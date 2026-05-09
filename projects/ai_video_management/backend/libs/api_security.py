@@ -5,20 +5,13 @@ from dataclasses import dataclass
 
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
-from starlette.responses import JSONResponse, Response
+from starlette.responses import JSONResponse
 from starlette.types import ASGIApp
 
-logger = logging.getLogger("spec_driven.api_security")
+logger = logging.getLogger("ai_video_management.api_security")
 
-GUARDED_ROUTES: frozenset[tuple[str, str]] = frozenset(
-    {
-        ("PUT", "/api/file"),
-        ("POST", "/api/regen-prompt"),
-        ("POST", "/api/promote"),
-        ("DELETE", "/api/promote"),
-        ("DELETE", "/api/project"),
-    }
-)
+# Only PUT /api/file is a state-changing endpoint.
+GUARDED_ROUTES: frozenset[tuple[str, str]] = frozenset({("PUT", "/api/file")})
 
 
 @dataclass(frozen=True)
@@ -75,3 +68,25 @@ class OriginHostMiddleware(BaseHTTPMiddleware):
                     content={"detail": {"kind": "origin_blocked"}},
                 )
         return await call_next(request)
+
+
+CSP_HEADER: str = (
+    "default-src 'self'; "
+    "img-src 'self'; "
+    "style-src 'self' 'unsafe-inline'; "
+    "script-src 'self'; "
+    "connect-src 'self'; "
+    "object-src 'none'; "
+    "base-uri 'self'"
+)
+
+
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    """Attach CSP + X-Content-Type-Options + Referrer-Policy on every response."""
+
+    async def dispatch(self, request: Request, call_next):  # type: ignore[no-untyped-def]
+        response = await call_next(request)
+        response.headers.setdefault("Content-Security-Policy", CSP_HEADER)
+        response.headers.setdefault("X-Content-Type-Options", "nosniff")
+        response.headers.setdefault("Referrer-Policy", "no-referrer")
+        return response
