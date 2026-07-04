@@ -23,7 +23,9 @@ Burn modes (`lang`):
 """
 from __future__ import annotations
 
+import os
 import re
+import sys
 from dataclasses import dataclass
 
 # start[-~至]end  optional colon separator  text (text may carry a `||` zh/en
@@ -40,7 +42,25 @@ VALID_LANGS: tuple[str, ...] = ("zh", "en", "both")
 # render proportionally (divergence note per the spec).
 _PLAY_RES_X: int = 1080
 _PLAY_RES_Y: int = 1920
-_FONT_ZH: str = "微软雅黑"
+# The ASS Fontname is resolved by the OS at burn time (libass/fontconfig on
+# macOS+Linux, GDI on Windows), so the name MUST be a CJK font that actually
+# exists on the host — a Windows-only name (微软雅黑) renders as garbled
+# fallback glyphs on macOS. Pick the per-OS system CJK font; override via env
+# (`AI_VIDEO_MGMT_SUBTITLE_FONT_ZH`) for hosts with a different installed font.
+_SUBTITLE_FONT_ZH_ENV: str = "AI_VIDEO_MGMT_SUBTITLE_FONT_ZH"
+
+
+def default_font_zh() -> str:
+    override = os.environ.get(_SUBTITLE_FONT_ZH_ENV, "").strip()
+    if override:
+        return override
+    if sys.platform == "darwin":
+        return "PingFang SC"  # macOS system Chinese font, always present
+    if sys.platform.startswith("win"):
+        return "微软雅黑"  # Microsoft YaHei
+    return "Noto Sans CJK SC"  # Linux default CJK
+
+
 _FONT_EN: str = "Arial"
 _FONT_SIZE_ZH: int = 64
 _FONT_SIZE_EN: int = 46
@@ -175,7 +195,7 @@ def cues_to_ass(cues: tuple[SubtitleCue, ...], lang: str = "zh") -> str:
         "OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, "
         "ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, "
         "Alignment, MarginL, MarginR, MarginV, Encoding\n"
-        f"{_style_row('ZH', _FONT_ZH, _FONT_SIZE_ZH)}\n"
+        f"{_style_row('ZH', default_font_zh(), _FONT_SIZE_ZH)}\n"
         f"{_style_row('EN', _FONT_EN, _FONT_SIZE_EN)}\n"
         "\n"
         "[Events]\n"

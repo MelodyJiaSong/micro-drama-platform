@@ -21,6 +21,7 @@ from libs.domain.errors.subtitle__error import (
 )
 from libs.domain.value_objects.subtitle__valueobject import (
     cues_to_ass,
+    default_font_zh,
     parse_subtitles,
 )
 from libs.infrastructure.writers.subtitle__writer import SubtitleBurner
@@ -67,11 +68,18 @@ def test_cues_to_ass_zh_only_default_lang() -> None:
     cues = parse_subtitles("0-3 甲 || A\n3-5.5 乙 || B\n")
     ass = cues_to_ass(cues)  # default zh
     assert "[Script Info]" in ass and "[V4+ Styles]" in ass
-    assert "微软雅黑" in ass
+    assert default_font_zh() in ass  # per-OS CJK font (PingFang SC on macOS, 微软雅黑 on Windows)
     dialogues = [ln for ln in ass.splitlines() if ln.startswith("Dialogue:")]
     assert len(dialogues) == 2
     assert "甲" in dialogues[0] and "A" not in dialogues[0]
     assert "0:00:05.50" in dialogues[1]
+
+
+def test_subtitle_font_zh_env_override(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("AI_VIDEO_MGMT_SUBTITLE_FONT_ZH", "Source Han Sans")
+    assert default_font_zh() == "Source Han Sans"
+    ass = cues_to_ass(parse_subtitles("0-3 甲\n"))
+    assert "Source Han Sans" in ass
 
 
 def test_cues_to_ass_en_only() -> None:
