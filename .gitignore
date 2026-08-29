@@ -256,3 +256,9 @@ ai_videos/**/*.bmp
 ai_videos/_deleted/
 
 .venv-stableaudio/
+
+# WSL alternate-data-stream artifacts. NTFS attaches a :Zone.Identifier stream
+# to downloaded files; WSL exposes it as a separate file, so `git add` picks it
+# up. The colon is illegal in Windows filenames, so any committed one makes
+# `git clone`/`checkout` abort on Windows with "error: invalid path".
+*:Zone.Identifier
