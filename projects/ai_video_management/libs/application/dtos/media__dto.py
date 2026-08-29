@@ -13,11 +13,17 @@ class MediaFileQdto:
     """For serve-media: returns the resolved on-disk Path + the content-type
     so the route handler can build a FileResponse. The Path lives in this
     DTO (not domain) because it's a transport artefact — the route handler
-    needs it to construct FastAPI's FileResponse."""
+    needs it to construct FastAPI's FileResponse.
+
+    `disposition` is `inline` for types the browser renders in place (pdf)
+    and `attachment` for everything else. `<img>` / `<video>` ignore the
+    header, but an `<iframe>` honours it — an `attachment` pdf downloads
+    instead of displaying."""
 
     resolved_path: Path
     media_type: str
     filename: str
+    disposition: str
 
 
 @dataclass(frozen=True)

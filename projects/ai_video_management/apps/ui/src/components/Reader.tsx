@@ -48,6 +48,7 @@ import { SeamScorePanel } from "./SeamScorePanel";
 const IMAGE_EXTS = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"]);
 const VIDEO_EXTS = new Set([".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v"]);
 const AUDIO_EXTS = new Set([".mp3", ".wav", ".m4a", ".aac", ".ogg", ".flac"]);
+const PDF_EXTS = new Set([".pdf"]);
 const SHOT_MD_RE = /^ai_videos\/[^_][^/]*\/(?:episodes\/ep\d+\/)?prompts\/shot\d+\/shot\d+\.md$/;
 
 export interface ReaderProps {
@@ -95,7 +96,8 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
   const isMediaImage = IMAGE_EXTS.has(ext);
   const isMediaVideo = VIDEO_EXTS.has(ext);
   const isMediaAudio = AUDIO_EXTS.has(ext);
-  const isMediaOnly = isMediaVideo || isMediaImage || isMediaAudio;
+  const isMediaPdf = PDF_EXTS.has(ext);
+  const isMediaOnly = isMediaVideo || isMediaImage || isMediaAudio || isMediaPdf;
 
   const load = useCallback(async () => {
     if (!path) return;
@@ -414,6 +416,7 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
   const isImage = isMediaImage;
   const isVideo = isMediaVideo;
   const isAudio = isMediaAudio;
+  const isPdf = isMediaPdf;
   const isMarkdown = ext === ".md";
   const isJsonl = ext === ".jsonl";
   const isCode = ext === ".json" || ext === ".yaml" || ext === ".yml";
@@ -627,6 +630,24 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
           ) : isMediaImage ? (
             <div className="media-view">
               <img src={mediaUrl(path)} alt={filename} />
+              {!isDeletedFile ? (
+                <div className="reader-media-actions">
+                  <button type="button" className="reader-media-archive-btn"
+                    onClick={onArchiveToggle} disabled={mediaActionsBusy}
+                    aria-label={isArchivedFile ? `Unarchive ${filename}` : `Archive ${filename}`}>
+                    {archiveLabel}
+                  </button>
+                  <button type="button" className="reader-media-delete-btn"
+                    onClick={onDeleteClick} disabled={mediaActionsBusy}
+                    aria-label={`Delete ${filename}`}>
+                    {deleteLabel}
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          ) : isPdf ? (
+            <div className="media-view pdf-view">
+              <iframe src={mediaUrl(path)} title={filename} />
               {!isDeletedFile ? (
                 <div className="reader-media-actions">
                   <button type="button" className="reader-media-archive-btn"

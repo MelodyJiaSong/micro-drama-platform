@@ -32,7 +32,7 @@ def get_media(
     return FileResponse(
         str(qdto.resolved_path),
         media_type=qdto.media_type,
-        headers=file_security_headers(qdto.filename),
+        headers=file_security_headers(qdto.filename, qdto.disposition),
     )
 
 

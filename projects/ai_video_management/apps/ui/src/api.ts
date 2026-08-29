@@ -1,4 +1,4 @@
-import { ApiError, type ApiErrorDetail, type FileResult, type TreeNode, type WriteResult } from "./types";
+import { ApiError, type ApiErrorDetail, type FileResult, type PrevizStatus, type TreeNode, type WriteResult } from "./types";
 
 async function readJson<T>(response: Response): Promise<T> {
   const text = await response.text();
@@ -1911,4 +1911,34 @@ export async function scoreEpisodeSeams(
     body: JSON.stringify({ path, lang, compare }),
   });
   return readJson<SeamMetricsResult>(response);
+}
+
+/** Start rendering the previz `.blend` under `path` to an MP4. Returns the
+ * opening snapshot only — the render runs 15–30 min, so the caller polls
+ * `fetchPrevizStatus` until the state is terminal. */
+export async function renderPreviz(path: string): Promise<PrevizStatus> {
+  const response = await fetch("/api/previz/render", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify({ path }),
+  });
+  return readJson<PrevizStatus>(response);
+}
+
+export async function cancelPreviz(path: string): Promise<PrevizStatus> {
+  const response = await fetch("/api/previz/cancel", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify({ path }),
+  });
+  return readJson<PrevizStatus>(response);
+}
+
+export async function fetchPrevizStatus(path: string): Promise<PrevizStatus> {
+  const response = await fetch(`/api/previz/status?path=${encodeURIComponent(path)}`, {
+    method: "GET",
+    headers: { Accept: "application/json" },
+    cache: "no-store",
+  });
+  return readJson<PrevizStatus>(response);
 }

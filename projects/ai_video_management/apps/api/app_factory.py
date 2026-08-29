@@ -48,6 +48,13 @@ from libs.domain.errors.casting__error import (
     InvalidDramaPathError,
     InvalidRoleError,
 )
+from libs.domain.errors.previz__error import (
+    BlenderMissingError,
+    InvalidPrevizPathError,
+    PrevizBlendNotFoundError,
+    PrevizRenderBusyError,
+    PrevizRenderFailedError,
+)
 from libs.domain.errors.character_video__error import (
     AudioExtractFailedError,
     CharacterVideoNotFoundError,
@@ -189,6 +196,12 @@ _PLAIN: tuple[tuple[type[Exception], int, str, bool], ...] = (
     (ConcatFailedError, 500, "concat_failed", True),
     (ViewExtractFailedError, 500, "view_extract_failed", True),
     (AudioExtractFailedError, 500, "audio_extract_failed", True),
+    # previz (Blender .blend → mp4)
+    (InvalidPrevizPathError, 400, "invalid_path", False),
+    (PrevizBlendNotFoundError, 404, "not_found", False),
+    (PrevizRenderBusyError, 409, "render_busy", False),
+    (BlenderMissingError, 500, "blender_missing", True),
+    (PrevizRenderFailedError, 500, "render_failed", True),
     # episode
     (InvalidEpisodePathError, 400, "invalid_path", False),
     (NotEpisodePathError, 400, "not_an_episode", False),

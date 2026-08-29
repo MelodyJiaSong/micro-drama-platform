@@ -109,7 +109,7 @@ interface ActorLeafShape {
 export function collectFilePaths(node: ActorLeafShape): string[] {
   const out: string[] = [];
   const walk = (n: ActorLeafShape): void => {
-    if (n.type === "file" || n.type === "image" || n.type === "video" || n.type === "audio") out.push(n.path);
+    if (n.type === "file" || n.type === "image" || n.type === "video" || n.type === "audio" || n.type === "pdf") out.push(n.path);
     if (n.type === "actor") {
       out.push(n.path);
       if (n.face_path) out.push(n.face_path);

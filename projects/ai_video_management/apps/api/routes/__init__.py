@@ -19,12 +19,14 @@ from apps.api.routes.downloads__route import router as _downloads_router
 from apps.api.routes.drama__route import router as _drama_router
 from apps.api.routes.episode__route import router as _episode_router
 from apps.api.routes.episode_bgm__route import router as _episode_bgm_router
+from apps.api.routes.eval_center__route import router as _eval_center_router
 from apps.api.routes.file__route import router as _file_router
 from apps.api.routes.frame__route import router as _frame_router
 from apps.api.routes.intro_card__route import router as _intro_card_router
 from apps.api.routes.scene_plate__route import router as _scene_plate_router
 from apps.api.routes.media__route import router as _media_router
 from apps.api.routes.novel__route import router as _novel_router
+from apps.api.routes.previz__route import router as _previz_router
 from apps.api.routes.perf_check__route import router as _perf_check_router
 from apps.api.routes.perf_score__route import router as _perf_score_router
 from apps.api.routes.performance__route import router as _performance_router
@@ -60,3 +62,5 @@ router.include_router(_subtitle_router)
 router.include_router(_intro_card_router)
 router.include_router(_production_router)
 router.include_router(_drama_router)
+router.include_router(_eval_center_router)
+router.include_router(_previz_router)

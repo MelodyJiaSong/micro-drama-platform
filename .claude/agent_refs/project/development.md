@@ -144,6 +144,8 @@ Every Python app under `apps/*/` (api, batch jobs, CLIs) wires its components wi
 - For FastAPI, route handlers use `@inject` + `Annotated[Type, Depends(Provide[Container.x])]` to receive Query/Command instances. The handler body is two lines: call `execute(...)`, return the DTO.
 - Test isolation: tests override providers (`container.x.override(stub)`) rather than monkey-patching imports.
 - Add `dependency-injector` to `pyproject.toml` `[project].dependencies` of every solution that has a Python app.
+- **A new route file ships with its provider and its router registration in the SAME change.** When `wiring_config` uses `packages=["apps.{exe}.routes"]`, `container.wire()` imports every module in the package — so a route referencing `Provide[Container.x]` with no `x` on the container is not a dead feature, it is an `AttributeError` at boot that takes the whole app down. Landing `{aggregate}__route.py` without the matching `container.py` providers + `routes/__init__.py` `include_router` is a stage-5 `blocker`. (Source: ai_video_management follow-up 156 — eval-center/previz routes committed alone left the backend unbootable.)
+- **A new UI component ships with the `types.ts` / `api.ts` exports it imports, in the SAME change.** `tsc -b` compiles the whole source tree, so a component that no route renders yet still fails the build — and a failed build emits no `index.html`, leaving the backend with nothing to serve. Build output (`apps/*/static/`) is gitignored, so this cannot be recovered from git on another clone; it must be rebuilt. (Source: ai_video_management follow-up 157 — `PrevizRenderPanel.tsx` landed without its API layer.)
 
 ### 6. Tests live at solution root, mirroring source
 

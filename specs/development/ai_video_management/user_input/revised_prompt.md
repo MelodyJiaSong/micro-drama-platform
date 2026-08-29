@@ -10378,3 +10378,21 @@ SeamPlanModal 三互斥按钮(硬拼/裁切/RIFE)→两级：主选 硬拼/不�
 
 ## Follow-up 152 — 2026-06-27 · 拼接丢末字「了」= 音频被裁到视频长度
 根因：seam_concat `_render_body` 把音频 atrim 到 `_probe` 的**视频流**时长；shot11 视频9.93s/音频10.10s（TTS末字在画面后才念完）→ 纯硬拼也把「了」裁掉。修：`_audio_dur()` 探音频长 + butt 尾保留完整音频、`tpad` 保末帧补画面 a/v 同步、超长 cap 1.0s（防 135c）；tpad 须在 `_norm`(含fps) 后才生效。验证 shot11「了」保住、a/v Δ0.02s、23 tests pass。用户提的 UI 音频选项：默认已不裁音频、无需手选；需重生 ep04。
+
+## Follow-up 153 — 2026-06-27 · 剧主页从导航打开 + 全局 takes / 逐集合成
+剧节点在左导航点击后打开自己的主页（控制台），导航上的动作按钮移到该主页；takes 提为全局层、合成按集进行。
+
+## Follow-up 154 — 2026-06-27 · 演员库 / 背景音乐库主页 + 移除 _voices
+`_actors` / `_bgm` 显示中文标签（演员库 / 背景音乐库）、各自有主页（/actors、/bgm），导航按钮移上主页；删除 `ai_videos/_voices/` 及其导航surface（/voices、VoicePoolGenerator）。
+
+## Follow-up 155 — 2026-08-29 · 导航中文标题：括号是限定语不是标题
+`TreeReader._h1_zh` 把 H1 的 `（…）` 一律当标题本体，`# 热血高校（预告片）` 在左导航被显示成「预告片」（看起来像项目没出现）。修：`（…）` 仅在括号前文本**不含中文**时才是标题（`pinyin（中文）`）；括号前已是中文时视为限定语、丢弃并继续走中点分隔规则。另：空项目目录本就不被后端过滤，但缺 `README.md`/`1_立项/concept.md` 时只显示 pinyin 名——新建项目须补带中文 H1 的 `README.md`。
+
+## Follow-up 156 — 2026-08-29 · eval-center/previz DI 漏接线导致后端起不来
+`eval_center__route.py` / `previz__route.py` 已提交但 `container.py` provider 与 `routes/__init__.py` 注册从未落地；`wiring_config` 用 `packages=` 会 import 包内每个模块，故缺 provider = 整个 app boot 崩（`AttributeError: Container has no attribute 'eval_center_query'`）。补三个 Singleton（previz_renderer 必须 Singleton）+ 四个 Factory + 两个 router 注册；previz 领域错误补进 app_factory 全局错误表；`test_boot_smoke` 的端点注册守卫改为递归展开 fastapi ≥0.139 惰性 `_IncludedRouter`（此前失效，正是它本该拦下这个 bug）。契约：新增路由文件必须同一次提交带上 DI provider + router 注册。
+
+## Follow-up 157 — 2026-08-29 · UI 看不到新项目 = 后端跑在另一个 clone；previz 前端 API 层缺失
+8766 上的后端是从 `C:\workspace\spec_coding`（另一 clone，remote finalde/spec_coding）起的，那份 `ai_videos/` 无 rexue_gaoxiao / duikang_shangzeng。排障通则：UI 与磁盘对不上时先确认服务进程的 repo root，再查代码。连带修：`PrevizRenderPanel.tsx` 依赖的 `PrevizStatus` 类型与 `renderPreviz/cancelPreviz/fetchPrevizStatus` 三个 API 从未提交（与 156 同源）→ `tsc -b` 失败 → 无 `index.html` 可服务（static/ 被 gitignore，不可靠 git 恢复）。契约：新增前端组件必须同一次提交带上它引用的 types/api 导出。
+
+## Follow-up 158 — 2026-08-29 · webapp 支持 PDF 预览
+剧目录里的参考 PDF（分镜/拍摄通告）此前不在任何扩展名白名单，目录在左导航显示为空。`.pdf` 进 `MEDIA_EXTENSIONS`（不进 `ALLOWED_EXTENSIONS`，`/api/file` 不得当文本解码）、新增 `pdf` 叶子类型、`MediaFileQdto.disposition` 区分 inline/attachment（`<iframe>` 遵守 Content-Disposition，attachment 会触发下载）、Reader 用 `<iframe>` 渲染（CSP `object-src 'none'` 封死 embed/object）、`Content-Disposition` 补 RFC 5987 `filename*`（中文名不再被削成 `_.pdf`）。排障教训：杀 uvicorn reload 父进程不杀 spawn worker，孤儿 worker 继续用旧代码应答同一端口。

@@ -8,10 +8,13 @@ ALLOWED_EXTENSIONS: frozenset[str] = frozenset(
 # Media files (per follow-up 005): visible in sidebar tree; served via /api/media
 # (raw FileResponse, bypasses MAX_FILE_BYTES). User-rendered turntable mp4 / scene
 # ref png / shot output video etc. — gitignored, but webapp displays inline.
+# `.pdf` rides the same path (reference decks a user drops into a drama folder);
+# it stays OUT of ALLOWED_EXTENSIONS so /api/file never tries to decode it as text.
 MEDIA_EXTENSIONS: frozenset[str] = frozenset(
     {".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp",
      ".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v",
-     ".mp3", ".wav", ".m4a", ".aac", ".ogg", ".flac"}
+     ".mp3", ".wav", ".m4a", ".aac", ".ogg", ".flac",
+     ".pdf"}
 )
 TREE_VISIBLE_EXTENSIONS: frozenset[str] = ALLOWED_EXTENSIONS | MEDIA_EXTENSIONS
 MAX_FILE_BYTES: int = 1_048_576

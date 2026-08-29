@@ -38,6 +38,24 @@ def test_drama_zh_title_readme_still_wins(tmp_path: Path) -> None:
     assert _reader(tmp_path)._project_zh_title(proj) == "重生之总裁夫人"
 
 
+def test_drama_zh_title_drops_paren_qualifier(tmp_path: Path) -> None:
+    # `中文（限定语）` — the parenthetical is a qualifier, not the title
+    # (`# 热血高校（预告片）` must read 热血高校, not 预告片).
+    proj = tmp_path / "ai_videos" / "rexue_gaoxiao"
+    proj.mkdir(parents=True)
+    (proj / "README.md").write_text("# 热血高校（预告片）\n", encoding="utf-8")
+    assert _reader(tmp_path)._project_zh_title(proj) == "热血高校"
+
+
+def test_drama_zh_title_paren_qualifier_after_middle_dot(tmp_path: Path) -> None:
+    proj = tmp_path / "ai_videos" / "rexue_gaoxiao"
+    (proj / "1_立项").mkdir(parents=True)
+    (proj / "1_立项" / "concept.md").write_text(
+        "# 立项策划单 · 热血高校（预告片）\n", encoding="utf-8"
+    )
+    assert _reader(tmp_path)._project_zh_title(proj) == "热血高校"
+
+
 def test_scene_zh_label_from_paren(tmp_path: Path) -> None:
     scene = tmp_path / "ai_videos" / "d" / "2_世界观人设" / "scenes" / "zhenbei_wangfu_zhengting"
     scene.mkdir(parents=True)

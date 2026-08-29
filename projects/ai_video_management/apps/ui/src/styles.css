@@ -782,6 +782,16 @@ button:disabled { cursor: not-allowed; opacity: 0.6; }
 }
 .media-view video { width: 100%; }
 
+/* PDFs render in an iframe (CSP blocks <embed>/<object> via object-src 'none').
+   Chrome's built-in viewer needs a real height — a percentage collapses to 0. */
+.pdf-view iframe {
+  width: 100%;
+  height: calc(100vh - 220px);
+  min-height: 420px;
+  border: 1px solid var(--border, #333);
+  background: #fff;
+}
+
 /* Per-file archive button on single-media reader pages (per follow-up 020) */
 .reader-media-archive-btn,
 .reader-media-extract-btn {

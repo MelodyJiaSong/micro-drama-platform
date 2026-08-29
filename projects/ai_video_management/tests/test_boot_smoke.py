@@ -80,6 +80,23 @@ def test_csp_header_on_responses() -> None:
     assert "img-src 'self'" in csp
 
 
+def _flatten_routes(routes: object) -> list[object]:
+    """Yield leaf routes, descending through FastAPI's lazy `_IncludedRouter`.
+
+    Since fastapi 0.139 `include_router` stores a placeholder route that carries
+    no `.path` / `.methods`; the real routes hang off its `original_router`.
+    Walking only the top level made every endpoint look unregistered.
+    """
+    out: list[object] = []
+    for route in routes:  # type: ignore[union-attr]
+        inner = getattr(route, "original_router", None)
+        if inner is not None:
+            out.extend(_flatten_routes(inner.routes))
+        else:
+            out.append(route)
+    return out
+
+
 def test_all_post_endpoints_registered() -> None:
     """Follow-up 012: catch stale-route regressions early.
 
@@ -92,7 +109,7 @@ def test_all_post_endpoints_registered() -> None:
     bound = BoundOrigin(host="127.0.0.1", port=8766)
     app = make_app(rr, bound, serve_static=False)
     registered: set[tuple[str, str]] = set()
-    for route in app.routes:
+    for route in _flatten_routes(app.routes):
         methods = getattr(route, "methods", None)
         path = getattr(route, "path", None)
         if methods and path:

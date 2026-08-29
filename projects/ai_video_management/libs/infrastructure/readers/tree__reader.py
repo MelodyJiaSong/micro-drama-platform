@@ -13,6 +13,8 @@ from libs.domain.value_objects.novel__valueobject import CANONICAL_NOVELS, categ
 _IMAGE_EXTENSIONS: frozenset[str] = frozenset({".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"})
 _VIDEO_EXTENSIONS: frozenset[str] = frozenset({".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v"})
 _AUDIO_EXTENSIONS: frozenset[str] = frozenset({".mp3", ".wav", ".m4a", ".aac", ".ogg", ".flac"})
+_PDF_EXTENSIONS: frozenset[str] = frozenset({".pdf"})
+_CJK_RE = re.compile("[\u4e00-\u9fff]")
 _ACTOR_FOLDER_RE = re.compile(r"^actor_\d{4,}$")
 _VOICE_FOLDER_RE = re.compile(r"^voice_\d{4,}$")
 # Chinese display labels for the shared system folders under `ai_videos/` (they
@@ -222,6 +224,11 @@ class TreeReader:
         """Extract a Chinese display title from a markdown file's first H1.
         Priority: 《…》 → （…） → text after a middle-dot separator (· / ・) →
         the whole H1 text. None when the file is missing or has no H1.
+
+        The （…） rule only fires when the text before the parenthesis has no
+        CJK — `pinyin（中文）` means the parenthetical IS the title, but
+        `热血高校（预告片）` means it is a qualifier, so it is dropped and the
+        head keeps flowing through the middle-dot rule.
         """
         if not md_path.is_file():
             return None
@@ -236,7 +243,11 @@ class TreeReader:
                             return m.group(1)
                         m = re.search(r"[（(]([^）)]+)[）)]", head)
                         if m:
-                            return m.group(1)
+                            before = head[: m.start()].strip()
+                            if _CJK_RE.search(before):
+                                head = before
+                            else:
+                                return m.group(1)
                         tail = re.split(r"\s*[·・]\s*", head)[-1].strip()
                         return tail or head or None
         except OSError:
@@ -399,6 +410,8 @@ class TreeReader:
             node_type = "image"
         elif ext in _AUDIO_EXTENSIONS:
             node_type = "audio"
+        elif ext in _PDF_EXTENSIONS:
+            node_type = "pdf"
         else:
             node_type = "file"
         node: dict[str, Any] = {"type": node_type, "name": f.name, "path": self._rel(f)}

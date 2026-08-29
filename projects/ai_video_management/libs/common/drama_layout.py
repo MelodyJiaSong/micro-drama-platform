@@ -69,3 +69,27 @@ def episodes_dir(drama_dir: Path) -> Path:
         drama_dir / SHOTS_STAGE / "episodes",
         drama_dir / SCRIPT_STAGE / "episodes",
     )
+
+
+def script_md(drama_dir: Path) -> Path:
+    """Single-piece `script.md` — flat root or `4_剧本/`."""
+    return _first_existing_file(
+        drama_dir / "script.md", drama_dir / SCRIPT_STAGE / "script.md"
+    )
+
+
+def shotlist_md(drama_dir: Path) -> Path:
+    """Single-piece `shotlist.md` — flat root or `5_6_分镜与prompt/`."""
+    return _first_existing_file(
+        drama_dir / "shotlist.md", drama_dir / SHOTS_STAGE / "shotlist.md"
+    )
+
+
+def shots_dir(drama_dir: Path) -> Path:
+    """The single-piece `shots/` tree — flat root or `5_6_分镜与prompt/`.
+    Multi-episode dramas keep their shots under `episodes/{ep}/shots/` instead
+    (see `episodes_dir`), so this resolving to a real dir is itself evidence of
+    a single-piece project."""
+    return _first_existing_dir(
+        drama_dir / "shots", drama_dir / SHOTS_STAGE / "shots"
+    )

@@ -250,10 +250,26 @@ ai_videos/**/*.jpeg
 ai_videos/**/*.webp
 ai_videos/**/*.gif
 ai_videos/**/*.bmp
+ai_videos/**/*.m4v
+ai_videos/**/*.pdf
+
+# Remaining audio + the rest of the media set, kept in step with
+# tools/assets/scanner.py MEDIA_EXTENSIONS — anything assets_sync uploads to R2
+# must be ignored here, or the same bytes end up in both stores.
+ai_videos/**/*.wav
+ai_videos/**/*.m4a
+ai_videos/**/*.aac
+ai_videos/**/*.ogg
+ai_videos/**/*.flac
 
 # Audio — all mp3 are heavy binaries, never tracked (global).
 *.mp3
 *.MP3
+
+# assets_sync sha256 cache — a derived (size, mtime_ns) -> sha256 lookup that
+# saves re-hashing 6+ GB on every run. Per-machine (mtime is not portable),
+# rebuildable by deleting it. The MANIFEST (ai_videos/assets.json) IS tracked.
+.assets_cache.json
 
 # Recycle bin — soft-deleted content awaiting hard purge. Nothing under it is
 # ever tracked (the webapp's "清空回收站" purge wipes it from disk anyway).

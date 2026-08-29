@@ -5,6 +5,7 @@ export type TreeNodeType =
   | "image"
   | "video"
   | "audio"
+  | "pdf"
   | "actor"
   | "voice";
 
@@ -43,6 +44,20 @@ export interface WriteResult {
   bytes: number;
   mtime: number;
   mtime_http: string;
+}
+
+/** Previz render job snapshot — the shape of PrevizStatusQdto. Start (POST
+ * /api/previz/render) and poll (GET /api/previz/status) return the same shape,
+ * so the panel holds one piece of state and overwrites it with either. */
+export interface PrevizStatus {
+  blend: string;
+  state: string;
+  rendered_frames: number;
+  total_frames: number;
+  percent: number;
+  message: string;
+  mp4: string | null;
+  elapsed_seconds: number;
 }
 
 export interface ApiErrorDetail {

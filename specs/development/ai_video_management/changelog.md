@@ -4384,3 +4384,67 @@ Source: 用户——「评分机制换一下：先把所有 metric 都做到 80 
 两个健壮性修正：① 承接缝候选不含裸硬切(butt)——承接缝至少裁切，避免退化成硬切且丢失再调优资格；② tune_seams 改由 shot 的 `衔接=承接`(读 .md)判定，不再看 plan 方法,故被写成任何方法的承接缝都仍会被重调(修复"一旦写成 butt 就被跳过"的回归)。
 前端：dashboard/inline panel 排名改用 floor→score 分层；每个候选显示 ✓全≥80 / ✗最低{min} 徽标；footer/规则说明更新。api.ts SeamMethodScore 加 floor_pass/min_metric、SeamMetricsResult 加 metric_floor/all_floor_pass。skill SKILL.md 说明分层规则。
 验证：ep01 实跑——shot10→11 trim@0.10 加权88.9(无方案达标·M4 66.8 封顶) / shot11→12 trim@0.10 加权99.4(全≥80)；overall 94.2(A)·all_floor_pass=False；seam/episode/media pytest 55 passed；UI tsc 0 + build OK；sidecar 重生。
+
+## Follow-up 155 — 2026-08-29 10:00:00
+Source: user_input/follow_ups/202608.md - section 155
+Summary: 左导航中文标题把 H1 的括号限定语误当标题（热血高校（预告片）→ 显示成「预告片」）；括号规则改为仅在括号前无中文时生效。
+
+Auto-updated:
+- projects/ai_video_management/libs/infrastructure/readers/tree__reader.py — `_h1_zh` 新增 `_CJK_RE` 判定：括号前含中文 → 丢弃括号保留前段并继续中点分隔；否则沿用 `pinyin（中文）` 取括号内容。
+- user_input/revised_prompt.md — 补录 follow-up 153 / 154 / 155 条目（此前 153、154 未回写，恢复 raw + 全部 follow-ups 的不变式）。
+- ai_videos/duikang_shangzeng/README.md — 新建项目 对抗熵增 补中文 H1 README，使左导航显示中文名而非 pinyin 目录名。
+
+No conflicts found in: interview/qa.md, findings/, final_specs/spec.md, validation/*（导航标题抽取规则为阶段 6 实现细节，上游文档未固化该规则）
+
+## Follow-up 155（续）— 2026-08-29 10:00:00
+Source: user_input/follow_ups/202608.md - section 155
+Summary: 阶段编号目录下的单片项目 sub_type 检测失效（rexue_gaoxiao 显示不出 short 徽标/镜数）。
+
+Auto-updated:
+- projects/ai_video_management/libs/common/drama_layout.py — 新增 `script_md` / `shotlist_md` / `shots_dir` 三个 layout resolver（扁平根 ↔ `4_剧本/`、`5_6_分镜与prompt/`）。
+- projects/ai_video_management/libs/common/sub_type_lookup.py — `_looks_like_short` / `_count_shots` 改走 `drama_layout`；新增 `_has_flat_shots`（有 `shots/shotNN/` 且无 episodes 层 = 单片）。
+- projects/ai_video_management/tests/test_tree_display_name_zh.py — 新增两个括号限定语回归用例。
+
+验证: `tests/test_sub_type_staged_short.py` 2 个此前长红的用例转绿；全量 backend 套件 44 failed → 42 failed（其余 42 个为 main 上既有失败，与本次改动无关，多数引用已不存在的 `wukong_juexing` 数据）。
+
+## Follow-up 156 — 2026-08-29 11:00:00
+Source: user_input/follow_ups/202608.md - section 156
+Summary: eval-center / previz 路由已提交但 DI provider 与 router 注册缺失，后端 boot 直接 AttributeError 崩溃。
+
+Auto-updated:
+- projects/ai_video_management/apps/api/container.py — 补 `eval_center_reader` / `eval_center_writer` / `previz_renderer` 三个 Singleton（previz 必须 Singleton：renderer 持有唯一在途渲染任务的线程/锁/取消事件）+ `eval_center_{query,command}` / `previz_{query,command}` 四个 Factory 及对应 import。
+- projects/ai_video_management/apps/api/routes/__init__.py — 注册 `_eval_center_router` / `_previz_router` 进组合 router（此前两个路由模块被 wiring import、却从未挂载）。
+- projects/ai_video_management/apps/api/app_factory.py — previz 领域错误登记进全局错误表 5 行，域错误不再以 500 泄漏。
+- projects/ai_video_management/tests/test_boot_smoke.py — `_flatten_routes` 递归展开 fastapi ≥0.139 的惰性 `_IncludedRouter`，恢复端点注册守卫的有效性。
+
+验证: 实起 uvicorn，`/api/tree` `/api/eval/{overview,runs,config}` 全 200、`/api/previz/status` 返回 400 `{"kind":"invalid_path"}`（此前 500），日志零 traceback；全量 backend 套件 44 failed → 31 failed，零新增失败。
+
+No conflicts found in: interview/qa.md, findings/, final_specs/spec.md, validation/*
+
+## Follow-up 157 — 2026-08-29 13:10:00
+Source: user_input/follow_ups/202608.md - section 157
+Summary: UI 看不到新项目的真因是后端跑在另一个 clone（C:\workspace\spec_coding）；连带修复 previz 前端 API 层缺失导致的整体构建失败。
+
+Auto-updated:
+- projects/ai_video_management/apps/ui/src/types.ts — 补 `PrevizStatus` 接口（对齐 `PrevizStatusQdto` 八个字段）。
+- projects/ai_video_management/apps/ui/src/api.ts — 补 `renderPreviz` / `cancelPreviz` / `fetchPrevizStatus` 三个函数（POST render 202、POST cancel、GET status 带 no-store）。
+
+验证: `npx tsc -b` 退出 0（此前 4 个 TS2305）；`npm run build` 产出 `apps/api/static/index.html` + assets；`GET /` 返回 200 且为新 bundle；8766 上 `/api/tree` 的 AI Videos 段含 `rexue_gaoxiao=热血高校`、`duikang_shangzeng=对抗熵增`。
+
+No conflicts found in: interview/qa.md, findings/, final_specs/spec.md, validation/*
+
+## Follow-up 158 — 2026-08-29 14:00:00
+Source: user_input/follow_ups/202608.md - section 158
+Summary: webapp 支持 PDF 预览——`.pdf` 进 tree、以 application/pdf + inline 提供、Reader 用 iframe 内嵌渲染。
+
+Auto-updated:
+- projects/ai_video_management/libs/common/exposed_tree.py — `.pdf` 加入 `MEDIA_EXTENSIONS`（刻意不进 `ALLOWED_EXTENSIONS`）。
+- projects/ai_video_management/libs/application/dtos/media__dto.py — `MediaFileQdto` 增 `disposition` 字段。
+- projects/ai_video_management/libs/application/queries/media__query.py — `.pdf → application/pdf`；`_INLINE_MEDIA_TYPES` 决定 inline / attachment。
+- projects/ai_video_management/apps/api/routes/_helpers.py — `file_security_headers` 接收 disposition；补 RFC 5987 `filename*`（中文名不再被削成 `_.pdf`）。
+- projects/ai_video_management/apps/api/routes/media__route.py — 透传 `qdto.disposition`。
+- projects/ai_video_management/libs/infrastructure/readers/tree__reader.py — 新增 `pdf` 叶子类型。
+- projects/ai_video_management/apps/ui/src/{types.ts,components/Sidebar.tsx,components/Reader.tsx,lib/linkResolver.ts,styles.css} — `pdf` 叶子类型 + 📄 图标 + `<iframe>` 预览 + `.pdf-view` 高度。
+- projects/ai_video_management/tests/test_pdf_preview.py — 新增 5 个用例（media 非 text 白名单、叶子类型、inline、video 仍 attachment、RFC 5987 中文名）。
+
+验证: 对抗熵增 两个 PDF 在 `/api/tree` 为 `type=pdf`；`/api/media` 返回 200 `application/pdf` `inline; filename="_.pdf"; filename*=UTF-8''…` 且首字节为 `%PDF-`；video 仍为 attachment；`tsc -b` 0 + `npm run build` 通过；全量 backend 套件 31 failed（与基线持平，零新增）。

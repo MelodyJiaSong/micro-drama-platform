@@ -30,7 +30,11 @@ _MEDIA_MIME_MAP: dict[str, str] = {
     ".aac": "audio/aac",
     ".ogg": "audio/ogg",
     ".flac": "audio/flac",
+    ".pdf": "application/pdf",
 }
+
+# Types the browser renders in place rather than downloading.
+_INLINE_MEDIA_TYPES: frozenset[str] = frozenset({"application/pdf"})
 
 
 class MediaQuery:
@@ -47,8 +51,10 @@ class MediaQuery:
         resolved = self._resolver.resolve(rel_path)
         if resolved is None or not resolved.is_file():
             raise FileNotInSandboxError(rel_path)
+        media_type = _MEDIA_MIME_MAP.get(ext, "application/octet-stream")
         return MediaFileQdto(
             resolved_path=resolved,
-            media_type=_MEDIA_MIME_MAP.get(ext, "application/octet-stream"),
+            media_type=media_type,
             filename=resolved.name,
+            disposition="inline" if media_type in _INLINE_MEDIA_TYPES else "attachment",
         )

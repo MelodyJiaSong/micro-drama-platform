@@ -24,6 +24,7 @@ from libs.application.commands.character_video__command import CharacterVideoCom
 from libs.application.queries.character__query import CharacterQuery
 from libs.application.commands.downloads__command import DownloadsCommand
 from libs.application.commands.episode__command import EpisodeCommand
+from libs.application.commands.eval_center__command import EvalCenterCommand
 from libs.application.commands.episode_bgm__command import EpisodeBgmCommand
 from libs.application.commands.episode_takes__command import EpisodeTakesCommand
 from libs.application.commands.drama_takes__command import DramaTakesCommand
@@ -37,6 +38,7 @@ from libs.application.commands.media__command import MediaCommand
 from libs.application.commands.novel__command import NovelCommand
 from libs.application.commands.perf_score__command import PerfScoreCommand
 from libs.application.commands.production__command import ProductionCommand
+from libs.application.commands.previz__command import PrevizCommand
 from libs.application.commands.subtitle__command import SubtitleCommand
 from libs.application.commands.subtitle_batch__command import SubtitleBatchCommand
 from libs.application.commands.voice__command import VoiceCommand
@@ -46,6 +48,7 @@ from libs.application.queries.casting__query import CastingQuery
 from libs.application.queries.episode__query import EpisodeQuery
 from libs.application.queries.episode_bgm__query import EpisodeBgmQuery
 from libs.application.queries.file__query import FileQuery
+from libs.application.queries.eval_center__query import EvalCenterQuery
 from libs.application.commands.shot_performance__command import ShotPerformanceCommand
 from libs.application.queries.perf_check__query import PerfCheckPromptQuery
 from libs.application.queries.performance_candidate__query import PerformanceCandidateQuery
@@ -53,6 +56,7 @@ from libs.application.queries.shot_regen__query import ShotRegenPromptQuery
 from libs.application.queries.media__query import MediaQuery
 from libs.application.queries.novel__query import NovelQuery
 from libs.application.queries.prompt__query import PromptQuery
+from libs.application.queries.previz__query import PrevizQuery
 from libs.application.queries.tree__query import TreeQuery
 from libs.application.queries.voice__query import VoiceQuery
 from libs.common.exposed_tree import ExposedTree
@@ -61,6 +65,7 @@ from libs.common.safe_resolve import SafeResolver
 from libs.infrastructure.clients.anthropic__client import AnthropicClient
 from libs.infrastructure.readers.bgm_reference__reader import BgmReferenceReader
 from libs.infrastructure.readers.file__reader import FileReader
+from libs.infrastructure.readers.eval_center__reader import EvalCenterReader
 from libs.infrastructure.readers.perf_check__reader import PerfCheckPromptReader
 from libs.infrastructure.readers.performance_library__reader import PerformanceLibraryReader
 from libs.infrastructure.readers.shot_regen__reader import ShotRegenPromptReader
@@ -82,6 +87,7 @@ from libs.infrastructure.writers.drama_takes__writer import DramaTakesSelector
 from libs.infrastructure.readers.drama_episodes__reader import DramaEpisodesReader
 from libs.infrastructure.writers.episode_subtitle__writer import EpisodeSubtitleBurner
 from libs.infrastructure.writers.file__writer import FileWriter
+from libs.infrastructure.writers.eval_center__writer import EvalCenterWriter
 from libs.infrastructure.writers.frame__writer import FrameExtractor
 from libs.infrastructure.writers.scene_plate__writer import ScenePlateExtractor
 from libs.infrastructure.writers.shot_performance__writer import ShotPerformanceWriter
@@ -92,6 +98,7 @@ from libs.infrastructure.writers.media__writer import MediaArchiver, MediaRename
 from libs.infrastructure.writers.novel__writer import NovelDownloader
 from libs.infrastructure.writers.perf_score__writer import PerfScorer
 from libs.infrastructure.writers.production__writer import ProductionExporter
+from libs.infrastructure.writers.previz__writer import PrevizRenderer
 from libs.infrastructure.writers.voice__writer import VoicePool
 
 
@@ -147,6 +154,17 @@ class Container(containers.DeclarativeContainer):
     )
     production_exporter: providers.Singleton[ProductionExporter] = providers.Singleton(
         ProductionExporter, exposed=exposed_tree, resolver=safe_resolver
+    )
+    eval_center_reader: providers.Singleton[EvalCenterReader] = providers.Singleton(
+        EvalCenterReader, repo_root=repo_root_path
+    )
+    eval_center_writer: providers.Singleton[EvalCenterWriter] = providers.Singleton(
+        EvalCenterWriter, repo_root=repo_root_path, reader=eval_center_reader
+    )
+    # Singleton: the renderer owns the single in-flight previz job (thread, lock,
+    # cancel event), so every request must see the same instance.
+    previz_renderer: providers.Singleton[PrevizRenderer] = providers.Singleton(
+        PrevizRenderer, exposed=exposed_tree, resolver=safe_resolver
     )
     shot_regen_reader: providers.Singleton[ShotRegenPromptReader] = providers.Singleton(
         ShotRegenPromptReader, exposed=exposed_tree, resolver=safe_resolver
@@ -279,6 +297,18 @@ class Container(containers.DeclarativeContainer):
     )
     production_command: providers.Factory[ProductionCommand] = providers.Factory(
         ProductionCommand, exporter=production_exporter
+    )
+    eval_center_command: providers.Factory[EvalCenterCommand] = providers.Factory(
+        EvalCenterCommand, writer=eval_center_writer
+    )
+    eval_center_query: providers.Factory[EvalCenterQuery] = providers.Factory(
+        EvalCenterQuery, reader=eval_center_reader
+    )
+    previz_command: providers.Factory[PrevizCommand] = providers.Factory(
+        PrevizCommand, renderer=previz_renderer
+    )
+    previz_query: providers.Factory[PrevizQuery] = providers.Factory(
+        PrevizQuery, renderer=previz_renderer
     )
     shot_regen_query: providers.Factory[ShotRegenPromptQuery] = providers.Factory(
         ShotRegenPromptQuery, reader=shot_regen_reader

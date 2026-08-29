@@ -2,9 +2,12 @@
 
 Heuristic (does not look outside `ai_videos/{name}/`):
 
-- If `ai_videos/{name}/episodes/` exists with at least one `epNN/` child → `novel`.
-- Else if `ai_videos/{name}/script.md` or `ai_videos/{name}/shotlist.md` exists → `short`.
+- If the episodes tree exists with at least one `epNN/` child → `novel`.
+- Else if `script.md`, `shotlist.md`, or a flat `shots/shotNN/` tree exists → `short`.
 - Else → `None` (project shape not yet recognisable).
+
+Every path is resolved through `drama_layout`, so both the legacy flat root and
+the staged pipeline (`4_剧本/`, `5_6_分镜与prompt/`) are recognised.
 
 Trade-off: a novel project mid-creation without any episode folders yet would
 mis-detect as short. Acceptable; user can fix downstream by adding the first
@@ -22,6 +25,7 @@ import re
 SubType = Literal["novel", "short"]
 
 _EPISODE_DIR_RE = re.compile(r"^ep\d+$")
+_SHOT_DIR_RE = re.compile(r"^shot\d+$")
 
 
 @dataclass(frozen=True)
@@ -56,14 +60,26 @@ def _count_episodes(project_dir: Path) -> int | None:
 
 
 def _looks_like_short(project_dir: Path) -> bool:
-    """Short layout: README + script.md + shotlist.md at project root, no episodes/."""
-    has_shotlist = (project_dir / "shotlist.md").is_file()
-    has_script = (project_dir / "script.md").is_file()
-    return has_shotlist or has_script
+    """Short layout: script.md / shotlist.md / a flat shots tree, no episodes/.
+    Each of the three is resolved through `drama_layout`, so the staged pipeline
+    (`4_剧本/script.md`, `5_6_分镜与prompt/{shotlist.md, shots/}`) counts as well
+    as the legacy flat root."""
+    if drama_layout.shotlist_md(project_dir).is_file():
+        return True
+    if drama_layout.script_md(project_dir).is_file():
+        return True
+    return _has_flat_shots(project_dir)
+
+
+def _has_flat_shots(project_dir: Path) -> bool:
+    shots = drama_layout.shots_dir(project_dir)
+    if not shots.is_dir():
+        return False
+    return any(p.is_dir() and _SHOT_DIR_RE.match(p.name) for p in shots.iterdir())
 
 
 def _count_shots(project_dir: Path) -> int | None:
-    shotlist = project_dir / "shotlist.md"
+    shotlist = drama_layout.shotlist_md(project_dir)
     if not shotlist.is_file():
         return None
     try:
