@@ -1,0 +1,340 @@
+dimension_id: format_compliance
+name_cn: 格式契约
+description_cn: 机械格式契约维度：以确定性规则为主判定 shotNN.md 是否满足出片硬契约——YAML 信封与 canonical 段结构齐全、Shot context 必备行（衔接/空间核验）在场且衔接三态规范、视频
+  prompt 必备字段行齐全且 ≤2000 全字符、时长 4–15s、比例 9:16、零 hex 色值、台词字段纯净（零字幕样式）、有台词必有配音块且语速 ≤5 字/秒、锁定描述符逐字节一致、参考行格式洁净且与上画内容双向一致、无字幕铁律双落点、字面化/敏感高危措辞零命中。只收单镜可判项；台词措辞质量、运镜/站位审美、剧情连贯均不在本维度。
+subcategories:
+- id: file_structure
+  name_cn: 文件结构与信封
+  weight: 1.0
+  fields:
+  - id: yaml_envelope_parsable
+    name_cn: YAML 信封可解析
+    evaluator: rule
+    judge_instruction_cn: 检查 shotNN.md 文件开头是否有可解析的 YAML frontmatter 信封：文件以「---」行起、内为合法 YAML 键值对（含 worker_id/stage/role/status
+      等键）、再以「---」行收尾。不合格情形：无 frontmatter 直接进入正文；「---」缺失一端；YAML 缩进或冒号错误导致解析失败；信封被挪到文件中部。信封是产线机器读取 shot 状态的唯一入口，缺失或损坏即结构性硬缺陷。本字段只判信封在场且可解析，不评键值内容的语义正确性。
+    weight: 3.0
+    anchors:
+      g1: 文件直接以「## 小说原文」或 H1 标题开头，完全没有 frontmatter；或 --- 块内是散文而非键值对，YAML 解析直接报错。
+      g3: frontmatter 在场且可解析，但缺 status 或 role 等常见键，或 blockers 未写成列表等格式不规范。
+      g5: 首行「---」起、合法 YAML、worker_id/stage/role/work_unit_id/status/blockers/confidence 全套键齐、「---」干净收尾，机器一次解析通过。
+    sources:
+    - K1
+    - K14
+    rule_id: envelope_present
+    rule_params: {}
+  - id: canonical_sections_complete
+    name_cn: canonical 段结构齐全有序
+    evaluator: llm
+    judge_instruction_cn: 对照 canonical 模板检查段落齐全且有序：① YAML 信封之后有「## 小说原文」段（本镜对应小说摘录）；② 一行 H1 标题（如「# ep08 / shot03
+      · 提议验灵」，含集号/镜号）；③「## Shot context」段（Summary/Characters/Scene/Duration 等 bullets）；④「## 视频 prompt」段，内含一个闭合的
+      ```text 围栏代码块；⑤ 有台词的镜另有「## 台词配音 prompt」段。标准顺序：小说原文→H1→Shot context→视频 prompt→台词配音。缺任一段、段落乱序、```text 围栏未闭合、H1
+      缺失均为缺陷。配音块是否缺失由配音块专项字段判分，此处只对整体结构扣分。
+    weight: 3.0
+    anchors:
+      g1: 缺「## Shot context」或「## 视频 prompt」整段，或 prompt 正文没有 ```text 围栏、裸奔在 markdown 正文里。
+      g3: 各段俱在但顺序颠倒（如 H1 排在小说原文之前），或「## 小说原文」缺失/空段，或段标题写法不标准（如「##Shot context」粘连）。
+      g5: 五段齐全、顺序正确、```text 围栏闭合、H1 含集号/镜号/镜名，逐段与模板吻合。
+    sources:
+    - K1
+  - id: no_abolished_frame_blocks
+    name_cn: 无废止静帧块残留
+    evaluator: rule
+    judge_instruction_cn: 检查全文不得出现已废止的「## 起始帧」「## 结束帧」静态帧描述块。旧版模板曾要求每镜写起始帧/结束帧两段静帧文字，现契约已废止：首末帧信息只允许以 Shot context
+      的「首末帧反差」bullet 和衔接机制（帧 handle 如 本镜首帧=>@）承载。命中「## 起始帧」或「## 结束帧」段标题即不合格。注意：Shot context 里的「首末帧反差」行是合规写法不算命中；参考行中的「本镜首帧=>@」「本镜末帧=>@」handle
+      也不算。
+    weight: 2.0
+    anchors:
+      g1: 文件含完整的「## 起始帧」+「## 结束帧」两个废止块，各带整段静帧画面描述，明显是旧模板未迁移。
+      g3: 残留一个废止块标题但内容已清空，或标题被改成注释仍留在文中。
+      g5: 全文零废止块，首末帧信息只出现在「首末帧反差」bullet 与参考行帧 handle 中。
+    sources:
+    - K2
+    rule_id: forbidden_pattern
+    rule_params:
+      pattern: '##\s*(起始帧|结束帧)'
+      scope: full_file
+      description: 已废止的「## 起始帧」「## 结束帧」静帧块标题不得出现在文件任何位置
+- id: shot_context_lines
+  name_cn: Shot context 必备行
+  weight: 1.0
+  fields:
+  - id: seam_and_spatial_lines_present
+    name_cn: 衔接行与空间核验行在场
+    evaluator: rule
+    judge_instruction_cn: 检查「## Shot context」段必须同时含「衔接」行与「空间核验」行（bullet 形式如「- **衔接**：…」「- **空间核验**：…」均算在场）。衔接行声明本镜与上一镜的接缝方式（硬切/承接末帧/运动承接三态之一）；空间核验行写机位、在画人物位置朝向轨迹、object
+      在框态，说话镜另含说话窗几何。这两行是出片端拼接与空间检查的机读入口，缺任一行即不合格。本字段只判「行在不在场」，行内取值是否规范由衔接三态专项字段判，空间几何对不对归其他维度。
+    weight: 4.0
+    anchors:
+      g1: Shot context 里既无衔接行也无空间核验行，接缝方式与机位几何全靠下游猜。
+      g3: 两行有其一（常见为有衔接、缺空间核验），或行在但键名写偏（如「衔接方式」「空间检查」）导致机读不中。
+      g5: 「衔接」与「空间核验」两行俱在、键名标准、各自带完整内容（三态声明 + 机位/人物位置/说话窗四件套）。
+    sources:
+    - K26
+    - K33
+    rule_id: shot_context_required
+    rule_params:
+      keys:
+      - 衔接
+      - 空间核验
+  - id: seam_mode_wellformed
+    name_cn: 衔接三态标准形与落点互斥
+    evaluator: llm
+    judge_instruction_cn: 检查衔接行取值是否为三态标准形之一，且配套落点互斥齐全：①「硬切（独立首帧…）」——默认态，此时全文不得残留上一镜帧 handle（本镜首帧=>@ / 上镜末3秒=>@）或首帧结构化指令；②「承接
+      shotNN 末帧（首帧＝上一镜末帧）」——须配套三落点：参考行最前「本镜首帧=>@」、Reference uploads 列上一镜末帧、参考行下方「首帧:」结构化指令；③「运动承接 shotNN（延续{动作}）」——须有「上镜末3秒=>@」类运动参考，且动作字段首拍含「延续/已在进行中」措辞。若下一镜将承接本镜，本镜应带尾帧锁定标注。每集首镜必须硬切。旧式裸写「承
+      shotNN」不带三态前缀＝非标准形，判缺陷。
+    weight: 3.0
+    anchors:
+      g1: 衔接值是自由散文（「接上一镜继续」），不属三态任何一形；或标了承接却全文零帧 handle 落点，接缝端无法执行。
+      g3: 三态标准形写对，但落点缺一处（承接镜漏「首帧:」指令、运动承接镜动作首拍没写「延续」），或硬切镜残留一个多余帧 handle。
+      g5: 三态标准形 + 落点完全互斥齐全：硬切零帧字段；承接三落点俱全；运动承接带运动参考与「延续」首拍措辞；首镜为硬切。
+    sources:
+    - K26
+- id: prompt_hard_params
+  name_cn: 视频 prompt 硬参数
+  weight: 1.0
+  fields:
+  - id: prompt_fields_complete
+    name_cn: 必备字段行齐全
+    evaluator: rule
+    judge_instruction_cn: 检查「## 视频 prompt」的 ```text 块内必备字段行是否齐全：角色、情节、场景、镜头、走位、动作、光线 / 色调、渲染样式、负面词、比例、时长（另有 参考、角色识别
+      / 参考图、台词、节奏 等常见行，缺失记次要缺陷）。每字段以「字段名:」行起头。任一必备字段行整体缺失即硬缺陷——生成模型按字段读取，漏一行等于该控制维度完全失控（漏「负面词」＝零负向约束、漏「时长」＝出片长度随机）。字段行在但内容空壳记部分缺陷；字段名错写（「灯光:」代替「光线
+      / 色调:」）视同缺失。
+    weight: 5.0
+    anchors:
+      g1: 缺 2 个及以上必备字段行（如既无负面词也无走位），prompt 结构残缺，多个控制维度失控。
+      g3: 缺 1 个必备字段行，或 11 行全在但有一两行是空壳/字段名不标准需人工对号。
+      g5: 11 个必备字段行全部在场、命名标准，另带参考/角色识别/台词/节奏行，各字段均有实际内容。
+    gate: true
+    gate_min_grade: 3.0
+    sources:
+    - K3
+    rule_id: required_prompt_fields
+    rule_params:
+      fields:
+      - 角色
+      - 情节
+      - 场景
+      - 镜头
+      - 走位
+      - 动作
+      - 光线 / 色调
+      - 渲染样式
+      - 负面词
+      - 比例
+      - 时长
+  - id: prompt_char_count_within_limit
+    name_cn: ≤2000 全字符上限
+    evaluator: rule
+    judge_instruction_cn: 统计「## 视频 prompt」```text 块的全字符数：去掉首尾空白后，中文、ASCII 字母、数字、标点、@符号每个字符各计 1，仅内部空白与换行不计。总数必须 ≤2000，无任何字段豁免（情节字段也全计）。这是生成模型的真实输入上限——超长会被
+      Seedance/即梦截断或直接拒绝，属出片必炸级硬契约。超 2000 即不合格，超得越多越严重：通常意味着负面词/渲染样式堆砌、锁定描述在多字段重复粘贴、情节/动作/镜头跨字段复读未去重。1800–2000 贴顶但合格。
+    weight: 5.0
+    anchors:
+      g1: 全字符数超 2400：负面词写了四五十项、渲染样式大段堆砌、同一段动作描述在情节/动作/镜头三处复读。
+      g3: 全字符数在 2000–2100 之间轻微超顶，去掉一两处冗余罗列即可达标。
+      g5: 全字符数 ≤2000：字段信息密度高、零跨字段复读、负面词收敛在约 22 项标准集规模、渲染样式为核心关键词集。
+    gate: true
+    gate_min_grade: 3.0
+    sources:
+    - K10
+    - ai_video.md 12.4
+    rule_id: char_count_max
+    rule_params:
+      max: 2000
+  - id: shot_duration_in_range
+    name_cn: 时长 4–15 秒
+    evaluator: rule
+    judge_instruction_cn: 检查「时长:」字段值须落在 4–15 秒闭区间。下限 4s 是 Seedance 平台硬下限（小于 4s 直接拒绝生成）；上限 15s 是单镜硬顶（更长必须拆成两镜并加连续性衔接）。时长应写明确秒数（如「13秒」）；缺时长行、写成区间或模糊值（「10-15秒」「约十秒」）、数值越界均不合格。Shot
+      context 的 Duration bullet 与 prompt 内时长行数值应一致，不一致时按 prompt 行判并记一致性缺陷。
+    weight: 4.0
+    anchors:
+      g1: 时长写 3 秒（平台必拒）或 20 秒（超顶未拆镜），或时长行整体缺失。
+      g3: 时长在 4–15s 界内，但 Duration bullet 与 prompt 行数值打架（一处 12s 一处 13秒），或写法含糊需人工换算。
+      g5: 时长为 4–15s 内的明确秒数，与 Duration bullet 一致，且与台词窗/动作时间轴标注自洽（如 13s＝0-7s 台词窗+7-13s 特效窗）。
+    gate: true
+    gate_min_grade: 3.0
+    sources:
+    - K11
+    rule_id: duration_range
+    rule_params:
+      min: 4
+      max: 15
+  - id: aspect_ratio_916
+    name_cn: 比例 9:16
+    evaluator: rule
+    judge_instruction_cn: 检查「比例:」字段必须为 9:16（竖屏短剧默认画幅）。写成 16:9、1:1、4:3 或缺比例行均不合格（除非项目有明确 divergence note，本评测默认没有）。比例错误会让整条视频画幅横竖颠倒——镜头字段里所有竖屏构图假设（竖构图纵深、上下分层、低角度仰拍收顶）全部失效，属整镜作废级错误。写法应为标准记号「9:16」；「9比16」「竖屏」等非标准写法机读会失配，记轻度缺陷。
+    weight: 3.0
+    anchors:
+      g1: 比例写 16:9 或整行缺失，竖屏构图假设全盘作废。
+      g3: 比例语义是竖屏但写法不规范（「9比16」「竖屏 9-16」），机读可能失配。
+      g5: '「比例: 9:16」标准写法，与镜头字段的竖屏构图描述一致。'
+    sources:
+    - K11
+    rule_id: aspect_ratio
+    rule_params:
+      expected: '9:16'
+  - id: no_hex_color_codes
+    name_cn: 零 hex 色值
+    evaluator: rule
+    judge_instruction_cn: '检查全文（尤其「光线 / 色调」「渲染样式」字段）不得出现十六进制颜色码（#RRGGBB 或 #RGB，如 #D4AF37、#fff）。契约要求所有颜色用自然中文色名锁定（如
+      青石灰/夯土黄/日光暖白/法镜莹白），hex 码对视频生成模型无意义，且其出现说明色彩锁定流程被绕过（多为从设计稿直接复制）。命中任一 hex 码即不合格。「#」后跟随的不是 3 位或 6 位十六进制字符的普通标记不算命中。'
+    weight: 2.0
+    anchors:
+      g1: 光线字段用「#C8A96B 鎏金、#2F4F4F 青灰」等多个 hex 码代替中文色名锁定。
+      g3: 全文仅残留一处 hex（多为旧稿复制残留），其余色彩均为中文色名。
+      g5: 零 hex，色彩全部以自然中文色名表达，并与场景/角色锁定色名一致（如「青石灰/夯土黄/日光暖白…锁定色」）。
+    sources:
+    - K9
+    rule_id: no_hex_colors
+    rule_params: {}
+- id: dialogue_voice_contract
+  name_cn: 台词与配音契约
+  weight: 1.0
+  fields:
+  - id: dialogue_field_free_of_subtitle_styling
+    name_cn: 台词字段零字幕样式
+    evaluator: rule
+    judge_instruction_cn: 检查「台词:」字段内零字幕样式信息：不得出现「字幕/内嵌硬字幕/后期软字幕/字体/字号/位置/颜色/鎏金字幕样式」等任何字幕呈现描述，也不得使用旧标签「台词 / 字幕:」。台词字段只承载：说话人+类型标注+台词正文+口型指令；字幕一律由用户后期添加。凡坐在台词槽里的文字都可能被生成模型烧成画面字幕，样式描述混入＝出片必炸级。豁免：负面词字段里的「字幕/subtitles」是合规抑制词不算命中；台词字段头部的模板固定括注「（画面不显示文字、仅供口型与配音参考）」亦不算。
+    weight: 5.0
+    anchors:
+      g1: 台词字段写「台词以内嵌硬字幕显示、白色宋体40号底部居中」，整句字幕样式混入，必被烧进画面。
+      g3: 无样式描述但残留旧标签「台词 / 字幕:」，或括注里冒出「后期软字幕」一词。
+      g5: 台词字段纯净：仅「角色〔类型〕：台词正文」逐条 + 标准括注，零字幕相关词。
+    gate: true
+    gate_min_grade: 3.0
+    sources:
+    - K4
+    - ai_video.md 12.4
+    rule_id: forbidden_pattern
+    rule_params:
+      pattern: 字幕|字体|字号|[Ss]ubtitles?
+      scope: dialogue_field
+      description: 台词字段内不得出现任何字幕样式/呈现信息或旧「台词 / 字幕」标签
+  - id: dialogue_line_format_valid
+    name_cn: 台词行格式与口型标注
+    evaluator: llm
+    judge_instruction_cn: '检查台词字段的行格式契约：① 每条台词写成「角色〔类型〕：台词正文」，类型∈对白/正常台词/内心独白/旁白/OS/系统等；② 内心独白/OS 必须带「不对口型/嘴唇不动」类口型指令——内心独白＝嘴不动是硬约定；③
+      台词槽内只许台词正文：舞台提示、环境音说明、旁注（「本镜无台词·默剧静默拍」「环境音：风声」）一律不得写进台词字段，会被烧成字幕；④ 静默镜必须显式写「台词: 无」，不得留空或塞说明文字；⑤ 系统台词须标女声类标注（如〔女声·系统提示音·不对口型〕）。字段头部统一括注「（画面不显示文字、仅供口型与配音参考）」为模板固定件，合规。'
+    weight: 4.0
+    anchors:
+      g1: 台词行无类型标注、内心独白没写嘴不动，或台词槽里塞了「（本镜无台词·环境音：虫鸣鸟叫）」整句说明文字。
+      g3: 类型标注齐全但 OS 句漏了嘴不动指令，或静默镜写成「台词:（无）」等不规范形，或系统句没标女声。
+      g5: '每条「角色〔类型〕：正文」标准形、OS/内心独白带嘴不动指令、系统句带女声标注、静默镜是干净的「台词: 无」。'
+    sources:
+    - K5
+    - K21
+    - K22b
+  - id: voice_block_present_for_dialogue
+    name_cn: 有台词必有配音块
+    evaluator: rule
+    judge_instruction_cn: 有台词（台词字段非「无」）的 shot 必须带「## 台词配音 prompt」段，且每个说话人一块，块内含：角色、音色（锁定 voice_id）、情绪、语速、类型、台词、时长目标
+      七要素（其中 音色/类型/台词/时长目标 四项为硬核，缺任一即不合格）。本管线音视频解耦生产：视频不带自动 TTS，配音块缺失＝该镜成片是哑片，属出片必炸级。内心独白（OS）也是说话镜，同样必须有配音块并锁 voice_id，绝不允许静默交付。配音块内台词正文须与视频
+      prompt 台词字段逐句一致，不一致记缺陷。
+    weight: 5.0
+    anchors:
+      g1: 有两句对白的镜完全没有「## 台词配音 prompt」段，或有段但缺台词正文与时长目标，成片必哑。
+      g3: 配音块在、四项硬核俱全，但缺情绪/语速要素，或两个说话人挤在一块未拆分，或块内台词与视频 prompt 有一字之差。
+      g5: 每说话人一块、七要素齐全、音色带锁定 voice_id、台词与视频 prompt 逐句一致、时长目标与镜内台词窗（如 0–7s）吻合。
+    applies_when: has_dialogue
+    gate: true
+    gate_min_grade: 3.0
+    sources:
+    - K7
+    - ai_video.md 12.4-H
+    rule_id: voice_block_when_dialogue
+    rule_params: {}
+  - id: voice_suppression_matches_dialogue_state
+    name_cn: 人声抑制与台词状态匹配
+    evaluator: llm
+    judge_instruction_cn: '检查人声抑制负面词与本镜台词状态是否匹配，方向搞反都是缺陷：① 静默镜（台词: 无）的负面词必须含人声抑制组（人声/配音/旁白/念白/念出角色名/no voiceover
+      之类至少一组）——否则模型会把角色字段里的名字念成画外音；② 有台词镜严禁整体人声抑制负面词（生成器正是从台词字段生成配音，加了会把台词一并压哑；针对具体噪声的「画外他人笑声」类可以）；③ 视频 prompt 正文（情节/动作/走位/镜头/节奏）不得有具名或具体人声描写——「画外一声朗笑」「某某大笑」「哈哈」等会被烧成音轨；泛化环境动静（台下哗然/惊叹声四起/风声）合规。'
+    weight: 3.0
+    anchors:
+      g1: 静默镜零人声抑制词且情节里写「云鹤朗笑一声」；或有台词镜挂了「no speech/不生成人声」把台词整体压哑。
+      g3: 抑制方向正确但组不全（静默镜负面词只有「旁白」一个词），或正文残留一处「哈哈」拟声词未清。
+      g5: 静默镜带完整人声抑制组、有台词镜零整体抑制词、正文人声描写全部泛化为环境动静，三侧方向全对。
+    sources:
+    - K22
+    - ai_video.md 5a
+- id: reference_locking
+  name_cn: 参考与锁定一致性
+  weight: 1.0
+  fields:
+  - id: locked_descriptor_byte_identical
+    name_cn: 锁定描述符逐字节一致
+    evaluator: rule
+    judge_instruction_cn: 对照 grounding 提供的角色卡，检查每个具名锁定角色在「角色:」字段里的锁定描述符/识别标签是否逐字节一致——一字不改、一符不增删、标点不换。锁定描述符是跨镜跨集人脸与造型一致性的唯一机制，任何改写（同义替换、删短语、加形容词、调语序）都会造成生成漂移；同角色相邻镜变景别时造型字段也须与卡一致零变化。豁免：明确标注「即兴生成不锁脸」的一次性临时角色（群像龙套）。另注意描述符不应含文字五官/痣疤锚——脸由选角参考图承载，文字五官反而致漂移。
+    weight: 4.0
+    anchors:
+      g1: 主角描述符被自由改写：语序调换+新加两个形容词+删了一个短语，或某锁定角色干脆没贴描述符。
+      g3: 描述符主体与卡一致但有一两处标点/用词微差（「、」变「，」、「灰白道袍」变「灰白色道袍」），属复制走样。
+      g5: 所有锁定角色描述符与角色卡逐字节相同，临时角色显式标「即兴生成不锁脸」，零文字五官描述。
+    sources:
+    - K8
+    - K18
+    rule_id: locked_descriptor_byte_match
+    rule_params: {}
+  - id: ref_line_format_clean
+    name_cn: 参考行格式与跨镜 meta 洁净
+    evaluator: rule
+    judge_instruction_cn: 检查视频 prompt ```text 正文的参考行格式与洁净度：① 参考行每项须为「{名}=>@」收尾——「@」后带数字的旧编号式（=>@1、=>@2）已废止；② 声音项（「{角色}声音=>」）不得出现在参考行，配音一律走台词配音块；③
+      旧「参考分配:」独立行已废止；④ ```text 正文不得残留跨镜/工作流 meta：「承接 shotNN」「供下镜承接」「同场景跨镜一致」「follow-up 编号」等——生成模型只读单镜，这些字样白占字数且可能被当正向文本渲染。豁免：以上字样写在「##
+      Shot context」段内是合规的，只检查代码块内部。命中任一即不合格。
+    weight: 2.0
+    anchors:
+      g1: 参考行仍是「c16=>@1, 云鹤声音=>@2」编号+声音混排，且情节里带「承接 shot02、供下镜承接」多处 meta。
+      g3: 参考行格式正确，但正文残留一处「（follow-up 110）」或「同场景跨镜一致」括注未清。
+      g5: 参考行全部「{名}=>@」无编号无声音项，代码块内零跨镜/工作流 meta，衔接与沿革信息只出现在 Shot context。
+    sources:
+    - K27
+    - K26
+    rule_id: forbidden_pattern
+    rule_params:
+      pattern: =>@\s*\d|声音\s*=>|参考分配|承接\s*shot|供下镜承接|同场景跨镜一致|follow-?up\s*\d
+      scope: prompt_body
+      description: prompt 正文不得残留旧编号参考式、声音参考项、参考分配行及跨镜/工作流 meta 字样
+  - id: ref_visibility_two_way_consistent
+    name_cn: ref 与上画可见双向一致
+    evaluator: llm
+    judge_instruction_cn: 对每个有锁定卡的可上画元素（角色、道具/法器、场景 plate、系统 UI 等非实体资产）做双向核验：① 本镜实际上画可见的元素→参考行必须带其「{名}=>@」ref、正文贴其锁定描述；多人同框的镜须有「角色识别
+      / 参考图」绑定行，把参考图↔画面位置↔识别标签绑死（防串脸）；系统 UI 上画同样要带其 ref。② 本镜明确不上画的元素（情节/走位写明 藏衣内/不外露/不掏出/画外）→禁带 ref、禁写完整外观描述，只可点名提及（如「衣内玉佩骤热·不外露」）——带了
+      ref 或外观句，模型会把它凭空画出来。依据 Shot context 与情节/走位判断「该不该上画」，再对照参考行两向核对。
+    weight: 3.0
+    anchors:
+      g1: 情节写玉佩藏衣内不外露，参考行却带「玉佩=>@」+完整外观句，必被凭空画出；或上画的系统对话框漏带「系统=>@」。
+      g3: 上画元素 ref 与描述齐全，但多人同框缺一条参考图↔画面位置绑定行，留有串脸风险。
+      g5: 上画元素 ref+锁定描述+绑定行三件套齐全，不上画元素零 ref 零外观句仅点名，参考行与画面内容严格互为镜像。
+    sources:
+    - K20
+    - K8b
+- id: forbidden_wording
+  name_cn: 禁用措辞与负面词落点
+  weight: 1.0
+  fields:
+  - id: subtitle_ban_double_anchor
+    name_cn: 无字幕铁律双落点与负面词基线
+    evaluator: llm
+    judge_instruction_cn: 检查无字幕铁律的两个落点与负面词基线：① 渲染样式字段须含「全程无字幕/画面不烧任何字幕文字」类 directive；② 负面词字段须含「字幕/subtitles」类抑制词——仅有「画面文字」不够；两处缺一即不合格。多角色口型对白镜（≥2
+      句对口型正常台词）字幕烧录风险显著更高，应按高风险档加强：渲染样式前置强化句（如「【全程绝对无字幕·画面不烧任何字幕/台词文字/caption】」）+ 负面词扩展（中文字幕/对白文字/台词文字/字幕条/caption/text
+      overlay）。③ 同时查负面词基线是否明显残缺：人脸变形/五官漂移/畸形肢体/现代服饰/画面文字等基础组只剩三五个词即为缺陷。
+    weight: 4.0
+    anchors:
+      g1: 渲染样式无任何无字幕 directive、负面词只有「画面文字」没有「字幕/subtitles」，且是多角色对白镜裸奔。
+      g3: 双落点都在，但多角色对白镜未按高风险档加强，或负面词基线缺整个现代服饰组。
+      g5: 渲染样式带无字幕句、负面词含字幕/subtitles 全组、对白镜按高风险档前置强化、基线负面词完整覆盖人脸/肢体/服饰/文字。
+    sources:
+    - K15
+    - K19
+  - id: no_literalization_or_sensitive_words
+    name_cn: 字面化高危词与审核敏感词零命中
+    evaluator: llm
+    judge_instruction_cn: 扫描视频 prompt 正文的两类高危措辞：① 字面化比喻词（会被模型渲染成实体/怪异动画）——光效织物组：「光帘/光纱/光幔罩身、漫落披上盖住」会被画成真布罩头，合规写法是「光柱/光束/照射/斜照而下」；眼部发光组：「瞳泛金/眼内锐光/瞳孔发光」正面描写即命中；表演生理组与反复态：「红一阵白一阵/面如死灰/心如刀绞」及「一阵…一阵/时…时…/忽…忽…/反复/交替」会被做成高频循环动画，应改单向一次性生理白描。②
+      平台审核敏感词——武器特写（刀/剑/刃口+特写停留）、真实军事地标（长城/烽燧/关隘）、真人演员/品牌/受版权 IP 名、真实地名误植（如「包头」作头巾讲）。豁免：负面词行内出现是抑制用法不算；「## 小说原文」段文学原文可保留；带否定前缀的写法（「不忽冷忽暖」「绝不来回反复」）不算命中。
+    weight: 3.0
+    anchors:
+      g1: 动作字段写「金色光帘漫落罩住全身」+「脸上红一阵白一阵」，两个已知必炸词组同镜齐上。
+      g3: 正面描写无直接命中，但残留一处贴边措辞（如「剑上寒光一闪」带武器特写倾向）且未加兜底负向。
+      g5: 正文零字面化高危词零敏感词：光效全用光学词并注「纯光束照射·非织物」，情绪变化写成带时间轴的单向过程并带兜底负向，武器/地名全部泛化。
+    sources:
+    - K35
+    - K13
+    - K17

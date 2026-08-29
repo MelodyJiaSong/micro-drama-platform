@@ -1,0 +1,45 @@
+dimension_id: pacing
+name_cn: 时长节奏
+description_cn: 评该镜时长是否 make sense：台词/独白在该秒数里念得完（按角色声口分档算语速）、动作 beats 演得开不赶、无干站注水拖长、时长 4–15s 且按戏剧 beat 取值、台词窗与动作窗时间轴划分完整自洽、配音块时长目标与总时长自洽、镜内换气口与接缝端台词静默到位。只判单镜；整集节奏（90–120s、15s
+  一反转等）归 rollup 层。
+subcategories:
+- id: speech_speed
+  name_cn: 语速可念性
+  weight: 1.0
+  fields:
+  - id: cps_hard_cap
+    name_cn: 语速硬上限 5 字/秒
+    evaluator: rule
+    judge_instruction_cn: 对每个台词配音块，数其「台词」行的汉字字数（标点不计），除以该块「时长目标」的秒数，得字/秒。任何一块 > 5 字/秒即不合格——中文口语的物理极限约 5 字/秒，超了配音念不完、必吞字或音画错位。「时长目标」若带窗口括注（如「7秒（0–7s）」）取秒数数字部分。例：28
+      字台词配 7 秒 = 4.0 通过；20 字配 3 秒 ≈ 6.7 不通过。多块各自独立判，任一超即整项不过。
+    weight: 5.0
+    anchors:
+      g1: 有配音块字/秒 > 6（如 20 字塞进 3 秒），台词物理上念不完，成片必吞字或砍句。
+      g3: 全部块 ≤ 5 但有块压在 4.8–5.0 边线（如 34 字配 7 秒），句末感叹或换气一吃就超。
+      g5: 每块都 ≤ 4.5 字/秒且留有余量，慢嗓句更低，没有任何一块贴上限。
+    applies_when: has_dialogue
+    gate: true
+    gate_min_grade: 3.0
+    sources:
+    - PA1
+    rule_id: dialogue_speed_max
+    rule_params:
+      max_cps: 5
+- id: timeline_consistency
+  name_cn: 时间轴自洽
+  weight: 1.0
+  fields:
+  - id: voice_targets_sum_fit
+    name_cn: 配音时长目标自洽
+    evaluator: llm
+    judge_instruction_cn: 把所有台词配音块的「时长目标」相加，与「时长:」总秒数比：之和必须 ≤ 总时长，且应给转场/停顿/无台词动作留余量（有纯动作或特效窗的镜，配音窗 + 无声窗合计应 = 总时长）。同时核对每块时长目标与动作时间轴上的台词窗一致——如配音块写
+      7 秒、Duration 写「0–7s 进言窗」即一致。反例：总时长 10 秒，两块配音目标 6+5=11 秒，念不完且无停顿；或配音块写 5 秒但动作轴只给了 0–3s 说话窗。正例：13 秒镜，配音 7 秒对应
+      0–7s 台词窗、7–13s 为无台词特效窗。
+    weight: 4.0
+    anchors:
+      g1: 配音时长目标之和超过总时长（如 11s > 10s），或与台词窗直接矛盾（5 秒配音塞 3 秒窗），成片必砍词或音画错位。
+      g3: 之和恰好等于总时长、零余量，转场停顿没处放；或某块目标与窗口有 1 秒内小出入。
+      g5: 之和 ≤ 总时长且留 0.5 秒以上余量，每块目标与动作轴台词窗逐一对得上。
+    applies_when: has_dialogue
+    sources:
+    - PA4

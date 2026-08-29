@@ -4,8 +4,14 @@
 PY  := python
 PIP := pip
 NPM := npm
+VENV := .venv
 
-.PHONY: install install-backend install-frontend run run-prod run-backend run-frontend build-frontend test test-backend test-frontend e2e boot-smoke clean
+# Interpreter inside the venv. Resolved by the shell when a recipe runs, not
+# by make at parse time, so it is still correct when the venv was created
+# earlier in the same run. Windows venvs use Scripts/, POSIX ones use bin/.
+VENV_PY = $$(if [ -f "$(VENV)/Scripts/python.exe" ]; then echo "$(VENV)/Scripts/python.exe"; else echo "$(VENV)/bin/python"; fi)
+
+.PHONY: venv create-venv install install-backend install-frontend run run-prod run-backend run-frontend build-frontend test test-backend test-frontend e2e boot-smoke clean
 
 install: install-backend install-frontend
 
@@ -19,8 +25,19 @@ run: run-backend
 
 run-prod: build-frontend run-backend
 
-run-backend:
-	$(PY) -m apps.api.main
+# Use $(VENV); create and provision it first if it is missing.
+venv:
+	@[ -f "$(VENV)/Scripts/python.exe" ] || [ -f "$(VENV)/bin/python" ] || $(MAKE) create-venv
+
+create-venv:
+	@echo ">> No $(VENV) found - creating it"
+	$(PY) -m venv "$(VENV)"
+	@echo ">> Installing requirements into $(VENV)"
+	"$(VENV_PY)" -m pip install --upgrade pip
+	"$(VENV_PY)" -m pip install -r requirements.txt
+
+run-backend: venv
+	"$(VENV_PY)" -m apps.api.main
 
 run-frontend:
 	cd apps/ui && $(NPM) run dev

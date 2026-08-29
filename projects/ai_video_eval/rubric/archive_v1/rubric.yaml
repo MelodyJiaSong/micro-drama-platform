@@ -1,0 +1,30 @@
+version: 1.0.0-draft
+dimensions:
+- groundedness
+- consistency
+- faithfulness
+- renderability
+- dialogue_quality
+- cinematography
+- pacing
+- format_compliance
+- dramatic_effectiveness
+dimension_weights:
+  groundedness: 1.2
+  consistency: 1.2
+  faithfulness: 1.1
+  renderability: 1.2
+  dialogue_quality: 1.0
+  cinematography: 1.0
+  pacing: 0.8
+  format_compliance: 0.8
+  dramatic_effectiveness: 1.0
+verdict:
+  pass_min: 75.0
+  conditional_min: 60.0
+  inconclusive_share_max: 0.25
+  severity:
+    blocker_max: 1.0
+    major_max: 2.0
+    minor_max: 3.0
+  rollup_fail_share_fail: 0.2
