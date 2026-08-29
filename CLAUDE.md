@@ -51,7 +51,7 @@ spec_coding/
 │   └── settings.local.json
 ├── specs/
 │   └── {task_type}/{task_name}/
-│       ├── user_input/{raw_prompt.md, revised_prompt.md, follow_ups/NNN-{date}-{slug}.md}
+│       ├── user_input/{raw_prompt.md, revised_prompt.md, follow_ups/{YYYYMM}.md}
 │       ├── interview/{qa.md, promoted.md}
 │       ├── findings/{angle-*.md, dossier.md, promoted.md}
 │       ├── final_specs/{spec.md, promoted.md}
@@ -224,24 +224,22 @@ The triage is itself a state-surface discipline: every rule the user gives must 
 Once a spec-driven project exists, follow-up chat may contain additional intent for it. Triage every new prompt before doing anything else.
 
 1. **Triage.** Casual chat / general question with no spec-driven impact → answer normally, no persistence. Real instruction → classify which project. **If ambiguous (project X, Y, or none), ASK the user** — do not silently pick.
-2. **Persist** at `specs/{type}/{name}/user_input/follow_ups/NNN-{YYYYMMDD-HHmmss}-{slug}.md` (NNN zero-padded, sequential). Contents: abstracted instruction (drop chitchat); prefix with `# Follow-up draft NNN — {YYYY-MM-DD}` + a one-line summary. An OPTIONAL YAML frontmatter block may declare routing hints (all fields optional):
-   ```yaml
-   ---
-   target_stage: 1 | 2 | 3 | 4 | 5 | 6        # which stage this instruction primarily affects
-   target_artifacts:                            # specific files the walk should examine first
-     - validation/security.md
-     - final_specs/spec.md
-   severity: low | medium | high                # how invasive the patch is allowed to be
-   ---
+2. **Persist** by APPENDING to the current month's log at `specs/{type}/{name}/user_input/follow_ups/{YYYYMM}.md` (e.g. `202608.md`). Never create a per-follow-up file; a new file is started ONLY when the month rolls over. Append a section headed `## NNN — {YYYY-MM-DD HH:mm:ss} — {slug}` (NNN zero-padded, sequential per project, continuing across months), preceded by a `---` rule. Contents: abstracted instruction (drop chitchat) + a one-line summary. Body headings start at `###` so they nest under the section. An OPTIONAL routing-hint block may follow the header as a blockquote — YAML frontmatter cannot repeat inside a combined file (all fields optional):
    ```
-   Frontmatter is a hint, not a contract — the downstream walk still inspects every artifact. Omit the block entirely if no routing hint is needed.
-3. **Regenerate `revised_prompt.md`** = `raw_prompt.md` + every `follow_ups/*.md` in numerical order. No confirmation needed.
+   > target_stage: 1 | 2 | 3 | 4 | 5 | 6        # which stage this instruction primarily affects
+   > target_artifacts:                            # specific files the walk should examine first
+   >   - validation/security.md
+   >   - final_specs/spec.md
+   > severity: low | medium | high                # how invasive the patch is allowed to be
+   ```
+   The routing-hint block is a hint, not a contract — the downstream walk still inspects every artifact. Omit the block entirely if no routing hint is needed.
+3. **Regenerate `revised_prompt.md`** = `raw_prompt.md` + every `follow_ups/*.md` in filename (chronological) order, and within each monthly log every `## NNN` section in order. No confirmation needed.
 4. **Walk downstream artifacts** in order: `interview/qa.md` → `findings/dossier.md` + per-angle → `final_specs/spec.md` → `validation/strategy.md` + per-level → generated outputs under `projects/` or `ai_videos/`.
 5. **Auto-update affected sections in place.** Smallest change that resolves the conflict / fills the gap. Surgical only; no whole-file regen. Inline markers (`<!-- auto-updated by follow-up NNN -->`) are NOT added by default — ask the user if a particular update is invasive enough to warrant one.
 6. **Append `changelog.md`** at `specs/{type}/{name}/changelog.md`:
    ```markdown
    ## Follow-up NNN — {YYYY-MM-DD HH:mm:ss}
-   Source: user_input/follow_ups/NNN-{slug}.md
+   Source: user_input/follow_ups/{YYYYMM}.md - section NNN
    Summary: {one line}
 
    Auto-updated:
