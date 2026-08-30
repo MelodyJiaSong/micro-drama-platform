@@ -16,11 +16,18 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-SHOTS = REPO / "ai_videos" / "xianjian_yi_mv" / "5_6_分镜与prompt" / "shots"
+DEFAULT_PROJECT = "xianjian_yi_mv"
 
 
-def _frames_dir(shot_id: str) -> Path:
-    frames = SHOTS / shot_id / "whitemodel" / "frames"
+def shots_dir(project: str) -> Path:
+    return REPO / "ai_videos" / project / "5_6_分镜与prompt" / "shots"
+
+
+SHOTS = shots_dir(DEFAULT_PROJECT)
+
+
+def _frames_dir(shot_id: str, project: str = DEFAULT_PROJECT) -> Path:
+    frames = shots_dir(project) / shot_id / "whitemodel" / "frames"
     if not frames.is_dir():
         raise SystemExit(f"找不到 {frames}\n先在 Blender 里 Ctrl+F12 渲染动画。")
     if not sorted(frames.glob("*.png")):
@@ -54,9 +61,11 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("shot_id", help="例如 shot12")
     parser.add_argument("--fps", type=int, default=24)
+    parser.add_argument("--project", default=DEFAULT_PROJECT,
+                        help="ai_videos/ 下的项目名，例如 duikang_shangzeng")
     args = parser.parse_args()
 
-    frames = _frames_dir(args.shot_id)
+    frames = _frames_dir(args.shot_id, args.project)
     dst = frames.parent / f"{args.shot_id}_orbit_whitemodel.mp4"
     _encode(frames, dst, args.fps)
 

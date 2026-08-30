@@ -1,8 +1,9 @@
 """Diff local scan against the manifest — what to upload, download, or drop.
 
-Everything is decided from sha256, so a file that was renamed locally is an
-`add` + `remove` in the manifest but needs no transfer: its content is already
-in the bucket under the same key.
+Change is decided from sha256, never mtime. A file that only moved is detected
+by matching its digest against a manifest entry at another path: that becomes a
+server-side copy (`renames`), not a re-upload, so moving a 300 MB take costs no
+bandwidth.
 """
 from __future__ import annotations
 
@@ -20,10 +21,12 @@ class SyncPlan:
     download: dict[str, AssetEntry]
     unchanged: int
     drifted: dict[str, tuple[str, str]]
+    renames: dict[str, str]
 
     @property
     def upload_bytes(self) -> int:
-        return sum(e.size for e in self.upload.values())
+        """Bytes actually leaving this machine — renames move server-side."""
+        return sum(e.size for rel, e in self.upload.items() if rel not in self.renames)
 
     @property
     def download_bytes(self) -> int:
@@ -44,12 +47,16 @@ def build(local: dict[str, AssetEntry], manifest: Manifest) -> SyncPlan:
         else:
             unchanged += 1
     download = {rel: e for rel, e in manifest.assets.items() if rel not in local}
-    return SyncPlan(upload=upload, download=download, unchanged=unchanged, drifted=drifted)
+    gone = {manifest.assets[rel].sha256: rel for rel in download}
+    renames = {rel: gone[e.sha256] for rel, e in upload.items() if e.sha256 in gone}
+    return SyncPlan(
+        upload=upload, download=download, unchanged=unchanged, drifted=drifted, renames=renames
+    )
 
 
 def unreferenced_keys(manifest: Manifest, remote_keys: list[str]) -> list[str]:
-    live = {entry.key for entry in manifest.assets.values()}
-    return sorted(k for k in remote_keys if k not in live)
+    """Bucket keys the manifest no longer names — deleted or renamed-away files."""
+    return sorted(k for k in remote_keys if k not in manifest.assets)
 
 
 def human_bytes(n: int) -> str:

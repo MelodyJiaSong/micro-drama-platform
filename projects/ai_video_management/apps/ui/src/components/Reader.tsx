@@ -49,6 +49,9 @@ const IMAGE_EXTS = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"]);
 const VIDEO_EXTS = new Set([".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v"]);
 const AUDIO_EXTS = new Set([".mp3", ".wav", ".m4a", ".aac", ".ogg", ".flac"]);
 const PDF_EXTS = new Set([".pdf"]);
+// White-model meshes handed back by image-to-3D — previewed in-browser so the user
+// can judge a mesh (thin structures, silhouette) without opening Blender.
+const MODEL_EXTS = new Set([".glb", ".gltf"]);
 const SHOT_MD_RE = /^ai_videos\/[^_][^/]*\/(?:episodes\/ep\d+\/)?prompts\/shot\d+\/shot\d+\.md$/;
 
 export interface ReaderProps {
@@ -97,7 +100,9 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
   const isMediaVideo = VIDEO_EXTS.has(ext);
   const isMediaAudio = AUDIO_EXTS.has(ext);
   const isMediaPdf = PDF_EXTS.has(ext);
-  const isMediaOnly = isMediaVideo || isMediaImage || isMediaAudio || isMediaPdf;
+  const isMediaModel = MODEL_EXTS.has(ext);
+  const isMediaOnly =
+    isMediaVideo || isMediaImage || isMediaAudio || isMediaPdf || isMediaModel;
 
   const load = useCallback(async () => {
     if (!path) return;
@@ -417,6 +422,7 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
   const isVideo = isMediaVideo;
   const isAudio = isMediaAudio;
   const isPdf = isMediaPdf;
+  const isModel = isMediaModel;
   const isMarkdown = ext === ".md";
   const isJsonl = ext === ".jsonl";
   const isCode = ext === ".json" || ext === ".yaml" || ext === ".yml";
@@ -630,6 +636,37 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
           ) : isMediaImage ? (
             <div className="media-view">
               <img src={mediaUrl(path)} alt={filename} />
+              {!isDeletedFile ? (
+                <div className="reader-media-actions">
+                  <button type="button" className="reader-media-archive-btn"
+                    onClick={onArchiveToggle} disabled={mediaActionsBusy}
+                    aria-label={isArchivedFile ? `Unarchive ${filename}` : `Archive ${filename}`}>
+                    {archiveLabel}
+                  </button>
+                  <button type="button" className="reader-media-delete-btn"
+                    onClick={onDeleteClick} disabled={mediaActionsBusy}
+                    aria-label={`Delete ${filename}`}>
+                    {deleteLabel}
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          ) : isModel ? (
+            <div className="media-view model-view">
+              {/* @google/model-viewer custom element; see main.tsx for the import. */}
+              <model-viewer
+                src={mediaUrl(path)}
+                alt={filename}
+                camera-controls
+                touch-action="pan-y"
+                shadow-intensity="1"
+                exposure="1"
+                environment-image="neutral"
+                ar-status="not-presenting"
+              />
+              <p className="muted model-view-hint">
+                拖动旋转 · 滚轮缩放 · 右键平移。白模只承载几何，材质与长相由出片模型提供。
+              </p>
               {!isDeletedFile ? (
                 <div className="reader-media-actions">
                   <button type="button" className="reader-media-archive-btn"

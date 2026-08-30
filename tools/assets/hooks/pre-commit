@@ -1,0 +1,13 @@
+#!/bin/sh
+# assets_sync: put the media bytes in R2 and the refreshed index in THIS commit.
+#
+# The index (ai_videos/assets.json) is tracked; the bytes are not. Uploading
+# here — rather than at push time — is the only hook point where the refreshed
+# index can still be staged into the commit it describes, so a plain
+# `git commit && git push` ships bytes and index together.
+#
+# Skip with ASSETS_SYNC_AUTO_PUSH=0, or `git commit --no-verify`.
+# Offline is not an error: --soft-fail warns, and pre-push still guards.
+[ "$ASSETS_SYNC_AUTO_PUSH" = "0" ] && exit 0
+"@PYTHON@" tools/assets_sync.py push --stage-manifest --soft-fail
+exit 0

@@ -4448,3 +4448,149 @@ Auto-updated:
 - projects/ai_video_management/tests/test_pdf_preview.py — 新增 5 个用例（media 非 text 白名单、叶子类型、inline、video 仍 attachment、RFC 5987 中文名）。
 
 验证: 对抗熵增 两个 PDF 在 `/api/tree` 为 `type=pdf`；`/api/media` 返回 200 `application/pdf` `inline; filename="_.pdf"; filename*=UTF-8''…` 且首字节为 `%PDF-`；video 仍为 attachment；`tsc -b` 0 + `npm run build` 通过；全量 backend 套件 31 failed（与基线持平，零新增）。
+
+
+## Follow-up 159 — 2026-08-30
+Source: user_input/follow_ups/202608.md - section 159
+Summary: 导入功能新增 object 型道具的 `v{N}_{视角}` 子目录路由；脚本产物目录排除出重命名扫描；新增 drama_layout.props_dir()。
+
+Auto-updated:
+- libs/infrastructure/writers/downloads__writer.py — 新增 `_PROP_VIEW_PREFIX` /
+  `GENERATED_DIR_NAMES` / `_prop_view_token` / `_match_prop_view` / `_match_view_any_prop`；
+  move 循环在 prop 命中后向下细化到 view 目录、`_classify` 落空时兜底按视角词全剧唯一匹配；
+  `prop_view` 并入 scene_plate 的覆盖语义；rename 调用追加 GENERATED_DIR_NAMES 排除；
+  props 目录改用 drama_layout.props_dir()
+- libs/common/drama_layout.py — 新增 `props_dir()`（flat root 或 `2_世界观人设/`），
+  取代 `characters_dir(...).parent / "props"` 的脆弱推导
+- tests/test_downloads_import_prop_views.py — 【新增】8 条：视角词解析、四视角各自落位、
+  截断文件名仍能路由、重跑只覆盖自己那一张、无视角词的 prop 根资产留在根、
+  跨 prop 同名视角词判歧义不落盘、第二个 object 的视角共存、脚本产物目录保住契约文件名
+
+测试：新增 8 条全绿。全量 `pytest tests/` 31 红 228 绿——对同一组文件做 stash 基线比对，
+改动前后红的条目与数量完全一致（downloads 相关 11 条 + seam/sub_type/api_security/
+tree_walker/previz 20 条均为既有失败），本次改动**零回归**。
+
+已知未修（记录以免重复排查）:
+- tests/test_downloads_import_props.py 3 条 prop 多形态变体测试改动前即红，
+  需导入端 + MediaRenamer 双端变体感知；view 子目录方案与该分支不相干，未触碰
+
+
+## Follow-up 160 — 2026-08-30
+Source: ai_video follow-up duikang_shangzeng/019
+Summary: 导入端支持「一个主体目录内多视图共存」：按视图键命名、重导只覆盖同名；重命名扫描对多视图目录放行。
+
+Auto-updated:
+- libs/infrastructure/writers/downloads__writer.py — 新增 `_view_key()`（取下载名首个
+  空白分隔词、须以目录 token 开头、去浏览器重名后缀）；scene/prop 命中改为按视图键命名，
+  并用 `_clear_named_media` 只覆盖同名那一张（不再清空整个目录）
+- libs/infrastructure/writers/media__writer.py — 新增 `_folder_tokens()` 与
+  `_SINGLE_IMAGE_FOLDER`；多视图主体目录里以目录 token 开头的文件名不再被塌成
+  `{目录}{N}.ext`；单图目录（`v{N}_…` / `bg{N}_{方位}_{描述}`）行为不变
+- tests/test_downloads_import_scene_views.py — 【新增】6 条：视图键解析、多视图共存、
+  重导只覆盖同名、重命名不动视图名、更长的主体 token 优先、同目录 md 不受影响
+
+顺带修复: tests/test_downloads_import_props.py 的 3 条「同一 prop 多形态变体互相覆盖」
+长期失败测试现已通过——与本次是同一个机制
+
+测试：baseline 31 红 228 绿 → 现 28 红 237 绿。失败集是 baseline 的子集，零回归；
+新增 6 条全绿，修复 3 条
+
+
+## Follow-up 161 — 2026-08-30
+Source: ai_video follow-up duikang_shangzeng/023
+Summary: 修复主体目录被当单图 plate 清空的导入缺陷；新增 `bg{N}.{M}` 路由键与 scene_subject 落位。
+
+Auto-updated:
+- libs/infrastructure/writers/downloads__writer.py — `_SUBJECT_FOLDER`（两段形状）
+  ∧ `_is_subject_folder`（含 `{目录名}.md`）双信号判据；`_SUBJECT_KEY = ^bg(\d+)\.(\d+)`；
+  `_match_subject_any_scene`（`{N}` 歧义时报 unmatched 不猜）；新 kind `scene_subject`
+  按视图键命名、只覆盖同名；plate 扫描跳过主体目录
+- tests/test_downloads_import_scene_subjects.py — 【新增】7 条，含实地失败复现
+  （三张导进去只活一张）与「两段 plate 无 md / 三段 plate 有 md」的判据边界
+
+测试：baseline 31 红 228 绿 → 28 红 244 绿。失败集为 baseline 严格子集，零回归；
+新增 16 条全绿，修复 3 条历史失败
+
+
+## Follow-up 162 — 2026-08-30
+Source: ai_video follow-up duikang_shangzeng/024
+Summary: 修复 scene_subject 路由键锚定开头导致的落名错误；落盘改为只用键命名。
+
+Auto-updated:
+- libs/infrastructure/writers/downloads__writer.py — `_SUBJECT_KEY` 由 `^bg(\d+)\.(\d+)`
+  改为无锚定并用 `re.search`；`scene_subject` 的落盘名由「下载文本提取」改为
+  「只用键 `bg{N}.{M}`」，对工具前缀/时间戳后缀免疫
+- tests/test_downloads_import_scene_subjects.py — 用例改用**真实下载名**
+  `ElevenLabs_image_gpt-image-2_bg1.1_广场正向 参考_ _2026-08-30T09_22_13.png`
+
+端到端实测: 真实下载 → `bg1_广场/bg1.1.png`，moved 1 / renamed 0 / errors 0
+测试：28 红 244 绿，失败集仍为 baseline 严格子集
+
+
+## Follow-up 163 — 2026-08-30
+Source: ai_video follow-up duikang_shangzeng/025
+Summary: 把「文件名带两个路由键时最左匹配胜出」写成契约并用真实双键文件名加回归测试。
+
+Auto-updated:
+- libs/infrastructure/writers/downloads__writer.py — 注释写明多键场景与
+  「最左匹配是构造保证（路由键＝prompt 首行，必在 `参考:` 行之前）」
+- tests/test_downloads_import_scene_subjects.py — 新增
+  test_first_key_wins_when_the_name_carries_two，用真实即梦双键文件名
+
+运维提示: follow-up 024/025 的写入端修复需**重启后端**才生效；
+旧进程会把主体目录当单图 plate、每次导入清空整个目录
+
+
+## Follow-up 164 — 2026-08-30
+Source: ai_video follow-up duikang_shangzeng/027
+Summary: 排障——后端从 spec_coding clone 启动、加载旧 writers，导致所有导入修复"看起来没生效"。
+
+根因: 机器上有 micro-drama-platform 与 spec_coding 两个同结构 clone。
+进程用 micro-drama-platform 的 venv，但 `-m apps.api.main` 按启动 CWD 解析模块，
+加载了 spec_coding 的旧 `downloads__writer.py`（0 处 `_SUBJECT_KEY`）；
+数据根却是 micro-drama-platform ——「改代码没反应」与「文件确实被写坏」同时成立。
+
+处理: 停 PID 43872，从 micro-drama-platform 重启；启动日志确认 WatchFiles 监视本 clone。
+
+排查手法（记下来复用）: 拿一个只存在于新代码的符号在各 clone grep，
+数量不同即证明服务加载错了源码树。同类前科见 follow-up 157 ui-served-from-wrong-repo-clone。
+
+
+## Follow-up 165 — 2026-08-30
+Source: ai_video follow-up duikang_shangzeng/028
+Summary: 路由键 `bg{N}.{M}` 改为 `bg{N}-{M}`；连字符避开点被当扩展名分隔符的歧义。
+
+Auto-updated:
+- libs/infrastructure/writers/downloads__writer.py — `_SUBJECT_KEY` 与 scene_subject 落盘命名改用连字符
+- tests/test_downloads_import_scene_subjects.py — 全部用例同步（8 条全绿）
+
+
+## Follow-up — 2026-08-30 18:10:00
+Source: user_input/follow_ups/202608.md - UI 支持 .glb 显示与预览
+Summary: `.glb`/`.gltf` 接入 media 通道，Reader 增加交互式 3D 预览。
+
+Auto-updated:
+- libs/common/exposed_tree.py — MEDIA_EXTENSIONS += `.glb` `.gltf`（树可见 + 可被 /api/media 服务）。
+  与 `.pdf` 同理**刻意不进 ALLOWED_EXTENSIONS**，避免 /api/file 拿它当文本解码
+- libs/application/queries/media__query.py — MIME 映射 `.glb`→`model/gltf-binary`、
+  `.gltf`→`model/gltf+json`；两者加入 `_INLINE_MEDIA_TYPES`
+  （`attachment` 会让浏览器直接下载而不是交给 model-viewer 取）
+- libs/domain/value_objects/media__valueobject.py — MEDIA_EXTENSIONS_SET += `.glb` `.gltf`，
+  使归档/删除/恢复命令（MediaPath）对网格生效
+- apps/ui/package.json — 新增依赖 `@google/model-viewer`
+- apps/ui/src/main.tsx — 副作用导入以注册 `<model-viewer>` 自定义元素
+- apps/ui/src/model-viewer.d.ts — 【新建】自定义元素的 JSX 类型声明
+  （tsc 看不见自定义元素；只声明实际用到的属性，不整体退化成 any）
+- apps/ui/src/components/Reader.tsx — MODEL_EXTS + isModel 分派 + 预览分支
+  （camera-controls / neutral environment / 归档删除按钮与其它媒体一致）
+- apps/ui/src/styles.css — `.model-view` 样式
+- tests/test_media_glb_preview.py — 【新建】4 条：扩展名归属（含"不得进 ALLOWED_EXTENSIONS"）、
+  MediaPath 接受、glb 与 gltf 各自的 media_type + inline disposition
+
+验证:
+- 新测试 4 passed
+- 既有 media/tree 测试 24 passed / 1 failed —— 失败项 `test_ai_videos_section_has_project_meta_for_wukong`
+  找的是 `wukong_juexing`，而 `ai_videos/` 下只有 `wushen_juexing`，**为既有失败、与本改动无关**
+- `npm run build`（含 `tsc -b`）通过
+- 端到端实测真实文件 `props/f80_ferrari/f80_raw.glb`（33.9 MB）：
+  树可见 ✓ / MediaPath 接受 ✓ / media_type=model/gltf-binary ✓ / disposition=inline ✓

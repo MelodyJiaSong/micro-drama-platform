@@ -1,9 +1,13 @@
 """`ai_videos/assets.json` — the tracked path→content index.
 
-Content-addressed: the R2 object key is derived from the sha256, so renaming a
-file is a manifest-only change and two identical takes are stored once. The
-manifest holds no bucket name, account id or endpoint — those are credentials'
-neighbours and stay in the environment.
+The R2 object key IS the path under `ai_videos/`, so the bucket mirrors the
+drama tree exactly — `wushen_juexing/5_6_分镜与prompt/episodes/ep01/shots/...`
+browses in the dashboard the way it browses on disk. sha256 is still recorded,
+but only to detect change; a rename moves an object server-side rather than
+re-uploading it.
+
+The manifest holds no bucket name, account id or endpoint — those are
+credentials' neighbours and stay in the environment.
 """
 from __future__ import annotations
 
@@ -19,12 +23,6 @@ MANIFEST_VERSION: int = 1
 class AssetEntry:
     sha256: str
     size: int
-
-    @property
-    def key(self) -> str:
-        """R2 object key. Sharded by the first byte so a bucket listing stays
-        navigable at hundreds of thousands of objects."""
-        return f"objects/{self.sha256[:2]}/{self.sha256}"
 
 
 @dataclass(frozen=True)

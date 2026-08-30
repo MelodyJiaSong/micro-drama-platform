@@ -86,6 +86,28 @@ ai_videos/{name}/
 - 输出：world.md（bg 代号/力量规则/势力）+ characters/{角色}/{角色}.md 人物卡（含 Seedream ref 图 prompt + turntable）+ scenes/{场景}/ 场景档 + casting.md（voice_id）+ style_guide.md。
 - QC：`ai_videos__格式契约`（锁定串 byte-identical / voice_id / 零 hex / 场景 bg 档齐全）。避坑：人脸/服装漂移靠人物卡复制锁死；藏锋规则写进力量体系防 AI 乱加特效。
 
+#### 阶段 2b · 3D 资产轨（**条件触发**，与 2 并行）
+
+**何时触发**：本剧存在①核心复用物件（车/器物/法宝）需跨镜零漂移，
+或②多镜头共用同一地点 + 长镜头穿行。**只有短镜、单场景、无复用物件的剧跳过本轨。**
+
+- **判别用什么建**（`ai_video.md` rule 4g §B 四条，按顺序问）：
+  有现成资产→买；直线/模块/精确尺寸→脚本建；有机曲面+有界+只有图→image-to-3D；**环境→永不用 image-to-3D**。
+- **object 轨**（rule 4d）：五步出图（锚点+正/侧/背）→ 用户在生成平台出 mesh →
+  **必过闸门** `blender -b --factory-startup --python tools/whitemodel_normalize.py -- --src <glb> --spec <object.toml> --out <name>.blend`
+  → `tools/render_object_turntable.py` 出七视角+转盘。
+  **闸门 vendor 无关**：任何来源的网格（image-to-3D / 买的高模 / 脚本 blockout）走同一道验收。
+- **environment 轨**（rule 4g §C–F）：先画长镜头路径 → 按接近度分级（真立面/体块+屋顶/纯体块/不建）
+  → 定模数 → 有机构件走 object 轨、平直部分脚本建 → 拼成**唯一一份** `{world}.blend`
+  → **必跑** `tools/render_scene_plan.py` 平面图并肉眼过一遍。
+- **每个 object 一份 `object.toml`**：尺寸/朝向/容差 + 可证伪验收探针（占位用**面积占比**不用顶点数；
+  截面对比带`限定`与可选`最大差`；**必须有朝向判别探针**——包围盒抓不住 180° 掉头）。
+- **阈值校准方向**：首个**被人眼接受**的网格落地后跑闸门、据其实测值收紧阈值，
+  那一版即回归基线。**拿已知不合格的网格去调阈值使其通过＝把闸门调废。**
+- **产物只承载几何**：闸门无条件剥材质；渲染器强制灰模。长相归参考图与出片模型（rule 12.16）。
+- QC：闸门退出码（0=通过，1=验收未过）。**"全部通过"≠"好白模"**——
+  体量探针判不了表面质量与拓扑，型面好坏仍须看渲染图。
+
 ### 阶段 3 · 分集大纲 → `3_大纲/arc_outline.md`
 - 提问：总集数切割 · 每集「上集承接+本集核心+下集伏笔」 · 起承转钩四段的镜数/时长预算 · 每集钩尾类型(危机/情感/实力/信息)。
 - 输出：arc_outline.md。

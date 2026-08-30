@@ -1,0 +1,7 @@
+#!/bin/sh
+# assets_sync: `git pull --rebase` rewrites instead of merging, so post-merge
+# never fires — fetch the media the new index names here instead.
+[ "$ASSETS_SYNC_AUTO_PULL" = "0" ] && exit 0
+[ "$1" = "rebase" ] || exit 0
+"@PYTHON@" tools/assets_sync.py pull --auto
+exit 0

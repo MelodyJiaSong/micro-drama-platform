@@ -75,20 +75,19 @@ previz: 需要
 
 ## Reference uploads
 
-| 位 | 内容 |
+| 位（`@` 处手填） | 填什么 |
 |---|---|
-| 图片1 | `shot19/shot19_lastframe.png` — **本镜首帧（上一镜末帧）** |
-| 图片2 | `props/cavallino_horse/cavallino_horse.png` — 马主锁 |
-| 图片3 | `scenes/entropy_city/bg1_广场.png` — 环境锁 |
-| 图片4 | `props/f80_ferrari/f80_ferrari_rear.png` — 远景车尾锁 |
-| 视频1 | `shots/shot20/whitemodel/shot20.mp4` — 运镜锁 |
+| `本镜首帧(上一镜末帧)=>@` | `shots/shot19/shot19_lastframe.png` — **shot19 末帧**，进模型的首帧槽（非参考图） |
+| `previz_shot20(previz灰模视频)=>@` | `shots/shot20/shot20_previz.mp4` — **形状 · 动作 · 走位 · 机位（权限最高）** |
+| `cavallino_horse(物件主体)=>@` | Seedance 主体 `cavallino_horse` — 图集与锁定描述符住在主体里，不逐镜上传 |
+| `entropy_city_bg1_广场(场景主体)=>@` | Seedance 主体 `entropy_city_bg1_广场` — 图集与锁定描述符住在主体里，不逐镜上传 |
 
 ## 视频 prompt
 
 ```text
 shot20
-参考: `本镜首帧(上一镜末帧)=>@图片1, cavallino_horse=>@图片2, entropy_city_bg1_广场=>@图片3, f80_ferrari_rear=>@图片4, previz_shot20=>@视频1`
-角色: `cavallino_horse — 一匹纯黑色的高大骏马，肌肉线条紧实，鬃毛与尾毛浓密微卷；额头正中一道细窄的白色竖纹，从两眼之间延伸到鼻梁上方；四蹄为深灰近黑，左前蹄内侧有一小块白斑；眼睛为深褐色、瞳孔清晰、眼白极少；不戴任何鞍具与缰绳。另在画面右侧深处有一台远去的红色超级跑车，只有车尾与两点尾灯可辨、小如一枚硬币`
+参考: `本镜首帧(上一镜末帧)=>@, cavallino_horse(物件主体)=>@, entropy_city_bg1_广场(场景主体)=>@, previz_shot20(previz灰模视频)=>@`
+角色: `@cavallino_horse。另在画面右侧深处有一台远去的红色超级跑车，只有车尾与两点尾灯可辨、小如一枚硬币`
 角色识别: 画面中只有这一匹马，严禁出现第二匹马或马群；画面中没有任何人
 情节: `一匹刚从青铜雕像变回血肉的黑马，从广场的石台座上迈下来，落地扬起一圈灰，随即朝远去的车追去`
 场景: `entropy_city 熵增都市中央广场 — 严格照@图片3。褪成无饱和灰烬色的现代都市广场，天空灰白、阴云均质、没有太阳也没有方向性影子；空气中悬浮着极细的灰色微粒缓慢向下飘落，在地面积起薄薄一层；广场中央有一座灰色石质台座`

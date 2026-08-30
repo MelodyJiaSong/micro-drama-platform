@@ -1,0 +1,14 @@
+#!/bin/sh
+# assets_sync: never let the index leave ahead of the objects it names.
+#
+# Ordering that keeps git and R2 consistent: bytes go up FIRST, the index
+# follows. A manifest pushed ahead of its objects makes `assets_sync.py pull`
+# fail for everyone who pulls it.
+#
+# Normally pre-commit has already done this and there is nothing to do. If media
+# slipped through (committed with --no-verify, or R2 was down), `check --push`
+# uploads it now and then refuses the push, because the index it just rewrote is
+# not in any commit yet — commit it and push again.
+#
+# Bypass with `git push --no-verify`.
+"@PYTHON@" tools/assets_sync.py check --push || exit 1

@@ -18,8 +18,11 @@ A = AssetEntry(sha256="a" * 64, size=10)
 B = AssetEntry(sha256="b" * 64, size=20)
 
 
-def test_key_is_content_addressed_and_sharded() -> None:
-    assert A.key == f"objects/aa/{'a' * 64}"
+def test_object_key_is_the_path_itself(tmp_path: Path) -> None:
+    """The bucket mirrors the drama tree — no hashed or numbered key space."""
+    manifest = Manifest(assets={"wushen_juexing/2_世界观人设/characters/c1/c1.png": A}, updated="")
+    manifest.save(tmp_path / "assets.json")
+    assert "wushen_juexing/2_世界观人设/characters/c1/c1.png" in Manifest.load(tmp_path / "assets.json").assets
 
 
 def test_manifest_round_trip(tmp_path: Path) -> None:
@@ -70,15 +73,22 @@ def test_plan_classifies_each_case() -> None:
     assert set(plan.download) == {"remote_only.mp4"}
 
 
-def test_rename_needs_no_transfer() -> None:
-    """Same bytes at a new path: the manifest changes, the object key does not."""
+def test_rename_becomes_a_server_side_move() -> None:
+    """Same digest at a new path: copied inside the bucket, never re-uploaded."""
     plan = build({"new/name.mp4": A}, Manifest(assets={"old/name.mp4": A}, updated=""))
-    assert plan.upload["new/name.mp4"].key == A.key
+    assert plan.renames == {"new/name.mp4": "old/name.mp4"}
+    assert plan.upload_bytes == 0          # nothing leaves this machine
+
+
+def test_genuine_new_file_is_not_a_rename() -> None:
+    plan = build({"new.mp4": B}, Manifest(assets={"old.mp4": A}, updated=""))
+    assert plan.renames == {}
+    assert plan.upload_bytes == B.size
 
 
 def test_unreferenced_keys_are_the_prune_set() -> None:
     manifest = Manifest(assets={"a.mp4": A}, updated="")
-    assert unreferenced_keys(manifest, [A.key, B.key]) == [B.key]
+    assert unreferenced_keys(manifest, ["a.mp4", "gone.mp4"]) == ["gone.mp4"]
 
 
 def test_scan_skips_git_tracked_media(tmp_path: Path) -> None:

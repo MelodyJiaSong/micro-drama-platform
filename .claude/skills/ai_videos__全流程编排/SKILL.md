@@ -16,6 +16,7 @@ description: AI 短剧全链路生产流程总编排（脑洞→立项→世界�
 |---|---|---|---|---|
 | 1 | 核心创意立项 | `ai_videos__stage1_立项` | `ai_videos/{name}/1_立项/concept.md` | 人工确认 |
 | 2 | 世界观+锁定人设 | `ai_videos__stage2_世界观人设` | `2_世界观人设/{world.md, characters/, scenes/, props/, casting.md, style_guide.md}` | `ai_videos__格式契约` |
+| 2b | **3D 资产轨**（条件触发：有复用物件 或 多镜共用地点+长镜穿行） | BLUEPRINT §阶段 2b（`ai_video.md` rule 4d/4g） | `props/{object}/{object.toml, *.blend, whitemodel/}` · `scenes/**/{world}.blend` | `tools/whitemodel_normalize.py` 闸门退出码 |
 | 3 | 分集大纲 | `ai_videos__stage3_大纲` | `3_大纲/arc_outline.md` | `ai_videos__剧情连贯` + `ai_videos__全剧序列` |
 | 4 | 文学剧本(台词) | `ai_videos__stage4_剧本` | `4_剧本/episodes/epNN/{script.md, dialogue.md}` | `ai_videos__台词大师` + `ai_videos__白话大师`（白话口语化专项，台词仍书面时再过） |
 | 5 | 分镜运镜设计 | `ai_videos__stage5_分镜` | `5_6_分镜与prompt/episodes/epNN/{shotlist.md, shots/shotNN/shotNN.md}` | `ai_videos__站位朝向`+`ai_videos__运镜`+`ai_videos__动作表演`+`ai_videos__光线色调`+`ai_videos__时长节奏`（+ 含打斗的 shot 跑 `ai_videos__武打设计`；+ 涉超自然视觉的 shot 跑 `ai_videos__特效设计`） |

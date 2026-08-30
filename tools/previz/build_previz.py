@@ -28,12 +28,12 @@ from bpy_extras.object_utils import world_to_camera_view
 
 # 键名白名单：拼错直接报错，绝不静默忽略（沿用 shot12 previz 的既定规则）
 SCHEMA = {
-    "全局": {"shot", "fps", "total_sec", "场景", "分辨率", "地面", "原点偏移", "贴地", "素模场景"},
+    "全局": {"shot", "fps", "total_sec", "场景", "分辨率", "地面", "原点偏移", "贴地", "素模场景", "项目"},
     "机位": {"俯角", "焦距", "基准主体", "占画高", "横向偏移", "距离倍数", "方位角", "位置", "切墙", "起始俯仰偏移", "锁定主体"},
     "运镜": {"类型", "起", "止", "量"},
     "角色": {"名", "色", "身高", "关键帧"},
     "角色.关键帧": {"t", "位置", "朝向", "姿态"},
-    "道具": {"名", "形", "尺寸", "位置", "色", "朝向", "关键帧"},
+    "道具": {"名", "形", "尺寸", "位置", "色", "朝向", "关键帧", "档"},
     "道具.关键帧": {"t", "位置", "朝向", "尺寸"},
 }
 
@@ -144,7 +144,14 @@ def f(t: float) -> int:
 scene_name = G.get("场景")
 scene_blend = None
 if scene_name:
-    src = REPO / "ai_videos" / "xianjian_yi_mv" / "2_世界观人设" / "scenes" / scene_name / f"{scene_name}.blend"
+    # rule: 场景主档按 [全局].项目 解析；缺省 xianjian_yi_mv（向后兼容既有 shot 配置）
+    _proj = G.get("项目", "xianjian_yi_mv")
+    # 场景 .blend 住在 `scenes/{name}/_blender/`——它是 blender 侧产物，
+    # 与出图用的主体目录分开放（ai_video.md rule 4e）。旧布局（放在场景根）作兜底。
+    _scene_dir = REPO / "ai_videos" / _proj / "2_世界观人设" / "scenes" / scene_name
+    src = _scene_dir / "_blender" / f"{scene_name}.blend"
+    if not src.is_file():
+        src = _scene_dir / f"{scene_name}.blend"
     if src.is_file():
         # rule 12.16：场景主档永不修改，只在 previz 目录里改副本
         scene_blend = OUT_DIR / f"{SHOT}_previz.blend"
@@ -416,8 +423,59 @@ for p in CFG.get("道具", []):
     elif shape == "sphere":
         ob = sphere(f"P_{nm}", size[0], (loc[0], loc[1], loc[2] + size[0]), m)
         dim_h = size[0] * 2
+    elif shape == "模型":
+        # 从一份 .blend 追加真实网格当 proxy。给「产品即长相」的镜用（如车体白模）：
+        # 色块方盒能定机位与尺度，但定不了「这台车看上去对不对」。
+        rel = p.get("档")
+        if not rel:
+            die(f"道具「{nm}」形＝模型，必须给「档」＝白模 .blend 的仓库相对路径")
+        blend_path = (REPO / str(rel)).resolve()
+        if not blend_path.is_file():
+            die(f"道具「{nm}」的白模档不存在：{blend_path}")
+        _before = {o.name for o in bpy.data.objects}
+        with bpy.data.libraries.load(str(blend_path), link=False) as (_src, _dst):
+            _dst.objects = list(_src.objects)
+        _new = [o for o in bpy.data.objects if o.name not in _before]
+        _meshes = [o for o in _new if o.type == "MESH"]
+        if not _meshes:
+            die(f"道具「{nm}」的白模档里没有 MESH 物体：{blend_path}")
+        for o in _new:
+            if o.type != "MESH":
+                bpy.data.objects.remove(o, do_unlink=True)
+        for o in _meshes:
+            scene.collection.objects.link(o)
+        bpy.ops.object.select_all(action="DESELECT")
+        for o in _meshes:
+            o.select_set(True)
+        bpy.context.view_layer.objects.active = _meshes[0]
+        if len(_meshes) > 1:
+            bpy.ops.object.join()
+        ob = bpy.context.view_layer.objects.active
+        ob.name = f"P_{nm}"
+        # 归一化到「尺寸」给的包围盒，原点挪到底面中心（与 box 分支同约定）
+        bpy.ops.object.origin_set(type="ORIGIN_GEOMETRY", center="BOUNDS")
+        _d = ob.dimensions
+        if min(_d) <= 0:
+            die(f"道具「{nm}」白模包围盒异常：{tuple(_d)}")
+        ob.scale = Vector((size[0] / _d.x, size[1] / _d.y, size[2] / _d.z))
+        bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+        ob.data.materials.clear()
+        # 白模 prop 不用 MATS 的 ID 色——那套材质带 emission 0.25，自发光是平的，
+        # 会把这个物体的型面抹平。而白模 prop 恰恰是全场唯一需要读出型面的东西
+        # （色块方盒只需要读位置，读不读得出形状无所谓）。给它专用的无自发光灰模。
+        _wm = bpy.data.materials.get("M_WHITEMODEL")
+        if _wm is None:
+            _wm = mat("M_WHITEMODEL", (0.62, 0.62, 0.63), 0.0)
+            _wb = _wm.node_tree.nodes.get("Principled BSDF")
+            _wb.inputs["Roughness"].default_value = 0.65
+            if "Specular IOR Level" in _wb.inputs:
+                _wb.inputs["Specular IOR Level"].default_value = 0.2
+        ob.data.materials.append(_wm)
+        ob.location = Vector((loc[0], loc[1], loc[2] + size[2] / 2))
+        link_previz(ob)
+        dim_h = size[2]
     else:
-        die(f"道具「{nm}」的形＝{shape} 不认识；可用＝box/plane/cyl/sphere")
+        die(f"道具「{nm}」的形＝{shape} 不认识；可用＝box/plane/cyl/sphere/模型")
     if "朝向" in p:
         ob.rotation_euler = Euler((0, 0, math.radians(float(p["朝向"]))))
     for kf in p.get("关键帧", []):
@@ -657,16 +715,25 @@ for _ob in list(bpy.data.objects):
     if _ob.type == "LIGHT" and _ob.name != "PREVIZ_SUN":
         _ob.hide_render = True
         _ob.hide_viewport = True
+# 三点布光。previz 要读的是【型面】——曲面往哪拐、哪里鼓、哪里凹。
+# 平光（等能量对打的两盏 sun）会把这些信息抹平：灰模在平光下就是一片均匀的灰。
+# 所以主光压低角度、拉开与补光的比值，再加一盏背侧轮廓光把剪影从背景里剥出来。
 sun = bpy.data.lights.new("PREVIZ_SUN", type="SUN")
-sun.energy = 4.0
+sun.energy = 5.0
+sun.angle = math.radians(6)          # 软一点，避免硬边切碎型面
 sun_ob = bpy.data.objects.new("PREVIZ_SUN", sun)
 link_previz(sun_ob)
-sun_ob.rotation_euler = Euler((math.radians(48), 0, math.radians(35)))
-sun2 = bpy.data.lights.new("PREVIZ_FILL", type="SUN")   # 补光，压暗部
-sun2.energy = 1.6
+sun_ob.rotation_euler = Euler((math.radians(38), 0, math.radians(35)))
+sun2 = bpy.data.lights.new("PREVIZ_FILL", type="SUN")   # 补光：只抬暗部，不许压平主光
+sun2.energy = 0.9                                       # 主:补 ≈ 5.5:1，原来是 2.5:1
 fill_ob = bpy.data.objects.new("PREVIZ_FILL", sun2)
 link_previz(fill_ob)
 fill_ob.rotation_euler = Euler((math.radians(65), 0, math.radians(-140)))
+sun3 = bpy.data.lights.new("PREVIZ_RIM", type="SUN")    # 轮廓光：剥离剪影
+sun3.energy = 3.0
+rim_ob = bpy.data.objects.new("PREVIZ_RIM", sun3)
+link_previz(rim_ob)
+rim_ob.rotation_euler = Euler((math.radians(72), 0, math.radians(196)))
 if scene.world is None or not scene.world.name.startswith("PREVIZ"):
     _w = bpy.data.worlds.new("PREVIZ_WORLD")
     _w.use_nodes = True
@@ -675,6 +742,53 @@ if scene.world is None or not scene.world.name.startswith("PREVIZ"):
         _bg.inputs[0].default_value = (0.42, 0.45, 0.50, 1.0)
         _bg.inputs[1].default_value = 1.0
     scene.world = _w
+
+# ---------------------------------------------------------------- 形状可读性
+# previz 的唯一职责是把【形】和【走位】交给 Seedance。参考图只覆盖 4 个固定角度，
+# 其余角度上「这台车是什么形状」，Seedance 只能从 previz 里读——读不到就自己编，
+# 编出来就是逐镜车型漂移（benchmark_teardown.md 点名的竞品头号缺陷）。
+# 默认渲染设置（平光 + 无 AO + 无描边）会在渲染这一步就把型面信息丢掉，
+# 网格再好也传不出去。下面三项是把形状真正渲进画面的最低配置。
+
+# ① 环境光遮蔽——凹陷、缝隙、轮拱内侧、扩散器叶片之间靠它才有暗部
+scene.eevee.use_raytracing = True
+scene.eevee.use_fast_gi = True
+scene.eevee.fast_gi_method = "AMBIENT_OCCLUSION_ONLY"
+scene.eevee.fast_gi_distance = 0.6          # 米。车身尺度下 0.6 能吃住轮拱与进气口
+scene.eevee.fast_gi_ray_count = 4
+scene.eevee.fast_gi_step_count = 12
+scene.eevee.fast_gi_resolution = "1"
+scene.eevee.taa_render_samples = max(scene.eevee.taa_render_samples, 32)   # AO 要采样才不噪
+
+# ② Freestyle 轮廓描边——灰模上读转折最有效的一招，且不引入任何美术
+# 同 render_object_turntable：高面数网格关掉 Freestyle——它在生成网格的非流形
+# 拓扑上会崩，且高面数靠 AO 就读得出型面。
+_dense = sum(len(o.data.polygons) for o in bpy.data.objects if o.type == "MESH")
+scene.render.use_freestyle = _dense < 200000
+scene.render.line_thickness_mode = "ABSOLUTE"
+scene.render.line_thickness = 1.0
+_fs = bpy.context.view_layer.freestyle_settings
+for _ls in list(_fs.linesets):
+    _fs.linesets.remove(_ls)
+_ls = _fs.linesets.new("PREVIZ_FORM")
+_ls.select_silhouette = True        # 外轮廓
+_ls.select_border = True            # 开放边界
+_ls.select_crease = True            # 硬转折
+_ls.select_ridge_valley = True      # 曲面脊/谷：泪滴座舱、后轮拱外鼓靠这条才显形
+_ls.select_contour = False
+_ls.select_edge_mark = False
+_fs.crease_angle = math.radians(130)
+_ls.linestyle.color = (0.05, 0.05, 0.06)
+_ls.linestyle.thickness = 1.2
+
+# ③ 背景压深一档，让轮廓光剥出来的剪影有对比可读
+if scene.world is not None and scene.world.use_nodes:
+    _bgn = scene.world.node_tree.nodes.get("Background")
+    if _bgn is not None:
+        _bgn.inputs[0].default_value = (0.20, 0.22, 0.26, 1.0)
+
+print("  形状可读性：AO(0.6m) + Freestyle(轮廓/边界/折痕/脊谷) + 三点光 已启用")
+
 
 blend_out = OUT_DIR / f"{SHOT}_previz.blend"
 bpy.ops.wm.save_as_mainfile(filepath=str(blend_out))

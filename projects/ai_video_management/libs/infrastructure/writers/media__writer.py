@@ -8,6 +8,8 @@ name). One file per aggregate per role, per follow-up 059.
 """
 from __future__ import annotations
 
+import re
+
 import shutil
 import time
 import uuid
@@ -46,6 +48,26 @@ EPISODES_DIR_NAME = "episodes"
 # the folder name — without this guard it gets collapsed to `{folder}{N}.png` and
 # the intro-card burn can no longer find it (follow-up wushen_juexing intro-card).
 _RESERVED_STEMS = frozenset({"intro_card"})
+
+
+_SINGLE_IMAGE_FOLDER = re.compile(r"^(?:s\d+_)?(?:v\d+_|bg\d+_[^_]+_)")
+
+
+def _folder_tokens(folder_name: str) -> tuple[str, ...]:
+    """Lowercased folder name plus its `_`-split parts (>=2 chars).
+
+    Mirrors DownloadsImporter._tokens so both ends agree on what counts as
+    "named after this folder".
+    """
+    out = [folder_name.lower()]
+    if "_" in folder_name:
+        out.extend(part.strip().lower() for part in folder_name.split("_")
+                   if len(part.strip()) >= 2)
+    seen: dict[str, None] = {}
+    for t in out:
+        if t:
+            seen[t] = None
+    return tuple(seen)
 
 
 def _uniquify(target: Path) -> Path:
@@ -324,13 +346,28 @@ class MediaRenamer:
         except OSError:
             return ops, skipped
         by_ext: dict[str, list[Path]] = {}
+        parent_name = folder.name
+        own_tokens = _folder_tokens(parent_name)
+        # Single-image folders (a prop view `v{N}_…`, a scene plate
+        # `bg{N}_{方位}_{描述}`) hold exactly one canonical image and keep the
+        # rename-to-folder-name contract, junk suffixes and all. Everything else
+        # — a scene subject `bg{N}_{地点}`, a prop root — is a MULTI-VIEW folder
+        # whose filenames carry the view identity and must survive.
+        multi_view = _SINGLE_IMAGE_FOLDER.match(parent_name) is None
         for p in entries:
             if p.stem.lower() in _RESERVED_STEMS:
                 continue  # leave intro_card.* etc. at their fixed canonical name
+            # A subject folder holds SEVERAL named views of one subject
+            # (`广场/广场正向.png`, `玉佩/玉佩_完整.png`). Those names carry the view
+            # identity; collapsing them to `{folder}{N}.ext` destroys it and the
+            # numbering is order-dependent, so which view is which changes on
+            # every import. Keep any stem that begins with a folder token.
+            if multi_view and any(p.stem.lower().startswith(t) for t in own_tokens):
+                skipped.append(self._rel(p))
+                continue
             ext = p.suffix.lower()
             if ext in MEDIA_EXTENSIONS:
                 by_ext.setdefault(ext, []).append(p)
-        parent_name = folder.name
         for ext, files in by_ext.items():
             if len(files) == 1:
                 target_names = [f"{parent_name}{ext}"]

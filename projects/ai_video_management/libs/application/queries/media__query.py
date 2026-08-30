@@ -31,10 +31,14 @@ _MEDIA_MIME_MAP: dict[str, str] = {
     ".ogg": "audio/ogg",
     ".flac": "audio/flac",
     ".pdf": "application/pdf",
+    ".glb": "model/gltf-binary",
+    ".gltf": "model/gltf+json",
 }
 
 # Types the browser renders in place rather than downloading.
-_INLINE_MEDIA_TYPES: frozenset[str] = frozenset({"application/pdf"})
+_INLINE_MEDIA_TYPES: frozenset[str] = frozenset(
+    {"application/pdf", "model/gltf-binary", "model/gltf+json"}
+)
 
 
 class MediaQuery:

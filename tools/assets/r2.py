@@ -87,11 +87,23 @@ class R2Store:
         path.parent.mkdir(parents=True, exist_ok=True)
         self.client.download_file(self.bucket, key, str(path))  # type: ignore[attr-defined]
 
-    def list_keys(self, prefix: str = "objects/") -> Iterator[str]:
+    def list_keys(self, prefix: str = "") -> Iterator[str]:
+        for key, _ in self.list_objects(prefix):
+            yield key
+
+    def list_objects(self, prefix: str = "") -> Iterator[tuple[str, int]]:
+        """Key and size for every object — one listing answers "what is already
+        up there", which is how an interrupted push resumes without re-sending."""
         paginator = self.client.get_paginator("list_objects_v2")  # type: ignore[attr-defined]
         for page in paginator.paginate(Bucket=self.bucket, Prefix=prefix):
             for item in page.get("Contents", []):
-                yield str(item["Key"])
+                yield str(item["Key"]), int(item["Size"])
+
+    def copy(self, src_key: str, dst_key: str) -> None:
+        """Server-side move — the bytes never round-trip through this machine."""
+        self.client.copy_object(  # type: ignore[attr-defined]
+            Bucket=self.bucket, Key=dst_key, CopySource={"Bucket": self.bucket, "Key": src_key}
+        )
 
     def delete(self, keys: list[str]) -> None:
         for start in range(0, len(keys), 1000):

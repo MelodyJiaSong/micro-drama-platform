@@ -24,17 +24,29 @@
 - Cross-publish surfaces: does the ai_video sub-type (`short` vs `novel`) drive different navigation modes?
 - Tooling parity: same FastAPI + React + Vite + Vitest + Playwright + pytest stack as `spec_driven`?
 
+
+
 ---
 
-# Follow-up draft 001 — 2026-05-05
+# Follow-ups · 202605.md
+
+# Follow-ups 2026-05
+
+<!-- Consolidated monthly log. New follow-ups APPEND a `## NNN` section
+     below; a new file starts only when the month rolls over. -->
+
+
+---
+
+## 001 — 2026-05-05 12:15:36 — ai-videos-only-scope
 
 Restrict ai_video_management to ai_videos/ only — no specs, no Claude settings, no spec-pipeline integration.
 
-## Original wording
+### Original wording
 
 > ai_video_management is a secific artifacts management for ai_videos related, it should not show specs or any claude settings. in another words only focus on root folder ai_vidoes and artifacts genreated under it
 
-## Abstracted intent
+### Abstracted intent
 
 The webapp is a **focused viewer / editor for `ai_videos/` artifacts only**. The previous design loaded three sidebar sections (AI Videos / Specs / Context) and exposed regen-prompt + pinning surfaces tied to the spec pipeline; the user wants those removed.
 
@@ -50,28 +62,29 @@ Concrete deltas:
 8. **Mutation surface:** reduces from 4 endpoints to 1 — only `PUT /api/file` remains. `POST /api/regen-prompt`, `POST /api/promote`, `DELETE /api/promote` all dropped.
 9. **Page routing:** drop `/project/:type/:name` and `/stage/:type/:name/:stage` routes (RegeneratePanel host pages); root path `/` and `/file/*` remain.
 
-## Why
+### Why
 
 Division of concern. `spec_driven` (port 8765) already manages the spec pipeline — that's where regen prompts and pinning naturally live. `ai_video_management` (port 8766) becomes its complement: the place to browse, view, edit, and compare the *outputs* (character bibles, Seedream立绘 prompts, style guides, scripts, shotlists, dual Kling+Seedance prompts, publish metadata, README) under `ai_videos/{name}/`. Scope clarity beats feature breadth.
 
-## Out of scope (this follow-up does NOT request)
+### Out of scope (this follow-up does NOT request)
 
 - Removing `ai_video_management` entirely — the viewer/editor for ai_videos/ artifacts is still wanted, with the three load-bearing custom views (ShotPairView, ShotlistTableView, ImageRefView) preserved.
 - Changing the security model — Origin/Host gate, EXPOSED_TREE sandbox, extension allowlist, RFC 7232 mtime concurrency, IPv4 loopback, light theme, CSP all stay.
 - Changing the bound port — still 8766 (5174 for Vite dev).
 - Changing the sub-type badge UX — still `短` / `剧` next to project nodes when detected.
 
+
 ---
 
-# Follow-up draft 002 — 2026-05-05
+## 002 — 2026-05-05 13:05:48 — zero-claude-coupling
 
 ai_video_management must be unaware of `CLAUDE.md`, `.claude/`, and `specs/` even at internal-anchor level. Backend code should not read or reference those files for any purpose.
 
-## Original wording
+### Original wording
 
 > backend should not read those files either, the whole ai_video_management system should not aware the existence of specs and claude settings, it is none of its business
 
-## Abstracted intent
+### Abstracted intent
 
 Follow-up 001 hid `specs/`, `CLAUDE.md`, `.claude/` from the user-facing tree but left `backend/libs/repo_root.py` walking up the directory tree looking for `CLAUDE.md + .claude/` as anchor markers. The user wants that internal coupling removed too. **Zero references to those paths anywhere in `projects/ai_video_management/` source code.**
 
@@ -84,41 +97,42 @@ Concrete deltas:
 
 The webapp must be a true black box: drop it under any folder that contains `ai_videos/` as a sibling, run it, and it works. Any other directory layout choices are not its concern.
 
-## Why
+### Why
 
 Hard separation of concern. `ai_video_management` manages `ai_videos/` artifacts; that is its full surface area. Knowing about `CLAUDE.md`, `.claude/`, or `specs/` — even just as anchor markers — is leakage. After this follow-up, grep-ing the codebase for those literal strings should return nothing.
 
-## Out of scope
+### Out of scope
 
 - The `specs/development/ai_video_management/` directory under the workspace's spec-pipeline tree continues to exist (this is the agent_team workflow's audit trail, written by Claude Code, not by the webapp itself). The webapp simply does not read it.
 - The CLAUDE.md / .claude/ files in the workspace continue to exist (they govern Claude Code behavior, not the webapp). The webapp simply does not read them.
 - spec_driven (port 8765) keeps its own anchor strategy unchanged; only ai_video_management is affected.
 
+
 ---
 
-# Follow-up draft 003 — 2026-05-09
+## 003 — 2026-05-09 15:21:35 — research-folder-and-viewer
 
 Summary: Introduce a new repo-root `research/` folder for free-form reference / research dumps, and surface its contents through the ai_video_management webapp's sidebar viewer (alongside the existing AI Videos section).
 
-## Original wording
+### Original wording
 
 > are you able to search online for the story line for some most popular chinese 仙侠剧 剧本？and dump them into a few md files
 > 1: yes, 6~8 is good enough. 2: yes lets introduce a special research folder under root, and also please add the nice viewer to view them on ai_video_management project
 
-## Desired behavior
+### Desired behavior
 
 1. **New repo-root folder `research/`.** Plain markdown dumps of reference material — initially `research/xianxia_storylines/{slug}.md` (one md per drama) plus an index `research/xianxia_storylines/README.md`. Format intentionally loose: not a spec-driven pipeline output, just structured prose / data the user can browse and feed into video planning later.
 2. **ai_video_management webapp surfaces it.** The sidebar (currently a single "AI Videos" section) gets a sibling "Research" section that recursively walks `research/`. Same `<Reader>` machinery (markdown / image / qa fallback), same Origin/Host gate, same EXPOSED_TREE sandbox semantics.
 3. **Same security / write contract as `ai_videos/`.** Files under `research/` are admitted by the EXPOSED_TREE `is_inside` predicate, the path-traversal hardening, and the read/write/promote allowlists exactly the same way as files under `ai_videos/`. Image files (`.png`/`.jpg`) keep their read-only contract; markdown is editable in place.
 4. **Folder content is bilingual / loose.** The `agent_refs/project/ai_video.md` "everything Chinese in `ai_videos/` content" rule does NOT extend to `research/` — research dumps may mix Chinese (drama plot) with English (citations / metadata) freely. Path/file names stay ASCII.
 
-## Why a new top-level folder, not a subfolder of `ai_videos/`
+### Why a new top-level folder, not a subfolder of `ai_videos/`
 
 `ai_videos/{name}/` is reserved for stage-6 video-project outputs (per `agent_refs/project/ai_video.md` and CLAUDE.md "AI video rules"). Putting research dumps inside it would conflate "spec-pipeline output" with "free-form reference," confuse the regen-prompt scope semantics (`scope=project | episode N`), and risk accidental deletion when a project-scoped regen `rm -rf`'s the project folder. A sibling folder is cleaner.
 
-## Concrete deltas
+### Concrete deltas
 
-### Spec — `final_specs/spec.md`
+#### Spec — `final_specs/spec.md`
 
 - **FR-7 amend.** Append `research/**/*.{md,json,jsonl,yaml,yml,txt,png,jpg}` as a 5th EXPOSED_TREE root.
 - **FR-8 amend.** `is_inside` predicate admits `research/` as a 4th allowed top-level (alongside the existing `ai_videos/`, plus `specs/ai_video/` and `.claude/` / `CLAUDE.md` from FR-7). The same `_EXCLUDED_DIRS` filter (`node_modules`, `.git`, `.audit`, `__pycache__`, `.pytest_cache`, `dist`, `build`, `.vite`) applies to the new admission.
@@ -126,32 +140,32 @@ Summary: Introduce a new repo-root `research/` folder for free-form reference / 
 - **FR-43 amend.** Sidebar fixed-order section list updated to **AI Videos / Research / Specs / Context**.
 - No new FR / NFR — the Research section reuses every existing render mode dispatch, security control, and pinning rule.
 
-### Backend — `projects/ai_video_management/backend/libs/`
+#### Backend — `projects/ai_video_management/backend/libs/`
 
 - **`exposed_tree.py`** — `is_inside`'s allowed-first-segment branch extended: previously `if first == "ai_videos":`; now `if first in {"ai_videos", "research"}:`. Same excluded-dirs loop applies. Public method (kept thin, no API change).
 - **`tree_walker.py`** — new `_research_section(self) -> dict` method paralleling `_ai_videos_section`. Walks `research/` recursively via the existing `_walk_filtered` helper using `_is_allowed_leaf`. Returns `{"type": "section", "name": "Research", "path": "", "children": [...]}`. Leaves use the same `_leaf_for` (so `.png`/`.jpg` get `type: "image"`). NO `project_meta` payload — Research dirs don't have a sub_type. `build()` updated to include `_research_section()` in the children list, ordered after `_ai_videos_section()` (matches FR-18 ordering).
 - No changes to `api.py`, `file_reader.py`, `file_writer.py` — they already key off `is_inside` for sandbox enforcement, so the EXPOSED_TREE extension flows through automatically.
 
-### Backend — tests
+#### Backend — tests
 
 - `backend/tests/unit/test_exposed_tree.py` (if present) — add a parametrized case asserting that `is_inside("research/foo.md")` returns `True` and `is_inside("research/.git/foo")` returns `False`. If the file already covers `ai_videos/` shape, mirror those cases for `research/`.
 - `backend/tests/unit/test_tree_walker.py` — add a case asserting that when `research/{slug}/file.md` exists, `walker.build()["children"]` contains a section named `"Research"` with the expected nested `children`.
 
-### Frontend — `projects/ai_video_management/frontend/src/components/Sidebar.tsx`
+#### Frontend — `projects/ai_video_management/frontend/src/components/Sidebar.tsx`
 
 - No code changes required. The sidebar already iterates `tree.children` uniformly and renders each top-level section recursively. As long as the backend emits the Research section, the sidebar surfaces it automatically with working disclosure carets, keyboard nav, and click-to-open file behavior.
 
-### Frontend — `Reader.tsx` / `Home.tsx`
+#### Frontend — `Reader.tsx` / `Home.tsx`
 
 - No changes. Markdown files under `research/` dispatch to the standard markdown render path via the existing extension-based path inference (FR-48 fallback: `markdown`).
 
-### New content — `research/xianxia_storylines/`
+#### New content — `research/xianxia_storylines/`
 
 - One md per drama (6–8 dramas, per the user's confirmed scope). File slug is pinyin / English (e.g. `sansheng_sanshi_shili_taohua.md`); content is bilingual (Chinese plot + English / citation metadata mixed).
 - Per-file structure: 中文剧名 + 英文标题 + 年份/集数/主演 + 一句话设定 + 主线剧情 (3–6 段) + 主要角色 + 关键虐点/名场面 + 题材标签 + 评分/口碑 + 来源 (Wikipedia / 百度百科 / Douban URLs).
 - Index file `research/xianxia_storylines/README.md` lists every drama as a markdown link to its file with a one-liner.
 
-## Out of scope
+### Out of scope
 
 - Renaming `Research` to a Chinese label — kept English to match the existing "AI Videos" / "Specs" / "Context" pattern (per FR-43 and NFR-6: app chrome English, file content Chinese).
 - Adding a "Research" tab to the regen-prompt panel — research files are NOT pipeline artifacts and do NOT participate in regen prompts.
@@ -160,17 +174,18 @@ Summary: Introduce a new repo-root `research/` folder for free-form reference / 
 - A project-meta badge for `research/{slug}/` dirs — research dumps don't have a sub_type, so no badge is rendered (FR-44 returns nothing when `project_meta` is absent — same code path).
 - Image rendering deviations — `research/**/*.png` and `.jpg` route through the same `ImageRefView` / `ImagePlaceholder` machinery as `ai_videos/`. No new view mode.
 
+
 ---
 
-# Follow-up draft 004 — 2026-05-09
+## 004 — 2026-05-09 19:48:37 — allow-chinese-filenames
 
 Summary: 用户希望 ai_video_management 能识别中文命名的 artifact 文件。背景: `mozun_chongsheng` 项目 follow-up 002 把所有 character / ref_image 文件名改为中文（`沧冥-魔尊本相.md` 等）。本 follow-up 验证 ai_video_management webapp 已支持 UTF-8 中文文件名，无需代码改动；只在 spec / agent_refs 中明确 documenting that 中文文件名也是合法 path 选项。
 
-## 用户原话（部分，与 mozun_chongsheng follow-up 002 同源）
+### 用户原话（部分，与 mozun_chongsheng follow-up 002 同源）
 
 > 还有再ai_video_management里面，产生的artfacts可以以中文名命名，我好知道哪个文件对应的是哪个人物
 
-## 当前实现实状
+### 当前实现实状
 
 webapp 的 EXPOSED_TREE 沙箱通过 `backend/libs/exposed_tree.py::is_inside`：
 
@@ -198,9 +213,9 @@ def is_inside(self, rel: str) -> bool:
 
 **结论：webapp 已经支持中文文件名，无需代码改动。**
 
-## 文档侧改动
+### 文档侧改动
 
-### agent_refs/project/ai_video.md 规则 1 amend
+#### agent_refs/project/ai_video.md 规则 1 amend
 
 旧规则:
 > Folder and file names inside `ai_videos/{name}/` are **English or pinyin**.
@@ -212,28 +227,29 @@ def is_inside(self, rel: str) -> bool:
 > File **contents** are **Chinese** (unchanged).
 > task_name 仍**必须**为 pinyin or English（用于 task_id 构造与跨平台 path stability）。
 
-### ai_video_management spec 添加 acknowledgement
+#### ai_video_management spec 添加 acknowledgement
 
 `specs/development/ai_video_management/final_specs/spec.md` 在 FR-7 / FR-8 后加一条说明（or as a separate FR）：webapp 沙箱已支持 UTF-8 中文文件名（不需 widening 任何 allow-list）；前端 sidebar 使用 React 直接渲染 `node.name` 自然支持中文。
 
-## Out of scope
+### Out of scope
 
 - 不改 EXPOSED_TREE / is_inside / safe_resolve 代码 (already supports UTF-8)
 - 不改 frontend Sidebar / Reader components (already render Chinese node names)
 - 不改 路径合规 / 安全测试 (Origin/Host gate / path traversal hardening 与字符集无关)
 - 不改 task_name 必须 pinyin/English 的硬规则（task_id 构造与跨平台 stability）
 
+
 ---
 
-# Follow-up draft 005 — 2026-05-10
+## 005 — 2026-05-10 16:18:39 — media-display-playback
 
 Summary: 用户已开始把生成好的视频和图片放进 `ai_videos/{project}/characters/c{N}_*/` / `scenes/s{N}_*/` / `episodes/ep{NN}/prompts/shot{NN}/` 文件夹（per mozun_chongsheng follow-up 014 的 folder-per-asset schema），但 ai_video_management webapp 左侧 nav 只显示 `.md` 文件，**完全不显示 `.mp4` / `.png` / `.webp` 等媒体文件**。需求：(A) 让 webapp 左侧 nav 显示所有 media 文件 (mp4 / mov / webm / png / jpg / jpeg / webp / gif / bmp / etc.); (B) 用户点击 media 文件 → 直接在右侧 Reader 显示图片或播放视频；(C) 通用契约：folder 内任何 media 文件都自动显示，user 不需要 manually wire 每种文件类型。
 
-## 用户原话
+### 用户原话
 
 > 我把生成好的video和picture放到目录底下，ai_video_management left nav并没有显示出来，帮我在ai_video_management里加上图片和视频浏览的功能，不论我将来往folder里放什么文件，都可以显示播放
 
-## 当前实现 vs 期望
+### 当前实现 vs 期望
 
 **当前**:
 - `exposed_tree.py` 的 `ALLOWED_EXTENSIONS = {.md, .json, .yaml, .yml, .jsonl, .txt, .png, .jpg}` — 只 8 种扩展名 visible in tree。
@@ -246,11 +262,11 @@ Summary: 用户已开始把生成好的视频和图片放进 `ai_videos/{project
 - 点击 → 右侧 Reader 直接渲染图片 (`<img>`) 或播放视频 (`<video controls>`)
 - 通用：扩展 media 类型时只需 update 单一允许列表
 
-## 实施方案
+### 实施方案
 
-### (A) Backend changes
+#### (A) Backend changes
 
-#### A1. `projects/ai_video_management/backend/libs/exposed_tree.py`
+##### A1. `projects/ai_video_management/backend/libs/exposed_tree.py`
 
 新增 `MEDIA_EXTENSIONS` set（与 `ALLOWED_EXTENSIONS` 解耦）：
 
@@ -265,7 +281,7 @@ MEDIA_EXTENSIONS: frozenset[str] = frozenset({
 
 新增 `TREE_VISIBLE_EXTENSIONS = ALLOWED_EXTENSIONS | MEDIA_EXTENSIONS` 用于 tree walker。
 
-#### A2. `projects/ai_video_management/backend/libs/tree_walker.py`
+##### A2. `projects/ai_video_management/backend/libs/tree_walker.py`
 
 - `_is_allowed_leaf(p)` 改用 `TREE_VISIBLE_EXTENSIONS` (包含 media)。
 - `_leaf_for(f)` 扩展 type tagging:
@@ -273,7 +289,7 @@ MEDIA_EXTENSIONS: frozenset[str] = frozenset({
   - `.mp4/.mov/.webm/.mkv/.avi/.m4v` → `type: "video"` (NEW)
   - 其他 ALLOWED → `type: "file"`
 
-#### A3. `projects/ai_video_management/backend/libs/api.py`
+##### A3. `projects/ai_video_management/backend/libs/api.py`
 
 新增 `/api/media` endpoint（与 `/api/file` 解耦；不走 base64，不走 MAX_FILE_BYTES）：
 
@@ -297,9 +313,9 @@ def get_media(path: str = Query(...)) -> Response:
 
 注意：FileResponse 由 FastAPI 处理 streaming + range requests (HTTP 206)，浏览器视频播放需要 range support。
 
-### (B) Frontend changes
+#### (B) Frontend changes
 
-#### B1. `projects/ai_video_management/frontend/src/types.ts`
+##### B1. `projects/ai_video_management/frontend/src/types.ts`
 
 `TreeNodeType` 加 `"video"`：
 
@@ -307,7 +323,7 @@ def get_media(path: str = Query(...)) -> Response:
 export type TreeNodeType = "section" | "directory" | "file" | "image" | "video";
 ```
 
-#### B2. `projects/ai_video_management/frontend/src/api.ts`
+##### B2. `projects/ai_video_management/frontend/src/api.ts`
 
 加 `mediaUrl()` helper：
 
@@ -318,14 +334,14 @@ export function mediaUrl(path: string, mtime?: number): string {
 }
 ```
 
-#### B3. `projects/ai_video_management/frontend/src/components/Reader.tsx`
+##### B3. `projects/ai_video_management/frontend/src/components/Reader.tsx`
 
 - 当 path 扩展名是 video（.mp4/.mov/.webm/.mkv/.avi/.m4v）→ 渲染 `<video controls src={mediaUrl(path)} />`。
 - 当 path 扩展名是 image（已支持 .png/.jpg via /api/file base64；扩展 .jpeg/.webp/.gif/.bmp via /api/media）→ 渲染 `<img src={mediaUrl(path)} />`。
 - 现有 `isImage` check 扩展为 `isMediaImage` 包含所有 image extensions；新加 `isMediaVideo` check.
 - 当 user 当前查看 .md 文件时，scan `knownPaths` 找同 folder 内 sibling media files → 在 markdown 渲染下方渲染 SiblingMedia gallery（image + video grid）。
 
-#### B4. `projects/ai_video_management/frontend/src/components/SiblingMedia.tsx` (NEW)
+##### B4. `projects/ai_video_management/frontend/src/components/SiblingMedia.tsx` (NEW)
 
 ```tsx
 interface SiblingMediaProps {
@@ -366,11 +382,11 @@ function findSiblingMedia(path: string, all: string[]): string[] {
 }
 ```
 
-#### B5. `projects/ai_video_management/frontend/src/components/Sidebar.tsx`
+##### B5. `projects/ai_video_management/frontend/src/components/Sidebar.tsx`
 
 Sidebar 已 render TreeNode based on `node.type`. 加 "video" 图标 (e.g., 🎬) 让用户区分 media files。
 
-#### B6. `projects/ai_video_management/frontend/src/styles.css`
+##### B6. `projects/ai_video_management/frontend/src/styles.css`
 
 ```css
 .media-view { padding: 16px; text-align: center; }
@@ -384,7 +400,7 @@ Sidebar 已 render TreeNode based on `node.type`. 加 "video" 图标 (e.g., 🎬
 .sibling-media-grid .sibling-media-item figcaption { font-size: 11px; color: var(--text-muted); margin-top: 4px; word-break: break-all; }
 ```
 
-### (C) Test coverage (Out of scope for this follow-up — TBD)
+#### (C) Test coverage (Out of scope for this follow-up — TBD)
 
 Existing tests in `backend/tests/` cover ALLOWED_EXTENSIONS + sandbox security. After this follow-up, add:
 - `test_api_media_route.py`: GET /api/media returns 200 for valid media path within sandbox; 400 for non-media ext; 404 for outside-sandbox path.
@@ -392,14 +408,14 @@ Existing tests in `backend/tests/` cover ALLOWED_EXTENSIONS + sandbox security. 
 
 These can land in independent surgical follow-up; webapp functionality works end-to-end without them.
 
-## 期望行为
+### 期望行为
 
 1. 用户把 `c1_沧冥/turntable.mp4` 放进 folder → 刷新 webapp → 左侧 nav 内 `c1_沧冥/` folder 下显示 `c1_沧冥.md` + `turntable.mp4` 两个 children.
 2. 用户 click `turntable.mp4` → 右侧 Reader 内嵌播放该视频（HTML5 `<video controls>`）。
 3. 用户 click `c1_沧冥.md` → 渲染 markdown content + 下方自动 grid display 同 folder 的所有 media files（含播放控件）。
 4. 任何未来添加的 media 类型只需 add 到 `MEDIA_EXTENSIONS` 一处即可（前后端单源 truth）。
 
-## Out of scope
+### Out of scope
 
 - 不修改 mozun_chongsheng (or any specific ai_video project) content.
 - 不实现 backend tests (deferred to independent surgical follow-up).
@@ -408,26 +424,27 @@ These can land in independent surgical follow-up; webapp functionality works end
 - 不实现 thumbnail generation for videos (浏览器原生 video preview 已足够 for v1).
 - 不实现 download button (用户右键 → 另存为 已能下载)。
 
-## Security considerations
+### Security considerations
 
 - `/api/media` 复用现有 `safe_resolve` sandbox - 路径必在 ai_videos/ 或 research/ 之内。
 - `MEDIA_EXTENSIONS` 严格 allowlist (无 .exe / .bat / 等可执行扩展)。
 - FastAPI FileResponse 自动设 correct Content-Type + Content-Length，没有 directory traversal 风险（safe_resolve 已防）。
 - MAX_FILE_BYTES 不 apply to /api/media (videos can be 100MB+) — 但路径仍在 sandbox 内，无法上传任意文件 (无 PUT /api/media endpoint，只 GET)。
 
+
 ---
 
-# Follow-up draft 006 — 2026-05-10
+## 006 — 2026-05-10 16:40:54 — stale-runtime-instructions
 
 Summary: 用户反馈 follow-up 005 之后 mp4 文件仍不在 webapp 左侧 nav 显示（user 已 drop 3 个 mp4 + 1 个 md 到 `ai_videos/mozun_chongsheng/characters/c3_苏璃月/`）。**根因诊断**：backend 代码已正确改写 (Python 测试 walker 已 emit `type: "video"` 节点)，但**用户运行中的 webapp 进程没有 reload 新代码**。本 follow-up: (A) 确认 backend 代码无 bug；(B) 写明 reload 步骤；(C) 加 backend `--reload` 选项 (optional) 让未来 backend 改动自动 hot-reload。
 
-## 用户原话
+### 用户原话
 
 > I still dont see any mp4 files on the left menu although I already put the files under the folders like C:\workspace\spec_coding\ai_videos\mozun_chongsheng\characters\c3_苏璃月
 
-## 诊断
+### 诊断
 
-### 文件确实存在
+#### 文件确实存在
 
 ```
 C:\workspace\spec_coding\ai_videos\mozun_chongsheng\characters\c3_苏璃月\
@@ -437,7 +454,7 @@ C:\workspace\spec_coding\ai_videos\mozun_chongsheng\characters\c3_苏璃月\
 └── c3_苏璃月3.mp4     (21 643 452 bytes)
 ```
 
-### Backend 代码已正确
+#### Backend 代码已正确
 
 通过 Python REPL 直接调用 `TreeWalker.build()` 后:
 - `TREE_VISIBLE_EXTENSIONS` 包含 `.mp4` ✅
@@ -445,7 +462,7 @@ C:\workspace\spec_coding\ai_videos\mozun_chongsheng\characters\c3_苏璃月\
 - walker 输出树含 `type: "video"` 节点 ✅
 - `exposed.is_inside('ai_videos/mozun_chongsheng/characters/c3_苏璃月/c3_苏璃月1.mp4')` returns `True` ✅
 
-### 真正的问题: 进程未 reload 新代码
+#### 真正的问题: 进程未 reload 新代码
 
 用户运行中的 webapp:
 - `cd backend && PYTHONPATH=. python main.py` — 直接 spawn FastAPI/uvicorn 进程，**没有 auto-reload**。修改 `exposed_tree.py` / `tree_walker.py` / `api.py` 后必须 **手动重启** backend 进程。
@@ -453,9 +470,9 @@ C:\workspace\spec_coding\ai_videos\mozun_chongsheng\characters\c3_苏璃月\
 
 `backend/static/` 当前是空 dir (仅 `.gitkeep`)，frontend/`dist/` 不存在 → 用户应当走 vite dev server 路径 → frontend 应已自动 reload。但 backend 必须重启。
 
-## 修复 (代码层面 zero changes — backend 代码本身已正确)
+### 修复 (代码层面 zero changes — backend 代码本身已正确)
 
-### (A) 用户操作 (立即生效)
+#### (A) 用户操作 (立即生效)
 
 1. **重启 backend**:
    ```bash
@@ -486,7 +503,7 @@ C:\workspace\spec_coding\ai_videos\mozun_chongsheng\characters\c3_苏璃月\
    - `c3_苏璃月2.mp4` (🎬)
    - `c3_苏璃月3.mp4` (🎬)
 
-### (B) 让未来 backend 改动自动 hot-reload (可选 quality-of-life)
+#### (B) 让未来 backend 改动自动 hot-reload (可选 quality-of-life)
 
 `projects/ai_video_management/backend/main.py` 加 `--reload` arg 让 user 可启用 uvicorn auto-reload (dev 模式)：
 
@@ -498,39 +515,41 @@ uvicorn.run(app, host=HOST, port=PORT, reload=args.reload, ...)
 
 Trade-off: `reload=True` 时 uvicorn 不能直接接收 `app` instance，须传 import string `"main:app"`. 可保留两条 path：no-reload (production-style，传 instance) vs reload (dev-style，传 string). 本 follow-up 仅记录设计；具体实现 deferred 给独立 surgical follow-up。
 
-### (C) 让 frontend `dist/` build 也 visible 给后端
+#### (C) 让 frontend `dist/` build 也 visible 给后端
 
 当前 `make run-prod` 会 build frontend 并启 backend，但 `build-frontend` 输出到 `frontend/dist/` 而 backend 期待 `backend/static/`. Makefile 没有 copy step → 用户即使 build 了 frontend 也看不到产物。**也是已知 gap，independent surgical follow-up 处理**。
 
-## 期望行为 (post-restart)
+### 期望行为 (post-restart)
 
 1. webapp 左侧 nav 在 `ai_videos/mozun_chongsheng/characters/c3_苏璃月/` 下展示 1 md + 3 mp4 = 4 children。
 2. 点击任一 mp4 → 右侧 Reader 内嵌 HTML5 `<video controls>` 播放，支持 拖动 seek (HTTP range support 由 FastAPI FileResponse 提供)。
 3. 点击 `c3_苏璃月.md` → Reader 渲染 markdown + 下方 `📁 Folder media · 同 folder 媒体` gallery 显示 3 个 video figure cards (含 inline `<video controls>`).
 
-## Out of scope
+### Out of scope
 
 - 不改 backend 代码 (验证已正确)。
 - 不实现 backend `--reload` 选项 (deferred surgical follow-up)。
 - 不实现 Makefile `run-prod` copy dist→static step (deferred surgical follow-up)。
 - 不改 frontend 代码 (follow-up 005 frontend code 未触动用户运行进程；hot-reload 应自动接管)。
 
+
 ---
 
-# Follow-up draft 007 — 2026-05-10
+## 007 — 2026-05-10 17:04:38 — rename-media-to-parent-folder
+
 Summary: 在 ai_video_management webapp 加一个"按 parent folder 命名 media 文件"的功能 — 短剧级别的 button，一点扫整个当前短剧下所有 folder，把每个 folder 里的图片+视频文件 rename 成跟其所在 folder 同名（重复时附加数字 1/2/3）。
 
-## 背景 / 用户场景
+### 背景 / 用户场景
 - 用户从 Seedance 下载 video 后放进 `ai_videos/{drama}/{characters|scenes|shots}/{asset}/` 文件夹，下载下来的原始文件名通常含时间戳/任务 ID/中英混排（例：`jimeng-2026-05-10-6390-柳红袖 · 红袖招老板娘 — 角色 reference 转身样片（turntab....mp4`、`kling_20260510_VIDEO_白月清___紫霄宫主_3014_0.mp4`），既不便引用也不便在文件管理器排序。
 - 用户希望命名规则与现存惯例一致 —— 例如 `ai_videos/mozun_chongsheng/characters/c1_沧冥/` 下已有的 `c1_沧冥1.mp4`、`c1_沧冥2.mp4`，即"以所在 folder 的 name 为前缀，附加序号"。
 
-## 功能要求 (UI 层)
+### 功能要求 (UI 层)
 1. **按钮位置**: 短剧（drama / project）级别 —— 即 `ai_videos/{drama}/` 这一层 tree 节点的 row 上（紧邻已有的 `subtype-badge` "短/剧" pill），文字 / icon 风格保持轻量（例如 `🏷 重命名` 或 `重命名媒体`），不破坏 sidebar 节奏。
 2. **点击行为**: 触发后端扫描该短剧 folder 整棵树（递归），按规则 rename 所有 image / video 文件；操作完成后 refresh tree（用户能立即看到改名结果）；并在某个轻量位置 surface 结果摘要（已重命名 N 个 / 跳过 M 个 / 失败 K 个），失败时显示错误。
 3. **范围限制**: 只 touch image + video 文件（与 `MEDIA_EXTENSIONS` 一致：`.png .jpg .jpeg .webp .gif .bmp .mp4 .mov .webm .mkv .avi .m4v`）。其他文件（`.md`、`.json` 等）原样不动。
 4. **避免双击重复触发** / **避免在进行中再次点击**: button 在 in-flight 期间 disabled。
 
-## 重命名规则 (后端)
+### 重命名规则 (后端)
 - 对短剧目录递归遍历每个 folder（`_EXCLUDED_DIRS` 仍排除：`node_modules`、`.git`、`.audit`、`__pycache__`、`.pytest_cache`、`dist`、`build`、`.vite`）。
 - 在每个 folder 内：
   - 收集 immediate children 的 image + video 文件（不下钻子文件夹的 media）。
@@ -542,39 +561,41 @@ Summary: 在 ai_video_management webapp 加一个"按 parent folder 命名 media
 - "Parent folder name" 取 file 的 immediate 父目录的 basename（与 `Path.parent.name` 一致），不做转义；目录名已是文件系统合法字符。
 - Drama 自己（`ai_videos/{drama}/`）直接 children 中的 media 文件也按规则处理（parent = drama name）。
 
-## 安全 / 边界
+### 安全 / 边界
 - 入参 `path` 必须 `safe_resolve` 后落在 `ai_videos/{drama}` 这一层（顶级一段必须是 `ai_videos`，且必须是其 immediate child directory，不能是 `ai_videos/` 本身、也不能是更深层的子目录 —— rename 是 drama-scoped 操作）。
 - Origin/Host gate 与现有 `PUT /api/file` 一致（state-changing endpoint）。
 - 无 If-Unmodified-Since 要求 —— 文件名修改本身就是 atomic per-file，且 batch rename 不需要 RFC 7232 配对。
 - 拒绝 symlink；遇到任何 OSError 单独记录到 errors 列表，但不中断 batch。
 
-## 后端 endpoint
+### 后端 endpoint
 - `POST /api/rename-media`，body `{ "path": "ai_videos/{drama}" }`，返回 `{ "renamed": [{from, to}, ...], "skipped": [path, ...], "errors": [{path, message}, ...] }`。HTTP code 200 if path valid（即使部分文件失败 —— 部分失败的细节在 body 内）；400 if path 形状不对；404 if path 不存在 / 不在 sandbox 内 / 不是 drama-level；405 for 非 POST。
 
-## 前端最小改动
+### 前端最小改动
 - `api.ts` 加 `renameMedia(path)` helper。
 - `Sidebar.tsx` 在 drama 节点 row（depth=1 且 `project_meta` 非空）渲染一个 inline button —— 点击触发 `renameMedia` → 显示 in-flight spinner → 完成后调用现有 `refreshTree` 通道（`onSelect` 之外需 expose 一个 `onTreeReload` 回调），并在 console + a11y live region 报告结果。
 - `App.tsx` 把 tree refresh 函数 thread 进 Sidebar；保持 light theme。
 - 不引入任何新的 modal / popover library（用现有的 inline DOM）。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 - 不增加 / 移除目录；不删除文件。
 - 不处理子文件夹之间的 media 跨 folder 合并（每个 folder 独立处理）。
 - 不为非 ai_videos 顶级（如 `research/`）开放 rename —— 只 drama 适用。
 - 不做 dry-run 预览模式（v1 直接执行；后续若需要可加 `?dry_run=true`）。
 - 不写 backend pytest（与 follow-up 005 / 006 一致地推迟到批量补测）。
 
+
 ---
 
-# Follow-up draft 008 — 2026-05-10
+## 008 — 2026-05-10 20:18:26 — archive-unarchive-media
+
 Summary: 在 ai_video_management webapp 加 per-file archive / unarchive 功能 — 用户在 SiblingMedia tile 上点 "📦 Archive" 把 media 文件移动到同 folder 下的 `archive/` 子目录（不存在则自动创建）；archive/ 内的 media tile 上点 "↺ Unarchive" 把它移回原 folder。两步皆可逆。
 
-## 背景 / 用户场景
+### 背景 / 用户场景
 - 用户从 Seedance / Kling 渲染出大量 reference / shot mp4 + png 后，会有"暂时不要的 / 待筛选 / 旧版本"产物 — 既不想删（怕回头要用），也不想留在主 folder 里干扰 SiblingMedia 预览的视觉节奏。
 - 现有 follow-up 007 已经把"按 parent folder 命名"自动化了，但没有一个 "soft delete" 或 "归档" 通道。
 - 用户原话："lets add a new feature for all the images and videos archive and revert archive, basically, if I archive a video or picture, it will simply create a archive folder under current one parent folder and move the video file, I can also reverse that."
 
-## 决策 (interactive 收集，2026-05-10 20:18)
+### 决策 (interactive 收集，2026-05-10 20:18)
 
 | 问 | 用户答 |
 |---|---|
@@ -582,13 +603,13 @@ Summary: 在 ai_video_management webapp 加 per-file archive / unarchive 功能 
 | archive/ 在 tree sidebar 可见性 | Show archive/ as normal folder in tree — 不加进 `_EXCLUDED_DIRS`，作为常规 subfolder 显示，用户可像浏览其他 folder 一样进入。 |
 | `POST /api/rename-media` 是否跳过 archive/ 内文件 | Rename inside archive/ too — 保持 batch rename uniform，archive/ 内文件也按 parent folder name (即 `archive`) rename。⚠️注意：这意味着 `shot01/archive/foo.mp4` → `shot01/archive/archive.mp4`（单文件态）或 `shot01/archive/archive1.mp4`、`archive2.mp4`（多文件态）。如果用户后续觉得这规则不合适，单独 follow-up 调。 |
 
-## 功能要求 (UI 层)
+### 功能要求 (UI 层)
 1. **Archive button**: SiblingMedia 中每个非 archive/ 内的 media tile 右下角浮一个轻量 "📦 Archive" 按钮（仅 hover 显示 OK，但 v1 默认始终显示以避免触屏隐藏）。Tooltip "Move to archive/ subfolder"。
 2. **Unarchive button**: SiblingMedia 中每个 archive/ 子目录内的 media tile（同样以 grid 显示）右下角浮 "↺ Unarchive" 按钮。Tooltip "Move back to parent folder"。
 3. **SiblingMedia 渲染范围扩展**: 当 currentPath 是 `<folder>/<file>.md` 时，除了显示 `<folder>/` 直系 media，还要显示 `<folder>/archive/` 内 media（带视觉区分：例如灰阶 figure border + figcaption 前缀 "📦"）。Archive subfolder 媒体作为单独子区域 "Archived · 已归档" 渲染在主 grid 下方。
 4. **In-flight 防重复**: button 在 in-flight 期间 disabled。错误时通过 `aria-live` toast 公告（已有的 `#aria-live-toast`）。成功后调用 `onSaved` 触发 tree refresh + 重新 mount Reader → SiblingMedia 自动刷新。
 
-## 后端 endpoints
+### 后端 endpoints
 - `POST /api/archive-media`，body `{ "path": "ai_videos/{drama}/.../<file>.<ext>" }`
   - 校验 path 在 sandbox 内 + ext 是 media + 文件存在 + 不是 symlink。
   - 计算目标 = `<file 所在 folder>/archive/<basename>`。
@@ -607,20 +628,20 @@ Summary: 在 ai_video_management webapp 加 per-file archive / unarchive 功能 
   - rename 后，若 archive/ folder 空（无任何文件 / 子目录），自动 `rmdir` 清理空壳。
   - 405 for 非 POST。
 
-## 安全 / 边界
+### 安全 / 边界
 - 入参 `path` 必须 `safe_resolve` 后落在 EXPOSED_TREE 内（首段 `ai_videos` 或 `research`）— 与现有 `is_inside` 一致。
 - Origin/Host gate 与现有 state-changing endpoint (`PUT /api/file`, `POST /api/rename-media`) 一致。
 - 拒绝 symlink。
 - 不需要 If-Unmodified-Since（rename 是 atomic per-file，不存在并发编辑 race；并发 archive 同一文件第二次会 fail with 404 not_found，因为第一次已移走）。
 - archive/ folder 创建权限：与 file_writer 现有写权限一致（mode 0o755 默认）。
 
-## 前端最小改动
+### 前端最小改动
 - `api.ts`: 新增 `archiveMedia(path)` + `unarchiveMedia(path)` helpers，签名 `Promise<{from: string, to: string}>`。
 - `SiblingMedia.tsx`: 接受新 prop `onChange?: () => void`；渲染 archive/ 子目录 media + per-tile 按钮；按钮 onClick 触发对应 helper + onChange。
 - `Reader.tsx`: 把 `onSaved` 透传给 SiblingMedia 作 `onChange`（命名复用：archive/unarchive 也是 "tree mutation" → 触发 refreshKey bump）。
 - `styles.css`: 新增 archive button + archived figure 灰阶样式；与已有 light theme 调性一致；不引入新色板。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 - 不引入"全局 Archive 视图"（用户已选择"archive/ 在 tree 内可见"，无需单独面板）。
 - 不批量归档（v1 per-file；批量归档单独 follow-up）。
 - 不限制 archive/ 嵌套深度（理论上 `archive/archive/` 可能出现，但 v1 不阻止；只用 `parent.name === "archive"` 判定）。
@@ -628,17 +649,18 @@ Summary: 在 ai_video_management webapp 加 per-file archive / unarchive 功能 
 - 不改 `_EXCLUDED_DIRS`（archive/ 作为常规 folder 显示）。
 - 不改 `MediaRenamer`（rename 内部不跳 archive/，与用户决策一致）。
 
+
 ---
 
-# Follow-up draft 009 — 2026-05-11
+## 009 — 2026-05-11 19:56:38 — import-from-downloads-classifier
 
 Summary: 把已有的 drama-row "🏷 重命名" 按钮升级为 "📥 导入 + 重命名" 一键流程 —— 后端扫描用户 OS 的 Downloads folder（过去 7 天 by mtime 的 image / video 文件），对每个文件按文件名 substring-match 该 drama 下 `characters/c*/` + `scenes/s*/` + `episodes/ep*/prompts/shot*/` folder 名，把文件 `shutil.move` 到匹配最长的子目录；无匹配文件丢进新建的 `ai_videos/{drama}/not_matched/`；移动完成后调用现有 `MediaRenamer.rename_drama()`（新增 `excluded_folder_names={"not_matched"}` 跳过未分类桶，保留原始文件名供用户人肉triage）。
 
-## 用户原话
+### 用户原话
 
 > lets add a new functionality to the ai_video_management, enrich the rename button, it should go to the chrome downloads folder, look at past week's all image and video format files, they are all related to ai videos, based on the file name, use your best guess to put it into either charactors foldre or scene folders or shot folders under ai_videos you think relavent, if not, create a not matched folder on ai video management, I will move it myself, after you move the file then apply rename same logic as before
 
-## 决策 (interactive 收集，2026-05-11 19:56)
+### 决策 (interactive 收集，2026-05-11 19:56)
 
 | 问 | 用户答 |
 |---|---|
@@ -647,14 +669,14 @@ Summary: 把已有的 drama-row "🏷 重命名" 按钮升级为 "📥 导入 + 
 | 分类器算法 | Substring match against this drama's 现有 folder 名，longest-match 胜；tie → shot > scene > character。 |
 | 时间窗口 | 过去 7 天（by file mtime），与"past week"一致。 |
 
-## 功能要求 (UI 层)
+### 功能要求 (UI 层)
 
 1. **按钮文案变化**: drama-row 上原 "🏷 重命名" → "📥 导入 + 重命名"；in-flight "导入并重命名中…"；title `按文件名分类导入 Downloads 内的近 7 天图片/视频到此 drama，并按 parent folder 重命名`。
 2. **点击行为**: 单 API 调用 → 后端依次执行 import + rename → 返回合并 summary → toast 显示 `已导入 N / 未分类 M / 已重命名 K / 失败 E`。Tree refresh 触发让新导入文件立即出现在 sidebar。
 3. **In-flight 防重复**: 同一 drama path 处于 in-flight 时再次点击 no-op（与 follow-up 007 的 `renamingPath` 同机制）。
 4. **失败模式**: ApiError 类型直接展示 `detail.kind`；Downloads 目录不存在 → toast 显示 `downloads_dir_missing`，不抛白屏。
 
-## 分类器算法 (后端)
+### 分类器算法 (后端)
 
 输入：filename basename (不含 ext)，drama 下三类 candidate 子目录。
 对每个 candidate folder：
@@ -671,7 +693,7 @@ Summary: 把已有的 drama-row "🏷 重命名" 按钮升级为 "📥 导入 + 
 - 字符串前缀如 `c1_` 与 `s7_` 短而通用，单独命中容易误判。把整个 `c1_沧冥` 作 primary token、`c1` / `沧冥` 作回退 token，可让 `kling_c1_沧冥_test.mp4` 命中长 token (length 5)，让 `kling_c1.mp4` 命中短 token (length 2)。两者都比 not_matched 好。
 - 类型优先级 shot > scene > character 对应分类粒度：shot 文件名通常最 specific（含 epNN / shotNN），优先匹配以免被 character 名"沧冥"过早抢走。
 
-## 后端 endpoint
+### 后端 endpoint
 
 - `POST /api/import-from-downloads`，body `{ "path": "ai_videos/{drama}" }`
   - 验证 path 形状（与 `rename-media` 一致：immediate child of `ai_videos/`，drama 存在，sandbox 内）。
@@ -683,7 +705,7 @@ Summary: 把已有的 drama-row "🏷 重命名" 按钮升级为 "📥 导入 + 
   - 返回 `{ moved: [{from, to, kind}], unmatched: [{from, to}], errors: [{path, message}], rename: <RenameResult.to_payload()> }`。`kind` ∈ `character|scene|shot`。`from` / `to` / `path` 均为字符串：`from` 是 Downloads 内绝对路径的 basename + 上层 marker（避免泄露完整 home 路径，但保留可调试性 → 用 `~/Downloads/<basename>` 形式渲染）；`to` 与 `path` 是仓库 root 相对路径。
   - HTTP 200 if drama 验证通过（部分 file-level 失败的细节在 body 内）；400 `invalid_drama_path`；404 `not_found`；405 method-not-allowed；500 `downloads_dir_missing`。
 
-## 安全 / 边界 (新 sandbox 扩展)
+### 安全 / 边界 (新 sandbox 扩展)
 
 - **新读路径**: Downloads 文件夹在 EXPOSED_TREE 之外。本 follow-up 的后端首次允许"从沙箱外读 + 移动 file 到沙箱内"。
   - 限制范围：只读 Downloads 目录的 immediate children；不下钻；不读子目录；不读其他非 Downloads 路径。
@@ -694,13 +716,13 @@ Summary: 把已有的 drama-row "🏷 重命名" 按钮升级为 "📥 导入 + 
 - Origin/Host gate：与现有 `POST /api/rename-media` / `PUT /api/file` 一致。
 - 不绑定 `If-Unmodified-Since`：move 是 file-level atomic，不存在并发编辑 race。
 
-## 前端最小改动
+### 前端最小改动
 
 - `api.ts`: 新增 `importFromDownloads(path)` POST helper + `ImportFromDownloadsResult` type，签名 `Promise<{moved, unmatched, errors, rename: RenameMediaResult}>`。`renameMedia` helper 保留（其他代码不调，但保留以兼容、便测试）。
 - `Sidebar.tsx`: drama-row button onClick 改调 `importFromDownloads`；toast summary 改 `已导入 N / 未分类 M / 已重命名 K / 失败 E`；button label 改 "📥 导入 + 重命名"。
 - `App.tsx` / `styles.css`: 无变更。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 dry-run 预览模式（v1 直接 move；后续若需要单独 follow-up）。
 - 不引入多选 / 单文件 import（只 batch import）。
@@ -709,13 +731,14 @@ Summary: 把已有的 drama-row "🏷 重命名" 按钮升级为 "📥 导入 + 
 - 不写 e2e Playwright（同上）。
 - 不改 `MediaRenamer` 默认 `excluded_folder_names`；只通过 import endpoint 显式传入 `{"not_matched"}`。其他 `/api/rename-media` 调用方行为不变。
 
+
 ---
 
-# Follow-up draft 010 — 2026-05-11
+## 010 — 2026-05-11 12:04:54 — scene-ref-video-3.9s-all-angles
 
 把 ai_video 工作流的 **scene reference video prompt 时长上限**从 2.9s 提到 **3.9s**，并把"动作分段"从原来的「全景定场 + 横移 + 推近 / 三段」改写为「**全角度覆盖 / 起手正面**」的多角度建模序列。
 
-## 范围说明（cross-project rule change）
+### 范围说明（cross-project rule change）
 
 本 follow-up 由用户在 ai_video_management 项目语境中提出（hook 标记），但 **实际改动跨项目**：
 
@@ -724,7 +747,7 @@ Summary: 把已有的 drama-row "🏷 重命名" 按钮升级为 "📥 导入 + 
 
 ai_video_management webapp 本身（viewer / editor for `ai_videos/`）**不受影响**：它只读不写场景档内容，schema 改动只反映为同一 .md 文件的不同字节。所以本 follow-up 不引入 ai_video_management 的 final_spec / validation / projects 代码改动。Follow-up 持久化登记在此项目下，是因为 UserPromptSubmit hook 把 "ai_video_management" 识别为 active project；该选择被用户在三选题中再次确认。
 
-## 用户原话（abstracted）
+### 用户原话（abstracted）
 
 - 把 scene generation prompt 的时长改为 **3.9s**
 - 在 3.9s 内 **尽量把场景所有角度都覆盖到**（all-angle capture）
@@ -734,7 +757,7 @@ ai_video_management webapp 本身（viewer / editor for `ai_videos/`）**不受�
   - 完全不用考虑音频 / 背景音乐（visual-only 已经是现状，但要在 prompt body 中显式重申）
 - 唯一目标：给 Seedance 提供 **最大密度的场景信息**，让它据此建出真正的 shot 视频
 
-## 新 schema 设计（3.9s 五段，all-angle + front-start）
+### 新 schema 设计（3.9s 五段，all-angle + front-start）
 
 旧 schema（2.9s 三段）：
 1. 0-1s 远景定场（广角全景 + 微仰摇）
@@ -754,13 +777,13 @@ ai_video_management webapp 本身（viewer / editor for `ai_videos/`）**不受�
 - 「中景横移 + 长焦特写」保留旧 schema 已验证的 "标志道具 + 材质质感" 抓取能力
 - 总时长 3.9s 是 reference 上传新上限（前提：用户已在 follow-up 010 当中给出 "运镜可极快 / 不必担心速度" 的明确授权——5 段在 3.9s 内仍属于极速段落，但 Seedance 不抖即可）
 
-## 显式要求加入 prompt body
+### 显式要求加入 prompt body
 
 - **运镜可极快**：在「动作（timed beats）」段头补一句"本视频是 reference，不是给观众看的，运镜可极快但要稳定无抖动"（沿用 2.9s 原文）
 - **visual-only / 无音频**：新增一行 `音频: 无（视频纯视觉 reference，不要 BGM / 音效 / 旁白 / 环境音）` 放在「比例」与「时长」之间，让任何下游 video 模型不要 hallucinate audio track
 - **detail 密度**：在「场景」「背景」「光源」三个字段保留原来从锁定描述符照抄的所有细节（不为了缩短 3.9s 而精简描述文字 —— 文字密度与视频时长无关，video 模型在 3.9s 内会根据文字提示扫描）
 
-## Byte-identical 字段更新
+### Byte-identical 字段更新
 
 旧 byte-identical 7 字段（per rule #12.10 last paragraph）：
 `镜头 / 光线 / 色调（除时辰光源 token）/ 节奏 / 渲染样式 / 比例 / 时长（=2.9s）/ 视频专属负向`
@@ -770,7 +793,7 @@ ai_video_management webapp 本身（viewer / editor for `ai_videos/`）**不受�
 
 负向 prompt 中所有 `不要 超过 2.9s` → `不要 超过 3.9s`；新增 `不要 任何音频 / BGM / 音效 / 旁白`。
 
-## 影响清单（待 patch）
+### 影响清单（待 patch）
 
 1. `.claude/agent_refs/project/ai_video.md` rule #12.10 全段（约 60 行 schema body + 多处 2.9s 文本）
 2. `ai_videos/mozun_chongsheng/scenes/s{1..9}_*/s{N}_*.md` — 9 个场景档的「场景 reference video prompt」段
@@ -781,18 +804,20 @@ ai_video_management webapp 本身（viewer / editor for `ai_videos/`）**不受�
 - `agent_refs/project/ai_video.md` 中的 rule #12.5（character turntable，保持 2.9s，per 用户在 turntable 三选题确认）
 - 其它 `ai_videos/` 项目（目前仅 mozun_chongsheng，无其它实例需要 cascade）
 
+
 ---
 
-# Follow-up draft 011 — 2026-05-11
+## 011 — 2026-05-11 20:25:46 — batch-archive-media-multi-select
+
 Summary: 在 SiblingMedia grid 加 multi-select + 批量 Archive / Unarchive — 用户在 character / scene / shot / 任意含 media 的 folder 里勾选若干图片/视频，点 toolbar 上的 "Archive Selected (N)" 一键归档；archived 子区域同理勾选 + "Unarchive Selected (N)"。Per-tile 单文件按钮保留不变。
 
-## 背景 / 用户场景
+### 背景 / 用户场景
 - Follow-up 008 实现了 per-tile archive / unarchive — 一次一文件。
 - 实际工作流：用户从 Seedance/Kling 渲染出 10+ 候选 mp4 / png 后，只保留 1 个 final，其余全部归档。Per-tile 点 10 次太繁。
 - 用户原话："I want an archive button so I can move selected pictures and videos and move them to a local archive folder, so I only leave that 1 video in the current charactor folder ... Apply the same features to other folder under left nav such as scene and shot etc"
 - 范围 = SiblingMedia 当前已经覆盖的所有 folder（character / scene / shot / episode / 任何含 media 的 `.md` 同 folder）— 该组件已经 generic 跑在 Reader 下方，无需 per-folder 分别加。
 
-## 决策 (interactive 收集，2026-05-11 20:25)
+### 决策 (interactive 收集，2026-05-11 20:25)
 
 | 问 | 用户答 |
 |---|---|
@@ -801,7 +826,7 @@ Summary: 在 SiblingMedia grid 加 multi-select + 批量 Archive / Unarchive —
 | Select all helper | Yes — toolbar 含 "Select all" + "Clear" + "Archive Selected (N)" 三按钮，分别作用于当前 section（Folder media 或 Archived）；selection state 两个 section 独立。 |
 | Batch 错误处理 | Continue on error — 顺序发 N 个 archive/unarchive 请求，全部完成后聚合 announce："Archived 3, failed 2: foo.mp4 (target_exists), bar.png (move_failed)"。成功的不回滚，失败的留原地。 |
 
-## 功能要求 (UI 层)
+### 功能要求 (UI 层)
 
 1. **Checkbox UI**:
    - 每个 `MediaTile` 左上角加一个 `<input type="checkbox">` (大小 ≥18px, hit area ≥24x24px for touch)。Background 半透明 white 圆角，避免被视频 thumbnail 吞没。
@@ -840,11 +865,11 @@ Summary: 在 SiblingMedia grid 加 multi-select + 批量 Archive / Unarchive —
    - Toolbar 按钮 `aria-label` 含计数（"Archive 3 selected files"）。
    - Toast 走已有的 `#aria-live-toast` region。
 
-## 后端
+### 后端
 - **无新 endpoint**。`POST /api/archive-media` + `POST /api/unarchive-media` (follow-up 008, FR-9c / FR-9d) 已存在，per-file 原子操作，批量纯前端循环调用即可。
 - 不引入 `POST /api/archive-media-batch` — N 通常 ≤20，串行 round-trip 在 localhost 上 < 50ms × N，不构成性能问题；引入批量 endpoint 反而需要复杂的部分失败回滚或半成功 response shape。
 
-## 前端最小改动
+### 前端最小改动
 - `SiblingMedia.tsx`:
   - 新增 `selectedActive: Set<string>` + `selectedArchived: Set<string>` state。
   - 新增 `busy: boolean` 整段锁；保留 `busyPath: string | null` 供单文件高亮。
@@ -856,12 +881,12 @@ Summary: 在 SiblingMedia grid 加 multi-select + 批量 Archive / Unarchive —
   - `.sibling-media-toolbar button:disabled` — 走 light-theme `#9ca3af` 灰。
   - `.sibling-media-item input[type="checkbox"]` — absolute 左上 8px / 8px，scale 1.3，半透明白底圆角 4px。
 
-## 安全 / 边界
+### 安全 / 边界
 - 不引入新的安全 surface — 仅前端循环已存在的 endpoint。
 - Origin/Host gate 仍然每次 archive 请求都走（per-call middleware，与 batch 无关）。
 - 不需要 If-Unmodified-Since（批量 archive 复用 008 的"single atomic rename，无 edit race"假设）。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 - 不引入 backend batch endpoint（理由见后端段）。
 - 不引入"按 mtime 区间批量归档"、"按文件名 pattern 批量归档" 等高级筛选 — v1 纯 manual select。
 - 不引入跨 folder 批量（每个 SiblingMedia 实例只看自己的 folder + archive/）。
@@ -870,26 +895,27 @@ Summary: 在 SiblingMedia grid 加 multi-select + 批量 Archive / Unarchive —
 - 不写 backend pytest（与 005 / 006 / 007 / 008 / 009 / 010 一致地推迟到批量补测）。
 - 不写 frontend Vitest（与现有 SiblingMedia 一致 — e2e 走 Playwright 时再补）。
 
+
 ---
 
-# Follow-up draft 012 — 2026-05-11
+## 012 — 2026-05-11 12:28:33 — backend-autoreload-stale-routes
 
 修复 stale-backend 导致 dev workflow 偶发 `405 Method Not Allowed` 的根因。让 `make run-backend` 默认开 uvicorn `--reload`，新加 endpoint 不再要求用户手动重启 Python 进程。
 
-## 用户报告
+### 用户报告
 
 > when I click the button on ai_video_management, I got error: 导入失败: Method Not Allowed
 
 用户点 drama-row 的 "📥 导入 + 重命名" 按钮（per follow-up 009），前端 `POST /api/import-from-downloads`，UI toast 显示 `导入失败: Method Not Allowed`。该 toast 串内容由 `frontend/src/api.ts → readJson` 的 ApiError detail.kind 渲染；当 detail 是字符串（FastAPI 默认 405 体 `{"detail": "Method Not Allowed"}`）时，detail.kind 直接吃了那串 string，所以 toast 串带空格、Title Case。
 
-## 根因诊断（先复现确认）
+### 根因诊断（先复现确认）
 
 1. **代码层**：`backend/libs/api.py` 已注册 `@app.post("/api/import-from-downloads")`（follow-up 009 落地），fastapi TestClient 直接打该路由 → **200**；catch-all `methods=["GET","PUT","PATCH","DELETE"]` 注册正确 → `GET` → **405**（带结构化 `{detail:{kind:"method_not_allowed"}}`）。
 2. **路由表层**：进程内 `app.routes` 列出 `/api/import-from-downloads {'POST'}` + `/api/import-from-downloads {'PATCH','DELETE','PUT','GET'}` 两条，**POST 槽 100% 占住**。
 3. **唯一能解释「带空格 / Title Case 405 体」**：用户浏览器击中的 backend Python 进程 **是 follow-up 009 之前启动的旧进程**，里面只有 catch-all 的更早形态 / 或干脆没有 import-from-downloads 路由 — fastapi 在那个版本只 register 了 `/api/rename-media` POST，POST 到 `/api/import-from-downloads` 撞 fastapi 内置 405 fallback（`{"detail":"Method Not Allowed"}` — 注意不是我们自己 catch-all 的结构化体）。
 4. **根因**：`backend/main.py` 直接 `uvicorn.run(app, host=..., port=...)`，**不开 `--reload`**。Makefile `run-backend` 跟着不开。每次 follow-up 加新 endpoint，老用户必须自己手动 Ctrl+C → 重启进程，否则 backend 是旧版。
 
-## 修复方案
+### 修复方案
 
 **最小代码改动 + 默认安全。**
 
@@ -902,11 +928,11 @@ Summary: 在 SiblingMedia grid 加 multi-select + 批量 Archive / Unarchive —
 - `frontend/src/api.ts` `readJson` 解析路径不变 — Title Case `Method Not Allowed` 是 fastapi 体本身的格式，前端不需要 normalize；解决 stale-backend 后这种 string 体不会再出现，只会出现自定义的结构化 `{detail:{kind:"method_not_allowed"}}`，toast 串变 `导入失败: method_not_allowed`（lowercase snake_case）— 这是设计内的标识。
 - `OriginHostMiddleware` `GUARDED_ROUTES` — 与本 bug 无关；不在本 follow-up 范围扩。后续如果想把所有 POST endpoint 加 Origin/Host gate（目前只 PUT /api/file 有），另起 follow-up。
 
-## 如何向用户解释 / immediate workaround
+### 如何向用户解释 / immediate workaround
 
 restart backend process — `Ctrl+C` 当前 `make run-backend` → `make run-backend` 重启 → 浏览器重试按钮即 OK。本 follow-up 落地后 dev workflow 不再需要这一步。
 
-## 影响清单
+### 影响清单
 
 - `projects/ai_video_management/backend/main.py` — 加 `--reload`/`--no-reload` flag + reload 分支用 import-string
 - `projects/ai_video_management/backend/libs/api.py`（或新加 `libs/asgi_factory.py`） — 加 `_create_default_app` factory
@@ -918,37 +944,38 @@ restart backend process — `Ctrl+C` 当前 `make run-backend` → `make run-bac
 - `Makefile`（默认行为已正确）
 - 任何前端 / `agent_refs/` / 其它项目
 
+
 ---
 
-# Follow-up draft 013 — 2026-05-11
+## 013 — 2026-05-11 12:50:29 — batch-trim-character-mp4-to-2.9s
 
 一次性数据操作：把 `ai_videos/mozun_chongsheng/characters/c*/c*.mp4` 全部 19 个文件 **就地** trim 到 **exact 2.9s**（ffmpeg re-encode），让它们直接满足 character turntable rule #12.5 的 ≤ 2.9s Seedance reference 上传约束 — 之前用户手工渲染的实际时长 3-5s 各异。
 
-## 范围说明（hook 标记 vs 实际范围）
+### 范围说明（hook 标记 vs 实际范围）
 
 UserPromptSubmit hook 把 prompt 归到 `ai_video_management`，但 **本 follow-up 不改 webapp 代码** — 它是 `ai_videos/mozun_chongsheng/characters/` 下的 binary file 重写（mp4 byte-level）。webapp 只读，schema 不解析时长字段，所以 ai_video_management 行为零变化。Follow-up 持久化登记于此是因为 hook 选了它；同时在 `specs/ai_video/mozun_chongsheng/changelog.md` 加 cross-ref 条目记录实际 artifact 改动。
 
-## 用户原话
+### 用户原话
 
 > are you able to easily cut a 4s mp4 into 2.9s, basically just take the first 2.9s
 > basically for all mp4 and ai_video_management/charactor folders, help me cut them into 2.9s
 
 （`charactor` = `character` 笔误）
 
-## 用户在多选题中确认
+### 用户在多选题中确认
 
 1. **Output strategy**：overwrite in place（原文件被替换，no backup ; 用户接受 ; 原始版本已无）
 2. **Precision**：exact 2.9s（ffmpeg re-encode，每文件 ~5-10s，总 batch 约 2 分钟）
 3. **Scope**：仅 19 个 `characters/c*/*.mp4`；scene mp4s 跳过（rule #12.10 v2 已把 scene 改 3.9s，与本批操作目标冲突）；其他 drama 不影响（目前只 mozun_chongsheng）
 
-## 执行细节
+### 执行细节
 
 - **ffmpeg binary**：通过 `pip install --user imageio-ffmpeg` 拉来的 v7.1 bundled exe（位于 `%LOCALAPPDATA%\Packages\PythonSoftwareFoundation.Python.3.13_*\LocalCache\local-packages\Python313\site-packages\imageio_ffmpeg\binaries\ffmpeg-win-x86_64-v7.1.exe`）；不污染系统 PATH。
 - **命令模板**：`ffmpeg -y -i <src> -t 2.9 -c:v libx264 -preset fast -crf 18 -c:a aac -movflags +faststart <tmp>` → atomic rename `tmp` → `src`。`-c:a aac` 是因为部分 Kling/Seedance 输出含 audio track；`-movflags +faststart` 让网页 / webapp 内 inline 播放更快开始。
 - **Atomic write**：先写 `<src>.trim.mp4` 临时文件，ffmpeg 成功后再 `mv` 覆盖原文件 — 防 ffmpeg 中途崩溃留下半截文件。
 - **Verify**：每文件 trim 完用 `ffprobe -v error -show_entries format=duration` 输出实际时长；用 Python 判断 abs(duration - 2.9) < 0.05 算 OK；否则记入 errors[]。
 
-## 19 文件清单（pre-state，post-state 见 changelog）
+### 19 文件清单（pre-state，post-state 见 changelog）
 
 ```
 characters/c10_司空玄/c10_司空玄1.mp4
@@ -974,7 +1001,7 @@ characters/c9_韩夺心/c9_韩夺心.mp4
 
 （注意：`c2_*` 与 `c*_seedream.png` 同名 png 不在范围；scene `s*/s*N.mp4` 跳过；ep* prompts/shot* 下的成片 mp4 跳过。）
 
-## 不受影响（surgical 范围之外）
+### 不受影响（surgical 范围之外）
 
 - `projects/ai_video_management/` 任何代码 / 测试 / e2e — webapp 不 parse 时长字段，文件 mtime 会变但内容仍是合法 mp4
 - `agent_refs/project/ai_video.md` rule #12.5（character turntable 锁 2.9s）— **本 follow-up 是把 artifact 主动对齐到现有规则**，无规则改动
@@ -984,13 +1011,14 @@ characters/c9_韩夺心/c9_韩夺心.mp4
 - `characters/c*/c*_seedream.md` Seedream 立绘 prompt 文件 — 不动
 - `episodes/ep*/prompts/shot*/shot*.md` shot prompt 文件 — `{ref_c{N}_*}` placeholder 仍指向同名 mp4 路径，无需 path patch；唯一不同是 mtime 与时长
 
-## 唯一遗留风险
+### 唯一遗留风险
 
 如果某些 source mp4 **本就 ≤ 2.9s**（用户已手工剪过 / 或 Seedance 输出就是短的），`-t 2.9` 不会扩长视频；ffmpeg 直接输出原时长，验证步骤 abs() < 0.05 误差窗会让 ≤ 2.85s 的文件标 `tolerated`（短于规则但不算 failed）。Changelog 会列出每文件 before/after 时长，用户 review 时可决定要不要 re-render。
 
+
 ---
 
-# Follow-up draft 014 — 2026-05-12
+## 014 — 2026-05-12 20:15:00 — actor-face-pool-casting-ref-video
 
 新增三件事到 ai_video_management webapp，按 pipeline 顺序：
 
@@ -998,19 +1026,19 @@ characters/c9_韩夺心/c9_韩夺心.mp4
 2. **Casting workflow** — 在 ai_video project 内，把 pool 中某个 actor 关联到该 project 的某个 role（character），形成 role → actor 映射。Casting 表可编辑可重置。
 3. **Reference video generation** — 完成 casting 后，把 actor 的 face image 与现有 character turntable 2.9s Seedance prompt（agent_refs/project/ai_video.md rule #12.5）组合，产出 Seedance image-to-video ref-video 输入，最终的 mp4 落到 `ai_videos/{drama}/characters/c{N}_*/c{N}_*.mp4`（继续遵守 ≤ 2.9s 硬上限）。
 
-## 用户原话
+### 用户原话
 
 > lets add a new features to the ai_video_management, I will first need you to acurately genreate me a pool of actor faces using AI, like asian, men, 20~25 ages, handsome etc, all the pictures are well labled and managed, and then we need a workflow process to do casting, like pic actor A for the role B in this ai vidoe project C, and once we complete this casting, we will use the picture together with the 2.9s prompt you generated previously to generate a reference video for each charactor
 
 (`charactor` = `character` 笔误；`pic` = `pick` 笔误)
 
-## 上下文锚点
+### 上下文锚点
 
 - "2.9s prompt you generated previously" 指 `agent_refs/project/ai_video.md` rule #12.5（character turntable Seedance reference 2.9s 硬上限）+ follow-up 013 已把 `ai_videos/mozun_chongsheng/characters/c*/c*.mp4` 全 19 个文件就地 trim 到 ≤ 2.9s，artifact 已对齐规则。
 - 现有 import 流（follow-up 009 `POST /api/import-from-downloads`）已具备「从 Downloads 扫近 7 天 image/video → substring-match 分类 → move 到 drama 内」能力；新功能可在此基础上扩展，而不是另起炉灶。
 - 现有 webapp 至 follow-up 013 都遵守"text-prompt viewing/editing only"原则（follow-up 001 hard-out-of-scope），从不直接调外部 AI API。本 follow-up **可能**会突破此原则（视 Q2/Q4 决策而定）。
 
-## 决策 (interactive 收集，2026-05-12)
+### 决策 (interactive 收集，2026-05-12)
 
 | 问 | 用户答 |
 |---|---|
@@ -1019,7 +1047,7 @@ characters/c9_韩夺心/c9_韩夺心.mp4
 | Casting 持久化 | `ai_videos/{drama}/casting.md` 单 markdown 表（role / actor_id / notes 三列；缩略图由前端 CastingView 通过 actor_id 查询 actor 池实时渲染，不在 md 内 inline 图）。 |
 | Ref-video 生成 | **不进 webapp**。用户手工：在 webapp 内看到 actor face path + rule #12.5 的 2.9s prompt → 复制到 Seedance 外部跑 → 下载 → 走已有 follow-up 009 import-from-downloads 流程落到 `characters/c{N}_*/c{N}_*.mp4`。 |
 
-## 属性 schema（六字段）
+### 属性 schema（六字段）
 
 每张 face 用六个字段 label，前五个 enum，第六个自由文本：
 
@@ -1035,7 +1063,7 @@ characters/c9_韩夺心/c9_韩夺心.mp4
 后端从六字段 deterministic 拼接一条英文 Seedream 风格 prompt，例如：
 `portrait headshot of asian male, 22 years old, handsome, period ancient chinese cultivator outfit, professional studio lighting, neutral background, photorealistic, sharp focus, 8k`
 
-## 文件 layout
+### 文件 layout
 
 ```
 ai_videos/
@@ -1053,7 +1081,7 @@ ai_videos/
     └── ...
 ```
 
-## 新增 endpoint（5 个）
+### 新增 endpoint（5 个）
 
 - `POST /api/actors/generate` — body `{count: 1..20, ethnicity, gender, age_range, look, style, notes?}` → 循环调 pollinations.ai N 次（不同 seed）→ 每张图落到 `ai_videos/_actors/actor_NNNN/`；返回 `{generated: [{id, image_path, attrs}], errors}`
 - `GET /api/actors` — 列出 pool 全部 actor + 属性（给 casting picker 用）
@@ -1063,7 +1091,7 @@ ai_videos/
 
 新 endpoint 仍走 SecurityHeadersMiddleware（CSP / X-Content-Type-Options / Referrer-Policy）。Origin/Host gate（`GUARDED_ROUTES`）暂沿用现有 pattern——只 PUT /api/file 在 gated set 内，新 POST/DELETE 与现有 rename / archive / import 一致地不加 gate（已知 security gap，留给后续 security pass）。
 
-## 新增前端 view / 组件
+### 新增前端 view / 组件
 
 - `ActorPoolGenerator.tsx` — 模态表单：六字段下拉 + count + 提交 → 调 `/api/actors/generate`。从 Sidebar 上 `_actors/` 行的 "🎭 Generate" 按钮触发。
 - `ActorGalleryView.tsx`（可选 v1）— 浏览模式：filter chips + 缩略图网格。v1 简化：直接在 sidebar 展开 `_actors/` 看 actor folders；每个 `actor_NNNN.md` 用现有 markdown view + SiblingMedia 渲染。
@@ -1071,12 +1099,12 @@ ai_videos/
   - **Read mode**：显示当前 casting 表 + 每行 actor 缩略图（通过 `/api/actors` 查询）+ rule #12.5 的 2.9s prompt 直接 inline 复制按钮（含 face path）。
   - **Assign mode**：filter chips（按属性筛 actor）+ 缩略图网格 + 每个 role 一个 dropdown（actor_id 选择）→ 调 `/api/casting/assign`。
 
-## 新增后端 libs
+### 新增后端 libs
 
 - `actor_pool.py` — `ActorPool` 类：`generate_batch` / `list_actors`；prompt builder；ID 分配（`actor_{NNNN}` 自增）；httpx GET pollinations.ai；保存 jpg + 写 sidecar md；error per file 不 fail 整 batch。
 - `casting.py` — `Casting` 类：`read_casting(drama)` / `assign(drama, role, actor, notes)` / `unassign(drama, role)`；管理 `casting.md` 表格的 parse + write（整文件重写避免 markdown table 编辑边界 case）。
 
-## 安全 / 边界扩展
+### 安全 / 边界扩展
 
 - **首次出站 HTTP**：backend 第一次访问外部 URL（pollinations.ai）。Server-side 硬化：
   - 写死 `POLLINATIONS_BASE = 'https://image.pollinations.ai/prompt/'`，不接受用户传 URL。
@@ -1087,7 +1115,7 @@ ai_videos/
 - 新增 endpoint 仍受 SecurityHeadersMiddleware 覆盖。
 - 不引入新 secret / API key（pollinations.ai 无 auth）。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不动 rule #12.5 的 2.9s 硬上限；ref-video 生成仍走"用户手工外部跑 + import"。
 - 不动 rule #12.10 的 3.9s scene reference 规则。
@@ -1098,24 +1126,25 @@ ai_videos/
 - 不引入 Origin/Host gate 扩展（与现有 pattern 一致；security gap 留给独立 follow-up）。
 - 不引入 face attribute auto-classification（属性来自用户填的表单 → 100% 准确，无需 ML 推断）。
 
-## 不在本 follow-up 范围（v1 红线）
+### 不在本 follow-up 范围（v1 红线）
 
 - 不动 character turntable rule #12.5 的 2.9s 硬上限（follow-up 013 刚把 artifact 对齐到这条规则；ref-video 输出继续遵守）。
 - 不影响 scene reference video rule #12.10 的 3.9s（follow-up 010 已定）。
 - 不影响 spec_driven webapp / 现有 spec pipeline。
 - 不在本 follow-up 内做 backend pytest + e2e Playwright（与 005-013 一致推迟）。
 
+
 ---
 
-# Follow-up draft 015 — 2026-05-12
+## 015 — 2026-05-12 21:05:00 — actors-bootstrap-folder
 
 修 follow-up 014 留下的 chicken-and-egg UX bug: 用户启动 webapp 后看不到 "🎭 生成演员" 按钮，因为它绑在 sidebar 的 `_actors/` 行上，而 `_actors/` 目录只在第一次成功生成后才被 backend 创建。新用户无法首次触发生成 → 无法看到 UI 入口 → 无法用此功能。
 
-## 用户原话
+### 用户原话
 
 > I dont see it in ai_video_management's UI page
 
-## 根因
+### 根因
 
 follow-up 014 `Sidebar.tsx` 渲染逻辑：
 
@@ -1129,7 +1158,7 @@ const isActorsRoot = isAiVideoChild && dramaPathParts[1] === "_actors";
 
 follow-up 014 `actor_pool.py:generate_batch` 第一行 `actors_dir.mkdir(parents=True, exist_ok=True)` 是 lazy 创建 —— 必须先调用 endpoint 才创建文件夹。Endpoint 必须从 sidebar 按钮触发。死循环。
 
-## 修复
+### 修复
 
 后端启动时 eager 创建 `ai_videos/_actors/`，无需等待第一次生成调用：在 `api.py:create_app()` 实例化 ActorPool 之后立即调一次 `actor_pool.actors_dir().mkdir(parents=True, exist_ok=True)`。
 
@@ -1138,28 +1167,29 @@ follow-up 014 `actor_pool.py:generate_batch` 第一行 `actors_dir.mkdir(parents
 - 文件夹为空时，TreeWalker.`_walk_project` 仍能正常生成 directory 节点（已 verified：`sub = []` 不阻塞 node 创建）
 - 对已有 `_actors/` 的安装零影响（`exist_ok=True`）
 
-## 用户 next step
+### 用户 next step
 
 若用户的 backend 进程是 follow-up 014 之前启动的，新代码（5 个 endpoint + 启动时 mkdir）不会生效。follow-up 012 已让 `make run-backend` 默认开 `uvicorn --reload`，新增 / 改动的 `libs/*.py` 文件会自动被检测并 reload。但若用户用 `make run-prod` 跑的（非 reload 模式）则需手动重启。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不动 actor pool / casting 任何业务逻辑
 - 不动 backend libs 文件结构（只在 create_app 内加 1 行 mkdir）
 - 不动前端代码
 - 不写 backend pytest（与 005-014 一致推迟）
 
+
 ---
 
-# Follow-up draft 016 — 2026-05-12
+## 016 — 2026-05-12 21:30:00 — jpg-preview-uses-api-media
 
 修 follow-up 014 / 015 之后用户报告的另一个 UX bug：点击 `ai_videos/_actors/actor_NNNN/actor_NNNN.jpg` 文件，Reader 不显示图片预览，而是一大段 base64 字符串。
 
-## 用户原话
+### 用户原话
 
 > when I select a jpg under actors, it is now display or preview properly on the UI
 
-## 根因
+### 根因
 
 **两件事的交叉**：
 
@@ -1192,7 +1222,7 @@ follow-up 014 `actor_pool.py:generate_batch` 第一行 `actors_dir.mkdir(parents
 
 follow-up 014 引入 actor pool（`ai_videos/_actors/*/*.jpg`）后，用户首次大规模点 `.jpg` 文件 → 触发这个潜在了 5+ follow-up 的 bug。
 
-## 修复
+### 修复
 
 **改 Reader 的 dispatch，让 `.png`/`.jpg` 也走 `/api/media`**，与其他 image / video 扩展一致；同时改 ImageRefView 的 `<img src>` 用 `mediaUrl()` 取代 `imageUrl()`（同根因 —— 但当前仓库无 `_seedream.png` 资产被加载过，所以这个分支的 broken 之前没暴露）：
 
@@ -1203,20 +1233,21 @@ follow-up 014 引入 actor pool（`ai_videos/_actors/*/*.jpg`）后，用户首�
 
 `/api/media` 端点的 sandbox 限制（`exposed.is_inside` + `resolver.resolve`）与 `/api/file` 等价（见 `api.py:178`），所以这个改动不弱化安全。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不删 `imageUrl` helper（保留兼容；可后续 follow-up 清理）
 - 不动 `/api/file` 对 `.png`/`.jpg` 的 base64 行为（其他调用方 e.g. 测试 / 直接 download 可能仍依赖；本 follow-up 只改前端 render 路由）
 - 不动 FR-61（spec 文字写 `/api/file`，与实际现状不符 —— 是 specs 的历史陈述，不阻碍 fix）
 - 不写 backend pytest / e2e（与 005-015 一致推迟）
 
+
 ---
 
-# Follow-up draft 017 — 2026-05-12
+## 017 — 2026-05-12 22:00:00 — actor-generation-progress-visibility
 
 修 follow-up 014 引入的 batch generate UX 问题：用户报告点 "🎭 生成演员" 选 count=20，磁盘只出现 1 张图片，且不知道剩下 19 张的状态（仍在生成？失败？已结束？）。
 
-## 用户原话
+### 用户原话
 
 > I clicked the genreate button to generate 20 actors, right now only 1 picture gets genreated, I am not sure the progress of the rest 19, could you introduce some way for me to see the generation job's progress whether it is still running or failed or what happend.
 
@@ -1226,7 +1257,7 @@ follow-up 014 引入 actor pool（`ai_videos/_actors/*/*.jpg`）后，用户首�
 
 （先前 prompt 已登记为 follow-up 016；本 prompt 登记为本 draft 017。）
 
-## 根因
+### 根因
 
 follow-up 014 的 `POST /api/actors/generate` 是 **同步 + 串行** 实现：
 
@@ -1243,7 +1274,7 @@ pollinations.ai 每次响应 5–30 秒不等。`count=20` worst case = 20 × 30
 2. 用户刷新 sidebar 看到只 1 张图，**无任何 in-flight 状态指示**，无法分辨是后端还在跑、是 pollinations.ai 限速、还是 backend 已完成但失败。
 3. 失败的具体原因（per-image timeout / response_too_large / mkdir_failed）藏在 backend `errors[]` 数组里，但因浏览器断开，前端永远拿不到这个数组。
 
-## 修复策略：搬移循环到前端
+### 修复策略：搬移循环到前端
 
 最小侵入修复 —— 不动 backend，只把循环从 `generate_batch(attrs, count)` **搬到前端**：
 
@@ -1263,7 +1294,7 @@ pollinations.ai 每次响应 5–30 秒不等。`count=20` worst case = 20 × 30
 
 前端 loop 已能满足"可见进度 + 单张失败可分辨"的核心需求；SSE / job tracker 是 v2 升级路径。
 
-## 行为契约
+### 行为契约
 
 修复后：
 - 单击 "生成" → modal 显示 progress bar `[████░░░░░░] 4 / 20 (20%)`；按钮文案 `生成中… (4 / 20)`；
@@ -1272,11 +1303,11 @@ pollinations.ai 每次响应 5–30 秒不等。`count=20` worst case = 20 × 30
 - 全部完成 → toast `已生成 N / 失败 E`；errors 列表保持可见，便于用户拍照 / debug；
 - 关闭 modal：当前 inflight 请求完成（无法 abort 中途），但 loop 停止。
 
-## 后端改动：零
+### 后端改动：零
 
 `actor_pool.py:generate_batch` 保持原 count 参数支持（与现有 endpoint 契约 / pytest scenarios / 测试 stub 一致）；仅前端调用方式从 `count=N` 改为 `N × count=1`。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 backend job tracker / SSE（如未来需要可独立 follow-up）
 - 不引入 retry-failed-only 按钮（v1 失败后用户重新点 "生成" 即可，跳过已生成的 ID 范围）
@@ -1284,13 +1315,14 @@ pollinations.ai 每次响应 5–30 秒不等。`count=20` worst case = 20 × 30
 - 不写 pytest / e2e（与 005-016 一致推迟）
 - 不动 backend / `POST /api/actors/generate` 错误码契约
 
+
 ---
 
-# Follow-up draft 018 — 2026-05-12
+## 018 — 2026-05-12 22:30:00 — pollinations-rate-limit-retry
 
 修 follow-up 014 / 017 batch generate 在用户实测中遇到的 **pollinations.ai 429 rate limit cascade**。用户跑 count=20，第 1 张成功后所有后续请求拿到 429 Too Many Requests，且每个 error 都报 `actor_0003` —— 两个独立 bug 的合流。
 
-## 用户原话
+### 用户原话
 
 > I asked to generate 20 in a batch, but after generate the first picture, I got error:
 > #2: actor_0003: http_failed: The read operation timed out
@@ -1298,9 +1330,9 @@ pollinations.ai 每次响应 5–30 秒不等。`count=20` worst case = 20 × 30
 > #4: actor_0003: http_failed: Client error '429 Too Many Requests' ...
 > ...
 
-## 两个独立根因
+### 两个独立根因
 
-### 根因 A：pollinations.ai 免费 endpoint 有限速
+#### 根因 A：pollinations.ai 免费 endpoint 有限速
 
 实测响应：连发 2+ 请求即触发 HTTP 429。Research 阶段（follow-up 014）调查的资料没明确说免费 endpoint 限速；现在用户实测 = 有，且很激进。
 
@@ -1308,7 +1340,7 @@ pollinations.ai 每次响应 5–30 秒不等。`count=20` worst case = 20 × 30
 - 第 3-N 张 429
 - follow-up 014 `_default_fetcher` 实现：单次 GET，无重试，无 backoff —— 一拿 429 / timeout 立即冒泡到 `generate_batch` 的 `except Exception` 分支，写 errors[]，跳过。
 
-### 根因 B：incomplete folder 占着 ID 不放
+#### 根因 B：incomplete folder 占着 ID 不放
 
 每个失败请求都报 `actor_0003`，因为：
 
@@ -1317,9 +1349,9 @@ pollinations.ai 每次响应 5–30 秒不等。`count=20` worst case = 20 × 30
 3. 旧批失败时（用户先前那次 1/20）某个 folder 可能在 jpg 没写盘前 partial 残留 —— 或者 Windows 上偶发 rmdir 失败被 swallow。
 4. 残留的 `actor_0002/` 空 folder 被 `_next_actor_id_num` 算进 max → 下一批永远从 `actor_0003` 开始。每次新 iteration mkdir(actor_0003) 成功（folder 被新批每次 cleanup 后又被新批 mkdir），收到 429，cleanup actor_0003 folder。下一 iteration 又是 actor_0003。死循环。
 
-## 三处修复
+### 三处修复
 
-### 修复 1 — backend retry-with-backoff on 429 / timeout
+#### 修复 1 — backend retry-with-backoff on 429 / timeout
 
 `actor_pool.py:_default_fetcher` 重写：
 
@@ -1329,7 +1361,7 @@ pollinations.ai 每次响应 5–30 秒不等。`count=20` worst case = 20 × 30
 - 其他 HTTP 错误码（500/404/...）直接冒泡（不重试，避免浪费 wall-clock）。
 - 单张图片总 wall-clock worst case ~81s（30s base × 1 + 3s + 30s × 1 + 6s + 30s × 1 + 12s + 30s × 1）。仍远低于浏览器 fetch 默认超时。
 
-### 修复 2 — `_next_actor_id_num` 跳过 + 清理 incomplete folders
+#### 修复 2 — `_next_actor_id_num` 跳过 + 清理 incomplete folders
 
 把 `_ACTOR_DIR_RE` 命中但缺 `<id>.jpg` 的 folder 视为 incomplete：
 
@@ -1339,7 +1371,7 @@ pollinations.ai 每次响应 5–30 秒不等。`count=20` worst case = 20 × 30
 
 副作用：如果用户**手动**在 `_actors/` 里创建了空 `actor_NNNN/` folder 想"占位"，本 fix 会删掉它。这种 hack 不在 v1 contract 内，不视为破坏行为。
 
-### 修复 3 — frontend 加 inter-iteration throttle
+#### 修复 3 — frontend 加 inter-iteration throttle
 
 `ActorPoolGenerator.tsx` 在每次 await `generateActors()` 完成后、下一轮开始前 sleep **2 秒**（最后一轮不 sleep）：
 
@@ -1349,7 +1381,7 @@ pollinations.ai 每次响应 5–30 秒不等。`count=20` worst case = 20 × 30
 
 加 hint 文字到 modal："pollinations.ai 免费 endpoint 有限速 — 默认每张间隔 2 秒；遇到 429 自动重试 3 次（最长等 60s）。"
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 backend job tracker（仍 stateless；retry 在单次 HTTP call 内完成，不跨 endpoint 调用持久化）
 - 不并行 N 张（避免触发限速）
@@ -1357,19 +1389,20 @@ pollinations.ai 每次响应 5–30 秒不等。`count=20` worst case = 20 × 30
 - 不改 `MAX_BATCH_COUNT=20`（用户可继续要 20；只是更慢、有 throttle）
 - 不写 backend pytest / e2e（与 005-017 一致推迟；retry path 在 fake fetcher 下不触发，需独立测试 fixture）
 
+
 ---
 
-# Follow-up draft 019 — 2026-05-12
+## 019 — 2026-05-12 21:43:45 — archive-ui-for-direct-media-views
 
 Summary: archive feature 在 character / scene / shot folder 内**只对 markdown reader 可见**的回归 — 用户最自然的工作流是点 sidebar 里的 mp4 文件直接看视频，但此时 Reader 走 `isVideo` 分支只渲染 `<video>`，没有 SiblingMedia → 没有 checkbox、没有 toolbar、没有 Archive Selected。follow-up 008 + 011 的批量归档完全实现但用户看不见。本 follow-up 把 SiblingMedia 渲染范围从「.md only」扩展到「任何 single-file media reader 视图」。
 
-## 用户原话
+### 用户原话
 
 > for the mp4 file i put under charactors and scenes foders, lets introduce a fuction called archive basically under each charactor, there will be multiple mp4 video reference, I need to select one and move the rest to archive, so I could just select those unwanted ones and then say archive, then it should be moved to a local archive folder under current charactor folder, apply the same to scene, shot, and all ai videos
 
 用户描述的就是 follow-up 008 + 011 已实现的功能契约，但实测看不见 — 经诊断确认是 **render 入口缺失**，非后端 / 逻辑 bug。
 
-## 根因
+### 根因
 
 `projects/ai_video_management/frontend/src/components/Reader.tsx` 的 render-mode dispatch（line 142-178）目前只在 `isMarkdown` 分支底下挂 `<SiblingMedia>`（line 172）。其他分支：
 
@@ -1385,7 +1418,7 @@ Summary: archive feature 在 character / scene / shot folder 内**只对 markdow
 
 典型 character 文件夹（实测 `ai_videos/mozun_chongsheng/characters/c1_沧冥/` 有 1 个 `.md` + **8 个 `.mp4`**）：用户点任一 mp4 → 看到 video 但没归档 UI；只有点 `c1_沧冥.md` 才会看到 SiblingMedia 的 8 个 sibling 视频 + 批量归档 toolbar。这违背"point and click" 直觉。
 
-## 决策（无 interactive 问题，按用户原文契约推断）
+### 决策（无 interactive 问题，按用户原文契约推断）
 
 | 问 | 决策 |
 |---|---|
@@ -1395,7 +1428,7 @@ Summary: archive feature 在 character / scene / shot folder 内**只对 markdow
 | 行为差异 | 无。`findSiblingMedia` 已排除 `currentPath` 自身 — 用户点 `c1_沧冥1.mp4` 后 SiblingMedia 显示 `c1_沧冥2.mp4` ~ `c1_沧冥8.mp4` + 同 folder 的 png / jpg；他可勾选 1-7 中不要的，点 Archive Selected。这就是用户要的 UX。 |
 | 视觉 | `<SiblingMedia>` 默认 grid 已在 light-theme 灰背景下良好；不引入新样式。已有 `🎬 当前视频` ↑ `📁 Folder media · 同 folder 媒体` ↓ 的纵向布局对 video 分支同样适用。 |
 
-## 功能要求
+### 功能要求
 
 1. **Reader.tsx 修改范围限定 line 142-178 的 `reader-body` JSX**。其他逻辑（fetch、save、conflict、editing）零改动。
 2. **四处新增 `<SiblingMedia>`**（每处都用同一份 props）：
@@ -1407,13 +1440,13 @@ Summary: archive feature 在 character / scene / shot folder 内**只对 markdow
 4. **零后端改动** — `POST /api/archive-media` + `POST /api/unarchive-media` (follow-up 008) 已存在；SiblingMedia 内部循环复用 (follow-up 011)。
 5. **零样式新增** — 复用 follow-up 005 + 008 + 011 已有的 `.sibling-media-grid` / `.sibling-media-toolbar` / `.sibling-media-item` 等 CSS。
 
-## 安全 / 边界
+### 安全 / 边界
 
 - 不引入新 endpoint 调用 — 复用现有 archive / unarchive media handlers，保持 Origin/Host gate、sandbox、symlink 拒绝、原子 rename 等已验证契约。
 - 不影响 editing flow — `editing && !isImage && !isVideo` (line 132) 已确保 video / image 不进入 Editor 分支。
 - `<SiblingMedia>` 返回 `null` 当 `siblings.length === 0 && archived.length === 0`（SiblingMedia.tsx line 233）— 单文件文件夹（没有兄弟 media）下不会渲染空白 section，无视觉回归。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 folder-level archive UI（无 file 选中时显示文件夹媒体列表）— 走 Reader 路由 `/file/:path`，路由不变；当前的"点一个 sibling 文件看到批量 UI" 流程已满足用户原话。
 - 不挂载到 CastingView / ShotlistTableView / JsonlView / CodeView — 当前无 ref-video 用例。
@@ -1421,17 +1454,18 @@ Summary: archive feature 在 character / scene / shot folder 内**只对 markdow
 - 不写 frontend Vitest / e2e Playwright（与 follow-up 005 ~ 018 一致，推迟到批量补测）。
 - 不重命名 SiblingMedia → `FolderMediaPanel` 等更通用的名字 — 名字仍准确（它确实显示 "siblings"），重命名是 churn。
 
+
 ---
 
-# Follow-up draft 020 — 2026-05-12
+## 020 — 2026-05-12 21:57:51 — mp4-page-single-archive-button
 
 Summary: 收窄 follow-up 019 在 single-file media reader 页面上加的 SiblingMedia grid — 用户反馈"mp4 page 只要一个 archive 按钮归档当前文件"。视频 / 图片 单文件页面 grid + checkbox + toolbar 信息量过大，用户实际只想 "看完这个 mp4 觉得不要 → 一键归档 → 继续看下一个"。回归到 per-file inline button UX。
 
-## 用户原话
+### 用户原话
 
 > change the format a little bit, on the mp4 page, just give me a archive button to archieve current mp4 file
 
-## 决策（无 interactive 问题，按用户原文直推）
+### 决策（无 interactive 问题，按用户原文直推）
 
 | 问 | 决策 |
 |---|---|
@@ -1442,7 +1476,7 @@ Summary: 收窄 follow-up 019 在 single-file media reader 页面上加的 Sibli
 | 错误处理？ | 走已有 `#aria-live-toast` 公告；按钮 disabled in-flight。 |
 | 视觉？ | 按钮挂 `.media-view` 内 video / img 之下，单行右对齐；轻量灰底 + light-theme，与 `.sibling-media-archive-btn` 调性一致但 reader 级 class 名独立。 |
 
-## 功能要求
+### 功能要求
 
 1. **Reader.tsx 在 `isVideo` 分支**：移除 follow-up 019 加的 `<SiblingMedia>`；在 `<video>` 之下加 `<button className="reader-media-archive-btn">` 触发 archive / unarchive；fragment 包裹不再需要 → 回到 `<div className="media-view">…</div>` 单容器。
 
@@ -1463,13 +1497,13 @@ Summary: 收窄 follow-up 019 在 single-file media reader 页面上加的 Sibli
 
 8. **样式**：新增 `.reader-media-archive-btn` 样式 — float / margin-top 6px、light-theme bg、disabled cursor: progress；不污染已有 `.sibling-media-archive-btn`。
 
-## 后端 / 安全 / 边界
+### 后端 / 安全 / 边界
 
 - **零后端改动** — 复用 008 / 011 已有的 `POST /api/archive-media` + `POST /api/unarchive-media`，安全契约（Origin/Host gate、sandbox、symlink reject、原子 rename、archive/ folder 自动清理空壳）原样生效。
 - **archive 文件再 archive**：后端已校验"immediate parent is archive → 400 `already_archived`"，所以按钮永远显示其中一个 state，不会 double-archive。
 - **不跨 folder**：依然是 per-file，与 008 一致；用户视角只多了"已在 reader 里"这一个入口。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不为 `isImageRef` / `isShotPair` / `isMarkdown` 引入单按钮 — 那些 markdown view 旁的 SiblingMedia 仍是最佳 UX；用户没要求收窄。
 - 不为 `isCasting` / `isShotlistTable` / `isJsonl` / `isCode` / `isTxt` 加 archive — drama-root 级文件，无 ref-video / ref-image 用例。
@@ -1477,17 +1511,18 @@ Summary: 收窄 follow-up 019 在 single-file media reader 页面上加的 Sibli
 - 不引入 confirm dialog — archive 可逆，按钮变成 Unarchive 即 misclick recovery。
 - 不写 frontend Vitest / e2e Playwright（与 005 ~ 019 一致推迟）。
 
+
 ---
 
-# Follow-up draft 021 — 2026-05-12
+## 021 — 2026-05-12 23:00:00 — multi-provider-face-generation
 
 让 actor face 生成不再绑定单一 source，引入 **provider rotation with failover** 架构。Pollinations.ai 仍是默认 primary，新增 **AI Horde（aihorde.net）匿名 endpoint** 作为 fallback；每张图按 round-robin 选起点 provider，失败时 fall through 到 chain 内下一个。
 
-## 用户原话
+### 用户原话
 
 > is pollination.ai the only site you could download free ai generated pictures? is there any other free alternative? could you do a bit research to see if there is a better one, then we could avoid the rate limit of only 1 sites
 
-## Research summary（详见 conversation log）
+### Research summary（详见 conversation log）
 
 | Provider | Auth | Free limit | Latency | Server-side? | Verdict |
 |---|---|---|---|---|---|
@@ -1501,16 +1536,16 @@ Summary: 收窄 follow-up 019 在 single-file media reader 页面上加的 Sibli
 | ZSky AI | signup + 50 lifetime credits | 50 lifetime | fast | ✅ | 太小 |
 | Generated.Photos | 必须 key | 受限 | fast | ✅ | ⛔ ToS 禁 download/cache（同 follow-up 014 否决理由） |
 
-## 用户决策（interactive 收集 2026-05-12）
+### 用户决策（interactive 收集 2026-05-12）
 
 | 问 | 用户答 |
 |---|---|
 | Provider mix | **pollinations + AI Horde fallback**（不引入 Cloudflare） |
 | Failover 策略 | **Round-robin per image, with failover** — 每张从 chain 下一位起，失败则 fall through |
 
-## 架构设计
+### 架构设计
 
-### Provider 抽象
+#### Provider 抽象
 
 ```python
 class Provider(Protocol):
@@ -1548,14 +1583,14 @@ class ProviderChain:
 
 Round-robin index 每次调用前进 1（无论成功失败），所以连续 N 次调用会依次以 provider[0], [1], ..., [N-1] 起手。失败时 fall through 同 chain 余下 provider。
 
-### Configuration
+#### Configuration
 
 环境变量 `AI_VIDEO_MGMT_FACE_PROVIDERS=pollinations,aihorde`（默认）控制 chain 组成 + 顺序。用户可设：
 - `pollinations` → 单 provider，关闭 AI Horde
 - `aihorde,pollinations` → 反序，AI Horde 优先
 - 空 / 无效值 → 回退默认
 
-### Test-fetcher 兼容
+#### Test-fetcher 兼容
 
 `ActorPool.__init__(exposed, resolver, fetcher=None, providers=None)`：
 - 现有测试传 `fetcher=lambda u, t, m: bytes` 仍 work — `fetcher` 被包成 `FetcherShimProvider` 单成员 chain，绕过 env var
@@ -1564,7 +1599,7 @@ Round-robin index 每次调用前进 1（无论成功失败），所以连续 N 
 
 `generate_batch` 内部从 `self._fetcher` 改用 `self._chain.generate(prompt, seed, width, height)` —— URL build 移到 provider 内部，避免 chain 假设特定 URL 结构。
 
-## 安全 / 边界扩展
+### 安全 / 边界扩展
 
 - AI Horde 也是新出站 HTTP destination（第 2 个），与 pollinations 同样硬化：
   - Base URL 写死 `https://aihorde.net/api/v2`
@@ -1574,7 +1609,7 @@ Round-robin index 每次调用前进 1（无论成功失败），所以连续 N 
 - 单图 worst case wall-clock：pollinations retry (~81s) + AI Horde async wait (180s) + AI Horde download (30s) = ~5 min。已远超浏览器 fetch timeout，但 follow-up 017 已搬循环到前端 → 每图独立请求，单图 5min 是上限。
 - CSP `connect-src 'self'` 不变（前端不直接访问 AI Horde）
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 Cloudflare Workers AI（用户答选不要）
 - 不引入更精细 per-provider retry config（pollinations 仍 retry 3 次；AI Horde 单次尝试不内部 retry，由 chain 层 fall through 到 pollinations）
@@ -1583,17 +1618,18 @@ Round-robin index 每次调用前进 1（无论成功失败），所以连续 N 
 - 不写新 backend pytest（与 005-019 一致推迟；inline smoke 验证 chain 行为）
 - 不动 frontend（chain 对前端透明）
 
+
 ---
 
-# Follow-up draft 022 — 2026-05-12
+## 022 — 2026-05-12 22:07:24 — sidebar-collapse-all-icon
 
 Summary: 在 sidebar 顶部加一个 collapse-all 图标按钮，单击 → 把当前 tree 内所有 folder 节点 `expanded` 状态置 `false`，整个 nav 树折叠到顶层。
 
-## 用户原话
+### 用户原话
 
 > on the ai_video_management left menu, lets add a collapse all icon, when click it will collapse the entire left nav tree
 
-## 决策（无 interactive 问题，按用户原文直推）
+### 决策（无 interactive 问题，按用户原文直推）
 
 | 问 | 决策 |
 |---|---|
@@ -1605,7 +1641,7 @@ Summary: 在 sidebar 顶部加一个 collapse-all 图标按钮，单击 → 把�
 | 与 currentPath ancestors 的交互 | line-62 effect 在 `currentPath` 变化时 expand 祖先链。collapse-all 不修改 `currentPath`，所以 effect 不会被触发抵消折叠。但若用户折叠后又点 sidebar 内别处文件，那次 navigation 会重新展开新路径的祖先链 — 符合 VS Code 行为。 |
 | 当前文件被折叠后不可见 | 接受 — VS Code 同样行为。Breadcrumb + Reader 仍显示当前文件路径，用户可手动展开找回。不是缺陷。 |
 
-## 功能要求
+### 功能要求
 
 1. **Sidebar.tsx 修改范围**：
    - 加 `onCollapseAll: () => void` 局部 useCallback（依赖 `[tree]`）：walk tree → 把所有 `node.type` 非 file/image/video 的节点 path 都置 `false` → `setExpanded(allFalse)`（覆盖 prev 全部 known path）。
@@ -1618,30 +1654,31 @@ Summary: 在 sidebar 顶部加一个 collapse-all 图标按钮，单击 → 把�
 
 3. **零后端改动**、零新 endpoint、零新 dep。
 
-## 安全 / 边界
+### 安全 / 边界
 
 - 不引入新的安全 surface — 纯 client-side state 操作。
 - 不影响键盘导航 — 现有 ArrowLeft/Right/Up/Down/Enter/Space 行为不变；collapse-all button 通过 Tab 可达。
 - 不影响 `ActorPoolGenerator` 模态 / `renameToast` / `subtype-badge` 等 sidebar 内既有功能。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不加 "Expand all" 反向按钮 — 用户没要求；line-50 effect 已经在 tree 刷新时默认全展开，需要时刷新页面即可。
 - 不加键盘快捷键（Ctrl+Shift+Numpad-Minus 等） — 单按钮就够，键盘党用 Tab 到 button + Enter 即可。
 - 不持久化 collapse 状态到 localStorage — line-50 effect 已经让 collapse-all 跨同 session tree refresh 持久；跨 session 重置（刷新页面 = 全展开默认）符合"一次性整理视图"语义。
 - 不写 frontend Vitest / e2e Playwright（与 005 ~ 021 一致推迟）。
 
+
 ---
 
-# Follow-up draft 023 — 2026-05-12
+## 023 — 2026-05-12 22:15:39 — delete-media-to-deleted-folder
 
 Summary: 在 mp4 / image reader 页面上 Archive 按钮旁加一个 Delete 按钮 — 把当前 media 文件 soft-move 到 `ai_videos/_deleted/{保留原 ai_videos 之下的子路径}`。Soft-delete 而非真删除 — 文件仍在 sandbox 内可见、可手工移回；后续若需要 in-app restore 走单独 follow-up。
 
-## 用户原话
+### 用户原话
 
 > please also add a delete button to the mp4 files which will move it to a top level _deleted folder
 
-## 决策（无 interactive 问题，按用户原文直推 + 与 follow-up 008 / 020 一致性推断）
+### 决策（无 interactive 问题，按用户原文直推 + 与 follow-up 008 / 020 一致性推断）
 
 | 问 | 决策 |
 |---|---|
@@ -1660,7 +1697,7 @@ Summary: 在 mp4 / image reader 页面上 Archive 按钮旁加一个 Delete 按�
 | 成功后导航 | 与 Archive 一致：`useNavigate` 跳新路径让 reader 立刻显示同一 media 从 `_deleted/` 加载；但此时 button 区域因 `_deleted/` 隐藏 → 用户看到 video + 空 footer，明确反馈"已搬走"。 |
 | 错误处理 | Aria-live toast 公告 + button re-enable。busy state 与 `archiving` 互斥（两按钮共享一个 busy guard 防 double-fire）。 |
 
-## 功能要求
+### 功能要求
 
 1. **`projects/ai_video_management/backend/libs/media_archiver.py`**：
    - 新增 `DELETED_DIR_NAME = "_deleted"` + `AI_VIDEOS_ROOT_NAME = "ai_videos"`。
@@ -1704,7 +1741,7 @@ Summary: 在 mp4 / image reader 页面上 Archive 按钮旁加一个 Delete 按�
    - 加 `.reader-media-delete-btn` — 与 `.reader-media-archive-btn` 同基线尺寸；hover 时 color → 警示红（用 var(--text)，不引入新色板；通过 border-color 切到 `#c53030` 或类似 light-theme 红 — 检查 styles 已有调色后选用 `--error-border` 之类已定义变量）。disabled 走相同 opacity 0.55 + cursor: progress。
    - 与 Archive button 间距：margin-left 8px 即可。
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **Origin/Host gate**（per follow-up 002 / api_security middleware）原样生效，新 endpoint 无 carve-out。
 - **Sandbox**: `_validate_media_source` 已校验 path 在 EXPOSED_TREE 内。Target path `ai_videos/_deleted/...` 仍在 sandbox 首段 `ai_videos`，无逃逸。
@@ -1714,7 +1751,7 @@ Summary: 在 mp4 / image reader 页面上 Archive 按钮旁加一个 Delete 按�
 - **DOS via deep path**：path 长度 / depth 没硬上限；但 sandbox 内文件本来就受 OS path-max 限制，与现状一致，无新风险。
 - **不验 `If-Unmodified-Since`**：单 atomic rename，无 edit race，与 archive 决策一致。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 in-app restore / undelete 按钮 — user 没要求；用户可用文件管理器或后续 follow-up。
 - 不引入"clear _deleted/"批量真删除按钮 — 同理。
@@ -1725,13 +1762,14 @@ Summary: 在 mp4 / image reader 页面上 Archive 按钮旁加一个 Delete 按�
 - 不 rmdir 原文件被删后的空 parent folder — 与 Archive 设计不对称（Archive unarchive 会清空 archive/ 但 archive 创建不删 parent；Delete 同理，只创建 target chain 不删 src parent）。
 - 不 prescribe `_deleted/` 大小 / 数量上限 — 用户责任。
 
+
 ---
 
-# Follow-up draft 024 — 2026-05-12
+## 024 — 2026-05-12 23:30:00 — kling-text-to-image-provider
 
 加 **Kling text-to-image** 作为第 3 个 face generation provider，放在 chain 首位作为 primary。Kling 是 ByteDance/快手 商业级 API（用户已经用它跑 Seedance 视频，故已有 access），text-to-image ~1-3s 出图（10×+ 快过 pollinations，30×+ 快过 AI Horde queue），属性可控（prompt 内传），稳定（无队列波动）。
 
-## 用户原话
+### 用户原话
 
 > please use the following see if it could speed things up, right now it took so long to generate the pictures:
 >   - 方案 A：从 thispersondoesnotexist.com 自动下载 100 张 AI 生成的亚洲脸（需要筛选，因为它生成全人种）
@@ -1739,7 +1777,7 @@ Summary: 在 mp4 / image reader 页面上 Archive 按钮旁加一个 Delete 按�
 >
 > if I give you kling text to image api, would that help?
 
-## 评估
+### 评估
 
 | 选项 | Verdict |
 |---|---|
@@ -1747,7 +1785,7 @@ Summary: 在 mp4 / image reader 页面上 Archive 按钮旁加一个 Delete 按�
 | C) Generated.Photos | ❌ ToS 明禁 "caching, stockpiling, or downloading photos as stand-alone files" —— 与 `_actors/` 持久化用例正面冲突 |
 | **Kling text-to-image (用户提议)** | ✅ 商业级 + JWT auth + 用户已有 access + ~1-3s/img + prompt-based attribute control + 无队列等 |
 
-## Kling API 摘要
+### Kling API 摘要
 
 - POST `https://api.klingai.com/v1/images/generations`
 - Auth: JWT HS256，payload `{iss: access_key, exp: now+1800, nbf: now-5}`，signed with `secret_key`
@@ -1756,9 +1794,9 @@ Summary: 在 mp4 / image reader 页面上 Archive 按钮旁加一个 Delete 按�
 - Poll: GET `/v1/images/generations?pageSize=500` 列 tasks，找匹配 task_id，等 `task_status: "succeed"`
 - 拿到 `task_result.images[0].url` → download (r2-like CDN URL)
 
-## 实现
+### 实现
 
-### 新增 `KlingProvider`（actor_pool.py）
+#### 新增 `KlingProvider`（actor_pool.py）
 
 跟随 `Provider` Protocol，集成现有 chain：
 
@@ -1767,12 +1805,12 @@ Summary: 在 mp4 / image reader 页面上 Archive 按钮旁加一个 Delete 按�
 - **流程**：submit POST → 检 `code == 0` → poll GET（每 2s，max 120s）→ 找 task → 检 `task_status` (`succeed` / `failed` / 其他 = processing) → 拿 url → SSRF-vet → download (follow_redirects=True, 5MB cap, 30s timeout)
 - **Aspect ratio**：从 (width, height) 推断：512×512 → `"1:1"`；其他 16:9 / 9:16 / 4:3 / 3:4 fallback。Kling 不接受任意分辨率，必须 enum ratio
 
-### `_build_default_chain` 改动
+#### `_build_default_chain` 改动
 
 - 默认 chain 改为 **`kling,pollinations,aihorde`**（kling 优先；用户未设 kling env 时 factory 返 None，chain 自动降级回 `pollinations,aihorde` —— 零 breaking change）
 - factory 返 None 的支持：循环内 `instance = factory(); if instance is None: continue`
 
-### env vars
+#### env vars
 
 新增两个 optional env（zero impact if unset）：
 - `KLING_ACCESS_KEY` —— Kling access key (AK)
@@ -1782,7 +1820,7 @@ Summary: 在 mp4 / image reader 页面上 Archive 按钮旁加一个 Delete 按�
 
 `AI_VIDEO_MGMT_FACE_PROVIDERS` 不动；默认值变为 `kling,pollinations,aihorde`。用户可手动 override 顺序（如 `pollinations,kling,aihorde` 让 pollinations 优先）或排除某个（`kling,pollinations` 跳过 AI Horde）。
 
-## 安全 / 边界扩展
+### 安全 / 边界扩展
 
 - **JWT secret 不进 source code / log / response body** —— 仅 env var 读，仅 HMAC 输入用
 - **AK 进 JWT payload (`iss` claim)** —— 这是 Kling 协议标准，AK 本身不是 secret（identifier）
@@ -1791,7 +1829,7 @@ Summary: 在 mp4 / image reader 页面上 Archive 按钮旁加一个 Delete 按�
 - **Response code check**：Kling 即使 HTTP 200 也可能在 body `code != 0` 报错；显式检查避免吞错
 - **失败模式**：JWT 过期 → submit 401 → chain fall through；Kling rate limit → submit 429 → chain fall through；轮询超时 (120s) → raise TimeoutError → chain fall through
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 `PyJWT` 依赖（stdlib 足够）
 - 不引入 Kling video-to-image / image-to-image / image-to-video endpoint（仅 text-to-image）
@@ -1801,19 +1839,20 @@ Summary: 在 mp4 / image reader 页面上 Archive 按钮旁加一个 Delete 按�
 - 不动前端（chain 透明）
 - 不在 spec.md 改 FR-9f 的 endpoint 契约（仅在 provider 描述里加 kling）
 
+
 ---
 
-# Follow-up draft 025 — 2026-05-12
+## 025 — 2026-05-12 22:51:47 — kling-only-provider-and-env-file
 
 把 face generation provider 收窄为 **仅 Kling**。删除 Pollinations + AI Horde + `ProviderChain` + 旧 retry/backoff 机制 + `AI_VIDEO_MGMT_FACE_PROVIDERS` env var。Kling 凭借 ~1-3s/img + 商业级稳定性 + JWT auth + prompt-attribute 可控，已经压倒 fallback chain 的价值；保留多 provider 抽象只会让安全表面 (3 个出站 host + 公开 anonymous apikey + r2.dev SSRF surface) 更大而无收益。
 
-## 用户原话
+### 用户原话
 
 > Lets remove the rest options to generate pictures, only use kling api key, here is the key you can put it in some local env file that is not tracked by git.
 >   Access Key: A4PbbYLeTaaF3GBaBBmm3JgKFkNQPCHy
 >   Secret Key: hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 
-## 决策
+### 决策
 
 | 项 | 之前 (follow-up 024) | 现在 (follow-up 025) |
 |---|---|---|
@@ -1830,9 +1869,9 @@ Summary: 在 mp4 / image reader 页面上 Archive 按钮旁加一个 Delete 按�
 | Frontend 2s inter-request throttle | 存在 (`INTER_REQUEST_THROTTLE_MS`) | **删除**（Kling 不限速）|
 | 凭证存储 | env 直接 export（无文档） | **`projects/ai_video_management/backend/.env`** + 启动时 stdlib 加载（不入 git，根 `.gitignore` 已含 `.env`）|
 
-## 实现
+### 实现
 
-### 1. `backend/.env`（新文件，不入 git）
+#### 1. `backend/.env`（新文件，不入 git）
 
 ```
 KLING_ACCESS_KEY=A4PbbYLeTaaF3GBaBBmm3JgKFkNQPCHy
@@ -1843,20 +1882,20 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - 根 `.gitignore` 第 "# Environments" section 已含 `.env` → 自动 ignored，无需修改 .gitignore
 - 文件本身不通过 EXPOSED_TREE 暴露（EXPOSED_TREE 限于 `ai_videos/`, `research/`, `specs/ai_video/`, `CLAUDE.md`, `.claude/**`；`projects/` 不在内）
 
-### 2. `libs/env_loader.py`（新模块，≤30 行 stdlib）
+#### 2. `libs/env_loader.py`（新模块，≤30 行 stdlib）
 
 - `load_env_file(path: Path) -> int` —— 读 `KEY=VALUE` 行；跳过空行 + `#` 注释行；只在 key 不在 `os.environ` 时 setdefault（已存在的 env 优先，便于 CI override）；返回加载的 key 数
 - 不引入 `python-dotenv` 依赖；纯 stdlib (`pathlib` + `os`)
 - 文件不存在 → return 0（dev 友好；缺凭证的错误会在 `KlingProvider.from_env()` 阶段以 `RuntimeError` 浮现）
 
-### 3. wire into `main.py` + `libs/asgi.py`
+#### 3. wire into `main.py` + `libs/asgi.py`
 
 两个启动入口都在最早期 import 完 stdlib 后 `load_env_file(Path(__file__).parent / ".env")`：
 
 - `main.py`：在 `from libs.api import create_app` **之前**调用（否则 ActorPool 的 `_build_default_chain` 已经构造 KlingProvider）
 - `libs/asgi.py`：在 `from libs.api import create_app` **之前**调用（reload mode 路径）
 
-### 4. `actor_pool.py` 重构
+#### 4. `actor_pool.py` 重构
 
 **删除：**
 - `POLLINATIONS_BASE`, `_build_pollinations_url`, `PollinationsProvider`
@@ -1874,28 +1913,28 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 
 **Sidecar 字符串：**「`AI-generated actor face (pollinations.ai, follow-up 014).`」→ 「`AI-generated actor face (Kling text-to-image, follow-up 025).`」
 
-### 5. `frontend/ActorPoolGenerator.tsx`
+#### 5. `frontend/ActorPoolGenerator.tsx`
 
 - 删除 `INTER_REQUEST_THROTTLE_MS` 常量 + 主循环里的 `await new Promise(setTimeout, 2000)` 块
 - 删除 `phase: "throttling"` 状态 + ProgressPanel 的 "⏸ 等待限速冷却…" 分支 + footer 按钮的 "等待 2s 防限速…" 文本
 - 删除 `<p className="rate-limit-hint">ℹ️ pollinations.ai 免费 endpoint 有限速…</p>` banner
 - `Progress` interface 收窄：`phase: "idle" | "generating"`
 
-### 6. Spec 更新（surgical）
+#### 6. Spec 更新（surgical）
 
 - `final_specs/spec.md` FR-9f：删除 (a) Pollinations + (b) AI Horde 段；保留 (c) Kling 段并去掉 "(c)" 前缀；把 "Default chain" 改为 "Provider"；删除 `AI_VIDEO_MGMT_FACE_PROVIDERS` 提及；Kling env vars 从 optional 升为 required（启动 failfast）
 - `validation/security.md` carve-out #7：删除 Pollinations + AI Horde + chain 描述；保留 Kling secret hardening (g-bis)；删 (e), (f), (g)；新增 .env 文件不入 git 说明
 - `validation/acceptance_criteria.md` U3.15 标题 "+ pollinations.ai 出站 HTTP" → "+ Kling 出站 HTTP"；Given 行 monkey-patch 注释 "模拟 pollinations.ai 成功响应" → "模拟 Kling 成功响应"（httpx monkey-patch 路径不变，provider-agnostic）
 - `user_input/revised_prompt.md`：composed-from 加 025；header summary 替换为本 follow-up；follow-up 018 / 021 / 024 标记为 "已被 025 覆盖" 但 prior 行仍保留以保审计完整
 
-## 安全 / 边界变化
+### 安全 / 边界变化
 
 - **缩小**：出站 host 数 3→2；anonymous AI Horde apikey 漏洞面消失；pollinations 公共 endpoint 无 auth 风险消失
 - **不变**：Kling JWT HS256 stdlib（无 PyJWT dep）；secret 仅 env / 仅 `hmac.new` 输入；access_key 在 `iss` claim 是 identifier；30 分钟 JWT exp 现生；`code != 0` 显式检查；SSRF-vet download URL；30s timeout + 5MB cap
 - **新增**：`.env` 文件存在；根 `.gitignore` `.env` 已覆盖；env_loader 不覆写已存在的 env（CI / shell 可 override）；文件 read errors 静默（filenotfound→return 0；其他 IOError 不影响启动，KlingProvider.from_env() 会 raise 给出明确错误）
 - **failfast**：之前 follow-up 024 的 `KlingProvider.from_env() → None → chain fallback` 链路消失；现在 `ActorPool.__init__` 缺 env → `RuntimeError("kling env keys missing; set KLING_ACCESS_KEY + KLING_SECRET_KEY")`，启动期就报错而非首次 generate 时
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 `python-dotenv` 依赖（stdlib 30 行足够）
 - 不改 `ActorPool.generate_batch` 公开签名（仍 `(attrs, count) -> GenerateResult`）
@@ -1906,17 +1945,18 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - 不引入 `KLING_MODEL` env override（继续 hardcode `kling-v1`）
 - 不写 backend pytest（与 014-024 一致推迟；inline smoke 验证 import + env_loader + KlingProvider.from_env）
 
+
 ---
 
-# Follow-up draft 026 — 2026-05-12
+## 026 — 2026-05-12 23:10:14 — actor-folder-delete
 
 在 sidebar 上每个 `ai_videos/_actors/actor_NNNN/` 行加一个 🗑 Delete 按钮：点击 → 软删除整个 actor folder 到 `ai_videos/_deleted/_actors/actor_NNNN/`（保留 follow-up 023 mp4 delete 的子路径镜像 + soft-delete 语义）。**关键扩展**：cascade-unassign — delete 前先扫描每个 drama 的 `casting.md`，移除所有引用该 `actor_id` 的行，避免 dangling reference。
 
-## 用户原话
+### 用户原话
 
 > lets add a delete button at actor folder level, after delete, it will be moved to _delete folder similar to the mp4 delete feature
 
-## 决策
+### 决策
 
 | 问 | 决策 | 理由 |
 |---|---|---|
@@ -1932,9 +1972,9 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 | 不存在的 actor | 400 `actor_not_found` | 标准 input validation |
 | 已在 `_deleted/` | 400 `already_deleted` | 防御性兜底（按钮 UI 隐藏所以正常路径不会触发）|
 
-## 功能要求
+### 功能要求
 
-### Backend
+#### Backend
 
 **`projects/ai_video_management/backend/libs/actor_pool.py`**
 
@@ -1984,7 +2024,7 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
   - cascade `OSError` → 500 `cascade_failed`
 - Method-not-allowed handler GET/PUT/PATCH/DELETE → 405
 
-### Frontend
+#### Frontend
 
 **`projects/ai_video_management/frontend/src/api.ts`**
 
@@ -2008,7 +2048,7 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 
 - 加 `.actor-delete-btn` rule — 与 `.drama-rename-btn` 同尺寸基线；hover 时 border-color → `var(--error-border)`；disabled opacity 0.55
 
-### 安全 / 边界
+#### 安全 / 边界
 
 - **Origin/Host gate**：新 endpoint 自动通过现有 `api_security` middleware 守护（POST → 在 GUARDED_ROUTES 列表里？检查并加入）
 - **Sandbox**：target path `ai_videos/_deleted/_actors/...` 仍在 `ai_videos/` 一级；`actor_id` 严格匹配 `^actor_\d{4,}$` 没有路径注入面
@@ -2017,7 +2057,7 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - **Atomic rename**：单 folder `Path.rename()`；跨 fs 边界少见但 OS error 走 `ActorDeleteFailed`
 - **不验 `If-Unmodified-Since`**：与 archive / delete-media 一致
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 in-app restore / undelete 按钮 — user 没要求；用户可用文件管理器或后续 follow-up
 - 不批量删除（多选）— v1 单 actor
@@ -2028,20 +2068,21 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - 不动 spec_driven webapp 或其他 project
 - 不引入"actor 引用扫描预览"（删前不弹出"将解除 N 个 casting 引用"列表） — confirm 文本足以；事后 toast 报告数字
 
+
 ---
 
-# Follow-up draft 027 — 2026-05-12
+## 027 — 2026-05-12 23:26:56 — concurrency-and-variance
 
 两个独立修复, 共同提升 batch generate UX:
 
 1. **并发**: 当前 frontend 串行 await `generateActors({count: 1, ...})`，按 Kling ~2-3s/img 算 20 张就要 ~50s。Kling API 允许 9 路并发 → frontend 改用 9-worker pool, batch 总时间从 `N × 2-3s` 降到 `ceil(N/9) × 2-3s`（20 张约 6-9s）。
 2. **变异 (variance)**: 当前 `_build_prompt(attrs)` 对一个 batch 输出**同一句** prompt，仅 seed 不同 → Kling 同语义 prompt + 不同 seed 产生的 face 仍偏趋同。用户原话 (translation): 同一批应当在六字段基础上**自动注入** per-image 描述差异 — 长相 (清秀/邪魅/俊朗/小鲜肉)、肤色 (白/麦色/古铜)、脸型 (尖/圆/方)、眼型、发型等，避免趋同。
 
-## 用户原话
+### 用户原话
 
 > current generation of actor picture is too slow, kling api allow 9 concurrent request, please remove any limitation on your side and leverage the 9 concurrency on kling api, also, when I let you do batch generation, you should introduce a lot of variance to the text on top of the basic info, for example the basic info is asian，18~25 years old，handsome man，然后在这个基础上，你应该对于每一张图片加入自己的信息，可能图片1是清秀长相，图片二是邪魅长相，图片三是俊朗长相，图片四是小鲜肉，然后有的是皮肤白，有的是尖脸有的是圆脸，总之不要让每张图片太趋同
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -2057,9 +2098,9 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 | Sidecar 记录 | **记录 full varianced prompt** (与当前 `_build_sidecar(prompt=...)` 一致路径) | 用户能在 `actor_NNNN.md` 看 "这张图实际用了什么 prompt"，复现 / 复盘可靠 |
 | 关闭变异? | v1 无 opt-out — 用户明确想要差异 | 若未来用户需要 "纯净 base prompt" 模式可加 follow-up 加 toggle |
 
-## 功能要求
+### 功能要求
 
-### Backend
+#### Backend
 
 **`projects/ai_video_management/backend/libs/actor_pool.py`**
 
@@ -2084,7 +2125,7 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
    - 传给 provider + sidecar
 6. **`MAX_BATCH_COUNT`** 20 → **50**
 
-### Frontend
+#### Frontend
 
 **`projects/ai_video_management/frontend/src/components/ActorPoolGenerator.tsx`**
 
@@ -2103,14 +2144,14 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 
 **`projects/ai_video_management/frontend/src/api.ts`** — 零改动 (HTTP API 形状不变)
 
-### Spec / validation walk
+#### Spec / validation walk
 
 - `final_specs/spec.md` FR-9f: 在 prompt 描述里加 "per-image variance phrase appended to the prompt (server-side variance pools seeded by the actor's seed, see `_variance_for`)"；提到 frontend 9-way worker pool；MAX_BATCH_COUNT 20→50
 - `final_specs/spec.md` FR-88: count input 上限 20→50
 - `validation/security.md` carve-out #7: 变异 fragments **来自硬编码的服务端 tuple**，不接受用户输入 → 无新 prompt-injection 面；race-safe ID 分配同时关闭 9-并发下的 ID 冲突 race；MAX_BATCH_COUNT 50 = 仍然 bound 整个 batch 的最大 outbound HTTP wave
 - `validation/acceptance_criteria.md` U3.15: 加 "concurrent batch" 子断言 (Given 9 个并发请求各 count=1 → ID 不重号 + 全部成功); 提到 prompt 含 variance fragment
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **No new outbound surface** — 仍仅 Kling
 - **No new user input** — variance pools 完全 server-side
@@ -2118,7 +2159,7 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - **No new failure mode** — variance 注入只是字符串拼接，不会让 prompt 失败
 - **Sidecar 不变规格** — 仍含完整 prompt + seed; 用户可复现（同 seed → 同 variance → 同 prompt）
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 backend 内部并发（FastAPI sync threadpool 已足够；不加 `ThreadPoolExecutor` / async wrapper）
 - 不引入 negative_prompt / cfg_scale 等 Kling 高级参数
@@ -2129,17 +2170,18 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - 不动 Kling JWT / SSRF-vet / 30s timeout / 5MB cap（与 follow-up 025 一致；并发只是同时跑多个相同的单请求）
 - 不动 `_actors/_deleted/` 路径分配规则（follow-up 026 已定义）
 
+
 ---
 
-# Follow-up draft 028 — 2026-05-12
+## 028 — 2026-05-12 23:43:09 — actor-grid-view
 
 加 actor pool grid view: 一屏看多个 actor 缩略图便于横向比较，替代当前 "sidebar 点 actor_NNNN → 主区域单图查看 → 再点下一个" 的单张 workflow。Backend `GET /api/actors` 已经返回完整列表 (follow-up 014)，零 backend 改动。
 
-## 用户原话
+### 用户原话
 
 > current view of actors is only one at a time, need to first give me a grid like view to compare all pictures you could do paging if cannot fit all into one page, but one at a time is not efficient
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -2160,9 +2202,9 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 | `_deleted/_actors/` 也在 grid 显示? | **否** | grid 走 `/api/actors` 该 endpoint 只 list `_actors/` 不含 `_deleted/`；保持一致 |
 | Layout | CSS grid `repeat(auto-fill, minmax(180px, 1fr))` + gap 12px | 响应式自动布局 |
 
-## 功能要求
+### 功能要求
 
-### Frontend
+#### Frontend
 
 **`projects/ai_video_management/frontend/src/components/ActorGrid.tsx`** (new):
 
@@ -2206,21 +2248,21 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - `.actor-grid-empty` — empty state
 - `.actor-grid-pagination` — flex prev/next/indicator
 
-### Spec / validation walk
+#### Spec / validation walk
 
 - `final_specs/spec.md` 新增 **FR-91** ActorGrid view 完整契约 (route / data source / tile / pagination)；扩 **FR-87** 提及 grid-view 按钮 + 路由 + 入口
 - `validation/security.md` 无新 carve-out — grid 是纯 GET 读取面 (`/api/actors`)，已被 follow-up 014 carve-out 覆盖；本 follow-up 只 reaffirm
 - `validation/acceptance_criteria.md` 新增 **U3.18** scenario: 0 actors / 5 actors / 13 actors (跨页) / 25 actors (3 页) / tile click → /file/{path}
 - `final_specs/spec.md` 主路由列表 (如果有) 加 `/actors`
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **No new HTTP surface**: 复用 `GET /api/actors` 和 `GET /api/media` (FR-10b + 005)
 - **No new write surface**: grid 是 read-only，删除仍走 sidebar 🗑 (follow-up 026)
 - **Image paths trusted**: `image_path` 来自 backend 受信任的 ActorInfo.to_dict()，前端直接拼 `/api/media?path=...`，后端 media 路由 `_validate_media_source` 校验
 - **No new sandboxing surface**: tile click 跳 `/file/{image_path}` 经 React Router → Reader 走现有路径 → 后端 `/api/file` / `/api/media` 全部已有校验
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 filter chips (ethnicity / gender / age 等)
 - 不引入 sort options (default by id; 多排序选项是 v2)
@@ -2234,20 +2276,21 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - 不引入 keyboard navigation (arrow keys 移动 focus tile) — v1 mouse-first；可加 follow-up
 - 不引入 URL query 参数持久化 page (`/actors?page=2`) — v1 in-memory state；返回页面会回到 page 1
 
+
 ---
 
-# Follow-up draft 029 — 2026-05-13
+## 029 — 2026-05-13 00:00:12 — richer-variance-and-resolution-picker
 
 两个 batch generation 增强:
 
 1. **大幅扩张 variance**: 当前 follow-up 027 的 5 池 × 1 pick = 5 fragment ≈ 80-150 字符 的 variance 仍然让一 batch 内的图片偏趋同。用户要求 **每张图片注入 ≥1000 字符** random 形容词；example 标签覆盖 "小鲜肉" / "秀气" / "俊朗" / "邪魅" 这类整体气质轴；外加面部各部位 / 肤色 / 肤质 / 眼型 / 发型 / 表情 / 光照 / 摄影风格 等子轴。**全部 server-side hardcoded English fragments**（用户给的中文 label 是意图描述，prompt 用 English 与 base 一致避免 Kling 重点散乱）。
 2. **像素分辨率选择器**: 当前 hardcoded 512×512 (映射到 Kling aspect_ratio 1:1，Kling 实际返回 ~1024px native)。用户要 UI 提供 选项；user interactive 选择 **普通 / 2K / 4K**，default 普通 (Kling native，无 resize)；2K → Pillow Lanczos upscale 到 2048×2048；4K → 4096×4096。
 
-## 用户原话
+### 用户原话
 
 > 当生成一个batch的时候，你需要加一些random的形容词到prompt里，然后再发给kling api，比如同一个batch里，图片1是小鲜肉，图片二是秀气长相，图片三是俊朗长相，图片4是邪魅长相等等，你至少要加1000字以上的random形容词，然后在发给kling api。 然后生成的时候应该让我选在像素，default可以不用2k，4k 普通画质就可以
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -2267,9 +2310,9 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 | Sidecar 记录 | sidecar `actor_NNNN.md` 加 `resolution` 字段 + 长 variance prompt 全文 | 用户能从 md 看具体生成参数复现 |
 | Aspect ratio | 保持 1:1 (face headshot 默认) | 用户没要求 aspect；focus 在 pixel resolution |
 
-## 功能要求
+### 功能要求
 
-### Backend
+#### Backend
 
 **`projects/ai_video_management/backend/requirements.txt`**: 加 `pillow>=10.0`
 
@@ -2325,7 +2368,7 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - `GenerateActorsBody.resolution: str = "normal"`
 - `actors_generate` endpoint 把 `body.resolution` 传给 `generate_batch`
 
-### Frontend
+#### Frontend
 
 **`projects/ai_video_management/frontend/src/api.ts`**:
 
@@ -2338,7 +2381,7 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - 加 dropdown "画质" sibling 于现有 6 个属性 dropdown
 - onSubmit 传 `resolution` 到 generateActors
 
-### Spec / validation
+#### Spec / validation
 
 - `final_specs/spec.md` FR-9f: body 加 `resolution` field；描述 Pillow resize 流程；variance 总长 1000+ chars
 - `final_specs/spec.md` FR-86: 加 `resolution` enum `{"normal", "2k", "4k"}`
@@ -2346,7 +2389,7 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - `validation/security.md` carve-out #7: 加 Pillow 二进制处理 (受信任 Kling 来源 + JPEG-only 不解析任意格式 + 5MB cap 仍前置限制原图);  注明 Pillow 是新增 dep
 - `validation/acceptance_criteria.md` U3.15: 加 variance ≥1000 chars 断言 + resolution = 2k 输出 jpg 是 2048×2048 + 无效 resolution → 400
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **No new HTTP surface** — 仍单 endpoint `POST /api/actors/generate`，仅 body 扩字段
 - **No new user-controlled prompt** — variance pools 服务端硬编码；resolution 来自 enum；同 follow-up 027 立场
@@ -2354,7 +2397,7 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - **Upscale 不是真细节**: 文档化在 sidecar — `resolution=4k` 但 Kling 原始 ~1024px，结果只是 Lanczos 插值，不是 native 4K
 - **磁盘开销**: 4K JPEG ~ 1-3 MB；50 batch × 4K ≈ 100MB；用户自行管理
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不动 aspect ratio (保持 1:1)；竖屏 / 横屏 actor 是 v2
 - 不引入 image format 选择 (PNG/WEBP)；保持 JPEG
@@ -2366,9 +2409,10 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - 不写 backend pytest / Vitest (推迟)
 - 不引入 quality slider (JPEG quality 仍 hardcoded 95)
 
+
 ---
 
-# Follow-up draft 030 — 2026-05-13
+## 030 — 2026-05-13 00:11:16 — grid-bulk-delete-and-assign
 
 在 ActorGrid (follow-up 028) 上加两个 bulk operation 功能:
 
@@ -2377,11 +2421,11 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 
 用户问 "you may need a more powerful data store" — interactive 决策回答：**保持 per-drama `casting.md` 不变**。理由：actor-drama-character 关系本就是 many-to-many（同一 actor_id 出现在多个 drama 的 `casting.md` 即视为参演多剧），现有 markdown 表已经原生支持，引入 SQLite / JSON index 只会产生第二真值源 + sync 风险。
 
-## 用户原话
+### 用户原话
 
 > 在演员池页面，加入以下功能，第一个是bulk delelte，第二个功能是assign charactor, 给我drop down的选项，先选择哪个短剧，在选择短剧里的人物，然后确定后，此演员会标记参演这部短剧的这个角色。一个演员可以同时出演多部剧.you may need a more powerful data store to store this kind of relationship, it is up to you to pick the best fit
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -2398,16 +2442,16 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 | Selection 跨页保留 | **跨页保留 selection** (Set 不绑 page) | 用户能跨页累积多选；切回前页能看 selected 状态 |
 | Footer bar 持久化 | 当 select mode 开启时 sticky 在 grid 底部 | UX 显眼 |
 
-## 功能要求
+### 功能要求
 
-### Backend
+#### Backend
 
 零改动。所有逻辑走现有 endpoints：
 - `POST /api/actors/delete` (FR-9i, follow-up 026)
 - `POST /api/casting/assign` (FR-9g, follow-up 014)
 - `GET /api/tree` (FR-10, follow-up 003)
 
-### Frontend
+#### Frontend
 
 **`projects/ai_video_management/frontend/src/App.tsx`**:
 
@@ -2450,21 +2494,21 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - `.actor-grid-checkbox` — overlay 上左角 checkbox
 - `.assign-modal` — backdrop + panel (复用现有 modal CSS)
 
-### Spec / validation
+#### Spec / validation
 
 - `final_specs/spec.md` FR-91 扩展: 加 select mode + bulk delete + assign workflow 描述
 - `final_specs/spec.md` FR-89 (CastingView) 维持不变 — 这里的 assign 走相同 endpoint
 - `validation/security.md` 无新 carve-out — 都走已有 endpoints
 - `validation/acceptance_criteria.md` U3.18 扩展: select mode / 多选 / bulk delete / assign workflow
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **No new HTTP surface** — 全部复用 `POST /api/actors/delete` + `POST /api/casting/assign` + `GET /api/tree`
 - **No new write surface** — 所有 writes 都已在前面 follow-up 校验
 - **Selection state 跨页**：纯前端 in-memory，不持久化；刷新页面清空
 - **Assign 失败不阻塞** — per-actor 独立，与现有 batch-archive (follow-up 011) 模式一致
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入新 backend endpoint
 - 不引入 SQLite / JSON index — 用户 interactive 选择保留 markdown 表
@@ -2477,9 +2521,10 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - 不引入键盘 shortcut (Esc 退出 select mode 是 nice-to-have，v2)
 - 不引入 selection 持久化 (URL / localStorage) — in-memory v1
 
+
 ---
 
-# Follow-up draft 031 — 2026-05-13
+## 031 — 2026-05-13 00:16:00 — photorealism-no-wax-face
 
 修 Kling 输出 "AI 蜡像脸" 观感。当前 follow-up 029 的 17 池 variance 让脸够不同，但还是普遍"AI 风" — 过度光滑 / 完美对称 / 雕像质感。解决思路两层叠加:
 
@@ -2487,11 +2532,11 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 2. **新增 photorealism variance pool**: 每张图片再额外抽 2-3 个真实摄影 cue（相机型号 / 镜头 / 胶卷感 / 自然光场景 / 业余拍摄感）。
 3. **删除/替换误导关键词**: "8k" / "photorealistic" / "sharp focus" 单独使用反而让 Kling 走超清雕像路径；改为 "photorealistic candid documentary photo, medium-format film, soft skin micro-texture"。
 
-## 用户原话
+### 用户原话
 
 > 请确保kling生成的人像是真人，目前生成的太假了，一看就是AI生成的，有的甚至像是蜡像脸
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -2503,9 +2548,9 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 | 影响范围 | 仅 backend `actor_pool.py`；frontend 零改动 | UX 不变；用户感知改进在生成结果 |
 | Retro-fit 已存在的 actors | 不重新生成 | 老 sidecar 保留；新生成立刻生效 |
 
-## 功能要求
+### 功能要求
 
-### Backend
+#### Backend
 
 **`projects/ai_video_management/backend/libs/actor_pool.py`**:
 
@@ -2517,23 +2562,23 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
    - 加 `rng.sample(_VARIANCE_PHOTOREALISM, k=min(2, ...))` 抽样
    - 总长仍 ≥ 1000 chars（length-guard 不动）
 
-### Frontend
+#### Frontend
 
 零改动。用户感知通过 backend prompt 改写自动生效。
 
-### Spec / validation
+#### Spec / validation
 
 - `final_specs/spec.md` FR-9f: 更新 prompt 描述 — 删除 "8k" 等 + 提及 anti-wax 永久注入 + 第 18 池 `_VARIANCE_PHOTOREALISM`
 - `validation/security.md`: 无新 carve-out — variance 仍 server-side hardcoded
 - `validation/acceptance_criteria.md` U3.15: 加 "sidecar prompt 不含 'photorealistic' / 'sharp focus' / '8k' 单独短语" + "含 'natural skin texture' / 'candid' / 'RAW' 等 anti-wax keywords" 断言
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **No new surface** — 仅 backend prompt 改写 + 一个新硬编码 pool
 - **Backwards compat** — `_build_prompt` 签名不变；调用方零影响
 - **Test fixture** — 现有 7 boot-smoke 测试不依赖 prompt 内容；零回归
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 Kling negative_prompt 字段（确认 Kling text-to-image 是否支持后才能引入；当前未确认）
 - 不引入 model_name 切换（kling-v1 vs kling-v1-5）
@@ -2542,9 +2587,10 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - 不动 follow-up 029 的 17 池或 length-guard 机制
 - 不动 follow-up 030 的 grid / select mode
 
+
 ---
 
-# Follow-up draft 032 — 2026-05-13
+## 032 — 2026-05-13 00:19:36 — grid-page-size-and-prompt-preview
 
 两个独立小改:
 
@@ -2553,11 +2599,11 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 
 第 2 项需要：preview 返回 N 个 (seed, prompt)，gen 接受 `seeds: list[int]` 复用同样种子 → 同样 variance → 同样 prompt → 字节级一致 review。
 
-## 用户原话
+### 用户原话
 
 > 每页的演员展示上限可以多一点， 比如50个，当batch gen以前，加一个步骤，然我review 以下你准备发给kling api的prompt的final 版本，我确定之后点另一个button 在执行
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -2574,9 +2620,9 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 | 并发不变 | 确认后仍 9-worker pool 跑 count=1 调用，每个调用带其 seed | gen API 已可接 seeds 数组分发 |
 | seeds 传递机制 | frontend worker 池里每个 worker 拉的 slot 对应 seeds[slot-1]；POST /api/actors/generate body 带 `{seeds: [single_seed]}` count=1 | 单 seed 数组保证 backend 收到的 seeds 就是 frontend 期望的 |
 
-## 功能要求
+### 功能要求
 
-### Backend
+#### Backend
 
 **`projects/ai_video_management/backend/libs/actor_pool.py`**:
 
@@ -2595,7 +2641,7 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - 新 endpoint `POST /api/actors/preview-prompts` body `GenerateActorsBody`（seeds 字段忽略）→ 调 `actor_pool.preview_prompts(...)` → 返回 JSON；同 method-not-allowed handler 405
 - `actors_generate` 把 `body.seeds` 传给 `generate_batch`
 
-### Frontend
+#### Frontend
 
 **`projects/ai_video_management/frontend/src/api.ts`**:
 
@@ -2619,7 +2665,7 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 
 - 新 rules: `.prompt-preview-list` / `.prompt-preview-card` / `.prompt-preview-seed` / `.prompt-preview-body` / `.prompt-preview-toggle` 等
 
-### Spec / validation
+#### Spec / validation
 
 - `final_specs/spec.md` FR-9f: body 加 `seeds: list[int] | None` + 描述 preview-then-confirm 流程
 - `final_specs/spec.md` 新 **FR-9j** `POST /api/actors/preview-prompts` (dry-run prompt 计算，无 Kling 调用，无文件 IO)
@@ -2627,14 +2673,14 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - `validation/security.md` carve-out #7: 加 `/api/actors/preview-prompts` 是 read-only dry-run，无新 outbound HTTP；seeds 来自用户但走 InvalidAttribute 校验（必须 list[int] + len==count）
 - `validation/acceptance_criteria.md` U3.15: 加 preview → seeds-roundtrip → gen 用同样 prompts 断言；新 U3.19 grid PAGE_SIZE 50 + 在 13 actors 时不分页（13 ≤ 50）
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **`/api/actors/preview-prompts` 无副作用** — 仅 in-memory prompt 计算 + 返回；不写磁盘 / 不调 Kling
 - **`seeds` 输入面**: 用户可控的整数数组。Backend 校验 `list[int] + len==count`；seeds 仅作为 `_variance_for(seed, gender)` 的 RNG seed，不直接进入文件路径或 shell 命令，无新 injection 面
 - **JSON 响应大小**: 50 prompts × 1500 chars ≈ 75 KB；仍在合理 JSON response 范围
 - **No new outbound HTTP** — preview 不调 Kling
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 prompt 编辑（用户只能 review；要改 prompt 须改 attrs 重新 preview）
 - 不引入 per-image 不同 attrs（一 batch 仍 share base attrs）
@@ -2643,9 +2689,10 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - 不动 follow-up 031 的 anti-wax / camera pool
 - 不动 follow-up 030 的 grid select mode / bulk delete / assign
 
+
 ---
 
-# Follow-up draft 033 — 2026-05-13
+## 033 — 2026-05-13 00:25:47 — filename-convention-and-filters
 
 三个相关改动:
 
@@ -2653,11 +2700,11 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 2. **Filters on ActorGrid**: 加 race / gender / age_range 三个过滤 dropdown，"全部" 默认；过滤后 actors 列表再走分页
 3. **Migrate existing actors**: app 启动时 idempotent 扫描 `_actors/`，把 `actor_NNNN.jpg` 重命名到新格式（从 sidecar 读 attrs）
 
-## 用户原话
+### 用户原话
 
 > lets introduce some convention for the actor file names, it should be always {民族}__{性别}__{年龄段}.jpg, and then in the main 演员池page, lets add filters, like filter by race, filter by gendor, filter by age etc. and make your best guess to update existing actors to follow this new rule
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -2676,9 +2723,9 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 | 过滤 + 分页 | 先 filter → 再 page；filter 变化时 page 重置到 0 | 标准模式 |
 | 过滤状态持久 | in-memory；URL / localStorage 不持久 | v1 简单 |
 
-## 功能要求
+### 功能要求
 
-### Backend
+#### Backend
 
 **`projects/ai_video_management/backend/libs/actor_pool.py`**:
 
@@ -2699,7 +2746,7 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
    - 返回 `{"migrated": N, "skipped": M, "errors": K}`
 7. `ActorPool.__init__` 末尾自动调 `migrate_filenames()` 一次（idempotent；缺 `_actors/` dir 时静默 skip）
 
-### Frontend
+#### Frontend
 
 **`projects/ai_video_management/frontend/src/components/ActorGrid.tsx`**:
 
@@ -2714,21 +2761,21 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 
 - 加 `.actor-grid-filters` (flex row of dropdowns)
 
-### Spec / validation
+#### Spec / validation
 
 - `final_specs/spec.md` FR-9f: 描述 new jpg filename + sidecar 不变 + auto-migrate
 - `final_specs/spec.md` FR-91: 加 filter UI 描述
 - `validation/security.md` 无新 carve-out
 - `validation/acceptance_criteria.md` U3.15: 加 jpg 文件名匹配 `{race}__{gender}__{age_range}.jpg`；U3.18: 加 filter 多组合断言
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **No new HTTP surface** — migration 是 backend 内部；filter 纯前端
 - **No new write surface** — migration 是 rename within `_actors/`，仍在 EXPOSED_TREE 内
 - **Migration 失败兜底** — per-folder try/except；坏文件不阻塞 app 启动
 - **Sidecar 不动** — 仅 jpg 重命名
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 filter "look" / "style"（v1 只 race/gender/age 三轴；用户原话）
 - 不引入 search 框
@@ -2739,17 +2786,18 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 - 不动 casting.md 引用（actor_id 仍是 folder 名）
 - 不写 pytest / Vitest
 
+
 ---
 
-# Follow-up draft 034 — 2026-05-13
+## 034 — 2026-05-13 00:38:00 — actor-md-styled-read-view
 
 **Summary:** Actor sidecar markdown (`ai_videos/_actors/actor_NNNN/actor_NNNN.md`) gets a dedicated, visually friendly read-only view (no bulk-selection / SiblingMedia toolbar).
 
-## Source
+### Source
 
 > under ai_video_management, for actors, on the actor_NN.md file lets remove the bottom bulk selection section, we dont need it. Also put the prompt in read mode by default, and make it style and visual friendly
 
-## Abstracted instruction
+### Abstracted instruction
 
 1. **Drop bulk-selection UI from actor pages.** When the currently-viewed markdown path matches `^ai_videos/_actors/actor_[^/]+/actor_[^/]+\.md$`, do NOT render `SiblingMedia` (which carries the Select-all / Clear / Archive-Selected toolbar + per-tile checkboxes). Actor folders hold only one face image + the sidecar md; the batch-archive surface is dead weight there.
 2. **Replace generic markdown render with an `ActorView` custom view** (sibling of `ImageRefView` / `CastingView`):
@@ -2762,27 +2810,28 @@ KLING_SECRET_KEY=hyKnTGphpHEFbp4mpbhPNkQMR93Gpa3d
 5. **No backend change.** Pure frontend dispatch + styling. The sidecar md schema is unchanged (still the canonical edit target for power users).
 6. **Out of scope.** ActorGrid card style is not touched (different surface; covered by follow-ups 028/030/032). The actor folder's archive/ subfolder — if present — also vanishes from view alongside SiblingMedia; that's intentional, archive ops for actor faces happen via the grid bulk-delete (030) and the per-actor delete button (026), not per-image archive.
 
-## Why now
+### Why now
 
 The actor sidecar md was rendered through the generic markdown branch, which inherits SiblingMedia. With one image per actor folder, the bulk-selection toolbar is noise. The prompt block is the most-copied piece of content on that page and deserves a styled, single-click-to-copy treatment.
 
-## Acceptance
+### Acceptance
 
 - Navigating to `/file/ai_videos/_actors/actor_0013/actor_0013.md` shows: large face image, key/value metadata block, prompt card with Copy button — and NO bulk-selection toolbar / "Select all" buttons / per-tile checkboxes.
 - Global `Edit` button in `Reader`'s top toolbar still flips to the raw-markdown editor (power-user escape hatch).
 - Other markdown surfaces (shotlist, casting, ref_images, generic project md) are unchanged.
 
+
 ---
 
-# Follow-up draft 035 — 2026-05-13
+## 035 — 2026-05-13 11:00:00 — scene-frame-extract-button
 
 Summary: 新增 "🎞 Extract Frames" 按钮于 SiblingMedia 的每个 .mp4 tile（非 archived 视频），点击后调用新的 `POST /api/extract-frames` 端点，对 source mp4 用 imageio-ffmpeg 抽取 5 个 canonical 参考帧（t=0.5/4.4/7.9/11.4/14.6s，对齐 `agent_refs/project/ai_video.md` rule #12.10 v3 的 hero/reverse/vert/mid/detail 抽帧建议时间点），输出 PNG 至与 mp4 同 folder（命名 `{stem}_f{N}_{role}.png`）。下游 shot 视频生成时可直接将这 5 张 PNG 作为场景 reference image 上传给 Kling/Seedance。
 
-## 用户原话
+### 用户原话
 
 > now I can generate a 15s scene video we disucssed about about the scene, now lets add a new button for the scene, when click, you take pictures from those scene, where the pictures will be used as a reference about the scene to generate shot videos
 
-## 决策
+### 决策
 
 - **抽帧时间点 = rule #12.10 v3 的 5 个 canonical 抽帧建议**：t=0.5 (hero) / 4.4 (reverse) / 7.9 (vert) / 11.4 (mid) / 14.6 (detail) — 与 scene reference video prompt 的 walk-through 5 dwell 对齐。每帧输出独立 PNG，命名 `{video_stem}_f{N}_{role}.png` 便于和 source mp4 配对。
 - **按钮位置 = SiblingMedia 的每个 .mp4 tile**：与现有 Archive 按钮并列，仅在视频文件 + 非 archived 状态显示。匹配现有 per-tile 操作模式，无需引入 scene-level 概念（任何视频都可抽帧，包括非场景 reference）。
@@ -2791,17 +2840,17 @@ Summary: 新增 "🎞 Extract Frames" 按钮于 SiblingMedia 的每个 .mp4 tile
 - **幂等性**：ffmpeg `-y` 覆盖输出。再次点击按钮直接覆盖 PNG，不报错。
 - **PNG drops in same folder** → SiblingMedia 的 useEffect 已经在 onChange 后自动 refresh tree，5 张 PNG 立即出现在同一 SiblingMedia 视图中作为新 tiles。
 
-## 工作流变更
+### 工作流变更
 
 **Before**：场景 reference video 渲染后，user 想把单帧作为 shot 视频生成的图像 reference 需要：(a) 下载 mp4 到本地；(b) 用本地 ffmpeg/QuickTime/PotPlayer 截图；(c) 上传回到 ai_video_management 项目目录；(d) 重新刷新 webapp tree。
 
 **After**：在 webapp SiblingMedia 视图中点击 .mp4 tile 上的 "🎞 Extract Frames" 按钮 → 后端 ffmpeg 直接抽取 5 帧 PNG 落到同 folder → tree 自动 refresh → 5 张 PNG 立即可见可下载可作为 shot prompt 的 reference image 上传给 Kling / Seedance。
 
-## Why now
+### Why now
 
 User 在 mozun_chongsheng 项目已经按 rule #12.10 v3 (15s walk-through) 生成了第一个场景 reference video（s1_长阶顶3.mp4，实测 15.07s）。Walk-through 视频的 5 个 canonical dwell 视角（hero / reverse / vert / mid / detail）正是 shot 视频生成时需要的 background reference image 来源。Manual 抽帧工作流摩擦大；让 webapp 一键完成是自然的下一步。本 button 是 rule #12.10 v3 抽帧建议时间点的 webapp implementation。
 
-## 影响范围
+### 影响范围
 
 - `projects/ai_video_management/backend/libs/frame_extractor.py` — 新建。`FrameExtractor` class mirror `MediaArchiver` 风格；`CANONICAL_FRAMES` 常量列 5 个 (timestamp, role) 元组；`VIDEO_EXTENSIONS` frozenset；`InvalidPath` / `NotFound` / `NotVideo` / `FfmpegMissing` / `ExtractFailed` 异常；`FrameResult` 与 `ExtractResult` 不可变 dataclass。
 - `projects/ai_video_management/backend/libs/api.py` — (a) docstring 端点计数 16 → 17；(b) 新增 `ExtractFramesBody` Pydantic model；(c) import `frame_extractor` 各 symbol；(d) 在 `create_app` 内实例化 `FrameExtractor`；(e) 新增 `@app.post("/api/extract-frames")` handler + `@app.api_route(..., methods=[GET/PUT/PATCH/DELETE])` 405 兜底。
@@ -2810,28 +2859,29 @@ User 在 mozun_chongsheng 项目已经按 rule #12.10 v3 (15s walk-through) 生�
 - `projects/ai_video_management/frontend/src/components/SiblingMedia.tsx` — (a) import `extractFrames`；(b) `MediaTile` props 增加 `extracting` + `onExtractFrames`；(c) tile 内增加 `.sibling-media-actions` 容器包裹两个按钮；(d) 仅在 `isVideo && !archived` 显示 "🎞 Extract Frames" 按钮；(e) SiblingMedia 增加 `extractingPath` state + `handleExtractFrames` async handler，使用现有 `announce` aria-live 反馈；(f) 两处 `<MediaTile>` 实例传入新 props。
 - `projects/ai_video_management/frontend/src/styles.css` — `.sibling-media-archive-btn` 选择器扩展到 `.sibling-media-extract-btn`（共享样式）；新增 `.sibling-media-actions` 容器样式（flex column gap 4px，stretch 子元素）。
 
-## 不影响
+### 不影响
 
 - 其余端点 / lib 模块 / 组件不变。
 - Backend 安全模型不变 — `FrameExtractor` 复用 `ExposedTree.is_inside` + `SafeResolver.resolve` + 拒绝 symlink。
 - 现有 archive / unarchive / delete 按钮行为不变。
 - 蒙太奇黑底特殊变体（s9_识海）— 抽帧逻辑通用，对黑底视频也能抽出 5 个相同的黑帧 PNG（user 不必对 s9 点抽帧按钮，但点了也不报错）。
 
-## 实测验证
+### 实测验证
 
 `s1_长阶顶3.mp4`（15.07s 已渲染 reference）抽帧成功：5 帧均生成 ~1.2-1.3 MB PNG，MD5 各不相同（确认非 duplicate）。失败 0 项。
 
+
 ---
 
-# Follow-up draft 036 — 2026-05-13
+## 036 — 2026-05-13 22:23:53 — actor-folder-collapsed-single-leaf
 
 **Summary:** 把 `ai_videos/_actors/actor_NNNN/` 文件夹在左侧导航树中折叠成**一个 leaf 节点**（不再展开成 folder + jpg + md 两层），点击 leaf → 进入 `ActorView`（已存在的 follow-up 034 视图）一页展示该 actor 的全部内容；该页同时承载所有相关操作（特别是 delete 按钮 — 与 sidebar 现有的 🗑 等价）。
 
-## Source
+### Source
 
 > under ai_video_management actors, each actor has a folder, inside it we have md file as well as the jpg file combine the folder, jpg and md into 1 item on the left nav, so the 1 page will show everything about this actor and all the related operation like delete
 
-## Abstracted instruction
+### Abstracted instruction
 
 1. **Tree shape — actor folder collapses to leaf.** `TreeWalker._walk_filtered` 在遍历到 `ai_videos/_actors/` 的直接子目录时，若该子目录名匹配 `^actor_\d{4,}$`，**不再递归展开**其内容；改为发射**单个 leaf 节点**：
    - `type: "actor"` (新 TreeNode 类型，介于 file/image/video 之间但语义上唯一)
@@ -2857,11 +2907,11 @@ User 在 mozun_chongsheng 项目已经按 rule #12.10 v3 (15s walk-through) 生�
    - 不动 ActorGrid 的网格行为 (follow-up 028/030/032/033)。
    - 不动 CastingView 的 actor 选择器（仍按 `GET /api/actors` 返回的扁平列表呈现）。
 
-## Why now
+### Why now
 
 折叠前，每个 actor 在 sidebar 占 3 行（folder ▾ + jpg 🖼 + md 📄），200 个 actors 就是 600 行展开后的节点；几乎从不需要单独点 jpg 或 md（jpg 已经在 ActorView 顶部展示，md 已经被 ActorView 解析成结构化视图）。折叠成单 leaf 后，导航成本从 N×3 行降到 N 行，且语义上"actor"就是一个原子单位 — folder 名等于 actor_id 等于稳定的 casting reference key。把 delete 操作放进 ActorView 同时保留 sidebar 的 🗑 按钮，给出两条等价路径（左侧扫一眼批删 vs 进入 actor 详情核对后再删），与 follow-up 030 的 ActorGrid bulk delete 形成完整的 1/N/批量三级删除矩阵。
 
-## Acceptance
+### Acceptance
 
 - 加载 `/` 后展开 `ai_videos/_actors/`：每个 `actor_NNNN` 显示为**单行** `🎭 actor_NNNN` + 右侧 🗑 按钮，**不显示**展开三角，**不显示**任何 jpg/md 子节点。
 - 点击 `actor_NNNN` 行 → URL 变为 `/file/ai_videos/_actors/actor_NNNN/actor_NNNN.md` → 主区渲染 `ActorView`（face 图 + 属性表 + prompt card + Copy + **新增**的 🗑 删除按钮 + 顶部 title）。
@@ -2869,21 +2919,22 @@ User 在 mozun_chongsheng 项目已经按 rule #12.10 v3 (15s walk-through) 生�
 - Sidebar 行中的 🗑 按钮仍按 follow-up 026 行为工作（无变化）。
 - 其他左侧节点 (drama folder / `_deleted/_actors/` / research) 行为均不变。
 
+
 ---
 
-# Follow-up draft 037 — 2026-05-13
+## 037 — 2026-05-13 22:25:21 — uvicorn-graceful-shutdown-timeout
 
 Summary: dev backend (`make run-backend` / `python main.py`，默认 `--reload`）在 user 编辑 `libs/` 下任意 .py 文件触发 reload 时偶发"卡死"——uvicorn 打印 `Shutting down` + `Waiting for connections to close. (CTRL+C to force quit)` 后无限阻塞，user 不得不手动 Ctrl+C。根因是 uvicorn `graceful_shutdown` 默认 wait forever，而本项目的同步 endpoint（face generation 30s–2min / frame extraction 1–3s / import-from-downloads 文件移动）会持续占用线程；reload 期间任一未完成请求都把 shutdown 卡住。
 
 修复：`backend/main.py` 给两个 `uvicorn.run` 调用加 `timeout_graceful_shutdown=2`（秒），让 reload / SIGINT 在 2 秒后强制 close 所有连接，dev 循环不再 hang。
 
-## 用户原话
+### 用户原话
 
 > for ai_video_management, once a while I will encouter errors and the system just stuck: WARNING:  WatchFiles detected changes in 'libs\frame_extractor.py'. Reloading...
 >  INFO:     Shutting down
 > INFO:     Waiting for connections to close. (CTRL+C to force quit)
 
-## 根因诊断
+### 根因诊断
 
 1. **触发路径**：WatchFiles 检测到 `libs/frame_extractor.py` 变更 → uvicorn reload 进程发 SIGTERM 给老 worker → 老 worker 进入 graceful shutdown → 等所有 active connections close。
 2. **uvicorn 默认行为**：`timeout_graceful_shutdown=None`（永久等待）— 这是 uvicorn 设计上对 prod-correctness 的偏好，但 dev workflow 完全相反。
@@ -2894,7 +2945,7 @@ Summary: dev backend (`make run-backend` / `python main.py`，默认 `--reload`�
    - `POST /api/archive-media` / `POST /api/delete-media`：磁盘 IO，秒级但不绝对零。
 4. **dev 表象**：user 在 generate / extract 期间改了 Python 文件 → reload 立刻发起 → 当前请求还没完 → graceful shutdown wait forever → terminal 卡 `Waiting for connections to close` 行。CTRL+C 后 user 还得 Ctrl+C 第二次才能彻底退出（uvicorn force-quit 路径）。
 
-## 修复方案
+### 修复方案
 
 **最小代码改动 + dev/prod 同改。** uvicorn `timeout_graceful_shutdown` 参数 since 0.29（本项目 `uvicorn[standard]>=0.29` 已满足）。两条 `uvicorn.run(...)` 调用各加 `timeout_graceful_shutdown=2`：
 
@@ -2913,14 +2964,14 @@ Summary: dev backend (`make run-backend` / `python main.py`，默认 `--reload`�
 - 不加 prod 部署文档警告。`--no-reload` 一样吃 2s timeout，prod 真要 hot deploy 用 nginx / systemd 滚动重启，不靠这 2s。
 - 不加 frontend 提示 / toast。这是 dev workflow 内事故，user 看到的是 terminal 输出，前端无感知。
 
-## 影响范围
+### 影响范围
 
 - `projects/ai_video_management/backend/main.py` — 两条 `uvicorn.run(...)` 各加一个 kwarg `timeout_graceful_shutdown=2`。其余 argparse / load_env / import-string 不动。
 - `specs/development/ai_video_management/user_input/revised_prompt.md` — header 升级 + 文件列表追加 036。
 - `specs/development/ai_video_management/final_specs/spec.md` — FR-2 docstring 同步（uvicorn.run 调用 shape 描述增加 `timeout_graceful_shutdown=2`）。
 - `specs/development/ai_video_management/changelog.md` — append follow-up 036 条目。
 
-## 不影响
+### 不影响
 
 - 任何 frontend 文件 / lib / endpoint 业务逻辑。
 - 现有 `--reload` 默认行为（follow-up 012 确立）。
@@ -2928,17 +2979,18 @@ Summary: dev backend (`make run-backend` / `python main.py`，默认 `--reload`�
 - 其它项目（spec_driven 等）不动。
 - agent_refs / playbook / harness — 这是本项目特定 dev 行为，不上升到 common-level rule（其它项目 sync endpoint 占比远低于本项目；本 fix 价值显著但非普适）。
 
+
 ---
 
-# Follow-up draft 038 — 2026-05-13
+## 038 — 2026-05-13 22:23:41 — bulk-hard-delete-deleted-folder
 
 Summary: 在 sidebar `ai_videos/_deleted/` 行上加入"管理"入口（"🧹 永久清理"按钮，导航 `/deleted` route），打开新的 `DeletedView` 多选页面。页面递归列出 `ai_videos/_deleted/**` 下所有 media 文件（mp4 / 图片）作为 tile grid，支持 select-mode 多选 + 跨页保留 + 全选/全清；底部 sticky bar 提供 "🗑 永久删除 (N)" 按钮。点击触发"打字 `DELETE` 才能解锁确认按钮"的模态（含文件数 + "此操作不可撤销"红色警示），确认后前端 loop 新增 `POST /api/hard-delete-media` 端点逐文件 `Path.unlink()` 真删除。Soft-delete 仓库（`_deleted/`）变成可清空的"回收站"。
 
-## 用户原话
+### 用户原话
 
 > under ai_video_management, for _delete foler, give me an option to bulk hard delete those files
 
-## 交互问答记录（启动前）
+### 交互问答记录（启动前）
 
 | 问 | 选项 | 用户选 |
 |---|---|---|
@@ -2946,7 +2998,7 @@ Summary: 在 sidebar `ai_videos/_deleted/` 行上加入"管理"入口（"🧹 �
 | Surface | sidebar row vs reader page vs both | **Sidebar row for ai_videos/_deleted** |
 | Confirmation | type DELETE vs window.confirm vs two-step | **Type 'DELETE' to confirm + show file count** |
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -2972,9 +3024,9 @@ Summary: 在 sidebar `ai_videos/_deleted/` 行上加入"管理"入口（"🧹 �
 | 已 hard-delete 的文件 reader 行为 | 不动 Reader.tsx —用户在 hard-delete 后会回到 grid，不会停留在 `/file/...` 上看 404 | 范围收窄；不引入"Reader 检测 404 自动 navigate('/')" 这种额外行为 |
 | `_deleted/` 外路径误传 | 后端 400 `not_in_deleted` | 防御性返回码；前端理论上只发 `_deleted/` 内路径 |
 
-## 功能要求
+### 功能要求
 
-### 1. Backend
+#### 1. Backend
 
 **`projects/ai_video_management/backend/libs/media_archiver.py`**：
 - 新增 `class NotInDeleted(Exception)`：标记 hard-delete 调用了非 `_deleted/` 路径。
@@ -2996,7 +3048,7 @@ Summary: 在 sidebar `ai_videos/_deleted/` 行上加入"管理"入口（"🧹 �
   - 405 method_not_allowed handler (GET/PUT/PATCH/DELETE)
   - 成功 `{deleted: "ai_videos/_deleted/.../foo.mp4"}`。
 
-### 2. Frontend
+#### 2. Frontend
 
 **`projects/ai_video_management/frontend/src/api.ts`**：
 - 加 `interface HardDeleteMediaResult { deleted: string; }`
@@ -3025,7 +3077,7 @@ Summary: 在 sidebar `ai_videos/_deleted/` 行上加入"管理"入口（"🧹 �
 **`projects/ai_video_management/frontend/src/styles.css`**：
 - 加 `.deleted-view-page`（页面包装）、`.deleted-view-grid`（CSS grid auto-fill 180px tiles，复用 `.actor-grid`）、`.deleted-tile`（按钮 tile）、`.deleted-tile-selected`（蓝边）、`.deleted-tile-thumb`（img/video 容器，`object-fit: cover`）、`.deleted-tile-name`、`.deleted-tile-path`（muted 小字）、`.deleted-view-empty`、`.deleted-view-confirm-input`、`.deleted-view-confirm-warning`（红色 banner）、`.deleted-bulk-purge`（footer 红主按钮）。
 
-### 3. Spec / validation
+#### 3. Spec / validation
 
 - `final_specs/spec.md`：
   - 新增 **FR-94** (follow-up 038)：`POST /api/hard-delete-media` 端点契约 + `DeletedView` + sidebar `_deleted/` 行 "🧹 永久清理" 按钮 + typed-DELETE 模态契约。
@@ -3035,7 +3087,7 @@ Summary: 在 sidebar `ai_videos/_deleted/` 行上加入"管理"入口（"🧹 �
   - 覆盖矩阵补 `FR-94 → U3.22`。
 - `user_input/revised_prompt.md`：composed-from 加 038；header summary 重写为 038 内容；Last regenerated 时间更新。
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **Origin/Host gate**（follow-up 002 / `api_security` middleware）原样生效 — 新 endpoint 无 carve-out。
 - **Sandbox**：`_validate_media_source` 已校验 path 在 EXPOSED_TREE 内 + 扩展名 + symlink-reject。**额外**：`hard_delete` 强制 `parts[0]=="ai_videos" && parts[1]=="_deleted"`，所以即使前端被注入也无法 unlink `_deleted/` 之外的文件。
@@ -3044,7 +3096,7 @@ Summary: 在 sidebar `ai_videos/_deleted/` 行上加入"管理"入口（"🧹 �
 - **空 parent**：unlink 留空文件夹，由用户手工或将来 follow-up 清理（与 follow-up 023 设计对称：删除时不动 src parent）。
 - **`_deleted/_actors/`**：actor folder（follow-up 026）整个 folder 被 rename 进 `_deleted/_actors/actor_NNNN/`，其内 jpg + md 是 media 与非-media 混合。**本 follow-up 仅删 media（mp4 + 图片）**，actor sidecar `.md` 不在 `MEDIA_EXTENSIONS` 内 → `_validate_media_source` 直接 raise `NotMedia` 400。这意味着 hard-delete 只能逐张清掉 actor folder 的 jpg，`.md` 残留 — v1 接受（与 hard-delete-media 只针对 media 的语义一致；clear actor sidecar 走 follow-up 035 之后的 v2 follow-up）。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入"清空整个 `_deleted/` 一键按钮"（用户选 multi-select 而非全清；全选 + typed-DELETE 已能实现等价 UX）。
 - 不引入 hard-delete `.md` / `.json` / 非-media 文件。
@@ -3056,13 +3108,14 @@ Summary: 在 sidebar `ai_videos/_deleted/` 行上加入"管理"入口（"🧹 �
 - 不引入键盘 shortcut（Delete 键、Ctrl+A 等）。
 - 不引入 sidebar 二级菜单 / 右键菜单（一个明显按钮足够）。
 
+
 ---
 
-# Follow-up draft 039 — 2026-05-13
+## 039 — 2026-05-13 12:00:00 — apps-libs-ddd-cqrs-layout
 
 Adopt the solution-layout + DDD + CQRS conventions established in `.claude/agent_refs/project/development.md` (rules §1–6).
 
-## Required structural changes
+### Required structural changes
 
 1. **Top-level reshape** of `projects/ai_video_management/` to:
    - `apps/api/` (was `backend/`) — thin FastAPI wrapper. `main.py`, `container.py`, `routes/`.
@@ -3081,7 +3134,7 @@ Adopt the solution-layout + DDD + CQRS conventions established in `.claude/agent
 
 6. **`dependency_injector`** per §5.
 
-## Concrete file moves (initial mapping)
+### Concrete file moves (initial mapping)
 
 - `backend/main.py` → `apps/api/main.py`
 - `backend/libs/api.py` → split into `apps/api/routes/*.py` + multiple `libs/application/` queries+commands
@@ -3097,24 +3150,25 @@ Adopt the solution-layout + DDD + CQRS conventions established in `.claude/agent
 - `backend/libs/downloads_importer.py` → `libs/application/import_downloads__command.py` + `libs/infrastructure/downloads__reader.py` + classifier domain logic
 - `backend/libs/actor_pool.py` + `casting.py` → domain heart: `actor__entity.py`, `actor_pool__aggregate.py`, `casting__valueobject.py`; app-layer commands `pick_actor__query.py`, `assign_actor__command.py`; infra reader/writer for the actor pool folder
 
-## Out of scope
+### Out of scope
 
 - API contract changes (HTTP routes + JSON shapes stay byte-identical).
 - Frontend code restructure.
 - Test rewrites beyond import-path updates.
 - Mid-flight uncommitted edits in working tree (12 M files at follow-up time) are preserved into the migrated layout.
 
+
 ---
 
-# Follow-up draft 040 — 2026-05-13
+## 040 — 2026-05-13 22:46:35 — deleted-folder-bottom-of-nav
 
 Summary: 左侧 nav 的 "AI Videos" section 内，把 `ai_videos/_deleted/` directory 节点 sort 到列表底部（其它 drama folder 和 `_actors/` 保持现有字母顺序）。回收站是低频访问 + 视觉噪声大的系统目录，应该让位给真正的内容 — drama / `_actors`。
 
-## 用户原话
+### 用户原话
 
 > in ai_video_management left nav, lets move _deleted to the bottom of the left nav
 
-## 当前行为
+### 当前行为
 
 `backend/libs/tree_walker.py::_ai_videos_section` 用 `sorted(p for p in ai_videos_root.iterdir() if p.is_dir())` 对 ai_videos 顶层子目录按文件名字母序排序。ASCII 中 `_` (0x5F=95) < lowercase letters (97–122)，所以 `_actors`, `_deleted` 都排在所有 pinyin/英文 drama folder 之前。结果 sidebar 顶部是：
 
@@ -3125,7 +3179,7 @@ Summary: 左侧 nav 的 "AI Videos" section 内，把 `ai_videos/_deleted/` dire
 📁 ...其它 dramas
 ```
 
-## 期望行为
+### 期望行为
 
 ```
 📁 _actors/ 🎭
@@ -3136,7 +3190,7 @@ Summary: 左侧 nav 的 "AI Videos" section 内，把 `ai_videos/_deleted/` dire
 
 `_actors/` 不动（高频使用 — 整个 face pool + 角色分配工作流的入口）。只把 `_deleted/` 拉到末尾。
 
-## 修复方案
+### 修复方案
 
 **最小、纯 backend、零 frontend 改动。**
 
@@ -3169,14 +3223,14 @@ def _ai_videos_section(self) -> dict[str, Any]:
 
 **为什么 `_deleted` 不参与字母序对比：** 简化逻辑 — 无论项目里有多少 drama 文件夹，`_deleted` 永远是最后一项，零歧义。
 
-## 影响范围
+### 影响范围
 
 - `projects/ai_video_management/backend/libs/tree_walker.py` — `_ai_videos_section` 改写如上。
 - `specs/development/ai_video_management/user_input/revised_prompt.md` — 文件列表追加 040 + header bump。
 - `specs/development/ai_video_management/final_specs/spec.md` — FR-tree section 加一行 `_deleted` 排序契约（已找到 FR-39 / FR-40 附近的 tree-walking 描述区域）。
 - `specs/development/ai_video_management/changelog.md` — append follow-up 040 条目。
 
-## 不影响
+### 不影响
 
 - Frontend `Sidebar.tsx` — 直接消费 backend 给的顺序，零改动。
 - `_actors/` 顶部位置 — 保持当前 alphabetical 顺序。
@@ -3186,21 +3240,22 @@ def _ai_videos_section(self) -> dict[str, Any]:
 - Tests — `backend/tests/` 内无 `_deleted` 顺序断言（grep 已验证）；不新增测试。
 - Follow-up 039 的 `apps/+libs/` layout 改造尚未应用到 code，本 follow-up 改的是当前 `backend/libs/tree_walker.py`；当 039 应用时该模块会迁到 `libs/infrastructure/` 或 `libs/application/`，本规则随之搬走，语义不变。
 
+
 ---
 
-# Follow-up draft 041 — 2026-05-13
+## 041 — 2026-05-13 22:58:00 — frame-naming-v2-8-frames-priority-rank
 
 Summary: 重做场景视频抽帧的命名 + 帧数 + 排序约定。**5 帧 → 8 帧；扁平 `_f{N}_{role}` → 描述性 `_r{rank}_{role}_{shot_size}`；rank 1-8 = "如果只能上传 N 张参考图先选谁" 的优先级**。同时把 `frames/` 加进 `MediaRenamer` 的 excluded 集，否则用户跑 drama-level rename 时 8 个精心命名的 PNG 会被改成 `frames1.png ~ frames8.png`（这是当前实测 bug —— s1_长阶顶/frames/ 里现在就是 `frames1..frames5.png`，user 完全看不出谁是 hero 谁是 detail）。
 
-## 用户原话
+### 用户原话
 
 > in ai video management, for the frames folder generated under a scene folder, I need better naming convention for the frame files, you should tell me things like if is hero wide or reverse wide, and there should be a fixed 8 pictures frames generated? per your strategy from the video or whatever number you think is the best. Also please rank the pictures with order, in case I can only upload 3 as reference, I know which one to upload.
 
-## 帧数 = 8 的理由
+### 帧数 = 8 的理由
 
 15s walk-through reference video（rule #12.10 v3）由 **5 个 canonical dwell** (每个 ≥0.8s 静止锁机位 = 锐利非 blur) + **4 段 transition** (motion = 偶发 blur) 构成。8 帧 = 5 个 dwell anchor + 3 个战略 transition 中间帧，覆盖正交角度空隙（side / threequarter / mediumclose 三个 dwell 没有的角度档）。10 帧会加入冗余（front-quarter, back-quarter），diminishing return；6 帧需要砍掉 vert/aerial 或 detail，丢失关键信息。**5 帧 → 8 帧的 marginal cost 极低**（ffmpeg seek 慢一帧 ~100ms，总耗时 1-3s → 2-5s，user 无感知）；**marginal value 高**（多出 side / threequarter / mediumclose 三个角度直接对应实际 shot 拍摄的常见构图）。
 
-## 8 帧 schema（按 rank 优先级，timestamp 由 walk-through 路径决定）
+### 8 帧 schema（按 rank 优先级，timestamp 由 walk-through 路径决定）
 
 | rank | timestamp | role | shot_size | focal | 抽帧理由 |
 |------|-----------|------|-----------|-------|----------|
@@ -3217,7 +3272,7 @@ Summary: 重做场景视频抽帧的命名 + 帧数 + 排序约定。**5 帧 →
 
 **Rank 4-5 是次轴补强**（背向 / 高低）；**rank 6-8 是 transition 帧填空**（侧面 / 3/4 / 中近）。User 可以视具体 shot 需求挑选 — 比如某 shot 要拍角色站在场景中部往上看，那 r5 (vert) 比 r4 (reverse) 更重要，但 r1 (mid) 仍然第一选。
 
-## 命名约定 v2
+### 命名约定 v2
 
 ```
 {scene_folder}_r{rank}_{role}_{shot_size}.png
@@ -3243,13 +3298,13 @@ frames/
 2. **Role + shot_size 双标签**。role 是语义角色（hero / detail / threequarter），shot_size 是光学档（wide / medium / telephoto / oblique）。两者一起回答 "这张图能用在什么 shot"。
 3. **保留 scene folder 前缀**（follow-up 035 amendment 已确立的规则）。任何 mp4 take 在同 scene folder 抽帧都覆盖同一组 8 个 PNG。
 
-## v1 → v2 迁移与 idempotent 覆盖
+### v1 → v2 迁移与 idempotent 覆盖
 
 旧的 5 帧 `_f{N}_{role}.png` 文件 + 任何被 `MediaRenamer` 改名的 `framesN.png` 残留，在新 extract 之前 sweep 清掉：在 `FrameExtractor.extract()` 开头，对 `frames/` 子目录里的 **所有 `*.png` 文件**做一次 `unlink()`（不递归，只清 frames/ 顶层）。
 
 为什么 sweep 整个目录而非只清 v1 pattern：`frames/` 在本契约里专属于 frame extraction 输出，不会有其它来源的 PNG 进来。Sweep 整个目录 = 彻底 idempotent，零残留风险（包括将来万一再改 schema v3 时）。
 
-## `MediaRenamer` 排除 `frames/`
+### `MediaRenamer` 排除 `frames/`
 
 **当前 bug 实测**：`ai_videos/mozun_chongsheng/scenes/s1_长阶顶/frames/` 现状是 `frames1.png` ~ `frames5.png`（不是预期的 `s1_长阶顶_f1_hero.png`）。原因 — follow-up 035 抽帧后，user 又点了 drama-level "重命名 media"（FR-9b），`MediaRenamer` 把 `frames/` 子目录里所有文件按 follow-up 007 规则改成 `{parent-folder-name}{N}.{ext}` = `frames{N}.png`。精心命名的 role 信息 100% 丢失。
 
@@ -3261,7 +3316,7 @@ frames/
 
 注：`MediaRenamer.rename_drama` 已有 `excluded_folder_names` 参数（follow-up 009 引入），本改动只是补 caller-side 的集合传递，零 libs API 变更。
 
-## API 响应 schema 扩展
+### API 响应 schema 扩展
 
 `ExtractFramesResult.frames[*]` 现有字段 `{timestamp, role, path}` 之外新增：
 - `rank: int` (1-8)
@@ -3269,7 +3324,7 @@ frames/
 
 Frontend `api.ts::ExtractedFrame` interface 同步加这两字段（保持 optional 兼容性 — 但 backend 一定填，前端不需要 `?`）。
 
-## 影响范围
+### 影响范围
 
 - `projects/ai_video_management/backend/libs/frame_extractor.py` —
   - `CANONICAL_FRAMES` 改 tuple shape 为 `(timestamp, role, shot_size, rank)`，元素从 5 个扩到 8 个，按 timestamp 升序排（顺序 = ffmpeg seek 顺序，非 rank 顺序）。
@@ -3284,7 +3339,7 @@ Frontend `api.ts::ExtractedFrame` interface 同步加这两字段（保持 optio
 - `specs/development/ai_video_management/final_specs/spec.md` — 在 FR-9j 与 FR-9i 之间插入 **FR-9r** 新条目（场景视频抽帧端点契约 v2：8 帧 + rank + shot_size + sweep + frames/ 排除于 rename）。
 - `specs/development/ai_video_management/changelog.md` — append follow-up 041 条目。
 
-## 不影响
+### 不影响
 
 - `POST /api/extract-frames` 端点路由 / 请求 body shape / HTTP status code 全部不变。
 - Frontend SiblingMedia / Reader 的抽帧按钮交互不变（toast 文案保留 generic "Extracted N frames"，N 现在永远是 8 + failures 数）。
@@ -3295,20 +3350,21 @@ Frontend `api.ts::ExtractedFrame` interface 同步加这两字段（保持 optio
 - agent_refs/project/ai_video.md rule #12.10-C 的"中间帧 buffet"段说"user 后续若 shot 需要某个 3/4 偏移角度作为额外参考，可在 source mp4 上手动 ffmpeg 抽取" —— 现在那段建议被 webapp 一键 8-frame 抽帧 + 描述性命名取代，但 rule 文本本身不动（保留作为"用户也可以手动覆盖"的退路）。
 - Follow-up 039 的 `apps/+libs/` layout 改造尚未应用到 code；当迁移时 `frame_extractor.py` 与 `media_renamer.py` 会随之搬到 `libs/infrastructure/` 或 `libs/application/`，本 follow-up 的语义随之搬走，行为不变。
 
+
 ---
 
-# Follow-up draft 042 — 2026-05-13
+## 042 — 2026-05-13 22:50:19 — uvicorn-force-exit-watchdog
 
 Summary: 修 follow-up 037 没修干净的 dev-reload 卡死。`timeout_graceful_shutdown=2` 让 uvicorn 在 2s 后 cancel 正在运行的 asyncio task，但 FastAPI 所有 sync `def` endpoint 都在 anyio threadpool 里跑（25+ 路由全 sync），cancel asyncio wrapper 不会 kill 底层线程；Kling 30–120s / `/api/media` range stream / pollinations / frame_extractor 等线程继续占住进程，Python 解释器在最外层 `sys.exit` 时等非-daemon 线程导致 `Waiting for connections to close. (CTRL+C to force quit)` 卡死。修法：注入 force-exit watchdog — patch `uvicorn.Server.handle_exit` 在 signal handler 跑完后启动一个 daemon `threading.Timer`，N 秒后调 `os._exit(0)` 硬退。uvicorn 自己的 graceful 路径仍优先跑，watchdog 仅作为兜底确保进程在 (timeout_graceful_shutdown + 余量) 内死掉。
 
-## 用户原话
+### 用户原话
 
 > I got some error again, the appliation just stucked: 2Fframes%2Fframes5.png HTTP/1.1" 200 OK
 > WARNING:  WatchFiles detected changes in 'libs\tree_walker.py'. Reloading...
 >  INFO:     Shutting down
 > INFO:     Waiting for connections to close. (CTRL+C to force quit)
 
-## 根因分析
+### 根因分析
 
 1. **uvicorn 0.34（已安装）正确解析 `timeout_graceful_shutdown=2`** — `Server.shutdown()` 在 `_wait_tasks_to_complete()` 外裹了 `asyncio.wait_for(..., timeout=2)`，2s 后 `TimeoutError` cancel 所有 in-flight task。
 2. **cancel asyncio task ≠ kill 底层 OS 线程** — FastAPI 把每个 sync `def get_/post_` endpoint 通过 `anyio.to_thread.run_sync` 派到 threadpool。cancel wrapper coroutine 只是 raise `CancelledError` 给 awaiter，**线程本身继续跑**直到 sync 函数自然返回。
@@ -3316,7 +3372,7 @@ Summary: 修 follow-up 037 没修干净的 dev-reload 卡死。`timeout_graceful
 4. **Python `sys.exit()` 等非-daemon 线程** — uvicorn `Server.run()` 返回后回到 `main.py`，Python 标准退出路径需要 join 所有非-daemon 线程。anyio threadpool 工人默认是非-daemon → 卡住。
 5. **`force_exit=True` 不杀线程** — `force_exit` 只跳过 graceful drain 但不调 `os._exit`，因此同卡。
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -3331,9 +3387,9 @@ Summary: 修 follow-up 037 没修干净的 dev-reload 卡死。`timeout_graceful
 | 不动 `timeout_graceful_shutdown=2` | 是 | 037 决策保持有效；watchdog 是 037 之后的二级保险 |
 | 不引入新依赖 | 是 | 纯 stdlib `os` / `signal` / `threading` |
 
-## 功能要求
+### 功能要求
 
-### Backend
+#### Backend
 
 **`projects/ai_video_management/backend/libs/uvicorn_force_exit.py`** (新)：
 - 常量 `FORCE_EXIT_GRACE = 2.0`。
@@ -3349,18 +3405,18 @@ Summary: 修 follow-up 037 没修干净的 dev-reload 卡死。`timeout_graceful
 **`projects/ai_video_management/backend/libs/asgi.py`**：
 - 顶部（在 `load_env_file` 之后、`create_app` 之前的 import 块内）`from libs.uvicorn_force_exit import install as _install_force_exit; _install_force_exit()`。Reload 模式子进程 import 该模块时 patch 生效。
 
-### Spec / validation
+#### Spec / validation
 
 - `final_specs/spec.md` **FR-2** 行：原本 follow-up 037 写了 `uvicorn.run(...)` 调用包含 `timeout_graceful_shutdown=2`。追加 follow-up 042 amendment：`main.py` 与 `libs/asgi.py` 在 uvicorn 启动前调 `libs.uvicorn_force_exit.install()`；该函数 monkey-patch `uvicorn.Server.handle_exit` 加 daemon `threading.Timer((timeout_graceful_shutdown or 0) + 2s, lambda: os._exit(0))`，作为 sync threadpool 阻塞导致 Python 退出 hang 的兜底。
 - `validation/acceptance_criteria.md` 加一条 manual scenario **U2.5**：dev reload 强制退出兜底（manual：在 `/api/extract-frames` 在飞时改 `libs/tree_walker.py`，期望 ≤ 4s 内子进程 PID 消失 + WatchFiles 启动新 PID）。`[manual]` 标记 — 此场景需要 OS 进程观察 + 时间断言，自动化 cost 高，v1 接受 manual checkbox。
 - `validation/acceptance_criteria.md` 覆盖矩阵 FR-2 行附加 `, U2.5`。
 
-### User input
+#### User input
 
 - `user_input/revised_prompt.md`：header 加 Prior follow-up 042 段；不动 040/041 narrative。
 - `user_input/follow_ups/042-20260513-225019-uvicorn-force-exit-watchdog.md` (本文件)。
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **`os._exit(0)` 跳过所有 atexit / finally / __del__ / 线程 join**。后果：写入中的文件可能残缺（Path.rename 是 atomic 但 multi-write sequence 不是）。本项目所有写都是单 syscall 级（atomic rename / 单 `unlink` / 单 `mkdir`），无 multi-step 文件操作横跨 watchdog 触发窗口的风险。Kling generation 写的是 actor folder 内 `actor_NNNN.md` + jpg — 两个独立 atomic write；若一个写完另一个没写，下次 `_reap_incomplete_folders()` 会扫掉（follow-up 027）。
 - **`os._exit` 不通过 lifespan shutdown** → 但本项目 FastAPI 没注册 `@app.on_event("shutdown")` handler；`ActorPool.__init__` 的 `migrate_filenames()` 是启动时一次性，无 shutdown 对应；DownloadsImporter / FrameExtractor / Casting 都 stateless。所以跳 lifespan 无副作用。
@@ -3371,7 +3427,7 @@ Summary: 修 follow-up 037 没修干净的 dev-reload 卡死。`timeout_graceful
 - **不破 `uvicorn` 升级** — 只依赖 `Server.handle_exit(sig, frame)` 签名 + `Server.config.timeout_graceful_shutdown` 属性，两个 API 至少从 uvicorn 0.20 起稳定到 0.34。
 - **不破 pytest** — 测试不 import `main.py` / `asgi.py` 顶层；`uvicorn_force_exit.install()` 不被自动调；测试套件继续正常退出。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不把 25+ 个 sync `def` endpoint 改成 `async def` + httpx async client（巨大重构）。
 - 不把 anyio threadpool 工人改成 daemon（这会让 Kling generation 在 reload 触发时丢中间结果 → 比 hang 还差）。
@@ -3383,17 +3439,18 @@ Summary: 修 follow-up 037 没修干净的 dev-reload 卡死。`timeout_graceful
 - 不动 audit log / events.jsonl（webapp 非 agent_team 状态机）。
 - 不动 040/041 已落地的修改。
 
+
 ---
 
-# Follow-up draft 043 — 2026-05-13
+## 043 — 2026-05-13 22:47:37 — assign-from-actor-page-character-link
 
 **Summary:** ActorView 增加"角色分配"区块：用户在 actor 页用两层级联 dropdown（drama → 角色 folder）把当前 actor 挂到一个 ai_video 项目里的某个 c{N}_* 角色；assign 时在该角色 folder 内写 `_cast.md` 让 char folder 也能看到所选 actor（含 face 图）；一个 actor 可在不同 ai_video 项目里挂多个角色，但一个 ai_video 项目里同一角色只能挂 1 个 actor（由 casting.md upsert 已保证）；**actor 一旦有任何分配，禁止 delete / archive**。
 
-## Source
+### Source
 
 > lets add a new feature for the actor page, I could assign the actor to a specific role under a specific ai_video project. It is like multi dropdown. Once assigned the role, you need to maintain a link of the actor under the charactor folder, you could aslo see the picture of the actor. Note one actor could play many roles in differnet ai videos, but one ai vidoe charactor could only be one actor. When an actor has a role assigned, it cannot be deleted or archived.
 
-## Abstracted instruction
+### Abstracted instruction
 
 1. **ActorView 顶部新增"角色分配"区块**（在元数据块上方或下方均可，建议下方与 prompt card 同列）：
    - 区块顶 header："🎬 角色分配 (N)" — N 是当前 assignments 数量。
@@ -3432,11 +3489,11 @@ Summary: 修 follow-up 037 没修干净的 dev-reload 卡死。`timeout_graceful
     - 不为 `_cast.md` 加专门的 Reader render mode；它走通用 markdown 渲染分支，图片通过 ![face](...) 标准 markdown 语法 + 现有 renderer image src 解析。
     - 不在 _cast.md 内置编辑能力 / 不让 _cast.md 反向触发 casting.md（_cast.md 是衍生物，casting.md 是真相）。
 
-## Why now
+### Why now
 
 之前 actor → role 分配只能从 CastingView（drama 视角）或 ActorGrid 批量 modal（pool 视角）发起，actor detail 页是哑读视图。把分配能力放进 ActorView 让"我现在看着这张脸，想把它指派给某个角色"这条最常见的 mental motion 在同一页完成。`_cast.md` 这层把分配在 character folder 也"可见化"，让创作者在 drama tree 浏览角色 folder 时一眼看到当前 actor 的脸 + 跳回演员档案。Delete 拒绝把"actor 是 casting.md 引用源"从软约束（cascade-unassign 静默清理）改为硬约束，避免用户因为删错 actor 而丢失多个 drama 的精心分配。
 
-## Acceptance
+### Acceptance
 
 - ActorView 渲染时调 `GET /api/actors/assignments?actor_id=actor_0013` → 收到 `{assignments: [...]}` → 区块按上述规则 render。
 - "+ 添加分配" 表单的两 dropdown 级联正确：drama 改变 → role 列表重算 → 第一项被选中。
@@ -3447,17 +3504,18 @@ Summary: 修 follow-up 037 没修干净的 dev-reload 卡死。`timeout_graceful
 - `POST /api/archive-media path="ai_videos/_actors/actor_NNNN/{jpg}"` 在 assigned 状态：返回 409 `{kind:"actor_is_assigned"}`，文件不动。
 - character folder 不存在时 assign 仍然成功（casting.md 有 row，无 `_cast.md` 写入）—不算错误。
 
+
 ---
 
-# Follow-up draft 044 — 2026-05-13
+## 044 — 2026-05-13 23:05:00 — missing-lib-dramas-ts
 
 **Summary:** Vite import error `[plugin:vite:import-analysis] Failed to resolve import "../lib/dramas" from "src/components/ActorView.tsx"`. Follow-up 043 item #9 directed extracting `extractDramas` + `findChild` + `DramaChoice` from `ActorGrid.tsx` into a shared `src/lib/dramas.ts`, and updated the imports in both `ActorGrid.tsx` and `ActorView.tsx` accordingly — but the new file itself was never written. Implementation gap, not a behavior change.
 
-## Source
+### Source
 
 > got front end error: `[plugin:vite:import-analysis] Failed to resolve import "../lib/dramas" from "src/components/ActorView.tsx". Does the file exist?`
 
-## Abstracted instruction
+### Abstracted instruction
 
 1. **Create `apps/ui/src/lib/dramas.ts`** exporting:
    - `interface DramaChoice { path: string; name: string; characters: string[]; }`
@@ -3469,11 +3527,11 @@ Summary: 修 follow-up 037 没修干净的 dev-reload 卡死。`timeout_graceful
 
 3. **No backend changes.** Imports, API routes, JSON shapes, casting/character_link semantics all unchanged.
 
-## Why
+### Why
 
 Follow-up 043's spec walk on the frontend was incomplete: the import-extract step landed in the two consumer files but the producer file (`lib/dramas.ts`) was never written. The drama-extraction logic was deleted from `ActorGrid.tsx` (because the comment in the spec says "moved"), leaving an unresolved import at first run. This fixes the gap without changing semantics.
 
-## Acceptance
+### Acceptance
 
 - `cd projects/ai_video_management/apps/ui && npm run dev` boots without the `Failed to resolve import "../lib/dramas"` overlay.
 - ActorView's "+ 添加分配" form renders the drama dropdown with the live list of `ai_videos/{name}/` directories (non-`_` prefix).
@@ -3481,78 +3539,81 @@ Follow-up 043's spec walk on the frontend was incomplete: the import-extract ste
 - Selecting a drama in either component populates the role dropdown with the matching `characters/c*/` subfolders.
 - Zero behavior delta vs. follow-up 043's intended behavior — the file should have existed since 043.
 
+
 ---
 
-# Follow-up draft 045 — 2026-05-13
+## 045 — 2026-05-13 23:15:00 — env-file-location-and-asgi-mismatch
 
 **Summary:** Backend boot fails with `RuntimeError: kling env keys missing; set KLING_ACCESS_KEY + KLING_SECRET_KEY` because (a) after the follow-up 039 migration the project's `.env` file was never recreated at the new canonical path `apps/api/.env`, and (b) `apps/api/asgi.py` reads `Path(__file__).resolve().parent.parent / ".env"` (= `apps/.env`) while `apps/api/main.py` reads `Path(__file__).resolve().parent / ".env"` (= `apps/api/.env`) — the two entry points disagree.
 
-## Source
+### Source
 
 > got error: `Process SpawnProcess-1: ... RuntimeError: kling env keys missing; set KLING_ACCESS_KEY + KLING_SECRET_KEY (e.g. via backend/.env loaded by env_loader)`. User also supplied the Kling Access Key + Secret Key with the instruction "put it in a local env file not tracked by git".
 
-## Abstracted instruction
+### Abstracted instruction
 
 1. **Canonical env-file location post-039 = `apps/api/.env`** (sits next to `main.py` / `asgi.py`). The follow-up 025 convention was `backend/.env`; the 039 migration moves `backend/main.py` → `apps/api/main.py`, so `.env` follows suit and lives at `apps/api/.env`. **Update references** in `revised_prompt.md` + downstream specs that still say `backend/.env`.
 2. **`apps/api/asgi.py` env-path bug**: fix `Path(__file__).resolve().parent.parent / ".env"` → `Path(__file__).resolve().parent / ".env"` so it agrees with `main.py`. Both entry points must load the same `.env`.
 3. **Create the actual `.env` file at `apps/api/.env`** containing `KLING_ACCESS_KEY` and `KLING_SECRET_KEY` (concrete values supplied by user privately; **NOT to be persisted in this follow-up or any spec artifact**). The file is already covered by the repo root `.gitignore` (line 138: `.env`).
 4. **No other code changes.** `env_loader.load_env_file` already returns 0 silently if the file is missing; the boot-time `RuntimeError` from `KlingProvider.from_env()` is the intended failfast.
 
-## Why now
+### Why now
 
 After the apps/+libs/ migration, the entry-point pair (`main.py` + `asgi.py`) both load env-vars before importing the rest of the app — the path needed to be stable across both. The migration left `asgi.py` with a stale `.parent.parent` from when it lived at `backend/libs/asgi.py` (relative to which `.parent.parent` = `backend/`, the correct location at the time). At the new path `apps/api/asgi.py`, the same expression yields `apps/`, one level too high.
 
-## Acceptance
+### Acceptance
 
 - `cd projects/ai_video_management && python -m apps.api.main` boots without `kling env keys missing` (given a populated `apps/api/.env`).
 - `python -m apps.api.main` (default reload mode) and `python -m apps.api.main --no-reload` both pick up the same `.env`.
 - `git status` does NOT list `apps/api/.env` as untracked (gitignore catches it).
 - The Kling key values do NOT appear in any committed file (spec, code, or changelog).
 
-## Out of scope
+### Out of scope
 
 - No change to `env_loader` itself.
 - No change to `KlingProvider.from_env()` or its error message.
 - No promoting `.env` to a per-environment config system; the simple `KEY=VALUE` loader still suffices.
 
+
 ---
 
-# Follow-up draft 046 — 2026-05-17
+## 046 — 2026-05-17 12:14:44 — casting-container-kwarg-mismatch
 
 **Summary:** Backend 500 on every `POST /api/casting/assign` and `DELETE /api/casting/assign`. Root cause: `apps/api/container.py` 在 follow-up 039 DDD 迁移期间把 `Casting` provider 的 kwarg 写成 `media_renamer=media_renamer`，但 `libs/infrastructure/casting__writer.py::Casting.__init__` 的形参名是 `renamer`。`dependency_injector.providers.Singleton(Casting, ..., media_renamer=...)` 在首次解析时调 `Casting(exposed=..., resolver=..., media_renamer=..., actor_pool=...)` → `TypeError: __init__() got an unexpected keyword argument 'media_renamer'` → FastAPI 转 500。
 
-## Source
+### Source
 
 > the feature seems not working, when trying to assign the actor to a charactor, it shows 请求失败: 500
 
-## Abstracted instruction
+### Abstracted instruction
 
 1. **Fix the kwarg.** 在 `apps/api/container.py` 把 `Casting` provider 的 `media_renamer=media_renamer` 改成 `renamer=media_renamer`。命名约定上 provider 变量名仍叫 `media_renamer`（与其他 provider 一致），只是绑定到 `Casting.__init__` 的形参 `renamer` 时改用正确的关键字。
 2. **No other changes.** `Casting.__init__` 签名保持 `renamer` —— 与 follow-up 014 时的旧 `backend/libs/casting.py` 字节一致；改 provider 的 kwarg 风险更小（影响面 = 一处）。`/api/casting/assign` (FR-9g) + `/api/casting/assign` DELETE (FR-9h) + ActorView assign 表单（FR-95 follow-up 043）从 500 恢复 200。
 3. **Out of scope.** 不改 DDD 命名约定（infrastructure 类的 `__init__` 形参 vs container 字段名是否要一致是更大的设计讨论，留给后续）；不动 routes / endpoint shape / `_cast.md` 写入 / refuse-if-assigned 逻辑。
 
-## Why now
+### Why now
 
 Follow-up 043 在 pre-039 layout（`backend/libs/api.py` 手工构造 `Casting(exposed, resolver, media_renamer, actor_pool)` 位置参数）下 end-to-end 验证通过；039 迁移后 `container.py` 改用 `dependency_injector` 关键字参数，但 kwarg 名未与构造函数签名对齐，所有走 DI 的 casting 调用立刻 500。`fetchActorAssignments` 走 `find_assignments_for_actor` 不经过构造函数那条 unhealthy path 看起来 OK 是因为 ActorPool 单独构造成功（route 用 `_refuse_if_actor_assigned` helper 注入 casting 时同样 500，但用户先撞到 assign 表单提交路径）。Bug 是纯 wiring 不一致，零业务逻辑改动。
 
-## Acceptance
+### Acceptance
 
 - `POST /api/casting/assign` 用合法 `{path, role, actor_id, notes}` 返回 200 + `{path, entries}`，并写入 `ai_videos/{drama}/characters/{role}/_cast.md`（per FR-9g follow-up 043）。
 - `DELETE /api/casting/assign` 用同 path/role 返回 200 并删除 `_cast.md`（per FR-9h follow-up 043）。
 - ActorView "确认分配" 按钮：不再触发 `请求失败: 500` alert；assignment 出现在列表中。
 - `GET /api/actors/assignments?actor_id=...` 仍返回 200（之前也 200，因为 casting singleton 在该路径解析时同样 throw，但 helper `_refuse_if_actor_assigned` 在该 endpoint 链路中也曾经 500 — 修复后两端都 200）。
 
+
 ---
 
-# Follow-up draft 047 — 2026-05-17
+## 047 — 2026-05-17 12:18:01 — downloads-importer-container-kwarg-mismatch
 
 **Summary:** Backend 500 on `POST /api/import-from-downloads`. **Same kwarg-mismatch bug** that follow-up 046 fixed for `Casting`, but on the `DownloadsImporter` provider — 046 修了 sibling provider 没扫面所有 provider，留下了相同形态的 wiring 不一致。`apps/api/container.py::downloads_importer` 写 `media_renamer=media_renamer`，但 `libs/infrastructure/downloads__importer.py::DownloadsImporter.__init__` 第 3 个形参叫 `renamer` —— DI singleton 在 first inject 时调 `DownloadsImporter(exposed=..., resolver=..., media_renamer=...)` → `TypeError: __init__() got an unexpected keyword argument 'media_renamer'` → FastAPI 默认 handler 返回 `{"detail": "Internal Server Error"}`（无 `detail.kind`） → 前端 `Sidebar.tsx` 落入 `err.detail?.kind ?? err.status` 分支 → toast 显示 `导入失败: 500`。
 
-## Source
+### Source
 
 > got error when I try to import the downloaded video after click button: 导入失败: 500
 
-## Root-cause diagnosis（与 046 同形态）
+### Root-cause diagnosis（与 046 同形态）
 
 | 处 | container.py kwarg | constructor 形参 | 状态 |
 |---|---|---|---|
@@ -3562,7 +3623,7 @@ Follow-up 043 在 pre-039 layout（`backend/libs/api.py` 手工构造 `Casting(e
 
 Pattern：039 迁移到 `dependency_injector` 时，container 字段名一般沿用变量名（`media_renamer`），但传给 sub-provider 的 kwarg 必须按目标 `__init__` 的**形参名**写。`Casting.__init__(renamer=...)` 与 `DownloadsImporter.__init__(renamer=...)` 是 sibling — 046 只修了前者；后者一直挂着。
 
-## Fix
+### Fix
 
 **最小、单行、纯 container.py。**
 
@@ -3590,28 +3651,28 @@ downloads_importer: providers.Singleton[DownloadsImporter] = providers.Singleton
 
 零 libs 改动；`DownloadsImporter.__init__` 签名保留 `renamer`（与 follow-up 009 + 041 时的代码字节一致）。Provider 内部变量名 `media_renamer` 不动 — 与 sibling providers 命名风格一致 (`media_renamer` / `media_archiver`)；只调整传给 `DownloadsImporter` 的关键字。
 
-## 防御：扫一次所有 provider 的 kwarg 矩阵
+### 防御：扫一次所有 provider 的 kwarg 矩阵
 
 为防 047 同型 bug 再潜伏（每加一个 infra 类就重蹈），本 follow-up 顺手 audit container.py 全部 11 个 provider 与其 `__init__` 签名（见上表）；目前仅 `downloads_importer` 一处。**不引入 lint / test** — 若再有同型 bug，应在 follow-up 042 的 boot-smoke matrix 内补一条「DI container resolve smoke」（先解析所有 provider，捕获 TypeError），但那是独立 follow-up 的工作量。本 follow-up 仅修当前 bug。
 
-## Why now
+### Why now
 
 User 之前使用 import-from-downloads 走的是 pre-039 路径 (`backend/libs/api.py::create_app` 手工 `DownloadsImporter(exposed, resolver, media_renamer)` 位置传参，因此 `media_renamer` 形参名差异不出错)。039 迁移到 DI singleton 用关键字传参后，第一次实际调用就 500 — 用户此刻才点 import 按钮触发。
 
-## Acceptance
+### Acceptance
 
 - `POST /api/import-from-downloads` body `{path: "ai_videos/{drama}"}` 返回 200 + `{moved, unmatched, errors, rename}`（FR-9e shape 不变）。
 - Sidebar drama-row "📥 导入 + 重命名" 按钮：从 toast `导入失败: 500` 恢复到 `已导入 N / 未分类 M / 错误 X，重命名 Y` 正常摘要。
 - `frames/` 仍被 rename 排除（follow-up 041 + 047 两层 — 041 行为不变）。
 - 其它端点不动。
 
-## 影响范围
+### 影响范围
 
 - `projects/ai_video_management/apps/api/container.py` — 单行 kwarg 名修正。
 - `specs/development/ai_video_management/user_input/revised_prompt.md` — 文件列表追加 047 + header bump。
 - `specs/development/ai_video_management/changelog.md` — append follow-up 047 条目。
 
-## 不影响
+### 不影响
 
 - `libs/infrastructure/downloads__importer.py` — 零改动；`DownloadsImporter.__init__(renamer=...)` 形参不变。
 - 任何 FR / `final_specs/spec.md` — 这是纯 wiring bug，FR-9e endpoint 契约（请求 body / response shape / status codes）从未变化；spec walk 无需更新。
@@ -3620,17 +3681,18 @@ User 之前使用 import-from-downloads 走的是 pre-039 路径 (`backend/libs/
 - Tests — `apps/api/tests/test_boot_smoke.py` 已枚举 POST 路由矩阵，且本 follow-up 不动路由；no test 改动。
 - Follow-up 046 的 `Casting` fix 仍然有效；本 047 是其在 sibling provider 上的镜像补丁。
 
+
 ---
 
-# Follow-up draft 048 — 2026-05-17
+## 048 — 2026-05-17 12:17:49 — dramas-extractor-section-name-mismatch
 
 Summary: 修 ActorView "＋ 添加分配" 按钮永远 disabled 的 bug。`apps/ui/src/lib/dramas.ts` 的 `extractDramas(tree)` 调用 `findChild(tree, "ai_videos")` 找小写 section name，但 backend `tree__reader.py::_ai_videos_section` 返回 `name: "AI Videos"`（display 字符串，原 follow-up 003 之后的 sidebar 三段式重命名所致）— `findChild` 永远返回 `null`，`dramas.length === 0`，ActorView line 240 与 AssignForm line 336 同时 disable。同 bug 也影响 `ActorGrid` 的 "🎬 分配角色 (N)" bulk-assign 模态。`Home.tsx:56` 已正确按 `c.name === "AI Videos"` 找 section — 证明 section 名确实是 "AI Videos"。
 
-## 用户原话
+### 用户原话
 
 > the button to assign actor is disabled on the front end
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -3643,9 +3705,9 @@ Summary: 修 ActorView "＋ 添加分配" 按钮永远 disabled 的 bug。`apps/
 | 不重写 ActorView / ActorGrid | 是 | 它们 import `extractDramas`；改一处修两处 |
 | 测试 | 暂不写自动化（沿用 005-045 推迟批量补测）| 用户手动验证：进 ActorView，"＋ 添加分配" 应可点击 |
 
-## 功能要求
+### 功能要求
 
-### Frontend
+#### Frontend
 
 **`projects/ai_video_management/apps/ui/src/lib/dramas.ts`**：
 - 改 `extractDramas(tree)`：
@@ -3654,7 +3716,7 @@ Summary: 修 ActorView "＋ 添加分配" 按钮永远 disabled 的 bug。`apps/
 - 新增 `findAiVideosSection(tree: TreeNode): TreeNode | null`：BFS，命中条件是"该节点的 children 中至少一个 `path.startsWith("ai_videos/")`"。
 - 不动 `findChild`、`DramaChoice` 接口、export 列表。
 
-### Spec / validation
+#### Spec / validation
 
 - `final_specs/spec.md`：FR-91（ActorGrid bulk assign）+ FR-95（ActorView assignments，follow-up 043 引入）相关行追加 follow-up 046 amendment 一句：drama 列表通过 path-prefix 查找而非 section name lookup。
 - `validation/acceptance_criteria.md`：U3.23（follow-up 043 ActorView assignments）追加一段 "given /api/tree 返回 section 名='AI Videos'" 的前置条件，确保未来回归。
@@ -3662,7 +3724,7 @@ Summary: 修 ActorView "＋ 添加分配" 按钮永远 disabled 的 bug。`apps/
 - `user_input/revised_prompt.md`：header bump for 046。
 - `changelog.md` 加 follow-up 046 entry。
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **纯前端 lib 改动**，0 backend、0 HTTP route、0 endpoint shape 变化。
 - **path-prefix 查找无歧义**：tree node 的 `path` 字段是 backend 用 `Path.relative_to(repo_root).as_posix()` 算出来的；`"ai_videos/{drama}"` 是磁盘 layout 的 ground truth，不会跨语言 / 本地化变。
@@ -3671,7 +3733,7 @@ Summary: 修 ActorView "＋ 添加分配" 按钮永远 disabled 的 bug。`apps/
 - **`_actors/` / `_deleted/`** 系统 folder 仍被 `drama.name.startsWith("_")` 过滤掉，行为不变。
 - **没字符 folder 的 drama** 仍以 `characters: []` 出现，由 AssignForm 第二级 select disabled + 提示文本处理（line 305–311 原逻辑）。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不重命名 backend section 名回 "ai_videos"（UI 三段式契约）。
 - 不重写 Home.tsx 的 `c.name === "AI Videos"` 直接匹配（它独立工作；本次只修真正 broken 的路径）。
@@ -3680,17 +3742,18 @@ Summary: 修 ActorView "＋ 添加分配" 按钮永远 disabled 的 bug。`apps/
 - 不动 backend `Casting` / `find_assignments_for_actor` / 任何 endpoint。
 - 不动 ActorGrid / ActorView 组件本身（修一处 lib 改两处消费方）。
 
+
 ---
 
-# Follow-up draft 049 — 2026-05-17
+## 049 — 2026-05-17 12:25:00 — actor-photo-reference-line-in-character-prompts
 
 Summary: 每个角色 reference turntable prompt 的 fenced ` ```text ` 代码块在 `角色:` 段后追加一行 `参考图: 请参考附加的演员照片 {actor_photo_path}`，提示视频模型把上传的演员照片视为面部 reference。**Placeholder 形式为 `{actor_photo_path}`**（user 复制 prompt 时手填实际 jpg 相对路径，留为未来 webapp 可自动替换的接缝）。**两层落地**：(1) 立刻 patch 现有 `ai_videos/mozun_chongsheng/characters/c{1..10}_*/c{N}_*.md` 共 10 份文件；(2) 同时更新 `.claude/agent_refs/project/ai_video.md` rule #12.5 的 turntable prompt schema 模板，保证未来任何 ai_video 项目通过 agent_team 生成的 character ref 文件都自动包含这一行。
 
-## 用户原话
+### 用户原话
 
 > ok, for all the chrarctor prompt, we should add one line, like please reference attached actor photo {placeholder}
 
-## 交互问答记录（启动前）
+### 交互问答记录（启动前）
 
 | 问 | 用户选 |
 |---|---|
@@ -3698,7 +3761,7 @@ Summary: 每个角色 reference turntable prompt 的 fenced ` ```text ` 代码�
 | 插入位置 | **Right after `角色:` paragraph (first content line in the prompt)** |
 | 是否未来生效 | **Yes — also amend `.claude/agent_refs/project/ai_video.md`** |
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -3711,9 +3774,9 @@ Summary: 每个角色 reference turntable prompt 的 fenced ` ```text ` 代码�
 | 影响范围 | 仅 character ref prompt（fenced text 块）—— shot prompts (rule #12.4) / scene prompts (rule #12.10) / seam-frame seedream prompts 不动 | user 指明 "character prompt"；shot prompts 已有 `## 出场角色 — 上传以下 turntable reference 视频到模型` 表格作为 ref 引用，不需要重复 actor photo 提示 |
 | 现有 10 个文件 | 全部 in-place 修改，保留原文件其它内容（角色 bible + 配音对照表 等不动）| 单点 surgical insert，0 风险 |
 
-## 功能要求
+### 功能要求
 
-### 1. agent_refs 改动（未来生效）
+#### 1. agent_refs 改动（未来生效）
 
 **`.claude/agent_refs/project/ai_video.md` rule #12.5 schema 块**：
 - 在 line 513 `角色: {一句话锁定 byte-identical} + ...` 行之后空一行，新增：
@@ -3722,7 +3785,7 @@ Summary: 每个角色 reference turntable prompt 的 fenced ` ```text ` 代码�
   ```
 - 在 "Turntable 视频 prompt 锁定字段（10+ 角色 byte-identical...）" 段（line 559–561）的字段列表加 `参考图`（位于 `角色` 之后、`场景` 之前）。
 
-### 2. 现有 10 份 character md (data-op)
+#### 2. 现有 10 份 character md (data-op)
 
 **`ai_videos/mozun_chongsheng/characters/c{1..10}_*/c{N}_*.md`**：
 - 在每份 file 的 fenced ` ```text ` 代码块内、`角色: ...` 段（实际行 91 in c1，等价位置 in c2..c10）之后空 1 行处插入：
@@ -3732,14 +3795,14 @@ Summary: 每个角色 reference turntable prompt 的 fenced ` ```text ` 代码�
 - 后面紧接 1 空行 + 已有 `场景: ...` 段，保持段落间一致空行格式。
 - 其余内容（bible 段 / 配音对照表 / 弧光 / 关键场景 / etc.）byte-identical 不动。
 
-### 3. Spec / validation
+#### 3. Spec / validation
 
 - 不动 `final_specs/spec.md`（webapp 不变 — 这是 ai_video 任务的内容契约，不是 development webapp 的 FR）。
 - 不动 `validation/acceptance_criteria.md` 同理。
 - `user_input/revised_prompt.md`：header bump for 049。
 - `changelog.md` 加 follow-up 049 entry。
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **纯内容编辑**，0 backend / 0 endpoint / 0 frontend / 0 schema 变化。
 - **`_cast.md` 不动**：那是 follow-up 043 的 actor-character 关联文件；本 follow-up 不读不写。
@@ -3748,7 +3811,7 @@ Summary: 每个角色 reference turntable prompt 的 fenced ` ```text ` 代码�
 - **不破坏现有合集**：rule #12.5 v4 已声明 turntable 10+ 角色合集需要 byte-identical 字段；本 follow-up 加的新行也是 byte-identical，向后兼容。
 - **未来 `_actors/` 复用约束**：placeholder token 选 `{actor_photo_path}` 而非 `{actor_jpg}` / `{演员图}` 等，因为 webapp `Reader.tsx` 等地方未来可用 regex `\{actor_photo_path\}` 精确匹配做 inline-resolve；token name 拼写稳定要紧。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不在 webapp Reader / ActorView 加 inline-resolve 逻辑（webapp 改动留给独立 follow-up）。
 - 不动 shot prompt (rule #12.4) / scene prompt (rule #12.10) / seam-frame seedream (rule #12.4) — user 仅说 "character prompt"。
@@ -3758,17 +3821,18 @@ Summary: 每个角色 reference turntable prompt 的 fenced ` ```text ` 代码�
 - 不动 audit log。
 - 不引入新 placeholder 自动解析 / Editor 内 token-highlight UI。
 
+
 ---
 
-# Follow-up draft 050 — 2026-05-17
+## 050 — 2026-05-17 12:51:22 — copy-actor-face-to-character-cast-subfolder
 
 Summary: 给 actor 分配角色时，除了写 `_cast.md` 与 `casting.md` row（follow-up 043 既有行为），后端再把 actor face jpg 复制到 character folder 的 `cast/` 子目录，命名 `{actor_id}_face.{ext}`（保留源扩展名）。Unassign 时清空 `cast/` 子目录；reassign 时 sweep-then-copy 自动替换。`_cast.md` 内嵌图片 markdown 链接同步改用 local 相对路径 `cast/{actor_id}_face.{ext}`，去掉 `../../../_actors/` 跨级 traversal — 让 character folder 在 Seedance/Kling 等模型 prompt 时**自包含**，不依赖 `_actors/` 仍在 sandbox 内。
 
-## 用户原话
+### 用户原话
 
 > when assign an actor to a charactor, could you also copy the actors artifacts like image to the charactor folder
 
-## 交互问答记录（启动前）
+### 交互问答记录（启动前）
 
 | 问 | 用户选 |
 |---|---|
@@ -3776,7 +3840,7 @@ Summary: 给 actor 分配角色时，除了写 `_cast.md` 与 `casting.md` row�
 | Layout | **`cast/` 子目录 + `{actor_id}_face.{ext}` prefix** — 让 character root 干净，文件名带 actor_id 防 reassign 历史冲突（虽然本方案 unassign/reassign 都 sweep clean，prefix 仍保留以备万一 cast 内出现外部加文件） |
 | 清理策略 | **Delete on unassign; replace on reassign** — character folder 永远 mirror 当前 assignment；无 stale orphan |
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -3792,9 +3856,9 @@ Summary: 给 actor 分配角色时，除了写 `_cast.md` 与 `casting.md` row�
 | 失败回滚 | copy 写入 cast/face.jpg 失败 → 已写完 casting.md row 不撤回；下次 assign 会 retry copy | casting.md row 是 truth；copy 是 secondary artifact。与 follow-up 043 `_cast.md` 写入 swallow OSError 同语义 |
 | `unassign_actor_everywhere`（follow-up 026 cascade，code 仍在但 post-043 无 caller） | 同步加 sweep 调用 | 一致性 — 即便目前 dead code，未来 revive 时不发现 cast/ 残留 |
 
-## 功能要求
+### 功能要求
 
-### Backend
+#### Backend
 
 **`projects/ai_video_management/libs/infrastructure/casting__writer.py`**：
 
@@ -3834,7 +3898,7 @@ Summary: 给 actor 分配角色时，除了写 `_cast.md` 与 `casting.md` row�
 
 7. 不改 `assign` / `unassign` 顶层签名 — caller 透明。
 
-### 不动
+#### 不动
 
 - 路由层 `apps/api/routes.py` 不动 — `Casting.assign` / `unassign` 行为契约对调用方不变（仅副作用 surface 多出 cast/ 拷贝）。
 - 前端 `apps/ui/src/components/ActorView.tsx` / `Reader.tsx` / `CastingView.tsx` 不动 — 不需要新 prop / 新 UI 元素。
@@ -3842,20 +3906,20 @@ Summary: 给 actor 分配角色时，除了写 `_cast.md` 与 `casting.md` row�
 - `actor_pool__writer.py` 不动 — `actor_face_filename` / `actor_exists` 现有 API 已够。
 - `agent_refs/project/ai_video.md` 不动 — `cast/` 是 webapp 副作用，不是 ai_video 任务 generation contract（rule #12.x 都是讲 prompt 内容，不讲 webapp 维护的辅助文件）。
 
-### Spec / validation
+#### Spec / validation
 
 - `final_specs/spec.md` FR-9g（`POST /api/casting/assign`）追加 amendment：除写 `casting.md` row + `_cast.md` 外，复制 actor face jpg 到 `characters/{role}/cast/{actor_id}_face.{ext}`；reassign 自动 sweep；OS 失败时 fall-through（仅 `_cast.md` image 段为空）。
 - `final_specs/spec.md` FR-9h（`DELETE /api/casting/assign`）追加 amendment：除删除 `_cast.md` 外，sweep `characters/{role}/cast/actor_*_face.*` + 空 cast/ best-effort rmdir。
 - `final_specs/spec.md` FR-95（ActorView assignments section）追加一句：assign 触发 backend 复制 face 到 character folder 的 `cast/` 子目录；ActorView UI 不变。
 - `validation/acceptance_criteria.md` U3.23（follow-up 043 ActorView assignments）扩展 Gherkin：assign 后 `characters/{role}/cast/{actor_id}_face.jpg` 存在 + `_cast.md` 内 image link 指向 `cast/{actor_id}_face.jpg`；reassign 新 actor → 旧 actor 文件被删 + 新 actor 文件出现；unassign → cast/ 内 face 被删；空 cast/ rmdir。
 
-### User input + audit
+#### User input + audit
 
 - `user_input/revised_prompt.md`：header bump for 050。
 - `changelog.md`：append follow-up 050 entry。
 - `specs/ai_video/mozun_chongsheng/changelog.md`：append 平行 entry（cross-task — 改了 mozun 下 character folder 的副作用 surface）— 但**不立刻 backfill 现有 assignments**（follow-up 050 是行为契约更新，未来 assign / 触发 reassign 时才生效；用户若要 backfill 已有 assignments 走 unassign-then-reassign）。
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **Sandbox**：source = `_actors/{actor_id}/{face_filename}`（在 `ai_videos/` 内）；dst = `characters/{role}/cast/{actor_id}_face.{ext}`（在 `ai_videos/` 内）。无 sandbox 逃逸。
 - **Symlink**：source `is_symlink()` → return None 跳 copy（与 follow-up 008 / 014 一致）。dst 总是新文件，无 symlink。
@@ -3865,7 +3929,7 @@ Summary: 给 actor 分配角色时，除了写 `_cast.md` 与 `casting.md` row�
 - **Webapp tree refresh**：Reader / Sidebar 在 `onSaved()` 后 fetch `/api/tree`；新 `cast/` 子目录与内部 jpg 自动出现在 tree（`tree_walker._is_allowed_leaf` 已允许 jpg）。
 - **未来扩展**：若加 actor ref video / 抽帧 frames，同 prefix `{actor_id}_*` 在 `cast/` 内扩展；当前 sweep regex 仅匹配 `actor_NNNN_face.*`，不误删未来其它 prefix 的文件。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不 backfill 现有 assignments — 行为契约变化只对未来 assign 生效；用户要应用到现存 assignments 手动 unassign-then-reassign 即可。
 - 不复制 actor sidecar `.md` —用户选 just jpg。
@@ -3877,15 +3941,16 @@ Summary: 给 actor 分配角色时，除了写 `_cast.md` 与 `casting.md` row�
 - 不动 `_deleted/` / archive/ 逻辑。
 - 不让 sidebar 隐藏 `cast/`（user 应能 inspect 复制了什么）。
 
+
 ---
 
-# Follow-up draft 051 — 2026-05-17
+## 051 — 2026-05-17 12:56:59 — application-layer-implementation
 
 Implement the application + domain layers that follow-up 039 promised but never produced. Currently `apps/api/routes.py` imports and depends on `libs.infrastructure.*` classes directly; `libs/application/` and `libs/domain/` contain only empty `__init__.py`. This violates `.claude/agent_refs/project/development.md` §1 (dependency arrows: apps may NOT import from infrastructure) and §3 (every endpoint is a Query or Command).
 
-## Required moves
+### Required moves
 
-### 1. `libs/application/` populated with one Query or Command per endpoint
+#### 1. `libs/application/` populated with one Query or Command per endpoint
 
 Every route handler in `apps/api/routes.py` must call exactly one application-layer Query or Command. Mapping (read = Query, state-change = Command):
 
@@ -3913,7 +3978,7 @@ Every route handler in `apps/api/routes.py` must call exactly one application-la
 
 Per development.md §3 read-side simplification: every Query may bypass aggregates and load via Reader → Qdto. Every Command MUST go through the domain layer (load aggregate via Reader → invoke method that enforces invariants → persist via Writer).
 
-### 2. `libs/domain/` populated with entities + value objects + repository protocols
+#### 2. `libs/domain/` populated with entities + value objects + repository protocols
 
 Carve out from existing infrastructure modules into `libs/domain/`:
 
@@ -3925,7 +3990,7 @@ Carve out from existing infrastructure modules into `libs/domain/`:
 
 Domain code imports nothing from `libs.infrastructure` or `libs.application` — pure Python + `libs.common`. The Protocols in `domain/{aggregate}__repository.py` are the only dependency-inversion seam.
 
-### 3. `libs/infrastructure/` becomes Reader / Writer / Dao only
+#### 3. `libs/infrastructure/` becomes Reader / Writer / Dao only
 
 Existing files split / rename:
 
@@ -3938,7 +4003,7 @@ Existing files split / rename:
 - `file__reader.py`, `file__writer.py`, `tree__reader.py` stay as is (already pure I/O — but their result objects move out into `__dao.py` if they currently double as DTOs).
 - `origin_host__middleware.py` stays (FastAPI middleware — naturally lives at the transport edge but accepted under `infrastructure/` since it's framework adapter code).
 
-### 4. `libs/application/` gets `__qdto.py`, `__cdto.py`, `__mapper.py` files
+#### 4. `libs/application/` gets `__qdto.py`, `__cdto.py`, `__mapper.py` files
 
 Per development.md §3:
 
@@ -3946,7 +4011,7 @@ Per development.md §3:
 - Every Command writes its own `{name}__cdto.py` (frozen dataclass) — for input + output.
 - Every aggregate gets a `{name}__mapper.py` in `libs/application/` — owns ALL mapping among DAO ↔ Entity/ValueObject ↔ QDto/CDto. The `.to_payload()` / `.to_dict()` methods currently scattered across infrastructure result classes (`CastingResult.to_payload`, `GenerateResult.to_payload`, `ExtractedFrame.to_payload`, etc.) move into mappers; the DAOs and Entities themselves don't know about JSON shape.
 
-### 5. `apps/api/routes.py` becomes thin transport
+#### 5. `apps/api/routes.py` becomes thin transport
 
 After the refactor:
 
@@ -3955,14 +4020,14 @@ After the refactor:
 - Pydantic request bodies stay in `routes.py` (transport-layer shapes); they are constructed into `__cdto` inputs before calling `.execute()`.
 - HTTP-error-mapping table (which domain error → which HTTP status / `kind` payload) lives in one helper in `routes.py` — the application layer has no knowledge of HTTP.
 
-### 6. `apps/api/container.py` exposes application-layer providers
+#### 6. `apps/api/container.py` exposes application-layer providers
 
 - Keep current infrastructure Singletons (Readers / Writers / Clients).
 - Add Factory providers for every Query, Command, Mapper.
 - `wiring_config` already targets `apps.api.routes`; no change needed.
 - Route handlers receive Query / Command instances, NOT infrastructure instances.
 
-### 7. Tests updated for layered import paths
+#### 7. Tests updated for layered import paths
 
 Existing tests (`test_boot_smoke.py`, `test_api_security_three_shapes.py`, `test_tree_walker_consumer_walk.py`, `test_sub_type_lookup.py`, `conftest.py`) currently override or import from `libs.infrastructure.*`. After the refactor:
 
@@ -3971,19 +4036,19 @@ Existing tests (`test_boot_smoke.py`, `test_api_security_three_shapes.py`, `test
 - New unit tests for each Query / Command using `container.x.override(stub)` per development.md §5.
 - Add `tests/libs/domain/` with pure unit tests for entities + value objects (no I/O).
 
-### 8. Common refs sharpened so this never silently re-happens
+#### 8. Common refs sharpened so this never silently re-happens
 
 - `.claude/agent_refs/project/development.md` gains a new rule: empty `libs/application/` while `apps/*` imports from `libs/infrastructure/` is a stage-5 `blocker`. Cite this incident.
 - `.claude/agent_refs/validation/development.md` gains a matching severity row.
 
-## Out of scope
+### Out of scope
 
 - HTTP route paths + JSON response shapes (byte-identical contracts).
 - Frontend (`apps/ui/`) — unaffected; consumes the same JSON shapes.
 - Cross-aggregate refactors beyond what's needed to make commands go through domain (e.g., we don't introduce domain events in v1 — the rule allows it but no current endpoint demands it).
 - Migrating to async route handlers (sync `def` is the established convention per follow-up 042's uvicorn watchdog rationale).
 
-## Acceptance trigger
+### Acceptance trigger
 
 After this follow-up lands:
 
@@ -3992,13 +4057,14 @@ After this follow-up lands:
 - `find projects/ai_video_management/libs/domain -name "*.py" -type f | wc -l ≥ 1` (at least the carved-out aggregates).
 - Existing `pytest` suite passes without functional changes (only import-path updates).
 
+
 ---
 
-# Follow-up draft 052 — 2026-05-17
+## 052 — 2026-05-17 13:17:40 — actor-realism-diversity-body-shot
 
 Summary: Three coupled upgrades to actor pool generation: **(A) Realism** — photographer-name + camera-spec anchors per gen replace the generic studio-headshot prior that bakes in AI-stock-photo look; **(B) Diversity** — rotate STYLE-level variance (medium + framing + lighting paradigm + type-anchor + negative-prompt rotation) on top of existing feature-level variance (031's 18-pool descriptor list operates at micro-feature level, doesn't escape Kling's macro latent); **(C) Body shot** — every actor gen now produces a second 9:16 full-body casting image (heather-gray fitted tee + black athletic shorts, neutral standing pose) saved as `{ethnicity}__{gender}__{age_range}__body.jpg` alongside the existing face jpg. Same seed across face+body for identity coherence; doubles Kling cost per actor. Casting cast/ copy (follow-up 050) extends to copy body jpg too; `_cast.md` embeds both.
 
-## 用户原话
+### 用户原话
 
 > there are two problem with the current actor genreation, one is hte face gets genreated is too fake, so please think about a strategy to make the reuslt look like real person, the second problem is the pictures genreated out of the batch are so correlated to each other they all look them same, although I added some randomness to the prompt, but it seems not enough, help me think about a better strategy. Another thing is this is for casting, I am wondering if wes should have a full body front view casting picture, like wearing some standard uniform better in shorts so we can see the charactor body shape as well, what do you think, what do we do in a real casting?
 
@@ -4006,7 +4072,7 @@ Summary: Three coupled upgrades to actor pool generation: **(A) Realism** — ph
 
 > all of them
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -4041,9 +4107,9 @@ Summary: Three coupled upgrades to actor pool generation: **(A) Realism** — ph
 | ActorGrid tile | 不动 — 仍只显 face | 列表识别度；body 是 detail view |
 | Generator UI | 不动 | always-on 不需要 toggle |
 
-## 功能要求
+### 功能要求
 
-### A. Backend — `libs/infrastructure/actor_pool__writer.py`
+#### A. Backend — `libs/infrastructure/actor_pool__writer.py`
 
 **常量新增：**
 ```python
@@ -4150,7 +4216,7 @@ RAW unedited photograph aesthetic,
 - 新 `_find_actor_body_jpg(folder)` → first jpg matching `__body.jpg` pattern
 - `actor_body_filename(actor_id) -> str | None` — 给 casting 用
 
-### B. Backend — `libs/infrastructure/casting__writer.py` (follow-up 050 扩展)
+#### B. Backend — `libs/infrastructure/casting__writer.py` (follow-up 050 扩展)
 
 - 改名常量 `_CAST_FACE_RE` → `_CAST_ARTIFACT_RE`，regex 改 `^actor_\d{4,}_(face|body)\.[a-zA-Z0-9]+$`
 - `_copy_actor_face` → `_copy_actor_artifacts(character_folder, actor_id) -> tuple[str | None, str | None]`：copy face → `cast/{actor_id}_face.{ext}`，copy body → `cast/{actor_id}_body.{ext}`（如果存在）；返回 `(face_filename, body_filename)`
@@ -4158,7 +4224,7 @@ RAW unedited photograph aesthetic,
 - `_write_character_link` 调 new artifacts copy；body 失败不阻塞
 - Sweep regex 更新即可（`_CAST_ARTIFACT_RE`）
 
-### C. Backend — `libs/infrastructure/tree__reader.py`
+#### C. Backend — `libs/infrastructure/tree__reader.py`
 
 - 在 `_actors/{id}/` 的 collapsed leaf 中新增 `body_path` field（与 `face_path` 并列）：
   ```python
@@ -4173,7 +4239,7 @@ RAW unedited photograph aesthetic,
   ```
 - `_first_face_image` 重命名 `_first_face_jpg` 已存在；加 `_first_body_jpg(folder)` 查 `__body.jpg`
 
-### D. Frontend — `apps/ui/src/`
+#### D. Frontend — `apps/ui/src/`
 
 - `types.ts`：`TreeNode` 加 `body_path?: string | null`
 - `lib/linkResolver.ts`：`collectFilePaths` 在 actor leaf 同时 push `node.body_path`（与 `face_path` 同 pattern）
@@ -4183,7 +4249,7 @@ RAW unedited photograph aesthetic,
   - 加 CSS class `.actor-view-body-pane` + `.actor-view-body-image`
 - 不动 `ActorGrid.tsx` / `CastingView.tsx` / `Sidebar.tsx`
 
-### E. Spec / validation
+#### E. Spec / validation
 
 - `final_specs/spec.md`:
   - FR-9f 重写描述：每 actor 双图（face 1:1 + body 9:16）；style-level variance 新 5 池命名 + 数量；photographer style + type anchor 描述；negative rotation；body wardrobe lock
@@ -4195,13 +4261,13 @@ RAW unedited photograph aesthetic,
   - U3.23 (assign chain) 扩展：cast/ 内含 `actor_NNNN_face.jpg` AND `actor_NNNN_body.jpg`；reassign sweep 两个；unassign sweep 两个
   - 新 scenario U3.24：generate batch → 每 actor folder 含 face jpg + body jpg + sidecar md（含两段 prompt）
 
-### F. User input + audit
+#### F. User input + audit
 
 - `revised_prompt.md` header bump for 052
 - `changelog.md` append follow-up 052
 - `specs/ai_video/mozun_chongsheng/changelog.md` 平行 entry（行为契约前置；当前项目不 backfill）
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **Kling cost x2**：每 actor 两 Kling 调用；batch count 上限 50 不变；用户 batch 实际成本翻倍。**接受** — 用户明确 "all of them"。
 - **Sandbox**：body jpg 写入路径仍在 `_actors/{id}/`，跟 face 同 folder；cast/ 同 character folder 内；无 sandbox 逃逸。
@@ -4212,7 +4278,7 @@ RAW unedited photograph aesthetic,
 - **Photographer-name IP**：用真实 photographer style anchor 是 prompt engineering 通用做法；style reference 不构成 IP 侵权（不复制 specific photograph）；选取的 8 位都是 portrait/documentary 公开 attribution 群。**接受**。
 - **Type anchor 不含 real celebrity**：池中只用 archetype（vocation / build / upbringing）；不写 "Brad Pitt type" 等以避免 model 输出近似真人。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 face-swap / img2img 二次精修 pipeline
 - 不引入 in-character body shot（戏装 body shot）— v2
@@ -4224,17 +4290,18 @@ RAW unedited photograph aesthetic,
 - 不动 audit log
 - 不 backfill 现有 5 个 actor（actor_0013 ~ actor_0017）— 用户若要 backfill 重新 generate
 
+
 ---
 
-# Follow-up draft 053 — 2026-05-17
+## 053 — 2026-05-17 13:23:00 — diverse-mode-archetype-categories
 
 Summary: 新增 "多样化随机模式 (Diverse mode)" — 用户仅选 gender + ethnicity + count，后端按 **10 个 cinematic archetype** 均匀分布滚出 attrs（age_range / look / style / type_anchor）保证 batch 覆盖所有人物类型；每个 actor sidecar 记录 `archetype` 字段；ActorGrid 加 archetype filter chip。启动时一次性 best-effort backfill — 把现有 5 个 actor 映射到最近的 archetype。
 
-## 用户原话
+### 用户原话
 
 > 在UI上加一个新的演员生成模式，我只需要选择男女，还有种族，你帮我生成格式各样的人，又年轻俊美的，有老人，中年人， 有整齐的，有奸邪的，有妖媚的，又善良的，总之random生成各色各样的人，并把它们分类成小的类目，类目可以你来推荐，比如真是电影选角色是怎么归类的
 
-## 交互问答记录
+### 交互问答记录
 
 | 问 | 用户选 |
 |---|---|
@@ -4242,7 +4309,7 @@ Summary: 新增 "多样化随机模式 (Diverse mode)" — 用户仅选 gender +
 | 分配策略 | **Even-distribution (default)** — guarantees coverage |
 | Backfill 现有 5 | **Yes** — best-effort backfill from current attrs |
 
-## 10 个 archetype 锁定表
+### 10 个 archetype 锁定表
 
 | slug | 中文 | 适用 gender | age_range bias | look bias | style bias | type-anchor 池 (取自 follow-up 052) |
 |---|---|---|---|---|---|---|
@@ -4259,7 +4326,7 @@ Summary: 新增 "多样化随机模式 (Diverse mode)" — 用户仅选 gender +
 
 注：`both` archetypes 自动 fork 为 male/female 两版本（按当前选 gender 取）。
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -4280,9 +4347,9 @@ Summary: 新增 "多样化随机模式 (Diverse mode)" — 用户仅选 gender +
 | Sidebar 不变 | actor folder 在 `_actors/` 平铺，不按 archetype 分子目录 | 文件系统层简洁；filter 是查询层 |
 | Body shot (follow-up 052) | diverse 模式同样产生 face + body | 默认行为，无需特殊 opt-in |
 
-## 功能要求
+### 功能要求
 
-### Backend
+#### Backend
 
 **`libs/infrastructure/actor_pool__writer.py`**：
 
@@ -4335,7 +4402,7 @@ Summary: 新增 "多样化随机模式 (Diverse mode)" — 用户仅选 gender +
 2. `generate_diverse_actors__command.py` — 新 Command file，包装 `pool.generate_diverse_batch`。
 3. `actor__mapper.py` — 加 diverse-to-cdto 映射。
 
-### Frontend
+#### Frontend
 
 **`apps/ui/src/api.ts`**：
 
@@ -4363,7 +4430,7 @@ Summary: 新增 "多样化随机模式 (Diverse mode)" — 用户仅选 gender +
 
 **`apps/ui/src/styles.css`**：无新 class — 复用 actor-grid filter / form-field 样式。
 
-### Spec / validation
+#### Spec / validation
 
 - `final_specs/spec.md`:
   - 新 **FR-9t** `POST /api/actors/generate-diverse` 端点契约 + 10 archetype 表 + even-distribution 算法。
@@ -4373,11 +4440,11 @@ Summary: 新增 "多样化随机模式 (Diverse mode)" — 用户仅选 gender +
 - `revised_prompt.md` header bump for 053。
 - `changelog.md` append。
 
-### Cross-task
+#### Cross-task
 
 - `specs/ai_video/mozun_chongsheng/changelog.md` parallel entry — 行为契约前置；现有 5 actor 启动时自动 backfill archetype（mozun_chongsheng character 也将能用 archetype 反查理想 actor）。
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **Kling cost**：与 052 相同；diverse N actors → 2N Kling calls；无额外加倍。
 - **`generate_diverse_batch` 并发**：复用 existing batch 的 sequential 调用；frontend 9-worker pool (follow-up 027) 继续起作用（每 worker call diverse with count=1 即可，但 even-distribution 在 count=1 不有意义 → diverse 模式禁用 frontend 并发，单调用 count=N）。**接受 v1**。
@@ -4385,7 +4452,7 @@ Summary: 新增 "多样化随机模式 (Diverse mode)" — 用户仅选 gender +
 - **`classify_actor_attrs` 漏分类**：fall-through 用 `everyman` 不是 None — 保证所有 actor 启动后都有 archetype；用户若不满意可手编 sidecar。
 - **Notes field 在 diverse 模式**：自动写入 archetype 中文名（如 `男主气场冷峻`） — 帮助用户在 ActorGrid 浏览时一眼识别；用户可手动编辑 sidecar 改 notes。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 archetype-specific 视觉 prompt 重写（archetype 仅控制 attrs 抽样 + sidecar 标签；prompt 走 follow-up 052 variance + 052 type_anchor pool）
 - 不引入 frontend 9-worker pool concurrency for diverse mode（单 backend call N images 即可）
@@ -4395,14 +4462,16 @@ Summary: 新增 "多样化随机模式 (Diverse mode)" — 用户仅选 gender +
 - 不写 backend pytest / frontend Vitest（统一推迟）
 - 不动 follow-up 052 的 face/body 双图、cast/ copy、variance pools
 
+
 ---
 
-# Follow-up draft 054 — 2026-05-17
+## 054 — 2026-05-17 06:08:04 — character-video-truncate-and-shot-concat
+
 Add two video-pipeline features to the ai_video_management webapp: per-character video truncation, and per-shot character reel.
 
 ---
 
-## Feature 1 — Truncate any character mp4 to a 2-second `video.mp4`
+### Feature 1 — Truncate any character mp4 to a 2-second `video.mp4`
 
 - Scope: only files that match `ai_videos/{drama}/characters/{cN_xxx}/*.mp4` (the per-drama character folders). Out of scope: `_actors/`, `episodes/`, `scenes/`.
 - UI: an additional per-tile button **"Truncate to 2s → video.mp4"** appears in `SiblingMedia` for character mp4 tiles (alongside the existing Archive / Extract Frames buttons). Visible only for `.mp4/.mov/.webm/.mkv/.avi/.m4v` files whose path matches the character-folder pattern above.
@@ -4415,7 +4484,7 @@ Add two video-pipeline features to the ai_video_management webapp: per-character
   - Response: `{ src: rel_path_of_source, out: rel_path_of_video_mp4, duration_seconds: 2.0 }`.
   - Errors: same shape as `/api/extract-frames` (`invalid_path` / `not_a_video` / `not_found` / `ffmpeg_missing` / `truncate_failed`) plus a new `not_a_character_video` kind when the path doesn't match `characters/cN_*/`.
 
-## Feature 2 — Concatenate the involved characters' 2-second clips for a shot
+### Feature 2 — Concatenate the involved characters' 2-second clips for a shot
 
 - Scope: shot md files at `ai_videos/{drama}/episodes/ep{NN}/prompts/shot{NN}/shot{NN}.md` (novel layout) and `ai_videos/{drama}/prompts/shot{NN}/shot{NN}.md` (short layout).
 - UI: a "Build shot character reel" button on the `ShotPairView` header (and on any direct render of a shot md). Triggers the concat call with the current shot md path.
@@ -4432,14 +4501,14 @@ Add two video-pipeline features to the ai_video_management webapp: per-character
   - Errors: `invalid_path` / `not_a_shot_md` / `not_found` / `ffmpeg_missing` / `concat_failed` / `no_character_table` (the md has no recognisable 出场角色 table).
   - "Only the characters for the current shot" rule is satisfied because the parser only reads the shot md being requested — no cross-shot or whole-episode aggregation.
 
-## Cross-cutting decisions (from the clarification round)
+### Cross-cutting decisions (from the clarification round)
 
 - Truncation output naming: always `video.mp4` in the same character folder. Source mp4 stays. (User chose "Truncate writes to video.mp4 in same folder".)
 - Concat input: always `video.mp4` in each involved character folder. (User chose "video.mp4 in char folder".)
 - Character detection: every row of the 出场角色 table, regardless of the "turntable 必需" ✅/❌ column. (User chose "All rows of the 出场角色 table".)
 - Concat output location: sibling of the shot md, named `<shotNN>_chars.mp4`. (User chose "Sibling of shot md".)
 
-## Architecture / placement (per project rules)
+### Architecture / placement (per project rules)
 
 - `routes.py` stays a thin transport layer: two new Pydantic bodies, one application-layer call each, domain-error → HTTP mapping table in line with follow-up 051.
 - New application Commands: `TruncateCharacterVideoCommand`, `ConcatShotCharactersCommand`, each with a sibling `__cdto.py` + `__mapper.py`.
@@ -4448,17 +4517,18 @@ Add two video-pipeline features to the ai_video_management webapp: per-character
 - DI wiring: two Singletons (`CharacterVideoTruncator`, `ShotConcatBuilder`) + two Factories in `apps/api/container.py`.
 - ffmpeg binary: reuse `imageio_ffmpeg.get_ffmpeg_exe()` per `frame__extractor.py` precedent (no system install required).
 
+
 ---
 
-# Follow-up draft 055 — 2026-05-17
+## 055 — 2026-05-17 13:39:00 — count-input-mid-typing-clamp-bug
 
 Summary: 修 `ActorPoolGenerator` 数量 input 在中途输入时被自动 clamp 到 50 的 bug。当前 `onChange` 通过 `Math.min(MAX_BATCH_COUNT=50, Number(value))` 在每次 keystroke 都 clamp，导致用户在显示 "5" 的 input 里光标放在末尾输入 "1" → 中间值 "51" 被 React 立即 clamp 为 "50"，再输入 "0" 变 "500" → 又 clamp 为 50。用户看到的就是 "想输入 10 但永远停在 50"，且 input 视觉上短暂闪烁（"51" → "50" 的快速 snap = "fade away" 描述）。修法：input 用独立 string state 控制（`countText`），允许任意中间值；派生 numeric `count` 在使用时 clamp；input `onBlur` 时把 string state 重置回 canonical clamped 字符串。
 
-## 用户原话
+### 用户原话
 
 > some bug on the UI, try to enter a number in the box, the UI box just fade away, and even after I type 10, the number still stay as 50
 
-## 根因
+### 根因
 
 `apps/ui/src/components/ActorPoolGenerator.tsx`:
 ```tsx
@@ -4479,7 +4549,7 @@ Summary: 修 `ActorPoolGenerator` 数量 input 在中途输入时被自动 clamp
 
 中途值永远到不了 user 想要的数字（除非用户先全选清空再输入；但 browser default 行为是 cursor 不 select-all on focus）。
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -4492,9 +4562,9 @@ Summary: 修 `ActorPoolGenerator` 数量 input 在中途输入时被自动 clamp
 | Edge case: 用户输入小数 / 负数 | `Math.trunc` + `Math.max(1, ...)` | 强制正整数 |
 | 测试 | 手动 — 进 ActorPoolGenerator，光标停在末尾输 "1" "0" 应得到 10；input 不闪烁 | 单一 UI fix，无 backend 改动 |
 
-## 功能要求
+### 功能要求
 
-### Frontend only
+#### Frontend only
 
 **`apps/ui/src/components/ActorPoolGenerator.tsx`**：
 
@@ -4515,18 +4585,18 @@ Summary: 修 `ActorPoolGenerator` 数量 input 在中途输入时被自动 clamp
 4. 删除现有 onChange 内的 clamp 逻辑（被 derived count 取代）。
 5. 其余 call sites（`onPreview` / `onConfirmGenerate` / `onDiverseGenerate` / footer 按钮 label）不动 — 仍用 `count`，因为它现在是 useMemo derived。
 
-### 不动
+#### 不动
 
 - 后端 / endpoint / DTO / Container / mapper / 域层全部不变。
 - 其它 frontend 组件不变。
 - spec.md / acceptance_criteria.md 不动（无 FR 行为变化，仅 UI bugfix）。
 
-### User input + audit
+#### User input + audit
 
 - `revised_prompt.md` header bump for 054。
 - `changelog.md` append follow-up 054 entry。
 
-## 安全 / 边界
+### 安全 / 边界
 
 - 纯前端 UI fix；零 backend / endpoint / shape 变化。
 - Derived `count` 总在 `[1, MAX_BATCH_COUNT]` 范围；非数字 / 空 / 负数 fallback 到 1；submit 时永远是合法值。
@@ -4534,36 +4604,37 @@ Summary: 修 `ActorPoolGenerator` 数量 input 在中途输入时被自动 clamp
 - `onBlur` 把 input value 重置为 canonical 后，下次 focus 时若 user select-all 输入，行为正常；不 select-all 直接 append，最终 blur 时也会归位（不会有 stuck-at-50）。
 - HTML5 `<input type="number" max=50>` 浏览器箭头点击仍会 cap 在 50 — 与 derived count clamp 一致，无矛盾。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 select-all-on-focus（可作为 v2 UX polish；目前 fix 已足够让 user 顺利输入）。
 - 不动其它 number input（如 ActorView form 内的字段 / SiblingMedia bulk-select）— 它们要么不存在同 bug，要么不在用户上下文中。
 - 不增 / 减 `MAX_BATCH_COUNT`。
 - 不写 frontend Vitest（统一推迟）。
 
+
 ---
 
-# Follow-up draft 056 — 2026-05-17
+## 056 — 2026-05-17 14:32:22 — libs-sub-bucketing-by-role
 
 Sub-bucket every `libs/` layer by file role (per-suffix sub-folder). The single-level layout from follow-up 039 packed 40+ files into one folder (`libs/application/`), making the file list hostile to navigation. Group files of the same role into a sub-folder named for the role (plural).
 
-## Required moves
+### Required moves
 
-### 1. `libs/application/` gains four sub-folders
+#### 1. `libs/application/` gains four sub-folders
 
 - `libs/application/queries/` — every `*__query.py` (7 files)
 - `libs/application/commands/` — every `*__command.py` (15 files)
 - `libs/application/dtos/` — every `*__qdto.py` + `*__cdto.py` (12 files in one folder; the `Q`/`C` suffix already disambiguates)
 - `libs/application/mappers/` — every `*__mapper.py` (7 files)
 
-### 2. `libs/domain/` gains four sub-folders
+#### 2. `libs/domain/` gains four sub-folders
 
 - `libs/domain/entities/` — every `*__entity.py` (2 files)
 - `libs/domain/value_objects/` — every `*__valueobject.py` (6 files)
 - `libs/domain/errors/` — every `*__error.py` (7 files)
 - `libs/domain/repositories/` — every `*__repository.py` (2 files)
 
-### 3. `libs/infrastructure/` gains three sub-folders for current content
+#### 3. `libs/infrastructure/` gains three sub-folders for current content
 
 - `libs/infrastructure/readers/` — `file__reader.py`, `tree__reader.py`
 - `libs/infrastructure/middleware/` — `origin_host__middleware.py`
@@ -4571,11 +4642,11 @@ Sub-bucket every `libs/` layer by file role (per-suffix sub-folder). The single-
 
 `libs/infrastructure/clients/` and `libs/infrastructure/daos/` are referenced in the common-level rule but stay empty for v1 — no `*__client.py` / `*__dao.py` exist yet (those land when the actor-pool deep §3 split runs; see follow-up 051 deferred items). The empty folders are NOT pre-created in this follow-up — they materialize the moment the first file with that suffix lands.
 
-### 4. `libs/common/` stays flat
+#### 4. `libs/common/` stays flat
 
 No canonical role taxonomy applies (env_loader, exposed_tree, origin, repo_root, safe_resolve, sub_type_lookup are all utility primitives). Per the common-level rule's lone exception.
 
-### 5. All imports updated
+#### 5. All imports updated
 
 Every cross-module import path gains one component:
 
@@ -4594,36 +4665,37 @@ Every cross-module import path gains one component:
 
 Wiring config in `apps/api/container.py` (`wiring_config = WiringConfiguration(modules=["apps.api.routes"])`) is unchanged — the route module path didn't move.
 
-## Common-level rule update
+### Common-level rule update
 
 `agent_refs/project/development.md` §1 + §4 + `CLAUDE.md` § Project rules updated to specify the sub-bucketing convention. Future development projects follow this layout by default.
 
 `agent_refs/validation/development.md` §11b grep paths updated to walk the new tree (`libs/application/queries`, `libs/application/commands`, `libs/application/commands/*__command.py`).
 
-## Out of scope
+### Out of scope
 
 - Renaming legacy mutator-suffix files to canonical `*__writer.py`. That's tech debt for a separate follow-up; the bucketing rule explicitly does NOT require it.
 - Test mirror-tree creation (`tests/libs/application/queries/...` etc.). The four existing tests still pass; deeper test tree lands when new unit tests are added (follow-up 051 §7 deferred).
 - HTTP routes + JSON shapes (byte-identical, zero externally observable change).
 - Frontend (`apps/ui/`) — unaffected.
 
-## Acceptance trigger
+### Acceptance trigger
 
 - Pytest baseline preserved: 18 pass / 5 pre-existing wukong fixture failures.
 - §11b grep gates pass against the new paths.
 - `ls libs/application/` shows 4 sub-folders + `__init__.py` and nothing else (no loose `*__query.py` etc. at the layer root).
 
+
 ---
 
-# Follow-up draft 057 — 2026-05-17
+## 057 — 2026-05-17 14:15:00 — count-input-modal-close-defensive
 
 Summary: Follow-up 055 fixed the mid-typing clamp flicker on `ActorPoolGenerator` count input, but the user reports a second symptom — "when I try to enter the amount, the UI window just get closed" — modal dismisses entirely on input interaction. The remaining failure modes are native-`<input type="number">` quirks (spinner-arrow click bubbling, validation-tooltip blur, IME compose-cancel) that can leak past the modal-panel's `e.stopPropagation()` on certain browsers. Fix: switch the input from `type="number"` to `type="text" inputMode="numeric"`, strip non-digits at onChange, and add explicit `stopPropagation` on `onClick` / `onMouseDown` / `onKeyDown` to bulletproof against any bubble. Also `preventDefault` Enter so accidental form-submit semantics never escape the input.
 
-## 用户原话
+### 用户原话
 
 > the bug still exist, when I try to enter the amount, the UI window just get closed
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -4637,9 +4709,9 @@ Summary: Follow-up 055 fixed the mid-typing clamp flicker on `ActorPoolGenerator
 | 不动 055 的 `countText` / `count` derive 逻辑 | 是 | 055 的 state 分离 + useMemo clamp 仍是正确底座；本 follow-up 只加防御层 |
 | 不动其它 input | 是 | 仅 count input 报错；其它 select / textarea 暂未观察到问题 |
 
-## 功能要求
+### 功能要求
 
-### Frontend only
+#### Frontend only
 
 `apps/ui/src/components/ActorPoolGenerator.tsx`:
 
@@ -4664,13 +4736,13 @@ Summary: Follow-up 055 fixed the mid-typing clamp flicker on `ActorPoolGenerator
 
 不动其它内容（055 的 state 分离 + useMemo derive 保留）。
 
-### 不动
+#### 不动
 
 - 后端 / endpoint / DTO / Container / 域层全部不变
 - 其它 frontend 组件不变
 - spec / acceptance criteria 不动
 
-## 安全 / 边界
+### 安全 / 边界
 
 - `inputMode="numeric"` 让 mobile 弹数字键盘（替代 type="number" 的同行为）。
 - `pattern="[0-9]*"` 是 HTML5 visual hint；不强制（也不该强制 — string-state 允许 transient）。
@@ -4679,24 +4751,25 @@ Summary: Follow-up 055 fixed the mid-typing clamp flicker on `ActorPoolGenerator
 - `preventDefault` Enter — 防止 form-submit 默认行为（本组件无 form，但浏览器有些版本仍可能触发副作用）。
 - 不影响 derived `count` 逻辑：useMemo 仍 clamp 到 [1, MAX_BATCH_COUNT]。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不重写整个模态为 `<dialog>` element / 引入 focus-trap 库
 - 不写 vitest（统一推迟）
 - 不动 spec 或 acceptance — 是 v1 UI defensive patch，无 FR 行为变化
 - 不调整 MAX_BATCH_COUNT
 
+
 ---
 
-# Follow-up draft 058 — 2026-05-17
+## 058 — 2026-05-17 14:40:26 — generator-modal-x-only-close
 
 Summary: 把 "🎭 生成演员人脸" 模态锁死为**仅顶角 × 按钮才能关闭**。当前 `.modal-backdrop` `onClick={onCloseRequest}` 让点击空白处关闭模态，footer 的 "关闭" 按钮也是一条关闭路径——这两条都是 follow-up 057 防御 layer 之外的合法用户交互，但用户希望进一步收紧：**所有"意外关闭"路径全部移除**，只有顶角 × 是合法 close affordance。"停止" 按钮（busy state 期间）保留为 cancel-in-flight 动作，不是 close。
 
-## 用户原话
+### 用户原话
 
 > please make 生成演员人脸 model only close by explictly click the x button, no other way to close it on front end
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -4711,9 +4784,9 @@ Summary: 把 "🎭 生成演员人脸" 模态锁死为**仅顶角 × 按钮才�
 | `onClose` prop | 不动 — 仍由 Sidebar 传入 setGeneratorOpen(false) | 内部 onClose 调用次数减少（footer 按钮删除后），但 prop 保持 |
 | 其它 modal (如 PromptPreviewModal / 未来 modals) | **不动** | 用户明确指 "生成演员人脸 model"；其它 modal 保持现行 click-outside-close 行为 |
 
-## 功能要求
+### 功能要求
 
-### Frontend only
+#### Frontend only
 
 `apps/ui/src/components/ActorPoolGenerator.tsx`:
 
@@ -4723,18 +4796,18 @@ Summary: 把 "🎭 生成演员人脸" 模态锁死为**仅顶角 × 按钮才�
 4. `onCloseRequest` 函数本身不动（× 按钮仍调用）。
 5. `onClose` callback prop 不动。
 
-### 不动
+#### 不动
 
 - 后端 / endpoint / DTO / Container / 域层 / repository / 域错误全部不变。
 - 其它 frontend 组件不变（PromptPreviewModal / DeletedView / Editor 等其它 modal 不收紧）。
 - spec.md / acceptance_criteria.md 不动（无 FR 行为变化 — 仅 close-affordance 收紧，模态的功能契约不变）。
 
-### User input + audit
+#### User input + audit
 
 - `revised_prompt.md` header bump for 058。
 - `changelog.md` append 058 entry。
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **Modal 关闭路径单点化** — 整个 generator modal 的 close action 仅经 × 按钮 → `onCloseRequest`；busy 时变 cancel，not-busy 时调 `onClose()`。便于未来加 confirmation prompt（"真的要放弃 N 个 actor 的生成？"）只需 patch 一处。
 - **× 按钮始终 enabled**（仅 aria-label 在 busy 时切换为 "中断后关闭"）— 用户始终能逃出模态；不构成无逃逸 trap。
@@ -4743,7 +4816,7 @@ Summary: 把 "🎭 生成演员人脸" 模态锁死为**仅顶角 × 按钮才�
 - **A11y 影响**：用户必须用鼠标 / 触摸点 × 或键盘 tab 到 × 后 Enter。`type="button"` × 仍是 native button，screen-reader 可达。
 - **未来如需 confirm-on-close**：只需在 `onCloseRequest` 内加 `if (!confirm("...")) return;` —— 单点 patch。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 focus-trap 库
 - 不收紧 PromptPreviewModal 或其它 modal
@@ -4751,25 +4824,26 @@ Summary: 把 "🎭 生成演员人脸" 模态锁死为**仅顶角 × 按钮才�
 - 不动 stage 6 generation worker pool / cancel 语义
 - 不写 pytest / vitest
 
+
 ---
 
-# Follow-up draft 059 — 2026-05-17
+## 059 — 2026-05-17 14:50:00 — diverse-preview-confirm-worker-pool
 
 Summary: 把多样化随机模式（follow-up 053）的生成路径从"单 HTTP 调用阻塞 N 个 actor"重做为"preview-then-confirm + 9-worker concurrent pool 单 slot 单调用"，对齐标准模式（follow-up 032 + 027）。单次请求生成 10 个 actor × face+body 双图 ≈ 10 × 2 × 30-120s = 10-40 分钟的同步 HTTP，浏览器看到 UI 卡死，uvicorn `timeout_graceful_shutdown=2` 也可能截断。修法：(1) 新 `POST /api/actors/preview-diverse` 返回 N 个 slot 的 `{seed, archetype, archetype_label, attrs, prompt, body_prompt}` 计划；(2) `ActorPoolGenerator` 多样化模式从直 generate 改为 preview→confirm pattern，确认后用既有 9-worker pool 按 slot iterate 调 `generateActors({count: 1, ...slot.attrs, seeds: [slot.seed], archetype: slot.archetype})`；(3) `generateActors` 后端 body 扩 optional `archetype` 字段，按 slot 写入 sidecar archetype slug；(4) ProgressPanel 原生支持 done/failed/in-flight 进度报告。同时满足用户两条诉求：preview-first + UI 响应式 progress。
 
-## 用户原话
+### 用户原话
 
 > when I choose多样化随机模式, still show me the prompt and let me review first, before you submit to kling api to generate the actors
 
 > when I click generate 10 random actors, it just stuck there forever, plesae fix the issue also the UI should be responsive and show me the progress
 
-## 根因 (responsiveness)
+### 根因 (responsiveness)
 
 `ActorPoolGenerator.onDiverseGenerate` 调 `generateDiverseActors({count, gender, ethnicity, resolution})` → 单 HTTP 调用。后端 `ActorPool.generate_diverse_batch` 在该单次 sync FastAPI request 内 sequential 跑 N 个 slot，每 slot 两次 Kling：face (10-120s) + body (10-120s)。N=10 时上限 ~40 分钟。浏览器看到无响应（无中间反馈、无进度），用户感觉"卡死"。同时 follow-up 037 + 042 的 `timeout_graceful_shutdown=2` + `os._exit` watchdog 在 dev reload 时可能截断该长 request。
 
 修法：把"单 batch 调用"改为"N 个 count=1 调用 + 9-worker concurrent pool"。每 slot 一个 HTTP request；front-end 边收边更新 `Progress { done, failed, in_flight }` → ProgressPanel 实时显示。已经是标准模式 (follow-up 027) 的成熟 pattern；只需把多样化模式接入。
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -4790,9 +4864,9 @@ Summary: 把多样化随机模式（follow-up 053）的生成路径从"单 HTTP 
 | Preview modal 渲染 diverse 元数据 | `PromptPreviewModal` 加可选 archetype/attrs 显示在每个 prompt card header（present 即显示） | 用户审阅时能看到角色类型分布 + 滚出的 attrs |
 | ProgressPanel | 不动 — 既有标准模式 progress UI 已支持 done/failed/in_flight + per-slot phase 报告 | 多样化模式自动得益 |
 
-## 功能要求
+### 功能要求
 
-### Backend
+#### Backend
 
 **`libs/infrastructure/writers/actor__writer.py`**（post-056 reorg 路径）：
 
@@ -4845,7 +4919,7 @@ Summary: 把多样化随机模式（follow-up 053）的生成路径从"单 HTTP 
 3. 新 405 handler `actors_preview_diverse_method_not_allowed`。
 4. `actors_generate` route 内 `_generate_input(body)` 函数 + 路由调用更新以传递 `body.archetype`（透传到 CDTO）。
 
-### Frontend
+#### Frontend
 
 **`apps/ui/src/api.ts`**：
 
@@ -4878,17 +4952,17 @@ Attrs: asian / male / 18-25 / handsome / period-ancient-china
 {prompt}
 ```
 
-### Spec / validation
+#### Spec / validation
 
 - `final_specs/spec.md` 加 FR-9t (`POST /api/actors/preview-diverse`) + FR-9f extension 提及 archetype 可选写入 sidecar via generate-actors 单 slot 调用。
 - `validation/acceptance_criteria.md` 暂不更新（deferred batch）。
 
-### User input + audit
+#### User input + audit
 
 - `revised_prompt.md` header bump for 059。
 - `changelog.md` append 059 entry。
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **Preview 不调 Kling** — 零成本；用户自由 preview 后取消。
 - **Cost x2 per slot** (face + body) — 同 follow-up 052；preview→confirm 之间用户能 cancel 减少未生成 slot。
@@ -4899,7 +4973,7 @@ Attrs: asian / male / 18-25 / handsome / period-ancient-china
 - **失败隔离** — 单 slot 失败不阻塞其它（既有 worker pool 已支持）；diverse 模式同理。
 - **Backward compat** — 旧 `generate-diverse` endpoint 保留；`generateDiverseActors` API 函数保留；只是 UI 不再用。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不删除旧 `generate-diverse` 后端 endpoint / 应用层 Command。
 - 不为 standard 模式加 archetype（standard 不挑 archetype；用户若想标 archetype 走 diverse）。
@@ -4910,15 +4984,16 @@ Attrs: asian / male / 18-25 / handsome / period-ancient-china
 - 不动 follow-up 052 的双图 + Variance + cast/ copy 路径。
 - 不动 follow-up 053 的 generate_diverse_batch 方法（向后兼容保留）。
 
+
 ---
 
-# Follow-up draft 059 — 2026-05-17
+## 060 — 2026-05-17 14:58:21 — libs-one-file-per-aggregate
 
 Consolidate per-operation files into one-file-per-aggregate within each role sub-folder. After follow-up 056 the per-role sub-folders were created (`application/{queries,commands,dtos,mappers}`, etc.) but each sub-folder still held one file per operation: 15 commands, 12 DTOs, 7 queries. Roll them up so each aggregate gets a single file per role.
 
-## Required moves
+### Required moves
 
-### 1. `libs/application/commands/` — 15 files → 7
+#### 1. `libs/application/commands/` — 15 files → 7
 
 - `actor__command.py` ← `generate_actors__command.py` + `generate_diverse_actors__command.py` + `delete_actor__command.py`
 - `casting__command.py` ← `assign_actor__command.py` + `unassign_actor__command.py`
@@ -4928,7 +5003,7 @@ Consolidate per-operation files into one-file-per-aggregate within each role sub
 - `downloads__command.py` ← `import_from_downloads__command.py`
 - `character_video__command.py` ← `truncate_character_video__command.py` + `concat_shot_characters__command.py`
 
-### 2. `libs/application/queries/` — 7 files → 5
+#### 2. `libs/application/queries/` — 7 files → 5
 
 - `actor__query.py` ← `list_actors__query.py` + `preview_actor_prompts__query.py` + `get_actor_assignments__query.py`
 - `casting__query.py` ← `read_casting__query.py`
@@ -4936,7 +5011,7 @@ Consolidate per-operation files into one-file-per-aggregate within each role sub
 - `file__query.py` ← `read_file__query.py`
 - `tree__query.py` ← `get_tree__query.py`
 
-### 3. `libs/application/dtos/` — 12 files → 8
+#### 3. `libs/application/dtos/` — 12 files → 8
 
 Each aggregate gets one `{aggregate}__dto.py` holding BOTH its Qdtos and Cdtos. The `Qdto` / `Cdto` suffix on each class name already disambiguates Query-vs-Command intent within the file.
 
@@ -4949,11 +5024,11 @@ Each aggregate gets one `{aggregate}__dto.py` holding BOTH its Qdtos and Cdtos. 
 - `tree__dto.py` ← `tree__qdto.py` (renamed)
 - `character_video__dto.py` ← `character_video__cdto.py` (renamed)
 
-### 4. `libs/application/mappers/` — already aggregate-named, no change
+#### 4. `libs/application/mappers/` — already aggregate-named, no change
 
 `actor__mapper.py`, `casting__mapper.py`, `media__mapper.py`, `file__mapper.py`, `frame__mapper.py`, `downloads__mapper.py`, `character_video__mapper.py` — these already followed the per-aggregate convention; only their import paths shift to the new DTO names.
 
-### 5. `libs/domain/value_objects/` — 6 files → 5
+#### 5. `libs/domain/value_objects/` — 6 files → 5
 
 - `actor__valueobject.py` ← `actor_attrs__valueobject.py` (renamed)
 - `casting__valueobject.py` ← `cast_entry__valueobject.py` (renamed)
@@ -4961,16 +5036,16 @@ Each aggregate gets one `{aggregate}__dto.py` holding BOTH its Qdtos and Cdtos. 
 - `frame__valueobject.py` ← `frame_spec__valueobject.py` (renamed)
 - `media__valueobject.py` ← `media_path__valueobject.py` + `archive_state__valueobject.py` (merged — both belong to media aggregate)
 
-### 6. `libs/domain/errors/` — 7 files → 7 (rename only)
+#### 6. `libs/domain/errors/` — 7 files → 7 (rename only)
 
 - `file__error.py` ← `file_resource__error.py` (renamed for naming consistency)
 - All others (`actor__error.py`, `casting__error.py`, `character_video__error.py`, `downloads__error.py`, `frame__error.py`, `media__error.py`) already follow the convention.
 
-### 7. `libs/domain/entities/` + `libs/domain/repositories/` — no change
+#### 7. `libs/domain/entities/` + `libs/domain/repositories/` — no change
 
 Already aggregate-named.
 
-### 8. `libs/infrastructure/writers/` — 9 files → 7
+#### 8. `libs/infrastructure/writers/` — 9 files → 7
 
 - `actor__writer.py` ← `actor_pool__writer.py` (renamed)
 - `casting__writer.py` (no change)
@@ -4980,15 +5055,15 @@ Already aggregate-named.
 - `frame__writer.py` ← `frame__extractor.py` (renamed)
 - `media__writer.py` ← `media__archiver.py` + `media__renamer.py` (merged — both belong to media aggregate; no name conflicts)
 
-### 9. `libs/infrastructure/readers/` + `libs/infrastructure/middleware/` — no change
+#### 9. `libs/infrastructure/readers/` + `libs/infrastructure/middleware/` — no change
 
 Already aggregate-named.
 
-### 10. All imports rewritten
+#### 10. All imports rewritten
 
 A single Python regex sweep across `apps/`, `libs/`, `tests/` updates every `from libs.X.{old_module} import` to point at the new aggregate file. Wiring config in `apps/api/container.py` (`wiring_config = WiringConfiguration(modules=["apps.api.routes"])`) unchanged.
 
-## Common-level rule update
+### Common-level rule update
 
 `agent_refs/project/development.md` §1 gains:
 - **File-per-aggregate rule**: each role sub-folder holds `{aggregate}__{role}.py` files; one file per aggregate per role; all operations of that role for that aggregate live in the same file, disambiguated by class name.
@@ -5001,29 +5076,30 @@ A single Python regex sweep across `apps/`, `libs/`, `tests/` updates every `fro
 
 `CLAUDE.md` § Project rules solution-layout bullet expanded to mention the file-per-aggregate rule.
 
-## Out of scope
+### Out of scope
 
 - Renaming class names within the aggregate files. `GenerateActorsCommand` and `DeleteActorCommand` stay as-is — the file name aggregates them; the class name remains the operation name.
 - Changing HTTP route paths or JSON shapes (byte-identical).
 - Frontend (`apps/ui/`) — unaffected.
 - Test mirror-tree creation (deferred per follow-up 051 §7).
 
-## Acceptance trigger
+### Acceptance trigger
 
 - Pytest baseline preserved: 18 pass / 5 pre-existing wukong fixture failures.
 - §11b updated gates pass: routes.py 0 infra imports; Q+C class count ≥ 19; every `*__command.py` imports from `libs.domain`.
 - `ls libs/application/commands/` shows 7 aggregate files + `__init__.py`. `ls libs/application/queries/` shows 5. `ls libs/application/dtos/` shows 8.
 - No file with `generate_actors__command.py` / `archive_media__command.py` / `actor__qdto.py` / `actor__cdto.py` / etc. shape remains under `libs/`.
 
+
 ---
 
-# Follow-up draft 061 — 2026-05-17
+## 061 — 2026-05-17 15:18:09 — one-class-per-qc-file-method-per-op
 
 Collapse each `{aggregate}__{command,query}.py` from multi-class-per-file to **one class per aggregate, one method per operation**. After follow-up 060 each aggregate file held N command/query classes (e.g., `actor__command.py` had `GenerateActorsCommand` + `GenerateDiverseActorsCommand` + `DeleteActorCommand` as three sibling classes). This follow-up rolls them into a single `ActorCommand` class with three methods (`generate`, `generate_diverse`, `delete`). The operation name lives on the **method**, not the class or the filename.
 
-## Required moves
+### Required moves
 
-### 1. `libs/application/commands/` — one class per file
+#### 1. `libs/application/commands/` — one class per file
 
 Every `*__command.py` now defines exactly ONE class `{Aggregate}Command` with one method per operation.
 
@@ -5039,7 +5115,7 @@ Every `*__command.py` now defines exactly ONE class `{Aggregate}Command` with on
 
 Constructor dependencies are the **union** of operation dependencies. `MediaCommand.__init__(archiver, renamer, casting)` carries all three because `archive`/`unarchive`/`delete`/`hard_delete` use `archiver`, `rename` uses `renamer`, `delete` uses `casting` for the cross-aggregate refuse-if-assigned check.
 
-### 2. `libs/application/queries/` — one class per file
+#### 2. `libs/application/queries/` — one class per file
 
 | File | Class | Methods |
 |---|---|---|
@@ -5049,7 +5125,7 @@ Constructor dependencies are the **union** of operation dependencies. `MediaComm
 | `file__query.py` | `FileQuery` | `read` |
 | `tree__query.py` | `TreeQuery` | `build` |
 
-### 3. `apps/api/container.py` — 12 Factory providers (down from 22 after follow-up 060's class-per-operation layout)
+#### 3. `apps/api/container.py` — 12 Factory providers (down from 22 after follow-up 060's class-per-operation layout)
 
 One Factory per aggregate Q/C class:
 
@@ -5068,7 +5144,7 @@ file_query      = Factory(FileQuery, reader=file_reader)
 tree_query      = Factory(TreeQuery, reader=tree_reader)
 ```
 
-### 4. `apps/api/routes.py` — handlers call aggregate methods
+#### 4. `apps/api/routes.py` — handlers call aggregate methods
 
 Each handler injects the aggregate Q/C and calls the method matching the endpoint's operation:
 
@@ -5084,11 +5160,11 @@ def archive_media(body, command: MediaCommand = Depends(Provide[Container.media_
     ...
 ```
 
-### 5. The `execute()` convention is retired
+#### 5. The `execute()` convention is retired
 
 The earlier development.md draft mandated each Command/Query class expose `execute(...)`. With method-per-operation that no longer fits — `ActorCommand.execute()` would have to dispatch on a discriminator. Replaced by named methods that match the operation.
 
-## Common-level rule update
+### Common-level rule update
 
 - `agent_refs/project/development.md` §1 — "One class per aggregate file, one method per operation" rule added (separates Q/C from DTO files: Q/C are single-class; DTOs can be multi-class because they're pure data).
 - `agent_refs/project/development.md` §3 — Application layer §3 rewritten: classes are named `{Aggregate}Query` / `{Aggregate}Command`; methods are named after operations; `execute()` convention retired.
@@ -5096,32 +5172,33 @@ The earlier development.md draft mandated each Command/Query class expose `execu
 - `agent_refs/validation/development.md` §11b — grep #2 changed from "class count" to "method count" (`grep -hE "^    def [a-z]\w*\(" ... | grep -v "^    def _"`); new grep #4 enforces "exactly one class per `*__command.py` / `*__query.py`".
 - `CLAUDE.md` § Project rules solution-layout bullet — updated to call out one-class-per-file for Q/C, multi-class allowed for DTOs.
 
-## Out of scope
+### Out of scope
 
 - HTTP route paths + JSON shapes (byte-identical).
 - DTOs / mappers / domain / infrastructure layers (unchanged).
 - Frontend (`apps/ui/`) — unaffected.
 
-## Acceptance trigger
+### Acceptance trigger
 
 - Pytest baseline preserved: 18 pass / 5 pre-existing wukong fixture failures.
 - §11b updated gates pass: routes.py 0 infra imports; method count ≥ 19; commands import libs.domain; exactly one class per `*__command.py` / `*__query.py`.
 - 12 Factory providers in `apps/api/container.py` (one per aggregate Q/C).
 - No file under `libs/application/commands/` or `libs/application/queries/` contains more than one `^class \w+(Command|Query)\b` declaration.
 
+
 ---
 
-# Follow-up draft 062 — 2026-05-17
+## 062 — 2026-05-17 15:22:34 — confirm-send-close-preview-show-progress
 
 Summary: 修 "点击确认发送后 UI 没反应" 的 bug。`PromptPreviewModal` 在用户点 ✓ 确认发送之后**没被关闭** — `onConfirmGenerate` 启动 9-worker pool 但从不调 `setPreview(null)`。预览模态仍叠在生成器模态之上，遮住底下的 `ProgressPanel` → 用户看不到 done/failed/inFlight 进度，错以为 "什么都没发生"。实际后台正在跑生成（HTTP 已发出，actor 文件夹已建立）。修法：`onConfirmGenerate` 首行（busy guard 之后）立刻 `setPreview(null)`，关闭预览模态让 ProgressPanel 浮上来。
 
-## 用户原话
+### 用户原话
 
 > after I click 确认发送，on the ui, nothing happens, is the right behaviour to just close that modal or what?
 
 回答用户的问题：**是的**，正确行为应该是点 ✓ 确认发送后立即关闭 `PromptPreviewModal`，回到生成器模态展示实时进度。现行代码漏了关闭这一步，所以 UI "什么都没发生"（实际生成进行中，被预览模态盖住了）。
 
-## 根因
+### 根因
 
 `apps/ui/src/components/ActorPoolGenerator.tsx` `onConfirmGenerate`:
 
@@ -5139,7 +5216,7 @@ const onConfirmGenerate = useCallback(async () => {
 
 整段没 `setPreview(null)`。`PromptPreviewModal` 是条件渲染 `{preview ? <PromptPreviewModal /> : null}`，preview 不被清就一直显示，遮住下面的 generator modal 体内的 `ProgressPanel`（仅当 `progress` truthy 时渲染）。
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -5150,9 +5227,9 @@ const onConfirmGenerate = useCallback(async () => {
 | 同时关 generator modal？ | **否** | 用户需要看进度；自动关 generator modal 会丢失 ProgressPanel + toast。生成完成后用户自己点 × |
 | 自动关 generator modal on success | **否**（v1）| 进度 + toast 是 useful 信息；用户点 × 显式关闭。未来可加 "auto-close on success" 选项，本 follow-up 不做 |
 
-## 功能要求
+### 功能要求
 
-### Frontend only
+#### Frontend only
 
 `apps/ui/src/components/ActorPoolGenerator.tsx`:
 
@@ -5166,26 +5243,26 @@ const onConfirmGenerate = useCallback(async () => {
 }, [...]);
 ```
 
-### 不动
+#### 不动
 
 - `PromptPreviewModal` 组件不动 — 它本身就是被外层 `preview` state 控制 mount/unmount 的，无需内部改造。
 - 后端 / endpoint / DTO 全部不变。
 - `cancelPreview` 不动 — 取消路径已正确。
 - ProgressPanel 不动 — 已支持实时 `done/failed/inFlight` 更新。
 
-### User input + audit
+#### User input + audit
 
 - `revised_prompt.md` header bump for 062。
 - `changelog.md` append 062 entry。
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **`preview` 在 closure 内仍可用**：`useCallback` 捕获的是 setState 触发前的 preview 引用；setPreview(null) 触发 re-render 但当前执行中的 `onConfirmGenerate` async function 内 `preview.prompts.map` 等仍正常工作（closure capture）。
 - **Re-clicking 确认发送**：第一次 click → `setPreview(null)` + `setBusy(true)`；之后 PromptPreviewModal 卸载；不会有第二次 click，因为按钮已被卸载。
 - **Generation 完成后**：toast 显示在 generator modal 内；用户点 × 关闭。
 - **Cancel 中途**：用户点 generator modal 内的 "停止" 按钮 → `cancelledRef.current = true` → worker 不再 claim 新 slot → done/failed 最终 count 更新 → toast 显示 "已中断 — 已生成 X / 失败 Y / 跳过 Z"。Preview 模态早已关闭，不影响。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 "auto-close generator modal on success" 选项。
 - 不动 generator modal × 关闭路径（follow-up 058 保留）。
@@ -5193,17 +5270,18 @@ const onConfirmGenerate = useCallback(async () => {
 - 不重写 ProgressPanel。
 - 不加 progress bar animation / sound notification。
 
+
 ---
 
-# Follow-up draft 063 — 2026-05-17
+## 063 — 2026-05-17 15:31:00 — generator-dropdown-chinese-labels
 
 Summary: `ActorPoolGenerator` 下拉菜单 option 文字汉化。当前 `<option>` 使用 `ATTR_OPTIONS` 的 raw 英文/slug（"asian", "male", "handsome", "modern-casual", "normal"），用户希望看到中文标签。`<option value>` 仍传 slug（与后端 closed-enum schema 兼容），仅显示文本汉化。
 
-## 用户原话
+### 用户原话
 
 > the drop down menu under 生成演员人脸 should be all chinese
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -5213,7 +5291,7 @@ Summary: `ActorPoolGenerator` 下拉菜单 option 文字汉化。当前 `<option
 | 范围 | 仅 `ActorPoolGenerator`（用户原话） | ActorGrid filter 下次可用同 map 翻译，但本 follow-up 不扩 |
 | 后端 | 不动 | 仅前端显示 |
 
-## 功能要求
+### 功能要求
 
 `apps/ui/src/api.ts`:
 - 新 export `ATTR_LABELS_ZH: { [K in keyof typeof ATTR_OPTIONS]: Record<string, string> }`，6 个字段全填中文。
@@ -5224,7 +5302,7 @@ Summary: `ActorPoolGenerator` 下拉菜单 option 文字汉化。当前 `<option
 
 无后端 / spec / 测试改动。
 
-## 翻译表
+### 翻译表
 
 | 字段 | slug → 中文 |
 |---|---|
@@ -5235,20 +5313,22 @@ Summary: `ActorPoolGenerator` 下拉菜单 option 文字汉化。当前 `<option
 | style | modern-casual→现代休闲 / period-ancient-china→古装仙侠 / period-western→西方古装 / business→商务 / streetwear→街头潮流 / sci-fi→科幻 / fantasy→奇幻 |
 | resolution | normal→普通 (~1024px Kling 原始) / 2k→2K (2048px) / 4k→4K (4096px) |
 
+
 ---
 
-# Follow-up draft 064 — 2026-05-17
+## 064 — 2026-05-17 07:37:50 — shot-concat-take-first-mp4-in-folder
+
 Refine the shot-concat contract introduced in follow-up 054.
 
-## Change
+### Change
 
 Replace the per-character `video.mp4` lookup with "first mp4 directly inside the character folder, alphabetical order, case-insensitive extension match against the project's video allowlist." Only when the folder contains no mp4 at the top level do we report it as missing.
 
-## Why
+### Why
 
 Per follow-up 054 the concat looked for `<char_folder>/video.mp4` specifically, on the assumption that the user would first click "✂ 截到 2s → video.mp4" on a chosen take. In practice the user does not want to pre-stage the clips — they expect the concat button to "just work" against whatever mp4s already exist in the character folders. The truncate button remains as an independent utility but is no longer a prerequisite.
 
-## Spec
+### Spec
 
 - Source selection: `Path.iterdir()` filtered to top-level non-symlink files whose `.suffix.lower()` is in `VIDEO_EXTENSIONS`, sorted by `name`, first element wins. Subdirectories (e.g. `archive/`) are skipped automatically.
 - Output filename and location unchanged: `<shot_folder>/<shotNN>_chars.mp4`.
@@ -5257,7 +5337,7 @@ Per follow-up 054 the concat looked for `<char_folder>/video.mp4` specifically, 
   - `character_folder_missing` — the resolved folder does not exist on disk.
   - `no_mp4_in_folder` — folder exists but has no mp4 at the top level. **Replaces** the old `video_mp4_missing` reason.
 
-## Touch list
+### Touch list
 
 - `libs/infrastructure/writers/character_video__writer.py` —
   - Drop the `_VIDEO_FILENAME = "video.mp4"` constant.
@@ -5267,21 +5347,22 @@ Per follow-up 054 the concat looked for `<char_folder>/video.mp4` specifically, 
   - Toast text for the empty-output case: `未生成 — 没有角色文件夹包含 mp4` (was `未生成 — 0 个角色具备 video.mp4`).
   - Button `aria-label` + `title` updated to describe the new "first mp4 in folder" behavior.
 
-## Out of scope
+### Out of scope
 
 - Feature 1 ("✂ 截到 2s → video.mp4") is unchanged — still useful on its own, just no longer the prerequisite step for feature 2.
 
+
 ---
 
-# Follow-up draft 064 — 2026-05-17
+## 064 — 2026-05-17 15:34:14 — unified-mode-random-defaults-look-extension
 
 Summary: 三个耦合改动 — (1) 合并 "标准模式 / 多样化随机模式" 为 ONE 模式，去掉 radio toggle；(2) 每个下拉菜单加 "🎲 随机" sentinel option 作 DEFAULT，用户可以混合 — 部分字段固定 + 部分随机；(3) `look` 字段加 5 个新 enum 值：`righteous` (正义) / `sinister` (阴邪) / `seductive` (妩媚) / `cunning` (狡诈) / `innocent` (天真)，覆盖人物性格/气质维度（原 look 偏物理外貌）。每 slot 独立随机滚 (不再做 10-archetype even-distribution)；用户想要 archetype 平衡可手动选 `look=阴邪` 等。Frontend 客户端 roll random + 调既有 preview-prompts(count=1, seeds=[seed_i]) per slot；后端 `preview_prompts` 扩 optional `seeds` 参数让 frontend 显式控 seed 避免 `time.time()` 毫秒精度同 base_seed 冲突。
 
-## 用户原话
+### 用户原话
 
 > combine 标准模式和多样化随机模式 into one，in each dropdown, we could have an 随机option, when selectd, you can just randrom it, and 随机is the default value, also add more drop down option like 正义，阴邪，妩媚，狡诈，天真 etc
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -5302,7 +5383,7 @@ Summary: 三个耦合改动 — (1) 合并 "标准模式 / 多样化随机模式
 | Diverse 模式 preview-diverse endpoint | 保留 backward compat；UI 不再用 | 同 |
 | ActorGrid filter | 加新 look 值的 ATTR_LABELS_ZH 映射也覆盖 | 自动得益（follow-up 063 已用 ATTR_LABELS_ZH）|
 
-## 新 look 值 backend prompt fragments
+### 新 look 值 backend prompt fragments
 
 | slug | name_zh | prompt fragment (English) |
 |---|---|---|
@@ -5312,9 +5393,9 @@ Summary: 三个耦合改动 — (1) 合并 "标准模式 / 多样化随机模式
 | cunning | 狡诈 | cunning sharp-eyed expression, slight knowing smirk, calculating raised brow |
 | innocent | 天真 | innocent unspoiled expression, soft wide-eyed gaze, gentle natural smile |
 
-## 功能要求
+### 功能要求
 
-### Backend
+#### Backend
 
 `libs/infrastructure/writers/actor__writer.py`:
 1. `LOOK_OPTIONS` frozenset：加 5 个 slug。
@@ -5334,7 +5415,7 @@ Summary: 三个耦合改动 — (1) 合并 "标准模式 / 多样化随机模式
 `apps/api/routes.py`:
 - `_generate_input(body)` 已 plumb `seeds`；无需改。
 
-### Frontend
+#### Frontend
 
 `apps/ui/src/api.ts`:
 1. `ATTR_OPTIONS.look`: append 5 new slugs `["handsome", "beautiful", "cute", "mature", "rugged", "soft", "aristocratic", "fierce", "righteous", "sinister", "seductive", "cunning", "innocent"]`。
@@ -5359,17 +5440,17 @@ Summary: 三个耦合改动 — (1) 合并 "标准模式 / 多样化随机模式
 
 `apps/ui/src/styles.css`: 无新 class（既有 form-grid 兼容）。
 
-### Spec / validation
+#### Spec / validation
 
 - `final_specs/spec.md` FR-86 (closed enum schema): look enum 加 5 values。
 - `validation/acceptance_criteria.md`：deferred batch。
 
-### User input + audit
+#### User input + audit
 
 - `revised_prompt.md` header bump for 064。
 - `changelog.md` append 064 entry。
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **Closed enum 完整性**：5 新 look values 加入 LOOK_OPTIONS 后通过 `_validate_attrs` 检查；preview-prompts + generate-actors 全部接受。
 - **Backward compat**: 既有 actor sidecar 用旧 8 look slugs；list_actors 解析不受影响。
@@ -5380,7 +5461,7 @@ Summary: 三个耦合改动 — (1) 合并 "标准模式 / 多样化随机模式
 - **Cost generate**: 每 actor 仍 2 Kling calls (face + body)；新 mode 不变。
 - **UX 默认随机**: 用户首次开模态，所有 6 字段都是 🎲 随机；点 "预览 5 个 prompt" → 5 个完全随机 attrs 组合。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不动 generate-diverse / preview-diverse endpoints (backward compat)。
 - 不删 ActorPoolGenerator 的 mode 相关 import / state 注释 — 留着 simple cleanup 给下次。
@@ -5390,25 +5471,26 @@ Summary: 三个耦合改动 — (1) 合并 "标准模式 / 多样化随机模式
 - 不动 follow-up 053 archetype 反查 / migrate_archetypes。
 - 不收紧/扩 look enum 之外的字段（ethnicity / gender 等）。
 
+
 ---
 
-# Follow-up draft 065 — 2026-05-17
+## 065 — 2026-05-17 16:22:02 — split-routes-by-aggregate-file-size-rule
 
 Two coupled changes:
 
 1. **Add a file-size guideline** to `agent_refs/project/development.md` §1: prefer `< 100 lines`, split by sub-concern (matching the layer's role taxonomy) when bigger. Hard cap around `~1000` lines without a clear sub-concern boundary = stage-5 `warning`.
 2. **Apply the rule to `apps/api/routes.py`** (847 lines): split into `apps/api/routes/{aggregate}__route.py`, mirroring the per-aggregate layout used in `libs/application/{queries,commands}/`.
 
-## Required moves
+### Required moves
 
-### 1. New file-size rule (common-level, in `agent_refs/project/development.md` §1)
+#### 1. New file-size rule (common-level, in `agent_refs/project/development.md` §1)
 
 Inserted right after the dependency-direction subsection. Guideline only, not a hard cap. Aggregates with genuinely complex business logic (e.g., variance pools + prompt assembly + Kling client wrapper) may legitimately exceed. Split direction is dictated by the layer's existing taxonomy:
 - A `routes.py` with all endpoints splits by aggregate into `routes/{aggregate}__route.py`.
 - A `*__writer.py` past ~500 lines may split by operation IF operations don't share private state; otherwise size is justified.
 - A `*__dto.py` past ~200 lines may split into `__qdto.py` + `__cdto.py` ONLY when it materially helps readability.
 
-### 2. Routes split: `apps/api/routes.py` (847 lines) → `apps/api/routes/{aggregate}__route.py`
+#### 2. Routes split: `apps/api/routes.py` (847 lines) → `apps/api/routes/{aggregate}__route.py`
 
 8 per-aggregate route files + a shared helpers module + a combined-router package init:
 
@@ -5429,7 +5511,7 @@ Plus:
 
 Each per-aggregate file owns its Pydantic request bodies (no shared `_bodies.py`). Aggregate-specific helpers (e.g. actor's `_generate_input` / `_diverse_input`) live with their handlers.
 
-### 3. Container wiring: `wiring_config` switched from `modules=` to `packages=`
+#### 3. Container wiring: `wiring_config` switched from `modules=` to `packages=`
 
 `apps/api/container.py`:
 ```python
@@ -5437,15 +5519,15 @@ wiring_config = containers.WiringConfiguration(packages=["apps.api.routes"])
 ```
 This auto-wires every per-aggregate route module's `@inject` decorators. Same change in `apps/api/asgi.py`, `apps/api/main.py`, `tests/conftest.py` for the explicit `container.wire(...)` calls.
 
-### 4. App factory unchanged
+#### 4. App factory unchanged
 
 `apps/api/app_factory.py` still `from apps.api.routes import router` — the `routes/__init__.py` exposes the combined router. Single mount line `app.include_router(router)`.
 
-### 5. Test imports updated
+#### 5. Test imports updated
 
 `tests/conftest.py`, `tests/test_api_security_three_shapes.py`, `tests/test_boot_smoke.py`: `from apps.api.routes import create_app` → `from apps.api.app_factory import create_app`. (`create_app` has lived in `app_factory.py` since follow-up 051; the tests were still importing from the legacy location.)
 
-### 6. Pre-turn recovery: 11 OLD-path imports + 5 dupe flat infra files
+#### 6. Pre-turn recovery: 11 OLD-path imports + 5 dupe flat infra files
 
 The turn opened in an inconsistent state where some files had been rolled back to pre-056 paths while sub-bucket folders and aggregate Q/C files from follow-ups 056–061 still existed. Resolved by:
 - Moving the 5 surviving flat infra files into their sub-folders (`casting__writer.py`, `file__writer.py`, `file__reader.py`, `tree__reader.py`, `origin_host__middleware.py`).
@@ -5457,26 +5539,27 @@ The turn opened in an inconsistent state where some files had been rolled back t
 
 The broader common-ref work from follow-ups 051/056/060/061 (§6b empty-application-layer blocker, §11b validation grep checks, §3 application-layer rewrite, §4 file-pattern table) was NOT fully restored in this follow-up — those can be re-added in a separate cleanup if the user wants the institutional memory back in agent_refs.
 
-## Out of scope
+### Out of scope
 
 - HTTP route paths + JSON shapes (byte-identical).
 - Re-applying the deeper deferred work from follow-up 051 (e.g., splitting `actor__writer.py` 1985 lines into `kling__client.py` + `actor__dao.py` + `actor__reader.py` + `actor__writer.py`).
 - Aggressively splitting other >100-line files. The rule is a guideline; existing larger aggregates stay where they are unless a sub-concern axis emerges.
 
-## Acceptance trigger
+### Acceptance trigger
 
 - Pytest baseline preserved: 18 pass / 5 pre-existing wukong fixture failures.
 - App constructs cleanly via `apps.api.app_factory.create_app(container, serve_static=False)`; route count matches pre-split.
 - `wc -l apps/api/routes/*.py` shows each file is well under the 800-line legacy size.
 - `import apps.api.routes` resolves to the package (with the combined `router` attribute), not a leftover `routes.py`.
 
+
 ---
 
-# Follow-up draft 066 — 2026-05-17
+## 066 — 2026-05-17 16:29:55 — fix-main-asgi-create-app-import
 
 Bugfix to follow-up 065's routes-split: `apps/api/main.py` and `apps/api/asgi.py` still imported `create_app` from the legacy `apps.api.routes` location, which now resolves to the per-aggregate routes **package** rather than the module that used to export `create_app`.
 
-## Symptom
+### Symptom
 
 ```
 $ make run-backend
@@ -5488,35 +5571,36 @@ Traceback (most recent call last):
 ImportError: cannot import name 'create_app' from 'apps.api.routes' (.../apps/api/routes/__init__.py)
 ```
 
-## Root cause
+### Root cause
 
 Follow-up 051 introduced `apps/api/app_factory.py` as the new home for `create_app`. Follow-up 065's route-split pre-turn recovery updated `tests/conftest.py` + `tests/test_*.py` to import from the new location but missed the same import sites in `apps/api/main.py` + `apps/api/asgi.py`. Pytest passed (it uses `tests/conftest.py:make_app` which already pointed at the right place), so the regression slipped through.
 
-## Fix
+### Fix
 
 Both files: `from apps.api.routes import create_app` → `from apps.api.app_factory import create_app`. Single-line edit per file; no other changes.
 
-## Out of scope
+### Out of scope
 
 - Adding a smoke test for `python -m apps.api.main --no-reload` (would catch this class of regression at pytest time, but stays a follow-up of its own).
 - HTTP route paths + JSON shapes (byte-identical).
 
-## Acceptance trigger
+### Acceptance trigger
 
 - `python -m apps.api.main --no-reload` boots without ImportError (or, equivalently, `import apps.api.main` + `import apps.api.asgi` cold-import cleanly).
 - Pytest baseline unchanged: 18 pass / 5 pre-existing wukong fixture failures.
 
+
 ---
 
-# Follow-up draft 067 — 2026-05-17
+## 067 — 2026-05-17 16:35:05 — look-enum-domain-infra-sync
 
 Summary: 修 follow-up 064 漏的第二份 `LOOK_OPTIONS`。064 把 5 个新 look 值（righteous / sinister / seductive / cunning / innocent）只加到 infrastructure 层 `actor__writer.py::LOOK_OPTIONS`，但 domain 层 `actor__valueobject.py::LOOK_OPTIONS` 仍是原 8 项；`ActorAttrs.validate()` 在 application command / query 里跑 → 用户选新 look 值 preview → `InvalidActorAttributeError("look=... not in schema")` → 路由层映射成 `400 invalid_attribute`。用户看到 "预览失败: 400 invalid_attribute"。一行扩 domain `LOOK_OPTIONS` 同步 5 新值即可。
 
-## 用户原话
+### 用户原话
 
 > when I try to generate actors, I got 预览失败: 400 invalid_attribute
 
-## 根因
+### 根因
 
 DDD 拆层后两份 closed-enum source-of-truth：
 - `libs/domain/value_objects/actor__valueobject.py::LOOK_OPTIONS` (domain validate, 用 `ActorAttrs.validate()`)
@@ -5524,7 +5608,7 @@ DDD 拆层后两份 closed-enum source-of-truth：
 
 Follow-up 064 only updated the infra copy; domain stayed at 8 entries. The application layer's `ActorQuery.preview_prompts` / `ActorCommand.generate` call `attrs.validate()` first (domain) — that's where the rejection happens.
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -5534,7 +5618,7 @@ Follow-up 064 only updated the infra copy; domain stayed at 8 entries. The appli
 | 检查其它字段 | 跑了一遍 ETHNICITY / GENDER / AGE_RANGE / STYLE / RESOLUTION — 5 字段 064 未扩，domain + infra 都没改 → 仍 in sync | 无需动 |
 | Validation | 跑 ActorAttrs.validate() against 5 new look values + 1 known-invalid value | 5 pass; invalid 仍 reject |
 
-## 功能要求
+### 功能要求
 
 `libs/domain/value_objects/actor__valueobject.py`:
 - `LOOK_OPTIONS` frozenset 扩 5 个 slug: `righteous`, `sinister`, `seductive`, `cunning`, `innocent`。
@@ -5542,21 +5626,22 @@ Follow-up 064 only updated the infra copy; domain stayed at 8 entries. The appli
 
 无 frontend / API / spec FR 变化。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不重构 LOOK_OPTIONS 到单一 source of truth（domain 导出 → infra import）。这是 DDD enum-duplication 通用问题，需要扫所有 closed enums (ETHNICITY/GENDER/AGE_RANGE/STYLE/RESOLUTION 都有 domain+infra 两份)，留独立 follow-up。
 - 不动 archetype 反查 / classify。
 - 不写 pytest（添 enum 后 boot_smoke 已 catch；显式 vitest 推迟）。
 
+
 ---
 
-# Follow-up draft 068 — 2026-05-17
+## 068 — 2026-05-17 16:44:19 — srp-extract-infra-exceptions
 
 Apply the **Single Responsibility Principle** to infrastructure files: a `.py` file does one thing well. Exception classes don't live in writer/reader files — extract them to `libs/infrastructure/errors/{aggregate}__error.py`, mirroring the `libs/domain/errors/{aggregate}__error.py` layout on the domain side.
 
-## Required moves
+### Required moves
 
-### 1. Add the SRP rule to `agent_refs/project/development.md` §1
+#### 1. Add the SRP rule to `agent_refs/project/development.md` §1
 
 A new paragraph just after the dependency-direction subsection (and before the file-size guideline added in 065). Calls out four concrete extractions:
 
@@ -5567,7 +5652,7 @@ A new paragraph just after the dependency-direction subsection (and before the f
 
 `CLAUDE.md` § Project rules gets a parallel SRP bullet.
 
-### 2. Extract every infra exception class
+#### 2. Extract every infra exception class
 
 Walk every file under `libs/infrastructure/writers/` and `libs/infrastructure/readers/`. For each `class Xxx(Exception): ...` block, move it to `libs/infrastructure/errors/{aggregate}__error.py`. Total: **43 exception classes across 8 source files → 7 errors files**.
 
@@ -5590,38 +5675,39 @@ from libs.infrastructure.errors.{aggregate}__error import (
 
 The `# noqa: F401` flag is set because the writer's `__init__`-level imports look "unused" to lint but ARE used by external callers via the writer's `from libs.infrastructure.writers.{aggregate}__writer import Xxx` shape.
 
-### 3. No command rewrites required
+#### 3. No command rewrites required
 
 Commands currently import exceptions from the writers (e.g., `from libs.infrastructure.writers.media__writer import InvalidPath, NotMedia, ...`). These imports still resolve because the writer re-exports them. A future cleanup can switch each command to import directly from `libs.infrastructure.errors.{aggregate}__error` — that's mechanical and orthogonal.
 
-### 4. Domain side unchanged
+#### 4. Domain side unchanged
 
 `libs/domain/errors/{aggregate}__error.py` already exists for each aggregate and holds domain-level errors (e.g., `InvalidActorAttributeError`, `ActorNotFoundError`, `FileNotInSandboxError`). The new infra files DON'T duplicate them — they hold the raw infrastructure-side exceptions (`InvalidAttribute`, `ActorNotFound`, `OutsideSandbox`, etc., bare names without `Error` suffix). The semantic distinction is: domain errors are what the application layer raises to communicate business-rule violations; infra exceptions are what the filesystem / HTTP / ffmpeg subprocesses raise. Commands catch infra exceptions and re-raise as domain errors.
 
-## Out of scope
+### Out of scope
 
 - DAO dataclass extractions (item 2 of the SRP rule). Many DAOs still live in writer files (e.g., `TruncateResult`, `ConcatResult`, `MoveResult`, `RenameResult`, `GenerateResult`, `ActorInfo`, etc.). Each can move to `libs/infrastructure/daos/{aggregate}__dao.py` in a future follow-up; the SRP rule is in place to flag them next time someone touches these files.
 - Switching command imports from writers → errors files (mechanical, see §3).
 - HTTP route paths + JSON shapes (byte-identical).
 
-## Acceptance trigger
+### Acceptance trigger
 
 - Pytest baseline preserved: 18 pass / 5 pre-existing wukong fixture failures.
 - `python -c "import apps.api.main"` and `import apps.api.asgi` boot cleanly.
 - `find libs/infrastructure/errors -name "*.py" -not -name "__init__.py" | wc -l` ≥ 7.
 - No file under `libs/infrastructure/writers/` or `libs/infrastructure/readers/` defines `^class \w+(Exception):` (use grep to verify).
 
+
 ---
 
-# Follow-up draft 069 — 2026-05-17
+## 069 — 2026-05-17 16:49:15 — prompt-preview-card-polish-no-overflow
 
 Summary: `PromptPreviewModal` 每张 prompt card 视觉优化 + 强制无横向滚动条。Variance + photographer + medium + type_anchor 等组合后的 prompt 可达 ~2000 字符，含大量 comma-separated tokens（部分 token 内可能无空格）。旧 CSS 仅 `.prompt-preview-body` 加了 `pre-wrap` + `break-word`；`.prompt-preview-toggle`（`<summary>` 内显示前 180 char 切片）+ `.prompt-preview-attrs`（单行 attrs 串）+ card 容器无 overflow guard，长 token 仍可能撑出横条。新 CSS 统一加 `overflow-wrap: anywhere` + `word-break: break-word` 到所有 text-bearing 元素 + `overflow: hidden` 在 card 外壳 + body 最高 360px 内滚（不撑模态）。同步美化：圆角 / 间距 / hover 阴影 / pill-style seed badge / 折叠箭头 / 更松行高（1.7）/ 颜色对比微调。
 
-## 用户原话
+### 用户原话
 
 > 优化每个prompt在UI的展示，使得不过prompt多大,没有horizontal bar,并且让prompt看起来美观些
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -5636,7 +5722,7 @@ Summary: `PromptPreviewModal` 每张 prompt card 视觉优化 + 强制无横向�
 | Body 排版 | line-height 1.5 → 1.7；font-size 12 → 12.5；padding 8 → 12/14 | 长 prompt 阅读舒适 |
 | Panel 宽度 | max-width 900 → 980；width 90vw → 92vw | 大屏更多横向空间，减少不必要换行 |
 
-## 功能要求
+### 功能要求
 
 `apps/ui/src/styles.css` 修改既有 `.prompt-preview-*` 块：
 
@@ -5652,14 +5738,14 @@ Summary: `PromptPreviewModal` 每张 prompt card 视觉优化 + 强制无横向�
 
 不动 component JSX；不动后端 / endpoint / spec FR。
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **零 JS 改动**；纯 CSS。
 - **跨浏览器**：`::marker` + `::-webkit-details-marker` 双写覆盖 Safari + Chromium + Firefox。
 - **A11y**：折叠箭头是装饰；`<details>` 的语义不变；screen reader 仍能正确朗读 "summary"。
 - **Print**：max-height 在 print media 可能阻断长 prompt — 未来若需打印走单独 `@media print` 覆盖，本 v1 不做。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不改 PromptPreviewModal JSX。
 - 不动 ActorPoolGenerator dropdown / form-grid 样式。
@@ -5667,17 +5753,18 @@ Summary: `PromptPreviewModal` 每张 prompt card 视觉优化 + 强制无横向�
 - 不重排 meta / attrs / toggle / body 顺序。
 - 不写 vitest。
 
+
 ---
 
-# Follow-up draft 070 — 2026-05-17
+## 070 — 2026-05-17 17:00:51 — markdown-pre-no-horizontal-scroll
 
 Summary: Reader 内 markdown-rendered shotXX.md / 角色 ref / shot pair 等文件的 fenced ` ```text ` 代码块仍有横向滚动条 — follow-up 069 仅修了 `PromptPreviewModal` 内的 prompt 卡片，没动 Reader 渲染 markdown 时的 `<pre>` 元素。`.markdown-view pre` / `.code-view pre` / `.jsonl-line pre` 三处都用 `overflow-x: auto` + 默认 `white-space: pre`（不换行）。改为 `white-space: pre-wrap` + `overflow-wrap: anywhere` + `word-break: break-word` + `overflow-x: hidden` — 长 comma-separated prompt 自然换行，无横条；换行符仍被 `pre-wrap` 保留（不破多行 prompt 结构）。
 
-## 用户原话
+### 用户原话
 
 > I can still see horizontal bar in frontend page when comes to prompt like in shotXX.md
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -5688,7 +5775,7 @@ Summary: Reader 内 markdown-rendered shotXX.md / 角色 ref / shot pair 等文�
 | `.markdown-view pre` line-height | 1.6 → 1.65（微调） | 换行后字距更舒展 |
 | 其它 markdown 元素 | 不动 — `.markdown-view code` (inline) 已 `padding: 1px 4px`，自然 wrap | 仅 `<pre>` 块状元素有 horizontal-scroll 历史包袱 |
 
-## 功能要求
+### 功能要求
 
 `apps/ui/src/styles.css`:
 
@@ -5698,7 +5785,7 @@ Summary: Reader 内 markdown-rendered shotXX.md / 角色 ref / shot pair 等文�
 
 无 JSX / 后端 / endpoint / spec FR 改动。
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **多行结构保留**：`pre-wrap` 保留 `\n` 换行符 — Multi-line YAML / JSON / shot prompt 的视觉结构（每个 `字段: 值` 一行）不被破坏。
 - **Code highlighting**：项目当前无 syntax highlighter；`<pre><code>` 是 raw 文本；wrap 不破坏潜在 highlighter 的 token boundary（未来加 highlighter 也兼容，highlighter 输出 `<span>` 不改 white-space）。
@@ -5706,25 +5793,26 @@ Summary: Reader 内 markdown-rendered shotXX.md / 角色 ref / shot pair 等文�
 - **Long URL / hash tokens**：`overflow-wrap: anywhere` 在 URL 中间也会 break — 罕见 cosmetic concern；本场景 shot prompt 不放 URL，可接受。
 - **复制粘贴**：`<pre>` text content 在用户 select+copy 时仍是原始字符；wrap 是视觉行为，剪贴板内容不变。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不引入 syntax highlighting。
 - 不动 `.code-block-wrapper > .copy-btn` 位置（既有 absolute top-right OK）。
 - 不动 Reader / breadcrumb / toolbar / sidebar 样式。
 - 不写 vitest。
 
+
 ---
 
-# Follow-up draft 071 — 2026-05-17
+## 071 — 2026-05-17 17:02:53 — feature-pools-expand-archetype-bias
 
 Deepen the actor-generation prompt diversity and make archetypes look coherent end-to-end. Two coupled changes to `libs/infrastructure/writers/actor__writer.py`:
 
 1. **Expand the 6 facial-feature variance pools** to ≥ 20 entries each. The user specifically called out Chinese-aesthetic descriptors that the existing English pools didn't cover well: 大眼 / 小眼 / 圆眼 / 丹凤眼 / 泪眼 for eyes; 蒜头鼻 / 驼峰鼻 / 高挺鼻梁 for nose. Each missing variant is now an explicit pool entry with the Chinese term inline in parentheses.
 2. **Add an archetype → feature-bias map** so each of the 10 existing archetypes (`leading_hero` / `leading_warm` / `ingenue_kind` / `ingenue_lively` / `femme_fatale` / `villain_cold` / `sage_elder` / `martial_drifter` / `everyman` / `youth_fresh`) draws from a **coherent subset** of indices in each facial-feature pool. So 英俊男主 (`leading_hero`) lands `square strong / Roman-bust / chiseled` jaws with `phoenix eyes` and `deep-set piercing` gaze; 妖艳女配 (`femme_fatale`) lands `V-shaped / swan-neck / catlike` jaws with `heavy-lidded sultry` eyes and `Bardot full` lips. Random-with-bias, not deterministic — same seed still reproduces the same draw.
 
-## Required moves
+### Required moves
 
-### 1. Pool expansions (≥ 20 entries each)
+#### 1. Pool expansions (≥ 20 entries each)
 
 | Pool | Before | After | New Chinese descriptors |
 |---|---|---|---|
@@ -5737,7 +5825,7 @@ Deepen the actor-generation prompt diversity and make archetypes look coherent e
 
 Existing entries are preserved — additions append, never replace.
 
-### 2. `_ARCHETYPE_FEATURE_BIAS` map
+#### 2. `_ARCHETYPE_FEATURE_BIAS` map
 
 New top-level dict keyed by archetype slug. Each value is a sub-dict keyed by pool name (`"jawline" / "cheekbones" / "brow" / "nose" / "lips" / "eyes"`) → tuple of preferred indices into that pool.
 
@@ -5774,11 +5862,11 @@ Example (full map in code):
 
 Indices reference the post-expansion pool order (jawline 0..21, cheekbones 0..19, brow 0..20, nose 0..20, lips 0..19, eyes 0..21). A new `_pick_biased(rng, pool, biased)` helper does `rng.choice(filtered)` when bias is non-empty, falls through to `rng.choice(pool)` otherwise. Out-of-range indices are silently skipped (defends against pool reordering).
 
-### 3. `_variance_for(seed, gender, archetype=None)`
+#### 3. `_variance_for(seed, gender, archetype=None)`
 
 Signature gains `archetype: str | None = None`. The 6 facial-feature picks inside the function now consult `_ARCHETYPE_FEATURE_BIAS.get(archetype or "", {})` for each pool's bias tuple. Eye picks (which sample 2 distinct entries) use a deduplicated subset when biased; ≥ 1000-char features-text guard preserved. When `archetype is None` or unknown, behavior is byte-identical to the pre-069 uniform-random sampling.
 
-### 4. Call sites forward archetype
+#### 4. Call sites forward archetype
 
 Four `_variance_for` call sites in this module:
 - `preview_prompts(...)` — gains `archetype: str | None = None` kwarg; forwards to `_variance_for(seed, attrs.gender, archetype=archetype)`.
@@ -5788,14 +5876,14 @@ Four `_variance_for` call sites in this module:
 
 Commands / queries / DTOs / routes: **unchanged**. The `preview_prompts` archetype kwarg is optional (defaults to None → no behavioral change for callers that don't pass it).
 
-## Out of scope
+### Out of scope
 
 - Splitting the variance pools out of `actor__writer.py` into a dedicated `actor__variance_pools.py` (or moving them to `libs/domain/value_objects/actor__variance.py` since they're business knowledge). The SRP + file-size guidelines from 068 + 065 flag this for future cleanup — `actor__writer.py` is now ~2200 lines. Captured here so the next stage-5 review sees the deferred restructure.
 - Biasing the *non*-facial pools (hair, skin, expression, lighting, mood). The user asked specifically about 五官 (facial features). Those pools stay uniform random; adding archetype bias to them would compound the seasoning without the user calling for it.
 - Frontend changes. The dropdown UI already drives archetype selection through `generate_diverse_batch`; no UI change needed.
 - HTTP routes + JSON shapes (byte-identical).
 
-## Acceptance trigger
+### Acceptance trigger
 
 - Each of the 6 facial-feature pools has ≥ 20 entries.
 - `_ARCHETYPE_FEATURE_BIAS` is keyed by all 10 archetype slugs.
@@ -5803,19 +5891,20 @@ Commands / queries / DTOs / routes: **unchanged**. The `preview_prompts` archety
 - `_variance_for(seed, 'male', archetype='leading_hero')` and `_variance_for(seed, 'female', archetype='femme_fatale')` produce facial-feature picks within the biased index subsets for that archetype (smoke-tested: hero gets Roman-bust jaw + sharply-angled cheeks; femme_fatale gets swan-neck jaw + sharply-angled cheeks).
 - Pytest baseline preserved: 18 pass / 5 pre-existing wukong fixture failures.
 
+
 ---
 
-# Follow-up draft 072 — 2026-05-17
+## 072 — 2026-05-17 17:12:15 — strip-cjk-annotations-from-kling-prompt
 
 Bugfix to follow-up 071: actor generation returns "失败 6 张" / each slot with `500 HTTP 500`. The root cause is that follow-up 071 baked Chinese-aesthetic annotations into the new variance-pool entries (e.g. ` (高挺鼻梁)`, ` (小眼睛)`, ` (蒜头鼻)`, ` (大眼睛)`, ` (圆眼睛)`, ` (泪眼)`, ` (驼峰鼻)`). These were intended as **in-source documentation** so a dev browsing the source could see which Chinese descriptor each English entry maps to. But the pool entries are concatenated directly into the prompt that goes on the wire to Kling's text-to-image API, and **Kling rejects the prompt** (observed empirically — every slot fails with `kling submit: code=1101 …` surfaced upstream as HTTP 500 per slot).
 
-## Symptom
+### Symptom
 
 UI: "🧑‍🎨 演员生成失败 6 张 — 查看原因" with per-slot rows `#1: 500 HTTP 500`, `#2: 500 HTTP 500`, … `#6: 500 HTTP 500`.
 
 Backend: the bare `except Exception as exc:` in `apps/api/routes/actor__route.py` mapped Kling's per-slot HTTP failure to the catchall slot-error message format; the actual HTTP-200 batch response carried `result.errors = [{"requested_id": "actor_NNNN", "message": "http_failed: 500 …"}, ...]` from `actor__writer.generate_batch`.
 
-## Root cause
+### Root cause
 
 Each follow-up 071 expansion entry was written like:
 ```python
@@ -5825,7 +5914,7 @@ Each follow-up 071 expansion entry was written like:
 
 `_variance_for` concatenates these via `", ".join(parts)` into `Variance.features_text`, which gets composed into the final Kling prompt by `_build_face_prompt` / `_build_body_prompt`. Kling-v1 silently rejects (HTTP 500) prompts containing the CJK-in-parens chunks. Pure-ASCII English prompts work fine, so the Chinese in parens is the breaking content.
 
-## Fix
+### Fix
 
 Add a module-level regex `_CJK_PARENS_RE = re.compile(r"\s*\([^)]*[一-鿿][^)]*\)")` (matches an optional leading space + `(...)` whose contents include at least one CJK Unified Ideograph in U+4E00–U+9FFF). Apply it once at the end of `_variance_for` when assembling `features_text`:
 
@@ -5835,7 +5924,7 @@ features_text = _CJK_PARENS_RE.sub("", ", ".join(parts))
 
 The Chinese annotations remain in the source — a dev reading `actor__writer.py` still sees ` (高挺鼻梁)` next to "high-bridged dignified nose…" as the documentation note. The wire content sent to Kling becomes pure ASCII.
 
-## Smoke proof
+### Smoke proof
 
 ```python
 sample = "high-bridged dignified nose ... (高挺鼻梁), petite narrow downturned eyes ... (小眼睛)"
@@ -5846,22 +5935,23 @@ _CJK_PARENS_RE.sub("", sample)
 # CJK-in-features_text count = 0/24.
 ```
 
-## Out of scope
+### Out of scope
 
 - Switching to bare-English pool entries (loses the source documentation; the regex strip is the cheaper compromise).
 - Adding Kling-API-input validation upstream (e.g., reject CJK at prompt-build time with a domain error). Not worth it for one regex.
 - Refactoring `actor__writer.py` further (already at ~2200 lines; the SRP/file-size flag from 068+065 still stands as deferred cleanup).
 - HTTP routes + JSON shapes — no change; existing slot-failure accounting in `result.errors` is preserved (a Kling 5xx still surfaces per-slot if it happens for some other reason).
 
-## Acceptance trigger
+### Acceptance trigger
 
 - `_variance_for(seed, gender, archetype=...)` produces `features_text` containing zero CJK characters for any combination of `seed × gender × archetype`.
 - A re-run of "generate 6 actors" against the live Kling API completes without per-slot HTTP 500 (the user verifies in the UI).
 - Pytest baseline preserved: 18 pass / 5 pre-existing wukong fixture failures.
 
+
 ---
 
-# Follow-up draft 073 — 2026-05-17
+## 073 — 2026-05-17 17:21:07 — reap-mtime-threshold-concurrent-race
 
 Race-condition bugfix in `_reap_incomplete_folders`. User reports two slots out of six failing with `[Errno 2] No such file or directory` when writing the actor jpg:
 
@@ -5872,7 +5962,7 @@ Race-condition bugfix in `_reap_incomplete_folders`. User reports two slots out 
 
 The folders `actor_0096` / `actor_0099` were successfully allocated by `_allocate_actor_id` (atomic `mkdir(exist_ok=False)`), but by the time their Kling HTTP returned (30–120s later) and the writer tried to `write_bytes` the jpg, the folder had been **deleted by a sibling concurrent request's reaper sweep**.
 
-## Root cause
+### Root cause
 
 Per follow-up 064 (unified-mode generator) + follow-up 059 (diverse-mode preview→confirm worker pool), the frontend issues N parallel `count=1` requests to `POST /api/actors/generate` so the user gets progressive UI feedback instead of one long-blocking batch. Each request enters `ActorPool.generate_batch` which runs `self._reap_incomplete_folders(actors_dir)` at the top before allocating its own slot:
 
@@ -5886,7 +5976,7 @@ T=47  Request B: Kling returns; writer.write_bytes(actor_0099/...jpg) → [Errno
 
 The reaper has no notion of "in-flight" — it deletes ANY actor folder without a jpg, treating sibling concurrent requests' fresh folders the same as orphaned folders left by killed batches.
 
-## Fix
+### Fix
 
 Add a mtime threshold to `_reap_incomplete_folders`. Folders younger than `_REAP_MIN_AGE_SECONDS = 300.0` (5 minutes) are skipped — that's safely past Kling's worst case (120s face wait + 120s body wait + assembly overhead), so a peer in-flight folder is never deleted. Genuinely orphaned folders from killed batches are still reaped on the next call after their mtime ages past the threshold.
 
@@ -5897,7 +5987,7 @@ Two changes to `libs/infrastructure/writers/actor__writer.py`:
 
 The keep-if-has-jpg check (from follow-ups 018 + 027 + 033) is preserved — folders with a jpg are kept regardless of age.
 
-## Smoke proof
+### Smoke proof
 
 Three scenarios via a temp dir:
 - Fresh folder (`mkdir` just now) → **NOT** reaped ✓ (was the bug)
@@ -5906,27 +5996,28 @@ Three scenarios via a temp dir:
 
 Plus 18 tests pass / 5 pre-existing wukong fixture failures (zero regressions).
 
-## Out of scope
+### Out of scope
 
 - Adding a sentinel `in_progress` marker file (alternative architecture — a writer drops `.in_progress` after allocation, reaper skips folders with the marker, jpg-write removes the marker). The mtime-threshold approach is simpler and sufficient because the failure mode is timing-driven and the threshold is well above Kling's worst-case wait.
 - Serializing concurrent generate calls (would defeat the worker-pool UX from follow-up 059).
 - HTTP routes + JSON shapes (byte-identical).
 
-## Acceptance trigger
+### Acceptance trigger
 
 - Re-running "generate 6 actors" through the worker-pool UI no longer produces `[Errno 2] No such file or directory` per-slot errors.
 - Killed batches still get cleaned up on subsequent generate calls (after the mtime ages past 5 min).
 - Pytest baseline preserved.
 
+
 ---
 
-# Follow-up draft 074 — 2026-05-17
+## 074 — 2026-05-17 17:28:56 — within-archetype-diversity-skin-eyeshape
 
 User reports that within a single archetype (e.g. `femme_fatale` 妩媚) the generated actors look too similar — same lip type, same skin tone, etc. The user wants ≥ 20 entries per axis covering **size / color / shape** dimensions, and these should be wired into the per-actor randomness so within-archetype variety is visibly higher.
 
 Three coupled changes:
 
-## 1. Expand the skin pools
+### 1. Expand the skin pools
 
 | Pool | Before | After | Dimensions added |
 |---|---|---|---|
@@ -5935,7 +6026,7 @@ Three coupled changes:
 
 User explicitly called out 皮肤白 / 皮肤黑 (white/dark) — the new entries cover alabaster→ebony with intermediate caramel/chestnut/umber/cocoa/mahogany.
 
-## 2. Expand the eyes pool with Chinese shape vocabulary
+### 2. Expand the eyes pool with Chinese shape vocabulary
 
 | Pool | Before | After | New shapes |
 |---|---|---|---|
@@ -5943,7 +6034,7 @@ User explicitly called out 皮肤白 / 皮肤黑 (white/dark) — the new entrie
 
 User explicitly called out 桃花眼 + general shape variety — these are textbook Chinese aesthetic eye-shape descriptors. CJK annotations stay in source as docs; follow-up 072's `_CJK_PARENS_RE` strips them at wire-assembly time.
 
-## 3. Wild-card fallthrough in `_pick_biased`
+### 3. Wild-card fallthrough in `_pick_biased`
 
 Even with widened bias subsets, the per-pool biased random pick produces a relatively narrow set of features within an archetype. Add a wild-card probability — with 25% chance, `_pick_biased` falls through to **uniform random over the FULL pool** even when bias is given.
 
@@ -5962,7 +6053,7 @@ With 6 biased facial picks per actor, prob(all archetype-biased) = 0.75⁶ ≈ *
 
 Skin tone + skin texture stay **uniform random** (not added to `_ARCHETYPE_FEATURE_BIAS`) — that maximizes cross-archetype skin variety, which is exactly what the user wants.
 
-## 4. Sprinkle new eye shapes into fitting archetype bias subsets
+### 4. Sprinkle new eye shapes into fitting archetype bias subsets
 
 Five archetypes get the new eye-shape indices added to their `"eyes"` bias tuple where they fit naturally:
 
@@ -5974,7 +6065,7 @@ Five archetypes get the new eye-shape indices added to their `"eyes"` bias tuple
 
 `leading_hero`, `villain_cold`, `sage_elder`, `martial_drifter`, `everyman` don't get the new shapes baked into bias — but they'll still get them ~25% of the time via the wild-card fallthrough.
 
-## Smoke proof
+### Smoke proof
 
 30 femme_fatale generations measured:
 
@@ -5988,23 +6079,24 @@ top eyes:                 catlike, 杏眼 (apricot), 桃花眼 (peach-blossom), 
 
 Pre-074 the same 30 gens would have produced ~4 unique skin tones (small pool) + ~4 unique eyes (narrow bias). Diversity step-change is significant.
 
-## Out of scope
+### Out of scope
 
 - Adding `skin_tone` / `skin_texture` to `_ARCHETYPE_FEATURE_BIAS` — would NARROW skin variety per archetype, which is the opposite of what the user wants.
 - Adding hair color / hair length / hair style to the bias map — same reasoning; user wants more variety, not less.
 - Refactoring `actor__writer.py` (now ~2300 lines) into multiple files. SRP + file-size flags from 065/068 still stand as deferred cleanup.
 - HTTP routes + JSON shapes (byte-identical).
 
-## Acceptance trigger
+### Acceptance trigger
 
 - `_VARIANCE_SKIN_TONE` ≥ 20 entries; `_VARIANCE_SKIN_TEXTURE` ≥ 20 entries; `_VARIANCE_EYES` ≥ 25 entries.
 - `_BIAS_WILD_PROB > 0` so within-archetype actors see wild-card features ~25% per pool.
 - 30 femme_fatale generations show ≥ 10 distinct skin tones and ≥ 5 distinct eye shapes (was ~4 each pre-074).
 - Pytest baseline preserved: 18 pass / 5 pre-existing wukong fixture failures.
 
+
 ---
 
-# Follow-up draft 075 — 2026-05-17
+## 075 — 2026-05-17 17:51:00 — chinese-structured-prompt
 
 Switch every actor-generation prompt sent to Kling from English variance-composed strings to **structured Chinese**, in the format the user specified:
 
@@ -6026,9 +6118,9 @@ Switch every actor-generation prompt sent to Kling from English variance-compose
 
 Kling 是快手（Kuaishou）训练的中文模型，对中文原生 prompt 支持优于英文。Follow-up 072 之前的 `(中文)` 失败问题是 **English 主体内 parens-CJK 切换**触发的 tokenizer 边界问题，**纯中文** prompt 没有这个问题。
 
-## Required moves
+### Required moves
 
-### 1. New file: `libs/infrastructure/writers/actor__chinese_prompt.py` (per SRP)
+#### 1. New file: `libs/infrastructure/writers/actor__chinese_prompt.py` (per SRP)
 
 One file, one concern — the Chinese prompt builder. Contains:
 
@@ -6052,11 +6144,11 @@ One file, one concern — the Chinese prompt builder. Contains:
 
 Pure deterministic — same `(seed, archetype)` reproduces the same draw, so the face + body images for one actor share the same identity-anchor (五官 + 体型 + 综合描述).
 
-### 2. `actor__writer.py`: delegate `_build_face_prompt` + `_build_body_prompt` to the Chinese builder
+#### 2. `actor__writer.py`: delegate `_build_face_prompt` + `_build_body_prompt` to the Chinese builder
 
 Both static methods on `ActorPool` now have signatures `(attrs: ActorAttrs, seed: int, archetype: str | None)` and delegate via `from libs.infrastructure.writers.actor__chinese_prompt import build_face_prompt / build_body_prompt`. The English `Variance` machinery (`_VARIANCE_*` pools + `_variance_for` + `_ARCHETYPE_FEATURE_BIAS` + `_pick_biased` + `_LOOK_ENRICHED`) is now dead code as far as wire-prompt content goes. Kept in source (not removed) for legacy reference and minimal-blast-radius this turn.
 
-### 3. Call-site updates (4 places)
+#### 3. Call-site updates (4 places)
 
 `preview_prompts` / `preview_diverse_prompts` / `generate_batch` / `generate_diverse_batch` each lose the `variance = _variance_for(...)` line and pass `seed + archetype` directly to the two builders:
 
@@ -6072,11 +6164,11 @@ body_prompt = self._build_body_prompt(attrs, seed, archetype)
 
 For diverse-mode sites the archetype source is `spec.slug`; for standard-mode sites it's the `archetype` kwarg threaded from the command. Both unchanged in behavior — the change is just *what* the prompt content looks like, not *which* archetype it gets.
 
-### 4. `_CJK_PARENS_RE` strip kept but no longer load-bearing
+#### 4. `_CJK_PARENS_RE` strip kept but no longer load-bearing
 
 The strip from follow-up 072 still runs in `_variance_for` for the English path, but the English `Variance.features_text` is no longer fed to Kling (the Chinese builder produces the wire content directly). The strip is now a harmless legacy guard against the old English pool entries' `(中文)` annotations.
 
-## Smoke proof
+### Smoke proof
 
 ```
 ==== femme_fatale face prompt (seed=42) ====
@@ -6097,31 +6189,32 @@ The strip from follow-up 072 still runs in `_variance_for` for the English path,
 
 `ActorPool._build_face_prompt` + `ActorPool._build_body_prompt` smoke-tested to delegate correctly. Pytest baseline preserved (18 pass / 5 pre-existing wukong fixture failures). `import apps.api.main` + `import apps.api.asgi` boot clean.
 
-## Out of scope
+### Out of scope
 
 - **Removing the dead English variance machinery**. Substantial cleanup, would shrink `actor__writer.py` from ~2300 lines toward ~600 lines. Deferred — this turn focused on wire-format change.
 - **Per-五官 archetype bias** (e.g., `femme_fatale` should prefer 桃花眼 / 红唇 / 高颧骨 specifically). The Chinese pools currently uniform-random 5 of the 7 sections; only 体型 has archetype bias. The 综合描述 carries the archetype direction so Kling should still produce on-archetype images; tightening the per-五官 bias is a future follow-up if `femme_fatale` outputs aren't consistently 妖艳-coded enough.
 - **Frontend prompt-preview UI updates** — the preview pane will now show structured Chinese instead of comma-separated English, which is the user-visible improvement.
 - HTTP routes + JSON shapes — byte-identical.
 
-## Acceptance trigger
+### Acceptance trigger
 
 - `from libs.infrastructure.writers.actor__chinese_prompt import build_face_prompt` works.
 - `ActorPool._build_face_prompt(attrs, seed, archetype)` returns a string containing 眼睛：/ 鼻子：/ 嘴巴：/ 眉毛：/ 轮廓：/ 皮肤：/ 体型：/ 综合描述：/ 服装：/ 摄影：/ 避免：.
 - Re-running "generate 6 actors" through the UI completes without Kling per-slot 500 errors (the user verifies in the UI; if Kling still rejects, fall-back is to swap the prompt back to English in a future fix).
 - Pytest baseline preserved.
 
+
 ---
 
-# Follow-up draft 077 — 2026-05-17
+## 077 — 2026-05-17 19:22:20 — look-dominates-feature-bias
 
 User reports that 角色生成预览的 10 个 prompt 跟所选 look 不太相关 — they picked **阴邪** (the 075 user message wrote "淫邪" — same intent, the dropdown slug is `sinister` / 中文标签 阴邪) and the 10 preview prompts all felt generic. User accepts variance in 眼睛大小 / 鼻子形状 / 等细节 ("自由发挥") but the **整体气质** must match the picked look.
 
-## 用户原话
+### 用户原话
 
 > 在角色生成是，预览显示的prompt跟我所要的有比较大的出入，我在选项中已经选择了要淫邪的，但是预览里的10个prompt都跟淫邪不太相关，你可以在眼睛大小，鼻子形状等等细节自由发挥，但整体需要按我的要求来
 
-## 根因
+### 根因
 
 `libs/infrastructure/writers/actor__chinese_prompt.py` (post-075) 把 face/body prompt 拆成 8 行结构化中文。每行如 `眼睛：{descriptor}` 从 22-条池 **uniform random** 抽。Bias 仅作用于 `体型` 一行（per `_BODY_BIAS_BY_ARCHETYPE`），其它 5 个 五官/skin 池没有 bias。
 
@@ -6132,9 +6225,9 @@ User reports that 角色生成预览的 10 个 prompt 跟所选 look 不太相�
 
 整体效果：用户感觉所选 look 完全没体现。
 
-## 修复
+### 修复
 
-### 1. 新 `_LOOK_FEATURE_BIAS_ZH` map — 五官 + 轮廓 + 体型 全部按 look bias
+#### 1. 新 `_LOOK_FEATURE_BIAS_ZH` map — 五官 + 轮廓 + 体型 全部按 look bias
 
 5 个 character-archetype look (`righteous` / `sinister` / `seductive` / `cunning` / `innocent`) 各自有一份 bias 子集。Index 是 075 池子内的位置（眼睛 0..21，鼻子 0..21，嘴巴 0..21，眉毛 0..21，轮廓 0..21，体型 0..21）。Bias 子集挑选标准：descriptor 文字里含 look 主题的关键词或近义词（如 sinister → 凌厉 / 杀气 / 冷峻 / 阴险 / 锐利）。
 
@@ -6185,7 +6278,7 @@ _LOOK_FEATURE_BIAS_ZH: dict[str, dict[str, tuple[int, ...]]] = {
 
 8 个物理 look (`handsome` / `beautiful` / `cute` / `mature` / `rugged` / `soft` / `aristocratic` / `fierce`) 暂不加 bias — 这些已经覆盖在 archetype 表里，且用户没明说"画风跟它们也不对劲"。Out of scope for this follow-up.
 
-### 2. 新 `_LOOK_OVERLAY_ZH` map — 在 `综合描述` 之后追加一行 `气质：xxx` 直接复述 look 主题
+#### 2. 新 `_LOOK_OVERLAY_ZH` map — 在 `综合描述` 之后追加一行 `气质：xxx` 直接复述 look 主题
 
 ```python
 _LOOK_OVERLAY_ZH: dict[str, str] = {
@@ -6199,7 +6292,7 @@ _LOOK_OVERLAY_ZH: dict[str, str] = {
 
 只对这 5 个 look 触发（`.get(look)` returns None for the other 8 physical looks → 不追加 `气质` 行，prompt 形状向后兼容）。
 
-### 3. `build_face_prompt` + `build_body_prompt` 切换到 `_pick_biased`
+#### 3. `build_face_prompt` + `build_body_prompt` 切换到 `_pick_biased`
 
 `attrs["look"]` 已经在 attrs dict 内 — 不需要改 signature。两 builder 内：
 
@@ -6227,11 +6320,11 @@ lines.extend([..., 姿态 / 服装 / 画面 / 摄影 / _CASTING_REQUIREMENTS_ZH 
 
 `_pick_biased` 已经有 `_BIAS_WILD_PROB = 0.25` 的 wild-card fallthrough — 即使 bias 有值，25% 概率仍从全池抽。**这正是用户要的"细节自由发挥"** — 6 个 五官-轮廓-体型 bias 全部命中的概率 = `0.75^6 ≈ 18%`，绝大多数 actor 至少有 1-2 个 wild-card feature 打破完全 same-look，但整体气质 + 综合描述 + 气质 overlay 三层叠加，保证用户看 10 个 prompt 都能感受到所选 look。
 
-### 4. 不影响 8 个物理 look 的现有行为
+#### 4. 不影响 8 个物理 look 的现有行为
 
 `look_bias = {}` → 所有 `look_bias.get(...)` 返 `None` → `_pick_biased` 退化为 `_pick` (uniform) → 输出 byte-identical to pre-077。仅 `look ∈ {righteous, sinister, seductive, cunning, innocent}` 触发新行为。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不动 archetype tuple 匹配的 fall-through 逻辑 (075 已加 `_classify_actor_attrs` 兜底，这里靠 look bias 把缺位补齐 — 互补不冲突).
 - 不收紧 `_classify_actor_attrs`（不强行把 look=sinister 都映射到 villain_cold，因为 fem-sinister 没有专门 archetype — 让 archetype 走老路径，look bias 兜底）。
@@ -6242,7 +6335,7 @@ lines.extend([..., 姿态 / 服装 / 画面 / 摄影 / _CASTING_REQUIREMENTS_ZH 
 - 不动 HTTP routes + JSON shapes (byte-identical)。
 - 不动 frontend（用户报的是 backend prompt 内容问题；UI 选项已就位 per 064）。
 
-## Acceptance trigger
+### Acceptance trigger
 
 - `_LOOK_FEATURE_BIAS_ZH` 字典 keyed by 5 character-look slugs，每 slug 6 个 pool 都有非空 tuple。
 - `_LOOK_OVERLAY_ZH` 字典 keyed by 同 5 slugs，每条 ≥ 10 个中文字。
@@ -6251,23 +6344,25 @@ lines.extend([..., 姿态 / 服装 / 画面 / 摄影 / _CASTING_REQUIREMENTS_ZH 
 - Pytest baseline preserved (18 pass / 5 pre-existing wukong fixture failures).
 - Discovery note (out of scope, not fixed): `actor__writer.py` + `actor__chinese_prompt.py` 都有 "Per follow-up 076" 引用但 follow-up 076 文件不存在。属于历史遗留 — 未来一次回填可写一个 076 entry 描述 075 之后 wardrobe + comp-card full-body framing + classify-actor-attrs fall-through 这三处实改动。本 follow-up 不回填。
 
+
 ---
 
-# Follow-up draft 078 — 2026-05-17
+## 078 — 2026-05-17 19:28:26 — character-ref-4s-truncate-2s
+
 Bump character reference video duration from 2.9s to 4s so each character has more screen time to showcase identity, and lock the timing contract so the first 2 seconds remain self-sufficient — the user can keep using a 2s truncation downstream without losing critical information. Reaffirms the existing shot-character-reel auto-truncate-to-2s behavior as the canonical contract (no code change required — already implemented).
 
-## Why 4s (not 2.9s any more)
+### Why 4s (not 2.9s any more)
 
 - The earlier 2.9s ceiling (follow-up 015 over on the ai_video side, codified as agent_refs/project/ai_video.md rule #12.5 v4) was driven by 2026-05 Seedance reference-upload limits. Those limits have eased; 4s comfortably fits within current Seedance / Sora / Veo / Runway Gen-3 reference budgets and leaves room for a slower, more legible turntable.
 - 4s gives the character ≈ 38% more on-screen seconds for identity capture (face/profile/voice timbre) without breaking the "极速 reference, not a viewer-facing shot" framing.
 
-## Why first 2s must remain self-sufficient
+### Why first 2s must remain self-sufficient
 
 - The chars-reel concat operation (`ShotConcatBuilder` in `libs/infrastructure/writers/character_video__writer.py`) trims each per-character clip to `_CONCAT_SEGMENT_S = 2.0` seconds before concatenation. That is the canonical "短角色合辑" path and stays at 2s — it is the right length for a per-shot character cue reel.
 - The user also pulls 2s clips ad-hoc via the existing **✂ 截到 2s → video.mp4** button (follow-up 054 truncator, `_TRUNCATE_DURATION_S = 2.0`).
 - Both 2s consumers slice the **first** 2 seconds of the source. Therefore the character ref prompt MUST front-load identity beats: the character finishes saying "一" and "二" (Chinese count) within the first 2 seconds, with the visible turntable pass covering正/侧/背/侧 in that window. "三" is then said in the 2-4s tail along with the face推近 close-up.
 
-## Authoritative prompt-timing contract (post-follow-up)
+### Authoritative prompt-timing contract (post-follow-up)
 
 ```
 时长: 4s
@@ -6291,45 +6386,47 @@ Bump character reference video duration from 2.9s to 4s so each character has mo
 
 `场景` / `镜头`（修订后整段） / `光线 / 色调` / `节奏（4s 内）` / `渲染样式` / `比例` / `负向` 其余字段 byte-identical 跨角色（与 v4 同）；唯一逐角色字段仍是 `角色:` 段。
 
-## Auto-truncate-to-2s on shot-char video — confirmed unchanged
+### Auto-truncate-to-2s on shot-char video — confirmed unchanged
 
 - The webapp already enforces this. `ShotConcatBuilder._ffmpeg_concat` (lines ~605-625 of `character_video__writer.py`) runs each input through `trim=duration={_CONCAT_SEGMENT_S},...` inside `-filter_complex`, where `_CONCAT_SEGMENT_S = 2.0`. Each character contributes its first 2 seconds; the segments concatenate into a uniform 720x1280 30fps reel with normalised audio.
 - Character source selection is the existing "first mp4 in folder, alphabetical" rule (follow-up 064) — unchanged.
 - **No code change is required for this follow-up.** This follow-up only updates the upstream prompt template so the first 2 seconds of every generated character video carry enough identity information for the trimmer to land on something useful.
 
-## Touch list (downstream walk)
+### Touch list (downstream walk)
 
 - `.claude/agent_refs/project/ai_video.md` rule #12.5 — bump duration 2.9s → 4s, swap "1, 2, 3" → "一, 二, 三", restructure timed beats to the 4-segment table above, update negatives, update "Turntable 视频 prompt 锁定字段" duration value (= 4s), update rationale paragraph + footer "(Originated from … rev — follow-up 078 …)".
 - `specs/development/ai_video_management/user_input/revised_prompt.md` — regenerated from raw + every follow-up (this follow-up appended).
 - `specs/development/ai_video_management/changelog.md` — append follow-up 078 entry.
 - `projects/ai_video_management/libs/infrastructure/writers/character_video__writer.py` — **no change**. The 2s concat-segment constant is the right one and is already in place.
 
-## Cross-project ripple
+### Cross-project ripple
 
 - `specs/ai_video/mozun_chongsheng/user_input/follow_ups/019-{date}-character-ref-4s.md` — sibling follow-up on the mozun_chongsheng ai_video project, applying the new 4s schema to the 10 existing character md files (`ai_videos/mozun_chongsheng/characters/c{1..10}_*/c{N}_*.md`). That project's `changelog.md` gets its own entry. The cross-cutting rule update under `.claude/agent_refs/project/ai_video.md` makes every future ai_video project inherit the new schema without per-project follow-ups.
 
-## Out of scope
+### Out of scope
 
 - Existing rendered `*.mp4` artifacts inside `ai_videos/{drama}/characters/cN_*/` — those are user-rendered media (gitignored per NFR-18). Re-renders happen at the user's discretion using the updated prompt; no automatic re-rendering.
 - The actor-comp-card pipeline (`actor__chinese_prompt.py`) — that pipeline produces *still images* for the casting pool, not character reference videos. It is not affected.
 - The chars-reel concat output filename, location, timing-annotation patch (`参考: 请参考视频 {ref_chars_reel}, 0~2s 为 …` line at the top of each shot prompt) — all unchanged.
 
+
 ---
 
-# Follow-up draft 078 — 2026-05-17
+## 079 — 2026-05-17 11:39:48 — look-led-archetype-classification
+
 Fix actor-preview prompt 综合描述 contradicting the user's selected `look`.
 
-## Bug
+### Bug
 
 Preview a single actor with `look=sinister` (阴邪) + `gender=female`. The prompt's 综合描述 line came back as `"一位市井百姓, 朴实无华, 邻家亲切, 烟火气十足"` — the `everyman` archetype's synthesis line, which directly contradicts the user's selected sinister direction.
 
-## Root cause
+### Root cause
 
 `_classify_actor_attrs` (in `libs/infrastructure/writers/actor__writer.py`) required all four attrs to match a single archetype's tuples: `gender_filter`, `age_range`, `look`, `style`. When the user picked `look=sinister + gender=female`, no archetype matched because the only `sinister`-tagged archetype was `villain_cold` (gender_filter=male). The classifier fell through to `_ARCHETYPE_FALLBACK_SLUG = "everyman"`, and `_SYNTHESIS_BY_ARCHETYPE["everyman"]` is the "市井百姓 烟火气" line — the same regardless of what look the user picked.
 
 The same class of mismatch silently fired for every "evil" look on a female actor (`sinister`, `cunning` had no female archetype), every "sultry" look on a male (`seductive` had no male archetype), every "noble" female (`righteous` was male-only), every "innocent" male (`innocent` was female-only).
 
-## Fix (two-part)
+### Fix (two-part)
 
 1. **Classifier is now look-led with progressive relaxation.** `_classify_actor_attrs` walks four priorities:
    1. Strict 4-way match (legacy follow-up 053 path — preserves deterministic distribution for diverse mode).
@@ -6346,7 +6443,7 @@ The same class of mismatch silently fired for every "evil" look on a female acto
    - `ingenue_kind.looks` += `("righteous",)` — female noble.
    - `youth_fresh.looks` += `("innocent",)` — male innocent (this archetype is already `gender_filter=both`).
 
-## Verification
+### Verification
 
 Smoke ran on 10 edge-case combos including the user's exact case. All resolve to a look-coherent archetype:
 
@@ -6363,31 +6460,33 @@ seductive female 65+ fantasy   -> femme_fatale  (age mismatch but look dominates
 handsome male 18-25 ancient    -> leading_hero  (legacy 4-way path intact)
 ```
 
-## Touch list
+### Touch list
 
 - `libs/infrastructure/writers/actor__writer.py::_classify_actor_attrs` — rewritten as 4-priority look-led classifier.
 - `libs/infrastructure/writers/actor__writer.py::_ARCHETYPES` — `looks` tuples extended for `femme_fatale`, `leading_warm`, `ingenue_kind`, `youth_fresh`.
 
-## Out of scope
+### Out of scope
 
 - The feature-bias subset selection (`_ARCHETYPE_FEATURE_BIAS`) is unchanged; bias rows already exist for every archetype slug, so the new cross-gender mappings inherit appropriate facial-feature bias automatically.
 - No changes to diverse-mode batch generation (`generate_diverse_batch`) — that path still uses `_ARCHETYPES`-driven plan distribution which is unaffected.
 - No frontend changes; the bug was fully backend-side.
 
+
 ---
 
-# Follow-up draft 080 — 2026-05-17
+## 080 — 2026-05-17 20:02:56 — actor-minimal-wardrobe-full-body
+
 Strengthen the actor-generation wardrobe so each generated actor photo is a true industry comp-card / model-portfolio body-evaluation shot — head-to-toe framing maintained, with **as minimal wardrobe as possible** so that body fat / leg length / leg straightness or bow / breast size / shoulder-hip ratio are all visually verifiable from a single photo.
 
-## Why
+### Why
 
 User: "生成actor时，请确保生成的actor是全身照，从头到脚，我要看到身材，要知道腿长还是腿短，退直的还是弯的，胸大还是胸小，所以穿越少越好".
 
 The previous comp-card wardrobe introduced in the orphan follow-up 076 (tank top + booty shorts level) is tight but still covers torso + most thighs, leaving leg-straightness and ribcage / waist proportions partially ambiguous. The new wardrobe is a step closer to industry swimwear-standard comp-card (sports bikini / 赤膊 + 高叉短) — the same convention talent agencies use for fit-cast body reads.
 
-## Spec — exact changes to `libs/infrastructure/writers/actor__chinese_prompt.py`
+### Spec — exact changes to `libs/infrastructure/writers/actor__chinese_prompt.py`
 
-### 1. `_casting_wardrobe(gender_zh)` rewrite (lines 400-412)
+#### 1. `_casting_wardrobe(gender_zh)` rewrite (lines 400-412)
 
 The function still returns a single locked outfit per gender (not derived from `attrs.style`) so the cast photo stays a body-shape reference, not a costume preview.
 
@@ -6408,7 +6507,7 @@ Notes for the implementation:
 - Keep `_GENDER_ZH` mapping unchanged (`"male" → "男性"`, `"female" → "女性"`).
 - Update the docstring: replace "Per follow-up 076" → "Per follow-ups 076 + 079" so the lineage stays auditable. Brief one-line addition: "079 升级 tank/booty-shorts 到 industry swimwear-standard 以最大化 body-shape visibility".
 
-### 2. `_CASTING_REQUIREMENTS_ZH` (lines 415-419) — tighten the explicit visibility list
+#### 2. `_CASTING_REQUIREMENTS_ZH` (lines 415-419) — tighten the explicit visibility list
 
 Replace the body-feature list to enumerate every metric the user named:
 
@@ -6420,7 +6519,7 @@ Replace the body-feature list to enumerate every metric the user named:
 
 Three deltas: (a) "头顶到脚踝" → "头顶到脚趾, 一帧定格不裁切" — `脚踝` allowed framing to crop the feet, `脚趾` enforces toe inclusion; (b) "腿型直弯" expanded with "大腿内外侧线条"; (c) "胸型" expanded with explicit "胸大胸小" (which is the user's literal phrasing) plus "上身肌肉线条" for the male赤膊 case.
 
-### 3. Framing line inside `build_face_prompt` (line ~455) + `build_body_prompt` (line ~495)
+#### 3. Framing line inside `build_face_prompt` (line ~455) + `build_body_prompt` (line ~495)
 
 Currently:
 - face: `"画面：从头顶到脚踝全身可见, 中性纯灰背景, 头部居画上 1/3"`
@@ -6428,7 +6527,7 @@ Currently:
 
 Update both `脚踝` → `脚趾` for consistency with the requirements line. Otherwise unchanged.
 
-### 4. `_NEGATIVES_ZH` (lines 394-397) — add the framing-failure cases
+#### 4. `_NEGATIVES_ZH` (lines 394-397) — add the framing-failure cases
 
 Append three negatives so the model can't degrade the body read:
 
@@ -6443,7 +6542,7 @@ Append three negatives so the model can't degrade the body read:
 
 The final negative is load-bearing — minimal wardrobe must serve body-shape evaluation, not glamour. The pose stays the existing `自然站立, 双臂自然下垂略外开 15°, 正脸面向镜头, 重心均匀` (face variant) / `... 双腿略分开半肩宽显腿型` (body variant); no changes there.
 
-## Out of scope
+### Out of scope
 
 - `_classify_actor_attrs` fallback / age range distribution — unchanged.
 - `_LOOK_FEATURE_BIAS_ZH` / archetype bias (follow-up 077) — unchanged. Look-driven 五官 + 综合描述 + 气质 overlay continue to fire on top of the new wardrobe.
@@ -6451,18 +6550,20 @@ The final negative is load-bearing — minimal wardrobe must serve body-shape ev
 - The face/body variant split (`build_face_prompt` vs `build_body_prompt`) and their seed-sharing identity anchor — unchanged. Both variants get the new wardrobe through the same `_casting_wardrobe` call.
 - HTTP routes + JSON shapes — unchanged. Preview pane simply renders the new prompt text.
 
-## Touch list
+### Touch list
 
 - `projects/ai_video_management/libs/infrastructure/writers/actor__chinese_prompt.py` — `_casting_wardrobe` body, `_CASTING_REQUIREMENTS_ZH` body, framing line in `build_face_prompt` + `build_body_prompt`, `_NEGATIVES_ZH` body.
 - `specs/development/ai_video_management/changelog.md` — append follow-up 079 entry.
 - `specs/development/ai_video_management/user_input/revised_prompt.md` — header bump (Composed-from + Last-regenerated lines).
 
+
 ---
 
-# Follow-up draft 081 — 2026-05-17
+## 081 — 2026-05-17 20:26:25 — actor-force-full-body-framing
+
 Force every actor generation to render as a **full-body head-to-toe** photo. Reinforces follow-up 080 (which added swimwear-minimal wardrobe + 11-metric body-readability list) by removing ambiguous head-focus phrasing from the prompt template and adding explicit wide-shot framing markers + harder negative guards.
 
-## Why
+### Why
 
 User: "生成actor是，请强制生成全身从头到脚的全身照".
 
@@ -6470,9 +6571,9 @@ Even after 080 the `build_face_prompt` opening line still reads `正面全身定
 
 Fix: take the framing decision off the model's plate by pinning it in a leading `镜头：` line + scrubbing every word that hints at head-emphasis.
 
-## Spec — exact changes to `libs/infrastructure/writers/actor__chinese_prompt.py`
+### Spec — exact changes to `libs/infrastructure/writers/actor__chinese_prompt.py`
 
-### 1. `build_face_prompt` — opening line + pose line + 画面 line
+#### 1. `build_face_prompt` — opening line + pose line + 画面 line
 
 - Line 458 (current): `f"正面全身定妆照（头部对焦）：{ethn} {gender}，{age}"`.
 - Line 458 (new): `f"正面**全身**定妆照（远景 wide / long shot; 头到脚完整入框; 头部清晰仅用于身份识别, 不主导构图）：{ethn} {gender}，{age}"`.
@@ -6483,7 +6584,7 @@ Fix: take the framing decision off the model's plate by pinning it in a leading 
 - Line 473 (current): `"画面：从头顶到脚趾全身可见（一帧定格不裁切）, 中性纯灰背景, 头部居画上 1/3"`.
 - Line 473 (new): `"画面：9:16 竖屏 / 从头顶到脚趾完整可见 / 头部上方留 ~5% 顶边 / 双脚下方留 ~5% 底边 / 头部占画面上 1/5 (留 4/5 给身体) / 中性纯灰背景"`.
 
-### 2. `build_body_prompt` — opening line + pose line + 画面 line
+#### 2. `build_body_prompt` — opening line + pose line + 画面 line
 
 - Line 498 (current): `f"正面全身定妆照（形体对焦）：{ethn} {gender}，{age}"`.
 - Line 498 (new): `f"正面**全身**定妆照（远景 wide / long shot; 头到脚完整入框; 形体对焦）：{ethn} {gender}，{age}"`.
@@ -6493,7 +6594,7 @@ Fix: take the framing decision off the model's plate by pinning it in a leading 
 - Body 画面 line (current): `"画面：从头顶到脚趾完整全身可见（一帧定格不裁切）, 中性纯灰背景, 头部居画上 1/4 形体居画中"`.
 - Body 画面 line (new): `"画面：9:16 竖屏 / 从头顶到脚趾完整可见 / 头部上方留 ~5% 顶边 / 双脚下方留 ~5% 底边 / 头部占画面上 1/5 (留 4/5 给身体) / 形体居画中 / 中性纯灰背景"`.
 
-### 3. Insert a leading `镜头：` line at the **very top** of both prompts
+#### 3. Insert a leading `镜头：` line at the **very top** of both prompts
 
 Right above the opening "正面**全身**定妆照..." line, prepend:
 
@@ -6503,7 +6604,7 @@ Right above the opening "正面**全身**定妆照..." line, prepend:
 
 Putting framing FIRST anchors the model's compositional decision before any subject description. Both variants get the identical 镜头 line — it's a project-output rule, not a per-variant cue.
 
-### 4. `_NEGATIVES_ZH` — escalate to imperative + add new framing failures
+#### 4. `_NEGATIVES_ZH` — escalate to imperative + add new framing failures
 
 Current trailing segment:
 
@@ -6522,11 +6623,11 @@ New (replace + extend):
 
 The existing "宽松遮形衣物 / T 恤 / 长裤 ..." and "故意性感化姿势 / 媚态 / 内衣广告感" segments stay unchanged.
 
-## Why putting `镜头:` first works
+### Why putting `镜头:` first works
 
 Kling (and most text-to-image models trained on caption-style data) treat the first tokens as compositional anchors. The current prompt opens with `正面全身定妆照（头部对焦）：东亚 女性，30 岁左右` — the model latches onto `东亚 女性 30 岁` as the subject and reaches for a generic portrait template. Leading with `镜头：full-body wide shot, 9:16 竖屏构图, 头顶到脚趾完整入框, ...` forces the framing decision into the high-attention prefix where Kling is most likely to honor it.
 
-## Out of scope
+### Out of scope
 
 - `_LOOK_FEATURE_BIAS_ZH` / `_LOOK_OVERLAY_ZH` / `_BODY_BIAS_BY_ARCHETYPE` / `_BIAS_WILD_PROB` — all unchanged. 080's wardrobe + 077's look-bias overlay continue to fire on top of the new framing.
 - `_classify_actor_attrs` — unchanged.
@@ -6534,18 +6635,20 @@ Kling (and most text-to-image models trained on caption-style data) treat the fi
 - API-level aspect-ratio parameter (already 9:16 via UI selector) — unchanged; the prompt-body 9:16 line is belt-and-suspenders.
 - Historical generated jpgs — untouched.
 
-## Touch list
+### Touch list
 
 - `projects/ai_video_management/libs/infrastructure/writers/actor__chinese_prompt.py` — opening line + pose line + 画面 line for both `build_face_prompt` and `build_body_prompt` (4 line changes per variant = 8 line changes); insert a leading `镜头：` line in both variants (2 inserts); `_NEGATIVES_ZH` body (1 replace).
 - `specs/development/ai_video_management/changelog.md` — append 081 entry.
 - `specs/development/ai_video_management/user_input/revised_prompt.md` — header bump (Composed-from + Last-regenerated lines).
 
+
 ---
 
-# Follow-up draft 082 — 2026-05-17
+## 082 — 2026-05-17 20:38:12 — batch-pool-diversity
+
 Within-batch diversity for actor generation: for every face/body pool (eyes / nose / lips / brow / contour / skin / body) **no two slots in the same batch share the same descriptor** unless the pool is genuinely exhausted. User-fixed dropdown attrs (ethnicity / gender / age_range / look / style / resolution) still apply to all slots verbatim — only the pool draws diversify.
 
-## Why
+### Why
 
 User: "对一个batch里，除了我explictly选择的外，在同一个batch里不得有重复的，比如我选择的asian，25岁，美丽型的，那这个batch里的10张图都要符合这些，但是我没选择的部分，要强制他们不一样，比如一个嘴大，另一个就一定嘴小，一个眼睛大另一个就一定眼睛小，一个高，另一个就矮，一个丰满另一个就苗条等等，凡是我没提到的，都要体现出多样性".
 
@@ -6557,7 +6660,7 @@ Mapping the examples to the existing prompt builder:
 
 All four examples are face/body POOL draws (not dropdown attrs). Today each parallel `count=1` call seeds its own `random.Random(seed)` independently and runs `_pick / _pick_biased(rng, pool, bias)` per pool, so collisions across slots are pure birthday-problem chance — for a pool of 22 + 10 slots, expected unique = ~10 * (1 - (1 - 1/22)^9) ≈ 4 distinct pool values per batch in the worst case (lots of duplicates). User sees "10 张脸都长一样".
 
-## Design — batch coordination via deterministic per-slot pre-resolution
+### Design — batch coordination via deterministic per-slot pre-resolution
 
 The current frontend fires N parallel `count=1` calls to `preview_prompts` (one per slot, each with its own seed + per-slot rolled random_dims). To coordinate without server-side shared state, each call receives THREE small body fields:
 
@@ -6574,7 +6677,7 @@ When all three are provided, the backend:
 
 When `batch_seed/batch_size/slot_index` are absent (legacy call, e.g., `count=1` standalone, or pre-082 frontend), backend keeps current per-slot independent `_pick_biased` draws — full backward compat.
 
-### `_batch_sample_pool(batch_rng, pool_len, bias_indices, count, wild_prob=_BIAS_WILD_PROB)` algorithm
+#### `_batch_sample_pool(batch_rng, pool_len, bias_indices, count, wild_prob=_BIAS_WILD_PROB)` algorithm
 
 Goal: return `count` distinct indices, **bias-preferred but exhaust-then-fall-through** + retain follow-up 074's 25% wild-card variance.
 
@@ -6604,7 +6707,7 @@ Notes:
 - The shuffle on line 14 prevents structural bias where slot 0 always gets a bias-pick and slot N-1 always gets a wild-card.
 - Deterministic in `(batch_seed, pool_len, bias_indices, count, wild_prob)` — every parallel call computes identical picks.
 
-### Frontend integration (5-line change)
+#### Frontend integration (5-line change)
 
 In `apps/ui/src/components/ActorPoolGenerator.tsx::onPreview`:
 
@@ -6626,7 +6729,7 @@ await Promise.all(slotPlans.map((plan, i) => previewPrompts({
 
 Same 3 fields plumbed into the `onConfirmGenerate` worker-pool that fires `generateBatch` per slot (so actual Kling-generation gets the same pool-diversity).
 
-### Backend signatures
+#### Backend signatures
 
 - `actor__chinese_prompt.py`:
   - New `_batch_sample_pool(batch_rng, pool_len, bias_indices, count, wild_prob=_BIAS_WILD_PROB) -> list[int]` (module-private helper).
@@ -6648,11 +6751,11 @@ Same 3 fields plumbed into the `onConfirmGenerate` worker-pool that fires `gener
 
 - `apps/ui/src/api.ts`: `previewPrompts(...)` + `generateBatch(...)` request types add the 3 optional fields.
 
-### Why "still 7 pools coordinated" only — not the 6 dropdowns
+#### Why "still 7 pools coordinated" only — not the 6 dropdowns
 
 User chose "Pools only" in clarification: the four concrete examples (嘴 / 眼 / 高矮 / 丰满苗条) are all face/body POOL attributes, not dropdowns. Random-dropdown diversity for unfixed attrs (e.g., 10 slots with 10 distinct age_ranges when age is set to 随机) is deferred — would require either single `count=N` call or a coordinated `random_dims` parameter through the frontend roll path. Phase-2 follow-up if user wants it later.
 
-## Out of scope
+### Out of scope
 
 - Random-dropdown attr diversity (the 6 dropdowns). Today each slot rolls its own random_dim on frontend independently; collisions can happen for low-cardinality dims (e.g., gender ∈ {male, female} with count=10 will always have ≥5 dupes per gender, but that's expected for the binary).
 - The diverse-mode preview/generate path (`preview_diverse_prompts` / `generate_diverse_batch` from follow-up 059). That path uses `_distribute_archetypes` for cross-archetype variance and is conceptually orthogonal to within-archetype pool diversity. Optional second-phase follow-up to apply the same batch coordination to the diverse path.
@@ -6660,7 +6763,7 @@ User chose "Pools only" in clarification: the four concrete examples (嘴 / 眼 
 - Wild-card probability `_BIAS_WILD_PROB = 0.25` (074) — preserved; applied at the batch level (~25% of slots in a batch are wild).
 - HTTP route paths / response shapes — unchanged (only request bodies gain 3 optional fields, backward-compat).
 
-## Touch list
+### Touch list
 
 - `projects/ai_video_management/libs/infrastructure/writers/actor__chinese_prompt.py` — new `_batch_sample_pool` helper + new `build_face_prompt_with_picks` + `build_body_prompt_with_picks`.
 - `projects/ai_video_management/libs/infrastructure/writers/actor__writer.py` — `ActorPool.preview_prompts` + `ActorPool.generate_batch` gain 3 optional kwargs + `_resolve_batch_picks` private helper.
@@ -6673,12 +6776,14 @@ User chose "Pools only" in clarification: the four concrete examples (嘴 / 眼 
 - `specs/development/ai_video_management/changelog.md` — append 082 entry.
 - `specs/development/ai_video_management/user_input/revised_prompt.md` — header bump.
 
+
 ---
 
-# Follow-up draft 083 — 2026-05-17
+## 083 — 2026-05-17 22:03:13 — mandatory-full-body-triple-anchor
+
 Reinforce the full-body head-to-toe framing as **MANDATORY** and emphasize it at the very start of every prompt — repeated at multiple positions so Kling cannot lose the constraint to attention dilution mid-prompt.
 
-## Why
+### Why
 
 User: "请确保生成的actor照片是全身照从头到脚，请在所有prompt 提开始强调这点，而且是必须执行".
 
@@ -6696,9 +6801,9 @@ The `严禁` token lands at the tail of the line where attention is weakest, and
 
 Three anchor positions = redundancy. Prompt attention is leaky; one tail keyword can drift, but three tokens distributed across the prompt at prefix / middle / pre-tail positions cannot all be ignored simultaneously.
 
-## Spec — exact text
+### Spec — exact text
 
-### New leading line (replaces current 镜头: line in all 4 builder variants)
+#### New leading line (replaces current 镜头: line in all 4 builder variants)
 
 ```
 镜头【强制 MANDATORY · 全身从头到脚】：full-body wide shot · long shot · 9:16 竖屏 · 头顶到脚趾完整入画 · MUST show entire body from top of head to toes · 严禁 portrait / half-body / close-up / head-shoulder crop · 任何裁切均视为生成失败。
@@ -6710,7 +6815,7 @@ Key changes vs 081/082:
 - `·` separator (raised dot) instead of `,` — visually distinct, fewer token-merging issues.
 - `任何裁切均视为生成失败` adds explicit failure semantics.
 
-### New second line (inserted immediately after the leading line, before the 正面 line)
+#### New second line (inserted immediately after the leading line, before the 正面 line)
 
 ```
 【再次强调 · 必须执行】整张图必须显示完整全身：从 ① 头顶（含发丝）→ ② 面部 → ③ 颈 → ④ 肩 → ⑤ 胸 → ⑥ 腰 → ⑦ 臀 → ⑧ 大腿 → ⑨ 小腿 → ⑩ 脚趾, 上下 zero crop。生成任何 portrait / 半身 / 特写 / 头肩 / 腰上 / 胸上 构图 = 生成失败。
@@ -6718,7 +6823,7 @@ Key changes vs 081/082:
 
 Enumerating the 10 anatomy waypoints binds the model to a concrete checklist, not just an abstract "full body". The numbered list further reduces drift — the model can count and see each waypoint.
 
-### Tail reminder (insert immediately above `_NEGATIVES_ZH`, after `_CASTING_REQUIREMENTS_ZH`)
+#### Tail reminder (insert immediately above `_NEGATIVES_ZH`, after `_CASTING_REQUIREMENTS_ZH`)
 
 ```
 【强制构图 · 最后强调】整图必须 9:16 竖屏 + 头顶到脚趾 zero-crop + 头部仅占画面 1/5 + 身体占 4/5 + 头顶留 ~5% 顶边 + 脚趾下方留 ~5% 底边。如未满足任何一项均视为不合格。
@@ -6726,7 +6831,7 @@ Enumerating the 10 anatomy waypoints binds the model to a concrete checklist, no
 
 This sits right before `_NEGATIVES_ZH` (which is the last line of the prompt) so the framing contract is the last token batch the model reads before applying constraints.
 
-### Opening descriptor line — strengthen the literal "full-body" tag
+#### Opening descriptor line — strengthen the literal "full-body" tag
 
 For `build_face_prompt` + `build_face_prompt_with_picks`:
 
@@ -6742,7 +6847,7 @@ For `build_body_prompt` + `build_body_prompt_with_picks`:
 
 `**【强制全身】**` markdown-bold + bracketed-Chinese-imperative makes the full-body contract land in the descriptor row too — second anchor inside the high-attention prefix.
 
-## Out of scope
+### Out of scope
 
 - Pool / wardrobe / negative-style lines (080, 081, 082 changes) — untouched.
 - `_BIAS_WILD_PROB` / look bias (074, 077) / look-led classifier (079) — untouched.
@@ -6750,23 +6855,24 @@ For `build_body_prompt` + `build_body_prompt_with_picks`:
 - HTTP routes / JSON shapes / API contracts — byte-identical (only prompt body changes).
 - Diverse-mode preview/generate path — kept consistent automatically (same builders).
 
-## Touch list
+### Touch list
 
 - `projects/ai_video_management/libs/infrastructure/writers/actor__chinese_prompt.py` — 4 builder variants (`build_face_prompt`, `build_body_prompt`, `build_face_prompt_with_picks`, `build_body_prompt_with_picks`) get the new leading line + second line + tail-reminder + strengthened descriptor opening.
 - `specs/development/ai_video_management/changelog.md` — append 083 entry.
 - `specs/development/ai_video_management/user_input/revised_prompt.md` — header bump.
 
+
 ---
 
-# Follow-up draft 084 — 2026-05-17
+## 084 — 2026-05-17 22:19:24 — delete-toast-never-disappears
 
 User 反馈："删除成功的提示在前端永远不消失，是个 bug"。
 
-## 用户原话
+### 用户原话
 
 > 删除成功的提示在前端永远不消失，是个bug
 
-## 根因
+### 根因
 
 `apps/ui/src/lib/announce.ts` 有一个**带 TTL 自动清除**的 shared `announceToast(message, ttlMs=4500)`（在 follow-up 060 引入），但**没有任何调用方 import 它**。4 个 component 各自复制了一个 **缺 TTL 清除** 的本地 `announceToast` / `announce`：
 
@@ -6781,9 +6887,9 @@ User 反馈："删除成功的提示在前端永远不消失，是个 bug"。
 
 `lib/announce.ts` 的注释 (follow-up 060) 明确写过 "Auto-clears after a TTL — re-firing while still visible resets the clock" — utility 写对了, 但 caller migration 漏做。本 follow-up = 补做 060 的 caller migration。
 
-## 改动范围
+### 改动范围
 
-### 项目代码（本 follow-up 同 turn 落地）
+#### 项目代码（本 follow-up 同 turn 落地）
 
 1. `apps/ui/src/components/Reader.tsx`：
    - 顶部 import 加入 `import { announceToast } from "../lib/announce";`
@@ -6804,12 +6910,12 @@ User 反馈："删除成功的提示在前端永远不消失，是个 bug"。
    - 顶部 import 加入 `import { announceToast as announce } from "../lib/announce";` (aliased import 保留本地 8 处 `announce(...)` call sites 命名不动)。
    - 删除本地 helper (line 66-74)。
 
-### Pipeline 状态
+#### Pipeline 状态
 
 5. `specs/development/ai_video_management/user_input/revised_prompt.md` — `Last regenerated` 头 bump 到 084。
 6. `specs/development/ai_video_management/changelog.md` — append 084 entry。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - `lib/announce.ts` 不动 — utility 已正确实现 (TTL 4500ms + clear region + remove `.is-visible` class)。
 - `apps/api/` 后端不动 — 本 bug 纯前端 UX。
@@ -6817,7 +6923,7 @@ User 反馈："删除成功的提示在前端永远不消失，是个 bug"。
 - CSS `.a11y-live-region` / `.is-visible` (styles.css:82-87) 不动。
 - 其他 component 内 toast-like 提示 (如 inline error banner, modal) 不动 — 本 follow-up 只修 `aria-live-toast` region 永久驻留 bug。
 
-## Acceptance trigger
+### Acceptance trigger
 
 - 4 文件 `Edit` 后, 仍只剩 1 个 `announceToast` definition (`lib/announce.ts:19`)。
 - 仍只剩 1 个 `announce`-shape definition (`lib/announce.ts:19`, 在 SiblingMedia 通过 aliased import 暴露为 `announce`)。
@@ -6825,23 +6931,25 @@ User 反馈："删除成功的提示在前端永远不消失，是个 bug"。
 - `npm test` 通过 (existing test suite, 不要求新 test — follow-up 060 utility 已被覆盖, 这里仅是 import 拓宽)。
 - 手测 (用户侧)：触发 删除 / 永久删除 / 批量删除 / archive / unarchive — 4.5 秒后 toast 自动消失 + DOM `#aria-live-toast` 失去 `.is-visible` class。
 
-## 判断
+### 判断
 
 - 选 import + delete-local-helper 而非 fix-each-local-helper：保留单一权威实现, 避免下次 TTL 调整时四处漂移。`lib/announce.ts` 的 follow-up 060 注释指明 utility 是为共享而生。
 - SiblingMedia 用 aliased import (`as announce`) 而非 rename 8 处 call sites：最小 diff, 行为等价。
 
+
 ---
 
-# Follow-up draft 085 — 2026-05-17
+## 085 — 2026-05-17 22:18:15 — fix-half-body-root-cause
+
 Fix the actual root cause that follow-ups 080-083 couldn't reach with prompt-text alone: the face-shot **canvas is 1:1 (512×512)** while the prompt insists "9:16 竖屏". Text instructions cannot win against canvas geometry — a full body does not lay out top-to-bottom in a square frame, so Kling crops to chest-up no matter how many `【强制 MANDATORY】` markers we prepend.
 
-## Why prompt-only fixes failed
+### Why prompt-only fixes failed
 
 User reports: the prompts produced by 081/082/083 still come back half-body. Looking at the exact prompt text the user pasted, all 4 anchors are correctly present (lead `【强制 MANDATORY · 全身从头到脚】`, restate `① 头顶 → ... → ⑩ 脚趾`, descriptor `**【强制全身】**`, tail `【强制构图 · 最后强调】`). The prompt text is doing everything it can.
 
 Three stacked structural causes:
 
-### 1. The canvas is square (root cause, ~70% of the issue)
+#### 1. The canvas is square (root cause, ~70% of the issue)
 
 `actor__writer.py` lines 92-93:
 ```python
@@ -6853,13 +6961,13 @@ The face shot's `generate(prompt, seed, 512, 512)` tells Kling to render into a 
 
 `_kling_aspect_ratio(width, height)` (line 1126) maps the (512, 512) → "1:1" aspect_ratio param sent to Kling. The model then optimizes its sampler for square composition, which for human subjects means face/upper-body emphasis. Compositional priors locked at the API level beat any prompt-text framing markers.
 
-### 2. "定妆照" is a beauty-headshot Chinese prior (~20%)
+#### 2. "定妆照" is a beauty-headshot Chinese prior (~20%)
 
 All 4 builders open their descriptor row with `正面全身定妆照` (or `**【强制全身】**正面全身定妆照` after 083). In Chinese photography taxonomy, **「定妆照」overwhelmingly means beauty / headshot / makeup-test shot** — it is the standard term TV/film productions use for the close-up makeup reference taken right before shooting. Models trained on Chinese photography captions have a strong prior `定妆照 → portrait crop`. The `全身` modifier in front does not override the noun-level prior.
 
 Industry comp-card terminology that doesn't carry the headshot prior: **「模特造型照」** / **「全身模特照」** / **「fashion comp card / Z-card 全身照」**. Talent agencies use these for body-evaluation shots specifically.
 
-### 3. The photography pool actively biases toward portrait (~10%)
+#### 3. The photography pool actively biases toward portrait (~10%)
 
 `_PHOTOGRAPHY_ZH` (10 entries) — at least 5 actively pull toward portrait composition:
 
@@ -6873,9 +6981,9 @@ Industry comp-card terminology that doesn't carry the headshot prior: **「模�
 
 The current prompt the user pasted picked entry #5 (Portra 400). Of course Kling produced a portrait — the user explicitly asked for portrait film.
 
-## Spec
+### Spec
 
-### Part A — canvas geometry (fixes root cause)
+#### Part A — canvas geometry (fixes root cause)
 
 `projects/ai_video_management/libs/infrastructure/writers/actor__writer.py`:
 
@@ -6890,7 +6998,7 @@ Both face + body shots are now 720×1280 (9:16 portrait canvas, full-body capabl
 
 `_kling_aspect_ratio(720, 1280)` will map → "9:16" sent to Kling.
 
-### Part B — `_resize_jpeg` must be aspect-preserving
+#### Part B — `_resize_jpeg` must be aspect-preserving
 
 Current (line 1615-1628):
 
@@ -6911,7 +7019,7 @@ img = img.resize((new_w, new_h), Image.LANCZOS)
 
 Scales the **longest edge** to `target_px`, preserves source aspect. 720×1280 + "2k" → 1152×2048. 720×1280 + "4k" → 2304×4096. Docstring updated to reflect new behavior; the "Kling returns ~1024×1024 natively for 1:1 aspect" note becomes "Kling returns the requested width × height; resolution presets scale the longest edge".
 
-### Part C — replace "定妆照" + rewrite photography pool
+#### Part C — replace "定妆照" + rewrite photography pool
 
 `projects/ai_video_management/libs/infrastructure/writers/actor__chinese_prompt.py`:
 
@@ -6961,11 +7069,11 @@ Every entry now:
 - Drops portrait-named films (Portra, SX-70) for landscape/fashion films (Ektar, Cinestill 50D, Ektar 100).
 - Keeps the realism / texture cues that 074/077/080 depend on for non-AI-face look.
 
-## Why this works
+### Why this works
 
 Canvas geometry is a hard constraint at the API layer — Kling cannot return a square image when the request is 720×1280. With a 9:16 canvas + a prompt that says "head to toe" + a photography cue that says "35mm full body", every layer of the request now agrees. Today they disagree (canvas says square / prompt says full-body / photography says portrait lens) and the model resolves the conflict by averaging toward the strongest prior — which has been portrait.
 
-## Out of scope
+### Out of scope
 
 - Frontend `ActorPoolGenerator.tsx` / `ActorGrid` / `ActorView` — no change. The JPEG dimensions change but the file format + filename convention + sidecar shape stay the same; the React components display whatever pixel ratio comes back.
 - HTTP routes / JSON shapes / endpoint behaviors — byte-identical.
@@ -6973,24 +7081,25 @@ Canvas geometry is a hard constraint at the API layer — Kling cannot return a 
 - Historical generated JPEGs (1:1 squares) — left as-is. User re-generates whoever needs the new framing.
 - The face-vs-body shot distinction itself — kept for now (both 9:16; face emphasizes face within the full body, body emphasizes proportions). Future follow-up could collapse to single shot if dual generation becomes unnecessary cost.
 
-## Touch list
+### Touch list
 
 - `projects/ai_video_management/libs/infrastructure/writers/actor__writer.py` — `IMAGE_WIDTH / IMAGE_HEIGHT / IMAGE_WIDTH_BODY / IMAGE_HEIGHT_BODY` constants + `_resize_jpeg` aspect-preserving rewrite + docstring updates.
 - `projects/ai_video_management/libs/infrastructure/writers/actor__chinese_prompt.py` — 4 builder descriptor rows (定妆照 → 全身模特造型照) + `_CASTING_REQUIREMENTS_ZH` + `_PHOTOGRAPHY_ZH` (10 entries).
 - `specs/development/ai_video_management/changelog.md` — append 084 entry.
 - `specs/development/ai_video_management/user_input/revised_prompt.md` — header bump.
 
+
 ---
 
-# Follow-up draft 086 — 2026-05-17
+## 086 — 2026-05-17 22:20:00 — actor-grid-assigned-filter
 
 Summary: ActorGrid (`/actors` 路由) 加一个新 filter dropdown "分配状态" — 用户可选 "全部 / 已分配 / 未分配" 来过滤已经分配到 character role 的 actor。Backend `GET /api/actors` listing payload 新增 `is_assigned: bool` 字段，每个 actor 标记是否在任一 drama 的 `casting.md` 内出现。同时 tile 右上角加一个 🎬 小 badge — "全部" 视图下也能一眼看到哪些 actor 已用、哪些空闲。
 
-## 用户原话
+### 用户原话
 
 > 在看 actor 的页面，帮我加个新功能，filter in or filter out those charactors already assigned to a role
 
-## 决策
+### 决策
 
 | 项 | 决策 | 理由 |
 |---|---|---|
@@ -7004,9 +7113,9 @@ Summary: ActorGrid (`/actors` 路由) 加一个新 filter dropdown "分配状态
 | `is_assigned` 是否含 `_deleted/` 内 actor | **否** — `assigned_actor_ids()` 只扫 `ai_videos/` 顶层非-`_` drama；`_deleted/_actors/` 内的 deleted actor 不出现在 listing 也无 assignment | follow-up 026/043 deleted actor 已从 listing 过滤；新字段语义一致 |
 | Stale data | listing per click `/actors` route 重新 fetch；assign/unassign 触发 `onChange()` → tree refresh → 也 reload actors → is_assigned 跟新 | 与既有 follow-up 043 onSaved chain 一致 |
 
-## 功能要求
+### 功能要求
 
-### Backend
+#### Backend
 
 1. **`libs/infrastructure/writers/casting__writer.py`** `Casting` 类加方法：
    ```python
@@ -7034,7 +7143,7 @@ Summary: ActorGrid (`/actors` 路由) 加一个新 filter dropdown "分配状态
 
 6. 不动 `apps/api/routes.py` — `actors_list` handler 已经 dispatch to `ActorQuery.list()`，payload 自动多 `is_assigned` 字段。
 
-### Frontend
+#### Frontend
 
 1. **`apps/ui/src/api.ts`** `ActorInfo` interface 加 optional `is_assigned?: boolean`。
 
@@ -7049,13 +7158,13 @@ Summary: ActorGrid (`/actors` 路由) 加一个新 filter dropdown "分配状态
    - `.actor-tile-id` 改 `display: flex; align-items: center; gap: 6px`（让 badge 自然贴在 id 右侧）。
    - 新 `.actor-tile-assigned-badge { font-size: 11px; opacity: 0.85; line-height: 1; }`。
 
-### 不动
+#### 不动
 
 - spec.md / acceptance_criteria.md — listing field 增加是向后兼容，无 FR 行为变化。
 - Container.py / route 层 — ActorQuery 已有 casting 注入（follow-up 043 起）。
 - 其它 components（ActorView / CastingView / DeletedView）— 不需要 `is_assigned`。
 
-## 安全 / 边界
+### 安全 / 边界
 
 - **`_deleted/` actor 不出现在 `assigned_actor_ids()`** — 因为 `assigned_actor_ids` 扫的是非-`_` drama 的 casting.md；已 unassign 的 deleted actor 不会标记 assigned。
 - **空 casting.md 文件不会 crash**：`_parse` 返回空 list；`assigned_actor_ids` 跳过。
@@ -7063,16 +7172,18 @@ Summary: ActorGrid (`/actors` 路由) 加一个新 filter dropdown "分配状态
 - **跨 race**：用户 assign 一个 actor 的瞬间正好别人 list — listing 看到的是 fresh casting.md state（每次 parse fresh）。
 - **`is_assigned` 字段缺失向后兼容**：前端 `?: boolean` optional；旧 list payload 无字段时所有 actor 视为 unassigned，filter 工作正常（只是 "已分配" 永空）。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - 不显示 assignment 数量（"这个 actor 分配到 3 个角色"）— 用户问题只要 binary filter；count 留给 ActorView 详情页 (FR-95 已有 `assignments[].length`)。
 - 不在 listing 上 expand 每个 actor 的 assignment 列表 — 数据量过大，留 ActorView。
 - 不动 ActorView 内 assign/unassign 流（FR-95 已支持）。
 - 不写 vitest / pytest。
 
+
 ---
 
-# Follow-up draft 087 — 2026-05-17
+## 087 — 2026-05-17 22:35:38 — negative-prompt-split-shorten-positive
+
 Fix the remaining half-body output that 085's canvas fix couldn't reach. Root cause this time is **prompt engineering anti-patterns**, not API geometry. Two structural problems:
 
 1. **Negative tokens inside the positive prompt backfire.** Diffusion models (Kling included) parse each token's semantic meaning, not its negation context. Putting `严禁 portrait`, `不要 头肩特写`, `生成失败 = portrait crop` in the positive prompt **injects portrait-related tokens into the model's attention** — the model sees `portrait` repeated across 1660 chars and gradually drifts toward what it sees most. Every 081 → 083 escalation made this worse.
@@ -7080,15 +7191,15 @@ Fix the remaining half-body output that 085's canvas fix couldn't reach. Root ca
 
 Plus: the positive prompt is now **1660 chars** — well past Kling's effective attention budget. The actual subject description is drowning under framing-instruction text.
 
-## Why
+### Why
 
 User: "生成的图片还是只有上半身" (post-085 follow-up).
 
 085 fixed the canvas from 1:1 → 9:16 so Kling returns a 720×1280 image. But aspect ratio doesn't dictate composition — Kling can still frame the subject as upper-body within a 9:16 canvas if the prompt biases compositional attention that way. Our 4-anchor framing language was doing exactly that: every `严禁 portrait`, `不要 头肩`, `headshot crop = 失败` token in the positive prompt activated the portrait neurons we were trying to suppress.
 
-## Design
+### Design
 
-### Part A — KlingProvider accepts `negative_prompt`
+#### Part A — KlingProvider accepts `negative_prompt`
 
 `projects/ai_video_management/libs/infrastructure/writers/actor__writer.py`:
 
@@ -7127,7 +7238,7 @@ class KlingProvider:
 
 Backward compatible — when `negative_prompt` is None/empty, the body shape is byte-identical to pre-087.
 
-### Part B — `_build_prompts_for_slot` returns `(face_prompt, body_prompt, negative_prompt)`
+#### Part B — `_build_prompts_for_slot` returns `(face_prompt, body_prompt, negative_prompt)`
 
 `ActorPool._build_prompts_for_slot` now returns a 3-tuple. The negative prompt is shared between face + body (the framing failures and modesty-fallback bans apply equally to both shots). Call sites in `preview_prompts` + `generate_batch` thread it through:
 
@@ -7139,7 +7250,7 @@ body_bytes = self._provider.generate(body_prompt, seed, IMAGE_WIDTH_BODY, IMAGE_
 
 `preview_prompts` also includes `negative_prompt` in each slot's payload so the user can see exactly what gets sent.
 
-### Part C — Positive prompt: positive-only, shortened to ~500 chars
+#### Part C — Positive prompt: positive-only, shortened to ~500 chars
 
 Refactored 4 builder variants (`build_face_prompt`, `build_body_prompt`, `build_face_prompt_with_picks`, `build_body_prompt_with_picks`). Each emits a positive-only prompt with this shape:
 
@@ -7178,7 +7289,7 @@ All of the above move into the new `_NEGATIVE_PROMPT_ZH` constant sent via Kling
 
 Target positive length: ~500 chars (down from 1660). Verified with smoke.
 
-### Part D — New `_NEGATIVE_PROMPT_ZH` constant
+#### Part D — New `_NEGATIVE_PROMPT_ZH` constant
 
 ```python
 _NEGATIVE_PROMPT_ZH: str = (
@@ -7198,7 +7309,7 @@ EN + ZH both — Kling-v1 is trained on bilingual captions; either side catches 
 
 The constant is shared across all 4 builders (returned as the 3rd tuple element from `_resolve_batch_picks` / direct builders).
 
-## Why this should work
+### Why this should work
 
 Diffusion model best practice (documented across SD, Midjourney, Kling, Sora):
 - **Positive prompt** = the things you want, in concise positive language.
@@ -7208,7 +7319,7 @@ Diffusion model best practice (documented across SD, Midjourney, Kling, Sora):
 
 Our 081–083 escalation violated all three rules at once. 085 fixed the geometry. 087 fixes the prompt engineering.
 
-## Out of scope
+### Out of scope
 
 - Look bias (077) / minimal wardrobe (080) / batch coordination (082) / canvas + photography pool (085) — unchanged, continue to apply.
 - The 4 module-level framing constants `_LEADING_FRAMING_MANDATE / _RESTATE_FRAMING_MANDATE / _TAIL_FRAMING_MANDATE` from 083 — **deleted** (superseded by single positive composition tag + dedicated negative_prompt).
@@ -7216,7 +7327,7 @@ Our 081–083 escalation violated all three rules at once. 085 fixed the geometr
 - Frontend ActorPoolGenerator / preview modal — preview pane will start showing the negative prompt block alongside the positive; small JSX add to render it (optional polish; if skipped, the preview just won't show negatives but generation still uses them).
 - Historical JPEGs — unchanged. User regenerates with the new prompt structure.
 
-## Touch list
+### Touch list
 
 - `projects/ai_video_management/libs/infrastructure/writers/actor__writer.py`:
   - `KlingProvider.generate` + `KlingProvider._submit` accept `negative_prompt: str | None = None`.
@@ -7235,16 +7346,18 @@ Our 081–083 escalation violated all three rules at once. 085 fixed the geometr
 - `specs/development/ai_video_management/changelog.md` — append 087 entry.
 - `specs/development/ai_video_management/user_input/revised_prompt.md` — header bump.
 
-## Why slot 087 (not 086)
+### Why slot 087 (not 086)
 
 Slot 086 taken by parallel "actor-grid-assigned-filter" follow-up (the same concurrent stream that placed the is_assigned DTO comments earlier). Slot 084 was the "delete-toast-never-disappears" frontend fix. This work is unrelated to either — takes 087 to keep the audit log topic-coherent.
 
+
 ---
 
-# Follow-up draft 088 — 2026-05-17
+## 088 — 2026-05-17 23:13:50 — character-ref-15s-proper-casting
+
 Bump character reference turntable from 4s to **15s** so each character gets proper screen time to showcase casting (more camera angles, more dialogue, voice/emotion range). The 0-2s self-sufficient contract from follow-up 078 stays — `_CONCAT_SEGMENT_S = 2.0` truncation use case unchanged.
 
-## Why
+### Why
 
 User: "lets change the charactor video prompt to from 4s to 15s, you have a lot more time and roomt to show a proper casting, and let the charactor speak a lot more than 1,2,3. but since I have a use case to also need to truncate the vidoe to 2s, so lets make sure we have a proper first 2s, and charactor speak 1,2 at least, and then you can use the result of time, to show more angle of the charactor in casting and let him talk more".
 
@@ -7252,16 +7365,16 @@ Follow-up 078 (rule #12.5 v5) gave each character 4s — enough to ship "0-2s �
 
 The 2s truncate contract (shot-char concat reel `_CONCAT_SEGMENT_S = 2.0` + ✂ 截到 2s button `_TRUNCATE_DURATION_S = 2.0`) **must continue to work**. So 0-2s stays byte-identical across all characters (一 + 二 + 正面定场 + 360° 回正), exactly as v5 already locks. 2-15s is the new "extension" that gets dropped by the trim and only matters when the full 15s is uploaded to Seedance.
 
-## Spec — rule #12.5 v5 → v6
+### Spec — rule #12.5 v5 → v6
 
-### Locked 0-2s prefix (UNCHANGED from v5 — this is the truncate-compat half)
+#### Locked 0-2s prefix (UNCHANGED from v5 — this is the truncate-compat half)
 
 ```
 0-1s: 正面**全身远景**起手, {角色姿态 + 眼神跟镜 + 自然呼吸}; 说"一"。
 1-2s: 镜头**快速 360° 顺时针环绕一圈**（侧面 90° → 正背 180° → 另一侧 270° → 回正 360°）, 全身始终在画面内, 覆盖正/侧/背/侧四向轮廓; 说"二"。**必须在 2.0s 前完成发声 + 回正到正面**。
 ```
 
-### New 2-15s casting-reel extension (per-character variable)
+#### New 2-15s casting-reel extension (per-character variable)
 
 ```
 2-3s: 镜头由全身远景**推**至**面部中近景特写**（眉眼 + 服装领口 + 标志特征点 row #11）; 说"三, 我是 {角色姓名}"。
@@ -7272,7 +7385,7 @@ The 2s truncate contract (shot-char concat reel `_CONCAT_SEGMENT_S = 2.0` + ✂ 
 13-15s: 镜头最终**推至特写**（眼神直视镜头, 标志特征点 row #11 占满下半画面, 例: 沧冥右眼下方朱砂痣, 司空玄左颈侧十字暗纹）; 角色说出**character bible 中"配音参考"段标注的最终语气基线**（如 "本尊从不解释, 只清算" — 一句 ≤ 10 字的 catch-phrase）, 定格 0.5s 结束。
 ```
 
-### Dialogue source — character-specific
+#### Dialogue source — character-specific
 
 The 0-2s segment is byte-identical across all characters (`一` then `二`). The 2-15s segment is **per-character**, sourced from each character md's existing `## 标志台词或口头禅` section (every character bible has 3 catch phrases) + the `## 配音参考` section's "声线 / 语速 / 情绪基调" descriptors. The shot mapping:
 
@@ -7283,17 +7396,17 @@ The 0-2s segment is byte-identical across all characters (`一` then `二`). The
 - 11-13s: `{角色名}.bible["标志台词"][2]` verbatim.
 - 13-15s: `{角色名}.bible["配音参考 catch-phrase"]` (the most character-defining ≤10-char line; if the character only has 3 catch phrases total, repeat #1 as the closing tag).
 
-### Camera-move template (byte-identical across characters)
+#### Camera-move template (byte-identical across characters)
 
 The 6 camera moves (推近 / 反向 90° / 拉远 3/4 / 横向 pan 360° / 拉近 medium / 特写) are byte-identical across characters — the casting reel structure is locked. Per-character variation lives only in: (a) dialogue text, (b) standout feature focused in 13-15s close-up (row #11 标志特征点), (c) prop / wardrobe details visible in 11-13s medium close-up.
 
-### Time-budget / Seedance upload contract
+#### Time-budget / Seedance upload contract
 
 - New ceiling: **15s** (was 4s in v5; 2.9s in v4; 12s in pre-v4).
 - Seedance / Sora / Veo / Runway Gen-3 / Kling reference upload limits per 2026-05 testing: ≥ 15s comfortably accepted; aligns with the scene-reference v3 walk-through (rule #12.10) so character + scene refs are dim-comparable.
 - Existing 2s truncation paths (`_CONCAT_SEGMENT_S = 2.0` in `ShotConcatBuilder._ffmpeg_concat`, `_TRUNCATE_DURATION_S = 2.0` in `CharacterVideoTruncator.truncate`) keep working unchanged — they slice 0-2s which is still self-sufficient per the locked prefix.
 
-### Negatives (additions)
+#### Negatives (additions)
 
 Append to the per-character video reference prompt's `负向:` section:
 
@@ -7305,7 +7418,7 @@ Append to the per-character video reference prompt's `负向:` section:
 
 Drop the old v5 negative `不要 超过 4s（reference 上传硬上限 v5）`.
 
-### Locked-fields list (10+ character byte-identical)
+#### Locked-fields list (10+ character byte-identical)
 
 Per rule #12.5 v5 footer: 9 fields are byte-identical across all character turntable prompts; only `角色:` line varies. v6 extends:
 
@@ -7324,11 +7437,11 @@ Per rule #12.5 v5 footer: 9 fields are byte-identical across all character turnt
 
 Goal preserved: 10+ character turntable outputs剪辑成「角色介绍合集」 still feasible because 0-2s is byte-identical truncate-compat + camera-move template is byte-identical; only spoken text + standout feature differ per character (which is exactly what a casting reel should differ on).
 
-## Why slot 088 (not 086)
+### Why slot 088 (not 086)
 
 Concurrent parallel work has been claiming slots 084 (toast TTL fix) + 086 (assigned filter chip). Slot 087 = my just-shipped `negative_prompt` split. This new work takes 088.
 
-## Touch list
+### Touch list
 
 - `.claude/agent_refs/project/ai_video.md` rule #12.5 v5 → v6 — bump duration 4s → 15s, rewrite timed-beats schema (3 locked-prefix beats + 6 new casting-reel beats), rewrite dialogue sourcing section (per-character from bibles), update negatives (drop "≤ 4s", add 5 new), update locked-fields list (per-character dialogue carve-out), update footer attribution `rev — follow-up 088 …`.
 - `specs/development/ai_video_management/user_input/revised_prompt.md` — header bump 088.
@@ -7338,7 +7451,7 @@ Concurrent parallel work has been claiming slots 084 (toast TTL fix) + 086 (assi
 - `specs/ai_video/mozun_chongsheng/changelog.md` — append entry.
 - `ai_videos/mozun_chongsheng/characters/c{1..10}_*/c{N}_*.md` — patch each character file's video reference prompt section to the 15s schema + insert that character's 3 标志台词 into the per-character dialogue slots.
 
-## Out of scope
+### Out of scope
 
 - `ai_video_management` webapp code — **no code change**. The 2s concat trim path in `character_video__writer.py` already does what 088 needs (slices 0-2s). The `✂ 截到 2s` button likewise. New 15s source mp4s just have more material after the 2s mark; the truncator doesn't care.
 - Frontend — unchanged. The webapp displays whatever video duration the user renders.
@@ -7346,17 +7459,18 @@ Concurrent parallel work has been claiming slots 084 (toast TTL fix) + 086 (assi
 - Scene reference v3 (rule #12.10, 15s walk-through) — already 15s, unchanged.
 - Shot prompts (rule #12.6) — only reference `{ref_cN_xxx}` placeholder, no embedded duration text. Unchanged.
 
-## User-side action after this lands
+### User-side action after this lands
 
 For each of the 10 mozun_chongsheng characters, render a new 15s turntable using the updated prompt. Replace the existing `characters/cN_*/cN_*.mp4` files. Concat reel and ✂ 截到 2s continue to work because 0-2s is locked. The full 15s gives Seedance a much richer voice / emotion / silhouette / standout-feature reference per character.
 
+
 ---
 
-# Follow-up draft 089 — 2026-05-17
+## 089 — 2026-05-17 23:45:00 — stale-backend-blocking-half-body-fixes
 
 Half-body still happens because the running backend is stale: 085 + 087 fixes are on disk but the uvicorn process loaded the old module before those edits and still serves it from memory. Restart the backend before drawing any further conclusions about Kling.
 
-## Evidence
+### Evidence
 
 - `projects/ai_video_management/libs/infrastructure/writers/actor__writer.py` on disk has the post-085 constants: `IMAGE_WIDTH=720, IMAGE_HEIGHT=1280, IMAGE_WIDTH_BODY=720, IMAGE_HEIGHT_BODY=1280` and an aspect-preserving `_resize_jpeg` (longest edge → target_px).
 - `projects/ai_video_management/libs/infrastructure/writers/actor__chinese_prompt.py` on disk has the post-087 structure:
@@ -7371,13 +7485,13 @@ Half-body still happens because the running backend is stale: 085 + 087 fixes ar
   - 「严禁 portrait / half-body」 baked into the positive prompt body — does not exist in current builder (moved to `_NEGATIVE_PROMPT_ZH` per 087).
 - The sidecar is written at generation time and reflects the exact prompt string sent to Kling, so this proves the request actually shipped from old in-memory code.
 
-## Why the disk → memory gap
+### Why the disk → memory gap
 
 Python `import` caches modules. Once `libs.infrastructure.writers.actor__chinese_prompt` and `libs.infrastructure.writers.actor__writer` are imported into the FastAPI worker, subsequent edits to those `.py` files don't take effect until the process restarts or the module is force-reloaded. Uvicorn `--reload` is dev-only; if the backend is being run with the production-style command (no `--reload`), in-place edits never propagate.
 
 The previous half-body follow-ups (080 → 081 → 082 → 083 → 085 → 087) each ran the same `Edit` operation against the source files, and the user kept testing without restart. Every "still half-body" report from after 085 is therefore not evidence that 085's structural fixes are insufficient — it's evidence that the fixes were never loaded.
 
-## Action
+### Action
 
 1. Restart the backend so the new modules load. From `projects/ai_video_management/`:
    ```powershell
@@ -7395,17 +7509,18 @@ The previous half-body follow-ups (080 → 081 → 082 → 083 → 085 → 087) 
    If no → still stale; double-check the launch command and process tree.
 4. If the prompt is the new format AND the JPG is still chest-up / waist-up: at that point the structural fixes are insufficient and the next escalation is the Kling image model itself (`KLING_DEFAULT_MODEL = "kling-v1"` is the oldest text-to-image gen — newer Kling models have stronger framing adherence). Do NOT preemptively switch the model — that's a separate follow-up that should be cut only after a clean restart still shows half-body output.
 
-## Convention for future Kling prompt edits
+### Convention for future Kling prompt edits
 
 After any edit to `actor__chinese_prompt.py` or the prompt-assembling parts of `actor__writer.py`, the next generation's sidecar md is the source of truth for what actually shipped. If the sidecar text does not contain the new strings, the backend did not pick up the edit — restart before drawing conclusions about Kling.
 
-## Touch list
+### Touch list
 
 - `specs/development/ai_video_management/changelog.md` — append 089 entry.
 
+
 ---
 
-# Follow-up draft 090 — 2026-05-18 — **SUPERSEDED by follow-up 091 before implementation**
+## 090 — 2026-05-18 00:10:00 — character-ref-7s-tighter-casting
 
 **Status: spec-only, never shipped.** Within minutes of this spec being written, the user reported Kling's content validator rejecting uploaded character videos with: *"the current video contains cuts or transitions, and no clear, complete character is detected, please upload a single shot clear character video"*. The 7s casting reel designed below (with 360° fast orbit in 0-2s + camera-direction reversals + push-in/pull-out resets in the tail) violates Kling's single-shot constraint just like v5/v6 did. The 0-2s fast 360° also blurs the character so Kling can't detect a clear subject.
 
@@ -7415,7 +7530,7 @@ Superseded by follow-up 091 (v8 — static-camera 7s). Kept on file for audit tr
 
 Step character reference turntable down from 15s (v6) to **7s** (v7). 0-2s self-sufficient contract (一/二 + 正面定场 + 360° 回正, byte-identical across characters) **stays** — `_CONCAT_SEGMENT_S = 2.0` shot-char concat + `✂ 截到 2s` button unchanged. 2-7s collapses the v6 casting reel down to its essential beats: 3 camera moves + 自报姓名 + 2 character-specific signature lines (slot #5 doubles as catch close + 标志特征点 final lock).
 
-## Why
+### Why
 
 User: "lets change the charactor video prompt from 15s to 7s now".
 
@@ -7426,16 +7541,16 @@ User: "lets change the charactor video prompt from 15s to 7s now".
 
 Net: 7-segment v6 → **5-segment v7**. 8-row dialogue table → **6-row**. Same locked 0-2s prefix.
 
-## Spec — rule #12.5 v6 → v7
+### Spec — rule #12.5 v6 → v7
 
-### Locked 0-2s prefix (UNCHANGED from v5/v6)
+#### Locked 0-2s prefix (UNCHANGED from v5/v6)
 
 ```
 0-1s: 正面**全身远景**起手, {角色姿态 + 眼神跟镜 + 自然呼吸}; 说"一"。
 1-2s: 镜头**快速 360° 顺时针环绕一圈**（侧面 90° → 正背 180° → 另一侧 270° → 回正 360°）; 说"二"。**必须在 2.0s 前完成发声 + 回正到正面**。
 ```
 
-### New 2-7s casting tail (per-character variable)
+#### New 2-7s casting tail (per-character variable)
 
 ```
 2-3s: 镜头**推**至**面部中近景特写**（眉眼 + 服装领口 + 标志特征点 row #11）; 说"三, 我是 {角色姓名}"。
@@ -7443,7 +7558,7 @@ Net: 7-segment v6 → **5-segment v7**. 8-row dialogue table → **6-row**. Same
 5-7s: 镜头回正 + **拉近至胸像 medium close-up**（含双手手势 + 标志道具 if any, 标志特征点 row #11 占满下半画面）; 角色说出**标志台词 #2**（catch + 情绪 peak + final lock); 定格 0.3s 结束。
 ```
 
-### 6-row dialogue table (was 8-row in v6)
+#### 6-row dialogue table (was 8-row in v6)
 
 | # | 台词 | 用途 | 时段 | 情绪基调 |
 |---|---|---|---|---|
@@ -7456,19 +7571,19 @@ Net: 7-segment v6 → **5-segment v7**. 8-row dialogue table → **6-row**. Same
 
 Slot 5 collapses v6's separate "情绪 peak" (slot 7) + "catch close" (slot 8) into one beat — the second signature line carries both purposes since 5-7s is the final 2 seconds.
 
-### 时长
+#### 时长
 
 - v7 = **7s** (was 15s v6 / 4s v5 / 2.9s v4 / 12s pre-v4).
 - Comfortably within Seedance / Sora / Veo / Runway / Kling reference upload ceilings.
 - Cheaper to render than 15s; faster iteration loop for the user.
 
-### Negatives (adjustments from v6)
+#### Negatives (adjustments from v6)
 
 - Replace `不要 超过 15s（reference 上传硬上限 v6）` → `不要 超过 7s（reference 上传硬上限 v7）`.
 - Drop `不要 跳过任何 6 个 camera-move 段（结构性破坏 casting reel 完整性）` — v7 only has 3 camera moves in the tail, not 6.
 - Keep all other v6 negatives: 一/二 must finish by 2s; 0-2s no extra dialogue (byte-identical truncate-compat); over-emote ban; standard camera-stability + lipsync-alignment bans.
 
-### Locked-fields list (10+ character byte-identical)
+#### Locked-fields list (10+ character byte-identical)
 
 Same carve-out logic as v6, with field values updated:
 
@@ -7477,7 +7592,7 @@ Same carve-out logic as v6, with field values updated:
 - `台词 2-7s` = per-character (from bible `## 标志台词或口头禅` — slots #1 and #2)
 - All other locked fields (场景, 镜头 template, 光线 / 色调, 节奏, 渲染样式, 比例, video-specific negatives) byte-identical.
 
-## Out of scope
+### Out of scope
 
 - ai_video_management webapp code — **no code change**. 2s trim + concat path already does what v7 needs (slices 0-2s).
 - `character_video__writer.py` — unchanged.
@@ -7485,7 +7600,7 @@ Same carve-out logic as v6, with field values updated:
 - Shot prompts (rule #12.6) — only reference `{ref_cN_xxx}` placeholders, no embedded duration text.
 - Existing rendered mp4s (currently a mix of 4s / 15s / older). User re-renders at their discretion.
 
-## Touch list
+### Touch list
 
 - `.claude/agent_refs/project/ai_video.md` rule #12.5 v6 → v7 — bump duration 15s → 7s, swap 7-segment beats → 5-segment, swap 8-row table → 6-row, update negatives (drop the 6-camera-move ban, swap 15s → 7s ceiling), update locked-fields list, append footer attribution `rev — follow-up 090 …`.
 - `specs/development/ai_video_management/user_input/revised_prompt.md` — header bump 090.
@@ -7495,14 +7610,16 @@ Same carve-out logic as v6, with field values updated:
 - `specs/ai_video/mozun_chongsheng/changelog.md` — entry.
 - `ai_videos/mozun_chongsheng/characters/c{1..10}_*/c{N}_*.md` — patch via one-shot script: v6 7-segment dynamics → v7 5-segment; 8-row table → 6-row; 时长 15s → 7s; v7 negatives.
 
+
 ---
 
-# Follow-up draft 091 — 2026-05-18
+## 091 — 2026-05-18 00:15:44 — character-ref-7s-static-camera-kling-compat
+
 > **SUPERSEDED by follow-up 092 (rule #12.5 v9, slow-push-in + slow-orbit 15s)** — user rejected v8's trade-off (static frontal full-body sacrifices face close-up + 侧身/背面 silhouette). 092 reverses the static-camera lockdown with a slow-motion hypothesis (≤ 45°/s orbit, no direction reversals) about Kling's validator. Kept on file as audit trail of the static-camera retreat that 092 reverses; v8 also remains the documented fallback if v9 fails the validator.
 
 Rebuild the character reference turntable around Kling's upload-validator constraint: **single shot, no cuts or transitions, clear character throughout**. Locked-camera 7s frontal shot; character speaks the entire 7s; no orbit, no push-in, no pull-out. Supersedes 090 (v7) which was never implemented because its 360° orbit + camera-direction reversals would have been rejected the same way 088 (v6) was.
 
-## Why
+### Why
 
 Kling's actual feedback on uploaded character ref videos (post-088 v6 15s casting reel, post any earlier multi-camera-move attempt):
 
@@ -7517,15 +7634,15 @@ Every prior version (v5 4s / v6 15s / v7 7s) violates rule #1 in the 0-2s segmen
 
 The only way to make Kling accept the upload is **drop the multi-angle ambition entirely** and ship a single-shot static-camera reference. This sacrifices the 0-2s 360° silhouette pass that v5 introduced for truncate-compat, but per the user's clarification this turn ("Static frontal full-body + 一/二 recommended"), the 2s truncate output still yields a useful frontal voice + identity reference even without the silhouette catalog.
 
-## Design — v8 static-camera 7s
+### Design — v8 static-camera 7s
 
-### Single fixed camera
+#### Single fixed camera
 
 - **Position**: frontal full-body, ~35mm wide, centered subject. Camera locked for the full 7 seconds. No orbit, no push, no pull, no pan, no tilt.
 - **Subject**: stays in place. Slight natural breathing + micro head turns + speaking lip movement only. No turn-in-place. No walking.
 - **Framing**: 9:16 portrait canvas, head-to-toe in frame, head ~1/6 of frame height, feet near bottom with ~5% safety margin (per 081/083 framing language, which is still valid for the still-camera shot).
 
-### 7s timed beats (5 segments)
+#### 7s timed beats (5 segments)
 
 ```
 0-1s: 静态正面全身远景, 角色站定, 自然呼吸, 眼神看镜; 说"一"。
@@ -7537,7 +7654,7 @@ The only way to make Kling accept the upload is **drop the multi-angle ambition 
 
 Every segment starts with "同机位同构图" — explicit anti-cut language. The camera literally does nothing for 7 seconds.
 
-### 5-row dialogue table
+#### 5-row dialogue table
 
 | # | 台词 | 用途 | 时段 | 情绪基调 |
 |---|---|---|---|---|
@@ -7547,7 +7664,7 @@ Every segment starts with "同机位同构图" — explicit anti-cut language. T
 | 4 | {标志台词 #1} | 标准声线 baseline | 3-5s | character-specific (per bible 配音参考) |
 | 5 | {标志台词 #2} | 情绪 peak + catch + final lock | 5-7s | character-specific |
 
-### 2s truncate-compat — preserved but reshaped
+#### 2s truncate-compat — preserved but reshaped
 
 Slicing the first 2 seconds of a v8 source yields: **静态正面全身远景 + 角色说"一"+"二"**. Lost: the 360° silhouette pass (side / back / other side). Kept: the character's voice baseline + clean frontal full-body identity + 2 spoken syllables.
 
@@ -7555,7 +7672,7 @@ This is a deliberate downgrade of the truncate output. The user explicitly appro
 - Kling reference upload was already broken with the 360° → no working pipeline regardless.
 - The static 2s clip is still a useful baseline for the shot-char concat reel (`_CONCAT_SEGMENT_S = 2.0`) — every character now contributes 2s of "frontal full-body + voice baseline" to the concat, which is still a per-character cue card.
 
-### 镜头 field — explicitly single-shot
+#### 镜头 field — explicitly single-shot
 
 ```
 镜头: 静态单镜头 single take · 锁定机位 locked camera · 正面全身远景 (~35mm wide) · 9:16 竖屏 · 7 秒内无任何镜头运动 (no orbit / no push-in / no pull-out / no pan / no tilt / no zoom)
@@ -7563,7 +7680,7 @@ This is a deliberate downgrade of the truncate output. The user explicitly appro
 
 This positive declaration is the strongest signal to Kling's renderer to NOT add camera moves. The negatives below reinforce.
 
-### Negatives (Kling-validator-aware)
+#### Negatives (Kling-validator-aware)
 
 Append / rewrite the v6 negatives to:
 
@@ -7578,7 +7695,7 @@ Append / rewrite the v6 negatives to:
 Drop from v6: `不要 跳过任何 6 个 camera-move 段` (no camera moves at all in v8).
 Drop from v6: `不要 镜头回切倒退 (要单向 360°)` (no 360° at all in v8).
 
-### Locked-fields list
+#### Locked-fields list
 
 - `时长` = 7s (byte-identical)
 - `镜头` = 静态单镜头 single take, locked frontal full-body (byte-identical, structural)
@@ -7586,7 +7703,7 @@ Drop from v6: `不要 镜头回切倒退 (要单向 360°)` (no 360° at all in 
 - `台词 2-7s` = per-character (from bible `## 标志台词或口头禅` slots #1 + #2)
 - All other locked fields (场景, 光线 / 色调, 节奏 = 缓慢 7s 内角色仅自然呼吸 + 说话, 渲染样式, 比例, video-specific negatives) byte-identical.
 
-## Out of scope
+### Out of scope
 
 - ai_video_management webapp code — **no code change**. 2s trim path still slices first 2s. Concat reel still works (per-character contribution is now 2s of static frontal + voice).
 - Existing rendered mp4s (4s v5 / 15s v6 / older). User re-renders to v8 7s static at their discretion.
@@ -7594,7 +7711,7 @@ Drop from v6: `不要 镜头回切倒退 (要单向 360°)` (no 360° at all in 
 - Shot prompts (rule #12.6) — only reference `{ref_cN_xxx}` placeholders, no embedded duration text.
 - Future: if Kling later supports multi-shot character references, we can re-introduce the v6 casting-reel design. v8 is the conservative spec that just works.
 
-## Touch list
+### Touch list
 
 - `.claude/agent_refs/project/ai_video.md` rule #12.5 v6 → v8 (skip v7) — bump duration 15s → 7s, replace 7-segment beats with 5-segment static-camera beats, replace 镜头 field with single-shot declaration, replace 8-row table with 5-row, swap negatives (drop multi-camera-move + 360° bans, add no-camera-motion + no-cut + no-turn-in-place bans), update locked-fields list (镜头 now byte-identical structural), update 节奏 (= 缓慢 7s 角色仅自然呼吸 + 说话), append footer attribution `rev — follow-up 091 (v8 supersedes v7 which was specced but never shipped due to Kling validator feedback) …`.
 - `specs/development/ai_video_management/user_input/revised_prompt.md` — header bump 091.
@@ -7604,16 +7721,18 @@ Drop from v6: `不要 镜头回切倒退 (要单向 360°)` (no 360° at all in 
 - `specs/ai_video/mozun_chongsheng/changelog.md` — entry (supersedes 023 note).
 - `ai_videos/mozun_chongsheng/characters/c{1..10}_*/c{N}_*.md` — patch via one-shot script: v6 7-segment dynamics → v8 5-segment static, 8-row table → 5-row, 时长 15s → 7s, 镜头 line single-shot declaration, negatives swap. Each character's existing bible 标志台词 #1 and #2 (the same lines plugged in by 088) stay in slots 4 + 5.
 
-## Status of 090 + 023 (v7)
+### Status of 090 + 023 (v7)
 
 Both files marked "SUPERSEDED before implementation" at the top. Kept on file as audit trail of the design iteration that led to v8. Do NOT patch character files from 090's spec.
 
+
 ---
 
-# Follow-up draft 092 — 2026-05-18
+## 092 — 2026-05-18 19:49:56 — character-ref-slow-push-in-slow-orbit
+
 Re-introduce multi-angle character reference: **slow push-in + slow 360° orbit**, single continuous take, 15s. User-directed reversal of 091's v8 static-camera lockdown — the v8 truncate-output downgrade (lost the side/back reference) is no longer acceptable. Hypothesis: Kling's "cut/transition" rejection was triggered by *speed*, not motion itself; v5/v6 spun the camera at ~720°/s in the 0-2s segment (a half-second whip-around 360°), which both registered as a "cut" to the validator and motion-blurred the subject. v9 keeps the camera moving the entire shot but at ≤ 45°/s for orbit and gentle dolly speed for the push-in. Single-take continuous motion (no stops, no direction reversals) — the validator's "single shot" contract is reasserted via *continuity*, not via stillness.
 
-## Why this turn
+### Why this turn
 
 User instruction: 「镜头由远到近，要能拍清楚脸部，而且缓慢旋转能看到侧身和背面」.
 
@@ -7626,9 +7745,9 @@ v9 explicitly reverses three v8 design points:
 
 **Risk acknowledgment.** v9 is a *hypothesis* about Kling's validator: slow continuous motion will pass where v5/v6's fast direction-reversing motion failed. v5/v6 had: 0.5s 360° (≈720°/s), plus push-in/pull-out reversals. v9 has: 5s 360° (≈72°/s during the orbit phase, or 45°/s averaged across 2-13s if we include the linked push-in), single direction, no reversal. **If Kling still rejects v9 uploads**, the user has two retreat paths: (a) reintroduce v8's static frontal for the upload-required ref clip while keeping v9 as a separate planning/preview clip; (b) compress motion further (e.g., 0-2s static + 2-5s slow push-in only, drop the 360°, ship as v9.1).
 
-## Design — v9 slow-orbit + slow-push-in 15s
+### Design — v9 slow-orbit + slow-push-in 15s
 
-### Continuous single-take camera path
+#### Continuous single-take camera path
 
 | Phase | Time | Motion | Framing at end of phase |
 |---|---|---|---|
@@ -7642,7 +7761,7 @@ v9 explicitly reverses three v8 design points:
 - **Slow speeds throughout.** Orbit at ≤ 45°/s (5x slower than v5's blink-360°). Push-in: 35mm → 50mm equivalent over 3 seconds (gentle dolly, not a punch). Pull-back: 50mm → 35mm over 8s (very gentle, hidden within orbit motion).
 - **Single continuous take.** No fades, no dissolves, no scene changes. The camera is always observing the same character in the same studio space.
 
-### 15s timed beats (5 segments)
+#### 15s timed beats (5 segments)
 
 ```
 0-2s: 静态正面全身远景, 锁定机位, 角色站定, 自然呼吸, 眼神看镜; 说"一"+"二"。**必须在 2.0s 前完成发声**。
@@ -7652,7 +7771,7 @@ v9 explicitly reverses three v8 design points:
 13-15s: 镜头回正面全身远景锁定 (back to 0-2s framing), 角色完成 标志台词 #2 final lock; 0.3s 自然定格收尾。
 ```
 
-### 5-row dialogue table (same slots as v8, retimed)
+#### 5-row dialogue table (same slots as v8, retimed)
 
 | # | 台词 | 用途 | 时段 | 情绪基调 |
 |---|---|---|---|---|
@@ -7664,13 +7783,13 @@ v9 explicitly reverses three v8 design points:
 
 **Why slots 4 + 5 are stretched.** v8 had slot #4 in 3-5s and #5 in 5-7s (2s each). v9 gives them 5s each (5-10s, 10-15s) — more breathing room for the slow-orbit shot to register the body-side and back-side body shapes while the actor is mid-line, so each 标志台词 reads as continuous performance rather than a sliced clip.
 
-### 2s truncate-compat — preserved unchanged
+#### 2s truncate-compat — preserved unchanged
 
 Slicing the first 2 seconds of a v9 source yields: **静态正面全身远景 + 角色说"一"+"二"** — *identical* output to v8's 2s slice. The downstream `ShotConcatBuilder._ffmpeg_concat` `_CONCAT_SEGMENT_S = 2.0` trim + `✂ 截到 2s` button (`_TRUNCATE_DURATION_S = 2.0`) both continue to land on frontal-full-body + voice-baseline content, byte-identical to v8.
 
 This means **no code change to ai_video_management.** The 2s contract is what the webapp depends on; the 2-15s rest of the clip is upload material that webapp doesn't touch.
 
-### 镜头 field — explicit single-take continuous motion
+#### 镜头 field — explicit single-take continuous motion
 
 ```
 镜头: 单镜头连续运镜 single continuous take · 9:16 竖屏 · 4 段连续运动 (2-5s 缓慢推近 + 5-13s 缓慢顺时针 360° 环绕 + 同段 5-13s 缓慢拉远 + 13-15s 锁定收尾) · 全程匀速 / 无方向反转 / 无定格中断 / 无 cut / transition / fade
@@ -7678,7 +7797,7 @@ This means **no code change to ai_video_management.** The 2s contract is what th
 
 The positive declaration enumerates the moves and explicitly calls out "no reversal / no stop-and-go" — the design lessons learned from v6's rejection.
 
-### Negatives (Kling-validator-aware, v9 update)
+#### Negatives (Kling-validator-aware, v9 update)
 
 Replace v8's "no motion" negatives with v9's "slow continuous motion only" negatives:
 
@@ -7696,7 +7815,7 @@ Replace v8's "no motion" negatives with v9's "slow continuous motion only" negat
 Dropped from v8: `不要 任何镜头运动` (v9 reintroduces controlled motion).
 Dropped from v8: `不要 角色转身` is kept (still want camera-orbit, not character-turn-in-place).
 
-### Locked-fields list (v9)
+#### Locked-fields list (v9)
 
 - `时长` = 15s (byte-identical)
 - `镜头` = 单镜头连续运镜 single continuous take, 5-phase template (byte-identical, structural)
@@ -7705,7 +7824,7 @@ Dropped from v8: `不要 角色转身` is kept (still want camera-orbit, not cha
 - `台词 2-15s` = per-character (from bible `## 标志台词或口头禅` slots #1 + #2)
 - All other locked fields (场景, 光线 / 色调, 渲染样式, 比例, video-specific negatives) byte-identical.
 
-## Out of scope
+### Out of scope
 
 - ai_video_management webapp code — **no code change**. 2s trim path slices the same byte-identical first 2s; concat reel still works.
 - Existing rendered mp4s (v8 7s static, v6 15s casting reel, older). User re-renders to v9 15s at their discretion.
@@ -7713,7 +7832,7 @@ Dropped from v8: `不要 角色转身` is kept (still want camera-orbit, not cha
 - Shot prompts (rule #12.6) — only reference `{ref_cN_xxx}` placeholders, no embedded duration text.
 - Future: if Kling rejects v9 uploads, retreat to v9.1 (drop the orbit phase, keep push-in only) or back to v8. v9 is the user-directed reversal of v8's over-correction; empirical validation pending after first 10 character renders.
 
-## Touch list
+### Touch list
 
 - `.claude/agent_refs/project/ai_video.md` rule #12.5 v8 → v9 — bump 时长 7s → 15s, replace 5-segment static beats with 5-segment slow-motion beats, replace 镜头 field with single-take continuous-motion declaration, retime dialogue table slot #3 (2-3s → 2-5s) + #4 (3-5s → 5-10s) + #5 (5-7s → 10-15s), swap negatives (drop no-camera-motion + no-cut bans, add slow-motion-only + no-reversal + no-stop-and-go bans), update 节奏 (= 缓慢连续运镜), append footer attribution `rev — follow-up 092 (v9 supersedes v8, user-directed reversal: re-enable slow camera motion to recover side/back reference + face close-up that v8 sacrificed) …`.
 - `specs/development/ai_video_management/user_input/revised_prompt.md` — header bump 092.
@@ -7723,16 +7842,18 @@ Dropped from v8: `不要 角色转身` is kept (still want camera-orbit, not cha
 - `specs/ai_video/mozun_chongsheng/changelog.md` — entry.
 - `ai_videos/mozun_chongsheng/characters/c{1..10}_*/c{N}_*.md` — patch via one-shot script (parallel to 091's `/tmp/patch_chars_v8.py`): v8 5-segment static → v9 5-segment slow-motion, 时长 7s → 15s, 镜头 line static-declaration → continuous-motion-declaration, negatives swap, 节奏 line update. Each character's existing bible 标志台词 #1 + #2 (the same lines plugged in by 088 → 091) stay in slots #4 + #5 with retimed slots (now 5-10s / 10-15s). User runs the script after reviewing this draft.
 
-## Status of v8 (follow-up 091)
+### Status of v8 (follow-up 091)
 
 091 marked SUPERSEDED at top with a one-line note pointing to 092. Kept on file as audit trail of the static-camera retreat that v9 reverses. The Kling validator concern from 091 is *not refuted* — it's reinterpreted: speed (not motion) was the cause. v9 tests the slow-motion hypothesis. If empirical evidence supports v8 (i.e., v9 also gets rejected), 091 stays the de-facto active spec and v9 is recorded as a tried-and-failed iteration.
 
+
 ---
 
-# Follow-up draft 093 — 2026-05-18
+## 093 — 2026-05-18 20:39:39 — character-views-and-audio-extract
+
 Add a new character-video aggregate operation: **extract 3 angle views (front / side / back) + the full audio track** from a character turntable mp4. Outputs land in a new `views/` subfolder next to the source. UI exposed as a per-tile button gated by character-folder path detection.
 
-## Why
+### Why
 
 Rule #12.5 v9 (per follow-up 092) renders the character turntable as a single 15s continuous-take video: 0-2s static frontal full-body (truncate-compat) + 2-5s slow dolly-in to medium close-up (face clear) + 5-13s slow clockwise 360° orbit + 13-15s settle. The video as a single asset is hard to use downstream — Seedance / Kling shot prompts that need a **side-body silhouette** or a **back-side reference** want a still image, not a 15s clip; voice-line tooling wants the audio track separately from the video. Today the user is screencap-scrubbing for these manually.
 
@@ -7744,9 +7865,9 @@ This feature automates the 3-still + audio extraction so the v9 turntable become
 
 Timestamps are anchored to v9's 5-phase camera path: the user explicitly designed the orbit window (5-13s = 8s for 360°) so the 1/4 and 1/2 marks of the orbit window are predictable angle landings.
 
-## Design
+### Design
 
-### Coordinate timing math
+#### Coordinate timing math
 
 Given v9's 15s schedule:
 - 0-2s static frontal (locked camera) — front pick anywhere in 0-2s; midpoint t=1.0s avoids the 0s discontinuity + the 2s motion-start handoff.
@@ -7763,7 +7884,7 @@ Three picks at t=1.0 / 7.0 / 9.0 cover the three orthogonal angles the user name
 
 **Why these timestamps are hard-coded against v9.** They are not arbitrary — they are the algebraic image of v9's 5-phase camera path. If the rule #12.5 schedule changes (e.g., a future v10 with a different orbit window), these constants must change too. The constants live in a domain value object next to a comment that names rule #12.5 v9 explicitly, so a future v10 rev knows where to look.
 
-### DDD+CQRS placement
+#### DDD+CQRS placement
 
 Per project layout rules (CLAUDE.md § Project rules / development.md):
 
@@ -7783,7 +7904,7 @@ Per project layout rules (CLAUDE.md § Project rules / development.md):
 - `apps/api/routes/character_video__route.py` — add `POST /api/extract-character-views` with `ExtractCharacterViewsBody{path: str}` Pydantic model. Maps the 6 named domain errors (Invalid / NotCharacterVideo / NotFound / FfmpegMissing / ViewExtractFailed / AudioExtractFailed) to `detail.kind` strings.
 - `apps/api/container.py` — add `character_view_extractor: Singleton[CharacterViewExtractor]`. Update `character_video_command` Factory to pass the new dependency.
 
-### UI exposure
+#### UI exposure
 
 **New api.ts function:** `extractCharacterViews(path: string): Promise<ExtractCharacterViewsResult>` + typescript types matching the Cdtos.
 
@@ -7794,7 +7915,7 @@ Per project layout rules (CLAUDE.md § Project rules / development.md):
 
 Toast feedback: `Extracted 3 views + audio from {filename} → views/` on success, `Extract views failed: {kind}` on error.
 
-### File-naming examples
+#### File-naming examples
 
 For `ai_videos/mozun_chongsheng/characters/c1_沧冥/c1_沧冥.mp4`:
 - `ai_videos/mozun_chongsheng/characters/c1_沧冥/views/c1_沧冥_front.png` (t=1.0s)
@@ -7804,7 +7925,7 @@ For `ai_videos/mozun_chongsheng/characters/c1_沧冥/c1_沧冥.mp4`:
 
 Prefix is the parent dir name `c1_沧冥`, NOT the mp4 stem. If the user later renders a `c1_沧冥_take2.mp4` alongside, re-extracting overwrites the same 4 outputs (so `views/` always reflects the LATEST extraction in the folder, single source of truth).
 
-### Idempotency + cleanup
+#### Idempotency + cleanup
 
 On every extract:
 1. `views/` mkdir (parents=True, exist_ok=True).
@@ -7813,11 +7934,11 @@ On every extract:
 4. Run 1 ffmpeg audio-extract subprocess call: `-i {src} -vn -c:a libmp3lame -q:a 4 {out}.mp3`. No `-t` cap — extracts the full source audio (15s for v9 sources, but works for any duration).
 5. Failures (per-view or audio) accumulate in a `failures` tuple but do not raise unless **all 4 outputs fail** (parallels `FrameExtractor`'s "raise if no frames produced" semantics).
 
-### Tests
+#### Tests
 
 The existing test suite is light on character-video coverage. No new tests in scope for this turn — boot-smoke verifies route registration, and the existing pattern of relying on integration smoke + manual UI test holds. If a future bug demands regression coverage, a fixture mp4 + unit test for `CharacterViewExtractor` lands then.
 
-## Out of scope
+### Out of scope
 
 - No changes to v9 rule #12.5 / character file schema — this is a downstream-of-v9 webapp tool, not a spec change.
 - No changes to the existing scene-frame extractor (`FrameExtractor` + `FrameCommand`). Scene videos keep the 8-frame schedule.
@@ -7827,7 +7948,7 @@ The existing test suite is light on character-video coverage. No new tests in sc
 - No .wav option (deferred — .mp3 is what the user picked).
 - No agent_refs / spec changes — this is project-scoped, not a cross-cutting rule.
 
-## Touch list
+### Touch list
 
 - `projects/ai_video_management/libs/domain/value_objects/character_video__valueobject.py` (NEW)
 - `projects/ai_video_management/libs/infrastructure/errors/character_video__error.py` — add `ViewExtractFailed`, `AudioExtractFailed`.
@@ -7843,18 +7964,20 @@ The existing test suite is light on character-video coverage. No new tests in sc
 - `specs/development/ai_video_management/user_input/revised_prompt.md` — header bump 093.
 - `specs/development/ai_video_management/changelog.md` — entry for 093.
 
+
 ---
 
-# Follow-up draft 094 — 2026-05-18
+## 094 — 2026-05-18 22:24:55 — actor-grid-look-filter
+
 Add 外貌气质 (`look` attribute) as the 5th filter dropdown on the actor grid page, parallel to the existing 民族 / 性别 / 年龄段 / 分配状态 filters.
 
-## Why
+### Why
 
 The actor tile already displays the actor's `look` value as a chip (e.g., `sinister` / `seductive` / `cunning`), and `look` is one of the user-selected attributes during actor generation. Users browsing the pool naturally want to filter to "show me all 阴邪 actors" the same way they filter by 民族 / 性别 / 年龄段. The filter row is the established pattern; the new dropdown is mechanically parallel.
 
 The `look` attribute has special weight in actor generation per follow-up 077 (look-dominates-feature-bias) + follow-up 079 (look-led-archetype-classification), so a per-look filter is also useful for QC ("did the sinister actors actually render as 阴邪?") and for batch operations (selecting all 阴邪 actors to assign to a particular character archetype).
 
-## Design
+### Design
 
 Frontend-only change in `apps/ui/src/components/ActorGrid.tsx`:
 
@@ -7865,36 +7988,38 @@ Frontend-only change in `apps/ui/src/components/ActorGrid.tsx`:
 
 No backend changes. No API changes. No new types. `actor.look` is already in `ActorInfo` per `apps/ui/src/api.ts:166` and the 13 canonical values are already in `ATTR_OPTIONS.look` per `api.ts:328`.
 
-## Out of scope
+### Out of scope
 
 - No re-ordering of filter dropdowns; the new one goes at the end of the row.
 - No grouping of look values into "physical appearance" vs "character archetype" subgroups (the original 077/079 distinction). The flat 13-item list matches the existing dropdown UX. A future polish could collapse into 2 `<optgroup>` if the list grows.
 - No localization of option labels (slugs in English). Existing dropdowns use the same slug-only pattern; changing one would create UX inconsistency.
 
-## Touch list
+### Touch list
 
 - `projects/ai_video_management/apps/ui/src/components/ActorGrid.tsx` — add `filterLook` state, predicate, page-reset dep, dropdown.
 - `specs/development/ai_video_management/user_input/revised_prompt.md` — header bump.
 - `specs/development/ai_video_management/changelog.md` — append 094 entry.
 
+
 ---
 
-# Follow-up draft 095 — 2026-05-18
+## 095 — 2026-05-18 22:30:27 — gender-bleed-fix-and-actor-tile-redirect
+
 Two unrelated fixes bundled because both touch the actor pipeline UX:
 
 1. **Bug fix**: batch-generating men yields ~half women. Root cause is that the 7 Chinese descriptor pools (`_EYES_ZH` / `_NOSE_ZH` / `_LIPS_ZH` / `_BROW_ZH` / `_CONTOUR_ZH` / `_SKIN_ZH` / `_BODY_ZH` in `actor__chinese_prompt.py`) contain entries with explicit gender markers — `少女`, `美人`, `闺秀`, `妩媚`, `妖艳`, `婴儿肥`, `邻家女孩`, `致命诱惑` (female-only) and `男性化`, `邻家男孩`, `阳光男孩`, `健壮型男`, `长腿欧巴`, `腹肌分明`, `魁梧` (male-only) — but `_pick_biased` and `_resolve_batch_picks` draw uniformly across the whole pool regardless of `attrs.gender`. With ~8-10 female-tagged entries per 22-entry pool, a male prompt has ~30-45% chance per pool of pulling a female descriptor; cumulative across 7 attribute draws the probability of at least one cross-gender leak is >95%, and even one or two feminine descriptors in 7 attribute lines is enough to push Kling toward female rendering.
 
 2. **UX change**: clicking an actor tile in the grid view should redirect to the actor main page (`ai_videos/_actors/{actor_id}/{actor_id}.md`, which Reader renders via `ActorView`), not to the raw jpg viewer. The grid view's purpose is browsing the pool; the natural drill-down is the per-actor sidecar page (with bible, assignments, delete button) — the jpg is already shown as the tile thumbnail.
 
-## Why
+### Why
 
 For (1): users running batch generation pre-select the gender attribute. The current bug breaks that user-supplied filter at the prompt level. The Kling model gets a structured prompt that says `性别：男性，眼睛：[female marker]，嘴巴：[female marker]，体型：[female marker]` — the model resolves the contradiction by leaning toward the dominant signal (the descriptive markers, since there are 7 of them vs 1 gender label). Filtering pools by gender at pick time keeps the structured prompt internally consistent.
 
 For (2): the existing `navigate("/file/" + imagePath)` shows the jpg in the file viewer. The actor's `actor_NNNN.md` carries the full attribute table + casting assignments + delete button via `ActorView`. The md is the real "actor page"; the jpg is just a thumbnail. Users browsing the grid want to drill into the actor record, not stare at a bigger thumbnail.
 
-## Design
+### Design
 
-### Fix 1 — gender-filtered pool draws
+#### Fix 1 — gender-filtered pool draws
 
 Approach: keep the pool tuple type unchanged (`tuple[str, ...]`), add a runtime gender filter that strips entries whose descriptor contains a cross-gender marker. The marker lists are kept small and explicit (substring match on terms that *unambiguously* imply gender identity, not physical attributes that could apply to either gender).
 
@@ -7955,7 +8080,7 @@ Test plan (manual, post-deploy):
 - Same for `gender=female`: verify ZERO of 男性化 / 健壮型男 / 长腿欧巴.
 - After fix, the rendered actor jpgs from a male batch should be >90% male (was ~50% per user report). Some residual feminizing is possible because non-marker descriptors can still bias the model — that's a follow-up if needed.
 
-### Fix 2 — tile redirect to actor md
+#### Fix 2 — tile redirect to actor md
 
 Single-line change in `ActorGrid.tsx:107`:
 
@@ -7968,14 +8093,14 @@ Reader (line 216) already detects `^ai_videos/_actors/actor_[^/]+/actor_[^/]+\.m
 
 The `imagePath` is no longer used by `onTileClick`; the existing closure signature stays compatible by ignoring the second argument at the call site. (Could remove `imagePath` from the closure for a cleaner signature, but that's a minor refactor not in scope.)
 
-## Out of scope
+### Out of scope
 
 - Not retagging every pool entry with explicit gender metadata (heavier refactor — 154 entries × 2 attributes). Substring marker filtering is the pragmatic 80/20 fix.
 - Not addressing residual feminizing from non-marker descriptors (e.g., a male prompt could still draw "高颧骨, 立体感强, 模特脸" which is gender-neutral on paper but Kling might still skew female with). If empirical Kling output remains skewed >10% after this fix, options are: (a) expand marker lists, (b) introduce gender-specific sub-pools per attribute, (c) strengthen the prompt-level gender signal (e.g., repeat `性别：男性` later in the prompt).
 - Not touching `_VARIANCE_*` English pools in `actor__writer.py` — those are already gendered (`_VARIANCE_FACE_FEATURES_MALE` / `_VARIANCE_FACE_FEATURES_FEMALE`). The bug is only in the new Chinese structured-prompt path (per follow-up 075).
 - Tile thumbnail behavior unchanged — only the click-target changes. Users still see the jpg as the tile preview.
 
-## Touch list
+### Touch list
 
 - `projects/ai_video_management/libs/infrastructure/writers/actor__chinese_prompt.py` — add 2 marker tuples + `_filter_pool_by_gender` helper; update `build_face_prompt` + `build_body_prompt` + `_resolve_batch_picks` to filter pools.
 - `projects/ai_video_management/libs/infrastructure/writers/actor__writer.py` — pass `gender_slug=attrs.gender` to `_resolve_batch_picks`.
@@ -7983,12 +8108,14 @@ The `imagePath` is no longer used by `onTileClick`; the existing closure signatu
 - `specs/development/ai_video_management/user_input/revised_prompt.md` — header bump.
 - `specs/development/ai_video_management/changelog.md` — entry.
 
+
 ---
 
-# Follow-up draft 096 — 2026-05-18
+## 096 — 2026-05-18 22:40:47 — character-ref-7s-locked-framing-3view-extract
+
 Re-design character reference turntable as **7s locked-framing single-take with extraction-ready angle landings**. Rule #12.5 v9 → v10 (supersedes v9): 时长 15s → 7s, drop the dolly-in to MCU (no framing change anywhere in the shot), keep slow continuous orbit but trimmed to 180° + bookend statics. The new 7s clip is designed bottom-up around the **extract-3-views + audio** pipeline introduced in follow-up 093: every angle pick lands at IDENTICAL medium-full framing so the 3 extracted png stills (front/side/back) form a clean consistent character-sheet, suitable as image-to-video reference for downstream Kling/Seedream shots.
 
-## Why
+### Why
 
 Two compounding problems with v9 (15s slow push-in + slow orbit):
 
@@ -8000,9 +8127,9 @@ User instruction this turn: 「我需要 character 视频生成后能可靠地�
 
 User selected (via clarifying question this turn): **locked medium-full framing throughout** — accept that v10 drops v9's dedicated face MCU window in exchange for 3 angle stills at identical framing. Face is still recognizable at medium-full (head occupies ~1/5 of frame height, ~720px tall at 9:16 1080p), just not a true close-up.
 
-## Design — v10 7s locked-framing single-take
+### Design — v10 7s locked-framing single-take
 
-### Continuous single-take camera path
+#### Continuous single-take camera path
 
 | Phase | Time | Camera | Framing throughout |
 |---|---|---|---|
@@ -8015,7 +8142,7 @@ User selected (via clarifying question this turn): **locked medium-full framing 
 - **Locked camera distance.** No dolly, no zoom, no parallax change. The orbit radius is constant. This is the load-bearing rule for v10 — it's what makes the 3 extracted angle stills come out at IDENTICAL framing.
 - **45°/s orbit speed cap preserved.** Same speed as v9, so the Kling validator hypothesis (slow continuous motion passes; only fast / direction-reversing motion is judged as cut) is unchanged.
 
-### 7s timed beats (5 segments — same slot count as v8/v9, retimed)
+#### 7s timed beats (5 segments — same slot count as v8/v9, retimed)
 
 ```
 0-1s: 静态正面全身 medium-full (锁定机位), 角色站定, 自然呼吸, 眼神看镜; 说"一"。
@@ -8026,7 +8153,7 @@ User selected (via clarifying question this turn): **locked medium-full framing 
 6-7s: 镜头锁定 180° (背面 medium-full), 角色完成 标志台词 #2 final lock; 自然定格收尾。
 ```
 
-### Angle landings (extract-ready timestamps)
+#### Angle landings (extract-ready timestamps)
 
 The `CANONICAL_VIEWS` value object in `libs/domain/value_objects/character_video__valueobject.py` (introduced by follow-up 093) currently hardcodes v9's timestamps `(1.0 front, 7.0 side, 9.0 back)`. v10 changes these to:
 
@@ -8041,7 +8168,7 @@ The `CANONICAL_VIEWS` value object in `libs/domain/value_objects/character_video
 
 **Why t=4.0s for side, not t=4.5s.** Same logic — pick at the clean integer half-second mark closest to 90°. ((4.0-2.0)×45 = 90° exactly.)
 
-### 5-row dialogue table (v10 — same 5 slots as v8/v9, retimed shorter)
+#### 5-row dialogue table (v10 — same 5 slots as v8/v9, retimed shorter)
 
 | # | 台词 | 用途 | 时段 | 情绪基调 |
 |---|---|---|---|---|
@@ -8053,19 +8180,19 @@ The `CANONICAL_VIEWS` value object in `libs/domain/value_objects/character_video
 
 **Why slots 4 + 5 are 2s each (vs v9's 5s each).** v9 stretched these slots over the long orbit window to let body-side + back-side silhouettes register while actor mid-line. v10's 4s orbit is short enough that 2s/2s is comfortable for one bible line each — slot #4 covers the orbit through 90° (side reveal mid-line), slot #5 covers the orbit through 180° + back lock (back reveal + final emotional read).
 
-### 2s truncate-compat — preserved unchanged
+#### 2s truncate-compat — preserved unchanged
 
 Slicing the first 2 seconds of a v10 source yields: **静态正面 medium-full + 角色说"一"+"二"** — same content as v8/v9 in the 0-2s window. Framing tightness differs from v8/v9 (v10 is medium-full ~40mm; v8/v9 were wide ~35mm), but the 2s segment remains: (a) static, (b) frontal, (c) full-body, (d) carries "一+二" voice baseline byte-identical across characters.
 
 The downstream `ShotConcatBuilder._ffmpeg_concat` (`_CONCAT_SEGMENT_S = 2.0`) and `✂ 截到 2s` button (`_TRUNCATE_DURATION_S = 2.0`) both continue to land on frontal-full-body + voice-baseline content. **No code change needed to the truncate path.**
 
-### 镜头 field — locked-distance single-take orbit
+#### 镜头 field — locked-distance single-take orbit
 
 ```
 镜头: 单镜头连续运镜 single continuous take · 9:16 竖屏 · 3 阶段 (0-2s 锁定机位 正面 medium-full + 2-6s 缓慢顺时针 180° orbit ≤ 45°/s 同距离同 framing 无 dolly + 6-7s 锁定机位 背面 medium-full) · 全程匀速 / 单方向 / 无方向反转 / 无 dolly / 无 zoom / 无 cut / transition / fade · 头顶到脚趾完整入画 throughout, 头部约占画面高度 1/5 throughout
 ```
 
-### Negatives (v10 — adds locked-distance bans on top of v9's slow-motion-only bans)
+#### Negatives (v10 — adds locked-distance bans on top of v9's slow-motion-only bans)
 
 Same 11-item ban list as v9, plus:
 - `不要 任何 dolly / zoom / 推拉镜头 (相机距角色的距离全程锁定不变, 仅旋转 — 抽帧时 front / side / back 三张 png 必须同 framing)`
@@ -8073,7 +8200,7 @@ Same 11-item ban list as v9, plus:
 
 Dropped from v9: `2-5s 缓慢推近` motion segment (no more dolly-in to MCU). Dropped from v9: `5-13s 同步缓慢 reverse-dolly 拉远` (no more reverse-dolly).
 
-### Locked-fields list (v10)
+#### Locked-fields list (v10)
 
 - `时长` = 7s (was 15s in v9, was 7s in v8, was 15s in v6, was 4s in v5, was 2.9s in v4)
 - `镜头` = 单镜头连续运镜 single continuous take, 3-phase locked-framing template (NEW v10 — was 5-phase mixed-framing in v9)
@@ -8082,7 +8209,7 @@ Dropped from v9: `2-5s 缓慢推近` motion segment (no more dolly-in to MCU). D
 - `台词 2-7s` = per-character (from bible `## 标志台词或口头禅` slots #1 + #2)
 - All other locked fields (场景, 光线 / 色调, 渲染样式, 比例, video-specific negatives 11-item base) byte-identical to v9.
 
-### CANONICAL_VIEWS code change
+#### CANONICAL_VIEWS code change
 
 File: `projects/ai_video_management/libs/domain/value_objects/character_video__valueobject.py`
 
@@ -8106,7 +8233,7 @@ CANONICAL_VIEWS: tuple[CharacterViewSpec, ...] = (
 
 Module docstring updated to reference v10's 3-phase camera path instead of v9's 5-phase. The `front` constant is unchanged (t=1.0s is mid 0-2s static intro in both v9 and v10).
 
-## Risks + retreat paths
+### Risks + retreat paths
 
 1. **Kling validator may still reject 7s slow-orbit clips.** Same hypothesis as v9: slow continuous single-direction motion passes; only fast / direction-reversing motion is judged as cut. v10's orbit is at the same 45°/s speed cap as v9 — if v9 passes, v10 should pass. If empirical data shows v10 rejected, retreat paths:
    - (a) v10.1: drop the orbit entirely, ship 7s of static front lock (= v8 with byte-identical 0-2s + per-character 标志台词 in 2-7s, but loses side/back reference). The extract pipeline then only gets the front view + audio reliably; side/back fall back to "extract failed" status.
@@ -8116,7 +8243,7 @@ Module docstring updated to reference v10's 3-phase camera path instead of v9's 
 
 3. **Pre-v10 mp4s already rendered in `ai_videos/mozun_chongsheng/characters/c*` won't extract cleanly with the new t=4.0s / t=6.0s timestamps.** The CANONICAL_VIEWS change is a hard cut — old v9 mp4s extracted post-fix would land side at t=4.0s (still in the dolly-in window, not at any clean angle) and back at t=6.0s (also pre-orbit-arrival in v9's schedule). Mitigation: users re-render character refs to v10 before extracting. The webapp's extract button returns the same 200 / `views=[…]` shape for old + new sources; only the visual quality of the 3 stills differs. Documented in the changelog so users know to re-render after this follow-up ships.
 
-## Out of scope
+### Out of scope
 
 - No `agent_team` orchestrator changes — this is a project-scoped fix to the character ref schema + the extract value object timestamps.
 - No new endpoint / Cdto / route changes — follow-up 093's `POST /api/extract-character-views` route + value object plumbing already exist. v10 only changes the 3 timestamp constants inside the value object.
@@ -8125,29 +8252,31 @@ Module docstring updated to reference v10's 3-phase camera path instead of v9's 
 - No test changes — the existing extract pipeline has integration smoke + manual UI test only (per 093 "no new tests in scope").
 - No 0-2s segment change — byte-identical to v8 + v9 (still 一/二 + static frontal + medium-full framing now instead of wide). This is intentional: the 2s truncate-compat contract is preserved.
 
-## Touch list
+### Touch list
 
 - `.claude/agent_refs/project/ai_video.md` rule #12.5 v9 → v10: replace v9 design rationale + 5-phase schedule + dialogue table + negatives + locked-fields block. Demote v9 to archive footer attribution alongside v8/v6/v5/v4. Add v10 design rationale + 3-phase schedule + retimed dialogue table + 2 new negatives.
 - `projects/ai_video_management/libs/domain/value_objects/character_video__valueobject.py`: update `CANONICAL_VIEWS` tuple side timestamp 7.0 → 4.0, back timestamp 9.0 → 6.0; update module docstring to reference v10's 3-phase camera path.
 - `specs/development/ai_video_management/user_input/revised_prompt.md`: header bump 096.
 - `specs/development/ai_video_management/changelog.md`: append 096 entry with explicit "supersedes v9" + risk acknowledgment + retreat-path notes.
 
-## Status of v9 (follow-up 092)
+### Status of v9 (follow-up 092)
 
 092 supersedes v8 (091). 096 (v10) supersedes 092 (v9). v9 stays on file as audit trail of the 15s slow-push-in-and-orbit attempt; user empirical feedback (this turn) is that the variable framing across the dolly window made the 3-view extract pipeline produce inconsistent stills — locked-distance orbit is the chosen reversal.
 
+
 ---
 
-# Follow-up draft 097 — 2026-05-18
+## 097 — 2026-05-18 23:57:49 — extract-views-button-on-direct-mp4-page
+
 Add the 🖼 "提取三视图+音频" button to the direct-video-view page in `Reader.tsx`, not just inside `SiblingMedia.tsx`. Follow-up 093 wired the button on per-tile thumbnails inside the SiblingMedia panel (which only renders below md / shot-pair / image-ref files), but a user navigating directly to an mp4 (e.g., clicking a video filename in the tree) sees the inline `<video controls>` block at `Reader.tsx:261-286` which only carries 🎞 Extract Frames / 📦 Archive / 🗑 Delete — no 🖼 button.
 
-## Why
+### Why
 
 User this turn: "make the button appear on each mp4 page please". Discovered when the user re-rendered v10 character turntable mp4s and opened one directly via the file tree — couldn't find the extract-3-views button. The button does exist, but only on the SiblingMedia panel (the sibling-files strip shown below a markdown file's content), so the user had to navigate to the character `.md` file first and scroll past the markdown to find it on a tile thumbnail. That extra navigation step defeats the point of having direct-mp4 navigation.
 
 The 🎞 Extract Frames button already lives in BOTH places (per follow-up 062 which added the direct-mp4 extract button alongside the sibling-panel version). Follow-up 093 only wired the new 🖼 button to the sibling panel — this turn closes that asymmetry.
 
-## Design
+### Design
 
 Two-file change, parallels the 🎞 Extract Frames dual placement:
 
@@ -8165,7 +8294,7 @@ Toast wording mirrors SiblingMedia's behavior: success = `Extracted N views + au
 
 No new endpoint / route / Cdto / mapper changes — the wire-up already exists from follow-up 093. This is a pure frontend dual-placement parity fix.
 
-## Out of scope
+### Out of scope
 
 - No change to extract behavior, timestamps, or output file naming — all driven by `CANONICAL_VIEWS` value object (follow-up 093 + 096).
 - No change to SiblingMedia button (still renders on each tile in the sibling panel; this follow-up just adds a SECOND placement on the direct-video-view page).
@@ -8173,19 +8302,21 @@ No new endpoint / route / Cdto / mapper changes — the wire-up already exists f
 - No batch-extract-all-character-mp4s button at the character-folder level (deferred per 093 "out of scope").
 - No tooltip rewording — the SiblingMedia button's title still says "v9 character turntable (15s slow-orbit)" which is stale post-096; that's a separate cleanup not bundled here to keep the diff focused on the dual-placement parity.
 
-## Touch list
+### Touch list
 
 - `projects/ai_video_management/apps/ui/src/components/SiblingMedia.tsx` — promote `isCharacterVideoPath` (and optionally `CHARACTER_VIDEO_PATH_RE`) from module-private to named export. Single-line `function` → `export function` change.
 - `projects/ai_video_management/apps/ui/src/components/Reader.tsx` — add import + state + handler + label + button-render-block + update mediaActionsBusy.
 - `specs/development/ai_video_management/user_input/revised_prompt.md` — header bump 097.
 - `specs/development/ai_video_management/changelog.md` — append 097 entry.
 
+
 ---
 
-# Follow-up draft 098 — 2026-05-19
+## 098 — 2026-05-19 00:06:05 — character-ref-v10.2-static-landings
+
 Rule #12.5 v10 → v10.2 — replace v10's single 4s continuous orbit with **3 static landings + 2 short motion bridges**, after empirical evidence that the video model under-rotates v10's continuous orbit (covers ~90° in 4 seconds instead of 180°). Each angle pick now lands at a guaranteed-static moment regardless of how the model paces the orbit between landings. Front/back extract timestamps unchanged; side moves t=4.0s → t=3.5s.
 
-## Why
+### Why
 
 User report this turn after rendering v10 character mp4s and clicking 🖼 extract:
 > "the side is still almost front, the back picture actually shows side ... the video does not have a backview in it, I think it start to move around 4~5s so the last frame in the video is still side view"
@@ -8198,9 +8329,9 @@ v10's "single continuous slow orbit" gave the model too much latitude. v10.2 tak
 
 This is the retreat path noted as **v10.2** in follow-up 096's risk acknowledgment.
 
-## Design — v10.2 5-phase locked-framing single-take
+### Design — v10.2 5-phase locked-framing single-take
 
-### Continuous single-take camera path
+#### Continuous single-take camera path
 
 | Phase | Time | Camera | Framing |
 |---|---|---|---|
@@ -8216,7 +8347,7 @@ This is the retreat path noted as **v10.2** in follow-up 096's risk acknowledgme
 - **Each motion bridge can be paced however the model likes.** If it goes 90°/s for half a second and then holds, fine. If it eases gently across the full second, fine. The static landing at the end of each bridge is the contract; the in-between path is the model's choice.
 - **45°/s "preferred" orbit speed** retained in the prompt for negatives sanity (Kling validator hypothesis: slow continuous motion ≤ 45°/s passes; fast 720°/s whip-pan fails). But the user-visible math is now anchored on landings, not speeds.
 
-### Angle-landing timestamps (extract-ready)
+#### Angle-landing timestamps (extract-ready)
 
 The `CANONICAL_VIEWS` value object in `libs/domain/value_objects/character_video__valueobject.py` updated:
 
@@ -8228,7 +8359,7 @@ The `CANONICAL_VIEWS` value object in `libs/domain/value_objects/character_video
 
 Front and back keep their v10 timestamps because in v10.2 those still land at clean static moments. Only side moves 4.0 → 3.5 because the 1s side static window (3-4s) doesn't contain t=4.0s — t=3.5s is the mid-window pick.
 
-### 7s timed beats (5 segments — same slot count as v8/v9/v10)
+#### 7s timed beats (5 segments — same slot count as v8/v9/v10)
 
 ```
 0-1s: 锁定机位 正面 medium-full。角色站定, 自然呼吸, 眼神看镜；说"一"。
@@ -8239,7 +8370,7 @@ Front and back keep their v10 timestamps because in v10.2 those still land at cl
 5-7s: 锁定机位 背面 180° medium-full (与 0-2s 同 framing 仅角度差 180°, settle)。说**{本角色 bible "标志台词" 第 2 句}** (catch + 情绪 peak + final lock); 自然定格收尾。
 ```
 
-### 5-row dialogue table (preserved structure, slot timings byte-identical to v10)
+#### 5-row dialogue table (preserved structure, slot timings byte-identical to v10)
 
 | # | 台词 | 用途 | 时段 | 情绪基调 |
 |---|---|---|---|---|
@@ -8251,11 +8382,11 @@ Front and back keep their v10 timestamps because in v10.2 those still land at cl
 
 Slot 4 spans the 3-4s side-static + 4-5s motion-to-back transition (the actor delivers slot #1 continuously across the static-side hold and the brief motion bridge). Slot 5 fully sits inside the 5-7s back-static.
 
-### 2s truncate-compat — preserved unchanged
+#### 2s truncate-compat — preserved unchanged
 
 0-2s segment byte-identical across v8 / v9 / v10 / v10.2: static frontal + "一" + "二" at medium-full framing. Downstream `_CONCAT_SEGMENT_S = 2.0` truncate output unchanged.
 
-### Negatives swap (v10 → v10.2)
+#### Negatives swap (v10 → v10.2)
 
 DROP from v10:
 - `不要 mid-shot freeze (除 0-2s 首段 + 6-7s 尾段 byte-identical lock 外, 2-6s 段全程匀速运动)` — v10.2 explicitly INTRODUCES mid-shot statics at 3-4s and 5-7s. This v10 ban is the hardcoded conflict.
@@ -8268,14 +8399,14 @@ KEEP all other v10 negatives byte-identical (no fast motion, no direction revers
 
 The "no mid-shot freeze" ban removal is the load-bearing change. Kling validator's prior rejection of v6 mentioned "cuts or transitions" — static-to-motion-to-static transitions within a single take are NOT cuts (no scene change, same character, same studio, continuous timecode). The model just decelerates to zero and accelerates from zero. Speed at boundary = 0 means no motion blur, which character detector benefits from. **Hypothesis**: v10.2's bookended motion segments are categorically different from v6's whip-pans; if v10 passed, v10.2 should pass.
 
-### Risk acknowledgment (v10.2 retreat paths)
+#### Risk acknowledgment (v10.2 retreat paths)
 
 If Kling validator rejects v10.2 uploads:
 - **v10.3**: drop one of the two motion bridges. Schedule becomes 0-2s static front + 2-3s motion 0° → 90° + 3-7s static side (4s). Loses back angle — extract pipeline degrades to front + side reliable.
 - **v10.4**: drop both motion bridges, ship 7s static front (= v8 with v10.2 negatives). Loses side AND back — extract pipeline degrades to front-only reliable.
 - **v11+ multi-clip path**: render front / side / back as 3 separate 2-3s clips and concatenate at the file-system level. Most expensive, most bulletproof. Reserved for if all single-clip variants fail.
 
-### CANONICAL_VIEWS code change
+#### CANONICAL_VIEWS code change
 
 File: `projects/ai_video_management/libs/domain/value_objects/character_video__valueobject.py`
 
@@ -8299,7 +8430,7 @@ CANONICAL_VIEWS: tuple[CharacterViewSpec, ...] = (
 
 Module docstring updated to reference v10.2's 5-phase camera path (3 static + 2 motion) and re-derive the timestamps from the new schedule.
 
-## Out of scope
+### Out of scope
 
 - No frontend changes — 🖼 button (097), api wire-up (093), and `views/` folder convention all work unchanged. Only the value-object constant + the rule changes.
 - No new endpoint / Cdto / mapper changes.
@@ -8307,7 +8438,7 @@ Module docstring updated to reference v10.2's 5-phase camera path (3 static + 2 
 - No sibling mozun_chongsheng follow-up auto-spawned in this turn (deferred to immediate next turn — see Touch list). User runs the patch script after reviewing this draft, OR I run it inline this turn alongside the rule patch.
 - No re-render of existing v10 mp4s. Users re-render at their discretion after the rule + value-object land. Existing v10 mp4s extracted with new (1.0, 3.5, 6.0) timestamps will land side picks at the (still mid-motion) 3.5s mark on v10 sources — minor improvement over t=4.0s on v10 sources but the back pick still lands in the motion tail.
 
-## Touch list
+### Touch list
 
 - `.claude/agent_refs/project/ai_video.md` rule #12.5 v10 → v10.2: swap 「3 阶段 (static + 4s 连续 orbit + back static)」 → 「5 阶段 (static + 1s motion + static + 1s motion + static)」 throughout the active spec section, prompt body code block, 设计原则 section, locked-fields list, negatives line (drop 1 ban + add 2 bans). Demote v10's 3-phase rationale to archive ("为什么 v10 的 4s 连续 orbit 不再生效"). Append footer rev attribution for v10.2.
 - `projects/ai_video_management/libs/domain/value_objects/character_video__valueobject.py`: side timestamp 4.0 → 3.5 + docstring rev for v10.2 5-phase camera path.
@@ -8319,18 +8450,20 @@ Module docstring updated to reference v10.2's 5-phase camera path (3 static + 2 
 - `specs/ai_video/mozun_chongsheng/user_input/revised_prompt.md`: header bump 027.
 - `specs/ai_video/mozun_chongsheng/changelog.md`: append 027 entry.
 
-## User-side action after this lands
+### User-side action after this lands
 
 1. Re-render the 10 character turntable mp4s at 7s with the v10.2 prompt. v10 renders (just done this morning) need to be invalidated — v10.2's 5-phase schedule produces different visual content from v10's 3-phase schedule.
 2. Upload one v10.2 mp4 to Kling for empirical validator test before re-rendering all 10. **Hypothesis**: bookended motion segments (decel to 0 at each landing) categorically different from v6 whip-pans; if v10 passed, v10.2 should pass. **Risk**: validator may flag the in-take static holds as "stop-and-go" — retreat paths v10.3 / v10.4 documented above.
 3. Click 🖼 button (now on both the direct-mp4 page AND the SiblingMedia tile per 097) — the 3 stills should now be at clean 0° / 90° / 180° angles with byte-identical medium-full framing.
 
+
 ---
 
-# Follow-up draft 099 — 2026-05-19
+## 099 — 2026-05-19 20:22:33 — character-ref-v11-simplified-prompt
+
 Rule #12.5 v10.2 → v11 — **simplified prompt language, camera motion described ONCE only**. Same 5-phase schedule as v10.2 (3 static landings at 0°/90°/180° + 2 short transitions) and same `CANONICAL_VIEWS` timestamps `(1.0, 3.5, 6.0)` — no code change. The change is purely in how the prompt talks to the video model: drop the multi-field redundancy (镜头 + 动作 + 节奏 + 负向 all repeating the motion path with different jargon), put motion in the 动作 timed beats only, use plain Chinese instead of "motion bridge" / "static landing" / "locked-framing" jargon.
 
-## Why
+### Why
 
 User report after re-rendering with v10.2 prompt:
 > "the camera did not move as you intended in the charactor prompt, I think kling got confused, you need to tell it in a more simple way and only once in the prompt. currently the it shart to turn around to side view at only about 5s."
@@ -8343,11 +8476,11 @@ Diagnosis: v10.2's prompt has the camera motion path described in **4 different 
 
 When a video model sees the same motion described 4 times with different framings, it doesn't trust any single specification — it averages, and tends to under-commit to motion. Kling specifically is biased toward static front-facing content in short clips, so when the prompt is ambiguous about timing it defaults to "keep the character static for most of the clip, do brief motion near the end." User observation that motion starts at ~5s (3 seconds past v10.2 spec's 2s start) is consistent with the model averaging across the 4 redundant descriptions and discounting the precise timing.
 
-## Design — v11 simplified prompt
+### Design — v11 simplified prompt
 
 Same schedule as v10.2. Same `CANONICAL_VIEWS` timestamps. **Only the prompt rendering changes.**
 
-### Field consolidation
+#### Field consolidation
 
 | Field | v10.2 content | v11 content |
 |---|---|---|
@@ -8356,7 +8489,7 @@ Same schedule as v10.2. Same `CANONICAL_VIEWS` timestamps. **Only the prompt ren
 | 节奏 | "锁定 framing 5-phase 单 take, 3 static landings (0-2s / 3-4s / 5-7s) + 2 motion bridges (2-3s / 4-5s 各 1s)" — REPEATS the motion path | "单 take 7s, 角色站立不动只说话, 镜头按动作 timed beats 旋转 + 停顿" — minimal, no path repetition |
 | 负向 | 14 items with qualifier paragraphs (`不要 motion 跨越目标角度 (1s motion bridge 必须精确终止在 90° (t=3s)...)`, `不要 静态段内继续微调机位 (3-4s 段 + 5-7s 段必须完全静止...)`, etc.) | 10 simple bans, no qualifier paragraphs — `不要 dolly / zoom / 距离变化 / framing 变化 / 角色转身 / 走动 / cut / transition / fade / 超过 7s` |
 
-### New v11 prompt body schema
+#### New v11 prompt body schema
 
 ```text
 {中文名} · {身份} — 角色 reference 7s 单 take
@@ -8400,29 +8533,29 @@ Key wording principles:
 - **Dialogue + camera motion can co-occur in 动作 beats.** Beat 3-4s says "镜头停在 X" AND "角色说 Y" — both happen together, no separate split.
 - **Critical timing markers kept inline.** "必须在 2.0s 前说完" stays in beat 0-2s; 标志台词 references stay in beats 5-7s. These are loadbearing for downstream truncate + voice baseline contracts.
 
-### Hypothesis
+#### Hypothesis
 
 With camera motion described ONCE and in plain Chinese, the model should follow the 5 timed beats more literally. v10.2's failure mode (motion delayed to ~5s) was the model averaging across 4 conflicting descriptions; v11 gives it ONE description to follow.
 
-### Risk acknowledgment
+#### Risk acknowledgment
 
 - **The model may still under-commit to motion.** If v11 also has motion starting late (≥3s), the issue isn't prompt redundancy but a fundamental bias in the model toward static front-facing content. Retreat options:
   - **v12**: shift the schedule earlier, accepting a tighter 0-1s static front (loses 0-2s truncate-compat byte-identical contract). 0-1s static + 1-3s motion + 3-4s static side + 4-5s motion + 5-7s static back. CANONICAL_VIEWS would change to (0.5, 3.5, 6.0).
   - **v13 multi-clip**: render front / side / back as 3 separate clips and concatenate at file-system level. Most expensive but bypasses the model's single-clip timing bias entirely. Each clip is a static shot — no motion required.
 - **Bare-bones negatives may let unwanted defaults slip through.** v10.2 had explicit "不要 motion 跨越目标角度" preventing the model from rotating past the spec angle. v11 drops this. If models over-rotate (e.g., past 180° to 270°), retreat is to add back ONE qualifier (`不要 镜头超过 180°`) without re-inflating the entire negatives section.
 
-### CANONICAL_VIEWS code change
+#### CANONICAL_VIEWS code change
 
 **None.** v11 keeps v10.2's `(1.0, 3.5, 6.0)` timestamps. The schedule is the same; only the prompt wording changes. Front pick at mid 0-2s static (t=1.0s), side pick at mid 3-4s static (t=3.5s), back pick at mid 5-7s static back hold (t=6.0s).
 
-## Out of scope
+### Out of scope
 
 - No frontend changes — 🖼 button (097) + path-gate + api wire-up unchanged.
 - No backend changes — `CharacterViewExtractor` and the route both unchanged.
 - No value-object code change — `CANONICAL_VIEWS` constants stay `(1.0, 3.5, 6.0)`.
 - No frontend UI tooltip rewording (the SiblingMedia tile button's tooltip still says "v9" — separate cleanup).
 
-## Touch list
+### Touch list
 
 - `.claude/agent_refs/project/ai_video.md` rule #12.5 v10.2 → v11: rewrite the active prompt body code block (镜头 / 动作 / 节奏 / 负向 + minor others); v10.2 demoted to archive footer with rationale "为什么 v10.2 verbose prompt 不再生效 — model 在 4 字段重复描述下 confuses + 把 motion 全部 squeeze 到 ~5s 之后". Update file schema description (sibling-file comment) for v11 simpler form.
 - `ai_videos/mozun_chongsheng/characters/c{1..10}_*/c{N}_*.md`: 10 files patched via one-shot script — replace 镜头 line + 动作 block + 节奏 line + 负向 line + 文件说明 + h1 heading + prompt-block title with simpler v11 form. Keep character-specific 角色 line + dialogue contents byte-identical.
@@ -8433,28 +8566,29 @@ With camera motion described ONCE and in plain Chinese, the model should follow 
 - `specs/ai_video/mozun_chongsheng/user_input/revised_prompt.md`: header bump 028.
 - `specs/ai_video/mozun_chongsheng/changelog.md`: append 028 entry.
 
-## User-side action
+### User-side action
 
 1. Re-render the 10 character mp4s at 7s with v11 prompt. v10 + v10.2 renders are invalidated.
 2. Upload one v11 mp4 to Kling — empirical test whether simpler prompt language fixes the timing.
 3. Click 🖼 — check whether motion actually starts at t=2s now (not t=5s).
 4. If motion is still delayed, report back — escalate to v12 (shift schedule earlier, break 0-2s truncate-compat) or v13 (multi-clip).
 
+
 ---
 
-# Follow-up draft 100 — 2026-05-20
+## 100 — 2026-05-20 21:33:34 — clickable-breadcrumb-navigation
 
 Make the Reader breadcrumb segments clickable so the user can jump to an
 ancestor in the path.
 
-## Intent
+### Intent
 
 The breadcrumb at the top of the Reader (e.g. `ai_videos / _actors /
 actor_0187 / actor_0187.md`) currently renders each segment as plain text.
 Each non-last segment must become an in-app navigation control that brings
 the user "up one level" toward the indicated ancestor.
 
-## Behaviour
+### Behaviour
 
 1. The last segment (the file currently being viewed) stays non-interactive
    and keeps the `breadcrumb-current` styling.
@@ -8476,7 +8610,7 @@ the user "up one level" toward the indicated ancestor.
    an underline / accent hover state; no layout shift versus the current
    plain-text version.
 
-## Out of scope
+### Out of scope
 
 - No new backend route for folder browsing — this is a pure UI change.
 - No change to the `/file/<path>` route contract. Clicking a folder
@@ -8486,9 +8620,11 @@ the user "up one level" toward the indicated ancestor.
 - No change to the Home (`/`) or sidebar tree behaviour beyond what
   already follows from `currentPath` updates.
 
+
 ---
 
-# Follow-up draft 101 — 2026-05-20
+## 101 — 2026-05-20 20:53:02 — novels-section-and-downloader
+
 **Note**: Originally numbered 096 in the prior turn; renumbered to 101 in this turn to avoid collision with the existing `096-20260518-224047-character-ref-7s-locked-framing-3view-extract.md`. Slot 101 is the next free number after 100.
 
 
@@ -8497,15 +8633,15 @@ Three bundled changes:
 2. **Add a new `novels/` top-level + sidebar section** to replace the deleted Research section. Same tree-walker pattern (`_walk_filtered` + leaf predicate) — only the section name + admit-list change.
 3. **Add a novel-downloader pipeline** (domain VO + infrastructure writer + application command + CLI entry) that scrapes 10 hot xianxia novels from sudugu.org (and fallback sources where reachable) into `novels/{slug}/{slug}.md` (single concatenated markdown for easy in-webapp reading) + `novels/{slug}/_meta.json` (per-chapter completion tracking, resumable). Launch the full scrape in background at end of this turn.
 
-## Why
+### Why
 
 User asked for: download "these few novels" (the 10 from my prior sudugu.org research) → add a new section in the webapp to read them → delete current research content. Goal is to consolidate xianxia reference material under the webapp's read surface so the user can read source novels alongside their ai_video drama projects.
 
 User explicitly opted into: (a) full deletion of research/, (b) full scrape of all 10 novels in this turn (acknowledged ambition), (c) any sources I can find but **must be complete, no partial downloads**.
 
-## Design
+### Design
 
-### Architecture (DDD + CQRS per CLAUDE.md project rules)
+#### Architecture (DDD + CQRS per CLAUDE.md project rules)
 
 **Domain layer (NEW files):**
 - `libs/domain/value_objects/novel__valueobject.py`: `NovelSpec` (frozen dataclass: slug, title_zh, author, source_host, source_id) + `CANONICAL_NOVELS` tuple of 10. Slugs are pinyin (`fanren_xiuxian_zhuan`, `guangyin_zhiwai`, ...) so paths stay ASCII per `agent_refs/project/ai_video.md` rule 1 convention (Chinese stays in file content + README). Hard-coding the 10 source IDs makes the manifest a domain artifact, not a runtime config.
@@ -8545,7 +8681,7 @@ User explicitly opted into: (a) full deletion of research/, (b) full scrape of a
 - `tests/test_tree_walker_consumer_walk.py:31-69` — section list assertion + the `test_research_section_walks_repo_research_dir` test. Rename to test_novels_section_walks_repo_novels_dir + adjust path.
 - `tests/test_api_security_three_shapes.py:83` — section list assertion.
 
-### Canonical novel manifest (top 10 from sudugu.org xianxia ranking, verified accessible)
+#### Canonical novel manifest (top 10 from sudugu.org xianxia ranking, verified accessible)
 
 | slug | title_zh | author | source | source_id |
 |---|---|---|---|---|
@@ -8562,7 +8698,7 @@ User explicitly opted into: (a) full deletion of research/, (b) full scrape of a
 
 Slug convention: pinyin words separated by `_`, byte-identical for every reference. Title + author are stored Chinese-as-content. Per `agent_refs/project/ai_video.md` rule 1 (the existing "everything Chinese in `ai_videos/` paths is English/pinyin" rule generalized to `novels/`).
 
-### Per-novel folder shape
+#### Per-novel folder shape
 
 ```
 novels/
@@ -8574,13 +8710,13 @@ novels/
 
 The sidebar surfaces both files. Sidebar collapse-all behavior already handles multi-child folders, so navigating to a novel + reading its single `{slug}.md` is one click.
 
-### Completion semantics ("no partial downloads")
+#### Completion semantics ("no partial downloads")
 
 `_meta.json.complete = true` IFF `len([c for c in chapters if c.done]) == len(chapters)`. The downloader writes `complete: false` until every chapter has been fetched at least once. **A novel is never marked complete with any chapter missing.** Webapp surfaces both complete and in-progress novels (with a badge); the user picks. The "no partial" constraint is enforced as a metadata invariant — the actual `{slug}.md` is built incrementally, but it's not labeled "complete" until 100%.
 
 For novels whose source becomes unreachable mid-scrape, `_meta.json` records the per-chapter failure reason. Re-running `download_all` resumes from the last gap, hitting only the missing chapters (resumable contract).
 
-### Multi-source fallback
+#### Multi-source fallback
 
 User asked for any sources I can find. Pragmatic v1 implementation: **sudugu.org-only**. Each `NovelSpec` carries a single `source_host` + `source_id`. Future v2 can extend `NovelSpec.sources: tuple[NovelSource, ...]` with the downloader walking fallbacks if the primary returns 404 / unreachable. v1 stays simple because:
 - Different sites have different HTML shapes — a single scraper module per site
@@ -8589,13 +8725,13 @@ User asked for any sources I can find. Pragmatic v1 implementation: **sudugu.org
 
 If sudugu.org fails for specific books mid-scrape, the spec records this as a known limitation; user re-runs after I expand to fallback sources in a future follow-up.
 
-### Honest scale acknowledgment
+#### Honest scale acknowledgment
 
 凡人修仙传 alone has ~2400+ chapters. 10 novels combined = likely 5000-10000 chapters total. At 0.8s/req polite rate that's 4000-8000 sec = **70-130 minutes minimum** of network I/O. Sudugu.org may rate-limit, throw transient 5xx, or block the user-agent — the downloader has retries, but the run is realistically a multi-hour job that may not complete in this turn's shell context.
 
 **This turn's deliverable**: launch the background download + the webapp surface is fully wired so the user sees novels arrive as they download. The download keeps running until either (a) it finishes, (b) the shell context closes (in which case user re-runs the CLI to resume from `_meta.json` checkpoint), (c) sudugu.org permanently fails specific books (user gets a list of remaining gaps).
 
-### Out of scope (this turn)
+#### Out of scope (this turn)
 
 - Multi-source fallback per book (v1 = sudugu.org only).
 - Per-chapter txt format (v1 = single `{slug}.md`).
@@ -8603,7 +8739,7 @@ If sudugu.org fails for specific books mid-scrape, the spec records this as a kn
 - Backend `POST /api/novels/download` endpoint (CLI-only for v1 to keep browser clients from spawning long-running scrapes).
 - Search / chapter-jump UI inside a novel (v1 = scroll the single .md).
 
-## Touch list
+### Touch list
 
 - **Delete**: `research/` (whole folder, including xianxia_storylines/*.md + README + research/).
 - **NEW Python files (8)**: `libs/domain/value_objects/novel__valueobject.py`, `libs/domain/errors/novel__error.py`, `libs/infrastructure/errors/novel__error.py`, `libs/infrastructure/writers/novel__writer.py`, `libs/application/dtos/novel__dto.py`, `libs/application/mappers/novel__mapper.py`, `libs/application/commands/novel__command.py`, `libs/application/queries/novel__query.py`.
@@ -8614,14 +8750,15 @@ If sudugu.org fails for specific books mid-scrape, the spec records this as a kn
 - **Background job**: launch `python -m apps.cli.novel_download` at end of turn; runs until completion or shell closes; CLI is resumable so re-running picks up where it left off.
 - **Audit**: `specs/development/ai_video_management/user_input/revised_prompt.md` (header bump 096), `specs/development/ai_video_management/changelog.md` (entry).
 
+
 ---
 
-# Follow-up draft 101 — 2026-05-21
+## 101 — 2026-05-21 00:24:55 — sidebar-default-collapsed
 
 Left-nav (sidebar) tree should default to **everything collapsed** on
 initial load.
 
-## Intent
+### Intent
 
 Today the `Sidebar` walks the tree on first load and pre-expands every
 directory / section node (`expanded[path] = true`). With hundreds of
@@ -8631,7 +8768,7 @@ a fully-spread tree before they pick a target.
 The user wants the opposite default: on first load every collapsible node
 is closed. They expand only what they click on.
 
-## Behaviour
+### Behaviour
 
 1. On initial tree load, every collapsible node defaults to **closed**.
    Top-level sections (`depth === 0` — currently only the "AI Videos"
@@ -8650,23 +8787,24 @@ is closed. They expand only what they click on.
 4. `onCollapseAll` (the ⊟ button) remains a useful no-op-equivalent on
    first load but stays meaningful after the user has expanded things.
 
-## Out of scope
+### Out of scope
 
 - No new persistence layer (no `localStorage` for expansion state) — the
   default-collapsed behaviour applies fresh on every page load.
 - No change to the always-open top-level section render.
 - No change to `Reader` / `Breadcrumb` / any other component.
 
+
 ---
 
-# Follow-up draft 102 — 2026-05-20
+## 102 — 2026-05-20 21:56:38 — novels-categorize-and-chinese-display
 
 Three bundled changes (extends follow-up 101):
 1. **Expand `CANONICAL_NOVELS` manifest** beyond the 10 仙侠 entries to cover multiple genres (仙侠 / 玄幻 / 都市 / 历史 / 科幻 / 言情). Source IDs verified against sudugu.org.
 2. **Categorize novels on disk and in the sidebar**: introduce `category: str` + `category_zh: str` on `NovelSpec`; layout becomes `novels/{category}/{slug}/{slug}.md` (+ `_meta.json`) instead of flat `novels/{slug}/`.
 3. **Chinese display names in the sidebar**: tree nodes that represent novels and categories carry a `display_name` field with the Chinese title; the React Sidebar renders `display_name` when present, falling back to `name` for everything else.
 
-## Why
+### Why
 
 User: "幫我下載更多的小説，在UI上名字要顯示中文，下載的小説要按題材分類， 比如仙俠類".
 
@@ -8675,16 +8813,16 @@ Three asks compounded:
 - Display Chinese titles in the sidebar (not pinyin folder names).
 - Group by category in the sidebar (e.g. 仙侠類 as a folder).
 
-## Design
+### Design
 
-### Domain (extend, not replace)
+#### Domain (extend, not replace)
 
 `libs/domain/value_objects/novel__valueobject.py`:
 - `NovelSpec` gains `category: str` (slug, ASCII) + `category_zh: str` (Chinese label).
 - `CANONICAL_NOVELS` expanded to ~20-25 entries spread across 5-6 genre buckets. The original 10 from follow-up 101 are tagged `category="xianxia"`, `category_zh="仙侠"`.
 - New helper `categories() -> list[tuple[str, str]]` returning unique (slug, zh) pairs in canonical order, used by the tree-builder and by `_index.md`.
 
-### Filesystem layout migration
+#### Filesystem layout migration
 
 Before: `novels/{slug}/{slug}.md` + `_meta.json`.
 After:  `novels/{category}/{slug}/{slug}.md` + `_meta.json`.
@@ -8693,7 +8831,7 @@ The existing in-flight `novels/fanren_xiuxian_zhuan/` (in-progress at the time o
 
 `novels/_index.md` is regenerated grouped by category — one `## {category_zh}` section per genre, table rows for each novel within.
 
-### Tree integration (display_name on intermediate + leaf nodes)
+#### Tree integration (display_name on intermediate + leaf nodes)
 
 `libs/infrastructure/readers/tree__reader.py`:
 - `_novels_section` produces category-level child nodes with `{name: "{category}", display_name: "{category_zh}", type: "folder", children: [...]}`.
@@ -8702,11 +8840,11 @@ The existing in-flight `novels/fanren_xiuxian_zhuan/` (in-progress at the time o
 
 The existing `_walk_filtered` is reused for intermediate folders that don't have a canonical mapping; only novel + category folders get the `display_name` enrichment.
 
-### Frontend Sidebar (minimal change)
+#### Frontend Sidebar (minimal change)
 
 `apps/ui/src/components/Sidebar.tsx`: where a tree node's label is rendered, prefer `node.display_name` when present, fall back to `node.name`. One-line change in the render path. `apps/ui/src/types.ts` adds `display_name?: string` to the TreeNode type.
 
-### Downloader update
+#### Downloader update
 
 `libs/infrastructure/writers/novel__writer.py`: `download(slug)` resolves the spec's category and writes to `novels_root / spec.category / slug / ...` instead of `novels_root / slug / ...`. `download_all` iterates `CANONICAL_NOVELS` as before.
 
@@ -8714,7 +8852,7 @@ The existing `_walk_filtered` is reused for intermediate folders that don't have
 
 `NovelQuery.list()` walks two levels (`novels/{category}/{slug}/_meta.json`) and returns category info in the Qdto. `NovelStatusQdto` gains `category: str` + `category_zh: str` fields.
 
-### Manifest expansion
+#### Manifest expansion
 
 New entries by category (all verified accessible on sudugu.org):
 
@@ -8734,19 +8872,19 @@ Total target: ~24 novels across 6 categories.
 
 Source-id verification is part of the manifest-build step; any entry that returns 404 against `sudugu.org/{source_id}/` is dropped from the seed list with a one-line note. The architecture supports adding more later without code changes.
 
-### Tests to update
+#### Tests to update
 
 - `tests/test_boot_smoke.py`: no change to the section list ([AI Videos, Novels]); the new `display_name` field is additive.
 - `tests/test_tree_walker_consumer_walk.py`: existing `test_novels_section_walks_repo_novels_dir` already tolerates empty `novels/`; relax/widen its assertion to allow category-level children.
 
-### Out of scope
+#### Out of scope
 
 - Genre re-categorization based on sudugu.org's actual metadata (each novel's category is hardcoded in the manifest).
 - Renaming `{slug}.md` to use Chinese — file names stay pinyin per ASCII-paths convention.
 - Sidebar grouping of `ai_videos/` by sub-type (orthogonal change).
 - Webapp routing changes (URLs still use pinyin slugs).
 
-## Touch list
+### Touch list
 
 - **Modified Python files**:
   - `libs/domain/value_objects/novel__valueobject.py` — add fields + expand manifest + `categories()` helper.
@@ -8762,15 +8900,16 @@ Source-id verification is part of the manifest-build step; any entry that return
 - **Background job**: restart `python -m apps.cli.novel_download` after migration.
 - **Audit**: `specs/development/ai_video_management/changelog.md` (entry 102).
 
+
 ---
 
-# Follow-up draft 103 — 2026-05-20
+## 103 — 2026-05-20 22:44:06 — more-xianxia-index-first-round-robin
 
 Two bundled changes (extends 101 + 102):
 1. **Add 11 more xianxia novels** to the manifest (28 → 39 total; xianxia: 10 → 21).
 2. **Refactor `NovelDownloader.download_all` to index-first + round-robin** so all novels appear in the sidebar within ~30 s of launch, and chapter counts grow across every novel in parallel instead of draining one novel to completion before starting the next.
 
-## Why
+### Why
 
 User: "I can only see 1 凡人修仙傳，please help me download more novels, 仙俠題材爲主".
 
@@ -8778,9 +8917,9 @@ The user's blocker was UX: 凡人修仙传 has 2512 chapters. At 0.8 s/req that'
 - **More novels** — the request implies they want more variety than the current 10 xianxia entries. (102 added 18 across other genres but the xianxia-only count stayed at 10.)
 - **仙俠題材爲主** — prioritize xianxia in the expansion.
 
-## Design
+### Design
 
-### Architecture: two-phase `download_all`
+#### Architecture: two-phase `download_all`
 
 ```
 Phase 1 — index pass (fast, ~1 request × 1-3 pages per novel):
@@ -8802,7 +8941,7 @@ Key benefits:
 - Resume contract preserved: `_meta.json[chapters][i].done` is the only checkpoint. Re-running picks up exactly where it left off in either phase.
 - Rate-limit is global (single `httpx.Client`, single `_last_request_at` clock), so polite to the source across all 39 novels combined — not 39 × per-novel.
 
-### Code shape
+#### Code shape
 
 - `download_all` body completely replaced (no surgical edits). Splits into:
   - `_ensure_index(spec) -> _NovelState`: idempotent index fetch + meta/body initialization. New helper, replaces the leading 12 lines of the old `download(slug)` body.
@@ -8810,7 +8949,7 @@ Key benefits:
   - `download(slug)` rewritten to loop over `_download_one_chapter` until no undone chapters remain (functional parity with the old per-novel synchronous flow).
 - New `_NovelState` dataclass holds the in-flight `(spec, meta, meta_path, body_path)` tuple — keeps the round-robin loop one-line per iteration.
 
-### Manifest expansion (11 new xianxia)
+#### Manifest expansion (11 new xianxia)
 
 All probed against sudugu.org index pages, title + author + first-page chapter count verified:
 
@@ -8830,20 +8969,20 @@ All probed against sudugu.org index pages, title + author + first-page chapter c
 
 These are sudugu.org's xianxia category page-1 entries not already in the manifest (page 2/3 of the category turned out to be cross-category trending, so the natural xianxia pool maxed out at this count).
 
-### Backwards-compatibility
+#### Backwards-compatibility
 
 - `_meta.json` format unchanged from 102.
 - `NovelDownloadResult` / `NovelStatusQdto` shapes unchanged from 102.
 - `download(slug)` public method preserves its old signature + semantics (used by `NovelCommand.download(slug)` and unchanged routes).
 - The in-flight `xianxia/fanren_xiuxian_zhuan/` (348 chapters done at the moment of restart) resumes from chapter 349 on the next launch — confirmed by manual checkpoint inspection.
 
-### Out of scope
+#### Out of scope
 
 - ThreadPoolExecutor / parallel HTTP. Single-threaded round-robin already meets the visibility goal; concurrent requests would either violate the 0.8 s polite-rate contract or require per-source rate-limit bookkeeping.
 - Cross-category round-robin priority (e.g. "prioritize xianxia"). The manifest order itself already puts all 21 xianxia first, so they naturally start indexing/downloading before the other 18 entries.
 - Auto-discovery from sudugu.org rankings — manifest stays hand-curated.
 
-## Touch list
+### Touch list
 
 - **Modified**:
   - `libs/domain/value_objects/novel__valueobject.py` — 11 new xianxia entries.
@@ -8851,16 +8990,17 @@ These are sudugu.org's xianxia category page-1 entries not already in the manife
 - **Background job**: restart `python -m apps.cli.novel_download` after refactor; resume from existing `_meta.json` checkpoints.
 - **Audit**: changelog entry 103.
 
+
 ---
 
-# Follow-up draft 104 — 2026-05-20
+## 104 — 2026-05-20 23:34:36 — novels-serial-mode-complete-only-sidebar
 
 Three bundled changes (reverts 103's round-robin design + adds visibility filter):
 1. **Revert `download_all` to strict serial**: complete novel N fully (every chapter `done=True`) before starting novel N+1. The 103 round-robin pattern is replaced.
 2. **Sidebar filter — show only complete novels**: `TreeReader._novels_section` filters out any novel whose `_meta.json.complete != True`. Incomplete novels stay on disk (resume checkpoint preserved) but are invisible in the webapp.
 3. **Delete round-robin artifacts**: novels with `chapters_done <= 5` on disk (the 1-3-chapter stubs that follow-up 103's round-robin produced) get their folders removed. Preserve `xianxia/fanren_xiuxian_zhuan/`'s 348-chapter checkpoint (user explicitly opted to continue it).
 
-## Why
+### Why
 
 User: "每一部小説為社麽只有第一章，我要完整的小説所有章節，如果只有一張，那就直接刪掉，我只要有完整章節的小説".
 
@@ -8873,9 +9013,9 @@ Direct correction of 103's round-robin design. The user wants:
 
 Clarification question asked + answered: keep `xianxia/fanren_xiuxian_zhuan/`'s 348-chapter checkpoint and continue it serially (option 1 of 3). Don't redo from zero.
 
-## Design
+### Design
 
-### Revert to serial in `download_all`
+#### Revert to serial in `download_all`
 
 The 103 two-phase shape (Phase 1 index pass for all, then Phase 2 round-robin across all) is replaced by:
 
@@ -8886,38 +9026,38 @@ for spec in CANONICAL_NOVELS:
 
 `download(slug)` is unchanged from 103 — it already loops `_ensure_index` + `_download_one_chapter` until done. The two helpers stay; `_NovelState` dataclass stays. The change is one method body. **Net effect**: 凡人修仙傳 will be fully downloaded (~30 min remaining for 2164 chapters at 0.8 s/req) before 光阴之外 starts.
 
-### Tree filter: complete-only
+#### Tree filter: complete-only
 
 `libs/infrastructure/readers/tree__reader.py::_novels_section` reads each novel folder's `_meta.json` and skips folders where `complete != True`. Reasoning:
 - The user's directive "我只要有完整章節的小説" maps to a visibility filter, not a disk-deletion policy. Incomplete folders stay on disk so the downloader's resume contract keeps working.
 - Filter is read at tree-walk time (cheap — at most 39 small JSON reads per `GET /api/tree`).
 - Category folders with zero complete children are also hidden, so the user sees an empty `Novels` section initially, then categories + novels pop in as they finish.
 
-### Cleanup: delete round-robin stubs
+#### Cleanup: delete round-robin stubs
 
 Walk `novels/{category}/{slug}/_meta.json` and delete the folder iff `chapters_done <= 5 AND complete != True`. The threshold catches everything the round-robin produced (most novels finished cycle 1 with 1 chapter each before the user redirected) but preserves any novel with meaningful progress. Per the user's clarification, `fanren_xiuxian_zhuan` (348 chapters) is explicitly preserved.
 
 After cleanup, the disk state is: `novels/xianxia/fanren_xiuxian_zhuan/` only. The downloader's next launch will resume `fanren_xiuxian_zhuan` from chapter 349, then naturally proceed to the next CANONICAL_NOVELS entry (光阴之外) once `fanren_xiuxian_zhuan.complete = True` is flipped.
 
-### What the user sees
+#### What the user sees
 
 - **Right now (after this turn)**: webapp sidebar `Novels` section is empty. `fanren_xiuxian_zhuan` is downloading in the background but `complete != True` so it's filtered out.
 - **In ~30 minutes**: `fanren_xiuxian_zhuan` finishes (348 → 2512 chapters done), `complete: True` flips in `_meta.json`, `仙侠 → 凡人修仙传` appears in the sidebar.
 - **Over the next several hours**: each subsequent novel completes and appears one-by-one in the sidebar.
 
-### Trade-offs acknowledged
+#### Trade-offs acknowledged
 
 - The user trades **broad visibility** (39 partial novels, 1 chapter each, hard to read) for **deep visibility** (1 fully readable novel at a time as it finishes).
 - The sidebar is empty for ~30 minutes — the user accepted this when they said "我只要有完整章節的小説".
 - If the user later wants in-progress visibility back, the fix is to relax the tree filter (e.g. show novels where `complete == True OR chapters_done > 100`). The state surface for that change is `tree__reader.py::_novels_section` (one predicate).
 
-### Out of scope
+#### Out of scope
 
 - Progress indicator in the sidebar header (e.g. "currently downloading: 凡人修仙传 348/2512"). Could be added if the user finds the empty-sidebar UX unsettling.
 - Parallel/concurrent download — explicitly rejected here; the user wants serial.
 - Auto-trim incomplete novel folders on a schedule — only the one-time cleanup runs this turn.
 
-## Touch list
+### Touch list
 
 - **Modified Python files**:
   - `libs/infrastructure/writers/novel__writer.py` — `download_all` body reverted to serial loop; helpers + dataclass unchanged.
@@ -8926,21 +9066,22 @@ After cleanup, the disk state is: `novels/xianxia/fanren_xiuxian_zhuan/` only. T
 - **Background job**: relaunch `python -m apps.cli.novel_download`; resume `fanren_xiuxian_zhuan` from chapter 349.
 - **Audit**: changelog entry 104.
 
+
 ---
 
-# Follow-up draft 105 — 2026-05-20
+## 105 — 2026-05-20 23:51:17 — parallel-downloader-thread-pool
 
 Switch `download_all` to a thread-pool parallel runner so multiple novels download simultaneously, while preserving every checkpoint (no re-downloads).
 
-## Why
+### Why
 
 User: picked option 2 (parallel) + option 3 (keep current state) from the speedup menu. Translation: keep the existing `xianxia/fanren_xiuxian_zhuan/` 479-chapter checkpoint, but run multiple novels concurrently so total wall-clock drops from ~9h serial to ~2h parallel.
 
 User explicitly accepted the trade-off of higher total request rate to sudugu.org (option 2 was annotated with "可能封 IP" risk).
 
-## Design
+### Design
 
-### Thread pool of per-worker downloaders
+#### Thread pool of per-worker downloaders
 
 ```python
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -8966,13 +9107,13 @@ def _download_in_isolated_worker(self, spec, on_progress):
         return d.download(spec.slug, on_progress=on_progress)
 ```
 
-### Why per-worker `httpx.Client` (not shared)
+#### Why per-worker `httpx.Client` (not shared)
 
 The current `NovelDownloader` has a single `httpx.Client` + a single `_last_request_at` clock that gates every request. Sharing this across threads would force a 0.8 s serial gate even with N workers — defeating the point.
 
 Per-worker clients mean each thread's rate limiter is independent: each thread does at most 1.25 req/s. With 5 workers that's a peak ~6.25 req/s aggregate to sudugu.org. Risk acknowledged: the user opted in.
 
-### Why keep `max_workers=5` as default
+#### Why keep `max_workers=5` as default
 
 - 1-2 workers: tiny speedup, not worth the complexity.
 - 3-5 workers: ~3-5× wall-clock improvement, sudugu.org likely tolerates this for a few hours.
@@ -8980,39 +9121,40 @@ Per-worker clients mean each thread's rate limiter is independent: each thread d
 
 5 is a reasonable middle. Can be tuned later via CLI flag if 429s show up.
 
-### Resume contract preserved
+#### Resume contract preserved
 
 `download(slug)` is unchanged — it uses `_ensure_index` + the chapter loop that reads/writes `_meta.json` atomically per chapter. Parallel workers each write only their own novel's meta file, so there's no shared-state contention (each `novels/{cat}/{slug}/` directory is owned by exactly one worker).
 
 The current `xianxia/fanren_xiuxian_zhuan/` at chapter 479 will be picked up by whichever worker happens to claim it and resumed from chapter 480.
 
-### `_write_index_md` runs once at the end
+#### `_write_index_md` runs once at the end
 
 Previously called inside the serial loop after each novel finished. With parallel completions arriving on different threads, the safer path is to write `_index.md` once after `as_completed` drains. (The user reads the sidebar — which auto-builds from `_meta.json` files via `TreeReader` — not `_index.md`, so the lag is harmless.)
 
-### `download` method unchanged
+#### `download` method unchanged
 
 The public single-novel `NovelCommand.download(slug)` path stays as it was — synchronous, single client, single rate-limit clock. Parallel behavior only kicks in via `download_all`.
 
-### Out of scope
+#### Out of scope
 
 - Per-source / per-IP global rate limit. The 0.8 s per-worker limit + httpx-level retry on 429 is the v1 throttling strategy. If sudugu.org rate-limits, the per-chapter retry+backoff in `_http_get` already handles it.
 - Configurable `max_workers` via CLI flag. Default 5 hardcoded; can be parameterized if needed.
 - Progress reporter changes. The existing `on_progress` callback prints lines like `[slug] idx/total`; with parallel workers these now interleave across slugs, which is acceptable (the line itself names the slug).
 
-## Touch list
+### Touch list
 
 - **Modified**: `libs/infrastructure/writers/novel__writer.py` — `download_all` rewritten to use `ThreadPoolExecutor`; new `_download_in_isolated_worker(spec, on_progress)` helper that owns a fresh `NovelDownloader` per call.
 - **Background job**: kill current downloader, restart; parallel mode resumes every novel from its existing checkpoint.
 - **Audit**: changelog entry 105.
 
+
 ---
 
-# Follow-up draft 106 — 2026-05-20
+## 106 — 2026-05-20 23:57:18 — sudugu-ip-block-revert-to-serial-default
 
 Revert CLI default `--workers` from 5 → 1 after sudugu.org IP-blocked us in response to follow-up 105's parallel run. Parallel-mode code path stays in place for future opt-in; default behavior reverts to the polite single-stream pace.
 
-## Why
+### Why
 
 Within ~10 s of launching 5 parallel workers in follow-up 105, every chapter request started returning HTTP 302 redirects to `https://www.google.com/`. Verified post-incident with three different User-Agents (Chrome / Firefox / curl) — all three returned 302 → google.com from the same Win11 client IP. Conclusion: sudugu.org's edge fired a per-IP anti-bot rule.
 
@@ -9020,60 +9162,61 @@ The IP block is currently active. Even single-threaded requests now redirect. Th
 
 User signoff: parallel risk was accepted in 105 ("可能封 IP" was explicitly in the prompt). This follow-up captures the consequence + the mitigation.
 
-## Design
+### Design
 
-### Revert the default, keep the code
+#### Revert the default, keep the code
 
 `apps/cli/novel_download.py::main` parses `--workers N`. Previous default: 5. New default: 1. Three lines change (banner help string + comment + the `workers = N` initializer). The `download_all` ThreadPoolExecutor body and the `_download_in_isolated_worker` helper from follow-up 105 stay — `--workers 3` (or higher) still works once the block clears.
 
 The single-stream default is the proven-polite shape: 0.8 s/req with httpx-level backoff on 429/5xx. The same pattern that downloaded `xianxia/fanren_xiuxian_zhuan/` to chapter 501 without incident.
 
-### Why not also remove the parallel code?
+#### Why not also remove the parallel code?
 
 Two reasons:
 1. The user opted into parallel and may want to retry once the block lifts.
 2. Removing it now would be churn — same surface area to maintain either way.
 
-### Why not auto-detect the 302→google redirect?
+#### Why not auto-detect the 302→google redirect?
 
 A defensive improvement worth doing later: `_http_get` could treat "response URL host != source host" as a block signal and halt with a structured error instead of feeding google.com's HTML into the content parser (which is what generated the misleading `DownloadFailed: content block not found at <chapter URL>` messages). Deferred — small scope, separate concern from the immediate "revert default" fix.
 
-### Resume contract still intact
+#### Resume contract still intact
 
 Every chapter the parallel workers attempted got `done=False` with an `error` field set. On the next launch, those chapters automatically retry (the loop iterates over `chapters` and acts on any not-yet-`done` entry; the `error` field is informational, not load-bearing for resume logic). `xianxia/fanren_xiuxian_zhuan/` stays at its real 501-chapter checkpoint.
 
-### What the user should do
+#### What the user should do
 
 - Wait some amount of time (likely 15-60 min, possibly longer) before relaunching. Or use a VPN to get a fresh IP.
 - Once relaunched with the new default (`workers=1`), the download proceeds polite-rate.
 - The fanren progress is preserved — it resumes from chapter 502.
 
-### Out of scope
+#### Out of scope
 
 - 302-detection circuit-breaker in `_http_get` (deferred).
 - Multi-source fallback so we can route around a blocked source (was already out of scope in 101 — still is).
 - Proxy / VPN integration (user-side concern).
 - Auto-back-off across CLI launches (e.g. detect the block, sleep 30 min, retry).
 
-## Touch list
+### Touch list
 
 - **Modified**: `apps/cli/novel_download.py` — three-line change: docstring `Usage:` block, comment explaining the revert, `workers = 1`.
 - **Audit**: changelog entry 106.
 - **No code change**: `libs/infrastructure/writers/novel__writer.py` parallel-mode code path stays intact; opt-in via `--workers N` still works.
 
+
 ---
 
-# Follow-up draft 107 — 2026-05-21
+## 107 — 2026-05-21 00:11:30 — multi-source-fallback-ttkan-co
 
 Add multi-source fallback to the novel downloader so a single source going down (e.g. sudugu.org's IP block from follow-up 106) doesn't halt the pipeline. Second source: `ttkan.co` (verified reachable from this IP at the time of this follow-up).
 
-## Why
+### Why
 
 User picked "1 + 3" from the recovery menu: wait for the sudugu.org IP block to expire AND add multi-source fallback as the long-term fix.
 
 The IP block in 106 surfaced a structural weakness: the downloader had exactly one source per novel hardcoded into `NovelSpec`, so when sudugu.org started returning 302 → google.com, every novel halted. Multi-source is the architectural fix.
 
-## Probing summary
+### Probing summary
 
 Tried 9 candidate alt sites. Three return 200 cleanly; only one has the novels we need:
 
@@ -9085,9 +9228,9 @@ Tried 9 candidate alt sites. Three return 200 cleanly; only one has the novels w
 
 `ttkan.co` chosen because: (a) reachable, (b) has the popular novels, (c) HTML structure parseable with simple regex, (d) no chapter-page pagination (simpler than sudugu).
 
-## Design
+### Design
 
-### Domain — `NovelSource` value object
+#### Domain — `NovelSource` value object
 
 ```python
 @dataclass(frozen=True)
@@ -9102,7 +9245,7 @@ Manifest update:
 - Every existing entry's `(source_host='sudugu.org', source_id='X')` becomes `sources=(NovelSource('sudugu.org', 'X'),)`.
 - The 5 verified ttkan entries get a second `NovelSource('ttkan.co', '<ttkan-slug>')` appended.
 
-### Infrastructure — per-host dispatch
+#### Infrastructure — per-host dispatch
 
 Two new private helpers in `NovelDownloader`:
 - `_fetch_index_via_sudugu(source) -> list[ChapterRecord]` — the existing index-with-pagination logic, factored out.
@@ -9114,7 +9257,7 @@ Two new private helpers in `NovelDownloader`:
 
 `_fetch_chapter_full(spec, chapter)` looks at the URL's host and dispatches; the chapter URL already encodes which source it came from (because the URL string starts with `https://www.{host}/`).
 
-### Active source tracked in `NovelMeta`
+#### Active source tracked in `NovelMeta`
 
 ```python
 @dataclass
@@ -9128,7 +9271,7 @@ When `_ensure_index` picks a source successfully, it stores those two fields. On
 - If the active source still works (still in `spec.sources`, still reachable), reuse it. Chapter URLs stay aligned.
 - If not, re-fetch the index from the next reachable source. Chapter URLs change. `done` flags are preserved by `chapter.idx` (98%+ correct; sources occasionally split chapters slightly differently — acceptable trade-off for v1).
 
-### Re-fetch semantics on source switch
+#### Re-fetch semantics on source switch
 
 If a novel's existing meta has 501 chapters marked done with sudugu URLs, and we now switch to ttkan:
 1. `_fetch_chapter_index_ttkan` returns 2453 chapter records (vs sudugu's 2512).
@@ -9136,14 +9279,14 @@ If a novel's existing meta has 501 chapters marked done with sudugu URLs, and we
 3. Net effect: chapters 1-501 keep `done=True`; chapter 502+ become the ttkan URLs and get downloaded.
 4. The body `.md` file accumulated under sudugu content stays intact; new chapters appended under ttkan content (Traditional Chinese — small content style mismatch the user can accept or convert with opencc later).
 
-### Out of scope
+#### Out of scope
 
 - Auto-recover MID-novel from source switch (i.e. detect 302 mid-chapter-download and switch immediately). v1 only switches at next launch.
 - opencc 繁→简 conversion for ttkan content.
 - Search-driven slug discovery on ttkan (manual hand-curation for the 5 verified novels; others fall back to sudugu-only).
 - More source sites (biquge family, 69shuba) — all currently blocked or hostile; revisit if needed.
 
-## Touch list
+### Touch list
 
 - **Modified Python files**:
   - `libs/domain/value_objects/novel__valueobject.py` — add `NovelSource` dataclass; refactor `NovelSpec` schema to `sources: tuple[NovelSource, ...]`; add compat `source_host` / `source_id` properties; update all 39 manifest entries; add ttkan source to 5 popular novels (fanren_xiuxian_zhuan, guangyin_zhiwai, wanmei_shijie, ze_tian_ji, lingjing_xingzhe).
@@ -9153,25 +9296,26 @@ If a novel's existing meta has 501 chapters marked done with sudugu URLs, and we
 - **No code change** to CLI: `--workers 1` default from 106 stays.
 - **No background-job restart this turn**: the IP block from 106 likely still active; user controls when to re-launch. Once unblocked (or via VPN), the new multi-source build will automatically prefer the working source.
 
+
 ---
 
-# Follow-up draft 108 — 2026-05-21
+## 108 — 2026-05-21 00:52:00 — legado-rule-reader
 
 Add a Legado-3.0-rule-driven HTML reader so future fallback novel sources can be added by dropping a JSON book-source file into `libs/infrastructure/readers/sources/` instead of hand-coding per-host scraping helpers in `novel__writer.py`. The user-facing trigger was "check Legado, take what's useful"; this follow-up captures what was taken and why most of Legado was not.
 
-## What was rejected, and why
+### What was rejected, and why
 
 Legado itself is an Android app, not a CLI/library, so it cannot be shelled out to from the Python downloader. Its HTTP and Content Provider APIs assume Legado is running on a phone — useless here.
 
 Crucially, **Legado would not solve the speed problem** (follow-up 106's sudugu.org anti-bot block). The bottleneck is per-host request shaping, not crawler throughput; Legado fetches with the same HTTP signature and would trip the same rate limit.
 
-## What was taken
+### What was taken
 
 The reusable part of the Legado ecosystem is its **book-source rule format** — a JSON shape describing CSS / XPath / default-path / regex selectors for any novel mirror. The community has curated rule sets for hundreds of Chinese novel sites (XIU2/Yuedu, aoaostar/legado, jing332/file, etc.). Bringing in a thin Python interpreter for that format lets follow-up 107's multi-source fallback grow declaratively.
 
-## Design
+### Design
 
-### New files (no changes to existing production code path)
+#### New files (no changes to existing production code path)
 
 | Path | Purpose |
 |---|---|
@@ -9180,7 +9324,7 @@ The reusable part of the Legado ecosystem is its **book-source rule format** —
 | `libs/infrastructure/readers/legado__reader.py` | Stateless rule engine `_LegadoEngine` + public `LegadoReader` with `fetch_toc`, `fetch_chapter`, `fetch_book_info`. Owns its `httpx.Client` (same UA + zh-CN headers as the existing downloader). |
 | `libs/infrastructure/readers/sources/ttkan_co.json` | Vendored Legado source for `cn.ttkan.co` (from XIU2/Yuedu#85). First data point; validates the rule grammar coverage. |
 
-### Rule grammar supported
+#### Rule grammar supported
 
 - **XPath** — `//meta[@name='...']/@content`, `@xpath:…`, `./…`, `(…)`.
 - **CSS** — `@css:.foo .bar`.
@@ -9188,7 +9332,7 @@ The reusable part of the Legado ecosystem is its **book-source rule format** —
 - **Multi-rule concat** — `ruleA&&ruleB` joined.
 - **Trailing regex replace** — `…##pat##rep##` (or `##pat##rep`).
 
-### Explicitly out of scope (raises `LegadoUnsupportedSyntaxError`)
+#### Explicitly out of scope (raises `LegadoUnsupportedSyntaxError`)
 
 - `@js:` rules, `<js>…</js>` blocks, full `{{js}}` templating (literal `{{key}}` substitution is the only template form we'll add when search lands).
 - JSONPath rules (`$.foo`, `@json:…`).
@@ -9196,7 +9340,7 @@ The reusable part of the Legado ecosystem is its **book-source rule format** —
 
 These cover ~95% of community sources we'd plausibly want; the JS-heavy ones (anti-bot redirects, dynamic search) are the wrong shape for our crawler anyway.
 
-### Wiring (deliberately not done in this follow-up)
+#### Wiring (deliberately not done in this follow-up)
 
 `novel__writer.py` keeps its existing `_fetch_index_via_sudugu` / `_fetch_index_via_ttkan` Python helpers. The Legado reader is opt-in scaffolding; the next time a host needs to be added, the choice is:
 1. Hand-code another `_fetch_index_via_{host}` (current pattern), OR
@@ -9204,13 +9348,13 @@ These cover ~95% of community sources we'd plausibly want; the JS-heavy ones (an
 
 Switching the existing `ttkan.co` Python helper over to its Legado JSON form would be a useful cross-validation step but is left for a future follow-up — the Python helper works, deletion is risky without parity tests.
 
-### New runtime dependencies
+#### New runtime dependencies
 
 - `lxml>=5.0` — HTML parsing + XPath + CSS (via `cssselect>=1.2`). Both ship precompiled Windows wheels for Python 3.10+, so install is `pip install lxml cssselect` with no native build chain.
 
 Both added to `projects/ai_video_management/pyproject.toml` and the mirrored `requirements.txt`. Root deps untouched (root `pyproject.toml` is scoped to the spec_studio platform; ai_video_management is a separate solution).
 
-## Touch list
+### Touch list
 
 - **New Python files**:
   - `libs/infrastructure/daos/__init__.py` (new role folder under infra)
@@ -9225,19 +9369,20 @@ Both added to `projects/ai_video_management/pyproject.toml` and the mirrored `re
 - **Unchanged**: every existing reader/writer, every route, every UI file, every CLI script. The Legado reader is additive scaffolding.
 - **Audit**: changelog 108.
 
+
 ---
 
-# Follow-up draft 109 — 2026-05-21
+## 109 — 2026-05-21 20:31:17 — cn-ttkan-jitter-end-of-chapter
 
 Three small wins extracted from reading `freeok/so-novel`'s declarative source-rule schema (their Java tool's `bundle/rules/*.json`). The architectural refactor (declarative `SourceRule` dataclass + bs4 CSS selectors) and adding 3rd/4th fallback hosts were both deferred — only the trivial quick wins are in scope this turn.
 
-## Why now
+### Why now
 
 Follow-up 107 added `ttkan.co` as a 2nd source but flagged content as **Traditional Chinese** (so-novel's `cn.ttkan.co` rule serves Simplified — same selectors, same paths, different subdomain). Follow-up 106 made the fixed `0.8 s` polite delay default global; so-novel's converged convention is min/max randomized jitter (typical 1.0–2.0 s) which is anti-bot smarter at the same average rate. End-of-chapter `(本章完)` markers leak into body files because the existing `_extract_paragraphs` only strips HTML, not Chinese boilerplate — every so-novel site rule lists this exact regex under `chapter.filterTxt`.
 
-## Changes
+### Changes
 
-### 1. `ttkan.co` → `cn.ttkan.co` (Simplified Chinese)
+#### 1. `ttkan.co` → `cn.ttkan.co` (Simplified Chinese)
 
 - `libs/domain/value_objects/novel__valueobject.py:65` — `_ttkan()` factory returns `NovelSource("cn.ttkan.co", source_slug)`.
 - `libs/infrastructure/writers/novel__writer.py` — ttkan URL templates use `https://{src.host}/...` (no `www.` prefix; the `cn.` subdomain is already in `host`). Host comparison in `_fetch_chapter_full` becomes `cn.ttkan.co`.
@@ -9245,11 +9390,11 @@ Follow-up 107 added `ttkan.co` as a 2nd source but flagged content as **Traditio
 
 **Migration on next run:** `_meta.json` files for the 5 ttkan-bearing novels (`fanren_xiuxian_zhuan`, `guangyin_zhiwai`, `wanmei_shijie`, `ze_tian_ji`, `lingjing_xingzhe`) carry `active_source_host="ttkan.co"`. New spec has `host="cn.ttkan.co"` → `source_changed=True` in `_ensure_index` → ttkan index re-fetched from `cn.` subdomain → chapter URLs rewritten by `idx`, preserving `done`/`hash`. Already-downloaded Traditional Chinese chapters stay in body files; new chapters appended as Simplified (mixed-script boundary acknowledged, opencc conversion deferred). Sudugu-only novels: `active_source_host="sudugu.org"` unchanged, no migration triggered.
 
-### 2. `(本章完)` filter in `_extract_paragraphs`
+#### 2. `(本章完)` filter in `_extract_paragraphs`
 
 Strip the literal end-of-chapter marker from each paragraph before appending; if the paragraph becomes empty, drop it. Matches so-novel's universal `filterTxt: "\\(本章完\\)"` (half-width parens only — the form sudugu/ttkan emit; full-width `（本章完）` not yet observed).
 
-### 3. Jitter delay (replace fixed 0.8 s)
+#### 3. Jitter delay (replace fixed 0.8 s)
 
 - `_INTER_REQUEST_DELAY = 0.8` replaced with `_INTER_REQUEST_DELAY_MIN = 1.0` + `_INTER_REQUEST_DELAY_MAX = 2.0` (so-novel's converged values for both sudugu and ttkan).
 - `NovelDownloader.__init__` signature: `delay_seconds: float` → `delay_min_seconds: float, delay_max_seconds: float`. CLI doesn't pass either (uses defaults), so the rename is contained.
@@ -9257,7 +9402,7 @@ Strip the literal end-of-chapter marker from each paragraph before appending; if
 - `_download_in_isolated_worker` plumbs both delays to the per-worker `NovelDownloader`.
 - Average request rate goes from 1.25 req/s → ~0.67 req/s per worker (50% slower at the average, but **harder to fingerprint** than fixed cadence; matches so-novel's empirical anti-bot setting for sudugu).
 
-## What was deliberately NOT done
+### What was deliberately NOT done
 
 - **Declarative `SourceRule` schema + bs4 port.** so-novel's rule-template.json5 is genuinely better than my regex-per-host approach, but moving sudugu+ttkan to a generic CSS-selector engine is a 2–3 hr refactor with replay-test scope. Deferred until a 3rd source is needed.
 - **Adding `xbiqugu.la` / `22biqu.com` / `shuhaige.net` as 3rd/4th fallback hosts.** Each would need either (a) new `_fetch_index_via_*` / `_fetch_chapter_via_*` pairs (deepening the per-host pattern that's already painful) OR (b) the declarative refactor above. Deferred together with the refactor.
@@ -9265,7 +9410,7 @@ Strip the literal end-of-chapter marker from each paragraph before appending; if
 - **Cloudflare / proxy-required tier hosts** — would need `curl_cffi` for TLS fingerprint spoofing or actual proxies. Not pursued.
 - **opencc 繁→简 conversion** for the existing body fragments downloaded from `www.ttkan.co` pre-migration. Still deferred per follow-up 107.
 
-## Touch list
+### Touch list
 
 - **Modified Python files (2)**:
   - `libs/domain/value_objects/novel__valueobject.py` — `_ttkan()` factory host string.
@@ -9273,17 +9418,19 @@ Strip the literal end-of-chapter marker from each paragraph before appending; if
 - **Unchanged**: CLI, application layer, frontend, routes, container, `NovelMeta` schema, `NovelSource` schema. so-novel's `bundle/rules/*.json` was read for reference only — not vendored.
 - **Audit**: revised_prompt.md header bump; changelog 109.
 
+
 ---
 
-# Follow-up draft 110 — 2026-05-23
+## 110 — 2026-05-23 12:37:01 — add-five-popular-xianxia
+
 Summary: 在 `CANONICAL_NOVELS` 仙侠 section 追加 5 部高人气作品 — 剑来 / 仙逆 / 大奉打更人 / 赤心巡天 / 大道争锋；用户已通过 webapp 启动 resume + parallel=2 workers，本 follow-up 在 catalog 里补 5 个 entries 让 downloader 在跑完现有 queue 后继续抓这 5 部。
 
-## 用户意图
+### 用户意图
 - 已恢复当前 in-progress download（`guangyin_zhiwai` 240/1383 起继续，serial→workers=2 提速）。
 - 用户要求"download more 仙侠剧 after it" + "you can propose 2"（让 assistant 选典型 / 知名作品） + "you can try 2 workers"（worker 数量改 2）。
 - Assistant 已在 sudugu.org `/paihang/xianxia.html` 排行榜前 2 页 cross-reference 现有 catalog，挑选 5 部既不重复又有完成度或人气保证的 ongoing/complete 作品。
 
-## 追加的 5 个 `NovelSpec`
+### 追加的 5 个 `NovelSpec`
 | slug | title_zh | author | sudugu id | 备注 |
 |---|---|---|---|---|
 | `jianlai` | 剑来 | 烽火戏诸侯 | 287 | 现象级长篇（连载中）|
@@ -9292,39 +9439,41 @@ Summary: 在 `CANONICAL_NOVELS` 仙侠 section 追加 5 部高人气作品 — �
 | `chixin_xuntian` | 赤心巡天 | 情何以甚 | 56 | 完本好评 |
 | `dadao_zhengfeng` | 大道争锋 | 误道者 | 435 | 经典完本 |
 
-## 数据契约
+### 数据契约
 - 每条 entry 写法与现有 follow-up 103 expanded section 一致：单一 `_sudugu(...)` source（ttkan 备源不在本次范围 — 用户没要求，且 follow-up 107 的 multi-source fallback 在 downloader 端已支持，后续如发现 sudugu 抓不下来再补 ttkan 即可，不阻塞本次）。
 - 5 个 slug 均符合 `slug.replace("_", "").isalnum()` 规则（小写 ASCII + 下划线，无中文 / 数字开头 / 特殊字符）。
 - `category="xianxia"` / `category_zh="仙侠"` 与现有仙侠 entries 完全一致。
 - 全部插在仙侠 section 末尾（紧贴 `cong_songzi_liyu` 之后），保留 follow-up 103 expanded comment 之下的"按 follow-up 顺序追加"惯例。
 
-## 运行时影响
+### 运行时影响
 - Downloader 当前后台 task 仍在 workers=2 模式跑 catalog 所有 novels；新增 5 个 entries 会在下次启动时被 `download_all` 看见。本次不强行 restart — 当前 in-progress 跑完后，用户 / cron 下次触发即会拾取这 5 部。
 - 如需立即拉起 5 部下载：等当前 background task 结束（或手动 stop）后，再次 `python -m apps.cli.novel_download --workers 2`，即拉新 entries（resumable 状态机会自动跳过现有 done chapters）。
 - Workers 默认值不在本 follow-up 改动 — follow-up 106 把默认 reverted 到 1（sudugu IP-block protection），用户手动传 `--workers 2` 是 per-run opt-in。
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 - ttkan 备源 / multi-source spec（参考 follow-up 107 模式，后续按需补）。
 - 玄幻 / 都市 / 历史 / 科幻 / 言情 等 category 扩充。
 - workers 默认值上调（保持 follow-up 106 的 serial-by-default + opt-in parallel 策略）。
 - UI 上新 entries 在 sidebar 的渲染规则不变（沿用 follow-up 104 complete-only-sidebar 行为）。
 
+
 ---
 
-# Follow-up draft 111 — 2026-05-24
+## 111 — 2026-05-24 09:58:34 — novels-split-per-chapter
+
 Summary: 把 `downloaded_novels/{cat}/{slug}/{slug}.md`（3–19 MB 单文件）按章节拆成 `downloaded_novels/{cat}/{slug}/chapters/{NNNN}-{title}.md`（典型 5–80 KB / 章），删除原拼接文件，让前端能通过 `/api/file`（`MAX_FILE_BYTES = 1 MiB`）真正打开每一章。Downloader 同步切换到 per-chapter 写盘；新增一次性 splitter CLI 处理 11 本已下载的小说；`_meta.json.chapters[].file` 记录每章相对文件名。Follow-up 101 第 109 行明确把"分页 / 单文件超 1 MiB 打不开"留作未来 follow-up，本 follow-up 即兑现。
 
-## 用户原话
+### 用户原话
 > under ai_video_management novels, the downloaded novel are too big in one md file, plesae split them into multiple md files so it is easy to view on frontend
 
-## 用户多选裁决
+### 用户多选裁决
 1. 拆分粒度：**每章一个 .md**（granular nav，章级单位即用户阅读单位）。
 2. 原拼接 `{slug}.md`：**删除**（不留双份；前端读 chapters/ 目录即可，整书下载场景目前没有 spec 化需求）。
 3. 落地范围：**Both — 立即拆分已存在 11 本 + 同步改 writer**，新下载的小说从一开始就是 per-chapter 形态。
 
-## 设计
+### 设计
 
-### 文件夹形态（一次拆分到位 + 未来下载延续）
+#### 文件夹形态（一次拆分到位 + 未来下载延续）
 
 ```
 downloaded_novels/
@@ -9340,7 +9489,7 @@ downloaded_novels/
 
 旧 `{slug}.md` 在 splitter 跑完后删除。`chapters/` 目录是 splitter 与 writer 共用的唯一落盘位置，无双份。
 
-### 文件命名规则
+#### 文件命名规则
 
 - `{NNNN}-{sanitized_title}.md`
   - `NNNN` = 4 位零填充章节 idx（`fanren_xiuxian_zhuan` 现有 ~2400 章，4 位足够；超过 9999 章再考虑 5 位 — 现已下载的最大 fanren 也未到 3000）。
@@ -9348,7 +9497,7 @@ downloaded_novels/
 - 文件正文：`# {chapter.title}\n\n{body}\n`（H1 仍为完整标题，便于在 Reader 视图内一目了然）。
 - 文件名沿用 follow-up 004 中文文件名豁免 — 前端 Sidebar `Reader` 已经能正确显示中文 / `/api/file` URL-decode 自动处理。
 
-### `_meta.json` 形态
+#### `_meta.json` 形态
 
 `ChapterRecord` 新增可空字段：
 
@@ -9366,7 +9515,7 @@ class ChapterRecord:
 
 `done == True` 但 `file is None` 即表示 splitter 还没跑（兼容旧元数据）。Splitter 跑完后所有 done 章节都填上 `file`。Writer 写章节时同步赋值。`to_json` / `from_json` 序列化对应字段，旧文件读不到字段时返回 `None`（向后兼容，splitter 会一次性回填）。
 
-### Writer 改造（`libs/infrastructure/writers/novel__writer.py`）
+#### Writer 改造（`libs/infrastructure/writers/novel__writer.py`）
 
 `_ensure_index` / `_download_one_chapter` 不再 append 到 `{slug}.md`：
 
@@ -9376,7 +9525,7 @@ class ChapterRecord:
 4. Resumable 语义不变：`chapter.done == True` 即 skip；只是判定的物理证据从"`.md` append 偏移"变成"`chapters/{file}` 文件存在"。
 5. Idempotency：写文件前若 `chapters_dir / file` 已存在则覆写（避免重复 download 导致脏文件）；`_write_meta` 仍是 tmp+rename 原子写。
 
-### Splitter CLI（`apps/cli/novel_split.py` — 新增）
+#### Splitter CLI（`apps/cli/novel_split.py` — 新增）
 
 一次性脚本，对 `downloaded_novels/**/*/{slug}.md` 全量处理：
 
@@ -9396,23 +9545,23 @@ python -m apps.cli.novel_split --dry-run      # 只打印不写盘
 
 Splitter 与 writer 共用 `_safe_filename_segment` / `_build_chapter_filename` helper（提到模块顶层；如果 writer 不希望 import CLI 模块，把 helper 提到 `libs/common/` 反而更干净 — 但为了最小变更，保留在 writer 模块，splitter `from ... import` 复用）。
 
-### Tree reader（`libs/infrastructure/readers/tree__reader.py`）
+#### Tree reader（`libs/infrastructure/readers/tree__reader.py`）
 
 `_novels_section` 现在的 `_walk_filtered(novel_dir, self._is_allowed_leaf)` 会自动递归到 `chapters/` 子目录并把每章 `.md` 当 leaf 渲染。**不需要代码改动**。Sidebar `expanded[novel_dir]` 默认收起（follow-up 101），用户点开后看到 README + _meta.json + chapters/ 三个子条目；展开 chapters/ 才看到逐章文件。
 
-### Tests / 回归
+#### Tests / 回归
 
 - 既有 `tests/test_tree_walker_consumer_walk.py` 对 novels section 有 assertion — 现仍能正常walk（添加新嵌套层级不会破坏 walker）。
 - 不新增专用测试（最小变更原则；splitter 是一次性运维脚本，writer 行为通过 splitter 输出可用即间接验证）。
 
-### Out of scope
+#### Out of scope
 
 - 章节 "上一章 / 下一章" navigation UI（前端独立 follow-up；splitter 输出本身已含 `_meta.json.chapters[].file` 顺序）。
 - 小说级 search / 关键字跳转（v1 仍靠浏览器 Ctrl+F 章内搜）。
 - 拆分粒度切换（per-chapter 已是用户挑选粒度）。
 - 把 helper 提到 `libs/common/`（保留 writer 内私有，splitter import 即可；后续若有第三方使用者再升格）。
 
-## Touch list
+### Touch list
 
 - **NEW**: `projects/ai_video_management/apps/cli/novel_split.py`
 - **Modified**: `projects/ai_video_management/libs/infrastructure/writers/novel__writer.py` — `ChapterRecord.file` 新字段；`_NovelState.chapters_dir` 替代 `body_path`；`_ensure_index` 写 README + mkdir chapters/；`_download_one_chapter` 写 per-chapter；新增 `_safe_filename_segment` + `_build_chapter_filename` helper。
@@ -9420,16 +9569,18 @@ Splitter 与 writer 共用 `_safe_filename_segment` / `_build_chapter_filename` 
 - **Runtime**: 跑 `python -m apps.cli.novel_split` 处理已下载的 11 本小说。
 - **Audit**: `specs/development/ai_video_management/user_input/revised_prompt.md` header bump（111）；`specs/development/ai_video_management/changelog.md` 追加条目。
 
+
 ---
 
-# Follow-up draft 112 — 2026-05-24
+## 112 — 2026-05-24 10:04:44 — kling-actor-429-retry
+
 Summary: 修 Kling actor 生成 `/v1/images/generations` 429 Too Many Requests 级联 —— 前端 (follow-up 027) 9-worker 并发 pool 每个 worker 触发 backend `generate_batch(count=1)` 内的 face + body 两次 Kling submit，瞬时 18 个并发请求超过 Kling 商业端的 per-account QPS 限速 cap，`KlingProvider._submit` 的 `resp.raise_for_status()` 直接抛 `httpx.HTTPStatusError` 冒泡到 `generate_batch` line 1581 的 `except Exception`，写 `http_failed: Client error '429 Too Many Requests' for url 'https://api.klingai.com/v1/images/generations'` 到 `result.errors[i].message`，整个 slot 阵亡。复用 follow-up 018 (pollinations rate-limit retry) 的 3-retry + [3s, 6s, 12s] backoff 形态，本次落到 Kling 上：429 时额外尊重 server 的 `Retry-After` header（cap 60s），httpx 超时同 backoff 重试，其他 4xx/5xx 直接冒泡。前端 9-worker 并发不变 —— 与 018 一致，retry-on-server 已经吸收 burst-induced rate-limit，无需牺牲并发吞吐。
 
-## 用户原话
+### 用户原话
 
 > generate actor got errors:#2: actor_0032: http_failed: Client error '429 Too Many Requests' for url 'https://api.klingai.com/v1/images/generations' For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429
 
-## 根因
+### 根因
 
 `libs/infrastructure/writers/actor__writer.py:1280 _submit()` 单次 POST，无重试：
 
@@ -9453,7 +9604,7 @@ resp.raise_for_status()    # 429 → httpx.HTTPStatusError 冒泡
 
 也就是 follow-up 018 的 root cause B（folder cleanup）已经修了，root cause A（无 retry）这次在 Kling 上重新出现。
 
-## 修复
+### 修复
 
 `libs/infrastructure/writers/actor__writer.py`:
 
@@ -9471,7 +9622,7 @@ resp.raise_for_status()    # 429 → httpx.HTTPStatusError 冒泡
 
 5. `KlingProvider._poll` 同上 —— 虽然实测 429 主要来自 submit（用户截图显示 url 是 `/images/generations` POST），但 poll 也是 GET 同一 endpoint，且每个 task 平均 poll 6–30 次（120s max_wait / 2s interval），在 burst window 内有同等触发风险，cheap insurance。
 
-### Smoke 验证
+#### Smoke 验证
 
 `_kling_retry_sleep_seconds` + `_kling_call_with_retry` 单元行为本地验证 5/5 通过：
 - 三档 backoff 默认 `[3.0, 6.0, 12.0]` ✓
@@ -9481,7 +9632,7 @@ resp.raise_for_status()    # 429 → httpx.HTTPStatusError 冒泡
 - `500 propagates`：1 个 attempt 后立即 raise ✓
 - `timeout-retry`：1 个 timeout + 1 个成功 = 2 attempt ✓
 
-## 不在本 follow-up 范围
+### 不在本 follow-up 范围
 
 - **不降低 frontend `CONCURRENCY = 9`** —— follow-up 018 同款判断：retry-on-server 吸收 burst-induced rate-limit 优于牺牲并发；只在 retry 仍然失败时让 slot 阵亡（保留现有 `http_failed` 错误链路 + folder cleanup）。
 - **不引入 user-configurable retry 参数**（v1 hardcoded，与 018 对齐）。
@@ -9490,7 +9641,7 @@ resp.raise_for_status()    # 429 → httpx.HTTPStatusError 冒泡
 - **不区分 face 与 body shot 的 retry budget** —— 两次 submit 共享同一个 21s 上限（一个 slot 的两次独立 submit 各自有自己的 21s 预算，worst case 一个 slot 总等 ~42s），仍远低于 worker 内 generate 流程的总 wall-clock（每张 Kling 出图 30-60s）。
 - **不动 `_provider.generate()` 的下载 phase**（`with client.stream("GET", img_url)` + `iter_bytes` 那段，line 1249-1259）—— 下载走 Kling CDN 而非 `api.klingai.com`，429 不来自这里；超时已有 30s `DEFAULT_TIMEOUT_SECONDS` 限制，超时失败由 `generate_batch` 同样的 `http_failed` 路径处理。
 
-## Touch list
+### Touch list
 
 - **Modified**: `projects/ai_video_management/libs/infrastructure/writers/actor__writer.py`
   - imports 区域：新增 `from collections.abc import Callable`
@@ -9508,26 +9659,28 @@ resp.raise_for_status()    # 429 → httpx.HTTPStatusError 冒泡
   - `specs/development/ai_video_management/user_input/revised_prompt.md` header bump（112）
   - `specs/development/ai_video_management/changelog.md` 追加条目
 
-## Open question (deferred)
+### Open question (deferred)
 
 - 9-worker 是否仍是 Kling 友好的最佳值？目前的猜测是 Kling 商业版 QPS 上限在 ~5-10/s 区间；retry 吸收了 burst，但稳态 throughput 没改善。如果用户报告 retry 之后仍然 high error-rate 或 batch 总耗时显著拉长，下个 follow-up 可以测：(a) 把 frontend `CONCURRENCY` 调到 4-6 看是否完全消除 429；或 (b) 在 backend `_submit` 内加 token-bucket 限流（process-wide 计数器 + asyncio/threading lock）。
 
+
 ---
 
-# Follow-up draft 113 — 2026-05-24
+## 113 — 2026-05-24 10:14:28 — split-novels-into-downloaded-and-my-novel
+
 Summary: 把现有顶层目录 `novels/` 重命名为 `downloaded_novels/`（即"下载来的他人小说"基线语料），并新增同级目录 `my_novel/`（我自己撰写的原创小说，为 AI 短剧生产准备）。webapp `ExposedTree` 现在容纳三个顶层根：`ai_videos/`、`downloaded_novels/`、`my_novel/`。沙箱白名单、tree-reader 分区、容器 DI、CLI 下载器、前端类型注释、相关测试同步更新。`my_novel/` 不应用 `_meta.json.complete == True` 筛选（原创稿不是爬下来的，没有 complete 字段），按子目录原样呈现。
 
-## 用户原话
+### 用户原话
 > under ai_videos_management rename current downloaded novels folder to downloaded_novels, I am going to introduce a new folder called my novel, under my novel, I am going to ask you to take a look at existing downloaded novels, and then make up a new novel for me, 題材仍然是某一類，比如仙俠，請把諸多小説當作baseline，編排一部新的小説，而且保證不會有版權重複問題，但是要保持小説的競猜性，你可以從多部小説中提取要素，更換人名，然後你還要與時俱進，從網上research跟多有關此類型題材的信息系和熱點，把他融入到小説中。小説的最終目的是拍攝ai短劇
 
-## 用户多选裁决
+### 用户多选裁决
 1. **顶层布局**：`downloaded_novels/` + `my_novel/` 两个同级目录（不在外层包一层 parent；不用复数 `my_novels/`）。
 2. **新小说创作工作流**：通过 `/agent_team`（task_type=ai_video, sub_type=novel）跑完整 spec-driven 六阶段，研究阶段拆为 baseline 提取 / 题材网络热点 / 人物去版权化三个 angle。
 3. **webapp 同步更新**：全量改 — `_ALLOWED_TOP_LEVEL`、`ExposedTree`、tree_reader、readers/writers、routes、DTO、前端类型、CLI、tests 都一起改到位，不留分裂状态。
 
-## 设计
+### 设计
 
-### 目录形态
+#### 目录形态
 
 ```
 spec_coding/
@@ -9541,7 +9694,7 @@ spec_coding/
     └── (跑 /agent_team 后落 my_novel/{slug}/)
 ```
 
-### webapp `ExposedTree` 沙箱
+#### webapp `ExposedTree` 沙箱
 
 `libs/common/safe_resolve.py` 与 `libs/common/exposed_tree.py` 的 `_ALLOWED_TOP_LEVEL`：
 
@@ -9552,7 +9705,7 @@ _ALLOWED_TOP_LEVEL: frozenset[str] = frozenset({"ai_videos", "downloaded_novels"
 `ExposedTree`：
 - `novel_dirs()` → 拆分为 `downloaded_novel_dirs()` + `my_novel_dirs()` 两个公开方法，分别返回各自 root 下的一级子目录。
 
-### tree_reader 分区
+#### tree_reader 分区
 
 `libs/infrastructure/readers/tree__reader.py` 改输出三个 section（顺序固定）：
 
@@ -9560,28 +9713,28 @@ _ALLOWED_TOP_LEVEL: frozenset[str] = frozenset({"ai_videos", "downloaded_novels"
 2. **"Downloaded Novels"**（原 "Novels" 改名 + 指向 `downloaded_novels/`；保留 `_meta.json.complete == True` 筛选 + CANONICAL_NOVELS 排序 + 中文 display_name 映射）
 3. **"My Novel"**（新增；指向 `my_novel/`；不应用 complete 筛选；按 `name.lower()` 字典序排序；项目目录有 `README.md` H1 中文标题时填 `display_name`，与 ai_videos section 共用 `_project_zh_title()` 抽取器）
 
-### 容器 DI
+#### 容器 DI
 
 `apps/api/container.py`：
 - `novels_root` 提供者 → 重命名为 `downloaded_novels_root`，并新增 `my_novel_root`。
 - `NovelDownloader`、`NovelQuery` 的 `novels_root` 参数都绑定到 `downloaded_novels_root`（这两个类的"novels"指的是"下载来的小说"概念）。
 
-### CLI 下载器
+#### CLI 下载器
 
 `apps/cli/novel_download.py` 的 `_resolve_novels_root()` 改为查找 `downloaded_novels/`（而非 `novels/`）；`NOVELS_ROOT` 环境变量名保留（向后兼容）但语义指向新位置。打印的标签从 `novels_root:` 改为 `downloaded_novels_root:`。
 
-### 前端类型
+#### 前端类型
 
 `apps/ui/src/types.ts` 中 `display_name` 注释更新，提及 `downloaded_novels/{category}/{slug}/` 与 `my_novel/{name}/` 两种使用场景。前端代码没有任何地方 hardcode `"Novels"` 字符串（只有 `Home.tsx` 通过 `c.name === "AI Videos"` 拿 AI Videos 区，本次不受影响）。
 
-### 测试
+#### 测试
 
 - `test_tree_walker_consumer_walk.py`
   - `test_tree_sections_order` 断言由 `["AI Videos", "Novels"]` → `["AI Videos", "Downloaded Novels", "My Novel"]`。
   - 原 `test_novels_section_walks_repo_novels_dir` 拆为 `test_downloaded_novels_section_walks_repo_downloaded_novels_dir` 与 `test_my_novel_section_walks_repo_my_novel_dir`。
 - `test_boot_smoke.py::test_get_tree_returns_expected_sections` 与 `test_api_security_three_shapes.py::test_get_tree_unguarded` 的 section 名单同步更新。
 
-### Phase B：用 `/agent_team` 产出第一部原创仙侠小说
+#### Phase B：用 `/agent_team` 产出第一部原创仙侠小说
 
 新发 spec-driven 任务 `task_type=ai_video, sub_type=novel`，最终产物布局：
 
@@ -9603,21 +9756,22 @@ _ALLOWED_TOP_LEVEL: frozenset[str] = frozenset({"ai_videos", "downloaded_novels"
 - `my_novel/{slug}/README.md`（中文标题 + 概要）。
 - `my_novel/{slug}/world.md`、`characters/`、`outline.md`、`episodes/epNN/{script,shots}.md`（per `agent_refs/project/ai_video.md` 的 novel 子类型约定）。
 
-## 落地不动的旧规则
+### 落地不动的旧规则
 
 - `_meta.json.complete == True` 筛选仅对 `downloaded_novels/` 应用（原 follow-up 104 规则的语义保持）。
 - 章节级 per-file 拆分（follow-up 111）继续生效，只是路径前缀从 `novels/` 变成 `downloaded_novels/`。
 - ttkan/sudugu 双源 fallback、jitter、splitter（follow-up 107/109/111）完全不动。
 - `agent_refs/project/ai_video.md` 的 novel 子类型规则不动；只是新增"小说原稿放在 `my_novel/`"这一上游事实。
 
-## 不在本 follow-up 范围内
+### 不在本 follow-up 范围内
 
 - 新仙侠小说本身的内容产出 — Phase B 通过 `/agent_team` 独立跑。
 - 旧 `novels/` 路径相关的、未被本仓库代码引用的外部 reference（如其他 spec 文档里出现的字面量 `novels/`）— 历史文档不追溯改写，新文档全部使用新路径。
 
+
 ---
 
-# Follow-up draft 114 — 2026-05-24
+## 114 — 2026-05-24 05:55:07 — phase1-simplicity-refactor
 
 Phase 1 of a multi-phase simplicity refactor: collapse the parallel error hierarchies, centralize HTTP-error mapping at the FastAPI boundary, delete the empty `ActorEntity` holder, and remove a long tail of duplicated / boilerplate code. Splitting `actor__writer.py` and rewriting the mapper/Protocol layer are explicitly deferred to a later phase.
 
@@ -9639,13 +9793,13 @@ target_artifacts:
 severity: high
 ---
 
-## Intent
+### Intent
 
 The current backend keeps two parallel exception hierarchies for every aggregate (`libs/domain/errors/{X}__error.py` + `libs/infrastructure/errors/{X}__error.py`). Every Command/Query wraps each infra call in a `try / except InfraErr / raise DomainErr` block. Every route then wraps the Command/Query call in another `try / except DomainErr / return JSONResponse(...)` block. Adding a new error requires touching five places (infra class, domain class, command translator, route handler, kind string) with no compile-time help keeping them aligned.
 
 There is no second adapter behind any of these infrastructures. The layering is buying drift risk without buying optionality.
 
-## Phase 1 scope (this follow-up)
+### Phase 1 scope (this follow-up)
 
 1. **Collapse parallel error hierarchies, all aggregates.** Infrastructure raises domain errors directly. The `libs/infrastructure/errors/` package is deleted in its entirety. For infra exceptions that did not have a domain counterpart (e.g. `GenerationDirMissing`, `TargetExists`, `MoveFailed`, `NovelNotFound`), add a named domain class so the boundary still has a stable name.
 2. **Centralize HTTP-error mapping at the FastAPI boundary.** Replace the per-endpoint `try / except DomainErr / return JSONResponse(...)` blocks with a single `app.exception_handler(DomainErr)` per error class, registered in `apps/api/app_factory.py`. Status code and `{"detail": {"kind": ...}}` shape stay identical to today.
@@ -9658,51 +9812,50 @@ There is no second adapter behind any of these infrastructures. The layering is 
 9. **Drop `@runtime_checkable` from `ActorRepository`.** No runtime `isinstance(x, ActorRepository)` check exists.
 10. **Fix the swallowed `OSError` in `apps/api/app_factory.py`.** If `_actors/` cannot be created at startup, the actor feature is broken — fail loudly with a clear traceback rather than silently continuing.
 
-## Phase 1 explicitly does NOT do
+### Phase 1 explicitly does NOT do
 
 - Splitting `libs/infrastructure/writers/actor__writer.py` (2,431 lines) into `clients/kling__client.py` + archetype valueobject + sidecar file + a slimmed `ActorPool`. Deferred to Phase 2.
 - Retyping `ActorRepository.preview_prompts() -> dict[str, object]` to a real dataclass so the `preview_to_qdto` mapper can drop its isinstance gauntlet. Deferred to Phase 2.
 - Collapsing the mapper layer's pure-boilerplate methods (`generate_to_cdto`, `info_to_qdto`) into direct field copies / `asdict`. Deferred to Phase 2.
 - The `from __future__ import annotations` line at the top of every Python file. Cosmetic-only; not worth the noise in this diff.
 
-## Constraints
+### Constraints
 
 - HTTP response shapes (status codes + `{"detail": {"kind": ..., ...}}` bodies) MUST be byte-identical to today's behavior. The existing test suite (`tests/test_api_security_three_shapes.py`, `tests/test_boot_smoke.py`, etc.) is the contract.
 - No new dependencies.
 - All changes land inside `projects/ai_video_management/`; no edits to `CLAUDE.md` or `.claude/agent_refs/` in this phase (Phase 2 will revisit `agent_refs/project/development.md` §1 if needed to soften the entity-mandatory rule).
 
-## Why now
+### Why now
 
 Three reviews of this codebase have repeatedly identified the same friction points; the layering is not earning its boilerplate. Collapsing the error hierarchies is the highest leverage change available and is a prerequisite for any of the Phase 2 work.
 
----
 
 ---
-target_stage: 4
-target_artifacts:
-  - final_specs/spec.md
-  - validation/strategy.md
-  - validation/acceptance_criteria.md
-  - validation/bdd_scenarios.md
-  - validation/security.md
-severity: medium
----
 
-# Follow-up draft 115 — 2026-05-24
+## 115 — 2026-05-24 11:30:00 — voices-folder-and-prompt-generation
+
+> target_stage: 4
+> target_artifacts:
+>   - final_specs/spec.md
+>   - validation/strategy.md
+>   - validation/acceptance_criteria.md
+>   - validation/bdd_scenarios.md
+>   - validation/security.md
+> severity: medium
 
 Add a `_voices/` voice-profile asset pool parallel to `_actors/`. Each voice profile is a generated Chinese-language 配音 prompt the user copies into an external AI voice model (ElevenLabs / MiniMax / CosyVoice / etc.). The webapp itself does **NOT** call any voice-generation API — it composes prompts locally and stores user-supplied audio samples.
 
-## Original wording
+### Original wording
 
 > under ai_video_management, 除了_actors之外, 幫我生成一個配音folder，裏面我會需要生成不同的配音聲音，比如陰柔太監音，雄壯將軍音，柔美宮主音等等，類似生成actor一樣的機制，只是這次不是直接給kling api，而是給我prompt，我自己交給別的ai model生成聲音
 
-## Abstracted intent
+### Abstracted intent
 
 Dubbing (配音) is the missing leg of the character-bible triad: face → body → voice. The actor pool (FR-9f / follow-ups 014–112) gives the visual identity; this follow-up adds the auditory identity as a sibling asset pool.
 
 The key distinction from the actor pipeline: voice generation is **purely local text composition** — no outbound HTTP, no provider key management, no 429 retry, no rate limiting. The webapp's contribution is (a) the generated Chinese prompt text + organized library, and (b) optional audio sample storage so the user can preview voices in-grid after rendering them externally. The "AI model" call is the user's manual paste-and-render step, outside the webapp.
 
-### Concrete deltas
+#### Concrete deltas
 
 1. **Folder:** `ai_videos/_voices/voice_NNNN/` parallel to `ai_videos/_actors/actor_NNNN/`. Same `_xxx` underscore-prefix convention so the existing single-leaf-collapsed sidebar pattern (follow-up 036) applies identically.
 
@@ -9768,7 +9921,7 @@ The key distinction from the actor pipeline: voice generation is **purely local 
     - Drop-in via filesystem: user copies `voice_NNNN.mp3` into the folder by hand; webapp picks it up on next tree refresh, no DB to sync.
     - No automated retrieval. No TTS in-browser. No waveform visualization. v1 audio support is `<audio controls>` playback only.
 
-## Why
+### Why
 
 Two reasons:
 
@@ -9776,7 +9929,7 @@ Two reasons:
 
 2. **Sidesteps all the provider complexity** that dominated actor follow-ups 018 – 112. Because voice synthesis happens externally, the webapp's surface area for this feature is small: a prompt composer + a file library + an audio playback affordance. The grid / generator / casting UX is already built — we reuse it for voices with a different backend.
 
-## Out of scope
+### Out of scope
 
 - **No external AI voice API calls.** The webapp never hits ElevenLabs / MiniMax / CosyVoice / OpenAI TTS. Voice synthesis is the user's manual step.
 - **No real-time voice cloning, no waveform visualization, no in-browser TTS preview.** v1 audio playback is just `<audio controls>` when a sample file exists.
@@ -9786,26 +9939,25 @@ Two reasons:
 - **Voice-to-character cast-folder copy vs. id-reference is a v1 detail.** Pick the simpler path during exec; record divergence in spec if it diverges from the actor cast pattern.
 - **Provider-key management UI, env file format for voice providers** — not applicable, no providers.
 
----
 
 ---
-target_stage: 6
-target_artifacts:
-  - projects/ai_video_management/apps/ui/src/lib/promptEdit.ts
-  - projects/ai_video_management/apps/ui/src/markdown/renderer.tsx
-  - projects/ai_video_management/apps/ui/src/components/Reader.tsx
-  - projects/ai_video_management/apps/ui/src/components/ShotPairView.tsx
-  - projects/ai_video_management/apps/ui/src/components/ImageRefView.tsx
-  - projects/ai_video_management/apps/ui/src/components/ActorView.tsx
-  - projects/ai_video_management/apps/ui/src/styles.css
-severity: medium
----
 
-# Follow-up draft 116 — 2026-05-25
+## 116 — 2026-05-25 23:17:32 — per-block-inline-edit-ai-videos
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/lib/promptEdit.ts
+>   - projects/ai_video_management/apps/ui/src/markdown/renderer.tsx
+>   - projects/ai_video_management/apps/ui/src/components/Reader.tsx
+>   - projects/ai_video_management/apps/ui/src/components/ShotPairView.tsx
+>   - projects/ai_video_management/apps/ui/src/components/ImageRefView.tsx
+>   - projects/ai_video_management/apps/ui/src/components/ActorView.tsx
+>   - projects/ai_video_management/apps/ui/src/styles.css
+> severity: medium
 
 webapp 的 inline "edit prompt" 模式只覆盖 **第一个** fenced code block。但 ai_video.md rule 12.6-B (per follow-up xianxia_new/011) + rule 12.3 + rule 12.5 让 scene 档 / character 档 / actor 档可包含 N 个 prompt code block (scenes: 立绘 + 15s walk-through; characters: turntable + Seedream立绘 + state-A/B 变体; actors: face shot + body shot)。结果: 用户只能编辑第一个 prompt，其余 prompt 只能开"整个 md 文件"编辑器，违背"edit just the prompt"原则。
 
-## 抽象指令
+### 抽象指令
 
 在 `ai_videos/` 下的所有 markdown 文件中，**每一个** fenced code block 都加一个 inline ✏ Edit 按钮，行为契约: (a) 仅替换该 code block 的 body, (b) 保留 frontmatter / 标题 / 锁定描述符 / 负向段 / cross-doc 路径 等其他段落 byte-identical, (c) 走现有 PUT /api/file + If-Unmodified-Since concurrency, (d) 409 stale_write 时保留 textarea buffer 不丢失。
 
@@ -9824,37 +9976,36 @@ webapp 的 inline "edit prompt" 模式只覆盖 **第一个** fenced code block�
 
 5. **CSS** (styles.css): 新增 `.code-block-actions` (flex 容器, 替代旧的单按钮绝对定位), `.code-block-edit-btn` (蓝色 variant), `.code-block-save-btn` (绿色 variant), `.code-block-wrapper-editing` (蓝边框 + padding), `.code-block-textarea` (类比 shot-pane-textarea, 等宽字体), `.code-block-edit-error` (红色 banner)。
 
-## 不动的契约
+### 不动的契约
 
 - `prompts/` 路径全部已废止 → `shots/` (per follow-up xianxia_new/011)。Reader.tsx `SHOT_MD_RE` 仍使用旧路径 regex `prompts/shot\d+/shot\d+.md` —— 本 follow-up 不修复 (单独 follow-up 应跟进, 否则 shotNN.md 不再走 ShotPairView 而落到 isShotMd-only path)。
 - VoiceView 单 prompt 编辑模式保持 byte-identical (functional currently)。
 - 全文件编辑入口 ("✎ Edit" toolbar button) 保留, 用于编辑 frontmatter / 标题 / 锁定描述符 / 负向段等非 prompt 段。
 - promptEdit.ts 老 API (`findFirst*` / `replaceFirst*`) 保留, 不破坏现有调用方。
 
-## 触发原因
+### 触发原因
 
 用户原话: "在ai videos裏，每個prompt都給我一個edit mode，而且只是edit prompt自己，不是當前md 文件". 用户通过多选锁定: 范围 = 仅 `ai_videos/` 下的 .md / 4 个 specialized view 同步升级。
 
----
 
 ---
-target_stage: 6
-target_artifacts:
-  - .claude/agent_refs/project/ai_video.md
-  - projects/ai_video_management/libs/infrastructure/clients/anthropic__client.py
-  - projects/ai_video_management/libs/application/queries/prompt__query.py
-  - projects/ai_video_management/apps/api/routes/prompt__route.py
-  - projects/ai_video_management/apps/ui/src/components/PromptStructuredEditor.tsx
-  - projects/ai_video_management/apps/ui/src/markdown/renderer.tsx
-  - projects/ai_video_management/apps/ui/src/api.ts
-severity: high
----
 
-# Follow-up draft 117 — 2026-05-31
+## 117 — 2026-05-31 17:33:58 — prompt-skeleton-plus-ai-dimension-refine
+
+> target_stage: 6
+> target_artifacts:
+>   - .claude/agent_refs/project/ai_video.md
+>   - projects/ai_video_management/libs/infrastructure/clients/anthropic__client.py
+>   - projects/ai_video_management/libs/application/queries/prompt__query.py
+>   - projects/ai_video_management/apps/api/routes/prompt__route.py
+>   - projects/ai_video_management/apps/ui/src/components/PromptStructuredEditor.tsx
+>   - projects/ai_video_management/apps/ui/src/markdown/renderer.tsx
+>   - projects/ai_video_management/apps/ui/src/api.ts
+> severity: high
 
 shot 视频 prompt 由「一次生成写满所有维度」改为「先出基础骨架 + 在 webapp 里逐栏目 AI 细化」的两段式工作流。
 
-## 抽象指令
+### 抽象指令
 
 改变每个 shot 视频 prompt 的结构与生成方式：
 
@@ -9866,7 +10017,7 @@ shot 视频 prompt 由「一次生成写满所有维度」改为「先出基础�
    - 用户在卡片里选一个、点「填入 / 追加」确认 —— 智能合并：该字段为空则填入，非空则换行追加；其余字段不动；
    - 再走现有 per-block Save（PUT /api/file + If-Unmodified-Since）落盘。
 
-## 落地
+### 落地
 
 后端（新增 read-only `prompt` aggregate，DDD+CQRS）：
 
@@ -9883,26 +10034,27 @@ shot 视频 prompt 由「一次生成写满所有维度」改为「先出基础�
 - `apps/ui/src/markdown/renderer.tsx` — CopyableCode 把 `ctx.fileContent`（作 shotContext）+ `ctx.currentPath` 透传给 PromptStructuredEditor。
 - `apps/ui/src/styles.css` — `.prompt-refine-*` 样式。
 
-## 不动的契约
+### 不动的契约
 
 - ✨ 细化只对 shot **视频 prompt**（blockKind=video）开放；起始帧/结束帧、actor/scene/character 的结构化编辑不变（ShotPairView 直接用 PromptStructuredEditor 但不传 blockKind/shotContext，自然不出现 ✨）。
 - 无 `ANTHROPIC_API_KEY` 时后端返回 503 suggestion_unavailable，前端提示「未配置 ANTHROPIC_API_KEY」；其余编辑/保存功能完全不受影响（feature 可选、优雅降级）。
 - per-block inline edit（follow-up 116）、PUT /api/file 并发、负向已废止等既有契约保持不变。
 - 后端调用 LLM 仅用于「建议」，不写文件；落盘仍走用户确认 + 现有 Save 链路。
 
-## 触发原因
+### 触发原因
 
 用户原话: "我們改一下每一個prompt的結構，自動生成的prompt顯示一個very basic version，然後在ui頁面上有一堆欄目選項，都是不同維度的prompt細化共我選擇，我點擊一個欄目的時候，你直接根據當前的場景，當前欄目，推薦給我幾個細化prompt的選擇，我選擇個點擊確認之後，你就把這個細節加入到prompt裏面"。用户通过多选锁定：建议来源 = 后端实时调用 LLM；basic version = 改自动生成（stage 6）；适用范围 = 只 shot 视频 prompt；LLM 集成 = 官方 anthropic SDK；合并方式 = 智能（空则填入，非空则追加）。
 
----
 
 ---
-target_stage: 6
-target_artifacts:
-  - final_specs/spec.md
-severity: medium
----
-# Follow-up draft 118 — 2026-05-31
+
+## 118 — 2026-05-31 19:42:55 — episode-concat-shots-into-one-mp4
+
+> target_stage: 6
+> target_artifacts:
+>   - final_specs/spec.md
+> severity: medium
+
 Episode-level "合成本集视频" button: concatenate a whole episode's shot renders into one episode mp4.
 
 In the ai_video_management webapp, while viewing an episode, surface a button that, on click,
@@ -9928,22 +10080,33 @@ Disambiguation captured at request time: scan scope = **renders/ subfolder only*
 "recurse whole shot folder"), so the 2-second character reel `shot{NN}_chars.mp4` is never mistaken for
 the shot's final render.
 
----
+
 
 ---
-target_stage: 6
-target_artifacts:
-  - projects/ai_video_management/libs/infrastructure/writers/downloads__writer.py
-severity: low
+
+# Follow-ups · 202606.md
+
+# Follow-ups 2026-06
+
+<!-- Consolidated monthly log. New follow-ups APPEND a `## NNN` section
+     below; a new file starts only when the month rolls over. -->
+
+
 ---
 
-# Follow-up draft 119 — 2026-06-01
+## 119 — 2026-06-01 14:40:18 — import-route-scene-orientation-plates
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/ai_video_management/libs/infrastructure/writers/downloads__writer.py
+> severity: low
+
 导入+重命名 (DownloadsImporter) 要支持把场景背景图归位到「朝向 plate 子 folder」，而不仅是 scene 根。
 
-## 背景
+### 背景
 ai_video 场景背景采 folder-per-朝向：`scenes/{scene}/bg{N}_{方位}_{描述}/`，每朝向一张 PNG。出图工具 (jimeng/即梦) 的下载文件名取 prompt `主体:` 行正文，含朝向「方位词」(朝北/朝南/朝东/朝西/高位俯瞰/案前)，但**不**含完整 plate_id。旧导入只把文件匹配到 scene 根，6 张朝向图全挤在 scene 根 + 被 rename 折叠，无法归位。
 
-## What landed (stage-6 净增量)
+### What landed (stage-6 净增量)
 `libs/infrastructure/writers/downloads__writer.py`:
 - `_plate_orientation_token(folder_name)` — 取 `bg\d+_` 之后第一段 (= 方位) 作路由 token；非 `bg{N}_` folder 返回 None。
 - `_match_scene_plate(filename, scene_folder)` — 文件已匹配到 scene 后，遍历该 scene 的 plate 子 folder，按**方位段**子串匹配，命中则把目标下沉到该 plate folder。
@@ -9954,26 +10117,26 @@ ai_video 场景背景采 folder-per-朝向：`scenes/{scene}/bg{N}_{方位}_{描
 
 纯增量：不改 character / shot / 既有 scene-根 路由语义；仅在 scene 下存在 `bg\d+_*` 子 folder 时触发。
 
-## 验证
+### 验证
 实跑 `import_drama("ai_videos/nvdi_tuihun_houhuile")`：6 张 jimeng 背景 PNG 全部归位 bg1–bg6 + 自动重命名，moved 全为 `scene_plate`，0 unmatched / 0 error。
 
----
 
 ---
-target_stage: 6
-target_artifacts:
-  - projects/ai_video_management/libs/infrastructure/writers/downloads__writer.py
-  - projects/ai_video_management/tests/test_downloads_import_shots.py
-severity: medium
----
 
-# Follow-up draft 120 — 2026-06-02
+## 120 — 2026-06-02 13:19:20 — downloads-scene-plate-overwrite-on-reimport
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/ai_video_management/libs/infrastructure/writers/downloads__writer.py
+>   - projects/ai_video_management/tests/test_downloads_import_shots.py
+> severity: medium
+
 导入功能 re-import 场景朝向图时不 work: 已有 `{plate_id}.png` 的 plate folder 再导入新图, 会变成 `{plate_id}1.png` + `{plate_id}2.png` 编号重复, 而非覆盖。要求 fix, existing 图直接覆盖。
 
-## 根因
+### 根因
 `import_drama` 两步流程 (move 保留原名 → `rename_drama` 批量按父 folder 名重命名)。plate folder 已有 `{plate_id}.png` (上次导入) 时, 新 jimeng 文件 move 进来 → folder 内 2 个 png → `MediaRenamer._plan_folder` 走「多文件」分支, 命名为 `{plate}1.png`/`{plate}2.png` (编号), 不覆盖; 且 Windows `rename` 到已存在目标会失败。结果: 累积重复 + 无干净 `{plate_id}.png`。
 
-## What landed (stage-6)
+### What landed (stage-6)
 `libs/infrastructure/writers/downloads__writer.py`:
 - 新增 `_clear_folder_media(folder)` — 删 folder 顶层 media 文件 (子目录/非 media/symlink/.md 不动)。
 - `import_drama`: 当 `kind == "scene_plate"` (plate folder 恒为单图), move 前先 `_clear_folder_media(dst_folder)` 清掉旧图 + 编号 junk → 覆盖语义; 之后只剩新文件 → rename 产出干净 `{plate_id}.png`。
@@ -9981,73 +10144,72 @@ severity: medium
 - docstring 补述 scene-plate 覆盖行为。
 - **不影响** character/scene-根/shot renders 的多文件共存语义 (clear 仅对 scene_plate)。.md 提示词文件不被删 (非 media)。
 
-## 验证
+### 验证
 - `tests/test_downloads_import_shots.py` 新增 2 用例: `test_scene_plate_routes_by_orientation_token` (补 follow-up 015 方位段路由的回归保护, 之前无测试) + `test_scene_plate_reimport_overwrites_and_clears_numbered` (覆盖 + 清编号 junk + .md 存活)。`pytest` 6 passed。
 - 实跑 `import_drama("ai_videos/nvdi_tuihun_houhuile")`: 6 张 06-02 新图全归位 bg1-bg6, 清掉旧的 `{plate}1/{plate}2.png` junk, 每 folder 恰 1 张 `{plate_id}.png` = 新图, 0 error。
 
----
 
 ---
-target_stage: 6
-target_artifacts:
-  - projects/ai_video_management/apps/ui/src/components/PromptStructuredEditor.tsx
-  - projects/ai_video_management/apps/ui/src/markdown/renderer.tsx
-severity: low
----
 
-# Follow-up draft 121 — 2026-06-07
+## 121 — 2026-06-07 06:03:22 — prompt-edit-default-raw-text
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/components/PromptStructuredEditor.tsx
+>   - projects/ai_video_management/apps/ui/src/markdown/renderer.tsx
+> severity: low
+
 每个 prompt 都给一个 edit mode, 可以直接修改里面的文字。
 
-## 现状
+### 现状
 `ai_videos/` 下每个 ```text``` prompt 代码块右上角已有 `✏ Edit` 按钮 (renderer.tsx CopyableCode, editEnabled = path.startsWith("ai_videos/"))。点它打开 `PromptStructuredEditor`, 该编辑器已含「📝 原文」(raw textarea, 直接改文字) 与「🪜 结构化」(逐字段表单) 两模式 + 切换。但**默认进结构化表单** (shot prompt 有可解析字段时), 不是「直接改文字」。
 
-## What landed (stage-6, 2 行级改动)
+### What landed (stage-6, 2 行级改动)
 - `PromptStructuredEditor.tsx` — 默认模式由 `initialParsed.fields.length>0 ? "structured" : "raw"` 改为恒 `"raw"`: 点 ✏ Edit 立即显示该 prompt 的可编辑文本框, 直接改字即存; 「🪜 结构化」逐字段表单仍可一键切换。
 - `renderer.tsx` — 编辑提示文案由「点它进入结构化表单编辑」改为「点它直接编辑该 prompt 的文字 (默认原文文本框, 改完即存; 也可切结构化表单)」。
 
-## 机制 (已存在, 未改)
+### 机制 (已存在, 未改)
 raw 模式 textarea 编辑整块 body → 保存走既有 `replaceFencedCodeAt(fileContent, blockIndex, newBody)` + `putFile(path, ..., {ifUnmodifiedSince: mtimeHttp})` 单块替换 + 409 并发守卫; 不影响文件其他段落。
 
-## 验证
+### 验证
 `tsc --noEmit` 通过 (改动为字面量+注释+文案, 类型安全); 无 UI 测试断言旧默认; editEnabled 对 ai_videos/ 全开 → nvdi 所有 shot/scene prompt 均有此 edit mode。
 
----
 
 ---
-target_stage: 6
-target_artifacts:
-  - projects/ai_video_management/apps/ui/src/markdown/renderer.tsx
-  - ai_videos/nvdi_tuihun_houhuile/
-severity: high
----
 
-# Follow-up draft 122 — 2026-06-07
+## 122 — 2026-06-07 06:16:39 — edit-button-hidden-crlf-blockindex
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/markdown/renderer.tsx
+>   - ai_videos/nvdi_tuihun_houhuile/
+> severity: high
+
 md page 上看不到 prompt 的 ✏ Edit 按钮 (跟 121 的默认 raw 模式无关 —— 按钮本身没出现)。
 
-## 根因
+### 根因
 `CopyableCode` 的 `canEdit = editEnabled && blockIndex>=0 && mtimeHttp!==undefined`。`blockIndex = bodyToIndex.get(trimmedBody)`。`bodyToIndex` 的 key 由**源文件**块体构造, 含 `\r\n` (CRLF); 但 ReactMarkdown 渲染出的代码块被规范化成 `\n` (LF), `trimmedBody` 是 LF → key 对不上 → `blockIndex = −1` → 按钮静默隐藏。nvdi 全部 `.md` 是 CRLF (本会话早先用 Python `open(...,"w")` 写文件时把 LF 转成了 CRLF; 仓库标准是 LF, feng_shou_lu 即 LF)。
 
-## What landed
+### What landed
 - **数据修复**: nvdi 全部 35 个 `.md` 由 CRLF 转回 LF (二进制替换 `\r\n`→`\n`) → 块匹配立即对上, 按钮出现 (无需重新构建, 刷新页面即可)。
 - **代码防呆**: `renderer.tsx` 的 `bodyToIndex` key 与 `trimmedBody` 都先 `.replace(/\r\n/g,"\n")` 再 trim → 即使源文件是 CRLF 也能匹配, 按钮不再被行尾隐藏 (需重新构建生效)。
 
-## 注 (过程教训)
+### 注 (过程教训)
 后续用 Python 脚本批量改 ai_videos/ 下 `.md` 时, 须**保留 LF**: 用 `open(f,"wb")` 二进制写, 或 `open(f,"w",newline="\n")`, 不要默认 text 模式 (Windows 会把 `\n`→`\r\n`)。mozun_chongsheng 也是 CRLF (非本会话所致), 其 edit 按钮同样会被隐藏 —— 代码防呆修复对它也生效 (待重新构建); 数据层 LF 转换本轮**仅做了 nvdi**。
 
-## 验证
+### 验证
 nvdi `.md` 残留 CRLF = 0; `tsc --noEmit` 通过 (regex 归一化, 类型安全)。
 
----
 
 ---
-target_stage: 6
-target_artifacts:
-  - apps/ui/src/components/PerfScorePanel.tsx
-  - apps/api/routes/perf_check__route.py
-severity: low
----
 
-# Follow-up draft 123 — 2026-06-13
+## 123 — 2026-06-13 17:03:59 — perf-check-downloaded-mp4-and-score
+
+> target_stage: 6
+> target_artifacts:
+>   - apps/ui/src/components/PerfScorePanel.tsx
+>   - apps/api/routes/perf_check__route.py
+> severity: low
 
 表演评分面板新增「让 Claude 检查已下载 MP4 并打分」按钮：一点即定位该 perf 条目已下载的成片，未发现或发现多个时报错，恰好一个时组装 copy-paste prompt 让 Claude 抽帧检查并打分。
 
@@ -10060,21 +10222,21 @@ severity: low
 - 接线：container（`perf_check_reader` Singleton + `perf_check_query` Factory）+ `routes/__init__.py`。路径非法走既有 `InvalidDramaPathError` → 400 映射（`PerfCheckPathError` 继承之，与 `ShotRegenPathError` 同模式）。
 - 前端：`api.ts` `perfCheckPrompt()` + `PerfScorePanel` 按钮/handler/状态 + 只读 prompt 文本框 + 📋 复制。沿用浅色主题真实变量（`--bg`/`--text`/`--border`），不再硬编码深色。
 
----
 
 ---
-target_stage: 6
-target_artifacts:
-  - projects/ai_video_management/libs/infrastructure/writers/actor__writer.py
-  - projects/ai_video_management/libs/infrastructure/writers/downloads__writer.py
-  - projects/ai_video_management/apps/ui/src/components/ActorPoolGenerator.tsx
-severity: medium
----
 
-# Follow-up draft 124 — 2026-06-13
+## 124 — 2026-06-13 18:38:59 — actor-prompt-only-mode-and-downloads-import
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/ai_video_management/libs/infrastructure/writers/actor__writer.py
+>   - projects/ai_video_management/libs/infrastructure/writers/downloads__writer.py
+>   - projects/ai_video_management/apps/ui/src/components/ActorPoolGenerator.tsx
+> severity: medium
+
 演员生成新增「只生成 prompt（默认）」模式：不调用 Kling，直接落地 actor 文件夹 + sidecar，用户自行 copy 到 Kling/Seedance 出图，下载后一键导入归位。
 
-## 意图（抽象后）
+### 意图（抽象后）
 演员池生成器当前只有「预览 prompt → 确认 → 9 路并发调 Kling 出图」一条路径。新增一个并设为**默认**的模式：
 
 1. **只生成 prompt（prompt-only，默认）**：点「创建 prompt」即在 `ai_videos/_actors/actor_NNNN/` 下分配文件夹并写 sidecar `.md`，**不调用任何出图 API**。face / body 两条 prompt 各自以演员 id 前缀打头（如 `id0009f, …` / `id0009b, …`），这样用户把 prompt 粘到 Kling 或 Seedance 出图、下载下来的文件名会带上该 id，可据此回填到对应 actor 文件夹。一条 prompt 同时适用 Kling 与 Seedance（不另造 Seedance 专用 prompt）。
@@ -10083,18 +10245,20 @@ severity: medium
 
 face + body 与现有生成器输出保持一致（face 主图 + body 全身参考）。
 
-## 落地（stage-6 净增量）
+### 落地（stage-6 净增量）
 - `actor__writer.py`：`ActorPool.create_prompts_batch(...)` —— 分配 id、构建 face/body prompt、按 `_actor_import_tag(id_num, is_body)` 给 prompt 打 `idNNNN[f|b]` 前缀、只写 sidecar（无 jpg、无 Kling 调用）。`_reap_incomplete_folders` 跳过含 sidecar `.md` 的文件夹（prompt-only 待导入 actor 不被回收）。`_build_sidecar` 加 `pending_import` 形参（body_image 行显示「待导入」+ 导入说明）。
 - `downloads__writer.py`：`DownloadsImporter.import_actors()` —— 镜像 `import_performances`，按 `_ACTOR_IMPORT_TAG = re.compile(r"id(\d{4,})([fb])", re.IGNORECASE)` 路由，face→`_attrs_to_filename`、body→`_attrs_to_body_filename`，下载图统一 `_reencode_to_jpeg` 转 JPEG 落地（face/body jpg 凭文件名后缀被 `_find_actor_jpg`/`_find_actor_body_jpg` 发现，sidecar 不另记录文件名，故无回填步骤）。
 - 应用层 / 路由：新增 `ActorCommand.create_prompts` + `POST /api/actors/create-prompts`；`ActorRepository` 协议补 `create_prompts_batch`。导入**复用现有** `POST /api/import-from-downloads` —— `DownloadsCommand.import_drama` 按 `drama_name == "_actors"` 分流到 `import_actors`（与 perf 库 `_performances` 分流同构），不新增路由。
 - 前端：`api.ts` 加 `createActorPrompts()`（导入复用现有 `importFromDownloads`）；`ActorPoolGenerator.tsx` 加模式切换（prompt-only 默认）+ 创建后的 prompt 面板（每个 actor id + face/body 复制按钮）；`Sidebar.tsx` actors 根加「📥 导入演员」常驻按钮（复用 `onRenameClick` → `importFromDownloads("ai_videos/_actors")`）。
 
-## 判断点
+### 判断点
 - 导入 tag 用 `idNNNN[f|b]`（ASCII，f=face / b=body）而非裸 `0009`：裸数字易与文件名里的时间戳等冲突（perf 库正是为此用 CJK `演NNNN` tag），加 `id` 前缀 + 显式 f/b marker 既保留用户要的「prompt 以 id 打头」语义，又避免误匹配且能区分 face/body。
+
 
 ---
 
-# Follow-up draft 125 — 2026-06-16
+## 125 — 2026-06-16 10:00:00 — bilingual-subtitle-burn
+
 每个 shot 文件夹的字幕文件改为双语（中文+英文）；烧字幕按钮提供三种语言选择（中/英/中英）生成带字幕视频。
 
 ---
@@ -10107,16 +10271,18 @@ target_artifacts:
 severity: medium
 ---
 
-## 指令
+### 指令
 - **双语 `subtitles.md`**：每 shot 的 `shots/shot{NN}/subtitles.md` 每行 `起-止(秒) 中文 || English`（`||` 分隔中/英；省略即中文单语，向后兼容）。`|` 不再作时间-文本分隔符。SubtitleCue 增 zh/en 字段。
 - **三语言烧录**：`POST /api/burn-subtitles` body 增 `lang ∈ zh|en|both`，输出 `{stem}_subtitled_{zh|en|zhen}.mp4`；`both` 模式中文在上、英文在下。新错误 `invalid_subtitle_lang`；所选语言无文本→`empty_subtitles`。
 - **UI**：render 卡片把单个「💬烧录台词」换成三个按钮「💬中文 / 💬EN / 💬中英」，各调对应 lang。
 - **scaffold**：生成双语模板 `中文 || `（英文留空），并改从 `## 台词配音` 块的 `台词:` 行取词（更可靠）。
 - 样式：中文 微软雅黑 72、英文 Arial 52、底部居中白字黑边。测试 `tests/test_subtitle_burn.py` 覆盖双语解析 + 三模式烧录 + 非法 lang。
 
+
 ---
 
-# Follow-up draft 126 — 2026-06-16
+## 126 — 2026-06-16 11:00:00 — subtitle-margins-naming-episode-lang
+
 字幕位置/边距优化 + 烧字幕输出按 shot 命名 + 按语言合成整集（最多 4 版本）。
 
 ---
@@ -10129,14 +10295,16 @@ target_artifacts:
 severity: medium
 ---
 
-## 指令
+### 指令
 - **字幕太靠下 + 左右边距不够**：底边距 80→170px（往上移、不贴底），左右安全边距 60→120px（不顶边、强制内缩换行）。both 模式中文 MarginV 250 / 英文 170。
 - **烧字幕输出重命名**：不再用原 take stem，改每 shot 每语言一个稳定 master `shots/shot{NN}/shot{NN}_{zh|en|zhen}.mp4`，放 shot 文件夹根目录（与 renders/ 原始 take 区分）。同 shot 可导入多个原始 mp4；点某语言按钮即生成/覆盖对应 master。
 - **按语言合成整集**：`/api/concat-episode` body 增 `lang ∈ original|zh|en|both`。original 取 renders/ 最新 take→ep{NN}.mp4；zh|en|both 取每 shot 的 shot{NN}_{suffix}.mp4→ep{NN}_{suffix}.mp4；缺源跳过。故一集最多 4 版本。UI「🎬 合成本集视频」改 4 按钮（原片/中文/EN/中英）。
 
+
 ---
 
-# Follow-up draft 127 — 2026-06-16
+## 127 — 2026-06-16 12:00:00 — subtitle-wrap-margins-os
+
 字幕左右无 margin（长行溢出）根因=WrapStyle 不换行；改为自动折行（一行排不下就多行）；内心独白也须进字幕。手机竖屏 9:16 视角。
 
 ---
@@ -10146,12 +10314,17 @@ target_artifacts:
 severity: medium
 ---
 
-## 指令
+### 指令
 - **左右 margin 仍未生效**：根因是 ASS `WrapStyle: 2`（禁止自动换行），长中文行整条溢出、无视 MarginL/R。修复：`WrapStyle: 0` + 渲染层主动折行——按每行字数上限（中文 ≤13 / 英文 ≤32，基于可用宽 840px）把长行**均分成多行**（手机一行排不下就两行/多行，绝不溢出）。
 - 字号下调便于折行排版：中文 72→64、英文 52→46。
 - **both 模式防重叠**：原来中/英两个独立事件（各自 MarginV），多行折行后会重叠；改为把中文行+英文行合成**一个底部锚定块**（中上英下整体堆叠）。
 - **内心独白也要在字幕里**：确认 subtitles.md 收录所有发声单元（含内心独白/系统/画外），scaffold 从 `## 台词配音` 全部 `台词:` 取词（已满足；wushen EP1 14 个文件全部含 OS 行，已校验）。
-# Follow-up draft 128 — 2026-06-16
+
+
+---
+
+## 128 — 2026-06-16 13:00:00 — rename-skip-episode-final-cuts
+
 Episode-level final-cut videos must not be mangled by the import/rename pass.
 
 The drama-scoped batch rename (`MediaRenamer.rename_drama`, used by both the
@@ -10174,9 +10347,11 @@ subfolders — should be touched. Excluding the whole `episodes/` subtree from t
 rename walk is the fix; it changes nothing for renders (already excluded) and
 stops the final-cut mangling.
 
+
 ---
 
-# Follow-up draft 129 — 2026-06-17
+## 129 — 2026-06-17 11:00:00 — copy-all-video-prompts-button
+
 一键复制本集所有 shot 的视频 prompt（only 视频 prompt，不含台词配音）。
 
 ---
@@ -10187,212 +10362,1042 @@ target_artifacts:
 severity: low
 ---
 
-## 指令
+### 指令
 在 webapp 加一个按钮：一键复制当前 EP 下**所有 shot 的视频 prompt**到剪贴板。**只含视频 prompt**（`## 视频 prompt` 代码块），不含 `台词配音` 块。
 
-## 实现（纯前端、无新后端端点）
+### 实现（纯前端、无新后端端点）
 - 位置：episode 级 markdown（`episodes/ep{NN}/{shotlist,script,dialogue,publish,…}.md`）的 reader 工具栏，复用 `isEpisodeFile` 锚点（与「合成本集视频」四个 🎬 按钮并排）。按钮 **📋 复制全部视频 prompt**。
 - 行为：从 `knownPaths` 过滤本集 `shots/shot{NN}/shot{NN}.md`（排序）→ 逐个 `GET /api/file` → 提取「视频 prompt」fenced block（按最近的前置 `##` 标题分类，同 inline 编辑器规则，`blockKindFromHeading==="video"`）→ 以空行拼接 → `navigator.clipboard.writeText` → toast 报告复制数 / 跳过数。
 - 新文件 `apps/ui/src/lib/videoPrompts.ts`：`extractVideoPromptBody` / `episodeDirOf` / `shotMdPathsInEpisode`，含单测 `test/videoPrompts.test.ts`（7 例）。
 - CSS `.reader-copy-prompts-btn`（镜像 `.reader-episode-concat-btn`）。
 - 校验：tsc --noEmit 通过；vitest 全绿（30 旧 + 7 新）。
 
+
 ---
 
-# Follow-up 132 — 2026-06-21 · 一键生成末帧图片按钮
+## 130 — 2026-06-18 09:30:00 — sidebar-zh-display-name
+
+left nav（Sidebar）里 drama 名（wushen_juexing）和 scene 名要用中文显示。
 
 ---
 target_stage: 6
+target_artifacts: [libs/infrastructure/readers/tree__reader.py]
 severity: low
 ---
 
-## 指令
-给每个 shot 渲染视频 tile 加「⏮ 生成末帧」按钮——一键截取该镜成片最后一帧成 `shot{NN}_lastframe.png`（落 shot 根），供下一承接镜作首帧上传。配合新「跨镜首帧承接」流程（ai_video.md 2026-06-21）。
+### 指令
+Sidebar 已渲染 `display_name || name`，缺的是后端给 pinyin 文件夹填中文 display_name：
+1. **drama**：旧 `_project_zh_title` 只读 README.md《》；新分阶段结构无顶层 README，标题在 `1_立项/concept.md` H1（`# 立项策划单 · 武神觉醒`）。扩展为先 README《》、再 `1_立项/concept.md` H1（取 `·` 后段）。
+2. **scene**：scenes 现为 pinyin（`scenes/zhenbei_wangfu_zhengting/`），中文在 `{name}.md` H1 `（镇北王府正厅）`。`_sidecar_zh_label` 加 scene 分支（`parent.name=='scenes'` → 读 `{name}.md` H1 取 `（中文）`），scope 限定 scenes 以免误改 character 文件夹。
+3. 抽公共 `_h1_zh`（《…》→（…）→ `·` 后段 → 整段 H1）。
+4. 单测 tests/test_tree_display_name_zh.py（5 例）。
 
-## 实现（复用 frame 聚合 + ffmpeg 模式）
-- 后端 `FrameExtractor.extract_last_frame`（`-sseof -3` + `-update 1` 取末帧、落最近 shotNN 根）→ `FrameCommand.extract_last_frame` → `ExtractLastFrameResultCdto` → `POST /api/extract-last-frame`（加进 frame__route，复用 ExtractFramesBody，container 无需改、复用既有 frame 错误 handler）。
-- 前端 `extractLastFrame` api + `SiblingMedia.tsx` 按钮（gated isShotVideoPath，shot 按钮组首位）。
-- 测试 `tests/test_frame_last_frame.py`（5 例）；pytest 26 绿；apps/ui tsc 干净。
-
----
-
-# Follow-up 133 — 2026-06-21 · 整集 concat 承接接缝自动抹平
-
----
-target_stage: 6
-severity: medium
----
-
-## 指令
-整集 concat（click「中文」等四个 🎬）时，只在承接镜接缝自动检测裁掉 incoming 镜头头部的重复定格帧，让承接处 smooth、观众看不出；硬切镜不动（声音用户自理）。
-
-## 实现
-- `EpisodeConcatBuilder`：`_is_continuity_shot`（读 shotNN.md `衔接:`，先判硬切）+ `_detect_head_freeze`/`_parse_head_freeze`（freezedetect 头 1.5s、头部起冻才裁、capped 0.6s、fail-open）+ 承接镜 concat filter `trim/atrim=start={t}`。`ShotClip.trimmed_s` 透传，前端 toast 报「抹平 N 处承接接缝」。
-- 测试 test_episode_concat.py +8；pytest 47 绿；apps/ui tsc 干净。
 
 ---
 
-# Follow-up 134 — 2026-06-22 · 承接接缝结构性重复帧保底裁除
+## 131 — 2026-06-18 11:00:00 — drama-layout-staged-paths
+
+Bug：新分阶段结构（全流程编排）后无法 assign 演员到角色；要确保 assign/导入/其他功能在新旧结构下都 work。
 
 ---
 target_stage: 6
-severity: medium
----
-
-## 指令
-首尾帧链接 + freeze-trim 后承接接缝仍有 ~1 帧 micro-stutter（结构性重复帧低于 freezedetect 阈值漏检）。concat 时承接镜 head_trim 改 `max(detected, _SEAM_MIN_HEAD_TRIM_S=0.08s)` 保底裁掉重复帧；硬切/首镜不裁。Button(concat)端处理、零 prompt 改动。「前后延长0.1s」方向反了（延长=更卡，应裁不应延）。残留速度突变型 hitch 可再加承接 seam 短 crossfade（escalation，未做）。
-- episode__writer.py +常量 +max() 逻辑；test +1；pytest 22 绿。
-
----
-
-# Follow-up 135 — 2026-06-22 · 承接 seam 短交叉淡化（crossfade）
-
----
-target_stage: 6
-severity: medium
----
-
-## 指令
-裁重复帧后承接 seam 残留"速度突变"型 hitch → concat 改左折叠：承接 seam 用 `xfade` ~0.12s 交叉淡化（近似帧零鬼影、抹速度差），硬切 seam butt-join `concat`。Button 端、零 prompt 改动。
-- `_ffmpeg_concat` 重写左折叠（xfade/acrossfade 承接、concat=n=2 硬切；xfade offset 跟踪运行时间线）；+`_SEAM_XFADE_S=0.12`/`_probe_duration`/`_CLIP_DURATION_RE`；audio-less 镜各自 anullsrc 静音轨（修潜在双消费 bug）；build() 传 continuity。叠加 134 保底裁。
-- 真 ffmpeg 集成测试 +1；pytest 31 绿。
-
----
-
-# Follow-up 136 — 2026-06-22 · 撤销承接 seam 交叉淡化，回到干净 butt-join
-
----
-target_stage: 6
-severity: medium
----
-
-## 指令
-follow-up 135 的 xfade 交叉淡化效果不行——两镜间出现一瞬间"图片转换/溶解"，明显不契合（裁帧后两帧已不同，dissolve 反而出戏）。撤销 xfade 左折叠，整集 concat 回到单次 butt-join `concat=n=N:v=1:a=1`：承接 seam 仅靠裁掉重复头帧实现干净连续切，硬切 seam 同为干净切。零 crossfade、零 prompt 改动。
-- `_ffmpeg_concat` 去掉左折叠/xfade/acrossfade，删 `continuity` 形参与 `_SEAM_XFADE_S`；build() 不再传 continuity。
-- 保留 follow-up 134 保底裁 + audio-less 镜各自 anullsrc + 本轮真 bug 修复（`_probe_duration` 测视频流时长，修「少了很多内容」）。
-- 真跑 EP1：zh + original 均 129.4s 全 12 镜；fake_concat 签名去 continuity；xfade 命名测试改 butt-join 语义。pytest 25 绿。
-
----
-
-# Follow-up 137 — 2026-06-22 · 承接接缝两侧裁速度坡道（消 0.2s 卡顿）
-
----
-target_stage: 6
-severity: medium
----
-
-## 指令
-butt-join 后承接接缝仍 ~0.2s 卡顿——根因是**两侧速度坡道**（出镜减速进末帧、入镜从静止加速），非重复帧定格，紧阈值 freezedetect 漏检。修：承接接缝两侧都裁——入镜头部用 -45dB freezedetect+floor，出镜尾部固定裁一小段（尾部减速碎片化、检测会过裁，故确定性裁）；两侧 floor `_SEAM_MIN_EDGE_TRIM_S=0.15`。仍 butt-join，硬切不裁。
-- 常量：noise -55→-45dB；`_SEAM_MIN_HEAD_TRIM_S`→`_SEAM_MIN_EDGE_TRIM_S=0.15`；`_HEAD_EPS`→`_EDGE_EPS`。build() 设 head_trims（承接镜，detect+floor）+ tail_trims[前一镜]=0.15；`_ffmpeg_concat` +tail_trims，每 clip `trim=start=H:end=(dur-T)`。
-- 真跑 EP1：zh+original 均 127.6s 全 12 镜，承接镜两侧都裁（shot06 头 0.22+尾 0.15）。pytest 25 绿。零 prompt 改动。
-
----
-
-# Follow-up 138 — 2026-06-22 · 合成帧率跟随源（消 24→30 pulldown judder）
-
----
-target_stage: 6
+target_artifacts: [libs/common/drama_layout.py, libs/infrastructure/writers/*, apps/ui/src/**]
 severity: high
 ---
 
-## 指令
-整体「还是不顺」根因不在接缝——是**强制 30fps 上变换**：shot render ~24fps（VFR），硬转 30 每 5 帧复制 1 帧，全片 ~30% 复制帧＝整片 judder。改：合成输出帧率跟随源——`_ffmpeg_concat` 探测各 clip fps、取中位、snap 到最近标准帧率（24/25/30/50/60，容差 1.5），探测全失败才回落 30。
-- 常量 `_CONCAT_TARGET_FPS=30`→`_CONCAT_FALLBACK_FPS=30`+`_STANDARD_FPS`+`_FPS_SNAP_TOL`+`_FPS_RE`；新增 `_target_fps`/`_probe_fps`/`_snap_fps`；filter `fps={target_fps}`。
-- 真跑 EP1：输出 23.89fps（原生）、复制帧 30%→3%。测试 +3（snap 边界/24源→24/回落 30）。pytest 28 绿。零 prompt 改动。
+### 根因
+分阶段结构把资产从 drama 根目录移到 stage 文件夹：`casting.md`/`characters`/`scenes` → `2_世界观人设/`，`episodes` → `4_剧本/`。后端/前端多处硬编码旧根路径——assign 角色尤其断在：① 前端 `isCasting` 正则只配根 `casting.md`，新位置 `2_世界观人设/casting.md` 不匹配 → CastingView 根本不渲染（无"+添加角色"）；② 后端 casting writer 写 `drama_dir/casting.md` + 找 `drama_dir/characters`（旧位置）。
+
+### 修复
+- 新增 `libs/common/drama_layout.py` 解析器：`casting_md/characters_dir/scenes_dir/episodes_dir(drama_dir)`，优先返回存在的位置（根/stage），缺省回退根（首次 create）。新旧结构都 work。
+- 后端接入：casting__writer（assign/unassign/读/扫描，10+4 处）、downloads__writer（导入：characters/scenes/episodes）、sub_type_lookup（episodes）、bgm_reference__reader（episodes cue 扫描）、character_video__writer（`_is_under_character_folder` / `_character_folder_for` 容忍 stage 前缀）。
+- 前端：Reader `isCasting` / `isEpisodeFile` 正则放开 stage 中间段；dramas.ts 新增 `findAssetDir`（characters/scenes 在根或 `2_世界观人设/` 下找）→ 人物/场景下拉、casting 资产恢复。
+- 测试：tests/test_drama_layout.py（5 例，全过）。
+
+### 校验
+解析器对 wushen（staged）/nvdi（root）都正确；前端 tsc 干净；casting/character_video/downloads/tree 相关测试通过。
+注：test_sub_type_lookup / test_tree_walker 里 `wukong_juexing` 相关失败为**既有 stale fixture**（项目已改名 wushen_juexing），与本修复无关。
+
 
 ---
 
-# Follow-up 139 — 2026-06-22 · 合成时自动去死帧（mpdecimate 压掉镜头内卡死段）
+## 132 — 2026-06-21 18:00:50 — extract-last-frame-button
 
----
-target_stage: 6
-severity: high
----
-
-## 指令
-「明显的一秒跳跃」确认是源 clip 内部 1–3s 长近静止段（i2v 卡住，shot06 ~3.6s/shot08 ~2.4s/shot09 ~1s，均在镜头中部非接缝）。用户选自动去死帧：concat 每 clip 加 `mpdecimate`(hi=64*24:lo=64*12:frac=0.2) 丢近静止帧 + `setpts=N/{fps}/TB` 重排，压掉死气（clip 变短而非 hold）。自适应：卡死镜削 ~26%、运动镜仅 ~3%。concat 转 video-only + 单条 anullsrc 静音轨(-shortest)（去死帧后逐 clip a/v 无法对齐；真台词/BGM 后期 mux）。删 `_probe_has_audio`。保留 137/135c/138/136。
-- 真跑 EP1：zh 127.6→113.3s、original→113.5s，24fps 12 镜，压 ~14s 死气；长 hold 从 ~10s+ 降到 1.8s(zh)。测试 clip 加 `noise` 逐帧运动防被 decimate 收掉。pytest 28 绿。零 prompt 改动。
-
----
-
-# Follow-up 140 — 2026-06-22 · 去死帧后恢复同步音轨（修「没声音」回归）
+在 webapp 加「一键生成末帧图片」按钮，配合新的「跨镜首帧承接」流程（承接镜的首帧＝上一镜成片末帧）。
 
 ---
 target_stage: 6
-severity: high
+target_artifacts:
+  - libs/infrastructure/writers/frame__writer.py
+  - apps/api/routes/frame__route.py
+  - apps/ui/src/components/SiblingMedia.tsx
+severity: low
 ---
 
-## 指令
-去死帧(139)把 concat 改 video-only+静音轨 → 视频没声音（回归）。源 render 全带 AAC 音轨、要保留。修：测每镜去死帧后时长 ldur，把该镜音轨 `atempo=window/ldur` 压到 ldur 保持同步（卡死镜音频略快但同步、无卡死镜 tempo≈1 no-op），concat 恢复 v=1:a=1。
-- 抽 `_video_chain`（去死帧链构建一次、测时长与 seg 共用）；+`_decimated_duration`（跑链到 null 读 time=）；+`_atempo_chain`（>2 拆 ≤2 乘积）；恢复 `_probe_has_audio`（无音轨镜 anullsrc 定长 ldur）。
-- 真跑 EP1：zh video 113.9/audio 114.0、original 114.0/114.0，has_audio=True、漂移 0.08s。pytest 28 绿。零 prompt 改动。
-- 注：shot11→12 仍跳=两段独立生成的近静止背身镜位姿对不齐（生成侧问题，concat 不可消），需重生成/改硬切/加运动。
+### 背景
+ai_video 流程新增「跨镜首帧承接」机制（见 `.claude/agent_refs/project/ai_video.md` 2026-06-21 amendment + `ai_videos__运镜` M8 / `ai_videos__格式契约` K26）：视觉连续的相邻镜，**下一镜（承接镜）的首帧 = 上一镜成片的实际末帧**（截帧上传，不另生成静帧）。webapp 需要把"截上一镜末帧"做成一键操作。
+
+### 指令
+给每个 **shot 渲染视频** tile 加一个按钮「⏮ 生成末帧」——一键截取该镜成片的**最后一帧**成 PNG，落 shot 根目录 `shot{NN}_lastframe.png`，供下一个承接镜作首帧参考图上传。二次点击覆盖。
+
+### 实现（复用 frame 聚合 + burn-intro-cards 那套 ffmpeg/路径模式）
+- 后端 `FrameExtractor.extract_last_frame(rel)`：`-sseof -3` 只解码尾段 + `-update 1` 让 PNG 留最后一帧；输出落最近 `shotNN` 祖先根（复用 `_shot_folder`）。复用 `_validate_video_source` + 既有 frame 错误类（`FfmpegMissingError`/`FrameExtractFailedError`/`NotVideoError`/`VideoNotFoundError`，已注册 handler，无需新增）。
+- 应用层 `FrameCommand.extract_last_frame` + DTO `ExtractLastFrameResultCdto`（`{src,out}`）+ `FrameMapper.last_frame_to_cdto`。
+- 路由 `POST /api/extract-last-frame`（加进既有 `frame__route` router，复用 `ExtractFramesBody`）。container 无需改（`frame_command` 已 wired）。
+- 前端 `extractLastFrame(path)` api + `SiblingMedia.tsx`：state/handler/prop 镜像 `extractFrames`，按钮 gated `isShotVideoPath`，放 shot-video 按钮组首位。
+- 测试 `tests/test_frame_last_frame.py`（5 例：`_shot_folder` 分支 + 真 ffmpeg 截帧落 shot 根 + 校验错误路径）。
+- 校验：pytest 26 绿（boot smoke + scene_plate + intro_card + 本测试）；apps/ui `tsc -b` 干净。
+
 
 ---
 
-# Follow-up 141 — 2026-06-22 · 撤销去死帧+变速，回到忠实拼接
+## 133 — 2026-06-21 19:02:00 — concat-seam-destutter
+
+按末帧承接生成的相邻镜拼接（click「中文」整集 concat）时，承接接缝处有 ~0.2s 画面卡顿（重复定格帧）；要在 concat 时自动抹平、让画面 smooth、观众看不出（声音用户自理）。
 
 ---
 target_stage: 6
+target_artifacts:
+  - libs/infrastructure/writers/episode__writer.py
+  - apps/ui/src/components/Reader.tsx
+severity: medium
+---
+
+### 背景 / 根因
+承接镜（`衔接:` = 承接）是用上一镜末帧当首帧生成的，所以它第一帧 ＝ 上一镜最后一帧（重复），且生成器常把首帧静止保持一拍 → 整集 concat 时接缝处画面冻 ~0.2s。硬切镜是有意切镜、不处理。
+
+### 指令
+整集 concat（`POST /api/concat-episode`，原片/中文/EN/中英 四个 🎬 + 烧字幕路径）时，**只在承接镜接缝**自动检测并裁掉 incoming 镜头头部的静止重复帧，让承接处连续顺滑；硬切镜不动。用户选「自动检测裁掉重复定格帧、流畅优先」（裁帧会让承接镜略短，可接受、声音自理）。
+
+### 实现
+- `EpisodeConcatBuilder`：
+  - `_is_continuity_shot(shot_dir)` 读 shotNN.md 的 `衔接:` 行（**先判硬切**——硬切文案「无承接帧」含子串「承接」，须先排除，否则全部硬切被误判为承接）。
+  - `_detect_head_freeze` 用 freezedetect 只解码头 1.5s；`_parse_head_freeze` 解析（clip 头部起冻才裁、裁到 motion 恢复点、capped 0.6s、fail-open 不裁）。
+  - 每个承接镜（i>0）在 concat filter 里 `trim/atrim=start={t}` 裁掉头部静止段；硬切镜与首镜不动。
+  - `ShotClip.trimmed_s` 透传 dto/mapper/api；前端 toast 报「抹平 N 处承接接缝」。
+- 测试：`test_episode_concat.py` +8（`_parse_head_freeze` 4 例确定性 + 真 ffmpeg static-head 检测 + 承接裁帧/硬切不裁 build 集成 + `_is_continuity_shot` 硬切优先）。
+- 校验：pytest 47 绿（boot/episode/frame/intro/scene_plate/subtitle_batch）；apps/ui tsc -b 干净。
+
+
+---
+
+## 134 — 2026-06-22 00:05:30 — seam-min-trim-duplicate-frame
+
+首尾帧链接 + concat freeze-trim 后，承接接缝处仍有轻微卡顿（~1帧）；要在 concat 时把残留的"结构性重复帧"也去掉，画面 smooth、观众看不出。
+
+---
+target_stage: 6
+target_artifacts:
+  - libs/infrastructure/writers/episode__writer.py
+severity: medium
+---
+
+### 根因（残留卡顿）
+承接镜 B 的**首帧 = 上一镜 A 的末帧**（B 就是用 A 末帧生成的），所以 seam 处那一帧是**结构性重复帧**。原 freeze-trim 用 freezedetect（d=0.04s）检测头部静止段——但**1–2 帧的极短重复/近似帧低于其检测阈值时会漏检**，留下 ~1 帧 micro-stutter。
+
+### 修法（concat 端，按钮即处理，无需改 prompt）
+`EpisodeConcatBuilder`：承接镜（i>0）的 head_trim 改为 `max(detected_freeze, _SEAM_MIN_HEAD_TRIM_S=0.08s)`——freezedetect 没测到长 freeze 时，**也保底裁掉 ~0.08s（2–3 帧@30fps）**，确保结构性重复帧一定被去掉。硬切镜与首镜不裁。
+
+### 用户问答
+- 「前后各延长0.1秒」→ **方向反了**：延长=加 hold=更卡。要 **裁掉**重复帧（或 crossfade 重叠），不是 extend。
+- 「点 button 能处理么/要改 prompt 么」→ **button（concat）端处理，零 prompt 改动**。帧级接缝与 prompt 文本无关。
+- 若保底裁后仍有"速度突变"型 hitch（A 减速入帧 vs B 加速出帧）→ 下一步可加**承接 seam 短 crossfade（~0.12s）**（escalation，未做）。
+
+### 实现 + 校验
+- 新增常量 `_SEAM_MIN_HEAD_TRIM_S=0.08`；build() head_trim 取 max(detected, min)。
+- 测试 +1（detector stub=0 → 承接镜 trimmed_s==min，硬切/首镜=0）；pytest 22 绿（episode 15 + boot smoke）。
+
+
+---
+
+## 135 — 2026-06-22 00:15:00 — seam-crossfade
+
+保底裁重复帧后承接接缝若仍有"速度突变"型 hitch，要在 concat 时给承接 seam 加短交叉淡化（crossfade），让画面更 smooth。用户：「现在就加上，我要看看效果」。
+
+---
+target_stage: 6
+target_artifacts:
+  - libs/infrastructure/writers/episode__writer.py
+severity: medium
+---
+
+### 背景
+裁掉结构性重复帧后，承接 seam 仍可能残留"速度突变"——上一镜减速冲进末帧、下一镜从静止加速出来，速度对不上，即使无重复帧也有一丝顿。裁帧治不了速度差，需要在接缝做短重叠混合。
+
+### 指令
+整集 concat 改成左折叠：**承接 seam 用 `xfade` 交叉淡化 ~0.12s**（两帧近乎相同→零鬼影、却把速度差抹平），**硬切 seam 仍 butt-join `concat`**（有意切镜）。Button(concat)端、零 prompt 改动。
+
+### 实现
+- `EpisodeConcatBuilder._ffmpeg_concat` 重写为左折叠：逐镜 normalize 成 v{i}/a{i}，然后 `xfade`(video)/`acrossfade`(audio) 在承接 seam、`concat=n=2` 在硬切 seam。xfade `offset` 跟踪运行时间线（每次 xfade 把总长缩短 duration）。
+- 新增 `_SEAM_XFADE_S=0.12` + `_probe_duration`（算 xfade offset 用）+ `_CLIP_DURATION_RE`。
+- **音频**：audio-less 镜各自生成 `anullsrc` 静音轨（按 eff 时长）→ 折叠不再双消费共享源（顺手修了原 ≥2 无音轨镜的潜在 filtergraph bug）。用户自配音轨，本处只保证产物合法。
+- build() 计算并传 `continuity` 列表给 `_ffmpeg_concat`。
+- 仍叠加 follow-up 134 的保底裁（先裁重复帧/hold，再 xfade 抹速度差）。
+
+### 校验
+- 新增真 ffmpeg 集成测试：3 个无音轨 clip（1 承接 xfade + 1 硬切 cut）跑通真实 filtergraph、产物合法、时长被缩短(<3.6 naive)。
+- fake_concat 签名 +continuity。pytest 31 绿（episode 16 + boot smoke + frame）。零 prompt 改动。
+
+
+---
+
+## 136 — 2026-06-22 00:30:00 — revert-seam-crossfade
+
+承接 seam 的交叉淡化（follow-up 135）效果不行——两镜之间有一瞬间"图片的转换"，明显不契合。撤掉 crossfade，承接 seam 改回干净的连续硬接。用户：「效果不行，两个shot中间有一瞬间图片的转换，明显不契合」。
+
+---
+target_stage: 6
+target_artifacts:
+  - libs/infrastructure/writers/episode__writer.py
+severity: medium
+---
+
+### 背景
+follow-up 135 给承接 seam 加了 ~0.12s `xfade` 交叉淡化想抹平"速度突变"。但裁掉重复头帧后，参与混合的两帧已不再相同，dissolve 把它们叠在一起反而被肉眼读成"一瞬间图片切换/溶解"，比顿挫更出戏。结论：交叉淡化是错的工具，承接 seam 要的是干净的连续切（去掉重复帧即可），不是溶解。
+
+### 指令
+撤销 follow-up 135 的 xfade 左折叠，整集 concat 回到**一次性 butt-join `concat`**：每镜 normalize 成 v{i}/a{i}，承接 seam 仅靠裁掉重复头帧（follow-up 134 的保底裁）实现干净连续切，硬切 seam 同为干净切。零 crossfade、零 prompt 改动。
+
+### 实现
+- `EpisodeConcatBuilder._ffmpeg_concat` 去掉左折叠/`xfade`/`acrossfade`，改回单次 `concat=n=N:v=1:a=1`。删除 `continuity` 形参与 `_SEAM_XFADE_S` 常量。
+- 保留 follow-up 134 的保底裁（`_SEAM_MIN_HEAD_TRIM_S`）+ audio-less 镜各自 `anullsrc`（修原双消费 bug）。
+- 保留本轮真 bug 修复：`_probe_duration` 改测**视频流**时长（`-map 0:v:0 -c copy -f null -` 取末尾 `time=`），不再用容器 Duration——容器时长=更长的音轨会高估视频时间线，曾导致 EP1 被截到 60s（`少了很多内容`）。
+- build() 不再计算/传 `continuity`。
+
+### 校验
+- 真跑 EP1（wushen_juexing）：zh + original 均 129.4s、完整 12 镜（撤 xfade 前的 bug 是被截到 60s）。
+- 保留"音>视"回归测试（container Duration 超视频时不得截断，>2s）。
+- fake_concat 签名去掉 continuity；xfade 命名的两个真 ffmpeg 集成测试改名/改 docstring 为 butt-join 语义、仍校验产物合法。pytest 25 绿（episode + boot smoke）。零 prompt 改动。
+
+
+---
+
+## 137 — 2026-06-22 01:00:00 — seam-trim-both-sides-velocity-ramp
+
+butt-join 后承接接缝仍有 ~0.2s 卡顿。诊断：卡顿不是重复帧定格，而是**两侧的速度坡道**——出镜（上一镜）减速冲进末帧、入镜（承接镜）从静止加速，帧一直在变只是很慢，紧阈值 freezedetect 漏检。修法：承接接缝两侧都裁掉坡道（入镜头部 + 出镜尾部），留干净的 motion-to-motion 切。用户：「还是有一瞬间的卡顿估计0.2秒左右」。
+
+---
+target_stage: 6
+target_artifacts:
+  - libs/infrastructure/writers/episode__writer.py
+severity: medium
+---
+
+### 背景
+之前只裁入镜头部、且只裁字面定格（~0.05–0.08s）。实测以更松阈值（-40/-45dB）量同一批 clip：入镜头部慢帧 0.13–0.22s、出镜尾部慢帧 0.12–0.20s。这正是 i2v 的物理——末帧是模型被要求收束到的静止帧，出镜减速进、入镜从该静止帧加速出，合起来 ~0.2s 的"dwell"被肉眼读成卡顿。只裁单侧、只裁定格治不了。
+
+### 指令
+承接接缝**两侧都裁**速度坡道：
+- **入镜头部**：freezedetect（阈值放松到 -45dB，使慢坡道也算 near-frozen），floor 保底；
+- **出镜尾部（前一镜）**：固定裁一小段——尾部减速在松阈值下会被切成很长的碎片化"慢"区间，检测会高估（甚至误吞 ~1s 合法减速），所以尾部只确定性裁掉最后那一小段"近零运动"，不靠检测。
+两侧各 floor `_SEAM_MIN_EDGE_TRIM_S=0.15`。仍是 butt-join（无 crossfade）。硬切接缝不裁。
+
+### 实现
+- 常量：`_SEAM_FREEZE_NOISE` -55→-45dB；`_SEAM_HEAD_EPS_S`→`_SEAM_EDGE_EPS_S`；`_SEAM_MIN_HEAD_TRIM_S(0.08)`→`_SEAM_MIN_EDGE_TRIM_S(0.15)`。
+- build()：每个承接镜 i 设 `head_trims[i]=max(detect_head, 0.15)`、`tail_trims[i-1]=0.15`（前一镜尾部固定裁；不对尾部跑检测——碎片化不可靠/过裁）。`trimmed_s=head+tail`。
+- `_ffmpeg_concat` +`tail_trims` 形参；每 clip `trim=start=H:end=(dur-T)`（视频+音频同步），`eff`/`end` 据此算，anullsrc 同步。
+- 尾部裁只影响合成显示，不动 lastframe.png / 生成管线 / 尾帧锁定。
+
+### 校验
+- 真跑 EP1（wushen_juexing）：zh + original 均 127.6s 全 12 镜；承接镜（06/07/11/12）头部裁（shot06 检出 0.22+尾 0.15=0.367）、其前驱（05/10）拿到 0.15 尾部裁——两侧都裁实锤。
+- 测试：fake_concat +tail_trims；承接 trim 断言改为"前驱尾部也裁 0.15"；`_SEAM_MIN_HEAD_TRIM_S`→`_SEAM_MIN_EDGE_TRIM_S`。pytest 25 绿。零 prompt 改动。
+- 注：是否真消除 0.2s 卡顿需用户肉眼确认（合成端无法自动验感知）。
+
+
+---
+
+## 138 — 2026-06-22 01:30:00 — concat-match-source-fps-no-pulldown-judder
+
+合成视频整体「还是不顺」。诊断：根因不在接缝——是**强制 30fps 上变换**。shot render 实测 ~24fps（VFR，24.04–24.09），合成时被硬转 30fps，每 5 帧多复制 1 帧（4:5 pulldown），全片约 30% 帧是复制帧 → 整片 judder，所以裁接缝怎么裁都不顺。修法：合成输出帧率**跟随源**（探测中位 fps、snap 到最近标准帧率），不再硬编码 30。用户：「还是不顺」。
+
+---
+target_stage: 6
+target_artifacts:
+  - libs/infrastructure/writers/episode__writer.py
 severity: high
 ---
 
-## 指令
-「语速明显比原视频快」+「整体秒数跟原来不一致」都是去死帧(139)+变速(140)副作用。查证：视频卡住段仍在说话（冻画≠静音，shot06 视频 3.1–5.9s 冻结但音频非静音）→ atempo 把整镜音频加速=语速快、去死帧压短=时长不符。去死帧与本素材根本冲突。用户选回到忠实拼接：撤销 139+140，每镜原速原长（含音频，无 atempo），只留 承接 seam 两侧裁(137)+帧率跟随源(138)+butt-join(136)。
-- 删 `_DECIMATE`/`_video_chain`/`_decimated_duration`/`_atempo_chain`；视频回 `...fps={target}`、音频回 `atrim→asetpts→aresample→aformat`（无 atempo）；anullsrc 按 eff 定长。还原测试 noise。
-- 真跑 EP1：源合计 130.2s，输出 129.6s（差 0.6s＝seam 微裁），has_audio=True 自然语速。pytest 28 绿。
-- 遗留生成侧：镜头内边说话边卡画、shot11→12 近静止跳切——需重生成对应镜头。
+### 背景
+前三轮（裁重复帧 133/134、xfade 135 撤回 136、两侧裁坡道 137）都只动接缝，但用户始终觉得不顺。实测 mpdecimate：30fps 输出里 ~30% 是复制帧；改 24fps 后降到 ~3%（剩下是真静止内容）。源 clip 全是 ~24fps，硬转 30 注入大量复制帧＝全片卡顿，与接缝无关。这才是"不顺"的主因。
 
-## Follow-up 142 — 2026-06-22 · 合成加交叉叠化柔化硬切
-合成成片镜头交接处「画面先跳一下才切」、硬切切换感强。`_ffmpeg_concat` 由 butt-join concat 改为 xfade(视频)+acrossfade(音频)交叉叠化链（`_XFADE_DUR=0.25`，xdur 钳到 min(eff)/2）。柔化硬切并盖住 i2v 尾部安定抖动。与 follow-up 136 回退的承接近同帧叠化不同（这里叠化两段不同镜头，标准用途）。代价：总时长缩短 (n-1)·xdur（EP1 130.2→126.7s），语速不变。测试阈值随之调整，28 passed。
+### 指令
+合成输出帧率改为**匹配源 cadence**：`_ffmpeg_concat` 探测各 clip 的 fps、取中位、snap 到最近标准帧率（24/25/30/50/60，容差 1.5；24 与 25 仅差 1 故取最近不取首个命中），探测全失败才回落 `_CONCAT_FALLBACK_FPS=30`。`fps={target}` 用该值。其余（720×1280/pad/setsar/butt-join/两侧裁坡道）不变。
 
-## Follow-up 143 — 2026-06-22 · 撤销交叉叠化，退回硬拼接
-用户反馈交叉叠化(142)没变柔和、还不如硬切，revert。`_ffmpeg_concat` 恢复 butt-join concat（删 xfade/acrossfade + _XFADE_DUR）。教训：i2v 短剧素材接缝干净硬切读感最好，两次转场实验(135/136 承接近同帧叠化、142/143 整集叠化)均失败；尾部跳帧是生成缺陷，靠重生成根治、不在合成层做转场。28 passed，EP1 130.7s。
+### 实现
+- 常量：`_CONCAT_TARGET_FPS=30` → `_CONCAT_FALLBACK_FPS=30` + `_STANDARD_FPS=(24,25,30,50,60)` + `_FPS_SNAP_TOL=1.5` + `_FPS_RE`。
+- 新增 `_target_fps`（中位+snap+回落）/`_probe_fps`（`ffmpeg -i` 解析 "NN fps"）/`_snap_fps`（取最近标准、容差内才 snap）。
+- `_ffmpeg_concat` 算 `target_fps=self._target_fps(...)`，filter 用 `fps={target_fps}`。
 
-## Follow-up 144 — 2026-06-22 · seam_concat.py 接缝处理工具
-新增 `tools/seam_concat.py`：处理 Seedance 首尾帧链式两段视频 concat 的接缝顿挫。默认 trim 缓动尾/头 + 去重复共享帧(可靠, ffmpeg-only)；`--rife <exe>` 走外部 RIFE 光流补帧(失败退 butt-join+warn, 无声造假禁止)。实测 ffmpeg minterpolate 不能在两张静帧间重建运动, 故不内置。仅适用连续接缝, 不改 webapp(经 141/143 定为忠实硬拼接)。
+### 校验
+- 真跑 EP1（wushen_juexing）：输出 23.89fps（≈24 原生）、12 镜 127.6s；复制帧 ~30%→~3%。
+- 测试 +3：`_snap_fps` 边界（24.05/23.89→24, 29.97→30, 25.10→25, 47→47）、`_target_fps` 24fps 源→24（不上变 30）、不可探测回落 30。合成测试用 30fps testsrc→snap 30 仍绿。pytest 28 绿。零 prompt 改动。
+- 注：感知是否真顺需用户肉眼确认。若仍有残留接缝感，则属 i2v 两段独立生成的运动轨迹不连续（裁帧/帧率均无法消，需生成侧处理）。
 
-## Follow-up 145 — 2026-06-22 · RIFE 补帧接进合成 button + 音轨修复
-安装/配置 RIFE 后实测 EP1 承接缝补帧获认可。给 `tools/seam_concat.py` 加回音轨（桥段用真正被裁掉的接缝内容＝前镜尾+后镜头，连续环境声而非静音/回声）+ 逐缝承接/硬切控制；把 RIFE 补帧接进 webapp「合成本集视频」button（localStorage 复选框，默认 on，≥1 承接缝时委托 seam_concat.py 重建速度斜坡，硬切仍干净切）。运动门限：仅 6≤diff≤55 才补帧，否则回退裁+硬拼。缺 exe 显式报错不静默回退。
 
-## Follow-up 146 — 2026-06-23 · 拼接方案面板（逐缝 RIFE 选择）
-点击「合成本集视频」改为弹出「拼接方案」面板（SeamPlanModal）：`POST /api/episode-seams` 拉每个衔接的 承接/硬切 + 前镜末帧/后镜首帧缩略图 + 自动帧差 + 建议。硬切锁硬拼；承接可选 硬拼/RIFE（RIFE 下可调 trim + 补帧密度）。「生成」POST `/api/concat-episode {plan}`，用户选择覆盖自动门限，方案存 `epNN/seam_plan.json` 可复现。读侧 `EpisodeQuery.analyze_seams` + Qdto；建侧 `plan` 穿过 episode__{command,mapper,writer}。
+---
 
-## Follow-up 146 — 2026-06-23 · Actor 生成 prompt 服装性别区分 + 锁正脸
-Actor 生成两修：① 服装按性别区分（修「男角色穿女式吊带背心」——删通用 `_WARDROBE_REVEALING_ZH`，新增男款无袖运动背心 / 女款吊带背心 + `_wardrobe_for(gender)`，覆盖 face/body/combined 全 builder）；② 三个 header 统一加正脸正面平视约束（绝不侧脸/转头/低头/仰头），seductive 面部细节去「微微侧脸」，负面词加正脸约束组——否则捕捉不到面部细节。
+## 139 — 2026-06-22 02:00:00 — concat-defreeze-mpdecimate
 
-## Follow-up 147 — 2026-06-24 · 出片改 concat-first：先拼干净成片，再对整集烧一次字幕
-旧流程「每镜先烧字幕→再拼接」两处损坏字幕：拼接二次编码 + 承接裁帧改片段时长致字幕错位（每镜本地 0 起无全局 offset）。改为出片三步：① 定版（每镜 renders/ 最新复制成 shot{NN}.mp4，原始多版不动，复制非软链）；② 拼接成片（干净无字幕拼成 ep{NN}.mp4 + 写 ep{NN}.segments.json，每镜真实 [start,end) 按裁帧后时长累加，仅 lang=original）；③ 整集字幕（对 ep{NN}.mp4 一次烧字幕，每镜 cue 按 segments re-time + 按 start_s 平移到成片时间轴，只编码一次→不受拼接/裁帧影响→ep{NN}_{zh|en|zhen}.mp4）。EN/中英保留；每镜单独烧字幕保留为调试不进主区；复制非软链。旧「先烧后拼」/「每镜烧」路径保留 back-compat 不混用。
+诊断确认「明显的一秒跳跃」是**源 clip 内部的长近静止段**（i2v 生成卡住 1–3s），非接缝问题：实测 shot06 源有 ~3.6s 近静止、shot08 ~2.4s、shot09 ~1s，且都在镜头中部（非接缝）。用户选择**合成时自动去死帧**。修法：concat 给每个 clip 加 `mpdecimate` 丢掉近重复/近静止帧 + `setpts=N/FR/TB` 重排，把死气压掉（clip 变短），不是 hold 住。
 
-## Follow-up 148 — 2026-06-27 · 一键导出 production + 剧 level dashboard 主页
-一键把一部剧所有带字幕 ep 成片拷到 `ai_videos/{drama}/production/`：中文 `ep{NN}_zh.mp4`→`中文/`、英文 `ep{NN}_en.mp4`→`英文/`、中英 `ep{NN}_zhen.mp4`→`中英/`，子文件夹内去后缀命名 `ep{NN}.mp4`、覆盖不删旧、报每语言计数。后端 `production__{writer,command,dto,mapper,route}` + `POST /api/export-production`（复用 subtitle_batch 的 drama-root/episode-walk 两 layout）。前端新增剧级 main page（DramaDashboard·锚 README 页）：承载剧级按钮（导出 production + 全剧烧字幕从 toolbar 迁入）+ 剧级展示，后续剧级功能都放这；解决 left nav toolbar 放不下按钮。
+---
+target_stage: 6
+target_artifacts:
+  - libs/infrastructure/writers/episode__writer.py
+severity: high
+---
 
-## Follow-up 149 — 2026-06-27 · 拼接裁切允许从 0（只选 RIFE 不裁切）
-SeamPlanModal 裁切秒 input `min=0.04`→`min=0`，允许「RIFE + trim=0」=不裁切只补帧平滑。后端 seam_concat plan 路径本不 floor trim，但 `_rife_bridge` 在 trim≈0 时桥段音频复用 atrim 空切片致 acrossfade 失败、静默回退 butt-join；加 `_SEAM_TRIM_EPS=0.02` 守卫：trim<eps 时不复用环境声、走 anullsrc 静音桥，保证 trim=0 仍出 RIFE 桥（1 帧·可用密度控件加帧）。
+### 背景
+前四轮（裁重复帧 133/134、xfade 撤回 135/136、两侧裁坡道 137、帧率跟随源 138）都治不了，因为它们只动接缝/全局帧率，而卡顿是**镜头内部**的长近静止段。freezedetect 严阈值看不出（i2v 慢漂移非定格）。用户已确认接受去死帧的代价（压时长、改节奏、与预设台词时长对不上；音频本就后期 mux）。
 
-## Follow-up 150 — 2026-06-27 · 拼接硬拼仍出 rife = 构建落点错配（vite outDir）
-真因：app 服务 `apps/api/static/`（空），vite.config 却 build 到 `apps/backend/static/`（重构遗留）→ 每次 build 不进被服务目录 → prod 跑陈旧 bundle。用户已把拼接升级为三态（硬拼 butt / 裁切平接 trim / RIFE）但前端改动从未被服务，故旧 UI 下硬拼仍出 rife。修 `vite.config.{ts,js}` outDir → `apps/api/static` 并重建到位（三态逻辑本身正确、不改）。
+### 指令
+合成时自动去死帧：每个 clip 视频链 seam-trim → scale/pad/setsar → `mpdecimate` → `setpts=N/{target_fps}/TB`，丢近静止帧并把存活帧按目标帧率重排（死气被压掉、clip 变短，而非 fps 补帧 hold 住）。阈值 `hi=64*24:lo=64*12:frac=0.2`（实测：卡死镜头削 ~26%、运动镜头仅 ~3%，自适应不伤真动作）。concat 改 video-only（`a=0`），音频用单条 `anullsrc`+`-shortest`（去死帧后逐 clip a/v 无法对齐；真台词/BGM 后期 mux，本合成音轨本就 throwaway）。
 
-## Follow-up 151 — 2026-06-27 · 拼接 UI 两级（硬拼/不硬拼·不硬拼下裁切与RIFE并存）
-SeamPlanModal 三互斥按钮(硬拼/裁切/RIFE)→两级：主选 硬拼/不硬拼；不硬拼展开 裁切秒(0可)+RIFE勾选+密度(勾时)。映射后端 butt/trim/rife 三态(纯前端)。另诊断 ep4 shot11→12「硬拼不像硬拼」：saved plan 已是 butt、承接缝纯硬拼会保留 ramp，看到的是修复前旧 render → 重启+硬刷+重生 ep4；要干净用 不硬拼+裁切。
+### 实现
+- 常量 +`_DECIMATE="mpdecimate=hi=64*24:lo=64*12:frac=0.2"`。
+- `_ffmpeg_concat`：per-clip 视频 filter 用 `{_DECIMATE},setpts=N/{target_fps}/TB`（替原 `fps={target_fps}`）；`concat=...:v=1:a=0[outv]`；额外 lavfi `anullsrc` 输入(index n) 映射为音轨 + `-shortest`。删掉 per-clip 音频段构建与 `_probe_has_audio`（不再用；character_video__writer 有自己的副本）。
+- 保留：seam 两侧裁(137)、视频流时长探测(135c)、帧率跟随源(138)、butt-join 无 xfade(136)。
 
-## Follow-up 152 — 2026-06-27 · 拼接丢末字「了」= 音频被裁到视频长度
-根因：seam_concat `_render_body` 把音频 atrim 到 `_probe` 的**视频流**时长；shot11 视频9.93s/音频10.10s（TTS末字在画面后才念完）→ 纯硬拼也把「了」裁掉。修：`_audio_dur()` 探音频长 + butt 尾保留完整音频、`tpad` 保末帧补画面 a/v 同步、超长 cap 1.0s（防 135c）；tpad 须在 `_norm`(含fps) 后才生效。验证 shot11「了」保住、a/v Δ0.02s、23 tests pass。用户提的 UI 音频选项：默认已不裁音频、无需手选；需重生 ep04。
+### 校验
+- 真跑 EP1（wushen_juexing）：zh 127.6→**113.3s**、original →113.5s，均 24.01fps、12 镜——压掉 ~14s 死气；长 hold(≥0.35s) 从 ~10s+ 降到 zh 1.8s / original 3.6s。
+- 测试：合成 testsrc 是近静止会被 decimate 收掉，故 `_silent_clip`/`_clip_audio_longer` 加 `noise=alls=40:allf=t+u` 逐帧运动以保帧；时长断言据此成立。pytest 28 绿。零 prompt 改动。
+- 注：残留 1.8–3.6s 散点 hold 若仍嫌卡，可调 `lo=64*16`/`frac=0.15` 更激进（风险：伤真动作）。
 
-## Follow-up 153 — 2026-06-27 · 剧主页从导航打开 + 全局 takes / 逐集合成
-剧节点在左导航点击后打开自己的主页（控制台），导航上的动作按钮移到该主页；takes 提为全局层、合成按集进行。
 
-## Follow-up 154 — 2026-06-27 · 演员库 / 背景音乐库主页 + 移除 _voices
-`_actors` / `_bgm` 显示中文标签（演员库 / 背景音乐库）、各自有主页（/actors、/bgm），导航按钮移上主页；删除 `ai_videos/_voices/` 及其导航surface（/voices、VoicePoolGenerator）。
+---
 
-## Follow-up 155 — 2026-08-29 · 导航中文标题：括号是限定语不是标题
-`TreeReader._h1_zh` 把 H1 的 `（…）` 一律当标题本体，`# 热血高校（预告片）` 在左导航被显示成「预告片」（看起来像项目没出现）。修：`（…）` 仅在括号前文本**不含中文**时才是标题（`pinyin（中文）`）；括号前已是中文时视为限定语、丢弃并继续走中点分隔规则。另：空项目目录本就不被后端过滤，但缺 `README.md`/`1_立项/concept.md` 时只显示 pinyin 名——新建项目须补带中文 H1 的 `README.md`。
+## 140 — 2026-06-22 02:45:00 — defreeze-keep-synced-audio
 
-## Follow-up 156 — 2026-08-29 · eval-center/previz DI 漏接线导致后端起不来
-`eval_center__route.py` / `previz__route.py` 已提交但 `container.py` provider 与 `routes/__init__.py` 注册从未落地；`wiring_config` 用 `packages=` 会 import 包内每个模块，故缺 provider = 整个 app boot 崩（`AttributeError: Container has no attribute 'eval_center_query'`）。补三个 Singleton（previz_renderer 必须 Singleton）+ 四个 Factory + 两个 router 注册；previz 领域错误补进 app_factory 全局错误表；`test_boot_smoke` 的端点注册守卫改为递归展开 fastapi ≥0.139 惰性 `_IncludedRouter`（此前失效，正是它本该拦下这个 bug）。契约：新增路由文件必须同一次提交带上 DI provider + router 注册。
+去死帧（follow-up 139）引入回归：合成出来的视频**没声音了**。原因是 139 为绕开去死帧后的音画错位，把 concat 改成 video-only + 单条静音轨。但源 render 都带 AAC 音轨、用户要保留。修法：恢复每镜真音轨，并按去死帧后的时长 `atempo` 时间匹配，保持同步。用户：「有一个新的 bug 是出来的视频没声音了」。
 
-## Follow-up 157 — 2026-08-29 · UI 看不到新项目 = 后端跑在另一个 clone；previz 前端 API 层缺失
-8766 上的后端是从 `C:\workspace\spec_coding`（另一 clone，remote finalde/spec_coding）起的，那份 `ai_videos/` 无 rexue_gaoxiao / duikang_shangzeng。排障通则：UI 与磁盘对不上时先确认服务进程的 repo root，再查代码。连带修：`PrevizRenderPanel.tsx` 依赖的 `PrevizStatus` 类型与 `renderPreviz/cancelPreviz/fetchPrevizStatus` 三个 API 从未提交（与 156 同源）→ `tsc -b` 失败 → 无 `index.html` 可服务（static/ 被 gitignore，不可靠 git 恢复）。契约：新增前端组件必须同一次提交带上它引用的 types/api 导出。
+---
+target_stage: 6
+target_artifacts:
+  - libs/infrastructure/writers/episode__writer.py
+severity: high
+---
 
-## Follow-up 158 — 2026-08-29 · webapp 支持 PDF 预览
-剧目录里的参考 PDF（分镜/拍摄通告）此前不在任何扩展名白名单，目录在左导航显示为空。`.pdf` 进 `MEDIA_EXTENSIONS`（不进 `ALLOWED_EXTENSIONS`，`/api/file` 不得当文本解码）、新增 `pdf` 叶子类型、`MediaFileQdto.disposition` 区分 inline/attachment（`<iframe>` 遵守 Content-Disposition，attachment 会触发下载）、Reader 用 `<iframe>` 渲染（CSP `object-src 'none'` 封死 embed/object）、`Content-Disposition` 补 RFC 5987 `filename*`（中文名不再被削成 `_.pdf`）。排障教训：杀 uvicorn reload 父进程不杀 spawn worker，孤儿 worker 继续用旧代码应答同一端口。
+### 背景
+139 误判 concat 音轨是 throwaway 而直接静音。实测 12 个源 render 全带 AAC 立体声音轨（i2v 自带环境音/人声），用户预览要听。难点：去死帧把视频压短（~14s），音轨连续 → 直接保留会逐镜漂移甚至 concat 冻帧补齐。
+
+### 指令
+恢复每镜真音轨并保持同步：测出每镜**去死帧后的视频时长** ldur，把该镜音轨 `atempo=window/ldur` 时间压缩到 ldur（卡死镜的音频略快但与画面同步；无卡死镜 tempo≈1.0 即 no-op）。concat 恢复 `v=1:a=1`。无音轨镜回落 anullsrc（按 ldur 定长）。
+
+### 实现
+- 抽出 `_video_chain(i,head,end,tail,fps)`：构建去死帧视频滤镜链一次，供"测时长"与"concat seg"用同一串（保证帧数一致）。
+- 新增 `_decimated_duration(ff,src,vchain)`：跑该链到 null 读末尾 `time=` 得 ldur。
+- 新增 `_atempo_chain(factor)`：单 atempo 仅 [0.5,2.0]，>2 拆成 ≤2 的乘积链。
+- `_ffmpeg_concat`：每镜 `[i:a]atrim(window)→asetpts→atempo(window/ldur)→aresample→aformat[a{i}]`；恢复 `concat ... v=1:a=1[outv][outa]`；去掉单条 anullsrc 输入。恢复 `_probe_has_audio`（无音轨镜走 anullsrc 定长 ldur）。
+- 保留 139 去死帧 + 137 两侧裁 + 138 帧率跟随源 + 135c 视频流时长 + 136 butt-join。
+
+### 校验
+- 真跑 EP1：zh video=113.9s/audio=114.0s、original 114.0/114.0，**has_audio=True、漂移 0.08s**（同步）。pytest 28 绿。零 prompt 改动。
+- 另：shot11→12 仍有明显跳——查证为两段独立生成的"背身朝窗"近静止镜位姿对不齐（无运动遮掩→跳切感），属生成侧内容问题，裁帧/去死帧/帧率均无法消；需重生成 shot12（真从 shot11 末帧承接）或改硬切或加运动。已如实告知用户。
+
+
+---
+
+## 141 — 2026-06-22 03:15:00 — revert-defreeze-faithful-concat
+
+撤销去死帧(139)+变速(140)，回到忠实拼接。两个新症状——「有些地方语速明显比原视频快」「整体秒数跟原来不一致」——都是去死帧的副作用。查证根因：视频卡住的段落**仍在说话**（冻画≠静音，如 shot06 视频 3.1–5.9s 冻结但音频非静音），所以去死帧要么把整镜音频 atempo 加速（语速快）、要么丢台词，且压短总时长。用户选**回到忠实拼接**。
+
+---
+target_stage: 6
+target_artifacts:
+  - libs/infrastructure/writers/episode__writer.py
+severity: high
+---
+
+### 背景
+139 用 mpdecimate 去掉镜头内长近静止段，140 为保音画同步把整镜音频 atempo 到去死帧后时长。但 atempo 对**整镜**音频统一加速（含没被裁的说话部分）→ 语速明显变快；且去死帧压短了总时长（EP1 130→113s）→ 与原始不一致。实测 freezedetect(视频) vs silencedetect(音频) 区间**不重合**：卡死段里角色在说话。结论：去死帧与本素材（卡顿压着台词）根本冲突，是错的工具。卡顿/跳跃属生成侧缺陷。
+
+### 指令
+撤销 139+140，`_ffmpeg_concat` 回到忠实拼接：每镜**原速原长**播放（含音频），只做 ① 承接 seam 两侧裁坊道(137) ② 帧率跟随源(138) ③ butt-join(136)。音频自然速度（atrim 到 [head,end] window + asetpts + aresample + aformat，**无 atempo**），无音轨镜回落 anullsrc(按 eff 定长)。concat v=1:a=1。
+
+### 实现
+- 删 `_DECIMATE` 常量、`_video_chain`/`_decimated_duration`/`_atempo_chain` 方法。
+- `_ffmpeg_concat` 每镜视频 `trim→setpts→scale→pad→setsar→fps={target}`（去掉 mpdecimate+setpts=N/FR/TB）；音频 `atrim(window)→asetpts→aresample→aformat`（无 atempo）；anullsrc 按 `eff=end-h` 定长。
+- 保留 137/138/135c/136 + `_probe_has_audio`。还原测试 clip 的 `noise`（去死帧才需要，已删）。
+
+### 校验
+- 真跑 EP1（wushen_juexing）：源 clip 合计 130.2s；输出 zh/original 均 **129.6s**（差 0.6s＝承接 seam 微裁），**has_audio=True、自然语速**。pytest 28 绿。零 prompt 改动。
+- 遗留（生成侧，concat 不可修）：shot06/08 等镜头内「边说话边卡画」的停顿仍在；shot11→12 近静止背身镜位姿对不齐的跳切仍在。解法＝重新生成这些镜头（让画面在说话时有动作、承接镜真从上一镜末帧续）。
+
+
+---
+
+## 142 — 2026-06-22 21:15:00 — concat-crossdissolve-soften-cuts
+
+合成成片在镜头交接处「画面先跳一下、才切到下一镜」，硬切切换感明显。改成在每对相邻 clip 之间加短交叉叠化（xfade 视频 + acrossfade 音频）柔化硬切、并盖住 i2v 留在 clip 尾部的 ~0.1–0.2s 安定抖动。
+
+---
+target_stage: 6
+target_artifacts:
+  - libs/infrastructure/writers/episode__writer.py
+  - tests/test_episode_concat.py
+severity: medium
+---
+
+### 背景
+用户实拍反馈：合成 EP1 成片「首尾帧交接处有明显的画面跳了一下，才切换到下一镜」，整体硬切切换感强。用户选「加转场柔化（交叉叠化）」。
+
+### 与已回退叠化（136）的区别（关键，避免误判重复）
+follow-up 135 的 seam cross-fade 在 **承接** 缝上叠化**近乎相同的两帧**→看着像闪一下，136 回退。本次叠化的是**两段完全不同的镜头**（硬切相邻镜），这是叠化的标准正确用途，不会出 136 的问题。且叠化期正好把上一镜尾部那一「跳」淡出。
+
+### 改动（已落地）
+`episode__writer.py::_ffmpeg_concat`：
+- 每对相邻 clip 由 butt-join `concat` 改为 **xfade(transition=fade) 链 + acrossfade 链**（视频/音频按同一 `xdur` 重叠、A/V 锁定）。
+- 新常量 `_XFADE_DUR=0.25`；`xdur=min(_XFADE_DUR, min(eff)/2)` 防短镜被过度消耗；`n==1` 跳过叠化。
+- 保留 follow-up 137/138/141 的全部既有处理：承接 seam 两侧微裁、源帧率匹配、自然语速忠实音频（无 atempo）、audio-less 用 anullsrc。
+- map 由 `[outv]/[outa]` 改为最终 xfade/acrossfade 标签。
+
+### 代价（固有，已说明给用户）
+叠化必然重叠两段，整集总时长缩短 `(n-1)·xdur`。EP1：源 130.2s → 输出 126.7s（11 缝×0.25 + shot10/11/12 承接微裁 0.6s）。语速不变（不动 atempo）。
+
+### 测试
+- `test_real_concat_preserves_length_*` 阈值由 `>2.0` 调为 `>1.4`（叠化重叠后 3 clip≈1.5s，截断到首 clip≈0.85s 仍可区分）。
+- `test_real_concat_consecutive_承接_seams` docstring 由「No cross-fade/plain concat」更新为交叉叠化。
+- 28 passed。
+
+### 备注
+本次只解决「硬切切换感/尾部跳帧」。shot11→12 背身位姿跳、镜头内卡死仍是生成缺陷，需用户侧重生成（见 wushen_juexing follow-up 042 的 regen 清单），叠化只能弱化、不能消除。
+
+
+---
+
+## 143 — 2026-06-22 21:30:00 — revert-crossdissolve-back-to-hardcut
+
+撤销 follow-up 142 的镜头交接交叉叠化，退回忠实硬拼接。用户实拍反馈：叠化「感觉没有变柔和，还不如之前的硬切」。
+
+---
+target_stage: 6
+target_artifacts:
+  - libs/infrastructure/writers/episode__writer.py
+  - tests/test_episode_concat.py
+severity: medium
+---
+
+### 背景
+follow-up 142 给每对相邻 clip 加了 xfade+acrossfade 交叉叠化以柔化硬切/盖住尾部跳帧。用户看了成片：叠化没有变柔和，反而比之前的硬切更差，要求 revert。
+
+### 教训（写给未来）
+两次转场实验都失败：
+- 135/136：承接近同帧叠化 → 闪一下。
+- 142/143：整集不同镜叠化 → 不显柔和、反而更差。
+结论：**i2v 短剧素材的镜头交接,干净硬切(butt-join concat)读感最好**。"画面先跳一下才切"是 i2v 留在 clip 尾部的安定抖动(生成缺陷)，叠化盖不住、只会引入新的违和；要根治得重生成该镜，不在合成层做转场。后续不要再提叠化柔化作为接缝方案。
+
+### 改动（已落地，= 回到 follow-up 141 状态）
+`episode__writer.py::_ffmpeg_concat`：
+- 删 xfade/acrossfade 链，恢复 `concat=n=N:v=1:a=1[outv][outa]` butt-join，map 恢复 `[outv]/[outa]`。
+- 删常量 `_XFADE_DUR` 及其注释；seam 注释恢复为 plain concat（记两次叠化均回退）。
+- 自然语速忠实音频、承接微裁、源帧率匹配全部保留不变。
+
+### 测试
+- `test_real_concat_preserves_length_*` 阈值 `>1.4` 回退为 `>2.0`。
+- `test_real_concat_consecutive_承接_seams` docstring 回退为 butt-join/no cross-fade（记两次叠化均回退）。
+- 28 passed。EP1 重渲 130.7s（≈源 130.2s，忠实拼接恢复）。
+
+### 仍未解决（生成缺陷，需重生成）
+shot11→12 背身位姿跳、镜头内卡死（shot06/07 近静止 25–26%）。见 wushen_juexing follow-up 042 regen 清单。
+
+
+---
+
+## 144 — 2026-06-22 22:00:00 — seam-concat-tool-trim-dedup-rife
+
+新增 `tools/seam_concat.py`：针对「Seedance 首尾帧链式生成的两段视频，直接 concat 后接缝有明显镜头切换感」的独立处理工具。
+
+---
+target_stage: 6
+target_artifacts:
+  - tools/seam_concat.py
+severity: low
+---
+
+### 背景
+用户用 Seedance 首尾帧生成两段视频、手动 concat 后接缝顿挫明显，问怎么拼接处理。根因：首尾帧生成让 A 结尾缓动收敛到末帧、B 又从同一张首帧缓动起步，且 A 末帧≈B 首帧（B 由 A 末帧生成），直接 concat = 减速→同帧冻结两帧→加速 的速度断裂+重复帧（不是像素跳变，所以叠化盖不住——已在 142/143 验证叠化更差）。
+
+### 实测裁决（写给未来，避免重走）
+- **方案1 裁缓动+去重复帧**：ffmpeg-only，可靠，价值最高 → 工具默认。
+- **方案2 交叉叠化**：盖不住速度断裂、反而更差 → 已弃（webapp 142/143 验证）。
+- **方案3 光流补帧**：真正修复运动断裂。**ffmpeg `minterpolate` 实测在「两张任意静态帧之间」只能产出 0–4 帧乱码，不能重建多帧运动**（本回合验证），故工具**不内置 minterpolate**；真补帧靠外部 RIFE（`--rife`）。无 RIFE 时工具保持 trim-only，绝不假装有 bridge。
+
+### 工具行为
+`python tools/seam_concat.py --out ep.mp4 A.mp4 B.mp4 [...] [--trim 0.10] [--rife <exe>] [--fps 0]`
+- 默认：每个接缝裁掉前镜 ease-out 尾 + 后镜 ease-in 头（头裁同时丢掉重复的共享帧），filter-concat 重编一次（短段 `-c copy` 会丢帧，故用 filter）。
+- `--rife <exe>`：用外部 RIFE（如 rife-ncnn-vulkan）对每个接缝抽前镜末帧+后镜首帧、补中间帧；任一步失败→该缝退回 butt-join + 打 warning（无声造假禁止）。`--rife` 路径不存在→upfront 干净报错（exit 2）。**RIFE 调用只用最稳的单帧对接口 `-0 a -1 b -o mid.png`（产 1 张中点帧），2 层递归得 3 张中间帧（q1/mid/q3，约 0.1s 桥）；dir-mode `-n` 语义跨 build 不一致故不用。本机无 RIFE 二进制、此路径按 rife-ncnn-vulkan 文档接口编写但未本地实测，失败安全退化。**
+- 仅适用**连续接缝**（同场景/景别/机位）；不同机位/景别本就该硬切，别 trim/bridge。
+
+### 与 webapp 关系
+独立工具，**不改 webapp 合成**（webapp 经 141/143 已定为忠实硬拼接、不做转场）。用户手动 concat 工作流用此工具；EP1 那种「假承接、实为景别跳切」的缝不适用（已在 042 改判硬切）。
+
+### 验证
+合成 testsrc 片段实测：plain concat 60 帧（含重复缝帧）→ trim+dedup 48 帧（缝区去除、内容保留）；3 段链 69 帧；坏 `--rife` 路径干净报错；正常路径 exit 0。
+
+
+---
+
+## 145 — 2026-06-22 23:30:00 — rife-audio-fix-and-wire-into-episode-concat-button
+
+安装/配置 RIFE 后实测 EP1 承接缝补帧效果获认可；给 `tools/seam_concat.py` 加回音轨 + 逐缝承接/硬切控制；把 RIFE 补帧接进 webapp「合成本集视频」button。
+
+---
+target_stage: 6
+target_artifacts:
+  - tools/seam_concat.py
+  - projects/ai_video_management/libs/infrastructure/writers/episode__writer.py
+  - projects/ai_video_management/apps/ui/src/components/Reader.tsx
+severity: medium
+---
+
+### 背景
+144 落地 seam_concat 工具（trim+dedup，RIFE 未本地实测）。本回合：
+1. 本机装好 RIFE（`rife-ncnn-vulkan` 20221029），GPU 自检通过（NVIDIA RTX 5000 Ada；运动中点帧落在中间＝真补帧非叠化）。安装位置 `C:\tools\rife\rife-ncnn-vulkan-20221029-windows\rife-ncnn-vulkan.exe`。
+2. EP1 实测：只在 2 条**承接缝**（shot10→11、shot11→12）补帧、其余 9 条硬切保持原样 → 用户认可效果（「效果不错」）。
+3. 用户反馈两点：① 成片**没声音**了；② 把 RIFE 补帧**接进 webapp 的 button 点击**。
+
+### 改动
+#### A. seam_concat 加回音轨
+- `_render_body` 保留对应时间窗的音频（`atrim` 对齐视频 trim；源无音轨→`anullsrc` 静音补齐），统一 44100/stereo/aac。
+- RIFE 桥段（合成帧本无声）加同长静音轨——桥落在 <0.2s 的走位/驻足 beat，静音即静、非掉音。
+- 末段 concat 改 `v=1:a=1`（双流），每段 a/v layout 一致才能 concat。
+- 顺手修：`main()` 开头把 stdout/stderr 重配 utf-8，避免中文路径在 cp1252 终端 print 崩溃。
+
+#### B. seam_concat 逐缝承接/硬切控制（关键正确性）
+- 新增 `--seams`：长度＝片段数-1 的 `b`(承接 bridge＝trim+RIFE)/`c`(硬切＝纯 butt-join，不 trim 不补帧) 串。省略＝全 bridge（旧行为）。
+- 原因：工具原先对**每条缝**一视同仁 trim+补帧，会把**故意的硬切**也补糊。EP1 只有 2 条承接缝，其余是设计好的切镜，绝不能动。
+- `seam_concat()` 现返回实际补帧的 bridge 数（供 webapp 上报）。
+
+#### C. RIFE 接进 webapp「合成本集视频」button
+- 链路：Reader.tsx 复选框「🪄 RIFE 补帧」(localStorage 持久化、默认开) → `concatEpisode(path, lang, rife)` → `POST /api/concat-episode {rife}` → `EpisodeCommand.concat(..., rife)` → `EpisodeConcatBuilder.build(rel, lang, rife)`。
+- builder 已有 `_is_continuity_shot`（读 shotNN.md `衔接:` 行判承接/硬切），据此自动生成 `--seams`；rife=True 且存在承接缝时，**复用 `tools/seam_concat.py`（按 sandbox root 路径 import，单一事实源、不复制逻辑）**做拼接，否则走原忠实硬拼接（行为不变）。
+- RIFE exe 路径来自 env `RIFE_NCNN_VULKAN_EXE`，否则默认安装路径。**rife=True 但 exe 不存在 → 明确报错（`rife_exe_not_found`），绝不静默退回 butt-join**（符合 CLAUDE.md「无静默 fallback」）。
+- 结果新增 `rife_used` / `rife_bridges`，UI toast 显示「RIFE 补帧 N 处承接缝」。
+
+### 决策记录（写给未来）
+- **承接/硬切判定的唯一来源** = shotNN.md 的 `衔接:` 行（builder `_is_continuity_shot` 已实现；seam_concat 侧用 `--seams` 显式接收）。webapp 自动算、CLI 手动传。
+- **webapp 不复制补帧逻辑**：按路径 import `tools/seam_concat.py`，避免与用户后续调参漂移。
+- 默认开 RIFE：用户要的就是它；无 GPU/exe 的机器会明确报错提示装/设路径，而非偷偷降级。
+
+### 验证
+- seam_concat 重建 EP1（`--seams cccccccccbb`）：12 镜、2 RIFE 桥、131.7s、含 aac 44100 stereo 音轨。
+- builder 直驱（button 代码路径）`build(ep01, lang=zh, rife=True)`：rife_used=True、rife_bridges=2、12 镜 0 跳过、写 ep01_zh.mp4。
+- 既有 `tests/test_episode_concat.py` 21 项全过（rife 默认 False，旧行为不变）。
+- 前端 `tsc --noEmit` 0 错；`npm run build` 成功，bundle 写入 apps/backend/static。
+
+
+---
+
+## 146 — 2026-06-23 — seam-plan-modal-per-seam-rife-choice
+
+点击「合成本集视频」改为弹出「拼接方案」面板：逐个 shot→shot 衔接处由用户选 硬拼/RIFE(+trim+补帧密度)，确认后生成，方案存 epNN/seam_plan.json 可复现。
+
+---
+target_stage: 6
+target_artifacts:
+  - tools/seam_concat.py
+  - projects/ai_video_management/libs/infrastructure/writers/episode__writer.py
+  - projects/ai_video_management/apps/ui/src/components/SeamPlanModal.tsx
+severity: medium
+---
+
+### 背景 / 决策
+RIFE 补帧只在「中段连续运动」可用：太像→停顿、太不像(换机位/构图)→morф。但全局帧差(mean-abs luma)在 ~40–50 区间无法可靠区分「大幅连续运动」和「构图/机位变化」——ep4 shot9→10=46 是 morф、ep3 有 44–46 却是好的，没有单一阈值正确(MAX 试过 55→40 都是按下葫芦浮起瓢)。结论(用户提议、采纳)：**把每条缝的决策交给人 + 缩略图辅助**，自动门限降级为「建议默认」。
+
+### 产物
+新增「拼接方案」面板，点 原片/中文/EN/中英 任一按钮即弹出(不再立即拼)：
+1. `POST /api/episode-seams {path,lang}` → 每个衔接：承接/硬切、前镜末帧+后镜首帧缩略图(base64)、自动帧差、建议。
+2. 硬切缝锁「硬拼」；承接缝可选 硬拼/RIFE；RIFE 下可调 trim(裁切 0.04–0.4) + 补帧密度(depth 1–4 / 自动)。
+3. 「生成」→ `POST /api/concat-episode {plan}`，**用户选择覆盖自动门限**(plan 路径 gate off)，并把方案存 `epNN/seam_plan.json`；重开面板自动载入已存方案。
+
+### 关键设计
+- **方案文件存本集文件夹** `epNN/seam_plan.json`(用户选定)，跟集走、可复现、删集即删方案。
+- **不复制补帧逻辑**：webapp 仍按 sandbox root 路径复用 `tools/seam_concat.py`，新增 `plan` 入参(每缝 {bridge,trim,depth})。
+- **读写分层**：analyze 是只读 → 新建 `EpisodeQuery`(走 query 层)；build 仍是 command。
+- 自动门限 MAX 55→40 保留，仅作面板「建议」默认值。
+
+### 验证
+- tool plan 路径(gate off+depth)实测在真实 clip 生效；analyze_seams 直驱返回 14 缝+缩略图+建议；build(plan) 生成并存 seam_plan.json、重载 has_saved_plan=True。
+- API 双端点 TestClient/pydantic 别名(from)round-trip 通过；front tsc 0 错、build 成功。
+- test_episode_concat 21 + route/container 49 全过。(全量 5 项预存失败属 wukong_juexing 数据/put_file loopback，与本功能无关。)
+
+
+---
+
+## 146 — 2026-06-23 20:29:10 — actor-gendered-wardrobe-frontal-face
+
+Actor 生成 prompt 两处修正：① 男女服装必须区分，现状男角色被生成成穿女式吊带背心；② 所有 actor 必须正脸朝镜头，否则捕捉不到面部细节。
+
+---
+target_stage: 6
+target_artifacts:
+  - libs/infrastructure/writers/actor__chinese_prompt.py
+severity: low
+---
+
+### 背景 / 根因
+- **服装串性别**：`_WARDROBE_REVEALING_ZH` 是男女通用一条、写死「纯白色紧身**吊带背心**」。吊带背心是女款服饰名词，Kling 据此把男角色也渲染成穿女式背心。
+- **未锁正脸**：三个 header 中只有 `_HEADER_FACE` 带「正脸面向镜头」，`_HEADER_BODY` 与主用的 `_HEADER_COMBINED` 都没有；且 `_LOOK_FACE_DETAIL_ZH["seductive"]` 含「微微侧脸」与正脸冲突。侧脸/转头时捕捉不到完整五官细节。
+
+### 落地
+- 服装按性别拆分：`_WARDROBE_MALE_ZH`（无袖紧身运动背心【男款圆领、绝非女式吊带背心】+ 运动短裤·体征看胸肌肩背轮廓）/ `_WARDROBE_FEMALE_ZH`（紧身吊带背心·体征看胸型大小）+ `_wardrobe_for(gender_slug)`；`_structured_lines` 与 `_build_with_picks_lines` 改为按 actor 性别取用（覆盖 face/body/combined 全部 builder）。
+- 三个 header 统一为「正脸正面平视镜头（绝不侧脸、不转头、不低头、不仰头，面部完整正对镜头便于捕捉五官细节）」。
+- `seductive` 面部细节「微微侧脸、颈线慵懒妩媚」→「下颌微收、眼神慵懒直视镜头、媚意自生」（保 seductive 韵味但守正脸）。
+- 负面词组新增正脸约束：侧脸 / 侧面 / 半侧脸 / 3-4 侧脸 / 转头 / 扭头 / 回头 / 低头 / 仰头 / 脸朝向一侧 / 面部转开 / 背对镜头 / 后脑勺 / 不看镜头 / profile view / side face。
+
+### 验证
+- `tests/test_actor_prompt_only_roundtrip.py` 通过；实跑男/女 combined prompt 确认服装分化 + 两个 header 均含正脸约束。
+
+
+---
+
+## 147 — 2026-06-24 20:48:23 — concat-first-whole-episode-subtitles
+
+把出片流程从「每镜先烧字幕→再拼接」改成「先拼接干净成片→再对整集烧一次字幕」，让字幕不再被拼接/裁帧损坏。
+
+### 背景 / 根因
+
+旧流程对每个 shot 先烧字幕得到 `shot{NN}_zh.mp4`，再把这些已烧字幕片段拼接成集。两处硬伤：
+
+1. **二次编码**：每镜烧字幕已编码一次，拼接再编码一次，字幕边缘/清晰度被劣化。
+2. **接缝裁帧错位**：承接接缝的 freezedetect 裁帧改变了片段时长，而字幕是按裁帧前的每镜本地时间轴烧的，一裁就和画面错位/闪跳；且每镜字幕本地 0 起、无全局 offset，根本不知道自己在整集里的真实位置。
+
+### 新流程（出片三步）
+
+episode 文件工具栏改为三个顺序按钮（锁画面 → 再上字幕，影视后期标准做法）：
+
+1. **① 定版** — 每镜把 `renders/` 最新 mp4 复制成稳定的 `shot{NN}.mp4`（`renders/` 原始多版不动；复制非软链，跨平台稳）。
+2. **② 拼接成片** — 把各 `shot{NN}.mp4`（缺则回退 `renders/` 最新）干净无字幕地拼成 `ep{NN}.mp4`，并写出 sidecar `ep{NN}.segments.json`（每镜在成片里的真实 `[start,end)`，按裁帧后的真实分段时长累加）。仍走 SeamPlanModal，但只 `lang=original`。
+3. **③ 整集字幕（中文/EN/中英）** — 对拼好的 `ep{NN}.mp4` 一次性烧字幕：每镜 cue 按 `segments.json` 的真实段时长 re-time、按 `start_s` 平移到成片时间轴，只编码一次 → 不受拼接/裁帧影响 → `ep{NN}_{zh|en|zhen}.mp4`。
+
+### 用户拍板的三点
+
+1. EN / 中英 保留（③ 整集字幕照样支持 zh/en/both）。
+2. 每镜单独烧字幕（`shot{NN}_zh.mp4`）保留为可选调试，**不放主按钮区**（仍在 shotlist / drama-README 页）。
+3. `shot{NN}.mp4` 用**复制**（`shutil.copy2`），不用软链。
+
+### 关键修复
+
+- 字幕时间轴吃 **concat 实际产出的分段时长**（含承接裁帧后的真实长度），不再用每镜原始时长累加——这是错位的根。
+- 旧「先烧后拼」(`lang=zh|en|both` concat) 与「每镜烧字幕」路径保留为 back-compat / 调试，不再是主流程，两套不混用。
+- 对白从不落在接缝，故 RIFE/plan 路径的分段时长用 re-probe 近似（`approx:true`）对 cue 对齐无影响。
+
+
+---
+
+## 148 — 2026-06-27 16:33:30 — export-production-folder-and-drama-dashboard
+
+一键把所有带字幕的 ep 导出到 production folder（中文/英文分子文件夹）；并新增剧 level 主页（点 left nav 的剧 → 右侧 main page 放剧级按钮与展示）。
+
+---
+target_stage: 6
+target_artifacts:
+  - projects/ai_video_management/apps/ui/src/components/Reader.tsx
+  - projects/ai_video_management/apps/api/routes/
+severity: medium
+---
+
+### 指令
+1. **一键导出 production**：把一部剧所有**带字幕的 ep 成片**拷到 `ai_videos/{drama}/production/`——中文（`ep{NN}_zh.mp4`）进 `中文/` 子文件夹、英文（`ep{NN}_en.mp4`）进 `英文/` 子文件夹（中英 `ep{NN}_zhen.mp4` 若存在进 `中英/`）；子文件夹内文件去语言后缀命名 `ep{NN}.mp4`（lang 由文件夹表示）。覆盖、不删旧文件、报每语言计数。
+2. **剧 level 主页（dashboard）**：left nav 的剧级 toolbar 按钮已放不下；点击一部剧（其 README 页作锚）右侧呈现一个 main page，承载剧级按钮（导出 production + 全剧烧字幕等）与剧级展示/功能，后续剧级功能都往这放。
+
+### 落地
+- 后端：`production__{writer,command,dto,mapper,route}` + container wiring + routes/__init__ 注册。`POST /api/export-production {path}` → 解析 drama root（复用 subtitle_batch `_drama_root`/`_episode_dirs` 两种 layout）→ 找各 ep 的 `ep{NN}_{zh|en|zhen}.mp4` → `shutil.copy2` 到 `production/{中文|英文|中英}/ep{NN}.mp4`。
+- 前端：`exportProduction` in api.ts + 新 `DramaDashboard` 组件（在 isDramaReadme 页渲染为 main page：剧级动作区[导出 production + 全剧烧字幕 zh/en/both（从 toolbar 迁入）] + README 内容）；toolbar 去拥挤。
+- 测试：`test_production_export.py`（两 layout、按语言路由、去后缀命名、skip 无字幕 ep）。
+
+
+---
+
+## 149 — 2026-06-27 17:09:04 — seam-trim-allow-zero-rife-without-trim
+
+拼接功能（SeamPlanModal）裁切秒应允许从 0 开始（现在 min=0.04），即可以「只选 RIFE 但不裁切」（trim=0）。
+
+---
+target_stage: 6
+target_artifacts:
+  - projects/ai_video_management/apps/ui/src/components/SeamPlanModal.tsx
+  - tools/seam_concat.py
+severity: low
+---
+
+### 指令
+RIFE 接缝的「裁切秒」输入框 `min=0.04` 强制至少裁 0.04s，用户无法选「RIFE + 不裁切」。允许 trim 从 0 开始。
+
+### 根因 / 落地
+- 前端：`SeamPlanModal.tsx` 裁切 input `min={0.04}` → `min={0}`（step 0.02、max 0.4 不变）；TRIM_HELP 补一句「0=不裁切，仅在接缝处补帧平滑」。
+- 后端：plan 路径已不 floor trim（seam_concat `trims[j]=float(e["trim"])`），但 `_rife_bridge` 在 trim≈0 时桥段音频复用的 atrim 切片为空 → acrossfade 失败 → 静默回退 butt-join（违背「选 RIFE」）。加守卫：trim < eps 时不复用两侧环境声、改用 anullsrc 静音桥（0.04s），保证 trim=0 仍出 RIFE 桥而非回退。
+
+
+---
+
+## 150 — 2026-06-27 17:26:40 — seam-butt-shows-rife-stale-bundle-and-trimbutt
+
+拼接：选了硬切/硬拼，出来的还是有 rife 效果。
+
+---
+target_stage: 6
+target_artifacts:
+  - projects/ai_video_management/apps/ui/vite.config.ts
+  - projects/ai_video_management/apps/ui/vite.config.js
+severity: high
+---
+
+### 根因（构建/服务路径错配 → 服务的是陈旧 bundle）
+`app_factory.py` 服务 `apps/api/static/`（实为空·只有 .gitkeep），但 `vite.config.{ts,js}` 的 outDir 还指向 `apps/backend/static/`（backend→api 重构遗留）。于是每次 `npm run build` 都落到 app **不服务**的目录 → prod 模式拿到陈旧 bundle。用户此前已把 SeamPlanModal/api.ts/episode__writer 升级成**三态拼接**（硬拼 butt / 裁切平接 trim / RIFE），逻辑都对，但这些前端改动从未进入被服务的 bundle → 跑的是升级前的旧 UI，所以「硬拼仍出 rife」。Makefile `clean` 与 README 均指 `apps/api/static`，确认 vite.config 是 stale。
+
+### 落地
+- `vite.config.{ts,js}` outDir `apps/backend/static` → `apps/api/static`（app_factory 服务目录），`npm run build` 重建到该目录（index.html + assets 已落位）。
+- 三态拼接（butt/trim/rife）后端 + 前端为用户并行实现、已完整正确，本 follow-up 不改其逻辑，只修构建落点让其生效。
+- 遗留：`apps/backend/static/` 旧产物已不再使用（可后续清理，不影响服务）。
+
+
+---
+
+## 151 — 2026-06-27 17:41:35 — seam-ux-hardcut-vs-soft-with-trim-and-rife
+
+拼接 UI 改结构：先选 硬拼 / 不硬拼；不硬拼时 裁切 与 RIFE 可同时存在并各自调整。另：ep4 shot11→12 选硬拼出来不像硬拼（疑似 stale render）。
+
+---
+target_stage: 6
+target_artifacts:
+  - projects/ai_video_management/apps/ui/src/components/SeamPlanModal.tsx
+severity: medium
+---
+
+### 指令 1 — 拼接 UI 两级结构（SeamPlanModal）
+原三互斥按钮（硬拼/裁切/RIFE）改为两级：① 主选 **硬拼 / 不硬拼**；② 选「不硬拼」时展开：**裁切秒**（始终可调，0=不裁）+ **RIFE 补帧**勾选框 + **密度**（勾 RIFE 时）。即裁切与 RIFE 在「不硬拼」下并存可调（裁切+不勾=只裁平接 method `trim`；裁切+勾=裁切+补帧 method `rife`；硬拼=method `butt`）。后端 butt/trim/rife 三态已就绪，纯前端重构 + 文案/CSS。
+
+### 指令 2 — ep4 shot11→12 硬拼结果不对（诊断）
+查证：ep4 `seam_plan.json` 中 `shot11->shot12 method=butt`（保存正确）；shot11=硬切独立首帧、shot12=承接 shot11 末帧，故该缝是**承接缝**。当前后端 butt→`{bridge:False}`=纯硬拼。结论：非代码 bug——用户看到的成片是**改成 butt 之前 / bundle 修复前的旧 render**（且此前 vite outDir 错配，前端改动从未被服务）。需重启后端 + 硬刷新 + **重新生成 ep4**。承接缝纯硬拼会保留首尾帧 ramp/重复帧（看着发软），想干净应用「不硬拼+裁切」。
+
+
+---
+
+## 152 — 2026-06-27 18:00:00 — unmatched-downloads-not-imported
+
+Downloads import: unmatched files are not imported at all (no `not_matched/` dumping ground).
+
+---
+target_stage: 6
+target_artifacts:
+  - libs/infrastructure/writers/downloads__writer.py
+severity: medium
+---
+
+The Downloads importer previously moved any file it could not route to a
+`not_matched/` (drama) or `_not_matched/` (performances / actors / bgm)
+sub-folder for manual triage. Change the behavior across ALL importer entry
+points (`import_drama`, `import_performances`, `import_actors`, `import_bgms`):
+
+- An unmatched download is **NOT imported at all** — it is left untouched in the
+  user's Downloads folder.
+- It is still **reported** in the result's `unmatched` list (kind `"unmatched"`,
+  carrying only `from`, no `to`) so the UI count is unchanged.
+- No `not_matched/` / `_not_matched/` folder is ever created.
+
+Also delete the existing `ai_videos/wushen_juexing/not_matched/` folder and its
+contents (stale triage leftovers).
+
+
+---
+
+## 152 — 2026-06-27 18:10:01 — concat-drops-audio-tail-last-word
+
+拼接后 shot11 最后一句台词「我能进下门了」的「了」消失了——明显有处理、不是简单拼接。用户提议把 audio 处理选项暴露到 UI（如"0 处理拼接"）。
+
+---
+target_stage: 6
+target_artifacts:
+  - tools/seam_concat.py
+severity: high
+---
+
+### 根因（已定位+验证）
+`seam_concat._render_body` 把每个 clip 的**音频 atrim 到视频时长** `end=dur`（`_probe` 返回的是**视频流**长度）。shot11 视频 9.93s、音频 10.10s（TTS「了」在画面结束后才念完）→ 即便是纯 butt 硬拼（无 seam 裁切），音频也被裁到 9.93s → 末字「了」丢失。这是默认处理，不是 RIFE/裁切。
+
+### 修复（tools/seam_concat.py）
+- 新增 `_audio_dur()` 探音频流长度 + `_AUDIO_TAIL_KEEP_S=1.0` 常量。
+- `_render_body`：butt 尾（tail≈0）时音频保留到**完整长度**（不再裁到视频长），超出视频的部分用 `tpad=stop_mode=clone` **保持末帧**补齐画面，a/v 同步；超出量 cap 1.0s（防 135c 卡死音轨撑爆段）。seam 裁切尾（tail>0）维持原样（裁切量对 a/v 同裁）。
+- 关键坑：`tpad` 必须在 `_norm`（含 `fps=`）**之后**才生效，否则静默 no-op。
+- 验证：shot11 body 音频 9.93→10.10s（「了」保住）、画面补帧到 10.08s（a/v Δ0.02s）；3-clip 合成含 0.3s 音频超长 clip 解码 OK、a/v 同步；test_episode_concat 23 passed。
+
+### 未做 / 备注
+- 用户提议的 UI 音频选项：默认修复后音频本就不再被裁、「了」保住，故无需手动选项即正确；如需显式控制可后续加 toggle。
+- 与运镜 M8 新规则「接缝两端 0.3s 留台词静默 (ai_video.md (J))」互补：本修复是出片端兜底、(J) 是设计端预防。
+- 用户需**重新生成 ep04** 才能拿到修复后的音频。
+
+
+---
+
+## 153 — 2026-06-27 18:45:00 — drama-mainpage-open-from-nav-buttons-off-nav
+
+点击 left nav 的剧节点本身应弹出剧级 main page（不只是 dropdown），剧级按钮从 left nav 移到该 main page；导出 production 按钮亦在此页。（148 主页落点修正——原实现把 dashboard 锚在 README 页、点剧节点只展开 dropdown，未达 148 本意。）
+
+---
+target_stage: 6
+target_artifacts:
+  - projects/ai_video_management/apps/ui/src/components/Sidebar.tsx
+  - projects/ai_video_management/apps/ui/src/components/DramaPage.tsx
+  - projects/ai_video_management/apps/ui/src/App.tsx
+severity: medium
+---
+
+### 指令
+1. 点击 left nav 的剧（武神觉醒）节点：**不仅是 dropdown**——右侧同时弹出一个剧级 main page。
+2. 这个剧级 main page 承载：导出 production 按钮（148 的新 button）+ 一系列剧 level 功能与展示，后续剧级功能都往这放。
+3. **不要把这些剧级 button 加到 left nav 里**（从 nav 移除，集中到 main page）。
+
+### 落地
+- 新 `DramaPage` 组件 + 路由 `/drama?drama={path}`（App.tsx）。host：`DramaDashboard`（导出 production + 全剧烧字幕）+ 资源管理（导入+重命名、角色画廊，从 nav 迁入）+ 📺 分集总览（每集列出已烧字幕成片 zh/en/中英 = 导出会拷到 production/ 的内容）。
+- `Sidebar`：剧节点 onClick → `navigate(/drama?drama=)` + 仍 toggle dropdown；移除 nav 内联的两个剧级按钮（导入+重命名、角色画廊）。
+- `Reader`：`DramaDashboard` 从 isDramaReadme 页移除（连同 import 与 isDramaReadme 判定），集中到 DramaPage。
+- styles.css：新增 `.drama-page*` 布局。
+
+
+---
+
+## 153 — 2026-06-27 19:00:00 — drama-console-global-takes-and-per-episode-concat
+
+Drama production console (main page): add a global 全局定版 button + a per-episode 拼接成片 button list.
+
+---
+target_stage: 6
+target_artifacts:
+  - apps/ui/src/components/DramaDashboard.tsx
+  - apps/api/routes/drama__route.py
+severity: medium
+---
+
+On the drama main page (`DramaDashboard`, the 🎬 剧集制作台 console):
+
+1. **全局定版 button** — a drama-wide counterpart to the per-episode 定版
+   (`select-episode-takes`). Walks every `episodes/ep{NN}/` of the drama and, for
+   each shot, locks its newest `renders/` take to a stable `shot{NN}.mp4`
+   (`renders/` left untouched). Does NOT concat. A single episode with no
+   shots / no render is reported, not fatal.
+
+2. **Per-episode 拼接成片 button** — the main page lists every episode (with
+   定版 progress + whether a master already exists); each row has a one-click
+   button that concats that episode's locked takes into `ep{NN}.mp4` (reuses the
+   existing `/api/concat-episode`, defaults lang=original / no rife / auto plan).
+   Disabled until the episode has at least one 定版-locked shot.
+
+New backend endpoints: `POST /api/select-drama-takes`, `POST /api/list-drama-episodes`.
+
+
+---
+
+## 154 — 2026-06-27 20:00:00 — actors-bgm-library-pages-and-voices-removal
+
+Turn `_actors` / `_bgm` into named library main pages (演员库 / 背景音乐库) with their toolbar + grid consolidated onto the page; delete the `_voices` library.
+
+---
+target_stage: 6
+target_artifacts:
+  - apps/ui/src/components/Sidebar.tsx
+  - apps/ui/src/components/ActorGrid.tsx
+  - apps/ui/src/components/BgmGrid.tsx
+  - libs/infrastructure/readers/tree__reader.py
+severity: medium
+---
+
+1. **演员库**: the left-nav `_actors/` folder shows the Chinese label **演员库**.
+   Clicking the node opens its own main page (`/actors`) on the right — like a
+   drama node. The left-nav action buttons (生成演员 / 导入演员 / 网格) move ONTO
+   that page; since the page already IS the grid, the standalone 网格 button is
+   dropped (consolidated).
+
+2. **背景音乐库**: same treatment for `_bgm/` → label **背景音乐库**, main page
+   `/bgm`, toolbar (生成 BGM / 导入下载音乐) moved onto the page.
+
+3. **Delete `_voices`**: remove the `ai_videos/_voices/` folder and all its
+   contents, plus its left-nav surface (buttons, `/voices` grid route,
+   VoicePoolGenerator). Backend `/api/voices/*` endpoints are left defined but
+   unreachable from the nav.
+
+
+
+---
+
+# Follow-ups · 202608.md
+
+# Follow-ups — 2026-08
+
+---
+
+## 155 — 2026-08-29 10:00:00 — nav-zh-title-parenthetical-is-qualifier-not-title
+
+> target_stage: 6
+> target_artifacts:
+>   - libs/infrastructure/readers/tree__reader.py
+> severity: low
+
+左导航的中文标题抽取（`TreeReader._h1_zh`）把 H1 里的 `（…）` 一律当成标题本体，
+导致 `# 热血高校（预告片）` 在导航里显示成 **预告片** —— 项目看起来"没出现在
+左导航"，实际是被显示成了另一个名字。
+
+规则修正：`（…）` 只有在**括号前的文本不含中文**时才是标题本体
+（`pinyin（中文）`，例如 `zhenbei_wangfu_zhengting（镇北王府正厅）`）；
+括号前已经是中文时，括号内容是限定语，丢弃括号、保留前半段并继续走
+中点（`·` / `・`）分隔规则。
+
+另：`ai_videos/{name}/` 下的项目即使为空（无任何流程阶段产物）也必须出现在左导航
+——后端本就不过滤空目录，但没有 `README.md`/`1_立项/concept.md` 时只会显示 pinyin
+文件夹名，新建项目应同时补一份带中文 H1 的 `README.md`。
+
+顺带修掉同一屏上的第二个症状：`sub_type_lookup` 只认扁平根目录的
+`script.md` / `shotlist.md`，阶段编号目录（`4_剧本/`、`5_6_分镜与prompt/`）下的
+单片项目一律 `sub_type=None`，导航/主页不显示 short 徽标与镜数。改为经
+`drama_layout` 解析（并新增 `script_md` / `shotlist_md` / `shots_dir` 三个
+resolver），另把「有扁平 `shots/shotNN/` 树且无 episodes 层」本身当作单片证据。
+`tests/test_sub_type_staged_short.py` 早已写好但一直是红的，现在转绿。
+
+---
+
+## 156 — 2026-08-29 11:00:00 — eval-center-previz-di-wiring-missing-backend-unbootable
+
+> target_stage: 6
+> target_artifacts:
+>   - apps/api/container.py
+>   - apps/api/routes/__init__.py
+>   - apps/api/app_factory.py
+> severity: high
+
+后端起不来：`AttributeError: type object 'Container' has no attribute 'eval_center_query'`。
+
+根因：`eval_center__route.py` / `previz__route.py` 两个路由文件被提交了，但
+`container.py` 的 provider 与 `routes/__init__.py` 的 router 注册**从未一起落地**
+（该 commit 在 `apps/api/` 下只动了这两个文件）。`Container.wiring_config`
+用 `packages=["apps.api.routes"]`，wire 时会 import 包内**每一个**模块，所以缺 provider
+不是「该功能不可用」而是「整个 app 起不来」。
+
+契约补充：**新增路由文件必须同一次提交带上 DI provider + router 注册**——
+`apps/api/routes/` 下任何模块引用了 `Provide[Container.x]`，`Container` 就必须有 `x`，
+否则整个后端 boot 失败。
+
+另修：`previz` 的领域错误未登记进 `app_factory` 的全局错误表，域错误以 500 泄漏；
+按既有表补 5 行（invalid_path 400 / not_found 404 / render_busy 409 /
+blender_missing 500 / render_failed 500）。
+
+另修：`tests/test_boot_smoke.py::test_all_post_endpoints_registered` 只遍历
+`app.routes` 顶层，fastapi ≥0.139 的 `include_router` 存的是惰性
+`_IncludedRouter`（无 `.path`/`.methods`，真实路由挂在 `.original_router`），
+导致所有端点都被判为「未注册」。改为递归展开——这条测试正是本该拦住上面这个
+漏接线 bug 的守卫，必须让它真的有效。
+
+---
+
+## 157 — 2026-08-29 13:10:00 — ui-served-from-wrong-repo-clone-and-previz-ts-exports-missing
+
+> target_stage: 6
+> target_artifacts:
+>   - apps/ui/src/types.ts
+>   - apps/ui/src/api.ts
+> severity: high
+
+用户「UI 上还是看不到热血高校 / 对抗熵增」的真因**不是代码**：8766 端口上跑的后端
+是从 **另一个仓库副本** `C:\workspace\spec_coding` 起的（旧 clone，remote 是
+`finalde/spec_coding`），那份 `ai_videos/` 里根本没有 `rexue_gaoxiao` /
+`duikang_shangzeng`——它服务的 8 个条目与 spec_coding 磁盘内容逐字相同。前面修的
+标题抽取是真 bug、但不是本次「看不到」的原因。
+
+排障要点：UI 显示与磁盘对不上时，**先确认服务进程的 repo root**（看进程
+CommandLine / cwd，比对 `/api/tree` 与磁盘 `ls`），再去查代码。同名项目的多份 clone
+会让「代码已修好」和「界面没变化」同时为真。
+
+连带修：`apps/ui/src/components/PrevizRenderPanel.tsx` 引用了
+`types.ts` 的 `PrevizStatus` 与 `api.ts` 的 `renderPreviz` / `cancelPreviz` /
+`fetchPrevizStatus`，这四个导出**从未被提交**（与 follow-up 156 后端漏接线同源，
+同一个 commit 只落了组件、没落它依赖的 API 层）→ `tsc -b` 失败 → `npm run build`
+不产出 `index.html` → `apps/api/static/` 只有 `assets/` 而没有入口页。
+按 `PrevizStatusQdto` 补齐类型与三个 API 函数后构建通过。
+
+契约补充：**新增前端组件必须同一次提交带上它引用的 `types.ts` / `api.ts` 导出**——
+`tsc -b` 会编译整棵源码树，即使该组件尚未被任何路由引用，缺导出也会让**整个前端
+构建失败**、进而使后端没有 `index.html` 可服务（`static/` 被 gitignore，构建产物不进 git，
+换机器/换 clone 后无法靠 git 恢复）。
+
+---
+
+## 158 — 2026-08-29 14:00:00 — pdf-preview-in-webapp
+
+> target_stage: 6
+> target_artifacts:
+>   - libs/common/exposed_tree.py
+>   - libs/application/queries/media__query.py
+>   - libs/infrastructure/readers/tree__reader.py
+>   - apps/ui/src/components/Reader.tsx
+> severity: medium
+
+用户往剧目录里放的参考 PDF（分镜、拍摄通告）应当能在 webapp 里直接预览。
+此前 `.pdf` 不在任何扩展名白名单里，整个目录在左导航里显示为空。
+
+落地：
+- `.pdf` 进 `MEDIA_EXTENSIONS`（走 `/api/media` 原始 FileResponse、不受
+  `MAX_FILE_BYTES` 限制）；**不进** `ALLOWED_EXTENSIONS`，`/api/file` 永远不会
+  试图把它当文本解码。
+- 新增 `pdf` 叶子节点类型（tree_reader `_leaf_for` + 前端 `TreeNodeType`
+  + Sidebar 叶子判定 + 📄 图标 + linkResolver）。
+- `MediaFileQdto` 增加 `disposition` 字段：pdf = `inline`，其余 = `attachment`。
+  **`<iframe>` 会遵守 Content-Disposition，`attachment` 的 pdf 会触发下载而不是
+  内嵌显示**——这是必须区分的原因。
+- Reader 用 `<iframe>` 渲染（CSP `object-src 'none'` 封死了 `<embed>`/`<object>`，
+  `frame-src` 回落到 `default-src 'self'` 所以 iframe 可用）；iframe 需要真实高度，
+  百分比会塌成 0。
+- `Content-Disposition` 补 RFC 5987 `filename*=UTF-8''…`：原来的 ASCII 过滤会把
+  `对抗熵增_分镜.pdf` 削成 `_.pdf`，中文文件名在浏览器 PDF 阅读器标题/另存时全丢。
+
+排障教训（Windows）：**杀掉 uvicorn reload 父进程不会杀掉它 spawn 出来的 worker**。
+孤儿 worker 继续持有继承来的 8766 监听套接字并用旧代码应答，表现为「代码改了、
+重启了、接口还是旧行为」。排查时按 `netstat -ano` 找 8766 的全部 LISTENING PID，
+worker 的命令行是 `python -c "from multiprocessing…"`（不含 `apps.api`，按模块名
+过滤会漏掉）。
+
+
+---
+
+## 159 — 2026-08-30 — object-prop-view-subfolder-routing
+
+> target_stage: 6
+> target_artifacts:
+>   - libs/infrastructure/writers/downloads__writer.py
+>   - libs/common/drama_layout.py
+>   - tests/test_downloads_import_prop_views.py
+> severity: medium
+
+### 指令
+
+一个 **object 型道具**（身份需要多个机位、不是一张图能锁住的，如汽车广告里的车）
+下载完多张视角图后，导入功能必须知道把哪一张放进哪个目录。
+
+### 实现
+
+1. **view 子目录路由**（与场景 plate 同构）：`props/{object}/v{N}_{视角}/`，
+   `_prop_view_token` 取 `v{N}_` 之后的整个尾巴作路由键。
+   - `_match_prop_view` —— 文件名已按名匹配到某 prop 时，向下细化到 view 目录；
+   - `_match_view_any_prop` —— `_classify` 无命中时的兜底（**正常路径**：下载文件名
+     被截断到 prompt 首行，只剩中文视角词、不含拼音 prop 句柄），
+     全剧扫描 `props/*/v{N}_*`，唯一命中才落盘，歧义则 unmatched（不猜）。
+   - `kind == "prop_view"` 复用 scene_plate 的覆盖语义（`_clear_folder_media`），
+     一个 view 目录只留一张权威图——重跑锚点图是常态。
+2. **`GENERATED_DIR_NAMES = {"whitemodel", "previz"}` 排除出重命名扫描**。
+   `MediaRenamer.rename_drama` 递归把任意目录里的媒体改名成 `{目录名}{N}.ext`，
+   会把 `whitemodel/angles/f80_ferrari_front.png` 改成 `angles1.png`，
+   破坏 `render_object_turntable.py` 的 `{name}_{tag}.png` 命名契约与全部下游引用。
+3. **`drama_layout.props_dir()`** —— props 目录此前由
+   `characters_dir(...).parent / "props"` 推导，只有当 `characters/` 恰好也存在于
+   同一层时才能找到 staged 布局下的 props；有 props 无 characters 的剧会静默回落到 flat root。
+
+### 发现但未修（不在本次范围）
+
+`tests/test_downloads_import_props.py` 的 3 条「同一 prop 多形态变体不互相覆盖」
+（`玉佩_完整.png` / `玉佩_师兄半枚.png`）**在改动前即为红**：导入端把 prop 下载统一改名成
+`{folder}.ext`，且 `MediaRenamer` 还会把同目录多图塌成 `{folder}{N}.ext`——
+要修需同时改导入端与重命名端的变体感知。本次的 view 子目录走的是另一条路
+（一目录一图），未触碰该分支。
+
+### 一句话总结
+
+导入功能新增 object 型道具的 `v{N}_{视角}` 子目录路由（中文视角词为键、歧义不猜、重导覆盖），
+并把脚本产物目录排除出重命名扫描。

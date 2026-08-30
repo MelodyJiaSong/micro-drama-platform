@@ -10,11 +10,13 @@ ALLOWED_EXTENSIONS: frozenset[str] = frozenset(
 # ref png / shot output video etc. — gitignored, but webapp displays inline.
 # `.pdf` rides the same path (reference decks a user drops into a drama folder);
 # it stays OUT of ALLOWED_EXTENSIONS so /api/file never tries to decode it as text.
+# `.glb` / `.gltf` likewise: white-model meshes handed back by image-to-3D, previewed
+# in-browser so the user can judge a mesh without opening Blender.
 MEDIA_EXTENSIONS: frozenset[str] = frozenset(
     {".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp",
      ".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v",
      ".mp3", ".wav", ".m4a", ".aac", ".ogg", ".flac",
-     ".pdf"}
+     ".pdf", ".glb", ".gltf"}
 )
 TREE_VISIBLE_EXTENSIONS: frozenset[str] = ALLOWED_EXTENSIONS | MEDIA_EXTENSIONS
 MAX_FILE_BYTES: int = 1_048_576

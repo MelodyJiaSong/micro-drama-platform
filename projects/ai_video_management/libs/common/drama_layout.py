@@ -57,6 +57,16 @@ def scenes_dir(drama_dir: Path) -> Path:
     )
 
 
+def props_dir(drama_dir: Path) -> Path:
+    """`props/` — flat root or `2_世界观人设/`. Resolved on its own rather than
+    as `characters_dir(...).parent / "props"`: that derivation only found the
+    staged props when a `characters/` sibling also existed, so a drama with
+    props but no character folder silently fell back to the flat root."""
+    return _first_existing_dir(
+        drama_dir / "props", drama_dir / WORLD_STAGE / "props"
+    )
+
+
 def episodes_dir(drama_dir: Path) -> Path:
     """The episodes tree the render-side consumers walk (downloads import,
     episode compose, bgm-cue scan). The staged pipeline puts the shot/render

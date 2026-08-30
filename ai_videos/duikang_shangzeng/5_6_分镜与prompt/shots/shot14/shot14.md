@@ -69,19 +69,18 @@ previz: 需要
 
 ## Reference uploads
 
-| 位 | 内容 |
+| 位（`@` 处手填） | 填什么 |
 |---|---|
-| 图片1 | `props/f80_ferrari/f80_ferrari_3q_front.png` — 车型主锁 |
-| 图片2 | `props/f80_ferrari/whitemodel/angles/3q_front.png` — 白模结构/比例锁 |
-| 图片3 | `scenes/entropy_city/bg1_广场.png` — 环境锁 |
-| 视频1 | `shots/shot14/whitemodel/shot14.mp4` — 运镜锁（previz playblast） |
+| `previz_shot14(previz灰模视频)=>@` | `shots/shot14/shot14_previz.mp4` — **形状 · 动作 · 走位 · 机位（权限最高）** |
+| `f80_ferrari(物件主体)=>@` | Seedance 主体 `f80_ferrari` — 图集与锁定描述符住在主体里，不逐镜上传 |
+| `entropy_city_bg1_广场(场景主体)=>@` | Seedance 主体 `entropy_city_bg1_广场` — 图集与锁定描述符住在主体里，不逐镜上传 |
 
 ## 视频 prompt
 
 ```text
 shot14
-参考: `f80_ferrari_3q_front=>@图片1, f80白模四分之三前侧=>@图片2, entropy_city_bg1_广场=>@图片3, previz_shot14=>@视频1`
-角色: `f80_ferrari — Ferrari F80 双门中置引擎超级跑车，Rosso Supercar 深绯红三层漆、湿润镜面高光；碳纤黑车顶、A 柱与车门上沿，衬出泪滴形座舱；车头极窄、一道横贯黑色饰条，前轮正后方一道笔直竖向导流开口；宽而方的肩线、浑圆饱满的后轮拱；尾部主动式尾翼与巨型扩散器；蝶翼门；车身极低矮宽扁`
+参考: `f80_ferrari(物件主体)=>@, entropy_city_bg1_广场(场景主体)=>@, previz_shot14(previz灰模视频)=>@`
+角色: `@f80_ferrari`
 角色识别: 画面中没有任何人、没有动物；唯一主体就是这一台车，严禁第二台车入画
 情节: `灰烬色的空旷广场上，一台静止的超级跑车，被一道贴地扫过的光带从车头依次擦亮到车尾`
 场景: `entropy_city 熵增都市中央广场 — 严格照@图片3。现代都市广场，褪成无饱和的灰烬色；天空灰白、阴云均质、没有太阳也没有方向性影子；空气中悬浮着极细的灰色微粒缓慢向下飘落；地面为湿润的深灰石板、有薄水膜`
