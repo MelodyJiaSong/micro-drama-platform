@@ -4594,3 +4594,29 @@ Auto-updated:
 - `npm run build`（含 `tsc -b`）通过
 - 端到端实测真实文件 `props/f80_ferrari/f80_raw.glb`（33.9 MB）：
   树可见 ✓ / MediaPath 接受 ✓ / media_type=model/gltf-binary ✓ / disposition=inline ✓
+
+
+## Follow-up 166 — 2026-09-01
+Source: ai_video follow-up duikang_shangzeng/030
+Summary: 新增 GET /api/health，报告进程实际加载的 writers 路径与新符号，终结"改了代码没生效"的进程考古。
+
+Auto-updated:
+- apps/api/routes/health__route.py — 【新增】只读端点，返回 downloads_writer / media_writer
+  的 `__file__` 与 has_subject_routing / has_multi_view_rename
+- apps/api/routes/__init__.py — 挂载 _health_router
+
+背景: 本机有 micro-drama-platform 与 spec_coding 两个同结构 clone；
+从错误 CWD 启动的服务会静默加载旧 writers、却写入另一个 clone 的数据。
+用一次性探针剧（ai_videos/_probe）在真实服务上取证，确认服务仍是旧 writers。
+
+未解: 8766 上有监听持续以 404 应答，但其 owner PID 无进程记录，
+Stop-Process / taskkill 均报进程不存在；已停止尝试，需用户侧重启。
+
+## Follow-up 160 — 2026-09-05
+Source: user_input/follow_ups/202609.md - section 160
+Summary: previz 重建脚本的文件名解析改为 `shot*_previz.py` 优先、`build_previz.py` 兜底（ai_video.md rule 4h §C）。
+
+Auto-updated:
+- `libs/infrastructure/writers/previz__writer.py` — 新增 `_build_script()`，`_rebuild()` 改用它；加 `BUILD_SCRIPT_GLOB` 常量
+
+No conflicts found in: routes、application、UI（改动只在 writer 内部，签名与行为对旧目录不变）

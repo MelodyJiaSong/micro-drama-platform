@@ -16,6 +16,7 @@ from apps.api.routes.casting__route import router as _casting_router
 from apps.api.routes.character__route import router as _character_router
 from apps.api.routes.character_video__route import router as _character_video_router
 from apps.api.routes.downloads__route import router as _downloads_router
+from apps.api.routes.health__route import router as _health_router
 from apps.api.routes.drama__route import router as _drama_router
 from apps.api.routes.episode__route import router as _episode_router
 from apps.api.routes.episode_bgm__route import router as _episode_bgm_router
@@ -44,6 +45,7 @@ router.include_router(_media_router)
 router.include_router(_frame_router)
 router.include_router(_scene_plate_router)
 router.include_router(_downloads_router)
+router.include_router(_health_router)
 router.include_router(_actor_router)
 router.include_router(_bgm_router)
 router.include_router(_casting_router)

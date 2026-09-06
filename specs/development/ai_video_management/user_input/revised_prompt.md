@@ -25,10 +25,9 @@
 - Tooling parity: same FastAPI + React + Vite + Vitest + Playwright + pytest stack as `spec_driven`?
 
 
-
 ---
 
-# Follow-ups · 202605.md
+# ===== follow-ups: 202605.md =====
 
 # Follow-ups 2026-05
 
@@ -10081,10 +10080,9 @@ Disambiguation captured at request time: scan scope = **renders/ subfolder only*
 the shot's final render.
 
 
-
 ---
 
-# Follow-ups · 202606.md
+# ===== follow-ups: 202606.md =====
 
 # Follow-ups 2026-06
 
@@ -11217,10 +11215,9 @@ severity: medium
    unreachable from the nav.
 
 
-
 ---
 
-# Follow-ups · 202608.md
+# ===== follow-ups: 202608.md =====
 
 # Follow-ups — 2026-08
 
@@ -11401,3 +11398,57 @@ worker 的命令行是 `python -c "from multiprocessing…"`（不含 `apps.api`
 
 导入功能新增 object 型道具的 `v{N}_{视角}` 子目录路由（中文视角词为键、歧义不猜、重导覆盖），
 并把脚本产物目录排除出重命名扫描。
+
+---
+
+## 2026-08-30 18:10:00 — UI 支持 .glb 显示与预览
+
+### 指令
+
+让 `.glb` 文件能在 UI 上显示和 preview。
+
+### 背景
+
+image-to-3D 交回的白模网格是 `.glb`；能否在浏览器里判断它（薄结构在不在、剪影对不对、
+轮子有没有嵌进轮拱）决定了用户要不要为此打开 Blender。这是「接受/重掷」决策的关键一环。
+
+### 一句话
+
+`.glb`/`.gltf` 走既有的 media 通道（树可见 + /api/media 服务），Reader 里用
+model-viewer 做交互预览。
+
+
+---
+
+# ===== follow-ups: 202609.md =====
+
+# follow-ups · ai_video_management · 2026-09
+
+---
+
+## 160 — 2026-09-05 — previz 脚本改名：认 `shot{NN}_previz.py`
+
+> target_stage: 6
+> target_artifacts:
+>   - libs/infrastructure/writers/previz__writer.py
+> severity: low
+
+### 起因
+
+`ai_video.md` 新增 rule 4h §C：per-shot 的 S 档 previz 编排脚本必须叫 `shot{NN}_previz.py`，
+**不得与仓库通用引擎 `tools/previz/build_previz.py` 同名**——同名会让一份合法的 per-shot
+脚本在盘上看起来像「引擎被 fork 了一份私货」，也让真正的 fork 无法被一眼认出。
+xianjian_yi_mv 的 `shots/shot12/previz/build_previz.py` 据此更名为 `shot12_previz.py`。
+
+### 改了什么
+
+`PrevizWriter._rebuild()` 原本按硬编码文件名 `build_previz.py` 找脚本、并从中解析
+`SCENE_MASTER` 常量来重建 blend。抽出 `_build_script(previz_dir)`：
+`shot*_previz.py`（glob，取排序首个）优先，`build_previz.py` 作旧名兜底，都没有则返回
+`None`、维持「按现状渲染 blend」的旧行为。
+
+### 教训
+
+**改文件名要连工具链一起改。** 这个 writer 是按文件名找脚本的，只认旧名的话，
+改名当天 webapp 的「出片」按钮就会**悄悄不再重建 blend**——不报错，只是渲的是上一版几何。
+这类「静默降级」比报错危险，因为没人会去看。已把这条写进 `ai_video.md` rule 4h §C。

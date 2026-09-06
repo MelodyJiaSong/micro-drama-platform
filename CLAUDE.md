@@ -189,6 +189,37 @@ Detailed output rules live in `.claude/agent_refs/project/ai_video.md` per § St
   ⑤ **ID 色索引必须正反向成对声明**（"标记色非服装、不得入画"），否则会被渲成戏服；
   人物上 ID 色、建筑保持灰模（分界＝形状由谁提供）。
   ⑥ **一镜内主体数 ≤ 8**——这是**分镜阶段**的硬约束，超了就拆镜。
+- **3D 层的工程契约**（`ai_video.md` rule 4h）。六条：
+  ① **每镜必配 previz，覆盖率 100%**——它锁的不只是机位，还有**动作时刻表**；
+  「只给 hero 镜做 previz」的分级取舍已作废。两层 blend 分工见 rule 4g §J
+  （场景层只出 `.blend` + 校验 PNG 不渲 mp4；只有 shot previz 出 mp4）。
+  ② **`previz_config.toml` 是 3D 层唯一真相**——坐标/尺寸/机位数值只写 TOML，
+  prompt 不复述；**关键帧 `t` 与 shot md `动作:` 时间轴逐拍对齐**，改一处必同步另一处。
+  ③ **A/B 档一律走通用引擎 `tools/previz/build_previz.py`，禁止拷进 shot 目录改**；
+  S 档 hero 长镜可写 per-shot Python，但必须 import 共享 rig 库、且
+  **命名 `shot{NN}_previz.py`，绝不与引擎重名**（同名会让合法产物看起来像 fork）。
+  ④ **场景 `.blend` 由 `tools/build_{world}.py` 确定性生成，不手改**——blend 走 R2、
+  被 gitignore，手改过的 blend 没有可审阅的来源；改几何 ＝ 改脚本重跑；
+  一次性补丁脚本随 builder 落地即删。
+  ⑤ **几何覆盖范围按「镜头要拍到什么」定，不按「到原点多远」定**；
+  走廊 keep-out 是整块剔除，**小体量塞得进走廊之间，大体量只会被整块剔掉**。
+  ⑥ **previz 批量任务不许重叠跑**——`TaskStop` 杀 shell 不杀已 spawn 的 `blender.exe`，
+  重叠会报假失败；blend 定稿后再跑 previz。
+- **Hyper3D / Rodin 已接入**（`ai_video.md` rule 4h §G）。开关 `blendermcp_use_hyper3d`
+  是 **per-scene** 的（换 .blend 要重开，这是误判「没装好」的头号来源），
+  key 在 addon preferences；自检走 `mcp__blender__get_hyper3d_status`。
+  用它的判据仍是 rule 4g §B 四问——**有界的有机小件（器物/构件/法宝/随身道具）用；
+  环境永不用；整身着装人物也不用**（2026-09-05 实测：立绘喂进去塌成一团光滑坨，
+  见 rule 4h §G1。人物 proxy 走参数化人体骨架 + 现成布料衣物网格）。
+  **出了模型必须先渲一眼再往下做**，别拿没看过的网格去绑定/做 previz。
+  无论哪家 vendor，白模一律过 `tools/whitemodel_normalize.py` 同一道闸门。
+- **产物一致性纪律**（`ai_video.md` rule 4i）。三条：
+  ① **一份东西只有一个出处，副本必漂**——多份同构 prompt 走生成器
+  （`tools/gen_scene_prompts.py`），改 prompt ＝ 改生成器重跑；索引/流程文件只写指针不抄内容。
+  ② **冲突判定三问，顺序不能颠倒**：先问「这两个东西是不是同一个东西」（伪冲突），
+  再问「谁错」（判据＝剧情需求 + 交叉印证，不是「谁更新」也不是「默认听图」），
+  最后给改动挂证据。**在伪冲突上做取舍，两边都不对。**
+  ③ **「文档记载的现状」不是现状**——每份「照此开工」的指令文档须以自查对账一节开场。
 - **参考图资产的命名与路由（全仓统一）**：主体目录 `bg{N}_{主体名}`（`{N}` 全剧唯一），
   主体 md `{目录名}.md`（**它同时是「这是主体目录」的判据**），
   **路由键 `bg{N}-{M}`**，prompt 首行 ＝ 落盘文件名 stem ＝ `bg{N}-{M}_{视图名}`。

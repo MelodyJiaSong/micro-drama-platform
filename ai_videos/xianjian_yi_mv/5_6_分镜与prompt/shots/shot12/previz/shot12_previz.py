@@ -4,9 +4,9 @@
 第二幕 15–30s ＝ 原 shot13（22.5s 版）压进 15s，用户裁定的三处不动：剑气 0.22/0.26s（快）、一化多 1.4s 与平转 5.6s（慢）。
 
 用法（本目录）：
-    cp ../../../../2_世界观人设/scenes/s11_十里坡山神庙/s11_十里坡山神庙.blend shot12_previz.blend
-    blender -b shot12_previz.blend --python build_previz.py            # 默认俯角 20°
-    blender -b shot12_previz.blend --python build_previz.py -- 24      # 换俯角
+    cp ../../../../2_世界观人设/scenes/s11_十里坡山神庙/_blender/s11_十里坡山神庙.blend shot12_previz.blend
+    blender -b shot12_previz.blend --python shot12_previz.py            # 默认俯角 20°
+    blender -b shot12_previz.blend --python shot12_previz.py -- 24      # 换俯角
     blender -b shot12_previz.blend -a                                  # 渲 PNG 序列 frames/f####.png
     ffmpeg -y -framerate 24 -i frames/f%04d.png -c:v libx264 -pix_fmt yuv420p -crf 18 shot12_previz.mp4
 
@@ -42,7 +42,7 @@ from tools.previz_rig import (  # noqa: E402
 )
 
 # 场景主档（仓库相对路径）：webapp「出片」按钮据此自动 copy + 重建本 .blend（follow-up 058）
-SCENE_MASTER = "ai_videos/xianjian_yi_mv/2_世界观人设/scenes/s11_十里坡山神庙/s11_十里坡山神庙.blend"
+SCENE_MASTER = "ai_videos/xianjian_yi_mv/2_世界观人设/scenes/s11_十里坡山神庙/_blender/s11_十里坡山神庙.blend"
 
 FPS = 24
 TOTAL = 678  # 28.2s ＝ 第一幕 15.0s（＝ shot12 previz 原样）+ 第二幕 13.2s（follow-up 050：头顶平转 5.6→2.8s，省出的 2.8s 一部分还给插地/跳跃/跟斗/大笑，其余直接从总长剪掉——不必凑满 30s）
@@ -51,6 +51,13 @@ TEMPLE = Vector((-21.0, 19.0, 0.0))
 P = Vector((0.0, 4.0, 0.0))
 
 _argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
+_flags = [a for a in _argv if a.startswith("--")]
+_argv = [a for a in _argv if not a.startswith("--")]
+# 身体来源（2026-09-05）：proxy＝本脚本的关节 proxy + MPFB；cascadeur＝导入 Cascadeur 导出的 FBX（骨骼+网格+烘焙动画），
+# 剑/葫芦/机位/特效/环境全部沿用本脚本。用法：blender -b x.blend --python shot12_previz.py -- --body=cascadeur [俯角]
+BODY_SOURCE = "cascadeur" if "--body=cascadeur" in _flags else "proxy"
+CASC_FBX = Path(__file__).resolve().parent.parent / "cascadeur" / "act1_0-15s" / "shot12_act1.fbx"
+CASC_FPS = 30
 CAM_AZ = Vector((-0.259, 0.966, 0.0))
 CAM_LENS = 35.0
 BODY_H = 1.70
@@ -472,6 +479,27 @@ BODY_YAW = math.radians(BODY_YAW_DEG)
 RZ = RZ_FACE + BODY_YAW
 FRONT = Vector((math.sin(RZ), -math.cos(RZ), 0.0))  # 身前
 
+# ---------------------------------------------------------------- 场景灰模照明
+# 场景 .blend 由 tools/build_s11_shanshenmiao.py 生成，**纯几何、零材质、零灯光**
+# （ai_video.md rule 4h §D / 4g §D：几何归 blend，长相归参考图）。previz 自己的道具
+# 全是自发光材质、不吃灯，所以不给场景补一盏灯，庙与地面会整片渲成纯黑——
+# 那就等于 previz 没有把「庙在画左」这个遮挡与构图事实传下去。
+#
+# 补的是【型面可读】的最低限度，不是美术（rule 12.16）：一盏弱定向光 + 一点环境光，
+# 让灰模有明暗面能读出体量；不调色、不加阴影特效、不碰任何自发光道具。
+_sun_data = bpy.data.lights.new("PVZ_场景灰模光", type="SUN")
+_sun_data.energy = 1.6
+_sun = bpy.data.objects.new("PVZ_场景灰模光", _sun_data)
+bpy.context.scene.collection.objects.link(_sun)
+_sun.rotation_euler = Euler((math.radians(52), 0.0, math.radians(-125)))   # 自画左上斜下，呼应锚点图的月位
+if bpy.context.scene.world is None:
+    bpy.context.scene.world = bpy.data.worlds.new("PVZ_World")
+bpy.context.scene.world.use_nodes = True
+_bg = bpy.context.scene.world.node_tree.nodes.get("Background")
+if _bg is not None:
+    _bg.inputs[0].default_value = (0.045, 0.05, 0.06, 1.0)   # 极暗环境光：暗部不死黑
+    _bg.inputs[1].default_value = 1.0
+
 PREVIZ = bpy.data.collections.new("PREVIZ_shot12")
 bpy.context.scene.collection.children.link(PREVIZ)
 
@@ -535,10 +563,70 @@ M_QI = mat("PVZ_剑气_青", C_CYAN, 2.5, alpha=0.75)
 # 人形 proxy 走公共模块（rule 12.16 §3）—— shot12/shot13 共用同一具身体。
 # 这里原先是 shot12 初版人形的**复制品**，shot12 细化了三轮它却没跟上：
 # 两镜相邻，观众会直接看到同一个人前后变了体型。所以只此一处。
-rig = PrevizRig(link=link_previz, body=M_GREEN, skin=M_SKIN, limb_end=M_LIMB)
-_before_rig = set(bpy.data.objects)
-root, pelvis, J = rig.build(P)
-_rig_meshes = [o for o in bpy.data.objects if o not in _before_rig and o.type == "MESH"]
+class _NoRig:
+    """cascadeur 模式下手型键全部忽略（用户 2026-09-05：手指不做动作）。"""
+    def hand_pose(self, *a, **k): pass
+    def both_hands(self, *a, **k): pass
+
+
+class _JDict(dict):
+    """cascadeur 模式下的关节字典：只有手/骨盆/头真正跟随 FBX 骨骼；其它关节键给一个不入场景的哑空物件，
+    让旧的 pose()/key_rot(J[...]) 调用无害。"""
+    def __missing__(self, key):
+        ob = bpy.data.objects.new(f"PVZ_Jdummy_{key}", None)
+        self[key] = ob
+        return ob
+
+
+def import_cascadeur_body(fbx_path):
+    before = set(bpy.data.objects)
+    bpy.ops.import_scene.fbx(filepath=str(fbx_path), use_anim=True, automatic_bone_orientation=False, ignore_leaf_bones=False)
+    new = [o for o in bpy.data.objects if o not in before]
+    arm = next(o for o in new if o.type == "ARMATURE")
+    for o in list(new):
+        if o.type == "MESH" and o.name.startswith("Gourd"):      # Cascadeur 里的葫芦只是它自己的预览，Blender 沿用本脚本的葫芦
+            new.remove(o); bpy.data.objects.remove(o, do_unlink=True)
+    meshes = [o for o in new if o.type == "MESH"]
+    casc_root = empty("PVZ_casc_root", P)                          # Cascadeur 世界原点＝落地点、人面朝其 +Z（FBX 导入后＝Blender -Y）
+    casc_root.rotation_euler = Euler((0.0, 0.0, RZ))
+    arm.parent = casc_root
+    arm.matrix_parent_inverse = Matrix.Identity(4)
+    act = arm.animation_data.action                                # 30fps → 本脚本 FPS：Cascadeur 第 0 帧 = 本脚本第 1 帧
+    s = FPS / CASC_FPS
+    for layer in act.layers:
+        for strip in layer.strips:
+            for cb in strip.channelbags:
+                for fc in cb.fcurves:
+                    for kp in fc.keyframe_points:
+                        kp.co.x = 1 + (kp.co.x - 1) * s
+                        kp.handle_left.x = 1 + (kp.handle_left.x - 1) * s
+                        kp.handle_right.x = 1 + (kp.handle_right.x - 1) * s
+    for o in [arm] + meshes:
+        link_previz(o)
+    for m in meshes:
+        m.data.materials.clear(); m.data.materials.append(M_GREEN)
+    J = _JDict()
+    def follow(key, bone):
+        e = bpy.data.objects.new(f"PVZ_J_{key}", None); link_previz(e); e.parent = casc_root   # 朝向随身体 yaw，位置贴骨骼
+        c = e.constraints.new("COPY_LOCATION"); c.target = arm; c.subtarget = bone
+        J[key] = e; return e
+    for key, bone in (("handR", "hand_r"), ("handL", "hand_l"), ("pelvis", "pelvis"), ("head", "head"),
+                      ("footR", "foot_r"), ("footL", "foot_l")):
+        follow(key, bone)
+    print(f"[previz] body=cascadeur: {fbx_path.name}, bones={len(arm.data.bones)}, keys retimed x{s:.3f}")
+    return bpy.data.objects.new("PVZ_dummy_root", None), J["pelvis"], J, arm
+
+
+if BODY_SOURCE == "cascadeur":
+    root, pelvis, J, casc_arm = import_cascadeur_body(CASC_FBX)
+    rig = _NoRig()
+    pose = lambda *a, **k: None            # 身体姿态全部来自 FBX；本脚本的姿态键忽略
+    _rig_meshes = []
+else:
+    rig = PrevizRig(link=link_previz, body=M_GREEN, skin=M_SKIN, limb_end=M_LIMB)
+    _before_rig = set(bpy.data.objects)
+    root, pelvis, J = rig.build(P)
+    _rig_meshes = [o for o in bpy.data.objects if o not in _before_rig and o.type == "MESH"]
 # 精致人形（用户 2026-08-18：方块拼的小绿人像火柴棍、肢体细节看不出来）：
 # 用 MPFB 真人网格套在关节 proxy 上——骨骼逐根 Child Of 到关节空物件，姿态 K 帧照旧打在 J[...] 上；
 # 关节 proxy 的网格隐藏（空物件保留），画面里只剩一具四肢/手指/脚都读得出的绿人。
@@ -549,12 +637,13 @@ _BODY_SPEC = {
     "身高": BODY_HEIGHT_M, "体格": BODY_BUILD, "年龄档": BODY_AGE,
     "性别": BODY_GENDER, "比例": BODY_PROPORTIONS,
 }
-human, human_rig = attach_mpfb_human(
-    root, J, link=link_previz, body_mat=M_GREEN, skin_mat=M_SKIN, limb_mat=M_LIMB,
-    body_spec=_BODY_SPEC, subj_frac=SUBJ_FRAC)
-for _o in _rig_meshes:
-    _o.hide_render = True
-    _o.hide_viewport = True
+if BODY_SOURCE != "cascadeur":
+    human, human_rig = attach_mpfb_human(
+        root, J, link=link_previz, body_mat=M_GREEN, skin_mat=M_SKIN, limb_mat=M_LIMB,
+        body_spec=_BODY_SPEC, subj_frac=SUBJ_FRAC)
+    for _o in _rig_meshes:
+        _o.hide_render = True
+        _o.hide_viewport = True
 
 
 # 剑鞘留背上

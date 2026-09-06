@@ -75,6 +75,18 @@
    - `光线 / 色调:`（随情绪给光，对齐场景/角色锁定色名、零 hex；回忆镜上做旧滤镜；眼里不加发光特效）。
    - `节奏:`（visual-only 的节奏注：快切/凝滞/渐快等，配合时长）。
 4b. **逐对判跨镜首帧承接、写 `## Shot context` 的 `衔接:` 字段**（ai_video.md 2026-06-21；判定准则归 `运镜` M8）：相邻 A→B 满足①同场景/同bg ②机位连续或渐变(同轴推/拉/移·match cut、非越轴/正反打/景别跳切) ③动作或情绪不间断 → **承接**（`衔接: 承接 shot{NN} 末帧（首帧＝上一镜末帧）`，B 出片时截 A 成片末帧作 B 首帧上传、`动作:`首拍从 A 末拍姿态续起）；任一不满足 → **硬切（默认）**（`衔接: 硬切（独立首帧）`）。换场/时间跳/回忆进出/越轴/正反打/景别跳切一律硬切。每集首镜＝硬切。承接镜的 `参考:`/`Reference uploads` 落点由阶段 6 补（见 stage6 playbook §3）。**同时给被承接的上一镜（交接源）写 `尾帧锁定:` 字段**（ai_video.md (G)）：该镜末帧既被下镜用作首帧，重生成它时须以其 `shotNN_lastframe.png` 作尾帧锁定、保末帧不变，避免「改一镜要整条承接链重生」。
+4c. **建本镜 previz（每镜必做，覆盖率 100%）**（`agent_refs/project/ai_video.md` rule 4h）：
+   在 `shots/shot{NN}/previz/` 下写 `previz_config.toml` —— 从场景源
+   `2_世界观人设/scenes/{world}/_blender/{world}.blend` **拷贝**出 `shot{NN}_previz.blend`
+   （脚本绝不写回场景源），跑通用引擎 `tools/previz/build_previz.py` 渲出
+   `shot{NN}_previz.mp4`，它进阶段 6 本镜 prompt 的**视频参考位**（权限最高：形状·动作·走位·机位）。
+   - **TOML 的关键帧 `t` 必须与上一步 `动作:` 的时间轴逐拍对齐**——两处不一致等于对模型
+     说两套话。谁改都要同步另一处。
+   - **A/B 档一律用通用引擎，禁止把引擎拷进 shot 目录改**；S 档 hero 长镜（成套武打/法术
+     编排、IK 手臂与握持、逐把飞剑轨迹）可写 per-shot Python，但须 import
+     `tools/previz_{rig,human,config}.py`，且**命名 `shot{NN}_previz.py`，绝不叫 `build_previz.py`**。
+   - **不许重叠跑批**：`TaskStop` 杀 shell 不杀已 spawn 的 `blender.exe`，重叠会报假失败。
+
 5. **过 QC**：按 §6 跑五道审查关卡；blocker 清零才进阶段 6。
 6. **记审计 + 衔接**：审计写 `.audit/adhoc_agents/{date}/{task_id}/`（含 `pre_reading_consulted`）；进阶段 6（同一 shotNN.md 补剩余字段 + 五层契约）。
 
@@ -83,6 +95,7 @@
 ## 5. 输出物 + 模板
 
 - **产物**：`ai_videos/{name}/5_6_分镜与prompt/episodes/epNN/{shotlist.md, shots/shotNN/shotNN.md}`（内容全中文，路径英文/pinyin）。
+- **每镜另出 previz**：`shots/shotNN/previz/{previz_config.toml, shotNN_previz.blend, shotNN_previz.mp4}`（rule 4h §A/§B）。`previz_config.toml` 是 3D 层的唯一真相——画面坐标、相对大小、机位数值只写在它里面，shotNN.md 的 prompt 不复述。
 
 ### 5.1 shotlist.md 表模板（copy-ready）
 

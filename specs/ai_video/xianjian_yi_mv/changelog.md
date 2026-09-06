@@ -3179,3 +3179,40 @@ Auto-updated:
 - 归因：060 引入的大幅蜷指（拇指 78°/无名小指 ~110°）在 MPFB 代理网格的粗权重下逐节变形成尖钩；previz 的手势信息只需「二指并拢」，蜷指细节超出代理网格的表达能力——手型设计原则记入 previz_rig.py 注释：代理网格上宁直勿蜷
 
 No conflicts found in: 肘外张 40°（不受影响）；HAND_GRIP 握葫芦/剑柄（保持蜷握，握着物件不读成爪）；时长链/自动重建机制
+
+## Follow-up 062 — 2026-09-05
+Source: user_input/follow_ups/202609.md - section 062
+Summary: 先把 duikang_shangzeng 的新流程 + Hyper3D 接入上收进全局知识面，再用新流程从 shot12 重启本片。
+
+Auto-updated:
+- `CLAUDE.md` — § AI video rules 加三条指针：3D 层工程契约（rule 4h）/ Hyper3D 接入（4h §G）/ 产物一致性纪律（rule 4i）
+- `.claude/agent_refs/project/ai_video.md` — 新增 rule 4h（previz 100% 覆盖 · previz_config.toml 唯一真相 · 一个引擎两种表达且 per-shot 脚本不得与引擎重名 · builder 脚本确定性生成 blend · 覆盖范围按镜头定 · previz 不重叠跑批 · Hyper3D 接入与使用契约）与 rule 4i（单一出处 · 冲突判定三问 · 开工先对账）
+- `.claude/skills/ai_videos__全流程编排/playbooks/ai_videos__stage5_分镜.md` — §4 加步骤 4c「建本镜 previz」；§5 产物加 previz 三件套
+- `specs/ai_video/xianjian_yi_mv/user_input/revised_prompt.md` — 重新生成（raw + 202607/202608/202609 全量；旧文件停在合并月度日志之前的版本）
+
+本项目自身对新契约的两处偏差（已记录，重做时修正）:
+- `5_6_分镜与prompt/shots/shot12/previz/build_previz.py` 与通用引擎重名 → 应更名 `shot12_previz.py`（rule 4h §C）
+- `2_世界观人设/scenes/s11_十里坡山神庙/*.blend` 是手改产物、无 builder 脚本 → 应改为 `tools/build_s11_shanshenmiao.py` 确定性生成（rule 4h §D）
+
+No conflicts found in: 1_立项/concept.md、3_大纲、4_剧本（本轮未触及叙事文字）
+
+## Follow-up 062 (续) — 2026-09-05 · shot12 最小闭环落地
+Source: user_input/follow_ups/202609.md - section 062「已做（项目侧）」
+Summary: 按四项裁定重做 shot12 的场景与 previz；Hyper3D 人物外壳实测失败、改走现成布料网格。
+
+Auto-updated:
+- `ai_videos/xianjian_yi_mv/2_世界观人设/scenes/s11_十里坡山神庙/bg1_庙前空地/bg1_庙前空地.md` — 新建：世界锚点 prompt（1742 字·零参考图·路由键 bg1-1·验收 7 条）+ 月色口径收口表
+- `tools/build_s11_shanshenmiao.py` — 新建：确定性建场脚本（101 物件/5 collection），内置 shot12 画框自查
+- `.../s11_十里坡山神庙/_blender/blender_build.md` — 新建：即指令文档，以自查对账开场；几何事实表每条挂证据
+- `.../s11_十里坡山神庙/_blender/{s11_十里坡山神庙.blend, plan.png, check_shot12_起幅.png}` — 由脚本生成
+- `.../shots/shot12/previz/shot12_previz.py` — 自 `build_previz.py` 更名（rule 4h §C）；SCENE_MASTER 改指 `_blender/`
+- `projects/ai_video_management/libs/infrastructure/writers/previz__writer.py` — `_build_script()`：`shot*_previz.py` 优先、`build_previz.py` 旧名兜底
+- `.claude/agent_refs/project/ai_video.md` — rule 4h §G1（Hyper3D 整身人物失败模式 + 先渲一眼再往下做）、§H（config 派生事实用 {{占位符}}、duration-chain config）、§C 补工具链改名连带项
+- `CLAUDE.md` — Hyper3D 判据修正（整身着装人物也不用）
+
+退役（移入 `ai_videos/_deleted/xianjian_yi_mv_20260905/`）:
+- `s11_bg4_庙前_空地月夜/`（旧月色口径）、手改的 `s11_十里坡山神庙.blend{,1}`
+
+待办: bg1-1 锚点图待用户在即梦出；出图后复核几何；JJX_Robe 蒙到 previz 骨架；shot12.md 参考行改指新图。
+
+No conflicts found in: 3_大纲、4_剧本、其它 shot（本轮只动 s11 与 shot12）

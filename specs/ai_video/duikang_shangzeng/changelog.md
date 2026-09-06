@@ -827,3 +827,119 @@ Auto-updated:
 `bg1_广场_bg1-1.png`（`参考:` 路径被即梦拼进文件名），导致所有引用广场锚点的图被吸进 bg1_广场
 
 验证: 对 8 个主体目录跑只算不改的重命名规划，合计计划改名 0
+
+
+## Follow-up 029 — 2026-09-01
+Source: user_input/follow_ups/202608.md - section 029
+Summary: bg1-1 导入失败＝多后端并存（含旧代码）；磁盘代码干跑验证正确并完成导入；从回收站找回并归位 10 张图。
+
+Auto-updated:
+- 2_世界观人设/scenes/entropy_city/bg*/ — 回收站还原 10 张并改回连字符名：
+  bg1-1(新) / bg1-2 / bg1-4 / bg1-5 / bg1-1_prev(旧正向，待用户取舍) /
+  bg2-1 / bg2-2 / bg3-1 / bg4-1 / bg5-1 / bg6-1
+- 停掉全部后端（PID 11204、37176），只从 micro-drama-platform 启一个
+
+排查手法（记下复用）:
+1. 先干跑（只算不写）逐步打印 _classify / _match_plate_any_scene / _match_subject_any_scene
+2. 列出**所有** apps.api.main 进程，别只看端口 owner（本机 netstat owner 常为失效 PID）
+3. 回收站 vs os.remove 是"谁删的"的可靠指纹——本仓代码一律 os.remove
+
+缺口: bg1-3 广场侧向 仍需重出
+
+
+## Follow-up 031 — 2026-09-01
+Source: user_input/follow_ups/202609.md - section 031
+Summary: entropy_city 场景文字照 26 张已定稿图全面校正；高架判为图错、改跨城并挂重出告示；删掉 scene_build_flow 里重复的 prompt 摘要表。
+
+Auto-updated:
+- tools/gen_scene_prompts.py — SCENE 五段照图重写（广场围合/开口、主街断面与层数、隧道断面与双排灯、
+  全城肌理分级、高架改穿城）；VIEWS 三条机位/要点跟改（广场反向/侧向/斜瞰、全城斜瞰）；
+  新增 STALE 过期告示机制与 NEG_EXTRA 主体专属反向词
+- 2_世界观人设/scenes/entropy_city/bg1..bg8/*.md — 重跑生成器，26 条 prompt 全量同步（均 <2000 字）
+- 2_世界观人设/scenes/entropy_city/_blender/blender_build.md — 整份重写：26 张图逐张列真实路径+几何价值、
+  空间契约、几何事实表（带证据列）、精度分级、平面图与 12 组灰模对照的完整命令与机位表
+- 2_世界观人设/scenes/entropy_city/scene_build_flow.md — 空间事实表照图校正；blend 现状表加「待校正为」列；
+  视图数表对齐真实 26 张；删掉与主体 md 重复的 prompt 摘要表；当前状态刷新
+- 2_世界观人设/scenes/entropy_city.md — 机位板 `bg3_高架_跨江桥` → `bg3_高架_穿城桥`
+- user_input/revised_prompt.md — 按 raw + follow_ups 重新拼接（新增 202609.md）
+
+待办（用户侧）:
+- `bg3_高架/bg3-1/2/3.png` 三张重出：先 bg3-1 高架正向定稿，再出反向与材质
+- 之后跑 `_blender/blender_build.md` 校正 entropy_city.blend，并重跑受影响镜次 previz
+
+No conflicts found in: 3_大纲/arc_outline.md、4_剧本/、5_6_分镜与prompt/（全库 grep 跨江/水面/对岸/五栋/十四米，
+剩余命中全是本次新写的历史说明或 blend 现状记录）
+
+
+## Follow-up 032 — 2026-09-01
+Source: user_input/follow_ups/202609.md - section 032
+Summary: 按 blender_build.md 执行——写确定性 builder 重建 entropy_city 几何（404 物件 / 5 collection），灰模抓出并修掉「洞口在广场里面」。
+
+Auto-updated:
+- tools/build_entropy_city.py — 【新增】从零确定性生成 entropy_city.blend；每个数字对应 blender_build.md §4 一行
+- tools/add_city_fabric.py / add_tunnel.py / fix_plaza_opening.py — 【删除】一次性补丁，已被 builder 取代
+- 2_世界观人设/scenes/entropy_city/_blender/entropy_city.blend — 重建：
+  广场 6 独立塔 → 东西连续街墙 + 四块夹口板楼；主街楼到楼 14→23m、商铺 4–8 层、拱架移到 Y=100、
+  补远段街墙；高架 120m 直桥 → 600m 穿城带弯桥 + 21 墩 + 桥下地面路；隧道 14×6 → 12m×6m
+  含双排顶灯与边石、洞口 Y −20 → −50；肌理 266 小盒 → 286 街区分块；新建 5 个 collection
+- 2_世界观人设/scenes/entropy_city/_blender/plan.png + check_*.png ×12 — 【新增】校验产物
+- 2_世界观人设/scenes/entropy_city/_blender/blender_build.md — §4 隧道位置改 Y −50→−200；
+  §6 改写为「已建 + 与旧 blend 的差异 + 改几何要改脚本」；§8.2 机位表换成实跑过的坐标 + 三条坑
+- 2_世界观人设/scenes/entropy_city/scene_build_flow.md — blend 现状表按新几何重写；当前状态刷新
+- user_input/revised_prompt.md — 重新拼接
+
+灰模/自查抓到的缺陷（平面图看不出来）:
+1. 旧 blend 零 collection —— 324 物件全在默认 Collection 里，而文档把 collection 名列为「不可动」
+2. 隧道洞口 Y=−20 落在广场（y −30..30）内部 —— 拱门骑在广场地面上
+3. 三个对照机位会误判成「几何没建」：广场正向 y=−32 站到广场外、隧道机位 Z 没跟路面下沉、
+   桥上机位只比护栏顶高 0.1m
+
+No conflicts found in: 26 条视图 prompt（几何变更不改 `场景:` 文字口径，两边仍逐条一致）
+
+## Follow-up 032 补 — 2026-09-01
+Source: user_input/follow_ups/202609.md - section 032（追加）
+Summary: 用户问「高架两边的城市有没有画」——实测桥两侧几乎是空的；城市覆盖从圆形裁剪改矩形，补 6 栋高板楼。
+
+Auto-updated:
+- tools/build_entropy_city.py — 城市范围 圆形(r>320 剔除) → 矩形(x ±345, y −300→400)，罩住桥全长；
+  远处街区取消「合成一个大体量」（大体量压到走廊会被整块剔掉，在桥边留洞），一律 2×2；
+  新增 6 栋 58–80m 高板楼（位置写死，构图元素）
+- entropy_city.blend — FABRIC 286 → 436，全场 404 → 554，包围盒 660.5 × 716.6 × 81.4m
+- _blender/plan.png + check_{高架正向,高架反向,全城斜瞰,广场正向,主街正向}.png — 重渲
+- blender_build.md §4/§6/§8.2 + scene_build_flow.md — 同步新数字与这条坑
+
+实测（每 50m 一段、桥两侧 80m 内的楼数）: 修前 0–4 栋且北侧九段为零 → 修后 每段两侧各 1–5 栋
+
+## Follow-up 033 — 2026-09-01
+Source: user_input/follow_ups/202609.md - section 033
+Summary: 高架改回跨水弯桥（用户按 bg3-1/bg3-2 纠正）；根因是把长街上的天桥与城北的跨水桥当成了同一座桥，造出伪冲突。
+
+Auto-updated:
+- tools/build_entropy_city.py — BG3 重写：匝道爬升 + R=900m/41° 平面弯跨水（全长 758m）、
+  18 墩立在水里、水面 y 330→900、对岸天际线 y 905→1125、平行拱墩老桥；
+  BG2 新增窄天桥 y=150；keep-out 加水面与沿桥路径；近岸城市止于 y=325。554 → 768 物件
+- tools/gen_scene_prompts.py — SCENE["高架"] 改回跨水（弯道/水面/墩立水里/老桥/两岸城市）；
+  广场·主街·全城三处「高架横过长街」→「天桥」；清空 STALE 与 NEG_EXTRA
+- 2_世界观人设/scenes/entropy_city/bg*/*.md — 重跑生成器，26 条 prompt 同步（均 <2000 字）
+- 2_世界观人设/scenes/entropy_city/_blender/entropy_city.blend + check_*.png ×13 + plan.png — 重建重渲
+- 2_世界观人设/scenes/entropy_city/_blender/blender_build.md — §2 撤 bg3 过期告示、bg3-2 升为 ★；
+  §3 轴改「高架＝主街往北的延续」；§4 BG3 表重写；§5 冲突 C 改判 + 伪冲突教训；§6 差异表；
+  §8.2 桥上机位改成弧线上的点 + 「桥是弯的，别给直线端点」
+- 2_世界观人设/scenes/entropy_city/scene_build_flow.md — 空间事实表 高架/水与对岸/天桥 三行；blend 表
+- 2_世界观人设/scenes/entropy_city.md — 机位板 bg3_高架_穿城桥 → bg3_高架_跨水弯桥
+- 3_大纲/arc_outline.md — shot41「下方的城市」→「两岸的城市」；幕Ⅳ「从高架上看下去」→「从跨水高架上望出去」
+- 5_6_分镜与prompt/shots/shot41/previz_config.toml — 抬头注释同步
+
+撤销的上一轮动作: bg3-1/2/3 三张图**不再需要重出**（它们本来就是对的）；
+「江面/水面/对岸/跨江大桥/桥墩立在水里/滨江天际线」已从 bg3 负面词里移除
+
+## Follow-up 033 补 — 2026-09-02
+Source: user_input/follow_ups/202609.md - section 033（previz 回归）
+Summary: previz 回归 10/10 通过（全部基于最终 blend）；批量跑时的 3 个失败是重叠跑批导致的假失败。
+
+Auto-updated:
+- 5_6_分镜与prompt/shots/shot{01,16,21,22,40,41,46,47,49,52}/shot*_previz.mp4 + .blend — 全部按新几何重跑
+
+坑（已记进 follow-up）: TaskStop 只杀 shell，spawn 出去的 blender.exe 仍在写文件；
+重叠跑批会撞上被占用的文件、报出假失败。blend 定稿后再跑 previz。
+

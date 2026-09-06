@@ -56,7 +56,8 @@ from libs.domain.value_objects.previz__valueobject import (
 )
 
 PREVIZ_DIR_NAME: str = "previz"
-BUILD_SCRIPT_NAME: str = "build_previz.py"
+BUILD_SCRIPT_NAME: str = "build_previz.py"          # legacy name, still accepted
+BUILD_SCRIPT_GLOB: str = "shot*_previz.py"           # ai_video.md rule 4h §C
 CONFIG_NAME: str = "previz_config.toml"
 _SCENE_MASTER_RE = re.compile(r'^SCENE_MASTER\s*=\s*[ru]*["\']([^"\']+)["\']', re.M)
 _BUILD_TIMEOUT_S: int = 600
@@ -215,6 +216,22 @@ class PrevizRenderer:
             with self._lock:
                 self._proc = None
 
+    @staticmethod
+    def _build_script(previz_dir: Path) -> Path | None:
+        """The S-tier per-shot previz script, if this folder has one.
+
+        `ai_video.md` rule 4h §C: a per-shot script must be named
+        `shot{NN}_previz.py`, never `build_previz.py` — the latter is the
+        repo-wide declarative engine, and sharing its name makes a legitimate
+        per-shot script look like a forked engine. Folders written before that
+        rule still carry the old name, so both are accepted, new name first.
+        """
+        named = sorted(previz_dir.glob(BUILD_SCRIPT_GLOB))
+        if named:
+            return named[0]
+        legacy = previz_dir / BUILD_SCRIPT_NAME
+        return legacy if legacy.is_file() else None
+
     def _rebuild(self, blend: Path, blender: str) -> None:
         """Rebuild the `.blend` from the scene master + config before rendering.
 
@@ -226,8 +243,8 @@ class PrevizRenderer:
         which reads the config. Folders without a build script or without the
         constant keep the old behaviour: render the `.blend` as-is.
         """
-        script = blend.parent / BUILD_SCRIPT_NAME
-        if not script.is_file():
+        script = self._build_script(blend.parent)
+        if script is None:
             return
         master_match = _SCENE_MASTER_RE.search(script.read_text(encoding="utf-8"))
         if master_match is None:
