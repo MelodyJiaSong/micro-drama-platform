@@ -16,8 +16,18 @@
 #   * FbxSceneLoader.get_fbx_loader needs the VIEW scene (app.current_scene()); export_model bakes joints+mesh+anim.
 #   * 调试节奏（用户 2026-09-05）：改姿态只重跑对应 STAGE（~5s）+ 单帧截图（~4s）核对；不出 mp4、不导 FBX、不碰 Blender，全部关键帧确认后才全渲。
 #   * 无响应就直接杀（用户 2026-09-05）：播放中 / 弹窗 / 卡死时脚本服务器不应答，不要等用户暂停，taskkill 后 casc_restart.sh 重开、从 .casc 或脚本重建。
+#   * 一只手的 MainPoint / DirectionPoint / AdditionalPoint 共用一条 Animation Track（2026-09-06 实测，layer_id_by_obj_id 相同）：
+#     给其中任一点打键 = 整条轨道在该帧的当前值都存成键 → 逐帧 pass 要连 MainPoint 一起显式写回，并把网格键区间设 LINEAR。
+#   * 求值是异步 + 只算可视范围（2026-09-06 实测，耗掉半天）：set_anim_size 扩出来的帧在 set_visible_range 之前不求值，gpos 读到的全是
+#     最后一个可视帧的姿态（整段 act2 曾僵成第一幕末姿势）；扩长后立刻 set_visible_range(0, last)，读非键帧前先 goto 扫几帧 + sleep 5 s，
+#     再读两遍确认稳定。另外扩展区间里 BEZIER 段曾整段平直（615→690），先设 LINEAR 让求值可靠，finish 再换 BEZIER。
 #   * 窗口最小化时 take_image 永远不落盘（2026-09-05 实测）：截图前确认窗口未最小化（casc_restart.sh 末尾用 PowerShell ShowWindow 还原）。
-#   * AutoPosing / AutoPhysics have no scriptable "apply" entry point in this build (GUI only).
+#   * 改完必重开（用户 2026-09-06）：任何 Cascadeur / Blender 相关的改动交付，最后一步固定是 taskkill 现有实例、重新打开最新文件（.casc / .blend），
+#     保证用户看到的就是最新改动；GUI 里留着的是打开时的旧内存副本，不会自己刷新。
+#   * AutoPosing / AutoPhysics 等菜单工具没有直接的 API 函数，但官方给了 action id 表（2026-09-06 查 help/category/301）：
+#     app.get_action_manager().call_action("AutoPosingTool.AutoPosing" | "AutoPosingTool.Update" | "AutoPhysicsTool.Snap to Auto Physics"
+#     | "View.MotionGeneration_Run" | "View.Animation unbaking" | "View.Retargeting_Copy" | "Timeline.Bezier.Bezier on current frame" …)。
+#     需要先有正确的选区/时间轴区间（与 GUI 一致）；本仓库尚未实测；官方说明 call_action 以后会逐步换成正式 API。全表见 .claude/skills/ai_videos__cascadeur动作/SKILL.md。
 import csc, json, math, os, time
 import numpy as np
 

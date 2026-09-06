@@ -268,7 +268,7 @@ A_ORBIT1 = A_ORBIT0 + ORBIT_TIME
 A_STOMPS = tuple(_derived["_STOMP0"] + STOMP_GAP * i for i in range(STOMP_COUNT))
 A_STOMP_DUST = tuple(t + STOMP_DUST_LAG for t in A_STOMPS)
 A_RING_T0 = tuple(_derived["_RING_START"] + RING_GAP * i for i in range(RING_COUNT))
-T_DROP_SPAN = _derived["_DROP_SPAN"] * (DUR_DROP / 2.18)
+T_DROP_SPAN = _derived["_DROP_SPAN"] - _derived["_SEG_DROP"]   # 相对本段起点的跨度（_derived 里存的是绝对时刻；之前误把 16.5s 当跨度，只有前两把按时落、其余拖到跳起前一起落）
 T_BOUNCE = tuple(_derived[f"_BOUNCE{i}"] for i in range(4))
 T_LAUGH_BOBS = tuple(_derived[f"_BOB{i}"] for i in range(3))
 random.seed(SEED)
@@ -502,6 +502,24 @@ _bg = bpy.context.scene.world.node_tree.nodes.get("Background")
 if _bg is not None:
     _bg.inputs[0].default_value = (0.045, 0.05, 0.06, 1.0)   # 极暗环境光：暗部不死黑
     _bg.inputs[1].default_value = 1.0
+
+# 场景灰模按明度分层（rule 4g ⑤：建筑保持灰模、不上色）——只为让「庙 / 林 / 山壁 / 路」在一帧里读得开：
+# 林近黑、山壁次黑、庙亮灰带一点自发光（不随日光方向变暗）、小路更亮、栅栏中灰。2026-09-06 用户「背景对不上仙剑场景」。
+_SCENE_GREY = {"S11_FOREST": (0.07, 0.0), "S11_TEMPLE": (0.58, 0.45), "S11_PATH": (0.70, 0.30), "S11_FENCE": (0.30, 0.0)}
+for _cname, (_g, _e) in _SCENE_GREY.items():
+    _coll = bpy.data.collections.get(_cname)
+    if _coll is None:
+        continue
+    _m = mat(f"PVZ_灰模_{_cname}", (_g, _g, _g), _e)
+    if _cname == "S11_FOREST":                         # 林近黑带一点墨绿、灌木略亮、山体灰：读成林/山而不是楼房
+        _m = mat("PVZ_灰模_密林", (0.05, 0.075, 0.055), 0.0)
+    _m_cliff = mat("PVZ_灰模_山壁", (0.20, 0.20, 0.21), 0.0)
+    _m_bush = mat("PVZ_灰模_灌木", (0.09, 0.12, 0.08), 0.0)
+    for _o in _coll.objects:
+        if _o.type != "MESH":
+            continue
+        _o.data.materials.clear()
+        _o.data.materials.append(_m_cliff if _o.name.startswith("CLF") else (_m_bush if _o.name.startswith("BSH") else _m))
 
 PREVIZ = bpy.data.collections.new("PREVIZ_shot12")
 bpy.context.scene.collection.children.link(PREVIZ)

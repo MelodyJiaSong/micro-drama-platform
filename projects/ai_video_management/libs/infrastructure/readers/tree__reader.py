@@ -23,6 +23,7 @@ _VOICE_FOLDER_RE = re.compile(r"^voice_\d{4,}$")
 _SYSTEM_FOLDER_LABELS_ZH: dict[str, str] = {
     "_actors": "演员库",
     "_bgm": "背景音乐库",
+    "_research": "选题调研",
 }
 
 

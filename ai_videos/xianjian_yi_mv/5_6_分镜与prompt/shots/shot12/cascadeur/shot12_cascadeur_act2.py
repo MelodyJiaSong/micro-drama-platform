@@ -96,20 +96,24 @@ def pose_throw():
     p = copy_pose(STAND); hand_straight(p, "r", (-18, 94, 4), (-45, 60, -20.0)); head_tilt(p, -30); upper_lean(p, -5); return p
 
 
+def pose_seal_up(tilt=-22):                   # 剑阵段：同一道家手印放在身前（用户 2026-09-06 二改 + 参考图），只加抬头
+    p = pose_seal(); head_tilt(p, tilt); return p
+
+
 def pose_seal1():
-    p = copy_pose(STAND); hand_straight(p, "r", (-4, 40, 22), (-45, 15, 5.0)); head_tilt(p, -22); return p
+    return pose_seal_up(-22)
 
 
 def pose_seal_still():
-    p = copy_pose(STAND); hand_straight(p, "r", (-4, 40, 22), (-45, 15, 5.0)); head_tilt(p, -4); return p
+    return pose_seal_up(-10)
 
 
-def pose_point():                             # 亮相：右臂笔直斜指前下方，左手剑指收腰侧，右脚前踏半马步
-    p = copy_pose(STAND); stance(p, GROUND_Y - 12, rz=40); hand_straight(p, "r", (-16, 22, 46), (-48, 25, 15.0)); hand_straight(p, "l", (24, 8, 6), BASE["forearm_LimbDir_l"]); upper_lean(p, 8); return p
+def pose_point():                             # 亮相：右臂伸直、剑指二指往前一指（用户 2026-09-06：特效结束后两指前指，剑依次落地），左手收腰侧，右脚前踏半马步
+    p = copy_pose(STAND); stance(p, GROUND_Y - 12, rz=40); hand_straight(p, "r", (-16, 34, 50), (-48, 35, 18.0)); hand_straight(p, "l", (24, 8, 6), BASE["forearm_LimbDir_l"], roll=ROLL_IN["l"]); upper_lean(p, 8); return p
 
 
 def pose_spread():                            # 双臂平张、左腿抬起（右脚踩剑）
-    p = copy_pose(STAND); hand_straight(p, "l", (66, 47, 0), (45, 15, -60.0)); hand_straight(p, "r", (-66, 47, 0), (-45, 15, -60.0)); raise_leg(p, "l"); return p
+    p = copy_pose(STAND); hand_straight(p, "l", (66, 47, 0), (45, 15, -60.0), roll=ROLL_IN["l"]); hand_straight(p, "r", (-66, 47, 0), (-45, 15, -60.0), roll=ROLL_IN["r"]); raise_leg(p, "l"); return p
 
 
 def pose_tuck():                              # 团身
@@ -121,11 +125,11 @@ def pose_tuck():                              # 团身
 
 
 def pose_land():                              # 落地屈膝、双臂外撑
-    p = copy_pose(STAND); stance(p, GROUND_Y - 22, rz=10, lz=-10); hand_straight(p, "r", (-46, 22, 14), (-55, 15, -25.0)); hand_straight(p, "l", (46, 22, 14), (55, 15, -25.0)); upper_lean(p, 8); return p
+    p = copy_pose(STAND); stance(p, GROUND_Y - 22, rz=10, lz=-10); hand_straight(p, "r", (-46, 22, 14), (-55, 15, -25.0), roll=ROLL_IN["r"]); hand_straight(p, "l", (46, 22, 14), (55, 15, -25.0), roll=ROLL_IN["l"]); upper_lean(p, 8); return p
 
 
 def pose_laugh(bob=0.0):
-    p = copy_pose(STAND); hand_straight(p, "r", (-36, 14, 10), BASE["forearm_LimbDir_r"]); hand_straight(p, "l", (36, 14, 10), BASE["forearm_LimbDir_l"])
+    p = copy_pose(STAND); hand_straight(p, "r", (-36, 14, 10), BASE["forearm_LimbDir_r"], roll=ROLL_IN["r"]); hand_straight(p, "l", (36, 14, 10), BASE["forearm_LimbDir_l"], roll=ROLL_IN["l"])
     upper_lean(p, -8 + bob); head_tilt(p, -38 + bob * 1.5); return p
 
 
@@ -139,14 +143,20 @@ def KW(t, local, pelvis, yaw=0.0, title=""):
 
 PEL0 = P_LAND
 if STAGE == "body2a":
-    log("anim size ->", set_anim_size(F(T_TOTAL) + 1))
+    log("anim size ->", set_anim_size(F(T_TOTAL) + 1)); log("visible ->", set_visible_range(0, F(T_TOTAL)))   # 可视范围外的帧不求值：读到的全是最后一个可视帧的姿态（2026-09-06 实测）
     KW(7.45, pose_seal(), PEL0, title="seal before reach"); KW(7.85, pose_reach(), PEL0, title="reach sword")
     KW(ACT2, pose_end12(), PEL0, title="end12"); KW(T_WIND1 - 0.15, pose_end12(), PEL0, title="pre-wind1")
     KW(T_WIND1, pose_wind1(), PEL0, title="wind1"); KW(T_SLASH1, pose_slash1(), PEL0 - [0, 8, 0], title="slash1"); KW(T_WIND2 - 0.35, pose_slash1(), PEL0 - [0, 8, 0], title="slash1 hold")
     KW(T_WIND2, pose_wind2(), PEL0 - [0, 6, 0], title="wind2"); KW(T_SLASH2, pose_slash2(), PEL0 - [0, 6, 0], title="slash2"); KW(T_THROW_WIND - 0.25, pose_slash2(), PEL0 - [0, 6, 0], title="slash2 hold")
     KW(T_THROW_WIND, pose_throw_wind(), PEL0, title="throw wind"); KW(T_THROW, pose_throw(), PEL0, title="throw"); KW(T_SWORD_HIGH - 0.15, pose_throw(), PEL0, title="throw hold")
     KW(T_SEAL, pose_seal1(), PEL0, title="seal1"); KW(T_EYES, pose_seal_still(), PEL0, title="seal still")
-    KW(T_POINT - 0.5, pose_seal_still(), PEL0, title="seal hold")                    # 用户 2026-09-06：剑阵在空中时人物结印不动、双脚接地（不浮起）
+    KW(T_POINT - 0.15, pose_seal_still(), PEL0, title="seal hold")                    # 用户 2026-09-06：剑阵在空中时人物结印不动、双脚接地（不浮起）；手印保持到 T_POINT-0.15，再 0.15 s 内「猛然」前指（用户 2026-09-06）
+    _nat = natural_hands(); _jz2 = {s: {n: q_to_rot(q) for n, q in json.load(open(HANDS_JSON_IN))["JZ"][s].items()} for s in ("l", "r")}
+    _seal2 = {"r": _jz2["r"], "l": grip_hands()["l"]}                             # 剑阵段道家手印：右手剑指、左手握右拳
+    _point = {"r": _jz2["r"], "l": _nat["l"]}                                     # 亮相：右手保持剑指二指前指，左手放松
+    for fr, tbl in ((F(T_SEAL - 0.3), _nat), (F(T_SEAL), _seal2), (F(T_POINT - 0.15), _seal2), (F(T_POINT), _point), (F(T_JUMP0 - 0.15), _point), (F(T_JUMP0), _nat)):
+        for s in ("l", "r"):
+            set_box_rots(tbl[s], fr, f"seal2 fingers {s} f{fr}")
 
 elif STAGE == "body2b":
     KW(T_POINT, pose_point(), PEL0 - [0, 12, -10], title="point"); KW(T_JUMP0 - 0.15, pose_point(), PEL0 - [0, 12, -10], title="point hold")
@@ -246,27 +256,60 @@ elif STAGE == "sword":
     log("sword interp ->", set_interpolation([sw_name], sorted(keys), "LINEAR"))   # Bezier 在「插地保持」两端会甩出大幅过冲（剑钻到地下），单剑轨迹用线性
 
 elif STAGE == "wrists2":
-    F0, F1 = F(ACT2), F(T_TOTAL)
+    GRID = sorted(set(list(range(F(ACT2), F(T_TOTAL) + 1, 3)) + [F(T_TOTAL)]))
+    # 手的 MainPoint / DirectionPoint / AdditionalPoint 共用一条 Animation Track（2026-09-06 实测）：给朝向点打键会把整条轨道
+    # 在该帧的当前值一起存下来，而逐帧顺序打键时后面帧读到的是前一个新键的 STEP 值 → 手位全部僵在第一帧。
+    # 对策：先把全部网格帧的肘/腕位置一次读完，再写值 + 打键，并显式写回 MainPoint；最后把网格键的区间设成 BEZIER。
+    # 改完插值后 Cascadeur 在后台慢慢重算时间轴，紧接着读到的是旧缓存（2026-09-06 实测：同一帧隔几秒再读才正确）→ 读两遍直到稳定
+    import time as _time
+    def _read_all():
+        return {(s_, f_): (np.array(gpos(f"forearm_MainPoint_{s_}", f_)), np.array(gpos(f"hand_MainPoint_{s_}", f_))) for s_ in ("l", "r") for f_ in GRID}
+    for _f in GRID[::max(1, len(GRID) // 12)] + [GRID[-1]]:   # 扫一遍时间轴触发后台求值（可视范围外/新扩展的帧不会自动算）
+        goto(_f)
+    _time.sleep(5.0)
+    pre = _read_all()
+    for _try in range(6):
+        _time.sleep(2.0); _again = _read_all()
+        if all(np.allclose(pre[k][1], _again[k][1], atol=0.5) and np.allclose(pre[k][0], _again[k][0], atol=0.5) for k in pre):
+            break
+        pre = _again
+    log("wrist pre-read settled after", _try + 1, "checks")
     def mod(model, update, sc):
         le = model.layers_editor(); lv = scene.layers_viewer(); ids = set(); nodes = {}
         for side in ("l", "r"):
-            for n in (f"hand_DirectionPoint_{side}", f"hand_AdditionalPoint_{side}"):
+            for n in (f"hand_MainPoint_{side}", f"hand_DirectionPoint_{side}", f"hand_AdditionalPoint_{side}"):
                 nodes[n] = update.get_object_by_id(IDS[n]).root_group().node_deep("Position"); ids.add(nodes[n].data_id())
         for side in ("l", "r"):
             E0 = BASE[f"forearm_MainPoint_{side}"]; W0 = BASE[f"hand_MainPoint_{side}"]; m = f"hand_MainPoint_{side}"
-            for f in list(range(F0, F1 + 1, 3)) + [F1]:
-                E = np.array(gpos(f"forearm_MainPoint_{side}", f)); W = np.array(gpos(m, f)); R = _rot_between(W0 - E0, W - E)
+            for f in GRID:
+                E, W = pre[(side, f)]; R = _rot_between(W0 - E0, W - E)
+                nodes[m].set_value(W.astype("float32"), f)
                 for n in (f"hand_DirectionPoint_{side}", f"hand_AdditionalPoint_{side}"):
                     nodes[n].set_value((W + R @ (BASE[n] - BASE[m])).astype("float32"), f)
-                    le.set_fixed_interpolation_or_key_if_need(lv.layer_id_by_obj_id(IDS[n]), f, True)
+                le.set_fixed_interpolation_or_key_if_need(lv.layer_id_by_obj_id(IDS[m]), f, True)
         sc.run_update(ids, 0)
     log("wrists2 ->", scene.modify_update("straight wrists act2", mod))
-
+    log("wrists2 grid interp ->", set_interpolation(["hand_MainPoint_l", "hand_MainPoint_r"], GRID, "LINEAR"))
+elif STAGE == "interp":                          # 必须在 wrists2 之前（新键默认 Fixed 区间，键间读到的是缓存旧姿态）
+    KT = [7.45, 7.85, ACT2, T_WIND1 - 0.15, T_WIND1, T_SLASH1, T_WIND2 - 0.35, T_WIND2, T_SLASH2, T_THROW_WIND - 0.25, T_THROW_WIND, T_THROW, T_SWORD_HIGH - 0.15,
+          T_SEAL, T_EYES, T_POINT - 0.15, T_POINT, T_JUMP0 - 0.15, T_JUMP0, T_MERGE, *T_BOUNCE, T_FLIP0, T_LAND_DIP, T_LAND_UP, T_LAUGH, *T_LAUGH_BOBS, T_TOTAL]
+    log("interp act2 ->", set_interpolation(PTS, sorted({F(t) for t in KT}), "LINEAR"))
+    # 每一段「保持」（相邻两键姿态相同）都必须 LINEAR：Cascadeur 的 Bezier 会把下一段的大位移拉进等值区间（亮相保持段曾让人凭空浮起 46 cm、双脚离地 1.1 m）
+    HOLD_STARTS = (6.20, ACT2, T_SLASH1, T_SLASH2, T_THROW, T_SEAL, T_EYES, T_SPLIT, T_POINT)
+    log("holds linear ->", set_interpolation(PTS, sorted({F(t) for t in HOLD_STARTS}), "LINEAR"))
+    _boxes = BOX["l"] + BOX["r"]
+    log("box interp ->", set_interpolation(_boxes, sorted({F(t) for t in (T_SEAL - 0.3, T_SEAL, T_POINT - 0.15, T_POINT, T_JUMP0 - 0.15, T_JUMP0)}), "LINEAR"))
+    log("box holds linear ->", set_interpolation(_boxes, sorted({0, F(5.35), F(6.50), F(T_SEAL), F(T_POINT), F(T_JUMP0)}), "LINEAR"))
 elif STAGE == "finish":
     KT = [7.45, 7.85, ACT2, T_WIND1 - 0.15, T_WIND1, T_SLASH1, T_WIND2 - 0.35, T_WIND2, T_SLASH2, T_THROW_WIND - 0.25, T_THROW_WIND, T_THROW, T_SWORD_HIGH - 0.15,
-          T_SEAL, T_EYES, T_POINT - 0.5, T_POINT, T_JUMP0 - 0.15, T_JUMP0, T_MERGE, *T_BOUNCE, T_FLIP0, T_LAND_DIP, T_LAND_UP, T_LAUGH, *T_LAUGH_BOBS, T_TOTAL]
+          T_SEAL, T_EYES, T_POINT - 0.15, T_POINT, T_JUMP0 - 0.15, T_JUMP0, T_MERGE, *T_BOUNCE, T_FLIP0, T_LAND_DIP, T_LAND_UP, T_LAUGH, *T_LAUGH_BOBS, T_TOTAL]
     log("interp act2 ->", set_interpolation(PTS, sorted({F(t) for t in KT}), "BEZIER"))
-    log("holds linear ->", set_interpolation(PTS, sorted({F(t) for t in (6.20, T_EYES, T_SEAL, T_SPLIT)}), "LINEAR"))   # 长保持段用线性：Bezier 在等值区间也会向邻键方向鼓起（骨盆曾凭空抬 24 cm）
+    # 每一段「保持」（相邻两键姿态相同）都必须 LINEAR：Cascadeur 的 Bezier 会把下一段的大位移拉进等值区间（亮相保持段曾让人凭空浮起 46 cm、双脚离地 1.1 m）
+    HOLD_STARTS = (6.20, ACT2, T_SLASH1, T_SLASH2, T_THROW, T_SEAL, T_EYES, T_SPLIT, T_POINT)
+    log("holds linear ->", set_interpolation(PTS, sorted({F(t) for t in HOLD_STARTS}), "LINEAR"))
+    _boxes = BOX["l"] + BOX["r"]
+    log("box interp ->", set_interpolation(_boxes, sorted({F(t) for t in (T_SEAL - 0.3, T_SEAL, T_POINT - 0.15, T_POINT, T_JUMP0 - 0.15, T_JUMP0)}), "BEZIER"))
+    log("box holds linear ->", set_interpolation(_boxes, sorted({0, F(5.35), F(6.50), F(T_SEAL), F(T_POINT), F(T_JUMP0)}), "LINEAR"))
     log("visible range ->", set_visible_range(0, F(T_TOTAL)))
     cam(CAM.tolist(), TARGET.tolist()); log("vis", hide_controllers("View"))
     import time as _t

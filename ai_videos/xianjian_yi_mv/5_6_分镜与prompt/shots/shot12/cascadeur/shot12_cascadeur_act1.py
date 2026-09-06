@@ -28,26 +28,61 @@ HAND_JSON = OUT_DIR + r"\hands_lr_cascy.json"
 HAND_KEY_FRAMES = sorted({0, F(5.05), F(5.35), F(6.20), F(6.50)})
 HANDS_JSON_IN = globals().get("HANDS_JSON_IN", os.path.join(OUT_DIR, "hands_lr_cascy.json"))
 
+def _slerp(q0, q1, t):
+    q0 = np.array(q0, float); q1 = np.array(q1, float)
+    if np.dot(q0, q1) < 0:
+        q1 = -q1
+    d = float(np.clip(np.dot(q0, q1), -1.0, 1.0))
+    if d > 0.9995:
+        q = q0 + t * (q1 - q0)
+    else:
+        th = math.acos(d); q = (math.sin((1 - t) * th) * q0 + math.sin(t * th) * q1) / math.sin(th)
+    return q / np.linalg.norm(q)
+
+
+def natural_hands(curl_scale=1.0):
+    """自然放松手型（用户 2026-09-06「手指不要扭曲，保持自然」）：Cascy 默认手是五指张开的展示姿，
+    在它与剑指握姿之间取中（无名指/小指半握、食中指并拢），再给食中指整体微蜷。返回 {side: {box: Rotation}}。"""
+    relax = json.load(open(os.path.join(OUT_DIR, "relax_lr.json")))
+    jz = json.load(open(HANDS_JSON_IN))["JZ"]
+    out = {}
+    for s in ("l", "r"):
+        out[s] = {}
+        for n, q0 in relax[s].items():
+            q1 = jz[s].get(n, q0)
+            t = 0.5 if ("ring" in n or "pinky" in n) else (0.4 if "thumb" in n else 0.35)
+            r = q_to_rot([float(v) for v in _slerp(q0, q1, t)])
+            seg = n.split("_")[1][-1]
+            curl = {"1": 14.0, "2": 18.0, "3": 10.0}.get(seg, 0.0) * curl_scale if ("index" in n or "middle" in n) else 0.0
+            out[s][n] = rot_mul(r, rot_axis(curl, "z")) if curl else r
+    return out
+
+
+def grip_hands():
+    """握拳式抱手（道家手印里包住右拳的左手，用户 2026-09-06 参考图）：无名指/小指/拇指取剑指握姿，食中指在伸直基础上再大幅蜷曲。"""
+    relax = json.load(open(os.path.join(OUT_DIR, "relax_lr.json")))
+    jz = json.load(open(HANDS_JSON_IN))["JZ"]
+    out = {}
+    for s in ("l", "r"):
+        out[s] = {}
+        for n, q0 in relax[s].items():
+            r = q_to_rot([float(v) for v in jz[s].get(n, q0)])
+            seg = n.split("_")[1][-1]
+            curl = {"1": 45.0, "2": 55.0, "3": 30.0}.get(seg, 0.0) if ("index" in n or "middle" in n) else 0.0
+            out[s][n] = rot_mul(r, rot_axis(curl, "z")) if curl else r
+    return out
+
+
 # ---------- 手型 ----------
 NATURAL_HANDS = globals().get("NATURAL_HANDS", True)           # 用户 2026-09-05：手指全部不动、保持自然
 if STAGE == "hands" and NATURAL_HANDS:
-    log("anim size ->", set_anim_size(F(T_END) + 1))
+    log("anim size ->", set_anim_size(F(T_END) + 1)); log("visible ->", set_visible_range(0, F(T_END)))
     # 用户 2026-09-06：只在结印段加手指——两手都伸食中二指、其余蜷握（左手扣住右手二指）；其它时间手保持自然
-    _relax = {s: {n: q_to_rot(q) for n, q in tbl.items()} for s, tbl in json.load(open(os.path.join(OUT_DIR, "relax_lr.json"))).items()}
+    _relax = natural_hands()                                   # 用户 2026-09-06：Cascy 默认张开手改成放松自然手
     _hands = json.load(open(HANDS_JSON_IN))
     _jz = {s: {n: q_to_rot(q) for n, q in _hands["JZ"][s].items()} for s in ("l", "r")}
-    for fr, tbl in ((0, _relax), (F(5.05), _relax), (F(5.35), _jz), (F(6.20), _jz), (F(6.50), _relax)):
-        for s in ("l", "r"):
-            set_box_rots(tbl[s], fr, f"seal fingers {s} f{fr}")
-    log("hands: seal finger keys at 5.35-6.20s, natural elsewhere")
-elNATURAL_HANDS = globals().get("NATURAL_HANDS", True)           # 手指不做动作，保持自然
-if STAGE == "hands" and NATURAL_HANDS:
-    log("anim size ->", set_anim_size(F(T_END) + 1))
-    # 用户 2026-09-06：只在结印段加手指——两手都伸食中二指、其余蜷握（左手扣住右手二指）；其它时间手保持自然
-    _relax = {s: {n: q_to_rot(q) for n, q in tbl.items()} for s, tbl in json.load(open(os.path.join(OUT_DIR, "relax_lr.json"))).items()}
-    _hands = json.load(open(HANDS_JSON_IN))
-    _jz = {s: {n: q_to_rot(q) for n, q in _hands["JZ"][s].items()} for s in ("l", "r")}
-    for fr, tbl in ((0, _relax), (F(5.05), _relax), (F(5.35), _jz), (F(6.20), _jz), (F(6.50), _relax)):
+    _seal = {"r": _jz["r"], "l": grip_hands()["l"]}                    # 道家手印：右手剑指二指朝上，左手握拳包住右拳（用户参考图）
+    for fr, tbl in ((0, _relax), (F(5.05), _relax), (F(5.35), _seal), (F(6.20), _seal), (F(6.50), _relax)):
         for s in ("l", "r"):
             set_box_rots(tbl[s], fr, f"seal fingers {s} f{fr}")
     log("hands: seal finger keys at 5.35-6.20s, natural elsewhere")
@@ -127,10 +162,15 @@ def pose_release():
     p = copy_pose(STAND); hand_straight(p, "r", (-52, 40, 30), (-40, 10, -20.0)); return p   # 脱手：右臂向右前方甩直、胸高（葫芦飞向人物右手边＝画面左）
 
 
+# 道家手印（用户 2026-09-06 参考图）：右手竖立胸前正中、食中二指并拢指尖朝上（到下巴）、其余三指握拳；左手从左侧握住右拳；两肘外张。
+SEAL_RW, SEAL_RP, SEAL_HAND_DIR = np.array([-4.0, 40.0, 12.0]), np.array([-28.0, -5.0, 0.0]), np.array([0.0, 1.0, 0.1])   # 右腕 / 右肘极向点 / 手指向（腕部允许弯折，让二指竖直）
+SEAL_LW, SEAL_LP = np.array([4.4, 48.8, 15.2]), np.array([55.0, 40.0, 15.0])                                    # 左腕 / 左肘极向点（fit_seal_v2 迭代：左掌贴右拳左侧，间隙 0.2 cm）
+
+
 def pose_seal(foot_up=False):
     p = copy_pose(STAND)
-    hand_straight(p, "r", (-2, 35, 25), (-44, 10, 4.0))      # 右手收到胸前，前臂朝上前 → 剑指朝上前
-    hand_straight(p, "l", globals().get("SEAL_LW", (17.9, 50.8, 25.8)), globals().get("SEAL_LP", (52, 76, 12.0)))   # 左手掌心压在右手二指上（数值由 seal 拟合迭代得到，见下）
+    hand_straight(p, "r", SEAL_RW, SEAL_RP, hand_dir=SEAL_HAND_DIR)
+    hand_straight(p, "l", SEAL_LW, SEAL_LP)
     if foot_up:
         foot(p, "r", BASE["foot_MainPoint_r"] + np.array([0, 22, 6.0]), Rx(-25)); p["calf_LimbDir_r"] = BASE["calf_LimbDir_r"] + np.array([0, 8, 25.0])
     return p
@@ -147,7 +187,7 @@ def pose_finger():                            # 两手剑指 + 右脚前迈弓�
 
 
 def pose_end():
-    p = copy_pose(STAND); hand_straight(p, "r", (-26, 8, 12), BASE["forearm_LimbDir_r"]); return p
+    p = copy_pose(STAND); hand_straight(p, "r", (-26, 8, 12), BASE["forearm_LimbDir_r"], roll=ROLL_IN["r"]); return p
 
 
 def K(t, local, pelvis=None, title=""):
@@ -232,24 +272,44 @@ elif STAGE == "gourd":                           # 酒葫芦（用户 2026-09-05
         sc.run_update(ids, 0)
     log("gourd keys ->", scene.modify_update("gourd keys", mod_keys))
     log("gourd interp ->", set_interpolation([find("Gourd_body"), find("Gourd_neck")], [F_REL, F(4.62), F(4.85), F(4.95), F(5.10)], "BEZIER"))
-elif STAGE == "wrists":                          # 腕校直（用户 2026-09-05「中间手腕又弯了」）：按每帧实际前臂方向重摆手的朝向点，逐帧打死
-    F_LAST = F(T_END)
+elif STAGE == "wrists":                          # 腕校直（用户 2026-09-05「中间手腕又弯了」）：按每帧实际前臂方向重摆手的朝向点
+    GRID = sorted(set(list(range(0, F(T_END) + 1, 3)) + [F(T_END)]))     # 每 3 帧一键：逐帧打键会让 Cascadeur 卡死（2026-09-05）
+    # 手的 MainPoint / DirectionPoint / AdditionalPoint 共用一条 Animation Track（2026-09-06 实测）：给朝向点打键会把整条轨道
+    # 在该帧的当前值一起存下来，而逐帧顺序打键时后面帧读到的是前一个新键的 STEP 值 → 手位全部僵在第一帧。
+    # 对策：先把全部网格帧的肘/腕位置一次读完，再写值 + 打键，并显式写回 MainPoint；最后把网格键的区间设成 BEZIER。
+    # 改完插值后 Cascadeur 在后台慢慢重算时间轴，紧接着读到的是旧缓存（2026-09-06 实测：同一帧隔几秒再读才正确）→ 读两遍直到稳定
+    import time as _time
+    def _read_all():
+        return {(s_, f_): (np.array(gpos(f"forearm_MainPoint_{s_}", f_)), np.array(gpos(f"hand_MainPoint_{s_}", f_))) for s_ in ("l", "r") for f_ in GRID}
+    for _f in GRID[::max(1, len(GRID) // 12)] + [GRID[-1]]:   # 扫一遍时间轴触发后台求值（可视范围外/新扩展的帧不会自动算）
+        goto(_f)
+    _time.sleep(5.0)
+    pre = _read_all()
+    for _try in range(6):
+        _time.sleep(2.0); _again = _read_all()
+        if all(np.allclose(pre[k][1], _again[k][1], atol=0.5) and np.allclose(pre[k][0], _again[k][0], atol=0.5) for k in pre):
+            break
+        pre = _again
+    log("wrist pre-read settled after", _try + 1, "checks")
     def mod(model, update, sc):
-        le = model.layers_editor(); lv = scene.layers_viewer(); ids = set()
-        nodes = {}
+        le = model.layers_editor(); lv = scene.layers_viewer(); ids = set(); nodes = {}
         for side in ("l", "r"):
-            for n in (f"hand_DirectionPoint_{side}", f"hand_AdditionalPoint_{side}"):
+            for n in (f"hand_MainPoint_{side}", f"hand_DirectionPoint_{side}", f"hand_AdditionalPoint_{side}"):
                 nodes[n] = update.get_object_by_id(IDS[n]).root_group().node_deep("Position"); ids.add(nodes[n].data_id())
         for side in ("l", "r"):
             E0 = BASE[f"forearm_MainPoint_{side}"]; W0 = BASE[f"hand_MainPoint_{side}"]; m = f"hand_MainPoint_{side}"
-            for f in list(range(0, F_LAST + 1, 3)) + [F_LAST]:          # 每 3 帧一键：逐帧打键会让 Cascadeur 卡死（2026-09-05）
-                E = np.array(gpos(f"forearm_MainPoint_{side}", f)); W = np.array(gpos(m, f))
-                R = _rot_between(W0 - E0, W - E)
+            for f in GRID:
+                E, W = pre[(side, f)]; R = _rot_between(W0 - E0, W - E)
+                nodes[m].set_value(W.astype("float32"), f)
                 for n in (f"hand_DirectionPoint_{side}", f"hand_AdditionalPoint_{side}"):
                     nodes[n].set_value((W + R @ (BASE[n] - BASE[m])).astype("float32"), f)
-                    le.set_fixed_interpolation_or_key_if_need(lv.layer_id_by_obj_id(IDS[n]), f, True)
+                le.set_fixed_interpolation_or_key_if_need(lv.layer_id_by_obj_id(IDS[m]), f, True)
         sc.run_update(ids, 0)
     log("wrists ->", scene.modify_update("straight wrists", mod))
+    log("wrists grid interp ->", set_interpolation(["hand_MainPoint_l", "hand_MainPoint_r"], GRID, "LINEAR"))   # 3 帧一段线性，免 Bezier 鼓包
+elif STAGE == "interp":                          # 必须在 wrists 之前，且用 LINEAR：新键之间默认不插值（读到的是旧姿态）；BEZIER 在扩展出来的区间会整段平掉（2026-09-06 实测 615→690 平直），LINEAR 才可靠。finish 再把 KW 键换回 BEZIER。
+    log("interp points ->", set_interpolation(PTS, sorted({F(t) for t in KEY_T} | {F_LAND, F_DIP, F_UP}), "LINEAR"))
+    log("interp boxes ->", set_interpolation(BOX["l"] + BOX["r"], HAND_KEY_FRAMES, "LINEAR"))
 elif STAGE == "finish":
     log("interp points ->", set_interpolation(PTS, sorted({F(t) for t in KEY_T} | {F_LAND, F_DIP, F_UP}), "BEZIER"))
     log("interp boxes ->", set_interpolation(BOX["l"] + BOX["r"], HAND_KEY_FRAMES, "BEZIER"))

@@ -14,6 +14,8 @@
 
 命令行：`cp <s11 blend> ../shot12_previz.blend && blender -b ../shot12_previz.blend --python shot12_previz.py -- --body=cascadeur && blender -b ../shot12_previz.blend -a`，再用 ffmpeg 合成 `../shot12_previz.mp4`。
 
+Cascadeur 侧全量重建（落地 → 第一幕 → 第二幕 → 存盘 → 拷回 `cascadeur/full_0-27s/` → 导 FBX）：`bash ../cascadeur/rebuild.sh`（需 Cascadeur 脚本服务器在线，见 `tools/cascadeur/casc_restart.sh`）。改完任何 Cascadeur / Blender 产物后，最后一步固定是关掉现有实例、重开最新文件（ai_video.md rule 4h §H）。
+
 ## 出片（一步到位）
 
 改完 `previz_config.toml` → webapp 左侧树打开本目录任意文件 → 顶部 **「🎬 Previz 出片」→ 生成 MP4**。
@@ -151,7 +153,7 @@
 
 | 俯角 | 庙的 v（>1 出画） | 结果 |
 |---|---|---|
-| 20° | 0.985 | 庙被顶出画外 |
+| 20° | 0.985 | 庙被顶出画外（2026-09-06 复核：不止庙，庙后林线也全在画框上缘之外，背景只剩裸地——故回到 17°） |
 | **17°** | **0.926** | **庙在画左，四肢清晰** ✓ |
 | 14° | 0.867 | 庙更完整，但俯视感基本没有了 |
 | 11° | 0.809 | 近似平视 |

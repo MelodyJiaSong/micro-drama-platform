@@ -213,6 +213,15 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
         </button>
         <button
           type="button"
+          className="sidebar-nav-link"
+          aria-label="查看选题调研"
+          title="选题调研 · YouTube AIGC 系列排行 / 实测播放与点赞率 / 单人翻拍难度"
+          onClick={() => navigate("/research")}
+        >
+          📊 调研
+        </button>
+        <button
+          type="button"
           className="sidebar-collapse-all"
           aria-label="折叠全部"
           title="折叠全部 · Collapse all folders"
@@ -254,6 +263,7 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
           const isBgmRoot = isAiVideoChild && dramaPathParts[1] === "_bgm";
           const isPerformancesRoot = isAiVideoChild && dramaPathParts[1] === "_performances";
           const isDeletedRoot = isAiVideoChild && dramaPathParts[1] === "_deleted";
+          const isResearchRoot = isAiVideoChild && dramaPathParts[1] === "_research";
           const isActorEntry =
             item.node.type === "actor" &&
             dramaPathParts.length >= 3 &&
@@ -287,6 +297,7 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
                 if (isDrama) navigate(`/drama?drama=${encodeURIComponent(item.node.path)}`);
                 else if (isActorsRoot) navigate("/actors");
                 else if (isBgmRoot) navigate("/bgm");
+                else if (isResearchRoot) navigate("/research");
                 if (hasChildren) toggle(item.node.path);
               }}
             >

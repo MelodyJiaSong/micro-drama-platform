@@ -4620,3 +4620,51 @@ Auto-updated:
 - `libs/infrastructure/writers/previz__writer.py` — 新增 `_build_script()`，`_rebuild()` 改用它；加 `BUILD_SCRIPT_GLOB` 常量
 
 No conflicts found in: routes、application、UI（改动只在 writer 内部，签名与行为对旧目录不变）
+
+## Follow-up 161 — 2026-09-06
+Source: user_input/follow_ups/202609.md - section 161
+Summary: 新增「选题调研」模块（`/research`）+ 落盘一份 100 条实测样本的 YouTube AIGC 系列排行数据集。
+
+Auto-updated:
+- `tools/yt_research.py` — 【新增】yt-dlp 探针：`search` / `channel`（flat，含 view_count）
+  与 `meta`（含 like_count / upload_date / like_rate / vertical）三个子命令，输出 JSONL
+- `tools/yt_series_build.py` — 【新增】落盘前把草稿里引用的每条视频**再实测一次**：
+  解析不了或发布日期在窗口外的直接丢弃；`stats` 的中位数/总量由脚本算，不采信文字里的数字
+- `ai_videos/_research/youtube_series.json` — 【新增】数据集：10 个系列 × 10 条实测样本
+- `ai_videos/_research/README.md` — 【新增】数据来源、两条硬标准、复跑命令、局限
+- `libs/infrastructure/errors/research__error.py` — 【新增】ResearchError（kind: bad_name /
+  not_found / bad_json / bad_shape）
+- `libs/infrastructure/readers/research__reader.py` — 【新增】只读 `ai_videos/_research/*.json`；
+  数据集名走 `^[a-z0-9_]+$` 白名单挡穿越；坏 JSON 不拖垮列表
+- `libs/application/queries/research__query.py` — 【新增】ResearchQuery（datasets / dataset / series）
+- `apps/api/routes/research__route.py` — 【新增】GET `/api/research/datasets`、
+  `/api/research/dataset/{dataset}`、`/api/research/dataset/{dataset}/series/{slug}`。
+  **刻意没有写端点**——数据只能由离线实测生成，webapp 无法伪造它没测过的数字
+- `apps/api/container.py` — 挂 research_reader（Singleton）+ research_query（Factory）
+- `apps/api/routes/__init__.py` — 挂载 _research_router
+- `libs/infrastructure/readers/tree__reader.py` — 系统文件夹中文名加 `_research` → 「选题调研」
+- `apps/ui/src/lib/researchApi.ts` — 【新增】类型 + fetch + 四种排序 + 万/亿·百分比·时长格式化
+- `apps/ui/src/components/ResearchPage.tsx` / `ResearchSeriesCard.tsx` /
+  `ResearchVideoTable.tsx` / `ResearchText.tsx` — 【新增】页面、系列卡、样本表、
+  `**粗体**`/`` `code` `` 行内渲染器（数据集正文用 `**` 标重点，直出会露出星号）
+- `apps/ui/src/App.tsx` — 加 `/research` 路由
+- `apps/ui/src/components/Sidebar.tsx` — 加「📊 调研」导航按钮；点树里的 `_research` 跳 `/research`
+- `apps/ui/src/styles.css` — research 模块样式（沿用既有 light-theme token）
+- `tests/test_research_reader.py` — 【新增】12 项：列表/查单集/穿越与坏名字/坏 JSON/坏结构
+- `apps/ui/test/researchApi.test.ts`（9 项）、`apps/ui/test/researchText.test.tsx`（5 项）— 【新增】
+- `projects/ai_video_management/README.md` — 加「选题调研模块」一节
+
+调研方法（可复跑）:
+14 个搜索视角广撒网（851 次工具调用、275 条实测视频）→ 聚成 18 个候选格式 →
+15 个候选各深挖 12–16 条样本 → 每个候选过一次对抗式校验 → 3 个不同权重的排名器
+独立排序 → 汇总。5 个候选在对抗校验中被淘汰（假频道多样性 / 集英社漫画分格侵权 /
+克隆 13 位真人主播肖像与声音 / 搬运号数据 / 四门生意混装＋克隆在世真人声音）。
+落盘前 100/100 条视频复核通过，0 条丢弃。
+
+No conflicts found in: 其余 routes / application / infrastructure（改动全是新增文件，
+只有 container、routes/__init__、tree__reader 的中文名表、App.tsx、Sidebar.tsx 是加行）
+
+已知遗留（非本次引入）: 所有 SPA 路由（`/workflow`、`/actors`、`/drama`、`/research` …）
+直接敲 URL 都是 404 —— `app_factory.py` 用的是 `StaticFiles(html=True)`，它只对目录路径
+回落 index.html，没有 SPA catch-all。从 `/` 进去点导航一切正常。未在本次修复（会改动全局
+路由行为，且与 161 的诉求无关），需要的话可以单独加一条 catch-all。

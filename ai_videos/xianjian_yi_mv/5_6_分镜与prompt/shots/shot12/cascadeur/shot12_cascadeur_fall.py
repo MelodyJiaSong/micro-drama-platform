@@ -4,7 +4,7 @@
 # 需要外部注入：LIB（casc_lib.py 路径）、JZ_L（左手剑指四元数 json）、OUT_DIR。
 exec(open(LIB, encoding="utf-8").read())
 DEFS_ONLY = bool(globals().get("DEFS_ONLY"))
-if not DEFS_ONLY:
+if not DEFS_ONLY and not globals().get("SKIP_RELOAD"):      # rebuild.sh 先单独载入 Cascy.casc（载入 + 落地逐帧打键合在一次调用里会超 30 s 超时）
     reload_scene(r"C:\Program Files\Cascadeur\samples\Cascy.casc"); exec(open(LIB, encoding="utf-8").read())
 
 FPS = 30
@@ -57,8 +57,17 @@ def _rot_between(a, b):
     return np.eye(3) + vx + vx @ vx * (1 / (1 + c))
 
 
-def hand_straight(pose, side, wrist, pole):
-    """手腕不弯（用户 2026-09-05）：预测肘位（双骨 IK + 极向点），让手沿前臂方向延伸，手型相对前臂保持基础姿态。"""
+def _axis_rot(axis, deg):
+    """Rodrigues：绕单位向量 axis 转 deg 度的旋转矩阵。"""
+    a = axis / (np.linalg.norm(axis) + 1e-9); c, s = math.cos(math.radians(deg)), math.sin(math.radians(deg))
+    K = np.array([[0, -a[2], a[1]], [a[2], 0, -a[0]], [-a[1], a[0], 0]])
+    return np.eye(3) + s * K + (1 - c) * (K @ K)
+
+
+def hand_straight(pose, side, wrist, pole, roll=0.0, hand_dir=None):
+    """手腕不弯（用户 2026-09-05）：预测肘位（双骨 IK + 极向点），让手沿前臂方向延伸，手型相对前臂保持基础姿态。
+    roll：手绕前臂轴再转多少度（Cascy 基础姿态掌心朝前，垂手时要转成掌心贴腿；用户 2026-09-06「手指扭曲」）。
+    hand_dir：给定则手沿该方向而不沿前臂（腕部弯折），只用于道家手印这类手势。"""
     S = BASE[f"arm_MainPoint_{side}"]; E0 = BASE[f"forearm_MainPoint_{side}"]; W0 = BASE[f"hand_MainPoint_{side}"]
     L1 = np.linalg.norm(E0 - S); L2 = np.linalg.norm(W0 - E0)
     W = np.array(wrist, float); P = np.array(pole, float)
@@ -66,11 +75,16 @@ def hand_straight(pose, side, wrist, pole):
     a = (L1 * L1 - L2 * L2 + d * d) / (2 * d); h = math.sqrt(max(L1 * L1 - a * a, 0.0))
     v = (P - S) - u * np.dot(P - S, u); v = v / (np.linalg.norm(v) + 1e-9)
     E = S + u * a + v * h
-    R = _rot_between(W0 - E0, W - E)
+    R = _rot_between(W0 - E0, W - E if hand_dir is None else np.array(hand_dir, float))   # hand_dir：手不沿前臂、而指向给定方向（允许腕部弯折，如道家手印二指朝天）
+    if roll:
+        R = _axis_rot(W - E, roll) @ R
     m = f"hand_MainPoint_{side}"
     for n in (f"hand_DirectionPoint_{side}", f"hand_AdditionalPoint_{side}"):
         pose[n] = W + R @ (BASE[n] - BASE[m])
     pose[m] = W; pose[f"forearm_LimbDir_{side}"] = P
+
+ROLL_IN = {"l": 90.0, "r": -90.0}   # 手绕前臂轴转 90°：垂手时掌心贴腿、平张时掌心朝下（Cascy 基础姿态掌心朝前；用户 2026-09-06「手指扭曲」，f70 截图三档对比定的方向）
+
 
 def foot(pose, side, foot_pos, rot=np.eye(3)):
     m = f"foot_MainPoint_{side}"
@@ -82,8 +96,8 @@ def foot(pose, side, foot_pos, rot=np.eye(3)):
 # ---------- 姿态（身体局部系，cm）----------
 def pose_fall():
     p = {n: v.copy() for n, v in BASE.items()}
-    hand_straight(p, "l", (66, 47, 0), (45, 15, -60.0))     # 左臂平张，腕不弯
-    hand_straight(p, "r", (-66, 47, 0), (-45, 15, -60.0))   # 右臂平张（拎葫芦），腕不弯
+    hand_straight(p, "l", (66, 47, 0), (45, 15, -60.0), roll=ROLL_IN["l"])     # 左臂平张，腕不弯，掌心朝下
+    hand_straight(p, "r", (-66, 47, 0), (-45, 15, -60.0), roll=ROLL_IN["r"])   # 右臂平张（拎葫芦），腕不弯，掌心朝下
     hip = BASE["thigh_MainPoint_r"]
     L1 = np.linalg.norm(BASE["calf_MainPoint_r"] - hip); L2 = np.linalg.norm(BASE["foot_MainPoint_r"] - BASE["calf_MainPoint_r"])
     knee = hip + L1 * np.array([0, -math.cos(math.radians(60)), math.sin(math.radians(60))])       # 右髋前屈 60°
@@ -101,8 +115,8 @@ def pose_ground(pelvis_h, arm_w, arm_h, arm_z):
     for side in ("l", "r"):
         foot(p, side, BASE[f"foot_MainPoint_{side}"] + np.array([0, dy, 0]))
         p[f"calf_LimbDir_{side}"] = BASE[f"calf_LimbDir_{side}"] + np.array([0, dy * 0.5, 15.0])
-    hand_straight(p, "l", (arm_w, arm_h, arm_z), BASE["forearm_LimbDir_l"] + np.array([arm_w - 25, 0, 0.0]))
-    hand_straight(p, "r", (-arm_w, arm_h, arm_z), BASE["forearm_LimbDir_r"] + np.array([-(arm_w - 25), 0, 0.0]))
+    hand_straight(p, "l", (arm_w, arm_h, arm_z), BASE["forearm_LimbDir_l"] + np.array([arm_w - 25, 0, 0.0]), roll=ROLL_IN["l"])
+    hand_straight(p, "r", (-arm_w, arm_h, arm_z), BASE["forearm_LimbDir_r"] + np.array([-(arm_w - 25), 0, 0.0]), roll=ROLL_IN["r"])
     return p
 
 

@@ -78,6 +78,23 @@ Open `http://127.0.0.1:5174/`. The Vite proxy forwards `/api/*` to the backend w
 | `make install-backend` | `pip install -r backend/requirements.txt` (pip-only). |
 | `make install-frontend` | `npm install` inside `frontend/`. |
 
+## 选题调研模块 (follow-up 161 — 2026-09-06)
+
+`/research`（左侧导航 **📊 调研**，或点树里的 `ai_videos/_research/`）浏览「近半年 YouTube
+AIGC 系列排行」——为单人创作者挑可翻拍选题而做的调研。
+
+- **数据面**：`ai_videos/_research/{dataset}.json`，每个数据集一份排好序的 series 列表。
+  只读——webapp 不写、也不重算任何指标。
+- **指标真实性**：播放量 / 点赞数 / 发布日期全部由 `tools/yt_research.py`（封装 `yt-dlp`）
+  实测抓取，不接受搜索摘要或凭印象的估算。点赞率 = `like_count / view_count`。
+- **两个排序维度对应两条硬标准**：回报（播放量中位、点赞率中位）与单人翻拍易度
+  （1-5 星 + 每集工时）。默认「综合推荐」按两者的平衡名次排。
+- **接口**：`GET /api/research/datasets`、`/api/research/dataset/{dataset}`、
+  `/api/research/dataset/{dataset}/series/{slug}`。
+- **刷新**：重跑调研即可，例如
+  `python tools/yt_research.py search "<query>" --sp views_month --limit 25`（发现）与
+  `python tools/yt_research.py meta <id>... --jobs 3`（拿 like_count / upload_date）。
+
 ## Architecture
 
 - **Backend.** FastAPI on `127.0.0.1:8766` (IPv4 loopback). Strongly typed Python in `backend/libs/` (`@dataclass(frozen=True)` containers, `str | None` syntax). Single-process mode also serves `apps/api/static/`.

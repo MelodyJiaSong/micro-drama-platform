@@ -49,6 +49,7 @@ from libs.application.queries.episode__query import EpisodeQuery
 from libs.application.queries.episode_bgm__query import EpisodeBgmQuery
 from libs.application.queries.file__query import FileQuery
 from libs.application.queries.eval_center__query import EvalCenterQuery
+from libs.application.queries.research__query import ResearchQuery
 from libs.application.commands.shot_performance__command import ShotPerformanceCommand
 from libs.application.queries.perf_check__query import PerfCheckPromptQuery
 from libs.application.queries.performance_candidate__query import PerformanceCandidateQuery
@@ -66,6 +67,7 @@ from libs.infrastructure.clients.anthropic__client import AnthropicClient
 from libs.infrastructure.readers.bgm_reference__reader import BgmReferenceReader
 from libs.infrastructure.readers.file__reader import FileReader
 from libs.infrastructure.readers.eval_center__reader import EvalCenterReader
+from libs.infrastructure.readers.research__reader import ResearchReader
 from libs.infrastructure.readers.perf_check__reader import PerfCheckPromptReader
 from libs.infrastructure.readers.performance_library__reader import PerformanceLibraryReader
 from libs.infrastructure.readers.shot_regen__reader import ShotRegenPromptReader
@@ -160,6 +162,9 @@ class Container(containers.DeclarativeContainer):
     )
     eval_center_writer: providers.Singleton[EvalCenterWriter] = providers.Singleton(
         EvalCenterWriter, repo_root=repo_root_path, reader=eval_center_reader
+    )
+    research_reader: providers.Singleton[ResearchReader] = providers.Singleton(
+        ResearchReader, repo_root=repo_root_path
     )
     # Singleton: the renderer owns the single in-flight previz job (thread, lock,
     # cancel event), so every request must see the same instance.
@@ -303,6 +308,9 @@ class Container(containers.DeclarativeContainer):
     )
     eval_center_query: providers.Factory[EvalCenterQuery] = providers.Factory(
         EvalCenterQuery, reader=eval_center_reader
+    )
+    research_query: providers.Factory[ResearchQuery] = providers.Factory(
+        ResearchQuery, reader=research_reader
     )
     previz_command: providers.Factory[PrevizCommand] = providers.Factory(
         PrevizCommand, renderer=previz_renderer

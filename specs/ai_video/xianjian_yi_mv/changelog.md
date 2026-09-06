@@ -3256,3 +3256,94 @@ Auto-updated:
 - 新增：shots/shot12/shot12_previz.blend、shots/shot12/shot12_previz.mp4（Cascadeur 身体 + Blender 剑/特效 + s11 环境）
 
 Pending: shot12.md prompt 动作/节奏 文字仍按旧节奏（悬停/光圈/弓步绕身/光柱）描述，待用户确认新节奏后删改；webapp「Previz 出片」按钮仍写到 previz/ 目录，需改为 shot 根目录。
+
+## Follow-up 065 (修正) — 2026-09-06 11:41:48
+Source: user_input/follow_ups/202609.md - section 065（用户复看：「15s多的时候为什么要浮起来？不要有浮起来的动作」）
+Summary: 15.55–17.23s 亮相保持段人物凭空浮起（骨盆 +46cm、双脚离地 1.1m）——是 Cascadeur Bezier 把随后 2m 起跳的位移拉进了等值保持段，不是设计；全部保持段改线性后双脚 15.0–17.2s 全程贴地。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act2.py — finish 阶段 HOLD_STARTS 列出全部保持段起点（6.20 / 8.10 / 8.55 / 9.18 / 9.75 / 10.60 / 11.00 / 11.10 / 15.55）一律 LINEAR
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/full_0-27s/{shot12_full.casc, shot12_full.fbx} — 重存重导
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/{shot12_previz.blend, shot12_previz.mp4} — 重建重渲
+
+## Follow-up 066 — 2026-09-06 12:05:15
+Source: user_input/follow_ups/202609.md - section 066
+Summary: shot12 剑雨逐把快速落下；预演背景融合 s11 场景（林/山壁改到镜头正对的正北、俯角 20→17 让庙全貌与林线入画、场景灰模按明度分层）；改完必关掉重开。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/shot12_previz.py — T_DROP_SPAN 改为相对本段起点的跨度（原把绝对时刻 16.5s 当跨度，只有前两把按时落、其余拖到跳起前一起落）；新增场景灰模明度分层（林 0.09 / 山壁 0.20 / 庙 0.58+自发光 / 路 0.70 / 栅栏 0.30）
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/previz_config.toml — tilt_deg 20 → 17（20° 时庙脊与林线全在画框上缘之外；17° 是 follow-up 040 用户定过的折中）
+- tools/build_s11_shanshenmiao.py — 林 / 山壁弧段改为面向镜头的正北一侧（原 150°→390° 空出的是正北）；草地基面扩到山壁脚下；TILT_DEG 17；「庙脊」改为必须在画内
+- ai_videos/xianjian_yi_mv/2_世界观人设/scenes/s11_十里坡山神庙/_blender/{s11_十里坡山神庙.blend, check_shot12_起幅.png} — 重建重出
+- ai_videos/xianjian_yi_mv/2_世界观人设/scenes/s11_十里坡山神庙/_blender/blender_build.md — §1 基线 / §3 机位 / §4 林与山壁 / §5 构图说明同步
+- .claude/agent_refs/project/ai_video.md — rule 4h 新增 §H「改完必重开」（用户 2026-09-06 通用规则）
+- tools/cascadeur/casc_lib.py — 头注加「改完必重开」
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/{shot12_previz.blend, shot12_previz.mp4} — 重建重渲
+
+Judgment call: 俯角 20→17 是 Claude 为让庙与林线入画自行改的（用户授权「自己结合一下」；17° 沿用 follow-up 040 用户在四档对比后选定的值）；prompt 里的 `{{tilt_deg:zh}}` 占位符随 config 自动同步。若要回到 20°，改 previz_config.toml 即可，但那样背景只剩裸地。
+Pending: 月亮 / 天空在 35mm + 17° 俯角下仍在画框上缘之外（林线顶 > 画框顶），属光线，由场景参考图交给出片模型。
+
+## Follow-up 067 — 2026-09-06 12:53:14
+Source: user_input/follow_ups/202609.md - section 067
+Summary: shot12 非结印段手指自然放松、垂手掌心贴腿；剑阵在头顶那段双手举道家手印到面前而不是收胸前。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_fall.py — hand_straight 新增 roll（绕前臂轴）；ROLL_IN 左 +90° / 右 −90°（Cascy 基础姿态掌心朝前 → 垂手掌心贴腿、平张掌心朝下）；pose_fall / pose_ground 应用
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act1.py — natural_hands()（Cascy 张开展示手 → 与剑指握姿取中 + 食中指微蜷）替代 relax 作默认手型；删掉重复的 hands 段；pose_end 垂手 roll
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act2.py — pose_seal_up（第一幕结印几何 +(0,26,10) 举到面前）替代胸前 seal1/seal_still；举印段手指键 10.3/10.6/15.05/15.55；point/spread/land/laugh 垂手与平张 roll；手指 Box 轨道保持段 LINEAR
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/rebuild.sh — 新增：全量重建驱动（落地 → 第一幕 → 第二幕 → 存盘 → 拷回 → 导 FBX）
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/full_0-27s/{shot12_full.casc, shot12_full.fbx} — 重建重导
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/{shot12_previz.blend, shot12_previz.mp4} — 重建重渲
+
+## Follow-up 068 — 2026-09-06 13:09:30
+Source: user_input/follow_ups/202609.md - section 068
+Summary: shot12 剑阵段道家手印放在身前（067 的举到脸前改回身前偏上偏前）；亮相改为右手剑指二指前指，随后剑雨依次落地。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act2.py — SEAL_UP (0,26,10) → (0,6,14) 并重新拟合左手；pose_point 右手 (-16,22,46) → (-16,34,50) 前指；手指键：亮相段右手保持剑指、左手放松，起跳时放松
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/full_0-27s/{shot12_full.casc, shot12_full.fbx} — 重建重导
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/{shot12_previz.blend, shot12_previz.mp4} — 重建重渲
+
+## Follow-up 069 — 2026-09-06 13:39:33
+Source: user_input/follow_ups/202609.md - section 069（用户给道家手印参考图）
+Summary: shot12 两处道家手印按参考图重做：右手竖立胸前正中、食中二指朝上到下巴、余指握拳；左手从左侧握住右拳；两肘外张。剑阵段与胸前结印共用同一手印。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_fall.py — hand_straight 新增 hand_dir（手不沿前臂、指向给定方向，允许腕部弯折，仅用于手势）
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act1.py — grip_hands()（握拳式抱手）；pose_seal 改为 SEAL_RW(-4,40,12)/SEAL_RP/SEAL_HAND_DIR(0,1,0.05)/SEAL_LW(4.4,48.8,15.2)/SEAL_LP；5.35–6.20 s 手指键右剑指 + 左握拳
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act2.py — pose_seal_up = pose_seal + 抬头（去掉 SEAL_UP 偏移）；剑阵段手指键右剑指 + 左握拳
+- .claude/skills/ai_videos__cascadeur动作/SKILL.md — 新增 skill：MCP/脚本服务器接法、csc API 事实、工作纪律、AI 工具与 release notes（2019.5b→2026.2.1）摘要（用户「把 release notes 学进 skill」）
+- .claude/agent_refs/project/ai_video.md — rule 4h 新增 §I 指向该 skill
+- tools/cascadeur/casc_lib.py — 头注：菜单工具可经 action id（call_action）触发，替换「GUI only」旧说法
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/full_0-27s/{shot12_full.casc, shot12_full.fbx} — 重建重导
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/{shot12_previz.blend, shot12_previz.mp4} — 重建重渲
+
+## Follow-up 070 — 2026-09-06 13:44:42
+Source: user_input/follow_ups/202609.md - section 070
+Summary: 剑阵段全程道家手印；手印保持到 15.40 s，0.15 s 内猛然前指（15.55 s），剑雨自 15.70 s 起逐把落地（原前指过渡 0.5 s）。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act2.py — 结印保持键 / 手指键 / 插值键 T_POINT-0.5 → T_POINT-0.15
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/full_0-27s/{shot12_full.casc, shot12_full.fbx} — 重建重导
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/{shot12_previz.blend, shot12_previz.mp4} — 重建重渲
+
+## Follow-up 070 (管线修正) — 2026-09-06 14:42:41
+Source: 同 070；重建时发现第二幕除关键帧外整段僵成第一幕末姿势（手垂着），根因是 Cascadeur 只对可视范围内的帧求值、且求值异步。
+Summary: 第二幕扩长后立刻 set_visible_range；插值阶段（LINEAR）提前到腕校直之前；腕校直先扫帧 + 等 5 s 再读；手三点共用一条轨道故 MainPoint 一并显式写回。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act1.py — 新增 interp 阶段（LINEAR）；hands 阶段扩长后 set_visible_range；wrists 先读全部帧再打键、网格键 LINEAR
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act2.py — 同上（body2a 扩长后 set_visible_range；interp 阶段；wrists2 重写）
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/rebuild.sh — 阶段顺序 …gourd→interp→wrists→finish / …sword→interp→wrists2→finish；Cascy 单独载入；fall 用 NO_SAVE；脚本服务器掉线自动重启
+- tools/cascadeur/casc_lib.py、.claude/skills/ai_videos__cascadeur动作/SKILL.md — 记入「可视范围外不求值 / 求值异步 / 手三点共轨」事实
+
+## Follow-up 071 — 2026-09-06 15:57:16
+Source: user_input/follow_ups/202609.md - section 071
+Summary: 预演背景的方盒子树被读成现代楼房；按 s11 场景参考改成圆锥松林（内排 33–42 m 高 9–15 m、外排 44–54 m 高 13–20 m）+ 空地边缘灌木 + 截锥山脊（62–72 m，高 24–40 m），预演里林近黑墨绿、灌木略亮、山体灰。
+
+Auto-updated:
+- tools/build_s11_shanshenmiao.py — 新增 cone() 与确定性抖动；密林 / 灌木 / 山体全部改为圆锥或截锥剪影
+- ai_videos/xianjian_yi_mv/2_世界观人设/scenes/s11_十里坡山神庙/_blender/{s11_十里坡山神庙.blend, check_shot12_起幅.png} — 重建重出
+- ai_videos/xianjian_yi_mv/2_世界观人设/scenes/s11_十里坡山神庙/_blender/blender_build.md — §1 基线 / §4 林与山体行同步
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/shot12_previz.py — 场景灰模分层：密林 / 灌木 / 山体三档材质
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/{shot12_previz.blend, shot12_previz.mp4} — 重建重渲

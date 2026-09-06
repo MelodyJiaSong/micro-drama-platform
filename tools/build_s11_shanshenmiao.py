@@ -21,7 +21,7 @@ same frame or the previz framing report (庙/人头 的 UV) stops meaning anythi
     CAM_AZ (相机 → 主体的水平方向) = (-0.259, 0.966, 0)   → 机位在主体的【南偏东】
     TEMPLE (小庙中心) = (-21, 19, 0)                      → 主体西北 25.8m，落在画左作边框
 
-    解出来的机位：pos ≈ (3.44, -8.84, 5.74)，aim ≈ (-2.11, 3.44, 0.90)，35mm，俯角 20°
+    解出来的机位：pos ≈ (3.50, -9.06, 5.03)，aim ≈ (-2.11, 3.44, 0.90)，35mm，俯角 17°
     主体处画框 8.18m(高) × 14.55m(宽)；庙所在深度 33.2m 处画框半宽 17.1m，
     庙的横向偏移 16.4m < 17.1m → 庙贴着画左边缘进画。**这一条是本文件全部坐标的由来。**
 
@@ -48,7 +48,7 @@ OUT = sys.argv[sys.argv.index("--") + 1:][0]
 P = Vector((0.0, 4.0, 0.0))                  # 酒剑仙站位 / 动作中心
 CAM_AZ = Vector((-0.259, 0.966, 0.0))        # 相机 → 主体的水平方向
 R_VEC = Vector((CAM_AZ.y, -CAM_AZ.x, 0.0))   # 画面向右
-CAM_LENS, SUBJ_FRAC, TILT_DEG, PULL = 35.0, 0.22, 20.0, 1.30
+CAM_LENS, SUBJ_FRAC, TILT_DEG, PULL = 35.0, 0.22, 17.0, 1.30   # 俯角 20→17（2026-09-06）：20° 时庙脊与林线全在画框上缘之外，背景只剩裸地；17° 是 follow-up 040 用户定过的折中
 SENSOR_W = 36.0
 SENSOR_V = SENSOR_W * 1080.0 / 1920.0
 
@@ -95,10 +95,10 @@ PATH_A = Vector((13.0, 16.0, 0.0))
 PATH_B = Vector((31.0, 34.0, 3.2))
 
 # 密林 / 山壁：包住北半圈 + 庙后。C 级纯体块，只为遮挡与构图边框服务
-CANOPY_R0, CANOPY_R1 = 34.0, 50.0
-CANOPY_H0, CANOPY_H1 = 8.0, 14.0
+CANOPY_R0, CANOPY_R1 = 33.0, 54.0            # 内排 33–42 / 外排 44–54（圆锥松）
+CANOPY_H0, CANOPY_H1 = 9.0, 20.0
 CLIFF_R = 64.0
-CLIFF_H = 18.0
+CLIFF_H = 40.0                              # 截锥山脊最高 40 m（露在林线之上）
 
 COLS = {}
 
@@ -124,6 +124,24 @@ def box(coll, name, center, size, yaw=0.0):
     return ob
 
 
+def cone(coll, name, center_xy, radius, height, segments=8, top=0.0, yaw=0.0):
+    """圆锥/截锥体块：松树冠、灌木、山体的最低限度剪影（方盒子会被读成现代楼房，2026-09-06 用户）。"""
+    bpy.ops.mesh.primitive_cone_add(vertices=segments, radius1=radius, radius2=top, depth=height,
+                                    location=(center_xy[0], center_xy[1], height / 2))
+    ob = bpy.context.active_object
+    ob.name = name
+    ob.rotation_euler[2] = yaw
+    for c in list(ob.users_collection):
+        c.objects.unlink(ob)
+    collection(coll).objects.link(ob)
+    return ob
+
+
+def _j(i, k, lo, hi):
+    """确定性伪随机（不用 random，重跑得到同一座场）。"""
+    return lo + (hi - lo) * (((i * k) % 11) / 10.0)
+
+
 def wipe():
     bpy.ops.wm.read_factory_settings(use_empty=True)
 
@@ -134,7 +152,7 @@ wipe()
 _fcx, _fcy = (FIELD_X0 + FIELD_X1) / 2, (FIELD_Y0 + FIELD_Y1) / 2
 _fw, _fd = FIELD_X1 - FIELD_X0, FIELD_Y1 - FIELD_Y0
 box("S11_GROUND", "GND_field", (_fcx, _fcy, -0.05), (_fw, _fd, 0.1))
-box("S11_GROUND", "GND_apron", (_fcx, _fcy, -0.16), (_fw + 60, _fd + 60, 0.1))
+box("S11_GROUND", "GND_apron", (_fcx, _fcy, -0.16), (_fw + 130, _fd + 130, 0.1))   # 盖到山壁脚下，林线后不露底
 
 # ── 小庙（B 级：体块 + 四坡顶形制 + 门窗位置）──────────────────────────────
 tx, ty, _ = TEMPLE_POS
@@ -193,22 +211,31 @@ for i in range(seg):
     yaw = math.atan2(b.y - a.y, b.x - a.x)
     box("S11_PATH", f"PTH_{i + 1:02d}", (mid.x, mid.y, mid.z + 0.05), (L, PATH_W, 0.1), yaw)
 
-# ── 密林树冠 + 山壁（C 级纯体块，包北半圈与庙后）────────────────────────────
-n_tree = 46
-for i in range(n_tree):
-    # 确定性角度分布：从西南（庙后）扫到东北，跳过东南（机位方向）
-    a = math.radians(150.0 + 240.0 * i / (n_tree - 1))
-    r = CANOPY_R0 + (CANOPY_R1 - CANOPY_R0) * (((i * 13) % 7) / 6.0)
-    h = CANOPY_H0 + (CANOPY_H1 - CANOPY_H0) * (((i * 5) % 9) / 8.0)
-    w = 4.0 + 3.0 * (((i * 11) % 6) / 5.0)
-    box("S11_FOREST", f"TRE_{i + 1:02d}",
-        (P.x + math.cos(a) * r, P.y + math.sin(a) * r, h / 2), (w, w, h))
-n_cliff = 9
-for i in range(n_cliff):
-    a = math.radians(170.0 + 200.0 * i / (n_cliff - 1))
-    box("S11_FOREST", f"CLF_{i + 1}",
-        (P.x + math.cos(a) * CLIFF_R, P.y + math.sin(a) * CLIFF_R, CLIFF_H / 2),
-        (26.0, 26.0, CLIFF_H))
+# ── 密林 + 灌木 + 山体（C 级剪影，包住镜头正对的北半圈与庙后）──────────────────
+# 数学角 0°=东 90°=北；只空出机位所在的东南一侧。2026-09-06 用户：方盒子树在预演里被读成现代楼房 →
+# 改成圆锥松（两排、高矮参差）+ 场地边缘的矮灌木 + 截锥山体，对得上参考图「近黑密林 / 庙后高大杂木与松 / 山壁」。
+_ARC0, _ARC1 = -25.0, 205.0
+for i in range(40):                                   # 内排：贴着空地外沿的密林，高 9–15 m
+    a = math.radians(_ARC0 + (_ARC1 - _ARC0) * i / 39 + _j(i, 7, -2.5, 2.5))
+    r = _j(i, 13, 33.0, 42.0)
+    cone("S11_FOREST", f"TRE_{i + 1:02d}", (P.x + math.cos(a) * r, P.y + math.sin(a) * r),
+         _j(i, 5, 2.2, 3.4), _j(i, 3, 9.0, 15.0), segments=7, top=_j(i, 9, 0.0, 0.6), yaw=_j(i, 2, 0.0, 1.0))
+for i in range(34):                                   # 外排：更高的杂木与松，堆出林线的厚度，高 13–20 m
+    a = math.radians(_ARC0 + (_ARC1 - _ARC0) * (i + 0.5) / 34 + _j(i, 11, -2.0, 2.0))
+    r = _j(i, 17, 44.0, 54.0)
+    cone("S11_FOREST", f"TRE_{i + 41:02d}", (P.x + math.cos(a) * r, P.y + math.sin(a) * r),
+         _j(i, 7, 3.0, 4.6), _j(i, 5, 13.0, 20.0), segments=7, top=_j(i, 3, 0.0, 0.8), yaw=_j(i, 4, 0.0, 1.0))
+for i in range(26):                                   # 空地边缘的没膝灌木 / 半人高杂木（锚点图「中层」），1.5–3.5 m
+    a = math.radians(0.0 + 180.0 * i / 25 + _j(i, 9, -3.0, 3.0))
+    r = _j(i, 7, 25.0, 31.0)
+    _br = _j(i, 5, 1.6, 2.8)
+    cone("S11_FOREST", f"BSH_{i + 1:02d}", (P.x + math.cos(a) * r, P.y + math.sin(a) * r),
+         _br, _j(i, 3, 1.2, 2.6), segments=8, top=_br * _j(i, 11, 0.45, 0.7))   # 圆钝的截锥＝灌木丛，别成尖顶小帐篷
+for i in range(7):                                    # 山体：截锥山脊，露在林线之上，高 24–40 m
+    a = math.radians(10.0 + 160.0 * i / 6)
+    r = _j(i, 3, CLIFF_R - 2.0, CLIFF_R + 8.0)
+    cone("S11_FOREST", f"CLF_{i + 1}", (P.x + math.cos(a) * r, P.y + math.sin(a) * r),
+         _j(i, 5, 22.0, 34.0), _j(i, 7, 24.0, 40.0), segments=5, top=_j(i, 9, 2.0, 6.0), yaw=_j(i, 2, 0.0, 1.2))
 
 # ── 报告 ────────────────────────────────────────────────────────────────────
 bpy.context.view_layer.update()
@@ -259,7 +286,7 @@ print("  --- 画框自查（shot12 起幅机位）---")
 # want: True = 本镜必须在画内；False = 本镜画外是【设计如此】（为 shot11 / 宽镜而建）
 checks = [
     ("庙右缘", TEMPLE_POS + _rgt * (TEMPLE_W / 2 + TEMPLE_EAVE) + Vector((0, 0, 1.5)), True),
-    ("庙脊", TEMPLE_POS + Vector((0, 0, TEMPLE_RIDGE_H)), False),
+    ("庙脊", TEMPLE_POS + Vector((0, 0, TEMPLE_RIDGE_H)), True),
     ("人头", P + Vector((0, 0, MAN_H)), True),
     ("人脚", P, True),
     ("栅栏中", FENCE_MID + Vector((0, 0, FENCE_H)), False),

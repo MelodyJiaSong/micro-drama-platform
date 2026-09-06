@@ -1234,6 +1234,22 @@ Blender 预演与 prompt 文字同步更新，**不存在「改了 config 忘了
 每段开始时刻 ＝ 前面所有段之和，总长自动。改某段时长，段内细节节拍等比伸缩、后面的段
 自动顺延——**作者只需要在意「这一拍多长」**，这正是导演真正在决定的量。
 
+#### H. 改完必重开：Cascadeur / Blender 改动的交付终点是「关掉、重开」（2026-09-06）
+
+任何 Cascadeur / Blender 相关的改动（重建 .casc、重导 FBX、重建 .blend、改特效、重渲），
+**最后一步固定是：taskkill 现有 GUI 实例 → 重新打开最新的 .casc / .blend**，让用户看到的一定是最新改动。
+GUI 里留着的是打开那一刻的内存副本，磁盘文件被脚本重写后它**不会自己刷新**，用户会对着旧版本提意见——
+这是空转一轮反馈的头号来源。杀进程前先确认后台渲染（同名 `blender.exe`）已经结束（§F）。
+（来源：xianjian_yi_mv shot12 Cascadeur+Blender 实践，用户 2026-09-06 裁定。）
+
+#### I. Cascadeur 动作层：接法、API 事实与 AI 工具（2026-09-06）
+
+人物身体动作（骨骼 + 手指）在 Cascadeur 里由脚本生成、导带动画的 FBX 给 Blender previz。接法（官方内置 MCP / 脚本服务器）、
+已验证的 csc API 事实、分段投递 / 截图调试 / 保持段 LINEAR / 改完重开等纪律、AutoPosing / AutoPhysics / Inbetweening /
+Motion Generation / Video Mocap / Unbaking / Retargeting 的用法与 action id、以及 2019.5b→2026.2.1 全部 release notes 摘要，
+统一放在 skill **`ai_videos__cascadeur动作`**（`.claude/skills/ai_videos__cascadeur动作/SKILL.md`）；工具封装在 `tools/cascadeur/`。
+任何 Cascadeur 相关工作先读它。（来源：xianjian_yi_mv shot12 Cascadeur 实践 + 用户 2026-09-06「把 release notes 学进 skill」。）
+
 *(来源：duikang_shangzeng follow-up 001/031/032/033；xianjian_yi_mv shot12 previz 实践；
 2026-09-05 Hyper3D 接入实测——addon `blender_mcp.py` v5.1，free trial key ＝ `vibecoding`。)*
 

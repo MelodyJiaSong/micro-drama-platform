@@ -33,6 +33,7 @@ from apps.api.routes.perf_score__route import router as _perf_score_router
 from apps.api.routes.performance__route import router as _performance_router
 from apps.api.routes.production__route import router as _production_router
 from apps.api.routes.prompt__route import router as _prompt_router
+from apps.api.routes.research__route import router as _research_router
 from apps.api.routes.shot_regen__route import router as _shot_regen_router
 from apps.api.routes.subtitle__route import router as _subtitle_router
 from apps.api.routes.tree__route import router as _tree_router
@@ -65,4 +66,5 @@ router.include_router(_intro_card_router)
 router.include_router(_production_router)
 router.include_router(_drama_router)
 router.include_router(_eval_center_router)
+router.include_router(_research_router)
 router.include_router(_previz_router)
