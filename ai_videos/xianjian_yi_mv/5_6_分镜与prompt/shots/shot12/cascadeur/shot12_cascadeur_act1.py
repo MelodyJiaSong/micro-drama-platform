@@ -22,18 +22,35 @@ def log(*a):
 
 
 F = lambda t: int(round(t * FPS))
-T_END = 15.0
+T_END = 8.10                                              # 用户 2026-09-06：第一幕压到 8.1 s（出鞘→落手→开斩）
 BOX = {s: [n for n in IDS if n.startswith("f_") and n.endswith("_Box_" + s)] for s in ("l", "r")}
 HAND_JSON = OUT_DIR + r"\hands_lr_cascy.json"
-HAND_KEY_FRAMES = sorted({0, F(4.45), F(4.60), F(2.70), F(3.17), F(4.85), F(5.35), F(14.00), F(14.50), F(14.90), F(15.0)})
+HAND_KEY_FRAMES = sorted({0, F(5.05), F(5.35), F(6.20), F(6.50)})
+HANDS_JSON_IN = globals().get("HANDS_JSON_IN", os.path.join(OUT_DIR, "hands_lr_cascy.json"))
 
 # ---------- 手型 ----------
 NATURAL_HANDS = globals().get("NATURAL_HANDS", True)           # 用户 2026-09-05：手指全部不动、保持自然
 if STAGE == "hands" and NATURAL_HANDS:
-    log("anim size ->", set_anim_size(F(T_END) + 1)); log("hands natural: no finger keys")
+    log("anim size ->", set_anim_size(F(T_END) + 1))
+    # 用户 2026-09-06：只在结印段加手指——两手都伸食中二指、其余蜷握（左手扣住右手二指）；其它时间手保持自然
+    _relax = {s: {n: q_to_rot(q) for n, q in tbl.items()} for s, tbl in json.load(open(os.path.join(OUT_DIR, "relax_lr.json"))).items()}
+    _hands = json.load(open(HANDS_JSON_IN))
+    _jz = {s: {n: q_to_rot(q) for n, q in _hands["JZ"][s].items()} for s in ("l", "r")}
+    for fr, tbl in ((0, _relax), (F(5.05), _relax), (F(5.35), _jz), (F(6.20), _jz), (F(6.50), _relax)):
+        for s in ("l", "r"):
+            set_box_rots(tbl[s], fr, f"seal fingers {s} f{fr}")
+    log("hands: seal finger keys at 5.35-6.20s, natural elsewhere")
 elNATURAL_HANDS = globals().get("NATURAL_HANDS", True)           # 手指不做动作，保持自然
 if STAGE == "hands" and NATURAL_HANDS:
-    log("anim size ->", set_anim_size(F(T_END) + 1)); log("hands natural: no finger keys")
+    log("anim size ->", set_anim_size(F(T_END) + 1))
+    # 用户 2026-09-06：只在结印段加手指——两手都伸食中二指、其余蜷握（左手扣住右手二指）；其它时间手保持自然
+    _relax = {s: {n: q_to_rot(q) for n, q in tbl.items()} for s, tbl in json.load(open(os.path.join(OUT_DIR, "relax_lr.json"))).items()}
+    _hands = json.load(open(HANDS_JSON_IN))
+    _jz = {s: {n: q_to_rot(q) for n, q in _hands["JZ"][s].items()} for s in ("l", "r")}
+    for fr, tbl in ((0, _relax), (F(5.05), _relax), (F(5.35), _jz), (F(6.20), _jz), (F(6.50), _relax)):
+        for s in ("l", "r"):
+            set_box_rots(tbl[s], fr, f"seal fingers {s} f{fr}")
+    log("hands: seal finger keys at 5.35-6.20s, natural elsewhere")
 elif STAGE == "hands":
     log("anim size ->", set_anim_size(F(T_END) + 1))
     RELAX = {s: {n: q_to_rot(q) for n, q in tbl.items()} for s, tbl in json.load(open(OUT_DIR + r"\relax_lr.json")).items()}
@@ -103,17 +120,17 @@ def pose_drink():
 
 
 def pose_windup():
-    p = copy_pose(STAND); hand_straight(p, "r", (-32, 24, -26), (-58, 30, -30.0)); return p
+    p = copy_pose(STAND); hand_straight(p, "r", (14, 28, 22), (-20, 10, 40.0)); return p           # 起手：右手收到身前偏左（用户 2026-09-06：葫芦改往人物右手边扔）
 
 
 def pose_release():
-    p = copy_pose(STAND); hand_straight(p, "r", (24, 42, 24), (-18, 16, 34.0)); return p   # 甩向画右：右臂横扫过身前、胸高
+    p = copy_pose(STAND); hand_straight(p, "r", (-52, 40, 30), (-40, 10, -20.0)); return p   # 脱手：右臂向右前方甩直、胸高（葫芦飞向人物右手边＝画面左）
 
 
 def pose_seal(foot_up=False):
     p = copy_pose(STAND)
-    hand_straight(p, "r", (-2, 35, 25), (-44, 12, 4.0))      # 右手收到胸前
-    hand_straight(p, "l", (3, 50, 27), (44, 30, 4.0))        # 左手在其上方
+    hand_straight(p, "r", (-2, 35, 25), (-44, 10, 4.0))      # 右手收到胸前，前臂朝上前 → 剑指朝上前
+    hand_straight(p, "l", globals().get("SEAL_LW", (17.9, 50.8, 25.8)), globals().get("SEAL_LP", (52, 76, 12.0)))   # 左手掌心压在右手二指上（数值由 seal 拟合迭代得到，见下）
     if foot_up:
         foot(p, "r", BASE["foot_MainPoint_r"] + np.array([0, 22, 6.0]), Rx(-25)); p["calf_LimbDir_r"] = BASE["calf_LimbDir_r"] + np.array([0, 8, 25.0])
     return p
@@ -139,7 +156,7 @@ def K(t, local, pelvis=None, title=""):
     return ok
 
 
-KEY_T = [2.32, 2.70, 3.35, 3.50, 3.80, 4.15, 4.30, 4.45, 5.00, 5.35, 5.45, 5.56, 5.73, 5.84, 6.01, 6.12, 6.20, 9.50, 10.20, 10.80, 13.90, 14.90, 15.00]
+KEY_T = [2.32, 2.70, 3.35, 3.50, 3.80, 4.15, 4.30, 4.45, 5.00, 5.35, 5.45, 5.56, 5.73, 5.84, 6.01, 6.12, 6.20, 7.30, 8.10]
 
 if STAGE == "body1":
     K(2.70, pose_drink(), title="drink in"); K(3.35, pose_drink(), title="drink hold")
@@ -151,10 +168,9 @@ elif STAGE == "body2":
     K(5.35, pose_seal(), title="seal")
     for t0 in (5.32, 5.60, 5.88):                              # 右脚快跺三下：起→抬(+0.13)→落(+0.24)
         K(t0 + 0.13, pose_seal(foot_up=True), title=f"stomp up {t0}"); K(t0 + 0.24, pose_seal(), title=f"stomp down {t0}")
-    K(6.20, pose_seal(), title="seal end"); K(9.50, pose_seal(), title="seal hold"); K(10.20, pose_seal(), title="legs neutral hold")
+    K(6.20, pose_seal(), title="seal end"); K(7.30, pose_seal(), title="seal hold")
 elif STAGE == "body3":
-    fp, pel = pose_finger(); K(10.80, fp, pel, "finger lunge"); K(13.90, fp, pel, "finger hold")
-    K(14.90, pose_end(), title="end"); K(15.00, pose_end(), title="end hold")
+    K(8.10, pose_end(), title="end")           # 握剑后收到垂手预备位；7.45–7.85 的伸手取剑在 act2 body2a 里
 elif STAGE == "gourd":                           # 酒葫芦（用户 2026-09-05）：两颗球，随右手走，4.45s 抛向画右落地
     import common.mesh as c_mh
     def all_ids(): return {_MV.get_object_name(i): i for i in _MV.get_objects()}
@@ -198,7 +214,7 @@ elif STAGE == "gourd":                           # 酒葫芦（用户 2026-09-05
         if F(2.70) <= f <= F(3.35):
             return h + np.array([-3, 6, 7.0]), h + np.array([-7, 9, -1.0])
         return h + np.array([0, -16, 0.0]), h + np.array([0, -6, 0.0])
-    LAND = np.array([150.0, R_BODY, 25.0]); REST = np.array([168.0, R_BODY, 30.0])
+    LAND = np.array([-150.0, R_BODY, 25.0]); REST = np.array([-168.0, R_BODY, 30.0])   # 用户 2026-09-06：反方向（人物右手边）
     def mod_keys(model, update, sc):
         le = model.layers_editor(); lv = scene.layers_viewer()
         pb = node_of(update, GB, ("Local Position",)); pn = node_of(update, GN, ("Local Position",))   # 网格物件要驱动 Local Position；"Position" 是计算输出
@@ -210,9 +226,9 @@ elif STAGE == "gourd":                           # 酒葫芦（用户 2026-09-05
         for f in range(0, F_REL + 1):
             b, n = hang(f); key(f, b, n)
         b0, _ = hang(F_REL)
-        apex = (b0 + LAND) / 2 + np.array([0, 45, 0]); bounce = LAND + np.array([8, 14, 2])
-        key(F(4.62), apex, apex + np.array([6, 8, 0])); key(F(4.85), LAND, LAND + np.array([9, 4, 0]))
-        key(F(4.95), bounce, bounce + np.array([9, 3, 0])); key(F(5.10), REST, REST + np.array([10, 2, 0])); key(F(T_END), REST, REST + np.array([10, 2, 0]))
+        apex = (b0 + LAND) / 2 + np.array([0, 45, 0]); bounce = LAND + np.array([-8, 14, 2])
+        key(F(4.62), apex, apex + np.array([-6, 8, 0])); key(F(4.85), LAND, LAND + np.array([-9, 4, 0]))
+        key(F(4.95), bounce, bounce + np.array([-9, 3, 0])); key(F(5.10), REST, REST + np.array([-10, 2, 0])); key(F(T_END), REST, REST + np.array([-10, 2, 0]))
         sc.run_update(ids, 0)
     log("gourd keys ->", scene.modify_update("gourd keys", mod_keys))
     log("gourd interp ->", set_interpolation([find("Gourd_body"), find("Gourd_neck")], [F_REL, F(4.62), F(4.85), F(4.95), F(5.10)], "BEZIER"))

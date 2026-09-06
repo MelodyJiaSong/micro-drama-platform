@@ -3216,3 +3216,43 @@ Auto-updated:
 待办: bg1-1 锚点图待用户在即梦出；出图后复核几何；JJX_Robe 蒙到 previz 骨架；shot12.md 参考行改指新图。
 
 No conflicts found in: 3_大纲、4_剧本、其它 shot（本轮只动 s11 与 shot12）
+
+## Follow-up 063 — 2026-09-06 10:12:29
+Source: user_input/follow_ups/202609.md - section 063
+Summary: shot12 抛葫芦方向由画右改为画左（人物右手边），三处同步。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/shot12.md — 第 5 拍「朝画右地上抛出」→「朝画左地上抛出」
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/shot12_previz.py — GOURD_REST 改为 -R_VEC 方向（画左）
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/README.md — 时间轴表 4.3–5.1 抛葫芦到画左
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act1.py — 起手/脱手姿态与葫芦飞行落点改为 -X
+
+No conflicts found in: 反向提示词（无葫芦方向相关词）、其它 shot
+
+## Follow-up 064 — 2026-09-06 10:46:37
+Source: user_input/follow_ups/202609.md - section 064
+Summary: shot12 出鞘后不悬停直接落手开斩（第 5–9 段压到 1.9 s，总长 20.5 s）；剑阵空中段人物结印缓慢悬浮。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/previz_config.toml — dur_sword_in/rings/orbit/pillar/grip 与 orbit_time 按上述压缩（Blender 预演随之重建）
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act1.py — 第一幕收在 8.1 s，剑指弓步/绕身/光柱段身体键删除
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act2.py — 第二幕起点 15.0→8.1，单剑轨迹同步；新增结印悬浮键（+6/+30/+45/+42/+18/0 cm，线性）
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/full_0-27s/{shot12_full.casc,shot12_full.fbx} — 20.5 s 版重建
+
+Pending (需用户确认后再改): shot12.md 视频 prompt 的 动作/节奏 字段仍描述悬停浮动、光圈、剑指弓步、绕身一圈、光柱（第 7–11 拍）及 28.2 s 时长；若此改动定稿，需把这些拍删改为「出鞘飞到身前即落右手」并把 {{total_sec}} 随 config 更新。
+
+## Follow-up 065 — 2026-09-06 11:22:12
+Source: user_input/follow_ups/202609.md - section 065
+Summary: shot12 出鞘后剑停身前、右手伸出取剑；结印段双脚接地；预演 blend/mp4 移到 shot 根目录并删旧件。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act2.py — 新增 pose_reach（7.45 结印保持 → 7.85 右手到剑柄顶）；剑停 (-8,90,45) 等手、握后竖直渐变为沿前臂；悬浮键删除；长保持段线性插值
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act1.py — 第一幕收势只留 8.10 键
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/previz_config.toml — orbit_r 2.10 → 0.45（剑停在臂展内）
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/shot12_previz.py — ORBIT_Z 1.35 → 0.90
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/shot12.md — @视频1 路径 previz/shot12_previz.mp4 → shot12_previz.mp4
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/README.md — 产物落点与命令行说明
+- 删除：previz/shot12_previz.blend(.blend1)、previz/shot12_previz.mp4、previz/frames/、cascadeur/act1_0-15s/blender/、cascadeur/full_0-27s/blender/
+- 新增：shots/shot12/shot12_previz.blend、shots/shot12/shot12_previz.mp4（Cascadeur 身体 + Blender 剑/特效 + s11 环境）
+
+Pending: shot12.md prompt 动作/节奏 文字仍按旧节奏（悬停/光圈/弓步绕身/光柱）描述，待用户确认新节奏后删改；webapp「Previz 出片」按钮仍写到 previz/ 目录，需改为 shot 根目录。

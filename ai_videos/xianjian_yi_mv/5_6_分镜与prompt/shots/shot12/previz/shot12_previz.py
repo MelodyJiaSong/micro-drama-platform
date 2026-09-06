@@ -3,12 +3,12 @@
 第一幕 0–15s ＝ 原 shot12 previz（15s 版）**逐值一致、不压缩**（用户 2026-08-18 裁定）；
 第二幕 15–30s ＝ 原 shot13（22.5s 版）压进 15s，用户裁定的三处不动：剑气 0.22/0.26s（快）、一化多 1.4s 与平转 5.6s（慢）。
 
-用法（本目录）：
-    cp ../../../../2_世界观人设/scenes/s11_十里坡山神庙/_blender/s11_十里坡山神庙.blend shot12_previz.blend
-    blender -b shot12_previz.blend --python shot12_previz.py            # 默认俯角 20°
-    blender -b shot12_previz.blend --python shot12_previz.py -- 24      # 换俯角
-    blender -b shot12_previz.blend -a                                  # 渲 PNG 序列 frames/f####.png
-    ffmpeg -y -framerate 24 -i frames/f%04d.png -c:v libx264 -pix_fmt yuv420p -crf 18 shot12_previz.mp4
+用法（产物落 shot 根目录，与 cascadeur/ 同级；2026-09-06 用户裁定）：
+    cp ../../../../2_世界观人设/scenes/s11_十里坡山神庙/_blender/s11_十里坡山神庙.blend ../shot12_previz.blend
+    blender -b ../shot12_previz.blend --python shot12_previz.py -- --body=cascadeur   # 身体＝Cascadeur FBX（默认推荐）
+    blender -b ../shot12_previz.blend --python shot12_previz.py                       # 彩色 proxy 身体（旧法）
+    blender -b ../shot12_previz.blend -o <tmp>/frames/f#### -a                        # 渲 PNG 序列（帧图放临时目录）
+    ffmpeg -y -framerate 24 -i <tmp>/frames/f%04d.png -c:v libx264 -pix_fmt yuv420p -crf 18 ../shot12_previz.mp4
 
 脚本只动副本，绝不写回 2_世界观人设/scenes 下的原场景文件。人形 proxy 用 tools/previz_rig.py（rule 12.16 §3）。
 
@@ -56,7 +56,10 @@ _argv = [a for a in _argv if not a.startswith("--")]
 # 身体来源（2026-09-05）：proxy＝本脚本的关节 proxy + MPFB；cascadeur＝导入 Cascadeur 导出的 FBX（骨骼+网格+烘焙动画），
 # 剑/葫芦/机位/特效/环境全部沿用本脚本。用法：blender -b x.blend --python shot12_previz.py -- --body=cascadeur [俯角]
 BODY_SOURCE = "cascadeur" if "--body=cascadeur" in _flags else "proxy"
-CASC_FBX = Path(__file__).resolve().parent.parent / "cascadeur" / "act1_0-15s" / "shot12_act1.fbx"
+_casc_dir = Path(__file__).resolve().parent.parent / "cascadeur"
+CASC_FBX = _casc_dir / "full_0-27s" / "shot12_full.fbx"                    # 全长 27.4s（2026-09-06）；没有时退回第一幕 15s
+if not CASC_FBX.is_file():
+    CASC_FBX = _casc_dir / "act1_0-15s" / "shot12_act1.fbx"
 CASC_FPS = 30
 CAM_AZ = Vector((-0.259, 0.966, 0.0))
 CAM_LENS = 35.0
@@ -122,7 +125,7 @@ STAND_Z = BODY_H                       # 踩剑悬空：脚底离地约一个身
 # 是不对的）。因此第一幕原样占 0–15.0s，第二幕（原 shot13·22.5s 版）压进 15.0–30.0s。
 FALL_SPINS = 5          # 下落自转圈数
 ORBIT_R = 2.10          # 绕身半径：整圈轨迹都在人的剪影之外
-ORBIT_Z = 1.35          # 悬停/绕行高度
+ORBIT_Z = 0.90          # 悬停高度（用户 2026-09-06：剑停在身前等手来拿，剑心 0.9 m、柄顶 1.4 m）
 LUNGE_SINK = 0.11       # 弓步沉胯
 
 A_ENTER = 0.30          # 入场点（画外右上角）
@@ -584,7 +587,7 @@ def import_cascadeur_body(fbx_path):
     new = [o for o in bpy.data.objects if o not in before]
     arm = next(o for o in new if o.type == "ARMATURE")
     for o in list(new):
-        if o.type == "MESH" and o.name.startswith("Gourd"):      # Cascadeur 里的葫芦只是它自己的预览，Blender 沿用本脚本的葫芦
+        if o.type == "MESH" and (o.name.startswith("Gourd") or o.name.startswith("Sword")):   # Cascadeur 里的葫芦/方条剑只是它自己的预览，Blender 沿用本脚本的葫芦与剑（含剑阵、剑气）
             new.remove(o); bpy.data.objects.remove(o, do_unlink=True)
     meshes = [o for o in new if o.type == "MESH"]
     casc_root = empty("PVZ_casc_root", P)                          # Cascadeur 世界原点＝落地点、人面朝其 +Z（FBX 导入后＝Blender -Y）
@@ -611,7 +614,8 @@ def import_cascadeur_body(fbx_path):
         c = e.constraints.new("COPY_LOCATION"); c.target = arm; c.subtarget = bone
         J[key] = e; return e
     for key, bone in (("handR", "hand_r"), ("handL", "hand_l"), ("pelvis", "pelvis"), ("head", "head"),
-                      ("footR", "foot_r"), ("footL", "foot_l")):
+                      ("footR", "foot_r"), ("footL", "foot_l"), ("kneeR", "calf_r"), ("kneeL", "calf_l"),
+                      ("elbowR", "forearm_r"), ("elbowL", "forearm_l")):        # kneeR：踩剑时剑托在右脚底；elbowR：握剑时剑沿前臂
         follow(key, bone)
     print(f"[previz] body=cascadeur: {fbx_path.name}, bones={len(arm.data.bones)}, keys retimed x{s:.3f}")
     return bpy.data.objects.new("PVZ_dummy_root", None), J["pelvis"], J, arm
@@ -993,7 +997,7 @@ with Interp("BEZIER"):
         key_loc(gourd, fr, hand + Vector((0, 0, -0.10)))
 
 # 躺在画右地上；偏移按画面宽度定，画面收紧时才不会被挤出画外
-GOURD_REST = P + R_VEC * (FRAME_W * 0.19) + FRONT * 1.4 + Vector((0.0, 0.0, 0.13))
+GOURD_REST = P - R_VEC * (FRAME_W * 0.19) + FRONT * 1.4 + Vector((0.0, 0.0, 0.13))   # 用户 2026-09-06：葫芦改扔向画左（人物右手边）
 bpy.context.scene.frame_set(F_GOURD_OUT)
 bpy.context.view_layer.update()
 release_pt = J["handR"].matrix_world.to_translation() + Vector((0, 0, -0.10))

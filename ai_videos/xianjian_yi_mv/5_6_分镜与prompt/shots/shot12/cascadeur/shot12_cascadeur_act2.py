@@ -10,17 +10,18 @@ exec(open(ACT1_SCRIPT, encoding="utf-8").read())
 STAGE = STAGE2
 LOG = os.path.join(OUT_DIR, "build.log")
 
-T_TOTAL = 27.40
+T_TOTAL = 20.50                                          # 27.4 - 6.9（第一幕 15.0 → 8.1）
 # ---- 第二幕时刻（config 时长链，秒）----
-T_WIND1, T_SLASH1, T_WIND2, T_SLASH2 = 15.25, 15.45, 15.90, 16.08
-T_THROW_WIND, T_THROW, T_SWORD_HIGH, T_SEAL, T_EYES = 16.50, 16.65, 17.20, 17.50, 17.90
-T_SPLIT, T_SPIN_END, T_RISE_END = 18.00, 21.40, 22.00
-T_POINT, T_DROP0, T_DROP_DUR = 22.45, 22.60, 0.34
-T_JUMP0, T_JUMP_TOP, T_JUMP1, T_GATHER1, T_MERGE = 24.28, 24.52, 24.76, 25.00, 25.02
-T_BOUNCE = (25.10, 25.18, 25.26, 25.36)
-T_FLIP0, T_FLIP1, T_LAND_DIP, T_LAND_UP = 25.42, 26.05, 26.12, 26.28
-T_SWORD_UP, T_SWORD_APEX, T_SHEATH = 26.15, 26.28, 26.50
-T_LAUGH, T_LAUGH_BOBS = 26.54, (26.70, 26.86, 27.02)
+ACT2 = 8.10
+T_WIND1, T_SLASH1, T_WIND2, T_SLASH2 = ACT2 + 0.25, ACT2 + 0.45, ACT2 + 0.90, ACT2 + 1.08
+T_THROW_WIND, T_THROW, T_SWORD_HIGH, T_SEAL, T_EYES = ACT2 + 1.50, ACT2 + 1.65, ACT2 + 2.20, ACT2 + 2.50, ACT2 + 2.90
+T_SPLIT, T_SPIN_END, T_RISE_END = ACT2 + 3.00, ACT2 + 6.40, ACT2 + 7.00
+T_POINT, T_DROP0, T_DROP_DUR = ACT2 + 7.45, ACT2 + 7.60, 0.34
+T_JUMP0, T_JUMP_TOP, T_JUMP1, T_GATHER1, T_MERGE = ACT2 + 9.28, ACT2 + 9.52, ACT2 + 9.76, ACT2 + 10.00, ACT2 + 10.02
+T_BOUNCE = tuple(ACT2 + x for x in (10.10, 10.18, 10.26, 10.36))
+T_FLIP0, T_FLIP1, T_LAND_DIP, T_LAND_UP = ACT2 + 10.42, ACT2 + 11.05, ACT2 + 11.12, ACT2 + 11.28
+T_SWORD_UP, T_SWORD_APEX, T_SHEATH = ACT2 + 11.15, ACT2 + 11.28, ACT2 + 11.50
+T_LAUGH, T_LAUGH_BOBS = ACT2 + 11.54, tuple(ACT2 + x for x in (11.70, 11.86, 12.02))
 STAND_Z, HIGH_Y, RISE_Y = 170.0, 387.0, 900.0         # 踩剑悬空高度 / 抛剑高悬 / 升空出画（cm）
 AIR_SPINS, FLIP_COUNT = 2, 2
 SLOT = np.array([-110.0, 15.0, 60.0])                  # 单剑插地点（剑心；剑尖入土 35）
@@ -62,6 +63,13 @@ def raise_leg(p, side, hip_deg=70, knee_deg=95):
 
 def pose_end12():                            # 持剑垂手立定（第一幕末）
     return pose_end()
+
+
+GRAB = (-8, 47, 45)                          # 剑柄顶（身体局部系）：剑停在身前 0.45 m、剑心 0.9 m 高 → 柄顶 1.4 m
+
+
+def pose_reach():                             # 用户 2026-09-06：右手伸出去拿停在身前的剑
+    p = copy_pose(STAND); hand_straight(p, "r", GRAB, (-46, 30, 18.0)); upper_lean(p, 8); return p
 
 
 def pose_wind1():
@@ -132,11 +140,13 @@ def KW(t, local, pelvis, yaw=0.0, title=""):
 PEL0 = P_LAND
 if STAGE == "body2a":
     log("anim size ->", set_anim_size(F(T_TOTAL) + 1))
-    KW(15.00, pose_end12(), PEL0, title="end12"); KW(T_WIND1 - 0.35, pose_end12(), PEL0, title="pre-wind1")
+    KW(7.45, pose_seal(), PEL0, title="seal before reach"); KW(7.85, pose_reach(), PEL0, title="reach sword")
+    KW(ACT2, pose_end12(), PEL0, title="end12"); KW(T_WIND1 - 0.15, pose_end12(), PEL0, title="pre-wind1")
     KW(T_WIND1, pose_wind1(), PEL0, title="wind1"); KW(T_SLASH1, pose_slash1(), PEL0 - [0, 8, 0], title="slash1"); KW(T_WIND2 - 0.35, pose_slash1(), PEL0 - [0, 8, 0], title="slash1 hold")
     KW(T_WIND2, pose_wind2(), PEL0 - [0, 6, 0], title="wind2"); KW(T_SLASH2, pose_slash2(), PEL0 - [0, 6, 0], title="slash2"); KW(T_THROW_WIND - 0.25, pose_slash2(), PEL0 - [0, 6, 0], title="slash2 hold")
     KW(T_THROW_WIND, pose_throw_wind(), PEL0, title="throw wind"); KW(T_THROW, pose_throw(), PEL0, title="throw"); KW(T_SWORD_HIGH - 0.15, pose_throw(), PEL0, title="throw hold")
-    KW(T_SEAL, pose_seal1(), PEL0, title="seal1"); KW(T_EYES, pose_seal_still(), PEL0, title="seal still"); KW(T_POINT - 0.5, pose_seal_still(), PEL0, title="seal hold")
+    KW(T_SEAL, pose_seal1(), PEL0, title="seal1"); KW(T_EYES, pose_seal_still(), PEL0, title="seal still")
+    KW(T_POINT - 0.5, pose_seal_still(), PEL0, title="seal hold")                    # 用户 2026-09-06：剑阵在空中时人物结印不动、双脚接地（不浮起）
 
 elif STAGE == "body2b":
     KW(T_POINT, pose_point(), PEL0 - [0, 12, -10], title="point"); KW(T_JUMP0 - 0.15, pose_point(), PEL0 - [0, 12, -10], title="point hold")
@@ -198,22 +208,16 @@ elif STAGE == "sword":
     def K_(f, c, y, z=(0, 0, 1.0)): keys[int(f)] = (np.array(c, float), np.array(y, float), np.array(z, float))
     for f in list(range(0, 61)) + list(range(62, F(6.20) + 1, 2)):
         c, y, z = on_back(f); K_(f, c, y, z)
-    c, y, z = on_back(F(6.20)); K_(F(6.32), c + y * 55, y, z)               # 竖直拔出鞘
-    K_(F(6.95), (0, 255, 73), (0, 1, 0)); K_(F(7.20), (0, 190, 178), (0, 1, 0))
-    HOVER = np.array([0, 135, 210.0]); K_(F(8.10), HOVER, (0, 1, 0))
-    for i, t in enumerate((8.30, 9.30, 10.30)): K_(F(t), HOVER + [0, 4.5 if i % 2 == 0 else -4.5, 0], (0, 1, 0))
-    K_(F(11.0), HOVER, (0, 1, 0))
-    fo0, fo1 = F(11.0), F(12.1)
-    for fr in range(fo0, fo1 + 1, 2):                        # 绕身一圈：前 → 他的左 → 背后 → 他的右 → 前
-        a = 2 * math.pi * (fr - fo0) / (fo1 - fo0); K_(fr, (210 * math.sin(a), 135, 210 * math.cos(a)), (0, 1, 0))
-    K_(F(13.1), HOVER + [0, 4.5, 0], (0, 1, 0)); K_(F(14.0), HOVER, (0, 1, 0))
-    fg0, fg1 = F(14.0), F(14.5)
-    for fr in range(fg0 + 1, F(15.0) + 1):                    # 落回右手：剑竖直尖朝下、柄在手中，收势倾 26°
-        u = min(1.0, (fr - fg0) / (fg1 - fg0)); tilt = 26.0 * u
-        hand = np.array(gpos("hand_MainPoint_r", fr)); down = Rx(tilt) @ np.array([0, -1, 0.0])
-        grip = hand + down * SWORD_HALF
-        K_(fr, HOVER * (1 - u) + grip * u if fr <= fg1 else grip, -down)
-    for fr in range(F(15.0), F(T_THROW) + 1):                 # 握剑斩击：剑沿前臂延伸，柄在手中
+    c, y, z = on_back(F(6.20)); K_(F(6.27), c + y * 55, y, z)               # 竖直拔出鞘（用户 2026-09-06：出鞘→身前→落手，不悬停）
+    K_(F(6.64), (0, 255, 73), (0, 1, 0)); K_(F(6.79), (-4, 170, 110), (0, 1, 0))
+    HOVER = np.array([-8, 90, 45.0]); K_(F(7.31), HOVER, (0, 1, 0)); K_(F(7.85), HOVER, (0, 1, 0))   # 停在身前等手来拿（用户 2026-09-06）
+    fg0, fg1 = F(7.85), F(ACT2)
+    for fr in range(fg0 + 1, fg1 + 1):                        # 握住后：剑从竖直渐变为沿前臂延伸，柄在手中
+        u = (fr - fg0) / (fg1 - fg0)
+        hand = np.array(gpos("hand_MainPoint_r", fr)); elbow = np.array(gpos("forearm_MainPoint_r", fr))
+        fa = hand - elbow; fa /= np.linalg.norm(fa); a = (1 - u) * np.array([0, -1, 0.0]) + u * fa; a /= np.linalg.norm(a)
+        K_(fr, hand + a * SWORD_HALF, -a)
+    for fr in range(F(ACT2), F(T_THROW) + 1):                 # 握剑斩击：剑沿前臂延伸，柄在手中
         hand = np.array(gpos("hand_MainPoint_r", fr)); elbow = np.array(gpos("forearm_MainPoint_r", fr))
         a = hand - elbow; a /= np.linalg.norm(a); K_(fr, hand + a * SWORD_HALF, -a)
     hand = np.array(gpos("hand_MainPoint_r", F(T_THROW)))
@@ -242,7 +246,7 @@ elif STAGE == "sword":
     log("sword interp ->", set_interpolation([sw_name], sorted(keys), "LINEAR"))   # Bezier 在「插地保持」两端会甩出大幅过冲（剑钻到地下），单剑轨迹用线性
 
 elif STAGE == "wrists2":
-    F0, F1 = F(15.0), F(T_TOTAL)
+    F0, F1 = F(ACT2), F(T_TOTAL)
     def mod(model, update, sc):
         le = model.layers_editor(); lv = scene.layers_viewer(); ids = set(); nodes = {}
         for side in ("l", "r"):
@@ -259,9 +263,10 @@ elif STAGE == "wrists2":
     log("wrists2 ->", scene.modify_update("straight wrists act2", mod))
 
 elif STAGE == "finish":
-    KT = [15.0, T_WIND1 - 0.35, T_WIND1, T_SLASH1, T_WIND2 - 0.35, T_WIND2, T_SLASH2, T_THROW_WIND - 0.25, T_THROW_WIND, T_THROW, T_SWORD_HIGH - 0.15,
+    KT = [7.45, 7.85, ACT2, T_WIND1 - 0.15, T_WIND1, T_SLASH1, T_WIND2 - 0.35, T_WIND2, T_SLASH2, T_THROW_WIND - 0.25, T_THROW_WIND, T_THROW, T_SWORD_HIGH - 0.15,
           T_SEAL, T_EYES, T_POINT - 0.5, T_POINT, T_JUMP0 - 0.15, T_JUMP0, T_MERGE, *T_BOUNCE, T_FLIP0, T_LAND_DIP, T_LAND_UP, T_LAUGH, *T_LAUGH_BOBS, T_TOTAL]
     log("interp act2 ->", set_interpolation(PTS, sorted({F(t) for t in KT}), "BEZIER"))
+    log("holds linear ->", set_interpolation(PTS, sorted({F(t) for t in (6.20, T_EYES, T_SEAL, T_SPLIT)}), "LINEAR"))   # 长保持段用线性：Bezier 在等值区间也会向邻键方向鼓起（骨盆曾凭空抬 24 cm）
     log("visible range ->", set_visible_range(0, F(T_TOTAL)))
     cam(CAM.tolist(), TARGET.tolist()); log("vis", hide_controllers("View"))
     import time as _t

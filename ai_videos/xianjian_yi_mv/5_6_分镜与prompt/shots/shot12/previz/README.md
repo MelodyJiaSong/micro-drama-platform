@@ -8,6 +8,12 @@
 `previz_config.toml`＝总览/机位 + **19 个动作段，每段一个 `dur_*` 时长**（+该段动作参数，共 31 项）。动作顺序固定、首尾相接：段起点＝前面各段时长之和，**总长＝Σ duration（自动）**；改某段时长，段内节拍等比伸缩、后面的段自动顺延。UI：左侧点段名切换面板，顶部时间轴随输入实时变化。没暴露的细节用脚本默认值（要调告诉 Claude 按需加键）。同一份配置驱动 Blender 预演与 Seedance prompt 的 {{占位符}}（{{total_sec}} 由 Σdur 合成）。**肘部形态**：`seal_elbow_flare` / `finger_elbow_flare`（0=肘尖垂直垂在肩下贴身、正=向外拐、负=向里夹，单位度）——改后手臂由 4 自由度反解自动重摆（follow-up 059）。
 
 
+## 产物落点（2026-09-06 起）
+
+预演 `.blend` 与 `.mp4` 直接放在 shot 根目录：`shots/shot12/shot12_previz.blend`、`shots/shot12/shot12_previz.mp4`（与 `cascadeur/` 同级）。本目录只保留配置与脚本。身体来源默认为 Cascadeur 导出的 FBX（`cascadeur/full_0-27s/shot12_full.fbx`，`--body=cascadeur`），剑 / 剑阵 / 剑气 / 沟壑 / 光效 / 机位由本脚本生成，环境来自 `SCENE_MASTER` 的 s11 场景 blend 副本。
+
+命令行：`cp <s11 blend> ../shot12_previz.blend && blender -b ../shot12_previz.blend --python shot12_previz.py -- --body=cascadeur && blender -b ../shot12_previz.blend -a`，再用 ffmpeg 合成 `../shot12_previz.mp4`。
+
 ## 出片（一步到位）
 
 改完 `previz_config.toml` → webapp 左侧树打开本目录任意文件 → 顶部 **「🎬 Previz 出片」→ 生成 MP4**。
@@ -24,7 +30,7 @@
 | 0.3–2.0 | 自画面右上角斜落、绕体轴连转五圈、双脚砸地 → 尘环 |
 | 2.0–3.35 | 葫芦窄口抵唇饮一口 |
 | 3.5–4.15 | 身形一晃即稳 |
-| 4.3–5.1 | 抛葫芦到画右、落地翻滚停住 |
+| 4.3–5.1 | 抛葫芦到画左、落地翻滚停住 |
 | 5.35–6.2 | 两手掐诀（一手握住另一手两指）；**只右脚**快跺三下 |
 | 6.2–8.1 | 背剑自行出鞘、竖直拔出、越过肩头与头顶飞到身前，停在身前离地悬空（竖直、剑尖朝下），随后微幅上下浮动 |
 | 8.25–9.8 | 地面同心剑光环单向外扩到最大即停 |
