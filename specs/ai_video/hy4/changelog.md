@@ -72,3 +72,39 @@ Pending:
 - hy4 无 `divergence.md`（hy3 有）；16:9 与"无台词无配音"两处偏离目前只记在 concept.md §0
 
 No conflicts found in: 1_立项/concept.md, 3_大纲/outline.md, 4_剧本/script.md, 2_世界观人设/{world,style_guide,relationships}.md
+
+## Follow-up 002 — 2026-09-13 19:10:17
+Source: user_input/follow_ups/202609.md - section 002
+Summary: 实拍反馈 shot01–04：雪铲取出前没描述过所以凭空冒出、shot01 手部收尾没有结果所以接 shot02 突兀、shot02 侧身穿枝被演成撞树、bg3 雪井太小又贴地平视。
+
+Auto-updated:
+- tools/gen_shots_hy4.py —
+  新增 `CARRY`（雪铲竖扣包背面、D 形握把高出包顶一拃）并写进 `BAG_NOTE`；shot01–03 加 `p1`；
+  新增 `坑沿` 装备状态（shot04，原先误写「本镜内卸包」）；shot04 改「从包背面解下扣着的雪铲」、滑下将近两米；
+  shot01 重排为「远景 → 手插雪顶到冰（雪太薄）→ 切回远景转身走向林墙」，落幅 0.10 远景背影；
+  shot02 改为用手拨枝、身体不碰树，新增 `NEG_BUMP`；shot03 雪井尺寸与 N1 机位（坑沿外三米·一人高·俯角二十五度）；
+  bg3 场景串改为六米×一米八；shot18 的「shot01 末段」改为「手部特写段」
+- tools/gen_scene_prompts_hy4.py — bg3 放大（直径约六米＝五倍树干、深约一米八、远侧坑壁高过一人、树干下半截露在坑里），
+  N1 抬高，验收第一条改尺寸，新增主体级 `neg`（浅坑词组）；bg8 同步 N1 与尺寸
+- ai_videos/huangye_shenghuo/hy4/5_6_分镜与prompt/ — 重跑生成器（shot01–04、shot18、shotlist、all_shot_prompts 变动）
+- ai_videos/huangye_shenghuo/hy4/2_世界观人设/scenes/shenxue/{bg3,bg8}_*/ — 重跑场景生成器
+- ai_videos/huangye_shenghuo/hy4/4_剧本/script.md — shot01 手试雪太薄→转身、shot02 拨枝、shot03 N1 与尺寸、shot04 解下雪铲
+- ai_videos/huangye_shenghuo/hy4/2_世界观人设/world.md — 雪井尺寸行
+- ai_videos/huangye_shenghuo/hy4/3_大纲/outline.md、1_立项/concept.md — shot01 一句话描述
+- ai_videos/huangye_shenghuo/hy4/2_世界观人设/props/p1_雪铲与雪锯/p1_雪铲与雪锯.md、casting.md — p1 镜次扩到 shot01
+- .claude/agent_refs/project/ai_video.md — 新增 16.13 / 16.14 / 16.15
+
+Verified:
+- 生成器重跑干净：18 shots / 448s（时长未变）/ 正向 prompt 最长 2879 字（硬顶 5000）
+- 切口审计 17/17 ✅；shot01→shot02 由 4.89 变为 **0.22**，机位 `冰湖平视远景 → 林中平视` 不同
+- `shot_logic` blocker 0；`prompt_light` blocker 0（shot13/18「通红」两条 warning 为既有、与本次无关）
+- 巡检：shot01–04 无「包侧抽出 / 擦过 / 蹭到 / 直径约三米」残留；撞树负向只挂 shot02
+- 相邻连贯：shot01 末（转身走向林墙）→ shot02 首（走进云杉林）✓；shot02 末（朝画外走）→ shot03（转过一棵树入画）✓；
+  shot03 末（包连雪铲卸在坑沿）→ shot04 首（包口微距、握把露在边缘）✓；shot18 手部特写仍对 shot01 手部段 ✓
+
+Pending:
+- **需重出图**：`bg3-1`（主）→ 挂它的 `bg4-1`、`bg8-1` → `bg11-1`（N1 对比帧必须同机位同尺寸）；`bg5-1`/`bg12-1` 只继承基调，可不重出
+- **需重渲**（若已出过）：shot01–04（prompt 改了）；图重出后 shot05（bg4）、shot09（bg8）、shot17（bg11）
+- 未跑完整 `ai_videos__审查总编排`，本次只做了机械闸门 + 相邻连贯人工复核
+
+No conflicts found in: shot05–shot17 prompts, 2_世界观人设/{style_guide,relationships}.md, characters/*, props/{p2,p3,p4,p5}

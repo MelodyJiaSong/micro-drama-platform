@@ -58,7 +58,7 @@ confidence 定为 medium，原因有二：真实即梦 DOM／响应体要到 sta
 |---|---|
 | `boot_smoke` | SYS-01..06 |
 | `backend_api` | §13 全表 + SYS-60..63（consumer-walk／shared types）+ 与该 unit 相关的 T2 场景 |
-| `browser_backend`（WebUiBackend／PageMap／BrowserActor） | SYS-10、SYS-30..35、SYS-40..49、SYS-50..52、SYS-55，外加 §17.3 的 PageMap 双向解析测试 |
+| `browser_backend`（WebUiBackend／PageMap／BrowserActor） | SYS-10、SYS-30..34、SYS-40..55，外加 §17.3 的 PageMap 双向解析测试 |
 | `cli_backend` | SYS-70..74 |
 | `entity` | SYS-80..83 |
 | `mcp_transport` | SYS-20..27 |
@@ -230,7 +230,7 @@ confidence 定为 medium，原因有二：真实即梦 DOM／响应体要到 sta
 | `browser.channel` | chrome | chromium | G3 |
 | `pacing.min_submit_interval_s` | 15 | 2 | 调度断言在秒级完成 |
 | `wait.timeout_h` | 12 | 0.002（约 7.2 s） | 让 wait_timeout 可测；要求 schema 接受浮点（§19 C8） |
-| `canary.interval_min` | 30 | 30；SYS-35 单独用 0.1 测周期触发 | |
+| `canary.interval_min` | 30 | 30；SYS-55 单独用 0.1 测周期触发 | |
 | `confirm.allow_http_auto` | false | false；SYS-29 切 true | |
 | `budget.auto_confirm_daily_credits` | 2000 | 1000 | 3 镜批次（>1000）会命中上限 |
 | `notifications.toast` | true | true（T2 用 DI override 收集；T3 断言日志事件） | |
@@ -883,3 +883,119 @@ spec §5.10 没有定义这个响应的字段名（§19 C6）。本层给出**�
 **SYS-99 花积分按钮的二次确认**（FR-55）
 - 以下按钮都必须经过确认页或二次确认对话框才会发请求：「确认并开始」「创建主体」「选定」「分步 submit」「恢复队列」。
 - 测试方法：点击后在确认前取消 → 断言 network 中没有对应的 POST。
+
+---
+
+## 16. 真实站点只读 canary（T4 人工，`make canary`，AC13）
+
+**前置**
+- 用户本人在交互终端运行，service **未**在跑，以免抢 profile。
+- 使用真实 `.data/chrome_profile`，已登录。
+- `make canary` 开始时打印「本次只读，不会点击生成、不上传、不保存主体」，要求输入确认短语。
+
+**步骤**（CLI 执行，用户旁观浏览器窗口）
+1. 用真实 `global.toml` 启动 persistent context，打开 `browser.start_url`。
+2. 执行 FR-27 全部只读检查项：
+   - 登录标志；
+   - 创作类型、模型、参考模式、比例·分辨率·数量、时长控件存在；
+   - TipTap 编辑器；
+   - 上传入口（只定位，**不点击**，避免系统文件对话框）；
+   - 生成按钮存在（只定位）；
+   - 预计积分文本可读；
+   - 截获并解析最近一次 `get_history_queue_info` 或 `get_history_by_ids`。
+3. 打开 `/ai-tool/elements`，被动读取 `dreamina_subject/get` 并解析出主体列表（不打开「设置主体」弹窗）。
+4. CLI 侧只调用 `dreamina version` 和 `user_credit`。
+5. 输出逐项报告：`web_version`、`browser.version`、PageMap 标注版本与当前版本是否一致，写入 `.data/logs/canary-{ts}.jsonl`。
+
+**人工核对**
+- 报告逐项 ok 与屏幕实际一致（例如确实处于已登录状态）。
+- 浏览器里**没有**新增生成记录。
+- 积分余额前后相同：记录页头积分与 `user_credit` 的读数，两次一致。
+- 主体页没有被修改：`hy3_主角` 的修改时间不变。
+- 下拉菜单被打开过的话，已经复原。
+
+**机器侧兜底**：canary 运行期间，context 级请求监听器把「提交接口」「上传接口」「主体保存接口」的 URL 模式列为**禁止名单**。命中任何一条就立即关闭 context，并报 `critical`。
+
+**事件**：stage 6 最后一个 work unit 在 T0–T3 全绿后，发出 `validation.requires_manual_walkthrough`（`work_unit_id=real_site_canary`）。parent 提示用户执行本节，以及 accessibility level 的 UI 人工 walkthrough。用户确认前，不宣告完成。
+
+---
+
+## 17. stage-6 真实站点只读探针 → fixture 回灌
+
+探针在 stage 6 开工时由 parent 执行（参照 page-anatomy 的做法：全程只读、在用户登录态下进行），逐项回写 PageMap 与 spec §10。
+
+**17.1 探针清单与回灌去向**
+
+| §10 问题 | 探针动作（只读） | 回灌到 |
+|---|---|---|
+| Q1 下载入口 / 水印 / URL 一致性 | 在已有**完成**记录上打开「⋯」和图标按钮，只读菜单项文本；对比 video src 与下载菜单项的目标 URL，**不实际下载** | fake 站点 `download_entry` 的默认值；PageMap 下载 locator。水印与字节一致性无法只读验证 → 保留 `download_watermark_variant` 分支，并列为用户首次真实出片后的人工核对项 |
+| Q2 上传完成信号 / @ 名称 | 只读历史记录中已有参考素材的 chip 名与缩略图条；已有记录的上传接口无从观察 → 标注「首次真实提交时由用户手动观察」 | fake 上传完成信号配置；`mention_candidate_missing` 的触发条件 |
+| Q3 提交接口 / 任务 id / 状态字段 | 被动截获 `get_history_queue_info`、`get_history_by_ids` 的**响应 body**；提交接口需要一次真实生成才能看到 → 由用户手动出片时开着探针监听截获（service 不点击） | `tests/fixtures/real_responses/web_7.5.0/{queue_info,history_by_ids_generating,history_by_ids_done,history_by_ids_failed?}.json`（脱敏）；解析器单测与 fake stub 的响应模板 |
+| Q4 负向框 | 只读 composer DOM，查看 2.5 · 全能参考下有无负向输入 | fake `negative_box` 的默认值；`video.negative_prompt` 策略的 warning 断言 |
+| Q5 2.5 真实上限 / 1080P / prompt 硬上限 | 截获 `get_common_config` body；打开分辨率弹层只读可选项 | `real_responses/…/common_config.json`；`model_limits` 默认值的契约测试（值与 fixture 对账，`as_of` 更新） |
+| Q6 主体表单 | 打开「新建主体」弹窗，只读字段与上传位后按 Escape，不保存 | fake 主体弹窗 DOM；`entity_name_max_chars`；是否支持视频位 |
+| Q7 CLI | `dreamina version`；`--help` 对比 1.4.18 changelog（不升级、不生成）；`user_credit` 与页头积分并列记录 | fake CLI help/version 输出；`routing` 默认值说明 |
+| Q8 与 `ai_video_management` 兼容 | 读 `MediaRenamer`／`rename_drama` 源码，并在 `ai_video_management` 自己的测试夹具上 dry-run（不改真实树） | 若会改名 → 调整本项目 `outputs.video_name` 默认值；新增 T1 契约测试「`ai_video_management` 定版逻辑能识别 `renders/shot02_*.mp4`」 |
+| Q9 Claude Code 实测 | 用户本机 Claude Code 连 fake 模式的 service（§1.4 覆盖），执行 `wait_jobs(timeout_s=90)` 与一个 100 s 的人为延迟调用 | README 中的 `timeout` 建议值；若截断点 < 90 s → 下调 `wait_jobs` 上限（改 FR-52，走 follow-up） |
+
+**17.2 DOM 快照回灌**
+- 探针保存脚本禁用状态下的 `page.content()`（去掉 cookie、token、用户名、头像 URL）到 `tests/fixtures/real_dom_snapshots/web_7.5.0/{generate,elements,entity_modal,history_done}.html`。
+
+**17.3 PageMap 双向解析测试**（T1，stage 6 必须建）
+- 对 PageMap 中每一个 locator：
+  - 在真实 DOM 快照（静态加载）上恰好解析到 1 个元素；
+  - 在 fake 站点对应页面上也恰好解析到 1 个。
+- 任何一边解析到 0 或 >1 → `blocker`。这是 Fake 站点保真度的**唯一**机检手段：fake 与真实页面一旦漂移，这条测试就会失败，而不是等 e2e 上一片假绿。
+
+**17.4 响应解析器**
+- 解析器单测必须跑在 `real_responses/` 的真实 body 上（development.md §10）。
+- fake stub 的响应也从同一批文件生成，只改 id、进度、时间字段，保证 fake 与真实同构。
+- 探针前的占位 schema 标记 `fake-pre-probe`；探针完成后删除占位，否则 `blocker`。
+
+**17.5 敏感信息**：回灌 fixture 前跑脱敏检查，内容不得包含 `msToken`、`a_bogus`、`sessionid`、手机号或 uid 形态的数字串。命中即拒绝入库（`critical`）。
+
+---
+
+## 18. 已知 flaky 区域与对策
+
+| 区域 | 风险 | 对策 |
+|---|---|---|
+| Chrome/Chromium 启动（T0、T3） | Windows 冷启动慢、杀毒软件扫描 profile | 启动超时 60 s；不自动重试产品侧；harness 单次超时记 `warning` 后重跑 1 次 |
+| 杀进程时点（SYS-30、SYS-31） | DB 状态轮询与点击之间的竞态 | 用 fake 门控把窗口拉宽到「无限」（hold），而不是靠 sleep；拿不到窗口时记 `warning`（SYS-30 可达性说明） |
+| `wait_jobs` 进度间隔（SYS-20） | 事件循环在 Windows 上抖动 | 断言 ≤ 30 s，不对下限做严格断言 |
+| 调度间隔（SYS-47） | — | 只用 ledger 单调时间戳；间隔断言无容差（延迟只会让间隔变长） |
+| 浏览器关闭识别（SYS-51） | Playwright 在 Windows 上 close 事件不一致 | 判据是「60 s 内出现 `browser_lost`，或下一动作失败后进入」，不绑定具体事件 |
+| TipTap 加载竞态（「Agent 模式」骨架） | 首帧控件读回错误 | fake 固定重现这一竞态；产品必须等待稳定；本行失败按真实缺陷处理，不视为 flaky |
+| 自动滚动 | 定位漂移 | fake 固定开启；失败按真实缺陷处理 |
+| Toast（SYS-44） | 通知中心策略不同导致不显示 | 自动化只断言日志事件；是否真的显示归人工 |
+| 端口占用 | 随机端口碰撞 | 由 OS 分配端口（绑 0 取回端口号），再写入 config |
+| 中文路径 + 空格（§1.8） | 编码问题 | 必须通过，不视为 flaky |
+
+---
+
+## 19. spec 冲突、缺口与 carve-out（交 parent 在 stage-5 sign-off 前裁决）
+
+| # | 类型 | 内容 | 本层的处理 | 建议 severity |
+|---|---|---|---|---|
+| C1 | 措辞冲突 | §9 AC1「4 个参考项按 stem 上传，主体 @ 到 `hy3_主角`」与 FR-30「按顺序上传**非主体**项」对不上：shot02 实际是 3 次上传 + 4 个 mention | SYS-10 按 FR-30 断言 3 次上传 + mention 序列 4 项；建议把 AC1 改为「3 个图片参考按 stem 上传、4 个 @ 按序绑定」 | `warning`（先改措辞再签字） |
+| C2 | **carve-out 冲突** | FR-20「提交这一步零自动重试」与 FR-18「并行已达上限 → 回到 `awaiting_submit_slot` 再等」冲突：再等之后必然再次点击「生成」，这就是一次自动重复提交 | SYS-48 暂按「只有在正面证据证明上一次点击没有创建任务（背压提示 + 无提交成功响应 + 历史无新记录）时才允许再点」断言；没有证据 → 应转 `paused_needs_human`。需要 spec 明文写入这条例外 | `critical`（general.md §6：carve-out 与其他章节冲突） |
+| C3 | 缺口 | FR-19 / FR-23 没有定义 `restart_during_submit` 的 job 被 `resume` 时做什么：重新提交（可能双扣）？还是只做对账？ | SYS-42 只断言安全侧：没有新确认就不产生第二次点击。建议 spec 定为「resume = 只对账；要重提必须 `reroll` + 新确认」 | `blocker` |
+| C4 | 可测性缺口 | FR-1 只允许 `.env` 覆盖 token、profile、CLI path；唯一运行模式 `make run` 无法指向临时 `ai_videos/`、临时 `.data/`、测试 `global.toml`（fake start_url），除非改动进 git 的真实 config。另外真实 `.env` 优先级高于 config，可能把测试悄悄指向真实已登录 profile | 建议新增 `JIMENG_BRIDGE_REPO_ROOT` + `JIMENG_BRIDGE_DATA_DIR`（§1.4），配合 §1.5 G1/G2/G5 护栏 | `blocker`（没有它 T0/T2/T3 无法隔离执行） |
+| C5 | 解析契约与真实产物不符 | FR-8 写「以『反向提示词』为**标题**的 text 围栏」，但 hy3 全部 14 个 shot 用的是引用行 `> **反向提示词**（…）：`，不是 markdown 标题 | SYS-10 第 7 步按真实形态断言；parser 必须以真实文件做单测（development.md §10）。建议把 FR-8 改为「以含『反向提示词』的标题行**或引用行**引出」 | `blocker` |
+| C6 | 缺口 | §5.10 没有定义 `GET /api/dramas` 的响应字段（系列嵌套字段名） | §14.1 给出期望契约；要求 DTO 与 `types.ts` 在同一变更中落地 | `blocker`（漂移会被升级为 `critical`） |
+| C7 | 缺口 | FR-56 toast 在进程级 e2e 中无法注入 fake，spec 没有定义可观测证据 | 以 JSONL 日志事件 `toast.attempted` / `toast.failed` 作为契约（NFR 可观测性） | `warning` |
+| C8 | 可测性 | `wait.timeout_h` 若 schema 只收整数，测试无法缩放 | 要求 schema 接受浮点（或新增秒级键） | `warning` |
+| C9 | 判断 | FR-33「点击前持久化」没有规定「持久化」与「等待按钮可点」的先后，SYS-30 的窗口可能不可达 | 优先用 fake 门控；实在不可达时允许测试专用 fault point，仅在测试模式生效，由 security level 验证其惰性 | `warning` |
+| C10 | carve-out 确认 | ① 只有一种运行模式 → 只有一个 e2e profile；② 真实站点的「生成 / 下载 / 实扣积分 / 无水印」**永不自动化**，只能在用户手动出片时人工核对；③ Windows Service 形态不测 | 请用户明确确认这三项位于自动化闸门之外 | stage-5 必问（general.md §6） |
+| C11 | 顺序依赖 | AC7「propose 标出主体名冲突」依赖一个**已有的主体快照**；spec 没说没有快照时 propose 怎么表现 | SYS-10 先同步再 propose；建议 spec 规定无快照时给 warning「未同步，无法检测主体冲突」 | `warning` |
+| C12 | 措辞 | NFR 称 Fake 站点为「本地静态 HTML fixture」，但状态轮询、提交台账、故障注入都需要动态 stub server | §1.1 采用「静态资产 + 最小 stub server」 | `warning` |
+| C13 | 记录 | interview Round 3 设想用「立绘 + turntable」建主体；spec 默认 `source_images=*-1.png`，且页面上没有视频位。两者一致，只是与 qa 的最初设想不同。另外 hy1 真实卡没有 `*-1.png`，默认 glob 会匹配空 | SYS-81 把它当作真实用例覆盖 | 无需裁决 |
+
+---
+
+## 20. 运行入口（pip，不用 uv）
+
+- `make ui-build`：构建 UI 到 `apps/api/static/`。T1–T3 的前置条件，缺失直接失败。
+- `make test`：依次跑 T1（`pytest tests/api tests/libs -m "not system"`）→ T0（`pytest tests/system -m boot_smoke`）→ T2（`pytest tests/system -m "system and not process"`）→ T3（`pytest tests/system -m process` + `npx playwright test -c tests/ui/playwright.config.ts`）。T0 失败时后续阶段不再执行。
+- `make canary`：只做 §16，不被任何其他目标依赖。
+- 每个阶段在 stage 6 以对应的 work_unit_kind 发出 `validation.started` / `validation.pass` / `validation.issue.raised`，并附 §1.5 护栏的自检结果（护栏跳闸 → `pipeline.halted`）。

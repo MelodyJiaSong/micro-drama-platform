@@ -1,0 +1,156 @@
+# jimeng_web_bridge 全局 config（spec v2 FR-1）。进 git，只放非机密、与机器无关的值。
+# 机密与机器专属值走仓库根 .env：JIMENG_BRIDGE_TOKEN（必填，≥32 字符）、JIMENG_BRIDGE_PROFILE_DIR、DREAMINA_CLI_PATH。
+# 只有 UI 身份可以修改本文件（FR-4）。
+
+[server]
+port = 8790
+
+[routing]
+video = "web"
+
+[concurrency]
+max_remote_rendering = 3
+
+[pacing]
+min_submit_interval_s = 15
+
+[wait]
+timeout_h = 12
+
+[retries]
+set_params = 3
+upload = 3
+download = 3
+fill = 1
+
+[confirm]
+token_ttl_min = 30
+
+[idempotency]
+retention_h = 24
+
+[status]
+parse_failure_threshold = 5
+
+[entities]
+snapshot_stale_h = 24
+
+[download]
+duration_tolerance_s = 0.5
+
+[api]
+max_call_s = 85
+progress_interval_s = 25
+page_size_default = 50
+page_size_max = 200
+max_body_bytes = 1048576
+max_batch_items = 50
+
+[mcp]
+thumbnail_max_px = 768
+
+[ui]
+reference_thumb_max_px = 320
+
+[artifacts]
+preview_max_bytes = 1048576
+preview_retention_days = 30
+
+[time]
+timezone = "Asia/Shanghai"
+
+[browser]
+channel = "chrome"
+profile_dir = ".data/chrome_profile"
+start_url = "https://jimeng.jianying.com/ai-tool/generate?type=video"
+
+[canary]
+interval_min = 30
+
+[cli]
+path = "~/bin/dreamina.exe"
+min_version = "1.4.5"
+
+[notifications]
+toast = true
+
+# 能力矩阵。带「探针」注释的值以 stage-6 真实站点只读探针为准。
+[model_limits]
+as_of = "2026-09-13"
+
+[model_limits.models."seedance2.5"]
+backends = ["web"]
+duration_s = [4, 30]
+resolutions = ["480p", "720p"]  # 探针：1080P 是否可选
+ratios = ["21:9", "16:9", "4:3", "1:1", "3:4", "9:16"]
+max_images = 30  # 探针：页面称合计 50
+max_videos = 10
+max_audios = 10
+entities = true
+count_entities_as_images = false  # 探针
+negative_prompt_field = false  # 探针
+
+[model_limits.models."seedance2.0_vip"]
+backends = ["web", "cli"]
+duration_s = [4, 15]
+resolutions = ["720p", "1080p"]
+ratios = ["21:9", "16:9", "4:3", "1:1", "3:4", "9:16"]
+max_images = 9
+max_videos = 3
+max_audios = 3
+entities = true  # 仅 web；cli 不支持主体
+count_entities_as_images = false
+negative_prompt_field = false
+
+[model_limits.models."seedance2.0fast_vip"]
+backends = ["web", "cli"]
+duration_s = [4, 15]
+resolutions = ["720p"]
+ratios = ["21:9", "16:9", "4:3", "1:1", "3:4", "9:16"]
+max_images = 9
+max_videos = 3
+max_audios = 3
+entities = true
+count_entities_as_images = false
+negative_prompt_field = false
+
+[model_limits.models."seedance2.0"]
+backends = ["web", "cli"]
+duration_s = [4, 15]
+resolutions = ["720p"]
+ratios = ["21:9", "16:9", "4:3", "1:1", "3:4", "9:16"]
+max_images = 9
+max_videos = 3
+max_audios = 3
+entities = true
+count_entities_as_images = false
+negative_prompt_field = false
+
+[model_limits.models."seedance2.0fast"]
+backends = ["web", "cli"]
+duration_s = [4, 15]
+resolutions = ["720p"]
+ratios = ["21:9", "16:9", "4:3", "1:1", "3:4", "9:16"]
+max_images = 9
+max_videos = 3
+max_audios = 3
+entities = true
+count_entities_as_images = false
+negative_prompt_field = false
+
+[model_limits.models."seedream5.0"]
+backends = ["cli"]
+resolutions = ["2k", "4k"]
+ratios = ["21:9", "16:9", "3:2", "4:3", "1:1", "3:4", "2:3", "9:16"]
+max_images = 10
+
+[price_table]
+as_of = "2026-09-13"
+video = [
+    { model = "seedance2.5", resolution = "720p", credits_per_second = 20 },  # 实测：26s·720P 页面显示 520（会员价）
+    { model = "seedance2.0_vip", resolution = "720p", credits_per_second = 14 },
+    { model = "seedance2.0", resolution = "720p", credits_per_second = 8 },
+]
+image = [
+    { model = "seedream5.0", resolution = "2k", credits_per_image = 1 },  # 实测：CLI list_task commerce_info.credit_count = 1
+]
