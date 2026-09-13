@@ -4668,3 +4668,169 @@ No conflicts found in: 其余 routes / application / infrastructure（改动全�
 直接敲 URL 都是 404 —— `app_factory.py` 用的是 `StaticFiles(html=True)`，它只对目录路径
 回落 index.html，没有 SPA catch-all。从 `/` 进去点导航一切正常。未在本次修复（会改动全局
 路由行为，且与 161 的诉求无关），需要的话可以单独加一条 catch-all。
+
+## Follow-up 162 — 2026-09-06
+Source: user_input/follow_ups/202609.md - section 162
+Summary: 调研模块从只读卡片列表升级为四视图工作台 + 详情抽屉，并新增可持久化的用户决定层；
+顺带补上 SPA 深链接回落（因为视图状态进了 URL，刷新必须能还原）。
+
+Auto-updated:
+- `libs/infrastructure/writers/research__writer.py` — 【新增】工作区写入：
+  `mark_series`（status/rating/note）、`mark_video`（bookmarked/note）。
+  状态走 4 值白名单、评分 0-5、笔记 ≤4000 字；清空即删条目（不留空壳）。
+  **落点 `{dataset}.workspace.json` 与数据集分文件**——重跑调研不会抹掉用户的判断
+- `libs/application/commands/research__command.py` — 【新增】ResearchCommand
+- `libs/application/queries/research__query.py` — 加 `workspace()`
+- `libs/infrastructure/readers/research__reader.py` — `datasets()` 排除 `*.workspace.json`
+  （否则用户的决定会被当成一个数据集列出来；已由测试锁住）
+- `apps/api/routes/research__route.py` — 加 GET `/workspace`、
+  PUT `/series/{slug}/mark`、PUT `/video/{video_id}/mark`
+- `apps/api/container.py` — 挂 research_writer + research_command
+- `apps/api/app_factory.py` — 【新增】`SpaStaticFiles`：非 `/api/*` 的 404 回落 index.html。
+  `StaticFiles(html=True)` 只对目录路径回落，此前**每一个** SPA 路由
+  （/research、/workflow、/actors、/drama、/bgm、/deleted）直接打开或刷新都是 404
+- `apps/ui/src/lib/researchApi.ts` — 加 workspace 类型与读写、`flattenVideos`、`median`、
+  `thresholds`、`quadrantOf`（象限阈值取本数据集自身的中位数，重跑后依然有意义）
+- `apps/ui/src/components/ResearchPage.tsx` — 重写为工作台外壳：四视图 tab、
+  workspace 状态与写入集中在此、compare 选择、详情抽屉（含 Esc 关闭）。
+  tab 与打开的系列都进 URL，可深链接
+- 【新增】`ResearchDashboard/ResearchScatter/ResearchScatterScale/ResearchDashboardMethod`
+  — KPI + 象限散点（对数横轴，两条中位线切四象限，点大小=翻拍易度，填色=用户状态）
+- 【新增】`ResearchSeriesGrid/ResearchSeriesGridCard/ResearchSeriesGridSpark` — 六维筛选、
+  五种排序、卡内定状态/评分/加入对比、每卡 10 条样本的播放柱+赞率点
+- 【新增】`ResearchSeriesDetail` + `Replication/Samples/Notes` 三个子视图 — 五个子 tab，
+  样本行可加书签与写备注
+- 【新增】`ResearchVideoExplorer/Toolbar/Model` — 100 条样本的可查询表，列排序、
+  播放量背景条按当前筛选集归一、赞率前十分位高亮、页脚实时统计
+- 【新增】`ResearchCompare/ResearchCompareRows` — 16 行属性转置矩阵，数值行标「最佳」并画条
+- 【删除】`ResearchSeriesCard.tsx`、`ResearchVideoTable.tsx` — 被上述视图取代，已无引用
+- `apps/ui/src/styles.css` — 五个视图 + 外壳 + 抽屉样式（全部走既有 token，零硬编码色）
+- `tests/test_research_workspace.py` — 【新增】11 项，含「重生成数据集后决定仍在」
+- `tests/test_spa_deeplink.py` — 【新增】10 项，含「未知 /api 路径仍是 JSON 404」
+- `apps/ui/test/researchViews.test.tsx` — 【新增】8 项，五个视图对**真实数据集**渲染，
+  锁住：100 条样本、全部在窗口内、零 `<img>`（CSP img-src 'self'）、正文无残留 `**`
+- `projects/ai_video_management/README.md` — 更新调研模块一节
+
+自查发现并修掉的两个真问题:
+1. 工作区文件被 `datasets()` 当成数据集列出来（UI 上多出一个 "youtube_series.workspace" 页签）。
+2. 详情面板是 `height:100%`，直接内联渲染会掉到长列表底部、点开像没反应——改为抽屉容器。
+
+No conflicts found in: 其余 routes / application / infrastructure；改动集中在 research 一族
+与 app_factory 的静态挂载，既有端点行为不变（已由全量回归确认）。
+
+## Follow-up 163 — 2026-09-06
+Source: user_input/follow_ups/202609.md - section 163
+Summary: Suno 归入已有工具；新增基于实测新号爬升 + YPP 门槛的半年收益模型与「收益预估」视图；
+数据集改为按月组织，左侧导航做成 调研结果 › 月份 › 10 大分类 三层。
+
+Auto-updated:
+- `ai_videos/_research/youtube_series.json` → `2026-09.json` — 按月组织，新增
+  `group`/`month`/`owned_tools` 字段；4 处 Suno「需新增」改为「已有」，
+  相关 `stack_fit`/`blockers` 同步
+- `ai_videos/_research/2026-09_links.md` — 【新增】100 条样本的完整链接（含播放/赞率/日期）
+- `tools/yt_revenue_model.py` — 【新增】收益模型。**主导项是 YPP 门槛不是 RPM**：
+  先按实测的「每 110 播放 ≈ 1 订阅」与「时长 × 30% 完播」算订阅与观看小时，
+  求门槛通过月份，只对通过之后的播放计费，再扣 1 个月审核期与 $100 起付线。
+  爬升形状按实测回填（前两月累计仅 2%/6%）。全部中间量写进数据集，UI 可自证算法
+- `libs/infrastructure/readers/research__reader.py` — dataset id 允许 `-`（月份键）；
+  `datasets()` 额外返回 `group`/`month`/`series[]`，供导航直接构树
+- `apps/ui/src/components/ResearchNav.tsx` — 【新增】侧栏 API 驱动子树
+  （调研结果 › 月份 › 分类），点分类进 `/research?dataset&series`
+- `apps/ui/src/components/Sidebar.tsx` — `_research` 展开时挂载 ResearchNav
+- `apps/ui/src/components/ResearchRevenue.tsx` — 【新增】「收益预估」视图：
+  低/中/高三档 × 播放/订阅/门槛月/美元区间，逐条可展开看播放与 RPM 的依据，
+  并列出模型全部假设与政策原文（含 2027-02-01 门槛翻倍）
+- `apps/ui/src/components/ResearchPage.tsx` — 加「收益预估」tab
+- `apps/ui/src/lib/researchApi.ts` — 加 revenue 类型、`formatUsd`、导航字段
+- `appsts/ui/test/researchViews.test.tsx` — 加 2 项：门槛逻辑自洽
+  （门槛没过 ⇒ 收入必须为 0；计费播放 ≤ 总播放；播放更多不可能赚更少）+ 视图渲染
+- `apps/ui/src/styles.css` — 导航子树 + 收益视图样式
+
+调研结论（实测 190+ 个「近 10 个月内从零开号」的同赛道频道 + 8 个市场的 RPM 取证）:
+**中位情形下 10 个系列有 9 个在 6 个月内 AdSense 收入为 $0**——不是没人看，是过不了
+1000 订阅 + 4000 观看小时。唯一中位就能过门槛的是 #5 百合连载（第 4 个月过，$360–1200）。
+乐观情形下有 5 个能开始产生收入。另：`english-ai-fullmovie-microdrama` 的正确记法是
+**负数**（单集生成成本 $150–1200，中位集广告收入 $2–75）。
+
+No conflicts found in: 其余模块；改动集中在 research 一族与 Sidebar 的一处挂载点。
+
+## Follow-up 164 — 2026-09-06
+Source: user_input/follow_ups/202609.md - section 164
+Summary: 详情面板从遮罩抽屉改为主区域内联；调研按「半年回报」重新生成，<$100 剔除。
+
+Auto-updated:
+- `apps/ui/src/components/ResearchPage.tsx` — 详情不再是 overlay：选中系列时主区域
+  渲染详情、未选中时渲染当前 tab 视图。移除 drawer 与背景遮罩
+- `apps/ui/src/styles.css` — 删 `.research-drawer*`，改 `.research-detailhost` 内联容器
+- `ai_videos/_research/2026-09.json` — **整体重新生成**。旧的 10 个（按点赞率排）作废，
+  新的 5 个按 6 个月美元回报排序，全部 ≥ $100
+- `ai_videos/_research/2026-09_links.md` — 随之重生成（50 条实测样本）
+- `tools/yt_revenue_model.py` — 订阅转化率改为 **per-format**（`views_per_sub` 可按系列覆盖）。
+  实测 49（美国老年福利）到 730（印地怀旧），差 15 倍；用全局 110 会把 #3 算成 $0
+- `tools/yt_series_build.py` — 解析失败项以更小批次、更低并发重试两轮再判定
+  （本轮 12 条「失败」中 8 条实为限流，重试后全部拿到；不加这一步会把真证据当脏数据丢）
+- `apps/ui/test/researchViews.test.tsx` — 断言改为从数据集派生（系列数/样本数不再硬编码 10）
+
+调研结论（6 个视角重新发现 23 个候选 → 对抗校验砍 17 个 → 5 个入选）:
+| # | 系列 | 6个月中位回报 | 置信 |
+|---|---|---|---|
+| 1 | AI 原创长片（奇幻/科幻 Full Movie） | $1,850–6,475 | 中 |
+| 2 | 慢速英语学习故事长视频 | $1,776–5,920 | 高 |
+| 3 | 美国老年福利·社保医保税务解读 | $880–2,640 | 中高 |
+| 4 | 90 年代印度乡村童年怀旧 | $400–1,400 | 中 |
+| 5 | 印地/乌尔都语蔬菜拟人苦情剧 | $262–1,050 | 中低 |
+
+关键教训：**换排序指标必须重做发现，不能在旧榜上过滤**——旧榜 10 个用回报模型重算，
+9 个是 $0，因为「点赞率高」和「新号能在 4 个月内过 YPP 门槛」几乎不相关。
+韩语 AI BL 虽算术过线，但 10 条样本仅 6 条可复核 + 2027-02 门槛翻倍会归零 + 用户
+不懂韩语无法校验台词，本轮不列。
+
+No conflicts found in: 后端 research 一族（数据 schema 未变，仅内容重生成）。
+
+## Follow-up 165 — 2026-09-09 09:00:00
+Source: user_input/follow_ups/202609.md - section 165
+Summary: 剧根由「`ai_videos/` 下单层目录」放宽为「2 段或 3 段」，支持 `ai_videos/{series}/{episode}/` 系列嵌套；判定集中到新模块 `drama_ref`，后端向 UI 显式标记 `is_drama` / `series` 节点。
+
+Auto-updated:
+- `libs/common/drama_ref.py` — **新增**。`is_series_dir` / `series_dirs` / `drama_dirs` / `drama_depth` / `drama_root_rel` / `split_drama_rel`。系列判据＝目录下有 `series.json`；成员剧仍从文件系统派生。
+- `libs/domain/value_objects/drama__valueobject.py` — `DramaPath` 由「恰好 2 段」放宽为 2–3 段（纯形状校验，无文件系统访问）；`drama_name` 取末段，新增 `series_name`。
+- `libs/common/exposed_tree.py` — `ai_video_dirs()` 改用 `drama_ref.drama_dirs()`（系列展开成成员剧、丢掉 `_` 系统库）。
+- `libs/common/sub_type_lookup.py` — `project_name` 接受多段 key（`huangye_shenghuo/hy2`）。
+- `libs/common/drama_layout.py` — `shot_tree_for()` 新增 `drama_depth` 参数，`rel_parts` 的剧内起点不再写死 2。
+- `libs/infrastructure/readers/tree__reader.py` — 识别 series 目录，产出 `type: "series"` 节点（`display_name` 取 `series.json.name_zh`），成员剧与 `_series/` 共享目录挂在其下；drama 节点新增 `is_drama: true`；`sub_type_lookup` 改传多段 drama key；`_walk_filtered` 新增 `dirs=False`。
+- 路径守卫改用 `drama_ref.drama_depth()`（10 个文件）：`character__reader` / `drama_episodes__reader` / `character_video__writer`(4 处) / `drama_takes__writer` / `episode__writer` / `episode_takes__writer` / `episode_bgm__writer` / `episode_subtitle__writer` / `production__writer` / `subtitle_batch__writer`。
+- `libs/infrastructure/writers/media__writer.py` — `_validate_drama` 接受 2/3 段剧根，**并显式放行 `ai_videos/_*` 系统库**（DownloadsImporter 的表演库/演员库/BGM 库导入走同一入口）。
+- `libs/infrastructure/writers/casting__writer.py` — 5 处全剧扫描改用 `drama_ref.drama_dirs()`；新增 `_drama_key()`，输出的 `drama` 字段改为相对 `ai_videos/` 的多段 key（UI 会拼回 `ai_videos/{key}`）。
+- `libs/infrastructure/readers/bgm_reference__reader.py` — 同上扫描与 key 处理。
+- `apps/ui/src/types.ts` — `TreeNodeType` 新增 `"series"`；`TreeNode` 新增 `is_drama?: boolean`。
+- `apps/ui/src/lib/dramas.ts` — 新增 `collectDramaNodes()` / `dramaRootOf()`（按 `is_drama` 标记走）；`extractDramas` 与 `_findDramaNode` 改用它们；删掉按深度找 section 的 `findAiVideosSection`。
+- `apps/ui/src/components/Sidebar.tsx` — `isDrama` 改读 `node.is_drama`，不再按 `path.split("/").length === 2` 推断。
+- `apps/ui/src/components/CastingView.tsx` — 剧根由「切前 2 段」改为「剥掉 `casting.md` 与可选的 `2_世界观人设/`」。
+
+回归:
+- 全量 `pytest tests`：改动前 28 失败 / 261 通过，改动后 **27 失败 / 305 通过**，逐条 diff 无新增失败。
+  中途一度引入 3 个 `test_downloads_import_performances` 失败（系统库被当成非剧拒收），已按上方
+  `_validate_drama` 的系统库放行修复。
+- 残留的 3 个 `wukong_juexing` 相关失败为**改动前既有**（该剧目录已不存在），与本次无关。
+- `npx tsc --noEmit` 通过。
+
+No conflicts found in: `apps/api/`（路由层只透传 rel 路径）、`libs/application/`（命令/查询层不解析路径深度）
+
+## Follow-up 166 — 2026-09-12 12:00:00
+Source: user_input/follow_ups/202609.md - section 166
+Summary: 跨片复用资产的快捷链接 —— `*.link.json` 渲成 UI 里可预览的叶子。
+
+Auto-updated:
+- `libs/common/asset_link.py` — **新增**。`LINK_SUFFIX` / `is_link_file()` / `read()`；
+  target 必须在 `ai_videos/` 沙箱内、必须是真实文件、不能是 symlink，解析失败返回 None（不抛）。
+- `libs/infrastructure/readers/tree__reader.py` — `_walk_filtered` 识别 `*.link.json`，
+  新增 `_link_leaf()`：复用 `_leaf_for(target)` 生成节点（于是 type/预览/媒体服务全部照旧），
+  再覆盖 `name` 并挂 `is_link` / `link_at` / `link_note`；解析不了就退回按普通 json 显示。
+- `apps/ui/src/types.ts` — `TreeNode` 新增 `is_link?` / `link_at?` / `link_note?`。
+- `apps/ui/src/components/Sidebar.tsx` — 链接叶子前加 🔗 图标，`title` 取 `link_note`。
+
+回归: `pytest tests` **24 failed / 308 passed**，与改动前基线逐条一致，无新增失败；
+`npx tsc --noEmit` 通过。
+
+No conflicts found in: `/api/media`（链接节点的 path 就是目标的 path，媒体层无需感知链接）
+

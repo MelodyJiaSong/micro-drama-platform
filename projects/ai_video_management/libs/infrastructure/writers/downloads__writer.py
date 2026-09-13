@@ -77,6 +77,8 @@ _BGM_AUDIO_EXTS = frozenset({".mp3", ".wav", ".m4a", ".flac", ".ogg", ".aac"})
 DEFAULT_TIME_WINDOW_SECONDS = 7 * 24 * 60 * 60
 DOWNLOADS_ENV_VAR = "AI_VIDEO_MGMT_DOWNLOADS_DIR"
 _BASENAME_INVALID = re.compile(r"[\x00-\x1f/\\:*?\"<>|]")
+# Edge guard for id-token matching — see `_token_hit`.
+_ASCII_ALNUM = re.compile(r"[a-z0-9]")
 # Scene background plates live in orientation sub-folders named
 # `bg{N}_{方位}_{描述}` (per ai_video scene-plate convention). The 方位
 # segment — the FIRST `_`-part after the `bg{N}_` prefix — is the routing key:
@@ -609,33 +611,47 @@ class DownloadsImporter:
                     shots_dir = ep / "prompts"
                 if not shots_dir.is_dir():
                     continue
-                for shot in sorted(shots_dir.iterdir()):
-                    if not shot.is_dir() or shot.is_symlink():
-                        continue
-                    tokens = self._tokens(shot.name)
-                    ep_name = ep.name
-                    extra: list[str] = []
-                    if ep_name:
-                        extra.append(f"{ep_name}_{shot.name}".lower())
-                        extra.append(ep_name.lower())
-                    # Compact Chinese tag `{NN}集{NN}镜` — matches the filename
-                    # Kling derives from the shot block's first line
-                    # `{NN}集{NN}镜{视|始|末}` (ai_video rule 12.4). The ASCII
-                    # `epNN_shotNN` first line truncated to Kling's 9-char window
-                    # as `ep01_shot` (shot number lost → every episode render
-                    # collided); the Chinese tag fits ep+shot inside 9 chars.
-                    ep_digits = re.sub(r"\D", "", ep_name)
-                    shot_digits = re.sub(r"\D", "", shot.name)
-                    if ep_digits and shot_digits:
-                        extra.append(f"{ep_digits}集{shot_digits}镜")
-                    tokens = tuple(dict.fromkeys((*tokens, *extra)))
-                    # Shot media goes into the shot's renders/ subfolder so the
-                    # start/end/video outputs coexist with original names and
-                    # don't clutter or collide with shot{NN}.md.
-                    out.append(
-                        _Candidate(folder=shot / RENDERS_DIR_NAME, kind="shot", tokens=tokens)
-                    )
+                self._append_shot_candidates(out, shots_dir, ep.name)
+        # Single-piece (`sub_type=short` / MV) dramas keep shots FLAT at
+        # `5_6_分镜与prompt/shots/shot{NN}/` with no episodes layer. Without this
+        # branch they contribute ZERO shot candidates and every shot render falls
+        # through to whatever character/scene token the 参考 line left in the
+        # filename (xianjian_yi_mv, 2026-08-02 and again 2026-09-06).
+        flat_shots_dir = drama_layout.shots_dir(drama_dir)
+        if flat_shots_dir.is_dir():
+            self._append_shot_candidates(out, flat_shots_dir, "")
         return out
+
+    def _append_shot_candidates(
+        self, out: list[_Candidate], shots_dir: Path, ep_name: str
+    ) -> None:
+        """Append one `kind="shot"` candidate per shot folder. `ep_name` is the
+        owning episode, or "" for a flat single-piece drama."""
+        for shot in sorted(shots_dir.iterdir()):
+            if not shot.is_dir() or shot.is_symlink():
+                continue
+            tokens = self._tokens(shot.name)
+            extra: list[str] = []
+            if ep_name:
+                extra.append(f"{ep_name}_{shot.name}".lower())
+                extra.append(ep_name.lower())
+                # Compact Chinese tag `{NN}集{NN}镜` — matches the filename
+                # Kling derives from the shot block's first line
+                # `{NN}集{NN}镜{视|始|末}` (ai_video rule 12.4). The ASCII
+                # `epNN_shotNN` first line truncated to Kling's 9-char window
+                # as `ep01_shot` (shot number lost → every episode render
+                # collided); the Chinese tag fits ep+shot inside 9 chars.
+                ep_digits = re.sub(r"\D", "", ep_name)
+                shot_digits = re.sub(r"\D", "", shot.name)
+                if ep_digits and shot_digits:
+                    extra.append(f"{ep_digits}集{shot_digits}镜")
+            tokens = tuple(dict.fromkeys((*tokens, *extra)))
+            # Shot media goes into the shot's renders/ subfolder so the
+            # start/end/video outputs coexist with original names and
+            # don't clutter or collide with shot{NN}.md.
+            out.append(
+                _Candidate(folder=shot / RENDERS_DIR_NAME, kind="shot", tokens=tokens)
+            )
 
     @staticmethod
     def _tokens(folder_name: str) -> tuple[str, ...]:
@@ -669,12 +685,28 @@ class DownloadsImporter:
             for cand in candidates:
                 if cand.kind == "shot" and tag in cand.tokens:
                     return cand
+        # A single-piece drama has no episode, so no `{NN}集{NN}镜` tag: the shot
+        # folder name itself (`shot12`) is the prompt block's first line and the
+        # authoritative key. It too must win OUTRIGHT over length-based scoring —
+        # the render filename also carries the 参考 line's handles (`c8_落拓剑客`,
+        # 8 chars) which out-score `shot12` (6) and pull the render into
+        # `characters/`. Only an UNAMBIGUOUS hit routes: in a multi-episode drama
+        # the same `shot03` exists under several episodes, and those must keep
+        # falling through to the episode-scoped scoring below.
+        shot_m = re.search(r"shot\d+", name)
+        if shot_m is not None:
+            hits = [
+                c for c in candidates
+                if c.kind == "shot" and c.folder.parent.name.lower() == shot_m.group(0)
+            ]
+            if len(hits) == 1:
+                return hits[0]
         kind_priority = {"shot": 4, "prop": 3, "scene": 2, "character": 1}
         best: tuple[int, int, str, _Candidate] | None = None  # (score, kind_rank, folder_name_lex, candidate)
         for cand in candidates:
             score = 0
             for token in cand.tokens:
-                if token and token in name:
+                if token and _token_hit(token, name):
                     if len(token) > score:
                         score = len(token)
             if score == 0:
@@ -975,6 +1007,32 @@ class DownloadsImporter:
             return f"~/{rel.as_posix()}"
         except (OSError, ValueError):
             return p.name
+
+
+def _token_hit(token: str, name: str) -> bool:
+    """Substring test guarded at the token's ASCII-alphanumeric EDGES.
+
+    An asset folder's id prefix is a short ascii token (`c1`, `p4`, `s10`), and a
+    raw substring test matches it inside longer ascii runs: `p4` ⊂ "mp4" scored a
+    hit on `props/p4_…` for EVERY `.mp4` download and — tying on token length
+    with the character's own `c1`, then winning on kind_priority — pulled shot
+    renders and character turntables into the prop folder (`p3` ⊂ "mp3" is the
+    same bug on the audio path). `s1` ⊂ "s10_…" cross-matches two scenes.
+
+    Only ASCII edges are guarded, so a Chinese token stays a plain substring
+    match and the normal `c9_白发老妇` → `c9_姥姥` join key keeps working.
+    """
+    start = 0
+    while True:
+        i = name.find(token, start)
+        if i < 0:
+            return False
+        j = i + len(token)
+        left_clash = _ASCII_ALNUM.match(token[0]) and i > 0 and _ASCII_ALNUM.match(name[i - 1])
+        right_clash = _ASCII_ALNUM.match(token[-1]) and j < len(name) and _ASCII_ALNUM.match(name[j])
+        if not left_clash and not right_clash:
+            return True
+        start = i + 1
 
 
 def ord_seq(s: str) -> int:

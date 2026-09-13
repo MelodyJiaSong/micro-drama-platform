@@ -17,11 +17,6 @@ sub_type: short（单片/MV 模式，走全流程编排精简管线）
 - 选题动机：情怀+高质感重制路线（观众记忆是 480p，给他电影质感），弹幕"爷青回"型流量。
 - 版权策略：神似不形似——还原服化道/场景/构图/情绪，角色面部原创设计，标注"AI 概念重制/致敬"。
 
-
----
-
-# ===== follow-ups: 202607.md =====
-
 # Follow-ups 2026-07
 
 <!-- Consolidated monthly log. New follow-ups APPEND a `## NNN` section
@@ -452,11 +447,6 @@ UI 上的 folder 名字还是没有 s1_、s2_。
 ### 抽象后的指令
 
 - 场景在**导航里也要显示编号**（与角色的 `c1_`/`c2_` 一致），不能只在磁盘上有。
-
-
----
-
-# ===== follow-ups: 202608.md =====
 
 # Follow-ups 2026-08
 
@@ -1676,11 +1666,6 @@ follow-up 034 当初正是把这两镜从一个 30s 镜**拆开**的：22 拍挤
 - HAND_SWORD_FINGER / HAND_SEAL_WRAP：无名/小指/拇指的蜷曲角全部清零，五指伸直放平；食中仍按 059/060 的并拢角（idx 19 / mid 17 同向）贴住成对。
 - 根因：MPFB 代理网格手指权重粗，~100° 逐节蜷曲会变形成尖钩状（claw）；previz 只需读出「二指并拢的手势」，蜷指信息不值得为此付出鬼爪观感。
 
-
----
-
-# ===== follow-ups: 202609.md =====
-
 # follow-ups · xianjian_yi_mv · 2026-09
 
 ---
@@ -1800,3 +1785,396 @@ addon preferences 里 key 已设（free trial `vibecoding`，10 字符），但�
 - [ ] 锚点图定稿后复核几何，有出入改脚本重跑、更新 blender_build.md §1 基线。
 - [ ] 把 `JJX_Robe` 蒙到 previz 骨架上，给 previz 补宽袖长袍的体积（rule 4g §I）。
 - [ ] shot12.md 的 `参考:` 行改指 `bg1_庙前空地/bg1-1.png`。
+
+### 一个自己造出来又自己抓到的回归：previz 背景全黑
+
+换上新场景 blend 后第一版 previz 渲出来**背景整片纯黑**——庙和地面都不见了。
+根因：新场景按契约是**纯几何、零材质、零灯光**（rule 4h §D / 4g §D），
+而 previz 自己的道具全是**自发光**材质、不吃灯，所以场里根本没有光源照灰模。
+旧的手改 blend 自带材质，掩盖了这件事。
+
+**修在 previz 侧，不修在 builder 侧**——builder 必须保持「只出几何」，
+否则长相就开始往 blend 里渗。previz 补一盏弱定向光（自画左上斜下，呼应锚点图月位）
++ 极暗环境光，只为把灰模的**型面渲得可读**（ai_video.md「previz 白模必须把型面渲得可读」），
+不调色、不做阴影特效、不碰任何自发光道具。补完庙就正常出现在画左上（u=0.183 v=0.985）。
+
+> **教训：把一份带材质的资产换成一份纯几何资产时，要问「原来是谁在提供光」。**
+> 渲一帧就看见了——这也是「渲图是几何体检」的又一例：报告里 UV 全对，但画面是黑的，
+> **数值自查与看图各抓各的，两个都要做**。
+
+---
+
+## 063 — 2026-09-06 10:12:29 — shot12-gourd-toward-screen-left
+
+> target_stage: 6
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/shot12/shot12.md
+>   - 5_6_分镜与prompt/shots/shot12/previz/shot12_previz.py
+>   - 5_6_分镜与prompt/shots/shot12/cascadeur/
+> severity: low
+
+### 指令
+shot12 第 5 拍抛葫芦：方向改为**朝画左**（人物自己的右手边）抛出并落地，右手向右前方顺手一甩，不再横扫过身前朝画右。
+
+### 摘要
+葫芦落点由画右改画左；prompt 文字、Blender 预演落点、Cascadeur 动作同步。
+
+---
+
+## 064 — 2026-09-06 10:46:37 — shot12-sword-straight-to-hand-and-levitate
+
+> target_stage: 6
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/shot12/previz/previz_config.toml
+>   - 5_6_分镜与prompt/shots/shot12/cascadeur/
+>   - 5_6_分镜与prompt/shots/shot12/shot12.md
+> severity: medium
+
+### 指令
+1. 剑出鞘飞到身前后**不悬停**：直接落入右手、立刻开斩剑气。第 5–9 段（飞到身前 / 光圈 / 剑指弓步绕身 / 光柱 / 归掌）由 8.8 s 压到 1.9 s：dur_sword_in 1.20、dur_rings 0.05、dur_orbit 0.05（orbit_time 0.04）、dur_pillar 0.05、dur_grip 0.55。总长 27.4 → 20.5 s。
+2. 剑阵在空中那段（抛剑高悬 → 一化多 → 慢转 → 齐冲天 → 亮相前），人物**不乱动**：保持结印姿势，**缓慢浮起离地约 45 cm 再落回**，亮相前着地。
+
+### 摘要
+出鞘即落手开斩；剑阵段人物结印悬浮不动。
+
+---
+
+## 065 — 2026-09-06 11:22:12 — shot12-reach-for-sword-grounded-seal-output-layout
+
+> target_stage: 6
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/shot12/shot12.md
+>   - 5_6_分镜与prompt/shots/shot12/previz/
+>   - 5_6_分镜与prompt/shots/shot12/cascadeur/
+> severity: medium
+
+### 指令
+1. 剑出鞘后**回到身前停住**（身前 0.45 m、剑心 0.9 m 高），**右手伸出去拿剑**，握住后再挥出剑气；不是剑自己落进垂着的手里。
+2. 剑阵在空中那段人物结印**双脚全程接地**，不浮起也不回落（撤销 064 第 2 条的悬浮）。
+3. 预演 `.blend` 与 `.mp4` 放在 **shot 根目录**（与 `cascadeur/` 同级）：`shot12_previz.blend`、`shot12_previz.mp4`；旧的 blend/mp4（previz/ 下的 proxy 版、cascadeur/*/blender/ 下的）删除。
+4. shot 的 blend 以 scene 下的 `s11_十里坡山神庙.blend` 为底融合环境（现状即如此：先拷贝场景 blend 再加人物/剑/特效）。
+
+### 摘要
+伸手取剑；结印接地；预演产物落 shot 根目录；环境沿用 s11 场景 blend。
+
+---
+
+## 066 — 2026-09-06 12:02:27 — shot12-sword-rain-and-scene-background
+
+> target_stage: 6
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/shot12/previz/shot12_previz.py
+>   - 5_6_分镜与prompt/shots/shot12/previz/previz_config.toml
+>   - 2_世界观人设/scenes/s11_十里坡山神庙/_blender/
+> severity: medium
+
+### 指令
+1. Blender 特效「剑雨落下」：二十把剑要**像雨一样快速依次落下**，不能先落一两把、其余再一起落。
+2. Blender 预演的场景背景要对得上仙剑里 shot12 所需的场景（`s11_荒野破庙`：画左小庙正面、大片灰白空地、庙后与四周近黑密林与山壁、月夜）；具体怎么结合由 Claude 自行判断。
+3. 通用工作规则（已沉淀到 ai_video.md rule 4h §H）：任何 Cascadeur / Blender 相关改动完成后，最后一步固定是关掉现有实例、重新打开最新文件，确保用户看到的是最新改动。
+
+### 摘要
+剑雨逐把快速落下；预演背景融合 s11 场景要素；改完必关掉重开。
+
+---
+
+## 067 — 2026-09-06 12:49:26 — shot12-natural-fingers-and-raised-seal
+
+> target_stage: 6
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/shot12/cascadeur/
+> severity: low
+
+### 指令
+1. 旋身落地后（以及其它非结印时段）手指不要呈扭曲/张开的姿势，保持自然放松。
+2. 剑阵在头顶做特效的那段（抛剑高悬 → 一化多 → 齐冲天），双手**不要收在胸前**，继续保持道家手印（结印手型）即可。
+
+### 摘要
+非结印段手指自然；剑阵在空中时双手举道家手印、不放胸前。
+
+---
+
+## 068 — 2026-09-06 13:09:30 — shot12-seal-in-front-and-point-triggers-sword-rain
+
+> target_stage: 6
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act2.py
+> severity: low
+
+### 指令
+1. 宝剑特效（剑阵在空中）期间，伸出二指的道家手印**放在身前**（不举到脸前、不贴胸）。
+2. 特效结束后，**两指往前一指**（右手剑指前指），宝剑随即依次落地。
+
+### 摘要
+剑阵段道家手印置于身前；收尾两指前指触发剑雨依次落地。
+
+---
+
+## 069 — 2026-09-06 13:32:03 — daojia-shouyin-reference-image
+
+> target_stage: 6
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/shot12/cascadeur/
+> severity: low
+
+### 指令
+凡说「道家手势 / 道家手印」，一律以用户 2026-09-06 在对话里给的参考图为准（图未落盘，此处按图记录）：
+- 右手竖立在胸前正中，**食指与中指并拢伸直、指尖朝上**（指尖约到下巴），其余三指蜷曲成拳，拇指压在无名指上；
+- 左手从左侧**握住右手的拳部**（不是握伸出的两指），左手四指包住右拳、左拇指压在右拇指上；
+- 两肘向两侧张开，前臂大致水平；手印位置在胸口正前方（身前），不举到脸前、不贴胸。
+本条覆盖 shot12 第 5.35–6.20 s 的胸前结印与 10.6–15.05 s 剑阵段的手印。
+
+### 摘要
+道家手印以参考图为准：右手竖立二指朝上、左手握右拳、胸前正中。
+
+---
+
+## 070 — 2026-09-06 13:44:42 — sky-fx-seal-then-sudden-point-sword-rain
+
+> target_stage: 6
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act2.py
+> severity: low
+
+### 指令
+剑在空中做特效的整段，人物**依然保持道家手印**（按 069 参考图）；特效结束后**猛然**两指向前指出，数把宝剑随即**依次**落地。
+
+### 摘要
+剑阵段全程道家手印 → 猛然前指 → 剑雨依次落地（前指过渡压到 0.15 s）。
+
+---
+
+## 071 — 2026-09-06 15:57:16 — previz-background-must-read-as-scene-refs
+
+> target_stage: 6
+> target_artifacts:
+>   - 2_世界观人设/scenes/s11_十里坡山神庙/_blender/
+>   - 5_6_分镜与prompt/shots/shot12/previz/shot12_previz.py
+> severity: medium
+
+### 指令
+Blender 预演的背景不能被读成现代化建筑；背景要参考 shot12 对应 scene 目录（`2_世界观人设/scenes/s11_十里坡山神庙/`）里的 blend 与图片（近黑密林、庙后高大杂木与松、山壁）。
+
+### 摘要
+预演背景按 s11 场景参考重做剪影：圆锥松林两排 + 边缘灌木 + 截锥山脊，取代方盒子。
+
+---
+
+## 072 — 2026-09-06 16:46:02 — prompt-must-be-copy-ready-no-placeholders
+
+> target_stage: 6
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/shot12/shot12.md
+> severity: low
+
+### 指令
+shot prompt 里不能有 `{{total_sec:round}}` 这类占位符，用户要能直接复制给 Seedance；config 派生的数字写成实际值。
+
+### 摘要
+prompt 占位符全部烘成实际值，保证可直接复制。
+
+---
+
+## 073 — 2026-09-06 17:18:57 — restore-sword-orbit-and-mid-pullback
+
+> target_stage: 6
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/shot12/
+> severity: medium
+
+### 指令
+1. 剑出鞘后要**绕人转一圈**，再回到身前、手拿剑、挥出剑气（之前压缩时把绕身一圈弄丢了，所以只有 20.5s）。
+2. 剑抛到头顶那一拍，镜头稍微拉远一点，让剑离人物头顶有点距离。这类机位改动既改 Blender 预演（Seedance 照预演走机位）也改 prompt 的镜头描述。
+
+### 摘要
+绕身一圈回归（+1.4s，总长 21.9s）；抛剑高悬时机位轻拉 1.12 倍，齐冲天再拉 1.30 倍。
+
+---
+
+## 074 — 2026-09-06 18:22:04 — wider-framing-person-smaller
+
+> target_stage: 6
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/shot12/previz/previz_config.toml
+>   - 5_6_分镜与prompt/shots/shot12/shot12.md
+> severity: low
+
+### 指令
+Seedance 出片里人相比场景太大、场地显得太小：镜头再拉远，人在画面里要更小。
+
+### 摘要
+subj_frac 0.22 → 0.17（人占画高约六分之一），预演与 prompt 同步。
+
+---
+
+## 075 — 2026-09-06 18:38:04 — fingers-no-claw-and-gesture-reference-on-disk
+
+> target_stage: 6
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act1.py
+>   - 5_6_分镜与prompt/shots/shot12/shot12.md
+> severity: low
+
+### 指令
+1. 道士手势一律参考 `shots/shot12/ref/shoushi.png`（069 的参考图已落盘）。
+2. 除结印外手指**不要无意义弯曲**——不能像鬼爪：放松时五指并拢、由食指到小指逐渐更弯，不半张半蜷。
+
+### 摘要
+放松手改为并拢微蜷；抱拳手更深蜷；手印参考图落盘并作为 Seedance 第 3 张参考图。
+
+---
+
+## 076 — 2026-09-06 21:18:12 — temple-front-left-45-and-sword-scar-crack
+
+> target_stage: 6
+> target_artifacts:
+>   - 2_世界观人设/scenes/s11_十里坡山神庙/_blender/
+>   - 5_6_分镜与prompt/shots/shot12/
+> severity: medium
+
+### 指令
+1. 庙不在人物身后，而在他**左上方 45° 角**（画面左上、左前方）。
+2. 剑气在地上留下的剑痕要**一米深、十米长**——镜头要拉远才能体现长度和深度。
+3. 剑痕出现时要像**地裂、地被斩开**，凌厉，不是犁出一堆土的感觉。
+
+### 摘要
+庙移到左前方 45°（-11,15）；剑痕改为宽一尺、深一米、直道十米的黑色裂缝、去掉土垄；人占画高 0.17 → 0.14。
+
+---
+
+## 077 — 2026-09-06 22:52:07 — two-pauses-and-deeper-longer-scar
+
+> target_stage: 6
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/shot12/
+> severity: low
+
+### 指令
+1. 剑绕身一圈回到身前后**停顿 0.5 秒**再伸手拿。
+2. 最后剑回鞘后**停顿 1 秒**再大笑。
+3. 剑痕还不够深、不够长——要有**大地被斩开**的感觉。
+
+### 摘要
+两处停顿（+1.5 s，总长 23.4 s）；剑痕深 2.5 m、直道 16 m、月牙弧更长。
+
+---
+
+## 078 — 2026-09-06 23:00:15 — laugh-holds-two-seconds
+
+> target_stage: 6
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/shot12/
+> severity: low
+
+### 指令
+结尾大笑要**维持约 2 秒**再收拍。
+
+### 摘要
+大笑段 0.85 → 2.05 s（起伏七下），总长 23.4 → 24.6 s。
+
+---
+
+## 079 — 2026-09-07 12:15:00 — gash-reference-image-one-orbit-lap-landing-spot
+
+> target_stage: 6
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/shot12/shot12.md
+>   - 5_6_分镜与prompt/shots/shot12/ref/dilie.md
+>   - 5_6_分镜与prompt/shots/shot12/previz/shot12_previz.py
+>   - tools/build_s11_shanshenmiao.py
+> severity: medium
+
+### 指令
+1. **剑痕**：挥剑斩地那两下要像**把大地斩开**——1 米深、10 米长的地面裂痕；
+   现在的成片只在地上留了「一点挠痕」。要么在 Seedance prompt 里说死，
+   要么**先做一张参考图**告诉 Seedance「展开的大地裂痕长什么样」。
+2. **绕身**：剑绕酒剑仙**转一圈就够了，不要转两圈**。
+3. **落点**：酒剑仙旋转落下的落点要**靠近场地中央**，现在太靠前。
+
+### 摘要
+新增 `ref/dilie.md`（大地裂痕参考图 prompt，text→image 自由生成）并接进 shot12 的 `参考:` 行，
+prompt 第 10/11 拍改为「地被一刀劈开 + 永久留在地上」；第 8 拍写死「走满一圈立刻停、
+不是脱离剑体的光带」；`镜头:`/`走位:` 写死人在画面中的位置与「不站在场地前缘」；
+预演侧把栅栏移出画框、场地近缘外扩，并把月牙沟的 40 段拼接改成 110 段大重叠（原来在成片里被读成一串方坑）。
+
+---
+
+## 080 — 2026-09-07 13:05:00 — shot12-youtube-publish-metadata
+
+> target_stage: 6
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/shot12/publish.md
+> severity: low
+
+### 指令
+为 shot12 生成上传 YouTube 所需的 description / tags 等发布元数据。
+
+### 摘要
+新建 `shots/shot12/publish.md`（clip 级「名场面先行片」发布档）：上传参数表、
+主发 16:9 的标题 3 版 + 描述（含看点时间索引 + 致敬声明四句）+ 28 个 tag + 8 个话题标签、
+封面帧三选一（首选 ≈14.5s 二十剑成环）、Shorts 9:16 竖裁二发方案、发布前检查清单 8 条。
+口径承 `README.md`：致敬向 AI 概念重制、不使用官方素材、原创主题曲、零真人演员姓名。
+
+---
+
+## 081 — 2026-09-09 — adjacent-shot-cut-must-be-obvious-TOP-PRIORITY
+
+> target_stage: 5
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/shot09/
+>   - 5_6_分镜与prompt/shots/shot08/
+> severity: high
+
+### 指令
+1. **shot8 与 shot9 的衔接太不自然**，改。
+2. **流程上写明：两个 shot 之间的衔接应当是「刚好明显的镜头切换」，比如远近景的切换**——
+   切口明显，shot 之间的拼接就很简单。
+3. **把这条作为 top priority**，目的是**尽量省去剪辑（截切）的工作**。
+
+### 摘要
+新增跨项目铁律 ⓪（`ai_video_jingbie.md` §2.0）：相邻两镜必须一眼看得出「切了一个镜头」，
+机械判据＝`人占画高` 比值（**上镜落幅 ÷ 下镜起幅**）+ 场域差双信号表；每镜必写 `景别档:` 行，
+与 previz `subj_frac` 同量对账。**承接首帧由「与硬切并列的默认」降为例外**——它带来的
+(F)/(F2)/(J) 出片端工序正是用户要省的剪辑工作，二者互斥、不存在「半接不接」。
+落 CLAUDE.md / ai_video.md / ai_video_jingbie.md / 运镜 M3+M8 / 格式契约 K31 / stage5 playbook §3b。
+现场修：**改 shot08 的落幅、不改 shot09 的起幅**——shot08 末三秒在环绕收势的同时推成近景
+（previz 实渲 0.499 → 1.024），**1.02 ÷ 0.50 ＝ 2.0 ✅**。先试过「把 shot09 起幅推远到 0.16」，
+实渲证明不可行（见 changelog 081 的排查记录），且那会拆掉 shot09 自己的弧光，已回退。
+
+---
+
+## 082 — 2026-09-09 — backfill-all-shot-scales-fix-every-seam
+
+> target_stage: 5
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/
+> severity: high
+
+### 指令
+开工——把需要修复的都修一下；修正后把（因此过期的）MP4 删掉。
+
+### 摘要
+全 35 镜回填 `景别档:`；34 道相邻缝全部复核，**❌ 2 道 + ⚠ 7 道 → 全部转 ✅**（改 7 个镜的起幅）；
+顺带修掉 19 个 shot 的 H1 镜号（都写成 `# shot36`）；把 9 个 previz config 与 shot md 的落幅对齐
+（原有 6 处「文字写特写、预演只到中景」的漂移）；≥3 倍大幅推进改为写死对数缓动而非禁止；
+删除 30 个已过期的 previz 派生物（mp4/blend/blend1，14.2 MB）。
+
+---
+
+## 083 — 2026-09-12 — fix-shot09-previz-bug-purge-stale-renders
+
+> target_stage: 6
+> target_artifacts:
+>   - tools/previz/build_previz.py
+>   - 5_6_分镜与prompt/shots/shot09/previz/
+>   - 5_6_分镜与prompt/shots/*/renders/
+> severity: high
+
+### 指令
+把该修的都修掉；改动过的 shot，把 stale 的成片删掉，要重新生成。
+
+### 摘要
+定位并修掉 shot09 previz 的渲染 bug（`俯角 -10°` 把机位解到地面以下 z=-0.17m）；
+给 previz 引擎补两道自检（机位不得在地面以下 / 主体不得整个在画框外），这类 bug 以后过不了自检；
+shot36 占画比目标校到与实渲一致；按「生成输入是否变了」逐镜判定，删掉 7 条作废成片（186.6 MB）
+并重渲对应的 previz。

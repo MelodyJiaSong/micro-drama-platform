@@ -8,6 +8,8 @@ name). One file per aggregate per role, per follow-up 059.
 """
 from __future__ import annotations
 
+from libs.common import drama_ref
+
 import re
 
 import shutil
@@ -306,8 +308,17 @@ class MediaRenamer:
             raise InvalidDramaPathError("path is empty")
         normalized = rel.rstrip("/")
         parts = normalized.split("/")
-        if len(parts) != 2 or parts[0] != "ai_videos" or parts[1] == "":
-            raise InvalidDramaPathError("path must be 'ai_videos/{drama}'")
+        # A drama root (`ai_videos/{drama}` or `ai_videos/{series}/{drama}`) — or one
+        # of the shared system libraries, which DownloadsImporter targets the same
+        # way it targets a drama (`_performances`, `_actors`, `_bgm`).
+        is_drama_root = drama_ref.drama_depth(self._resolver.root, parts) == len(parts)
+        is_system_library = (
+            len(parts) == 2 and parts[0] == "ai_videos" and parts[1].startswith("_")
+        )
+        if not (is_drama_root or is_system_library):
+            raise InvalidDramaPathError(
+                "path must be 'ai_videos/{drama}' or 'ai_videos/{series}/{drama}'"
+            )
         if not self._exposed.is_inside(normalized):
             raise DramaNotFoundError("path outside sandbox")
         resolved = self._resolver.resolve(normalized)

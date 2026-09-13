@@ -13,11 +13,14 @@ robust + cross-platform, renders/ left intact.
 """
 from __future__ import annotations
 
+from libs.common import drama_ref
+
 import re
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
 
+from libs.common import drama_layout
 from libs.common.exposed_tree import ExposedTree
 from libs.common.render_select import newest_render
 from libs.common.safe_resolve import SafeResolver
@@ -94,21 +97,25 @@ class EpisodeTakesSelector:
         return SelectTakesResult(self._rel(episode_dir), tuple(selected), tuple(skipped))
 
     def _validate_episode(self, rel: str) -> Path:
+        """Resolve the shot tree `rel` belongs to — an `episodes/ep{NN}/` folder,
+        or a single-piece drama's shots root (`drama_layout.shot_tree_for`)."""
         if not isinstance(rel, str) or rel == "":
             raise InvalidEpisodePathError("path is empty")
         if not self._exposed.is_inside(rel):
             raise InvalidEpisodePathError("path outside sandbox")
         parts = rel.split("/")
-        if len(parts) < 4 or parts[0] != "ai_videos" or parts[1].startswith("_"):
+        depth = drama_ref.drama_depth(self._resolver.root, parts)
+        if depth is None:
             raise NotEpisodePathError("path is not under ai_videos/{drama}/")
-        try:
-            ep_idx = next(
-                i for i in range(1, len(parts) - 1)
-                if parts[i] == "episodes" and _EP_DIR_RE.match(parts[i + 1])
+        drama_root = self._resolver.resolve("/".join(parts[:depth]))
+        if drama_root is None or not drama_root.is_dir():
+            raise EpisodeNotFoundError("drama folder does not exist")
+        tree = drama_layout.shot_tree_for(drama_root, parts, depth)
+        if tree is None:
+            raise NotEpisodePathError(
+                "path is under neither episodes/ep{NN}/ nor a single-piece shots/ tree"
             )
-        except StopIteration as exc:
-            raise NotEpisodePathError("path is not under episodes/ep{NN}/") from exc
-        resolved = self._resolver.resolve("/".join(parts[: ep_idx + 2]))
+        resolved = self._resolver.resolve(self._rel(tree[0]))
         if resolved is None:
             raise InvalidEpisodePathError("episode path failed sandbox resolution")
         if resolved.is_symlink():

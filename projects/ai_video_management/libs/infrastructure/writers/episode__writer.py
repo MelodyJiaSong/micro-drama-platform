@@ -34,6 +34,8 @@ ffmpeg binary supplied by `imageio-ffmpeg` — no system install required.
 """
 from __future__ import annotations
 
+from libs.common import drama_ref
+
 import base64
 import importlib.util
 import json
@@ -48,6 +50,8 @@ from types import ModuleType
 
 import imageio_ffmpeg
 
+from libs.common import drama_layout
+from libs.common import video_canvas
 from libs.common.exposed_tree import ExposedTree
 from libs.common.render_select import newest_render
 from libs.common.safe_resolve import SafeResolver
@@ -79,8 +83,10 @@ VALID_EPISODE_LANGS: tuple[str, ...] = ("original",)
 _SEGMENTS_SUFFIX: str = ".segments.json"
 
 _EPISODE_FFMPEG_TIMEOUT_S: int = 600
-_CONCAT_TARGET_W: int = 720      # 9:16 reel — 720x1280 is fast to encode + plenty for review
-_CONCAT_TARGET_H: int = 1280
+# Output canvas is matched to the SOURCE frame shape, not hardcoded — same
+# reasoning as the framerate below. The rule lives in `libs.common.video_canvas`
+# because the character-views reel needs the very same one (a private copy in
+# each writer is exactly what let 16:9 dramas get letterboxed into 9:16).
 # Output framerate is matched to the SOURCE cadence, not hardcoded. The shot
 # renders are ~24fps (VFR); forcing them to 30 duplicates ~1 in 5 frames (4:5
 # pulldown) → a global judder that reads as 不顺 throughout, not just at seams.
@@ -688,24 +694,26 @@ class EpisodeConcatBuilder:
         if not self._exposed.is_inside(rel):
             raise InvalidEpisodePathError("path outside sandbox")
         parts = rel.split("/")
-        if len(parts) < 4 or parts[0] != "ai_videos" or parts[1].startswith("_"):
+        depth = drama_ref.drama_depth(self._resolver.root, parts)
+        if depth is None:
             raise NotEpisodePathError("path is not under ai_videos/{drama}/")
-        try:
-            ep_idx = next(
-                i for i in range(1, len(parts) - 1)
-                if parts[i] == "episodes" and _EP_DIR_RE.match(parts[i + 1])
+        drama_root = self._resolver.resolve("/".join(parts[:depth]))
+        if drama_root is None or not drama_root.is_dir():
+            raise EpisodeNotFoundError("drama folder does not exist")
+        tree = drama_layout.shot_tree_for(drama_root, parts, depth)
+        if tree is None:
+            raise NotEpisodePathError(
+                "path is under neither episodes/ep{NN}/ nor a single-piece shots/ tree"
             )
-        except StopIteration as exc:
-            raise NotEpisodePathError("path is not under episodes/ep{NN}/") from exc
-        episode_rel = "/".join(parts[: ep_idx + 2])
-        resolved = self._resolver.resolve(episode_rel)
+        tree_dir, slug = tree
+        resolved = self._resolver.resolve(self._rel(tree_dir))
         if resolved is None:
             raise InvalidEpisodePathError("episode path failed sandbox resolution")
         if resolved.is_symlink():
             raise InvalidEpisodePathError("symlink is not allowed")
         if not resolved.is_dir():
             raise EpisodeNotFoundError("episode folder does not exist")
-        return resolved, parts[ep_idx + 1].lower()
+        return resolved, slug
 
     @staticmethod
     def _shot_dirs(shots_dir: Path) -> list[Path]:
@@ -787,6 +795,7 @@ class EpisodeConcatBuilder:
         durations = [self._probe_duration(ffmpeg, src) for src in inputs]
         has_audio = [self._probe_has_audio(ffmpeg, src) for src in inputs]
         target_fps = self._target_fps(ffmpeg, inputs)
+        target_w, target_h = video_canvas.target_canvas(ffmpeg, inputs)
         h = [head_trims[i] if i < len(head_trims) else 0.0 for i in range(n)]
         tl = [tail_trims[i] if i < len(tail_trims) else 0.0 for i in range(n)]
         # kept window of each clip [head_trim, duration - tail_trim).
@@ -812,8 +821,8 @@ class EpisodeConcatBuilder:
             vtrim = f"trim=start={t:.3f}:end={end[i]:.3f}," if (t > 0 or tl[i] > 0) else ""
             segs.append(
                 f"[{i}:v]{vtrim}setpts=PTS-STARTPTS,"
-                f"scale={_CONCAT_TARGET_W}:{_CONCAT_TARGET_H}:force_original_aspect_ratio=decrease,"
-                f"pad={_CONCAT_TARGET_W}:{_CONCAT_TARGET_H}:(ow-iw)/2:(oh-ih)/2:black,"
+                f"scale={target_w}:{target_h}:force_original_aspect_ratio=decrease,"
+                f"pad={target_w}:{target_h}:(ow-iw)/2:(oh-ih)/2:black,"
                 f"setsar=1,fps={target_fps}[v{i}]"
             )
             if has_audio[i]:

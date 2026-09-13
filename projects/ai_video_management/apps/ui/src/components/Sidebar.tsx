@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteActor, importFromDownloads } from "../api";
 import { ApiError, type TreeNode } from "../types";
+import { ResearchNav } from "./ResearchNav";
 
 const ACTOR_ID_RE = /^actor_\d{4,}$/;
 
@@ -205,6 +206,15 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
         <button
           type="button"
           className="sidebar-nav-link"
+          aria-label="打开工具"
+          title="工具 · 给视频加 BGM"
+          onClick={() => navigate("/tools")}
+        >
+          🧰 工具
+        </button>
+        <button
+          type="button"
+          className="sidebar-nav-link"
           aria-label="查看 AI 短剧端到端工作流"
           title="AI 短剧端到端工作流 · 六阶段 / QC 关卡 / skill 调用"
           onClick={() => navigate("/workflow")}
@@ -257,8 +267,9 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
           const subType = item.node.project_meta?.sub_type;
           const dramaPathParts = item.node.path ? item.node.path.split("/") : [];
           const isAiVideoChild = item.node.type === "directory" && dramaPathParts.length === 2 && dramaPathParts[0] === "ai_videos";
-          const isSystemFolder = isAiVideoChild && dramaPathParts[1].startsWith("_");
-          const isDrama = isAiVideoChild && !isSystemFolder;
+          // A drama root is 2 segments when flat and 3 inside a series — the
+          // backend flags it so the sidebar never has to guess from depth.
+          const isDrama = item.node.is_drama === true;
           const isActorsRoot = isAiVideoChild && dramaPathParts[1] === "_actors";
           const isBgmRoot = isAiVideoChild && dramaPathParts[1] === "_bgm";
           const isPerformancesRoot = isAiVideoChild && dramaPathParts[1] === "_performances";
@@ -274,7 +285,7 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
           const actorId = isActorEntry ? dramaPathParts[2] : null;
           const isDeletingThis = actorId !== null && deletingActorId === actorId;
           const isRenamingThis = renamingPath === item.node.path;
-          return (
+          const treeItem = (
             <div
               key={item.node.path || item.node.name}
               role="treeitem"
@@ -306,6 +317,9 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
                   onClick={(e) => { e.stopPropagation(); toggle(item.node.path); }}>
                   {isOpen ? "▾" : "▸"}
                 </button>
+              ) : null}
+              {item.node.is_link ? (
+                <span aria-hidden="true" className="tree-icon" title={item.node.link_note ?? "跨片复用的快捷链接"}>🔗</span>
               ) : null}
               {item.node.type === "image" ? <span aria-hidden="true" className="tree-icon">🖼</span> : null}
               {item.node.type === "video" ? <span aria-hidden="true" className="tree-icon">🎬</span> : null}
@@ -360,6 +374,15 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
                   {isDeletingThis ? "删除中…" : "🗑"}
                 </button>
               ) : null}
+            </div>
+          );
+          // The research categories are series inside a dataset, not files, so the
+          // 调研结果 › 月份 › 分类 subtree is rendered from the research API instead.
+          if (!isResearchRoot || !isOpen) return treeItem;
+          return (
+            <div key={item.node.path} className="research-nav-host">
+              {treeItem}
+              <ResearchNav depth={item.depth} />
             </div>
           );
         })}

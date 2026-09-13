@@ -17,11 +17,14 @@ so "newest take wins" is defined once). The episode/shot/render layout mirrors
 """
 from __future__ import annotations
 
+from libs.common import drama_ref
+
 import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from libs.common import drama_layout
 from libs.common.exposed_tree import ExposedTree
 from libs.common.render_select import newest_render
 from libs.common.safe_resolve import SafeResolver
@@ -146,13 +149,14 @@ class SubtitleBatchBurner:
         if lang not in VALID_LANGS:
             raise InvalidSubtitleLangError(lang)
         drama_root = self._drama_root(rel)
-        episode_dirs = self._episode_dirs(drama_root)
+        episode_dirs = drama_layout.shot_tree_roots(drama_root)
         if not episode_dirs:
             raise NoBatchShotsError("drama has no episodes with shots")
         outcomes: list[BatchShotOutcome] = []
         for episode_dir in episode_dirs:
+            slug = drama_layout.shot_tree_slug(episode_dir, drama_root)
             for shot_dir in self._shot_dirs(episode_dir / _SHOTS_DIR_NAME):
-                outcomes.append(self._burn_one(episode_dir.name, shot_dir, lang))
+                outcomes.append(self._burn_one(slug, shot_dir, lang))
         if not outcomes:
             raise NoBatchShotsError("drama has no shot folders")
         return DramaBurnResult(self._rel(drama_root), lang, tuple(outcomes))
@@ -180,21 +184,17 @@ class SubtitleBatchBurner:
         return BatchShotOutcome(ep, shot, False, None, None, reason)
 
     def _episode_dir(self, rel: str) -> Path:
-        if not isinstance(rel, str) or rel == "":
-            raise InvalidBatchScopeError("path is empty")
-        if not self._exposed.is_inside(rel):
-            raise InvalidBatchScopeError("path outside sandbox")
+        """The shot tree `rel` belongs to — `episodes/ep{NN}/`, or a single-piece
+        drama's shots root (`drama_layout.shot_tree_for`)."""
+        drama_root = self._drama_root(rel)
         parts = rel.split("/")
-        if len(parts) < 4 or parts[0] != "ai_videos" or parts[1].startswith("_"):
-            raise InvalidBatchScopeError("path is not under ai_videos/{drama}/")
-        try:
-            ep_idx = next(
-                i for i in range(1, len(parts) - 1)
-                if parts[i] == _EPISODES_DIR_NAME and _EP_DIR_RE.match(parts[i + 1])
+        depth = drama_ref.drama_depth(self._resolver.root, parts) or 2
+        tree = drama_layout.shot_tree_for(drama_root, parts, depth)
+        if tree is None:
+            raise InvalidBatchScopeError(
+                "path is under neither episodes/ep{NN}/ nor a single-piece shots/ tree"
             )
-        except StopIteration as exc:
-            raise InvalidBatchScopeError("path is not under episodes/ep{NN}/") from exc
-        return self._resolve_dir("/".join(parts[: ep_idx + 2]))
+        return self._resolve_dir(self._rel(tree[0]))
 
     def _drama_root(self, rel: str) -> Path:
         if not isinstance(rel, str) or rel == "":
@@ -202,9 +202,10 @@ class SubtitleBatchBurner:
         if not self._exposed.is_inside(rel):
             raise InvalidBatchScopeError("path outside sandbox")
         parts = rel.split("/")
-        if len(parts) < 2 or parts[0] != "ai_videos" or parts[1].startswith("_"):
+        depth = drama_ref.drama_depth(self._resolver.root, parts)
+        if depth is None:
             raise InvalidBatchScopeError("path is not under ai_videos/{drama}/")
-        return self._resolve_dir("/".join(parts[:2]))
+        return self._resolve_dir("/".join(parts[:depth]))
 
     def _resolve_dir(self, rel: str) -> Path:
         resolved = self._resolver.resolve(rel)

@@ -14,6 +14,8 @@ skip `_`-prefixed dirs, parse) but over bgm.md instead of casting.md.
 """
 from __future__ import annotations
 
+from libs.common import drama_ref
+
 import re
 from libs.common import drama_layout
 from pathlib import Path
@@ -50,14 +52,12 @@ class BgmReferenceReader:
         if not ai_videos.is_dir():
             return []
         out: list[tuple[str, str, Path]] = []
-        for drama_dir in sorted(ai_videos.iterdir(), key=lambda p: p.name):
-            if not drama_dir.is_dir() or drama_dir.is_symlink():
-                continue
-            if drama_dir.name.startswith("_"):
-                continue
+        # Series members are scanned like flat dramas; `_`-prefixed system
+        # libraries are dropped.
+        for drama_dir in drama_ref.drama_dirs(self._exposed.root):
             root_cue = drama_dir / BGM_CUE_FILE_NAME
             if root_cue.is_file():
-                out.append((drama_dir.name, "(root)", root_cue))
+                out.append((drama_dir.relative_to(ai_videos).as_posix(), "(root)", root_cue))
             episodes = drama_layout.episodes_dir(drama_dir)
             if episodes.is_dir():
                 for ep_dir in sorted(episodes.iterdir(), key=lambda p: p.name):
@@ -70,7 +70,7 @@ class BgmReferenceReader:
                     if not ep_cue.is_file():
                         ep_cue = ep_dir / BGM_CUE_FILE_NAME
                     if ep_cue.is_file():
-                        out.append((drama_dir.name, f"episodes/{ep_dir.name}", ep_cue))
+                        out.append((drama_dir.relative_to(ai_videos).as_posix(), f"episodes/{ep_dir.name}", ep_cue))
         return out
 
     def find_references_for_bgm(self, bgm_id: str) -> list[dict[str, object]]:

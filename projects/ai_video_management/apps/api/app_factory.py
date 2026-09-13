@@ -16,6 +16,7 @@ from fastapi.exceptions import HTTPException as FastAPIHTTPException
 from fastapi.responses import JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from starlette.types import Scope
 
 from apps.api.container import Container
 from apps.api.routes import router
@@ -354,6 +355,29 @@ def _register_exception_handlers(app: FastAPI) -> None:
         return JSONResponse(status_code=exc.status_code, content={"detail": str(exc.detail)})
 
 
+class SpaStaticFiles(StaticFiles):
+    """Serve the built bundle, falling back to index.html for client-side routes.
+
+    `StaticFiles(html=True)` only falls back for *directory* paths, so every SPA
+    route (`/research`, `/drama`, `/workflow`, …) 404s when opened directly or
+    refreshed. The research workspace keeps its tab and open series in the query
+    string, so deep links have to resolve for the feature to work at all.
+
+    `/api/*` is deliberately excluded: an unknown API path must stay a JSON 404,
+    not silently return the HTML shell — that failure mode is very hard to debug
+    from the client side.
+    """
+
+    async def get_response(self, path: str, scope: Scope) -> Response:
+        try:
+            return await super().get_response(path, scope)
+        except StarletteHTTPException as exc:
+            request_path = str(scope.get("path", ""))
+            if exc.status_code != 404 or request_path.startswith("/api/"):
+                raise
+            return await super().get_response("index.html", scope)
+
+
 def create_app(container: Container, serve_static: bool = True) -> FastAPI:
     app = FastAPI(title="ai_video_management", openapi_url=None, docs_url=None, redoc_url=None)
 
@@ -374,6 +398,6 @@ def create_app(container: Container, serve_static: bool = True) -> FastAPI:
     if serve_static:
         static_dir = Path(__file__).resolve().parent / "static"
         if static_dir.is_dir():
-            app.mount("/", StaticFiles(directory=str(static_dir), html=True), name="static")
+            app.mount("/", SpaStaticFiles(directory=str(static_dir), html=True), name="static")
 
     return app

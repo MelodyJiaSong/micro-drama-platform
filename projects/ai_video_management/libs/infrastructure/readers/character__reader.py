@@ -8,6 +8,8 @@ its extraction source. Powers the gallery tile preview (`GET /api/character-vide
 """
 from __future__ import annotations
 
+from libs.common import drama_ref
+
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -85,7 +87,8 @@ class CharacterReader:
         if not self._exposed.is_inside(norm):
             raise InvalidCharactersDirError("path outside sandbox")
         parts = norm.split("/")
-        if len(parts) < 3 or parts[0] != "ai_videos" or parts[1].startswith("_"):
+        depth = drama_ref.drama_depth(self._exposed.root, parts)
+        if depth is None or len(parts) < depth + 1:
             raise InvalidCharactersDirError(
                 "path must be ai_videos/{drama}/.../characters/"
             )

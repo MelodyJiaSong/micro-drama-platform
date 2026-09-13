@@ -16,6 +16,8 @@ ffmpeg binary supplied by `imageio-ffmpeg` — no system install.
 """
 from __future__ import annotations
 
+from libs.common import drama_ref
+
 import os
 import re
 import subprocess
@@ -305,7 +307,8 @@ class EpisodeBgmManager:
         if not self._exposed.is_inside(rel):
             raise InvalidEpisodeBgmPathError("path outside sandbox")
         parts = rel.split("/")
-        if len(parts) < 4 or parts[0] != "ai_videos" or parts[1].startswith("_"):
+        depth = drama_ref.drama_depth(self._resolver.root, parts)
+        if depth is None or len(parts) < depth + 2:
             raise NotEpisodeBgmPathError("path is not under ai_videos/{drama}/")
         try:
             ep_idx = next(

@@ -95,3 +95,12 @@ def test_dataset_without_series_array_rejected(repo_root: Path) -> None:
     with pytest.raises(ResearchError) as exc:
         ResearchReader(repo_root).dataset("shapeless")
     assert exc.value.kind == "bad_shape"
+
+
+def test_workspace_file_is_not_listed_as_a_dataset(repo_root: Path) -> None:
+    """`{dataset}.workspace.json` lives beside the dataset; it is decisions, not data."""
+    research = repo_root / "ai_videos" / "_research"
+    (research / "youtube_series.workspace.json").write_text(
+        json.dumps({"dataset": "youtube_series", "series": {}, "videos": {}}), encoding="utf-8"
+    )
+    assert [r["dataset"] for r in ResearchReader(repo_root).datasets()] == ["youtube_series"]

@@ -3347,3 +3347,243 @@ Auto-updated:
 - ai_videos/xianjian_yi_mv/2_世界观人设/scenes/s11_十里坡山神庙/_blender/blender_build.md — §1 基线 / §4 林与山体行同步
 - ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/shot12_previz.py — 场景灰模分层：密林 / 灌木 / 山体三档材质
 - ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/{shot12_previz.blend, shot12_previz.mp4} — 重建重渲
+
+## Follow-up 071（定稿 + prompt 同步） — 2026-09-06 16:10:01
+Source: 用户「就用这版了，生成 MP4，确保 shot prompt 时间对得上」（2026-09-06）
+Summary: shot12 预演定稿（20.5s）；shot12.md 的 YAML / Shot context / 动作各拍 / 节奏 / 反向提示词全部同步到 Cascadeur 版节奏。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/shot12.md — duration 28s→20.5s；成片用段 0–20.5s（原槽 23s 差 2.5s 待剪辑定）；Summary/节奏 改为「道家手印跺地 → 剑停身前 → 伸手握剑 → 两斩 → 抛剑 → 举印闭眼 → 一化多 → 齐冲天 → 猛然前指 → 剑雨 → 跳旋踩剑 → 翻跟斗 → 归鞘 → 大笑」；删去光圈外扩 / 绕身一圈 / 光柱裹身三拍，动作重编号 1–21；第6/12拍改为参考图道家手印；第15拍「猛然前指」；决定性瞬间 22.2s→15.2s；参考用法「五处」首条改为握剑与两斩；反向提示词删去禁止握剑/挥剑/剑插地/剑回鞘/人物转身等与新设计冲突的条目；光线去掉光柱
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/{shot12_previz.blend, shot12_previz.mp4} — 定稿（灌木改圆钝截锥）
+
+Pending（需用户裁定）:
+- ~~视频 prompt 块 3447 字 > 格式契约 K10 的 2000 硬顶~~ → 2026-09-06 用户：生成器 prompt 上限改 5000、单镜上限 30s（已写入 CLAUDE.md / ai_video.md rule 6 / 格式契约 K10·K11 / 时长节奏），3447 字合规，无需裁剪。
+- ~~原时间槽 01:27–01:50 为 23s，本镜 20.5s，差 2.5s~~ → 用户 2026-09-06：做镜阶段不设分集时间轴，shot 时长自由，剪辑等全部 shot 定稿后再议（已写入 CLAUDE.md / ai_video.md rule 6）。
+- 本次未跑完整 ai_videos__审查总编排，只做了字段/占位符/节拍编号自查。
+
+## Follow-up 072 — 2026-09-06 16:46:02
+Source: user_input/follow_ups/202609.md - section 072
+Summary: shot12 prompt 的 9 处 `{{占位符}}` 烘成实际值（二十 / 一 / 十七 / 四分之一 / 五 / 三 / 两 / 两 / 20.5），可直接复制给 Seedance。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/shot12.md — 占位符全部替换；顶部说明改为「已烘成实际值，改 config 时同步这几个数字」
+- .claude/agent_refs/project/ai_video.md — rule 4h 占位符条款作废，改为「盘上 prompt 必须可直接复制、不留占位符」
+
+## Follow-up 073 — 2026-09-06 17:18:57
+Source: user_input/follow_ups/202609.md - section 073
+Summary: shot12 绕身一圈回归（7.6–8.7s，半径 1.8m，身前悬停点 0.45m 不变），总长 20.5 → 21.9s；抛剑高悬时机位轻拉 1.12 倍（pull_mid），齐冲天再拉 1.30 倍；prompt 镜头/动作/节奏/决定性瞬间/反向词同步。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/previz_config.toml — dur_orbit 0.05→1.45、orbit_time 0.04→1.10、orbit_r 0.45→1.80、新增 pull_mid 1.12
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/shot12_previz.py — HOVER_R 0.45 与 ORBIT_R 解耦；ORBIT 段起 0.15s 甩出绕身、绕完 0.25s 回身前；机位两段拉远（T_THROW→T_SWORD_HIGH 1.12×，T_PULL0→T_PULL1 1.30×）
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act1.py — T_END 8.10→9.50；seal hold 8.70、end 9.50
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act2.py — ACT2 9.50、T_TOTAL 21.90；剑 7.6–8.7s 逐帧绕身、8.95 回身前、9.25 伸手；seal before reach 8.85 / reach 9.25
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/shot12.md — 时长 21.9s；第8拍绕身一圈回归、后续重编号至 22；镜头改两次拉远；决定性瞬间 16.6s；反向词补回绕身相关条目
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/full_0-27s/{shot12_full.casc, shot12_full.fbx}、shots/shot12/{shot12_previz.blend, shot12_previz.mp4} — 重建重渲
+
+## Follow-up 073（补） — 2026-09-06 17:35:04
+Source: 用户「剑在头顶的时候离头顶远点，镜头可以拉远一点」（2026-09-06 二次）
+Summary: 抛剑高悬时机位轻拉由 1.12 → 1.20 倍；高悬剑的高度改按拉远后的机位取画面 88% 线（Blender HIGH_Z ≈ 3.84 → 更高），Cascadeur 预览剑 HIGH_Y 387 → 470 cm。属预演（Blender）改动，prompt 镜头行已写「抛剑高悬那一拍向后轻拉一小档」，不需再改。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/previz_config.toml — pull_mid 1.12 → 1.20
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/shot12_previz.py — PULL_MID 1.20；HIGH_Z 按 CAM_POS_MID 反求
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act2.py — HIGH_Y 470
+- 产物重建重渲（casc / fbx / blend / mp4）
+
+## Follow-up 073（补 2） — 2026-09-06 17:49:29
+Source: 复核渲染帧发现：已删的「光圈外扩 / 光柱裹身」两拍的特效对象仍在（段时长 0.05s），Bezier 在键前鼓出半透明光柱与同心光圈，与 prompt 不一致。
+Summary: 段时长 < 0.2s 时整体隐藏对应特效对象（RINGS / pillar）。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/shot12_previz.py — DUR_RINGS / DUR_PILLAR < 0.2 → hide_render + hide_viewport
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/{shot12_previz.blend, shot12_previz.mp4} — 重建重渲
+
+## Follow-up 074 — 2026-09-06 18:22:04
+Source: user_input/follow_ups/202609.md - section 074
+Summary: 机位整体拉远：人占画高 0.22 → 0.17（约六分之一）；Cascadeur 落地段入画点、场景自查、抛剑高度随之更新；prompt 镜头/空间核验改「六分之一」。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/previz_config.toml — subj_frac 0.17
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_fall.py — SUBJ_FRAC 0.17、TILT 17（入画点按新画框）
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act2.py — 预览剑 HIGH_Y 560 / RISE_Y 1200
+- tools/build_s11_shanshenmiao.py — 自查画框 SUBJ_FRAC 0.17
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/shot12.md — 镜头 / 空间核验 / 顶部说明「六分之一」
+- 产物重建重渲（casc / fbx / s11 blend 自查 / shot blend / mp4）
+
+## Follow-up 075 — 2026-09-06 18:38:04
+Source: user_input/follow_ups/202609.md - section 075
+Summary: 放松手不再像鬼爪（食中指并拢后微蜷 18/22/12°，无名指小指取握姿七成、拇指六成）；抱右拳的左手食中指深蜷 60/70/40°；道家手印参考图 `ref/shoushi.png` 进 shot12.md 参考表（@图片3）与 prompt 参考行。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act1.py — natural_hands / grip_hands 参数
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/shot12.md — 参考素材表加 @图片3 ref/shoushi.png；参考 / 参考用法 行改为四个参考
+- 产物重建重渲（casc / fbx / blend / mp4）
+
+## Follow-up 075（补） — 2026-09-06 20:47:19
+Source: 用户再次指出手指像鬼爪 + 手势参考图；近景排查发现：拎葫芦、握剑时右手是张开的放松手，放松手本身食中指偏直
+Summary: 放松手改为五指并拢都微弯（食中指 35/40/25°，无名指小指握姿五成半、拇指六成，指尖离腕 15.8 cm）；拎葫芦（0–4.45 s）与握剑（9.35–11.15 s）右手改握拳（61/70°，指尖离腕 10 cm）；剑指与道家手印不变。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act1.py — natural_hands 参数；hands 阶段加拎葫芦握拳键 0 / 4.45 / 4.60
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act2.py — 握剑握拳键 9.35 / T_THROW / T_THROW+0.15；手指轨道插值键同步
+- 产物重建重渲（casc / fbx / blend / mp4）
+
+## Follow-up 076 — 2026-09-06 21:18:12
+Source: user_input/follow_ups/202609.md - section 076
+Summary: 庙从身后远景 (-21,19) 移到左前方 45° (-11,15)；剑痕改为宽 0.3m、深 1m、直道 10m 的黑色裂缝，不再堆土垄（RIDGES=False）；人占画高 0.17 → 0.14 让十米剑痕看得全；prompt 剑痕描述改「地被一剑劈开的裂缝、无堆土」并加反向词。
+
+Auto-updated:
+- tools/build_s11_shanshenmiao.py — TEMPLE_POS (-11,15)、SUBJ_FRAC 0.14、机位说明
+- ai_videos/xianjian_yi_mv/2_世界观人设/scenes/s11_十里坡山神庙/_blender/blender_build.md — TEMPLE_POS / 机位行
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/previz_config.toml — subj_frac 0.14
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/shot12_previz.py — TEMPLE 常量；TRENCH_W 0.30 / TRENCH_D 1.0 / T1_LEN 10 / RIDGES=False
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_fall.py — SUBJ_FRAC 0.14（入画点）
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/shot12.md — 七分之一；庙位描述；剑痕描述与反向词；尾帧锁定
+- 产物重建重渲（casc / fbx / s11 blend / shot blend / mp4）
+
+## Follow-up 076（补） — 2026-09-06 22:06:50
+Source: 用户「地上并没有留下 1 米深、10 米长的剑痕，这是为什么」
+Summary: 原剑痕是沉在地里的黑色实心盒子，17° 俯角下只见顶面一条黑线、深度不可见。改为「地面布尔挖开 + 两壁一底的空槽」（口宽 1 m、深 1 m、直道 10 m），对面壁受光、底全黑，俯角下看得出深沟；月牙道同法。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/shot12_previz.py — gash() 与 PVZ_cutters 集合；GND_field / GND_apron 加布尔修改器；TRENCH_W 1.0
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/{shot12_previz.blend, shot12_previz.mp4} — 重建重渲
+
+## Follow-up 076（补 2） — 2026-09-06 22:18:12
+Source: 用户「真实效果宽不用非要 1 m，是很 sharp、很深的剑痕」
+Summary: 预演裂缝口宽 1.0 → 0.45 m（俯角下仍露黑底与一线内壁）；prompt 改「窄而深：缝口一掌宽、深约一米、两侧如刀切般锋利」，并注明预演缝口偏宽只为显深、成片以文字为准；反向词加「裂缝口很宽、裂缝边缘粗糙毛糙」。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/shot12_previz.py — TRENCH_W 0.45
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/shot12.md — 剑痕描述 / 反向词
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/{shot12_previz.blend, shot12_previz.mp4} — 重建重渲
+
+## Follow-up 077 — 2026-09-06 22:52:07
+Source: user_input/follow_ups/202609.md - section 077
+Summary: 绕身后剑在身前停 0.5 s 再握（第一幕 9.5 → 10.0 s）；归鞘后定住 1 s 再大笑；总长 21.9 → 23.4 s；剑痕深 1.0 → 2.5 m、直道 10 → 16 m、月牙弧 ±105° → ±125°、预演缝口 0.6 m；prompt 各处时刻与剑痕描述同步。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act1.py — T_END 10.0；收势键
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act2.py — ACT2 10.0 / T_TOTAL 23.4；伸手 9.75；剑停身前到 9.75；握剑手指键 9.85；T_LAUGH +1.0；落地站定保持段 LINEAR
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/previz_config.toml — dur_grip 1.05、dur_sheath 1.40
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/shot12_previz.py — GRIP 段前 0.45 s 停在身前；SHEATH 默认 1.40；TRENCH_D 2.5 / T1_LEN 16 / ARC ±125° / TRENCH_W 0.6
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/shot12.md — 时长 23.4；机位两次拉远时刻；决定性瞬间 17.1 s；第8拍停半息、第21拍归鞘后定住一息；剑痕「深两三米、长十几米、劈出画面下缘」
+- 产物重建重渲（casc / fbx / blend / mp4）
+
+## Follow-up 078 — 2026-09-06 23:00:15
+Source: user_input/follow_ups/202609.md - section 078
+Summary: 大笑维持约两秒再收拍：Cascadeur 大笑起伏 3 → 7 下、T_TOTAL 23.4 → 24.6 s；Blender dur_laugh 0.85 → 2.05；prompt 时长 24.6 s、第22拍「大笑维持约两秒」、决定性瞬间占比 70%。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/cascadeur/shot12_cascadeur_act2.py — T_TOTAL 24.6；T_LAUGH_BOBS 七下
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/previz_config.toml — dur_laugh 2.05
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/shot12_previz.py — LAUGH 段默认 2.05
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/shot12.md — 时长 24.6、第22拍、占比
+- 产物重建重渲（casc / fbx / blend / mp4）
+
+## Follow-up 079 — 2026-09-07 12:15:00
+Source: user_input/follow_ups/202609.md - section 079
+Summary: 新增大地裂痕参考图 prompt 并接进 shot12 `参考:` 行；prompt 写死「地被一刀劈开、裂缝永久留在地上」「绕身只走一圈、不是光带」「人不站在场地前缘」；预演把栅栏移出画框、月牙沟由 40 段拼接改 110 段大重叠（原被读成一串方坑）。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/ref/dilie.md — 新建：大地裂痕参考图 text→image prompt + 反向词 + 8 条验收清单
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/ref/shoushi.png — 由 ref.png 改名，对齐 prompt 里的 `shoushi` handle（CLAUDE.md「全部 handle ⊆ 全部产物路径」）
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/shot12.md — 参考素材表去槽位号并加 dilie；`参考:` 行加 `dilie(大地裂痕参考图)=>@`；`参考用法:` 改五参考；第8拍加「走满一圈立刻停、飞的是有实体的剑不是环形光带」；第10/11拍改「大地被一刀劈开 + 一亮一黑读深度 + 永久留在地上」；`镜头:` 写死人在画面中的位置；`走位:` 写死落在空地正中央、不站场地前缘；反向词加 24 项（绕两圈 / 光剑 / 地面没有裂缝 / 裂缝愈合 / 人贴画面下缘 等）
+- tools/build_s11_shanshenmiao.py — FENCE_MID (-5,-10.5) → (-5,-15.0)、FIELD_Y0 -12 → -18：拉远一档后栅栏不再挤进画面下缘
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/previz/shot12_previz.py — 月牙沟 ARC_N 40 → 110、段重叠 1.06 → 1.90、壁厚 0.06 → 0.03
+- 产物重建重渲（s11 blend / shot blend / mp4）
+
+No conflicts found in: interview/qa.md, findings/, final_specs/spec.md, validation/
+
+## Follow-up 080 — 2026-09-07 13:05:00
+Source: user_input/follow_ups/202609.md - section 080
+Summary: 为 shot12 建 clip 级 publish.md（YouTube 主发 + Shorts 竖裁二发），承 README 的致敬向合规口径。
+
+Auto-updated:
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot12/publish.md — 新建：上传参数 / 标题×3 / 描述 / 28 tags / 8 话题标签 / 封面帧三选一 / 9:16 竖版方案 / 发布前检查清单
+
+No conflicts found in: shot12.md, shotlist.md, style_guide.md, 3_大纲/theme_song.md
+
+## Follow-up 081 — 2026-09-09
+Source: user_input/follow_ups/202609.md - section 081
+Summary: 立跨项目铁律⓪「相邻镜切口必须一眼可辨」为 top priority（机检＝人占画高比值），承接首帧降为例外；修 shot08→shot09 那道 1.0 比值的缝。
+
+Auto-updated:
+- CLAUDE.md — § AI video rules 新增 TOP PRIORITY bullet（判据 + 落点 + 优先于承接机制）
+- .claude/agent_refs/project/ai_video_jingbie.md — 五级阶梯加「人占画高」数值列；新增铁律⓪（2.0.1 工时理由 / 2.0.2 双信号判据表 / 2.0.3 与承接的优先级）；§4 落点加 `景别档:` 字段要求
+- .claude/agent_refs/project/ai_video.md — 2026-09-09 amendment（甲–己），置于 2026-06-21 承接 amendment 之前并声明优先
+- .claude/skills/ai_videos__运镜/SKILL.md — M3 重写为铁律⓪机械判据（第一顺位）；M8 前置「承接是例外、与 M3 互斥」；工作流第 4 步改为先过 M3
+- .claude/skills/ai_videos__格式契约/SKILL.md — 新增 K31（`景别档:` 在场 + 相邻比值 + previz subj_frac 对账 + 半接不接告警；范围不回溯旧剧）
+- .claude/skills/ai_videos__全流程编排/playbooks/ai_videos__stage5_分镜.md — §3b 铁律⓪ 置顶为排镜第一步；4b 承接降为例外；QC 表 M3 标第一顺位
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot08/shot08.md — `镜头:` 末三秒加匀速推近收成近景；`景别档: 中景 0.50 → 近景 1.02`；首末帧反差 / 尾帧锁定 同步并留修正说明
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot08/previz/previz_config.toml — 新增 11–14s `推近` 段 量=3.1（标定 2.0m→75% / 2.6m→88% / 3.0m→99%）；previz 重建，实渲 49.9% → 102.4% ✓
+- ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot09/shot09.md — **内容未动**，只补 `景别档: 中景 0.50 → 中近景 0.67` 与 `衔接:` 的切口说明
+
+### 排查记录：为什么改的是 shot08 而不是 shot09
+先试的方案是「把 shot09 起幅推远到远景 0.16、落幅推到近景 0.90」，实渲否决，两条原因：
+1. **引擎的 `推近` 是「沿视轴走多少米」，观感大小 ∝ 1/机距——距离匀速 ≠ 大小匀速，且末段极陡。**
+   0.16→0.90 需推 16.1m，实渲结果是 0–6s 她只有两三个像素、6–7.5s 猛涨满画；改成四段前重后轻也压不平。
+   超过约 16.5m 机位还会穿过主体、`占画高` 反常回升（测到 161% / 208%）。
+   → 教训已写进 `ai_video_jingbie.md`：**一条连续镜里不做 远景→近景 的大幅推进，那本来就该是一次「切」。**
+2. shot09 的起幅是它「看不见人 → 看清一张脸」弧光的起点，动它等于拆掉那一镜的骨架。
+改 shot08 落幅则一举两得：本镜末帧的戏（肩背落花 + 烛焰压歪淌烛泪）本就该被强调，推近是它应得的。
+
+### 另发现（未处理·pre-existing）
+**`shot09` 的 previz 本身是坏的，与本次改动无关。** 用它原始配置重渲后逐帧看：0–4s 她只有两三个像素
+（引擎自检却报「起幅占画高 49.3%」——**自检值与实渲不符**），约 6s 有一帧糊掉的画面（机位穿过几何体），
+8s 后她才正常出现。等于这条 previz 前 60% 不可用、喂给 Seedance 会误导构图。需要单独修。
+
+Known gap (待用户决定是否开工): 全剧 34 道相邻缝中 31 道缺 `景别档:` 数据，无法机检——需一次回填 + 逐缝复核。
+
+## Follow-up 082 — 2026-09-09
+Source: user_input/follow_ups/202609.md - section 082
+Summary: 铁律⓪ 全剧落地——回填全部 `景别档:`、34 道缝全部转 ✅、修 19 个错 H1、9 个 previz 与文字对齐、删 30 个过期产物。
+
+Auto-updated:
+- shots/*/shotNN.md（35 个）— 新增 `景别档: {起幅景别}{人占画高} → {落幅景别}{人占画高}` 行，依据逐镜标注（previz 实测值 / 文字推定）
+- shots/{shot16,17,18,19,20,21,22,23,24,26,27,28,29,30,31,32,33,34,35}/ — H1 镜号由 `# shot36` 改为本镜号（19 个，copy-paste 遗留）
+- shots/shot03 — 起幅 中景 0.72 → **近景 1.15**（shot02 落幅 0.55，原比值 0.76 ❌ 同场同景别）
+- shots/shot04 — 起幅 中景 0.66 → **全景 0.32**（shot03 落幅 1.15，原比值 1.74 ❌ 同场）
+- shots/shot06 — 起幅 中景 0.34 → **全景 0.25**（原 1.47 ⚠）
+- shots/shot10 — 起幅 中景 0.48 → **全景 0.30**（原 1.40 ⚠；连带把 shot10→shot11 由 0.71 ⚠ 修成 0.42 ✅）
+- shots/shot25 — 起幅 中景 0.50 → **全景 0.30**（原 1.34 ⚠）
+- shots/shot28 — 起幅 中景 0.55 → **大全景 0.25**（原 1.00 ⚠）
+- shots/shot33 — 起幅 中景 0.67 → **全景 0.30**（原 1.00 ⚠）
+- shots/{shot03,04,06,07,09,10,11,14,36}/previz/previz_config.toml — `占画高` 与 `量` 二分标定到与 shot md 落幅一致；修掉 6 处既有漂移（shot06 0.47/shot07 0.635/shot09 0.501/shot11 0.196/shot14 0.656/shot36 目标 55% 实渲 48.8%）
+- shots/{shot06,18,23}/shotNN.md — ≥3 倍大幅推进补写对数缓动指令（「让人在画面里匀速变大、机位越近走得越慢」+ 中点景别参照）
+- .claude/agent_refs/project/ai_video_jingbie.md §3 — 由「≥3 倍推进禁止」改为「必须写死缓动」，并记 previz 引擎表达不了、config 与 md 是有意分歧
+- 删除 30 个过期 previz 派生物（mp4/blend/blend1，共 14.2 MB）—— config 已改，旧渲染 stale
+
+### 复审
+34 道相邻缝：**❌ 0 ／ ⚠ 0 ／ 其余全 ✅**。35 个 shot 全部有 `景别档:`，H1 全部与目录名一致。
+
+### 仍未解决（需另开）
+- **shot09 previz 的几何/机位 bug**：即便 config 正确，实渲仍是「前 60% 主角只有两三个像素、约 6s 一帧糊掉（机位穿过几何体）」，
+  且引擎自检报的占画高与实渲不符。本轮只对齐了数值，没修这个渲染问题。
+- shot06/18/23 的大幅推进目前靠 prompt 缓动指令兜底，previz 无法验证——出片后要重点看这三镜的推进曲线。
+
+## Follow-up 083 — 2026-09-12
+Source: user_input/follow_ups/202609.md - section 083
+Summary: 修掉 shot09 previz 渲染 bug + 给引擎补自检；删 7 条作废成片、重渲 10 条 previz。
+
+Auto-updated:
+- tools/previz/build_previz.py — 自检补两道硬检查：① **机位在地面以下**（起幅/落幅各查一次，z<0.05m 即报）② **基准主体整个落在画框纵向之外**（并对大幅超框给 warning）。原自检只量主体的纵向跨度、只查横向 `lo.x`，**从不查主体在不在画框里、也不查机位有没有钻进地里**——shot09「自检报 49%、实渲主体只有两三像素」正是这么漏过去的
+- shots/shot09/previz/previz_config.toml — `俯角 -10.0 → -5.0`。**根因**：解算式 `cam.z = aim.z + dist·sin(俯角)`，俯角为负（仰拍）时 z 被减到 -0.17m，机位埋在地面以下 → 前 60% 主体只有两三像素、约 6s 一帧糊掉（机位穿过地面）。-5° 时 z≈0.33m，仍低于她肩高、仍是仰拍，但在地面之上。实渲复核：0.498 → 0.686，全程主体在画框内、无糊帧 ✓
+- shots/shot36/previz/previz_config.toml + shot36.md — `占画高` 目标 1.20 → 1.08，与实渲一致（原偏差触发自检 ✗）
+- 删除 7 条作废成片（186.6 MB）：shot03 / shot04 / shot08 / shot09 / shot10 / shot11 / shot12 的 `renders/*.mp4`
+- 重渲 previz：**10 条全部完成** —— shot03/04/06/07/08/09/10/11/14/36，全部自检通过
+- tools/previz/build_previz.py — 占画比容差由**绝对 ±0.08** 改为 **`max(0.08, 0.12×目标)`**。原绝对值在 frac=0.3 时是 ±27%（够松），到 frac=1.08 时只剩 ±7%（过严）；横置构件（shot36 的房梁 7.0×0.34×0.30）被仰角拍时投影纵向跨度恒为声明高度的九成，于是任何 >0.8 的目标都必然判失败、直接卡住不渲。改后 shot36 通过并渲出
+- shots/shot36/shot36.md — `景别档` 以实渲为准（特写 0.97 → 空镜 0.10），并注明「声明 1.08 / 实渲 0.97」的已知偏差来源
+
+### 成片作废的判定口径（不按 mtime，按「生成输入变没变」）
+`景别档:` 回填动了全部 35 个 md 的 mtime，但那只是文档字段，不使成片作废。逐镜 git diff 判定
+**生成输入 ＝ prompt 正文字段（镜头/走位/动作/参考/角色/情节/光线/节奏/台词/时长…）∪ previz 配置**：
+- **prompt 变了**（11 镜）：shot03 04 06 08 10 12 18 23 25 28 33
+- **previz 变了**（10 镜）：shot03 04 06 07 08 09 10 11 14 36
+- 两者并集里**有成片的** 7 镜 → 删。
+- **保留**：shot01 / shot02 —— prompt 与 previz 都没动，只加了 `景别档:` 文档行，成片仍然有效。
+
+### 未处理
+- shot12 的 `cascadeur/{beat02_fall,test_jianzhi_v1}/*.mp4` 是开发期测试渲染、不是成片，未删。
+- 本轮删掉的是本地文件；`assets.json` 条目按 `assets_sync` 默认口径保留（不 `--prune-missing` 就不会把索引擦掉）。

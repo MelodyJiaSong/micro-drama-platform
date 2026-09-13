@@ -7,6 +7,8 @@ markdown tables (boundary cases are too easy to get wrong).
 """
 from __future__ import annotations
 
+from libs.common import drama_ref
+
 import os
 import re
 import shutil
@@ -219,6 +221,12 @@ class Casting:
             path=self._rel(casting_path), entries=[e.to_dict() for e in new_entries]
         )
 
+    def _drama_key(self, drama_dir: Path) -> str:
+        """Drama key relative to `ai_videos/` — one segment when flat, two when the
+        drama lives inside a series. The UI concatenates it back as
+        `ai_videos/{key}`, so it must carry the series prefix."""
+        return drama_dir.relative_to(self._resolver.root / "ai_videos").as_posix()
+
     def find_voice_assignments_for_voice(self, voice_id: str) -> list[dict[str, object]]:
         """Mirror of find_assignments_for_actor for voice bindings."""
         if not _VOICE_ID_SHAPE_RE.match(voice_id):
@@ -227,11 +235,10 @@ class Casting:
         if not ai_videos.is_dir():
             return []
         out: list[dict[str, object]] = []
-        for drama_dir in sorted(ai_videos.iterdir(), key=lambda p: p.name):
-            if not drama_dir.is_dir() or drama_dir.is_symlink():
-                continue
-            if drama_dir.name.startswith("_"):
-                continue
+        # `drama_dirs` expands a series folder into its member dramas and drops
+        # the `_`-prefixed system libraries, so a drama inside a series is scanned
+        # exactly like a flat one.
+        for drama_dir in drama_ref.drama_dirs(self._resolver.root):
             casting_path = drama_layout.casting_md(drama_dir)
             if not casting_path.is_file():
                 continue
@@ -242,7 +249,7 @@ class Casting:
                 character_folder = drama_layout.characters_dir(drama_dir) / e.role
                 out.append(
                     {
-                        "drama": drama_dir.name,
+                        "drama": self._drama_key(drama_dir),
                         "role": e.role,
                         "notes": e.notes,
                         "character_folder": self._rel(character_folder),
@@ -257,11 +264,10 @@ class Casting:
         if not ai_videos.is_dir():
             return set()
         ids: set[str] = set()
-        for drama_dir in ai_videos.iterdir():
-            if not drama_dir.is_dir() or drama_dir.is_symlink():
-                continue
-            if drama_dir.name.startswith("_"):
-                continue
+        # `drama_dirs` expands a series folder into its member dramas and drops
+        # the `_`-prefixed system libraries, so a drama inside a series is scanned
+        # exactly like a flat one.
+        for drama_dir in drama_ref.drama_dirs(self._resolver.root):
             casting_path = drama_layout.casting_md(drama_dir)
             if not casting_path.is_file():
                 continue
@@ -285,11 +291,10 @@ class Casting:
         if not ai_videos.is_dir():
             return []
         out: list[dict[str, object]] = []
-        for drama_dir in sorted(ai_videos.iterdir(), key=lambda p: p.name):
-            if not drama_dir.is_dir() or drama_dir.is_symlink():
-                continue
-            if drama_dir.name.startswith("_"):
-                continue
+        # `drama_dirs` expands a series folder into its member dramas and drops
+        # the `_`-prefixed system libraries, so a drama inside a series is scanned
+        # exactly like a flat one.
+        for drama_dir in drama_ref.drama_dirs(self._resolver.root):
             casting_path = drama_layout.casting_md(drama_dir)
             if not casting_path.is_file():
                 continue
@@ -300,7 +305,7 @@ class Casting:
                 character_folder = drama_layout.characters_dir(drama_dir) / e.role
                 out.append(
                     {
-                        "drama": drama_dir.name,
+                        "drama": self._drama_key(drama_dir),
                         "role": e.role,
                         "notes": e.notes,
                         "character_folder": self._rel(character_folder),
@@ -320,11 +325,10 @@ class Casting:
         if not ai_videos.is_dir():
             return set()
         ids: set[str] = set()
-        for drama_dir in ai_videos.iterdir():
-            if not drama_dir.is_dir() or drama_dir.is_symlink():
-                continue
-            if drama_dir.name.startswith("_"):
-                continue
+        # `drama_dirs` expands a series folder into its member dramas and drops
+        # the `_`-prefixed system libraries, so a drama inside a series is scanned
+        # exactly like a flat one.
+        for drama_dir in drama_ref.drama_dirs(self._resolver.root):
             casting_path = drama_layout.casting_md(drama_dir)
             if not casting_path.is_file():
                 continue
@@ -347,11 +351,10 @@ class Casting:
         if not ai_videos.is_dir():
             return []
         removed: list[dict[str, str]] = []
-        for drama_dir in sorted(ai_videos.iterdir(), key=lambda p: p.name):
-            if not drama_dir.is_dir() or drama_dir.is_symlink():
-                continue
-            if drama_dir.name.startswith("_"):
-                continue
+        # `drama_dirs` expands a series folder into its member dramas and drops
+        # the `_`-prefixed system libraries, so a drama inside a series is scanned
+        # exactly like a flat one.
+        for drama_dir in drama_ref.drama_dirs(self._resolver.root):
             casting_path = drama_layout.casting_md(drama_dir)
             if not casting_path.is_file():
                 continue
@@ -368,7 +371,7 @@ class Casting:
                             CastEntry(role=e.role, actor_id="", notes=e.notes, voice_id=e.voice_id)
                         )
                     else:
-                        removed.append({"drama": drama_dir.name, "role": e.role})
+                        removed.append({"drama": self._drama_key(drama_dir), "role": e.role})
                         self._remove_character_link(drama_dir, e.role)
                 else:
                     kept.append(e)

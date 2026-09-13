@@ -13,7 +13,9 @@ from pathlib import Path
 
 from libs.infrastructure.errors.research__error import ResearchError
 
-_DATASET = re.compile(r"^[a-z0-9_]+$")
+# Datasets are month-keyed (`2026-09`), so the id allows a dash.
+_DATASET = re.compile(r"^[a-z0-9_-]+$")
+WORKSPACE_SUFFIX: str = ".workspace.json"
 
 
 class ResearchReader:
@@ -25,6 +27,9 @@ class ResearchReader:
             return []
         out: list[dict[str, object]] = []
         for path in sorted(self.research_root.glob("*.json")):
+            # `{dataset}.workspace.json` holds the user's decisions, not a dataset.
+            if path.name.endswith(WORKSPACE_SUFFIX):
+                continue
             try:
                 data = json.loads(path.read_text(encoding="utf-8"))
             except (json.JSONDecodeError, OSError):
@@ -33,9 +38,16 @@ class ResearchReader:
                 {
                     "dataset": path.stem,
                     "title": data.get("title", path.stem),
+                    "group": data.get("group", "调研结果"),
+                    "month": data.get("month", path.stem),
                     "generated_at": data.get("generated_at"),
                     "window": data.get("window"),
                     "series_count": len(data.get("series", [])),
+                    "series": [
+                        {"slug": s.get("slug"), "name_zh": s.get("name_zh"), "rank": s.get("rank")}
+                        for s in data.get("series", [])
+                        if isinstance(s, dict)
+                    ],
                 }
             )
         return out

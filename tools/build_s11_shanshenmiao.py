@@ -19,9 +19,9 @@ same frame or the previz framing report (庙/人头 的 UV) stops meaning anythi
 
     P (酒剑仙站位 / 动作中心) = (0, 4, 0)
     CAM_AZ (相机 → 主体的水平方向) = (-0.259, 0.966, 0)   → 机位在主体的【南偏东】
-    TEMPLE (小庙中心) = (-21, 19, 0)                      → 主体西北 25.8m，落在画左作边框
+    TEMPLE (小庙中心) = (-14, 11, 0)                      → 主体左侧偏后 15.7m，画面左上 u≈0.15（2026-09-06）
 
-    解出来的机位：pos ≈ (3.50, -9.06, 5.03)，aim ≈ (-2.11, 3.44, 0.90)，35mm，俯角 17°
+    解出来的机位：pos ≈ (5.50, -16.5, 7.39)，aim ≈ (-2.11, 3.44, 0.90)，35mm，俯角 17°，人占画高 0.14（2026-09-06）
     主体处画框 8.18m(高) × 14.55m(宽)；庙所在深度 33.2m 处画框半宽 17.1m，
     庙的横向偏移 16.4m < 17.1m → 庙贴着画左边缘进画。**这一条是本文件全部坐标的由来。**
 
@@ -48,7 +48,7 @@ OUT = sys.argv[sys.argv.index("--") + 1:][0]
 P = Vector((0.0, 4.0, 0.0))                  # 酒剑仙站位 / 动作中心
 CAM_AZ = Vector((-0.259, 0.966, 0.0))        # 相机 → 主体的水平方向
 R_VEC = Vector((CAM_AZ.y, -CAM_AZ.x, 0.0))   # 画面向右
-CAM_LENS, SUBJ_FRAC, TILT_DEG, PULL = 35.0, 0.22, 17.0, 1.30   # 俯角 20→17（2026-09-06）：20° 时庙脊与林线全在画框上缘之外，背景只剩裸地；17° 是 follow-up 040 用户定过的折中
+CAM_LENS, SUBJ_FRAC, TILT_DEG, PULL = 35.0, 0.14, 17.0, 1.30   # 俯角 20→17（2026-09-06）：20° 时庙脊与林线全在画框上缘之外，背景只剩裸地；17° 是 follow-up 040 用户定过的折中
 SENSOR_W = 36.0
 SENSOR_V = SENSOR_W * 1080.0 / 1920.0
 
@@ -67,10 +67,12 @@ CAM_POS = (P + Vector((0.0, 0.0, 0.9))
 # 按 rule 4h §E —— 范围由【镜头要拍到什么】定，不由「场地设定有多大」定。
 # 画框在最远处（庙那一带，深 33m）半宽 17m，故硬土面要盖到 x −30…+16、y −12…+28。
 FIELD_X0, FIELD_X1 = -30.0, 16.0
-FIELD_Y0, FIELD_Y1 = -12.0, 28.0
+# 近缘 −12 → −18（用户 2026-09-07「落点太靠前」）：拉远一档后画框下缘落在 y≈−10，
+# 近缘 −12 只留 2m 余量、栅栏跟着挤进画。近缘退到 −18 后，人身前始终是一大片空地。
+FIELD_Y0, FIELD_Y1 = -18.0, 28.0
 
 # 小庙：单开间，通面阔一丈五 ≈ 5m。位置由 previz 契约钉死（画左边框），不可随手挪
-TEMPLE_POS = Vector((-21.0, 19.0, 0.0))
+TEMPLE_POS = Vector((-14.0, 11.0, 0.0))      # 2026-09-06 用户：庙不在身后远处，在画面左上、离他约 16m（原 (-21,19) 是远景；(-11,15) 试过太靠画中）
 TEMPLE_W, TEMPLE_D = 5.0, 4.2          # 通面阔 × 进深
 TEMPLE_WALL_H = 2.8                    # 檐口（墙高）
 TEMPLE_RIDGE_H = 4.6                   # 脊高 → 四坡顶举高 1.8m
@@ -86,7 +88,8 @@ STEP_N, STEP_H, STEP_D = 2, 0.14, 0.45
 FENCE_N = 26
 FENCE_SEG = 1.5
 FENCE_H = 0.9
-FENCE_MID = Vector((-5.0, -10.5, 0.0))
+FENCE_MID = Vector((-5.0, -15.0, 0.0))   # −10.5 → −15.0（用户 2026-09-07）：−10.5 时拉远一档后栅栏在 v≈0.16 挤进画面下缘，
+#                                          人看着像站在场地前缘；退到 −15.0 后起幅与拉远两档都在画外（v=−0.58 / −0.09）
 FENCE_YAW = math.radians(6.0)          # 近乎东西向，略斜
 
 # 上坡小路：自空地东北向东北斜上坡（C 级）
@@ -302,7 +305,7 @@ for label, pt, must in checks:
     pos = "镜后" if r is None else f"u={r[0]:6.3f} v={r[1]:6.3f}"
     print(f"    {label:8s} {pos}  {note}")
 _t = uv_of(TEMPLE_POS + Vector((0, 0, TEMPLE_RIDGE_H)))
-print(f"  庙落在画左边框？{'✓' if _t and 0.0 <= _t[0] <= 0.30 else '✗ —— 挪 TEMPLE_POS 或改 AIM_SHIFT'}")
+print(f"  庙落在画面左上？{'✓' if _t and 0.0 <= _t[0] <= 0.36 and _t[1] >= 0.6 else '✗ —— 挪 TEMPLE_POS 或改 AIM_SHIFT'}")   # 2026-09-06：庙移到左上（u≈0.3），不再贴左边缘
 print(f"  必须在画内的点，出画 {bad} 个" + ("" if bad == 0 else "  ← 先修这个再往下做 previz"))
 
 bpy.ops.wm.save_as_mainfile(filepath=OUT)

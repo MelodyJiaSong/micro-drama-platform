@@ -6,15 +6,43 @@ export interface DramaChoice {
   characters: string[];
 }
 
+/** Every drama root in the tree — flat ones and series members alike. Walks by
+ *  the backend's `is_drama` flag, never by path depth (a series member is three
+ *  segments deep). */
+export function collectDramaNodes(tree: TreeNode | null): TreeNode[] {
+  if (!tree) return [];
+  const out: TreeNode[] = [];
+  const queue: TreeNode[] = [tree];
+  while (queue.length > 0) {
+    const node = queue.shift()!;
+    if (node.is_drama === true && node.path?.startsWith("ai_videos/")) {
+      out.push(node);
+      continue; // a drama never nests another drama
+    }
+    for (const c of node.children ?? []) queue.push(c);
+  }
+  return out;
+}
+
+/** The drama root path that owns `filePath` (`ai_videos/hy1` or
+ *  `ai_videos/huangye_shenghuo/hy2`), or null when it belongs to none. */
+export function dramaRootOf(tree: TreeNode | null, filePath: string | null): string | null {
+  if (!filePath) return null;
+  let best: string | null = null;
+  for (const drama of collectDramaNodes(tree)) {
+    const root = drama.path;
+    if (filePath === root || filePath.startsWith(root + "/")) {
+      if (best === null || root.length > best.length) best = root;
+    }
+  }
+  return best;
+}
+
 export function extractDramas(tree: TreeNode | null): DramaChoice[] {
   if (!tree) return [];
-  const section = findAiVideosSection(tree);
-  if (!section) return [];
   const out: DramaChoice[] = [];
-  for (const drama of section.children ?? []) {
-    if (drama.type !== "directory") continue;
+  for (const drama of collectDramaNodes(tree)) {
     if (drama.name.startsWith("_")) continue;
-    if (!drama.path?.startsWith("ai_videos/")) continue;
     const characters: string[] = [];
     const chDir = findAssetDir(drama, "characters");
     if (chDir) {
@@ -45,17 +73,9 @@ function _stripPrefix(folder: string, re: RegExp): string {
 }
 
 function _findDramaNode(tree: TreeNode | null, filePath: string): TreeNode | null {
-  if (!tree) return null;
-  const m = /^ai_videos\/([^/]+)\//.exec(filePath);
-  if (!m) return null;
-  const dramaPath = `ai_videos/${m[1]}`;
-  const queue: TreeNode[] = [tree];
-  while (queue.length > 0) {
-    const node = queue.shift()!;
-    if (node.path === dramaPath && node.type === "directory") return node;
-    for (const c of node.children ?? []) queue.push(c);
-  }
-  return null;
+  const dramaPath = dramaRootOf(tree, filePath);
+  if (dramaPath === null) return null;
+  return collectDramaNodes(tree).find((d) => d.path === dramaPath) ?? null;
 }
 
 /** List the characters + scenes (display names) of the drama that `filePath`
@@ -102,19 +122,4 @@ export function findAssetDir(drama: TreeNode, name: string): TreeNode | null {
   if (direct) return direct;
   const world = findChild(drama, "2_世界观人设");
   return world ? findChild(world, name) : null;
-}
-
-
-function findAiVideosSection(tree: TreeNode): TreeNode | null {
-  const queue: TreeNode[] = [tree];
-  while (queue.length > 0) {
-    const node = queue.shift()!;
-    for (const c of node.children ?? []) {
-      if (c.path?.startsWith("ai_videos/")) return node;
-    }
-    for (const c of node.children ?? []) {
-      if (c.type === "section") queue.push(c);
-    }
-  }
-  return null;
 }

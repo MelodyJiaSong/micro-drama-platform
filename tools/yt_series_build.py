@@ -27,10 +27,10 @@ PROBE = REPO_ROOT / "tools" / "yt_research.py"
 def fetch(ids: list[str], jobs: int) -> dict[str, dict[str, Any]]:
     """Live-measure every id. Returns id -> metadata for the ones that resolved."""
     out: dict[str, dict[str, Any]] = {}
-    for start in range(0, len(ids), 12):
-        batch = ids[start : start + 12]
+
+    def run(batch: list[str], jobs_n: int) -> None:
         done = subprocess.run(
-            [sys.executable, str(PROBE), "meta", *batch, "--jobs", str(jobs)],
+            [sys.executable, str(PROBE), "meta", *batch, "--jobs", str(jobs_n)],
             capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=900,
         )
         for line in done.stdout.splitlines():
@@ -38,7 +38,21 @@ def fetch(ids: list[str], jobs: int) -> dict[str, dict[str, Any]]:
             if line.startswith("{"):
                 row = json.loads(line)
                 out[row["id"]] = row
+
+    for start in range(0, len(ids), 12):
+        run(ids[start : start + 12], jobs)
         print(f"  measured {len(out)}/{len(ids)}", file=sys.stderr)
+
+    # YouTube rate-limits bursts, and a throttled id looks exactly like a bad one.
+    # Retry the misses smaller and slower before calling any id unresolvable —
+    # otherwise a real video gets silently dropped from the evidence.
+    for attempt in (1, 2):
+        missing = [i for i in ids if i not in out]
+        if not missing:
+            break
+        print(f"  retry {attempt}: {len(missing)} unresolved", file=sys.stderr)
+        for start in range(0, len(missing), 4):
+            run(missing[start : start + 4], 1)
     return out
 
 

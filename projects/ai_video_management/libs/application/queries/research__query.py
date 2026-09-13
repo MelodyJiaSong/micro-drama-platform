@@ -2,11 +2,16 @@
 from __future__ import annotations
 
 from libs.infrastructure.readers.research__reader import ResearchReader
+from libs.infrastructure.writers.research__writer import ResearchWriter
 
 
 class ResearchQuery:
-    def __init__(self, reader: ResearchReader) -> None:
+    def __init__(self, reader: ResearchReader, writer: ResearchWriter) -> None:
         self._reader = reader
+        self._writer = writer
+
+    def workspace(self, dataset: str) -> dict[str, object]:
+        return self._writer.workspace(dataset)
 
     def datasets(self) -> dict[str, object]:
         return {"datasets": self._reader.datasets()}

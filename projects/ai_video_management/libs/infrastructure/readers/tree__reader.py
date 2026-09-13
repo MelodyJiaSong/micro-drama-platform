@@ -5,6 +5,7 @@ import re
 from pathlib import Path
 from typing import Any
 
+from libs.common import asset_link, drama_ref
 from libs.common.exposed_tree import ExposedTree, TREE_VISIBLE_EXTENSIONS
 from libs.common.sub_type_lookup import lookup as sub_type_lookup
 from libs.domain.value_objects.bgm__valueobject import CATEGORY_LABELS_ZH as BGM_CATEGORY_LABELS_ZH
@@ -56,6 +57,11 @@ class TreeReader:
         if ai_videos_root.is_dir():
             for project_dir in sorted(p for p in ai_videos_root.iterdir() if p.is_dir()):
                 if project_dir.name in self._exposed.excluded_dirs():
+                    continue
+                if drama_ref.is_series_dir(project_dir):
+                    series_node = self._walk_series(project_dir)
+                    if series_node is not None:
+                        children.append(series_node)
                     continue
                 project_node = self._walk_project(project_dir)
                 if project_node is None:
@@ -188,7 +194,8 @@ class TreeReader:
 
     def _walk_project(self, project_dir: Path) -> dict[str, Any] | None:
         sub = self._walk_filtered(project_dir, self._is_allowed_leaf)
-        meta = sub_type_lookup(self._root, project_dir.name)
+        drama_key = self._rel(project_dir).split("/", 1)[1]
+        meta = sub_type_lookup(self._root, drama_key)
         project_meta_payload: dict[str, Any] | None = None
         if meta.sub_type is not None or meta.shot_count is not None or meta.episode_count is not None:
             project_meta_payload = {
@@ -203,10 +210,52 @@ class TreeReader:
             "children": sub,
             "project_meta": project_meta_payload,
         }
+        # `is_drama` is the UI's only way to know where a drama root sits — a flat
+        # drama is 2 segments, a series member 3. Nothing downstream may re-derive
+        # that from path depth.
+        if not project_dir.name.startswith("_"):
+            node["is_drama"] = True
         zh_title = _SYSTEM_FOLDER_LABELS_ZH.get(project_dir.name) or self._project_zh_title(project_dir)
         if zh_title:
             node["display_name"] = zh_title
         return node
+
+    def _walk_series(self, series_dir: Path) -> dict[str, Any] | None:
+        """A series folder (`series.json`) renders as one collapsible node whose
+        children are its member dramas, plus any `_`-prefixed shared folder
+        (`_series/` — the series bible and cross-episode locked assets)."""
+        members: list[dict[str, Any]] = []
+        shared: list[dict[str, Any]] = []
+        for entry in sorted(p for p in series_dir.iterdir() if p.is_dir()):
+            if entry.name in self._exposed.excluded_dirs():
+                continue
+            node = self._walk_project(entry)
+            if node is None:
+                continue
+            if entry.name.startswith("_"):
+                node.pop("is_drama", None)
+                node.pop("project_meta", None)
+                if entry.name == drama_ref.SERIES_SHARED_DIR_NAME:
+                    node["display_name"] = "系列共用"
+                shared.append(node)
+            else:
+                members.append(node)
+        loose = self._walk_filtered(series_dir, self._is_allowed_leaf, dirs=False)
+        return {
+            "type": "series",
+            "name": series_dir.name,
+            "display_name": self._series_zh_title(series_dir),
+            "path": self._rel(series_dir),
+            "children": shared + members + loose,
+        }
+
+    def _series_zh_title(self, series_dir: Path) -> str:
+        try:
+            data = json.loads((series_dir / drama_ref.SERIES_MARKER_NAME).read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            return series_dir.name
+        name = data.get("name_zh")
+        return name if isinstance(name, str) and name else series_dir.name
 
     def _project_zh_title(self, project_dir: Path) -> str | None:
         """Chinese display title for a drama folder (pinyin / English on disk).
@@ -295,7 +344,11 @@ class TreeReader:
                 return label
         return None
 
-    def _walk_filtered(self, directory: Path, leaf_predicate: Any) -> list[dict[str, Any]]:
+    def _walk_filtered(
+        self, directory: Path, leaf_predicate: Any, dirs: bool = True
+    ) -> list[dict[str, Any]]:
+        """`dirs=False` emits only the directory's own files — used for a series
+        folder, whose sub-directories are walked as drama nodes instead."""
         children: list[dict[str, Any]] = []
         excluded = self._exposed.excluded_dirs()
         try:
@@ -306,6 +359,8 @@ class TreeReader:
             if entry.is_symlink():
                 continue
             if entry.name in excluded:
+                continue
+            if entry.is_dir() and not dirs:
                 continue
             if entry.is_dir():
                 collapsed = self._collapsed_actor_leaf(entry)
@@ -329,9 +384,30 @@ class TreeReader:
                         dir_node["display_name"] = zh_label
                     children.append(dir_node)
             elif entry.is_file():
+                if asset_link.is_link_file(entry):
+                    link_node = self._link_leaf(entry)
+                    if link_node is not None:
+                        children.append(link_node)
+                        continue
+                    # 解析不了就按普通 json 显示，让用户看得见、改得了
                 if leaf_predicate(entry):
                     children.append(self._leaf_for(entry))
         return children
+
+    def _link_leaf(self, link_file: Path) -> dict[str, Any] | None:
+        """A `*.link.json` renders as the asset it points at — the node carries the
+        **target's** path, so /api/media and preview work with no media-layer
+        change; `is_link` is what tells the UI it is a shortcut, not a copy."""
+        link = asset_link.read(self._root, link_file)
+        if link is None:
+            return None
+        node = self._leaf_for(self._root / link.target_rel)
+        node["name"] = link.display_name
+        node["is_link"] = True
+        node["link_at"] = self._rel(link_file)
+        if link.note:
+            node["link_note"] = link.note
+        return node
 
     def _is_allowed_leaf(self, p: Path) -> bool:
         return p.suffix.lower() in TREE_VISIBLE_EXTENSIONS

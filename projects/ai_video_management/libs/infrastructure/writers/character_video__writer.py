@@ -13,6 +13,8 @@ ffmpeg binary supplied by `imageio-ffmpeg` — no system install required.
 """
 from __future__ import annotations
 
+from libs.common import drama_ref
+
 import re
 import subprocess
 from dataclasses import dataclass
@@ -20,6 +22,7 @@ from pathlib import Path
 
 import imageio_ffmpeg
 
+from libs.common import video_canvas
 from libs.common.exposed_tree import ExposedTree
 from libs.common.safe_resolve import SafeResolver
 
@@ -150,9 +153,7 @@ class CharacterVideoTruncator:
         parts = rel.split("/")
         if len(parts) < 5:
             return False
-        if parts[0] != "ai_videos":
-            return False
-        if parts[1].startswith("_"):
+        if drama_ref.drama_depth(self._resolver.root, parts) is None:
             return False
         # `characters/` sits at the drama root (legacy) or under a stage folder
         # (staged pipeline `2_世界观人设/characters/`). Find it, then require a
@@ -175,8 +176,9 @@ class CharacterVideoTruncator:
 
 _CONCAT_FFMPEG_TIMEOUT_S: int = 180
 _CONCAT_SEGMENT_S: float = 2.0  # per-character clip length in the reel
-_CONCAT_TARGET_W: int = 720     # 9:16 reel — 720x1280 is fast to encode + plenty for review
-_CONCAT_TARGET_H: int = 1280
+# Canvas comes from the SOURCE clips (`libs.common.video_canvas`), not a fixed
+# 9:16 reel — the repo's dramas are not all 9:16 (ai_video.md rule 7), and the
+# old hardcode letterboxed 16:9 character views into a vertical frame.
 _CONCAT_TARGET_FPS: int = 30
 _SHOT_DIR_RE: re.Pattern[str] = re.compile(r"^shot\d+$", re.IGNORECASE)
 _SHOT_MD_NAME_RE: re.Pattern[str] = re.compile(r"^(shot\d+)\.md$", re.IGNORECASE)
@@ -321,7 +323,8 @@ class ShotConcatBuilder:
         parts = rel.split("/")
         if len(parts) < 4:
             raise NotShotMdError("path is too shallow to be a shot md")
-        if parts[0] != "ai_videos" or parts[1].startswith("_"):
+        depth = drama_ref.drama_depth(self._resolver.root, parts)
+        if depth is None:
             raise NotShotMdError("path is not under ai_videos/{drama}/")
         if Path(rel).suffix.lower() != ".md":
             raise NotShotMdError("path is not a .md file")
@@ -334,7 +337,9 @@ class ShotConcatBuilder:
             raise NotShotMdError("filename is not shot{NN}.md")
         if parts[-3].lower() != "prompts":
             raise NotShotMdError("shot folder is not under prompts/")
-        drama = parts[1]
+        # Drama key relative to `ai_videos/` — one segment when flat, two when the
+        # drama lives inside a series (`huangye_shenghuo/hy2`).
+        drama = "/".join(parts[1:depth])
         resolved = self._resolver.resolve(rel)
         if resolved is None:
             raise InvalidShotMdPathError("path failed sandbox resolution")
@@ -587,7 +592,8 @@ class ShotConcatBuilder:
         if ci + 1 >= len(parts) or not _CHARACTER_DIR_RE.match(parts[ci + 1]):
             return None
         if parts[0] == "ai_videos":
-            if len(parts) < 2 or parts[1] != drama:
+            drama_segments = drama.split("/")
+            if parts[1 : 1 + len(drama_segments)] != drama_segments:
                 return None
             return "/".join(parts[: ci + 2])
         # cell was drama-relative (`characters/cN` or `2_世界观人设/characters/cN`)
@@ -620,6 +626,7 @@ class ShotConcatBuilder:
             raise FfmpegMissingForCharacterVideoError(str(exc)) from exc
 
         n = len(inputs)
+        target_w, target_h = video_canvas.target_canvas(ffmpeg, inputs)
         has_audio = [self._probe_has_audio(ffmpeg, src) for src in inputs]
         need_null_source = not all(has_audio)
         null_idx = n  # index of the lavfi anullsrc input, if added
@@ -630,8 +637,8 @@ class ShotConcatBuilder:
                 f"[{i}:v]"
                 f"trim=duration={_CONCAT_SEGMENT_S},"
                 f"setpts=PTS-STARTPTS,"
-                f"scale={_CONCAT_TARGET_W}:{_CONCAT_TARGET_H}:force_original_aspect_ratio=decrease,"
-                f"pad={_CONCAT_TARGET_W}:{_CONCAT_TARGET_H}:(ow-iw)/2:(oh-ih)/2:black,"
+                f"scale={target_w}:{target_h}:force_original_aspect_ratio=decrease,"
+                f"pad={target_w}:{target_h}:(ow-iw)/2:(oh-ih)/2:black,"
                 f"setsar=1,"
                 f"fps={_CONCAT_TARGET_FPS}"
                 f"[v{i}]"
@@ -1107,7 +1114,8 @@ class CharacterViewExtractor:
         if not self._exposed.is_inside(rel):
             raise InvalidCharactersDirError("path outside sandbox")
         parts = rel.split("/")
-        if len(parts) < 3 or parts[0] != "ai_videos" or parts[1].startswith("_"):
+        depth = drama_ref.drama_depth(self._resolver.root, parts)
+        if depth is None or len(parts) < depth + 1:
             raise InvalidCharactersDirError("path must be ai_videos/{drama}/.../characters/")
         if parts[-1] != "characters":
             raise InvalidCharactersDirError("path must end in characters/")

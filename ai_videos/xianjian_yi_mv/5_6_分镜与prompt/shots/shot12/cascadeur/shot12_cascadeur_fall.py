@@ -10,7 +10,7 @@ if not DEFS_ONLY and not globals().get("SKIP_RELOAD"):      # rebuild.sh 先单�
 FPS = 30
 F_ENTER, F_LAND, F_DIP, F_UP, F_END = 9, 60, 64, 70, 90      # 0.30 / 2.00 / 2.12 / 2.32 s
 SPINS = 5
-SUBJ_H, SUBJ_FRAC, TILT, AZ = 180.0, 0.22, 20.0, 15.0        # 人高 cm · 占画高 · 俯角 · 机位偏离正前方的方位角
+SUBJ_H, SUBJ_FRAC, TILT, AZ = 180.0, 0.14, 17.0, 15.0        # 人高 cm · 占画高 · 俯角 · 机位偏离正前方的方位角
 VFOV = 28.0                                                   # Cascadeur 视口实测竖向视角（520cm 处 180cm 高占画 69%）
 
 bv = scene.model_viewer().behaviour_viewer()

@@ -39,9 +39,14 @@ const REF_VIDEO_PROMPT_TEMPLATE = (faceRel: string, _role: string): string => `[
 不要: 任何音频 / BGM / 音效 / 旁白 / 环境音；不要 超过 2.9s；不要 场景切换；不要 道具`;
 
 export function CastingView({ castingPath, onChange }: CastingViewProps): JSX.Element {
+  // `casting.md` sits at the drama root or under the staged-pipeline stage
+  // folder. Peel those off instead of slicing a fixed depth — a drama inside a
+  // series is `ai_videos/{series}/{drama}`, three segments, not two.
   const dramaPath = useMemo(() => {
-    const parts = castingPath.split("/");
-    return parts.slice(0, 2).join("/"); // "ai_videos/{drama}"
+    const parts = castingPath.split("/").filter(Boolean);
+    parts.pop();
+    if (parts[parts.length - 1] === "2_世界观人设") parts.pop();
+    return parts.join("/");
   }, [castingPath]);
 
   const [entries, setEntries] = useState<CastEntry[]>([]);
@@ -155,7 +160,7 @@ export function CastingView({ castingPath, onChange }: CastingViewProps): JSX.El
   return (
     <div className="casting-view">
       <div className="casting-header">
-        <h2>选角 — {dramaPath.split("/")[1]}</h2>
+        <h2>选角 — {dramaPath.split("/").slice(-1)[0]}</h2>
         <div className="casting-header-actions">
           {mode === "read" ? (
             <button type="button" className="casting-add-btn" onClick={() => setMode("assign")} disabled={busy}>

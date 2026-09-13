@@ -1,0 +1,188 @@
+# 《荒野生活》系列 · 合并后的完整意图（raw_prompt + 全部 follow-ups）
+
+> 派生文件，由 `raw_prompt.md` + `follow_ups/*.md` 按时序拼成。改动请改源文件后重生成。
+
+# 《荒野生活》系列 · 原始请求
+
+> 本系列的 spec 目录在第一次请求**之后**才建立，所以原始请求登记在
+> `follow_ups/202609.md` 的 `## 001` 一节（不在此处复制，避免两份出处）。
+> 本文件只记录系列级任务的口径。
+
+**task_type**：`ai_video` · **范围**：系列级（跨片），非单片
+**系列**：`ai_videos/huangye_shenghuo/`（`series.json` 是「这是系列」的判据）
+**已完成**：`hy1` 雨林第一夜 · `hy2` 红杉第一夜
+**本任务**：把系列排产到 20 部以上 —— 定场景/锚点、元素系统、拍摄骨架与逐部概念卡。
+
+单片级意图仍落各自的 `specs/ai_video/hy{N}/`；本目录只装系列级的。
+
+
+---
+
+# 后续指令（按时序）
+
+## 001 — 2026-09-12 — 二十部片单与元素系统
+
+> target_stage: 1
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/_series/slate.md
+>   - ai_videos/huangye_shenghuo/_series/slate_research.md
+>   - ai_videos/huangye_shenghuo/_series/series_bible.md
+> severity: medium
+
+### 指令
+
+系列要拍到 **20 部以上**。在开新片之前先定三件事：
+
+1. **场景清单** —— 20 部各自的地点与位置锚点。
+2. **元素的系统化引入** —— 观众可能喜欢的元素要有一套可复用的引入规则，
+   用户举的例子是「每次增加一个新的小动物」；要求给出还有哪些元素轴。
+3. **同类视频的吸引力调研** —— 先做实测调研（现有类似视频靠什么吸引人），
+   再据此给 **top 20 推荐**。
+
+### 一行摘要
+
+把系列从「一部一部想」升级为「一张 20 部的片单 + 一套元素预算表」，并要求片单由实测调研支撑。
+
+---
+
+## 002 — 2026-09-12 — 房子要有特点 / 安全感 / 野外做饭 / 按环境引钩子
+
+> target_stage: 1
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/_series/slate.md
+>   - ai_videos/huangye_shenghuo/_series/slate_cards.md
+>   - ai_videos/huangye_shenghuo/_series/slate_research.md
+> severity: medium
+
+### 指令
+
+对 20 部片单提四条要求：
+
+1. **每部的房子要有特点** —— 不能各部长得一样。
+2. **要有点安全感，不要太简陋** —— 房子要像能住人的，不是临时躲一夜的窝。
+3. **引入野外做饭元素** —— 煮汤、烤肉等。
+4. **不能太单一**；并且**要根据不同环境引入各自吸引人的地方**，据此继续调研、给更详细的 plan。
+
+### 一行摘要
+
+把片单从「20 个锚点」细化为「20 栋各有特点、有完成度的房子 + 20 条环境专属钩子 + 20 顿饭」，
+并把骨架从 12 镜扩到 14 镜以容纳取食与做饭两段戏。
+
+---
+
+## 003 — 2026-09-12 — 房子要结实：抵御大风与野兽 · 提案合并成单一文档
+
+> target_stage: 1
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/proposal.md
+>   - ai_videos/huangye_shenghuo/_series/series_bible.md
+> severity: medium
+
+### 指令
+
+1. **房子要结实，要有安全感** —— 标准可以定成「**抵御得了大风，还有野兽**」。
+2. **把提案全部放在《荒野生活》主目录下的一个 md 文件里**，便于在 webapp UI 里细看。
+
+### 一行摘要
+
+新增结构强度标准（L1 抗风 / L2 抗兽 / L3 被验证，全系列只 3 次兽夜、兽本体不进画），
+并把原先分散的三份文档合并为 `ai_videos/huangye_shenghuo/proposal.md` 单一提案。
+
+---
+
+## 004 — 2026-09-12 — 澄清：「野兽」是形容档位，不要真的野兽
+
+> target_stage: 1
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/proposal.md
+> severity: low
+
+### 指令
+
+澄清 003 的措辞：「抵御得了大风还有野兽」**只是形容**，用来说明**想要的房子是什么 level**。
+**片里不需要真的出现野兽。**
+
+### 一行摘要
+
+强度标准从「抗风 + 抗兽」改写为「档位量尺（八行）+ 抗风六条」——质量口径而非剧情要求；
+删除全部兽夜/爪痕/响声预警物设计，兽类调研数据降级保留为否决依据。
+
+---
+
+## 005 — 2026-09-12 — 直接用 hy 编号；已拍的锁定不动，未拍的继续讨论
+
+> target_stage: 1
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/proposal.md
+> severity: low
+
+### 指令
+
+提案直接用 `hy1` / `hy2` 这套编号，不要另立概念编号。
+**已经拍摄好的（hy1、hy2）直接放上去、保持不变**；
+未拍的（hy3 起）可以继续讨论怎么拍、还要加什么元素。
+
+### 一行摘要
+
+废除 s01–s20 概念编号层，全文改用 hy 编号（编号即排产顺序）；
+hy1 / hy2 进表但标「已锁定 · 不回溯」；新增讨论入口与元素候选池。
+
+---
+
+## 006 — 2026-09-12 — 人物 / 服装 / 工具变不变，由 Claude 提案；还能加什么元素
+
+> target_stage: 1
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/proposal.md
+>   - ai_videos/huangye_shenghuo/_series/series_bible.md
+> severity: medium
+
+### 指令
+
+1. **人物要不要变换、穿着打扮要不要变换、工具要不要变——由 Claude 直接 propose**，不要反问。
+2. 除了「每部一只小动物」，**还有什么有意思的元素可以加**，一并提案。
+
+### 一行摘要
+
+提案：主角不换（要换人另开支线）；服装改三层制度（锁定层不变 + 按地带加气候外层 + 脏污层）；
+工具分三类（原生永不变 / 自制累积上限 6 件 / 地方工具用完留在原地，后者即痕迹线机制）；
+另提 6 条建议立即采用的新元素常量 + 3 条可选 + 2 条不建议。
+
+---
+
+## 007 — 2026-09-12 — 再提一批元素：反差（例：女汉子劈柴）
+
+> target_stage: 1
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/proposal.md
+> severity: medium
+
+### 指令
+
+还有很多其他元素可以考虑，**比如「女汉子劈柴」——就是比较有对比/反差的元素**，再 propose 一些。
+
+### 一行摘要
+
+把「反差」立成轴 L（七类，每部至少三处、类型不重复）；女性主角查实数据（非泳池派 6–32M，
+多条频道可复制）；另提第二批 6 条非反差类元素。
+
+---
+
+## 008 — 2026-09-12 — 更正：人物、工具都是每集可以换的
+
+> target_stage: 1
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/proposal.md
+>   - ai_videos/huangye_shenghuo/_series/series_bible.md
+> severity: **high**（推翻了 006 里 Claude 的「主角不换」提案，并连带改动多处结构）
+
+### 指令
+
+**人物、工具都是每集可以换的。**
+
+### 一行摘要
+
+推翻 006 的「二十部同一个人」提案。人物每部换、服装随人换、工具改为「工具即人设」；
+恒定符号转移到五样（签名定帧 / 片名格式 / 无人声 / 14 镜骨架 / 火）+ 统一色域；
+长线伏笔升级为「痕迹人链」（每部的人留下的东西是另一部的人看见的痕迹）；
+连带改写 hy11 / hy16 / hy18 三部，其余十七部不受影响。

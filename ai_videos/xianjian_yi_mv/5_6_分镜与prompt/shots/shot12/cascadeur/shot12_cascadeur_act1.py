@@ -22,10 +22,10 @@ def log(*a):
 
 
 F = lambda t: int(round(t * FPS))
-T_END = 8.10                                              # 用户 2026-09-06：第一幕压到 8.1 s（出鞘→落手→开斩）
+T_END = 10.00                                             # 2026-09-06：出鞘 6.2 → 身前 7.3 → 绕身一圈 7.6–8.7 → 回身前 8.95 停半秒 → 伸手握剑 9.75 → 收势 10.0
 BOX = {s: [n for n in IDS if n.startswith("f_") and n.endswith("_Box_" + s)] for s in ("l", "r")}
 HAND_JSON = OUT_DIR + r"\hands_lr_cascy.json"
-HAND_KEY_FRAMES = sorted({0, F(5.05), F(5.35), F(6.20), F(6.50)})
+HAND_KEY_FRAMES = sorted({0, F(4.45), F(4.60), F(5.05), F(5.35), F(6.20), F(6.50)})
 HANDS_JSON_IN = globals().get("HANDS_JSON_IN", os.path.join(OUT_DIR, "hands_lr_cascy.json"))
 
 def _slerp(q0, q1, t):
@@ -50,10 +50,13 @@ def natural_hands(curl_scale=1.0):
         out[s] = {}
         for n, q0 in relax[s].items():
             q1 = jz[s].get(n, q0)
-            t = 0.5 if ("ring" in n or "pinky" in n) else (0.4 if "thumb" in n else 0.35)
+            # 用户 2026-09-06「像鬼爪」：Cascy 默认手指是张开的，半张半蜷就成爪。食中指先完全并拢（取剑指姿 t=1）再整体微蜷，
+            # 无名指/小指取握姿七成、拇指六成 → 五指并拢、由食指到小指逐渐更弯的放松手。
+            # 放松手＝五指并拢、都微微弯（食中指并拢后再蜷 35/40/25°，无名指小指取握姿五成半、拇指六成）——没有一根是伸直的，也没有一根张开
+            t = 0.55 if ("ring" in n or "pinky" in n) else (0.6 if "thumb" in n else 1.0)
             r = q_to_rot([float(v) for v in _slerp(q0, q1, t)])
             seg = n.split("_")[1][-1]
-            curl = {"1": 14.0, "2": 18.0, "3": 10.0}.get(seg, 0.0) * curl_scale if ("index" in n or "middle" in n) else 0.0
+            curl = {"1": 35.0, "2": 40.0, "3": 25.0}.get(seg, 0.0) * curl_scale if ("index" in n or "middle" in n) else 0.0
             out[s][n] = rot_mul(r, rot_axis(curl, "z")) if curl else r
     return out
 
@@ -68,7 +71,7 @@ def grip_hands():
         for n, q0 in relax[s].items():
             r = q_to_rot([float(v) for v in jz[s].get(n, q0)])
             seg = n.split("_")[1][-1]
-            curl = {"1": 45.0, "2": 55.0, "3": 30.0}.get(seg, 0.0) if ("index" in n or "middle" in n) else 0.0
+            curl = {"1": 60.0, "2": 70.0, "3": 40.0}.get(seg, 0.0) if ("index" in n or "middle" in n) else 0.0   # 包住右拳：食中指也深蜷（参考图 ref/shoushi.png）
             out[s][n] = rot_mul(r, rot_axis(curl, "z")) if curl else r
     return out
 
@@ -81,8 +84,10 @@ if STAGE == "hands" and NATURAL_HANDS:
     _relax = natural_hands()                                   # 用户 2026-09-06：Cascy 默认张开手改成放松自然手
     _hands = json.load(open(HANDS_JSON_IN))
     _jz = {s: {n: q_to_rot(q) for n, q in _hands["JZ"][s].items()} for s in ("l", "r")}
-    _seal = {"r": _jz["r"], "l": grip_hands()["l"]}                    # 道家手印：右手剑指二指朝上，左手握拳包住右拳（用户参考图）
-    for fr, tbl in ((0, _relax), (F(5.05), _relax), (F(5.35), _seal), (F(6.20), _seal), (F(6.50), _relax)):
+    _grip = grip_hands()
+    _seal = {"r": _jz["r"], "l": _grip["l"]}                            # 道家手印：右手剑指二指朝上，左手握拳包住右拳（用户参考图）
+    _hold = {"r": _grip["r"], "l": _relax["l"]}                          # 拎葫芦：右手握住葫芦颈（0 → 4.45 s 甩出为止），左手放松
+    for fr, tbl in ((0, _hold), (F(4.45), _hold), (F(4.60), _relax), (F(5.05), _relax), (F(5.35), _seal), (F(6.20), _seal), (F(6.50), _relax)):
         for s in ("l", "r"):
             set_box_rots(tbl[s], fr, f"seal fingers {s} f{fr}")
     log("hands: seal finger keys at 5.35-6.20s, natural elsewhere")
@@ -196,7 +201,7 @@ def K(t, local, pelvis=None, title=""):
     return ok
 
 
-KEY_T = [2.32, 2.70, 3.35, 3.50, 3.80, 4.15, 4.30, 4.45, 5.00, 5.35, 5.45, 5.56, 5.73, 5.84, 6.01, 6.12, 6.20, 7.30, 8.10]
+KEY_T = [2.32, 2.70, 3.35, 3.50, 3.80, 4.15, 4.30, 4.45, 5.00, 5.35, 5.45, 5.56, 5.73, 5.84, 6.01, 6.12, 6.20, 8.70, 10.00]
 
 if STAGE == "body1":
     K(2.70, pose_drink(), title="drink in"); K(3.35, pose_drink(), title="drink hold")
@@ -208,9 +213,9 @@ elif STAGE == "body2":
     K(5.35, pose_seal(), title="seal")
     for t0 in (5.32, 5.60, 5.88):                              # 右脚快跺三下：起→抬(+0.13)→落(+0.24)
         K(t0 + 0.13, pose_seal(foot_up=True), title=f"stomp up {t0}"); K(t0 + 0.24, pose_seal(), title=f"stomp down {t0}")
-    K(6.20, pose_seal(), title="seal end"); K(7.30, pose_seal(), title="seal hold")
+    K(6.20, pose_seal(), title="seal end"); K(8.70, pose_seal(), title="seal hold")
 elif STAGE == "body3":
-    K(8.10, pose_end(), title="end")           # 握剑后收到垂手预备位；7.45–7.85 的伸手取剑在 act2 body2a 里
+    K(10.00, pose_end(), title="end")          # 握剑后收到垂手预备位；9.35–9.75 的伸手取剑在 act2 body2a 里
 elif STAGE == "gourd":                           # 酒葫芦（用户 2026-09-05）：两颗球，随右手走，4.45s 抛向画右落地
     import common.mesh as c_mh
     def all_ids(): return {_MV.get_object_name(i): i for i in _MV.get_objects()}

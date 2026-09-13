@@ -1,5 +1,7 @@
 export type TreeNodeType =
   | "section"
+  /** A series folder (`ai_videos/{s}/series.json`) — its children are dramas. */
+  | "series"
   | "directory"
   | "file"
   | "image"
@@ -22,6 +24,18 @@ export interface TreeNode {
   children?: TreeNode[];
   /** Only populated on `ai_videos/{name}/` directory nodes. */
   project_meta?: ProjectMeta | null;
+  /** True on a drama root. A drama is `ai_videos/{drama}` when flat and
+   *  `ai_videos/{series}/{drama}` inside a series, so path depth is NOT a
+   *  reliable test — always use this flag. */
+  is_drama?: boolean;
+  /** True when this leaf is a cross-episode shortcut (`*.link.json`). `path`
+   *  already points at the real asset, so preview/download need no special
+   *  case — only the label does. */
+  is_link?: boolean;
+  /** Where the `*.link.json` manifest itself lives (only on `is_link` nodes). */
+  link_at?: string;
+  /** Why the shortcut exists, shown as the link leaf's tooltip. */
+  link_note?: string;
   /** Only populated on `type === "actor"` leaves: relative path of the first face image inside the collapsed actor folder. */
   face_path?: string | null;
   /** Only populated on `type === "voice"` leaves (follow-up 115): relative path of the first audio sample inside the collapsed voice folder, or null when no sample has been uploaded yet. */

@@ -26,6 +26,7 @@ from apps.api.routes.frame__route import router as _frame_router
 from apps.api.routes.intro_card__route import router as _intro_card_router
 from apps.api.routes.scene_plate__route import router as _scene_plate_router
 from apps.api.routes.media__route import router as _media_router
+from apps.api.routes.mux__route import router as _mux_router
 from apps.api.routes.novel__route import router as _novel_router
 from apps.api.routes.previz__route import router as _previz_router
 from apps.api.routes.perf_check__route import router as _perf_check_router
@@ -68,3 +69,4 @@ router.include_router(_drama_router)
 router.include_router(_eval_center_router)
 router.include_router(_research_router)
 router.include_router(_previz_router)
+router.include_router(_mux_router)

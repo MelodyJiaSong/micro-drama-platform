@@ -16,6 +16,8 @@ no `episodes/` dir so it is never re-walked.
 """
 from __future__ import annotations
 
+from libs.common import drama_ref
+
 import re
 import shutil
 from dataclasses import dataclass
@@ -104,9 +106,10 @@ class ProductionExporter:
         if not self._exposed.is_inside(rel):
             raise InvalidBatchScopeError("path outside sandbox")
         parts = rel.split("/")
-        if len(parts) < 2 or parts[0] != "ai_videos" or parts[1].startswith("_"):
+        depth = drama_ref.drama_depth(self._resolver.root, parts)
+        if depth is None:
             raise InvalidBatchScopeError("path is not under ai_videos/{drama}/")
-        resolved = self._resolver.resolve("/".join(parts[:2]))
+        resolved = self._resolver.resolve("/".join(parts[:depth]))
         if resolved is None:
             raise InvalidBatchScopeError("path failed sandbox resolution")
         if resolved.is_symlink():

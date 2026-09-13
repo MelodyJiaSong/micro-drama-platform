@@ -1,14 +1,16 @@
 """List a drama's episodes for the main-page production console.
 
-Walks `episodes/ep{NN}/` (both the flat root layout and the staged
-`…/5_6_分镜与prompt/episodes/` one, via `drama_layout.episodes_dir`) and reports
-each episode's shot count, how many shots are already 定版-locked
-(`shot{NN}.mp4` present), and whether the stitched master `ep{NN}.mp4` exists —
+Walks every shot tree the drama has (`drama_layout.shot_tree_roots` — an
+`episodes/ep{NN}/` per episode, or the single one a single-piece drama keeps at
+`shots/`) and reports each one's shot count, how many shots are already 定版-locked
+(`shot{NN}.mp4` present), and whether the stitched master exists —
 enough for the dashboard to render a per-episode 拼接成片 row with status.
 
 Read-only: no copies, no mutation.
 """
 from __future__ import annotations
+
+from libs.common import drama_ref
 
 import re
 from dataclasses import dataclass
@@ -19,18 +21,17 @@ from libs.common.exposed_tree import ExposedTree
 from libs.common.safe_resolve import SafeResolver
 from libs.domain.errors.subtitle__error import InvalidBatchScopeError
 
-_EP_DIR_RE = re.compile(r"^ep\d+$", re.IGNORECASE)
 _SHOT_DIR_RE = re.compile(r"^shot\d+$", re.IGNORECASE)
 _MP4_EXT = ".mp4"
 
 
 @dataclass(frozen=True)
 class EpisodeInfo:
-    episode: str         # ep folder name, e.g. "ep04"
+    episode: str         # shot-tree slug: "ep04", or the drama name (single-piece)
     episode_rel: str     # repo-relative ep folder path (concat target)
     shots: int           # shot{NN} subfolders
     locked: int          # shots with a 定版 shot{NN}.mp4
-    has_master: bool     # stitched ep{NN}.mp4 exists
+    has_master: bool     # stitched {slug}.mp4 exists
 
 
 @dataclass(frozen=True)
@@ -61,24 +62,21 @@ class DramaEpisodesReader:
 
     def list(self, rel: str) -> DramaEpisodesResult:
         drama_root = self._drama_root(rel)
-        episodes_dir = drama_layout.episodes_dir(drama_root)
         episodes: list[EpisodeInfo] = []
-        if episodes_dir.is_dir():
-            for ep_dir in self._sorted_ep_dirs(episodes_dir):
-                shots = self._shot_dirs(ep_dir / "shots")
-                locked = sum(
-                    1 for s in shots if (s / f"{s.name}{_MP4_EXT}").is_file()
+        for ep_dir in drama_layout.shot_tree_roots(drama_root):
+            slug = drama_layout.shot_tree_slug(ep_dir, drama_root)
+            shots = self._shot_dirs(ep_dir / drama_layout.SHOTS_DIR_NAME)
+            locked = sum(1 for s in shots if (s / f"{s.name}{_MP4_EXT}").is_file())
+            master = ep_dir / f"{slug}{_MP4_EXT}"
+            episodes.append(
+                EpisodeInfo(
+                    slug,
+                    self._rel(ep_dir),
+                    len(shots),
+                    locked,
+                    master.is_file() and not master.is_symlink(),
                 )
-                master = ep_dir / f"{ep_dir.name.lower()}{_MP4_EXT}"
-                episodes.append(
-                    EpisodeInfo(
-                        ep_dir.name,
-                        self._rel(ep_dir),
-                        len(shots),
-                        locked,
-                        master.is_file() and not master.is_symlink(),
-                    )
-                )
+            )
         return DramaEpisodesResult(self._rel(drama_root), tuple(episodes))
 
     def _drama_root(self, rel: str) -> Path:
@@ -87,9 +85,10 @@ class DramaEpisodesReader:
         if not self._exposed.is_inside(rel):
             raise InvalidBatchScopeError("path outside sandbox")
         parts = rel.split("/")
-        if len(parts) < 2 or parts[0] != "ai_videos" or parts[1].startswith("_"):
+        depth = drama_ref.drama_depth(self._exposed.root, parts)
+        if depth is None:
             raise InvalidBatchScopeError("path is not under ai_videos/{drama}/")
-        resolved = self._resolver.resolve("/".join(parts[:2]))
+        resolved = self._resolver.resolve("/".join(parts[:depth]))
         if resolved is None:
             raise InvalidBatchScopeError("path failed sandbox resolution")
         if resolved.is_symlink():
@@ -97,17 +96,6 @@ class DramaEpisodesReader:
         if not resolved.is_dir():
             raise InvalidBatchScopeError("drama folder does not exist")
         return resolved
-
-    @staticmethod
-    def _sorted_ep_dirs(episodes_dir: Path) -> list[Path]:
-        try:
-            entries = sorted(episodes_dir.iterdir(), key=lambda p: p.name)
-        except OSError:
-            return []
-        return [
-            e for e in entries
-            if e.is_dir() and not e.is_symlink() and _EP_DIR_RE.match(e.name)
-        ]
 
     @staticmethod
     def _shot_dirs(shots_dir: Path) -> list[Path]:

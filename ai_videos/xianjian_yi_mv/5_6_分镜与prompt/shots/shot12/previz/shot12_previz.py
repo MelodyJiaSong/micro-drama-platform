@@ -47,7 +47,7 @@ SCENE_MASTER = "ai_videos/xianjian_yi_mv/2_世界观人设/scenes/s11_十里坡�
 FPS = 24
 TOTAL = 678  # 28.2s ＝ 第一幕 15.0s（＝ shot12 previz 原样）+ 第二幕 13.2s（follow-up 050：头顶平转 5.6→2.8s，省出的 2.8s 一部分还给插地/跳跃/跟斗/大笑，其余直接从总长剪掉——不必凑满 30s）
 
-TEMPLE = Vector((-21.0, 19.0, 0.0))
+TEMPLE = Vector((-14.0, 11.0, 0.0))     # 用户 2026-09-06：庙不在身后，在他左前方 45°（与 tools/build_s11_shanshenmiao.py TEMPLE_POS 一致）
 P = Vector((0.0, 4.0, 0.0))
 
 _argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
@@ -75,6 +75,7 @@ BODY_PROPORTIONS = 0.55     # 比例 0..1：敦实 → 修长
 TILT_DEG = 20.0
 SENSOR_V = 36.0 * 9.0 / 16.0
 PULL_FACTOR = 1.30                     # 齐冲夜空时机位向后拉开一档（视野放大 30%）
+PULL_MID = 1.20                        # 抛剑高悬时先轻拉一小档（用户 2026-09-06：剑在头顶时离头顶留点距离）
 AIM_SHIFT_FRAC = 0.15                  # 视觉中心左移量（画宽比例）
 BODY_YAW_DEG = -30.0                   # 身体侧转角（三分面；负=转向画左/庙）
 RING_R_FRAC = 0.16                     # 高空二十剑成环半径（画宽比例）
@@ -104,7 +105,7 @@ DUR_SWORD_IN = 2.05
 DUR_RINGS = 1.55
 DUR_ORBIT = 2.30
 DUR_PILLAR = 1.90
-DUR_GRIP = 1.00
+DUR_GRIP = 1.05
 DUR_SLASH = 1.50
 DUR_THROW = 1.50
 DUR_SPLIT = 1.40
@@ -113,8 +114,8 @@ DUR_RISE = 0.70
 DUR_DROP = 2.18
 DUR_JUMP = 1.14
 DUR_FLIP = 0.73
-DUR_SHEATH = 0.40
-DUR_LAUGH = 0.85
+DUR_SHEATH = 1.40
+DUR_LAUGH = 2.05
 AIR_SPINS = 2           # 单脚跳起后绕竖直体轴转几圈
 FLIP_COUNT = 2          # 跃开后翻几个前空翻
 STAND_Z = BODY_H                       # 踩剑悬空：脚底离地约一个身高
@@ -223,6 +224,7 @@ FRAME_H = BODY_H / SUBJ_FRAC          # 人所在深度处的画面覆盖高度�
 FRAME_W = FRAME_H * 16.0 / 9.0
 D_SUBJ = FRAME_H * CAM_LENS / SENSOR_V
 D_SUBJ_FAR = D_SUBJ * PULL_FACTOR
+D_SUBJ_MID = D_SUBJ * PULL_MID
 AIM_SHIFT = FRAME_W * AIM_SHIFT_FRAC
 RING_R = FRAME_W * RING_R_FRAC
 GROUND_R = FRAME_W * GROUND_R_FRAC
@@ -236,9 +238,9 @@ _SEGS = (
     ("SEAL", DUR_SEAL, 0.88, {"_STOMP0": 0.00, "A_SEAL": 0.03, "A_SEAL_END": 0.88, "A_SWORD_OUT": 0.88}),
     ("SWORD_IN", DUR_SWORD_IN, 2.05, {"A_SWORD_LEAVE": 0.12, "A_SWORD_TOP": 0.75, "A_SWORD_HOLD": 1.00, "A_SWORD_HOVER": 1.90}),
     ("RINGS", DUR_RINGS, 1.55, {"_RING_START": 0.00, "A_RING_MAX": 1.55}),
-    ("ORBIT", DUR_ORBIT, 2.30, {"A_FINGER": 1.00, "A_ORBIT0": 1.20}),
+    ("ORBIT", DUR_ORBIT, 2.30, {"A_FINGER": 0.20, "A_ORBIT0": 0.24}),   # 2026-09-06：段起 0.15s 即飞出绕身（人保持道家手印，不再有剑指弓步）
     ("PILLAR", DUR_PILLAR, 1.90, {"A_PILLAR0": 0.00, "A_PILLAR_TOP": 1.20, "A_PILLAR_GONE": 1.90}),
-    ("GRIP", DUR_GRIP, 1.00, {"A_GRIP0": 0.00, "A_FADE0": 0.00, "A_GRIP1": 0.50, "A_FADE1": 0.80}),
+    ("GRIP", DUR_GRIP, 1.00, {"A_GRIP0": 0.45, "A_FADE0": 0.45, "A_GRIP1": 0.80, "A_FADE1": 0.95}),   # 2026-09-06：段前 0.45 剑停在身前，之后才落手
     ("SLASH", DUR_SLASH, 1.50, {"T_WIND1": 0.25, "T_SLASH1": 0.45, "T_QI1_END": 0.67, "T_WIND2": 0.90, "T_SLASH2": 1.08, "T_ARC_END": 1.34}),
     ("THROW", DUR_THROW, 1.50, {"T_THROW_WIND": 0.00, "T_THROW": 0.15, "T_SWORD_HIGH": 0.70, "T_SEAL": 1.00, "T_EYES_CLOSED": 1.40}),
     ("SPLIT", DUR_SPLIT, 1.40, {"T_SPLIT": 0.00, "T_SPLIT_DONE": 1.40}),
@@ -248,8 +250,8 @@ _SEGS = (
     ("JUMP", DUR_JUMP, 1.14, {"T_JUMP0": 0.00, "T_JUMP_TOP": 0.24, "T_JUMP1": 0.48, "T_GATHER1": 0.72, "T_MERGE": 0.74,
                               "_BOUNCE0": 0.82, "_BOUNCE1": 0.90, "_BOUNCE2": 0.98, "_BOUNCE3": 1.08}),
     ("FLIP", DUR_FLIP, 0.73, {"T_FLIP0": 0.00, "T_FLIP1": 0.63, "T_LAND_DIP": 0.70, "T_LAND_UP": 0.86}),
-    ("SHEATH", DUR_SHEATH, 0.40, {"T_SWORD_UP": 0.00, "T_SWORD_APEX": 0.13, "T_SHEATH": 0.35}),
-    ("LAUGH", DUR_LAUGH, 0.85, {"T_LAUGH": -0.01, "_BOB0": 0.15, "_BOB1": 0.31, "_BOB2": 0.47}),
+    ("SHEATH", DUR_SHEATH, 1.40, {"T_SWORD_UP": 0.00, "T_SWORD_APEX": 0.13, "T_SHEATH": 0.35}),   # 2026-09-06：默认 1.40＝归鞘 0.35 + 定住 1.05
+    ("LAUGH", DUR_LAUGH, 2.05, {"T_LAUGH": -0.01, "_BOB0": 0.15, "_BOB1": 0.31, "_BOB2": 0.47}),   # 2026-09-06：大笑维持约两秒
 )
 _t = 0.0
 _derived: dict = {}
@@ -473,6 +475,7 @@ def cam_pos_for(d):
 
 CAM_POS = cam_pos_for(D_SUBJ)
 CAM_POS_FAR = cam_pos_for(D_SUBJ_FAR)
+CAM_POS_MID = cam_pos_for(D_SUBJ_MID)
 CAM_AIM = P + Vector((0.0, 0.0, 0.9)) - R_VEC * AIM_SHIFT
 _d = Vector((CAM_POS.x - P.x, CAM_POS.y - P.y)).normalized()
 RZ_FACE = math.atan2(_d.x, -_d.y)  # 正身面朝镜头
@@ -560,7 +563,7 @@ def z_for_v(target_v, cam_pos):
     return 0.5 * (lo + hi)
 
 
-HIGH_Z = z_for_v(0.88, CAM_POS)   # 抛剑高悬：剑在画面上三分之一线（起幅机位）
+HIGH_Z = z_for_v(0.88, CAM_POS_MID)   # 抛剑高悬：剑在画面上三分之一线，按拉远后的机位算 → 离头顶更高（用户 2026-09-06：剑在头顶时离头顶远点）
 cam.location = CAM_POS
 bpy.context.view_layer.update()
 print(f"HIGH_Z={HIGH_Z:.2f} (head v={world_to_camera_view(sc, cam, P + Vector((0, 0, 1.6))).y:.3f})")
@@ -698,6 +701,13 @@ M_PILLAR = mat("PVZ_光柱_青", (0.45, 0.88, 1.00), 0.18, alpha=0.09)
 QI_RMAX = tuple(FRAME_W * k for k in (0.16, 0.30, 0.46, 0.64))
 RINGS = [ring(f"PVZ_qi_ring{i}", C_CYAN, EFX_EMIT, EFX_ALPHA, QI_RMAX[i]) for i in range(4)]
 pillar = cyl("PVZ_light_pillar", 1.45, 1.0, Vector((P.x, P.y, 0.5)), M_PILLAR, caps=False)
+# 段时长压到 0.2s 以下 ＝ 这拍已被删（2026-09-06：光圈外扩 / 光柱裹身不再存在）：整体隐藏，
+# 否则 Bezier 会在键前鼓出一截半透明光柱 / 光圈，prompt 里又没有这两拍。
+if DUR_RINGS < 0.2:
+    for _r in RINGS:
+        _r.hide_render = True; _r.hide_viewport = True
+if DUR_PILLAR < 0.2:
+    pillar.hide_render = True; pillar.hide_viewport = True
 land_dust = ring("PVZ_land_dust", C_DUST, 0.0, 0.55, 3.6)
 STOMP_DUST = [ring(f"PVZ_stomp_dust{i}", C_DUST, 0.0, 0.5, 1.15) for i in range(3)]
 
@@ -727,41 +737,72 @@ for i in range(N_SWORDS):
 
 # ---------------------------------------------------------------- 沟壑
 
-TRENCH_W = 0.50   # 沟口≈一个人肩宽
-TRENCH_D = 0.9    # 沟深（只为让沟内全黑，俯视看不见底）
+TRENCH_W = 0.60   # 裂缝口宽（成片以文字「一掌宽」为准；预演取 0.6 m 让 2.5 m 的深度在俯角下看得见）
+TRENCH_D = 2.5    # 剑痕深两米半（用户 2026-09-06 四改：还不够深、不够长，要有大地被斩开的感觉）
+# 地裂做法（用户 2026-09-06「地上并没有留下 1 米深的剑痕」）：黑色实心盒子沉在地里，从镜头看只有顶面一条黑线，深度是看不见的。
+# 改成：地面用布尔挖开 + 裂缝是「两壁 + 底」的空槽，对面那道壁受光、底全黑 → 俯角下看得出是一道深沟。
+M_WALL = mat("PVZ_裂缝壁_灰", (0.30, 0.28, 0.26), 0.0)
+CUTTERS = bpy.data.collections.new("PVZ_cutters")
+bpy.context.scene.collection.children.link(CUTTERS)
+
+
+def gash(name, w, L, d, center, rot, parent):
+    """一段地裂：隐藏的布尔切割盒 + 黑底 + 两道灰壁。center = 地表处的段中心（世界坐标），rot = 段朝向（局部 +Y 沿长度）。"""
+    R = Euler(rot).to_matrix()
+    cut = box(name + "_cut", (w, L, d + 0.4), center + Vector((0, 0, 0.2 - (d + 0.4) / 2)), M_TRENCH, parent, rot=rot)
+    cut.hide_render = True; cut.display_type = "WIRE"
+    for c in list(cut.users_collection):
+        c.objects.unlink(cut)
+    CUTTERS.objects.link(cut)
+    box(name + "_floor", (w, L, 0.06), center + Vector((0, 0, -d + 0.03)), M_TRENCH, parent, rot=rot)
+    for sgn in (1, -1):
+        box(name + ("_wallL" if sgn > 0 else "_wallR"), (0.03, L, d), center + R @ Vector((sgn * (w / 2 - 0.03), 0, 0)) + Vector((0, 0, -d / 2)), M_WALL, parent, rot=rot)
+    return cut
+
+
 RIDGE_H = 0.20
 RIDGE_W = 0.35
+RIDGES = False    # 不再堆土垄：裂缝边缘笔直锋利
 
 # 直沟：自他脚前一路划到画面下缘之外（沿身前方向）；用局部 Y 缩放从脚前长出去
-T1_LEN = FRAME_H * 1.35   # 直沟长度：稳出画面下缘
+T1_LEN = 16.0             # 直剑痕长十六米，一路劈出画面下缘（用户 2026-09-06）
 t1_root = empty("PVZ_trench1_root", P + FRONT * 0.7)
 t1_root.rotation_euler = Euler((0, 0, RZ + math.pi))  # 局部 +Y = FRONT
-box("PVZ_trench1", (TRENCH_W, T1_LEN, TRENCH_D), P + FRONT * (0.7 + T1_LEN / 2) + Vector((0, 0, -TRENCH_D / 2 + 0.02)), M_TRENCH, t1_root, rot=t1_root.rotation_euler)
-for sgn in (1, -1):
+gash("PVZ_trench1", TRENCH_W, T1_LEN, TRENCH_D, P + FRONT * (0.7 + T1_LEN / 2), t1_root.rotation_euler, t1_root)
+for sgn in ((1, -1) if RIDGES else ()):
     box(f"PVZ_trench1_ridge{'L' if sgn > 0 else 'R'}", (RIDGE_W, T1_LEN, RIDGE_H),
         P + FRONT * (0.7 + T1_LEN / 2) + R_VEC * (sgn * (TRENCH_W / 2 + RIDGE_W / 2)) + Vector((0, 0, RIDGE_H / 2)),
         M_RIDGE, t1_root, rot=t1_root.rotation_euler)
 
 # 月牙沟：以他为圆心半径 8m 的弧，自他身侧（画左）甩过身前到画面另一侧；40 段逐段出现
 ARC_R = FRAME_W * 0.30    # 月牙沟半径
-ARC_N = 40
-ARC_A0, ARC_A1 = math.radians(-105), math.radians(105)  # 0 = 正前；负 = 画左（他的右侧）
+# 40 → 110（2026-09-07）：40 段时每段弦长 1.1m，相邻两段的两道壁各自成一块平板、接缝处露出受光面，
+# 整道月牙沟在成片里被读成「一串独立的方坑」而不是一道连续的裂缝。段数加密 + 重叠加大即连成一道。
+ARC_N = 110
+ARC_A0, ARC_A1 = math.radians(-125), math.radians(125)  # 0 = 正前；负 = 画左（他的右侧）
 ARC_SEGS = []
 for k in range(ARC_N):
     a0 = ARC_A0 + (ARC_A1 - ARC_A0) * k / ARC_N
     a1 = ARC_A0 + (ARC_A1 - ARC_A0) * (k + 1) / ARC_N
     am = 0.5 * (a0 + a1)
     c = P + FRONT * (ARC_R * math.cos(am)) + R_VEC * (ARC_R * math.sin(am))
-    seg_len = ARC_R * (a1 - a0) * 1.06
+    seg_len = ARC_R * (a1 - a0) * 1.90   # 重叠 6% → 90%：相邻段的壁彼此吃进去大半段，接缝不再露出受光的端面
     seg = empty(f"PVZ_arc{k:02d}", c)
     # 段的局部 Y 沿弧切线
     tangent = (-FRONT * math.sin(am) + R_VEC * math.cos(am)).normalized()
     seg.rotation_euler = Euler((0, 0, math.atan2(tangent.y, tangent.x) - math.pi / 2))
     normal = (FRONT * math.cos(am) + R_VEC * math.sin(am)).normalized()
-    box(f"PVZ_arc{k:02d}_t", (TRENCH_W, seg_len, TRENCH_D), c + Vector((0, 0, -TRENCH_D / 2 + 0.02)), M_TRENCH, seg, rot=seg.rotation_euler)
-    for sgn in (1, -1):
+    gash(f"PVZ_arc{k:02d}", TRENCH_W, seg_len, TRENCH_D, c, seg.rotation_euler, seg)
+    for sgn in ((1, -1) if RIDGES else ()):
         box(f"PVZ_arc{k:02d}_r{sgn}", (RIDGE_W, seg_len, RIDGE_H), c + normal * (sgn * (TRENCH_W / 2 + RIDGE_W / 2)) + Vector((0, 0, RIDGE_H / 2)), M_RIDGE, seg, rot=seg.rotation_euler)
     ARC_SEGS.append(seg)
+
+# 地面挖开：一个布尔修改器吃整个 PVZ_cutters 集合（段出现＝该段切割盒从 0.001 放大到 1，地面随之裂开）
+for _gname in ("GND_field", "GND_apron"):
+    _g = bpy.data.objects.get(_gname)
+    if _g is not None:
+        _m = _g.modifiers.new("PVZ_地裂", "BOOLEAN")
+        _m.operation = "DIFFERENCE"; _m.operand_type = "COLLECTION"; _m.collection = CUTTERS; _m.solver = "FLOAT"   # Blender 5.1：FLOAT（旧 FAST）/ EXACT / MANIFOLD
 
 # 剑气示意：一块青色薄片贴地飞
 qi1 = box("PVZ_qi_slab1", (0.9, 0.35, 0.10), P, M_QI)
@@ -984,7 +1025,8 @@ with Interp("BEZIER"):
 bpy.context.view_layer.update()
 
 FRONT = Vector((math.sin(RZ), -math.cos(RZ), 0.0))  # 局部 -Y 的世界朝向 = 身前
-HOVER = Vector((P.x, P.y, 0.0)) + FRONT * ORBIT_R + Vector((0, 0, ORBIT_Z))
+HOVER_R = 0.45                                    # 身前悬停点：伸手可握（Cascadeur GRAB 0.45 m）
+HOVER = Vector((P.x, P.y, 0.0)) + FRONT * HOVER_R + Vector((0, 0, ORBIT_Z))
 ORBIT_C = Vector((P.x, P.y, ORBIT_Z))
 
 # 剑鞘：全程留背上不动 —— 直接挂 pelvis
@@ -1043,9 +1085,9 @@ with Interp("BEZIER"):
     # 6.2-6.32s 竖直向上拔出鞘 → 6.95s 越过头顶（略偏身前）→ 7.2s 在身前下落 → 8.1s 停在 HOVER
     key_rot(sword, f(A_SWORD_LEAVE), (0, 0, 0))
     key_loc(sword, f(A_SWORD_LEAVE), back_pt + Vector((0, 0, 0.55)))
-    key_loc(sword, f(A_SWORD_TOP), P + FRONT * (ORBIT_R * 0.35) + Vector((0, 0, 2.55)))
+    key_loc(sword, f(A_SWORD_TOP), P + FRONT * (HOVER_R * 0.35) + Vector((0, 0, 2.55)))
     key_rot(sword, f(A_SWORD_TOP), (0, 0, 0))
-    key_loc(sword, f(A_SWORD_HOLD), P + FRONT * (ORBIT_R * 0.85) + Vector((0, 0, ORBIT_Z + 0.55)))
+    key_loc(sword, f(A_SWORD_HOLD), P + FRONT * (HOVER_R * 0.85) + Vector((0, 0, ORBIT_Z + 0.55)))
     key_loc(sword, f(A_SWORD_HOVER), HOVER)
     key_rot(sword, f(A_SWORD_HOVER), (0, 0, 0))
 
@@ -1053,10 +1095,11 @@ with Interp("BEZIER"):
     # 悬停期极缓慢微幅上下浮动：幅度不超过一指宽、约两秒一个起伏
     tt = A_SWORD_HOVER + 0.2
     up = True
-    while tt <= A_ORBIT0:
+    while tt < A_ORBIT0 - 0.15:
         key_loc(sword, f(tt), HOVER + Vector((0, 0, 0.045 if up else -0.045)))
         up = not up
         tt += 1.0
+    key_loc(sword, f(A_ORBIT0 - 0.15), HOVER)              # 0.15s 内自身前甩出到绕身圆上
 
 with Interp("LINEAR"):
     # 13.2-15.4s 剑绕他的身体走整整一圈，匀速、同一方向：前→他的左→背后→他的右→回前。
@@ -1075,7 +1118,7 @@ with Interp("LINEAR"):
     key_rot(sword, fr_end, (0, 0, 0))
 
 with Interp("BEZIER"):
-    key_loc(sword, f(A_ORBIT1), HOVER)
+    key_loc(sword, f(A_ORBIT1 + 0.25), HOVER)             # 绕完一圈回到身前悬停点等手来拿
     tt = A_ORBIT1 + 1.0
     up = True
     while tt <= A_GRIP0:
@@ -1439,8 +1482,10 @@ with Interp("BEZIER"):
 
 with Interp("BEZIER"):
     key_loc(cam, 1, CAM_POS)
-    key_loc(cam, f(T_PULL0), CAM_POS)
-    key_loc(cam, f(T_PULL1), CAM_POS_FAR)
+    key_loc(cam, f(T_THROW), CAM_POS)
+    key_loc(cam, f(T_SWORD_HIGH), CAM_POS_MID)     # 抛剑高悬：轻拉一小档
+    key_loc(cam, f(T_PULL0), CAM_POS_MID)
+    key_loc(cam, f(T_PULL1), CAM_POS_FAR)          # 齐冲天：再拉一大档
     key_loc(cam, TOTAL, CAM_POS_FAR)
 
 # ---------------------------------------------------------------- 插值后处理

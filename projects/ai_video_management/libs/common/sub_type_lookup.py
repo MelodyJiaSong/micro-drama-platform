@@ -36,7 +36,12 @@ class ProjectMeta:
 
 
 def lookup(repo_root: Path, project_name: str) -> ProjectMeta:
-    project_dir = repo_root / "ai_videos" / project_name
+    """`project_name` is the drama key relative to `ai_videos/` — one segment when
+    flat, two when the drama sits inside a series (`huangye_shenghuo/hy2`)."""
+    segments = [s for s in project_name.split("/") if s not in ("", ".", "..")]
+    if not segments:
+        return ProjectMeta(sub_type=None, shot_count=None, episode_count=None)
+    project_dir = repo_root.joinpath("ai_videos", *segments)
     if not project_dir.is_dir():
         return ProjectMeta(sub_type=None, shot_count=None, episode_count=None)
     episode_count = _count_episodes(project_dir)

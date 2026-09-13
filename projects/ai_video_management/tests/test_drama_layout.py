@@ -66,3 +66,49 @@ def test_missing_falls_back_to_flat_root(tmp_path: Path) -> None:
     # nothing on disk → default to flat root so first-time create lands sanely
     assert dl.casting_md(d) == d / "casting.md"
     assert dl.characters_dir(d) == d / "characters"
+
+
+def test_shot_tree_roots_multi_episode(tmp_path: Path) -> None:
+    d = tmp_path / "md"
+    for ep in ("ep01", "ep02"):
+        (d / dl.SHOTS_STAGE / "episodes" / ep / "shots").mkdir(parents=True)
+
+    roots = dl.shot_tree_roots(d)
+
+    assert [r.name for r in roots] == ["ep01", "ep02"]
+    assert dl.shot_tree_slug(roots[0], d) == "ep01"
+
+
+def test_shot_tree_roots_single_piece(tmp_path: Path) -> None:
+    """No `episodes/` layer at all — the one shot tree is the stage dir itself,
+    and its slug (＝ the stitched master's stem) is the drama name."""
+    d = tmp_path / "sp"
+    (d / dl.SHOTS_STAGE / "shots" / "shot01").mkdir(parents=True)
+
+    roots = dl.shot_tree_roots(d)
+
+    assert len(roots) == 1 and roots[0].name == dl.SHOTS_STAGE
+    assert dl.shot_tree_slug(roots[0], d) == "sp"
+    assert not dl.is_episode_root(roots[0])
+
+
+def test_shot_tree_for_resolves_both_layouts(tmp_path: Path) -> None:
+    md = tmp_path / "md"
+    (md / dl.SHOTS_STAGE / "episodes" / "ep03" / "shots").mkdir(parents=True)
+    hit = dl.shot_tree_for(
+        md, "ai_videos/md/5_6_分镜与prompt/episodes/ep03/shots/shot01".split("/")
+    )
+    assert hit is not None and hit[0].name == "ep03" and hit[1] == "ep03"
+
+    sp = tmp_path / "sp"
+    (sp / dl.SHOTS_STAGE / "shots" / "shot01").mkdir(parents=True)
+    hit2 = dl.shot_tree_for(sp, "ai_videos/sp/README.md".split("/"))
+    assert hit2 is not None and hit2[1] == "sp"
+
+
+def test_shot_tree_for_returns_none_when_drama_has_no_shots(tmp_path: Path) -> None:
+    empty = tmp_path / "empty"
+    (empty / dl.WORLD_STAGE).mkdir(parents=True)
+
+    assert dl.shot_tree_roots(empty) == []
+    assert dl.shot_tree_for(empty, "ai_videos/empty/README.md".split("/")) is None

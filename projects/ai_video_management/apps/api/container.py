@@ -35,6 +35,7 @@ from libs.application.commands.frame__command import FrameCommand
 from libs.application.commands.scene_plate__command import ScenePlateCommand
 from libs.application.commands.intro_card__command import IntroCardCommand
 from libs.application.commands.media__command import MediaCommand
+from libs.application.commands.mux__command import MuxCommand
 from libs.application.commands.novel__command import NovelCommand
 from libs.application.commands.perf_score__command import PerfScoreCommand
 from libs.application.commands.production__command import ProductionCommand
@@ -49,6 +50,7 @@ from libs.application.queries.episode__query import EpisodeQuery
 from libs.application.queries.episode_bgm__query import EpisodeBgmQuery
 from libs.application.queries.file__query import FileQuery
 from libs.application.queries.eval_center__query import EvalCenterQuery
+from libs.application.commands.research__command import ResearchCommand
 from libs.application.queries.research__query import ResearchQuery
 from libs.application.commands.shot_performance__command import ShotPerformanceCommand
 from libs.application.queries.perf_check__query import PerfCheckPromptQuery
@@ -68,6 +70,8 @@ from libs.infrastructure.readers.bgm_reference__reader import BgmReferenceReader
 from libs.infrastructure.readers.file__reader import FileReader
 from libs.infrastructure.readers.eval_center__reader import EvalCenterReader
 from libs.infrastructure.readers.research__reader import ResearchReader
+from libs.infrastructure.writers.mux__writer import BgmMuxer
+from libs.infrastructure.writers.research__writer import ResearchWriter
 from libs.infrastructure.readers.perf_check__reader import PerfCheckPromptReader
 from libs.infrastructure.readers.performance_library__reader import PerformanceLibraryReader
 from libs.infrastructure.readers.shot_regen__reader import ShotRegenPromptReader
@@ -165,6 +169,12 @@ class Container(containers.DeclarativeContainer):
     )
     research_reader: providers.Singleton[ResearchReader] = providers.Singleton(
         ResearchReader, repo_root=repo_root_path
+    )
+    bgm_muxer: providers.Singleton[BgmMuxer] = providers.Singleton(
+        BgmMuxer, repo_root=repo_root_path
+    )
+    research_writer: providers.Singleton[ResearchWriter] = providers.Singleton(
+        ResearchWriter, repo_root=repo_root_path, reader=research_reader
     )
     # Singleton: the renderer owns the single in-flight previz job (thread, lock,
     # cancel event), so every request must see the same instance.
@@ -310,7 +320,13 @@ class Container(containers.DeclarativeContainer):
         EvalCenterQuery, reader=eval_center_reader
     )
     research_query: providers.Factory[ResearchQuery] = providers.Factory(
-        ResearchQuery, reader=research_reader
+        ResearchQuery, reader=research_reader, writer=research_writer
+    )
+    research_command: providers.Factory[ResearchCommand] = providers.Factory(
+        ResearchCommand, writer=research_writer
+    )
+    mux_command: providers.Factory[MuxCommand] = providers.Factory(
+        MuxCommand, muxer=bgm_muxer
     )
     previz_command: providers.Factory[PrevizCommand] = providers.Factory(
         PrevizCommand, renderer=previz_renderer

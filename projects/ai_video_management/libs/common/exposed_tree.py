@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from libs.common import drama_ref
+
 ALLOWED_EXTENSIONS: frozenset[str] = frozenset(
     {".md", ".json", ".yaml", ".yml", ".jsonl", ".txt", ".png", ".jpg"}
 )
@@ -50,10 +52,12 @@ class ExposedTree:
         return self._root
 
     def ai_video_dirs(self) -> list[Path]:
-        ai_videos_root = self._root / "ai_videos"
-        if not ai_videos_root.is_dir():
-            return []
-        return sorted(p for p in ai_videos_root.iterdir() if p.is_dir())
+        """Leaf drama folders — flat ones plus every member of a series folder.
+
+        A series (`ai_videos/{s}/series.json`) is never itself a drama, so it is
+        replaced here by its member dramas; see `libs.common.drama_ref`.
+        """
+        return drama_ref.drama_dirs(self._root)
 
     def downloaded_novel_dirs(self) -> list[Path]:
         root = self._root / "downloaded_novels"

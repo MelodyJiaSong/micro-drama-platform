@@ -12,6 +12,8 @@ from imageio-ffmpeg.
 """
 from __future__ import annotations
 
+from libs.common import drama_ref
+
 import json
 import re
 import subprocess
@@ -161,7 +163,8 @@ class EpisodeSubtitleBurner:
         if not self._exposed.is_inside(rel):
             raise InvalidBatchScopeError("path outside sandbox")
         parts = rel.split("/")
-        if len(parts) < 4 or parts[0] != "ai_videos" or parts[1].startswith("_"):
+        depth = drama_ref.drama_depth(self._resolver.root, parts)
+        if depth is None or len(parts) < depth + 2:
             raise InvalidBatchScopeError("path is not under ai_videos/{drama}/")
         try:
             ep_idx = next(

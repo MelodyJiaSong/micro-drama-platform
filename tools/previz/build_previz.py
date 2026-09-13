@@ -823,12 +823,34 @@ judge_at_end = "起始俯仰偏移" in CAM
 print(f"  基准主体「{SUBJ or '(自动)'}」起幅占画高 {occ * 100:.1f}%（目标 {frac * 100:.0f}%）"
       f"  画面横向 {lo.x:.2f}")
 occ_j = occupancy(subj_ob, subj_h, scene.frame_end)[0] if judge_at_end else occ
-if abs(occ_j - frac) > 0.08:
+# 2026-09-12：容差原为绝对值 0.08——在 frac=0.3 时是 ±27%（够松），到 frac=1.2 时只剩 ±6.7%（过严）。
+# 横置构件（如 shot36 的房梁：7.0×0.34×0.30 的横梁）被仰角拍时，投影纵向跨度天然不等于声明的「高」，
+# 实测恒为目标的九成左右，于是任何 >0.8 的目标都必然判失败。改成随目标放大的相对容差。
+_tol = max(0.08, 0.12 * frac)
+if abs(occ_j - frac) > _tol:
     # 自动解算时占画比是硬约束；手动指定机位时作者已经自己定了距离，只报不拦
-    msg = f"占画比实测 {occ_j:.2f} 与目标 {frac:.2f} 偏差过大"
+    msg = f"占画比实测 {occ_j:.2f} 与目标 {frac:.2f} 偏差过大（容差 ±{_tol:.2f}）"
     (print(f"  [warning] {msg}（手动机位）") if "位置" in CAM else problems.append(msg))
 if not judge_at_end and not (0.0 <= lo.x <= 1.0):
     problems.append("基准主体起幅不在画面内（横向偏移过大？）")
+
+# 2026-09-12：occupancy() 只量【纵向跨度】，从不检查主体是否真的落在画框纵向区间里，
+# 也不检查机位有没有钻到地面以下 —— shot09 的「自检报 49%、实渲主体只有两三像素 + 中途一帧糊掉」
+# 就是这么漏过去的（俯角 -10° 仰拍，解算出的机位 z = -0.17m，埋在地里）。补两道硬检查：
+def _cam_z(fr):
+    scene.frame_set(fr); bpy.context.view_layer.update()
+    return cam.matrix_world.translation.z
+
+for _fr, _tag in ((1, "起幅"), (scene.frame_end, "落幅")):
+    if _cam_z(_fr) < 0.05:
+        problems.append(f"{_tag}机位在地面以下（z={_cam_z(_fr):.2f}m）——俯角为负(仰拍)时会把机位解到地里，改俯角或用「位置」手动指定")
+    _o, _lo, _hi = occupancy(subj_ob, subj_h, _fr)
+    _top, _bot = max(_lo.y, _hi.y), min(_lo.y, _hi.y)
+    if _bot > 1.0 or _top < 0.0:
+        problems.append(f"{_tag}基准主体整个在画框外（纵向 {_bot:.2f}–{_top:.2f}）")
+    elif _bot < -0.25 or _top > 1.25:
+        print(f"  [warning] {_tag}基准主体大幅超出画框纵向范围（{_bot:.2f}–{_top:.2f}）")
+scene.frame_set(1); bpy.context.view_layer.update()
 
 occ_end, _, _ = occupancy(subj_ob, subj_h, scene.frame_end)
 print(f"  基准主体落幅占画高 {occ_end * 100:.1f}%")

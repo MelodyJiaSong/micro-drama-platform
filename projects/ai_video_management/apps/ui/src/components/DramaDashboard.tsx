@@ -22,6 +22,15 @@ import {
 import type { DramaEpisodeInfo, SubtitleLang } from "../api";
 import { ApiError } from "../types";
 
+/** A single-piece drama (`sub_type=short`) has no `episodes/` layer at all — the
+ * API reports its one shot tree with the drama name as slug. Show it as 全片
+ * rather than a pinyin folder name under a 剧集 heading. */
+const EP_SLUG_RE = /^ep\d+$/i;
+
+function isEpisodeSlug(slug: string): boolean {
+  return EP_SLUG_RE.test(slug);
+}
+
 function errKind(err: unknown): string {
   if (err instanceof ApiError) return err.detail?.kind ?? `HTTP ${err.status}`;
   if (err instanceof Error) return err.message;
@@ -152,7 +161,7 @@ export function DramaDashboard({ path, onSaved }: DramaDashboardProps): JSX.Elem
         <button type="button" className="drama-dashboard-btn drama-dashboard-btn-primary"
           onClick={onSelectTakesClick} disabled={takesBusy}
           aria-label="Lock every episode's newest take to shot{NN}.mp4 in one pass"
-          title="全局定版：遍历全剧所有 episodes/ep*/shots/shot*，每镜把 renders/ 里最新的一条 take 锁定复制为 shot{NN}.mp4（renders/ 原样保留），供拼接成片使用。缺 render 的镜头跳过。不做拼接。">
+          title="全局定版：遍历全剧每一个 shot 树（多集剧＝episodes/ep*/shots/shot*；单片剧＝shots/shot*，无 episodes 层），每镜把 renders/ 里最新的一条 take 锁定复制为 shot{NN}.mp4（renders/ 原样保留），供拼接成片使用。缺 render 的镜头跳过。不做拼接。">
           {takesBusy ? "⏳ 定版中…" : "🔒 全局定版"}
         </button>
         <button type="button" className="drama-dashboard-btn"
@@ -169,7 +178,7 @@ export function DramaDashboard({ path, onSaved }: DramaDashboardProps): JSX.Elem
           <button key={lang} type="button" className="drama-dashboard-btn"
             onClick={() => onBurnClick(lang)} disabled={burnBusy}
             aria-label={`Burn ${lang} subtitles into every shot of every episode`}
-            title="遍历全剧所有 episodes/ep*/shots/shot*，每镜取最新 render + subtitles.md 烧入字幕（已存在则覆盖）。缺 render 或缺 subtitles.md 的镜头自动跳过。">
+            title="遍历全剧每一个 shot 树（多集剧＝episodes/ep*/shots/shot*；单片剧＝shots/shot*，无 episodes 层），每镜取最新 render + subtitles.md 烧入字幕（已存在则覆盖）。缺 render 或缺 subtitles.md 的镜头自动跳过。">
             {burnBusy ? "⏳" : label}
           </button>
         ))}
@@ -177,21 +186,28 @@ export function DramaDashboard({ path, onSaved }: DramaDashboardProps): JSX.Elem
 
       {episodes.length > 0 ? (
         <div className="drama-dashboard-group drama-dashboard-episodes" role="group" aria-label="剧集列表">
-          <span className="drama-dashboard-group-label">剧集</span>
+          <span className="drama-dashboard-group-label">
+            {episodes.every((e) => !isEpisodeSlug(e.episode)) ? "成片" : "剧集"}
+          </span>
           <ul className="drama-episode-list">
             {episodes.map((ep) => (
               <li key={ep.episode} className="drama-episode-row">
-                <span className="drama-episode-name">{ep.episode}</span>
+                <span
+                  className="drama-episode-name"
+                  title={isEpisodeSlug(ep.episode) ? undefined : `成片将输出为 ${ep.episode}.mp4`}
+                >
+                  {isEpisodeSlug(ep.episode) ? ep.episode : "全片"}
+                </span>
                 <span className="drama-episode-meta">
                   {ep.locked}/{ep.shots} 定版{ep.has_master ? " · 已出片" : ""}
                 </span>
                 <button type="button" className="drama-dashboard-btn drama-episode-concat-btn"
                   onClick={() => onConcatClick(ep)}
                   disabled={concatBusyEp !== null || ep.locked === 0}
-                  aria-label={`Concat ${ep.episode} locked takes into one ep mp4`}
+                  aria-label={`Concat ${ep.episode} locked takes into one mp4`}
                   title={ep.locked === 0
-                    ? "本集还没有定版的镜头（shot{NN}.mp4）——先「全局定版」或在本集工具栏单集定版后再拼接。"
-                    : "把本集已定版的各镜 shot{NN}.mp4（缺则取最新 renders/ take）按顺序拼接成 ep{NN}.mp4 + segments.json（承接缝默认硬拼，不补帧）。已存在则覆盖。"}>
+                    ? "还没有定版的镜头（shot{NN}.mp4）——先「全局定版」，或在单个 shot 的工具栏里定版后再拼接。"
+                    : `把已定版的各镜 shot{NN}.mp4（缺则取最新 renders/ take）按顺序拼接成 ${ep.episode}.mp4 + segments.json（承接缝默认硬拼，不补帧）。已存在则覆盖。`}>
                   {concatBusyEp === ep.episode ? "⏳ 拼接中…" : "🎬 拼接成片"}
                 </button>
               </li>
