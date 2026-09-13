@@ -4834,3 +4834,23 @@ Auto-updated:
 
 No conflicts found in: `/api/media`（链接节点的 path 就是目标的 path，媒体层无需感知链接）
 
+## Follow-up 167 — 2026-09-13
+Source: user_input/follow_ups/202609.md - section 167
+Summary: 修人物视频抽帧的 extraction failed —— `@staticmethod` 里引用 `self` 的回归（8907992 系列化重构遗留）。
+
+Auto-updated:
+- libs/infrastructure/writers/character_video__writer.py — `_is_under_character_folder`
+  （`@staticmethod` 却用 `self._resolver.root` → 必然 NameError）提成模块级
+  `is_under_character_folder(root, rel)`；`CharacterVideoTruncator` 与
+  `CharacterViewExtractor` 两个调用点都改为传 `self._resolver.root`；
+  顺手收紧 `characters/` 位置判断为「剧根深度 或 剧根深度+1」
+- tests/test_character_video_path_guard.py — 新建回归测试（11 例，全绿）
+
+Verified:
+- 复现：`NameError: name 'self' is not defined`
+- 修后端到端跑通 hy3 的 `c1_砌炉的老人.mp4` → `views/` 下 5 个产物
+  （front 0.5s / side 2.0s / back 3.5s 三张 PNG + audio.mp3 + trim2s.mp4），`failures: []`
+- 全项目扫了一遍「staticmethod 里引用 self/cls」，**全仓只有这一处**
+- 全量 pytest：24 failed / 319 passed；**24 个失败全部预先存在**
+  （seam_smart_interpolation · sub_type_lookup · tree_walker · api_security，
+  均不 import character_video；git stash 掉本次改动后同样失败）

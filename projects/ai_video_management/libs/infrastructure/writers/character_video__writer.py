@@ -67,7 +67,36 @@ _OUTPUT_NAME: str = "video.mp4"
 _TRUNCATE_DURATION_S: float = 2.0
 
 # Path shape: ai_videos / {drama} / characters / {cN_xxx} / {filename}.{ext}
+# (`{drama}` is one OR two segments — a series member is `{series}/{drama}`.)
 _CHARACTER_DIR_RE: re.Pattern[str] = re.compile(r"^c\d+(_.*)?$")
+
+
+def is_under_character_folder(root: Path, rel: str) -> bool:
+    """True when `rel` points inside `…/characters/{cN_xxx}/`.
+
+    Needs `root` because the drama root is **two or three** segments depending
+    on whether the second one is a series folder, and that question is only
+    answerable against the filesystem (`libs.common.drama_ref` — the single
+    place allowed to resolve it; CLAUDE.md forbids re-deriving it from depth).
+
+    Module-level on purpose: two writers need it, and the previous shape —
+    a `@staticmethod` whose body reached for `self._resolver.root` — raised
+    `NameError: name 'self' is not defined` on every call, which took out
+    truncate / extract-views / extract-all for **every** drama
+    (regression in 8907992, the series-nesting refactor).
+    """
+    parts = rel.split("/")
+    depth = drama_ref.drama_depth(root, parts)
+    if depth is None:
+        return False
+    # `characters/` sits at the drama root (legacy) or under a stage folder
+    # (staged pipeline `2_世界观人设/characters/`) — so exactly `depth` or
+    # `depth + 1`. Anywhere deeper is some other folder that happens to be
+    # named `characters`, and must not pass.
+    for ci in (depth, depth + 1):
+        if ci < len(parts) and parts[ci] == "characters":
+            return ci + 1 < len(parts) and bool(_CHARACTER_DIR_RE.match(parts[ci + 1]))
+    return False
 
 
 @dataclass(frozen=True)
@@ -135,7 +164,7 @@ class CharacterVideoTruncator:
         ext = Path(rel).suffix.lower()
         if ext not in VIDEO_EXTENSIONS:
             raise NotCharacterVideoError("extension is not a video type")
-        if not self._is_under_character_folder(rel):
+        if not is_under_character_folder(self._resolver.root, rel):
             raise NotCharacterVideoError(
                 "path must be under ai_videos/{drama}/characters/{cN_xxx}/"
             )
@@ -147,22 +176,6 @@ class CharacterVideoTruncator:
         if not resolved.is_file():
             raise CharacterVideoNotFoundError("file does not exist")
         return resolved
-
-    @staticmethod
-    def _is_under_character_folder(rel: str) -> bool:
-        parts = rel.split("/")
-        if len(parts) < 5:
-            return False
-        if drama_ref.drama_depth(self._resolver.root, parts) is None:
-            return False
-        # `characters/` sits at the drama root (legacy) or under a stage folder
-        # (staged pipeline `2_世界观人设/characters/`). Find it, then require a
-        # cN_ child immediately after.
-        try:
-            ci = parts.index("characters", 2)
-        except ValueError:
-            return False
-        return ci + 1 < len(parts) and bool(_CHARACTER_DIR_RE.match(parts[ci + 1]))
 
     def _rel(self, p: Path) -> str:
         try:
@@ -1055,7 +1068,7 @@ class CharacterViewExtractor:
         ext = Path(rel).suffix.lower()
         if ext not in VIDEO_EXTENSIONS:
             raise NotCharacterVideoError("extension is not a video type")
-        if not CharacterVideoTruncator._is_under_character_folder(rel):
+        if not is_under_character_folder(self._resolver.root, rel):
             raise NotCharacterVideoError(
                 "path must be under ai_videos/{drama}/characters/{cN_xxx}/"
             )

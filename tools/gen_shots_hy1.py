@@ -18,6 +18,7 @@ import os
 import sys
 
 import prompt_light
+import shot_logic
 import shot_seam
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -660,6 +661,9 @@ def build():
     # 这是与 hy2 shot04 同源的污染。**12 镜已全部出过渲染，用户 2026-09-12 裁定不动**，
     # 所以整片进技术债清单；**清单只减不增**，新加的镜不在里面、一犯就拦。
     STYLE_LEGACY = {"shot%02d" % s["n"] for s in S}
+    # 镜内逻辑闸门（rule 16.10/16.11 · K33）：建造镜必须带逐段状态账本。
+    # legacy ＝ 已出过渲染、暂不补账本的镜；**只减不增**，新镜一律拦。
+    shot_logic.gate(emitted, legacy={"shot%02d" % s["n"] for s in S})
     prompt_light.gate(emitted, legacy=STYLE_LEGACY)
 
     audit = shot_seam.table(seams, "tools/gen_shots_hy1.py")
