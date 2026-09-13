@@ -34,7 +34,7 @@ import shutil
 import time
 from dataclasses import dataclass, field
 from io import BytesIO
-from libs.common import drama_layout
+from libs.common import asset_key, drama_layout
 from pathlib import Path
 
 from PIL import Image
@@ -277,14 +277,23 @@ class DownloadsImporter:
                 # suffix the generator wrapped around it.
                 _m = _SUBJECT_KEY.search(src.stem)
                 dst_name = f"bg{_m.group(1)}-{_m.group(2)}{ext}"
-            elif kind in ("prop", "scene"):
+            elif kind in ("prop", "scene", "character"):
                 # A subject folder holds several named views of one subject
                 # (`广场/广场正向.png`, `玉佩/玉佩_完整.png`). The download is named
                 # after the prompt's first line — the view key — so keep that key
                 # as the filename instead of collapsing every view onto
                 # `{folder}.ext`. Falls back to the folder name when the file
                 # carries no view key of its own (the subject's canonical image).
-                dst_name = f"{_view_key(src.stem, dst_folder.name) or dst_folder.name}{ext}"
+                #
+                # `asset_key` first: a `{prefix}{N}-{M}` routing key (`p3-2`,
+                # `c1-1`) is matched ANYWHERE in the stem, so the generator's
+                # own prefix (`ElevenLabs_image_gpt-image-2_…`) cannot hide it.
+                # Without this, `p3-1` and `p3-2` both fell through to the
+                # folder name and silently overwrote each other (rule 4b-A).
+                _key = (asset_key.view_key_in(src.stem, dst_folder.name)
+                        or _view_key(src.stem, dst_folder.name)
+                        or dst_folder.name)
+                dst_name = f"{_key}{ext}"
             try:
                 dst_folder.mkdir(parents=True, exist_ok=True)
             except OSError as exc:
@@ -296,7 +305,7 @@ class DownloadsImporter:
             # same character folder).
             if kind in ("scene_plate", "prop_view"):
                 self._clear_folder_media(dst_folder)
-            elif kind in ("prop", "scene", "scene_subject"):
+            elif kind in ("prop", "scene", "scene_subject", "character"):
                 # Overwrite only THIS view, never the folder's other views.
                 self._clear_named_media(dst_folder, Path(dst_name).stem)
             elif kind == "intro_card":
@@ -962,7 +971,12 @@ class DownloadsImporter:
     def _iter_downloads(self, cutoff: float) -> list[Path]:
         out: list[Path] = []
         try:
-            entries = sorted(self._downloads_dir.iterdir(), key=lambda p: p.name)
+            # (mtime, name): the same routing key downloaded twice → the NEWER
+            # take is processed last and therefore wins, deterministically.
+            entries = sorted(
+                self._downloads_dir.iterdir(),
+                key=lambda p: (p.stat().st_mtime, p.name),
+            )
         except OSError:
             return out
         for child in entries:

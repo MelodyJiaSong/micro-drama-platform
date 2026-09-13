@@ -125,3 +125,68 @@ Produced (由修好的功能生成，media 走 R2、git 不跟踪):
 - …_side.png（2.0s）· …_back.png（3.5s）· …_audio.mp3 · …_trim2s.mp4
 
 Cross-ref: specs/development/ai_video_management/ follow-up 167 + changelog
+
+## Follow-up 003 — 2026-09-13 17:30:00
+Source: user_input/follow_ups/202609.md - section 003
+Summary: hy3 资产按路由键重命名 + 导入 Downloads 队列；p3-1、p4-2 确认丢失待重出。
+
+Auto-updated:
+- ai_videos/huangye_shenghuo/hy3/2_世界观人设/props/{p1,p2,p3,p4}/ —
+  落盘改路由键名（`p1-1.png` / `p2-1.png` / `p3-2.png` / `p4-1.png`）
+- ai_videos/huangye_shenghuo/hy3/2_世界观人设/characters/{c1,c2}/ —
+  `c1-1.png` / `c1-2.mp4` / `c2-1.png`
+- ai_videos/huangye_shenghuo/hy3/5_6_分镜与prompt/shots/shot01..05/renders/ —
+  即梦渲染 take 各一条（保留出图工具原名，与 hy1/hy2 一致）
+- ai_videos/_deleted/huangye_shenghuo/hy3/.../p3-2_take0726.png — p3-2 的另一个 take 无损归档
+
+Pending（需用户出图）:
+- `p3-1` 抹泥板锚点 —— 被旧导入碰撞销毁，Downloads 里两张都是 p3-2
+- `p4-2` 挑檐层次锚点 —— 只有 p4-1 活下来
+
+Verified:
+- 导入实跑：6 moved / `unmatched: []` / `errors: []`
+- normalise 通道复查 hy3 全 22 个键名资产：全部 `skipped`，零误改
+- 卡内「出图后存」声明与盘上文件名逐条对账一致
+
+No conflicts found in: 1_立项/concept.md, 3_大纲/outline.md, 4_剧本/script.md, 5_6_分镜与prompt/shots/*
+
+## Follow-up 004 — 2026-09-13 19:20:00
+Source: user_input/follow_ups/202609.md - section 004
+Summary: shot03 取锹/扛锹改为「包外解扣带 + 右手握柄」、收尾改为视线承接 shot04；shot05 删除墙裂与塌方，对抗者改为「土的脾气」。
+
+Auto-updated:
+- tools/gen_shots_hy3.py — docstring 对抗者段重写；`SUPPORT` 锁定串去「中柱正对裂纹」改「三柱均匀分布」；
+  `BAG_NOTE["脱"]` 改为「锹绑包外·解扣带取下·开包取水壶时锯露一下」；`NEG_CLIFF` 补「要塌」抑制组；
+  `GRAVITY` 删「整块剥落的黄土」；`BG_REF` 的 bg2/bg12 去裂纹与剥落；
+  shot03 的 cuts/sstate/title/summary/plot/block/act/light/pace/spatial/contrast/moment/q 全面重写；
+  shot04 的 summary/contrast 写明与 shot03 的视线承接；
+  shot05 由 4 段改 3 段并重写 cuts/sstate/title/summary/plot/act/light/pace/spatial/contrast/moment/q
+- tools/gen_scene_prompts_hy3.py — bg2 删【那道裂纹】块与剥落土斑、role 改为「这个洞已经站得住了」+
+  反向声明；bg12/bg13 去「正对裂纹的中柱」；`NEG_DAY` 补「要塌」抑制组
+- ai_videos/huangye_shenghuo/hy3/1_立项/concept.md — §4 对抗者由「土会塌」改为「土的脾气」，附改动理由
+- ai_videos/huangye_shenghuo/hy3/3_大纲/outline.md — 承段与 shot05 行去塌方
+- ai_videos/huangye_shenghuo/hy3/4_剧本/script.md — shot03 开场（锹在包外 + 握柄）与敲三处听声、
+  锹刃磕砾石；shot05 标题与塌方段改为「他不打算等它掉」
+- ai_videos/huangye_shenghuo/hy3/2_世界观人设/{world,style_guide,relationships}.md — 裂纹降级为表面肌理、
+  bg2/对比帧② 行改为「崖面完整无损」、style_guide 负向表补「要塌」组、朝向表两行更新
+- ai_videos/huangye_shenghuo/hy3/2_世界观人设/characters/c1_砌炉的老人/c1_砌炉的老人.md — 老手证明改为敲声
+- ai_videos/huangye_shenghuo/hy3/2_世界观人设/props/p1_长柄铁锹/p1_长柄铁锹.md — 用法纪律加第 5、6 条
+  （扛肩必握柄 / 不在身上时横绑包外）
+- ai_videos/huangye_shenghuo/hy3/2_世界观人设/props/p2_随身装备/p2_随身装备.md — 明写两条皮扣带绑的是锹
+- ai_videos/huangye_shenghuo/hy3/README.md — 档位量尺与对抗者两行更新
+- ai_videos/huangye_shenghuo/hy3/5_6_分镜与prompt/ — 三个生成器重跑（14 镜 + 14 场景主体 + 汇编）
+
+Verified:
+- gen_shots_hy3 重跑干净：14 shots / 327s / 正向 prompt 最长 3683 字（硬顶 5000）
+- 切口审计 13/13 接缝 ✅（shot03→shot04 比值 4.00，机位 N1 → 砾石滩侧向平视）
+- `shot_logic.gate` / `prompt_light.gate` 无 legacy 豁免通过；独立跑 `tools/shot_logic.py`
+  与 `tools/prompt_light.py` 也是 blocker 0
+- shot05 段数 4→3，`镜内状态:` 账本段数同步为 3（账本内分隔符统一用 `·` 以免虚增段数）
+- shot03 动作时间轴复核无重叠（0–2 / 2–4 / 4–5 / 5–7 / 7–9 / 9–11 / 11–13 / 13–16 / 16–18 / 18–20 / 20–22）
+- 全片 grep sweep：已无任何正向描述塌方 / 整块剥落 / 剥落土斑的文字
+
+Pending（需重出图）:
+- **`bg2-1.png` 必须重出** —— 现有那张的贯穿黑缝正是用户指出的问题，看图确认过
+- `bg12-1.png` **不用重出** —— 看图确认裂纹在该视图里并未画出，只是 prompt 里提过
+
+No conflicts found in: 2_世界观人设/casting.md, 其余 12 个场景主体, shot01/02/06–14

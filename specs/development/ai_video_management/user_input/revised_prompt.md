@@ -11652,3 +11652,99 @@ feature rich、multilayer 的 UI 来 **view + manage** 内容。」
 
 新增 `libs/common/asset_link.py` + tree_reader 的 `_link_leaf`，把 `*.link.json` 渲成
 坐在本片目录、`path` 指向目标的叶子；前端加 `is_link` / `link_at` / `link_note` 与一个 🔗 图标。
+
+---
+
+## 167 — 2026-09-13 14:10:00 — 人物视频抽帧报 extraction failed
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/ai_video_management/libs/infrastructure/writers/character_video__writer.py
+>   - projects/ai_video_management/tests/test_character_video_path_guard.py
+> severity: high
+
+### 指令
+
+在 hy3 里点「从人物视频抽图」报 **extraction failed**，要修。
+
+### 根因
+
+`character_video__writer.py` 的 `_is_under_character_folder` 被标成 `@staticmethod`，
+**函数体里却引用了 `self._resolver.root`** —— 每次调用都抛
+`NameError: name 'self' is not defined`，在 UI 上表现为 extraction failed。
+
+这是 `8907992`（2026-09-09 系列化重构）引入的回归：那次把扁平的
+`parts[0] != "ai_videos"` 判断换成 `drama_ref.drama_depth(root, parts)`（正确方向，
+因为剧根现在是两段或三段），但**没有把这个静态方法改成能拿到 root 的形式**。
+`CharacterViewExtractor` 那一侧更明显——它是以
+`CharacterVideoTruncator._is_under_character_folder(rel)` **无绑定静态调用**的，
+连 `self` 都不存在。
+
+**影响面不止 hy3**：truncate / extract-views / extract-all 三个端点对**所有剧**全挂，
+只是这些按钮自那次重构后没人点过。
+
+### 修法
+
+提成模块级函数 `is_under_character_folder(root, rel)`（root 显式传入），两个调用点都改；
+顺手收紧 `characters/` 的位置判断——只接受 **剧根深度** 或 **剧根深度 + 1**
+（legacy 布局 / 阶段目录布局），不再接受埋在更深处、只是恰好叫 `characters` 的目录。
+新增 `tests/test_character_video_path_guard.py`（11 例：两种剧深度 × 两种布局 + 7 条负例）。
+
+### 一行摘要
+
+修 `@staticmethod` 里引用 `self` 的回归（系列化重构遗留），人物视频抽帧恢复；加回归测试钉死。
+
+---
+
+## 168 — 2026-09-13 17:30:00 — 同一主体的多视图导入时互相覆盖
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/ai_video_management/libs/infrastructure/writers/downloads__writer.py
+>   - projects/ai_video_management/libs/infrastructure/writers/media__writer.py
+> severity: high
+
+### 指令
+
+导入参考图时，同一主体的两个视图（`p3-1` 与 `p3-2`）都被命名成主体目录名
+`p3_抹泥板与黏土壁炉.png`，后导入的那张**静默覆盖**前一张，图直接丢失。
+修导入功能，并把该剧已被折叠成目录名的资产文件改回路由键命名。
+
+### 诊断
+
+出图工具按 prompt 首行命名下载，并在前后裹上自己的前缀与时间戳：
+
+```
+prompt 首行 : p3-2_黏土壁炉锚点
+落盘         : ElevenLabs_image_gpt-image-2_p3-2_黏土壁炉锚点 一座手_2026-09-13T07_26_16.png
+```
+
+两处都只认「stem **以**目录 token **开头**」：
+
+1. `DownloadsImporter._view_key` —— 开头判定失败 → fallthrough 到 `dst_folder.name`，
+   两个视图同名、`shutil.move` 覆盖。
+2. `MediaRenamer._plan_folder` —— 更糟：把这类文件折叠成**顺序相关**的 `{folder}{N}`，
+   同一张图在不同次导入里编号会变。
+
+场景主体（`bg{N}-{M}`）早就在 stem 里**任意位置**搜键，所以从没犯过；道具与人物没有。
+根因是同一套路由键逻辑有两份实现且只改了一份（违反 rule 4i ①「一份东西只有一个出处」）。
+
+### 落地
+
+- 新建 `libs/common/asset_key.py` —— 路由键逻辑的**唯一出处**：
+  `folder_key()` 从目录名取该目录**自己拥有**的前缀（`p3` / `c1` / `bg10`；
+  `bg1_朝北_城门` 这类单图 plate 返回 None，它的目录名就是键），
+  `view_key_in()` 在 stem 里**任意位置**搜 `{该前缀}-{数字}`、前面要求非字母数字边界
+  （所以 `gpt-image-2` 不会被误认成键）。**期望前缀只从目录名取，绝不从文件名猜** ——
+  这让误报在结构上不可能。
+- 两端都改用它：`downloads__writer.py` 命名分支（`prop`/`scene`/`character`）、
+  `media__writer.py` 的 `_plan_folder` normalise 通道。
+- `_clear_named_media` 的分支扩到 `("prop", "scene", "scene_subject", "character")`。
+- `_iter_downloads` 改按 `(mtime, name)` 排序 —— 同一键的两次 re-roll，**最新的 take 胜**
+  而不是按目录遍历顺序随机胜。
+- 新增 `tests/test_asset_routing_key_collision.py`（5 例）。
+
+### 一行摘要
+
+路由键在两处各有一份实现、只有场景那份支持「键在 stem 中间」，导致道具/人物多视图导入互相覆盖；
+抽成 `libs/common/asset_key.py` 单一出处、两端共用，并加回归测试。

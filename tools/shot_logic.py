@@ -51,6 +51,10 @@ ORDER_MARKS: tuple[str, ...] = ("然后才", "先把", "再去", "收回", "退�
 
 SKIP_DIRS: tuple[str, ...] = ("_deleted", "previz", "renders")
 _CLAUSE = re.compile(r"[；;]")
+# 段落计数**不能靠分隔符**：`；` 在段落正文里本来就会出现
+# （hy4 实测：`镜内状态:` 的一段写「**与上一段相同**；她停在原地…」就被数成了两段）。
+# 段落真正的标识是**时间前缀** `N–Ms`，拿它来数才稳。
+_SEG_HEAD = re.compile(r"\d+\s*[–\-~]\s*\d+\s*s")
 
 
 @dataclass(frozen=True)
@@ -73,9 +77,10 @@ def positive(md: str) -> str | None:
     return b[0] if b else None
 
 
-def _segments(cut_line: str) -> list[str]:
-    body = cut_line.split(":", 1)[1] if ":" in cut_line else ""
-    return [x for x in body.strip(" `").split("；") if x.strip()]
+def _count_segments(line: str) -> int:
+    """按时间前缀 `N–Ms` 数段 —— 不按分隔符，正文里的 `；` 不会干扰。"""
+    body = line.split(":", 1)[1] if ":" in line else ""
+    return len(_SEG_HEAD.findall(body))
 
 
 def check(shot: str, md: str) -> list[Issue]:
@@ -83,24 +88,23 @@ def check(shot: str, md: str) -> list[Issue]:
     if not pos:
         return []
     out: list[Issue] = []
-    cuts = _field(pos, "分镜")
-    segs = _segments(cuts)
+    n_cuts = _count_segments(_field(pos, "分镜"))
     body = _field(pos, "情节") + _field(pos, "动作")
 
     # ── L1：建造镜 + 镜内切镜 → 必须有逐段状态账本 ──
-    if len(segs) >= 2 and any(v in body for v in BUILD_VERBS):
+    if n_cuts >= 2 and any(v in body for v in BUILD_VERBS):
         ledger = _field(pos, "镜内状态")
         if not ledger:
             out.append(Issue(shot, "blocker", "L1",
                              "本镜有 %d 段镜内切镜、且在建造（%s），却没有 `镜内状态:` 逐段账本"
                              "——切镜时建造进度会倒退（rule 16.10）"
-                             % (len(segs), "/".join(v for v in BUILD_VERBS if v in body)[:20])))
+                             % (n_cuts, "/".join(v for v in BUILD_VERBS if v in body)[:20])))
         else:
-            n_led = len([x for x in ledger.split("：", 1)[-1].split("；") if x.strip()])
-            if n_led != len(segs):
+            n_led = _count_segments(ledger)
+            if n_led != n_cuts:
                 out.append(Issue(shot, "blocker", "L1",
                                  "`镜内状态:` 有 %d 段，`分镜:` 有 %d 段——必须一一对应"
-                                 % (n_led, len(segs))))
+                                 % (n_led, n_cuts)))
 
     # ── L2：同段内「肢体探入」＋「身体位移」而无次序词 ──
     for cl in _CLAUSE.split(_field(pos, "动作")):

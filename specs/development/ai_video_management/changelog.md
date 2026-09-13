@@ -4854,3 +4854,28 @@ Verified:
 - 全量 pytest：24 failed / 319 passed；**24 个失败全部预先存在**
   （seam_smart_interpolation · sub_type_lookup · tree_walker · api_security，
   均不 import character_video；git stash 掉本次改动后同样失败）
+
+## Follow-up 168 — 2026-09-13 17:30:00
+Source: user_input/follow_ups/202609.md - section 168
+Summary: 同一主体的多视图（p3-1 / p3-2）导入时都落成目录名、互相静默覆盖；抽出共用路由键模块修两端。
+
+Auto-updated:
+- projects/ai_video_management/libs/common/asset_key.py — 新建：`folder_key()` / `view_key_in()`，
+  路由键逻辑的唯一出处；期望前缀只从**目录名**取，键在 stem 里任意位置搜（`(?<![A-Za-z0-9])`
+  边界，杜绝 `gpt-image-2` 误命中）
+- projects/ai_video_management/libs/infrastructure/writers/downloads__writer.py —
+  `prop`/`scene`/`character` 命名分支改走 `asset_key.view_key_in()`；
+  `_clear_named_media` 分支扩到四类；`_iter_downloads` 改按 `(mtime, name)` 排序（同键最新 take 胜）
+- projects/ai_video_management/libs/infrastructure/writers/media__writer.py —
+  `_plan_folder` 在 multi_view 目录里先按路由键归一，取代原先折叠成顺序相关 `{folder}{N}` 的行为
+- projects/ai_video_management/tests/test_asset_routing_key_collision.py — 新建回归测试（5 例）
+
+Verified:
+- 16/16 绿（本测试 5 例 + follow-up 167 的 character-video guard 11 例）
+- 端到端：hy3 的 Downloads 队列实跑导入 —— 6 个文件，`unmatched: []`、`errors: []`；
+  `p3-2` 正确落成 `props/p3_抹泥板与黏土壁炉/p3-2.png`（修复前会变成 `p3_抹泥板与黏土壁炉.png`）
+- normalise 通道复查：hy3 全部 22 个已按键命名的资产全部走 `skipped`，零误改
+- `tests/test_downloads_import_scene_plates.py` 的 4 个失败为**预先存在**（`git stash` 验证过），
+  引用的是不存在的 `wukong_juexing` 剧
+
+No conflicts found in: interview/qa.md, findings/dossier.md, final_specs/spec.md, validation/*

@@ -8,7 +8,7 @@ name). One file per aggregate per role, per follow-up 059.
 """
 from __future__ import annotations
 
-from libs.common import drama_ref
+from libs.common import asset_key, drama_ref
 
 import re
 
@@ -376,6 +376,22 @@ class MediaRenamer:
             if multi_view and any(p.stem.lower().startswith(t) for t in own_tokens):
                 skipped.append(self._rel(p))
                 continue
+            # A `{prefix}{N}-{M}` routing key anywhere in the stem (rule 4b-A)
+            # IS the view identity — `ElevenLabs_image_gpt-image-2_p3-2_…` is
+            # view `p3-2` of this prop. Rename it to the bare key instead of
+            # letting it fall through to `{folder}{N}`: that numbering is
+            # order-dependent, so two views of one prop would swap identities
+            # (or collapse onto one name) on every pass. Same contract scene
+            # subjects already had.
+            if multi_view:
+                key = asset_key.view_key_in(p.stem, parent_name)
+                if key is not None:
+                    target = f"{key}{p.suffix.lower()}"
+                    if p.name == target:
+                        skipped.append(self._rel(p))
+                    else:
+                        ops.append(RenameOp(src=p, dst=p.with_name(target)))
+                    continue
             ext = p.suffix.lower()
             if ext in MEDIA_EXTENSIONS:
                 by_ext.setdefault(ext, []).append(p)

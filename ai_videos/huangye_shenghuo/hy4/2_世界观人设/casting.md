@@ -19,18 +19,20 @@
 | `p4` | 雪砖门 | shot09 成型 · shot17 拖上 |
 | `p5` | 石板灶 | shot09 成型 · shot12–16 |
 
-## 参考图清单（共 7 张人物/道具 + 场景另计）
+## 参考图清单（人物/道具 6 张 + 1 条建立视频；场景另计）
+
+> **落盘只用路由键命名** —— 中文视图名住在各自的卡里、不进文件名（`ai_video.md` rule 4b-A）。
 
 | 文件 | 出处 |
 |---|---|
-| `characters/c1_凿冰的女人/c1-1_凿冰的女人锚点.png` | 立绘 |
-| `characters/c1_凿冰的女人/c1-2_凿冰的女人转身.png` | turntable |
-| `characters/c2_雪兔/c2-1_雪兔锚点.png` | |
-| `props/p1_雪铲与雪锯/p1-1_雪铲与雪锯锚点.png` | |
-| `props/p2_冰镩/p2-1_冰镩锚点.png` | |
-| `props/p3_随身装备与食材/p3-1_随身装备锚点.png` | |
-| `props/p4_雪砖门/p4-1_雪砖门锚点.png` | |
-| `props/p5_石板灶/p5-1_石板灶锚点.png` | |
+| `characters/c1_凿冰的女人/c1-1.png` | 立绘（锚点） |
+| `characters/c1_凿冰的女人/c1-2.mp4` | **4s 建立视频**（非静帧；抽帧落 `views/`） |
+| `characters/c2_雪兔/c2-1.png` | |
+| `props/p1_雪铲与雪锯/p1-1.png` | |
+| `props/p2_冰镩/p2-1.png` | |
+| `props/p3_随身装备与食材/p3-1.png` | |
+| `props/p4_雪砖门/p4-1.png` | |
+| `props/p5_石板灶/p5-1.png` | |
 
 **场景主体参考图**由 `tools/gen_scene_prompts_hy4.py` 生成，见 `scenes/shenxue/`。
 
