@@ -3653,6 +3653,17 @@ title、description、tag、metadata，一个 page 分成每站一个 section，
 
 *(Originated from follow-up hy1/006 + hy2/001 — 2026-09-12.)*
 
+### 17. 史料驱动项目：阶段 0 dossier · 三级史实标签 · 参考图库 · 双语 voice_id（2026-09-13，shikong_lvxing follow-up 003–005）
+
+只对**声明「史料驱动」**的项目生效（历史 / 纪实 / 复原类；首个用例 `ai_videos/shikong_lvxing/`）；不回溯旧剧。
+
+- **17.1 阶段 0 先于立项。** `{片}/0_research/dossier.md`（固定 15 节：时空坐标 / 城市地图与路线 / 衣 / 食 / 住 / 行 / 物价与货币 / 职业阶层 / 节令习俗 / 语言称谓 / 当日大事 / 可采访或可观察人物（按项目形态） / 常见误传 / 未定推测 / 参考来源）不齐，不许写 concept、不许建资产、不许写台词。每条事实一行 YAML：`fact_id / claim / tag / source / source_url / tier / verified_by / used_in / prompt_string / negative`。多路研究员并行时，事实注册表是 `0_research/parts/*.md`（一份出处），`dossier.md` 只写综合、表格与 `fact_id` 指针（rule 4i ①）。`verified_by` 三态：`human`（用户看过原文页）/ `ai_read`（Claude 抓到原文页并附 `quote` + `source_url`，允许进 prompt，但 dossier §0 须列抽查清单、用户抽查后改 human）/ `ai_draft`（凭记忆）——**`ai_draft` 不得进 prompt**。SOP 见 `ai_videos__stage0_史料调研` playbook。
+- **17.2 三级史实标签。** ✅ 史料确证（T0 直接记载或 T1 可回查）／⚠️ 合理推测（旁证 / 同期同类 / 有争议；画面角标「推测」三秒，记者 / 旅行者**必须口播**「史书没写，我们按……推测」）／❌ 民间误传（与 T0/T1 矛盾；**只允许出现在 `unit: 纠错` 的 shot**，画面打 ❌ 卡 + 正解，且其关键词必进负向词）。画面可截图指认的东西（服饰 / 建筑 / 器物 / 食物 / 货币 / 称谓）只允许 ✅ / ⚠️。三色角标（绿 / 黄 / 红）+ 固定音效。
+- **17.3 每镜 `## Shot context` 必写 `史实:` 行**，列本镜用到的 `fact_id`（≥ 1）；生成器把 `facts / tag_max / unit / negative_blacklist` 做成字段，build 时不合格 raise（审计左移）。机检归 `ai_videos__格式契约` K34。
+- **17.4 参考图库先于锚点 prompt。** 每个场景 / 建筑 / 食物 / 服饰 / object 在写锚点 prompt 之前，先建 `{资产目录}/ref/`（≥ 8 张历史参考图：博物馆藏品 / 传世画局部 / 考古照片 / 学术复原图）+ 同目录 `refs.md` 索引（`ref_id / file / source_url / collection / accession / date / license / evidences / use`）。图片是媒体走 R2（`assets_sync`），索引进 git。工具：`tools/ref_fetch.py`（Met Collection API + Wikimedia Commons，均免 key；无 API 的来源手动下载后 `register`）。**锚点 prompt 里每个形制词都要指得出是哪张参考图、哪条 fact**；许可非 CC0 / CC-BY 的图只进 prompt 不入画（R15）。这一条与 rule 4d ①「锚点零参考图」的关系：4d ① 禁的是**拿 blockout / 灰模渲图当出图参考**；历史参考图给的是形制依据，允许进 prompt 与参考槽——是否作为全仓默认，待 sk1 实测后定。
+- **17.5 双语同画面。** 需要中英两站发布的项目，同一画面配两条 TTS 轨：每个发声角色两个 voice_id（`voice_id_zh` / `voice_id_en`），画外解说走 `内心独白` 型（嘴不动），出镜说话镜双渲或只在一版出镜，受访者短句 + 边干活边答 / 物件特写藏口型。**旁白型项目（当地人不开口，2026-09-14 shikong_lvxing follow-up 008）只有旅行者发声、只锁她一对 voice_id，当地人零台词、零 voice_id，生成器须设闸门拒绝非旅行者的台词。** 禁克隆真人音色。
+- **17.6 锁定串必带「不是 X」。** 生成模型的「古装」默认来自影视剧，本身就是误传的浓缩（清宫剧「大人」、唐宋人物穿明代立领、罗马人满街托加、维京角盔）——锁定串模板 `{形制名词}（{材质}，{色名}，{关键结构}），{穿着方式}；不是 {最常见误传形制}`；黑名单同时是负向词库。
+
 ## Update protocol
 
 Surgical. Cite source run / follow-up. Wholesale rewrites are anti-patterns.

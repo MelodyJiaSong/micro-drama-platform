@@ -45,6 +45,7 @@ span = max(ext_x, ext_y)
 cam_data = bpy.data.cameras.new("plan_cam")
 cam_data.type = "ORTHO"
 cam_data.ortho_scale = span
+cam_data.clip_end = (hi.z - lo.z) + max(span, 50.0) + 100.0  # 相机高度随 span 走，超过默认远裁剪面时整张平面图会渲成空白（sk1 汴京 1072 m 实测）
 cam = bpy.data.objects.new("plan_cam", cam_data)
 bpy.context.scene.collection.objects.link(cam)
 cam.location = (center.x, center.y, hi.z + max(span, 50.0))

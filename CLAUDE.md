@@ -90,6 +90,7 @@ The procedural detail for each coordinated stage lives in `.claude/skills/agent_
 
 | # | 阶段 | playbook | 产物落点 | QC 关卡 |
 |---|---|---|---|---|
+| 0 | 史料调研（**条件触发**：史料驱动项目——历史 / 纪实 / 复原类，concept 或系列圣经声明「史料驱动」；2026-09-13） | `ai_videos__stage0_史料调研` | `ai_videos/{name}/0_research/dossier.md` + 每个资产的 `refs.md`（`tools/ref_fetch.py`） | `ai_videos__格式契约` K34（dossier 15 节 + ≥ 20 条人工核过的 fact + 参考图库）；不齐不进阶段 1 |
 | 1 | 核心创意立项 | `ai_videos__stage1_立项` | `ai_videos/{name}/1_立项/concept.md` | 人工确认 |
 | 2 | 世界观+锁定人设 | `ai_videos__stage2_世界观人设` | `2_世界观人设/{world,characters,relationships,scenes,props,casting,style_guide}`（`characters/*` 每卡含 `## 人物灵魂`、`relationships.md`＝人物网，ai_video.md rule 12.11；`props/`＝重要复用物件卡，rule 4b） | `ai_videos__格式契约` |
 | 3 | 分集大纲 | `ai_videos__stage3_大纲` | `3_大纲/arc_outline.md` | `ai_videos__剧情连贯`+`ai_videos__全剧序列` |

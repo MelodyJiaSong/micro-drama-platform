@@ -14,6 +14,7 @@ description: AI 短剧全链路生产流程总编排（脑洞→立项→世界�
 ## 六阶段（本期 1–6，出 prompt 即止；阶段 7 渲染剪辑暂不做）
 | # | 阶段 | playbook | 产物落点 | QC 关卡（审查 skill） |
 |---|---|---|---|---|
+| 0 | **史料调研**（条件触发：史料驱动项目——历史 / 纪实 / 复原类，concept 或系列圣经声明「史料驱动」；2026-09-13 shikong_lvxing） | `ai_videos__stage0_史料调研` | `ai_videos/{name}/0_research/dossier.md`（+ 系列级 `_series/{sources.md, blacklist.md, glossary.md}` + 每个资产的 `refs.md`） | dossier 15 节齐 + ≥ 20 条 `verified_by: human` + 黑名单过完 + 参考图库达标（`ai_videos__格式契约` K34）；**不齐不许进阶段 1** |
 | 1 | 核心创意立项 | `ai_videos__stage1_立项` | `ai_videos/{name}/1_立项/concept.md` | 人工确认 |
 | 2 | 世界观+锁定人设 | `ai_videos__stage2_世界观人设` | `2_世界观人设/{world.md, characters/, scenes/, props/, casting.md, style_guide.md}` | `ai_videos__格式契约` |
 | 2b | **3D 资产轨**（条件触发：有复用物件 或 多镜共用地点+长镜穿行） | BLUEPRINT §阶段 2b（`ai_video.md` rule 4d/4g） | `props/{object}/{object.toml, *.blend, whitemodel/}` · `scenes/**/{world}.blend` | `tools/whitemodel_normalize.py` 闸门退出码 |
@@ -48,6 +49,7 @@ description: AI 短剧全链路生产流程总编排（脑洞→立项→世界�
 ## 项目文件夹结构（阶段编号目录，一眼看出属于哪步）
 ```
 ai_videos/{name}/
+├── 0_research/dossier.md                 # 只有史料驱动项目才有（阶段 0）
 ├── 1_立项/concept.md
 ├── 2_世界观人设/{world.md, characters/, scenes/, props/, casting.md, style_guide.md}
 ├── 3_大纲/arc_outline.md
