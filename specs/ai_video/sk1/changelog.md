@@ -327,6 +327,26 @@ Auto-updated:
 - bianjing.blend — 重建：全城房 262 667 → 71 490（城内 54 555）、树 68 632、静态行人约 31 000 → 11 988；QC 全过（仅表行自身尺寸 WARN，与本次无关）
 - _blender/look_01 / 03 / 06 / 07 / 08 — 重渲校验图（02 / 04 / 05 为近景 Place，布局未动，沿用）
 - shots/shot01|02/shot0N_previz.blend + shot0N_previz.mp4 — 从新场景拷贝重建、灰模重渲（各 750 帧 / 30 s）；shot01 末机位 = shot02 首机位 (5760, -4470, 152) 仍一致；机位与动作时刻表未改
-- shots/shot01|02/look/*.png — Cycles 写实校验帧重渲（`look/shot0N_look.mp4` 写实视频未重渲，仍是 007 之前版本）
+- shots/shot01|02/look/*.png — Cycles 写实校验帧重渲
+- shots/shot01|02/look/shot0N_look.mp4 — 2026-09-16 按新场景 Cycles 重渲写实视频（1280×720、96 采样、各 750 帧 / 30 s，逐帧计数校验后替换）
 
 No conflicts found in: 1_立项/concept.md、3_大纲、4_剧本/script.md、shot01.md / shot02.md prompt 文本、previz_config.toml、divergence.md（#19 已覆盖写实化偏离）
+
+## previz 取景对账 — 2026-09-15 22:50
+Source: 自查（非用户 follow-up）——检查新渲的白模时发现取景与 `景别档` 不一致
+
+Summary: `景别档:`（排镜的第一约束）与 S 档白模实际取景第一次逐镜对账：29 个 S 档镜只有 3 个两端都落在 spec 的 ±40% 内。
+
+Auto-updated:
+- tools/previz_sk1.py — 渲完落盘 `shotNN_previz_report.txt`（每个机位关键帧的人占画高 / 在不在画内），与产物同寿
+- tools/previz_frame_fix.py — 新增：按 `人占画高 ∝ 焦距 / 距离` 反解机位（室内退距 ≤1.8 倍、室外 ≤2.5 倍，焦距夹 20–120 mm）；默认只修「人被裁出画」的关键帧，物件特写档与「人还在画里」的偏差只报不改
+- 5_6_分镜与prompt/shots/{shot07,shot08,shot28,shot29,shot31,shot34}/previz_config.toml — 改焦距 + 机位距离；已复核 shot29 4.44→1.23（spec 1.20）、shot31 2.12→0.77（spec 0.75）
+- 5_6_分镜与prompt/shots/shot33/previz_config.toml — 20–28 s 切后的机位原来把她挤出画外（`in_frame=0`），看向改到她落座处
+- 2_世界观人设/scenes/bianjing/_blender/blender_build.md §9.2 — 对账做法、结果表、事故与处置
+- .claude/agent_refs/project/ai_video.md 4h §J / §K — 两条教训（白模取景必须与 `景别档` 对账；批渲进行中不许改运行库）
+
+Open decision（等用户定，未动）:
+- **室内镜的 `景别档` 与镜头 / 房间尺寸矛盾**：客店房间宽 4.2 m，「50 mm ＋ 近景 0.80」需要 5.4 m 机距；shot33 落幅写 0.30，房间里退到对角也只能到 ≈0.45。三条路——改 shot md 的景别值（连带重算该对切口比值，可能触发相邻镜连锁改）／改走位让她离镜头更近／认下更广的镜头。涉及 shot04、06、07、08、12、13、14、16、17、18、19、21、22、23、24、25、27、28、31、33、36 的一端或两端（详见 blender_build.md §9.2 与 `python tools/previz_frame_fix.py ai_videos/shikong_lvxing/sk1` 的报告）。
+
+事故: 批渲进行中改运行库（加落盘报告）→ 字符串换行没转义 → 之后 17 镜 3 秒内 SyntaxError 失败；运行库已修并 py_compile，失败镜与改过配置的镜已重渲（queue4，22 镜）。
+

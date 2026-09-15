@@ -8,8 +8,12 @@
 办法：`人占画高 ∝ 焦距 / 距离`。本工具读 shot md 的 spec 与上一次渲染的量测报告
 （`shotNN_previz_report.txt`，没有就退回 `scratchpad/logs/shotNN_build.log` 里的 CAMKEY 行），
 按比例改**首末两个** `[["机位"]]` 关键帧的 `焦距` 与 `位置`（中间关键帧不动）：
-  · 室内（配置里有 `[["布景"]]`）**只改焦距**，夹在 14–120 mm——机位往后退会退到墙外去；
-  · 室外先沿视线拉远 / 推近（最多 2.5 倍），差额再交给焦距。
+  · 先沿视线拉远 / 推近（室内最多 1.8 倍——退多了穿墙；室外 2.5 倍），差额再交给焦距，焦距夹在 20–120 mm
+    （20 mm 以下是鱼眼观感，拿它凑「近景」等于换了一个镜头语言）；
+  · 默认**只修「白模当参考已经失效」的关键帧**：人被裁出画（量测 ≥ 1.2 个画幅高）或人小到读不出
+    （spec ≥ 0.15 而量测只有 spec 的 ≤40%）；
+    偏紧偏松但人还在画里的，只报不改（`--all` 才一并修），因为那是 spec 与机位设计谁对的判断题，交人。
+  · spec 人占画高 > 1.2 的关键帧是**物件特写档**（茶盏微距、包子特写），人不是主体，一律只报不改。
 夹不住的差额如实报出来（那是 md 里「50 mm 近景」与房间尺寸本身矛盾，得改分镜，不是改机位）。
 
 用法：
@@ -27,8 +31,15 @@ import re
 import sys
 from dataclasses import dataclass
 
-LENS_MIN, LENS_MAX = 14.0, 120.0
+LENS_MIN, LENS_MAX = 20.0, 120.0       # 20 mm 以下是鱼眼观感，`近景` 不该靠它凑
 MOVE_MAX, MOVE_MIN = 2.5, 0.4          # 室外机位最多拉远 / 推近的倍数
+MOVE_MAX_IN, MOVE_MIN_IN = 1.8, 0.55   # 室内：能退的距离有限（退多了穿墙）
+OBJ_SPEC = 1.2                         # spec 人占画高 > 这个数＝物件特写档，人不是主体，交人工
+CROP = 1.2                             # 量测 ≥ 这个数＝人被裁出画，白模当参考已经失效
+TOO_SMALL = 0.4                        # 量测 / spec ≤ 这个数且 spec ≥ 0.15＝人小到读不出，参考同样失效
+SMALL_SPEC = 0.15
+DAMP = 0.7                             # 阻尼：机位沿视线缩放时，人不在看向点上，位移对 frac 的影响会被放大；
+                                       # 一次只走 70%（log 空间），渲完再跑一遍收敛，免得像 shot18 那样从 2.93 冲到 0.01
 TOL_LO, TOL_HI = 0.7, 1.45             # 量测 / spec 落在这个区间就算对上了
 SPEC_RE = re.compile(r"景别档: \D*?([\d.]+) → \D*?([\d.]+)（机位")
 CAMKEY_RE = re.compile(r"CAMKEY f=(\d+) t=([\d.]+) pos=\(([-\d.]+),([-\d.]+),([-\d.]+)\) lens=([\d.]+)"
@@ -106,10 +117,9 @@ def measured(shot_dir: str, sid: str) -> list[tuple[int, float, float]]:
 
 def solve(ratio: float, lens: float, interior: bool) -> tuple[float, float, float]:
     """(焦距倍数 a, 机位距离倍数 b, 残差)；frac 变化 ＝ a / b，目标 a / b ＝ 1 / ratio。"""
-    if interior:
-        b = 1.0
-    else:
-        b = min(MOVE_MAX, ratio) if ratio > 1 else max(MOVE_MIN, ratio)
+    ratio = ratio ** DAMP
+    hi, lo = (MOVE_MAX_IN, MOVE_MIN_IN) if interior else (MOVE_MAX, MOVE_MIN)
+    b = min(hi, ratio) if ratio > 1 else max(lo, ratio)
     a = b / ratio
     a = max(LENS_MIN / lens, min(LENS_MAX / lens, a)) if lens else a
     residual = (a / b) * ratio          # 1.0 ＝ 正好落在 spec
@@ -138,6 +148,7 @@ def main() -> int:
     ap.add_argument("drama_dir")
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--shots", default="")
+    ap.add_argument("--all", action="store_true", help="修所有偏差（默认只修「人被裁出画」的那些）")
     ap.add_argument("--log-dir", default="", help="回退日志目录（没有 previz 报告时用）")
     args = ap.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")
@@ -176,6 +187,15 @@ def main() -> int:
             ratio = got_v / spec_v if spec_v else 1.0
             if TOL_LO <= ratio <= TOL_HI:
                 acts.append(label + ":OK")
+                residuals.append(1.0)
+                continue
+            if spec_v > OBJ_SPEC:
+                acts.append("%s:物件特写档，人工判断(%.2f)" % (label, ratio))
+                residuals.append(1.0)
+                continue
+            broken = got_v >= CROP or (spec_v >= SMALL_SPEC and got_v / spec_v <= TOO_SMALL)
+            if not args.all and not broken:
+                acts.append("%s:偏%s%.1fx，未裁出画，留待人工" % (label, "紧" if ratio > 1 else "松", ratio if ratio > 1 else 1 / ratio))
                 residuals.append(1.0)
                 continue
             a, b, res = solve(ratio, key.lens, interior or not key.same_frame)
