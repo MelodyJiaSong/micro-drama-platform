@@ -128,3 +128,24 @@ Decisions recorded（判断）:
 - 即梦锚点图不代为出图：桥接服务规定扣积分必须用户本人在本地网页确认，自动化点击有封号风险
 
 No conflicts found in: huangye_shenghuo/*
+
+## Follow-up 012 — 2026-09-15 21:21:22
+Source: user_input/follow_ups/202609.md - section 012
+Summary: 旅行者改为阳光开朗、一看就有锻炼的独立女性 vlogger，出 6 位候选（3 中 3 外）；视频里旅行者直接出声、人物 prompt 带声音；系列人物只住 `_series/`，单站不放同键人物卡。
+
+Auto-updated:
+- tools/gen_traveller_cards.py — 新增：六张系列人物卡的唯一出处（数据表 + 模板；读 p3 / p11 锁定串；闸门：识别标签 ≤30 汉字、prompt ≤5000、首行路由键、12 维灵魂）
+- ai_videos/shikong_lvxing/_series/characters/c1_林问/c1_林问.md — 重做：29 岁前户外领队 / 攀岩型 vlogger（脸、身形、现代装、声音锁定串、12 维人物灵魂、立绘 c1-1、带声样建立视频 c1-2、sk1 宋装变体 c1-11 / c1-12）
+- ai_videos/shikong_lvxing/_series/characters/{c2_周野, c3_许棠, c4_艾拉, c5_妮娅, c6_露西娅} — 新增候选卡（同结构；c1–c3 视频里说普通话，c4–c6 说英语）
+- ai_videos/shikong_lvxing/sk1/2_世界观人设/characters/c1_林问/ — 删除（宋装变体迁入系列卡；旧立绘与旧卡存档 `ai_videos/_deleted/shikong_lvxing/sk1_c1_林问_旧长相_20260915/`）
+- ai_videos/shikong_lvxing/sk1/2_世界观人设/props/p11_旅行者宋装/ — 新增：宋装形制锁定串 + 历史参考图库（自原 c1 卡迁入，ref_id 改为 p11_旅行者宋装.refNN）+ 锚点 prompt p11-1（1520 字）
+- ai_videos/shikong_lvxing/sk1/2_世界观人设/characters/c2–c4 → c21_李十六 / c22_周四娘 / c23_沈十九 — 本地沉默面孔改键，避开系列名册键段（worker RENUM_sk1）
+- tools/gen_shots_sk1.py — `--traveller cN` 选旅行者；两态锁定串、声音锁定串、voice_id、视频语种一律读系列卡；有台词的镜加 `声音:` 行 + `{名}声音(cN-2 声样)` 参考 + NEG_VOICE；`## 台词配音 prompt` 降为补录 / 译配；本地角色键 c21–c23；36 镜重生（默认 c1；c4 试跑全部闸门通过后复原）
+- projects/ai_video_management/ — DownloadsImporter 同时向 `_series/` 路由，两边同键拒收并报 `series_key_conflict`（新 libs/common/series_shared.py、11 条新测试、README；worker IMP_series）
+- CLAUDE.md § AI video rules · Series nesting — 新增「系列共用人物只住 `_series/`」规则
+- ai_videos/shikong_lvxing/proposal.md — §3 名册换成 6 位候选；共用骨架「人脸 / 声音」行改为视频直接出声；目录树里的宋装参考图库指向 p11
+- ai_videos/shikong_lvxing/_series/glossary.md — 英文专名表不再写死旧 voice_id
+- specs/ai_video/sk1/divergence.md — 新增 #20 视频直接出声 / #21 声样按语种分两句 / #22 系列人物只住 `_series`、本地键 c21 起 / #23 旅行者可换；#5、#16 措辞同步
+- sk1 casting.md / publish.md / relationships.md / 0_research/dossier.md / qc_stage2.md — 同步候选名册、视频原声 + 译配轨、指针
+
+No conflicts found in: sk1 1_立项/concept.md、3_大纲/outline.md、world.md、style_guide.md（旅行者只以占位名「林问」出现，换人时由生成器替换）；scenes/ 与 p11 以外的道具卡

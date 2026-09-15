@@ -34,7 +34,7 @@ import shutil
 import time
 from dataclasses import dataclass, field
 from io import BytesIO
-from libs.common import asset_key, drama_layout
+from libs.common import asset_key, drama_layout, series_shared
 from pathlib import Path
 
 from PIL import Image
@@ -223,6 +223,7 @@ class DownloadsImporter:
         if not self._downloads_dir.is_dir():
             raise DownloadsDirMissingError(str(self._downloads_dir))
         candidates = self._collect_candidates(drama_dir)
+        conflicts = series_shared.find_conflicts(drama_dir)
         cutoff = time.time() - self._window
         result = ImportResult()
         for src in self._iter_downloads(cutoff):
@@ -247,6 +248,13 @@ class DownloadsImporter:
                     view = (self._match_subject_any_scene(src.name, drama_dir)
                             or self._match_view_any_prop(src.name, drama_dir))
                     if view is None:
+                        # A `bg{N}` subject owned by both the episode and `_series/`
+                        # makes the any-scene fallback refuse — report why.
+                        subject = _SUBJECT_KEY.search(src.stem)
+                        conflict = conflicts.for_key(f"bg{subject.group(1)}") if subject else None
+                        if conflict is not None:
+                            result.errors.append({"path": self._display_src(src), "message": conflict.message(self._rel)})
+                            continue
                         # Truly unmatched → NOT imported: leave the file in Downloads
                         # untouched, only report it back (no not_matched/ folder).
                         result.unmatched.append({"from": self._display_src(src), "kind": "unmatched"})
@@ -264,6 +272,10 @@ class DownloadsImporter:
                     if view is not None:
                         dst_folder, kind = view, (
                         "scene_subject" if self._is_subject_folder(view) else "prop_view")
+            conflict = conflicts.owning(dst_folder)
+            if conflict is not None:
+                result.errors.append({"path": self._display_src(src), "message": conflict.message(self._rel)})
+                continue
             # Canonical-named destinations (one image per folder): an intro-card
             # nameplate matched to a character → `{char}/intro_card.{ext}`; a prop
             # download → `props/{道具}/{道具}.{ext}`. Everything else keeps its
@@ -591,23 +603,15 @@ class DownloadsImporter:
 
     def _collect_candidates(self, drama_dir: Path) -> list[_Candidate]:
         out: list[_Candidate] = []
-        characters_dir = drama_layout.characters_dir(drama_dir)
-        if characters_dir.is_dir():
-            for child in sorted(characters_dir.iterdir()):
-                if child.is_dir() and not child.is_symlink():
-                    out.append(_Candidate(folder=child, kind="character", tokens=self._tokens(child.name)))
-        scenes_dir = drama_layout.scenes_dir(drama_dir)
-        if scenes_dir.is_dir():
-            for child in sorted(scenes_dir.iterdir()):
-                if child.is_dir() and not child.is_symlink():
-                    out.append(_Candidate(folder=child, kind="scene", tokens=self._tokens(child.name)))
-        # Props (`2_世界观人设/props/{道具名}/`) — a sibling of characters/scenes;
-        # one canonical image per prop folder (e.g. `props/玉佩/玉佩.png`).
-        props_dir = drama_layout.props_dir(drama_dir)
-        if props_dir.is_dir():
-            for child in sorted(props_dir.iterdir()):
-                if child.is_dir() and not child.is_symlink():
-                    out.append(_Candidate(folder=child, kind="prop", tokens=self._tokens(child.name)))
+        # Props (`2_世界观人设/props/{道具名}/`) are a sibling of characters/scenes.
+        # A series member also owns its series' `_series/` assets (episode first).
+        for kind, layout_dir in (
+            ("character", drama_layout.characters_dir),
+            ("scene", drama_layout.scenes_dir),
+            ("prop", drama_layout.props_dir),
+        ):
+            for child in series_shared.asset_dirs(drama_dir, layout_dir):
+                out.append(_Candidate(folder=child, kind=kind, tokens=self._tokens(child.name)))
         episodes_dir = drama_layout.episodes_dir(drama_dir)
         if episodes_dir.is_dir():
             for ep in sorted(episodes_dir.iterdir()):
@@ -786,23 +790,15 @@ class DownloadsImporter:
 
         Refuses to guess: if two scenes own the same `bg{N}_`, the drama has
         violated the "subject numbers are unique across the drama" convention
-        and the file is reported unmatched rather than misrouted.
+        and the file is reported unmatched rather than misrouted. A series
+        member's `_series/` scenes count as the drama's own here.
         """
         m = _SUBJECT_KEY.search(Path(filename).stem)
         if m is None:
             return None
         want = int(m.group(1))
-        scenes_dir = drama_layout.scenes_dir(drama_dir)
-        if not scenes_dir.is_dir():
-            return None
         hits: list[Path] = []
-        try:
-            scenes = sorted(scenes_dir.iterdir(), key=lambda p: p.name)
-        except OSError:
-            return None
-        for scene in scenes:
-            if not scene.is_dir() or scene.is_symlink():
-                continue
+        for scene in series_shared.asset_dirs(drama_dir, drama_layout.scenes_dir):
             try:
                 children = sorted(scene.iterdir(), key=lambda p: p.name)
             except OSError:
@@ -891,18 +887,9 @@ class DownloadsImporter:
         appears in the filename; route iff that leaves exactly one folder (else
         None → unmatched, never a silent misroute)."""
         name = filename.lower()
-        props_dir = drama_layout.props_dir(drama_dir)
-        if not props_dir.is_dir():
-            return None
         all_hits: list[Path] = []
         prop_scoped_hits: list[Path] = []
-        try:
-            props = sorted(props_dir.iterdir(), key=lambda p: p.name)
-        except OSError:
-            return None
-        for prop in props:
-            if not prop.is_dir() or prop.is_symlink():
-                continue
+        for prop in series_shared.asset_dirs(drama_dir, drama_layout.props_dir):
             prop_present = any(tok in name for tok in self._tokens(prop.name))
             try:
                 children = sorted(prop.iterdir(), key=lambda p: p.name)
@@ -936,18 +923,9 @@ class DownloadsImporter:
         plate folder (else None → not_matched, never a silent misroute).
         """
         name = filename.lower()
-        scenes_dir = drama_layout.scenes_dir(drama_dir)
-        if not scenes_dir.is_dir():
-            return None
         all_hits: list[Path] = []
         scene_scoped_hits: list[Path] = []
-        try:
-            scenes = sorted(scenes_dir.iterdir(), key=lambda p: p.name)
-        except OSError:
-            return None
-        for scene in scenes:
-            if not scene.is_dir() or scene.is_symlink():
-                continue
+        for scene in series_shared.asset_dirs(drama_dir, drama_layout.scenes_dir):
             scene_present = any(tok in name for tok in self._tokens(scene.name))
             try:
                 children = sorted(scene.iterdir(), key=lambda p: p.name)

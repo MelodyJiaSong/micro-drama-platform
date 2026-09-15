@@ -230,3 +230,103 @@ Commit 1（本条之后）：系列与 sk1 文字产物、规则与工具（只�
 ## 2026-09-14 提交前发现：事实注册表被 .gitignore 忽略 — 2026-09-14 13:36:07
 - 根 `.gitignore` 第 19 行的 Python 模板规则 `parts/` 把 `ai_videos/**/0_research/parts/`（538 条事实的唯一出处，生成器直读）整目录忽略了；照原样提交，新克隆的仓库构建不了分镜、研究成果也不进 git
 - 判断：不用 `git add -f` 一次性绕过，而是在 `.gitignore` 紧跟 `parts/` 加反向规则 `!ai_videos/**/0_research/parts/`——以后 sk2 / sk3 的研究目录自动入库
+
+## 2026-09-14 第一次提交完成 — 2026-09-14 13:36:30
+- 本地提交 `fe26cd2`（152 个文件）：系列与 sk1 的文字产物、规则 / skill、工具、`.gitignore` 事实注册表放行；未推送远端；媒体未同步 R2
+- 留给第二次提交：`tools/build_bianjing.py`、`scenes/bianjing/_blender/`、各镜 `previz_config.toml` / `shotNN_previz.py`（Blender 第二阶段 b 完成后）+ 媒体同步 R2
+- 不属本系列、两次提交都不带：`tools/gen_scene_prompts_hy4.py`、`tools/gen_shots_hy4.py`、hy4 文件、即梦桥接、index-tts、临时文件
+
+## 2026-09-14 Blender 第二阶段 b 中断后续跑 — 2026-09-14 20:47:02
+- B_city 规划完第二阶段 b 后因 API 认证错误（HTTP 403）停止，未渲出任何镜头；核对：无残留 blender.exe、除 shot01 / 02 / 35 外无半截白模动画；`tools/build_sk1_sets.py` 为中断前产出
+- 判断：续用同一个建城 worker（保留建城与航拍上下文），按「S 档与城内镜优先、再内景」顺序做，每做完一镜在 `blender_build.md` §9 记进度，便于再次中断后接着做
+
+## Follow-up 002–004（sk1）— 2026-09-14 22:09:42
+Source: specs/ai_video/sk1/user_input/follow_ups/202609.md - sections 002, 003, 004
+Summary: 参考图进 1:3–3:1 上传窗口；世界锚点由 bg1-1 改为 bg0-1；全片天要蓝、水要绿（晴天航拍效果）。
+
+Auto-updated:
+- tools/ref_aspect.py — **新建**：`check` / `fix` 宽高比窗口（≤ 6:1 补中性边到 3:1，更长折行拼版，不裁内容）；37 张 sk1 `ref/` 图已原地处理，复查 0 张越界
+- tools/ref_fetch.py — `pull` / `register` 入库即调 `fit()`；pyproject.toml / requirements.txt 加 pillow
+- .claude/agent_refs/project/ai_video.md — rule 17.7 上传图宽高比窗口（全局规则）
+- 14 个资产的 refs.md — 记下哪几张被补边 / 折行
+- scenes/bianjing/bg0_汴京全城 — bg0-1 成为世界锚点（只挂 ref11）、验收 / 出图顺序 / 挂法重写；bg0-1 与 bg0-2 天蓝水绿；字数重算
+- scenes/bianjing/bg1_虹桥 — 降为虹桥地点锚点、`参考:` 首项挂 bg0-1；天蓝水绿；字数重算
+- scenes/bianjing/bg16_汴京全城五更 — 唯一参考 bg0-1（兼世界锚点），去掉 bg1-1；锁定串「灰蓝天光」→「清冷蓝光」（生成器 BG 同步）；天与水改蓝绿
+- scenes/bianjing/bg2–bg15、bg17 — 世界锚点句柄与参考用法换成 bg0-1（只取基调、不取高空视角）；【天】改晴天蓝天、夜镜深蓝；去掉遮远景的薄雾；河水 / 御沟碧绿
+- props/p8_虹桥单体 — 世界锚点措辞更正；河面改碧绿（阴天光照不动，image-to-3D 前提）
+- _blender/city_plan.md — 排版底图河色改碧绿
+- world.md / casting.md — 世界锚点与继承拓扑、出图顺序改为 bg0-1 最先
+- style_guide.md — §1 天要蓝水要绿、§2 水与天色锁定、§3 卯时基准与「天与水」条件分句说明、§6 新增天与水负向两行
+- tools/gen_shots_sk1.py + 36 镜 + all_shot_prompts.md — `光线:` 按时段追加 SKY_DAY / SKY_DAWN / SKY_NIGHT（航拍镜加晴天无人机航拍比喻）、负向加 NEG_SKY / NEG_SKY_NIGHT；S01 / S02 / S03 / S05 / S17 / S26 / S30 / S31 / S34 / S35 灰霾与浑黄措辞改掉
+- 4_剧本/script.md — S26 画面动作「浑黄的浪头」→「泛白的浪头」
+- specs/ai_video/sk1/divergence.md — #17 世界锚点在 bg0、#18 天蓝水绿与 `boat.001` 浑黄记载相左
+
+No conflicts found in: 1_立项/concept.md、3_大纲/outline.md（S01「穿出贴水的晨雾」保留——只是贴水一层，不遮蓝天）、characters/*、props/p1–p7、p9、p10（无天空或阴天 image-to-3D）、0_research/*（事实注册表不改）
+
+## 2026-09-14 Blender 第二阶段 b 进行中（中期记录）— 2026-09-14 22:34:23
+Auto-updated（B_city，渲染队列仍在跑）:
+- 渲染方式：只有 S03 / S05 / S11 / S32 用通用引擎 `tools/previz/build_previz.py`（单机位、无变焦）；其余镜头因引擎做不了镜内切、变焦、跟拍与城景切布景，改用新共用执行器 `tools/previz_sk1.py`（S 档）——生成器里的 `previz 档` 字段待队列结束后按实际更正
+- 城市几何：`tools/build_bianjing.py` 新增六个精细片区 D 宣德楼 / E 汴河码头 / F 开封府 / H 相国寺 / I 桑家瓦子 / J 南薰门外；`tools/build_sk1_sets.py` 新建九个简单布景（客店房间、早市摊、医馆门面与铺内、园池、勾栏、正店阁子、遗址坑等）
+- 布局裁定（判断）：护龙河按 W11 放在城墙脚外 30 m、宽 38 m（旧表值与城墙重叠 7 m）；御街宽按 W11 320 m，朱杈子移到 ±19.5 m（在御沟外侧，合原文）、黑漆杈子 ±150 m、御廊 ±154…160 m
+- `tools/render_scene_view.py` — 远裁剪伸到场景最远角、近裁剪随距离与高度缩放
+- 逐镜截帧检查：S03 / S06 / S26 通过；S04（机位穿过人物）、S05（头被切、柜台出画）、S16（人走过机位、头被切）已改走位与机位并重排重渲
+- 判断：S01 / S02 / S35 航拍是在护龙河挪位、宣德楼精细片区建成前渲的，排在队尾按终版城市重渲，相机关键帧不变、S01 末帧与 S02 首帧仍须逐像素一致
+
+## Follow-up 005–006 — 2026-09-15 15:05:39
+Source: user_input/follow_ups/202609.md - sections 005, 006
+Summary: 场景 blend 从灰模升级为写实城市（取色自锚点图、形制 / 禁用项取自场景卡 prompt），shot01 / shot02 blend 从新场景拷贝重建并加人物与动作。
+
+Auto-updated:
+- tools/look_bianjing.py — **新建** look pass：锚点图采样取色 + CC0 PBR（pack 进 blend）；G_BLOCKS / 郊外单元盒 → 144 492 个宋式民居 GN 实例（城内零草顶）；p8 虹桥 / p9 / p10 / p10a 细模；柳树球 → 垂柳（截头老干、长柳丝）；御街两侧 → 桃李梨杏花树（bg4）；50 个歇山体块 → 平缓曲面屋顶 + 素木斗拱（仅宣德楼绿琉璃 + 朱漆）；城楼盒 → 木构城楼（直棂窗、平坐栏杆）；物理天空 + 22° 晨光 + 远郊地面外圈；`--stills` / `--frames` 出校验图
+- tools/polyhaven_fetch.py — **新建** CC0 纹理拉取；_blender/textures/polyhaven/ 12 套（gitignore、走 R2）
+- tools/build_bianjing.py — builder 跑完 QC 默认接 look pass（`--no-look` 关）；QC §6#7 / 走廊三角 / 几何摘要跳过 look 标记（布局摘要 38a7ff… 不变）；航拍 previz 加 `水手`（抱桅后仰 / 撑篙）与 `[["人群"]]`（沿线行走、贴虹桥桥面），场景已写实化时船用平底纲船细模；远裁剪 2000 km
+- shots/shot01/previz_config.toml — 放桅纲船 3 名水手；桥上行人 8
+- shots/shot02/previz_config.toml — 御街东西两侧行人各 10（御道空无一人）
+- shots/shot01|02/shot0N_previz.blend — 从写实化场景重新拷贝重建；shotNN/look/ 下 Cycles 校验帧
+- _blender/look_0{1..8}_*.png — 场景写实化校验图（机位表在 look_bianjing.VIEWS）
+- _blender/blender_build.md — §4 步 8 look pass；§7 禁止条款改为「布局代码不上材质」
+- specs/ai_video/sk1/divergence.md — #19 场景 blend 写实化（偏离 rule 4h §D1 / 4g §K）
+
+未落地（需要改布局 builder，另起任务）：马面 / 瓮城、宣德楼 U 形朵楼廊庑、东水门木框水门洞 + 马道、坊巷排水沟、田埂、彩楼欢门沿主街铺开；shot01 / shot02 的 previz mp4 未重渲（机位与动作时刻未变，灰模 mp4 仍有效）
+
+No conflicts found in: 1_立项/concept.md、3_大纲、4_剧本/script.md、shot01.md / shot02.md prompt 文本（走位与动作时刻未改）
+
+## Follow-up 007 — 2026-09-15 19:32:16
+Source: user_input/follow_ups/202609.md - section 007
+Summary: 全城与城外均匀铺满房子、建筑与人（对照 bg0-1）。
+
+Auto-updated:
+- tools/build_bianjing.py — 街区改逐栋判断 keep-out（KeepIndex）+ 院内背靠背小院，keep-out 收窄到一条路宽；宫城殿宇 72 座铺满；新增 build_gate_suburbs（11 座城门外关厢 13 031 栋 + 外廓散居 + 过壕桥 + 行道柳）与 build_hamlets（226 村 3 030 户）；灰模 previz 隐藏 LOOK_people；布局几何摘要变为 fc7cb2…（布局真的变了）
+- tools/look_bianjing.py — 城外房按来源定草顶比例（村落 75% / 关厢 20%）；新增 LOOK_people 约 31 000 静态行人（只进写实渲染）；人物衣色本白 / 皂黑 / 灰青
+- tools/previz_sk1.py — 地面探针跳过 look 层；灰模渲染隐藏 LOOK_people
+- _blender/city_plan.md §8 — 铺满规则（全部 C 判断）
+- bianjing.blend、shot01 / shot02 previz blend + 灰模 mp4 — 重建；房子 144 492 → 262 667
+
+## 系列 follow-up 012 — 2026-09-15 21:21:22
+Source: ../shikong_lvxing/user_input/follow_ups/202609.md - section 012
+Summary: 旅行者换成可选的 vlogger 候选（默认 c1 林问新形象）；视频直接出声；本站不再放旅行者卡，本地人物改键 c21–c23；宋装形制单列 p11。
+
+Auto-updated:
+- 2_世界观人设/characters/ — c1_林问 迁出（系列名册）；c2_李十六 / c3_周四娘 / c4_沈十九 → c21 / c22 / c23（文件、路由键、ref_id、w3_clothing 与 dossier 引用同步）
+- 2_世界观人设/props/p11_旅行者宋装/ — 新增
+- 2_世界观人设/{casting.md, relationships.md, qc_stage2.md, style_guide.md, props/p4_饮子摊} — 同步
+- 5_6_分镜与prompt/{shots/shot01–36, all_shot_prompts.md, shotlist.md, publish.md} + 4_剧本/{dialogue.md, script.md} — 由 tools/gen_shots_sk1.py 重生（声音行、声样参考、c21–c23、新 voice_id）
+- specs/ai_video/sk1/divergence.md — #20–#23
+
+No conflicts found in: 1_立项/concept.md、3_大纲/outline.md（旅行者以占位名出现）
+
+## Follow-up 008 — 2026-09-15 22:15:00
+Source: user_input/follow_ups/202609.md - section 008
+Summary: 城内降密、去整齐网格，房子按面宽 / 层数 / 类型分级，依据史料 w12 城市密度调研。
+
+Auto-updated:
+- 0_research/parts/w12_urban_density.md — **新建**：户口、宅院规模、坊巷肌理、城内空地调研（S / S* / J 分级）
+- tools/build_bianjing.py — 80 m 网格街区改为 `FABRIC` / `LOT_MIX`：300 m 大街区朝向抖动 ±11°，BSP 切 1 200–9 000 m² 地块、巷宽随机；按里城 / 外城东南 / 西北 / 近城墙分区定占用概率，干道与河边加密；地块类型 = 前店后宅 / 小屋排 / 一至三进院落（院墙 + 门屋 + 正厅 + 厢房）/ 大院 / 草屋 / 军营长屋 / 园圃池塘空地（带树）；层数九成单层、两层集中繁华沿街、三层只偶见正店。城内地块计数：garden 9 344、row 2 060、huts 1 212、courtyard 953、barracks 507、shops 466、compound 109；清掉中途留下的两份重复 `KeepIndex` / `FABRIC` 定义；布局几何摘要 fc7cb2… → 6274e6…
+- tools/look_bianjing.py — 民居原型按面宽档（4 / 8 / 12 / 18 m）× 层数（1 / 2 / 3）× 式样（瓦 / 铺面 / 草 / 楼）分，实例只做小幅缩放；18 m 单层宽屋明间高、次间低
+- _blender/city_plan.md §8 — 「街区 80 m 网格铺满」划掉，改写城内肌理规则（全部注明依据）
+- bianjing.blend — 重建：全城房 262 667 → 71 490（城内 54 555）、树 68 632、静态行人约 31 000 → 11 988；QC 全过（仅表行自身尺寸 WARN，与本次无关）
+- _blender/look_01 / 03 / 06 / 07 / 08 — 重渲校验图（02 / 04 / 05 为近景 Place，布局未动，沿用）
+- shots/shot01|02/shot0N_previz.blend + shot0N_previz.mp4 — 从新场景拷贝重建、灰模重渲（各 750 帧 / 30 s）；shot01 末机位 = shot02 首机位 (5760, -4470, 152) 仍一致；机位与动作时刻表未改
+- shots/shot01|02/look/*.png — Cycles 写实校验帧重渲（`look/shot0N_look.mp4` 写实视频未重渲，仍是 007 之前版本）
+
+No conflicts found in: 1_立项/concept.md、3_大纲、4_剧本/script.md、shot01.md / shot02.md prompt 文本、previz_config.toml、divergence.md（#19 已覆盖写实化偏离）

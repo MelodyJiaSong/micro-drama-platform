@@ -4,13 +4,15 @@
 改内容＝改本文件重跑（rule 4i ①）：
     python tools/gen_shots_sk1.py                  # 严格：任何 PENDING: 事实占位直接终止
     python tools/gen_shots_sk1.py --allow-pending  # 调研未齐时：PENDING: 只报 warning
+    python tools/gen_shots_sk1.py --traveller c4   # 换旅行者（系列名册 `_series/characters/`，默认 c1）
 
 产物：5_6_分镜与prompt/{shotlist.md, shots/shotNN/shotNN.md, all_shot_prompts.md}
       4_剧本/dialogue.md（由镜表生成，中英两条）；4_剧本/script.md 每镜「时长 / 台词」两段同步覆盖。
 
 形态（系列 follow-up 008 / 009 / 010）：只有林问开口（对镜 `正常台词` / 画外 `内心独白`）；当地人零台词、
 不看镜头，只用动作与手势回应；群声是没有可辨字句的环境声；没有人拦她，她守规矩（不走御道、宫里不碰东西）。
-双语：每句台词带英文旁白（`en-f-reporter-linwen-01`），时间窗与中文逐句对齐。
+旅行者（系列 follow-up 012）：由 `--traveller cN` 从系列名册选，名字 / 两态锁定串 / 声音锁定串 / 视频里说的语种全部读系列卡；
+镜表里写「林问 / Lin Wen」是占位名，落盘前换成选中的人。视频直接出声（`声音:` 行 + `cN-2` 声样），另一语种走译配轨，逐句同窗。
 
 构建闸门（不合格直接 raise，分镜生成不出来）：
     ① 单镜 15–30 s、片长 600–900 s；TTS 时长目标之和 ≤ 镜长；中文 ≤ 5.2 字/秒（逐句 + 整镜）；英文 ≤ 2.8 词/秒
@@ -41,7 +43,7 @@ DRAMA = "ai_videos/shikong_lvxing/sk1"
 ROOT = DRAMA + "/5_6_分镜与prompt"
 ASSETS = "2_世界观人设"
 A = DRAMA + "/" + ASSETS
-SERIES_C1 = "ai_videos/shikong_lvxing/_series/characters/c1_林问/c1_林问.md"
+SERIES_CHARS = "ai_videos/shikong_lvxing/_series/characters"
 STYLE_GUIDE = A + "/style_guide.md"
 NL = "\n"
 FENCE = chr(96) * 3
@@ -51,6 +53,51 @@ TOTAL_LO, TOTAL_HI = 600, 900
 MAX_CPS = 5.2
 MAX_WPS = 2.8
 ALLOW_PENDING = "--allow-pending" in sys.argv[1:]
+LANG_ZH = {"zh": "普通话", "en": "英语"}
+
+
+def _cli_traveller() -> str:
+    argv = sys.argv[1:]
+    for i, a in enumerate(argv):
+        if a.startswith("--traveller="):
+            return a.split("=", 1)[1]
+        if a == "--traveller" and i + 1 < len(argv):
+            return argv[i + 1]
+    return "c1"
+
+
+def _fence_after(text: str, head: str) -> str:
+    m = re.search(r"^%s[^\n]*\n(.*?)(?=^#{1,3} |\Z)" % re.escape(head), text, flags=re.S | re.M)
+    got = re.findall(r"^```\n(.*?)\n```", m.group(1), flags=re.S | re.M) if m else []
+    if len(got) != 1:
+        raise SystemExit("旅行者卡缺唯一围栏：%s" % head)
+    return got[0]
+
+
+def load_traveller(key: str) -> dict[str, str]:
+    """系列名册里的一张旅行者卡 → 生成器要的全部字段（follow-up 012；卡由 tools/gen_traveller_cards.py 生成）。"""
+    folders = [d for d in os.listdir(SERIES_CHARS) if d.split("_")[0] == key]
+    if len(folders) != 1:
+        raise SystemExit("系列名册里找不到唯一的旅行者 %s：%s" % (key, folders))
+    path = "%s/%s/%s.md" % (SERIES_CHARS, folders[0], folders[0])
+    text = io.open(path, encoding="utf-8").read()
+    y = re.search(r"^```yaml\ntraveller:\n(.*?)\n```", text, flags=re.S | re.M)
+    if not y:
+        raise SystemExit("%s 缺「生成器读取字段」yaml 块" % path)
+    tr = dict(re.findall(r"^  (\w+): (.*)$", y.group(1), flags=re.M))
+    tr.update(path=path, modern=_fence_after(text, "### shot 角色行锁定串 · 现代装态"),
+              song=_fence_after(text, "### shot 角色行锁定串 · sk1 宋装态"), voice=_fence_after(text, "### 声音锁定串"))
+    return tr
+
+
+TR = load_traveller(_cli_traveller())
+KEY, TNAME, TNAME_EN, TLANG, TFOLDER = TR["key"], TR["name_zh"], TR["name_en"], TR["lang"], TR["folder"]
+VOICE_LOCK = TR["voice"]
+
+
+def personalize(text: str) -> str:
+    """镜表里的占位名「林问 / Lin Wen」→ 选中的旅行者（落盘前最后一步；幂等）。"""
+    return text.replace("c1_林问", TFOLDER).replace("林问", TNAME).replace("Lin Wen", TNAME_EN)
 
 # ───────────────────────────── 签名句与固定件（中英逐字，闸门校验）
 OPENING = "今天是宣和二年清明。你在汴京，距今九百零六年。一切都和那天一样——只是，多了一个我。"
@@ -71,43 +118,44 @@ EN_HEDGE = re.compile(r"guess|estimat|infer|no record|don't record|doesn't recor
                       r"scholars (?:disagree|haven't|aren't sure)|undecided|my assumption|don't give|isn't recorded|not in the records", re.I)
 
 # ───────────────────────────── 人物锁定描述符（识别标签与卡第 8 行逐字相等；手里拿什么由每镜 `hands` 写）
-C1 = ("林问（Seedance 人物 entity · 宋装态）— 皂巾包低髻披本白盖头灰青宽袖褙子，胸牌短话筒采访本；本白交领短襦、"
-      "灰青直领对襟褙子宽袖腋下开衩不系、皂黑高腰麻布长裙、腰前青底白花粗布手巾、黑发低髻皂巾包髻露额无刘海、"
-      "本白粗布盖头系在髻后披于背、耳后一枚拇指盖大小的铜色圆片在包髻下可见、素色布质胸牌别在褙子左外襟（牌面只见几道淡墨笔画痕、没有可读的字）、"
-      "随身一支无标哑光黑木柄短话筒与一本麻布封面线装采访本（在手里还是收着，按 `走位:` 的「本镜手里」）、黑布浅口鞋白布袜、天足；"
-      "不是明代立领盘扣、不是清代长辫、不是影楼纱裙")
-C1_MODERN = ("林问（Seedance 人物 entity · 现代装态）— 黑齐肩低马尾，深灰工装夹克黑T深蓝直筒裤黑短靴，胸牌短话筒；"
-             "黑色齐肩低马尾无刘海、深灰无 logo 工装夹克配黑 T 与深蓝直筒裤、黑短靴、素色布质胸牌别在左胸（牌面只见几道淡墨笔画痕、没有可读的字）、"
-             "随身一支无标哑光黑木柄短话筒与一本麻布封面线装采访本（在手里还是收着，按 `走位:` 的「本镜手里」）、耳后一枚拇指盖大小的铜色圆片")
-C2 = ("李十六（参考 c2-1 立绘 + c2-2 turntable · 沉默背景人物，不开口、不看镜头）— 皂巾裹髻补丁短褐灰围布卷裤赤足，肩扛麻袋垫旧布；"
+C1 = TR["song"]
+C1_MODERN = TR["modern"]
+C2 = ("李十六（参考 c21-1 立绘 + c21-2 turntable · 沉默背景人物，不开口、不看镜头）— 皂巾裹髻补丁短褐灰围布卷裤赤足，肩扛麻袋垫旧布；"
       "三十八岁汴河脚夫：粗麻交领短褐本白泛灰黄多处补丁、前襟撩起掖进皂布腰带、灰布围布、灰褐宽裤卷至小腿、赤足、皂布头巾裹髻、"
       "肩上垫一块旧布、扛麻袋；不赤膊、不八块腹肌")
-C3 = ("周四娘（参考 c3-1 立绘 + c3-2 turntable · 沉默背景人物，不开口、不看镜头）— 皂巾包中高髻，灰青褙子皂黑裙青花围巾，守汤茶药担子；"
+C3 = ("周四娘（参考 c22-1 立绘 + c22-2 turntable · 沉默背景人物，不开口、不看镜头）— 皂巾包中高髻，灰青褙子皂黑裙青花围巾，守汤茶药担子；"
       "三十一岁汤茶药女摊主：本白交领短襦、皂黑高腰长裙、灰青粗布褙子敞开、青底白花粗布手巾围裙、皂巾包中高髻露额、黑布浅口鞋、"
       "守着汤茶药饮子摊（泥炉铜汤瓶、白瓷缸子、黑釉盏）；不是唐式高髻、不是影楼汉服")
-C4 = ("沈十九（参考 c4-1 立绘 + c4-2 turntable · 沉默背景人物，不开口、不看镜头、不拦人）— 黑漆圆顶无脚幞头皂色短衫撩襟裹腿麻鞋，手持木柄骨朵；"
+C4 = ("沈十九（参考 c23-1 立绘 + c23-2 turntable · 沉默背景人物，不开口、不看镜头、不拦人）— 黑漆圆顶无脚幞头皂色短衫撩襟裹腿麻鞋，手持木柄骨朵；"
       "二十六岁军巡铺兵：皂色交领窄袖短衫及膝、下摆一角掖进皮带、灰褐窄裤裹腿、麻鞋、黑漆圆顶无脚幞头、手持木柄骨朵；无腰牌、无抹额、无号衣、无铠甲")
-DESC = {"c1": C1, "c1m": C1_MODERN, "c2": C2, "c3": C3, "c4": C4}
-LABEL = {"c1": "皂巾包低髻披本白盖头灰青宽袖褙子，胸牌短话筒采访本",
-         "c1m": "黑齐肩低马尾，深灰工装夹克黑T深蓝直筒裤黑短靴，胸牌短话筒",
-         "c2": "皂巾裹髻补丁短褐灰围布卷裤赤足，肩扛麻袋垫旧布",
-         "c3": "皂巾包中高髻，灰青褙子皂黑裙青花围巾，守汤茶药担子",
-         "c4": "黑漆圆顶无脚幞头皂色短衫撩襟裹腿麻鞋，手持木柄骨朵"}
-CHAR_CARD = {"c1": A + "/characters/c1_林问/c1_林问.md", "c1m": SERIES_C1,
-             "c2": A + "/characters/c2_李十六/c2_李十六.md", "c3": A + "/characters/c3_周四娘/c3_周四娘.md",
-             "c4": A + "/characters/c4_沈十九/c4_沈十九.md"}
-NAME = {"c1": "林问（宋装态）", "c1m": "林问（现代装态）", "c2": "李十六", "c3": "周四娘", "c4": "沈十九"}
-TOKEN = {"c1": "c1_林问(Seedance 人物 entity·宋装态)", "c1m": "c1_林问(Seedance 人物 entity·现代装态)",
-         "c2": "c2_李十六(Seedance 人物 entity)", "c3": "c3_周四娘(Seedance 人物 entity)", "c4": "c4_沈十九(Seedance 人物 entity)"}
-UPLOAD = {"c1": "**Seedance 人物 entity「林问」宋装态**（系列卡 `_series/characters/c1_林问/c1-1.png` 定脸 + 本站 `%s/characters/c1_林问/c1-3.png` / `c1-4.mp4`）" % ASSETS,
-          "c1m": "**Seedance 人物 entity「林问」现代装态**（系列卡 `_series/characters/c1_林问/c1-1.png` + `c1-2.mp4`）",
-          "c2": "`%s/characters/c2_李十六/c2-1.png` + `c2-2.mp4`（沉默面孔）" % ASSETS,
-          "c3": "`%s/characters/c3_周四娘/c3-1.png` + `c3-2.mp4`（沉默面孔）" % ASSETS,
-          "c4": "`%s/characters/c4_沈十九/c4-1.png` + `c4-2.mp4`（沉默面孔）" % ASSETS}
+DESC = {"c1": C1, "c1m": C1_MODERN, "c21": C2, "c22": C3, "c23": C4}
 
-VOICE_ZH, VOICE_EN = "zh-f-reporter-linwen-01", "en-f-reporter-linwen-01"
-TONE_ZH = "三十出头女声，中低音、干净利落、不甜不嗲、短句收得住"
-TONE_EN = "early-thirties female, low-mid register, clear and unhurried, dry humour, no sing-song"
+
+def _label(desc: str) -> str:
+    return re.search(r"— (.*?)；", desc).group(1)
+
+
+LABEL = {"c1": _label(C1),
+         "c1m": _label(C1_MODERN),
+         "c21": "皂巾裹髻补丁短褐灰围布卷裤赤足，肩扛麻袋垫旧布",
+         "c22": "皂巾包中高髻，灰青褙子皂黑裙青花围巾，守汤茶药担子",
+         "c23": "黑漆圆顶无脚幞头皂色短衫撩襟裹腿麻鞋，手持木柄骨朵"}
+CHAR_CARD = {"c1": TR["path"], "c1m": TR["path"],
+             "c21": A + "/characters/c21_李十六/c21_李十六.md", "c22": A + "/characters/c22_周四娘/c22_周四娘.md",
+             "c23": A + "/characters/c23_沈十九/c23_沈十九.md"}
+NAME = {"c1": "林问（宋装态）", "c1m": "林问（现代装态）", "c21": "李十六", "c22": "周四娘", "c23": "沈十九"}
+TOKEN = {"c1": "%s(Seedance 人物 entity·宋装态)" % TFOLDER, "c1m": "%s(Seedance 人物 entity·现代装态)" % TFOLDER,
+         "c21": "c21_李十六(Seedance 人物 entity)", "c22": "c22_周四娘(Seedance 人物 entity)", "c23": "c23_沈十九(Seedance 人物 entity)"}
+UPLOAD = {"c1": "**Seedance 人物 entity「%s」宋装态**（系列卡 `_series/characters/%s/%s-1.png` 定脸 + `%s-11.png` 宋装立绘 / `%s-12.mp4` 宋装建立视频）" % (TNAME, TFOLDER, KEY, KEY, KEY),
+          "c1m": "**Seedance 人物 entity「%s」现代装态**（系列卡 `_series/characters/%s/%s-1.png` + `%s-2.mp4`）" % (TNAME, TFOLDER, KEY, KEY),
+          "c21": "`%s/characters/c21_李十六/c21-1.png` + `c21-2.mp4`（沉默面孔）" % ASSETS,
+          "c22": "`%s/characters/c22_周四娘/c22-1.png` + `c22-2.mp4`（沉默面孔）" % ASSETS,
+          "c23": "`%s/characters/c23_沈十九/c23-1.png` + `c23-2.mp4`（沉默面孔）" % ASSETS}
+
+VOICE_ZH, VOICE_EN = TR["voice_id_zh"], TR["voice_id_en"]
+VOICE_MAIN, VOICE_DUB = (VOICE_ZH, VOICE_EN) if TLANG == "zh" else (VOICE_EN, VOICE_ZH)
+TONE_ZH = TR["tone_zh"]
+TONE_EN = TR["tone_en"]
 
 # ───────────────────────────── 道具锁定串（与各 p 卡「锁定描述符」围栏逐字相等）
 P3_MIC = "无标哑光黑木柄短话筒＝一掌长的短话筒，话筒头是无字黑海绵罩，木柄哑光黑、无漆无标、握位磨出手泽；不是带台标的采访话筒、不是金属网头话筒、不是无线麦克风"
@@ -151,7 +199,7 @@ BG = {
     "bg13_相国寺": "相国寺东门书铺街、殿后资圣门书画摊，灰瓦素木北宋寺",
     "bg14_客店房间夜": "客店客房夜里：素木床榻瓷枕、陶油灯、直棂窗，不点蜡烛",
     "bg15_园林雅集": "园池边垂柳下黑漆大案藤墩文士雅集，茶床点茶兔毫建盏",
-    "bg16_汴京全城五更": "汴京全城五更天亮：灰蓝天光罩着屋海，街上零星油灯将熄",
+    "bg16_汴京全城五更": "汴京全城五更天亮：清冷蓝光罩着屋海，街上零星油灯将熄",
     "bg17_州桥夜市": "青石低平州桥南望夜市，两溜食摊只点油灯，无灯笼蜡烛",
 }
 BG_ID = {k.split("_")[0]: k for k in BG}
@@ -188,11 +236,20 @@ NEG_DRESS = "现代内衣外露, 拉链, 纽扣, 文胸带, 运动鞋, 袜子花
 # 以下是生成器侧条件块（style_guide §6 没有对应行，不做逐字校验；需要时由 style_guide 作者补行）
 NEG_TOUR = "古人开口说话, 清晰可辨的古人对白, 路人对口型, 画面里出现无人机"  # follow-up 008 / 010
 NEG_SILENT = "人声, 配音, 旁白, 念白, 念出角色名或台词文字, 任何生成人声音轨, no voiceover, no speech, no narration"  # K22：只挂 `台词: 无` 镜
+NEG_VOICE = "第二个人声, 声音换人, 电子合成音, 变声, 背景音乐盖过人声"  # follow-up 012：视频直接出声的镜
 NEG_NIGHT = "白天的天空, 日光直射"
 NEG_NIGHT_MODERN = "电灯, 冷白 LED 光, 手电筒, 冷白光源"  # R4 F32
 NEG_SUB_HI = "中文字幕, 对白文字, 台词文字, 字幕条, 弹幕, caption, text overlay"  # K19 高风险档：≥2 句对镜台词
 NEG_XUANDE = "金黄琉璃瓦, 北京故宫红墙黄瓦, 重檐"  # style_guide §6 宣德楼例外注
 NEG_AERIAL = "无人机影子, 飞行器投影, 镜头投影"  # R3-25
+NEG_SKY = "灰白阴天, 灰蒙蒙的天, 雾霾, 浑黄河水, 泥黄色水面"  # follow-up 004：天要蓝、水要绿
+NEG_SKY_NIGHT = "灰黑夜空, 浑黄河水"
+# 天与水按时段条件化追加进 `光线:`（不进 STYLE_BASE：夜镜没有蓝天，rule 16.9）
+SKY_DAY = "；晴天：画面里凡露出天空都是干净通透的蓝天，凡露出水面都是碧绿通透的水，空气透亮、远景清楚，没有灰霾"
+SKY_DAWN = "；画面里凡露出天空都是清冷透亮的蓝，凡露出水面都是碧绿的水，没有灰霾"
+SKY_NIGHT = "；画面里露出的夜空是深蓝、不是灰黑，露出的水面是深碧绿"
+SKY = {"day": SKY_DAY, "dawn": SKY_DAWN, "dawn_lamp": SKY_DAWN}
+SKY_AERIAL = "，像天气晴好时无人机航拍的实景（画面里看不到无人机）"
 MODERN_DROP = {"现代服饰", "皮靴", "拉链", "纽扣", "现代纽扣"}  # divergence #15：现代装镜不抹她的锁定装束
 NEG_BGX = {  # 各地点的误传负向（W7 / W8 调研；❌ 事实只进负向）
     "bg10_赵太丞家": "百子柜, 满墙小抽屉药柜, 药碾, 黑底金字堂号大匾, 某某堂匾额, 中医馆招牌, 清宫剧药铺",
@@ -314,10 +371,12 @@ def gate_locks() -> None:
     for c, desc in DESC.items():
         if LABEL[c] not in desc:
             bad.append("%s 描述符里没有识别标签原文" % c)
+        if c == "c1":
+            continue  # 宋装态锁定串本就逐字读自系列卡（load_traveller）
         got = card_label(CHAR_CARD[c])
         if got != LABEL[c]:
             bad.append("%s 识别标签 ≠ 卡第 8 行：%r" % (c, got))
-        if card_desc(CHAR_CARD[c]) != desc:
+        if c != "c1m" and card_desc(CHAR_CARD[c]) != desc:
             bad.append("%s 描述符 ≠ 卡「%s」围栏（rule 4i ① · R8 W3）" % (c, DESC_HEAD))
     p3 = card_locks(P3_CARD)
     for name, text in (("P3_MIC", P3_MIC), ("P3_BOOK", P3_BOOK), ("P3_EAR", P3_EAR), ("P3_BADGE", P3_BADGE)):
@@ -550,12 +609,12 @@ def negatives(s: dict) -> str:
         add.append("金银元宝")
     out = [NEG_BASE, NEG_ARCH, NEG_TOUR] + add
     if s["lt"] in ("day", "dawn"):
-        out.append(NEG_NOFIRE)
+        out += [NEG_NOFIRE, NEG_SKY]
     elif s["lt"] == "dawn_lamp":
-        out.append(NEG_LAMP)
+        out += [NEG_LAMP, NEG_SKY]
         drop.add("提亮的黑位")
     else:
-        out += [NEG_LAMP, NEG_NIGHT, NEG_NIGHT_MODERN]
+        out += [NEG_LAMP, NEG_NIGHT, NEG_NIGHT_MODERN, NEG_SKY_NIGHT]
         if s["lt"] == "oil":
             out.append(NEG_NOCANDLE)
     for flag, block in (("indoor", NEG_INDOOR), ("crowd", NEG_CROWD), ("local", NEG_LOCAL), ("dress", NEG_DRESS)):
@@ -571,6 +630,8 @@ def negatives(s: dict) -> str:
         out.append(s["neg_add"])
     if not s["lines"]:
         out.append(NEG_SILENT)
+    else:
+        out.append(NEG_VOICE + ", 说" + ("英文" if TLANG == "zh" else "中文"))
     seen, toks = set(), []
     for tok in ", ".join(out).split(", "):
         if tok not in drop and tok not in seen:
@@ -598,13 +659,13 @@ def refs_for(s: dict, sid: str) -> list[str]:
     for c in s["ch"]:
         items.append(TOKEN[c])
         if s["lines"] and lin and c == lin[-1]:
-            items.append("林问声音(voice_id %s)" % VOICE_ZH)  # K29：紧跟她最后一个视觉 token（R8 B2）
+            items.append("林问声音(%s-2 声样·voice_id %s)" % (KEY, VOICE_MAIN))  # K29：紧跟她最后一个视觉 token（R8 B2）
     if has_lin(s):
         items.append("p3-1(三件不变物锚点)")
     for p in s["pr"]:
         items.append(PROP[p][2])
     if s["lines"] and not has_lin(s):
-        items.append("林问声音(voice_id %s)" % VOICE_ZH)
+        items.append("林问声音(%s-2 声样·voice_id %s)" % (KEY, VOICE_MAIN))
     return items
 
 
@@ -656,7 +717,7 @@ def emit(s: dict, i: int, start: int, seams: list, facts: dict) -> tuple[str, st
         usage.append("首帧就是本镜第 0 帧，镜头运动与光自该帧那一刻续起，不重新开始。")
     if has_lin(s):
         usage.append("林问的脸、体型与装束由 Seedance 人物 entity 承载，本 prompt 不写五官。")
-    if any(c in s["ch"] for c in ("c2", "c3", "c4")):
+    if any(c in s["ch"] for c in ("c21", "c22", "c23")):
         usage.append("沉默面孔以其 entity 为唯一脸源，不开口、不看镜头、不美颜。")
     if s["pr"] or has_lin(s):
         usage.append("物件锚点锁形制，入画时按 `道具:` 行照搬。")
@@ -665,7 +726,7 @@ def emit(s: dict, i: int, start: int, seams: list, facts: dict) -> tuple[str, st
                      + ("切镜可以省略中间过程（换衣、走路、进门上楼），但光与环境音连续。" if s.get("cuts_elide")
                         else "切镜不改变时间线，环境音与光连续。"))
     if lines:
-        usage.append("台词只供口型与配音时长参考：配音由后期按锁定 voice_id 另行合成（中文、英文各一条），画面里不出现任何文字。")
+        usage.append("台词由视频直接出声：林问的声音照 `声音:` 行与「林问声音」参考（%s-2 建立视频前 2 秒声样）生成，台词说%s；对镜的句子对口型，画外的句子嘴唇不动、声音照样出；画面里不出现任何文字。" % (KEY, LANG_ZH[TLANG]))
     if speaks_on_camera(s):
         usage.append("画面里只有林问会开口，而且只在 `走位:`「林问开口与视线时间表」里标了「正脸看镜头开口」的时间窗里开口；其余所有人不说话、不对口型、不看镜头，人群只是听不清字句的环境声。")
     elif has_lin(s):
@@ -711,19 +772,22 @@ def emit(s: dict, i: int, start: int, seams: list, facts: dict) -> tuple[str, st
     if lines:
         p.append("台词:")
         for ln in lines:
-            p.append("· 林问〔%s〕：%s" % (line_tag(s, ln), ln["zh"]))
+            p.append("· 林问〔%s〕：%s" % (line_tag(s, ln), ln["zh"] if TLANG == "zh" else ln["en"]))
+        p.append("声音: `%s`；本镜人声由视频直接生成，全片只有林问一个人声；当地人和人群没有可辨字句" % VOICE_LOCK)
     else:
         p.append("台词: 无")
     tail = s.get("day_tail", DAY_TAIL) if s["lt"] in ("day", "dawn", "dawn_lamp") else ""
-    p += ["光线: `%s`" % (s["light"] + tail), "节奏: " + s["pace"], "渲染样式: " + STYLE_BASE, "比例: 16:9",
+    sky = SKY.get(s["lt"], SKY_NIGHT) + (SKY_AERIAL if s.get("aerial") else "")
+    p += ["光线: `%s`" % (s["light"] + tail + sky), "节奏: " + s["pace"], "渲染样式: " + STYLE_BASE, "比例: 16:9",
           "时长: %d秒" % s["d"]]
     pos = NL.join(p)
     gate_line_tags(s, pos)
+    pos = personalize(pos)
 
     end = start + s["d"]
     y = ["---", "shot_id: " + sid, "segment: " + s["seg"], "section: " + s["sec"],
          "timecode: %s–%s" % (tc(start), tc(end)), "duration: %ds" % s["d"], "time_of_day: " + TOD[s["tod"]][0],
-         "scene: " + s["bg"], "view: " + s["v"], "characters: [" + ", ".join(s["ch"]) + "]",
+         "scene: " + s["bg"], "view: " + s["v"], "characters: [" + ", ".join({"c1": KEY, "c1m": KEY + "m"}.get(c, c) for c in s["ch"]) + "]",
          "props: [" + ", ".join((["p3"] if has_lin(s) else []) + s["pr"]) + "]",
          "unit: " + s["unit"], "dialogue: " + ("yes" if lines else "none"),
          "previz_tier: " + s["tier"], "optional: " + ("yes" if s.get("optional") else "no"),
@@ -777,7 +841,8 @@ def emit(s: dict, i: int, start: int, seams: list, facts: dict) -> tuple[str, st
     for k in s["pr"]:
         ctx.append("  - [ ] `%s/props/%s/%s-1.png`" % (ASSETS, PROP[k][1], k))
     if lines:
-        ctx.append("  - [ ] 林问声音源：voice_id zh `%s` / en `%s`（casting.md）" % (VOICE_ZH, VOICE_EN))
+        ctx.append("  - [ ] 林问声音：`_series/characters/%s/%s-2.mp4` 前 2 秒声样（`views/_trim2s.mp4` / `_audio.mp3`）· 视频原声说%s（voice_id `%s`），译配轨 `%s`（casting.md）" % (
+            TFOLDER, KEY, LANG_ZH[TLANG], VOICE_MAIN, VOICE_DUB))
 
     body = (NL.join(y) + NL + NL.join(ctx) + NL + NL + "## 视频 prompt" + NL + FENCE + "text" + NL + pos + NL + FENCE + NL + NL +
             "> **反向提示词**（粘进平台负向框，**不要并进正向 prompt**）：" + NL + FENCE + "text" + NL + negatives(s) + NL + FENCE + NL)
@@ -800,12 +865,17 @@ def emit(s: dict, i: int, start: int, seams: list, facts: dict) -> tuple[str, st
                 "类型: %s（%s）｜ 时间窗: %s（与中文第 %d 句同窗）" % (ln["kind"], typ, win, k),
                 "台词: %s" % ln["en"],
                 "时长目标: %.1fs ｜ %d 词" % (ln["dur"], nwords(ln["en"]))]))
-        body += (NL + "## 台词配音 prompt" + NL + FENCE + "text" + NL + (NL + "---" + NL).join(zh) + NL + FENCE + NL + NL +
-                 "> **英文配音轨**（同一画面的第二条 TTS 轨；逐句与中文同一时间窗，≤ 2.8 词/秒）：" + NL +
+        role = {"zh": "视频原声补录（只在成片人声漂移时用）", "en": "整轨译配（去掉视频原声、保留环境音后 mux）"}
+        if TLANG == "en":
+            role = {"zh": role["en"], "en": role["zh"]}
+        body += (NL + "## 台词配音 prompt" + NL +
+                 "> **视频已直接出声**（系列 follow-up 012 · `specs/ai_video/sk1/divergence.md` #20）：本节不是默认产物。中文块＝%s；英文块＝%s。" % (role["zh"], role["en"]) + NL + NL +
+                 FENCE + "text" + NL + (NL + "---" + NL).join(zh) + NL + FENCE + NL + NL +
+                 "> **英文轨**（%s；逐句与中文同一时间窗，≤ 2.8 词/秒）：" % role["en"] + NL +
                  FENCE + "text" + NL + (NL + "---" + NL).join(en) + NL + FENCE + NL)
     if re.search(r"#[0-9A-Fa-f]{6}\b", body):
         raise SystemExit("%s 出现 hex 色值（K9）" % sid)
-    return body, pos, n_chars, rate
+    return personalize(body), pos, n_chars, rate
 
 
 def script_lines(s: dict) -> str:
@@ -830,7 +900,7 @@ def sync_script() -> None:
             raise SystemExit("script.md 缺镜块：### 镜 %02d" % s["n"])
         block = m.group(2)
         new, k1 = re.subn(r"- 时长: \d+s", "- 时长: %ds" % s["d"], block, count=1)
-        new, k2 = re.subn(r"- 台词:.*?(?=\n- 情绪氛围)", lambda _: script_lines(s), new, count=1, flags=re.S)
+        new, k2 = re.subn(r"- 台词:.*?(?=\n- 情绪氛围)", lambda _: personalize(script_lines(s)), new, count=1, flags=re.S)
         if not (k1 and k2):
             raise SystemExit("script.md 镜 %02d 缺「- 时长:」或「- 台词: … - 情绪氛围」结构" % s["n"])
         text = text[:m.start(2)] + new + text[m.end(2):]
@@ -850,7 +920,7 @@ def build() -> None:
     os.makedirs(os.path.join(ROOT, "shots"), exist_ok=True)
     emitted, rows, oversize, stats = {}, [], [], []
     dialogue = ["# sk1 · 纯台词（由 tools/gen_shots_sk1.py 生成，改内容＝改生成器重跑）", "",
-                "> 只有林问开口。`OS` ＝ 画外内心独白（嘴不动）；其余是对镜说话。当地人零台词。每句下一行是同一时间窗的英文旁白。", ""]
+                "> 只有林问开口，视频直接出声（说%s）。`OS` ＝ 画外内心独白（嘴不动、声音照出）；其余是对镜说话。当地人零台词。每句下一行是同一时间窗的英文句。" % LANG_ZH[TLANG], ""]
     t = on_cam = off_cam = 0
     for i, s in enumerate(S):
         sid = "shot%02d" % s["n"]
@@ -892,8 +962,8 @@ def build() -> None:
         "# 镜头清单 · 时空旅行 · 汴京清明一日（sk1）",
         "",
         "> **16:9 · %ds · %d shots · 游览 vlog · 单站成片** · 单镜 15–30 s · 镜内允许切镜。" % (total, len(S)),
-        "> **只有林问开口**（对镜说话 %d 字 ≈ %.0f%% ／ 画外 %d 字 ≈ %.0f%%）；当地人零台词、不看镜头，群声没有可辨字句。每句配英文旁白（`%s`）。" % (
-            on_cam, 100.0 * on_cam / (on_cam + off_cam), off_cam, 100.0 * off_cam / (on_cam + off_cam), VOICE_EN),
+        "> **只有林问开口**（对镜说话 %d 字 ≈ %.0f%% ／ 画外 %d 字 ≈ %.0f%%）；当地人零台词、不看镜头，群声没有可辨字句。视频原声说%s（`声音:` 行 + `%s-2` 声样），另一语种走译配（`%s`）。" % (
+            on_cam, 100.0 * on_cam / (on_cam + off_cam), off_cam, 100.0 * off_cam / (on_cam + off_cam), LANG_ZH[TLANG], KEY, VOICE_DUB),
         "> **切口**：%d 个接缝里，唯一的承接对是 shot01→shot02（航拍连续，shot01 尾帧锁定）；其余全部硬切 + 景别跳档（≥2.0 或 ≤0.5 且两端机位标签不同）。" % (len(S) - 1),
         "> **时辰**：卯时开场 → 次日五更航拍收束，逐镜只进不退（`tod` 闸门）。",
         "> **previz**：每镜一条白模动画（`shotNN_previz.mp4`，待渲）进 `参考:`；S 档＝shot01 / 02 / 04 / 26 / 35，其余 A 档。",
@@ -907,11 +977,11 @@ def build() -> None:
     ]
     tail = ["", "---", "", "## 史实占位", ""] + (["- " + x for x in pending] if pending else ["- 无"])
     io.open(os.path.join(ROOT, "shotlist.md"), "w", encoding="utf-8", newline=NL).write(
-        NL.join(head + rows + shot_seam.table(seams, "tools/gen_shots_sk1.py") + tail) + NL)
+        personalize(NL.join(head + rows + shot_seam.table(seams, "tools/gen_shots_sk1.py") + tail)) + NL)
     io.open(os.path.join(ROOT, "all_shot_prompts.md"), "w", encoding="utf-8", newline=NL).write(
         "# sk1 · 全部视频 prompt 与台词配音 prompt（复制用；由 tools/gen_shots_sk1.py 生成）" + NL + NL +
         NL.join("## %s" % sid + NL + emitted[sid][emitted[sid].index("## 视频 prompt"):] for sid in sorted(emitted)) + NL)
-    io.open(os.path.join(DRAMA, "4_剧本", "dialogue.md"), "w", encoding="utf-8", newline=NL).write(NL.join(dialogue) + NL)
+    io.open(os.path.join(DRAMA, "4_剧本", "dialogue.md"), "w", encoding="utf-8", newline=NL).write(personalize(NL.join(dialogue)) + NL)
     sync_script()
 
     rates, lens, wpss = [x[1] for x in stats], [x[2] for x in stats], [x[3] for x in stats]
@@ -941,12 +1011,12 @@ S += [
                  "其下加一行 `末帧: 画面以末帧为结束、收束至末帧`，保证 shot02 的首帧参考不失效。末 3 秒镜头悬停，只剩水面反光与柳梢微动，接缝落在静定 beat 上（shouweizhen §3.3）"),
       title="【航拍】汴河低飞 · 虹桥放桅",
       summary="**全片第一个画面，一条航拍式连续长镜的前半段。** 卯时贴着汴河水面自东向西飞，离桥一个船身远的纲船放倒桅杆，镜头从虹桥桥面上方掠过，过桥后边飞边拔高到约一百五十米，末 3 秒悬停在汴河上空，远望约三公里外雾里显形的东水门，交给 shot02 接着飞。无台词。",
-      plot="宣和二年清明日卯时，太阳刚离地平线一掌高，镜头像一只鸟贴着浑黄的汴河水面自东向西飞：两岸新绿的垂柳、泊着的平底纲船一一向后掠过；前方出现一座没有桥柱的朱漆木拱桥，离桥还有一个船身远的一条纲船上，水手拽着绳、抱住桅杆根部把桅杆放倒；镜头从桥面上方擦过，过桥后沿河继续西飞、越飞越高，穿出贴水的晨雾，远处外城东墙与东水门的夯土城台从雾后显出来，镜头最后悬停在汴河上空远望东水门",
+      plot="宣和二年清明日卯时，太阳刚离地平线一掌高，镜头像一只鸟贴着碧绿的汴河水面自东向西飞：两岸新绿的垂柳、泊着的平底纲船一一向后掠过；前方出现一座没有桥柱的朱漆木拱桥，离桥还有一个船身远的一条纲船上，水手拽着绳、抱住桅杆根部把桅杆放倒；镜头从桥面上方擦过，过桥后沿河继续西飞、越飞越高，穿出贴水的晨雾，远处外城东墙与东水门的夯土城台从雾后显出来，镜头最后悬停在汴河上空远望东水门",
       cam="一个连续运镜、不切，24mm，全景深：0–12s 离水面约八米、镜头平视，自东向西沿汴河越飞越快地冲向虹桥，像贴水低飞的鸟；12–16s 抬高到约二十米，从虹桥桥面上方掠过，镜头略俯约十度看桥下刚放平桅杆的船；16–27s 过桥后边沿河西飞边拔高到约一百五十米，镜头回到平视略俯，远处东水门城台与外城东墙在画面深处露出来；27–30s 减速、悬停，镜头朝西北远望约三公里外的东水门。飞行像一只快鸟、画面平稳不拖影。画面里没有任何飞行器，也没有飞行器的影子",
       block="画面里没有具名人物；桥上人流为逆光剪影、不可辨面孔；纲船上两名水手在船中抱桅杆、一名在船尾撑篙；两岸远处行人为剪影；可辨主体不超过八个，所有人都不看镜头",
       act="0–8s 水面与两岸垂柳向后流过，一条泊岸的纲船从画左掠过；8–12s 前方虹桥越来越大，离桥还有一个船身远的纲船上，两名水手拽着绳、抱住桅杆根部，桅杆绕根部的转轴向船尾转动放倒；12–14s 桅杆最后半秒明显加速、落到船篷上顿一下停住，船头随即钻进桥洞；14–16s 镜头从桥面上方擦过；16–24s 过桥后沿河西飞拔高，河道在下方变窄，两岸屋舍渐密；24–27s 镜头穿出贴水的晨雾层，远处东水门城台从雾后的淡土黄剪影变成被低斜日光照亮的夯土实体；27–30s 悬停：雾在城台脚下慢慢散开，只有水面反光与柳梢微动",
       lines=[],
-      light="卯时，太阳刚离地平线一掌高、在镜头右后方的东方低空：低斜的暖光从画右后方擦过河面，右岸垂柳的长影一道道横铺在水上；虹桥朱漆拱木受光的一侧是发旧的暖赭红，桥腹与船篷背光处是天光反射的青灰冷调，放倒的桅杆被勾出一道暖亮边；贴水浮着一层极薄的晨雾，远处东水门城台起初只是雾后一块淡土黄的剪影",
+      light="卯时，太阳刚离地平线一掌高、在镜头右后方的东方低空：低斜的暖光从画右后方擦过河面，右岸垂柳的长影一道道横铺在水上；虹桥朱漆拱木受光的一侧是发旧的暖赭红，桥腹与船篷背光处是蓝天反射的冷蓝，放倒的桅杆被勾出一道暖亮边；贴水浮着一层极薄的晨雾，远处东水门城台起初只是雾后一块淡土黄的剪影",
       pace="流（低飞）→ 放桅 → 擦（过桥）→ 升（穿雾）→ 停（悬停远望）",
       spatial="机位＝汴河水面上空自东向西连续飞行、逐渐拔高；在画主体＝河道 → 放桅的船与虹桥 → 远处东水门；飞行方向＝画面深处（西），最后悬停在虹桥以西约六百米的河道上空",
       contrast="首帧＝贴水低飞的河面与柳（远景 0.02）→ 末帧＝悬停在汴河上空、雾后显形的东水门（远景 0.02）。**从一条河飞到能望见这座城的门。**",
@@ -966,9 +1036,9 @@ S += [
       plot="首帧是悬停在汴河上空、远望东水门的画面；镜头继续起升并向后退，越升越高，整座汴京在晨光里展开：三圈城墙一圈套一圈——最外一圈是外城的夯土城墙，墙外一道四十来米宽的护龙河，里面一圈旧城，城中偏西北是一圈小小的宫城；整座城并不是正南正北，城墙微微斜着；汴河从西往东南斜穿全城，南边蔡河绕一个弯；旧城东北角一片堆土堆石的大工地；东南和东北远处各立着一座高塔；画面一切，镜头已在宫城正南的御街上空，顺着宽阔的御街向北低飞，两边黑漆杈子、路心两行朱漆杈子向后飞退，最后减速停在宫城正门宣德楼的正前方，从低处仰视城楼",
       cam="0–14s 一个连续运镜：0–3s 自悬停缓缓起升（首帧就是悬停画面，不重新构图），24mm，镜头平视略俯；3–14s 边拔高边向后退，像延时航拍一样越升越快（地面缩小得很快，但画面平稳、不拖影、不跳帧），升到极高处，镜头始终朝西北望着城、下俯约二十五度，三圈城墙一圈套一圈占满画面宽度；14–30s 切到御街上空：14–26s 自宣德楼正南约七百米、离地约五十米起，沿御街中轴向北快速低飞并降到约八米，24mm，镜头平视，两边杈子向后飞退；26–30s 减速停在宣德楼正南约一百四十米、离地约八米处，镜头上仰约十度，城楼与两侧朵楼占满画面宽度、上缘留一线天。画面里没有任何飞行器，也没有飞行器的影子",
       block="画面里没有具名人物；御街两侧行人为剪影、不可辨面孔；御街中间两行朱漆杈子围出的御道里空无一人；可辨主体不超过八个，所有人都不看镜头",
-      act="0–3s 自悬停缓慢起升，东水门与汴河在画面下方变小；3–14s 越升越高：近处一段外城夯土城墙像一道长堤，墙外护龙河宽得能并排走几条船，汴河上的纲船只有米粒大；越往远处越灰越淡，旧城与城中偏西北的宫城在晨雾里只剩轮廓，城墙微微斜着；汴河斜穿全城，南边蔡河绕弯，旧城东北角一片工地，远处两座高塔；14–26s 切到御街上空向北低飞，两边黑漆杈子与路心两行朱漆杈子向后飞退，御沟水面一闪一闪；26–30s 减速，宣德楼越来越大，停住仰视：五个门洞、朱漆门扇、墩台上的砖石雕饰、单檐庑殿门楼与两侧朵楼，门楼屋面是发暗的绿琉璃瓦、不是金黄，门扇上一排排暗哑的铜金色门钉",
+      act="0–3s 自悬停缓慢起升，东水门与汴河在画面下方变小；3–14s 越升越高：近处一段外城夯土城墙像一道长堤，墙外护龙河宽得能并排走几条船，汴河上的纲船只有米粒大；晴天里远处依旧清楚，旧城与城中偏西北的宫城轮廓分明，城墙微微斜着；汴河斜穿全城，南边蔡河绕弯，旧城东北角一片工地，远处两座高塔；14–26s 切到御街上空向北低飞，两边黑漆杈子与路心两行朱漆杈子向后飞退，御沟水面一闪一闪；26–30s 减速，宣德楼越来越大，停住仰视：五个门洞、朱漆门扇、墩台上的砖石雕饰、单檐庑殿门楼与两侧朵楼，门楼屋面是发暗的绿琉璃瓦、不是金黄，门扇上一排排暗哑的铜金色门钉",
       lines=[L(19, "画外", OPENING, EN_OPENING, 10.5, "festival.001", "平、慢，像念一个日期", "慢")],
-      light="卯时刚过，低斜的日光自东方照来，全城屋顶东侧受光、西侧拖着长影，远处薄雾未散；宣德楼正面被东侧低光斜照，绿琉璃瓦在斜光里是哑一点的深绿",
+      light="卯时刚过，低斜的日光自东方照来，全城屋顶东侧受光、西侧拖着长影，晴天蓝天下远景清楚；宣德楼正面被东侧低光斜照，绿琉璃瓦在斜光里是哑一点的深绿",
       pace="升（全城）→ 切 → 飞（御街）→ 停（仰视宣德楼）",
       spatial="机位＝汴河上空悬停处起升后退 → 全城极高处斜俯 → 切到御街上空自南向北低飞 → 宣德楼前低空仰视；运动方向＝先向上向后，切后向正北",
       contrast="首帧＝汴河上空悬停远望东水门（远景 0.02，与 shot01 末帧同一画面）→ 末帧＝宣德楼正面仰视（远景 0.02）。**从城门外看见整座城，最后停在它的正门前。**",
@@ -993,7 +1063,7 @@ S += [
              L(12.5, "对镜", "先记两个数，按前后几年推算：米一斗两百五十文上下，扛活的一天挣一百文左右。",
                "Two numbers, estimated from nearby years: rice, about 250 wen a peck; a laborer's day, about 100.", 7.0, "price.022 price.023 price.024", "报数，稍慢"),
              L(21.5, "对镜", "我兜里揣着一贯钱，街上买东西，认的是铜钱。", "One string of coins in my pocket. Shops here take copper.", 4.0, "money.006 money.001", "举钱串")],
-      light="卯时的清明清晨，低斜的暖光自画右照在她脸的一侧，另一侧是天光反射的冷灰柔光；背景柔焦里桥上朱漆受光发暖、桥腹背光是青灰，河面浮着一层薄雾、反出一道碎光",
+      light="卯时的清明清晨，低斜的暖光自画右照在她脸的一侧，另一侧是蓝天反射的冷蓝柔光；背景柔焦里桥上朱漆受光发暖、桥腹背光是冷蓝，河面浮着一层薄雾、反出一道碎光",
       pace="说（稳）→ 点数 → 报数 → 喊声（缩脖回头）→ 举钱 → 笑",
       spatial="机位＝桥头台阶下正面眼平（末段平稳后退）；在画主体＝林问；她正面对镜头，19.5–21.5s 回头看画面后方的桥面",
       contrast="首帧＝她正面开口的近景（近景 0.75）→ 末帧＝拉开后她抿嘴笑、身后桥面入画（中景 0.50）。**逛单说完，这座城先喊了她一嗓子。**",
@@ -1040,7 +1110,7 @@ S += [
              L(7, "画外", "脚店的酒，是从正店批来的。", "A jiaodian buys its wine from them.", 2.5, "shop.002", "补充", "中", "身后脚店门首"),
              L(9.5, "画外", "桌上这副银酒具，是正店借的——脚店来打过两三回酒，正店就敢借。", "This silver is on loan from a big brewer — buy wine there a few times and they'll lend it.", 7.5, "food.026", "轻快", "中", "桌上的银注碗"),
              L(18, "对镜", "下酒菜一份不过十五文。记下，先不吃，这一贯钱得撑到晚上。", "Side dishes: fifteen wen, tops. Noted — not buying. This string has to last till night.", 5.5, "price.002", "合本子", "中", "")],
-      light="卯时末的清晨，低斜的日光从画右越过桥面照到桌上：她半张脸在光里、半张落进席棚的斜影，脚店欢门的彩帛在她身后逆光透亮；银注碗受光一侧是发暗的银白、背光一侧映着天光的冷灰，不是镜面；背景河上的薄雾还没散尽",
+      light="卯时末的清晨，低斜的日光从画右越过桥面照到桌上：她半张脸在光里、半张落进席棚的斜影，脚店欢门的彩帛在她身后逆光透亮；银注碗受光一侧是发暗的银白、背光一侧映着天光的冷灰，不是镜面；背景是蓝天下碧绿的河面",
       pace="点头 → 说 → 指门首 → 碰碗 → 记 → 摇头",
       spatial="机位＝桌边正对（末段极缓推近）；在画主体＝林问近景与银注碗；她说话时正面对镜头，伙计在她身后画左",
       contrast="首帧＝她与伙计互相点头（近景 0.75）→ 末帧＝她合上本子摇头、银注碗在画面下缘（近景 0.90）。**先记账，不花钱。**",
@@ -1203,7 +1273,7 @@ S += [
 
 S += [
  dict(n=11, seg="承", sec="吃·早市", d=20, bg="bg4_州桥御街", v="bg4-1", lt="day", tod=2, tier="A",
-      ch=["c1", "c3"], pr=["p4", "p2"], unit="吃", local=True, neg_drop=["火", "火焰"],
+      ch=["c1", "c22"], pr=["p4", "p2"], unit="吃", local=True, neg_drop=["火", "火焰"],
       day_tail="；除了汤瓶下小泥炉里那一点炭火，画面里没有别的火、没有灯笼、没有暖色人工光源",
       facts=["food.013", "house.012", "money.001", "money.008"],
       jb=(0.80, "近景", 0.75, "近景"), jbcam=("饮子摊伞下正对汤瓶", "伞下她的侧前方近景"),
@@ -1229,7 +1299,7 @@ S += [
       judge="「焌糟」解释挪到 shot31 真正的焌糟入画处，本镜删去（R5 F05）；「她点点头收了」会被读成认可两文，改为「够不够我也不知道」、摊主低头收钱不点头（R6 W06，price.018 是 ai_draft）；台词顺序按动作重排（R2-18）；「直至天明」与辰时对上，补「这会儿还剩几摊」（R5 F01 / R1 R25）；担梁木牌空白（p4 派生版）；泥炉炭火来自 p4 锁定串，本镜光线与负向对这一点炭火单独放行；上午→清晨（协调者裁定 1）"),
 
  dict(n=12, seg="承", sec="人们怎么活动", d=24, bg="bg3_汴河码头", v="bg3-1", lt="day", tod=3, tier="A",
-      ch=["c1", "c2"], pr=[], unit="行", crowd=True, local=True,
+      ch=["c1", "c21"], pr=[], unit="行", crowd=True, local=True,
       facts=["travel.003", "travel.001", "job.001", "job.005"],
       jb=(0.15, "远景", 0.50, "中景"), jbcam=("码头仓前高位远景", "仓门口侧面中景"),
       hands="右手握话筒垂在身侧、左手拿采访本贴在腰前",
@@ -1384,7 +1454,7 @@ S += [
              L(10, "对镜", "所以我走外头。规矩就是规矩。", "So I walk outside. Rules are rules.", 2.5, "", "侧头看御道"),
              L(13, "画外", "杈子里两道砖砌的御沟，宣和年间种了荷花，岸边是桃李梨杏，书上说「春夏之间，望之如绣」。", "Inside, two brick channels planted with lotus, peach and plum on the banks — like embroidery in spring, the book says.", 7.5, "route.010", "低头看", "中", "御沟里的小荷叶"),
              L(20.5, "画外", "早朝那会儿，御街到州桥这一段，卖药卖吃的吆喝声不断。", "At dawn, vendors cried their wares all the way to Zhou Bridge.", 5, "job.023", "解说", "中", "路尽头的宣德楼")],
-      light="午时近午顶侧光，朱漆杈子是这一天里最饱和的朱红偏橙、旧漆开裂处露出木色，黑漆杈子是哑光皂黑；御沟水面反着淡青偏白的天光；远处有一层被车马扬起的淡黄热霭",
+      light="午时近午顶侧光，朱漆杈子是这一天里最饱和的朱红偏橙、旧漆开裂处露出木色，黑漆杈子是哑光皂黑；御沟水面碧绿、映着蓝天；街面上被车马扬起一层很低的淡黄细尘",
       pace="走 → 停（看御道）→ 对镜 → 看荷叶 → 远（长焦宣德楼）",
       spatial="机位＝她右后方侧跟 → 御道中轴长焦平视（固定）；在画主体＝朱杈子外侧的她与空御道 → 御街纵深与宣德楼；她自南向北走在画面左侧",
       contrast="首帧＝朱杈子外侧行走的她（全景 0.30）→ 末帧＝长焦尽头清楚起来的宣德楼（远景 0.10）。**不走中间，照样走到它跟前。**",
@@ -1606,7 +1676,7 @@ S += [
       judge="「清明这一天人最多」是 festival.009 旧误读，按 W12 更正改为引「一百五日最盛」＝大寒食，并说清寒食第三天才是清明（R6 W01 / W20，协调者裁定 9）；「摔脚」加一句「可不是摔跤」防听错（R1 R30）；旗子不写「鲜亮」（R4 F29）；柳枝状态串照带；后段 12 s 空转缩到 10 s、镜长 22→20 s（R3-32）"),
 
  dict(n=26, seg="转", sec="当天大事", d=26, bg="bg1_虹桥", v="bg1-1", lt="day", tod=6, tier="S",
-      ch=["c4"], pr=[], unit="大事", crowd=True, local=True, fall=("桅杆",), neg_add="定格, 画面冻结",
+      ch=["c23"], pr=[], unit="大事", crowd=True, local=True, fall=("桅杆",), neg_add="定格, 画面冻结",
       facts=["boat.003", "boat.002", "bridge.006", "job.011", "house.011", "dress.021", "doubt.001"],
       jb=(0.25, "全景", 2.00, "特写"), jbcam=("虹桥河岸中位横移", "船头甲板低位仰拍桅根与桥洞"),
       cuts=[(0, 20, "一条纲船桅杆没放倒冲向桥洞，岸上顶篙、船上扑去放桅，铺兵在桥头挥手让人靠边", "开场"),
@@ -1616,7 +1686,7 @@ S += [
       plot="申时，太阳偏西，虹桥下一条纲船的桅杆还立着，顺着水冲向桥洞；桥上的人一片惊叫（听不清字句），岸上几个人拿长篙死死顶住船头，船上两个水手扑上去抱住桅杆往下放，却抱不住；桥头一个军巡铺兵挥着手让桥上的人往两边靠；桅杆越倒越快，砸平落定的一瞬，船头擦着桥洞钻了过去",
       cam="0–20s 一个连续运镜：河岸中位、眼平略高，35mm 缓推到 50mm，机位随船顺流方向缓慢横移跟船，f5.6；20–26s 切到船头甲板上低位仰拍，24mm，f5.6，机位固定在船上随船前进：桅杆根部与抱桅的手占画面下半，桥洞拱底从画面上方压过来、擦着倒平的桅杆掠过，画面实时继续",
       block="沈十九在桥头画右、面朝桥面、举起骨朵挥动让人靠边，不说话、不看镜头；桥上的人往两侧让，可辨不超过八个，其余剪影；0–20s 画面下缘前景是岸上顶船的一根长篙，离镜头很近、虚成一条暗色，随顶篙的人用力而弯；船自画左向画右冲向桥洞；两名水手抱桅杆、一名在船尾撑篙，岸上两个人顶篙；林问不入画",
-      act="0–4s 船冲近，桅杆还立着，桥上有人先叫起来；4–10s 桥上一片惊叫，岸上的人用长篙顶住船头，船速稍缓；10–15s 两名水手扑上去抱住桅杆根部往下放，沈十九在桥头挥手，桥上的人往两边让开，带起桥面的细尘；15–20s 两个水手抱不住，桅杆绕根部的转轴越倒越快，船头推出一道浑黄的浪头拍上岸边，桅杆倒下带起的风把船篷上的席子掀起一角；20–23s 船头仰拍：最后半秒明显加速、砸平落定在船篷上、弹一下停住，抱桅的手被带得一沉；23–26s 桥洞木拱的阴影从画面上方一掠而下、扫过桅杆根部和手——船头正擦着桥洞钻过，画面照常实时继续",
+      act="0–4s 船冲近，桅杆还立着，桥上有人先叫起来；4–10s 桥上一片惊叫，岸上的人用长篙顶住船头，船速稍缓；10–15s 两名水手扑上去抱住桅杆根部往下放，沈十九在桥头挥手，桥上的人往两边让开，带起桥面的细尘；15–20s 两个水手抱不住，桅杆绕根部的转轴越倒越快，船头推出一道泛白的浪头拍上岸边，桅杆倒下带起的风把船篷上的席子掀起一角；20–23s 船头仰拍：最后半秒明显加速、砸平落定在船篷上、弹一下停住，抱桅的手被带得一沉；23–26s 桥洞木拱的阴影从画面上方一掠而下、扫过桅杆根部和手——船头正擦着桥洞钻过，画面照常实时继续",
       lines=[L(0, "画外", "沿着城外的汴河堤走回虹桥，出事了——一条纲船的桅杆没放倒，正往桥洞冲。", "Back at the Rainbow Bridge — trouble. A boat's heading for the arch, mast still up.", 6, "boat.003", "紧", "快", ""),
              L(6, "画外", "岸上的人拿长篙顶住船，船上的人扑上去放桅。", "Bank poles brace it; the crew lunge for the mast.", 4, "boat.003 boat.002", "紧", "快", ""),
              L(10, "画外", "桥头那个铺兵在挥手让人往边上靠。铺兵白天管不管这种事，史书没写，是我的推测。", "A patrol soldier waves people aside. Whether they handled this by day, the records don't say. My guess.", 7.0, "job.011 house.011", "压着", "中"),
@@ -1726,7 +1796,7 @@ S += [
              L(9.5, "画外", "每个不过十五文，鹅鸭鸡兔、肚肺鳝鱼，什么馅儿都有。", "Fifteen wen each, tops: goose, duck, rabbit, tripe, eel.", 4.5, "price.001 food.002", "揭晓", "中", "案上数出来的铜钱"),
              L(14.5, "对镜", "买了两个。……皮薄，八分。", "Bought two. …Thin skin. Eight.", 2.5, "", "咽下后说"),
              L(17.5, "画外", "旁边煎的是旋煎羊白肠，史书没写价，我没买，不报价。", "Next door: fried mutton sausage. The records don't give a price, so I skipped it.", 5.5, "food.003", "解说", "中", "铁鏊上的羊白肠")],
-      light="戌时，天上只剩最后一线灰蓝、很快近黑；每个摊子棚柱上和案角的敞口陶灯盏是全部光源，豆大的火苗暖黄、一小簇一小簇，只照亮摊面与近处的手和脸，鏊下泥炉口一线暗红炭火只照亮炉口一圈；煎肠的油烟与包子笼的白汽在灯前被照亮、往上散；灯与灯之间是看不清的黑，黑位不提亮；没有月光直射、没有任何冷白光源",
+      light="戌时，天上只剩最后一线深蓝、很快转成深蓝近黑；每个摊子棚柱上和案角的敞口陶灯盏是全部光源，豆大的火苗暖黄、一小簇一小簇，只照亮摊面与近处的手和脸，鏊下泥炉口一线暗红炭火只照亮炉口一圈；煎肠的油烟与包子笼的白汽在灯前被照亮、往上散；灯与灯之间是看不清的黑，黑位不提亮；没有月光直射、没有任何冷白光源",
       pace="亮（纵深）→ 买 → 咬 → 对镜 → 看（微距）→ 羊白肠",
       spatial="机位＝州桥南头长焦纵深（固定）→ 摊前侧面中景（固定）→ 食物微距；在画主体＝夜市灯火 → 她与包子摊 → 包子与羊白肠；她面朝画右的摊主",
       contrast="首帧＝灯火连成一条的夜市纵深（全景 0.35）→ 末帧＝铁鏊上冒油的羊白肠微距（特写 2.00）。**这座城天黑了才最香。**",
@@ -1754,7 +1824,7 @@ S += [
              L(15, "对镜", "这是酒具，不是钱。", "This is tableware, not money.", 2.0, "money.007", "掂银注碗"),
              L(17, "对镜", "遇仙正店的银瓶酒，书上写七十二文「一角」，我按这个记。这顿，九分。", "At Yuxian, silver-flask wine was seventy-two wen a jug. I'll book that. Nine.", 5.5, "food.008", "点头"),
              L(22.5, "画外", FIXED, EN_FIXED, 2.5, "", "笑", "中", "手里的采访本")],
-      light="戌时，天上还剩最后一层灰蓝，街面与欢门木杆在这层天光里是冷灰的剪影；暖黄的烛光只从门里的珠帘缝与二楼吊窗漏出来，在门口地面投下一块暖色的光；进了阁子，桌上的烛火是主光，银器是发暗的银白、只有一点烛光的小高光；没有月光直射、没有冷白光源",
+      light="戌时，天上还剩最后一层深蓝，街面与欢门木杆在这层天光里是冷灰的剪影；暖黄的烛光只从门里的珠帘缝与二楼吊窗漏出来，在门口地面投下一块暖色的光；进了阁子，桌上的烛火是主光，银器是发暗的银白、只有一点烛光的小高光；没有月光直射、没有冷白光源",
       pace="亮（欢门）→ 进 → 坐 → 摆器皿（焌糟）→ 掂 → 说 → 记",
       spatial="机位＝街对面远景（固定）→ 阁子桌边近景（固定）；在画主体＝彩楼欢门 → 她与桌上银器；她侧身对镜头，焌糟在画右",
       contrast="首帧＝烛光从珠帘缝漏出的彩楼欢门（远景 0.15）→ 末帧＝她掂完银注碗对镜说完、划一笔（近景 0.75）。**两个人喝顿酒，桌上摆着快一百两银子。**",
@@ -1827,25 +1897,25 @@ S += [
       jb=(0.90, "近景", 0.75, "近景"), jbcam=("床头侧上方俯拍她躺着的脸", "床边正面近景"),
       hands="话筒与采访本放在桌上灭了的油灯旁、不在手里；揉后脑勺用右手",
       carry=[WILLOW_TABLE, "床腿上的布包仍拴着：" + KNOT],
-      cuts=[(0, 4, "五更：窗棂间透出极淡的灰白天光，铁牌声一下一下，她睁开眼", "开场"),
+      cuts=[(0, 4, "五更：窗棂间透出极淡的清冷蓝色天光，铁牌声一下一下，她睁开眼", "开场"),
             (4, 24, "她坐起来揉后脑勺，正对镜头说话", "切（换到床边正面）")],
       sstate=["油灯早已灭着、不再点亮；布包拴在床腿上；那枝柳横放在桌上",
               "与上一段相同：油灯灭着，布包仍拴着，柳枝仍在桌上；天光比上一段略亮"],
       title="【住·收】五更报晓 · 打分 · 签名收尾",
-      summary="五更，铁牌一下一下报晓，窗棂间透出极淡的灰白天光；她坐起来给客店打七分；问置顶评论问题，签名收尾两句。桌上是那枝柳和话筒本子，床腿上的布包还拴着。",
-      plot="五更将尽，外面传来一下一下敲铁牌的声音，直棂窗的窗棂间透出极淡的灰白天光；宋装的林问躺在床上睁开眼，坐起来，揉了揉后脑勺，对着镜头说话；桌上灭了的油灯旁放着那枝柳和她的话筒、采访本，床腿上的布包还拴着",
+      summary="五更，铁牌一下一下报晓，窗棂间透出极淡的清冷蓝色天光；她坐起来给客店打七分；问置顶评论问题，签名收尾两句。桌上是那枝柳和话筒本子，床腿上的布包还拴着。",
+      plot="五更将尽，外面传来一下一下敲铁牌的声音，直棂窗的窗棂间透出极淡的清冷蓝色天光；宋装的林问躺在床上睁开眼，坐起来，揉了揉后脑勺，对着镜头说话；桌上灭了的油灯旁放着那枝柳和她的话筒、采访本，床腿上的布包还拴着",
       cam="0–4s 床头侧上方俯拍近景，俯角三十度，50mm，机位固定，她躺着的脸与枕头；4–24s 切到床边正面，眼平，50mm，f2，近景（胸口以上），机位固定",
       block="她在画面中央的床上；0–4s 躺着、闭眼到睁眼；4–24s 坐起来正面朝镜头、看镜头说话；睡下不卸盖头与胸牌；房里只有她一个人",
       act="0–2s 铁牌声里她还闭着眼；2–4s 睁开眼；4–8s 她坐起来，揉着后脑勺看镜头给客店打分；8–16.5s 看着镜头认真问你；16.5–24s 看着镜头说签名收尾两句，最后微微一笑",
-      lines=[L(0, "画外", "五更了，外头有人敲铁牌报晓。书上说「闻此而起」——该起床了。", "Fifth watch: the iron plate. The book says hear it, get up.", 4.5, "job.012 daily.002", "刚醒", "慢", "窗棂间的灰白天光"),
+      lines=[L(0, "画外", "五更了，外头有人敲铁牌报晓。书上说「闻此而起」——该起床了。", "Fifth watch: the iron plate. The book says hear it, get up.", 4.5, "job.012 daily.002", "刚醒", "慢", "窗棂间清冷的蓝色天光"),
              L(4.5, "对镜", "床硬，瓷枕真凉，但睡着了。七分。", "Hard bed, cold pillow, but I slept. Seven.", 3.0, "inn.026 inn.027", "揉后脑勺"),
              L(8, "对镜", QUESTION, EN_QUESTION, 8.5, "", "认真问你"),
              L(16.5, "对镜", CLOSER[0], EN_CLOSER[0], 3.0, "", "平", "慢"),
              L(19.5, "对镜", CLOSER[1], EN_CLOSER[1], 4.0, "", "笑一下", "慢")],
-      light="五更末，窗棂间透出极淡的灰白天光，冷而柔、很暗，只勾出她半边脸的轮廓；油灯不再点亮，画面里没有任何火；屋角炭盆是空的",
+      light="五更末，窗棂间透出极淡的清冷蓝色天光，冷而柔、很暗，只勾出她半边脸的轮廓；油灯不再点亮，画面里没有任何火；屋角炭盆是空的",
       pace="醒（铁牌声）→ 坐起 → 打分 → 问 → 签名收尾",
       spatial="机位＝床头侧上方俯拍（固定）→ 床边正面近景（固定）；在画主体＝醒来的她 → 坐起来对镜说话的她；窗在她身后",
-      contrast="首帧＝铁牌声里闭着眼的脸（近景 0.90）→ 末帧＝窗棂间的灰白天光里她对镜头微笑（近景 0.75）。**灯昨晚就灭了，这一天亮了。**",
+      contrast="首帧＝铁牌声里闭着眼的脸（近景 0.90）→ 末帧＝窗棂间清冷的蓝色天光里她对镜头微笑（近景 0.75）。**灯昨晚就灭了，这一天亮了。**",
       moment="**23s 她说完「下一站见」微微一笑**",
       post="签名收尾两句逐字；8–24s 的评论问题与 publish.md 置顶评论逐字一致；零笑点；铁牌声进音床（daily.002）",
       judge="吹灯挪到 shot33，本镜只拍五更醒来，镜内不再有 4 秒纯黑段（R3-21 / R2-41）；铁牌与天光之间隔了一两个时辰，本镜从五更将尽起（R5 F21）；天光写暗（R4 F31）；「闻此而起」补一句白话（R1 R31）；打分拆成画外感受＋对镜打分，评论问题放宽到 6 秒（R1 R32）；瓷枕补 inn.027（R6 W12）；睡下不卸盖头与胸牌：五样恒定符号优先于起居真实（R2-42，判断）；柳枝与绳结状态串照带；景别档起幅俯拍近景 0.90（上一镜落幅全景 0.30，比值 0.33）"),
@@ -1860,12 +1930,12 @@ S += [
       plot="五更天亮，镜头从沿城客店的灰瓦屋脊上方起飞，边往后退边拔高，屋脊下的巷子里还亮着两三点豆大的油灯；天一点点变亮，那几点油灯越来越淡；汴河露出来，几条船开始撑篙；镜头一路拉远升高，外城城墙与墙外宽宽的护龙河在远处成一圈细线，城墙微微斜着、不是正南正北，东南和东北远处两座高塔；第一道低平的暖光先照到塔尖与城墙顶，贴地的薄雾从受光的地方开始变薄",
       cam="一个连续运镜、不切，24mm：0–6s 离屋脊约十四米，沿屋脊缓缓向后退并抬升；6–16s 边向后退边升到约六百米，镜头下俯约二十度朝西北；16–20s 减速悬停，整座城在画面里展开到地平线，外城城墙与护龙河是远处一圈细线，两座高塔立在远处。飞速平稳、不拖影。画面里没有任何飞行器，也没有飞行器的影子",
       block="画面里没有具名人物；早起的行人与船工只是远处剪影、不可辨面孔；可辨主体不超过八个，都不看镜头",
-      act="0–6s 灰瓦屋脊在画面下方后退，屋脊下巷子里两三点油灯还亮着；6–11s 天色一点点变亮，那几点油灯在天光里越来越淡，其中一盏被人吹灭；11–16s 汴河露出来，几条船开始撑篙，船只有米粒大，河面反着灰白的天光；16–20s 第一道直射的暖光先照亮两座高塔的塔尖和外城城墙顶，贴地的薄雾从受光的地方开始散开，露出下面一格一格的街巷，镜头悬停；宫城正门远远只是一点深绿的屋顶",
+      act="0–6s 灰瓦屋脊在画面下方后退，屋脊下巷子里两三点油灯还亮着；6–11s 天色一点点变亮，那几点油灯在天光里越来越淡，其中一盏被人吹灭；11–16s 汴河露出来，几条船开始撑篙，船只有米粒大，河面是碧绿的、映着渐亮的蓝天；16–20s 第一道直射的暖光先照亮两座高塔的塔尖和外城城墙顶，贴地的薄雾从受光的地方开始散开，露出下面一格一格的街巷，镜头悬停；宫城正门远远只是一点深绿的屋顶",
       lines=[],
-      light="五更末，东方天边从灰白转浅金，太阳还没出来，整座城先是一片灰蓝，屋脊下的巷子里还剩两三点豆大的暖黄油灯光；16–20s 太阳上沿刚露出地平线，第一道低平的暖光从画右（东面）先落在两座高塔的塔尖与城墙顶上，其余屋面仍在灰蓝里；薄雾贴着地面",
+      light="五更末，东方天边从清冷的深蓝转成透亮的浅蓝、近地平线一线浅金，太阳还没出来，整座城先笼在清冷的蓝色天光里，屋脊下的巷子里还剩两三点豆大的暖黄油灯光；16–20s 太阳上沿刚露出地平线，第一道低平的暖光从画右（东面）先落在两座高塔的塔尖与城墙顶上，其余屋面仍在清冷的蓝光里；薄雾贴着地面",
       pace="起（屋脊）→ 升 → 灯淡 → 远（全城）→ 第一道光 → 停",
       spatial="机位＝客店屋脊上方连续后退拔高到全城高空斜俯；在画主体＝屋脊与巷灯 → 屋顶群与汴河 → 全城；运动方向＝向后、向上",
-      contrast="首帧＝灰蓝里屋脊下还亮着的两三点油灯（远景 0.02）→ 末帧＝第一道暖光照上塔尖与城墙、雾正在散的整座城（远景 0.02）。**城里最后几盏灯灭掉，第一道光落在城墙上。**",
+      contrast="首帧＝清冷蓝光里屋脊下还亮着的两三点油灯（远景 0.02）→ 末帧＝第一道暖光照上塔尖与城墙、雾正在散的整座城（远景 0.02）。**城里最后几盏灯灭掉，第一道光落在城墙上。**",
       moment="**17s 第一道直射光落在塔尖与城墙顶，巷子里最后一点油灯已灭**",
       post="考证卡与「本站 N 条事实 · M 条存疑」由后期叠在本镜；环境音＝远处报晓铁牌声 + 早起的零星人声（没有可辨字句）；可选的 shot36 不入片时，本镜末帧就是全片最后一帧",
       judge="片尾顺序改为客店过夜 → 本镜五更航拍 → 可选的今日遗址（R5 F07 / 协调者裁定 2），镜号 36→35；主体改挂 bg16_汴京全城五更、锁定串照卡（协调者裁定 6）；有零星油灯，挂有灯负向、去掉「提亮的黑位」，不挂蜡烛组（bg16 卡判断：酒店灯烛 street.003 ✅）；高度按 R3-26 改为约六百米、城墙是远处细线，不再写看得清护城河两岸杨柳；灯熄与第一道光（R4 F19）；远处宫城门楼按宣德楼例外处理；B_city 渲 `shots/shot35/shot35_previz.*`"),

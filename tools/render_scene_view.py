@@ -23,6 +23,14 @@ bpy.ops.wm.open_mainfile(filepath=blend)
 cam_data = bpy.data.cameras.new("view_cam")
 cam_data.lens = focal
 cam_data.sensor_width = 36.0
+# 裁剪面随场景尺度走：默认远裁剪 1000 m 会把城级场景（sk1 汴京 ±9 km）的远处整片裁掉；
+# 远裁剪一放大，近裁剪若仍是 0.1 m，深度精度不够，地面与贴得很近的水面 / 街面会在远处打架出暗斑。
+# 所以远裁剪取「相机到场景包围盒最远角」，近裁剪按离看点的距离与离地高度放大（贴地近景仍保持 0.1 m）。
+_pts = [ob.matrix_world @ Vector(c) for ob in bpy.context.scene.objects if ob.type == "MESH" for c in ob.bound_box]
+_far = max(((p - pos).length for p in _pts), default=1000.0)
+cam_data.clip_end = max(1000.0, _far * 1.05)
+_lo_z = min((p.z for p in _pts), default=0.0)
+cam_data.clip_start = min(150.0, max(0.1, (tgt - pos).length / 400.0, (pos.z - _lo_z) / 40.0 - 0.1))
 cam = bpy.data.objects.new("view_cam", cam_data)
 bpy.context.scene.collection.objects.link(cam)
 cam.location = pos

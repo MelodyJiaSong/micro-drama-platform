@@ -2,6 +2,8 @@
 
 > 图片在 `ref/`（媒体走 R2，不进 git）；本索引进 git。每张图写清它证明哪个 `fact_id`、许可能否入画。
 
+> 2026-09-14（sk1 follow-up 002）：Seedance 上传图宽高比须在 1:3–3:1，以下图已用 `tools/ref_aspect.py` 原地处理（不裁内容；补边＝补中性边到 3:1，折 N 行＝长卷按行拼版）：ref01 / ref02 补边，ref17 折 2 行。原图可按 `source_url` 重抓。
+
 ```yaml
 - ref_id: bg7_坊巷民居.ref01
   file: ref/ref01_Along_the_River_During_t_commons.jpg

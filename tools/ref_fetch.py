@@ -26,6 +26,8 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Iterator
 
+from ref_aspect import fit
+
 UA = "spec_coding-ref-fetch/0.1 (https://github.com/; contact: repo owner)"
 MET = "https://collectionapi.metmuseum.org/public/collection/v1"
 COMMONS = "https://commons.wikimedia.org/w/api.php"
@@ -174,6 +176,7 @@ def pull(asset_dir: Path, keys: list[str], evidences: list[str], use: str) -> No
         ext = Path(urllib.parse.urlparse(c.image_url).path).suffix.lower() or ".jpg"
         file = ref_dir / f"ref{_next_index(ref_dir):02d}_{_slug(c.title)}_{source}{ext}"
         size = _download(c.image_url, file)
+        fit(file)  # Seedance only accepts uploads between 1:3 and 3:1
         ref_id = append_ref(asset_dir, file, c, evidences, use)
         print(json.dumps({"ref_id": ref_id, "file": str(file), "bytes": size, "license": c.license}, ensure_ascii=False))
 
@@ -184,6 +187,7 @@ def register(asset_dir: Path, file: Path, c: Candidate, evidences: list[str], us
     dest = file if file.parent == ref_dir else ref_dir / f"ref{_next_index(ref_dir):02d}_{_slug(file.stem)}_manual{file.suffix.lower()}"
     if dest != file:
         file.replace(dest)
+    fit(dest)
     print(json.dumps({"ref_id": append_ref(asset_dir, dest, c, evidences, use), "file": str(dest)}, ensure_ascii=False))
 
 
