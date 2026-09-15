@@ -53,7 +53,7 @@ Background: 离线测试世界
 | 反向提示词 | 紧跟视频 prompt、由「反向提示词」引出的 ```text 围栏，开头为 `第二个人, 人群, 路人` |
 | 角色卡 | hy3 `c1_砌炉的老人/`：`c1-1.png`、`c1-2.mp4`；md 内有 `c1-1_砌炉的老人立绘`、`c1-2_砌炉的老人turntable` 两个块<br>hy3 `c2_獾/`：`c2-1.png`；md 内有 `c2-1_獾锚点` 块，以及锁定描述符裸围栏 |
 | 跨集复用 | hy2 `characters/c1_造家的人/c1_造家的人.png.link.json` → hy1 同名文件<br>hy2 `props/p2_随身装备/p2_随身装备.png.link.json` → hy1 同名文件 |
-| 旧写法（真实） | rexue_gaoxiao：`学校泳池_bg2_水面_俯拍=>@1`、`(道具参考图)`（共 20 个 shot 带 `=>@数字`）<br>xianjian_yi_mv shot18：`c3_英气女子=>@, s5_bg3_石门内侧=>@`（无括号）<br>wushen_juexing：`裴知秋=>, bg6_座前_虚化背景=>`（无 `@`） |
+| 旧写法（真实） | rexue_gaoxiao：`学校泳池_bg2_水面_俯拍=>@1`（shot01；共 20 个 shot 带 `=>@数字`）<br>xianjian_yi_mv shot18：`c3_英气女子=>@, s5_bg3_石门内侧=>@`（无括号）<br>wushen_juexing：`裴知秋=>, bg6_座前_虚化背景=>`（无 `@`） |
 | 已有产物 | hy3 `shot01/renders/`、`shot02/renders/` 已有手工下载的 mp4 |
 
 ## 2. F1 首次启动与登录
@@ -360,8 +360,8 @@ Scenario Outline: AC-IN-03 解析错误可操作——指出要填的 config 键
     | shot | token | config_key |
     | hy3 派生夹具：引用 bg99-1(场景参考图) | bg99-1 缺文件 | references.overrides."bg99-1" |
     | hy3 派生夹具：_series/ 下再放一张 bg11-1.png | bg11-1 多重匹配 | references.overrides."bg11-1" |
-    | rexue_gaoxiao/shot02.md | (道具参考图) 没有命中任何规则 | references.rules |
-    | rexue_gaoxiao/shot02.md | 学校泳池_bg2_水面_俯拍=>@1 已填槽位号 | @pending:C3 |
+    | （任一真实 shot 中未被默认规则覆盖的 label，如 `道家手印参考图`） | label 没有命中任何规则 | references.rules |
+    | rexue_gaoxiao/shot01.md | 学校泳池_bg2_水面_俯拍=>@1 已填槽位号 | 无（v2：legacy_reference_syntax，不可豁免） |
     | xianjian_yi_mv/shot18.md | c3_英气女子=>@ 无括号 | references.overrides."c3_英气女子" @pending:C3 |
     | hy3 shot01 副本加 本镜首帧(上一镜末帧) | 找不到 shot00_lastframe.png | references.overrides."本镜首帧" |
 

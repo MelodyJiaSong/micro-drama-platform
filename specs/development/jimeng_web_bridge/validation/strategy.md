@@ -125,3 +125,12 @@ stage 6 拆成下列 work unit，按顺序执行（U4 和 U5 在 U3 之后可以
 ## Promotion-preservation check
 
 本任务各阶段目录下都**没有** `<stage>/promoted.md`，因此没有需要保留的 pin。按规则，stage 6 不生成这项检查。
+
+## Stage-6 severity decision（用户，2026-09-14）
+
+对 `agent_refs/validation/general.md`「Security failure → critical，未经用户明确同意不得进入修复轮」的**本项目 override**：
+
+- **文件沙箱 / 路径校验类** critical（不涉及积分、账号、确认闸门），parent 可以直接进入修复轮，事后在汇报里说明，并在 `events.jsonl` 里记 `user_approval: standing`。
+- **涉及花积分、账号、确认闸门的** critical 仍须逐次征得用户同意。
+
+来源：interview/qa.md「Stage-6 decisions」。

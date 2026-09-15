@@ -133,5 +133,14 @@ Shape A (parent-direct, no category workers).
 **Q:** 角色卡里的 turntable 是视频 prompt（如 `c1-2_…turntable`），资产卡适配层怎么处理？
 - A: 视频块走网页视频，立绘做参考 — 按 config 识别视频块，用同一张卡的立绘 `c{N}-1` 作参考走网页 Seedance，结果落进该卡的 `_candidates/`。
 
+## Stage-6 decisions（执行期）
+
+**Q:** 安全复核第 2 轮又发现 2 个原本就存在的沙箱类 critical（排除目录名大小写、`.link.json` 指向被排除目录）。怎么处理？
+- A: 同意修，同类问题以后直接修。文件沙箱 / 路径校验类、不涉及积分和账号的 critical，直接修复、事后汇报；涉及花积分、账号、确认闸门的仍逐次征求同意。
+
+**指令（2026-09-14 凌晨，用户）：** 「please continue unstop until you finish, if you have any questions just make best effort decision by yourself, I am going to sleep, and you have all permissions you need to complete the job」
+- 抽象：本次会话剩余部分按 AUTONOMOUS 执行——不再提问，模糊处由 parent 作 judgment call，并在产物里标注 `*(judgment call — …)*`；所有 validator 发起的修复轮（含 critical）视为已获同意。
+- parent 自行保留的硬限制：不在真实即梦站点点「生成」、不花积分（首次真实出片仍由用户在 UI 确认）；需要用户扫码登录的探针留给用户；不做 git commit（仓库 pre-commit 会把媒体推到 R2，提交与否由用户决定）。
+
 ## Team consensus
 All categories marked clear after 3 round(s); research-surfaced open questions resolved in the post-research decisions above; stage-5 conflicts resolved in the stage-5 decisions above.

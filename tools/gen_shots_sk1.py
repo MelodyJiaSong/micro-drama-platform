@@ -320,6 +320,11 @@ def has_lin(s: dict) -> bool:
     return "c1" in s["ch"] or "c1m" in s["ch"]
 
 
+def previz_done(sid: str) -> bool:
+    """白模动画渲出来了没有——镜头卡里的 previz 状态由盘上产物定，不手写（CLAUDE.md § State surfaces 1）。"""
+    return os.path.exists(os.path.join(ROOT, "shots", sid, sid + "_previz.mp4"))
+
+
 def tc(sec: int) -> str:
     return "%02d:%02d" % (sec // 60, sec % 60)
 
@@ -816,7 +821,8 @@ def emit(s: dict, i: int, start: int, seams: list, facts: dict) -> tuple[str, st
     ctx += ["- 景别档: %s%.2f → %s%.2f（机位 `%s` → `%s`）。**与前一镜的切口**：%s" % (
                 s["jb"][1], s["jb"][0], s["jb"][3], s["jb"][2], s["jbcam"][0], s["jbcam"][1], seam),
             "- 史实: %s ｜ 本镜最高不确定度 `%s` ｜ 栏目 `unit: %s`" % (fact_line, s["tag_max"], s["unit"]),
-            "- previz: `previz 档: %s` · 计划产物 `5_6_分镜与prompt/shots/%s/%s_previz.mp4（待渲）`；关键帧 `t` 须与 `动作:` 时间轴逐拍对齐（rule 4h）" % (s["tier"], sid, sid),
+            "- previz: `previz 档: %s` · 白模动画 `5_6_分镜与prompt/shots/%s/%s_previz.mp4`（%s）；关键帧 `t` 须与 `动作:` 时间轴逐拍对齐（rule 4h）" % (
+                s["tier"], sid, sid, "已渲" if previz_done(sid) else "待渲"),
             "- **空间核验**：" + s["spatial"],
             "- **首末帧反差**：" + s["contrast"],
             "- **决定性瞬间**：" + s["moment"]]
@@ -831,7 +837,8 @@ def emit(s: dict, i: int, start: int, seams: list, facts: dict) -> tuple[str, st
     ctx.append("- **Reference uploads**：")
     if s.get("handoff_from"):
         ctx.append("  - [ ] 上一镜末帧 `shot%02d_lastframe.png`（从 shot%02d 成片截取最后一帧，进本镜首帧槽）" % (s["handoff_from"], s["handoff_from"]))
-    ctx.append("  - [ ] `5_6_分镜与prompt/shots/%s/%s_previz.mp4`（白模动画，待渲）" % (sid, sid))
+    ctx.append("  - [%s] `5_6_分镜与prompt/shots/%s/%s_previz.mp4`（白模动画，%s）" % (
+        "x" if previz_done(sid) else " ", sid, sid, "已渲" if previz_done(sid) else "待渲"))
     for v, bg, note in scene_items(s):
         ctx.append("  - [ ] `%s/scenes/bianjing/%s/%s.png`（场景主体·%s）" % (ASSETS, bg, v, note))
     for c in s["ch"]:

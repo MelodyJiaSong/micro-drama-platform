@@ -108,3 +108,92 @@ Pending:
 - 未跑完整 `ai_videos__审查总编排`，本次只做了机械闸门 + 相邻连贯人工复核
 
 No conflicts found in: shot05–shot17 prompts, 2_世界观人设/{style_guide,relationships}.md, characters/*, props/{p2,p3,p4,p5}
+
+## Follow-up 003 — 2026-09-13 19:40:00
+Source: user_input/follow_ups/202609.md - section 003
+Summary: bg3 雪井仍不够大——放大到直径约十米、深约三米六（两人高），N1 俯角 35°，以背风洼地五米风积雪自洽。
+
+Auto-updated:
+- tools/gen_scene_prompts_hy4.py — bg3 尺寸（10m×3.6m、下半段近乎竖直、雪影 14m）、背风洼地风积雪五米多、
+  验收加「宁可夸张不许画小」、负向加 `坑深不过一人 / 坑底一眼就到`；bg8 尺寸同步；N1 俯角 25°→35°（全文件）
+- tools/gen_shots_hy4.py — bg3 场景串、shot03 情节/机位/看点、shot04 滑下「三米多」与坑沿高度；N1 俯角 35°
+- ai_videos/huangye_shenghuo/hy4/5_6_分镜与prompt/、scenes/shenxue/{bg3,bg8}_*/ — 重跑两个生成器
+- ai_videos/huangye_shenghuo/hy4/4_剧本/script.md、2_世界观人设/world.md — 尺寸与机位同步
+- .claude/agent_refs/project/ai_video.md — 16.14 补第⑤条（模型系统性往小里画，尺寸按「一眼夸张」写）
+
+Verified:
+- 生成器重跑干净：18 shots / 448s / 正向最长 2879 字；切口 17/17 ✅；bg3 prompt 1765 字（在 1200–2400 内）
+- `shot_logic` / `prompt_light` blocker 0
+- 残留扫描：无「六米 / 一米八 / 将近两米 / 俯角二十五度」（命中的「零下二十五度」是气温，无关）
+
+Pending:
+- 盘上 `bg3-1.png` 时间戳 18:02，**早于 002 的 prompt 改动**——仍是旧图，需按新 prompt 重出
+- 仍需重出 `bg4-1` / `bg8-1` / `bg11-1`；图出后重渲 shot03–05、shot09、shot17
+
+No conflicts found in: shot05–shot17 prompts（bg4 竖井一米二直达地面与五米风积雪自洽）, style_guide.md, props/*
+
+## Follow-up 004 — 2026-09-13 19:55:00
+Source: user_input/follow_ups/202609.md - section 004
+Summary: bg3 雪井深度认可、宽度不够——直径加到约十六米（深仍三米六），去掉「像一口大井」窄比喻，宽度写成画面占比，N1 换 20mm 广角。
+
+Auto-updated:
+- tools/gen_scene_prompts_hy4.py — bg3：直径 16m（树干十三倍、宽是深四倍多）、雪影 20m、「大漏斗不是窄井」、
+  「坑口两侧坑沿出画、画面下半部分几乎全是坑」、机位加 20mm 广角；验收同步；负向加窄井词组；bg8 尺寸同步
+- tools/gen_shots_hy4.py — bg3 场景串、shot03 情节（去「陡得像井」）与 N1 焦段；shot09 / shot17 N1 焦段 28mm → 20mm
+- ai_videos/huangye_shenghuo/hy4/5_6_分镜与prompt/、scenes/shenxue/{bg3,bg8}_*/ — 重跑两个生成器
+- ai_videos/huangye_shenghuo/hy4/4_剧本/script.md、2_世界观人设/world.md — 尺寸同步
+- .claude/agent_refs/project/ai_video.md — 16.14 ⑤ 补「宽度别用窄比喻，写画面占比 + 宽深比，必要时换广角」
+
+Verified:
+- 生成器重跑干净：18 shots / 448s / 正向最长 2879 字；切口 17/17 ✅；bg3 prompt 1863 字
+- `shot_logic` / `prompt_light` blocker 0
+- 残留扫描：无「直径约十米 / 十四米 / 像一口大井 / 陡得像井」；shot03 / shot09 / shot17 的 N1 均为 20mm
+
+Pending:
+- 盘上 `bg3-1.png` 仍是 18:02 的旧图（用户看的新图尚未导入）——按新 prompt 重出并导入
+- 仍需重出 `bg4-1` / `bg8-1` / `bg11-1`；图出后重渲 shot03–05、shot09、shot17
+
+No conflicts found in: shot01–02、shot05–08、shot10–16、shot18 prompts, style_guide.md, props/*
+
+## Follow-up 005 — 2026-09-13 20:05:00
+Source: user_input/follow_ups/202609.md - section 005
+Summary: bg3 雪窝直径再翻倍到约三十二米（深三米六不变），补「风绕孤树打旋掏雪」成因使画面自洽。
+
+Auto-updated:
+- tools/gen_scene_prompts_hy4.py — bg3：直径 32m（树干二十多倍、宽是深九倍）、「远侧坑沿远在树后很远处」、
+  成因改为树冠挡中心 + 风绕孤树打旋掏雪、「雪井」称「雪窝」、删树冠雪影数字；验收同步；负向加 `坑宽不过几棵树 / 小雪窝`；bg8 尺寸同步
+- tools/gen_shots_hy4.py — bg3 场景串、shot03 情节
+- ai_videos/huangye_shenghuo/hy4/5_6_分镜与prompt/、scenes/shenxue/{bg3,bg8}_*/ — 重跑两个生成器
+- ai_videos/huangye_shenghuo/hy4/4_剧本/script.md、2_世界观人设/world.md — 尺寸与成因同步
+- .claude/agent_refs/project/ai_video.md — 16.14 ⑤ 补「尺寸以用户看图认可为准，物理说不通时补成因」
+
+Verified:
+- 两个生成器重跑干净（场景生成器首次因编辑残留的引号报 SyntaxError，已修正后重跑）；18 shots / 448s；切口 17/17 ✅；bg3 prompt 1914 字
+- `shot_logic` / `prompt_light` blocker 0；残留扫描无「十六米 / 二十米的雪影」
+
+Pending:
+- 按新 prompt 重出 `bg3-1` → `bg4-1` / `bg8-1` → `bg11-1`；图出后重渲 shot03–05、shot09、shot17
+
+No conflicts found in: shot01–02、shot04–18 prompts, style_guide.md, props/*
+
+## Follow-up 006 — 2026-09-13 20:20:00
+Source: user_input/follow_ups/202609.md - section 006
+Summary: bg3 雪窝再深再大——深约四米五、直径约四十米、坑底平坦；改用「能盖下一间小屋、人站坑底离坑沿还差两个多人」给尺度，并声明画面里无屋。
+
+Auto-updated:
+- tools/gen_scene_prompts_hy4.py — bg3：深 4.5m / 直径 40m / 风积雪六米多；新增「深度和宽度要能在里面盖下一间小屋」一组功能尺度句；
+  坑底改平坦开阔；远侧坑壁「比一间小屋还高」；验收同步并加「画面里没有任何屋子」；负向加 `坑里有屋子 / 坑底窄得站不下几个人 / 坑底是尖的`；bg8 同步
+- tools/gen_shots_hy4.py — bg3 场景串（含「画面里没有屋子」）、shot03 情节与看点、shot04 滑下四米多与坑沿高度
+- ai_videos/huangye_shenghuo/hy4/5_6_分镜与prompt/、scenes/shenxue/{bg3,bg8}_*/ — 重跑两个生成器
+- ai_videos/huangye_shenghuo/hy4/4_剧本/script.md、2_世界观人设/world.md — 尺寸同步
+- .claude/agent_refs/project/ai_video.md — 16.14 ⑤ 补「数字压不住时写能装下什么，参照物不入画要反向声明」
+
+Verified:
+- 两个生成器重跑干净；18 shots / 448s；切口 17/17 ✅；bg3 prompt 2056 字
+- `shot_logic` / `prompt_light` blocker 0；残留扫描无旧尺寸
+
+Pending:
+- 按新 prompt 重出 `bg3-1` → `bg4-1` / `bg8-1` → `bg11-1`；图出后重渲 shot03–05、shot09、shot17
+- 若出图里仍冒出屋子，把「小屋」参照从 shot03/04 场景串里拿掉、只留在 bg3 锚点 prompt
+
+No conflicts found in: shot01–02、shot05–18 prompts（负向常驻 `木屋 / 帐篷` 与参照句不冲突）, style_guide.md, props/*

@@ -1108,6 +1108,10 @@ def run(script_file: str) -> None:
         die("只许改本镜目录里的场景副本：先把 bianjing.blend 复制到本镜目录再跑（rule 4h §A）")
     info = build(cfg_path)
     bpy.ops.wm.save_mainfile()
+    # 机位与人占画高的量测报告落盘在本镜目录（`tools/previz_frame_fix.py` 读它反解机位；
+    # 日志在 scratchpad 里会被清掉，报告必须跟产物同寿）。
+    cfg_path.with_name(cfg_path.parent.name + "_previz_report.txt").write_text(
+        "\n".join(info["report"]) + "\n", encoding="utf-8")
     for line in info["report"]:
         print(line)
     print(f"PREVIZ OK frames=1..{info['frames']} fps={info['fps']} cuts={info['cuts']} sets={info['sets']} "

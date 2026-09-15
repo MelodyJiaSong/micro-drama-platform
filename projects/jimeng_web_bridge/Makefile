@@ -5,7 +5,7 @@ NPM  := npm
 VENV := .venv
 VENV_PY = $$(if [ -f "$(VENV)/Scripts/python.exe" ]; then echo "$(VENV)/Scripts/python.exe"; else echo "$(VENV)/bin/python"; fi)
 
-.PHONY: venv init install ui-build run test test-perf test-soak canary
+.PHONY: venv init install ui-build ui-contract run test test-signoff test-perf test-soak canary probe probe-capture
 
 venv:
 	@[ -f "$(VENV)/Scripts/python.exe" ] || [ -f "$(VENV)/bin/python" ] || ( $(PY) -m venv "$(VENV)" && "$(VENV_PY)" -m pip install --upgrade pip && "$(VENV_PY)" -m pip install -r requirements.txt )
@@ -21,6 +21,10 @@ init: venv
 ui-build:
 	cd apps/ui && $(NPM) run build
 
+# Rewrites apps/ui/test/fixtures/contract/*.json from the response DTOs; the UI build type-checks against them.
+ui-contract: venv
+	"$(VENV_PY)" -m tests.contract.ui_contract
+
 run: venv
 	"$(VENV_PY)" -m apps.api.main
 
@@ -35,3 +39,14 @@ test-soak: venv
 
 canary: venv
 	"$(VENV_PY)" -m apps.api.canary_cli
+
+test-signoff: venv
+	JWB_REQUIRE_REAL_REPO=1 JWB_REQUIRE_FFPROBE=1 "$(VENV_PY)" -m pytest tests -m "not perf and not soak"
+
+# Read-only probes of the real site in the service's own Chrome profile (scan the QR code when asked).
+# They never click 生成/发布/删除/保存/确认 and never spend credits.
+probe-capture: venv
+	"$(VENV_PY)" tests/probe/site_probe_phase1.py
+
+probe: venv
+	"$(VENV_PY)" tests/probe/site_probe_phase2.py

@@ -26,7 +26,7 @@ status: 已出prompt
 - 衔接: 承接 shot01 末帧（首帧＝上一镜末帧）
 - 景别档: 远景0.02 → 远景0.02（机位 `汴河上空一百五十米悬停远眺东水门` → `宣德楼前低空仰视航拍`）。**与前一镜的切口**：上一镜 shot01 落幅 **远景 0.02**（机位 `汴河上空一百五十米悬停远眺东水门`）→ 本镜起幅 **远景 0.02**（机位 `汴河上空一百五十米悬停远眺东水门`），比值 1.00 — **承接对，豁免跳档**：本镜首帧就是上一镜成片末帧，接缝要看不出来（jingbie §2.0.3：承接与跳档互斥）。
 - 史实: `kaifeng.city.001`（✅）、`kaifeng.city.021`（✅）、`kaifeng.city.022`（✅）、`kaifeng.palace.010`（✅）、`kaifeng.city.024`（✅）、`kaifeng.route.003`（✅）、`kaifeng.city.005`（✅）、`kaifeng.city.030`（✅）、`kaifeng.route.009`（✅）、`kaifeng.city.018`（✅）、`kaifeng.city.038`（✅）、`kaifeng.palace.002`（✅）、`kaifeng.palace.004`（✅）、`kaifeng.festival.001`（✅） ｜ 本镜最高不确定度 `✅` ｜ 栏目 `unit: 航拍`
-- previz: `previz 档: S` · 计划产物 `5_6_分镜与prompt/shots/shot02/shot02_previz.mp4（待渲）`；关键帧 `t` 须与 `动作:` 时间轴逐拍对齐（rule 4h）
+- previz: `previz 档: S` · 白模动画 `5_6_分镜与prompt/shots/shot02/shot02_previz.mp4`（已渲）；关键帧 `t` 须与 `动作:` 时间轴逐拍对齐（rule 4h）
 - **空间核验**：机位＝汴河上空悬停处起升后退 → 全城极高处斜俯 → 切到御街上空自南向北低飞 → 宣德楼前低空仰视；运动方向＝先向上向后，切后向正北
 - **首末帧反差**：首帧＝汴河上空悬停远望东水门（远景 0.02，与 shot01 末帧同一画面）→ 末帧＝宣德楼正面仰视（远景 0.02）。**从城门外看见整座城，最后停在它的正门前。**
 - **决定性瞬间**：**29s 停在宣德楼正前方仰视的那一帧**（封面候选）
@@ -35,7 +35,7 @@ status: 已出prompt
 - **判断**：按 R3-02 方案 A：镜内一切（14s）、删去 W11 WP4，WP5→WP6 改在宣德楼正南约七百米起飞、约五十米每秒；州桥不在飞越路线（它是 shot16 的主体，飞越要约八十五米每秒）；「马面」无 fact，不写；宣德楼绿琉璃瓦例外延伸到本镜末段（style_guide §6 注），挂 bg12 负向组并加「潘杨湖」（R6 W16 / R4 F06）；格局取 city.001 / 021 / 022、palace.010、city.024、route.003 与 city.005、city.030、city.018、city.038；场景参考 bg0-1（0–14s）+ bg4-1（御街）+ bg12-1（宣德楼前）
 - **Reference uploads**：
   - [ ] 上一镜末帧 `shot01_lastframe.png`（从 shot01 成片截取最后一帧，进本镜首帧槽）
-  - [ ] `5_6_分镜与prompt/shots/shot02/shot02_previz.mp4`（白模动画，待渲）
+  - [x] `5_6_分镜与prompt/shots/shot02/shot02_previz.mp4`（白模动画，已渲）
   - [ ] `2_世界观人设/scenes/bianjing/bg0_汴京全城/bg0-1.png`（场景主体·bg0_汴京全城）
   - [ ] `2_世界观人设/scenes/bianjing/bg4_州桥御街/bg4-1.png`（场景主体·14–26s 御街低飞）
   - [ ] `2_世界观人设/scenes/bianjing/bg12_宣德楼/bg12-1.png`（场景主体·26–30s 宣德楼前）

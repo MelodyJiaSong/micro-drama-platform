@@ -174,7 +174,7 @@ Version: **v2**（在 stage-5 validation 暴露的冲突和缺口基础上修订
 | `seedance2.5` | web | 4–30 | 480p, 720p* | 21:9, 16:9, 4:3, 1:1, 3:4, 9:16 | 30 / 10 / 10*（页面称合计 50） | 支持 | false* |
 | `seedance2.0_vip` | web, cli | 4–15 | 720p, 1080p | 同上 | 9 / 3 / 3 | web 支持 / cli 不支持 | false* |
 | `seedance2.0fast_vip`、`seedance2.0`、`seedance2.0fast` | web, cli | 4–15 | 720p | 同上 | 9 / 3 / 3 | web 支持 / cli 不支持 | false* |
-| `seedream5.0`（另有 3.0–4.7） | cli | — | 2k, 4k（3.x：1k, 2k） | 21:9, 16:9, 3:2, 4:3, 1:1, 3:4, 2:3, 9:16 | image2image 1–10 | — | — |
+| `seedream5.0`（另有 3.0–4.7） | cli | — | 2k, 4k（3.x：1k, 2k） | 21:9, 16:9, 3:2, 4:3, 1:1, 3:4, 2:3, 9:16 | image2image 1–10（仅 4.0+；3.x 只支持 text2image，来源：本机 dreamina 1.4.5 `image2image --help` 的 model_version 为 4.0–5.0） | — | — |
 
 计数规则：主体 mention **不计入**图片上限（`count_entities_as_images = false`*）；首帧计入图片上限。
 
@@ -258,7 +258,7 @@ Version: **v2**（在 stage-5 validation 暴露的冲突和缺口基础上修订
 - 围栏内的 `负面词:` 行属于正向 prompt 原文，不单独提取。
 
 *字段解析（在 prompt 围栏内）*
-- `比例:`：允许两侧有反引号、后面跟注释、同一行用 `｜` 分隔多个字段；取第一个 `\d+:\d+`。不在所选模型的比例列表里 → 预检错误。
+- `比例:`：允许两侧有反引号、后面跟注释、同一行用 `｜` 分隔多个字段；取第一个 `\d+(\.\d+)?:\d+`（`2.35:1` 这种带小数的值原样取出，再由比例白名单拒绝）。不在所选模型的比例列表里 → 预检错误。
 - `时长:`：允许 `22秒`、`22s`、`22 s`，允许反引号，允许与其他字段同行；取第一个数字，四舍五入为整数秒。
 
 *`参考:` 行*
@@ -268,7 +268,7 @@ Version: **v2**（在 stage-5 validation 暴露的冲突和缺口基础上修订
   - `=>@` 后面跟了数字；
   - 项没有括号；
   - 项是 `名字=>` 而没有 `@`。
-- 有 `参考:` 行但一项都没解析出来，或 `参考:` 行里有无法识别的片段 → 预检错误，绝不静默当作零参考。
+- 有 `参考:` 行但一项都没解析出来，或 `参考:` 行里有无法识别的片段 → 预检错误，绝不静默当作零参考。显式写 `参考: 无` 表示声明本镜零参考，合法。
 - 没有 `参考:` 行、正文也没有 `=>@` → 零参考，合法。
 
 *规则匹配*
@@ -327,7 +327,7 @@ Version: **v2**（在 stage-5 validation 暴露的冲突和缺口基础上修订
 - 历史里若有同 `model × resolution` 的实扣记录，一并显示「最近实测单价」，方便用户更新价格表。
 
 **FR-13 `BatchCommand.precheck(items, idempotency_key?)`。**
-- 返回 `batch_id`、摘要（ok / warning / error 计数，合计预计积分）、确认页 URL。
+- 返回 `batch_id`、摘要（ok / warning / error 计数，合计预计积分——命中已有作业的条目不计入合计）、确认页 URL。
 - 逐条明细用分页的 `BatchQuery.get` 获取。MCP 返回里的 ok 条目只给计数。
 - **token 不返回给 bearer 客户端**（FR-14）。
 - batch 状态为 `awaiting_confirm`。含 error 条目的 batch 不能确认，需要剔除后重新预检（UI 提供「剔除错误项并重新预检」）。
@@ -373,8 +373,8 @@ queued ──(有槽+间隔满足+队列运行中)──▶ preparing[set_params
 | `wait_timeout` | `paused_needs_human` | 可以 | `generating`（继续轮询） |
 | `download_failed`（下载重试耗尽） | `paused_needs_human` | 可以 | `downloading` |
 | `restart_during_submit`、`submit_rejected`、`submit_unconfirmed` | `paused_needs_human` | **仅 UI 裁决**（FR-19） | 由裁决决定 |
-| `estimate_exceeds_confirmed` | `paused_needs_human` | **仅 UI 批准** | `preparing` → `submitting` |
-| `cli_error` | `paused_needs_human` | 可以 | 提交前的错误 → `queued`；提交后的错误 → `generating` |
+| `estimate_exceeds_confirmed` | `paused_needs_human` | **仅 UI 批准**（批准绑定具体积分数） | `queued`；再次准备时页面预计不超过批准数（含容差）才提交，否则再次暂停 |
+| `cli_error` | `paused_needs_human` | 提交前：可以；**提交中且未拿到任务标识：仅 UI 裁决（同 `submit_unconfirmed`）**；已拿到任务标识：可以 | 提交前 → `queued`；已拿到任务标识 → `generating` |
 
 **FR-18 调度。**
 - UI 动作全局串行，只有一个 BrowserActor。
@@ -385,7 +385,7 @@ queued ──(有槽+间隔满足+队列运行中)──▶ preparing[set_params
 
 **FR-19 崩溃安全提交与 UI 裁决。**
 - 点击前持久化 `submitting` 和指纹。点击后按 FR-33 拿到平台任务标识，才进入 `generating`。
-- 启动时：`submitting` → `paused_needs_human(restart_during_submit)`；`generating` / `downloading` → 先 canary，再恢复轮询或下载。
+- 启动时：`submitting` → `paused_needs_human(restart_during_submit)`；`preparing` → `queued`（composer 已随重启失效）；`generating` / `downloading` → 先 canary，再恢复轮询或下载。
 - `restart_during_submit` / `submit_rejected` / `submit_unconfirmed` 的裁决**只能在 UI 里做**。UI 列出即梦历史中提交时刻前后、prompt 前缀一致的记录，供用户三选一：
   1. 「这就是它」→ 关联平台任务，进入 `generating`；
   2. 「确认没有提交」→ 允许人工再提交一次，这是用户的显式操作，计为新的 attempt；
@@ -407,6 +407,7 @@ queued ──(有槽+间隔满足+队列运行中)──▶ preparing[set_params
 - `submitting` 中取消 → 先记 `cancel_requested`，等点击结果：没有点击 → `cancelled`；已经提交 → `cancelled(credits_spent=true)`。
 - `generating` / `downloading` 中取消 → `cancelled(credits_spent=true)`，停止等待和下载。
 - 响应和 UI 都明确显示「积分不会退还」。
+- 取消意图跨重启与裁决保留：带 `cancel_requested` 的作业，裁决「确认没有提交」或遇到 `submit_rejected` 时直接 `cancelled`，不回队列。
 
 **FR-23 恢复。**
 - `resume_job`：只接受 FR-17 表中标为「可以」的原因。
@@ -517,7 +518,7 @@ queued ──(有槽+间隔满足+队列运行中)──▶ preparing[set_params
 - 位置：每个产物文件（renders 视频、候选、升格后的文件）旁边写 `{文件名}.jimeng.json`，进 git。升格后的文件带 `promoted_from`；归档时 sidecar 随文件一起移动。
 - 字段（**白名单**，不含账号 id、cookie、token、签名 URL）：
   - 任务：`job_id`、`batch_id`、`attempt`、`backend`
-  - 来源：`source{type, path, block_key}`、`prompt_sha256`、`negative_prompt_sha256`
+  - 来源：`source{type, path, block_key}`、`prompt_sha256`、`negative_prompt_sha256`（冻结请求里的负向提示词；没有则为 null）、`negative_prompt_sent`（是否实际填入平台）
   - 参考：`references[{name, kind, path | entity, sha256}]`
   - 参数与平台：`params`、`platform_task_id`
   - 积分：`credits_estimated{static, page}`、`credits_charged`
@@ -543,7 +544,7 @@ queued ──(有槽+间隔满足+队列运行中)──▶ preparing[set_params
 
 **FR-49 创建。**
 - `EntityCommand.request_create(drama, character_dir)`（API / MCP / UI 均可调用）：往一个 batch 里加入 `entity_create` 条目，预检按 FR-11 第 10 项。
-- **确认只在 UI 的批次确认页进行**。描述可以在确认页编辑，编辑后的内容写入冻结请求。
+- **确认只在 UI 的批次确认页进行**。描述可以在确认页编辑，但一经编辑，该条目要重新预检，生成新批次与新 token；确认时不接受对冻结内容的任何修改。
 - 执行：进入「新建主体」表单 → 上传参考图 → 填写名称和描述 → 保存 → 重新同步核验。
 - 同名主体已存在 → 复用，不创建。
 
@@ -557,6 +558,7 @@ queued ──(有槽+间隔满足+队列运行中)──▶ preparing[set_params
 |---|---|---|---|
 | GET | `/api/health` | 免认证（只返回 `{ok}`） | `SessionQuery.health` |
 | GET | `/api/session` | A | `SessionQuery.status`（返回最近一次快照，**不在请求内调用 CLI 或 canary**） |
+| POST | `/api/session/browser/open` | A | `SessionCommand.open_browser`（后台拉起专用浏览器窗口供扫码登录，立即返回；不导航到生成、不点击） |
 | POST | `/api/operations/canary` | A | `OperationCommand.start_canary` |
 | GET | `/api/operations/{id}` | A | `OperationQuery.get` |
 | POST | `/api/batches` | A | `BatchCommand.precheck` |
@@ -586,9 +588,13 @@ queued ──(有槽+间隔满足+队列运行中)──▶ preparing[set_params
 | GET | `/api/entities/reconcile` | A | `EntityQuery.reconcile` |
 | POST | `/api/entities/create-requests` | A | `EntityCommand.request_create` |
 | GET | `/api/history` | A | `HistoryQuery.list` |
+| GET | `/api/history/daily` | A | `HistoryQuery.daily_totals`（`?days=`，按 `time.timezone` 分日） |
 | POST | `/api/candidates/promote` | A | `CandidateCommand.promote` |
 
-- `{drama}` 是 URL 编码后的剧根相对路径。
+- `{drama}` 是 URL 编码后的剧根相对路径。服务端只对原始路径解码一次（`%252F` 不会变成 `/`）。
+- `GET /api/jobs` 查询参数：`state`（可重复）、`batch_id`、`drama`、`since`（上次返回的 `cursor`）、`page`、`page_size`。
+- `POST /ui-api/jobs/{id}/adjudicate` 请求体：`{choice: link_existing, platform_task_id}` / `{choice: confirm_not_submitted}` / `{choice: cancel}` / `{choice: approve_estimate, approved_credits}`（最后一种映射 `JobCommand.approve_estimate`）。
+- 响应形状由 `libs/application/dtos/*` 决定；`tests/contract/ui_contract.py` 生成 UI 合同夹具，UI 构建对其做类型检查。
 - 业务错误统一为 `{error_code, message, hint, config_key?}`。
 - 请求体上限 `api.max_body_bytes`。
 
@@ -686,7 +692,7 @@ queued ──(有槽+间隔满足+队列运行中)──▶ preparing[set_params
 
 - MCP Python SDK 版本 ≥ 1.23.0，并显式配置 `TransportSecuritySettings`（allowed hosts / origins）。
 - 文件沙箱：
-  - 读仅限仓库 `ai_videos/`；写仅限 `ai_videos/` 下的目标目录、`ai_videos/_deleted/` 与 `projects/jimeng_web_bridge/.data/`。
+  - 读仅限仓库 `ai_videos/`；写仅限 `ai_videos/` 下的目标目录、`ai_videos/_deleted/`、`projects/jimeng_web_bridge/.data/`，以及固定路径的全局 config `projects/jimeng_web_bridge/config/global.toml`（该路径只来自启动配置，永不取自请求）。`{drama}` 等路径参数只接受 `/` 分隔，含 `\` 的直接拒绝。
   - 拒绝：`..`、绝对或盘符路径、UNC 与设备路径、symlink 和 junction、NTFS 备用数据流（`:`）、保留名、结尾的点或空格、与 `ai_videos` 共前缀的兄弟目录。
 - 子进程：argv 列表，`cli.path` 必须是 `.exe`；只有 UI 身份能修改 `cli.path`，并写审计日志。
 - 机密卫生：token 与 HMAC 密钥不出现在日志、数据库、sidecar、响应、MCP 输出里；`.gitignore` 覆盖 `.data/` 与 `.env`（用测试断言）。
@@ -780,6 +786,10 @@ projects/jimeng_web_bridge/
 2. **剧根解析重新实现。** 项目之间不能互相 import，所以本项目在 `libs/common/drama_ref.py` 里按**同一条 `series.json` 规则**重新实现（不按路径深度判定）。另外叠加 FR-10 的「可列入」条件，用来排除 `notes/`。契约测试针对真实 `ai_videos/` 树运行。
 3. **运行时数据放在项目目录下的 `.data/`**（gitignored）。它不是 CLAUDE.md 所说的 workflow 状态面。
 4. **新增 `ai_videos` 结构文件**：剧根下的 `jimeng_config.toml`、产物旁的 `*.jimeng.json`，以及 `_candidates/` 目录。
+6. **应用层适配器（stage 6 定）。** `development.md` 同时要求「infrastructure 不 import domain」和「repository 实现放 infrastructure」，两者在本项目冲突。本项目的做法：
+   - **infrastructure** 只处理 DAO（SQLite 读写器、CLI / 浏览器客户端）。
+   - **应用层适配器** 实现 domain 的 Protocol：`libs/application/repositories/{aggregate}__repository.py`（DAO ↔ 实体经 `mappers/`）与 `libs/application/backends/{web_ui,dreamina_cli}__backend.py`（`GenerationBackend` 端口，包装 infrastructure 客户端）。
+   - **依赖方向保持单向**：infrastructure → common；application → infrastructure + domain + common。
 5. **行尾。** 仓库 `core.autocrlf=true` 且没有 `.gitattributes`，所以 FR-8 在读入时统一成 LF。给 `ai_videos/**/*.md` 加 `.gitattributes`（`eol=lf`）属于仓库级改动，不在本项目范围内，作为建议记录。
 
 ---
@@ -827,6 +837,22 @@ projects/jimeng_web_bridge/
 ---
 
 ## 10. Open questions（stage 6 开工时对真实站点做只读探针，结果回写 PageMap、config 默认值和本 spec）
+
+> **U0 探针结果（2026-09-13，在用户浏览器里只读勘察，经用户授权下载 1 条已完成视频）：**
+> - **下载（Q1 已答）**：
+>   - 位置：悬停结果卡，右上角出现图标组「下载 / ⋯ / 收藏」。点「下载」直接下载，没有子菜单，也没有「无水印」选项。
+>   - 水印：会员账号下载的文件首尾帧都**没有可见水印**。
+>   - 文件名：`jimeng-{YYYY-MM-DD}-{4位数}-{prompt 前缀截断}….mp4`，所以 service 必须自己重命名。
+>   - 编码：h264 720×1280 60fps + AAC 44.1 kHz；生成参数 4 s，实测 4.06 s，0.5 s 容差合适。
+>   - 元数据：含 `comment: vid:…`、`LvMetaInfo.trace_info.originItemId`（可用来与平台记录对账）、`AIGC` 隐式标识（按 FR-45 保留）。脱敏后的夹具在 `tests/fixtures/real_responses/download_probe_metadata.json`。
+> - **「⋯」菜单**：用作参考视频 / 创建主体 / 发布 / 删除 / 举报。卡片底部的编辑工具条（高清、延长、对口型、音效等）v1 不使用。
+> - **CLI（Q8 部分）**：
+>   - `list_task` 返回 JSON 数组 `[{submit_id, gen_task_type, gen_status, fail_reason, result_json{images[{width,height}], videos[]}, commerce_info{credit_count, triplet, triplets}}]`；Seedream 单张的 `credit_count` 是 1。
+>   - `query_result` 查询不存在的 id → 退出码 1，stdout 为**非 JSON** 的 gorm 日志 `record not found`。解析器必须能容忍非 JSON 输出。
+>   - 本机版本 1.4.5，最新 1.4.18，没有升级。
+> - **转入 U4 的项**：Q2（上传完成信号、@ 候选名）、Q3（提交与状态响应体）、Q4、Q5、Q6、Q7。
+>   - 原因：扩展环境里页内 hook 抓不到响应体（页面请求不经过页面 realm 的 fetch/XHR）；用户标签页转到后台后无法截图，为了不干扰用户正在进行的操作，停止在用户浏览器里继续勘察。
+>   - 做法：U4 在 service 专用 profile 里由用户登录一次后，用 Playwright `page.on("response")` 与 `expect_file_chooser` 做同样的只读探针（上传 1 张测试图、打开「新建主体」弹窗、不保存、不生成）。
 
 1. **下载**：下载控件在哪里（「⋯」还是图标）？会员下载是否无水印？文件名是什么，时长和比例是否与生成参数一致？
 2. **上传**：完成信号是什么？素材在 @ 候选里显示的名称是否等于文件 stem？
@@ -876,3 +902,4 @@ projects/jimeng_web_bridge/
 | §9.1 改为「3 个上传 + 1 个主体」 | acceptance G1 · bdd AMB-28 |
 | 解析器使用探针采集并脱敏的真实响应作为夹具 | acceptance G25 · unit |
 | 测试注入点 `JIMENG_BRIDGE_REPO_ROOT` / `_DATA_DIR` / `_GLOBAL_CONFIG`；测试模式下不加载 `.env`；测试专用 fault point 与 toast sink；fake dreamina 优先用 `.exe` | system C4/C7/C9 |
+| stage 6：新增 `POST /api/session/browser/open`（会话页「打开浏览器窗口」）与 `GET /api/history/daily`（历史页每日合计）；`/api/jobs` 查询参数与 adjudicate 请求体（含 `approve_estimate`）写明；路径只解码一次 | stage-6 U3/U6 集成（自主模式判断） |

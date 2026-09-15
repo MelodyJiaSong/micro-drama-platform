@@ -8,3 +8,13 @@ Auto-updated:
 - validation/strategy.md — 新建；含 v1→v2 取代表与 carve-outs。
 
 No conflicts found in: findings/*
+
+## Stage-6 spec amendment — 2026-09-14 00:32:33
+Source: stage-6 U3 service_shell / U6 management_ui integration (autonomous session, parent judgment call)
+Summary: HTTP 表补齐 UI 需要的两个端点，并写明作业列表查询参数、裁决请求体和单次解码规则。
+
+Auto-updated:
+- final_specs/spec.md §5.10 — 新增 `POST /api/session/browser/open`、`GET /api/history/daily`；写明 `/api/jobs` 查询参数、adjudicate 请求体（含 approve_estimate）、路径只解码一次、UI 合同夹具。
+- final_specs/spec.md §11 — 追加一行修订记录。
+
+No conflicts found in: interview/qa.md, findings/*, validation/*

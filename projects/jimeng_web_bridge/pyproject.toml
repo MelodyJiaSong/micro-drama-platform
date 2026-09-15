@@ -12,6 +12,7 @@ dependencies = [
     "playwright>=1.49",
     "mcp>=1.23.0",
     "tomlkit>=0.13",
+    "tzdata>=2024.1",
     "pillow>=10.4",
     "windows-toasts>=1.3; sys_platform == 'win32'",
     "httpx>=0.27",
@@ -29,6 +30,7 @@ include = ["apps*", "libs*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = "--strict-markers"
 asyncio_mode = "auto"
 markers = [
     "requires_probe: depends on fixtures captured by the stage-6 read-only site probe",
