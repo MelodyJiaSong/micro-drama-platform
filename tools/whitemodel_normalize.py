@@ -358,6 +358,9 @@ def parse_args() -> argparse.Namespace:
                     help="uniform=按最长轴等比（默认，保留比例缺陷以便验收发现）；"
                          "stretch=逐轴精确贴合")
     ap.add_argument("--qc-only", action="store_true", help="只体检，不归一化不写盘")
+    ap.add_argument("--aspect-tol", type=float, default=4.0,
+                    help="仅 fit=stretch：来源网格逐轴缩放因子的 最大÷最小 上限；"
+                         "超了只报 warning（压方是 vendor 系统性行为、不是“网格错了”）")
     # 源朝向每换一版生成网格就可能不同，改 toml 太重——命令行覆盖，toml 里那个值当默认。
     ap.add_argument("--src-forward", help="覆盖 spec 的 [几何].源朝向.前，如 +Y / -Z")
     ap.add_argument("--src-up", help="覆盖 spec 的 [几何].源朝向.上")
@@ -415,6 +418,23 @@ def main() -> None:
     ]
 
     checks: list[Check] = []
+
+    if args.fit == "stretch" and not args.qc_only:
+        # stretch 把包围盒检查变成恒真 —— 闸门改成盯**来源比例漂移**：
+        # 逐轴需要的缩放因子彼此差得越多，说明生成网格离声明的形状越远。
+        # 2026-09-17 sk1：Rodin 对高长径比物体系统性地"压方"（漕船 4:1 出成 1.25:1、
+        # 表木 12:1 同理），三视图再对也纠不回来。对 previz 白模而言逐轴贴合是对的
+        # ——它只承载体量与轮廓。所以这条报 warning 而不判死：它是给人看的读数，
+        # 真正判"长得像不像"的是 rule 4h §G 的那一眼渲图（build_objects 自动出 peek）。
+        drift = max(ratios) / max(min(ratios), 1e-9)
+        checks.append(Check(
+            "来源比例漂移",
+            drift <= args.aspect_tol,
+            f"逐轴缩放因子 {ratios.x:.3f} / {ratios.y:.3f} / {ratios.z:.3f}"
+            f"  最大÷最小 = {drift:.2f} / 容差 {args.aspect_tol:.2f}"
+            f"  （fit=stretch：已逐轴贴合到声明包围盒）",
+            fatal=False,
+        ))
 
     dev = [abs(dims[i] - target[i]) / max(target[i], 1e-9) for i in range(3)]
     checks.append(Check(

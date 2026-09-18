@@ -1,7 +1,3 @@
-# sk1 · 合并后的完整意图（raw_prompt + 全部 follow-ups）
-
-> 派生文件，由 `raw_prompt.md` + `follow_ups/*.md` 按时序拼成。改动请改源文件后重生成。
-
 # sk1 · 《时空旅行》第 1 站 · 汴京 · 1120 · 清明日 — 原始请求
 
 > **task_type**：`ai_video` · **sub_type**：`short`（单站独立成片，系列嵌套于 `ai_videos/shikong_lvxing/`）
@@ -14,7 +10,6 @@
 
 阶段 0 参数（用户确认，2026-09-13）：严格度＝科普向娱乐（画面可截图指认的东西只允许 ✅ / ⚠️，❌ 只进纠错单元）；系列公共库本站新建；每个资产 ≥ 8 张历史参考图。
 
----
 
 # sk1 · 后续指令日志 · 2026-09
 
@@ -165,3 +160,237 @@ look pass 的建筑形制 / 材质 / 禁用项以 `bg*.md` prompt 为准、以 `
 ### 一行摘要
 
 以史料（户口、宅院规模、坊巷肌理、城内空地）为据重排街区：不规则地块、按区位变化的密度、院落大小与层数分级、菜园池塘空地。
+
+---
+
+## 009 — 2026-09-16 12:40:30 — shot01 / shot02 整体重排：进城穿梭 + 末段拉高
+
+> target_stage: 5
+> target_artifacts:
+>   - tools/gen_shots_sk1.py
+>   - ai_videos/shikong_lvxing/sk1/5_6_分镜与prompt/shots/shot01/
+>   - ai_videos/shikong_lvxing/sk1/5_6_分镜与prompt/shots/shot02/
+> severity: high
+
+### 指令
+
+shot01、shot02 的镜头整体大改：河上飞过桥那一段 8 秒就结束；之后飞进城门，在城里各个场景之间来回穿梭（汴河码头、州桥与御街、相国寺、桑家瓦子）；最后几秒拉高无人机位，看到大半个城市。时长仍是 30 + 30 并保留首尾承接；previz、mp4 与 shot md prompt 三层一起改；这两镜不要台词。本站的画外签名开场随之取消（用户在同一条 follow-up 里选的）。
+
+### 一行摘要
+
+两镜各切成四段（镜内硬切）：虹桥 → 东水门 → 码头 → 州桥／御街 → 相国寺 → 瓦子 → 两千二百米拉高；台词全删、签名开场闸门放宽。
+
+---
+
+## 010 — 2026-09-16 14:32:10 — 一镜到底，不要镜内切换
+
+> target_stage: 5
+> target_artifacts:
+>   - tools/gen_shots_sk1.py
+>   - ai_videos/shikong_lvxing/sk1/5_6_分镜与prompt/shots/shot01/previz_config.toml
+>   - ai_videos/shikong_lvxing/sk1/5_6_分镜与prompt/shots/shot02/previz_config.toml
+> severity: high
+
+### 指令
+
+shot01 / shot02 里看得出来的镜内切换要全部去掉——这两镜要一镜到底，一条连续运镜从头飞到尾，没有任何切点与转场。
+
+### 一行摘要
+
+撤销 follow-up 009 的「镜内四段硬切」排法：两镜各自零切点，previz 里不许有 `"切" = true`，shot md 的 `镜头:` / `动作:` 改成一条连续航线。
+
+---
+
+## 011 — 2026-09-16 16:05:40 — 飞得太快 / 城与郊区做小 / 无人机不要转弯
+
+> target_stage: 5
+> target_artifacts:
+>   - tools/build_bianjing.py
+>   - ai_videos/shikong_lvxing/sk1/5_6_分镜与prompt/shots/shot01/previz_config.toml
+>   - ai_videos/shikong_lvxing/sk1/5_6_分镜与prompt/shots/shot02/previz_config.toml
+> severity: high
+
+### 指令
+
+两个问题：① 飞得太快——城市与郊区都做小一点（郊区尤其要小，应该很快就进城），航线上那几处地点也不要离太远，必要时重做 scene 的图与 blend；② 无人机不要转弯，要流线型，符合一镜到底的流畅感，凡是打破流畅的都要调整。追问「结尾是保持真实速度（只看到御街—宣德楼—宫城那一片）还是放开成时空压缩加速上升（看到整座城）」，用户选前者。
+
+### 一行摘要
+
+郊区带收窄（关厢出城路 1200 m、田间村落带 2600 m）、起飞点挪到东水门外 350 m、全程 33–60 m/s 真无人机速度、航线只走小曲率弧线不作 90° 转弯；虹桥与桑家瓦子退出航拍，结尾收在约 320 m。城内考古实测尺度不缩（拒绝把 W11 量得的城改小，改的是航线与郊区）。
+
+---
+
+## 012 — 2026-09-16 19:52:05 — 码头缩短到 8 秒，省下的时间给其他地方
+
+> target_stage: 5
+> target_artifacts:
+>   - ai_videos/shikong_lvxing/sk1/5_6_分镜与prompt/shots/shot01/previz_config.toml
+>   - ai_videos/shikong_lvxing/sk1/5_6_分镜与prompt/shots/shot02/previz_config.toml
+>   - tools/gen_shots_sk1.py
+> severity: medium
+
+### 指令
+
+汴河码头那一段缩短到 8 秒，省下来的时间分给其他地方。
+
+### 一行摘要
+
+shot01 码头段 11–19 s（整 8 秒，速度降到约 30 m/s）、城内汴河段加长到 11 秒；shot02 相国寺 12–22 s（6→10 秒）、结尾爬升 22–30 s（6.5→8 秒），代价是城内汴河平直段压到 12 秒、要跑约 95 m/s。
+
+---
+
+## 013 — 2026-09-16 20:24:30 — 交付口径：每镜一个单独 mp4（喂 Seedance）；合成版是一次性需求
+
+> target_stage: 6
+> severity: low
+
+### 指令
+
+交付要**每镜一个单独的 mp4**——这些单镜 mp4 是拿去喂 Seedance 的参考素材，所以按参考素材出（与该镜 md 的 `比例:` / `时长:` 逐值对齐、不做重压缩）。**首尾相接的合成 mp4 只是这一次的临时需求，不要写进常规流程**，以后只在用户明确要时才做。
+
+### 一行摘要
+
+常规交付＝每镜一个单独 mp4（Seedance 参考口径：同比例、同时长、高码率）；合成版属一次性、不入流程。
+
+---
+
+## 014 — 2026-09-16 23:08:19 — 全站重来：画风改《权力的游戏》实拍电影感；汴京 3D 只做无人机航线用得到的那一段
+
+> target_stage: 2
+> target_artifacts:
+>   - ai_videos/shikong_lvxing/sk1/2_世界观人设/style_guide.md
+>   - ai_videos/shikong_lvxing/sk1/2_世界观人设/scenes/bianjing/**/*.md
+>   - ai_videos/shikong_lvxing/sk1/2_世界观人设/props/**/*.md
+>   - ai_videos/shikong_lvxing/sk1/2_世界观人设/characters/**/*.md
+>   - ai_videos/shikong_lvxing/sk1/2_世界观人设/scenes/bianjing/_blender/
+>   - tools/build_bianjing.py
+>   - tools/gen_shots_sk1.py
+> severity: high
+
+### 指令
+
+现有出图**太像动画 / 游戏 CG，不像真实场景**，全站推倒重来：所有 scene 图片重新生成，画风改**《权力的游戏》那一路的实拍电影感**。先做 research 再动手，然后把**所有 prompt** 按新画风更新。现有的 png / mp4 / blender **可以全部删掉**。
+
+另一件事：生成的**汴京城俯视图太大了**。只需要**刚好够拍那条无人机长镜头**的规模就行——**一镜到底不需要俯视**，所以不必做出整座城；3D 规模可以大幅缩小，但**每一栋建筑都要精致、有代表性**。据此重新酝酿所有 scene 图片与建筑图片。
+
+（追加口径：用户去睡觉，本轮全权自主决策，含删文件等有风险的动作，不必回头确认。）
+
+### 一行摘要
+
+画风基准由「自然纪实影像」改为 GoT 实拍电影感（真实摄影机/镜头/胶片语汇 + 脏旧质感 + 有方向的硬光与真实暗部 + 去 CG 词），参考图政策由「上传宋画」改为「只上传照片类参考、宋画只作者对账」；汴京 3D 由全城体块层改为**沿航线的走廊层**（航线去掉末段爬升与俯视，封顶低空），建筑改为少而精的代表性原型库；旧 png / mp4 / blend 全删重出。
+
+---
+
+## 015 — 2026-09-17 — 物件优先流水线：拆解 → 三视图 → Hyper3D → 白模 → 场景/镜头 blend → 预览 mp4
+
+> target_stage: 2
+> target_artifacts:
+>   - tools/hyper3d_fetch.py
+>   - tools/gen_object_cards.py
+>   - ai_videos/shikong_lvxing/sk1/2_世界观人设/object_inventory.toml
+> severity: high
+
+### 指令
+
+接入 Hyper3D（用户提供 key，长期保留）。**任何 scene / building / prop，先拆出尽量多的物件**，给用户一份**物件文件夹清单**；每个文件夹里放一份 md，用来出该物件的**正视图 / 侧视图 / 背视图**；用户出图并导入后，用 Hyper3D 由三视图生成 3D 模型并下载；再用这些模型 + 场景图拼出场景 blend 与镜头 blend，最后出预览 mp4。先测通，通了就写进流程。
+
+追加（同日）：希望**出图也自动化**——先自动出正视图，再以正视图为参考出侧视图与背视图；场景图同样自动出。用户为此提供了一个 key（`sk_…`，ElevenLabs）。
+
+### 一行摘要
+
+流水线＝拆解物件 → 每物件四图（锚点+正/侧/背）→ Hyper3D image-to-3D → 白模闸门 → `resolve_asset` 自动换装 → previz mp4；Hyper3D 已测通（无头 HTTP 适配器，71 s 出一辆可用的车）。**自动出图这一环卡住**：ElevenLabs 是语音 API、没有图像生成能力，且该 key 实测 401。
+
+---
+
+## 016 — 2026-09-17 — 更多物件，并且真的摆进场景 blend；Kling 整条退出；Seedance/即梦 key 验签
+
+> target_stage: 2
+> target_artifacts:
+>   - ai_videos/shikong_lvxing/sk1/2_世界观人设/object_inventory.toml
+>   - ai_videos/shikong_lvxing/sk1/2_世界观人设/scenes/bianjing/_blender/city_plan.md
+>   - tools/build_bianjing.py
+>   - tools/jimeng_fetch.py
+> severity: high
+
+### 指令
+
+1. sk1 要**更多物件**，而且这些物件要**被引用、被用进场景 blend 的搭建**（不能只停在卡上）。
+2. **把 Kling 整条从系统里去掉**，已经不用了。
+3. Seedance 的 key（`ak_…` / `sk_…`）先读文档再验：`https://jimeng.jianying.com/ai-tool/jimeng-api/console/guide`
+   （用户随后贴了完整文档：`X-Agent-*` 头 + HMAC-SHA256 签名，`/agent_openapi/v1/{novel,video}/{submit,query}`）。
+4. 用 ElevenLabs 自动出 sk1 所有 prop 的正 / 侧 / 背三视图，再自动拿这些图 + prompt 走 Hyper3D 出 3D 模型。
+
+### 一行摘要
+
+物件从 16 个扩到 33 个并新增「布点层」把它们真的撒进场景 blend（1658 个实例，走廊 + Place + keep-out 三道剔除）；
+Kling 从代码与规范里整条删除（保留历史记录）；即梦 key **验签通过**但它只有短剧 / 营销两个 Agent、没有任意文生图接口；
+自动出图仍卡在 ElevenLabs 的 Pro 套餐（402）。
+
+---
+
+## 017 — 2026-09-17 13:20:00 — 全部 props 出三视图 → Hyper3D 出白模 → 把模型发给我
+
+> target_stage: 2
+> target_artifacts:
+>   - ai_videos/shikong_lvxing/sk1/2_世界观人设/props/**
+>   - tools/image_fetch.py
+>   - tools/hyper3d_fetch.py
+>   - tools/whitemodel_normalize.py
+> severity: medium
+
+### 指令
+
+把 sk1 下**所有** props 的正面 / 侧面 / 背面参考图都生成出来，再用 Hyper3D 做出 3D 模型，然后把 3D 模型发给用户。
+
+### 一行摘要
+
+按 rule 4d 的物件白模流程批量跑通三步（三视图出图 → Rodin image-to-3D → `whitemodel_normalize` 过闸门），覆盖 props 全表（p1–p44 现存 40 个物件卡），产物白模回交用户查看。
+
+---
+
+## 018 — 2026-09-17 14:40:00 — p22 三视图对不上实物：全部物件图重新生成
+
+> target_stage: 2
+> target_artifacts:
+>   - tools/gen_object_cards.py
+>   - ai_videos/shikong_lvxing/sk1/2_世界观人设/props/p1[2-9]_*/
+>   - ai_videos/shikong_lvxing/sk1/2_世界观人设/props/p[2-4][0-9]_*/
+> severity: medium
+
+### 指令
+
+p22 生成出来的 3D 物件「长得和图片不是一个东西」，感觉三个方向的图要重新生成。确认后用户定：**全部重新生成**。
+
+### 一行摘要
+
+根因是三视图的 prompt 只写了「从哪看」、没写「这一面该看到多大」——没有天然正面的物件（床榻 1.1 宽 × 2.0 长 × 0.6 高）会被模型把长边当正面，接着「侧面」又画一次长边，三张图落在同一个轴上，喂进 image-to-3D 等于只给了一个方向的信息；同一根因也解释了 p12 / p18 / p19 / p23 / p24 的包围盒偏差。修法是把清单里现成的尺寸逐视图算出可见的两条边、连同「第三个方向是看不见的进深」一起写死进每张 prompt（`gen_object_cards.py` 的 `VIEWS` 带上轴索引 + `_shape` / `_depth`）。33 张卡重生成，旧图与由旧图派生的 `raw.glb` / 白模 blend 全删重跑。
+
+---
+
+## 016 — 2026-09-18 09:05:00 — scene 也走物件流水线：先逐个建筑/物件出图+白模，再拼 scene blend
+
+> target_stage: 2
+> target_artifacts:
+>   - ai_videos/shikong_lvxing/sk1/2_世界观人设/object_inventory.toml
+>   - ai_videos/shikong_lvxing/sk1/2_世界观人设/props/p46_* … p60_*
+>   - ai_videos/shikong_lvxing/sk1/2_世界观人设/scenes/bianjing/**
+>   - tools/build_bianjing.py
+>   - tools/look_bianjing.py
+> severity: high
+
+### 指令
+
+按另一个 session 已跑通的物件流水线（ElevenLabs 三视图 → Hyper3D → `whitemodel_normalize` 闸门），
+对 **scene** 做同一件事。次序与做法：
+1. **先出 p46–p60**——这十五张卡是与 scene 相关的建筑构件与立面（斗拱、瓦当、板门、栏杆、悬鱼、
+   两层楼屋立面、脚店门脸、彩楼欢门、草屋、正厅立面、府衙门屋、寺院大三门、城门门楼、仓廒、农舍）。
+2. 再做 scene：**一个 scene 由多个建筑 / 物件组成，先逐一出每个 object 的图与 3D 模型，
+   再拼出 scene 的整体 blender 文件。**
+3. **规模上限**：一个 scene 里若有成百上千栋房子（俯视图那种），**API 出的模型最多约 20 个**，
+   靠**反复使用**铺满；若能不经 ElevenLabs / Hyper3D 就**程序化生成成百上千个微调版**（尺寸、
+   开间、层数、镜像、材质、做旧的小幅变体），那更好。
+
+### 一行摘要
+
+scene 改为「自下而上」装配：≤20 个 API 白模当原型库 + 程序化微调实例化铺满，
+先跑完 p46–p60 的图与白模，再按此装配 scene blend。

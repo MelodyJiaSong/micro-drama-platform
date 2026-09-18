@@ -392,7 +392,10 @@ plan0-1_汴京俯视排版底图
 - **坐标唯一来源**：`0_research/parts/w11_city_layout.md` §2.8 的 TOML（`[[wall]]` `[[gate]]` `[[river]]` `[[street]]` `[[landmark]]` `[[place_anchor]]` `[[waypoint]]`）。`tools/build_bianjing.py` 直接解析那段 TOML，**脚本与本文件都不抄坐标**；W11 改表 → 重跑 builder。
 - **本节只管「怎么建」**：地标建法 / 体量高 / 资产键 / 精度级，以及住宅街区用哪几个单元键。按 W11 `name` 逐字对上，缺行或多行 builder 直接 raise。
 - **Place 在全城里的位置**：三块 Place 的世界锚点与旋转取 W11 `[[place_anchor]]`（§1 表已同步）；Place 足迹内全城层让位（地面开洞、街区 / 街 / 城墙 / 河道改道接 Place 自己的几何）。
-- **精度按镜头接近度**（rule 4g ④）：全城街区＝C 级纯盒；S02 俯冲走廊（御街两侧 250 m）、S36 起飞点（Place B 周围 400 m）与 S01 低飞走廊（东水门—虹桥汴河两岸郊外）升 B 级（盒 + 悬山屋面）。
+- **精度按镜头接近度**（rule 4g ④）——**2026-09-16 follow-up 014 重写**：用户定调「城做得太大了，只要刚好够拍那条无人机长镜头；一镜到底不用有俯视，所以不必做出整座城；规模可以大幅缩小，但每一栋建筑都要精致、有代表性」。于是**全城铺满作废**，改为 §8.2 的**走廊制**：
+  - **走廊之外一栋不建。** 判据是「镜头拍不拍得到」，不是「离原点多远」（rule 4g ⑤）。全城的城墙、城门、河道、主街与**地标照旧全建**——它们数量少、是天际线的骨架，也正是「有代表性的建筑」；被砍掉的是**填充用的住宅街区肌理**。
+  - **走廊之内分三档**：`r_full` 内 A 级（台基 + 墙身 + 出檐悬山 + 正脊 + 临街披檐）、`r_mid` 内 B 级（盒 + 悬山屋面）、`r_far` 内 C 级（纯体块，只当远景轮廓）。
+  - A 级是这次新加的——原来最高只有 B（盒子加个屋顶）。既然只建拍得到的那一段，省下来的预算就该花在**贴身而过的那几百米**上。
 - 住宅单元键：`p10` · `p10a` · `p9`（街区里每个盒子＝一个单元的包围盒；白模到位后盒子尺寸跟着白模包围盒走，布局不动）
 - **铺满规则（2026-09-15 follow-up 007，对照 bg0-1；全部 C 判断）**：
   - ~~**街区**：80 m 网格铺满~~ → **2026-09-15 follow-up 008 取代**（用户：太密太整齐）。**城内肌理**改为 `FABRIC` / `LOT_MIX`，依据 `0_research/parts/w12_urban_density.md`：
@@ -439,6 +442,46 @@ plan0-1_汴京俯视排版底图
 | 526 | 迎祥池 | 池 | — | — | C | 地面开池 |
 | 527 | 东水门拐子城 | 跳过 | — | — | — | Place B 方块 23 |
 | 528 | 虹桥 | 跳过 | — | — | — | Place A 方块 1 |
+
+### 8.2 航线走廊（follow-up 014；`build_bianjing.py` 读本节的 TOML）
+
+**为什么是走廊**：36 个镜里只有 shot01 / shot02 / shot35 三个航拍镜会看到「一片城」，其余 33 个镜都在 Place 足迹里、全城层只是它们窗外的背景。而这三个航拍镜按 follow-up 014 **全部压到低空、不再有俯视**，所以它们看得到的也只是**航线两侧的一条带**。带以外的城，无论建得多好都不会进任何一帧。
+
+**走廊怎么定**：**不新写一个坐标**（§8 铁律：坐标只来自 W11）。走廊 ＝
+① 汴河折线的 `s0…s1` 一段（弧长沿 W11 `[[river]] 汴河` 的折线量，起点＝折线第 0 点）＋
+② 每个 Place 的锚点圆盘（锚点取 W11 `[[place_anchor]]` 与 `DERIVED_ANCHORS`）。
+航线本身住在各镜的 `previz_config.toml`（唯一真相），本节只登记它**扫过的范围**。
+
+```toml
+# 两组半径（m）。线（航线扫过的河与街）给大的，点（Place 锚点）给小的——
+# 地面镜只看得到自己那条街的两三百米，给它 900 m 的背景纯属浪费。
+# 判据：低空 24 mm，前方约 d 米处横向可见宽度 ≈ d；再远压在地平线上，交给「一直建」的地标撑天际线。
+r_full = 160.0
+r_mid  = 340.0
+r_far  = 600.0
+place_r_full = 100.0
+place_r_mid  = 220.0
+place_r_far  = 380.0
+
+[[leg]]
+kind = "river"
+name = "汴河"
+s0 = 7200.0            # 相国寺桥（s 7441）以西 240 m
+s1 = 11600.0           # 东水门（s 11024）外约 580 m
+note = "shot01 + shot02 的一镜到底主段：城外 → 穿东水门 → 汴河码头 → 城内汴河一路西飞到相国寺桥"
+
+[[leg]]
+kind = "street"
+name = "御街·宣德门—州桥"
+note = "shot02 末段低空朝西北，御街中轴与尽头的宣德楼在画面里；S16–S19 地面镜的背景也在这条带上"
+
+[[leg]]
+kind = "street"
+name = "临汴河大街（相国寺前）"
+note = "相国寺桥 → 寺前街，shot02 由河转寺的那一段"
+```
+
+**代价（写明白）**：`r_far` 之外的住宅肌理不存在，所以**任何新镜位如果把镜头转向走廊之外，会拍到空地**。加新航线＝先改本节 `[[leg]]`、再重跑 builder；builder 会在 QC 里报出被砍掉的街区数，那个数就是「这次省了多少」。
 
 ## 9. 航拍机位（S 档 previz：shot01 / shot02 / shot35；2026-09-14 定稿）
 
@@ -500,3 +543,385 @@ plan0-1_汴京俯视排版底图
 | shot33 | S | 套景 客店房间（夜） | `shot33_previz.py` | 28 s | 见 §9.1 |
 | shot34 | S | 套景 客店房间（五更） | `shot34_previz.py` | 24 s | 见 §9.1 |
 | shot36 | S | 套景 遗址坑 | `shot36_previz.py` | 24 s | 见 §9.1 |
+
+## 12. 物件布点（scatter；2026-09-17 follow-up 016）
+
+**这一节是「物件清单」与「场景 blend」之间那根缺失的线。** `object_inventory.toml` 把场景拆成了物件、
+`gen_object_cards.py` 给每个物件生成了出图卡，但在此之前**没有任何一处告诉 builder 把它们摆在哪** ——
+于是卡建好了、白模就算出来了也进不了画面。本节补上。
+
+**为什么是「撒」不是「逐个列坐标」**：柳树、杈子、摊子、车驴这类东西一场就是几十上百个，
+逐行写进 §2 的方块表不现实，也没意义（它们不需要各自可指认）。所以按**线**撒：
+沿已有的河 / 街折线，给间距、给横向偏移带、给抖动，builder 自己算点。
+**坐标依旧一个都不新写**——线取 W11 的 `[[river]]` / `[[street]]`（§8 铁律）。
+
+**三道剔除**（顺序固定）：① 走廊外不撒（§8.2）；② Place 足迹内不撒（那里有自己的详细几何）；
+③ keep-out 内不撒（河、城墙脚、城门；`in_water = true` 的物件反过来，**只**撒在河里）。
+
+**白模没到货也照撒**：`resolve_asset` 找不到白模就用 `object.toml` 的 `[几何].尺寸` 做同尺寸替身盒。
+所以**场景与镜头现在就能跑通**，白模是逐个到货、逐个替换的增量升级。
+
+```toml
+# TOML 一行一个键（分号不是 TOML 的分隔符）。
+# along.kind = "river" | "street"，name 必须在 W11 里存在
+# offset = [近, 远]，离中线的横向距离带，两侧各撒（m）
+# spacing = 沿线间距（m）；jitter.pos = 位置抖动半径（m）；jitter.yaw = 朝向抖动（度）
+# face = "line"（默认，朝向沿线）| "cross"（朝向垂直于线、面向街心）
+# in_water = true → 落在水面高度、且只撒在河道里
+# max = 上限，防止一条长河撒出几千个实例拖垮 blend
+# on_street = true → 摘掉「街面」那一层 keep-out。街面挡的是**房子**；
+#   行道柳 / 杈子 / 摊子 / 车驴本来就该站在街上（御街宽 320 m，不摘就一个都撒不出来）
+# along.kind = "place" → 在某个 Place 的**局部坐标**里取一条直线（2026-09-17 follow-up 018）：
+#   `name` 是 Place 字母、`axis` 定走向（"x"/"y"）、`at` 是另一轴上的偏移、`s0/s1` 是跨度。
+#   给「没有河街可沿、但属于某个 Place」的东西用：寺内书摊、府前拴马石、瓦子里的长凳、码头粮袋。
+#   坐标依旧一个都不新写——只用 Place 自己的 frame 与 PLACE_RANGE（§8 铁律）。
+# in_place = true → 摘掉 Place 足迹那一层 keep-out，**以及落在该足迹内的全城层 keep-out**。
+#   后半句是必须的：那些街区/河/墙的禁区四边形建于 Place 挖洞之前，几何早已让位、禁区却还在；
+#   不摘，Place 里一个都撒不出来（实测：书市 60 个只落 5 个、瓦子看棚 0 个）。
+#   与 `along.kind = "place"` 配合时 Place 名从 `along.name` 取，也可以直接写成 in_place = "H"。
+
+[[scatter]]
+key = "p26"
+name = "沿汴河的老柳"
+spacing = 13.0
+offset = [20.0, 24.0]   # 汴河 keep-out = 半宽13 + pad6 = 19 m，必须站到它外面
+along = { kind = "river", name = "汴河", s0 = 7200.0, s1 = 11600.0 }
+jitter = { pos = 2.5, yaw = 180.0 }
+seed = 2601
+max = 260
+
+[[scatter]]
+key = "p26"
+name = "御街行道柳"
+spacing = 14.0
+offset = [128.0, 136.0]  # 御街宽 320 m，行道柳在街两侧边上
+on_street = true
+along = { kind = "street", name = "御街·宣德门—州桥" }
+jitter = { pos = 2.0, yaw = 180.0 }
+seed = 2602
+max = 120
+
+[[scatter]]
+key = "p18"
+name = "御街朱漆杈子"
+spacing = 2.6
+offset = [50.0, 50.0]    # 两行杈子夹出中间约 100 m 的御道（route.009）
+on_street = true
+along = { kind = "street", name = "御街·宣德门—州桥" }
+face = "cross"
+jitter = { pos = 0.12, yaw = 2.0 }
+seed = 1801
+max = 900
+
+[[scatter]]
+key = "p12"
+name = "汴河漕船"
+spacing = 95.0
+offset = [0.0, 5.0]
+along = { kind = "river", name = "汴河", s0 = 7300.0, s1 = 11500.0 }
+in_water = true
+jitter = { pos = 3.0, yaw = 6.0 }
+seed = 1201
+max = 40
+
+[[scatter]]
+key = "p28"
+name = "临汴河席棚小摊"
+spacing = 17.0
+offset = [20.5, 23.0]
+along = { kind = "river", name = "汴河", s0 = 7300.0, s1 = 10900.0 }
+face = "cross"
+jitter = { pos = 1.2, yaw = 8.0 }
+seed = 2801
+max = 180
+
+[[scatter]]
+key = "p14"
+name = "市摊大伞"
+spacing = 29.0
+offset = [21.0, 24.0]
+along = { kind = "river", name = "汴河", s0 = 7300.0, s1 = 10900.0 }
+jitter = { pos = 1.5, yaw = 180.0 }
+seed = 1401
+max = 110
+
+[[scatter]]
+key = "p19"
+name = "街上的独轮串车"
+spacing = 62.0
+offset = [20.0, 23.0]
+along = { kind = "river", name = "汴河", s0 = 7300.0, s1 = 11400.0 }
+jitter = { pos = 1.5, yaw = 25.0 }
+seed = 1901
+max = 60
+
+[[scatter]]
+key = "p17"
+name = "街上的驮货毛驴"
+spacing = 88.0
+offset = [20.0, 23.5]
+along = { kind = "river", name = "汴河", s0 = 7300.0, s1 = 11500.0 }
+jitter = { pos = 1.8, yaw = 30.0 }
+seed = 1701
+max = 45
+
+[[scatter]]
+key = "p24"
+name = "沿街竖立招"
+spacing = 23.0
+offset = [24.0, 25.0]
+along = { kind = "river", name = "汴河", s0 = 7300.0, s1 = 10900.0 }
+face = "cross"
+jitter = { pos = 0.6, yaw = 6.0 }
+seed = 2401
+max = 130
+# ══════════════════════════════════════════════════════════════════════════
+# 以下 22 条（2026-09-17 follow-up 018）—— 把清单里其余的物件也接进场景。
+# 在此之前只有 8/33 个物件有布点，剩下 25 个就算白模建好也进不了任何一帧。
+# 新增 along.kind = "place"：Place 局部坐标里的一条直线（`axis` 定走向、`at` 是
+# 另一轴上的偏移、`s0/s1` 是跨度），给寺内 / 府前 / 瓦子里 / 码头上这类
+# 「没有河街可沿、但属于某个 Place」的东西用；配 `in_place = true` 摘掉
+# Place 足迹那一层 keep-out（撒的正是属于它的东西）。坐标依旧一个都不新写。
+# ══════════════════════════════════════════════════════════════════════════
+
+[[scatter]]
+key = "p13"
+name = "虹桥头表木"
+spacing = 46.0
+offset = [22.0, 24.0]
+along = { kind = "place", name = "A", axis = "x", at = 0.0, s0 = -24.0, s1 = 24.0 }
+in_place = true
+face = "cross"
+jitter = { pos = 0.3, yaw = 3.0 }
+seed = 1301
+max = 4
+
+
+
+[[scatter]]
+key = "p16"
+name = "东水门驼队"
+spacing = 7.0
+offset = [20.0, 24.0]
+along = { kind = "river", name = "汴河", s0 = 10750.0, s1 = 11450.0 }
+jitter = { pos = 1.0, yaw = 12.0 }
+seed = 1601
+max = 14
+
+[[scatter]]
+key = "p39"
+name = "桥头铺兵骨朵"
+spacing = 26.0
+offset = [22.0, 26.0]
+along = { kind = "place", name = "A", axis = "x", at = 0.0, s0 = -30.0, s1 = 30.0 }
+in_place = true
+jitter = { pos = 0.6, yaw = 180.0 }
+seed = 3901
+max = 6
+
+[[scatter]]
+key = "p41"
+name = "汴河码头粮袋堆"
+spacing = 6.5
+offset = [22.0, 34.0]
+along = { kind = "place", name = "E", axis = "x", at = 10.0, s0 = -55.0, s1 = 45.0 }
+in_place = true
+jitter = { pos = 1.6, yaw = 180.0 }
+seed = 4101
+max = 40
+
+[[scatter]]
+key = "p40"
+name = "码头与桥头的空筐席卷"
+spacing = 11.0
+offset = [22.0, 36.0]
+along = { kind = "place", name = "E", axis = "x", at = -14.0, s0 = -55.0, s1 = 45.0 }
+in_place = true
+jitter = { pos = 1.8, yaw = 180.0 }
+seed = 4001
+max = 36
+
+[[scatter]]
+key = "p30"
+name = "桑家瓦子看棚群"
+spacing = 34.0
+offset = [30.0, 44.0]
+along = { kind = "place", name = "I", axis = "y", at = 0.0, s0 = -60.0, s1 = 90.0 }
+in_place = true
+jitter = { pos = 4.0, yaw = 12.0 }
+seed = 3001
+max = 10
+
+[[scatter]]
+key = "p44"
+name = "瓦子看棚前长凳"
+spacing = 2.4
+offset = [16.0, 22.0]
+along = { kind = "place", name = "I", axis = "y", at = 0.0, s0 = -55.0, s1 = 85.0 }
+in_place = true
+face = "cross"
+jitter = { pos = 0.4, yaw = 6.0 }
+seed = 4401
+max = 120
+
+[[scatter]]
+key = "p33"
+name = "相国寺书市书摊"
+spacing = 9.0
+offset = [7.0, 30.0]
+along = { kind = "place", name = "H", axis = "x", at = -55.0, s0 = -100.0, s1 = 180.0 }
+in_place = true
+face = "cross"
+jitter = { pos = 2.0, yaw = 8.0 }
+seed = 3301
+max = 60
+
+[[scatter]]
+key = "p37"
+name = "相国寺大三门石门枕"
+spacing = 14.0
+offset = [3.0, 3.0]
+along = { kind = "place", name = "H", axis = "x", at = -118.0, s0 = -21.0, s1 = 21.0 }
+in_place = true
+face = "cross"
+jitter = { pos = 0.15, yaw = 2.0 }
+seed = 3701
+max = 8
+
+[[scatter]]
+key = "p37"
+name = "开封府府门石门枕"
+spacing = 14.0
+offset = [3.0, 3.0]
+along = { kind = "place", name = "F", axis = "x", at = -138.0, s0 = -14.0, s1 = 14.0 }
+in_place = true
+face = "cross"
+jitter = { pos = 0.15, yaw = 2.0 }
+seed = 3702
+max = 6
+
+[[scatter]]
+key = "p42"
+name = "开封府前拴马石与马槽"
+spacing = 9.0
+offset = [17.0, 21.0]
+along = { kind = "place", name = "F", axis = "x", at = -128.0, s0 = -95.0, s1 = 95.0 }
+in_place = true
+face = "cross"
+jitter = { pos = 1.0, yaw = 6.0 }
+seed = 4201
+max = 26
+
+[[scatter]]
+key = "p43"
+name = "御街御沟两侧"
+spacing = 16.0
+offset = [58.0, 58.5]
+on_street = true
+along = { kind = "street", name = "御街·宣德门—州桥" }
+face = "cross"
+jitter = { pos = 0.4, yaw = 3.0 }
+seed = 4301
+max = 200
+
+[[scatter]]
+key = "p35"
+name = "御街纸马铺纸扎楼阁"
+spacing = 54.0
+offset = [140.0, 146.0]
+on_street = true
+along = { kind = "street", name = "御街·宣德门—州桥" }
+jitter = { pos = 1.4, yaw = 180.0 }
+seed = 3501
+max = 40
+
+[[scatter]]
+key = "p29"
+name = "御街早市蒸笼灶"
+spacing = 36.0
+offset = [132.0, 138.0]
+on_street = true
+along = { kind = "street", name = "御街·宣德门—州桥" }
+jitter = { pos = 1.2, yaw = 180.0 }
+seed = 2901
+max = 48
+
+[[scatter]]
+key = "p20"
+name = "夜市每摊一盏陶油灯"
+spacing = 17.0
+offset = [132.5, 137.0]
+on_street = true
+along = { kind = "street", name = "御街·宣德门—州桥" }
+jitter = { pos = 0.8, yaw = 180.0 }
+seed = 2001
+max = 120
+
+[[scatter]]
+key = "p27"
+name = "沿街挑担货筐"
+spacing = 24.0
+offset = [126.0, 134.0]
+on_street = true
+along = { kind = "street", name = "御街·宣德门—州桥" }
+jitter = { pos = 1.5, yaw = 180.0 }
+seed = 2701
+max = 70
+
+[[scatter]]
+key = "p36"
+name = "寺前街铺面青布幌"
+spacing = 15.0
+offset = [17.0, 18.5]
+on_street = true
+along = { kind = "street", name = "临汴河大街（相国寺前）" }
+face = "cross"
+jitter = { pos = 0.4, yaw = 5.0 }
+seed = 3601
+max = 120
+
+[[scatter]]
+key = "p34"
+name = "寺前街铺面柜台"
+spacing = 78.0
+offset = [19.0, 20.0]
+on_street = true
+along = { kind = "street", name = "临汴河大街（相国寺前）" }
+face = "cross"
+jitter = { pos = 0.5, yaw = 4.0 }
+seed = 3401
+max = 24
+
+[[scatter]]
+key = "p21"
+name = "坊巷巷口井台辘轳"
+spacing = 84.0
+offset = [15.0, 19.0]
+on_street = true
+along = { kind = "street", name = "临汴河大街（相国寺前）" }
+jitter = { pos = 2.0, yaw = 180.0 }
+seed = 2101
+max = 20
+
+[[scatter]]
+key = "p25"
+name = "出城踏青路上的插柳暖轿"
+spacing = 64.0
+offset = [10.0, 15.0]
+on_street = true
+along = { kind = "street", name = "御街·龙津桥—南薰门" }
+jitter = { pos = 2.0, yaw = 20.0 }
+seed = 2501
+max = 26
+```
+
+**三个物件故意不进全城层**（写明白，免得下次有人以为是漏了）：
+`p22 素木床榻`、`p31 黑漆大案与藤墩`、`p32 茶床与建盏` 都是**室内 / 院内**陈设
+（客店房间、园林雅集），全城层里没有它们该待的那间屋子——它们属于 shot blend，
+由镜头自己的 previz 摆，不由布点层撒。`p23 直棂窗扇` 同理但理由不同：
+它是**建筑构件**，该长在房子原型上（rule 4g ②「生成构件、不生成建筑」），
+撒一地窗扇没有意义。
+
+**代价**：撒点只保证「不在禁区、不在 Place 里、在走廊内」，**不保证不与全城层的房子互相插入**——
+房子是 BSP 切出来的地块，撒点不读它。实测下来沿河沿街的偏移带基本落在街面上；真撞上了，
+改 `offset` 带或 `spacing`，不要去手改 blend（rule 4h ④：blend 由脚本确定性生成）。

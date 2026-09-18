@@ -8,15 +8,15 @@ Cross-cutting rules about the outputs of every ai_video-task project (`ai_videos
 
 - `task_name` is **pinyin or English**, never Chinese. Example: `chongsheng_zhi_zongcai_furen`, not `重生之总裁夫人`. Reason: task_id 构造（`task_id = "{task_name}-{YYYYMMDD-HHmmss}"`）必须 ASCII 稳定；`.audit/adhoc_agents/{date}/{task_id}/` 路径在 Windows + git 下需保持简洁。The Chinese title lives in `ai_videos/{name}/README.md`.
 - Folder names inside `ai_videos/{name}/` 默认为 **English or pinyin** (`characters/`, `episodes/ep01/`, `shots/`, `ref_images/`)。这些是结构化目录，命名稳定性 > 可读性。
-- File names inside `ai_videos/{name}/` 默认为 **English or pinyin**（`shotlist.md`, `shot01_kling.md`, `episode.md`），但 **角色 / 场景 / 道具等"内容性"文件可 opt-in 中文命名**（`沧冥-魔尊本相.md` / `紫霄宫-禁地暗室.md`），便于在 ai_video_management webapp 中一眼识别"哪个文件对应哪个人物 / 场景"。Opt-in 须在 `specs/ai_video/{name}/final_specs/spec.md` 显式记录 divergence note。
-- 结构性文件（`shotlist.md` / `episode.md` / `shot{NN}_{kling,seedance,lastframe_seedream}.md` / `publish.md` / `arc_outline.md` / `world.md` / `style_guide.md` / `README.md`）保持 English/pinyin —— 这些是骨架，跨项目模板复用率高。
+- File names inside `ai_videos/{name}/` 默认为 **English or pinyin**（`shotlist.md`, `shot01.md`, `episode.md`），但 **角色 / 场景 / 道具等"内容性"文件可 opt-in 中文命名**（`沧冥-魔尊本相.md` / `紫霄宫-禁地暗室.md`），便于在 ai_video_management webapp 中一眼识别"哪个文件对应哪个人物 / 场景"。Opt-in 须在 `specs/ai_video/{name}/final_specs/spec.md` 显式记录 divergence note。
+- 结构性文件（`shotlist.md` / `episode.md` / `shot{NN}.md` / `publish.md` / `arc_outline.md` / `world.md` / `style_guide.md` / `README.md`）保持 English/pinyin —— 这些是骨架，跨项目模板复用率高。
 - File **contents** are **Chinese**. The project's "everything Chinese in `ai_videos/`" rule applies to file content, not paths.
 
 *(Per follow-up `mozun_chongsheng/002` 与 `ai_video_management/004`：现代 Windows + git 已能稳定处理 UTF-8 路径；ai_video_management webapp `is_inside` / `safe_resolve` / 前端 Sidebar 已支持 UTF-8 中文路径段；放宽限制以提升内容文件可识别性。)*
 
 ### 1b. No hex color codes / hex-bound color annotations in outputs
 
-- **任何 `ai_videos/{name}/` 输出文件都不得含十六进制色码** (`#` + 6 hex digits, e.g. `#a87838`)，无论是否包裹反引号。色码对目标 AI 视频/图像模型 (Kling / Seedance / Seedream / ...) 不可解析，只是噪声。
+- **任何 `ai_videos/{name}/` 输出文件都不得含十六进制色码** (`#` + 6 hex digits, e.g. `#a87838`)，无论是否包裹反引号。色码对目标 AI 视频/图像模型 (Seedance / Seedream / ...) 不可解析，只是噪声。
 - **色码 + 与之绑定的颜色名共同删除**：形如 `色名 #hex`（`月夜紫黑 #2a0a3a`）或 `(#hex 色名)`（`(#a87838 冷金挑光)`）的「颜色提示」整体去掉颜色部分——保留它所修饰的物件名 (`青灰长袍 #7a8a8a` → `长袍`；`骨白碎冰刃 #e8d8c0` → `碎冰刃`)；纯色/情绪短语 (`月夜紫黑 #2a0a3a + 残血暗 #5a1a14`) 整段移除。颜色仅以自然中文描述存在于行文里，不再设专门「配色 hex」字段或 `色名 #hex` 标注。
 - **本规则覆盖各模板里残留的 hex 字段标签**：rule 12.8 锁定描述符 `瞳色（hex）`/`服装 / 主色（hex）`/`配色 hex（主/辅/点缀/高光）`、rule 12.3 场景档 `配色 hex（主/辅/点缀）`、rule 12.4 视频 prompt `色调对齐主/辅/点缀 hex` —— 一律不带 hex，直接用中文色彩描述；style_guide 调色表里的色码列清空（保留命名/用途列）。
 - 色温 (`5500K`/`4500K`)、尺寸、机位等非色码信息**保留**——它们不是颜色提示。
@@ -132,7 +132,6 @@ ai_videos/{name}/
 ├── shotlist.md                  # 标记 hook 镜头
 ├── shots/                       # per rule 3 v3 (post follow-up xianxia_new/011): renamed from `prompts/` for naming clarity
 │   ├── shot01_startframe_seedream.md  # only shot 01 (template: rule #12.4)
-│   ├── shotNN_kling.md                # template: rule #12.4
 │   ├── shotNN_seedance.md             # template: rule #12.4
 │   └── shotNN_lastframe_seedream.md   # every shot (template: rule #12.4)
 └── publish.md
@@ -140,11 +139,11 @@ ai_videos/{name}/
 
 ### 4. Image-first character pipeline
 
-Every named character MUST get a Seedream ref-image prompt under `characters/ref_images/<role>_seedream.md`. The user generates the立绘 once via Seedream; that image is then attached as the reference frame in every Kling image-to-video shot featuring that character.
+Every named character MUST get a Seedream ref-image prompt under `characters/ref_images/<role>_seedream.md`. The user generates the立绘 once via Seedream; that image is then attached as the reference frame in every image-to-video shot featuring that character.
 
-Reason: pure-text character description drifts visibly across hundreds of generations. Image-to-video on Kling locks the face / outfit / build origin.
+Reason: pure-text character description drifts visibly across hundreds of generations. Image-to-video locks the face / outfit / build origin.
 
-Concrete shot-prompt template (Kling, image-to-video):
+Concrete shot-prompt template (image-to-video):
 
 ```
 [参考图: characters/ref_images/<role>_seedream.md 生成的立绘]
@@ -425,7 +424,7 @@ prompt 里则只写 `@主体名`——这样跨镜措辞不可能漂，因为压
 
 1. **建主体一次，每镜 `@` 它。** object 的图集 + 锁定描述符组成**一个主体**；
    此后每个用到它的 shot 在 prompt 里 `@` 该主体即可，不再逐镜重贴描述符。
-   旧写法「每镜只带本镜视角那一张」源于槽位稀缺时代的 Kling/Seedance 1.x。
+   旧写法「每镜只带本镜视角那一张」源于槽位稀缺时代的 Seedance 1.x。
 2. **~~槽位不再稀缺，一镜可以同时带 object 主锚图 + 本镜视角图 + 场景方位板 + 角色图~~**
    —— **2026-08-30 用户实测推翻。** 那句话是「参考＝逐镜上传的图片」这个旧心智模型的残留：
    **主体已经持有整套图集**，逐镜再传视角图、场景板、白模渲图全是冗余，
@@ -483,6 +482,44 @@ prompt 里则只写 `@主体名`——这样跨镜措辞不可能漂，因为压
 9. **合规 fallback**：正文含真实品牌 / IP 专名而平台可能拒绝时，在卡片里预先写好去品牌变体
    ——删掉专名，**首行路由键与其余所有字段一字不改**（几何特征本身足以锁住主体）。见 §16。
 10. **≤ 5000 中文字符**（全局 5000 硬顶 / 格式契约 K10；2026-09-06 由 2000 上调，生成器新限制），生成时自检，不留给下游校验器。
+11. **正交三视图的视图约束必须写在 prompt 最前面，而且要说成剪影后果（2026-09-17 sk1/018，三次实测）**
+    —— 紧跟路由键的第一行就是 `视图:`，按这个次序说三句：**哪一面正对镜头** → **哪个方向完全朝着镜头、
+    一点也看不见** → **所以外轮廓是 W×H、看起来是矮而方的一块，不是细长的一条**；另外两个视图
+    同时写进负向词。`主体:` 行也带上 `【正视图·正面正对镜头】` 前缀。
+    **位置与说法都是必要条件，不是修辞**：第一版只把尺寸写进中段的 `画面尺寸:` 字段，p12 漕船
+    照样把「正面」画成舷侧视图——模型读到 `主体: 漕船` + `形体规格: 长 18 米` 就已经锁死了构图。
+    同一个要求用一条 136 字的裸 prompt 单发，**一次就画对了船头正视图**，证明模型能画，
+    是那一堆字段把指令稀释了。
+    要防的缺陷：**没有天然正面的物件**（床榻 宽1.1×长2.0×高0.6）或**有压倒性经典视角的物件**
+    （船、扁担）会被画成同一个轴的三张图，喂进 image-to-3D 等于只给了一个方向的信息。
+    **机检**：`python tools/view_check.py`（剪影宽高比 + 腐蚀掉细附件后的核心宽高比 + 两张裁切图相关度），
+    已挂成 Rodin 调用前的闸门；判不动的那一档（声明宽高比差 < 1.8 倍）工具明写不背书。
+    **兜底**：机检判定塌陷的物件走替身盒，**不要降级成单视图**——实测 p27 挑担货筐这样出来的是
+    坏网格（扁担穿过筐身），因为一张图本来就重建不出第二个方向。
+13. **三视图不一定是「正/侧/背」——按物件形状换档（2026-09-18 sk1/018 实测）**
+    —— **背面与正面是同一根轴**，三张图实际只覆盖两个方向；而「现实里没人会去拍的那个窄面」
+    模型无论 prompt 怎么写都不画（床榻端面、扁担端面、杈子窄端，实测反复失败）。两档替换：
+    · `view3 = "俯视"` —— 第三张换正交俯视。补上第三个轴，且它不是「经典产品视角」、塌不到侧视图上。
+      实测 p18 4.629/声明 4.8、p27 0.278/0.25、p42 2.687/2.8，四个全部奏效。
+    · `view2 = "四分之三"` —— 又宽又薄的物件换俯视后第三张对了、第二张仍塌，
+      再把第二张换成右前上方四分之三视角：**一张同时给出三个轴**，且是模型最愿意画的角度。
+      它带轻微透视，场景串与负向词另有一版（`ISO_SCENE` / `ISO_NEG`）。实测 p18/p27/p42 换后全过。
+    默认仍是「正/侧/背」——只有机检 `view_check` 判定塌陷时才换档，不要预先猜。
+14. **白模的「来源比例漂移」超过 2.0 就不要它，退回同尺寸替身盒（2026-09-18 sk1/018）**
+    —— 漂移 ＝ 逐轴缩放因子的 最大÷最小，闸门直接报。阈值由实测卡出，不是拍的：
+    p37 石门枕 1.47 / p21 井台辘轳 1.43 形态都对；p44 长条木凳 2.84 出来是一堆带尖刺的框、
+    p22 素木床榻 3.37 是一块带枕头疙瘩的板、四条腿没了。**坏网格连体量与轮廓都不保，
+    而替身盒至少这两样是准的**——白模的唯一消费者是 previz，它要的正是体量与轮廓。
+    落点：`tools/build_objects.py` 的 `DRIFT_MAX`，闸门跑完读 log 自动判、自动删。
+12. **image-to-3D 给不出高长径比，这是 vendor 的固有行为、不是"这一版没掷好"（2026-09-17 sk1/018）**
+    —— 漕船声明 18 × 4.5（4:1），三张正交视图全对，Rodin 出来仍是 1.25:1 的一坨；表木（12.5）、
+    青布幌（36）同理。而**紧凑物件在同一条流水线上几乎完美**：油纸伞 / 骆驼 / 毛驴 / 辘轳 / 床榻的
+    逐轴缩放因子最大÷最小是 1.00–1.17。所以这是形状的函数，不是运气。
+    处置按 rule 4g ②：**近平面 / 近线性的东西本来就该走脚本**，而且对它们来说
+    「同尺寸替身盒」不是近似、**就是正确形状**（一块板就是一块板），跳过不是降级。
+    白模闸门相应改 `--fit stretch`（白模只承载体量与轮廓，逐轴贴合是对的取舍），
+    代价不藏起来：闸门报 `来源比例漂移` warning，且每个白模自动出三张灰模快照
+    （rule 4h §G 那一眼——让人一眼看懂"它把船压方了"，而不是看懂"偏差 236.9%"）。
 
 **物件参考图的标准字段序**（人物走 rule 4 / 12.5，本序专用于物件与空间）：
 
@@ -1463,15 +1500,15 @@ Author-side duration heuristic (non-binding — adjust per script):
 
 The shot's `动作:` timed beats and `台词 / 字幕:` time windows MUST sum to exactly the `时长:` value. No divergence note required for any duration in 3–15 s; durations outside the range (< 3 s twitch cuts, or > 15 s) DO require an explicit divergence note in the Shot context Summary.
 
-**Kling 2.1 Pro cap (10 s) note:** when a shot's `时长:` > 10 s is rendered via Kling, the user splits the render into back-to-back Kling calls (each ≤ 10 s) and uses the shot's own `shot{NN}_lastframe.png` mid-seam as input to the second call. The shot prompt itself is always written for whatever duration the beat needs — the Kling split is a user-side rendering step, not a schema concern. Seedance accepts ≤ 15 s directly in a single call.
+**渲染上限（2026-09-17 Kling 退出后）：** 单次调用的时长上限由 Seedance 决定（当前 30 s）。shot 的 `时长:` 永远按戏的需要写；超过渲染上限时由作者拆成前后两次调用，用本镜的 `shot{NN}_lastframe.png` 做中缝输入——这是出片侧的操作，不是 schema 的事。
 
 **Per-episode total duration — 180–195 s (3:00–3:15).** Each episode (novel) / short MUST assemble to a total runtime of **180–195 秒**. The episode total is the binding target; per-shot durations are still chosen per beat (above), but the author writes **enough beats** that the `时长` column of `shotlist.md` sums into `[180, 195]`. `shotlist.md` carries an explicit `时长合计` line proving the sum is in range (stage-6 validator greps it).
 
-**Fast-cut default + 30 s hard cap（2026-09-06 由 15 s 上调）.** Default episode pacing is **fast-cut: 名义 5–8 s/shot, ~25–35 shots/episode** (国内短剧 cut rhythm). **No shot exceeds 30 s** — 30 s is the hard rendering cap (Kling/Seedance), not just a dramatic ceiling. Because every shot is now ≤ 15 s, the legacy ">15 s beat split with seam frame" carve-out is retired: a beat that would run long is authored as multiple consecutive ≤15 s shots, not one over-length shot. The 3–15 s per-beat heuristic table still governs individual shot sizing within the fast-cut budget.
+**Fast-cut default + 30 s hard cap（2026-09-06 由 15 s 上调）.** Default episode pacing is **fast-cut: 名义 5–8 s/shot, ~25–35 shots/episode** (国内短剧 cut rhythm). **No shot exceeds 30 s** — 30 s is the hard rendering cap (Seedance), not just a dramatic ceiling. Because every shot is now ≤ 15 s, the legacy ">15 s beat split with seam frame" carve-out is retired: a beat that would run long is authored as multiple consecutive ≤15 s shots, not one over-length shot. The 3–15 s per-beat heuristic table still governs individual shot sizing within the fast-cut budget.
 
 *(rev — follow-up "flexible per-shot duration" — 2026-05-21: reversed the earlier "15 s is the target, fill the full budget" stance because user empirical review found forced-15 s shots dilute fast beats and let the model invent uninstructed filler. The earlier policy originated from a "Seedance single-generation budget" optimization that turned out to favor model uptime over dramatic pacing. New policy: duration follows the beat, with 15 s as ceiling only.)*
 
-*(rev — follow-up "每集 3 分钟 + fast-cut + 15s 硬上限": added per-episode total 180–195 s, fast-cut 5–8 s default (~25–35 shots/ep), and a hard 15 s/shot cap (Kling/Seedance render limit). Per-shot beat sizing unchanged; episode now assembled to total. All 7 existing episodes regenerated under this rule.)*
+*(rev — follow-up "每集 3 分钟 + fast-cut + 15s 硬上限": added per-episode total 180–195 s, fast-cut 5–8 s default (~25–35 shots/ep), and a hard 15 s/shot cap (Seedance render limit). Per-shot beat sizing unchanged; episode now assembled to total. All 7 existing episodes regenerated under this rule.)*
 
 **Overflow cascades to the next episode — never trim dialogue or cram (per follow-up wushen_juexing/022 — 2026-06-14).** When a drama declares a per-episode duration target (whether the 180–195 s default above or a per-project divergence such as wushen_juexing's ~90 s), and an episode's content (especially dialogue-dense 对峙 scenes) exceeds that target, the author **splits at the nearest scene/beat boundary near the target and pushes the surplus shots into the next episode** — re-numbering the moved shots (folder `shotNN/`, compact tag `{NN}集{NN}镜…`, H1, frontmatter `work_unit_id`) to the new episode. Do **NOT** compress shots, delete dialogue, or pad to hit the bound. The overflow episode may temporarily run short (fewer than the min shot count / under the min seconds) — mark its `shotlist.md` with `溢出段·待补` and exempt it from the S-DUR bounds until that episode's own beats fill it back to target. Rationale: dialogue density and episode length are independent levers; cap length by cascading, not by gutting the script.
 
@@ -1485,7 +1522,7 @@ Every episode (novel) and every short ships with `publish.md` containing: hook t
 
 ### 9. README required, in Chinese
 
-Every `ai_videos/{name}/README.md` ships with: 项目概要, 使用说明 (how to take these files into Seedream + Kling + Seedance), 角色清单, 风格关键词. Updated alongside any feature change per `CLAUDE.md`'s general project rule.
+Every `ai_videos/{name}/README.md` ships with: 项目概要, 使用说明 (how to take these files into Seedream + Seedance), 角色清单, 风格关键词. Updated alongside any feature change per `CLAUDE.md`'s general project rule.
 
 ### 9b. 引用表演演技库（`ai_videos/_performances/`）— 标注 + 按剧情融入
 
@@ -1536,7 +1573,7 @@ AI-video generators (Kling 2.1 Pro, Seedance 1.0 Pro) cap individual clips at ~1
 1. Render each `_seedream.md` frame prompt via Seedream; save the PNG next to the prompt:
    - `shots/shot01_startframe.png` (only shot 01 of video / each episode)
    - `shots/shot{NN}_lastframe.png` (every shot)
-2. For each Kling shot, set `input_image_urls = [start_frame_path, end_frame_path]`:
+2. For each image-to-video shot, set `input_image_urls = [start_frame_path, end_frame_path]`:
    - shot 01: `[shot01_startframe.png, shot01_lastframe.png]`
    - shot N (N ≥ 2): `[shot{N-1}_lastframe.png, shot{N}_lastframe.png]`
 3. Seedance is text-to-video (no image input). Seam frames are not Seedance API parameters, but their described content MUST match across adjacent shots — re-use the same `场景:` / `光线/色调:` tokens and the locked character descriptor so Seedance text-only outputs read consistently next to neighboring Kling outputs.
@@ -1583,10 +1620,10 @@ AI-video generators (Kling 2.1 Pro, Seedance 1.0 Pro) cap individual clips at ~1
   - **把人物卡加入 `参考:` 行 + Reference uploads**：每个角色首登镜的 `参考:` 末尾加 `{角色}出场卡=>` token、Reference uploads 列「{角色}出场卡(characters/cN_X/intro_card.png)」——**用户出图后会把人物卡 PNG 一并上传作参考**（多角色首登镜每位各加一个）。
   - **`镜头:` 字段给卡图所在顶角留负空间**（如「右上角留出适当负空间、主体不顶到该角」）——纯构图指令，让卡不挡主体。
   - **两种出片方式**（用户二选一，2026-06-20 用户改走 model 渲染）：
-    - **(主) 上传参考 + `出场卡:` prompt 指令让 Seedance/Kling 渲**：首登镜 `## 视频 prompt` 块加 `出场卡:` 字段，指示模型把**上传的人物卡参考图**当叠加角标——「在{角色}出现约1秒后、于【右上/左上角】渐进淡入、半透明叠加、停留约3秒再渐进淡出；小尺寸固定顶角、不缩放位移变形、不挡主体、不打断正剧；卡内文字即参考图原样、不另行生成文字」。`出场卡:` 是**叠加角标指令、非台词字幕**——属 rule 12.4「画面不烧台词字幕」的**例外**（同系统 UI 框：deliberate 叠层 + 来自上传参考，不是模型自编文字）。⚠ 视频模型对「定时精准叠图」不一定可靠，效果看模型。
+    - **(主) 上传参考 + `出场卡:` prompt 指令让 Seedance 渲**：首登镜 `## 视频 prompt` 块加 `出场卡:` 字段，指示模型把**上传的人物卡参考图**当叠加角标——「在{角色}出现约1秒后、于【右上/左上角】渐进淡入、半透明叠加、停留约3秒再渐进淡出；小尺寸固定顶角、不缩放位移变形、不挡主体、不打断正剧；卡内文字即参考图原样、不另行生成文字」。`出场卡:` 是**叠加角标指令、非台词字幕**——属 rule 12.4「画面不烧台词字幕」的**例外**（同系统 UI 框：deliberate 叠层 + 来自上传参考，不是模型自编文字）。⚠ 视频模型对「定时精准叠图」不一定可靠，效果看模型。
     - **(备) webapp「🪧 人物卡」后期 overlay 烧**：deterministic，见下「烧录」条。两条路用户自选；prompt 里 `出场卡:` 字段与后期烧录互不冲突（用了 model 渲就别再烧、反之亦然）。
 - **导入路由（DownloadsImporter）**：① **人物卡**——出图 prompt 开头的「{角色名}」让下载文件名带角色 token，导入时匹配到角色文件夹 + 文件名含「名牌/出场卡/intro card」marker → 落成该角色的 `intro_card.{ext}`（只覆盖 intro_card.*、不动立绘）。② **道具**——`props/{名}/` 作候选，下载名含道具名 → 落 `props/{名}/{名}.{ext}`。③ **场景立绘 / 全局建场底图**——文件名含「场景立绘/全局/建场/底图」marker 时**留在场景根**、不被误判进 `bg{N}_{方位}_` 方位 plate 子目录（避免「小神庙内部」里的「庙内」误中 plate token）。
-- **卡图美术建议（用户在 Kling 做图时参考）**：古风竖排名牌、透明底、竖牌比例；**烫金书法名字**（金箔金属立体感）、**身份白色小字**、**白色花纹纹螺边框**；留白干净、叠顶角不挡主体；成品在 9:16 里占宽 ~28–32%。位置走**顶角（右上 / 左上，默认对齐角色画面侧）**，**避开底部台词字幕安全区**（底部留给 11c 字幕）；淡入 → 在屏 ~3.5s → 淡出。多角色同框各发卡时，**出现点错开 + 尽量分置左右顶角**，互不撞。
+- **卡图美术建议（用户出图时参考）**：古风竖排名牌、透明底、竖牌比例；**烫金书法名字**（金箔金属立体感）、**身份白色小字**、**白色花纹纹螺边框**；留白干净、叠顶角不挡主体；成品在 9:16 里占宽 ~28–32%。位置走**顶角（右上 / 左上，默认对齐角色画面侧）**，**避开底部台词字幕安全区**（底部留给 11c 字幕）；淡入 → 在屏 ~3.5s → 淡出。多角色同框各发卡时，**出现点错开 + 尽量分置左右顶角**，互不撞。
 - **烧录（webapp「🪧 人物卡」`POST /api/burn-intro-cards`）**：ffmpeg 把卡图按 `宽度占比` 缩放、`fade` 淡入淡出、`overlay` 叠到顶角 → 生成 `shot{NN}.mp4`（落 shot 根、不覆盖 `renders/` 原片、二次烧录覆盖）。多卡链式叠加。卡图缺失 → `intro_card_image_missing`。
 - **审查**：`ai_videos__格式契约` 校验——重要角色首登镜有 `首登字卡:` Shot-context 行 + 该集 `intro_cards.md` 有其行；且字卡文字**未混入** shot ```text``` 块（混入=blocker，等同画面文字违规）。龙套被误发卡 / 同角色二次发卡 = warning；重要角色首登首句台词 / 窗口 < 字卡时长（卡来不及读）= warning。
 - **产物落点（webapp「🪧 人物卡」烧录）**：输入取 `renders/` 下的原始 take（**不覆盖原片**）；输出落 **shot 文件夹根目录、命名 `shot{NN}.mp4`**（不进 `renders/`），即该镜的成片视频。输出名稳定，**二次烧录覆盖同名 `shot{NN}.mp4`**（除 `renders/` 原片外其余生成物均可覆盖）。shot 根定位解析到最近的 `shotNN` 祖先目录，嵌套 `renders/**` 的 take 也只往 shot 根写；先渲 tmp 再 move，避免读写同文件。与 11c 字幕烧录（输出 `shot{NN}_{zh|en|zhen}.mp4`）落点同规、互不覆盖。
@@ -1701,11 +1738,11 @@ AI-video generators (Kling 2.1 Pro, Seedance 1.0 Pro) cap individual clips at ~1
 > 4. CLAUDE.md「General coding rules」的 narrative-edit coherence check 通用约束同步指向本 suite（不再只指连贯性单项）。
 > Stage-6 validation level #9 由「短剧故事+台词大师」扩为调用 `审查总编排`。
 >
-> **⚠ 2026-06-18 amendment — 选角供脸（user-cast face）：脸由角色库选角承载，卡片与 prompt 不再写解剖式五官，只留「角色识别标签」+ 造型全字段.** Per follow-up「我会人工选择角色，因为我有角色库，所以每个 character 面部的描述可以直接选角，但是发型、妆容、服饰其他所有细节都还是需要的」+ 反馈澄清「之后每个 shot 都会上传人物图片，Seedance/Kling 仍靠文字匹配多人物，应保留简要描述帮助匹配正确」: 项目已有 `casting.md`（role → `actor_id`）+ 每角色 `_cast.md` 嵌入 `_actors/actor_XXXX/*.jpg` 选角脸图——**该脸图 = 该角色长相的权威源**。由此对全流程作如下统一收窄：
+> **⚠ 2026-06-18 amendment — 选角供脸（user-cast face）：脸由角色库选角承载，卡片与 prompt 不再写解剖式五官，只留「角色识别标签」+ 造型全字段.** Per follow-up「我会人工选择角色，因为我有角色库，所以每个 character 面部的描述可以直接选角，但是发型、妆容、服饰其他所有细节都还是需要的」+ 反馈澄清「之后每个 shot 都会上传人物图片，Seedance 仍靠文字匹配多人物，应保留简要描述帮助匹配正确」: 项目已有 `casting.md`（role → `actor_id`）+ 每角色 `_cast.md` 嵌入 `_actors/actor_XXXX/*.jpg` 选角脸图——**该脸图 = 该角色长相的权威源**。由此对全流程作如下统一收窄：
 > 1. **脸＝选角图，文字不再重建五官。** 角色 bible 与所有 prompt **停止用文字描脸**：rule 12.8 锁定描述符字段 **#2「面貌（眉/眼/鼻/唇/轮廓）」删除**；**#3「瞳色」降级**——只保留铁律约束（如「绝不发光 / 绝不挑金光」），不再描具体颜色（图里有）；rule 12.7「5–7 项 micro-detail 五官清单」与解剖式 face-differentiator（痣/疤/三庭五眼/鼻翼唇峰）**一律删除**。这些长相信息由选角图承载，文字重建是冗余。
 > 2. **新增「妆容」字段 + 造型字段全保留并仍要写全。** 锁定描述符**新增一行 `妆容`**（素颜/淡妆/伤妆/泪妆/血污/病气妆 等，随剧情态可标变化态）。**保留并仍由文字锁定**：发型/发色、妆容、服饰、标志道具、性别/年龄观感/体型、标志动作、气质、配色、voice_id。**脸以外的一切照旧**。
 > 3. **一句话锁定升格为「角色识别标签」（职责从描脸→多人消歧）。** rule 12.8 字段「一句话锁定（≤30字，byte-identical 复制到所有 shot `角色:` 行）」**保留**，但内容**只写画面可辨的造型项**（体型气质 + 发型 + 服饰 + 标志道具），**不写五官解剖**。它的新职责：在**多人物 shot** 里把「上传的哪张参考图 = 画面里哪个人」绑定消歧（见 §4）。
-> 4. **shot prompt 的 `面部辨识特征:` 子句（rule 12.4-B）撤销「解剖辨识锚」，改为「角色识别 / 参考图绑定」。** 原「末尾追加可机检的痣/疤辨识锚、byte-identical 复制自 bible」**作废**。改为：`角色:` 行 = byte-identical 复制角色识别标签（§3）；**单人 shot** 只需此标签；**多人物同框 shot** 在 `参考:` / `走位:` 里逐个写死「参考图 ↔ 画面位置 ↔ 识别标签」绑定（如「画面左·裴知秋＝参考图A·清瘦病气少年月白直裰；画面右·裴昭＝参考图B·锦衣骄纵少年」）。**Why（必须保留文字的原因）**：Seedance/Kling 用上传参考图还原长相，但模型不知道画面里哪个人对应你传的哪张脸——多主体 shot 纯靠图片极易串脸/换头/融人，必须靠文字告诉它「有几个人、各自在哪、谁穿什么、谁是谁」。文字职责＝绑定与消歧，**不是**重建五官。
+> 4. **shot prompt 的 `面部辨识特征:` 子句（rule 12.4-B）撤销「解剖辨识锚」，改为「角色识别 / 参考图绑定」。** 原「末尾追加可机检的痣/疤辨识锚、byte-identical 复制自 bible」**作废**。改为：`角色:` 行 = byte-identical 复制角色识别标签（§3）；**单人 shot** 只需此标签；**多人物同框 shot** 在 `参考:` / `走位:` 里逐个写死「参考图 ↔ 画面位置 ↔ 识别标签」绑定（如「画面左·裴知秋＝参考图A·清瘦病气少年月白直裰；画面右·裴昭＝参考图B·锦衣骄纵少年」）。**Why（必须保留文字的原因）**：Seedance 用上传参考图还原长相，但模型不知道画面里哪个人对应你传的哪张脸——多主体 shot 纯靠图片极易串脸/换头/融人，必须靠文字告诉它「有几个人、各自在哪、谁穿什么、谁是谁」。文字职责＝绑定与消歧，**不是**重建五官。
 > 5. **turntable（rule 12.5）保留，改吃选角脸。** 每个有人形的命名角色**仍生成 7s turntable 参考视频**，但**输入 = 该角色 `_cast.md` 选角演员脸图 + 本卡的发型/妆容/服饰/道具文字**；turntable prompt 正文**不再写五官**，改写「以上传的参考脸为准，应用如下造型」。渲出的 turntable.mp4 锁定「完整造型」，仍作后续每个 shot 的角色 reference。（非实体角色如「系统」仍用 UI 浮现块例外，无 turntable。）旧 line 107「Seedream 立绘 ref-image prompt」与 line 643「`角色:` line = 一句话锁定 + face-differentiator」同步按本条收窄：立绘/turntable 改吃选角脸，face-differentiator 解剖锚删除。
 > 6. **审查 skill 同步。** `ai_videos__格式契约`：**不再**校验五官 byte-identical、**不再**要求 face-differentiator 解剖锚；改校验 ① 角色识别标签 byte-identical ② `妆容` 字段在场 ③ 发型/服饰/道具等造型字段齐全 ④ 多人 shot 含参考图绑定行。`ai_videos__站位朝向`：多人物 shot 校验「参考图↔位置↔标签」绑定写死。`ai_videos__全剧序列`：跨集一致性查的是识别标签 + voice_id（不再查五官描述符）。
 > 7. **范围＝流程级**：本条改全流程契约，所有 ai_video 项目（含 wushen_juexing 回填）按此执行。新项目默认走选角供脸。
@@ -1733,7 +1770,7 @@ AI-video generators (Kling 2.1 Pro, Seedance 1.0 Pro) cap individual clips at ~1
 > 5. **重生范围 = 本 shot + 受影响邻接**（同 2026-06-16/06-17 连贯性契约）：仅表演变化不影响剧情链 → 只重生本 shot；动到开场/结尾情绪走向 → regen prompt 须把相邻 shot/episode 纳入 context。
 > 6. **审查同步**：`ai_videos__动作表演` 校验适配版保留原 perf 的 carrier/intensity 内核且未照抄打架；`ai_videos__时长节奏` 校验库时长与 beat 时长窗匹配。范围＝流程级（所有 ai_video 项目）。
 >
-> **⚠ 2026-06-19 amendment — `参考:` 行去 `place_holder`，句柄后跟填写分隔符 `=>`.** Per follow-up「`参考:` 行没必要放 placeholder 字样」+「加个分隔符、我自己填 `=>` 之后的部分；不用冒号怕跟 `参考:` 混淆误导 Kling」: `参考:` 行列出本 shot 要 attach 的引用句柄——角色名 + 场景 bg 代号，逗号分隔，**每个句柄后跟 `=>`**（用户在 `=>` 后填该模型实际 reference）。例：`参考: \`裴知秋=>, bg6_座前_虚化背景=>\``（旧 `参考: \`裴知秋：place_holder, bg6_座前_虚化背景_place_holder\`` 作废）。分隔符选 `=>`：不用 `:`/`：`（避免与行首 `参考:` 标签混淆误导 Kling/Seedance），不用单箭头 `→`（视频模型易读成运动方向）。
+> **⚠ 2026-06-19 amendment — `参考:` 行去 `place_holder`，句柄后跟填写分隔符 `=>`.** Per follow-up「`参考:` 行没必要放 placeholder 字样」+「加个分隔符、我自己填 `=>` 之后的部分；不用冒号怕跟 `参考:` 混淆误导 Kling」: `参考:` 行列出本 shot 要 attach 的引用句柄——角色名 + 场景 bg 代号，逗号分隔，**每个句柄后跟 `=>`**（用户在 `=>` 后填该模型实际 reference）。例：`参考: \`裴知秋=>, bg6_座前_虚化背景=>\``（旧 `参考: \`裴知秋：place_holder, bg6_座前_虚化背景_place_holder\`` 作废）。分隔符选 `=>`：不用 `:`/`：`（避免与行首 `参考:` 标签混淆误导 Seedance），不用单箭头 `→`（视频模型易读成运动方向）。
 > 1. **列入规则不变**：本 shot 画面内每个人物（含背影 / 远景 / 剪影）+ 每个场景 plate 都列；纯 OS / 画外音有台词者列声音参考注 `{角色}(画外 OS·声音请参考)`（同样不带 place_holder）。
 > 2. **收窄全文残留**：rule 12.4 参考行格式 + nvdi 008 / 009 / 029 等条款里的 `{名}：place_holder` / `{plate}_place_holder` 写法一律去 place_holder 字面（句柄照列）；`## Shot context` 的 `Reference uploads` 行同理。本条只动 `参考:` 行的占位字样，**不改** nvdi-023 可选的「prompt body 人物 placeholder 化」独立机制。
 > 3. 范围＝流程级（所有 ai_video 项目）；wushen_juexing 现有 12 shot + 聚合档 + 场景档已回填。
@@ -1766,16 +1803,16 @@ AI-video generators (Kling 2.1 Pro, Seedance 1.0 Pro) cap individual clips at ~1
 > 3. **范围＝流程级 + 现在回填**：所有 ai_video 项目；wushen_juexing 现有全部超标 prompt（6 场景朝向块 / 2 场景 walk-through 块 / 4 turntable 块 / ep01 全部 shot 块）本次裁到 ≤ 2000。
 > 4. **审查同步**：`ai_videos__格式契约` K10 改为 hard 2000、覆盖所有 prompt 类型、severity=blocker、删 12.4-E 例外豁免。
 >
-> **⚠ 2026-06-18 amendment — 角色 turntable「统一声样台词」契约（替代 一二三 计数 · 喂 Seedance/Kling 前 3 秒声音采样 · 动作零改动）.** Per follow-up「角色 prompt 里保持动作不变、让角色台词多说一点（现有 turntable 只念一二三）；之后加 trim 截视频前 3 秒做声音采样——念什么由我决定但**要统一**、每个角色念的都一样，方便 Seedance 抓前 3 秒声线细节」。**纯 prompt 约定**（trim 由用户后期/工具做，不写代码）。规则：
+> **⚠ 2026-06-18 amendment — 角色 turntable「统一声样台词」契约（替代 一二三 计数 · 喂 Seedance 前 3 秒声音采样 · 动作零改动）.** Per follow-up「角色 prompt 里保持动作不变、让角色台词多说一点（现有 turntable 只念一二三）；之后加 trim 截视频前 3 秒做声音采样——念什么由我决定但**要统一**、每个角色念的都一样，方便 Seedance 抓前 3 秒声线细节」。**纯 prompt 约定**（trim 由用户后期/工具做，不写代码）。规则：
 > 1. **scope = 角色 reference / turntable（rule 12.5），不是 shot.** 受影响的是每个实体角色卡里的 7s turntable prompt（`characters/{中文名}/{中文名}.md`）。叙事 shot 的 `台词:` **不受本条影响**、保持各自剧情台词。（一个更早的同日草稿曾误写成「每个 shot 前 3 秒前置台词」——以本版 turntable 级为准，覆盖之。）
 > 2. **统一声样台词（跨角色 byte-identical）**：所有实体角色的 turntable 念**同一句**固定台词，由本契约锁定为：**`你好，今天天气还不错，外面很安静。`**（中性、白话、四声齐备、不分年代；**非剧情台词、绝不出现在成片**，仅作声线采样）。各角色用**自己的 voice_id / 声线 / 语速**演绎这同一句——统一的是**文本**，音色仍按角色锁定。
 > 3. **替代旧"一二三"计数**：turntable 原 0-2s 念"一""二" / 3-4s 念"三"的中文计数（含「3 句数字计数台词」表、"voice baseline byte-identical 跨角色"约定）**全部替换**为本统一台词；台词在 **0–3s（trim 窗口）内念完**，0–2s 正面为主、口型清晰，3s 后静默。
 > 4. **动作零改动铁律**：只换"念的内容"，**turntable 的转身相位 / 姿态 / 构图 / 5-phase 时点 / 抽帧点 / 时长 / 光线 / 渲染样式一律不变**。
-> 5. **trim 用途**：trim 截 turntable mp4 前 3 秒 = 该角色喂 Seedance/Kling 的**声音采样源**（与视觉 reference = turntable.mp4 整段解耦）。
+> 5. **trim 用途**：trim 截 turntable mp4 前 3 秒 = 该角色喂 Seedance 的**声音采样源**（与视觉 reference = turntable.mp4 整段解耦）。
 > 6. **审查同步**：`ai_videos__格式契约` 校验每个实体角色 turntable 含本统一台词且**跨角色 byte-identical**、不残留"一二三"计数（K-新增）。范围＝流程级（所有 ai_video 项目，含 wushen_juexing 回填——本次已做）。
 >
 > **⚠ 2026-06-14 amendment — shot prompt `台词:` 字段废止字幕三选一，改「正常台词 / 内心独白」二标注.** Per follow-up "在 shot prompt 里，不要提及有关字幕的任何细节，我到时候会自己加字幕，你只需要把台词放上去，标明是正常台词还是内心独白，内心独白嘴是不能动的": shot 视频 prompt 的 dialogue 字段 **label 由 `台词 / 字幕:` 改为 `台词:`**，且**字段内严禁任何字幕信息**（「内嵌硬字幕 / 后期软字幕 / 软字幕 / 硬字幕 / 字幕样式 / 鎏金字幕 / 字体调性（方正粗黑 白底黑边…） / 字幕窗时间 / 不上字幕 / 登场字幕位」全删）。字幕由用户后期自加。字段只保留：① 说话人 + 台词原文；② 类型二标注 `正常台词`（口型随台词开合）或 `内心独白`（**嘴唇不动、不对口型**，靠表情 / 眼神演内心，per nvdi 027）；③ 在画人物口型指令。完整契约见 §12.4「台词契约（v2）」。Stage-6 validators MUST reject 任何 shot 视频 prompt 里仍含字幕字样 / 字体调性 / `台词 / 字幕:` 旧 label 的行。rule 11c 的 render-side 字幕烧录（`subtitles.md` + webapp 一键烧字幕）是**用户后期自加字幕的工具**，与本条不冲突 —— 它读 `台词:` 文本但不要求 prompt 里写字幕样式。
-> **⚠ 2026-06-19 amendment — 负面词必须显式禁字幕（光「不写字幕样式」挡不住模型自动烧字幕）.** Per follow-up "shot8 自己带上字幕了，确保所有 shot 都不带字幕"：实测 Seedance/Kling 对**有台词(对白)的镜会自动把台词烧成字幕**，即便 prompt 不含任何字幕样式也照烧（对白越密越爱烧，shot8=4 句对白最明显）。光靠「不提字幕」+ 负面词「画面文字」不够。**铁律：每个 shot 视频 prompt 的 `渲染样式:` 收尾写「全程无字幕、画面不烧任何字幕/台词文字」，`负面词:` 显式含「字幕 / 台词字幕 / 对白字幕 / subtitles」**（系统 UI 文字镜如鎏金对话框例外、不禁「画面文字」、只禁台词字幕）。Stage-6 validator 应检查每个有台词的 shot 是否带这两道显式禁字幕。
+> **⚠ 2026-06-19 amendment — 负面词必须显式禁字幕（光「不写字幕样式」挡不住模型自动烧字幕）.** Per follow-up "shot8 自己带上字幕了，确保所有 shot 都不带字幕"：实测 Seedance 对**有台词(对白)的镜会自动把台词烧成字幕**，即便 prompt 不含任何字幕样式也照烧（对白越密越爱烧，shot8=4 句对白最明显）。光靠「不提字幕」+ 负面词「画面文字」不够。**铁律：每个 shot 视频 prompt 的 `渲染样式:` 收尾写「全程无字幕、画面不烧任何字幕/台词文字」，`负面词:` 显式含「字幕 / 台词字幕 / 对白字幕 / subtitles」**（系统 UI 文字镜如鎏金对话框例外、不禁「画面文字」、只禁台词字幕）。Stage-6 validator 应检查每个有台词的 shot 是否带这两道显式禁字幕。
 
 **⚠ 2026-09-09 amendment — 【TOP PRIORITY】相邻镜之间默认走「明显的硬切 + 景别跳档」，承接首帧降为例外（用户 follow-up xianjian/081）。** 用户定调：*「两个 shot 之间的衔接应该是刚好明显的镜头切换，比如远近景的切换，这样 shot 之间的链接就很简单——我想尽量省去剪切的工作。」* **本条修订下方 2026-06-21 (A)/(E) 的默认，并在冲突时优先。**
 
@@ -1823,7 +1860,7 @@ AI-video generators (Kling 2.1 Pro, Seedance 1.0 Pro) cap individual clips at ~1
 
 > **(H2) 承接镜=尾锁源时，**首次生成走「首帧单图」、双帧指令仅留给重生（follow-up 2026-06-27「ep1 shot10末帧作 shot11 首帧、生成总差 50+ 帧」）。** 一个镜既是**承接镜**（首帧＝上一镜末帧）又是**尾锁源**（末帧供下一镜承接）时，它在**首次生成**那一刻**本镜末帧根本还不存在**。此时若按 (H)① 写**首+末双帧**指令（`首末帧: …自首帧顺接渐变至末帧` + 在 `参考:` 里列出 `本镜末帧=>@`），等于命令模型"渐变到一张不存在的末帧"→ 模型不再把首帧当硬性第 0 帧、转而自由收敛 → **生成起幅相对所给首帧漂移数十帧**（实测 50+）。正解：**首次生成只走 (H)② 首帧单图**——结构化指令写 `首帧: 画面以首帧为起始、自首帧那一刻续起自然顺接展开、起始不重新缩放/不重新定位/不重摆姿`；`参考:` 行**首次只列 `本镜首帧(上一镜末帧)=>@` + 角色 + 场景，不列 `本镜末帧=>@`**（尾帧仅在重生本镜锁末帧时才加）；`参考:` 行末 `本镜末帧=>` handle 仍可在场（(G)「首次无图可省、handle 在场作提示」）。**首+尾双帧指令（H①）只在重生本镜**（此时 `shot{NN}_lastframe.png` 已存在、作尾帧上传锁定末帧）时才启用。② **配套两条铁律**：(a) 首帧务必传进生成器的**专用「首帧」槽**（image-to-video 首帧图），**不是**全能参考/普通参考图槽——进全能参考槽＝模型当"引导图"而非第 0 帧、照样漂；(b) 承接 seam 落点**禁落"走路/转身/出招中途"**（mid-stride / mid-turn）——i2v 接续半步/半转姿态会**重置步态/动作相位**致跳帧，应把交接帧设计在**收势/立定/亮相定格/反应 beat**（承 (F2)：本就该停顿的瞬间）；故**交接源镜的末拍应收到一个静定 beat**（如"转身完成、面南立定收势一拍"），而非停在仍在位移的中途帧。归口 `ai_videos__运镜` M8（承接对默认按本条写"首次首帧单图 + seam 落静定 beat"），机械校验由 `格式契约` K27 兜「`参考:` 每项裸 `=>@`、首末帧由项名自明」。
 
-> **(I) 首末帧反差铁律（每镜必有显著首↔末帧差·follow-up 2026-06-21）。** 图生视频（Seedance/Kling 全能参考）的运动量＝**起始帧→结尾帧的视觉差**：首末帧越接近、生成越接近静止。故**每镜必须保证起始帧与结尾帧有显著视觉反差**，杠杆（按 delta 大小排）：① **景别推/拉**（中景↔特写一来一回，整帧改观，最廉价最有效）；② **位置/姿态**（坐↔起身、阖目↔睁眼、手位移、头垂↔抬、松垮↔挺直）；③ **表情/面色**（平静↔惊变、枯白↔回暖）；④ **光线**（冷↔暖、暗↔亮、UI/框淡入）；⑤ **机位角度**（微 orbit 改背景）。**内省 / 打坐 / 对话静坐等天然静态镜尤其危险**——「全程不动位」＝首末帧雷同＝出片静止；必须靠 ①景别推拉 + ②姿态/③表情变化强行制造 delta（藏锋镜也照做、不靠外放光效）。落点：每镜 `## Shot context` 加一行 `首末帧反差: {首帧状态} → {末帧状态}（杠杆标注）`，作设计自检；承接镜的首帧＝上镜末帧（锁定）、故反差由**本镜末帧**与该锁定首帧拉开。判定归口 `ai_videos__运镜`（设计每镜景别/运动保证 delta），机械层不强校（属审美设计）。EP3 内省独角戏（shot3–10·打坐修炼）按本条全量 redesign。
+> **(I) 首末帧反差铁律（每镜必有显著首↔末帧差·follow-up 2026-06-21）。** 图生视频（Seedance 全能参考）的运动量＝**起始帧→结尾帧的视觉差**：首末帧越接近、生成越接近静止。故**每镜必须保证起始帧与结尾帧有显著视觉反差**，杠杆（按 delta 大小排）：① **景别推/拉**（中景↔特写一来一回，整帧改观，最廉价最有效）；② **位置/姿态**（坐↔起身、阖目↔睁眼、手位移、头垂↔抬、松垮↔挺直）；③ **表情/面色**（平静↔惊变、枯白↔回暖）；④ **光线**（冷↔暖、暗↔亮、UI/框淡入）；⑤ **机位角度**（微 orbit 改背景）。**内省 / 打坐 / 对话静坐等天然静态镜尤其危险**——「全程不动位」＝首末帧雷同＝出片静止；必须靠 ①景别推拉 + ②姿态/③表情变化强行制造 delta（藏锋镜也照做、不靠外放光效）。落点：每镜 `## Shot context` 加一行 `首末帧反差: {首帧状态} → {末帧状态}（杠杆标注）`，作设计自检；承接镜的首帧＝上镜末帧（锁定）、故反差由**本镜末帧**与该锁定首帧拉开。判定归口 `ai_videos__运镜`（设计每镜景别/运动保证 delta），机械层不强校（属审美设计）。EP3 内省独角戏（shot3–10·打坐修炼）按本条全量 redesign。
 
 > **(J) 接缝两端 0.3s 台词静默守卫（首尾帧镜须留无台词缓冲·follow-up 2026-06-27）。** 凡参与首尾帧承接的镜，**接缝端 0.3s 内不得有任何台词 / 内心独白（OS）/ 旁白发声**——因为 (F)/(F2)/(F3) 的出片端接缝抹平（裁掉减速定格的"死运动"帧 / 裁 incoming 头部静止重复帧 / 缓动回弹）会在接缝处**丢掉约 0.2s 音频**，台词若压在这 0.2–0.3s 上就被吞字、接缝处听感发哑或截断。两侧各留缓冲：① **交接源镜（其末帧供下一镜承接 / 有 `尾帧锁定:`）**——`台词:` / `## 台词配音 prompt` 的最后一句须在**本镜末尾前 ≥0.3s 收声**，末 0.3s 只留动作收势 / 定格反应 beat（恰与 (H2)②「末拍收到静定 beat」「不落走路/转身中途」一致——静定 beat 本就无话）；② **承接镜（`衔接: 承接 shotNN`）**——`台词:` / 配音的第一句须在**本镜开头 0.3s 之后**才起，首 0.3s 只承接上镜末帧的姿态续动、不开口。**一镜若两端都接（链中段）则首尾各留 0.3s 静默**。落点：① 设计端由 `ai_videos__运镜` M8 在判承接对时，把台词时间窗从接缝端缩进 ≥0.3s（写进该镜 `动作:` 时间轴 / `台词:` 起止）；② `ai_videos__时长节奏` 按本条核查——算"字数÷时长 ≤4"时，**承接 / 尾锁镜的可用台词时长＝镜时长 − 0.3s（单端）/ −0.6s（两端）**，不够念就加时长或把首/末句移到相邻非接缝镜；③ `ai_videos__台词大师` 协同（接缝端那句别硬塞）。机械层 `ai_videos__格式契约` 不强校（台词在镜内的精确时间窗多为软标注、属节奏/语义层）。硬切镜（无承接/锁定）不受本条约束。
 
@@ -1835,7 +1872,7 @@ AI-video generators (Kling 2.1 Pro, Seedance 1.0 Pro) cap individual clips at ~1
 - **负面词块基线（2026-06-17，必填 contract）**：`style_guide.md § 负向锁定` 的全剧基线**至少含** `人脸变形 / 五官漂移 / 多余发光特效 / 画面文字 / 畸形肢体 / 夸张金光 / 现代服饰`（可按项目/角色/场景追加，不得删基线）。每个 shot 的 `负向` 段 re-paste 此基线；`ai_videos__格式契约` 校验每镜 prompt 负向段在场且含基线项（K15）。该块是 AI 短剧 pipeline 阶段 6 的硬产物（见 `ai_videos__全流程编排`）。
 - 「台词」字段（`台词:`）只写 说话人 + 台词原文 + 类型（正常台词 / 内心独白）+ 口型指令；**prompt 内不含任何字幕信息**（字幕用户后期自加），台词音轨由 12.4-H 配音(TTS)层单独生成（详见 12.4「台词契约（v2）」）。
 - 「动作」必须以 timed beats 写成（如 `0–3s ... / 3–6s ... / 6–8s ...`），且最后一拍 frozen 状态 = 该 shot 的 `lastframe` 静帧 seam-frame 的「主体定义 / 姿态」描述。
-- **模板 model-agnostic**：rule #12.4 schema 不区分目标 AI 模型（Kling / Seedance / Sora / Veo / Seedream / Midjourney / ...）。文件命名 `shotNN_{model}.md` 仅用于区分输出目标，不影响字段定义。
+- **模板 model-agnostic**：rule #12.4 schema 不区分目标 AI 模型（Seedance / Sora / Veo / Seedream / Midjourney / ...）。文件命名 `shotNN_{model}.md` 仅用于区分输出目标，不影响字段定义。
 
 #### 12.1 角色档 — `characters/{role}.md`
 
@@ -2003,7 +2040,7 @@ re-paste `style_guide.md § 负向锁定` + 场景专属（如「不要现代建
 
 #### 12.4 镜头 prompt 模板（model-agnostic 二件套：视频 shot + 静帧 seam-frame）
 
-模板按 prompt **用途**（视频 vs 静帧）分列，**不**按目标 AI 模型（Kling / Seedance / Sora / Veo / Seedream / Midjourney / ...）分列。同一 shot 可同时存在多个 model variant 文件（`shotNN_kling.md` / `shotNN_seedance.md` / `shotNN_sora.md` / ...），它们共享同一 schema；模型能力差异只通过 12.4-A「角色字段展开规则」与「`[参考图]` 行是否出现」两点自动适配。
+模板按 prompt **用途**（视频 vs 静帧）分列，**不**按目标 AI 模型（Seedance / Sora / Veo / Seedream / Midjourney / ...）分列。同一 shot 可同时存在多个 model variant 文件（`shotNN_kling.md` / `shotNN_seedance.md` / `shotNN_sora.md` / ...），它们共享同一 schema；模型能力差异只通过 12.4-A「角色字段展开规则」与「`[参考图]` 行是否出现」两点自动适配。
 
 文件命名约定（rev follow-up 006，不再按 model 分 variant）：
 
@@ -2031,7 +2068,7 @@ re-paste `style_guide.md § 负向锁定` + 场景专属（如「不要现代建
 
 ## 视频 prompt — 复制下方代码块到视频生成模型
 
-> **用法**：复制下方代码块整段，粘贴到任何视频生成模型（Seedance / Kling / Sora / Veo / Runway Gen-3 等）。按"Reference uploads checklist"上传该 shot 的 turntable mp4 + 场景 PNG. **seam-frame PNG 链路已 abolished (rule #11 abolished, rule #5 v2)**: 跨 shot 视觉连续性由描述层 byte-identical (角色一句话锁定 / 场景一句话锁定 / 光线色调 / 渲染样式 / 负向) + 共享 reference mp4 + 共享场景 PNG 承担, 不再依赖 input_image_urls seam frame PNG.
+> **用法**：复制下方代码块整段，粘贴到任何视频生成模型（Seedance / Sora / Veo / Runway Gen-3 等）。按"Reference uploads checklist"上传该 shot 的 turntable mp4 + 场景 PNG. **seam-frame PNG 链路已 abolished (rule #11 abolished, rule #5 v2)**: 跨 shot 视觉连续性由描述层 byte-identical (角色一句话锁定 / 场景一句话锁定 / 光线色调 / 渲染样式 / 负向) + 共享 reference mp4 + 共享场景 PNG 承担, 不再依赖 input_image_urls seam frame PNG.
 
 ```text
 {rule #12.4 v1 prompt body — 14-field schema}
@@ -2081,7 +2118,7 @@ re-paste `style_guide.md § 负向锁定` + 场景专属（如「不要现代建
 ```
 
 - 人物名 + 场景名(bg 代号)取自本 shot 的 `角色:` 行 / Shot context `Characters` + `Scene`；人物在前、场景在后，逗号分隔，**不加 `place_holder` 占位字样**（2026-06-19 收窄）。
-- **每个句柄后跟填写分隔符 `=>`**（如 `裴知秋=>`），用户生成时在 `=>` 后填该模型的实际 reference 标记。用 `=>` 不用冒号 `:`/`：`——避免与行首 `参考:` 标签混淆、误导 Kling/Seedance；也不用单箭头 `→`（视频模型易读成运动方向）。
+- **每个句柄后跟填写分隔符 `=>`**（如 `裴知秋=>`），用户生成时在 `=>` 后填该模型的实际 reference 标记。用 `=>` 不用冒号 `:`/`：`——避免与行首 `参考:` 标签混淆、误导 Seedance；也不用单箭头 `→`（视频模型易读成运动方向）。
 - **⚠ 2026-06-22 amendment — Seedance 2.0 全能参考（Omni Reference）@标签 + 首尾帧角色分配契约（research-backed·指导 shot prompt 写法）.** 来源：用户 research（Seedance 2.0「全能参考 + 首尾帧」机制，2026-06-22；sources: PiAPI seedance-2-0 / WaveSpeed complete-guide / seedance-2ai.org first-last-frame / 即梦全能参考完全指南CSDN / GitHub Emily2040 seedance-2.0 pipeline）。**核心认知：Seedance 2.0 的「首尾帧」不是与全能参考并列的独立模式，而是「全能参考」里的两个角色——把首帧图 / 尾帧图当作 @ 参考素材上传，再在 prompt 正文用 @标签给每个素材派角色（首帧 / 尾帧 / 角色锁 / 场景锁 / 运镜参考 / 背景音）。** 故凡有 `本镜首帧=>` / `本镜末帧=>` 的镜，写 prompt 时须把它们落成全能参考的 @ 首尾帧分配句，而非只留占位。落地规则：
   1. **`参考:` 行 = 全能参考上传清单**：每个 `{名}=>` 占位对应一个上传槽。为 Seedance 全能参考，给每项配一个 @ 句柄（图 → `@图1 @图2 …`、视频 → `@视频1 …`、音频 → `@音频1 …`，按出现顺序编号；英文版 `[Image1]`）。**@句柄必须 byte-identical 原样写**（`@图1`/`@视频1`），不得改写成「第一张图」——模型靠精确标签路由（GitHub pipeline 的 tag-preservation 铁律）。
   2. **`参考:` 行每项以裸 `=>@` 收尾，`@` 后留空——绝不代填槽位号（2026-09-06 用户裁定 · 取代 2026-06-28 的 inline `=>@N`）**：`参考:` 行每个上传项写成 `` `{项名}(类型)=>@` ``，例：`参考: \`c19_萧若云=>@, c12_围观武者乙=>@, c12_围观武者乙声音=>@, 镇演武场_bg1_场口_入场=>@\``。
@@ -2106,7 +2143,7 @@ re-paste `style_guide.md § 负向锁定` + 场景专属（如「不要现代建
 - **背影 / 非焦点人物必须在 `角色:` 给「背影可见」外貌，多个背影必须区分（per follow-up nvdi 031）**：只列入 `参考` 还不够——背影 / 远景 / 侧影 出场的人物，`角色:` 行**仍要给其外貌描述**，重点是**从背面也能看见的特征**（衣色 / 发型 / 发色 / 冠帽 / 体态年龄），脸部细节（痣 / 疤 / 瞳色）可略。**根因（nvdi shot07 实测）**：若 `角色:` 只描述了焦点人物、没给背影人物外貌，且台词 / 情节又在强调某个人，视频模型（Kling）**没有文字线索区分背影**，会把所有背影都渲染成那个被强调的人（观测：两道背影都成了 chenfan）。**当画面有 ≥2 个背影 / 相似人物**时，除各自外貌外，还须在 `走位:` / 入镜人物句**逐一点明每道背影是谁 + 其区分特征（衣色 / 发型）**，并显式写「两道背影衣色发型迥异、各按其参考分别渲染、严禁雷同或都渲染成同一人」。上传的参考图多为正脸，对「背影」帮助有限，**文字区分是关键**。
 - **AI-fed 字段用具体角色名、禁关系称谓（per follow-up nvdi 021）**：每个 shot 对生成模型是**独立 context**，模型无跨镜记忆，无法解析「父子 / 父亲 / 儿子 / 二人」等关系/相对称谓指向谁。故凡进入生成的字段（`参考:` / `走位:` / `角色:` / `情节:` / `动作:` 等 ```text``` 块内字段，及 Shot context 的 `Characters`）一律用**具体角色名**（如 `陈国公`、`陈凡`），不用关系称谓。**例外**：`台词:` 内角色口语中的称呼（如儿子唤「父亲」、太监称「令郎」）是自然对白，保留；`## Chapter excerpt` 引用块（`>` 小说原文，不喂模型）保留原文。尤其 `走位:`（决定谁在画面内/何处）出现关系称谓是 blocker —— 模型会无法定位人物。配合上一/下一条：`走位:` 既要用具体名，也要把每个**入画**人物（含背影/前景/远景）列入 `参考:`，每个**不入画**者显式标 `画外/不入画/离去`。
 - **人物 placeholder 化 + 生成块无英文（per follow-up nvdi 023，可选·按项目）**：当项目要求 shot prompt 完全自包含、零歧义时，可把 ```text``` 生成块内**所有人物指代**（人名 + 代词「他/他们/其/二人」+ 称谓「老臣/纨绔/父亲/令郎/老奴」+ 台词内人名）统一换成 **`{人物拼音}_place_holder`** 单一 token（如 `taijian_place_holder` / `chenguogong_place_holder` / `chenfan_place_holder`），`参考:` 行的人物条目亦收拢为该 token（`{名}：place_holder` → `{拼音}_place_holder`）。配套：生成块内**除 placeholder 外不留英文单词**——`cinematic`→电影感、`photorealism`→照片级写实、`4K HDR`→超高清高动态范围、`OS/V.O.`→画外音/旁白、`fast-cut`→快切、`mm/cm/s`→毫米/厘米/秒、`reveal/motif`→反转/母题 等全译中文。**例外（保留）**：① **一切「对白」不 placeholder 化（per follow-up nvdi 024 + 025）**——凡是会**被读出 / 显示成字幕**的对白文字（placeholder 会被当字幕渲染出来），一律用**自然人名**（太监 / 陈凡 / 陈国公）+ **保留口语代词与称呼**（他 / 其 / 父亲 / 令郎 / 老奴 / 老臣 / 凡儿 等，按需）。范围**不止 `台词:` 字段**——还包括**嵌在 `情节:` / `动作:` 等字段里、引号内（“…” / 《…》 / 「…」 / "…"）的对白**（同一句台词在叙述里被引用时也算对白）。判定：**引号内（对白）= 自然人名/代词；引号外（叙述/描述）= placeholder**。说话人标签 + 口型注亦用自然人名。②形容/比喻用法的称谓（`老臣沉稳` / `老练阴柔` 是气质描述，非指代）③成语（`判若两人`）④指物的「二物/二者」⑤场景背景 plate 代码（`bg1_朝北_长案主位`，是引用标识非英文词）⑥地名 `陈国公府`（含「陈国公」但是府邸名，不 token 化）⑦Shot context / frontmatter / 标题 等**模板脚手架**（不粘贴进模型，非「prompt」本体）。注意把人名 token 化时须**保护地名**（先挡 `陈国公府` 再换 `陈国公`）并避开 `他人/其他/国公府`；token 化时**跳过 `台词:` 行**。
-- **隐含人群的场景须定员 + 负向禁群众（per follow-up nvdi 022）**：宣旨 / 接旨 / 朝会 / 升堂 / 早朝 / 婚宴 / 法事 / 战阵 等**语义上隐含一堂人**的场景，视频 / 图像模型 (Kling / 即梦等) 会按训练数据惯例**凭空补一堆群众 / 群臣 / 围观**（例：太监「今解除朕…钦此」宣旨 + 跪礼区 → Kling 把空厅填满跪伏百官）。即便 `情节` 写了「空旷正厅」也压不住。须双管齐下：① `走位:` **正向定员且点名（per follow-up nvdi 028 强化）**——不要只写泛泛的「仅本镜入画人物」，要**明确写出本镜入镜的每个人物 + 其正面/背影状态**，如「本镜入镜人物仅 {A}(正面)、{B}与{C}(前景下方背影、未露正脸); 别无他人, 不得增添任何其他人物 (无群臣/侍从/围观人群/路人)」，并点出场所性质（如「国公府私宅正厅, 非朝堂金殿」）。点名 + 正背面状态让模型清楚「只有这几个、长这样」，比泛泛定员更能挡掉凭空增添的人。② `负向:` 加 `不要 群臣 / 大臣 / 百官 / 群众 / 围观人群 / 跪伏群臣 / 侍从随从 / 多余人物 / 凭空增添人物`（若项目已移除 `负向` 字段 per nvdi 026，则此条挪到平台反向输入框）。台词里的帝王措辞 (`朕` / `钦此`) 是剧情必需不删，靠点名定员反制其人群联想。
+- **隐含人群的场景须定员 + 负向禁群众（per follow-up nvdi 022）**：宣旨 / 接旨 / 朝会 / 升堂 / 早朝 / 婚宴 / 法事 / 战阵 等**语义上隐含一堂人**的场景，视频 / 图像模型 (即梦等) 会按训练数据惯例**凭空补一堆群众 / 群臣 / 围观**（例：太监「今解除朕…钦此」宣旨 + 跪礼区 → Kling 把空厅填满跪伏百官）。即便 `情节` 写了「空旷正厅」也压不住。须双管齐下：① `走位:` **正向定员且点名（per follow-up nvdi 028 强化）**——不要只写泛泛的「仅本镜入画人物」，要**明确写出本镜入镜的每个人物 + 其正面/背影状态**，如「本镜入镜人物仅 {A}(正面)、{B}与{C}(前景下方背影、未露正脸); 别无他人, 不得增添任何其他人物 (无群臣/侍从/围观人群/路人)」，并点出场所性质（如「国公府私宅正厅, 非朝堂金殿」）。点名 + 正背面状态让模型清楚「只有这几个、长这样」，比泛泛定员更能挡掉凭空增添的人。② `负向:` 加 `不要 群臣 / 大臣 / 百官 / 群众 / 围观人群 / 跪伏群臣 / 侍从随从 / 多余人物 / 凭空增添人物`（若项目已移除 `负向` 字段 per nvdi 026，则此条挪到平台反向输入框）。台词里的帝王措辞 (`朕` / `钦此`) 是剧情必需不删，靠点名定员反制其人群联想。
 - **画外 OS 说话人的声音参考（per follow-up nvdi 009）**：当某句台词由**不入镜**的角色说出（画外 / OS / V.O.），该角色虽不在画、无视觉 turntable，`参考` 行仍须给出其**声音**参考占位，格式 `{角色}(画外 OS·声音请参考)：place_holder`，供用户 attach 配音参考（与视觉 reference 占位区分）。
 - **场景背景参考 = 单 token（per follow-up nvdi 029）**：`参考:` 里的场景背景条目要**和人物参考一样**用单个 `{xxx}_place_holder` token，**不写** verbose 的 `{场景名}·背景图 {plate}：place_holder`。token 用该 shot 的背景 plate 做名（`{plate}_place_holder`，如 `bg2_朝南_厅门_place_holder`，保留朝向信息让用户知道 attach 哪张朝向图）；且 shot 内**所有该场地的引用**（`参考:` + `场景:` 字段的场景名）都用同一个 token。
 - **每个 structured 字段值用反引号包裹（per follow-up nvdi 029）**：shot prompt ```text``` 块里每个 `{label}: {value}` 字段的**值用反引号 `` ` `` 抱起来**——`` 镜头: `中近景 + 缓慢推近…` `` ——帮视频模型（Kling）清晰分辨各结构段的边界。所有字段（参考/角色/情节/场景/镜头/走位/动作/台词/光线/节奏/渲染样式/比例/时长）一致处理。
@@ -2201,9 +2238,9 @@ re-paste `style_guide.md § 负向锁定` + 场景专属（如「不要现代建
 
 （旧 v1「内嵌硬字幕 / 后期软字幕 / 默剧」三选一契约已 **ABOLISHED**；stage-6 validators MUST reject 任何 shot 视频 prompt 里出现字幕字样 / 字体调性 / `台词 / 字幕:` 旧 label 的行。台词文本仍由 `script.md` / `dialogue.md` 决定，shot prompt 透传。）
 
-**`台词` 字段只留跟视频有关的信息、不含字幕排版（per follow-up nvdi 028，v2 强化）**：喂给视频生成器（Kling / Seedance）的 `台词:` 字段**只保留**①对白内容（说话人 + 台词原文 / 内心独白）②`· 在画人物口型:` 口型指令（跟画面里嘴动不动有关，保留）。**必须移除**字幕排版 / 后期制作信息——字体（思源宋体 / 思源宋体斜体）、字号、位置（画面下 1/6 居中）、颜色（白色描边黑）、字幕窗时间（约 6 秒-9 秒）、前缀（「画外音:」）、「三选一字幕契约取后期软字幕」/「视频不烧字」/「不烧字」/「默剧处理无字幕」等。**根因**：这些是后期剪辑的字幕排版，不是画面内容，混在 prompt 里会**扰乱 Kling 生成视频**；prompt 须「只跟视频有关、简洁清晰」。字幕排版按需记在文件末尾 `### 后期字幕（不入 prompt）` 块。
+**`台词` 字段只留跟视频有关的信息、不含字幕排版（per follow-up nvdi 028，v2 强化）**：喂给视频生成器（Seedance）的 `台词:` 字段**只保留**①对白内容（说话人 + 台词原文 / 内心独白）②`· 在画人物口型:` 口型指令（跟画面里嘴动不动有关，保留）。**必须移除**字幕排版 / 后期制作信息——字体（思源宋体 / 思源宋体斜体）、字号、位置（画面下 1/6 居中）、颜色（白色描边黑）、字幕窗时间（约 6 秒-9 秒）、前缀（「画外音:」）、「三选一字幕契约取后期软字幕」/「视频不烧字」/「不烧字」/「默剧处理无字幕」等。**根因**：这些是后期剪辑的字幕排版，不是画面内容，混在 prompt 里会**扰乱 Kling 生成视频**；prompt 须「只跟视频有关、简洁清晰」。字幕排版按需记在文件末尾 `### 后期字幕（不入 prompt）` 块。
 
-**在画人物口型契约（per follow-up nvdi 007 — 防 Kling 自动加口型 / 乱口型 / 鸟语）**：凡在画人物在该镜中**不出声**的情形——默剧 / 静默 reaction / 仅环境音（脚步、衣袂、叩案、烛火等）/ V.O. 内心独白（画外配音，角色在画但不现场说话）/ 听者方（台词系他人 OS）——`台词 / 字幕:` 行必须显式追加子句 `· 在画人物口型: {在画角色}全程闭口、嘴唇不动、无说话口型`；V.O. 须注明「内心独白 OS 为画外配音 / 字幕、非现场出声，严禁把 OS 台词对到该角色嘴上」；听者方须注明「台词系 {说话人} OS（不入画），严禁对到听者嘴上」。同时 `负向:` 行必须含 `不要 说话 / 不要 嘴部开合 / 不要 说话口型 / 不要 lip sync / 不要 自动配音`。**根因**：Kling / Seedance 等模型默认给在画人脸自动叠加说话口型，弱表述（如「(静默, 无台词)」）不足以抑制，必须 `台词` 显式闭口指令 + `负向` 反向词双重锁定。（与 rule 5 v3 行 247-248 的 OS `在画人物口型:` 子项同源，此处扩展到全部「在画不出声」镜并强制 `负向` 反向词。）**内心独白镜「闭口但表情演内心」（per follow-up nvdi 027）**：嘴唇不动 **≠** 面无表情/呆滞——V.O. 内心独白镜里，角色须用**面部表情 / 眼神 / 神态**（眼神由倦转锐、微表情、唇线收紧或微扬、瞳孔变化、神色冷峻等）把内心独白的所想所感**演绎出来**，嘴不动但内心情绪外显。故 `在画人物口型:` 注除「全程闭口、嘴唇不动、无说话口型」外，须追加「**但内心所想靠表情 / 眼神 / 神态演出来，不靠开口、不对口型**」，并在 `动作:` 节奏里给出对应的神态变化 beat。
+**在画人物口型契约（per follow-up nvdi 007 — 防 Kling 自动加口型 / 乱口型 / 鸟语）**：凡在画人物在该镜中**不出声**的情形——默剧 / 静默 reaction / 仅环境音（脚步、衣袂、叩案、烛火等）/ V.O. 内心独白（画外配音，角色在画但不现场说话）/ 听者方（台词系他人 OS）——`台词 / 字幕:` 行必须显式追加子句 `· 在画人物口型: {在画角色}全程闭口、嘴唇不动、无说话口型`；V.O. 须注明「内心独白 OS 为画外配音 / 字幕、非现场出声，严禁把 OS 台词对到该角色嘴上」；听者方须注明「台词系 {说话人} OS（不入画），严禁对到听者嘴上」。同时 `负向:` 行必须含 `不要 说话 / 不要 嘴部开合 / 不要 说话口型 / 不要 lip sync / 不要 自动配音`。**根因**：Seedance 等模型默认给在画人脸自动叠加说话口型，弱表述（如「(静默, 无台词)」）不足以抑制，必须 `台词` 显式闭口指令 + `负向` 反向词双重锁定。（与 rule 5 v3 行 247-248 的 OS `在画人物口型:` 子项同源，此处扩展到全部「在画不出声」镜并强制 `负向` 反向词。）**内心独白镜「闭口但表情演内心」（per follow-up nvdi 027）**：嘴唇不动 **≠** 面无表情/呆滞——V.O. 内心独白镜里，角色须用**面部表情 / 眼神 / 神态**（眼神由倦转锐、微表情、唇线收紧或微扬、瞳孔变化、神色冷峻等）把内心独白的所想所感**演绎出来**，嘴不动但内心情绪外显。故 `在画人物口型:` 注除「全程闭口、嘴唇不动、无说话口型」外，须追加「**但内心所想靠表情 / 眼神 / 神态演出来，不靠开口、不对口型**」，并在 `动作:` 节奏里给出对应的神态变化 beat。
 
 **每 shot 自带台词 + 跨 shot 连贯（per follow-up nvdi 009）**：① 每个 shot 携带**自己的** `台词`（哪怕该句由画外 OS 角色说出）；当一段连续对白 / 旁白跨多个 shot 时，须拆成**不重叠的连续片段**，每 shot 只放本镜对应的那一段，跨 shot 读下来连贯且**不重复**（反例：相邻两镜都塞整句同一台词 → 字幕/配音重复）。② **shot prompt 正文严禁跨 shot 引用**——不得在 prompt body（`镜头` / `动作` / `台词` 等任何字段）写「承 shotNN」「续于 shotNN」「本镜不重复…见 shotNN」「下一镜」之类；生成时每个 shot 独立喂入模型，跨 shot 引用纯属噪声且会误导生成。每个 shot prompt 必须**自包含、只描述本镜**。
 
@@ -2213,7 +2250,7 @@ re-paste `style_guide.md § 负向锁定` + 场景专属（如「不要现代建
 
 **Cross-reference**：rule #4（角色 image-to-video 高阶模板）与 rule #11（seam-frame 还原模板）保留作为语义说明；本节 12.4 是字段级强契约。如二者矛盾，**以 12.4 为准**。Rule #5 dual-prompt 政策（每 shot 至少 `_kling.md` + `_seedance.md` 双 variant 输出）仍生效，但二者共享 12.4 的同一 schema —— variant 之间的差异仅来自「参考图是否出现」与 12.4-A 展开规则，schema 字段与字段顺序完全一致。
 
-*(Originated from follow-up "导演 + prompt master 模板化" — 2026-05-10；rev — follow-up "model-agnostic templates" — 2026-05-10：把 Kling/Seedance 三件套抽象为视频/静帧二件套；新增 12.4-A 角色字段展开规则；shot prompt 文件命名统一为 `shotNN_{model}.md`。)*
+*(Originated from follow-up "导演 + prompt master 模板化" — 2026-05-10；rev — follow-up "model-agnostic templates" — 2026-05-10：把 Seedance 三件套抽象为视频/静帧二件套；新增 12.4-A 角色字段展开规则；shot prompt 文件命名统一为 `shotNN_{model}.md`。)*
 
 #### 12.4-B Consolidated chars-reel reference + budget-shifted schema (per follow-up "concat + reorganize shot prompts")
 
@@ -2287,7 +2324,7 @@ The parent applies patches surgically inline (one Edit per patch), then re-emits
 
 #### 12.4-E Novel-prose-grade detail density in video prompt body (per follow-up "flexible per-shot duration + 增厚 prompt 细节" — 2026-05-21)
 
-The shot md's `## 视频 prompt` code block must read like a **director-novelist 的镜头脚本**, not a field-checklist. The schema fields stay the same (rule #12.4 v4 + 12.4-B), but the *content* inside `动作:` / `台词 / 字幕:` / `光线 / 色调:` carries the kind of micro-detail a Chinese 仙侠 / 短剧 novel would name — facial micro-expressions, breath / pulse / shoulder physical tells, sensory atmospheric beats (魔气溢出之触感 / 雷光逆吹鬓边 / 长袍下摆吃风的厚度 / 尘埃自阶面浮起的方向), tonal qualifiers on every dialogue line, and named reactions on every non-speaker. Kling / Seedance interpret the prompt literally — the more specific the spec, the less the model invents uninstructed filler.
+The shot md's `## 视频 prompt` code block must read like a **director-novelist 的镜头脚本**, not a field-checklist. The schema fields stay the same (rule #12.4 v4 + 12.4-B), but the *content* inside `动作:` / `台词 / 字幕:` / `光线 / 色调:` carries the kind of micro-detail a Chinese 仙侠 / 短剧 novel would name — facial micro-expressions, breath / pulse / shoulder physical tells, sensory atmospheric beats (魔气溢出之触感 / 雷光逆吹鬓边 / 长袍下摆吃风的厚度 / 尘埃自阶面浮起的方向), tonal qualifiers on every dialogue line, and named reactions on every non-speaker. Seedance interpret the prompt literally — the more specific the spec, the less the model invents uninstructed filler.
 
 **Per-beat 动作 enrichment contract (every timed beat MUST carry at minimum 3 layers):**
 
@@ -2560,7 +2597,7 @@ characters/
 
 ---
 
-# 视频 reference prompt — Seedance / Kling / Sora / Veo / Runway Gen-3（7s locked-framing 5-phase single-take + 0-2s 一/二 lock + static landings at 0°/90°/180°）
+# 视频 reference prompt — Seedance / Sora / Veo / Runway Gen-3（7s locked-framing 5-phase single-take + 0-2s 一/二 lock + static landings at 0°/90°/180°）
 
 > **用法**：复制下方代码块整段，粘贴到支持 video reference 的 AI 视频模型...
 
@@ -2585,9 +2622,9 @@ characters/
 
 ---
 
-## 文字生视频 reference prompt — Seedance / Kling / Sora / Veo / Runway Gen-3（7s 单 take, 镜头依次拍正面 → 左侧身 → 背面, plain Chinese v11）
+## 文字生视频 reference prompt — Seedance / Sora / Veo / Runway Gen-3（7s 单 take, 镜头依次拍正面 → 左侧身 → 背面, plain Chinese v11）
 
-> **用法**：复制下方代码块整段，粘贴到支持 video reference 的 AI 视频模型（Seedance / Sora / Veo 3 / Runway Gen-3 / Kling 等）。**该样片本身**作为后续真正 shot 视频的 video reference 输入，锁定形象 + 声线 + 节奏。**注意：≤ 7s（rule #12.5 v11 时长）**（前 2s 必须自包含 byte-identical 一/二 — 下游 ai_video_management 短角色合辑 / ✂ 截到 2s 按钮均取 0-2s 片段；**镜头 motion ONLY 在 动作 timed beats 一次描述**, 不在 镜头/节奏/负向 字段重复;**3 个抽帧角度 (front t=1.0s / side t=3.5s / back t=6.0s) 全部来自 static lock 帧, framing byte-identical, 供下游 extract-3-views pipeline 用作 character sheet**）。
+> **用法**：复制下方代码块整段，粘贴到支持 video reference 的 AI 视频模型（Seedance / Sora / Veo 3 / Runway Gen-3 等）。**该样片本身**作为后续真正 shot 视频的 video reference 输入，锁定形象 + 声线 + 节奏。**注意：≤ 7s（rule #12.5 v11 时长）**（前 2s 必须自包含 byte-identical 一/二 — 下游 ai_video_management 短角色合辑 / ✂ 截到 2s 按钮均取 0-2s 片段；**镜头 motion ONLY 在 动作 timed beats 一次描述**, 不在 镜头/节奏/负向 字段重复;**3 个抽帧角度 (front t=1.0s / side t=3.5s / back t=6.0s) 全部来自 static lock 帧, framing byte-identical, 供下游 extract-3-views pipeline 用作 character sheet**）。
 
 ```text
 {中文名} · {身份} — 角色 reference 7s 单 take
@@ -2656,7 +2693,7 @@ characters/
 
 **模型路径与 PNG 抽帧：**
 
-- **支持 video reference 的视频模型**（Seedance / Sora / Veo 3 / Runway Gen-3 / Kling 等）：直接 copy-paste 此 prompt 生成 turntable 视频；视频本身作为后续 shot prompt 的 reference 上传。
+- **支持 video reference 的视频模型**（Seedance / Sora / Veo 3 / Runway Gen-3 等）：直接 copy-paste 此 prompt 生成 turntable 视频；视频本身作为后续 shot prompt 的 reference 上传。
 - **仅 image-to-video 的旧模型**（Kling 早期版本，需 PNG input）：从 turntable 视频抽一帧（推荐 0s 正面帧）作为 PNG，喂 Kling image-to-video。无需独立 image prompt 文件。
 - **声线 lock**：v1 visual-only 模型输出静音视频，"1, 2, 3" 3 个数字作为唇形 reference；v2 audio-aware 模型输出含音频的 voice reference，整段视频作为 video-to-video reference 喂下游 shot prompt（声线 timbre + 咬字基线由 3 个数字的发音锚定，多情绪表演由 shot prompt 的 dialogue script 承担）。
 
@@ -2664,7 +2701,7 @@ characters/
 
 rule #12.5 v2 **完全 supersedes rule #12.2**。rule #12.2（角色立绘 prompt 单文件 8 子段结构）不再生效——character pipeline 不再独立生成 image prompt 文件。如历史 ai_video 项目仍保留 rule #12.2 格式的立绘 prompt 文件，可保持原状作为 archive，但新生成的 character ref 文件按 rule #12.5 v2 schema。
 
-*(Originated from follow-up "character dual-prompt copy-paste file" — 2026-05-10；rev — follow-up "drop image prompt, video-only" — 2026-05-10：Seedance 等已支持 video reference 上传，①号 image prompt 块去除；rule #12.2 完全 superseded；workflow simplified to 单 prompt → turntable 视频 → 后续 shot reference 一站到位。rev — follow-up "compress reference videos to 2.9s" — 2026-05-10：rule #12.5 v4：turntable 时长 12s → 2.9s（Seedance 等 reference 上传约束）；5 句多情绪台词 → 3 个数字 "1, 2, 3"；动作 beats 重排为 全身定场 + 360° 快环 + 面部推近 三段，最大化 2.9s 内信息密度。rev — ai_video_management follow-up 078 — 2026-05-17：rule #12.5 v5：turntable 时长 2.9s → 4s（下游 Seedance 等 reference 上限放宽，多 ~38% 时间做身份捕捉）；Arabic "1, 2, 3" → 中文 "一, 二, 三"；动作 beats 重排为 0-1s 定场 + 1-2s 360° + 2-3s 推近 + 3-4s 1s 特写定格 四段；新增「前 2s 自包含」契约 — "一" + "二" 必须在 2.0s 前完成发声 + 镜头回正到正面，对齐 `ai_video_management` 短角色合辑 trim 2s + ✂ 截到 2s 按钮的下游切片边界。rev — ai_video_management follow-up 088 — 2026-05-17：rule #12.5 v6：turntable 时长 4s → 15s（下游 Seedance / Sora / Veo / Runway / Kling reference upload ceiling 2026-05 中旬放宽到 ≥ 15s, 同 rule #12.10 v3 scene-walkthrough dim-comparable）；保留 v5 的 0-2s lock（"一" + "二" + 正面定场 + 360° 回正）byte-identical 跨角色作 truncate-compat 契约；新增 2-15s per-character casting reel — 6 个 camera moves（推近 / 反向 90° / 拉远 3/4 / 横向 pan 360° / 拉近 medium / 特写）+ 4 句台词从角色 bible `## 标志台词或口头禅` 段三句逐字 + 13-15s 最 character-defining 一句作 catch close, 全部加 表情 range silent capture 段（8-11s）。台词跨角色不再 byte-identical（仅 0-2s 段保 byte-identical）；2-15s 段给 Seedance 真实 per-character voice timbre + emotion + 标志特征点 final-lock close-up reference。rev — ai_video_management follow-up 090 (v7 7s casting reel) — 2026-05-18: SUPERSEDED before implementation by follow-up 091。spec only, never shipped。kept on file as audit trail。rev — ai_video_management follow-up 091 — 2026-05-18：rule #12.5 v8 (skip v7)：turntable 时长 15s → 7s + **全程静态单镜头 single take, 锁定机位, 零运动**。Kling validator 拒收 v5/v6/v7 因 fast 360° orbit + push-in/pull-out/pan 全被判 cut/transition + spin blur 让 character-detector miss subject。v8 完全弃 multi-camera ambition: 5 段 timed beats 全部「同机位同构图」, 角色仅自然呼吸 + 头部微动 + 说话。0-2s 段简化为静态 frontal 全身 + 一/二 (弃 v5/v6 的 360° silhouette pass, truncate output 仅给 frontal voice baseline)。2-7s 段 per-character: 三 + 自报姓名 / 标志台词 #1 baseline / 标志台词 #2 catch+peak+final-lock。8-row dialogue table → 5-row。video-specific negatives 加 no-camera-motion + no-cut + no-turn-in-place 三组 Kling-validator-aware ban; 弃 v6 的 6-camera-move 段 ban + 360° direction-reversal ban。rev — ai_video_management follow-up 092 — 2026-05-18 (晚段)：rule #12.5 v9 (supersedes v8)：turntable 时长 7s → 15s + **单 take 连续运镜 single continuous take, 慢速 + 单方向 + 无方向反转**。用户拒绝 v8 的 multi-angle + face close-up reference trade-off (v8 静态全身远景下面部占 1/6 frame 太小不能 read; 侧身/背面 silhouette 全失), 092 直接 reversal v8 走 slow-motion 路线。v9 hypothesis: Kling validator 的 cut/transition 判定核心因子是**速度**+ 方向反转, 不是 motion 本身。v5/v6 fast 360° (~720°/s, 半秒 whip) + v6 多 camera moves 含方向反转 触发 validator; v9 走 ≤ 45°/s slow orbit + 单 dolly-in + 同段 reverse-dolly 隐藏在 orbit 弧线 (不构成方向反转) + 13-15s 锁定收尾。5 阶段连续运镜: 0-2s 锁定 (v8 同) + 2-5s 缓慢 dolly-in 到 medium close-up (face clear) + 5-13s 缓慢顺时针 360° 环绕 + 同段缓慢 reverse-dolly 回 wide + 13-15s 锁定收尾。0-2s 段 v8 + v9 完全相同 byte-identical (下游 webapp 2s 切片输出不变)。dialogue table 5-row 不变, 但 slot 3 (2-5s)/4 (5-10s)/5 (10-15s) 时段重排匹配 v9 5 阶段。video-specific negatives 由 v8 的 no-camera-motion 全禁 → v9 的 slow-motion-only + no-reversal + no-stop-and-go 限定 (11 项)。Risk acknowledged: 如 v9 仍被 validator 拒, 退到 v9.1 (drop orbit, keep 5s push-in) 或 v8 (7s static)。rev — ai_video_management follow-up 096 — 2026-05-18：rule #12.5 v10 (supersedes v9)：turntable 时长 15s → 7s + **锁定 framing single continuous take, no dolly + no zoom, 仅旋转**。v9 (092) 的 dolly-in + reverse-dolly 设计在 follow-up 093 「抽 3 视图 + 音频」管线上线后暴露结构性问题: front pick (t=1.0s) 在 wide 段抽到 full-body, side pick (t=7.0s) 落在 reverse-dolly 中段抽到 head ~1/3 frame, back pick (t=9.0s) 落在 reverse-dolly 末段仍非 byte-identical framing — 3 张 png framing 不一致, 无法作为 coherent character sheet 喂下游模型。v10 完全 reverse v9: drop 2-5s dolly-in (失去专属 face MCU, 接受 medium-full ~40mm 下面部 ~1/5 frame ≈ 360-400px tall) + drop 5-13s reverse-dolly (相机距角色距离全程锁定) + 360° orbit 砍到 180° (身体左右对称, 270° 右侧身 redundant) + 时长 15s → 7s。3 阶段 timed beats: 0-2s 静态正面 medium-full (一+二, byte-identical 跨 v8/v9/v10) + 2-6s 缓慢顺时针 180° orbit at 45°/s (相机距角色距离锁定, no dolly, no zoom) + 6-7s 锁定背面 medium-full settle。0-2s 段内容跨 v8/v9/v10 byte-identical (下游 webapp 2s 切片输出 content 不变, framing 微调 wide → medium-full)。dialogue table 5-row 不变, slot 3 (2-3s)/4 (3-5s)/5 (5-7s) 时段重排匹配 v10 3 阶段。video-specific negatives 由 v9 的 11 项 → v10 的 13 项 (加 no-dolly / no-zoom + no-framing-change 两组新 ban, 删 v9 的 reverse-dolly-allowed 例外)。配套代码: `libs/domain/value_objects/character_video__valueobject.py` 的 `CANONICAL_VIEWS` 时间戳 (1.0, 7.0, 9.0) → (1.0, 4.0, 6.0) — front pick t=1.0s 不变 (仍 mid 0-2s 静态), side t=4.0s = (4.0-2.0)*45°/s = 90°, back t=6.0s = (6.0-2.0)*45°/s = 180°。Risk acknowledged: 如 v10 仍被 validator 拒, 退到 v10.1 (drop orbit, 全 7s 静态正面 = v8 + 2-7s per-character dialogue, 抽帧管线退化到只有 front 可靠) 或 v10.2 (orbit 内插 90°/180° 处短暂 ~0.3s static hold)。096 用户在 clarifying 中明确选 locked-framing trade-off (3 张 png 一致 > 专属 face MCU)。rev — ai_video_management follow-up 098 — 2026-05-19：rule #12.5 v10.2 (supersedes v10)：turntable schema 由 v10 的 「3 阶段 (static front + 4s 连续 orbit + static back)」 → v10.2 的 「5 阶段 (static front + 1s motion + static side + 1s motion + static back)」, 加入两个 mid-shot static landings at 90° + 180°。用户 empirical 实测 (2026-05-19, 首批 v10 渲染后): 模型 under-rotates v10 单条 4s 连续 orbit (~22°/s 实测速度, ~半速), 且 motion 段似乎 4-5s 才真正启动 — 7s 视频末帧仍在 ~90° 侧身, 根本没到 180° 背面;`抽帧时间戳 (1.0, 4.0, 6.0)` 在 v10 source 上 side picks 落在仍接近正面位置, back picks 落在 ~90° (实际显示 side)。Root cause: 视频模型不精确遵循 timed-beat 速度指令, 「slow continuous orbit at 45°/s for 4s」 给模型太多 latitude — 模型解读 "slow" 时按内部 pacing 估算 + 短 clip 内倾向 under-rotate 规避 motion-blur。v10.2 把 latitude 取消: 3 个 static landings (front 0-2s, side 3-4s, back 5-7s) + 2 个 1s motion bridges, 每个 motion bridge 必须精确终止在指定角度 (90° at t=3s, 180° at t=5s), static lock 段镜头完全不动。抽帧 picks 全部来自 static 帧, sidestep 模型 orbit pacing 不准的根本问题。配套代码: `libs/domain/value_objects/character_video__valueobject.py` 的 `CANONICAL_VIEWS` 时间戳 (1.0, 4.0, 6.0) → (1.0, 3.5, 6.0) — front t=1.0s 不变 (仍 mid 0-2s static), side t=4.0s → t=3.5s = mid 3-4s static side (v10 的 4.0s 在 v10.2 已是 motion bridge 起点), back t=6.0s 不变 (仍 mid 5-7s static back, 但 v10 此 pick 落在 orbit 末段, v10.2 此 pick 落在 static 中段 1s 远离 motion-end)。dialogue table 5-row 结构 + 时段不变 (slot 3 = 2-3s, slot 4 = 3-5s, slot 5 = 5-7s), 仅 用途 column micro-edit ("orbit 起" → "motion 0°→90°", "over orbit 0-90°" → "over 静态侧身 hold + motion 90°→180°", "over orbit 90°-180° + 锁定收尾" → "over 静态背面 settle")。video-specific negatives 由 v10 的 13 项 → v10.2 的 14 项 (drop `不要 mid-shot freeze (除 0-2s + 6-7s 外, 2-6s 段全程匀速运动)` v10 ban — v10.2 显式 INTRODUCES 90° + 180° 两个 mid-shot static landings — 此 ban 直接 conflict, 必须 drop; add `不要 motion 跨越目标角度` + `不要 静态段内继续微调机位` 两组 new bans 确保 1s motion bridges 精确停在 angle landings 且 static lock 段绝对静止); modify `不要 快速运镜` qualifier 由 「orbit 旋转速度 ≤ 45°/s」 → 「motion bridge 段速度 ≤ 90°/s 平均, 起末 0 速度平滑加减速」 (motion 段更短但峰值速度可略高, ramp-up/down 起末 0 velocity 是 anti-blur 契约);  modify `不要 任何 cut / transition` qualifier 加 「(static-to-motion-to-static 切换是 0 velocity 边界, 不是 cut)」 显式 disclaim, 防止 validator 误判 phase 边界; modify `不要 旋转过程中角色脸部 motion blur` qualifier 由 「慢速 orbit + 角色站定」 → 「motion bridge 起末 0 速度 + 角色站定」。Risk acknowledged: v10.2 是 hypothesis (bookended motion 段 ≠ v6 whip-pan, validator 应接受); 如 v10.2 仍被 validator 拒, 退到 v10.3 (drop 一个 motion bridge, 失去 back angle, extract 退化到 front + side 可靠) 或 v10.4 (drop 双 motion bridges, 全 7s 静态正面 = v8 风格 + v10.2 negatives, 失去 side + back, extract 退化到 front-only); v11+ multi-clip path (3 个 separate clips concatenated) reserved for if all single-clip variants fail。rev — ai_video_management follow-up 099 — 2026-05-19：rule #12.5 v11 (supersedes v10.2)：schedule 不变 (3 static landings + 2 transitions + locked framing), CANONICAL_VIEWS (1.0, 3.5, 6.0) 不变 (无 code change), **仅简化 prompt rendering**。Root cause for v10.2 → v11: user 实测 v10.2 渲染发现 motion 实际起于 ~5s (而非 spec 的 2s), 因为 prompt 把 motion 路径在 4 字段重复描述 (镜头 + 动作 + 节奏 + 负向 qualifier 段落), 用 "motion bridge" / "static landing" / "locked-framing" / "single continuous take" 技术 jargon, 模型在多 conflicting 描述下 average 而 under-commit to motion。User: "I think kling got confused, you need to tell it in a more simple way and only once in the prompt"。v11 收窄: 镜头 = 仅 framing/lens specs (no motion path), 动作 = ONLY 字段描述 motion 路径 + 时间, 节奏 = 一句话 (无路径重复), 负向 = 10 项简单 bans (无 qualifier 段落)。Plain Chinese: "镜头围绕角色顺时针绕 90° 到角色左侧身" / "镜头停在左侧身角度不动" — 不用 "motion bridge" / "锁定机位 medium-full" 等 jargon。锁定机位 jargon 全部移除 — model 可能把 "锁定" 当 "全程不要动" 理解。Risk acknowledged: 如 v11 简化后模型仍 under-commit, 说明问题不是 prompt 冗余而是模型对短 clip 内 motion 的根本偏见; 退路 v12 (shift schedule earlier, 0-1s static + motion + 3-4s static side + motion + 5-7s static back, 牺牲 0-2s truncate-compat 契约, CANONICAL_VIEWS side 0.5/3.5/6.0) 或 v13 multi-clip (3 separate clips concatenated)。)*
+*(Originated from follow-up "character dual-prompt copy-paste file" — 2026-05-10；rev — follow-up "drop image prompt, video-only" — 2026-05-10：Seedance 等已支持 video reference 上传，①号 image prompt 块去除；rule #12.2 完全 superseded；workflow simplified to 单 prompt → turntable 视频 → 后续 shot reference 一站到位。rev — follow-up "compress reference videos to 2.9s" — 2026-05-10：rule #12.5 v4：turntable 时长 12s → 2.9s（Seedance 等 reference 上传约束）；5 句多情绪台词 → 3 个数字 "1, 2, 3"；动作 beats 重排为 全身定场 + 360° 快环 + 面部推近 三段，最大化 2.9s 内信息密度。rev — ai_video_management follow-up 078 — 2026-05-17：rule #12.5 v5：turntable 时长 2.9s → 4s（下游 Seedance 等 reference 上限放宽，多 ~38% 时间做身份捕捉）；Arabic "1, 2, 3" → 中文 "一, 二, 三"；动作 beats 重排为 0-1s 定场 + 1-2s 360° + 2-3s 推近 + 3-4s 1s 特写定格 四段；新增「前 2s 自包含」契约 — "一" + "二" 必须在 2.0s 前完成发声 + 镜头回正到正面，对齐 `ai_video_management` 短角色合辑 trim 2s + ✂ 截到 2s 按钮的下游切片边界。rev — ai_video_management follow-up 088 — 2026-05-17：rule #12.5 v6：turntable 时长 4s → 15s（下游 Seedance / Sora / Veo / Runway reference upload ceiling 2026-05 中旬放宽到 ≥ 15s, 同 rule #12.10 v3 scene-walkthrough dim-comparable）；保留 v5 的 0-2s lock（"一" + "二" + 正面定场 + 360° 回正）byte-identical 跨角色作 truncate-compat 契约；新增 2-15s per-character casting reel — 6 个 camera moves（推近 / 反向 90° / 拉远 3/4 / 横向 pan 360° / 拉近 medium / 特写）+ 4 句台词从角色 bible `## 标志台词或口头禅` 段三句逐字 + 13-15s 最 character-defining 一句作 catch close, 全部加 表情 range silent capture 段（8-11s）。台词跨角色不再 byte-identical（仅 0-2s 段保 byte-identical）；2-15s 段给 Seedance 真实 per-character voice timbre + emotion + 标志特征点 final-lock close-up reference。rev — ai_video_management follow-up 090 (v7 7s casting reel) — 2026-05-18: SUPERSEDED before implementation by follow-up 091。spec only, never shipped。kept on file as audit trail。rev — ai_video_management follow-up 091 — 2026-05-18：rule #12.5 v8 (skip v7)：turntable 时长 15s → 7s + **全程静态单镜头 single take, 锁定机位, 零运动**。Kling validator 拒收 v5/v6/v7 因 fast 360° orbit + push-in/pull-out/pan 全被判 cut/transition + spin blur 让 character-detector miss subject。v8 完全弃 multi-camera ambition: 5 段 timed beats 全部「同机位同构图」, 角色仅自然呼吸 + 头部微动 + 说话。0-2s 段简化为静态 frontal 全身 + 一/二 (弃 v5/v6 的 360° silhouette pass, truncate output 仅给 frontal voice baseline)。2-7s 段 per-character: 三 + 自报姓名 / 标志台词 #1 baseline / 标志台词 #2 catch+peak+final-lock。8-row dialogue table → 5-row。video-specific negatives 加 no-camera-motion + no-cut + no-turn-in-place 三组 Kling-validator-aware ban; 弃 v6 的 6-camera-move 段 ban + 360° direction-reversal ban。rev — ai_video_management follow-up 092 — 2026-05-18 (晚段)：rule #12.5 v9 (supersedes v8)：turntable 时长 7s → 15s + **单 take 连续运镜 single continuous take, 慢速 + 单方向 + 无方向反转**。用户拒绝 v8 的 multi-angle + face close-up reference trade-off (v8 静态全身远景下面部占 1/6 frame 太小不能 read; 侧身/背面 silhouette 全失), 092 直接 reversal v8 走 slow-motion 路线。v9 hypothesis: Kling validator 的 cut/transition 判定核心因子是**速度**+ 方向反转, 不是 motion 本身。v5/v6 fast 360° (~720°/s, 半秒 whip) + v6 多 camera moves 含方向反转 触发 validator; v9 走 ≤ 45°/s slow orbit + 单 dolly-in + 同段 reverse-dolly 隐藏在 orbit 弧线 (不构成方向反转) + 13-15s 锁定收尾。5 阶段连续运镜: 0-2s 锁定 (v8 同) + 2-5s 缓慢 dolly-in 到 medium close-up (face clear) + 5-13s 缓慢顺时针 360° 环绕 + 同段缓慢 reverse-dolly 回 wide + 13-15s 锁定收尾。0-2s 段 v8 + v9 完全相同 byte-identical (下游 webapp 2s 切片输出不变)。dialogue table 5-row 不变, 但 slot 3 (2-5s)/4 (5-10s)/5 (10-15s) 时段重排匹配 v9 5 阶段。video-specific negatives 由 v8 的 no-camera-motion 全禁 → v9 的 slow-motion-only + no-reversal + no-stop-and-go 限定 (11 项)。Risk acknowledged: 如 v9 仍被 validator 拒, 退到 v9.1 (drop orbit, keep 5s push-in) 或 v8 (7s static)。rev — ai_video_management follow-up 096 — 2026-05-18：rule #12.5 v10 (supersedes v9)：turntable 时长 15s → 7s + **锁定 framing single continuous take, no dolly + no zoom, 仅旋转**。v9 (092) 的 dolly-in + reverse-dolly 设计在 follow-up 093 「抽 3 视图 + 音频」管线上线后暴露结构性问题: front pick (t=1.0s) 在 wide 段抽到 full-body, side pick (t=7.0s) 落在 reverse-dolly 中段抽到 head ~1/3 frame, back pick (t=9.0s) 落在 reverse-dolly 末段仍非 byte-identical framing — 3 张 png framing 不一致, 无法作为 coherent character sheet 喂下游模型。v10 完全 reverse v9: drop 2-5s dolly-in (失去专属 face MCU, 接受 medium-full ~40mm 下面部 ~1/5 frame ≈ 360-400px tall) + drop 5-13s reverse-dolly (相机距角色距离全程锁定) + 360° orbit 砍到 180° (身体左右对称, 270° 右侧身 redundant) + 时长 15s → 7s。3 阶段 timed beats: 0-2s 静态正面 medium-full (一+二, byte-identical 跨 v8/v9/v10) + 2-6s 缓慢顺时针 180° orbit at 45°/s (相机距角色距离锁定, no dolly, no zoom) + 6-7s 锁定背面 medium-full settle。0-2s 段内容跨 v8/v9/v10 byte-identical (下游 webapp 2s 切片输出 content 不变, framing 微调 wide → medium-full)。dialogue table 5-row 不变, slot 3 (2-3s)/4 (3-5s)/5 (5-7s) 时段重排匹配 v10 3 阶段。video-specific negatives 由 v9 的 11 项 → v10 的 13 项 (加 no-dolly / no-zoom + no-framing-change 两组新 ban, 删 v9 的 reverse-dolly-allowed 例外)。配套代码: `libs/domain/value_objects/character_video__valueobject.py` 的 `CANONICAL_VIEWS` 时间戳 (1.0, 7.0, 9.0) → (1.0, 4.0, 6.0) — front pick t=1.0s 不变 (仍 mid 0-2s 静态), side t=4.0s = (4.0-2.0)*45°/s = 90°, back t=6.0s = (6.0-2.0)*45°/s = 180°。Risk acknowledged: 如 v10 仍被 validator 拒, 退到 v10.1 (drop orbit, 全 7s 静态正面 = v8 + 2-7s per-character dialogue, 抽帧管线退化到只有 front 可靠) 或 v10.2 (orbit 内插 90°/180° 处短暂 ~0.3s static hold)。096 用户在 clarifying 中明确选 locked-framing trade-off (3 张 png 一致 > 专属 face MCU)。rev — ai_video_management follow-up 098 — 2026-05-19：rule #12.5 v10.2 (supersedes v10)：turntable schema 由 v10 的 「3 阶段 (static front + 4s 连续 orbit + static back)」 → v10.2 的 「5 阶段 (static front + 1s motion + static side + 1s motion + static back)」, 加入两个 mid-shot static landings at 90° + 180°。用户 empirical 实测 (2026-05-19, 首批 v10 渲染后): 模型 under-rotates v10 单条 4s 连续 orbit (~22°/s 实测速度, ~半速), 且 motion 段似乎 4-5s 才真正启动 — 7s 视频末帧仍在 ~90° 侧身, 根本没到 180° 背面;`抽帧时间戳 (1.0, 4.0, 6.0)` 在 v10 source 上 side picks 落在仍接近正面位置, back picks 落在 ~90° (实际显示 side)。Root cause: 视频模型不精确遵循 timed-beat 速度指令, 「slow continuous orbit at 45°/s for 4s」 给模型太多 latitude — 模型解读 "slow" 时按内部 pacing 估算 + 短 clip 内倾向 under-rotate 规避 motion-blur。v10.2 把 latitude 取消: 3 个 static landings (front 0-2s, side 3-4s, back 5-7s) + 2 个 1s motion bridges, 每个 motion bridge 必须精确终止在指定角度 (90° at t=3s, 180° at t=5s), static lock 段镜头完全不动。抽帧 picks 全部来自 static 帧, sidestep 模型 orbit pacing 不准的根本问题。配套代码: `libs/domain/value_objects/character_video__valueobject.py` 的 `CANONICAL_VIEWS` 时间戳 (1.0, 4.0, 6.0) → (1.0, 3.5, 6.0) — front t=1.0s 不变 (仍 mid 0-2s static), side t=4.0s → t=3.5s = mid 3-4s static side (v10 的 4.0s 在 v10.2 已是 motion bridge 起点), back t=6.0s 不变 (仍 mid 5-7s static back, 但 v10 此 pick 落在 orbit 末段, v10.2 此 pick 落在 static 中段 1s 远离 motion-end)。dialogue table 5-row 结构 + 时段不变 (slot 3 = 2-3s, slot 4 = 3-5s, slot 5 = 5-7s), 仅 用途 column micro-edit ("orbit 起" → "motion 0°→90°", "over orbit 0-90°" → "over 静态侧身 hold + motion 90°→180°", "over orbit 90°-180° + 锁定收尾" → "over 静态背面 settle")。video-specific negatives 由 v10 的 13 项 → v10.2 的 14 项 (drop `不要 mid-shot freeze (除 0-2s + 6-7s 外, 2-6s 段全程匀速运动)` v10 ban — v10.2 显式 INTRODUCES 90° + 180° 两个 mid-shot static landings — 此 ban 直接 conflict, 必须 drop; add `不要 motion 跨越目标角度` + `不要 静态段内继续微调机位` 两组 new bans 确保 1s motion bridges 精确停在 angle landings 且 static lock 段绝对静止); modify `不要 快速运镜` qualifier 由 「orbit 旋转速度 ≤ 45°/s」 → 「motion bridge 段速度 ≤ 90°/s 平均, 起末 0 速度平滑加减速」 (motion 段更短但峰值速度可略高, ramp-up/down 起末 0 velocity 是 anti-blur 契约);  modify `不要 任何 cut / transition` qualifier 加 「(static-to-motion-to-static 切换是 0 velocity 边界, 不是 cut)」 显式 disclaim, 防止 validator 误判 phase 边界; modify `不要 旋转过程中角色脸部 motion blur` qualifier 由 「慢速 orbit + 角色站定」 → 「motion bridge 起末 0 速度 + 角色站定」。Risk acknowledged: v10.2 是 hypothesis (bookended motion 段 ≠ v6 whip-pan, validator 应接受); 如 v10.2 仍被 validator 拒, 退到 v10.3 (drop 一个 motion bridge, 失去 back angle, extract 退化到 front + side 可靠) 或 v10.4 (drop 双 motion bridges, 全 7s 静态正面 = v8 风格 + v10.2 negatives, 失去 side + back, extract 退化到 front-only); v11+ multi-clip path (3 个 separate clips concatenated) reserved for if all single-clip variants fail。rev — ai_video_management follow-up 099 — 2026-05-19：rule #12.5 v11 (supersedes v10.2)：schedule 不变 (3 static landings + 2 transitions + locked framing), CANONICAL_VIEWS (1.0, 3.5, 6.0) 不变 (无 code change), **仅简化 prompt rendering**。Root cause for v10.2 → v11: user 实测 v10.2 渲染发现 motion 实际起于 ~5s (而非 spec 的 2s), 因为 prompt 把 motion 路径在 4 字段重复描述 (镜头 + 动作 + 节奏 + 负向 qualifier 段落), 用 "motion bridge" / "static landing" / "locked-framing" / "single continuous take" 技术 jargon, 模型在多 conflicting 描述下 average 而 under-commit to motion。User: "I think kling got confused, you need to tell it in a more simple way and only once in the prompt"。v11 收窄: 镜头 = 仅 framing/lens specs (no motion path), 动作 = ONLY 字段描述 motion 路径 + 时间, 节奏 = 一句话 (无路径重复), 负向 = 10 项简单 bans (无 qualifier 段落)。Plain Chinese: "镜头围绕角色顺时针绕 90° 到角色左侧身" / "镜头停在左侧身角度不动" — 不用 "motion bridge" / "锁定机位 medium-full" 等 jargon。锁定机位 jargon 全部移除 — model 可能把 "锁定" 当 "全程不要动" 理解。Risk acknowledged: 如 v11 简化后模型仍 under-commit, 说明问题不是 prompt 冗余而是模型对短 clip 内 motion 的根本偏见; 退路 v12 (shift schedule earlier, 0-1s static + motion + 3-4s static side + motion + 5-7s static back, 牺牲 0-2s truncate-compat 契约, CANONICAL_VIEWS side 0.5/3.5/6.0) 或 v13 multi-clip (3 separate clips concatenated)。)*
 
 #### 12.5-A 角色造型覆盖照片契约（v2 per follow-up 2026-05-25 — 取代 v1 generic boilerplate）
 
@@ -2776,7 +2813,7 @@ supersedes rule #5（pre-007 双管线 / 三件套 file 模型）+ rule #11 在 
 
 ## 视频 prompt — 复制下方代码块到视频生成模型
 
-> **用法**：① 先按上方 Reference placeholders 表准备好 reference 文件并上传到模型。② 把下方代码块整段粘贴到 Seedance / Sora / Veo / Runway / Kling，**手动把 `{ref_xxx}` 占位符替换为模型识别的 reference 标记**（每模型语法略不同：Seedance 上传后用 `[reference]` 链接 / Kling 用 `input_image_urls` / 其他模型按其文档）。
+> **用法**：① 先按上方 Reference placeholders 表准备好 reference 文件并上传到模型。② 把下方代码块整段粘贴到 Seedance / Sora / Veo / Runway，**手动把 `{ref_xxx}` 占位符替换为模型识别的 reference 标记**（每模型语法略不同：Seedance 上传后用 `[reference]` 链接 用 `input_image_urls` / 其他模型按其文档）。
 
 ```text
 角色: {ref_<char1>} {char1 一句话锁定，含 face-differentiator}；{ref_<char2>} {char2 锁定}（若多角色）...
@@ -2866,7 +2903,7 @@ supersedes rule #5（pre-007 双管线 / 三件套 file 模型）+ rule #11 在 
 
 - Rule #12.4 v2 视频 prompt 14-字段 schema 仍生效，作为 `## 视频 prompt` 段 ```text ``` 代码块的内容标准。
 - Rule #12.4 v2 静帧 seam 列字段（主体定义 / 姿态 frozen instant / etc.）仍生效，作为 `## Seam-frame still prompts` 段两个代码块的内容标准。
-- Rule #11 seam-frame 工作流契约（loop-back / 抽帧 / Kling input_image_urls）仍生效；只是文件级别从独立 `_seedream.md` 折叠为内嵌代码块。
+- Rule #11 seam-frame 工作流契约（loop-back / 抽帧 input_image_urls）仍生效；只是文件级别从独立 `_seedream.md` 折叠为内嵌代码块。
 - Rule #12.5 v2 character ref 文件依然独立（character pipeline 与 shot pipeline 解耦）；rule #12.6 的合并仅作用于 shot 级别。
 
 *(Originated from follow-up "single self-contained shot file" — 2026-05-10。Supersedes rule #5 file-set requirement; supersedes rule #11 seam-frame independent file structure; multi-character `台词` extension introduced.)*
@@ -3311,11 +3348,11 @@ OLD path → NEW path（applied across 50 shot files 出场角色 table + Refere
 
 > **⚠ 2026-06-27 amendment — 场景 walk-through 视频统一 14s + 运镜连贯平稳 + 大小场景一律一致.** Per follow-up「把场景的视频改成 14 秒、不要 15 秒；过程运镜要连贯和平稳；把流程全部做到一致，不管小场景还是大场景」：① **时长锁定 14s**（不再 15s）——本节下文所有 `15s` 一律读作 `14s`，时间轴按下文 14s 5-dwell 重排（14s×30fps=420 帧）；负向 / 平台 `duration` 参数 / 截帧时点同步改 14s。② **运镜连贯平稳为硬约束**：一条几何连续相机路径、**全程匀速缓动、dwell 进出 ease-in/ease-out 缓入缓出、路径 monotonic 平滑**；**无剪辑 / 跳切 / 淡入淡出 / hard cut / 180° 瞬间反向、无顿挫 / 无骤停骤起、全程绝对无抖动**；dwell 段完全锁机位给锐利非 blur 静帧。③ **大小场景一律一致**：不论**小场景**（室内单间 / 窄空间 / 回忆虚化底）还是**大场景**（室外 vista / 大殿 / 长街），一律用**同一 14s 5-dwell walk-through 结构 + 同一平稳运镜节奏**——**不因场景大小增减时长、改 dwell 数或改运镜节奏**；差异只体现在**运镜位移幅度**（小场景小幅 dolly/yaw、大场景大幅），位移幅度随空间缩放、时间轴 / dwell / 平稳度不变。归口：场景档「步骤二」与 12.10-B body 一律按本条；新场景自 stage2 起默认 14s 平稳 walk-through。
 
-镜像 character turntable pipeline（rule #12.5 v4，仍保持 2.9s 不动），为每个立档场景增加 **场景 reference 视频 prompt** 段，与现有 Seedream 立绘 image prompt（rule #12.8 v2 schema）并存：image prompt 喂 image-only 模型 / 静帧 fallback；video prompt 喂 Kling / Seedance 等 video-as-reference 模型，用 **15s** walk-through 单视频，沿一条几何连续的相机路径（连续 dolly + 平滑 yaw + 垂直俯仰 + 推进 zoom 的复合移动，无剪辑 / 无跳切）依次悬停在 5 个 canonical 视角上，让模型抓到场景空间结构 + 多角度几何 + 主要建筑或自然元素 + 标志道具材质 + 配色 hex + 时辰光源。15s × 30fps = 450 帧，5 个 canonical 悬停帧 + 约 350 张免费"3/4 中间角度"参考帧（user 可后续按需 ffmpeg 抽帧）。
+镜像 character turntable pipeline（rule #12.5 v4，仍保持 2.9s 不动），为每个立档场景增加 **场景 reference 视频 prompt** 段，与现有 Seedream 立绘 image prompt（rule #12.8 v2 schema）并存：image prompt 喂 image-only 模型 / 静帧 fallback；video prompt 喂 Seedance 等 video-as-reference 模型，用 **15s** walk-through 单视频，沿一条几何连续的相机路径（连续 dolly + 平滑 yaw + 垂直俯仰 + 推进 zoom 的复合移动，无剪辑 / 无跳切）依次悬停在 5 个 canonical 视角上，让模型抓到场景空间结构 + 多角度几何 + 主要建筑或自然元素 + 标志道具材质 + 配色 hex + 时辰光源。15s × 30fps = 450 帧，5 个 canonical 悬停帧 + 约 350 张免费"3/4 中间角度"参考帧（user 可后续按需 ffmpeg 抽帧）。
 
 **为什么 15s walk-through（per follow-up 017 — 把 scene reference 从 v2 的 3.9s 五段升到 v3 的 15s 单视频 walk-through）：**
 
-Kling / Seedance 等 video-as-reference 下游模型的 reference 上传上限实测已可放宽至 ≥ 15s（不再是 v2 假设的 3.9s）。v2 的 3.9s 五段把 5 个 canonical 视角硬塞在 3.9s 内 — 单视角 dwell <0.8s、运镜过急，导致 (a) 每个 canonical 帧带 motion blur，作为 reference 不够锐利；(b) 极快运镜下模型偶发"跟不上"，中段材质 / 几何漂移。v3 把时长放宽到 **15s 单视频**，沿一条**几何连续**的相机路径（不能有剪辑 / 跳切 / 剧烈反向）依次悬停在同样 5 个 canonical 视角，每个 dwell ≥ 0.8s 给出锐利静帧。**关键约束：重要 canonical 视角 frontload 在视频前段（t < 6s）** —— Kling / Seedance 在 t > 12s 后进入训练分布边缘，常见失败模式（材质漂、几何缓慢变形、长尾噪点）集中在视频后段；frontload 重要帧后，即便后段翻车，损失的是次要参考图（3/4 角度 / 长焦特写），不至于丢失 hero / reverse 这种 ground truth。15s 也带来副产物 "**中间帧 buffet**" —— 非 canonical 时间点的 ~350 帧是免费的 3/4 角度参考（介于 hero 与 reverse 之间的任意偏移角度），user 可按需抽帧，无需重新调 API。本视频仍是纯视觉 reference — **不要任何音频 / BGM / 音效 / 旁白 / 环境音**；prompt body 显式声明该约束。
+Seedance 等 video-as-reference 下游模型的 reference 上传上限实测已可放宽至 ≥ 15s（不再是 v2 假设的 3.9s）。v2 的 3.9s 五段把 5 个 canonical 视角硬塞在 3.9s 内 — 单视角 dwell <0.8s、运镜过急，导致 (a) 每个 canonical 帧带 motion blur，作为 reference 不够锐利；(b) 极快运镜下模型偶发"跟不上"，中段材质 / 几何漂移。v3 把时长放宽到 **15s 单视频**，沿一条**几何连续**的相机路径（不能有剪辑 / 跳切 / 剧烈反向）依次悬停在同样 5 个 canonical 视角，每个 dwell ≥ 0.8s 给出锐利静帧。**关键约束：重要 canonical 视角 frontload 在视频前段（t < 6s）** —— Seedance 在 t > 12s 后进入训练分布边缘，常见失败模式（材质漂、几何缓慢变形、长尾噪点）集中在视频后段；frontload 重要帧后，即便后段翻车，损失的是次要参考图（3/4 角度 / 长焦特写），不至于丢失 hero / reverse 这种 ground truth。15s 也带来副产物 "**中间帧 buffet**" —— 非 canonical 时间点的 ~350 帧是免费的 3/4 角度参考（介于 hero 与 reverse 之间的任意偏移角度），user 可按需抽帧，无需重新调 API。本视频仍是纯视觉 reference — **不要任何音频 / BGM / 音效 / 旁白 / 环境音**；prompt body 显式声明该约束。
 
 **12.10-A 场景文件 schema 扩展（rule #12.8 v2 amend，15s v3 schema）：**
 
@@ -3338,9 +3375,9 @@ Kling / Seedance 等 video-as-reference 下游模型的 reference 上传上限�
 
 ---
 
-# 场景 reference video prompt — Kling / Seedance / Sora / Veo / Runway Gen-3（14s walk-through 建模样片）
+# 场景 reference video prompt — Seedance / Sora / Veo / Runway Gen-3（14s walk-through 建模样片）
 
-> **用法**：复制下方代码块整段，粘贴到支持 video reference 的 AI 视频模型（Kling / Seedance 优先）。**该样片本身**作为后续真正 shot 视频的 video reference 输入，锁定场景空间 + 材质 + 配色 + 时辰光源 + 多角度几何。**注意：时长锁定 14s**（2026-06-27 amendment·不再 15s；reference 上传约束 per rule #12.10，对应 Kling / Seedance 当前 tier）。**运镜连贯平稳、大小场景一律一致。视频纯视觉，无任何音频 / BGM / 音效 / 旁白。** 渲染完成后保留 source mp4 与 scene 文件同 folder — 14s × 30fps = 420 帧可作"中间帧 buffet"按需 ffmpeg 抽取 3/4 角度参考图。
+> **用法**：复制下方代码块整段，粘贴到支持 video reference 的 AI 视频模型（Seedance 优先）。**该样片本身**作为后续真正 shot 视频的 video reference 输入，锁定场景空间 + 材质 + 配色 + 时辰光源 + 多角度几何。**注意：时长锁定 14s**（2026-06-27 amendment·不再 15s；reference 上传约束 per rule #12.10，对应 Seedance 当前 tier）。**运镜连贯平稳、大小场景一律一致。视频纯视觉，无任何音频 / BGM / 音效 / 旁白。** 渲染完成后保留 source mp4 与 scene 文件同 folder — 14s × 30fps = 420 帧可作"中间帧 buffet"按需 ffmpeg 抽取 3/4 角度参考图。
 
 ```text
 {scene video reference prompt body — 14s schema per rule #12.10-B}
@@ -3349,7 +3386,7 @@ Kling / Seedance 等 video-as-reference 下游模型的 reference 上传上限�
 
 **12.10-B 场景视频 reference prompt body schema（v3 — 15s walk-through，5 canonical dwell 帧 + 中间帧 buffet；compact format，≤ 2000 字，多行短行避免 horizontal scroll）：**
 
-Body 仅保留 6 个 prompt 字段（`场景` / `镜头` / `动作` / `光线/色调` / `节奏` / `负向`）。平台 / API 侧设定的 4 字段（`渲染样式` / `比例` / `音频` / `时长`）**禁止出现在 body 内** —— user 在 Kling / Seedance UI 或 API call 中直接设定（duration=15s, aspect_ratio=9:16, no audio）。每个字段值用自然句号断行成多行短行（推荐每行 ≤ 80 字符宽），webapp 渲染时不出 horizontal scroll。
+Body 仅保留 6 个 prompt 字段（`场景` / `镜头` / `动作` / `光线/色调` / `节奏` / `负向`）。平台 / API 侧设定的 4 字段（`渲染样式` / `比例` / `音频` / `时长`）**禁止出现在 body 内** —— user 在 Seedance UI 或 API call 中直接设定（duration=15s, aspect_ratio=9:16, no audio）。每个字段值用自然句号断行成多行短行（推荐每行 ≤ 80 字符宽），webapp 渲染时不出 horizontal scroll。
 
 ```text
 {scene-name} — 14s walk-through 场景 reference
@@ -3361,7 +3398,7 @@ Body 仅保留 6 个 prompt 字段（`场景` / `镜头` / `动作` / `光线/�
 空间: {空间结构 from 锁定描述符 #2 + 主要建筑或自然元素 from #3 详述，~120-180 字铺陈尺度 / 入口 / 关键区 + 主要元素相对位置}
 
 镜头: 一条 14 秒几何连续相机路径（连续 dolly + 平滑 yaw + 垂直俯仰 + 推进 zoom 复合移动），焦距随路径段渐变 24mm → 28mm → 28mm → 35mm → 85mm。
-沿路径依次悬停 5 个 canonical 视角（每个 dwell 1.0s + 4 段平滑过渡），重要视角 frontload 在 t<6s 抵御 Kling/Seedance 在 t>11s 后的训练分布边缘漂移。
+沿路径依次悬停 5 个 canonical 视角（每个 dwell 1.0s + 4 段平滑过渡），重要视角 frontload 在 t<6s 抵御 Seedance 在 t>11s 后的训练分布边缘漂移。
 运镜连贯平稳铁律：全程匀速缓动、dwell 进出 ease-in/ease-out 缓入缓出、路径 monotonic 平滑；无剪辑/跳切/淡入淡出/hard cut/180° 瞬间反向、无顿挫/无骤停骤起、全程绝对无抖动；dwell 段完全静止锁机位、给出锐利非 blur 静帧。
 大小场景一律同一 14s 时间轴/dwell/平稳度——小场景小幅 dolly/yaw、大场景大幅，仅运镜位移幅度随空间缩放、时长不变。
 
@@ -3386,13 +3423,13 @@ Body 仅保留 6 个 prompt 字段（`场景` / `镜头` / `动作` / `光线/�
 不要 任何音频 / 超过或短于 14s。
 ```
 
-**Body 长度严格区间：1950 ≤ chars ≤ 2000**（v3 compact-rich）。短于 1950 字代表场景描述不够，模型抓不到足够 feature；长于 2000 字风险 Kling/Seedance prompt 截断或注意力稀释。实测 9 个场景 body 落在 1955-1998 字范围（s9_识海 蒙太奇黑底变体走特殊变体 schema，body 同样填到 1950-2000 区间，通过加大用法说明与负向项数填充）。
+**Body 长度严格区间：1950 ≤ chars ≤ 2000**（v3 compact-rich）。短于 1950 字代表场景描述不够，模型抓不到足够 feature；长于 2000 字风险 Seedance prompt 截断或注意力稀释。实测 9 个场景 body 落在 1955-1998 字范围（s9_识海 蒙太奇黑底变体走特殊变体 schema，body 同样填到 1950-2000 区间，通过加大用法说明与负向项数填充）。
 
 **与早期 v3 compact（750-1320 字）的差异**：① 新增 `空间` 字段（120-180 字），从锁定描述符 #2/#3 拉信息铺陈空间结构 / 入口 / 关键区 + 主要元素相对位置；② 5 个 canonical dwell 描述从 ~40 字扩到 ~100-130 字，加入 focal length 标注 (24mm / 28mm / 35mm / 85mm) 与材质 / 纹理细节；③ 4 段 transition 加机位轨迹细节（俯仰角度 / 高度变化）；④ `光线/色调` 从 ~80 字扩到 ~200-300 字，加入主光 / 辅光 / 反光 + 各表面对光的反应 + 时辰大气感；⑤ `负向` 加入场景专属构图禁忌 1-3 项。**禁止用废话填充字数** — 每多一字必须承载 model-actionable feature 信号（材质、几何、光照、构图、负向边界）。
 
 **12.10-C Scene reference 上传与下游 shot prompt 联动：**
 
-- 立档场景（≥ 2 shots 复用）：user 渲染 `s{N}_{name}.mp4` 后，在 shot prompt 的 Reference placeholders 表第 2 列填该 mp4 path（与 character turntable 同列处理）。Shot prompt 的 `{ref_s{N}_{name}}` placeholder 仍内联引用，user paste 时上传该 mp4 给 Kling / Seedance 即获 scene reference。
+- 立档场景（≥ 2 shots 复用）：user 渲染 `s{N}_{name}.mp4` 后，在 shot prompt 的 Reference placeholders 表第 2 列填该 mp4 path（与 character turntable 同列处理）。Shot prompt 的 `{ref_s{N}_{name}}` placeholder 仍内联引用，user paste 时上传该 mp4 给 Seedance 即获 scene reference。
 - 未立档场景（仅 1 shot 出现，inline 描述）：不生成 scene reference 视频；shot prompt 的 `场景:` 行 inline 描述足够。
 - Shot prompt 文件 schema（rule #12.6 v2）不变 —— scene reference 视频上传逻辑由 user 操作时识别，不引入新 prompt 字段。
 - **中间帧 buffet 使用**：14s × 30fps = 420 帧。canonical 5 帧的抽帧时间点已在 12.10-B 给出（0.5/4.0/7.3/10.5/13.5s）；user 后续若 shot 需要某个 3/4 偏移角度作为额外参考，可在 source mp4（与 scene 文件同 folder）上手动 ffmpeg `-ss <time> -vframes 1 -q:v 1 frame.png` 抽取，无需重新调 API。
@@ -3401,7 +3438,7 @@ Body 仅保留 6 个 prompt 字段（`场景` / `镜头` / `动作` / `光线/�
 
 `镜头` / `节奏` / 视频专属负向核心项 **3 类**在所有场景 video reference prompt 中 byte-identical（v3 compact：从 v3 long 的 8 字段 / v2 的 7 字段缩减为 3 类，因 `渲染样式` / `比例` / `音频` / `时长` 4 字段移出 body 由平台 / API 侧设定；时长锁值 **14s**（2026-06-27 amendment）改在 API call 的 `duration` 参数；比例 9:16 改在 `aspect_ratio` 参数；音频禁止改在 `no_audio=true` 或负向兜底；渲染样式锁在 model 选择与 settings）。这样 6+ 场景的 reference 视频输出可剪辑成「场景巡礼合集」，同时 body 字符数从 v3 long 的 ~2900 降到 v3 compact 的 ~1300-1500 字符，对齐 follow-up 013 的 ≤2000 字 shot prompt 上限。
 
-*(Originated from follow-up "compress reference videos to 2.9s" — 2026-05-10；amended by follow-up 010 "scene ref video 3.9s + all-angle + front-start" — 2026-05-11；further amended by follow-up 017 "scene ref video 15s walk-through + 5 canonical dwell + frontload important poses + 中间帧 buffet" — 2026-05-13. v3 把时长从 3.9s 放宽到 15s 单视频；动作从五段极速序列重写为一条几何连续路径 + 5 个 canonical dwell 帧（每个 ≥ 0.8s）；显式 frontload 重要视角于 t < 6s 抵御长尾漂移；引入"中间帧 buffet"概念用于 user 按需抽 3/4 角度参考。Solves: ① v2 的 3.9s 五段中单视角 dwell < 0.8s 致 motion blur，参考图锐利度不足；② 极快运镜下偶发模型跟不上，中段材质 / 几何漂移；③ Kling / Seedance reference 上传上限实测已可放宽至 ≥ 15s；④ 通过 frontload 重要视角 + 中间帧 buffet，单条 walk-through 视频信息密度反而高于五段极速序列。Character turntable rule #12.5 不一致地保留 2.9s — 单体 360° 在 2.9s 内已足够覆盖，turntable 不存在场景 ref 的"球面采样多视角"信息密度问题。本规则仅 update 场景 reference 视频；角色 turntable (rule #12.5 v4) 与 shot prompts (rule #12.6 v2) 未触及。)*
+*(Originated from follow-up "compress reference videos to 2.9s" — 2026-05-10；amended by follow-up 010 "scene ref video 3.9s + all-angle + front-start" — 2026-05-11；further amended by follow-up 017 "scene ref video 15s walk-through + 5 canonical dwell + frontload important poses + 中间帧 buffet" — 2026-05-13. v3 把时长从 3.9s 放宽到 15s 单视频；动作从五段极速序列重写为一条几何连续路径 + 5 个 canonical dwell 帧（每个 ≥ 0.8s）；显式 frontload 重要视角于 t < 6s 抵御长尾漂移；引入"中间帧 buffet"概念用于 user 按需抽 3/4 角度参考。Solves: ① v2 的 3.9s 五段中单视角 dwell < 0.8s 致 motion blur，参考图锐利度不足；② 极快运镜下偶发模型跟不上，中段材质 / 几何漂移；③ Seedance reference 上传上限实测已可放宽至 ≥ 15s；④ 通过 frontload 重要视角 + 中间帧 buffet，单条 walk-through 视频信息密度反而高于五段极速序列。Character turntable rule #12.5 不一致地保留 2.9s — 单体 360° 在 2.9s 内已足够覆盖，turntable 不存在场景 ref 的"球面采样多视角"信息密度问题。本规则仅 update 场景 reference 视频；角色 turntable (rule #12.5 v4) 与 shot prompts (rule #12.6 v2) 未触及。)*
 
 #### 12.11 人物灵魂 + 人物网 + 创作前必读（per run wushen_juexing 流程精髓升级 — 2026-06-28）
 
@@ -3703,6 +3740,54 @@ title、description、tag、metadata，一个 page 分成每站一个 section，
 - **17.5 双语同画面。** 需要中英两站发布的项目，同一画面配两条 TTS 轨：每个发声角色两个 voice_id（`voice_id_zh` / `voice_id_en`），画外解说走 `内心独白` 型（嘴不动），出镜说话镜双渲或只在一版出镜，受访者短句 + 边干活边答 / 物件特写藏口型。**旁白型项目（当地人不开口，2026-09-14 shikong_lvxing follow-up 008）只有旅行者发声、只锁她一对 voice_id，当地人零台词、零 voice_id，生成器须设闸门拒绝非旅行者的台词。** 禁克隆真人音色。
 - **17.7 上传图的宽高比窗口 1:3 – 3:1（2026-09-14 sk1 follow-up 002）。** Seedance 拒收宽高比在此窗口之外的上传图；传世长卷的局部与全卷缩略几乎都超（实测 4:1–35:1）。凡会进 `参考:` 槽的图（`ref/` 历史参考图为主），入库时就要落进窗口：`ref_fetch.py` 的 `pull` / `register` 自动调用 `tools/ref_aspect.py`，手工放进 `ref/` 的图用 `python tools/ref_aspect.py fix <目录>` 补跑、`check` 巡检。处理方式不裁内容：≤ 6:1 的补中性边到 3:1，更长的卷轴按行折叠成 2–4 行拼版。生成出来的锚点图本身画幅在 16:9 / 9:16，不受影响。
 - **17.6 锁定串必带「不是 X」。** 生成模型的「古装」默认来自影视剧，本身就是误传的浓缩（清宫剧「大人」、唐宋人物穿明代立领、罗马人满街托加、维京角盔）——锁定串模板 `{形制名词}（{材质}，{色名}，{关键结构}），{穿着方式}；不是 {最常见误传形制}`；黑名单同时是负向词库。
+
+### 18. 「像动画 / 像游戏 CG」的四个成因与修法（2026-09-16，sk1 follow-up 014）
+
+sk1 出到第 20 多张图时被用户整体否掉：「画面太像动画，不像真实场景，全部重来」。逐张复盘（`ai_videos/shikong_lvxing/sk1/2_世界观人设/look_research.md`）得到四条**可泛化**的成因，任何要实拍感的项目都适用：
+
+- **18.1 画类参考图会把画风带进画面，文字否定挡不住。** 喂《清明上河图》原本局部定形制，prompt 里写「绢本的色调、线描笔触和平面透视一律不照搬」——没用，模型对参考图的**风格吸收**远强于对文字否定的服从，出来的就是画的亲戚。**修法**：画类史料降级为**作者对账**（`ref/` 照存、`refs.md` 照索引、形制词对账表照引用），**不进上传窗口**；上传位只给世界锚点、地点锚点与**照片类参考**（现存实物 / 遗构 / 复原实拍）。这一条不削弱史料地位——史料证明形制，由作者读完写成文字，**文字进 prompt，图不进槽位**。
+
+- **18.2 「实拍质感」是形容词，模型当标签收下就完事。** 要写成**可执行的摄影事实**：机身 + 传感器规格 + 镜头 + 光圈 + 快门 + 景深性质 + 光学缺陷（暗角 / 色散 / 柔光晕 / 颗粒）。尤其**「全景深」必须反掉**——边到边一样锐是效果图与游戏引擎的签名特征，真实电影镜头远处一定会软、会被大气吃掉对比度。把「f8，全景深」换成「f4，焦点在 X，越远越淡越软越偏蓝灰」，单这一条就改掉了半个画风。
+
+- **18.3 做旧要写「污损状态」，不是「材质种类」。** 「可辨的木纹、麻布的纤维、夯土的粗糙」写的是材料是什么，模型照做出来的是**崭新的**木头和布。要写的是它被用过之后的样子：晒白、发霉、包浆、补丁、水渍、缺口、泥点、指甲缝里的黑泥。这一层是「像不像真的」的主要承重墙，**按主体挑面写（≤ 4 面），不进全片共用串**——共用串里只留一句总纲（rule 16.9：共用串只放对每一镜都成立的东西）。
+
+- **18.4 暗部被抬亮 ＝ 画面立刻变假。** 「背光处是天光反射的冷蓝」这类写法会被理解成整体补光，出来的暗部是浅灰的。要明写**光比**（受光面与阴影差几档）、明写**哪些地方掉到接近黑**（檐下 / 门洞 / 桥腹 / 棚下 / 舱里）、并把 `抬亮的暗部, 补出来的蓝色暗部` 挂进负向。配套的正向纪律：日外优先**逆光 / 遮蔽下的散射光**，正面均匀照明进负向；空气里必须写一样介质（浮尘 / 晨雾 / 白汽 / 油烟），没有介质的空气是渲染图的空气。
+
+**负向要挡成因，不是挡症状。** `卡通渲染 / 插画风 / CG 感 / 塑料感材质` 是症状词，挡不住上面四条；成因词是 `全景深, 边到边一样锐, 均匀布光, 正面平光, 抬亮的暗部, 补出来的蓝色暗部, 崭新的木头, 崭新的布, 一尘不染, 建筑效果图, 游戏引擎画面, 沙盘模型`。
+
+**落地形态（推荐）**：把 look 层（参考图政策 / 摄影行 / 天 / 光的纪律 / 做旧层 / 渲染样式串 / 负向块）收进**一个生成器**，逐卡盖章、可重跑、可机检长度，内容层（场景、主体物、围合建筑、人群……）留给作者手写（rule 4i ①）。sk1 的实现是 `tools/gen_scene_prompts_sk1.py`，shot 侧 `tools/gen_shots_sk1.py` 直接 import 它的串，两边不可能漂。
+
+### 19. 「只建拍得到的那一段」：环境几何走走廊制（2026-09-16，sk1 follow-up 014）
+
+rule 4g ④ 说「几何精度按镜头接近度分级」、rule 4g ⑤ 说「覆盖范围按镜头要拍到什么定，不按到原点多远定」。sk1 把这两条推到底：**整座城不建，只建航线与各 Place 两侧的一条带**。
+
+- **触发条件**：项目里只有少数几个镜会看到「一片城」，其余镜都在各自的 Place 足迹里。这时全城铺满是纯浪费——带外的房子无论建得多好都不会进任何一帧。
+- **前提是先把镜头压下来**：只要还有一个俯视全城的镜，整城几何就省不掉。sk1 的做法是把航拍封顶低空（末段爬升整段作废，收尾从 320 m / 602 m 降到 42 m / 110 m），**全片没有一帧俯视**；代价是地标的近景改由地面镜承担——本来也该归它们。
+- **怎么定走廊**：**一个坐标都不新写**。走廊 ＝ 已有的河 / 街折线的某几段 ∪ 各 Place 锚点圆盘，线与点各给一组三档半径（线的带宽比点大——航拍看得远，地面镜只看得到自己那条街）。配置写进该项目的 `city_plan.md`，builder 解析；航线本身仍以各镜 `previz_config.toml` 为唯一真相，`city_plan` 只登记它扫过的范围。
+- **省下的预算要花回去**：sk1 同时新增了一档更细的建筑原型（台基 + 墙身 + **出檐**悬山 + 正脊 + 临街披檐），贴身而过的那几百米从「盒子加个盖」升级成看得出木构做法的房子。**缩小规模的目的是提高密度处的质量，不是单纯砍量。**
+- **闸门放在最下游的那一个函数里**：城内街区、城外关厢、田间村落三条摆放路径都汇进同一个 `house()`，判据只写在那里，就不会有哪条路漏掉。
+- **代价必须写进文档**：走廊外一栋不建，所以**任何新镜位把镜头转向走廊外会拍到空地**；加航线 ＝ 先改走廊配置、再重跑 builder。builder 在 QC 里报「走廊内建房 N 栋 / 走廊外砍掉 M 栋」，那两个数就是这次省了多少。
+
+### 20. Hyper3D / Rodin：进 pipeline 要走无头 HTTP，不要走 BlenderMCP（2026-09-17，sk1 follow-up 015）
+
+rule 4h §G 说的「开关 `blendermcp_use_hyper3d` 是 per-scene 的」，在**人坐在电脑前试一个东西**时是注意事项；在 **pipeline 里它是硬伤**——MCP 那条路要求一个开着的 Blender GUI + 每换一个 .blend 重开一次开关，批处理与 CI 都跑不了。
+
+- **适配器直接打 `https://hyperhuman.deemos.com/api/v2/{rodin,status,download}`**，请求体照搬 addon 里那份已验证的形状（`create_rodin_job_main_site`）。实现见 `tools/hyper3d_fetch.py`。两处 addon 与线上不符、抄之前要改：**`texture_mode` 不接受 `"None"`**（合法值 `legacy / minimum / extreme-low / low / medium / high / extreme-high`，白模给 `minimum`）；**`bbox_condition` 只吃整数**（它只表达比例，按最大边归一到 100 再取整即可）。
+- **key 走 gitignored `.env`**（与 R2 同一套做法），不进任何被 git 跟踪的文件，也不写进 addon preferences 以外的地方。
+- **vendor 换不换不重要，闸门才重要**：`whitemodel_normalize.py` 吃任何来源的网格，所以「Rodin / Hunyuan3D / 买的高模 / 脚本 blockout」是可替换项，`object.toml` 的验收清单是不变项。新增 vendor ＝ 新增一个 fetch 适配器，不动下游。
+- **text-only 出的模型会丢薄长件**。实测：一辆宋代太平车，prompt 里明写了「两根前伸的长车辕」，Sketch 档出来板车面 / 辐条轮 / 轮毂 / 铁箍都对，**两根辕整个没生成**。所以 **image-to-3D 的正确用法是喂多视角参考图**，text-only 只适合探形状、不适合定稿。
+
+### 21. 物件优先：场景先拆成物件，再逐个生成（2026-09-17，用户定的流程）
+
+这条把 rule 4g ②「生成构件，不生成建筑」从一句原则落成一条可执行的流水线，五步各自的产出就是下一步的输入：
+
+1. **拆解**（Claude）：读场景卡，把场景拆成**有界的物件**，写进 `{片}/2_世界观人设/object_inventory.toml`。收什么不收什么按 rule 4g §B 四问——器物 / 构件 / 车船 / 家具 / 动物 / 树收；**环境、整栋建筑、整身着装人物不收**。
+2. **摊成文件夹**（生成器）：`tools/gen_object_cards.py` 把清单摊成 `props/pN_{名}/`，每个装一份四图 prompt（`-1` 锚点 + `-2/-3/-4` 正/侧/背）与一份 `object.toml`。**四张而不是三张**：三张正交图各自独立生成时不会互相同意，锚点先定形制、其余三张挂着它出。正交三视图一律**阴天均匀光**（烘进纹理的方向光会被重建当成几何）。
+3. **出图**（用户或出图链路）：按 md 出图、导入；导入器按 prompt 首行的路由键落位。
+4. **生成 + 闸门**（Claude）：`hyper3d_fetch.py --image 正 --image 侧 --image 背` → `whitemodel_normalize.py --spec object.toml` → `whitemodel/{名}.blend`。
+5. **组装**（Claude）：重跑场景 builder。**布局代码一个字都不用改**——`resolve_asset` 看见白模就把同尺寸替身换成真网格，shot previz 跟着变。
+
+**这条流水线最值钱的性质是「资产键先行」**：先把 `pN` 写进布局，用同尺寸替身占位，场景与镜头**在一张图都没出之前就能跑通**；白模是逐个到货、逐个替换的增量升级，不是一次性的阻塞。
 
 ## Update protocol
 

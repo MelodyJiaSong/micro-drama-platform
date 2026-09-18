@@ -350,3 +350,325 @@ Open decision（等用户定，未动）:
 
 事故: 批渲进行中改运行库（加落盘报告）→ 字符串换行没转义 → 之后 17 镜 3 秒内 SyntaxError 失败；运行库已修并 py_compile，失败镜与改过配置的镜已重渲（queue4，22 镜）。
 
+
+## Follow-up 009 — 2026-09-16 12:40:30
+Source: user_input/follow_ups/202609.md - section 009
+Summary: shot01 / shot02 重排为「河上 8 秒 → 穿东水门 → 城里穿梭 → 拉高看大半个城」，两镜无台词。
+
+Auto-updated:
+- tools/gen_shots_sk1.py — S01 / S02 镜表条目整条重写（bg / vx 场景参考、cuts 四段、jb·jbcam 接缝、情节 / 镜头 / 走位 / 动作 / 光线 / 节奏 / 判断），`lines=[]`；`gate_shape` 的「S02 末句必须是签名开场」删除、「签名开场只出现一次」放宽为「最多一次」（用户选择本站不要签名开场）；S02 facts 换掉 ⚠️ `ent.015` → ✅ `shop.006`，并加 `route.010`（御沟荷与岸边桃李梨杏）`city.038`（两塔）
+- shots/shot01|02/shot0N.md + all_shot_prompts.md + dialogue.md + script.md — 生成器重跑产出（prompt 2217 / 2224 字，≤5000；36 镜 898 s；接缝全 ✅）
+- shots/shot01|02/previz_config.toml — 四段机位重写：汴河@A 虹桥段 → 汴河@B 穿水门（水面上 4 m，闸门吊在 z 6–8、门楣在 z 8 以上，previz 实测 z 8.5 会埋进实体渲成全黑）→ Place E 码头 → 汴河@C 州桥东减速；shot02 承接后 Place C 御街 → Place H 相国寺（高位 38 m 斜对中轴）→ Place I 瓦子 → 世界 (2700,-2000,2200) 拉高；新增码头纲船与脚夫、相国寺书市与瓦子门口人群
+- tools/look_bianjing.py — 阙楼（`_que` 高盒子）升级为砖台 + 木构楼身 + 曲面瓦顶（原来渲成一块白板，正落在 shot01 末帧里）
+- shots/shot01|02/shot0N_previz.blend + shot0N_previz.mp4 + look/shot0N_look.mp4 — 全部重建重渲
+
+No conflicts found in: 3_大纲/outline.md（序段仍是两条航拍长镜）、其余 34 镜（时辰与接缝未变）
+
+## Follow-up 010 — 2026-09-16 14:32:10
+Source: user_input/follow_ups/202609.md - section 010
+Summary: shot01 / shot02 改成一镜到底，撤掉 follow-up 009 排的镜内硬切。
+
+Auto-updated:
+- tools/gen_shots_sk1.py — S01 / S02 的 `cuts=` 全删，新增共用运镜口径常量 `RAMP`（连续运镜、不切、无急转、无折返）；`gate_shape` 放宽（S02 不再强制签名台词行，签名开场最多出现一次）
+- shots/shot01/previz_config.toml、shots/shot02/previz_config.toml — 关键帧重排为单条连续航线，零 `"切" = true`
+- shots/shot01/shot01.md、shots/shot02/shot02.md — 由生成器重出（`分镜:` 段落取消，`镜头:` / `动作:` 改为一条连续时间轴）
+
+No conflicts found in: 2_世界观人设/、4_剧本/、其余 34 镜
+
+## Follow-up 011 — 2026-09-16 16:05:40
+Source: user_input/follow_ups/202609.md - section 011
+Summary: 郊区收小、起飞点挪近、全程真无人机速度、航线不作 90° 转弯；结尾按用户选择收在约 320 m。
+
+Auto-updated:
+- tools/build_bianjing.py — 关厢出城路 1200 m / 12 m 宽（原 2600 m）、田间村落格 700 m、村落带收到离墙 2600 m 以内
+- shots/shot01/previz_config.toml — 起飞点改到东水门外 350 m（虹桥退出航拍），全程 33–50 m/s
+- shots/shot02/previz_config.toml — 桑家瓦子与州桥退出航线（它们要求急转 / 折返），结尾爬升收在约 320 m
+- tools/gen_shots_sk1.py — S01 / S02 的 `jbcam` / `summary` / `plot` / `cam` / `act` / `spatial` / `judge` 按新航线重写
+- ai_videos/.../scenes/bianjing/_blender/bianjing.blend — 按新 builder 重建（布局层几何摘要不变的部分照旧）
+
+用户定调里没有照办的一条（已当面说明）：城内不按比例缩小——城墙、街道、地标的坐标来自 W11 考古实测（外城 x −4132…3904 / y −3625…5699），缩城会让所有史料 fact 与地面镜失效；改的是航线长度与郊区带宽度。
+
+No conflicts found in: 0_research/、4_剧本/、地面 34 镜
+
+## Follow-up 012 — 2026-09-16 19:52:05
+Source: user_input/follow_ups/202609.md - section 012
+Summary: 码头段压到 8 秒整，省下的时间分给城内汴河段、相国寺与结尾爬升。
+
+Auto-updated:
+- shots/shot01/previz_config.toml — 码头 11–19 s（8 秒，约 30 m/s）；城内汴河段 19–30 s（11 秒）；码头入口关键帧从 (2792,−2688,9) 挪到 (2750,−2688,8) 并把看点推远到 (2700,−2566,6)——原位置 ray_cast 实测落在外城东墙墙体里（墙在 x≈2790），出洞后有一秒多画面全是夯土
+- shots/shot02/previz_config.toml — 相国寺 12–22 s（6→10 秒）、结尾爬升 22–30 s（6.5→8 秒）；城内汴河平直段压到 12 秒
+- tools/gen_shots_sk1.py — S01 / S02 的 `cam` / `act` / `vx` / `moment` / `judge` 同步改时刻表
+- shots/shot01/shot01.md、shots/shot02/shot02.md — 生成器重出（prompt 1739 / 2038 字，K10 / K31 / K34 全过）
+
+取舍（已告知用户）：码头给满 8 秒后，shot02 城内汴河段只剩 12 秒，而东水门到州桥实测 2.8 km，这一段要跑约 95 m/s、快于真无人机；选它是因为这段是平直河道、两岸铺面重复，是全镜信息量最低的一段。
+
+No conflicts found in: 其余 34 镜、scene blend 布局层
+
+## Follow-up 013 — 2026-09-16 20:24:30
+Source: user_input/follow_ups/202609.md - section 013
+Summary: 常规交付＝每镜一个单独 mp4（喂 Seedance 的参考素材口径）；合成 mp4 是一次性需求、不入流程。
+
+Auto-updated:
+- （无产物改动；本条改的是交付方式）单镜 mp4 按该镜 md 的 `比例:` / `时长:` 出、用高码率不做重压缩（压缩块影会被生成模型学进画面）；合成版只在用户明确要求时另做
+
+## Follow-up 014 — 2026-09-16 23:08:19
+Source: user_input/follow_ups/202609.md - section 014
+Summary: 全站画风改《权力的游戏》实拍电影感（先 research 再改，所有 prompt 重出）；汴京 3D 由全城改为航线走廊制、航拍封顶低空取消俯视；旧 png / mp4 / blend 全删。
+
+Auto-updated:
+- 2_世界观人设/look_research.md — **新增**。画风调研：现有图为什么像动画（8 条逐条诊断，含「喂宋画出画」这一最大成因）、GoT 实拍感由什么构成（器材 / 只用动机光且不怕黑 / 真材料逐块做旧，附出处）、与既有定调的冲突裁决表（蓝天绿水保留，改的是晴天的画法）、进 prompt 的词表
+- 2_世界观人设/style_guide.md — §1 加「画风基准＝GoT 实拍电影感」六条；§3 加「光的四条纪律」（先找逆光 / 写光比 / 暗部不救 / 空气里必须有东西）并改写卯时基准行；§6 加「反 CG 块」（挡成因不挡症状）；§7 `STYLE_BASE` 整串换成可执行的摄影事实并删掉「全景深」；§10 **新增**参考图政策（宋画退出上传）；§11 **新增** `摄影:` 与 `【质感与做旧】` 两条新行
+- tools/gen_scene_prompts_sk1.py — **新增**。stage-2 图 prompt 的 look 层唯一出处：37 个 prompt 的 `参考: / 参考用法: / 摄影: / 【天】/ 【光】/ 【质感与做旧】/ 光色: / 样式: / 渲染样式: / 做旧: / 负向块 / 上传行 / 字数行` 逐卡盖章，内容层不碰；`机位:` 里的 `f8，全景深` 由它摘掉；跑两遍结果逐字节相同；`--check` 只校验不写盘
+- 2_世界观人设/{scenes,props,characters}/**/*.md — 37 个图 prompt 全部重出（21 个 bg 视图 + 8 个 p 锚点 + 3 张立绘 + bg17-2）。p8 / p9 / p10 三视图与 c* turntable **故意不动**：它们是 image-to-3D 白模输入，按 divergence #18 必须阴天均匀光
+- 2_世界观人设/scenes/bianjing/bg16_汴京全城五更/ — 机位由「高空 3800 m 俯瞰全城」改为「屋脊上方 110 m 低角度看屋海」，与降下来的 shot35 对齐
+- tools/gen_shots_sk1.py — `STYLE_BASE / NEG_BASE / NEG_ARCH / NEG_CG / SURFACE` 改为从 look 层生成器 import（两边不可能漂）；每镜新增 `摄影:`（光圈按 `jb` 的人占画高分档）与 `做旧:`（按 bg 挑面）两行；`光线:` 末尾统一追加光比与暗部纪律；`SKY_DAY` 的「远景清楚」改为「大气退远」；S02 / S35 的 `cam / act / summary / plot / spatial / contrast / jbcam / judge` 按新航线重写
+- 5_6_分镜与prompt/shots/*/shot*.md + all_shot_prompts.md + shotlist.md — 36 镜全部重出（prompt 1817–4675 字，K10 / K31 全过）
+- shots/shot02/previz_config.toml — 末段爬升（22–30s 升到 320 m、俯角 38°）整段作废，改为低空续飞 26→42 m、俯角 < 2°
+- shots/shot35/previz_config.toml — 悬停高度 602 m → 110 m
+- scenes/bianjing/_blender/city_plan.md — §8 精度分级整条重写为走廊制；**新增 §8.2「航线走廊」**（三档线半径 + 三档 Place 半径 + 走廊 leg 表，坐标全部取自 W11 现有的河 / 街折线与 Place 锚点，一个新坐标都不写）
+- tools/build_bianjing.py — 新增 `Corridor` 与 `load_corridor()`；`house()` 成为唯一闸门（城内街区 / 城外关厢 / 田间村落三条路都汇进它）并新增 **A 级**建筑（台基 + 墙身 + 出檐悬山 + 正脊 + 临街披檐）；`build_blocks` 加整块街区粗筛；QC 报「走廊内建房 / 走廊外砍掉」
+- tools/look_bianjing.py — `sample_palette()` 加闸门：锚点图不在盘上时给出可执行的错误（先 `--no-look` 建灰模，新锚点落盘后再 dress），不再抛裸文件错误
+- scenes/bianjing/_blender/bianjing.blend — 按走廊制重建（`--no-look` 布局灰模；走廊内 10 580 栋 / 走廊外砍掉 17 488 栋，A 2 094 / B 3 078 / C 5 408）
+- ai_videos/shikong_lvxing/sk1/**/*.{png,mp4,blend,blend1} — **589 个文件、3.44 GB 全部删除**（用户授权）；`ref/` 下 276 张史料参考图保留（它们是形制与验收的依据，只是不再上传）
+- specs/ai_video/sk1/divergence.md — #8 收窄（画类参考退出上传）；新增 #24（图 prompt 字数 1200–2800）、#25（全城层走廊制）、#26（航拍封顶低空、全片无俯视）
+- .claude/agent_refs/project/ai_video.md — 新增 rule 18（「像动画」的四个成因与修法，可泛化）与 rule 19（环境几何走走廊制）
+
+No conflicts found in: 0_research/、1_立项/、3_大纲/、4_剧本/（台词与剧情未动）
+
+未做 / 待办（已知，明确列出）:
+- **36 镜 previz mp4 未重渲**：全部旧 mp4 已删，几何与 shot02 / shot35 的航线都变了，必须整批重渲（rule 4h ⑥：不许重叠跑）。已验证 shot02 的 previz 能正常建场与出帧（首帧 (1794.9, −1064.8, 14.0)、末帧 (305, 580, 42)，末段确无俯视），单帧抽检画面无空洞；整批渲染是数小时的活，留给下一轮
+- **look pass 未重跑**：材质色取样自各地点锚点图，而锚点图正等着按新画风重出；新图落盘后跑 `blender -b bianjing.blend --python tools/look_bianjing.py -- --save`
+- **照片类参考库只补了 bg1**：本机不通外网，`ref_fetch` 抓不到；清单写在 style_guide §10
+- **assets.json 未整理**：`boto3` 未安装、`assets_sync` 跑不起来，manifest 仍指向 R2 里已删的旧媒体（好处是旧图还能找回来）。装好依赖后跑 `python tools/assets_sync.py push --prune-missing` 让索引与盘上一致
+
+## Follow-up 014 修订 — 2026-09-17（用户当面口径：图 prompt < 2000 字、video prompt 5000 字）
+
+Summary: 图 prompt 的上限收回 2000（原 follow-up 014 曾上调到 2800），靠共用串去重挤进去；video 侧 5000 硬线本来就有、已复核。
+
+Auto-updated:
+- tools/gen_scene_prompts_sk1.py — `LO, HI = 1200, 1999`，**超上限一律 raise**、偏短只提醒不拦；`STYLE_TAIL` 由 299 字压到 210（反 CG 长清单交给负向块的 `NEG_CG`，正向只留一句）；`【天】/【光】/【质感与做旧】/摄影:/参考用法:` 逐条收紧；做旧由四面改**三面**；**`光色:` 整行取消**（「与世界锚点同一套影调」`参考用法:` 已经说过一遍，两处写就是副本）
+- tools/gen_scene_prompts_sk1.py — **焦距改为写死在 `LOOK` 表的 `foc=` 字段**。原来是从卡的 `机位:` 行回读，但那一行的光学尾巴正是本文件要摘掉的，第二遍就读不到、会悄悄退回 35mm 默认值（已发现并修复；36 个焦距从 git HEAD 挖回原值逐条核对，盘上与表零差异）
+- 2_世界观人设/**/*.md — 37 个图 prompt 重出，**字数 1128–1988，全部 < 2000**
+- 2_世界观人设/scenes/bianjing/bg1_虹桥、bg0_汴京全城 — 内容层去重（做旧词已由 `【质感与做旧】` 接管的部分、重复的解释性叮嘱、`远景清楚`→与大气退远矛盾的说法）
+- tools/gen_shots_sk1.py — 随共用串一起变短，**video prompt 1705–4518 字**；`MAX_PROMPT = 5000` 的硬 gate 本来就在（超限 raise），复核通过
+- style_guide.md §7 / §11.1 / §11.2 + divergence #24 — 与上面逐条对齐
+
+复核：生成器跑两遍字节相同（幂等）；`prompt_light` / `shot_logic` 在 sk1 范围内 0 blocker
+
+## Follow-up 015 — 2026-09-17
+Source: user_input/follow_ups/202609.md - section 015
+Summary: Hyper3D 接入并测通（无头），物件优先流水线的骨架落地；自动出图一环因 ElevenLabs 无图像能力而挂起。
+
+Auto-updated:
+- .env（gitignored）— 新增 `HYPER3D_API_KEY`、`ELEVENLABS_API_KEY`；两个 key 都不进任何被 git 跟踪的文件
+- tools/hyper3d_fetch.py — **新增**。Rodin 的无头 HTTP 适配器（建任务 → 轮询 → 下 GLB），请求体照 `addon.py` 的 `create_rodin_job_main_site`。走 HTTP 而不是 BlenderMCP，是因为 MCP 那条路要开着 GUI、且 `blendermcp_use_hyper3d` 是 per-scene 开关，进不了 pipeline。实测两处与 addon 不符、已修：`texture_mode` 不接受 `"None"`（合法值 legacy…extreme-high，白模用 `minimum`）、`bbox_condition` 只吃整数（内部按最大边归一到 100）
+- tools/gen_object_cards.py — **新增**。读物件清单 → 生成 `props/pN_{名}/{名}.md`（锚点 + 正/侧/背四张图的 prompt，正交 + 阴天均匀光，divergence #18）与 `object.toml`（归一化 + 验收规格骨架）。`object.toml` 已存在时不覆盖——阈值是人调过的
+- 2_世界观人设/object_inventory.toml — **新增**。第一批 16 个物件（p12–p27），按 rule 4g §B 只收有界物件；环境与整栋建筑不进清单
+- 2_世界观人设/props/p12…p27/ — 16 个物件文件夹 + 四图 prompt + 验收规格
+
+验证（实测，不是推断）:
+- Hyper3D 打通：Sketch 档 71 s 出「太平车」raw.glb（1.8 MB，23 332 tris），渲四视图人眼验收——板车面、辐条轮、轮毂、铁箍都在
+- **同时暴露 text-only 的短板**：prompt 里写了的两根车辕没有生成出来。薄长件正是 image-to-3D 最不稳的地方，**这恰好证明用户提的三视图流程是对的**——多视角参考能把这一类件按住
+
+挂起（需要用户定夺）:
+- **自动出图**：ElevenLabs 是语音 API（TTS / 音色 / 音效 / 配音），**没有图像生成接口**，出不了三视图与场景图；且该 key 实测 `401`。仓库里已有的自动出图链路是 `projects/jimeng_web_bridge`（图片走官方 dreamina CLI），但它按自身设计**必须由用户在本地网页点确认**（花积分 + 平台条款风险），Claude 与脚本都不能代点
+
+## Follow-up 015 续 — 2026-09-17（出图自动化：gpt-image-1 / medium）
+
+Auto-updated:
+- tools/image_fetch.py — **新增**。OpenAI `gpt-image-1` 适配器，按用户定的次序出图：
+  `-1 正面` 走 `images/generations`（纯文字），`-2 侧面` / `-3 背面` 走 `images/edits`、
+  把 `-1` 放进参考槽**只换机位**。物件三视图 1024×1024、场景图 1536×1024，`quality=medium`（用户定）。
+  `--object all` 跑全清单、`--scene bgN-M` 出场景图、`--dry-run` 不花钱先看 prompt、
+  已存在默认跳过（`--force` 覆盖）。429/5xx 退避重试。多部件表单从 `hyper3d_fetch` import，一个出处
+- tools/gen_object_cards.py — 出图次序按用户定的改：**`-1` 就是正面（那张参考）**，
+  `-2 侧面` / `-3 背面` 挂着它出；四分之三锚点不再默认出（它只对人眼验收有用、对重建没用，省一张）
+- props/p12…p27 — 16 张卡按新次序重出
+
+修正一条我先前说错的话:
+- **ElevenLabs 那个 key 是有效的**。401 的正文是 `missing the permission voices_read` / `user_read`
+  ——是**权限范围受限**，不是 key 失效。我先前写「实测 401 ＝ 过期或撤销」是错的，已改。
+  （它仍然不能出图：ElevenLabs 没有图像生成接口。它的用处是台词配音层，需要补 `voices_read` + `text_to_speech` 权限）
+
+修掉一个被实际触发的坑:
+- **旧媒体被 git hook 拉回来了**。follow-up 014 删掉的 589 个文件里，有 11 个在我后来几次
+  `git checkout -- <路径>` 之后被 `post-checkout` 钩子从 R2 重新下载回来——**因为 `assets.json`
+  还列着它们**（这正是 014 changelog 里记的那条风险，现在真的发生了）。危害不止是碍眼：
+  `look_bianjing.py` 的调色板取样自 `bg*-1.png`，旧图在盘上就会让重建悄悄捡回旧画风。
+  已处理：重新删除 + **直接剪掉 manifest 里 674 条盘上已不存在的 sk1 条目**（索引侧操作，
+  等价于 `push --prune-missing`，不需要 boto3、不动 R2 里的对象）。sk1 在 manifest 里
+  现在只剩 312 张 `ref/` 史料参考图（它们是有意保留的输入）。
+
+阻塞:
+- **缺 `OPENAI_API_KEY`**。`gpt-image-1` 要 OpenAI 的 key（`sk-…` / `sk-proj-…`），
+  ElevenLabs 的 `sk_…` 不是同一个东西、也调不了 OpenAI。适配器与卡都已就位、`--dry-run` 走通，
+  key 一到就能跑 `python tools/image_fetch.py --object all`
+
+## Follow-up 015 续 2 — 2026-09-17（出图走 ElevenLabs Flows；两处我说错了，已更正）
+
+更正（两条，都是我错）:
+1. **ElevenLabs 有图像生成。** 实测 `https://api.elevenlabs.io/openapi.json`：`/v1/flows/image`
+   是一个**多厂商**图像入口，`model_id` 判别式支持 `gpt-image-1 / gpt-image-1.5 / gpt-image-2`、
+   `gemini-2.5-flash-image / gemini-3-pro-image / gemini-3.1-flash-image / -flash-lite`、
+   `bytedance-seedream-5-lite / bytedance-seedream-5-pro`。用户说网页端能选 GPT Image 2 是对的，
+   我先前「ElevenLabs 是纯语音 API、没有图像接口」的判断是错的。**一个 key 同时覆盖出图与配音，
+   不需要另外的 OpenAI key。**
+2. **挡住出图的不是 key 权限，是套餐。** 三次实测把两件事分开了：
+   - `POST /v1/flows/image` 空体 → **422 参数错**（说明**有权限**，只是 body 没写对）
+   - `POST /v1/flows/image` 合法体 → **402 `paid_plan_required`：requires a Pro plan or above**
+   - `GET /v1/voices`、`GET /v1/user` → 401，点名缺 `voices_read` / `user_read`
+   所以：**创建图像这一项当前 key 就有权限，缺的是账号套餐（要 Pro 及以上）**；缺权限的是那几个「读」接口。
+
+Auto-updated:
+- tools/image_fetch.py — 由「直连 OpenAI」改写为 **ElevenLabs Flows** 适配器：
+  `POST /v1/flows/image`（`model_id` 默认 `gpt-image-2`、`quality=medium`（用户定）、
+  物件三视图 `1:1 / 1K`、场景图 `16:9 / 2K`）→ 轮询 `GET /v1/flows/image/{id}` → 下 `content_url`。
+  侧/背两张按 **`{"type":"generation","generation_id":…}`** 引用正面那次生成（省一次上传，
+  且引用的是模型自己的产物、比重传字节更稳），正面若来自上一轮则退回 `inline_base64`。
+  401 / 402 分别给出「权限不够」「套餐不够」的可执行提示
+
+Seedance key 验证（用户 2026-09-17 给的 `ak_…` / `sk_…`）:
+- **不是可灵**：按可灵的 ak/sk + JWT(HS256, iss=ak) 签名打 `api.klingai.com` 与 `api-singapore.klingai.com`
+  → `401 code 1002 access key not found`（签名格式对、账号不存在）
+- **不是火山引擎 Ark**：`Bearer` 打 `ark.cn-beijing.volces.com/api/v3/models` → `401 API key format is incorrect`
+- **到此为止没有继续试**：搜到的 `seedanceapi.org` / `seedance25free.com` / `seedances.app` 等都是
+  第三方聚合站，**把用户的 secret 逐个投给来路不明的域名本身就是泄露**。需要用户说明这对 key 是哪个
+  控制台签发的，再对着那一个域名验
+
+## Follow-up 016 — 2026-09-17
+Source: user_input/follow_ups/202609.md - section 016
+Summary: 物件扩到 33 个并真正进入场景 blend（新增布点层，1658 实例）；Kling 整条退出；即梦 key 验签通过但不能出任意图。
+
+Auto-updated:
+- 2_世界观人设/object_inventory.toml — 第二批 17 个物件（p28–p44）：席棚小摊 / 蒸笼灶 / 瓦子看棚 / 黑漆大案与藤墩 /
+  茶床与建盏 / 书摊 / 药铺柜台 / 纸扎楼阁 / 青布幌 / 石门枕 / 过壕木桥 / 骨朵 / 空竹筐与芦席卷 / 粮袋堆 /
+  拴马石与马槽 / 御沟荷与砖石沿 / 长条木凳。**合计 33 个**，卡与 `object.toml` 由生成器重出
+- scenes/bianjing/_blender/city_plan.md — **新增 §12「物件布点（scatter）」**。这是「物件清单」与「场景 blend」
+  之间那根一直缺的线：此前卡建好了、白模就算出来也进不了画面，因为没有任何一处告诉 builder 摆在哪。
+  按**线**撒（沿 W11 已有的河 / 街折线，给间距 + 横向偏移带 + 抖动），坐标一个都不新写
+- tools/build_bianjing.py — 新增 `load_scatter` / `scatter_line` / `place_object` / `build_scatter`，
+  接在 `build_global_layer` 末尾。三道剔除：走廊外 → Place 足迹内 → keep-out 内（`in_water` 的反过来只撒在河里）。
+  白模缺席时 `resolve_asset` 自动降级成同尺寸替身盒，**所以场景与镜头现在就跑得通**，白模到货逐个替换
+- tools/build_bianjing.py — `World` 分出 `keepout_street`：街面 keep-out 挡的是**房子**，
+  而行道柳 / 杈子 / 摊子 / 车驴本来就该站在街上。`on_street = true` 的条目摘掉这一层
+- bianjing.blend — 重建：**1658 个物件实例**（沿汴河老柳 260 / 御街行道柳 120 / 御街朱漆杈子 713 /
+  汴河漕船 40 / 席棚小摊 180 / 市摊大伞 110 / 独轮串车 60 / 驮货毛驴 45 / 沿街竖立招 130）
+- CLAUDE.md + .claude/agent_refs/** + tools/** — **Kling 整条退出**：删除 `tools/kling_autopilot/`
+  与已完成使命的一次性迁移脚本 `tools/genericize_perf_prompts.py`；「每镜双 prompt（Kling + Seedance）」
+  契约改为只出 Seedance；10 s 切分口径、厂商枚举、代码里的 `### Kling 版` 分支共 46+ 处规范性提法清除。
+  **dated amendment 块里的历史记录保留**——那是「当时发生了什么」的记录，不是指令
+- tools/jimeng_fetch.py — **新增**。即梦 OpenAPI 的签名与调用（`X-Agent-*` + HMAC-SHA256 + Base64URL 无 padding）
+
+实测（不是推断）:
+- **即梦 key 验签通过**：用不存在的 run_id 打 `/agent_openapi/v1/novel/query` → `code 20001 task not found`。
+  这一条排除了 `10002 AK 不存在` / `10006 签名校验失败` / `10007 权限不足`——**签名算法与账号都是对的**
+- **但它出不了三视图**：该 API 只有两个能力——`pippit_novel_agent`（短剧：剧本解析 → 角色 / 场景生成 →
+  分镜设计 → 分镜短片 → 成片合成）与 `pippit_avatar_marketing_agent`（营销视频）。`character_generate` /
+  `scene_generate` 看着像出图，但它们**绑在一条由 `script_analysis` 上传剧本文件建起的 thread 上**，
+  产出什么由 Agent 自己定，**给不了「这个物件的正视图」这种任意 prompt**。且文档写明「目前仅供超级会员限时可用」
+- **ElevenLabs 出图仍被套餐挡住**：合法 body 的 `POST /v1/flows/image` → `402 paid_plan_required`
+
+阻塞（两条自动出图的路都不通）:
+- ElevenLabs `/v1/flows/image`（gpt-image-2 / seedream-5-pro / gemini-3-pro）：key 有权限，**账号要 Pro 及以上**
+- 即梦 OpenAPI：key 有权限，**但没有任意文生图接口**
+→ 33 个物件的三视图暂时出不了；`image_fetch.py --object all` 与下游 Hyper3D 链路已就位，解锁即可跑
+
+## Follow-up 015 — 2026-09-17 13:20:00
+Source: user_input/follow_ups/202609.md - section 015
+Summary: props 全表批量出三视图 + Hyper3D 白模，模型回交用户。
+
+Auto-updated:
+- （执行型，产物落在 props/pN_*/ 下：三视图 png + whitemodel/pN_*.blend；进展与失败项在本条下方续记）
+
+## Follow-up 018 — 2026-09-17 14:40:00
+Source: user_input/follow_ups/202609.md - section 018
+Summary: 三视图 prompt 补上「这一面该看到多大」，33 张物件卡重生成，旧图与旧白模全删重跑。
+
+Auto-updated:
+- tools/gen_object_cards.py — `VIEWS` 带上可见轴索引；新增 `_shape()` / `_depth()`；每张 prompt 多一行 `画面尺寸:`
+- ai_videos/shikong_lvxing/sk1/2_世界观人设/props/p1[2-9]_*, p[2-4][0-9]_* — 33 张卡重生成（99 段 prompt）
+- specs/ai_video/sk1/user_input/revised_prompt.md — 按 raw + follow_ups 重拼
+
+Deleted (regen 前清场，follow-up 018 根因是旧图本身有缺陷):
+- props/p12–p44 下 52 张 `pNN-N.png`
+- props/p12–p18 下 32 个 `whitemodel/{raw.glb, *.blend}` 派生产物
+
+No conflicts found in: 1_立项/, 3_大纲/, 4_剧本/, 5_6_分镜与prompt/, scenes/, characters/
+
+## Follow-up 018（续）— 2026-09-17 22:50:00
+Source: user_input/follow_ups/202609.md - section 018（同一轮实测里连带发现的三件事）
+Summary: 三视图指令提到高权重位置；Rodin 对细长物件系统性压方 → 长径比 ≥6 走替身盒；物件布点从 8/33 补到 30/33。
+
+Auto-updated:
+- tools/gen_object_cards.py — `视图:` 行提到路由键正下方，按「哪一面正对镜头 / 哪个方向完全看不见 / 外轮廓因此长什么样」写；另外两个视图进负向词
+- tools/build_objects.py — 新增 `SKIP_ASPECT = 6.0` 长径比分流；闸门改 `--fit stretch`；`detect_orientation` 加 `SWITCH_MARGIN`（近立方物件不乱转）；白模落盘自动出 peek
+- tools/whitemodel_normalize.py — stretch 模式下新增「来源比例漂移」warning + `--aspect-tol`
+- tools/mesh_peek.py — 新增：白模三张灰模快照（rule 4h §G 的那一眼）
+- tools/hyper3d_fetch.py — HTTP 调用加指数退避重试（4xx/5xx 仍直接判死）
+- tools/build_bianjing.py — scatter 新增 `along.kind = "place"` + `in_place`（连同 Place 足迹内的全城层 keep-out 一起摘）；布点落空时记拒绝原因
+- ai_videos/.../scenes/bianjing/_blender/city_plan.md — §12 追加 22 条布点；闸门与过壕木桥退出布点（Place B 方块表已建）
+
+实测数据（都进了代码注释，不是口头结论）:
+- p12 漕船声明 4:1，三视图正确，Rodin 出 1.25:1；等比缩放偏差 236.9%，逐轴拉伸把斜桅杆抻成长刺
+- p14 油纸伞 2.4×2.4×2.6 近立方，包围盒不含朝向信息，旧的 detect_orientation 把伞放倒了
+- Place 内布点原为 0–5 个（书市 60→5、瓦子看棚 0），原因是挖洞前建的 keep-out 没跟着撤
+- 布点实例 1495 → 2522；30/33 物件有落点
+
+No conflicts found in: 1_立项/, 3_大纲/, 4_剧本/, 5_6_分镜与prompt/
+
+## Follow-up 018（续 2）— 2026-09-17 23:10:00
+Source: user_input/follow_ups/202609.md - section 018
+Summary: 把「三视图塌成一个轴」做成机检，并挂成 Rodin 调用前的闸门。
+
+Auto-updated:
+- tools/view_check.py — 新增。抠主体剪影 + 腐蚀掉细附件后的核心宽高比 + 两张裁切图的相关度，
+  三个信号合判「这两张图是不是同一个轴」。阈值 DIFF=1.8 由四个实测例定（见文件抬头）
+- tools/build_objects.py — 三视图齐了先过 view_check，塌陷就不送 Rodin（状态 `views-collapsed`），
+  省一次调用、也挡住一个注定对不上的网格；另外去掉了 `seen` 里对 "done" 的缓存
+  （状态每轮从盘上重推，CLAUDE.md §State surfaces 第 1 条）
+
+为什么需要它（这个缺陷今晚出现三次，全靠人眼）:
+- p22 素木床榻 —— 用户报的
+- p12 漕船 —— 我改完 prompt 自己抽查才发现
+- p27 挑担货筐 —— 机检自己抓到的，确认属实（「正面」是扁担的侧视图）
+机检的边界也写明白了：声明宽高比差不到 1.8 倍的两个面，本工具不声称能分辨
+（p25 插柳暖轿差 1.6 倍，腐蚀后核心 0.68 vs 0.80 仍分不开——而它其实是对的）。
+
+No conflicts found in: specs 其余部分
+
+## Follow-up 016 — 2026-09-18 09:05:00
+Source: user_input/follow_ups/202609.md - section 016
+Summary: scene 走物件流水线自下而上装配；先 p46–p60 建筑构件/立面，再以 ≤20 白模原型 + 程序化微调铺满 scene。
+
+Auto-updated:
+- （执行中，进展续记于本条下方）
+
+## Follow-up 018（收尾）— 2026-09-18 08:40:00
+Source: user_input/follow_ups/202609.md - section 018
+Summary: props 全部跑完 —— 25 个白模 / 8 个替身盒；新增俯视与四分之三两档视图集；新增漂移硬闸门。
+
+最终状态（p12–p44 共 33 个物件）:
+- 三视图 99/99 出完，机检 `view_check` 33/33 无塌陷
+- 白模 25 个，替身盒 8 个（长径比 12.5–36 的平板/线性件 + 漂移超限的 2 个）
+- 城市 blend：2110 / 2522 个实例是真网格（10.55M 面），替身盒 412
+
+本轮新增的三条机制（都由实测卡出阈值，不是拍的）:
+1. **第三视图可换俯视**（`view3 = "俯视"`）—— 背面与正面同轴、对重建不贡献新方向；
+   而「没人会去拍的窄面」模型无论如何不画。实测：p18 4.629/4.8、p27 0.278/0.25、
+   p42 2.687/2.8、p22 通过，四个全部奏效。
+2. **第二视图可换四分之三**（`view2 = "四分之三"`）—— 又宽又薄的物件换俯视后第三张对了、
+   第二张仍塌（p18 杈子窄端 0.5 m）。四分之三一张给全三个轴，是模型最愿意画的角度。
+   实测 p18/p27/p42 换后全过（p42 画面相似度掉到 0.60，确实转了）。
+3. **漂移硬闸门 `DRIFT_MAX = 2.0`** —— 超了就退回替身盒。阈值由实测卡出：
+   p37 石门枕 1.47 形态对、p21 辘轳 1.43 对；p44 长条木凳 2.84 出来是带尖刺的框、
+   p22 素木床榻 3.37 是带枕头疙瘩的板且四条腿没了。坏网格连体量轮廓都不保，不如替身盒。
+
+Auto-updated:
+- tools/gen_object_cards.py — VIEW3_TOP / VIEW2_ISO 两档；ISO_SCENE / ISO_NEG；逐视图措辞按视角分支
+- tools/view_check.py — AXES_TOP（俯视量的轴不同）
+- tools/build_objects.py — DRIFT_MAX 闸门
+- tools/hyper3d_fetch.py — JSON 调用与下载改走 curl（urllib 反复抛 SSL UNEXPECTED_EOF，p42 连挂两轮；curl 一次过）
+- CLAUDE.md — 新增「删除产物不必请示」一节（用户 2026-09-18 定）
+- object_inventory.toml — p18/p27/p42 标 view2+view3，p22 标 view3；新增 p45–p60 建筑原型（scene 阶段用，用户改由另一 session 负责，本轮只跑了 p45）
+
+No conflicts found in: scenes/（用户在另一 session 处理，本轮未动）

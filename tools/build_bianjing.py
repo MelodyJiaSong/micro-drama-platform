@@ -37,7 +37,7 @@ import re
 import sys
 import tomllib
 import traceback
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 import bmesh
@@ -79,8 +79,11 @@ CORRIDOR_R_B = 2.0          # 判断：入城通道本身只有 4 m 宽（门洞
 DOOR_CLEAR_MIN = 6.0        # blender_build §1 / §6 #4
 
 # Place B（数值出自 city_plan 方块 20–27；⚠️ 城墙三值为 gate.004 ai_draft，只用于几何、不进 prompt）
-WALL_BASE_W = 34.0
-WALL_TOP_W = 4.0
+# 2026-09-17（照 bg2 东水门锚点图量形制）：原值 底宽 34 / 顶宽 4（gate.004 ⚠️ ai_draft）在 8.7 m 高上是 1:1.7 的坡，
+# 渲出来是一道能走上去的土坡、不是城墙；bg2 上墙面近乎直立、只带轻微收分（约 1:4），墙顶是一条可行走的平台。
+# 数值来源由「ai_draft 的底宽」改为「锚点图量出的收分 + 可行走顶宽」，底宽随之缩到 16 m（divergence #27）。
+WALL_BASE_W = 16.0
+WALL_TOP_W = 12.0
 WALL_H = 8.7
 WATER_GATE_SPAN = 22.0
 SLUICE_Z = (6.0, 8.0)       # blender_build §4 步 2：闸门薄板吊起态
@@ -262,7 +265,7 @@ def parse_plan(md: str) -> list[Row]:
 
 def parse_one_take(md: str) -> list[Vector]:
     sec = md.split("## 4. 一镜到底路径", 1)
-    m = re.search(r"```toml\n(.*?)```", sec[1] if len(sec) == 2 else "", re.S)
+    m = re.search("```toml" + chr(10) + "(.*?)```", sec[1] if len(sec) == 2 else "", re.S)
     if not m:
         raise PlanError("city_plan.md §4 缺 toml 块")
     cfg = tomllib.loads(m.group(1))
@@ -636,6 +639,69 @@ RIVER_AXIS_Y: dict[str, float] = {"A": 0.0, "B": 0.0, "C": 0.0, "D": -62.0, "E":
 WALL_AXIS: dict[str, tuple[str, float]] = {"B": ("y", 0.0), "D": ("x", 0.0)}
 
 
+# ── 航线走廊（follow-up 014：只建拍得到的那一段；口径与代价见 city_plan §8.2）──────────
+CORRIDOR: "Corridor | None" = None
+
+
+class Corridor:
+    """镜头先于几何（rule 4g ④）：先有航线，才决定哪儿建、建多细。
+
+    走廊 ＝ 汴河折线的一段 ∪ 每个 Place 的锚点；三档半径决定 A / B / C 级，
+    超出 `r_far` 一栋不建。**一个坐标都不新写**——线取 W11 `[[river]]`，点取 place_anchor。
+    """
+
+    def __init__(self, cfg: dict, spec: dict) -> None:
+        self.r = (float(spec["r_full"]), float(spec["r_mid"]), float(spec["r_far"]))
+        self.rp = (float(spec["place_r_full"]), float(spec["place_r_mid"]), float(spec["place_r_far"]))
+        self.segs: list[tuple[Pt, Pt]] = []
+        for leg in spec["leg"]:
+            kind = leg["kind"]
+            if kind == "river":
+                pts = [(float(a), float(b)) for a, b in next(r for r in cfg["river"] if r["name"] == leg["name"])["points"]]
+                s0, s1, acc = float(leg["s0"]), float(leg["s1"]), 0.0
+                for a, b2 in zip(pts, pts[1:]):
+                    ln = v2len(v2sub(b2, a))
+                    if acc + ln > s0 and acc < s1:      # 与 [s0,s1] 有交集的折线段整段收下
+                        self.segs.append((a, b2))
+                    acc += ln
+            elif kind == "street":
+                st = next((x for x in cfg["street"] if x["name"] == leg["name"]), None)
+                if st is None:
+                    raise PlanError(f"§8.2 [[leg]] 街「{leg['name']}」不在 W11 [[street]] 里")
+                pts = [(float(a), float(b)) for a, b in st["points"]]
+                self.segs += list(zip(pts, pts[1:]))
+            else:
+                raise PlanError(f"§8.2 [[leg]] kind 只支持 river / street，见到 {kind}")
+        if not self.segs:
+            raise PlanError("§8.2 走廊没有落到任何折线上（s0/s1 写反了？）")
+        self.pts: list[Pt] = [(f.x, f.y) for f in FRAMES.values()]
+        self.culled = 0
+        self.built: dict[str, int] = {}
+
+    def level(self, p: Pt) -> str | None:
+        """线走廊与点走廊各自分档，取最细的那一档（rule 4g ④）。"""
+        dl = min(dist_point_seg(p, a, b) for a, b in self.segs)
+        dp = min((v2len(v2sub(p, q)) for q in self.pts), default=1e9)
+        for k, lv in enumerate("ABC"):
+            if dl <= self.r[k] or dp <= self.rp[k]:
+                return lv
+        return None
+
+
+def load_corridor(md: str, cfg: dict) -> Corridor:
+    sec = md.split("### 8.2", 1)
+    if len(sec) != 2:
+        raise PlanError("city_plan.md 缺 §8.2 航线走廊")
+    m = re.search("```toml" + chr(10) + "(.*?)```", sec[1], re.S)
+    if not m:
+        raise PlanError("city_plan.md §8.2 缺 toml 块")
+    spec = tomllib.loads(m.group(1))
+    for k in ("r_full", "r_mid", "r_far", "place_r_full", "place_r_mid", "place_r_far", "leg"):
+        if k not in spec:
+            raise PlanError(f"§8.2 TOML 缺 {k}")
+    return Corridor(cfg, spec)
+
+
 def load_w11() -> dict:
     md = W11_LAYOUT.read_text(encoding="utf-8")
     sec = md.split("### 2.8", 1)
@@ -848,6 +914,7 @@ class World:
     rings: dict[str, list[Pt]]
     ring_skip: dict[str, tuple[Pt, Pt] | None]
     keepout: list[list[Pt]]
+    keepout_street: list[list[Pt]] = field(default_factory=list)
 
 
 WORLD: list[World] = []
@@ -1143,7 +1210,11 @@ def build_streets(world: World) -> int:
         ob = b.finish(f"G_{401 + si}_street", "G_STREETS", 401 + si)
         ob["bj_name"] = st["name"]
         cut_places(ob)
-        world.keepout += [seg_quad(a, c, wd / 2 + 3.0, 3.0) for a, c in zip(pts, pts[1:])]
+        quads = [seg_quad(a, c, wd / 2 + 3.0, 3.0) for a, c in zip(pts, pts[1:])]
+        world.keepout += quads
+        # 同一份也单独记一份：街面挡的是**房子**。街上的东西（行道柳、杈子、摊、车）
+        # 本来就该站在街上，撒点时要能把这一层摘掉（follow-up 016，city_plan §12 `on_street`）
+        world.keepout_street += quads
     return len(world.cfg["street"])
 
 
@@ -1159,19 +1230,56 @@ def lm_rect(lm: dict, pad: float = 0.0) -> list[Pt]:
 
 
 def house(b: Batch, c: Pt, u: Pt, n: Pt, dims: tuple[float, float, float], level: str) -> None:
-    """一个住宅单元的包围盒（长边沿 u、门脸朝 n）；B 级加悬山屋面（脊沿 u）。"""
+    """一个住宅单元（长边沿 u、门脸朝 n）。
+
+    精度三档（rule 4g ④，走廊制见 city_plan §8.2）：
+      C  纯体块 —— 只当远景轮廓
+      B  体块 + 悬山屋面 —— 中景，看得出屋顶形制
+      A  台基 + 墙身 + 出檐悬山 + 正脊 + 临街披檐 —— 贴身而过的那几百米
+
+    **走廊是在这里闸的**：城外关厢、田间村落、城内街区三条路都汇进本函数，
+    在这里判一次，就不会有哪条路漏掉（follow-up 014）。
+    """
+    if CORRIDOR is not None:
+        lv = CORRIDOR.level(c)
+        if lv is None:
+            CORRIDOR.culled += 1
+            return
+        level = lv
+        CORRIDOR.built[lv] = CORRIDOR.built.get(lv, 0) + 1
     lx, ly, h = dims
-    q = [(c[0] + u[0] * a + n[0] * d, c[1] + u[1] * a + n[1] * d)
-         for a, d in ((-lx / 2, -ly / 2), (lx / 2, -ly / 2), (lx / 2, ly / 2), (-lx / 2, ly / 2))]
-    eave = Z_STREET + (h * 0.65 if level == "B" else h)
-    extrude(b, q, Z_STREET, eave)
-    if level == "B":
-        back = [(q[0][0], q[0][1]), (q[1][0], q[1][1])]
-        ridge = [((q[0][0] + q[3][0]) / 2, (q[0][1] + q[3][1]) / 2), ((q[1][0] + q[2][0]) / 2, (q[1][1] + q[2][1]) / 2)]
-        front = [(q[3][0], q[3][1]), (q[2][0], q[2][1])]
-        sec0 = [Vector((back[0][0], back[0][1], eave)), Vector((front[0][0], front[0][1], eave)), Vector((ridge[0][0], ridge[0][1], Z_STREET + h))]
-        sec1 = [Vector((back[1][0], back[1][1], eave)), Vector((front[1][0], front[1][1], eave)), Vector((ridge[1][0], ridge[1][1], Z_STREET + h))]
-        b.poly_solid(sec0, sec1)
+
+    def quad(ex: float) -> list[Pt]:
+        a, d = lx / 2 + ex, ly / 2 + ex
+        return [(c[0] + u[0] * sa + n[0] * sd, c[1] + u[1] * sa + n[1] * sd)
+                for sa, sd in ((-a, -d), (a, -d), (a, d), (-a, d))]
+
+    q = quad(0.0)
+    if level == "C":
+        extrude(b, q, Z_STREET, Z_STREET + h)
+        return
+    base = Z_STREET
+    if level == "A":                                  # 台基：各边宽出 0.45 m、高 0.45 m
+        base = Z_STREET + 0.45
+        extrude(b, quad(0.45), Z_STREET, base)
+    eave = base + h * (0.60 if level == "A" else 0.65)
+    extrude(b, q, base, eave)                         # 墙身
+    ov = quad(0.85) if level == "A" else q            # A 级出檐 0.85 m（宋木构出檐深，这是轮廓的关键）
+    ridge_z = base + h
+    mid = [((ov[0][0] + ov[3][0]) / 2, (ov[0][1] + ov[3][1]) / 2),
+           ((ov[1][0] + ov[2][0]) / 2, (ov[1][1] + ov[2][1]) / 2)]
+    sec0 = [Vector((ov[0][0], ov[0][1], eave)), Vector((ov[3][0], ov[3][1], eave)), Vector((mid[0][0], mid[0][1], ridge_z))]
+    sec1 = [Vector((ov[1][0], ov[1][1], eave)), Vector((ov[2][0], ov[2][1], eave)), Vector((mid[1][0], mid[1][1], ridge_z))]
+    b.poly_solid(sec0, sec1)
+    if level != "A":
+        return
+    extrude(b, seg_quad(mid[0], mid[1], 0.18), ridge_z - 0.10, ridge_z + 0.28)   # 正脊
+    # 临街披檐：门脸一侧（+n）挑出 1.5 m 的一坡草棚，是宋代街屋最认得出的一笔
+    fo, fi = quad(0.0)[3], quad(0.0)[2]
+    po = [(fo[0] + n[0] * 1.5, fo[1] + n[1] * 1.5), (fi[0] + n[0] * 1.5, fi[1] + n[1] * 1.5)]
+    z_hi, z_lo = base + h * 0.42, base + h * 0.30
+    b.poly_solid([Vector((fo[0], fo[1], z_hi)), Vector((po[0][0], po[0][1], z_lo)), Vector((po[0][0], po[0][1], z_lo - 0.12)), Vector((fo[0], fo[1], z_hi - 0.12))],
+                 [Vector((fi[0], fi[1], z_hi)), Vector((po[1][0], po[1][1], z_lo)), Vector((po[1][0], po[1][1], z_lo - 0.12)), Vector((fi[0], fi[1], z_hi - 0.12))])
 
 
 def unit_dims(keys: tuple[str, ...]) -> dict[str, tuple[float, float, float]]:
@@ -1444,6 +1552,10 @@ def build_blocks(world: World, keys: tuple[str, ...]) -> tuple[int, int]:
             corners = [fr.world(lcx + a, lcy + d) for a, d in ((-SB / 2, -SB / 2), (SB / 2, -SB / 2), (SB / 2, SB / 2), (-SB / 2, SB / 2))]
             if not any(point_in_poly(q, outer) for q in corners + [c]):
                 continue
+            # 走廊闸门的粗筛：整块大街区都在走廊外就整块跳过（省掉 BSP 切地块与
+            # 上万次 keep-out 查询）。细筛在 house() 里逐栋做 —— 这里只是快进。
+            if CORRIDOR is not None and all(CORRIDOR.level(q) is None for q in corners + [c]):
+                continue
             idx_n = 10001 + made
             rng = random.Random(idx_n)
             ang = math.radians(FRAMES["C"].rot_deg + rng.uniform(-FABRIC["jitter_deg"], FABRIC["jitter_deg"]))
@@ -1540,8 +1652,9 @@ def build_blocks(world: World, keys: tuple[str, ...]) -> tuple[int, int]:
                         if ok_quad(q):
                             extrude(water, q, Z_STREET - 0.4, Z_STREET + 0.02)
                             n_b["p"] += 1
-                    for _ in range(int(lw * ld / 500) + rng.randint(0, 3)):
-                        tree(rng.uniform(x0 + 2, x1 - 2), rng.uniform(y0 + 2, y1 - 2), rng.uniform(6.0, 11.0))
+                    for _ in range(min(5, int(lw * ld / 1500)) + rng.randint(0, 2)):   # 园圃 / 空地里的树按地块大小，别种成林子
+                        if rng.random() < 0.7:
+                            tree(rng.uniform(x0 + 2, x1 - 2), rng.uniform(y0 + 2, y1 - 2), rng.uniform(6.0, 11.0))
                     if rng.random() < 0.3:                           # 菜园边看园的小屋
                         bld(*P(rng.uniform(-L / 3, L / 3), D / 2 - 3.0), 4.0, 3.5, 3.6, face, along_x)
                 elif kind == "huts":
@@ -1726,7 +1839,7 @@ def outside_keep(world: World, river_pad: float, place_pad: float) -> KeepIndex:
     return KeepIndex(keep)
 
 
-SUBURB_ROAD_LEN, SUBURB_ROAD_W = 2400.0, 12.0
+SUBURB_ROAD_LEN, SUBURB_ROAD_W = 1200.0, 12.0   # follow-up 011：郊区收窄（用户：郊区尤其要小，应该很快就进城）
 
 
 def build_gate_suburbs(world: World, keys: tuple[str, ...]) -> tuple[int, int]:
@@ -1856,7 +1969,8 @@ def build_gate_suburbs(world: World, keys: tuple[str, ...]) -> tuple[int, int]:
     return gates, chunks.houses
 
 
-HAMLET_CELL = 850.0
+HAMLET_CELL = 700.0
+HAMLET_BELT = 2600.0     # follow-up 011：村落只留在城墙外 0.8–2.6 km 的一圈里，郊野不再铺满 19 × 18 km
 
 
 def build_hamlets(world: World, keys: tuple[str, ...]) -> tuple[int, int]:
@@ -1876,7 +1990,7 @@ def build_hamlets(world: World, keys: tuple[str, ...]) -> tuple[int, int]:
             cx = (i + 0.5) * HAMLET_CELL + rng.uniform(-280.0, 280.0)
             cy = (j + 0.5) * HAMLET_CELL + rng.uniform(-280.0, 280.0)
             if not (x0 + 300 < cx < x1 - 300 and y0 + 300 < cy < y1 - 300) or point_in_poly((cx, cy), outer) \
-               or min(dist_point_seg((cx, cy), q, outer[(k + 1) % len(outer)]) for k, q in enumerate(outer)) < 1000.0:
+               or not (800.0 <= min(dist_point_seg((cx, cy), q, outer[(k + 1) % len(outer)]) for k, q in enumerate(outer)) <= HAMLET_BELT):
                 continue
             yaw = rng.uniform(0.0, math.pi / 2)
             u, n = (math.cos(yaw), math.sin(yaw)), (-math.sin(yaw), math.cos(yaw))
@@ -1951,8 +2065,182 @@ def gallery(b: Batch, f: Frame, sx: int, gx0: float, gx1: float, y0: float, y1: 
     extrude(b, roof, z0 + 3.8, z0 + 4.1)
 
 
+# ── 布局层 ③ 物件布点（follow-up 016；口径与代价见 city_plan §12）────────────────────
+# 这是「物件清单」到「场景 blend」之间那根线：沿已有的河 / 街折线撒实例，
+# 白模没到货就撒同尺寸替身盒（`resolve_asset` 自动降级），到货了自动换成真网格。
+SCATTER_COUNTS: dict[str, int] = {}
+REJECTS: dict[str, dict[str, int]] = {}
+
+
+def load_scatter(md: str) -> list[dict]:
+    sec = md.split("## 12. 物件布点", 1)
+    if len(sec) != 2:
+        return []
+    m = re.search("```toml" + chr(10) + "(.*?)```", sec[1], re.S)
+    if not m:
+        raise PlanError("city_plan.md §12 缺 toml 块")
+    return tomllib.loads(m.group(1)).get("scatter", [])
+
+
+def scatter_line(world: World, along: dict) -> list[Pt]:
+    kind, name = along["kind"], along["name"]
+    if kind == "river":
+        pts = [(float(a), float(b)) for a, b in next(r for r in world.cfg["river"] if r["name"] == name)["points"]]
+        s0, s1 = float(along.get("s0", 0.0)), float(along.get("s1", 1e9))
+        out, acc = [], 0.0
+        for a, b in zip(pts, pts[1:]):
+            ln = v2len(v2sub(b, a))
+            if acc + ln > s0 and acc < s1:
+                out += [a, b]
+            acc += ln
+        return out
+    if kind == "street":
+        st = next((x for x in world.cfg["street"] if x["name"] == name), None)
+        if st is None:
+            raise PlanError(f"§12 街「{name}」不在 W11 [[street]] 里")
+        return [(float(a), float(b)) for a, b in st["points"]]
+    if kind == "place":
+        # Place 局部坐标里的一条直线——寺内 / 府前 / 瓦子里这类东西没有河街可沿，
+        # 但它们都属于某个 Place。坐标依旧一个都不新写：只用 Place 自己的
+        # frame 与 PLACE_RANGE（§8 铁律），`at` 是另一轴上的局部偏移。
+        if name not in FRAMES:
+            raise PlanError(f"§12 place「{name}」不是 Place（可用 {sorted(FRAMES)}）")
+        f = FRAMES[name]
+        x0, x1, y0, y1 = PLACE_RANGE[name]
+        at = float(along.get("at", 0.0))
+        if along.get("axis", "y") == "x":
+            a0, a1 = float(along.get("s0", x0)), float(along.get("s1", x1))
+            return [f.world(a0, at), f.world(a1, at)]
+        a0, a1 = float(along.get("s0", y0)), float(along.get("s1", y1))
+        return [f.world(at, a0), f.world(at, a1)]
+    raise PlanError(f"§12 along.kind 只支持 river / street / place，见到 {kind}")
+
+
+def place_object(key: str, level: str, c: Pt, yaw_deg: float, z: float, tag: str, n: int) -> None:
+    proto = get_proto(key, level)
+    f = proto.asset.front()
+    yaw = math.radians(yaw_deg) - math.atan2(f.y, f.x)
+    ob = bpy.data.objects.new(f"SC_{key}_{n:04d}", None)
+    ob.instance_type, ob.instance_collection = "COLLECTION", proto.collection
+    ob.location = (c[0], c[1], z)
+    ob.rotation_euler = (0.0, 0.0, yaw)
+    ob["bj_asset"], ob["bj_proxy"], ob["bj_scatter"] = key, int(proto.is_proxy), tag
+    collection("G_OBJECTS" + ("_PROXY" if proto.is_proxy else "")).objects.link(ob)
+
+
+def build_scatter(world: World, md: str) -> dict[str, int]:
+    specs = load_scatter(md)
+    if not specs:
+        return {}
+    street_keep = {id(q) for q in world.keepout_street}
+    keep_nostreet = [q for q in world.keepout if id(q) not in street_keep]
+
+    base_keep: list[list[Pt]] = []
+    for pts, wd in world.rivers.values():
+        base_keep += [seg_quad(a, b, wd / 2 + BLOCK_RIVER_PAD, 3.0) for a, b in zip(pts, pts[1:])]
+    for w in world.cfg["wall"]:
+        ring = world.rings[ring_key(w["name"])]
+        base_keep += [seg_quad(a, ring[(i + 1) % len(ring)], float(w["base_m"]) / 2 + BLOCK_WALL_PAD, BLOCK_WALL_PAD)
+                      for i, a in enumerate(ring)]
+    base_keep += [octagon(tuple(g["xy"]), BLOCK_GATE_PAD) for g in world.cfg["gate"]]
+    # Place 足迹默认剔除（里面有自己的详细几何）；`in_place = "H"` 的 spec 撒的正是
+    # "属于那个 Place 的东西"（寺前门枕、府前拴马石、瓦子里的长凳），对它要做两件事：
+    #   ① 摘掉 Place 足迹这一层；
+    #   ② **连同落在该足迹里的全城层 keep-out 一起摘掉** —— 那些街区/河/墙的禁区四边形
+    #      是在 Place 挖洞之前建的，几何早已让位，禁区却还留着。不摘，Place 里一个都撒不出来
+    #      （2026-09-17 实测：相国寺书市 60 个只落 5 个、瓦子看棚 0 个，全被这层挡着）。
+    place_keep = [place_poly(pl, 8.0) for pl in PLACES]
+    idx_place = KeepIndex(place_keep)
+
+    def dry_index(on_street: bool, in_place: str | None) -> KeepIndex:
+        keep = list(keep_nostreet if on_street else world.keepout)
+        if in_place is None:
+            return KeepIndex(keep + base_keep + place_keep)
+        foot = place_poly(in_place, 0.0)
+        return KeepIndex([q for q in keep + base_keep if not sat_overlap(q, foot)])
+
+    idx_cache: dict[tuple[bool, str | None], KeepIndex] = {}
+    made: dict[str, int] = {}
+    n = 0
+    for spec in specs:
+        key = spec["key"]
+        line = scatter_line(world, spec["along"])
+        rng = random.Random(int(spec.get("seed", 1)))
+        off0, off1 = (float(v) for v in spec["offset"])
+        step = float(spec["spacing"])
+        jit = spec.get("jitter", {})
+        jp, jy = float(jit.get("pos", 0.0)), float(jit.get("yaw", 0.0))
+        cross = spec.get("face") == "cross"
+        on_street = bool(spec.get("on_street"))
+        # in_place = true 时取 along.name（place 模式）；也可以直接写 Place 字母
+        in_place: str | None = None
+        if spec.get("in_place"):
+            v = spec["in_place"]
+            in_place = v if isinstance(v, str) else str(spec["along"].get("name", ""))
+            if in_place not in PLACES:
+                raise PlanError(f"§12 {key} 的 in_place 认不出 Place：{in_place!r}")
+        if (on_street, in_place) not in idx_cache:
+            idx_cache[(on_street, in_place)] = dry_index(on_street, in_place)
+        idx_dry = idx_cache[(on_street, in_place)]
+        water = bool(spec.get("in_water"))
+        cap = int(spec.get("max", 400))
+        cnt = 0
+        # 撒不出来的时候要说得出为什么：三道剔除各自记一笔（2026-09-17）。
+        # 「0 个」不带原因等于让下一个人重新猜一遍——今晚已经在这上面栽过一次。
+        rej = {"走廊外": 0, "Place内": 0, "禁区": 0}
+        for a, b in zip(line, line[1:]):
+            d = v2sub(b, a)
+            ln = v2len(d)
+            if ln < 1e-6:
+                continue
+            u = (d[0] / ln, d[1] / ln)
+            nrm = (-u[1], u[0])
+            head = math.degrees(math.atan2(d[1], d[0]))
+            t = step * 0.5
+            while t < ln and cnt < cap:
+                for side in (1, -1):
+                    if cnt >= cap:
+                        break
+                    off = side * rng.uniform(off0, off1)
+                    px = a[0] + u[0] * t + nrm[0] * off + rng.uniform(-jp, jp)
+                    py = a[1] + u[1] * t + nrm[1] * off + rng.uniform(-jp, jp)
+                    pt = (px, py)
+                    if CORRIDOR is not None and CORRIDOR.level(pt) is None:
+                        rej["走廊外"] += 1
+                        continue
+                    if water:
+                        if in_place is None and idx_place.hits(octagon(pt, 2.0)):
+                            rej["Place内"] += 1
+                            continue
+                    else:
+                        if idx_dry.hits(octagon(pt, 1.5)):
+                            rej["禁区"] += 1
+                            continue
+                    yaw = head + (90.0 if cross else 0.0) + (180.0 if side < 0 and cross else 0.0)
+                    place_object(key, "B", pt, yaw + rng.uniform(-jy, jy),
+                                 Z_WATER if water else Z_STREET, spec.get("name", key), n)
+                    n += 1
+                    cnt += 1
+                t += step
+        label = f"{key} {spec.get('name', '')}".strip()
+        made[label] = cnt
+        if cnt < int(spec.get("max", 400)) * 0.5:
+            REJECTS[label] = {k: v for k, v in rej.items() if v}
+        SCATTER_COUNTS[key] = SCATTER_COUNTS.get(key, 0) + cnt
+    if REJECTS:
+        NOTES.append("G 物件布点·撒不满的原因（拿到不足一半上限的 spec）："
+                     + "；".join(f"{k} {v}" for k, v in REJECTS.items()))
+    NOTES.append("G 物件布点（follow-up 016，city_plan §12）："
+                 + "；".join(f"{k} {v} 个" for k, v in made.items())
+                 + f"　合计 {sum(made.values())} 个实例")
+    return made
+
+
+
 def build_global_layer(md: str) -> dict[str, object]:
     cfg = load_w11()
+    global CORRIDOR
+    CORRIDOR = load_corridor(md, cfg)
     plans, keys = parse_global_plan(md)
     world = world_setup(cfg)
     ponds = [lm_rect(lm) for lm in cfg["landmark"] if plans[lm["name"]].method == "池"]
@@ -1967,11 +2255,20 @@ def build_global_layer(md: str) -> dict[str, object]:
     n_sub, n_sub_boxes = build_suburbs(world, keys)
     n_gate_sub, n_gate_houses = build_gate_suburbs(world, keys)
     n_hamlets, n_hamlet_houses = build_hamlets(world, keys)
+    scat = build_scatter(world, md)          # follow-up 016：物件清单 → 场景 blend 的那根线
     counts: dict[str, object] = {
         "城墙": len(cfg["wall"]), "城门（建 / 表）": f"{n_gates} / {len(cfg['gate'])}", "河道": len(cfg["river"]),
         "街道": n_streets, "御街设施延伸": n_yujie, "地标建法": lm_counts, "宫内殿宇": n_halls, "街区": n_blocks, "街区单元盒": n_boxes,
         "郊外段": n_sub, "郊外单元盒": n_sub_boxes, "关厢城门": n_gate_sub, "关厢房": n_gate_houses,
-        "田间村落": n_hamlets, "村落房": n_hamlet_houses}
+        "田间村落": n_hamlets, "村落房": n_hamlet_houses,
+        "走廊内建房（按级）": dict(sorted(CORRIDOR.built.items())) if CORRIDOR else {},
+        "走廊外砍掉的房": CORRIDOR.culled if CORRIDOR else 0,
+        "物件布点": scat, "物件实例合计": sum(scat.values())}
+    if CORRIDOR:
+        NOTES.append("G 航线走廊（follow-up 014，city_plan §8.2）：线半径 %g / %g / %g m，"
+                     "Place 半径 %g / %g / %g m；走廊内建房 %d 栋（A %d / B %d / C %d），走廊外砍掉 %d 栋"
+                     % (*CORRIDOR.r, *CORRIDOR.rp, sum(CORRIDOR.built.values()), CORRIDOR.built.get("A", 0),
+                        CORRIDOR.built.get("B", 0), CORRIDOR.built.get("C", 0), CORRIDOR.culled))
     NOTES.append("G 全城层计数：" + "；".join(f"{k} {v}" for k, v in counts.items()))
     return counts
 
