@@ -1,15 +1,14 @@
 """One-time sweep: prepend a compact import tag as the first line of every
 render-prompt fenced block in the performance library, so a downloaded
-Kling/Seedance/Seedream file (named from the prompt's first ~9 chars) carries a
+Seedance/Seedream file (named from the prompt's first ~9 chars) carries a
 token the downloads importer can route to the right `perf_NNNN/` folder.
 
 Tag scheme (per `_performances/_testrig.md`): `演{NNNN}{克|即|始}`
   演 = 演技库 marker (distinguishes from drama shot tags)
   NNNN = the entry's 4-digit perf number
-  克 = Kling 可灵 video / 即 = 即梦 Seedance video / 始 = 起始帧 Seedream still
+  即 = 即梦 Seedance video / 始 = 起始帧 Seedream still
 
 Section → marker:
-  `### Kling 版 …`   → 克
   `### Seedance 版 …` → 即
   `## 起始帧表情`     → 始
 
@@ -26,8 +25,6 @@ _PERF_NUM = re.compile(r"perf_(\d{4})")
 
 
 def _marker_for(header: str) -> str | None:
-    if header.startswith("### Kling"):
-        return "克"
     if header.startswith("### Seedance"):
         return "即"
     if header.startswith("## 起始帧表情"):

@@ -25,6 +25,7 @@ from __future__ import annotations
 import argparse
 import math
 import random
+import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -45,21 +46,36 @@ Z = bj.Z_STREET
 
 # ── palette: (image, rect as fractions x0,y0,x1,y1 from top-left, target albedo luminance, saturation kept) ─────────
 # The anchors are lit at sunrise, so sampled hue carries warm light; saturation is scaled back to get an albedo.
+# 2026-09-17：用户按 follow-up 014 的新画风先出了 bg0–bg3 四张（bg4 州桥御街 / bg7 坊巷民居 / bg12 宣德楼 还没出）。
+# 取样源因此全部改指 bg2（东水门：夯土墙面、门洞立柱木、城楼灰瓦、护龙河水、柳叶、朱栏）与
+# bg3（汴河码头：灰板瓦、白泥墙、墙脚灰砖、栈桥旧木、土街），这两张恰好装满 shot01 用到的每一种材质。
+# glazed 目前借 bg2 城楼灰瓦当占位（琉璃只出现在宣德楼与宫城，属 shot02 地界）；bg4 / bg7 / bg12 落盘后
+# 把 glazed / stone / roof / plaster 改回各自的主体图再 dress 一次即可（rect 见 git 历史）。
+# 2026-09-18：26 张锚点图按 follow-up 014 的新画风全部重出（构图与上一版完全不同），
+# 于是取样 rect 一律重取——办法不是手量（手量的 rect 一换图就失效，前一版把水取到土路、
+# 把耕地取到护龙河），而是把每个材质要的东西写成**可判定的目标**（暗而不艳＝瓦、亮而不艳＝泥墙、
+# 偏青＝水、偏绿＝叶、偏暖＝夯土与旧木），在 12×12 网格里选最优格。图再换一次就重跑一次挑格。
+# glazed：新版 bg12-1 里绿琉璃不明显，暂取门楼屋面最暗的一格（偏褐），待宣德楼视图重出后再收。
+# field：新版几张郊野图偏暖、没有明确绿地，与 leaf 同取园林的绿、靠各自的饱和系数区分。
 PALETTE_SRC: dict[str, tuple[str, tuple[float, float, float, float], float, float]] = {
-    "roof":    ("bg7_坊巷民居/bg7-1.png",   (0.010, 0.270, 0.165, 0.420), 0.09, 0.4),
-    "glazed":  ("bg12_宣德楼/bg12-1.png",  (0.440, 0.222, 0.675, 0.293), 0.06, 1.0),
-    "plaster": ("bg7_坊巷民居/bg7-1.png",   (0.940, 0.738, 0.995, 0.853), 0.52, 0.35),
-    "rammed":  ("bg2_东水门城门/bg2-1.png", (0.550, 0.418, 0.620, 0.711), 0.28, 0.8),
-    "earth":   ("bg7_坊巷民居/bg7-1.png",   (0.350, 0.800, 0.500, 0.933), 0.20, 0.9),
-    "water":   ("bg1_虹桥/bg1-1.png",      (0.520, 0.820, 0.660, 0.900), 0.07, 1.9),
-    "leaf":    ("bg2_东水门城门/bg2-1.png", (0.010, 0.498, 0.080, 0.622), 0.16, 1.0),
-    "red":     ("bg1_虹桥/bg1-1.png",      (0.650, 0.293, 0.750, 0.338), 0.09, 1.2),
-    "timber":  ("bg2_东水门城门/bg2-1.png", (0.300, 0.240, 0.525, 0.284), 0.11, 0.6),
-    "brick":   ("bg12_宣德楼/bg12-1.png",  (0.260, 0.551, 0.450, 0.622), 0.12, 0.4),
-    "stone":   ("bg4_州桥御街/bg4-1.png",   (0.300, 0.560, 0.700, 0.620), 0.26, 0.5),
-    "field":   ("bg0_汴京全城/bg0-1.png",   (0.900, 0.550, 0.990, 0.700), 0.15, 2.2),
+    "roof":    ("bg7_坊巷民居/bg7-1.png",     (0.167, 0.500, 0.250, 0.583), 0.09, 0.4),
+    "glazed":  ("bg12_宣德楼/bg12-1.png",     (0.917, 0.583, 1.000, 0.667), 0.07, 0.9),
+    "plaster": ("bg7_坊巷民居/bg7-1.png",     (0.333, 0.250, 0.417, 0.333), 0.46, 0.35),
+    "rammed":  ("bg2_东水门城门/bg2-1.png",   (0.583, 0.667, 0.667, 0.750), 0.30, 0.8),
+    "earth":   ("bg7_坊巷民居/bg7-1.png",     (0.750, 0.250, 0.833, 0.333), 0.22, 0.9),
+    # 水：原来取 bg1-1 左下角，那是背光深水、又被 sat 1.9 推成艳蓝；锚点图里的汴河是**青绿带浊**，
+    # 饱和度只有 0.24（bg3-1 河面实测 rgb 0.100/0.117/0.131），所以换源并把 sat 降到 1.1。
+    "water":   ("bg3_汴河码头/bg3-1.png",     (0.917, 0.417, 1.000, 0.500), 0.07, 1.1),
+    "leaf":    ("bg15_园林雅集/bg15-1.png",   (0.417, 0.250, 0.500, 0.333), 0.16, 1.0),
+    "red":     ("bg5_正店酒楼/bg5-1.png",     (0.500, 0.750, 0.583, 0.833), 0.09, 1.2),
+    "timber":  ("bg3_汴河码头/bg3-1.png",     (0.000, 0.667, 0.083, 0.750), 0.13, 0.6),
+    "brick":   ("bg12_宣德楼/bg12-1.png",     (0.583, 0.833, 0.667, 0.917), 0.12, 0.4),
+    "stone":   ("bg4_州桥御街/bg4-1.png",     (0.417, 0.333, 0.500, 0.417), 0.24, 0.5),
+    # 耕地：原来借园林的树冠绿（0.159/0.167/0.000），渲出来是一片纯绿；新画风的郊野是**暖橄榄**，
+    # 清明刚返青的麦田夹翻耕地（bg8-1 田块实测 rgb 0.452/0.321/0.144）。田块的绿变化由色带给，不靠基色。
+    "field":   ("bg8_郊外清明踏青路/bg8-1.png", (0.333, 0.250, 0.417, 0.333), 0.16, 1.2),
 }
-RAMMED_PATCH = ("bg2_东水门城门/bg2-1.png", (0.550, 0.418, 0.620, 0.711))
+RAMMED_PATCH = ("bg2_东水门城门/bg2-1.png", (0.583, 0.667, 0.667, 0.750))
 
 MAT_NAMES = ("EARTH", "GROUND", "WATER", "RIVERBED", "RAMMED", "PLASTER", "TIMBER", "RED", "BLACK", "ROOF", "ROOF_UV",
              "GLAZED", "BRICK", "STONE", "REED", "WINDOW", "GILT", "LEAF", "BARK", "CLOTH_RED", "CLOTH_BLUE", "INVISIBLE",
@@ -97,6 +113,18 @@ def luminance(rgb: np.ndarray) -> np.ndarray:
 
 
 def sample_palette() -> dict[str, tuple[float, float, float]]:
+    """全城的材质色从各地点锚点图上取样 —— 所以锚点图必须先存在、且必须是**当前画风**的那一版。
+
+    2026-09-16 follow-up 014：全站改《权力的游戏》实拍画风，旧锚点图整批作废删掉了。
+    在新锚点出图之前，look pass 没有取样来源；此时应当只建布局灰模（`--no-look`），
+    等新锚点落盘后再 dress 一次，材质色才会跟着新画风走。
+    """
+    missing = [rel for rel, *_ in PALETTE_SRC.values() if not (SCENES / rel).is_file()]
+    if missing:
+        raise SystemExit(
+            "look pass 取不到调色板：以下地点锚点图不在盘上 —— " + "、".join(sorted(set(missing)))
+            + chr(10) + "按 follow-up 014，旧锚点已按新画风作废重出；在新图落盘之前请用 `--no-look` 只建布局灰模，"
+              "落盘后再跑一次 look（`blender -b <blend> --python tools/look_bianjing.py -- --save`）。")
     out = {}
     for key, (rel, rect, albedo, sat) in PALETTE_SRC.items():
         img, px = load_pixels(SCENES / rel)
@@ -109,21 +137,26 @@ def sample_palette() -> dict[str, tuple[float, float, float]]:
 
 
 def rammed_patch() -> bpy.types.Image:
-    """夯层 patch from bg2-1: mirror-tiled in X, cross-faded in Y, luminance-normalised, packed into the blend."""
+    """夯层 patch from bg2-1 —— 只保留**逐行**（＝沿高度）的夯层亮度曲线。
+
+    2026-09-17 照 bg2 对账：原来把整块 crop 连着列方向一起平铺，而 bg2 的墙面自带雨水冲蚀的竖沟，
+    平铺后渲成了规律的「灯芯绒」竖条纹。现在按行取平均，把 patch 压成一列（宽度 1 px）—— 夯层是
+    水平的这件事由图决定，竖向的冲蚀改由材质里的噪声单独给、且不重复（见 build_materials 的 layers）。
+    """
     rel, rect = RAMMED_PATCH
     _img, px = load_pixels(SCENES / rel)
     c = srgb_to_linear(crop(px, rect))
-    c = np.concatenate([c, c[:, ::-1]], axis=1)
-    h = c.shape[0]
-    k = max(2, h // 6)
-    ramp = np.linspace(0.0, 1.0, k)[:, None, None]
-    c[:k] = c[:k] * ramp + c[h - k:] * (1 - ramp)
-    c = c[:h - k]
-    lum = luminance(c)
-    c = np.repeat((lum / max(1e-4, float(lum.mean())))[..., None], 3, axis=2) * 0.5
-    hh, ww = c.shape[:2]
-    rgba = np.concatenate([np.clip(c, 0, 1), np.ones((hh, ww, 1), np.float32)], axis=2)[::-1]
-    img = bpy.data.images.new("LOOK_rammed_layers", ww, hh, float_buffer=True)
+    rows = luminance(c).mean(axis=1)                       # 逐行亮度 ＝ 夯层节奏
+    k = max(2, len(rows) // 6)                             # 首尾交叉淡化，竖向可无缝重复
+    ramp = np.linspace(0.0, 1.0, k)
+    rows = rows.copy()
+    rows[:k] = rows[:k] * ramp + rows[len(rows) - k:] * (1 - ramp)
+    rows = rows[:len(rows) - k]
+    rows = rows / max(1e-4, float(rows.mean())) * 0.5
+    col = np.repeat(np.clip(rows, 0, 1)[:, None, None], 3, axis=2)
+    hh = col.shape[0]
+    rgba = np.concatenate([col, np.ones((hh, 1, 1), np.float32)], axis=2)[::-1]
+    img = bpy.data.images.new("LOOK_rammed_layers", 1, hh, float_buffer=True)
     img.colorspace_settings.name = "Non-Color"
     img.pixels.foreach_set(rgba.astype(np.float32).ravel())
     img.pack()
@@ -292,13 +325,23 @@ def water_material(rgb) -> bpy.types.Material:
     bmp.inputs["Distance"].default_value = 0.08
     nt.link(h, bmp.inputs["Height"])
     lw = nt.n("ShaderNodeLayerWeight")
-    lw.inputs["Blend"].default_value = 0.35
-    deep = tuple(c * 0.6 for c in rgb)
-    col = nt.mix(lw.outputs["Facing"], deep, tuple(min(1.0, c * 2.2) for c in rgb))
+    lw.inputs["Blend"].default_value = 0.25
+    # 原来正面色取 rgb×2.2 —— 叠上 sat 1.9 的取样值就成了艳蓝。锚点图里的河面是浊的：
+    # 明暗差小、饱和低，靠悬浮泥沙散射而不是镜面反射。
+    #
+    # 2026-09-19 修一个反了的菲涅尔：原来 `mix(Facing, deep, bright)` —— Facing 在**垂直俯视**时
+    # 接近 1、掠射时接近 0，于是「正对着看＝亮、斜着看＝暗」，与真实的水正好相反（真实是垂直看
+    # 进浑水里最暗、掠射角上整片映着天空最亮）。航拍镜几乎全程是掠射，于是整条河渲成一块死黑板，
+    # 连带把东水门的洞口也堵成黑的（透过洞口看到的正是洞内那段水）。现在按 Fresnel 的真实方向接：
+    # 掠射 → 天光映射（去饱和的亮灰，不是艳蓝），俯视 → 浑水本色。
+    deep = tuple(c * 0.62 for c in rgb)
+    lum = sum(rgb[:3]) / 3.0
+    sheen = tuple(min(1.0, lum * 0.55 + c * 0.75) for c in rgb)     # 提亮 + 去饱和：天光是灰的
+    col = nt.mix(lw.outputs["Facing"], sheen, deep)
     bsdf = nt.n("ShaderNodeBsdfPrincipled")
     nt.link(col, bsdf.inputs["Base Color"])
-    bsdf.inputs["Roughness"].default_value = 0.16
-    bsdf.inputs["Specular IOR Level"].default_value = 0.35
+    bsdf.inputs["Roughness"].default_value = 0.11
+    bsdf.inputs["Specular IOR Level"].default_value = 0.5
     nt.link(bmp.outputs["Normal"], bsdf.inputs["Normal"])
     out = nt.n("ShaderNodeOutputMaterial")
     nt.link(bsdf.outputs["BSDF"], out.inputs["Surface"])
@@ -381,6 +424,14 @@ def ground_material(pal: dict, city_quad: list[tuple[float, float]]) -> bpy.type
     earth = tinted(dirt_c, dirt.mean_luma, pal["earth"])
     worn = nt.math("GREATER_THAN", nt.noise(nt.coords(40.0), 1.0, 4.0), 0.56)
     city_col = nt.mix(nt.math("MULTIPLY", worn, 0.55), earth, tinted(grass_c, grass.mean_luma, pal["field"]))
+    # 车辙与踩实带：把噪声沿一个轴拉长 30 倍 ＝ 顺街向的细长条纹（锚点图里街面全是这种深浅带，
+    # 之前城内是一整片平土色，是航拍最假的一处）。两组正交，南北街与东西街都覆盖到。
+    for scl in ((1 / 2.6, 1 / 78.0, 1.0), (1 / 78.0, 1 / 2.6, 1.0)):
+        rut_m = nt.n("ShaderNodeMapping")
+        rut_m.inputs["Scale"].default_value = scl
+        nt.link(pos, rut_m.inputs["Vector"])
+        rut = nt.noise(rut_m.outputs["Vector"], 1.0, 3.0)
+        city_col = nt.mix(0.16, city_col, nt.math("ADD", nt.math("MULTIPLY", rut, 0.55), 0.6), "MULTIPLY")
 
     # 田块：长条地块网格（每 420 m 大块里随机横竖），每块一个随机作物色
     big = nt.n("ShaderNodeVectorMath", operation="FLOOR")
@@ -448,8 +499,23 @@ def build_materials(pal: dict, city_quad: list[tuple[float, float]]) -> list[bpy
     patch = rammed_patch()
 
     def layers(nt: NT):
-        vec = nt.coords(3.5)
-        return nt.tex(patch, vec, box=True, non_color=True).outputs["Color"]
+        # 夯层必须在任何墙向上都是**水平**的。原来走 box 投影：墙面法向为 ±X 时 patch 的行被投到水平轴上，
+        # 夯层渲成了竖条纹（2026-09-17 照 bg2 对账时发现）。改为自己合成 UV —— v 只取 z、u 取 (x+y)，
+        # 于是花纹只随高度变化、沿墙走向缓慢平移，横纹与墙向无关。
+        xyz = nt.n("ShaderNodeSeparateXYZ")
+        nt.link(nt.n("ShaderNodeTexCoord").outputs["Object"], xyz.inputs["Vector"])
+        u = nt.math("MULTIPLY", nt.math("ADD", xyz.outputs["X"], xyz.outputs["Y"]), 1.0 / 9.0)
+        v = nt.math("MULTIPLY", xyz.outputs["Z"], 1.0 / 3.0)
+        comb = nt.n("ShaderNodeCombineXYZ")
+        nt.link(u, comb.inputs["X"])
+        nt.link(v, comb.inputs["Y"])
+        courses = nt.tex(patch, comb.outputs["Vector"], box=False, non_color=True).outputs["Color"]
+        # 竖向雨蚀沟：拉长的噪声（水平细、竖向粗），只占三成权重 —— 有竖沟但不成规律条纹
+        gully = nt.n("ShaderNodeMapping")
+        gully.inputs["Scale"].default_value = (1.0, 1.0, 0.07)
+        nt.link(nt.n("ShaderNodeTexCoord").outputs["Object"], gully.inputs["Vector"])
+        streak = nt.noise(gully.outputs["Vector"], 0.55, 4.0)
+        return nt.mix(0.18, courses, nt.math("ADD", nt.math("MULTIPLY", streak, 0.7), 0.45), "MULTIPLY")
 
     mats = {
         "EARTH": pbr_material("EARTH", "raked_dirt", pal["earth"], 3.0, bump=0.5, keep_hue=0.1),
@@ -1336,6 +1402,21 @@ def upgrade_structures(ob: bpy.types.Object, mats: list[bpy.types.Material]) -> 
     is_gate = col in ("G_GATES",) or (col == "B_GATES" and "tower" in ob.name)
     mb = MB()
     replaced: list[int] = []
+    if "_que" in ob.name:                      # 阙楼：布局层只有一个高盒子，渲出来是一块白板 → 砖台 + 木构楼身 + 瓦顶
+        for i, (s, n) in enumerate(zip(starts, sizes)):
+            if n != 8:
+                continue
+            box = co[s:s + 8]
+            zlo, zhi = float(box[:, 2].min()), float(box[:, 2].max())
+            if zhi - zlo < 8.0:
+                continue
+            c, u, v, a, b = rect_frame(box[:4])
+            base_top = zlo + (zhi - zlo) * 0.55
+            fm = FrameMB(mb, c, u, v)
+            fm.box(-a, a, -b, b, zlo, base_top, "BRICK")
+            timber_tower(fm, a * 0.9, b * 0.9, base_top, zhi)
+            curved_hip(FrameMB(mb, c, u, v), a + 1.4, b + 1.4, zhi, (zhi - zlo) * 0.22, "ROOF")
+            replaced.append(i)
     for i, (s, n) in enumerate(zip(starts, sizes)):
         if n not in (5, 6):
             continue
@@ -1381,8 +1462,471 @@ def is_tree_object(ob: bpy.types.Object) -> bool:
 PLACE_PROTOS = {"p8": "PROTO_p8_PROXY", "p9": "PROTO_p9_PROXY", "p10": "PROTO_p10_PROXY", "p10a": "PROTO_p10a_PROXY"}
 
 
+# ── 白模上色（follow-up 016）────────────────────────────────────────────────────────
+# 白模过闸门时材质被剥干净（那是对的：颜色不该由 vendor 决定），而 `get_proto` 是 **link** 进来的
+# 库数据、装不上本地材质 —— 结果是所有 Place / 地标 / §12 撒点的真网格在彩色渲染里全是灰的。
+# 这里把每个 PROTO_pN_{A,B} 里的网格 make_local 一次，按「相对高度 + 法向 + 面积」派本仓库的
+# LOOK_* 材质，再打 look=1（布局层的零材质检查只看没有 look 标记的对象）。
+# 实例不用动：它们指向同一份 proto，proto 换了材质，几千个实例一起变。
+WM_RULES: dict[str, dict[str, str]] = {
+    # key: {roof, wall, plinth, member}；缺省见 dress_whitemodels 的 base
+    "p12": {"roof": "REED", "wall": "TIMBER", "plinth": "TIMBER", "member": "TIMBER"},      # 漕船：席篷 + 素木壳
+    "p13": {"roof": "TIMBER", "wall": "TIMBER", "plinth": "STONE", "member": "TIMBER"},     # 表木
+    "p14": {"roof": "REED", "wall": "REED", "plinth": "TIMBER", "member": "TIMBER"},        # 油纸伞
+    "p15": {"roof": "BLACK", "wall": "TIMBER", "plinth": "STONE", "member": "BLACK"},       # 铁裹闸门
+    "p16": {"roof": "SKIN", "wall": "SKIN", "plinth": "SKIN", "member": "CLOTH_UNDYED"},    # 骆驼
+    "p17": {"roof": "SKIN", "wall": "SKIN", "plinth": "SKIN", "member": "CLOTH_UNDYED"},    # 毛驴
+    "p18": {"roof": "RED", "wall": "RED", "plinth": "STONE", "member": "RED"},              # 朱漆杈子
+    "p20": {"roof": "BLACK", "wall": "BLACK", "plinth": "BLACK", "member": "BLACK"},        # 陶油灯
+    "p26": {"roof": "LEAF", "wall": "LEAF", "plinth": "BARK", "member": "BARK"},            # 老柳树
+    "p28": {"roof": "REED", "wall": "REED", "plinth": "EARTH", "member": "TIMBER"},         # 席棚小摊
+    "p35": {"roof": "PLASTER", "wall": "PLASTER", "plinth": "TIMBER", "member": "TIMBER"},  # 纸扎楼阁
+    "p36": {"roof": "CLOTH_BLUE", "wall": "CLOTH_BLUE", "plinth": "TIMBER", "member": "TIMBER"},  # 青布幌
+    "p40": {"roof": "REED", "wall": "REED", "plinth": "TIMBER", "member": "TIMBER"},        # 空筐与席卷
+    "p41": {"roof": "CLOTH_UNDYED", "wall": "CLOTH_UNDYED", "plinth": "CLOTH_UNDYED", "member": "TIMBER"},  # 粮袋堆
+    "p42": {"roof": "STONE", "wall": "STONE", "plinth": "STONE", "member": "TIMBER"},       # 拴马石与马槽
+    "p43": {"roof": "LEAF", "wall": "STONE", "plinth": "STONE", "member": "LEAF"},          # 御沟荷与砖石沿
+    "p37": {"roof": "STONE", "wall": "STONE", "plinth": "STONE", "member": "STONE"},        # 石门枕
+    "p54": {"roof": "REED", "wall": "RAMMED", "plinth": "EARTH", "member": "TIMBER"},       # 草屋
+    "p58": {"roof": "ROOF_UV", "wall": "RAMMED", "plinth": "BRICK", "member": "TIMBER"},    # 城门门楼
+    "p59": {"roof": "ROOF_UV", "wall": "PLASTER", "plinth": "BRICK", "member": "TIMBER"},   # 仓廒
+    "p60": {"roof": "REED", "wall": "RAMMED", "plinth": "EARTH", "member": "TIMBER"},       # 田间农舍
+}
+WM_BASE = {"roof": "ROOF_UV", "wall": "PLASTER", "plinth": "BRICK", "member": "TIMBER"}
+
+
+# ── 细长件走脚本，不走 image-to-3D（2026-09-18）─────────────────────────────────────
+# Rodin 对高长径比物体是**系统性压方**的（build_objects.py 抬头已记：漕船 4:1 出成 1.25:1），
+# 于是这十件一律卡在闸门的「来源比例漂移」上、退回替身盒。重掷没有意义——那不是随机失手。
+# 这十件恰好都是平直重复结构：杆、框、板、梁、凳、幌，按 rule 4g ② 本就该归脚本。
+# 每个 builder 按 object_inventory.toml 的声明尺寸建，原点在接地面中心、正面朝 +Y，
+# 与白模闸门的归一化口径一致——所以 §12 撒点、Place 行、地标槽位都不用改一个字。
+def o_biaomu(mb: MB) -> None:                                      # p13 表木 0.6 × 0.6 × 7.5
+    mb.tube([Vector((0, 0, 0)), Vector((0, 0, 7.0))], [0.14, 0.11], 8, "TIMBER")
+    mb.box((-0.40, -0.05, 6.82), (0.40, 0.05, 6.94), "TIMBER")
+    mb.box((-0.06, -0.12, 6.94), (0.06, 0.12, 7.22), "TIMBER")
+    mb.box((-0.10, -0.06, 7.10), (0.10, 0.06, 7.18), "TIMBER")
+
+
+def o_zhamen(mb: MB) -> None:                                      # p15 铁裹闸门 4.2 × 0.4 × 5.0
+    mb.box((-2.1, -0.16, 0.0), (2.1, 0.16, 5.0), "TIMBER")
+    for z in (0.5, 1.6, 2.6, 3.6, 4.6):
+        mb.box((-2.1, -0.20, z - 0.06), (2.1, 0.20, z + 0.06), "BLACK")
+    for x in (-1.4, 0.0, 1.4):
+        mb.box((x - 0.07, -0.20, 0.0), (x + 0.07, 0.20, 5.0), "BLACK")
+    for x in (-1.2, 1.2):
+        mb.tube([Vector((x, 0, 5.0)), Vector((x, 0, 5.3))], [0.05, 0.05], 6, "BLACK")
+
+
+def o_chuangta(mb: MB) -> None:                                    # p22 素木床榻 1.1 × 2.0 × 0.6
+    mb.box((-0.55, -1.0, 0.45), (0.55, 1.0, 0.52), "TIMBER")
+    for sx in (-0.47, 0.47):
+        for sy in (-0.92, 0.92):
+            mb.box((sx - 0.04, sy - 0.04, 0.0), (sx + 0.04, sy + 0.04, 0.45), "TIMBER")
+    mb.box((-0.55, -1.00, 0.36), (0.55, -0.94, 0.45), "TIMBER")
+    mb.box((-0.10, 0.62, 0.52), (0.10, 0.82, 0.62), "PLASTER")
+
+
+def o_chuangshan(mb: MB) -> None:                                  # p23 直棂窗扇 1.2 × 0.08 × 1.4
+    for x in (-0.60, 0.56):
+        mb.box((x, -0.04, 0.0), (x + 0.04, 0.04, 1.4), "TIMBER")
+    for z in (0.0, 1.36):
+        mb.box((-0.60, -0.04, z), (0.60, 0.04, z + 0.04), "TIMBER")
+    for k in range(13):
+        x = -0.54 + k * 0.09
+        mb.box((x - 0.015, -0.015, 0.04), (x + 0.015, 0.015, 1.36), "TIMBER")
+
+
+def o_lizhao(mb: MB) -> None:                                      # p24 竖长木立招 0.4 × 0.12 × 2.4
+    mb.box((-0.06, -0.06, 0.0), (0.06, 0.06, 0.20), "STONE")
+    mb.box((-0.15, -0.02, 0.18), (0.15, 0.02, 2.38), "TIMBER")
+    mb.box((-0.19, -0.05, 2.30), (0.19, 0.05, 2.40), "TIMBER")
+
+
+def o_huang(mb: MB) -> None:                                       # p36 青布幌 0.5 × 0.05 × 1.8
+    mb.box((-0.35, -0.02, 1.72), (0.35, 0.02, 1.80), "TIMBER")
+    mb.box((-0.25, -0.01, 0.22), (0.25, 0.01, 1.72), "CLOTH_BLUE")
+    for x in (-0.18, 0.0, 0.18):
+        mb.box((x - 0.02, -0.01, 0.06), (x + 0.02, 0.01, 0.22), "CLOTH_BLUE")
+
+
+def o_muqiao(mb: MB) -> None:                                      # p38 过壕木桥 4.0 × 14.0 × 1.2
+    mb.box((-2.0, -7.0, 1.02), (2.0, 7.0, 1.14), "TIMBER")
+    for x in (-1.7, -0.6, 0.6, 1.7):
+        mb.tube([Vector((x, -7.0, 0.87)), Vector((x, 7.0, 0.87))], [0.15, 0.15], 8, "TIMBER")
+    for sx in (-1.95, 1.95):
+        for k in range(8):
+            y = -6.5 + k * 13.0 / 7
+            mb.box((sx - 0.05, y - 0.05, 1.14), (sx + 0.05, y + 0.05, 1.94), "TIMBER")
+        mb.box((sx - 0.05, -7.0, 1.86), (sx + 0.05, 7.0, 1.94), "TIMBER")
+    for sy in (-6.6, 6.6):
+        for sx in (-1.7, 1.7):
+            mb.tube([Vector((sx, sy, 0.0)), Vector((sx, sy, 0.95))], [0.13, 0.13], 6, "TIMBER")
+
+
+def o_guduo(mb: MB) -> None:                                       # p39 骨朵 0.12 × 0.12 × 0.95
+    mb.tube([Vector((0, 0, 0)), Vector((0, 0, 0.80))], [0.017, 0.015], 8, "TIMBER")
+    mb.tube([Vector((0, 0, 0.80)), Vector((0, 0, 0.95))], [0.05, 0.02], 8, "BLACK")
+    for k in range(7):
+        a = 2 * math.pi * k / 7
+        cx, cy = 0.03 * math.cos(a), 0.03 * math.sin(a)
+        mb.box((cx - 0.012, cy - 0.012, 0.82), (cx + 0.012, cy + 0.012, 0.92), "BLACK")
+
+
+def o_mudeng(mb: MB) -> None:                                      # p44 长条木凳 0.35 × 1.8 × 0.45
+    mb.box((-0.175, -0.90, 0.39), (0.175, 0.90, 0.45), "TIMBER")
+    for sy in (-0.78, 0.78):
+        for sx in (-1, 1):
+            x0 = sx * 0.13
+            mb.tube([Vector((x0, sy, 0.0)), Vector((x0 * 0.72, sy, 0.39))], [0.03, 0.03], 6, "TIMBER")
+        mb.box((-0.14, sy - 0.025, 0.14), (0.14, sy + 0.025, 0.19), "TIMBER")
+
+
+def o_caochuan(mb: MB) -> None:                                    # p12 漕船 4.5 × 18 × 3
+    ln, wd = 18.0, 4.5
+    for k in range(12):
+        t0, t1 = k / 12, (k + 1) / 12
+        y0, y1 = -ln / 2 + ln * t0, -ln / 2 + ln * t1
+        w0 = wd / 2 * (0.55 + 0.45 * math.sin(math.pi * min(1.0, max(0.0, (t0 - 0.02) / 0.96))))
+        w1 = wd / 2 * (0.55 + 0.45 * math.sin(math.pi * min(1.0, max(0.0, (t1 - 0.02) / 0.96))))
+        for sx in (-1, 1):
+            q = [(sx * w0, y0, 0.0), (sx * w1, y1, 0.0), (sx * w1, y1, 1.35), (sx * w0, y0, 1.35)]
+            mb.face(q if sx > 0 else [q[1], q[0], q[3], q[2]], "TIMBER")
+        mb.face([(-w0, y0, 0.0), (w0, y0, 0.0), (w1, y1, 0.0), (-w1, y1, 0.0)], "TIMBER")
+    for k in range(9):
+        t0, t1 = k / 9, (k + 1) / 9
+        y0, y1 = -6.0 + 12.0 * t0, -6.0 + 12.0 * t1
+        for sx in (-1, 1):
+            x = sx * 1.6
+            ztop = 1.35 + 0.95 * math.cos(math.pi / 2 * abs(x) / 1.7)
+            mb.face([(x, y0, 1.35), (x, y1, 1.35), (x, y1, ztop), (x, y0, ztop)], "REED")
+        mb.face([(-1.6, y0, 2.30), (1.6, y0, 2.30), (1.6, y1, 2.30), (-1.6, y1, 2.30)], "REED")
+    mb.box((-1.5, 6.2, 1.35), (1.5, 8.2, 3.0), "TIMBER")
+    mb.tube([Vector((0, 8.2, 2.2)), Vector((0, 9.4, 0.2))], [0.10, 0.08], 6, "TIMBER")
+    mb.tube([Vector((0.9, -5.6, 2.45)), Vector((0.9, 3.4, 2.75))], [0.16, 0.10], 8, "TIMBER")
+    for k in range(6):
+        x0, y0 = -1.2 + (k % 3) * 0.9, -5.4 + (k // 3) * 1.1
+        mb.box((x0, y0, 2.30), (x0 + 0.7, y0 + 0.8, 2.75), "CLOTH_UNDYED")
+
+
+def o_bandoor(mb: MB) -> None:                                     # p48 板门一扇 0.95 × 0.06 × 2.15
+    for k in range(5):
+        x0 = -0.475 + k * 0.19
+        mb.box((x0 + 0.004, -0.022, 0.0), (x0 + 0.186, 0.022, 2.15), "TIMBER")
+    for z in (0.28, 1.08, 1.90):
+        mb.box((-0.475, -0.028, z - 0.035), (0.475, 0.028, z + 0.035), "TIMBER")   # 横向穿带
+    mb.tube([Vector((0.30, 0.028, 1.12)), Vector((0.30, 0.075, 1.12))], [0.035, 0.03], 6, "BLACK")
+
+
+def o_railing(mb: MB) -> None:                                     # p49 木栏杆一段 2.4 × 0.14 × 1.05
+    for sx in (-1.18, 1.14):
+        mb.box((sx, -0.055, 0.0), (sx + 0.06, 0.055, 1.05), "TIMBER")              # 望柱
+    mb.box((-1.20, -0.045, 0.94), (1.20, 0.045, 1.02), "TIMBER")                   # 扶手
+    mb.box((-1.20, -0.035, 0.40), (1.20, 0.035, 0.46), "TIMBER")                   # 中枋
+    for k in range(9):
+        x = -1.06 + k * 0.265
+        mb.box((x - 0.018, -0.022, 0.46), (x + 0.018, 0.022, 0.94), "TIMBER")      # 棂条
+    for k in range(9):
+        x = -1.06 + k * 0.265
+        mb.box((x - 0.015, -0.02, 0.06), (x + 0.015, 0.02, 0.40), "TIMBER")
+
+
+def o_bofeng(mb: MB) -> None:                                      # p50 悬山博风与悬鱼 2.8 × 0.1 × 1.6
+    for sx in (-1, 1):
+        n = 9
+        for k in range(n):
+            t0, t1 = k / n, (k + 1) / n
+            x0, x1 = sx * 1.40 * (1 - t0), sx * 1.40 * (1 - t1)
+            z0, z1 = 0.10 + 1.30 * t0, 0.10 + 1.30 * t1
+            mb.face([(x0, -0.05, z0), (x1, -0.05, z1), (x1, 0.05, z1), (x0, 0.05, z0)], "TIMBER")
+            mb.face([(x0, 0.05, z0 - 0.22), (x1, 0.05, z1 - 0.22), (x1, 0.05, z1), (x0, 0.05, z0)], "TIMBER")
+    mb.box((-0.14, -0.04, 0.86), (0.14, 0.04, 1.44), "TIMBER")                     # 悬鱼
+    mb.box((-0.22, -0.035, 1.26), (0.22, 0.035, 1.38), "TIMBER")
+    mb.tube([Vector((0, 0, 1.40)), Vector((0, 0, 1.56))], [0.05, 0.03], 6, "TIMBER")
+
+
+def o_willow(mb: MB) -> None:
+    """p26 老柳树 6 × 6 × 8：树身 + 三根主枝 + 十六条下垂枝条。
+
+    Rodin 给的是一颗**光滑蛋**（peek 实测，与 rule 4h §G1 记的「立绘塌成一团光滑坨」同一模式）——
+    细长下垂的柳条是生成式最拿不住的形状，而它有 236 个实例沿街排开，一眼就假。
+    垂柳恰好是**参数化最省的树**：一根主干 + 几根主枝 + 一束下垂曲线，脚本给得又准又轻。
+    """
+    rng = random.Random(26)
+    mb.tube([Vector((0, 0, 0)), Vector((0.1, 0.05, 1.6)), Vector((0.05, -0.05, 3.1))],
+            [0.42, 0.34, 0.26], 8, "BARK")
+    tops = []
+    for k in range(3):
+        a = 2 * math.pi * k / 3 + 0.4
+        tip = Vector((1.15 * math.cos(a), 1.15 * math.sin(a), 4.6 + 0.35 * k))
+        mb.tube([Vector((0.05, -0.05, 3.0)), (tip + Vector((0, 0, -0.7))) * 0.7, tip], [0.22, 0.15, 0.09], 6, "BARK")
+        tops.append(tip)
+    for k in range(16):
+        a = 2 * math.pi * k / 16 + rng.uniform(-0.12, 0.12)
+        r = rng.uniform(1.7, 2.9)
+        base = tops[k % 3] + Vector((0.25 * math.cos(a), 0.25 * math.sin(a), rng.uniform(0.2, 1.1)))
+        pts, rad = [base], [0.055]
+        n = 6
+        for i in range(1, n + 1):
+            t = i / n
+            pts.append(Vector((r * t * math.cos(a), r * t * math.sin(a),
+                               base.z + 1.0 * t - 3.4 * t * t + rng.uniform(-0.06, 0.06))))
+            rad.append(0.05 * (1 - 0.7 * t))
+        mb.tube(pts, rad, 5, "LEAF", cap=False)
+        for i in range(1, n):                                  # 枝条上的叶片：小三角片，量少但打断轮廓
+            p0 = pts[i]
+            w = 0.34
+            mb.face([(p0.x, p0.y, p0.z), (p0.x + w * math.cos(a + 1.2), p0.y + w * math.sin(a + 1.2), p0.z - 0.26),
+                     (p0.x + w * 0.4 * math.cos(a), p0.y + w * 0.4 * math.sin(a), p0.z - 0.52)], "LEAF")
+
+
+SCRIPT_OBJECTS: dict[str, tuple] = {
+    "p12": (o_caochuan, "LOOK_p12_caochuan"), "p13": (o_biaomu, "LOOK_p13_biaomu"),
+    "p15": (o_zhamen, "LOOK_p15_zhamen"), "p22": (o_chuangta, "LOOK_p22_chuangta"),
+    "p23": (o_chuangshan, "LOOK_p23_chuangshan"), "p24": (o_lizhao, "LOOK_p24_lizhao"),
+    "p36": (o_huang, "LOOK_p36_huang"), "p38": (o_muqiao, "LOOK_p38_muqiao"),
+    "p39": (o_guduo, "LOOK_p39_guduo"), "p44": (o_mudeng, "LOOK_p44_mudeng"),
+    # p48–p50 厚 6–14 cm 的薄板件：Rodin 必压方，直接归脚本（与上面十件同一条判据）
+    "p48": (o_bandoor, "LOOK_p48_bandoor"), "p49": (o_railing, "LOOK_p49_railing"),
+    "p50": (o_bofeng, "LOOK_p50_bofeng"), "p26": (o_willow, "LOOK_p26_willow"),
+}
+
+
+
+# ── 立面白模进城市肌理（follow-up 016）────────────────────────────────────────────
+# 用户定的口径：一个 scene 里成百上千栋房子，**API 出的模型最多约 20 个**，靠反复使用铺满；
+# 能程序化出微调版就程序化。这里就是那条线：
+#   ① 原型 ＝ 立面白模（p45 三间店铺 / p51 两层楼屋 / p52 脚店门脸 / p54 草屋 /
+#      p55 院落正厅 / p59 仓廒 / p60 田间农舍），每个只出一次；
+#   ② 变体 ＝ 程序化——**按面宽整开间平铺 1–3 份**（不是硬拉伸，免得开间被抻宽）、
+#      余量用 ±20% 非等比缩放吸收、逐实例镜像与小幅偏转；
+#   ③ 缺哪个立面就退回脚本原型（`LOOK_H*`），不阻塞。
+# 落地形态仍是同一套 instance-on-points（`look_pick` / `look_rot` / `look_scl`），
+# 所以几万栋房子只是几万个点，不是几万份网格。
+FACADES: dict[str, tuple[int, str, tuple[float, float, float]]] = {
+    # key: (层数, 式样, 声明尺寸 X宽×Y进深×Z高)；尺寸与 object_inventory.toml 一致
+    "p61": (1, "tile", (4.6, 5.0, 4.2)),      # 4 m 档专用（占全城约四成房子），2026-09-18 为「精致缩小版」补出
+    "p62": (2, "shop", (3.6, 6.0, 6.4)),      # 窄面宽两层临街屋：补上 309 栋窄高房落回方块的那一档
+    "p45": (1, "shop", (11.1, 9.0, 5.5)),
+    "p51": (2, "shop", (11.1, 9.0, 8.5)),
+    "p52": (1, "inn", (7.4, 7.0, 5.8)),
+    "p54": (1, "thatch", (4.2, 4.0, 3.6)),
+    "p55": (1, "hall", (11.0, 8.0, 6.2)),
+    "p59": (1, "granary", (10.5, 22.0, 7.2)),
+    "p60": (1, "farm", (6.2, 5.5, 4.4)),
+}
+
+
+# ── 立面变体（follow-up 018：街上不要都长一个样）─────────────────────────────────
+# 8 个 API 立面 + 镜像 + 缩放抖动，一排房子仍看得出是同款。变体不靠再出模型，而是把
+# 立面网格的面**复录一遍**、再挂脚本附件：披檐、布幌、竖立招、侧披、柴垛。
+# 每个 key 出三款 → 24 个原型，再乘镜像与 ±2° 偏转，街上基本不重复。
+def fa_plain(mb: MB, w: float, d: float, h: float, rng: random.Random) -> None:
+    return None
+
+
+def fa_awning(mb: MB, w: float, d: float, h: float, rng: random.Random) -> None:
+    """临街披檐（席顶）＋ 一面布幌：最常见的街屋做法。"""
+    z = h * rng.uniform(0.40, 0.52)
+    out = rng.uniform(1.2, 1.9)
+    y0 = d / 2
+    mb.face([(-w / 2, y0, z), (w / 2, y0, z), (w / 2, y0 + out, z - 0.42), (-w / 2, y0 + out, z - 0.42)], "REED")
+    mb.face([(w / 2, y0, z - 0.06), (-w / 2, y0, z - 0.06), (-w / 2, y0 + out, z - 0.48), (w / 2, y0 + out, z - 0.48)], "REED")
+    for sx in (-w / 2 + 0.2, w / 2 - 0.2):
+        mb.box((sx - 0.05, y0 + out - 0.12, 0.0), (sx + 0.05, y0 + out, max(0.1, z - 0.42)), "TIMBER")
+    hx = rng.uniform(-w / 4, w / 4)
+    mb.box((hx - 0.22, y0 + out - 0.03, max(0.2, z - 2.1)), (hx + 0.22, y0 + out - 0.01, max(0.4, z - 0.5)),
+           "CLOTH_BLUE" if rng.random() < 0.6 else "CLOTH_RED")
+
+
+def fa_sign_shed(mb: MB, w: float, d: float, h: float, rng: random.Random) -> None:
+    """竖立招 ＋ 侧面单坡披屋 ＋ 柴垛：作坊 / 脚店的样子。"""
+    sx = (w / 2 + 0.5) * rng.choice((-1, 1))
+    mb.box((sx - 0.06, d / 2 - 0.06, 0.0), (sx + 0.06, d / 2 + 0.06, 0.2), "STONE")
+    mb.box((sx - 0.16, d / 2 - 0.02, 0.2), (sx + 0.16, d / 2 + 0.02, h * 0.62), "TIMBER")
+    mb.box((sx - 0.2, d / 2 - 0.05, h * 0.60), (sx + 0.2, d / 2 + 0.05, h * 0.64), "TIMBER")
+    ss = -1.0 if sx > 0 else 1.0
+    x0 = ss * (w / 2)
+    x1 = x0 + ss * rng.uniform(2.2, 3.4)
+    zh, zl = h * 0.45, h * 0.34
+    mb.face([(x0, -d / 4, zh), (x1, -d / 4, zl), (x1, d / 4, zl), (x0, d / 4, zh)], "REED")
+    for yy in (-d / 4, d / 4):
+        lo_x, hi_x = sorted((x1 - ss * 0.06, x1 + ss * 0.06))
+        mb.box((lo_x, yy - 0.06, 0.0), (hi_x, yy + 0.06, zl), "TIMBER")
+    for k in range(3):
+        wx = x0 + ss * rng.uniform(0.4, 1.6)
+        mb.box((wx - 0.35, -d / 5 + k * 0.42, 0.0), (wx + 0.35, -d / 5 + k * 0.42 + 0.34, 0.34), "TIMBER")
+
+
+FACADE_VARIANTS = (fa_plain, fa_awning, fa_sign_shed)
+
+
+def facade_protos(mats: list[bpy.types.Material], start: int, log=print) -> tuple[list[bpy.types.Object], dict]:
+    """把有白模的立面 append 进本文件、派好材质，返回 (原型对象, key → (索引, 声明尺寸, 式样, 层数))。
+
+    必须 append 而不是 link —— link 进来的库网格装不上本地材质（白模是无材质的），
+    那正是 `dress_whitemodels` 处理 Place / 撒点那批时踩到的同一件事。
+    """
+    obs: list[bpy.types.Object] = []
+    table: dict[str, tuple] = {}
+    for key, (storey, style, size) in FACADES.items():
+        wm = bj.resolve_asset(key).whitemodel
+        if not wm.is_file():
+            continue
+        with bpy.data.libraries.load(str(wm), link=False) as (src, dst):
+            dst.objects = list(src.objects)
+        meshes = [o for o in dst.objects if o is not None and o.type == "MESH" and len(o.data.polygons)]
+        if not meshes:
+            continue
+        faces: list[tuple[list, str]] = []
+        rule = {**WM_BASE, **WM_RULES.get(key, {})}
+        for o in meshes:
+            me = o.data
+            nrm, cen, _fv = face_arrays(me)
+            zs = cen[:, 2]
+            z0, z1 = float(zs.min()), float(zs.max())
+            rel = (zs - z0) / max(1e-4, z1 - z0)
+            area = np.empty(len(me.polygons), np.float32)
+            me.polygons.foreach_get("area", area)
+            flat = np.abs(nrm[:, 2]) > 0.30
+            names = np.where(flat & (rel > 0.45), rule["roof"], rule["wall"])
+            names = np.where(rel < 0.06, rule["plinth"], names)
+            names = np.where((~flat) & (area < 0.12), rule["member"], names)
+            vs = np.empty(len(me.vertices) * 3, np.float32)
+            me.vertices.foreach_get("co", vs)
+            vs = vs.reshape(-1, 3)
+            for poly, mname in zip(me.polygons, names):
+                pts = [tuple(vs[me.loops[li].vertex_index]) for li in range(poly.loop_start, poly.loop_start + poly.loop_total)]
+                if len(pts) >= 3:
+                    faces.append((pts, str(mname)))
+        for o in meshes:                                  # append 进来的原件用不着了
+            bpy.data.objects.remove(o)
+        picks = []
+        for vi, addon in enumerate(FACADE_VARIANTS):
+            vmb = MB()
+            for pts, mname in faces:
+                vmb.face(pts, mname)
+            addon(vmb, size[0], size[1], size[2], random.Random(abs(hash(key)) % 9973 + vi))
+            picks.append(start + len(obs))
+            obs.append(vmb.finish(f"LOOK_H{start + len(obs):02d}_facade_{key}_v{vi}", mats))
+        table[key] = (picks, size, style, storey)
+    log("look: facades " + (", ".join(f"{k}→{v[0]}" for k, v in sorted(table.items())) or "无（白模还没到货）"))
+    return obs, table
+
+
+FACADE_REJECT: dict[str, int] = {}
+
+
+def facade_pick(table: dict, d: tuple[float, float, float], style: str, storey: int,
+                rng: random.Random) -> tuple[int, tuple[float, float, float], int] | None:
+    """按「式样 + 层数」选立面，返回 (pick, 逐轴缩放, 平铺份数)；选不到或缩放超界返回 None。"""
+    # 选型按「同层数 + 面宽就近」，不按式样标签硬匹配：实测只有 18% 的房子能配上立面，
+    # 4 m 档（占全城四成）与 8 m 档全落回脚本方块原型，城看着就不精致（2026-09-18）。
+    # 式样仍参与——同宽多选时优先同式样，但不会因为标签不同就退回方块。
+    cands = [(k, v) for k, v in table.items() if v[3] == storey]
+    if not cands:
+        FACADE_REJECT[f"无 {storey} 层立面"] = FACADE_REJECT.get(f"无 {storey} 层立面", 0) + 1
+        return None
+
+    def mismatch(kv) -> tuple:
+        """面宽与脊高一起打分：只按面宽挑会选到「宽度刚好、却矮了一半」的立面
+        （实测 12 m × 6.6 m 的房子被配上 4.2 m 高的草屋，sz=1.83 直接越界、落回方块）。"""
+        fw, _fd, fh = kv[1][1]
+        n = max(1, min(3, int(round(d[0] / fw))))
+        return (abs(d[0] / (n * fw) - 1.0) + abs(d[2] / fh - 1.0), 0 if kv[1][2] == style else 1)
+
+    key, (picks, size, _st, _sy) = min(cands, key=mismatch)
+    pick = picks[rng.randrange(len(picks))] if isinstance(picks, list) else picks
+    fw, fd, fh = size
+    n = max(1, min(3, int(round(d[0] / fw))))
+    sx = d[0] / (n * fw)
+    sz = d[2] / fh
+    if not (0.70 <= sx <= 1.45 and 0.70 <= sz <= 1.40):
+        why = f"{key} 缩放越界 sx={sx:.2f} sz={sz:.2f}（目标 {d[0]:.1f}×{d[2]:.1f}）"
+        FACADE_REJECT[why] = FACADE_REJECT.get(why, 0) + 1
+        return None
+    return pick, (sx, max(0.6, min(1.6, d[1] / fd)), sz), n
+
+
+def facade_points(u, pick: int, sc: tuple[float, float, float], n: int, rng: random.Random) -> list[tuple]:
+    """一栋房子 → n 个立面实例（沿面宽排开），逐份镜像与 ±2° 偏转，两栋不会一模一样。"""
+    out = []
+    step = u.dims[0] / n
+    ux, uy = math.cos(u.yaw), math.sin(u.yaw)
+    for i in range(n):
+        off = (i - (n - 1) / 2) * step
+        loc = (u.loc[0] + ux * off, u.loc[1] + uy * off, u.loc[2])
+        mirror = rng.random() < 0.5
+        yaw = u.yaw + math.radians(rng.uniform(-2.0, 2.0))
+        out.append((loc, yaw, ((-1 if mirror else 1) * sc[0], sc[1], sc[2] * rng.uniform(0.97, 1.03)), pick))
+    return out
+
+
+def dress_script_objects(mats: list[bpy.types.Material], log=print) -> int:
+    """替身盒 → 脚本件：把 `PROTO_pN_PROXY` 里的盒子藏起来，塞进脚本建的真形。"""
+    n = 0
+    for key, (fn, name) in SCRIPT_OBJECTS.items():
+        # 同一个 key 可能有三份 proto（PROXY 替身 / A 全型面 / B 抽面），而实例各挂各的一份——
+        # 只顶掉第一份，别的档照旧显示白模（2026-09-18 实测：御街上一排 6 m 的光滑蛋就是 A 档漏了）。
+        cols = [c for t in ("PROXY", "A", "B") if (c := bpy.data.collections.get(f"PROTO_{key}_{t}"))]
+        if not cols:
+            continue
+        for col in cols:
+            # 把这一档 proto 里原有的全部摘掉，再放进脚本件。两个坑都在这一行里：
+            #   · 只 hide_render 没用——collection 实例照样渲（御街那排 6 m 光滑蛋就是这么来的）；
+            #   · 不能只摘「没打 look 标记的」——`dress_whitemodels` 先跑过、已经给白模打了 look=1，
+            #     于是白模反而被跳过、继续显示。proto 下次 build 会重新链进来，摘干净是安全的。
+            for o in list(col.objects):
+                col.objects.unlink(o)
+            mb = MB()
+            fn(mb)
+            col.objects.link(mb.finish(f"{name}_{col.name.rsplit('_', 1)[1]}", mats))
+        n += 1
+    log(f"look: scripted {n} slender objects (Rodin 压方的那批)")
+    return n
+
+
+def dress_whitemodels(mats: list[bpy.types.Material], log=print) -> int:
+    """给 `PROTO_p*_{A,B}` 里的真网格派材质。返回上了色的 proto 网格数。"""
+    n = 0
+    for col in sorted((c for c in bpy.data.collections if re.fullmatch(r"PROTO_p\d+[a-z]?_[AB]", c.name)),
+                      key=lambda c: c.name):
+        key = col.name.split("_")[1]
+        rule = {**WM_BASE, **WM_RULES.get(key, {})}
+        for ob in list(col.objects):
+            if ob.type != "MESH" or not len(ob.data.polygons):
+                continue
+            if ob.library is not None:
+                ob.make_local()
+            if ob.data.library is not None:
+                ob.data.make_local()
+            me = ob.data
+            nrm, cen, _fv = face_arrays(me)
+            zs = cen[:, 2]
+            z0, z1 = float(zs.min()), float(zs.max())
+            rel = (zs - z0) / max(1e-4, z1 - z0)
+            area = np.empty(len(me.polygons), np.float32)
+            me.polygons.foreach_get("area", area)
+            flat = np.abs(nrm[:, 2]) > 0.30
+            idx = np.full(len(me.polygons), M[rule["wall"]], np.int32)
+            idx[flat & (rel > 0.45)] = M[rule["roof"]]                    # 屋面 / 冠 / 篷
+            idx[rel < 0.06] = M[rule["plinth"]]                           # 台基 / 墙脚 / 落地
+            idx[(~flat) & (area < 0.12)] = M[rule["member"]]              # 细长竖件＝柱 / 栏 / 棂
+            me.polygons.foreach_set("material_index", idx)
+            set_slots(me, mats)
+            me.update()
+            tag(ob)                    # look=1：布局层的「零材质」检查跳过它
+            ob["look_wm"] = 1          # 但 undress 不许删它——几何不是 look pass 造的
+            n += 1
+    log(f"look: dressed {n} whitemodel protos")
+    return n
+
+
+
 def undress() -> None:
     for ob in list(bpy.data.objects):
+        if ob.get("look_wm"):
+            continue          # 白模 proto：几何属于布局层（`get_proto` 链进来的），look pass 只给它派材质，不许删
         if ob.get("look"):
             bpy.data.objects.remove(ob)
         elif ob.get("look_hidden"):
@@ -1433,6 +1977,8 @@ def dress(log=print) -> dict[str, int]:
     skip_up = set(TREE_OBJECTS) | {o.name for o in bpy.data.collections["G_SUBURBS"].objects}
     n_up = sum(upgrade_structures(ob, mats) for ob in layout if ob.name not in skip_up)
     log(f"look: upgraded {n_up} roofs / gate towers")
+    dress_script_objects(mats, log)
+    dress_whitemodels(mats, log)
 
     counts: dict[str, int] = {}
     # place protos
@@ -1472,6 +2018,8 @@ def dress(log=print) -> dict[str, int]:
                     name = f"LOOK_H{len(protos):02d}_{wk}_S{storey}_{st}_L{lod}"
                     protos.append(house_object(name, parts, st, lod, len(protos) * 7 + 3, mats))
                     pick_of[(wk, storey, lod, st)] = len(protos) - 1
+    fac_obs, fac_table = facade_protos(mats, len(protos), log)
+    protos += fac_obs
     house_protos = proto_collection("LOOK_PROTO_HOUSES", protos)
 
     def proto_for(d: tuple[float, float, float], lod: int, rng: random.Random, thatch: float, shop: float) -> tuple[int, tuple[float, float, float]]:
@@ -1484,6 +2032,18 @@ def dress(log=print) -> dict[str, int]:
         lx, ly = WIDTHS[wk]
         return pick_of[(wk, storey, lod, st)], (d[0] / lx, d[1] / ly, d[2] / STOREYS[storey])
 
+    def fabric_points(u, lod: int, rng: random.Random, thatch: float, shop: float) -> list[tuple]:
+        """一栋房子的实例点：有合适的立面白模就用它（可平铺多份），否则用脚本原型一份。"""
+        if u.dims[2] < 2.5 or u.dims[0] < 2.0:
+            return []                      # 院墙 / 院坪 / 台基板：不是房子，别拿房原型压成薄片
+        storey = 1 if u.dims[2] < 7.0 else (2 if u.dims[2] < 10.5 else 3)
+        style = "thatch" if rng.random() < thatch else ("shop" if rng.random() < max(shop, 0.25 if storey > 1 else shop) else "tile")
+        hit = facade_pick(fac_table, u.dims, {"tile": "shop", "shop": "shop", "tall": "shop"}.get(style, style), storey, rng)
+        if hit is not None:
+            return facade_points(u, hit[0], hit[1], hit[2], rng)
+        pick, sc = proto_for(u.dims, lod, rng, thatch, shop)
+        return [(u.loc, u.yaw, ((-1 if u.mirror else 1) * sc[0], sc[1], sc[2]), pick)]
+
     pts = []
     all_units: list[Unit] = []
     for ob in list(bpy.data.collections["G_BLOCKS"].objects):
@@ -1494,8 +2054,7 @@ def dress(log=print) -> dict[str, int]:
         for u in units:
             # 城内零草顶（bg0 / bg7）；只有贫户小棚（面宽 < 5.5 m 且单层）偶见草顶
             thatch = 0.25 if (u.dims[0] < 5.5 and u.dims[2] < 4.5) else 0.0
-            pick, sc = proto_for(u.dims, 2 if level == "B" else 1, rng, thatch, 0.25 if u.dims[1] >= 9.0 else 0.08)
-            pts.append((u.loc, u.yaw, ((-1 if u.mirror else 1) * sc[0], sc[1], sc[2]), pick))
+            pts += fabric_points(u, 2 if level == "B" else 1, rng, thatch, 0.25 if u.dims[1] >= 9.0 else 0.08)
         hide(ob)
     for ob in list(bpy.data.collections["G_SUBURBS"].objects):
         if is_tree_object(ob):
@@ -1504,12 +2063,14 @@ def dress(log=print) -> dict[str, int]:
         thatch = 0.75 if "hamlet" in ob.name else (0.2 if "guanxiang" in ob.name else 0.3)   # bg8 村舍草顶；关厢多瓦房
         for u in house_units(ob):
             all_units.append(u)
-            pick, sc = proto_for(u.dims, 2, rng, thatch, 0.1)
-            pts.append((u.loc, u.yaw, ((-1 if u.mirror else 1) * sc[0], sc[1], sc[2]), pick))
+            pts += fabric_points(u, 2, rng, thatch, 0.1)
         hide(ob)
     looks = look_collection("LOOK_CITY")
     instancer("LOOK_houses", looks, house_protos, pts)
     counts["houses"] = len(pts)
+    if FACADE_REJECT:
+        top = sorted(FACADE_REJECT.items(), key=lambda kv: -kv[1])[:6]
+        log("look: facade 落回脚本原型的原因 " + "; ".join(f"{k}×{n}" for k, n in top))
 
     willows = proto_collection("LOOK_PROTO_WILLOWS", [willow_object(f"LOOK_W{i}_willow", 100 + i, mats) for i in range(5)])
     trees: list[Tree] = []
@@ -1533,8 +2094,14 @@ def dress(log=print) -> dict[str, int]:
             idx[np.isin(isl, np.array(sorted(hide_ids)))] = M["INVISIBLE"]
             ob.data.polygons.foreach_set("material_index", idx)
     rng = random.Random(7)
-    tpts = [(t.base, rng.uniform(0, 2 * math.pi), (t.crown / 3.2 * 1.1, t.crown / 3.2 * 1.1, max(0.5, t.height / 8.0)), rng.randrange(5))
-            for t in trees]
+    # 竖向比例不能只按「冠岛的高」算：布局层有些树（御街行道树）只有冠是一个岛、树身另算，
+    # 于是 t.height 只有 2.4 m，6 m 高的树原型被压成 4.3 × 4.3 × 2.4 的扁蛋（2026-09-18 实测：
+    # 御街两侧 248 个灰蛋就是这么来的）。树不会比自己宽还矮——竖向比例给一个不低于横向 0.9 倍的下限。
+    def _tree_scale(t) -> tuple[float, float, float]:
+        w = t.crown / 3.2 * 1.1
+        return (w, w, max(0.5, t.height / 8.0, w * 0.9))
+
+    tpts = [(t.base, rng.uniform(0, 2 * math.pi), _tree_scale(t), rng.randrange(5)) for t in trees]
     instancer("LOOK_trees", looks, willows, tpts)
     counts["trees"] = len(tpts)
     fruit = proto_collection("LOOK_PROTO_BLOSSOMS", [blossom_object(f"LOOK_B{i}_blossom", 300 + i, mats) for i in range(4)])
@@ -1674,10 +2241,15 @@ def setup_world(elev: float = SUN_ELEV, az: float = SUN_AZ) -> None:
     cy.sample_clamp_indirect = 8.0
     try:
         sc.view_settings.view_transform = "AgX"
-        sc.view_settings.look = "AgX - Medium High Contrast"
+        sc.view_settings.look = "AgX - High Contrast"
     except TypeError:
         pass
-    sc.view_settings.exposure = -0.4
+    # 2026-09-18，`tools/plate_match.py` 实测：渲图比锚点图**中景亮 +0.20、饱和低 0.29–0.44**
+    # （bg2-1 / bg4-1 / bg7-1 三处一致），也就是「亮而灰」。这不是某个材质的问题，是整体调子：
+    # 曝光压 0.35 档、对比提一档、饱和补两成，让暗部沉下去、颜色回来（GoT 那一路的底子）。
+    sc.view_settings.exposure = -0.75
+    if hasattr(sc.view_settings, "saturation"):
+        sc.view_settings.saturation = 1.22
     sc.render.resolution_x, sc.render.resolution_y, sc.render.resolution_percentage = 1920, 1080, 100
 
 
@@ -1705,14 +2277,14 @@ def world_of(spec: tuple) -> Vector:
 
 
 VIEWS: dict[str, tuple[tuple, tuple, float]] = {
-    "01_aerial_city": (("世界", 4700.0, -4300.0, 1900.0), ("世界", 200.0, 700.0, 0.0), 24.0),
-    "08_aerial_se_corner": (("世界", 4700.0, -4450.0, 260.0), ("世界", 3300.0, -3000.0, 0.0), 24.0),
+    "01_aerial_city": (("世界", 2350.0, -2150.0, 1900.0), ("世界", 100.0, 350.0, 0.0), 24.0),
+    "08_aerial_se_corner": (("世界", 2350.0, -2225.0, 260.0), ("世界", 1650.0, -1500.0, 0.0), 24.0),
     "02_aerial_bianhe_hongqiao": (("Place", "A", 260.0, -60.0, 70.0), ("Place", "A", 0.0, 0.0, 4.0), 28.0),
     "03_hongqiao_river": (("Place", "A", 55.0, -1.0, 3.2), ("Place", "A", 0.0, 0.0, 4.2), 30.0),
     "04_hongqiao_bank": (("Place", "A", -32.0, -16.0, 3.8), ("Place", "A", 0.0, 1.0, 5.2), 26.0),
     "05_dongshuimen": (("Place", "B", 70.0, -26.0, 7.0), ("Place", "B", 0.0, 0.0, 9.0), 26.0),
-    "06_yujie_xuandelou": (("世界", 90.0, 1000.0, 10.0), ("世界", 103.0, 1140.0, 32.0), 24.0),
-    "07_city_blocks_low": (("世界", -520.0, 160.0, 90.0), ("世界", -140.0, 520.0, 0.0), 28.0),
+    "06_yujie_xuandelou": (("世界", 45.0, 500.0, 10.0), ("世界", 51.5, 570.0, 32.0), 24.0),
+    "07_city_blocks_low": (("世界", -260.0, 80.0, 90.0), ("世界", -70.0, 260.0, 0.0), 28.0),
 }
 
 

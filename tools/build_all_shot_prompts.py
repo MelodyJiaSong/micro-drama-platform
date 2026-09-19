@@ -73,7 +73,7 @@ def _default_header(ep_dir: str) -> str:
         f"# {ep} 全镜 prompt 汇编（只读快照）\n\n"
         "> ⚠ 只读快照——改各 `shots/shotNN/shotNN.md` 源后用 "
         "`tools/build_all_shot_prompts.py` 重新汇编，勿手改本文件。\n"
-        "> 复制每镜 `视频 prompt` 代码块进 Seedance/Kling 出片；"
+        "> 复制每镜 `视频 prompt` 代码块进 Seedance 出片；"
         "`台词配音` 块喂 TTS。\n"
     )
 

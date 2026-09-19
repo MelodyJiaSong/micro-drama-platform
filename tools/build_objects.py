@@ -164,6 +164,14 @@ def process(o: dict, tier: str, logs: Path) -> str:
         return "no-folder"
     if aspect(o["size"]) >= SKIP_ASPECT:
         return "proxy-box"
+    # 清单里挂了 `skip3d = "理由"` 的，直接判替身盒，一次 Rodin 也不掷。
+    #
+    # 为什么需要它（2026-09-18 p22 素木床榻踩出来的）：此前「这个物件不走生成」这件事只能靠
+    # **whitemodel/ 里有没有 raw.glb** 来表达，而那个状态是本文件自己会改写的 —— 删掉 blend 想让它
+    # 退回替身盒，下一次全量跑又拿留着的 raw.glb 重新过一遍闸门、把同一个坏网格重新放行；
+    # 连 raw.glb 一起删，则每跑一次全量就重掷一次 Rodin。两头都不对。判据属于清单，不属于产物目录。
+    if o.get("skip3d"):
+        return "proxy-box"
     imgs = views_ready(fold, key)
     if not imgs:
         return "waiting"

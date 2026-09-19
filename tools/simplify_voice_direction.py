@@ -2,8 +2,7 @@
 
 Per follow-up 2026-05-25: "盡量要簡短" — the original 念法 lines contained
 per-字 micro-direction (e.g. `"奉天"二字起势重音 + 略拖音`) that bloats the
-prompt without giving the AI model genuinely actionable signal. Kling /
-Seedance / Sora derive the voice modulation from the scene context + key
+prompt without giving the AI model genuinely actionable signal. Seedance / Sora derive the voice modulation from the scene context + key
 voice descriptors; they ignore per-字 timing direction.
 
 New format: each `· 念法 (...)` line is replaced with a 3-bullet block:

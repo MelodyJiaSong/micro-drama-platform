@@ -43,9 +43,18 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 
 REPO = Path(__file__).resolve().parent.parent
+DRAMA_DEFAULT = "shikong_lvxing/sk1"
 A = REPO / "ai_videos" / "shikong_lvxing" / "sk1" / "2_世界观人设"
 INVENTORY = A / "object_inventory.toml"
 PROPS = A / "props"
+
+
+def _rebind(drama: str) -> None:
+    """把模块级路径重绑到指定剧集（`--drama shikong_lvxing/sk2`）。"""
+    global A, INVENTORY, PROPS
+    A = REPO / "ai_videos" / drama / "2_世界观人设"
+    INVENTORY = A / "object_inventory.toml"
+    PROPS = A / "props"
 
 # 三视图的共用工装串：正交、阴天均匀光、纯背景、零文字。**不是 GoT 画风**（见抬头）
 ORTHO = ("正交视图（无透视、无近大远小），纯中性浅灰背景，阴天一样的均匀散射光、没有方向性阴影、"
@@ -218,14 +227,20 @@ def card_md(o: dict) -> str:
                 f"形体规格: 整体约{dims}；{o.get('spec', '各部件比例照参考图')}",
                 f"识别特征: {o.get('id', '、'.join(o['parts']))}",
                 f"材质细节: {o.get('mat', '素木灰褐、不上漆；铁件发黑；麻绳捆扎处留绳头')}",
-                f"机位: {cam}（正交，相机光轴严格垂直于该面）",
+                # 四分之三视角**不是**正交图（它的 `场景:` 串自己就这么写着），再给机位挂一句「正交、光轴垂直于该面」
+                # 就是同一张 prompt 里自相矛盾——模型只能挑一边听。2026-09-18 p57 重出第二视图时发现。
+                f"机位: {cam}" + ("" if is_iso else "（正交，相机光轴严格垂直于该面）"),
                 f"场景: {ISO_SCENE if is_iso else ORTHO}",
                 "比例: 1:1（正方形画幅，主体居中）",
                 "```", "",
                 "**反向提示词**（粘进平台的负向框，不要并进正向）：", "",
-                "```text", (ISO_NEG if is_iso else ORTHO_NEG) + f", {block[0]}, {block[1]}, 四分之三视角, 斜角透视, "
-                f"把看不见的进深画成左右方向的宽度, 外轮廓比 {hw:g}:{vh:g} 更细长的剪影"
-                + ("" if n == "1" else ", 与参考图相同的取景"),
+                # 尾部这几条只对正交图成立：四分之三视角要的就是斜角与三个轴同时可见，
+                # 把「四分之三视角, 斜角透视, 把看不见的进深画成左右方向的宽度」挂进它自己的负向框
+                # 等于让模型别画这张图；剪影宽高比对带透视的图也量不出来（机检同样跳过它）。
+                "```text", (ISO_NEG + f", {block[0]}, {block[1]}, 正交平视, 与参考图相同的取景" if is_iso else
+                            ORTHO_NEG + f", {block[0]}, {block[1]}, 四分之三视角, 斜角透视, "
+                            f"把看不见的进深画成左右方向的宽度, 外轮廓比 {hw:g}:{vh:g} 更细长的剪影"
+                            + ("" if n == "1" else ", 与参考图相同的取景")),
                 "```", ""]
     out += ["---", "", "## 验收（`object.toml` 的探针只测体量，这几条要人眼看）", ""]
     for part in o["parts"]:
@@ -266,8 +281,11 @@ def spec_toml(o: dict) -> str:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true")
+    ap.add_argument("--drama", default=DRAMA_DEFAULT,
+                    help="剧集路径，如 shikong_lvxing/sk2（默认 %(default)s）")
     ap.add_argument("--only", default="", help="逗号分隔的 pN，只处理这几个")
     args = ap.parse_args()
+    _rebind(args.drama)
     only = {s.strip() for s in args.only.split(",") if s.strip()}
     made = []
     for o in load():

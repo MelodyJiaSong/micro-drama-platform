@@ -16,9 +16,12 @@ The license is recorded on every entry: anything that is not CC0 / CC-BY is mark
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
+import os
 import re
 import sys
+import time
 import urllib.parse
 import urllib.error
 import urllib.request
@@ -147,6 +150,34 @@ def _next_index(ref_dir: Path) -> int:
     return max(nums, default=0) + 1
 
 
+@contextlib.contextmanager
+def _asset_lock(asset_dir: Path, timeout: float = 180.0):
+    """Serialise index allocation and refs.md rewrites per asset dir.
+
+    Both are read-then-write, so two processes pulling into the same asset dir
+    otherwise hand out duplicate refNN numbers and drop each other's index rows
+    (observed 2026-09-18, sk3: 10 duplicate numbers across two asset dirs).
+    Different asset dirs stay fully parallel.
+    """
+    asset_dir.mkdir(parents=True, exist_ok=True)
+    lock = asset_dir / ".ref_fetch.lock"
+    deadline = time.monotonic() + timeout
+    while True:
+        try:
+            fd = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+            break
+        except FileExistsError:
+            if time.monotonic() > deadline:
+                raise TimeoutError(f"{lock} still held after {timeout:.0f}s; delete it if stale")
+            time.sleep(0.1)
+    try:
+        os.write(fd, str(os.getpid()).encode())
+        os.close(fd)
+        yield
+    finally:
+        lock.unlink(missing_ok=True)
+
+
 def append_ref(asset_dir: Path, file: Path, c: Candidate, evidences: list[str], use: str) -> str:
     ref_id = f"{asset_dir.name}.{file.stem.split('_')[0]}"
     entry = (
@@ -174,21 +205,26 @@ def pull(asset_dir: Path, keys: list[str], evidences: list[str], use: str) -> No
             print(f"-- {key}: no image", file=sys.stderr)
             continue
         ext = Path(urllib.parse.urlparse(c.image_url).path).suffix.lower() or ".jpg"
-        file = ref_dir / f"ref{_next_index(ref_dir):02d}_{_slug(c.title)}_{source}{ext}"
-        size = _download(c.image_url, file)
+        with _asset_lock(asset_dir):
+            file = ref_dir / f"ref{_next_index(ref_dir):02d}_{_slug(c.title)}_{source}{ext}"
+            file.touch()  # claim the number before releasing the lock
+        size = _download(c.image_url, file)  # slow; deliberately outside the lock
         fit(file)  # Seedance only accepts uploads between 1:3 and 3:1
-        ref_id = append_ref(asset_dir, file, c, evidences, use)
+        with _asset_lock(asset_dir):
+            ref_id = append_ref(asset_dir, file, c, evidences, use)
         print(json.dumps({"ref_id": ref_id, "file": str(file), "bytes": size, "license": c.license}, ensure_ascii=False))
 
 
 def register(asset_dir: Path, file: Path, c: Candidate, evidences: list[str], use: str) -> None:
     ref_dir = asset_dir / "ref"
     ref_dir.mkdir(parents=True, exist_ok=True)
-    dest = file if file.parent == ref_dir else ref_dir / f"ref{_next_index(ref_dir):02d}_{_slug(file.stem)}_manual{file.suffix.lower()}"
-    if dest != file:
-        file.replace(dest)
-    fit(dest)
-    print(json.dumps({"ref_id": append_ref(asset_dir, dest, c, evidences, use), "file": str(dest)}, ensure_ascii=False))
+    with _asset_lock(asset_dir):
+        dest = file if file.parent == ref_dir else ref_dir / f"ref{_next_index(ref_dir):02d}_{_slug(file.stem)}_manual{file.suffix.lower()}"
+        if dest != file:
+            file.replace(dest)
+        fit(dest)
+        ref_id = append_ref(asset_dir, dest, c, evidences, use)
+    print(json.dumps({"ref_id": ref_id, "file": str(dest)}, ensure_ascii=False))
 
 
 def main(argv: list[str] | None = None) -> int:

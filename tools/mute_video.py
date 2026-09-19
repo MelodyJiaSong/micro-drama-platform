@@ -1,6 +1,6 @@
 """Strip the audio track from a video, producing a silent master.
 
-AI-video shots rendered by Seedance/Kling ship with a baked-in audio track
+AI-video shots rendered by Seedance ship with a baked-in audio track
 (auto-TTS or ambient noise) that is NOT consistent across one-by-one renders.
 Post-production replaces it: the silent video is the canonical master that
 `tools/mux_av.py` later mounts the locked-voice 台词 MP3 (and BGM) onto.

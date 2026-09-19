@@ -35,7 +35,7 @@ Per-platform best practices: Douyin hook timing, 快手 captioning conventions, 
 
 ### 5. 15s-shot-decomposition
 
-How does scene-X get split into ≤15 s atomic clips that Kling / Seedance can each generate in one pass? Models the seam constraint: motion start/end states, character continuity tokens between shots, prop position carry-over.
+How does scene-X get split into ≤15 s atomic clips that Seedance can each generate in one pass? Models the seam constraint: motion start/end states, character continuity tokens between shots, prop position carry-over.
 
 **Citation bar:** cite Kling and Seedance documentation for length cap, supported motion descriptors, image-to-video parameter set.
 

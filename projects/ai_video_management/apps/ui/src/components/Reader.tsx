@@ -18,7 +18,7 @@ import { PerformanceSelector } from "./PerformanceSelector";
 import { Renderer } from "../markdown/renderer";
 import { CodeView } from "../markdown/CodeView";
 import { JsonlView } from "../markdown/JsonlView";
-import { SiblingMedia, isCharacterVideoPath, isSceneVideoPath } from "./SiblingMedia";
+import { SiblingMedia, isCharacterVideoPath, isSceneVideoPath, isShotVideoPath } from "./SiblingMedia";
 import { detectShotPair } from "../lib/shotPairing";
 import { extractDramaAssets } from "../lib/dramas";
 import { episodeDirOf, extractVideoPromptBody, shotMdPathsInEpisode } from "../lib/videoPrompts";
@@ -32,6 +32,7 @@ import {
   deleteMedia,
   extractCharacterViews,
   extractFrames,
+  extractLastFrame,
   extractScenePlates,
   fetchFile,
   mediaUrl,
@@ -82,6 +83,7 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
   const [extracting, setExtracting] = useState<boolean>(false);
   const [extractingViews, setExtractingViews] = useState<boolean>(false);
   const [extractingPlates, setExtractingPlates] = useState<boolean>(false);
+  const [extractingLastFrame, setExtractingLastFrame] = useState<boolean>(false);
   const [concatBusy, setConcatBusy] = useState<boolean>(false);
   // Clicking a 合成本集视频 lang button opens the per-seam planner for that lang.
   const [seamLang, setSeamLang] = useState<EpisodeLang | null>(null);
@@ -385,6 +387,26 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
     }
   }, [path, onSaved]);
 
+  const onExtractLastFrameClick = useCallback(async () => {
+    if (!path) return;
+    setExtractingLastFrame(true);
+    try {
+      const result = await extractLastFrame(path);
+      const outName = result.out.split("/").pop() ?? result.out;
+      const firstName = result.first_frame?.split("/").pop();
+      announceToast(
+        firstName
+          ? `已截取末帧 → ${outName}，并复制到下一镜首帧 ${firstName}`
+          : `已截取末帧 → ${outName}（无下一镜，未复制首帧）`,
+      );
+      onSaved();
+    } catch (err) {
+      announceToast(`截取末帧失败: ${archiveErrorKind(err)}`);
+    } finally {
+      setExtractingLastFrame(false);
+    }
+  }, [path, onSaved]);
+
   const onExtractScenePlatesClick = useCallback(async () => {
     if (!path) return;
     setExtractingPlates(true);
@@ -458,7 +480,8 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
   const pathParts = path.split("/");
   const isArchivedFile = pathParts.length >= 2 && pathParts[pathParts.length - 2] === "archive";
   const isDeletedFile = path.startsWith("ai_videos/_deleted/");
-  const mediaActionsBusy = archiving || deleting || extracting || extractingViews || extractingPlates;
+  const mediaActionsBusy =
+    archiving || deleting || extracting || extractingViews || extractingPlates || extractingLastFrame;
   const archiveLabel = isArchivedFile
     ? (archiving ? "Unarchiving…" : "↺ Unarchive")
     : (archiving ? "Archiving…" : "📦 Archive");
@@ -468,6 +491,8 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
   const showViewsBtn = isVideo && !isArchivedFile && !isDeletedFile && isCharacterVideoPath(path);
   const platesExtractLabel = extractingPlates ? "⏳ 截取中…" : "🧭 截取方向背景图";
   const showPlatesBtn = isVideo && !isArchivedFile && !isDeletedFile && isSceneVideoPath(path);
+  const lastFrameExtractLabel = extractingLastFrame ? "⏳ 截取中…" : "⏮ 生成末帧";
+  const showLastFrameBtn = isVideo && !isArchivedFile && !isDeletedFile && isShotVideoPath(path);
 
   return (
     <div className="reader">
@@ -618,6 +643,14 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
                       aria-label={`Extract per-direction bg plates from ${filename}`}
                       title="从场景 walk-through mp4 按各 bg 朝向的截帧时点抽帧，写入对应 bg{N}_{方位}/ 文件夹。截帧秒数读自本场景 md「背景图系统 index」表（与 步骤二 walk-through 时间轴一致）。">
                       {platesExtractLabel}
+                    </button>
+                  ) : null}
+                  {showLastFrameBtn ? (
+                    <button type="button" className="reader-media-extract-btn"
+                      onClick={onExtractLastFrameClick} disabled={mediaActionsBusy}
+                      aria-label={`Extract last frame from ${filename}`}
+                      title="截取本镜成片的最后一帧 → shot{NN}_lastframe.png (放 shot 根目录)，并自动复制到下一镜 shot{NN+1}_firstframe.png 作本镜首帧 (跨镜首帧承接)；二次点击覆盖。">
+                      {lastFrameExtractLabel}
                     </button>
                   ) : null}
                   <button type="button" className="reader-media-archive-btn"

@@ -635,7 +635,11 @@ PLACE_HOLE: dict[str, tuple[float, float, float, float]] = {
     "A": (-75.0, 75.0, -30.0, 30.0), "B": (-50.0, 120.0, -45.0, 45.0), "C": (-46.0, 46.0, -80.0, 120.0),
     **{p: PLACE_RANGE[p] for p in ("D", "E", "F", "H", "I", "J")}}
 # 折线穿过 Place 时足迹内改走 Place 自己的轴：河沿局部 X（y ＝ 偏移）、城墙沿给定轴；没登记的 Place 被穿过即报错
-RIVER_AXIS_Y: dict[str, float] = {"A": 0.0, "B": 0.0, "C": 0.0, "D": -62.0, "E": 0.0, "I": -17.0}
+RIVER_AXIS_Y: dict[str, float] = {"A": 0.0, "B": 0.0, "C": 0.0, "D": -62.0, "E": 0.0, "I": -17.0,
+                                  # follow-up 017：城缩到 0.5 后汴河进了相国寺足迹（足迹 1:1、中心距缩了）。
+                                  # 相国寺在航线上、不能挪，于是给它登记改道轴：河沿足迹南缘走，
+                                  # 与史地关系一致（寺在汴河之北），大殿与院落照旧在干地上。
+                                  "H": -140.0}
 WALL_AXIS: dict[str, tuple[str, float]] = {"B": ("y", 0.0), "D": ("x", 0.0)}
 
 
@@ -702,13 +706,56 @@ def load_corridor(md: str, cfg: dict) -> Corridor:
     return Corridor(cfg, spec)
 
 
+# ── 拍摄用尺度（follow-up 017，2026-09-18 用户定调「城市面积可以缩小，只需要够拍」）──
+# W11 的**坐标**统一乘 CITY_SCALE，**尺寸不乘**：街还是 25 m 宽、房还是 11 m 面宽、墙还是 8.7 m 高，
+# 变的只是「两处地点之间有多远」。为什么这是对的取舍：
+#   · 一镜到底的航线原本 4 km / 60 s ＝ 67 m/s 平均、城内汴河那段要 95 m/s，比真无人机快一倍；
+#     压到 0.5 之后全程 33–45 m/s，**速度问题从根上消失，而且不用切镜**（follow-up 010 的一镜到底照旧）。
+#   · 全片没有俯视全城的镜头了（follow-up 014 把末段爬升取消），观众无从对照城的总尺寸；
+#     能看出比例的只有「街多宽、房多高、门洞多大」——这些保持 1:1。
+# 代价（已登记 divergence #28）：几何不再与「外城周长五十里」这类**距离类**史料对得上。
+# 几何只服务 previz，不进 prompt；口播里的里程数照旧引 W11，不引 blend。
+CITY_SCALE = 0.5
+# 压缩后个别 Place 的 1:1 足迹会压到河/街上（足迹不缩、中心距缩）。逐个挪开，只挪不在航线上的：
+#   开封府（Place F）——压缩后汴河从它足迹里穿过（实测 k≤0.7 起冲突）。它是地面镜地点、不在一镜到底的
+#   航线上，往北挪 70 m 即让出河道；相对州桥的方位不变（仍在州桥西北），地面镜的取景不受影响。
+SCALE_NUDGE: dict[str, tuple[float, float]] = {"开封府": (0.0, 70.0)}
+_SCALE_XY = {"gate": ("xy",), "landmark": ("xy",), "place_anchor": ("xy",)}
+_SCALE_PTS = {"wall": ("points",), "river": ("points",), "street": ("points",)}
+
+
+def scale_w11(cfg: dict) -> dict:
+    """只缩坐标：xy / points / waypoint 的 pos 与 look_at。宽度、高度、足迹尺寸原样。"""
+    k = CITY_SCALE
+    if k == 1.0:
+        return cfg
+    for sec, fields in _SCALE_XY.items():
+        for row in cfg.get(sec, []):
+            for f in fields:
+                row[f] = [float(v) * k for v in row[f]]
+    for sec, fields in _SCALE_PTS.items():
+        for row in cfg.get(sec, []):
+            for f in fields:
+                row[f] = [[float(a) * k, float(b) * k] for a, b in row[f]]
+    for row in cfg.get("waypoint", []):
+        for f in ("pos", "look_at"):
+            if f in row:
+                v = [float(x) for x in row[f]]
+                row[f] = [v[0] * k, v[1] * k] + v[2:]          # z 是高度，不缩
+    for row in cfg.get("landmark", []):
+        for name, (dx, dy) in SCALE_NUDGE.items():
+            if row["name"].startswith(name):
+                row["xy"] = [row["xy"][0] + dx, row["xy"][1] + dy]
+    return cfg
+
+
 def load_w11() -> dict:
     md = W11_LAYOUT.read_text(encoding="utf-8")
     sec = md.split("### 2.8", 1)
     m = re.search(r"```toml\n(.*?)```", sec[1] if len(sec) == 2 else "", re.S)
     if not m:
         raise PlanError("w11_city_layout.md §2.8 缺 toml 块")
-    cfg = tomllib.loads(m.group(1))
+    cfg = scale_w11(tomllib.loads(m.group(1)))
     for key in ("wall", "gate", "river", "street", "landmark", "place_anchor", "waypoint"):
         if not cfg.get(key):
             raise PlanError(f"W11 TOML 缺 [[{key}]]")
@@ -1077,6 +1124,19 @@ def in_any_place(pt: Pt, margin: float) -> bool:
     return any(point_in_poly(pt, place_poly(p, margin)) for p in PLACES)
 
 
+def rect_in_any_place(rect: list[Pt], margin: float = 0.0) -> bool:
+    """矩形与任一 Place 足迹相交（AABB 相交判定）——压缩后中心点判定不够用了。"""
+    rx0, rx1 = min(q[0] for q in rect), max(q[0] for q in rect)
+    ry0, ry1 = min(q[1] for q in rect), max(q[1] for q in rect)
+    for p in PLACES:
+        poly = place_poly(p, margin)
+        px0, px1 = min(q[0] for q in poly), max(q[0] for q in poly)
+        py0, py1 = min(q[1] for q in poly), max(q[1] for q in poly)
+        if rx0 < px1 and px0 < rx1 and ry0 < py1 and py0 < ry1:
+            return True
+    return False
+
+
 def build_walls(world: World) -> dict[str, list[tuple[int, float, float]]]:
     gaps: dict[str, list[tuple[int, float, float]]] = {}
     for idx, w in enumerate(world.cfg["wall"]):
@@ -1309,8 +1369,10 @@ def build_landmarks(world: World, plans: dict[str, LandmarkPlan], keys: tuple[st
         if plan.method in ("跳过", "池"):
             counts[plan.method] = counts.get(plan.method, 0) + 1
             continue
-        if in_any_place((x, y), 0.0):
-            NOTES.append(f"G 地标 {lm['name']}：在 Place 足迹内，跳过")
+        if rect_in_any_place(lm_rect(lm)):
+            # 判定看**整块足迹是否相交**，不只看中心点：城压到 0.5 之后（follow-up 017）
+            # 地标中心还在 Place 之外、体量却压进去了，于是全城层与 Place 的精细版重叠。
+            NOTES.append(f"G 地标 {lm['name']}：足迹与 Place 相交，跳过（Place 自己建精细版）")
             continue
         r = lm_rect(lm)
         ew, ns = r[1][0] - r[0][0], r[2][1] - r[1][1]
@@ -1669,8 +1731,8 @@ def build_blocks(world: World, keys: tuple[str, ...]) -> tuple[int, int]:
                     for side in (1, -1) if D > 24 else (face,):
                         s0 = -L / 2
                         while s0 < L / 2 - 4:
-                            bays = rng.choice((1, 1, 2, 2, 3)) if not shop else rng.choice((1, 2, 2, 3, 4))
-                            wbld = bays * rng.uniform(3.3, 4.2)
+                            bays = rng.choice((1, 1, 2, 2, 3)) if not shop else rng.choice((1, 2, 2, 3, 3, 4, 5))
+                            wbld = bays * rng.uniform(3.1, 4.4)
                             if s0 + wbld > L / 2:
                                 break
                             depth = rng.uniform(9.0, 13.0) if shop else rng.uniform(5.5, 8.5)
@@ -1678,9 +1740,14 @@ def build_blocks(world: World, keys: tuple[str, ...]) -> tuple[int, int]:
                             h = rng.uniform(7.5, 9.5) if two else rng.uniform(4.3, 6.2)   # S*：全城单层约九成，两层集中在繁华沿街
                             if shop and sp > 0.6 and rng.random() < 0.012:
                                 h = rng.uniform(11.0, 13.0)               # 三层只给正店（全城 72 户）
-                            if rng.random() > 0.12:
+                            # 临街要紧凑：宋代街屋是**共墙成排**的（「屋宇雄壮，门面广阔」），
+                            # 原来 12% 空位 + 四成概率留 1.5–3 m 空当，渲出来是一颗颗独立小房。
+                            # 现在沿街热闹处几乎不留缝（sp 越高越密），背街才留巷口与空地。
+                            skip = 0.03 + 0.16 * (1.0 - sp)
+                            if rng.random() > skip:
                                 bld(*P(s0 + wbld / 2, side * (D / 2 - depth / 2 - 0.5)), wbld, depth, h, side, along_x)
-                            s0 += wbld + rng.choice((0.0, 0.0, 0.0, 1.5, 3.0))
+                            gaps = ((0.0,) * 7 + (1.2, 2.5)) if sp > 0.45 else ((0.0,) * 3 + (1.5, 3.0))
+                            s0 += wbld + rng.choice(gaps)
                     if D > 30 and rng.random() < 0.6:
                         tree(cx + rng.uniform(-lw / 4, lw / 4), cy + rng.uniform(-ld / 4, ld / 4), rng.uniform(7.0, 10.0))
                 elif kind in ("courtyard", "compound"):
@@ -1728,62 +1795,113 @@ def build_blocks(world: World, keys: tuple[str, ...]) -> tuple[int, int]:
 
 
 def build_suburbs(world: World, keys: tuple[str, ...]) -> tuple[int, int]:
-    """东水门—虹桥汴河两岸郊外（S01 低飞走廊，B 级）；只建外城以东（判断：其余城外不入镜）。"""
+    """东水门外关厢 + 汴河两岸郊外（S01 低飞走廊）；只建外城以东（判断：其余城外不入镜）。
+
+    2026-09-19 重做（用户：「城门外的建筑规划也不理想，拍出来像劣质动画」）。原来三条都反了：
+      · **每 14 m 抽一个随机型号、两排、行距 5 m 的独立盒子**——站在裸土上，没有街、没有连排，
+        低空掠过时就是一地积木。真实的关厢是**共墙连排的店面直接压着河岸大道**
+        （《清明上河图》最挤的一段就在东水门外），所以改用城内 row/shops 那一套：
+        开间 3.1–4.4 m、1–4 开间一户、进深 8–13 m、缝几乎为 0。
+      · **密度写反了**：真实是越靠城门越密、楼越高。sp 现在按「离护龙河外岸多远」衰减，
+        两层房只出现在近城那几百米。
+      · **`离城墙 140 m 内不建`**——那恰好是相机压得最低的最后 6 秒，于是飞过的是一片
+        保证空无一物的场地。现在建到护龙河外岸 +10 m 为止。
+    精度档不在这里定：`house()` 里 CORRIDOR 会按 city_plan §8.2 的半径带覆写（rule 4g ④）。
+    """
     pts, wd = world.rivers[next(k for k in world.rivers if k.startswith("汴河"))]
     outer = world.rings["外城"]
     ocx = sum(p[0] for p in outer) / len(outer)
-    dims = unit_dims(keys)
+    wcfg = next(x for x in world.cfg["wall"] if ring_key(x["name"]) == "外城")
+    moat_out = float(wcfg["base_m"]) / 2 + float(wcfg["moat_offset_m"]) + float(wcfg["moat_width_m"])
     made, boxes, trees = 0, 0, 0
     acc = 0.0
     chunk, chunk_i = Batch(), 0
-    tb = Batch()
+    tb, rd = Batch(), Batch()
     rng = random.Random(20001)
+    ROAD_W, BANK = 8.0, 2.5                  # 水边 2.5 m 土坡 + 8 m 河岸大道，街面压着路沿
+    FRONT = wd / 2 + BANK + ROAD_W
+    # 关厢要尽量铺到城门根下：原来 `in_any_place(p, 40)` 把门外 160 m 整块让掉，而 Place B 的足迹
+    # 本身就有 120 m、且 B 只建墙 / 门 / 码头 / 护龙河、不建房。余量收到 0——**但不能真的进 B**：
+    # 「全城层在 Place 足迹内让位」是硬不变式（Place 的地面是开了洞的，城层房子摆进去就浮在洞上）。
+    # B 足迹内那一段关厢属于 B 自己的活，要建就加 city_plan 的 Place B 表行，不能从城层伸进去。
+    keep = [lm_rect(lm, 6.0) for lm in world.cfg["landmark"]] + moat_quads(world)
+    keep += [place_poly(pl, 18.0 if pl != "B" else 0.0) for pl in PLACES]
+    for wl in world.cfg["wall"]:
+        rg = world.rings[ring_key(wl["name"])]
+        keep += [seg_quad(q, rg[(i + 1) % len(rg)], float(wl["base_m"]) / 2 + 12.0, 12.0) for i, q in enumerate(rg)]
+    idx = KeepIndex(keep)
+
+    def d_wall(q: Pt) -> float:
+        return min(dist_point_seg(q, r, outer[(i + 1) % len(outer)]) for i, r in enumerate(outer))
+
     for a, b2 in zip(pts, pts[1:]):
         d = v2sub(b2, a)
         ln = v2len(d)
         tu = (d[0] / ln, d[1] / ln)
         tn = (-tu[1], tu[0])
-        s = 0.0
-        while s < ln:
-            p = (a[0] + tu[0] * s, a[1] + tu[1] * s)
-            s += 14.0
-            acc += 14.0
-            if p[0] < ocx or point_in_poly(p, outer) or min(dist_point_seg(p, q, outer[(i + 1) % len(outer)]) for i, q in enumerate(outer)) < 140.0 \
-               or in_any_place(p, 40.0):
-                continue
-            for side in (-1.0, 1.0):
-                nn = (tn[0] * side, tn[1] * side)
-                off = wd / 2 + 8.0
-                for row, dens in ((0, 0.75), (1, 0.45)):
-                    if rng.random() > dens:
-                        continue
-                    k = rng.choice(keys)
-                    lx, ly, h = dims[k]
-                    c = (p[0] + nn[0] * (off + ly / 2), p[1] + nn[1] * (off + ly / 2))
-                    house(chunk, c, tu, (-nn[0], -nn[1]), dims[k], "B")
+        for side in (-1.0, 1.0):
+            nn = (tn[0] * side, tn[1] * side)
+            s = 0.0
+            while s < ln:
+                p0 = (a[0] + tu[0] * s, a[1] + tu[1] * s)
+                dw = d_wall(p0)
+                if p0[0] < ocx or point_in_poly(p0, outer) or dw < moat_out + 6.0:
+                    s += 12.0
+                    continue
+                sp = max(0.08, math.exp(-max(0.0, dw - moat_out) / 320.0))     # 越靠城门越繁华
+                bays = rng.choice((1, 2, 2, 3, 3, 4)) if sp > 0.45 else rng.choice((1, 1, 2, 2, 3))
+                lx = bays * rng.uniform(3.1, 4.4)
+                if s + lx > ln:
+                    break
+                ly = rng.uniform(8.0, 13.0) if sp > 0.4 else rng.uniform(5.5, 8.5)
+                two = rng.random() < 0.34 * sp
+                h = rng.uniform(7.4, 9.2) if two else rng.uniform(4.3, 6.2)
+                c = (p0[0] + tu[0] * lx / 2 + nn[0] * (FRONT + ly / 2),
+                     p0[1] + tu[1] * lx / 2 + nn[1] * (FRONT + ly / 2))
+                if idx.hits(house_quad(c, tu, (-nn[0], -nn[1]), (lx, ly, h))):
+                    s += lx
+                    continue
+                if rng.random() > 0.05 + 0.30 * (1.0 - sp):                     # 沿街几乎不留缝
+                    house(chunk, c, tu, (-nn[0], -nn[1]), (lx, ly, h), "A")
                     boxes += 1
-                    off += ly + 5.0
-                if rng.random() < 0.6:
-                    tpos = (p[0] + nn[0] * (wd / 2 + 3.0), p[1] + nn[1] * (wd / 2 + 3.0))
-                    tb.cyl(tpos[0], tpos[1], Z_STREET, Z_STREET + 4.5, 0.2, 6)
-                    tb.ball((tpos[0], tpos[1], Z_STREET + 4.5), 2.2)
+                    if rng.random() < 0.55 * sp:                                # 第二进：背街一排，矮一档
+                        ly2 = rng.uniform(5.0, 8.0)
+                        c2 = (c[0] + nn[0] * (ly / 2 + 3.0 + ly2 / 2), c[1] + nn[1] * (ly / 2 + 3.0 + ly2 / 2))
+                        house(chunk, c2, tu, (-nn[0], -nn[1]), (lx, ly2, rng.uniform(3.9, 5.4)), "A")
+                        boxes += 1
+                elif rng.random() < 0.5:                                        # 空当种柳，别露裸地
+                    tp = (p0[0] + nn[0] * (wd / 2 + 1.2), p0[1] + nn[1] * (wd / 2 + 1.2))
+                    tb.cyl(tp[0], tp[1], Z_STREET, Z_STREET + 4.5, 0.2, 6)
+                    tb.ball((tp[0], tp[1], Z_STREET + 4.5), 2.2)
                     trees += 1
-            if acc >= 280.0:
-                acc = 0.0
-                if chunk.bm.verts:
-                    chunk.finish(f"G_{20001 + chunk_i}_suburb", "G_SUBURBS", 20001 + chunk_i)
-                    chunk_i += 1
-                    made += 1
-                else:
-                    chunk.bm.free()
-                chunk = Batch()
+                gaps = ((0.0,) * 7 + (1.2, 2.5)) if sp > 0.45 else ((0.0,) * 3 + (1.5, 3.5))
+                step = lx + rng.choice(gaps)
+                p1 = (p0[0] + tu[0] * step, p0[1] + tu[1] * step)
+                extrude(rd, [(p0[0] + nn[0] * (wd / 2 + BANK), p0[1] + nn[1] * (wd / 2 + BANK)),
+                             (p1[0] + nn[0] * (wd / 2 + BANK), p1[1] + nn[1] * (wd / 2 + BANK)),
+                             (p1[0] + nn[0] * FRONT, p1[1] + nn[1] * FRONT),
+                             (p0[0] + nn[0] * FRONT, p0[1] + nn[1] * FRONT)],
+                        Z_STREET - 0.05, Z_STREET + STREET_H)
+                s += step
+                acc += step
+                if acc >= 280.0:
+                    acc = 0.0
+                    if chunk.bm.verts:
+                        chunk.finish(f"G_{20001 + chunk_i}_suburb", "G_SUBURBS", 20001 + chunk_i)
+                        chunk_i += 1
+                        made += 1
+                    else:
+                        chunk.bm.free()
+                    chunk = Batch()
     if chunk.bm.verts:
         chunk.finish(f"G_{20001 + chunk_i}_suburb", "G_SUBURBS", 20001 + chunk_i)
         made += 1
     else:
         chunk.bm.free()
     tb.finish("G_20000_suburb_willows", "G_SUBURBS", 20000)
-    NOTES.append(f"G 郊外（东水门—虹桥汴河两岸）：{made} 段、{boxes} 个单元盒、{trees} 棵柳（B 级）")
+    rd.finish("G_20500_suburb_riverroad", "G_STREETS", 20500)
+    NOTES.append(f"G 关厢与郊外（东水门—虹桥汴河两岸）：{made} 段、{boxes} 户共墙街面、{trees} 棵柳；"
+                 f"密度随离城门距离衰减，建到护龙河外岸 +10 m")
     return made, boxes
 
 
@@ -2047,7 +2165,7 @@ def build_yujie_extension(world: World) -> int:
                 b.cyl(wx, wy, z0, z0 + 2.8, 0.12, 6)
                 b.ball((wx, wy, z0 + 2.8), 1.2)
         gallery(b, f, sx, gx0, gx1, y0, y1, z0)
-        b.finish(f"G_4011_yujie_{tag}", "G_STREETS", 4011)
+        cut_places(b.finish(f"G_4011_yujie_{tag}", "G_STREETS", 4011))   # 压缩后御街设施会压进开封府 / 相国寺足迹，照街道的规矩让位
     NOTES.append(f"G 御街设施延伸：Place C 北缘（局部 y={y0:g}）→ Place D 南缘（y={y1:.0f}），杈子 / 御沟树 / 御廊按 Place C 方块 33–36 偏移"
                  f"（御街宽取 W11 320 m：黑杈子 ±{black:g}、御廊 ±{gx0:g}…±{gx1:g}）")
     return 2
@@ -2435,10 +2553,50 @@ def b_water_gate(r: Row) -> None:
     ly, lx, th = r.sizes[-1]
     solid_box("B_20_lintel", "B_GATES", (-px / 2, -WATER_GATE_SPAN / 2, SLUICE_Z[1]), (px / 2, WATER_GATE_SPAN / 2, top), 20)
     solid_box("B_20_sluice_raised", "B_GATES", (px / 2, -WATER_GATE_SPAN / 2, SLUICE_Z[0]), (px / 2 + 0.25, WATER_GATE_SPAN / 2, SLUICE_Z[1]), 20)
+    # 2026-09-18 照 bg2-1 对账：锚点图里**水门上是一座大城楼**（面阔比城台窄不了多少、出檐很深、
+    # 带一圈栏杆平座），两侧旱门只是小门洞；而我们把三座楼做成了一样大的小盒子，一眼就是模型。
+    # W11 的 12 × 8 × 6 是楼身净尺寸，这里按图把**主楼放大到 1.45 倍**、出檐再挑出 1.2 m。
+    # 2026-09-19 用户定调「城门要再雄伟壮丽一点」：原来是「城台 8.7 m ＋ 单檐小楼 7.2 m」，
+    # 在 48 m 宽的河面上压不住场，低空迎面飞来时城楼只占画面很小一块。三处放大，都是真实做法：
+    #   ① **城台比两侧城墙再高出一截**（真实城门台座就是抬起来的，这是「门」区别于「墙」的第一眼），
+    #   ② **单檐改重檐**（腰檐 + 上檐，中间夹一层平座），楼身加高加阔，面阔占满台座，
+    #   ③ **台座边缘加垛口**，让轮廓线不再是一条平板直线。
+    PLINTH = 3.6                                                  # 城台高出两侧城墙的量
+    ptop = top + PLINTH
+    solid_box("B_20_plinth", "B_GATES", (-px / 2 - 0.6, -WATER_GATE_SPAN / 2 - 7.0, top),
+              (px / 2 + 0.6, WATER_GATE_SPAN / 2 + 7.0, ptop), 20)
     b = Batch()
-    b.box((-lx / 2, -ly / 2, top), (lx / 2, ly / 2, top + th - 3.0))
-    b.hip(0.0, 0.0, lx, ly, top + th - 3.0, 3.0)
+    for sx in (-1, 1):                                            # 垛口：台座两长边各一排
+        n = 13
+        for k in range(n):
+            wy = -(WATER_GATE_SPAN / 2 + 6.2) + (WATER_GATE_SPAN + 12.4) * k / (n - 1)
+            b.cbox((sx * (px / 2 + 0.3), wy, ptop + 0.6), (1.1, 1.6, 1.2))
+    mw, md = lx * 1.95, ly * 1.75                                 # 面阔/进深：原 1.45 倍再放大
+    body = th * 1.55
+    b.box((-mw / 2, -md / 2, ptop), (mw / 2, md / 2, ptop + body * 0.52))          # 下层楼身
+    b.hip(0.0, 0.0, mw + 3.0, md + 3.0, ptop + body * 0.52, 2.6)                   # 腰檐（出檐 1.5 m）
+    for sx in (-1, 1):                                            # 腰檐上的平座栏杆
+        for k in range(11):
+            wy = -md / 2 + md * k / 10
+            b.cbox((sx * (mw / 2 + 0.75), wy, ptop + body * 0.52 + 0.85), (0.12, 0.12, 1.6))
+        b.box((sx * (mw / 2 + 0.62), -md / 2, ptop + body * 0.52 + 1.5),
+              (sx * (mw / 2 + 0.88), md / 2, ptop + body * 0.52 + 1.65))
+    uw, ud = mw * 0.86, md * 0.86
+    b.box((-uw / 2, -ud / 2, ptop + body * 0.52 + 1.7), (uw / 2, ud / 2, ptop + body))   # 上层楼身
+    b.hip(0.0, 0.0, uw + 3.4, ud + 3.4, ptop + body, 4.2)                          # 上檐：更深的出檐 + 更高的屋面
     b.finish("B_20_tower", "B_GATES", 20)
+
+    # 马道：城台两侧各一道夯土坡道（bg2-1 里是城门最认得出的一笔，我们之前只给旱门做了）
+    hb = WALL_BASE_W / 2
+    for sy, tag in ((1, "N"), (-1, "S")):
+        # 马道要落在**旱门之外**：旱门门洞在 y ±16，坡道压上去就把门洞堵死（QC §4步5 实测抓到）。
+        y0 = sy * 26.0
+        y1 = y0 + sy * 24.0
+        rb = Batch()
+        rb.prism_x(-px / 2 - 2.5, -px / 2 + 1.0,
+                   sorted([(y0, top), (y0, Z_STREET), (y1, Z_STREET)], key=lambda q: (q[0] * sy, -q[1])))
+        rb.finish(f"B_20_madao_{tag}", "B_GATES", 20)
+        FOOTPRINTS["B"].append((-px / 2 - 2.5, -px / 2 + 1.0, min(y0, y1), max(y0, y1)))
 
 
 def b_dry_gate(r: Row) -> None:
@@ -3819,8 +3977,10 @@ def qc(one_take: list[Vector], entry: list[Vector], qc_only: bool) -> int:
 
 # ── previz 公用：S 档航拍（shotNN_previz.py 只调这里；本镜编排只写在 shots/shotNN/previz_config.toml）──────────
 AERIAL_SCHEMA: dict[str, set[str]] = {
-    "全局": {"shot", "fps", "total_sec", "分辨率"},
-    "机位": {"t", "位置", "看向", "焦距", "切"},
+    "全局": {"shot", "fps", "total_sec", "分辨率", "匀速", "平滑"},
+    # 停留：该关键帧附近「每米花多少秒」的相对倍数（默认 1.0）。时间按弧长 × 停留分配，
+    # 权重再经 ±1.5 s 宽窗平滑——既能给某一拍多几秒，又不会出现一脚油门。
+    "机位": {"t", "位置", "看向", "焦距", "切", "停留"},
     "道具": {"名", "Place", "尺寸", "桅高", "水手", "关键帧"},
     "道具.关键帧": {"t", "位置", "桅角"},
     "人群": {"名", "Place", "数", "起点", "终点", "横向", "速度", "种子", "贴桥面"},
@@ -3929,7 +4089,8 @@ def aerial_keys(cfg_path: Path) -> list[dict]:
         lens = aerial_keys(sibling_config(cfg_path, str(k["位置"][1])))[-1]["焦距"] if inherit else float(k["焦距"])
         keys.append({"t": float(k["t"]), "位置": resolve_spec(world, k["位置"], "位置", cfg_path),
                      "看向": resolve_spec(world, k["看向"], "看向", cfg_path), "焦距": lens,
-                     "切": bool(k.get("切", False)), "承接": inherit})
+                     "切": bool(k.get("切", False)), "承接": inherit,
+                     "停留": float(k.get("停留", 1.0))})
     return keys
 
 
@@ -3960,6 +4121,9 @@ def mono_hermite(ts: list[float], vs: list[float], t: float, ease_in: bool) -> f
             + (-2 * u ** 3 + 3 * u ** 2) * vs[i + 1] + (u ** 3 - u ** 2) * h * m[i + 1])
 
 
+UNIFORM_ON = False        # build_aerial 打开匀速时置 True（见 camera_at 的 ease 判断）
+
+
 def camera_at(keys: list[dict], t: float) -> tuple[Vector, Vector, float]:
     segs: list[list[dict]] = []
     for k in keys:
@@ -3969,10 +4133,268 @@ def camera_at(keys: list[dict], t: float) -> tuple[Vector, Vector, float]:
             segs[-1].append(k)
     seg = [sg for sg in segs if sg[0]["t"] <= t + 1e-9][-1]
     ts = [k["t"] for k in seg]
-    ease = seg is segs[0] and keys[0]["承接"]
+    ease = seg is segs[0] and keys[0]["承接"] and not UNIFORM_ON
     pos = Vector([mono_hermite(ts, [k["位置"][i] for k in seg], t, ease) for i in range(3)])
     look = Vector([mono_hermite(ts, [k["看向"][i] for k in seg], t, ease) for i in range(3)])
     return pos, look, mono_hermite(ts, [k["焦距"] for k in seg], t, ease)
+
+
+def curve_lateral(pts: list[Vector], fps: int) -> tuple[float, float]:
+    """逐帧位置 → 最大侧向加速度 (t, a)：二阶差分取加速度，再取垂直于速度的分量。
+
+    为什么是这个量：相机就是**按帧**被 key 的，帧率下的二阶差分就是它真实经历的加速度；
+    而「相邻速度夹角 ÷ dt」随采样间隔漂移（密采样上任何抖动都读成几十 g，闸门失灵），
+    三点外接圆半径在近共线时又会数值退化 —— 两个都试过，都不能用（2026-09-18）。
+    """
+    worst = (0.0, 0.0)
+    for i in range(1, len(pts) - 1):
+        v = (pts[i + 1] - pts[i - 1]) * (fps / 2.0)
+        if v.length < 1.0:                       # 近乎悬停：侧向加速度无意义
+            continue
+        a = (pts[i + 1] - pts[i] * 2.0 + pts[i - 1]) * (fps * fps)
+        a_lat = (a - v.normalized() * a.dot(v.normalized())).length
+        if a_lat > worst[1]:
+            worst = ((i + 1) / fps, a_lat)
+    return worst
+
+
+def aerial_path(keys: list[dict], total: float, fps: int, n_frames: int,
+                smooth_g: float = 1.0, step_m: float = 0.5) -> dict:
+    """解出逐帧机位。三步，顺序与「在什么空间做」都要紧（2026-09-18 踩了三次）：
+
+      1. **等弧长重采样**：先按名义 t 密采样，再沿路径每 `step_m` 米取一点。
+         为什么：按 t 采样得到的点在空间上是不均匀的（慢的地方密、快的地方疏），
+         在这种点列上做滑动平均等于变频滤波 —— 会造出新的折角，还把航线拖偏两百米。
+      2. **等距低通**：窗口以米为单位自适应放大，直到逐帧侧向加速度 ≤ `平顺` g。
+         窗口是米，直接对应转弯半径，物理意义清楚。平滑只动机位、不动看向。
+      3. **按弧长 × 停留权重配时间**：`停留` 大的地方每米多花时间（权重经宽窗平滑），
+         于是既能给某一拍多几秒，又不会出现一脚油门。
+    """
+    dense_n = 6000
+    ts = [total * i / dense_n for i in range(dense_n + 1)]
+    raw = [camera_at(keys, t)[0] for t in ts]
+    acc_raw = [0.0]
+    for a, b in zip(raw, raw[1:]):
+        acc_raw.append(acc_raw[-1] + (b - a).length)
+    L = acc_raw[-1] or 1.0
+
+    m = max(8, int(L / step_m))
+    P_uni, T_uni = [], []                      # 等弧长点列 + 每点对应的名义 t
+    j = 1
+    for i in range(m + 1):
+        target = L * i / m
+        while j < len(acc_raw) - 1 and acc_raw[j] < target:
+            j += 1
+        a0, a1 = acc_raw[j - 1], acc_raw[j]
+        r = 0.0 if a1 - a0 < 1e-9 else (target - a0) / (a1 - a0)
+        P_uni.append(raw[j - 1] + (raw[j] - raw[j - 1]) * r)
+        T_uni.append(ts[j - 1] + (ts[j] - ts[j - 1]) * r)
+
+    def low_pass(pts: list[Vector], win: int) -> list[Vector]:
+        """等距点列的箱式低通。两端**沿切向延长补齐**——否则窗口在端点被截断、
+        端点附近等于没滤，起飞后一秒就会留下一个 1.5 g 的折角（2026-09-18 实测 1.36s 处 14.3 m/s²）。"""
+        if win <= 0:
+            return list(pts)
+        head_dir = (pts[1] - pts[0]) if len(pts) > 1 else Vector((1.0, 0.0, 0.0))
+        tail_dir = (pts[-1] - pts[-2]) if len(pts) > 1 else Vector((1.0, 0.0, 0.0))
+        pad_head = [pts[0] - head_dir * (win - i) for i in range(win)]
+        pad_tail = [pts[-1] + tail_dir * (i + 1) for i in range(win)]
+        ext = pad_head + list(pts) + pad_tail
+        out = []
+        for i in range(win, win + len(pts)):
+            a = Vector((0.0, 0.0, 0.0))
+            for q in ext[i - win:i + win + 1]:
+                a += q
+            out.append(a / (2 * win + 1))
+        return out
+
+    def weight_at(t: float) -> float:
+        ks = sorted(keys, key=lambda k: k["t"])
+        if t <= ks[0]["t"]:
+            return float(ks[0].get("停留", 1.0))
+        for a, b in zip(ks, ks[1:]):
+            if t <= b["t"] + 1e-9:
+                wa, wb = float(a.get("停留", 1.0)), float(b.get("停留", 1.0))
+                r = 0.0 if b["t"] - a["t"] < 1e-9 else (t - a["t"]) / (b["t"] - a["t"])
+                return wa + (wb - wa) * r
+        return float(ks[-1].get("停留", 1.0))
+
+    w = [weight_at(t) for t in T_uni]
+    wspan = max(1, m // 20)
+    for _ in range(2):
+        w = [sum(w[max(0, i - wspan):min(len(w), i + wspan + 1)])
+             / len(w[max(0, i - wspan):min(len(w), i + wspan + 1)]) for i in range(len(w))]
+
+    MAX_DEV = 5.0     # 平滑允许偏离作者航线的上限（米）
+
+    def solve(win: int) -> dict:
+        pts = low_pass(P_uni, win)
+        # 带约束的平滑：平滑是为了压掉折角，但它会把航线整体推偏（实测 ±108 m 窗口推偏 24 m），
+        # 在二十来米宽的门洞里，推偏就是撞墙；事后再拉回来又会拐出 258 m/s² 的尖峰。
+        # 所以在平滑这一步就夹住：任何点偏离原线不得超过 MAX_DEV，超了就投影回球面。
+        for i, (a, b) in enumerate(zip(pts, P_uni)):
+            d = a - b
+            if d.length > MAX_DEV:
+                pts[i] = b + d.normalized() * MAX_DEV
+        acc = [0.0]
+        for i in range(len(pts) - 1):
+            acc.append(acc[-1] + (pts[i + 1] - pts[i]).length * (w[i] + w[i + 1]) / 2)
+        tot = acc[-1] or 1.0
+        pos, tnom = [], []
+        k = 1
+        for f in range(n_frames):
+            target = tot * f / max(1, n_frames - 1)
+            while k < len(acc) - 1 and acc[k] < target:
+                k += 1
+            a0, a1 = acc[k - 1], acc[k]
+            r = 0.0 if a1 - a0 < 1e-9 else (target - a0) / (a1 - a0)
+            pos.append(pts[k - 1] + (pts[k] - pts[k - 1]) * r)
+            tnom.append(T_uni[k - 1] + (T_uni[k] - T_uni[k - 1]) * r)
+        spd = [(pos[i + 1] - pos[i]).length * fps for i in range(len(pos) - 1)]
+        return {"pos": pos, "t_nom": tnom, "pts": pts, "spd": spd,
+                "path": sum((pts[i + 1] - pts[i]).length for i in range(len(pts) - 1)),
+                "lat": curve_lateral(pos, fps),
+                "accel": max((abs(b - a) * fps for a, b in zip(spd, spd[1:])), default=0.0)}
+
+    def backtrack(pts: list[Vector]) -> tuple[float, float]:
+        """折返检查：把每帧位置投影到「首→末」这条弦上，投影值必须一路不减。
+
+        为什么用投影而不是看转角：**平缓的折返一样是折返**——半径 200 m 的 180° 掉头
+        侧向加速度完全合规，却依然是「飞过去又飞回来」。投影单调性把这类全抓住，
+        而正常的弯（哪怕 90°）在弦上的投影仍然递增，不会误报。
+        """
+        if len(pts) < 3:
+            return (0.0, 0.0)
+        chord = pts[-1] - pts[0]
+        if chord.length < 1e-6:
+            return (0.0, 0.0)
+        u = chord.normalized()
+        proj = [(q - pts[0]).dot(u) for q in pts]
+        worst, peak = (0.0, 0.0), proj[0]
+        for i, v in enumerate(proj):
+            back = peak - v
+            if back > worst[1]:
+                worst = ((i + 1) / fps, back)
+            peak = max(peak, v)
+        return worst
+
+    win, sol = 0, solve(0)
+    cap = 0 if smooth_g <= 0 else max(4, m // 12)   # 平滑 = 0：不做空间平滑，完全按关键帧线飞
+    while cap and sol["lat"][1] > smooth_g * 9.81 and win < cap:
+        win = max(2, min(cap, win * 2 if win else max(2, int(4.0 / step_m))))
+        sol = solve(win)
+    sol["win"] = win
+    sol["win_m"] = win * step_m
+    sol["back"] = backtrack(sol["pos"])
+
+    # ── 看向平滑：把逐帧看点低通，直到云台偏转速率 ≤ 25°/s（真云台平缓摇的量级）。
+    # 只平滑「看哪儿」，不动「飞哪儿」；窗口按帧数自适应。
+    look_raw = [camera_at(keys, t)[1] for t in sol["t_nom"]]
+
+    def yaw_rate(ls: list[Vector], ps: list[Vector]) -> tuple[float, float]:
+        worst, prev = (0.0, 0.0), None
+        for i, (lk, ps_i) in enumerate(zip(ls, ps)):
+            d = lk - ps_i
+            if d.length < 1e-6:
+                continue
+            yaw = math.degrees(math.atan2(d.y, d.x))
+            if prev is not None:
+                r = abs((yaw - prev + 180.0) % 360.0 - 180.0) * fps
+                if r > worst[1]:
+                    worst = (i / fps, r)
+            prev = yaw
+        return worst
+
+    def smooth_pts(ls: list[Vector], win: int) -> list[Vector]:
+        if win <= 0:
+            return list(ls)
+        out = []
+        for i in range(len(ls)):
+            lo, hi = max(0, i - win), min(len(ls), i + win + 1)
+            a = Vector((0.0, 0.0, 0.0))
+            for q in ls[lo:hi]:
+                a += q
+            out.append(a / (hi - lo))
+        return out
+
+    lwin, looks = 0, look_raw
+    while yaw_rate(looks, sol["pos"])[1] > 25.0 and lwin < len(look_raw) // 4:
+        lwin = max(3, lwin * 2 if lwin else max(3, fps // 3))
+        looks = smooth_pts(look_raw, lwin)
+    sol["look"] = looks
+    sol["look_win"] = lwin
+    sol["yaw"] = yaw_rate(looks, sol["pos"])
+    sol["dev"] = max(((a - b).length for a, b in zip(P_uni, sol["pts"])), default=0.0)
+    return sol
+
+
+def verify_camera(cfg_path: Path, fps: int, n: int, smooth_g: float) -> dict:
+    """从 blend 里**已打好关键帧的相机**回读，逐帧重算四项判据。
+
+    为什么必须这样（2026-09-19 事故）：净空修正一度写在打帧之后，于是闸门量的是修正后的数组、
+    blend 里留的是修正前的路径 —— 闸门报「净空 4.0 m」，成片却直接撞墙。
+    **闸门要测产物。** 这里读的就是渲染时真正会用的那条相机轨迹。
+    """
+    sc = bpy.context.scene
+    dg = bpy.context.evaluated_depsgraph_get()
+    cam = sc.camera
+    pos, look = [], []
+    for f in range(1, n + 1):
+        sc.frame_set(f)
+        m = cam.matrix_world
+        pos.append(m.translation.copy())
+        look.append((m.to_3x3() @ Vector((0.0, 0.0, -1.0))).normalized())
+    rays = [Vector(d) for d in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1))]
+    worst_clr = (0.0, 1e9, "-")
+    for i in range(0, n, 2):
+        for d in rays + [look[i]]:
+            hit, loc, _nr, _ix, ob, _mx = sc.ray_cast(dg, pos[i], d, distance=15.0)
+            if not hit:
+                continue
+            nm = ob.name if ob else "-"
+            if nm.startswith(("G_000", "B_00_river", "B_00_ground")):
+                continue
+            dist = (loc - pos[i]).length
+            if dist < worst_clr[1]:
+                worst_clr = ((i + 1) / fps, dist, nm)
+    spd = [(pos[i + 1] - pos[i]).length * fps for i in range(n - 1)]
+    lat = curve_lateral(pos, fps)
+    view = (0.0, 0.0)
+    for i in range(1, n):
+        v = pos[i] - pos[i - 1]
+        if v.length < 1e-6:
+            continue
+        v2, d2 = Vector((v.x, v.y, 0.0)), Vector((look[i].x, look[i].y, 0.0))
+        if v2.length < 1e-6 or d2.length < 1e-6:
+            continue
+        a = math.degrees(v2.normalized().angle(d2.normalized(), 0.0))
+        if a > view[1]:
+            view = ((i + 1) / fps, a)
+    chord = pos[-1] - pos[0]
+    back = (0.0, 0.0)
+    if chord.length > 1e-6:
+        u = chord.normalized()
+        peak = (pos[0] - pos[0]).dot(u)
+        for i, p in enumerate(pos):
+            v = (p - pos[0]).dot(u)
+            if peak - v > back[1]:
+                back = ((i + 1) / fps, peak - v)
+            peak = max(peak, v)
+    out = {"clr": worst_clr, "lat": lat, "view": view, "back": back,
+           "spd_lo": min(spd), "spd_hi": max(spd),
+           "accel": max((abs(b - a) * fps for a, b in zip(spd, spd[1:])), default=0.0)}
+    print(f"VERIFY（从相机回读）净空 {worst_clr[1]:.1f} m @ {worst_clr[0]:.2f}s（{worst_clr[2]}）；"
+          f"速度 {out['spd_lo']:.0f}–{out['spd_hi']:.0f} m/s；切向 {out['accel']:.1f}；"
+          f"侧向 {lat[1]:.1f} m/s² @ {lat[0]:.2f}s；视线偏航向 {view[1]:.0f}°；折返 {back[1]:.1f} m")
+    if worst_clr[1] < 2.5:
+        raise PlanError(f"{cfg_path}：{worst_clr[0]:.2f}s 相机离 {worst_clr[2]} 只有 {worst_clr[1]:.1f} m —— 撞墙。")
+    if lat[1] > smooth_g * 1.2 * 9.81:
+        raise PlanError(f"{cfg_path}：{lat[0]:.2f}s 侧向 {lat[1]:.1f} m/s² 超 1.2 g —— 这个速度转不过来。")
+    if view[1] > 100.0:
+        raise PlanError(f"{cfg_path}：{view[0]:.2f}s 视线偏航向 {view[1]:.0f}° —— 边往前飞边回头看。")
+    if back[1] > 3.0:
+        raise PlanError(f"{cfg_path}：{back[0]:.2f}s 折返 {back[1]:.1f} m —— 一镜到底不许折返。")
+    return out
 
 
 def build_aerial(cfg_path: Path) -> dict:
@@ -3981,6 +4403,60 @@ def build_aerial(cfg_path: Path) -> dict:
     fps, total = int(g["fps"]), float(g["total_sec"])
     n = int(round(total * fps))
     keys = aerial_keys(cfg_path)
+    global UNIFORM_ON
+    uniform = bool(g.get("匀速", True))
+    UNIFORM_ON = uniform
+    # 键名以 AERIAL_SCHEMA 为准：曾经 schema 写 `平滑`、这里读 `平顺`，于是 TOML 里调的阈值
+    # 一律不生效，默认值悄悄接管（2026-09-19 实测）。一个东西只能有一个名字。
+    smooth_g = float(g.get("平滑", g.get("平顺", 1.0)))   # 允许的侧向加速度上限，单位 g
+    sol = aerial_path(keys, total, fps, n, smooth_g) if uniform else None
+    t_of = (lambda x: x)
+
+    # 净空修正必须在**打关键帧之前**跑：2026-09-19 实测事故——修正写在诊断段（打帧之后），
+    # 于是闸门量的是修正后的数组、blend 里留的是修正前的路径，闸门报「净空 4.0 m」而成片直接撞墙。
+    # 教训：**闸门要测产物，不要测中间变量**；任何改路径的步骤都得排在产物生成之前。
+    if sol and smooth_g > 0:
+        # ── 净空修正：平滑是为了压掉折角，但它会把航线推偏（实测 ±108 m 窗口推偏 24 m），
+        # 在门洞这种只有二十来米宽的窗口里，推偏就等于撞墙。做法是**紧处不平滑**：
+        # 净空不足的帧（含前后各 10 帧）把位置按权重拉回作者写的原始关键帧线——
+        # 那条线是照洞口中心穿的，本来就不需要平滑。
+        dg0 = bpy.context.evaluated_depsgraph_get()
+        rays = [Vector(d) for d in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1))]
+
+        def clearance(pt) -> tuple[float, str]:
+            best = (1e9, "-")
+            for d in rays:
+                hit, loc, _n, _i, ob, _m = bpy.context.scene.ray_cast(dg0, pt, d, distance=12.0)
+                if not hit:
+                    continue
+                nm = ob.name if ob else "-"
+                if nm.startswith(("G_000", "B_00_river", "B_00_ground")):
+                    continue
+                dd = (loc - pt).length
+                if dd < best[0]:
+                    best = (dd, nm)
+            return best
+
+        raw_pos = [camera_at(keys, t)[0] for t in sol["t_nom"]]
+        FEATHER = 30                      # 羽化半径（帧）：1.2 s 内把修正量渐入渐出
+        for _ in range(8):
+            tight = [i for i in range(len(sol["pos"])) if clearance(sol["pos"][i])[0] < 4.0]
+            if not tight:
+                break
+            # 硬边界会造成瞬移：窗口内拉回 70%、窗口外不动，相邻两帧就差好几米
+            # （2026-09-19 实测：8.68s 处速度 38→263 m/s、切向加速度 5610 m/s²，观感就是「撞一下」）。
+            # 改成余弦羽化：修正量在 ±FEATHER 帧内平滑渐入渐出，路径保持连续。
+            pull = [0.0] * len(sol["pos"])
+            for i in tight:
+                for j in range(max(0, i - FEATHER), min(len(sol["pos"]), i + FEATHER + 1)):
+                    w = 0.8 * 0.5 * (1.0 + math.cos(math.pi * abs(j - i) / FEATHER))
+                    if w > pull[j]:
+                        pull[j] = w
+            for j, w in enumerate(pull):
+                if w > 0.0:
+                    sol["pos"][j] = sol["pos"][j] * (1 - w) + raw_pos[j] * w
+
+
     sc = bpy.context.scene
     sc.frame_start, sc.frame_end, sc.render.fps = 1, n, fps
 
@@ -3995,7 +4471,11 @@ def build_aerial(cfg_path: Path) -> dict:
     con = cam.constraints.new("TRACK_TO")
     con.target, con.track_axis, con.up_axis = tgt, "TRACK_NEGATIVE_Z", "UP_Y"
     for f in range(1, n + 1):
-        pos, look, lens = camera_at(keys, (f - 1) / fps)
+        t_nom = sol["t_nom"][min(f - 1, n - 1)] if sol else (f - 1) / fps
+        pos, look, lens = camera_at(keys, t_nom)
+        if sol:
+            pos = sol["pos"][min(f - 1, n - 1)]
+            look = sol["look"][min(f - 1, n - 1)]
         cam.location, tgt.location, cam_data.lens = pos, look, lens
         cam.keyframe_insert("location", frame=f)
         tgt.keyframe_insert("location", frame=f)
@@ -4148,7 +4628,81 @@ def build_aerial(cfg_path: Path) -> dict:
     sc.render.ffmpeg.constant_rate_factor = "MEDIUM"
     sc.render.filepath = f"//{g['shot']}_previz.mp4"
     cuts = [k["t"] for k in keys if k["切"]]
-    return {"frames": n, "fps": fps, "first": keys[0], "last": keys[-1], "cuts": cuts}
+    info = {"frames": n, "fps": fps, "first": keys[0], "last": keys[-1], "cuts": cuts}
+    info["verify"] = verify_camera(cfg_path, fps, n, smooth_g)
+    if sol:
+        # 云台闸门：一边往前飞、一边把镜头拧到后方，看着就是「原地打转」。
+        # 视线与航向夹角 > 100° 直接报错（2026-09-19 用户实测 shot01 摇到 176°）。
+        view_off = []
+        for i in range(1, len(sol["pos"])):
+            vel = sol["pos"][i] - sol["pos"][i - 1]
+            if vel.length < 1e-6:
+                continue
+            look = sol["look"][i] - sol["pos"][i]
+            if look.length < 1e-6:
+                continue
+            v2, d2 = Vector((vel.x, vel.y, 0.0)), Vector((look.x, look.y, 0.0))
+            if v2.length < 1e-6 or d2.length < 1e-6:
+                continue
+            ang = math.degrees(v2.normalized().angle(d2.normalized(), 0.0))
+            view_off.append(((i + 1) / fps, ang))
+        worst_view = max(view_off, key=lambda x: x[1], default=(0.0, 0.0))
+        info["view"] = worst_view
+        # 净空闸门：逐帧朝六个方向投射短射线，机位离任何几何 < 2.5 m 就报错。
+        # 2026-09-19 实测：航线平滑（±108 m 窗口）把飞行线从河心推偏 24 m，挤进了旱门门垛与
+        # 沿河民居之间的缝里，最近处 0.6 m —— 观众看到的就是「像撞在墙上」。
+        dg = bpy.context.evaluated_depsgraph_get()
+        dirs = [Vector(d) for d in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1))]
+        worst_clr = (0.0, 1e9, "-")
+        for i in range(0, len(sol["pos"]), 2):
+            p0 = sol["pos"][i]
+            for d in dirs:
+                hit, loc, _n, _idx, ob, _m = bpy.context.scene.ray_cast(dg, p0, d, distance=12.0)
+                if not hit:
+                    continue
+                dist = (loc - p0).length
+                nm = ob.name if ob else "-"
+                if nm.startswith(("G_000_ground", "G_000_water", "B_00_river", "B_00_ground", "G_000")):
+                    continue                     # 脚下的地与水不算「撞」
+                if dist < worst_clr[1]:
+                    worst_clr = ((i + 1) / fps, dist, nm)
+        info["clr"] = worst_clr
+        if worst_clr[1] < 2.5:
+            raise PlanError(
+                f"{cfg_path}：{worst_clr[0]:.2f}s 处机位离 {worst_clr[2]} 只有 {worst_clr[1]:.1f} m（< 2.5 m）"
+                f"—— 贴着几何飞，观众看到的是「撞墙」（用户 2026-09-19 实测反馈）。"
+                f"把该段关键帧挪到洞口 / 街道中线上，或减小平滑窗口（平滑会把航线推偏）。")
+        if sol["yaw"][1] > 40.0:
+            raise PlanError(
+                f"{cfg_path}：{sol['yaw'][0]:.2f}s 处云台偏转 {sol['yaw'][1]:.0f}°/s（>40°/s ＝ 甩镜头）"
+                f"—— 用户 2026-09-19 再次定调「不要总是 180 度转镜头」。把该段的 `看向` 改成沿航向渐变的点，"
+                f"别让云台在一两秒里横扫过去。")
+        if worst_view[1] > 100.0:
+            raise PlanError(
+                f"{cfg_path}：{worst_view[0]:.2f}s 处视线偏离航向 {worst_view[1]:.0f}°（>100° ＝ 边往前飞边回头看）"
+                f"—— 用户 2026-09-19 定调「不要总是 180 度转镜头」。把该段主体沿航线铺长、"
+                f"或把 `看向` 改成前方偏侧的点，别用云台补路线的短。")
+        if sol["back"][1] > 3.0:
+            raise PlanError(
+                f"{cfg_path}：{sol['back'][0]:.2f}s 处航线**折返** {sol['back'][1]:.1f} m"
+                f"（沿首末弦的投影往回走了）—— 用户 2026-09-18 定调「折返全去掉，没必要折返」。"
+                f"把该段关键帧改成沿航向单调推进；要回看某个主体就用 `看向`，别把机身掉回去。")
+        if sol["lat"][1] > smooth_g * 1.2 * 9.81:
+            raise PlanError(
+                f"{cfg_path}：{sol['lat'][0]:.2f}s 处侧向加速度 {sol['lat'][1]:.1f} m/s²"
+                f"（> {smooth_g * 1.2:.1f} g）—— 这个速度下转不过来（follow-up 011「不要转弯、要流线型」）。"
+                f"出路：① 该段改直线飞过、靠 `看向` 摇过去看主体；② 该段 `停留` 加大（降速）后再转。")
+        beats = []
+        for k in keys:
+            j = min(range(len(sol["t_nom"])), key=lambda i: abs(sol["t_nom"][i] - k["t"]))
+            beats.append((k["t"], j / fps))
+        info.update({"path": sol["path"], "win": sol["win"], "win_m": sol["win_m"],
+                     "dev": sol["dev"], "accel": sol["accel"], "back": sol["back"],
+                     "yaw": sol["yaw"], "look_win": sol["look_win"],
+                     "lat": sol["lat"], "beats": beats,
+                     "spd_lo": min(sol["spd"]), "spd_hi": max(sol["spd"]),
+                     "prof": [(i / fps, v) for i, v in enumerate(sol["spd"]) if i % fps == 0]})
+    return info
 
 
 def run_aerial_previz(script_file: str) -> None:
@@ -4161,6 +4715,16 @@ def run_aerial_previz(script_file: str) -> None:
     a0, z0 = info["first"], info["last"]
     print(f"PREVIZ OK frames=1..{info['frames']} fps={info['fps']} cuts={info['cuts']} "
           f"first=({a0['位置'].x:.2f},{a0['位置'].y:.2f},{a0['位置'].z:.2f}) last=({z0['位置'].x:.2f},{z0['位置'].y:.2f},{z0['位置'].z:.2f})")
+    if info.get("path"):
+        print(f"PREVIZ 速度 路径 {info['path']:.0f} m  {info['spd_lo']:.0f}–{info['spd_hi']:.0f} m/s  "
+              f"最大切向加速度 {info['accel']:.1f} m/s²  最大侧向 {info['lat'][1]:.1f} m/s² @ {info['lat'][0]:.2f}s")
+        print(f"PREVIZ 云台 视线偏航向 最大 {info['view'][1]:.0f}° @ {info['view'][0]:.2f}s（>100 报错）；"
+              f"偏转速率 最大 {info['yaw'][1]:.0f}°/s @ {info['yaw'][0]:.2f}s（>40 报错）；看向平滑 ±{info['look_win']} 帧")
+        print(f"PREVIZ 净空 最近 {info['clr'][1]:.1f} m @ {info['clr'][0]:.2f}s（{info['clr'][2]}；<2.5 报错）")
+        print(f"PREVIZ 平滑 窗口 ±{info['win_m']:.0f} m  航线最大偏离 {info['dev']:.1f} m  "
+              f"最大折返 {info['back'][1]:.1f} m @ {info['back'][0]:.2f}s（>3 m 报错）")
+        print("PREVIZ 速度曲线 " + " ".join(f"{t:.0f}s:{v:.0f}" for t, v in info["prof"] if int(t) % 3 == 0))
+        print("PREVIZ 关键帧落点 " + " ".join(f"{a:.1f}→{b:.1f}" for a, b in info["beats"]))
     sys.stdout.flush()
 
 

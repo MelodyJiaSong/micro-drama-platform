@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from pathlib import Path
 from typing import Any
@@ -15,6 +16,10 @@ _IMAGE_EXTENSIONS: frozenset[str] = frozenset({".png", ".jpg", ".jpeg", ".webp",
 _VIDEO_EXTENSIONS: frozenset[str] = frozenset({".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v"})
 _AUDIO_EXTENSIONS: frozenset[str] = frozenset({".mp3", ".wav", ".m4a", ".aac", ".ogg", ".flac"})
 _PDF_EXTENSIONS: frozenset[str] = frozenset({".pdf"})
+# White-model meshes (image-to-3D output / `tools/whitemodel_normalize.py` input).
+# Their own node type so the sidebar marks them and the UI knows to preview them
+# in <model-viewer> rather than treat them as an opaque download.
+_MODEL_EXTENSIONS: frozenset[str] = frozenset({".glb", ".gltf"})
 _CJK_RE = re.compile("[\u4e00-\u9fff]")
 _ACTOR_FOLDER_RE = re.compile(r"^actor_\d{4,}$")
 _VOICE_FOLDER_RE = re.compile(r"^voice_\d{4,}$")
@@ -37,6 +42,7 @@ class TreeReader:
     def __init__(self, exposed: ExposedTree) -> None:
         self._exposed = exposed
         self._root = exposed.root
+        self._root_prefix = str(self._root).rstrip(os.sep) + os.sep
 
     def build(self) -> dict[str, Any]:
         return {
@@ -351,18 +357,27 @@ class TreeReader:
         folder, whose sub-directories are walked as drama nodes instead."""
         children: list[dict[str, Any]] = []
         excluded = self._exposed.excluded_dirs()
+        # `os.scandir` rather than `Path.iterdir`: on Windows the directory
+        # enumeration already carries is_dir / is_file / is_symlink, so reading
+        # them off the DirEntry costs nothing, while the `Path` form issued five
+        # separate `nt.stat` calls per entry — 106,926 of them (5.1s) across this
+        # tree. `is_dir` is asked once here and passed down as a plain bool.
         try:
-            entries = sorted(directory.iterdir(), key=lambda p: (not p.is_dir(), p.name.lower()))
+            with os.scandir(directory) as it:
+                scanned = [(Path(e.path), e.name, e.is_dir(follow_symlinks=False),
+                            e.is_file(follow_symlinks=False), e.is_symlink())
+                           for e in it]
         except OSError:
             return children
-        for entry in entries:
-            if entry.is_symlink():
+        scanned.sort(key=lambda row: (not row[2], row[1].lower()))
+        for entry, name, is_dir, is_file, is_symlink in scanned:
+            if is_symlink:
                 continue
-            if entry.name in excluded:
+            if name in excluded:
                 continue
-            if entry.is_dir() and not dirs:
+            if is_dir and not dirs:
                 continue
-            if entry.is_dir():
+            if is_dir:
                 collapsed = self._collapsed_actor_leaf(entry)
                 if collapsed is not None:
                     children.append(collapsed)
@@ -375,7 +390,7 @@ class TreeReader:
                 if sub:
                     dir_node: dict[str, Any] = {
                         "type": "directory",
-                        "name": entry.name,
+                        "name": name,
                         "path": self._rel(entry),
                         "children": sub,
                     }
@@ -383,7 +398,7 @@ class TreeReader:
                     if zh_label:
                         dir_node["display_name"] = zh_label
                     children.append(dir_node)
-            elif entry.is_file():
+            elif is_file:
                 if asset_link.is_link_file(entry):
                     link_node = self._link_leaf(entry)
                     if link_node is not None:
@@ -489,6 +504,8 @@ class TreeReader:
             node_type = "audio"
         elif ext in _PDF_EXTENSIONS:
             node_type = "pdf"
+        elif ext in _MODEL_EXTENSIONS:
+            node_type = "model"
         else:
             node_type = "file"
         node: dict[str, Any] = {"type": node_type, "name": f.name, "path": self._rel(f)}
@@ -507,6 +524,23 @@ class TreeReader:
         return node
 
     def _rel(self, p: Path) -> str:
+        """Path relative to the exposed root, POSIX-separated.
+
+        Sliced off the string rather than computed with `resolve()` +
+        `relative_to()`. The two are equivalent here — `ExposedTree` resolves the
+        root in its constructor, and every path reaching this method was built by
+        descending from that root with symlinks skipped, so there is nothing left
+        for `resolve()` to normalize. They are not equivalent in cost: profiling
+        the 20,573-node tree put `_rel` at 68% of the whole walk (42,034
+        `nt._getfinalpathname` calls for 9.5s, plus 8.3s inside `relative_to`),
+        which is what made `/api/tree` take 42s and the dev-server proxy give up.
+
+        The resolve-based form stays as the fallback for a path that is not under
+        the root, which is the only case where slicing cannot answer.
+        """
+        s = str(p)
+        if s.startswith(self._root_prefix):
+            return s[len(self._root_prefix):].replace(os.sep, "/")
         try:
             return p.resolve().relative_to(self._root).as_posix()
         except ValueError:

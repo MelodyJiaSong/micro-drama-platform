@@ -52,7 +52,10 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 
 REPO = Path(__file__).resolve().parent.parent
-SK1 = REPO / "ai_videos" / "shikong_lvxing" / "sk1" / "2_世界观人设"
+# 资产根按剧切换（原先写死在 sk1；sk3 开站后必须能指到别的剧）。
+# `--drama shikong_lvxing/sk3` 覆盖它；不传则沿用 sk1，旧命令行为不变。
+DRAMA_DEFAULT = "shikong_lvxing/sk1"
+A = REPO / "ai_videos" / "shikong_lvxing" / "sk1" / "2_世界观人设"
 API = "https://api.elevenlabs.io/v1"
 CTX = ssl.create_default_context()
 TMP = Path(os.environ.get("TEMP") or "/tmp")
@@ -137,8 +140,11 @@ def inline(p: Path) -> dict:
 
 def create(key: str, prompt: str, *, model: str, quality: str, aspect: str, resolution: str,
            refs: list[dict] | None = None) -> str:
-    payload = {"model_id": model, "prompt": prompt, "quality": quality,
+    payload = {"model_id": model, "prompt": prompt,
                "aspect_ratio": aspect, "resolution": resolution}
+    # `quality` 只有 OpenAI 那一族收；seedream / gemini 传了直接 422 extra_forbidden
+    if model.startswith("gpt-image"):
+        payload["quality"] = quality
     if refs:
         payload["images"] = refs
     data = _api("POST", "/flows/image", key, payload)
@@ -176,7 +182,7 @@ def prompt_blocks(md: Path) -> list[tuple[str, str]]:
 
 
 def run_object(key: str, pkey: str, args) -> None:
-    hits = sorted((SK1 / "props").glob(f"{pkey}_*/{pkey}_*.md"))
+    hits = sorted((A / "props").glob(f"{pkey}_*/{pkey}_*.md"))
     if len(hits) != 1:
         raise SystemExit(f"{pkey}：找到 {len(hits)} 张卡，要正好 1 张")
     card, folder = hits[0], hits[0].parent
@@ -214,9 +220,9 @@ def run_object(key: str, pkey: str, args) -> None:
 
 def run_scene(key: str, rk: str, args) -> None:
     stem = rk.split("-")[0]
-    hits = (sorted(SK1.glob(f"scenes/*/{stem}_*/{stem}_*.md"))
-            or sorted(SK1.glob(f"props/{stem}_*/{stem}_*.md"))
-            or sorted(SK1.glob(f"characters/{stem}_*/{stem}_*.md")))
+    hits = (sorted(A.glob(f"scenes/*/{stem}_*/{stem}_*.md"))
+            or sorted(A.glob(f"props/{stem}_*/{stem}_*.md"))
+            or sorted(A.glob(f"characters/{stem}_*/{stem}_*.md")))
     if len(hits) != 1:
         raise SystemExit(f"{rk}：找到 {len(hits)} 张卡，要正好 1 张")
     card = hits[0]
@@ -248,15 +254,21 @@ def main() -> None:
     ap.add_argument("--aspect", default="1:1", help="物件三视图画幅")
     ap.add_argument("--scene-resolution", default="2K", choices=("1K", "2K", "4K"))
     ap.add_argument("--scene-aspect", default="16:9")
+    ap.add_argument("--drama", default=DRAMA_DEFAULT,
+                    help="资产根，相对 ai_videos/，如 shikong_lvxing/sk3")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--force", action="store_true", help="已存在也重出")
     args = ap.parse_args()
+    global A
+    A = REPO / "ai_videos" / args.drama / "2_世界观人设"
+    if not A.is_dir():
+        ap.error("资产根不存在：%s" % A)
     key = "DRY" if args.dry_run else api_key()
 
     if args.object:
         keys = [args.object]
         if args.object == "all":
-            inv = tomllib.loads((SK1 / "object_inventory.toml").read_text(encoding="utf-8"))
+            inv = tomllib.loads((A / "object_inventory.toml").read_text(encoding="utf-8"))
             keys = [o["key"] for o in inv["object"]]
         failed: list[str] = []
         for k in keys:

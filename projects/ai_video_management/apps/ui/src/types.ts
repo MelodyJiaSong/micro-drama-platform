@@ -8,6 +8,8 @@ export type TreeNodeType =
   | "video"
   | "audio"
   | "pdf"
+  /** A 3D white model (`.glb` / `.gltf`) — previewed in <model-viewer>. */
+  | "model"
   | "actor"
   | "voice";
 

@@ -34,7 +34,9 @@ import { ApiError } from "../types";
 const VIDEO_EXTS = new Set([".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v"]);
 const IMAGE_EXTS = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"]);
 const AUDIO_EXTS = new Set([".mp3", ".wav", ".m4a", ".aac", ".ogg", ".flac"]);
-const MEDIA_EXTS = new Set([...VIDEO_EXTS, ...IMAGE_EXTS, ...AUDIO_EXTS]);
+// White models (image-to-3D output, normalised by tools/whitemodel_normalize.py).
+const MODEL_EXTS = new Set([".glb", ".gltf"]);
+const MEDIA_EXTS = new Set([...VIDEO_EXTS, ...IMAGE_EXTS, ...AUDIO_EXTS, ...MODEL_EXTS]);
 const ARCHIVE_DIR_NAME = "archive";
 const RENDERS_DIR_NAME = "renders";
 
@@ -111,6 +113,28 @@ function findRendersMedia(currentPath: string, all: string[]): string[] {
       const tail = p.slice(rendersPrefix.length);
       if (tail.includes("/")) return false;
       return MEDIA_EXTS.has(extOf(p));
+    })
+    .sort();
+}
+
+/** White models sitting one level down from the md — `whitemodel/raw.glb` for a
+ * prop, `model/model.glb` for a character. Same-folder and `renders/` models are
+ * already covered by the sections above, and `archive/` by the one below, so those
+ * three are skipped here to keep each mesh on exactly one tile. Only meshes are
+ * pulled up: a subfolder's images (views/, frames/, peek renders) would flood the
+ * card, and they stay one click away in the tree. */
+export function findSubfolderModels(currentPath: string, all: string[]): string[] {
+  const lastSlash = currentPath.lastIndexOf("/");
+  if (lastSlash < 0) return [];
+  const parent = currentPath.slice(0, lastSlash + 1);
+  const skipped = new Set([ARCHIVE_DIR_NAME, RENDERS_DIR_NAME]);
+  return all
+    .filter((p) => {
+      if (!p.startsWith(parent)) return false;
+      if (!MODEL_EXTS.has(extOf(p))) return false;
+      const segments = p.slice(parent.length).split("/");
+      if (segments.length !== 2) return false;
+      return !skipped.has(segments[0]);
     })
     .sort();
 }
@@ -199,6 +223,7 @@ function MediaTile({
   const ext = extOf(path);
   const isVideo = VIDEO_EXTS.has(ext);
   const isAudio = AUDIO_EXTS.has(ext);
+  const isModel = MODEL_EXTS.has(ext);
   const isCharacterVideo = isVideo && isCharacterVideoPath(path);
   const isShotVideo = isVideo && isShotVideoPath(path);
   const isSceneVideo = isVideo && isSceneVideoPath(path);
@@ -231,6 +256,20 @@ function MediaTile({
         <video controls preload="metadata" src={url} />
       ) : isAudio ? (
         <audio controls preload="metadata" src={url} />
+      ) : isModel ? (
+        /* @google/model-viewer custom element; see main.tsx for the import.
+           `loading="lazy"` keeps a multi-mesh card from fetching every MB up front. */
+        <model-viewer
+          src={url}
+          alt={filename}
+          camera-controls
+          touch-action="pan-y"
+          shadow-intensity="1"
+          exposure="1"
+          environment-image="neutral"
+          loading="lazy"
+          ar-status="not-presenting"
+        />
       ) : (
         <img src={url} alt={filename} loading="lazy" />
       )}
@@ -403,6 +442,7 @@ function Toolbar({
 export function SiblingMedia({ currentPath, knownPaths, onChange }: SiblingMediaProps): JSX.Element | null {
   const siblings = useMemo(() => findSiblingMedia(currentPath, knownPaths), [currentPath, knownPaths]);
   const renders = useMemo(() => findRendersMedia(currentPath, knownPaths), [currentPath, knownPaths]);
+  const models = useMemo(() => findSubfolderModels(currentPath, knownPaths), [currentPath, knownPaths]);
   const archived = useMemo(() => findArchivedMedia(currentPath, knownPaths), [currentPath, knownPaths]);
   const [busyPath, setBusyPath] = useState<string | null>(null);
   const [busy, setBusy] = useState<boolean>(false);
@@ -415,6 +455,7 @@ export function SiblingMedia({ currentPath, knownPaths, onChange }: SiblingMedia
   const [scaffoldingPath, setScaffoldingPath] = useState<string | null>(null);
   const [selectedActive, setSelectedActive] = useState<Set<string>>(() => new Set());
   const [selectedRenders, setSelectedRenders] = useState<Set<string>>(() => new Set());
+  const [selectedModels, setSelectedModels] = useState<Set<string>>(() => new Set());
   const [selectedArchived, setSelectedArchived] = useState<Set<string>>(() => new Set());
 
   // Drop selected paths that no longer exist in the lists after a tree refresh
@@ -426,10 +467,13 @@ export function SiblingMedia({ currentPath, knownPaths, onChange }: SiblingMedia
     setSelectedRenders((prev) => prune(prev, renders));
   }, [renders]);
   useEffect(() => {
+    setSelectedModels((prev) => prune(prev, models));
+  }, [models]);
+  useEffect(() => {
     setSelectedArchived((prev) => prune(prev, archived));
   }, [archived]);
 
-  if (siblings.length === 0 && renders.length === 0 && archived.length === 0) return null;
+  if (siblings.length === 0 && renders.length === 0 && models.length === 0 && archived.length === 0) return null;
 
   const handleArchive = async (path: string): Promise<void> => {
     setBusyPath(path);
@@ -605,6 +649,29 @@ export function SiblingMedia({ currentPath, knownPaths, onChange }: SiblingMedia
   const toggleArchivedSel = (path: string): void => {
     setSelectedArchived((prev) => toggle(prev, path));
   };
+  const toggleModelsSel = (path: string): void => {
+    setSelectedModels((prev) => toggle(prev, path));
+  };
+
+  const handleBatchArchiveModels = async (): Promise<void> => {
+    const paths = models.filter((p) => selectedModels.has(p));
+    if (paths.length === 0) return;
+    setBusy(true);
+    const successes: string[] = [];
+    const failures: { name: string; kind: string }[] = [];
+    for (const p of paths) {
+      try {
+        await archiveMedia(p);
+        successes.push(p);
+      } catch (err) {
+        failures.push({ name: basename(p), kind: errorKind(err) });
+      }
+    }
+    setSelectedModels(new Set());
+    setBusy(false);
+    onChange?.();
+    announce(buildBatchAnnounce("Archived", successes.length, failures));
+  };
 
   const handleBatchArchiveRenders = async (): Promise<void> => {
     const paths = renders.filter((p) => selectedRenders.has(p));
@@ -697,6 +764,49 @@ export function SiblingMedia({ currentPath, knownPaths, onChange }: SiblingMedia
                 selected={selectedRenders.has(p)}
                 selectionBusy={busy}
                 onToggleSelect={toggleRendersSel}
+                onArchive={handleArchive}
+                onUnarchive={handleUnarchive}
+                onExtractFrames={handleExtractFrames}
+                onExtractLastFrame={handleExtractLastFrame}
+                onExtractScenePlates={handleExtractScenePlates}
+                onExtractCharacterViews={handleExtractCharacterViews}
+                onBurnSubtitles={handleBurnSubtitles}
+                onScaffoldSubtitles={handleScaffoldSubtitles}
+                onBurnIntroCards={handleBurnIntroCards}
+              />
+            ))}
+          </div>
+        </>
+      ) : null}
+      {models.length > 0 ? (
+        <>
+          <h3>🧊 3D 白模 · 子目录内的 .glb / .gltf（拖动旋转 · 滚轮缩放）</h3>
+          <Toolbar
+            total={models.length}
+            selectedCount={selectedModels.size}
+            busy={busy}
+            archived={false}
+            onSelectAll={() => setSelectedModels(new Set(models))}
+            onClear={() => setSelectedModels(new Set())}
+            onBatch={handleBatchArchiveModels}
+          />
+          <div className="sibling-media-row">
+            {models.map((p) => (
+              <MediaTile
+                key={p}
+                path={p}
+                archived={false}
+                busy={busy || busyPath === p}
+                extracting={extractingPath === p}
+                extractingViews={extractingViewsPath === p}
+                extractingPlates={extractingPlatesPath === p}
+                extractingLastFrame={extractingLastFramePath === p}
+                burning={burningPath === p}
+                scaffolding={scaffoldingPath === p}
+                cardBurning={cardBurningPath === p}
+                selected={selectedModels.has(p)}
+                selectionBusy={busy}
+                onToggleSelect={toggleModelsSel}
                 onArchive={handleArchive}
                 onUnarchive={handleUnarchive}
                 onExtractFrames={handleExtractFrames}

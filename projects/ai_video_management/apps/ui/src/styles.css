@@ -882,6 +882,18 @@ button:disabled { cursor: not-allowed; opacity: 0.6; }
   border-radius: 4px;
   padding: 8px;
 }
+/* A white-model tile: model-viewer has no intrinsic size, so unlike img/video it
+   needs explicit width+height or it collapses to zero and renders blank. */
+.sibling-media-item model-viewer {
+  display: block;
+  width: 304px;
+  height: 240px;
+  /* Dark, like the img/video tiles — a white model has its materials stripped, so
+     on a light panel it is a white silhouette on white and reads as nothing. */
+  background: #202024;
+  border-radius: 3px;
+  --poster-color: transparent;
+}
 .sibling-media-item img,
 .sibling-media-item video {
   display: block;
@@ -3982,7 +3994,7 @@ details[open] > .prompt-preview-toggle::before {
 .model-view model-viewer {
   width: 100%;
   height: min(70vh, 720px);
-  background: var(--panel-bg, #f4f4f5);
+  background: #202024;
   border: 1px solid var(--border, #d4d4d8);
   border-radius: 6px;
   --poster-color: transparent;

@@ -15,6 +15,9 @@ interface ModelViewerAttributes
   exposure?: string;
   "environment-image"?: string;
   "ar-status"?: string;
+  /** "eager" | "lazy" | "auto" — lazy keeps a card full of meshes from fetching
+   *  every MB before the user scrolls to it. */
+  loading?: string;
 }
 
 declare global {

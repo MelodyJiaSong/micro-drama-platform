@@ -1,10 +1,22 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteActor, importFromDownloads } from "../api";
-import { ApiError, type TreeNode } from "../types";
+import { ApiError, type TreeNode, type TreeNodeType } from "../types";
 import { ResearchNav } from "./ResearchNav";
 
 const ACTOR_ID_RE = /^actor_\d{4,}$/;
+
+/** Node types that open a file in the reader when clicked. One source — adding
+ * a leaf type (e.g. `model` for .glb) must not mean editing five predicates. */
+const FILE_LEAF_TYPES: ReadonlySet<TreeNodeType> = new Set<TreeNodeType>([
+  "file", "image", "video", "audio", "pdf", "model",
+]);
+/** Plus the folder-collapsing leaves, which carry children but never expand. */
+const LEAF_TYPES: ReadonlySet<TreeNodeType> = new Set<TreeNodeType>([
+  ...FILE_LEAF_TYPES, "actor", "voice",
+]);
+const isFileLeaf = (type: TreeNodeType): boolean => FILE_LEAF_TYPES.has(type);
+const isLeafType = (type: TreeNodeType): boolean => LEAF_TYPES.has(type);
 
 export interface SidebarProps {
   tree: TreeNode | null;
@@ -86,7 +98,7 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
     if (!tree) return;
     const accum: Record<string, boolean> = {};
     const walk = (node: TreeNode): void => {
-      if (node.type === "file" || node.type === "image" || node.type === "video" || node.type === "audio" || node.type === "pdf" || node.type === "actor" || node.type === "voice") return;
+      if (isLeafType(node.type)) return;
       if (node.path) accum[node.path] = false;
       for (const c of node.children ?? []) walk(c);
     };
@@ -150,7 +162,7 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
     if (!tree) return;
     const accum: Record<string, boolean> = {};
     const walk = (node: TreeNode): void => {
-      if (node.type === "file" || node.type === "image" || node.type === "video" || node.type === "audio" || node.type === "pdf" || node.type === "actor" || node.type === "voice") return;
+      if (isLeafType(node.type)) return;
       if (node.path) accum[node.path] = false;
       for (const c of node.children ?? []) walk(c);
     };
@@ -161,7 +173,7 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
   const onItemKeyDown = (event: React.KeyboardEvent<HTMLDivElement>, item: FlatNode): void => {
     const items = flat;
     const index = items.findIndex((i) => i.node.path === item.node.path);
-    const isLeaf = item.node.type === "file" || item.node.type === "image" || item.node.type === "video" || item.node.type === "audio" || item.node.type === "pdf" || (item.node.children ?? []).length === 0;
+    const isLeaf = isFileLeaf(item.node.type) || (item.node.children ?? []).length === 0;
     const isOpen = expanded[item.node.path] === true;
     if (event.key === "ArrowDown") {
       event.preventDefault();
@@ -180,7 +192,7 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
       else if (item.parentPath) focusByPath(treeRef.current, item.parentPath, setFocusedPath);
     } else if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      if (item.node.type === "file" || item.node.type === "image" || item.node.type === "video" || item.node.type === "audio" || item.node.type === "pdf") onSelect(item.node.path);
+      if (isFileLeaf(item.node.type)) onSelect(item.node.path);
       else toggle(item.node.path);
     }
   };
@@ -259,7 +271,7 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
       ) : null}
       <div ref={treeRef} role="tree" aria-label="File tree" className="tree">
         {flat.map((item) => {
-          const isLeaf = item.node.type === "file" || item.node.type === "image" || item.node.type === "video" || item.node.type === "audio" || item.node.type === "pdf" || item.node.type === "actor" || item.node.type === "voice";
+          const isLeaf = isLeafType(item.node.type);
           const hasChildren = (item.node.children ?? []).length > 0;
           const isOpen = expanded[item.node.path] === true || item.depth === 0;
           const isActive = currentPath === item.node.path;
@@ -325,6 +337,7 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
               {item.node.type === "video" ? <span aria-hidden="true" className="tree-icon">🎬</span> : null}
               {item.node.type === "audio" ? <span aria-hidden="true" className="tree-icon">🎵</span> : null}
               {item.node.type === "pdf" ? <span aria-hidden="true" className="tree-icon">📄</span> : null}
+              {item.node.type === "model" ? <span aria-hidden="true" className="tree-icon" title="3D 白模 — 点开可在浏览器里转着看">🧊</span> : null}
               {item.node.type === "actor" ? <span aria-hidden="true" className="tree-icon">🎭</span> : null}
               {isActorsRoot ? <span aria-hidden="true" className="tree-icon">🎭</span> : null}
               {isBgmRoot ? <span aria-hidden="true" className="tree-icon">🎵</span> : null}

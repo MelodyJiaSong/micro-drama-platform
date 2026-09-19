@@ -18,6 +18,7 @@ from libs.common.exposed_tree import (
 from libs.common.safe_resolve import SafeResolver
 from libs.application.queries.media__query import MediaQuery
 from libs.domain.value_objects.media__valueobject import MediaPath
+from libs.infrastructure.readers.tree__reader import TreeReader
 
 REL = "ai_videos/drama/2_世界观人设/props/obj/obj.glb"
 
@@ -61,3 +62,32 @@ def test_gltf_serves_as_json_flavoured_gltf(tmp_path: Path) -> None:
 
     assert result.media_type == "model/gltf+json"
     assert result.disposition == "inline"
+
+
+def test_mesh_leaf_carries_its_own_tree_type(tmp_path: Path) -> None:
+    """`model`, not the catch-all `file` — the sidebar marks it 🧊 and the reader
+    knows to hand it to <model-viewer> instead of offering a download."""
+    _seed(tmp_path)
+    reader = TreeReader(ExposedTree(tmp_path))
+
+    for ext in (".glb", ".gltf"):
+        mesh = tmp_path / REL.replace(".glb", ext)
+        mesh.write_bytes(b"glTF\x02\x00\x00\x00")
+        assert reader._leaf_for(mesh)["type"] == "model"
+
+
+def test_mesh_in_whitemodel_subfolder_is_reachable_from_the_tree(tmp_path: Path) -> None:
+    """The prop card's mesh lives one level down (`whitemodel/raw.glb`), which is
+    where `tools/whitemodel_normalize.py` writes it — it must survive the walk."""
+    prop = tmp_path / "ai_videos" / "drama" / "2_世界观人设" / "props" / "p19_独轮串车"
+    (prop / "whitemodel").mkdir(parents=True)
+    (prop / "p19_独轮串车.md").write_text("# 独轮串车", encoding="utf-8")
+    (prop / "whitemodel" / "raw.glb").write_bytes(b"glTF\x02\x00\x00\x00")
+    (prop / "whitemodel" / "p19.blend").write_bytes(b"BLENDER")
+
+    children = TreeReader(ExposedTree(tmp_path))._walk_filtered(
+        prop / "whitemodel", lambda f: f.suffix.lower() in TREE_VISIBLE_EXTENSIONS
+    )
+
+    names = {c["name"]: c["type"] for c in children}
+    assert names == {"raw.glb": "model"}  # .blend has no browser preview, stays hidden

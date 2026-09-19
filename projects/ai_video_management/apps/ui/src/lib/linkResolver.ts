@@ -97,6 +97,13 @@ function joinSegments(baseDir: string, rel: string): string | null {
   return segments.join("/");
 }
 
+/** Leaf node types that name a real file on disk. `model` (.glb / .gltf) belongs
+ * here too: dropping it would strip white models out of `knownPaths`, which is
+ * what every sibling-media / link-resolution lookup is filtered against. */
+const FILE_LEAF_TYPES: ReadonlySet<string> = new Set([
+  "file", "image", "video", "audio", "pdf", "model",
+]);
+
 interface ActorLeafShape {
   path: string;
   type: string;
@@ -109,7 +116,7 @@ interface ActorLeafShape {
 export function collectFilePaths(node: ActorLeafShape): string[] {
   const out: string[] = [];
   const walk = (n: ActorLeafShape): void => {
-    if (n.type === "file" || n.type === "image" || n.type === "video" || n.type === "audio" || n.type === "pdf") out.push(n.path);
+    if (FILE_LEAF_TYPES.has(n.type)) out.push(n.path);
     if (n.type === "actor") {
       out.push(n.path);
       if (n.face_path) out.push(n.face_path);
