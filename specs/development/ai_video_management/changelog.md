@@ -4879,3 +4879,97 @@ Verified:
   引用的是不存在的 `wukong_juexing` 剧
 
 No conflicts found in: interview/qa.md, findings/dossier.md, final_specs/spec.md, validation/*
+
+## Follow-up 169 — 2026-09-17 23:20:00
+Source: user_input/follow_ups/202609.md - section 169
+Summary: `.glb` 白模已在 `ai_videos/` 产出（sk1 `props/*/whitemodel/raw.glb`），但只有单文件页能预览；补全树/侧栏/主体卡片三处露出。
+
+Auto-updated:
+- projects/ai_video_management/libs/infrastructure/readers/tree__reader.py — 加 `_MODEL_EXTENSIONS`，
+  `.glb`/`.gltf` 叶子类型从兜底 `file` 改为 **`model`**
+- projects/ai_video_management/apps/ui/src/types.ts — `TreeNodeType` 加 `"model"`
+- projects/ai_video_management/apps/ui/src/components/Sidebar.tsx — 叶子类型判定收敛成
+  `FILE_LEAF_TYPES` / `LEAF_TYPES` 两个集合（原地复制了 5 份），`model` 记为可点叶子 + 🧊 图标
+- projects/ai_video_management/apps/ui/src/lib/linkResolver.ts — `collectFilePaths` 保留 `model` 叶子。
+  **改叶子类型引出的真回归**：`knownPaths` 是 sibling-media / 链接解析的过滤底表，漏改会让 `.glb`
+  从"能显示"退成"完全不可见"（浏览器实测抓到后补的）
+- projects/ai_video_management/apps/ui/src/components/SiblingMedia.tsx — `.glb`/`.gltf` 进 `MEDIA_EXTS`
+  （tile 渲 `<model-viewer loading="lazy">`）；新增 `findSubfolderModels` + 「🧊 3D 白模」一节，
+  把下一层子目录的网格（`whitemodel/raw.glb`、`model/model.glb`）提到主体卡片上，
+  只捞网格不捞图、跳过 `renders/`/`archive/`，一个网格只出现在一个 tile 里
+- projects/ai_video_management/apps/ui/src/model-viewer.d.ts — 补 `loading` 属性类型
+- projects/ai_video_management/apps/ui/src/styles.css — `.sibling-media-item model-viewer` 显式宽高
+  （custom element 无固有尺寸，不给就塌成 0 高 = 空白）+ 深色底（白模材质被剥光，浅底上白对白）
+- projects/ai_video_management/tests/test_media_glb_preview.py — +2 例
+- projects/ai_video_management/apps/ui/test/siblingModels.test.ts — 新建，5 例
+- projects/ai_video_management/README.md — 新增「3D 白模预览」条目
+- projects/ai_video_management/apps/api/static/ — 重新 build（webapp 走已构建的 bundle）
+
+Verified:
+- 后端全量 337 passed / 24 failed；24 例为**预先存在**（引用已不存在的 `wukong_juexing` 等），
+  用 `HEAD` 版 `tree__reader.py` 对照跑过，改前改后同一份
+- 前端 `tsc -b` 零错；`siblingModels.test.ts` 5/5 绿
+- 端到端（真浏览器，127.0.0.1:8766）：sk1 `p19_独轮串车.md` 出「🧊 3D 白模」节、独轮车白模可拖转；
+  `whitemodel/raw.glb` 单页全幅可转；`f80_ferrari.md` 同 folder 4 个 `.glb` 各成 tile；
+  侧栏 `raw.glb` 显示 🧊 且可点；`/api/media` 返回 `model/gltf-binary` 2.9MB
+
+Known gap (未改，待用户定夺):
+- `.glb`/`.gltf` 被 `.gitignore` 忽略，且不在 `tools/assets/scanner.py` 的 `MEDIA_EXTENSIONS` 里
+  → 白模不进 git 也不进 R2，只存在于生成它的那台机器上。要跨机器可见需显式把两个后缀
+  加进 scanner（会开始往 R2 上传，属独立决定）。
+
+No conflicts found in: interview/qa.md, findings/dossier.md, final_specs/spec.md, validation/*
+
+## Follow-up 170 — 2026-09-19 16:10:00
+Source: user_input/follow_ups/202609.md - section 170
+Summary: /api/tree 42s → 4s（walk 18.5s → 2.2s），vite 代理不再超时；输出逐节点验证与改前完全一致。
+
+Auto-updated:
+- libs/infrastructure/readers/tree__reader.py — `_rel()` 改成字符串切片。原实现对**每个节点**跑 `Path.resolve().relative_to(root)`，而 `ExposedTree` 构造时已经 resolve 过 root、walker 又显式跳过 symlink，两步的结果恒等于切掉前缀——代价却是 42,034 次 `nt._getfinalpathname`（9.5s）加 `relative_to` 内部 8.3s，合计占整个 walk 的 68%。resolve 版本保留为「路径不在 root 下」的兜底，那是切片答不了的唯一情形
+- libs/infrastructure/readers/tree__reader.py — `_walk_filtered()` 由 `Path.iterdir()` 改 `os.scandir()`。Windows 的目录枚举本来就带着 is_dir / is_file / is_symlink，从 DirEntry 上读是免费的；`Path` 形式每个条目打五次 `nt.stat`，全树 106,926 次、5.1s。`is_dir` 在此只问一次，以 bool 往下传
+
+验证：
+- **输出逐节点等价**——把改前版本还原成模块与新版同进程各跑一次 `build()`，`old == new` 深比较通过（含子节点顺序）。节点数 20,573 不变
+- **测试无回归**——同一套 `pytest tests/` 在改前 / 改后失败集合**逐条相同**（23 failed / 337 passed）。这 23 条与本改动无关：`test_seam_smart_interpolation`(14)、`test_downloads_import_scene_plates`(4)、`test_api_security_three_shapes`(2)、`test_sub_type_lookup`(2)、`test_tree_walker_consumer_walk`(1)，后三处里有 3 条是在找 `wukong_juexing`，而盘上的剧叫 `wushen_juexing`（早年改名后测试没跟上）
+- **实测**：`build()` 18.48s → 2.21s；`/api/tree` over HTTP 42.1s → 3.9–4.5s；整个后端测试套件 274s（单文件）→ 22s（全量）
+
+归因记录（留给下次）：序列化层是干净的，不要往那边找——`jsonable_encoder` 0.35s、`json.dumps` 0.15s、pydantic 校验 dict[str, Any] 0.00s。慢的全在文件系统遍历。
+
+未做：`/api/tree` 仍是 2.9 MB / 20,573 节点的一次性全量响应，前端 `App.tsx` 每次 `refreshKey` 自增（保存、删除、导入、改名）都整棵重取。真正的下一步是增量或按需展开，不是继续压常数；本轮只解掉阻塞。
+
+No conflicts found in: final_specs/spec.md, validation/, apps/ui/（前端未改）
+
+## Follow-up 171 — 2026-09-19 23:10:00
+Source: user_input/follow_ups/202609.md - section 171
+Summary: `⏮ 生成末帧` 没丢，只是从没出现在 mp4 单文件视图上；按同行另外三个抽帧按钮的形状补齐。
+
+先确认「是不是真被删了」：
+- `apps/api/routes/frame__route.py` `POST /api/extract-last-frame` — 在
+- `libs/application/commands/frame__command.py` `FrameCommand.extract_last_frame` — 在
+- `libs/infrastructure/writers/frame__writer.py` `FrameExtractor.extract_last_frame` +
+  `_copy_to_next_shot_firstframe` / `_next_shot_folder` — 在
+- `apps/ui/src/components/SiblingMedia.tsx` 媒体卡上的 `⏮ 生成末帧` — 在
+- `git log -S"生成末帧"` 只有一条 e0380a2（新增），没有删除提交
+- 盘上证据：`sk1/…/shot01/shot01_lastframe.png` 与 `shot02/shot02_firstframe.png`
+  是今天 18:30 同一次点击产出的，功能本身能跑
+
+真正的缺口：`Reader.tsx` 的 mp4 单文件视图里，同一个 `.reader-media-actions` 行
+已经挂了 🎞 Extract Frames（所有视频）/ 🖼 提取三视图（character 视频）/
+🧭 截取方向背景图（scene 视频），**唯独 shot 视频的末帧按钮没有**。于是从 mp4 页面看
+「四个抽帧入口少了一个」，像是被删。按钮此前只能从 `shotNN.md` 往下翻到媒体卡才够得着。
+
+Auto-updated:
+- apps/ui/src/components/Reader.tsx — 加 `showLastFrameBtn`（gate = `isShotVideoPath`，
+  与另外两个 gate 同构）+ `extractingLastFrame` state + `onExtractLastFrameClick`；
+  按钮并入 `mediaActionsBusy`，复用 `.reader-media-extract-btn` 样式
+  （`reader-media-views-btn` / `-plates-btn` 两个类在 styles.css 里根本没有规则，
+  跟着它们走只会多一个没样式的按钮）
+- apps/api/static/assets/* — `npm run build` 重出 bundle（`tsc -b` 通过），
+  `index-*.js` 里 `生成末帧` 由 1 处变 2 处（SiblingMedia + Reader）
+
+验证：
+- `npm run build` 通过（含 `tsc -b` 类型检查）
+- `npm test`：64 passed / 2 failed，失败两条都在 `test/dramas.test.ts`（`extractDramaAssets`
+  的 drama 作用域），与本改动无关——本轮只动 Reader.tsx，`lib/dramas.ts` 未改
+
+No conflicts found in: final_specs/spec.md, validation/, 后端（route / command / writer 均未改）

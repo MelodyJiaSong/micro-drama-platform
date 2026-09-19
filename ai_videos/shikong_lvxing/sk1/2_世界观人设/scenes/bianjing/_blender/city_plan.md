@@ -467,7 +467,9 @@ place_r_far  = 380.0
 kind = "river"
 name = "汴河"
 s0 = 7200.0            # 相国寺桥（s 7441）以西 240 m
-s1 = 11600.0           # 东水门（s 11024）外约 580 m
+s1 = 11850.0           # 东水门（s 11024）外约 830 m（未缩尺里程；CITY_SCALE 后 ＝ 门外 415 m）
+                       # 2026-09-19：shot01 起飞点在门外 320 m（缩尺后），原来的 s1 只到门外 288 m，
+                       # 于是**开镜头那一段在走廊之外、什么都没建**，飞过的是一片空地。
 note = "shot01 + shot02 的一镜到底主段：城外 → 穿东水门 → 汴河码头 → 城内汴河一路西飞到相国寺桥"
 
 [[leg]]
@@ -585,7 +587,7 @@ key = "p26"
 name = "沿汴河的老柳"
 spacing = 13.0
 offset = [20.0, 24.0]   # 汴河 keep-out = 半宽13 + pad6 = 19 m，必须站到它外面
-along = { kind = "river", name = "汴河", s0 = 7200.0, s1 = 11600.0 }
+along = { kind = "river", name = "汴河", s0 = 3600.0, s1 = 5800.0 }
 jitter = { pos = 2.5, yaw = 180.0 }
 seed = 2601
 max = 260
@@ -593,7 +595,7 @@ max = 260
 [[scatter]]
 key = "p26"
 name = "御街行道柳"
-spacing = 14.0
+spacing = 10.0
 offset = [128.0, 136.0]  # 御街宽 320 m，行道柳在街两侧边上
 on_street = true
 along = { kind = "street", name = "御街·宣德门—州桥" }
@@ -604,7 +606,7 @@ max = 120
 [[scatter]]
 key = "p18"
 name = "御街朱漆杈子"
-spacing = 2.6
+spacing = 6.0
 offset = [50.0, 50.0]    # 两行杈子夹出中间约 100 m 的御道（route.009）
 on_street = true
 along = { kind = "street", name = "御街·宣德门—州桥" }
@@ -618,7 +620,7 @@ key = "p12"
 name = "汴河漕船"
 spacing = 95.0
 offset = [0.0, 5.0]
-along = { kind = "river", name = "汴河", s0 = 7300.0, s1 = 11500.0 }
+along = { kind = "river", name = "汴河", s0 = 3650.0, s1 = 5750.0 }
 in_water = true
 jitter = { pos = 3.0, yaw = 6.0 }
 seed = 1201
@@ -627,9 +629,9 @@ max = 40
 [[scatter]]
 key = "p28"
 name = "临汴河席棚小摊"
-spacing = 17.0
+spacing = 11.0
 offset = [20.5, 23.0]
-along = { kind = "river", name = "汴河", s0 = 7300.0, s1 = 10900.0 }
+along = { kind = "river", name = "汴河", s0 = 3650.0, s1 = 5450.0 }
 face = "cross"
 jitter = { pos = 1.2, yaw = 8.0 }
 seed = 2801
@@ -640,7 +642,7 @@ key = "p14"
 name = "市摊大伞"
 spacing = 29.0
 offset = [21.0, 24.0]
-along = { kind = "river", name = "汴河", s0 = 7300.0, s1 = 10900.0 }
+along = { kind = "river", name = "汴河", s0 = 3650.0, s1 = 5450.0 }
 jitter = { pos = 1.5, yaw = 180.0 }
 seed = 1401
 max = 110
@@ -650,7 +652,7 @@ key = "p19"
 name = "街上的独轮串车"
 spacing = 62.0
 offset = [20.0, 23.0]
-along = { kind = "river", name = "汴河", s0 = 7300.0, s1 = 11400.0 }
+along = { kind = "river", name = "汴河", s0 = 3650.0, s1 = 5700.0 }
 jitter = { pos = 1.5, yaw = 25.0 }
 seed = 1901
 max = 60
@@ -660,7 +662,7 @@ key = "p17"
 name = "街上的驮货毛驴"
 spacing = 88.0
 offset = [20.0, 23.5]
-along = { kind = "river", name = "汴河", s0 = 7300.0, s1 = 11500.0 }
+along = { kind = "river", name = "汴河", s0 = 3650.0, s1 = 5750.0 }
 jitter = { pos = 1.8, yaw = 30.0 }
 seed = 1701
 max = 45
@@ -670,7 +672,7 @@ key = "p24"
 name = "沿街竖立招"
 spacing = 23.0
 offset = [24.0, 25.0]
-along = { kind = "river", name = "汴河", s0 = 7300.0, s1 = 10900.0 }
+along = { kind = "river", name = "汴河", s0 = 3650.0, s1 = 5450.0 }
 face = "cross"
 jitter = { pos = 0.6, yaw = 6.0 }
 seed = 2401
@@ -689,7 +691,7 @@ key = "p13"
 name = "虹桥头表木"
 spacing = 46.0
 offset = [22.0, 24.0]
-along = { kind = "place", name = "A", axis = "x", at = 0.0, s0 = -24.0, s1 = 24.0 }
+along = { kind = "place", name = "A", axis = "x", at = 0.0, s0 = -24.0, s1 = 12.0 }
 in_place = true
 face = "cross"
 jitter = { pos = 0.3, yaw = 3.0 }
@@ -703,7 +705,7 @@ key = "p16"
 name = "东水门驼队"
 spacing = 7.0
 offset = [20.0, 24.0]
-along = { kind = "river", name = "汴河", s0 = 10750.0, s1 = 11450.0 }
+along = { kind = "river", name = "汴河", s0 = 5375.0, s1 = 5725.0 }
 jitter = { pos = 1.0, yaw = 12.0 }
 seed = 1601
 max = 14
@@ -713,7 +715,7 @@ key = "p39"
 name = "桥头铺兵骨朵"
 spacing = 26.0
 offset = [22.0, 26.0]
-along = { kind = "place", name = "A", axis = "x", at = 0.0, s0 = -30.0, s1 = 30.0 }
+along = { kind = "place", name = "A", axis = "x", at = 0.0, s0 = -30.0, s1 = 15.0 }
 in_place = true
 jitter = { pos = 0.6, yaw = 180.0 }
 seed = 3901
@@ -724,7 +726,7 @@ key = "p41"
 name = "汴河码头粮袋堆"
 spacing = 6.5
 offset = [22.0, 34.0]
-along = { kind = "place", name = "E", axis = "x", at = 10.0, s0 = -55.0, s1 = 45.0 }
+along = { kind = "place", name = "E", axis = "x", at = 10.0, s0 = -55.0, s1 = 22.5 }
 in_place = true
 jitter = { pos = 1.6, yaw = 180.0 }
 seed = 4101
@@ -735,7 +737,7 @@ key = "p40"
 name = "码头与桥头的空筐席卷"
 spacing = 11.0
 offset = [22.0, 36.0]
-along = { kind = "place", name = "E", axis = "x", at = -14.0, s0 = -55.0, s1 = 45.0 }
+along = { kind = "place", name = "E", axis = "x", at = -14.0, s0 = -55.0, s1 = 22.5 }
 in_place = true
 jitter = { pos = 1.8, yaw = 180.0 }
 seed = 4001
@@ -746,7 +748,7 @@ key = "p30"
 name = "桑家瓦子看棚群"
 spacing = 34.0
 offset = [30.0, 44.0]
-along = { kind = "place", name = "I", axis = "y", at = 0.0, s0 = -60.0, s1 = 90.0 }
+along = { kind = "place", name = "I", axis = "y", at = 0.0, s0 = -60.0, s1 = 45.0 }
 in_place = true
 jitter = { pos = 4.0, yaw = 12.0 }
 seed = 3001
@@ -757,7 +759,7 @@ key = "p44"
 name = "瓦子看棚前长凳"
 spacing = 2.4
 offset = [16.0, 22.0]
-along = { kind = "place", name = "I", axis = "y", at = 0.0, s0 = -55.0, s1 = 85.0 }
+along = { kind = "place", name = "I", axis = "y", at = 0.0, s0 = -55.0, s1 = 42.5 }
 in_place = true
 face = "cross"
 jitter = { pos = 0.4, yaw = 6.0 }
@@ -767,9 +769,9 @@ max = 120
 [[scatter]]
 key = "p33"
 name = "相国寺书市书摊"
-spacing = 9.0
+spacing = 15.0
 offset = [7.0, 30.0]
-along = { kind = "place", name = "H", axis = "x", at = -55.0, s0 = -100.0, s1 = 180.0 }
+along = { kind = "place", name = "H", axis = "x", at = -55.0, s0 = -100.0, s1 = 90.0 }
 in_place = true
 face = "cross"
 jitter = { pos = 2.0, yaw = 8.0 }
@@ -781,7 +783,7 @@ key = "p37"
 name = "相国寺大三门石门枕"
 spacing = 14.0
 offset = [3.0, 3.0]
-along = { kind = "place", name = "H", axis = "x", at = -118.0, s0 = -21.0, s1 = 21.0 }
+along = { kind = "place", name = "H", axis = "x", at = -118.0, s0 = -21.0, s1 = 10.5 }
 in_place = true
 face = "cross"
 jitter = { pos = 0.15, yaw = 2.0 }
@@ -793,7 +795,7 @@ key = "p37"
 name = "开封府府门石门枕"
 spacing = 14.0
 offset = [3.0, 3.0]
-along = { kind = "place", name = "F", axis = "x", at = -138.0, s0 = -14.0, s1 = 14.0 }
+along = { kind = "place", name = "F", axis = "x", at = -138.0, s0 = -14.0, s1 = 7.0 }
 in_place = true
 face = "cross"
 jitter = { pos = 0.15, yaw = 2.0 }
@@ -805,7 +807,7 @@ key = "p42"
 name = "开封府前拴马石与马槽"
 spacing = 9.0
 offset = [17.0, 21.0]
-along = { kind = "place", name = "F", axis = "x", at = -128.0, s0 = -95.0, s1 = 95.0 }
+along = { kind = "place", name = "F", axis = "x", at = -128.0, s0 = -95.0, s1 = 47.5 }
 in_place = true
 face = "cross"
 jitter = { pos = 1.0, yaw = 6.0 }
@@ -815,7 +817,7 @@ max = 26
 [[scatter]]
 key = "p43"
 name = "御街御沟两侧"
-spacing = 16.0
+spacing = 9.0
 offset = [58.0, 58.5]
 on_street = true
 along = { kind = "street", name = "御街·宣德门—州桥" }
@@ -838,7 +840,7 @@ max = 40
 [[scatter]]
 key = "p29"
 name = "御街早市蒸笼灶"
-spacing = 36.0
+spacing = 19.0
 offset = [132.0, 138.0]
 on_street = true
 along = { kind = "street", name = "御街·宣德门—州桥" }
@@ -860,7 +862,7 @@ max = 120
 [[scatter]]
 key = "p27"
 name = "沿街挑担货筐"
-spacing = 24.0
+spacing = 13.0
 offset = [126.0, 134.0]
 on_street = true
 along = { kind = "street", name = "御街·宣德门—州桥" }
@@ -913,6 +915,81 @@ along = { kind = "street", name = "御街·龙津桥—南薰门" }
 jitter = { pos = 2.0, yaw = 20.0 }
 seed = 2501
 max = 26
+
+# 2026-09-18 照 bg2-1 对账补：锚点图里城门口挤满柳树、牛车、驮驴与靠岸小船，
+# 我们的门前是空地——城门是 shot01 的八秒招牌镜，空着最显假。
+[[scatter]]
+key = "p26"
+name = "东水门外柳"
+spacing = 9.0
+offset = [16.0, 22.0]
+along = { kind = "river", name = "汴河", s0 = 5520.0, s1 = 5760.0 }
+jitter = { pos = 2.0, yaw = 180.0 }
+seed = 2603
+max = 60
+
+[[scatter]]
+key = "p19"
+name = "东水门外串车"
+spacing = 17.0
+offset = [26.0, 33.0]
+along = { kind = "river", name = "汴河", s0 = 5530.0, s1 = 5750.0 }
+jitter = { pos = 1.6, yaw = 12.0 }
+seed = 1902
+max = 18
+
+[[scatter]]
+key = "p17"
+name = "东水门外驮货毛驴"
+spacing = 23.0
+offset = [24.0, 31.0]
+along = { kind = "river", name = "汴河", s0 = 5540.0, s1 = 5740.0 }
+jitter = { pos = 1.8, yaw = 25.0 }
+seed = 1703
+max = 14
+
+# 2026-09-19：码头原来只在门内一小块（仓群 x 1351–1372），航拍飞过去两三秒就完，
+# 为了给它 8 秒，云台只能一路回头看（实测视线偏航向 176° —— 一边往西飞一边看正后方）。
+# 正解是把码头**沿河岸往西铺长**：仓廒一排、货堆与挑担接着排，机身一路直飞、镜头朝前偏右即可。
+[[scatter]]
+key = "p59"
+name = "仓前码头岸线仓廒"
+spacing = 34.0
+offset = [30.0, 34.0]
+along = { kind = "river", name = "汴河", s0 = 5050.0, s1 = 5420.0 }
+jitter = { pos = 2.0, yaw = 3.0 }
+seed = 5901
+max = 9
+
+[[scatter]]
+key = "p41"
+name = "仓前码头岸线粮袋堆"
+spacing = 13.0
+offset = [19.0, 25.0]
+along = { kind = "river", name = "汴河", s0 = 5050.0, s1 = 5420.0 }
+jitter = { pos = 1.4, yaw = 40.0 }
+seed = 4102
+max = 22
+
+[[scatter]]
+key = "p27"
+name = "仓前码头岸线挑担"
+spacing = 16.0
+offset = [16.0, 20.0]
+along = { kind = "river", name = "汴河", s0 = 5060.0, s1 = 5410.0 }
+jitter = { pos = 1.2, yaw = 25.0 }
+seed = 2702
+max = 16
+
+[[scatter]]
+key = "p12"
+name = "仓前码头岸线靠岸纲船"
+spacing = 26.0
+offset = [9.0, 11.0]
+along = { kind = "river", name = "汴河", s0 = 5060.0, s1 = 5410.0 }
+jitter = { pos = 1.5, yaw = 4.0 }
+seed = 1203
+max = 10
 ```
 
 **三个物件故意不进全城层**（写明白，免得下次有人以为是漏了）：

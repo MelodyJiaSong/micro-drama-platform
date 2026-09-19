@@ -144,3 +144,72 @@
 - Commons 上《清明上河图》有三套可用局部：`Qingming Festival Detail 1–17`（华盛顿大学扫描，公版）、`Qingming shanghe tu {bridge,gate tower,road,sedan chair,towboat,well,11}`（主题命名，公版）、`Along the River During the Qingming Festival Section 1–4`（CC0 高清分段）；**清院本 / 仇英本另有一套，只作对照、不作形制依据**。
 - 维基文库分卷 URL 稳定（`書名/卷N`），比 ctext 好抓；四库本页面用 `書名_(四庫全書本)/卷N`。
 - 中文路径 URL 用 urllib 批量核状态会报 `UnicodeEncodeError`——这是脚本编码问题不是站点故障，须先 percent-encode。
+
+## 8. 虚构世界（sk2 起，2026-09-18）
+
+> **系列扩边**：sk2 起本系列不再限于「历史上的某一天、某座城」，增加**虚拟城支线**（游戏 / 虚构世界里的城）。
+> 阶段 0 由「史料调研」平移为**「设定考据」**——方法论不变（一手优先、每条带出处与原文摘句、三级标签、黑名单、参考图库），只换来源类型。
+
+### 8.1 虚构世界的 tier 映射（与历史站的 T0–T4 一一对应）
+
+| 层级 | 历史站 | 虚构站 |
+|---|---|---|
+| **T0 一手** | 正史 / 出土文献 / 传世图像 | **作品本体**：游戏客户端内的模型 / 地图 / NPC / 物品 / 任务文本；官方设定书（如《魔兽世界编年史》）；官网 lore 页；官方 CG 与原画 |
+| **T1 学术** | 学术专著 / 考古报告 | **带作品内引用的百科条目**（Warcraft Wiki `warcraft.wiki.gg`、Wowpedia）、**带 id 的数据库条目**（Wowhead Classic） |
+| **T2 严肃普及** | 有参考文献的普及读物 | 有出处的 lore / 美术考据长文与频道 |
+| **T3 百科媒体** | 无引用的百科 / 媒体 | 无引用的百科段落、论坛、攻略站 |
+| **T4 只作反例** | 影视 / 网文 / 模型默认 | **玩家推测、同人设定、生成模型默认** |
+
+**三级标签的虚构站口径**：`✅` 设定明载（T0/T1 有可指认的作品内出处）· `⚠️` 设定没写、按该世界自身逻辑推测（口播须说「设定没写，我按…推」）· `❌` 玩家误传**或版本错置**（把后续资料片的特征安到本站锚定的版本上）。
+**版本锚点是虚构站的「纪年」**：历史站写「宣和二年」，虚构站写「经典旧世 Vanilla」。跨版本的特征＝跨朝代的服饰，一律 ❌。
+
+### 8.2 魔兽世界 · 暴风城（sk2）
+
+| 来源 | 层级 | 能回答什么 | URL | 本次核对状态 |
+|---|---|---|---|---|
+| Warcraft Wiki（Wowpedia 继任站） | T1 | 分区 / 地标 / NPC / lore / 版本沿革 | https://warcraft.wiki.gg/ | 阶段 0 七路研究员核 |
+| Wowpedia（Fandom 旧站） | T1 | 同上，旧版条目与图片 | https://wowpedia.fandom.com/ | 同上 |
+| Wowhead Classic 数据库 | T1 | **物品标价 / NPC 坐标 / 物件 id**（物价与「他站在哪」的最权威来源） | https://www.wowhead.com/classic/ | 同上 |
+| Wowhead 中文站 | T1 | **官方简体中文译名** | https://www.wowhead.com/cn/ | 同上 |
+| 暴雪官方 lore / 《魔兽世界编年史》 | T0 | 建城史 / 政权 / 世界观 | 官网 + Chronicle（Dark Horse） | 同上 |
+| 官方原画 concept art / 游戏截图 | T0（图像） | 建筑形制 / 装束 / 器物长相 | 各条目图库 | **暴雪版权：只作形制依据，不入画、不上传给生成模型**（见 sk2 divergence #101） |
+| 用户提供的暴风城素材视频 | T3 | 氛围与形制对照 | https://www.youtube.com/watch?v=roMWEeV2P4U | ⚠️ 页面为 SPA，WebFetch 取不到标题与描述；**Claude 无法观看视频内容**，仅登记备查 |
+
+### 8.3 虚构站的检索教训（逐站追加）
+
+- YouTube 视频页对 WebFetch 只返回页脚导航，**取不到标题 / 描述 / 字幕**；需要视频里的具体画面时，由用户截图提供（2026-09-18，sk2）。
+
+
+## 3. 英格兰 · 伦敦
+
+### 3.1 伦敦 1666（sk3）
+
+> 逐条 `fact_id`、逐字 `quote` 与许可见 `sk3/0_research/parts/w1–w6`；参考图库 130 张见 `sk3/0_research/refs/`（索引进 git、图走 R2）。
+> **抓取避坑（实测 2026-09-18）**：`pepysdiary.com` 对 WebFetch 返回 403，但 `curl` / `urllib` 带浏览器 UA 正常；
+> 其站内检索 `/search/?q=<词>` 可直接定位日记日期，是本站最高效的入口。
+> `thegazette.co.uk` 的 issue 85 PDF 是**纯扫描无文字层**；`oed.com` 需登录（改用 etymonline，tier 已下调）。
+
+| 来源 | 层级 | 能回答什么 | URL / 出处 |
+|---|---|---|---|
+| Samuel Pepys 日记 1666-09-01 / 09-02 / 09-04 函 | T0 | 全站时间轴脊柱；火的起点、国王的命令、市长崩溃的唯一逐字引语；衣食住行价格记载极细 | https://www.pepysdiary.com/diary/1666/09/01/ · `/09/02/` |
+| John Evelyn 日记 1666-08-27 / 09-02 / 09-03 | T0 | 第二个具名目击者；**火前六天与 Wren 勘查旧圣保罗、议定 "a noble cupola"**；closer 候选 `London was, but is no more.` | Project Gutenberg |
+| London Gazette No. 85（Whitehall, September 8, 1666） | T0 | 官方起火时刻「at one of the Clock in the morning」；官方认定「本该拆房断火而未办」 | fireoflondon.org.uk 人工转录（官方扫描件无文字层，⚠️ 需比对） |
+| Rege Sincera 小册（1667） | T0 | 火前长期干旱与东风 | 同上转录站 |
+| Harley 议员家书（1666） | T0（引于 T1） | 帮工被烟呛醒「between one and two」；女仆死在屋里 | 引自 London Museum / Kate Loveman 2023 |
+| 1662 年 Hackney Coach Act（逐字法条） | T0 | 400 辆牌照上限、£5/年、10s/天、头一小时 18d；**住户每周三周六自扫门前** | british-history.ac.uk |
+| Stow, Survey of London | T0 | 城墙城门、街区、货种 | british-history.ac.uk |
+| Hollar 版画（1647 Long View · 1666 火前火后双联 · Dugdale 1658 圣保罗全套 · Byrsa Londinensis · Ornatus Muliebris / Theatrum Mulierum 服饰） | T0（图像） | **本站画面的原始素材**（img2img 底本）：天际线 / 桥 / 圣保罗 / 交易所 / 各阶层服饰 | Met CC0 · Yale CC0 · Rijksmuseum CC0 · Wikimedia Commons |
+| Faithorne & Newcourt 1658 伦敦地图 | T0（图像） | 火前街道格局 | Commons |
+| **Ogilby & Morgan 1676 实测图（100 ft/inch）** | T0（图像） | **建模前应以它套合替换 w2 的推算坐标** | ⚠️ 本轮未取，建模前必取 |
+| Stephenson, LSE Working Paper 231（引 TNA WORK 5/1） | T1 | **锚 B 日工钱**：1660 年国王工程署，小工 16d/天、石匠木匠 24–30d/天 | LSE Economic History WP231 |
+| Primatt, The City and Country Purchaser, 1667 | T1 | 交叉核对工钱（瓦匠 36d / 小工 20d） | — |
+| Kate Loveman（London Museum, 2023） | T1 | 首个目击者 Thomas Dagger 的身份 | londonmuseum.org.uk |
+| Evelyn, Fumifugium, 1661 | T0 | **航拍的大气**：旅人「在许多英里之外先闻到、而不是先看到这座城」 | Gutenberg |
+| Tinniswood, By Permission of Heaven | T2 | Farriner 打烊、女儿 Hanna 午夜巡查（**⚠️ 全 dossier tier 最低、却是整集的锚点，需回溯原书注释**） | Penguin |
+| etymonline `curfew` | T2 | 词源 cuevrefeu「盖火」——敲钟命令压好炉火，**正是为防无人看管的炉火酿成大火** | etymonline.com |
+| **Boulton 2000**（1660 年代伦敦分项食品价） | T1 | **唯一能补上食品价空白的文献** | ⚠️ 两条 PDF 路径均 404 / 付费墙，未取 |
+| Stuart Royal Proclamations | T0 | 1661 / 1665 两道禁 jetty 公告原文 | ⚠️ 本轮只拿到 T3 转述 |
+- **`warcraft.wiki.gg` 的正文抓取会丢引文，改走原始 wikitext**：`https://warcraft.wiki.gg/index.php?title={条目}&action=raw` 直接返回未渲染的 wikitext。sk2 的 W9 路实测——本片质量最高的几条逐字引文（贡多拉「prohibitively esoteric」、未启用的副本门、英雄谷五块铭文、设计师自述、免费牛奶桶）**全部出自这条路**，用普通 WebFetch 读渲染页都拿不到。**下游沿用。**（2026-09-18，sk2 · W9）
+- **Wowhead 是 JS 渲染，但有两条绕法**：物品价格走 `https://www.wowhead.com/classic/item={id}&xml` 取 `jsonEquip.buyprice`（sk2 · W4 实测）；`quest=` 页的正文仍可正常抓（sk2 · W9 实测）。**但 3D Modelviewer 与 NPC 装备槽绕不过去，必须人眼在浏览器里看。**（2026-09-18，sk2）
+- **官方 ≠ 版本正确**：暴雪官网的暴风城导览文写的是**大灾变之后**的城（瓦里安喷泉、乌瑟尔喷泉都在里面）。虚构站引用官方资料时，**必须再问一句「这是哪个版本」**。同理，`warcraft.wiki.gg` 的主条目一律按**当前版本**撰写，版本锚点靠 `Patch changes` 小节逐条回查。（2026-09-18，sk2 · W1/W6/W8）
+- **数值类来源要锁构建号**：狮鹫票价走 `wago.tools` 的 DB2 `TaxiPath` 时，**同一张表在正式服构建与 Classic Era 构建里数值不同**（暴风城→哨兵岭 retail 5 铜 vs Classic 110 铜）。不锁构建（sk2 用的是 `1.15.5.57638`）就会整段版本错置。（2026-09-18，sk2 · W4）

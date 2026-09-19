@@ -149,3 +149,40 @@ Auto-updated:
 - sk1 casting.md / publish.md / relationships.md / 0_research/dossier.md / qc_stage2.md — 同步候选名册、视频原声 + 译配轨、指针
 
 No conflicts found in: sk1 1_立项/concept.md、3_大纲/outline.md、world.md、style_guide.md（旅行者只以占位名「林问」出现，换人时由生成器替换）；scenes/ 与 p11 以外的道具卡
+
+## Follow-up 013 — 2026-09-18 13:02:01
+Source: user_input/follow_ups/202609.md - section 013
+Summary: 系列扩边出「虚拟城支线」，第 2 站 sk2 ＝ 魔兽世界暴风城（经典旧世 Vanilla）。
+
+Auto-updated:
+- `ai_videos/shikong_lvxing/series.json` — description 去掉「历史上的」限定，写明城分历史城 / 虚拟城两类及各自的纪年口径
+- `ai_videos/shikong_lvxing/proposal.md` — 新增 § H「虚拟城支线」：两类站对照表、十五条不变量改两条（I-2 / I-10）、明确不改 I-4、虚拟城选站三判据
+- `ai_videos/shikong_lvxing/_series/sources.md` — 新增 §8「虚构世界」：T0–T4 tier 映射表 + 暴风城来源表 + 检索教训（只追加不改已有行）
+- `specs/ai_video/sk2/` — 新建（raw/revised prompt、divergence #101–110、changelog）
+- `ai_videos/shikong_lvxing/sk2/` — 新建阶段编号目录，与 sk1 同构
+
+No conflicts found in: `_series/{blacklist.md, glossary.md, characters/}`（sk2 的暴风城黑名单与译名表由阶段 0 产出后另行追加，不改 sk1 已有行）；sk1 的任何产物（站站独立）。
+
+## Follow-up 014 — 2026-09-18 15:10:00
+Source: user_input/follow_ups/202609.md - section 014
+Summary: 虚拟城站的 I-7 由「当地人零台词」改为「有逐字原文才能开口」；历史站不动。
+
+Auto-updated:
+- `ai_videos/shikong_lvxing/proposal.md` § H —「十五条不变量的改写」由两条增至三条，新增 I-7 条目（含原始理由的还原、虚拟城口径、配套三条）
+- `specs/ai_video/sk2/divergence.md` — 新增 #111 及配套三条
+
+No conflicts found in: sk1 与其余历史站（I-7 对历史站原样成立，未改一字）；I-5 旅行者三铁律、I-11 / I-12 旅行者形态（**均未变**：她仍不与当地人对话，仍是全片唯一解说声源）。
+
+## Follow-up 015 — 2026-09-18 16:10:00
+Source: user_input/follow_ups/202609.md - section 015
+Summary: 虚拟城站允许「偶尔的 NPC 互动」（三档制）；形态确认为「旅游 + 解说」。
+
+Auto-updated:
+- `ai_videos/shikong_lvxing/series.json` — description 里「她不和当地人对话」按历史城 / 虚拟城两类分述
+- `ai_videos/shikong_lvxing/proposal.md` § H · I-7 条目 — 补「互动三档」表 + 不变的分界线（知识只由旅行者讲）
+- `specs/ai_video/sk2/divergence.md` — 新增 #113，含本站实际用到的档 2 台词表
+- `ai_videos/shikong_lvxing/sk2/1_立项/concept.md` — 形态铁律段改写
+
+撤销: follow-up 008 的「她不和当地人对话」**在虚拟城站的适用**（历史站原样不动）。
+
+No conflicts found in: sk1 与其余历史站；I-5 旅行者三铁律（问路买东西不属「干预」，三铁律原样成立）；I-11 / I-12（她仍是全片唯一解说声源）。

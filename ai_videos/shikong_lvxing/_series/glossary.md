@@ -1,6 +1,8 @@
 # 《时空旅行》系列公共库 · glossary（称谓白名单 + TTS 读音表 + 台词纪律）
 
 > **2026-09-14 起（系列 follow-up 008）当地人不开口**：本表的称谓白名单只用于旅行者在解说里提到别人时怎么叫（「脚店的大伯」「铺兵」），不再用于古人对白；TTS 专名读音表照常使用。
+>
+> **2026-09-18 起按站型分叉**：上句只对**游览型**站成立（sk1 等）。**Titanic 型**站按语言可考性分级开放 NPC 台词——sk3 伦敦 1666 是第一个，其 §1.2 白/黑名单**同时用于解说与对白**。见 `proposal.md` A §2 分型表。
 
 > 首站 sk1（汴京 1120）建，逐站追加；每站新增一节。出处与 fact_id 见各站 `0_research/dossier.md` §10。
 > 草案（2026-09-13，W5）：`verified_by: ai_read`，进 prompt 前需人工核原文页。
@@ -185,3 +187,66 @@
 3. **自称默认「我」。** 「奴家 / 小人 / 某」每位受访者至多出现一次、只在第一次对陌生人或对官时；之后全用「我」。
 4. **每句朗读过关。** 写完先在脑里念一遍：真人今天会不会这么说？有没有对仗、有没有唱礼腔（「众家新苗按序上前」这类）、有没有翻译腔？不过关就拆短句、换口语词。
 5. **专名先查表再配音。** 台词里出现 §2 的字一律按表读；表里没有的先补表（带出处）再录；配音 prompt 的 `台词:` 行可在专名后括注拼音供 TTS（如「花石纲（gāng）」），成片字幕不显示括注。
+
+
+---
+
+## 1.2 sk3 · 伦敦 1666（Titanic 型 · **本站当地人开口**）
+
+> **本站是系列第一个允许具名 NPC 说话的站**（`proposal.md` A §2 的 2026-09-18 站型分叉；I-7 按语言可考性分级开放）。
+> 所以下表**同时用于旅行者的解说与 NPC 的对白**，与 sk1 只用于解说不同。
+> 量尺不是印象，是计数——对 pepysdiary.com 全日记（1660-01-01–1669-05-31）逐词站内检索的**命中条目数**，
+> 查询方式与逐条语境见 `sk3/0_research/parts/w5_language_customs_myths.md` §10.3。
+> **下游若要新增一个称谓，照同样方式查一次再加，不要凭印象。**
+
+### 称谓白名单（英语站）
+
+| 对象 | ✅ 白名单 | Pepys 命中 | fact |
+|---|---|---|---|
+| 默认男性敬称（对上 / 平辈 / 陌生人通吃） | **Sir** | 2,019 条 | `london1666.lang.006` |
+| 有身份的女性 | **Madam** | 73 条 | 007 |
+| 已婚或有身份的城中女性 | **Mistress / Mrs.**（读作 Mistress） | 151 条 | 007 |
+| 有身份的男性平民 | **Mr. / Master** | 极高频 | 007 |
+| 礼貌请求 | **pray you**（**不是** prithee） | 163 条 | 005 |
+| 市长 Bludworth | **my Lord Mayor**（`my Lord` 单用亦可） | 64 条 | 010 |
+| 查理二世 | **his Majesty / the King** | 高频 | 010 |
+| 约克公爵（火中实际指挥者） | **the Duke of York** | 高频 | 010 |
+| Farriner 的身份说法 | **the King's baker**（Pepys 9/2 逐字） | 逐字 | 013-B |
+
+### ⚠️ 可用但要克制
+
+| 称谓 | 为什么打黄灯 | fact |
+|---|---|---|
+| **Goodman / Goody** | 是真词，但 Pepys 笔下 13 处**全部在乡下**（Brampton）。**放进 Cheapside 摊主嘴里＝把新英格兰殖民地口音搬进伦敦。** | 008 |
+| **Goodwife** | 全日记 **0 命中**。学术上确有（乡村/殖民地），**无任何伦敦 1666 证据**。 | 008 |
+| **your Worship** | **0 个真命中**（4 条全是 Mrs. Worship 这个姓 + 宗教义）。**不进台词。** | 009 |
+| **prithee** | 词典上 17 世纪常见（复辟喜剧里很多），**Pepys 全日记 0 命中**。它是**戏台词**不是**街头话**。 | 005 |
+
+### ❌ 黑名单
+
+`thee / thou / thy / thine` 当日常（1666 年它的实际语用是**羞辱 / 拉平地位**——Pepys 把它动词化：`thou'd him all along`＝一路不给他体面；成系统 thee/thou 的是**贵格会**，正因此被起诉，让摊主这么说话＝把他写成正在被通缉的异见者）· `prithee / verily / forsooth / methinks` 堆砌（莎士比亚腔）· 维多利亚式客套（差 200 年）· 美式用语（gotten / sidewalk / I guess / okay / folks）· **`Gracechurch Street`（1666 年它还叫 `Gracious Street`）** · `Sire`（法式奇幻用语，对查理二世是 `your Majesty` / `Sir`）· 仿古拼写进台词或字幕（`ye olde` / `doth` / `hath` 当口语）。
+
+### 1666 年的街名写法＝当时读法（台词与字卡都用左列）
+
+`Gracious Street`（今 Gracechurch）· `Canning Street`（今 Cannon）· `Fanchurch Street`（今 Fenchurch）· `Southwarke` · `Queenhith`。
+
+---
+
+## 2.2 sk3 · TTS 专名读音表（伦敦 1666）
+
+> 全表 21 条见 `sk3/0_research/parts/w5_language_customs_myths.md` §10.5（含 IPA、1666 写法、依据）。此处只摘**一定会读错的**。
+
+| 专名 | 给 TTS 的重拼 | ⛔ 陷阱 |
+|---|---|---|
+| **Pepys** | **PEEPS** | 绝不读 "PEP-iss" / "PEP-eez" |
+| **Thames** | **TEMZ** | 绝不读 "THAYMZ"；`th` 不发 θ |
+| **Southwark** | **SUDH-uk** | 绝不读 "SOUTH-wark" |
+| **Holborn** | **HOH-bun** | `l` 不发音 |
+| **Evelyn**（人名） | **EEV-lin** | 绝不读 "EV-uh-lin"（那是现代女名）⚠️ 建议人工二核 |
+| **Bloodworth** | **BLUD-wurth** | 不读长 oo；**Pepys 自己的拼法是 `Bludworth`** |
+| **Cheapside** | **CHEEP-side** | 不是「便宜」，是古英语 cēap＝市场 |
+| **Wren** | **REN** | `W` 不发音 |
+| **Gracious Street** | **GRAY-shus STREET** | **1666 年不叫 Gracechurch** |
+| **Islington** | **IZ-ling-tun** | `s` 读 /z/ |
+| **Whitehall** | **wyte-HAWL** | 重音在后 |
+| **Queenhithe** | ⚠️ **未核** | **进片前必须补核，不要让 TTS 自由发挥** |

@@ -121,3 +121,31 @@
 - **宋站加**：席地而坐 · 宵禁 / 街鼓 · 青团 · 三寸金莲（市井）· 满屋蜡烛 · 路引
 - **罗马站加**：toga on everyone · white marble statues · horned helmets · medieval castle · sunglasses / wristwatch
 - **中世纪 / 维京站加**：horned helmet · iron maiden · filthy peasants · chastity belt
+
+
+## 英语 / 近代欧洲（L01–L18，sk3 伦敦 1666 新增，2026-09-18）
+
+> 每条既是 sk3 dossier §13 的 ❌ 行，也是该站 fact `negative:` 的必含词。出处与 fact_id 见
+> `sk3/0_research/parts/{w3_clothing_food, w4_prices_work_transport, w5_language_customs_myths}.md`。
+> **❌ 条目只允许出现在 `unit: 纠错` 的 shot。**
+
+| # | 领域 | 误传 | 正解 | 负向词（进 prompt） | 首次登记站 |
+|---|---|---|---|---|---|
+| L01 | 建筑 | 伦敦城内是茅草顶 | **自 1189 年即禁茅草**，1666 年绝大多数是瓦顶。**给图像模型的头号负向** | thatched roof, thatch, straw roof | sk3 |
+| L02 | 衣 | 男子穿长马甲 vest | 查理二世 **1666-10-07** 才宣布，比本站晚五周、大火夹在中间。9/1 仍是**短 doublet + petticoat breeches** | long vest, waistcoat, Persian vest, three-piece suit | sk3 |
+| L03 | 建筑 | 布丁巷画面里有 Monument 纪念柱 | **1671 年才动工**，出现即穿帮 | Monument column, fluted Doric column with urn | sk3 |
+| L04 | 衣 | 清教徒式全黑装 + 高顶帽 + 方形帽扣 | 黑染料贵且易褪，黑衣是主日与画像用的最好衣裳；实际是 "sadd colours"（russet / 枯叶褐 / 茶褐 / 肝褐 / 法国绿）。**帽上方扣纯属 19 世纪想象** | pilgrim hat, buckled hat, all-black puritan dress, square hat buckle | sk3 |
+| L05 | 衣 | 戴高顶窄檐 capotain | 到 1666 年已过时十几年 | capotain, tall crowned narrow brim hat | sk3 |
+| L06 | 建筑 | 圣保罗有雷恩的圆顶 | **火后重建**才有。1666 年是无尖顶的旧教堂：204 ft 方塔残段 + Inigo Jones 古典外皮 + 满墙脚手架 | Wren dome, baroque dome, tall gothic spire | sk3 |
+| L07 | 食 | 餐桌上有土豆 / 番茄 / 玉米 / 辣椒 | 土豆 1662 年皇家学会才推广（富人花园稀罕物）；番茄是「毒苹果」纯观赏；辣椒 1669 年伊夫林才有第一条食谱用法 | potato, tomato, maize, corn on the cob, chilli | sk3 |
+| L08 | 食 | 平民用叉子吃饭 | 1666 年平民靠手指 + 刀尖 + 勺；叉子是「意大利式外国做作」。上流餐桌可有（双齿） | fork in commoner hand, four-tined fork | sk3 |
+| L09 | 食 | 英国人 1666 年就在喝茶 | 英语首条喝茶记载是 Pepys **1660-09-25**「a cup of tee (a China drink) of which I never had drank before」——**有，但极稀**，当日常饮料画就是错。日常饮料是 **small beer** | teapot, tea service, everyday tea drinking | sk3 |
+| L10 | 语言 | 人人满口 thee / thou | 到 1650 年已显过时或书面；Pepys 全日记 thou 仅 5 处、thee 6 处，**全在特殊语域**（临终私语 / 咒语 / 圣经引文 / 羞辱）。成系统 thee/thou 的是**贵格会**，正因此被起诉 | thee, thou, thy, thine（作日常） | sk3 |
+| L11 | 语言 | prithee / verily / forsooth / methinks | 莎士比亚腔、戏台腔；`prithee` 全日记 **0 命中** | prithee, verily, forsooth, methinks | sk3 |
+| L12 | 语言 | 街名写 Gracechurch Street | **1666 年叫 Gracious Street**；Cannon＝Canning、Fenchurch＝Fanchurch | Gracechurch Street（作 1666 用法） | sk3 |
+| L13 | 语言 | 仿古拼写进台词或字幕 | 本系列明令禁止 | ye olde, doth, hath（作口语） | sk3 |
+| L14 | 史实 | 大火「只死了 6 个人」 | 该数字可靠性有学术争议，**不得当确数口播** | 「只死了六个人」的断言 | sk3 |
+| L15 | 史实 | 伦敦桥在大火中被烧毁 | 桥**没被烧毁**；1633 年火烧掉的北端 42 栋到 1666 年仍未重建，那道空档恰恰**挡住了火烧向 Southwark** | burning London Bridge | sk3 |
+| L16 | 史实 | 街上有「Bring out your dead」瘟疫车 | 那是 **1665 年**的事 | plague cart, bring out your dead, plague doctor beak mask | sk3 |
+| L17 | 史实 | 片中出现 Hubert 被处决 / 归咎天主教徒法国人 | 是火**之后**的事，**不得提前** | Hubert execution, anti-Catholic mob（作 9/1–9/2 画面） | sk3 |
+| L18 | 街景 | 玻璃大窗 + 铺装整齐的宽街 + 夜里有路灯 | jetty 逐层外挑、lane 顶部净空只剩 1.5–2 m；**9 月 1 日夜里没有任何公共照明**（住户挂灯是 1668 年才规定，玻璃罩路灯 1683 年才有） | large glass windows, wide paved boulevard, street lamps | sk3 |

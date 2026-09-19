@@ -12,7 +12,7 @@
 | c1（默认） | 林问（Lin Wen） | 普通话 | `zh-f-vlogger-linwen-01` | `en-f-vlogger-linwen-01` | 二十九岁女声，明亮温暖的中音、带笑意，语速偏快、字字清楚，爽快不嗲 |
 | c2 | 周野（Zhou Ye） | 普通话 | `zh-f-vlogger-zhouye-01` | `en-f-vlogger-zhouye-01` | 二十七岁女声，清亮偏高、脆，语速快，带一点西南口音的软尾音，笑声爽朗 |
 | c3 | 许棠（Xu Tang） | 普通话 | `zh-f-vlogger-xutang-01` | `en-f-vlogger-xutang-01` | 三十一岁女声，温柔女中音带轻微沙哑气声，语速偏慢、爱停顿，江南口音的软尾音 |
-| c4 | 艾拉（Ella Hart） | 英语 | `en-f-vlogger-ella-01` | `zh-f-vlogger-ella-01` | late-twenties British female, light West Country accent, bright mid-high register, fast, upward endings, self-deprecating |
+| c4 | 艾拉（Ella Hart） | 英语 | `en-f-vlogger-ella-01` | `zh-f-vlogger-ella-01` | late-twenties American female, General American (Pacific Northwest), rhotic, bright mid-high register, fast, upward endings, self-deprecating |
 | c5 | 妮娅（Nia Brooks） | 英语 | `en-f-vlogger-nia-01` | `zh-f-vlogger-nia-01` | thirty, American female, warm rich low-mid register, light Southern drawl, rhythmic, big laugh |
 | c6 | 露西娅（Lucía Vega） | 英语 | `en-f-vlogger-lucia-01` | `zh-f-vlogger-lucia-01` | late-twenties Spanish female speaking English, clear Spanish accent, warm slightly grainy mid register, fast and expressive |
 

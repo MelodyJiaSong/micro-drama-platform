@@ -25,11 +25,6 @@
 - Tooling parity: same FastAPI + React + Vite + Vitest + Playwright + pytest stack as `spec_driven`?
 
 
----
-
-# Follow-ups
-
-
 # Follow-ups 2026-05
 
 <!-- Consolidated monthly log. New follow-ups APPEND a `## NNN` section
@@ -10080,6 +10075,7 @@ Disambiguation captured at request time: scan scope = **renders/ subfolder only*
 "recurse whole shot folder"), so the 2-second character reel `shot{NN}_chars.mp4` is never mistaken for
 the shot's final render.
 
+
 # Follow-ups 2026-06
 
 <!-- Consolidated monthly log. New follow-ups APPEND a `## NNN` section
@@ -11210,6 +11206,7 @@ severity: medium
    VoicePoolGenerator). Backend `/api/voices/*` endpoints are left defined but
    unreachable from the nav.
 
+
 # Follow-ups — 2026-08
 
 ---
@@ -11407,6 +11404,7 @@ image-to-3D 交回的白模网格是 `.glb`；能否在浏览器里判断它（�
 
 `.glb`/`.gltf` 走既有的 media 通道（树可见 + /api/media 服务），Reader 里用
 model-viewer 做交互预览。
+
 
 # follow-ups · ai_video_management · 2026-09
 
@@ -11748,3 +11746,107 @@ prompt 首行 : p3-2_黏土壁炉锚点
 
 路由键在两处各有一份实现、只有场景那份支持「键在 stem 中间」，导致道具/人物多视图导入互相覆盖；
 抽成 `libs/common/asset_key.py` 单一出处、两端共用，并加回归测试。
+
+---
+
+## 169 — 2026-09-17 23:20:00 — UI 加 .glb 3D 白模预览
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/ai_video_management/libs/infrastructure/readers/tree__reader.py
+>   - projects/ai_video_management/apps/ui/src/components/SiblingMedia.tsx
+>   - projects/ai_video_management/apps/ui/src/components/Sidebar.tsx
+>   - projects/ai_video_management/apps/ui/src/lib/linkResolver.ts
+> severity: medium
+
+### 指令
+
+`ai_videos/` 下开始产出 `.glb` 三维白模（sk1 的 `props/p{N}_*/whitemodel/raw.glb` 等），
+要能在 webapp 里预览。
+
+### 现状盘点（先查再改）
+
+单文件预览**早已存在**：`Reader` 有 `MODEL_EXTS` 分支渲 `<model-viewer>`，
+`/api/media` 发 `model/gltf-binary` + `inline`，`@google/model-viewer` 已在依赖里。
+缺的是**看得见**——
+
+1. 白模落在 `whitemodel/` 子目录，而 `SiblingMedia` 只看**同 folder** + `renders/` + `archive/`，
+   所以主体卡片（`p19_独轮串车.md`）上一个字都不提它；
+2. `SiblingMedia` 的 `MEDIA_EXTS` 不含 `.glb`，即使网格就躺在同 folder（`f80_ferrari/base.glb`）也不显示；
+3. 树叶子类型是兜底的 `file`，侧栏没有图标区分，扫一眼看不出哪个是网格。
+
+### 落地
+
+- `tree__reader.py` 加 `_MODEL_EXTENSIONS` → 叶子类型 **`model`**（原为 `file`）。
+- `Sidebar.tsx`：`model` 记为可点叶子 + 🧊 图标。**叶子类型判定原先复制了 5 份**，
+  先收敛成 `FILE_LEAF_TYPES` / `LEAF_TYPES` 两个集合再加类型。
+- `linkResolver.collectFilePaths`：第 6 份拷贝，同样加 `model`。
+  **这一处是改类型引出的真回归**——`knownPaths` 是所有 sibling-media / 链接解析的过滤底表，
+  漏了它，`.glb` 反而从"能显示"退成"完全不可见"（浏览器实测抓到）。
+- `SiblingMedia.tsx`：`.glb`/`.gltf` 进 `MEDIA_EXTS`（tile 渲 `<model-viewer loading="lazy">`），
+  新增 `findSubfolderModels` + **🧊 3D 白模**一节，把下一层子目录的网格提到卡片上；
+  只捞网格不捞图，且跳过 `renders/`/`archive/`（那两节已各自覆盖），一个网格只出现在一个 tile 里。
+- CSS：`model-viewer` 无固有尺寸，必须显式给宽高否则塌成 0 高渲成空白；
+  底色改深（白模材质被剥光，浅底上是白对白）。
+
+### 验证
+
+- 后端：`tests/test_media_glb_preview.py` +2 例（叶子类型 = `model`；`whitemodel/` 子目录里
+  `.glb` 进树、`.blend` 不进）。全量 337 passed / 24 failed，24 例为**预先存在**
+  （引用已不存在的 `wukong_juexing` 等），改前改后同一份。
+- 前端：`apps/ui/test/siblingModels.test.ts` 新增 5 例（含 `collectFilePaths` 保留 `model` 的回归钉）。
+- 端到端（真浏览器）：sk1 `p19_独轮串车.md` 卡片出 🧊 一节、独轮车白模可拖动旋转；
+  `whitemodel/raw.glb` 单页全幅可转；`f80_ferrari.md` 同 folder 4 个 `.glb` 各自成 tile；
+  侧栏 `raw.glb` 显示 🧊 且可点。
+
+### 一行摘要
+
+`.glb` 白模在 UI 里可见可转：树叶子独立类型 + 侧栏 🧊 + 卡片新增「3D 白模」节（捞子目录网格）+ sibling tile 渲 model-viewer；
+顺手收敛了散在 6 处的叶子类型判定（其中 1 处漏改会让 `.glb` 从树里整个消失）。
+
+---
+
+## 170 — 2026-09-19 16:10:00 — /api/tree 慢到 vite 代理报错，侧栏起不来
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/ai_video_management/libs/infrastructure/readers/tree__reader.py
+> severity: medium
+
+### 指令
+
+前端起不来：vite 反复报 `http proxy error: /api/tree — connect ECONNREFUSED 127.0.0.1:8766`。
+修掉它。
+
+### 一行摘要
+
+报错文本是 ECONNREFUSED（后端还没 bind 完就被打），但**真正的病是 `/api/tree` 要跑 42 秒**——
+20,573 个节点、2.9 MB，前端等不到就重试，重试又叠上一轮全盘遍历。
+实测归因：`_rel()` 占 build 的 68%（每个节点做一次 `Path.resolve()`，42,034 次
+`nt._getfinalpathname` ＝ 9.5s；再加 `Path.relative_to()` 8.3s），而 root 早已 resolve 过、
+walker 又显式跳过 symlink，这两步**结果恒等于字符串切片**；其次是 `iterdir()` + 逐个
+`is_dir/is_file/is_symlink` 打出的 106,926 次 `nt.stat`（5.1s），`os.scandir()` 的
+DirEntry 在 Windows 上本来就带着这些位。判据是 profile 数字，不是猜测：
+`jsonable_encoder` 0.35s、`json.dumps` 0.15s、pydantic 校验 0.00s，序列化层是干净的。
+
+---
+
+## 171 — 2026-09-19 23:10:00 — 生成末帧按钮在 mp4 页面上找不到
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/components/Reader.tsx
+> severity: low
+
+### 指令
+
+「从 mp4 生成末帧、并自动把本镜末帧复制成下一镜首帧」的按钮，在打开 mp4 时看不到；
+把它放到 mp4 自己的预览页上。
+
+### 一行摘要
+
+功能没丢——`⏮ 生成末帧` 一直在 `SiblingMedia` 的媒体卡上（要先打开 `shotNN.md` 再往下翻），
+后端 `/api/extract-last-frame` 与 `FrameExtractor.extract_last_frame` 也完好。
+真正的缺口是 **Reader 的 mp4 单文件视图漏了这一个按钮**：同一行里另外三个抽帧按钮
+（🎞 Extract Frames / 🖼 提取三视图 / 🧭 截取方向背景图）都在，唯独 shot 视频的末帧按钮没有，
+于是它看起来像是被删了。按同样的形状补上 `showLastFrameBtn`（gate = `isShotVideoPath`）。

@@ -672,3 +672,122 @@ Auto-updated:
 - object_inventory.toml — p18/p27/p42 标 view2+view3，p22 标 view3；新增 p45–p60 建筑原型（scene 阶段用，用户改由另一 session 负责，本轮只跑了 p45）
 
 No conflicts found in: scenes/（用户在另一 session 处理，本轮未动）
+
+## Follow-up 017 — 2026-09-18 11:40:00
+Source: user_input/follow_ups/202609.md - section 017
+Summary: 城市按拍摄需要缩小（坐标 ×0.5、尺寸 1:1），一镜到底保留且速度终于落到真无人机量级。
+
+Auto-updated:
+- tools/build_bianjing.py — 新增 `CITY_SCALE = 0.5` 与 `scale_w11()`（只缩 xy / points / waypoint，宽度高度足迹不缩）；新增 `SCALE_NUDGE`（开封府北移 70 m）与 `RIVER_AXIS_Y["H"] = -140`，解决压缩后河与 Place 足迹相撞
+- shots/shot01|shot02/previz_config.toml — 沿线距离 ds、世界坐标 x/y 同步 ×0.5（z 与 Place 局部坐标不动），沿街人群线同步
+- tools/look_bianjing.py — `VIEWS` 的世界坐标 ×0.5；修掉三个白模层 bug：① 树竖向比例只按冠岛高算 → 6 m 树被压成扁蛋（御街 248 个）；② `undress()` 把 look pass 派过材质的白模 proto 删掉（改用 `look_wm` 保护）；③ 脚本件顶替白模时只 hide_render 无效（collection 实例照渲）且跳过了已打 look 标记的白模 → 改为把 proto 集合摘干净再放脚本件
+- 走廊内建筑 16,738 → 6,120 栋，树 3,484，人 2,832；QC 全绿（城墙 / 城门 / 走廊 / 门洞通透 / 布局层零材质）
+
+取舍：几何不再与「外城周长五十里」这类**距离类**史料对得上（divergence #28）。几何只服务 previz、不进 prompt；口播里的里程仍引 W11。
+
+## Follow-up 018 — 2026-09-18 15:20:00
+Source: user_input/follow_ups/202609.md - section 018
+Summary: blend 向参考图收敛，改为可量化对账（此前靠人眼抽查，漏掉了水色、耕地、街面三处偏差）。
+
+Auto-updated:
+- tools/plate_match.py — **新增**。`PLATE_VIEW` 登记「锚点键 → 同机位」（bg0-1 / bg1-1 / bg2-1 / bg4-1 / bg7-1），渲同分辨率同焦距，输出并排 PNG + 三分带（天 / 中景 / 近景）的亮度与饱和度差 + 天际线高度差。地面镜机位由 previz 给、不入此表（rule 4e ④）
+- 已知待收敛项（下一轮按此表逐条压差值）：汴河水偏蓝偏艳、城墙面雨蚀噪声太规律、郊野一片纯绿缺田垄、街面缺车辙与砖缝、窄高房缺立面原型
+
+## Follow-up 019 — 2026-09-18 17:05:00
+Source: user_input/follow_ups/202609.md - section 019
+Summary: props 全量盘点 —— 图 51/51 齐，白模 38/48 + 替身盒 10/48（设计内）；唯一真缺口 p57 寺院大三门已补出白模。
+
+Auto-updated:
+- ai_videos/shikong_lvxing/sk1/2_世界观人设/object_inventory.toml — p57 加 `view2 = "四分之三"`。理由是 view_check 实测：侧面 7.5 × 9.5 近方形，模型把「侧视图」画成了第二张正立面（视图1/2 相似度 0.92、视图2/3 0.93），三张图只覆盖两个轴，于是 `build_objects` 一直判它 proxy-box、从未送过 Hyper3D。修法与 p18 / p27 / p42 同一条
+- tools/gen_object_cards.py — 修掉四分之三视图 prompt 的两处自相矛盾（此前 p18 / p27 / p42 三张卡也带着）：① `机位:` 无条件追加「（正交，相机光轴严格垂直于该面）」，与同一张 prompt 里 `场景:` 的「不是正交图」打架；② 负向框无条件追加「四分之三视角, 斜角透视, 把看不见的进深画成左右方向的宽度」——正面要的就是这张图，负面又把它挡掉。现按 `is_iso` 分流，四分之三档改挡「正交平视」，并去掉对带透视图无意义的剪影宽高比约束。**p18 / p27 / p42 三张卡本轮不重发**——它们的图已经出过并被接受，把卡换成新措辞会让卡与实际渲染用的 prompt 对不上（CLAUDE.md「规则变更默认只对新增与改动的产物生效」）；下次谁要重出图，`gen_object_cards.py --only pNN` 自然带上修正版
+- props/p57_寺院大三门/ — 卡重生成；`p57-2.png` 重出（四分之三视角，54s）；view_check 由 ✗ 转 ✓（相似度 0.92 → 0.71）
+- props/p57_寺院大三门/whitemodel/ — **新增** `raw.glb` + `p57_寺院大三门.blend` + `peek_{iso,side,top}.png`。闸门全绿：包围盒 15.5 × 7.5 × 9.5 m 偏差 0.0%、来源比例漂移 1.43（< DRIFT_MAX 2.0）、松散块 4750、五条部件探针全过；peek 人眼复核：三门洞 / 庑殿顶 / 柱础 / 通长石阶都在
+- props/p45_三间店铺立面/whitemodel/ — 删掉 Blender 自动备份 `*.blend1`
+
+盘点结论（判据全部取自盘上，不取自记忆）：
+- **图**：48 个清单物件 × 3 视图 = 144 张全部在位；另有 3 个不在清单的目录（p48 / p49 / p50）也各有 3 张
+- **白模 38**：p14 p16–p21 p25–p35 p37 p40–p43 p45–p47 p51–p62（p57 为本轮新增）
+- **替身盒 10（设计内，不是缺口）**：长径比 ≥ `SKIP_ASPECT` 6.0 的 8 个（p12 6.0 / p13 12.5 / p15 12.5 / p23 17.5 / p24 20.0 / p36 36.0 / p38 11.7 / p39 7.9），加上过了闸门但 `来源比例漂移 > DRIFT_MAX` 退回的 2 个（p22 3.37 / p44 2.84）。对近平面、近线性的物件，同尺寸替身盒不是近似、就是正确形状（rule 4g ②）
+- **p1–p11 不走本流水线**：它们是史料参考卡（`ref/` + `refs.md`），不出三视图、不出白模；p8 / p9 / p10 的几何由 `build_bianjing.py` 脚本建（`proxy_p8` 等）
+
+No conflicts found in: interview/qa.md, findings/, final_specs/spec.md, validation/, ai_videos/shikong_lvxing/sk1/{1_立项,3_大纲,4_剧本,5_6_分镜与prompt}
+
+待用户裁决（本轮未动）：`props/p48_板门一扇` / `p49_木栏杆一段` / `p50_悬山博风与悬鱼` 三个目录有卡、有 object.toml、有 3 张图，但 `object_inventory.toml` 里没有对应 key（文件中留着三段空行的删除痕迹）。三者长径比分别是 35.8 / 17.1 / 28.0，无论在不在清单都是替身盒档、白模状态不受影响；要的是把清单补回去（恢复「每个 props/pN_* 都在清单里」的不变量）还是把三个目录删掉。
+
+## Follow-up 019（续）— 2026-09-18 23:30 — 「能补的就补」
+Source: 用户口头追加（同 section 019）
+Summary: 孤儿目录补回清单；p22 / p44 各重掷两次后判定为系统性失败，把「不走生成」从产物状态改成清单判据。
+
+Auto-updated:
+- object_inventory.toml — **补回 p48 板门一扇 / p49 木栏杆一段 / p50 悬山博风与悬鱼** 三条。验证方式是拿补回的条目重跑 `gen_object_cards.py --only p48,p49,p50`：三张卡与盘上**逐字节一致**，说明 desc / spec / id / mat / parts / scene / size / front 全部还原正确。唯一还原不了的是 `en`（任何 commit 里都没出现过，`git log -S` 查空），它只被 `rodin_prompt()` 用、而替身盒档走不到那一步，已按邻条措辞新写并在清单里就地标注「真要送 Rodin 前先核一眼」
+- tools/build_objects.py — **新增 `skip3d` 判据**：清单里挂了 `skip3d = "理由"` 的物件直接判替身盒，一次 Rodin 也不掷。此前「这个物件不走生成」只能靠 `whitemodel/raw.glb` 在不在来表达，而那正是本文件自己会改写的状态——删掉 blend 想让它退回替身盒，下一次全量跑又拿留着的 raw.glb 重新过闸门、把同一个坏网格重新放行（本轮实测踩到）；连 raw.glb 一起删则每跑一次全量就重掷一次 Rodin。判据属于清单，不属于产物目录
+- object_inventory.toml — p22 / p44 各加 `skip3d` + 实测依据注释；两者 `whitemodel/` 清空
+
+p22 素木床榻（重掷 2 次，均判失败，**不再重掷**）：
+- 输入没问题——三视图 view_check 全过，正视图画得清清楚楚是「板 + 四条腿 + 瓷枕 + 薄被」
+- 三次结果：漂移 3.37 被闸门退回 / 漂移 **1.01 过了闸门但形状是一整块实心板加一枚飘在旁边的枕头** / 第三次退化成一个 L 形托盘
+- 根因：床榻正立面的剪影是一个**填满的矩形**，腿间空当在任何一张正交图里都不成其为轮廓，image-to-3D 于是永远重建成实心块。这是物件的结构属性，不是手气
+- **第二次那一版是 rule 4h §G 的活样本**：闸门量得出比例、量不出「长得像不像」，只看漂移数（1.01，全清单最好看的数字之一）就会把一个坏网格放行。**出了模型必须先渲一眼**这条不是客套话
+- 真要做，写 builder 脚本（板 + 四条腿是纯参数化的，rule 4g ②）
+
+p44 长条木凳（重掷 2 次，均超阈，**不再重掷**）：三次来源比例漂移 2.84 / 3.78 / 2.60，全部 > `DRIFT_MAX` 2.0。它长径比 5.1，卡在 `SKIP_ASPECT` 6.0 之下，实际行为却和跳过档一样——vendor 对细长件的压方行为在 5.1 这一档已经稳定发生
+
+盘点终态：清单 51 个物件，图 51/51 齐，**白模 38 / 替身盒 13**（长径比档 11 + skip3d 档 2），清单外孤儿目录 0，异常 0。
+
+未做（按用户指示留给他自己）：`assets_sync.py push` —— 本轮新增的 `p57-2.png` 与 p57 白模尚未进 R2 / manifest。
+
+## Follow-up 020 — 2026-09-19 10:30:00
+Source: user_input/follow_ups/202609.md - section 020
+Summary: 航拍机位四条硬约束（匀速 / 不折返 / 不甩头 / 不贴墙）做成产物级闸门，shot01 航线重做。
+
+Auto-updated:
+- tools/build_bianjing.py — `verify_camera()` 从已打关键帧的相机回读四项判据（净空/侧向/视线/折返）；净空修正移到打帧之前；`[全局]` 阈值键名统一为 `平滑`（此前 schema 写 `平滑`、reader 读 `平顺`，TOML 里的阈值一律不生效）
+- ai_videos/.../shots/shot01/previz_config.toml — 机位改为解析式「直线 → R400 圆弧 → 直线」逐帧关键帧（751 帧，位置 4 位小数）；高度分段改 smoothstep；看点偏移与焦距改余弦渐入
+- ai_videos/.../shots/shot01/shot01.md — `镜头:` / `动作:` 时间轴按最终航线逐拍重写（rule 4h §B 1）
+- .claude/agent_refs/project/ai_video.md — rule 4h §B 新增第 3 条（航线解析式定义 + 闸门回读产物 + 三维 C1 + TOML 小数位精度）
+
+闸门读数（从相机回读）：净空 4.0 m @6.12s（门楣）· 侧向 9.4 m/s² @15.04s（0.96 g）· 切向 5.1 m/s²（46–60 m/s）· 视线偏航向 24° · 折返 0.0 m。
+
+No conflicts found in: shot02（终点与高度未变，`承接` 关系不受影响）
+
+## Follow-up 021 — 2026-09-19 10:45:00
+Source: user_input/follow_ups/202609.md - section 021
+Summary: 全剧改为「跨越时空的 vlogger 边旅游边解说」——主讲人从画外旁白改为出镜主播。
+
+Auto-updated:
+- （尚未改动产物）等用户在「整集一次性改」与「先抽 4 个 shot 打样」之间定调后执行
+
+No conflicts found in: —
+
+## Follow-up 022 — 2026-09-19 17:10:00
+Source: user_input/follow_ups/202609.md - section 022
+Summary: 航拍镜补挂全城俯瞰锚点 bg0-1，并写死「只取长相、不取几何」的用法分工。
+
+Auto-updated:
+- ai_videos/.../shots/shot01/shot01.md — `参考:` 增挂 `bg0-1(bg0_汴京全城)`；`参考用法:` 增写俯瞰锚点只给长相
+- ai_videos/.../shots/shot02/shot02.md — 同上
+- .claude/agent_refs/project/ai_video.md — 「视图集要多小」一节增「高度档例外：航拍镜必挂全域俯瞰锚点」，含「不得拿渲图回喂图模型」的警告
+
+No conflicts found in: bg0_汴京全城 卡（卡里本就写明它是「全片开场与收尾两条航拍长镜的长相源头」，此前只是没挂到镜上）
+
+## Follow-up 023 — 2026-09-19 18:20:00
+Source: user_input/follow_ups/202609.md - section 023
+Summary: 修水材质反向菲涅尔（顺带修好「城门看着关着」）；确立「3D 修几何、材质等 Seedance」的处置原则。
+
+Auto-updated:
+- tools/look_bianjing.py — `water_material()` 菲涅尔方向改正（掠射→去饱和天光，俯视→浑水本色），粗糙度 0.24→0.11
+- .claude/agent_refs/project/ai_video.md — rule 4h §B 新增第 4 条（水菲涅尔方向 + 「看得出是开着的」靠透光）
+
+待定（等 Seedance 继承度验证后再决定是否投入）：地面大尺度地物（田垄/田块/小路/水渠）、大气透视、夯层横缝几何、拐子城翼墙按 bg2-1 改为低矮驳岸
+
+No conflicts found in: shot01 航线与闸门（本次未动机位）
+
+## Follow-up 024 — 2026-09-19 19:05:00
+Source: user_input/follow_ups/202609.md - section 024
+Summary: 关厢重做为共墙连排街面；密度改为朝城门递增；拆掉城墙 140 m 禁建圈；走廊延到起飞点之外。
+
+Auto-updated:
+- tools/build_bianjing.py — `build_suburbs()` 重写：共墙开间（1–4 开间/户、进深 8–13 m、缝≈0）+ 第二进背街排 + 河岸大道 `G_20500_suburb_riverroad`；密度/层数按离护龙河外岸距离衰减；禁建圈 140 m → 护龙河外岸 +10 m；Place 余量 40 m → 18 m
+- ai_videos/.../_blender/city_plan.md §8.2 — 汴河 leg `s1` 11600 → 11850（未缩尺），覆盖 shot01 门外 320 m 的起飞点
+
+No conflicts found in: shot01 航线与四项闸门（本次未动机位）；shot02（其航段在城内，不经关厢）
