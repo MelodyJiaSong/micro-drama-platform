@@ -43,6 +43,17 @@ GOLDEN: dict[str, tuple[str, int, str | None]] = {
 }
 
 
+# xianjian_yi_mv was deleted 2026-09-19 when the drama was restarted as the xianjian_yi
+# series. The fixtures are still valid parser inputs — only their upstream is gone, so a
+# missing source is expected here rather than a warning worth reading.
+DELETED_UPSTREAM: frozenset[str] = frozenset({
+    "real_shots/xianjian__shot01.md", "real_shots/xianjian__shot02.md",
+    "real_shots/xianjian__shot03.md", "real_shots/xianjian__shot14.md",
+    "real_shots/xianjian__shot17.md", "real_shots/xianjian__shot23.md",
+    "real_cards/xianjian__p1_木剑.md",
+})
+
+
 def _sha(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
@@ -82,6 +93,9 @@ def test_fixture_provenance_against_real_sources() -> None:
     assert rows
     for fixture, source in rows:
         origin = root / source
+        if fixture in DELETED_UPSTREAM:
+            assert not origin.is_file(), f"{source} is back — drop {fixture} from DELETED_UPSTREAM"
+            continue
         if not origin.is_file():
             warnings.warn(f"fixture source no longer exists: {source}", stacklevel=1)
         elif origin.read_bytes() != (FIXTURES_DIR / fixture).read_bytes():

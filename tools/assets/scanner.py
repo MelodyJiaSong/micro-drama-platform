@@ -27,6 +27,14 @@ MEDIA_EXTENSIONS: frozenset[str] = frozenset(
 # `_deleted/` is the webapp's recycle bin — its whole point is that the bytes are
 # on their way out. `previz/frames/` is recomputable from previz_config.toml.
 _SKIP_TOP_LEVEL: frozenset[str] = frozenset({"_deleted"})
+# `ref/` 是各资产的**参考图**目录。sk1 的参考图是公版（Met CC0 / Commons），同步没问题；
+# 但 sk2 起的虚拟城站，参考图是**权利人版权素材**（暴风城＝暴雪），
+# 按 `specs/ai_video/sk2/divergence.md` #108 它们「只作形制依据、不入画、不上传生成模型」——
+# 把它们推进对象存储等于再分发，同样不行。所以 `ref/` 整体不进 R2：
+# 形制结论已经转写成 `refs.md` 里的中文锁定串（带 source_url），图随时可按 URL 复现。
+# `refs_game98/` 与 `refs_longplay/` 是从公开视频抽的逐场景参考帧，
+# 由 tools/fetch_xianjian_refs.py 随时重抽——派生缓存，同样不进 R2。
+_SKIP_DIRS: frozenset[str] = frozenset({"ref", "refs_game98", "refs_longplay"})
 _CACHE_NAME: str = ".assets_cache.json"
 _CHUNK: int = 1 << 20
 
@@ -50,6 +58,8 @@ def is_syncable(rel: PurePosixPath) -> bool:
         return False
     parts = rel.parts
     if parts and parts[0] in _SKIP_TOP_LEVEL:
+        return False
+    if _SKIP_DIRS.intersection(parts):
         return False
     return not any(parts[i] == "previz" and parts[i + 1] == "frames" for i in range(len(parts) - 1))
 

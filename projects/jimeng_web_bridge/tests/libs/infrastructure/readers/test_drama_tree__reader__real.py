@@ -28,11 +28,16 @@ def test_listing_nests_series_and_excludes_notes(tree: DramaTreeReader) -> None:
     children = [child.name for child in series.children]
     assert {"hy1", "hy2", "hy3", "hy4"} <= set(children)
     assert "_series" not in children
-    flat = {"wushen_juexing", "duikang_shangzeng", "rexue_gaoxiao", "xianjian_yi_mv", "xingji_yingjiu"}
+    flat = {"wushen_juexing", "duikang_shangzeng", "rexue_gaoxiao", "xingji_yingjiu"}
     assert flat <= set(nodes)
     assert all(nodes[name].node_type == "drama" for name in flat)
     assert "notes" not in nodes
     assert not any(name.startswith("_") for name in nodes)
+    # xianjian_yi carries series.json, so it surfaces here only once an episode has
+    # listable content — and when it does it must come through as a series, never as a
+    # flat drama. Holds both before and after the first xjN/ fills in.
+    if "xianjian_yi" in nodes:
+        assert nodes["xianjian_yi"].node_type == "series"
 
 
 def test_hy3_shot02_resolves_to_hy3_files_only(
@@ -113,7 +118,7 @@ def test_video_only_asset_is_not_an_image(tree: DramaTreeReader, require_media: 
 
 @pytest.mark.parametrize(
     ("drama", "stem", "count"),
-    [("ai_videos/wushen_juexing", "shot10_lastframe", 3), ("ai_videos/xianjian_yi_mv", "views1", 10)],
+    [("ai_videos/wushen_juexing", "shot10_lastframe", 3)],
 )
 def test_real_duplicate_stems_are_ambiguous(tree: DramaTreeReader, drama: str, stem: str, count: int) -> None:
     result = tree.resolve_asset_file(drama, stem, EXCLUDE)
@@ -122,15 +127,15 @@ def test_real_duplicate_stems_are_ambiguous(tree: DramaTreeReader, drama: str, s
     assert (result.status, len(result.candidates)) == ("ambiguous", count)
 
 
-def test_previz_alias_and_subdir(tree: DramaTreeReader, require_media: Callable[[str], None]) -> None:
+def test_previz_alias(tree: DramaTreeReader, require_media: Callable[[str], None]) -> None:
+    # The previz/ SUBDIR half of this test used to run against xianjian_yi_mv, the only
+    # drama that laid previz out that way; it was deleted 2026-09-19. The behaviour stays
+    # covered synthetically by
+    # test_reference_resolver__reader.py::test_shot_video_exact_in_previz_subdir_and_renders_excluded.
     duikang = "ai_videos/duikang_shangzeng/5_6_分镜与prompt/shots/shot01"
-    xianjian = "ai_videos/xianjian_yi_mv/5_6_分镜与prompt/shots/shot02"
     require_media(f"{duikang}/shot01_previz.mp4")
-    require_media(f"{xianjian}/previz/shot02_previz.mp4")
     alias = tree.resolve_shot_video(duikang, "previz_shot01", EXCLUDE)
     assert (alias.status, alias.step, alias.path) == ("found", "swapped_alias", f"{duikang}/shot01_previz.mp4")
-    subdir = tree.resolve_shot_video(xianjian, "shot02_previz", EXCLUDE)
-    assert (subdir.status, subdir.path) == ("found", f"{xianjian}/previz/shot02_previz.mp4")
 
 
 def test_prev_shot_lastframe_real(tree: DramaTreeReader, require_media: Callable[[str], None]) -> None:

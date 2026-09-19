@@ -2,6 +2,8 @@
 
 Byte-for-byte copies (`cp -p`) of real repo files taken 2026-09-13 by impl-02-inputs_and_config (spec v2 FR-8/FR-9 parser tests). Never edit a copy; add a new copy when a new variant appears.
 
+**`xianjian__*` 的上游已于 2026-09-19 删除**（`ai_videos/xianjian_yi_mv/` 整个项目被清除，该剧重启为 `xianjian_yi` 系列）。这些拷贝本身仍是有效的 parser 测试输入，只是源路径不再存在；`test_shot_prompt__reader__golden.py` 的 `DELETED_UPSTREAM` 记录了这一点，源若复现会报错提醒。
+
 | fixture | source |
 |---|---|
 | `real_shots/hy3__shot02.md` | `ai_videos/huangye_shenghuo/hy3/5_6_分镜与prompt/shots/shot02/shot02.md` |

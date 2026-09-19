@@ -55,13 +55,23 @@ def test_not_under_a_drama(repo_root: Path, rel: str) -> None:
 def test_real_drama_dirs_and_listability(repo_root: Path) -> None:
     names = {path.relative_to(repo_root / "ai_videos").as_posix() for path in drama_ref.drama_dirs(repo_root)}
     assert {f"huangye_shenghuo/hy{n}" for n in range(1, 5)} <= names
-    assert {"wushen_juexing", "duikang_shangzeng", "rexue_gaoxiao", "xianjian_yi_mv", "xingji_yingjiu"} <= names
+    assert {"wushen_juexing", "duikang_shangzeng", "rexue_gaoxiao", "xingji_yingjiu"} <= names
     assert "huangye_shenghuo" not in names
     assert not any(name.startswith("_") or "/_" in name for name in names)
     assert "notes" in names
     assert not drama_ref.is_listable_drama(repo_root / "ai_videos" / "notes")
     assert drama_ref.is_listable_drama(repo_root / "ai_videos" / "huangye_shenghuo" / "hy3")
-    assert "huangye_shenghuo" in [path.name for path in drama_ref.series_dirs(repo_root)]
+    series = [path.name for path in drama_ref.series_dirs(repo_root)]
+    assert "huangye_shenghuo" in series
+    # xianjian_yi is a series from the moment series.json lands, before any episode exists.
+    assert "xianjian_yi" in series
+    # The series root is never itself a drama; everything it contributes is an xjN episode.
+    assert "xianjian_yi" not in names
+    assert all(
+        name.split("/")[1].startswith("xj")
+        for name in names
+        if name.startswith("xianjian_yi/")
+    )
 
 
 def test_flat_drama_with_hy1_subdir_stays_depth_two(tmp_path: Path) -> None:
