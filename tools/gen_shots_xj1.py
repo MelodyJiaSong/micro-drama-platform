@@ -1,94 +1,23 @@
 # -*- coding: utf-8 -*-
-"""Emit the seven xj1 shot files from one table.
+"""xj1《余杭客栈的清晨》的七镜数据。
 
-Same-shaped prompts go through a generator, never hand-copied into seven files
-(ai_video.md rule 4i ①): change a shot by editing SHOTS here and re-running.
-
-The gates live in this file, not in a downstream reviewer (rule「审计要左移进生成器」):
-a shot that breaks the 一镜到底 contract, the 5000-char prompt cap or the speech-rate
-ceiling simply fails to build.
+只有数据。prompt 版式、闸门与产物回读校验都在 `tools/xj_shot_engine.py`，81 集共用一份——
+把引擎复制进每一集，就是让某条规则在第 3 集生效、在第 40 集悄悄消失。
 
 Run (repo root):
   python tools/gen_shots_xj1.py
-  python tools/gen_shots_xj1.py --check     # 只跑闸门，不写文件
+  python tools/gen_shots_xj1.py --check     # 只跑闸门
+  python tools/gen_shots_xj1.py --verify    # 回读产物
 """
 from __future__ import annotations
 
-import argparse
-import re
 import sys
-from dataclasses import dataclass, field
 from pathlib import Path
 
-sys.stdout.reconfigure(encoding="utf-8")
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-REPO = Path(__file__).resolve().parent.parent
-EP = REPO / "ai_videos" / "xianjian_yi" / "xj1" / "5_6_分镜与prompt"
-SERIES = "../../../_series"
-
-PROMPT_MAX = 5000
-SPEECH_MAX = 5.0            # 字 / 秒
-
-LOCK_C1 = "高马尾靛蓝发带青年，素白交领赭褐披巾靛蓝短打，笑意飞扬青涩"
-LOCK_C10 = "五十许圆脸妇人，花白圆髻素木簪，靛蓝粗布交领挽袖，土黄褐围裙带油渍，手掌厚茧指节粗"
-LOCK_C21 = "四十许精瘦男子，深靛青布帕缠头，深靛青对襟衣镶几何折线织带，深褐粗麻短褂，宽腰带挂素银环扣与鼓皮囊"
-LOCK_C22 = "佝偻老妪深灰破麻斗篷压低兜帽面隐阴影，拄未去皮歪曲木杖，强逆光压成剪影仅边缘冷白轮廓光"
-LOCK_BG1 = "深栗褐色老木穿斗构架挑空大堂，白灰粉墙地脚泛潮，青灰方砖墁地磨出暗光，二层木回廊细棂栏杆，屋架露明檩椽举折内凹"
-LOCK_BG2 = "深栗褐色木板墙小客房，深色木楼板积细灰，简陋木床被褥未叠，东侧步步锦木格窗切出平行晨光带"
-LOCK_BG3 = "深栗褐色临空回廊，左侧方望柱圆棱寻杖细棂栏杆，右侧四扇同款板门带铁环，深色木楼板中央一条磨痕通向尽头楼梯"
-LOCK_BG4 = "无源平光灰白乱石坡，棱角碎石铺至地平线零彩度，贴地薄灰雾顺坡流动，坡脊线外浓雾吞没一切"
-LOCK_P1 = "浅色杂木自削木剑，通体柴刀削面棱线未刨光，钝圆剑尖不开刃，麻绳缠扁木条护手，握位手汗浸深"
-LOCK_P2 = "旧熟铁锅铲，铲面灶火熏黑带麻点锈斑，前缘磨出银白亮边，木柄油润近铲头焦黑"
-
-STYLE_BASE = "电影级实拍质感，35mm 胶片颗粒，浅景深，自然肤质，无字幕无水印无logo，无动漫卡通质感，16:9"
-NEG_BASE = ("人脸变形、五官漂移、多余发光特效、画面文字、畸形肢体、夸张金光、现代服饰、字幕、水印、logo、"
-            "动漫卡通质感、塑料感皮肤、眼睛发光、瞳孔发光、多余手指、断肢、现代建筑、西式服装、"
-            "同一角色出现两次、两个相同人物")
-
-
-@dataclass(frozen=True)
-class Line:
-    who: str
-    kind: str               # 正常台词 / 内心独白 / 画外
-    text: str
-    voice: str
-    mood: str
-    secs: float
-
-
-@dataclass(frozen=True)
-class Shot:
-    n: int
-    title: str
-    secs: int
-    seam: str               # 承接 / 硬切
-    scene_key: str
-    scene_lock: str
-    jingbie: str
-    seam_note: str
-    refs: tuple[str, ...]
-    chars: tuple[tuple[str, str], ...]
-    plot: str
-    camera: str
-    blocking: str
-    action: str
-    light: str
-    rhythm: str
-    style_extra: str
-    neg_extra: str
-    lines: tuple[Line, ...] = ()
-    inner_cut: str = ""
-    inner_state: str = ""
-    source: str = ""
-
-    @property
-    def carries_lastframe(self) -> bool:
-        return self.n < 7
-
-    @property
-    def speech_chars(self) -> int:
-        return sum(len(l.text) for l in self.lines)
-
+from xj_shot_engine import (LOCK_BG1, LOCK_BG2, LOCK_BG3, LOCK_BG4, LOCK_C1, LOCK_C10,
+                            LOCK_C21, LOCK_C22, LOCK_P1, LOCK_P2, Line, Shot, run)
 
 SHOTS: tuple[Shot, ...] = (
     Shot(
@@ -121,6 +50,9 @@ SHOTS: tuple[Shot, ...] = (
         inner_state="镜内状态: 段1＝乱石坡，人在半空、木剑在手、黑影未倒；"
                     "段2＝客房，人已在床上仰躺、木剑不在手中（斜靠床头）、锅铲已落下",
         source="ch01 场景 1 + 过场动画 3",
+        dub_note="第 1 句是本集的机关——它既是梦里那声呼唤，也是妇人在床边叫他起床。"
+                 "镜内切就切在这句的余音上：**切前切后要听得出是同一个声源被「翻译」了**，"
+                 "前半带长混响、飘；切后立刻收干成实声。这是唯一一处两个 voice_id 演同一声。",
         lines=(
             Line("c22_梦中老妪", "画外", "李——逍——遥……李——逍——遥……", "female-crone-hollow-01", "空洞拖长，一圈圈荡开／极慢", 5.0),
             Line("c1_江湖游侠", "正常台词", "哇哇！作恶多端的罗刹鬼婆！", "male-youth-bright-01", "中二豪气，虚张声势／快", 2.5),
@@ -188,6 +120,8 @@ SHOTS: tuple[Shot, ...] = (
         style_extra="暖金晨光、真实室内、低饱和",
         neg_extra="暖色灯火、烛光、金属剑、宝剑、护手剑格、闪回画面、叠化、回忆滤镜、法术光效",
         source="ch01 场景 1",
+        dub_note="「是哦——侠侣？……一去不回」必须比前后都慢、都轻。这是全片「孤儿」那条线"
+                 "唯一一次被说出口，说完立刻用下一句的骂盖过去——她不让这句话停留。",
         lines=(
             Line("c10_市井大娘", "正常台词", "就会削些木刀木剑，成天学你爹舞刀弄剑，没个定性——哪家姑娘肯嫁给你哟……", "female-elder-brisk-01", "眼睛落在木剑上，语气转沉／中", 7.0),
             Line("c1_江湖游侠", "正常台词", "那我爹怎么娶到我娘的？", "male-youth-bright-01", "脱口而出的反将一军／快", 2.5),
@@ -327,7 +261,7 @@ SHOTS: tuple[Shot, ...] = (
         rhythm="前段一问一答，25s 后完全无人声，只剩指节敲桌的三下，间隔均匀、逐渐放大。最后 5 秒不配任何人声。",
         style_extra="暖木底色、客人区域压冷、末段特写浅景深、真实室内",
         neg_extra="暖色灯火、烛光、电灯、兵器、刀剑、夸张反派表情、阴森滤镜、绿色调、慢动作、法术光效",
-        source="ch01 场景 2",
+        source="ch01 场景 2", last_shot=True,
         lines=(
             Line("c21_南疆行商头领", "正常台词", "以后没有我们的吩咐，不许闲杂人等上楼来——知道了吗？", "male-mid-low-gravel-01", "「上楼」二字咬重／慢", 6.5),
             Line("c1_江湖游侠", "正常台词", "是……这容易，小的一定照办。", "male-youth-bright-01", "顺从，眼睛瞟了下楼上／中", 3.5),
@@ -338,250 +272,5 @@ SHOTS: tuple[Shot, ...] = (
     ),
 )
 
-
-def video_prompt(s: Shot) -> str:
-    refs = "、".join(f"`{r}=>@`" for r in s.refs)
-    chars = "；".join(f"{k}＝{v}" for k, v in s.chars)
-    lines = "；".join(f"{l.who}（{l.kind}）「{l.text}」" for l in s.lines) or "本镜无台词"
-    # 用「口不动」而非「嘴不动」：dialogue.md 与仓库通用说法都是前者，同一件事只留一种写法
-    lip = ("内心独白（OS）口不动、不出口型，其余台词正常口型。"
-           if any(l.kind == "内心独白" for l in s.lines) else "台词正常口型。")
-    parts = [
-        f"参考: {refs}",
-        f"参考用法: 角色参考图只锁长相与服装，不锁姿势与机位；场景参考图只锁材质与光的性格，"
-        f"几何以本条 走位/镜头 为准；本镜首帧＝上一镜末帧时，构图与光必须从该帧无缝接起。"
-        if s.n > 1 else
-        "参考用法: 角色参考图只锁长相与服装，不锁姿势与机位；场景参考图只锁材质与光的性格，几何以本条 走位/镜头 为准。",
-        f"角色: {chars}",
-        f"情节: {s.plot}",
-        f"场景: {s.scene_lock}",
-        f"镜头: {s.camera}",
-        f"走位: {s.blocking}",
-        f"动作: {s.action}",
-        f"台词: {lines}。{lip}",
-        f"光线: {s.light}",
-        f"节奏: {s.rhythm}",
-        f"渲染样式: {STYLE_BASE}，{s.style_extra}",
-        "比例: 16:9",
-        f"时长: {s.secs}s",
-    ]
-    if s.inner_cut:
-        parts.insert(6, s.inner_cut)
-    if s.inner_state:
-        parts.insert(7 if s.inner_cut else 6, s.inner_state)
-    parts.append(f"负面词: {NEG_BASE}、{s.neg_extra}")
-    return "\n".join(parts)
-
-
-def dub_block(s: Shot) -> str:
-    if not s.lines:
-        return "## 台词配音 prompt\n\n本镜无台词，不配音。只保留环境声：脚步、木楼梯吱呀、大堂人声底噪。\n"
-    rows = "\n".join(
-        f"| {i} | {l.who} | `{l.voice}` | {l.kind} | {l.mood} | 「{l.text}」 | {l.secs}s |"
-        for i, l in enumerate(s.lines, 1))
-    return ("## 台词配音 prompt\n\n"
-            "| # | 角色 | voice_id | 类型 | 情绪／语速 | 台词 | 时长目标 |\n|---|---|---|---|---|---|---|\n"
-            f"{rows}\n\n"
-            "> voice_id 全片锁定不换；**内心独白也必须配音入片**，只是口不动。\n")
-
-
-def render(s: Shot) -> str:
-    prompt = video_prompt(s)
-    tail = (f"尾帧锁定: shot{s.n:02d}_lastframe.png（下游 shot{s.n + 1:02d} 承接本镜末帧；"
-            "重生时必须用本文件钉住末帧）" if s.carries_lastframe else
-            "尾帧锁定: 无（本集末镜，无下游承接镜）")
-    return f"""---
-episode: xj1
-shot: {s.n:02d}
-title: {s.title}
-duration_s: {s.secs}
-seam: {"承接" if s.n > 1 else "硬切"}
-effects_tier: {"T2" if s.n == 1 else "T0"}
-source: {s.source}
----
-
-# xj1 · shot{s.n:02d}《{s.title}》
-
-## Shot context
-
-- **衔接**: {s.seam}
-- **{tail.split(':')[0]}**: {tail.split(': ', 1)[1]}
-- **接缝**: {s.seam_note.removeprefix("接缝: ")}
-- **景别档**: {s.jingbie}
-- **场景**: {s.scene_key}
-- **原作出处**: {s.source}
-- **剧本**: `../../../4_剧本/script.md` § shot{s.n:02d}；台词逐句同步 `../../../4_剧本/dialogue.md`
-
-## 视频 prompt
-
-```text
-{prompt}
-```
-
-字数: {len(prompt)} / {PROMPT_MAX}
-
-{dub_block(s)}"""
-
-
-def gate(s: Shot) -> list[str]:
-    bad: list[str] = []
-    p = video_prompt(s)
-    if len(p) > PROMPT_MAX:
-        bad.append(f"shot{s.n:02d}: 视频 prompt {len(p)} 字 > {PROMPT_MAX} 硬顶")
-    rate = s.speech_chars / s.secs
-    if rate > SPEECH_MAX:
-        bad.append(f"shot{s.n:02d}: 语速 {rate:.2f} 字/秒 > {SPEECH_MAX}")
-    if sum(l.secs for l in s.lines) > s.secs:
-        bad.append(f"shot{s.n:02d}: 配音时长之和 {sum(l.secs for l in s.lines):.1f}s > 镜长 {s.secs}s")
-    if not (3 <= s.secs <= 30):
-        bad.append(f"shot{s.n:02d}: 时长 {s.secs}s 不在 3–30s")
-    if s.n > 1 and not s.seam.startswith("承接"):
-        bad.append(f"shot{s.n:02d}: 非首镜必须承接（本片 divergence，见 proposal §2.1）")
-    if s.n == 1 and not s.seam.startswith("硬切"):
-        bad.append("shot01: 首镜必须是独立首帧硬切")
-    if s.carries_lastframe and "尾帧锁定" not in render(s):
-        bad.append(f"shot{s.n:02d}: 缺尾帧锁定")
-    if "@1" in p or "@图" in p:
-        bad.append(f"shot{s.n:02d}: `参考:` 出现代填槽位号，必须是裸 `=>@`")
-    if re.search(r"#[0-9a-fA-F]{6}", p):
-        bad.append(f"shot{s.n:02d}: prompt 内出现 hex 色值")
-    if "字幕" in p and "无字幕" not in p:
-        bad.append(f"shot{s.n:02d}: 台词块混入字幕信息")
-    # 角色键按已知集合匹配，不用正则猜边界——正则会把键后紧跟的中文一起吞掉。
-    known = {"c1_江湖游侠", "c10_市井大娘", "c21_南疆行商头领", "c22_梦中老妪"}
-    locked = {k for k, _ in s.chars}
-    on_screen = {k for k in known if k in s.blocking}
-    on_screen |= {l.who for l in s.lines if l.kind != "画外"}
-    for who in sorted(on_screen - locked):
-        bad.append(f"shot{s.n:02d}: {who} 入画（走位或非画外台词）但 chars 缺其锁定串——"
-                   f"锁不住长相，承接链上同一个人会在相邻两镜长成两样")
-    in_plot = {k for k in known if k in s.plot}
-    for who in sorted(locked - on_screen - in_plot):
-        bad.append(f"shot{s.n:02d}: {who} 有锁定串却不入画——多余锁定串白占字数")
-    # 生成块的叙事字段不得出现 IP 专名：平台对 IP/真人名会直接拒绝，模型也会套 IP 先验。
-    # 专名只允许留在 `台词:`——那是说出口的话，仓库既有做法即如此（wushen 的「裴家」）。
-    for name in ("李逍遥", "李大娘", "婶婶", "罗刹鬼婆", "苗人", "仙剑"):
-        if name in " ".join((s.plot, s.camera, s.blocking, s.action, s.light, s.rhythm)):
-            bad.append(f"shot{s.n:02d}: 叙事字段出现 IP 专名「{name}」——只用锁定键或代词")
-    if s.inner_cut and not s.inner_state:
-        bad.append(f"shot{s.n:02d}: 有镜内切镜但缺 `镜内状态:`")
-    # 动作时间轴必须铺满整镜。改时长最容易漏改动作表：shot03/04/07 延长后动作轴仍停在旧秒数，
-    # prompt 于是声称 30s 却只描述了 28s，末尾两秒交给模型自由发挥。
-    spans = [(float(a), float(b)) for a, b in re.findall(r"(\d+(?:\.\d+)?)\s*[–-]\s*(\d+(?:\.\d+)?)s",
-                                                         s.action)]
-    if not spans:
-        bad.append(f"shot{s.n:02d}: `动作:` 没有任何时间轴标注")
-    else:
-        covered = max(b for _, b in spans)
-        if abs(covered - s.secs) > 0.01:
-            bad.append(f"shot{s.n:02d}: 动作时间轴只到 {covered:.0f}s，镜长 {s.secs}s——"
-                       f"末尾 {s.secs - covered:.0f}s 无动作描述")
-    return bad
-
-
-
-_FENCE_RE = re.compile(r"^```text\n(.*?)\n^```", re.M | re.S)
-_REQUIRED_FIELDS = ("参考:", "参考用法:", "角色:", "情节:", "场景:", "镜头:", "走位:",
-                    "动作:", "台词:", "光线:", "节奏:", "渲染样式:", "比例:", "时长:", "负面词:")
-_IP_NAMES = ("李逍遥", "李大娘", "婶婶", "罗刹鬼婆", "苗人", "仙剑")
-
-
-def verify() -> list[str]:
-    """Open the written files and judge those, which is the only thing that can say the
-    artefact is sound."""
-    bad: list[str] = []
-    for s in SHOTS:
-        f = EP / "shots" / f"shot{s.n:02d}" / f"shot{s.n:02d}.md"
-        if not f.is_file():
-            bad.append(f"shot{s.n:02d}: 产物不存在 {f}")
-            continue
-        text = f.read_text(encoding="utf-8")
-        m = _FENCE_RE.search(text)
-        if m is None:
-            bad.append(f"shot{s.n:02d}: 产物里找不到 ```text 视频 prompt 块")
-            continue
-        body = m.group(1)
-        for fld in _REQUIRED_FIELDS:
-            if ("\n" + fld) not in ("\n" + body):
-                bad.append(f"shot{s.n:02d}: 产物缺字段 `{fld}`")
-        if len(body) > PROMPT_MAX:
-            bad.append(f"shot{s.n:02d}: 产物 prompt {len(body)} 字 > {PROMPT_MAX}")
-        if re.search(r"#[0-9a-fA-F]{6}", body):
-            bad.append(f"shot{s.n:02d}: 产物含 hex 色值")
-        if re.search(r"=>@\s*[0-9\u56fe\u7b2c]", body):
-            bad.append(f"shot{s.n:02d}: 产物的 `参考:` 代填了槽位号，必须裸 `=>@`")
-        if "比例: 16:9" not in body:
-            bad.append(f"shot{s.n:02d}: 产物比例不是 16:9")
-        if f"时长: {s.secs}s" not in body:
-            bad.append(f"shot{s.n:02d}: 产物时长与表不一致（应 {s.secs}s）")
-        if s.carries_lastframe and "尾帧锁定" not in text:
-            bad.append(f"shot{s.n:02d}: 产物缺尾帧锁定行")
-        if s.n > 1 and "承接 shot" not in text:
-            bad.append(f"shot{s.n:02d}: 产物未声明承接")
-        if s.lines and "## 台词配音 prompt" not in text:
-            bad.append(f"shot{s.n:02d}: 有台词却无配音块")
-        for l in s.lines:
-            if l.text not in text:
-                bad.append(f"shot{s.n:02d}: 台词未出现在产物中「{l.text[:14]}…」")
-        if any(l.kind == "内心独白" for l in s.lines) and "口不动" not in body:
-            bad.append(f"shot{s.n:02d}: 有内心独白但产物未写明口不动")
-        # IP 专名只许留在 `台词:` 一行里；其余叙事行出现即违规
-        for line in body.splitlines():
-            if line.startswith(("台词:", "角色:", "参考:")):
-                continue
-            for name in _IP_NAMES:
-                if name in line:
-                    bad.append(f"shot{s.n:02d}: 产物 `{line[:6]}` 行出现 IP 专名「{name}」")
-    combined = EP / "all_shot_prompts.md"
-    if not combined.is_file():
-        bad.append("all_shot_prompts.md 不存在")
-    else:
-        ct = combined.read_text(encoding="utf-8")
-        for s in SHOTS:
-            if f"shot{s.n:02d}" not in ct:
-                bad.append(f"all_shot_prompts.md 缺 shot{s.n:02d}")
-    return bad
-
-
-def main() -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--check", action="store_true")
-    ap.add_argument("--verify", action="store_true",
-                    help="打开已写出的 shot 文件回读校验（不重新生成）")
-    args = ap.parse_args()
-
-    if args.verify:
-        problems = verify()
-        for b in problems:
-            print(f"  ✗ {b}")
-        print("产物回读校验：" + ("不通过" if problems else f"通过（{len(SHOTS)} 个文件）"))
-        return 1 if problems else 0
-
-    problems = [b for s in SHOTS for b in gate(s)]
-    for b in problems:
-        print(f"  ✗ {b}")
-    if problems:
-        print("闸门未过，不生成")
-        return 1
-    total = sum(s.secs for s in SHOTS)
-    print(f"闸门全过：{len(SHOTS)} 镜，合计 {total}s = {total // 60}分{total % 60:02d}秒")
-    for s in SHOTS:
-        print(f"  shot{s.n:02d} {s.title:8} {s.secs:>3}s  prompt {len(video_prompt(s)):>4}字  "
-              f"语速 {s.speech_chars / s.secs:.2f}字/秒  {s.seam[:2]}")
-    if args.check:
-        return 0
-    for s in SHOTS:
-        d = EP / "shots" / f"shot{s.n:02d}"
-        d.mkdir(parents=True, exist_ok=True)
-        (d / f"shot{s.n:02d}.md").write_text(render(s), encoding="utf-8")
-    combined = "\n\n---\n\n".join(
-        f"# shot{s.n:02d}《{s.title}》 {s.secs}s\n\n```text\n{video_prompt(s)}\n```" for s in SHOTS)
-    (EP / "all_shot_prompts.md").write_text(
-        f"# xj1 全部分镜 prompt（生成物，勿手改——改 `tools/gen_shots_xj1.py`）\n\n{combined}\n",
-        encoding="utf-8")
-    print(f"已写出 {len(SHOTS)} 个 shot 文件 + all_shot_prompts.md → {EP}")
-    return 0
-
-
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(run("xj1", SHOTS))
