@@ -1,0 +1,3309 @@
+# G04 · 东部王国南部 —— 经典旧世(Vanilla / Classic Era 1.12)地理树
+# 树数据唯一出处。markdown 树由 tools/build_world_tree.py 生成，不要手写。
+# 非树信息(自查对账/版本差异/存疑/图片链接/下游提醒)见 g04_ek_south_notes.md
+nodes:
+
+  # ==========================================================================
+  # ZONE 1 · 荆棘谷 Stranglethorn Vale
+  # ==========================================================================
+  - id: stranglethorn_vale
+    parent: eastern_kingdoms
+    type: zone
+    subtype: ""
+    name_zh: 荆棘谷
+    name_en: Stranglethorn Vale
+    level: "30-45"
+    faction: contested
+    coords: ""
+    adjacent: [duskwood]
+    era: vanilla
+    look_zh: 湿热浓绿的热带雨林，巨型蕨叶与缠绕藤蔓遮天，红土小径泥泞，残断的巨魔石阶与蛇形图腾从林间探出，远处是碧蓝的南海
+    note_zh: 旧世一整块大区，4.0.3 被劈成北荆棘谷与荆棘谷海角两张图；本树按旧世的单一大区收录
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Jungle trolls patrol this steaming rainforest."
+    verified_by: ai_read
+
+  # --- 北半部 ---
+  - id: rebel_camp
+    parent: stranglethorn_vale
+    type: settlement
+    subtype: camp
+    name_zh: 反抗军营地
+    name_en: Rebel Camp
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 雨林北口路边的简陋帆布军帐群，木栅与火堆，士兵在泥地上擦拭刀剑，背后是通往暮色森林的峡口
+    note_zh: 玩家进入荆棘谷的第一站，库尔森任务线起点
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Rebel Camp"
+    verified_by: ai_read
+
+  - id: kurzens_compound
+    parent: stranglethorn_vale
+    type: settlement
+    subtype: camp
+    name_zh: 库尔森的营地
+    name_en: Kurzen's Compound
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 密林中被高木栅围死的叛军营寨，木塔与吊桥，营内火把通明，地上散着乱丢的补给箱
+    note_zh: 库尔森上校的叛军基地，内有地下坑道「储藏室」
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Kurzen's Compound"
+    verified_by: ai_read
+
+  - id: the_stockpile
+    parent: kurzens_compound
+    type: subzone
+    subtype: ""
+    name_zh: "储藏室"
+    name_en: The Stockpile
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 库尔森营地下方的泥岩地下坑道，狭窄潮湿，堆满木桶与军械箱，火把照出斑驳岩壁
+    note_zh: "官方译名未查到；库尔森营地的地下仓库区〔2026-09-23 更正：简中名「储藏室」取自 Classic Era 1.15.9 客户端 AreaTable/WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "The Stockpile"
+    verified_by: ai_read
+
+  - id: grom_gol_base_camp
+    parent: stranglethorn_vale
+    type: settlement
+    subtype: camp
+    name_zh: 格罗姆高营地
+    name_en: Grom'gol Base Camp
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 雨林里削尖圆木围成的兽人前哨，兽皮帐篷与图腾柱，营地正中一座高耸的木制飞艇塔，红色部落旗在湿风里垂着
+    note_zh: 部落在荆棘谷的唯一据点；指挥官为阿格罗高，设飞行点与飞艇塔
+    source_url: https://warcraft.wiki.gg/wiki/Grom%27gol_Base_Camp
+    quote: "Led by Commander Aggro'gosh"
+    verified_by: ai_read
+
+  - id: grom_gol_zeppelin_tower
+    parent: grom_gol_base_camp
+    type: transport
+    subtype: boat
+    name_zh: 格罗姆高飞艇塔
+    name_en: Grom'gol Zeppelin Tower
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 多层螺旋木梯盘上的高塔，顶端平台停着一艘挂满绳索与红布的飞艇，气囊在雨中缓缓晃动
+    note_zh: 通奥格瑞玛与幽暗城两条飞艇线；schema 的 transport 枚举无 zeppelin 值，暂归 boat
+    source_url: https://warcraft.wiki.gg/wiki/Grom%27gol_Base_Camp
+    quote: "zeppelin tower"
+    verified_by: ai_read
+
+  - id: grom_gol_flightpath
+    parent: grom_gol_base_camp
+    type: transport
+    subtype: flightpath
+    name_zh: 格罗姆高飞行点
+    name_en: Grom'gol Flight Master
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 营地边缘的双足飞龙栖木，兽皮棚遮住阳光，飞龙收翅蹲伏
+    note_zh: 旧世航线：藏宝海湾、斯通纳德、卡加斯；【G04-V 核验】所引页面未出现该名的原文，verified_by 降级为 ai_draft
+    source_url: https://warcraft.wiki.gg/wiki/Grom%27gol_Base_Camp
+    quote: ""
+    verified_by: ai_draft
+
+  - id: nesingwarys_expedition
+    parent: stranglethorn_vale
+    type: settlement
+    subtype: camp
+    name_zh: 奈辛瓦里远征队营地
+    name_en: Nesingwary's Expedition
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林间空地上的猎人营，帆布帐与晾兽皮的木架，地上摊着虎皮与豹皮，篝火边靠着长枪
+    note_zh: 赫米特·奈辛瓦里的狩猎任务线起点（猎豹/猎虎/猎迅猛龙）
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Nesingwary's Expedition"
+    verified_by: ai_read
+
+  - id: venture_co_base_camp
+    parent: stranglethorn_vale
+    type: settlement
+    subtype: camp
+    name_zh: 风险投资公司营地
+    name_en: Venture Co. Base Camp
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 被推平的林地上搭起的哥布林工地，黄漆木棚、蒸汽机械与成堆原木，锯末与油污混在红土里
+    note_zh: 哥布林伐木/采矿公司在荆棘谷的据点
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Venture Co. Base Camp"
+    verified_by: ai_read
+
+  - id: venture_co_operations_center
+    parent: stranglethorn_vale
+    type: settlement
+    subtype: camp
+    name_zh: 风险投资公司行动中心
+    name_en: Venture Co. Operations Center
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 比营地更大的哥布林作业区，铁皮屋与高架吊臂，蒸汽阀不时喷出白雾
+    note_zh: 中文名未经官方页面核实
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Venture Co. Operations Center"
+    verified_by: ai_read
+
+  - id: mosh_ogg_ogre_mound
+    parent: stranglethorn_vale
+    type: settlement
+    subtype: camp
+    name_zh: 莫什奥格食人魔山
+    name_en: Mosh'Ogg Ogre Mound
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林中隆起的土石丘，巨大的粗木栅与兽骨堆，洞口熏黑，食人魔的破布帐篷歪在坡上
+    note_zh: 莫什奥格食人魔聚居地
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Mosh'Ogg Ogre Mound"
+    verified_by: ai_read
+
+  - id: lake_nazferiti
+    parent: stranglethorn_vale
+    type: poi
+    subtype: ""
+    name_zh: 纳菲瑞提湖
+    name_en: Lake Nazferiti
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 雨林腹地的墨绿静湖，水面浮着睡莲与倒木，岸边芦苇高过人头，湖心雾气不散
+    note_zh: 祖尔格拉布入口在湖的东面
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Lake Nazferiti"
+    verified_by: ai_read
+
+  - id: nazferiti_river
+    parent: stranglethorn_vale
+    type: poi
+    subtype: ""
+    name_zh: Nazferiti river
+    name_en: Nazferiti river
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 自纳菲瑞提湖流出的浑浊河道，水色偏褐，两岸红土塌陷，露出盘结的树根
+    note_zh: 官方译名未查到；wiki 列为 undisplayed location（游戏内不显示地名）
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Nazferiti river"
+    verified_by: ai_read
+
+  - id: the_savage_coast
+    parent: stranglethorn_vale
+    type: subzone
+    subtype: ""
+    name_zh: 蛮荒海岸
+    name_en: The Savage Coast
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 荆棘谷西侧的白沙海岸线，椰树斜倚，浪拍礁石，沙上散着破船板与巨型蟹壳
+    note_zh: 荆棘谷西岸，纳迦与鱼人出没
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "The Savage Coast"
+    verified_by: ai_read
+
+  - id: ruins_of_zul_kunda
+    parent: stranglethorn_vale
+    type: settlement
+    subtype: ruin
+    name_zh: 祖昆达废墟
+    name_en: Ruins of Zul'Kunda
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 海岸边的巨魔废城，倒塌的石阶金字塔与蛇头石雕，藤蔓爬满断柱，火盆仍燃着绿焰
+    note_zh: 北部海岸的古拉巴什巨魔聚落
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Ruins of Zul'Kunda"
+    verified_by: ai_read
+
+  - id: ruins_of_zul_mamwe
+    parent: stranglethorn_vale
+    type: settlement
+    subtype: ruin
+    name_zh: 祖玛维废墟
+    name_en: Ruins of Zul'Mamwe
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 湖畔的巨魔村落废墟，高脚茅屋架在水上，木桥相连，图腾柱插满羽毛与骨饰
+    note_zh: 荆棘谷东部最大的巨魔聚落之一
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Ruins of Zul'Mamwe"
+    verified_by: ai_read
+
+  - id: balia_mah_ruins
+    parent: stranglethorn_vale
+    type: settlement
+    subtype: ruin
+    name_zh: 巴里亚曼废墟
+    name_en: Balia'mah Ruins
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林间小片巨魔石屋遗迹，苔绿的方石基座与歪斜的图腾，地面积水映出树影
+    note_zh: ""
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Balia'mah Ruins"
+    verified_by: ai_read
+
+  - id: bal_lal_ruins
+    parent: stranglethorn_vale
+    type: settlement
+    subtype: ruin
+    name_zh: 巴拉尔废墟
+    name_en: Bal'lal Ruins
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 密林深处的小型巨魔祭址，环形石台中央立着断裂的蛇神石像，四周藤蔓垂落
+    note_zh: ""
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Bal'lal Ruins"
+    verified_by: ai_read
+
+  - id: kal_ai_ruins
+    parent: stranglethorn_vale
+    type: settlement
+    subtype: ruin
+    name_zh: 卡莱废墟
+    name_en: Kal'ai Ruins
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 雨林坡地上的巨魔石屋群，屋顶塌陷露出焦黑梁木，石阶被树根撑裂
+    note_zh: ""
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Kal'ai Ruins"
+    verified_by: ai_read
+
+  - id: mizjah_ruins
+    parent: stranglethorn_vale
+    type: settlement
+    subtype: ruin
+    name_zh: 米扎废墟
+    name_en: Mizjah Ruins
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 半没入沼泥的巨魔遗迹，断墙外露青砖，水面浮着落叶与残破的编织席
+    note_zh: ""
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Mizjah Ruins"
+    verified_by: ai_read
+
+  - id: tkashi_ruins
+    parent: stranglethorn_vale
+    type: settlement
+    subtype: ruin
+    name_zh: "伽什废墟"
+    name_en: Tkashi Ruins
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林中一片低矮巨魔石基与倒柱，杂草齐腰，柱头雕着张口的蛇
+    note_zh: "官方译名未查到（未出现在中文探索成就清单中）〔2026-09-23 更正：简中名「伽什废墟」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Tkashi Ruins"
+    verified_by: ai_read
+
+  - id: ziata_jai_ruins
+    parent: stranglethorn_vale
+    type: settlement
+    subtype: ruin
+    name_zh: 赞塔加废墟
+    name_en: Ziata'jai Ruins
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 依山而建的多层巨魔石台，阶梯直通半空断口，台面刻满褪色的血红纹样
+    note_zh: ""
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Ziata'jai Ruins"
+    verified_by: ai_read
+
+  - id: zuuldaia_ruins
+    parent: stranglethorn_vale
+    type: settlement
+    subtype: ruin
+    name_zh: 祖丹亚废墟
+    name_en: Zuuldaia Ruins
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 南部海岬上的巨魔废城，石阶从海水里升起，断柱正对落日，浪花拍打基座
+    note_zh: ""
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Zuuldaia Ruins"
+    verified_by: ai_read
+
+  - id: zul_gurub_entrance
+    parent: stranglethorn_vale
+    type: poi
+    subtype: ""
+    name_zh: 祖尔格拉布入口
+    name_en: Zul'Gurub Entrance
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 纳菲瑞提湖东岸的巨魔城门，两侧是高耸的蛇形石柱，门洞内漆黑，门前石阶上残留干涸的血迹
+    note_zh: 位于荆棘谷东北、纳菲瑞提湖东面；旧世 1.7 随祖尔格拉布开放
+    source_url: https://warcraft.wiki.gg/wiki/Zul%27Gurub_(Classic)
+    quote: "Zul'Gurub is a 20-man raid instance located in northeastern Stranglethorn Vale, released in patch 1.7."
+    verified_by: ai_read
+
+  - id: altar_of_hireek
+    parent: zul_gurub
+    type: subzone
+    subtype: ""
+    name_zh: "希里克祭坛"
+    name_en: Altar of Hir'eek
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 漆黑的蝙蝠神洞窟，穹顶倒挂成群蝙蝠，地面骨屑堆积，唯一光源是几盏摇晃的油灯
+    note_zh: "官方译名未查到；蝙蝠神希亚卡的祭坛〔2026-09-23 更正：简中名「希里克祭坛」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Zul%27Gurub_(Classic)
+    quote: "Altar of Hir'eek"
+    verified_by: ai_read
+
+  - id: altar_of_the_blood_god
+    parent: zul_gurub
+    type: subzone
+    subtype: ""
+    name_zh: "血神祭坛"
+    name_en: Altar of the Blood God
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 巨大的露天血池神坛，环形石阶围着中央血潭，蛇形石雕自池中昂首，空气里飘着血雾
+    note_zh: "官方译名未查到；哈卡最终战所在〔2026-09-23 更正：简中名「血神祭坛」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Zul%27Gurub_(Classic)
+    quote: "Altar of the Blood God"
+    verified_by: ai_read
+
+  - id: the_edge_of_madness
+    parent: zul_gurub
+    type: subzone
+    subtype: ""
+    name_zh: The Edge of Madness
+    name_en: The Edge of Madness / The Cache of Madness
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 封闭的地下石室，中央一口冒着紫光的大锅，四壁刻满扭曲符文，光线从锅口向上打亮人脸
+    note_zh: 官方译名未查到；轮换召唤 boss 的密室
+    source_url: https://warcraft.wiki.gg/wiki/Zul%27Gurub_(Classic)
+    quote: "The Cache of Madness/Edge of Madness"
+    verified_by: ai_read
+
+  - id: the_coil
+    parent: zul_gurub
+    type: subzone
+    subtype: ""
+    name_zh: "毒蛇小径"
+    name_en: The Coil
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 盘旋向下的蛇形石道，两侧墙面浮雕巨蛇鳞纹，地面积着浅水，回声很重
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「毒蛇小径」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Zul%27Gurub_(Classic)
+    quote: "The Coil"
+    verified_by: ai_read
+
+  - id: the_bloodfire_pit
+    parent: zul_gurub
+    type: subzone
+    subtype: ""
+    name_zh: The Bloodfire Pit
+    name_en: The Bloodfire Pit / The Devil's Terrace
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 露天的下沉火坑，坑底烧着暗红炭火，边缘立着插满骨头的木桩，热气扭曲了远景
+    note_zh: 官方译名未查到
+    source_url: https://warcraft.wiki.gg/wiki/Zul%27Gurub_(Classic)
+    quote: "The Devil's Terrace/The Bloodfire Pit"
+    verified_by: ai_read
+
+  - id: mandokirs_domain
+    parent: zul_gurub
+    type: subzone
+    subtype: ""
+    name_zh: Mandokir's Domain
+    name_en: Mandokir's Domain / Hakkari Grounds
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 宽阔的露天竞技场地，沙地被踩得发硬，四周高墙挂着破旧战旗，正中一根拴着迅猛龙的粗木桩
+    note_zh: 官方译名未查到；血领主曼多基尔与其坐骑所在
+    source_url: https://warcraft.wiki.gg/wiki/Zul%27Gurub_(Classic)
+    quote: "Mandokir's Domain/Hakkari Grounds"
+    verified_by: ai_read
+
+  - id: naze_of_shirvallah
+    parent: zul_gurub
+    type: subzone
+    subtype: ""
+    name_zh: "希瓦拉尔之角"
+    name_en: Naze of Shirvallah
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 虎神神殿的高台，两尊巨虎石像守着入口，台面铺着虎皮，周围竖着削尖的木桩
+    note_zh: "官方译名未查到；虎神希尔瓦拉的祭祀高台〔2026-09-23 更正：简中名「希瓦拉尔之角」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Zul%27Gurub_(Classic)
+    quote: "Naze of Shirvallah"
+    verified_by: ai_read
+
+  - id: pagles_pointe
+    parent: zul_gurub
+    type: subzone
+    subtype: ""
+    name_zh: "帕格渔点"
+    name_en: Pagle's Pointe
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 神殿内的方形深水池，池边石栏残破，水色墨绿看不见底，岸上放着一根孤零零的钓竿
+    note_zh: "官方译名未查到；钓鱼召唤加兹兰卡的水池〔2026-09-23 更正：简中名「帕格渔点」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Zul%27Gurub_(Classic)
+    quote: "Pagle's Pointe"
+    verified_by: ai_read
+
+  - id: shadrazaar
+    parent: zul_gurub
+    type: subzone
+    subtype: ""
+    name_zh: "沙德拉扎尔"
+    name_en: Shadra'zaar
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 蛛网密布的阴暗神殿区，石柱之间挂着厚重白网，地上是干枯的虫壳
+    note_zh: "官方译名未查到；蜘蛛神莎德拉的区域〔2026-09-23 更正：简中名「沙德拉扎尔」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Zul%27Gurub_(Classic)
+    quote: "Shadra'zaar"
+    verified_by: ai_read
+
+  - id: temple_of_bethekk
+    parent: zul_gurub
+    type: subzone
+    subtype: ""
+    name_zh: "贝瑟克神庙"
+    name_en: Temple of Bethekk
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 独立的黑豹神殿，门柱雕着豹首，殿内一池墨色水面倒映穹顶，四角燃着幽蓝火
+    note_zh: "官方译名未查到；豹神贝丝婷的神殿〔2026-09-23 更正：简中名「贝瑟克神庙」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Zul%27Gurub_(Classic)
+    quote: "Temple of Bethekk"
+    verified_by: ai_read
+
+  - id: zanzas_rise
+    parent: zul_gurub
+    type: subzone
+    subtype: ""
+    name_zh: "赞扎高地"
+    name_en: Zanza's Rise
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 神城外侧的高石台，可俯瞰整座祖尔格拉布，台上立着一尊高大的巨魔守护石像
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「赞扎高地」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Zul%27Gurub_(Classic)
+    quote: "Zanza's Rise"
+    verified_by: ai_read
+
+  - id: yojamba_isle
+    parent: stranglethorn_vale
+    type: settlement
+    subtype: camp
+    name_zh: 约亚姆巴岛
+    name_en: Yojamba Isle
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 西岸外的小岛，岸边几顶赞达拉巨魔的蓝金色帐篷，沙滩上插着刻花木桩，海水清澈见底
+    note_zh: 赞达拉部族营地，祖尔格拉布声望与开门任务的发放地；1.7 随 ZG 加入
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Yojamba Isle"
+    verified_by: ai_read
+
+  - id: the_vile_reef
+    parent: stranglethorn_vale
+    type: subzone
+    subtype: ""
+    name_zh: 暗礁海
+    name_en: The Vile Reef
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 水下的珊瑚礁群，阳光穿透海面打出光柱，礁石间是纳迦的贝壳建筑与沉船残骸
+    note_zh: 荆棘谷西侧海底区域
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "The Vile Reef"
+    verified_by: ai_read
+
+  # --- 南半部（海角） ---
+  - id: the_cape_of_stranglethorn
+    parent: stranglethorn_vale
+    type: subzone
+    subtype: ""
+    name_zh: 荆棘谷海角
+    name_en: The Cape of Stranglethorn
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 荆棘谷最南端的狭长海岬，雨林退成灌木与礁岩，海风把椰树吹得一边倒，远处是藏宝海湾的木栈桥
+    note_zh: 旧世是荆棘谷的一个子区域；4.0.3 被提升为独立地图「荆棘谷海角」
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "The Cape of Stranglethorn"
+    verified_by: ai_read
+
+  - id: booty_bay
+    parent: the_cape_of_stranglethorn
+    type: city
+    subtype: capital
+    name_zh: 藏宝海湾
+    name_en: Booty Bay
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 嵌在悬崖裂口里的多层木板海港城，房屋层层叠叠沿崖壁钉出去，栈桥与吊梯交错，灯笼在海风里晃，港内停着帆船
+    note_zh: 荆棘谷中立主城，黑水卡特尔哥布林所辖；统治者雷维尔加兹男爵；有旅店、银行、拍卖行、飞行点、通棘齿城的船
+    source_url: https://warcraft.wiki.gg/wiki/Booty_Bay
+    quote: "its pirates, primarily the Blackwater Raiders of Booty Bay and their archenemies the Bloodsail Buccaneers"
+    verified_by: ai_read
+
+  - id: the_salty_sailor_tavern
+    parent: booty_bay
+    type: poi
+    subtype: ""
+    name_zh: "水手之家旅店"
+    name_en: The Salty Sailor Tavern
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 港口最热闹的木结构酒馆，两层通高的厅堂，长桌与酒桶，窗外就是船桅，室内暖黄灯光与人声
+    note_zh: "官方译名未查到；藏宝海湾的旅店，男爵雷维尔加兹的露台在楼上〔2026-09-23 更正：简中名「水手之家旅店」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Booty_Bay
+    quote: "The Salty Sailor Tavern"
+    verified_by: ai_read
+
+  - id: the_old_port_authority
+    parent: booty_bay
+    type: poi
+    subtype: ""
+    name_zh: "港务局"
+    name_en: The Old Port Authority
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 码头边的旧木造港务楼，门口挂着褪色的航运告示牌，屋檐下堆着绳索与货箱
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「港务局」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Booty_Bay
+    quote: "The Old Port Authority"
+    verified_by: ai_read
+
+  - id: booty_bay_docks
+    parent: booty_bay
+    type: poi
+    subtype: ""
+    name_zh: 藏宝海湾码头
+    name_en: Booty Bay Docks
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 伸入海湾的长木栈桥，桩基裹着藤壶，桥面堆着货箱与渔网，尽头系着一艘三桅帆船
+    note_zh: 中文名未经官方页面核实；通棘齿城的船与码头主管洛兹基尔在此；【G04-V 核验】所引页面未出现该名的原文，verified_by 降级为 ai_draft
+    source_url: https://warcraft.wiki.gg/wiki/Booty_Bay
+    quote: ""
+    verified_by: ai_draft
+
+  - id: boat_booty_bay_ratchet
+    parent: booty_bay_docks
+    type: transport
+    subtype: boat
+    name_zh: 藏宝海湾—棘齿城航线
+    name_en: The Maiden's Fancy (Booty Bay to Ratchet)
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一艘中型木帆船靠在栈桥边，白帆半收，甲板上吊着灯，跳板搭在桥面上
+    note_zh: 连接东部王国与卡利姆多（棘齿城/贫瘠之地）的中立航线；【G04-V 核验】所引页面未出现该名的原文，verified_by 降级为 ai_draft
+    source_url: https://warcraft.wiki.gg/wiki/Booty_Bay
+    quote: ""
+    verified_by: ai_draft
+
+  - id: booty_bay_flightpath
+    parent: booty_bay
+    type: transport
+    subtype: flightpath
+    name_zh: 藏宝海湾飞行点
+    name_en: Booty Bay Flight Master
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 崖顶的木制起降平台，栏杆外就是海，狮鹫与双足飞龙并排栖在架上
+    note_zh: 旧世中立飞行点，两阵营通用；航线含暴风城、哨兵岭、夜色镇、斯通纳德、卡加斯；【G04-V 核验】所引页面未出现该名的原文，verified_by 降级为 ai_draft
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: ""
+    verified_by: ai_draft
+
+  - id: stranglethorn_trust_bank
+    parent: booty_bay
+    type: poi
+    subtype: ""
+    name_zh: Stranglethorn Trust Bank
+    name_en: Stranglethorn Trust Bank
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 木板街上一间挂铁栅的小楼，门口两名哥布林守卫，招牌是刻着金币图案的木牌
+    note_zh: 官方译名未查到；藏宝海湾的银行
+    source_url: https://warcraft.wiki.gg/wiki/Booty_Bay
+    quote: "Stranglethorn Trust Bank"
+    verified_by: ai_read
+
+  - id: bloodsail_compound
+    parent: the_cape_of_stranglethorn
+    type: settlement
+    subtype: camp
+    name_zh: 血帆营地
+    name_en: Bloodsail Compound
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 海滩上的海盗营，破帆搭成的棚子，沙地上插着弯刀与骷髅旗，火堆边翻着的酒桶
+    note_zh: 血帆海盗据点，与藏宝海湾的黑水海盗敌对
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Bloodsail Compound"
+    verified_by: ai_read
+
+  - id: gurubashi_arena
+    parent: the_cape_of_stranglethorn
+    type: poi
+    subtype: ""
+    name_zh: 古拉巴什竞技场
+    name_en: Gurubashi Arena
+    level: ""
+    faction: pvp
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 海边一座巨大的圆形巨魔斗兽场，石阶看台环绕，沙地中央立着一口铁箱，外墙爬满藤蔓
+    note_zh: 旧世自由 PvP 区，每三小时刷新一次箱子（古拉巴什的珍宝箱）
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Gurubashi Arena"
+    verified_by: ai_read
+
+  - id: battle_ring
+    parent: gurubashi_arena
+    type: poi
+    subtype: ""
+    name_zh: "大竞技场"
+    name_en: Battle Ring
+    level: ""
+    faction: pvp
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 竞技场底部的圆形沙地，被石墙围死，地面颜色比外圈深，像是浸过血
+    note_zh: "官方译名未查到；竞技场中央的斗场本体〔2026-09-23 更正：简中名「大竞技场」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Battle Ring"
+    verified_by: ai_read
+
+  - id: crystalvein_mine
+    parent: the_cape_of_stranglethorn
+    type: settlement
+    subtype: mine
+    name_zh: 水晶矿洞
+    name_en: Crystalvein Mine
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 山壁上的矿洞口，木支架撑着洞门，洞内岩壁嵌着泛蓝的晶簇，轨道与翻倒的矿车留在坡上
+    note_zh: ""
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Crystalvein Mine"
+    verified_by: ai_read
+
+  - id: mistvale_valley
+    parent: the_cape_of_stranglethorn
+    type: subzone
+    subtype: ""
+    name_zh: 薄雾谷
+    name_en: Mistvale Valley
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 常年浮着白雾的林谷，树干裹满青苔，阳光被雾散成一片乳白，猿猴在高处树冠间跳
+    note_zh: 薄雾谷猩猩栖息地
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Mistvale Valley"
+    verified_by: ai_read
+
+  - id: spirit_den
+    parent: mistvale_valley
+    type: subzone
+    subtype: ""
+    name_zh: "灵魂之穴"
+    name_en: Spirit Den
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 薄雾谷里的一处洞穴，洞口挂着骨串与羽饰，内部燃着幽绿的火，烟贴着地面流动
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「灵魂之穴」取自 Classic Era 1.15.9 客户端 AreaTable/WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Spirit Den"
+    verified_by: ai_read
+
+  - id: nek_mani_wellspring
+    parent: the_cape_of_stranglethorn
+    type: poi
+    subtype: ""
+    name_zh: 纳克迈尼圣泉
+    name_en: Nek'mani Wellspring
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林中一汪清澈泉眼，石砌边沿雕着巨魔纹样，水面极静，倒映出上方的树冠缺口
+    note_zh: ""
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Nek'mani Wellspring"
+    verified_by: ai_read
+
+  - id: ruins_of_aboraz
+    parent: the_cape_of_stranglethorn
+    type: settlement
+    subtype: ruin
+    name_zh: 阿博拉兹废墟
+    name_en: Ruins of Aboraz
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 南部海边的巨魔废墟，断墙一半泡在浅水里，石阶上覆着白色盐霜与海藻
+    note_zh: ""
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Ruins of Aboraz"
+    verified_by: ai_read
+
+  - id: ruins_of_jubuwal
+    parent: the_cape_of_stranglethorn
+    type: settlement
+    subtype: ruin
+    name_zh: 朱布瓦尔废墟
+    name_en: Ruins of Jubuwal
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 礁岩上的小片巨魔遗迹，石柱斜插入海，浪打上来会没过最低一级台阶
+    note_zh: ""
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Ruins of Jubuwal"
+    verified_by: ai_read
+
+  - id: janeiros_point
+    parent: the_cape_of_stranglethorn
+    type: poi
+    subtype: ""
+    name_zh: "加尼罗哨站"
+    name_en: Janeiro's Point
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 伸向海面的岩石岬角，顶端一座破败的小石塔，海浪在下方礁石上炸开白沫
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「加尼罗哨站」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Janeiro's Point"
+    verified_by: ai_read
+
+  - id: the_crystal_shore
+    parent: the_cape_of_stranglethorn
+    type: subzone
+    subtype: ""
+    name_zh: "水晶海岸"
+    name_en: The Crystal Shore
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 沙粒偏白的海滩，退潮后露出成片透亮的贝壳与晶砂，反光刺眼
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「水晶海岸」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "The Crystal Shore"
+    verified_by: ai_read
+
+  - id: southern_savage_coast
+    parent: the_cape_of_stranglethorn
+    type: subzone
+    subtype: ""
+    name_zh: "南野人海岸"
+    name_en: Southern Savage Coast
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 海角西侧的岩岸，黑色礁石密布，浪高，岸上散着被冲上来的浮木与破桅
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「南野人海岸」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Southern Savage Coast"
+    verified_by: ai_read
+
+  - id: wild_shore
+    parent: the_cape_of_stranglethorn
+    type: subzone
+    subtype: ""
+    name_zh: "蛮荒海岸"
+    name_en: Wild Shore
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 藏宝海湾外侧的荒滩，沙上横着一具巨大的沉船骨架，海盗的篝火痕迹还在
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「蛮荒海岸」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Wild Shore"
+    verified_by: ai_read
+
+  - id: jaguero_isle
+    parent: the_cape_of_stranglethorn
+    type: subzone
+    subtype: ""
+    name_zh: 哈圭罗岛
+    name_en: Jaguero Isle
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 藏宝海湾东南外海的孤岛，中央一座石造小塔，椰林密布，岸边有巨猿脚印
+    note_zh: 需从藏宝海湾游泳/跳崖前往；「拯救公主」任务线所在
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Jaguero Isle"
+    verified_by: ai_read
+
+  - id: haunted_isle
+    parent: the_cape_of_stranglethorn
+    type: poi
+    subtype: ""
+    name_zh: Haunted Isle
+    name_en: Haunted Isle
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 雾气笼罩的小礁岛，几棵枯树与半截石墙，水面泛着冷灰色
+    note_zh: 官方译名未查到；wiki 列为 undisplayed location
+    source_url: https://warcraft.wiki.gg/wiki/Stranglethorn_Vale_(Classic)
+    quote: "Haunted isle"
+    verified_by: ai_read
+
+  - id: swamp_of_sorrows
+    parent: eastern_kingdoms
+    type: zone
+    subtype: ""
+    name_zh: 悲伤沼泽
+    name_en: Swamp of Sorrows
+    level: "35-45"
+    faction: contested
+    coords: ""
+    adjacent: [blasted_lands, deadwind_pass]
+    era: vanilla
+    look_zh: 终年阴雨的墨绿沼泽，枯死的巨树从齐腰浑水里立起，树冠垂满苔须，水面浮着绿藻与气泡，天光始终是铅灰色
+    note_zh: 旧世的悲伤沼泽比 4.0.3 后更荒凉、几乎无人烟；绿龙眷族巡守于此
+    source_url: https://warcraft.wiki.gg/wiki/Swamp_of_Sorrows_(Classic)
+    quote: "Among its murk-ridden marshes the green dragonspawn patrol at the behest of their dreaming mistress, Ysera."
+    verified_by: ai_read
+
+  - id: stonard
+    parent: swamp_of_sorrows
+    type: settlement
+    subtype: town
+    name_zh: 斯通纳德
+    name_en: Stonard
+    level: ""
+    faction: horde
+    coords: "[46, 55]"
+    adjacent: []
+    era: vanilla
+    look_zh: 沼泽高地上的兽人要塞，粗木与兽皮搭的圆顶大厅，两座土制地穴入口，红旗插在泥岸边，四周是死水与枯木
+    note_zh: 部落在悲伤沼泽的唯一据点，旧世此区唯一飞行点；由调度官鲁亚格指挥
+    source_url: https://warcraft.wiki.gg/wiki/Stonard
+    quote: "protected by two burrows"
+    verified_by: ai_read
+
+  - id: stonard_flightpath
+    parent: stonard
+    type: transport
+    subtype: flightpath
+    name_zh: 斯通纳德飞行点
+    name_en: Stonard Flight Master
+    level: ""
+    faction: horde
+    coords: "[46, 55]"
+    adjacent: []
+    era: vanilla
+    look_zh: 泥地上的木制栖架，双足飞龙缩着翅膀避雨，旁边插着部落战旗
+    note_zh: 旧世航线：格罗姆高营地、藏宝海湾、卡加斯、烈焰峰；【G04-V 核验】所引页面未出现该名的原文，verified_by 降级为 ai_draft
+    source_url: https://warcraft.wiki.gg/wiki/Swamp_of_Sorrows_(Classic)
+    quote: ""
+    verified_by: ai_draft
+
+  - id: the_harborage
+    parent: swamp_of_sorrows
+    type: settlement
+    subtype: village
+    name_zh: 避难营
+    name_en: The Harborage
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 沼泽西侧的小村落，几间草顶棚屋围着一堆篝火，木桩上晾着破布，四周积水没过脚踝
+    note_zh: 失落者（破碎的德莱尼）聚居点
+    source_url: https://warcraft.wiki.gg/wiki/Swamp_of_Sorrows_(Classic)
+    quote: "The Harborage"
+    verified_by: ai_read
+
+  - id: fallow_sanctuary
+    parent: swamp_of_sorrows
+    type: settlement
+    subtype: village
+    name_zh: 农田避难所
+    name_en: Fallow Sanctuary
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 荒废的农田与残垣，泥水漫过田埂，失落者搭的简陋窝棚散在田间，木栅东倒西歪
+    note_zh: 失落者聚居的废弃农庄
+    source_url: https://warcraft.wiki.gg/wiki/Swamp_of_Sorrows_(Classic)
+    quote: "Fallow Sanctuary"
+    verified_by: ai_read
+
+  - id: misty_reed_post
+    parent: swamp_of_sorrows
+    type: settlement
+    subtype: camp
+    name_zh: 芦苇岗哨
+    name_en: Misty Reed Post
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东岸滩头的小木哨所，苇丛齐肩，栈道通向水边，哨所顶上一盏未点的油灯
+    note_zh: 中文名未经官方页面核实（按同名 Misty Reed 系列译法推得）
+    source_url: https://warcraft.wiki.gg/wiki/Swamp_of_Sorrows_(Classic)
+    quote: "Misty Reed Farm/Misty Reed Post"
+    verified_by: ai_read
+
+  - id: misty_reed_strand
+    parent: swamp_of_sorrows
+    type: subzone
+    subtype: ""
+    name_zh: 芦苇海滩
+    name_en: Misty Reed Strand
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 悲伤沼泽东侧的泥沙海滩，成片高芦苇被风压出波纹，浅水里埋着鱼人的贝壳窝
+    note_zh: ""
+    source_url: https://warcraft.wiki.gg/wiki/Swamp_of_Sorrows_(Classic)
+    quote: "Misty Reed Strand"
+    verified_by: ai_read
+
+  - id: misty_valley
+    parent: swamp_of_sorrows
+    type: subzone
+    subtype: ""
+    name_zh: 迷雾谷
+    name_en: Misty Valley
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 被岩壁夹住的狭长谷地，浓雾贴地不散，枯树只剩黑色剪影，能见度不足十步
+    note_zh: 通往逆风小径方向的谷地
+    source_url: https://warcraft.wiki.gg/wiki/Swamp_of_Sorrows_(Classic)
+    quote: "Misty Valley"
+    verified_by: ai_read
+
+  - id: pool_of_tears
+    parent: swamp_of_sorrows
+    type: subzone
+    subtype: ""
+    name_zh: 泪水之池
+    name_en: Pool of Tears
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 沼泽东部的大片深水湖，水色近黑，湖心隐约露出淹没神庙的尖顶与破损石阶
+    note_zh: 阿塔哈卡神庙（沉没的神庙）入口所在
+    source_url: https://warcraft.wiki.gg/wiki/Swamp_of_Sorrows_(Classic)
+    quote: "Pool of Tears"
+    verified_by: ai_read
+
+  - id: temple_of_atal_hakkar_entrance
+    parent: pool_of_tears
+    type: poi
+    subtype: ""
+    name_zh: 阿塔哈卡神庙入口
+    name_en: Temple of Atal'Hakkar Entrance
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 湖心露出水面的神庙顶层，绿藻爬满石壁，要绕着外圈台阶一路下潜才能到达内部的传送门
+    note_zh: 需从泪水之池湖心下潜，绕神庙外层螺旋而下
+    source_url: https://warcraft.wiki.gg/wiki/Temple_of_Atal%27Hakkar
+    quote: "The Temple of Atal'Hakkar (also known as the Sunken Temple) is a shrine to the nefarious Blood God Hakkar the Soul"
+    verified_by: ai_read
+
+  - id: st_hall_of_masks
+    parent: temple_of_atal_hakkar
+    type: subzone
+    subtype: ""
+    name_zh: "面具大厅"
+    name_en: Hall of Masks
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 长廊两壁嵌满巨魔面具浮雕，火光从下方打上去让面具的阴影拉长
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「面具大厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Temple_of_Atal%27Hakkar
+    quote: "Hall of Masks"
+    verified_by: ai_read
+
+  - id: st_hall_of_bones
+    parent: temple_of_atal_hakkar
+    type: subzone
+    subtype: ""
+    name_zh: "白骨大厅"
+    name_en: Hall of Bones
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 地面与壁龛堆满骨骸的甬道，碎骨被踩得咯吱作响，墙上挂着褪色的兽皮
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「白骨大厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Temple_of_Atal%27Hakkar
+    quote: "Hall of Bones"
+    verified_by: ai_read
+
+  - id: st_hall_of_ritual
+    parent: temple_of_atal_hakkar
+    type: subzone
+    subtype: ""
+    name_zh: "仪式大厅"
+    name_en: Hall of Ritual
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 摆着石制祭台的仪式厅，地面刻着放射状血槽，四角立着燃绿火的铜盆
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「仪式大厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Temple_of_Atal%27Hakkar
+    quote: "Hall of Ritual"
+    verified_by: ai_read
+
+  - id: st_the_broken_hall
+    parent: temple_of_atal_hakkar
+    type: subzone
+    subtype: ""
+    name_zh: "破碎大厅"
+    name_en: The Broken Hall
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 塌了半边的大厅，穹顶裂开一道口子漏下浑浊水光，断柱横在地上
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「破碎大厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Temple_of_Atal%27Hakkar
+    quote: "The Broken Hall"
+    verified_by: ai_read
+
+  - id: st_the_butchery
+    parent: temple_of_atal_hakkar
+    type: subzone
+    subtype: ""
+    name_zh: "屠宰房"
+    name_en: The Butchery
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 挂着铁钩与残肉的屠宰间，石台上血迹发黑，地漏里积着暗红的水
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「屠宰房」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Temple_of_Atal%27Hakkar
+    quote: "The Butchery"
+    verified_by: ai_read
+
+  - id: st_chamber_of_blood
+    parent: temple_of_atal_hakkar
+    type: subzone
+    subtype: ""
+    name_zh: "鲜血之厅"
+    name_en: Chamber of Blood
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 圆形血室，中央一池暗红液体缓缓冒泡，池沿刻满环形符文
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「鲜血之厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Temple_of_Atal%27Hakkar
+    quote: "Chamber of Blood"
+    verified_by: ai_read
+
+  - id: st_den_of_the_caller
+    parent: temple_of_atal_hakkar
+    type: subzone
+    subtype: ""
+    name_zh: "召唤者之穴"
+    name_en: Den of the Caller
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 阴暗的召唤者居所，四壁挂满干枯的草药与符咒袋，地上一圈用骨粉画的法阵
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「召唤者之穴」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Temple_of_Atal%27Hakkar
+    quote: "Den of the Caller"
+    verified_by: ai_read
+
+  - id: st_chamber_of_the_dreamer
+    parent: temple_of_atal_hakkar
+    type: subzone
+    subtype: ""
+    name_zh: "沉睡者之厅"
+    name_en: Chamber of the Dreamer
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 深处的圆形石室，中央浮着一团幽绿光，墙上是翡翠梦境风格的藤蔓浮雕
+    note_zh: "官方译名未查到；与绿龙伊瑟拉相关〔2026-09-23 更正：简中名「沉睡者之厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Temple_of_Atal%27Hakkar
+    quote: "Chamber of the Dreamer"
+    verified_by: ai_read
+
+  - id: st_lair_of_the_chosen
+    parent: temple_of_atal_hakkar
+    type: subzone
+    subtype: ""
+    name_zh: "天选者之巢"
+    name_en: Lair of the Chosen
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 地下的龙类巢穴，石地上散着裂开的巨蛋与蛋壳碎片，角落堆着腐叶
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「天选者之巢」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Temple_of_Atal%27Hakkar
+    quote: "Lair of the Chosen"
+    verified_by: ai_read
+
+  - id: st_the_pit_of_sacrifice
+    parent: temple_of_atal_hakkar
+    type: subzone
+    subtype: ""
+    name_zh: "牺牲之池"
+    name_en: The Pit of Sacrifice
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 神庙中央的下沉大坑，六尊蛇头石像自上层环绕俯视，坑底一座矮祭台
+    note_zh: "官方译名未查到；六个祭祀石像的机关房〔2026-09-23 更正：简中名「牺牲之池」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Temple_of_Atal%27Hakkar
+    quote: "The Pit of Sacrifice"
+    verified_by: ai_read
+
+  - id: st_sanctum_of_the_fallen_god
+    parent: temple_of_atal_hakkar
+    type: subzone
+    subtype: ""
+    name_zh: "堕神圣地"
+    name_en: Sanctum of the Fallen God
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 最深处的圣所，巨大的哈卡化身虚影盘在高处，地面被绿光照成病态的青色
+    note_zh: "官方译名未查到；哈卡的化身所在〔2026-09-23 更正：简中名「堕神圣地」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Temple_of_Atal%27Hakkar
+    quote: "Sanctum of the Fallen God"
+    verified_by: ai_read
+
+  - id: st_hall_of_serpents
+    parent: temple_of_atal_hakkar
+    type: subzone
+    subtype: ""
+    name_zh: "毒蛇大厅"
+    name_en: Hall of Serpents
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 爬满藤苔的低矮长厅，地面积着齐踝的沼泥与绿色黏液，墙根盘着石雕巨蛇，空气里浮着孢子
+    note_zh: "官方译名未查到；【旧世独有 · G04-V 补入】4.0.3a 大地的裂变随神庙改建移除，仅存在于经典旧世；作者原稿漏收〔2026-09-23 更正：简中名「毒蛇大厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Hall_of_Serpents
+    quote: "The Hall of Serpents is located inside the Temple of Atal'Hakkar."
+    verified_by: ai_read
+
+  - id: st_hall_of_the_cursed
+    parent: temple_of_atal_hakkar
+    type: subzone
+    subtype: ""
+    name_zh: "诅咒大厅"
+    name_en: Hall of the Cursed
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 从入口大厅两侧石梯上行到的环廊，石壁被诅咒侵蚀出蜂窝状孔洞，廊下悬着半腐的祭品
+    note_zh: "官方译名未查到；由神庙传送门后第一间大厅的左右阶梯上行进入；【旧世独有 · G04-V 补入】4.0.3a 大地的裂变随神庙改建移除，仅存在于经典旧世；作者原稿漏收〔2026-09-23 更正：简中名「诅咒大厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Hall_of_the_Cursed
+    quote: "The Hall of the Cursed is located inside the Temple of Atal'Hakkar."
+    verified_by: ai_read
+
+  - id: st_the_pit_of_refuse
+    parent: temple_of_atal_hakkar
+    type: subzone
+    subtype: ""
+    name_zh: "抛弃之池"
+    name_en: The Pit of Refuse
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 神庙底部的弃物坑，浑浊污水漫过碎骨与烂木，泥怪从水里缓缓立起，臭气几乎有实体
+    note_zh: "官方译名未查到；【旧世独有 · G04-V 补入】4.0.3a 大地的裂变随神庙改建移除，仅存在于经典旧世；作者原稿漏收〔2026-09-23 更正：简中名「抛弃之池」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/The_Pit_of_Refuse
+    quote: "The Pit of Refuse is located inside Temple of Atal'Hakkar. It is full of bog beasts, oozes, maggots, and worms."
+    verified_by: ai_read
+
+  - id: the_shifting_mire
+    parent: swamp_of_sorrows
+    type: subzone
+    subtype: ""
+    name_zh: 流沙泥潭
+    name_en: The Shifting Mire
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一片会吞人的灰褐泥沼，表面结着薄壳，踩下去咕嘟冒泡，枯枝从泥里斜插出来
+    note_zh: ""
+    source_url: https://warcraft.wiki.gg/wiki/Swamp_of_Sorrows_(Classic)
+    quote: "The Shifting Mire"
+    verified_by: ai_read
+
+  - id: sorrowmurk
+    parent: swamp_of_sorrows
+    type: subzone
+    subtype: ""
+    name_zh: 忧伤湿地
+    name_en: Sorrowmurk
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 北部最深的黑水区，水几乎没胸，死树成排站在雾里，水面漂着一层油亮的膜
+    note_zh: ""
+    source_url: https://warcraft.wiki.gg/wiki/Swamp_of_Sorrows_(Classic)
+    quote: "Sorrowmurk"
+    verified_by: ai_read
+
+  - id: splinterspear_junction
+    parent: swamp_of_sorrows
+    type: settlement
+    subtype: crossroads
+    name_zh: 断矛路口
+    name_en: Splinterspear Junction
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 沼泽中的泥路交汇点，路中央插着一支折断的长矛做路标，四面都是齐腰水草
+    note_zh: ""
+    source_url: https://warcraft.wiki.gg/wiki/Swamp_of_Sorrows_(Classic)
+    quote: "Splinterspear Junction"
+    verified_by: ai_read
+
+  - id: stagalbog
+    parent: swamp_of_sorrows
+    type: subzone
+    subtype: ""
+    name_zh: 雄鹿沼泽
+    name_en: Stagalbog
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 南部的浅水湿地，成片的睡莲与浮草，水下能看到游动的鳄鱼背脊
+    note_zh: ""
+    source_url: https://warcraft.wiki.gg/wiki/Swamp_of_Sorrows_(Classic)
+    quote: "Stagalbog"
+    verified_by: ai_read
+
+  - id: stagalbog_cave
+    parent: stagalbog
+    type: subzone
+    subtype: ""
+    name_zh: 雄鹿沼泽洞穴
+    name_en: Stagalbog Cave
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 半淹在水里的洞口，洞内水位及膝，钟乳石滴水，深处有绿龙眷族的影子
+    note_zh: 中文名未经官方页面核实（按母区 Stagalbog 译法推得）
+    source_url: https://warcraft.wiki.gg/wiki/Swamp_of_Sorrows_(Classic)
+    quote: "Stagalbog Cave"
+    verified_by: ai_read
+
+  - id: itharius_cave
+    parent: swamp_of_sorrows
+    type: subzone
+    subtype: ""
+    name_zh: 伊萨里奥斯的洞穴
+    name_en: Itharius's Cave
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 藏在崖壁后的干燥洞窟，洞内比外面亮，一条绿龙化身盘踞在中央，鳞片泛着翡翠光
+    note_zh: 绿龙伊萨里奥斯所在，沉没的神庙任务线相关
+    source_url: https://warcraft.wiki.gg/wiki/Swamp_of_Sorrows_(Classic)
+    quote: "Purespring Cavern/Itharius's Cave"
+    verified_by: ai_read
+
+  - id: the_forbidding_sea_sos
+    parent: swamp_of_sorrows
+    type: subzone
+    subtype: ""
+    name_zh: 荒芜之海
+    name_en: The Forbidding Sea
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 沼泽东侧的灰绿海面，天色压得很低，浪不大但颜色浑浊，看不到对岸
+    note_zh: 中文名未经官方页面核实；东部王国东侧的公海，多个地区共用此名
+    source_url: https://warcraft.wiki.gg/wiki/Swamp_of_Sorrows_(Classic)
+    quote: "The Forbidding Sea"
+    verified_by: ai_read
+
+  # ==========================================================================
+  # ZONE 3 · 诅咒之地 Blasted Lands
+  # ==========================================================================
+  - id: blasted_lands
+    parent: eastern_kingdoms
+    type: zone
+    subtype: ""
+    name_zh: 诅咒之地
+    name_en: Blasted Lands
+    level: "45-55"
+    faction: contested
+    coords: ""
+    adjacent: [swamp_of_sorrows]
+    era: vanilla
+    look_zh: 寸草不生的暗红荒原，地表龟裂成深沟，嶙峋的紫黑岩柱斜插向天，天空是不祥的橙紫色，风里卷着红尘
+    note_zh: 被黑暗之门的魔法扭曲而成；4.0.3 大改（新增瑟维奇、污染之林等），本树只收旧世
+    source_url: https://warcraft.wiki.gg/wiki/Blasted_Lands_(Classic)
+    quote: "The Blasted Lands bear that name for a reason: they were twisted by the magic that brought the Dark Portal into being."
+    verified_by: ai_read
+
+  - id: nethergarde_keep
+    parent: blasted_lands
+    type: settlement
+    subtype: town
+    name_zh: 守望堡
+    name_en: Nethergarde Keep
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 荒原北缘的白石要塞，方形塔楼与雉堞在红土上格外突兀，蓝色旗帜猎猎，塔顶有法师的紫光结界
+    note_zh: 达拉然肯瑞托与联盟共建，职责是监视黑暗之门；旧世联盟在诅咒之地的唯一据点与飞行点
+    source_url: https://warcraft.wiki.gg/wiki/Nethergarde_Keep
+    quote: "A dam holding back the evils of a blighted land"
+    verified_by: ai_read
+
+  - id: nethergarde_keep_flightpath
+    parent: nethergarde_keep
+    type: transport
+    subtype: flightpath
+    name_zh: 守望堡飞行点
+    name_en: Nethergarde Keep Flight Master
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 城墙内侧的石砌狮鹫栖台，狮鹫收翅立在护栏上，背后是塔楼的阴影
+    note_zh: 旧世航线：暴风城、夜色镇、摩根的岗哨；【G04-V 核验】所引页面未出现该名的原文，verified_by 降级为 ai_draft
+    source_url: https://warcraft.wiki.gg/wiki/Burning_Steppes_(Classic)
+    quote: ""
+    verified_by: ai_draft
+
+  - id: garrison_armory
+    parent: nethergarde_keep
+    type: poi
+    subtype: ""
+    name_zh: 要塞军械库
+    name_en: Garrison Armory
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 要塞内的石造兵器库，墙上成排挂着长剑与圆盾，中央是铁砧与炉火
+    note_zh: 守望堡内的军械区
+    source_url: https://warcraft.wiki.gg/wiki/Blasted_Lands_(Classic)
+    quote: "Garrison Armory"
+    verified_by: ai_read
+
+  - id: the_dark_portal
+    parent: blasted_lands
+    type: poi
+    subtype: ""
+    name_zh: 黑暗之门
+    name_en: The Dark Portal
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 巨大的双柱石门立在深坑正中，门框刻满兽人符文与弯曲的角饰，门内是一面幽蓝的能量幕，四周石阶上守着高大的恶魔
+    note_zh: 【旧世关键差异】1.12 时黑暗之门不可通行——走进去只是穿到门背后，纯装饰；2.0.1 才真正开启通外域。周围有精英恶魔把守
+    source_url: https://warcraft.wiki.gg/wiki/Dark_Portal
+    quote: "When a player walked through the gate they merely passed through to the back of the gate as if nothing was there - the portal was merely for show in game."
+    verified_by: ai_read
+
+  - id: dark_portal_crater
+    parent: the_dark_portal
+    type: poi
+    subtype: ""
+    name_zh: 黑暗之门坑地
+    name_en: The Dark Portal crater
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 环绕黑暗之门的巨大环形凹地，一圈圈石阶向下收拢到门前的平台，阶面被烧得焦黑，高大的恶魔分立两侧
+    note_zh: 【描述性命名，非官方地名】wiki 原文称黑暗之门位于诅咒之地的 crater area；旧世此处有精英恶魔把守
+    source_url: https://warcraft.wiki.gg/wiki/Dark_Portal
+    quote: "It resides in the crater area within the Blasted Lands subzone."
+    verified_by: ai_read
+
+  - id: dreadmaul_hold
+    parent: blasted_lands
+    type: settlement
+    subtype: camp
+    name_zh: 巨槌要塞
+    name_en: Dreadmaul Hold
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 红土坡上的食人魔营寨，巨大的粗木尖桩围栏，兽皮帐篷比人还高，营中央一堆烧得发黑的骨头
+    note_zh: 旧世为巨槌食人魔所据（4.0.3 后才变成部落据点）
+    source_url: https://warcraft.wiki.gg/wiki/Blasted_Lands_(Classic)
+    quote: "Dreadmaul Hold/Okril'lon Hold"
+    verified_by: ai_read
+
+  - id: dreadmaul_post
+    parent: blasted_lands
+    type: settlement
+    subtype: camp
+    name_zh: 巨槌岗哨
+    name_en: Dreadmaul Post
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 荒原上的小股食人魔前哨，三两顶破帐与一根插着头骨的木杆，周围是裸露的红岩
+    note_zh: 巨槌食人魔的前出哨站
+    source_url: https://warcraft.wiki.gg/wiki/Blasted_Lands_(Classic)
+    quote: "Dreadmaul Post"
+    verified_by: ai_read
+
+  - id: altar_of_storms_blasted_lands
+    parent: blasted_lands
+    type: poi
+    subtype: ""
+    name_zh: 风暴祭坛
+    name_en: Altar of Storms (Blasted Lands)
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 荒原上一座环形立石祭坛，中央石台泛着微弱紫光，石柱倾斜，地面刻着已磨损的恶魔符文
+    note_zh: 旧兽人部落的风暴祭坛之一；同名祭坛在燃烧平原亦有一座（id 需加限定）
+    source_url: https://warcraft.wiki.gg/wiki/Blasted_Lands_(Classic)
+    quote: "Altar of Storms"
+    verified_by: ai_read
+
+  - id: serpents_coil
+    parent: blasted_lands
+    type: subzone
+    subtype: ""
+    name_zh: 盘蛇谷
+    name_en: Serpent's Coil
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 盘绕成蛇形的干涸河谷，两壁是层层剥落的红岩，谷底散着巨大的蛇类骨节
+    note_zh: ""
+    source_url: https://warcraft.wiki.gg/wiki/Blasted_Lands_(Classic)
+    quote: "Serpent's Coil"
+    verified_by: ai_read
+
+  - id: rise_of_the_defiler
+    parent: blasted_lands
+    type: subzone
+    subtype: ""
+    name_zh: 污染者高地
+    name_en: Rise of the Defiler
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 荒原上突起的台地，顶部一圈焦黑的仪式石，紫色的余烬从地缝里往上飘
+    note_zh: 亵渎者拉瑟莱克（Razelikh the Defiler）任务线相关
+    source_url: https://warcraft.wiki.gg/wiki/Blasted_Lands_(Classic)
+    quote: "Rise of the Defiler"
+    verified_by: ai_read
+
+  - id: the_tainted_scar
+    parent: blasted_lands
+    type: subzone
+    subtype: ""
+    name_zh: 腐烂之痕
+    name_en: The Tainted Scar
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 大地上一道巨大的焦黑裂痕，坑底冒着绿色毒雾，恶魔的骨骸与烧融的岩块混在一起
+    note_zh: 旧世为卡扎克领主与燃烧军团残部盘踞地（世界 boss 蓝龙王艾索雷苟斯之弟 Kazzak 在此）
+    source_url: https://warcraft.wiki.gg/wiki/Blasted_Lands_(Classic)
+    quote: "A sizable remnant of the Burning Legion led by Lord Kazzak has taken refuge within the Tainted Scar."
+    verified_by: ai_read
+
+  - id: the_forbidding_sea_bl
+    parent: blasted_lands
+    type: subzone
+    subtype: ""
+    name_zh: 荒芜之海
+    name_en: The Forbidding Sea
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 诅咒之地东缘的海面，被岸上的红尘染成浑浊的铁锈色，浪头低而钝，岸线是一路塌进海里的紫黑岩块
+    note_zh: 中文名未经官方页面核实；东部王国东侧的公海，与悲伤沼泽共用此名（见 the_forbidding_sea_sos），id 加区域后缀以防冲突；【G04-V 补入】作者原稿只在悲伤沼泽一侧收录，诅咒之地一侧漏收
+    source_url: https://warcraft.wiki.gg/wiki/Blasted_Lands_(Classic)
+    quote: "The Forbidding Sea"
+    verified_by: ai_read
+
+  # ==========================================================================
+  # ZONE 4 · 逆风小径 Deadwind Pass
+  # ==========================================================================
+  - id: deadwind_pass
+    parent: eastern_kingdoms
+    type: zone
+    subtype: ""
+    name_zh: 逆风小径
+    name_en: Deadwind Pass
+    level: "55-60"
+    faction: contested
+    coords: ""
+    adjacent: [duskwood, swamp_of_sorrows]
+    era: vanilla
+    look_zh: 终年昏暗的狭长峡谷，枯死的黑树与灰白岩壁，浓雾贴着谷底走，天光只剩一线；南端是卡拉赞黑塔的剪影
+    note_zh: 旧世本区几乎没有任务与 NPC，是最荒凉的过路区；连接暮色森林与悲伤沼泽
+    source_url: https://warcraft.wiki.gg/wiki/Deadwind_Pass_(Classic)
+    quote: "A foul wind constantly blows across the decimated canyon, giving it the name Deadwind."
+    verified_by: ai_read
+
+  - id: deadmans_crossing
+    parent: deadwind_pass
+    type: settlement
+    subtype: ruin
+    name_zh: 死者十字
+    name_en: Deadman's Crossing
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 谷中一处废弃的人类村落十字路口，石砌房屋只剩墙框，屋顶早塌，路边一座倒地的木制路牌
+    note_zh: 旧世为无人废村
+    source_url: https://warcraft.wiki.gg/wiki/Deadwind_Pass_(Classic)
+    quote: "Deadman's Crossing"
+    verified_by: ai_read
+
+  - id: the_vice
+    parent: deadwind_pass
+    type: subzone
+    subtype: ""
+    name_zh: 罪恶谷
+    name_en: The Vice
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 两侧崖壁向中间挤压的窄谷，像被钳住一样，谷底堆着滚落的碎石与食人魔的粗木栅
+    note_zh: 格罗什高食人魔盘踞的谷地
+    source_url: https://warcraft.wiki.gg/wiki/Deadwind_Pass_(Classic)
+    quote: "The Vice"
+    verified_by: ai_read
+
+  - id: groshgok_compound
+    parent: the_vice
+    type: settlement
+    subtype: camp
+    name_zh: "格罗高克营地"
+    name_en: Grosh'gok Compound
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 罪恶谷里的食人魔营地，歪斜的木栅与兽皮棚，营中一堆常年不灭的火，四周插满削尖的木桩
+    note_zh: "官方译名未查到；格罗什高食人魔营地〔2026-09-23 更正：简中名「格罗高克营地」取自 Classic Era 1.15.9 客户端 AreaTable/WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Deadwind_Pass_(Classic)
+    quote: "Grosh'gok Compound"
+    verified_by: ai_read
+
+  - id: karazhan
+    parent: deadwind_pass
+    type: poi
+    subtype: ""
+    name_zh: 卡拉赞
+    name_en: Karazhan
+    level: ""
+    faction: contested
+    coords: "[54, 78]"
+    adjacent: []
+    era: vanilla
+    look_zh: 峡谷南端拔地而起的巨大黑石高塔，塔身层层收窄直插低云，窗口透出不定的幽光，塔基周围地形像一个人的头骨
+    note_zh: 【旧世关键差异】1.12 时卡拉赞只是不可进入的地标（外观地形），没有副本入口；2.0（燃烧的远征）才开放为 10 人团队本。麦迪文的旧居，建在魔网节点上
+    source_url: https://warcraft.wiki.gg/wiki/Karazhan
+    quote: "Karazhan is an abandoned citadel (or castle) located on a nexus of ley lines in southern Deadwind Pass."
+    verified_by: ai_read
+
+  - id: the_masters_cellar
+    parent: karazhan
+    type: subzone
+    subtype: ""
+    name_zh: "主宰的庇护所"
+    name_en: The Master's Cellar
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 塔基外侧通向地下的石阶与拱门，门洞漆黑，门框上的雕饰被风蚀得看不清
+    note_zh: "官方译名未查到；卡拉赞塔基的地窖区，旧世不可进入〔2026-09-23 更正：简中名「主宰的庇护所」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Deadwind_Pass_(Classic)
+    quote: "The Master's Cellar"
+    verified_by: ai_read
+
+  - id: morgans_plot
+    parent: karazhan
+    type: poi
+    subtype: ""
+    name_zh: "摩根墓场"
+    name_en: Morgan's Plot
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 卡拉赞塔下的小墓园，歪斜的石碑与锈铁围栏，枯草没过碑脚，雾在碑间贴地流动
+    note_zh: "官方译名未查到；卡拉赞塔外的墓地〔2026-09-23 更正：简中名「摩根墓场」取自 Classic Era 1.15.9 客户端 AreaTable/WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Deadwind_Pass_(Classic)
+    quote: "Morgan's Plot"
+    verified_by: ai_read
+
+  - id: aridens_camp
+    parent: deadwind_pass
+    type: poi
+    subtype: ""
+    name_zh: "埃瑞丁营地"
+    name_en: Ariden's Camp
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 峡谷高处的一处废弃法师营地，翻倒的帐篷与散落的书页，地上一个烧完的法阵圈
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「埃瑞丁营地」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Deadwind_Pass_(Classic)
+    quote: "Ariden's Camp"
+    verified_by: ai_read
+
+  - id: sleeping_gorge
+    parent: deadwind_pass
+    type: subzone
+    subtype: ""
+    name_zh: "沉睡峡谷"
+    name_en: Sleeping Gorge
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 谷中一段异常安静的河床，水几乎不流，两岸枯树倒影一动不动
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「沉睡峡谷」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Deadwind_Pass_(Classic)
+    quote: "Sleeping Gorge"
+    verified_by: ai_read
+
+  - id: deadwind_ravine
+    parent: deadwind_pass
+    type: subzone
+    subtype: ""
+    name_zh: "逆风谷"
+    name_en: Deadwind Ravine
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 切进岩层的深沟，底部窄到只容一人通过，抬头只能看见一条灰色天缝
+    note_zh: "官方译名未查到；已在旧世子区域表内（非 4.0.3 新增）〔2026-09-23 更正：简中名「逆风谷」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Deadwind_Pass_(Classic)
+    quote: "Deadwind Ravine"
+    verified_by: ai_read
+
+  - id: crypt_deadwind_pass
+    parent: deadwind_pass
+    type: subzone
+    subtype: ""
+    name_zh: "墓穴"
+    name_en: Crypt (Deadwind Pass)
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 崖壁里凿出的墓穴入口，铁栅半开，石阶向下没入黑暗，门楣刻着风化的人形浮雕
+    note_zh: "官方译名未查到；id 已加区域限定以防与其他地区同名节点冲突〔2026-09-23 更正：简中名「墓穴」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Deadwind_Pass_(Classic)
+    quote: "Crypt"
+    verified_by: ai_read
+
+  # ==========================================================================
+  # ZONE 5 · 燃烧平原 Burning Steppes
+  # ==========================================================================
+  - id: burning_steppes
+    parent: eastern_kingdoms
+    type: zone
+    subtype: ""
+    name_zh: 燃烧平原
+    name_en: Burning Steppes
+    level: "50-58"
+    faction: contested
+    coords: ""
+    adjacent: [redridge_mountains, searing_gorge, blackrock_mountain]
+    era: vanilla
+    look_zh: 焦黑龟裂的火山原野，地表爬着橙红熔岩纹，空中飘着灰烬与火星，天色被烟熏成暗橙，远处黑石山的轮廓吞掉半个天际
+    note_zh: 扼守暴风王国通往卡兹莫丹与洛丹伦的唯一陆路；黑石兽人、黑龙军团与拉格纳罗斯的仆从所据
+    source_url: https://warcraft.wiki.gg/wiki/Burning_Steppes_(Classic)
+    quote: "The Burning Steppes hold the only accessible land passage from the Kingdom of Stormwind to Khaz Modan and Lordaeron."
+    verified_by: ai_read
+
+  - id: morgans_vigil
+    parent: burning_steppes
+    type: settlement
+    subtype: camp
+    name_zh: 摩根的岗哨
+    name_en: Morgan's Vigil
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东南角残破小镇上的联盟营地，石墙只剩半截，帆布帐搭在废墟之间，蓝旗插在焦土上，营外就是通赤脊山的山口
+    note_zh: 旧世联盟在燃烧平原的据点与飞行点；建在一座城镇废墟上
+    source_url: https://warcraft.wiki.gg/wiki/Burning_Steppes_(Classic)
+    quote: "Morgan's Vigil"
+    verified_by: ai_read
+
+  - id: morgans_vigil_flightpath
+    parent: morgans_vigil
+    type: transport
+    subtype: flightpath
+    name_zh: 摩根的岗哨飞行点
+    name_en: Morgan's Vigil Flight Master
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 焦土上的木制狮鹫栖架，狮鹫的羽毛上落了一层灰
+    note_zh: 旧世航线：暴风城、湖畔镇、瑟银哨塔、守望堡；【G04-V 核验】所引页面未出现该名的原文，verified_by 降级为 ai_draft
+    source_url: https://warcraft.wiki.gg/wiki/Burning_Steppes_(Classic)
+    quote: ""
+    verified_by: ai_draft
+
+  - id: flame_crest
+    parent: burning_steppes
+    type: settlement
+    subtype: camp
+    name_zh: 烈焰峰
+    name_en: Flame Crest
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 火山岩台地上的小型部落前哨，几顶兽皮帐与一根图腾柱，红旗被热风吹得笔直，脚下岩缝透出橘光
+    note_zh: 旧世部落在燃烧平原的据点与飞行点
+    source_url: https://warcraft.wiki.gg/wiki/Burning_Steppes_(Classic)
+    quote: "Flame Crest"
+    verified_by: ai_read
+
+  - id: flame_crest_flightpath
+    parent: flame_crest
+    type: transport
+    subtype: flightpath
+    name_zh: 烈焰峰飞行点
+    name_en: Flame Crest Flight Master
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 岩台边缘的木架，双足飞龙立在上面，背后是燃烧平原的橙色天空
+    note_zh: 旧世航线：斯通纳德、卡加斯、瑟银哨塔；【G04-V 核验】所引页面未出现该名的原文，verified_by 降级为 ai_draft
+    source_url: https://warcraft.wiki.gg/wiki/Burning_Steppes_(Classic)
+    quote: ""
+    verified_by: ai_draft
+
+  - id: blackrock_pass
+    parent: burning_steppes
+    type: subzone
+    subtype: ""
+    name_zh: 黑石小径
+    name_en: Blackrock Pass
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 从平原盘旋而上的黑岩栈道，一侧是岩壁一侧是深渊，路面被熔岩烤得发脆，尽头是黑石山的南侧门洞
+    note_zh: 燃烧平原一侧进入黑石山的通道
+    source_url: https://warcraft.wiki.gg/wiki/Burning_Steppes_(Classic)
+    quote: "Blackrock Pass"
+    verified_by: ai_read
+
+  - id: blackrock_mountain_south_entrance
+    parent: blackrock_pass
+    type: poi
+    subtype: ""
+    name_zh: 黑石山南入口（燃烧平原侧）
+    name_en: Blackrock Mountain South Entrance (Burning Steppes side)
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 山体上巨大的黑岩门洞，门内橙红光从深处漫出来，门框两侧是粗糙凿出的台阶
+    note_zh: 中文名为描述性命名（非官方地名）；部落从烈焰峰向西、走南侧坡道进入
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Mountain
+    quote: "Horde, from Flame Crest in Burning Steppes, run west and take the south ramp."
+    verified_by: ai_draft
+
+  - id: blackrock_stronghold
+    parent: burning_steppes
+    type: settlement
+    subtype: camp
+    name_zh: 黑石要塞
+    name_en: Blackrock Stronghold
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 山脚下的黑石兽人营寨，黑铁尖刺围栏与烧红的炉膛，营中竖着黑色狼头旗，地面被踩成焦黑硬土
+    note_zh: 黑石兽人在山外的营地
+    source_url: https://warcraft.wiki.gg/wiki/Burning_Steppes_(Classic)
+    quote: "Blackrock Stronghold"
+    verified_by: ai_read
+
+  - id: ruins_of_thaurissan
+    parent: burning_steppes
+    type: settlement
+    subtype: ruin
+    name_zh: 索瑞森废墟
+    name_en: Ruins of Thaurissan
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 大片被熔岩吞掉一半的矮人城市废墟，石砌拱门与方塔焦黑倾斜，街道被凝固的岩浆封死，缝隙里仍透出橘光
+    note_zh: 黑铁矮人的旧都，索瑞森大帝召唤拉格纳罗斯导致其毁灭
+    source_url: https://warcraft.wiki.gg/wiki/Burning_Steppes_(Classic)
+    quote: "Ruins of Thaurissan"
+    verified_by: ai_read
+
+  - id: the_pillar_of_ash
+    parent: burning_steppes
+    type: poi
+    subtype: ""
+    name_zh: 灰烬之柱
+    name_en: The Pillar of Ash
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 平原上孤立的高耸黑岩石柱，柱身被烟熏得发亮，柱顶终年悬着一缕灰色烟气
+    note_zh: 黑石山南侧的地标
+    source_url: https://warcraft.wiki.gg/wiki/Burning_Steppes_(Classic)
+    quote: "Black Tooth Hovel (The Pillar of Ash)"
+    verified_by: ai_read
+
+  - id: dreadmaul_rock
+    parent: burning_steppes
+    type: subzone
+    subtype: ""
+    name_zh: 巨槌石
+    name_en: Dreadmaul Rock
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东北角一座顶部平坦的巨大岩丘，坡上散着食人魔的粗木营棚与骨堆，丘顶有一口熔炉
+    note_zh: 巨槌食人魔在燃烧平原的据点（与诅咒之地的巨槌要塞同族）
+    source_url: https://warcraft.wiki.gg/wiki/Burning_Steppes_(Classic)
+    quote: "Dreadmaul Rock"
+    verified_by: ai_read
+
+  - id: terror_wing_path
+    parent: burning_steppes
+    type: subzone
+    subtype: ""
+    name_zh: 龙翼小径
+    name_en: Terror Wing Path
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 沿山脊延伸的窄道，两侧岩柱林立，黑龙与幼龙在头顶盘旋，地上散着新旧不一的龙蛋壳
+    note_zh: 黑龙军团出没的山脊通道
+    source_url: https://warcraft.wiki.gg/wiki/Burning_Steppes_(Classic)
+    quote: "Terror Wing Path"
+    verified_by: ai_read
+
+  - id: dracodar
+    parent: burning_steppes
+    type: subzone
+    subtype: ""
+    name_zh: 德拉考达尔
+    name_en: Draco'dar
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 熔岩湖边的黑龙聚集地，岩台上卧着成年黑龙，热浪让空气不断扭动，地面呈暗红玻璃质
+    note_zh: 黑龙军团据点
+    source_url: https://warcraft.wiki.gg/wiki/Burning_Steppes_(Classic)
+    quote: "Draco'dar"
+    verified_by: ai_read
+
+  - id: slither_rock
+    parent: burning_steppes
+    type: subzone
+    subtype: ""
+    name_zh: "滑石"
+    name_en: Slither Rock
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 平原上一块盘曲如蛇身的长条岩脊，表面布满横向裂纹，岩缝里透出暗红
+    note_zh: "官方译名未查到（未出现在中文探索成就清单中）〔2026-09-23 更正：简中名「滑石」取自 Classic Era 1.15.9 客户端 AreaTable/WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Burning_Steppes_(Classic)
+    quote: "Slither Rock"
+    verified_by: ai_read
+
+  - id: altar_of_storms_burning_steppes
+    parent: burning_steppes
+    type: poi
+    subtype: ""
+    name_zh: 风暴祭坛
+    name_en: Altar of Storms (Burning Steppes)
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 焦土上的环形立石祭坛，中央石台有一圈已经发黑的符文槽，石柱被熔岩烤出裂纹
+    note_zh: 与诅咒之地的同名祭坛是两处不同地点，id 已加区域限定
+    source_url: https://warcraft.wiki.gg/wiki/Burning_Steppes_(Classic)
+    quote: "Altar of Storms"
+    verified_by: ai_read
+
+  # ==========================================================================
+  # ZONE 6 · 灼热峡谷 Searing Gorge
+  # ==========================================================================
+  - id: searing_gorge
+    parent: khaz_modan
+    type: zone
+    subtype: ""
+    name_zh: 灼热峡谷
+    name_en: Searing Gorge
+    level: "45-50"
+    faction: contested
+    coords: ""
+    adjacent: [badlands, loch_modan, burning_steppes, blackrock_mountain]
+    era: vanilla
+    look_zh: 被整片挖空的赤褐矿区盆地，露天矿坑层层下陷，蒸汽与黄烟从地缝喷出，空气浑浊呈橙黄色，四周是陡直的红岩崖壁
+    note_zh: 【旧世关键差异】1.12 时洛克莫丹一侧的入口上着锁，需完成任务线拿到「灼热峡谷的钥匙」（或盗贼 225 开锁）；4.0.3 后才无条件开放
+    source_url: https://warcraft.wiki.gg/wiki/Searing_Gorge_(Classic)
+    quote: "The climate is very similar to Burning Steppes, as it was the same catastrophe that blackened both: the summoning of Ragnaros."
+    verified_by: ai_read
+
+  - id: thorium_point
+    parent: searing_gorge
+    type: settlement
+    subtype: town
+    name_zh: 瑟银哨塔
+    name_en: Thorium Point
+    level: ""
+    faction: neutral
+    coords: "[36, 27]"
+    adjacent: []
+    era: vanilla
+    look_zh: 建在岩台上的黑铁矮人聚落，铁皮棚屋与高炉挤在一起，炉火把矮人的脸映成橘色，栈桥悬在矿坑上方
+    note_zh: 瑟银兄弟会据点，旧世灼热峡谷唯一飞行点、两阵营通用；管理者为监督者奥菲斯特
+    source_url: https://warcraft.wiki.gg/wiki/Thorium_Point
+    quote: "It is home to a group of exceptionally stout Dark Iron dwarves called the Thorium Brotherhood, who have split from the Dark Iron clan."
+    verified_by: ai_read
+
+  - id: thorium_point_flightpath
+    parent: thorium_point
+    type: transport
+    subtype: flightpath
+    name_zh: 瑟银哨塔飞行点
+    name_en: Thorium Point Flight Master
+    level: ""
+    faction: neutral
+    coords: "[36, 27]"
+    adjacent: []
+    era: vanilla
+    look_zh: 岩台边的铁架栖台，狮鹫与双足飞龙分列两端，下方就是冒烟的矿坑
+    note_zh: 旧世中立飞行点；航线：铁炉堡、摩根的岗哨（联盟）／卡加斯、烈焰峰（部落）；【G04-V 核验】所引页面未出现该名的原文，verified_by 降级为 ai_draft
+    source_url: https://warcraft.wiki.gg/wiki/Searing_Gorge_(Classic)
+    quote: ""
+    verified_by: ai_draft
+
+  - id: the_cauldron
+    parent: searing_gorge
+    type: subzone
+    subtype: ""
+    name_zh: 大熔炉
+    name_en: The Cauldron
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 峡谷中央巨大的圆形下沉矿坑，像一口锅，坑壁盘旋着一圈圈作业平台，坑底是发亮的熔渣与火光
+    note_zh: 灼热峡谷的核心矿坑
+    source_url: https://warcraft.wiki.gg/wiki/Searing_Gorge_(Classic)
+    quote: "The Cauldron"
+    verified_by: ai_read
+
+  - id: the_slag_pit
+    parent: the_cauldron
+    type: subzone
+    subtype: ""
+    name_zh: "熔渣之池"
+    name_en: The Slag Pit
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 大熔炉最底部的熔渣池，暗红的渣浆缓慢流动，表面结壳又被顶破，热浪把画面顶端烤得发虚
+    note_zh: "官方译名未查到；大熔炉底部区域〔2026-09-23 更正：简中名「熔渣之池」取自 Classic Era 1.15.9 客户端 AreaTable/WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Searing_Gorge_(Classic)
+    quote: "The Slag Pit"
+    verified_by: ai_read
+
+  - id: grimesilt_dig_site
+    parent: searing_gorge
+    type: settlement
+    subtype: camp
+    name_zh: 煤渣挖掘场
+    name_en: Grimesilt Dig Site
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 侏儒/哥布林式的露天挖掘营地，蒸汽机械与木制吊架，成堆的碎石与翻倒的矿车，空气里全是粉尘
+    note_zh: 煤渣工程师与挖掘者据点
+    source_url: https://warcraft.wiki.gg/wiki/Searing_Gorge_(Classic)
+    quote: "Grimesilt Dig Site"
+    verified_by: ai_read
+
+  - id: firewatch_ridge
+    parent: searing_gorge
+    type: subzone
+    subtype: ""
+    name_zh: 观火岭
+    name_en: Firewatch Ridge
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 西侧高地上的黑铁矮人营区，石砌哨塔与熔炉排成一线，岩脊上望下去是整条冒烟的峡谷
+    note_zh: 黑铁矮人据点
+    source_url: https://warcraft.wiki.gg/wiki/Searing_Gorge_(Classic)
+    quote: "Firewatch Ridge"
+    verified_by: ai_read
+
+  - id: dustfire_valley
+    parent: searing_gorge
+    type: subzone
+    subtype: ""
+    name_zh: 尘火谷
+    name_en: Dustfire Valley
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 常年扬尘的浅谷，风把红色细尘卷成低矮的旋涡，地上零散烧着几处自燃的火点
+    note_zh: ""
+    source_url: https://warcraft.wiki.gg/wiki/Searing_Gorge_(Classic)
+    quote: "Dustfire Valley"
+    verified_by: ai_read
+
+  - id: blackchar_cave
+    parent: searing_gorge
+    type: subzone
+    subtype: ""
+    name_zh: 黑炭谷
+    name_en: Blackchar Cave
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 崖壁上熏得全黑的洞口，洞内岩壁像木炭一样酥脆，深处透出微弱红光
+    note_zh: 中文名取自国服探索成就清单
+    source_url: https://warcraft.wiki.gg/wiki/Searing_Gorge_(Classic)
+    quote: "Blackchar Cave"
+    verified_by: ai_read
+
+  - id: the_sea_of_cinders
+    parent: searing_gorge
+    type: subzone
+    subtype: ""
+    name_zh: 灰烬之海
+    name_en: The Sea of Cinders
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一整片没过脚踝的灰白炭灰平地，踩上去会扬起灰雾，偶有暗红余烬在灰下闪一下
+    note_zh: ""
+    source_url: https://warcraft.wiki.gg/wiki/Searing_Gorge_(Classic)
+    quote: "The Sea of Cinders"
+    verified_by: ai_read
+
+  - id: stonewrought_pass
+    parent: searing_gorge
+    type: transport
+    subtype: portal
+    name_zh: "石坝小径"
+    name_en: Stonewrought Pass
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 山体中凿出的矮人隧道，方正的石拱与铁闸门，门上挂着沉重的黑铁锁，隧道里只有壁灯的昏黄光
+    note_zh: "官方译名未查到。连接洛克莫丹与灼热峡谷的隧道；【旧世】闸门上锁，需「灼热峡谷的钥匙」。schema 的 transport 枚举无 tunnel 值，按「固定通路」归 portal〔2026-09-23 更正：简中名「石坝小径」取自 Classic Era 1.15.9 客户端 AreaTable/WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Searing_Gorge_(Classic)
+    quote: "the entrance to the Searing Gorge in Loch Modan is locked until the [Key to Searing Gorge] is obtained via a quest line."
+    verified_by: ai_read
+
+  - id: tanner_camp
+    parent: searing_gorge
+    type: settlement
+    subtype: camp
+    name_zh: 制皮匠营地
+    name_en: Tanner Camp
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 岩壁下的小营地，木架上绷着正在鞣制的兽皮，地上几口浸皮的木桶，烟从小火堆里直直升起
+    note_zh: ""
+    source_url: https://warcraft.wiki.gg/wiki/Searing_Gorge_(Classic)
+    quote: "Tanner Camp"
+    verified_by: ai_read
+
+  - id: blackrock_mountain_north_entrance
+    parent: searing_gorge
+    type: poi
+    subtype: ""
+    name_zh: 黑石山北入口（灼热峡谷侧）
+    name_en: Blackrock Mountain North Entrance (Searing Gorge side)
+    level: ""
+    faction: contested
+    coords: "[34, 74]"
+    adjacent: []
+    era: vanilla
+    look_zh: 峡谷南缘崖壁上的巨大裂口，通道向下倾斜，越往里越热，岩壁颜色由红转黑
+    note_zh: 中文名为描述性命名（非官方地名）；联盟从瑟银哨塔向南即到
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Mountain
+    quote: "The path to Blackrock Mountain starts at 34,74 in Searing Gorge."
+    verified_by: ai_read
+
+  # ==========================================================================
+  # ZONE 7 · 黑石山 Blackrock Mountain（跨区副本枢纽）
+  # ==========================================================================
+  - id: blackrock_mountain
+    parent: khaz_modan
+    type: zone
+    subtype: ""
+    name_zh: 黑石山
+    name_en: Blackrock Mountain
+    level: "49-60"
+    faction: contested
+    coords: ""
+    adjacent: [burning_steppes, searing_gorge]
+    era: vanilla
+    look_zh: 一座被掏空的巨型火山内腔，中央是深不见底的熔岩井，橙红光自下而上打亮环形石道与悬空铁链，热浪让所有轮廓微微发抖
+    note_zh: 【挂靠裁定】黑石山在旧世是独立地区（zone id 25），地理上同时接燃烧平原与灼热峡谷。本树把它作为 zone 挂在 khaz_modan 下（依据 warcraft.wiki.gg 的 Khaz Modan 地区条目明确把 Blackrock Mountain 列入），并在燃烧平原、灼热峡谷两侧各挂一个入口 poi 指向它——「一份几何，两道门」，避免同一座山被登记两次
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Mountain
+    quote: "One of the most dangerous places in Azeroth, inside this unnaturally created volcano is some of the greatest work ever wrought by the dwarves."
+    verified_by: ai_read
+
+  - id: the_molten_span
+    parent: blackrock_mountain
+    type: subzone
+    subtype: ""
+    name_zh: "熔岩之桥"
+    name_en: The Molten Span
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 山腹正中的巨型环形大厅，一圈宽阔的石道贴着岩壁盘绕，中央悬空一座石塔，下方是翻滚的熔岩海
+    note_zh: "官方译名未查到。黑石山的中央枢纽大厅；两个入口都通到这里，所有副本门都从这一圈石道分出去〔2026-09-23 更正：简中名「熔岩之桥」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Mountain
+    quote: "The Molten Span"
+    verified_by: ai_read
+
+  - id: forgewrights_tomb
+    parent: the_molten_span
+    type: poi
+    subtype: ""
+    name_zh: 铸铁者之墓
+    name_en: Forgewright's Tomb
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 悬在熔岩正上方的独立石塔，由数条粗铁链从四面拉住，塔顶一方矮人风格的石棺
+    note_zh: 中文名未经官方页面核实（弗兰克罗恩·铸铁者之墓）；玩家必须走铁链爬到这座中央石柱，再从另一条铁链下到副本门
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Mountain
+    quote: "To get to both of these entrances, you must traipse across the chains suspending Forgewright's Tomb in the Molten Span of Blackrock Mountain."
+    verified_by: ai_draft
+
+  - id: molten_span_chains
+    parent: the_molten_span
+    type: poi
+    subtype: ""
+    name_zh: 熔岩上的铁链
+    name_en: The chains across the Molten Span
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 数条手臂粗的黑铁锁链横跨熔岩深渊，链面被烤得发红，链下就是翻涌的岩浆，人要贴着链面一步步挪过去
+    note_zh: 【描述性命名，非官方地名】黑石山最具标志性的画面；进任何一个副本都必须先过这几条链
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Mountain
+    quote: "Both factions will have to learn to climb the chain to get to the center column."
+    verified_by: ai_draft
+
+  - id: the_grinding_quarry
+    parent: blackrock_mountain
+    type: subzone
+    subtype: ""
+    name_zh: "碾石场"
+    name_en: The Grinding Quarry
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一条凿穿岩体的矿道，两壁留着粗糙的凿痕，地上铺着碎石与废弃轨道，尽头是黑石深渊的传送门
+    note_zh: "官方译名未查到。从中央石柱下链后右转穿过它，即到黑石深渊入口〔2026-09-23 更正：简中名「碾石场」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "cross the chain to Blackrock Mountain's central island, follow the path downward to a ledge above the lava, proceed into and through the Grinding Quarry to find the instance portal"
+    verified_by: ai_read
+
+  - id: the_masonary
+    parent: blackrock_mountain
+    type: subzone
+    subtype: ""
+    name_zh: "石匠区"
+    name_en: The Masonary
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 山腹里的石工作业区，半成形的石砖与立柱靠墙排开，地面积着厚厚的石粉
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「石匠区」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Mountain
+    quote: "The Masonary"
+    verified_by: ai_read
+
+  # --- 黑石深渊 ---
+  - id: shadowforge_city
+    parent: blackrock_depths
+    type: city
+    subtype: capital
+    name_zh: 暗炉城
+    name_en: Shadowforge City
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 山腹中的黑铁矮人都城，黑石雕成的多层楼阁沿岩壁展开，街道两侧是熔炉与铁匠铺，头顶没有天空只有岩顶与火光
+    note_zh: 中文名未经官方页面核实；黑铁矮人的现都，位于黑石深渊中段
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "Shadowforge City"
+    verified_by: ai_read
+
+  - id: brd_detention_block
+    parent: blackrock_depths
+    type: subzone
+    subtype: ""
+    name_zh: 监狱区
+    name_en: Detention Block
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一排排黑铁栅栏牢房，走廊窄而长，每间牢房里只有一盏昏灯与草垫
+    note_zh: 中文名未经官方页面核实
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "Detention Block"
+    verified_by: ai_read
+
+  - id: brd_ring_of_the_law
+    parent: blackrock_depths
+    type: subzone
+    subtype: ""
+    name_zh: 命运大厅
+    name_en: Ring of the Law
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 圆形的地下斗兽场，沙地中央一道升降闸门，四周石阶看台上坐满起哄的黑铁矮人
+    note_zh: 中文名未经官方页面核实；审判/斗技场区
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "Ring of the Law"
+    verified_by: ai_read
+
+  - id: brd_halls_of_the_law
+    parent: blackrock_depths
+    type: subzone
+    subtype: ""
+    name_zh: "秩序大厅"
+    name_en: Halls of the Law
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 肃穆的司法长廊，两侧立着高大的黑铁矮人石像，地面铺着深色方砖
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「秩序大厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "Halls of the Law"
+    verified_by: ai_read
+
+  - id: brd_the_grim_guzzler
+    parent: blackrock_depths
+    type: subzone
+    subtype: ""
+    name_zh: 黑铁酒吧
+    name_en: The Grim Guzzler
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 地下酒馆，长吧台后是整面墙的酒桶，中央一座小舞台，矮人与食人魔挤在长凳上举杯，灯光昏黄酒气熏人
+    note_zh: 中文名未经官方页面核实；黑石深渊最出名的场景之一
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "The Grim Guzzler"
+    verified_by: ai_read
+
+  - id: brd_the_lyceum
+    parent: blackrock_depths
+    type: subzone
+    subtype: ""
+    name_zh: "讲学厅"
+    name_en: The Lyceum
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 高大的柱厅，两排巨柱撑起穹顶，地面抛光得能映出火光，尽头是通往皇座的大门
+    note_zh: "官方译名未查到；通往帝王席与熔火之心方向的必经大厅〔2026-09-23 更正：简中名「讲学厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "The Lyceum"
+    verified_by: ai_read
+
+  - id: brd_the_imperial_seat
+    parent: blackrock_depths
+    type: subzone
+    subtype: ""
+    name_zh: "帝王之座"
+    name_en: The Imperial Seat
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 黑铁皇帝的王座厅，高台上一把黑石王座，两侧铁炉喷着火，地面镶着金属纹样
+    note_zh: "官方译名未查到；达格兰·索瑞森大帝所在〔2026-09-23 更正：简中名「帝王之座」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "The Imperial Seat"
+    verified_by: ai_read
+
+  - id: brd_the_molten_bridge
+    parent: blackrock_depths
+    type: subzone
+    subtype: ""
+    name_zh: "熔火之桥"
+    name_en: The Molten Bridge
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一道窄石桥横过地底的岩浆河，桥面没有护栏，下方熔岩的光把桥身照成剪影
+    note_zh: "官方译名未查到；黑石深渊最底部、通往熔火之心方向〔2026-09-23 更正：简中名「熔火之桥」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "The Molten Bridge"
+    verified_by: ai_read
+
+  - id: brd_shrine_of_thaurissan
+    parent: blackrock_depths
+    type: subzone
+    subtype: ""
+    name_zh: "索瑞森神殿"
+    name_en: Shrine of Thaurissan
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 供奉索瑞森的神龛区，环形石台上立着大帝的雕像，四周点着长明火盆
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「索瑞森神殿」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "Shrine of Thaurissan"
+    verified_by: ai_read
+
+  - id: brd_the_manufactory
+    parent: blackrock_depths
+    type: subzone
+    subtype: ""
+    name_zh: "制造厂"
+    name_en: The Manufactory
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 地下兵工厂，成排的铁砧与传送带，火星从锻打处溅出，半成品武器堆在墙角
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「制造厂」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "The Manufactory"
+    verified_by: ai_read
+
+  - id: brd_the_black_vault
+    parent: blackrock_depths
+    type: subzone
+    subtype: ""
+    name_zh: "黑色宝库"
+    name_en: The Black Vault
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 厚重铁门后的宝库密室，墙上嵌着上锁的格柜，中央一口黑铁箱
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「黑色宝库」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "The Black Vault"
+    verified_by: ai_read
+
+  - id: brd_summoners_tomb
+    parent: blackrock_depths
+    type: subzone
+    subtype: ""
+    name_zh: "召唤者之墓"
+    name_en: Summoners' Tomb
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 摆满石棺的墓室，棺盖上刻着召唤者的浮雕，地上一圈仍在微微发光的法阵
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「召唤者之墓」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "Summoners' Tomb"
+    verified_by: ai_read
+
+  - id: brd_chamber_of_enchantment
+    parent: blackrock_depths
+    type: subzone
+    subtype: ""
+    name_zh: "魔法之厅"
+    name_en: Chamber of Enchantment
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 附魔室，中央一口冒着幽蓝光的石槽，四壁架子上排着发光的符文石
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「魔法之厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "Chamber of Enchantment"
+    verified_by: ai_read
+
+  - id: brd_the_iron_hall
+    parent: blackrock_depths
+    type: subzone
+    subtype: ""
+    name_zh: "钢铁大厅"
+    name_en: The Iron Hall
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 全铁铸的大厅，墙面是铆接的铁板，回声极重，两侧立着铁铸的矮人守卫像
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「钢铁大厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "The Iron Hall"
+    verified_by: ai_read
+
+  - id: brd_hall_of_crafting
+    parent: blackrock_depths
+    type: subzone
+    subtype: ""
+    name_zh: "工艺之厅"
+    name_en: Hall of Crafting
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 工匠大厅，长条工作台一直排到底，台上摊着工具与半成的护甲片
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「工艺之厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "Hall of Crafting"
+    verified_by: ai_read
+
+  - id: brd_mold_foundry
+    parent: blackrock_depths
+    type: subzone
+    subtype: ""
+    name_zh: "浇铸间"
+    name_en: Mold Foundry
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 铸模车间，地面排着一格格砂模，橘红的铁水正沿着导槽流进模腔
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「浇铸间」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "Mold Foundry"
+    verified_by: ai_read
+
+  - id: brd_the_domicile
+    parent: blackrock_depths
+    type: subzone
+    subtype: ""
+    name_zh: "住宅区"
+    name_en: The Domicile
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 黑铁矮人的居住区，一间间凿在岩壁里的小屋，门口挂着布帘与晾着的衣物
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「住宅区」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "The Domicile"
+    verified_by: ai_read
+
+  - id: brd_dark_iron_highway
+    parent: blackrock_depths
+    type: subzone
+    subtype: ""
+    name_zh: "黑铁大道"
+    name_en: Dark Iron Highway
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 贯穿地下城的宽阔主道，路面被车辙磨出两道深沟，两侧石壁每隔一段插着火把
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「黑铁大道」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "Dark Iron Highway"
+    verified_by: ai_read
+
+  - id: brd_east_garrison
+    parent: blackrock_depths
+    type: subzone
+    subtype: ""
+    name_zh: "东区兵营"
+    name_en: East Garrison
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东侧的驻军哨所，铁栅门与武器架，墙上挂着黑铁旗
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「东区兵营」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "East Garrison"
+    verified_by: ai_read
+
+  - id: brd_west_garrison
+    parent: blackrock_depths
+    type: subzone
+    subtype: ""
+    name_zh: "西区兵营"
+    name_en: West Garrison
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 西侧的驻军哨所，结构与东侧对称，门口两名持锤的黑铁卫兵
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「西区兵营」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Depths
+    quote: "West Garrison"
+    verified_by: ai_read
+
+  # --- 熔火之心 ---
+  - id: molten_core_entrance
+    parent: blackrock_depths
+    type: poi
+    subtype: ""
+    name_zh: 熔火之心入口
+    name_en: Molten Core Entrance
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 黑石深渊最底层、熔岩桥尽头的一道燃烧裂口，橘红的光从缝里喷出来，靠近能看到空气被热浪撕开
+    note_zh: 位于黑石深渊的最底部（过图书馆大厅、熔岩桥方向）；旧世另可由「拉格纳罗斯之手」附近的传送门直接传入（需完成熔火之心的钥匙任务线）
+    source_url: https://warcraft.wiki.gg/wiki/Molten_Core
+    quote: "The Molten Core lies at the very bottom of Blackrock Depths."
+    verified_by: ai_read
+
+  - id: mc_magmadar_cavern
+    parent: molten_core
+    type: subzone
+    subtype: ""
+    name_zh: "玛格曼达洞穴"
+    name_en: Magmadar Cavern
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一处开阔的熔岩洞厅，中央是烧成焦黑的平地，四周熔岩从岩壁缝隙里缓缓渗下
+    note_zh: "官方译名未查到；熔火恶犬玛格曼达所在〔2026-09-23 更正：简中名「玛格曼达洞穴」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Molten_Core
+    quote: "Magmadar Cavern"
+    verified_by: ai_read
+
+  - id: mc_ragnaros_lair
+    parent: molten_core
+    type: subzone
+    subtype: ""
+    name_zh: 拉格纳罗斯的巢穴
+    name_en: Ragnaros' Lair
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 熔火之心最深处的巨型岩浆湖，湖心一块环形黑岩平台，火焰之王从湖面破出时整个洞窟被照成白橙色
+    note_zh: 中文名未经官方页面核实；炎魔之王拉格纳罗斯的最终战场
+    source_url: https://warcraft.wiki.gg/wiki/Molten_Core
+    quote: "Ragnaros' Lair"
+    verified_by: ai_read
+
+  # --- 黑石塔 ---
+  - id: blackrock_spire_entrance
+    parent: the_molten_span
+    type: poi
+    subtype: ""
+    name_zh: 黑石塔入口
+    name_en: Blackrock Spire Entrance
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 熔岩大厅东北角的一道高大石门，门前是沿岩壁盘旋而上的宽石道，门内透出暗红的火光
+    note_zh: 中文名为描述性命名（非官方地名）。沿 The Molten Span 的环形大道向上绕到东北角即是；旧世此处一道门通向黑石塔下层与上层
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Spire
+    quote: "The Blackrock Spire entrance is located by following the broad circular road up and around to the northeast corner of the large central chamber The Molten Span."
+    verified_by: ai_draft
+
+  - id: blackrock_spire
+    parent: blackrock_mountain
+    type: dungeon
+    subtype: ""
+    name_zh: 黑石塔
+    name_en: Blackrock Spire
+    level: "55-60"
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 火山内腔上半部的兽人要塞，粗犷的黑岩阶梯与吊桥层层向上，营火与铁笼散在平台上，越往高处龙的痕迹越多
+    note_zh: 旧世分「下层(LBRS)」与「上层(UBRS)」，共用同一个入口门；下层为黑石兽人、食人魔与森林巨魔组成的黑暗部落，上层为黑龙军团与黑翼卫队
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Spire
+    quote: "The lower spire is inhabited by the Dark Horde - orcs, ogres and forest trolls and their allies, the black dragonflight..."
+    verified_by: ai_read
+
+  - id: hordemar_city
+    parent: blackrock_spire
+    type: subzone
+    subtype: ""
+    name_zh: "霍德玛尔城"
+    name_en: Hordemar City
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 塔内的兽人聚居区，层层叠叠的木台与吊梯挂在岩壁上，帐篷之间燃着一堆堆篝火，烟顺着岩壁往上走
+    note_zh: "官方译名未查到；黑石塔下层的兽人城区〔2026-09-23 更正：简中名「霍德玛尔城」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Spire
+    quote: "Hordemar City"
+    verified_by: ai_read
+
+  - id: skitterweb_tunnels
+    parent: hordemar_city
+    type: subzone
+    subtype: ""
+    name_zh: "蛛网隧道"
+    name_en: Skitterweb Tunnels
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 被厚白蛛网封住的岩洞坑道，网上粘着裹成茧的尸体，地面爬满小蜘蛛
+    note_zh: "官方译名未查到；黑石塔下层蜘蛛区〔2026-09-23 更正：简中名「蛛网隧道」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Spire
+    quote: "Skitterweb Tunnels"
+    verified_by: ai_read
+
+  - id: halycons_lair
+    parent: hordemar_city
+    type: subzone
+    subtype: ""
+    name_zh: "哈雷肯之巢"
+    name_en: Halycon's Lair
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 洞穴深处的兽栏，铁链拴着的巨狼在阴影里喘气，地上散着啃净的骨头
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「哈雷肯之巢」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Spire
+    quote: "Halycon's Lair"
+    verified_by: ai_read
+
+  - id: mok_doom
+    parent: hordemar_city
+    type: subzone
+    subtype: ""
+    name_zh: "摩多姆"
+    name_en: Mok'Doom
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 食人魔占据的洞厅，顶高而暗，中央一根插满头骨的图腾，四周堆着抢来的箱笼
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「摩多姆」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Spire
+    quote: "Mok'Doom"
+    verified_by: ai_read
+
+  - id: tazzalor
+    parent: hordemar_city
+    type: subzone
+    subtype: ""
+    name_zh: "塔萨洛尔"
+    name_en: Tazz'Alaor
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 森林巨魔的营区，编织草席与羽饰挂在岩壁上，火堆边立着细长的木图腾
+    note_zh: "官方译名未查到；黑石塔下层的余烬图腾森林巨魔（Smolderthorn）区。【G04-V 核验·拼写】旧世游戏内拼作 Tazz'Alaor，暴雪到大地的裂变才改拼为 Tazz'Alor；本树锚定 1.12，故保留 Tazz'Alaor，勿按现行 wiki 条目名「订正」〔2026-09-23 更正：简中名「塔萨洛尔」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Tazz%27Alor
+    quote: "Tazz'Alor is an area of Lower Blackrock Spire, and the domain of the Smolderthorn forest trolls."
+    verified_by: ai_read
+
+  - id: brs_chamber_of_battle
+    parent: hordemar_city
+    type: subzone
+    subtype: ""
+    name_zh: "战斗之厅"
+    name_en: Chamber of Battle
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 圆形的练兵厅，地上画着圈，墙边的武器架被砍得缺口密布
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「战斗之厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Spire
+    quote: "Chamber of Battle"
+    verified_by: ai_read
+
+  - id: brs_the_storehouse
+    parent: hordemar_city
+    type: subzone
+    subtype: ""
+    name_zh: "仓库"
+    name_en: The Storehouse
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 堆到顶的仓库，麻袋、木桶与兵器箱挤在一起，只留出一条窄过道
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「仓库」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Spire
+    quote: "The Storehouse"
+    verified_by: ai_read
+
+  - id: hall_of_blackhand
+    parent: blackrock_spire
+    type: subzone
+    subtype: ""
+    name_zh: 黑手大厅
+    name_en: Hall of Blackhand
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 黑石塔上层的巨大石厅，两排粗柱撑起高顶，尽头是一座高台与王座，墙上挂着破旧的兽人战旗
+    note_zh: 中文名未经官方页面核实。旧世开启黑翼之巢的「奥术水晶球（Orb of Command）」就在黑手大厅内，用它才能打开黑翼之巢的入口
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Spire
+    quote: "Hall of Blackhand"
+    verified_by: ai_read
+
+  - id: dragonspire_hall
+    parent: blackrock_spire
+    type: subzone
+    subtype: ""
+    name_zh: "龙塔大厅"
+    name_en: Dragonspire Hall
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 两侧排列着龙形石雕与火盆的长厅，每尊雕像前立着一名黑龙化身的守卫
+    note_zh: "官方译名未查到；黑石塔上层〔2026-09-23 更正：简中名「龙塔大厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Spire
+    quote: "Dragonspire Hall"
+    verified_by: ai_read
+
+  - id: the_rookery
+    parent: blackrock_spire
+    type: subzone
+    subtype: ""
+    name_zh: "孵化间"
+    name_en: The Rookery
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 满地黑龙蛋的孵化洞窟，蛋壳泛着暗红微光，洞顶挂着焦黑的钟乳石，蛋与蛋之间有踩出的窄路
+    note_zh: "官方译名未查到；黑龙孵化场〔2026-09-23 更正：简中名「孵化间」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Spire
+    quote: "The Rookery"
+    verified_by: ai_read
+
+  - id: blackrock_stadium
+    parent: blackrock_spire
+    type: subzone
+    subtype: ""
+    name_zh: "黑石竞技场"
+    name_en: Blackrock Stadium
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 塔内的大型竞技场，环形看台由粗凿黑岩砌成，场中一道铁闸门，头顶是敞开的火山内腔
+    note_zh: "官方译名未查到；黑石塔上层的竞技场（雷德·黑手的挑战场）〔2026-09-23 更正：简中名「黑石竞技场」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Spire
+    quote: "Blackrock Stadium"
+    verified_by: ai_read
+
+  - id: brs_the_furnace
+    parent: blackrock_spire
+    type: subzone
+    subtype: ""
+    name_zh: "熔炉"
+    name_en: The Furnace
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一座巨型熔炉厅，炉口比人还高，橘红的火舌从炉门里舔出来，地面烧得发亮
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「熔炉」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Spire
+    quote: "The Furnace"
+    verified_by: ai_read
+
+  - id: brs_hall_of_binding
+    parent: blackrock_spire
+    type: subzone
+    subtype: ""
+    name_zh: "禁锢之厅"
+    name_en: Hall of Binding
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 用于束缚仪式的石厅，地面刻着巨大的圆形符文阵，四角立着铁制的束缚架
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「禁锢之厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Spire
+    quote: "Hall of Binding"
+    verified_by: ai_read
+
+  - id: brs_spire_throne
+    parent: blackrock_spire
+    type: subzone
+    subtype: ""
+    name_zh: "尖塔王座"
+    name_en: Spire Throne
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 塔顶敞开的王座平台，四面是火山内腔的深渊，中央一把黑岩王座，风把火盆吹得乱晃
+    note_zh: "官方译名未查到；黑石塔上层顶端〔2026-09-23 更正：简中名「尖塔王座」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackrock_Spire
+    quote: "Spire Throne"
+    verified_by: ai_read
+
+  # --- 黑翼之巢 ---
+  - id: bwl_dragonmaw_garrison
+    parent: blackwing_lair
+    type: subzone
+    subtype: ""
+    name_zh: "龙喉兵营"
+    name_en: Dragonmaw Garrison
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 龙喉兽人的驻防区，黑石走廊两侧是兵器架与铁笼，尽头一道厚重的龙首浮雕大门
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「龙喉兵营」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackwing_Lair
+    quote: "Dragonmaw Garrison"
+    verified_by: ai_read
+
+  - id: bwl_halls_of_strife
+    parent: blackwing_lair
+    type: subzone
+    subtype: ""
+    name_zh: "征战大厅"
+    name_en: Halls of Strife
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一段极长的黑石走廊，两侧墙面嵌着成排会喷火的龙首雕像，地面反射着断续的火光
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「征战大厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackwing_Lair
+    quote: "Halls of Strife"
+    verified_by: ai_read
+
+  - id: bwl_shadow_wing_lair
+    parent: blackwing_lair
+    type: subzone
+    subtype: ""
+    name_zh: "影翼巢穴"
+    name_en: Shadow Wing Lair
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 培育实验龙的洞厅，岩壁上一格格嵌着不同颜色的龙蛋，中央的平台上摆着炼金器皿
+    note_zh: "官方译名未查到〔2026-09-23 更正：简中名「影翼巢穴」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Blackwing_Lair
+    quote: "Shadow Wing Lair"
+    verified_by: ai_read
+
+  - id: bwl_crimson_laboratories
+    parent: blackwing_lair
+    type: subzone
+    subtype: ""
+    name_zh: Crimson Laboratories
+    name_en: Crimson Laboratories
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一连串暗红灯光的实验室，玻璃器皿与培养槽沿墙排开，槽里泡着半成形的变异幼龙，地面淌着冷却液
+    note_zh: 官方译名未查到；位于 Halls of Strife 与 Nefarian's Lair 之间，wiki 列为 undisplayed location（游戏内不显示地名）；【G04-V 补入】作者原稿漏收
+    source_url: https://warcraft.wiki.gg/wiki/Crimson_Laboratories
+    quote: "The Crimson Laboratories are the rooms of Blackwing Lair between the Halls of Strife and Nefarian's Lair."
+    verified_by: ai_read
+
+  - id: nefarians_lair
+    parent: blackwing_lair
+    type: subzone
+    subtype: ""
+    name_zh: 奈法利安的巢穴
+    name_en: Nefarian's Lair
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 最深处的圆形巢厅，高高的王座平台在正前方，两侧墙上密排着骷髅龙头，地面是抛光黑石
+    note_zh: 中文名未经官方页面核实；奈法利安最终战所在
+    source_url: https://warcraft.wiki.gg/wiki/Blackwing_Lair
+    quote: "Nefarian's Lair"
+    verified_by: ai_read

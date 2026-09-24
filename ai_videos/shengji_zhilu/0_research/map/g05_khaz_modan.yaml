@@ -1,0 +1,2017 @@
+# G05 · 卡兹莫丹 + 铁炉堡 —— 经典旧世 Vanilla / Classic Era (1.12) 地理树
+# 本文件是树数据的唯一出处；非树信息见 g05_khaz_modan_notes.md
+#
+# 主要取源：
+#   A) wago.tools DBC 导出 —— Classic Era 构建 1.15.9.69722 的 AreaTable（enUS + zhCN）、
+#      UiMap / UiMapAssignment / WorldMapOverlay / AreaPOI / TaxiNodes / LFGDungeons。
+#      这是「哪些地名属于旧世」和「国服官方简体译名」的机器可核对底稿。
+#   B) warcraft.wiki.gg 逐个 zone / 地点页（人眼读过，quote 为原句）。
+#   C) 铁炉堡各区在 Classic AreaTable 里没有条目（城内分区是地图美术标签，不是 subzone），
+#      其官方中文名取自正式服 AreaTable（构建 12.1.0.69875，zhCN）——同名同地，译名沿用。
+#      正式服也查不到的，按规则保留英文原名并在 note_zh 标注。
+
+nodes:
+
+  # ============================================================
+  # 大陆内 lore 分区
+  # ============================================================
+  - id: dun_morogh
+    parent: khaz_modan
+    type: zone
+    subtype: ""
+    name_zh: 丹莫罗
+    name_en: Dun Morogh
+    level: "1-10"
+    faction: alliance
+    coords: ""
+    adjacent: [ironforge, loch_modan]
+    era: vanilla
+    look_zh: 终年积雪的高山盆地，深绿云杉压着厚雪，灰蓝天光下是冻住的湖面、石砌矮人小屋的红瓦斜顶与冒黑烟的矿车轨道
+    note_zh: 矮人与侏儒共用的新手区；旧世里唯一的陆路出口是东边南北两条门径通往洛克莫丹，另有铁炉堡大门进城。4.0.3 后地貌大改（新增新工匠镇 / 冰雪谷塌陷等），本树一概不收
+    source_url: https://warcraft.wiki.gg/wiki/Dun_Morogh
+    quote: "Dun Morogh is a snowy, forested mountain range in western Khaz Modan."
+    verified_by: ai_read
+
+  - id: coldridge_valley
+    parent: dun_morogh
+    type: subzone
+    subtype: ""
+    name_zh: 寒脊山谷
+    name_en: Coldridge Valley
+    level: ""
+    faction: alliance
+    coords: "[32, 71]"
+    adjacent: []
+    era: vanilla
+    look_zh: 丹莫罗西南角一处被雪山合围的小盆地，一条冻溪穿过缓坡，坡上散着小木屋与训练假人，雪地被踩成泥灰色的小路
+    note_zh: 旧世矮人与侏儒共同的出生山谷（侏儒的新工匠镇是 4.0.3 才分出去的）；出口只有东边的寒脊山小径
+    source_url: https://warcraft.wiki.gg/wiki/Coldridge_Valley
+    quote: "The primary threats to the valley in the cataclysm era are earthquake hazards, troggs, and Frostmane trolls, the latter two of which have been stirred up by the quakes."
+    verified_by: ai_read
+
+  - id: anvilmar
+    parent: coldridge_valley
+    type: settlement
+    subtype: village
+    name_zh: 安威玛尔
+    name_en: Anvilmar
+    level: ""
+    faction: alliance
+    coords: "[29, 69]"
+    adjacent: []
+    era: vanilla
+    look_zh: 山谷尽头一座半嵌进岩壁的石砌大屋，门口两盏铁灯笼、屋内一座常烧的火塘，门外雪地上排着一列训练假人
+    note_zh: 玩家睁眼的第一个点：新手导师、第一批任务与职业训练师都在这里；名字来自铁炉堡的安威玛尔家族
+    source_url: https://warcraft.wiki.gg/wiki/Coldridge_Valley
+    quote: "The valley contains the settlement of Anvilmar and connects to the broader zone through Coldridge Pass."
+    verified_by: ai_read
+
+  - id: coldridge_pass
+    parent: coldridge_valley
+    type: poi
+    subtype: ""
+    name_zh: 寒脊山小径
+    name_en: Coldridge Pass
+    level: ""
+    faction: alliance
+    coords: "[37, 67]"
+    adjacent: []
+    era: vanilla
+    look_zh: 一条凿穿山体的窄隧道，顶上垂着冰棱，洞壁架着木支撑与几盏油灯，尽头亮出丹莫罗的雪原
+    note_zh: 新手山谷通往丹莫罗本体的唯一通道，洞里蹲着石腭穴居人（旧世第一个「必须打过去」的关口）。4.0.3 后此洞塌陷
+    source_url: https://warcraft.wiki.gg/wiki/Coldridge_Valley
+    quote: "Coldridge Pass caved in. Major changes to landscape."
+    verified_by: ai_read
+
+  - id: kharanos
+    parent: dun_morogh
+    type: settlement
+    subtype: village
+    name_zh: 卡拉诺斯
+    name_en: Kharanos
+    level: ""
+    faction: alliance
+    coords: "[46, 52]"
+    adjacent: []
+    era: vanilla
+    look_zh: 大路边一圈石墙围起的矮人小镇，陡坡屋顶压着厚雪，镇心一座露天铁砧与红火炉，旁边就是冒着麦芽热气的酿酒厂
+    note_zh: 丹莫罗的主镇、新手出谷后的第一个大补给点（旅店 / 铁匠 / 各系训练师）。旧世这里没有飞行点——狮鹫点是 4.0.3a 才加的
+    source_url: https://warcraft.wiki.gg/wiki/Kharanos
+    quote: "The town is surrounded by the stark wintry wilds of Dun Morogh."
+    verified_by: ai_read
+
+  - id: thunderbrew_distillery
+    parent: kharanos
+    type: settlement
+    subtype: inn
+    name_zh: 雷酒酿制厂
+    name_en: Thunderbrew Distillery
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 卡拉诺斯镇内最大的一栋木石建筑，门口堆着橡木酒桶，屋里是长条木桌、壁炉与一排铜制蒸馏罐
+    note_zh: 卡拉诺斯的旅店本体（炉石绑定点），雷酒家族的酒厂；旧世新手「烤野猪肋排」一类的烹饪任务起点
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "2102,ThunderbrewDistillery,雷酒酿制厂,0,1"
+    verified_by: ai_read
+
+  - id: steelgrills_depot
+    parent: dun_morogh
+    type: settlement
+    subtype: camp
+    name_zh: 钢架补给站
+    name_en: Steelgrill's Depot
+    level: ""
+    faction: alliance
+    coords: "[50, 49]"
+    adjacent: []
+    era: vanilla
+    look_zh: 卡拉诺斯东边路口的侏儒机械场，铁皮棚下停着几台漏油的蒸汽机械与机械陆行鸟，地上铺着油渍与零件
+    note_zh: 侏儒工程学与机械陆行鸟相关点，紧挨卡拉诺斯东侧
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "189,SteelgrillsDepot,钢架补给站,0,1"
+    verified_by: ai_read
+
+  - id: the_grizzled_den
+    parent: dun_morogh
+    type: subzone
+    subtype: ""
+    name_zh: 灰色洞穴
+    name_en: The Grizzled Den
+    level: ""
+    faction: alliance
+    coords: "[41, 60]"
+    adjacent: []
+    era: vanilla
+    look_zh: 南坡林间一处敞口熊窟，洞口垂着冰凌与枯藤，洞内是踩实的泥地、散落的骨头与湿毛皮的腥气
+    note_zh: 旧世新手熊怪任务区（幼熊 / 成年灰熊），卡拉诺斯西南的山坡上
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "136,TheGrizzledDen,灰色洞穴,0,1"
+    verified_by: ai_read
+
+  - id: frostmane_hold
+    parent: dun_morogh
+    type: subzone
+    subtype: ""
+    name_zh: 霜鬃巨魔要塞
+    name_en: Frostmane Hold
+    level: ""
+    faction: contested
+    coords: "[28, 52]"
+    adjacent: []
+    era: vanilla
+    look_zh: 雪坡下凿开的巨魔洞穴群，洞口插着骨制图腾与兽皮旗，里面燃着幽蓝的火盆与成排的木笼
+    note_zh: 霜鬃巨魔的老巢，丹莫罗西侧；旧世新手区最硬的一片野外怪点
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "135,FrostmaneHold,霜鬃巨魔要塞,0,1"
+    verified_by: ai_read
+
+  - id: chill_breeze_valley
+    parent: dun_morogh
+    type: subzone
+    subtype: ""
+    name_zh: 寒风峡谷
+    name_en: Chill Breeze Valley
+    level: ""
+    faction: alliance
+    coords: "[36, 54]"
+    adjacent: []
+    era: vanilla
+    look_zh: 通往诺莫瑞根的那条风口谷地，两侧灰岩壁夹着一条被风吹净的雪路，谷底立着侏儒的废弃管道与歪掉的路标
+    note_zh: 丹莫罗西北的峡谷，把卡拉诺斯一线接到烈酒村与诺莫瑞根
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "801,ChillBreezeValley,寒风峡谷,0,1"
+    verified_by: ai_read
+
+  - id: brewnall_village
+    parent: chill_breeze_valley
+    type: settlement
+    subtype: camp
+    name_zh: 烈酒村
+    name_en: Brewnall Village
+    level: ""
+    faction: alliance
+    coords: "[31, 46]"
+    adjacent: []
+    era: vanilla
+    look_zh: 雪地上几顶帆布帐篷加一圈篝火，中间架着一口冒泡的酿酒铜锅，旁边横七竖八堆着空酒桶
+    note_zh: 名为「村」实为营地（没有任何房屋）；巴利布鲁家族在此，旧世新手酿酒任务链起点
+    source_url: https://warcraft.wiki.gg/wiki/Brewnall_Village
+    quote: "Despite being called a village, the location has no actual buildings and seems more like a camp."
+    verified_by: ai_read
+
+  - id: iceflow_lake
+    parent: dun_morogh
+    type: poi
+    subtype: ""
+    name_zh: 涌冰湖
+    name_en: Iceflow Lake
+    level: ""
+    faction: alliance
+    coords: "[34, 38]"
+    adjacent: []
+    era: vanilla
+    look_zh: 整片冻硬的湖面，灰白冰壳上压着薄雪与风纹，岸边枯枝结满冰壳，湖心能看见冻在冰里的深色水纹
+    note_zh: 丹莫罗西北的大冻湖，诺莫瑞根入口东侧；旧世钓鱼与穴居人任务区
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "211,IceflowLake,涌冰湖,0,1"
+    verified_by: ai_read
+
+  - id: shimmer_ridge
+    parent: dun_morogh
+    type: subzone
+    subtype: ""
+    name_zh: 闪光岭
+    name_en: Shimmer Ridge
+    level: ""
+    faction: contested
+    coords: "[41, 39]"
+    adjacent: []
+    era: vanilla
+    look_zh: 北侧一道结满冰晶的山脊，阳光下岩面泛出细碎反光，脊背上扎着霜鬃巨魔的兽皮帐篷与骨堆
+    note_zh: 霜鬃巨魔的北方营地，涌冰湖东北
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "802,ShimmerRidge,闪光岭,0,1"
+    verified_by: ai_read
+
+  - id: misty_pine_refuge
+    parent: dun_morogh
+    type: settlement
+    subtype: camp
+    name_zh: 雾松避难所
+    name_en: Misty Pine Refuge
+    level: ""
+    faction: alliance
+    coords: "[56, 45]"
+    adjacent: []
+    era: vanilla
+    look_zh: 雪松林里一小片空地，两顶帐篷围着一堆将熄的篝火，树影间常年吊着一层薄雾
+    note_zh: 丹莫罗中北部的小型野外营地，规模很小、容易漏
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "138,MistyPineRefuge,雾松避难所,0,1"
+    verified_by: ai_read
+
+  - id: gol_bolar_quarry
+    parent: dun_morogh
+    type: subzone
+    subtype: ""
+    name_zh: 古博拉采掘场
+    name_en: Gol'Bolar Quarry
+    level: ""
+    faction: alliance
+    coords: "[69, 56]"
+    adjacent: []
+    era: vanilla
+    look_zh: 被削成阶梯状的露天石坑，坑壁一层层灰白岩台，坑底停着矿车与木架，深处开着一个黑洞洞的矿道口
+    note_zh: 丹莫罗东部的矮人采石场，旧世穴居人入侵任务区；采石场深处另有矿洞。旧世此处无飞行点（4.0.3a 才加）
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "134,GolBolarQuarry,古博拉采掘场,0,1"
+    verified_by: ai_read
+
+  - id: amberstill_ranch
+    parent: dun_morogh
+    type: settlement
+    subtype: farm
+    name_zh: 冻石农场
+    name_en: Amberstill Ranch
+    level: ""
+    faction: alliance
+    coords: "[64, 51]"
+    adjacent: []
+    era: vanilla
+    look_zh: 雪坡上一圈木栅栏围出的牧场，棚屋顶压雪，围栏里站着长毛白羊与几头矮种山羊
+    note_zh: 丹莫罗东部的矮人牧场，旧世公羊坐骑（冻石家族）相关点
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "803,AmberstillRanch,冻石农场,0,1"
+    verified_by: ai_read
+
+  - id: the_tundrid_hills
+    parent: dun_morogh
+    type: subzone
+    subtype: ""
+    name_zh: 冻土岭
+    name_en: The Tundrid Hills
+    level: ""
+    faction: alliance
+    coords: "[60, 58]"
+    adjacent: []
+    era: vanilla
+    look_zh: 一串起伏的雪丘，雪层薄到露出深褐冻土与碎石，稀疏几棵被风压弯的矮松
+    note_zh: 丹莫罗东南的丘陵带，连接卡拉诺斯与南门一线
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "804,TheTundridHills,冻土岭,0,1"
+    verified_by: ai_read
+
+  - id: helms_bed_lake
+    parent: dun_morogh
+    type: poi
+    subtype: ""
+    name_zh: 盔枕湖
+    name_en: Helm's Bed Lake
+    level: ""
+    faction: alliance
+    coords: "[77, 54]"
+    adjacent: []
+    era: vanilla
+    look_zh: 丹莫罗最东端的一汪冻湖，湖形像一顶倒扣的头盔，岸边是碎石滩与几株枯杉
+    note_zh: 丹莫罗东端、靠近洛克莫丹门径的湖
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "212,HelmsBedLake,盔枕湖,0,1"
+    verified_by: ai_read
+
+  - id: ironbands_compound
+    parent: helms_bed_lake
+    type: settlement
+    subtype: farm
+    name_zh: 铁环营地
+    name_en: Ironband's Compound
+    level: ""
+    faction: alliance
+    coords: "[77, 60]"
+    adjacent: []
+    era: vanilla
+    look_zh: 湖畔一座带矮石墙的独门院落，院里堆着木箱与考古工具，烟囱冒着细白烟
+    note_zh: 探险者协会成员铁环家族的丹莫罗据点，与洛克莫丹的「铁环挖掘场」是同一家族、不同地点，别混
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "716,IronbandsCompound,铁环营地,0,1"
+    verified_by: ai_read
+
+  - id: north_gate_pass_dun_morogh
+    parent: dun_morogh
+    type: poi
+    subtype: ""
+    name_zh: 北门小径
+    name_en: North Gate Pass
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东北角一条夹在两面岩壁之间的上坡雪道，路面被车辙压出两条深沟，尽头是一道木石关卡
+    note_zh: 丹莫罗通往洛克莫丹的北侧门径（洛克莫丹一侧有同名小径，是同一条路的两端）
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "807,NorthGatePass,北门小径,0,1"
+    verified_by: ai_read
+
+  - id: north_gate_outpost_dun_morogh
+    parent: north_gate_pass_dun_morogh
+    type: settlement
+    subtype: tower
+    name_zh: 北门哨岗
+    name_en: North Gate Outpost
+    level: ""
+    faction: alliance
+    coords: "[82, 38]"
+    adjacent: []
+    era: vanilla
+    look_zh: 门径口的一座方形石塔加一段矮墙，塔顶挂着铁炉堡的铁砧旗，墙根堆着火药桶
+    note_zh: 北门小径上的矮人山地兵哨所
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "808,NorthGateOutpost,北门哨岗,0,1"
+    verified_by: ai_read
+
+  - id: south_gate_pass_dun_morogh
+    parent: dun_morogh
+    type: poi
+    subtype: ""
+    name_zh: 南门小径
+    name_en: South Gate Pass
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东南角的一条隘路，雪已化成泥浆，两侧岩壁较低、能看到远处洛克莫丹方向的绿意
+    note_zh: 丹莫罗通往洛克莫丹的南侧门径
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "805,SouthGatePass,南门小径,0,1"
+    verified_by: ai_read
+
+  - id: south_gate_outpost_dun_morogh
+    parent: south_gate_pass_dun_morogh
+    type: settlement
+    subtype: tower
+    name_zh: 南门哨岗
+    name_en: South Gate Outpost
+    level: ""
+    faction: alliance
+    coords: "[85, 51]"
+    adjacent: []
+    era: vanilla
+    look_zh: 隘路口一座石塔与木栅栏哨所，门口架着一门小火炮，旗杆上是铁炉堡旗
+    note_zh: 南门小径上的矮人哨所
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "806,SouthGateOutpost,南门哨岗,0,1"
+    verified_by: ai_read
+
+  - id: gates_of_ironforge
+    parent: dun_morogh
+    type: poi
+    subtype: ""
+    name_zh: 铁炉堡大门
+    name_en: Gates of Ironforge
+    level: ""
+    faction: alliance
+    coords: "[55, 39]"
+    adjacent: []
+    era: vanilla
+    look_zh: 整面山壁雕成的巨大矮人石门，两尊持锤石像分立两侧，门缝里透出熔炉的橙红光，门前石阶被踩得发亮
+    note_zh: 丹莫罗一侧通往铁炉堡城内的唯一入口；注意它在 AreaTable 里归属丹莫罗，不是铁炉堡
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "809,GatesOfIronforge,铁炉堡大门,0,1"
+    verified_by: ai_read
+
+  # ============================================================
+  # CITY · 铁炉堡 Ironforge（独立地图，入口在丹莫罗）
+  # ============================================================
+  - id: ironforge
+    parent: dun_morogh
+    type: city
+    subtype: capital
+    name_zh: 铁炉堡
+    name_en: Ironforge
+    level: ""
+    faction: alliance
+    coords: "[54, 35]"
+    adjacent: [dun_morogh, stormwind_city]
+    era: vanilla
+    look_zh: 整座挖在山腹里的环形石城，穹顶是凿出的黑岩，一圈圈台地朝中央的熔岩大锻炉落下去，火光把砖石烤成橙红，处处是黄铜管道与铁轨
+    note_zh: 联盟矮人主城，独立地图；coords 是它在丹莫罗地图上的图标位置。经 Deeprun Tram 直通暴风城。铁炉堡城内各区在 Classic AreaTable 里没有条目（属地图美术标签），故下属节点的坐标大多未查到
+    source_url: https://warcraft.wiki.gg/wiki/Ironforge
+    quote: "a series of concentric rings, with the smaller levels deeper underground, all radiating out from the namesake Great Forge at its center"
+    verified_by: ai_read
+
+  - id: the_commons
+    parent: ironforge
+    type: district
+    subtype: ""
+    name_zh: 平民区
+    name_en: The Commons
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 进城后第一圈宽环廊，两侧一长排石砌商铺与摊位，穹顶垂下铁链吊灯，地面被人流踩出光亮的石板道
+    note_zh: 铁炉堡的入口大厅兼商业环；拍卖行与银行都在这一圈。中文名取自正式服 AreaTable（5719 平民区）
+    source_url: https://warcraft.wiki.gg/wiki/Ironforge
+    quote: "Located just beyond the city gates, this serves as the primary entry point and commercial hub."
+    verified_by: ai_read
+
+  - id: vault_of_ironforge
+    parent: the_commons
+    type: poi
+    subtype: ""
+    name_zh: 铁炉堡金库
+    name_en: Vault of Ironforge
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 平民区内环一道厚重的圆形金属闸门，门面刻满齿轮纹，门内是一排排铁制保险柜
+    note_zh: 铁炉堡银行。「铁炉堡金库」为常见官方译法，但未在 DBC 中查到该条目，属存疑
+    source_url: https://warcraft.wiki.gg/wiki/Ironforge
+    quote: "Vault of Ironforge - The bank, located at the inner edge of the Commons"
+    verified_by: ai_read
+
+  - id: ironforge_auction_house
+    parent: the_commons
+    type: poi
+    subtype: ""
+    name_zh: 铁炉堡拍卖行
+    name_en: Ironforge Auction House
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 城门内侧两侧的高拱门厅，墙上钉满羊皮纸告示，柜台后站着一排拍卖师
+    note_zh: 位于平民区外环、正对前门之间
+    source_url: https://warcraft.wiki.gg/wiki/Ironforge
+    quote: "Auction House - At the outer edge of the Commons between front gates"
+    verified_by: ai_read
+
+  - id: the_great_forge
+    parent: ironforge
+    type: district
+    subtype: ""
+    name_zh: 大锻炉
+    name_en: The Great Forge
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 城心一口巨大的熔岩坑，橙红岩浆上架着环形铁桥，四周石台上立着一座座铁砧，火星与热浪把整片空气烤得发抖
+    note_zh: 铁炉堡最古老的一区、城市得名于此；锻造/工程相关训练师、狮鹫场与至高熔炉王座都在这一圈
+    source_url: https://warcraft.wiki.gg/wiki/The_Great_Forge
+    quote: "The Great Forge never shuts down. It's a loud, hot, and cheerful place, serving not only as the physical center of the city, but also the central part of city life."
+    verified_by: ai_read
+
+  - id: the_great_anvil
+    parent: the_great_forge
+    type: poi
+    subtype: ""
+    name_zh: 大铁砧
+    name_en: The Great Anvil
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 熔岩坑正中一座比人还高的黑铁大砧，砧面被锤出凹痕，周围一圈小铁砧呈放射状排开
+    note_zh: 大锻炉的核心标志物。「大铁砧」未在 DBC 中查到对应条目，属常见译法，存疑
+    source_url: https://warcraft.wiki.gg/wiki/The_Great_Forge
+    quote: "Key features include the famous Great Anvil, multiple foundries pouring molten slag"
+    verified_by: ai_read
+
+  - id: the_high_seat
+    parent: the_great_forge
+    type: district
+    subtype: ""
+    name_zh: "王座厅"
+    name_en: The High Seat
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 大锻炉尽头抬高的王座厅，一条石阶直上，厅中一张黑铁王座背靠雕满符文的石壁，两侧立着持斧卫兵
+    note_zh: "铁炉堡王座厅；旧世里坐在这里的是麦格尼·铜须。官方译名未查到（Classic 与正式服 AreaTable 均无此条目；记忆中可能为「至高熔炉」，待核）〔2026-09-23 更正：简中名「王座厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Ironforge
+    quote: "The High Seat - The throne room of Ironforge, located within The Great Forge area"
+    verified_by: ai_read
+
+  - id: cask_n_anvil
+    parent: the_great_forge
+    type: settlement
+    subtype: inn
+    name_zh: 酒桶与铁砧
+    name_en: Cask 'n' Anvil
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 熔炉边一间被火光照成暖橙色的小酒馆，吧台由一块厚铁板搭成，墙上挂着铁钳与旧锤
+    note_zh: 大锻炉区的酒馆。中文名取自正式服 AreaTable（8698 酒桶与铁砧）；该条目在 Classic AreaTable 中不存在，但建筑本体旧世即有
+    source_url: https://warcraft.wiki.gg/wiki/Ironforge
+    quote: "The Great Forge - The High Seat - Cask 'n' Anvil"
+    verified_by: ai_read
+
+  - id: ironforge_gryphon_roost
+    parent: the_great_forge
+    type: transport
+    subtype: flightpath
+    name_zh: 铁炉堡狮鹫场
+    name_en: Ironforge Gryphon Roost
+    level: ""
+    faction: alliance
+    coords: "[56, 48]"
+    adjacent: []
+    era: vanilla
+    look_zh: 大锻炉东侧一段开放石台，几头白羽狮鹫拴在铁环上，地上铺着干草与羽毛，台沿直接对着熔岩坑
+    note_zh: 铁炉堡飞行点（旧世狮鹫管理员 Gryth Thurden）。坐标由 Classic Era TaxiNodes 的世界坐标换算到铁炉堡地图得出
+    source_url: "https://wago.tools/db2/TaxiNodes/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "6,铁炉堡，丹莫罗,ContinentID=0"
+    verified_by: ai_read
+
+  - id: the_mystic_ward
+    parent: ironforge
+    type: district
+    subtype: ""
+    name_zh: 秘法区
+    name_en: The Mystic Ward
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一圈安静的蓝调厅堂，石柱之间悬着发光的符文水盆，水从壁槽流下来，光线比别处冷得多
+    note_zh: 平民区往北；法师 / 牧师 / 圣骑士等施法者训练区，神秘大厅在其中
+    source_url: https://warcraft.wiki.gg/wiki/Ironforge
+    quote: "The Mystic Ward - North from the Commons, housing the Hall of Mysteries."
+    verified_by: ai_read
+
+  - id: hall_of_mysteries
+    parent: the_mystic_ward
+    type: district
+    subtype: ""
+    name_zh: "秘法大厅"
+    name_en: Hall of Mysteries
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 秘法区深处的高顶圣堂，中央一口圣光照亮的水池，两侧是雕着圣徽的石柱与长明烛台
+    note_zh: "牧师与圣骑士训练所在（主角若走圣骑士，这里是关键场景）。官方译名未查到（Classic 与正式服 AreaTable 均无此条目；记忆中可能为「神秘大厅」，待核）〔2026-09-23 更正：简中名「秘法大厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Ironforge
+    quote: "The Mystic Ward - Hall of Mysteries"
+    verified_by: ai_read
+
+  - id: the_military_ward
+    parent: ironforge
+    type: district
+    subtype: ""
+    name_zh: 军事区
+    name_en: The Military Ward
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 墙上挂满盾牌与战斧的环形厅，地面铺深色石板，角落是训练假人与兵器架，灯光偏暗偏红
+    note_zh: 平民区往东；战士 / 猎人 / 盗贼等训练区，武器大厅在其中，两家酒馆也在这一带
+    source_url: https://warcraft.wiki.gg/wiki/Ironforge
+    quote: "The Military Ward - East from the Commons, containing the Hall of Arms."
+    verified_by: ai_read
+
+  - id: hall_of_arms
+    parent: the_military_ward
+    type: district
+    subtype: ""
+    name_zh: 武器大厅
+    name_en: Hall of Arms
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 军事区里的大练武厅，中央一圈沙地擂台，四周兵器架列满长柄武器，墙上是历代矮人战旗
+    note_zh: 战士训练厅。中文名取自正式服 AreaTable（5340 武器大厅）
+    source_url: https://warcraft.wiki.gg/wiki/Ironforge
+    quote: "The Military Ward - Hall of Arms"
+    verified_by: ai_read
+
+  - id: the_stonefire_tavern
+    parent: the_military_ward
+    type: settlement
+    subtype: inn
+    name_zh: 石火旅店
+    name_en: The Stonefire Tavern
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一间石砌酒馆，正中一口方形火塘，长桌两侧坐满矮人，墙上挂着熏黑的酒旗
+    note_zh: 军事区的旅店（炉石绑定点）。中文名取自正式服 AreaTable（8622 石火旅店）
+    source_url: https://warcraft.wiki.gg/wiki/Ironforge
+    quote: "Additional Named Locations (Undisplayed/Other): Bruuk's Corner, Dark Iron Embassy, The Stonefire Tavern"
+    verified_by: ai_read
+
+  - id: bruuks_corner
+    parent: the_military_ward
+    type: settlement
+    subtype: inn
+    name_zh: Bruuk's Corner
+    name_en: Bruuk's Corner
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 军事区拐角一处小酒吧台，一名壮硕的酒保守着几只酒桶，头顶悬着一盏铜灯
+    note_zh: 军事区的小酒吧（老板 Bruuk Barleybeard）。官方译名未查到（Classic 与正式服 AreaTable 均无此条目）
+    source_url: https://warcraft.wiki.gg/wiki/Ironforge
+    quote: "Additional Named Locations (Undisplayed/Other): Bruuk's Corner, Dark Iron Embassy, The Stonefire Tavern"
+    verified_by: ai_read
+
+  - id: hall_of_explorers
+    parent: ironforge
+    type: district
+    subtype: ""
+    name_zh: 探险者大厅
+    name_en: Hall of Explorers
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 高穹顶的展陈大厅，中庭立着完整的恐龙骨架与泰坦石碑残块，四壁是书架与玻璃展柜
+    note_zh: 探险者协会总部；下辖图书馆与博物馆，旧世考古 / 奥达曼任务链的发端
+    source_url: https://warcraft.wiki.gg/wiki/Ironforge
+    quote: "Hall of Explorers - Beyond the Great Forge, containing The Library and The Museum within it."
+    verified_by: ai_read
+
+  - id: the_library_ironforge
+    parent: hall_of_explorers
+    type: subzone
+    subtype: ""
+    name_zh: "图书馆"
+    name_en: The Library
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 探险者大厅一侧的书库，环形书架直抵穹顶，长桌上摊着地图与放大镜，光线来自壁上的暖黄油灯
+    note_zh: "探险者大厅内的图书馆。官方译名未查到（Classic 与正式服 AreaTable 均无此条目）〔2026-09-23 更正：简中名「图书馆」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Ironforge
+    quote: "Hall of Explorers - The Library - The Museum"
+    verified_by: ai_read
+
+  - id: the_museum_ironforge
+    parent: hall_of_explorers
+    type: subzone
+    subtype: ""
+    name_zh: The Museum
+    name_en: The Museum
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 探险者大厅中庭的展区，巨大的化石骨架立在中央，四周玻璃柜里陈列着泰坦碎片与古代石板
+    note_zh: 探险者大厅内的博物馆。官方译名未查到（Classic 与正式服 AreaTable 均无此条目）
+    source_url: https://warcraft.wiki.gg/wiki/Ironforge
+    quote: "Hall of Explorers - The Library - The Museum"
+    verified_by: ai_read
+
+  - id: tinker_town
+    parent: ironforge
+    type: district
+    subtype: ""
+    name_zh: "侏儒区"
+    name_en: Tinker Town
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 挤满黄铜管道与蒸汽阀的侏儒区，中央一台巨大的球形机械上架着一把小王座，四周是零件摊与冒火花的工作台
+    note_zh: "侏儒流亡区，矿道地铁入口在此；三家店铺（Berryfizz's / Springspindle's / Things That Go Boom!）。官方译名未查到（Classic 与正式服 AreaTable 均无此条目；注意它不是「提尔的手」——那是东瘟疫之地的 Tyr's Hand）〔2026-09-23 更正：简中名「侏儒区」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Tinker_Town
+    quote: "The district is built around a large spherical machine with a small throne attached to it."
+    verified_by: ai_read
+
+  - id: deeprun_tram_ironforge
+    parent: tinker_town
+    type: transport
+    subtype: tram
+    name_zh: 矿道地铁
+    name_en: Deeprun Tram
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一段下行的金属月台，轨道钻进一条亮着排灯的长隧道，站台边停着一列橙铜色的有轨车厢
+    note_zh: 铁炉堡直通暴风城的地下轨道（免费、旧世即有），入口在提克小镇/Tinker Town 一侧。中文名取自正式服 AreaTable（2257 矿道地铁）
+    source_url: https://warcraft.wiki.gg/wiki/Ironforge
+    quote: "Deeprun Tram - Free transportation to Stormwind, accessed from Tinker Town"
+    verified_by: ai_read
+
+  - id: berryfizzs_potions
+    parent: tinker_town
+    type: poi
+    subtype: ""
+    name_zh: Berryfizz's Potions and Mixed Drinks
+    name_en: Berryfizz's Potions and Mixed Drinks
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 侏儒区一间摆满彩色瓶罐的小铺，货架上液体颜色刺眼，柜台后一台咕嘟冒泡的蒸馏装置
+    note_zh: 提克小镇的炼金 / 药水铺（旧世炼金训练点之一）。官方译名未查到
+    source_url: https://warcraft.wiki.gg/wiki/Tinker_Town
+    quote: "Three shops operate in the area: Berryfizz's Potions and Mixed Drinks, Springspindle's Gadgets, and Things That Go Boom!"
+    verified_by: ai_read
+
+  - id: the_forlorn_cavern
+    parent: ironforge
+    type: district
+    subtype: ""
+    name_zh: 荒弃的洞穴
+    name_en: The Forlorn Cavern
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一段刻意不加修饰的天然岩洞，顶上垂着钟乳，地下暗河从中间淌过，光源只有零星几支火把，是全城最暗的一块
+    note_zh: 位于秘法区与探险者大厅之间；旧世的盗贼/潜行相关角落。该名称在 Classic AreaTable 里是后加的条目（ID 4679），但洞体旧世即存在
+    source_url: https://warcraft.wiki.gg/wiki/Ironforge
+    quote: "The Forlorn Cavern - Located between the Mystic Ward and the Hall of Explorers."
+    verified_by: ai_read
+
+  - id: old_ironforge
+    parent: ironforge
+    type: district
+    subtype: ""
+    name_zh: "旧铁炉堡"
+    name_en: Old Ironforge
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 王座厅下方一层更古老的石窟，柱式粗笨、没有黄铜装饰，只有裸岩与旧火盆，空气里有陈年的冷
+    note_zh: "位于至高熔炉王座厅左侧门之后，下辖领主大厅（Hall of Thanes）。旧世地图数据里存在但玩家不可进入，4.0.3 后才开放——如要入镜须当作「旧世不可达」处理。官方译名未查到〔2026-09-23 更正：简中名「旧铁炉堡」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Ironforge
+    quote: "Hall of Thanes (Old Ironforge) - Accessible after crossing the left door by the throne room entrance."
+    verified_by: ai_read
+
+  # ============================================================
+  # ZONE 2 · 洛克莫丹 Loch Modan
+  # ============================================================
+  - id: loch_modan
+    parent: khaz_modan
+    type: zone
+    subtype: ""
+    name_zh: 洛克莫丹
+    name_en: Loch Modan
+    level: "10-20"
+    faction: alliance
+    coords: ""
+    adjacent: [dun_morogh, wetlands, badlands, searing_gorge]
+    era: vanilla
+    look_zh: 环山抱着一整片碧蓝湖水的温带谷地，坡上是松树与白桦，湖岸是黄绿草坡与红瓦矮人屋，北端横着一道巨大的灰石水坝
+    note_zh: 矮人第二区；旧世的湖是满的（4.0.3 大地裂变炸掉水坝后湖水几乎排干，这是本区头号版本差异）。往南可步行进荒芜之地，往北经丹奥加兹进湿地
+    source_url: https://warcraft.wiki.gg/wiki/Loch_Modan
+    quote: "The gray and rugged mountains rise up on all sides around the loch, and the hills are lightly wooded with pine and birch."
+    verified_by: ai_read
+
+  - id: thelsamar
+    parent: loch_modan
+    type: settlement
+    subtype: town
+    name_zh: 塞尔萨玛
+    name_en: Thelsamar
+    level: ""
+    faction: alliance
+    coords: "[35, 47]"
+    adjacent: []
+    era: vanilla
+    look_zh: 湖西岸坡地上的矮人小镇，一排石基木墙的坡顶屋沿路展开，镇边一座敞篷狮鹫棚，屋后是马厩与铁砧
+    note_zh: 洛克莫丹的主镇：旅店（烈酒旅店）、飞行点、铁匠、探险者协会小楼、镇长住所。注意——它的官方译名是「塞尔萨玛」，不是「铁环水坝」（铁环是 Ironband，水坝是 Stonewrought Dam，三者各是各的）
+    source_url: https://warcraft.wiki.gg/wiki/Thelsamar
+    quote: "The town has a gryphon roost, an inn, several vendors, as well as class and profession trainers."
+    verified_by: ai_read
+
+  - id: stoutlager_inn
+    parent: thelsamar
+    type: settlement
+    subtype: inn
+    name_zh: 烈酒旅店
+    name_en: Stoutlager Inn
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 镇中一栋两层木石客栈，门口挂着麦酒招牌，一楼是长桌与壁炉，二楼开着几扇小窗对着湖面
+    note_zh: 塞尔萨玛的旅店本体（炉石绑定点）
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "2101,StoutlagerInn,烈酒旅店,0,38"
+    verified_by: ai_read
+
+  - id: thelsamar_gryphon_roost
+    parent: thelsamar
+    type: transport
+    subtype: flightpath
+    name_zh: 塞尔萨玛狮鹫场
+    name_en: Thelsamar Gryphon Roost
+    level: ""
+    faction: alliance
+    coords: "[34, 51]"
+    adjacent: []
+    era: vanilla
+    look_zh: 镇南一处木架高台，两三头狮鹫立在横梁上，台下堆着草料与鞍具
+    note_zh: 洛克莫丹唯一的旧世飞行点（狮鹫管理员 Thorgrum Borrelson）；旧世航线通铁炉堡 / 米奈希尔港 / 避难谷地 / 瑟银哨塔
+    source_url: "https://wago.tools/db2/TaxiNodes/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "8,塞尔萨玛，洛克莫丹,ContinentID=0"
+    verified_by: ai_read
+
+  - id: the_loch
+    parent: loch_modan
+    type: poi
+    subtype: ""
+    name_zh: 洛克湖
+    name_en: The Loch
+    level: ""
+    faction: alliance
+    coords: "[51, 44]"
+    adjacent: []
+    era: vanilla
+    look_zh: 占据整个谷底的大湖，水色深蓝发绿，湖心浮着几座长草的小岛，风一起就是一片细碎白浪
+    note_zh: 本区的地貌主体，水源来自北端水坝拦住的铁炉堡山雪水。旧世水位是满的——4.0.3 后排干九成，湖底变成裸露泥滩
+    source_url: https://warcraft.wiki.gg/wiki/Loch_Modan
+    quote: "The Loch (90% drained dry from dam destruction - Cataclysm)"
+    verified_by: ai_read
+
+  - id: stonewrought_dam
+    parent: loch_modan
+    type: poi
+    subtype: ""
+    name_zh: 巨石水坝
+    name_en: Stonewrought Dam
+    level: ""
+    faction: alliance
+    coords: "[48, 15]"
+    adjacent: []
+    era: vanilla
+    look_zh: 横跨北端峡口的巨型灰石坝，坝面一排排拱券与石阶，坝顶是可以走人的宽石桥，底下泄水口喷出白色水柱
+    note_zh: 拦住洛克湖、造出下游湿地的工程奇迹（黑铁矮人 Franclorn Forgewright 建）；旧世它是完好的，坝上有矮人守军应对黑铁袭扰。4.0.3 被死亡之翼炸毁
+    source_url: https://warcraft.wiki.gg/wiki/Stonewrought_Dam
+    quote: "Recently the dam came under attack by the dwarves of the Dark Iron clan, and the dwarves of Ironforge were forced to increase their security."
+    verified_by: ai_read
+
+  - id: silver_stream_mine
+    parent: loch_modan
+    type: settlement
+    subtype: mine
+    name_zh: 银泉矿洞
+    name_en: Silver Stream Mine
+    level: ""
+    faction: alliance
+    coords: "[35, 22]"
+    adjacent: []
+    era: vanilla
+    look_zh: 北岸崖壁上一个木框加固的矿洞口，洞外停着两辆翻倒的矿车，洞内壁面泛着银灰色的矿脉光
+    note_zh: 洛克莫丹北部的矮人矿井，旧世被穴居人占据；矿业任务点
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "149,SilverStreamMine,银泉矿洞,0,38"
+    verified_by: ai_read
+
+  - id: ironbands_excavation_site
+    parent: loch_modan
+    type: poi
+    subtype: ""
+    name_zh: 铁环挖掘场
+    name_en: Ironband's Excavation Site
+    level: ""
+    faction: alliance
+    coords: "[65, 67]"
+    adjacent: []
+    era: vanilla
+    look_zh: 湖东南山脚挖开的考古坑，坑壁露出泰坦石构件，木脚手架与帐篷围着坑口，地上摊着刷子与残片
+    note_zh: 探险者协会的发掘点，旧世被穴居人袭击（经典任务链）；与丹莫罗的「铁环营地」同属一家族、不同地点
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "142,IronbandsExcavationSite,铁环挖掘场,0,38"
+    verified_by: ai_read
+
+  - id: mo_grosh_stronghold
+    parent: loch_modan
+    type: poi
+    subtype: ""
+    name_zh: 莫格罗什要塞
+    name_en: Mo'grosh Stronghold
+    level: ""
+    faction: contested
+    coords: "[70, 25]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东北山坳里的食人魔营地，粗木栅栏围着几顶巨大的兽皮帐篷，中央一堆常烧的篝火与插满骨头的图腾柱
+    note_zh: 莫格罗什食人魔的据点，洛克莫丹东北；旧世 15-20 级任务区
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "143,MogroshStronghold,莫格罗什要塞,0,38"
+    verified_by: ai_read
+
+  - id: the_farstrider_lodge
+    parent: loch_modan
+    type: settlement
+    subtype: inn
+    name_zh: 旅行者营地
+    name_en: The Farstrider Lodge
+    level: ""
+    faction: alliance
+    coords: "[73, 52]"
+    adjacent: []
+    era: vanilla
+    look_zh: 湖东岸林边一座猎人木屋，门廊挂着兽皮与鹿角，屋前拴着猎犬，院里立着射箭靶
+    note_zh: 猎人主题的小据点（旧世猎人训练与驯兽任务点）。旧世这里没有飞行点——那是 4.0.3 才加的
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "147,TheFarstriderLodge,旅行者营地,0,38"
+    verified_by: ai_read
+
+  - id: grizzlepaw_ridge
+    parent: loch_modan
+    type: subzone
+    subtype: ""
+    name_zh: 灰爪山
+    name_en: Grizzlepaw Ridge
+    level: ""
+    faction: alliance
+    coords: "[46, 73]"
+    adjacent: []
+    era: vanilla
+    look_zh: 南岸一道长满松林的缓岭，林下是厚厚的松针与倒木，常能看到熊与山猫在坡上活动
+    note_zh: 塞尔萨玛以南的林岭，旧世野兽任务区
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "936,GrizzlepawRidge,灰爪山,0,38"
+    verified_by: ai_read
+
+  - id: stonesplinter_valley
+    parent: loch_modan
+    type: subzone
+    subtype: ""
+    name_zh: 碎石怪之谷
+    name_en: Stonesplinter Valley
+    level: ""
+    faction: contested
+    coords: "[34, 73]"
+    adjacent: []
+    era: vanilla
+    look_zh: 西南一条乱石谷，谷壁裂出数个穴居人洞口，地上满是碎岩与粗糙的石制工具
+    note_zh: 碎石穴居人的聚居谷，洛克莫丹西南；旧世 12-18 级任务区（谷内深层洞穴系统是 4.0.3 才扩的）
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "923,StonesplinterValley,碎石怪之谷,0,38"
+    verified_by: ai_read
+
+  - id: valley_of_kings
+    parent: loch_modan
+    type: subzone
+    subtype: ""
+    name_zh: 国王谷
+    name_en: Valley of Kings
+    level: ""
+    faction: alliance
+    coords: "[21, 74]"
+    adjacent: []
+    era: vanilla
+    look_zh: 西南角一条笔直的石谷，两侧崖壁雕着巨大的矮人王像，谷底一条被车辙压实的商路直通南面山口
+    note_zh: 洛克莫丹西南出口；由此接石门通道方向可去灼热峡谷（旧世该门有锁），也是往荒芜之地的南下路线一端
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "924,ValleyOfKings,国王谷,0,38"
+    verified_by: ai_read
+
+  - id: north_gate_pass_loch_modan
+    parent: loch_modan
+    type: poi
+    subtype: ""
+    name_zh: 北门小径
+    name_en: North Gate Pass
+    level: ""
+    faction: alliance
+    coords: "[24, 24]"
+    adjacent: []
+    era: vanilla
+    look_zh: 西北角通往丹莫罗的山口，路面从草绿一路变成残雪，两侧岩壁夹出一条窄道
+    note_zh: 洛克莫丹一侧的北门径（与丹莫罗同名小径是同一条路的两端）
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "838,NorthGatePass,北门小径,0,38"
+    verified_by: ai_read
+
+  - id: algaz_station
+    parent: north_gate_pass_loch_modan
+    type: settlement
+    subtype: camp
+    name_zh: 奥加兹岗哨
+    name_en: Algaz Station
+    level: ""
+    faction: alliance
+    coords: "[24, 18]"
+    adjacent: []
+    era: vanilla
+    look_zh: 山路边一处矮石墙围起的驻防点，几顶军帐加一座瞭望木塔，路障后站着披斗篷的矮人山地兵
+    note_zh: 北门小径以东、丹奥加兹以南的矮人驻防点
+    source_url: https://warcraft.wiki.gg/wiki/Algaz_Station
+    quote: "Algaz Station is a dwarven outpost in Loch Modan where many dwarven mountaineers are stationed."
+    verified_by: ai_read
+
+  - id: south_gate_pass_loch_modan
+    parent: loch_modan
+    type: poi
+    subtype: ""
+    name_zh: 南门小径
+    name_en: South Gate Pass
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 西侧一条较低的隘路，草坡与碎石交界，往西越走越冷、雪线渐现
+    note_zh: 洛克莫丹一侧的南门径（通丹莫罗）
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "839,SouthGatePass,南门小径,0,38"
+    verified_by: ai_read
+
+  - id: dun_algaz_loch_modan
+    parent: loch_modan
+    type: poi
+    subtype: ""
+    name_zh: 丹奥加兹
+    name_en: Dun Algaz
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 北端凿穿山体的两段长隧道，洞壁架着木梁与火把，中段露天的一小片谷地驻着兽人营帐
+    note_zh: 洛克莫丹通湿地的唯一陆路；隧道中段旧世被龙喉兽人占据。湿地一侧另有同名区域条目（本树记作 dun_algaz_wetlands）
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "837,DunAlgaz,丹奥加兹,0,38"
+    verified_by: ai_read
+
+  - id: algaz_gate
+    parent: dun_algaz_loch_modan
+    type: poi
+    subtype: ""
+    name_zh: 奥加兹大门
+    name_en: Algaz Gate
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 隧道南口一道厚重的铁木闸门，门楣刻着矮人符文，门前一小段吊桥式石台
+    note_zh: 丹奥加兹隧道在洛克莫丹一侧的关门
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "145,AlgazGate,奥加兹大门,0,38"
+    verified_by: ai_read
+
+  # ============================================================
+  # ZONE 3 · 湿地 Wetlands
+  # ============================================================
+  - id: wetlands
+    parent: khaz_modan
+    type: zone
+    subtype: ""
+    name_zh: 湿地
+    name_en: Wetlands
+    level: "20-30"
+    faction: contested
+    coords: ""
+    adjacent: [loch_modan, arathi_highlands, dustwallow_marsh, darkshore]
+    era: vanilla
+    look_zh: 常年灰绿的低地沼泽，浅水塘与泥路交错，枯瘦的湿地乔木举着稀疏树冠，天色总是阴的，远处东边压着一座黑色山堡
+    note_zh: 三面环山、西面开向大海；北经萨多尔大桥去阿拉希高地，南经丹奥加兹回洛克莫丹，米奈希尔港的船通塞拉摩与奥伯丁。旧世本区无夜精灵据点（绿色守护者之林等是 4.0.3 新增）
+    source_url: https://warcraft.wiki.gg/wiki/Wetlands
+    quote: "a large, wet region below Stonewrought Dam and north of Loch Modan, covered with small rivers, lakes, and ponds"
+    verified_by: ai_read
+
+  - id: menethil_harbor
+    parent: wetlands
+    type: settlement
+    subtype: port
+    name_zh: 米奈希尔港
+    name_en: Menethil Harbor
+    level: ""
+    faction: alliance
+    coords: "[11, 55]"
+    adjacent: []
+    era: vanilla
+    look_zh: 建在沼泽尽头小岛上的石墙港镇，四座方塔拱着中央城堡，木栈桥伸进灰绿海水，桅杆与帆影挤在码头边
+    note_zh: 联盟在东部王国最重要的海运枢纽；旧世从这里发两条船：塞拉摩（尘泥沼泽）与奥伯丁（黑海岸）。城墙 / 城堡 / 深水旅店 / 狮鹫场都在镇内。4.0.3 后半个镇沉入海里
+    source_url: https://warcraft.wiki.gg/wiki/Menethil_Harbor
+    quote: "the thick, stone wall which protects most of the town from inland incursions"
+    verified_by: ai_read
+
+  - id: menethil_keep
+    parent: menethil_harbor
+    type: poi
+    subtype: ""
+    name_zh: 米奈希尔城堡
+    name_en: Menethil Keep
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 镇中央方形石堡，四角各一座带尖顶的塔楼，墙头插着联盟蓝旗，堡内是石阶与窄窗
+    note_zh: 镇上的军事核心，旧世由 Captain Stoutfist 驻守
+    source_url: https://warcraft.wiki.gg/wiki/Menethil_Harbor
+    quote: "Four towers crown the iconic Menethil Keep, which watch over the settlement like stern guardians."
+    verified_by: ai_read
+
+  - id: deepwater_tavern
+    parent: menethil_harbor
+    type: settlement
+    subtype: inn
+    name_zh: 深水旅店
+    name_en: Deepwater Tavern
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 码头边一栋两层木屋，招牌被海风吹得发白，屋内低梁上挂着渔网与油灯，水手挤在长桌旁
+    note_zh: 米奈希尔港的旅店（炉石绑定点），旧世港区社交中心
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "2104,DeepwaterTavern,深水旅店,0,11"
+    verified_by: ai_read
+
+  - id: menethil_gryphon_roost
+    parent: menethil_harbor
+    type: transport
+    subtype: flightpath
+    name_zh: 米奈希尔港狮鹫场
+    name_en: Menethil Harbor Gryphon Roost
+    level: ""
+    faction: alliance
+    coords: "[10, 60]"
+    adjacent: []
+    era: vanilla
+    look_zh: 镇南一处石台狮鹫栏，狮鹫立在木架上，背后就是灰蒙蒙的海面
+    note_zh: 湿地唯一的旧世飞行点（狮鹫管理员 Shellei Brondir）；旧世航线通铁炉堡 / 塞尔萨玛 / 避难谷地
+    source_url: "https://wago.tools/db2/TaxiNodes/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "7,米奈希尔港，湿地,ContinentID=0"
+    verified_by: ai_read
+
+  - id: menethil_dock_theramore
+    parent: menethil_harbor
+    type: transport
+    subtype: boat
+    name_zh: 米奈希尔港码头（往塞拉摩）
+    name_en: Menethil Harbor Dock (to Theramore Isle)
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 长木栈桥尽头一条中型帆船，船身吃水深、帆布泛黄，跳板搭在湿滑的木板上
+    note_zh: 旧世跨大陆航线之一：米奈希尔港 → 塞拉摩岛（卡利姆多·尘泥沼泽）。船名 Lady Mehley
+    source_url: https://warcraft.wiki.gg/wiki/Menethil_Harbor
+    quote: "Lady Mehley boat to Ruins of Theramore (Dustwallow Marsh)"
+    verified_by: ai_read
+
+  - id: menethil_dock_auberdine
+    parent: menethil_harbor
+    type: transport
+    subtype: boat
+    name_zh: 米奈希尔港码头（往奥伯丁）
+    name_en: Menethil Harbor Dock (to Auberdine)
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 北侧另一条栈桥，停着一艘船体更修长、挂着暗色帆的船，甲板上常见夜精灵旅人
+    note_zh: 旧世跨大陆航线之二：米奈希尔港 → 奥伯丁（卡利姆多·黑海岸）。该航线在 3.0.2 被改掉，本树只记旧世状态
+    source_url: https://warcraft.wiki.gg/wiki/Menethil_Harbor
+    quote: "Auberdine connection (later removed in patch 3.0.2)"
+    verified_by: ai_read
+
+  - id: menethil_bay
+    parent: wetlands
+    type: poi
+    subtype: ""
+    name_zh: 米奈希尔海湾
+    name_en: Menethil Bay
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 港镇以南的浅海湾，水色灰绿、浪不高，水下能看见沉船与成片的海草
+    note_zh: 米奈希尔港南侧海域
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "299,MenethilBay,米奈希尔海湾,0,11"
+    verified_by: ai_read
+
+  - id: baradin_bay
+    parent: wetlands
+    type: poi
+    subtype: ""
+    name_zh: 巴拉丁海湾
+    name_en: Baradin Bay
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 港镇以北的开阔海湾，浅滩上散着黑掉的沉船残骸，退潮时露出成排的肋木
+    note_zh: 米奈希尔港北侧海域，失落的舰队沉在这里
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "298,BaradinBay,巴拉丁海湾,0,11"
+    verified_by: ai_read
+
+  - id: the_lost_fleet
+    parent: baradin_bay
+    type: poi
+    subtype: ""
+    name_zh: 失落的舰队
+    name_en: The Lost Fleet
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 浅水里半沉的几条大船，木壳发黑开裂、桅杆斜插进泥里，船身被藤壶与水草裹住
+    note_zh: 第二次战争中被毁的库尔提拉斯第三舰队残骸，位于蓝腮沼泽以北的巴拉丁海湾（Wave Mistress / Intrepid 两艘为主）；旧世水下任务区
+    source_url: https://warcraft.wiki.gg/wiki/The_Lost_Fleet
+    quote: "Wreckage of a part of the Lost Fleet in the Wetlands."
+    verified_by: ai_read
+
+  - id: bluegill_marsh
+    parent: wetlands
+    type: subzone
+    subtype: ""
+    name_zh: 蓝腮沼泽
+    name_en: Bluegill Marsh
+    level: ""
+    faction: contested
+    coords: "[20, 35]"
+    adjacent: []
+    era: vanilla
+    look_zh: 西北一片浅水滩涂，泥岸上插着鱼人用的骨制尖桩与草棚，水面漂着成片浮萍
+    note_zh: 蓝腮鱼人的地盘，湿地西北；旧世 20-24 级任务区
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1022,BluegillMarsh,蓝腮沼泽,0,11"
+    verified_by: ai_read
+
+  - id: sundown_marsh
+    parent: wetlands
+    type: subzone
+    subtype: ""
+    name_zh: 日落沼泽
+    name_en: Sundown Marsh
+    level: ""
+    faction: contested
+    coords: "[24, 30]"
+    adjacent: []
+    era: vanilla
+    look_zh: 西北的开阔湿草甸，水洼一块接一块反着灰天，几丛高草和枯木立在水中
+    note_zh: 湿地西北的沼泽带，靠近蓝腮与盐沫一线
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1024,SundownMarsh,日落沼泽,0,11"
+    verified_by: ai_read
+
+  - id: saltspray_glen
+    parent: wetlands
+    type: subzone
+    subtype: ""
+    name_zh: 盐沫沼泽
+    name_en: Saltspray Glen
+    level: ""
+    faction: contested
+    coords: "[34, 24]"
+    adjacent: []
+    era: vanilla
+    look_zh: 北岸靠海的一段谷地，风大、草伏，海雾常年不散，地表结着一层白色盐霜
+    note_zh: 湿地北部临海谷地
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1023,SaltsprayGlen,盐沫沼泽,0,11"
+    verified_by: ai_read
+
+  - id: black_channel_marsh
+    parent: wetlands
+    type: subzone
+    subtype: ""
+    name_zh: 黑水沼泽
+    name_en: Black Channel Marsh
+    level: ""
+    faction: contested
+    coords: "[20, 50]"
+    adjacent: []
+    era: vanilla
+    look_zh: 水色发墨的一片深沼，水面浮着油亮的黑膜，枯树根盘出水面，几乎没有光进得去
+    note_zh: 米奈希尔港东侧的暗色沼泽
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1018,BlackChannelMarsh,黑水沼泽,0,11"
+    verified_by: ai_read
+
+  - id: whelgars_excavation_site
+    parent: wetlands
+    type: poi
+    subtype: ""
+    name_zh: 维尔加挖掘场
+    name_en: Whelgar's Excavation Site
+    level: ""
+    faction: alliance
+    coords: "[34, 45]"
+    adjacent: []
+    era: vanilla
+    look_zh: 泥地里挖开的考古坑群，坑中立着巨大的恐龙化石骨架，四周是矮人帐篷、木梯与刷净的骨片
+    note_zh: 探险者协会在湿地的发掘营，旧世被迅猛龙与鱼人骚扰（经典 20 级出头任务链）
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "118,WhelgarsExcavationSite,维尔加挖掘场,0,11"
+    verified_by: ai_read
+
+  - id: the_green_belt
+    parent: wetlands
+    type: subzone
+    subtype: ""
+    name_zh: 绿带草地
+    name_en: The Green Belt
+    level: ""
+    faction: contested
+    coords: "[55, 37]"
+    adjacent: []
+    era: vanilla
+    look_zh: 湿地中部少见的一条干爽草带，草色偏亮绿，几株高大的阔叶树成行立着，像一条穿过沼泽的绿色缓坡
+    note_zh: 湿地中部的林草带，迅猛龙活动区
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1025,TheGreenBelt,绿带草地,0,11"
+    verified_by: ai_read
+
+  - id: angerfang_encampment
+    parent: wetlands
+    type: subzone
+    subtype: ""
+    name_zh: 怒牙营地
+    name_en: Angerfang Encampment
+    level: ""
+    faction: horde
+    coords: "[46, 46]"
+    adjacent: []
+    era: vanilla
+    look_zh: 泥地上一圈尖木桩围起的兽人营，红黑兽皮帐篷、铁架火盆，营中央竖着龙喉氏族的旗与兽骨柱
+    note_zh: 龙喉兽人在湿地的主营，旧世 24-28 级任务区
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1036,AngerfangEncampment,怒牙营地,0,11"
+    verified_by: ai_read
+
+  - id: ironbeards_tomb
+    parent: wetlands
+    type: poi
+    subtype: ""
+    name_zh: 铁须之墓
+    name_en: Ironbeard's Tomb
+    level: ""
+    faction: contested
+    coords: "[45, 31]"
+    adjacent: []
+    era: vanilla
+    look_zh: 沼泽中一处半埋的矮人石墓入口，门楣裂开、石阶下积着黑水，墓内是塌了一半的棺室
+    note_zh: 湿地北部的矮人古墓，旧世小型探索/任务点
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "309,IronbeardsTomb,铁须之墓,0,11"
+    verified_by: ai_read
+
+  - id: dun_modr
+    parent: wetlands
+    type: settlement
+    subtype: town
+    name_zh: 丹莫德
+    name_en: Dun Modr
+    level: ""
+    faction: horde
+    coords: "[46, 16]"
+    adjacent: []
+    era: vanilla
+    look_zh: 北端路边一小片石砌矮人聚落，屋顶破损、墙上留着烟熏痕，街上走动的是穿黑甲的黑铁矮人，炉火烧成暗红
+    note_zh: 旧世被黑铁矮人占据（首领是术士 Balgaras the Foul），是湿地北部最硬的一处敌对据点，位于萨多尔大桥以南；4.0.3 后被铁炉堡夺回，变成友方
+    source_url: https://warcraft.wiki.gg/wiki/Dun_Modr
+    quote: "The city contains a blacksmith shop and an inn-brewery."
+    verified_by: ai_read
+
+  - id: thandol_span
+    parent: wetlands
+    type: poi
+    subtype: ""
+    name_zh: 萨多尔大桥
+    name_en: Thandol Span
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 横跨深峡的两座巨型石拱桥，桥墩粗得像塔，其中一座被炸断、断口垂着扭曲的铁索，桥面宽到能并排走车
+    note_zh: 湿地通阿拉希高地的唯一陆路；旧世两桥之一已被黑铁矮人炸毁，仅存一桥且重兵把守
+    source_url: https://warcraft.wiki.gg/wiki/Thandol_Span
+    quote: "The Thandol Span is a set of massive stone bridges connecting the Wetlands of northern Khaz Modan with the Arathi Highlands of southeastern Lordaeron."
+    verified_by: ai_read
+
+  - id: direforge_hill
+    parent: wetlands
+    type: subzone
+    subtype: ""
+    name_zh: 恶铁岭
+    name_en: Direforge Hill
+    level: ""
+    faction: horde
+    coords: "[63, 36]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东北一座裸岩小丘，坡上支着黑铁矮人的铁棚与熔炉，炉口喷着暗红火，坡面被熏得焦黑
+    note_zh: 黑铁矮人在湿地东北的据点
+    source_url: https://warcraft.wiki.gg/wiki/Direforge_Hill
+    quote: "With the Shattering, fire elementals overtook the region, driving out the dwarves."
+    verified_by: ai_read
+
+  - id: raptor_ridge
+    parent: wetlands
+    type: subzone
+    subtype: ""
+    name_zh: 恐龙岭
+    name_en: Raptor Ridge
+    level: ""
+    faction: contested
+    coords: "[72, 38]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东侧一片高地岩坡，地上散着蛋壳与啃净的骨头，岩缝间能看到成群迅猛龙来回巡走
+    note_zh: 湿地等级最高的野外点之一（旧世约 28-30 级），迅猛龙群聚地
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1017,RaptorRidge,恐龙岭,0,11"
+    verified_by: ai_read
+
+  - id: mosshide_fen
+    parent: wetlands
+    type: subzone
+    subtype: ""
+    name_zh: 藓皮沼泽
+    name_en: Mosshide Fen
+    level: ""
+    faction: contested
+    coords: "[63, 58]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东南一片长满厚苔的湿林，树干裹着绿毛，地面软塌，豺狼人的草窝散在树根之间
+    note_zh: 藓皮豺狼人的地盘，湿地东南
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1020,MosshideFen,藓皮沼泽,0,11"
+    verified_by: ai_read
+
+  - id: thelgen_rock
+    parent: wetlands
+    type: poi
+    subtype: ""
+    name_zh: 瑟根石
+    name_en: Thelgen Rock
+    level: ""
+    faction: contested
+    coords: "[58, 70]"
+    adjacent: []
+    era: vanilla
+    look_zh: 南端一个塌进地下的洞口，洞内是被水泡软的岩壁与蛛网，深处有成堆的丝茧
+    note_zh: 湿地南部的塌陷洞穴（旧世蜘蛛/豺狼人任务点），靠近丹奥加兹出口
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1021,ThelgenRock,瑟根石,0,11"
+    verified_by: ai_read
+
+  - id: dun_algaz_wetlands
+    parent: wetlands
+    type: poi
+    subtype: ""
+    name_zh: 丹奥加兹
+    name_en: Dun Algaz
+    level: ""
+    faction: contested
+    coords: "[48, 74]"
+    adjacent: []
+    era: vanilla
+    look_zh: 南端山壁上的隧道北口，洞外一小片被踩烂的泥地与兽人栅栏，洞内向南越走越暗
+    note_zh: 丹奥加兹隧道在湿地一侧的出口（洛克莫丹一侧见 dun_algaz_loch_modan）；AreaTable 里两侧各有一条同名条目
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "836,DunAlgaz,丹奥加兹,0,11"
+    verified_by: ai_read
+
+  - id: dragonmaw_gates
+    parent: wetlands
+    type: poi
+    subtype: ""
+    name_zh: 龙喉大门
+    name_en: Dragonmaw Gates
+    level: ""
+    faction: horde
+    coords: "[78, 61]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东端山壁前一道巨大的铁木关门，门两侧是兽人搭的哨塔与火盆，门后一条长坡通向更深的山谷
+    note_zh: 通往格瑞姆巴托的关门，旧世由龙喉兽人把守
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1038,DragonmawGates,龙喉大门,0,11"
+    verified_by: ai_read
+
+  - id: grim_batol
+    parent: dragonmaw_gates
+    type: poi
+    subtype: ""
+    name_zh: 格瑞姆巴托
+    name_en: Grim Batol
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 山谷尽头一整面被凿成城门的黑色山体，门脸高得望不到顶，四周岩石焦黑、毫无生气，天色比别处更暗
+    note_zh: 被遗弃的矮人山城；旧世只是一处不可进入的外景（副本是 4.x 才开的），拍摄时按「远景压迫感地标」处理
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1037,GrimBatol,格瑞姆巴托,0,11"
+    verified_by: ai_read
+
+  - id: the_great_sea_wetlands
+    parent: wetlands
+    type: poi
+    subtype: ""
+    name_zh: 无尽之海
+    name_en: The Great Sea
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 西面一望无际的灰蓝海面，浪压得很低，远处水天相接处只有一条模糊的白线
+    note_zh: 湿地西侧的外海（AreaTable 里湿地名下确有此条目），船离港后穿过的就是它
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "2365,TheGreatSea,无尽之海,0,11"
+    verified_by: ai_read
+
+  - id: the_forbidding_sea_wetlands
+    parent: wetlands
+    type: poi
+    subtype: ""
+    name_zh: 禁忌之海
+    name_en: The Forbidding Sea
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 更北的一片深色海域，水色近墨，浪比南面大，海雾成团地压在水面上
+    note_zh: 湿地北侧外海（AreaTable 里湿地名下确有此条目）
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "2402,TheForbiddingSea,禁忌之海,0,11"
+    verified_by: ai_read
+
+  # ============================================================
+  # ZONE 4 · 荒芜之地 Badlands
+  # ============================================================
+  - id: badlands
+    parent: khaz_modan
+    type: zone
+    subtype: ""
+    name_zh: 荒芜之地
+    name_en: Badlands
+    level: "35-45"
+    faction: contested
+    coords: ""
+    adjacent: [loch_modan, searing_gorge]
+    era: vanilla
+    look_zh: 龟裂的红褐色荒漠盆地，四周是刀削般的赭色岩崖，地上横着风化的巨兽骨架，天光发黄、能见度被浮尘压低
+    note_zh: 卡兹莫丹最南端；北接洛克莫丹（步行），西接灼热峡谷。旧世这里没有联盟据点，唯一的城镇是部落的卡加斯——这是本区最重要的阵营事实。4.0.3 后卡加斯被山崩埋掉，新增新卡加斯 / 熔火之滨 / 龙嘴等一批地名，本树一概不收
+    source_url: https://warcraft.wiki.gg/wiki/Badlands
+    quote: "The Badlands is an arid and desolate region in Khaz Modan accessed via the Searing Gorge to the west and Loch Modan to the north."
+    verified_by: ai_read
+
+  - id: kargath
+    parent: badlands
+    type: settlement
+    subtype: town
+    name_zh: 卡加斯
+    name_en: Kargath
+    level: ""
+    faction: horde
+    coords: "[4, 47]"
+    adjacent: []
+    era: vanilla
+    look_zh: 西端崖下一圈尖木寨墙围出的兽人镇，红黑兽皮帐篷与粗木望塔，寨心一堆常烧的火，旗上是破碎之手的爪印
+    note_zh: 旧世卡兹莫丹唯一的部落据点：旅店 / 飞行点 / 马厩 / 铁砧，但没有银行与拍卖行。得名于破碎之手氏族酋长卡加斯·刃拳。4.0.3 被山崩摧毁
+    source_url: https://warcraft.wiki.gg/wiki/Kargath
+    quote: "Kargath was at its time the only Horde outpost in Khaz Modan, named after the Shattered Hand clan chieftain Kargath Bladefist."
+    verified_by: ai_read
+
+  - id: kargath_wind_rider_post
+    parent: kargath
+    type: transport
+    subtype: flightpath
+    name_zh: 卡加斯双足飞龙站
+    name_en: Kargath Wind Rider Post
+    level: ""
+    faction: horde
+    coords: "[4, 45]"
+    adjacent: []
+    era: vanilla
+    look_zh: 寨墙外一处夯土高台，两头双足飞龙缩着翅膀蹲在木架上，台边插着氏族旗
+    note_zh: 荒芜之地旧世唯一的飞行点，且只对部落开放（联盟旧世在本区没有任何飞行点，取景时别给联盟角色安排落地镜）
+    source_url: "https://wago.tools/db2/TaxiNodes/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "21,卡加斯，荒芜之地,ContinentID=0"
+    verified_by: ai_read
+
+  - id: the_dustbowl
+    parent: badlands
+    type: subzone
+    subtype: ""
+    name_zh: 漫尘盆地
+    name_en: The Dustbowl
+    level: ""
+    faction: contested
+    coords: "[29, 50]"
+    adjacent: []
+    era: vanilla
+    look_zh: 一整片下陷的平底沙盆，地表龟裂成六边形土块，风把细尘卷成低矮的旋涡贴地跑
+    note_zh: 荒芜之地中西部的沙盆，本区最「空」的一片取景地
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1878,TheDustbowl,漫尘盆地,0,3"
+    verified_by: ai_read
+
+  - id: apocryphans_rest
+    parent: badlands
+    type: subzone
+    subtype: ""
+    name_zh: 圣者之陵
+    name_en: Apocryphan's Rest
+    level: ""
+    faction: contested
+    coords: "[14, 62]"
+    adjacent: []
+    era: vanilla
+    look_zh: 荒原上一具横卧的巨大骨架，肋骨拱成天然的拱廊，骨面被风沙磨成灰白，骨架间搭着几顶破帐篷
+    note_zh: 荒芜之地西南的巨型骸骨地标，旧世亡灵/掘墓任务点；本区最上镜的自然奇观之一
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "337,ApocryphansRest,圣者之陵,0,3"
+    verified_by: ai_read
+
+  - id: mirage_flats
+    parent: badlands
+    type: subzone
+    subtype: ""
+    name_zh: 雾气平原
+    name_en: Mirage Flats
+    level: ""
+    faction: contested
+    coords: "[29, 75]"
+    adjacent: []
+    era: vanilla
+    look_zh: 南部一片被热浪蒸得发虚的平原，地平线抖动、远景像泡在水里，地面是浅色的盐碱壳
+    note_zh: 荒芜之地南部平原
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1879,MirageFlats,雾气平原,0,3"
+    verified_by: ai_read
+
+  - id: camp_cagg
+    parent: badlands
+    type: settlement
+    subtype: camp
+    name_zh: 卡格营地
+    name_en: Camp Cagg
+    level: ""
+    faction: horde
+    coords: "[14, 81]"
+    adjacent: []
+    era: vanilla
+    look_zh: 荒原上几顶破烂兽皮帐篷围着一堆黑灰，地上扔着啃过的大骨头与粗木棒
+    note_zh: 尘吼食人魔四营之一（西南），旧世 40 级上下的怪点
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "344,CampCagg,卡格营地,0,3"
+    verified_by: ai_read
+
+  - id: dustbelch_grotto
+    parent: camp_cagg
+    type: poi
+    subtype: ""
+    name_zh: 火山洞穴
+    name_en: Dustbelch Grotto
+    level: ""
+    faction: horde
+    coords: "[7, 86]"
+    adjacent: []
+    era: vanilla
+    look_zh: 崖壁下一个大口岩洞，洞口熏黑，洞内一堆常燃的火与成排的草席，深处堆着抢来的箱笼
+    note_zh: 尘吼食人魔的主巢洞，荒芜之地西南角
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "347,DustbelchGrotto,火山洞穴,0,3"
+    verified_by: ai_read
+
+  - id: agmonds_end
+    parent: badlands
+    type: subzone
+    subtype: ""
+    name_zh: 埃格蒙德的营地
+    name_en: Agmond's End
+    level: ""
+    faction: contested
+    coords: "[48, 78]"
+    adjacent: []
+    era: vanilla
+    look_zh: 一具更巨大的兽骨半埋在红土里，脊椎像一道天然山脊横过荒原，骨下阴影里扎着几顶考古帐篷
+    note_zh: 荒芜之地南部的巨骨地标兼营地，旧世考古/食人魔任务点
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "345,AgmondsEnd,埃格蒙德的营地,0,3"
+    verified_by: ai_read
+
+  - id: camp_boff
+    parent: badlands
+    type: settlement
+    subtype: camp
+    name_zh: 博夫营地
+    name_en: Camp Boff
+    level: ""
+    faction: horde
+    coords: "[63, 72]"
+    adjacent: []
+    era: vanilla
+    look_zh: 岩台上一小圈食人魔帐篷，中央立着挂满头骨的木柱，火堆边横着一根包铁的大棒
+    note_zh: 尘吼食人魔四营之一（东南）
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "342,CampBoff,博夫营地,0,3"
+    verified_by: ai_read
+
+  - id: camp_kosh
+    parent: badlands
+    type: settlement
+    subtype: camp
+    name_zh: 柯什营地
+    name_en: Camp Kosh
+    level: ""
+    faction: horde
+    coords: "[66, 24]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东北岩坡上的食人魔营，帐篷用整张兽皮撑开，营外插着一排削尖的木桩
+    note_zh: 尘吼食人魔四营之一（东北）
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "341,CampKosh,柯什营地,0,3"
+    verified_by: ai_read
+
+  - id: camp_wurg
+    parent: badlands
+    type: settlement
+    subtype: camp
+    name_zh: 瓦格营地
+    name_en: Camp Wurg
+    level: ""
+    faction: horde
+    coords: "[29, 55]"
+    adjacent: []
+    era: vanilla
+    look_zh: 荒原中段的食人魔营，三两顶帐篷背着一块风蚀巨岩，火堆上架着一口熏黑的大锅
+    note_zh: 尘吼食人魔四营之一（中部）；四营共戴一个头目 Boss Tho'grun。4.0.3 后被死亡之翼犁毁，仅 Classic 可见
+    source_url: https://warcraft.wiki.gg/wiki/Camp_Wurg
+    quote: "Camp Wurg was destroyed by Deathwing as it lies directly in the path of destruction that makes up the Scar of the Worldbreaker."
+    verified_by: ai_read
+
+  - id: valley_of_fangs
+    parent: badlands
+    type: subzone
+    subtype: ""
+    name_zh: 巨牙谷
+    name_en: Valley of Fangs
+    level: ""
+    faction: contested
+    coords: "[46, 56]"
+    adjacent: []
+    era: vanilla
+    look_zh: 两侧岩壁上竖着一排排尖锥状风蚀岩柱的窄谷，像张开的牙口，谷底常有沙流顺坡淌下
+    note_zh: 荒芜之地中部的岩柱谷
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1877,ValleyOfFangs,巨牙谷,0,3"
+    verified_by: ai_read
+
+  - id: dustwind_gulch
+    parent: badlands
+    type: subzone
+    subtype: ""
+    name_zh: 尘风峡谷
+    name_en: Dustwind Gulch
+    level: ""
+    faction: contested
+    coords: "[62, 47]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东部一条被风掏空的浅谷，谷壁上是一层层水平的沉积纹，风穿过时带起长条状的黄尘
+    note_zh: 荒芜之地东部峡谷（4.0.3 后联盟在附近建尘风挖掘场，旧世没有）
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1898,DustwindGulch,尘风峡谷,0,3"
+    verified_by: ai_read
+
+  - id: hammertoes_digsite
+    parent: badlands
+    type: poi
+    subtype: ""
+    name_zh: 铁趾挖掘场
+    name_en: Hammertoe's Digsite
+    level: ""
+    faction: contested
+    coords: "[54, 33]"
+    adjacent: []
+    era: vanilla
+    look_zh: 荒原中段挖开的探方，坑边立着木架与绳索，坑里露出灰白的泰坦石砖与断柱
+    note_zh: 通往奥达曼的考古线索点；旧世奥达曼任务链在此展开
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "346,HammertoesDigsite,铁趾挖掘场,0,3"
+    verified_by: ai_read
+
+  - id: angor_fortress
+    parent: badlands
+    type: settlement
+    subtype: tower
+    name_zh: 苦痛堡垒
+    name_en: Angor Fortress
+    level: ""
+    faction: horde
+    coords: "[41, 25]"
+    adjacent: []
+    era: vanilla
+    look_zh: 荒原北部一座方正的黑石堡，墙头架着短炮，城垛被烟熏黑，堡内火盆燃着暗红的火
+    note_zh: 黑铁矮人在荒芜之地的指挥中枢，用作挖掘奥达曼的前进基地；旧世高等级任务区
+    source_url: https://warcraft.wiki.gg/wiki/Angor_Fortress
+    quote: "Angor Fortress is the main site of operations of the Dark Iron dwarves in the Badlands."
+    verified_by: ai_read
+
+  - id: the_makers_terrace
+    parent: badlands
+    type: subzone
+    subtype: ""
+    name_zh: 造物者遗迹
+    name_en: The Maker's Terrace
+    level: ""
+    faction: contested
+    coords: "[51, 16]"
+    adjacent: []
+    era: vanilla
+    look_zh: 北端一片从红土里露出来的泰坦台地，巨大的方形石阶与断柱按直角排布，与周围乱石的荒漠形成强烈反差
+    note_zh: 奥达曼入口所在的泰坦遗迹台地，荒芜之地北端
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1897,TheMakersTerrace,造物者遗迹,0,3"
+    verified_by: ai_read
+
+  - id: uldaman_dig_one
+    parent: uldaman
+    type: subzone
+    subtype: ""
+    name_zh: "一号挖掘场"
+    name_en: Dig One
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 副本口外的第一处探方，木支撑撑着土壁，地上散着矿灯与断掉的十字镐
+    note_zh: "位于副本入口之外的露天探方（Dig Two / Dig Three 在副本内）。官方译名未查到〔2026-09-23 更正：简中名「一号挖掘场」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Uldaman
+    quote: "three dig sites (Dig Two and Dig Three inside the instance, plus Dig One outside)"
+    verified_by: ai_read
+
+  - id: uldaman_map_chamber
+    parent: uldaman
+    type: subzone
+    subtype: ""
+    name_zh: "地图厅"
+    name_en: Map Chamber
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一间圆形石厅，中央地面浮起一张发着蓝光的立体世界图，四壁刻满泰坦符文
+    note_zh: "奥达曼内的地图厅（旧世任务关键场景）。官方译名未查到〔2026-09-23 更正：简中名「地图厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Uldaman
+    quote: "The dungeon contains numerous chambers including the Hall of the Keepers, Map Chamber, Khaz'goroth's Seat (final boss arena)"
+    verified_by: ai_read
+
+  - id: uldaman_hall_of_the_keepers
+    parent: uldaman
+    type: subzone
+    subtype: ""
+    name_zh: "守护者大厅"
+    name_en: Hall of the Keepers
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一条两侧立着巨型石卫士的长廊，石像比人高数倍、沿墙成对排开，尽头是一道刻符的石门
+    note_zh: "奥达曼内的守卫者长廊。官方译名未查到（正式服同名条目属龙飞时代的新奥达曼副本，不可直接套用）〔2026-09-23 更正：简中名「守护者大厅」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Uldaman
+    quote: "The dungeon contains numerous chambers including the Hall of the Keepers, Map Chamber, Khaz'goroth's Seat (final boss arena)"
+    verified_by: ai_read
+
+  - id: uldaman_khazgoroths_seat
+    parent: uldaman
+    type: subzone
+    subtype: ""
+    name_zh: "卡兹格罗斯的王座"
+    name_en: Khaz'goroth's Seat
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 副本最深处的圆形大殿，正中一座巨大的泰坦石座与石碑，顶上开着一圈蓝光符文环
+    note_zh: "奥达曼最终 boss 场地。官方译名未查到〔2026-09-23 更正：简中名「卡兹格罗斯的王座」取自 Classic Era 1.15.9 客户端 WMOAreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Uldaman
+    quote: "Khaz'goroth's Seat (final boss arena)"
+    verified_by: ai_read
+
+  - id: lethlor_ravine
+    parent: badlands
+    type: subzone
+    subtype: ""
+    name_zh: 莱瑟罗峡谷
+    name_en: Lethlor Ravine
+    level: ""
+    faction: contested
+    coords: "[79, 51]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东端一道深陷的大裂谷，谷底堆着焦黑岩块与龙骨，暗红色的龙群在谷上空盘旋，空气被热浪扭曲
+    note_zh: 黑龙幼龙的聚集谷，荒芜之地东端；旧世本区等级最高的野外点（45 级上下）
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "339,LethlorRavine,莱瑟罗峡谷,0,3"
+    verified_by: ai_read
+
+  - id: badlands_searing_gorge_pass
+    parent: badlands
+    type: poi
+    subtype: ""
+    name_zh: 通往灼热峡谷的山口
+    name_en: Pass to Searing Gorge
+    level: ""
+    faction: contested
+    coords: "[0, 63]"
+    adjacent: []
+    era: vanilla
+    look_zh: 西侧崖壁间一条上坡窄道，越往上岩色越红、空气越烫，尽头透出灼热峡谷的橙红天光
+    note_zh: 荒芜之地通灼热峡谷的西侧山口。名称为描述性，非游戏内区域名（官方译名不适用）
+    source_url: https://warcraft.wiki.gg/wiki/Badlands
+    quote: "Map Coordinates Given: Pass to Searing Gorge at (0,63)"
+    verified_by: ai_read

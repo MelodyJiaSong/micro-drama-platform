@@ -1,0 +1,377 @@
+# G10 · 卡利姆多南部（尘泥沼泽 / 千针石林 / 费拉斯 / 塔纳利斯 / 安戈洛环形山 / 希利苏斯）
+# 版本锚点：经典旧世 Vanilla / Classic Era (1.12)。4.0.3a 之后才有/才改的地名一律不进本树。
+# 本文件是树数据的唯一出处；notes.md 不得重复任何树字段。
+#
+# 来源与强度：本片区**不在第一季拍摄范围内**，两轮 agent 测绘均失败后由 parent 依据
+# 本剧已核验的 `parts/w06_全升级路线地图.md`（120 条事实，已过 W06-V 核验）逐条转写。
+# 因此本片区的 `verified_by` 一律 `ai_draft`——w06 的原始 quote 与 source_url 留在该 part 里，
+# 本文件只做**结构转写**，**不冒充原文页**。推进到该片区再按 G01–G13 的标准重测。
+nodes:
+  - id: dustwallow_marsh
+    parent: southern_kalimdor
+    type: zone
+    subtype: ""
+    name_zh: 尘泥沼泽
+    name_en: Dustwallow Marsh
+    level: "35-45"
+    faction: contested
+    coords: ""
+    adjacent: [the_barrens, thousand_needles, wetlands]
+    era: vanilla
+    look_zh: 湿热腐臭的沼泽，泥浆与蚊蚋，枯立木与高草；南端是黑龙盘踞的泥沼
+    note_zh: 「失踪的外交官」任务链终点存疑（w06 U19：wiki 未列该链经过区域）；海路经米奈希尔港往来
+    source_url: https://warcraft.wiki.gg/wiki/Dustwallow_Marsh
+    quote: ""
+    verified_by: ai_draft
+  - id: theramore_isle
+    parent: dustwallow_marsh
+    type: settlement
+    subtype: port
+    name_zh: 塞拉摩岛
+    name_en: Theramore Isle
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 沼泽东侧的岛上要塞，石墙木桥与灯塔，港口停着往米奈希尔港的帆船
+    note_zh: 吉安娜在此。❌ Vanilla 是**完好的联盟要塞**——塞拉摩废墟与紫色魔法弹坑是 MoP 之后的事
+    source_url: https://warcraft.wiki.gg/wiki/Theramore_Isle
+    quote: ""
+    verified_by: ai_draft
+  - id: wyrmbog
+    parent: dustwallow_marsh
+    type: subzone
+    subtype: ""
+    name_zh: "巨龙沼泽"
+    name_en: Wyrmbog
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 沼泽最南端，黑龙与龙人盘踞的泥潭，地面散着巨大的骨骸
+    note_zh: "奥妮克希亚巢穴入口所在（副本节点归 g11_instances）〔2026-09-23 更正：简中名「巨龙沼泽」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Wyrmbog
+    quote: ""
+    verified_by: ai_draft
+  - id: brackenwall_village
+    parent: dustwallow_marsh
+    type: settlement
+    subtype: village
+    name_zh: 蕨墙村
+    name_en: Brackenwall Village
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 食人魔与部落共处的泥沼营地，木桩围墙与兽皮帐篷
+    note_zh: 部落在尘泥沼泽的落脚点
+    source_url: https://warcraft.wiki.gg/wiki/Brackenwall_Village
+    quote: ""
+    verified_by: ai_draft
+  - id: thousand_needles
+    parent: southern_kalimdor
+    type: zone
+    subtype: ""
+    name_zh: 千针石林
+    name_en: Thousand Needles
+    level: "25-35"
+    faction: contested
+    coords: ""
+    adjacent: [the_barrens, desolace, tanaris, dustwallow_marsh]
+    era: vanilla
+    look_zh: 巨大的干涸峡谷，一根根圆柱形砂岩台地拔地而起，台地之间连着晃动的绳桥
+    note_zh: 半人马、鹰身人、蜥蜴。**无飞行点**，往来经萨兰纳尔与闪光平原
+    source_url: https://warcraft.wiki.gg/wiki/Thousand_Needles
+    quote: ""
+    verified_by: ai_draft
+  - id: shimmering_flats
+    parent: thousand_needles
+    type: subzone
+    subtype: ""
+    name_zh: 闪光平原
+    name_en: Shimmering Flats
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 白色盐碱滩，地精与侏儒的赛车跑道绕着平原一圈，看台由铁皮与木架搭成
+    note_zh: 幻影赛道（地精 vs 侏儒赛车）。❌ 大地的裂变之后这里被水淹没，旧世是干的
+    source_url: https://warcraft.wiki.gg/wiki/Shimmering_Flats
+    quote: ""
+    verified_by: ai_draft
+  - id: freewind_post
+    parent: thousand_needles
+    type: settlement
+    subtype: camp
+    name_zh: "乱风岗"
+    name_en: Freewind Post
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 建在一根砂岩台地顶上的牛头人营地，绳桥是唯一的路
+    note_zh: 部落飞行点
+    source_url: https://warcraft.wiki.gg/wiki/Freewind_Post
+    quote: ""
+    verified_by: ai_draft
+  - id: thalanaar
+    parent: thousand_needles
+    type: settlement
+    subtype: camp
+    name_zh: 萨兰纳尔
+    name_en: Thalanaar
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 峡谷西端的暗夜精灵哨站，泉眼边几株活树与守泉的德鲁伊
+    note_zh: 联盟飞行点，也是千针石林通往费拉斯的关口。**w06-V 已裁定**：原稿的「塔拉尼斯」与本名是同一地点的两个自译名
+    source_url: https://warcraft.wiki.gg/wiki/Thalanaar
+    quote: ""
+    verified_by: ai_draft
+  - id: feralas
+    parent: southern_kalimdor
+    type: zone
+    subtype: ""
+    name_zh: "菲拉斯"
+    name_en: Feralas
+    level: "40-50"
+    faction: contested
+    coords: ""
+    adjacent: [desolace, thousand_needles]
+    era: vanilla
+    look_zh: 茂密雨林与远古巨树，林间遍布倒塌的夜精灵石柱与藤蔓覆盖的废墟
+    note_zh: "⚠️ 译名两存：本剧考据 §2／§3.2 作「费拉斯」，另有「菲拉斯」写法（w06-V 已标为同一处的两个自译名）；官方词表未拿到，见 `pending_user.md` #5。戈杜尼食人魔、纳迦、奇美拉、鹰身人〔2026-09-23 更正：简中名「菲拉斯」取自 Classic Era 1.15.9 客户端 AreaTable zhCN〕"
+    source_url: https://warcraft.wiki.gg/wiki/Feralas
+    quote: ""
+    verified_by: ai_draft
+  - id: feathermoon_stronghold
+    parent: feralas
+    type: settlement
+    subtype: port
+    name_zh: 羽月要塞
+    name_en: Feathermoon Stronghold
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 建在外海小岛上的夜精灵要塞，紫蓝色月形穹顶与吊桥
+    note_zh: 联盟飞行点；与被遗忘的海岸之间有区内摆渡（4.0.3a 移除）
+    source_url: https://warcraft.wiki.gg/wiki/Feathermoon_Stronghold
+    quote: ""
+    verified_by: ai_draft
+  - id: forgotten_coast
+    parent: feralas
+    type: subzone
+    subtype: ""
+    name_zh: 被遗忘的海岸
+    name_en: The Forgotten Coast
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 费拉斯西岸的滩涂与断崖，海雾常年不散，岸边泊着通往羽月要塞的小渡船
+    note_zh: 羽月渡轮的大陆侧码头
+    source_url: https://warcraft.wiki.gg/wiki/The_Forgotten_Coast
+    quote: ""
+    verified_by: ai_draft
+  - id: camp_mojache
+    parent: feralas
+    type: settlement
+    subtype: camp
+    name_zh: 莫沙彻营地
+    name_en: Camp Mojache
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 雨林深处的牛头人营地，圆顶兽皮帐篷绕着一根图腾柱
+    note_zh: 部落飞行点
+    source_url: https://warcraft.wiki.gg/wiki/Camp_Mojache
+    quote: ""
+    verified_by: ai_draft
+  - id: dire_maul_ruins
+    parent: feralas
+    type: subzone
+    subtype: ""
+    name_zh: 埃德萨拉废墟
+    name_en: Eldre'Thalas
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 雨林中央的巨大夜精灵城废墟，高柱与断墙围出三块互不相通的区域
+    note_zh: 厄运之槌三翼的入口所在（副本节点归 g11_instances）
+    source_url: https://warcraft.wiki.gg/wiki/Dire_Maul
+    quote: ""
+    verified_by: ai_draft
+  - id: tanaris
+    parent: southern_kalimdor
+    type: zone
+    subtype: ""
+    name_zh: 塔纳利斯
+    name_en: Tanaris
+    level: "40-50"
+    faction: contested
+    coords: ""
+    adjacent: [thousand_needles, un_goro_crater]
+    era: vanilla
+    look_zh: 连绵沙丘与沙暴，烈日下空气扭曲，沙里偶尔拱出巨大的沙虫脊背
+    note_zh: 土狼、蝎子、蜥蜴、沙虫
+    source_url: https://warcraft.wiki.gg/wiki/Tanaris
+    quote: ""
+    verified_by: ai_draft
+  - id: gadgetzan
+    parent: tanaris
+    type: settlement
+    subtype: town
+    name_zh: 加基森
+    name_en: Gadgetzan
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 沙漠中的地精铁皮棚屋镇，锈蚀的管道与风车，镇口立着火炮
+    note_zh: 中立城；联盟与部落各有一个飞行点管理员
+    source_url: https://warcraft.wiki.gg/wiki/Gadgetzan
+    quote: ""
+    verified_by: ai_draft
+  - id: caverns_of_time_entrance
+    parent: tanaris
+    type: poi
+    subtype: ""
+    name_zh: 时光之穴
+    name_en: Caverns of Time
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 沙漠中一道向下的巨大裂口，洞壁盘着看不见尽头的螺旋坡道
+    note_zh: "**Vanilla 不可进**，只是地标；内部副本是燃烧的远征才开"
+    source_url: https://warcraft.wiki.gg/wiki/Caverns_of_Time
+    quote: ""
+    verified_by: ai_draft
+  - id: zul_farrak_ruins
+    parent: tanaris
+    type: subzone
+    subtype: ""
+    name_zh: 祖尔法拉克外围
+    name_en: Zul'Farrak
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 沙丘中的巨魔石城，阶梯金字塔与插满头骨的木桩
+    note_zh: 祖尔法拉克副本入口所在（副本节点归 g11_instances）
+    source_url: https://warcraft.wiki.gg/wiki/Zul%27Farrak
+    quote: ""
+    verified_by: ai_draft
+  - id: un_goro_crater
+    parent: southern_kalimdor
+    type: zone
+    subtype: ""
+    name_zh: 安戈洛环形山
+    name_en: Un'Goro Crater
+    level: "48-55"
+    faction: contested
+    coords: ""
+    adjacent: [tanaris, silithus]
+    era: vanilla
+    look_zh: 火山口里的史前丛林，中央火羽山冒着烟，地上遍布发光水晶与冒泡的焦油坑
+    note_zh: 魔暴龙、迅猛龙、火元素、剑龙。全剧唯一的「史前丛林 + 恐龙 + 发光水晶」奇观集候选
+    source_url: https://warcraft.wiki.gg/wiki/Un%27Goro_Crater
+    quote: ""
+    verified_by: ai_draft
+  - id: marshals_refuge
+    parent: un_goro_crater
+    type: settlement
+    subtype: camp
+    name_zh: 马绍尔营地
+    name_en: Marshal's Refuge
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 藏在环形山岩壁凹处的科考营地，帆布帐篷与堆满标本箱的木架
+    note_zh: 中立飞行点；水晶塔科考任务链的起点
+    source_url: https://warcraft.wiki.gg/wiki/Marshal%27s_Refuge
+    quote: ""
+    verified_by: ai_draft
+  - id: fire_plume_ridge
+    parent: un_goro_crater
+    type: poi
+    subtype: ""
+    name_zh: 火羽山
+    name_en: Fire Plume Ridge
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 环形山正中的活火山锥，顶口终年冒烟，山坡是黑色凝固熔岩
+    note_zh: 火元素聚集地
+    source_url: https://warcraft.wiki.gg/wiki/Fire_Plume_Ridge
+    quote: ""
+    verified_by: ai_draft
+  - id: silithus
+    parent: southern_kalimdor
+    type: zone
+    subtype: ""
+    name_zh: 希利苏斯
+    name_en: Silithus
+    level: "55-60"
+    faction: contested
+    coords: ""
+    adjacent: [un_goro_crater]
+    era: vanilla
+    look_zh: 沙岩荒漠，地表被巨大的虫巢从下方撕开，沙丘间竖着一根根甲壳状的巢口
+    note_zh: 异种虫、暮光教徒
+    source_url: https://warcraft.wiki.gg/wiki/Silithus
+    quote: ""
+    verified_by: ai_draft
+  - id: cenarion_hold
+    parent: silithus
+    type: settlement
+    subtype: camp
+    name_zh: 塞纳里奥要塞
+    name_en: Cenarion Hold
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 荒漠中的德鲁伊石砌要塞，墙头缠着活藤，院里一口不涸的水池
+    note_zh: 中立飞行点；联盟与部落各有一个管理员
+    source_url: https://warcraft.wiki.gg/wiki/Cenarion_Hold
+    quote: ""
+    verified_by: ai_draft
+  - id: scarab_wall
+    parent: silithus
+    type: poi
+    subtype: ""
+    name_zh: 甲虫之墙
+    name_en: Scarab Wall
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 横亘荒漠的巨大甲壳质屏障，正中一扇合拢的巢门，门上嵌着甲虫形的锁
+    note_zh: 安其拉之门。安其拉废墟与神殿的入口所在（副本节点归 g11_instances）
+    source_url: https://warcraft.wiki.gg/wiki/Scarab_Wall
+    quote: ""
+    verified_by: ai_draft

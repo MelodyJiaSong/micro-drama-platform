@@ -1,0 +1,1702 @@
+# G03 · 暴风城（Stormwind City）地理树 —— 版本锚点：经典旧世 Vanilla / Classic Era（1.12）
+# 本文件是本片区树数据的唯一出处。非树数据（自查对账 / 版本差异 / 存疑 / 图源 / 提醒）见 g03_stormwind_city_notes.md。
+# sk2 既有成果：ai_videos/shikong_lvxing/sk2/0_research/parts/{w1_city_layout,w2_architecture,w7_deeprun_tram}.md
+nodes:
+  # ============================================================
+  # L0 · 城市本体
+  # ============================================================
+  - id: stormwind_city
+    parent: kingdom_of_stormwind
+    type: city
+    subtype: ""
+    name_zh: 暴风城
+    name_en: Stormwind City
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: [elwynn_forest]
+    era: vanilla
+    look_zh: 白灰石砌的人类王城，若干近似矩形的街区被碧蓝深水运河切开，石拱桥横跨水面，屋顶蓝灰石板、旗幡蓝金配色，每个街区角落都长着结果的苹果树
+    note_zh: 人类首都；旧世只有两个入口——英雄谷陆路正门与矮人区的矿道地铁（港口是 3.0.2 才有）；全城约 640×600 m、步行穿城 4–5 分钟（sk2:stormwind.city.047/048）；adjacent 只在本节点填（暴风城在世界地图上本身就是一个 zone），见 notes §5
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_City
+    quote: "The city is made up of roughly rectangular districts separated by canals."
+    verified_by: ai_read
+
+  - id: stormwind_city_walls
+    parent: stormwind_city
+    type: poi
+    subtype: ""
+    name_zh: 暴风城城墙
+    name_en: Walls of Stormwind City
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 高厚的白石城墙环抱全城，墙顶是可通行的加宽平台，垛口连续，墙面无窗，蓝金旗幡沿垛口一字挂开
+    note_zh: 狮鹫管理员、飞行训练师与坐骑商人都在城墙上（sk2:stormwind.city.033）；城墙上没有第二道城门，去赤脊山/西部荒野/暮色森林都得先出正门回艾尔文森林
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_City
+    quote: "The gryphon master, the flying trainer, and the mount vendor are on the walls of the city."
+    verified_by: ai_read
+
+  # ============================================================
+  # L1 · 九个城区（旧世 6 个正式区名 + 暴风要塞 + 英雄谷 + 运河区）
+  # ============================================================
+  - id: valley_of_heroes
+    parent: stormwind_city
+    type: district
+    subtype: ""
+    name_zh: 英雄谷
+    name_en: The Valley of Heroes
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 城门内外一整块绿意盎然的天然盆地，一座宽阔石桥横跨谷底的窄护城水面，桥两侧立着远超真人尺度的巨型石雕像，主路尽头在雕像前分成左右两岔
+    note_zh: 位于城市南侧，含城门本身；所有入城者看到的第一眼；旧世的骑马将军是马库斯·乔纳森，不是哈蒙德·克雷（sk2 版本错置清单第 10 条）
+    source_url: https://warcraft.wiki.gg/wiki/Valley_of_Heroes
+    quote: "The Valley of Heroes is a valley that lies before Stormwind Gate. A bridge of stone crosses the narrow moat and is the first sight of all who enter. This gloriously lush valley lies south of the city"
+    verified_by: ai_read
+
+  - id: trade_district
+    parent: stormwind_city
+    type: district
+    subtype: ""
+    name_zh: 贸易区
+    name_en: Trade District
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 全城最中心也最吵的街区，两三层白石商铺围合出一片开阔石板广场，底层开敞为铺面、上层住人，摊位与行商挤满街面，正中一座石砌圆喷泉
+    note_zh: 又叫集市区（Bazaar District）；进正门后的第一块地方；银行/邮箱/旅店在西南侧，狮鹫管理员在东侧一道坡道上去（sk2:stormwind.district.011b）
+    source_url: https://warcraft.wiki.gg/wiki/Trade_District
+    quote: "The bank, mailbox, and inn are on the southwest side of the Trade District. The Gryphon Master is up a ramp on the east side."
+    verified_by: ai_read
+
+  - id: old_town
+    parent: stormwind_city
+    type: district
+    subtype: ""
+    name_zh: 旧城区
+    name_en: Old Town
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 墙体是发黄发灰的旧石与外露的深褐木构架，街道狭窄曲折、地面湿污，墙面爬着水渍霉斑，屋檐低垂几乎相接，晾衣绳横跨巷口
+    note_zh: 贸易区以东，全城最老的一块（没被兽人烧过，所以从未真正重建）；也是全城穷人的居住区，乞丐窃贼都在这儿；走法：贸易区往东北 / 要塞往南 / 矮人区往东南
+    source_url: https://warcraft.wiki.gg/wiki/Old_Town
+    quote: "It is a rustic, downtrodden place, where the streets are described as far dirtier and smellier than the other districts."
+    verified_by: ai_read
+
+  - id: mage_quarter
+    parent: stormwind_city
+    type: district
+    subtype: ""
+    name_zh: 法师区
+    name_en: Mage Quarter
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一座爬满深绿藤蔓的高塔统领全区，四周是两层的裁缝铺与仓库，门口堆着捆扎布匹与封蜡陶罐，沿街摆着露天咖啡座
+    note_zh: 城市西南角（官方导览语）/ 南角（wiki 语）；从教堂广场或贸易区来都要向西南跨过运河；全城海拔最高的一块，巫师圣殿入口比花园区高约 40 码
+    source_url: https://warcraft.wiki.gg/wiki/Mage_Quarter
+    quote: "The Mage Quarter (also called the Mage District or the Mage's District) lies in the southern corner of Stormwind City."
+    verified_by: ai_read
+
+  - id: cathedral_square
+    parent: stormwind_city
+    type: district
+    subtype: ""
+    name_zh: 教堂广场
+    name_en: Cathedral Square
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一片开阔石铺广场，北端被一座多侧翼、多尖塔的巨大教堂立面完全统治，广场两侧是较矮的市政厅与孤儿院，衬得教堂更高
+    note_zh: 贸易区以北，圣光信徒的宗教中心；走法：贸易区往西北、矮人区往东南；【旧世红线】广场中心是阿隆索斯·法奥纪念碑，不是乌瑟尔雕像；旧世的教堂广场后面**没有**暴风湖与暴风城公墓（那两处是 4.0.3a 才加的，见 notes §2）
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_City
+    quote: "To the north of the Trade District is Cathedral Square, the religious center for all followers of the Holy Light."
+    verified_by: ai_read
+
+  - id: dwarven_district
+    parent: stormwind_city
+    type: district
+    subtype: ""
+    name_zh: 矮人区
+    name_en: Dwarven District
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 矮胖敦实的石构建筑，门窗比人类区低矮、比例更厚重，铁件与铆钉外露；数处露天广场上并排立着燃着炭火的锻炉与铁砧，橙红火星四溅，整个街区笼在一层不散的灰蓝烟雾里
+    note_zh: 全城北角、教堂广场以东；第二次战争后为安置麦格尼国王派来的工匠而设；走法：教堂广场往东北 / 旧城区往西北 / 要塞往西 / 或直接坐矿道地铁到站；【旧世】区内没有拍卖行、没有皇家银行、旅店「黄金酒桶」也不存在（都是 4.0.3a）
+    source_url: https://warcraft.wiki.gg/wiki/Dwarven_District
+    quote: "The Dwarven District lies in the northern corner of Stormwind City. Here, the dwarves of Ironforge established an enclave after the Second War to house all the workers sent by King Magni."
+    verified_by: ai_read
+
+  - id: stormwind_park
+    parent: stormwind_city
+    type: district
+    subtype: ""
+    name_zh: 花园区
+    name_en: The Park
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 与全城的白石硬铺完全相反——地面是草与土径，高大乔木成荫、树影斑驳，建筑稀疏矮小依树而建，整体色调比别处更绿更柔；正中一口自发光的乳白偏冷蓝月亮井
+    note_zh: 【旧世独有】城市西角；原是市民休闲地，后成了来访暗夜精灵的聚居处；东部王国唯一有德鲁伊训练师的地方；走法：教堂广场往西南 / 法师区往西北；4.0.3a 被死亡之翼整块掀飞，7.0.3 原址建雄狮之眠——正片里必须是**完好的绿地**
+    source_url: https://warcraft.wiki.gg/wiki/Park
+    quote: "The Park used to be the district located in the western corner of Stormwind City. It was once a place devoted to leisure activities for Stormwind's populace until it became a refuge for visiting night elves"
+    verified_by: ai_read
+
+  - id: stormwind_keep
+    parent: stormwind_city
+    type: district
+    subtype: ""
+    name_zh: 暴风要塞
+    name_en: Stormwind Keep
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 建在全城最高岩石台地上的多体量城堡群，主厅居中、四周簇拥方塔圆塔，塔顶覆深蓝灰石板，建筑之间以带连续券拱的高架廊道相连，明显高出周围街区一大截
+    note_zh: 矮人区与旧城区之间，王国权力中枢；进法是沿运河一路往北、过一座**吊桥**进内庭院；【旧世】王座上坐的是幼年安度因，博瓦尔·弗塔根摄政、卡特拉娜·普瑞斯托任顾问；4.0.3a 内外全面重制（露天步道+大喷泉）——那个样子不得入画
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_City
+    quote: "Rising high between the Dwarven District and Old Town, the keep is the seat of power of the kingdom and serves as the residence of the Stormwindian kings"
+    verified_by: ai_read
+
+  - id: stormwind_canals
+    parent: stormwind_city
+    type: district
+    subtype: ""
+    name_zh: 运河区
+    name_en: The Canals / Canal District
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 深而清澈的碧蓝水道穿城而过，两岸是大理石步道与系船石桩，堤顶到水面有明显落差，沿岸嵌着一排一两开间宽的小店门脸，石拱桥横跨水上
+    note_zh: 不是一个环，而是若干段拼成的网，每段以「相邻两区之间」命名；【旧世是深水】——4.0.3a 才被淤泥半填成能趟过去的浅水，正片里不得出现淤泥/芦苇/露出水面的杂物；运河里还有一只传说中的白化巨鳄
+    source_url: https://warcraft.wiki.gg/wiki/Canals_(Stormwind_City)
+    quote: "The Canals, located in the Canal District, are a series of waterways that wind their way through Stormwind City, separating each of its various districts."
+    verified_by: ai_read
+
+  # ============================================================
+  # L2 · 英雄谷
+  # ============================================================
+  - id: stormwind_gate
+    parent: valley_of_heroes
+    type: poi
+    subtype: ""
+    name_zh: 暴风城大门
+    name_en: Stormwind Gate
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 巨型白石城门高过艾尔文森林的树冠，门洞深邃常年洞开，门内门外各站两名蓝金板甲持戟的人类卫兵
+    note_zh: 隔开暴风城与艾尔文森林；全城的木质指路牌都指向它；sk2 GM 坐标 (-9040.90, 451.38, 93.06)，建模取为原点（sk2:stormwind.city.040）
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_Gate
+    quote: "Stormwind Gate is a massive gate that separates Stormwind City from Elwynn Forest. It is located between Elwynn Forest and the Valley of Heroes."
+    verified_by: ai_read
+
+  - id: stormwind_gate_ballistae
+    parent: stormwind_gate
+    type: poi
+    subtype: ""
+    name_zh: 城门外的双弩炮
+    name_en: Ballistae outside Stormwind Gate
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 城门外道路两侧各架一台木制巨弩，弩臂横张、绞盘上弦，弩身漆着蓝金纹样，炮口正对门外来路
+    note_zh: 出自暴雪官网导览《Welcome to Stormwind - A Guided Tour》；只在门**外**，门内没有
+    source_url: http://worldofwarcraft.blizzard.com/en-us/news/20142731
+    quote: "Arriving at the city, you'll pass through the Stormwind Gates which are flanked by two ballistae just outside of them."
+    verified_by: ai_read
+
+  - id: dragon_head_on_stormwind_gate
+    parent: stormwind_gate
+    type: poi
+    subtype: ""
+    name_zh: 城门上悬挂的巨龙头颅
+    name_en: Dragon head hung from the Stormwind gates
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 城门左侧拱门下以粗铁链倒挂着一颗远大于门下行人的巨龙头颅，龙角向下、鳞片暗哑，血色已干成暗褐
+    note_zh: 【旧世独有的活景观】玩家上交奥妮克希亚/奈法利安的头颅后，头会挂上城门并给全城 buff；1.7.0 修过该机制的 bug、3.2.2 起不再触发——即「现行版本没有、旧世有」的反向错置（sk2:stormwind.landmark.007）
+    source_url: https://warcraft.wiki.gg/wiki/Rallying_Cry_of_the_Dragonslayer
+    quote: "Nefarian's Head hanging from the gates of Stormwind"
+    verified_by: ai_read
+
+  - id: valley_of_heroes_bridge
+    parent: valley_of_heroes
+    type: poi
+    subtype: ""
+    name_zh: 英雄谷石桥
+    name_en: Valley of Heroes bridge
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一座厚重的宽石桥跨过一道窄护城水面，桥面宽到可容马车并行，两侧矮石栏，桥两端接着绿意盎然的谷地草坡
+    note_zh: 入城主路；桥尽头正对图拉扬像，像前分左右两岔；桥长与桥宽无任何数据来源，建模按 ⚠️ 自设（sk2 未查第 7 条）
+    source_url: https://warcraft.wiki.gg/wiki/Valley_of_Heroes
+    quote: "A bridge of stone crosses the narrow moat and is the first sight of all who enter."
+    verified_by: ai_read
+
+  - id: valley_of_heroes_moat
+    parent: valley_of_heroes
+    type: poi
+    subtype: ""
+    name_zh: 英雄谷护城水面
+    name_en: Valley of Heroes moat
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一道不宽的静水护城壕横在城门前，水色偏深，两岸是修整过的石堤与草坡
+    note_zh: 桥下即是；大灾变时达纳斯的雕像被死亡之翼撞进这片水里——旧世它还好端端立在桥上
+    source_url: https://warcraft.wiki.gg/wiki/Valley_of_Heroes
+    quote: "A bridge of stone crosses the narrow moat"
+    verified_by: ai_read
+
+  - id: statue_kurdran_wildhammer
+    parent: valley_of_heroes
+    type: poi
+    subtype: ""
+    name_zh: 库德兰·蛮锤像
+    name_en: Statue of Kurdran Wildhammer
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 桥左侧第一尊：连基座约九米高的矮人石像，立于高大方形基座上，面朝桥心，基座刻有铭牌
+    note_zh: 鹰巢山的蛮锤领主；五尊雕像纪念的是踏入黑暗之门远征德拉诺的联盟远征军首领；铭牌文字是「头衔＋功绩＋推定已故」格式——画面上基座铭牌须画成空白石板或纹样，零文字
+    source_url: https://warcraft.wiki.gg/wiki/Valley_of_Heroes
+    quote: "On the left are Kurdran Wildhammer, Thane of Aerie Peak, and the Archmage Khadgar of the Kirin Tor"
+    verified_by: ai_read
+
+  - id: statue_khadgar
+    parent: valley_of_heroes
+    type: poi
+    subtype: ""
+    name_zh: 大法师卡德加像
+    name_en: Statue of Khadgar
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 桥左侧第二尊：连基座约九米高的法师石像，长袍持杖，立于方形基座上面朝桥心
+    note_zh: 肯瑞托的大法师、麦迪文的前学徒；铭牌同样以「推定已故」收尾
+    source_url: https://warcraft.wiki.gg/wiki/Valley_of_Heroes
+    quote: "the Archmage Khadgar of the Kirin Tor"
+    verified_by: ai_read
+
+  - id: statue_danath_trollbane
+    parent: valley_of_heroes
+    type: poi
+    subtype: ""
+    name_zh: 达纳斯·托尔贝恩像
+    name_en: Statue of Danath Trollbane
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 桥右侧第一尊：连基座约九米高的披甲战士石像，立于方形基座上面朝桥心
+    note_zh: 远征军部队指挥官；大灾变时这尊被死亡之翼撞落进桥下水中——**旧世它完好地立着**
+    source_url: https://warcraft.wiki.gg/wiki/Valley_of_Heroes
+    quote: "on the right are Force Commander Danath Trollbane and Ranger-Captain Alleria Windrunner"
+    verified_by: ai_read
+
+  - id: statue_alleria_windrunner
+    parent: valley_of_heroes
+    type: poi
+    subtype: ""
+    name_zh: 奥蕾莉亚·风行者像
+    name_en: Statue of Alleria Windrunner
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 桥右侧第二尊：连基座约九米高的高等精灵游侠石像，持弓，立于方形基座上面朝桥心
+    note_zh: 游侠上尉；五尊里唯一的精灵
+    source_url: https://warcraft.wiki.gg/wiki/Valley_of_Heroes
+    quote: "Ranger-Captain Alleria Windrunner"
+    verified_by: ai_read
+
+  - id: statue_turalyon
+    parent: valley_of_heroes
+    type: poi
+    subtype: ""
+    name_zh: 图拉扬像
+    name_en: Statue of Turalyon
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 主路尽头正中一尊圣骑士将军石像，居中正对来路，比两侧四尊更醒目，路在像前分成左右两岔
+    note_zh: 远征军军事统帅；它是「所有入城者都要从英雄脚下走过」这句话的落点，也是分镜的天然构图中心
+    source_url: https://warcraft.wiki.gg/wiki/Valley_of_Heroes
+    quote: "at the end of the main road, just before it splits to enter Stormwind City proper, is General Turalyon, the expedition's military leader."
+    verified_by: ai_read
+
+  - id: valley_of_heroes_road_fork
+    parent: valley_of_heroes
+    type: poi
+    subtype: ""
+    name_zh: 入城主路分岔口
+    name_en: Valley of Heroes road fork
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 主路在图拉扬像前分成左右两岔，两个岔口各站着一名披甲军官，谷中一名将军骑在高大战马上缓行
+    note_zh: 左岔站圣骑士马丁雷少校、右岔站石桥元帅；骑马的将军旧世是马库斯·乔纳森（哈蒙德·克雷是后期继任者，不得入画）
+    source_url: https://warcraft.wiki.gg/wiki/Valley_of_Heroes
+    quote: "Down the left fork of the bridge is the paladin, Major Mattingly, and down to the right stands Field Marshal Stonebridge."
+    verified_by: ai_read
+
+  - id: valley_of_heroes_towers
+    parent: valley_of_heroes
+    type: poi
+    subtype: ""
+    name_zh: 俯瞰谷地的双塔
+    name_en: Towers overlooking the Valley of Heroes
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 谷地两侧各一座白石塔楼居高临下俯瞰桥面，塔身完好无损、无任何焦痕或裂缝
+    note_zh: 大灾变时死亡之翼在这两座塔上留下巨大焦黑爪痕、还震坏了塔基——**旧世两塔完好**，爪痕是穿帮
+    source_url: https://warcraft.wiki.gg/wiki/Valley_of_Heroes
+    quote: "Danath's statue was toppled by Deathwing, who also damaged the two towers overlooking the valley, leaving fiery claw marks on them"
+    verified_by: ai_read
+
+  # ============================================================
+  # L2 · 贸易区
+  # ============================================================
+  - id: gilded_rose
+    parent: trade_district
+    type: settlement
+    subtype: inn
+    name_zh: 镶金玫瑰
+    name_en: The Gilded Rose
+    level: ""
+    faction: alliance
+    coords: "[60.6, 75.0]"
+    adjacent: []
+    era: vanilla
+    look_zh: 两层木石混构的旅店，招牌可读，一层是燃着壁炉的酒馆大堂、二层客房，窗口透出暖黄灯光
+    note_zh: 【旧世全城唯一一家真旅店】——反证极硬：4.0.1 加了旅店老板后官方写「making the Pig and Whistle Stormwind's **second** inn」；夹在银行与拍卖行之间，老板娘是旅店老板奥里森；国服译名两说（镶金玫瑰／镀金玫瑰），见 notes §3
+    source_url: https://warcraft.wiki.gg/wiki/Gilded_Rose
+    quote: "The Gilded Rose is the inn located in the Trade District. It is a popular resting point for travelers passing through the human capital of Stormwind City due to its proximity to the bank, Auction House, and an ever-popular mailbox."
+    verified_by: ai_read
+
+  - id: stormwind_counting_house
+    parent: trade_district
+    type: subzone
+    subtype: ""
+    name_zh: 暴风城会计室
+    name_en: Stormwind Counting House
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一座敦实的石砌两层建筑，正门高大厚重包铁，门楣挂着钱币图案的招牌，门前石阶旁立着邮箱
+    note_zh: 贸易区的银行，补丁 1.1.0 加入；靠正门那一侧；2.3.0 加了公会银行金库；4.0.3a 内部重制过（那版内饰不得入画）；国服译名两说（会计室／银号），见 notes §3
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_Counting_House
+    quote: "Stormwind Counting House is a bank found in the Trade District of Stormwind City."
+    verified_by: ai_read
+
+  - id: stormwind_trade_auction_house
+    parent: trade_district
+    type: subzone
+    subtype: ""
+    name_zh: 贸易区拍卖行
+    name_en: Trade District Auction House
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 贸易区西部、喷泉正北的一座石砌厅堂，门前有讲台与邮箱，厅内是长柜台与成排的公告板，人挤人
+    note_zh: 补丁 1.9.0 才加入（1.9 之前暴风城没有拍卖行）；**旧世它不叫「交易者大厅／Trader's Hall」**——那名字是 4.0.3a 改的；1.9 起铁炉堡/暴风城/达纳苏斯拍卖池联通
+    source_url: https://warcraft.wiki.gg/wiki/Trader%27s_Hall
+    quote: "Patch 4.0.3a: Building updated and renamed to Trader's Hall. / Patch 1.9.0: Added."
+    verified_by: ai_read
+
+  - id: stormwind_visitors_center
+    parent: trade_district
+    type: subzone
+    subtype: ""
+    name_zh: 暴风城接待中心
+    name_en: Stormwind Visitor's Center
+    level: ""
+    faction: alliance
+    coords: "[64, 77]"
+    adjacent: []
+    era: vanilla
+    look_zh: 一栋敞开大门的公共厅堂，门厅高阔，两侧设长桌与卷宗架，墙上挂着一排纹章旗帜
+    note_zh: 从英雄谷进城第一眼能看到的建筑之一；公会管理员在进门左手边，办公会与公会战袍
+    source_url: https://warcraft.wiki.gg/wiki/Trade_District
+    quote: "The Guild Master is to the left in the Visitor's Center when you come in and can help you make a guild or a guild tabard."
+    verified_by: ai_read
+
+  - id: gryphon_roost
+    parent: trade_district
+    type: transport
+    subtype: flightpath
+    name_zh: 狮鹫栖木
+    name_en: Gryphon Roost
+    level: ""
+    faction: alliance
+    coords: "[71.0, 72.6]"
+    adjacent: []
+    era: vanilla
+    look_zh: 贸易区东侧一道石砌坡道沿建筑外墙盘上二层平台，平台是开敞的狮鹫栖场，粗木横梁上停着数只狮鹫，地面散落羽毛与草料，边缘无遮挡直接临空
+    note_zh: 暴风城的飞行点，管理员杜加尔·朗德瑞克（旧世在位）；由两名蛮锤矮人养育这些狮鹫；「狮鹫栖木」作为**子区域名**是 4.0.3a 才加到这块既有区域上的，地点本身旧世就有
+    source_url: https://warcraft.wiki.gg/wiki/Gryphon_Roost
+    quote: "The Gryphon Roost is the location of Stormwind City's flight master Dungar Longdrink ... located just off the Trade District, and houses the city's gryphons, raised by the two Wildhammer dwarves."
+    verified_by: ai_read
+
+  - id: trade_district_fountain
+    parent: trade_district
+    type: poi
+    subtype: ""
+    name_zh: 贸易区喷泉
+    name_en: Trade District fountain
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 石砌圆形喷泉立在街区中央的开阔地上，水柱不高，池沿坐着歇脚的市民，四周被店面环绕
+    note_zh: 拍卖行就在它正北；具体形制（几级水池、有无雕像、水柱高度）无来源，建模按 ⚠️ 自设（sk2 未查第 8 条）；⚠️「在喷泉边等队友」查无出处，不得写成事实，要拍等人应改到监狱门口集合石
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_City_Guard_(NPC)
+    quote: "It is in the western portion Trade District, just north of the fountain."
+    verified_by: ai_read
+
+  - id: trade_district_mailbox
+    parent: trade_district
+    type: poi
+    subtype: ""
+    name_zh: 贸易区邮箱
+    name_en: Trade District mailbox
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一个齐腰高的绿铜色金属邮箱立在建筑门前的石阶旁，箱盖是斜的，正面开着投信口
+    note_zh: 邮箱不集中在一处——凡是拍卖行、银行、旅店门口都有一个；贸易区这一个是「银行＋拍卖行＋邮箱三件套」的那一个，玩家记忆强度最高
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_City_Guard_(NPC)
+    quote: "Mailboxes are scattered throughout the city. You can find one in front of any auction house, bank or inn."
+    verified_by: ai_read
+
+  - id: trias_cheese
+    parent: trade_district
+    type: subzone
+    subtype: ""
+    name_zh: 提亚斯奶酪店
+    name_en: Trias' Cheese
+    level: ""
+    faction: alliance
+    coords: "[66, 74]"
+    adjacent: []
+    era: vanilla
+    look_zh: 临街的奶酪铺，柜台上叠着整轮的黄褐色奶酪，货架挂着腌肉，门口木牌写着店名
+    note_zh: 崔亚斯一家经营；与隔壁加利纳家的酒庄凑成贸易区的「吃喝角」
+    source_url: https://warcraft.wiki.gg/wiki/Trias%27_Cheese
+    quote: "Trias' Cheese is a cheese shop located in the Trade District of Stormwind City."
+    verified_by: ai_read
+
+  - id: lionheart_armory
+    parent: trade_district
+    type: subzone
+    subtype: ""
+    name_zh: 狮心武器库
+    name_en: Lionheart Armory
+    level: ""
+    faction: alliance
+    coords: "[62, 67]"
+    adjacent: []
+    era: vanilla
+    look_zh: 两层石砌店面，一层敞开为铺面，木架上挂着成排的布甲、皮甲与锁甲，门口立着穿甲的木质人台
+    note_zh: 卖布/皮/锁三系护甲；旧世价带低到离谱（见习长袍 35 铜），一件能穿的衣服比一条新鲜面包还便宜
+    source_url: https://warcraft.wiki.gg/wiki/Lionheart_Armory
+    quote: "Lionheart Armory is a cloth, leather, and mail armor shop located in the Trade District of Stormwind."
+    verified_by: ai_read
+
+  - id: wellers_arsenal
+    parent: trade_district
+    type: subzone
+    subtype: ""
+    name_zh: 维勒武器店
+    name_en: Weller's Arsenal
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 临街的武器铺，墙上与木架上挂满斧、锤、剑与长矛，柜台后是磨刀石与油布
+    note_zh: 在拍卖行旁；旧世价带：锤 17 银 40 铜、长剑 87 银 45 铜、重矛 2 金 71 银 33 铜——「一把像样的武器＝几十银到数金」
+    source_url: https://warcraft.wiki.gg/wiki/Weller%27s_Arsenal
+    quote: "Weller's Arsenal is a weapon shop found in the Trade District of Stormwind City."
+    verified_by: ai_read
+
+  - id: empty_quiver
+    parent: trade_district
+    type: subzone
+    subtype: ""
+    name_zh: 空箭袋
+    name_en: The Empty Quiver
+    level: ""
+    faction: alliance
+    coords: "[59, 69]"
+    adjacent: []
+    era: vanilla
+    look_zh: 窄门面的弓箭铺，门内竖着成排的长弓与火枪，墙上挂着箭袋与羽箭捆
+    note_zh: 贸易区的弓/箭/枪专卖
+    source_url: https://warcraft.wiki.gg/wiki/Empty_Quiver
+    quote: "The Empty Quiver is the place to be in Stormwind City's Trade District when it comes to bows, arrows and guns."
+    verified_by: ai_read
+
+  - id: everyday_merchandise
+    parent: trade_district
+    type: subzone
+    subtype: ""
+    name_zh: 日用商品
+    name_en: Everyday Merchandise
+    level: ""
+    faction: alliance
+    coords: "[65, 72]"
+    adjacent: []
+    era: vanilla
+    look_zh: 杂货铺，门口堆着麻袋、木桶与陶罐，货架上是灯油、绳索、背包与干粮
+    note_zh: 贸易区的杂货/贸易品店
+    source_url: https://warcraft.wiki.gg/wiki/Everyday_Merchandise
+    quote: "Everyday Merchandise is a general and trade goods shop located in the Trade District in Stormwind City."
+    verified_by: ai_read
+
+  - id: pestles_apothecary
+    parent: trade_district
+    type: subzone
+    subtype: ""
+    name_zh: 匹斯特的药剂店
+    name_en: Pestle's Apothecary
+    level: ""
+    faction: alliance
+    coords: "[63, 75]"
+    adjacent: []
+    era: vanilla
+    look_zh: 药剂铺，窗台与货架排满彩色药水瓶与草药袋，柜台上摆着研钵与天平
+    note_zh: 贸易区的炼金/材料店
+    source_url: https://warcraft.wiki.gg/wiki/Pestle%27s_Apothecary
+    quote: "Pestle's Apothecary is an alchemy and reagents shop located in the Trade District of Stormwind City."
+    verified_by: ai_read
+
+  # ============================================================
+  # L2 · 旧城区
+  # ============================================================
+  - id: pig_and_whistle_tavern
+    parent: old_town
+    type: subzone
+    subtype: ""
+    name_zh: 猪和哨声旅店
+    name_en: Pig and Whistle Tavern
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 低矮的两层木构酒馆，一层是烟熏的大堂，长条木桌与炉灶，铁锅挂在墙上；二楼阁楼堆着酒桶与杂货
+    note_zh: 【旧世是酒馆，不是旅店】——旅店老板玛根·蒂尔曼是 4.0.1 才加的，旅行者只能在这儿**喝一杯**、不能在这儿**住**；有烹饪训练师，二楼肯多·卡邦卡卖烹饪配方；「猪和哨声」作为子区域名是 7.1.5 才挂上的
+    source_url: https://warcraft.wiki.gg/wiki/Pig_and_Whistle_Tavern
+    quote: "Patch 4.0.1: Innkeeper Maegan Tillman was added, making the Pig and Whistle Stormwind's second inn."
+    verified_by: ai_read
+
+  - id: stormwind_command_center
+    parent: old_town
+    type: subzone
+    subtype: ""
+    name_zh: 指挥中心
+    name_en: Command Center
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 围合式的军营院落，厚重石砌、开小窗，院中是露天沙地训练场，一侧是马厩
+    note_zh: 【旧世的职业训练在这儿】暴风城军官的指挥所，含战士与猎人训练师、马厩管理员与骑术训练师；9.0.1 被改造成「训练大厅」并把全部职业训练师集中进去——**旧世职业训练师是分散在各区的**
+    source_url: https://warcraft.wiki.gg/wiki/Command_Center
+    quote: "The Alliance Command Center is the base of operations for Stormwind's army officers, warrior trainers and hunter trainers."
+    verified_by: ai_read
+
+  - id: old_town_training_grounds
+    parent: stormwind_command_center
+    type: poi
+    subtype: ""
+    name_zh: 露天训练场
+    name_en: Old Town training grounds
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 院中一片露天沙地，立着草人靶与兵器架，士兵列队操练，地面被踩出深浅不一的印子
+    note_zh: 指挥中心建筑群的一部分；是「这城还在打仗」最直观的一个画面
+    source_url: https://warcraft.wiki.gg/wiki/Old_Town
+    quote: "the Command Center is the base of operations for Stormwind's army officers, which include the Champions' Hall, the army's barracks, open training grounds, stables, and the headquarters of the SI:7"
+    verified_by: ai_read
+
+  - id: old_town_stables
+    parent: stormwind_command_center
+    type: poi
+    subtype: ""
+    name_zh: 旧城区马厩
+    name_en: Old Town stables
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 木栅围起的马厩，草料堆在角落，马匹拴在横木上，地面铺着湿草与泥
+    note_zh: 指挥中心建筑群的一部分；马厩管理员与骑术训练师在此
+    source_url: https://warcraft.wiki.gg/wiki/Old_Town
+    quote: "the army's barracks, open training grounds, stables"
+    verified_by: ai_read
+
+  - id: champions_hall
+    parent: old_town
+    type: subzone
+    subtype: ""
+    name_zh: 勇士大厅
+    name_en: Champions' Hall
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 旧城区东南端一座封闭的石砌厅堂，门厚重，厅内墙上挂满战旗与纹章，柜台后陈列着成套的荣誉奖励装备
+    note_zh: 补丁 1.4.0 加入的联盟 PvP 军官兵营；**旧世进门有荣誉值门槛**（2.0.1 才取消）、而且它是独立实例、有自己的载入画面（1.7.0 起），门可以关上（3.0.2 才改成不关门）
+    source_url: https://warcraft.wiki.gg/wiki/Champions%27_Hall
+    quote: "The Champions' Hall is the officer's barracks for the Alliance in Stormwind City. It is located in the south of the Old Town."
+    verified_by: ai_read
+
+  - id: si7_stormwind
+    parent: old_town
+    type: subzone
+    subtype: ""
+    name_zh: 军情七处
+    name_en: SI:7
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 旧城区一栋不挂招牌的石楼，门窄而深，窗小且多数封着，门口没有守卫也没有排队的人
+    note_zh: 王国情报机构总部，潜行者训练师在此；剧情上是「城里有个不出声的机构」这一钩子的落点，门外给一个不进去的定镜最有味道
+    source_url: https://warcraft.wiki.gg/wiki/SI:7_(Stormwind_City)
+    quote: "SI:7 is the main headquarters building of the same-named organization. Leaders of the organization are located here, in the Old Town of Stormwind City."
+    verified_by: ai_read
+
+  - id: old_town_portcullis
+    parent: old_town
+    type: poi
+    subtype: ""
+    name_zh: 旧城区铁闸门
+    name_en: Old Town portcullis
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一道厚重的铁栅升降闸门嵌在石墙里，常年紧闭、门后是黑暗的通道，门前无人
+    note_zh: 【旧世有、现行没有】旧城区与贸易区之间的大铁闸门，门后是一个从未启用的副本传送门，原本打算通向玩家住宅区；大灾变时被移除——所以正片里**应该**出现这道关着的闸门
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_City
+    quote: "The unused instance portal behind a large portcullis between the Old Town and the Trade District (removed in Cataclysm) was originally meant to lead to the player housing area."
+    verified_by: ai_read
+
+  - id: five_deadly_venoms
+    parent: old_town
+    type: subzone
+    subtype: ""
+    name_zh: 五种剧毒
+    name_en: The Five Deadly Venoms
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 窄暗的店面，货架上排着深色小瓶与封蜡罐，柜台后挂着干枯的蛛壳与蛇皮
+    note_zh: 旧城区的毒药店（潜行者用）
+    source_url: https://warcraft.wiki.gg/wiki/Five_Deadly_Venoms
+    quote: "The Five Deadly Venoms is a poison shop found in the Old Town in Stormwind City."
+    verified_by: ai_read
+
+  - id: heavy_handed_weapons
+    parent: old_town
+    type: subzone
+    subtype: ""
+    name_zh: 重装武器
+    name_en: Heavy Handed Weapons
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 旧城区的武器铺，门口立着重斧与双手剑，店内光线昏暗，木梁低矮
+    note_zh: 旧城区的武器店之一
+    source_url: https://warcraft.wiki.gg/wiki/Heavy_Handed_Weapons
+    quote: "Heavy Handed Weapons is a weapon shop found in the Old Town in Stormwind City."
+    verified_by: ai_read
+
+  - id: honest_blades
+    parent: old_town
+    type: subzone
+    subtype: ""
+    name_zh: 诚实之刃
+    name_en: Honest Blades
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一间窄门面的刀剑铺，墙上斜插着成排的单手剑与匕首，门牌是一把铁打的剑形
+    note_zh: 旧城区的武器店之一
+    source_url: https://warcraft.wiki.gg/wiki/Honest_Blades
+    quote: "Honest Blades is a weapon shop found in the Old Town in Stormwind City."
+    verified_by: ai_read
+
+  - id: limited_immunity
+    parent: old_town
+    type: subzone
+    subtype: ""
+    name_zh: 有限防护
+    name_en: Limited Immunity
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 护甲铺，木架上挂着旧的锁甲与皮护腕，柜台边堆着待修的破甲片
+    note_zh: 旧城区的护甲店
+    source_url: https://warcraft.wiki.gg/wiki/Limited_Immunity
+    quote: "Limited Immunity is an armor shop found in the Old Town in Stormwind City."
+    verified_by: ai_read
+
+  - id: protective_hide
+    parent: old_town
+    type: subzone
+    subtype: ""
+    name_zh: 护体皮甲
+    name_en: The Protective Hide
+    level: ""
+    faction: alliance
+    coords: "[72.7, 62.1]"
+    adjacent: []
+    era: vanilla
+    look_zh: 皮匠铺，门口撑着整张兽皮，屋内挂着刮刀、鞣皮架与一捆捆皮绳，空气里是皮革与油脂味
+    note_zh: 旧城区的皮甲店，制皮训练师与剥皮训练师都在这儿
+    source_url: https://warcraft.wiki.gg/wiki/Protective_Hide
+    quote: "The Protective Hide is an armor shop located in the Old Town district of Stormwind City."
+    verified_by: ai_read
+
+  - id: silver_shield
+    parent: old_town
+    type: subzone
+    subtype: ""
+    name_zh: 白银之盾
+    name_en: The Silver Shield
+    level: ""
+    faction: alliance
+    coords: "[70, 58]"
+    adjacent: []
+    era: vanilla
+    look_zh: 两层的盾牌铺，一层墙面挂满大小圆盾与鸢盾，招牌本身就是一面银色的盾
+    note_zh: 旧城区的盾牌专卖
+    source_url: https://warcraft.wiki.gg/wiki/Silver_Shield
+    quote: "The Silver Shield is a shield store located in the Old Town in Stormwind City."
+    verified_by: ai_read
+
+  - id: thanes_boots
+    parent: old_town
+    type: subzone
+    subtype: ""
+    name_zh: 希恩靴店
+    name_en: Thane's Boots
+    level: ""
+    faction: alliance
+    coords: "[72, 58]"
+    adjacent: []
+    era: vanilla
+    look_zh: 鞋靴铺，门口摆着成排的皮靴与铁头战靴，柜台上摊着鞋楦与麻线
+    note_zh: 旧城区的鞋靴店
+    source_url: https://warcraft.wiki.gg/wiki/Thane%27s_Boots
+    quote: "Thane's Boots is a footwear store located in Old Town in Stormwind City."
+    verified_by: ai_read
+
+  # ============================================================
+  # L2 · 法师区
+  # ============================================================
+  - id: wizards_sanctum
+    parent: mage_quarter
+    type: subzone
+    subtype: ""
+    name_zh: 巫师圣殿
+    name_en: Wizard's Sanctum
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 法师区正中一座细高的独立石塔，塔身大面积爬满深绿藤蔓，外壁盘绕着一道露天螺旋石阶直上塔顶，塔顶收束成尖锥
+    note_zh: 法师区最高的塔，也是全城采样点里海拔最高的（sk2 GM 坐标 -9005.53, 867.86, 129.69）；【旧世内部是法师训练塔，不是传送门大厅】——「暴风城传送门房间」是 8.1.5 才有的，通往各主城/外域/德拉诺的成排传送门一律不得入画
+    source_url: https://warcraft.wiki.gg/wiki/Wizard%27s_Sanctum
+    quote: "For mages in training, access to the mage trainers is gained by going up the ramp and climbing to the highest part of the tower and then passing through the portal there."
+    verified_by: ai_read
+
+  - id: wizards_sanctum_spiral_stair
+    parent: wizards_sanctum
+    type: poi
+    subtype: ""
+    name_zh: 圣殿外盘旋石阶
+    name_en: Wizard's Sanctum outer ramp
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一道无扶手或仅有矮石栏的石砌坡道沿塔外壁盘绕数圈直通塔顶平台，踩上去能一路看见整个法师区下沉
+    note_zh: 不会飞的人上塔的唯一路；是「垂直向上摇」这一镜的天然载体
+    source_url: https://warcraft.wiki.gg/wiki/Wizard%27s_Sanctum
+    quote: "access to the mage trainers is gained by going up the ramp and climbing to the highest part of the tower"
+    verified_by: ai_read
+
+  - id: slaughtered_lamb
+    parent: mage_quarter
+    type: subzone
+    subtype: ""
+    name_zh: 已宰的羔羊
+    name_en: The Slaughtered Lamb
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一间门面不起眼的小酒馆，招牌画着被宰的羊；一层几乎空着，只有酒保守着吧台，地板上有一道通往地下的活板门
+    note_zh: 旧世的术士公会所在；酒保贾雷尔·摩尔会劝客人「离阴影远点」；裁缝训练师也在这儿；sk2 GM 坐标 (-8960.11, 1007.08, 122.03)
+    source_url: https://warcraft.wiki.gg/wiki/Slaughtered_Lamb
+    quote: "The Slaughtered Lamb is a seedy pub in the Mage Quarter of Stormwind City. The top floor is empty except for the bartender Jarel Moor, who advises patrons to stay away from the shadows."
+    verified_by: ai_read
+
+  - id: slaughtered_lamb_cellar
+    parent: slaughtered_lamb
+    type: subzone
+    subtype: ""
+    name_zh: 已宰的羔羊地窖
+    name_en: The Slaughtered Lamb cellar
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 活板门下的石砌地窖，唯一光源是地上的暗紫色法阵与几支蜡烛，墙角堆着酒桶与骨头，术士与恶魔仆从散坐在阴影里
+    note_zh: 术士在这儿修习黑暗法术、也在这儿做召唤仪式；对旧世术士玩家是 100% 强制去过的地方（sk2 玩家记忆强度「强」第 ⑩ 项）
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_City
+    quote: "shady warlocks are often drawn to the dark cellars of the Slaughtered Lamb, where they practice their dark arts in the shadows of polite society."
+    verified_by: ai_read
+
+  - id: blue_recluse
+    parent: mage_quarter
+    type: subzone
+    subtype: ""
+    name_zh: 蓝色隐士
+    name_en: The Blue Recluse
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 街角的酒馆兼餐馆，门外摆着户外木桌，桌上是冒热气的杯子，室内干净体面、有真正开火的后厨
+    note_zh: 全城唯一有主厨＋学徒厨师、被官方称作 restaurant 的地方；菜单满是「河汊沼泽」风味乡土菜；⚠️ 旧世能不能在此住宿**未查实**（按「4.0.1 才有第二家 inn」推论为不能）
+    source_url: https://warcraft.wiki.gg/wiki/Blue_Recluse
+    quote: "The Blue Recluse is a tavern and restaurant in the Mage Quarter of Stormwind City."
+    verified_by: ai_read
+
+  - id: alchemy_needs
+    parent: mage_quarter
+    type: subzone
+    subtype: ""
+    name_zh: 炼金材料店
+    name_en: Alchemy Needs
+    level: ""
+    faction: alliance
+    coords: "[56, 86]"
+    adjacent: []
+    era: vanilla
+    look_zh: 店内成排的蒸馏器与陶罐，天花板下倒挂着一束束干草药，柜台上是研钵、天平与摊开的配方
+    note_zh: 法师区的炼金与草药店，炼金训练师在此
+    source_url: https://warcraft.wiki.gg/wiki/Alchemy_Needs
+    quote: "Alchemy Needs is an alchemy and herbalism store located in the Mage Quarter of the Alliance capital of Stormwind City."
+    verified_by: ai_read
+
+  - id: ancient_curios
+    parent: mage_quarter
+    type: subzone
+    subtype: ""
+    name_zh: 古董店
+    name_en: Ancient Curios
+    level: ""
+    faction: alliance
+    coords: "[48, 86]"
+    adjacent: []
+    era: vanilla
+    look_zh: 材料铺，架上摆着蒙尘的奇物、符文石与卷轴匣，角落堆着来历不明的旧木箱
+    note_zh: 法师区的施法材料店
+    source_url: https://warcraft.wiki.gg/wiki/Ancient_Curios
+    quote: "Ancient Curios is a reagents shop located in the Mage Quarter in Stormwind City."
+    verified_by: ai_read
+
+  - id: duncans_textiles
+    parent: mage_quarter
+    type: subzone
+    subtype: ""
+    name_zh: 邓肯的织物面料
+    name_en: Duncan's Textiles
+    level: ""
+    faction: alliance
+    coords: "[53, 82]"
+    adjacent: []
+    era: vanilla
+    look_zh: 裁缝铺，墙面挂着成匹的布料，长案上摊着剪好的布片与针线笸箩，门口立着量衣木架
+    note_zh: 法师区最主要的裁缝铺之一，裁缝训练师在此
+    source_url: https://warcraft.wiki.gg/wiki/Duncan%27s_Textiles
+    quote: "Duncan's Textiles is a tailoring shop located in the Mage Quarter in Stormwind City."
+    verified_by: ai_read
+
+  - id: essential_components
+    parent: mage_quarter
+    type: subzone
+    subtype: ""
+    name_zh: 基本部件
+    name_en: Essential Components
+    level: ""
+    faction: alliance
+    coords: "[48, 82]"
+    adjacent: []
+    era: vanilla
+    look_zh: 小门面的材料铺，一整面墙是分格的小抽屉，抽屉面写着货名，柜台上摆着秤与漏斗
+    note_zh: 法师区的施法材料店
+    source_url: https://warcraft.wiki.gg/wiki/Essential_Components
+    quote: "Essential Components is a reagents shop located in the Mage Quarter in Stormwind City."
+    verified_by: ai_read
+
+  - id: larson_clothiers
+    parent: mage_quarter
+    type: subzone
+    subtype: ""
+    name_zh: 拉尔森服装店
+    name_en: Larson Clothiers
+    level: ""
+    faction: alliance
+    coords: "[52, 84]"
+    adjacent: []
+    era: vanilla
+    look_zh: 成衣铺，木架上挂着长袍与各式帽子，橱窗前立着穿好长袍的木人台
+    note_zh: 法师区的长袍与帽子店
+    source_url: https://warcraft.wiki.gg/wiki/Larson_Clothiers
+    quote: "Larson Clothiers is a robe and hat shop located in the Mage Quarter in Stormwind City."
+    verified_by: ai_read
+
+  - id: pyrotechnics
+    parent: mage_quarter
+    type: subzone
+    subtype: ""
+    name_zh: 焰火店
+    name_en: Pyrotechnics
+    level: ""
+    faction: alliance
+    coords: "[43, 77]"
+    adjacent: []
+    era: vanilla
+    look_zh: 焰火铺，货架上排着裹着彩纸的烟花筒与引信盘，墙上贴着烧焦边角的说明图
+    note_zh: 法师区的烟花店；节日戏（新年/暗月）可用
+    source_url: https://warcraft.wiki.gg/wiki/Pyrotechnics
+    quote: "Pyrotechnics is a fireworks shop located in the Mage Quarter in Stormwind City."
+    verified_by: ai_read
+
+  - id: stormwind_staves
+    parent: mage_quarter
+    type: subzone
+    subtype: ""
+    name_zh: 暴风法杖店
+    name_en: Stormwind Staves
+    level: ""
+    faction: alliance
+    coords: "[52, 76]"
+    adjacent: []
+    era: vanilla
+    look_zh: 窄而高的店面，法杖与长杖竖靠在墙边一字排开，柜台后挂着几把雕花的仪式杖
+    note_zh: 法师区的武器（法杖）店
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_Staves
+    quote: "Stormwind Staves is a weapon shop located in the Mage Quarter in Stormwind City."
+    verified_by: ai_read
+
+  - id: mage_quarter_well
+    parent: mage_quarter
+    type: poi
+    subtype: ""
+    name_zh: 法师区水井
+    name_en: Mage Quarter well
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 街心一口石砌圆井，井沿粗厚被绳子磨出凹槽，上方是木架与辘轳
+    note_zh: 出自中文 GM 传送坐标表条目「法师区,水井」(-8929.28, 960.16, 117.31)，tier T3；是法师区的天然聚人点
+    source_url: https://blog.csdn.net/weixin_30439131/article/details/98442978
+    quote: "法师区,水井 ... x,y,z,h=-8929.279297,960.157776,117.309624,4.079603"
+    verified_by: ai_read
+
+  # ============================================================
+  # L2 · 教堂广场
+  # ============================================================
+  - id: cathedral_of_light
+    parent: cathedral_square
+    type: subzone
+    subtype: ""
+    name_zh: 光明大教堂
+    name_en: Cathedral of Light
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 极高的石造教堂，主体两侧伸出多组侧翼，屋脊上林立着数量众多的细长尖塔、越靠中心越高；内厅是浅暖白石砌筑、嵌着饱和钴蓝色石材条带，高窗斜落的光柱把空间切开
+    note_zh: 【圣骑士与牧师训练师都在这里】——教堂广场的光明大教堂，旧世的圣骑士训练师是格雷森·沙德布雷勋爵与杜索里安·罗尔；也是全城医疗（急救训练）中心；sk2 GM 坐标 (-8556.61, 826.03, 106.53)；4.0.3a 有过一次轻度重制
+    source_url: https://warcraft.wiki.gg/wiki/Cathedral_of_Light
+    quote: "Cathedral of Light in Cathedral Square in Stormwind City is the most striking monument of the Church of the Holy Light."
+    verified_by: ai_read
+
+  - id: cathedral_of_light_catacombs
+    parent: cathedral_of_light
+    type: subzone
+    subtype: ""
+    name_zh: 大教堂地下墓穴
+    name_en: Cathedral of Light catacombs
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 祭坛左右两侧各有一道隐在列柱阴影里的下行石阶，阶下是低矮的石砌拱顶墓穴，壁龛中安放石棺，烛光昏黄
+    note_zh: 受尊崇的逝者——牧师、战争英雄、圣骑士——的安息之所；内部形制的文字来源只有《Exploring Azeroth》，细节须人眼核图
+    source_url: https://warcraft.wiki.gg/wiki/Cathedral_of_Light
+    quote: "The cathedral's catacombs are the resting place of the honored dead: priests, war heroes, paladins, and others."
+    verified_by: ai_read
+
+  - id: cathedral_of_light_bell
+    parent: cathedral_of_light
+    type: poi
+    subtype: ""
+    name_zh: 大教堂之钟
+    name_en: The cathedral's bell
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 钟室内一口巨大的青铜钟悬于粗木梁下，钟体表面是矮人风格的錾刻纹样与铆接感边饰
+    note_zh: 在铁炉堡的大熔炉上铸成，与洛丹伦那口钟是一对，是矮人送给人类以纪念两族友谊的礼物；**按点报时**，遇险时也敲钟示警（不是「每天日落只敲一记」——sk2 w2 的措辞需按此更正）
+    source_url: https://warcraft.wiki.gg/wiki/Cathedral_of_Light
+    quote: "The cathedral's bell was created on the Great Forge in Ironforge, like its twin bell for Lordaeron, as a gift from the dwarves to remind the friendship between their peoples. ... It rings to mark the hours, and in times of danger to alert the citizens."
+    verified_by: ai_read
+
+  - id: alonsus_faol_monument
+    parent: cathedral_square
+    type: poi
+    subtype: ""
+    name_zh: 阿隆索斯·法奥纪念碑
+    name_en: Monument to Alonsus Faol
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 大教堂正前方立着一座石造纪念碑与喷泉，基座方正、碑体竖立，形制庄重而不张扬，纪念的是一位教士形象的老者
+    note_zh: 【全片最隐蔽的一个版本坑】旧世这儿是阿隆索斯·法奥纪念碑，大灾变（4.0.3a）才被换成乌瑟尔·光明使者雕像；持战锤的圣骑士雕像与「Uther the Lightbringer / A righteous Paladin」铭牌一律是穿帮；碑的具体形制未查到，须人眼核旧世截图（sk2 w2 Q2）
+    source_url: https://warcraft.wiki.gg/wiki/Cathedral_Square
+    quote: "After the Cataclysm, a statue of Uther replaced that of Alonsus Faol."
+    verified_by: ai_read
+
+  - id: stormwind_city_hall
+    parent: cathedral_square
+    type: subzone
+    subtype: ""
+    name_zh: 城市大厅
+    name_en: City Hall
+    level: ""
+    faction: alliance
+    coords: "[57, 48]"
+    adjacent: []
+    era: vanilla
+    look_zh: 广场一侧的矮公共建筑，门厅内是长桌、卷宗柜与摊开的图纸，墙上钉着城区图
+    note_zh: 暴风城的建筑师与研究者在这里给全城人口做普查、也在这儿琢磨怎么改善市民生活；首席建筑师是巴罗斯·亚历克斯顿
+    source_url: https://warcraft.wiki.gg/wiki/City_Hall
+    quote: "The City Hall of Stormwind is one of the key administrative centers of the city."
+    verified_by: ai_read
+
+  - id: stormwind_orphanage
+    parent: cathedral_square
+    type: subzone
+    subtype: ""
+    name_zh: 孤儿院
+    name_en: Orphanage
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 广场边一栋两层小楼，窗口低、窗台上摆着孩子的木玩具，门前有一小片被踩秃的空地
+    note_zh: 收容历次战争留下的人类孤儿；由约翰·特纳与妻子斯蒂芬妮经营
+    source_url: https://warcraft.wiki.gg/wiki/Orphanage_(Stormwind_City)
+    quote: "The Stormwind orphanage houses the human orphans of various wars and conflicts from the recent history of Stormwind."
+    verified_by: ai_read
+
+  - id: argent_dawn_stormwind
+    parent: cathedral_square
+    type: subzone
+    subtype: ""
+    name_zh: 银色黎明（暴风城）
+    name_en: The Argent Dawn (Stormwind)
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 孤儿院后面一栋不起眼的石屋，门上挂着银色黎明的纹章，屋里常年没什么人
+    note_zh: 银色黎明在暴风城王国的总部；位置在孤儿院后方；官方描述是「目前似乎并未启用」——拍成一间冷清的据点即可
+    source_url: https://warcraft.wiki.gg/wiki/The_Argent_Dawn_(Stormwind)
+    quote: "The Argent Dawn is a building located in the Cathedral Square in Stormwind City. It serves as the headquarters of the Argent Dawn in the Kingdom of Stormwind"
+    verified_by: ai_read
+
+  - id: just_maces
+    parent: cathedral_square
+    type: subzone
+    subtype: ""
+    name_zh: 战锤专卖店
+    name_en: Just Maces
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 大教堂西南侧的武器铺，墙上挂着成排的钉头锤与战锤，也混着几把长剑
+    note_zh: 名字叫「只卖锤」，实际卖各种近战武器；老板是格雷戈里·阿杜斯
+    source_url: https://warcraft.wiki.gg/wiki/Just_Maces
+    quote: "Just Maces is a weapons shop located in Stormwind City's Cathedral Square. ... The shop can be found just south-west of the Cathedral of Light."
+    verified_by: ai_read
+
+  - id: righteous_plates
+    parent: cathedral_square
+    type: subzone
+    subtype: ""
+    name_zh: 正义之甲
+    name_en: Righteous Plates
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 大教堂正南的护甲铺，门口立着整套板甲的木人台，店内架上是胸甲、护腿与头盔
+    note_zh: 由阿古斯图斯与特蕾莎·穆莱恩夫妇共同经营；靠近教堂，服务的是圣骑士与牧师那一路客
+    source_url: https://warcraft.wiki.gg/wiki/Righteous_Plates
+    quote: "Righteous Plates is an armor shop located in the Cathedral Square in Stormwind City."
+    verified_by: ai_read
+
+  # ============================================================
+  # L2 · 矮人区
+  # ============================================================
+  - id: deeprun_tram_cog_entrance
+    parent: dwarven_district
+    type: poi
+    subtype: ""
+    name_zh: 矿道地铁齿轮隧道口
+    name_en: Deeprun Tram cog entrance
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一只直径数层楼高的巨大金属齿轮竖立嵌在石壁上、缓缓旋转，齿牙粗大、表面是暗黄铜与铁灰混合并带铆钉油渍，齿轮内圈就是下沉的拱形洞口
+    note_zh: 在矮人区东侧（卫兵口述是「矮人区靠里面」）；绝不会认错的地标，仰拍定镜的第一候选
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_City
+    quote: "The massive spinning cog that frames the entrance to the tram tunnel cannot be missed."
+    verified_by: ai_read
+
+  - id: deeprun_tram_underground_lake
+    parent: deeprun_tram
+    type: poi
+    subtype: ""
+    name_zh: 地铁地下湖段
+    name_en: Deeprun Tram underground lake
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 隧道穿过一段被幽绿湖水包围的区间，窗外是斜卧的沉船残骸、半开的巨蚌、一名戴潜水头盔的侏儒，远处一头长颈巨兽的剪影缓缓掠过
+    note_zh: 所谓「水下段」其实是一个地下湖，也就是当年施工时遇到的那个；里面有沉船、宝箱、潜水员、两只娜迦海妖、一条姥鲨和一头叫 Nessy 的 threshadon；⚠️ 隧道顶壁是不是玻璃穹顶，文字来源**没写**，须人眼核图
+    source_url: https://warcraft.wiki.gg/wiki/Deeprun_Tram
+    quote: "The underwater section of the tram is, in fact, a subterranean lake."
+    verified_by: ai_read
+
+  - id: cut_throat_alley
+    parent: dwarven_district
+    type: subzone
+    subtype: ""
+    name_zh: 割喉小巷
+    name_en: Cut-Throat Alley
+    level: ""
+    faction: alliance
+    coords: "[64, 46]"
+    adjacent: []
+    era: vanilla
+    look_zh: 一条无人的死胡同，两侧是高墙，地上只有一堆板条箱与木桶，尽头是一栋空置两层一居室住宅的门
+    note_zh: 技术上属矮人区，但没有矮人区的烟雾气；不与矮人区其余部分相连，只能徒步穿过运河矮人区一侧、教堂广场人行桥南边的那间店进去；【旧世那间店还没有名字】——「林荫女士（The Shady Lady）」是 4.2.0 才加的招牌
+    source_url: https://warcraft.wiki.gg/wiki/Cut-Throat_Alley
+    quote: "Cut-Throat Alley can only be reached on foot by passing through a shop called the Shady Lady, on the Dwarven side of the Canals just south of the footbridge from Cathedral Square ... The alley's only features are a number of crates and barrels ... It does not connect to the rest of the Dwarven District."
+    verified_by: ai_read
+
+  - id: stonehand_mining
+    parent: dwarven_district
+    type: subzone
+    subtype: ""
+    name_zh: 石手矿业
+    name_en: Stonehand Mining
+    level: ""
+    faction: alliance
+    coords: "[59.8, 37.0]"
+    adjacent: []
+    era: vanilla
+    look_zh: 矮人式的低矮厚重店面，门口堆着矿镐、矿石筐与熔炼坩埚，墙上钉着矿脉示意图
+    note_zh: 暴风城学采矿的地方；矮人区的矿业店与训练点
+    source_url: https://warcraft.wiki.gg/wiki/Stonehand_Mining
+    quote: "Stonehand Mining is a shop located in the Dwarven District in Stormwind City. It is the place players go in the city to learn the mining profession."
+    verified_by: ai_read
+
+  - id: dwarven_district_forges
+    parent: dwarven_district
+    type: poi
+    subtype: ""
+    name_zh: 露天锻造广场
+    name_en: Dwarven District open-air forges
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 数处露天广场上并排立着燃着炭火的锻炉与铁砧，橙红火星随热气四溅上升，空气里悬着灰蓝烟尘把光线切成一道道光柱，墙上挂满打好的兵器
+    note_zh: 矮人区的感官核心——烟、火星、不停的锤声，地面随铁砧的敲击震动；这是全城最适合做近景特写（通红的铁 / 溅起的火星）的一块
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_City
+    quote: "The air is thick with smoke and sparks, and the ground trembles with the pounding of anvils ... blacksmiths create masterpieces out of common metals in the many open-air plazas."
+    verified_by: ai_read
+
+  - id: dwarven_district_well
+    parent: dwarven_district
+    type: poi
+    subtype: ""
+    name_zh: 矮人区北部水井
+    name_en: Dwarven District well
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 街心一口石砌的圆形水井（兼作喷泉），井沿粗厚，四周是矮胖的矮人式门脸
+    note_zh: 出自中文 GM 传送坐标表条目「矮人区,北部水井」(-8384.76, 630.87, 94.76)，tier T3；⚠️ 现行版本卫兵说的「金酒桶就在喷泉旁」不适用于旧世——黄金酒桶是 4.0.3a 才加的
+    source_url: https://blog.csdn.net/weixin_30439131/article/details/98442978
+    quote: "矮人区,北部水井 ... x,y,z,h=-8384.759766,630.868896,94.762863,3.218431"
+    verified_by: ai_read
+
+  # ============================================================
+  # L2 · 花园区
+  # ============================================================
+  - id: stormwind_moonwell
+    parent: stormwind_park
+    type: poi
+    subtype: ""
+    name_zh: 花园区月亮井
+    name_en: Moonwell of the Park
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林间空地正中一口月亮井：圆形浅池，池沿是浅色石材雕出的花瓣状边缘，池水自发光呈乳白偏冷蓝、极静并向上散出微弱光雾，台边立着藤蔓缠绕的雕花石柱
+    note_zh: 暗夜精灵在园区广场正中造的；**东部王国唯一一口**；对旧世德鲁伊玩家是 100% 强制去过的地方；日落光下是本片区最好的一张画
+    source_url: https://warcraft.wiki.gg/wiki/Park
+    quote: "It was the only place in the Eastern Kingdoms where druid trainers resided. The night elves created a Moonwell in the center of the park square."
+    verified_by: ai_read
+
+  - id: stormwind_park_square
+    parent: stormwind_park
+    type: poi
+    subtype: ""
+    name_zh: 花园区中心广场
+    name_en: The park square
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 树冠围合出的一块草地空场，自然石径从四面汇进来，月亮井居中，几名长耳紫肤的暗夜精灵散立在池周
+    note_zh: 德鲁伊大师们围着月亮井传授德鲁伊之道；本区也有牧师训练师、草药训练师与马厩管理员（都是暗夜精灵）；sk2 GM 坐标「花园,中心」(-8742.26, 1063.29, 89.75)——全城最西、海拔最低
+    source_url: https://warcraft.wiki.gg/wiki/Park
+    quote: "The night elves created a Moonwell in the center of the park square."
+    verified_by: ai_read
+
+  - id: stormwind_park_banner
+    parent: stormwind_park
+    type: poi
+    subtype: ""
+    name_zh: 花园区入口旗幡
+    name_en: The Park entrance banner
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 入口处悬着一面标识该区的竖幅旗幡，织物垂坠、边缘有流苏，图案与其他城区的旗幡成套
+    note_zh: 各城区入口都挂这种标识旗幡（教堂广场也有同制式的一面）；是「我走进了哪个区」最省事的过场符号
+    source_url: https://warcraft.wiki.gg/wiki/Park
+    quote: "One of the banners marking the entrance to the Park."
+    verified_by: ai_read
+
+  # ============================================================
+  # L2 · 暴风要塞
+  # ============================================================
+  - id: stormwind_keep_drawbridge
+    parent: stormwind_keep
+    type: poi
+    subtype: ""
+    name_zh: 要塞吊桥
+    name_en: Stormwind Keep drawbridge
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一座放下的木质吊桥跨过运河，两端是石砌门楼与绞盘铁链，桥那头是围合的王城庭院
+    note_zh: 进要塞的路——沿运河一路往北走就会遇到它（游戏内卫兵原话）；sk2 GM 坐标「暴风要塞,入口」(-8524.95, 437.38, 105.57)
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_City_Guard_(NPC)
+    quote: "The keep is in northren Storwmind. Just follow the canals north and you'll eventually come across a drawbridge... that leads into the keep's courtyard."
+    verified_by: ai_read
+
+  - id: stormwind_keep_courtyard
+    parent: stormwind_keep
+    type: poi
+    subtype: ""
+    name_zh: 要塞内庭院
+    name_en: Stormwind Keep courtyard
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 吊桥那头围合的石铺庭院，四周是要塞主体的高墙与券拱廊道，墙头站着披甲卫兵
+    note_zh: 吊桥直接通到这里，再从这儿进主厅；【旧世不是露天步道＋大喷泉的样子】，那是 4.0.3a 重制后的
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_City_Guard_(NPC)
+    quote: "a drawbridge... that leads into the keep's courtyard."
+    verified_by: ai_read
+
+  - id: stormwind_throne_room
+    parent: stormwind_keep
+    type: subzone
+    subtype: ""
+    name_zh: 王座厅
+    name_en: Throne room
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 主厅尽头的穹顶大厅，厅顶为半球形石砌穹窿，正中高起的台基上是一张镶金王座、左右各蹲踞一尊金色狮子，王座靠背嵌彩绘玻璃在台基上投下彩色光斑，四周环立披甲的皇家卫队
+    note_zh: 王座叫「狮子御座（Lion Seat）」；【旧世戏点】瓦里安失踪，十岁的安度因戴冠，博瓦尔·弗塔根摄政、卡特拉娜·普瑞斯托女士任王室顾问（实为奥妮克希亚）——王座上坐着一个明显年幼的男孩，这是旧世独有的一场戏；4.0.3a 王座厅重新设计过
+    source_url: https://warcraft.wiki.gg/wiki/Throne_room
+    quote: "During the absence of King Varian Wrynn, his ten-year-old son Anduin watched over the city, aided in his rule by Lady Katrana Prestor and Highlord Bolvar Fordragon"
+    verified_by: ai_read
+
+  - id: stormwind_war_room
+    parent: stormwind_throne_room
+    type: subzone
+    subtype: ""
+    name_zh: 作战室
+    name_en: War Room
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 王座厅正后方的地图室，中央一张大木桌摊着大幅羊皮地图，压着镇纸与小旗，四周站着披甲军官
+    note_zh: 从主厅穿过王座厅、正前方第一道门就是；战场指挥官（battlemaster）在此
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_Keep
+    quote: "War Room - First door, straight ahead through the throne room from the main hall."
+    verified_by: ai_read
+
+  - id: stormwind_keep_garden
+    parent: stormwind_keep
+    type: subzone
+    subtype: ""
+    name_zh: 要塞花园
+    name_en: Garden (Stormwind Keep)
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 要塞内一处小庭院花园，石栏围出几块修剪过的绿地与坐凳，市民在这儿散步读书，两侧各有门通向图书馆与画廊
+    note_zh: 进主厅后往左手第一个；4.0.3a 重新设计过——旧世不是能俯瞰暴风湖的那个花园平台
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_Keep
+    quote: "Garden - First left as you go down the main hall of the keep."
+    verified_by: ai_read
+
+  - id: stormwind_royal_library
+    parent: stormwind_keep_garden
+    type: subzone
+    subtype: ""
+    name_zh: 皇家图书馆
+    name_en: Royal Library
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 要塞内的藏书厅，高及天花板的木架塞满卷轴、典籍与手抄本，长案上摊着打开的书，烛台与羽毛笔在旁
+    note_zh: 从花园往右；联盟各族的冒险者都能来查阅史料；馆长是米尔顿·希夫
+    source_url: https://warcraft.wiki.gg/wiki/Royal_Library
+    quote: "The Royal Library (or the Stormwind Library) of Stormwind City is located inside Stormwind Keep. There is an extensive collection of scrolls, tomes, books, and texts on various subjects"
+    verified_by: ai_read
+
+  - id: stormwind_royal_gallery
+    parent: stormwind_keep_garden
+    type: subzone
+    subtype: ""
+    name_zh: 皇家画廊
+    name_en: Royal Gallery
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 要塞内一间不大的陈列室，石墙上挂着装框画作，室内立着三尊等身以上的人物石像各据一隅
+    note_zh: 【旧世有、现行没有】——4.0.3a 被移除；在小庭院花园之后、皇家图书馆旁边；陈列玛拉·佛德拉贡、莱恩国王、戴林·普罗德摩尔等人的雕像；sk2 GM 坐标「皇家画廊,暴风要塞北部」(-8344.79, 514.30, 122.27)
+    source_url: https://warcraft.wiki.gg/wiki/Royal_Gallery
+    quote: "The Royal Gallery was a little room beyond the small courtyard park of Stormwind Keep, next to the Royal Library. The gallery featured fine art and grandiose statues of illustrious personas such as Mara Fordragon, King Llane, and Daelin Proudmoore."
+    verified_by: ai_read
+
+  # ============================================================
+  # L2 · 运河区
+  # ============================================================
+  - id: stockade_meeting_stone
+    parent: stormwind_stockade
+    type: poi
+    subtype: ""
+    name_zh: 监狱门口集合石
+    name_en: Stockade meeting stone
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 监狱建筑门外侧立着一块人高的刻纹立石，石面凿着凹槽与符号，石前的一小块湿石台被踩得发亮
+    note_zh: 1.3.0 起就在；【旧世它不是召唤石】——集合石的作用是自动帮你凑队，2.0.1 才变成召唤；这里是可考证的「玩家在城里等人」的地点（sk2 裁定：比「贸易区喷泉边等队友」硬，后者查无出处）
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_Stockade_(Classic)
+    quote: "Stormwind Stockade ... loc=Canals, Stormwind City"
+    verified_by: ai_read
+
+  - id: stormwind_vault
+    parent: stormwind_canals
+    type: poi
+    subtype: ""
+    name_zh: 宝库
+    name_en: The Vault
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 与监狱隔水相望的第二座方形石堡，四面完全被水环绕，临水一侧是放下的竖向铁栅闸门，两名披甲卫兵一左一右持戟守在闸前的窄石台上
+    note_zh: 位于监狱正对面，除「四面全水」与「顶上有钟」外形制与监狱基本相同；从未开放过，连内测都没有；它其实没有正式名字，「Vault」只出自非正史设定书《Lands of Conflict》
+    source_url: https://warcraft.wiki.gg/wiki/Vault_(Stormwind_City)
+    quote: "is located opposite the Stockade, and mirrors that other prison in most ways, except that it is completely surrounded by water and has a clock on top of it. It is currently inaccessible, gated off by a portcullis with two guards."
+    verified_by: ai_read
+
+  - id: stormwind_vault_clock
+    parent: stormwind_vault
+    type: poi
+    subtype: ""
+    name_zh: 宝库顶的大钟
+    name_en: The Vault clock
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 堡顶正中嵌着一面大石钟面，指针清晰、钟面被水汽熏出一层灰
+    note_zh: 全城唯一一面公共钟面；⚠️「钟停在 8:15」是**大灾变之后**的设定（对应死亡之翼袭城的时刻、致敬广岛），旧世的指针不该停在那儿——长焦特写时要避开这一点
+    source_url: https://warcraft.wiki.gg/wiki/Vault_(Stormwind_City)
+    quote: "The clock at the top of the vault which was stopped at the time of Deathwing's attack on Stormwind City is a reference to the time at which the atomic bomb was dropped"
+    verified_by: ai_read
+
+  - id: gallina_winery
+    parent: stormwind_canals
+    type: subzone
+    subtype: ""
+    name_zh: 加林纳酿酒厂
+    name_en: Gallina Winery
+    level: ""
+    faction: alliance
+    coords: "[59, 77]"
+    adjacent: []
+    era: vanilla
+    look_zh: 运河边的酒庄门脸，门口堆着木桶与酒瓶架，铺面正对水面步道，门前不远就是钓鱼的木码头
+    note_zh: 运河区贸易区一侧；由加利纳家族经营；门口那个码头边是钓鱼训练师阿诺德·勒兰的位置
+    source_url: https://warcraft.wiki.gg/wiki/Gallina_Winery
+    quote: "Gallina Winery is a wine shop found in the Canals district in Stormwind City. It is owned and run by the Gallina family."
+    verified_by: ai_read
+
+  - id: canal_tailor_and_fit_shop
+    parent: stormwind_canals
+    type: subzone
+    subtype: ""
+    name_zh: 运河裁缝店
+    name_en: Canal Tailor and Fit Shop
+    level: ""
+    faction: alliance
+    coords: "[57, 66]"
+    adjacent: []
+    era: vanilla
+    look_zh: 运河石堤边一两开间宽的裁缝铺，门正对水面，橱窗里挂着成衣，门楣招牌是一把立体的剪刀
+    note_zh: 运河店铺之一；它给狮心武器库供布甲（尤其针织衫与裤子）
+    source_url: https://warcraft.wiki.gg/wiki/Canal_Tailor_and_Fit_Shop
+    quote: "Canal Tailor and Fit Shop is a clothing shop found in the Canals district in Stormwind City. They are known to provide the cloth armor for Lionheart Armory"
+    verified_by: ai_read
+
+  - id: fragrant_flowers
+    parent: stormwind_canals
+    type: subzone
+    subtype: ""
+    name_zh: 芳香的花朵
+    name_en: Fragrant Flowers
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 运河边的花店，门口摆满盆栽与扎好的花束，花色是整条运河上最跳的一处暖色
+    note_zh: 坐落在贸易区与旧城区之间那段运河的尽头、贸易区一侧
+    source_url: https://warcraft.wiki.gg/wiki/Fragrant_Flowers
+    quote: "Fragrant Flowers is the name of a flower shop located in the Canal District in Stormwind City. It sits at the end of the canal between the Trade District and Old Town, on the Trade District side."
+    verified_by: ai_read
+
+  - id: finest_thread
+    parent: stormwind_canals
+    type: subzone
+    subtype: ""
+    name_zh: The Finest Thread
+    name_en: The Finest Thread
+    level: ""
+    faction: alliance
+    coords: "[50, 60]"
+    adjacent: []
+    era: vanilla
+    look_zh: 运河西南角一间窄门面的裁缝材料铺，门正对水面步道，隔着水就能看见监狱石堡
+    note_zh: 【官方简体中文译名未查到】（灰机 wiki 无此条目），故保留英文原名；位置在教堂广场外西南角的运河沿岸；4.3.0 被「三缕风」（虚空仓库/幻化）取代——**旧世这儿是它，不是三缕风**
+    source_url: https://warcraft.wiki.gg/wiki/Finest_Thread
+    quote: "The Finest Thread was a tailoring goods shop located along the canals on the outer southwest corner of the Cathedral Square in Stormwind. It was replaced by The Three Winds"
+    verified_by: ai_read
+
+  - id: canals_enchanting_shop
+    parent: stormwind_canals
+    type: poi
+    subtype: ""
+    name_zh: 运河边的附魔师铺子
+    name_en: Canal-side enchanting shop
+    level: ""
+    faction: alliance
+    coords: "[53.0, 74.2]"
+    adjacent: []
+    era: vanilla
+    look_zh: 运河边一间窄门面的小铺，橱窗里摆着发微光的符文石与卷轴，店门正对水面步道
+    note_zh: 位置在法师区外侧、去监狱路上的运河沿岸（游戏内卫兵指路原话）；【旧世这栋楼还没有招牌名】——「考迪尔的附魔店」是 4.0.3a 才给它起的名字，所以本节点按功能命名，不套用后期店名
+    source_url: https://warcraft.wiki.gg/wiki/Cordell%27s_Enchanting
+    quote: "Patch 4.0.3a: Building given its name."
+    verified_by: ai_read
+
+  - id: cathedral_dwarven_footbridge
+    parent: stormwind_canals
+    type: poi
+    subtype: ""
+    name_zh: 教堂广场↔矮人区人行桥
+    name_en: Cathedral Square-Dwarven District footbridge
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一座窄而拱的石质人行桥跨过运河，桥面仅容两三人并行，两侧是矮石栏
+    note_zh: 桥南就是运河矮人区一侧那间通往割喉小巷的店；⚠️ 全城运河上到底有几座桥、各是什么形制**没有任何文字来源**，只能确证三座（英雄谷石桥、本人行桥、要塞吊桥），建模时桥数属自行设定、口播不要报数字
+    source_url: https://warcraft.wiki.gg/wiki/Cut-Throat_Alley
+    quote: "on the Dwarven side of the Canals just south of the footbridge from Cathedral Square"
+    verified_by: ai_read
+
+  - id: canals_fishing_docks
+    parent: stormwind_canals
+    type: poi
+    subtype: ""
+    name_zh: 运河木码头
+    name_en: Canal docks
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 大理石步道沿水边一路下沉成小块木质码头，码头上坐着几名垂钓者，脚边放着木桶与鱼篓，钓线垂进深水
+    note_zh: 钓鱼是暴风城市民的热门消遣，运河里有各种淡水鱼、最适合新手练钓；码头沿岸零散分布、不集中在一处
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_City
+    quote: "Anglers fish from the many docks in the city, the freshwater fish within perfect quarry for the beginning fisherman."
+    verified_by: ai_read

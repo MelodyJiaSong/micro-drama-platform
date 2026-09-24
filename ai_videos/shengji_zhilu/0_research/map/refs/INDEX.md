@@ -1,0 +1,199 @@
+# 参考图库索引 · 游戏内地图
+
+> 由 `tools/fetch_wow_maps.py --index` 生成。**目录结构镜像世界树**（大陆 / 分区 / 区）。
+> **图只进人眼，不进模型**（`divergence #8`）。版权归暴雪娱乐，内部参考，不再分发。
+
+  - **_continent** `eastern_kingdoms/_continent/` — 1 张
+    - `WorldMap-Azeroth-vanilla.jpg` · vanilla
+      - **暮色森林** `eastern_kingdoms/azeroth_subcontinent/kingdom_of_stormwind/duskwood/` — 1 张
+        - `WorldMap-Duskwood_c60.jpg` · c60
+      - **艾尔文森林** `eastern_kingdoms/azeroth_subcontinent/kingdom_of_stormwind/elwynn_forest/` — 1 张
+        - `WorldMap-Elwynn_c60.jpg` · c60
+        - **microdungeons** `eastern_kingdoms/azeroth_subcontinent/kingdom_of_stormwind/elwynn_forest/microdungeons/` — 4 张
+          - `WorldMap-MicroDungeon-Elwynn-Dalaran.jpg` · 单版本（微型地下城无 c60 变体）
+          - `WorldMap-MicroDungeon-Elwynn-FargodeepMine.jpg` · 单版本（微型地下城无 c60 变体）
+          - `WorldMap-MicroDungeon-Elwynn-FargodeepMine1.jpg` · 单版本（微型地下城无 c60 变体）
+          - `WorldMap-MicroDungeon-Elwynn-JasperlodeMine.jpg` · 单版本（微型地下城无 c60 变体）
+        - **北郡山谷** `eastern_kingdoms/azeroth_subcontinent/kingdom_of_stormwind/elwynn_forest/northshire_valley/` — 1 张
+          - `WorldMap-Elwynn_c60.jpg` · c60
+          - **microdungeons** `eastern_kingdoms/azeroth_subcontinent/kingdom_of_stormwind/elwynn_forest/northshire_valley/microdungeons/` — 4 张
+            - `WorldMap-MicroDungeon-Elwynn-Dalaran.jpg` · 单版本（微型地下城无 c60 变体）
+            - `WorldMap-MicroDungeon-Elwynn-FargodeepMine.jpg` · 单版本（微型地下城无 c60 变体）
+            - `WorldMap-MicroDungeon-Elwynn-FargodeepMine1.jpg` · 单版本（微型地下城无 c60 变体）
+            - `WorldMap-MicroDungeon-Elwynn-JasperlodeMine.jpg` · 单版本（微型地下城无 c60 变体）
+      - **赤脊山** `eastern_kingdoms/azeroth_subcontinent/kingdom_of_stormwind/redridge_mountains/` — 1 张
+        - `WorldMap-Redridge_c60.jpg` · c60
+      - **暴风城** `eastern_kingdoms/azeroth_subcontinent/kingdom_of_stormwind/stormwind_city/` — 1 张
+        - `WorldMap-StormwindCity_c60.jpg` · c60
+      - **西部荒野** `eastern_kingdoms/azeroth_subcontinent/kingdom_of_stormwind/westfall/` — 1 张
+        - `WorldMap-Westfall_c60.jpg` · c60
+        - **microdungeons** `eastern_kingdoms/azeroth_subcontinent/kingdom_of_stormwind/westfall/microdungeons/` — 3 张
+          - `WorldMap-MicroDungeon-Westfall-DeadminesWestfall.jpg` · 单版本（微型地下城无 c60 变体）
+          - `WorldMap-MicroDungeon-Westfall-GoldCoastQuarry.jpg` · 单版本（微型地下城无 c60 变体）
+          - `WorldMap-MicroDungeon-Westfall-JangolodeMine.jpg` · 单版本（微型地下城无 c60 变体）
+  - **诅咒之地** `eastern_kingdoms/blasted_lands/` — 1 张
+    - `WorldMap-BlastedLands_c60.jpg` · c60
+  - **燃烧平原** `eastern_kingdoms/burning_steppes/` — 1 张
+    - `WorldMap-BurningSteppes_c60.jpg` · c60
+    - **microdungeons** `eastern_kingdoms/burning_steppes/microdungeons/` — 3 张
+      - `WorldMap-MicroDungeon-BurningSteppes-BlackrockMountain.jpg` · 单版本（微型地下城无 c60 变体）
+      - `WorldMap-MicroDungeon-BurningSteppes-BlackrockMountain1.jpg` · 单版本（微型地下城无 c60 变体）
+      - `WorldMap-MicroDungeon-BurningSteppes-BlackrockMountain2.jpg` · 单版本（微型地下城无 c60 变体）
+  - **逆风小径** `eastern_kingdoms/deadwind_pass/` — 1 张
+    - `WorldMap-DeadwindPass_c60.jpg` · c60
+    - **microdungeons** `eastern_kingdoms/deadwind_pass/microdungeons/` — 5 张
+      - `WorldMap-MicroDungeon-DeadwindPass-Dalaran.jpg` · 单版本（微型地下城无 c60 变体）
+      - `WorldMap-MicroDungeon-DeadwindPass-KarazhanCatacombs.jpg` · 单版本（微型地下城无 c60 变体）
+      - `WorldMap-MicroDungeon-DeadwindPass-TheMastersCellar.jpg` · 单版本（微型地下城无 c60 变体）
+      - `WorldMap-MicroDungeon-DeadwindPass-TheMastersCellar1.jpg` · 单版本（微型地下城无 c60 变体）
+      - `WorldMap-MicroDungeon-DeadwindPass-TheMastersCellar2.jpg` · 单版本（微型地下城无 c60 变体）
+    - **荒芜之地** `eastern_kingdoms/khaz_modan/badlands/` — 1 张
+      - `WorldMap-Badlands_c60.jpg` · c60
+      - **microdungeons** `eastern_kingdoms/khaz_modan/badlands/microdungeons/` — 1 张
+        - `WorldMap-MicroDungeon-Badlands-Uldaman.jpg` · 单版本（微型地下城无 c60 变体）
+    - **黑石山** `eastern_kingdoms/khaz_modan/blackrock_mountain/` — 2 张
+      - `WorldMap-Blackrock.jpg` · ⚠ 零售
+      - `WorldMap-MicroDungeon-BurningSteppes-BlackrockMountain.jpg` · 单版本（微型地下城无 c60 变体）
+      - **暗影裂口城** `eastern_kingdoms/khaz_modan/blackrock_mountain/shadowforge_city/` — 2 张
+        - `WorldMap-BlackrockDepths.jpg` · ⚠ 零售
+        - `WorldMap-BlackrockDepths1.jpg` · ⚠ 零售
+    - **丹莫罗** `eastern_kingdoms/khaz_modan/dun_morogh/` — 1 张
+      - `WorldMap-DunMorogh_c60.jpg` · c60
+      - **铁炉堡** `eastern_kingdoms/khaz_modan/dun_morogh/ironforge/` — 1 张
+        - `WorldMap-Ironforge_c60.jpg` · c60
+      - **microdungeons** `eastern_kingdoms/khaz_modan/dun_morogh/microdungeons/` — 4 张
+        - `WorldMap-MicroDungeon-DunMorogh-ColdridgePass.jpg` · 单版本（微型地下城无 c60 变体）
+        - `WorldMap-MicroDungeon-DunMorogh-Gnomeregan.jpg` · 单版本（微型地下城无 c60 变体）
+        - `WorldMap-MicroDungeon-DunMorogh-GolBolarQuarry.jpg` · 单版本（微型地下城无 c60 变体）
+        - `WorldMap-MicroDungeon-DunMorogh-TheGrizzledDen.jpg` · 单版本（微型地下城无 c60 变体）
+    - **洛克莫丹** `eastern_kingdoms/khaz_modan/loch_modan/` — 1 张
+      - `WorldMap-LochModan_c60.jpg` · c60
+    - **灼热峡谷** `eastern_kingdoms/khaz_modan/searing_gorge/` — 1 张
+      - `WorldMap-SearingGorge_c60.jpg` · c60
+      - **microdungeons** `eastern_kingdoms/khaz_modan/searing_gorge/microdungeons/` — 3 张
+        - `WorldMap-MicroDungeon-SearingGorge-BlackrockMountain.jpg` · 单版本（微型地下城无 c60 变体）
+        - `WorldMap-MicroDungeon-SearingGorge-BlackrockMountain1.jpg` · 单版本（微型地下城无 c60 变体）
+        - `WorldMap-MicroDungeon-SearingGorge-BlackrockMountain2.jpg` · 单版本（微型地下城无 c60 变体）
+    - **湿地** `eastern_kingdoms/khaz_modan/wetlands/` — 1 张
+      - `WorldMap-Wetlands_c60.jpg` · c60
+    - **奥特兰克山脉** `eastern_kingdoms/lordaeron/alterac_mountains/` — 1 张
+      - `WorldMap-Alterac_c60.jpg` · c60
+    - **阿拉希高地** `eastern_kingdoms/lordaeron/arathi_highlands/` — 1 张
+      - `WorldMap-Arathi_c60.jpg` · c60
+    - **东瘟疫之地** `eastern_kingdoms/lordaeron/eastern_plaguelands/` — 1 张
+      - `WorldMap-EasternPlaguelands_c60.jpg` · c60
+      - **microdungeons** `eastern_kingdoms/lordaeron/eastern_plaguelands/microdungeons/` — 1 张
+        - `WorldMap-MicroDungeon-EasternPlaguelands-PaladinClassShrine.jpg` · 单版本（微型地下城无 c60 变体）
+    - **希尔斯布莱德丘陵** `eastern_kingdoms/lordaeron/hillsbrad_foothills/` — 1 张
+      - `WorldMap-Hillsbrad_c60.jpg` · c60
+    - **银松森林** `eastern_kingdoms/lordaeron/silverpine_forest/` — 2 张
+      - `WorldMap-Silverpine.jpg` · ⚠ 零售
+      - `WorldMap-Silverpine_c60.jpg` · c60
+    - **辛特兰** `eastern_kingdoms/lordaeron/the_hinterlands/` — 1 张
+      - `WorldMap-Hinterlands_c60.jpg` · c60
+    - **提瑞斯法林地** `eastern_kingdoms/lordaeron/tirisfal_glades/` — 1 张
+      - `WorldMap-Tirisfal_c60.jpg` · c60
+      - **microdungeons** `eastern_kingdoms/lordaeron/tirisfal_glades/microdungeons/` — 2 张
+        - `WorldMap-MicroDungeon-Tirisfal-KeepersRest.jpg` · 单版本（微型地下城无 c60 变体）
+        - `WorldMap-MicroDungeon-Tirisfal-ScarletMonasteryEntrance.jpg` · 单版本（微型地下城无 c60 变体）
+      - **幽暗城** `eastern_kingdoms/lordaeron/tirisfal_glades/undercity/` — 1 张
+        - `WorldMap-Undercity_c60.jpg` · c60
+    - **西瘟疫之地** `eastern_kingdoms/lordaeron/western_plaguelands/` — 1 张
+      - `WorldMap-WesternPlaguelands_c60.jpg` · c60
+  - **荆棘谷** `eastern_kingdoms/stranglethorn_vale/` — 3 张
+    - `WorldMap-Stranglethorn.jpg` · ⚠ 零售
+    - `WorldMap-StranglethornVale.jpg` · ⚠ 零售
+    - `WorldMap-Stranglethorn_c60.jpg` · c60
+    - **藏宝海湾** `eastern_kingdoms/stranglethorn_vale/booty_bay/` — 1 张
+      - `WorldMap-StranglethornVale.jpg` · ⚠ 零售
+  - **悲伤沼泽** `eastern_kingdoms/swamp_of_sorrows/` — 1 张
+    - `WorldMap-SwampofSorrows_c60.jpg` · c60
+  - **_continent** `kalimdor/_continent/` — 1 张
+    - `WorldMap-Kalimdor_c60.jpg` · c60
+    - **凄凉之地** `kalimdor/central_kalimdor/desolace/` — 1 张
+      - `WorldMap-Desolace_c60.jpg` · c60
+      - **microdungeons** `kalimdor/central_kalimdor/desolace/microdungeons/` — 2 张
+        - `WorldMap-MicroDungeon-Desolace-MaraudonOutside.jpg` · 单版本（微型地下城无 c60 变体）
+        - `WorldMap-MicroDungeon-Desolace-MaraudonOutside1.jpg` · 单版本（微型地下城无 c60 变体）
+    - **杜隆塔尔** `kalimdor/central_kalimdor/durotar/` — 1 张
+      - `WorldMap-Durotar_c60.jpg` · c60
+      - **microdungeons** `kalimdor/central_kalimdor/durotar/microdungeons/` — 5 张
+        - `WorldMap-MicroDungeon-Durotar-BurningBladeCoven.jpg` · 单版本（微型地下城无 c60 变体）
+        - `WorldMap-MicroDungeon-Durotar-DustwindCave.jpg` · 单版本（微型地下城无 c60 变体）
+        - `WorldMap-MicroDungeon-Durotar-SkullRock.jpg` · 单版本（微型地下城无 c60 变体）
+        - `WorldMap-MicroDungeon-Durotar-TiragardeKeep.jpg` · 单版本（微型地下城无 c60 变体）
+        - `WorldMap-MicroDungeon-Durotar-TiragardeKeep1.jpg` · 单版本（微型地下城无 c60 变体）
+      - **奥格瑞玛** `kalimdor/central_kalimdor/durotar/orgrimmar/` — 1 张
+        - `WorldMap-Orgrimmar_c60.jpg` · c60
+    - **莫高雷** `kalimdor/central_kalimdor/mulgore/` — 1 张
+      - `WorldMap-Mulgore_c60.jpg` · c60
+      - **microdungeons** `kalimdor/central_kalimdor/mulgore/microdungeons/` — 2 张
+        - `WorldMap-MicroDungeon-Mulgore-PalemaneRock.jpg` · 单版本（微型地下城无 c60 变体）
+        - `WorldMap-MicroDungeon-Mulgore-TheVentureCoMine.jpg` · 单版本（微型地下城无 c60 变体）
+      - **雷霆崖** `kalimdor/central_kalimdor/mulgore/thunder_bluff/` — 1 张
+        - `WorldMap-ThunderBluff_c60.jpg` · c60
+    - **石爪山脉** `kalimdor/central_kalimdor/stonetalon_mountains/` — 2 张
+      - `WorldMap-StonetalonMountain_c60.jpg` · c60
+      - `WorldMap-StonetalonMountains.jpg` · ⚠ 零售
+    - **贫瘠之地** `kalimdor/central_kalimdor/the_barrens/` — 1 张
+      - `WorldMap-Barrens_c60.jpg` · c60
+      - **microdungeons** `kalimdor/central_kalimdor/the_barrens/microdungeons/` — 1 张
+        - `WorldMap-MicroDungeon-Barrens-WailingCavernsBarrens.jpg` · 单版本（微型地下城无 c60 变体）
+    - **灰谷** `kalimdor/northern_kalimdor/ashenvale/` — 1 张
+      - `WorldMap-Ashenvale_c60.jpg` · c60
+    - **艾萨拉** `kalimdor/northern_kalimdor/azshara/` — 1 张
+      - `WorldMap-Azshara_c60.jpg` · c60
+    - **黑海岸** `kalimdor/northern_kalimdor/darkshore/` — 1 张
+      - `WorldMap-Darkshore_c60.jpg` · c60
+    - **费伍德森林** `kalimdor/northern_kalimdor/felwood/` — 1 张
+      - `WorldMap-Felwood_c60.jpg` · c60
+    - **月光林地** `kalimdor/northern_kalimdor/moonglade/` — 1 张
+      - `WorldMap-Moonglade_c60.jpg` · c60
+    - **泰达希尔** `kalimdor/northern_kalimdor/teldrassil/` — 1 张
+      - `WorldMap-Teldrassil_c60.jpg` · c60
+      - **达纳苏斯** `kalimdor/northern_kalimdor/teldrassil/darnassus/` — 1 张
+        - `WorldMap-Darnassus_c60.jpg` · c60
+      - **microdungeons** `kalimdor/northern_kalimdor/teldrassil/microdungeons/` — 4 张
+        - `WorldMap-MicroDungeon-Teldrassil-BanethilBarrowDen.jpg` · 单版本（微型地下城无 c60 变体）
+        - `WorldMap-MicroDungeon-Teldrassil-BanethilBarrowDen1.jpg` · 单版本（微型地下城无 c60 变体）
+        - `WorldMap-MicroDungeon-Teldrassil-FelRock.jpg` · 单版本（微型地下城无 c60 变体）
+        - `WorldMap-MicroDungeon-Teldrassil-ShadowthreadCave.jpg` · 单版本（微型地下城无 c60 变体）
+    - **冬泉谷** `kalimdor/northern_kalimdor/winterspring/` — 1 张
+      - `WorldMap-Winterspring_c60.jpg` · c60
+    - **尘泥沼泽** `kalimdor/southern_kalimdor/dustwallow_marsh/` — 1 张
+      - `WorldMap-DustwallowMarsh_c60.jpg` · c60
+    - **费拉斯** `kalimdor/southern_kalimdor/feralas/` — 1 张
+      - `WorldMap-Feralas_c60.jpg` · c60
+    - **希利苏斯** `kalimdor/southern_kalimdor/silithus/` — 1 张
+      - `WorldMap-Silithus_c60.jpg` · c60
+      - **microdungeons** `kalimdor/southern_kalimdor/silithus/microdungeons/` — 1 张
+        - `WorldMap-MicroDungeon-Silithus-TwilightsRun.jpg` · 单版本（微型地下城无 c60 变体）
+    - **塔纳利斯** `kalimdor/southern_kalimdor/tanaris/` — 1 张
+      - `WorldMap-Tanaris_c60.jpg` · c60
+      - **microdungeons** `kalimdor/southern_kalimdor/tanaris/microdungeons/` — 4 张
+        - `WorldMap-MicroDungeon-Tanaris-CavernsofTime.jpg` · 单版本（微型地下城无 c60 变体）
+        - `WorldMap-MicroDungeon-Tanaris-CavernsofTime1.jpg` · 单版本（微型地下城无 c60 变体）
+        - `WorldMap-MicroDungeon-Tanaris-TheGapingChasm.jpg` · 单版本（微型地下城无 c60 变体）
+        - `WorldMap-MicroDungeon-Tanaris-TheNoxiousLair.jpg` · 单版本（微型地下城无 c60 变体）
+    - **千针石林** `kalimdor/southern_kalimdor/thousand_needles/` — 1 张
+      - `WorldMap-ThousandNeedles_c60.jpg` · c60
+    - **安戈洛环形山** `kalimdor/southern_kalimdor/un_goro_crater/` — 1 张
+      - `WorldMap-UnGoroCrater_c60.jpg` · c60
+      - **microdungeons** `kalimdor/southern_kalimdor/un_goro_crater/microdungeons/` — 1 张
+        - `WorldMap-MicroDungeon-UngoroCrater-TheSlitheringScar.jpg` · 单版本（微型地下城无 c60 变体）
+
+**合计 108 张。**
+
+## ⚠ 只拿到现行零售版的区域地图（没有经典变体）
+
+**4.0.3a 把人族 1–30 级区域整体重画过**，看这些图时要自己减掉后加的东西。
+微型地下城图**不在此列**——它们在 wiki 上本来就只有一个版本，不是版本错置。
+
+- 黑石山 / WorldMap-Blackrock.jpg
+- 暗影裂口城 / WorldMap-BlackrockDepths.jpg
+- 暗影裂口城 / WorldMap-BlackrockDepths1.jpg
+- 银松森林 / WorldMap-Silverpine.jpg
+- 荆棘谷 / WorldMap-Stranglethorn.jpg
+- 荆棘谷 / WorldMap-StranglethornVale.jpg
+- 藏宝海湾 / WorldMap-StranglethornVale.jpg
+- 石爪山脉 / WorldMap-StonetalonMountains.jpg

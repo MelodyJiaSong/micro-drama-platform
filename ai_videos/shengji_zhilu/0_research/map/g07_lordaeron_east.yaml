@@ -1,0 +1,1888 @@
+# G07 · 洛丹伦东部与瘟疫之地 —— 地理树片区数据
+# 版本锚点：经典旧世 Vanilla / Classic Era（1.12 内容，客户端数据取自 Classic Era 1.15.9.69722）
+# 数据主源：暴雪客户端 DBC/DB2（AreaTable / TaxiNodes / AreaPOI / AreaTrigger / UiMapAssignment），
+#           经 wago.tools 导出 enUS + zhCN 两份逐行对照；name_zh 即国服官方简体译名。
+# 非树数据（自查对账 / 版本差异 / 存疑 / 地图图片 / 下游提醒）见 g07_lordaeron_east_notes.md
+nodes:
+
+  # ============================================================
+  # ZONE 1 · 阿拉希高地 Arathi Highlands (AreaID 45)
+  # ============================================================
+  - id: arathi_highlands
+    parent: lordaeron
+    type: zone
+    subtype: ""
+    name_zh: 阿拉希高地
+    name_en: Arathi Highlands
+    level: "30-40"
+    faction: contested
+    coords: ""
+    adjacent: [hillsbrad_foothills, wetlands]
+    era: vanilla
+    look_zh: 开阔的金褐色高地草甸与低缓丘陵，灰白裸岩断崖切开草坡，散落石砌废农庄、断墙与倒塌的塔基，天光灰蓝而通透
+    note_zh: 旧世 30-40 级争夺区；联盟据点避难谷地、部落据点落锤镇、阿拉希盆地战场入口都在此。北面辛特兰在旧世没有陆路直通——瓦洛卡通道是 4.0.3 才开凿的
+    source_url: https://warcraft.wiki.gg/wiki/Arathi_Highlands
+    quote: "The Arathi Highlands (sometimes referred to as simply Arathi, the Highlands, or Arathor) are a region in southeastern Lordaeron, east of Hillsbrad Foothills and south of the Hinterlands."
+    verified_by: ai_read
+
+  - id: refuge_pointe
+    parent: arathi_highlands
+    type: settlement
+    subtype: town
+    name_zh: 避难谷地
+    name_en: Refuge Pointe
+    level: ""
+    faction: alliance
+    coords: "[46, 47]"
+    adjacent: []
+    era: vanilla
+    look_zh: 大路旁一圈木栅与帆布营帐围成的联盟驻地，篝火、拴马桩与伤兵帐篷挤在一起，栅栏外就是空旷草坡
+    note_zh: 阿拉希唯一的联盟据点与飞行点；激流堡残军的后方营地，阿拉希盆地联盟入口就在营内
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=320 AreaName_lang="Refuge Pointe" ParentAreaID=45 zhCN="避难谷地" ExplorationLevel=30'
+    verified_by: ai_read
+
+  - id: hammerfall
+    parent: arathi_highlands
+    type: settlement
+    subtype: town
+    name_zh: 落锤镇
+    name_en: Hammerfall
+    level: ""
+    faction: horde
+    coords: "[74, 36]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东部高地上的兽人聚落，尖木桩围栏内是兽皮圆顶帐与红色旗幡，脚下是赭红色的干裂岩地
+    note_zh: 阿拉希唯一的部落据点与飞行点；由逃出人类劳工营的兽人所建，阿拉希盆地部落入口在镇后
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=321 AreaName_lang="Hammerfall" ParentAreaID=45 zhCN="落锤镇" ExplorationLevel=30'
+    verified_by: ai_read
+
+  - id: stromgarde_keep
+    parent: arathi_highlands
+    type: settlement
+    subtype: ruin
+    name_zh: 激流堡
+    name_en: Stromgarde Keep
+    level: ""
+    faction: contested
+    coords: "[18, 69]"
+    adjacent: []
+    era: vanilla
+    look_zh: 高地西南角的巨型石砌要塞废墟，塌陷的城墙与被投石弩打穿的塔楼，城内街巷长满野草、随处是碎石堆
+    note_zh: 旧世三方混战——激流堡守军占内堡、辛迪加占城区、巨石之拳食人魔占旧法师区；阿拉索人类王国最后的都城遗址
+    source_url: https://warcraft.wiki.gg/wiki/Stromgarde_Keep
+    quote: "The inner keep of Stromgarde, ruined and penetrated by ballista bolts."
+    verified_by: ai_read
+
+  - id: tower_of_arathor
+    parent: stromgarde_keep
+    type: poi
+    subtype: ""
+    name_zh: 阿拉索之塔
+    name_en: The Tower of Arathor
+    level: ""
+    faction: contested
+    coords: "[18, 69]"
+    adjacent: []
+    era: vanilla
+    look_zh: 激流堡内一座还立着的圆形法师塔，塔身有裂口，顶层露天，内部石阶盘旋而上
+    note_zh: 旧法师区的主塔，被食人魔攻陷；大法师特雷勒恩留在塔内的法器是旧世任务目标
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=325 AreaName_lang="The Tower of Arathor" ParentAreaID=45 zhCN="阿拉索之塔"'
+    verified_by: ai_read
+
+  - id: the_sanctum_stromgarde
+    parent: stromgarde_keep
+    type: subzone
+    subtype: ""
+    name_zh: 密室
+    name_en: The Sanctum
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 激流堡内堡下方的封闭石室，无窗，只有石柱与祭坛式的台座，光线来自壁上火把
+    note_zh: 激流堡内的小型微型地下区域（非独立副本）；客户端 AreaTable 中挂在阿拉希高地下，按地理归入激流堡
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=326 AreaName_lang="The Sanctum" ParentAreaID=45 zhCN="密室"'
+    verified_by: ai_read
+
+  - id: thoradins_wall
+    parent: arathi_highlands
+    type: poi
+    subtype: ""
+    name_zh: 索拉丁之墙
+    name_en: Thoradin's Wall
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 横亘在西部边界的古老石墙，墙体半塌、爬满藤蔓，中间留一道供大路穿过的豁口
+    note_zh: 阿拉希高地与希尔斯布莱德丘陵的分界；阿拉索帝国时代留下的边墙，穿墙豁口即两区陆路通道
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=1857 AreaName_lang="Thoradin''s Wall" ParentAreaID=45 zhCN="索拉丁之墙" ExplorationLevel=32'
+    verified_by: ai_read
+
+  - id: northfold_manor
+    parent: arathi_highlands
+    type: settlement
+    subtype: farm
+    name_zh: 诺斯弗德农场
+    name_en: Northfold Manor
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 草坡上一组石基木构的农舍与谷仓，屋顶部分塌陷，院里堆着干草垛与废弃农具
+    note_zh: 被辛迪加占据的废弃人类农庄，旧世 30 级出头的刷怪点
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=313 AreaName_lang="Northfold Manor" ParentAreaID=45 zhCN="诺斯弗德农场" ExplorationLevel=31'
+    verified_by: ai_read
+
+  - id: go_shek_farm
+    parent: arathi_highlands
+    type: settlement
+    subtype: farm
+    name_zh: 格沙克农场
+    name_en: Go'Shek Farm
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 大路东侧的农庄，主屋与磨坊尚完整，木栅围出的田地已荒，谷仓阁楼可上人
+    note_zh: 同样落入辛迪加之手的农庄；旧世任务链在此取信件与物资
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=314 AreaName_lang="Go''Shek Farm" ParentAreaID=45 zhCN="格沙克农场" ExplorationLevel=33'
+    verified_by: ai_read
+
+  - id: dabyries_farmstead
+    parent: arathi_highlands
+    type: settlement
+    subtype: farm
+    name_zh: 达比雷农场
+    name_en: Dabyrie's Farmstead
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 高地中部大路旁的农庄群，低矮石墙圈出的院落里有水井与畜栏，屋后是整片黄褐色的休耕地
+    note_zh: 辛迪加控制的第三处农庄，位于避难谷地与落锤镇之间的主路上
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=315 AreaName_lang="Dabyrie''s Farmstead" ParentAreaID=45 zhCN="达比雷农场" ExplorationLevel=31'
+    verified_by: ai_read
+
+  - id: witherbark_village
+    parent: arathi_highlands
+    type: settlement
+    subtype: village
+    name_zh: 枯木村
+    name_en: Witherbark Village
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 高地东北的丛林巨魔营地，圆锥形兽皮帐与插满骨头的图腾柱，地上是燃着的火坑与晾肉架
+    note_zh: 枯木（Witherbark）巨魔部族的主村；旧世任务在此取部族图腾
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=317 AreaName_lang="Witherbark Village" ParentAreaID=45 zhCN="枯木村" ExplorationLevel=33'
+    verified_by: ai_read
+
+  - id: witherbark_caverns
+    parent: witherbark_village
+    type: subzone
+    subtype: ""
+    name_zh: 枯木洞穴
+    name_en: Witherbark Caverns
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 村旁岩壁上的一处洞口，洞内狭窄潮湿、挂着兽皮与骨饰，深处有火光
+    note_zh: 枯木村附属的洞穴区；4.0.3 之后该区域名被移除，只在旧世存在
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=1837 AreaName_lang="Witherbark Caverns" ParentAreaID=45 zhCN="枯木洞穴"'
+    verified_by: ai_read
+
+  - id: boulderfist_hall
+    parent: arathi_highlands
+    type: subzone
+    subtype: ""
+    name_zh: 石拳大厅
+    name_en: Boulderfist Hall
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 山体里开凿出的食人魔厅堂，粗大石柱撑着低矮洞顶，地上散着啃剩的大骨与破木桶
+    note_zh: 巨石之拳食人魔的主巢；旧世 35 级左右的洞穴刷怪区
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=316 AreaName_lang="Boulderfist Hall" ParentAreaID=45 zhCN="石拳大厅" ExplorationLevel=35'
+    verified_by: ai_read
+
+  - id: boulder_gor
+    parent: arathi_highlands
+    type: subzone
+    subtype: ""
+    name_zh: 博德戈尔
+    name_en: Boulder'gor
+    level: ""
+    faction: contested
+    coords: "[35, 44]"
+    adjacent: []
+    era: vanilla
+    look_zh: 高地中部一道下陷的乱石谷地，谷底支着食人魔的粗木棚与火堆，四壁是灰白巨岩
+    note_zh: 巨石之拳食人魔的第二处据点，世界地图上以「石拳前哨」图标标出
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=1858 AreaName_lang="Boulder''gor" ParentAreaID=45 zhCN="博德戈尔" ExplorationLevel=32'
+    verified_by: ai_read
+
+  - id: boulderfist_outpost
+    parent: boulder_gor
+    type: poi
+    subtype: ""
+    name_zh: 石拳前哨
+    name_en: Boulderfist Outpost
+    level: ""
+    faction: contested
+    coords: "[35, 44]"
+    adjacent: []
+    era: vanilla
+    look_zh: 博德戈尔谷口的食人魔哨位，几根插着头骨的木桩与一座望火台
+    note_zh: 旧世世界地图上的 POI 图标点（AreaPOI 1010，所属区域＝博德戈尔）
+    source_url: https://wago.tools/db2/AreaPOI?build=1.15.9.69722
+    quote: 'AreaPOI ID=1010 Name_lang="Boulderfist Outpost" AreaID=1858 zhCN="石拳前哨"'
+    verified_by: ai_read
+
+  - id: drywhisker_gorge
+    parent: arathi_highlands
+    type: subzone
+    subtype: ""
+    name_zh: 枯须峡谷
+    name_en: Drywhisker Gorge
+    level: ""
+    faction: contested
+    coords: "[82, 37]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东部边缘一条狭窄的赭红色岩缝峡谷，谷壁上凿着矿洞口，谷底堆着矿车与碎石
+    note_zh: 枯须狗头人的矿坑，旧世 36 级左右任务区；4.0.3 才在此新增独立的「枯须矿洞」区域名，不进本树
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=318 AreaName_lang="Drywhisker Gorge" ParentAreaID=45 zhCN="枯须峡谷" ExplorationLevel=36'
+    verified_by: ai_read
+
+  - id: faldirs_cove
+    parent: arathi_highlands
+    type: subzone
+    subtype: ""
+    name_zh: 法迪尔海湾
+    name_en: Faldir's Cove
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 西南海岸悬崖下的隐蔽沙滩海湾，浅绿海水、搁浅的破船与滩头的海盗帐篷
+    note_zh: 旧世只能从悬崖跳下或游泳进入（4.0.3 才从激流堡开出一条路）；海盗与沉船任务区
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=327 AreaName_lang="Faldir''s Cove" ParentAreaID=45 zhCN="法迪尔海湾" ExplorationLevel=40'
+    verified_by: ai_read
+
+  - id: the_drowned_reef
+    parent: faldirs_cove
+    type: subzone
+    subtype: ""
+    name_zh: 水下暗礁
+    name_en: The Drowned Reef
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 海湾外的水下礁盘，蓝绿色光柱穿过水面，礁石间卡着倾覆的船体与散落箱笼
+    note_zh: 法迪尔海湾外的水下区域，旧世沉船打捞任务的目标点
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=328 AreaName_lang="The Drowned Reef" ParentAreaID=45 zhCN="水下暗礁"'
+    verified_by: ai_read
+
+  - id: blackwater_shipwrecks
+    parent: faldirs_cove
+    type: poi
+    subtype: ""
+    name_zh: 黑水湾沉船
+    name_en: Blackwater Shipwrecks
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 近岸浅水里成片倾斜的沉船桅杆与龙骨，退潮时露出被藤壶包住的船板
+    note_zh: 旧世独有的沉船带，4.0.3 之后区域名被移除——只在经典旧世的树里存在
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=322 AreaName_lang="Blackwater Shipwrecks" ParentAreaID=45 zhCN="黑水湾沉船"'
+    verified_by: ai_read
+
+  - id: obreens_camp
+    parent: arathi_highlands
+    type: settlement
+    subtype: camp
+    name_zh: 奥布瑞恩营地
+    name_en: O'Breen's Camp
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 荒坡上的小型盗匪营，两三顶破帆布帐围着一堆余烬，旁边拴着驮马
+    note_zh: 旧世独有的小营地，4.0.3 之后被移除；规模极小，适合做「路遇匪帮」的一场戏
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=323 AreaName_lang="O''Breen''s Camp" ParentAreaID=45 zhCN="奥布瑞恩营地"'
+    verified_by: ai_read
+
+  - id: circle_of_inner_binding
+    parent: arathi_highlands
+    type: subzone
+    subtype: ""
+    name_zh: 内禁锢法阵
+    name_en: Circle of Inner Binding
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 草地上一圈等距立起的符文石柱，圈心地面刻着发微光的法阵纹，周围有元素生物游荡
+    note_zh: 四座「禁锢法阵」之一；旧世 38 级左右元素刷怪点，法阵群是阿拉希最具辨识度的地标
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=335 AreaName_lang="Circle of Inner Binding" ParentAreaID=45 zhCN="内禁锢法阵" ExplorationLevel=38'
+    verified_by: ai_read
+
+  - id: circle_of_outer_binding
+    parent: arathi_highlands
+    type: subzone
+    subtype: ""
+    name_zh: 外禁锢法阵
+    name_en: Circle of Outer Binding
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 与内法阵同构的石柱环，位置更靠外，石柱表面风化更重、缺了一两根
+    note_zh: 四座禁锢法阵之一
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=336 AreaName_lang="Circle of Outer Binding" ParentAreaID=45 zhCN="外禁锢法阵" ExplorationLevel=38'
+    verified_by: ai_read
+
+  - id: circle_of_east_binding
+    parent: arathi_highlands
+    type: subzone
+    subtype: ""
+    name_zh: 东部禁锢法阵
+    name_en: Circle of East Binding
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 高地东侧的符文石柱环，立在一片被烧灼过的焦黑地面上
+    note_zh: 四座禁锢法阵之一
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=333 AreaName_lang="Circle of East Binding" ParentAreaID=45 zhCN="东部禁锢法阵" ExplorationLevel=38'
+    verified_by: ai_read
+
+  - id: circle_of_west_binding
+    parent: arathi_highlands
+    type: subzone
+    subtype: ""
+    name_zh: 西部禁锢法阵
+    name_en: Circle of West Binding
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 高地西侧的符文石柱环，一侧石柱已倒伏，圈内积着小水洼
+    note_zh: 四座禁锢法阵之一。4.0.3 新增的「元素之环 Circle of Elements」不属于旧世，未收录
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=334 AreaName_lang="Circle of West Binding" ParentAreaID=45 zhCN="西部禁锢法阵" ExplorationLevel=38'
+    verified_by: ai_read
+
+  - id: forbidding_sea_arathi
+    parent: arathi_highlands
+    type: subzone
+    subtype: ""
+    name_zh: 禁忌之海
+    name_en: The Forbidding Sea
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 高地东岸外的深色外海，灰绿浪涌拍在礁石上，远处只有海雾没有陆地
+    note_zh: 同一片外海在客户端里按所属 zone 分成多个同名区域（阿拉希 2401 / 辛特兰 2400 / 东瘟疫 16361），本树按 zone 各建一节点并加限定后缀
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2401 AreaName_lang="The Forbidding Sea" ParentAreaID=45 zhCN="禁忌之海"'
+    verified_by: ai_read
+
+  - id: ab_entrance_alliance
+    parent: refuge_pointe
+    type: poi
+    subtype: ""
+    name_zh: 阿拉希盆地联盟入口
+    name_en: Arathi Basin Alliance Entrance
+    level: ""
+    faction: alliance
+    coords: "[46, 44]"
+    adjacent: []
+    era: vanilla
+    look_zh: 避难谷地营内一处立着战场旗帜的空地，联盟战场军官守在旁边
+    note_zh: 客户端区域触发器写明「只有至少20级的联盟玩家才能进入」
+    source_url: https://wago.tools/db2/AreaTrigger?build=1.15.9.69722
+    quote: 'AreaTrigger ID=3953 ContinentID=0 Message_lang="只有至少20级的联盟玩家才能进入。"'
+    verified_by: ai_read
+
+  - id: ab_entrance_horde
+    parent: hammerfall
+    type: poi
+    subtype: ""
+    name_zh: 阿拉希盆地部落入口
+    name_en: Arathi Basin Horde Entrance
+    level: ""
+    faction: horde
+    coords: "[73, 28]"
+    adjacent: []
+    era: vanilla
+    look_zh: 落锤镇后方山坡上的战场旗帜与部落战场军官，脚下是通向盆地的土路
+    note_zh: 客户端区域触发器写明「只有至少20级的部落玩家才能进入」
+    source_url: https://wago.tools/db2/AreaTrigger?build=1.15.9.69722
+    quote: 'AreaTrigger ID=3954 ContinentID=0 Message_lang="只有至少20级的部落玩家才能进入。"'
+    verified_by: ai_read
+
+  - id: ab_trollbane_hall
+    parent: arathi_basin
+    type: subzone
+    subtype: ""
+    name_zh: 托尔贝恩大厅
+    name_en: Trollbane Hall
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 盆地北端的石砌厅堂，蓝色联盟旗帜挂在门楣上，厅外是出发用的石阶坡道
+    note_zh: 阿拉希盆地的联盟出生营地
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=3417 AreaName_lang="Trollbane Hall" ParentAreaID=3358 zhCN="托尔贝恩大厅"'
+    verified_by: ai_read
+
+  - id: ab_defilers_den
+    parent: arathi_basin
+    type: subzone
+    subtype: ""
+    name_zh: 污染者之穴
+    name_en: Defiler's Den
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 盆地南端凿进岩壁的洞穴营地，红色部落旗与尖木桩排在洞口
+    note_zh: 阿拉希盆地的部落出生营地
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=3418 AreaName_lang="Defiler''s Den" ParentAreaID=3358 zhCN="污染者之穴"'
+    verified_by: ai_read
+
+  - id: ab_farm
+    parent: arathi_basin
+    type: subzone
+    subtype: ""
+    name_zh: 农场
+    name_en: Farm
+    level: ""
+    faction: pvp
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 盆地东南的农舍与谷仓，院中立着可占领的旗杆，四周是齐腰高的作物
+    note_zh: 阿拉希盆地五处资源点之一
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=3420 AreaName_lang="Farm" ParentAreaID=3358 zhCN="农场"'
+    verified_by: ai_read
+
+  - id: ab_blacksmith
+    parent: arathi_basin
+    type: subzone
+    subtype: ""
+    name_zh: 铁匠铺
+    name_en: Blacksmith
+    level: ""
+    faction: pvp
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 盆地正中的石造铁匠棚，炉火常燃、砧台与水槽俱在，旗杆立在棚前空地
+    note_zh: 阿拉希盆地五处资源点之一，位置居中、交战最密
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=3421 AreaName_lang="Blacksmith" ParentAreaID=3358 zhCN="铁匠铺"'
+    verified_by: ai_read
+
+  - id: ab_lumber_mill
+    parent: arathi_basin
+    type: subzone
+    subtype: ""
+    name_zh: 伐木场
+    name_en: Lumber Mill
+    level: ""
+    faction: pvp
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 盆地西侧高台上的木结构锯木场，堆着原木与锯末，旗杆立在台边可俯瞰全场
+    note_zh: 阿拉希盆地五处资源点之一，地势最高
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=3422 AreaName_lang="Lumber Mill" ParentAreaID=3358 zhCN="伐木场"'
+    verified_by: ai_read
+
+  - id: ab_gold_mine
+    parent: arathi_basin
+    type: subzone
+    subtype: ""
+    name_zh: 矿洞
+    name_en: Gold Mine
+    level: ""
+    faction: pvp
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 盆地西北凿进山体的矿洞口，木支架撑着洞门，轨道与矿车伸出洞外
+    note_zh: 阿拉希盆地五处资源点之一
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=3423 AreaName_lang="Gold Mine" ParentAreaID=3358 zhCN="矿洞"'
+    verified_by: ai_read
+
+  - id: ab_stables
+    parent: arathi_basin
+    type: subzone
+    subtype: ""
+    name_zh: 兽栏
+    name_en: Stables
+    level: ""
+    faction: pvp
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 盆地北侧的长条马厩，木栏内铺着干草，旗杆立在马厩门前
+    note_zh: 阿拉希盆地五处资源点之一，离联盟出生点最近
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=3424 AreaName_lang="Stables" ParentAreaID=3358 zhCN="兽栏"'
+    verified_by: ai_read
+
+  # ============================================================
+  # ZONE 2 · 辛特兰 The Hinterlands (AreaID 47)
+  # ============================================================
+  - id: the_hinterlands
+    parent: lordaeron
+    type: zone
+    subtype: ""
+    name_zh: 辛特兰
+    name_en: The Hinterlands
+    level: "40-50"
+    faction: contested
+    coords: ""
+    adjacent: [hillsbrad_foothills]
+    era: vanilla
+    look_zh: 深绿的高大针阔混交林，覆满厚苔的巨石与多级瀑布，林间是紫褐色腐殖土坡与巨魔凿出的石砌阶地
+    note_zh: 旧世 40-50 级争夺区；西端矮人鹰巢山（联盟）、东南海岸恶齿村（部落）、东南山城辛萨罗是全区核心。旧世唯一的陆路入口来自希尔斯布莱德丘陵东侧，通往阿拉希与瘟疫之地的通道都是 4.0.3 之后才有的
+    source_url: https://warcraft.wiki.gg/wiki/Hinterlands
+    quote: "The Hinterlands are a wooded and mountainous region located in the eastern part of Lordaeron, north of the Eastern Kingdoms."
+    verified_by: ai_read
+
+  - id: aerie_peak
+    parent: the_hinterlands
+    type: settlement
+    subtype: town
+    name_zh: 鹰巢山
+    name_en: Aerie Peak
+    level: ""
+    faction: alliance
+    coords: "[14, 48]"
+    adjacent: []
+    era: vanilla
+    look_zh: 建在山脊高处的矮人聚落，圆形石屋与木廊桥连成一串，狮鹫在崖边盘旋，脚下是整片墨绿林海
+    note_zh: 蛮锤矮人的主城镇，辛特兰唯一的联盟据点与飞行点；旧世联盟练级的落脚点
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=348 AreaName_lang="Aerie Peak" ParentAreaID=47 zhCN="鹰巢山" ExplorationLevel=41'
+    verified_by: ai_read
+
+  - id: wildhammer_keep
+    parent: aerie_peak
+    type: subzone
+    subtype: ""
+    name_zh: 蛮锤城堡
+    name_en: Wildhammer Keep
+    level: ""
+    faction: alliance
+    coords: "[14, 45]"
+    adjacent: []
+    era: vanilla
+    look_zh: 鹰巢山顶端的圆形石堡，粗石墙与锥顶塔楼，堡前是狮鹫停驻的开阔石台
+    note_zh: 蛮锤矮人首领所在的主堡，位于鹰巢山最高处
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=349 AreaName_lang="Wildhammer Keep" ParentAreaID=47 zhCN="蛮锤城堡"'
+    verified_by: ai_read
+
+  - id: revantusk_village
+    parent: the_hinterlands
+    type: settlement
+    subtype: village
+    name_zh: 恶齿村
+    name_en: Revantusk Village
+    level: ""
+    faction: horde
+    coords: "[78, 79]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东南海岸线上的森林巨魔渔村，吊脚木屋架在礁岩与浅水之上，挂着渔网、鱼干与彩绘面具
+    note_zh: 恶齿（Revantusk）森林巨魔部族的村子，旧世中期补丁加入，是辛特兰唯一的部落据点与飞行点
+    source_url: https://warcraft.wiki.gg/wiki/Revantusk_Village
+    quote: "You can find the port village on the coast of the Hinterlands."
+    verified_by: ai_read
+
+  - id: quel_danil_lodge
+    parent: the_hinterlands
+    type: settlement
+    subtype: village
+    name_zh: 奎尔丹尼小屋
+    name_en: Quel'Danil Lodge
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林中空地上的高等精灵木石庭院，尖顶木屋与雕花立柱，屋前有石砌水池与蓝金色旗帜
+    note_zh: 高等精灵的驻地；旧世 45 级左右任务枢纽，联盟/部落任务线都会指向它
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=350 AreaName_lang="Quel''Danil Lodge" ParentAreaID=47 zhCN="奎尔丹尼小屋" ExplorationLevel=45'
+    verified_by: ai_read
+
+  - id: jinthaalor
+    parent: the_hinterlands
+    type: subzone
+    subtype: ""
+    name_zh: 辛萨罗
+    name_en: Jintha'Alor
+    level: ""
+    faction: contested
+    coords: "[63, 70]"
+    adjacent: []
+    era: vanilla
+    look_zh: 整座山体被凿成层层叠叠的巨魔石城，之字形长阶从山脚盘到山顶，平台上排着石像、火盆与骨制图腾
+    note_zh: 旧世由恶枝（Vilebranch）巨魔部族占据（恶齿部族夺下它是 4.0.3 之后的事）；全区最大的野外微型地下城，山顶是祖尔祭坛
+    source_url: https://warcraft.wiki.gg/wiki/Jintha%27Alor
+    quote: "Jintha'Alor (also spelled Jintha'alor) is a forest troll city of the located in the Hinterlands."
+    verified_by: ai_read
+
+  - id: the_altar_of_zul
+    parent: jinthaalor
+    type: poi
+    subtype: ""
+    name_zh: 祖尔祭坛
+    name_en: The Altar of Zul
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 辛萨罗最顶层的露天祭坛，环形石台中央一块血渍斑斑的祭石，四周插着高过人的骨杖
+    note_zh: 辛萨罗山顶的仪式场；旧世「祖尔法拉克之槌」任务链在此完成加持，是全区等级最高的一点
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=355 AreaName_lang="The Altar of Zul" ParentAreaID=47 zhCN="祖尔祭坛" ExplorationLevel=46'
+    verified_by: ai_read
+
+  - id: shadraalor
+    parent: the_hinterlands
+    type: subzone
+    subtype: ""
+    name_zh: 沙德拉洛
+    name_en: Shadra'Alor
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林中一处环形巨魔石台遗址，中央水面上架着石桥，四角立着蛛形雕像，地面结着大片蛛网
+    note_zh: 供奉蛛神沙德拉的遗址；旧世 44 级左右任务点，蛛网与蛛形石雕是它的画面识别特征
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=353 AreaName_lang="Shadra''Alor" ParentAreaID=47 zhCN="沙德拉洛" ExplorationLevel=44'
+    verified_by: ai_read
+
+  - id: agolwatha
+    parent: the_hinterlands
+    type: subzone
+    subtype: ""
+    name_zh: 亚戈瓦萨
+    name_en: Agol'watha
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 密林间的小型巨魔石砌遗迹，断柱与矮台被藤蔓吞没，地上散着碎陶与骨堆
+    note_zh: 辛特兰三处「watha」巨魔遗迹之一（另两处为祖瓦沙、沙尔瓦萨）
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=1884 AreaName_lang="Agol''watha" ParentAreaID=47 zhCN="亚戈瓦萨" ExplorationLevel=46'
+    verified_by: ai_read
+
+  - id: zunwatha
+    parent: the_hinterlands
+    type: subzone
+    subtype: ""
+    name_zh: 祖瓦沙
+    name_en: Zun'watha
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 坡地上的巨魔废墟群，半塌的石门与散落的祭台石，四周是高大的深色树干
+    note_zh: 辛特兰三处巨魔遗迹之一
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=352 AreaName_lang="Zun''watha" ParentAreaID=47 zhCN="祖瓦沙"'
+    verified_by: ai_read
+
+  - id: shaolwatha
+    parent: the_hinterlands
+    type: subzone
+    subtype: ""
+    name_zh: 沙尔瓦萨
+    name_en: Shaol'watha
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东部林地里的巨魔石台遗迹，台面裂开长出树苗，边缘的石阶通向林下阴影
+    note_zh: 辛特兰三处巨魔遗迹之一，探索等级最高（49）
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=1917 AreaName_lang="Shaol''watha" ParentAreaID=47 zhCN="沙尔瓦萨" ExplorationLevel=49'
+    verified_by: ai_read
+
+  - id: hiriwatha
+    parent: the_hinterlands
+    type: subzone
+    subtype: ""
+    name_zh: 西利瓦萨
+    name_en: Hiri'watha
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林间一块被围起的坡地遗迹，低矮石墙与破损的巨魔石雕半埋在落叶里
+    note_zh: 旧世叫「西利瓦萨」；4.0.3 在原址改建为「西利瓦萨研究站」，改名后的版本不属于本树
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=1885 AreaName_lang="Hiri''watha" ParentAreaID=47 zhCN="西利瓦萨" ExplorationLevel=42'
+    verified_by: ai_read
+
+  - id: skulk_rock
+    parent: the_hinterlands
+    type: subzone
+    subtype: ""
+    name_zh: 隐匿石
+    name_en: Skulk Rock
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 北侧山壁下的大裂口洞窟，洞外堆着乱石，洞内潮湿、垂着钟乳与蛛丝
+    note_zh: 旧世 48 级左右的洞穴区，是辛特兰北缘少数的室内取景点
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=351 AreaName_lang="Skulk Rock" ParentAreaID=47 zhCN="隐匿石" ExplorationLevel=48'
+    verified_by: ai_read
+
+  - id: seradane
+    parent: the_hinterlands
+    type: subzone
+    subtype: ""
+    name_zh: 瑟拉丹
+    name_en: Seradane
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林海深处一圈发着翠绿微光的巨树与立石，地面浮着绿色雾气，空气里飘着发光孢子
+    note_zh: 翡翠梦境四处传送门之一，旧世由绿龙守卫（梦魇之龙之一在此），是辛特兰最异质的一块景
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=356 AreaName_lang="Seradane" ParentAreaID=47 zhCN="瑟拉丹" ExplorationLevel=41'
+    verified_by: ai_read
+
+  - id: valorwind_lake
+    parent: the_hinterlands
+    type: subzone
+    subtype: ""
+    name_zh: 瓦罗温湖
+    name_en: Valorwind Lake
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林中一潭墨绿色的静水湖，湖面倒映整片林冠，岸边是倒伏的大树与裸露树根
+    note_zh: 辛特兰东部的内陆湖，旧世 48 级左右区域
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=1883 AreaName_lang="Valorwind Lake" ParentAreaID=47 zhCN="瓦罗温湖" ExplorationLevel=48'
+    verified_by: ai_read
+
+  - id: the_overlook_cliffs
+    parent: the_hinterlands
+    type: subzone
+    subtype: ""
+    name_zh: 望海崖
+    name_en: The Overlook Cliffs
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东南临海的高崖带，崖顶还是密林、崖下是拍岸白浪，断崖处可俯瞰整条海岸线
+    note_zh: 辛特兰东南的临海崖区，恶齿村就在崖下海岸；俯瞰大海的镜位取景首选
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=307 AreaName_lang="The Overlook Cliffs" ParentAreaID=47 zhCN="望海崖" ExplorationLevel=48'
+    verified_by: ai_read
+
+  - id: plaguemist_ravine
+    parent: the_hinterlands
+    type: subzone
+    subtype: ""
+    name_zh: 毒雾峡谷
+    name_en: Plaguemist Ravine
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 西北角一道下切的深谷，谷底常年积着灰绿色的浓雾，两侧树木发黄凋萎
+    note_zh: 辛特兰西北与瘟疫之地接壤的一线，瘟疫气息渗进林区的过渡带；旧世此处没有通往西瘟疫之地的陆路
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=1882 AreaName_lang="Plaguemist Ravine" ParentAreaID=47 zhCN="毒雾峡谷" ExplorationLevel=45'
+    verified_by: ai_read
+
+  - id: the_creeping_ruin
+    parent: the_hinterlands
+    type: subzone
+    subtype: ""
+    name_zh: 爬虫废墟
+    name_en: The Creeping Ruin
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 被藤蔓与苔藓整个吞掉的小型石构废墟，只剩几根柱头露在绿色之外
+    note_zh: 辛特兰腹地的小废墟点，旧世 47 级左右
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=1886 AreaName_lang="The Creeping Ruin" ParentAreaID=47 zhCN="爬虫废墟" ExplorationLevel=47'
+    verified_by: ai_read
+
+  - id: featherbeards_hovel
+    parent: the_hinterlands
+    type: settlement
+    subtype: camp
+    name_zh: 羽须小屋
+    name_en: Featherbeard's Hovel
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林间一间独栋的粗木小屋，屋顶压着石板，门前晾着草药与兽皮
+    note_zh: 辛特兰腹地的独居者小屋，规模只有一间房，适合做「林中隐士」一场景
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=1880 AreaName_lang="Featherbeard''s Hovel" ParentAreaID=47 zhCN="羽须小屋"'
+    verified_by: ai_read
+
+  - id: shindiggers_camp
+    parent: the_hinterlands
+    type: settlement
+    subtype: camp
+    name_zh: 拉普索迪营地
+    name_en: Shindigger's Camp
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 溪边的小营地，一顶帐篷、一堆篝火与几只酒桶，矮人的工具散在地上
+    note_zh: 国服官方译名与英文名不同源（英文 Shindigger's Camp ↔ 中文「拉普索迪营地」），以客户端 zhCN 为准
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=1881 AreaName_lang="Shindigger''s Camp" ParentAreaID=47 zhCN="拉普索迪营地"'
+    verified_by: ai_read
+
+  - id: bogens_ledge
+    parent: the_hinterlands
+    type: settlement
+    subtype: camp
+    name_zh: 伯根的棚屋
+    name_en: Bogen's Ledge
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 山崖突出的一块平台上搭着的简易棚屋，背靠岩壁，台前就是断崖
+    note_zh: 辛特兰的崖边落脚点，规模极小
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=1887 AreaName_lang="Bogen''s Ledge" ParentAreaID=47 zhCN="伯根的棚屋"'
+    verified_by: ai_read
+
+  - id: forbidding_sea_hinterlands
+    parent: the_hinterlands
+    type: subzone
+    subtype: ""
+    name_zh: 禁忌之海
+    name_en: The Forbidding Sea
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 望海崖之外的开阔外海，灰蓝海面一直延伸到雾线，近岸有黑色礁石与浪花
+    note_zh: 与阿拉希、东瘟疫之地的「禁忌之海」是同一片外海，客户端按 zone 分成不同 AreaID
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2400 AreaName_lang="The Forbidding Sea" ParentAreaID=47 zhCN="禁忌之海"'
+    verified_by: ai_read
+
+  # ============================================================
+  # ZONE 3 · 西瘟疫之地 Western Plaguelands (AreaID 28)
+  # ============================================================
+  - id: western_plaguelands
+    parent: lordaeron
+    type: zone
+    subtype: ""
+    name_zh: 西瘟疫之地
+    name_en: Western Plaguelands
+    level: "50-60"
+    faction: contested
+    coords: ""
+    adjacent: [tirisfal_glades, eastern_plaguelands, alterac_mountains]
+    era: vanilla
+    look_zh: 病态的灰橙色丘陵农田，枯死的白杨与歪斜篱笆，空气里浮着淡绿瘟疫雾，废弃农舍的屋顶大多塌了一半
+    note_zh: 旧世 50-60 级争夺区（常用练级带 51-58）；联盟据点寒风营地、部落据点亡灵壁垒，通灵学院入口在凯尔达隆岛。西接提瑞斯法林地（经亡灵壁垒）、东接东瘟疫之地（经索多里尔河桥）、西南经奥特兰克山脉下希尔斯布莱德
+    source_url: https://warcraft.wiki.gg/wiki/Western_Plaguelands
+    quote: "The Western Plaguelands are located in northern Lordaeron, wedged between Tirisfal Glades to the west, the Eastern Plaguelands to the east, and the Alterac Mountains to the south."
+    verified_by: ai_read
+
+  - id: chillwind_camp
+    parent: western_plaguelands
+    type: settlement
+    subtype: camp
+    name_zh: 寒风营地
+    name_en: Chillwind Camp
+    level: ""
+    faction: alliance
+    coords: "[43, 85]"
+    adjacent: []
+    era: vanilla
+    look_zh: 山口处一圈帆布军帐与木栅，中央一堆常燃的篝火，帐外堆着补给箱与拒马
+    note_zh: 西瘟疫之地唯一的联盟据点与飞行点，位于通往奥特兰克山脉的南部山口；客户端里飞行点名串写作「冰风岗」而区域名写作「寒风营地」，同一处、以区域名为准。4.0.3 后整体改名 Chillwind Point
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=3197 AreaName_lang="Chillwind Camp" ParentAreaID=28 zhCN="寒风营地"'
+    verified_by: ai_read
+
+  - id: ruins_of_andorhal
+    parent: western_plaguelands
+    type: settlement
+    subtype: ruin
+    name_zh: 安多哈尔废墟
+    name_en: Ruins of Andorhal
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一整座被烧空的人类城镇废墟，石墙焦黑、屋顶塌尽，街巷间立着倾斜的钟楼与成排的粮仓残架
+    note_zh: 洛丹伦瘟疫粮的源头城镇，旧世由巫妖克尔苏加德的天灾据点占据；旧世区域名是「安多哈尔废墟」，4.0.3 被重建并改名为「安多哈尔」
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=193 AreaName_lang="Ruins of Andorhal" ParentAreaID=28 zhCN="安多哈尔废墟" ExplorationLevel=55'
+    verified_by: ai_read
+
+  - id: hearthglen
+    parent: western_plaguelands
+    type: settlement
+    subtype: town
+    name_zh: 壁炉谷
+    name_en: Hearthglen
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 北部山坳里一座还完整的人类城镇，红瓦白墙的联排房屋沿坡而上，镇顶是一座带塔楼的石堡，血色十字军的红白旗帜到处都是
+    note_zh: 旧世由血色十字军占据（泰兰·弗丁在此），是全区唯一「没被毁掉」的城镇，与四周的焦土形成强对比；旧世 60 级精英区
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=190 AreaName_lang="Hearthglen" ParentAreaID=28 zhCN="壁炉谷" ExplorationLevel=56'
+    verified_by: ai_read
+
+  - id: mardenholde_keep
+    parent: hearthglen
+    type: subzone
+    subtype: ""
+    name_zh: 玛登霍尔德城堡
+    name_en: Mardenholde Keep
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 壁炉谷最高处的石堡，方塔与尖顶塔楼并立，堡前有宽石阶与挂着红白旗的门楼
+    note_zh: 壁炉谷的主堡，血色十字军在此的指挥所
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=203 AreaName_lang="Mardenholde Keep" ParentAreaID=28 zhCN="玛登霍尔德城堡"'
+    verified_by: ai_read
+
+  - id: northridge_lumber_camp
+    parent: western_plaguelands
+    type: settlement
+    subtype: camp
+    name_zh: 北山伐木场
+    name_en: Northridge Lumber Camp
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 山腰上的伐木营，倒伏的原木堆成小山，锯架与木屋散落在被砍秃的林地里
+    note_zh: 通往壁炉谷路上的伐木营，旧世被天灾亡灵占据
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=192 AreaName_lang="Northridge Lumber Camp" ParentAreaID=28 zhCN="北山伐木场" ExplorationLevel=55'
+    verified_by: ai_read
+
+  - id: sorrow_hill
+    parent: western_plaguelands
+    type: subzone
+    subtype: ""
+    name_zh: 悔恨岭
+    name_en: Sorrow Hill
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一整片缓坡墓地，成百上千的歪斜墓碑排到山脊线，坡顶是一座独立的圆形石砌陵墓
+    note_zh: 西瘟疫之地南部的大墓区，乌瑟尔之墓在其中；镜头上是全区最有仪式感的一块地
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=197 AreaName_lang="Sorrow Hill" ParentAreaID=28 zhCN="悔恨岭" ExplorationLevel=50'
+    verified_by: ai_read
+
+  - id: uthers_tomb
+    parent: sorrow_hill
+    type: poi
+    subtype: ""
+    name_zh: 乌瑟尔之墓
+    name_en: Uther's Tomb
+    level: ""
+    faction: neutral
+    coords: "[52, 84]"
+    adjacent: []
+    era: vanilla
+    look_zh: 悔恨岭顶端的白石陵寝，穹顶由列柱撑起，中央石棺上方悬着圣光纹章，四周是低矮的围栏与长明火盆
+    note_zh: 圣骑士始祖乌瑟尔·光明使者的安息地；对「圣骑士主角」题材是全片最重要的朝圣点之一
+    source_url: https://wago.tools/db2/AreaPOI?build=1.15.9.69722
+    quote: 'AreaPOI ID=709 Name_lang="Uther''s Tomb" AreaID=197 zhCN="乌瑟尔之墓"'
+    verified_by: ai_read
+
+  - id: the_weeping_cave
+    parent: western_plaguelands
+    type: subzone
+    subtype: ""
+    name_zh: 哭泣之洞
+    name_en: The Weeping Cave
+    level: ""
+    faction: contested
+    coords: "[65, 39]"
+    adjacent: []
+    era: vanilla
+    look_zh: 岩壁下的低矮洞口，洞内常年滴水，地面积着浅水洼，钟乳上挂着灰绿色黏液
+    note_zh: 西瘟疫之地中部的洞穴点，旧世被亡灵占据
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=198 AreaName_lang="The Weeping Cave" ParentAreaID=28 zhCN="哭泣之洞" ExplorationLevel=55'
+    verified_by: ai_read
+
+  - id: felstone_field
+    parent: western_plaguelands
+    type: settlement
+    subtype: farm
+    name_zh: 费尔斯通农场
+    name_en: Felstone Field
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 荒废的农庄，塌了一半的谷仓与倒伏的篱笆，院子正中架着一口冒绿烟的大铁锅
+    note_zh: 旧世「四口瘟疫之锅」之一——四座农庄（费尔斯通／达尔松之泪／盖罗恩／嚎哭鬼屋）各有一口天灾熬瘟疫的大锅，净化任务链贯穿全区
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=199 AreaName_lang="Felstone Field" ParentAreaID=28 zhCN="费尔斯通农场" ExplorationLevel=50'
+    verified_by: ai_read
+
+  - id: dalsons_tears
+    parent: western_plaguelands
+    type: settlement
+    subtype: farm
+    name_zh: 达尔松之泪
+    name_en: Dalson's Tears
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 大路边的农庄，主屋门窗尽毁、田垄长满枯草，院角同样架着一口冒绿烟的瘟疫大锅
+    note_zh: 四口瘟疫之锅之一；旧世区域名是「达尔松之泪」，4.0.3 改名为「达尔松农场 Dalson's Farm」
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=200 AreaName_lang="Dalson''s Tears" ParentAreaID=28 zhCN="达尔松之泪" ExplorationLevel=54'
+    verified_by: ai_read
+
+  - id: gahrrons_withering
+    parent: western_plaguelands
+    type: settlement
+    subtype: farm
+    name_zh: 盖罗恩农场
+    name_en: Gahrron's Withering
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东北角最偏的一座农庄，果园的树全枯成黑色枝杈，院中大锅下的火还没灭
+    note_zh: 四口瘟疫之锅之一，探索等级最高（57），通常是净化链的最后一站
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=201 AreaName_lang="Gahrron''s Withering" ParentAreaID=28 zhCN="盖罗恩农场" ExplorationLevel=57'
+    verified_by: ai_read
+
+  - id: the_writhing_haunt
+    parent: western_plaguelands
+    type: settlement
+    subtype: farm
+    name_zh: 嚎哭鬼屋
+    name_en: The Writhing Haunt
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一处被鬼影缠住的农庄，谷仓门大敞、屋里浮着惨绿的光，院中大锅旁排着一列尸堆
+    note_zh: 四口瘟疫之锅之一；探索等级最低（46），通常是净化链的第一站
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=202 AreaName_lang="The Writhing Haunt" ParentAreaID=28 zhCN="嚎哭鬼屋" ExplorationLevel=46'
+    verified_by: ai_read
+
+  - id: darrowmere_lake_wpl
+    parent: western_plaguelands
+    type: subzone
+    subtype: ""
+    name_zh: 达隆米尔湖
+    name_en: Darrowmere Lake
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一片灰绿色的大湖，湖面浮着薄雾与枯木，湖心是一座立着废墟城堡的孤岛
+    note_zh: 西瘟疫之地南部的大湖，湖心岛即凯尔达隆；同名区域在东瘟疫之地另有一份（AreaID 2299），本树按 zone 各建一节点
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2297 AreaName_lang="Darrowmere Lake" ParentAreaID=28 zhCN="达隆米尔湖" ExplorationLevel=55'
+    verified_by: ai_read
+
+  - id: caer_darrow
+    parent: darrowmere_lake_wpl
+    type: subzone
+    subtype: ""
+    name_zh: 凯尔达隆
+    name_en: Caer Darrow
+    level: ""
+    faction: contested
+    coords: "[70, 73]"
+    adjacent: []
+    era: vanilla
+    look_zh: 湖心孤岛上的城堡废墟，只剩外墙与几根断柱，岛上飘着半透明的幽灵村民，一条石桥从岸边通上岛
+    note_zh: 巴罗夫家族的旧领地，被毁后成了鬼岛；岛下的地穴就是通灵学院入口
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2298 AreaName_lang="Caer Darrow" ParentAreaID=28 zhCN="凯尔达隆" ExplorationLevel=55'
+    verified_by: ai_read
+
+  - id: school_of_necromancy
+    parent: caer_darrow
+    type: subzone
+    subtype: ""
+    name_zh: 通灵术学校
+    name_en: School of Necromancy
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 凯尔达隆废墟下方的地穴入口区，石阶下沉到黑暗里，门框两侧立着骷髅装饰的石柱
+    note_zh: 通灵学院在野外一侧的区域名（客户端 AreaTable 里与副本内区域分列两条）
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=195 AreaName_lang="School of Necromancy" ParentAreaID=28 zhCN="通灵术学校"'
+    verified_by: ai_read
+
+  - id: scholomance_entrance
+    parent: caer_darrow
+    type: poi
+    subtype: ""
+    name_zh: 通灵学院入口
+    name_en: Scholomance Entrance
+    level: ""
+    faction: contested
+    coords: "[69, 73]"
+    adjacent: []
+    era: vanilla
+    look_zh: 岛上废墟中一道向下的石门，门内是幽绿色的传送光幕，门前石阶被苔藓盖住
+    note_zh: 客户端区域触发器写明「只有至少45级的玩家才能进入」
+    source_url: https://wago.tools/db2/AreaTrigger?build=1.15.9.69722
+    quote: 'AreaTrigger ID=2567 ContinentID=0 Message_lang="只有至少45级的玩家才能进入。"'
+    verified_by: ai_read
+
+  - id: thondroril_river_wpl
+    parent: western_plaguelands
+    type: subzone
+    subtype: ""
+    name_zh: 索多里尔河
+    name_en: Thondroril River
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一条南北向的宽河，河水浑浊发灰，主路在此跨一座石桥过河，桥头有废弃的岗亭
+    note_zh: 西／东瘟疫之地的分界河，过桥即进入东瘟疫之地；东岸同名区域另有一份（AreaID 2619）
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2620 AreaName_lang="Thondroril River" ParentAreaID=28 zhCN="索多里尔河"'
+    verified_by: ai_read
+
+  # ============================================================
+  # ZONE 4 · 东瘟疫之地 Eastern Plaguelands (AreaID 139)
+  # ============================================================
+  - id: eastern_plaguelands
+    parent: lordaeron
+    type: zone
+    subtype: ""
+    name_zh: 东瘟疫之地
+    name_en: Eastern Plaguelands
+    level: "55-60"
+    faction: contested
+    coords: ""
+    adjacent: [western_plaguelands]
+    era: vanilla
+    look_zh: 猩红橙色的毒土荒原，天空压着暗红云层，枯焦的黑色树干成片倒伏，地面裂口里渗出发亮的绿色脓液
+    note_zh: 旧世 55-60 级争夺区（常用练级带 53-60），全大陆瘟疫最深的一块；斯坦索姆与纳克萨玛斯都在此。旧世唯一陆路入口是西面索多里尔河桥——北面的塔拉斯通道在旧世封死（燃烧的远征才通往幽暗森林），与辛特兰之间无陆路
+    source_url: https://warcraft.wiki.gg/wiki/Eastern_Plaguelands
+    quote: "The Eastern Plaguelands is the more heavily devastated half of the Plaguelands, a region that was once known as the Eastweald and was part of the Kingdom of Lordaeron."
+    verified_by: ai_read
+
+  - id: lights_hope_chapel
+    parent: eastern_plaguelands
+    type: settlement
+    subtype: town
+    name_zh: 圣光之愿礼拜堂
+    name_en: Light's Hope Chapel
+    level: ""
+    faction: neutral
+    coords: "[82, 59]"
+    adjacent: []
+    era: vanilla
+    look_zh: 焦土荒原中一小块仍是绿色的圣地，白石小教堂立在中央，彩窗透出暖光，四周围着银色黎明的帐篷与拒马
+    note_zh: 银色黎明的大本营，也是旧世东瘟疫之地唯一的飞行点（联盟／部落各一名飞行管理员）；纳克萨玛斯前置声望链的交接地
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2268 AreaName_lang="Light''s Hope Chapel" ParentAreaID=139 zhCN="圣光之愿礼拜堂" ExplorationLevel=58'
+    verified_by: ai_read
+
+  - id: fp_lights_hope_chapel
+    parent: lights_hope_chapel
+    type: transport
+    subtype: flightpath
+    name_zh: 圣光之愿礼拜堂飞行点
+    name_en: Light's Hope Chapel Flight Path
+    level: ""
+    faction: neutral
+    coords: "[82, 59]"
+    adjacent: []
+    era: vanilla
+    look_zh: 教堂侧旁两处分开的飞行架——一边是拴着狮鹫的木台，一边是倒挂蝙蝠的木架
+    note_zh: 旧世东瘟疫之地唯一的飞行点，两阵营各有一个节点：TaxiNodes ID=67（Flags=1 联盟，[82,59]）与 ID=68（Flags=2 部落，[80,57]）
+    source_url: https://wago.tools/db2/TaxiNodes?build=1.15.9.69722
+    quote: 'TaxiNodes ID=67 Name_lang="Light''s Hope Chapel, Eastern Plaguelands" Flags=1 / ID=68 同名 Flags=2'
+    verified_by: ai_read
+
+  - id: the_marris_stead
+    parent: eastern_plaguelands
+    type: settlement
+    subtype: farm
+    name_zh: 玛瑞斯农场
+    name_en: The Marris Stead
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 荒原上一座还立着的两层农舍，木栅围出的院子里拴着几匹瘦马，屋内点着灯
+    note_zh: 旧世部落一侧的任务枢纽（纳萨诺斯·玛瑞斯在此），派玩家去打血色十字军；是部落玩家在东瘟疫之地的主要落脚点
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2260 AreaName_lang="The Marris Stead" ParentAreaID=139 zhCN="玛瑞斯农场" ExplorationLevel=54'
+    verified_by: ai_read
+
+  - id: stratholme_city
+    parent: eastern_plaguelands
+    type: subzone
+    subtype: ""
+    name_zh: 斯坦索姆
+    name_en: Stratholme
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 北部一整座被高墙围死的城，墙内是黑紫色的街区与腐臭的橙色浓雾，塔楼顶端飘着天灾的绿火
+    note_zh: 阿尔萨斯屠城之地，旧世的野外区域部分；城本身作为副本另有独立地图。城墙上有两处可进入的门
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2279 AreaName_lang="Stratholme" ParentAreaID=139 zhCN="斯坦索姆" ExplorationLevel=55'
+    verified_by: ai_read
+
+  - id: stratholme_main_gate
+    parent: stratholme_city
+    type: poi
+    subtype: ""
+    name_zh: 斯坦索姆正门
+    name_en: Stratholme Main Gate
+    level: ""
+    faction: contested
+    coords: "[30, 16]"
+    adjacent: []
+    era: vanilla
+    look_zh: 城西一对高大的铁木城门，门上钉着锈铁加固条，门前石道两侧是倒塌的路障与烧黑的马车
+    note_zh: 斯坦索姆两处入口中偏西的一处；客户端触发器要求至少 45 级
+    source_url: https://wago.tools/db2/AreaTrigger?build=1.15.9.69722
+    quote: 'AreaTrigger ID=2216/2217 ContinentID=0 Message_lang="只有至少45级的玩家才能进入。"'
+    verified_by: ai_read
+
+  - id: stratholme_service_entrance
+    parent: stratholme_city
+    type: poi
+    subtype: ""
+    name_zh: 斯坦索姆侧门
+    name_en: Stratholme Service Entrance
+    level: ""
+    faction: contested
+    coords: "[48, 22]"
+    adjacent: []
+    era: vanilla
+    look_zh: 城墙侧面一道窄得多的仆役门，半掩着，门内一条昏暗的下坡通道
+    note_zh: 斯坦索姆两处入口中偏东的一处，绕城墙才能到；客户端触发器同样要求至少 45 级
+    source_url: https://wago.tools/db2/AreaTrigger?build=1.15.9.69722
+    quote: 'AreaTrigger ID=2214 ContinentID=0 Message_lang="只有至少45级的玩家才能进入。"'
+    verified_by: ai_read
+
+  - id: plaguewood
+    parent: eastern_plaguelands
+    type: subzone
+    subtype: ""
+    name_zh: 病木林
+    name_en: Plaguewood
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 西北一片病死的森林，树干发黑、树冠只剩枯枝，林间浮着绿色孢子雾，抬头能看见天上悬着的黑色要塞
+    note_zh: 纳克萨玛斯悬浮于此林上空；旧世通往纳克萨玛斯的传送尖塔就立在林中
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2277 AreaName_lang="Plaguewood" ParentAreaID=139 zhCN="病木林" ExplorationLevel=55'
+    verified_by: ai_read
+
+  - id: plaguewood_tower
+    parent: plaguewood
+    type: settlement
+    subtype: tower
+    name_zh: 病木林哨塔
+    name_en: Plaguewood Tower
+    level: ""
+    faction: contested
+    coords: "[22, 32]"
+    adjacent: []
+    era: vanilla
+    look_zh: 枯林中一座方形石塔，塔身爬满黑色霉斑，顶层的窗口透出绿光
+    note_zh: 东瘟疫之地四座哨塔之一（旧世为天灾／血色占据的据点，地图上有图标）；四塔在 4.0.3 才变成银色北伐军的飞行点，旧世不是飞行点
+    source_url: https://wago.tools/db2/AreaPOI?build=1.15.9.69722
+    quote: 'AreaPOI ID=1756 Name_lang="Plaguewood Tower" zhCN="病木林哨塔"'
+    verified_by: ai_read
+
+  - id: scourgehold
+    parent: plaguewood
+    type: subzone
+    subtype: ""
+    name_zh: 瘟疫要塞
+    name_en: Scourgehold
+    level: ""
+    faction: contested
+    coords: "[40, 26]"
+    adjacent: []
+    era: vanilla
+    look_zh: 病木林中一座露天的石砌传送尖塔，塔心地面刻着发绿光的符文圆环，塔外是成圈的骨堆
+    note_zh: 纳克萨玛斯在地面一侧的区域名；玩家踩上塔心的符文圆环被传送进浮空要塞
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2278 AreaName_lang="Scourgehold" ParentAreaID=139 zhCN="瘟疫要塞"'
+    verified_by: ai_read
+
+  - id: tyrs_hand
+    parent: eastern_plaguelands
+    type: settlement
+    subtype: town
+    name_zh: 提尔之手
+    name_en: Tyr's Hand
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东南角一座保存完好的人类城镇，白墙红顶、街道整洁，血色十字军的红白旗挂满街口，中央是一座高耸的大教堂
+    note_zh: 血色十字军在东瘟疫之地的主力据点，旧世全是 60 级精英，是全区最危险的野外点
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2266 AreaName_lang="Tyr''s Hand" ParentAreaID=139 zhCN="提尔之手" ExplorationLevel=55'
+    verified_by: ai_read
+
+  - id: the_scarlet_basilica
+    parent: tyrs_hand
+    type: subzone
+    subtype: ""
+    name_zh: 血色十字军教堂
+    name_en: The Scarlet Basilica
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 提尔之手中央的大教堂，高窗、肋拱与长条石阶，殿内成排长凳一直延伸到祭坛
+    note_zh: 提尔之手的主教堂建筑（微型地下区域），旧世内有血色十字军高阶头目
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2267 AreaName_lang="The Scarlet Basilica" ParentAreaID=139 zhCN="血色十字军教堂"'
+    verified_by: ai_read
+
+  - id: scarlet_base_camp
+    parent: eastern_plaguelands
+    type: settlement
+    subtype: camp
+    name_zh: 血色十字军营地
+    name_en: Scarlet Base Camp
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 荒原上的一小片红白帐篷，中间竖着血色十字军的旗杆，外围是木尖桩与巡逻的骑兵
+    note_zh: 血色十字军在提尔之手外的前进营地；旧世区域名即「血色十字军营地」，4.0.3 改成了「亡灵教派营地 Death Cultist Base Camp」
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2265 AreaName_lang="Scarlet Base Camp" ParentAreaID=139 zhCN="血色十字军营地"'
+    verified_by: ai_read
+
+  - id: darrowshire
+    parent: eastern_plaguelands
+    type: settlement
+    subtype: ruin
+    name_zh: 达隆郡
+    name_en: Darrowshire
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 南部一座只剩地基与断墙的小村废墟，村中十字路口立着半塌的石碑，夜里会浮出半透明的村民幽灵
+    note_zh: 旧世最有名的鬼村：「达隆郡的战斗」任务链在此重演当年的屠村之战，是全区情感浓度最高的一点
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2262 AreaName_lang="Darrowshire" ParentAreaID=139 zhCN="达隆郡" ExplorationLevel=55'
+    verified_by: ai_read
+
+  - id: the_undercroft
+    parent: eastern_plaguelands
+    type: subzone
+    subtype: ""
+    name_zh: 墓室
+    name_en: The Undercroft
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 南部一片下沉的家族墓园，石棺盖被掀开散落一地，围墙内立着几座小型陵屋
+    note_zh: 达隆郡一带的墓区，旧世任务链会在此掘墓取遗物
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2261 AreaName_lang="The Undercroft" ParentAreaID=139 zhCN="墓室" ExplorationLevel=54'
+    verified_by: ai_read
+
+  - id: corins_crossing
+    parent: eastern_plaguelands
+    type: settlement
+    subtype: crossroads
+    name_zh: 考林路口
+    name_en: Corin's Crossing
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 两条大路交汇处的小镇废墟，十字路口四角各一栋烧空的房子，路中央翻着一辆废弃货车
+    note_zh: 东瘟疫之地中部的十字路口镇，旧世由天灾占据；因为居中，是全区赶路必经之地
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2264 AreaName_lang="Corin''s Crossing" ParentAreaID=139 zhCN="考林路口" ExplorationLevel=57'
+    verified_by: ai_read
+
+  - id: northdale
+    parent: eastern_plaguelands
+    type: settlement
+    subtype: ruin
+    name_zh: 北谷
+    name_en: Northdale
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 北部山谷里的村镇废墟，成排的石墙房子只剩外壳，街道被塌下的屋梁堵住
+    note_zh: 东瘟疫之地北部的废镇，旧世为天灾控制区
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2272 AreaName_lang="Northdale" ParentAreaID=139 zhCN="北谷" ExplorationLevel=58'
+    verified_by: ai_read
+
+  - id: terrordale
+    parent: eastern_plaguelands
+    type: settlement
+    subtype: ruin
+    name_zh: 恐惧谷
+    name_en: Terrordale
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 最北端的废镇，被浓密的灰绿毒雾整个罩住，只能看见房屋的黑色轮廓
+    note_zh: 东瘟疫之地最北的废墟区，紧邻病木林
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2627 AreaName_lang="Terrordale" ParentAreaID=139 zhCN="恐惧谷" ExplorationLevel=55'
+    verified_by: ai_read
+
+  - id: terrorweb_tunnel
+    parent: eastern_plaguelands
+    type: subzone
+    subtype: ""
+    name_zh: 恶蛛隧道
+    name_en: Terrorweb Tunnel
+    level: ""
+    faction: contested
+    coords: "[15, 30]"
+    adjacent: []
+    era: vanilla
+    look_zh: 山体里被蛛丝糊满的隧道，洞壁挂着成串的茧，地面黏腻，深处有暗紫色的微光
+    note_zh: 西北角通往纳克萨玛斯方向的蛛怪隧道，旧世 60 级区域
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2626 AreaName_lang="Terrorweb Tunnel" ParentAreaID=139 zhCN="恶蛛隧道"'
+    verified_by: ai_read
+
+  - id: zul_mashar
+    parent: eastern_plaguelands
+    type: subzone
+    subtype: ""
+    name_zh: 祖玛沙尔
+    name_en: Zul'Mashar
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东北高地上的巨魔遗迹群，阶梯式石台与图腾柱立在枯黄的坡地上
+    note_zh: 东瘟疫之地北部的森林巨魔遗址（旧世由蹂躏者巨魔占据），与瘟疫主题反差明显
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2273 AreaName_lang="Zul''Mashar" ParentAreaID=139 zhCN="祖玛沙尔" ExplorationLevel=57'
+    verified_by: ai_read
+
+  - id: mazra_alor
+    parent: zul_mashar
+    type: subzone
+    subtype: ""
+    name_zh: 玛兹拉罗
+    name_en: Mazra'Alor
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 祖玛沙尔中心的一组高台建筑，台顶有火盆与巨魔石像，台下是环形的石阶
+    note_zh: 祖玛沙尔内部的核心台地
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2274 AreaName_lang="Mazra''Alor" ParentAreaID=139 zhCN="玛兹拉罗"'
+    verified_by: ai_read
+
+  - id: quel_lithien_lodge
+    parent: eastern_plaguelands
+    type: settlement
+    subtype: village
+    name_zh: 奎尔林斯小屋
+    name_en: Quel'Lithien Lodge
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 北部林边的高等精灵木屋群，蓝金配色的尖顶与雕花立柱，院里立着精灵样式的灯柱
+    note_zh: 高等精灵游侠的驻地，是东瘟疫之地北部唯一的非敌对聚落；探索等级最高（59）
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2276 AreaName_lang="Quel''Lithien Lodge" ParentAreaID=139 zhCN="奎尔林斯小屋" ExplorationLevel=59'
+    verified_by: ai_read
+
+  - id: crown_guard_tower
+    parent: eastern_plaguelands
+    type: settlement
+    subtype: tower
+    name_zh: 皇冠哨塔
+    name_en: Crown Guard Tower
+    level: ""
+    faction: contested
+    coords: "[40, 75]"
+    adjacent: []
+    era: vanilla
+    look_zh: 南部路边一座方形石塔，外墙有箭孔，塔基周围堆着沙袋与破损的旗杆
+    note_zh: 东瘟疫之地四座哨塔之一，位置最南；旧世不是飞行点（4.0.3 才变成飞行点）
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2263 AreaName_lang="Crown Guard Tower" ParentAreaID=139 zhCN="皇冠哨塔" ExplorationLevel=55'
+    verified_by: ai_read
+
+  - id: eastwall_tower
+    parent: eastern_plaguelands
+    type: settlement
+    subtype: tower
+    name_zh: 东墙哨塔
+    name_en: Eastwall Tower
+    level: ""
+    faction: contested
+    coords: "[67, 48]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东部大路旁的石塔，塔顶垛口塌了一角，塔下是被压弯的木栅与散落的兵器
+    note_zh: 东瘟疫之地四座哨塔之一，旧世不是飞行点
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2271 AreaName_lang="Eastwall Tower" ParentAreaID=139 zhCN="东墙哨塔" ExplorationLevel=56'
+    verified_by: ai_read
+
+  - id: eastwall_gate
+    parent: eastern_plaguelands
+    type: poi
+    subtype: ""
+    name_zh: 东墙大门
+    name_en: Eastwall Gate
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一道横跨道路的石砌门洞，门扇早已不在，门柱上还留着焦黑的火烧痕
+    note_zh: 东墙哨塔一线的关口
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2625 AreaName_lang="Eastwall Gate" ParentAreaID=139 zhCN="东墙大门"'
+    verified_by: ai_read
+
+  - id: northpass_tower
+    parent: eastern_plaguelands
+    type: settlement
+    subtype: tower
+    name_zh: 北地哨塔
+    name_en: Northpass Tower
+    level: ""
+    faction: contested
+    coords: "[57, 24]"
+    adjacent: []
+    era: vanilla
+    look_zh: 北部路口的石塔，塔身最完整，塔前有一口废井与拴马的石桩
+    note_zh: 东瘟疫之地四座哨塔之一，位置最北；旧世不是飞行点
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2275 AreaName_lang="Northpass Tower" ParentAreaID=139 zhCN="北地哨塔" ExplorationLevel=56'
+    verified_by: ai_read
+
+  - id: browman_mill
+    parent: eastern_plaguelands
+    type: settlement
+    subtype: farm
+    name_zh: 布洛米尔
+    name_en: Browman Mill
+    level: ""
+    faction: contested
+    coords: "[77, 51]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东部一座废弃的磨坊，风车叶片只剩骨架，磨坊旁堆着发霉的麦袋
+    note_zh: 东瘟疫之地东部的小型磨坊点，地图上有 POI 图标
+    source_url: https://wago.tools/db2/AreaPOI?build=1.15.9.69722
+    quote: 'AreaPOI ID=1018 Name_lang="Browman Mill" zhCN="布洛米尔"'
+    verified_by: ai_read
+
+  - id: the_fungal_vale
+    parent: eastern_plaguelands
+    type: subzone
+    subtype: ""
+    name_zh: 蘑菇谷
+    name_en: The Fungal Vale
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一整片长满巨型菌伞的洼地，菌盖呈病态的紫褐色，空气里飘满发光的孢子
+    note_zh: 西部的菌类洼地，视觉上与全区的焦红形成强对比，是很好的奇观取景点
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2258 AreaName_lang="The Fungal Vale" ParentAreaID=139 zhCN="蘑菇谷" ExplorationLevel=58'
+    verified_by: ai_read
+
+  - id: the_noxious_glade
+    parent: eastern_plaguelands
+    type: subzone
+    subtype: ""
+    name_zh: 剧毒林地
+    name_en: The Noxious Glade
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东北一片死林，树皮剥落露出灰白木质，地面覆着一层黄绿色的毒粉
+    note_zh: 东瘟疫之地东北的死林区，旧世 60 级区域
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2270 AreaName_lang="The Noxious Glade" ParentAreaID=139 zhCN="剧毒林地" ExplorationLevel=58'
+    verified_by: ai_read
+
+  - id: the_infectis_scar
+    parent: eastern_plaguelands
+    type: subzone
+    subtype: ""
+    name_zh: 魔刃之痕
+    name_en: The Infectis Scar
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 大地上一道被撕开的长条裂谷，谷底是翻涌的绿色脓浆，两壁的土是发黑的紫褐色
+    note_zh: 东部的瘟疫裂谷，旧世 60 级区域
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2623 AreaName_lang="The Infectis Scar" ParentAreaID=139 zhCN="魔刃之痕" ExplorationLevel=59'
+    verified_by: ai_read
+
+  - id: pestilent_scar
+    parent: eastern_plaguelands
+    type: subzone
+    subtype: ""
+    name_zh: 瘟疫之痕
+    name_en: Pestilent Scar
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 另一条较浅的瘟疫裂沟，沟沿翻起干裂的土块，沟里积着暗绿色的稠液
+    note_zh: 与魔刃之痕同类的裂谷地貌，位置更靠中部
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2622 AreaName_lang="Pestilent Scar" ParentAreaID=139 zhCN="瘟疫之痕" ExplorationLevel=55'
+    verified_by: ai_read
+
+  - id: blackwood_lake
+    parent: eastern_plaguelands
+    type: subzone
+    subtype: ""
+    name_zh: 黑木湖
+    name_en: Blackwood Lake
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一潭近乎墨色的死水湖，湖面浮着一层油膜，岸边立着成片泡烂的枯树桩
+    note_zh: 东瘟疫之地东北的死水湖
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2624 AreaName_lang="Blackwood Lake" ParentAreaID=139 zhCN="黑木湖" ExplorationLevel=58'
+    verified_by: ai_read
+
+  - id: lake_mereldar
+    parent: eastern_plaguelands
+    type: subzone
+    subtype: ""
+    name_zh: 米雷达尔湖
+    name_en: Lake Mereldar
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东南部的大湖，水色比其他水面清一些，湖岸仍有零星绿草，对岸就是提尔之手的白墙
+    note_zh: 靠近圣光之愿礼拜堂与提尔之手的湖区，是东瘟疫之地少数「还没彻底死掉」的水体
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2621 AreaName_lang="Lake Mereldar" ParentAreaID=139 zhCN="米雷达尔湖" ExplorationLevel=54'
+    verified_by: ai_read
+
+  - id: darrowmere_lake_epl
+    parent: eastern_plaguelands
+    type: subzone
+    subtype: ""
+    name_zh: 达隆米尔湖
+    name_en: Darrowmere Lake
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 达隆米尔湖伸进东瘟疫之地一侧的水面，灰绿色、岸边全是枯死的芦苇
+    note_zh: 与西瘟疫之地的达隆米尔湖是同一片湖，客户端按 zone 分成两个同名区域（西 2297 / 东 2299）
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2299 AreaName_lang="Darrowmere Lake" ParentAreaID=139 zhCN="达隆米尔湖"'
+    verified_by: ai_read
+
+  - id: thondroril_river_epl
+    parent: eastern_plaguelands
+    type: subzone
+    subtype: ""
+    name_zh: 索多里尔河
+    name_en: Thondroril River
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东岸一侧的河滩，河水浑灰，桥头石阶通向一片枯草坡
+    note_zh: 东／西瘟疫之地界河的东岸部分；旧世提里奥·弗丁隐居在这条河边（「弗丁的救赎」任务链起点）
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=2619 AreaName_lang="Thondroril River" ParentAreaID=139 zhCN="索多里尔河" ExplorationLevel=55'
+    verified_by: ai_read
+
+  - id: forbidding_sea_eastern_plaguelands
+    parent: eastern_plaguelands
+    type: subzone
+    subtype: ""
+    name_zh: 禁忌之海
+    name_en: The Forbidding Sea
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东岸外的外海，海水颜色比南方更灰冷，近岸漂着从陆上冲下来的枯木
+    note_zh: 与阿拉希、辛特兰的「禁忌之海」是同一片外海，客户端按 zone 分成不同 AreaID
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722
+    quote: 'AreaTable ID=16361 AreaName_lang="The Forbidding Sea" ParentAreaID=139 zhCN="禁忌之海"'
+    verified_by: ai_read

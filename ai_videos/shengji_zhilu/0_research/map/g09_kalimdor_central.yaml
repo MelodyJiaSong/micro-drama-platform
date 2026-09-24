@@ -1,0 +1,3088 @@
+# G09 · 卡利姆多中部 + 奥格瑞玛 + 雷霆崖 —— 地理树数据（唯一出处）
+# 版本锚点：经典旧世 Vanilla / Classic Era（1.12 / Classic Era 1.15.9 客户端数据）
+# 节点存在性与 name_zh 的第一权威 = 暴雪 Classic Era 客户端 AreaTable（wago.tools 导出，含国服官方简中译名）
+# quote 约定：来源为 warcraft.wiki.gg 时为该页原句；来源为 AreaTable/TaxiNodes CSV 时为该行字段原文
+# 本文件由 scratchpad/gen/build.py 生成并机检；markdown 主树由 tools/build_world_tree.py 合成，勿手写
+nodes:
+  # ======================= 杜隆塔尔 Durotar =======================
+  - id: durotar
+    parent: central_kalimdor
+    type: zone
+    subtype: ""
+    name_zh: "杜隆塔尔"
+    name_en: "Durotar"
+    level: "1-10"
+    faction: "horde"
+    coords: ""
+    adjacent: [the_barrens, azshara]
+    era: vanilla
+    look_zh: "龟裂的暗红沙土与赭红砂岩峭壁，稀疏的干草与棕榈状枯树，兽人木栅与尖木桩哨塔沿土路排开，天空常年灰黄带尘"
+    note_zh: "兽人/巨魔新手区，名字取自萨尔的父亲杜隆坦；西接贫瘠之地、北接艾萨拉，东面是无尽之海。旧世没有飞行点（只能走奥格瑞玛）"
+    source_url: https://warcraft.wiki.gg/wiki/Durotar
+    quote: "Durotar, the land named after Thrall's father, Durotan, lies on the eastern coast of Kalimdor. It borders the Northern Barrens to the west and the coastal lands of Azshara to the north. The land is rocky, and the soil is cracked and red, not unlike the orcs' homeland of Draenor."
+    verified_by: ai_read
+
+  - id: valley_of_trials
+    parent: durotar
+    type: subzone
+    subtype: ""
+    name_zh: "试炼谷"
+    name_en: "Valley of Trials"
+    level: ""
+    faction: "horde"
+    coords: "[44, 67]"
+    adjacent: []
+    era: vanilla
+    look_zh: "四面被赭红高崖围死的封闭小谷，谷底一圈兽人兽皮尖顶帐篷与木架，中央一口小水潭，崖壁上开着两处黑洞口"
+    note_zh: "所有兽人/巨魔玩家的出生地；北侧崖壁上的洞口通火刃集会所，西北山顶有秘道通灵魂石地"
+    source_url: https://warcraft.wiki.gg/wiki/Valley_of_Trials
+    quote: "The Valley of Trials in southern Durotar is where all young orcish adventurers begin their journey."
+    verified_by: ai_read
+
+  - id: the_den_durotar
+    parent: valley_of_trials
+    type: settlement
+    subtype: "camp"
+    name_zh: "大兽穴"
+    name_en: "The Den"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "试炼谷西南角一处半掘进土坡的兽人营地，粗木门楣与兽皮门帘，几顶锥形帐篷围着一堆常燃的篝火"
+    note_zh: "试炼谷的大本营，几乎所有新手任务的发放点；有基础职业训练师与商人，没有专业训练师。id 加 _durotar 限定以避开同名条目"
+    source_url: https://warcraft.wiki.gg/wiki/The_Den
+    quote: "The Den is the base of operations in the Valley of Trials, and is the starting camp for young orc adventurers."
+    verified_by: ai_read
+
+  - id: burning_blade_coven
+    parent: valley_of_trials
+    type: poi
+    subtype: ""
+    name_zh: "火刃集会所"
+    name_en: "Burning Blade Coven"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "试炼谷北缘尘土红山壁上的一处洞口，洞内是暗紫绿色的邪能光与散落的骨骸法阵，小鬼在洞口乱窜"
+    note_zh: "新手期的第一个洞穴副本式任务点；火刃氏族在杜隆塔尔的三处据点之一（另两处是尘风洞穴、骷髅石）"
+    source_url: https://warcraft.wiki.gg/wiki/Burning_Blade_Coven
+    quote: "The Burning Blade Coven lies within the dusty red mountains that form the northern border of the Valley of Trials."
+    verified_by: ai_read
+
+  - id: hidden_path
+    parent: durotar
+    type: subzone
+    subtype: ""
+    name_zh: "秘道"
+    name_en: "Hidden Path"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "绕着全区最高那座山盘旋而上的一线窄岩径，一侧贴壁一侧临空，路面碎石松动，登顶可俯瞰整个贫瘠之地"
+    note_zh: "萨满新手任务要求自己找到的隐秘路线；沿途接灵魂石地与眠炎圣殿，最低处可下到棘齿城或奥格瑞玛方向"
+    source_url: https://warcraft.wiki.gg/wiki/Hidden_Path
+    quote: "Those just beginning to follow the path of the shaman are tasked with finding this secret route through the mountains that border the Valley of Trials."
+    verified_by: ai_read
+
+  - id: spirit_rock
+    parent: hidden_path
+    type: poi
+    subtype: ""
+    name_zh: "灵魂石地"
+    name_en: "Spirit Rock"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "山脊高处一块孤立的红褐巨岩，四周插着兽人图腾柱与飘动的兽皮条幡，风声极大"
+    note_zh: "部落萨满的圣地，从秘道上去"
+    source_url: https://warcraft.wiki.gg/wiki/Spirit_Rock
+    quote: "Spirit Rock is a place sacred to the shaman of the Horde. It is located in the hills high above the Valley of Trials in Durotar, and is accessible from the Hidden Path leading up to it."
+    verified_by: ai_read
+
+  - id: shrine_of_the_dormant_flame
+    parent: hidden_path
+    type: poi
+    subtype: ""
+    name_zh: "眠炎圣殿"
+    name_en: "Shrine of the Dormant Flame"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "全区最高峰顶的一小块平台，中央一座石砌火盆不燃，四角立着风化的石柱，脚下是整片赭红大地"
+    note_zh: "又叫永恒圣火神殿，部落萨满最神圣之地；只能沿秘道螺旋上山抵达，山顶视野可入远景大全景"
+    source_url: https://warcraft.wiki.gg/wiki/Shrine_of_the_Dormant_Flame
+    quote: "The Shrine of the Dormant Flame (or the Shrine of Eternal Flame) is a place most holy to all shaman of the Horde. It is accessible via a secret path that spirals around the tallest mountain of the region, just northwest of the Valley of Trials."
+    verified_by: ai_read
+
+  - id: sen_jin_village
+    parent: durotar
+    type: settlement
+    subtype: "village"
+    name_zh: "森金村"
+    name_en: "Sen'jin Village"
+    level: ""
+    faction: "horde"
+    coords: "[56, 76]"
+    adjacent: []
+    era: vanilla
+    look_zh: "海边一排高脚木桩托起的巨魔茅顶棚屋，屋檐挂着骨制风铃与彩绘面具，村前是白沙滩与停着的独木舟"
+    note_zh: "暗矛巨魔的村子，以森金酋长命名；巨魔玩家离开试炼谷后的第一个据点。旧世没有飞行点"
+    source_url: https://warcraft.wiki.gg/wiki/Sen%27jin_Village
+    quote: "Sen'jin Village is a settlement of the Darkspear tribe located on the southern coast of Durotar."
+    verified_by: ai_read
+
+  - id: darkspear_strand
+    parent: durotar
+    type: subzone
+    subtype: ""
+    name_zh: "暗矛海滩"
+    name_en: "Darkspear Strand"
+    level: ""
+    faction: "horde"
+    coords: "[55, 81]"
+    adjacent: []
+    era: vanilla
+    look_zh: "森金村外一条细长白沙海滩，浅绿海水拍岸，滩上横着几条搁浅的独木舟与破渔网"
+    note_zh: "暗矛巨魔从回音群岛撤离时的登陆点，紧挨森金村"
+    source_url: https://warcraft.wiki.gg/wiki/Darkspear_Strand
+    quote: "The Darkspear Strand is where the Darkspear trolls arrived upon their evacuation of the Echo Isles."
+    verified_by: ai_read
+
+  - id: echo_isles
+    parent: durotar
+    type: subzone
+    subtype: ""
+    name_zh: "回音群岛"
+    name_en: "Echo Isles"
+    level: ""
+    faction: "horde"
+    coords: "[64, 85]"
+    adjacent: []
+    era: vanilla
+    look_zh: "东南外海一串热带小岛，浓绿棕榈与藤蔓压住破败的巨魔草屋，岛间是浅碧色的潟湖水道"
+    note_zh: "旧世这里被巫毒巨魔扎拉赞恩占据、暗矛族已被赶走，是一片敌对野外区域，不是新手村。4.0.3 后才被夺回并改成巨魔出生地"
+    source_url: https://warcraft.wiki.gg/wiki/Echo_Isles
+    quote: "The Echo Isles are a small cluster of tropical landmasses located off the southeastern coast of Durotar."
+    verified_by: ai_read
+
+  - id: razor_hill
+    parent: durotar
+    type: settlement
+    subtype: "town"
+    name_zh: "剃刀岭"
+    name_en: "Razor Hill"
+    level: ""
+    faction: "horde"
+    coords: "[54, 43]"
+    adjacent: []
+    era: vanilla
+    look_zh: "土路十字口上的兽人小镇，尖木桩围墙围着几座半掘进土丘的兽人地穴与一座高大木石兵营，门口立着红黑部落旗"
+    note_zh: "杜隆塔尔中部的路口镇：南通森金村与试炼谷、北通奥格瑞玛、西过怒水河去贫瘠之地十字路口。旧世没有飞行点"
+    source_url: https://warcraft.wiki.gg/wiki/Razor_Hill
+    quote: "Razor Hill is an orcish settlement built on a crossroads in central Durotar. The southern road eventually leads to Sen'jin Village and the Valley of Trials. The northern road leads to Orgrimmar"
+    verified_by: ai_read
+
+  - id: razor_hill_barracks
+    parent: razor_hill
+    type: poi
+    subtype: ""
+    name_zh: "剃刀岭兵营"
+    name_en: "Razor Hill Barracks"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "镇上最高最大的一座两层木石建筑，粗圆木梁架与兽皮顶，门前一排练功用的木桩靶"
+    note_zh: "镇里唯一的大型建筑，有战士/牧师/萨满/急救训练师与杂货商"
+    source_url: https://warcraft.wiki.gg/wiki/Razor_Hill_Barracks
+    quote: "The Razor Hill Barracks features trainers for warriors, priests, shamans and first aid. It also has a general goods vendor."
+    verified_by: ai_read
+
+  - id: razorwind_canyon
+    parent: durotar
+    type: subzone
+    subtype: ""
+    name_zh: "烈风峡谷"
+    name_en: "Razorwind Canyon"
+    level: ""
+    faction: "horde"
+    coords: "[46, 30]"
+    adjacent: []
+    era: vanilla
+    look_zh: "剃刀岭以北主路两侧的两片红岩窄谷，崖壁上凿出一排哈比人巢穴，地上散着碎骨与羽毛"
+    note_zh: "尘风哈比人的筑巢地，分踞主路东西两侧；从峡谷北端可进枯水谷"
+    source_url: https://warcraft.wiki.gg/wiki/Razorwind_Canyon
+    quote: "Razorwind Canyon is a nesting ground for the Dustwind harpies of Durotar. It is located in two areas, to the east and west of the main road leading between Razor Hill and Orgrimmar."
+    verified_by: ai_read
+
+  - id: drygulch_ravine
+    parent: razorwind_canyon
+    type: subzone
+    subtype: ""
+    name_zh: "枯水谷"
+    name_en: "Drygulch Ravine"
+    level: ""
+    faction: "horde"
+    coords: "[52, 27]"
+    adjacent: []
+    era: vanilla
+    look_zh: "一条被高崖夹死的干涸河谷，谷底全是碎石与枯死的灌木，唯一的地面入口是一个贴着崖根的小洞"
+    note_zh: "除了从上面掉下来，唯一入口是从烈风峡谷穿一个小洞进来"
+    source_url: https://warcraft.wiki.gg/wiki/Drygulch_Ravine
+    quote: "Drygulch Ravine is a location in Durotar. Apart from falling down into the ravine from above, the only entrance is from Razorwind Canyon, through a small cave"
+    verified_by: ai_read
+
+  - id: dustwind_cave
+    parent: razorwind_canyon
+    type: poi
+    subtype: ""
+    name_zh: "尘风洞穴"
+    name_en: "Dustwind Cave"
+    level: ""
+    faction: "horde"
+    coords: "[53, 29]"
+    adjacent: []
+    era: vanilla
+    look_zh: "烈风峡谷崖顶上一个不大的洞口，洞内点着数堆绿焰火盆，墙上挂着火刃氏族的黑色刀旗"
+    note_zh: "火刃氏族新成员受训的地方，在剃刀岭东北的崖上"
+    source_url: https://warcraft.wiki.gg/wiki/Dustwind_Cave
+    quote: "Dustwind Cave is a rather small cave in Durotar located atop the cliffs of Razorwind Canyon, just northeast of Razor Hill."
+    verified_by: ai_read
+
+  - id: razormane_grounds
+    parent: durotar
+    type: subzone
+    subtype: ""
+    name_zh: "钢鬃营地"
+    name_en: "Razormane Grounds"
+    level: ""
+    faction: "horde"
+    coords: "[47, 46]"
+    adjacent: []
+    era: vanilla
+    look_zh: "散落着剥净的兽骨与插地木刺的开阔红土地，荆棘从头顶的红岩上垂下来，野猪人的草泥棚屋歪斜地立着"
+    note_zh: "钢鬃野猪人从贫瘠之地向杜隆塔尔推进的前线，在全区中部"
+    source_url: https://warcraft.wiki.gg/wiki/Razormane_Grounds
+    quote: "The Razormane Grounds, located in central Durotar, are the front lines of the battle for the Razormane quilboars' expansion from the Barrens into Durotar."
+    verified_by: ai_read
+
+  - id: kolkar_crag
+    parent: durotar
+    type: subzone
+    subtype: ""
+    name_zh: "科卡尔峭壁"
+    name_en: "Kolkar Crag"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "杜隆塔尔南部一道嶙峋的红岩裂口，谷中散着半人马的兽皮帐与拴马桩"
+    note_zh: "科卡尔半人马在杜隆塔尔的据点。4.0.3a 该子区域被整块移除"
+    source_url: https://warcraft.wiki.gg/wiki/Kolkar_Crag
+    quote: "Kolkar Crag was a craggy gorge in southern Durotar called this way because of the Kolkar centaurs inhabiting it."
+    verified_by: ai_read
+
+  - id: thunder_ridge
+    parent: durotar
+    type: subzone
+    subtype: ""
+    name_zh: "雷霆山"
+    name_en: "Thunder Ridge"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "西北部一道被雷暴常年劈打的高岩脊，岩面焦黑，雷霆蜥蜴在脊上游荡，空气里带静电感"
+    note_zh: "奥格瑞玛西北的雷霆蜥蜴栖地；托克雷农场在它东南。**警告：现行 wiki 把它写成「a flooded gorge」（被水淹的峡谷）、住着「drowned thunder lizards」，那是 4.0.3a 大洪水之后的状态**——旧世它是一道干燥的高岩脊，雷霆蜥蜴活着在脊上游荡，画面上不要出现积水、淹没的树或溺死的蜥蜴（AreaTable 369「雷霆山」实证存在）"
+    source_url: https://warcraft.wiki.gg/wiki/Thunder_Ridge
+    quote: "Thunder Ridge [40.2, 25.8] is a ... gorge in northwestern Durotar, just southwest of Orgrimmar. ... it was an ancient forest home to many herds of thunder lizards"
+    verified_by: ai_read
+
+  - id: tor_kren_farm
+    parent: durotar
+    type: settlement
+    subtype: "farm"
+    name_zh: "托克雷农场"
+    name_en: "Tor'kren Farm"
+    level: ""
+    faction: "horde"
+    coords: "[43, 30]"
+    adjacent: []
+    era: vanilla
+    look_zh: "一小片木栅围出的猪圈与两座歪斜的兽人木屋，屋外晾着咸肉，地上是被拱翻的红土"
+    note_zh: "杜隆塔尔西北的兽人养猪农场，在雷霆山东南；旧世由米莎·托克雷经营"
+    source_url: https://warcraft.wiki.gg/wiki/Tor%27kren_Farm
+    quote: "Tor'kren Farm is located southeast of Thunder Ridge and north of the Southfury Watershed in northwestern Durotar."
+    verified_by: ai_read
+
+  - id: jaggedswine_farm
+    parent: durotar
+    type: settlement
+    subtype: "farm"
+    name_zh: "野猪农场"
+    name_en: "Jaggedswine Farm"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "奥格瑞玛正门外东侧的大猪圈，一座粗木储物棚与一汪浑浊的小水塘，苦工赶着黑毛野猪"
+    note_zh: "奥格瑞玛城门外的两座猪场之一（另一座是石牙农场），供应部落的肉食"
+    source_url: https://warcraft.wiki.gg/wiki/Jaggedswine_Farm
+    quote: "Jaggedswine Farm is one of several pig farms located near the front gates of Orgrimmar in the orcish homeland of Durotar."
+    verified_by: ai_read
+
+  - id: rocktusk_farm
+    parent: durotar
+    type: settlement
+    subtype: "farm"
+    name_zh: "石牙农场"
+    name_en: "Rocktusk Farm"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "奥格瑞玛正门外西侧沿路的猪场，几排木栅圈与一座低矮草顶棚屋，背靠北面的红色山壁"
+    note_zh: "在奥格瑞玛大门外沿西面那条路下去一点"
+    source_url: https://warcraft.wiki.gg/wiki/Rocktusk_Farm
+    quote: "Rocktusk Farm is situated in Durotar just down the western road outside the gates of Orgrimmar."
+    verified_by: ai_read
+
+  - id: skull_rock
+    parent: durotar
+    type: poi
+    subtype: ""
+    name_zh: "骷髅石"
+    name_en: "Skull Rock"
+    level: ""
+    faction: "horde"
+    coords: "[55, 11]"
+    adjacent: []
+    era: vanilla
+    look_zh: "东北海岸边一块形似骷髅头的巨岩，岩口就是洞口，洞内燃着绿色邪能火焰"
+    note_zh: "火刃氏族在杜隆塔尔的第三处据点，首领是兽人术士加兹乌兹"
+    source_url: https://warcraft.wiki.gg/wiki/Skull_Rock
+    quote: "Skull Rock in northeastern Durotar is one of several holdouts of the Burning Blade cult in the region."
+    verified_by: ai_read
+
+  - id: bladefist_bay
+    parent: durotar
+    type: subzone
+    subtype: ""
+    name_zh: "刃拳海湾"
+    name_en: "Bladefist Bay"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "东北角一湾深蓝海水嵌在红岩岸之间，向北望得见艾萨拉那侧的绿色海岸线"
+    note_zh: "出奥格瑞玛正门沿东面那条路过去即到；骷髅石就在湾边"
+    source_url: https://warcraft.wiki.gg/wiki/Bladefist_Bay
+    quote: "Bladefist Bay is a portion of the Great Sea off the eastern coast of central Kalimdor. It is on the northeastern coast of Durotar around Skull Rock"
+    verified_by: ai_read
+
+  - id: deadeye_shore
+    parent: durotar
+    type: subzone
+    subtype: ""
+    name_zh: "死眼海岸"
+    name_en: "Deadeye Shore"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "东岸一大块与周围红土断开的浅色沙地，形状像缺了一只眼的骷髅，地上只有迅猛龙、蝎子和野猪"
+    note_zh: "以兽人英雄、血环氏族前酋长基尔罗格·死眼命名；在枯水谷正东"
+    source_url: https://warcraft.wiki.gg/wiki/Deadeye_Shore
+    quote: "Deadeye Shore is a section of seashore on the eastern coast of Durotar, directly east of Drygulch Ravine. Featuring a large patch of sand missing from the desert, shaped like a skull missing an eye"
+    verified_by: ai_read
+
+  - id: scuttle_coast
+    parent: durotar
+    type: subzone
+    subtype: ""
+    name_zh: "流亡海岸"
+    name_en: "Scuttle Coast"
+    level: ""
+    faction: "horde"
+    coords: "[61, 52]"
+    adjacent: []
+    era: vanilla
+    look_zh: "东岸乱礁滩，一艘艘库尔提拉斯战船的残骸撞碎在礁石上，断桅与船肋斜插出水面"
+    note_zh: "普罗德摩尔海军与兽人海战后的遗迹；提拉加德城堡就在这段海岸上"
+    source_url: https://warcraft.wiki.gg/wiki/Scuttle_Coast
+    quote: "The Scuttle Coast is on the east coast of Durotar, looking out to the Great Sea. It is southeast of Razor Hill and north of Tiragarde Keep. The coast was littered with ships from Kul Tiras, smashed upon the rocks"
+    verified_by: ai_read
+
+  - id: tiragarde_keep
+    parent: durotar
+    type: settlement
+    subtype: "ruin"
+    name_zh: "提拉加德城堡"
+    name_en: "Tiragarde Keep"
+    level: ""
+    faction: "alliance"
+    coords: "[58, 57]"
+    adjacent: []
+    era: vanilla
+    look_zh: "海岸上一座半塌的人类石砌堡垒，塔楼缺口、石墙被熏黑，残余的蓝白旗帜挂在断墙上"
+    note_zh: "杜隆塔尔境内唯一的联盟据点，原属库尔提拉斯的戴林·普罗德摩尔；旧世由本尼迪克中尉的残部把守"
+    source_url: https://warcraft.wiki.gg/wiki/Tiragarde_Keep
+    quote: "Tiragarde Keep is an Alliance stronghold located in the Scuttle Coast in Durotar. It was previously manned by soldiers loyal to Admiral Daelin Proudmoore, Lord of Kul Tiras, and was ruined in a battle against the Horde."
+    verified_by: ai_read
+
+  - id: southfury_river_durotar
+    parent: durotar
+    type: poi
+    subtype: ""
+    name_zh: "怒水河"
+    name_en: "Southfury River"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "分开杜隆塔尔与贫瘠之地的一条宽浑河，土黄色急流，一座粗木栈桥横跨其上"
+    note_zh: "杜隆塔尔与贫瘠之地的天然边界，过桥即前沿哨所；河里有鳄鱼。同名节点在贫瘠之地侧另有一个（AreaTable 814/815），故 id 加限定"
+    source_url: https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN
+    quote: "814|怒水河|14 (ParentAreaID=Durotar)"
+    verified_by: ai_read
+
+  - id: great_sea_durotar
+    parent: durotar
+    type: poi
+    subtype: ""
+    name_zh: "无尽之海"
+    name_en: "The Great Sea"
+    level: ""
+    faction: "neutral"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "杜隆塔尔以东的开阔海面，深蓝到青绿的渐变水色，远处海天一线无岛"
+    note_zh: "杜隆塔尔的东侧外海；客户端里是独立 area（2320）。同名 area 在贫瘠之地侧另有一个（2319），故 id 加限定"
+    source_url: https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN
+    quote: "2320|无尽之海|14 (ParentAreaID=Durotar)"
+    verified_by: ai_read
+
+  - id: durotar_zeppelin_towers
+    parent: durotar
+    type: transport
+    subtype: "boat"
+    name_zh: "奥格瑞玛飞艇塔"
+    name_en: "Orgrimmar Zeppelin Towers"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "城门外两座高耸的螺旋木塔，塔顶停着涂成红黑色的哥布林飞艇，气囊上绘着部落徽记"
+    note_zh: "旧世两条飞艇航线：奥格瑞玛↔荆棘谷格罗姆高营地、奥格瑞玛↔提瑞斯法幽暗城。塔在城外的杜隆塔尔一侧，不在城内。TaxiNodes 35「奥格瑞玛的飞艇」。**subtype 由 `portal` 改为 `boat`**：全仓 10 个飞艇节点里 8 个用 `boat`（`g12_transport.yaml` 6 个 + `g04_ek_south.yaml` 1 个 + 本节点），`portal` 只此一处，属枚举不一致。**同一处地点在 `g12_transport.yaml` 里另有 id `zeppelin_tower_durotar`（含两个 berth 子节点），合龙时以 G12 为准去重，本节点保留作杜隆塔尔地貌索引**"
+    source_url: https://wago.tools/db2/TaxiNodes/csv?build=1.15.9.69722&locale=zhCN
+    quote: "35|奥格瑞玛的飞艇|ContinentID=1|Pos=1320.07,-4649.20,21.57"
+    verified_by: ai_read
+
+  # ======================= 奥格瑞玛 Orgrimmar =======================
+  - id: orgrimmar
+    parent: durotar
+    type: city
+    subtype: ""
+    name_zh: "奥格瑞玛"
+    name_en: "Orgrimmar"
+    level: ""
+    faction: "horde"
+    coords: "[46, 12]"
+    adjacent: []
+    era: vanilla
+    look_zh: "嵌在赭红岩壁里的一串峡谷城，粗圆木与兽皮搭的尖顶屋顶一层层贴着崖壁，红黑部落旗与骨制图腾插满谷壁，抬头只见一线天"
+    note_zh: "兽人与整个部落的首都，以奥格瑞姆·毁灭之锤命名，建在杜隆塔尔北缘的一套山谷与洞穴里；旧世大酋长萨尔坐镇智慧谷的格罗玛什要塞。作为 zone 它挂在杜隆塔尔之下（AreaTable 1637 的 ParentAreaID 为 0，但世界地图上它落在杜隆塔尔境内）"
+    source_url: https://warcraft.wiki.gg/wiki/Orgrimmar
+    quote: "Orgrimmar is the capital city of the orcs and the Horde as a whole. Named in honor of the legendary Orgrim Doomhammer, and nestled into a system of valleys on the northern edge of Durotar, Orgrimmar stands as one of the mightiest warrior cities in the world."
+    verified_by: ai_read
+
+  - id: orgrimmar_main_gate
+    parent: orgrimmar
+    type: poi
+    subtype: ""
+    name_zh: "奥格瑞玛正门"
+    name_en: "Gates of Orgrimmar"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "两扇尖木桩与铁箍拼成的巨门嵌在崖壁缺口里，门楣是整根削尖的原木，两侧崖顶各立一座木石哨塔"
+    note_zh: "全城唯一的正式出入口，朝南开向杜隆塔尔；进门即力量谷。旧世城外没有其他城门"
+    source_url: https://warcraft.wiki.gg/wiki/Orgrimmar
+    quote: "The Valley of Strength is the main valley of Orgrimmar. ... It is also the first area encountered after passing through the main gate."
+    verified_by: ai_read
+
+  - id: valley_of_strength
+    parent: orgrimmar
+    type: district
+    subtype: ""
+    name_zh: "力量谷"
+    name_en: "Valley of Strength"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "进门后第一片开阔谷地，两侧崖壁被凿出层层平台与木梯，兽皮顶摊位挤满谷底，地面是踩实的暗红夯土"
+    note_zh: "全城最热闹的主谷；拍卖行、银行、邮箱与双足飞龙栖木都在这里。4.0.3a 被重新设计过，旧世的地面布局与现行版本不同"
+    source_url: https://warcraft.wiki.gg/wiki/Valley_of_Strength
+    quote: "The Valley of Strength is the main valley of Orgrimmar. The area is a bustling hive of activity for most of the day and night, with all manner of adventurers frequenting its shops and facilities."
+    verified_by: ai_read
+
+  - id: valley_of_spirits
+    parent: orgrimmar
+    type: district
+    subtype: ""
+    name_zh: "精神谷"
+    name_en: "Valley of Spirits"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "一条又长又窄的支谷，巨魔风格的高脚茅顶棚屋与彩绘骨面具立在两侧，谷底常年半明，挂满串珠与羽饰"
+    note_zh: "暗矛巨魔在城内的聚居区，从力量谷往西进入；旧世谷内有暗棘旅店与灵魂旅店，其中一座二楼有通往诅咒之地的传送门"
+    source_url: https://warcraft.wiki.gg/wiki/Valley_of_Spirits
+    quote: "The Valley of Spirits is a long narrow valley that leads from the Valley of Strength to the Talon Gate in Orgrimmar. It is the long-standing seat of the Darkspear trolls."
+    verified_by: ai_read
+
+  - id: the_drag
+    parent: orgrimmar
+    type: district
+    subtype: ""
+    name_zh: "暗巷"
+    name_en: "The Drag"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "夹在两面高崖之间的一条终年背光的窄street，两侧一家挨一家的专业作坊与摊铺，头顶只露出一线天光"
+    note_zh: "连接力量谷与智慧谷的商铺长街，几乎所有专业训练师都在这里；从暗巷可拐进荣誉谷与暗影裂口。国服译名待核（本条按常见译法「暗巷」，若与官方不符请以官方为准）"
+    source_url: https://warcraft.wiki.gg/wiki/The_Drag
+    quote: "The Drag is an alley lined with shops which links the Valley of Strength and the Valley of Wisdom in Orgrimmar. The Valley of Honor and the Cleft of Shadow can be accessed from the Drag."
+    verified_by: ai_read
+
+  - id: valley_of_honor
+    parent: orgrimmar
+    type: district
+    subtype: ""
+    name_zh: "荣誉谷"
+    name_en: "Valley of Honor"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "城东北的军事谷地，铁匠炉的橙红火光与锤击声不断，谷中一口方形水池，地上立满练功木桩与兵器架"
+    note_zh: "战士与猎人训练师、武器防具商与战场指挥官所在地；勇者大厅是谷中的主建筑。旧世谷中有一处未启用的圆形斗兽坑（勇气竞技场要到 3.0.2 才真正加入）"
+    source_url: https://warcraft.wiki.gg/wiki/Valley_of_Honor
+    quote: "The Valley of Honor is the military district of Orgrimmar. It is home to both warrior and hunter trainers, various arms and armor vendors, and the Horde battlemasters."
+    verified_by: ai_read
+
+  - id: valley_of_wisdom
+    parent: orgrimmar
+    type: district
+    subtype: ""
+    name_zh: "智慧谷"
+    name_en: "Valley of Wisdom"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "城西北一片较安静的谷地，牛头人式的大帐与图腾柱立在谷侧，谷正中是全城最高大的一座尖顶石木要塞"
+    note_zh: "旧世这里才是格罗玛什要塞与大酋长萨尔的所在地（4.0.3a 才把要塞移走、改成牛头人区）；谷内有旅店、银行与拍卖行"
+    source_url: https://warcraft.wiki.gg/wiki/Valley_of_Wisdom
+    quote: "The Valley of Wisdom was once the location of Grommash Hold, where Warchief Thrall once resided in Orgrimmar."
+    verified_by: ai_read
+
+  - id: cleft_of_shadow
+    parent: orgrimmar
+    type: district
+    subtype: ""
+    name_zh: "暗影裂口"
+    name_en: "Cleft of Shadow"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "从暗巷往西凿进山体的一处洞穴式街区，完全不见天空，墙上只有紫绿色的幽光与零星火盆，空气里飘着烟"
+    note_zh: "潜行者、法师与术士训练师所在地；怒焰裂谷的入口传送门就在这里，紧挨尼鲁·血刃的帐篷。4.0.3a 起这里不再能看见天空、子区域名一度被移除"
+    source_url: https://warcraft.wiki.gg/wiki/Cleft_of_Shadow
+    quote: "The Cleft of Shadow (or the Cleft of Shadows) is home to Orgrimmar's rogue, mage, and warlock trainers. It is also the location of the entrance to the Ragefire Chasm instance"
+    verified_by: ai_read
+
+  - id: grommash_hold
+    parent: valley_of_wisdom
+    type: poi
+    subtype: ""
+    name_zh: "格罗玛什要塞"
+    name_en: "Grommash Hold"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "智慧谷正中一座巨大的尖顶石木堡，门口两侧立着削尖的巨型木桩与兽骨，门洞深而窄，内殿只靠火盆照明"
+    note_zh: "以兽人英雄格罗玛什·地狱咆哮命名，旧世是大酋长萨尔的王座所在。**注意：它在旧世位于智慧谷，不是力量谷**——4.0.3a 才被重建并移到力量谷"
+    source_url: https://warcraft.wiki.gg/wiki/Grommash_Hold
+    quote: "Grommash Hold is an enormous fortress located in the Valley of Strength in the orc capital of Orgrimmar. ... Patch 4.0.3a: Remodeled and moved."
+    verified_by: ai_read
+
+  - id: hall_of_the_brave
+    parent: valley_of_honor
+    type: poi
+    subtype: ""
+    name_zh: "勇者大厅"
+    name_en: "Hall of the Brave"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "荣誉谷里最大的一座木石兵营，两层粗梁结构，室内外都立着成排的练功木桩"
+    note_zh: "战士公会所在地，容纳部落军官、战士训练师与战场指挥官"
+    source_url: https://warcraft.wiki.gg/wiki/Hall_of_the_Brave
+    quote: "The Hall of the Brave is a large barracks located in the Valley of Honor in the orc capital of Orgrimmar. The Hall contains many of the Horde's army officers, warrior trainers, and battlemasters."
+    verified_by: ai_read
+
+  - id: hunters_hall
+    parent: valley_of_honor
+    type: poi
+    subtype: ""
+    name_zh: "猎人大厅"
+    name_en: "Hunter's Hall"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "荣誉谷一侧的兽皮顶木屋，墙上挂着兽头与弓箭，屋后是一排拴着野兽的兽栏"
+    note_zh: "猎人商店与训练所在；屋后是奥格瑞玛的兽栏"
+    source_url: https://warcraft.wiki.gg/wiki/Hunter%27s_Hall
+    quote: "Hunter's Hall is a hunter shop found in the Valley of Honor in Orgrimmar. The kennels of Orgrimmar are behind the building."
+    verified_by: ai_read
+
+  - id: shadowswift_brotherhood
+    parent: cleft_of_shadow
+    type: poi
+    subtype: ""
+    name_zh: "影踪兄弟会"
+    name_en: "Shadowswift Brotherhood"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "暗影裂口洞壁上凿出的一间低矮暗屋，只有一盏火盆，门口挂着黑色兽皮帘"
+    note_zh: "潜行者训练师所在地。国服译名待核（本条按常见译法，若与官方不符请以官方为准）"
+    source_url: https://warcraft.wiki.gg/wiki/Shadowswift_Brotherhood
+    quote: "The Shadowswift Brotherhood is a structure located in the Cleft of Shadow of Orgrimmar. Rogue trainers can be found here."
+    verified_by: ai_read
+
+  - id: darkbriar_lodge
+    parent: valley_of_spirits
+    type: poi
+    subtype: ""
+    name_zh: "暗棘旅店"
+    name_en: "Darkbriar Lodge"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "精神谷里一座两层高脚巨魔木屋，屋顶是厚茅草，二楼平台上立着一道幽紫色的法阵门框"
+    note_zh: "旧世暗矛族的建筑，二楼有一道通往诅咒之地的传送门；旁边就是灵魂旅店。4.0.3a 被移除。国服译名待核"
+    source_url: https://warcraft.wiki.gg/wiki/Darkbriar_Lodge
+    quote: "The Darkbriar Lodge was a building found in the Valley of Spirits in Orgrimmar. Its inhabitants were of the Darkspear tribe. On the second floor, there was a portal to the Blasted Lands. Next to it was Spirit Lodge."
+    verified_by: ai_read
+
+  - id: orgrimmar_auction_house
+    parent: valley_of_strength
+    type: poi
+    subtype: ""
+    name_zh: "奥格瑞玛拍卖行"
+    name_en: "Orgrimmar Auction House"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "力量谷里一座宽口敞门的大木棚，门前整天围着人，棚内柱子上钉满写字的皮卷与木牌"
+    note_zh: "部落玩家的主拍卖行，由一群哥布林经营；4.0.3a 被重新建模"
+    source_url: https://warcraft.wiki.gg/wiki/Auction_House_(Valley_of_Strength)
+    quote: "The Auction House is one of several auction houses in Orgrimmar, this one located in the Valley of Strength, and is considered the main Auction House for most Horde players."
+    verified_by: ai_read
+
+  - id: bank_of_orgrimmar
+    parent: valley_of_strength
+    type: poi
+    subtype: ""
+    name_zh: "奥格瑞玛银行"
+    name_en: "Bank of Orgrimmar"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "力量谷里一座厚重的石木混砌方屋，门口两根包铁立柱，门内一排金属包边的箱柜，终日人挤人"
+    note_zh: "旧世的奥格瑞玛银行在力量谷，与拍卖行相邻，是部落玩家最密集的两处之一；4.0.3a「Relocated and remodeled」，重建后的格罗玛什要塞正占着它旧世的位置。国服译名待核（非 AreaTable 子区域，客户端语言包无此条目）"
+    source_url: https://warcraft.wiki.gg/wiki/Bank_of_Orgrimmar
+    quote: "The Bank of Orgrimmar is the bank located in Orgrimmar and is considered a heavily populated bank. ... Grommash Hold now occupies its original location. ... Patch 4.0.3a (2010-11-23): Relocated and remodeled."
+    verified_by: ai_read
+
+  - id: the_skytower
+    parent: valley_of_strength
+    type: poi
+    subtype: ""
+    name_zh: "天空塔"
+    name_en: "The Skytower"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "一座高出谷壁的螺旋木塔，粗原木骨架外挂兽皮与部落旗帜，塔顶平台停着双足飞龙，栖木边缘垂着骨饰风铃"
+    note_zh: "旧世独有：奥格瑞玛的部落飞行点塔本体，塔身同时连着精神谷一侧；旧世的飞行管理员多拉斯就站在这座塔上（4.0.3a 后被挪到新建的「奥格瑞玛空中通道 Orgrimmar Skyway」）。**4.0.3a 整塔移除、仅存于 Classic**，拍旧世奥格瑞玛天际线必须有它。与 `orgrimmar_flightpath`（TaxiNodes 23）是同一处的建筑层与交通层。国服译名待核（非 AreaTable 子区域）"
+    source_url: https://warcraft.wiki.gg/wiki/Skytower
+    quote: "The Skytower (or The Sky Tower) was the name for the Horde flight point tower located in Orgrimmar, also linking to the Valley of Spirits. ... The subject of this article was removed in patch 4.0.3a but remains in World of Warcraft: Classic."
+    verified_by: ai_read
+
+  - id: hall_of_legends
+    parent: orgrimmar
+    type: poi
+    subtype: ""
+    name_zh: "传说大厅"
+    name_en: "Hall of Legends"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "一道只对高荣誉者开启的厚重石门后的殿堂，墙上挂满战旗，室内是暗红火光"
+    note_zh: "部落的 PvP 荣誉奖励大厅（联盟对应暴风城英雄大厅）；1.4.0 随荣誉系统加入，旧世是一个独立的小实例，2.0.1 起全角色可进"
+    source_url: https://warcraft.wiki.gg/wiki/Hall_of_Legends
+    quote: "Patch 1.4.0: Added. ... Patch 2.0.1: With the addition of the new honor system, all characters can enter the Hall."
+    verified_by: ai_read
+
+  - id: orgrimmar_flightpath
+    parent: valley_of_strength
+    type: transport
+    subtype: "flightpath"
+    name_zh: "奥格瑞玛双足飞龙栖木"
+    name_en: "Orgrimmar Wind Rider Roost"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "谷侧架高的木platform，粗木横梁上停着几只收翼的双足飞龙，梁下垂着绳梯与皮索"
+    note_zh: "旧世卡利姆多部落航线的核心枢纽（TaxiNodes 23「奥格瑞玛，杜隆塔尔」）；去十字路口 / 陶拉祖营地 / 棘齿城 / 烈日石居 / 雷霆崖等全部从这里起飞"
+    source_url: https://wago.tools/db2/TaxiNodes/csv?build=1.15.9.69722&locale=zhCN
+    quote: "23|奥格瑞玛，杜隆塔尔|ContinentID=1|Pos=1677.59,-4315.71,61.17"
+    verified_by: ai_read
+
+  - id: the_barrens
+    parent: central_kalimdor
+    type: zone
+    subtype: ""
+    name_zh: "贫瘠之地"
+    name_en: "The Barrens"
+    level: "10-25"
+    faction: "contested"
+    coords: ""
+    adjacent: [durotar, mulgore, stonetalon_mountains, ashenvale, dustwallow_marsh, thousand_needles]
+    era: vanilla
+    look_zh: "一望无际的赭黄干草原，土黄的硬土路笔直穿过，稀疏的伞状金合欢树投下细影，低矮的红褐山脊当作天然边界"
+    note_zh: "旧世是**一整块**地区（10-25 级），南北连通不断；4.0.3a 才被大裂谷劈成北/南贫瘠之地两个 zone。部落玩家的集体记忆之地"
+    source_url: https://warcraft.wiki.gg/wiki/Barrens
+    quote: "The Barrens is a large zone in central Kalimdor controlled mostly by the Horde. It is a massive savanna, with low mountains serving as natural borders and with a few oases in the north-central region around the Crossroads."
+    verified_by: ai_read
+
+  - id: the_crossroads
+    parent: the_barrens
+    type: settlement
+    subtype: "crossroads"
+    name_zh: "十字路口"
+    name_en: "The Crossroads"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "两条土路交叉处的兽人小镇，一圈尖木桩墙围着几座半埋入土的兽人地穴与兽皮尖顶帐，路口立着高大的木制部落旗杆"
+    note_zh: "贫瘠之地的心脏，也是整个卡利姆多部落玩家的第一大集散地：南北黄金之路与东西向（棘齿城↔石爪山）的路在此交汇，飞行点连接几乎所有部落据点"
+    source_url: https://warcraft.wiki.gg/wiki/Crossroads
+    quote: "The Crossroads is the largest Horde town in the Northern Barrens, aptly named for the crossing of the main north-south road (from the Gold Road) and the road from Ratchet in the east all the way to the Stonetalon Mountains in the west."
+    verified_by: ai_read
+
+  - id: crossroads_flightpath
+    parent: the_crossroads
+    type: transport
+    subtype: "flightpath"
+    name_zh: "十字路口飞行点"
+    name_en: "Crossroads Flight Path"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "镇中一座架高的粗木栖木台，两三只双足飞龙收翼蹲在横梁上"
+    note_zh: "TaxiNodes 25；卡利姆多部落航线的中转核心"
+    source_url: https://wago.tools/db2/TaxiNodes/csv?build=1.15.9.69722&locale=zhCN
+    quote: "25|十字路口，贫瘠之地|ContinentID=1|Pos=-441.80,-2596.08,96.06"
+    verified_by: ai_read
+
+  - id: gold_road
+    parent: the_barrens
+    type: poi
+    subtype: ""
+    name_zh: "黄金之路"
+    name_en: "Gold Road"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "纵贯全区南北的一条压实土黄大道，路面被车辙压出两条深沟，两侧只有干草与零星路碑"
+    note_zh: "贫瘠之地的南北主干道，北端止于莫尔杉壁垒；旧世它一路向南跨过连接南北两半的桥，桥南那段叫南黄金之路"
+    source_url: https://warcraft.wiki.gg/wiki/Gold_Road
+    quote: "The Gold Road runs north-south from Mor'shan Rampart to the Great Divide. Prior to the Cataclysm the road continued south, to a bridge connecting the northern and southern half of the Barrens."
+    verified_by: ai_read
+
+  - id: southern_gold_road
+    parent: the_barrens
+    type: poi
+    subtype: ""
+    name_zh: "南黄金之路"
+    name_en: "Southern Gold Road"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "黄金之路过桥以南的一段，路面更沙、路肩塌陷，沿途立着被风蚀的商队路标"
+    note_zh: "旧世从南端的升降梯起、到连接南北贫瘠之地的那座桥为止的一段；4.0.3a 该子区域被移除"
+    source_url: https://warcraft.wiki.gg/wiki/Southern_Gold_Road
+    quote: "Officially, the section of the road that bears the name Southern Gold Road begins at the Great Lift at the southern end of the Barrens and ends at the bridge connecting the northern and southern ends of the Barrens."
+    verified_by: ai_read
+
+  - id: southern_barrens_subzone
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "南贫瘠之地"
+    name_en: "Southern Barrens"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "同一片赭黄草原的南半，草色更枯、红土裸露更多，地平线上是千针石林方向的台地剪影"
+    note_zh: "**旧世这只是贫瘠之地内部的一个子区域标签**（AreaTable 1156），不是独立 zone；4.0.3a 才被拆成正式 zone。id 加 _subzone 以避开 Cata 的同名 zone"
+    source_url: https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN
+    quote: "1156|南贫瘠之地|17 (ParentAreaID=The Barrens)"
+    verified_by: ai_read
+
+  - id: far_watch_post
+    parent: the_barrens
+    type: settlement
+    subtype: "tower"
+    name_zh: "前沿哨所"
+    name_en: "Far Watch Post"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "路边一座木石瞭望塔加一座兽人地穴，旁边立着两台蒙皮的投石车，南面有一圈狼栏"
+    note_zh: "过怒水河桥进入贫瘠之地后的第一个部落哨点，紧挨杜隆塔尔边界"
+    source_url: https://warcraft.wiki.gg/wiki/Far_Watch_Post
+    quote: "Far Watch Post is a small Horde outpost located just west of the bridge between Durotar and the Northern Barrens. It contains a watch tower, an orc burrow and a few catapults."
+    verified_by: ai_read
+
+  - id: ratchet
+    parent: the_barrens
+    type: settlement
+    subtype: "port"
+    name_zh: "棘齿城"
+    name_en: "Ratchet"
+    level: ""
+    faction: "neutral"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "东海岸的哥布林港镇，铁皮与杂木拼起来的歪斜房子沿栈桥排开，吊车与货箱堆在码头上，空气里有油烟味"
+    note_zh: "卡利姆多最重要的中立港：这里的船直通东部王国荆棘谷的藏宝海湾。联盟与部落都能安全进入"
+    source_url: https://warcraft.wiki.gg/wiki/Ratchet
+    quote: "Ratchet is a major goblin port in Kalimdor, a medium-sized harbor city located on the eastern shore of the Northern Barrens, directly between Orgrimmar and Theramore Isle. The town does most of its business through Booty Bay"
+    verified_by: ai_read
+
+  - id: ratchet_flightpath
+    parent: ratchet
+    type: transport
+    subtype: "flightpath"
+    name_zh: "棘齿城飞行点"
+    name_en: "Ratchet Flight Path"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "码头后方一座铁架搭的栖木塔，横梁上拴着双足飞龙"
+    note_zh: "TaxiNodes 80"
+    source_url: https://wago.tools/db2/TaxiNodes/csv?build=1.15.9.69722&locale=zhCN
+    quote: "80|棘齿城，贫瘠之地|ContinentID=1|Pos=-894.59,-3773.01,11.48"
+    verified_by: ai_read
+
+  - id: ratchet_booty_bay_boat
+    parent: ratchet
+    type: transport
+    subtype: "boat"
+    name_zh: "棘齿城—藏宝海湾航线"
+    name_en: "Ratchet - Booty Bay Boat"
+    level: ""
+    faction: "neutral"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "伸进海里的长木栈桥尽头停着一艘哥布林蒸汽货轮，烟囱冒黑烟，甲板堆满木箱"
+    note_zh: "旧世连接卡利姆多与东部王国的两条中立航线之一（另一条是黑海岸奥伯丁）；对岸是荆棘谷藏宝海湾。TaxiNodes 34"
+    source_url: https://wago.tools/db2/TaxiNodes/csv?build=1.15.9.69722&locale=zhCN
+    quote: "34|棘齿城到藏宝海湾的船只|ContinentID=1|Pos=-1965.17,-5824.29,-1.06"
+    verified_by: ai_read
+
+  - id: broken_keel_tavern
+    parent: ratchet
+    type: poi
+    subtype: ""
+    name_zh: "破船旅店"
+    name_en: "Broken Keel Tavern"
+    level: ""
+    faction: "neutral"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "码头边一座用翻转的船体当屋顶的酒馆，木板墙歪歪斜斜，门口挂着油灯"
+    note_zh: "棘齿城的旅店。**注意：它不是客户端 AreaTable 的子区域**，只是镇内建筑；名称取自 warcraft.wiki.gg 的 Ratchet 子区域列表，本条未单独抓到页面"
+    source_url: https://warcraft.wiki.gg/wiki/Ratchet
+    quote: "(建筑名取自 Ratchet 页的子区域列表：Ratchet → Broken Keel Tavern)"
+    verified_by: ai_draft
+
+  - id: the_merchant_coast
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "商旅海岸"
+    name_en: "The Merchant Coast"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "贫瘠之地的东侧海岸线，黄土断崖直落到青蓝浅海，崖下是细碎的贝壳沙滩"
+    note_zh: "因棘齿城哥布林的贸易得名；棘齿城、北方城堡都在这段海岸上，外海是勇士岛"
+    source_url: https://warcraft.wiki.gg/wiki/Merchant_Coast
+    quote: "The Merchant Coast is the name given to the small portion of the Northern Barrens that forms the coastline of the Great Sea. Along the Merchant Coast is the goblin port town of Ratchet, and the Theramore outpost, Northwatch Hold."
+    verified_by: ai_read
+
+  - id: fray_island
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "勇士岛"
+    name_en: "Fray Island"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "东海岸外一座干燥小岛，一条贯穿全岛的石砌水道，岛上只有沙土与零星干草"
+    note_zh: "只能游泳过去；旧世岛上是一圈好斗的佣兵，是个小型 PvP/单挑点"
+    source_url: https://warcraft.wiki.gg/wiki/Fray_Island
+    quote: "Fray Island is a small arid island located off the eastern shore of the Northern Barrens. A small sewer stretches the length of the island"
+    verified_by: ai_read
+
+  - id: the_tidus_stair
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "提度斯阶梯"
+    name_en: "The Tidus Stair"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "海边一组天然形成的层层岩台，像被凿出的巨型石阶一级级落向海面"
+    note_zh: "在棘齿城东南的海岸上；旧世有两个牛头人（艾丝伦·观水者与玛伦·观天者）在此垂钓并与水灵交谈"
+    source_url: https://warcraft.wiki.gg/wiki/Tidus_Stair
+    quote: "The Tidus Stair is an interesting geological formation that has the form of several terraces forming a giant set of stone stairs overlooking part of the Merchant Coast. It is located southeast of Ratchet"
+    verified_by: ai_read
+
+  - id: northwatch_hold
+    parent: the_barrens
+    type: settlement
+    subtype: "tower"
+    name_zh: "北方城堡"
+    name_en: "Northwatch Hold"
+    level: ""
+    faction: "alliance"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "海岸边一座石砌联盟要塞，方塔与雉堞城墙，蓝白狮鹫旗猎猎，墙下是成排的帐篷与投石机"
+    note_zh: "联盟在卡利姆多的主要军事据点之一，隶属塞拉摩；旧世一度是精英区（2.3.0 才取消）。从这里往东南即进尘泥沼泽"
+    source_url: https://warcraft.wiki.gg/wiki/Northwatch_Hold
+    quote: "Northwatch Hold (or Northwatch Keep) is a massive Alliance fortress located between the Merchant Coast in the Southern Barrens and Dustwallow Marsh."
+    verified_by: ai_read
+
+  - id: the_sludge_fen
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "淤泥沼泽"
+    name_en: "The Sludge Fen"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "东北角一片被钻井污染的黑色油泊，木架井塔与锈铁管道横在泥面上，油光在日光下泛彩"
+    note_zh: "风险投资公司的油田；北面有它的哨塔、西面是研究站、东北是石矿洞"
+    source_url: https://warcraft.wiki.gg/wiki/Sludge_Fen
+    quote: "The Sludge Fen (or the Sludge Fens) is an oil field found on the northeast corner of the Northern Barrens."
+    verified_by: ai_read
+
+  - id: boulder_lode_mine
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "石矿洞"
+    name_en: "Boulder Lode Mine"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "东北山壁上的矿洞口，洞外是兽人式的木架与红黑旗，矿车轨道从洞里伸出来"
+    note_zh: "被风险投资公司占据的矿；建筑与旗帜显示它原属部落。首领是铜栓老大"
+    source_url: https://warcraft.wiki.gg/wiki/Boulder_Lode_Mine
+    quote: "The Boulder Lode Mine is a mine located in the northeastern section of the Northern Barrens. It is controlled by the Venture Company and seems to have once belonged to the Horde judging by the orcish architecture and Horde banners found around the area."
+    verified_by: ai_read
+
+  - id: the_dry_hills
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "无水岭"
+    name_en: "The Dry Hills"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "西北角的一片矮丘，反而是全区最绿的地方，草色偏青，崖上是鹰身女妖的枝巢"
+    note_zh: "石爪山脉的东麓丘陵，巫翼鹰身人的地盘，她们一直在劫掠北段黄金之路上的商队"
+    source_url: https://warcraft.wiki.gg/wiki/Dry_Hills
+    quote: "The Dry Hills are located in the far northwestern corner of the Northern Barrens. Despite their name, the Dry Hills are actually one of the greener areas of the Barrens."
+    verified_by: ai_read
+
+  - id: the_mor_shan_rampart
+    parent: the_barrens
+    type: settlement
+    subtype: "tower"
+    name_zh: "莫尔杉壁垒"
+    name_en: "The Mor'shan Rampart"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "北端路口上的一道临时防御工事，削尖的原木栅栏配两座木制哨塔，塔上挂着部落旗，背后是灰谷的深绿林线"
+    note_zh: "黄金之路的北端终点，挡住联盟从灰谷南下的推进；旧世战歌峡谷战场的部落入口就在这一带"
+    source_url: https://warcraft.wiki.gg/wiki/Mor%27shan_Rampart
+    quote: "The Mor'shan Rampart lies at the northern terminus of the Gold Road in Northern Barrens. This makeshift defensive post was built to withstand the push of Alliance forces into the region from Ashenvale to the north."
+    verified_by: ai_read
+
+  - id: mor_shan_base_camp
+    parent: the_barrens
+    type: settlement
+    subtype: "camp"
+    name_zh: "莫尔杉营地"
+    name_en: "Mor'shan Base Camp"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "壁垒南侧一小片兽人营帐与拴狼桩，营中立着战歌氏族的黑红狼头旗"
+    note_zh: "战歌掠夺者的基地，也是战歌峡谷战场的部落入口所在。**存疑**：AreaTable 1599 落在 1597–1603 的 UNUSED 区块里（同块相邻几条都带 UNUSED 后缀），旧世是否真作为子区域文本显示待核，见备注 ③"
+    source_url: https://warcraft.wiki.gg/wiki/Mor%27shan_Base_Camp
+    quote: "Mor'shan Base Camp ... is located just south of the Ashenvale-Barrens border, near the Mor'shan Rampart. It is the base of the Warsong Outriders and also the location of the Horde entrance to the Warsong Gulch battleground."
+    verified_by: ai_read
+
+  - id: warsong_gulch_horde_entrance
+    parent: mor_shan_base_camp
+    type: transport
+    subtype: "portal"
+    name_zh: "战歌峡谷战场入口（部落侧）"
+    name_en: "Warsong Gulch Entrance (Horde)"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "营地边一道立在两根图腾柱之间的暗红色法阵门，门里翻滚着血色雾气"
+    note_zh: "旧世战歌峡谷（10-60 分段战场）的部落入口；联盟侧入口在灰谷。战场本身是独立地图（AreaTable 3277，ContinentID=489），不属于本片区的树"
+    source_url: https://warcraft.wiki.gg/wiki/Warsong_Gulch
+    quote: "| loc = Between the [[Barrens]] and [[Ashenvale]]"
+    verified_by: ai_read
+
+  - id: grol_dom_farm
+    parent: the_barrens
+    type: settlement
+    subtype: "farm"
+    name_zh: "格罗多姆农场"
+    name_en: "Grol'dom Farm"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "路边一圈木栅围起的猪圈与两座兽人草顶棚屋，苦工赶着黑毛野猪，地上全是拱翻的干土"
+    note_zh: "奥格瑞玛建城后冒出来的众多兽人养猪场之一，在十字路口北面的路上"
+    source_url: https://warcraft.wiki.gg/wiki/Grol%27dom_Farm
+    quote: "Grol'dom Farm is one of the many orcish pig farms that have sprung up in the years after the founding of Orgrimmar."
+    verified_by: ai_read
+
+  - id: dreadmist_peak
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "鬼雾峰"
+    name_en: "Dreadmist Peak"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "一座孤立的高岩峰，越往上空气越红越浊，峰顶被一层暗红雾罩住，能见度极低"
+    note_zh: "十字路口西北的火刃邪教据点；顶上是鬼雾兽穴"
+    source_url: https://warcraft.wiki.gg/wiki/Dreadmist_Peak
+    quote: "Dreadmist Peak is a mountain northwest of the Crossroads in the Northern Barrens. As you climb to the top of the Peak, the atmosphere becomes red and foggy."
+    verified_by: ai_read
+
+  - id: dreadmist_den
+    parent: dreadmist_peak
+    type: poi
+    subtype: ""
+    name_zh: "鬼雾兽穴"
+    name_en: "Dreadmist Den"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "峰顶雾中的一处洞口，洞内常年是暗红的半明，中央供着一颗搏动的深紫色种子"
+    note_zh: "火刃邪教的巢穴，藏着「恶魔之种」；终年笼在污染山峰的暗红雾里"
+    source_url: https://warcraft.wiki.gg/wiki/Dreadmist_Den
+    quote: "Dreadmist Den is a Burning Blade cultist holding located within Dreadmist Peak. It contains the Demon Seed, an invaluable artifact to the Cult. The den is perpetually shrouded in a dark red mist"
+    verified_by: ai_read
+
+  - id: the_forgotten_pools
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "遗忘之池"
+    name_en: "The Forgotten Pools"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "干草原上一小片突兀的翠绿绿洲，几汪清水围着高大的棕榈与芦苇，水边长着独有的沉重蘑菇"
+    note_zh: "全区三大绿洲中最北的一个，在十字路口往西那条路的北侧；科尔卡半人马在此巡逻"
+    source_url: https://warcraft.wiki.gg/wiki/Forgotten_Pools
+    quote: "The Forgotten Pools are the northernmost of the oases in the Northern Barrens, located north off the western road out of the Crossroads."
+    verified_by: ai_read
+
+  - id: lushwater_oasis
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "甜水绿洲"
+    name_en: "Lushwater Oasis"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "十字路口正南的绿洲，几潭深碧的水被高棕榈围住，水汽让空气比周围凉，池边有一处向下的黑洞口"
+    note_zh: "三大绿洲之一，**哀嚎洞穴的入口就在这里**；科尔卡半人马在树间潜伏"
+    source_url: https://warcraft.wiki.gg/wiki/Lushwater_Oasis
+    quote: "Lushwater Oasis, just south of the Crossroads, is one of three major oases in the Northern Barrens. It is notable for containing the entrance to the accursed Wailing Caverns."
+    verified_by: ai_read
+
+  - id: the_stagnant_oasis
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "死水绿洲"
+    name_en: "The Stagnant Oasis"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "水色发暗发绿的一片死水塘，浮着厚厚的水藻，岸边芦苇枯黄，几头瘦弱的科多兽独自饮水"
+    note_zh: "三大绿洲中最南的一个，夹在商旅海岸与黄金之路之间；这里的失落科多兽比南边巨人旷野的好打"
+    source_url: https://warcraft.wiki.gg/wiki/Stagnant_Oasis
+    quote: "The Stagnant Oasis is an oasis located between the Merchant Coast and the Gold Road. In addition to Kolkar centaur camped on its fringes and other indigenous oasis flora, it is also home to several Lost Barrens Kodos"
+    verified_by: ai_read
+
+  - id: shrine_of_the_fallen_warrior
+    parent: the_barrens
+    type: poi
+    subtype: ""
+    name_zh: "战士之魂神殿"
+    name_en: "Shrine of the Fallen Warrior"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "一处小土丘顶上的简易石台，台上立着一副插地的兽人铠甲与一柄战斧，四周插着招魂的布条"
+    note_zh: "十字路口以西的纪念地，要沿山脊往西南绕、从丘底的小径上去。为纪念一位暴雪员工而设"
+    source_url: https://warcraft.wiki.gg/wiki/Shrine_of_the_Fallen_Warrior
+    quote: "The Shrine of the Fallen Warrior is located on a small hill in the Northern Barrens west of the Crossroads. To reach it, the player must follow a ridge to the southwest and half-way up the hill will find the base of a mound."
+    verified_by: ai_read
+
+  - id: thorn_hill
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "荆棘岭"
+    name_en: "Thorn Hill"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "山顶北坡上一大片野猪人聚落，草泥圆顶棚屋一座挨一座，四处插着削尖的木刺与骨制图腾"
+    note_zh: "钢鬃野猪人的大据点，在十字路口与杜隆塔尔之间；首领是野猪人托图斯克"
+    source_url: https://warcraft.wiki.gg/wiki/Thorn_Hill
+    quote: "Thorn Hill is a sizable settlement nestled on the north face of a mountain top between the Crossroads and Durotar. It is populated by a large number of Razormane quilboar"
+    verified_by: ai_read
+
+  - id: agama_gor
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "阿迦玛戈"
+    name_en: "Agama'gor"
+    level: ""
+    faction: "contested"
+    coords: "[44, 50]"
+    adjacent: []
+    era: vanilla
+    look_zh: "路北一片荆棘环绕的野猪人营地，圆顶草棚与插地木刺围成圈，地上散落血色的碎晶"
+    note_zh: "硬鬃野猪人的聚落，在陶拉祖营地以西那条路的北侧，与路南的迅猛龙平原（钢鬃部族）常年交战。4.0.3a 该子区域被移除"
+    source_url: https://warcraft.wiki.gg/wiki/Agama%27gor
+    quote: "Agama'gor was a large Bristleback quilboar settlement located just north of the road leading west from Camp Taurajo."
+    verified_by: ai_read
+
+  - id: bramblescar
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "迅猛龙平原"
+    name_en: "Bramblescar"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "路南一片带刺灌木围出的野猪人营地，草棚低矮，四周是被刨开的干土与骨堆"
+    note_zh: "钢鬃野猪人部族的巢穴，与路北的阿迦玛戈（硬鬃部族）交战。4.0.3a 该子区域被移除。zhCN 官方译名「迅猛龙平原」与英文原名并不对应，但客户端就是这么译的"
+    source_url: https://warcraft.wiki.gg/wiki/Bramblescar
+    quote: "Bramblescar is the location of a tribe of Razormane quilboar. They are at war with the Bristleback tribe which has a holding at Agama'gor on the opposite side of the road."
+    verified_by: ai_read
+
+  - id: raptor_grounds
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "迅猛龙巢穴"
+    name_en: "Raptor Grounds"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "一小块凹下去的谷地，散着迅猛龙用树枝与骨头搭起来的粗糙窝棚，地上亮闪闪的拾来物堆成小丘"
+    note_zh: "日鳞迅猛龙的地盘，在贫瘠之地南部、北方城堡以西；这群迅猛龙聪明到会造窝造工具、爱抢闪亮东西。4.0.3a 该子区域被移除"
+    source_url: https://warcraft.wiki.gg/wiki/Raptor_Grounds
+    quote: "Raptor Grounds was a tiny valley located in the southern part of the Barrens and west of Northwatch Hold. It was densely populated by the Sunscale raptors, who are odd among their kind, showing an unnatural intelligence and even building their own crude huts and tools."
+    verified_by: ai_read
+
+  - id: blackthorn_ridge
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "黑棘山"
+    name_en: "Blackthorn Ridge"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "长满黑色带刺灌木的一道山脊，脊顶一处小营地，脊下有一汪格外清澈的水潭"
+    note_zh: "剃刀沼泽正北的野猪人地盘（主要是钢鬃部族）；兽人萨满布琳住在脊上。4.0.3a 该子区域被移除"
+    source_url: https://warcraft.wiki.gg/wiki/Blackthorn_Ridge
+    quote: "Blackthorn Ridge is a thorny valley located just north of the Quilboar capital of Razorfen Kraul, populated primarily by Razormane Quilboar."
+    verified_by: ai_read
+
+  - id: camp_taurajo
+    parent: the_barrens
+    type: settlement
+    subtype: "town"
+    name_zh: "陶拉祖营地"
+    name_en: "Camp Taurajo"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "草原上一片牛头人营地，高大的圆锥兽皮大帐围成环，帐顶垂着彩绘布条与羽饰，中央是长燃的篝火"
+    note_zh: "贫瘠之地南部的牛头人据点，在通往莫高雷的山口附近；有旅店、商人、专业训练师与飞行点。牛头人玩家从血蹄村沿东面的路过来即到。4.0.3a 被联盟烧毁、改称陶拉祖废墟"
+    source_url: https://warcraft.wiki.gg/wiki/Camp_Taurajo
+    quote: "Camp Taurajo was a tauren outpost situated in the Southern Barrens near the mountain pass leading to Mulgore. ... It had an inn, a few vendors, some profession trainers and a flight master."
+    verified_by: ai_read
+
+  - id: camp_taurajo_flightpath
+    parent: camp_taurajo
+    type: transport
+    subtype: "flightpath"
+    name_zh: "陶拉祖营地飞行点"
+    name_en: "Camp Taurajo Flight Path"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "营地边一座木架栖木，双足飞龙停在横梁上，梁柱缠着兽皮与羽饰"
+    note_zh: "TaxiNodes 77"
+    source_url: https://wago.tools/db2/TaxiNodes/csv?build=1.15.9.69722&locale=zhCN
+    quote: "77|陶拉祖营地，贫瘠之地|ContinentID=1|Pos=-2380.67,-1882.67,95.85"
+    verified_by: ai_read
+
+  - id: field_of_giants
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "巨人旷野"
+    name_en: "Field of Giants"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "南部一大片开阔草场，成群的巨型科多兽在其中缓慢游走，地上零星散着巨大的白骨"
+    note_zh: "贫瘠之地南部的科多兽栖地。4.0.3a 该子区域被移除（原地被部落的荒凉之战堡垒占据）"
+    source_url: https://warcraft.wiki.gg/wiki/Field_of_Giants
+    quote: "The Field of Giants was once an area found in the southern reaches of the Barrens."
+    verified_by: ai_read
+
+  - id: honors_stand
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "荣耀岗哨"
+    name_en: "Honor's Stand"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "西路边上几座兽人地穴与两座木制哨塔，其中一部分被打塌了一半，苦工正在修补"
+    note_zh: "扼守烈日石居到十字路口那条西路的部落哨站，历史上是多次大战的战场；旧世常被科尔卡半人马袭击"
+    source_url: https://warcraft.wiki.gg/wiki/Honor%27s_Stand
+    quote: "Guarding the west road between Sun Rock Retreat and the Crossroads, Honor's Stand once consisted of a number of burrows, some badly damaged, as well as watch towers."
+    verified_by: ai_read
+
+  - id: bael_modan
+    parent: the_barrens
+    type: settlement
+    subtype: "mine"
+    name_zh: "巴尔莫丹"
+    name_en: "Bael Modan"
+    level: ""
+    faction: "alliance"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "南端一座矮墩墩的矮人石堡加一门巨型火炮，堡下是层层掘开的露天矿坑，脚手架与矿车轨道盘绕而下"
+    note_zh: "矮人在贫瘠之地南端的挖掘基地；这块地原属石矛牛头人部族。矿坑深处有一座泰坦建筑"
+    source_url: https://warcraft.wiki.gg/wiki/Bael_Modan
+    quote: "Bael Modan is a dwarven base in the Southern Barrens consisting of a fortress with a giant cannon and an excavation site for digging. Before the dwarves came, the area was home to the Stonespire tauren."
+    verified_by: ai_read
+
+  - id: bael_dun_keep
+    parent: bael_modan
+    type: poi
+    subtype: ""
+    name_zh: "巴尔丹城堡"
+    name_en: "Bael'dun Keep"
+    level: ""
+    faction: "alliance"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "俯瞰矿坑的一座方正矮人石堡，厚墙小窗，堡顶架着铜制机械与蓝金旗帜"
+    note_zh: "俯瞰巴尔莫丹挖掘场的要塞，旧世由双辫将军统领，对部落玩家敌对"
+    source_url: https://warcraft.wiki.gg/wiki/Bael%27dun_Keep
+    quote: "Bael'dun Keep is the fortress that overlooks the Bael Modan digsite in the southern Barrens. It is inhabited by a force of dwarves that are hostile to Horde players."
+    verified_by: ai_read
+
+  - id: the_great_lift_barrens
+    parent: the_barrens
+    type: transport
+    subtype: "tram"
+    name_zh: "升降梯"
+    name_en: "The Great Lift"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "悬崖边一座牛头人造的巨型木制升降台，粗麻绳与配重块顺着崖壁垂下，台面能站下一队人与坐骑"
+    note_zh: "贫瘠之地南端通往千针石林的唯一垂直通道（AreaTable 1718，挂在贫瘠之地下）；4.0.3 千针石林被淹后升降梯被毁。同名节点在千针石林侧另有一个，故 id 加限定"
+    source_url: https://warcraft.wiki.gg/wiki/Great_Lift
+    quote: "The Great Lift was a tauren built elevator that allowed travel between the Barrens and Thousand Needles."
+    verified_by: ai_read
+
+  - id: southfury_river_barrens
+    parent: the_barrens
+    type: poi
+    subtype: ""
+    name_zh: "怒水河"
+    name_en: "Southfury River"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "贫瘠之地东北边界上的浑黄大河，水流湍急，一座粗木桥横过河面通向杜隆塔尔"
+    note_zh: "贫瘠之地与杜隆塔尔的界河；客户端里两侧各有一个同名 area（815 在贫瘠之地、814 在杜隆塔尔），故 id 加限定"
+    source_url: https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN
+    quote: "815|怒水河|17 (ParentAreaID=The Barrens)"
+    verified_by: ai_read
+
+  - id: great_sea_barrens
+    parent: the_barrens
+    type: poi
+    subtype: ""
+    name_zh: "无尽之海"
+    name_en: "The Great Sea"
+    level: ""
+    faction: "neutral"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "贫瘠之地以东的开阔海面，由岸边的浅青渐变到远处的深蓝"
+    note_zh: "商旅海岸外的海域；客户端里是独立 area（2319）。同名 area 在杜隆塔尔侧另有一个（2320），故 id 加限定"
+    source_url: https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN
+    quote: "2319|无尽之海|17 (ParentAreaID=The Barrens)"
+    verified_by: ai_read
+
+  - id: cavern_of_mists
+    parent: wailing_caverns
+    type: subzone
+    subtype: ""
+    name_zh: "迷雾洞穴"
+    name_en: "Cavern of Mists"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "入口处的大洞厅，地面间歇喷出的地热气柱把中央那汪碧绿水潭罩在厚雾里"
+    note_zh: "**在副本门外**的那一段：地热喷泉、中央水潭，稀有九头蛇特里高雷时而出现在水中。国服译名待核"
+    source_url: https://warcraft.wiki.gg/wiki/Cavern_of_Mists
+    quote: "The Cavern of Mists (or the Wailing Cavern) is a section of the Wailing Caverns located just outside the instance. Geysers erupt from the cavern floor, forming a verdant pool in the center of the chamber."
+    verified_by: ai_read
+
+  - id: screaming_gully
+    parent: wailing_caverns
+    type: subzone
+    subtype: ""
+    name_zh: "尖啸沟壑"
+    name_en: "Screaming Gully"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "进门后的第一个大厅，浅水漫过地面，岩壁上垂着藤蔓，水声与风声混成持续的尖啸"
+    note_zh: "副本传送门之后的第一大厅，女牙王安娜科德拉与上古海龟克雷什在此。国服译名待核"
+    source_url: https://warcraft.wiki.gg/wiki/Screaming_Gully
+    quote: "The Screaming Gully is the first large chamber encountered beyond the instance portal in the Wailing Caverns."
+    verified_by: ai_read
+
+  - id: pit_of_fangs
+    parent: wailing_caverns
+    type: subzone
+    subtype: ""
+    name_zh: "尖牙之巢"
+    name_en: "Pit of Fangs"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "一段窄而深的蛇窟通道，地上盘着成堆的毒蛇，岩缝里透出青绿冷光"
+    note_zh: "牙王科布拉恩（Lord Cobrahn）的地盘。国服译名待核"
+    source_url: https://warcraft.wiki.gg/wiki/Pit_of_Fangs
+    quote: "The Pit of Fangs is a section of the Wailing Caverns patrolled by the venomous Deviate Vipers and Deviate Adders. The Fanglord named Lord Cobrahn makes his residence here."
+    verified_by: ai_read
+
+  - id: crag_of_the_everliving
+    parent: wailing_caverns
+    type: subzone
+    subtype: ""
+    name_zh: "永生峭壁"
+    name_en: "Crag of the Everliving"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "洞中难得青翠的一段，巨大的藤蔓与发光真菌爬满立柱，上层盘踞着一株古老的活树妖"
+    note_zh: "牙王派萨斯所守，上层是上古之兽「永生者维尔丹」，旁边是牙王之首瑟芬提斯。国服译名待核"
+    source_url: https://warcraft.wiki.gg/wiki/Crag_of_the_Everliving
+    quote: "Crag of the Everliving is a verdant section of the Wailing Caverns, presided over by the Fanglord Lord Pythas."
+    verified_by: ai_read
+
+  - id: winding_chasm
+    parent: wailing_caverns
+    type: subzone
+    subtype: ""
+    name_zh: "蜿蜒裂隙"
+    name_en: "Winding Chasm"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "一长串来回折返的窄隧道，两侧是垂直的黑岩，脚下偶有深不见底的缝"
+    note_zh: "副本后段的曲折隧道，旧世牙王派萨斯与雷霆蜥蜴斯卡姆在此。4.1.0 被整段移除。国服译名待核"
+    source_url: https://warcraft.wiki.gg/wiki/Winding_Chasm
+    quote: "The Winding Chasm is a long, convoluted series of tunnels near the end of the Wailing Caverns."
+    verified_by: ai_read
+
+  - id: dreamers_rock
+    parent: wailing_caverns
+    type: subzone
+    subtype: ""
+    name_zh: "梦境之岩"
+    name_en: "Dreamer's Rock"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "洞底一间小密室，中央一块平顶岩台上躺着沉睡的暗夜精灵德鲁伊，四周浮着细碎的翠绿光点"
+    note_zh: "副本终点房间，沉睡的德鲁伊纳拉雷克斯在此；击败全部牙王后由他的弟子来唤醒他。国服译名待核"
+    source_url: https://warcraft.wiki.gg/wiki/Dreamer%27s_Rock
+    quote: "Dreamer's Rock is a small chamber beyond the Screaming Gully. The sleeping night elf druid, Naralex, lies in repose in this chamber of the Wailing Caverns."
+    verified_by: ai_read
+
+  - id: razorfen_kraul_entrance
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "剃刀沼泽"
+    name_en: "Razorfen Kraul"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "南端西侧一大片高过人头的黑色荆棘丛，藤刺盘绕成拱与墙，中间只留一条勉强通过的窄道"
+    note_zh: "剃刀沼泽副本入口所在的野外子区域（AreaTable 1717）。id 加 _entrance 以区别于副本本体"
+    source_url: https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN
+    quote: "1717|剃刀沼泽|17 (ParentAreaID=The Barrens)"
+    verified_by: ai_read
+
+  - id: razorfen_downs_entrance
+    parent: the_barrens
+    type: subzone
+    subtype: ""
+    name_zh: "剃刀高地"
+    name_en: "Razorfen Downs"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "更南端的荆棘丘陵，藤刺更黑更枯，丘顶露出插在荆棘里的白骨与低矮的石冢"
+    note_zh: "剃刀高地副本入口所在的野外子区域（AreaTable 1316）；地理上贴着千针石林的边界。id 加 _entrance 以区别于副本本体"
+    source_url: https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN
+    quote: "1316|剃刀高地|17 (ParentAreaID=The Barrens)"
+    verified_by: ai_read
+
+  - id: mulgore
+    parent: central_kalimdor
+    type: zone
+    subtype: ""
+    name_zh: "莫高雷"
+    name_en: "Mulgore"
+    level: "1-10"
+    faction: "horde"
+    coords: ""
+    adjacent: [the_barrens]
+    era: vanilla
+    look_zh: "四面环山围住的一整片翠绿高原草海，草浪随风起伏，零星的赤红砂岩台地拔地而起，天空高而蓝"
+    note_zh: "牛头人新手区，被群山天然合围；旧世**唯一**的对外通路是东面通往贫瘠之地（陶拉祖营地方向）的山口——那道「大门」要到 4.0.3a 才建起来"
+    source_url: https://warcraft.wiki.gg/wiki/Mulgore
+    quote: "The green, verdant plains of Mulgore are home to the noble tauren. Mulgore is nestled in the foothills of the Stonetalon Mountains to the north, and protected by a natural wall of mountains on all sides."
+    verified_by: ai_read
+
+  - id: red_cloud_mesa
+    parent: mulgore
+    type: subzone
+    subtype: ""
+    name_zh: "红云台地"
+    name_en: "Red Cloud Mesa"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "南端高崖之上一块与下方平原隔绝的起伏草台，草色偏黄，边缘是直落的赤红砂岩断面"
+    note_zh: "牛头人玩家的出生台地；北下崖即进主平原。纳拉其营地在台地西北角，是台上唯一安全的地方"
+    source_url: https://warcraft.wiki.gg/wiki/Red_Cloud_Mesa
+    quote: "Red Cloud Mesa is the name for the rolling plains atop the high cliffs in southern Mulgore. Here, young tauren adventurers prove themselves by helping drive back the invading Bristleback quilboars."
+    verified_by: ai_read
+
+  - id: camp_narache
+    parent: red_cloud_mesa
+    type: settlement
+    subtype: "village"
+    name_zh: "纳拉其营地"
+    name_en: "Camp Narache"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "五顶圆锥形兽皮大帐围成一圈，帐面绘着赭红图腾，中央是长燃篝火，帐顶垂着羽饰与风铃"
+    note_zh: "牛头人的出生村，鹰风部族的主村；旧世共五座建筑（主帐/灵魂帐/面包帐/军械帐/商人帐），职业训练师围着村心站一圈"
+    source_url: https://warcraft.wiki.gg/wiki/Camp_Narache
+    quote: "Camp Narache is the starting town for the tauren, which is located in southern Mulgore at the northern edge of the Red Cloud Mesa. Camp Narache is the main village of the Hawkwind Tribe"
+    verified_by: ai_read
+
+  - id: brambleblade_ravine
+    parent: red_cloud_mesa
+    type: subzone
+    subtype: ""
+    name_zh: "刺刃峡谷"
+    name_en: "Brambleblade Ravine"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "台地东北缘一道下切的窄谷，谷壁长满带刺灌木，谷底散着野猪人的草泥棚屋与插地木刺"
+    note_zh: "红云台地上的硬鬃野猪人据点；旧世首领是刺牙酋长索恩曼特。4.0.3a 起谷内生物全部移除、非飞行坐骑不可达"
+    source_url: https://warcraft.wiki.gg/wiki/Brambleblade_Ravine
+    quote: "Brambleblade Ravine is the home to the Bristleback quilboars found on the northeastern edge of Red Cloud Mesa."
+    verified_by: ai_read
+
+  - id: kodo_rock
+    parent: mulgore
+    type: poi
+    subtype: ""
+    name_zh: "科多石"
+    name_en: "Kodo Rock"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "草原上一块孤零零的暗红巨岩，形状像一头卧着的科多兽，远看几乎与草丘混在一起"
+    note_zh: "纳拉其营地附近的天然地标，旧世牛头人萨满早期任务的目的地；得走近才看得见。4.0.3a 该子区域被移除"
+    source_url: https://warcraft.wiki.gg/wiki/Kodo_Rock
+    quote: "Kodo Rock was a natural monument near Camp Narache that tauren shaman needed to go to for one of their early quests. The rock could only be seen from a short distance so one needed to pay attention."
+    verified_by: ai_read
+
+  - id: bloodhoof_village
+    parent: mulgore
+    type: settlement
+    subtype: "village"
+    name_zh: "血蹄村"
+    name_en: "Bloodhoof Village"
+    level: ""
+    faction: "horde"
+    coords: "[48, 58]"
+    adjacent: []
+    era: vanilla
+    look_zh: "湖畔一圈高大的圆锥兽皮帐与木架晾肉杆，帐面彩绘图腾，村外是成片及膝的绿草与几株孤树"
+    note_zh: "莫高雷中部的牛头人村，以血蹄部族命名，绕着石牛湖的水边建；牛头人玩家离开红云台地后的第一个据点。往东沿路即到贫瘠之地陶拉祖营地"
+    source_url: https://warcraft.wiki.gg/wiki/Bloodhoof_Village
+    quote: "Bloodhoof Village is a tauren settlement named in honor of the Bloodhoof tribe, located in central Mulgore, around the waters of Stonebull Lake."
+    verified_by: ai_read
+
+  - id: stonebull_lake
+    parent: mulgore
+    type: subzone
+    subtype: ""
+    name_zh: "石牛湖"
+    name_en: "Stonebull Lake"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "平原中央一汪清澈的浅蓝湖水，岸边是密实的草与芦苇，夜里湖面映着血蹄村的火光"
+    note_zh: "血蹄村就建在湖边；东北岸是被破坏的货车"
+    source_url: https://warcraft.wiki.gg/wiki/Stonebull_Lake
+    quote: "Bloodhoof Village as seen over Stonebull Lake at night."
+    verified_by: ai_read
+
+  - id: ravaged_caravan
+    parent: mulgore
+    type: subzone
+    subtype: ""
+    name_zh: "被破坏的货车"
+    name_en: "Ravaged Caravan"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "土丘上一辆烧塌的哥布林货车，还在往外冒黑烟，箱子散落一地，几个风险投资公司的人守着残骸"
+    note_zh: "石牛湖东北岸；原本是给风险投资公司矿洞送补给的车队，被牛头人打掉"
+    source_url: https://warcraft.wiki.gg/wiki/Ravaged_Caravan
+    quote: "The Ravaged Caravan is a ruined Venture Company camp on the northeastern shore of Stonebull Lake. ... It now sits on a mound, spewing out black smoke."
+    verified_by: ai_read
+
+  - id: the_golden_plains
+    parent: mulgore
+    type: subzone
+    subtype: ""
+    name_zh: "金色平原"
+    name_en: "The Golden Plains"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "雷霆崖东南一大片草色偏金黄的开阔盆地，草浪一直铺到山脚，成群的科多兽在其中缓行"
+    note_zh: "牛头人最珍视的猎场之一；传说中的巨型科多兽阿拉奇亚就栖息在这片草海里"
+    source_url: https://warcraft.wiki.gg/wiki/Golden_Plains
+    quote: "The Golden Plains are a large basin surrounding Thunder Bluff on the southeast. These plains are one of the most treasured parts of the tauren homeland, and are one of the tauren people's favorite hunting grounds."
+    verified_by: ai_read
+
+  - id: the_rolling_plains
+    parent: mulgore
+    type: subzone
+    subtype: ""
+    name_zh: "草海平原"
+    name_en: "The Rolling Plains"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "南部起伏最明显的一段草原，草丘一层叠一层，远处山脊压低了地平线"
+    note_zh: "从血蹄村一直铺到贫瘠之地边界；莫高雷唯一有半人马游骑兵渗进来的地方，东部有狂风鹰身人的巢"
+    source_url: https://warcraft.wiki.gg/wiki/Rolling_Plains
+    quote: "The Rolling Plains cover much of southern Mulgore, stretching from Bloodhoof Village to the Barrens border."
+    verified_by: ai_read
+
+  - id: windfury_ridge
+    parent: mulgore
+    type: subzone
+    subtype: ""
+    name_zh: "狂风山"
+    name_en: "Windfury Ridge"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "东部一道石脊，崖面上密布鹰身女妖的枝条巢穴，脊下草丛里藏着美洲狮与狼"
+    note_zh: "狂风鹰身人的地盘，靠近就会被俯冲攻击"
+    source_url: https://warcraft.wiki.gg/wiki/Windfury_Ridge
+    quote: "Windfury Ridge is a dangerous place to travel for those who are not aware of its inhabitants. Furious harpies swoop down to capture or kill those who come too near to their nests"
+    verified_by: ai_read
+
+  - id: palemane_rock
+    parent: mulgore
+    type: poi
+    subtype: ""
+    name_zh: "白鬃石"
+    name_en: "Palemane Rock"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "西部草坡上的一处岩洞口，洞外散着啃净的骨头与破皮毛，洞内昏暗"
+    note_zh: "白鬃豺狼人的洞穴，见人就扑"
+    source_url: https://warcraft.wiki.gg/wiki/Palemane_Rock
+    quote: "Palemane Rock is a cave in western Mulgore inhabited by gnolls of the Palemane tribe. They are aggressive creatures and will attack any who wander too close."
+    verified_by: ai_read
+
+  - id: the_venture_co_mine
+    parent: mulgore
+    type: subzone
+    subtype: ""
+    name_zh: "风险投资公司矿洞"
+    name_en: "The Venture Co. Mine"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "东侧崖壁上凿开的大矿口，木制脚手架与铁轨伸出洞外，洞口堆着矿石与哥布林的机械零件"
+    note_zh: "哥布林在牛头人家园里挖的大矿，共三个入口（主洞口、崖上、一处小伐木营），只有主洞口能步行进入；旧世主管是菲兹斯普罗克特"
+    source_url: https://warcraft.wiki.gg/wiki/Venture_Co._Mine
+    quote: "The Venture Co. Mine (also spelled Venture Company Mine) is an enormous mine run by the Venture Company in the eastern cliffs of Mulgore. The mine has three entrance points."
+    verified_by: ai_read
+
+  - id: bael_dun_digsite
+    parent: mulgore
+    type: subzone
+    subtype: ""
+    name_zh: "巴尔丹挖掘场"
+    name_en: "Bael'dun Digsite"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "西缘山体上被削开的一大块露天采石坑，层层台阶状的黄岩面，矮人的帐篷与吊装架挂在坑壁上"
+    note_zh: "巴尔莫丹矮人远征队在莫高雷西缘挖的坑；血蹄部族视其为对大地母亲的冒犯，外交失败后决定砸掉他们的镐"
+    source_url: https://warcraft.wiki.gg/wiki/Bael%27dun_Digsite
+    quote: "The Bael'dun Digsite is an excavation site of the dwarven expedition based at Bael Modan. It is a large quarry dug into the mountainside in the western edge of Mulgore."
+    verified_by: ai_read
+
+  - id: red_rocks
+    parent: mulgore
+    type: poi
+    subtype: ""
+    name_zh: "赤色石"
+    name_en: "Red Rocks"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "东北角一组天然的赤红砂岩柱与平台，岩色在日落时红得发烫，四周极静，没有营地也没有野兽"
+    note_zh: "牛头人的葬地与静思之处，被视为此世与彼世之间的过渡带；从雷霆崖过去很近"
+    source_url: https://warcraft.wiki.gg/wiki/Red_Rocks
+    quote: "Red Rocks is a naturally occurring formation of red sandstone located in northeastern Mulgore. It is a peaceful and reflective site where one can step out of the world of Thunder Bluff into a place serving as a transition between that world and the next."
+    verified_by: ai_read
+
+  - id: winterhoof_water_well
+    parent: mulgore
+    type: poi
+    subtype: ""
+    name_zh: "冰蹄水井"
+    name_en: "Winterhoof Water Well"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "草原上一口石砌圆井，井沿插着四根彩绘图腾柱，柱间拉着系满布条的绳"
+    note_zh: "牛头人三口圣泉之一，位于南部草海平原的边缘"
+    source_url: https://warcraft.wiki.gg/wiki/Winterhoof_Water_Well
+    quote: "The Winterhoof Water Well is located at the edge of the Rolling Plains in southern Mulgore."
+    verified_by: ai_read
+
+  - id: thunderhorn_water_well
+    parent: mulgore
+    type: poi
+    subtype: ""
+    name_zh: "雷角水井"
+    name_en: "Thunderhorn Water Well"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "北路旁的一口石井，井口盖着编草，四角立着矮图腾桩"
+    note_zh: "牛头人三口圣泉之一，在雷霆崖与血蹄村之间的北路边"
+    source_url: https://warcraft.wiki.gg/wiki/Thunderhorn_Water_Well
+    quote: "The Thunderhorn Water Well is located in the midst of the grasslands in Mulgore, by the north road between Thunder Bluff and Bloodhoof Village."
+    verified_by: ai_read
+
+  - id: wildmane_water_well
+    parent: mulgore
+    type: poi
+    subtype: ""
+    name_zh: "蛮鬃水井"
+    name_en: "Wildmane Water Well"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "最北端的一口石井，井水发浑，井沿的图腾柱有被砍砸的痕迹"
+    note_zh: "牛头人三口圣泉中最北的一口，就在雷霆崖北面；旧世曾被风险投资公司占据、后被牛头人赶走，恐怖图腾部族又在下毒"
+    source_url: https://warcraft.wiki.gg/wiki/Wildmane_Water_Well
+    quote: "The Wildmane Water Well is located just north of Thunder Bluff. It is the northernmost of the tauren people's sacred water wells."
+    verified_by: ai_read
+
+  - id: skyline_ridge
+    parent: mulgore
+    type: subzone
+    subtype: ""
+    name_zh: "冲天岭"
+    name_en: "Skyline Ridge"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "西北一道拔高的长石脊，脊线把天空切成一条，脊上草稀、风大，能俯瞰整片莫高雷草海"
+    note_zh: "**wiki 条目为空壳**，本条的存在性与译名取自 Classic Era 客户端 AreaTable（399，ParentAreaID=Mulgore）；画面描述为按地貌推断的保守写法，实拍前请再核"
+    source_url: https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN
+    quote: "399|冲天岭|215 (ParentAreaID=Mulgore)"
+    verified_by: ai_read
+
+  - id: mantle_rock
+    parent: mulgore
+    type: poi
+    subtype: ""
+    name_zh: "披肩石"
+    name_en: "Mantle Rock"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "草原上一块横向伸出的扁平巨岩，像一件搭在肩上的斗篷，岩下能遮出一片阴影"
+    note_zh: "**wiki 条目为空壳**，存在性与译名取自 Classic Era 客户端 AreaTable（473，ParentAreaID=Mulgore）；画面描述为按名称与地貌推断的保守写法，实拍前请再核"
+    source_url: https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN
+    quote: "473|披肩石|215 (ParentAreaID=Mulgore)"
+    verified_by: ai_read
+
+  - id: brave_wind_mesa
+    parent: mulgore
+    type: subzone
+    subtype: ""
+    name_zh: "强风台地"
+    name_en: "Brave Wind Mesa"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "一座孤立的赤红砂岩平顶台地，四壁陡直，台面只有被风压平的短草"
+    note_zh: "**wiki 条目为空壳**，存在性与译名取自 Classic Era 客户端 AreaTable（471，ParentAreaID=Mulgore）；与火石台地同属莫高雷北部的几座孤立台地。实拍前请再核"
+    source_url: https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN
+    quote: "471|强风台地|215 (ParentAreaID=Mulgore)"
+    verified_by: ai_read
+
+  - id: fire_stone_mesa
+    parent: mulgore
+    type: subzone
+    subtype: ""
+    name_zh: "火石台地"
+    name_en: "Fire Stone Mesa"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "另一座孤立的平顶砂岩台地，岩色比周围更红，日照下像烧过一样"
+    note_zh: "**wiki 条目为空壳**，存在性与译名取自 Classic Era 客户端 AreaTable（472，ParentAreaID=Mulgore）。实拍前请再核"
+    source_url: https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN
+    quote: "472|火石台地|215 (ParentAreaID=Mulgore)"
+    verified_by: ai_read
+
+  # ======================= 雷霆崖 Thunder Bluff =======================
+  - id: thunder_bluff
+    parent: mulgore
+    type: city
+    subtype: ""
+    name_zh: "雷霆崖"
+    name_en: "Thunder Bluff"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "几座平顶红岩高台悬在数百尺高空，台面铺满圆锥兽皮大帐与木架，台与台之间只靠晃动的绳索吊桥相连，帐顶的图腾与羽饰在风里一直响"
+    note_zh: "牛头人的首都，由凯恩·血蹄建立，坐落在莫高雷北部；整座城建在高崖上，只能靠西南与东北两侧的升降梯上下。旧世**没有飞艇**（飞艇坡道要到 3.2.0 才加）"
+    source_url: https://warcraft.wiki.gg/wiki/Thunder_Bluff
+    quote: "The entire city is built on bluffs several hundred feet above the surrounding landscape and is accessible by elevators on the southwestern and northeastern sides."
+    verified_by: ai_read
+
+  - id: tb_lower_rise
+    parent: thunder_bluff
+    type: district
+    subtype: ""
+    name_zh: "低层高地"
+    name_en: "Lower Rise"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "中央主台最低的一层，一圈摊位与挑高的兽皮商帐围着中心空地，地面是夯实的红土与铺开的编席"
+    note_zh: "全城的交易层：旅店、银行、拍卖行与邮箱都在这里；两部升降梯从这一层下到莫高雷草原。国服译名待核（客户端 AreaTable 未收录此名）"
+    source_url: https://warcraft.wiki.gg/wiki/Lower_rise
+    quote: "The lower rise is Thunder Bluff's main hub of trade, and also contains some professional trainers, as well as several points of interest, such as the inn, the bank, the auction house, and a mailbox."
+    verified_by: ai_read
+
+  - id: tb_middle_rise
+    parent: thunder_bluff
+    type: district
+    subtype: ""
+    name_zh: "中层高地"
+    name_en: "Middle Rise"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "主台的中间一层，沿崖边一圈作坊帐篷，架子上摊着皮子、草药与织物，风把布幡吹得笔直"
+    note_zh: "专业技能层：炼金/附魔/剥皮/裁缝/制皮训练师都在这里；由绳桥分别连到长者高地与灵魂高地。国服译名待核"
+    source_url: https://warcraft.wiki.gg/wiki/Middle_Rise
+    quote: "Middle Rise (or the middle rise) is Thunder Bluff's tradeskill area, and contains professional trainers for alchemy, enchanting, skinning, tailoring, and leatherworking."
+    verified_by: ai_read
+
+  - id: tb_high_rise
+    parent: thunder_bluff
+    type: district
+    subtype: ""
+    name_zh: "顶层高地"
+    name_en: "High Rise"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "中央主台的最顶层，正中一顶格外高大的酋长大帐，帐前是一圈露天的石阶议事场，四面全是天空"
+    note_zh: "大酋长的居所与露天议事场所在；旧世坐镇的是凯恩·血蹄。国服译名待核"
+    source_url: https://warcraft.wiki.gg/wiki/High_Rise
+    quote: "The High Rise (or the high rise) is the top of Thunder Bluff's central mesa and contains the home of High Chieftain Baine Bloodhoof. Outside of the High Chieftain's quarters, Thunder Bluff's populace can witness important decisions and fateful events in an open-air auditorium."
+    verified_by: ai_read
+
+  - id: elder_rise
+    parent: thunder_bluff
+    type: district
+    subtype: ""
+    name_zh: "长者高地"
+    name_en: "Elder Rise"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "主台正东的一座独立平顶台地，台上立着几顶绘满自然纹样的大帐与活着的树桩图腾，绿意比别处明显"
+    note_zh: "塞纳里奥议会在雷霆崖的所在地，德鲁伊与牧师训练师都在这里；旧世大德鲁伊哈缪尔·符文图腾坐镇，玛加萨·恐怖图腾住在两座桥之间那顶帐里。由两条绳桥分别连顶层与中层"
+    source_url: https://warcraft.wiki.gg/wiki/Elder_Rise
+    quote: "Elder Rise is directly east of the central bluff and is the home of the Cenarion Circle in Thunder Bluff. ... Elder Rise connects to high rise and middle rise by separate rope bridges."
+    verified_by: ai_read
+
+  - id: hall_of_elders
+    parent: elder_rise
+    type: poi
+    subtype: ""
+    name_zh: "长者大厅"
+    name_en: "Hall of Elders"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "长者高地上最大的一顶兽皮大帐，帐内昏暗、只靠中央火塘照明，四壁挂着记事的皮画"
+    note_zh: "长者高地的主建筑"
+    source_url: https://warcraft.wiki.gg/wiki/Hall_of_Elders
+    quote: "The Hall of Elders is the main building in Elder Rise in Thunder Bluff."
+    verified_by: ai_read
+
+  - id: spirit_rise
+    parent: thunder_bluff
+    type: district
+    subtype: ""
+    name_zh: "灵魂高地"
+    name_en: "Spirit Rise"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "主台西北的一座台地，台面插满高矮不一的图腾柱，柱间系着招魂的彩布条，台下岩缝里冒出白色水汽"
+    note_zh: "萨满研习的中心，观天者部族在此最有影响力；台体之下是蒸汽弥漫的预见之池。由两条绳桥分别连低层与中层"
+    source_url: https://warcraft.wiki.gg/wiki/Spirit_Rise
+    quote: "Spirit Rise is situated to the northwest of the central bluff and is the center for shamanistic studies in Thunder Bluff. The Skychaser tribe holds great influence here. Below the surface of the mesa are the steamy Pools of Vision."
+    verified_by: ai_read
+
+  - id: the_pools_of_vision
+    parent: spirit_rise
+    type: subzone
+    subtype: ""
+    name_zh: "预见之池"
+    name_en: "The Pools of Vision"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "灵魂高地台体内部的一段隧道与温泉洞，热气把视线糊成一片，池水泛着乳白，岩壁上凝着水珠"
+    note_zh: "灵魂高地台顶之下的隧道系统；旧世是被遗忘者在雷霆崖的据点"
+    source_url: https://warcraft.wiki.gg/wiki/Pools_of_Vision
+    quote: "The Pools of Vision are located within a tunnel system just below the cap of Spirit Rise, and serve as the Forsaken base of operations at Thunder Bluff."
+    verified_by: ai_read
+
+  - id: hunter_rise
+    parent: thunder_bluff
+    type: district
+    subtype: ""
+    name_zh: "猎人高地"
+    name_en: "Hunter Rise"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "主台正南的一座台地，台上立着成排的练功木桩与晾皮架，帐外拴着猎豹与巨狼"
+    note_zh: "猎人与战士的聚居台地，也是猎手、追踪者与制革匠的地方；猎人大厅在此。由绳桥连低层与顶层"
+    source_url: https://warcraft.wiki.gg/wiki/Hunter_Rise
+    quote: "Located to the south of the main bluff in Thunder Bluff, Hunter Rise is the home of the hunters, warriors, and paladins of the tauren. ... Hunter Rise connects to lower rise and high rise by"
+    verified_by: ai_read
+
+  - id: tb_elevators
+    parent: thunder_bluff
+    type: transport
+    subtype: "tram"
+    name_zh: "雷霆崖升降梯"
+    name_en: "Thunder Bluff Elevators"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "贴着赤红崖壁上下滑行的两座巨型木制升降台，粗麻绳与配重块沿崖面垂落，台面四角立着图腾柱"
+    note_zh: "西南与东北各一部，是上下雷霆崖的**唯一**方式（旧世没有飞艇）；从崖底的莫高雷草原直达低层高地"
+    source_url: https://warcraft.wiki.gg/wiki/Thunder_Bluff
+    quote: "The entire city is built on bluffs several hundred feet above the surrounding landscape and is accessible by elevators on the southwestern and northeastern sides."
+    verified_by: ai_read
+
+  - id: tb_rope_bridges
+    parent: thunder_bluff
+    type: poi
+    subtype: ""
+    name_zh: "雷霆崖绳索吊桥"
+    name_en: "Thunder Bluff Rope Bridges"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "几座悬在高空的木板绳桥，桥面窄、走上去会晃，两侧只有一道系着布条的绳扶手，桥下是几百尺的空"
+    note_zh: "连接中央主台与长者/灵魂/猎人三座外围台地的唯一通路，每对台地之间各有独立的一条"
+    source_url: https://warcraft.wiki.gg/wiki/Elder_Rise
+    quote: "Elder Rise connects to high rise and middle rise by separate rope bridges."
+    verified_by: ai_read
+
+  - id: tb_flightpath
+    parent: thunder_bluff
+    type: transport
+    subtype: "flightpath"
+    name_zh: "雷霆崖双足飞龙栖木"
+    name_en: "Thunder Bluff Wind Rider Roost"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "架在中央主台边缘的木制栖木塔，几只双足飞龙收翼停在横梁上，塔身缠着图腾与羽饰"
+    note_zh: "TaxiNodes 22；栖木塔同时串起低层/中层/顶层三层"
+    source_url: https://wago.tools/db2/TaxiNodes/csv?build=1.15.9.69722&locale=zhCN
+    quote: "22|雷霆崖，莫高雷|ContinentID=1|Pos=-1197.21,29.71,176.95"
+    verified_by: ai_read
+
+  # ======================= 石爪山脉 Stonetalon Mountains =======================
+  - id: stonetalon_mountains
+    parent: central_kalimdor
+    type: zone
+    subtype: ""
+    name_zh: "石爪山脉"
+    name_en: "Stonetalon Mountains"
+    level: "15-27"
+    faction: "contested"
+    coords: ""
+    adjacent: [the_barrens, ashenvale, desolace]
+    era: vanilla
+    look_zh: "层叠的灰褐石峰夹着深绿的针叶谷地，山腰常挂低云，被砍秃的山坡上留着成片树桩与锯木架"
+    note_zh: "旧世 15-27 级的争夺区；西接迷雾之海、东接贫瘠之地、北接灰谷、南接凄凉之地。4.0.3a 被大改，地形与据点几乎重排"
+    source_url: https://warcraft.wiki.gg/wiki/Stonetalon_Mountains
+    quote: "The Stonetalon Mountains are a range of peaks that lie west of the Northern Barrens, south of Ashenvale, and north of Desolace. The mountains are traditionally the ancestral home of the harpies"
+    verified_by: ai_read
+
+  - id: sun_rock_retreat
+    parent: stonetalon_mountains
+    type: settlement
+    subtype: "town"
+    name_zh: "烈日石居"
+    name_en: "Sun Rock Retreat"
+    level: ""
+    faction: "horde"
+    coords: "[50, 61]"
+    adjacent: []
+    era: vanilla
+    look_zh: "藏在峰间的一小片部落聚落，兽皮尖顶帐与牛头人图腾柱贴着岩壁排开，一侧是直落的悬崖"
+    note_zh: "石爪山脉中部的部落据点（也拼作 Sunrock Retreat），旧世本区**唯一**的部落大本营，以兽人与牛头人为主，专事修复被风险投资公司破坏的山林。有飞行点"
+    source_url: https://warcraft.wiki.gg/wiki/Sun_Rock_Retreat
+    quote: "Sun Rock Retreat (also spelled Sunrock Retreat) is a Horde settlement centrally-located in the Stonetalon Mountains, hidden amid the peaks south of Mirkfallon Lake."
+    verified_by: ai_read
+
+  - id: sun_rock_flightpath
+    parent: sun_rock_retreat
+    type: transport
+    subtype: "flightpath"
+    name_zh: "烈日石居飞行点"
+    name_en: "Sun Rock Retreat Flight Path"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "崖边一座矮木栖木架，双足飞龙停在横梁上，背后就是空谷"
+    note_zh: "TaxiNodes 29"
+    source_url: https://wago.tools/db2/TaxiNodes/csv?build=1.15.9.69722&locale=zhCN
+    quote: "29|烈日石居，石爪山|ContinentID=1|Pos=966.57,1040.32,104.27"
+    verified_by: ai_read
+
+  - id: stonetalon_peak
+    parent: stonetalon_mountains
+    type: settlement
+    subtype: "town"
+    name_zh: "石爪峰"
+    name_en: "Stonetalon Peak"
+    level: ""
+    faction: "alliance"
+    coords: "[43, 16]"
+    adjacent: []
+    era: vanilla
+    look_zh: "山脉最高处一片被绿色围住的山谷聚落，暗夜精灵的紫瓦弧顶建筑与发光的月井立在林间，四周是灰岩绝壁"
+    note_zh: "西北端的联盟/暗夜精灵据点，由附近猛禽洞穴的德鲁伊维护；石爪峰是山脉最大的一座峰，对暗夜精灵与牛头人都是圣地。有飞行点"
+    source_url: https://warcraft.wiki.gg/wiki/Stonetalon_Peak
+    quote: "Stonetalon Peak is an Alliance settlement at the far northwestern end of the Stonetalon Mountains. It is built within a verdant mountain valley and is maintained by the druids of the nearby Talon Den."
+    verified_by: ai_read
+
+  - id: stonetalon_peak_flightpath
+    parent: stonetalon_peak
+    type: transport
+    subtype: "flightpath"
+    name_zh: "石爪峰飞行点"
+    name_en: "Stonetalon Peak Flight Path"
+    level: ""
+    faction: "alliance"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "谷中一处木制狮鹫栖台，狮鹫收翼立在横杆上"
+    note_zh: "TaxiNodes 33"
+    source_url: https://wago.tools/db2/TaxiNodes/csv?build=1.15.9.69722&locale=zhCN
+    quote: "33|石爪峰，石爪山|ContinentID=1|Pos=2681.13,1461.68,232.88"
+    verified_by: ai_read
+
+  - id: the_talon_den
+    parent: stonetalon_peak
+    type: poi
+    subtype: ""
+    name_zh: "猛禽洞穴"
+    name_en: "The Talon Den"
+    level: ""
+    faction: "alliance"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "山体中凿出的暗夜精灵树穴，入口被盘曲的巨根抱住，洞内是幽蓝的月光石照明"
+    note_zh: "石爪峰上的一处熊穴（barrow den），住着暗色湖的树妖、塞纳里奥看护者与暗色湖守卫；旧世一度是精英区（2.3.0 才取消）"
+    source_url: https://warcraft.wiki.gg/wiki/Talon_Den
+    quote: "The Talon Den is a barrow den on Stonetalon Peak inhabited by Mirkfallon Dryads, night elves Cenarion Caretakers, and Mirkfallon Keepers."
+    verified_by: ai_read
+
+  - id: mirkfallon_lake
+    parent: stonetalon_mountains
+    type: subzone
+    subtype: ""
+    name_zh: "暗色湖"
+    name_en: "Mirkfallon Lake"
+    level: ""
+    faction: "contested"
+    coords: "[47, 40]"
+    adjacent: []
+    era: vanilla
+    look_zh: "群峰正中一潭墨绿色的静水，四周被高针叶林围死，水面几乎不起波，常年浮着一层薄雾"
+    note_zh: "石爪山脉的中心湖；旧世湖边有翼龙、软泥怪与雷霆蜥蜴"
+    source_url: https://warcraft.wiki.gg/wiki/Mirkfallon_Lake
+    quote: "Mirkfallon Lake is a lake located within the center of Stonetalon Mountains. It was once host to a wide variety of creatures, including wyverns, slimes, and thunder lizards."
+    verified_by: ai_read
+
+  - id: the_charred_vale
+    parent: stonetalon_mountains
+    type: subzone
+    subtype: ""
+    name_zh: "焦炭谷"
+    name_en: "The Charred Vale"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "西南一整片被烧成焦黑的谷地，地缝里淌着橙红岩浆，枯树只剩炭桩，空气被热浪扭曲"
+    note_zh: "旧世本区等级最高、最危险的一角，黑龙与元素在此盘踞；谷地一路延伸到西面的海。血怒鹰身人是这里唯一的鹰身人族群"
+    source_url: https://warcraft.wiki.gg/wiki/Charred_Vale
+    quote: "The Charred Vale is a large valley once a verdant place but now lies mostly in flames and lava in the southwest section of the Stonetalon Mountains."
+    verified_by: ai_read
+
+  - id: valley_of_the_bloodfuries
+    parent: stonetalon_mountains
+    type: subzone
+    subtype: ""
+    name_zh: "血怒峡谷"
+    name_en: "Valley of the Bloodfuries"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "焦炭谷边缘一段更窄的火谷，崖上密布鹰身女妖的骨枝巢，地面覆着黑灰"
+    note_zh: "血怒鹰身人的地盘。**注意**：wiki 认为它可能只是焦炭谷的早期名称或其一部分；Classic Era AreaTable 里确有此 area（466，ParentAreaID=石爪山脉），故入树并标注此存疑"
+    source_url: https://warcraft.wiki.gg/wiki/Valley_of_the_Bloodfuries
+    quote: "The Valley of the Bloodfuries was a planned subzone in the Stonetalon Mountains. It could have been an early name for the Charred Vale or a part of it"
+    verified_by: ai_read
+
+  - id: windshear_crag
+    parent: stonetalon_mountains
+    type: subzone
+    subtype: ""
+    name_zh: "狂风峭壁"
+    name_en: "Windshear Crag"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "曾是老龄巨木林的谷地，现在只剩成片齐腰的树桩与堆起的原木，哥布林的铁架厂房横跨在谷上"
+    note_zh: "被风险投资公司剃秃的伐木谷；狂风矿洞、峭壁湖、黑狼河都在谷内，谷西北是通灰谷的石爪小径入口"
+    source_url: https://warcraft.wiki.gg/wiki/Windshear_Crag
+    quote: "Windshear Crag was once a massive old-growth forest nestled in a valley in the Stonetalon Mountains. It was deforested by the Venture Company"
+    verified_by: ai_read
+
+  - id: cragpool_lake
+    parent: windshear_crag
+    type: subzone
+    subtype: ""
+    name_zh: "峭壁湖"
+    name_en: "Cragpool Lake"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "谷中一汪不大的湖，水色浑浊发绿，一座巨大的哥布林铁架结构从湖面上方横跨过去"
+    note_zh: "风险投资公司的大型构架就架在湖上，旧世格伦佐·扳手哨在上面指挥整个狂风峭壁的作业"
+    source_url: https://warcraft.wiki.gg/wiki/Cragpool_Lake
+    quote: "The Cragpool Lake is a small lake in Windshear Crag in the Stonetalon Mountains. An enormous structure built by the Venture Company runs above it."
+    verified_by: ai_read
+
+  - id: blackwolf_river
+    parent: windshear_crag
+    type: poi
+    subtype: ""
+    name_zh: "黑狼河"
+    name_en: "Blackwolf River"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "从峭壁湖淌出的一条小河，水面浮着伐木留下的油污与木屑，颜色偏黑"
+    note_zh: "源自峭壁湖、穿过狂风峭壁的小河，旧世被伐木作业严重污染；河的尽头是狂风矿洞"
+    source_url: https://warcraft.wiki.gg/wiki/Blackwolf_River
+    quote: "The Blackwolf River is a small river running through Windshear Crag from the Cragpool Lake in the Stonetalon Mountains. It was originally heavily polluted due to the deforestation operations that the Venture Company did in the valley."
+    verified_by: ai_read
+
+  - id: windshear_mine
+    parent: windshear_crag
+    type: poi
+    subtype: ""
+    name_zh: "狂风矿洞"
+    name_en: "Windshear Mine"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "河尽头山壁上的一处锡矿洞口，洞外堆着矿渣与废弃的矿车"
+    note_zh: "锡矿，风险投资公司撤走后被部落接手；他们在时雇的是狗头人挖矿"
+    source_url: https://warcraft.wiki.gg/wiki/Windshear_Mine
+    quote: "Windshear Mine is a tin mine claimed by the Horde after the Venture Company abandoned the area. The mine is located at the end of Blackwolf River in Windshear Crag."
+    verified_by: ai_read
+
+  - id: the_talondeep_path_stonetalon
+    parent: windshear_crag
+    type: transport
+    subtype: "portal"
+    name_zh: "石爪小径"
+    name_en: "The Talondeep Path"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "山体里一条蜿蜒的天然隧道，岩壁上到处是小死胡同与破洞，洞里空无一人、也没有怪"
+    note_zh: "连接灰谷与石爪山脉的穿山隧道：灰谷侧入口在神秘湖以西，石爪侧入口在狂风峭壁西北。旧世隧道内既没有友方 NPC 也没有敌对生物。4.0.3a 改名为 Talondeep Pass。**id 已加 `_stonetalon` 限定后缀**：`g08_kalimdor_north.yaml` 里另有一个 id 完全相同的 `the_talondeep_path`（type=subzone，parent=ashenvale），两者指同一条隧道的两端；AreaTable 1277 把这条 area 唯一地挂在石爪山脉（ParentAreaID=406）下，故本节点为石爪侧端口，合龙时应把 G08 那个改成 `the_talondeep_path_ashenvale` 或直接并入本节点"
+    source_url: https://warcraft.wiki.gg/wiki/Talondeep_Path
+    quote: "The Talondeep Path was a winding tunnel that connected Ashenvale with the Stonetalon Mountains. ... The entrance on the Ashenvale side was found just west of Mystral Lake, while the entrance on the Stonetalon side was found in the northwestern part of Windshear Crag."
+    verified_by: ai_read
+
+  - id: greatwood_vale
+    parent: stonetalon_mountains
+    type: subzone
+    subtype: ""
+    name_zh: "巨木谷"
+    name_en: "Greatwood Vale"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "东南山麓一片还没被砍的高针叶林谷，树干笔直高耸，林下光线很暗，地面铺着厚松针"
+    note_zh: "石爪山脉东南的林谷，从蛛网小径进入；南面是部落的玛拉卡金"
+    source_url: https://warcraft.wiki.gg/wiki/Greatwood_Vale
+    quote: "The Greatwood Vale is a forested valley in the foothills of the Stonetalon Mountains. It is accessible via Webwinder Path."
+    verified_by: ai_read
+
+  - id: webwinder_path
+    parent: stonetalon_mountains
+    type: poi
+    subtype: ""
+    name_zh: "蛛网小径"
+    name_en: "Webwinder Path"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "一条沿山腰切过去的窄土路，路两侧的树枝间挂满厚厚的蛛网，光线被网滤得发灰"
+    note_zh: "从玛拉卡金一路通到暗色湖的主路段；东南接巨木谷与滚岩峡谷"
+    source_url: https://warcraft.wiki.gg/wiki/Webwinder_Path
+    quote: "Webwinder Path is a main stretch of road that goes from Malaka'jin, all the way to Mirkfallon Lake."
+    verified_by: ai_read
+
+  - id: malaka_jin
+    parent: stonetalon_mountains
+    type: settlement
+    subtype: "camp"
+    name_zh: "玛拉卡金"
+    name_en: "Malaka'jin"
+    level: ""
+    faction: "horde"
+    coords: "[70, 91]"
+    adjacent: []
+    era: vanilla
+    look_zh: "山道旁一小片巨魔营地，兽骨与彩绘木杆撑起的低矮茅棚，架子上晾着猎来的兽皮与肉干"
+    note_zh: "石爪山脉东南的部落小村，一群巨魔猎人靠把猎物卖给过路的部落冒险者过活；在恐怖图腾岗哨正南"
+    source_url: https://warcraft.wiki.gg/wiki/Malaka%27jin
+    quote: "Malaka'jin is a Horde village in the Stonetalon Mountains, just south of the Grimtotem Post. It houses a small community of troll hunters who make a modest income by selling their catches to passing Horde adventurers."
+    verified_by: ai_read
+
+  - id: grimtotem_post
+    parent: stonetalon_mountains
+    type: settlement
+    subtype: "camp"
+    name_zh: "恐怖图腾岗哨"
+    name_en: "Grimtotem Post"
+    level: ""
+    faction: "contested"
+    coords: "[74, 85]"
+    adjacent: []
+    era: vanilla
+    look_zh: "山坳里一片牛头人营地，帐面是发暗的深色兽皮、图腾柱涂黑，营中来回走动的牛头人全副武装"
+    note_zh: "恐怖图腾部族在石爪山脉的基地，由凶悍的格伦迪格·黑云统领；旧世他们从这里袭击了阿帕拉耶营地"
+    source_url: https://warcraft.wiki.gg/wiki/Grimtotem_Post
+    quote: "Grimtotem Post is the base of Grimtotem tribe operations in Stonetalon Mountains. ... The Grimtotem here are led by the fierce Grundig Darkcloud."
+    verified_by: ai_read
+
+  - id: camp_aparaje
+    parent: stonetalon_mountains
+    type: settlement
+    subtype: "camp"
+    name_zh: "阿帕拉耶营地"
+    name_en: "Camp Aparaje"
+    level: ""
+    faction: "horde"
+    coords: "[77, 90]"
+    adjacent: []
+    era: vanilla
+    look_zh: "东部山坡上几顶被掀翻烧过的牛头人帐篷，帐架焦黑，地上散着打翻的器物"
+    note_zh: "石爪山脉东部的牛头人村，被恐怖图腾从岗哨杀过来打掉；旧世马卡巴·平蹄与女儿卡娅曾住在这里"
+    source_url: https://warcraft.wiki.gg/wiki/Camp_Aparaje
+    quote: "Camp Aparaje was a tauren village in eastern Stonetalon Mountains that was attacked by Grimtotem forces from Grimtotem Post led by Grundig Darkcloud."
+    verified_by: ai_read
+
+  - id: sishir_canyon
+    parent: stonetalon_mountains
+    type: subzone
+    subtype: ""
+    name_zh: "希塞尔山谷"
+    name_en: "Sishir Canyon"
+    level: ""
+    faction: "contested"
+    coords: "[54, 75]"
+    adjacent: []
+    era: vanilla
+    look_zh: "一条从主路岔出去的空旷石谷，两侧是笔直的灰岩壁，谷底几乎什么都没有"
+    note_zh: "旧世是一条空谷。**注意：4.0.3a 被完全重新设计**（并在谷内加了艾德雷萨废墟），旧世的样子与现行版本完全不同，不要用现行参考图"
+    source_url: https://warcraft.wiki.gg/wiki/Sishir_Canyon
+    quote: "Sishir Canyon is an empty canyon that leads from the main road in the Stonetalon Mountains to the Ruins of Eldre'thar. ... Patch 4.0.3a: Completely redesigned."
+    verified_by: ai_read
+
+  - id: boulderslide_ravine
+    parent: stonetalon_mountains
+    type: subzone
+    subtype: ""
+    name_zh: "滚岩峡谷"
+    name_en: "Boulderslide Ravine"
+    level: ""
+    faction: "contested"
+    coords: "[65, 91]"
+    adjacent: []
+    era: vanilla
+    look_zh: "一条落满滚石的小峡谷，谷壁碎裂、随时还在掉石头，山羊在石堆间跳跃"
+    note_zh: "从蛛网小径进去；谷的尽头就是滚岩洞穴。旧世没被交战双方波及，只有岩羊与偶尔的碎石暴掠者，常有矿脉"
+    source_url: https://warcraft.wiki.gg/wiki/Boulderslide_Ravine
+    quote: "Boulderslide Ravine is a small ravine that is most notable for leading into Boulderslide Cavern. It is accessible from Webwinder Path."
+    verified_by: ai_read
+
+  - id: boulderslide_cavern
+    parent: boulderslide_ravine
+    type: poi
+    subtype: ""
+    name_zh: "滚岩洞穴"
+    name_en: "Boulderslide Cavern"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "峡谷尽头的洞窟，洞壁上嵌着发紫光的晶簇，狗头人举着头灯在里面乱挖"
+    note_zh: "滚岩狗头人的巢，他们在疯狂开采一种会发紫光的稀有水晶「共鸣水晶」，这种晶体带着一点泰坦之土的魔力"
+    source_url: https://warcraft.wiki.gg/wiki/Boulderslide_Cavern
+    quote: "Boulderslide Cavern is a cave found at the end of Boulderslide Ravine where the Boulderslide kobolds nest. They frantically mining a rare glowing purple crystal called Resonite"
+    verified_by: ai_read
+
+  # ======================= 凄凉之地 Desolace =======================
+  - id: desolace
+    parent: central_kalimdor
+    type: zone
+    subtype: ""
+    name_zh: "凄凉之地"
+    name_en: "Desolace"
+    level: "30-40"
+    faction: "contested"
+    coords: ""
+    adjacent: [stonetalon_mountains, feralas]
+    era: vanilla
+    look_zh: "一整片灰白到土灰色的干裂荒原，枯死的白树只剩枝杈，遍地是风化的科多兽头骨，天光总是发灰发暗"
+    note_zh: "旧世 30-40 级的争夺区，原名玛珊'舍；北接石爪山脉、南接菲拉斯，西临迷雾之海。半人马各部族的家园，燃烧之刃邪教也在此活动"
+    source_url: https://warcraft.wiki.gg/wiki/Desolace
+    quote: "Desolace, originally known as Mashan'she, is a large, arid region on the western coast of Kalimdor, nestled between the Stonetalon Mountains in the north and the jungles of Feralas in the south. The homeland of the barbarous centaur, Desolace was once nothing but a massive grey desert, filled with dead trees and skulls of dead kodo"
+    verified_by: ai_read
+
+  - id: nijels_point
+    parent: desolace
+    type: settlement
+    subtype: "town"
+    name_zh: "尼耶尔前哨站"
+    name_en: "Nijel's Point"
+    level: ""
+    faction: "alliance"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "北部山口上的联盟营地，石砌矮墙围着几座木屋与蓝白帐篷，塞纳里奥议会的绿色旗与联盟旗并排"
+    note_zh: "凄凉之地北山中的联盟兼塞纳里奥议会据点，是本区联盟侧的唯一大本营；旧世飞行点连羽月要塞、塞拉摩与黑海岸奥伯丁"
+    source_url: https://warcraft.wiki.gg/wiki/Nijel%27s_Point
+    quote: "Nijel's Point is an Alliance and Cenarion Circle outpost located in the northern mountains of Desolace."
+    verified_by: ai_read
+
+  - id: nijels_point_flightpath
+    parent: nijels_point
+    type: transport
+    subtype: "flightpath"
+    name_zh: "尼耶尔前哨站飞行点"
+    name_en: "Nijel's Point Flight Path"
+    level: ""
+    faction: "alliance"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "营地边的狮鹫栖台，两只狮鹫收翼立在木架上"
+    note_zh: "TaxiNodes 37"
+    source_url: https://wago.tools/db2/TaxiNodes/csv?build=1.15.9.69722&locale=zhCN
+    quote: "37|尼耶尔前哨站，凄凉之地|ContinentID=1|Pos=139.24,1325.82,193.50"
+    verified_by: ai_read
+
+  - id: shadowprey_village
+    parent: desolace
+    type: settlement
+    subtype: "port"
+    name_zh: "葬影村"
+    name_en: "Shadowprey Village"
+    level: ""
+    faction: "horde"
+    coords: "[26, 75]"
+    adjacent: []
+    era: vanilla
+    look_zh: "海边一排高脚木桩托起的巨魔棚屋，屋前伸出几条窄栈桥直入海水，晾渔网与骨制风铃挂在檐下"
+    note_zh: "凄凉之地南段海岸上的部落港村，以巨魔渔民为主，也是部落在本区的交通节点；附近有塞纳里奥议会的树妖塞兰德拉在追查扎尔塔的遗骸"
+    source_url: https://warcraft.wiki.gg/wiki/Shadowprey_Village
+    quote: "Shadowprey Village is a port located on the southern end of the coast of Desolace. Primarily a troll fishing village, Shadowprey is also a travel node for Horde adventurers."
+    verified_by: ai_read
+
+  - id: shadowprey_flightpath
+    parent: shadowprey_village
+    type: transport
+    subtype: "flightpath"
+    name_zh: "葬影村飞行点"
+    name_en: "Shadowprey Village Flight Path"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "村边木台上的双足飞龙栖木，背后就是灰蓝的海"
+    note_zh: "TaxiNodes 38"
+    source_url: https://wago.tools/db2/TaxiNodes/csv?build=1.15.9.69722&locale=zhCN
+    quote: "38|葬影村，凄凉之地|ContinentID=1|Pos=-1767.64,3263.89,4.94"
+    verified_by: ai_read
+
+  - id: ghost_walker_post
+    parent: desolace
+    type: settlement
+    subtype: "camp"
+    name_zh: "幽灵岗哨"
+    name_en: "Ghost Walker Post"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "荒原正中一小片牛头人营地，几顶灰褐兽皮帐围着一堆火，帐外插着招魂布条，四周一览无遗、毫无遮蔽"
+    note_zh: "凄凉之地中部的部落前哨，紧挨科多兽坟场；相比葬影村它极其暴露。部落从这里对燃烧之刃与各半人马部族用兵"
+    source_url: https://warcraft.wiki.gg/wiki/Ghost_Walker_Post
+    quote: "Ghost Walker Post is a small tauren outpost established in central Desolace directly adjacent to the Kodo Graveyard. It is one of two Horde outposts in the region, though Ghost Walker Post is much more exposed to danger compared to Shadowprey Village"
+    verified_by: ai_read
+
+  - id: kodo_graveyard
+    parent: desolace
+    type: subzone
+    subtype: ""
+    name_zh: "科多兽坟场"
+    name_en: "Kodo Graveyard"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "满地都是巨大的科多兽白骨与半埋的头骨，肋骨拱成一座座天然的骨架棚，地面是灰白的骨屑"
+    note_zh: "科多兽的最终归宿地；旧世在这里捡骨头会引出科多兽的幽魂"
+    source_url: https://warcraft.wiki.gg/wiki/Kodo_Graveyard
+    quote: "The Kodo Graveyard is a large gaveyard that is final resting place of the Kodo, location in Desolace."
+    verified_by: ai_read
+
+  - id: scrabblescrews_camp
+    parent: desolace
+    type: settlement
+    subtype: "camp"
+    name_zh: "瑟卡布斯库的营地"
+    name_en: "Scrabblescrew's Camp"
+    level: ""
+    faction: "neutral"
+    coords: "[61, 62]"
+    adjacent: []
+    era: vanilla
+    look_zh: "坟场边一顶小小的哥布林帐篷与一辆停着的科多兽拉车，车边堆着捆好的骨料"
+    note_zh: "哥布林斯密德·瑟卡布斯库经营科多兽商队的地方，离科多兽坟场不远"
+    source_url: https://warcraft.wiki.gg/wiki/Scrabblescrew%27s_Camp
+    quote: "Scrabblescrew's Camp is a small goblin camp located not far from the Kodo Graveyard in Desolace. It is the home of Smeed Scrabblescrew, an enterprising goblin who maintains a kodo caravan."
+    verified_by: ai_read
+
+  - id: kormeks_hut
+    parent: desolace
+    type: settlement
+    subtype: "camp"
+    name_zh: "考米克小屋"
+    name_en: "Kormek's Hut"
+    level: ""
+    faction: "neutral"
+    coords: "[62, 39]"
+    adjacent: []
+    era: vanilla
+    look_zh: "荒原中部一座孤零零的破木屋，屋外一圈木栅围着散落骨头的空地"
+    note_zh: "旧世住着一对奇怪的搭档——暮光之锤的薇洛（在屋内）与哥布林比布利·福茨巴克（在屋外的栏里）；屋名来源的「考米克」本人下落不明"
+    source_url: https://warcraft.wiki.gg/wiki/Kormek%27s_Hut
+    quote: "Kormek's Hut is a small hovel in north-central Desolace. It is inhabited by the odd pair of Willow and Bibbly F'utzbuckle."
+    verified_by: ai_read
+
+  - id: thunder_axe_fortress
+    parent: desolace
+    type: settlement
+    subtype: "ruin"
+    name_zh: "雷斧堡垒"
+    name_en: "Thunder Axe Fortress"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "西北荒原上一座半塌的石砌堡垒，几处常燃的火堆在断墙间跳动，燃烧之刃的黑色刀旗插在垛口上"
+    note_zh: "被燃烧之刃邪教占据的堡垒，旧世由科霍尔统领；他们丢了「伊鲁索斯之手」后，另找到了召唤强大恶魔纳萨根的办法"
+    source_url: https://warcraft.wiki.gg/wiki/Thunder_Axe_Fortress
+    quote: "Thunder Axe Fortress is a stronghold occupied by the Burning Blade cult. The fortress is located in northwestern Desolace and is now led by Kohor."
+    verified_by: ai_read
+
+  - id: mannoroc_coven
+    parent: desolace
+    type: subzone
+    subtype: ""
+    name_zh: "玛诺洛克集会所"
+    name_en: "Mannoroc Coven"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "一片被邪能二次烧过的暗夜精灵废墟，断柱间浮着绿色的邪能雾，空气一进入就压得人发闷"
+    note_zh: "以深渊领主玛诺洛斯命名；地狱火、魅魔、地狱猎犬与地狱火守卫盘踞其中。在幽灵岗哨正南、葬影村以东"
+    source_url: https://warcraft.wiki.gg/wiki/Mannoroc_Coven
+    quote: "Mannoroc Coven located directly to the south of Ghost Walker Post and east of Shadowprey Village, is the location of a number of night elven ruins in Desolace."
+    verified_by: ai_read
+
+  - id: valley_of_spears
+    parent: desolace
+    type: subzone
+    subtype: ""
+    name_zh: "长矛谷"
+    name_en: "Valley of Spears"
+    level: ""
+    faction: "contested"
+    coords: "[33, 57]"
+    adjacent: []
+    era: vanilla
+    look_zh: "西部一条被石壁夹住的谷地，谷中插满半人马的图腾长矛与骨幡，帐篷沿谷壁一排排搭着"
+    note_zh: "玛拉当半人马部族的老巢；**玛拉顿的入口就在谷的西南端**"
+    source_url: https://warcraft.wiki.gg/wiki/Valley_of_Spears
+    quote: "The Valley of Spears is a valley in western Desolace where the Maraudine clan of centaur make their home. The entrance to Maraudon is located in the southwestern end of the valley."
+    verified_by: ai_read
+
+  - id: magram_village
+    parent: desolace
+    type: settlement
+    subtype: "village"
+    name_zh: "玛格拉姆村"
+    name_en: "Magram Village"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "东南几汪发黄的污水塘与塘中小岛，粗糙的木桥把岛连起来，半人马的兽皮帐搭在岛上与岸边"
+    note_zh: "玛格拉姆半人马部族的村子；旧世玩家可以选择与玛格拉姆或吉尔吉斯两族之一结盟、对付另一族。4.0.3a 被「肖克萨卡」取代"
+    source_url: https://warcraft.wiki.gg/wiki/Magram_Village
+    quote: "Magram Village is a centaur village, home of the Magram clan. It is located in the southeastern area of Desolace on the shores and islands of a series of polluted yellow pools."
+    verified_by: ai_read
+
+  - id: gelkis_village
+    parent: desolace
+    type: settlement
+    subtype: "village"
+    name_zh: "吉尔吉斯村"
+    name_en: "Gelkis Village"
+    level: ""
+    faction: "contested"
+    coords: "[35, 81]"
+    adjacent: []
+    era: vanilla
+    look_zh: "西南一圈沿着大裂谷边缘搭起的半人马村落，谷底的崖台之间用吊桥相连，帐篷挂在崖边"
+    note_zh: "吉尔吉斯半人马部族的主村，在葬影村东南偏一点；村子环绕一道大裂谷而建，桥一路通到南面山壁上的波尔甘的洞穴"
+    source_url: https://warcraft.wiki.gg/wiki/Gelkis_Village
+    quote: "Gelkis Village is a centaur village located just to the east and slightly south of Shadowprey Village in southwestern Desolace. It is the principal village of the Gelkis clan, and is situated in a ring around a large ravine."
+    verified_by: ai_read
+
+  - id: bolgans_hole
+    parent: gelkis_village
+    type: poi
+    subtype: ""
+    name_zh: "波尔甘的洞穴"
+    name_en: "Bolgan's Hole"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "南面山壁上的洞口，洞里长着成簇的蓝色晶体，冷光把洞壁照成幽蓝"
+    note_zh: "吉尔吉斯部族首脑所居的洞（旧世是沙卡可汗、后为修多可汗）；洞里长着叫「塞拉德拉斯之泪」的蓝色水晶，萨满囤着它、相信那是塞拉德拉斯公主的护佑"
+    source_url: https://warcraft.wiki.gg/wiki/Bolgan%27s_Hole
+    quote: "Bolgan's Hole is a cave in Gelkis Village in Desolace that houses the most prominent members of the Gelkis centaur."
+    verified_by: ai_read
+
+  - id: kolkar_village
+    parent: desolace
+    type: settlement
+    subtype: "village"
+    name_zh: "科尔卡村"
+    name_en: "Kolkar Village"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "东缘一小片半人马营地，帐篷破旧、拴马桩东倒西歪，有被洗劫过的痕迹"
+    note_zh: "科尔卡半人马部族在凄凉之地的权力中心，位于萨格隆以南、玛格拉姆村以北；旧世已被玛格拉姆部族攻占。4.0.3a 被「玛格拉姆领地」取代"
+    source_url: https://warcraft.wiki.gg/wiki/Kolkar_Village
+    quote: "Kolkar Village was the center of power for the Kolkar clan of centaur. The village located on the eastern margin of Desolace between Sargeron to the north and Magram Village to the south was conquered by the Magram clan."
+    verified_by: ai_read
+
+  - id: valley_of_bones
+    parent: desolace
+    type: subzone
+    subtype: ""
+    name_zh: "白骨之谷"
+    name_en: "Valley of Bones"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "南缘一道石崖夹出的窄谷，两侧崖壁下瘫着两具巨大到不成比例的骸骨，谷中骷髅与鬼火飘动"
+    note_zh: "骷髅与半人马亡灵法师出没，玛格拉姆部族的鬼魂也在此游荡；崖壁下那对巨骨被称作「死亡巨人」，来历不明"
+    source_url: https://warcraft.wiki.gg/wiki/Valley_of_Bones
+    quote: "The Valley of Bones is a crag on the southern edge of Desolace, infested by skeletons and centaur necromancers and haunted by ghosts of the Magram clan. Collapsed against the cliff walls are a pair of massive skeletons of unknown origin called the Dead Goliaths."
+    verified_by: ai_read
+
+  - id: shadowbreak_ravine
+    parent: desolace
+    type: subzone
+    subtype: ""
+    name_zh: "破影峡谷"
+    name_en: "Shadowbreak Ravine"
+    level: ""
+    faction: "contested"
+    coords: "[79, 78]"
+    adjacent: []
+    era: vanilla
+    look_zh: "东南山中一条藏得很深的峡谷，谷里立着几丛巨型蘑菇与一圈拖着巨链的召唤法阵"
+    note_zh: "燃烧之刃邪教的隐蔽据点，在玛格拉姆村东南的山里"
+    source_url: https://warcraft.wiki.gg/wiki/Shadowbreak_Ravine
+    quote: "Shadowbreak Ravine is a well-hidden haven for Burning Blade cultists found in the mountains southeast of Shok'Thokar in Desolace. It holds several structures including giant mushrooms and a summoning circle with giant chains."
+    verified_by: ai_read
+
+  - id: sargeron
+    parent: desolace
+    type: subzone
+    subtype: ""
+    name_zh: "萨格隆"
+    name_en: "Sargeron"
+    level: ""
+    faction: "contested"
+    coords: "[74, 28]"
+    adjacent: []
+    era: vanilla
+    look_zh: "东北一片倒塌的暗夜精灵城市废墟，紫白断柱斜插在灰土里，仇恨之刃萨特在残垣间游荡"
+    note_zh: "原是一座暗夜精灵城，上古之战后就成了废墟；原名已失传，如今的名字是占据此地的仇恨之刃萨特以其主子萨格拉斯之名改的"
+    source_url: https://warcraft.wiki.gg/wiki/Sargeron
+    quote: "Sargeron was once a night elven city, but has lain in ruins since the War of the Ancients. The town's original name has been lost to time, but its ruins are now home to numerous Hatefury satyr who have redubbed it Sargeron"
+    verified_by: ai_read
+
+  - id: ethel_rethor
+    parent: desolace
+    type: subzone
+    subtype: ""
+    name_zh: "艾瑟雷索"
+    name_en: "Ethel Rethor"
+    level: ""
+    faction: "contested"
+    coords: "[41, 31]"
+    adjacent: []
+    era: vanilla
+    look_zh: "西北海边一片大半沉在水下的暗夜精灵废墟，只剩一座孤塔立在水上，一道小石桥通向塔那扇封死的门"
+    note_zh: "旧世银色黎明的代表阿佐尔·阿达莫萨斯驻在这里；与许多沿海精灵废墟一样，这里也被纳迦占据"
+    source_url: https://warcraft.wiki.gg/wiki/Ethel_Rethor
+    quote: "Ethel Rethor is a night elven ruin in the far northwest of Desolace. Most of the ruins are located under-water with the exception of a lone tower with a small bridge leading to a closed entrance."
+    verified_by: ai_read
+
+  - id: tethris_aran
+    parent: desolace
+    type: subzone
+    subtype: ""
+    name_zh: "塔迪萨兰"
+    name_en: "Tethris Aran"
+    level: ""
+    faction: "contested"
+    coords: "[54, 14]"
+    adjacent: []
+    era: vanilla
+    look_zh: "北部荒原上一串低矮的暗夜精灵断墙与倒柱，没有任何人烟，只有野兽在废墟间穿行"
+    note_zh: "雷斧堡垒以北的暗夜精灵废墟群，推测是大分裂时被毁的；里面只有野生动物"
+    source_url: https://warcraft.wiki.gg/wiki/Tethris_Aran
+    quote: "Tethris Aran is a series of night elven ruins found in northern Desolace just north of Thunder Axe Fortress. The ruins are inhabited only by the wild creatures of Desolace."
+    verified_by: ai_read
+
+  - id: ranazjar_isle
+    parent: desolace
+    type: subzone
+    subtype: ""
+    name_zh: "拉纳加尔岛"
+    name_en: "Ranazjar Isle"
+    level: ""
+    faction: "contested"
+    coords: "[28, 8]"
+    adjacent: []
+    era: vanilla
+    look_zh: "西北外海一座多岩小岛，岛上散着暗夜精灵废墟的残柱，地上横着被杀的纳迦尸体"
+    note_zh: "旧世 1.7.0 才加入；岛上的精灵废墟与艾瑟雷索似乎属于同一座古城。纳迦曾占据此岛，后被海地精领主海德罗尼斯屠尽"
+    source_url: https://warcraft.wiki.gg/wiki/Ranazjar_Isle
+    quote: "Ranazjar Isle is a small, rocky island off the northwest coast of Desolace. ... On the isle, there are night elven ruins that seem to be part of the same ancient city as those of Ethel Rethor."
+    verified_by: ai_read
+
+  - id: sartheris_strand
+    parent: desolace
+    type: subzone
+    subtype: ""
+    name_zh: "萨瑟里斯海岸"
+    name_en: "Sar'theris Strand"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "凄凉之地的整条西海岸，与内陆的灰枯相反，这里阳光充足、有成片的绿草铺到沙滩"
+    note_zh: "海巨人、纳迦与龙虾人密布；北段外海有卡尼托的沉船，艾瑟雷索崖下的沙滩上横着一条撞碎的小船"
+    source_url: https://warcraft.wiki.gg/wiki/Sar%27theris_Strand
+    quote: "Sar'theris Strand is the name of the coast of Desolace. It is heavily populated by sea giants, naga, and makrura. ... Though Desolace is a grey, gloomy wasteland, the Sar'theris Strand is sunny and grassy."
+    verified_by: ai_read
+
+  - id: broken_spear_village
+    parent: desolace
+    type: settlement
+    subtype: "village"
+    name_zh: "断矛村"
+    name_en: "Broken Spear Village"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "荒原上一处被打烂的半人马营地，帐篷塌了一半，折断的长矛插在土里"
+    note_zh: "**wiki 条目为空壳**，存在性与译名取自 Classic Era 客户端 AreaTable（2217，ParentAreaID=Desolace）；画面描述为按名称与本区地貌推断的保守写法，实拍前请再核"
+    source_url: https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN
+    quote: "2217|断矛村|405 (ParentAreaID=Desolace)"
+    verified_by: ai_read
+
+  - id: veiled_sea_desolace
+    parent: desolace
+    type: poi
+    subtype: ""
+    name_zh: "迷雾之海"
+    name_en: "The Veiled Sea"
+    level: ""
+    faction: "neutral"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "凄凉之地以西的外海，铅灰色的浪与终年不散的低垂海雾，远处什么都看不清"
+    note_zh: "凄凉之地西侧外海；客户端里是独立 area（2324）。同名 area 在卡利姆多西北侧还有几个（G08 已收），故 id 加限定"
+    source_url: https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN
+    quote: "2324|迷雾之海|405 (ParentAreaID=Desolace)"
+    verified_by: ai_read
+
+  - id: wicked_grotto
+    parent: maraudon
+    type: subzone
+    subtype: ""
+    name_zh: "邪恶洞穴"
+    name_en: "Wicked Grotto"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "通体泛紫的晶洞隧道，紫水晶从顶上垂下来，光线被晶体折成一片冷紫，水潭里浮着紫色孢子"
+    note_zh: "从**紫色**隧道那道传送门进去的第一段，一路到毒液瀑布；萨特与小鬼盘踞，是被恶魔污染的一侧"
+    source_url: https://warcraft.wiki.gg/wiki/Wicked_Grotto
+    quote: "The Wicked Grotto is located inside Maraudon, and is the first area beyond the instance portal in the purple tunnels. It stretches past the Vyletongue Seat to the Poison Falls, and is home to numerous satyr and grells."
+    verified_by: ai_read
+
+  - id: foulspore_cavern
+    parent: maraudon
+    type: subzone
+    subtype: ""
+    name_zh: "污臭洞穴"
+    name_en: "Foulspore Cavern"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "橙黄色的菌洞，巨大的菌伞与孢子囊挤满洞顶，地上淌着黏稠的绿色毒液，空气里飘满橙色孢子"
+    note_zh: "从**橙色**隧道那道传送门进去的第一段，经毒性洞窟一路到毒液瀑布；巨型鞭笞者拉佐拉什在此。腐烂、疫病与毒性是这一侧的主题"
+    source_url: https://warcraft.wiki.gg/wiki/Foulspore_Cavern
+    quote: "Foulspore Cavern is located inside Maraudon, and is the first area beyond the instance portal in the orange tunnels. It stretches past the Noxious Hollow to the Poison Falls, and is the location of the giant lasher Razorlash."
+    verified_by: ai_read
+
+  - id: earth_song_falls
+    parent: maraudon
+    type: subzone
+    subtype: ""
+    name_zh: "大地之歌瀑布"
+    name_en: "Earth Song Falls"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "副本最深处的巨型地下洞厅，一道大瀑布从高处直落进底下的池子，四壁嵌满发光的晶柱"
+    note_zh: "玛拉顿的最终区域，塞拉德拉斯公主所在；1.2.0 随副本一同加入"
+    source_url: https://warcraft.wiki.gg/wiki/Earth_Song_Falls
+    quote: "The falls, from where the portal drops the player initally. ... Patch 1.2.0: Added."
+    verified_by: ai_read
+

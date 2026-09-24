@@ -1,0 +1,2956 @@
+# G08 · 卡利姆多北部 + 达纳苏斯 —— 地理树数据（唯一出处）
+# 版本锚点：经典旧世 Vanilla / Classic Era（1.12 / Classic Era 1.15.9 客户端数据）
+# 节点存在性与 name_zh 的第一权威 = 暴雪 Classic Era 客户端 AreaTable（wago.tools 导出，含国服官方简中译名）
+# quote 约定：来源为 warcraft.wiki.gg 时为该页原句；来源为 AreaTable/TaxiNodes CSV 时为该行字段原文（ID|AreaName_lang|ParentAreaID）
+nodes:
+  - id: the_veiled_sea
+    parent: northern_kalimdor
+    type: poi
+    subtype: ""
+    name_zh: 迷雾之海
+    name_en: The Veiled Sea
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 卡利姆多西北外海，铅灰色浪涌与终年不散的低垂海雾，能见度极低
+    note_zh: 泰达希尔、黑海岸、灰谷三地的西侧外海（客户端里是三个同名 area：2322/2326/2325），此处合并为一个节点
+    source_url: https://warcraft.wiki.gg/wiki/Veiled_Sea
+    quote: "The Veiled Sea is the name of the vast sea that lies to the north and west of Kalimdor"
+    verified_by: ai_read
+
+  # ======================= 泰达希尔 Teldrassil =======================
+  - id: teldrassil
+    parent: northern_kalimdor
+    type: zone
+    subtype: ""
+    name_zh: 泰达希尔
+    name_en: Teldrassil
+    level: "1-12"
+    faction: alliance
+    coords: ""
+    adjacent: [darkshore]
+    era: vanilla
+    look_zh: 世界树冠顶上的浅紫靛蓝夜林，青蓝发光的巨树枝干、紫白花草与垂落的藤萝，木质吊桥与树屋盘绕而上
+    note_zh: 暗夜精灵新手区，整座地区长在世界树的树冠上；对外唯一通路是南端鲁瑟兰村的船与传送门。等级带以 wiki 旧世专页「Teldrassil (Classic)」信息框 `level=1-12` 为准（G08-V 核验改；任务线实际集中在 1-10，两个数字都可用，取景按 1-12 算更稳）
+    source_url: https://warcraft.wiki.gg/wiki/Teldrassil
+    quote: "Teldrassil (meaning \"Crown of the Earth\" in Darnassian) was a World Tree situated on the eponymous island off Kalimdor's northwestern coast."
+    verified_by: ai_read
+
+  - id: shadowglen
+    parent: teldrassil
+    type: subzone
+    subtype: ""
+    name_zh: 幽影谷
+    name_en: Shadowglen
+    level: ""
+    faction: alliance
+    coords: "[58.4, 34.4]"
+    adjacent: []
+    era: vanilla
+    look_zh: 树冠东北的浅碗状林间谷地，紫蓝薄雾贴地，中央一株巨大发光金树，四周是新绿草坡与小木台
+    note_zh: 暗夜精灵出生地（1-5 级），所有暗夜精灵角色从这里睁眼
+    source_url: https://warcraft.wiki.gg/wiki/Shadowglen
+    quote: "Shadowglen (or Shadow Glen) is the night elven starting area"
+    verified_by: ai_read
+
+  - id: aldrassil
+    parent: shadowglen
+    type: settlement
+    subtype: village
+    name_zh: 奥达希尔
+    name_en: Aldrassil
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 幽影谷正中的巨树，树身裹着螺旋木梯与平台，枝上挂满淡金光球
+    note_zh: 新手训练师与第一批任务发布者都在树上平台；是幽影谷的地标与聚落核心
+    source_url: https://warcraft.wiki.gg/wiki/Aldrassil
+    quote: "Aldrassil is the giant tree and village in the center of Shadowglen, which is located in the northeastern corner of Teldrassil"
+    verified_by: ai_read
+
+  - id: shadowthread_cave
+    parent: shadowglen
+    type: subzone
+    subtype: ""
+    name_zh: 黑丝洞
+    name_en: Shadowthread Cave
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 谷地西北角的窄口洞穴，洞内挂满灰白蛛网与半透明卵囊，光线只剩洞口一线
+    note_zh: 新手蜘蛛洞（幽影谷西北角），首批「进洞清怪」任务点
+    source_url: https://warcraft.wiki.gg/wiki/Shadowthread_Cave
+    quote: "Shadowthread Cave is in the northwest corner of the Shadowglen in Teldrassil"
+    verified_by: ai_read
+
+  - id: dolanaar
+    parent: teldrassil
+    type: settlement
+    subtype: village
+    name_zh: 多兰纳尔
+    name_en: Dolanaar
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林间十字路口的暗夜精灵村落，紫顶弧形木屋与藤蔓廊桥，路边立着发光的月亮石灯柱
+    note_zh: 泰达希尔中部主村（约 5-10 级枢纽），有旅店、商人、职业训练师。旧世此处没有飞行点（飞行点是 4.0.3 才加的）
+    source_url: https://warcraft.wiki.gg/wiki/Dolanaar
+    quote: "Dolanaar was a night elven village located in the central-eastern part of Teldrassil"
+    verified_by: ai_read
+
+  - id: ban_ethil_hollow
+    parent: teldrassil
+    type: subzone
+    subtype: ""
+    name_zh: 班尼希尔山谷
+    name_en: Ban'ethil Hollow
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 多兰纳尔到达纳苏斯大道以南的下凹峡谷，两壁树根裸露，谷底堆着熊怪的粗木图腾
+    note_zh: 木爪熊怪活动区，通往班奈希尔兽穴
+    source_url: https://warcraft.wiki.gg/wiki/Ban%27ethil_Hollow
+    quote: "Ban'ethil Hollow is a small ravine in Teldrassil, located south of the road that leads from Dolanaar to Darnassus"
+    verified_by: ai_read
+
+  - id: ban_ethil_barrow_den
+    parent: ban_ethil_hollow
+    type: subzone
+    subtype: ""
+    name_zh: 班奈希尔兽穴
+    name_en: Ban'ethil Barrow Den
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 树根盘成的地下兽穴，多层环形通道，墙上残留精灵浮雕，被熊怪的兽皮与篝火覆盖
+    note_zh: 微型地下城（非副本），原是暗夜精灵沉睡德鲁伊的圣所，旧世被木爪熊怪占据
+    source_url: https://warcraft.wiki.gg/wiki/Ban%27ethil_Barrow_Den
+    quote: "Ban'ethil Barrow Den is a small barrow den in Teldrassil that was once one of the sacred places built by night elves to hold sleeping Druids of the Talon"
+    verified_by: ai_read
+
+  - id: the_cleft
+    parent: teldrassil
+    type: subzone
+    subtype: ""
+    name_zh: 大断崖
+    name_en: The Cleft
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 多兰纳尔西北的树身裂口，断面粗糙发黑，裂缝深处是熊怪的窝棚与骨堆
+    note_zh: 被腐化的木爪熊怪聚居地
+    source_url: https://warcraft.wiki.gg/wiki/Cleft
+    quote: "The Cleft is a corrupted furbolg den located north west of Dolanaar in Teldrassil"
+    verified_by: ai_read
+
+  - id: fel_rock
+    parent: teldrassil
+    type: subzone
+    subtype: ""
+    name_zh: 地狱石
+    name_en: Fel Rock
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 幽影谷西侧的岩壁洞口，洞内岩石泛暗绿磷光，蝙蝠与蛛类在顶壁倒挂
+    note_zh: 已被腐化的洞穴；旧世新手任务「地狱石的蝙蝠」等在此
+    source_url: https://warcraft.wiki.gg/wiki/Fel_Rock
+    quote: "Fel Rock is a now corrupted cave in Teldrassil"
+    verified_by: ai_read
+
+  - id: gnarlpine_hold
+    parent: teldrassil
+    type: subzone
+    subtype: ""
+    name_zh: 脊骨堡
+    name_en: Gnarlpine Hold
+    level: ""
+    faction: contested
+    coords: "[43, 65.2]"
+    adjacent: []
+    era: vanilla
+    look_zh: 树冠西南尽头的熊怪营地，粗木尖桩围栏、兽皮帐篷与中央大篝火，地面踩成泥
+    note_zh: 木爪熊怪的主营；泰达希尔新手线的收尾战场（约 10 级）
+    source_url: https://warcraft.wiki.gg/wiki/Gnarlpine_Hold
+    quote: "Gnarlpine Hold lies in the far southwest corner of Teldrassil"
+    verified_by: ai_read
+
+  - id: lake_al_ameth
+    parent: teldrassil
+    type: subzone
+    subtype: ""
+    name_zh: 奥拉密斯湖
+    name_en: Lake Al'Ameth
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 多兰纳尔以南的静水湖，湖面映出紫色树冠，岸边芦苇与倒伏的白木
+    note_zh: 泰达希尔最大的水域之一，钓鱼与采药点
+    source_url: https://warcraft.wiki.gg/wiki/Lake_Al%27Ameth
+    quote: "Lake Al'Ameth is one of the largest bodies of water existing on Teldrassil"
+    verified_by: ai_read
+
+  - id: the_oracle_glade
+    parent: teldrassil
+    type: subzone
+    subtype: ""
+    name_zh: 神谕林地
+    name_en: The Oracle Glade
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 西北端的圆形圣林，中央一口冷蓝月亮井，周围立着风化的精灵石柱与白色花海
+    note_zh: 泰达希尔西北的圣地；旧世任务链「神谕林地」的终点
+    source_url: https://warcraft.wiki.gg/wiki/Oracle_Glade
+    quote: "The Oracle Glade is a shrine in the northwestern area of Teldrassil"
+    verified_by: ai_read
+
+  - id: pools_of_arlithrien
+    parent: teldrassil
+    type: subzone
+    subtype: ""
+    name_zh: 阿里斯瑞恩之池
+    name_en: Pools of Arlithrien
+    level: ""
+    faction: alliance
+    coords: "[40, 65]"
+    adjacent: []
+    era: vanilla
+    look_zh: 一串阶梯状的小水潭，水色青碧，潭间有细瀑跌落，周围铺满湿润的苔石
+    note_zh: 泰达希尔西南的水潭群，脊骨堡以北
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722&locale=zhCN
+    quote: "478|Pools of Arlithrien|阿里斯瑞恩之池|ParentAreaID=141"
+    verified_by: ai_read
+
+  - id: rut_theran_village
+    parent: teldrassil
+    type: settlement
+    subtype: port
+    name_zh: 鲁瑟兰村
+    name_en: Rut'theran Village
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 世界树根部海面上的小码头村，贝壳形白顶木屋立在水中木桩上，长栈桥伸进灰蓝海雾
+    note_zh: 泰达希尔与外界唯一的实体出入口：船通黑海岸的奥伯丁，传送门直达达纳苏斯
+    source_url: https://warcraft.wiki.gg/wiki/Rut%27theran_Village
+    quote: "Rut'theran Village was a village port for the night elven city of Darnassus, located at the very bottom of the World Tree Teldrassil"
+    verified_by: ai_read
+
+  - id: rut_theran_portal
+    parent: rut_theran_village
+    type: transport
+    subtype: portal
+    name_zh: 鲁瑟兰村传送门（通达纳苏斯）
+    name_en: Portal to Darnassus
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 立在村中石台上的巨大椭圆光门，门面是流动的青白色光膜，边框为缠藤的白石拱
+    note_zh: 旧世玩家上树的标准路径：下船 → 穿传送门 → 达纳苏斯（反向亦可，部落可利用它突袭主城）
+    source_url: https://warcraft.wiki.gg/wiki/Darnassus
+    quote: "sail to Rut'theran Village, a small settlement at the base of Teldrassil, and from there step into the glowing portal to the city proper"
+    verified_by: ai_read
+
+  - id: rut_theran_docks
+    parent: rut_theran_village
+    type: transport
+    subtype: boat
+    name_zh: 鲁瑟兰村码头
+    name_en: Rut'theran Village Docks
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 探入海雾的长木栈桥，尽头停着高桅的暗夜精灵白帆船，船首雕成猫头鹰
+    note_zh: 旧世唯一航线：鲁瑟兰村 ⇆ 黑海岸·奥伯丁（跑这条线的船英文名 The Moonspray，官方简中船名未查到，不自拟）。前往东部王国需在奥伯丁换乘去米奈希尔港的船
+    source_url: https://warcraft.wiki.gg/wiki/Auberdine
+    quote: "The Bravery provided transportation from here to Menethil Harbor, while The Moonspray worked as a ferry between Auberdine and Rut'theran Village at the foot of Teldrassil."
+    verified_by: ai_read
+
+  - id: rut_theran_flightpath
+    parent: rut_theran_village
+    type: transport
+    subtype: flightpath
+    name_zh: 鲁瑟兰村飞行点
+    name_en: Rut'theran Village Flight Path
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 栈桥边的高木台，一只灰白色巨型角鹰兽栖在横木上，脚边散落羽毛
+    note_zh: 旧世泰达希尔唯一的飞行点（TaxiNodes ID=27）。达纳苏斯与多兰纳尔的飞行点是 4.0.3 之后才有的
+    source_url: https://wago.tools/db2/TaxiNodes?build=1.15.9.69722&locale=zhCN
+    quote: "27|Rut'theran Village, Teldrassil|鲁瑟兰村，泰达希尔"
+    verified_by: ai_read
+
+  - id: starbreeze_village
+    parent: teldrassil
+    type: settlement
+    subtype: village
+    name_zh: 星风村
+    name_en: Starbreeze Village
+    level: ""
+    faction: contested
+    coords: "[65, 49.6]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东侧林中的废弃小村，几栋紫顶木屋空无一人，屋内外结满灰白蛛丝
+    note_zh: 被蜘蛛与堕落之魂占据的空村；旧世任务「星风村」在此
+    source_url: https://warcraft.wiki.gg/wiki/Starbreeze_Village
+    quote: "Starbreeze Village lies southeast of Shadowglen and east of Dolanaar in Teldrassil"
+    verified_by: ai_read
+
+  - id: wellspring_lake
+    parent: teldrassil
+    type: subzone
+    subtype: ""
+    name_zh: 涌泉湖
+    name_en: Wellspring Lake
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 达纳苏斯东北的小湖，水面极静如镜，映着树冠的紫光，岸边是平铺的白石滩
+    note_zh: 涌泉河的源头湖，位于神谕林地东南
+    source_url: https://warcraft.wiki.gg/wiki/Wellspring_Lake
+    quote: "Wellspring Lake is a small lake northeast of Darnassus and southeast of the Oracle Glade in Teldrassil"
+    verified_by: ai_read
+
+  - id: wellspring_river
+    parent: teldrassil
+    type: subzone
+    subtype: ""
+    name_zh: 涌泉河
+    name_en: Wellspring River
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 从树心涌出的细河，水流清亮带微光，沿林间石槽蜿蜒，两岸铺满蕨类
+    note_zh: 源自世界树体内的天然泉；泰达希尔的主要水系
+    source_url: https://warcraft.wiki.gg/wiki/Wellspring_River
+    quote: "Wellspring River comes from a natural spring that lies deep within the great tree Teldrassil"
+    verified_by: ai_read
+
+  # ======================= 达纳苏斯 Darnassus =======================
+  - id: darnassus
+    parent: teldrassil
+    type: city
+    subtype: capital
+    name_zh: 达纳苏斯
+    name_en: Darnassus
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 树冠西侧的月白靛蓝都城，环抱一片浅湖，弧形木桥跨水相连，紫顶白柱殿堂与萤火般的光点浮在夜色里
+    note_zh: 暗夜精灵首都，客户端里是独立 zone（AreaID 1657）而非泰达希尔的子区域；五个大区 + 中央神殿花园
+    source_url: https://warcraft.wiki.gg/wiki/Darnassus
+    quote: "Darnassus was the greatest city of the night elves, housing the leaders of both the druids and the faithful of Elune."
+    verified_by: ai_read
+
+  - id: the_temple_gardens
+    parent: darnassus
+    type: district
+    subtype: ""
+    name_zh: 神殿花园
+    name_en: The Temple Gardens
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 城市中央的开阔水景园，浅湖中一座圆形绿岛，环岛白石堤与低矮花丛，四面木桥辐射而出
+    note_zh: 达纳苏斯的地理与交通中心，银行与去鲁瑟兰村的传送门都在这一片
+    source_url: https://warcraft.wiki.gg/wiki/Temple_Gardens
+    quote: "The Temple Gardens are a large open area in the center of the night elven capital of Darnassus"
+    verified_by: ai_read
+
+  - id: temple_of_the_moon
+    parent: the_temple_gardens
+    type: poi
+    subtype: ""
+    name_zh: 月神殿
+    name_en: Temple of the Moon
+    level: ""
+    faction: alliance
+    coords: "[39, 76]"
+    adjacent: []
+    era: vanilla
+    look_zh: 南端的巨型半球穹顶神殿，内部一池环形月光水，白色立柱间垂下银纱，穹顶开口漏下月柱
+    note_zh: 泰兰德·语风与艾露恩姐妹会所在；旧世也是暗夜精灵牧师训练与「月神殿」任务的中心
+    source_url: https://warcraft.wiki.gg/wiki/Darnassus
+    quote: "The Temple of the Moon, home of the Sisters of Elune, the high-priestess order of the Night Elves."
+    verified_by: ai_read
+
+  - id: darnassus_bank
+    parent: the_temple_gardens
+    type: poi
+    subtype: ""
+    name_zh: 达纳苏斯银行
+    name_en: Bank of Darnassus (Bough of the Eternals)
+    level: ""
+    faction: alliance
+    coords: "[40, 42]"
+    adjacent: []
+    era: vanilla
+    look_zh: 神殿花园中央岛上的粗壮空心古树建筑，树洞入口撑成拱门，内壁嵌着一排排保险柜
+    note_zh: 银行所在建筑英文名 Bough of the Eternals；该建筑名的官方简中译名未查到，故节点名用功能名
+    source_url: https://warcraft.wiki.gg/wiki/Darnassus
+    quote: "The Bough of the Eternals, which contains the bank of Darnassus. It is located on the central island of the Temple Gardens."
+    verified_by: ai_read
+
+  - id: darnassus_portal_rutheran
+    parent: the_temple_gardens
+    type: transport
+    subtype: portal
+    name_zh: 达纳苏斯传送门（通鲁瑟兰村）
+    name_en: Portal to Rut'theran Village
+    level: ""
+    faction: alliance
+    coords: "[30, 41]"
+    adjacent: []
+    era: vanilla
+    look_zh: 银行西侧水畔的石拱光门，青白光膜微微起伏，门前一小块铺石平台
+    note_zh: 进出主城的主通道（比飞到鲁瑟兰快得多）；部落亦可穿行，是旧世突袭达纳苏斯的入口
+    source_url: https://warcraft.wiki.gg/wiki/Darnassus
+    quote: "The portal to Rut'theran Village, west of the bank. This portal is also usable by Horde characters, allowing raids on the city."
+    verified_by: ai_read
+
+  - id: cenarion_enclave
+    parent: darnassus
+    type: district
+    subtype: ""
+    name_zh: 塞纳里奥区
+    name_en: Cenarion Enclave
+    level: ""
+    faction: alliance
+    coords: "[36, 14]"
+    adjacent: []
+    era: vanilla
+    look_zh: 城北高处的树冠平台群，多层木台由斜坡与藤桥串起，台上立着巨大的守护巨树
+    note_zh: 德鲁伊与猎人训练区；旧世大德鲁伊范达尔·鹿盔在此
+    source_url: https://warcraft.wiki.gg/wiki/Darnassus
+    quote: "The Cenarion Enclave, containing druid and hunter trainers."
+    verified_by: ai_read
+
+  - id: craftsmens_terrace
+    parent: darnassus
+    type: district
+    subtype: ""
+    name_zh: 工匠区
+    name_en: Craftsmen's Terrace
+    level: ""
+    faction: alliance
+    coords: "[54, 38]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东北侧的环形作坊台地，沿弧墙排开铁匠炉、织机与炼金台，炉火是全城唯一的暖色
+    note_zh: 专业技能训练与旅店所在
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722&locale=zhCN
+    quote: "1659|Craftsmen's Terrace|工匠区|ParentAreaID=1657"
+    verified_by: ai_read
+
+  - id: darnassus_inn
+    parent: craftsmens_terrace
+    type: settlement
+    subtype: inn
+    name_zh: 达纳苏斯旅店
+    name_en: Darnassus Inn
+    level: ""
+    faction: alliance
+    coords: "[62.5, 29.8]"
+    adjacent: []
+    era: vanilla
+    look_zh: 工匠区一栋两层空心树屋，窗口透出暖黄灯光，门口挂着月形招牌
+    note_zh: 主城炉石绑定点
+    source_url: https://warcraft.wiki.gg/wiki/Darnassus
+    quote: "The inn, located in Craftsmen's Terrace."
+    verified_by: ai_read
+
+  - id: tradesmens_terrace
+    parent: darnassus
+    type: district
+    subtype: ""
+    name_zh: 贸易区
+    name_en: Tradesmen's Terrace
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 城南的大片台地，成排货摊与卷边布棚，地面铺浅色木板，人流最密
+    note_zh: 拍卖行与各类商人所在
+    source_url: https://warcraft.wiki.gg/wiki/Tradesmen%27s_Terrace
+    quote: "The Tradesmen's Terrace is a large district in the southern portion of Darnassus, the night elf capital"
+    verified_by: ai_read
+
+  - id: darnassus_auction_house
+    parent: tradesmens_terrace
+    type: poi
+    subtype: ""
+    name_zh: 达纳苏斯拍卖行
+    name_en: Darnassus Auction House
+    level: ""
+    faction: alliance
+    coords: "[55, 58.5]"
+    adjacent: []
+    era: vanilla
+    look_zh: 贸易区中一座开敞的木构大厅，中央立着公告木牌，四周是排队的玩家与拍卖师
+    note_zh: 旧世联盟三大拍卖行中最冷清的一个（位置偏远）
+    source_url: https://warcraft.wiki.gg/wiki/Darnassus
+    quote: "The Auction House, located in the Tradesmen's Terrace."
+    verified_by: ai_read
+
+  - id: warriors_terrace
+    parent: darnassus
+    type: district
+    subtype: ""
+    name_zh: 战士区
+    name_en: Warrior's Terrace
+    level: ""
+    faction: alliance
+    coords: "[60, 44]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东侧入城门廊，石砌台阶两侧立着持长刃的哨兵雕像，尽头是训练场的圆形沙地
+    note_zh: 主城东入口；战士训练与决斗场；城内主墓地就在战士区旁
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722&locale=zhCN
+    quote: "1660|Warrior's Terrace|战士区|ParentAreaID=1657"
+    verified_by: ai_read
+
+  - id: darnassus_cemetery
+    parent: warriors_terrace
+    type: poi
+    subtype: ""
+    name_zh: 达纳苏斯墓地
+    name_en: Darnassus Cemetery
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 战士区外侧的树下墓园，成排素白石碑半没在草里，碑前点着小盏蓝烛
+    note_zh: 城内主墓地（玩家在主城附近阵亡的复活点）
+    source_url: https://warcraft.wiki.gg/wiki/Warrior%27s_Terrace
+    quote: "Darnassus's main graveyard is located just off the Warrior's Terrace"
+    verified_by: ai_read
+
+
+  # ======================= 黑海岸 Darkshore =======================
+  - id: darkshore
+    parent: northern_kalimdor
+    type: zone
+    subtype: ""
+    name_zh: 黑海岸
+    name_en: Darkshore
+    level: "9-25"
+    faction: alliance
+    coords: ""
+    adjacent: [teldrassil, ashenvale, wetlands]
+    era: vanilla
+    look_zh: 灰蓝阴冷的长条雾海岸，黑褐高松林贴着碎石滩，浪花拍打断裂的白色古代石柱与搁浅的沉船
+    note_zh: 联盟主线区；旧世形态在 4.0.3 被彻底摧毁（详见备注文件「版本差异」）。等级带以 wiki 旧世专页「Darkshore (Classic)」信息框 `level=9-25` 为准（G08-V 核验改；主线任务集中在 10-20，北端玛塞斯特拉废墟一带才到 18-25）
+    source_url: https://warcraft.wiki.gg/wiki/Darkshore
+    quote: "Darkshore is a long strip of coast on the northwestern part of Kalimdor"
+    verified_by: ai_read
+
+  - id: auberdine
+    parent: darkshore
+    type: settlement
+    subtype: town
+    name_zh: 奥伯丁
+    name_en: Auberdine
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 海岸边的暗夜精灵木镇，紫顶弧形屋与高脚木台沿沙滩排开，栈桥伸入灰雾海面
+    note_zh: 旧世黑海岸的唯一城镇与三向船运枢纽：旅店、邮箱、铁砧、马厩、飞行点、各类专业训练师齐全。4.0.3 被死亡之翼摧毁，变成「奥伯丁废墟」
+    source_url: https://warcraft.wiki.gg/wiki/Auberdine
+    quote: "Auberdine was a night elven town in Darkshore"
+    verified_by: ai_read
+
+  - id: auberdine_docks
+    parent: auberdine
+    type: transport
+    subtype: boat
+    name_zh: 奥伯丁码头
+    name_en: Auberdine Docks
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 两条并排的长栈桥，桥头各停一艘高桅帆船，木板被海水泡成深褐色
+    note_zh: 旧世两条航线：北桥 → 泰达希尔·鲁瑟兰村（The Moonspray）；南桥 → 湿地·米奈希尔港（The Bravery，联盟从卡利姆多回东部王国的主干道）。注意南桥的终点在 3.0.2 才改成暴风城港口，**旧世写米奈希尔港**
+    source_url: https://warcraft.wiki.gg/wiki/Auberdine
+    quote: "The Bravery provided transportation from here to Menethil Harbor, while The Moonspray worked as a ferry between Auberdine and Rut'theran Village at the foot of Teldrassil."
+    verified_by: ai_read
+
+  - id: auberdine_flightpath
+    parent: auberdine
+    type: transport
+    subtype: flightpath
+    name_zh: 奥伯丁飞行点
+    name_en: Auberdine Flight Path
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 镇北高台上栖着灰羽角鹰兽，台下堆着鞍具与草料
+    note_zh: TaxiNodes ID=26。旧世连接鲁瑟兰村、阿斯特兰纳、石爪峰、刺枝林地、塔伦迪斯营地、尼耶尔前哨站、羽月要塞、塞拉摩、月光林地
+    source_url: https://wago.tools/db2/TaxiNodes?build=1.15.9.69722&locale=zhCN
+    quote: "26|Auberdine, Darkshore|奥伯丁，黑海岸"
+    verified_by: ai_read
+
+  - id: ameth_aran
+    parent: darkshore
+    type: subzone
+    subtype: ruin
+    name_zh: 亚米萨兰
+    name_en: Ameth'Aran
+    level: ""
+    faction: contested
+    coords: "[43.6, 60.4]"
+    adjacent: []
+    era: vanilla
+    look_zh: 海边草坡上的断柱废墟群，白石被海风蚀出凹坑，柱间飘着半透明的蓝色幽魂
+    note_zh: 上古高等精灵遗址，被诅咒的亡魂游荡；旧世任务「亚米萨兰之书」在此
+    source_url: https://warcraft.wiki.gg/wiki/Ameth%27Aran
+    quote: "The ruins of Ameth'Aran can be found to the southeast of the Ruins of Auberdine, and east from the Blazing Strand, in Darkshore"
+    verified_by: ai_read
+
+  - id: bashal_aran
+    parent: darkshore
+    type: subzone
+    subtype: ruin
+    name_zh: 巴莎兰
+    name_en: Bashal'Aran
+    level: ""
+    faction: contested
+    coords: "[45, 36]"
+    adjacent: []
+    era: vanilla
+    look_zh: 北部林间的环形遗址，残破石阶围着一口枯竭的月亮井，藤蔓爬满倾倒的立柱
+    note_zh: 同为上古高等精灵废墟，与亚米萨兰同属一条诅咒任务链
+    source_url: https://warcraft.wiki.gg/wiki/Bashal%27Aran
+    quote: "Bashal'Aran is a night elven ruin found to the southwest of Lor'danel in northern Darkshore, formerly consisting of ancient Highborne ruins"
+    verified_by: ai_read
+
+  - id: blackwood_den
+    parent: darkshore
+    type: subzone
+    subtype: ""
+    name_zh: 黑木洞穴
+    name_en: Blackwood Den
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 山壁上的熊怪洞口，洞前立着粗木栅与兽骨图腾，洞内火光摇晃
+    note_zh: 黑木熊怪的巢穴（旧世亦称 Blackwood Hold）
+    source_url: https://warcraft.wiki.gg/wiki/Blackwood_Den
+    quote: "The Blackwood Den, sometimes known as Blackwood Hold"
+    verified_by: ai_read
+
+  - id: cliffspring_falls
+    parent: darkshore
+    type: subzone
+    subtype: ""
+    name_zh: 峭壁之泉
+    name_en: Cliffspring Falls
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 崖壁间垂落的细瀑，水帘后是一处潮湿洞口，岩面挂满深绿苔藓
+    note_zh: 壁泉河的源头，黑海岸的主要饮水来源；洞中在旧世被污染
+    source_url: https://warcraft.wiki.gg/wiki/Cliffspring_Falls
+    quote: "The Cliffspring Falls are the origin of the Cliffspring River in Darkshore, serving as the principal source of drinking water for the region."
+    verified_by: ai_read
+
+  - id: cliffspring_river
+    parent: darkshore
+    type: subzone
+    subtype: ""
+    name_zh: 壁泉河
+    name_en: Cliffspring River
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 北部穿林而过的浅河，水色灰绿，河床遍布圆石，两岸是笔直的深色松林
+    note_zh: 黑海岸北部主要河流，自峭壁之泉流向大海
+    source_url: https://warcraft.wiki.gg/wiki/Cliffspring_River
+    quote: "The Cliffspring River is a river in the northern part of Darkshore"
+    verified_by: ai_read
+
+  - id: grove_of_the_ancients
+    parent: darkshore
+    type: settlement
+    subtype: camp
+    name_zh: 古树之林
+    name_en: Grove of the Ancients
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 南端的神圣林地，几株会走动的远古树人静立在残破石台间，脚下青苔覆盖倒塌的神殿基座
+    note_zh: 智慧古树欧努（Onu）驻地，旁有商人与沉睡的德鲁伊；黑海岸通往灰谷的路上最后一个安全点
+    source_url: https://warcraft.wiki.gg/wiki/Grove_of_the_Ancients
+    quote: "The Grove of the Ancients is a sacred ruin of an old night elven temple, where Onu, an Ancient of Lore, resides together with a pair of merchants and a sleeping druid"
+    verified_by: ai_read
+
+  - id: mists_edge
+    parent: darkshore
+    type: subzone
+    subtype: ""
+    name_zh: 薄雾海
+    name_en: Mist's Edge
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 黑海岸最长的一段海滩，湿沙上散着贝壳与浮木，海面永远压着一层齐腰高的白雾
+    note_zh: 奥伯丁以北的整段海岸线
+    source_url: https://warcraft.wiki.gg/wiki/Mist%27s_Edge
+    quote: "Mist's Edge is by far the longest stretch of coast in Darkshore"
+    verified_by: ai_read
+
+  - id: remtravels_excavation
+    parent: darkshore
+    type: subzone
+    subtype: mine
+    name_zh: 雷姆塔维尔挖掘场
+    name_en: Remtravel's Excavation
+    level: ""
+    faction: alliance
+    coords: "[35, 85]"
+    adjacent: []
+    era: vanilla
+    look_zh: 南部海边的考古工地，木架与绳梯搭在半掘开的土坑上，散落着箱子、铲子与半埋的巨大骨骼
+    note_zh: 侏儒探矿者雷姆塔维尔的挖掘营；旧世任务「失踪的探矿者」起点
+    source_url: https://warcraft.wiki.gg/wiki/Remtravel%27s_Excavation
+    quote: "Remtravel's Excavation is an archeological dig site in Darkshore named after the famous archaeologist, Prospector Remtravel"
+    verified_by: ai_read
+
+  - id: ruins_of_mathystra
+    parent: darkshore
+    type: subzone
+    subtype: ruin
+    name_zh: 玛塞斯特拉废墟
+    name_en: Ruins of Mathystra
+    level: ""
+    faction: contested
+    coords: "[61.2, 20.5]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东北高地上的大片石砌遗址，成排断柱与碎裂的地面浮雕，遍地散着青铜残器
+    note_zh: 黑海岸最北的上古遗址，等级最高的一片野外（约 18-20）
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722&locale=zhCN
+    quote: "443|Ruins of Mathystra|玛塞斯特拉废墟|ParentAreaID=148"
+    verified_by: ai_read
+
+  - id: the_long_wash
+    parent: darkshore
+    type: subzone
+    subtype: ""
+    name_zh: 长桥码头
+    name_en: The Long Wash
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一小段被潮水反复冲刷的鹅卵石滩，浪线上堆着断木与海藻
+    note_zh: 黑海岸最短的一段海岸（名字与实际相反）
+    source_url: https://warcraft.wiki.gg/wiki/Long_Wash
+    quote: "The Long Wash is ironically enough the shortest stretch of coast in Darkshore"
+    verified_by: ai_read
+
+  - id: the_masters_glaive
+    parent: darkshore
+    type: subzone
+    subtype: ruin
+    name_zh: 主宰之剑
+    name_en: The Master's Glaive
+    level: ""
+    faction: contested
+    coords: "[39, 87]"
+    adjacent: []
+    era: vanilla
+    look_zh: 一柄巨大的黑色古神战刃斜插在荒地中央，刃身高过树冠，周围地面龟裂发黑，散落兽骨
+    note_zh: 黑海岸最南端的标志性奇观，旁有黑暗信徒营地；视觉冲击力最强的取景点之一
+    source_url: https://warcraft.wiki.gg/wiki/Master%27s_Glaive
+    quote: "The Master's Glaive is located in the southwest part of Darkshore"
+    verified_by: ai_read
+
+  - id: tower_of_althalaxx
+    parent: darkshore
+    type: subzone
+    subtype: tower
+    name_zh: 奥萨拉克斯之塔
+    name_en: Tower of Althalaxx
+    level: ""
+    faction: contested
+    coords: "[56, 26]"
+    adjacent: []
+    era: vanilla
+    look_zh: 林中一座孤立的圆形石塔，塔身爬满藤，塔顶露台上燃着幽绿的火盆
+    note_zh: 黑暗守护者（暗影议会）据点；旧世多段式任务链「奥萨拉克斯之塔」的舞台
+    source_url: https://warcraft.wiki.gg/wiki/Tower_of_Althalaxx
+    quote: "The Tower of Althalaxx is a tower located in northern Darkshore"
+    verified_by: ai_read
+
+  - id: twilight_shore
+    parent: darkshore
+    type: subzone
+    subtype: ""
+    name_zh: 暮光海岸
+    name_en: Twilight Shore
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 南段海岸，沙色偏黑，退潮后露出大片湿亮的岩坪与搁浅的巨型贝壳
+    note_zh: 黑海岸南部的海岸带，靠近雷姆塔维尔挖掘场
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722&locale=zhCN
+    quote: "2078|Twilight Shore|暮光海岸|ParentAreaID=148"
+    verified_by: ai_read
+
+  - id: twilight_vale
+    parent: darkshore
+    type: subzone
+    subtype: ""
+    name_zh: 暮光谷
+    name_en: Twilight Vale
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 南部的密林谷地，树干更粗更暗，林下终日半明半暗，地面厚厚一层针叶
+    note_zh: 黑海岸南部森林，自亚米萨兰以南直到灰谷边界
+    source_url: https://warcraft.wiki.gg/wiki/Twilight_Vale
+    quote: "Twilight Vale is the name of the southern forests of Darkshore, starting south of Ameth'Aran until the border with Ashenvale"
+    verified_by: ai_read
+
+  - id: wildbend_river
+    parent: darkshore
+    type: subzone
+    subtype: ""
+    name_zh: 急弯河
+    name_en: Wildbend River
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 南部急转的浅河，水流湍急冲过圆石，两岸是陡起的土坡与裸露树根
+    note_zh: 黑海岸南部河流，靠近古树之林
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722&locale=zhCN
+    quote: "454|Wildbend River|急弯河|ParentAreaID=148"
+    verified_by: ai_read
+
+  # ======================= 灰谷 Ashenvale =======================
+  - id: ashenvale
+    parent: northern_kalimdor
+    type: zone
+    subtype: ""
+    name_zh: 灰谷
+    name_en: Ashenvale
+    level: "18-30"
+    faction: contested
+    coords: ""
+    adjacent: [darkshore, felwood, azshara, stonetalon_mountains, the_barrens]
+    era: vanilla
+    look_zh: 深青苔绿的上古密林，银灰色参天树干间飘着薄雾，月亮井的冷蓝水光与倒木、精灵石雕交错
+    note_zh: 暗夜精灵祖地，旧世联盟/部落在此正面冲突（哨兵 vs 战歌氏族伐木场）；战歌峡谷战场设在南缘
+    source_url: https://warcraft.wiki.gg/wiki/Ashenvale
+    quote: "It is the ancestral homeland of the night elves, under the protection of their Sentinels and the children of the demigod Cenarius."
+    verified_by: ai_read
+
+  - id: astranaar
+    parent: ashenvale
+    type: settlement
+    subtype: town
+    name_zh: 阿斯特兰纳
+    name_en: Astranaar
+    level: ""
+    faction: alliance
+    coords: "[36, 50]"
+    adjacent: []
+    era: vanilla
+    look_zh: 湖心小岛上的精灵小镇，两座木桥连向岸边，紫顶塔楼与哨兵驻所围着中央空地
+    note_zh: 灰谷的联盟枢纽：旅店、飞行点、任务总站；旧世 PvP 服务器上被部落突袭的重灾区
+    source_url: https://warcraft.wiki.gg/wiki/Astranaar
+    quote: "Astranaar is a night elven town located in central Ashenvale"
+    verified_by: ai_read
+
+  - id: astranaar_flightpath
+    parent: astranaar
+    type: transport
+    subtype: flightpath
+    name_zh: 阿斯特兰纳飞行点
+    name_en: Astranaar Flight Path
+    level: ""
+    faction: alliance
+    coords: "[36, 50]"
+    adjacent: []
+    era: vanilla
+    look_zh: 镇口木台上栖着两只棕灰角鹰兽，台边插着写满航线的木牌
+    note_zh: TaxiNodes ID=28；旧世灰谷唯一的联盟飞行点
+    source_url: https://wago.tools/db2/TaxiNodes?build=1.15.9.69722&locale=zhCN
+    quote: "28|Astranaar, Ashenvale|阿斯特兰纳，灰谷"
+    verified_by: ai_read
+
+  - id: bathrans_haunt
+    parent: ashenvale
+    type: subzone
+    subtype: ruin
+    name_zh: 巴斯兰鬼屋
+    name_en: Bathran's Haunt
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 西北林中几栋烧塌的精灵木屋，焦黑梁架斜插进地，屋间浮着淡蓝色的亡魂
+    note_zh: 被诅咒的废弃居所，闹鬼；旧世任务「巴斯兰的头发」在此
+    source_url: https://warcraft.wiki.gg/wiki/Bathran%27s_Haunt
+    quote: "Bathran's Haunt is located in northwestern Ashenvale, north of the Ruins of Ordil'Aran and a ways east of the Zoram Strand"
+    verified_by: ai_read
+
+  - id: the_zoram_strand
+    parent: ashenvale
+    type: subzone
+    subtype: ""
+    name_zh: 佐拉姆海岸
+    name_en: The Zoram Strand
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 西北角的白沙海滩，浅水里立着半沉的上古石柱，纳迦从浪里爬上岸
+    note_zh: 灰谷西北出海口；黑暗深渊的洞口与部落的佐拉姆加前哨站都在这一带
+    source_url: https://warcraft.wiki.gg/wiki/Zoram_Strand
+    quote: "The Zoram Strand is a stretch of beach in the northwest corner of Ashenvale"
+    verified_by: ai_read
+
+  - id: zoramgar_outpost
+    parent: the_zoram_strand
+    type: settlement
+    subtype: port
+    name_zh: 佐拉姆加前哨站
+    name_en: Zoram'gar Outpost
+    level: ""
+    faction: horde
+    coords: "[12, 35]"
+    adjacent: []
+    era: vanilla
+    look_zh: 沙滩上的兽人木栅营地，尖木围墙插着红黑旗帜，简易码头伸进浅海
+    note_zh: 部落在灰谷西北的港口前哨，带飞行点；是部落玩家打黑暗深渊的集合点
+    source_url: https://warcraft.wiki.gg/wiki/Zoram%27gar_Outpost
+    quote: "The Zoram'gar Outpost is a Horde port outpost located on the Zoram Strand of Ashenvale"
+    verified_by: ai_read
+
+  - id: zoramgar_flightpath
+    parent: zoramgar_outpost
+    type: transport
+    subtype: flightpath
+    name_zh: 佐拉姆加前哨站飞行点
+    name_en: Zoram'gar Outpost Flight Path
+    level: ""
+    faction: horde
+    coords: "[12, 35]"
+    adjacent: []
+    era: vanilla
+    look_zh: 营地边的木桩栖架，一只黑褐色双足飞龙蹲在上面，尾巴扫着沙
+    note_zh: TaxiNodes ID=58
+    source_url: https://wago.tools/db2/TaxiNodes?build=1.15.9.69722&locale=zhCN
+    quote: "58|Zoram'gar Outpost, Ashenvale|佐拉姆加前哨站，灰谷"
+    verified_by: ai_read
+
+  - id: bloodtooth_camp
+    parent: ashenvale
+    type: settlement
+    subtype: camp
+    name_zh: 血牙营地
+    name_en: Bloodtooth Camp
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林间的小型兽人营地，几顶兽皮帐篷围着篝火，木桩上挂着风干的兽头
+    note_zh: 弗伦河西侧、南月亮井西南的部落小营
+    source_url: https://warcraft.wiki.gg/wiki/Bloodtooth_Camp
+    quote: "Bloodtooth Camp is located in Ashenvale just west of the Falfarren River and southwest of the southern Moonwell"
+    verified_by: ai_read
+
+  - id: bough_shadow
+    parent: ashenvale
+    type: subzone
+    subtype: ""
+    name_zh: 大树荫
+    name_en: Bough Shadow
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东北角林间的圆形空地，中央浮着一道翠绿色的光门，门边盘踞着绿色巨龙守卫
+    note_zh: 旧世四座翡翠梦境之门之一（另三座在菲拉斯、暮色森林、辛特兰），有绿龙守门
+    source_url: https://warcraft.wiki.gg/wiki/Bough_Shadow
+    quote: "Bough Shadow is located in the northeastern corner of Ashenvale, just beyond Forest Song"
+    verified_by: ai_read
+
+  - id: demon_fall_canyon
+    parent: ashenvale
+    type: subzone
+    subtype: ""
+    name_zh: 屠魔峡谷
+    name_en: Demon Fall Canyon
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 两壁夹峙的深谷，地面焦黑龟裂泛暗绿，谷底立着一座兽人纪念碑
+    note_zh: 格罗姆·地狱咆哮与玛诺洛斯同归于尽之地，谷中有纪念碑；旧世部落任务链的重要舞台
+    source_url: https://warcraft.wiki.gg/wiki/Demon_Fall_Canyon
+    quote: "Demon Fall Canyon is a fel-corrupted canyon located in Ashenvale, south of Felfire Hill and just east of Demon Fall Ridge"
+    verified_by: ai_read
+
+  - id: demon_fall_ridge
+    parent: ashenvale
+    type: subzone
+    subtype: ""
+    name_zh: 屠魔山
+    name_en: Demon Fall Ridge
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 俯瞰峡谷的高脊，岩面赤褐，山脊上残留着被烧焦的树桩
+    note_zh: 屠魔峡谷西侧、上方的山脊
+    source_url: https://warcraft.wiki.gg/wiki/Demon_Fall_Ridge
+    quote: "Demon Fall Ridge is located in Ashenvale, just west and above of Demon Fall Canyon"
+    verified_by: ai_read
+
+  - id: falfarren_river
+    parent: ashenvale
+    type: subzone
+    subtype: ""
+    name_zh: 弗伦河
+    name_en: Falfarren River
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 南北纵贯的宽河，水色墨绿，主干道在河上架着一座宽木桥
+    note_zh: 灰谷中部的南北分界水系，主路桥是东西向必经点
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722&locale=zhCN
+    quote: "433|Falfarren River|弗伦河|ParentAreaID=331"
+    verified_by: ai_read
+
+  - id: fallen_sky_lake
+    parent: ashenvale
+    type: subzone
+    subtype: ""
+    name_zh: 坠星湖
+    name_en: Fallen Sky Lake
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 圆形陨坑积成的湖，湖岸陡直，水色幽深发蓝，湖心露出一块黑色巨石
+    note_zh: 灰谷南部，银翼哨站以南、战歌劳工营地以西
+    source_url: https://warcraft.wiki.gg/wiki/Fallen_Sky_Lake
+    quote: "Fallen Sky Lake is located in Ashenvale south of Silverwing Outpost, west of the Warsong Labor Camp, and northeast of Silverwing Grove"
+    verified_by: ai_read
+
+  - id: felfire_hill
+    parent: ashenvale
+    type: subzone
+    subtype: ""
+    name_zh: 冥火岭
+    name_en: Felfire Hill
+    level: ""
+    faction: contested
+    coords: "[80, 68]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东部的低矮山丘，地面燃着零星绿色鬼火，树木枯死成黑炭状
+    note_zh: 恶魔残余活动区，碎木岗哨东南
+    source_url: https://warcraft.wiki.gg/wiki/Felfire_Hill
+    quote: "Felfire Hill is located in Ashenvale, southeast of Splintertree Post, southwest of the Warsong Lumber Camp, and northeast of the Dor'Danil Barrow Den"
+    verified_by: ai_read
+
+  - id: fire_scar_shrine
+    parent: ashenvale
+    type: subzone
+    subtype: ruin
+    name_zh: 火痕神殿
+    name_en: Fire Scar Shrine
+    level: ""
+    faction: contested
+    coords: "[26, 64]"
+    adjacent: []
+    era: vanilla
+    look_zh: 林中被焚毁的神殿遗址，石台熏黑开裂，四周立着萨特的骨制图腾
+    note_zh: 萨特占据的焚毁圣所，阿斯特兰纳西南
+    source_url: https://warcraft.wiki.gg/wiki/Fire_Scar_Shrine
+    quote: "Fire Scar Shrine is located in southwestern Ashenvale, southwest of Astranaar, south of the Shrine of Aessina, and west of the Ruins of Stardust"
+    verified_by: ai_read
+
+  - id: forest_song
+    parent: ashenvale
+    type: subzone
+    subtype: ruin
+    name_zh: 林歌神殿
+    name_en: Forest Song
+    level: ""
+    faction: contested
+    coords: "[85, 44]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东北角的古精灵遗址，白石台阶爬满苔，残柱围着一小片安静的空地
+    note_zh: 旧世是古老遗址，没有飞行点（飞行点与联盟哨站是 4.0.3 之后才加的）
+    source_url: https://warcraft.wiki.gg/wiki/Forest_Song
+    quote: "Forest Song is an ancient night elf ruin located in northeastern Ashenvale, just northeast of Satyrnaar, north of the Warsong Lumber Camp, and southwest of Bough Shadow"
+    verified_by: ai_read
+
+  - id: greenpaw_village
+    parent: ashenvale
+    type: settlement
+    subtype: village
+    name_zh: 绿爪村
+    name_en: Greenpaw Village
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林中熊怪的木棚村落，圆顶草棚围着中央火堆，木架上晾着兽皮
+    note_zh: 被腐化的熊怪村；灰谷中部，林中树居以南
+    source_url: https://warcraft.wiki.gg/wiki/Greenpaw_Village
+    quote: "Greenpaw Village is located in central Ashenvale, south of Raynewood Retreat, northeast of Silverwind Refuge, and northwest of the southern moonwell"
+    verified_by: ai_read
+
+  - id: iris_lake
+    parent: ashenvale
+    type: subzone
+    subtype: ""
+    name_zh: 伊瑞斯湖
+    name_en: Iris Lake
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 阿斯特兰纳以东的椭圆小湖，水面浮着成片鸢尾，岸边芦苇高过人
+    note_zh: 旧世独有：4.0.3 后湖水被抽干，改名「伊瑞斯湖遗迹」
+    source_url: https://warcraft.wiki.gg/wiki/Iris_Lake
+    quote: "Iris Lake was located in north-central Ashenvale, east of Astranaar and west of Shael'dryn's moonwell"
+    verified_by: ai_read
+
+  - id: kargathia_keep
+    parent: warsong_lumber_camp
+    type: settlement
+    subtype: tower
+    name_zh: 卡加希亚要塞
+    name_en: Kargathia Keep
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东部河畔的兽人木石堡垒，尖木高墙与瞭望塔，墙头插着战歌氏族旗
+    note_zh: 位于**战歌伐木营地的东部**（不是营地之外）、怒水河西岸的兽人据点，是战歌氏族军官的指挥所。G08-V 核验改挂：原挂在 `ashenvale` 下，但本节点自己的 quote 与 wiki 灰谷子区域列表都把它算作伐木营地的一部分（客户端 AreaTable 里 2637 的 ParentAreaID 确为 331 灰谷，本树按「地理包含」而非 AreaTable 父子挂，与 Aldrassil / 黑暗深渊等处口径一致）
+    source_url: https://warcraft.wiki.gg/wiki/Kargathia_Keep
+    quote: "Kargathia Keep is located in eastern Ashenvale, in the eastern part of the Warsong Lumber Camp just west of the Southfury River"
+    verified_by: ai_read
+
+  - id: lake_falathim
+    parent: ashenvale
+    type: subzone
+    subtype: ""
+    name_zh: 法拉希姆湖
+    name_en: Lake Falathim
+    level: ""
+    faction: contested
+    coords: "[21.41, 38.46]"
+    adjacent: []
+    era: vanilla
+    look_zh: 西部林间的清澈湖泊，湖底可见白色沙带，岸边有一圈低矮的精灵石基
+    note_zh: 灰谷西部，佐拉姆海岸东南、迈斯特拉岗哨西南
+    source_url: https://warcraft.wiki.gg/wiki/Lake_Falathim
+    quote: "Lake Falathim is located in western Ashenvale, southeast of the Zoram Strand and southwest of Maestra's Post"
+    verified_by: ai_read
+
+  - id: maestras_post
+    parent: ashenvale
+    type: settlement
+    subtype: camp
+    name_zh: 迈斯特拉岗哨
+    name_en: Maestra's Post
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林间小丘上的哨兵营地，两三顶紫色帐篷与一座木质瞭望台，周围插着月形旗
+    note_zh: 灰谷西部的哨兵前哨；玩家从黑海岸南下进入灰谷后的第一个联盟落脚点
+    source_url: https://warcraft.wiki.gg/wiki/Maestra%27s_Post
+    quote: "Maestra's Post is located in western Ashenvale, south of the Ruins of Ordil'Aran and northwest of Astranaar"
+    verified_by: ai_read
+
+  - id: ashenvale_moonwell
+    parent: ashenvale
+    type: poi
+    subtype: ""
+    name_zh: 月亮井
+    name_en: Moonwell
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林间圆形石台围着一池冷蓝发光的井水，水面上方浮着细小光点，四角立着雕花石柱
+    note_zh: 灰谷有两口被单独标名的月亮井（北井约 [53,46]，南井约 [59,59]）；客户端里共用同一个 area 名「月亮井」
+    source_url: https://warcraft.wiki.gg/wiki/Moonwell
+    quote: "A moonwell is an upwelling of magical waters created by the night elves to maintain and restore their magical powers"
+    verified_by: ai_read
+
+  - id: mystral_lake
+    parent: ashenvale
+    type: subzone
+    subtype: ""
+    name_zh: 密斯特拉湖
+    name_en: Mystral Lake
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 南部的开阔湖面，四周被高树围成一圈，水色近乎墨绿，晨雾贴着水面
+    note_zh: 灰谷南部，银风避难所以南、石爪小径以东
+    source_url: https://warcraft.wiki.gg/wiki/Mystral_Lake
+    quote: "Mystral Lake (or Lake Mystral) is located in south-central Ashenvale, just south of Silverwind Refuge and east of Talondeep Vale"
+    verified_by: ai_read
+
+  - id: night_run
+    parent: ashenvale
+    type: subzone
+    subtype: ""
+    name_zh: 夜道谷
+    name_en: Night Run
+    level: ""
+    faction: contested
+    coords: "[66.6, 57.0]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东部的狭长林道谷地，两侧坡上是密集的黑绿树墙，谷底一条被踩实的土路
+    note_zh: 灰谷东部，林中树居以东、碎木岗哨西北
+    source_url: https://warcraft.wiki.gg/wiki/Night_Run
+    quote: "Night Run is located in east-central Ashenvale, east of Raynewood Retreat and northwest of Splintertree Post"
+    verified_by: ai_read
+
+  - id: nightsong_woods
+    parent: ashenvale
+    type: subzone
+    subtype: ""
+    name_zh: 夜歌森林
+    name_en: Nightsong Woods
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 灰谷东半部的连片深林，树冠遮得几乎不见天，林下常年昏暗，苔藓覆盖一切
+    note_zh: 从林中树居一直延伸到艾萨拉边界的东部森林统称
+    source_url: https://warcraft.wiki.gg/wiki/Nightsong_Woods
+    quote: "Nightsong Woods is the eastern part of Ashenvale forest, stretching from Raynewood Retreat and the road to Felwood in the west, all the way east to Azshara"
+    verified_by: ai_read
+
+  - id: raynewood_retreat
+    parent: ashenvale
+    type: settlement
+    subtype: village
+    name_zh: 林中树居
+    name_en: Raynewood Retreat
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一株参天巨树周围搭起的多层木台与旋梯，树干上开出窗口，平台边缘垂下绳梯
+    note_zh: 灰谷中北部、围绕同名巨树建成的精灵据点
+    source_url: https://warcraft.wiki.gg/wiki/Raynewood_Retreat
+    quote: "Raynewood Retreat is an area located in north-central Ashenvale, around the Great Tree of the same name, east of Shael'dryn's moonwell and west of Night Run"
+    verified_by: ai_read
+
+  - id: satyrnaar
+    parent: ashenvale
+    type: settlement
+    subtype: camp
+    name_zh: 萨提纳尔
+    name_en: Satyrnaar
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 废墟改成的萨特聚落，断墙上钉着兽骨与暗紫布幡，地面画着血色符号
+    note_zh: 萨特据点，碎木岗哨东北
+    source_url: https://warcraft.wiki.gg/wiki/Satyrnaar
+    quote: "Satyrnaar is located in northeastern Ashenvale, northeast of Splintertree Post and southwest of Forest Song"
+    verified_by: ai_read
+
+  - id: silverwind_refuge
+    parent: ashenvale
+    type: settlement
+    subtype: ruin
+    name_zh: 银风避难所
+    name_en: Silverwind Refuge
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 湖畔一组半塌的精灵石屋，屋顶塌出洞口，院内立着倾斜的月形石碑
+    note_zh: 灰谷中南部的精灵建筑群；4.0.3 后被改写成部落前哨（旧世不是）
+    source_url: https://warcraft.wiki.gg/wiki/Silverwind_Refuge
+    quote: "Silverwind Refuge is located in south-central Ashenvale, just north of Mystral Lake"
+    verified_by: ai_read
+
+  - id: silverwing_grove
+    parent: ashenvale
+    type: subzone
+    subtype: ""
+    name_zh: 银翼树林
+    name_en: Silverwing Grove
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 南缘的哨兵林地，林间立着紫顶帐篷与一道发光的战场传送门
+    note_zh: 战歌峡谷战场的联盟入口（银翼哨兵驻地）
+    source_url: https://warcraft.wiki.gg/wiki/Silverwing_Grove
+    quote: "Silverwing Grove is the Silverwing Sentinels base"
+    verified_by: ai_read
+
+  - id: silverwing_outpost
+    parent: ashenvale
+    type: settlement
+    subtype: camp
+    name_zh: 银翼哨站
+    name_en: Silverwing Outpost
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林边的小型哨兵站，两顶帐篷与一座箭塔，塔上哨兵持弓远眺
+    note_zh: 灰谷南部，贫瘠之地边界以北、碎木岗哨西南
+    source_url: https://warcraft.wiki.gg/wiki/Silverwing_Outpost
+    quote: "Silverwing Outpost is located in south-central Ashenvale, north of the border with the Barrens and southwest of Splintertree Post"
+    verified_by: ai_read
+
+  - id: southfury_river
+    parent: ashenvale
+    type: subzone
+    subtype: ""
+    name_zh: 怒水河
+    name_en: Southfury River
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 宽阔湍急的大河，水色浑黄，两岸是陡峭的红土崖壁，河上架着一座长木桥
+    note_zh: 卡利姆多最显著的河流，是灰谷 / 艾萨拉 / 杜隆塔尔之间的天然界河（客户端里灰谷侧 879、艾萨拉侧 878 同名）。本节点＝灰谷段；艾萨拉段 G08-V 核验时补成了独立节点 `southfury_river_azshara`
+    source_url: https://warcraft.wiki.gg/wiki/Southfury_River
+    quote: "The Southfury River acts as the border between Ashenvale (left) and Azshara (right)."
+    verified_by: ai_read
+
+  - id: splintertree_post
+    parent: ashenvale
+    type: settlement
+    subtype: camp
+    name_zh: 碎木岗哨
+    name_en: Splintertree Post
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东部林中的兽人木栅要塞，削尖原木围墙、瞭望塔与中央大帐，地上堆着新伐的木料
+    note_zh: 部落在灰谷的主据点，带飞行点；旧世灰谷部落任务的总站
+    source_url: https://warcraft.wiki.gg/wiki/Splintertree_Post
+    quote: "Splintertree Post is a Horde outpost in Ashenvale, lying just north-west of Felfire Hill"
+    verified_by: ai_read
+
+  - id: splintertree_flightpath
+    parent: splintertree_post
+    type: transport
+    subtype: flightpath
+    name_zh: 碎木岗哨飞行点
+    name_en: Splintertree Post Flight Path
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 营地内的木桩栖架，一只灰绿双足飞龙俯身啃食，旁边立着骑手
+    note_zh: TaxiNodes ID=61
+    source_url: https://wago.tools/db2/TaxiNodes?build=1.15.9.69722&locale=zhCN
+    quote: "61|Splintertree Post, Ashenvale|碎木岗哨，灰谷"
+    verified_by: ai_read
+
+  - id: the_dordanil_barrow_den
+    parent: ashenvale
+    type: subzone
+    subtype: ""
+    name_zh: 朵丹尼尔兽穴
+    name_en: The Dor'Danil Barrow Den
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 树根缠绕的地下墓穴入口，向下的石阶两侧刻着精灵浮雕，洞内漂着淡绿雾气
+    note_zh: 微型地下城（非副本）：沉睡德鲁伊的兽穴，旧世已被腐化
+    source_url: https://warcraft.wiki.gg/wiki/Dor%27Danil_Barrow_Den
+    quote: "The Dor'Danil Barrow Den is located in Ashenvale, south of Splintertree Post, and southwest of Felfire Hill"
+    verified_by: ai_read
+
+  - id: the_howling_vale
+    parent: ashenvale
+    type: subzone
+    subtype: ""
+    name_zh: 狼嚎谷
+    name_en: The Howling Vale
+    level: ""
+    faction: contested
+    coords: "[52, 37]"
+    adjacent: []
+    era: vanilla
+    look_zh: 谷地深处的洞窟，洞口垂着枯藤，洞内散落碎骨，夜里传出狼嚎回声
+    note_zh: 灰谷北部靠近费伍德边界的洞穴
+    source_url: https://warcraft.wiki.gg/wiki/Howling_Vale
+    quote: "The Howling Vale is a cave located in north-central Ashenvale, just southwest of the border to Felwood"
+    verified_by: ai_read
+
+  - id: the_ruins_of_ordil_aran
+    parent: ashenvale
+    type: subzone
+    subtype: ruin
+    name_zh: 奥迪拉兰废墟
+    name_en: The Ruins of Ordil'Aran
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 西北林中的小片废墟，几段矮墙与倾倒的柱础埋在落叶里
+    note_zh: 灰谷西北，迈斯特拉岗哨以北
+    source_url: https://warcraft.wiki.gg/wiki/Ruins_of_Ordil%27Aran
+    quote: "The Ruins of Ordil'Aran are located in northwestern Ashenvale, north of Maestra's Post and south of Bathran's Haunt"
+    verified_by: ai_read
+
+  - id: the_ruins_of_stardust
+    parent: ashenvale
+    type: subzone
+    subtype: ruin
+    name_zh: 星尘废墟
+    name_en: The Ruins of Stardust
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林间空地上的白石遗址，断柱排成半圆，地面镶嵌着已磨平的星形图案
+    note_zh: 阿斯特兰纳以南、石爪小径以西
+    source_url: https://warcraft.wiki.gg/wiki/Ruins_of_Stardust
+    quote: "The Ruins of Stardust are located in southwestern Ashenvale, south of Astranaar and west of the Talondeep Path"
+    verified_by: ai_read
+
+  - id: the_shady_nook
+    parent: ashenvale
+    type: subzone
+    subtype: ""
+    name_zh: 林荫小径
+    name_en: The Shady Nook
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一处被高树完全遮蔽的小凹地，光线极暗，地上长满伞状蘑菇
+    note_zh: 灰谷中部，林中树居以南、绿爪村以东
+    source_url: https://warcraft.wiki.gg/wiki/Shady_Nook
+    quote: "The Shady Nook is located in Ashenvale, south of Raynewood Retreat and east of Greenpaw Village"
+    verified_by: ai_read
+
+  - id: the_shrine_of_aessina
+    parent: ashenvale
+    type: subzone
+    subtype: ruin
+    name_zh: 艾森娜神殿
+    name_en: The Shrine of Aessina
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林中的自然女神祭坛，藤蔓缠绕的石像立在浅水中，四周开着白色小花
+    note_zh: 灰谷西南，火痕神殿以北
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722&locale=zhCN
+    quote: "416|The Shrine of Aessina|艾森娜神殿|ParentAreaID=331"
+    verified_by: ai_read
+
+  - id: the_talondeep_path
+    parent: ashenvale
+    type: subzone
+    subtype: ""
+    name_zh: 石爪小径
+    name_en: The Talondeep Path
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 凿穿山体的粗糙隧道，木支撑架顶着岩顶，洞内点着零星火把
+    note_zh: 旧世连接灰谷与石爪山的隧道（部落开凿）；4.0.3 后被封
+    source_url: https://warcraft.wiki.gg/wiki/Talondeep_Path
+    quote: "The Talondeep Path was a winding tunnel that connected Ashenvale with the Stonetalon Mountains"
+    verified_by: ai_read
+
+  - id: thistlefur_village
+    parent: ashenvale
+    type: settlement
+    subtype: village
+    name_zh: 蓟皮村
+    name_en: Thistlefur Village
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 山坡上的熊怪村，锥形树皮棚屋沿坡排布，村后是通向洞穴的黑色洞口
+    note_zh: 蓟皮熊怪聚居地（村后洞穴即蓟皮要塞）；阿斯特兰纳以北
+    source_url: https://warcraft.wiki.gg/wiki/Thistlefur_Village
+    quote: "Thistlefur Village is a village located in the westcentral area of Ashenvale, north of Astranaar"
+    verified_by: ai_read
+
+  - id: warsong_labor_camp
+    parent: ashenvale
+    type: settlement
+    subtype: camp
+    name_zh: 战歌劳工营地
+    name_en: Warsong Labor Camp
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林间空出的泥地工场，成堆原木与简易棚屋，地上是深深的车辙
+    note_zh: 战歌氏族在灰谷东南的伐木劳工点
+    source_url: https://warcraft.wiki.gg/wiki/Warsong_Labor_Camp
+    quote: "The Warsong Labor Camp is located in southeastern Ashenvale, east of Fallen Sky Lake and southwest of Dor'Danil Barrow Den"
+    verified_by: ai_read
+
+  - id: warsong_lumber_camp
+    parent: ashenvale
+    type: settlement
+    subtype: camp
+    name_zh: 战歌伐木营地
+    name_en: Warsong Lumber Camp
+    level: ""
+    faction: horde
+    coords: "[84.1, 62.6]"
+    adjacent: []
+    era: vanilla
+    look_zh: 被砍成秃地的一大片林区，树桩密布，中央立着伐木机与巨大的锯木台，浓烟自炉口冒出
+    note_zh: 战歌氏族的主伐木场，也是灰谷「联盟 vs 部落」矛盾的核心景观
+    source_url: https://warcraft.wiki.gg/wiki/Warsong_Lumber_Camp
+    quote: "Warsong Lumber Camp is Warsong clan's lumber-cutting camp in Ashenvale"
+    verified_by: ai_read
+
+  - id: xavian
+    parent: ashenvale
+    type: settlement
+    subtype: ruin
+    name_zh: 萨维亚
+    name_en: Xavian
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 建在古神殿废墟上的萨特营地，残柱之间吊着兽皮帐幕，地面插满带刺骨杖
+    note_zh: 萨维亚萨特的据点，萨提纳尔以北、林歌神殿以西
+    source_url: https://warcraft.wiki.gg/wiki/Xavian
+    quote: "Xavian is a satyr sect located in northeastern Ashenvale, living in the ruins of an ancient Night elf temple, north of Satyrnaar and west of Forest Song"
+    verified_by: ai_read
+
+
+  # ======================= 费伍德森林 Felwood =======================
+  - id: felwood
+    parent: northern_kalimdor
+    type: zone
+    subtype: ""
+    name_zh: 费伍德森林
+    name_en: Felwood
+    level: "48-55"
+    faction: contested
+    coords: ""
+    adjacent: [ashenvale, winterspring, moonglade]
+    era: vanilla
+    look_zh: 病态荧绿与褐紫的腐化森林，冒绿泡的污水河穿过焦黑扭曲的树干，空气里浮着绿色孢子雾
+    note_zh: 燃烧军团污染的旧灰谷北部；与冬泉谷、月光林地之间靠木喉要塞隧道连通（需木喉熊怪声望）
+    source_url: https://warcraft.wiki.gg/wiki/Felwood
+    quote: "Felwood is a corrupted forest filled with tainted creatures of the woods, demonic satyr and infernals, and rotting treants and ancients"
+    verified_by: ai_read
+
+  - id: bloodvenom_post
+    parent: felwood
+    type: settlement
+    subtype: camp
+    name_zh: 血毒岗哨
+    name_en: Bloodvenom Post
+    level: ""
+    faction: horde
+    coords: "[34, 52]"
+    adjacent: []
+    era: vanilla
+    look_zh: 污河边的部落小营，几顶皮帐与一圈尖木桩，火堆的烟被绿雾压得贴地
+    note_zh: 部落在费伍德的唯一据点，带飞行点
+    source_url: https://warcraft.wiki.gg/wiki/Bloodvenom_Post
+    quote: "Bloodvenom Post was a tiny Horde outpost in Felwood near the Bloodvenom River"
+    verified_by: ai_read
+
+  - id: bloodvenom_flightpath
+    parent: bloodvenom_post
+    type: transport
+    subtype: flightpath
+    name_zh: 血毒岗哨飞行点
+    name_en: Bloodvenom Post Flight Path
+    level: ""
+    faction: horde
+    coords: "[34, 52]"
+    adjacent: []
+    era: vanilla
+    look_zh: 帐篷旁的木架上蹲着一只深绿双足飞龙，翅膜上沾着孢子粉
+    note_zh: TaxiNodes ID=48（客户端中文标签写作「血毒河，费伍德森林」，与区域名「血毒岗哨」略有出入）
+    source_url: https://wago.tools/db2/TaxiNodes?build=1.15.9.69722&locale=zhCN
+    quote: "48|Bloodvenom Post, Felwood|血毒河，费伍德森林"
+    verified_by: ai_read
+
+  - id: bloodvenom_falls
+    parent: felwood
+    type: subzone
+    subtype: ""
+    name_zh: 血毒瀑布
+    name_en: Bloodvenom Falls
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 高处垂落的浑浊瀑布，水呈暗绿发黄，落点翻起厚厚的黄白泡沫
+    note_zh: 血毒河的源头，费伍德中北部高地
+    source_url: https://warcraft.wiki.gg/wiki/Bloodvenom_Falls
+    quote: "Bloodvenom Falls is a corrupted waterfall high in Felwood"
+    verified_by: ai_read
+
+  - id: bloodvenom_river
+    parent: felwood
+    type: subzone
+    subtype: ""
+    name_zh: 血毒河
+    name_en: Bloodvenom River
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 纵贯全区的污染河流，水面浮着荧绿色油膜并不断冒泡，河岸的草全都枯白
+    note_zh: 费伍德的主干水系，从北向南贯穿
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722&locale=zhCN
+    quote: "1764|Bloodvenom River|血毒河|ParentAreaID=361"
+    verified_by: ai_read
+
+  - id: deadwood_village
+    parent: felwood
+    type: settlement
+    subtype: village
+    name_zh: 死木村
+    name_en: Deadwood Village
+    level: ""
+    faction: contested
+    coords: "[50.22, 85.79]"
+    adjacent: []
+    era: vanilla
+    look_zh: 南部的熊怪营寨，歪斜的木棚与兽骨图腾插在泥地里，篝火烧着发绿的火苗
+    note_zh: 死木熊怪（被腐化的熊怪部族）聚居地；旧世「死木熊怪声望」任务的主要刷怪区
+    source_url: https://warcraft.wiki.gg/wiki/Deadwood_Village
+    quote: "Deadwood Village is a furbolg village of the Deadwood tribe in southern Felwood"
+    verified_by: ai_read
+
+  - id: emerald_sanctuary
+    parent: felwood
+    type: settlement
+    subtype: camp
+    name_zh: 翡翠圣地
+    name_en: Emerald Sanctuary
+    level: ""
+    faction: neutral
+    coords: "[51, 80]"
+    adjacent: []
+    era: vanilla
+    look_zh: 腐化森林中一小块仍然鲜绿的林地，绿草与健康树木被一道看不见的界线圈住，中央立着德鲁伊的石台
+    note_zh: 翡翠之环德鲁伊的营地，是费伍德南部唯一的中立安全点（与污染景观形成强对比，取景价值高）
+    source_url: https://warcraft.wiki.gg/wiki/Emerald_Sanctuary
+    quote: "Emerald Sanctuary is a camp of the Emerald Circle in southeastern Felwood"
+    verified_by: ai_read
+
+  - id: felpaw_village
+    parent: felwood
+    type: settlement
+    subtype: village
+    name_zh: 魔爪村
+    name_en: Felpaw Village
+    level: ""
+    faction: contested
+    coords: "[61, 14]"
+    adjacent: []
+    era: vanilla
+    look_zh: 最北端的熊怪村落，棚屋密集，村口木架上挂着腐烂的战利品
+    note_zh: 魔爪熊怪聚居地，紧挨木喉要塞入口
+    source_url: https://warcraft.wiki.gg/wiki/Felpaw_Village
+    quote: "Felpaw Village is a furbolg settlement that lies in the very north of Felwood, near the entrance of Timbermaw Hold"
+    verified_by: ai_read
+
+  - id: irontree_woods
+    parent: felwood
+    type: subzone
+    subtype: ""
+    name_zh: 铁木森林
+    name_en: Irontree Woods
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 北部林区，树干粗硬发灰像铁铸的柱子，地面覆着一层灰白木屑
+    note_zh: 费伍德北部，扭木类怪物的活动区
+    source_url: https://warcraft.wiki.gg/wiki/Irontree_Woods
+    quote: "Irontree Woods lies in northern Felwood"
+    verified_by: ai_read
+
+  - id: irontree_cavern
+    parent: irontree_woods
+    type: subzone
+    subtype: ""
+    name_zh: 铁木山洞
+    name_en: Irontree Cavern
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 深入山体的湿洞，洞壁生着发光的绿色菌毯，地面积着浅浅的腐水
+    note_zh: 铁木森林中的深洞，内有扭木撕裂者与苔藓鞭笞者
+    source_url: https://warcraft.wiki.gg/wiki/Irontree_Cavern
+    quote: "Irontree Cavern is a deep cave inhabited by Warpwood Shredders and Warpwood Moss Flayers"
+    verified_by: ai_read
+
+  - id: jadefire_glen
+    parent: felwood
+    type: settlement
+    subtype: camp
+    name_zh: 碧火谷
+    name_en: Jadefire Glen
+    level: ""
+    faction: contested
+    coords: "[42, 86]"
+    adjacent: []
+    era: vanilla
+    look_zh: 南端的萨特营地，绿色火盆排成弧形，地上画着发光的符文圈
+    note_zh: 碧火萨特据点（南）
+    source_url: https://warcraft.wiki.gg/wiki/Jadefire_Glen
+    quote: "Jadefire Glen is an encampment of demonic satyr in southern Felwood"
+    verified_by: ai_read
+
+  - id: jadefire_run
+    parent: felwood
+    type: settlement
+    subtype: camp
+    name_zh: 碧火小径
+    name_en: Jadefire Run
+    level: ""
+    faction: contested
+    coords: "[43.55, 17.96]"
+    adjacent: []
+    era: vanilla
+    look_zh: 北部林道旁的萨特营，帐幕挂在枯树之间，火光把绿雾照成一团团光晕
+    note_zh: 碧火萨特据点（北）
+    source_url: https://warcraft.wiki.gg/wiki/Jadefire_Run
+    quote: "Jadefire Run is a satyr encampment in northern Felwood"
+    verified_by: ai_read
+
+  - id: jaedenar
+    parent: felwood
+    type: settlement
+    subtype: ruin
+    name_zh: 加德纳尔
+    name_en: Jaedenar
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 被改造成邪教据点的洼地聚落，木屋顶插着骨制旗杆，地面刻满巨大的召唤法阵
+    note_zh: 暗影议会在艾泽拉斯的据点，以燃烧军团首领之名命名；旧世 50 级左右的任务集群
+    source_url: https://warcraft.wiki.gg/wiki/Jaedenar
+    quote: "Jaedenar is an area in Felwood that has been completely taken over by the Shadow Council"
+    verified_by: ai_read
+
+  - id: shadow_hold
+    parent: jaedenar
+    type: subzone
+    subtype: ""
+    name_zh: 暗影堡
+    name_en: Shadow Hold
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 地下多层迷宫，紫黑石壁上嵌着幽绿灯火，恶魔与术士的身影在廊道尽头晃动
+    note_zh: 微型地下城（非副本）：原为暗夜精灵兽穴，旧世被暗影议会改成巨大的地下堡垒
+    source_url: https://warcraft.wiki.gg/wiki/Shadow_Hold
+    quote: "Shadow Hold, located within Jaedenar in western Felwood, is a former night elf barrow den which now serves as the Shadow Council's stronghold on Azeroth."
+    verified_by: ai_read
+
+  - id: shrine_of_the_deceiver
+    parent: jaedenar
+    type: poi
+    subtype: ""
+    name_zh: 欺诈者神祠
+    name_en: Shrine of the Deceiver
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 加德纳尔中央的黑石祭坛，坛面刻着扭曲符号，四周插着燃绿火的铁杖
+    note_zh: 加德纳尔内的祭坛（供奉基尔加丹「欺诈者」）
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722&locale=zhCN
+    quote: "1771|Shrine of the Deceiver|欺诈者神祠|ParentAreaID=361"
+    verified_by: ai_read
+
+  - id: morlos_aran
+    parent: felwood
+    type: subzone
+    subtype: ruin
+    name_zh: 摩罗萨兰
+    name_en: Morlos'Aran
+    level: ""
+    faction: contested
+    coords: "[56, 87]"
+    adjacent: []
+    era: vanilla
+    look_zh: 南部林中的古精灵遗址，断柱歪斜，柱身的雕纹被绿色苔垢盖住
+    note_zh: 大分裂之前的暗夜精灵聚落遗迹，费伍德南部
+    source_url: https://warcraft.wiki.gg/wiki/Morlos%27Aran
+    quote: "Morlos'Aran was once a great night elf settlement, long before the Great Sundering"
+    verified_by: ai_read
+
+  - id: ruins_of_constellas
+    parent: felwood
+    type: subzone
+    subtype: ruin
+    name_zh: 克斯特拉斯废墟
+    name_en: Ruins of Constellas
+    level: ""
+    faction: contested
+    coords: "[42, 68]"
+    adjacent: []
+    era: vanilla
+    look_zh: 平地上的一片白石残墙，德鲁伊与萨特在废墟间对峙，地面散落断裂的法杖
+    note_zh: 费伍德中部废墟，萨特与德鲁伊争夺之地
+    source_url: https://warcraft.wiki.gg/wiki/Ruins_of_Constellas
+    quote: "The Ruins of Constellas is an area of Felwood"
+    verified_by: ai_read
+
+  - id: shatter_scar_vale
+    parent: felwood
+    type: subzone
+    subtype: ""
+    name_zh: 碎痕谷
+    name_en: Shatter Scar Vale
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 陨石砸出的浅坑群，坑底裸露出赤黑岩块，坑壁边缘的树全被推倒成放射状
+    note_zh: 费伍德北部的陨坑地带（地狱火降落处），血毒瀑布以北
+    source_url: https://warcraft.wiki.gg/wiki/Shatter_Scar_Vale
+    quote: "Shatter Scar Vale lies north of the Bloodvenom Falls in Felwood"
+    verified_by: ai_read
+
+  - id: talonbranch_glade
+    parent: felwood
+    type: settlement
+    subtype: camp
+    name_zh: 刺枝林地
+    name_en: Talonbranch Glade
+    level: ""
+    faction: alliance
+    coords: "[62, 24]"
+    adjacent: []
+    era: vanilla
+    look_zh: 北部林中的小块净土，紫顶帐篷立在尚未枯死的绿草上，角鹰兽栖在旁边木架上
+    note_zh: 联盟在费伍德的唯一据点，带飞行点；紧邻木喉要塞南口
+    source_url: https://warcraft.wiki.gg/wiki/Talonbranch_Glade
+    quote: "Talonbranch Glade is an Alliance outpost in the northern parts of Felwood"
+    verified_by: ai_read
+
+  - id: talonbranch_flightpath
+    parent: talonbranch_glade
+    type: transport
+    subtype: flightpath
+    name_zh: 刺枝林地飞行点
+    name_en: Talonbranch Glade Flight Path
+    level: ""
+    faction: alliance
+    coords: "[62, 24]"
+    adjacent: []
+    era: vanilla
+    look_zh: 营地边的木栖架，灰白角鹰兽收着翅膀站立，脚下铺着干草
+    note_zh: TaxiNodes ID=65
+    source_url: https://wago.tools/db2/TaxiNodes?build=1.15.9.69722&locale=zhCN
+    quote: "65|Talonbranch Glade, Felwood|刺枝林地，费伍德森林"
+    verified_by: ai_read
+
+  - id: timbermaw_hold
+    parent: felwood
+    type: subzone
+    subtype: ""
+    name_zh: 木喉要塞
+    name_en: Timbermaw Hold
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 凿在山体里的熊怪要塞隧道，圆形洞厅由粗木梁撑起，中央燃着大火塘，墙上挂满图腾与兽皮
+    note_zh: 木喉熊怪的主巢，同时是连通费伍德 / 冬泉谷 / 月光林地的三向隧道；声望不够时熊怪会攻击玩家（旧世跑图的经典难关）
+    source_url: https://warcraft.wiki.gg/wiki/Timbermaw_Hold
+    quote: "Timbermaw Hold is the capital of the Timbermaw tribe of furbolgs"
+    verified_by: ai_read
+
+  # ======================= 冬泉谷 Winterspring =======================
+  - id: winterspring
+    parent: northern_kalimdor
+    type: zone
+    subtype: ""
+    name_zh: 冬泉谷
+    name_en: Winterspring
+    level: "55-60"
+    faction: contested
+    coords: ""
+    adjacent: [felwood, moonglade]
+    era: vanilla
+    look_zh: 蓝白高原雪谷，深蓝夜空挂着极光，墨绿云杉挂满冰凌，齐膝厚雪与冻结的湖面
+    note_zh: 旧世 55-60 级顶级野外区；对外只有木喉要塞隧道一条陆路（通费伍德与月光林地）
+    source_url: https://warcraft.wiki.gg/wiki/Winterspring
+    quote: "Winterspring is a snowy valley located in Northern Kalimdor, east of Felwood, northeast of Mount Hyjal, and north of Azshara"
+    verified_by: ai_read
+
+  - id: everlook
+    parent: winterspring
+    type: settlement
+    subtype: town
+    name_zh: 永望镇
+    name_en: Everlook
+    level: ""
+    faction: neutral
+    coords: "[59.2, 49.8]"
+    adjacent: []
+    era: vanilla
+    look_zh: 雪地里的哥布林贸易站，铁皮棚屋与冒黑烟的烟囱挤在一起，货箱与蒸汽管道堆在路边
+    note_zh: 冬泉谷唯一的中立城镇（steamwheedle 联合会/藏宝海湾贸易集团），双阵营共用：旅店、飞行点、各类商人与材料贩子
+    source_url: https://warcraft.wiki.gg/wiki/Everlook
+    quote: "Everlook is a trading post run by the goblins of the Steamwheedle Cartel"
+    verified_by: ai_read
+
+  - id: everlook_flightpath
+    parent: everlook
+    type: transport
+    subtype: flightpath
+    name_zh: 永望镇飞行点
+    name_en: Everlook Flight Path
+    level: ""
+    faction: neutral
+    coords: "[59.2, 49.8]"
+    adjacent: []
+    era: vanilla
+    look_zh: 镇外雪地上的双层木台，两侧分别栖着角鹰兽与双足飞龙，雪被踩成黑泥
+    note_zh: TaxiNodes ID=52/53（中立镇，两阵营各有一个坐骑点）
+    source_url: https://wago.tools/db2/TaxiNodes?build=1.15.9.69722&locale=zhCN
+    quote: "52|Everlook, Winterspring|永望镇，冬泉谷"
+    verified_by: ai_read
+
+  - id: starfall_village
+    parent: winterspring
+    type: settlement
+    subtype: village
+    name_zh: 坠星村
+    name_en: Starfall Village
+    level: ""
+    faction: alliance
+    coords: "[49, 40.2]"
+    adjacent: []
+    era: vanilla
+    look_zh: 雪线上的暗夜精灵小村，紫顶木屋被雪压着，屋檐下挂着蓝色灯笼
+    note_zh: 冬泉谷唯一的联盟聚落（只有商人与任务发布者，旧世无飞行点、无旅店）
+    source_url: https://warcraft.wiki.gg/wiki/Starfall_Village
+    quote: "Starfall Village is a small night elven settlement of Alliance vendors and quest givers in Winterspring, the only Alliance settlement in the region"
+    verified_by: ai_read
+
+  - id: timbermaw_post
+    parent: winterspring
+    type: settlement
+    subtype: camp
+    name_zh: 木喉岗哨
+    name_en: Timbermaw Post
+    level: ""
+    faction: contested
+    coords: "[35, 57]"
+    adjacent: []
+    era: vanilla
+    look_zh: 雪地路边的小熊怪营，几顶圆棚与一堆柴火，雪上印满宽大的掌印
+    note_zh: 木喉熊怪在冬泉谷西侧的小营地，冰火温泉东南、凯斯利尔湖以西
+    source_url: https://warcraft.wiki.gg/wiki/Timbermaw_Post
+    quote: "Timbermaw Post is a small furbolg camp located southeast across the road from the Frostfire Hot Springs, and west of Lake Kel'Theril"
+    verified_by: ai_read
+
+  - id: winterfall_village
+    parent: winterspring
+    type: settlement
+    subtype: village
+    name_zh: 寒水村
+    name_en: Winterfall Village
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东部雪坡上的大型熊怪村，锥形棚屋成群，村中大火堆边架着熬煮的铁锅
+    note_zh: 被腐化的寒水熊怪聚居地（旧世木喉声望的主要刷怪点之一），永望镇附近
+    source_url: https://warcraft.wiki.gg/wiki/Winterfall_Village
+    quote: "Winterfall Village is a large village of corrupted furbolgs in the far eastern area of Winterspring, near Everlook"
+    verified_by: ai_read
+
+  - id: lake_kel_theril
+    parent: winterspring
+    type: subzone
+    subtype: ""
+    name_zh: 凯斯利尔湖
+    name_en: Lake Kel'Theril
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 中部的冻湖，冰面淡蓝透明，冰下可见沉没的白石建筑，湖面上飘着半透明的精灵亡魂
+    note_zh: 冰封湖面下埋着上古精灵城市；旧世著名的「幽魂捞碎片」刷怪点
+    source_url: https://warcraft.wiki.gg/wiki/Lake_Kel%27Theril
+    quote: "Lake Kel'Theril is a small frozen lake in central Winterspring"
+    verified_by: ai_read
+
+  - id: the_ruins_of_kel_theril
+    parent: lake_kel_theril
+    type: subzone
+    subtype: ruin
+    name_zh: 凯斯利尔废墟
+    name_en: The Ruins of Kel'Theril
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 湖畔与冰下的白石残城，断柱成排插出冰面，雪掩住了坍塌的台阶
+    note_zh: 微型地下城（非副本）：上古暗夜精灵大城遗迹，高地精亡魂游荡
+    source_url: https://warcraft.wiki.gg/wiki/Ruins_of_Kel%27Theril
+    quote: "The Ruins of Kel'Theril are the remnants of a great night elven city"
+    verified_by: ai_read
+
+  - id: mazthoril
+    parent: winterspring
+    type: subzone
+    subtype: ""
+    name_zh: 麦索瑞尔
+    name_en: Mazthoril
+    level: ""
+    faction: contested
+    coords: "[55, 62.1]"
+    adjacent: []
+    era: vanilla
+    look_zh: 巨大的冰蓝洞窟，穹顶垂下成排冰柱，蓝龙盘踞在发光的冰台上
+    note_zh: 微型地下城（非副本）：蓝龙军团在冬泉谷的洞穴，凯斯利尔湖与永望镇之间
+    source_url: https://warcraft.wiki.gg/wiki/Mazthoril
+    quote: "Mazthoril is a huge and deep icy cavern — populated by blue dragons — located near the central part of Winterspring, not far from Lake Kel'Theril or Everlook"
+    verified_by: ai_read
+
+  - id: ban_thallow_barrow_den
+    parent: winterspring
+    type: subzone
+    subtype: ""
+    name_zh: 班萨罗兽穴
+    name_en: Ban'Thallow Barrow Den
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 雪坡下的兽穴入口，木梁撑住洞口，洞内是盘绕的暗色树根与熊怪火堆
+    note_zh: 微型地下城（非副本）：冬泉谷的熊怪兽穴，靠近坠星村
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722&locale=zhCN
+    quote: "2254|Ban'Thallow Barrow Den|班萨罗兽穴|ParentAreaID=618"
+    verified_by: ai_read
+
+  - id: darkwhisper_gorge
+    parent: winterspring
+    type: subzone
+    subtype: ""
+    name_zh: 暗语峡谷
+    name_en: Darkwhisper Gorge
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 南端的深黑峡谷，两壁几乎垂直，谷底没有雪、只有赤黑的裸岩与零星恶魔火光
+    note_zh: 冬泉谷最南端的峡谷，60 级精英恶魔与暮光之锤活动区；地形上通向海加尔山脚
+    source_url: https://warcraft.wiki.gg/wiki/Darkwhisper_Gorge
+    quote: "Darkwhisper Gorge is an area being used as a Twilight's Hammer recruitment and training spot"
+    verified_by: ai_read
+
+  - id: frostwhisper_gorge
+    parent: winterspring
+    type: subzone
+    subtype: ""
+    name_zh: 霜语峡谷
+    name_en: Frostwhisper Gorge
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 南部的窄长冰谷，谷壁结着厚冰层，风从谷口灌进来卷起雪粉
+    note_zh: 位于暗语峡谷正北
+    source_url: https://warcraft.wiki.gg/wiki/Frostwhisper_Gorge
+    quote: "Frostwhisper Gorge is a canyon in southern Winterspring, just north of Darkwhisper Gorge"
+    verified_by: ai_read
+
+  - id: dun_mandarr
+    parent: winterspring
+    type: subzone
+    subtype: ""
+    name_zh: 丹曼达尔
+    name_en: Dun Mandarr
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 雪原上的小型石砌基座与一处冰洞口，残墙只剩半人高
+    note_zh: 冬泉谷东南的小据点，旁有冰洞
+    source_url: https://warcraft.wiki.gg/wiki/Dun_Mandarr
+    quote: "Dun Mandarr is a small base nearby an icy cavern in south-eastern Winterspring"
+    verified_by: ai_read
+
+  - id: frostfire_hot_springs
+    parent: winterspring
+    type: subzone
+    subtype: ""
+    name_zh: 冰火温泉
+    name_en: Frostfire Hot Springs
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 雪地里一连串冒着白汽的温热水潭，潭边的雪融成黑泥，蒸汽在冷空气里凝成雾柱
+    note_zh: 冬泉谷最西端的温泉群（雪地里唯一的暖色与蒸汽景观）
+    source_url: https://warcraft.wiki.gg/wiki/Frostfire_Hot_Springs
+    quote: "Frostfire Hot Springs are a series of steaming pools at the far western end of Winterspring"
+    verified_by: ai_read
+
+  - id: frostsaber_rock
+    parent: winterspring
+    type: subzone
+    subtype: ""
+    name_zh: 霜刀石
+    name_en: Frostsaber Rock
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 雪原北部突起的巨大岩峰，岩缝里卧着白色霜刃豹，岩顶终年积雪
+    note_zh: 霜刃豹的栖地；旧世暗夜精灵霜刃豹坐骑声望任务链的核心区
+    source_url: https://warcraft.wiki.gg/wiki/Frostsaber_Rock
+    quote: "Frostsaber Rock is a large jutting tor in the northern part of Winterspring"
+    verified_by: ai_read
+
+  - id: ice_thistle_hills
+    parent: winterspring
+    type: subzone
+    subtype: ""
+    name_zh: 冰蓟岭
+    name_en: Ice Thistle Hills
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 连绵的雪丘，坡上散落洞口，冰霜巨魔与雪怪的身影在丘脊上移动
+    note_zh: 永望镇东南的大片丘陵
+    source_url: https://warcraft.wiki.gg/wiki/Ice_Thistle_Hills
+    quote: "The Ice Thistle Hills is a large area just southeast of Everlook"
+    verified_by: ai_read
+
+  - id: moon_horror_den
+    parent: winterspring
+    type: subzone
+    subtype: ""
+    name_zh: 惨月洞穴
+    name_en: Moon Horror Den
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 雪坡下的小洞，洞口积雪被踩塌，洞内传出枭兽的低吼
+    note_zh: 狂暴枭兽栖居的小洞穴
+    source_url: https://warcraft.wiki.gg/wiki/Moon_Horror_Den
+    quote: "Moon Horror Den is a small cave inhabited by Raging Owlbeasts"
+    verified_by: ai_read
+
+  - id: owl_wing_thicket
+    parent: winterspring
+    type: subzone
+    subtype: ""
+    name_zh: 枭翼树丛
+    name_en: Owl Wing Thicket
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 南部密集的雪松丛，树干间是一串相连的洞口，地上羽毛与骨头散落
+    note_zh: 冬泉谷南部的枭兽洞窟群
+    source_url: https://warcraft.wiki.gg/wiki/Owl_Wing_Thicket
+    quote: "Owl Wing Thicket is a series of caves in southern Winterspring"
+    verified_by: ai_read
+
+  - id: the_hidden_grove
+    parent: winterspring
+    type: subzone
+    subtype: ""
+    name_zh: 隐秘小林
+    name_en: The Hidden Grove
+    level: ""
+    faction: contested
+    coords: "[64.6, 27.3]"
+    adjacent: []
+    era: vanilla
+    look_zh: 群山环抱的圆形林间洼地，中央是未结冰的深色小湖，四周立着高大的云杉
+    note_zh: 冬泉谷东北的隐蔽林地（旧世德鲁伊与自然守护者出没）
+    source_url: https://warcraft.wiki.gg/wiki/Hidden_Grove
+    quote: "The Hidden Grove is a forested crater in northeastern Winterspring"
+    verified_by: ai_read
+
+  # ======================= 月光林地 Moonglade =======================
+  - id: moonglade
+    parent: northern_kalimdor
+    type: zone
+    subtype: ""
+    name_zh: 月光林地
+    name_en: Moonglade
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: [felwood, winterspring]
+    era: vanilla
+    look_zh: 群山围抱的深绿银白圣地，镜面般的湖泊映着满月，粗壮古树间浮着紫色萤光，永远是夜
+    note_zh: 德鲁伊圣地与塞纳里奥议会总部，无等级带、双阵营中立不可攻击；德鲁伊可用「传送：月光林地」直接抵达，其他职业走木喉要塞隧道或飞行点
+    source_url: https://warcraft.wiki.gg/wiki/Moonglade
+    quote: "The Moonglade is a vale in Northern Kalimdor that serves as a haven for druids, and is also the home of the Cenarion Circle"
+    verified_by: ai_read
+
+  - id: nighthaven
+    parent: moonglade
+    type: settlement
+    subtype: village
+    name_zh: 永夜港
+    name_en: Nighthaven
+    level: ""
+    faction: neutral
+    coords: "[48.6, 39.2]"
+    adjacent: []
+    era: vanilla
+    look_zh: 湖畔的精灵村镇，圆顶紫瓦木屋沿弧形石阶排列，水边浮着一排纸灯
+    note_zh: 月光林地的主聚落：德鲁伊训练师、塞纳里奥议会补给官、飞行点；旧世「月光林地」节日（春节/月光仙女）也在此
+    source_url: https://warcraft.wiki.gg/wiki/Nighthaven
+    quote: "Nighthaven is the main settlement in the Moonglade"
+    verified_by: ai_read
+
+  - id: nighthaven_flightpath
+    parent: nighthaven
+    type: transport
+    subtype: flightpath
+    name_zh: 永夜港飞行点
+    name_en: Nighthaven Flight Path
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 村口的石台上栖着一只巨大的白羽角鹰兽，台边点着蓝色灯柱
+    note_zh: TaxiNodes ID=62/63。旧世由此可飞奥伯丁（联盟）/ 血毒岗哨（部落）等
+    source_url: https://wago.tools/db2/TaxiNodes?build=1.15.9.69722&locale=zhCN
+    quote: "62|Nighthaven, Moonglade|永夜港，月光林地"
+    verified_by: ai_read
+
+  - id: moonglade_druid_teleport
+    parent: nighthaven
+    type: transport
+    subtype: portal
+    name_zh: 德鲁伊传送落点（月光林地）
+    name_en: "Teleport: Moonglade arrival point"
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 永夜港边的一小块发光石坪，落地瞬间地面泛起圈状的绿色光纹
+    note_zh: 德鲁伊专属法术「传送：月光林地」的落点（14 级可学）；旧世德鲁伊职业任务的集散地。永夜港内另有一对**德鲁伊专用**中立飞行管理员，免费飞暗夜精灵德鲁伊去鲁瑟兰村、飞牛头人德鲁伊去雷霆崖，非德鲁伊不可用
+    source_url: https://warcraft.wiki.gg/wiki/Moonglade
+    quote: "Druids can learn to teleport themselves to Moonglade at level 14, which makes it very easy for night elf druids to access Darnassus and Darkshore when they need to."
+    verified_by: ai_read
+
+  - id: lake_eluneara
+    parent: moonglade
+    type: subzone
+    subtype: ""
+    name_zh: 月神湖
+    name_en: Lake Elune'ara
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 占据林地中央的大湖，水面静得像镜子，倒映满月与环湖山影，湖心一座小岛
+    note_zh: 月光林地的中央水域，被视为艾露恩的圣水
+    source_url: https://warcraft.wiki.gg/wiki/Lake_Elune%27ara
+    quote: "Lake Elune'ara is a large body of crystal water that covers the central part of the Moonglade"
+    verified_by: ai_read
+
+  - id: shrine_of_remulos
+    parent: moonglade
+    type: poi
+    subtype: ""
+    name_zh: 雷姆洛斯神殿
+    name_en: Shrine of Remulos
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 林地南侧的露天圣坛，环形石阶围着一株巨树，半人半鹿的守护者站在阶前
+    note_zh: 塞纳留斯之子守护者雷姆洛斯所在；旧世安其拉开门任务链与「梦魇」剧情的关键地点
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722&locale=zhCN
+    quote: "2362|Shrine of Remulos|雷姆洛斯神殿|ParentAreaID=493"
+    verified_by: ai_read
+
+  - id: stormrage_barrow_dens
+    parent: moonglade
+    type: subzone
+    subtype: ""
+    name_zh: 怒风兽穴
+    name_en: Stormrage Barrow Dens
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 山壁上并排的三个树根洞口，洞内是安静的圆形石室，中央石台上躺着沉睡的德鲁伊
+    note_zh: 玛法里奥·怒风与众德鲁伊长眠的兽穴群，月光林地东侧
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722&locale=zhCN
+    quote: "2363|Stormrage Barrow Dens|怒风兽穴|ParentAreaID=493"
+    verified_by: ai_read
+
+  - id: moonglade_timbermaw_tunnel_exit
+    parent: moonglade
+    type: poi
+    subtype: ""
+    name_zh: 木喉隧道月光林地出口
+    name_en: Timbermaw Hold exit (Moonglade side)
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 山壁根部的圆形洞口，洞外骤然由昏暗转为林地的银蓝月光
+    note_zh: 非德鲁伊玩家进入月光林地的唯一陆路：从费伍德或冬泉谷穿木喉要塞隧道出到这里（隧道口在月光林地西南山体上）
+    source_url: https://warcraft.wiki.gg/wiki/Moonglade
+    quote: "The only land route to the Moonglade runs through the southwestern mountains via Timbermaw Hold."
+    verified_by: ai_read
+
+
+  # ======================= 艾萨拉 Azshara =======================
+  - id: azshara
+    parent: northern_kalimdor
+    type: zone
+    subtype: ""
+    name_zh: 艾萨拉
+    name_en: Azshara
+    level: "45-55"
+    faction: contested
+    coords: ""
+    adjacent: [ashenvale, durotar]
+    era: vanilla
+    look_zh: 永恒深秋的海崖林地，橙红与金黄的树冠铺满山坡，白色大理石废墟柱廊直落到碧蓝海湾上方
+    note_zh: 旧世 45-55 级野外区，任务稀少、地形破碎；西侧以怒水河与灰谷相隔，南接杜隆塔尔。4.0.3 被哥布林彻底改造（详见备注文件）
+    source_url: https://warcraft.wiki.gg/wiki/Azshara
+    quote: "The trees and other flora are tinged in brilliant oranges and reds, and nearer the coast, great cliffs and sandy beaches line the ocean."
+    verified_by: ai_read
+
+  - id: talrendis_point
+    parent: azshara
+    type: settlement
+    subtype: camp
+    name_zh: 塔伦迪斯营地
+    name_en: Talrendis Point
+    level: ""
+    faction: alliance
+    coords: "[10, 74]"
+    adjacent: []
+    era: vanilla
+    look_zh: 西南河口的精灵哨站，紫顶帐篷依崖而建，木桥跨过下方湍流
+    note_zh: 联盟在艾萨拉的唯一据点，带飞行点；紧邻怒水河桥（灰谷方向入口）
+    source_url: https://warcraft.wiki.gg/wiki/Talrendis_Point
+    quote: "Talrendis Point is a large night elven outpost located in southwestern Azshara"
+    verified_by: ai_read
+
+  - id: talrendis_flightpath
+    parent: talrendis_point
+    type: transport
+    subtype: flightpath
+    name_zh: 塔伦迪斯营地飞行点
+    name_en: Talrendis Point Flight Path
+    level: ""
+    faction: alliance
+    coords: "[10, 74]"
+    adjacent: []
+    era: vanilla
+    look_zh: 崖边木台上栖着角鹰兽，背后是整片橙红树冠
+    note_zh: TaxiNodes ID=64
+    source_url: https://wago.tools/db2/TaxiNodes?build=1.15.9.69722&locale=zhCN
+    quote: "64|Talrendis Point, Azshara|塔伦迪斯营地，艾萨拉"
+    verified_by: ai_read
+
+  - id: valormok
+    parent: azshara
+    type: settlement
+    subtype: camp
+    name_zh: 瓦罗莫克
+    name_en: Valormok
+    level: ""
+    faction: horde
+    coords: "[14, 65]"
+    adjacent: []
+    era: vanilla
+    look_zh: 西部林间的兽人营地，兽皮帐篷围着一圈尖木桩，旗杆上挂着红黑战旗
+    note_zh: 部落在艾萨拉的唯一据点，带飞行点
+    source_url: https://warcraft.wiki.gg/wiki/Valormok
+    quote: "Valormok is an orc-controlled Horde outpost in Azshara"
+    verified_by: ai_read
+
+  - id: valormok_flightpath
+    parent: valormok
+    type: transport
+    subtype: flightpath
+    name_zh: 瓦罗莫克飞行点
+    name_en: Valormok Flight Path
+    level: ""
+    faction: horde
+    coords: "[14, 65]"
+    adjacent: []
+    era: vanilla
+    look_zh: 营边木架上栖着双足飞龙，爪下是被踩烂的落叶
+    note_zh: TaxiNodes ID=44
+    source_url: https://wago.tools/db2/TaxiNodes?build=1.15.9.69722&locale=zhCN
+    quote: "44|Valormok, Azshara|瓦罗莫克，艾萨拉"
+    verified_by: ai_read
+
+  - id: bay_of_storms
+    parent: azshara
+    type: subzone
+    subtype: ""
+    name_zh: 风暴海湾
+    name_en: Bay of Storms
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 深深切入陆地的大海湾，湾口被高崖夹住，海面常年翻着白浪，水下可见沉没的石构
+    note_zh: 艾萨拉东北部的巨大海湾，纳迦活动中心；4.0.3 后被哥布林挖成部落徽记形状并建起 Bilgewater Harbor（旧世无）
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722&locale=zhCN
+    quote: "1227|Bay of Storms|风暴海湾|ParentAreaID=16"
+    verified_by: ai_read
+
+  - id: hetaeras_clutch
+    parent: bay_of_storms
+    type: subzone
+    subtype: ruin
+    name_zh: 赫塔拉的巢穴
+    name_en: Hetaera's Clutch
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 沉在海湾水下的大型月神殿，倾斜的柱廊没在幽蓝水中，三头海蛇盘在殿心
+    note_zh: 水下的艾露恩神殿遗迹，旧世多头蛇赫塔拉的巢；4.0.3 后被 Bilgewater Harbor 覆盖
+    source_url: https://warcraft.wiki.gg/wiki/Hetaera%27s_Clutch
+    quote: "Hetaera's Clutch was a large underwater temple of Elune located in the Bay of Storms, off the coast of Azshara"
+    verified_by: ai_read
+
+  - id: scalebeards_cave
+    parent: bay_of_storms
+    type: subzone
+    subtype: ""
+    name_zh: 鳞须海龟洞穴
+    name_en: Scalebeard's Cave
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 海湾西侧小岛上的低矮岩洞，洞口被海浪打湿，洞内躺着一只巨大的老海龟
+    note_zh: 旧世独有的小岛洞穴（稀有巨龟鳞须）；4.0.3 后消失
+    source_url: https://warcraft.wiki.gg/wiki/Scalebeard%27s_Cave
+    quote: "Scalebeard's Cave was located on a tiny island in the western part of the Bay of Storms in Azshara"
+    verified_by: ai_read
+
+  - id: the_shattered_strand
+    parent: azshara
+    type: subzone
+    subtype: ""
+    name_zh: 破碎海岸
+    name_en: The Shattered Strand
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 海湾北岸的碎石滩，大块方形石料散落在沙上，像被打碎的建筑残骸
+    note_zh: 风暴海湾北侧海岸，纳迦登陆点
+    source_url: https://warcraft.wiki.gg/wiki/Shattered_Strand
+    quote: "The Shattered Strand is a coastal area in Azshara, lining the north side of the Bay of Storms"
+    verified_by: ai_read
+
+  - id: temple_of_arkkoran
+    parent: the_shattered_strand
+    type: subzone
+    subtype: ruin
+    name_zh: 亚考兰神殿
+    name_en: Temple of Arkkoran
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 半沉在浅海里的圆形神殿废墟，残柱围成一圈，中央水面下伏着巨大的海兽阴影
+    note_zh: 破碎海岸边的水下神殿（旧世上古海兽亚考兰所在）
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722&locale=zhCN
+    quote: "1226|Temple of Arkkoran|亚考兰神殿|ParentAreaID=16"
+    verified_by: ai_read
+
+  - id: southridge_beach
+    parent: azshara
+    type: subzone
+    subtype: ""
+    name_zh: 南山海滩
+    name_en: Southridge Beach
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 海湾南岸的狭长沙滩，背后是陡直的橙红崖壁，沙面上散落漂木
+    note_zh: 风暴海湾南侧海岸
+    source_url: https://warcraft.wiki.gg/wiki/Southridge_Beach
+    quote: "Southridge Beach is located in central Azshara, lining the South edge of the Bay of Storms"
+    verified_by: ai_read
+
+  - id: ruins_of_eldarath
+    parent: azshara
+    type: subzone
+    subtype: ruin
+    name_zh: 埃达拉斯废墟
+    name_en: Ruins of Eldarath
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 大片白色大理石城市废墟，成排立柱与台阶顺山势铺开，柱间长出橙红树木
+    note_zh: 艾萨拉最大的上古暗夜精灵城市遗址，是本区最具规模感的取景点
+    source_url: https://warcraft.wiki.gg/wiki/Ruins_of_Eldarath
+    quote: "The Ruins of Eldarath are a night elf archaeology dig site"
+    verified_by: ai_read
+
+  - id: temple_of_zin_malor
+    parent: azshara
+    type: subzone
+    subtype: ruin
+    name_zh: 辛玛洛神殿
+    name_en: Temple of Zin-Malor
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 山腰上的圆形神殿遗址，中央基座空着，四周立柱残缺不齐，地面刻着巨大的法阵
+    note_zh: 上古奥术神殿；旧世「辛玛洛水晶」任务链（与辛特兰的辛玛洛水晶呼应）
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722&locale=zhCN
+    quote: "1223|Temple of Zin-Malor|辛玛洛神殿|ParentAreaID=16"
+    verified_by: ai_read
+
+  - id: tower_of_eldara
+    parent: azshara
+    type: subzone
+    subtype: tower
+    name_zh: 埃达拉之塔
+    name_en: Tower of Eldara
+    level: ""
+    faction: contested
+    coords: "[89, 32]"
+    adjacent: []
+    era: vanilla
+    look_zh: 东端海岬上的孤塔，白石塔身斜倚崖边，塔顶残缺，下方是碧蓝深海
+    note_zh: 艾萨拉东部海岸的上古精灵塔，纳迦占据
+    source_url: https://warcraft.wiki.gg/wiki/Tower_of_Eldara
+    quote: "The Tower of Eldara was once part of the extensive night elven civilization that stretched across most of what is now called Azshara"
+    verified_by: ai_read
+
+  - id: ravencrest_monument
+    parent: azshara
+    type: subzone
+    subtype: ruin
+    name_zh: 拉文凯斯雕像
+    name_en: Ravencrest Monument
+    level: ""
+    faction: contested
+    coords: "[65, 87]"
+    adjacent: []
+    era: vanilla
+    look_zh: 崖顶上一座巨大的精灵战士石像残躯，只剩下半身与一只手，风化严重，脚下是悬崖与海
+    note_zh: 上古之战英雄肯瑞斯·拉文凯斯的巨像遗迹，位于埃达拉斯废墟东南的海岬顶端
+    source_url: https://warcraft.wiki.gg/wiki/Ravencrest_Monument
+    quote: "The Ravencrest Monument marks the remains of a huge statue in Azshara, referred to by Torg Twocrush as an \"ancient night elven colossus\"."
+    verified_by: ai_read
+
+  - id: the_ruined_reaches
+    parent: azshara
+    type: subzone
+    subtype: ""
+    name_zh: 废墟海岸
+    name_en: The Ruined Reaches
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 南部的乱石海岸，倒塌的石构半埋在沙中，海浪不断冲刷断柱
+    note_zh: 艾萨拉南部沿海，靠近杜隆塔尔边界
+    source_url: https://warcraft.wiki.gg/wiki/Ruined_Reaches
+    quote: "The Ruined Reaches form the southern coast of Azshara near the border to Durotar"
+    verified_by: ai_read
+
+  - id: rethress_sanctum
+    parent: the_ruined_reaches
+    type: subzone
+    subtype: ruin
+    name_zh: 雷瑟斯圣所
+    name_en: Rethress Sanctum
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 海岸上的小型圣所废墟，半圆石墙围着一口干涸的水池
+    note_zh: 废墟海岸内的遗址，拉文凯斯雕像西南
+    source_url: https://warcraft.wiki.gg/wiki/Rethress_Sanctum
+    quote: "Rethress Sanctum is a ruined shrine located in the Ruined Reaches, southwest of Ravencrest Monument in Azshara"
+    verified_by: ai_read
+
+  - id: bitter_reaches
+    parent: azshara
+    type: subzone
+    subtype: ""
+    name_zh: 痛苦海岸
+    name_en: Bitter Reaches
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东北角的荒凉海岬，草色枯黄，崖下是终年拍打的冷灰海浪
+    note_zh: 艾萨拉东北端
+    source_url: https://warcraft.wiki.gg/wiki/Bitter_Reaches
+    quote: "The Bitter Reaches is the name given to the northeastern region of Azshara"
+    verified_by: ai_read
+
+  - id: jagged_reef
+    parent: azshara
+    type: subzone
+    subtype: ""
+    name_zh: 锯齿暗礁
+    name_en: Jagged Reef
+    level: ""
+    faction: contested
+    coords: "[68, 11]"
+    adjacent: []
+    era: vanilla
+    look_zh: 北岸外密布的尖锐礁石，浪在礁间炸成白沫，水下可见船骸
+    note_zh: 艾萨拉北部海岸线
+    source_url: https://warcraft.wiki.gg/wiki/Jagged_Reef
+    quote: "The Jagged Reef is the name for the northern coast of Azshara"
+    verified_by: ai_read
+
+  - id: lake_mennar
+    parent: azshara
+    type: subzone
+    subtype: ""
+    name_zh: 门纳尔湖
+    name_en: Lake Mennar
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 内陆的深蓝湖泊，湖面浮着淡蓝魔法光尘，蓝龙在湖上低空盘旋
+    note_zh: 诺达希尔之外少数能见到蓝龙军团的地点之一（旧世艾萨拉的蓝龙就在这里）
+    source_url: https://warcraft.wiki.gg/wiki/Lake_Mennar
+    quote: "Lake Mennar is one of the few places in the world where the blue dragonflight can be found outside of Northrend"
+    verified_by: ai_read
+
+  - id: legash_encampment
+    parent: azshara
+    type: settlement
+    subtype: camp
+    name_zh: 雷加什营地
+    name_en: Legash Encampment
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 北部林中的萨特营地，暗紫布幔挂在橙红树冠下，地面插着带刺图腾
+    note_zh: 雷加什萨特据点，乌索兰以东、萨拉斯营地以北
+    source_url: https://warcraft.wiki.gg/wiki/Legash_Encampment
+    quote: "The Legash Encampment is located in northern Azshara, east of Ursolan and north of the Thalassian Base Camp"
+    verified_by: ai_read
+
+  - id: haldarr_encampment
+    parent: azshara
+    type: settlement
+    subtype: camp
+    name_zh: 哈达尔营地
+    name_en: Haldarr Encampment
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 西部林间的萨特小营，几处兽皮棚与冒绿烟的火堆
+    note_zh: 哈达尔萨特据点，影歌神殿东北、旧瓦罗莫克西南
+    source_url: https://warcraft.wiki.gg/wiki/Haldarr_Encampment
+    quote: "The Haldarr Encampment was located in western Azshara, northeast of Shadowsong Shrine and southwest of old Valormok"
+    verified_by: ai_read
+
+  - id: shadowsong_shrine
+    parent: azshara
+    type: subzone
+    subtype: ruin
+    name_zh: 影歌神殿
+    name_en: Shadowsong Shrine
+    level: ""
+    faction: contested
+    coords: "[15, 73]"
+    adjacent: []
+    era: vanilla
+    look_zh: 西部一座被废墟覆盖的小丘，残墙沿坡分布，顶上立着半截石碑
+    note_zh: 艾萨拉西部遗址，塔伦迪斯营地以北
+    source_url: https://warcraft.wiki.gg/wiki/Shadowsong_Shrine
+    quote: "Shadowsong Shrine was a ruin-covered hill in western Azshara"
+    verified_by: ai_read
+
+  - id: thalassian_base_camp
+    parent: azshara
+    type: settlement
+    subtype: camp
+    name_zh: 萨拉斯营地
+    name_en: Thalassian Base Camp
+    level: ""
+    faction: contested
+    coords: "[57, 25]"
+    adjacent: []
+    era: vanilla
+    look_zh: 北部高地上的考察营，方形帐篷与堆放的箱子、卷轴，旁边支着测绘用的三脚架
+    note_zh: 北部的高等精灵考察营（旧世设定）；4.0.3 后改写为联盟/部落阵营营地
+    source_url: https://warcraft.wiki.gg/wiki/Thalassian_Base_Camp
+    quote: "The Thalassian Base Camp was located in northern Azshara, south of the Legash Encampment and east of Ursolan"
+    verified_by: ai_read
+
+  - id: ursolan
+    parent: azshara
+    type: subzone
+    subtype: ruin
+    name_zh: 乌索兰
+    name_en: Ursolan
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 西北林地里的小片遗址，熊形石雕倒在草中，残柱只剩底座
+    note_zh: 艾萨拉西北部遗址，紧挨（艾萨拉侧的）木喉要塞洞穴以东
+    source_url: https://warcraft.wiki.gg/wiki/Ursolan
+    quote: "Ursolan is an area in Azshara just east of Timbermaw Hold"
+    verified_by: ai_read
+
+  - id: timbermaw_hold_azshara
+    parent: azshara
+    type: subzone
+    subtype: ""
+    name_zh: 木喉要塞
+    name_en: Timbermaw Hold (Azshara)
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 西北山壁下的熊怪洞穴，洞口用原木加固，洞内火光与兽皮帐帘
+    note_zh: 注意：这是艾萨拉西北的同名熊怪洞穴（客户端 AreaID 1216），与费伍德的木喉要塞隧道（1769）**不是同一处、互不连通**；4.0.3 后改名 Blackmaw Hold（黑颚要塞）
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722&locale=zhCN
+    quote: "1216|Timbermaw Hold|木喉要塞|ParentAreaID=16"
+    verified_by: ai_read
+
+  - id: forlorn_ridge
+    parent: azshara
+    type: subzone
+    subtype: ""
+    name_zh: 凄凉山
+    name_en: Forlorn Ridge
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 西南的裸岩山脊，坡面寸草不生，脊线把西部林地与海岸隔开
+    note_zh: 艾萨拉西南的山岭；4.0.3 后被炸开改造
+    source_url: https://warcraft.wiki.gg/wiki/Forlorn_Ridge
+    quote: "Forlorn Ridge is a mountain that was once located in southwestern Azshara"
+    verified_by: ai_read
+
+  - id: bears_head
+    parent: azshara
+    type: subzone
+    subtype: ""
+    name_zh: 熊头
+    name_en: Bear's Head
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东南山脉边缘一块形似熊首的巨岩，岩体赤褐，周围是稀疏的橙红矮树
+    note_zh: 艾萨拉东南山地边缘的偏远小区域。**G08-V 核验补充（结掉备注文件 ③-4 的待核项）**：wiki 明写「Xylem's Tower（又名 Azshara Tower）是一座位于艾萨拉 Bear's Head 的法师塔」，塔与塔上的大法师 Xylem、他的学徒 Sanath Lim-yo 在旧世均已存在（两人页面都没有「4.0.3a 新增」补丁记录，Sanath 页只记 2.0.1 换模型），**唯一进塔方式是让 Sanath Lim-yo 给你传送**。但 `Xylem's Tower` 直到 7.2.0 才「成为独立子区域」，Classic Era AreaTable 里没有这个 area 名，故**本树不为它单开节点**，信息挂在本节点。wiki 上那组 `[28.1, 50.0]` 坐标是 Sanath Lim-yo（传送人）的站位，不是塔的位置——原备注怀疑「坐标互相矛盾」，成因在此
+    source_url: https://warcraft.wiki.gg/wiki/Bear%27s_Head
+    quote: "Bear's Head is a remote subzone located by the southeastern edge of the mountains of Azshara"
+    verified_by: ai_read
+
+  - id: southfury_river_azshara
+    parent: azshara
+    type: subzone
+    subtype: ""
+    name_zh: 怒水河
+    name_en: Southfury River (Azshara)
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 艾萨拉西南边界的河段，河面比灰谷段更宽更缓，两岸是橙红秋林压着的红土高崖
+    note_zh: G08-V 核验补漏：怒水河在客户端里是**逐地区各自一条 area**，艾萨拉侧为 878、灰谷侧为 879（还有杜隆塔尔 814、贫瘠之地 815）。原树只收了灰谷侧的 `southfury_river`，艾萨拉的子区域清单因此缺一条。**与 `timbermaw_hold` / `timbermaw_hold_azshara` 的拆法不同**——那两处是真的两个地方，这里是同一条河的两段，取景时按一条河处理即可，本节点只为让艾萨拉的子区域列表完整
+    source_url: https://wago.tools/db2/AreaTable?build=1.15.9.69722&locale=zhCN
+    quote: "878|Southfury River|怒水河|ParentAreaID=16"
+    verified_by: ai_read

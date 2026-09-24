@@ -1,0 +1,2532 @@
+# G06 · 洛丹伦北部 + 幽暗城 —— 魔兽世界经典旧世（Vanilla / Classic Era 1.12）地理树
+# 树数据的唯一出处；markdown 树由 tools/build_world_tree.py 生成，不要手写。
+# 非树数据（自查对账 / 版本差异 / 存疑 / 地图图片链接）见 g06_lordaeron_north_notes.md
+nodes:
+  - id: tirisfal_glades
+    parent: lordaeron
+    type: zone
+    subtype: ""
+    name_zh: "提瑞斯法林地"
+    name_en: "Tirisfal Glades"
+    level: "1-10"
+    faction: "horde"
+    coords: ""
+    adjacent: [silverpine_forest, western_plaguelands]
+    era: vanilla
+    look_zh: "病绿色天光下的橡木疏林与枯黄草坡，贴地白雾，石篱笆、歪斜墓碑与被瘟疫熏黑的农舍散落其间"
+    note_zh: "亡灵新手区；洛丹伦王国旧都所在地，被遗忘者的地盘。4.0.3 未大改，但 BfA 洛丹伦之战后布瑞尔与幽暗城被毁，本树取 vanilla 状态"
+    source_url: "https://warcraft.wiki.gg/wiki/Tirisfal_Glades"
+    quote: "an eerie region found on the northern coast of Lordaeron"
+    verified_by: ai_read
+  - id: deathknell
+    parent: tirisfal_glades
+    type: settlement
+    subtype: "village"
+    name_zh: "丧钟镇"
+    name_en: "Deathknell"
+    level: ""
+    faction: "horde"
+    coords: "[35, 64]"
+    adjacent: []
+    era: vanilla
+    look_zh: "灰白雾气锁住的小山谷，半塌的木屋与一座石砌小教堂，墓地就在村口，土是翻开的"
+    note_zh: "被遗忘者出生地（1 级）；村北仍被天灾占着，村南归被遗忘者"
+    source_url: "https://warcraft.wiki.gg/wiki/Deathknell"
+    quote: "Deathknell is a small Forsaken village nestled in a well-guarded valley just north of Silverpine Forest"
+    verified_by: ai_read
+  - id: shadow_grave
+    parent: deathknell
+    type: subzone
+    subtype: ""
+    name_zh: "灰影墓穴"
+    name_en: "Shadow Grave"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "教堂下的石砌地穴，棺板掀开，绿磷烛光"
+    note_zh: "玩家从此处的棺材里爬出，被遗忘者剧情起点"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "2117,ShadowGrave,灰影墓穴,0,85"
+    verified_by: ai_read
+  - id: night_webs_hollow
+    parent: deathknell
+    type: subzone
+    subtype: ""
+    name_zh: "夜行蜘蛛洞穴"
+    name_en: "Night Web's Hollow"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "被厚蛛网糊死的矿洞口，洞内挂着裹尸茧"
+    note_zh: "丧钟镇西北的旧金矿，被巨蛛占据（新手任务点）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "155,NightWeb'sHollow,夜行蜘蛛洞穴,0,85"
+    verified_by: ai_read
+  - id: deathknell_chapel
+    parent: deathknell
+    type: poi
+    subtype: ""
+    name_zh: "丧钟镇教堂"
+    name_en: "Deathknell chapel"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "人类样式的石教堂，彩窗碎了一半，门口插着被遗忘者的旗"
+    note_zh: "非官方译名：游戏内无独立地名标签，依 wiki 英文描述建节点；村内的被遗忘者据点，被遗忘者「被遗忘者之影」教派主要据点之一"
+    source_url: "https://warcraft.wiki.gg/wiki/Deathknell"
+    quote: "the church of Deathknell is one of the main bases of the Forsaken Cult of Forgotten Shadows"
+    verified_by: ai_read
+  - id: brill
+    parent: tirisfal_glades
+    type: settlement
+    subtype: "town"
+    name_zh: "布瑞尔"
+    name_en: "Brill"
+    level: ""
+    faction: "horde"
+    coords: "[60, 57]"
+    adjacent: []
+    era: vanilla
+    look_zh: "十字路口上的一圈木石小屋，屋顶压着茅草，中间一座尖顶钟楼，路面是湿泥"
+    note_zh: "提瑞斯法的中枢镇子，旅店/马厩/铁砧/训练师齐全；就在洛丹伦废墟正北"
+    source_url: "https://warcraft.wiki.gg/wiki/Brill"
+    quote: "Brill is a small town under the control of the Forsaken, in the Tirisfal Glades of northern Lordaeron."
+    verified_by: ai_read
+  - id: brill_town_hall
+    parent: brill
+    type: poi
+    subtype: ""
+    name_zh: "布瑞尔城镇大厅"
+    name_en: "Brill Town Hall"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "镇中心的两层木石议事厅，门前挂被遗忘者旗，二层窗透着灯"
+    note_zh: "布瑞尔镇中心的议事厅"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "2118,BrillTownHall,布瑞尔城镇大厅,0,85"
+    verified_by: ai_read
+  - id: gallows_end_tavern
+    parent: brill
+    type: settlement
+    subtype: "inn"
+    name_zh: "恐惧之末旅店"
+    name_en: "Gallows' End Tavern"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "低矮木构旅店，壁炉火光昏黄，招牌上刻着绞索"
+    note_zh: "布瑞尔旅店（炉石点）；国服官方名「恐惧之末旅店」"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "2119,Gallows'EndTavern,恐惧之末旅店,0,85"
+    verified_by: ai_read
+  - id: brill_blacksmith
+    parent: brill
+    type: poi
+    subtype: ""
+    name_zh: "布瑞尔铁匠铺"
+    name_en: "Blacksmith"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "敞开式棚屋铁匠铺，砖砌熔炉红着火，铁砧与淬火桶摆在门口，墙上挂着成排马蹄铁"
+    note_zh: "布瑞尔三座 vanilla 建筑之一（另两座是城镇大厅与恐惧之末旅店），4.0.3 连同全镇一起被换成被遗忘者新建筑，国服官方译名未经客户端核实（该条目不在 Classic Era AreaTable 内），以 name_en 为准"
+    source_url: "https://warcraft.wiki.gg/wiki/Brill"
+    quote: "In the wake of the Cataclysm, Brill's buildings had already been replaced with the new Forsaken architecture seen in Northrend"
+    verified_by: ai_draft
+  - id: ruins_of_lordaeron
+    parent: tirisfal_glades
+    type: settlement
+    subtype: "ruin"
+    name_zh: "洛丹伦废墟"
+    name_en: "Ruins of Lordaeron"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "巨大的白石王宫外墙已成焦黑残垣，庭院裂开，断柱间飘着幽灵，正门后是通往地下的升降梯"
+    note_zh: "洛丹伦王国旧都「首都城」的地表废墟；幽暗城的入口就在这座王宫之下"
+    source_url: "https://warcraft.wiki.gg/wiki/Ruins_of_Lordaeron"
+    quote: "the remains of the city of Lordaeron, the great capital city of the fallen kingdom"
+    verified_by: ai_read
+  - id: lordaeron_throne_room
+    parent: ruins_of_lordaeron
+    type: poi
+    subtype: ""
+    name_zh: "洛丹伦王座厅"
+    name_en: "Lordaeron throne room"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "长条石厅，尽头是空王座，地面一道干涸血痕，阳光从破顶斜射下来"
+    note_zh: "非官方译名（wiki 作 Lordaeron's palace / imperial chamber）；阿尔萨斯弑父特伦纳斯之地，剧情价值极高"
+    source_url: "https://warcraft.wiki.gg/wiki/Ruins_of_Lordaeron"
+    quote: "To this day, one can hear the moments before King Terenas' death"
+    verified_by: ai_read
+  - id: undercity_elevators
+    parent: ruins_of_lordaeron
+    type: poi
+    subtype: ""
+    name_zh: "幽暗城升降梯"
+    name_en: "Undercity elevators"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "王宫地下的三部木制吊笼升降梯，铁链绞盘，下方是绿水环城"
+    note_zh: "非官方译名；地表废墟与地下城之间的唯一步行通道"
+    source_url: "https://warcraft.wiki.gg/wiki/Undercity"
+    quote: "The Trade Quarter - The city center at the bottom elevator exits."
+    verified_by: ai_read
+  - id: undercity_zeppelin_towers
+    parent: ruins_of_lordaeron
+    type: transport
+    subtype: "flightpath"
+    name_zh: "幽暗城飞艇平台"
+    name_en: "Undercity zeppelin towers"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "废墟西侧两座高木塔，塔顶系着鼓胀的飞艇，吊桥晃动"
+    note_zh: "非官方译名。vanilla 两条航线：奥格瑞玛（杜隆塔尔）、格罗姆高营地（荆棘谷）；复仇岗是 WotLK 才加的"
+    source_url: "https://warcraft.wiki.gg/wiki/Tirisfal_Glades"
+    quote: "Zeppelin towers south of Brill"
+    verified_by: ai_read
+  - id: undercity
+    parent: ruins_of_lordaeron
+    type: city
+    subtype: "capital"
+    name_zh: "幽暗城"
+    name_en: "Undercity"
+    level: ""
+    faction: "horde"
+    coords: "[62, 72]"
+    adjacent: []
+    era: vanilla
+    look_zh: "没有天空的地下环形城：骨白拱顶、蜡黄火把、一圈墨绿瘟疫水渠横穿全城，空气里飘着药剂蒸汽"
+    note_zh: "被遗忘者主城；王宫地下三层，外环四大区围着圆形中庭，银行在最中心"
+    source_url: "https://warcraft.wiki.gg/wiki/Undercity"
+    quote: "The city is made up of roughly symmetrical quarters arranged around a circular center."
+    verified_by: ai_read
+  - id: undercity_trade_quarter
+    parent: undercity
+    type: district
+    subtype: ""
+    name_zh: "贸易区"
+    name_en: "The Trade Quarter"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "圆形中庭，中央一座铁笼状银行，四周拱门下是摊位与拍卖行，绿水从脚边流过"
+    note_zh: "国服惯用名（客户端 AreaTable 未收录城内分区，名取自中文攻略与游戏内地图贴图）；升降梯落地即此处"
+    source_url: "https://warcraft.wiki.gg/wiki/Undercity"
+    quote: "The Trade Quarter - The city center at the bottom elevator exits."
+    verified_by: ai_draft
+  - id: undercity_bank
+    parent: undercity_trade_quarter
+    type: poi
+    subtype: ""
+    name_zh: "幽暗城银行"
+    name_en: "Undercity bank"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "中庭正中的铁栅笼屋，四面开口，笼顶挂锁链"
+    note_zh: "非官方译名；全城最醒目的定位物，玩家集散点"
+    source_url: "https://warcraft.wiki.gg/wiki/Undercity"
+    quote: "its most central point has a cage-like structure"
+    verified_by: ai_draft
+  - id: undercity_magic_quarter
+    parent: undercity
+    type: district
+    subtype: ""
+    name_zh: "魔法区"
+    name_en: "The Magic Quarter"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "紫蓝色符文光的拱厅，浮空法阵与传送门，地面刻着大圆环"
+    note_zh: "国服惯用名。贸易区东北；法师/术士训练师，通往黑暗之门的传送门在此（vanilla 无）"
+    source_url: "https://warcraft.wiki.gg/wiki/Undercity"
+    quote: "The Magic Quarter - Northeast from the Trade Quarter."
+    verified_by: ai_draft
+  - id: undercity_rogues_quarter
+    parent: undercity
+    type: district
+    subtype: ""
+    name_zh: "盗贼区"
+    name_en: "The Rogues' Quarter"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "低矮暗巷式拱厅，只点零星烛火，墙上挂着匕首靶与假人"
+    note_zh: "国服惯用名。贸易区东南；盗贼/猎人训练师"
+    source_url: "https://warcraft.wiki.gg/wiki/Undercity"
+    quote: "The Rogues' Quarter - Southeast from the Trade Quarter."
+    verified_by: ai_draft
+  - id: undercity_apothecarium
+    parent: undercity
+    type: district
+    subtype: ""
+    name_zh: "炼金房"
+    name_en: "The Apothecarium"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "成排的铜釜与蒸馏架，毒绿蒸汽从釜口翻出，解剖台上摊着尸体"
+    note_zh: "国服惯用名（Apothecarium）。贸易区西南；瘟疫研究核心，剧情价值高——被遗忘者的新瘟疫在此炼制"
+    source_url: "https://warcraft.wiki.gg/wiki/Undercity"
+    quote: "The Apothecarium - Southwest from the Trade Quarter."
+    verified_by: ai_draft
+  - id: undercity_war_quarter
+    parent: undercity
+    type: district
+    subtype: ""
+    name_zh: "军事区"
+    name_en: "The War Quarter"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "铁砧、靶场与操练场，火光偏橙，墙边码着破盾"
+    note_zh: "国服惯用名（也译战士区）。贸易区西北；战士训练师与武器商"
+    source_url: "https://warcraft.wiki.gg/wiki/Undercity"
+    quote: "The War Quarter - Northwest from the Trade Quarter."
+    verified_by: ai_draft
+  - id: undercity_royal_quarter
+    parent: undercity
+    type: district
+    subtype: ""
+    name_zh: "皇家区"
+    name_en: "The Royal Quarter"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "窄深通道尽头的圆厅，黑绿烛火，高台上一张骨饰王座，女妖侍立"
+    note_zh: "国服惯用名。从炼金房旁的窄道进入；黑暗女王希尔瓦娜斯所在，全城最高规格场景"
+    source_url: "https://warcraft.wiki.gg/wiki/Undercity"
+    quote: "The Royal Quarter - South from the Apothecarium entrance."
+    verified_by: ai_draft
+  - id: undercity_canals
+    parent: undercity
+    type: district
+    subtype: ""
+    name_zh: "幽暗城运河"
+    name_en: "The Canals"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "环绕全城的墨绿色药水河道，河面浮着泡沫与残肢，石桥横跨"
+    note_zh: "非官方译名；四大区之间的水道，贯通全城的视觉母题"
+    source_url: "https://warcraft.wiki.gg/wiki/Undercity"
+    quote: "The Canals - Interspace between the different quarters."
+    verified_by: ai_draft
+  - id: undercity_sewers
+    parent: undercity
+    type: district
+    subtype: ""
+    name_zh: "幽暗城下水道"
+    name_en: "The Sewers"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "城西一条粗石管道，齐膝污水，鼠群与史莱姆"
+    note_zh: "非官方译名；从城西隧道进入，可步行出城"
+    source_url: "https://warcraft.wiki.gg/wiki/Undercity"
+    quote: "The Sewers - Through a tunnel west of city."
+    verified_by: ai_draft
+  - id: undercity_flightpath
+    parent: undercity
+    type: transport
+    subtype: "flightpath"
+    name_zh: "幽暗城，提瑞斯法林地"
+    name_en: "Undercity, Tirisfal Glades"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "城内环廊的一处石台，栏杆外拴着两头蝙蝠，地面刻着航线盘"
+    note_zh: "vanilla 提瑞斯法唯一的飞行点（亡灵壁垒飞行点是 4.0.3 才加的）；名取自客户端 TaxiNodes 表"
+    source_url: "https://wago.tools/db2/TaxiNodes/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "11,幽暗城，提瑞斯法林地"
+    verified_by: ai_read
+  - id: agamand_mills
+    parent: tirisfal_glades
+    type: settlement
+    subtype: "farm"
+    name_zh: "阿加曼德磨坊"
+    name_en: "Agamand Mills"
+    level: ""
+    faction: "contested"
+    coords: "[46, 37]"
+    adjacent: []
+    era: vanilla
+    look_zh: "山坡上的木制风车与谷仓群，风车叶片还在空转，坡下一片翻开的家族墓地"
+    note_zh: "阿加曼德家族的磨坊，现由被天灾复活的家族骷髅占据"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "157,AgamandMills,阿加曼德磨坊,0,85"
+    verified_by: ai_read
+  - id: agamand_family_crypt
+    parent: agamand_mills
+    type: subzone
+    subtype: ""
+    name_zh: "阿加曼德家族墓穴"
+    name_en: "Agamand Family Crypt"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "磨坊背后的石砌家族墓室，棺位嵌在墙上"
+    note_zh: "磨坊背后的地下墓穴，任务点"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "158,AgamandFamilyCrypt,阿加曼德家族墓穴,0,85"
+    verified_by: ai_read
+  - id: balnir_farmstead
+    parent: tirisfal_glades
+    type: settlement
+    subtype: "farm"
+    name_zh: "巴尼尔农场"
+    name_en: "Balnir Farmstead"
+    level: ""
+    faction: ""
+    coords: "[74, 62]"
+    adjacent: []
+    era: vanilla
+    look_zh: "东部缓坡上的完整农舍与围栏，马匹散步，是提瑞斯法少见的「还像活人住处」的地方"
+    note_zh: "巴尼尔家的马场；提瑞斯法东部"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "165,BalnirFarmstead,巴尼尔农场,0,85"
+    verified_by: ai_read
+  - id: brightwater_lake
+    parent: tirisfal_glades
+    type: poi
+    subtype: ""
+    name_zh: "澈水湖"
+    name_en: "Brightwater Lake"
+    level: ""
+    faction: ""
+    coords: "[69, 42]"
+    adjacent: []
+    era: vanilla
+    look_zh: "林间一汪墨绿湖水，湖心有座小岛与孤屋，岸边是烂掉的木栈"
+    note_zh: "提瑞斯法东部的湖"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "162,BrightwaterLake,澈水湖,0,85"
+    verified_by: ai_read
+  - id: gunthers_retreat
+    parent: brightwater_lake
+    type: poi
+    subtype: ""
+    name_zh: "冈瑟尔的居所"
+    name_en: "Gunther's Retreat"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "澈水湖心岛上的一座石屋，烟囱冒烟"
+    note_zh: "湖心岛上的隐居处"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "163,Gunther'sRetreat,冈瑟尔的居所,0,85"
+    verified_by: ai_read
+  - id: cold_hearth_manor
+    parent: tirisfal_glades
+    type: settlement
+    subtype: "ruin"
+    name_zh: "炉灰庄园"
+    name_en: "Cold Hearth Manor"
+    level: ""
+    faction: ""
+    coords: "[55, 59]"
+    adjacent: []
+    era: vanilla
+    look_zh: "烧空的庄园宅子，只剩焦黑梁架与半截烟囱，院里散着家具残骸"
+    note_zh: "被焚毁的庄园，鬼魂出没"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "166,ColdHearthManor,炉灰庄园,0,85"
+    verified_by: ai_read
+  - id: crusader_outpost
+    parent: tirisfal_glades
+    type: settlement
+    subtype: "camp"
+    name_zh: "十字军前哨"
+    name_en: "Crusader Outpost"
+    level: ""
+    faction: "contested"
+    coords: "[78, 53]"
+    adjacent: []
+    era: vanilla
+    look_zh: "红白十字旗的帆布营帐与木栅，篝火边架着长枪"
+    note_zh: "血色十字军在提瑞斯法东部的前哨"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "167,CrusaderOutpost,十字军前哨,0,85"
+    verified_by: ai_read
+  - id: scarlet_watch_post
+    parent: tirisfal_glades
+    type: settlement
+    subtype: "tower"
+    name_zh: "血色十字军哨岗"
+    name_en: "Scarlet Watch Post"
+    level: ""
+    faction: "contested"
+    coords: "[77, 34]"
+    adjacent: []
+    era: vanilla
+    look_zh: "林间一座石砌方塔，塔顶挂血色十字军红旗，塔下扎着两顶帐篷"
+    note_zh: "血色十字军哨岗，位于通往修道院的路上"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "459,ScarletWatchPost,血色十字军哨岗,0,85"
+    verified_by: ai_read
+  - id: garrens_haunt
+    parent: tirisfal_glades
+    type: settlement
+    subtype: "ruin"
+    name_zh: "加伦鬼屋"
+    name_en: "Garren's Haunt"
+    level: ""
+    faction: ""
+    coords: "[58, 38]"
+    adjacent: []
+    era: vanilla
+    look_zh: "荒废的农舍与畜栏，木料发黑，院中立着稻草人"
+    note_zh: "加伦家的废弃农场，闹鬼"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "164,Garren'sHaunt,加伦鬼屋,0,85"
+    verified_by: ai_read
+  - id: solliden_farmstead
+    parent: tirisfal_glades
+    type: settlement
+    subtype: "farm"
+    name_zh: "索利丹农场"
+    name_en: "Solliden Farmstead"
+    level: ""
+    faction: ""
+    coords: "[37, 49]"
+    adjacent: []
+    era: vanilla
+    look_zh: "西部海边的一组农舍与麦垛，田埂荒了一半"
+    note_zh: "提瑞斯法西部农场；再往西的湖边小道通向 vanilla 不可进入的封闭区"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "156,SollidenFarmstead,索利丹农场,0,85"
+    verified_by: ai_read
+  - id: faols_rest
+    parent: tirisfal_glades
+    type: poi
+    subtype: ""
+    name_zh: "法奥之墓"
+    name_en: "Faol's Rest"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "路边一座白石小墓与石碑，四周点着长明灯"
+    note_zh: "圣光教会大主教法奥的安息处"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "173,Faol'sRest,法奥之墓,0,85"
+    verified_by: ai_read
+  - id: nightmare_vale
+    parent: tirisfal_glades
+    type: subzone
+    subtype: ""
+    name_zh: "噩梦谷"
+    name_en: "Nightmare Vale"
+    level: ""
+    faction: ""
+    coords: "[48, 67]"
+    adjacent: []
+    era: vanilla
+    look_zh: "低洼谷地，遍地沼泽色的软泥与枯藤，雾比别处更厚"
+    note_zh: "提瑞斯法中部的谷地"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "811,NightmareVale,噩梦谷,0,85"
+    verified_by: ai_read
+  - id: stillwater_pond
+    parent: tirisfal_glades
+    type: poi
+    subtype: ""
+    name_zh: "静水池"
+    name_en: "Stillwater Pond"
+    level: ""
+    faction: ""
+    coords: "[49, 51]"
+    adjacent: []
+    era: vanilla
+    look_zh: "一潭不流动的死水，水面镜一样黑，岸边长着芦苇"
+    note_zh: "提瑞斯法中部小池塘"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "810,StillwaterPond,静水池,0,85"
+    verified_by: ai_read
+  - id: venomweb_vale
+    parent: tirisfal_glades
+    type: subzone
+    subtype: ""
+    name_zh: "毒蛛峡谷"
+    name_en: "Venomweb Vale"
+    level: ""
+    faction: ""
+    coords: "[87, 47]"
+    adjacent: []
+    era: vanilla
+    look_zh: "山谷两壁拉满灰白蛛网，树干上挂着裹尸茧，地面爬满蜘蛛"
+    note_zh: "提瑞斯法东部的蜘蛛谷"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "812,VenomwebVale,毒蛛峡谷,0,85"
+    verified_by: ai_read
+  - id: the_bulwark
+    parent: tirisfal_glades
+    type: settlement
+    subtype: "camp"
+    name_zh: "亡灵壁垒"
+    name_en: "The Bulwark"
+    level: ""
+    faction: "horde"
+    coords: "[81, 70]"
+    adjacent: []
+    era: vanilla
+    look_zh: "用碎石、断木与尸骨垒起的横向路障墙，两侧插满尖桩，墙后是黄灰色的瘟疫雾"
+    note_zh: "提瑞斯法与西瘟疫之地的边界壁垒，被遗忘者+银色黎明共守；vanilla 只有守军与修理，无飞行点"
+    source_url: "https://warcraft.wiki.gg/wiki/Bulwark"
+    quote: "a makeshift wall of debris stacked along the border between Tirisfal Glades and the Western Plaguelands"
+    verified_by: ai_read
+  - id: the_north_coast
+    parent: tirisfal_glades
+    type: subzone
+    subtype: ""
+    name_zh: "北部海岸"
+    name_en: "The North Coast"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "灰黑色卵石海滩与断崖，浪打礁石，天色铅灰"
+    note_zh: "提瑞斯法北面海岸线"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "168,TheNorthCoast,北部海岸,0,85"
+    verified_by: ai_read
+  - id: whispering_shore
+    parent: tirisfal_glades
+    type: subzone
+    subtype: ""
+    name_zh: "耳语海岸"
+    name_en: "Whispering Shore"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "东北角的砂砾海岸，风从海上来，草被压成一个方向"
+    note_zh: "提瑞斯法东北海岸；血色修道院外侧"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "169,\"Whispering Shore\",耳语海岸,0,85"
+    verified_by: ai_read
+  - id: whispering_gardens
+    parent: tirisfal_glades
+    type: subzone
+    subtype: ""
+    name_zh: "耳语花园"
+    name_en: "Whispering Gardens"
+    level: ""
+    faction: ""
+    coords: "[85, 33]"
+    adjacent: []
+    era: vanilla
+    look_zh: "修道院围墙外的整齐花园与石径，修剪过的树篱在瘟疫天光下显得不合时宜"
+    note_zh: "血色修道院的外围园林，修道院正门在此"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "160,WhisperingGardens,耳语花园,0,85"
+    verified_by: ai_read
+  - id: terrace_of_repose
+    parent: tirisfal_glades
+    type: subzone
+    subtype: ""
+    name_zh: "休息区"
+    name_en: "Terrace of Repose"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "修道院前的石砌平台与阶梯，两侧立着圣光雕像"
+    note_zh: "血色修道院门前的平台（国服官方名直译作「休息区」）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "161,TerraceofRepose,休息区,0,85"
+    verified_by: ai_read
+  - id: sm_grand_vestibule
+    parent: scarlet_monastery
+    type: subzone
+    subtype: ""
+    name_zh: "大前厅"
+    name_en: "The Grand Vestibule"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "四门交汇的石砌门厅，中央一口圣水池，四壁挂红十字挂毯"
+    note_zh: "非官方译名；非副本区域，四个副本入口都开在这里"
+    source_url: "https://warcraft.wiki.gg/wiki/Scarlet_Monastery"
+    quote: "The Scarlet Monastery, once known as the Old Monastery, is a fortified monastery located in the northeast corner of the blighted Tirisfal Glades"
+    verified_by: ai_draft
+  - id: silverpine_forest
+    parent: lordaeron
+    type: zone
+    subtype: ""
+    name_zh: "银松森林"
+    name_en: "Silverpine Forest"
+    level: "10-20"
+    faction: "horde"
+    coords: ""
+    adjacent: [tirisfal_glades, hillsbrad_foothills]
+    era: vanilla
+    look_zh: "青灰冷雾里的高瘦松林，湿黑泥路、倒伏的围栏与空农舍，远处传狼嚎，天色常年压得很低"
+    note_zh: "被遗忘者向南扩张的走廊；南端被格雷迈恩之墙封死。4.0.3 整区被战役重写（吉尔尼斯之战、派瑞沃德/安伯米尔剧情全改），本树取 vanilla"
+    source_url: "https://warcraft.wiki.gg/wiki/Silverpine_Forest"
+    quote: "Soft mists swirled gently near the moist, pine-needle-covered earth with rich evergreen scent from the moist air."
+    verified_by: ai_read
+  - id: the_sepulcher
+    parent: silverpine_forest
+    type: settlement
+    subtype: "town"
+    name_zh: "瑟伯切尔"
+    name_en: "The Sepulcher"
+    level: ""
+    faction: "horde"
+    coords: "[46, 37]"
+    adjacent: []
+    era: vanilla
+    look_zh: "山坡上一座石砌墓室与一间小木屋，四周是成片墓碑与铁栅栏，火盆点着绿火"
+    note_zh: "银松唯一的部落镇子（旅店/飞行点/训练师）；国服官方名「瑟伯切尔」"
+    source_url: "https://warcraft.wiki.gg/wiki/Sepulcher"
+    quote: "The Sepulcher, also known as the Silverpine Sepulcher, is a Forsaken base located in the western side of Silverpine Forest."
+    verified_by: ai_read
+  - id: sepulcher_flightpath
+    parent: the_sepulcher
+    type: transport
+    subtype: "flightpath"
+    name_zh: "瑟伯切尔，银松森林"
+    name_en: "The Sepulcher, Silverpine Forest"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "墓地旁的一小块空地，蝙蝠倒挂在枯树枝上，地插火把"
+    note_zh: "vanilla 银松唯一飞行点；名取自客户端 TaxiNodes 表"
+    source_url: "https://wago.tools/db2/TaxiNodes/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "10,瑟伯切尔，银松森林"
+    verified_by: ai_read
+  - id: maldens_orchard
+    parent: silverpine_forest
+    type: settlement
+    subtype: "farm"
+    name_zh: "玛尔丁果园"
+    name_en: "Malden's Orchard"
+    level: ""
+    faction: ""
+    coords: "[59, 12]"
+    adjacent: []
+    era: vanilla
+    look_zh: "北部路边的果园，果树全枯，篱笆倒了一半，木屋门开着"
+    note_zh: "银松北部果园；4.0.3 原址改建为「被遗忘者高级指挥部」"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "238,Malden'sOrchard,玛尔丁果园,0,130"
+    verified_by: ai_read
+  - id: the_dead_field
+    parent: silverpine_forest
+    type: settlement
+    subtype: "farm"
+    name_zh: "亡者农场"
+    name_en: "The Dead Field"
+    level: ""
+    faction: ""
+    coords: "[49, 22]"
+    adjacent: []
+    era: vanilla
+    look_zh: "一大片死掉的麦田，秸秆发黑倒伏，田中立着一座塌了半边的谷仓"
+    note_zh: "银松北部；4.0.3 原址改为「被遗忘者后卫营」"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "240,TheDeadField,亡者农场,0,130"
+    verified_by: ai_read
+  - id: the_ivar_patch
+    parent: silverpine_forest
+    type: settlement
+    subtype: "farm"
+    name_zh: "伊瓦农场"
+    name_en: "The Ivar Patch"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "小块田地与一间歪斜木屋，屋后堆着南瓜"
+    note_zh: "银松北部农场，食尸鬼出没"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "239,TheIvarPatch,伊瓦农场,0,130"
+    verified_by: ai_read
+  - id: the_decrepit_ferry
+    parent: silverpine_forest
+    type: settlement
+    subtype: "port"
+    name_zh: "破旧渡口"
+    name_en: "The Decrepit Ferry"
+    level: ""
+    faction: ""
+    coords: "[55, 35]"
+    adjacent: []
+    era: vanilla
+    look_zh: "洛丹米尔湖畔的朽木栈桥与一条半沉的渡船，桩子上缠着水草"
+    note_zh: "通往芬里斯岛方向的旧渡口；4.0.3 改名「破旧农场（Decrepit Fields）」"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "237,TheDecrepitFerry,破旧渡口,0,130"
+    verified_by: ai_read
+  - id: valgans_field
+    parent: silverpine_forest
+    type: settlement
+    subtype: "farm"
+    name_zh: "瓦尔甘牧场"
+    name_en: "Valgan's Field"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "湖边牧场，木栅圈着空畜栏，草地泛黄"
+    note_zh: "银松北部牧场（AreaPOI 亦记作「瓦尔甘农场」）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "227,Valgan'sField,瓦尔甘牧场,0,130"
+    verified_by: ai_read
+  - id: the_shining_strand
+    parent: silverpine_forest
+    type: subzone
+    subtype: ""
+    name_zh: "闪光湖岸"
+    name_en: "The Shining Strand"
+    level: ""
+    faction: ""
+    coords: "[59, 18]"
+    adjacent: []
+    era: vanilla
+    look_zh: "洛丹米尔湖西岸的浅白砂岸，湖水反着冷光，岸边泊着破船"
+    note_zh: "银松东北湖岸"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "927,TheShiningStrand,闪光湖岸,0,130"
+    verified_by: ai_read
+  - id: north_tides_run
+    parent: silverpine_forest
+    type: subzone
+    subtype: ""
+    name_zh: "北流海岸"
+    name_en: "North Tide's Run"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "西北海岸的碎石滩，浪灰白，崖上是松林"
+    note_zh: "银松西北海岸"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "305,NorthTide'sRun,北流海岸,0,130"
+    verified_by: ai_read
+  - id: north_tides_hollow
+    parent: north_tides_run
+    type: subzone
+    subtype: ""
+    name_zh: "北流谷"
+    name_en: "North Tide's Hollow"
+    level: ""
+    faction: ""
+    coords: "[41, 29]"
+    adjacent: []
+    era: vanilla
+    look_zh: "海岸边的洼地与一个洞口，遍地鱼人骨"
+    note_zh: "北流海岸边的洼地/洞穴"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "928,NorthTide'sHollow,北流谷,0,130"
+    verified_by: ai_read
+  - id: south_tides_run
+    parent: silverpine_forest
+    type: subzone
+    subtype: ""
+    name_zh: "南流海岸"
+    name_en: "South Tide's Run"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "西南海岸，沙色更暗，海雾常年不散"
+    note_zh: "银松西南海岸；4.0.3 后划入「战线」区域"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "306,SouthTide'sRun,南流海岸,0,130"
+    verified_by: ai_read
+  - id: the_skittering_dark
+    parent: silverpine_forest
+    type: subzone
+    subtype: ""
+    name_zh: "粘丝洞"
+    name_en: "The Skittering Dark"
+    level: ""
+    faction: ""
+    coords: "[38, 18]"
+    adjacent: []
+    era: vanilla
+    look_zh: "崖壁上的洞口，内壁糊满蛛网与卵囊，只有零星幽光"
+    note_zh: "银松西北的蜘蛛洞（国服官方名「粘丝洞」）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "226,TheSkitteringDark,粘丝洞,0,130"
+    verified_by: ai_read
+  - id: olsens_farthing
+    parent: silverpine_forest
+    type: settlement
+    subtype: "farm"
+    name_zh: "奥森农场"
+    name_en: "Olsen's Farthing"
+    level: ""
+    faction: ""
+    coords: "[46, 52]"
+    adjacent: []
+    era: vanilla
+    look_zh: "路西的小农庄，两间木屋一口井，院子里晾着破布"
+    note_zh: "银松中部农场，狼人出没"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "229,Olsen'sFarthing,奥森农场,0,130"
+    verified_by: ai_read
+  - id: deep_elem_mine
+    parent: silverpine_forest
+    type: poi
+    subtype: ""
+    name_zh: "埃利姆矿洞"
+    name_en: "Deep Elem Mine"
+    level: ""
+    faction: ""
+    coords: "[55, 52]"
+    adjacent: []
+    era: vanilla
+    look_zh: "山壁上的木框矿洞口，轨道伸进黑暗，洞外堆着矿车残骸"
+    note_zh: "银松中部矿洞（国服官方名「埃利姆矿洞」）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "213,DeepElemMine,埃利姆矿洞,0,130"
+    verified_by: ai_read
+  - id: ambermill
+    parent: silverpine_forest
+    type: settlement
+    subtype: "village"
+    name_zh: "安伯米尔"
+    name_en: "Ambermill"
+    level: ""
+    faction: "contested"
+    coords: "[61, 57]"
+    adjacent: []
+    era: vanilla
+    look_zh: "山谷里的人类村落，石屋加木顶，中央一座水车磨坊，窗里透着灯火"
+    note_zh: "达拉然法师控制的村子；4.0.3 剧情里被整体传送走，vanilla 仍在原地"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "233,Ambermill,安伯米尔,0,130"
+    verified_by: ai_read
+  - id: berens_peril
+    parent: silverpine_forest
+    type: subzone
+    subtype: ""
+    name_zh: "博伦的巢穴"
+    name_en: "Beren's Peril"
+    level: ""
+    faction: ""
+    coords: "[61, 76]"
+    adjacent: []
+    era: vanilla
+    look_zh: "密林深处的洞穴口，四周是被啃断的粗树桩"
+    note_zh: "银松南部的巨魔/野兽巢穴（国服官方名「博伦的巢穴」）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "231,Beren'sPeril,博伦的巢穴,0,130"
+    verified_by: ai_read
+  - id: pyrewood_village
+    parent: silverpine_forest
+    type: settlement
+    subtype: "village"
+    name_zh: "焚木村"
+    name_en: "Pyrewood Village"
+    level: ""
+    faction: "contested"
+    coords: "[46, 76]"
+    adjacent: []
+    era: vanilla
+    look_zh: "紧挨着高墙的人类村子，尖顶木屋一字排开，夜里家家闭户"
+    note_zh: "村民入夜变狼人（vanilla 著名设定）；国服官方名「焚木村」。4.0.3 后剧情大改"
+    source_url: "https://warcraft.wiki.gg/wiki/Shadowfang_Keep"
+    quote: "on a high bluff overlooking Pyrewood Village"
+    verified_by: ai_read
+  - id: pyrewood_town_hall
+    parent: pyrewood_village
+    type: poi
+    subtype: ""
+    name_zh: "焚木村议事厅"
+    name_en: "Pyrewood Town Hall"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "村中最大的一栋两层木石建筑，门前一方空场，夜里灯全灭"
+    note_zh: "焚木议会（洛德·莫里森与七名议员）所在；vanilla 入夜后议员成群变狼人，是本村最著名的场景。国服官方译名未经客户端核实（该条目不在 Classic Era AreaTable 内），以 name_en 为准"
+    source_url: "https://warcraft.wiki.gg/wiki/Pyrewood_Village"
+    quote: "a town hall, a blacksmith, and a chapel"
+    verified_by: ai_draft
+  - id: pyrewood_chapel
+    parent: pyrewood_village
+    type: poi
+    subtype: ""
+    name_zh: "焚木村礼拜堂"
+    name_en: "Pyrewood Chapel"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "尖顶小礼拜堂，彩窗完好，正面一扇木门，墙根爬着藤"
+    note_zh: "vanilla 焚木村三座建筑之一；4.0.3 后全村换成吉尔尼斯建筑样式。国服官方译名未经客户端核实（该条目不在 Classic Era AreaTable 内），以 name_en 为准"
+    source_url: "https://warcraft.wiki.gg/wiki/Pyrewood_Village"
+    quote: "a town hall, a blacksmith, and a chapel"
+    verified_by: ai_draft
+  - id: pyrewood_blacksmith
+    parent: pyrewood_village
+    type: poi
+    subtype: ""
+    name_zh: "焚木村铁匠铺"
+    name_en: "Blacksmith"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "村口的铁匠棚，炉火压得很低，工具挂了一墙"
+    note_zh: "vanilla 焚木村三座建筑之一。国服官方译名未经客户端核实（该条目不在 Classic Era AreaTable 内），以 name_en 为准"
+    source_url: "https://warcraft.wiki.gg/wiki/Pyrewood_Village"
+    quote: "a town hall, a blacksmith, and a chapel"
+    verified_by: ai_draft
+  - id: shadowfang_keep_grounds
+    parent: silverpine_forest
+    type: subzone
+    subtype: ""
+    name_zh: "影牙城堡"
+    name_en: "Shadowfang Keep"
+    level: ""
+    faction: ""
+    coords: "[47, 66]"
+    adjacent: []
+    era: vanilla
+    look_zh: "悬崖顶上的黑石城堡剪影，吊桥、铁闸门与两侧火盆，山道盘旋而上"
+    note_zh: "影牙城堡的户外区域与入口；城堡俯瞰焚木村"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "236,\"Shadowfang Keep\",影牙城堡,0,130"
+    verified_by: ai_read
+  - id: sfk_courtyard
+    parent: shadowfang_keep
+    type: subzone
+    subtype: ""
+    name_zh: "影牙城堡庭院"
+    name_en: "Shadowfang Keep courtyard"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "方形石庭，中央枯井，四角火盆，狼群在石板上游走"
+    note_zh: "非官方译名；进门第一个场景。原 quote 引的 Baron Ashbury 是 4.0.3 才加的 boss，已换成不带版本污染的房间名"
+    source_url: "https://warcraft.wiki.gg/wiki/Shadowfang_Keep"
+    quote: "Courtyard"
+    verified_by: ai_draft
+  - id: sfk_arugals_tower
+    parent: shadowfang_keep
+    type: subzone
+    subtype: ""
+    name_zh: "阿鲁高的高塔"
+    name_en: "Shadowfang Keep observatory"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "塔顶圆厅，星象仪与书架环绕，落地窗外是银松的雾海"
+    note_zh: "非官方译名（wiki 作 Upper/Lower Observatory）；vanilla 阿鲁高在塔顶"
+    source_url: "https://warcraft.wiki.gg/wiki/Shadowfang_Keep"
+    quote: "Upper Observatory"
+    verified_by: ai_draft
+  - id: the_greymane_wall
+    parent: silverpine_forest
+    type: poi
+    subtype: ""
+    name_zh: "格雷迈恩之墙"
+    name_en: "The Greymane Wall"
+    level: ""
+    faction: "neutral"
+    coords: "[48, 83]"
+    adjacent: []
+    era: vanilla
+    look_zh: "横断山谷的巨型灰石墙，墙体高过树冠，中央一道锁死的铁闸门，墙根压着雾"
+    note_zh: "vanilla 时永久关闭、墙后的吉尔尼斯不可进入；4.0.3 被大地的裂变震开，本树取 vanilla 封闭状态"
+    source_url: "https://warcraft.wiki.gg/wiki/Greymane_Wall"
+    quote: "The Greymane Wall was erected before the Third War by order of King Genn Greymane, as the kingdom of Gilneas isolated itself from the Alliance of Lordaeron and the rest of the world"
+    verified_by: ai_read
+  - id: fenris_isle
+    parent: silverpine_forest
+    type: subzone
+    subtype: ""
+    name_zh: "芬里斯岛"
+    name_en: "Fenris Isle"
+    level: ""
+    faction: ""
+    coords: "[72, 27]"
+    adjacent: []
+    era: vanilla
+    look_zh: "洛丹米尔湖心的岛，陡坡上长着黑松，山顶一座庄园的轮廓"
+    note_zh: "银松东北的湖心岛，需从破旧渡口一侧游过去"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "172,FenrisIsle,芬里斯岛,0,130"
+    verified_by: ai_read
+  - id: fenris_keep
+    parent: fenris_isle
+    type: settlement
+    subtype: "ruin"
+    name_zh: "芬里斯城堡"
+    name_en: "Fenris Keep"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "岛顶的石砌庄园，塔楼完好，院墙塌了一角，窗里有灯"
+    note_zh: "芬里斯岛上的城堡；vanilla 由达拉然法师与亡灵盘踞"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "235,FenrisKeep,芬里斯城堡,0,130"
+    verified_by: ai_read
+  - id: the_dawning_isles
+    parent: silverpine_forest
+    type: subzone
+    subtype: ""
+    name_zh: "黎明岛"
+    name_en: "The Dawning Isles"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "湖上几座无人小岛，芦苇与浅滩"
+    note_zh: "洛丹米尔湖上的小岛群，紧邻芬里斯岛"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "232,TheDawningIsles,黎明岛,0,130"
+    verified_by: ai_read
+  - id: bucklebree_farm
+    parent: silverpine_forest
+    type: settlement
+    subtype: "farm"
+    name_zh: "巴克布雷农场"
+    name_en: "Bucklebree Farm"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "林边的小农场，两间木屋与南瓜地"
+    note_zh: "存在于 vanilla 客户端区域表、后被移除的小农场；具体位置存疑（无地图高亮块）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "926,BucklebreeFarm,巴克布雷农场,0,130"
+    verified_by: ai_read
+  - id: lordamere_lake_silverpine
+    parent: silverpine_forest
+    type: poi
+    subtype: ""
+    name_zh: "洛丹米尔湖（银松段）"
+    name_en: "Lordamere Lake"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "铅灰色的大湖，对岸看不清，湖面常起白雾"
+    note_zh: "洛丹米尔湖横跨银松/希尔斯布莱德/奥特兰克三区，客户端为各区各建一个区域条目，本节点为银松段（ID 1338）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1338,LordamereLake,洛丹米尔湖,0,130"
+    verified_by: ai_read
+  - id: hillsbrad_foothills
+    parent: lordaeron
+    type: zone
+    subtype: ""
+    name_zh: "希尔斯布莱德丘陵"
+    name_en: "Hillsbrad Foothills"
+    level: "20-30"
+    faction: "contested"
+    coords: ""
+    adjacent: [silverpine_forest, alterac_mountains, arathi_highlands, the_hinterlands, western_plaguelands]
+    era: vanilla
+    look_zh: "温暖黄绿的起伏农田与松林，石基木屋、木栅羊圈与蜿蜒土路，南面直接连着海"
+    note_zh: "洛丹伦保存得最完好的一块地；vanilla 野外 PK 圣地（南海镇 vs 塔伦米尔）。4.0.3 南海镇被瘟疫炸成废墟、奥特兰克山脉并入本区，本树取 vanilla"
+    source_url: "https://warcraft.wiki.gg/wiki/Hillsbrad_Foothills"
+    quote: "It remains the best-preserved region of the fallen kingdom, giving travelers a feeling of what the land was like before the Plague."
+    verified_by: ai_read
+  - id: southshore
+    parent: hillsbrad_foothills
+    type: settlement
+    subtype: "town"
+    name_zh: "南海镇"
+    name_en: "Southshore"
+    level: ""
+    faction: "alliance"
+    coords: "[53, 50]"
+    adjacent: []
+    era: vanilla
+    look_zh: "海湾边的人类小镇：白墙红瓦屋、码头木栈、镇政厅与旅店围着一小块草地，旗帜是联盟蓝金"
+    note_zh: "联盟在希尔斯布莱德的据点，vanilla 野外 PK 的一极；4.0.3 被被遗忘者瘟疫摧毁成「南海镇废墟」"
+    source_url: "https://warcraft.wiki.gg/wiki/Southshore"
+    quote: "Southshore (or South Shore) is an Alliance port town located in the region of Hillsbrad Foothills"
+    verified_by: ai_read
+  - id: southshore_town_hall
+    parent: southshore
+    type: poi
+    subtype: ""
+    name_zh: "南海镇镇政厅"
+    name_en: "Southshore Town Hall"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "镇中心的两层石砌大屋，门前挂联盟旗"
+    note_zh: "非官方译名；vanilla 治安官雷德帕斯所在（希尔斯布莱德任务链起点）"
+    source_url: "https://warcraft.wiki.gg/wiki/Southshore"
+    quote: "An NPC quest giver named Marshal Redpath stood outside the Southshore Town Hall."
+    verified_by: ai_read
+  - id: southshore_inn
+    parent: southshore
+    type: settlement
+    subtype: "inn"
+    name_zh: "南海镇旅店"
+    name_en: "Southshore Inn"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "两层木构旅店，一层是酒吧长桌，二层窗口朝海"
+    note_zh: "非官方译名；联盟方炉石点"
+    source_url: "https://warcraft.wiki.gg/wiki/Southshore"
+    quote: "Inside the inn, Lieutenant Farren Orinelle mocked Redpath"
+    verified_by: ai_read
+  - id: southshore_docks
+    parent: southshore
+    type: poi
+    subtype: ""
+    name_zh: "南海镇码头"
+    name_en: "Southshore docks"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "伸进海湾的木栈桥，系着两条小渔船，桶与渔网堆在桥头"
+    note_zh: "非官方译名；客户端有「南海镇渡口」飞行节点条目（TaxiNodes 46），vanilla 实际未开放固定航线——存疑，见 notes"
+    source_url: "https://warcraft.wiki.gg/wiki/Southshore"
+    quote: "Nat Pagle idly fished off the dock."
+    verified_by: ai_read
+  - id: southshore_flightpath
+    parent: southshore
+    type: transport
+    subtype: "flightpath"
+    name_zh: "南海镇，希尔斯布莱德"
+    name_en: "Southshore, Hillsbrad"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "镇口草地上的狮鹫栖架，狮鹫抖着羽毛，旁边站着穿蓝袍的驭手"
+    note_zh: "vanilla 联盟方飞行点；名取自客户端 TaxiNodes 表"
+    source_url: "https://wago.tools/db2/TaxiNodes/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "14,南海镇，希尔斯布莱德"
+    verified_by: ai_read
+  - id: tarren_mill
+    parent: hillsbrad_foothills
+    type: settlement
+    subtype: "town"
+    name_zh: "塔伦米尔"
+    name_en: "Tarren Mill"
+    level: ""
+    faction: "horde"
+    coords: "[62, 23]"
+    adjacent: []
+    era: vanilla
+    look_zh: "北部路口的小村：一座石教堂、几间歪斜木屋与枯死的果园，被遗忘者旗插在井边"
+    note_zh: "被遗忘者据点，vanilla 野外 PK 的另一极——「塔伦米尔 vs 南海镇」是整个 vanilla 最出名的野外战场"
+    source_url: "https://warcraft.wiki.gg/wiki/Tarren_Mill"
+    quote: "Before the introduction of battlegrounds, Tarren Mill was often inaccessible because of the frequent all-out war"
+    verified_by: ai_read
+  - id: tarren_mill_flightpath
+    parent: tarren_mill
+    type: transport
+    subtype: "flightpath"
+    name_zh: "塔伦米尔，希尔斯布莱德"
+    name_en: "Tarren Mill, Hillsbrad"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "村东的蝙蝠栖杆，几只瘟疫蝙蝠倒挂着，杆下是泥地"
+    note_zh: "vanilla 部落方飞行点；名取自客户端 TaxiNodes 表"
+    source_url: "https://wago.tools/db2/TaxiNodes/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "13,塔伦米尔，希尔斯布莱德"
+    verified_by: ai_read
+  - id: hillsbrad
+    parent: hillsbrad_foothills
+    type: subzone
+    subtype: ""
+    name_zh: "希尔斯布莱德"
+    name_en: "Hillsbrad"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "区中部的开阔农耕带，麦田、篱笆与散落的石基农舍"
+    note_zh: "本区同名的中部村落带（客户端独立区域条目，与农场 286 相邻）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "287,Hillsbrad,希尔斯布莱德,0,267"
+    verified_by: ai_read
+  - id: hillsbrad_fields
+    parent: hillsbrad_foothills
+    type: settlement
+    subtype: "farm"
+    name_zh: "希尔斯布莱德农场"
+    name_en: "Hillsbrad Fields"
+    level: ""
+    faction: "alliance"
+    coords: "[35, 44]"
+    adjacent: []
+    era: vanilla
+    look_zh: "成片的麦田与三四座农舍，农夫与看门狗，背后是松树坡"
+    note_zh: "希尔斯布莱德农场；vanilla 部落玩家刷「杀农民」任务处，PK 高发地。4.0.3 变成被遗忘者的「污泥之地」"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "286,HillsbradFields,希尔斯布莱德农场,0,267"
+    verified_by: ai_read
+  - id: azurelode_mine
+    parent: hillsbrad_foothills
+    type: poi
+    subtype: ""
+    name_zh: "碧玉矿洞"
+    name_en: "Azurelode Mine"
+    level: ""
+    faction: ""
+    coords: "[26, 56]"
+    adjacent: []
+    era: vanilla
+    look_zh: "西侧山体上的矿洞口，木支架与矿车轨道，洞内泛蓝矿脉"
+    note_zh: "被穴居人/亡灵占据的矿洞（国服官方名「碧玉矿洞」）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "288,AzurelodeMine,碧玉矿洞,0,267"
+    verified_by: ai_read
+  - id: southpoint_tower
+    parent: hillsbrad_foothills
+    type: settlement
+    subtype: "tower"
+    name_zh: "南点哨塔"
+    name_en: "Southpoint Tower"
+    level: ""
+    faction: "alliance"
+    coords: "[15, 46]"
+    adjacent: []
+    era: vanilla
+    look_zh: "西界路口的圆形石塔，塔顶哨兵，旁边一小片营地"
+    note_zh: "通往银松的西侧关口；4.0.3 改建成被遗忘者的「南点大门」"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "285,SouthpointTower,南点哨塔,0,267"
+    verified_by: ai_read
+  - id: western_strand
+    parent: hillsbrad_foothills
+    type: subzone
+    subtype: ""
+    name_zh: "西部海岸"
+    name_en: "Western Strand"
+    level: ""
+    faction: ""
+    coords: "[35, 67]"
+    adjacent: []
+    era: vanilla
+    look_zh: "西南沙滩，浪线平缓，滩上散着海怪骨与破船板"
+    note_zh: "希尔斯布莱德西南海岸，鱼人与娜迦出没"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "295,WesternStrand,西部海岸,0,267"
+    verified_by: ai_read
+  - id: eastern_strand
+    parent: hillsbrad_foothills
+    type: subzone
+    subtype: ""
+    name_zh: "东部海滩"
+    name_en: "Eastern Strand"
+    level: ""
+    faction: ""
+    coords: "[64, 75]"
+    adjacent: []
+    era: vanilla
+    look_zh: "东南沙滩，礁石更多，海水偏深蓝"
+    note_zh: "希尔斯布莱德东南海岸"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "294,EasternStrand,东部海滩,0,267"
+    verified_by: ai_read
+  - id: nethander_stead
+    parent: hillsbrad_foothills
+    type: settlement
+    subtype: "farm"
+    name_zh: "奈杉德哨岗"
+    name_en: "Nethander Stead"
+    level: ""
+    faction: "contested"
+    coords: "[65, 53]"
+    adjacent: []
+    era: vanilla
+    look_zh: "东部丘陵上的农庄，房子被熊/豺狼人占了，院墙塌了半边"
+    note_zh: "东部农庄（国服官方名「奈杉德哨岗」）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "289,NethanderStead,奈杉德哨岗,0,267"
+    verified_by: ai_read
+  - id: dun_garok
+    parent: hillsbrad_foothills
+    type: settlement
+    subtype: "tower"
+    name_zh: "丹加洛克"
+    name_en: "Dun Garok"
+    level: ""
+    faction: "alliance"
+    coords: "[76, 65]"
+    adjacent: []
+    era: vanilla
+    look_zh: "东南山口的矮人石砌要塞，方塔与拱门厚重，门口点着火盆"
+    note_zh: "矮人（雷矛/丹莫罗军）在本区东南的要塞，与部落敌对"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "290,DunGarok,丹加洛克,0,267"
+    verified_by: ai_read
+  - id: durnholde_keep
+    parent: hillsbrad_foothills
+    type: settlement
+    subtype: "ruin"
+    name_zh: "敦霍尔德城堡"
+    name_en: "Durnholde Keep"
+    level: ""
+    faction: "contested"
+    coords: "[80, 39]"
+    adjacent: []
+    era: vanilla
+    look_zh: "山坡上的大型石砌要塞废墟：外墙缺口、塌掉的法师塔与一圈竞技场地基，风把旗吹成破条"
+    note_zh: "剧情重镇——萨尔当年被囚于此、也是他率兽人起义夷平之地；vanilla 由辛迪加占据。TBC 有「逃离敦霍尔德」副本重演旧日场景"
+    source_url: "https://warcraft.wiki.gg/wiki/Durnholde_Keep"
+    quote: "Durnholde Keep is a ruined stronghold located east of the town of Tarren Mill in the Hillsbrad Foothills."
+    verified_by: ai_read
+  - id: durnholde_barracks
+    parent: durnholde_keep
+    type: poi
+    subtype: ""
+    name_zh: "敦霍尔德兵营"
+    name_en: "Durnholde inner barracks"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "要塞内圈的长条石营房，屋顶塌了一半，通铺与锁链还在"
+    note_zh: "非官方译名；萨尔少年时被囚的建筑群"
+    source_url: "https://warcraft.wiki.gg/wiki/Durnholde_Keep"
+    quote: "Along with its inner barracks, Durnholde also had a mage tower and an arena."
+    verified_by: ai_read
+  - id: durnholde_mage_tower
+    parent: durnholde_keep
+    type: poi
+    subtype: ""
+    name_zh: "敦霍尔德法师塔"
+    name_en: "Durnholde mage tower"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "断成半截的圆塔，塔顶敞着口，石阶还能上人"
+    note_zh: "非官方译名；要塞内的法师塔残骸"
+    source_url: "https://warcraft.wiki.gg/wiki/Durnholde_Keep"
+    quote: "Along with its inner barracks, Durnholde also had a mage tower and an arena."
+    verified_by: ai_read
+  - id: durnholde_arena
+    parent: durnholde_keep
+    type: poi
+    subtype: ""
+    name_zh: "敦霍尔德角斗场"
+    name_en: "Durnholde arena"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "一圈下沉的椭圆形石地基，看台塌成碎石堆，场心的沙土被雨冲出沟"
+    note_zh: "非官方译名；黑摩尔逼萨尔角斗之处，剧情价值高"
+    source_url: "https://warcraft.wiki.gg/wiki/Durnholde_Keep"
+    quote: "Along with its inner barracks, Durnholde also had a mage tower and an arena."
+    verified_by: ai_read
+  - id: tarren_mill_church
+    parent: tarren_mill
+    type: poi
+    subtype: ""
+    name_zh: "塔伦米尔教堂"
+    name_en: "Tarren Mill church"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "村中一座小石教堂，钟塔歪着，窗玻璃全无"
+    note_zh: "非官方译名；vanilla 塔伦米尔的主要建筑之一"
+    source_url: "https://warcraft.wiki.gg/wiki/Tarren_Mill"
+    quote: "a church, a few houses and withered orchards"
+    verified_by: ai_read
+  - id: tarren_mill_barn
+    parent: tarren_mill
+    type: poi
+    subtype: ""
+    name_zh: "塔伦米尔谷仓"
+    name_en: "Tarren Mill old barn"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "村外的木板谷仓，门板脱落，旁边是枯死的果园"
+    note_zh: "非官方译名；4.0.3 重建后全村只剩这座旧谷仓保持原样"
+    source_url: "https://warcraft.wiki.gg/wiki/Tarren_Mill"
+    quote: "the only traces of what the town used to be is the old barn on the outskirts of town"
+    verified_by: ai_read
+  - id: tarren_mill_inn
+    parent: tarren_mill
+    type: settlement
+    subtype: "inn"
+    name_zh: "塔伦米尔旅店"
+    name_en: "Inn"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "低矮木屋旅店，窗口透出绿幽幽的灯，门口立着部落旗"
+    note_zh: "部落方炉石点，vanilla 南海镇↔塔伦米尔野外 PK 的部落集结点。国服官方译名未经客户端核实（该条目不在 Classic Era AreaTable 内），以 name_en 为准"
+    source_url: "https://warcraft.wiki.gg/wiki/Tarren_Mill"
+    quote: "a church, a few houses and withered orchards"
+    verified_by: ai_draft
+  - id: darrow_hill
+    parent: hillsbrad_foothills
+    type: subzone
+    subtype: ""
+    name_zh: "达隆山"
+    name_en: "Darrow Hill"
+    level: ""
+    faction: ""
+    coords: "[52, 35]"
+    adjacent: []
+    era: vanilla
+    look_zh: "中部的圆丘，坡顶几棵孤树，能俯瞰整片农田"
+    note_zh: "区中部高地（国服官方名「达隆山」）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1056,DarrowHill,达隆山,0,267"
+    verified_by: ai_read
+  - id: purgation_isle
+    parent: hillsbrad_foothills
+    type: subzone
+    subtype: ""
+    name_zh: "赎罪岛"
+    name_en: "Purgation Isle"
+    level: ""
+    faction: "contested"
+    coords: "[17, 80]"
+    adjacent: []
+    era: vanilla
+    look_zh: "海上一座螺旋上升的孤岛，岛顶是塌掉的哨塔与墓园，四周风大浪急"
+    note_zh: "南岸外海的小岛，vanilla 满是被诅咒的鬼魂（含召唤 Boss 科尔莫克）；需游泳前往"
+    source_url: "https://warcraft.wiki.gg/wiki/Purgation_Isle"
+    quote: "Purgation Isle is an island south of the shores of Hillsbrad Foothills, in a shape of a towering spiral."
+    verified_by: ai_read
+  - id: alterac_mountains
+    parent: lordaeron
+    type: zone
+    subtype: ""
+    name_zh: "奥特兰克山脉"
+    name_en: "Alterac Mountains"
+    level: "30-40"
+    faction: "contested"
+    coords: ""
+    adjacent: [hillsbrad_foothills, western_plaguelands, the_hinterlands]
+    era: vanilla
+    look_zh: "灰白积雪的高山与裸岩隘口，冷蓝天光，山脚是灰绿湖岸与枯树，雪地上是废墟的黑色轮廓"
+    note_zh: "奥特兰克王国（背叛者佩雷诺德家族）的故地，vanilla 是独立地区与独立地图；唯一步行入口来自南面的希尔斯布莱德。4.0.3 本区被整体并入希尔斯布莱德丘陵、不再是独立 zone——这是本片区最大的版本差异"
+    source_url: "https://warcraft.wiki.gg/wiki/Alterac_Mountains"
+    quote: "The Alterac Mountains are high peaks rising up north of the Hillsbrad Foothills, and spreading to the border of the Western Plaguelands in the north and The Hinterlands in the east."
+    verified_by: ai_read
+  - id: ruins_of_alterac
+    parent: alterac_mountains
+    type: settlement
+    subtype: "ruin"
+    name_zh: "奥特兰克废墟"
+    name_en: "Ruins of Alterac"
+    level: ""
+    faction: "contested"
+    coords: "[40, 49]"
+    adjacent: []
+    era: vanilla
+    look_zh: "雪中的石城废墟：还立着的宫殿主体、塌掉的教堂与议事厅、一道高大城门与两处墓地，散落着投石机残骸"
+    note_zh: "奥特兰克王国旧都；vanilla 由破碎岭食人魔（首领穆戈尔）占据，外围是辛迪加"
+    source_url: "https://warcraft.wiki.gg/wiki/Ruins_of_Alterac"
+    quote: "The Ruins of Alterac (or Alterac Ruins) are what remains of the former Alterac City (or the Keep at Alterac) located in the Alterac Mountains."
+    verified_by: ai_read
+  - id: alterac_palace
+    parent: ruins_of_alterac
+    type: poi
+    subtype: ""
+    name_zh: "奥特兰克王宫"
+    name_en: "Alterac palace"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "废墟里保存得最完整的一栋建筑：尖顶宫殿主体，正门台阶被雪埋住，大厅还立着"
+    note_zh: "非官方译名（客户端有 Alterac palace 的隐藏区域条目，地图不显示）；佩雷诺德王族的宫殿"
+    source_url: "https://warcraft.wiki.gg/wiki/Ruins_of_Alterac"
+    quote: "The palace, which remains relatively intact."
+    verified_by: ai_read
+  - id: alterac_gate
+    parent: ruins_of_alterac
+    type: poi
+    subtype: ""
+    name_zh: "奥特兰克城门"
+    name_en: "Alterac gate"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "高大的双塔石城门，门扇不在了，门洞里灌着风雪"
+    note_zh: "非官方译名；废墟的正面入口"
+    source_url: "https://warcraft.wiki.gg/wiki/Ruins_of_Alterac"
+    quote: "A mighty gate, not unlike the one at Stormwind City."
+    verified_by: ai_read
+  - id: alterac_graveyards
+    parent: ruins_of_alterac
+    type: poi
+    subtype: ""
+    name_zh: "奥特兰克墓地"
+    name_en: "Alterac graveyards"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "城内两处墓园，石碑歪斜，雪把碑文填平"
+    note_zh: "非官方译名；废墟内的两处墓地"
+    source_url: "https://warcraft.wiki.gg/wiki/Ruins_of_Alterac"
+    quote: "Two graveyards, one inside the city's limits and the other just outside, near Slaughter Hollow."
+    verified_by: ai_read
+  - id: alterac_church
+    parent: ruins_of_alterac
+    type: poi
+    subtype: ""
+    name_zh: "奥特兰克教堂废墟"
+    name_en: "Ruined church"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "只剩三面墙的石教堂，屋顶整个塌进厅内，雪落在碎石与断柱上"
+    note_zh: "废墟内建筑之一，与王宫、城门、两处墓地并列。国服官方译名未经客户端核实（该条目不在 Classic Era AreaTable 内），以 name_en 为准"
+    source_url: "https://warcraft.wiki.gg/wiki/Ruins_of_Alterac"
+    quote: "A ruined church. A dilapidated town hall."
+    verified_by: ai_draft
+  - id: alterac_town_hall
+    parent: ruins_of_alterac
+    type: poi
+    subtype: ""
+    name_zh: "奥特兰克议事厅废墟"
+    name_en: "Dilapidated town hall"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "半塌的议事厅，二层楼板垂下来，门楣上的纹章被凿花了"
+    note_zh: "废墟内建筑之一。国服官方译名未经客户端核实（该条目不在 Classic Era AreaTable 内），以 name_en 为准"
+    source_url: "https://warcraft.wiki.gg/wiki/Ruins_of_Alterac"
+    quote: "A ruined church. A dilapidated town hall."
+    verified_by: ai_draft
+  - id: strahnbrad
+    parent: alterac_mountains
+    type: settlement
+    subtype: "village"
+    name_zh: "斯坦恩布莱德"
+    name_en: "Strahnbrad"
+    level: ""
+    faction: "contested"
+    coords: "[73, 38]"
+    adjacent: []
+    era: vanilla
+    look_zh: "山间的人类小镇，屋顶积雪，铁匠铺与镇政厅还在，街上没有平民只有持刀的强盗"
+    note_zh: "vanilla 由辛迪加占据（关押兽人戈迪尔）；魔兽争霸 3 战役里阿尔萨斯救援的那个镇子"
+    source_url: "https://warcraft.wiki.gg/wiki/Strahnbrad"
+    quote: "the Syndicate was already using the town as their main base of operations to recover the Alterac Mountains for themselves"
+    verified_by: ai_read
+  - id: crushridge_hold
+    parent: alterac_mountains
+    type: settlement
+    subtype: "camp"
+    name_zh: "破碎岭城堡"
+    name_en: "Crushridge Hold"
+    level: ""
+    faction: "contested"
+    coords: "[47, 42]"
+    adjacent: []
+    era: vanilla
+    look_zh: "雪坡上的食人魔营地，粗木栅栏、兽皮帐篷与巨大的柴堆火"
+    note_zh: "破碎岭食人魔的据点"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "282,CrushridgeHold,破碎岭城堡,0,36"
+    verified_by: ai_read
+  - id: slaughter_hollow
+    parent: alterac_mountains
+    type: subzone
+    subtype: ""
+    name_zh: "屠杀谷"
+    name_en: "Slaughter Hollow"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "夹在岩壁间的凹谷，地上尽是骨头与血迹，帐篷边插着战利品杆"
+    note_zh: "破碎岭食人魔的屠宰场谷地，紧邻破碎岭城堡"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "283,SlaughterHollow,屠杀谷,0,36"
+    verified_by: ai_read
+  - id: dalaran_alterac
+    parent: alterac_mountains
+    type: settlement
+    subtype: "ruin"
+    name_zh: "达拉然"
+    name_en: "Dalaran"
+    level: ""
+    faction: "neutral"
+    coords: "[18, 62]"
+    adjacent: []
+    era: vanilla
+    look_zh: "湖边一座巨大的半透明紫色魔法穹顶，罩着城市废墟的尖塔，穹顶表面有符文缓缓流动"
+    note_zh: "vanilla 状态：肯瑞托用紫色魔法罩封住的达拉然废墟，玩家不能进入，外围有肯瑞托法师与岩石元素（30 多级）。WotLK 城市被抬到诺森德，原地留下「达拉然巨坑」——本树取 vanilla 的紫色穹顶"
+    source_url: "https://warcraft.wiki.gg/wiki/Dalaran_Crater"
+    quote: "a large purple dome with ruined buildings set up around and protruding from it"
+    verified_by: ai_read
+  - id: lordamere_internment_camp
+    parent: alterac_mountains
+    type: settlement
+    subtype: "camp"
+    name_zh: "洛丹米尔收容所"
+    name_en: "Lordamere Internment Camp"
+    level: ""
+    faction: "contested"
+    coords: "[21, 80]"
+    adjacent: []
+    era: vanilla
+    look_zh: "湖畔的木栅栏营地，成排的兵营木屋与瞭望塔，墙角还挂着锁链"
+    note_zh: "第二次战争后关押兽人的收容所之一，vanilla 由达拉然法师与辛迪加把守；4.0.3 原址改成「布雷泽农场」"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "278,LordamereInternmentCamp,洛丹米尔收容所,0,36"
+    verified_by: ai_read
+  - id: ravenholdt_manor
+    parent: alterac_mountains
+    type: settlement
+    subtype: "camp"
+    name_zh: "拉文霍德庄园"
+    name_en: "Ravenholdt Manor"
+    level: ""
+    faction: "neutral"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "山间台地上的橙顶石砌庄园，后院是训练场与靶子，只有一条盘山小道与一个山洞通进来"
+    note_zh: "拉文霍德组织（盗贼）的总部，位于敦霍尔德城堡西北的高台；vanilla 盗贼专属任务与「刺客的印记」声望地。坐标存疑：本区地图高亮块与冰风岗共用，未取到独立坐标"
+    source_url: "https://warcraft.wiki.gg/wiki/Ravenholdt_Manor"
+    quote: "Ravenholdt Manor is the headquarters for the Ravenholdt faction."
+    verified_by: ai_read
+  - id: chillwind_point
+    parent: alterac_mountains
+    type: subzone
+    subtype: ""
+    name_zh: "冰风岗"
+    name_en: "Chillwind Point"
+    level: ""
+    faction: ""
+    coords: "[80, 66]"
+    adjacent: []
+    era: vanilla
+    look_zh: "东侧的风口高地，积雪被风扫成波纹，几棵歪松"
+    note_zh: "奥特兰克东侧高地，通向西瘟疫之地方向；注意与西瘟疫之地的「冰风岗哨（Chillwind Camp）」不是同一处"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1684,ChillwindPoint,冰风岗,0,36"
+    verified_by: ai_read
+  - id: corrahns_dagger
+    parent: alterac_mountains
+    type: subzone
+    subtype: ""
+    name_zh: "考兰之匕"
+    name_en: "Corrahn's Dagger"
+    level: ""
+    faction: ""
+    coords: "[50, 78]"
+    adjacent: []
+    era: vanilla
+    look_zh: "一道刀刃形的岩脊直插雪地，脊上一条窄路"
+    note_zh: "南部的岩脊地形（国服官方名「考兰之匕」）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1679,Corrahn'sDagger,考兰之匕,0,36"
+    verified_by: ai_read
+  - id: dandreds_fold
+    parent: alterac_mountains
+    type: settlement
+    subtype: "farm"
+    name_zh: "达伦德农场"
+    name_en: "Dandred's Fold"
+    level: ""
+    faction: ""
+    coords: "[42, 17]"
+    adjacent: []
+    era: vanilla
+    look_zh: "被雪埋了一半的农舍与畜栏，木头发黑，雪面没有脚印"
+    note_zh: "北部高地上的废弃农场，属于「高地」农耕带"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1682,Dandred'sFold,达伦德农场,0,36"
+    verified_by: ai_read
+  - id: gallows_corner
+    parent: alterac_mountains
+    type: subzone
+    subtype: ""
+    name_zh: "绞刑场"
+    name_en: "Gallows' Corner"
+    level: ""
+    faction: ""
+    coords: "[50, 57]"
+    adjacent: []
+    era: vanilla
+    look_zh: "山路岔口立着一座绞刑架，横木上吊着空绳圈，雪地被踩乱"
+    note_zh: "奥特兰克中部的路口地标（国服官方名「绞刑场」）；名字本身就是画面"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1357,Gallows'Corner,绞刑场,0,36"
+    verified_by: ai_read
+  - id: gavins_naze
+    parent: alterac_mountains
+    type: subzone
+    subtype: ""
+    name_zh: "加文高地"
+    name_en: "Gavin's Naze"
+    level: ""
+    faction: ""
+    coords: "[30, 85]"
+    adjacent: []
+    era: vanilla
+    look_zh: "南部的裸岩坡地，草与雪交界，能俯瞰洛丹米尔湖"
+    note_zh: "南部高地（国服官方名「加文高地」）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1677,Gavin'sNaze,加文高地,0,36"
+    verified_by: ai_read
+  - id: growless_cave
+    parent: alterac_mountains
+    type: poi
+    subtype: ""
+    name_zh: "无草洞"
+    name_en: "Growless Cave"
+    level: ""
+    faction: ""
+    coords: "[41, 68]"
+    adjacent: []
+    era: vanilla
+    look_zh: "雪线下的洞口，洞外一圈啃光的骨头"
+    note_zh: "山地熊/雪人的洞穴（国服官方名「无草洞」）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1683,GrowlessCave,无草洞,0,36"
+    verified_by: ai_read
+  - id: misty_shore
+    parent: alterac_mountains
+    type: subzone
+    subtype: ""
+    name_zh: "雾气湖岸"
+    name_en: "Misty Shore"
+    level: ""
+    faction: ""
+    coords: "[31, 41]"
+    adjacent: []
+    era: vanilla
+    look_zh: "洛丹米尔湖北岸，水汽成团贴着湖面，岸边是灰石与枯苇"
+    note_zh: "奥特兰克西侧湖岸"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1681,MistyShore,雾气湖岸,0,36"
+    verified_by: ai_read
+  - id: soferas_naze
+    parent: alterac_mountains
+    type: subzone
+    subtype: ""
+    name_zh: "索菲亚高地"
+    name_en: "Sofera's Naze"
+    level: ""
+    faction: ""
+    coords: "[59, 70]"
+    adjacent: []
+    era: vanilla
+    look_zh: "东南方的高地台，视野开阔，地上是碎石与低矮灌木"
+    note_zh: "东南高地（国服官方名「索菲亚高地」）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1678,Sofera'sNaze,索菲亚高地,0,36"
+    verified_by: ai_read
+  - id: the_headland
+    parent: alterac_mountains
+    type: settlement
+    subtype: "camp"
+    name_zh: "山头营地"
+    name_en: "The Headland"
+    level: ""
+    faction: "contested"
+    coords: "[40, 85]"
+    adjacent: []
+    era: vanilla
+    look_zh: "南端伸进湖里的岬角，扎着辛迪加的帐篷与篝火"
+    note_zh: "南端岬角上的营地（国服官方名「山头营地」）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1680,TheHeadland,山头营地,0,36"
+    verified_by: ai_read
+  - id: the_uplands
+    parent: alterac_mountains
+    type: subzone
+    subtype: ""
+    name_zh: "高地"
+    name_en: "The Uplands"
+    level: ""
+    faction: ""
+    coords: "[58, 26]"
+    adjacent: []
+    era: vanilla
+    look_zh: "山脉北部的开阔缓坡，积雪薄，残存着一格一格的旧田埂"
+    note_zh: "奥特兰克王国的旧农业带，达伦德农场在其中"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "284,TheUplands,高地,0,36"
+    verified_by: ai_read
+  - id: lordamere_lake_alterac
+    parent: alterac_mountains
+    type: poi
+    subtype: ""
+    name_zh: "洛丹米尔湖（奥特兰克段）"
+    name_en: "Lordamere Lake"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "被雪山夹住的大湖，水色铁青，湖面常结薄雾"
+    note_zh: "洛丹米尔湖在本区的区域条目（ID 1339），与银松段 1338 是客户端的两条记录"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "1339,LordamereLake,洛丹米尔湖,0,36"
+    verified_by: ai_read
+  - id: the_foothill_caverns
+    parent: alterac_mountains
+    type: poi
+    subtype: ""
+    name_zh: "丘陵洞穴"
+    name_en: "The Foothill Caverns"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "山壁上的天然洞窟入口，洞深处有蓝白冷光"
+    note_zh: "奥特兰克山谷战场的过场洞窟（客户端区域条目，地图上不显示）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "277,TheFoothillCaverns,丘陵洞穴,0,36"
+    verified_by: ai_read
+  - id: alterac_valley_entrance
+    parent: alterac_mountains
+    type: subzone
+    subtype: ""
+    name_zh: "奥特兰克山谷（入口）"
+    name_en: "Alterac Valley (entrance)"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "山脉北端的雪谷谷口，两侧崖壁夹出一条通道，谷口立着双方的旗与传送法阵"
+    note_zh: "战场的现实世界入口所在区域（客户端区域条目 2839，父级为奥特兰克山脉）。联盟入口在南海镇正北、部落入口在塔伦米尔东北的山里；4.0.3 奥特兰克并入希尔斯布莱德后，wiki 直接描述为「在希尔斯布莱德北部」"
+    source_url: "https://warcraft.wiki.gg/wiki/Alterac_Valley"
+    quote: "Alterac Valley has its own entrances in the game world... The Alliance entrance is due north of Southshore, while the Horde entrance is north-east of Tarren Mill."
+    verified_by: ai_read
+  - id: dun_baldar
+    parent: alterac_valley
+    type: settlement
+    subtype: "capital"
+    name_zh: "丹巴达尔"
+    name_en: "Dun Baldar"
+    level: ""
+    faction: "alliance"
+    coords: "[48, 20]"
+    adjacent: []
+    era: vanilla
+    look_zh: "谷地北端的矮人石砌堡群，高墙、吊桥与圆塔，旗帜是雷矛蓝白"
+    note_zh: "联盟主基地，雷矛将军范达尔·雷矛所在"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "2959,DunBaldar,丹巴达尔,30,2597"
+    verified_by: ai_read
+  - id: dun_baldar_pass
+    parent: alterac_valley
+    type: poi
+    subtype: ""
+    name_zh: "丹巴达尔小径"
+    name_en: "Dun Baldar Pass"
+    level: ""
+    faction: "alliance"
+    coords: "[48, 20]"
+    adjacent: []
+    era: vanilla
+    look_zh: "通向丹巴达尔的雪道隘口，两侧是石墙"
+    note_zh: "丹巴达尔北侧隘口"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "3299,DunBaldarPass,丹巴达尔小径,30,2597"
+    verified_by: ai_read
+  - id: dun_baldar_north_bunker
+    parent: dun_baldar
+    type: settlement
+    subtype: "tower"
+    name_zh: "丹巴达尔北面碉堡"
+    name_en: "Dun Baldar North Bunker"
+    level: ""
+    faction: "alliance"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "雪线上的矮人石砌碉堡，射击孔亮着火光，顶上插雷矛旗"
+    note_zh: "联盟四座碉堡之一（联盟自家两座之一），部落需烧毁它才能削减联盟增援。国服官方译名未经客户端核实（该条目不在 Classic Era AreaTable 内），以 name_en 为准"
+    source_url: "https://warcraft.wiki.gg/wiki/Alterac_Valley"
+    quote: "Dun Baldar North Bunker"
+    verified_by: ai_draft
+  - id: dun_baldar_south_bunker
+    parent: dun_baldar
+    type: settlement
+    subtype: "tower"
+    name_zh: "丹巴达尔南面碉堡"
+    name_en: "Dun Baldar South Bunker"
+    level: ""
+    faction: "alliance"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "基地南侧的石碉堡，正对丹巴达尔小径，墙外堆着雪垒"
+    note_zh: "联盟四座碉堡之一。国服官方译名未经客户端核实（该条目不在 Classic Era AreaTable 内），以 name_en 为准"
+    source_url: "https://warcraft.wiki.gg/wiki/Alterac_Valley"
+    quote: "Dun Baldar South Bunker"
+    verified_by: ai_draft
+  - id: stormpike_aid_station
+    parent: dun_baldar
+    type: settlement
+    subtype: "camp"
+    name_zh: "雷矛医疗站"
+    name_en: "Stormpike Aid Station"
+    level: ""
+    faction: "alliance"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "帐篷与木栅围出的伤兵营，担架、药箱与火盆摆成一圈"
+    note_zh: "联盟中尉巴琳达·石炉驻地；与部落的霜狼救援站对称。国服官方译名未经客户端核实（该条目不在 Classic Era AreaTable 内），以 name_en 为准"
+    source_url: "https://warcraft.wiki.gg/wiki/Alterac_Valley"
+    quote: "Stormpike Aid Station"
+    verified_by: ai_draft
+  - id: icewing_bunker
+    parent: alterac_valley
+    type: settlement
+    subtype: "tower"
+    name_zh: "冰翼碉堡"
+    name_en: "Icewing Bunker"
+    level: ""
+    faction: "alliance"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "雪原上的石砌碉堡，射孔朝南，顶上插联盟旗"
+    note_zh: "联盟四座碉堡之一（烧掉它可削弱守军）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "3304,IcewingBunker,冰翼碉堡,30,2597"
+    verified_by: ai_read
+  - id: icewing_pass
+    parent: alterac_valley
+    type: poi
+    subtype: ""
+    name_zh: "冰翼小径"
+    name_en: "Icewing Pass"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "结冰的河谷通道，两侧冰壁反光"
+    note_zh: "中北部通道"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "2960,IcewingPass,冰翼小径,30,2597"
+    verified_by: ai_read
+  - id: icewing_cavern
+    parent: alterac_valley
+    type: poi
+    subtype: ""
+    name_zh: "冰翼洞穴"
+    name_en: "Icewing Cavern"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "冰壁围出的洞穴，地面是冻硬的雪"
+    note_zh: "冰翼附近的洞窟"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "3058,IcewingCavern,冰翼洞穴,30,2597"
+    verified_by: ai_read
+  - id: stonehearth_outpost
+    parent: alterac_valley
+    type: settlement
+    subtype: "camp"
+    name_zh: "石炉哨站"
+    name_en: "Stonehearth Outpost"
+    level: ""
+    faction: "alliance"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "半埋在雪里的石砌哨站，木栅与火盆"
+    note_zh: "联盟中线哨站"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "2958,StonehearthOutpost,石炉哨站,30,2597"
+    verified_by: ai_read
+  - id: stonehearth_bunker
+    parent: alterac_valley
+    type: settlement
+    subtype: "tower"
+    name_zh: "石炉碉堡"
+    name_en: "Stonehearth Bunker"
+    level: ""
+    faction: "alliance"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "中线的石碉堡，墙面被投石机砸出缺口"
+    note_zh: "联盟四碉堡之一"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "3305,StonehearthBunker,石炉碉堡,30,2597"
+    verified_by: ai_read
+  - id: stonehearth_graveyard
+    parent: alterac_valley
+    type: poi
+    subtype: ""
+    name_zh: "石炉墓地"
+    name_en: "Stonehearth Graveyard"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "雪地墓区，歪斜石碑与一面可占领的旗"
+    note_zh: "可争夺的复活点"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "3302,StonehearthGraveyard,石炉墓地,30,2597"
+    verified_by: ai_read
+  - id: stormpike_graveyard
+    parent: alterac_valley
+    type: poi
+    subtype: ""
+    name_zh: "雷矛墓地"
+    name_en: "Stormpike Graveyard"
+    level: ""
+    faction: "alliance"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "靠近联盟基地的墓地，石碑排列整齐"
+    note_zh: "联盟侧复活点"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "3303,StormpikeGraveyard,雷矛墓地,30,2597"
+    verified_by: ai_read
+  - id: snowfall_graveyard
+    parent: alterac_valley
+    type: poi
+    subtype: ""
+    name_zh: "雪落墓地"
+    name_en: "Snowfall Graveyard"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "谷地正中的高地墓园，四面受敌，风雪最大"
+    note_zh: "中立复活点，AV 最常易手的点位"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "3301,SnowfallGraveyard,雪落墓地,30,2597"
+    verified_by: ai_read
+  - id: field_of_strife
+    parent: alterac_valley
+    type: subzone
+    subtype: ""
+    name_zh: "征战平原"
+    name_en: "Field of Strife"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "被踩成泥雪的开阔平原，散落着旗杆、尸体与破损攻城器"
+    note_zh: "谷地中央主战场"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "3057,FieldofStrife,征战平原,30,2597"
+    verified_by: ai_read
+  - id: irondeep_mine
+    parent: alterac_valley
+    type: poi
+    subtype: ""
+    name_zh: "深铁矿洞"
+    name_en: "Irondeep Mine"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "北侧矿洞，木支架与矿车，洞内有穴居人"
+    note_zh: "北矿，占领后提供补给"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "2957,IrondeepMine,深铁矿洞,30,2597"
+    verified_by: ai_read
+  - id: coldtooth_mine
+    parent: alterac_valley
+    type: poi
+    subtype: ""
+    name_zh: "冷齿矿洞"
+    name_en: "Coldtooth Mine"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "南侧矿洞，洞口结着冰柱"
+    note_zh: "南矿，占领后提供补给"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "2963,ColdtoothMine,冷齿矿洞,30,2597"
+    verified_by: ai_read
+  - id: iceblood_garrison
+    parent: alterac_valley
+    type: settlement
+    subtype: "camp"
+    name_zh: "冰血要塞"
+    name_en: "Iceblood Garrison"
+    level: ""
+    faction: "horde"
+    coords: "[48, 48]"
+    adjacent: []
+    era: vanilla
+    look_zh: "兽人风格的木石营垒，尖桩墙与兽皮帐"
+    note_zh: "部落中线要塞"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "2977,IcebloodGarrison,冰血要塞,30,2597"
+    verified_by: ai_read
+  - id: iceblood_graveyard
+    parent: alterac_valley
+    type: poi
+    subtype: ""
+    name_zh: "冰血墓地"
+    name_en: "Iceblood Graveyard"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "营垒旁的墓地，插着部落图腾旗"
+    note_zh: "可争夺的复活点"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "3300,IcebloodGraveyard,冰血墓地,30,2597"
+    verified_by: ai_read
+  - id: iceblood_tower
+    parent: iceblood_garrison
+    type: settlement
+    subtype: "tower"
+    name_zh: "冰血塔"
+    name_en: "Iceblood Tower"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "兽人木塔，塔身绑着兽皮与骨饰，望楼上架着火盆"
+    note_zh: "部落四塔之一（冰血要塞的塔）。原树只有作为区域的冰血要塞，缺这座可占领的塔本体。国服官方译名未经客户端核实（该条目不在 Classic Era AreaTable 内），以 name_en 为准"
+    source_url: "https://warcraft.wiki.gg/wiki/Alterac_Valley"
+    quote: "Iceblood Tower"
+    verified_by: ai_draft
+  - id: tower_point
+    parent: alterac_valley
+    type: settlement
+    subtype: "tower"
+    name_zh: "哨塔高地"
+    name_en: "Tower Point"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "高地上的兽人木塔，顶上望楼，风吹旗猎猎"
+    note_zh: "部落四塔之一"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "2962,TowerPoint,哨塔高地,30,2597"
+    verified_by: ai_read
+  - id: frostwolf_keep
+    parent: alterac_valley
+    type: settlement
+    subtype: "capital"
+    name_zh: "霜狼要塞"
+    name_en: "Frostwolf Keep"
+    level: ""
+    faction: "horde"
+    coords: "[52, 78]"
+    adjacent: []
+    era: vanilla
+    look_zh: "谷地南端的兽人石木要塞，两座尖塔夹着大门，门前烧着大火盆"
+    note_zh: "部落主基地，督军德雷克塔尔所在"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "2978,FrostwolfKeep,霜狼要塞,30,2597"
+    verified_by: ai_read
+  - id: east_frostwolf_tower
+    parent: frostwolf_keep
+    type: settlement
+    subtype: "tower"
+    name_zh: "东霜狼塔"
+    name_en: "East Frostwolf Tower"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "要塞东侧木塔，塔尖挑着霜狼旗，塔基压在黑岩上"
+    note_zh: "部落四塔之一（霜狼自家两座之一）；`tower_point` 的 note「部落四塔之一」原本对不上树里只有两座塔。国服官方译名未经客户端核实（该条目不在 Classic Era AreaTable 内），以 name_en 为准"
+    source_url: "https://warcraft.wiki.gg/wiki/Alterac_Valley"
+    quote: "East Frostwolf Tower"
+    verified_by: ai_draft
+  - id: west_frostwolf_tower
+    parent: frostwolf_keep
+    type: settlement
+    subtype: "tower"
+    name_zh: "西霜狼塔"
+    name_en: "West Frostwolf Tower"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "要塞西侧木塔，与东塔对称，望楼朝着征战平原"
+    note_zh: "部落四塔之一。国服官方译名未经客户端核实（该条目不在 Classic Era AreaTable 内），以 name_en 为准"
+    source_url: "https://warcraft.wiki.gg/wiki/Alterac_Valley"
+    quote: "West Frostwolf Tower"
+    verified_by: ai_draft
+  - id: frostwolf_relief_hut
+    parent: frostwolf_keep
+    type: settlement
+    subtype: "camp"
+    name_zh: "霜狼救援站"
+    name_en: "Frostwolf Relief Hut"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "兽皮帐篷搭的救护点，草药架与陶罐堆在火塘边"
+    note_zh: "部落指挥官加尔冯加驻地；与联盟的雷矛医疗站对称。国服官方译名未经客户端核实（该条目不在 Classic Era AreaTable 内），以 name_en 为准"
+    source_url: "https://warcraft.wiki.gg/wiki/Alterac_Valley"
+    quote: "Frostwolf Relief Hut"
+    verified_by: ai_draft
+  - id: frostwolf_village
+    parent: alterac_valley
+    type: settlement
+    subtype: "village"
+    name_zh: "霜狼村"
+    name_en: "Frostwolf Village"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "要塞外的兽人村落，兽皮帐篷与图腾柱，霜狼在雪地里走动"
+    note_zh: "霜狼氏族的聚居地"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "2961,FrostwolfVillage,霜狼村,30,2597"
+    verified_by: ai_read
+  - id: frostwolf_graveyard
+    parent: alterac_valley
+    type: poi
+    subtype: ""
+    name_zh: "霜狼墓地"
+    name_en: "Frostwolf Graveyard"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "部落侧墓地，插着骨制标记"
+    note_zh: "部落侧复活点"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "3297,FrostwolfGraveyard,霜狼墓地,30,2597"
+    verified_by: ai_read
+  - id: frostwolf_pass
+    parent: alterac_valley
+    type: poi
+    subtype: ""
+    name_zh: "霜狼小径"
+    name_en: "Frostwolf Pass"
+    level: ""
+    faction: "horde"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "通向霜狼要塞的雪道隘口"
+    note_zh: "南端隘口"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "3298,FrostwolfPass,霜狼小径,30,2597"
+    verified_by: ai_read
+  - id: frost_dagger_pass
+    parent: alterac_valley
+    type: poi
+    subtype: ""
+    name_zh: "霜刀小径"
+    name_en: "Frost Dagger Pass"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "两壁夹峙的窄雪道，地面是硬冰"
+    note_zh: "中南部通道"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "3017,FrostDaggerPass,霜刀小径,30,2597"
+    verified_by: ai_read
+  - id: rock_of_durotan
+    parent: alterac_valley
+    type: poi
+    subtype: ""
+    name_zh: "杜隆坦之石"
+    name_en: "Rock of Durotan"
+    level: ""
+    faction: "horde"
+    coords: "[48, 20]"
+    adjacent: []
+    era: vanilla
+    look_zh: "雪原上一块巨大的孤立黑岩，岩面刻着兽人符号"
+    note_zh: "霜狼氏族的纪念地标"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "3318,RockofDurotan,杜隆坦之石,30,2597"
+    verified_by: ai_read
+  - id: the_veiled_cleft
+    parent: alterac_valley
+    type: poi
+    subtype: ""
+    name_zh: "迷雾裂隙"
+    name_en: "The Veiled Cleft"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "被风雪挡住入口的裂隙洞窟，内有冰霜法师"
+    note_zh: "谷地西侧洞窟（艾威娜/冰霜领主相关）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "3338,TheVeiledCleft,迷雾裂隙,30,2597"
+    verified_by: ai_read
+  - id: wildpaw_cavern
+    parent: alterac_valley
+    type: poi
+    subtype: ""
+    name_zh: "蛮爪洞穴"
+    name_en: "Wildpaw Cavern"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "雪怪的洞穴，洞口堆着啃过的骨头"
+    note_zh: "蛮爪雪怪巢穴"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "3337,WildpawCavern,蛮爪洞穴,30,2597"
+    verified_by: ai_read
+  - id: wildpaw_ridge
+    parent: alterac_valley
+    type: subzone
+    subtype: ""
+    name_zh: "蛮爪岭"
+    name_en: "Wildpaw Ridge"
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "谷地西侧的雪岭，坡陡林疏"
+    note_zh: "蛮爪雪怪活动的山岭"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "3306,WildpawRidge,蛮爪岭,30,2597"
+    verified_by: ai_read
+  - id: winterax_hold
+    parent: alterac_valley
+    type: settlement
+    subtype: "camp"
+    name_zh: "冰斧要塞"
+    name_en: "Winterax Hold"
+    level: ""
+    faction: "contested"
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: "冰原巨魔的营地，木桩、兽骨与篝火"
+    note_zh: "冰斧巨魔部族营地（AV 中立阵营）"
+    source_url: "https://wago.tools/db2/AreaTable/csv?build=1.15.9.69722&locale=zhCN"
+    quote: "2964,WinteraxHold,冰斧要塞,30,2597"
+    verified_by: ai_read

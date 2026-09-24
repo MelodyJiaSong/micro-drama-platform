@@ -1,0 +1,1028 @@
+# G13 · 北郡山谷 + 闪金镇（第 1–5 集拍摄地 · 建筑级地理树）
+# 版本锚点：经典旧世 Vanilla / Classic Era（1.12）。大地的裂变（4.0.3a）新增或改动的一律不进本树。
+# 坐标系：全部为【艾尔文森林地图帧】。旧世没有独立的北郡地图（北郡自己的地图是 **5.0.4 熊猫人之谜** 才加的，
+#         `Northshire_Valley` 的 Patch changes 节原文「Northshire Valley receives its own world map」——
+#         核验时修正：原稿写的 4.0.3a 是错的，但「旧世用艾尔文帧」这个结论不变），
+#         所以旧世玩家看到的就是艾尔文帧；wiki 信息框里出现的第二组 Northshire 帧坐标一律不采用
+#         （wiki 的 coords 模板第三参数会写明是 `Elwynn Forest` 还是 `Northshire`，照它取即可）。
+#         细节与对账见 g13_northshire_goldshire_detail_notes.md § 坐标帧。
+# 类型约定（本片区自定，已在 notes.md 说明）：settlement = 聚落；单体建筑 / 房间 / 路 / 地标 = poi；
+#         会让小地图换名的正式子区域 = subzone。
+# faction 约定：人类控制的地点填 alliance；被狗头人 / 迪菲亚占据的洞窟内部与窝点留空串。
+
+nodes:
+
+  # ==========================================================================
+  # 一 · 北郡山谷 Northshire Valley
+  # ==========================================================================
+
+  - id: northshire_valley
+    parent: elwynn_forest
+    type: zone
+    subtype: ""
+    name_zh: 北郡山谷
+    name_en: Northshire Valley
+    level: ""
+    faction: alliance
+    coords: "[50.2, 42.2]"
+    adjacent: [elwynn_forest]
+    era: vanilla
+    look_zh: 四面陡峭灰白石壁合围的碗形谷地，谷底是修剪整齐的亮绿草坡与金黄栎树林，一条清溪自北侧山壁跌落横贯谷底，全谷终年停在午后三四点的暖金斜光里
+    note_zh: 人族唯一新手区，第 1–5 集主场。仅南端一个谷口通往艾尔文森林；wiki 信息框记统治者为 Marshal Douglas McBride（麦克布莱德元帅）、首府为北郡修道院、种族含人类/兽人/地精/狗头人。**等级带：核验时改空**——原稿填的 "1-10" 无出处，`Northshire_Valley` 的 Infobox zone 里 `level =` 是空字段（"1-10" 是大地的裂变后艾尔文森林整区的带宽，不是本谷的），wiki 全页也没有任何等级表述；要填得另找出处
+    source_url: https://warcraft.wiki.gg/wiki/Northshire_Valley
+    quote: "Northshire Valley is surrounded by impenetrable mountains, with the exception of a pass to the south which is protected by thick stone walls and a guarded entryway."
+    verified_by: ai_read
+
+  - id: northshire_valley_pass
+    parent: northshire_valley
+    type: poi
+    subtype: ""
+    name_zh: 北郡谷口关卡
+    name_en: Northshire Valley Pass
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 谷地南端唯一缺口，两道厚重灰石墙夹出一条窄隘，墙头插暴风城蓝底金狮旗，路面是压实的黄土车辙，值守卫兵持戟立在墙根阴影里
+    note_zh: 非官方地名（描述性标签）。进出北郡山谷的唯一通路，南接艾尔文森林；wiki 只说这里有石墙与设卫的入口、北郡卫兵在此驻守
+    source_url: https://warcraft.wiki.gg/wiki/Northshire_Guard
+    quote: "A number of them can be found at the entrance to the valley, and more will arrive if Horde interlopers attack any members of the Alliance who dwell within the valley."
+    verified_by: ai_read
+
+  - id: northshire_valley_ridge
+    parent: northshire_valley
+    type: poi
+    subtype: ""
+    name_zh: 北郡环谷崖壁
+    name_en: Northshire Valley Ridge
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 环绕谷地的灰白石灰岩崖壁，上半截裸岩带横向层理、下半截覆着松林与蕨草，逆光时崖顶被描出一条金边
+    note_zh: 非官方地名（描述性标签）。wiki 原文称其为不可穿越的群山，是全谷的天然封闭边界——分镜里任何朝谷外的镜头都会撞上它
+    source_url: https://warcraft.wiki.gg/wiki/Northshire_Valley
+    quote: "Northshire Valley is surrounded by impenetrable mountains"
+    verified_by: ai_read
+
+  - id: northshire_valley_road
+    parent: northshire_valley
+    type: poi
+    subtype: ""
+    name_zh: 北郡谷内主路
+    name_en: Northshire Valley Road
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一条压实的黄土小路，两侧立矮木栅与野花，自南谷口向北缓缓上坡，穿过草坡直抵修道院前庭的石阶
+    note_zh: 非官方地名（描述性标签）。串起谷口关卡→修道院前庭的唯一主路，主角每集出入都会走它。核验时把 id 从 `northshire_abbey_road` 改成 `northshire_valley_road`：原 id 说「修道院路」、name_en 写 Northshire Valley Road，同一个节点两个名字
+    source_url: ""
+    quote: ""
+    verified_by: ai_draft
+
+  - id: northshire_river
+    parent: northshire_valley
+    type: subzone
+    subtype: ""
+    name_zh: 北郡河
+    name_en: Northshire River
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 谷底一条三四米宽的浅溪，水清见底露出卵石，两岸是齐膝湿草与低垂柳枝，水面把午后金光揉成一片晃动的亮斑
+    note_zh: wiki 标为 undisplayed（有名字但地图上不显示）。自暴风城以东的群山流下、穿过北郡山谷、最终注入水晶湖——这条水系把本片区三块地绑成一条线
+    source_url: https://warcraft.wiki.gg/wiki/Northshire_River
+    quote: "flows from the mountains east of Stormwind City, through Northshire Valley, and eventually empties its waters into Crystal Lake in Elwynn Forest"
+    verified_by: ai_read
+
+  - id: northshire_falls
+    parent: northshire_river
+    type: poi
+    subtype: ""
+    name_zh: 北郡瀑布
+    name_en: Northshire Falls
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 修道院侧后方山壁上一道三四层跌水，白水花砸在青黑湿岩上，常年挂一层薄水雾，逆光时雾里起小彩虹
+    note_zh: 非官方地名（描述性标签）。wiki 配图说明写明这道瀑布就在北郡修道院近旁——适合做第 1 集开场的地标空镜
+    source_url: https://warcraft.wiki.gg/wiki/Northshire_River
+    quote: "The falls as seen near Northshire Abbey"
+    verified_by: ai_read
+
+  - id: northshire_river_bridge
+    parent: northshire_river
+    type: poi
+    subtype: ""
+    name_zh: 北郡溪上石拱桥
+    name_en: Northshire River Bridge
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 跨溪的单拱灰石小桥，桥面铺不规则石板、两侧矮石栏被苔藓染绿，桥下水面被拱影切成明暗两半
+    note_zh: 非官方地名（描述性标签）。主路跨北郡河的过水点；文字源没有描述，形制待参考图定
+    source_url: ""
+    quote: ""
+    verified_by: ai_draft
+
+  - id: northshire_abbey
+    parent: northshire_valley
+    type: subzone
+    subtype: ""
+    name_zh: 北郡修道院
+    name_en: Northshire Abbey
+    level: ""
+    faction: alliance
+    coords: "[49.5, 41.0]"
+    adjacent: []
+    era: vanilla
+    look_zh: 灰白琢石砌成的十字形修道院，陡坡深蓝灰石板瓦屋顶，高而窄的尖拱窗嵌彩色玻璃，正面一座方形钟塔，墙根爬满常春藤，门前是一片修剪过的草坪
+    note_zh: 全剧第 1–3 集的核心建筑。由主厅 + 武器大厅 + 图书馆侧厅三段组成；wiki 信息框把它记作谷地的 capital（行政中心），实为修道院兼驻军建筑群、并非城市。坐标为按周边 NPC 坐标推得的建筑中心，非 wiki 直给
+    source_url: https://warcraft.wiki.gg/wiki/Northshire_Abbey
+    quote: "The abbey is comprised of three sections: the Main Hall, Hall of Arms, and Library Wing"
+    verified_by: ai_read
+
+  - id: abbey_forecourt
+    parent: northshire_abbey
+    type: poi
+    subtype: ""
+    name_zh: 修道院前庭草坪
+    name_en: Northshire Abbey Forecourt
+    level: ""
+    faction: alliance
+    coords: "[48.9, 41.6]"
+    adjacent: []
+    era: vanilla
+    look_zh: 修道院正门外的开阔草坪，中间一条石板甬道通向门阶，两侧立暴风城蓝底金狮旗与木质兵器架，新兵三三两两站在草地上
+    note_zh: 非官方地名（描述性标签）。坐标取麦克布莱德元帅信息框 `{{Coords|48.9|41.6|Elwynn Forest}}`（旧世他在室内、此处是 4.0.3a 后站位，见 notes 版本差异）；旧世前庭站的是副官威廉，wiki 的 History·World of Warcraft 节（＝大地的裂变之前）原文写他原本笔直站在驻地正前方。⚠️ 威廉的艾尔文帧坐标 `{{coords|48.8|38.4|Elwynn Forest}}` 是他**现在**的站位（「修道院后方西北、帐篷与联盟旗边上举望远镜」），不可拿来当前庭锚点；另一组 `{{coords|35.6|40.0|Northshire}}` 是北郡帧，更不能用
+    source_url: https://warcraft.wiki.gg/wiki/Willem
+    quote: "He originally stood straight in front of the garrison"
+    verified_by: ai_read
+
+  - id: abbey_main_doors
+    parent: northshire_abbey
+    type: poi
+    subtype: ""
+    name_zh: 修道院正门
+    name_en: Northshire Abbey Main Doors
+    level: ""
+    faction: alliance
+    coords: "[49.2, 41.3]"
+    adjacent: []
+    era: vanilla
+    look_zh: 一对深色橡木双开大门，包铁条与圆头铆钉，上方半圆拱券嵌一扇彩色玫瑰窗，门前三级被磨圆的灰石台阶，门轴处有常年开合磨出的亮痕
+    note_zh: wiki 用它当方位基准（墓地在正门以东）。门朝西南，正对前庭与谷内主路；坐标为推得，非直给
+    source_url: https://warcraft.wiki.gg/wiki/Northshire_Abbey
+    quote: "warlock trainers haunt the small graveyard to the east of the main doors"
+    verified_by: ai_read
+
+  - id: abbey_main_hall
+    parent: northshire_abbey
+    type: subzone
+    subtype: ""
+    name_zh: 主厅
+    name_en: Main Hall (Northshire)
+    level: ""
+    faction: alliance
+    coords: "[49.8, 40.8]"
+    adjacent: []
+    era: vanilla
+    look_zh: 进门即是的长条中厅，两排灰石立柱撑起外露木桁架，高窗把斜光切成一道道光柱落在磨亮的石板地上，尽头墙面挂着暴风城纹章挂毯
+    note_zh: 修道院的入口厅，由它分别通向钟塔、武器大厅与图书馆侧厅；新人接第一个任务的地方。旧世麦克布莱德元帅就站在这里
+    source_url: https://warcraft.wiki.gg/wiki/Main_Hall_(Northshire)
+    quote: "The Main Hall of Northshire Abbey, located in Northshire Valley in Elwynn Forest, serves as the entry of the abbey ... grants access to the tower, Hall of Arms, and Library Wing"
+    verified_by: ai_read
+
+  - id: abbey_main_hall_side_rooms
+    parent: abbey_main_hall
+    type: poi
+    subtype: ""
+    name_zh: 主厅两侧耳房
+    name_en: Main Hall Side Rooms
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 中厅两侧的小耳房，摆着草垫木床与陶制水盆，受伤的新兵半躺其上，光只从高处一扇小窗漏进来、整体压暗一档
+    note_zh: wiki 明写主厅两侧房间里躺着受伤学员（Wounded Trainees）——第 1 集交代危险感的现成场景
+    source_url: https://warcraft.wiki.gg/wiki/Main_Hall_(Northshire)
+    quote: "Like in the rest of the abbey, Wounded Trainees can be found here in the rooms on the sides."
+    verified_by: ai_read
+
+  - id: abbey_tower
+    parent: abbey_main_hall
+    type: poi
+    subtype: ""
+    name_zh: 修道院钟塔
+    name_en: Northshire Abbey Tower
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 修道院正面那座方形石塔，四面开竖长百叶窗，顶部是深蓝灰四坡锥顶带铜制风向标，内部是绕中柱盘旋的木梯，梯井里浮着灰尘
+    note_zh: wiki 明写主厅通向 tower——全修道院唯一的制高点，适合俯瞰全谷的建立镜头。内部陈设无文字源，待参考图定
+    source_url: https://warcraft.wiki.gg/wiki/Main_Hall_(Northshire)
+    quote: "grants access to the tower, Hall of Arms, and Library Wing"
+    verified_by: ai_read
+
+  - id: abbey_hall_of_arms
+    parent: northshire_abbey
+    type: subzone
+    subtype: ""
+    name_zh: 武器大厅
+    name_en: Hall of Arms (Northshire)
+    level: ""
+    faction: alliance
+    coords: "[50.3, 42.1]"
+    adjacent: []
+    era: vanilla
+    look_zh: 修道院南翼的练武厅，粗石墙上挂满剑盾与长戟，地面铺深色木板，靠墙立一排稻草假人，角落的铁火盆把墙面烤出一圈暖橙
+    note_zh: 位于主厅南侧（图书馆侧厅在对面）；圣骑士与战士训练师都在这里，是主角选圣骑士后的第一课场景
+    source_url: https://warcraft.wiki.gg/wiki/Hall_of_Arms_(Northshire)
+    quote: "situated south of the Main Hall (Northshire), and the Library Wing (Northshire) lies on the opposite side of the Abbey ... home to both the paladin and warrior trainers for the least experienced of the Stormwind Army recruits."
+    verified_by: ai_read
+
+  - id: hall_of_arms_room_2r
+    parent: abbey_hall_of_arms
+    type: poi
+    subtype: ""
+    name_zh: 武器大厅右起第二间（圣骑士训练室）
+    name_en: Hall of Arms Second Room on the Right
+    level: ""
+    faction: alliance
+    coords: "[50.4, 42.0]"
+    adjacent: []
+    era: vanilla
+    look_zh: 一层右起第二间小室，墙上挂圣光徽记与白金旗幡，屋中一张厚木桌摆着战锤与圣油瓶，枝形烛台把室内照成一片暖白
+    note_zh: 圣骑士训练师萨穆尔修士（Brother Sammuel）站位——主角若选圣骑士，这是他的入门房间
+    source_url: https://warcraft.wiki.gg/wiki/Brother_Sammuel
+    quote: "He can be found on the ground floor of the abbey, in the second room on the right from entering the building - in the hall of arms."
+    verified_by: ai_read
+
+  - id: hall_of_arms_room_3r
+    parent: abbey_hall_of_arms
+    type: poi
+    subtype: ""
+    name_zh: 武器大厅右起第三间（战士训练室）
+    name_en: Hall of Arms Third Room on the Right
+    level: ""
+    faction: alliance
+    coords: "[50.2, 42.2]"
+    adjacent: []
+    era: vanilla
+    look_zh: 一层右起第三间小室，四壁是木质兵器架与叠放的圆盾，地上散着木屑与磨刀石，窗外草坡的绿反光打在盾面上
+    note_zh: 战士训练师莱恩·贝希尔（Llane Beshere）站位
+    source_url: https://warcraft.wiki.gg/wiki/Llane_Beshere
+    quote: "He can be found on the ground floor of the abbey, in the third room on the right from entering the building - in the hall of arms."
+    verified_by: ai_read
+
+  - id: abbey_library_wing
+    parent: northshire_abbey
+    type: subzone
+    subtype: ""
+    name_zh: 图书馆侧厅
+    name_en: Library Wing (Northshire)
+    level: ""
+    faction: alliance
+    coords: "[49.8, 39.6]"
+    adjacent: []
+    era: vanilla
+    look_zh: 修道院北翼的两层图书馆，顶天立地的深色橡木书架塞满羊皮卷，长桌上摊着厚书与铜烛台，高窗的冷白光与烛火的暖黄在室内交错成两套色温
+    note_zh: 与武器大厅分居主厅两侧（本厅在北）；牧师训练师安妮塔女祭司在一层，法师训练师凯尔顿·布雷曼在二层。wiki 两页都写自己在主厅南侧、互相矛盾，本树按 NPC 坐标判定本厅在北——见 notes § 存疑
+    source_url: https://warcraft.wiki.gg/wiki/Priestess_Anetta
+    quote: "She can be found on the ground floor of the abbey, in the Library Wing"
+    verified_by: ai_read
+
+  - id: library_stair_room
+    parent: abbey_library_wing
+    type: poi
+    subtype: ""
+    name_zh: 图书馆左起第二间（楼梯间）
+    name_en: Library Wing Stair Room
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 进门左起第二间，屋角一道贴墙木楼梯盘向二层，梯下堆着木箱与卷轴筐，扶手被摸得发亮，梯级中段有一道从高窗斜切下来的冷白光
+    note_zh: 通往修道院二层的唯一楼梯，wiki 用它给凯尔顿·布雷曼指路
+    source_url: https://warcraft.wiki.gg/wiki/Khelden_Bremen
+    quote: "He can be found on the second floor of the abbey, up the stairs that are in the room second on the left from where you enter the abbey."
+    verified_by: ai_read
+
+  - id: library_upper_floor
+    parent: abbey_library_wing
+    type: poi
+    subtype: ""
+    name_zh: 图书馆二层
+    name_en: Library Wing Upper Floor
+    level: ""
+    faction: alliance
+    coords: "[49.6, 39.5]"
+    adjacent: []
+    era: vanilla
+    look_zh: 二层回廊房间，矮天花与外露深色木梁，书架沿栏杆围成一圈，中间一张长桌摆着水晶球与星图，窗外可俯瞰谷底草坡
+    note_zh: 法师训练师凯尔顿·布雷曼站位；wiki 配图证实图书馆侧厅分上下两层（Lower floor room / Upper floor room）
+    source_url: https://warcraft.wiki.gg/wiki/Library_Wing_(Northshire)
+    quote: "Lower floor room ... Upper floor room"
+    verified_by: ai_read
+
+  - id: abbey_graveyard
+    parent: northshire_abbey
+    type: poi
+    subtype: ""
+    name_zh: 修道院墓地
+    name_en: Northshire Abbey Graveyard
+    level: ""
+    faction: alliance
+    coords: "[49.9, 42.7]"
+    adjacent: []
+    era: vanilla
+    look_zh: 修道院东南侧的小墓园，十几块歪斜的灰石墓碑围在半人高石墙里，地面是湿草与落叶，柏树投下狭长阴影，整体比别处冷一档
+    note_zh: 术士训练师德鲁希拉·拉萨尔与恶魔训练师戴恩·温斯洛的站位。wiki 两处描述分别写正门以东与修道院东南——合起来就是正门右前方那块坡地
+    source_url: https://warcraft.wiki.gg/wiki/Drusilla_La_Salle
+    quote: "She can be found in the abbey graveyard, just to the south-east of the abbey, beside Dane Winslow."
+    verified_by: ai_read
+
+  - id: abbey_stable
+    parent: northshire_abbey
+    type: poi
+    subtype: ""
+    name_zh: 修道院马厩
+    name_en: Northshire Abbey Stable
+    level: ""
+    faction: alliance
+    coords: "[51.0, 40.0]"
+    adjacent: []
+    era: vanilla
+    look_zh: 修道院后侧的敞开式马厩，粗木柱撑起一面深色木瓦坡顶，地铺干草、墙上挂皮质鞍具与水桶，两三匹棕马低头吃料，苍蝇在光柱里打转
+    note_zh: 潜行者训练师尤里克·凯瑞丹与猎人训练师的站位，位于修道院背面（东北）。坐标来自 `Jorik_Kerridan` 信息框 `{{coords|51|40|Elwynn Forest}}`，该页原文写他「located in Northshire Valley behind Northshire Abbey」——「背面」有出处，「东北」是由坐标（比修道院偏东 1.5%、偏北 1.0%）推得
+    source_url: https://warcraft.wiki.gg/wiki/Northshire_Abbey
+    quote: "The rogue and hunter trainers can be found at the abbey's stable"
+    verified_by: ai_read
+
+  - id: northshire_vineyards
+    parent: northshire_valley
+    type: subzone
+    subtype: ""
+    name_zh: 北郡葡萄园
+    name_en: Northshire Vineyards
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 修道院东侧的缓坡葡萄园，一排排木架葡萄藤顺等高线铺开，叶子半绿半黄，行间是踩实的黄土垄沟，坡头停着收葡萄的木箱与手推车
+    note_zh: 位于修道院正东。旧世这里是完好的农庄（被迪菲亚的爪牙占了）；4.0.3a 后整片被黑石兽人点燃——旧世拍摄绝不能出现火场，见 notes 版本差异
+    source_url: https://warcraft.wiki.gg/wiki/Northshire_Vineyards
+    quote: "located just east of the abbey in Northshire Valley"
+    verified_by: ai_read
+
+  - id: vineyard_farmhouse
+    parent: northshire_vineyards
+    type: poi
+    subtype: ""
+    name_zh: 葡萄园农舍
+    name_en: Northshire Vineyards Farmhouse
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 葡萄园里一栋一层半的农舍，白灰泥墙外露深褐木构架，陡坡深灰木瓦顶开一扇老虎窗，木门旁堆着橡木酒桶与藤筐，石烟囱冒着细烟
+    note_zh: 非官方地名（描述性标签）。**核验时从 ai_read 降级为 ai_draft**——原挂的引文（葡萄园被迪菲亚占据）根本不能证明这里有一栋农舍。逐页核过：`Northshire_Vineyards` 全页无任何建筑/房屋/农舍字样，`Milly_Osworth` 页也没有，只写她是葡萄园的主人（"She is the owner of Northshire Vineyards"）。整栋农舍目前是零文字源的假设，形制与是否存在一并待参考图裁决
+    source_url: ""
+    quote: ""
+    verified_by: ai_draft
+
+  - id: vineyard_trellis_rows
+    parent: northshire_vineyards
+    type: poi
+    subtype: ""
+    name_zh: 葡萄园藤架垄
+    name_en: Vineyard Trellis Rows
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 齐胸高的木桩加横杆葡萄架，藤蔓垂下成串深紫葡萄，脚下是松过的黄土与落叶，阳光穿过叶隙在地上洒出碎金斑
+    note_zh: 非官方地名（描述性标签）。葡萄行之间的通道是天然的追逐/藏身走廊，适合第 2–3 集的小规模遭遇
+    source_url: ""
+    quote: ""
+    verified_by: ai_draft
+
+  - id: vineyard_east_shack
+    parent: northshire_vineyards
+    type: poi
+    subtype: ""
+    name_zh: 葡萄园东侧木棚
+    name_en: Shack East of Northshire Vineyards
+    level: ""
+    faction: ""
+    coords: "[57.4, 48.2]"
+    adjacent: []
+    era: vanilla
+    look_zh: 葡萄园东边一座歪斜的木板棚屋，屋顶盖着压石头的旧木板，墙缝漏光，门口生着一堆冒黑烟的火，四周散落撬开的木箱
+    note_zh: 非官方地名（wiki 原文只称 a shack）。迪菲亚头目加里克·帕德弗特（Garrick Padfoot）的据点，第 2–3 集的第一个人形反派点
+    source_url: https://warcraft.wiki.gg/wiki/Garrick_Padfoot
+    quote: "a shack just east of the Northshire Vineyards"
+    verified_by: ai_read
+
+  - id: echo_ridge_mine
+    parent: northshire_valley
+    type: subzone
+    subtype: ""
+    name_zh: 回音山矿洞
+    name_en: Echo Ridge Mine
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 谷地西北角山壁上凿出的小矿场，洞外是翻出的灰白碎石堆与几段断掉的矿车轨道，洞内一路向下，岩壁上嵌着橙绿锈色的铜矿脉
+    note_zh: 位于北郡山谷西北。旧世可自由进出、里面是狗头人与铜矿；4.0.3a 加了一道门把它封死——旧世拍摄必须是敞口可进的状态，见 notes 版本差异
+    source_url: https://warcraft.wiki.gg/wiki/Echo_Ridge_Mine
+    quote: "located in northwestern Northshire Valley within Elwynn Forest"
+    verified_by: ai_read
+
+  - id: echo_ridge_mine_entrance
+    parent: echo_ridge_mine
+    type: poi
+    subtype: ""
+    name_zh: 回音山矿洞洞口
+    name_en: Echo Ridge Mine Entrance
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 山壁上一个由粗木框架支撑的方形洞口，横梁上挂一盏晃动的油灯，两侧堆着碎石与断掉的镐柄，洞内黑得看不到底、只在边缘挂住一线日光
+    note_zh: 非官方地名（描述性标签）。第 1–2 集的经典构图点：人物站在洞口亮处、身后是纯黑的洞。**核验时换了引文**——原挂的「Gug Fatcandle can occasionally be found at the entrance」在 wiki 上是写在 "Following the Cataclysm, the mine has been closed off, and…" 这句里的，是 4.0.3a 之后的状态，拿它给旧世洞口背书属版本错置；现改用 4.0.3a 的补丁条目反证——既然那次才「加了一道门把矿洞封死」，旧世的洞口就是敞开可进的
+    source_url: https://warcraft.wiki.gg/wiki/Echo_Ridge_Mine
+    quote: "A gate was added which closed off the mine"
+    verified_by: ai_read
+
+  - id: echo_ridge_mine_tunnel
+    parent: echo_ridge_mine
+    type: poi
+    subtype: ""
+    name_zh: 回音山下行坑道
+    name_en: Echo Ridge Mine Tunnel
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一条仅容两人并行的下行坑道，顶部每隔几米一道原木支撑，墙上插的火把把岩面照成橙红，地面积着浅水洼与散落矿石
+    note_zh: 非官方地名（描述性标签）。wiki 写这条路一直绕到矿洞深处、然后豁然开出一个大厅；旧世玩家评价是很好走
+    source_url: https://warcraft.wiki.gg/wiki/Echo_Ridge_Mine
+    quote: "a path wound to the back of the mine and opened into a large room"
+    verified_by: ai_read
+
+  - id: echo_ridge_mine_back_chamber
+    parent: echo_ridge_mine
+    type: poi
+    subtype: ""
+    name_zh: 回音山矿洞尽头大厅
+    name_en: Echo Ridge Mine Back Chamber
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 坑道尽头豁然张开的圆形石厅，穹顶高处一道自然裂缝漏下一柱冷白天光，地面堆着矿石与一口铁箍木箱，四壁闪着铜矿的绿锈色
+    note_zh: 非官方地名（描述性标签）。wiki 写这里偶尔刷一口箱子、内有铜与武器——第 1 集主角拿到第一件装备的合理地点。核验时把引文换成直接支撑「箱子」这句的原文（原引文与上一节点 `echo_ridge_mine_tunnel` 重复且只证明拓扑）
+    source_url: https://warcraft.wiki.gg/wiki/Echo_Ridge_Mine
+    quote: "A chest sometimes spawned here and usually had a few copper to help with finances and maybe a new weapon"
+    verified_by: ai_read
+
+  - id: echo_ridge_kobold_camp
+    parent: echo_ridge_mine
+    type: poi
+    subtype: ""
+    name_zh: 回音山狗头人窝点
+    name_en: Echo Ridge Kobold Camp
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 洞口外侧平台上的狗头人窝点，几顶破布帐、一圈石头围出的火塘，插在地上的蜡烛与堆成小山的矿石篮，地面全是碎骨与杂乱脚印
+    note_zh: 非官方地名（描述性标签）。wiki 明写旧世这些狗头人不主动攻击、只有被打才还手——这条对第 1 集的动机设计很重要（是主角先动的手）
+    source_url: https://warcraft.wiki.gg/wiki/Echo_Ridge_Mine
+    quote: "the kobolds were defensive and would not become hostile unless attacked"
+    verified_by: ai_read
+
+  # ==========================================================================
+  # 二 · 闪金镇 Goldshire
+  # ==========================================================================
+
+  - id: goldshire
+    parent: elwynn_forest
+    type: settlement
+    subtype: town
+    name_zh: 闪金镇
+    name_en: Goldshire
+    level: ""
+    faction: alliance
+    coords: "[42.1, 65.9]"
+    adjacent: []
+    era: vanilla
+    look_zh: 金黄栎树林中一片开阔草地上的十字路口小镇，五六栋白灰泥加深褐木构架的房子，陡坡深蓝灰瓦顶，黄土主路把镇子切成四块，边缘围着矮木栅与晾衣绳
+    note_zh: 暴风城之外艾尔文森林最大的聚落，全剧第 4–5 集主场。旧世无银行、无拍卖行、无飞行点（飞行点是 4.0.3a 才加的，见 notes）。坐标取镇中心达根元帅站位
+    source_url: https://warcraft.wiki.gg/wiki/Goldshire
+    quote: "It has roads that lead to Stormwind City to the northwest, Northshire Abbey to the northeast, Westfall to the west, and Redridge Mountains to the east."
+    verified_by: ai_read
+
+  - id: goldshire_main_square
+    parent: goldshire
+    type: poi
+    subtype: ""
+    name_zh: 闪金镇中心广场（十字路口）
+    name_en: Goldshire Main Square
+    level: ""
+    faction: alliance
+    coords: "[42.1, 65.9]"
+    adjacent: []
+    era: vanilla
+    look_zh: 四条路交汇的黄土广场，地面被车辙压出浅沟，路边是石饮马槽与拴马桩，四角各有一栋房子把广场框住，正午光从正上方砸下来、影子很短
+    note_zh: wiki 在给阿德勒·菲尔德指路时用了 the town's main square 这个说法。达根元帅（Marshal Dughan）就站在这里负责全镇治安——第 4 集入镇的第一个交互点
+    source_url: https://warcraft.wiki.gg/wiki/Adele_Fielder
+    quote: "She lives in the big house by the lake, a short way north-east of the town's main square."
+    verified_by: ai_read
+
+  - id: lions_pride_inn
+    parent: goldshire
+    type: subzone
+    subtype: ""
+    name_zh: 狮王之傲旅店
+    name_en: Lion's Pride Inn
+    level: ""
+    faction: alliance
+    coords: "[43.8, 65.9]"
+    adjacent: []
+    era: vanilla
+    look_zh: 广场东侧一栋两层大旅店，一层粗琢灰石墙、二层白灰泥外露深褐木构架并外挑一圈木栏走廊，陡坡深蓝灰瓦顶，石砌烟囱冒烟，门楣上方一根铁臂挑出一块画着金狮头的木招牌
+    note_zh: 全魔兽最有名的非主城旅店，老玩家一眼能认。建筑占地约横跨坐标 X43.2–44.5 / Y65.5–66.3（由内部 NPC 坐标反推），正门朝西对着广场，地窖在东端。旅店老板是法利（Innkeeper Farley）。**核验时把 type 从 settlement 改为 subzone**：一栋旅店不是聚落，而且 `Elwynn_Forest` 的 Maps and subregions 表里它就是挂在 Goldshire 下的**正式子区域**（`*[[Goldshire]]` / `**[[Lion's Pride Inn]]`）——这也正是本树自订约定「subzone 只给会让小地图换名的正式子区域」所指的情况。它是本片区唯一一个既是建筑又是官方子区域的节点
+    source_url: https://warcraft.wiki.gg/wiki/Lion%27s_Pride_Inn
+    quote: "known for the frequent duels that take place just outside its entrance ... quite possibly the busiest non-city inn of all the zones"
+    verified_by: ai_read
+
+  - id: inn_front_steps
+    parent: lions_pride_inn
+    type: poi
+    subtype: ""
+    name_zh: 旅店门口石阶与决斗空地
+    name_en: Lion's Pride Inn Front Steps
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 旅店正门外三级被磨圆的石阶与一小块夯实空地，两侧插着火把，立一块钉满纸片的木告示板，地面被踩出一圈没有草的裸土
+    note_zh: 非官方地名（描述性标签）。wiki 明写这里以门口频繁的决斗出名——第 4 集拍主角第一次见识玩家文化的现成场景
+    source_url: https://warcraft.wiki.gg/wiki/Lion%27s_Pride_Inn
+    quote: "known for the frequent duels that take place just outside its entrance"
+    verified_by: ai_read
+
+  - id: inn_main_room
+    parent: lions_pride_inn
+    type: poi
+    subtype: ""
+    name_zh: 旅店一楼大厅
+    name_en: Lion's Pride Inn Main Room
+    level: ""
+    faction: alliance
+    coords: "[43.8, 65.9]"
+    adjacent: []
+    era: vanilla
+    look_zh: 一层大厅，深色木地板与外露横梁，正中一座石砌壁炉烧着旺火，长条木桌配条凳，墙上挂干草药束与铜锅，光以壁炉暖橙为主、窗口只透进一点冷白
+    note_zh: 旅店老板法利 [43.8, 65.9] 与杂货商布罗格·汉姆菲斯特（吧台后）都在这层；药剂师威廉·派斯特 [43.3, 65.8] 在靠门一侧
+    source_url: https://warcraft.wiki.gg/wiki/Brog_Hamfist
+    quote: "He can be found in the main room of the inn, behind the bar."
+    verified_by: ai_read
+
+  - id: inn_bar
+    parent: inn_main_room
+    type: poi
+    subtype: ""
+    name_zh: 旅店吧台
+    name_en: Lion's Pride Inn Bar
+    level: ""
+    faction: alliance
+    coords: "[43.9, 66.0]"
+    adjacent: []
+    era: vanilla
+    look_zh: 大厅一侧的厚木吧台，台后是顶到梁的酒架与一排横躺的橡木桶，台面摆着锡杯与油灯，台前三张高脚凳，台面被酒渍擦成深色
+    note_zh: 非官方地名（描述性标签）。布罗格·汉姆菲斯特站在吧台后卖杂货，酒保多宾斯 [43.9, 65.8] 管酒——同一个台面两个人
+    source_url: https://warcraft.wiki.gg/wiki/Brog_Hamfist
+    quote: "He can be found in the main room of the inn, behind the bar."
+    verified_by: ai_read
+
+  - id: inn_back_room
+    parent: lions_pride_inn
+    type: poi
+    subtype: ""
+    name_zh: 旅店后厨
+    name_en: Lion's Pride Inn Back Room
+    level: ""
+    faction: alliance
+    coords: "[44.3, 66.0]"
+    adjacent: []
+    era: vanilla
+    look_zh: 大厅后面的厨房兼肉铺，砖砌灶台上吊着黑铁锅，梁上挂成排火腿与蒜辫，案板上摊着肉与剁刀，蒸汽与油烟把光打成一片雾黄
+    note_zh: 厨师托马斯（Tomas）[44.3, 66.0] 与屠夫托德里克（Toddrick）[44.2, 66.0] 并排在此
+    source_url: https://warcraft.wiki.gg/wiki/Tomas
+    quote: "He is located in the inn's back room, near Toddrick."
+    verified_by: ai_read
+
+  - id: inn_staircase
+    parent: lions_pride_inn
+    type: poi
+    subtype: ""
+    name_zh: 旅店木楼梯
+    name_en: Lion's Pride Inn Staircase
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 大厅角落一道贴墙上行的木楼梯，栏杆被摸得发亮、踏板中间磨出浅凹，转折处一扇小窗把冷白光斜切在台阶上
+    note_zh: 非官方地名（描述性标签）。wiki 用上楼后的左右关系给二楼房间定位，说明楼梯口就是二楼方位的基准
+    source_url: https://warcraft.wiki.gg/wiki/Zaldimar_Wefhellt
+    quote: "He is located in the upstairs section of the inn, in the left-most room from going up the stairs."
+    verified_by: ai_read
+
+  - id: inn_cellar
+    parent: lions_pride_inn
+    type: poi
+    subtype: ""
+    name_zh: 旅店地窖
+    name_en: Lion's Pride Inn Cellar
+    level: ""
+    faction: alliance
+    coords: "[44.4, 66.1]"
+    adjacent: []
+    era: vanilla
+    look_zh: 旅店地下的石砌酒窖，低矮拱顶与渗水石墙，横躺的大橡木桶排成两列，只有几支蜡烛照明、四角全黑，地面反着一层水光
+    note_zh: 术士训练师马克西米利安·克罗（Maximillian Crowe）[44.4, 66.2] 与雷曼·马考特（Remen Marcot）[44.4, 66.0] 都在地窖——全镇最暗、最适合拍密谋戏的空间
+    source_url: https://warcraft.wiki.gg/wiki/Maximillian_Crowe
+    quote: "the cellar of the Lion's Pride Inn"
+    verified_by: ai_read
+
+  - id: inn_upper_floor
+    parent: lions_pride_inn
+    type: poi
+    subtype: ""
+    name_zh: 旅店二楼
+    name_en: Lion's Pride Inn Upper Floor
+    level: ""
+    faction: alliance
+    coords: "[43.5, 65.9]"
+    adjacent: []
+    era: vanilla
+    look_zh: 二层回字形走廊，矮天花与外露深褐木梁，脚下木板踩上去会响，一圈门通向几间客房，窗口把午后金光投成一块块长方形亮斑
+    note_zh: 三间有确证的房间：正中一间、上楼后最左一间、一间阅览室
+    source_url: https://warcraft.wiki.gg/wiki/Michelle_Belle
+    quote: "Michelle is located in the upstairs section of the inn, in the central room, along with Priestess Josetta."
+    verified_by: ai_read
+
+  - id: inn_upper_central_room
+    parent: inn_upper_floor
+    type: poi
+    subtype: ""
+    name_zh: 二楼正中客房
+    name_en: Lion's Pride Inn Upstairs Central Room
+    level: ""
+    faction: alliance
+    coords: "[43.3, 65.7]"
+    adjacent: []
+    era: vanilla
+    look_zh: 二楼正中的客房，两张铺素色床单的木床与一张摆陶水盆的小桌，墙上挂圣光徽记与一卷卷绷带，窗正对广场、光从西侧进来
+    note_zh: 牧师训练师约瑟塔女祭司 [43.3, 65.7] 与急救训练师米歇尔·贝尔 [43.4, 65.6] 同处一室
+    source_url: https://warcraft.wiki.gg/wiki/Priestess_Josetta
+    quote: "She can be found in the upstairs section of the Lion's Pride Inn, in the central room along with Michelle Belle."
+    verified_by: ai_read
+
+  - id: inn_upper_left_room
+    parent: inn_upper_floor
+    type: poi
+    subtype: ""
+    name_zh: 二楼上楼后最左一间
+    name_en: Lion's Pride Inn Upstairs Left-most Room
+    level: ""
+    faction: alliance
+    coords: "[43.3, 66.2]"
+    adjacent: []
+    era: vanilla
+    look_zh: 上楼后最左的一间，四壁堆着书箱与卷轴，桌上摊着星图、羽毛笔与几支冒微光的水晶，窗帘半拉、室内整体偏冷蓝
+    note_zh: 法师训练师扎尔迪马尔·维弗赫特（Zaldimar Wefhellt）站位
+    source_url: https://warcraft.wiki.gg/wiki/Zaldimar_Wefhellt
+    quote: "He is located in the upstairs section of the inn, in the left-most room from going up the stairs."
+    verified_by: ai_read
+
+  - id: inn_reading_room
+    parent: inn_upper_floor
+    type: poi
+    subtype: ""
+    name_zh: 二楼阅览室
+    name_en: Lion's Pride Inn Reading Room
+    level: ""
+    faction: alliance
+    coords: "[43.8, 65.9]"
+    adjacent: []
+    era: vanilla
+    look_zh: 二楼一间当作阅览室的房间，靠墙两排矮书架与一张长读书桌，桌上一盏烛台压着摊开的书，角落一把高背椅正对房门、坐着的人背光
+    note_zh: 潜行者训练师凯琳·希尔维斯（Keryn Sylvius）站位——wiki 明确称其为 the reading room on the second floor
+    source_url: https://warcraft.wiki.gg/wiki/Keryn_Sylvius
+    quote: "located in the reading room on the second floor of the Lion's Pride Inn"
+    verified_by: ai_read
+
+  - id: inn_upper_gallery
+    parent: inn_upper_floor
+    type: poi
+    subtype: ""
+    name_zh: 旅店二楼外挑木廊
+    name_en: Lion's Pride Inn Upper Gallery
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 二楼外挑的一圈木栏走廊，深褐木栏杆与短立柱，屋檐把走廊压出一道横贯的阴影带，站上去能俯瞰整个十字路口
+    note_zh: 非官方地名（描述性标签）。**核验后仍是本树风险最高的一个节点**：`Lion's_Pride_Inn` 全页只有 NPCs / Players' activity / Film universe / References / External links 五节，**没有任何建筑描述**（原 notes 说它有一节 "Physical Appearance" 自认无描述——查无此节，实情是连这一节都没有），全页唯一与高处有关的一句是「Players sometimes can be found climbing up to the top of the roof and lighting a campfire for fun.」，说的是屋顶、不是外廊。所以「二楼外挑木廊」零文字源、既不能证实也不能证伪，保留但**出图前必须先看参考图**；若参考图上没有外廊，本节点删除，俯拍广场决斗改用屋顶或对街铁匠铺机位
+    source_url: ""
+    quote: ""
+    verified_by: ai_draft
+
+  - id: goldshire_stable
+    parent: goldshire
+    type: poi
+    subtype: ""
+    name_zh: 闪金镇马厩
+    name_en: Goldshire Stable
+    level: ""
+    faction: alliance
+    coords: "[42.8, 65.9]"
+    adjacent: []
+    era: vanilla
+    look_zh: 旅店西侧的敞开式马厩，四根粗木柱撑一面深色木瓦坡顶，地铺干草、挂着鞍具与水桶，栅栏里三四匹棕马，旁边立一排拴马桩
+    note_zh: 非官方地名（描述性标签，`Goldshire` 信息框设施栏只写 `stables = yes`）。马厩管理员艾尔玛（Erma）站位，坐标取她信息框 `{{Coords|42.8|65.9|Elwynn Forest}}`，位置正好卡在铁匠铺与旅店之间。核验时换引文：原引文是信息框渲染出来的坐标串、不是页面上的句子
+    source_url: https://warcraft.wiki.gg/wiki/Erma
+    quote: "Erma is a human stable master located in Goldshire in Elwynn Forest."
+    verified_by: ai_read
+
+  - id: goldshire_forge
+    parent: goldshire
+    type: poi
+    subtype: ""
+    name_zh: 闪金镇铁匠铺
+    name_en: Goldshire Forge
+    level: ""
+    faction: alliance
+    coords: "[41.6, 65.7]"
+    adjacent: []
+    era: vanilla
+    look_zh: 广场西侧正对旅店的铁匠铺，半敞开的石基木构棚屋，中央一座砖石锻炉烧得通红，旁边铁砧与淬火水槽冒白汽，墙上挂满刀剑与半成品甲片
+    note_zh: wiki 两次用 opposite the Lion's Pride Inn 定位它——铁匠铺与旅店隔街对望，是全镇最强的正反打机位。铸剑师阿古斯 [41.7, 65.6]、武器商科琳娜·斯迪尔 [41.6, 65.8]、护甲商库兰·斯迪尔 [41.4, 65.6] 三人同处
+    source_url: https://warcraft.wiki.gg/wiki/Corina_Steele
+    quote: "She can be found in the forge, opposite the Lion's Pride Inn."
+    verified_by: ai_read
+
+  - id: goldshire_forge_yard
+    parent: goldshire_forge
+    type: poi
+    subtype: ""
+    name_zh: 铁匠铺后院
+    name_en: Goldshire Forge Yard
+    level: ""
+    faction: alliance
+    coords: "[41.1, 66.0]"
+    adjacent: []
+    era: vanilla
+    look_zh: 铁匠铺后面的小院，堆着铁锭、废铁与劈好的柴，一台磨刀砂轮与几个盛炭的木桶，地面被炭灰染黑，晾衣绳横过头顶
+    note_zh: 非官方地名（描述性标签）。圣骑士训练师威廉修士（Brother Wilhelm）就站在铁匠铺后面——主角若选圣骑士，到闪金镇后的第一个训练点在这里
+    source_url: https://warcraft.wiki.gg/wiki/Brother_Wilhelm
+    quote: "He can be found behind the blacksmith building"
+    verified_by: ai_read
+
+  - id: goldshire_trade_wagon
+    parent: goldshire
+    type: poi
+    subtype: ""
+    name_zh: 镇东南路口货车摊
+    name_en: Goldshire Trade Wagon
+    level: ""
+    faction: alliance
+    coords: "[41.9, 67.1]"
+    adjacent: []
+    era: vanilla
+    look_zh: 镇子东南出口路边停的一辆帆布篷货车，车板放下当柜台，摆着绳索、油灯、布卷与干粮，车辕边拴着一头驴，车底下压着几只货箱
+    note_zh: 非官方地名（描述性标签）。杂货商萨林·鲍登（Tharynn Bouden）的摊位——wiki 明写他在东南出镇路的起点、一辆货车边上。注意：闪金镇的杂货不在铺子里，是个露天车摊
+    source_url: https://warcraft.wiki.gg/wiki/Tharynn_Bouden
+    quote: "beside a wagon at the start of the south-eastern road out of Goldshire"
+    verified_by: ai_read
+
+  - id: goldshire_mailbox
+    parent: goldshire_main_square
+    type: poi
+    subtype: ""
+    name_zh: 闪金镇信箱
+    name_en: Goldshire Mailbox
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 路边一个齐腰高的红铜色信箱，圆顶上翘着一只小翅膀装饰，柱基埋在草里，箱口塞着几封没被取走的信
+    note_zh: wiki 的 `Goldshire` Infobox town 设施段明列 mailbox。核验时换引文为信息框原始 wikitext：原引文「Inn … Mailbox … Stables … Anvil & Forge … No Bank or Auctions」是把设施表复述成了一句页面上并不存在的话。信息框里**根本没有 bank / auction 这两个键**（模板不写即为无），旧世亦无银行与拍卖行；⚠️ 同一段里的 `flightpath = yes` 是大地的裂变后才有的，不适用旧世
+    source_url: https://warcraft.wiki.gg/wiki/Goldshire
+    quote: "| facilities = yes | inn = yes | mailbox = yes | stables = yes | anvil = yes | forge = yes"
+    verified_by: ai_read
+
+  - id: goldshire_north_road
+    parent: goldshire
+    type: poi
+    subtype: ""
+    name_zh: 北出镇大道（通暴风城）
+    name_en: Goldshire North Road to Stormwind
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 自广场向西北去的宽黄土大道，两侧是齐整木栅与高大金黄栎树，路面被马车压出两道深辙，尽头远方可望见暴风城巨门的灰白轮廓压在树冠之上
+    note_zh: 非官方地名（描述性标签）。通往暴风城大门，方向是西北。暴风城城门的形制与尺度直接复用 sk2 既有结论（ai_videos/shikong_lvxing/sk2/0_research/parts/w1_city_layout.md），不重新调研
+    source_url: https://warcraft.wiki.gg/wiki/Goldshire
+    quote: "It has roads that lead to Stormwind City to the northwest"
+    verified_by: ai_read
+
+  - id: goldshire_northeast_road
+    parent: goldshire
+    type: poi
+    subtype: ""
+    name_zh: 东北出镇路（通北郡修道院）
+    name_en: Goldshire Northeast Road to Northshire
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 自广场向东北上坡的碎石土路，穿过一片金黄栎树林，沿路立着指向北郡的木牌，坡顶回头能看见整个镇子的瓦顶
+    note_zh: 非官方地名（描述性标签）。第 3→4 集主角从北郡山谷下到闪金镇走的就是这条路——两个主场之间唯一的连接
+    source_url: https://warcraft.wiki.gg/wiki/Goldshire
+    quote: "roads that lead to ... Northshire Abbey to the northeast"
+    verified_by: ai_read
+
+  - id: goldshire_west_road
+    parent: goldshire
+    type: poi
+    subtype: ""
+    name_zh: 西出镇路（通西部荒野）
+    name_en: Goldshire West Road to Westfall
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 向西出镇的黄土路，路面渐渐变干变白，两侧树木由金黄栎树转成稀疏矮树与枯草丘，空气里的湿度肉眼可见地掉下去
+    note_zh: 非官方地名（描述性标签）。通往西部荒野，是全剧离开新手区的下一程；西行途中先经过明镜湖一带
+    source_url: https://warcraft.wiki.gg/wiki/Goldshire
+    quote: "roads that lead to ... Westfall to the west"
+    verified_by: ai_read
+
+  - id: goldshire_east_road
+    parent: goldshire
+    type: poi
+    subtype: ""
+    name_zh: 东出镇路（沿水晶湖北岸通东谷/赤脊山）
+    name_en: Goldshire East Road
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 向东出镇的黄土路，贴着水晶湖北岸走，一侧是反光的湖面与成片芦苇，一侧是密林与苔藓石堆，午后光从湖面反弹上来打亮路面
+    note_zh: 非官方地名（描述性标签）。wiki 写东去通往赤脊山；沿途先过水晶湖西北岸的几栋房子与码头
+    source_url: https://warcraft.wiki.gg/wiki/Goldshire
+    quote: "roads that lead to ... Redridge Mountains to the east"
+    verified_by: ai_read
+
+  - id: goldshire_southeast_road
+    parent: goldshire
+    type: poi
+    subtype: ""
+    name_zh: 东南出镇小路（通法戈第矿洞方向）
+    name_en: Goldshire Southeast Road
+    level: ""
+    faction: alliance
+    coords: "[41.9, 67.1]"
+    adjacent: []
+    era: vanilla
+    look_zh: 向东南出镇的窄土路，起点就是那辆货车摊，路面很快被树荫吞没，两侧灌木越来越密，光从金黄压成暗绿
+    note_zh: 非官方地名（描述性标签）。wiki 以它给萨林·鲍登定位；南下通往法戈第矿洞、马科伦农场与斯通菲尔德农场（均属邻片区，本树不收）
+    source_url: https://warcraft.wiki.gg/wiki/Tharynn_Bouden
+    quote: "beside a wagon at the start of the south-eastern road out of Goldshire"
+    verified_by: ai_read
+
+  # ==========================================================================
+  # 三 · 水晶湖 Crystal Lake
+  # ==========================================================================
+
+  - id: crystal_lake
+    parent: elwynn_forest
+    type: subzone
+    subtype: ""
+    name_zh: 水晶湖
+    name_en: Crystal Lake
+    level: ""
+    faction: alliance
+    coords: "[49.0, 65.7]"
+    adjacent: []
+    era: vanilla
+    look_zh: 闪金镇正东一片近圆形的清澈湖泊，湖水呈通透的蓝绿色，环岸是芦苇丛与低垂柳枝，湖心一座长着几棵细树的小岛，午后整片湖面碎成一片金鳞
+    note_zh: 位于闪金镇正东，北郡河的终点。湖里满是鱼人、对新手相当危险。**核验时补上了 coords**：原稿留空，现取湖心小岛坐标 `{{Co|49|65.7|Elwynn Forest}}`（来自 `Deeply missed, never forgotten` 条目，该物件明写「on an islet in Crystal Lake」，小岛在湖中央，故可当湖心锚点用）。另一个已确证锚点是西北岸 [47.5, 62.3]（李·布朗的码头）；东南半边仍无坐标。分类为 Murloc territories + Human territories 双挂，本树按人类侧填 alliance。注意：任务书里写的「黄金鱼塘」不是官方译名，国服官方译名是水晶湖
+    source_url: https://warcraft.wiki.gg/wiki/Crystal_Lake
+    quote: "Crystal Lake is a lake located directly east of Goldshire in Elwynn Forest. ... is crawling with murlocs and may be quite dangerous for the inexperienced adventurer."
+    verified_by: ai_read
+
+  - id: crystal_lake_pier
+    parent: crystal_lake
+    type: poi
+    subtype: ""
+    name_zh: 水晶湖西北岸木码头
+    name_en: Crystal Lake Pier
+    level: ""
+    faction: alliance
+    coords: "[47.5, 62.3]"
+    adjacent: []
+    era: vanilla
+    look_zh: 湖西北岸伸进水里的一条短木栈桥，木板被水泡成深灰、桩柱裹着水草，桥头放着鱼篓、鱼竿与一桶饵，水面倒影被脚步搅碎
+    note_zh: 非官方地名（描述性标签）。钓鱼训练师李·布朗（Lee Brown）站在码头上——wiki 明写他在水晶湖西北岸的一条 pier 上
+    source_url: https://warcraft.wiki.gg/wiki/Lee_Brown
+    quote: "located on a pier on the north-western shore of Crystal Lake in Elwynn Forest"
+    verified_by: ai_read
+
+  - id: crystal_lake_lakehouse
+    parent: goldshire
+    type: poi
+    subtype: ""
+    name_zh: 湖畔大宅
+    name_en: Lakeside House
+    level: ""
+    faction: alliance
+    coords: "[46.4, 62.1]"
+    adjacent: []
+    era: vanilla
+    look_zh: 湖西北岸一栋两层民居，白灰泥外露深褐木构架，陡坡深蓝灰瓦顶开两扇老虎窗，门前木架上晾着皮子与鱼干，院子一路铺到湖岸草地
+    note_zh: 非官方地名（wiki 原文作 the big house by the lake）。制皮训练师阿德勒·菲尔德住在这里；剥皮训练师海伦妮·佩尔特斯金纳 [46.3, 62.2] 与鱼贩杰森·马瑟斯 [47.4, 62.2] 都在门外一带。位置在镇中心广场的东北方不远处。**核验时把 parent 从 `crystal_lake` 改挂到 `goldshire`**：阿德勒·菲尔德与海伦妮·佩尔特斯金纳两页的信息框都写 `location = [[Goldshire]], [[Elwynn Forest]]`，海伦妮页更明写她「is in the home of Adele Fielder on the outskirts north-east of Goldshire」——这栋房子属于闪金镇外围，不属水晶湖子区域（对照：李·布朗在码头，他的信息框 `location` 只写 `[[Elwynn Forest]]`，没写 Goldshire，故码头仍挂水晶湖）
+    source_url: https://warcraft.wiki.gg/wiki/Adele_Fielder
+    quote: "She lives in the big house by the lake, a short way north-east of the town's main square."
+    verified_by: ai_read
+
+  - id: crystal_lake_islet
+    parent: crystal_lake
+    type: poi
+    subtype: ""
+    name_zh: 水晶湖湖心小岛
+    name_en: Crystal Lake Islet
+    level: ""
+    faction: ""
+    coords: "[49.0, 65.7]"
+    adjacent: []
+    era: vanilla
+    look_zh: 湖心一座只有十几步宽的小岛，岛上三四棵细树与一圈没过脚踝的浅草，四周浅滩清可见底、能看见水下的卵石
+    note_zh: 小岛本身 wiki 确认存在，坐标 `{{Co|49|65.7|Elwynn Forest}}`。**核验时消解了原稿的「墓碑是否旧世已有」存疑，结论是绝对不能拍**——岛上那块墓碑是独立条目 `Deeply missed, never forgotten`，其 Patch changes 节只有一行「Patch 10.1.5｜Added.」，即 **10.1.5（巨龙时代，2023）** 才加入，是暴雪为挪威玩家 Mats "Ibelin" Steen 立的纪念碑（连同一盏点燃的提灯与一只狐狸雕刻，复刻自他现实中的墓碑），旧世绝无此物。故 `look_zh` 已删掉「旧石碑」，**分镜里湖心岛必须是空岛：不得出现墓碑、提灯、狐狸雕刻**
+    source_url: https://warcraft.wiki.gg/wiki/Deeply_missed,_never_forgotten
+    quote: "is a gravestone located on an islet in Crystal Lake in Elwynn Forest"
+    verified_by: ai_read
+
+  - id: crystal_lake_reed_shallows
+    parent: crystal_lake
+    type: poi
+    subtype: ""
+    name_zh: 水晶湖鱼人浅滩
+    name_en: Crystal Lake Reed Shallows
+    level: ""
+    faction: ""
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 湖南岸与东岸的泥泞浅滩，成片高过人的芦苇与烂树桩，水面漂着绿藻，鱼人的贝壳窝棚与骨头堆散在水边，踩下去会冒气泡
+    note_zh: 非官方地名（描述性标签）。wiki 明写湖里爬满鱼人、对新手很危险；威廉·派斯特的隐形药水任务要从鱼人身上取海草——第 5 集的战斗场地
+    source_url: https://warcraft.wiki.gg/wiki/Crystal_Lake
+    quote: "William Pestle sends adventurers here to gather kelp from the murlocs in order to make an invisibility potion."
+    verified_by: ai_read

@@ -1,0 +1,502 @@
+# G01 · 世界与大陆骨架（树的上三层）
+# 版本锚点：经典旧世 Vanilla / Classic Era (1.12)
+# 本文件是树数据的唯一出处；非树数据（对账/版本差异/图例/zone 总表）见 g01_world_skeleton_notes.md
+# 取源：warcraft.wiki.gg（action=raw 原文页）· zh.wikipedia.org · wowdb.cn（中文区域名）
+
+nodes:
+
+  # ─────────────────────────────────────────────────────────────
+  # 第 1 层 · 世界
+  # ─────────────────────────────────────────────────────────────
+  - id: azeroth
+    parent: null
+    type: world
+    subtype: ""
+    name_zh: 艾泽拉斯
+    name_en: Azeroth
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一颗蓝绿色行星，四块大陆围着中央一片深蓝海洋，海心是一道终年不散的巨大白色漩涡
+    note_zh: 行星名；其核心沉睡着一位泰坦的世界之魂。Vanilla 玩家可去的只有东部王国与卡利姆多两块大陆
+    source_url: https://warcraft.wiki.gg/wiki/Azeroth
+    quote: "The world of Azeroth is comprised of four major continents, with a number of islands scattered about them."
+    verified_by: ai_read
+
+  # ─────────────────────────────────────────────────────────────
+  # 第 2 层 · 大陆（vanilla 可去的两块）
+  # ─────────────────────────────────────────────────────────────
+  - id: eastern_kingdoms
+    parent: azeroth
+    type: continent
+    subtype: ""
+    name_zh: 东部王国
+    name_en: Eastern Kingdoms
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: [kalimdor]
+    era: vanilla
+    look_zh: 一条南北向的狭长大陆，北端是灰绿色的瘟疫平原与松林，中段是灰褐色高山与峡谷，南端是湿热的墨绿雨林
+    note_zh: 由艾泽拉斯（南）、卡兹莫丹（中）、洛丹伦（北）三块次大陆拼成；人类 / 矮人 / 侏儒 / 亡灵的家乡；与卡利姆多之间只有船与飞艇相通，没有跨海飞行点
+    source_url: https://warcraft.wiki.gg/wiki/Eastern_Kingdoms
+    quote: "They are made up of a group of smaller continents (Azeroth, Khaz Modan and Lordaeron) formed from the original continent of Kalimdor following the Great Sundering."
+    verified_by: ai_read
+
+  - id: kalimdor
+    parent: azeroth
+    type: continent
+    subtype: ""
+    name_zh: 卡利姆多
+    name_en: Kalimdor
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: [eastern_kingdoms]
+    era: vanilla
+    look_zh: 西侧大陆，北部是靛蓝夜色下的巨杉古林，中部是赭黄干草原与红土峡谷，南部是荒漠盐滩与史前雨林
+    note_zh: 泰坦语「永烁星光之地」；暗夜精灵 / 兽人 / 牛头人 / 巨魔的家乡；wiki 自身把它分为北 / 中 / 南三个 region
+    source_url: https://warcraft.wiki.gg/wiki/Kalimdor
+    quote: "Kalimdor can be further divided into three regions known as Northern Kalimdor, Central Kalimdor, and Southern Kalimdor."
+    verified_by: ai_read
+
+  # ─────────────────────────────────────────────────────────────
+  # 第 2 层 · 大陆（非 vanilla；只挂一层，不往下展开）
+  # 用户要看到世界全貌，但本剧不拍它们
+  # ─────────────────────────────────────────────────────────────
+  - id: outland
+    parent: azeroth
+    type: continent
+    subtype: ""
+    name_zh: 外域
+    name_en: Outland
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: tbc
+    look_zh: 悬在紫红色虚空里的破碎大陆残骸，断裂的岩块漂浮在无底天幕上，天空是燃烧的橘红与靛紫
+    note_zh: 严格说不在艾泽拉斯星球上——它是另一个世界德拉诺被炸碎后的残骸，经诅咒之地的黑暗之门抵达；挂在世界根下只为保持树的连通性。2.0 开放，vanilla 不可去。G01-V 复核修正：adjacent 原写 [eastern_kingdoms]，但黑暗之门是传送门、不是接壤，且 eastern_kingdoms 一侧并未回填 outland（单向邻接），故清空；通路关系记在本行与 notes.md
+    source_url: https://warcraft.wiki.gg/wiki/Outland
+    quote: "Outland is the shattered floating remnants of the destroyed world of Draenor, the homeworld of the orcs and ogres, and refuge of the draenei."
+    verified_by: ai_read
+
+  - id: northrend
+    parent: azeroth
+    type: continent
+    subtype: ""
+    name_zh: 诺森德
+    name_en: Northrend
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: wotlk
+    look_zh: 终年冰雪覆盖的极北大陆，冰川、针叶林与黑色巨岩，天边挂着淡绿色极光
+    note_zh: 巫妖王的大本营冰冠堡垒所在；3.0 开放，vanilla 不可去
+    source_url: https://warcraft.wiki.gg/wiki/Northrend
+    quote: "Northrend is the northern, icy continent of the world of Azeroth. ... Northrend is a frozen wasteland that lies far to the north."
+    verified_by: ai_read
+
+  - id: pandaria
+    parent: azeroth
+    type: continent
+    subtype: ""
+    name_zh: 潘达利亚
+    name_en: Pandaria
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: cata_plus
+    look_zh: 东方水墨意境的大陆，竹海、梯田、青瓦飞檐与云雾缭绕的翠峰
+    note_zh: 5.0《熊猫人之谜》开放；被迷雾隔绝一万年。vanilla 不可去
+    source_url: https://warcraft.wiki.gg/wiki/Azeroth
+    quote: "to the south the newly discovered landmass of Pandaria, which had been isolated and shrouded by dense mists during the last 10,000 years."
+    verified_by: ai_read
+
+  - id: broken_isles
+    parent: azeroth
+    type: continent
+    subtype: ""
+    name_zh: 破碎群岛
+    name_en: Broken Isles
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: cata_plus
+    look_zh: 大漩涡北缘的一串岛屿，翡翠色古精灵林地、暗紫魔法都城与烧焦的军团登陆滩
+    note_zh: 7.0《军团再临》开放；分阿苏纳 / 至高岭 / 苏拉玛 / 风暴峡湾 / 破碎海滩。vanilla 不可去
+    source_url: https://zh.wikipedia.org/zh-cn/%E9%AD%94%E5%85%BD%E7%B3%BB%E5%88%97%E5%9C%B0%E5%90%8D%E5%88%97%E8%A1%A8
+    quote: "破碎群岛的区域划分为阿苏纳、至高岭、苏拉玛、风暴峡湾以及破碎海滩。"
+    verified_by: ai_read
+
+  - id: zandalar
+    parent: azeroth
+    type: continent
+    subtype: ""
+    name_zh: 赞达拉
+    name_en: Zandalar
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: cata_plus
+    look_zh: 南海上的巨魔群岛，金色阶梯金字塔、猩红沼泽与赭黄沙丘
+    note_zh: 8.0《争霸艾泽拉斯》开放，首都祖达萨；分祖达萨 / 纳兹米尔 / 沃顿。vanilla 不可去
+    source_url: https://zh.wikipedia.org/zh-cn/%E9%AD%94%E5%85%BD%E7%B3%BB%E5%88%97%E5%9C%B0%E5%90%8D%E5%88%97%E8%A1%A8
+    quote: "在《魔兽世界：争霸艾泽拉斯》中对玩家开放，首都位于祖达萨。"
+    verified_by: ai_read
+
+  - id: kul_tiras
+    parent: azeroth
+    type: continent
+    subtype: ""
+    name_zh: 库尔提拉斯
+    name_en: Kul Tiras
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: cata_plus
+    look_zh: 阴雨多雾的航海王国岛屿，灰石港口、白帆战舰、沼泽与险峻的绿色丘陵
+    note_zh: 8.0《争霸艾泽拉斯》开放，首都伯拉勒斯；拥有艾泽拉斯最强海军。vanilla 只作为剧情中的盟友国存在，不可去
+    source_url: https://zh.wikipedia.org/zh-cn/%E9%AD%94%E5%85%BD%E7%B3%BB%E5%88%97%E5%9C%B0%E5%90%8D%E5%88%97%E8%A1%A8
+    quote: "首都位于伯拉勒斯，与赞达拉群岛以及东部王国的暴风城王国隔海相望。"
+    verified_by: ai_read
+
+  - id: dragon_isles
+    parent: azeroth
+    type: continent
+    subtype: ""
+    name_zh: 巨龙群岛
+    name_en: Dragon Isles
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: cata_plus
+    look_zh: 龙族故土，巨大的龙骨状山脊、碧蓝湖林与悬在云层里的泰坦造物平台
+    note_zh: 9.2 之后的 10.0《巨龙时代》开放；分觉醒海岸 / 欧恩哈拉平原 / 碧蓝林海 / 索德拉苏斯 / 禁忌离岛。vanilla 不可去
+    source_url: https://zh.wikipedia.org/zh-cn/%E9%AD%94%E5%85%BD%E7%B3%BB%E5%88%97%E5%9C%B0%E5%90%8D%E5%88%97%E8%A1%A8
+    quote: "巨龙群岛共由觉醒海岸、欧恩哈拉平原、碧蓝林海、索德拉苏斯、禁忌离岛五个区域所组成。"
+    verified_by: ai_read
+
+  - id: khaz_algar
+    parent: azeroth
+    type: continent
+    subtype: ""
+    name_zh: Khaz Algar
+    name_en: Khaz Algar
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: cata_plus
+    look_zh: 一块海上大陆与它下面层层叠叠的地下世界，蜂巢状的岩层洞窟与发光的水晶矿脉
+    note_zh: 11.0《地心之战》开放。vanilla 不可去。G01-V 复核：name_zh 按仓库规则（notes §5.5.8「查不到就留英文原名，绝不自己音译」）从音译「卡兹阿加」改回英文原名——灰机 wiki 全站 403、zh.wikipedia 地名列表无此词、WebSearch 配额耗尽，三条路都没取到国服官方写法。常见音译候选仍是「卡兹阿加」，查到官方客户端写法后直接改回本字段
+    source_url: https://warcraft.wiki.gg/wiki/Azeroth
+    quote: "The islands of Zandalar, Kul Tiras, the Broken Isles, as well as the Dragon Isles and Khaz Algar, have been of major importance in recent events."
+    verified_by: ai_read
+
+  # ─────────────────────────────────────────────────────────────
+  # 第 2 层 · 海洋与水体（如何分隔两块大陆）
+  # type 用 region（schema 无 sea 枚举值，见 notes.md §图例）
+  # ─────────────────────────────────────────────────────────────
+  - id: the_great_sea
+    parent: azeroth
+    type: region
+    subtype: ""
+    name_zh: 无尽之海
+    name_en: The Great Sea
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 深蓝色的外洋，长涌浪与白色浪冠，远处天海交界处全是雾，看不到任何陆地轮廓
+    note_zh: 把东部王国（东岸）与卡利姆多（西岸）隔开的那片洋；上古之战后海水灌进塌陷的古卡利姆多而成。游戏内玩家游出去会进「疲劳区」。中文译名「无尽之海」另有「大海」写法，待国服客户端复核
+    source_url: https://warcraft.wiki.gg/wiki/Great_Sea
+    quote: "The Great Sea is the vast ocean separating the continents of Azeroth, with the Maelstrom at its center."
+    verified_by: ai_read
+
+  - id: the_maelstrom
+    parent: the_great_sea
+    type: region
+    subtype: ""
+    name_zh: 大漩涡
+    name_en: The Maelstrom
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 海心一道直径数里的巨大逆时针漩涡，墨黑水壁上缠着紫蓝色电弧，上空常年压着雷云
+    note_zh: 永恒之井内爆塌陷处；正好位于东部王国与卡利姆多之间的洋心。船与飞艇航线一律绕开它。Vanilla 只在世界地图上存在、不可进入；4.0.3 才成为可进入大陆
+    source_url: https://warcraft.wiki.gg/wiki/Maelstrom
+    quote: "The Maelstrom is a massive, fierce vortex of water that was created when the Well of Eternity collapsed into itself during the Great Sundering."
+    verified_by: ai_read
+
+  - id: veiled_sea
+    parent: azeroth
+    type: region
+    subtype: ""
+    name_zh: 迷雾之海
+    name_en: The Veiled Sea
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 卡利姆多西侧与北侧的海，终年一层齐桅高的乳白浓雾贴在水面上，能见度极低
+    note_zh: 名字来自暗夜精灵为遮蔽卡利姆多而升起的那层雾（第三次战争前一直没散）。泰达希尔漂在其上。中文名「迷雾之海」出自 wowdb.cn/zone-457.html 的页面标题（G01-V 复核：原 quote 只是那一页的 <title>，不是定义句，已换成英文维基页的原文定义句；中文名证据保留在此）。维基另记「它可能与禁忌之海在艾泽拉斯背面相连」
+    source_url: https://warcraft.wiki.gg/wiki/Veiled_Sea
+    quote: "The Veiled Sea is the name of the vast sea that lies to the north and west of Kalimdor."
+    verified_by: ai_read
+
+  - id: forbidding_sea
+    parent: azeroth
+    type: region
+    subtype: ""
+    name_zh: 禁忌之海
+    name_en: The Forbidding Sea
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 东部王国东侧的海，铅灰色阴天下的涌浪，海面空荡，一艘船都没有
+    note_zh: 大陆东岸的未探索外洋；辛特兰、阿拉希高地、悲伤沼泽的东岸都临着它。游戏内只作背景，没有可去内容。中文译名待国服客户端复核
+    source_url: https://warcraft.wiki.gg/wiki/Forbidding_Sea
+    quote: "The Forbidding Sea is a largely unexplored and uncharted sea along the eastern coast of the Eastern Kingdoms, sometimes noted by travelers on the coasts of the Hinterlands, Arathi Highlands and Swamp of Sorrows."
+    verified_by: ai_read
+
+  - id: south_seas
+    parent: the_great_sea
+    type: region
+    subtype: ""
+    name_zh: 南海
+    name_en: The South Seas
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 热带海域，碧绿透亮的浅水、白沙环礁与椰林小岛，天空明亮
+    note_zh: 无尽之海靠南的那一部分，环绕东部王国与卡利姆多的南端；荆棘谷南岸（藏宝海湾）就临着它。海盗与地精商会活跃区。中文译名待国服客户端复核
+    source_url: https://warcraft.wiki.gg/wiki/South_Seas
+    quote: "The South Seas, also known as the South Sea, is a body of water that surrounds the southern regions of the Eastern Kingdoms and Kalimdor, and the northern coasts of Pandaria."
+    verified_by: ai_read
+
+  - id: frozen_sea
+    parent: the_great_sea
+    type: region
+    subtype: ""
+    name_zh: 冰封之海
+    name_en: The Frozen Sea
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: wotlk
+    look_zh: 铅灰色极寒洋面，从房子大小到岛屿大小的浮冰与冰山漂在水上，寒风把水面刮成碎浪
+    note_zh: G01-V 补入。诺森德以南、一路向南直到大漩涡的那片洋；与南海一样是无尽之海的组成部分（维基原文「Since it is found in between the continents, the Frozen Sea is a portion of the Great Sea」），作者原树漏了它与珊瑚之海两片。**era 记 wotlk 不是 vanilla**——它的游戏内 zone（zone id 3979）与全部内容都是 3.0 才有，vanilla 玩家看不到也去不到，列在这里只为水体层完整。维基自注：游戏里把它画在祖达克以东是摆错了，lore 上它在诺森德以南，诺森德东岸与北岸是「北海 North Sea」。中文名「冰封之海」为直译，国服官方译名未查到（灰机 403 / WebSearch 配额耗尽）
+    source_url: https://warcraft.wiki.gg/wiki/Frozen_Sea
+    quote: "The Frozen Sea is the large body of water found south of Northrend."
+    verified_by: ai_read
+
+  - id: coral_sea
+    parent: the_great_sea
+    type: region
+    subtype: ""
+    name_zh: 珊瑚之海
+    name_en: The Coral Sea
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 艾萨拉外侧的一片暗色浅海，水下是迷宫般的珊瑚礁，有些礁体贴近水面甚至露出水面，礁间水体被发光的水草与鱼群映亮，天上常年压着暴风云
+    note_zh: G01-V 补入。艾萨拉近海，无尽之海的第三个组成部分（维基原文「Since this sea is found in between the continents, it is a part of the Great Sea」）。水面下是上古之战塌陷的暗夜精灵旧都金萨卡拉（Zin-Azshari）与永恒之井旧址。**只是 lore 地名，游戏内没有对应可选中区域**，vanilla 玩家在艾萨拉岸边看到的就是它；名字最早出自 2003 年的 Warcraft RPG，故 era 记 vanilla。中文名「珊瑚之海」为直译，国服官方译名未查到（灰机 403 / WebSearch 配额耗尽）
+    source_url: https://warcraft.wiki.gg/wiki/Coral_Sea
+    quote: "The Coral Sea is a dark sea near Azshara."
+    verified_by: ai_read
+
+  # ─────────────────────────────────────────────────────────────
+  # 第 3 层 · region（东部王国的三块次大陆 + 其下的 lore 分区）
+  # ─────────────────────────────────────────────────────────────
+  - id: azeroth_subcontinent
+    parent: eastern_kingdoms
+    type: region
+    subtype: ""
+    name_zh: 艾泽拉斯次大陆
+    name_en: Azeroth (continent)
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 大陆最南的三分之一，从北边的金秋橡树林一路往南变成焦黑火山高原与湿热墨绿雨林
+    note_zh: wiki 自身把东部王国分成三块「continent」，本树降为 region 层以免与世界根 azeroth 撞名（id 加 _subcontinent 限定）。也叫「暴风城大陆」。包含暴风王国全境 + 荆棘谷 + 悲伤沼泽 / 诅咒之地 / 燃烧平原 / 黑石山
+    source_url: https://warcraft.wiki.gg/wiki/Azeroth_(continent)
+    quote: "The continent of Azeroth is one of the three continents that form the Eastern Kingdoms, lying to the south of Khaz Modan."
+    verified_by: ai_read
+
+  - id: khaz_modan
+    parent: eastern_kingdoms
+    type: region
+    subtype: ""
+    name_zh: 卡兹莫丹
+    name_en: Khaz Modan
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 大陆中段的高山地带，灰白雪峰、凿进山体的矮人石雕大门、湖泊与红褐色荒原
+    note_zh: 矮人语「卡兹之山」，矮人与侏儒的祖地。包含丹莫罗 / 洛克莫丹 / 湿地 / 荒芜之地 / 灼热峡谷（黑石山跨界）。北面靠萨多尔大桥接洛丹伦
+    source_url: https://warcraft.wiki.gg/wiki/Khaz_Modan
+    quote: "Khaz Modan is one of the three continents making up the center third of the Eastern Kingdoms, between Azeroth to the south and Lordaeron to the north."
+    verified_by: ai_read
+
+  - id: lordaeron
+    parent: eastern_kingdoms
+    type: region
+    subtype: ""
+    name_zh: 洛丹伦
+    name_en: Lordaeron
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 大陆最北的三分之一，灰蓝色的针叶林与农田，往东北渐变成病黄色的瘟疫平原与焦黑废墟
+    note_zh: 得名于阿拉索帝国将领洛丹；从南端的阿拉希高地一直延伸到最北的永歌森林。第三次战争后大部分人口变成亡灵。包含提瑞斯法 / 银松 / 希尔斯布莱德 / 奥特兰克 / 阿拉希 / 辛特兰 / 东西瘟疫之地
+    source_url: https://warcraft.wiki.gg/wiki/Lordaeron
+    quote: "Separated from Khaz Modan by a narrow strait, the continent of Lordaeron stretches from the Arathi Highlands in the south to the Eversong Woods in the far north."
+    verified_by: ai_read
+
+  - id: kingdom_of_stormwind
+    parent: azeroth_subcontinent
+    type: region
+    subtype: ""
+    name_zh: 暴风王国
+    name_en: Kingdom of Stormwind
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 以暖金色橡木林与石桥农庄为核心、往外依次是干黄麦田、赤红砂岩湖山、灰紫雾林的人类领地
+    note_zh: 亦称「Kingdom of Azeroth 艾泽拉斯王国」（早期名）。乌瑞恩家族统治，都城暴风城。本剧主角的出生地与前 30 级活动范围。核心领地＝艾尔文森林 / 西部荒野 / 赤脊山 / 暮色森林 / 逆风小径，另在荆棘谷 / 悲伤沼泽 / 诅咒之地有前哨
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_(kingdom)
+    quote: "The kingdom of Stormwind is divided into several territories, each overseen by local authorities sworn to the House of Wrynn."
+    verified_by: ai_read
+
+  - id: stranglethorn
+    parent: azeroth_subcontinent
+    type: region
+    subtype: ""
+    name_zh: 荆棘谷
+    name_en: Stranglethorn
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 大陆最南端的湿热雨林，墨绿藤蔓缠死的巨树、遮天树冠下的石砌巨魔神庙、南岸是碧绿浅海与木栈码头
+    note_zh: 东部王国最南的分区，唯一没被历次大战毁掉的地方。vanilla 是一整个 zone（30–45 级）；4.0.3 被拆成北荆棘谷与荆棘海岸两个 zone——本树按 vanilla 记一个
+    source_url: https://warcraft.wiki.gg/wiki/Azeroth_(continent)
+    quote: "Stranglethorn is the only region of Azeroth that seems completely untouched by the wars that shook the land."
+    verified_by: ai_read
+
+  - id: quel_thalas
+    parent: lordaeron
+    type: region
+    subtype: ""
+    name_zh: 奎尔萨拉斯
+    name_en: Quel'Thalas
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 永恒春天的金红色精灵林地，鎏金尖塔与浮空法石，林中横着一条烧焦的灰黑色「天灾之痕」
+    note_zh: 塔拉斯语「高地家园」，高等/血精灵的王国，在洛丹伦最北。**vanilla 有一块官方命名为 Quel'thalas 的封闭 zone，玩家贴着提瑞斯法北岸游过去能到（避开疲劳区），但里面几乎是空地形，只有一座进不去的白塔和一个码头**——G01-V 复核修正：原写「vanilla 不可进」与本节点自己引的原文 "and was accessible in the game"、以及 Quel'Thalas/Eastern Kingdoms terrain 页的 "This tower could be found by swimming around from northern Tirisfal Glades" 直接矛盾。正确表述是「可游到、无内容」，不是「不可进」。永歌森林 / 幽魂之地是 2.0《燃烧的远征》、奎尔丹纳斯岛是 2.4 才开放。本剧不涉及
+    source_url: https://warcraft.wiki.gg/wiki/Quel%27Thalas
+    quote: "In World of Warcraft there was a zone of the old world officially named Quel'thalas. It was the only glimpse of Quel'Thalas before The Burning Crusade expansion, and was accessible in the game."
+    verified_by: ai_read
+
+  - id: gilneas
+    parent: lordaeron
+    type: region
+    subtype: ""
+    name_zh: 吉尔尼斯
+    name_en: Gilneas
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一道横贯半岛颈部的巨型灰石高墙与铁闸门，墙这边是银松森林的雾松林，墙那边什么都看不见
+    note_zh: 格雷迈恩王国。**vanilla 只有城墙**——格雷迈恩之墙立在银松森林南缘（入口靠近腐木村），墙后整个半岛不可进；4.0.3《大地的裂变》才开放为狼人起始区与吉尔尼斯废墟。本剧只能拍到墙
+    source_url: https://warcraft.wiki.gg/wiki/Greymane_Wall
+    quote: "It is a colossal wall with a substantially sized gate, located at the southern edge of the Silverpine Forest in Lordaeron (its entrance near Pyrewood Village) and the northern edge of the Gilnean peninsula."
+    verified_by: ai_read
+
+  # ─────────────────────────────────────────────────────────────
+  # 第 3 层 · region（卡利姆多的三块 lore 分区，wiki 自身用的划分）
+  # ─────────────────────────────────────────────────────────────
+  - id: northern_kalimdor
+    parent: kalimdor
+    type: region
+    subtype: ""
+    name_zh: 北卡利姆多
+    name_en: Northern Kalimdor
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 靛蓝夜色里的巨杉古林与月光，紫叶树冠、藤蔓石阶与发光的月亮井，再往北转成蓝白雪原
+    note_zh: 暗夜精灵的地盘。vanilla 含泰达希尔 / 黑海岸 / 灰谷 / 费伍德森林 / 艾萨拉 / 冬泉谷 / 月光林地。中文分区名为直译，国服官方译名未查到
+    source_url: https://warcraft.wiki.gg/wiki/Northern_Kalimdor
+    quote: "Northern Kalimdor is the northernmost region of Kalimdor, north of central Kalimdor."
+    verified_by: ai_read
+
+  - id: central_kalimdor
+    parent: kalimdor
+    type: region
+    subtype: ""
+    name_zh: 中卡利姆多
+    name_en: Central Kalimdor
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 赭黄色的干草原与红岩台地，稀疏的伞状树、兽人木栅哨站与尖木桩围墙
+    note_zh: 新部落的核心地盘。vanilla 含杜隆塔尔 / 贫瘠之地 / 莫高雷 / 石爪山脉 / 凄凉之地 / 尘泥沼泽。中文分区名为直译，国服官方译名未查到
+    source_url: https://warcraft.wiki.gg/wiki/Central_Kalimdor
+    quote: "Central Kalimdor, also also spelled as central Kalimdor, is the central region of Kalimdor between northern and southern Kalimdor."
+    verified_by: ai_read
+
+  - id: southern_kalimdor
+    parent: kalimdor
+    type: region
+    subtype: ""
+    name_zh: 南卡利姆多
+    name_en: Southern Kalimdor
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 大陆最野的南端，从菲拉斯的湿热蕨林一路转到千针石林的橘红石柱、塔纳利斯的金色沙丘与希利苏斯的惨白盐滩
+    note_zh: 大片未测绘区，定居点极少，遍布上古之战前的废墟。vanilla 含菲拉斯 / 千针石林 / 塔纳利斯 / 安戈洛环形山 / 希利苏斯。中文分区名为直译，国服官方译名未查到
+    source_url: https://warcraft.wiki.gg/wiki/Southern_Kalimdor
+    quote: "There are six major zones in southern Kalimdor: Feralas, Thousand Needles, Tanaris, Uldum, Un'Goro Crater, and Silithus."
+    verified_by: ai_read

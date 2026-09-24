@@ -1,0 +1,1551 @@
+# G12 · 交通网（飞行点 · 船 · 地铁 · 传送门）
+# 版本锚点：经典旧世 Vanilla / Classic Era 1.12
+# 树数据唯一出处 —— 非树信息一律在 g12_transport_notes.md，勿在此重复
+nodes:
+
+  # ============================================================
+  # A. 矿道地铁 Deeprun Tram（暴风城 ↔ 铁炉堡）
+  #    本段结论全部复用 sk2 既有调研，见 notes.md §1
+  # ============================================================
+
+  - id: deeprun_tram
+    parent: eastern_kingdoms
+    type: transport
+    subtype: tram
+    name_zh: 矿道地铁
+    name_en: Deeprun Tram
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 全封闭地下双轨隧道，铁灰色窄轨嵌在深褐枕木上，青灰花岗岩凿面岩壁，无天光，照明只来自隧道自身
+    note_zh: 免费；两列各三节车厢往返，单程 60 秒、每站停 12 秒；连接暴风城矮人区与铁炉堡机械侏儒区。官方简中译名是「矿道地铁」，不是「深铁矿道」。6 ADP 由 Magni 委托 Mekkatorque 开建，vanilla 当下（25 ADP）已通车约 19 年，是通勤日常而非新鲜事物。
+    source_url: https://warcraft.wiki.gg/wiki/Deeprun_Tram
+    quote: "The Deeprun Tram (or simply the Tram) is a long, fully enclosed, underground (and partially underwater) set of double tracks upon which rolls two sets of three wagons, all credited to the gnomes' technical engineering."
+    verified_by: ai_read
+
+  - id: deeprun_tram_stormwind_station
+    parent: "dwarven_district"
+    type: transport
+    subtype: tram
+    name_zh: 矿道地铁·暴风城站
+    name_en: Deeprun Tram - Stormwind City Station
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 地下石砌站台，无闸机无售票窗口无收费员，站台端头一道带横向防滑凿槽的石坡接入轨道层，人流密集
+    note_zh: 入口在矮人区东侧一条隧道；卫兵指路称它「在矮人区靠里面」。站台无卫兵驻守，PvE 服上属中立地界。掉下站台不会被碾——车从头顶无害驶过。vanilla 站上人物：侏儒小贩 Nipsy 卖「矿道鼠肉串」。比兹莫搏击俱乐部（Year 30 ADP）在 vanilla 不存在。
+    source_url: https://warcraft.wiki.gg/wiki/Travel_guide_to_Deeprun_Tram_and_boats
+    quote: "The Stormwind City end of the Deeprun Tram line is accessible through a tunnel on the east side of the district."
+    verified_by: ai_read
+
+  - id: deeprun_tram_ironforge_station
+    parent: "tinker_town"
+    type: transport
+    subtype: tram
+    name_zh: 矿道地铁·铁炉堡站
+    name_en: Deeprun Tram - Ironforge Station
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 与暴风城站同形制的地下石砌站台，四周是侏儒机械区的黄铜管线与齿轮，蒸汽从接缝逸出
+    note_zh: 位于铁炉堡东北的机械侏儒区（Tinker Town）。次序是先有车站、后有街区——侏儒失去诺莫瑞根后在已建成的车站所在区域造起机械侏儒区。站上人物：侏儒「灭鼠专家」Monty（海盗腔）、麻风侏儒 Haggle。
+    source_url: https://warcraft.wiki.gg/wiki/Travel_guide_to_Deeprun_Tram_and_boats
+    quote: "The gnomes constructed Tinker Town in the district where the Ironforge Deeprun Tram station had been built."
+    verified_by: ai_read
+
+  - id: deeprun_tram_stormwind_gear_gate
+    parent: deeprun_tram_stormwind_station
+    type: poi
+    subtype: ""
+    name_zh: 矿道地铁暴风城口·巨型齿轮门
+    name_en: Deeprun Tram Stormwind Entrance Gear
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 洞口外圈一枚直径数倍于人高的巨型齿轮，铁灰铸铁齿牙、齿面黄铜镶边与铆钉，绕洞口缓慢转动，洞内漆黑
+    note_zh: 两端入口同形制，绝不会认错；是「进城/出城」镜头最好用的视觉标记。
+    source_url: https://warcraft.wiki.gg/wiki/Travel_guide_to_Deeprun_Tram_and_boats
+    quote: "a tunnel surrounded by a great big rotating gear"
+    verified_by: ai_read
+
+  - id: deeprun_tram_ironforge_gear_gate
+    parent: deeprun_tram_ironforge_station
+    type: poi
+    subtype: ""
+    name_zh: 矿道地铁铁炉堡口·巨型齿轮门
+    name_en: Deeprun Tram Ironforge Entrance Gear
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 同暴风城口形制的巨型转动齿轮框住隧道口，背景是机械侏儒区的暖黄炉火与铜管
+    note_zh: 见 deeprun_tram_stormwind_gear_gate。
+    source_url: https://warcraft.wiki.gg/wiki/Travel_guide_to_Deeprun_Tram_and_boats
+    quote: "a tunnel surrounded by a great big rotating gear"
+    verified_by: ai_read
+
+  - id: deeprun_tram_underwater_lake
+    parent: deeprun_tram
+    type: poi
+    subtype: ""
+    name_zh: 矿道地铁水下段（地下湖）
+    name_en: Deeprun Tram Underwater Section
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 隧道穿过一片幽闭水体，水色深墨绿转青黑，无天光，光只来自隧道自身，水面在上方看不见
+    note_zh: 所谓「水下段」其实是施工期挖穿的那座地下湖，同一个东西。水里有宝箱、一名戴潜水头盔的侏儒 Deeprun Diver、数艘沉船、boss 级生物 Nessy（致敬尼斯湖水怪，玩家无法接近）、巨蚌、两只娜迦海妖、一条姥鲨。隧道确实从「大海」极小的一角底下穿过。
+    source_url: https://warcraft.wiki.gg/wiki/Deeprun_Tram
+    quote: "the Deeprun Tram actually passes under a very small portion of 'The Great Sea'."
+    verified_by: ai_read
+
+  # ============================================================
+  # B. 船与码头（vanilla 共 5 条航线 / 10 个码头）
+  # ============================================================
+
+  - id: dock_menethil_to_theramore
+    parent: menethil_harbor
+    type: transport
+    subtype: boat
+    name_zh: 米奈希尔港·塞拉摩航线码头
+    name_en: Menethil Harbor Dock - Theramore Isle
+    level: ""
+    faction: alliance
+    coords: "[11, 52]"
+    adjacent: []
+    era: vanilla
+    look_zh: 灰绿湿地水色上的木栈桥，桥头立着湿漉漉的系缆桩与油灯，远处是米奈希尔堡的方形石塔
+    note_zh: 联盟。船名 The Lady Mehley（《美莉女士号》，官方中文译名未查到）。这是联盟「东部王国 → 卡利姆多主线」的标准航路：铁炉堡/暴风城 → 米奈希尔港 → 塞拉摩岛。
+    source_url: https://warcraft.wiki.gg/wiki/Menethil_Harbor
+    quote: "It has also The Lady Mehley boat that sails to the Ruins of Theramore in Dustwallow Marsh, on the continent of Kalimdor"
+    verified_by: ai_read
+
+  - id: dock_theramore_to_menethil
+    parent: "theramore_isle"
+    type: transport
+    subtype: boat
+    name_zh: 塞拉摩岛·米奈希尔港航线码头
+    name_en: Theramore Isle Dock - Menethil Harbor
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 沼泽咸水边的木质深水码头，岸上一排弩炮与火炮对着海面，背后是塞拉摩的白石高塔
+    note_zh: 联盟。与 dock_menethil_to_theramore 对开。塞拉摩岛靠一座桥与尘泥沼泽本土相连。注意：塞拉摩毁于《熊猫人之谜》的魔能炸弹，vanilla 时完好。
+    source_url: https://warcraft.wiki.gg/wiki/Theramore_Isle
+    quote: "numerous ballistae and cannons to sink enemy naval vessels"
+    verified_by: ai_read
+
+  - id: dock_menethil_to_auberdine
+    parent: menethil_harbor
+    type: transport
+    subtype: boat
+    name_zh: 米奈希尔港·奥伯丁航线码头
+    name_en: Menethil Harbor Dock - Auberdine
+    level: ""
+    faction: alliance
+    coords: "[11, 52]"
+    adjacent: []
+    era: vanilla
+    look_zh: 与塞拉摩码头并列的另一座木栈桥，停靠一条人类样式的大帆船，桅索在海风里绷直
+    note_zh: 联盟。船名 The Bravery（官方中文译名未查到）。3.0.2 起航线改为暴风城港口出发、4.0.3a 起终点改鲁瑟兰村——vanilla 的形态是 米奈希尔港 ↔ 奥伯丁。这是联盟去黑海岸/泰达希尔的唯一水路。
+    source_url: https://warcraft.wiki.gg/wiki/The_Bravery
+    quote: "between Menethil Harbor in the Eastern Kingdoms to Auberdine in Kalimdor"
+    verified_by: ai_read
+
+  - id: dock_auberdine_to_menethil
+    parent: auberdine
+    type: transport
+    subtype: boat
+    name_zh: 奥伯丁·南码头（米奈希尔港航线）
+    name_en: Auberdine Southern Pier - Menethil Harbor
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 暗夜精灵风格的弯木码头，月蓝与紫灰调，栈道两侧立着叶形灯柱，背后是灰蓝海雾里的巨树剪影
+    note_zh: 联盟。奥伯丁的南侧码头。奥伯丁在大地的裂变中被死亡之翼焚毁、港口沉入海中，由洛达内尔取代——vanilla 时完好。
+    source_url: https://warcraft.wiki.gg/wiki/Auberdine
+    quote: "Auberdine's port fell into the sea, and most of its buildings were wrecked."
+    verified_by: ai_read
+
+  - id: dock_auberdine_to_rutheran
+    parent: auberdine
+    type: transport
+    subtype: boat
+    name_zh: 奥伯丁·北码头（鲁瑟兰村航线）
+    name_en: Auberdine Northern Dock - Rut'theran Village
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 同风格的第二座弯木码头，停着一条细长的暗夜精灵渡船，船身月白描银、帆为淡紫
+    note_zh: 联盟。船名 The Moonspray（官方中文译名未查到），4.0.3a 移除。这是去泰达希尔/达纳苏斯的必经一段：奥伯丁 →（船）→ 鲁瑟兰村 →（传送门）→ 达纳苏斯。
+    source_url: https://warcraft.wiki.gg/wiki/Boat
+    quote: "The Moonspray (Alliance): Auberdine, Darkshore to Rut'theran Village, Teldrassil - Removed in patch 4.0.3a"
+    verified_by: ai_read
+
+  - id: dock_rutheran_to_auberdine
+    parent: "rut_theran_village"
+    type: transport
+    subtype: boat
+    name_zh: 鲁瑟兰村·奥伯丁航线码头
+    name_en: Rut'theran Village Dock - Auberdine
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 世界树根部海面上的月白色码头群，头顶是遮天的泰达希尔树冠，水面浮着发光的花粉尘
+    note_zh: 联盟。鲁瑟兰村是泰达希尔的港口村，坐落在世界树脚下；村里的传送门直通达纳苏斯。vanilla 达纳苏斯城内没有飞行管理员，进出城主要靠这座村子。
+    source_url: https://warcraft.wiki.gg/wiki/Rut%27theran_Village
+    quote: "There is a portal here that goes directly into Darnassus"
+    verified_by: ai_read
+
+  - id: dock_booty_bay_to_ratchet
+    parent: booty_bay
+    type: transport
+    subtype: boat
+    name_zh: 藏宝海湾·棘齿城航线码头
+    name_en: Booty Bay Dock - Ratchet
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 层叠木板搭出的海盗港口，红漆大炮架在崖壁栈道上，桅杆与晾晒的渔网挤满暖黄灯火的海湾
+    note_zh: 中立，双阵营通用，免费。船名 The Maiden's Fancy（官方中文译名未查到）。进城要从一条巨鲨的白骨颚骨底下穿过——是本条航线最好认的画面标记。vanilla 区名是荆棘谷（Stranglethorn Vale）；「藏宝海岸 Cape of Stranglethorn」是 4.0.3 拆分后的名字，不进本树。
+    source_url: https://warcraft.wiki.gg/wiki/Booty_Bay
+    quote: "The Maiden's Fancy in Booty Bay"
+    verified_by: ai_read
+
+  - id: dock_ratchet_to_booty_bay
+    parent: ratchet
+    type: transport
+    subtype: boat
+    name_zh: 棘齿城·藏宝海湾航线码头
+    name_en: Ratchet Dock - Booty Bay
+    level: ""
+    faction: neutral
+    coords: "[68, 71]"
+    adjacent: []
+    era: vanilla
+    look_zh: 黄土海岸上钉出的哥布林木码头，锈铁吊臂与堆叠的货箱，港口小屋是拼补铁皮顶
+    note_zh: 中立，双阵营通用。棘齿城属加基森商业联合会，位于贫瘠之地东岸，在奥格瑞玛与塞拉摩岛之间。这是双阵营跨大陆最省钱的一条路。
+    source_url: https://warcraft.wiki.gg/wiki/Ratchet
+    quote: "Part of the Steamwheedle Cartel, this goblin port city provides a neutral haven for those that wish to trade goods and services in the Barrens."
+    verified_by: ai_read
+
+  - id: dock_forgotten_coast_to_feathermoon
+    parent: forgotten_coast
+    type: transport
+    subtype: boat
+    name_zh: 被遗忘的海岸·羽月要塞渡口
+    name_en: Forgotten Coast Dock - Feathermoon Stronghold
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 菲拉斯西海岸的简易木栈桥伸进浅海，背后是湿热的巨树雨林，海面对岸能看见要塞灯火
+    note_zh: 联盟。渡船 Feathermoon Ferry（官方中文译名未查到），连接菲拉斯本土的被遗忘的海岸与萨多尔岛上的羽月要塞，**同一个 zone 内的短程摆渡**。2.3.0 才给它加了船员模型、4.0.3a 随羽月要塞迁到本土而移除——vanilla 已存在。
+    source_url: https://warcraft.wiki.gg/wiki/Feathermoon_Ferry
+    quote: "Feathermoon Stronghold and the Forgotten Coast in Feralas"
+    verified_by: ai_read
+
+  - id: dock_feathermoon_to_forgotten_coast
+    parent: "feathermoon_stronghold"
+    type: transport
+    subtype: boat
+    name_zh: 羽月要塞·渡口
+    name_en: Feathermoon Stronghold Dock
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 海岛上的暗夜精灵哨站码头，紫蓝石阶接木栈桥，岸边立着哨兵雕像与月纹旗
+    note_zh: 联盟。vanilla 的羽月要塞在**萨多尔岛（Sardor Isle）**，不在本土；大地的裂变中被海啸摧毁、迁到本土并改名遗址。会游泳也可以直接游过去。
+    source_url: https://warcraft.wiki.gg/wiki/Boat
+    quote: "Feathermoon Ferry (Alliance): Forgotten Coast, Feralas to Feathermoon Stronghold, Sardor Isle, Feralas - Removed in patch 4.0.3a"
+    verified_by: ai_read
+
+  # ============================================================
+  # C. 飞艇 Zeppelin（部落专属，免费，vanilla 共 3 条线 / 3 座塔 / 6 个登船位）
+  #    schema 的 transport.subtype 没有 zeppelin 值，暂用 boat（同属「定点定线的免费载具」），
+  #    并在 name_zh / note_zh 里写死「飞艇」。见 notes.md §6 的 schema 扩展请求。
+  # ============================================================
+
+  - id: zeppelin_tower_durotar
+    parent: durotar
+    type: transport
+    subtype: boat
+    name_zh: 杜隆塔尔飞艇塔（奥格瑞玛城外）
+    name_en: Orgrimmar Zeppelin Tower
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 红土荒原上一座高耸的原木与兽皮塔架，螺旋坡道绕塔而上，顶端两根挑出的系泊臂各拴一艘鼓胀的飞艇气囊
+    note_zh: 部落。**vanilla 时在奥格瑞玛城外的杜隆塔尔地界，不在城内**——4.0.3a 才拆掉外塔、在城内新建两座。塔上两名哥布林飞艇管理员：Frezza（＜提瑞斯法林地飞艇管理员＞，去幽暗城）与 Snurk Bucksquick（＜荆棘谷飞艇管理员＞，去格罗姆高营地）；两人是兄妹。
+    source_url: https://warcraft.wiki.gg/wiki/Snurk_Bucksquick
+    quote: "Patch 4.0.3a (2010): Model updated and relocated from Durotar to Orgrimmar"
+    verified_by: ai_read
+
+  - id: zeppelin_berth_durotar_to_undercity
+    parent: zeppelin_tower_durotar
+    type: transport
+    subtype: boat
+    name_zh: 杜隆塔尔塔·幽暗城飞艇位
+    name_en: Durotar Zeppelin Berth - Undercity
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 木平台尽头的系泊臂，飞艇气囊贴着平台缓缓起伏，绳索吱呀作响，脚下是百米红土
+    note_zh: 部落，免费。飞艇名 The Thundercaller（＜雷鸣者号＞，官方中文译名未查到），奥格瑞玛 ↔ 幽暗城，跨大海。管理员 Frezza，会提醒「船上禁止吸烟、禁止施放火焰法术」。
+    source_url: https://warcraft.wiki.gg/wiki/Frezza
+    quote: "This baby will get you to Undercity faster and safer than any boat, and the view is truly breathtaking."
+    verified_by: ai_read
+
+  - id: zeppelin_berth_durotar_to_gromgol
+    parent: zeppelin_tower_durotar
+    type: transport
+    subtype: boat
+    name_zh: 杜隆塔尔塔·格罗姆高飞艇位
+    name_en: Durotar Zeppelin Berth - Grom'gol
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 同塔另一侧的系泊臂，飞艇吊舱漆成兽皮暗红，舱口挂着部落狼头旗
+    note_zh: 部落，免费。飞艇名 The Iron Eagle（＜铁鹰号＞，官方中文译名未查到），奥格瑞玛 ↔ 格罗姆高营地（荆棘谷）。管理员 Snurk Bucksquick。
+    source_url: https://warcraft.wiki.gg/wiki/Snurk_Bucksquick
+    quote: "The Iron Eagle, which travels to and from Grom'Gol Base Camp in Stranglethorn Vale."
+    verified_by: ai_read
+
+  - id: zeppelin_tower_tirisfal
+    parent: tirisfal_glades
+    type: transport
+    subtype: boat
+    name_zh: 提瑞斯法林地飞艇塔（幽暗城外）
+    name_en: Tirisfal Glades Zeppelin Tower
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 病黄天光下的石砌高塔，塔身爬满枯藤，塔顶系泊臂挑着两艘灰紫色飞艇，四周是提瑞斯法惨白的枯树
+    note_zh: 部落。位于**布瑞尔以南、幽暗城城门以北**的路边。vanilla 只有一座塔（第二座是 3.0.2 为北裂境加的）。两名哥布林管理员：Zapetta（＜杜隆塔尔飞艇管理员＞，去奥格瑞玛）与 Hin Denburg（＜荆棘谷飞艇管理员＞，去格罗姆高）；Hin Denburg 的名字在玩兴登堡号飞艇的梗。
+    source_url: https://warcraft.wiki.gg/wiki/Tirisfal_Glades
+    quote: "Zeppelin towers south of Brill"
+    verified_by: ai_read
+
+  - id: zeppelin_berth_tirisfal_to_orgrimmar
+    parent: zeppelin_tower_tirisfal
+    type: transport
+    subtype: boat
+    name_zh: 提瑞斯法塔·奥格瑞玛飞艇位
+    name_en: Tirisfal Zeppelin Berth - Orgrimmar
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 石塔顶端的木平台，被遗忘者的破布旗在风里抽打，飞艇气囊是褪色的灰紫
+    note_zh: 部落，免费。飞艇名 The Thundercaller，幽暗城 ↔ 奥格瑞玛。管理员 Zapetta（Nez'raz 的兄弟），飞艇起飞时他会说「但愿这次别再爆炸了」。
+    source_url: https://warcraft.wiki.gg/wiki/Zapetta
+    quote: "There goes the zeppelin to Orgrimmar. I hope there's no explosions this time."
+    verified_by: ai_read
+
+  - id: zeppelin_berth_tirisfal_to_gromgol
+    parent: zeppelin_tower_tirisfal
+    type: transport
+    subtype: boat
+    name_zh: 提瑞斯法塔·格罗姆高飞艇位
+    name_en: Tirisfal Zeppelin Berth - Grom'gol
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 同塔另一侧的系泊臂，吊舱蒙着暗绿帆布，绳梯垂向平台
+    note_zh: 部落，免费。飞艇名 The Purple Princess（＜紫色公主号＞，官方中文译名未查到），幽暗城 ↔ 格罗姆高营地——**东部王国内部的南北快线**，是部落从提瑞斯法直接下到荆棘谷的唯一速通路。管理员 Hin Denburg。
+    source_url: https://warcraft.wiki.gg/wiki/Hin_Denburg
+    quote: "Now, are you walking to Grom'Gol or are you gonna ride in style in this fine flying machine?"
+    verified_by: ai_read
+
+  - id: zeppelin_tower_gromgol
+    parent: "grom_gol_base_camp"
+    type: transport
+    subtype: boat
+    name_zh: 格罗姆高营地飞艇塔
+    name_en: Grom'gol Zeppelin Tower
+    level: ""
+    faction: horde
+    coords: "[38, 50]"
+    adjacent: []
+    era: vanilla
+    look_zh: 雨林里钉出的巨大原木塔架，藤蔓缠上塔身，两艘飞艇浮在湿热的绿色树冠之上
+    note_zh: 部落。营地在荆棘谷西南海岸；塔下有旅店（1.7.0 加入）。两名飞艇管理员：Nez'raz（去奥格瑞玛）与 Squibby Overspeck（去幽暗城）。
+    source_url: https://warcraft.wiki.gg/wiki/Grom%27gol_Base_Camp
+    quote: "A new inn has been added to the Grom'gol Base Camp in Stranglethorn Vale at the base of the zeppelin tower."
+    verified_by: ai_read
+
+  - id: zeppelin_berth_gromgol_to_orgrimmar
+    parent: zeppelin_tower_gromgol
+    type: transport
+    subtype: boat
+    name_zh: 格罗姆高塔·奥格瑞玛飞艇位
+    name_en: Grom'gol Zeppelin Berth - Orgrimmar
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 高出树冠的木平台，起飞瞬间脚下是一整片墨绿雨林与灰蓝海面
+    note_zh: 部落，免费。飞艇 The Iron Eagle，格罗姆高 ↔ 奥格瑞玛。管理员 Nez'raz（Zapetta 的兄弟）。
+    source_url: https://warcraft.wiki.gg/wiki/Grom%27gol_Base_Camp
+    quote: "The zeppelin masters are: Squibby Overspeck, Nez'raz"
+    verified_by: ai_read
+
+  - id: zeppelin_berth_gromgol_to_undercity
+    parent: zeppelin_tower_gromgol
+    type: transport
+    subtype: boat
+    name_zh: 格罗姆高塔·幽暗城飞艇位
+    name_en: Grom'gol Zeppelin Berth - Undercity
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 同塔另一侧平台，吊舱侧面挂着被遗忘者的骨白徽记
+    note_zh: 部落，免费。飞艇 The Purple Princess，格罗姆高 ↔ 幽暗城。管理员 Squibby Overspeck。
+    source_url: https://warcraft.wiki.gg/wiki/Grom%27gol_Base_Camp
+    quote: "The zeppelin masters are: Squibby Overspeck, Nez'raz"
+    verified_by: ai_read
+
+  # ============================================================
+  # D. 飞行点（vanilla 共 61 个：联盟 30 / 部落 29 / 中立 2）
+  #    `直连` 的取源与可信度见 notes.md §3——除特别标注外均为 ai_draft
+  # ============================================================
+
+  # ---------- D1. 联盟 · 东部王国（16） ----------
+
+  - id: fp_stormwind
+    parent: "trade_district"
+    type: transport
+    subtype: flightpath
+    name_zh: 暴风城飞行点
+    name_en: Stormwind City Flight Path
+    level: ""
+    faction: alliance
+    coords: "[71.0, 72.6]"
+    adjacent: []
+    era: vanilla
+    look_zh: 一道石坡沿建筑外墙盘上二层露天平台，木质栖架上停着数只白头狮鹫，平台边缘无遮挡直接临空俯瞰贸易区
+    note_zh: 狮鹫管理员 Dungar Longdrink（中文名「杜加尔·朗德瑞克」，头衔「狮鹫兽管理员」，55 级）。位置在贸易区**东侧一道坡道上去**。直连：铁炉堡 / 哨兵岭 / 湖畔镇 / 夜色镇 / 藏宝海湾 / 尼萨格德要塞 / 莫根的岗哨 / 瑟银哨塔。**全剧的交通原点**。
+    source_url: https://warcraft.wiki.gg/wiki/Stormwind_City
+    quote: "The bank, mailbox, and inn are on the southwest side of the Trade District. The Gryphon Master is up a ramp on the east side."
+    verified_by: ai_read
+
+  - id: fp_ironforge
+    parent: "the_great_forge"
+    type: transport
+    subtype: flightpath
+    name_zh: 铁炉堡飞行点
+    name_en: Ironforge Flight Path
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 大熔炉旁的岩台上一排石凿栖架，狮鹫在炉火橙光里抖羽，背景是翻滚的熔岩与铜管蒸汽
+    note_zh: 狮鹫管理员 Gryth Thurden（官方中文译名未查到）。位于大熔炉（The Great Forge）。直连：暴风城 / 塞尔萨玛 / 米奈希尔港 / 避难谷地 / 鹰巢山 / 冷风营地 / 圣光之愿礼拜堂。是联盟北线（湿地—阿拉希—辛特兰—瘟疫之地）的总枢纽。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "The Great Forge | Ironforge | Gryth Thurden | Gryphon"
+    verified_by: ai_read
+
+  - id: fp_sentinel_hill
+    parent: sentinel_hill
+    type: transport
+    subtype: flightpath
+    name_zh: 哨兵岭飞行点
+    name_en: Sentinel Hill Flight Path
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 金黄麦田与风车之间的土坡高地，木栅围出的栖架旁堆着谷袋，狮鹫背后是西部荒野的黄褐平原
+    note_zh: 狮鹫管理员 Thor（官方中文译名未查到）。西部荒野。直连：暴风城 / 湖畔镇 / 夜色镇 / 藏宝海湾。**主角离开新手区后第一个会用到的飞行点**。注意：西部荒野在 4.0.3 被大改，本树按 vanilla。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Sentinel Hill | Westfall | Thor | Gryphon"
+    verified_by: ai_read
+
+  - id: fp_lakeshire
+    parent: lakeshire
+    type: transport
+    subtype: flightpath
+    name_zh: 湖畔镇飞行点
+    name_en: Lakeshire Flight Path
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 镇北湖岸的木架栖台，狮鹫立在湖面反光前，背景是赤脊山的赭红崖壁与那座长木桥
+    note_zh: 狮鹫管理员 Ariena Stormfeather（官方中文译名未查到）。赤脊山。直连：暴风城 / 哨兵岭 / 夜色镇 / 莫根的岗哨。注意：赤脊山在 4.0.3 被大改。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Lakeshire | Redridge Mountains | Ariena Stormfeather | Gryphon"
+    verified_by: ai_read
+
+  - id: fp_darkshire
+    parent: darkshire
+    type: transport
+    subtype: flightpath
+    name_zh: 夜色镇飞行点
+    name_en: Darkshire Flight Path
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 常夜的青灰小镇边缘，栖架旁点着一盏昏黄提灯，狮鹫的白羽在暗色雾气里格外显眼
+    note_zh: 狮鹫管理员 Felicia Maline（官方中文译名未查到）。暮色森林。直连：暴风城 / 哨兵岭 / 湖畔镇 / 藏宝海湾 / 尼萨格德要塞。注意：暮色森林在 4.0.3 被大改。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Darkshire | Duskwood | Felicia Maline | Gryphon"
+    verified_by: ai_read
+
+  - id: fp_thelsamar
+    parent: thelsamar
+    type: transport
+    subtype: flightpath
+    name_zh: 塞尔萨玛飞行点
+    name_en: Thelsamar Flight Path
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 矮人石屋与烟囱之间的石台栖架，狮鹫背后是洛克莫丹的深蓝湖面与松林
+    note_zh: 狮鹫管理员 Thorgrum Borrelson（官方中文译名未查到）。洛克莫丹。直连：铁炉堡 / 米奈希尔港 / 避难谷地。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Thelsamar | Loch Modan | Thorgrum Borrelson | Gryphon"
+    verified_by: ai_read
+
+  - id: fp_menethil_harbor
+    parent: menethil_harbor
+    type: transport
+    subtype: flightpath
+    name_zh: 米奈希尔港飞行点
+    name_en: Menethil Harbor Flight Path
+    level: ""
+    faction: alliance
+    coords: "[11, 52]"
+    adjacent: []
+    era: vanilla
+    look_zh: 潮湿海风里的木栖架架在石堤上，狮鹫羽毛被吹得倒伏，背景是灰绿湿地与方形石塔
+    note_zh: 狮鹫管理员 Shellei Brondir（官方中文译名未查到）。湿地。**直连：铁炉堡 / 塞尔萨玛 / 避难谷地（wiki 原文直接列出，ai_read）**。此处同时是两条船的起点，是「联盟去卡利姆多」的总闸口。
+    source_url: https://warcraft.wiki.gg/wiki/Menethil_Harbor
+    quote: "Shellei Brondir served as the Gryphon Master, providing flight connections to Ironforge, Thelsamar, and Refuge Pointe."
+    verified_by: ai_read
+
+  - id: fp_southshore
+    parent: southshore
+    type: transport
+    subtype: flightpath
+    name_zh: 南海镇飞行点
+    name_en: Southshore Flight Path
+    level: ""
+    faction: alliance
+    coords: "[49.4, 52.2]"
+    adjacent: []
+    era: vanilla
+    look_zh: 海边农镇的石砌码头旁一座木栖架，狮鹫立在渔网与酒桶之间，背景是希尔斯布莱德的绿坡与灰海
+    note_zh: 狮鹫管理员 Darla Harris（官方中文译名未查到）。希尔斯布莱德丘陵。**这是 vanilla 才有的飞行点**：大地的裂变中南海镇被被遗忘者的瘟疫摧毁，Darla Harris 本人被改成亡灵蝙蝠管理员归了部落，所以现行 wiki 的联盟表里查不到她——漏掉它是本片区最容易犯的错。直连未查到（见 notes.md §3）。
+    source_url: https://warcraft.wiki.gg/wiki/Darla_Harris
+    quote: "Prior to the Shattering Darla was a human gryphon master for the town of Southshore."
+    verified_by: ai_read
+
+  - id: fp_refuge_pointe
+    parent: refuge_pointe
+    type: transport
+    subtype: flightpath
+    name_zh: 避难谷地飞行点
+    name_en: Refuge Pointe Flight Path
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 高原风口上的木围栏营地，栖架被绳索固定在岩地里，狮鹫背后是阿拉希连绵的黄绿丘陵与断墙
+    note_zh: 狮鹫管理员 Cedrik Prose（官方中文译名未查到）。阿拉希高地。直连：铁炉堡 / 塞尔萨玛 / 米奈希尔港 / 鹰巢山。此处也是阿拉希盆地战场的联盟入口所在。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Refuge Pointe | Arathi Highlands | Cedrik Prose | Gryphon"
+    verified_by: ai_read
+
+  - id: fp_aerie_peak
+    parent: aerie_peak
+    type: transport
+    subtype: flightpath
+    name_zh: 鹰巢山飞行点
+    name_en: Aerie Peak Flight Path
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 矮人堡垒外沿的悬崖栖台，云雾贴着崖口流过，狮鹫在鹰头图腾柱旁展翅
+    note_zh: 狮鹫管理员 Guthrum Thunderfist（官方中文译名未查到）。辛特兰，奎尔林登野蛮矮人的家。直连：铁炉堡 / 避难谷地 / 冷风营地 / 圣光之愿礼拜堂。狮鹫本身就产自辛特兰——这是联盟航空的「原产地」。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Aerie Peak | Hinterlands | Guthrum Thunderfist | Gryphon"
+    verified_by: ai_read
+
+  - id: fp_chillwind_camp
+    parent: chillwind_camp
+    type: transport
+    subtype: flightpath
+    name_zh: 冷风营地飞行点
+    name_en: Chillwind Camp Flight Path
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 灰白冷调的帐篷营地，栖架搭在结霜的木桩上，狮鹫呵出白气，背景是西瘟疫之地枯死的橙褐树林
+    note_zh: 狮鹫管理员 Bibilfaz Featherwhistle（官方中文译名未查到）。西瘟疫之地，营地扎在通往安多哈尔的路口。直连：铁炉堡 / 鹰巢山 / 圣光之愿礼拜堂。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Chillwind Camp | Western Plaguelands | Bibilfaz Featherwhistle | Gryphon"
+    verified_by: ai_read
+
+  - id: fp_lights_hope_chapel_alliance
+    parent: lights_hope_chapel
+    type: transport
+    subtype: flightpath
+    name_zh: 圣光之愿礼拜堂飞行点（联盟）
+    name_en: Light's Hope Chapel Flight Path (Alliance)
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 血红天光下的小白教堂，唯一一块没被瘟疫染黑的绿草地，栖架就立在墓碑与烛火之间
+    note_zh: 狮鹫管理员 Khaelyn Steelwing（官方中文译名未查到）。东瘟疫之地，银色黎明总部，**双阵营各有一名飞行管理员、互不攻击的中立圣地**。直连：铁炉堡 / 鹰巢山 / 冷风营地。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Light's Hope Chapel | Eastern Plaguelands | Khaelyn Steelwing | Gryphon"
+    verified_by: ai_read
+
+  - id: fp_booty_bay_alliance
+    parent: booty_bay
+    type: transport
+    subtype: flightpath
+    name_zh: 藏宝海湾飞行点（联盟）
+    name_en: Booty Bay Flight Path (Alliance)
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 海湾崖壁栈道上的木栖台，狮鹫俯瞰整片挤满桅杆的暖黄港湾
+    note_zh: 狮鹫管理员 Gyll（官方中文译名未查到）。荆棘谷。藏宝海湾是**双阵营各有一名飞行管理员的中立港**——这是主角低等级能到达的最南点。直连：暴风城 / 哨兵岭 / 夜色镇。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Booty Bay | Cape of Stranglethorn | Gyll | Gryphon"
+    verified_by: ai_read
+
+  - id: fp_nethergarde_keep
+    parent: nethergarde_keep
+    type: transport
+    subtype: flightpath
+    name_zh: 尼萨格德要塞飞行点
+    name_en: Nethergarde Keep Flight Path
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 紫红裂天之下的高墙要塞，栖架架在城墙内侧石台上，狮鹫背后是诅咒之地焦紫的荒原
+    note_zh: 狮鹫管理员 Alexandra Constantine（官方中文译名未查到）。诅咒之地，肯瑞托监视黑暗之门的前哨。直连：暴风城 / 夜色镇 / 莫根的岗哨。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Nethergarde Keep | Blasted Lands | Alexandra Constantine | Gryphon"
+    verified_by: ai_read
+
+  - id: fp_morgans_vigil
+    parent: morgans_vigil
+    type: transport
+    subtype: flightpath
+    name_zh: 莫根的岗哨飞行点
+    name_en: Morgan's Vigil Flight Path
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 焦黑火山岩坡上的小型哨站，栖架被火山灰染成暗灰，狮鹫背后是燃烧平原的橙红裂谷与飘落灰烬
+    note_zh: 狮鹫管理员 Borgus Stoutarm（官方中文译名未查到）。燃烧平原。直连：暴风城 / 湖畔镇 / 瑟银哨塔 / 尼萨格德要塞。是联盟打黑石塔/熔火之心的落脚点。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Morgan's Vigil | Burning Steppes | Borgus Stoutarm | Gryphon"
+    verified_by: ai_read
+
+  - id: fp_thorium_point_alliance
+    parent: thorium_point
+    type: transport
+    subtype: flightpath
+    name_zh: 瑟银哨塔飞行点（联盟）
+    name_en: Thorium Point Flight Path (Alliance)
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 铁灰矿区的木塔平台，空气里悬着煤灰，狮鹫立在锈铁桶与矿车之间，天色永远是脏黄
+    note_zh: 狮鹫管理员 Lanie Reed（官方中文译名未查到）。灼热峡谷，瑟银兄弟会的中立营地，**双阵营各有一名飞行管理员**。直连：暴风城 / 铁炉堡 / 莫根的岗哨。注意：灼热峡谷在 4.0.3 被大改。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Thorium Point | Searing Gorge | Lanie Reed | Gryphon"
+    verified_by: ai_read
+
+  # ---------- D2. 联盟 · 卡利姆多（14） ----------
+
+  - id: fp_rutheran_village
+    parent: "rut_theran_village"
+    type: transport
+    subtype: flightpath
+    name_zh: 鲁瑟兰村飞行点
+    name_en: Rut'theran Village Flight Path
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 世界树根部的月白色平台，角鹰兽（羽翼鹿角混种）立在雕花木架上，头顶是遮天树冠漏下的青绿光斑
+    note_zh: 角鹰兽管理员 Vesprystus（官方中文译名未查到）。泰达希尔。**vanilla 的达纳苏斯城内没有飞行管理员**——泰达希尔全岛只有这一个飞行点，进出城靠村里的传送门。直连：奥伯丁 / 永夜港（德鲁伊单向进）。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Rut'theran Village | Teldrassil | Vesprystus | Hippogryph"
+    verified_by: ai_read
+
+  - id: fp_auberdine
+    parent: auberdine
+    type: transport
+    subtype: flightpath
+    name_zh: 奥伯丁飞行点
+    name_en: Auberdine Flight Path
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 海雾弥漫的暗夜精灵港镇，叶形灯柱的冷蓝光里，角鹰兽栖在弯曲的木架上，远处是灰蓝的维伦海
+    note_zh: 角鹰兽管理员 Caylais Moonfeather（官方中文译名未查到）。黑海岸。**vanilla 才有**：奥伯丁毁于大地的裂变，Caylais 战死原地，由洛达内尔的 Teldira Moonfeather 接替——现行 wiki 表里已无此条。它是联盟卡利姆多北线的总枢纽：两条船 + 全部北线航班都经这里。直连：鲁瑟兰村 / 阿斯特兰纳 / 石爪峰 / 尼耶尔前哨站 / 羽月要塞 / 塞拉摩岛 / 鹰翼广场。
+    source_url: https://warcraft.wiki.gg/wiki/Caylais_Moonfeather
+    quote: "Caylais died during the destruction of Auberdine in the Cataclysm, and her body can be found near where she used to stand"
+    verified_by: ai_read
+
+  - id: fp_astranaar
+    parent: astranaar
+    type: transport
+    subtype: flightpath
+    name_zh: 阿斯特兰纳飞行点
+    name_en: Astranaar Flight Path
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 湖心小岛上的紫顶暗夜精灵建筑群，角鹰兽栖在水边石台上，背景是灰谷蓝绿色的高大密林
+    note_zh: 角鹰兽管理员 Daelyshia（官方中文译名未查到）。灰谷。直连：奥伯丁 / 石爪峰 / 棘齿城（中立）。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Astranaar | Ashenvale | Daelyshia | Hippogryph"
+    verified_by: ai_read
+
+  - id: fp_stonetalon_peak
+    parent: stonetalon_peak
+    type: transport
+    subtype: flightpath
+    name_zh: 石爪峰飞行点
+    name_en: Stonetalon Peak Flight Path
+    level: ""
+    faction: alliance
+    coords: "[43, 16]"
+    adjacent: []
+    era: vanilla
+    look_zh: 山顶绿谷里的德鲁伊哨站，角鹰兽立在苔木平台上，四周是石爪山脉赤褐色的层叠岩壁
+    note_zh: 角鹰兽管理员 Teloren（官方中文译名未查到）。石爪山脉北部。**vanilla 的位置是石爪峰**；4.0.3 后 Teloren 被挪到塔达希尔瞭望台（Thal'darah Overlook）——现行 wiki 表写的是后者，不要照抄。直连：奥伯丁 / 阿斯特兰纳 / 尼耶尔前哨站。
+    source_url: https://warcraft.wiki.gg/wiki/Stonetalon_Peak
+    quote: "Teloren served as the Hippogryph Master before the Cataclysm."
+    verified_by: ai_read
+
+  - id: fp_nijels_point
+    parent: nijels_point
+    type: transport
+    subtype: flightpath
+    name_zh: 尼耶尔前哨站飞行点
+    name_en: Nijel's Point Flight Path
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 高踞悬崖的石砌哨站，角鹰兽栖在崖边，俯瞰凄凉之地灰褐干裂的荒原与兀鹫
+    note_zh: 角鹰兽管理员 Baritanas Skyriver（官方中文译名未查到）。凄凉之地北端。直连：石爪峰 / 羽月要塞。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Nijel's Point | Desolace | Baritanas Skyriver | Hippogryph"
+    verified_by: ai_read
+
+  - id: fp_feathermoon_stronghold
+    parent: "feathermoon_stronghold"
+    type: transport
+    subtype: flightpath
+    name_zh: 羽月要塞飞行点
+    name_en: Feathermoon Stronghold Flight Path
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 海岛要塞的紫蓝石台，角鹰兽背后是菲拉斯湿热的巨树林与对岸海雾
+    note_zh: 角鹰兽管理员 Fyldren Moonfeather（官方中文译名未查到），65 级精英，4.0.3a 移除（很可能死于纳迦对旧羽月要塞的进攻）。**vanilla 的羽月要塞在萨多尔岛上**，靠渡船或游泳过去。直连：尼耶尔前哨站 / 塞纳里奥要塞 / 奥伯丁 / 萨兰纳尔。
+    source_url: https://warcraft.wiki.gg/wiki/Fyldren_Moonfeather
+    quote: "Patch 4.0.3a (2010-11-23): Removed."
+    verified_by: ai_read
+
+  - id: fp_thalanaar
+    parent: "thalanaar"
+    type: transport
+    subtype: flightpath
+    name_zh: 萨兰纳尔飞行点
+    name_en: Thalanaar Flight Path
+    level: ""
+    faction: alliance
+    coords: "[89.71, 45.58]"
+    adjacent: []
+    era: vanilla
+    look_zh: 泉水与古树之间的小型暗夜精灵营地，角鹰兽立在石泉边，一侧是菲拉斯的绿、另一侧是千针石林的红土
+    note_zh: 角鹰兽管理员 Thyssiana（官方中文译名未查到）。**位于菲拉斯与千针石林的交界**，是联盟从菲拉斯翻去塔纳利斯/尘泥沼泽的中转钉子。**直连：羽月要塞 / 塞拉摩岛 / 加基森（wiki 原文直接列出，ai_read）**。千针石林在大地的裂变中被水淹，此地被毁、西侧另建新萨兰纳尔。
+    source_url: https://warcraft.wiki.gg/wiki/Thalanaar
+    quote: "Thyssiana was the Hippogryph Master providing this service, with routes to Feathermoon Stronghold, Theramore Isle, and Gadgetzan."
+    verified_by: ai_read
+
+  - id: fp_theramore_isle
+    parent: "theramore_isle"
+    type: transport
+    subtype: flightpath
+    name_zh: 塞拉摩岛飞行点
+    name_en: Theramore Isle Flight Path
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 白石高塔围出的岛上要塞，狮鹫栖在城墙平台上，脚下是尘泥沼泽灰绿的死水与枯树
+    note_zh: 狮鹫管理员 Baldruc（官方中文译名未查到）。尘泥沼泽。**联盟踏上卡利姆多的第一块落脚地**（从米奈希尔港坐船来），也是塞拉摩海岸主城。直连：棘齿城 / 阿斯特兰纳 / 加基森 / 萨兰纳尔。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Theramore Isle | Dustwallow Marsh | Baldruc | Gryphon"
+    verified_by: ai_read
+
+  - id: fp_gadgetzan_alliance
+    parent: gadgetzan
+    type: transport
+    subtype: flightpath
+    name_zh: 加基森飞行点（联盟）
+    name_en: Gadgetzan Flight Path (Alliance)
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 沙漠里用铁皮与木板拼出的哥布林小城，狮鹫栖架架在晒得发白的木桩上，热浪扭曲地平线
+    note_zh: 狮鹫管理员 Bera Stonehammer（官方中文译名未查到）。塔纳利斯，哥布林中立城，**双阵营各有一名飞行管理员**。直连：棘齿城 / 塞拉摩岛 / 塞纳里奥要塞 / 萨兰纳尔。工程学传送器「加基森超级安全型传送器」的落点也在这里。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Gadgetzan | Tanaris | Bera Stonehammer | Gryphon"
+    verified_by: ai_read
+
+  - id: fp_cenarion_hold_alliance
+    parent: cenarion_hold
+    type: transport
+    subtype: flightpath
+    name_zh: 塞纳里奥要塞飞行点（联盟）
+    name_en: Cenarion Hold Flight Path (Alliance)
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 沙暴黄雾里的石木哨站，角鹰兽缩着翅膀避风，四周是希利苏斯惨白的沙丘与甲虫壳
+    note_zh: 角鹰兽管理员 Cloud Skydancer（官方中文译名未查到）。希利苏斯，塞纳里奥议会的中立要塞，**双阵营各有一名飞行管理员**。直连：羽月要塞 / 加基森。是安其拉开门事件的前进基地。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Cenarion Hold | Silithus | Cloud Skydancer | Hippogryph"
+    verified_by: ai_read
+
+  - id: fp_talonbranch_glade
+    parent: talonbranch_glade
+    type: transport
+    subtype: flightpath
+    name_zh: "刺枝林地飞行点"
+    name_en: Talonbranch Glade Flight Path
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 一小块未被污染的翠绿林间空地，角鹰兽立在月纹石台上，四周是费伍德森林病绿发光的树与孢子
+    note_zh: 角鹰兽管理员 Mishellena（官方中文译名未查到）。费伍德森林北部。直连：奥伯丁 / 月光林地 / 永望镇。**注意：Emerald Sanctuary（翡翠圣殿）的中立飞行管理员 Gorrim 是 2.1.0 才加的，不属 vanilla。**
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Talonbranch Glade | Felwood | Mishellena | Hippogryph"
+    verified_by: ai_read
+
+  - id: fp_everlook_alliance
+    parent: everlook
+    type: transport
+    subtype: flightpath
+    name_zh: 永望镇飞行点（联盟）
+    name_en: Everlook Flight Path (Alliance)
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 雪堆半埋的哥布林木屋群，角鹰兽抖落背上的雪，背景是冬泉谷幽蓝的针叶林与结冰湖面
+    note_zh: 角鹰兽管理员 Maethrya（官方中文译名未查到）。冬泉谷，哥布林中立镇，**双阵营各有一名飞行管理员**。直连：月光林地 / 鹰翼广场。工程学传送器「时空分裂者——永望镇」的落点在这里。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Everlook | Winterspring | Maethrya | Hippogryph"
+    verified_by: ai_read
+
+  - id: fp_moonglade_alliance
+    parent: moonglade
+    type: transport
+    subtype: flightpath
+    name_zh: 月光林地飞行点（联盟，湖南岸）
+    name_en: Moonglade Flight Path (Alliance)
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 静止湖水南岸的月光草地，角鹰兽立在白石台上，空气里浮着发光孢子，夜空永远挂着一轮大月亮
+    note_zh: 角鹰兽管理员 Sindrayl（官方中文译名未查到）。月光林地，湖（Lake Elune'ara）以南。**月光林地是双阵营都能来的德鲁伊圣地，禁止交战**。直连：鹰翼广场 / 永望镇。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "South of Lake Elune'ara | Moonglade | Sindrayl | Hippogryph"
+    verified_by: ai_read
+
+  - id: fp_nighthaven_druid_alliance
+    parent: nighthaven
+    type: transport
+    subtype: flightpath
+    name_zh: 永夜港飞行点（仅德鲁伊·单向）
+    name_en: Nighthaven Flight Path (Druid only, one-way)
+    level: ""
+    faction: alliance
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 永夜港紫蓝的塔楼与桥廊之间的小平台，一只角鹰兽独自等在月光里
+    note_zh: 角鹰兽管理员 Silva Fil'naveth（官方中文译名未查到）。**只服务德鲁伊，且是单向**——只送去鲁瑟兰村，不能反向飞回来。存在的意义是配合德鲁伊的「传送：月光林地」法术做「一进一出」的闭环。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Silva Fil'naveth at Nighthaven offers one-way only service to Rut'theran Village"
+    verified_by: ai_read
+
+  # ---------- D3. 部落 · 东部王国（12） ----------
+
+  - id: fp_undercity
+    parent: undercity_trade_quarter
+    type: transport
+    subtype: flightpath
+    name_zh: 幽暗城飞行点
+    name_en: Undercity Flight Path
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 环形下水道城的贸易区圆厅，巨型蝙蝠倒挂在拱顶铁架上，绿色瘟疫烛火从下方照亮翼膜
+    note_zh: 蝙蝠管理员 Michael Garrett（官方中文译名未查到）。幽暗城贸易区。**部落东部王国的总枢纽**：城外就是飞艇塔（去奥格瑞玛/格罗姆高）。直连：亡灵岗哨 / 塔伦米尔 / 落锤镇 / 雷文图斯克村 / 卡加斯 / 圣光之愿礼拜堂。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Trade Quarter | Undercity | Michael Garrett | Bat"
+    verified_by: ai_read
+
+  - id: fp_the_sepulcher
+    parent: the_sepulcher
+    type: transport
+    subtype: flightpath
+    name_zh: 亡灵岗哨飞行点
+    name_en: The Sepulcher Flight Path
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 雾锁墓园里的石拱建筑，蝙蝠挂在残破铁栏上，背景是银松森林灰蓝的枯松与狼影
+    note_zh: 蝙蝠管理员 Karos Razok（官方中文译名未查到）。银松森林。直连：幽暗城 / 塔伦米尔。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Sepulcher | Silverpine Forest | Karos Razok | Bat"
+    verified_by: ai_read
+
+  - id: fp_tarren_mill
+    parent: tarren_mill
+    type: transport
+    subtype: flightpath
+    name_zh: 塔伦米尔飞行点
+    name_en: Tarren Mill Flight Path
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 被遗忘者接管的人类村落，磨坊与木屋刷成脏绿，蝙蝠栖在屋檐下，村外是希尔斯布莱德的缓坡草场
+    note_zh: 蝙蝠管理员 Zarise（官方中文译名未查到）。希尔斯布莱德丘陵。与南边的南海镇隔着一片草场对峙——**vanilla 最著名的野外 PvP 战场就在这条路上**。直连：亡灵岗哨 / 落锤镇 / 幽暗城。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Tarren Mill | Hillsbrad Foothills | Zarise | Bat"
+    verified_by: ai_read
+
+  - id: fp_hammerfall
+    parent: hammerfall
+    type: transport
+    subtype: flightpath
+    name_zh: 落锤镇飞行点
+    name_en: Hammerfall Flight Path
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 高原东侧的兽人石木营寨，双足飞龙（蝎尾蝠翼）栖在木架上，背景是阿拉希黄绿丘陵与远处的断墙
+    note_zh: 双足飞龙管理员 Urda（官方中文译名未查到）。阿拉希高地。直连：幽暗城 / 塔伦米尔 / 雷文图斯克村 / 卡加斯。此处也是阿拉希盆地战场的部落入口所在。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Hammerfall | Arathi Highlands | Urda | Wyvern"
+    verified_by: ai_read
+
+  - id: fp_revantusk_village
+    parent: revantusk_village
+    type: transport
+    subtype: flightpath
+    name_zh: "恶齿村飞行点"
+    name_en: Revantusk Village Flight Path
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 辛特兰东南海边的巨魔村寨，草顶木屋与图腾柱，双足飞龙栖在临海木台上
+    note_zh: 双足飞龙管理员 Gorkas（官方中文译名未查到）。辛特兰，雷文图斯克食人魔巨魔部族的村子——**部落在辛特兰唯一的立足点**（联盟对位是鹰巢山）。直连：落锤镇 / 幽暗城 / 圣光之愿礼拜堂。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Revantusk Village | The Hinterlands | Gorkas | Wyvern"
+    verified_by: ai_read
+
+  - id: fp_kargath
+    parent: kargath
+    type: transport
+    subtype: flightpath
+    name_zh: 卡加斯飞行点
+    name_en: Kargath Flight Path
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 红岩峡谷口的兽人木栅要塞，双足飞龙栖在岩台上，背景是荒芜之地赭红干裂的沟壑
+    note_zh: 双足飞龙管理员 Gorrik（官方中文译名未查到）。荒芜之地。**vanilla 的名字是「卡加斯 Kargath」**，大地的裂变后才叫 New Kargath——现行 wiki 表写的是后者。直连：幽暗城 / 落锤镇 / 格罗姆高营地。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "New Kargath | Badlands | Gorrik | Wyvern"
+    verified_by: ai_read
+
+  - id: fp_stonard
+    parent: stonard
+    type: transport
+    subtype: flightpath
+    name_zh: 斯通纳德飞行点
+    name_en: Stonard Flight Path
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 沼泽泥水里架起的兽人木寨，双足飞龙立在湿滑的原木平台上，四周是悲伤沼泽的灰绿水汽与藤蔓
+    note_zh: 双足飞龙管理员 Breyk（官方中文译名未查到）。悲伤沼泽。**部落在东部王国最南的内陆据点**，也是部落走陆路去诅咒之地/黑暗之门的落脚点。直连：格罗姆高营地 / 藏宝海湾。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Stonard | Swamp of Sorrows | Breyk | Wyvern"
+    verified_by: ai_read
+
+  - id: fp_gromgol_base_camp
+    parent: "grom_gol_base_camp"
+    type: transport
+    subtype: flightpath
+    name_zh: 格罗姆高营地飞行点
+    name_en: Grom'gol Base Camp Flight Path
+    level: ""
+    faction: horde
+    coords: "[38, 50]"
+    adjacent: []
+    era: vanilla
+    look_zh: 雨林里的兽人木栅营地，双足飞龙栖在藤缠木架上，头顶是飞艇塔的巨大阴影
+    note_zh: 双足飞龙管理员 Thysta（官方中文译名未查到）。荆棘谷西南海岸。**直连：卡加斯 / 斯通纳德 / 藏宝海湾（wiki 原文直接列出，ai_read）**。营地同时是飞艇塔所在——部落跨大陆的南大门。
+    source_url: https://warcraft.wiki.gg/wiki/Grom%27gol_Base_Camp
+    quote: "Thysta serves as the Wind Rider Master at this outpost. She manages flight connections to Kargath, Stonard, and the neutral port of Booty Bay."
+    verified_by: ai_read
+
+  - id: fp_booty_bay_horde
+    parent: booty_bay
+    type: transport
+    subtype: flightpath
+    name_zh: 藏宝海湾飞行点（部落）
+    name_en: Booty Bay Flight Path (Horde)
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 海湾崖壁另一侧的木栖台，双足飞龙俯瞰挤满桅杆的暖黄港湾
+    note_zh: 双足飞龙管理员 Gringer（官方中文译名未查到）。荆棘谷藏宝海湾，中立港——**同一座城里两派各有一名飞行管理员，互不干涉**，这是全剧最好用的「两派同框但不打」的场景。直连：格罗姆高营地 / 斯通纳德 / 卡加斯。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Booty Bay | Cape of Stranglethorn | Gringer | Wyvern"
+    verified_by: ai_read
+
+  - id: fp_flame_crest
+    parent: flame_crest
+    type: transport
+    subtype: flightpath
+    name_zh: 烈焰峰飞行点
+    name_en: Flame Crest Flight Path
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 火山灰坡上的小型兽人哨站，双足飞龙的翼膜被橙红余烬映亮，背景是燃烧平原的裂谷与飘灰
+    note_zh: 双足飞龙管理员 Vahgruk（官方中文译名未查到；「烈焰峰」译名把握中等，见 notes.md §5）。燃烧平原，部落对位莫根的岗哨。直连：卡加斯 / 瑟银哨塔。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Flame Crest | Burning Steppes | Vahgruk | Wyvern"
+    verified_by: ai_read
+
+  - id: fp_thorium_point_horde
+    parent: thorium_point
+    type: transport
+    subtype: flightpath
+    name_zh: 瑟银哨塔飞行点（部落）
+    name_en: Thorium Point Flight Path (Horde)
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 同一片铁灰矿区的另一侧木台，双足飞龙立在锈铁与煤灰之间
+    note_zh: 双足飞龙管理员 Grisha（官方中文译名未查到）。灼热峡谷，瑟银兄弟会中立营地，双阵营各一名飞行管理员。直连：烈焰峰 / 卡加斯。注意：灼热峡谷在 4.0.3 被大改。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Thorium Point | Searing Gorge | Grisha | Wyvern"
+    verified_by: ai_read
+
+  - id: fp_lights_hope_chapel_horde
+    parent: lights_hope_chapel
+    type: transport
+    subtype: flightpath
+    name_zh: 圣光之愿礼拜堂飞行点（部落）
+    name_en: Light's Hope Chapel Flight Path (Horde)
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 教堂另一侧的石台，蝙蝠倒挂在铁架上，同一片绿草地、同一排烛火
+    note_zh: 蝙蝠管理员 Georgia（官方中文译名未查到）。东瘟疫之地，银色黎明总部，双阵营各一名飞行管理员的中立圣地。直连：幽暗城 / 雷文图斯克村。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Light's Hope Chapel | Eastern Plaguelands | Georgia | Bat"
+    verified_by: ai_read
+
+  # ---------- D4. 部落 · 卡利姆多（17） ----------
+
+  - id: fp_orgrimmar
+    parent: "valley_of_strength"
+    type: transport
+    subtype: flightpath
+    name_zh: 奥格瑞玛飞行点
+    name_en: Orgrimmar Flight Path
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 红岩峡谷城的高架木台，双足飞龙成排栖在兽皮顶棚下，脚下是力量谷赭红的泥砖屋与尖刺围栏
+    note_zh: 双足飞龙管理员 Doras（官方中文译名未查到）。位于力量谷北侧的高架道（现行 wiki 称 Orgrimmar Skyway）。**部落的总枢纽**：城外就是飞艇塔。直连：十字路口 / 雷霆崖 / 棘齿城 / 瓦罗莫克 / 碎木岗哨。
+    source_url: https://warcraft.wiki.gg/wiki/Orgrimmar
+    quote: "near a hut located on the Skyway just north of the Valley of Strength"
+    verified_by: ai_read
+
+  - id: fp_thunder_bluff
+    parent: thunder_bluff
+    type: transport
+    subtype: flightpath
+    name_zh: 雷霆崖飞行点
+    name_en: Thunder Bluff Flight Path
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 高台顶端挑出的木栈平台，双足飞龙立在图腾与风铃之间，四周是莫高雷金红的草海与百米直落的崖壁
+    note_zh: 双足飞龙管理员 Tal（中文名「塔尔」，头衔「双足飞龙管理员」，55 级，所在「莫高雷」）。**vanilla 时雷霆崖没有飞艇**（奥格瑞玛↔雷霆崖的 The Zephyr 是 3.2.0 才加的），只能飞或走。直连：奥格瑞玛 / 十字路口 / 西部荒野之风营地。
+    source_url: https://db.nfuwow.com/60/?npc=2995
+    quote: "中文名：塔尔 / 英文名：Tal / 头衔：双足飞龙管理员 / 等级：55 / 所在地点：莫高雷"
+    verified_by: ai_read
+
+  - id: fp_crossroads
+    parent: the_crossroads
+    type: transport
+    subtype: flightpath
+    name_zh: 十字路口飞行点
+    name_en: The Crossroads Flight Path
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 黄土大道交汇处的木栅小镇，双足飞龙栖在望楼旁，四面是贫瘠之地一望无际的金褐草原与稀疏枯树
+    note_zh: 双足飞龙管理员 Devrak（官方中文译名未查到）。贫瘠之地正中。**部落卡利姆多的中央换乘站**——几乎所有卡利姆多的部落航线都从这里分叉。直连：奥格瑞玛 / 雷霆崖 / 棘齿城 / 碎木岗哨 / 佐拉姆加前哨站 / 阳石堡垒 / 影牙村 / 石堡村 / 莫沙彻营地 / 加基森 / 西风避难所。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Crossroads | Northern Barrens | Devrak | Wyvern"
+    verified_by: ai_read
+
+  - id: fp_valormok
+    parent: valormok
+    type: transport
+    subtype: flightpath
+    name_zh: 瓦罗莫克飞行点
+    name_en: Valormok Flight Path
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 艾萨拉紫蓝色残破高地上的小型兽人营地，双足飞龙栖在木架上，远处是坠落的暗夜精灵废墟与幽蓝海面
+    note_zh: 双足飞龙管理员 Kroum（官方中文译名未查到）。艾萨拉，**部落在该区唯一的据点**（艾萨拉在 vanilla 是 48-55 级的高等级荒区，联盟无飞行点）。直连：奥格瑞玛。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Valormok | Azshara | Kroum | Wyvern"
+    verified_by: ai_read
+
+  - id: fp_splintertree_post
+    parent: splintertree_post
+    type: transport
+    subtype: flightpath
+    name_zh: 碎木岗哨飞行点
+    name_en: Splintertree Post Flight Path
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 被砍伐一空的林地里钉出的兽人木寨，新鲜树桩与锯末满地，双足飞龙栖在原木塔上
+    note_zh: 双足飞龙管理员 Vhulgra（官方中文译名未查到）。灰谷东部，兽人伐木营地——**它就是灰谷阵营冲突的起因**。直连：奥格瑞玛 / 十字路口 / 佐拉姆加前哨站。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Splintertree Post | Ashenvale | Vhulgra | Wyvern"
+    verified_by: ai_read
+
+  - id: fp_zoramgar_outpost
+    parent: zoramgar_outpost
+    type: transport
+    subtype: flightpath
+    name_zh: 佐拉姆加前哨站飞行点
+    name_en: Zoram'gar Outpost Flight Path
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 灰谷西北海岸的兽人木寨，双足飞龙立在礁石边的木台上，背景是佐拉姆海岸的纳迦废墟与灰蓝浪
+    note_zh: 双足飞龙管理员 Andruk（官方中文译名未查到）。灰谷佐拉姆海岸。直连：十字路口 / 碎木岗哨。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Zoram'gar Outpost | Ashenvale | Andruk | Wyvern"
+    verified_by: ai_read
+
+  - id: fp_sun_rock_retreat
+    parent: sun_rock_retreat
+    type: transport
+    subtype: flightpath
+    name_zh: "烈日石居飞行点"
+    name_en: Sun Rock Retreat Flight Path
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 赤褐岩壁间的牛头人石木聚落，双足飞龙栖在晒得发烫的岩台上，四周立着风化的图腾柱
+    note_zh: 双足飞龙管理员 Tharm（官方中文译名未查到；「阳石堡垒」译名把握中等，见 notes.md §5）。石爪山脉，牛头人据点，**部落在该区的落脚点**（联盟对位是石爪峰）。直连：十字路口。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Sun Rock Retreat | Stonetalon Mountains | Tharm | Wyvern"
+    verified_by: ai_read
+
+  - id: fp_shadowprey_village
+    parent: shadowprey_village
+    type: transport
+    subtype: flightpath
+    name_zh: "葬影村飞行点"
+    name_en: Shadowprey Village Flight Path
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 凄凉之地西海岸的巨魔/牛头人海边村落，木桩与鱼骨装饰，双足飞龙立在礁岩木台上
+    note_zh: 双足飞龙管理员 Thalon（官方中文译名未查到；「影牙村」译名把握中等，见 notes.md §5）。凄凉之地西南海岸。直连：十字路口。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Shadowprey Village | Desolace | Thalon | Wyvern"
+    verified_by: ai_read
+
+  - id: fp_brackenwall_village
+    parent: brackenwall_village
+    type: transport
+    subtype: flightpath
+    name_zh: "蕨墙村飞行点"
+    name_en: Brackenwall Village Flight Path
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 沼泽泥地上的食人魔木石村落，尺度比人类建筑大一圈，双足飞龙栖在粗木架上，四周是灰绿死水
+    note_zh: 双足飞龙管理员 Shardi（官方中文译名未查到；「石堡村」译名把握中等，见 notes.md §5）。尘泥沼泽，部落与食人魔盟友的据点（联盟对位是塞拉摩岛）。直连：十字路口 / 棘齿城 / 莫沙彻营地 / 加基森。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Brackenwall Village | Dustwallow Marsh | Shardi | Wyvern"
+    verified_by: ai_read
+
+  - id: fp_camp_mojache
+    parent: "camp_mojache"
+    type: transport
+    subtype: flightpath
+    name_zh: 莫沙彻营地飞行点
+    name_en: Camp Mojache Flight Path
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 菲拉斯湿热雨林里的牛头人帐篷营地，兽皮帐与图腾被藤蔓半掩，双足飞龙栖在木台上
+    note_zh: 双足飞龙管理员 Shyn（官方中文译名未查到）。菲拉斯，格里姆托腾/牛头人据点（联盟对位是羽月要塞）。直连：十字路口 / 石堡村 / 加基森。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Camp Mojache | Feralas | Shyn | Wyvern"
+    verified_by: ai_read
+
+  - id: fp_freewind_post
+    parent: "freewind_post"
+    type: transport
+    subtype: flightpath
+    name_zh: "乱风岗飞行点"
+    name_en: Freewind Post Flight Path
+    level: ""
+    faction: horde
+    coords: "[46, 50]"
+    adjacent: []
+    era: vanilla
+    look_zh: 千针石林红色石柱顶端的牛头人营地，只有绳索吊桥与外界相连，双足飞龙栖在悬空木台上，脚下是几百米的红岩深谷
+    note_zh: 双足飞龙管理员 Nyse（官方中文译名未查到；营地中文译名把握中等，见 notes.md §5）。千针石林，**建在石柱顶上、只能靠飞或吊桥进出**——是全剧最适合拍「高空孤岛」的取景点。**vanilla 才有**：大地的裂变中千针石林被水淹、营地被格里姆托腾攻占，现行 wiki 的部落表里查不到它。直连：雷霆崖 / 十字路口。
+    source_url: https://warcraft.wiki.gg/wiki/Freewind_Post
+    quote: "Nyse <Wind Rider Master>"
+    verified_by: ai_read
+
+  - id: fp_gadgetzan_horde
+    parent: gadgetzan
+    type: transport
+    subtype: flightpath
+    name_zh: 加基森飞行点（部落）
+    name_en: Gadgetzan Flight Path (Horde)
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 沙漠铁皮城另一侧的木台，双足飞龙在热浪里张开翼膜，背景是塔纳利斯白亮的沙丘
+    note_zh: 双足飞龙管理员 Bulkrek Ragefist（官方中文译名未查到）。塔纳利斯哥布林中立城，双阵营各一名飞行管理员。直连：十字路口 / 棘齿城 / 石堡村 / 莫沙彻营地。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Gadgetzan | Tanaris | Bulkrek Ragefist | Wyvern"
+    verified_by: ai_read
+
+  - id: fp_everlook_horde
+    parent: everlook
+    type: transport
+    subtype: flightpath
+    name_zh: 永望镇飞行点（部落）
+    name_en: Everlook Flight Path (Horde)
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 雪镇另一侧的木台，双足飞龙抖落翼上积雪，背景是冬泉谷幽蓝针叶林
+    note_zh: 双足飞龙管理员 Yugrek（官方中文译名未查到）。冬泉谷哥布林中立镇，双阵营各一名飞行管理员。直连：血毒岗哨 / 月光林地。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Everlook | Winterspring | Yugrek | Wyvern"
+    verified_by: ai_read
+
+  - id: fp_cenarion_hold_horde
+    parent: cenarion_hold
+    type: transport
+    subtype: flightpath
+    name_zh: 塞纳里奥要塞飞行点（部落）
+    name_en: Cenarion Hold Flight Path (Horde)
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 沙暴里的石木哨站另一侧，双足飞龙缩翼避风，四周是希利苏斯惨白沙丘与虫壳
+    note_zh: 双足飞龙管理员 Runk Windtamer（官方中文译名未查到）。希利苏斯塞纳里奥议会中立要塞，双阵营各一名飞行管理员。直连：加基森 / 莫沙彻营地。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Cenarion Hold | Silithus | Runk Windtamer | Wyvern"
+    verified_by: ai_read
+
+  - id: fp_bloodvenom_post
+    parent: bloodvenom_post
+    type: transport
+    subtype: flightpath
+    name_zh: 血毒岗哨飞行点
+    name_en: Bloodvenom Post Flight Path
+    level: ""
+    faction: horde
+    coords: "[34, 52]"
+    adjacent: []
+    era: vanilla
+    look_zh: 病绿发光的费伍德森林中央，牛头人风格的木石哨站被孢子雾包住，双足飞龙栖在木架上
+    note_zh: 双足飞龙管理员 Brakkar（官方中文译名未查到；「血毒岗哨」译名把握中等，见 notes.md §5）。费伍德森林中西部，由牛头人所建（看建筑与守卫）。**vanilla 才有**：大地的裂变中因 Winna Hazzard 的粘液实验而失守、未被收复，现行 wiki 的部落表里查不到它（顶替它的 Emerald Sanctuary 中立飞行点是 2.1.0 才加的）。直连：十字路口 / 永望镇。
+    source_url: https://warcraft.wiki.gg/wiki/Bloodvenom_Post
+    quote: "Brakkar <Wind Rider Master>"
+    verified_by: ai_read
+
+  - id: fp_moonglade_horde
+    parent: moonglade
+    type: transport
+    subtype: flightpath
+    name_zh: 月光林地飞行点（部落，西南角）
+    name_en: Moonglade Flight Path (Horde)
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 月光草地西南角的木台，双足飞龙立在月光里，与联盟角鹰兽隔湖相望却互不攻击
+    note_zh: 双足飞龙管理员 Faustron（官方中文译名未查到）。月光林地西南角。**双阵营禁战的德鲁伊圣地**——一个非常好的「两派同框」取景点。直连：血毒岗哨 / 永望镇。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Moonglade (Southwestern corner) | Moonglade | Faustron | Wyvern"
+    verified_by: ai_read
+
+  - id: fp_nighthaven_druid_horde
+    parent: nighthaven
+    type: transport
+    subtype: flightpath
+    name_zh: 永夜港飞行点（仅德鲁伊·单向，部落）
+    name_en: Nighthaven Flight Path (Druid only, one-way, Horde)
+    level: ""
+    faction: horde
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 永夜港另一侧的小平台，一只双足飞龙独自等在紫蓝月光里
+    note_zh: 双足飞龙管理员 Bunthen Plainswind（官方中文译名未查到）。**只服务德鲁伊、单向**，把部落德鲁伊送回雷霆崖；与联盟侧的 Silva Fil'naveth 对位。
+    source_url: https://warcraft.wiki.gg/wiki/Flight_master
+    quote: "Nighthaven | Moonglade | Bunthen Plainswind | Wyvern"
+    verified_by: ai_read
+
+  # ---------- D5. 中立飞行点（2） ----------
+
+  - id: fp_ratchet
+    parent: ratchet
+    type: transport
+    subtype: flightpath
+    name_zh: 棘齿城飞行点（中立）
+    name_en: Ratchet Flight Path (Neutral)
+    level: ""
+    faction: neutral
+    coords: "[69, 70]"
+    adjacent: []
+    era: vanilla
+    look_zh: 哥布林港镇里一座铁皮顶的小棚，棚外同时拴着狮鹫与双足飞龙，两只互相龇牙但谁也不动手
+    note_zh: 哥布林飞行管理员 Bragok（官方中文译名未查到）。贫瘠之地东岸。**vanilla 只有两个中立飞行点，这是其一**；它也是**联盟仅有的两个设在部落地盘里的飞行点之一**。注意：航线本身仍分阵营——联盟从这儿只能飞联盟点（阿斯特兰纳 / 塞拉摩岛），部落只能飞部落点（十字路口 / 奥格瑞玛），只有加基森两边都通。
+    source_url: https://warcraft.wiki.gg/wiki/Bragok
+    quote: "He provides one of only two flight paths available to Alliance set within Horde territory."
+    verified_by: ai_read
+
+  - id: fp_marshals_refuge
+    parent: "marshals_refuge"
+    type: transport
+    subtype: flightpath
+    name_zh: 马绍尔营地飞行点（中立）
+    name_en: Marshal's Refuge Flight Path (Neutral)
+    level: ""
+    faction: neutral
+    coords: "[45, 8]"
+    adjacent: []
+    era: vanilla
+    look_zh: 火山口北缘岩壁下的探险者营地，帐篷与挖掘工具堆在恐龙骨架旁，飞行管理员的棚子搭在岩窟口
+    note_zh: 哥布林飞行管理员 Gryfe（官方中文译名未查到；「马绍尔营地」译名把握中等，见 notes.md §5）。安戈洛环形山北缘。**vanilla 第二个、也是最后一个中立飞行点**，由暴雪官方 Classic travel 文章明确点名。大地的裂变后营地被石头守卫攻占、南迁改名 Marshal's Stand——现行 wiki 表写的是后者。
+    source_url: https://warcraft.wiki.gg/wiki/Marshal%27s_Refuge
+    quote: "Marshal's Refuge was a neutral camp at the northern edge of Un'Goro Crater set up by Marshal Expeditions."
+    verified_by: ai_read
+
+  # ============================================================
+  # E. 传送门（vanilla 的世界固定传送门极少）
+  # ============================================================
+
+  - id: portal_rutheran_to_darnassus
+    parent: "rut_theran_village"
+    type: transport
+    subtype: portal
+    name_zh: 鲁瑟兰村→达纳苏斯传送门
+    name_en: Rut'theran Village Portal to Darnassus
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 世界树根部一道环形石框，框内是缓慢旋转的青绿与月白光幕，光幕吐出细小的发光孢子
+    note_zh: "**vanilla 唯一一组常驻、免费、人人可用的世界传送门**（另一头见 portal_darnassus_to_rutheran）。它也对部落开放——历史上部落打达纳苏斯就是从这儿进去的。达纳苏斯城内没有飞行管理员，所以这道门是进出城的主路。"
+    source_url: https://warcraft.wiki.gg/wiki/Rut%27theran_Village
+    quote: "There is a portal here that goes directly into Darnassus"
+    verified_by: ai_read
+
+  - id: portal_darnassus_to_rutheran
+    parent: "the_temple_gardens"
+    type: transport
+    subtype: portal
+    name_zh: 达纳苏斯→鲁瑟兰村传送门
+    name_en: Darnassus Portal to Rut'theran Village
+    level: ""
+    faction: neutral
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 神殿花园西侧水池边的同款环形石框，光幕是同样的青绿月白，倒影落在静水上
+    note_zh: 与 portal_rutheran_to_darnassus 是同一道门的另一端，走同一个门回去。位于达纳苏斯的神殿花园（Temple Gardens）。
+    source_url: https://warcraft.wiki.gg/wiki/Darnassus
+    quote: "The easy way to enter the city is by taking a portal found at Rut'theran Village and to return to the village you simply take the same one."
+    verified_by: ai_read
+
+  - id: poi_dark_portal_vanilla
+    parent: blasted_lands
+    type: poi
+    subtype: ""
+    name_zh: 黑暗之门（旧世·关闭状态）
+    name_en: The Dark Portal (closed)
+    level: ""
+    faction: contested
+    coords: ""
+    adjacent: []
+    era: vanilla
+    look_zh: 紫红裂天下巨大的石拱与阶梯，门框上的符文黯淡无光，门洞里空无一物，只剩焦黑地面与恶魔残骸
+    note_zh: "**vanilla 期间它不是交通工具**——门是关着的，纯粹是诅咒之地的地标与剧情背景（门户开启是 TBC 前夕的事）。写进本片区是为了防止下游误当成可用传送门。附近的联盟据点是尼萨格德要塞、部落是斯通纳德一路过来。"
+    source_url: https://warcraft.wiki.gg/wiki/Blasted_Lands
+    quote: ""
+    verified_by: ai_draft
