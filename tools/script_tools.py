@@ -21,6 +21,10 @@ playbook 要求每集出两份文件：`script.md`（画面 + 台词）与 `dial
 - **时长**：每镜 3–30s（`ai_video.md` 全局）；**本仓库还有一条偏好**——避免 4–6s 碎镜。
 - **合计**：各镜时长之和必须等于文件头声明的本集总时长，且落在单集区间内——
   默认 90–120s；剧可在 `4_剧本/script.toml` 的 `[episode] min_s / max_s` 改写（取离 ep 最近的一份）。
+- **场景展示**（剧级 opt-in：`script.toml` 有 `[scenery]` 才启用）：每个场景主体（`场景:` 行第一个 `bgN`）
+  在全剧**第一次出现**的那一镜必须有 `- 场景展示: 【a–bs】{方式}：{特点}`，窗长 ≥ 阈值——
+  该 bg 所在的区也是第一次出现用 `new_zone_min_s`，否则用 `new_bg_min_s`。「第一次」按集序跨集算；
+  `场景:` 行带「闪前」的镜不算抵达。理由：新地方先给景再演戏（shengji_zhilu follow-up 011）。
 - **标注**：每行台词必须带 `[对白] / [OS] / [系统] / [叠层]` 之一（playbook §3）。
 - **白话铁律**：禁古语 / 公文唱礼腔（`台词大师` D1b）；英文台词禁伪古英语（thou / hath / verily…）。**这条是生成时闸门**，
   不留给下游 review——书面台词在本仓库反复出现过，靠提醒治不好。
@@ -52,6 +56,8 @@ _WIN = re.compile(r"【\s*([0-9.]+)\s*[–-]\s*([0-9.]+)\s*s\s*】")
 CN_CPS_MAX = 5.0
 EN_WPS_MAX = 3.0
 _TOTAL = re.compile(r"\*\*(\d+)s\*\*")
+_SCENERY = re.compile(r"^-\s*场景展示:\s*【\s*([0-9.]+)\s*[–-]\s*([0-9.]+)\s*s\s*】\s*(.*)$", re.M)
+_BG_KEY = re.compile(r"`(bg\d+)`")
 
 # 古语 / 公文唱礼腔的黑名单。命中即 blocker——**生成时就不许写出来**。
 ARCHAIC: tuple[str, ...] = (
@@ -60,7 +66,8 @@ ARCHAIC: tuple[str, ...] = (
     "敢问阁下", "承蒙", "失敬", "告罪", "领命", "遵命", "谨遵",
 )
 EP_RANGE_DEFAULT: tuple[float, float] = (90.0, 120.0)
-_CFG_KEYS: dict[str, set[str]] = {"episode": {"min_s", "max_s"}}
+_CFG_KEYS: dict[str, set[str]] = {"episode": {"min_s", "max_s"},
+                                  "scenery": {"new_zone_min_s", "new_bg_min_s"}}
 
 ARCHAIC_EN: re.Pattern[str] = re.compile(
     r"\b(thou|thee|thy|thine|hath|doth|verily|forsooth|'tis|henceforth|hither|thither|whence|wherefore)\b",
@@ -145,8 +152,8 @@ def parse(path: str) -> tuple[list[Shot], int | None]:
     return shots, (int(t.group(1)) if t else None)
 
 
-def ep_range(path: str) -> tuple[float, float]:
-    """离 ep 最近的 `script.toml`；没有就用默认。schema 之外的键直接报错，不静默忽略。"""
+def _config(path: str) -> tuple[dict, str | None]:
+    """离 ep 最近的 `script.toml`（及其路径）；没有就返回空配置。schema 之外的键直接报错，不静默忽略。"""
     d = os.path.dirname(os.path.abspath(path))
     while d.startswith(REPO) and d != REPO:
         f = os.path.join(d, "script.toml")
@@ -157,14 +164,75 @@ def ep_range(path: str) -> tuple[float, float]:
                 bad = set(body) - _CFG_KEYS.get(sec, set()) if isinstance(body, dict) else {sec}
                 if sec not in _CFG_KEYS or bad:
                     raise SystemExit("%s: 未知配置 [%s] %s" % (f, sec, sorted(bad)))
-            ep = cfg.get("episode", {})
-            lo = float(ep.get("min_s", EP_RANGE_DEFAULT[0]))
-            hi = float(ep.get("max_s", EP_RANGE_DEFAULT[1]))
-            if not 0 < lo < hi <= 3600:
-                raise SystemExit("%s: [episode] 区间 %g–%g 不合法" % (f, lo, hi))
-            return lo, hi
+            return cfg, f
         d = os.path.dirname(d)
-    return EP_RANGE_DEFAULT
+    return {}, None
+
+
+def ep_range(path: str) -> tuple[float, float]:
+    cfg, f = _config(path)
+    ep = cfg.get("episode", {})
+    lo = float(ep.get("min_s", EP_RANGE_DEFAULT[0]))
+    hi = float(ep.get("max_s", EP_RANGE_DEFAULT[1]))
+    if not 0 < lo < hi <= 3600:
+        raise SystemExit("%s: [episode] 区间 %g–%g 不合法" % (f, lo, hi))
+    return lo, hi
+
+
+def _zones(scenes_root: str) -> dict[str, str]:
+    """bgN → 它所在的区（scenes 下的上级目录路径；扁平布局为空串）。主体目录判据＝目录里有同名 md。"""
+    out: dict[str, str] = {}
+    for dirpath, dirs, _files in os.walk(scenes_root):
+        for d in dirs:
+            m = re.match(r"(bg\d+)_", d)
+            if m and os.path.isfile(os.path.join(dirpath, d, d + ".md")):
+                out[m.group(1)] = os.path.relpath(dirpath, scenes_root).replace(os.sep, "/")
+    return out
+
+
+def scenery_errors(path: str) -> list[str]:
+    cfg, f = _config(path)
+    sc = cfg.get("scenery")
+    if not sc or not f:
+        return []
+    zone_min, bg_min = float(sc["new_zone_min_s"]), float(sc["new_bg_min_s"])
+    drama = os.path.dirname(os.path.dirname(f))
+    zones = _zones(os.path.join(drama, "2_世界观人设", "scenes"))
+    seen_bg: set[str] = set()
+    seen_zone: set[str] = set()
+    errs: list[str] = []
+    for ep_path in episodes(os.path.join(os.path.dirname(f), "episodes")):
+        mine = os.path.samefile(ep_path, path)
+        tag = os.path.basename(os.path.dirname(ep_path))
+        for s in parse(ep_path)[0]:
+            m = _BG_KEY.search(s.scene)
+            if not m or "闪前" in s.scene:
+                continue
+            bg = m.group(1)
+            if bg not in zones:
+                if mine:
+                    errs.append("%s %s: 场景主体 %s 在 scenes/ 下找不到" % (tag, s.key, bg))
+                continue
+            first_bg, first_zone = bg not in seen_bg, zones[bg] not in seen_zone
+            seen_bg.add(bg)
+            seen_zone.add(zones[bg])
+            if not mine or not first_bg:
+                continue
+            need = zone_min if first_zone else bg_min
+            what = "新地区 %s" % zones[bg] if first_zone else "新地点 %s" % bg
+            wins = [(float(a), float(b)) for a, b, _t in _SCENERY.findall(s.body)]
+            if not wins:
+                errs.append("%s %s: %s第一次出现，缺 `- 场景展示: 【a–bs】…` 行（≥%gs）" % (tag, s.key, what, need))
+                continue
+            longest = max(b - a for a, b in wins)
+            if longest < need:
+                errs.append("%s %s: %s第一次出现，场景展示只有 %gs，要 ≥%gs" % (tag, s.key, what, longest, need))
+            for a, b in wins:
+                if not 0 <= a < b <= s.dur:
+                    errs.append("%s %s: 场景展示窗【%g–%gs】不在 0–%gs 内" % (tag, s.key, a, b, s.dur))
+        if mine:
+            break
+    return errs
 
 
 def check(path: str) -> list[str]:
@@ -197,6 +265,7 @@ def check(path: str) -> list[str]:
     total = sum(s.dur for s in shots)
     if declared is not None and abs(total - declared) > 0.5:
         errs.append("%s: 各镜时长合计 %gs ≠ 文件头声明的 %ds" % (tag, total, declared))
+    errs.extend(scenery_errors(path))
     lo, hi = ep_range(path)
     if not lo <= total <= hi:
         errs.append("%s: 单集 %gs 不在 %g–%gs" % (tag, total, lo, hi))

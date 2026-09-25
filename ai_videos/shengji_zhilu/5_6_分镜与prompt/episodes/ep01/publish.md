@@ -15,7 +15,7 @@
 |---|---|
 | 成片文件 | `5_6_分镜与prompt/episodes/ep01/ep01.mp4`（待出片） |
 | 画幅 | **16:9 横屏**（concept G9 ⑤） |
-| 时长 | **10:31（631s）** · 27 个 shot |
+| 时长 | **10:52（652s）** · 27 个 shot |
 | 声音 | 英文对白（TTS，voice_id 见 `2_世界观人设/casting.md`）+ 环境音 + 原创配乐；Seedance 自带音全部去掉（concept E1） |
 | 字幕 | 画面零字幕；英文 CC 与中文字幕由各站后台上传 |
 | 片头 / 片尾卡（后期叠） | 片头：*JUST ENOUGH LIGHT*（S01 切黑后）· 世界卡 `Twenty-five years after the Dark Portal opened. Elwynn Forest. Northshire.`；片尾：`An AI-generated fan work. Not affiliated with Blizzard Entertainment.` |
@@ -60,17 +60,17 @@ Two raw recruits walk into a quiet valley abbey.
 Aaron wants to become a paladin, but his light takes three counts to come, and he can't hold a line on his own. Duke calls himself "the Unbreakable" and keeps getting knocked flat. By the time they walk out of the valley, each has learned to hold the line for the other.
 
 00:00 The new recruits
-01:13 First fights
-02:03 The light under his feet
-02:47 The mine
-04:23 Three counts long
-04:53 A new lesson
-05:23 Back into the dark
-05:49 Across the river
-07:31 The shack
-08:22 Buy me three
-08:49 After
-09:15 Leaving the valley
+01:30 First fights
+02:20 The light under his feet
+03:04 The mine
+04:40 Three counts long
+05:10 A new lesson
+05:40 Back into the dark
+06:06 Across the river
+07:52 The shack
+08:43 Buy me three
+09:10 After
+09:36 Leaving the valley
 
 A story drawn from the classic leveling journey. Every episode is one step down the road.
 
@@ -101,7 +101,7 @@ just enough light, fantasy series, paladin, sword and sorcery, ai film, fan film
 ## 4. TikTok　🇬🇧 English
 
 **字段上限**：caption ≤2200 字符（含 hashtag）｜ 建议 3–5 个 hashtag
-**时长**：完整片 10:31 **超过 App 内 10 分钟上限，须走网页端上传**（网页端上限 60 分钟）；或只发下方精华版。
+**时长**：完整片 10:52 **超过 App 内 10 分钟上限，须走网页端上传**（网页端上限 60 分钟）；或只发下方精华版。
 **画幅**：横屏直投，带上下黑边——接受，换一条母版通吃。
 
 ### Caption
@@ -216,7 +216,7 @@ AI 生成的同人作品，与暴雪娱乐无关。
 |---|---|---|---|---|
 | 语言 | **英文** | **英文** | 中文（英文原声 + 中字） | 中文（英文原声 + 中字） |
 | 画幅 | 16:9 原生 | 16:9 直投 | 16:9 直投 | 16:9 直投 + 3:4 封面 |
-| 时长 | 10:31 完整片 | 网页端完整片 / 或精华版 | 完整片 | 完整片 |
+| 时长 | 10:52 完整片 | 网页端完整片 / 或精华版 | 完整片 | 完整片 |
 | 封面 | `shot23` 光柱 | `shot01` 空手 | `shot01` 空手 | `shot23` 竖裁 |
 | 章节 | 有（12 条） | 无 | 无 | 无 |
 | 标题上限 | 100 字符 | — | ~55 字 | **20 字** |

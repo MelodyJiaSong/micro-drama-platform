@@ -17,7 +17,9 @@ seam: 硬切
 - **情绪目的**: 公事公办里漏出一点关心
 - **场景**: bg2-1_院前_立面石阶
 - **剧本**: `../../../../../4_剧本/episodes/ep01/script.md` § 镜 S16；台词逐句同源（生成器从剧本读，不另抄）
-- **Reference uploads**（⚠ previz 与图尚未出，先占位）:
+- **镜头平面图（overhead）**: `planning/shot16_overhead.png`——本镜机位与人物走位的唯一出处（`planning/overhead.toml`）
+- **previz 的来路**（分层出片，ai_video.md rule 4j）：`planning/overhead.toml` → 镜头平面图过目 → shot blend（`previz/previz_config.toml` 从 overhead 读位置，加动作与形状；`tools/previz/build_previz.py` 渲）→ `previz/shot16_previz.mp4`（≥1280×720）
+- **Reference uploads**（图与 previz 尚未出，下列为待上传清单）:
   - shot16_previz.mp4(白模动画·运动与几何参考，不取长相)
   - bg2-1_院前_立面石阶(场景主体)
   - c13_维里副队长(人物·脸与造型)

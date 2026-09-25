@@ -95,7 +95,7 @@ The procedural detail for each coordinated stage lives in `.claude/skills/agent_
 | 2 | 世界观+锁定人设 | `ai_videos__stage2_世界观人设` | `2_世界观人设/{world,characters,relationships,scenes,props,casting,style_guide}`（`characters/*` 每卡含 `## 人物灵魂`、`relationships.md`＝人物网，ai_video.md rule 12.11；`props/`＝重要复用物件卡，rule 4b） | `ai_videos__格式契约` |
 | 3 | 分集大纲 | `ai_videos__stage3_大纲` | `3_大纲/arc_outline.md` | `ai_videos__剧情连贯`+`ai_videos__全剧序列` |
 | 4 | 文学剧本(台词) | `ai_videos__stage4_剧本` | `4_剧本/episodes/epNN/{script,dialogue}.md` | `ai_videos__台词大师` |
-| 5 | 分镜运镜 | `ai_videos__stage5_分镜` | `5_6_分镜与prompt/episodes/epNN/shots/shotNN/shotNN.md`(运镜设计) | 站位朝向/运镜/动作表演/光线色调/时长节奏 |
+| 5 | 分镜运镜 | `ai_videos__stage5_分镜` | `5_6_分镜与prompt/episodes/epNN/shots/shotNN/shotNN.md`(运镜设计) + 走动镜的 `shots/shotNN/planning/`(航线俯视图) | 站位朝向/运镜/动作表演/光线色调/时长节奏 |
 | 6 | 标准化分镜 Prompt | `ai_videos__stage6_prompt` | 同 shotNN.md(五层 prompt)+`all_shot_prompts.md` | `ai_videos__格式契约` + 出片前全 `ai_videos__审查总编排` |
 
 阶段 5、6 产物合一在 `shotNN.md`。项目用**阶段编号目录**（`1_立项/ … 5_6_分镜与prompt/`），新项目默认采用；已有项目（wushen_juexing）保留原结构、可选迁移。
@@ -158,6 +158,7 @@ Detailed output rules live in `.claude/agent_refs/project/ai_video.md` per § St
 - **Series nesting (2026-09-09).** A drama is `ai_videos/{name}/` by default, but several dramas that form a series live under one series folder: **`ai_videos/{series}/{episode}/`**. A directory directly under `ai_videos/` is a **series iff it contains `series.json`** (`{name_zh, slug, episode_prefix, …}`) — that marker is the single explicit rule; episode membership stays derived from the filesystem, never listed in the manifest. Shared cross-episode material goes in `ai_videos/{series}/_series/` (a `_`-prefixed dir is never an episode). Episode folders are `{prefix}{N}` (`hy1`, `hy2`) — the topic changes, the number does not; the Chinese title lives in each episode's `README.md`. Specs land at `specs/ai_video/{episode}/`; generators are `tools/gen_shots_{episode}.py` / `tools/gen_scene_prompts_{episode}.py`. Cross-episode invariants (the recurring person, sound doctrine, signature closer, production specs) live once in `_series/series_bible.md`; each episode's `concept.md` writes only what is specific to it. **Webapp side:** the drama root is 2 or 3 segments and is resolved in exactly one place — `projects/ai_video_management/libs/common/drama_ref.py`; the tree marks drama nodes with `is_drama` and series folders with `type: "series"`, and **no consumer may re-derive the drama root from path depth**. **Series-shared characters live only in `_series/` (2026-09-15).** A character (or prop / scene) reused across episodes has exactly one folder, under `ai_videos/{series}/_series/{characters,props,scenes}/`; an episode folder never holds a same-key or same-name copy. `DownloadsImporter` routes an episode's import into `_series/` too, and leaves in Downloads (error `series_key_conflict`) any file whose destination key is owned by both sides. So episode-local asset keys start above the series range (characters from `c21`), and a view that belongs to one episode only (a period costume) hangs on the series card under a series-unique key `c{N}-{episode number}{view}` (sk1 → `c1-11`, `c1-12`). An asset shared by two episodes that has no `_series/` home yet may keep the rule 4b-B `.link.json` pointer; once it moves into `_series/`, delete the episode's pointer folder, or the importer sees two owners of one key.
 - One folder per project at `ai_videos/{task_name}/` (or `ai_videos/{series}/{episode}/`). `task_name` is **pinyin or English**, never Chinese (e.g. `chongsheng_zhi_zongcai_furen`). The Chinese title lives in `ai_videos/{name}/README.md`.
 - **Drama folder (`task_name`) + structural files stay English/pinyin** (task_id stability + cross-project template reuse): `shotlist.md` / `world.md` / `style_guide.md` / `arc_outline.md` / `script.md` / `dialogue.md` / `shotNN.md` / `episodes/epNN/` / `shots/shotNN/` etc. **All file content is Chinese.**
+- **`scenes/` may nest the world's own hierarchy (2026-09-22, shengji_zhilu follow-up 006):** `scenes/{大陆}/{区}/bg{N}_{主体}/`. The subject-dir test is unchanged (`bg{N}_` + same-name md); hierarchy dirs are index-only (same-name md + `ref/` map links) and every consumer finds subjects **by that test, recursively, never by depth**. bg numbers come from `scenes/registry.toml` only. Details: `ai_video.md` rule 4e 2026-09-22 amendment.
 - **Asset sub-folders MAY be Chinese (per follow-up 2026-06-19).** Character folders (`characters/c{N}_裴知秋`), scene folders (`scenes/集市长街`), and scene-plate folders (`bg{N}_街角_摊位`) — plus their main sidecar `.md` + generated `.png/.mp4` named after the folder — use Chinese names so the left-nav reads natively in Chinese AND the download-import routing key (prompt first line) is Chinese end-to-end. `DownloadsImporter` routes on Chinese tokens fine (scene-name token + 方位/机位 token); verified. Drama folder still pinyin. (This relaxes the earlier "all paths English/pinyin" rule.)
 - Two sub-types, distinguished at stage-2 interview: `novel` (multi-episode, layout under `episodes/epNN/`) and `short` (single-piece, flat layout). Sub-type is captured in `qa.md` metadata and reasserted in stage-4 spec.
 - Every shot is **3–30 s, duration set per plot beat (≤ 30 s ceiling — raised from 15 s on 2026-09-06 when the generator's clip limit became 30 s)**. Author picks the duration the dramatic beat actually needs — fast reaction cuts at 3–6 s, expository / hook / monologue beats stretching toward 15 s, and only hero one-take sequences (e.g. a full sword-form 单镜) using the 15–30 s band — instead of padding short scenes to fill the Seedance budget. No "fill the full budget" pressure; no divergence note needed for any specific duration in the range. Anything longer than 30 s is two shots with a continuity token. **Shot lengths are free to change while shots are being worked on (2026-09-06): there is no episode timeline / timecode slot acting as a constraint on a single shot, a `timecode` / `成片用段` field is informational only, and a mismatch with an older slot is never a pending item. Assembly into the finished cut is decided only after the user is satisfied with every shot.** **Avoid 4–6 s fragment shots (2026-09-07): when a shot lands in 4–6 s, first ask whether it can merge with its neighbour into one continuous take** — the generator produces each shot's ambient audio / music as one unified bed, so a 12 s continuous shot carries one bed while two 6 s shots force the editor to splice two unrelated ones. Merge as a real continuous camera move (tilt down into a close-up, push in to macro, pull back to a two-shot, cut to handheld follow), never as an internal hard cut inside one prompt. If the neighbours genuinely cannot merge (different location, different build state, different time), add a real beat to reach ≥ 7 s instead of leaving it at 4 s. This targets *fragmentation*, not *pace* — genuine 3–5 s reaction cuts and montage beats are unaffected. A project may write the floor into its generator (`MIN_D`). **Amended 2026-09-08 (hy1/002): a cut *inside* one generated clip is fine** — the model holds picture and music consistent across a 20 s+ shot — so the merge unit is **one location + one state = one shot** (landing 20–27 s), not "whatever a continuous camera move can cover". Cap the upside: a bad beat anywhere in a 27 s shot costs the whole re-render, so stay under the 30 s render ceiling and put hero beats (emotional peak, signature/cover frame) at the *end* of their shot. Write the internal structure into a `分镜:` line (per-segment start/end seconds + `连续运镜`/`切`), and state that cuts carry no transition effects and do not break the shot's single continuous timeline, ambience, or light.
@@ -210,6 +211,53 @@ Detailed output rules live in `.claude/agent_refs/project/ai_video.md` per § St
   ⑤ **ID 色索引必须正反向成对声明**（"标记色非服装、不得入画"），否则会被渲成戏服；
   人物上 ID 色、建筑保持灰模（分界＝形状由谁提供）。
   ⑥ **一镜内主体数 ≤ 8**——这是**分镜阶段**的硬约束，超了就拆镜。
+- **分层出片：每一镜先出镜头平面图（overhead），用户点头后才做 shot blend（`ai_video.md` rule 4j 2026-09-25 修订，全仓所有剧）。**
+  四层各管各的、越往下改一次越贵：① **场景层**（scene blend + 场地平面图 floor plan，静态的地方）→
+  ② **镜头平面图 overhead**（每镜一张俯视图：机位路线与视角、每个人的走位与时刻、建筑与本镜物件在哪；
+  **不管动作细节与形状**，改一次秒级）→ ③ **shot blend**（真实动作、走位细节、物件形状、镜头远近变化，渲 previz MP4）→
+  ④ **Seedance**（色彩、表情、特效、质感）。**位置只写一次**：每镜 `planning/overhead.toml` 是唯一出处，挂在该场景
+  floor plan 的坐标系上、引用其块 id；shot blend 的 `previz_config.toml` 从它读位置，不重填坐标。
+  `python tools/shot_overhead.py --all <ep 目录>` 出全集的 `shotNN_overhead.png` + `overheads.md` 索引，
+  闸门在画图前拦：入画人物与 prompt `角色:` 双向一致、时刻落在镜长内、机位扎进实心体块、按景别与焦距反算的机位距离对不上。
+  **名字统一叫 overhead（镜头平面图）**——影视工业里画机位、运镜与演员走位的俯视图就叫 overhead；
+  floor plan 留给场地本身，flight plan 是航空用语（下一条的航线 / 走位两分法由本条取代；旧剧已出的图不回溯改名）。
+- **机位在世界里走动的镜，先出航线图给用户过目，再建 previz（`ai_video.md` rule 4j，2026-09-20）。**
+  *（适用范围与命名已由上一条取代；空中航线的生成器与闸门细则仍有效。）*
+  `python tools/shot_plan.py <shot 目录>` 从 `previz_config.toml` 的 `[[机位]]` + 世界地理坐标表
+  出 `shots/shotNN/planning/{shotNN_flightplan.png, shotNN_route.md}`（河/墙 + 建筑组方块 + 红线航线 +
+  方向箭头 + 航点 + 高度剖面），约一秒；建筑组方块写在 `planning/blocks.toml`（含 **bg 归属键**）。
+  **命名按镜头类型分（2026-09-21）**：机位在世界里飞的叫**航线图 flight plan**（`_flightplan.png`），
+  地面镜的机位与人物走位叫**走位平面图 ground plan**（`--kind ground` → `_groundplan.png`），
+  统称「镜头平面图」；`floor plan` 一词退役——它在影视工业里指室内 / 场地平面图，
+  用来称呼一条一公里多的空中航线是错的（旧剧已出的 `*_floorplan.png` 不回溯改名）。
+  **顺序是硬的：图 → 用户点头 → 才渲 previz**——`镜头:` 是散文、previz 是几百个关键帧，
+  两者都无法让人一眼看出「从哪飞到哪、途经什么、离那条河多远」，而错一条航线要重渲整条成片。
+  图上三个必对项：① **航线与它声称跟随的地物**（`route.md` 的 `离{河}中线` 一列；实测事故 sk1 shot01
+  ——prompt 写「贴着汴河飞」，实际只有穿门洞那一瞬离河 2 m，其余 96–318 m、夹角最大 61°，
+  于是几何权威的 previz 与 prompt 文字互相矛盾）② **途经建筑组有没有主体卡**（标「无专属 bg」的
+  反复入画就该回阶段 2 补卡）③ **方向箭头**（一条线两头都说得通）。
+  **航线本身要有生成器，不许手改逐帧关键帧（2026-09-21）**：sk1 走 `tools/gen_route_sk1.py`——
+  航点表写「沿河第几米、偏哪一岸几米、这一点多快、多高」，逐帧机位由它算（弦长参数化样条
+  + 速度剖面积分 + 等距低通），**闸门不过就不写盘**（侧向 ≤1 g、切向、速度区间、门洞净空、
+  贴河段的离河距离与航向差、视线偏航向、交接帧逐值相等、实测走廊）。
+  理由：那 751 行关键帧原本是一次性脚本算完就删的，于是「改航线」等于手改 751 行——没人会改，
+  矛盾就一直留着。**时刻由速度积分得出、不由作者写死**：按 (时刻, 弧长) 配时间，
+  两个航点之间差半秒就能挤出 9 m/s 或 100 m/s，而逐帧二阶差分会把这种「时间上的抖」
+  读成侧向加速度，闸门于是拦下一条几何上明明很平缓的航线。
+  ④ **入画覆盖表**：`--coverage` 逐帧算视锥，列出每个世界坐标条目的入画秒数与最近距离，
+  并标出**哪些反复入画却没有主体卡**——`bg_anchors.toml` 的 `[[todo]]` 由它生成，不靠目测。
+  ⑤ **航线要按 blend 里的真几何验，不能只按坐标表**：Place 局部几何与全城坐标表并不重合
+  （实测 sk1 门内北岸贴着水边就是沿城客店排），「沿中线飞」在图上完全合理、在几何里直接穿墙；
+  实测出来的可飞走廊写回生成器的 `corridor` 闸门，别只留在某一次的报错里。
+  世界一级的覆盖用 `--city`：读 `scenes/{world}/bg_anchors.toml`（**只声明挂在坐标表的哪一条，
+  不写坐标**）出全城 bg 分布图；没有点位的主体写进 `[[unplaced]]` 并把原因印在图上，
+  **把「漏标」与「本来就没有点位」分开**。
+- **每个场景 bg 主体配一份 3D（2026-09-21 用户定调）**：`scenes/{world}/bg{N}_*/` 下要么有
+  `bg{N}_set.blend`（**含多于一个 object** 的体块集：地面 / 墙 / 屋 / 树 / 水 /
+  船 / 塔各自成件；2026-09-25 起不再导出 `_set.glb`，见下文「GLB 只装单个物体」），要么有 `bg{N}_set.link.json` 指向已有的几何（全城俯瞰这类主体的三维
+  就是全城 blend 本身，复制一份只会漂）。sk1 的生成器是 `tools/build_bg_sets_sk1.py`
+  （`--check` 不开 Blender 就能核对齐不齐）。**它是给 previz 摆机位、判遮挡与纵深用的三维速记，
+  不是出图参考**——rule 4d ① 仍然成立：绝不拿白模渲图当出图参考。改体块 ＝ 改生成器的表重跑。
 - **3D 层的工程契约**（`ai_video.md` rule 4h）。六条：
   ① **每镜必配 previz，覆盖率 100%**——它锁的不只是机位，还有**动作时刻表**；
   「只给 hero 镜做 previz」的分级取舍已作废。两层 blend 分工见 rule 4g §J
@@ -234,6 +282,44 @@ Detailed output rules live in `.claude/agent_refs/project/ai_video.md` per § St
   见 rule 4h §G1。人物 proxy 走参数化人体骨架 + 现成布料衣物网格）。
   **出了模型必须先渲一眼再往下做**，别拿没看过的网格去绑定/做 previz。
   无论哪家 vendor，白模一律过 `tools/whitemodel_normalize.py` 同一道闸门。
+- **每个场景主体都要有一份 3D 产物**（`ai_video.md` rule 4h-K，2026-09-21 用户定调）。
+  `scenes/` 下每个 `bg{N}_{主体名}/` 出 `.blend`（放 `_blender/`）。
+  （2026-09-25 修订：原「单个网格说得完的出 `.glb`」作废——场景从来不是单个物体，见下条。）
+  理由：主体卡 + 锚点图只锁**长相**，锁不住**几何**；rule 4g ③「一致性来自只有一份几何」
+  由此从「一个世界一份 blend」收紧到「一个场景主体一份 3D 产物」。
+  建法不新增流程：`planning/blocks.toml` 是几何唯一出处，
+  **通用引擎 `tools/build_scene.py <scene 目录>` 确定性生成、不拷脚本、不手改**；
+  未登记的 `kind` 与布局违规（扎进山脊 / 块压块 / 坐在河道上）**在生成时 raise**。
+  场景层只出 `.blend` + 校验 PNG，**不渲 mp4**。
+- **GLB 只装单个物体；场景 blend ＝ 场景图 + prompt + 单物体 GLB 的汇总**（`ai_video.md` rule 4h-K
+  2026-09-25 修订，用户定调）。四条：
+  ① **一个 GLB ＝ 一个物体**（一栋建筑 / 一件器物 / 一张桌子）。块里有几样东西就是几件物件，
+  由 `blocks.toml` 的 `parts` 让 `build_scene` 摆在一起——组合是 Blender 的活，**绝不导出场景级 GLB**。
+  物件名读起来是几样东西（「长木桌与长凳」「木箱木桶堆」「…群」）`gen_bg_assets check` 直接拦下，
+  确是一件的写 `single = "理由"`。
+  ② **物件只住本剧 `props/p{N}_{名}/`**（卡 + asset.toml + ref/ + 三视图 + `mesh/p{N}.glb`），剧情物件与场景物件
+  共用一套编号，唯一出处 `props/registry.toml`，新物件用 `tools/props_lib.py new` 领号、不许手填；
+  **场景只引用、不自带资产库**（区里只留 `_plan/` 布局规划）；同一件东西全剧只一份（形制与状态都相同才合并）。
+  ③ **每个场景都要出图**：bg 锚点图与各方位 plate 图，`tools/gen_bg_images.py` 按依赖分层出
+  （世界锚点 → bg 锚点挂它 → plate 挂所属 bg），画幅跟成片走；**另挂该 bg 占地最大的前 3 件物件的正面图**，
+  让场景图里的物件与它的 GLB 长得一样；即梦优先，超 1600 字或失败退 ElevenLabs。
+  ④ **没有场景图不建 blend**（图先行、3D 在后）：`build_scene` 把 plate 图挂成同名机位相机的背景图对账，
+  场景卡 / plate 卡 / 物件卡的 prompt 进 blend 文本块，物件三视图立在场地外作参考。
+  机检：W11（bg 目录里有 GLB、或 props 里 GLB 不在 `p{N}_*/mesh/p{N}.glb`）与 Z4（区里还有 `_assets/`）即 blocker，W12 缺场景图 warning。
+- **每个 bg 必备一份场地平面图（floor plan），它是 previz 与出片的上游**
+  （`ai_video.md` rule 4k，2026-09-22 用户定调）。链条：
+  **floor plan（场地层）→ overhead 镜头平面图（shot 层，rule 4j）→ shot blend / previz MP4 → Seedance**。
+  图上**圆牌 1、2、3、4 只用来看图**；可引用的键是每块的 **`id`**（`b01`…）——
+  圆牌按面积降序生成，**改一块尺寸就会重排**，引它会静默指到别的建筑上。
+  **一份图挂在一个坐标系上，不是挂在一个目录上**：每个 `bg{N}_*` 必须能**解析**到恰好一份图，
+  但不必自己拥有；不拥有的写三行 `planning/plan.toml` 指过去。
+  **状态变体共用一份图**（`[meta] states` + 每块 `state_in`），**天气与时辰从不构成 state**。
+  新增必填只有三个：`id` / `h_m`（航线图唯一算不出来的数）/ `scale_src`（推定的在图上挂 ⚠）。
+  **零个 block 合法**——全仓一大半 bg 是没有建筑的自然场景。
+  **「必备」靠消费者跑不起来咬人**（`build_scene` / previz / `shot_plan` 解析不到就拒绝运行），
+  不靠全仓盘点，于是新活被挡住、旧剧一个都不扫。
+  schema 只有一份：`tools/previz/planschema.py`（不 import bpy，图与 blend 共用）。
+  **平面图/航线图/校验渲图一张都不许进 `参考:` 行**——它抵达 Seedance 的路径是 previz MP4 + prose 字段。
 - **产物一致性纪律**（`ai_video.md` rule 4i）。三条：
   ① **一份东西只有一个出处，副本必漂**——多份同构 prompt 走生成器
   （`tools/gen_scene_prompts.py`），改 prompt ＝ 改生成器重跑；索引/流程文件只写指针不抄内容。
@@ -266,6 +352,16 @@ Detailed output rules live in `.claude/agent_refs/project/ai_video.md` per § St
   **对审查类 skill 的直接约束**：`ai_videos__格式契约` 等机检 skill **只在被显式指定的范围内**
   报违规（某个 shot / 某集 / 某个新剧），**不得因为一条新规则就把旧剧全量判为 blocker**。
   确实需要统一旧剧时，由用户显式发起，作为一次独立的迁移任务。
+- **仙侠通用桥段库 `ai_videos/_research/xianxia/plots/`（2026-09-22 用户定调）。** 跨剧复用的**情节元件**：
+  诗文比试、比武、拍卖会捡漏这一类小情节，**不含具体人物 / 场景 / 世界观**，只有功能位、节拍表、
+  爽点落点、可替换变量，写新剧时当点缀填进去。**只做仙侠**（含古装 / 武侠 / 玄幻近亲题材），
+  与同目录 `parts/x*.md` 的仙侠 canon 调研互补——canon 管**这个世界是什么样**，本库管**演什么**。
+  一条 entry ＝ 一个 `.md`，**四样缺一不算建好**：功能位（谁在场，只写作用不写人）· 节拍表（每拍带
+  秒数 + 观众预期 + 这拍改变了什么）· 爽点落点（爽的是哪一下、靠前面哪一拍憋出来）· 可替换变量。
+  **动作点**：阶段 3 写 `arc_outline.md` 时翻本库，选中的注明 `桥段: plot_NNNN`；落到具体剧的产物
+  （功能位换成真人、变量填死）属于该剧，**不回写本库**。
+  **「哪条受欢迎」只能从 entry 末尾 `## 用例与反馈` 表派生**，不许写热度分数；别人的市场观察记
+  `## 出处`，与自有数据分开——发布数据尚未回流之前，本库只回答「有哪些元件可用」。
 - Per-episode (or per-short) `publish.md` with platform metadata is part of the stage-6 contract. **它是每部片唯一的「四站发布页」**（2026-09-12）：固定七节——母版与通用设置 / 封面帧 / **YouTube** / **TikTok** / **抖音** / **小红书** / 平台对照表 + 发布前检查清单；**YouTube 与 TikTok 一律英文，抖音与小红书一律中文**，四份文案各自独立创作而非互译；每块可复制内容单独进 ```text 围栏（标题/描述/标签各一块），每节附该站字段上限与完整 metadata（类别·语言·儿童内容·合集·许可·封面帧·画幅时长）。细则见 `.claude/agent_refs/project/ai_video.md` rule 16。
 - **Render-side 台词烧录 — 全流程默认关闭（follow-up 2026-06-20「所有 shot prompt 都不要烧字幕」）:** 默认**不烧任何字幕**，pipeline **不生成** per-shot `subtitles.md`；字幕统一由用户后期自行添加。webapp 烧字幕功能（`subtitles.md` → `_subtitled.mp4`）代码保留，仅作用户手动 opt-in，**不属默认产物、不参与格式契约校验、缺失不报错**。详见 `.claude/agent_refs/project/ai_video.md` rule 11c。
 - README required and in Chinese, updated alongside any feature change.
@@ -476,6 +572,10 @@ For `task_type=ai_video`, `task_name` is pinyin or English even when the project
 
 ## General coding rules
 
+- **能用 100 字说清的不写 200 字。** 文档、卡片、库条目、chat 回复一律写完再删一遍：
+  删重复、删铺垫、删「值得注意的是」这类空转。**表格优于排比句，一行示例优于一段解释。**
+  例外只有两处：有明确下限的产物（锚点 prompt ≥1500 字）、以及 prompt 里为锁死模型行为
+  而必要的冗余——那里的密度靠去重得到，不靠少写。
 - Default to writing no comments. Only when the *why* is non-obvious.
 - Don't add features, abstractions, or backwards-compat shims the task didn't ask for.
 - Don't add error handling for cases that cannot happen. Validate at system boundaries (user input, external APIs); trust internal calls.
@@ -486,6 +586,15 @@ For `task_type=ai_video`, `task_name` is pinyin or English even when the project
   实测 schema 白名单写 `平滑`、reader 读 `g.get("平顺", 1.0)`，于是配置里调的阈值一律不生效、
   默认值悄悄接管，而校验、日志、报错全都正常——排查掉整整一轮。写校验时顺手加一条：
   **配置里出现了 schema 允许、但代码从未读取的键，应当报错而不是忽略**。
+- **改一个全局常数时，手写的副本不会跟着改——要在「读进来的那一刻」判掉。** 上一条讲名字，
+  这一条讲**数值**：派生量（由常数算出来的坐标、尺寸、时长）会自动跟上，而**配置里手写死的
+  同类数值不会**，且两者混在同一份文件里看不出区别。实测：整城坐标统一缩放 0.5 之后，
+  `["Place", …]` 这类派生坐标自动缩了，某个镜头配置里手写的 `["世界", x, y, …]` 没缩，
+  于是一条 200 m 的航线被算成 2277 m、时速 114 m/s——而下游闸门只报得出「侧向加速度超标」
+  这个症状，完全指不到病根。做法：**给手写值加一条「它该落在什么范围内」的入口校验**
+  （坐标要落在场景包围盒内、时长要落在合法区间、比例要落在枚举里），在解析配置时就 raise，
+  并在报错里直接写出怀疑对象（「多半是缩尺前的值，xy 折半即可」）。症状级的闸门不能替代入口校验。
+
 - **长任务必须可中断可续跑，且不许用「按进程名杀」收尾。** 渲染、批量生成、大规模抓取一律
   **逐单元落盘 + 跳过已完成 + 最后合并**（例：逐帧 PNG → ffmpeg 合片），而不是让一个进程写一个大产物——
   后者被打断就是零产出，实测拿到过两次 `moov atom not found` 的废文件。

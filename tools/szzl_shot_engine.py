@@ -18,6 +18,7 @@
   ⑥ prompt ≤ 5000 字、零 hex、`参考:` 只用裸 `=>@`、红级 IP 名零出现、黄级专名不进叙事字段（concept C3）
   ⑦ 参考行（rule 23）：每镜有 previz 与至少一个场景主体；入画的人都有锁定串、不入画的人不挂；路由键在盘上有目录
   ⑧ `动作:` 时间轴铺满镜长；有 `分镜:` 的镜，段数与时间轴自洽
+  · 剧本的 `- 场景展示:` 行（新地方先给景，follow-up 011）原样并进 `镜头:`，数据文件里不另写
 写盘后 `verify()` 再从产物回读一遍（CLAUDE.md：闸门从最终产物回读，不校验中间变量）。
 """
 from __future__ import annotations
@@ -210,6 +211,14 @@ class Line:
     win: tuple[float, float] | None
 
 
+def script_scenery(ep: str) -> dict[str, list[tuple[float, float, str]]]:
+    """剧本 `- 场景展示:` 行（follow-up 011）——并进 prompt 的 `镜头:`，生成器数据里不再另写一份。"""
+    path = DRAMA / "4_剧本" / "episodes" / ep / "script.md"
+    shots, _ = script_tools.parse(str(path))
+    return {s.key: [(float(a), float(b), txt.strip()) for a, b, txt in script_tools._SCENERY.findall(s.body)]
+            for s in shots}
+
+
 def script_lines(ep: str) -> dict[str, tuple[float, list[Line]]]:
     path = DRAMA / "4_剧本" / "episodes" / ep / "script.md"
     shots, _ = script_tools.parse(str(path))
@@ -271,7 +280,8 @@ def _negatives(s: Shot) -> str:
     return "，".join(out)
 
 
-def video_prompt(s: Shot, lines: list[Line], secs: float) -> str:
+def video_prompt(s: Shot, lines: list[Line], secs: float,
+                 scenery: list[tuple[float, float, str]] | None = None) -> str:
     chars = "；".join("%s＝%s%s" % (c, char_lock(c), ("；本镜状态：" + s.state[c]) if c in s.state else "")
                       for c in s.chars) or "画面里没有人"
     props = "；".join("%s＝%s" % (p, prop_lock(p)) for p in s.props)
@@ -283,7 +293,7 @@ def video_prompt(s: Shot, lines: list[Line], secs: float) -> str:
         "角色: " + chars + ("；物件：" + props if props else ""),
         "情节: " + s.plot,
         "场景: " + "、".join(scene_lock(p.split("-")[0]) for p in dict.fromkeys(s.plates)),
-        "镜头: " + s.camera,
+        "镜头: " + s.camera + "".join("；%g–%gs 场景展示——%s" % sc for sc in (scenery or [])),
     ]
     if s.cut:
         parts.append("分镜: " + s.cut + "。镜内硬切不加任何转场效果，不打断本镜同一条时间线、环境声与光")
@@ -327,8 +337,9 @@ def dub_blocks(s: Shot, lines: list[Line]) -> str:
     return "\n".join(out) + "\n"
 
 
-def render(ep: str, s: Shot, lines: list[Line], secs: float, seam_ctx: str) -> str:
-    prompt = video_prompt(s, lines, secs)
+def render(ep: str, s: Shot, lines: list[Line], secs: float, seam_ctx: str,
+           scenery: list[tuple[float, float, str]] | None = None) -> str:
+    prompt = video_prompt(s, lines, secs, scenery)
     ups = "\n".join("  - %s" % h.strip("`").replace("=>@", "") for h in _handles(s, lines))
     return f"""---
 episode: {ep}
@@ -349,7 +360,9 @@ seam: 硬切
 - **情绪目的**: {s.emotion}
 - **场景**: {"、".join(plate_stem(p) for p in s.plates)}
 - **剧本**: `../../../../../4_剧本/episodes/{ep}/script.md` § 镜 {s.key}；台词逐句同源（生成器从剧本读，不另抄）
-- **Reference uploads**（⚠ previz 与图尚未出，先占位）:
+- **镜头平面图（overhead）**: `planning/shot{s.n:02d}_overhead.png`——本镜机位与人物走位的唯一出处（`planning/overhead.toml`）
+- **previz 的来路**（分层出片，ai_video.md rule 4j）：`planning/overhead.toml` → 镜头平面图过目 → shot blend（`previz/previz_config.toml` 从 overhead 读位置，加动作与形状；`tools/previz/build_previz.py` 渲）→ `previz/shot{s.n:02d}_previz.mp4`（≥1280×720）
+- **Reference uploads**（图与 previz 尚未出，下列为待上传清单）:
 {ups}
 
 ## 视频 prompt
@@ -375,6 +388,7 @@ def _field_line(prompt: str, name: str) -> str:
 def gate(ep: str, shots: tuple[Shot, ...]) -> tuple[list[str], dict]:
     bad: list[str] = []
     src = script_lines(ep)
+    scen = script_scenery(ep)
     keys = [s.key for s in shots]
     if keys != list(src):
         bad.append("镜号与剧本不一致：生成器 %s / 剧本 %s" % (keys, list(src)))
@@ -383,7 +397,7 @@ def gate(ep: str, shots: tuple[Shot, ...]) -> tuple[list[str], dict]:
             continue
         secs, lines = src[s.key]
         tag = "shot%02d" % s.n
-        p = video_prompt(s, lines, secs)
+        p = video_prompt(s, lines, secs, scen.get(s.key))
         if len(p) > PROMPT_MAX:
             bad.append("%s: prompt %d 字 > %d" % (tag, len(p), PROMPT_MAX))
         if _HEX.search(p):
@@ -419,13 +433,13 @@ def gate(ep: str, shots: tuple[Shot, ...]) -> tuple[list[str], dict]:
     except SystemExit as e:
         bad.append(str(e))
         seams = []
-    return bad, {"src": src, "seams": seams}
+    return bad, {"src": src, "seams": seams, "scen": scen}
 
 
-def _md_by_shot(ep: str, shots: tuple[Shot, ...], src: dict, seams: list) -> dict[str, str]:
+def _md_by_shot(ep: str, shots: tuple[Shot, ...], src: dict, seams: list, scen: dict) -> dict[str, str]:
     ctx = {sm.next_n: sm.context() for sm in seams}
     return {"shot%02d" % s.n: render(ep, s, src[s.key][1], src[s.key][0],
-                                     ctx.get(s.n, "集首镜，硬切（独立首帧）。"))
+                                     ctx.get(s.n, "集首镜，硬切（独立首帧）。"), scen.get(s.key))
             for s in shots}
 
 
@@ -490,7 +504,7 @@ def run(ep: str, shots: tuple[Shot, ...], generator: str, argv: list[str] | None
         print("闸门未过（%d 条），不生成" % len(bad))
         return 1
     src, seams = ctx["src"], ctx["seams"]
-    mds = _md_by_shot(ep, shots, src, seams)
+    mds = _md_by_shot(ep, shots, src, seams, ctx["scen"])
     prompt_light.gate(mds)
     shot_logic.gate(mds)
     wow_version_gate.gate(mds)

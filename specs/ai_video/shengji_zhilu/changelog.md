@@ -482,3 +482,63 @@ Auto-updated（工具）:
 - 阶段 5 五道审查（站位朝向 / 运镜 / 动作表演 / 光线色调 / 时长节奏）与阶段 6 格式契约**未跑**（子 agent 用量上限，Sep 30 8am 重置）；机检闸门已全过
 - bg3 卡须补「西侧油灯支巷净宽约一人」（S15 地形解依赖它）；bg1 缺院北林缘与狗头人营地两张 plate（S05 / S06 暂借 bg1-1）——场景归另一 session
 - 图与立绘一张都没出；人物 turntable 统一生成器未写（rule 22.2）
+
+## Follow-up 011 — 2026-09-25
+Source: user_input/follow_ups/202609.md - section 011
+Summary: 每到一个新地方，留足镜头展示场景特点（自然 / 优美 / 宏大），方式灵活。
+
+Auto-updated:
+- `1_立项/concept.md` — 新增 G10「新地方先给景」
+- `4_剧本/script.toml` — 新增 `[scenery] new_zone_min_s = 12 / new_bg_min_s = 6`
+- `tools/script_tools.py` — 新增场景展示闸门（剧级 opt-in）：bg 在全剧第一次出现的那一镜须有 `- 场景展示:` 且窗长达标，跨集按集序算，闪前镜豁免；配置读取合并为 `_config()`
+- `4_剧本/episodes/ep01/script.md` — 8 处补场景展示：S02 进谷 12s 升降揭示（新地区）· S03 修道院 6s 仰拍上摇 · S04 主厅 6s 纵深推进 · S05 林缘 8s 跟随 · S08 武器厅 9s 边读边走 · S09 矿洞 6s 坡下仰望 · S18 葡萄园 8s 越栅横移 · S21 小屋 6s 林隙窥视；另给 S17 石桥加 6s（非必需）。S02 18→26s、S03 22→28s、S04 25→28s、S18 22→26s，**全集 631 → 652s**
+- `4_剧本/episodes/ep01/dialogue.md` — 重新生成
+- `tools/szzl_shot_engine.py` — 从剧本读 `场景展示` 行并进 prompt 的 `镜头:`（数据文件不另写）
+- `tools/gen_shots_szzl_ep01.py` + `5_6_分镜与prompt/episodes/ep01/` — S02/S03/S04/S05/S18 镜头、动作时间轴与起幅景别改为先给景；重生成 27 镜，切口审计全过
+- `5_6_分镜与prompt/episodes/ep01/publish.md` — 章节时间轴按新镜长重算（10:52，12 章，最短 26s）
+- `README.md` — 时长与闸门表
+
+No conflicts found in: `2_世界观人设/`、`3_大纲/`
+
+## Follow-up 012 — 2026-09-25 08:20:25
+Source: user_input/follow_ups/202609.md - section 012
+Summary: GLB 只装单个物体；每个场景都要出图；场景 blend ＝ 场景图 + prompt + 单物体 GLB 的汇总。
+
+Auto-updated（规则）:
+- `CLAUDE.md` — 「每个场景 bg 主体配一份 3D」去掉 `_set.glb`；rule 4h-K 条去掉「单个网格出 .glb」；新增「GLB 只装单个物体；场景 blend ＝ 图 + prompt + 单物体 GLB」三条
+- `.claude/agent_refs/project/ai_video.md` — rule 4h-K 2026-09-25 amendment（parts / 场景图分层出图 / 没图不建 blend / W11 W12）
+
+Auto-updated（工具）:
+- `tools/build_scene.py` — 删 `export_glb`（旧 `{bg}.glb` 构建时顺手删）；没有场景图直接 raise；新增 `add_refs`（plate 图挂同名机位相机背景、场景卡 / plate 卡 / 资产卡 prompt 进文本块、资产三视图与场景图立成视口图片 empty、机位相机随 blend 保存、图按相对路径引用）；新增 `parts`（一个块里几件单物体资产按各自 size_m 摆）、`layout = "row"`（等距成排）、`build_room`（`interior = true` 的场地四壁 + 顶板，`opening = true` 的块留门洞）；网格最长轴与 size_m 不符时自动立正；不留 `.blend1`
+- `tools/gen_bg_images.py` — **新增**：bg 锚点图 + 方位 plate 图，世界锚点 → bg 锚点 → plate 分层出，即梦优先 / 超 1600 字或失败退 ElevenLabs，`.part` 落盘后改名（防半截参考图）
+- `tools/gen_bg_assets.py` — 单物体闸门（名字读起来是几样东西即拦，`single = "理由"` 例外）；`_dm_submit` 可传画幅；`--shard` 越界即报错（实测 `1/3..3/3` 漏掉第 0 份）；相对路径打印崩溃修复
+- `tools/apply_asset_plan.py` — `[[use]]` 支持 `parts` / `layout`；`check_plan` 校验 parts
+- `tools/link_bg_assets.py` — parts 块链接每件资产的文件
+- `tools/check_world_scenes_szzl.py` — W11（bg 目录里有 GLB / 资产库 GLB 不在 `{key}_*/mesh/`）blocker、W12（缺场景图）warning
+- `tools/build_bg_sets_sk1.py` — 不再导出 `_set.glb`；sk1 已有的 21 个不回溯删除
+
+Auto-updated（本剧）:
+- **删除** 228 个场景级 `_blender/bg{N}.glb`；W11 全仓 0 命中
+- 艾尔文组合件拆成单物体：a41 长木桌 + a44 长凳、a26 旧木箱 + a45 木桶、a05 石饮马槽 + a46 拴马桩（`plan.toml` 六处 `[[use]]` 改 `parts`）；其余 11 区 11 件组合件交拆分 agent；bg495-a02 树屋声明 `single`
+- ep01 九个场景的图：41 张（9 锚点 + 32 plate，含 bg1 世界锚点，全部 16:9 / 即梦）；新增 plate `bg1-6_院北_栎林苔石`（S05）与 `bg1-7_营外_林间矮帐`（S06）——**shot05 / shot06 的 `场景:` 与 `参考:` 仍借 bg1-1，待 ep01 分镜生成器改指**；bg3 卡与 `bg3-4` 补「西侧油灯支巷净宽约一人」（块 b05 宽 2.2 → 0.9 m）
+- ep01 九份 blend 重建（`apply_asset_plan --build --only …`）：9 / 9，占位 0；六个外景 bg 的全部 plate 机位挂上背景图，三个室内 bg 的 `c2` 挂场景图；无场景级 GLB、无 `.blend1`
+- Rodin：ep01 共出 13 件单物体 GLB（a35–a46 中 ep01 用到的），余额 ≈ 73.5；a05 / a46 只出了三视图（bg4 不在 ep01）；35 张旧 v3 卡按 16:9 重写构图并去黄级专名；bg1 / bg1-1 / bg1-3 去掉方形钟塔（与 bg2 版本铁律对齐）
+- bg175 / bg176 / bg177 — 门洞块写 `opening = true`，补与场景卡同机位的 `c2` 相机（`image` 绑场景图）；bg177 两排石柱 `layout = "row"`
+
+## 2026-09-25 — 分层出片：每镜先出镜头平面图（overhead），再做 shot blend（仓库级规则，本剧 ep01 首用）
+用户指出：shot 的 `参考:` 挂着 `shotNN_previz.mp4`，却没有任何一步说明它怎么来——阶段 5 的 4b-2（平面图）与 4c（previz）被跳过了。
+用户定调的分层：① 场景（scene blend + floor plan）→ ② 每镜 overhead（机位 / 走位 / 建筑与物件位置，不管动作与形状）→ ③ shot blend（真实动作、形状、镜头远近，渲 previz MP4）→ ④ Seedance。
+
+Auto-updated（仓库级）:
+- `CLAUDE.md` / `.claude/agent_refs/project/ai_video.md` rule 4j（2026-09-25 修订）/ stage5 playbook 4b-2 — 每一镜都出 overhead；位置只写在 `planning/overhead.toml`；名字统一叫 **overhead（镜头平面图）**（影视工业里画机位与演员走位的俯视图就叫 overhead；floor plan 留给场地，flight plan 是航空用语）
+- `tools/shot_overhead.py` — **新增**通用工具：读每镜 `overhead.toml`，底图复用场地平面图画法，出 `shotNN_overhead.png` + 集级 `overheads.md`；闸门：键名白名单、时刻、入画人物与 `角色:` 双向一致、机位扎进实心体块、景别 × 焦距反算距离
+- `tools/build_floorplan.py` — 场地画法抽成 `draw_site()` 供两张图共用（场地平面图输出逐字节不变）；越界的边距矩形钳进画布
+
+Auto-updated（本剧 ep01）:
+- `5_6_分镜与prompt/episodes/ep01/shots/shot01–27/planning/{overhead.toml, shotNN_overhead.png}` + `overheads.md` — 27 镜全部挂在各自场景的 floor plan 坐标系上，blocker 0 / warning 0
+- 闸门首跑拦下的真错误（已修）：S01 / S22 机位埋在柴垛里 · S05 起幅机位在修道院主厅里 · S23 / S24 机位在木屋里 · S06 / S25 / S26 机位距离与景别不符（S25 落幅改中景越肩、S26 起幅改手部特写，切口仍合格）· S08 杜克入画却不在 `角色:`（已补）
+- `tools/gen_shots_szzl_ep01.py` — 走位方向按 overhead 同步：主厅正门在西、治安官在东端（S04 / S07 / S25）· 武器厅由西往东、圆盾墙在东端（S08 / S14）· 矿洞洞口朝南、主巷正南北（S09–S12 / S15）· 晒场朝东南指林子（S20）· 出谷的盯梢者在**前方**林缘看着两人走近（S27）；S05 / S06 改用另一 session 新出的 plate bg1-6 / bg1-7
+- `4_剧本/episodes/ep01/script.md` — S20 / S27 两处方向同步
+- `tools/szzl_shot_engine.py` — 每个 shot md 写明镜头平面图路径与 previz 的来路（overhead → 过目 → shot blend → MP4）
+
+待用户：看 `overheads.md`（27 张图），点头后才进 shot blend。

@@ -7,9 +7,9 @@
 | 镜 | 时长 | 念白量 | 念白需时 |
 |---|---|---|---|
 | S01 | 8s | 2 词 | 0.7s |
-| S02 | 18s | 28 词 | 9.3s |
-| S03 | 22s | 37 词 | 12.3s |
-| S04 | 25s | 53 词 | 17.7s |
+| S02 | 26s | 28 词 | 9.3s |
+| S03 | 28s | 37 词 | 12.3s |
+| S04 | 28s | 53 词 | 17.7s |
 | S05 | 24s | 37 词 | 12.3s |
 | S06 | 26s | 19 词 | 6.3s |
 | S07 | 18s | 35 词 | 11.7s |
@@ -23,7 +23,7 @@
 | S15 | 26s | 28 词 | 9.3s |
 | S16 | 21s | 51 词 | 17.0s |
 | S17 | 15s | 20 词 | 6.7s |
-| S18 | 22s | 33 词 | 11.0s |
+| S18 | 26s | 33 词 | 11.0s |
 | S19 | 27s | 22 词 | 7.3s |
 | S20 | 17s | 36 词 | 12.0s |
 | S21 | 24s | 30 词 | 10.0s |
@@ -33,7 +33,7 @@
 | S25 | 26s | 40 词 | 13.3s |
 | S26 | 26s | 50 词 | 16.7s |
 | S27 | 24s | 27 词 | 9.0s |
-| **合计** | **631s** | — | **279.7s** |
+| **合计** | **652s** | — | **279.7s** |
 
 ---
 
@@ -42,55 +42,55 @@
 Duke: "Aaron — RUN!"　*(【1–5s】跪地嘶吼，冲画外)*
 　　（亚伦——快跑！）
 
-## 镜 S02　*(18s · `bg20` 南墙隘口 · the south gate（bg20-5 谷望_主路归谷）)*
+## 镜 S02　*(26s · `bg20` 南墙隘口 · the south gate（bg20-5 谷望_主路归谷）)*
 
-Aaron: "Hi. I'm Aaron. From Stormwind. I want to be a paladin."　*(【5–13s】小声，对自己练)*
+Aaron: "Hi. I'm Aaron. From Stormwind. I want to be a paladin."　*(【12–20s】小声，对自己练)*
 　　（你好，我叫亚伦，暴风城来的。我想当圣骑士。）
-Aaron: "...I want to learn to be a paladin."　*(【5–13s】停一秒后改口，重读 learn)*
+Aaron: "...I want to learn to be a paladin."　*(【12–20s】停一秒后改口，重读 learn)*
 　　（……我想学当圣骑士。）
-Duke: "Move, move, move — first come, first served!"　*(【13–18s】撞开他，不回头)*
+Duke: "Move, move, move — first come, first served!"　*(【20–26s】撞开他，不回头)*
 　　（让让让——先到先得！）
-Aaron: "...Served what?"　*(【13–18s】)*
+Aaron: "...Served what?"　*(【20–26s】)*
 　　（……得什么？）
 
-## 镜 S03　*(22s · `bg2` 北郡修道院 · Northshire Abbey（bg2-1 院前_立面石阶）)*
+## 镜 S03　*(28s · `bg2` 北郡修道院 · Northshire Abbey（bg2-1 院前_立面石阶）)*
 
-Duke: "First!"　*(【0–5s】趴着)*
+Duke: "First!"　*(【6–11s】趴着)*
 　　（我第一！）
-Willem: "Seventh. Today."　*(【0–5s】)*
+Willem: "Seventh. Today."　*(【6–11s】)*
 　　（今天第七个。）
-Aaron: "...So I'm eighth."　*(【5–9s】)*
+Aaron: "...So I'm eighth."　*(【11–15s】)*
 　　（……那我第八。）
-Willem: "Half the Guard's off fighting in distant lands. Trouble's getting closer. So here I am. Deputized."　*(【9–18s】)*
+Willem: "Half the Guard's off fighting in distant lands. Trouble's getting closer. So here I am. Deputized."　*(【15–24s】)*
 　　（卫兵一半在远方打仗，麻烦越来越近。所以我在这儿，临时顶个副队长。）
-Willem: "Marshal McBride's inside. Can't miss him."　*(【9–18s】)*
+Willem: "Marshal McBride's inside. Can't miss him."　*(【15–24s】)*
 　　（治安官玛克布莱德在里面，一眼就能认出来。）
-Duke: "Name's Duke! Duke the Unbreak—"　*(【18–22s】拍盾，嗓门更大)*
+Duke: "Name's Duke! Duke the Unbreak—"　*(【24–28s】拍盾，嗓门更大)*
 　　（我叫杜克！不倒的杜——）
-Willem: "In you go, Unbreakable."　*(【18–22s】已转身)*
+Willem: "In you go, Unbreakable."　*(【24–28s】已转身)*
 　　（进去吧，不倒的。）
 
-## 镜 S04　*(25s · `bg177` 主厅（Northshire Abbey 内）)*
+## 镜 S04　*(28s · `bg177` 主厅（Northshire Abbey 内）)*
 
-McBride: "Hey, citizen! You look like a stout one."　*(【3–11s】对 Duke)*
+McBride: "Hey, citizen! You look like a stout one."　*(【6–14s】对 Duke)*
 　　（嘿，市民！你看着挺结实。）
-McBride: "Hey, citizen! You look like a stout one."　*(【3–11s】对 Aaron，一字不差、停顿同位)*
+McBride: "Hey, citizen! You look like a stout one."　*(【6–14s】对 Aaron，一字不差、停顿同位)*
 　　（嘿，市民！你看着挺结实。）
-Duke: "...He says that to everyone?"　*(【3–11s】小声)*
+Duke: "...He says that to everyone?"　*(【6–14s】小声)*
 　　（……他对谁都这么说？）
-Aaron: "I'm Aaron."　*(【11–13s】)*
+Aaron: "I'm Aaron."　*(【14–16s】)*
 　　（我叫亚伦。）
-McBride: "Kobolds. Woods up north. Thin them out — ten should do it."　*(【13–21s】)*
+McBride: "Kobolds. Woods up north. Thin them out — ten should do it."　*(【16–24s】)*
 　　（狗头人，北边林子。去削掉一些——十只就行。）
-McBride: "One day we'll drive them out of Northshire."　*(【13–21s】)*
+McBride: "One day we'll drive them out of Northshire."　*(【16–24s】)*
 　　（总有一天，我们会把它们赶出北郡。）
-McBride: "...Not today."　*(【13–21s】停半拍)*
+McBride: "...Not today."　*(【16–24s】停半拍)*
 　　（……不是今天。）
-Aaron: "Ten each, or ten total?"　*(【21–25s】)*
+Aaron: "Ten each, or ten total?"　*(【24–28s】)*
 　　（一人十只，还是一共十只？）
-McBride: "...Each."　*(【21–25s】)*
+McBride: "...Each."　*(【24–28s】)*
 　　（……一人十只。）
-Duke: "I'll do twenty!"　*(【21–25s】)*
+Duke: "I'll do twenty!"　*(【24–28s】)*
 　　（那我二十！）
 
 ## 镜 S05　*(24s · `bg1` 北郡山谷 · Northshire Valley（院墙北侧林缘 · ⚠ 现有 plate 无此机位，暂借 bg1-1 谷心_北望修道院）)*
@@ -294,19 +294,19 @@ Duke: "...You're hungry."　*(【6–11s】)*
 Aaron: "I want to remember the way back."　*(【11–15s】)*
 　　（我想记住回来的路。）
 
-## 镜 S18　*(22s · `bg18` 北郡葡萄园 · Northshire Vineyards（bg18-1 田头_东岸入口）)*
+## 镜 S18　*(26s · `bg18` 北郡葡萄园 · Northshire Vineyards（bg18-1 田头_东岸入口）)*
 
-Milly: "You from the abbey? Those rows — they've taken them."　*(【4–12s】)*
+Milly: "You from the abbey? Those rows — they've taken them."　*(【8–16s】)*
 　　（你们是院里来的吧？那几垄——被他们占了。）
-Milly: "They've got three days. Then they rot on the vine."　*(【4–12s】)*
+Milly: "They've got three days. Then they rot on the vine."　*(【8–16s】)*
 　　（就剩三天。过了就烂在架上。）
-Aaron: "We'll get them back."　*(【12–22s】)*
+Aaron: "We'll get them back."　*(【16–26s】)*
 　　（我们去收回来。）
-Milly: "Either of you ever picked grapes?"　*(【12–22s】)*
+Milly: "Either of you ever picked grapes?"　*(【16–26s】)*
 　　（你俩谁摘过葡萄？）
-Duke: "...He has."　*(【12–22s】停一拍，指 Aaron)*
+Duke: "...He has."　*(【16–26s】停一拍，指 Aaron)*
 　　（……他摘过。）
-Aaron: "...I'll learn."　*(【12–22s】)*
+Aaron: "...I'll learn."　*(【16–26s】)*
 　　（……我现学。）
 
 ## 镜 S19　*(27s · `bg18` 北郡葡萄园 · Northshire Vineyards（bg18-2 架下_垄行纵深）)*

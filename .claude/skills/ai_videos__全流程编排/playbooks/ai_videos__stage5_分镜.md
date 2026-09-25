@@ -84,6 +84,37 @@
    - `光线 / 色调:`（随情绪给光，对齐场景/角色锁定色名、零 hex；回忆镜上做旧滤镜；眼里不加发光特效）。
    - `节奏:`（visual-only 的节奏注：快切/凝滞/渐快等，配合时长）。
 4b. **逐对判跨镜首帧承接、写 `## Shot context` 的 `衔接:` 字段**（ai_video.md 2026-06-21；判定准则归 `运镜` M8）。**⚠ 2026-09-09 起承接是例外、不是与硬切并列的默认**——先过 §3b 铁律 ⓪（硬切＋景别跳档）；只有「这两镜在观众眼里必须是同一个连续动作、中间不能有切口」才判承接，判了就要连带认下 ai_video.md (F)/(F2)/(J) 的全部出片端工序（裁帧/补帧/色彩对齐/接缝两端 0.3s 台词静默），那正是用户要省掉的剪辑工作。**铁律⓪ 与承接互斥，不存在「半接不接」。** 判定细则：相邻 A→B 满足①同场景/同bg ②机位连续或渐变(同轴推/拉/移·match cut、非越轴/正反打/景别跳切) ③动作或情绪不间断 → **承接**（`衔接: 承接 shot{NN} 末帧（首帧＝上一镜末帧）`，B 出片时截 A 成片末帧作 B 首帧上传、`动作:`首拍从 A 末拍姿态续起）；任一不满足 → **硬切（默认）**（`衔接: 硬切（独立首帧）`）。换场/时间跳/回忆进出/越轴/正反打/景别跳切一律硬切。每集首镜＝硬切。承接镜的 `参考:`/`Reference uploads` 落点由阶段 6 补（见 stage6 playbook §3）。**同时给被承接的上一镜（交接源）写 `尾帧锁定:` 字段**（ai_video.md (G)）：该镜末帧既被下镜用作首帧，重生成它时须以其 `shotNN_lastframe.png` 作尾帧锁定、保末帧不变，避免「改一镜要整条承接链重生」。
+4b-2. **每一镜先出镜头平面图（overhead）给用户过目，再做 shot blend / previz**（2026-09-25 修订，ai_video.md rule 4j）：
+   写 `shots/shotNN/planning/overhead.toml`（机位路点 + 人物走位 + 本镜物件，挂在该场景 floor plan 的坐标系上，**位置的唯一出处**），
+   跑 `python tools/shot_overhead.py --all <ep 目录>` 出 `shotNN_overhead.png` + `overheads.md`；用户点头后，
+   shot blend 的 `previz_config.toml` 从 overhead 读位置、只加动作与形状。以下为 2026-09-20 的原条文（空中航线细则仍有效）：
+   **先出航线俯视图（floor plan）给用户过目，再动 previz**（2026-09-20 用户定调「交流少了」）。
+   **适用**：任何机位在世界里走动的镜（航拍 / 穿行 / 长距离移动 / 跨地点）。原地小幅推拉摇可跳过。
+   **顺序是硬的：图 → 用户点头 → 才建 previz。** 反过来做等于拿渲染时间换沟通。
+
+   ```
+   python tools/shot_plan.py <shot 目录> --waypoints 0,8,15,30     # 航线图 flight plan
+   python tools/shot_plan.py <shot 目录> --coverage                # 入画覆盖表：谁入画多久、有没有主体卡
+   ```
+
+   产出落 `shots/shot{NN}/planning/`：`{shot}_floorplan.png`（俯视：河/城墙 + 建筑组方块 +
+   红线航线 + 方向箭头 + 航段牌 + 航点 + 高度剖面）+ `{shot}_route.md`（同一批数字的表）。
+   数据只来自 `previz_config.toml` 的 `[[机位]]` 与全城坐标表，**脚本不自编任何坐标**。
+   建筑组方块写在 `planning/blocks.toml`（名字 + 中心 + 尺寸 + 旋转 + **bg 归属键**），可随手改随手重跑。
+
+   **为什么这一步值一次往返**：`镜头:` 是散文、previz 是几百个关键帧，两者都无法让人一眼看出
+   「从哪飞到哪、途经什么、离那条河多远」。**图看 30 秒，错一条航线要重渲 30 秒的成片。**
+
+   **图出来后必对三件事**（都是机检项，不靠目测）：
+   - **航线与它声称跟随的地物**：prompt 说「贴着汴河飞」，就去看 `route.md` 的 `离{河}中线` 一列。
+     实测事故（sk1 shot01，2026-09-20）：全程只有穿门洞那一瞬离河 2 m，其余 96 / 150 / 205 / 318 m，
+     与河道夹角最大 61°。成因是航线用「直线 → R400 圆弧 → 直线」解析生成以保平滑，而河道是折的，
+     大圆弧接不住折角。**白模 previz 是几何权威、prompt 文字说的是另一回事，模型收到两套指令**——
+     这是「镜头怎么调都不满意」的一类可定位根因。
+   - **途经的建筑组有没有主体卡**：方块上标着「无专属 bg」的，出图只能借 bg0 全城航拍的长相。
+     数量多就该回阶段 2 补卡，而不是在 prompt 里用形容词硬顶。
+   - **方向**：箭头指的是航向。一条线两头都说得通，没有箭头的图不算过。
+
 4c. **建本镜 previz（每镜必做，覆盖率 100%）**（`agent_refs/project/ai_video.md` rule 4h）：
    在 `shots/shot{NN}/previz/` 下写 `previz_config.toml` —— 从场景源
    `2_世界观人设/scenes/{world}/_blender/{world}.blend` **拷贝**出 `shot{NN}_previz.blend`
@@ -104,6 +135,8 @@
 ## 5. 输出物 + 模板
 
 - **产物**：`ai_videos/{name}/5_6_分镜与prompt/episodes/epNN/{shotlist.md, shots/shotNN/shotNN.md}`（内容全中文，路径英文/pinyin）。
+- **每镜一张镜头平面图（overhead）**：`shots/shotNN/planning/{overhead.toml, shotNN_overhead.png}` + 集级 `overheads.md` 索引（步骤 4b-2）。`overhead.toml` 是位置的唯一出处，shot blend 从它读；图要用户点头才进 shot blend。
+- （2026-09-20 旧条文）**走动镜另出航线俯视图**：`shots/shotNN/planning/{shotNN_floorplan.png, shotNN_route.md, blocks.toml}`（步骤 4b-2）。这是**给人看的对账材料**，不是交付物，但它是 previz 的前置。
 - **每镜另出 previz**：`shots/shotNN/previz/{previz_config.toml, shotNN_previz.blend, shotNN_previz.mp4}`（rule 4h §A/§B）。`previz_config.toml` 是 3D 层的唯一真相——画面坐标、相对大小、机位数值只写在它里面，shotNN.md 的 prompt 不复述。
 
 ### 5.1 shotlist.md 表模板（copy-ready）
