@@ -141,7 +141,8 @@ def _sidecar(epd: Path, shot: str) -> list[tuple[str, float, float]] | None:
 
 
 def measured(epd: Path, part: segments.Part, lines: list[pc.Line]) -> list[tuple[float, float] | None]:
-    """每句在这一段 take 里的实际起止（源秒）：画内句取对齐缓存 ok / low_conf 的实测，画外 / 内心独白取 TTS sidecar 的实际摆位。
+    """每句在这一段 take 里的实际起止（源秒）：画内句取对齐缓存 edl.WORDED（ok / low_conf / moved）的实测，
+    画外 / 内心独白取 TTS sidecar 的实际摆位。
     拿不到的 → None（调用方退回计划窗），每个原因警告一次。"""
     tag = f"{part.shot}（take {part.take}）"
     out: list[tuple[float, float] | None] = [None] * len(lines)

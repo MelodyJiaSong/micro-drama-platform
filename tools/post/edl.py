@@ -10,8 +10,8 @@
 锚点 in / out：start | end | 秒数 | "line:N.start" / "line:N.end"（第 N 句实测起止，可带 ±秒）| "cut:K"（第 K 个镜内切点，
 没有实测就用计划）。按该事件 take 的对齐缓存（align.cache_path）解析；当前出片缺缓存就用 ALIGN_PYTHON 跑 align.py 补。
 end＝take 按 FPS 转恒定帧率后的末帧之后（缓存的 frames），不是容器时长 × FPS。
-line: / cut: 按编号取句子与切点：md 改了台词或切点、align.py 重算后编号会挪，所以用了它们的事件要写 basis（candidates 给出的
-这条 take 的编号指纹），对不上即报错——按旧编号切新缓存，切点会悄悄挪到别的句子上。
+line: / cut: 按编号取句子与切点：md 改了台词或切点、align.py 重算后编号会挪、句子起止会变，所以用了它们的事件要写 basis
+（candidates 给出的这条 take 的编号与起止指纹），对不上即报错——按旧编号切新缓存，切点会悄悄挪到别的句子上或别的时刻。
 键写错、fps ≠ pc.FPS、锚点解析不到、basis 对不上、in ≥ out：报错停下，写明哪个事件、哪个锚点。
 钉的 take 不是当前出片：plan / candidates 报错停下；verify 记 V1 不过（旧 take 的缓存还在就照它把别的项查完）。
 - take 自己的首尾不是剪出来的切点，V2 不查；新接缝要豁免时 match_ok 写在接缝后面那个事件上。
@@ -62,8 +62,8 @@ CMDS = ("init", "candidates", "verify", "plan")
 STATUSES = ("draft", "approved", "locked")
 KINDS = ("shot", "flash")
 NOTE_STATUSES = ("open", "patched", "ticket", "waived")
-LINE_STATUSES = (align.OK, align.LOW, align.MISSING, align.OFFSCREEN)
-WORDED = (align.OK, align.LOW)
+LINE_STATUSES = align.STATUSES
+WORDED = align.TIMED
 TOP_KEYS = frozenset({"version", "base_version", "status", "approved_by", "fps", "event", "note"})
 EVENT_KEYS = frozenset({"id", "shot", "take", "in", "out", "kind", "why", "match_ok", "quiet_ok", "basis"})
 NOTE_KEYS = frozenset({"ref", "status", "detail"})
@@ -129,7 +129,8 @@ class Edl:
 
 @dataclass(frozen=True)
 class ALine:
-    """对齐缓存里的一句。span：ok / low_conf ＝实测起止；offscreen ＝计划窗（TTS 按它摆）；missing ＝计划窗（没对上）。"""
+    """对齐缓存里的一句。span：ok / low_conf / moved ＝实测起止（moved＝没按剧本顺序说、从 ASR 找回的，时间上可以排在
+    编号更小的句子前面）；offscreen ＝计划窗（TTS 按它摆）；missing ＝计划窗（没对上）。"""
     idx: int
     text: str
     status: str
@@ -526,9 +527,10 @@ def anchor_t(a: str | float, al: Align) -> float:
 
 
 def basis(al: Align) -> str:
-    """line: / cut: 锚点的编号指纹：各句（序号, 原文）与镜内切点（帧号）。md 改了台词或切点、align.py 按新 md 重算后，
-    同一个 line:N 会指到别的句子——事件记下写锚点时的指纹，resolve 对不上即报错。"""
-    raw = json.dumps([[[x.idx, x.text] for x in al.lines], [frame(t) for t in al.cuts]], ensure_ascii=False)
+    """line: / cut: 锚点的指纹：各句（序号, 原文, 状态, 起止帧号）与镜内切点（帧号）。md 改了台词或切点、align.py 重算后
+    编号挪了或句子起止变了（改了算法、找回句让位），同一个 line:N 会指到别的地方——事件记下写锚点时的指纹，resolve 对不上即报错。"""
+    raw = json.dumps([[[x.idx, x.text, x.status, frame(x.span[0]), frame(x.span[1])] for x in al.lines],
+                      [frame(t) for t in al.cuts]], ensure_ascii=False)
     return hashlib.sha256(raw.encode("utf-8")).hexdigest()[:BASIS_LEN]
 
 
@@ -539,8 +541,8 @@ def resolve(edl: Edl, aligns: dict[tuple[str, str], Align]) -> list[Cut]:
     for ev in edl.events:
         al = aligns[(ev.shot, ev.take)]
         if ev.numbered and ev.basis != basis(al):
-            bad.append(f"{ev.id} {ev.shot}：line: / cut: 锚点是按另一版编号写的（basis {ev.basis} ≠ 当前 {basis(al)}："
-                       "md 改了台词或切点、align.py 重算过）——按 edl.py candidates 重挑锚点，basis 抄新的")
+            bad.append(f"{ev.id} {ev.shot}：line: / cut: 锚点是按另一版编号 / 起止写的（basis {ev.basis} ≠ 当前 {basis(al)}："
+                       "md 改了台词或切点、align.py 重算后句子起止变了）——按 edl.py candidates 重挑锚点，basis 抄新的")
             continue
         fr: dict[str, int] = {}
         for side, a in (("in", ev.a_in), ("out", ev.a_out)):

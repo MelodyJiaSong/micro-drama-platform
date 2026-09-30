@@ -27,7 +27,7 @@ argument-hint: "<剧名> <ep> 例: 魔兽世界 ep01 | shengji_zhilu ep01"
 
 - 当前审稿：`viewing/review.md`（成片）或 `viewing_animatic/review.md`（animatic）——注意力表、预计划走点、最该改的 3 处。
 - `python tools/post/edl.py candidates <剧> <ep>` → `post/cut/candidates.json`：每镜合法切点（离词 ≥ 0.08 s）、镜内切点、死区（> `idle_max_s` 无词无节拍）。**in / out 只许取这里的点或锚点**，不自编时间码。
-- 对齐缓存 `post/align/{shot}.{sha12}.json`：每句实测起止、`missing` / `low_conf` 句子（Seedance 漏说、改词、换顺序）。
+- 对齐缓存 `post/align/{shot}.{sha12}.json`：每句实测起止、`missing` / `low_conf` 句子（Seedance 漏说、改词）；换了顺序的从 ASR 找回、标 `moved`（实测起止照常当锚点，`moved` 字段记计划窗与找到处）。
 - 剧本意图（好笑 / 好哭标签）、`goals.toml` 锚点句——剪后必须仍在（V3）。
 
 ## 2. 补丁（封闭菜单）

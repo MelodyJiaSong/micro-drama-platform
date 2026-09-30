@@ -8,8 +8,10 @@
    → verify 报对应的 V 号且只报它；锚点不存在、in ≥ out、fps 不符 → verify 报错停下并写明事件与锚点（spec §4 的 raise）。
 3. 其余各项各一例：V1 审片结论（--proxy-ok 降为警告；render_review 没有 verdict_ok 也不放行；旧 take 没缓存）、
    V3、V4（含整镜相接的承接缝）、V6（含剧本改过没重出片的近似）、V7、V8、V9、V10 记账。
-4. line: / cut: 锚点的 basis：缺了、配在 start / end 上都报错；md 改了台词、align 重算后编号挪了，按旧 basis 解析报错停下。
+4. line: / cut: 锚点的 basis：缺了、配在 start / end 上都报错；md 改了台词、align 重算后编号挪了或句子起止变了，按旧 basis
+   解析报错停下。
    end 取缓存的 frames（CFR 帧数，比容器时长 × FPS 多一帧的 VFR 片不丢末帧）。
+   moved 句（时间上排在编号更小的句子前面）：line: 锚点取实测、整句删不报 V2、删半句报；missing 句当锚点照旧报错停下。
 5. candidates 的可切区间离词 ≥ WORD_MARGIN；CLI（命令放前放后都认）退出码跟 verify 一致。
 script_tools 只认仓库里的 script.toml（_config 以 script_tools.REPO 为界），所以把 script_tools.REPO 指到临时目录，
 让 V5–V7 读得到假剧的 [episode] / [scenery]。
@@ -445,10 +447,50 @@ def t_basis() -> None:
         msg = expect_raise("md 改了台词、align 重算：按旧编号的 line:2 报错停下", [ident()[0], line2, ident()[2]],
                            ("e02", "另一版编号", line2["basis"]))
         assert basis_of("shot02", F.take("shot02")) in msg, msg
+        retimed = json.loads(kept)                             # 编号、原文、切点都没变，align 改版重算后第 2 句晚了 1 s（找回句让位那类）
+        retimed["lines"][1] |= {"start": 7.0, "end": 8.1,
+                                "words": [w | {"s": w["s"] + 1.0, "e": w["e"] + 1.0} for w in retimed["lines"][1]["words"]]}
+        p.write_text(json.dumps(retimed, ensure_ascii=False), encoding="utf-8")
+        expect_raise("align 重算后句子起止变了：按旧 basis 的 line:2 报错停下", [ident()[0], line2, ident()[2]],
+                     ("e02", "另一版编号", line2["basis"]))
     finally:
         p.write_text(kept, encoding="utf-8")
     write_edl([ident()[0], ev("e02", "shot02", "cut:1"), ident()[2]])
     assert edl.plan(F.drama, F.epd)[1].fin == edl.frame(5.04)
+
+
+def t_moved() -> None:
+    """align v4 的 moved：shot03 第 3 句「Let's go.」其实抢在第 2 句之前说（ASR 找回在 2.4–3.2s，时间顺序 ≠ 编号顺序）。
+    line:3 锚点取实测起止；整句删掉它 V2 不报、只删半句报；第 2 句改成 missing 后拿它当锚点照旧报错停下。"""
+    p = edl.align_path(F.epd, "shot03", F.take("shot03"))
+    kept = p.read_text(encoding="utf-8")
+    j = json.loads(kept)
+    j["lines"][2] |= {"start": 2.4, "end": 3.2, "conf": None, "status": align.MOVED,
+                      "words": [{"w": "Let's", "s": 2.4, "e": 2.6}, {"w": "go.", "s": 3.0, "e": 3.2}],
+                      "moved": {"expected": [7.5, 9.0], "found": [2.4, 3.2], "match": 1.0}}
+    j["speech"] = align.speech_spans(j["lines"])
+    p.write_text(json.dumps(j, ensure_ascii=False), encoding="utf-8")
+    ok = {"match_ok": "自测：只查 V2"}
+    try:
+        write_edl([*ident()[:2], ev("e03", "shot03", "line:3.start-0.3")])
+        assert edl.plan(F.drama, F.epd)[2].fin == edl.frame(2.1)       # 实测 2.4 − 0.3；按计划窗会是 7.2
+        RESULTS.append(("moved 句当锚点：line:3.start-0.3 取实测起止", "—", "2.1s → 50 帧"))
+        expect("moved 句整句删（它在第 2 句之前说）", [*ident()[:2], ev("e03", "shot03", a_out=2.1), ev("e04", "shot03", 3.5, **ok)],
+               set())
+        expect("moved 句只删半句", [*ident()[:2], ev("e03", "shot03", a_out=2.1), ev("e04", "shot03", 2.8, **ok)], {"V2"},
+               has=("删了半句", "第 3 句", "1/2 个词"))
+        write_edl(ident())
+        rows = json.loads(edl.candidates(F.drama, F.epd).read_text(encoding="utf-8"))["events"]
+        gaps = next(r for r in rows if r["shot"] == "shot03")["gaps"]
+        want = [{"lo": 2.0, "hi": 2.292, "kind": "句间"}, {"lo": 2.708, "hi": 2.917, "kind": "句内"}, {"lo": 3.292, "hi": 4.083, "kind": "句间"}]
+        assert all(g in gaps for g in want), gaps
+        RESULTS.append(("candidates：moved 句按时间排（第 1 句 → 第 3 句 → 第 2 句）", "—", "句间 / 句内 / 句间"))
+        j["lines"][1] |={"start": 4.0, "end": 6.0, "conf": 0.9, "words": [], "status": align.MISSING}
+        j["speech"] = align.speech_spans(j["lines"])
+        p.write_text(json.dumps(j, ensure_ascii=False), encoding="utf-8")
+        expect_raise("missing 句当锚点", [*ident()[:2], ev("e03", "shot03", "line:2.start")], ("e03", "没对上（missing）"))
+    finally:
+        p.write_text(kept, encoding="utf-8")
 
 
 def t_end_frames() -> None:
@@ -557,8 +599,8 @@ def main() -> int:
     edl.ALIGN_PY = root / "没有这个_align.py"          # 缓存缺了就报错，不去真跑模型
     try:
         F = build(root)
-        for t in (t_identity, t_plan_frames, t_init, t_planted, t_v1, t_stale, t_v3, t_v4, t_chengjie, t_basis, t_end_frames, t_v6_v7,
-                  t_v8, t_v9, t_v10_ledger, t_candidates, t_cli):
+        for t in (t_identity, t_plan_frames, t_init, t_planted, t_v1, t_stale, t_v3, t_v4, t_chengjie, t_basis, t_moved, t_end_frames,
+                  t_v6_v7, t_v8, t_v9, t_v10_ledger, t_candidates, t_cli):
             t()
     finally:
         script_tools.REPO = repo_bound

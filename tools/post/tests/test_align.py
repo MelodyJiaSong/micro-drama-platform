@@ -160,6 +160,180 @@ def test_speech_spans() -> None:
             {"status": "offscreen", "words": []},
             {"status": "low_conf", "words": [{"s": 1.84, "e": 2.0}, {"s": 3.0, "e": 3.0}]}]
     assert align.speech_spans(recs) == [[0.5, 1.2], [1.5, 2.0]]
+    assert align.speech_spans(recs + [{"status": "moved", "words": [{"w": "Go.", "s": 2.4, "e": 2.7}]}]) == [[0.5, 1.2], [1.5, 2.0], [2.4, 2.7]]
+
+
+def _realign(words: dict[str, list[align.Word]], calls: list[tuple[str, float, float]]) -> align.Realign:
+    """假的重对齐：按句子给出强制对齐的词，记下被要求对齐的窗。"""
+    def run(text: str, a: float, b: float) -> list[align.Word]:
+        calls.append((text, round(a, 3), round(b, 3)))
+        return words[text]
+    return run
+
+
+def _no_realign(text: str, a: float, b: float) -> list[align.Word]:
+    raise AssertionError(f"不该重对齐：{text} {a}–{b}")
+
+
+def _missing(idx: int, text: str, t0: float, t1: float) -> dict:
+    """按剧本顺序对齐时被挤扁的一句：词全是零时长 → missing。"""
+    return align.line_record(idx, _line(t0=t0, t1=t1, text=text), [(f" {w}", t0, t0, 0.9) for w in text.split()])
+
+
+# shot05 的形状：模型把第 2 句挪到第 1 句前面说；按剧本顺序对齐时第 1 句的句首词被拖过来盖住第 2 句，第 2 句挤扁成 missing
+SWAP_HEARD = [("Dad's", 1.0, 1.1), ("boots", 1.1, 1.2), ("are", 1.2, 1.4), ("fine.", 1.4, 1.6),
+              ("Cobbles", 2.4, 2.6), ("are", 2.6, 2.7), ("up", 2.7, 2.8), ("the", 2.8, 2.9), ("path.", 2.9, 3.2)]
+# 第 2 句在找到的那段音频上重对齐：首尾比 ASR 宽一点，settle 按 ASR 的同词收回
+SWAP_REALIGN = {"Dad's boots are fine.": [(" Dad's", 0.94, 1.1, 0.9), (" boots", 1.1, 1.2, 0.95), (" are", 1.2, 1.4, 0.95),
+                                          (" fine.", 1.4, 1.72, 0.9)]}
+
+
+SWAP_FIRST = [(" Kobolds", 0.9, 2.6, 0.5), (" are", 2.6, 2.68, 0.99), (" up", 2.68, 2.78, 0.99), (" the", 2.78, 2.9, 0.99),
+              (" path.", 2.9, 3.2, 0.95)]
+
+
+def _swapped() -> list[dict]:
+    first = align.line_record(1, _line(t0=0.0, t1=3.0, text="Kobolds are up the path."), SWAP_FIRST)
+    second = align.line_record(2, _line(t0=3.0, t1=4.5, text="Dad's boots are fine."),
+                               [(" Dad's", 3.18, 3.2, 0.5), (" boots", 3.2, 3.2, 1.0), (" are", 3.2, 3.2, 0.99), (" fine.", 3.2, 3.2, 0.98)])
+    return [align.settle(r, SWAP_HEARD) for r in (first, second)]
+
+
+def test_relocate_swapped() -> None:
+    before = _swapped()
+    assert [(r["status"], r["start"], r["end"]) for r in before] == [("ok", 0.9, 3.2), ("missing", 3.0, 4.5)]
+    calls: list[tuple[str, float, float]] = []
+    one, two = align.relocate(before, SWAP_HEARD, _realign(SWAP_REALIGN, calls))
+    # ASR 那段 1.0–1.6 两边各放宽 MOVE_PAD 重对齐
+    assert calls == [("Dad's boots are fine.", 0.7, 1.9)]
+    # 第 2 句找回：词与起止取重对齐、按 ASR 收过首尾（0.94 → 1.0、1.72 → 1.6），记下计划窗、找到处与对上几成
+    assert (two["status"], two["start"], two["end"], two["conf"], two["cover"]) == ("moved", 1.0, 1.6, 0.925, 1.0)
+    assert [(w["w"], w["s"], w["e"]) for w in two["words"]] == [(w, s, e) for w, s, e in SWAP_HEARD[:4]]
+    assert two["moved"] == {"expected": [3.0, 4.5], "found": [1.0, 1.6], "match": 1.0}
+    # 第 1 句让位：句首 Kobolds 先夹出找回句（1.6），ASR 按序把它对到 Cobbles（错听也算对上）→ 收到 2.4，只缩不扩
+    assert (one["status"], one["start"], one["end"], one["cover"]) == ("ok", 2.4, 3.2, 0.8)
+    assert [(w["w"], w["s"], w["e"]) for w in one["words"]][:2] == [("Kobolds", 2.4, 2.6), ("are", 2.6, 2.68)]
+    assert align.speech_spans([one, two]) == [[1.0, 1.6], [2.4, 3.2]]
+    assert align.swapped(two, [one, two]) == "抢在 #1 之前说" and align.swapped(one, [one, two]) == "落到 #2 之后说"
+    assert before == _swapped()                                                  # 不改入参
+
+
+def test_relocate_neighbour_low() -> None:
+    # 第 1 句「Kobolds are up.」的覆盖率只是借了第 2 句的 are 才够：第 2 句找回后它只剩 up 一个词对得上 → 降 low_conf
+    heard = [("Dad's", 1.0, 1.1), ("boots", 1.1, 1.2), ("are", 1.2, 1.4), ("fine.", 1.4, 1.6),
+             ("Cobbles", 2.4, 2.6), ("or", 2.6, 2.7), ("up", 2.7, 2.8)]
+    first = align.settle(align.line_record(1, _line(t0=0.0, t1=3.0, text="Kobolds are up."),
+                                           [(" Kobolds", 0.9, 2.6, 0.5), (" are", 2.6, 2.7, 0.9), (" up", 2.7, 2.8, 0.9)]), heard)
+    second = align.settle(align.line_record(2, _line(t0=3.0, t1=4.5, text="Dad's boots are fine."),
+                                            [(" Dad's", 2.8, 2.8, 0.9), (" boots", 2.8, 2.8, 0.9), (" are", 2.8, 2.8, 0.9),
+                                             (" fine.", 2.8, 2.8, 0.9)]), heard)
+    assert (first["status"], first["cover"], second["status"]) == ("ok", 0.667, "missing")
+    one, two = align.relocate([first, second], heard, _realign(SWAP_REALIGN, []))
+    assert (two["status"], two["start"], two["end"]) == ("moved", 1.0, 1.6)
+    assert (one["status"], one["start"], one["end"], one["cover"]) == ("low_conf", 2.4, 2.8, 0.333)
+
+
+def test_relocate_noop() -> None:
+    # 顺序没乱、没有 missing：原样返回（同一个对象，一个字段都不动）
+    heard = [("Thank", 5.0, 5.2), ("you,", 5.2, 5.4), ("Egan.", 5.5, 5.9), ("Let's", 7.0, 7.2), ("go.", 7.2, 7.5)]
+    thanks = align.settle(align.line_record(1, _line(t0=4.5, t1=6.0, text="Thank you, Eagan."),
+                                            [(" Thank", 5.0, 5.2, 0.9), (" you,", 5.2, 5.4, 0.9), (" Eagan.", 5.5, 5.9, 0.6)]), heard)
+    go = align.settle(align.line_record(2, _line(t0=6.5, t1=8.0, text="Let's go."), [(" Let's", 7.0, 7.2, 0.9), (" go.", 7.2, 7.5, 0.9)]),
+                      heard)
+    recs = [thanks, go]
+    assert align.relocate(recs, heard, _no_realign) is recs
+    # missing 句的词只是别的 ok 句的核心（Thank you 归「Thank you, Eagan.」）：不找回，谁都不动
+    lost = align.line_record(3, _line(t0=8.0, t1=9.0, text="Thank you."), [(" Thank", 7.5, 7.5, 0.9), (" you.", 7.5, 7.5, 0.9)])
+    assert lost["status"] == "missing"
+    assert align.relocate(recs + [lost], heard, _no_realign) == recs + [lost]
+    # 按序对上不到 MOVE_MIN（Go home now. 只听到 Go now：3 词对上 2 个 = 0.67）：不找回
+    far = align.line_record(3, _line(t0=8.0, t1=9.0, text="Go home now."), [(" Go", 7.5, 7.5, 0.9), (" home", 7.5, 7.5, 0.9),
+                                                                            (" now.", 7.5, 7.5, 0.9)])
+    assert align.relocate([thanks, far], heard[:3] + [("Go", 7.0, 7.2), ("now.", 7.2, 7.5)], _no_realign) == [thanks, far]
+
+
+# shot10 实测：whisper 把 take 的第一个词拖回 0 s（A 0.00–8.68），同一模型强制对齐在 0–11.26 s 上把它放在 8.60
+SHOT10_HEARD = [("A", 0.0, 8.68), ("shield?", 8.68, 8.94), ("I", 10.22, 10.32), ("don't", 10.32, 10.46), ("use", 10.46, 10.64),
+                ("shields.", 10.64, 10.96), ("Got", 11.56, 11.64), ("a", 11.64, 11.84), ("shield?", 11.84, 12.02)]
+SHOT10_REALIGN = {"A shield. ...I don't use shields.": [
+    (" A", 8.6, 8.72, 0.109), (" shield.", 8.72, 10.28, 0.692), (" ...I", 10.28, 10.32, 0.005), (" don't", 10.32, 10.5, 0.995),
+    (" use", 10.5, 10.62, 0.855), (" shields.", 10.62, 11.0, 0.949)]}
+
+
+def test_relocate_head() -> None:
+    # 第 2 句在 take 开头、被挤成 missing（开头两句调了语序的形状）：起止不取 ASR 的 0.00，取重对齐、按 ASR 收首尾
+    got = align.settle(align.line_record(3, _line(t0=10.0, t1=14.0, text="Got a shield."),
+                                         [(" Got", 11.62, 11.64, 0.36), (" a", 11.64, 11.84, 0.99), (" shield.", 11.84, 12.02, 0.61)]),
+                       SHOT10_HEARD)
+    recs = [_missing(2, "A shield. ...I don't use shields.", 5.0, 10.0), got]
+    calls: list[tuple[str, float, float]] = []
+    two, three = align.relocate(recs, SHOT10_HEARD, _realign(SHOT10_REALIGN, calls))
+    assert calls == [("A shield. ...I don't use shields.", 0.0, 11.26)]
+    assert (two["status"], two["start"], two["end"], two["cover"]) == ("moved", 8.6, 10.96, 1.0)
+    assert two["moved"] == {"expected": [5.0, 10.0], "found": [8.6, 10.96], "match": 1.0}
+    assert align.speech_spans([two, three])[0][0] == 8.6 and three == got
+    # 重对齐也对不上（过半的词挤成零时长）：这段不是它，仍 missing，谁都不动
+    squeezed = {"A shield. ...I don't use shields.": [(f" {w}", 11.2, 11.2, 0.5) for w in "A shield. ...I don't use shields.".split()]}
+    assert align.relocate(recs, SHOT10_HEARD, _realign(squeezed, [])) == recs
+
+
+def test_relocate_owned_insertion() -> None:
+    # shot06 实测时刻：「That's ten!」被截在 That's 之后（ASR 没有 ten.）、挤成 missing。别的句子的词（#3 的 Nine. / Ten）不许
+    # 夹在段内当多出的词：找不回、#3 不动（以前会连 #3 的 Nine. 一起抢走，#3 的句首被削到 24.06）
+    heard = [("That's", 21.22, 21.82), ("Nine.", 22.88, 23.2), ("Ten", 23.96, 24.06), ("each", 24.06, 24.3), ("or", 24.3, 24.46),
+             ("ten", 24.5, 24.66), ("total?", 24.66, 24.9), ("Each,", 25.88, 26.04), ("obviously.", 26.42, 26.86)]
+    three = align.settle(align.line_record(3, _line(t0=17.0, t1=27.0, text="Nine. ...Ten each, or ten total?"),
+                                           [(" Nine.", 23.18, 23.28, 0.6), (" ...Ten", 23.96, 24.08, 0.02), (" each,", 24.08, 24.26, 0.71),
+                                            (" or", 24.4, 24.46, 0.99), (" ten", 24.5, 24.64, 0.98), (" total?", 24.64, 24.86, 0.87)]), heard)
+    four = align.settle(align.line_record(4, _line(t0=17.0, t1=27.0, text="...Each. Obviously."),
+                                          [(" ...Each.", 25.88, 26.04, 0.49), (" Obviously.", 26.46, 26.86, 0.65)]), heard)
+    recs = [_missing(2, "That's ten!", 17.0, 27.0), three, four]
+    assert (three["status"], three["start"], three["cover"]) == ("ok", 23.18, 1.0)
+    assert align.relocate(recs, heard, _no_realign) == recs
+
+
+def test_relocate_nested() -> None:
+    # 第 2 句夹在第 1 句两个分句之间说：第 1 句拖长的 path. 夹出第 2 句、按 ASR 收到 1.0，Can't 起 2.2——第 2 句前后留出句间空档
+    heard = [("Kobolds", 0.0, 0.3), ("are", 0.3, 0.4), ("up", 0.4, 0.5), ("the", 0.5, 0.6), ("path.", 0.6, 1.0),
+             ("Dad's", 1.2, 1.3), ("boots", 1.3, 1.4), ("are", 1.4, 1.6), ("fine.", 1.6, 1.8),
+             ("Can't", 2.0, 2.4), ("miss", 2.4, 2.5), ("the", 2.5, 2.6), ("candles.", 2.6, 3.0)]
+    one = align.settle(align.line_record(1, _line(t0=0.0, t1=2.5, text="Kobolds are up the path. Can't miss the candles."),
+                                         [(" Kobolds", 0.0, 0.3, 0.9), (" are", 0.3, 0.4, 0.9), (" up", 0.4, 0.5, 0.9), (" the", 0.5, 0.6, 0.9),
+                                          (" path.", 0.6, 2.2, 0.9), (" Can't", 2.2, 2.4, 0.9), (" miss", 2.4, 2.5, 0.9),
+                                          (" the", 2.5, 2.6, 0.9), (" candles.", 2.6, 3.0, 0.9)]), heard)
+    calls: list[tuple[str, float, float]] = []
+    realign = _realign({"Dad's boots are fine.": [(" Dad's", 1.15, 1.3, 0.9), (" boots", 1.3, 1.4, 0.9), (" are", 1.4, 1.6, 0.9),
+                                                  (" fine.", 1.6, 1.9, 0.9)]}, calls)
+    first, second = align.relocate([one, _missing(2, "Dad's boots are fine.", 2.5, 3.5)], heard, realign)
+    assert calls == [("Dad's boots are fine.", 1.0, 2.0)]                        # 放宽 MOVE_PAD 也不越过段外相邻的 ASR 词
+    assert (second["status"], second["start"], second["end"]) == ("moved", 1.2, 1.8)
+    assert (first["status"], first["start"], first["end"], first["cover"]) == ("ok", 0.0, 3.0, 1.0)
+    assert [(w["w"], w["s"], w["e"]) for w in first["words"]][4:6] == [("path.", 0.6, 1.0), ("Can't", 2.2, 2.4)]
+    assert not any(w["s"] < 1.8 and w["e"] > 1.2 for w in first["words"])
+    assert align.speech_spans([first, second]) == [[0.0, 1.0], [1.2, 1.8], [2.2, 3.0]]
+
+
+def test_relocate_contained() -> None:
+    # 两句 missing，「Let's go.」没说、「Let's go home.」说了：对上的原词多的先定，短句不抢长句的词
+    heard = [("Let's", 1.0, 1.2), ("go", 1.2, 1.4), ("home.", 1.4, 1.8), ("Fine.", 3.0, 3.4)]
+    fine = align.settle(align.line_record(1, _line(t0=2.8, t1=3.6, text="Fine."), [(" Fine.", 3.0, 3.4, 0.9)]), heard)
+    go, home = _missing(2, "Let's go.", 4.0, 5.0), _missing(3, "Let's go home.", 5.0, 6.0)
+    calls: list[tuple[str, float, float]] = []
+    realign = _realign({"Let's go home.": [(" Let's", 1.0, 1.2, 0.9), (" go", 1.2, 1.4, 0.9), (" home.", 1.4, 1.8, 0.9)]}, calls)
+    out = align.relocate([fine, go, home], heard, realign)
+    assert [(r["status"], r["start"], r["end"]) for r in out] == [("ok", 3.0, 3.4), ("missing", 4.0, 5.0), ("moved", 1.0, 1.8)]
+    assert [c[0] for c in calls] == ["Let's go home."]
+
+
+def test_reclaim_unheard_edge() -> None:
+    # 第 1 句的句首词 ASR 没听到（SWAP 去掉 Cobbles）：Kobolds 只夹出找回句（1.6 起），不收到 are（2.6）——漏听的词不当成空档
+    heard = SWAP_HEARD[:4] + SWAP_HEARD[5:]
+    first = align.settle(align.line_record(1, _line(t0=0.0, t1=3.0, text="Kobolds are up the path."), SWAP_FIRST), heard)
+    second = _missing(2, "Dad's boots are fine.", 3.0, 4.5)
+    one, two = align.relocate([first, second], heard, _realign(SWAP_REALIGN, []))
+    assert (two["status"], two["start"], two["end"]) == ("moved", 1.0, 1.6)
+    assert (one["status"], one["start"], one["end"]) == ("ok", 1.6, 3.2)
+    assert [(w["w"], w["s"], w["e"]) for w in one["words"]][:2] == [("Kobolds", 1.6, 2.6), ("are", 2.6, 2.68)]
 
 
 def test_pick_cuts() -> None:
