@@ -29,8 +29,9 @@ import edl            # 对齐缓存的位置与读法只在 edl.py 定义
 import segments
 
 MIN_CUE_S = 1.0
-CPS_EN = 17.0         # 字幕阅读速度上限（字符 / 秒，不计换行）：不含 CJK 的一条
+CPS_EN = 20.0         # 字幕阅读速度上限（字符 / 秒，不计换行）：不含 CJK 的一条（Netflix 英文成人口径；17 是儿童口径）
 CPS_ZH = 9.0          # 含 CJK 的一条
+SPILL_S = 0.5         # 镜尾台词读不完时，字幕最多越过段尾（切点）这么久；不压下一条、不越过整集片尾
 MS_PAD_S = 0.001      # SRT 起止各按毫秒取整，显示时长最多少 1 ms：排读完时间时先垫上
 PUNCT = "，。！？；：、,.!?;:…—"
 SENT = "。！？.!?…"
@@ -177,7 +178,7 @@ def kept(part: segments.Part, t: float) -> bool:
 
 
 def _cues_v2(epd: Path, part: segments.Part, lines: list[pc.Line]) -> list[Cue]:
-    """起点＝实测（或计划窗）映射到成片，夹在段首之后（入点按帧取整可能比句首晚半帧）；显示到读得完，不越过段尾。"""
+    """起点＝实测（或计划窗）映射到成片，夹在段首之后（入点按帧取整可能比句首晚半帧）；显示到读得完，最多越过段尾 SPILL_S。"""
     real = measured(epd, part, lines)
     out = []
     for i, s, d, cap in planned(lines):
@@ -188,10 +189,13 @@ def _cues_v2(epd: Path, part: segments.Part, lines: list[pc.Line]) -> list[Cue]:
             if al is not None and a >= al.end_s - edl.HALF_FRAME:
                 _warn_once(f"{part.shot}「{lines[i].text[:20]}」起点 {a:.2f}s 超出 take 的 {al.end_s:.2f}s（md 比出片新？），不出字幕")
             continue
-        limit = part.end if span else min(part.at(cap), part.end)
+        limit = part.end + SPILL_S if span else min(part.at(cap), part.end + SPILL_S)
         t0 = max(part.start, part.at(a))
         need = max(b - a, MIN_CUE_S, read_s(lines[i].text, _zh(lines[i])))
-        out.append(Cue(t0, min(t0 + need, limit), lines[i].text, _zh(lines[i]), f"{part.shot} 第 {i + 1} 句"))
+        end = min(t0 + need, limit)
+        if end > part.end:              # 跨了切点就在新镜里停满 SPILL_S，不在切点后一闪就收
+            end = limit
+        out.append(Cue(t0, end, lines[i].text, _zh(lines[i]), f"{part.shot} 第 {i + 1} 句"))
     return out
 
 
@@ -213,7 +217,8 @@ def cues_for(epd: Path, segs: Sequence[pc.Seg | segments.Part]) -> list[Cue]:
         if out[i].end > out[i + 1].start:
             c = out[i]
             out[i] = Cue(c.start, max(c.start + 0.2, out[i + 1].start - 0.04), c.src, c.zh, c.where)
-    return out
+    tail = max((s.start + s.dur for s in segs), default=0.0)
+    return [Cue(c.start, min(c.end, tail), c.src, c.zh, c.where) for c in out]
 
 
 # ─────────────────────────── 折行 ───────────────────────────

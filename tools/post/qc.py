@@ -416,12 +416,12 @@ def q7(video: Path, evs: list[Event], m: pc.Media) -> Check:
                 probs.append(f"{tag} 不在成片 0–{m.v_dur:.3f}s 内")
                 continue
             ev = next(e for e in reversed(evs) if a >= e.start - FRAME_S / 2)     # SRT 毫秒取整可能落在边界前半帧
-            if b > ev.end and frames(b - ev.end) > TOL_FRAMES:
-                probs.append(f"{tag} 越过 {ev.id} 尾 {ev.end:.3f}s")
+            if b > ev.end + subs.SPILL_S and frames(b - ev.end - subs.SPILL_S) > TOL_FRAMES:
+                probs.append(f"{tag} 越过 {ev.id} 尾 {ev.end:.3f}s 超过 {subs.SPILL_S:g}s")
             rate, cap = subs.cps(text, b - a), subs.cps_cap(text)
             if rate > cap:
                 probs.append(f"{tag} CPS {rate:.1f} > {cap:g}")
-    return _verdict(probs, f"{'、'.join(p.name for p in files)} 共 {n} 条：都在成片与所属事件内，CPS 未超",
+    return _verdict(probs, f"{'、'.join(p.name for p in files)} 共 {n} 条：都在成片内、越段尾不超 {subs.SPILL_S:g}s，CPS 未超",
                     {"files": [p.name for p in files], "cues": n})
 
 
