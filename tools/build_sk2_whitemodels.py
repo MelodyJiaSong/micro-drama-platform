@@ -35,7 +35,10 @@ REPO = Path(__file__).resolve().parent.parent
 A = REPO / "ai_videos" / "shikong_lvxing" / "sk2" / "2_世界观人设"
 PROPS = A / "props"
 INV = A / "object_inventory.toml"
-BLENDER = os.environ.get("BLENDER_BIN") or r"C:\Program Files\Blender Foundation\Blender 5.1\blender.exe"
+import sys as _sys, os as _os
+_sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+from blender_exe import BLENDER as _BLENDER_EXE  # noqa: E402  Blender 路径唯一出处
+BLENDER = _BLENDER_EXE
 
 
 def objects():

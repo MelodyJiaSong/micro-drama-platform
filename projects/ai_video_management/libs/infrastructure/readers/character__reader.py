@@ -18,7 +18,7 @@ from libs.common.exposed_tree import ExposedTree
 from libs.common.safe_resolve import SafeResolver
 from libs.domain.errors.character_video__error import InvalidCharactersDirError
 
-_CHARACTER_DIR_RE: re.Pattern[str] = re.compile(r"^c\d+(_.*)?$")
+from libs.common.character_dir import CHARACTER_DIR_RE as _CHARACTER_DIR_RE
 _VIDEO_EXTENSIONS: frozenset[str] = frozenset(
     {".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v"}
 )
@@ -87,7 +87,9 @@ class CharacterReader:
         if not self._exposed.is_inside(norm):
             raise InvalidCharactersDirError("path outside sandbox")
         parts = norm.split("/")
-        depth = drama_ref.drama_depth(self._exposed.root, parts)
+        # `asset_root_depth`: a series' shared `_series/characters/` owns the
+        # characters its episodes reuse, and is not a drama.
+        depth = drama_ref.asset_root_depth(self._exposed.root, parts)
         if depth is None or len(parts) < depth + 1:
             raise InvalidCharactersDirError(
                 "path must be ai_videos/{drama}/.../characters/"

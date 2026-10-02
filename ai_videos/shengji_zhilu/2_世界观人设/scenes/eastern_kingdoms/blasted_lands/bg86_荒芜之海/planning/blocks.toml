@@ -1,0 +1,142 @@
+# 荒芜之海 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg86"
+name_zh = "荒芜之海"
+size_m = [800, 600]
+px_per_m = 2.0
+grid_m = 50
+scale_src = "推定"
+scale_note = "取区级平面图东缘山墙与海岸带之间一段约 800 m 的岸线：西侧山墙脚、崖高约 45 m 取 terrain.toml 的 height_m；断崖到水线、塌落岩块离岸距离均为推定"
+# 世界树画面：诅咒之地东缘的海面，被岸上的红尘染成浑浊的铁锈色，浪头低而钝，岸线是一路塌进海里的紫黑岩块
+# 区图：东缘山墙（无缺口）紧贴海岸，山背直接陡降入海；区内唯一的水
+absent = [
+    "任何人物与动物（包括海鸟、鱼群与搁浅的活物）",
+    "船只、码头、栈桥、灯塔、渔网与任何人造物",
+    "沙滩、棕榈与任何绿色植被",
+    "蓝绿色清澈海水、白色浪花排浪与晴朗碧空",
+    "海中的岛屿与对岸陆地",
+    "火、烟与任何人工光源",
+    "上下断崖的路或台阶",
+    "雪、雨、雷电、暴风浪与夜景",
+    "4.0.3 之后本区新增的任何地貌与据点",
+]
+
+[[ridge]]
+name = "东缘山墙（红原与海之间，无缺口；东坡陡降成断崖）"
+poly = [[0, 0], [262, 0], [245, 140], [276, 290], [252, 440], [270, 600], [0, 600]]
+height_m = 45
+src = "推定"
+
+[[water]]
+name = "铁锈色海面（浑浊、浪低而钝；水线贴着断崖根部的碎石滩）"
+path = [[562, -20], [575, 300], [560, 620]]
+width_m = 480
+depth_m = 25
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "east"
+count = 1
+may_overlap = true
+name = "断崖根部碎石滩（窄长，浪打到崖脚）"
+xy = [300, 300]
+size = [40, 560]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p64"
+face = "east"
+count = 8
+over_water = true
+name = "塌落岩块群·北（崖顶整块掰断落下，半截没在水里）"
+xy = [365, 150]
+size = [60, 44]
+h_m = 7
+rot = 12
+src = "推定"
+note = "世界树「岸线是一路塌进海里的紫黑岩块」"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p65"
+face = "east"
+over_water = true
+name = "离岸孤立海蚀岩柱"
+xy = [440, 262]
+size = [14, 12]
+h_m = 24
+src = "推定"
+note = "与岸上塌块同一种紫黑火成岩，根部被浪啃出一圈凹槽"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p64"
+face = "east"
+over_water = true
+name = "斜插入水的巨型岩板"
+xy = [382, 360]
+size = [34, 10]
+h_m = 5
+rot = 32
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p64"
+face = "east"
+count = 10
+over_water = true
+name = "塌落岩块群·南（最大一片，向海伸出成天然石堤）"
+xy = [362, 448]
+size = [80, 52]
+h_m = 9
+rot = -8
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "plaza"
+face = "east"
+count = 1
+may_overlap = true
+over_water = true
+name = "浪退后露出的红泥浅滩"
+xy = [322, 545]
+size = [36, 60]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p65"
+face = "east"
+into_ridge = true
+name = "崖顶斜插的紫黑岩柱"
+xy = [140, 210]
+size = [12, 10]
+h_m = 22
+rot = 20
+src = "推定"
+note = "默认机位（崖顶）旁的前景物，承区级「斜插向天的紫黑岩柱」"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg86-c1"
+eye = [400, 552]
+target = [400, 300]
+eye_h = 26.7
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

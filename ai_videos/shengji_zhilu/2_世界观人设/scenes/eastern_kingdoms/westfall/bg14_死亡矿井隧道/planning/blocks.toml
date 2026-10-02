@@ -1,0 +1,197 @@
+# 死亡矿井坑道 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 本档是副本里「有代表性的一段」坑道，无坐标、无一手尺寸：整段布局按锚点 prompt 推定。
+# 坑道：西段直道 5 m 宽（x 0–39）→ 转运段 22 × 16 m（x 39–61）→ 东段收窄、折向东北、朝东缓缓下行。
+# 岩体用 [[ridge]] 表示坑道两侧的实心岩（height_m 为推定的顶板以上岩层厚度，只作图示）。
+# 木支撑框每 3–4 m 一道、油灯每一两道框一盏，逐道画会糊成一片，不入图；数量与节奏以锚点 prompt 为准。
+
+[meta]
+bg = "bg14"
+name_zh = "死亡矿井坑道"
+size_m = [110, 36]
+px_per_m = 12.0
+scale_src = "推定"
+scale_note = "取副本通道里有代表性的一段约 100 m：西段直坑道约 5 m 宽、4 m 高（两人并肩、比人高一倍多），转运段约 22 × 16 m；无一手尺寸出处"
+# 世界树画面：窄而长的木支撑矿道，轨道沿地面延伸，两侧是敲出来的岩壁与堆放的矿车
+absent = [
+    "天光、竖井透光（本段在地下深处，唯一光源是横梁油灯）",
+    "火把、炉火、熔铁的红光（熔炉大厅是 bg15，不入本档）",
+    "点着的火药桶、烟、爆破扬尘（爆破只在 shot 层写）",
+    "发光水晶、发光的石头",
+    "海水、船、船坞（地下船坞是 bg16，不入本档）",
+    "伐木机、工头与任何匪帮成员（属 shot 层）",
+    "任何人物与动物",
+    "文字、标牌、编号",
+]
+
+[[ridge]]
+name = "北侧岩体（西段北壁至黑岔口西沿）"
+poly = [[0, 0], [42, 0], [44.5, 14], [39, 14], [39, 19.5], [0, 19.5]]
+height_m = 20
+src = "推定"
+
+[[ridge]]
+name = "北侧岩体（黑岔口东沿至东段北壁）"
+poly = [[46, 0], [110, 0], [110, 11.5], [80, 17.5], [61, 19.5], [61, 14], [47.5, 14]]
+height_m = 20
+src = "推定"
+
+[[ridge]]
+name = "南侧岩体"
+poly = [[0, 24.5], [39, 24.5], [39, 30], [61, 30], [61, 24.5], [80, 22.5], [110, 16.5], [110, 36], [0, 36]]
+height_m = 20
+src = "推定"
+
+[[road]]
+name = "西段直坑道（5 m 宽、4 m 高）"
+path = [[0, 22], [39, 22]]
+width_m = 5
+src = "推定"
+
+[[road]]
+name = "东段坑道（收窄、折向东北、朝东下行）"
+path = [[61, 22], [80, 20], [110, 14]]
+width_m = 5
+src = "推定"
+
+[[road]]
+name = "北壁黑岔口（不点灯，地面高一台阶）"
+path = [[46, 14], [44, 3]]
+width_m = 3
+src = "推定"
+
+[[road]]
+name = "铁轨主线（沿坑道中线贯通）"
+path = [[0, 22], [39, 22], [61, 22], [80, 20], [110, 14]]
+width_m = 1.5
+src = "推定"
+
+[[road]]
+name = "铁轨侧线（转运段道岔分出）"
+path = [[42, 22], [48, 26.5], [60, 26.5]]
+width_m = 1.5
+src = "推定"
+
+[[water]]
+name = "轨沟渗水（一线细水，低洼处积成小水洼）"
+path = [[0, 22.9], [39, 22.9], [61, 22.9]]
+width_m = 0.4
+depth_m = 0.05
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "chamber"
+face = "south"
+count = 1
+into_ridge = true
+name = "转运段"
+xy = [50, 22]
+size = [22, 16]
+h_m = 0
+src = "推定"
+note = "坑道加宽段，顶比坑道高、两根并排横梁加固；地面被矿车碾成硬土；挂两盏灯，照得最亮"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p370"
+face = "south"
+over_water = true
+name = "西段南壁脱轨满载矿车"
+xy = [10, 23.4]
+size = [2.4, 1.4]
+h_m = 1.2
+src = "推定"
+note = "锚点机位近景；装满铁灰色碎矿，脱轨靠在南壁墙根，不挡顺坑道的一点透视"
+
+[[block]]
+id = "b03"
+kind = "asset"
+parts = [{asset = "p365", at = [-1.9, 0.7], yaw = 0}, {asset = "p365", at = [-0.8, 0.75], yaw = 3}, {asset = "p365", at = [0.3, 0.7], yaw = -2}, {asset = "p365", at = [1.4, 0.75], yaw = 0}, {asset = "p365", at = [-1.3, -0.4], yaw = 8}, {asset = "p365", at = [0.9, -0.5], yaw = -6}]
+face = "south"
+may_overlap = true
+name = "北壁木箱堆"
+xy = [53, 16]
+size = [5, 2.5]
+h_m = 1.8
+src = "推定"
+note = "钉死的木箱，码在黑岔口东侧的北壁下"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p364"
+face = "south"
+count = 3
+may_overlap = true
+name = "火药桶（从不点燃）"
+xy = [57.5, 16]
+size = [2, 1.5]
+h_m = 1.0
+src = "推定"
+note = "几只箍铁的火药桶立在木箱边；在灯旁但从不点燃，爆破只在 shot 层写"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p367"
+face = "south"
+may_overlap = true
+name = "南壁原木与木板垛"
+xy = [44, 28.4]
+size = [6, 2.2]
+h_m = 1.4
+src = "推定"
+note = "成垛的粗原木与锯好的木板，断面是浅黄新茬"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p370"
+face = "south"
+count = 3
+may_overlap = true
+name = "侧线空矿车串"
+xy = [56, 26.5]
+size = [7, 1.4]
+h_m = 1.2
+src = "推定"
+note = "侧线上停着的一串空矿车"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p370"
+face = "south"
+may_overlap = true
+name = "侧线边翻倒的矿车"
+xy = [50, 28.6]
+size = [2.2, 1.4]
+h_m = 1.0
+src = "推定"
+note = "翻倒在侧线南边，碎矿泼了一地"
+
+[[block]]
+id = "b08"
+kind = "mine_portal"
+face = "south"
+count = 1
+may_overlap = true
+name = "黑岔口口上的原木撑"
+xy = [46, 14.8]
+size = [3.4, 0.6]
+h_m = 3.0
+src = "推定"
+note = "口上用两根原木草草撑着，像是新挖开不久；伐木机从这里出（shot 层）"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg14-c1"
+eye = [55, 3]
+target = [55, 18]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

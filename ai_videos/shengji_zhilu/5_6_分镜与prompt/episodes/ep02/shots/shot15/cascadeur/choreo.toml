@@ -1,0 +1,58 @@
+# shot15 人体动作表（Cascadeur 层）。位置与朝向一律从 ../planning/overhead.toml 读，这里只写「身体摆成什么样」。
+# 改动作 ＝ 改本文件重跑 `python tools/cascadeur/choreo.py <shot 目录> --build`；部件都在共享库 tools/cascadeur/poses.toml。
+# 时刻与 shot15.md `动作:` 时间轴、overhead 的 [[hit]] / [[cast]] 逐拍对齐（rule 4h ②）。鼠面矿工与鬣狗人监工不在这里：色块人偶够用。
+# follow-up 052 G13：攻防镜的人体一律 Cascadeur。亚伦是 Cascadeur 体，审判的手势（双手一亮、左手一指）写在这里（引擎对 choreo 列了的人不再自动打技能卡手势）。
+
+[meta]
+origin = [19.6, 33.2]          # 平面图坐标；Cascadeur 原点 ＝ 杜克顶盾的那一点
+fps = 30
+
+# 杜克：0–4.9s 钢盾顶着监工，每挨一棒盾往下一沉、再往前一顶；8.7s 盾沿往上一磕；10.6s 起垂下盾喘气
+[actor."杜克"]
+# 6.8→8.3s 从监工东边抄上去：键要跟平面图路点一一对上，中间空着 Cascadeur 会自己插出一段提前走开（第 3 轮 6.8s 偏 0.66 m）
+gait = [[6.9, 8.2, "walk", "shield_guard"]]
+keys = [
+  [0.0, "stance_l+shield_guard"],
+  [0.8, "stance_l+shield_brace"],
+  [1.3, "lunge_small+shield_shove"],
+  [1.8, "stance_l+shield_guard"],
+  [2.4, "stance_l+shield_brace"],
+  [2.9, "lunge_small+shield_shove"],
+  [3.4, "stance_l+shield_guard"],
+  [3.6, "stance_l+shield_brace"],
+  [4.1, "stance_l+shield_guard"],
+  [4.9, "stance_l+shield_brace"],
+  [5.4, "stance_l+shield_guard"],
+  [5.9, "stance_l+shield_guard"],
+  [6.8, "stance_l+shield_guard"],
+  [8.3, "stance_l+shield_guard"],
+  [8.7, "lunge_small+shield_shove"],
+  [9.1, "stance_l+shield_guard"],
+  [9.3, "stance_l+shield_guard"],
+  [10.6, "stand+shield_low"],
+  [16.0, "stand+shield_low+breathe"],
+]
+
+# 亚伦：0–3.4s 从杜克身后绕到他右肩旁；4.4s 双手一亮、4.8s 左手往前一指（审判）；6.8s 往后侧身一让；
+# 7.2s 双手握锤，8.1s 一锤砸在监工左肩上；13.4s 走到窄轨边，14.8s 弯腰左手捡起卷纸
+[actor."亚伦"]
+gait = [[0.0, 3.3, "walk", "hammer_r_low"], [13.4, 14.2, "walk", "hammer_r_low"]]
+keys = [
+  [3.5, "stance_l+hammer_r_low"],
+  [4.4, "stance_l+hammer_r_low+palm_up_l"],
+  [4.8, "stance_l+hammer_r_low+point_l"],
+  [5.6, "stance_l+hammer_r_low+point_l"],
+  [5.9, "stance_l+hammer_r_low"],
+  [6.6, "stance_l+hammer_r_low"],
+  [6.8, "step_back+hammer_r_low"],
+  [7.2, "stance_l+twohand_low"],
+  [7.7, "stance_l+twohand_windup"],
+  [8.1, "lunge+twohand_strike"],
+  [8.5, "stance_l+twohand_low"],
+  [9.3, "stand+twohand_low"],
+  [13.3, "stand+hammer_r_low"],
+  [14.3, "stand+hammer_r_low"],
+  [14.8, "stand+hammer_r_low+pick_up_l"],
+  [15.3, "stand+hammer_r_low+hold_up_l"],
+  [16.0, "stand+hammer_r_low+hold_up_l"],
+]

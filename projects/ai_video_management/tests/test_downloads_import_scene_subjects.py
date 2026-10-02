@@ -157,3 +157,24 @@ def test_md_survives_the_import(tmp_path: Path) -> None:
     _importer(root, downloads).import_drama("ai_videos/d")
 
     assert (scene / "bg1_广场" / "bg1_广场.md").read_bytes() == b"prompts"
+
+
+def test_subject_is_found_under_world_hierarchy_layout(tmp_path: Path) -> None:
+    """`scenes/{大陆}/{区}/bg{N}_{主体}/` (shengji_zhilu, follow-up 006): the
+    subject sits three levels below `scenes/`, and a `bg{N}-{M}` download must
+    still route to it. Plates inside the subject are never mistaken for subjects."""
+    root = tmp_path / "repo"
+    zone = root / "ai_videos" / "d" / "2_世界观人设" / "scenes" / "eastern_kingdoms" / "elwynn_forest"
+    subject = zone / "bg4_闪金镇"
+    _touch(subject / "bg4_闪金镇.md", b"prompts")
+    _touch(subject / "bg4-1_镇心_十字路口" / "bg4-1_镇心_十字路口.md", b"plate prompt")
+    _touch(zone / "elwynn_forest.md", b"zone card")
+    _touch(zone / "ref" / "WorldMap-Elwynn_c60.jpg.link.json", b"{}")
+    downloads = tmp_path / "Downloads"
+    downloads.mkdir()
+    importer = _importer(root, downloads)
+    drama_dir = root / "ai_videos" / "d"
+
+    hit = importer._match_subject_any_scene("bg4-1_镇心_十字路口.png", drama_dir)
+    assert hit == subject
+    assert importer._match_subject_any_scene("bg9-1_不存在.png", drama_dir) is None

@@ -79,7 +79,8 @@ RAMMED_PATCH = ("bg2_东水门城门/bg2-1.png", (0.583, 0.667, 0.667, 0.750))
 
 MAT_NAMES = ("EARTH", "GROUND", "WATER", "RIVERBED", "RAMMED", "PLASTER", "TIMBER", "RED", "BLACK", "ROOF", "ROOF_UV",
              "GLAZED", "BRICK", "STONE", "REED", "WINDOW", "GILT", "LEAF", "BARK", "CLOTH_RED", "CLOTH_BLUE", "INVISIBLE",
-             "FIELD", "CLOTH_UNDYED", "SKIN", "BLOSSOM")
+             "FIELD", "CLOTH_UNDYED", "SKIN", "BLOSSOM",
+             "FIELD_A", "FIELD_B", "FIELD_C", "FIELD_D")   # 城外农田四色（麦苗/菜畦/翻耕/休耕）
 M = {n: i for i, n in enumerate(MAT_NAMES)}
 
 
@@ -521,6 +522,12 @@ def build_materials(pal: dict, city_quad: list[tuple[float, float]]) -> list[bpy
         "EARTH": pbr_material("EARTH", "raked_dirt", pal["earth"], 3.0, bump=0.5, keep_hue=0.1),
         "GROUND": ground_material(pal, city_quad),
         "WATER": water_material(pal["water"]),
+        # 农田四色：由取样得到的 field 基色派生——新绿（麦苗）、偏黄绿（菜畦）、
+        # 翻耕的湿土（暗红棕）、休耕的枯草（灰黄）。四色之间拉开明度，空中才看得出是拼布。
+        "FIELD_A": flat_material("FIELD_A", tuple(c * m for c, m in zip(pal["field"], (0.62, 1.30, 0.55))), 0.92),
+        "FIELD_B": flat_material("FIELD_B", tuple(c * m for c, m in zip(pal["field"], (1.05, 1.22, 0.42))), 0.92),
+        "FIELD_C": flat_material("FIELD_C", tuple(c * m for c, m in zip(pal["field"], (0.78, 0.60, 0.48))), 0.95),
+        "FIELD_D": flat_material("FIELD_D", tuple(c * m for c, m in zip(pal["field"], (1.18, 1.05, 0.70))), 0.93),
         "RIVERBED": flat_material("RIVERBED", tuple(c * 0.5 for c in pal["water"]), 0.9),
         "RAMMED": pbr_material("RAMMED", "excavated_soil_wall", pal["rammed"], 4.0, bump=0.6, keep_hue=0.05, overlay=layers),
         "PLASTER": pbr_material("PLASTER", "white_rough_plaster", pal["plaster"], 2.5, bump=0.25, keep_hue=0.35),
@@ -1182,6 +1189,12 @@ def classify(ob: bpy.types.Object, mats: list[bpy.types.Material], frame_c: bj.F
         idx = np.where(up | slope, M["ROOF"], np.where(zc < Z + 0.6, M["BRICK"], M["PLASTER"])).astype(np.int32)   # 院墙：青砖墙根、白灰墙身、瓦顶
     elif col in ("J_GROUND",) or name == "J_114_ridges":
         idx[:] = M["FIELD"]
+    elif col == "G_FIELDS":
+        # 城外农田：四种地色拼出空中看到的那张拼布（田埂走土色）。
+        # 只给**色块**，不做作物几何——从 15 m 掠过时决定观感的是色块边界与田埂的投影，不是麦穗。
+        idx[:] = M["EARTH"] if "ridges" in name else M[next(
+            (k for s, k in (("麦苗", "FIELD_A"), ("菜畦", "FIELD_B"), ("翻耕", "FIELD_C"), ("休耕", "FIELD_D"))
+             if s in name), "FIELD")]
     elif col.endswith(("_GROUND", "_STREET")) or col == "J_ROAD" or name.startswith("G_40") and "yujie" not in name:
         idx[:] = M["EARTH"]
         if name in ("D_56_stone_bridge",):

@@ -1,0 +1,245 @@
+# 卡加希亚要塞 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg417"
+name_zh = "卡加希亚要塞"
+size_m = [260, 200]
+px_per_m = 5.0
+scale_src = "地图量取"
+scale_note = "本图原点 ＝ 区级平面图 (4702, 1945) m；堡位（区图约 [90.7, 58.2]）、怒水河中线与两条路按区级 terrain.toml 平移换算。堡内布局无一手出处，按「尖木高墙 + 瞭望塔 + 指挥所」推定"
+# 世界树画面：东部河畔的兽人木石堡垒，尖木高墙与瞭望塔，墙头插着战歌氏族旗
+absent = [
+    "密林（堡子四周是伐尽的树桩秃地，林线在西北远处）",
+    "精灵式木构、紫顶与石板路",
+    "跨界河的桥（本档不画；河东是邻区崖台）",
+    "点着的火盆、火把、火塘与任何人工光源（白天默认，火塘冷灰）",
+    "伐木机、锯木台与炉口浓烟（属伐木营 bg426）",
+    "旗面上的文字与可辨的氏族纹章",
+    "任何人物、狼、坐骑与双足飞龙",
+    "4.0.3a 后的任何改建",
+]
+
+[[ridge]]
+name = "西岸红土陡坎（台地边缘跌落带）"
+poly = [[195, 0], [205, 0], [188, 58], [146, 200], [134, 200], [177, 58]]
+height_m = 12
+src = "推定"
+note = "台地比河面高十几米；陡坎位置贴河西岸推定"
+
+[[ridge]]
+name = "对岸红土崖台（邻区，只入远景）"
+poly = [[260, 60], [260, 200], [222, 200], [240, 130], [258, 70]]
+height_m = 30
+src = "地图量取"
+note = "区级 terrain.toml「怒水河东岸」平移"
+
+[[water]]
+name = "怒水河（浑黄界河）"
+path = [[240, 0], [223, 58], [178, 200]]
+width_m = 80
+depth_m = 6
+src = "地图量取"
+
+[[road]]
+name = "河畔支路（北来，到寨门）"
+path = [[88, 0], [96, 58], [82, 68]]
+width_m = 5
+src = "地图量取"
+
+[[road]]
+name = "东西主干道（擦堡南而过，东伸到台地边）"
+path = [[0, 180], [70, 146], [140, 120], [165, 104]]
+width_m = 8
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p375"
+face = "south"
+count = 40
+name = "伐木秃地（灰白树桩群）"
+xy = [22, 95]
+size = [40, 170]
+h_m = 0.5
+src = "原典方位"
+note = "本堡属伐木营东部；树桩密度推定"
+
+[[block]]
+id = "b02"
+kind = "palisade"
+face = "south"
+count = 1
+name = "北墙·寨门以西（石基尖木）"
+xy = [60, 70]
+size = [30, 2]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "palisade"
+face = "south"
+count = 1
+name = "北墙·寨门以东（石基尖木）"
+xy = [100, 70]
+size = [30, 2]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "gate_wall"
+face = "north"
+count = 1
+name = "寨门（包铁厚木门）"
+xy = [80, 70]
+size = [10, 3]
+h_m = 6
+src = "推定"
+note = "朝北，对河畔支路"
+
+[[block]]
+id = "b05"
+kind = "palisade"
+face = "south"
+count = 1
+name = "南墙（石基尖木）"
+xy = [80, 130]
+size = [70, 2]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "palisade"
+face = "south"
+count = 1
+name = "西墙（石基尖木）"
+xy = [45, 100]
+size = [2, 60]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "palisade"
+face = "east"
+count = 1
+name = "东墙（石基尖木，面河）"
+xy = [115, 100]
+size = [2, 60]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p381"
+face = "south"
+name = "东北瞭望塔（兽皮尖顶）"
+xy = [113, 72]
+size = [6, 6]
+h_m = 16
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p381"
+face = "south"
+name = "西南瞭望塔（矮一截）"
+xy = [47, 128]
+size = [6, 6]
+h_m = 13
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p380"
+face = "north"
+name = "木石大屋（指挥所）"
+xy = [80, 105]
+size = [30, 22]
+h_m = 12
+src = "推定"
+note = "石基、粗木梁、赭红兽皮顶，屋脊两端大木刺"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p380"
+face = "south"
+name = "营房长棚"
+xy = [58, 82]
+size = [14, 8]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p388"
+face = "south"
+name = "冷火塘（院内东北角）"
+xy = [102, 82]
+size = [3, 3]
+h_m = 0.4
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p391"
+face = "south"
+name = "兵器架（空）"
+xy = [104, 121]
+size = [4, 1.5]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p387"
+face = "south"
+name = "寨门旗杆·西"
+xy = [73, 67]
+size = [1, 1]
+h_m = 10
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p387"
+face = "south"
+name = "寨门旗杆·东"
+xy = [87, 67]
+size = [1, 1]
+h_m = 10
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "asset"
+asset = "p376"
+face = "south"
+name = "墙外原木垛"
+xy = [50, 52]
+size = [14, 5]
+h_m = 2
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg417-c1"
+eye = [130, 184]
+target = [130, 100]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

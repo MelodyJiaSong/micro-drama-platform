@@ -1,0 +1,212 @@
+# 林歌神殿 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 坐标原点在场地左上角，x 向东、y 向南，单位 m。场地左上角 ＝ 区级平面图 (4400, 1470)，即区图约 [83.4, 41.8]。
+# 区图量取：点位 [85,44] → 本图 (82,76)，正落在北山墙脚；遗址图标约 [86.5,46.1] → (161,150)；东侧短线坡约 [87.7–89, 43.7–48] → x≈227–293。
+
+[meta]
+bg = "bg437"
+name_zh = "林歌神殿"
+size_m = [260, 260]
+px_per_m = 5.0
+scale_src = "地图量取"
+scale_note = "北山墙脚线、遗址图标、东侧短线坡按区图量取（1 px ≈ 5.26 m，换算见区级 terrain.toml）；遗址内部的空地、台阶、石台尺寸无一手出处，按「一小片空地」推定"
+absent = [
+    "飞行点与飞行栖架（4.0.3 之后才加）",
+    "哨兵营地、紫顶帐篷、月形旗（4.0.3 之后的联盟哨站）",
+    "骨杖、兽骨、暗紫布幡与地面血色符号（那是西边的两处萨特营，不在本遗址）",
+    "绿色鬼火与枯死成黑炭的树（那是东南的冥火岭）",
+    "水体：河、湖、井水",
+    "完整的殿身屋顶（殿身只剩墙基）",
+    "火、火盆、灯笼等任何人工光源",
+    "道路（东西向大路在遗址以南约两百米，不进场地）",
+]
+
+[[ridge]]
+name = "北界山墙（贴着遗址后缘拔起）"
+poly = [[0, 0], [260, 0], [260, 68], [220, 76], [180, 84], [150, 86], [110, 86], [70, 82], [30, 80], [0, 76]]
+height_m = 280
+src = "地图量取"
+note = "区图北山墙在 x 83–88% 一段的山脚线约 y 44–44.6%"
+
+[[ridge]]
+name = "东侧土坎（区图短线坡，东高西低）"
+poly = [[228, 72], [260, 66], [260, 260], [248, 260], [240, 210], [234, 150]]
+height_m = 11
+src = "地图量取"
+note = "区图约 [87.7–89, 43.7–48]，齿朝西＝西侧低"
+
+[[road]]
+name = "南面旧石板小径（被落叶埋住）"
+path = [[152, 260], [150, 236], [151, 212], [150, 194]]
+width_m = 2
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "白石板圆形空地（铺地）"
+xy = [150, 160]
+size = [58, 58]
+h_m = 0
+src = "地图量取"
+note = "区图遗址图标位置；「直径五六十米的近圆形平地」，中心刻同心弧纹"
+
+[[block]]
+id = "b02"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "覆苔宽台阶（十来级）"
+xy = [150, 118]
+size = [30, 16]
+h_m = 3.2
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "贴山脚矩形石台（殿身仅剩墙基）"
+xy = [150, 98]
+size = [44, 22]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "台阶西端矮石栏"
+xy = [133.5, 118]
+size = [2, 3]
+h_m = 1.0
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "台阶东端矮石栏"
+xy = [166.5, 118]
+size = [2, 3]
+h_m = 0.8
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p386"
+face = "south"
+name = "西北高柱（柱头卷叶雕饰缺半）"
+xy = [130, 140]
+size = [1.6, 1.6]
+h_m = 9.5
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p386"
+face = "south"
+name = "东北高柱"
+xy = [170, 140]
+size = [1.6, 1.6]
+h_m = 9.0
+src = "推定"
+note = "两根高柱之间原架石梁，已塌落碎在柱脚"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p386"
+face = "south"
+name = "西侧断柱（齐肩）"
+xy = [122, 162]
+size = [1.6, 1.6]
+h_m = 1.6
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p386"
+face = "south"
+name = "东侧断柱（齐腰）"
+xy = [178, 162]
+size = [1.6, 1.6]
+h_m = 1.1
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p386"
+face = "south"
+name = "西南柱础（月牙浮雕）"
+xy = [131, 181]
+size = [2.0, 2.0]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p377"
+face = "south"
+name = "东南横倒整柱（摔成三截）"
+xy = [172, 190]
+size = [9, 1.6]
+rot = 35
+h_m = 0.8
+src = "推定"
+note = "机位在它西侧、空地南缘朝北偏东望"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p378"
+face = "south"
+count = 3
+name = "塌落石梁碎块"
+xy = [150, 143]
+size = [6, 2]
+h_m = 0.6
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p373"
+face = "south"
+name = "石台西角古树（根包矮墙）"
+xy = [122, 95]
+size = [10, 10]
+h_m = 32
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 6
+name = "东侧土坎顶古树列"
+xy = [246, 150]
+size = [10, 90]
+h_m = 38
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg437-c1"
+eye = [130, 239]
+target = [130, 130]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

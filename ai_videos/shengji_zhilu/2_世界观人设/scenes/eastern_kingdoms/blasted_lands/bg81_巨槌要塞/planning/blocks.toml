@@ -1,0 +1,240 @@
+# 巨槌要塞 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg81"
+name_zh = "巨槌要塞"
+size_m = [220, 200]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "取区级平面图 b901 的 220 × 200 m：一圈约 120 × 105 m 的尖桩寨墙 + 西北背山 + 东南坡下建场机位的退让；无一手尺寸出处"
+# 世界树画面：红土坡上的食人魔营寨，巨大的粗木尖桩围栏，兽皮帐篷比人还高，营中央一堆烧得发黑的骨头
+# 区图：西、北两面是北缘山墙西段与西北山体合抱的弧，东面是开阔红原与主干道 → 寨门开东墙
+absent = [
+    "任何人物与动物（默认空营）",
+    "燃着的火、火星与烟（营心骨堆冷透）",
+    "石砌房屋、塔楼、城垛与门扇",
+    "旗帜、纹章与文字标识",
+    "草地、树木与任何绿色植被",
+    "河流、水潭与任何水面",
+    "4.0.3 后才有的部落据点与其营帐旗号",
+    "铺装石板路（只有踩出来的土径）",
+]
+
+[[ridge]]
+name = "西北弧形紫黑山体（北缘山墙西段与西北山体合抱处）"
+poly = [[0, 0], [220, 0], [220, 16], [170, 22], [110, 28], [50, 32], [32, 70], [28, 130], [22, 200], [0, 200]]
+height_m = 45
+src = "推定"
+
+[[road]]
+name = "寨门外土径（斜下坡向东南，约 200 m 外接主干道）"
+path = [[174, 97], [188, 118], [202, 150], [214, 185], [220, 200]]
+width_m = 3
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "palisade"
+face = "north"
+count = 1
+name = "尖桩寨墙·北段"
+xy = [110, 45]
+size = [120, 3]
+h_m = 8
+src = "推定"
+note = "原木削尖斜插，尖头外斜；世界树「巨大的粗木尖桩围栏」"
+
+[[block]]
+id = "b02"
+kind = "palisade"
+face = "west"
+count = 1
+name = "尖桩寨墙·西段（坡高处）"
+xy = [50, 97.5]
+size = [3, 100]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "palisade"
+face = "south"
+count = 1
+name = "尖桩寨墙·南段"
+xy = [110, 150]
+size = [120, 3]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "palisade"
+face = "east"
+count = 1
+name = "尖桩寨墙·东段北"
+xy = [170, 67]
+size = [3, 38]
+h_m = 7.5
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "palisade"
+face = "east"
+count = 1
+name = "尖桩寨墙·东段南"
+xy = [170, 127.5]
+size = [3, 39]
+h_m = 7.5
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p60"
+face = "east"
+name = "寨门（两根粗门桩 + 挂巨兽颅骨的横梁，无门扇）"
+xy = [170, 97]
+size = [4, 18]
+h_m = 9
+src = "推定"
+note = "唯一出入口，朝东开向坡下主干道（judgment call）"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p59"
+face = "east"
+name = "巨帐·主（最高约 8 m）"
+xy = [82, 92]
+size = [18, 16]
+h_m = 8
+src = "推定"
+note = "世界树「兽皮帐篷比人还高」"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p59"
+face = "south"
+name = "巨帐·北"
+xy = [110, 64]
+size = [12, 11]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p59"
+face = "southwest"
+name = "巨帐·东北"
+xy = [142, 66]
+size = [11, 10]
+h_m = 5.5
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p59"
+face = "northeast"
+name = "巨帐·西南"
+xy = [80, 128]
+size = [12, 11]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p59"
+face = "northwest"
+name = "巨帐·东南"
+xy = [140, 132]
+size = [11, 10]
+h_m = 5.5
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+parts = [{asset = "p61", at = [0, 0], yaw = 0}, {asset = "p73", at = [3.7, 0], yaw = 90}, {asset = "p73", at = [2.99, 2.17], yaw = 126}, {asset = "p73", at = [1.14, 3.52], yaw = 162}, {asset = "p73", at = [-1.14, 3.52], yaw = 198}, {asset = "p73", at = [-2.99, 2.17], yaw = 234}, {asset = "p73", at = [-3.7, 0], yaw = 270}, {asset = "p73", at = [-2.99, -2.17], yaw = 306}, {asset = "p73", at = [-1.14, -3.52], yaw = 342}, {asset = "p73", at = [1.14, -3.52], yaw = 18}, {asset = "p73", at = [2.99, -2.17], yaw = 54}]
+face = "south"
+name = "营心焦骨堆（齐腰高，冷透）与熏黑石圈"
+xy = [118, 100]
+size = [9, 9]
+h_m = 1.2
+src = "推定"
+note = "世界树「营中央一堆烧得发黑的骨头」；早已冷透、不冒烟"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p62"
+face = "east"
+name = "帐前挂骨木杆"
+xy = [96, 84]
+size = [1, 1]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+parts = [{asset = "p77", at = [-2.6, 0.9], yaw = 5}, {asset = "p77", at = [-0.2, 1.2], yaw = -8}, {asset = "p74", at = [1.6, 0.8], yaw = 12}, {asset = "p74", at = [2.9, -0.4], yaw = -20}, {asset = "p75", at = [-2.9, -0.7], yaw = 0}, {asset = "p75", at = [0.6, -0.9], yaw = 0}]
+face = "north"
+name = "墙根锈铁箍、断木棒与破木箱板"
+xy = [160, 140]
+size = [8, 4]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p64"
+face = "south"
+count = 3
+name = "山脚塌落巨石（压歪北墙两根尖桩）"
+xy = [70, 38]
+size = [14, 8]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "寨墙外浅沟与斜插木刺（南墙外）"
+xy = [110, 156]
+size = [120, 3]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b17"
+kind = "asset"
+asset = "p65"
+face = "south"
+count = 2
+into_ridge = true
+name = "寨墙西北角外紫黑岩柱 ×2（东倒西歪，约 16 m）"
+xy = [40, 38]
+size = [6, 6]
+h_m = 16
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg81-c1"
+eye = [202, 100]
+target = [110, 100]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

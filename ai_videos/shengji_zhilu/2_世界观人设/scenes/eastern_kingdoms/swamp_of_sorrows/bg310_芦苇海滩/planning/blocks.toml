@@ -1,0 +1,259 @@
+# 芦苇海滩 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 坐标原点在场地左上角，x 向东、y 向南，单位 m。取海滩中南段一段约 1 km（北段近南北直、南段向西南弯），
+# 岸线走向按区图量取的形状示意；芦苇带宽、贝壳窝、漂木、枯树的位置无一手出处，推定。
+
+[meta]
+bg = "bg310"
+name_zh = "芦苇海滩"
+size_m = [500, 1000]
+px_per_m = 1.5
+grid_m = 100
+scale_src = "地图量取"
+scale_note = "区级平面图：海滩带 (73–92%,5–99%)，1 px ≈ 2.09 m；本图截取中南段约 1 km，岸线弯折按区图形状示意，滩宽与芦苇带宽推定"
+# 世界树画面：悲伤沼泽东侧的泥沙海滩，成片高芦苇被风压出波纹，浅水里埋着鱼人的贝壳窝
+absent = [
+  "码头、栈桥、港口、船只、帆（东北海岸的地精港口 4.0.3a 才有；旧世这条岸线没有任何航运设施）",
+  "金黄干沙、椰树、礁石、海崖（这里是湿泥沙低岸）",
+  "晴天蓝海、海上日出 / 夕阳、太阳与长影",
+  "火、篝火、火把、灯笼等人工光源",
+  "穿过芦苇带进沼泽的路（滩只能沿岸线走）",
+  "任何生物（贝壳窝是空的）、人物、文字、标记",
+]
+
+[[water]]
+name = "荒芜之海（近岸，东）"
+path = [[425, 0], [418, 300], [398, 560], [345, 800], [305, 1000]]
+width_m = 150
+depth_m = 30
+src = "地图量取"
+note = "区图东侧公海；岸线北段近南北直、南段向西南弯"
+
+[[water]]
+name = "荒芜之海（外海，东南）"
+path = [[455, 480], [440, 700], [425, 1000]]
+width_m = 140
+depth_m = 30
+src = "地图量取"
+note = "岸线南段西弯后空出来的海面，一直铺到场地东缘"
+
+[[water]]
+name = "滩内侧浅水道"
+path = [[205, 0], [212, 250], [196, 500], [150, 720], [95, 1000]]
+width_m = 24
+depth_m = 1
+src = "地图量取"
+note = "区级 terrain「东南水道二」沿海滩内侧南下的那条"
+
+[[block]]
+id = "b01"
+over_water = true
+kind = "yard"
+face = "east"
+count = 1
+may_overlap = true
+name = "泥沙滩·北段"
+xy = [322, 256]
+size = [45, 488]
+h_m = 0
+rot = 3
+src = "地图量取"
+note = "北段泥多、脚下黏"
+
+[[block]]
+id = "b02"
+over_water = true
+kind = "yard"
+face = "east"
+count = 1
+may_overlap = true
+name = "泥沙滩·南段"
+xy = [280, 770]
+size = [55, 460]
+h_m = 0
+rot = 22
+src = "地图量取"
+note = "南段沙色渐浅，向西南弯"
+
+[[block]]
+id = "b03"
+over_water = true
+kind = "asset"
+asset = "p319"
+face = "east"
+count = 40
+name = "芦苇带·北段"
+xy = [258, 256]
+size = [80, 488]
+h_m = 2.5
+rot = 3
+src = "推定"
+note = "齐人高，海风从东压来，朝西倒伏"
+
+[[block]]
+id = "b04"
+over_water = true
+kind = "asset"
+asset = "p319"
+face = "east"
+count = 40
+name = "芦苇带·南段"
+xy = [210, 765]
+size = [70, 440]
+h_m = 2.5
+rot = 22
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "墨绿泥岛·西北"
+xy = [100, 200]
+size = [120, 90]
+h_m = 0.5
+src = "地图量取"
+note = "泪水之池外围泥岛水网的最东一排"
+
+[[block]]
+id = "b06"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "墨绿泥岛·西"
+xy = [80, 480]
+size = [100, 120]
+h_m = 0.5
+src = "地图量取"
+
+[[block]]
+id = "b07"
+over_water = true
+kind = "asset"
+asset = "p334"
+face = "east"
+count = 5
+name = "贝壳泥窝群·北"
+xy = [362, 330]
+size = [30, 20]
+h_m = 1.2
+src = "原典方位"
+note = "世界树画面「浅水里埋着贝壳窝」；锚点图画面中的那几座，位置推定"
+
+[[block]]
+id = "b08"
+may_overlap = true
+over_water = true
+kind = "asset"
+asset = "p334"
+face = "east"
+count = 7
+name = "贝壳泥窝群·中"
+xy = [335, 560]
+size = [40, 25]
+h_m = 1.2
+src = "推定"
+note = "较老的几座塌了一半"
+
+[[block]]
+id = "b09"
+may_overlap = true
+over_water = true
+kind = "asset"
+asset = "p334"
+face = "east"
+count = 5
+name = "贝壳泥窝群·南"
+xy = [270, 900]
+size = [30, 20]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p318"
+face = "south"
+name = "灰白漂木"
+xy = [322, 420]
+size = [12, 3]
+h_m = 0.6
+rot = 20
+src = "推定"
+note = "锚点图前景"
+
+[[block]]
+id = "b11"
+may_overlap = true
+kind = "asset"
+asset = "p317"
+face = "south"
+name = "枯树·苇丛中"
+xy = [246, 450]
+size = [6, 6]
+h_m = 11
+src = "推定"
+
+[[block]]
+id = "b12"
+over_water = true
+kind = "asset"
+asset = "p321"
+face = "west"
+name = "近岸小岛·北"
+xy = [440, 760]
+size = [60, 40]
+h_m = 4
+src = "地图量取"
+note = "区图东南角近岸两个小岛 (91–97%,80–85%)，位置按岸线压缩示意"
+
+[[block]]
+id = "b13"
+over_water = true
+kind = "asset"
+asset = "p321"
+face = "west"
+name = "近岸小岛·南"
+xy = [405, 840]
+size = [40, 30]
+h_m = 3
+src = "地图量取"
+
+[[block]]
+id = "b14"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "芦苇岗哨"
+bg = "bg305"
+xy = [215, 720]
+size = [40, 40]
+h_m = 4
+src = "推定"
+note = "区级平面图 b902 (82%,80%)「紧贴芦苇海滩内侧」；本图按岸线压缩后推定落点，形状以 bg305 自己的平面图为准"
+
+[[block]]
+id = "b15"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "锚点机位（北段湿沙，朝南略偏西）"
+xy = [328, 400]
+size = [4, 4]
+h_m = 0
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）：场地被体块占满，放在室内
+[[anchor]]
+key = "bg310-c1"
+eye = [250, 850]
+target = [250, 200]
+eye_h = 1.65
+lens_mm = 24
+inside = true
+note = "室内南端朝北；自动生成，排镜时按需改"

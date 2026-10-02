@@ -571,3 +571,150 @@ shot01 开头几秒飞向城门那一段，成片太像劣质 CG 动画、不真
 ③ `离城墙 140 m 内不建` 恰好盖住相机压得最低的最后 6 秒，飞过的是保证空无一物的场地，
 改为建到护龙河外岸 +10 m；另外走廊 `s1` 只到门外 288 m，而起飞点在门外 320 m——
 **开镜头那一段根本在走廊之外**，已扩到门外 415 m。
+
+---
+
+## 024 — 2026-09-19 19:30:00 — 城门要更雄伟；shot01↔shot02 接成一镜到底（声画衔接为设计优先级）
+
+> target_stage: 6
+> target_artifacts:
+>   - ai_videos/shikong_lvxing/sk1/5_6_分镜与prompt/shots/shot01/
+>   - ai_videos/shikong_lvxing/sk1/5_6_分镜与prompt/shots/shot02/
+>   - tools/build_bianjing.py
+> severity: high
+
+### 指令
+
+① 城门要再雄伟壮丽一点。
+② shot01 与 shot02 要链接成一镜到底——**以「画面与声音怎样衔接得好」为优先级来设计飞行路线与动作**，
+而不是先排航线再看接缝。
+
+### 一行摘要
+
+接缝状态先定、航线后排：接缝位置取两镜总里程中点（2545 m / 60 s ⇒ 巡航 42.4 m/s，中点 1272 m），
+使两侧速度天然相等（原为 57 vs 33–41，近一倍速差）；缝落在开阔河面、直线平飞、上天下水，
+**刻意不藏遮罩**（遮罩遮不住第二条 clip 随后几秒的整体漂移，画面越简单越不易跑偏）；
+声音靠后期贯穿（mux 覆盖模型自带声 + 一条 60 s 连续 BGM/环境 + 一句台词跨缝）。
+城门改为「抬高城台 + 重檐两层 + 垛口」。
+
+---
+
+## 025 — 2026-09-20 00:30:00 — 授权自主完成：shot01 收尾后按同一标准处理其余 shot
+
+> target_stage: 6
+> severity: high
+
+### 指令
+
+睡前授权：完成当前工作后，按同样的标准把剩下的 shot 全部改完；期间不再提问，
+所有决策（含删文件这类高风险操作）自行判断执行。
+
+### 一行摘要
+
+「同样的标准」＝ ① 相机四项闸门从产物回读全绿（净空 / 侧向 ≤1.2 g / 视线偏航 / 零折返）；
+② 每镜 previz 从**重建后的城主档**重新拷贝生成（城几何改过，旧 previz blend 带的是旧城）；
+③ shot md 的 `镜头:`/`动作:` 时间轴与关键帧 `t` 逐拍对齐；④ 航拍镜挂全城俯瞰锚点 bg0-1。
+
+---
+
+## 026 — 2026-09-20 01:10:00 — 出片前先给 floor plan 对账（交流机制）
+
+> target_stage: 5
+> target_artifacts:
+>   - ai_videos/shikong_lvxing/sk1/5_6_分镜与prompt/shots/shot01/planning/
+>   - tools/shot_floorplan.py
+> severity: high
+
+### 指令
+
+shot01 的镜头仍不满意。**根因是交流太少**：动手前先给一张俯视 floor plan——
+从哪起飞、飞到哪、途经什么建筑，配 ①②③④ 的路线编号，要一眼看懂、要能很快生成，
+好让用户立刻判断是否符合预期。这类对账材料放进 shot 自己的一个单独 folder。
+
+### 一行摘要
+
+**把「先出图对齐、再动几何」变成 shot 的标准工序**，而不是只为 shot01 画一张图：
+新增 `tools/shot_floorplan.py`，从 `previz_config.toml`（航线唯一出处）+ W11 §2.8
+全城坐标表（城市唯一出处，经新拆出的 `tools/previz/city_layout.py` 乘同一个
+`CITY_SCALE`）生成 `planning/{shot}_floorplan.png` + `{shot}_route.md`，
+约一秒出图，改航线重跑即可。
+
+**第一版图就抓出一个实打实的矛盾**：航线只在门洞那一瞬贴着汴河（离中线 2 m），
+其余全程离河 96 / 150 / 205 / 318 m，与河道夹角最大 61°；而 shot01 的
+`情节:` / `镜头:` 通篇写「贴着汴河水面飞」「沿北岸掠过仓前码头」「顺汴河往西」。
+成因是航线用「直线 → R400 圆弧 → 直线」解析生成以保证 C1 平滑，而汴河在东水门
+这一段是折的（门外 330°→门内 297°→305°），R400 的大弧接不住折角，几何上必然甩开河。
+于是白模 previz（几何权威）与 prompt 文字互相矛盾，模型收到两套指令——
+这正是「镜头不满意」的一个可定位来源。三条候选改法记在
+`shots/shot01/planning/README.md`，等用户定。
+
+---
+
+## 027 — 2026-09-20 02:00:00 — floor plan 标 bg 归属 + 出一张全城 bg 分布图
+
+> target_stage: 2
+> target_artifacts:
+>   - ai_videos/shikong_lvxing/sk1/2_世界观人设/scenes/bianjing/bg_anchors.toml
+>   - ai_videos/shikong_lvxing/sk1/5_6_分镜与prompt/shots/shot01/planning/blocks.toml
+>   - tools/shot_floorplan.py
+> severity: medium
+
+### 指令
+
+① floor plan 的方块上标出哪个是 bg1、哪个是 bg2；
+② 在 scene 目录下再生成一张**全景** floor plan——不要移动箭头，但能标的 bg 都标出来。
+
+### 一行摘要
+
+单镜图：`blocks.toml` 每块加 `bg` 键，方块标签变成 `bg3 仓廒长排·仓前码头`；
+没有主体卡的块显式标「无专属 bg」（关厢屋舍 / 城内街区 / 河街铺面三处确实没有卡，
+只能借 bg0 全城航拍的长相）——**把「漏标」和「本来就没有」区分开**。
+
+全城图：`tools/shot_floorplan.py --city`，输出
+`scenes/bianjing/{bianjing_bg_floorplan.png, bg_index.md}`。18 个 bg 里**标出 12 个**，
+另外 6 个（bg0 全城 / bg8 郊外路 / bg10 赵太丞家 / bg14 客店内景 / bg15 园林 / bg16 五更全城）
+**故意没有点位**，逐条写明原因印在图上，免得下次再问一遍「是不是漏了」。
+点位不在 toml 里写坐标——`bg_anchors.toml` 只声明「挂在 W11 §2.8 的哪一条」
+（gate / landmark / river_offset），由脚本解析，全城坐标的唯一出处仍是 W11。
+州桥那一处三卡同点（bg4 御街 / bg9 今日遗址 / bg17 夜市，同地点不同时辰与时代），
+合成一个点一条标签。
+
+---
+
+## 028 — 2026-09-21 — 航线图上没有主体卡的建筑要补齐（卡＋图＋3D），并按「贴河穿门 / 城区上空」两段重排航线
+
+> target_stage: 2
+> target_artifacts:
+>   - ai_videos/shikong_lvxing/sk1/2_世界观人设/scenes/bianjing/bg_anchors.toml
+>   - ai_videos/shikong_lvxing/sk1/5_6_分镜与prompt/shots/shot01/previz_config.toml
+>   - ai_videos/shikong_lvxing/sk1/5_6_分镜与prompt/shots/shot01/shot01.md
+>   - tools/shot_plan.py
+> severity: high
+
+### 指令
+
+① shot01 的航线图上**有很多建筑不在 scene 里**（标着「无专属 bg」的那些块）——把它们补进
+`scenes/bianjing/`：建主体卡、**出图**、并确认 **3D 几何**到位。范围＝`bg_anchors.toml`
+`[[todo]]` 里按「入画时长＋最近距离」排好的全部五个（bg18 繁塔 / bg19 东水门外关厢 /
+bg20 城内汴河河街 / bg21 迎祥池 / bg22 汴河南岸角门子＋旧宋门）。
+② 之后**优化航线**，再出一张新的 plan 给用户看。选定改法＝**拆两段**：0–11s 严格沿汴河
+偏北岸穿东水门，11–30s 明确转为城区上空，`shot01.md` 的 `情节:` / `镜头:` 照这个分段重写
+（原航线只在门洞那一瞬贴河，其余离河 150 / 318 / 205 m，与文字互相矛盾）。
+③ **这张图不叫 floor plan**：机位在世界里飞的叫**航线图 / flight plan**，地面镜的叫
+**走位平面图 / ground plan**；工具随之从 `shot_floorplan.py` 改名 `shot_plan.py`。
+
+### 一行摘要
+
+把「航线图上标着无专属 bg 的建筑」当成缺口清单补齐（五张新主体卡 + 出图 + 3D 对账），
+航线改成「贴河穿门 + 城区上空」两段并与 prompt 文字对齐，图与工具按镜头类型改名
+flight plan / ground plan。
+
+### 定为通用规则的部分（已落 CLAUDE.md / ai_video.md rule 4j）
+
+- **航线俯视图的正式名称按镜头类型分**：走动镜（航拍 / 穿行 / 跨地点）＝**航线图 flight plan**，
+  产物 `shotNN_flightplan.png`；地面镜的机位与走位＝**走位平面图 ground plan**，
+  产物 `shotNN_groundplan.png`。统称「镜头平面图」。`floor plan` 一词退役——
+  它在影视工业里指室内 / 场地平面图，用来称呼一条 1.3 km 的空中航线是错的。
+- **航线图上标着「无专属 bg」的建筑组是缺口清单，不是图注**：反复入画（`bg_anchors.toml`
+  `[[todo]]` 按逐帧视锥算出的入画秒数 + 最近距离）的块就该回阶段 2 补主体卡，
+  否则出图只能借世界锚点的长相。

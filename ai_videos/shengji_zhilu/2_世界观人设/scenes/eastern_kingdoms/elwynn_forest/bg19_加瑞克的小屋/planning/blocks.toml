@@ -1,0 +1,183 @@
+# 加瑞克的小屋 · 俯视布局的几何唯一出处
+#
+# 改布局 ＝ 改本文件重跑
+#   blender -b --factory-startup --python tools/build_scene.py -- "<本 scene 目录>"
+# **不手改 PNG、不手改 blocks.md、不拷引擎**（rule 4i ① / rule 4h ③/④）。
+#
+# 几何回指 `../bg19_加瑞克的小屋.md` 的「## 锁定描述符」字段 2「空间结构 + 方位」——
+# 那是原典方位契约。**方位关系可信、小数坐标一律 ⚠**（w02-V 裁定），所以本表只用方位与步距。
+#
+# `h_m` ＝ 体块高度（米），`kind` ＝ 用哪套构件建，`face` ＝ 正面朝哪（门与窗开在这一面）。
+# **未登记的 kind 直接 raise**；扎进山脊 / 块压块 / 坐在河道上同样在生成时 raise。
+
+[meta]
+bg = "bg19"
+name_zh = "加瑞克的小屋"
+size_m = [34, 34]
+px_per_m = 18.0
+slope_m = 1.5
+scale_src = "原典"
+scale_note = """
+⚠ **尺度取自卡里**：空场约十二米见方、小屋约五米见方、北侧土坎高约两米——
+三个数都是卡里写死的。场地取 34 × 34 m 只为把四周林缘一并画进来。
+"""
+
+# ── 林间空场 ──────────────────────────────────────────────────────────
+# 卡里的方位契约：约十二米见方的林间空场；小屋在**正中偏东**、单层约五米见方、人字坡顶、
+# **门朝西**正对自西边葡萄园踩出来的土径（空场唯一出入口）；
+# 中央偏北＝柴垛与劈柴墩；西南角＝早已冷透的旧火塘；北侧＝高约两米的土坎；
+# 东侧贴小屋后墙拴两顶破帐篷；南侧与东侧其余全是林缘树影。
+
+[[block]]
+name = "加瑞克的小屋"
+id = "b01"
+kind = "asset"
+asset = "p170"
+face = "west"
+xy = [20, 17]
+size = [5.4, 5.4]
+h_m = 4.6
+wall_t = 0.2
+src = "原典方位"
+note = "**门朝西**。竖向木板拼接外墙、人字坡顶、西墙一扇无玻璃方窗。空心建法，`bg19-5 门内` 靠它"
+
+[[block]]
+name = "屋内木桌"
+id = "b02"
+kind = "asset"
+asset = "p174"
+face = "south"
+xy = [21.4, 17]
+size = [1.6, 0.9]
+h_m = 0.75
+may_overlap = true
+src = "推定"
+note = "「原主人的桌」——卡里写了这张 plate，但桌子本身文字无据，**推定**"
+
+[[block]]
+name = "柴垛"
+id = "b03"
+kind = "asset"
+asset = "p160"
+face = "south"
+xy = [18, 12]
+size = [3.2, 2.4]
+h_m = 1.4
+src = "原典方位"
+note = "空场**中央偏北**"
+
+[[block]]
+name = "旧火塘"
+id = "b04"
+kind = "asset"
+asset = "p175"
+face = "south"
+xy = [13, 22]
+size = [2.8, 2.8]
+h_m = 0.9
+src = "原典方位"
+note = "**西南角**，早已冷透。⚠ 16.8：写成名词化的冷材质（暗红褐色烧斑与细裂纹）+ 正面写死「早已冷透，不发光不发烫不冒烟」，**绝不能写成正在烧**"
+
+[[block]]
+name = "两顶破帐篷"
+id = "b05"
+kind = "asset"
+asset = "p176"
+face = "south"
+count = 2
+xy = [26, 17]
+size = [6, 5]
+h_m = 2.3
+src = "原典方位"
+note = "**东侧**贴着小屋后墙"
+
+[[block]]
+name = "南侧林缘"
+id = "b06"
+kind = "asset"
+asset = "p113"
+face = "south"
+count = 5
+may_overlap = true
+xy = [16, 31]
+size = [30, 5]
+h_m = 12
+src = "原典方位"
+
+[[block]]
+name = "东侧林缘"
+id = "b07"
+kind = "asset"
+asset = "p113"
+face = "south"
+count = 4
+into_ridge = true
+may_overlap = true
+xy = [32.5, 21]
+size = [3, 18]
+h_m = 12
+src = "原典方位"
+
+# ── 北侧那道两米土坎（老田埂塌出来的） ────────────────────────────────
+
+[[ridge]]
+name = "北侧土坎"
+height_m = 2.4
+poly = [[6, 0], [30, 0], [30, 9], [24, 10], [14, 9], [6, 10]]
+
+[[road]]
+name = "西来土径（唯一出入口）"
+width_m = 1.4
+path = [[2, 17], [9, 17], [16, 17]]
+
+[[road]]
+name = "坎上小路"
+width_m = 0.9
+path = [[9, 8], [18, 7], [27, 8]]
+
+# ── 校验机位 ──────────────────────────────────────────────────────────
+
+[[anchor]]
+key = "bg19-1_林隙_远望木屋"
+eye = [4, 20]
+target = [20, 17]
+eye_h = 1.65
+target_h = 3.0
+lens_mm = 50
+note = "从西边土径尽头透过林隙望过去，先看见屋"
+
+[[anchor]]
+key = "bg19-2_柴垛_门前空场"
+eye = [13, 17]
+target = [20, 17]
+eye_h = 1.6
+target_h = 2.2
+lens_mm = 28
+note = "站空场里正对西门"
+
+[[anchor]]
+key = "bg19-3_土坎_高角全院"
+eye = [20, 5]
+target = [20, 20]
+eye_h = 1.7
+target_h = 0.8
+lens_mm = 24
+note = "站两米土坎上俯瞰整块空场"
+
+[[anchor]]
+key = "bg19-4_屋后_双帐篷"
+eye = [30, 17]
+target = [25, 17]
+eye_h = 1.6
+target_h = 1.6
+lens_mm = 35
+
+[[anchor]]
+key = "bg19-5_门内_原主人的桌"
+inside = true
+eye = [17.6, 17]
+target = [21.4, 17]
+eye_h = 1.5
+target_h = 0.9
+lens_mm = 24
+note = "站西门口往屋里看。屋是空心建法，这张才拍得出来"

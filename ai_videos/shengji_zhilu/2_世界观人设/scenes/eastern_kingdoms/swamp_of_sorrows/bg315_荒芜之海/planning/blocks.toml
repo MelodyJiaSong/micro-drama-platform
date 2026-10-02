@@ -1,0 +1,151 @@
+# 荒芜之海 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 原点 ＝ 区级平面图 (1700, 850)；本图坐标 ＝ 区级坐标 − (1700, 850)。海岸线与两座小岛按区图 [86–93, 61–97] 量取；
+# 区图东缘 (x 100% ＝ 本图 x 397) 以东的海面区图没画，一律推定。芦苇带、浑水带宽度推定。
+# 锚点机位：b01 海滩靠海一侧湿沙，朝东偏北；两座小岛在画面右前方。南山墙入海处在场地西南外，不入锚点画面。
+
+[meta]
+bg = "bg315"
+name_zh = "荒芜之海"
+size_m = [700, 500]
+px_per_m = 2.0
+grid_m = 100
+scale_src = "地图量取"
+scale_note = "海岸线与小岛按区图（x%×20.974、y%×13.983 m）平移量取；区图东缘以东的海面、浑水带与芦苇带宽度推定"
+# 世界树画面：沼泽东侧的灰绿海面，天色压得很低，浪不大但颜色浑浊，看不到对岸
+absent = [
+    "船、帆、木筏、码头、栈桥与港口（东北海岸的地精港口 4.0.3a 才有）",
+    "对岸与任何远方陆地、灯塔、礁石群",
+    "巨浪、卷成管的浪花、拍岸溅起的高浪与风暴",
+    "清澈的蓝绿海水与白沙热带海滩",
+    "火、烛火、灯笼、火把与任何人工光源",
+    "阳光、光柱、投影、夕照与晴天",
+    "滩上的贝壳窝与小屋（属 bg310 / bg305，不在本档）",
+    "任何人物与动物（包括海鸟）",
+]
+
+[[water]]
+name = "近岸浅黄绿浑水带"
+path = [[262, 0], [228, 150], [180, 300], [110, 440], [80, 500]]
+width_m = 60
+depth_m = 2
+src = "推定"
+
+[[water]]
+name = "外海（灰绿深水，向东出场地）"
+path = [[480, 0], [450, 250], [420, 500]]
+width_m = 440
+depth_m = 30
+src = "推定"
+
+[[water]]
+name = "外海（近岸段）"
+path = [[330, 0], [300, 150], [250, 300], [190, 440], [160, 500]]
+width_m = 100
+depth_m = 12
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "yard"
+face = "east"
+count = 1
+may_overlap = true
+name = "湿沙滩靠海一侧（锚点机位）"
+xy = [140, 295]
+size = [10, 8]
+h_m = 0
+src = "推定"
+note = "离地约 1.7 m，朝东偏北约 15°；两座小岛落在画面中线右侧"
+
+[[block]]
+id = "b02"
+over_water = true
+kind = "asset"
+asset = "p321"
+face = "west"
+name = "近岛（扁平，灌丛 + 枯树）"
+xy = [230, 310]
+size = [42, 27]
+h_m = 4
+src = "地图量取"
+note = "区图 [91–93, 82–84]"
+
+[[block]]
+id = "b03"
+over_water = true
+kind = "asset"
+asset = "p321"
+face = "west"
+name = "远岛（扁平，半隐雾中）"
+xy = [303, 325]
+size = [42, 27]
+h_m = 4
+src = "地图量取"
+note = "区图 [94–96, 83–85]"
+
+[[block]]
+id = "b04"
+over_water = true
+kind = "yard"
+face = "east"
+count = 1
+may_overlap = true
+name = "泥沙滩（海岸线内侧）"
+xy = [152, 220]
+size = [440, 40]
+h_m = 0
+rot = -71
+src = "地图量取"
+bg = "bg310"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p319"
+face = "east"
+count = 40
+name = "芦苇带（机位身后）"
+xy = [118, 190]
+size = [380, 50]
+h_m = 2
+rot = -71
+src = "推定"
+bg = "bg310"
+
+[[block]]
+id = "b06"
+kind = "yard"
+face = "east"
+count = 1
+may_overlap = true
+name = "高潮线干海藻带"
+xy = [150, 250]
+size = [200, 3]
+h_m = 0
+rot = -71
+src = "推定"
+
+[[block]]
+id = "b07"
+may_overlap = true
+kind = "asset"
+asset = "p318"
+face = "south"
+name = "半埋浮木"
+xy = [150, 285]
+size = [6, 1]
+h_m = 0.4
+rot = 20
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg315-c1"
+eye = [350, 460]
+target = [350, 250]
+eye_h = 23.3
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

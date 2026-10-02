@@ -1,0 +1,278 @@
+# 蓟皮村 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地中心 ≈ 区图 [36, 36.5]（区级 b904，地图量取）；村台坡线与点线土径的走向读自区图，村内落位全部推定。
+
+[meta]
+bg = "bg424"
+name_zh = "蓟皮村"
+size_m = [260, 220]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "世界画面只有「山坡上锥形棚屋沿坡排布 + 村后洞口」；村台取约 80 × 60 m，场地放大到 260 × 220 m 把村后岩坡洞口与村前长坡一并框进来。村内尺度无一手出处"
+# 世界树画面：山坡上的熊怪村，锥形树皮棚屋沿坡排布，村后是通向洞穴的黑色洞口
+absent = [
+    "任何人物与动物（熊怪属 shot 层，不进底图）",
+    "任何火光：燃着的篝火、火把、灯笼、洞口里的火光",
+    "寨墙、栅栏与寨门（村子只靠坡势与林子围合）",
+    "石砌房屋、木板房与任何方正建筑",
+    "湖面与河流（湖在坡下约 400 m 外，从村台看不见）",
+    "道路以外的第二个入口",
+    "飞行点、旅店与任何阵营据点",
+    "文字招牌与纹章旗帜",
+]
+
+[[ridge]]
+name = "村后岩坡（东北抬起，接北墙山群）"
+poly = [[150, 0], [260, 0], [260, 110], [222, 86], [192, 70], [166, 54], [150, 34]]
+height_m = 30
+src = "地图量取"
+note = "区图村子东北紧贴山群影线；岩坡脚下开洞口"
+
+[[ridge]]
+name = "北侧林坡（缓缓上抬）"
+poly = [[0, 0], [150, 0], [150, 34], [100, 52], [40, 58], [0, 52]]
+height_m = 15
+src = "推定"
+
+[[road]]
+name = "西南土径（坡下 → 村口）"
+path = [[20, 220], [60, 186], [92, 152]]
+width_m = 2
+src = "地图量取"
+note = "区图点线土径自西南坡下绕上村子"
+
+[[road]]
+name = "村台外绕土径"
+path = [[92, 152], [78, 124], [92, 82], [128, 70], [160, 78], [172, 108], [162, 140], [130, 150], [92, 152]]
+width_m = 1.5
+src = "地图量取"
+note = "区图点线在村子外绕一圈"
+
+[[road]]
+name = "上洞口泥道"
+path = [[160, 78], [174, 71], [181, 67]]
+width_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p379"
+face = "east"
+name = "锥形棚屋·西"
+xy = [104, 115]
+size = [8, 8]
+h_m = 5.5
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p379"
+face = "southeast"
+name = "锥形棚屋·西北"
+xy = [110, 99]
+size = [8, 8]
+h_m = 5.5
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p379"
+face = "south"
+name = "锥形棚屋·北"
+xy = [124, 92]
+size = [8, 8]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p379"
+face = "south"
+name = "锥形棚屋·北偏东"
+xy = [140, 92]
+size = [8, 8]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p379"
+face = "southwest"
+name = "锥形棚屋·东北（最大，带檐棚）"
+xy = [155, 100]
+size = [10, 10]
+h_m = 6.5
+src = "推定"
+note = "最靠岩坡的一顶，门前多一段树皮檐棚"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p379"
+face = "west"
+name = "锥形棚屋·东"
+xy = [160, 116]
+size = [8, 8]
+h_m = 5.5
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p388"
+face = "south"
+name = "石圈火塘（冷灰余烬）"
+xy = [131, 118]
+size = [4, 4]
+h_m = 0.5
+src = "推定"
+note = "弧心；默认冷透不冒烟"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p391"
+face = "south"
+name = "晾皮横木架"
+xy = [139, 124]
+size = [5, 1.2]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p387"
+face = "south"
+name = "村口骨串木桩·左"
+xy = [89, 146]
+size = [1, 1]
+h_m = 2.2
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p387"
+face = "south"
+name = "村口骨串木桩·右"
+xy = [97, 150]
+size = [1, 1]
+h_m = 2.2
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "cave_mouth"
+face = "southwest"
+count = 1
+name = "洞口（黑，嵌在岩坡脚）"
+xy = [181, 63]
+size = [14, 6]
+h_m = 8
+rot = 35
+src = "原典方位"
+note = "世界树「村后是通向洞穴的黑色洞口」；比村台高约 10 m；洞内属同一聚落的地下部分，本档只到洞口"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p378"
+face = "south"
+count = 5
+name = "洞前乱石斜坡"
+xy = [168, 80]
+size = [22, 10]
+h_m = 3
+rot = 35
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "洞前旧烧痕（冷透）"
+xy = [174, 72]
+size = [8, 5]
+h_m = 0
+rot = 35
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p388"
+face = "south"
+name = "废弃棚屋底座（朽木桩圈）"
+xy = [176, 128]
+size = [8, 8]
+h_m = 0.6
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "rock_shelf"
+face = "south"
+count = 1
+name = "村台南缘陡坎"
+xy = [130, 162]
+size = [150, 5]
+h_m = 3
+src = "地图量取"
+note = "区图村子正南的弧形坡线"
+
+[[block]]
+id = "b16"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "南长坡（蕨丛与苔石，落向湖盆林子）"
+xy = [130, 194]
+size = [240, 50]
+h_m = 0
+src = "地图量取"
+
+[[block]]
+id = "b17"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 40
+name = "古树林·西"
+xy = [35, 118]
+size = [60, 110]
+h_m = 22
+src = "推定"
+note = "树丛"
+
+[[block]]
+id = "b18"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 22
+name = "古树林·东"
+xy = [228, 145]
+size = [55, 60]
+h_m = 22
+src = "推定"
+note = "树丛"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg424-c1"
+eye = [130, 18]
+target = [130, 110]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -4,9 +4,10 @@ from pathlib import Path
 
 from libs.common import drama_ref
 
-ALLOWED_EXTENSIONS: frozenset[str] = frozenset(
-    {".md", ".json", ".yaml", ".yml", ".jsonl", ".txt", ".png", ".jpg"}
+TEXT_EXTENSIONS: frozenset[str] = frozenset(
+    {".md", ".json", ".yaml", ".yml", ".jsonl", ".txt", ".toml"}
 )
+ALLOWED_EXTENSIONS: frozenset[str] = TEXT_EXTENSIONS | {".png", ".jpg"}
 # Media files (per follow-up 005): visible in sidebar tree; served via /api/media
 # (raw FileResponse, bypasses MAX_FILE_BYTES). User-rendered turntable mp4 / scene
 # ref png / shot output video etc. — gitignored, but webapp displays inline.
@@ -20,7 +21,11 @@ MEDIA_EXTENSIONS: frozenset[str] = frozenset(
      ".mp3", ".wav", ".m4a", ".aac", ".ogg", ".flac",
      ".pdf", ".glb", ".gltf"}
 )
-TREE_VISIBLE_EXTENSIONS: frozenset[str] = ALLOWED_EXTENSIONS | MEDIA_EXTENSIONS
+# Listed in the tree and served by /api/media as a plain download, but NOT media:
+# the downloads import and the rename pass both key off MEDIA_EXTENSIONS, and a
+# `.blend` is a script-built scene file (`_blender/{bg}.blend`) neither may touch.
+DOWNLOAD_ONLY_EXTENSIONS: frozenset[str] = frozenset({".blend"})
+TREE_VISIBLE_EXTENSIONS: frozenset[str] = ALLOWED_EXTENSIONS | MEDIA_EXTENSIONS | DOWNLOAD_ONLY_EXTENSIONS
 MAX_FILE_BYTES: int = 1_048_576
 
 _EXCLUDED_DIRS: frozenset[str] = frozenset(

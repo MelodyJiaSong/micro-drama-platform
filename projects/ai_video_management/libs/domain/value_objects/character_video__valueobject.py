@@ -10,7 +10,9 @@ Per 2026-06-27 follow-up the turntable is COMPRESSED 7s → 4s (same
 front→side→back arc done inside 4s). The 3 timestamps are the algebraic
 image of the 4s 5-phase camera path:
 
-  0-1s   static front lock         → front pick at t=0.5s (mid static intro)
+  0-1s   static front lock         → front pick at t=0 (the very first frame —
+                                     2026-09-26: the clip opens on the cleanest
+                                     front pose, before any drift into the turn)
   1-1.5s motion 0° → 90°
   1.5-2.5s static side lock        → side  pick at t=2.0s (mid static)
   2.5-3s motion 90° → 180°
@@ -32,7 +34,7 @@ class CharacterViewSpec:
 
 
 CANONICAL_VIEWS: tuple[CharacterViewSpec, ...] = (
-    CharacterViewSpec(0.5, "front"),
+    CharacterViewSpec(0.0, "front"),
     CharacterViewSpec(2.0, "side"),
     CharacterViewSpec(3.5, "back"),
 )

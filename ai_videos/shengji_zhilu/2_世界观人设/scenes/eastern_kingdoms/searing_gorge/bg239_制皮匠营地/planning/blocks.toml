@@ -1,0 +1,158 @@
+# 制皮匠营地 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg239"
+name_zh = "制皮匠营地"
+size_m = [160, 130]
+px_per_m = 6.0
+scale_src = "推定"
+scale_note = "区图无图标，区级块 b902 本身即推定（盆地西南缘崖脚）；营地只有披棚、火塘、三架皮架与四口木桶，按一处单户手艺营地取 160×130 m 把石窝与东北小径框进来，尺寸无一手出处"
+# 世界树画面：岩壁下的小营地，木架上绷着正在鞣制的兽皮，地上几口浸皮的木桶，烟从小火堆里直直升起
+absent = [
+    "任何人物、动物（兽皮是剥好的皮张，不是动物）",
+    "房屋、帐篷城、寨墙（只有一座贴岩壁的兽皮单坡披棚）",
+    "火把、灯笼、烛火（唯一人工光源是火塘里一小簇煤火）",
+    "熔岩与熔渣（最近的熔岩坑在营地北偏西约 90 m 外，不在本场地内）",
+    "任何水体、树木、草与绿色（木桶里是褐色鞣液，不是水）",
+    "西南与西两面的出入口（唯一出入口是东北口小径）",
+    "4.0.3a 后的任何改动",
+]
+
+[[ridge]]
+name = "西南岩壁（带浅岩檐与扇形烟痕，营地背靠）"
+poly = [[0, 0], [25, 0], [30, 40], [45, 70], [80, 88], [120, 95], [160, 92], [160, 130], [0, 130]]
+height_m = 180
+src = "推定"
+
+[[road]]
+name = "东北碎石小径（营地唯一出入口，缓坡下到盆地）"
+path = [[160, 12], [135, 26], [115, 38], [104, 47]]
+width_m = 2
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "campfire"
+face = "south"
+name = "黑石圈火塘（烧着一小簇煤火，外圈一撮冷透的旧煤渣）"
+xy = [80, 62]
+size = [3, 3]
+h_m = 0.3
+src = "推定"
+note = "本档唯一人工光源；细烟笔直上升至岩壁半腰"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p247"
+face = "northeast"
+name = "兽皮单坡披棚（木杆斜靠岩壁，棚口朝东北）"
+xy = [66, 76]
+size = [9, 5]
+h_m = 2.5
+rot = 27
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p246"
+face = "southwest"
+name = "绷皮木架·西（半干泛黄）"
+xy = [76, 47]
+size = [4, 1]
+h_m = 2.5
+rot = -15
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p246"
+face = "southwest"
+name = "绷皮木架·中（潮湿发深，带褐毛边）"
+xy = [89, 50]
+size = [4, 1]
+h_m = 2.5
+rot = 20
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p246"
+face = "southwest"
+name = "绷皮木架·东（空架，垂着松皮绳）"
+xy = [96, 59]
+size = [4, 1]
+h_m = 2.5
+rot = 60
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p248"
+face = "northeast"
+count = 4
+name = "铁箍鞣液木桶 ×4（披棚东南侧并排）"
+xy = [84, 81]
+size = [6, 2]
+h_m = 1.2
+rot = 12
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p245"
+face = "south"
+name = "刮皮圆木（一面磨亮，搁刮刀与磨刀石）"
+xy = [68, 53]
+size = [4, 1]
+h_m = 0.6
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p243"
+face = "south"
+name = "挡风巨石（半人高）"
+xy = [117, 68]
+size = [5, 3]
+h_m = 0.9
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p248"
+face = "south"
+name = "侧倒的空木桶（近景）"
+xy = [112, 40]
+size = [1, 1]
+h_m = 0.6
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "rock_shelf"
+face = "southwest"
+name = "小径坡头（锚点机位，朝西南）"
+xy = [124, 31]
+size = [6, 4]
+h_m = 1.5
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg239-c1"
+eye = [80, 120]
+target = [80, 65]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

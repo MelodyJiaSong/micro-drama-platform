@@ -47,6 +47,18 @@ def _inline_list(v: str) -> list[str]:
     return [_scalar(x) for x in body.split(",")] if body else []
 
 
+# 枚举字段的合法取值里永远不可能出现 `#`，所以行尾注释可以安全剥掉。
+# 这是复发性故障的闸门化：核验员习惯把「# 核验修正（…）」直接写在枚举值后面
+# （sk2 2026-09-18 踩过一次、靠手改 10 条收场），手改会复发，剥注释不会。
+_ENUM_FIELDS: tuple[str, ...] = ("tag", "verified_by", "tier")
+_TRAILING_COMMENT = re.compile(r"^(.*?)\s+#\s*(.*)$")
+
+
+def _split_enum_comment(val: str) -> tuple[str, str]:
+    m = _TRAILING_COMMENT.match(val)
+    return (m.group(1).strip(), m.group(2).strip()) if m else (val, "")
+
+
 def parse_block(text: str, part: str) -> list[dict]:
     facts: list[dict] = []
     cur: dict | None = None
@@ -64,6 +76,10 @@ def parse_block(text: str, part: str) -> list[dict]:
         if m:
             key, val = m.group(1), m.group(2).strip()
             block_scalar = False
+            if key in _ENUM_FIELDS:
+                val, comment = _split_enum_comment(val)
+                if comment:
+                    cur[key + "_note"] = comment
             if val == "":
                 cur[key], last = [], key
             elif val in ("|", ">", "|-", ">-"):

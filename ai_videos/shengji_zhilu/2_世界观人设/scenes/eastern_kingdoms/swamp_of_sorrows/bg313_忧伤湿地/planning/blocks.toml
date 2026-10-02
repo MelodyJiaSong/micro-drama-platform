@@ -1,0 +1,231 @@
+# 忧伤湿地 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 原点 ＝ 区级平面图 (1330, 150)；本图坐标 ＝ 区级坐标 − (1330, 150)。水道与北墙尾端按区级 terrain.toml 平移裁切（地图量取）；
+# 本 bg 本身在区级是推定落点（世界树无坐标），碎岛、枯树列、汇流黑水潭、树桩一律推定。
+# 锚点机位：b01 西南部窄小泥岛岛尖，贴水低机位，顺东北水网二朝东北望。农田避难所（bg304）在西缘外、泪水之池（bg312）在南缘外，都不入画。
+
+[meta]
+bg = "bg313"
+name_zh = "忧伤湿地"
+size_m = [600, 400]
+px_per_m = 2.5
+scale_src = "推定"
+scale_note = "水道与山坡按区级平面图（区图 x%×20.974、y%×13.983 m）平移量取，但本 bg 的区级落点本身是推定；碎岛、枯树列、汇流潭位置尺寸推定"
+# 世界树画面：北部最深的黑水区，水几乎没胸，死树成排站在雾里，水面漂着一层油亮的膜
+absent = [
+    "浅滩、沙洲与清水（这里水深近胸、黑亮不见底）",
+    "泥路、木桥、木桩、栈道与任何人工痕迹",
+    "开阔的湖面与湖心石庙（在南面，被雾与枯树挡住）",
+    "海面与船（海在东面，只透出一线更亮的雾）",
+    "睡莲、开花植物与任何鲜绿色（那是南部浅水湿地）",
+    "火、烛火、灯笼、火把与任何人工光源",
+    "阳光、光束、投影与晴天",
+    "任何人物与动物（水下的背脊也不要）",
+]
+
+[[ridge]]
+name = "北墙尾端山坡（西北角）"
+poly = [[0, 0], [53, 0], [31, 28], [0, 99]]
+height_m = 220
+src = "地图量取"
+
+[[water]]
+name = "农田东侧水道（西缘，北通海岸）"
+path = [[10, 300], [35, 258], [56, 164], [62, 59], [100, 2]]
+width_m = 24
+depth_m = 1.3
+src = "地图量取"
+
+[[water]]
+name = "东北水网一（南部，向东北通海岸）"
+path = [[114, 363], [219, 342], [324, 300], [428, 248], [512, 185]]
+width_m = 26
+depth_m = 1.5
+src = "地图量取"
+
+[[water]]
+name = "东北水网二（锚点视线所沿的水道）"
+path = [[135, 216], [219, 164], [292, 101], [376, 49], [449, 7]]
+width_m = 24
+depth_m = 1.5
+src = "地图量取"
+
+[[water]]
+name = "东北水网三（南北向连通）"
+path = [[261, 38], [282, 164], [271, 290], [301, 398]]
+width_m = 22
+depth_m = 1.5
+src = "地图量取"
+
+[[water]]
+name = "汇流黑水潭（二、三交汇处）"
+path = [[255, 95], [310, 120]]
+width_m = 70
+depth_m = 1.6
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "yard"
+face = "northeast"
+count = 1
+may_overlap = true
+name = "窄小泥岛岛尖（锚点机位）"
+xy = [118, 238]
+size = [26, 10]
+h_m = 0.2
+rot = -32
+src = "推定"
+note = "机位离水面约 0.8 m，朝东北顺水网二"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p317"
+face = "south"
+count = 8
+name = "枯树列（水网二西北岸）"
+xy = [165, 172]
+size = [110, 6]
+h_m = 14
+rot = -32
+src = "推定"
+
+[[block]]
+id = "b03"
+may_overlap = true
+kind = "asset"
+asset = "p317"
+face = "south"
+count = 8
+name = "枯树列（水网二东南岸）"
+xy = [190, 208]
+size = [110, 6]
+h_m = 14
+rot = -32
+src = "推定"
+
+[[block]]
+id = "b04"
+over_water = true
+kind = "asset"
+asset = "p317"
+face = "south"
+count = 3
+name = "汇流潭孤树群"
+xy = [290, 110]
+size = [20, 14]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b05"
+over_water = true
+kind = "asset"
+asset = "p335"
+face = "south"
+name = "折断空心树桩"
+xy = [230, 150]
+size = [2, 2]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "碎岛（水网二与三之间）"
+xy = [215, 255]
+size = [60, 40]
+h_m = 0.2
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "碎岛（北部）"
+xy = [180, 80]
+size = [60, 40]
+h_m = 0.2
+src = "推定"
+
+[[block]]
+id = "b08"
+over_water = true
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "碎岛（汇流潭以东）"
+xy = [360, 150]
+size = [50, 40]
+h_m = 0.2
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "单树小岛（右侧近处）"
+xy = [160, 262]
+size = [14, 10]
+h_m = 0.2
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "碎岛（东南）"
+xy = [420, 190]
+size = [50, 36]
+h_m = 0.2
+src = "推定"
+
+[[block]]
+id = "b11"
+may_overlap = true
+over_water = true
+kind = "asset"
+asset = "p318"
+face = "south"
+name = "斜插倒木（架在树杈上）"
+xy = [205, 190]
+size = [18, 2]
+h_m = 3
+rot = 30
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p319"
+face = "west"
+count = 30
+name = "芦苇海滩内缘（东缘远景）"
+xy = [565, 200]
+size = [50, 396]
+h_m = 2
+src = "地图量取"
+bg = "bg310"
+note = "区图东北岸沙滩带内缘约在 x 88%；只作雾后远景"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg313-c1"
+eye = [300, 368]
+target = [300, 200]
+eye_h = 20.0
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

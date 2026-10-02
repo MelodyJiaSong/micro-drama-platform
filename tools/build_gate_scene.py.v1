@@ -1,0 +1,408 @@
+# -*- coding: utf-8 -*-
+"""暴风城**入城段**的彩色高精场景：城门楼 + 城墙 + 引道 + 英雄谷雕像。
+
+与 `build_stormwind.py` 的分工（rule 4g ④「几何精度按镜头接近度分级」）
+------------------------------------------------------------------
+`build_stormwind.py` 建的是**全城 blockout**——灰盒子，给 42 条街景 previz 定机位用，
+镜头离得远、看的是体块关系。
+本文件建的是**一个地点的高精彩色场景**：S01–S07 是贴身穿过城门洞的 hero 镜，
+「贴身而过 ＝ 真立面」（rule 4g ④），blockout 精度在这里不够看。
+两者共用坐标约定：**原点 ＝ 城门洞正中，+Y 指向城内（北），+Z 向上，单位米，1:1 不缩放**。
+
+为什么不做成 blockout 的一个 `--detail` 开关：两者的用途、精度、材质、渲染引擎都不同，
+塞进一个脚本会让那 42 条 previz 的行为跟着这里的改动漂。**一个文件一个用途。**
+
+雕像从哪来
+----------
+**不是脚本建的，也不是 text-only 生成的**——`ai_video.md` §28 实测：
+Rodin 的 text-only 做不了整身着装人像（躺倒的光滑坨）。走 rule 4d 的「图先行」：
+纯文字出我们自己的三视图锚点图 → 那三张喂 image-to-3D → `whitemodel_normalize.py` 归一 →
+本文件 import。**权利人的官方图绝不上传生成模型**（`divergence #108`）。
+`STATUES` 表里 `mesh` 为 None 的，先放一个基座占位，场景照样能渲、能看布局。
+
+用法（仓库根目录）：
+    blender -b --factory-startup --python tools/build_gate_scene.py -- --out <绝对路径>.blend
+    blender -b --factory-startup --python tools/build_gate_scene.py -- --out x.blend --check <目录>
+"""
+import math
+import sys
+from pathlib import Path
+
+import bpy
+from mathutils import Vector
+
+# ── 尺寸表（米）。**改形制只改这里。** ─────────────────────────────────────────
+# ⚠️ 当前数值承自 build_stormwind.py 的城门段，**尚未按 _gate_research/gate_spec.md 校正**。
+#    研究交稿后逐条对照更新，并把每条的出处写进右侧注释。
+GATE_W, GATE_H, GATE_D = 12.0, 9.0, 16.0      # 门洞净宽 / 净高 / 进深
+PIER_W = 10.0                                  # 门洞两侧墩子宽
+WALL_H, WALL_T = 12.0, 4.0                     # 城墙高 / 厚
+MERLON_W, MERLON_H, MERLON_GAP = 2.0, 1.5, 2.0 # 方齿宽 / 高 / 间距
+TOWER_R, TOWER_H = 7.0, 20.0                   # 门楼圆塔半径 / 高
+SPIRE_H = 9.0                                  # 塔顶圆锥高
+ROAD_W, ROAD_LEN = 12.0, 180.0                 # 引道宽 / 长（向南）
+MOAT_W, MOAT_D = 22.0, 3.0                     # 护城河宽 / 深
+PLINTH = (3.0, 3.0, 3.5)                       # 雕像基座 长宽高
+STATUE_H = 7.0                                 # 雕像本体高（基座以上）
+STATUE_GAP = 26.0                              # 同侧相邻雕像间距
+STATUE_OFF = 11.0                              # 雕像中心离道路中轴的横向距离
+
+# ── 配色（自然色名 → 线性 RGB）。零 hex 是仓库规矩，这里是渲染用的数值，不进 prompt ──
+PALETTE = {
+    "暖白石":   (0.78, 0.74, 0.66),
+    "浅灰石":   (0.62, 0.61, 0.58),
+    "中蓝瓦":   (0.16, 0.26, 0.46),
+    "深棕木":   (0.20, 0.13, 0.08),
+    "黑铁":     (0.05, 0.05, 0.06),
+    "黄铜":     (0.55, 0.40, 0.14),
+    "群青幡":   (0.09, 0.14, 0.42),
+    "金狮":     (0.62, 0.48, 0.12),
+    "蓝绿水":   (0.08, 0.22, 0.20),
+    "草地":     (0.13, 0.20, 0.08),
+}
+
+# (编号, 沿 +Y 的位置, 在道路哪一侧 ±1, 人物名, 归一后的 .blend 路径或 None)
+STATUES = [
+    (1, -150.0, -1, "英雄一", None),
+    (2, -150.0, +1, "英雄二", None),
+    (3, -124.0, -1, "英雄三", None),
+    (4, -124.0, +1, "英雄四", None),
+    (5,  -98.0, -1, "英雄五", None),
+    (6,  -98.0, +1, "英雄六", None),
+]
+
+
+def argv():
+    a = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
+    d = {}
+    for i, x in enumerate(a):
+        if x.startswith("--") and i + 1 < len(a):
+            d[x[2:]] = a[i + 1]
+    return d
+
+
+def clear():
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+
+
+def mat(name):
+    """一个色名一份材质，复用。石材与水给不同的粗糙度/透射。"""
+    if name in bpy.data.materials:
+        return bpy.data.materials[name]
+    m = bpy.data.materials.new(name)
+    m.use_nodes = True
+    b = m.node_tree.nodes["Principled BSDF"]
+    r, g, bl = PALETTE[name]
+    b.inputs["Base Color"].default_value = (r, g, bl, 1.0)
+    if name == "蓝绿水":
+        b.inputs["Roughness"].default_value = 0.06
+        if "Transmission Weight" in b.inputs:
+            b.inputs["Transmission Weight"].default_value = 0.6
+    elif name in ("黑铁", "黄铜"):
+        b.inputs["Metallic"].default_value = 1.0
+        b.inputs["Roughness"].default_value = 0.45
+    else:
+        b.inputs["Roughness"].default_value = 0.85
+    return m
+
+
+def box(name, loc, size, color, parent=None, rot=0.0):
+    bpy.ops.mesh.primitive_cube_add(size=1.0, location=loc)
+    o = bpy.context.object
+    o.name = name
+    o.scale = size                       # primitive_cube_add(size=1) 边长为 1，直接乘
+    o.rotation_euler = (0, 0, rot)
+    bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+    o.data.materials.append(mat(color))
+    if parent:
+        o.parent = parent
+    return o
+
+
+def cone(name, loc, r, h, color, parent=None, verts=8):
+    bpy.ops.mesh.primitive_cone_add(vertices=verts, radius1=r, depth=h, location=loc)
+    o = bpy.context.object
+    o.name = name
+    o.data.materials.append(mat(color))
+    if parent:
+        o.parent = parent
+    return o
+
+
+def cyl(name, loc, r, h, color, parent=None, verts=16):
+    bpy.ops.mesh.primitive_cylinder_add(vertices=verts, radius=r, depth=h, location=loc)
+    o = bpy.context.object
+    o.name = name
+    o.data.materials.append(mat(color))
+    if parent:
+        o.parent = parent
+    return o
+
+
+def coll(name):
+    c = bpy.data.collections.new(name)
+    bpy.context.scene.collection.children.link(c)
+    return c
+
+
+def build_ground(root):
+    box("G_plain", (0, -40, -0.6), (700, 500, 1.0), "草地", root)
+    # 引道：略高于地面，暖白石板
+    box("G_road", (0, -ROAD_LEN / 2, 0.15), (ROAD_W, ROAD_LEN, 0.3), "暖白石", root)
+    # 护城河：城墙外一条横向水带
+    box("G_moat", (0, -MOAT_W / 2 - 2.0, -MOAT_D / 2), (700, MOAT_W, MOAT_D), "蓝绿水", root)
+    # 过河的桥面（引道在河上不断）
+    box("G_bridge", (0, -MOAT_W / 2 - 2.0, 0.15), (ROAD_W + 3, MOAT_W + 4, 0.6), "浅灰石", root)
+
+
+def merlons(root, y, x0, x1, top_z):
+    """一段墙顶的方齿。方齿不是尖齿——形制见 style_guide。"""
+    n = 0
+    x = x0
+    while x < x1:
+        box(f"M_{y:.0f}_{n:02d}", (x + MERLON_W / 2, y, top_z + MERLON_H / 2),
+            (MERLON_W, WALL_T, MERLON_H), "暖白石", root)
+        x += MERLON_W + MERLON_GAP
+        n += 1
+    return n
+
+
+def build_wall(root):
+    """城墙沿 y=0 横贯，门洞处断开。"""
+    half_open = GATE_W / 2 + PIER_W
+    for sgn in (-1, +1):
+        x_in, x_out = sgn * half_open, sgn * 320.0
+        xa, xb = min(x_in, x_out), max(x_in, x_out)
+        box(f"W_curtain_{'L' if sgn < 0 else 'R'}",
+            ((xa + xb) / 2, 0, WALL_H / 2), (xb - xa, WALL_T, WALL_H), "暖白石", root)
+        merlons(root, 0.0, xa, xb, WALL_H)
+        # 墙上每隔一段一座方塔
+        t = xa + 60
+        while t < xb - 20:
+            box(f"W_tower_{t:.0f}", (t, 0, (WALL_H + 5) / 2),
+                (10, WALL_T + 4, WALL_H + 5), "暖白石", root)
+            cone(f"W_spire_{t:.0f}", (t, 0, WALL_H + 5 + 4.0), 7.5, 8.0, "中蓝瓦", root)
+            t += 96
+
+
+def build_gatehouse(root):
+    """门洞必须是**真正贯通**的：两墩 + 过梁，中间是空的。"""
+    for sgn in (-1, +1):
+        box(f"GH_pier_{'L' if sgn < 0 else 'R'}",
+            (sgn * (GATE_W / 2 + PIER_W / 2), 0, GATE_H / 2),
+            (PIER_W, GATE_D, GATE_H), "暖白石", root)
+        # 门楼圆塔
+        cyl(f"GH_tower_{'L' if sgn < 0 else 'R'}",
+            (sgn * (GATE_W / 2 + PIER_W + TOWER_R * 0.6), 0, TOWER_H / 2),
+            TOWER_R, TOWER_H, "暖白石", root)
+        cone(f"GH_spire_{'L' if sgn < 0 else 'R'}",
+             (sgn * (GATE_W / 2 + PIER_W + TOWER_R * 0.6), 0, TOWER_H + SPIRE_H / 2),
+             TOWER_R + 0.8, SPIRE_H, "中蓝瓦", root)
+    # 过梁：从门洞净高往上到墙顶
+    box("GH_lintel", (0, 0, GATE_H + (WALL_H + 6 - GATE_H) / 2),
+        (GATE_W + PIER_W * 2, GATE_D, WALL_H + 6 - GATE_H), "暖白石", root)
+    merlons(root, 0.0, -(GATE_W / 2 + PIER_W), GATE_W / 2 + PIER_W, WALL_H + 6)
+    # 门洞两侧垂群青金狮幡
+    for sgn in (-1, +1):
+        box(f"GH_banner_{'L' if sgn < 0 else 'R'}",
+            (sgn * (GATE_W / 2 - 1.2), -GATE_D / 2 - 0.3, GATE_H - 3.0),
+            (1.8, 0.15, 5.0), "群青幡", root)
+
+
+def build_statues(root):
+    """基座由脚本建；雕像本体 import 归一后的 .blend（见模块抬头）。"""
+    placed = 0
+    for idx, y, side, who, mesh in STATUES:
+        x = side * STATUE_OFF
+        box(f"S{idx}_plinth_{who}", (x, y, PLINTH[2] / 2), PLINTH, "浅灰石", root)
+        if mesh and Path(mesh).exists():
+            before = set(bpy.data.objects)
+            bpy.ops.wm.append(directory=str(Path(mesh) / "Object"), filename="statue")
+            for o in set(bpy.data.objects) - before:
+                o.name = f"S{idx}_{who}"
+                o.location = (x, y, PLINTH[2])
+                o.rotation_euler = (0, 0, math.pi if side > 0 else 0.0)
+                o.parent = root
+            placed += 1
+        else:
+            # 占位：一根与雕像同高的方柱，只为看清布局与遮挡关系，**不是成品**
+            box(f"S{idx}_PLACEHOLDER_{who}", (x, y, PLINTH[2] + STATUE_H / 2),
+                (1.6, 1.6, STATUE_H), "浅灰石", root)
+    return placed
+
+
+def build_inner_city(root):
+    """门内的街区体块。
+
+    **为什么必须有**：S01 的第三段是「出洞，英雄谷的巨像依次从两侧掠过」——
+    如果门内是空的，穿门这个动作就没有落点，最后三分之一画面只剩草地和天空
+    （2026-09-20 首渲实测就是这样）。这里不求立面精度（rule 4g ④：
+    「中景＝体块+屋顶形制」），只求**穿出去之后眼前是一座城**。
+    """
+    import random
+    rng = random.Random(20260920)          # 固定种子：确定性生成，重跑结果一致
+    n = 0
+    for row in range(6):                    # 沿 +Y 六排
+        y = 34.0 + row * 46.0
+        for sgn in (-1, +1):
+            for k in range(4):              # 每侧四栋，越往外越靠边
+                x = sgn * (ROAD_W / 2 + 14.0 + k * 26.0 + rng.uniform(-3, 3))
+                w = rng.uniform(13, 20)
+                d = rng.uniform(13, 20)
+                h = rng.uniform(8, 15)      # 人类民居两三层
+                box(f"C_{row}{sgn:+d}{k}", (x, y + rng.uniform(-8, 8), h / 2),
+                    (w, d, h), "暖白石", root)
+                # 屋顶：四坡或圆锥尖顶，中蓝瓦——蓝色尖顶母题（style_guide §0）
+                if rng.random() < 0.45:
+                    cone(f"C_{row}{sgn:+d}{k}_spire", (x, y, h + 4.0),
+                         max(w, d) * 0.62, 8.0, "中蓝瓦", root, verts=8)
+                else:
+                    cone(f"C_{row}{sgn:+d}{k}_roof", (x, y, h + 2.6),
+                         max(w, d) * 0.74, 5.2, "中蓝瓦", root, verts=4)
+                n += 1
+    # 主街：从门洞一直向北
+    box("C_mainstreet", (0, 170.0, 0.12), (ROAD_W + 4, 300.0, 0.24), "暖白石", root)
+    return n
+
+
+def build_lamps(root):
+    """引道两侧黑铁街灯——蓝色尖顶母题的最小尺度（style_guide §0）。"""
+    y = -18.0
+    n = 0
+    while y > -ROAD_LEN + 10:
+        for sgn in (-1, +1):
+            x = sgn * (ROAD_W / 2 + 1.6)
+            cyl(f"L{n}_post_{'L' if sgn < 0 else 'R'}", (x, y, 2.4), 0.16, 4.8, "黑铁", root)
+            box(f"L{n}_lantern_{'L' if sgn < 0 else 'R'}", (x, y, 5.3), (0.7, 0.7, 0.9), "黄铜", root)
+            cone(f"L{n}_finial_{'L' if sgn < 0 else 'R'}", (x, y, 6.1), 0.45, 0.8, "中蓝瓦", root, verts=4)
+        y -= 22.0
+        n += 1
+
+
+def setup_world(sc):
+    """清晨低角度暖金侧逆光 + 天空。S01 的 `光线:` 就是这一套。"""
+    w = bpy.data.worlds.new("sky")
+    w.use_nodes = True
+    nt = w.node_tree
+    bg = nt.nodes["Background"]
+    sky = nt.nodes.new("ShaderNodeTexSky")
+    # Blender 5.1 把 Nishita 拆成了 SINGLE_/MULTIPLE_SCATTERING（4.x 的 "NISHITA" 已不存在）
+    opts = {i.identifier for i in sky.bl_rna.properties["sky_type"].enum_items}
+    sky.sky_type = ("MULTIPLE_SCATTERING" if "MULTIPLE_SCATTERING" in opts
+                    else ("NISHITA" if "NISHITA" in opts else "HOSEK_WILKIE"))
+    for attr, val in (("sun_elevation", math.radians(9.0)),   # 清晨低角度
+                      ("sun_rotation", math.radians(150.0)),   # 从画面右后方擦来
+                      ("altitude", 200.0)):
+        if hasattr(sky, attr):
+            setattr(sky, attr, val)
+    nt.links.new(sky.outputs[0], bg.inputs[0])
+    # 天空只当**补光**，不当主光：强度给 1.0 时它会把对比度冲平，
+    # 渲出来就是「没有投影的平光」——正是 ai_video.md §18 判为「像 CG」的头号特征。
+    bg.inputs[1].default_value = 0.35
+    sc.world = w
+
+    sun = bpy.data.objects.new("sun", bpy.data.lights.new("sun", "SUN"))
+    sun.data.energy = 6.0
+    sun.data.angle = math.radians(0.6)        # 太阳角径小 → 影子边缘利落
+    sun.data.use_shadow = True
+    # 阳光阴影走级联，**默认最远只覆盖 200 m 左右**；本场景跨度 700 m，
+    # 不拉长的话远处直接没有影子——而「没有投影」正是 §18 判为像 CG 的头号特征。
+    for attr, val in (("shadow_cascade_max_distance", 600.0),
+                      ("shadow_cascade_count", 4),
+                      ("shadow_soft_size", 0.8)):
+        if hasattr(sun.data, attr):
+            setattr(sun.data, attr, val)
+    # 仰角 9° ＝ 清晨，**长影从这里来**；方位 240° ＝ 从画面右后方擦来（侧逆光）。
+    # 方位若接近相机背后，影子全落在物体背面、画面上看不见——要的是**横着铺过来的长影**。
+    sun.rotation_euler = (math.radians(90 - 9), 0, math.radians(240))
+    sc.collection.objects.link(sun)
+
+
+def render_checks(out_dir: Path):
+    """三张校验图：正对城门 / 引道俯瞰 / 侧看城墙。**建完必须先看一眼。**"""
+    sc = bpy.context.scene
+    # Blender 5.1 的引擎枚举只有 BLENDER_EEVEE（4.2–4.5 曾叫 BLENDER_EEVEE_NEXT）。
+    # 名字猜错的后果是**静默回退到 Workbench**：几何照样渲出来，但材质与天空全没了，
+    # 看上去像「建错了」——实际是渲错了。所以按实际枚举取，取不到就报错，不许静默降级。
+    engines = {i.identifier for i in sc.render.bl_rna.properties["engine"].enum_items}
+    for cand in ("BLENDER_EEVEE_NEXT", "BLENDER_EEVEE", "CYCLES"):
+        if cand in engines:
+            sc.render.engine = cand
+            break
+    else:
+        raise SystemExit(f"找不到可用的渲染引擎，只有 {sorted(engines)}")
+    print(f"[gate] 渲染引擎 {sc.render.engine}")
+    sc.render.resolution_x, sc.render.resolution_y = 1280, 720
+    sc.render.film_transparent = False
+    # EEVEE 的阴影与环境遮蔽要显式开，否则是一片平光
+    ee = getattr(sc, "eevee", None)
+    if ee:
+        # 5.1 实际存在的才设——`use_gtao` / `taa_render_samples` 在 5.1 已移除，
+        # 设了也是静默无效（这类「以为设上了其实没有」是渲染调试最费时间的一类）
+        for attr, val in (("use_shadows", True), ("use_raytracing", True),
+                          ("shadow_ray_count", 4), ("shadow_step_count", 8),
+                          ("shadow_resolution_scale", 1.0)):
+            if hasattr(ee, attr):
+                setattr(ee, attr, val)
+    # 影调：Filmic/AgX 才有「高光柔滚不死白、暗部厚实」，Standard 会死白死黑
+    vs = sc.view_settings
+    looks = {i.identifier for i in vs.bl_rna.properties["view_transform"].enum_items}
+    for cand in ("AgX", "Filmic", "Standard"):
+        if cand in looks:
+            vs.view_transform = cand
+            break
+    vs.exposure = -0.3
+
+    cam_d = bpy.data.cameras.new("chk")
+    cam_d.lens = 32
+    cam_d.clip_end = 3000
+    cam = bpy.data.objects.new("chk", cam_d)
+    sc.collection.objects.link(cam)
+    sc.camera = cam
+    tgt = bpy.data.objects.new("chk_t", None)
+    sc.collection.objects.link(tgt)
+    t = cam.constraints.new("TRACK_TO")
+    t.target = tgt
+    t.track_axis, t.up_axis = "TRACK_NEGATIVE_Z", "UP_Y"
+
+    shots = [
+        ("gate_front", (0, -70, 14), (0, 0, 10)),
+        ("road_high", (0, -150, 70), (0, -40, 6)),
+        ("wall_side", (150, -60, 26), (20, 0, 12)),
+    ]
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for name, loc, look in shots:
+        cam.location = loc
+        tgt.location = look
+        sc.render.filepath = str(out_dir / f"check_{name}.png")
+        bpy.ops.render.render(write_still=True)
+    print(f"[gate] 校验图 3 张 -> {out_dir}")
+
+
+def main():
+    A = argv()
+    clear()
+    root = bpy.data.objects.new("GATE_ROOT", None)
+    bpy.context.scene.collection.objects.link(root)
+
+    build_ground(root)
+    build_wall(root)
+    build_gatehouse(root)
+    n_statue = build_statues(root)
+    n_city = build_inner_city(root)
+    build_lamps(root)
+    setup_world(bpy.context.scene)
+
+    n = len(bpy.context.scene.objects)
+    print(f"[gate] 物体 {n} 个（雕像真网格 {n_statue}/{len(STATUES)}，其余为基座占位；门内街区 {n_city} 栋）")
+
+    if "check" in A:
+        render_checks(Path(A["check"]))
+    if "out" in A:
+        p = Path(A["out"])
+        p.parent.mkdir(parents=True, exist_ok=True)
+        bpy.ops.wm.save_as_mainfile(filepath=str(p))
+        print(f"[gate] 已保存 {p}")
+
+
+main()

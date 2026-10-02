@@ -1,0 +1,98 @@
+# shot11 人体动作表（Cascadeur 层）。位置与朝向一律从 ../planning/overhead.toml 读，这里只写「身体摆成什么样」。
+# 改动作 ＝ 改本文件重跑 `python tools/cascadeur/choreo.py <shot 目录> --build`；部件都在共享库 tools/cascadeur/poses.toml。
+# 时刻与 shot11.md `动作:` 时间轴、overhead 的 [[hit]] / [[cast]] 逐拍对齐（rule 4h ②）。矿工不在这里：色块人偶够用。
+# follow-up 052：两人走路、打斗原先是色块人偶（走路像机器人、打斗僵硬）——攻防镜的人体一律 Cascadeur（G13）。
+# 6s / 25s 是镜内硬切、人换位置：切点前 0.1 s 各补一键，免得切前两帧人在滑。平面图每个路点时刻都钉一键（不钉会拖着走偏）。
+
+[parts]
+eyes_up = { head = -32 }     # 打斗里杜克抬头盯着对手（用户 2026-10-01：他全程低着头像傻子）
+eyes_fwd = { head = -12 }
+
+[meta]
+origin = [30.0, 14.0]          # 平面图坐标；Cascadeur 原点 ＝ 过道口南一步（杜克被拖进岔口的那一段）
+fps = 30
+
+# 杜克：0–5.9s 钢盾举在身前压低身子往里走；6s（切）堵在过道口，7.2 / 9.0s 扛镐、8.2s 盾沿一顶；10s 左肩挨一镐、左臂一软；
+# 11s 被撞得仰面坐倒，右手捂左肩；12.7–13.5s 坐着被拖进岔口；17.8s 光柱里长出一口气；18.3s 右膝撑地转身朝南、右胳膊搭上亚伦的肩，19s 站起来，19.7s 腿一软往下坠；
+# 20–24.9s 被架着往南逃，左臂垂着；25s（切）洞口外踉跄两步，靠木撑滑坐下来
+[actor."杜克"]
+gait = [[0.0, 5.5, "walk", "shield_guard+eyes_up"], [20.0, 24.6, "walk", "arm_over_r+arm_limp_l+breathe+eyes_fwd"], [25.0, 26.0, "walk", "clutch_l+eyes_fwd"]]
+keys = [
+  [5.9, "walk_b+shield_guard+eyes_up"],
+  [6.0, "stance_l+shield_guard+eyes_up"],
+  [7.0, "stance_l+shield_guard+eyes_up"],
+  [7.2, "stance_l+shield_brace+eyes_up"],
+  [7.5, "stance_l+shield_guard+eyes_up"],
+  [8.0, "stance_l+shield_guard+eyes_up"],
+  [8.2, "lunge+shield_shove+eyes_up"],
+  [8.6, "stance_l+shield_guard+eyes_up"],
+  [8.8, "stance_l+shield_guard+eyes_up"],
+  [9.0, "stance_l+shield_brace+eyes_up"],
+  [9.3, "stance_l+shield_guard+eyes_up"],
+  [9.85, "stance_l+shield_guard+eyes_up"],
+  [10.0, "stance_l+hit_shoulder_l+eyes_fwd"],
+  [10.6, "stand+hit_shoulder_l+eyes_fwd"],
+  [11.0, "step_back+hit_shoulder_l+eyes_fwd"],
+  [11.2, "fall_back+eyes_fwd"],
+  [11.4, "sit_ground+clutch_l+eyes_fwd"],
+  [12.7, "sit_ground+clutch_l+eyes_fwd"],
+  [13.5, "sit_ground+clutch_l+eyes_fwd"],
+  [17.4, "sit_ground+clutch_l+eyes_fwd"],
+  [17.8, "sit_ground+clutch_l+breathe+eyes_fwd"],
+  [18.3, "sit_ground+clutch_l+eyes_fwd"],
+  [18.7, "kneel_r+arm_over_r+arm_limp_l+eyes_fwd"],
+  [19.0, "stand+arm_over_r+arm_limp_l+eyes_fwd"],
+  [19.5, "stand+arm_over_r+arm_limp_l+eyes_fwd"],
+  [19.7, "brace_sink+arm_over_r+arm_limp_l+eyes_fwd"],
+  [19.9, "stand+arm_over_r+arm_limp_l+eyes_fwd"],
+  [24.9, "walk_a+arm_over_r+arm_limp_l+breathe+eyes_fwd"],
+  [26.5, "stand+clutch_l+eyes_fwd"],
+  [27.1, "sit_ground+clutch_l+eyes_fwd"],
+  [29.0, "sit_ground+clutch_l+breathe+eyes_fwd"],
+]
+
+# 亚伦：0–5.9s 右肩扛锤跟在后面；6s（切）双手握锤站在杜克右肩旁，7.8 / 9.4s 短砸；12.2s 横扫一锤把那群吓退；
+# 12.7–13.5s 绕到杜克背后，左手揪后领、右手拎锤，倒退着拖；12.7s 起边拖边喊；13.8s 跪稳在他西侧、锤撂下，按住他；14.8s 两掌拢光、吟唱，17.3s 左手举过头顶；
+# 18.3s 光散，转身朝南、左胳膊揽住杜克的腰，19s 一起站起来，19.3s 弯腰用右手去够身后的锤，19.8s 缩回手两手架住杜克往南逃；22.4–23.6s 往右后偏过头；25s（切）洞口外单膝跪下，28.7s 指杜克、29.3s 指自己
+[actor."亚伦"]
+gait = [[0.0, 5.5, "walk", "shoulder_carry"], [20.0, 24.6, "walk", "arm_around_l+catch_r"], [25.0, 26.0, "walk", "arm_around_l"]]
+keys = [
+  [5.9, "walk_b+shoulder_carry"],
+  [6.0, "stance_l+twohand_low"],
+  [7.4, "stance_l+twohand_chop_ready"],
+  [7.8, "lunge+twohand_chop"],
+  [8.2, "stance_l+twohand_low"],
+  [9.0, "stance_l+twohand_chop_ready"],
+  [9.4, "lunge+twohand_chop"],
+  [9.8, "stance_l+twohand_low"],
+  [11.6, "stance_l+twohand_low"],
+  [11.9, "stance_l+twohand_sweep_a"],
+  [12.2, "lunge+twohand_sweep_b"],
+  [12.4, "stance_l+twohand_low"],
+  [12.55, "walk_a+hammer_r_low"],
+  [12.7, "stance_l+hammer_r_low+drag_l"],
+  [13.1, "step_back+hammer_r_low+drag_l"],
+  [13.5, "stance_l+hammer_r_low+drag_l"],
+  [13.65, "walk_a+hammer_r_low"],
+  [13.8, "kneel_r+set_down_l_x"],
+  [14.2, "kneel_r+press_r"],
+  [14.6, "kneel_r+press_r"],
+  [14.8, "kneel_r+light_waist"],
+  [15.1, "kneel_r+light_waist"],
+  [15.3, "kneel_r+light_waist+light_high_l"],
+  [17.1, "kneel_r+light_waist+light_high_l"],
+  [17.3, "kneel_r+light_waist+arm_up_l"],
+  [17.8, "kneel_r+light_waist+arm_up_l"],
+  [18.2, "kneel_r+light_waist"],
+  [18.7, "kneel_r+arm_around_l"],
+  [19.0, "stand+arm_around_l"],
+  [19.3, "stand+arm_around_l+reach_down_back_r"],
+  [19.5, "stand+arm_around_l+reach_down_back_r"],
+  [19.8, "stand+arm_around_l+catch_r"],
+  [22.5, "walk_b+arm_around_l+catch_r+look_back_r"],
+  [23.0, "walk_a+arm_around_l+catch_r+look_back_r"],
+  [23.5, "walk_b+arm_around_l+catch_r"],
+  [24.9, "walk_a+arm_around_l+catch_r"],
+  [26.5, "kneel_r"],
+  [29.0, "kneel_r"],
+]

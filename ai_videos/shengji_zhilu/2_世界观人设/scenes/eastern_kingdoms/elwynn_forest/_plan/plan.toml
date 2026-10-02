@@ -1,0 +1,1635 @@
+# 艾尔文森林（elwynn_forest）区级资产规划 —— 区级资产规划师写，tools/apply_asset_plan.py 只读
+# 库里已有 p135…a10（闪金镇试点）；本区新立 a11…a34 共 24 件（≤25）。成片的块用单体 + count 散布。
+# 判据：贴地地坪 / 墙栅 / 拱桥 / 洞口坑道 / 水潭走脚本 kind（rule 4g）；其余有边界的物体引用本区资产库。
+# 去重（白模只锁几何与剪影，blend 里材质会剥掉；出图从不拿白模当参考，rule 4d ①）：
+#   白墙木构民居 a08 兼旅店后厨 / 农舍 / 小农舍 / 码头小屋 / 果园小屋 / 葡萄园小屋；两层大宅 a09 兼水晶湖岸民居（与 bg4·b13 同一栋）；
+#   敞开马厩 a03 兼锯木棚 / 马栏敞棚 / 酒桶敞棚 / 柴棚；帆布篷货车 a10 兼田头木板车；四臂路牌 a04 兼两臂路牌；
+#   橡树 a17 兼全区橡林与对岸暗林剪影；原木工棚 a11 兼峡谷木屋；栈桥 a24 兼溪上木板桥；树墩铁砧 a29 兼磨刀矮木墩；
+#   原木垛 a27 兼塔下柴垛；楼梯 a33 兼哨塔外置折梯；拱门洞 a31 兼修道院五道拱门 / 正门；巨石 a21 兼崖脚落石 / 岩脚碎岩。
+# judgment calls：
+#   bg4 的 face 按库里 asset.toml 注释的试点定稿写（与 size_m 的宽 / 深对得上，逐轴缩放不失真）。
+#   室内（bg175–177）：贴墙通长书架 / 兵器架 / 圆盾墙 ＝ 墙的衬里、平直重复，走 shelves；小室 / 耳房走 hall_shell（face 朝厅内开门洞）；
+#     长桌 / 长凳走 tables；祭台 altar；挂毯 low_wall 薄板；石旋梯 stair；二层书阁走 guard_post（立柱 + 楼板）。
+#   瀑布（bg181·b01、bg182·b02）走 proxy（竖直薄体正是 previz 要的遮挡体）；属别的 bg 的远景块（bg8·b08 镇子、bg174·b05 码头、
+#     bg182·b03 修道院院落）走 proxy 只占体积，几何以各自的 bg 为准；bg182·b04 葡萄园坡走 vineyard。
+#   湖岛（bg8·b01–b04）、机位缓坡（bg178·b07）、丘顶灰岩露头（bg7·b01）走 rock_shelf（抬高的平顶地块）。
+#   h_m = 0 的块一律走地坪（asset 单件 h_m=0 会取 min(size) 当高度）：芦苇浅滩 / 泥滩 / 卵石滩 / 田 / 院 / 树桩空地 → yard，
+#     瀑脚白沫区 → pool，冷灰火塘（bg185·b03）→ campfire（h=0 时柴堆退成一圈冷灰，正合默认态）。
+#   狗头人草窝铺（bg7·b07/b08，h 0.6）与出洞断轨（bg179·b05，h 0.2）贴地 → yard；出水口垫脚石（bg181·b05）→ boulders。
+#   围场 / 猪圈 / 残栏 / 桥头木栅 → palisade；石阶 / 塔脚台基 / 独立烟囱 → low_wall（实心方体）。
+#   无顶旧工棚架（bg179·b07，四柱一横杆）→ guard_post（四柱 + 顶框）。
+#   bg179·b02 入口坑道 h_m = 0（只示走向）→ tunnel，净高待作者补 h_m。
+
+[meta]
+zone = "elwynn_forest"
+
+# ── bg4（2026-09-30 floorplans-ep02 按 1.12 新卡重排：撤马厩 / 石井 / 民居 / 红铜信箱 / 石基木棚，加门廊 / 石墩信箱 / 圆顶熔炉 / 站位块）
+[[use]]
+bg = "bg4"
+block = "b01"
+asset = "p135"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg4"
+block = "b02"
+kind = "proxy"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg4"
+block = "b15"
+asset = "p265"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg4"
+block = "b03"
+kind = "yard"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg4"
+block = "b05"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg4"
+block = "b22"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg4"
+block = "b26"
+kind = "yard"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg4"
+block = "b16"
+kind = "proxy"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg4"
+block = "b08"
+kind = "proxy"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg4"
+block = "b18"
+face = "west"
+parts = [{asset = "p178", at = [0, 0.7], yaw = 0}, {asset = "p178", at = [0, 0], yaw = 12}, {asset = "p178", at = [0, -0.7], yaw = -8}]
+
+[[use]]
+bg = "bg4"
+block = "b17"
+kind = "low_wall"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg4"
+block = "b07"
+kind = "proxy"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg4"
+block = "b20"
+kind = "proxy"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg4"
+block = "b06"
+asset = "p138"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg4"
+block = "b21"
+kind = "proxy"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg4"
+block = "b24"
+kind = "proxy"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg4"
+block = "b25"
+kind = "proxy"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg4"
+block = "b14"
+asset = "p144"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg4"
+block = "b23"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg4"
+block = "b19"
+kind = "graveyard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg4"
+block = "b13"
+asset = "p143"
+face = "east"
+count = 1
+
+# ── bg5（2026-09-30 floorplans-ep02：按 1.12 新卡重排：后厨并入主楼、撤马厩与红铜信箱，加门廊 / 石墩信箱 / 门内药剂桌与吧台）
+[[use]]
+bg = "bg5"
+block = "b01"
+asset = "p135"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg5"
+block = "b11"
+kind = "proxy"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg5"
+block = "b04"
+kind = "low_wall"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg5"
+block = "b07"
+kind = "proxy"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg5"
+block = "b08"
+face = "west"
+parts = [{asset = "p178", at = [0, 0.7], yaw = 0}, {asset = "p178", at = [0, 0], yaw = 12}, {asset = "p178", at = [0, -0.7], yaw = -8}]
+
+[[use]]
+bg = "bg5"
+block = "b03"
+kind = "low_wall"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg5"
+block = "b12"
+kind = "proxy"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg5"
+block = "b13"
+kind = "proxy"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg5"
+block = "b14"
+asset = "p138"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg5"
+block = "b05"
+kind = "yard"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg5"
+block = "b09"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg5"
+block = "b15"
+kind = "proxy"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg5"
+block = "b16"
+kind = "proxy"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg5"
+block = "b10"
+asset = "p113"
+face = "south"
+count = 5
+
+# ── bg6
+[[use]]
+bg = "bg6"
+block = "b01"
+kind = "arch_bridge"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg6"
+block = "b02"
+asset = "p138"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg6"
+block = "b03"
+kind = "palisade"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg6"
+block = "b04"
+asset = "p113"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg6"
+block = "b05"
+asset = "p113"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg6"
+block = "b06"
+asset = "p113"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg6"
+block = "b07"
+asset = "p153"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg6"
+block = "b08"
+asset = "p113"
+face = "south"
+count = 25
+
+[[use]]
+bg = "bg6"
+block = "b09"
+asset = "p113"
+face = "south"
+count = 6
+
+# ── bg7（2026-09-30 floorplans-ep02：b02 原木洞口框 → 半嵌岩壁的暗红瓦木板矿屋）
+[[use]]
+bg = "bg7"
+block = "b01"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg7"
+block = "b02"
+kind = "proxy"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg7"
+block = "b03"
+asset = "p156"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg7"
+block = "b04"
+asset = "p156"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg7"
+block = "b05"
+asset = "p155"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg7"
+block = "b06"
+asset = "p155"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg7"
+block = "b07"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg7"
+block = "b08"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg7"
+block = "b09"
+kind = "palisade"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg7"
+block = "b10"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg7"
+block = "b11"
+kind = "vineyard"
+face = "south"
+count = 1
+
+# ── bg8
+[[use]]
+bg = "bg8"
+block = "b01"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg8"
+block = "b02"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg8"
+block = "b03"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg8"
+block = "b04"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg8"
+block = "b05"
+asset = "p157"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg8"
+block = "b06"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg8"
+block = "b07"
+asset = "p143"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg8"
+block = "b08"
+kind = "proxy"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg8"
+block = "b09"
+asset = "p113"
+face = "south"
+count = 7
+
+[[use]]
+bg = "bg8"
+block = "b10"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg8"
+block = "b11"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg8"
+block = "b12"
+asset = "p150"
+face = "north"
+count = 3
+
+
+# bg8 b13（2026-09-30 floorplans-ep02：栈桥西南岸边芦苇浅滩，S24 / S25）
+[[use]]
+bg = "bg8"
+block = "b13"
+kind = "yard"
+face = "south"
+count = 1
+
+# ── bg9（2026-09-30 floorplans-ep02：谷仓撤 p146（双坡顶）改复折顶占位，加门廊与溪岸木水槽）
+[[use]]
+bg = "bg9"
+block = "b01"
+asset = "p142"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg9"
+block = "b02"
+asset = "p137"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg9"
+block = "b03"
+kind = "proxy"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg9"
+block = "b04"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg9"
+block = "b05"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg9"
+block = "b06"
+asset = "p157"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg9"
+block = "b07"
+asset = "p151"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg9"
+block = "b08"
+kind = "proxy"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg9"
+block = "b09"
+kind = "proxy"
+face = "west"
+count = 1
+
+# ── bg173
+[[use]]
+bg = "bg173"
+block = "b01"
+asset = "p145"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg173"
+block = "b02"
+asset = "p137"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg173"
+block = "b03"
+asset = "p160"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg173"
+block = "b04"
+asset = "p160"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg173"
+block = "b05"
+kind = "palisade"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg173"
+block = "b06"
+asset = "p137"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg173"
+block = "b07"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg173"
+block = "b08"
+kind = "graveyard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg173"
+block = "b09"
+kind = "arch_bridge"
+face = "south"
+count = 1
+
+# ── bg174（2026-09-30 floorplans-ep02：加木桶形筒仓、西头矮石墙与高草坡、园边木板车；小屋 / 敞棚挪到筒仓东南）
+[[use]]
+bg = "bg174"
+block = "b01"
+kind = "vineyard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg174"
+block = "b02"
+asset = "p142"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg174"
+block = "b03"
+asset = "p137"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg174"
+block = "b04"
+asset = "p113"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg174"
+block = "b05"
+kind = "proxy"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg174"
+block = "b06"
+kind = "proxy"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg174"
+block = "b07"
+kind = "low_wall"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg174"
+block = "b08"
+kind = "yard"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg174"
+block = "b09"
+asset = "p349"
+face = "west"
+count = 1
+
+# ── bg175
+[[use]]
+bg = "bg175"
+block = "b01"
+asset = "p164"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg175"
+block = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg175"
+block = "b03"
+kind = "shelves"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg175"
+block = "b04"
+kind = "hall_shell"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg175"
+block = "b05"
+kind = "hall_shell"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg175"
+block = "b06"
+kind = "hall_shell"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg175"
+block = "b07"
+kind = "shelves"
+face = "west"
+count = 12
+
+[[use]]
+bg = "bg175"
+block = "b08"
+asset = "p163"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg175"
+block = "b09"
+asset = "p162"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg175"
+block = "b10"
+kind = "shelves"
+face = "south"
+count = 1
+
+# ── bg176
+[[use]]
+bg = "bg176"
+block = "b01"
+asset = "p164"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg176"
+block = "b02"
+kind = "tables"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg176"
+block = "b03"
+kind = "shelves"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg176"
+block = "b04"
+kind = "shelves"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg176"
+block = "b05"
+kind = "shelves"
+face = "west"
+count = 14
+
+[[use]]
+bg = "bg176"
+block = "b06"
+kind = "hall_shell"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg176"
+block = "b07"
+kind = "hall_shell"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg176"
+block = "b08"
+asset = "p166"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg176"
+block = "b09"
+kind = "guard_post"
+face = "west"
+count = 1
+
+# ── bg177
+[[use]]
+bg = "bg177"
+block = "b01"
+asset = "p164"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg177"
+block = "b02"
+asset = "p165"
+face = "south"
+count = 5
+layout = "row"
+
+[[use]]
+bg = "bg177"
+block = "b03"
+asset = "p165"
+face = "south"
+count = 5
+layout = "row"
+
+[[use]]
+bg = "bg177"
+block = "b04"
+kind = "tables"
+face = "east"
+count = 3
+
+[[use]]
+bg = "bg177"
+block = "b05"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg177"
+block = "b06"
+kind = "altar"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg177"
+block = "b07"
+kind = "low_wall"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg177"
+block = "b08"
+asset = "p164"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg177"
+block = "b09"
+asset = "p164"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg177"
+block = "b10"
+kind = "hall_shell"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg177"
+block = "b11"
+kind = "hall_shell"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg177"
+block = "b12"
+kind = "stair"
+face = "south"
+count = 1
+
+# ── bg178（2026-09-30 floorplans-ep02：农庄重排：大谷仓、屋前空地、窄口、翻倒货车 p349、南瓜堆；撤田头货车 p144 与机位缓坡）
+[[use]]
+bg = "bg178"
+block = "b01"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg178"
+block = "b09"
+kind = "yard"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg178"
+block = "b08"
+kind = "proxy"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg178"
+block = "b03"
+kind = "palisade"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg178"
+block = "b02"
+asset = "p142"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg178"
+block = "b13"
+kind = "yard"
+face = "northwest"
+count = 1
+
+[[use]]
+bg = "bg178"
+block = "b04"
+asset = "p349"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg178"
+block = "b10"
+kind = "proxy"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg178"
+block = "b05"
+asset = "p113"
+face = "east"
+count = 22
+
+[[use]]
+bg = "bg178"
+block = "b11"
+asset = "p113"
+face = "south"
+count = 12
+
+[[use]]
+bg = "bg178"
+block = "b12"
+asset = "p113"
+face = "south"
+count = 8
+
+[[use]]
+bg = "bg178"
+block = "b06"
+asset = "p151"
+face = "south"
+count = 14
+
+# ── bg179
+[[use]]
+bg = "bg179"
+block = "b01"
+kind = "mine_portal"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg179"
+block = "b02"
+kind = "tunnel"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg179"
+block = "b03"
+asset = "p155"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg179"
+block = "b04"
+asset = "p155"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg179"
+block = "b05"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg179"
+block = "b06"
+asset = "p156"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg179"
+block = "b07"
+kind = "guard_post"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg179"
+block = "b08"
+kind = "yard"
+face = "south"
+count = 1
+
+# ── bg180
+[[use]]
+bg = "bg180"
+block = "b01"
+asset = "p142"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg180"
+block = "b02"
+asset = "p157"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg180"
+block = "b03"
+face = "south"
+parts = [{asset = "p159", at = [-2.2, 0.8], yaw = 0}, {asset = "p159", at = [-1.1, 0.9], yaw = 5}, {asset = "p159", at = [-2, -0.4], yaw = -4}, {asset = "p159", at = [-0.9, -0.3], yaw = 0}, {asset = "p178", at = [0.6, 0.8], yaw = 0}, {asset = "p178", at = [1.4, 0.6], yaw = 0}, {asset = "p178", at = [1, -0.4], yaw = 0}]
+
+[[use]]
+bg = "bg180"
+block = "b04"
+asset = "p158"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg180"
+block = "b05"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg180"
+block = "b06"
+asset = "p161"
+face = "south"
+count = 12
+
+[[use]]
+bg = "bg180"
+block = "b07"
+asset = "p113"
+face = "south"
+count = 30
+
+[[use]]
+bg = "bg180"
+block = "b08"
+asset = "p113"
+face = "south"
+count = 18
+
+[[use]]
+bg = "bg180"
+block = "b09"
+asset = "p167"
+face = "south"
+count = 1
+
+# ── bg181
+[[use]]
+bg = "bg181"
+block = "b01"
+kind = "proxy"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg181"
+block = "b02"
+asset = "p152"
+face = "south"
+count = 30
+
+[[use]]
+bg = "bg181"
+block = "b03"
+asset = "p142"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg181"
+block = "b04"
+asset = "p113"
+face = "south"
+count = 12
+
+[[use]]
+bg = "bg181"
+block = "b05"
+kind = "boulders"
+face = "south"
+count = 5
+
+[[use]]
+bg = "bg181"
+block = "b06"
+asset = "p154"
+face = "south"
+count = 4
+
+# ── bg182
+[[use]]
+bg = "bg182"
+block = "b01"
+kind = "arch_bridge"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg182"
+block = "b02"
+kind = "proxy"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg182"
+block = "b03"
+kind = "proxy"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg182"
+block = "b04"
+kind = "vineyard"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg182"
+block = "b05"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg182"
+block = "b06"
+asset = "p151"
+face = "south"
+count = 3
+
+[[use]]
+bg = "bg182"
+block = "b07"
+asset = "p151"
+face = "south"
+count = 3
+
+[[use]]
+bg = "bg182"
+block = "b08"
+kind = "palisade"
+face = "south"
+count = 1
+
+# ── bg183
+[[use]]
+bg = "bg183"
+block = "b01"
+asset = "p147"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg183"
+block = "b02"
+asset = "p166"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg183"
+block = "b03"
+kind = "yard"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg183"
+block = "b04"
+asset = "p160"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg183"
+block = "b05"
+asset = "p151"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg183"
+block = "b06"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg183"
+block = "b07"
+asset = "p113"
+face = "south"
+count = 10
+
+[[use]]
+bg = "bg183"
+block = "b08"
+asset = "p113"
+face = "south"
+count = 30
+
+# ── bg184
+[[use]]
+bg = "bg184"
+block = "b01"
+asset = "p149"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg184"
+block = "b02"
+asset = "p154"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg184"
+block = "b03"
+asset = "p154"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg184"
+block = "b04"
+asset = "p154"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg184"
+block = "b05"
+asset = "p154"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg184"
+block = "b06"
+asset = "p154"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg184"
+block = "b07"
+asset = "p154"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg184"
+block = "b08"
+asset = "p154"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg184"
+block = "b09"
+asset = "p154"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg184"
+block = "b10"
+asset = "p154"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg184"
+block = "b11"
+asset = "p150"
+face = "north"
+count = 4
+
+[[use]]
+bg = "bg184"
+block = "b12"
+asset = "p150"
+face = "north"
+count = 4
+
+[[use]]
+bg = "bg184"
+block = "b13"
+kind = "ore_vein"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg184"
+block = "b14"
+kind = "ore_vein"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg184"
+block = "b15"
+asset = "p161"
+face = "south"
+count = 30
+
+# ── bg185
+[[use]]
+bg = "bg185"
+block = "b01"
+asset = "p145"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg185"
+block = "b02"
+asset = "p162"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg185"
+block = "b03"
+kind = "campfire"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg185"
+block = "b04"
+asset = "p157"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg185"
+block = "b05"
+asset = "p158"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg185"
+block = "b06"
+kind = "pool"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg185"
+block = "b07"
+asset = "p154"
+face = "north"
+count = 8
+
+# ── bg186
+[[use]]
+bg = "bg186"
+block = "b01"
+asset = "p148"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg186"
+block = "b02"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg186"
+block = "b03"
+asset = "p113"
+face = "south"
+count = 28
+
+[[use]]
+bg = "bg186"
+block = "b04"
+asset = "p113"
+face = "south"
+count = 30
+
+[[use]]
+bg = "bg186"
+block = "b05"
+asset = "p113"
+face = "south"
+count = 30
+
+[[use]]
+bg = "bg186"
+block = "b06"
+asset = "p167"
+face = "south"
+count = 1
+
+# ── ep01 补充（2026-09-25，follow-up 007）：ep01 用到的六个旧 v3 场景（bg1/2/3/18/19/20）的编号块落资产 ──
+# 只列要换成资产的块；地坪 / 墙 / 桥 / 洞口 / 坑道 / 室内墙体仍走原脚本 kind，不在这里出现。
+[[use]]
+bg = "bg1"
+block = "b01"
+asset = "p168"
+face = "south"
+[[use]]
+bg = "bg1"
+block = "b03"
+asset = "p169"
+face = "south"
+[[use]]
+bg = "bg1"
+block = "b04"
+asset = "p169"
+face = "south"
+[[use]]
+bg = "bg1"
+block = "b06"
+asset = "p144"
+face = "south"
+count = 2
+[[use]]
+bg = "bg1"
+block = "b07"
+asset = "p137"
+face = "south"
+[[use]]
+bg = "bg1"
+block = "b08"
+asset = "p150"
+face = "south"
+count = 4
+[[use]]
+bg = "bg1"
+block = "b11"
+asset = "p170"
+face = "west"
+[[use]]
+bg = "bg1"
+block = "b14"
+asset = "p147"
+face = "south"
+[[use]]
+bg = "bg2"
+block = "b02"
+asset = "p171"
+face = "south"
+[[use]]
+bg = "bg2"
+block = "b05"
+asset = "p172"
+face = "east"
+count = 2
+[[use]]
+bg = "bg2"
+block = "b07"
+asset = "p173"
+face = "east"
+count = 4
+[[use]]
+bg = "bg2"
+block = "b08"
+face = "south"
+parts = [{asset = "p174", at = [0, 1.9], yaw = 0}, {asset = "p177", at = [0, 2.65], yaw = 0}, {asset = "p177", at = [0, 1.15], yaw = 0}, {asset = "p174", at = [0, -1.9], yaw = 0}, {asset = "p177", at = [0, -1.15], yaw = 0}, {asset = "p177", at = [0, -2.65], yaw = 0}]
+
+[[use]]
+bg = "bg3"
+block = "b02"
+asset = "p154"
+face = "south"
+count = 6
+[[use]]
+bg = "bg3"
+block = "b09"
+asset = "p150"
+face = "south"
+count = 2
+[[use]]
+bg = "bg18"
+block = "b02"
+asset = "p464"
+face = "south"
+[[use]]
+bg = "bg18"
+block = "b04"
+face = "south"
+parts = [{asset = "p159", at = [-1.1, 0.5], yaw = 0}, {asset = "p159", at = [-1, -0.5], yaw = 8}, {asset = "p178", at = [0.4, 0.6], yaw = 0}, {asset = "p178", at = [1.1, 0.3], yaw = 0}, {asset = "p178", at = [0.7, -0.6], yaw = 0}]
+
+[[use]]
+bg = "bg18"
+block = "b06"
+asset = "p113"
+face = "south"
+count = 6
+[[use]]
+bg = "bg19"
+block = "b01"
+asset = "p170"
+face = "west"
+[[use]]
+bg = "bg19"
+block = "b02"
+asset = "p174"
+face = "south"
+[[use]]
+bg = "bg19"
+block = "b03"
+asset = "p160"
+face = "south"
+[[use]]
+bg = "bg19"
+block = "b04"
+asset = "p175"
+face = "south"
+[[use]]
+bg = "bg19"
+block = "b05"
+asset = "p176"
+face = "south"
+count = 2
+[[use]]
+bg = "bg19"
+block = "b06"
+asset = "p113"
+face = "south"
+count = 5
+[[use]]
+bg = "bg19"
+block = "b07"
+asset = "p113"
+face = "south"
+count = 4
+[[use]]
+bg = "bg20"
+block = "b04"
+asset = "p113"
+face = "south"
+count = 7
+[[use]]
+bg = "bg20"
+block = "b05"
+asset = "p154"
+face = "south"
+count = 5
+[[use]]
+bg = "bg20"
+block = "b06"
+asset = "p154"
+face = "south"
+count = 5
+
+# ── GLB 只装单个物体（2026-09-25，follow-up 011）：组合件拆成单物体，块里用 parts 摆 ──

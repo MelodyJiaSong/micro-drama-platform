@@ -1,4 +1,4 @@
-# sk2 · 《时空旅行》第 2 站 · 暴风城 Stormwind · 经典旧世 — 修订后请求（= raw_prompt + 全部 follow-ups）
+# sk2 · 《时空旅行》第 2 站 · 暴风城 Stormwind · 经典旧世 — 原始请求
 
 > **task_type**：`ai_video` · **sub_type**：`short`（单站独立成片，系列嵌套于 `ai_videos/shikong_lvxing/`）
 > 系列级意图在 `ai_videos/shikong_lvxing/proposal.md`；本目录只装 sk2 单站的。
@@ -30,9 +30,10 @@
 
 - **IP 定性与发布策略**：暴风城是暴雪 IP。非商业同人在 Blizzard fan content policy 下通常可行，四站商业分发 / 开收益是风险点。阶段 6 `publish.md` 之前需用户定性（同人标注 / 不开收益 / 换名致敬）。
 
----
 
-# Follow-ups（按时间顺序合并）
+<!-- from user_input/follow_ups/202609.md -->
+
+# sk2 · 后续指令日志 · 2026-09
 
 ---
 
@@ -122,3 +123,190 @@ W8 答「**那天发生了什么**」（事件），W9 答「**每个玩家都�
 - **I-7 的放宽（系列 follow-up 014）仍然有价值、继续保留**：没有《假面舞会》，但**当地人的吆喝与招呼语全是逐字原文**——面包小贩 `"Rolls, buns and bread. Baked fresh!"`、旅店老板 `"Welcome to my Inn, weary traveler."`、卫兵 `"Light be with you, sir."`、酒馆老板 `"Grab a drink my friend and pull up a seat"`。**这些正是一部旅游 vlog 最需要的环境真实感**，且一个字不用编。
 - 四个机构（王座厅 / 光明大教堂 / 矿道地铁 / 巫师圣殿）不变。
 - 片长 15 分钟版、约 43–45 镜、单镜 20–30 s 不变。
+
+---
+
+## 005 — 2026-09-19 — 台词全英文确认 + 背景音乐走英语系
+
+> target_stage: 4
+> target_artifacts:
+>   - ai_videos/shikong_lvxing/sk2/2_世界观人设/casting.md
+>   - ai_videos/shikong_lvxing/sk2/1_立项/concept.md
+> severity: medium
+
+### 指令
+
+请确保台词都是英文，背景音乐也是英语系的。
+
+### 一行摘要
+
+**台词：已经是。** 核查 `4_剧本/dialogue.md`——**47 句英文原声**（艾拉的对镜与画外全部英语，`divergence #109`）+ **47 句中文译配**，NPC 那四句本来就是游戏内英文逐字原文。**全片零中文口播**，中文只出现在字幕与译配轨。
+
+**配乐：新增规格**（`casting.md` §6）。全片走**西欧 / 不列颠**语汇：弦乐 + 法国号 + 竖琴的管弦底子，叠不列颠民谣的锡笛、提琴、手鼓；教堂段管风琴 + 无词合唱。**不用东亚音阶、不用中式乐器、不出现任何语种的可辨歌词**（会与口播抢）。依据是两头对齐——世界观是西方奇幻人类王都，主持人是英国布里斯托尔人。
+
+**两条纪律**：① **绝不使用暴雪原声音乐**（版权，与 `divergence #110` 的 IP 定性同一条线），全片配乐原创，走 `tools/stableaudio_gen.py`；② **S20–S22 王座厅几乎无乐**——戏剧反讽靠观众自己发现，不许用音乐提示，这是设计不是遗漏。
+
+另出 12 段分段编制表（对齐 44 镜），三个声音锚由音效承担而非音乐。
+
+---
+
+## 006 — 2026-09-19 14:20:00 — 人物卡人种锚与 4 秒建立视频
+
+> target_stage: 2
+> target_artifacts:
+>   - 2_世界观人设/characters/
+>   - .claude/agent_refs/project/ai_video.md
+> severity: high
+
+### 指示
+
+1. 大主教本尼迪塔斯出图是一张**东亚面孔**，属于错误——对该角色重做更详细的形象研究并重新生成。
+2. **所有有问题的角色一并重新生成。**
+3. **每张人物卡都必须带一条生成 4 秒视频的 prompt**（turntable）——这是标准流程的一部分，
+   **只有 character 有**，场景卡与物件卡没有。
+
+### 一句话
+
+人物卡缺两样标准件：人种锚与 4 秒建立视频 prompt；有问题的脸全部重出。
+
+---
+
+## 007 — 2026-09-19 14:55:00 — shot 参考行缺 previz 与场景图
+
+> target_stage: 5
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/
+>   - tools/gen_shots_sk2.py
+> severity: high
+
+### 指示
+
+shot1 的参考里除了一个 character 之外**什么都没有**——没有 previz 动画，也没有场景图片。
+核对该镜的参考行是否正确。
+
+### 一句话
+
+分镜的 `参考:` 行整层不完整，要求核对。
+
+
+---
+
+## 008 — 2026-09-19 15:30:00 — 艾拉改说美式口音
+
+> target_stage: 2
+> target_artifacts:
+>   - _series/characters/c4_艾拉/c4_艾拉.md
+>   - 2_世界观人设/casting.md
+> severity: medium
+
+### 指示
+
+艾拉讲的英文要是**美国口音**。
+
+### 一句话
+
+主持人口音由英式改为美式。
+
+
+---
+
+## 009 — 2026-09-19 16:50:00 — previz MP4 被 Seedance 拒收（分辨率下限）
+
+> target_stage: 5
+> target_artifacts:
+>   - tools/previz_sk2.py
+>   - 5_6_分镜与prompt/shots/*/shot*_previz.mp4
+> severity: high
+
+### 指示
+
+把 shot1 的 previz MP4 作为 reference 导入时，Seedance 报错：**分辨率不能低于 409600**。
+
+### 一句话
+
+previz 的像素数低于生成模型的下限，整批不可用。
+
+
+---
+
+## 010 — 2026-09-19 17:40:00 — 画面太像劣质游戏 CG，要真实感
+
+> target_stage: 2
+> target_artifacts:
+>   - 2_世界观人设/scenes/stormwind/
+>   - 2_世界观人设/style_guide.md
+>   - tools/gen_shots_sk2.py
+> severity: high
+
+### 指示
+
+视频画面太像劣质游戏 CG，要的是真实感。场景图需要重新生成。并要求看到当前在用的 prompt。
+
+### 一句话
+
+全片影像口径从「半写实」改为实拍电影，场景图全量重出。
+
+
+---
+
+## 011 — 2026-09-19 21:30:00 — shot1 的 previz 看起来不对
+
+> target_stage: 5
+> target_artifacts:
+>   - tools/build_stormwind.py
+>   - tools/previz_sk2.py
+>   - 5_6_分镜与prompt/shots/shot01/
+> severity: high
+
+### 指示
+
+把 bg0-1 改成不要那么游戏味；shot1 的 previz MP4 看起来怪怪的，核对是否正确。
+
+### 一句话
+
+开场镜的 previz 运镜与分镜对不上；航拍场景图仍偏游戏感。
+
+
+---
+
+## 012 — 2026-09-20 10:30:00 — 入城景观差得远，重查形制并出彩色 blender + MP4
+
+> target_stage: 5
+> target_artifacts:
+>   - 2_世界观人设/scenes/stormwind/_gate_research/
+>   - tools/build_gate_scene.py
+> severity: high
+
+### 指示
+
+previz 做出来的 shot 与暴风城入城景观差得很远。重新研究城门口到底长什么样，
+出一个**彩色**的 blender 场景与 MP4；雕像、城门等最好用 Hyper3D 生成的实物模型。
+
+### 一句话
+
+入城段形制重查 + 彩色高精场景 + 飞行 MP4。
+
+
+---
+
+## 013 — 2026-09-21 22:20:00 — 三项定夺：补内景几何 / 将军镜提前 / 优先出片验证
+
+> target_stage: 5
+> target_artifacts:
+>   - 5_6_分镜与prompt/shots/
+>   - 2_世界观人设/scenes/
+> severity: high
+
+### 指令
+
+1. **景别与现场宽度冲突** —— 14 条地面镜写远景 `subj_frac 0.09`（16:9 下需要 34.6 m
+   画幅宽），而地铁站台只有 4 m、教堂广场 30 m、法师区 29 m，室内镜更是没有内景几何。
+   处理方式：**室内补内景几何，室外改镜表**。
+2. **S07 地理倒退** —— 将军那场在桥中段（y≈74）却排在巨像段（y 118–136）之后，
+   等于她往北走完又倒回南边。处理方式：**把将军那场提到巨像段之前**，全程单调向北。
+3. **下一步优先级** —— 先把**入城段七镜真出片**，验证「previz → prompt → 出片」全链路，
+   再铺其余镜次。
+
+### 摘要
+
+定下内景补几何、外景改镜表；将军镜提前使动线单调向北；优先跑通入城段出片全链路。

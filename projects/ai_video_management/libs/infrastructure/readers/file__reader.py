@@ -15,9 +15,6 @@ from libs.domain.errors.file__error import (
     UnsupportedFileExtensionError,
 )
 
-_TEXT_EXTENSIONS: frozenset[str] = frozenset(
-    {".md", ".json", ".yaml", ".yml", ".jsonl", ".txt"}
-)
 _IMAGE_EXTENSIONS: frozenset[str] = frozenset({".png", ".jpg"})
 
 

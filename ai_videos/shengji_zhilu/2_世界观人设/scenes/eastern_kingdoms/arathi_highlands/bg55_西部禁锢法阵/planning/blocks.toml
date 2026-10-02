@@ -1,0 +1,296 @@
+# 西部禁锢法阵 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 区级图点位 (821.3, 657.1) m 落在本场地 (250, 170)（圈心）；古墙 = bg41 `b920` 平移、在豁口 (约 [20,31]) 处断开；
+# 主路 / 农庄支路取自 bg41 terrain.toml 同名折线平移。北界山墙西端在圈心北约 300 m，出场地。
+
+[meta]
+bg = "bg55"
+name_zh = "西部禁锢法阵"
+size_m = [440, 360]
+px_per_m = 3.5
+scale_src = "推定"
+scale_note = "古墙、豁口、主路与农庄支路是地图量取（bg41 平移）；石柱环直径 22 m、浅碟洼地、倒柱与水洼位置均按世界树画面推定，未实机量取"
+grid_m = 50
+# 世界树画面：高地西侧的符文石柱环，一侧石柱已倒伏，圈内积着小水洼
+absent = [
+    "火焰、烟与任何人工光源",
+    "发光的符文、阵纹与石柱（本座一律不发光）",
+    "任何人物、元素生物与动物（默认无人）",
+    "正在下的雨与水面涟漪（雨后已晴）",
+    "焦黑烧斑（那是东部法阵）",
+    "草丘与断桩空坑（那是外法阵）",
+    "完整无缺的城墙（古墙半塌、有豁口）",
+    "成片树林（只有一棵老树与几丛灌木）",
+    "北通邻区的山口（北面是封死的山墙）",
+    "4.0.3 新增的元素之环",
+]
+
+[[road]]
+name = "东西主路（豁口 → 朝东南去双湖）"
+path = [[102.2, 202.8], [167.9, 334.2], [177.6, 360]]
+width_m = 8
+src = "地图量取"
+
+[[road]]
+name = "主路墙外段（豁口向西出区）"
+path = [[102.2, 202.8], [60, 196], [0, 184]]
+width_m = 8
+src = "推定"
+
+[[road]]
+name = "农庄支路（在场地南缘外的主路弯处分出，擦过场地东南角向东北上坡）"
+path = [[351, 360], [374.7, 340.9], [440, 270.5]]
+width_m = 5
+src = "地图量取"
+
+[[water]]
+name = "圈心积水洼（最大一汪）"
+path = [[246, 168], [254, 173]]
+width_m = 6
+depth_m = 0.2
+src = "推定"
+
+[[water]]
+name = "圈内西北小水洼"
+path = [[243, 163], [246, 162]]
+width_m = 2.5
+depth_m = 0.1
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "古墙·豁口东北段（半塌，残垛）"
+xy = [145.7, 93.6]
+size = [219.7, 3]
+h_m = 6
+rot = 124
+src = "地图量取"
+note = "bg41 b920 平移；离法阵最近处约 130 m"
+
+[[block]]
+id = "b02"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "古墙·豁口西南段（多段塌成乱石堆）"
+xy = [37.55, 254.0]
+size = [127.3, 3]
+h_m = 3
+rot = 124
+src = "地图量取"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p50"
+face = "south"
+may_overlap = true
+name = "豁口北侧残方墩"
+xy = [86.5, 180.5]
+size = [6, 6]
+h_m = 7
+rot = 124
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p50"
+face = "south"
+may_overlap = true
+name = "豁口南侧残方墩"
+xy = [72.5, 201.5]
+size = [6, 6]
+h_m = 7
+rot = 124
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "浅碟洼地（石柱环所在，低约半人）"
+xy = [250, 170]
+size = [40, 36]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p47"
+face = "south"
+name = "石柱·东"
+xy = [261, 170]
+size = [1.3, 1.3]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p47"
+face = "south"
+name = "石柱·东北"
+xy = [257.8, 162.2]
+size = [1.3, 1.3]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p47"
+face = "south"
+name = "石柱·北"
+xy = [250, 159]
+size = [1.3, 1.3]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p47"
+face = "south"
+over_water = true
+name = "石柱·西北（微微西歪）"
+xy = [242.2, 162.2]
+size = [1.3, 1.3]
+h_m = 3.9
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p47"
+face = "south"
+name = "石柱·南"
+xy = [250, 181]
+size = [1.3, 1.3]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p47"
+face = "south"
+name = "石柱·东南"
+xy = [257.8, 177.8]
+size = [1.3, 1.3]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p47"
+face = "south"
+name = "倒柱·正西（整根朝外拍倒，半陷泥中）"
+xy = [236.9, 170]
+size = [4.2, 1.3]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p47"
+face = "south"
+name = "倒柱·西南（断成两截，错开躺在环外）"
+xy = [240.2, 179.9]
+size = [4.6, 1.5]
+h_m = 1
+rot = 135
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "pool"
+face = "south"
+count = 1
+may_overlap = true
+name = "正西柱坑（积浑水）"
+xy = [239.5, 170]
+size = [1.8, 1.8]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "pool"
+face = "south"
+count = 1
+may_overlap = true
+name = "西南柱坑（积浑水）"
+xy = [242.2, 177.8]
+size = [1.8, 1.8]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "asset"
+asset = "p47"
+face = "south"
+over_water = true
+name = "圈心圆鼓形矮石墩"
+xy = [251, 170]
+size = [1.2, 1.2]
+h_m = 0.5
+src = "推定"
+note = "墩脚泡在最大那汪水洼里"
+
+[[block]]
+id = "b17"
+kind = "asset"
+asset = "p43"
+face = "south"
+count = 3
+name = "灯芯草丛（环西低处）"
+xy = [232, 176]
+size = [6, 10]
+h_m = 0.8
+src = "推定"
+
+[[block]]
+id = "b18"
+kind = "asset"
+asset = "p42"
+face = "south"
+may_overlap = true
+name = "墙内侧孤阔叶老树"
+xy = [168, 150]
+size = [8, 8]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b19"
+kind = "asset"
+asset = "p43"
+face = "south"
+count = 3
+name = "墙内侧矮灌木丛"
+xy = [150, 205]
+size = [14, 8]
+h_m = 1.2
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg55-c1"
+eye = [220, 331]
+target = [220, 180]
+eye_h = 14.7
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

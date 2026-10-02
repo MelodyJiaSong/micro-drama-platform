@@ -1,0 +1,224 @@
+# 乌鸦岭墓地 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 本场地原点 ＝ 区级平面图（bg126）的 (340, 500) m；世界树坐标 [16, 33] 落在西北角孤屋 → 本图 (55~75, 43~50)。
+# 区图上的墓园范围约 (15–24%, 33–50%)；南缘外 (19%, 55%) 是空村 bg129。
+
+[meta]
+bg = "bg134"
+name_zh = "乌鸦岭墓地"
+size_m = [440, 400]
+px_per_m = 3.5
+scale_src = "地图量取"
+scale_note = "区图 1002×668 px 按 bg126 米制（x% × 24.689 m、y% × 16.459 m）量取：墓园图标群、两座墓室、西北孤屋、园心空场与五条岔路、东侧小山；碑区划分与空场中央石柱为推定"
+# 世界树画面：一片望不到头的墓碑与歪斜十字架，地面起伏、枯树列队站在碑间；全区雾最厚的地方就在这里，能见度只有几十步
+absent = ["空村的房屋与村口板车（南缘外，属 bg129）", "东侧小山背后的隐士棚屋与门缝绿光（场地外，属它自己的镜头）", "围墙 / 园门（北、西两面无墙，碑行直接没进黑林）", "任何火 / 灯笼 / 烛火 / 窗光（空铁灯架里没有灯）", "河流与水面（北界河在场地以北）", "鲜花 / 绿草 / 晴天 / 远景清晰", "亡灵、盗墓贼、巨蛛（属 shot 层）", "4.0.3a 后的狼人难民营与乌鸦岭飞行点"]
+
+[[ridge]]
+name = "西北角小丘（孤屋所在）"
+poly = [[35, 15], [100, 10], [130, 45], [115, 90], [60, 95], [30, 60]]
+height_m = 15
+src = "原典方位"
+note = "原典：墓地西北角的小丘，丘顶是亡灵法师的孤屋"
+
+[[ridge]]
+name = "东侧枯树小山"
+poly = [[314, 27], [400, 43], [413, 158], [376, 241], [302, 232], [290, 125]]
+height_m = 60
+src = "地图量取"
+note = "bg126 terrain『墓地东侧小山』；坡陡树密，背后（场地外东北）是隐士棚屋"
+
+[[road]]
+name = "南口主路（空村 → 园心空场）"
+path = [[150, 400], [152, 330], [154, 229]]
+width_m = 7
+src = "地图量取"
+note = "bg126 terrain『乌鸦岭岔路』在本场地内的一段；两车宽，深辙"
+
+[[road]]
+name = "西北支（→ 小丘孤屋）"
+path = [[145, 202], [120, 160], [95, 110], [80, 56]]
+width_m = 3
+src = "地图量取"
+
+[[road]]
+name = "东北支（→ 东北墓室 / 地穴入口）"
+path = [[165, 202], [200, 150], [238, 79]]
+width_m = 3
+src = "地图量取"
+
+[[road]]
+name = "西支（→ 西墓室）"
+path = [[139, 210], [100, 185], [53, 137]]
+width_m = 3
+src = "地图量取"
+
+[[road]]
+name = "东支（→ 小山脚）"
+path = [[169, 216], [230, 225], [285, 235]]
+width_m = 3
+src = "地图量取"
+
+[[road]]
+name = "西南支"
+path = [[141, 224], [90, 255], [50, 300]]
+width_m = 3
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p107"
+face = "south"
+into_ridge = true
+name = "西北丘顶孤木屋"
+xy = [75, 50]
+size = [12, 9]
+h_m = 7
+src = "坐标表"
+note = "世界树坐标 [16, 33]；窗口全黑，黑暗浓得像被罩子扣住"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p124"
+face = "southwest"
+name = "东北尖顶石墓室（地穴入口）"
+xy = [240, 74]
+size = [10, 8]
+h_m = 6
+src = "地图量取"
+note = "区图东北角带十字的墓室图标；门前石阶沉入地下，两侧空墓龛"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p124"
+face = "east"
+name = "西侧尖顶石墓室"
+xy = [47, 133]
+size = [9, 7]
+h_m = 6
+src = "地图量取"
+note = "区图西侧带十字的墓室图标；门楣石十字、铁栅门锈死"
+
+[[block]]
+id = "b04"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "园心圆形空场"
+xy = [154, 214]
+size = [30, 30]
+h_m = 0
+src = "地图量取"
+note = "区图上各岔路汇合的圆形空地"
+
+[[block]]
+id = "b05"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "空场中央断顶石柱"
+xy = [154, 214]
+size = [1.5, 1.5]
+h_m = 3
+src = "推定"
+note = "柱脚一圈倒塌的矮石栏"
+
+[[block]]
+id = "b06"
+kind = "graveyard"
+face = "south"
+count = 1
+may_overlap = true
+name = "碑区·北（碑、十字、列队枯树）"
+xy = [190, 140]
+size = [60, 50]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "graveyard"
+face = "south"
+count = 1
+may_overlap = true
+name = "碑区·西"
+xy = [80, 200]
+size = [60, 50]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "graveyard"
+face = "south"
+count = 1
+may_overlap = true
+name = "碑区·东"
+xy = [240, 190]
+size = [70, 40]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "graveyard"
+face = "south"
+count = 1
+may_overlap = true
+name = "碑区·西南"
+xy = [90, 300]
+size = [70, 60]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "graveyard"
+face = "south"
+count = 1
+may_overlap = true
+name = "碑区·东南（含铁栅家族墓）"
+xy = [230, 300]
+size = [80, 60]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "graveyard"
+face = "south"
+count = 1
+may_overlap = true
+name = "南口碑区·路西"
+xy = [120, 360]
+size = [40, 50]
+h_m = 2
+src = "推定"
+note = "近景：歪倒的墓碑、断横梁的木十字架、斜插的断柄铁锹"
+
+[[block]]
+id = "b12"
+kind = "graveyard"
+face = "south"
+count = 1
+may_overlap = true
+name = "南口碑区·路东"
+xy = [190, 360]
+size = [40, 50]
+h_m = 2
+src = "推定"
+note = "塌陷坟前的空铁灯架（无灯）"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg134-c1"
+eye = [220, 368]
+target = [220, 200]
+eye_h = 14.7
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

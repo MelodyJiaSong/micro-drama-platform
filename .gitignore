@@ -259,6 +259,7 @@ ai_videos/**/*.pdf
 # tools/assets/scanner.py MEDIA_EXTENSIONS — anything assets_sync uploads to R2
 # must be ignored here, or the same bytes end up in both stores.
 ai_videos/**/*.wav
+ai_videos/**/shot*_tts_*.json
 ai_videos/**/*.m4a
 ai_videos/**/*.aac
 ai_videos/**/*.ogg
@@ -278,6 +279,7 @@ ai_videos/**/*.flac
 ai_videos/_deleted/
 
 .venv-stableaudio/
+.venv-post/
 
 # 原作资料 raw 层（用户自有文档的本地底本，不入版本库）
 ai_videos/**/0_原作资料/**/_raw/
@@ -333,3 +335,15 @@ test.txt
 # 98 柔情版剧情剪辑的逐场景参考帧库：可由 tools/fetch_xianjian_refs.py 重新抽取的派生缓存
 ai_videos/**/refs_game98/
 ai_videos/**/refs_longplay/
+
+# 即梦异步出片的提交账本（submit_id -> 资产键）。**机器本地的派生缓存**，不进 git：
+# submit_id 绑定本机登录的账号，换机器没有意义；而且它本来就能用
+# `gen_turntable_videos_sk2.py --harvest` 的「按 prompt 回显反查」重建。
+.turntable_jobs.json
+.char_assets.lock
+
+# Seedance 网页出片资料包：每镜 资料包/ 是派生缓存，由 tools/seedance_kit.py 从 shot md 与资产重建（rule 12.4-K）
+ai_videos/**/资料包/
+
+# 每集后期工作目录（tools/post/：片段、LUT、步骤戳、ASS）——可再生的派生缓存，不入库
+ai_videos/**/episodes/*/post/

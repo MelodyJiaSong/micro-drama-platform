@@ -1,0 +1,167 @@
+# 东区兵营 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 西→东：对岸陡岩（x 0–10）· 大道（x 14–34，南低北高）· 台脚熔岩沟（x 37–41）· 岩坎 · 岩廊（x 46–54）· 营房（x 54–90）· 东门洞往法环。
+
+[meta]
+bg = "bg793"
+name_zh = "东区兵营"
+size_m = [100, 80]
+px_per_m = 14.0
+scale_src = "推定"
+scale_note = "1.12 副本无地图；相对方位取自现行区图上层（城南西角、东邻法环、西北隔大道对西区兵营、两营夹巨门），绝对尺寸按区级图 b904（37 × 40 m）加上台下大道推定为 100 × 80 m；台地高 8 m、巨门高 14 m 为推定"
+# 世界树画面：俯瞰下方宽阔石道的黑石兵营，厚重铁门两侧是带射击孔的岩壁走廊，火盆与熔岩红光从下方映上来。
+absent = [
+    "日光、天光、月光与任何露天（头顶是岩顶）",
+    "打开的进城巨门（默认态巨门紧闭、锁箱锁着）",
+    "木栅、帐篷与木构哨塔（全是黑石与黑铁）",
+    "树木草地与任何植被",
+    "真正的水与护城河（台脚沟里是熔岩）",
+    "蓝光、冷光与魔法光",
+    "任何守军、人物、坐骑与动物",
+    "旗帜、纹章与带文字的牌匾",
+]
+
+[[ridge]]
+name = "大道西侧对岸陡岩（其上是西区兵营）"
+poly = [[0, 0], [10, 0], [10, 80], [0, 80]]
+height_m = 20
+src = "地图量取"
+
+[[ridge]]
+name = "兵营台地（高出大道约 8 m）"
+poly = [[43, 0], [100, 0], [100, 80], [43, 80]]
+height_m = 8
+src = "原典方位"
+
+[[water]]
+name = "台脚熔岩沟（非水）"
+path = [[39, 80], [39, 12]]
+width_m = 4
+depth_m = 1
+src = "推定"
+
+[[road]]
+name = "黑铁大道末段（由南向北爬坡到巨门）"
+path = [[24, 80], [24, 8]]
+width_m = 20
+src = "原典方位"
+
+[[road]]
+name = "营房东门洞往法环"
+path = [[90, 45], [100, 45]]
+width_m = 5
+src = "地图量取"
+
+[[block]]
+id = "b01"
+into_ridge = true
+kind = "asset"
+asset = "p259"
+face = "west"
+name = "厚墙平顶黑石营房"
+xy = [72, 45]
+size = [36, 44]
+h_m = 10
+src = "原典方位"
+note = "世界树「俯瞰下方宽阔石道的黑石兵营」；体量为推定"
+
+[[block]]
+id = "b02"
+may_overlap = true
+into_ridge = true
+kind = "asset"
+asset = "p255"
+face = "west"
+name = "营房正面对开厚铁门（朝西）"
+xy = [54, 45]
+size = [1.5, 8]
+h_m = 4.5
+src = "原典方位"
+note = "世界树「厚重铁门」；朝西是推定"
+
+[[block]]
+id = "b03"
+into_ridge = true
+kind = "low_wall"
+face = "west"
+count = 1
+name = "射击孔岩廊·北段"
+xy = [51, 30]
+size = [6, 22]
+h_m = 1.2
+src = "原典方位"
+note = "世界树「铁门两侧是带射击孔的岩壁走廊」"
+
+[[block]]
+id = "b04"
+into_ridge = true
+kind = "low_wall"
+face = "west"
+count = 1
+name = "射击孔岩廊·南段"
+xy = [51, 60]
+size = [6, 22]
+h_m = 1.2
+src = "原典方位"
+
+[[block]]
+id = "b05"
+may_overlap = true
+into_ridge = true
+kind = "asset"
+asset = "p254"
+face = "west"
+name = "门锁机关（嵌墙大铁锁箱，铁链没入岩壁通巨门）"
+xy = [53, 36]
+size = [1.5, 2]
+h_m = 1.8
+src = "推定"
+note = "1.12 在此用暗炉钥匙操作门锁（世界树备注）；锁箱形制与位置为推定"
+
+[[block]]
+id = "b06"
+into_ridge = true
+over_water = true
+kind = "rock_shelf"
+face = "west"
+count = 1
+name = "营门石阶（折下岩坎、阶底石板跨熔岩沟）"
+xy = [42.5, 45]
+size = [5, 8]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p255"
+face = "south"
+name = "进城巨门（两扇紧闭的铁门）"
+xy = [24, 5]
+size = [20, 3]
+h_m = 14
+src = "原典方位"
+note = "与西区兵营夹峙黑铁大道尽头的两扇巨门（世界树备注）；门在营房西北按区级图 b917 摆位（该块本身也是推定）"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p256"
+face = "south"
+count = 2
+name = "巨门前落地大铁火盆（一对）"
+xy = [24, 10]
+size = [22, 1.5]
+h_m = 1.5
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg793-c1"
+eye = [50, 74]
+target = [50, 40]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

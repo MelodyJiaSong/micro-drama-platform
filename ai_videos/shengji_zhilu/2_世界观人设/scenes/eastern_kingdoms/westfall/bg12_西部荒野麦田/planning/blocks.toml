@@ -1,0 +1,185 @@
+# 西部荒野麦田 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 自造主体，无原典点位：落点沿用区级 bg383 的推定块（萨丁农场与哨兵岭之间、大道西侧）。
+# 场地原点 ＝ 区级平面图 (1480, 700) m；大道与哨兵岭坡脚由区级 terrain.toml 平移过来（地图量取），田内一切推定。
+
+[meta]
+bg = "bg12"
+name_zh = "西部荒野麦田"
+size_m = [400, 280]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "一块弃耕麦田取 400 × 280 m，东缘贴中央大道、南缘止于哨兵岭坡脚北缘；无一手尺寸出处"
+# 世界树无画面描述；world.md §5：金黄麦浪、风车剪影、废弃农舍、黄沙；地里立着收割机
+absent = [
+    "饱满的金色麦浪（旱灾麦子稀疏发干，金色只来自逆光）",
+    "绿色庄稼与青草",
+    "收割机械、红面罩、任何人物与动物（属 shot 层）",
+    "水面（灌溉沟是干的，界河在东面 400 m 外、机位身后）",
+    "燃烧的麦田、烟与火星",
+    "塌陷的巨坑与地裂（4.0.3a 才有）",
+    "石砌大屋与围墙（只有一栋木板空农舍与谷仓骨架）",
+]
+
+[[ridge]]
+name = "哨兵岭坡脚北缘（坡顶哨塔在场外南侧约 25 m）"
+poly = [[262, 280], [290, 246], [336, 232], [380, 240], [400, 258], [400, 280]]
+height_m = 8
+src = "地图量取"
+
+[[road]]
+name = "南北中央大道（贴田东缘）"
+path = [[366, 0], [388, 51], [392, 162], [366, 258], [350, 280]]
+width_m = 8
+src = "地图量取"
+
+[[road]]
+name = "田间土路（大道—农舍门前）"
+path = [[387, 60], [250, 72], [120, 66], [68, 62]]
+width_m = 3
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "未收的枯麦地"
+xy = [220, 140]
+size = [220, 116]
+h_m = 1
+src = "推定"
+note = "稀疏发干、穗头瘪；主机位从东缘大道朝西逆光看它"
+
+[[block]]
+id = "b02"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "北条短麦茬地"
+xy = [232, 38]
+size = [256, 44]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "南条短麦茬地"
+xy = [196, 224]
+size = [172, 36]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p343"
+face = "west"
+name = "高木架破帆风车"
+xy = [70, 150]
+size = [8, 8]
+h_m = 16
+src = "推定"
+note = "田西缘；逆光剪影"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p336"
+face = "east"
+name = "空农舍（门板没了只剩门框）"
+xy = [60, 52]
+size = [14, 10]
+h_m = 6
+src = "推定"
+note = "ep12 红面罩挂在它的门框上（道具属 shot 层）；门朝东对着田间土路"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p338"
+face = "south"
+name = "塌顶谷仓骨架"
+xy = [96, 34]
+size = [18, 12]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "干灌溉沟（东北—西南斜穿）"
+xy = [230, 150]
+size = [300, 3]
+h_m = 0
+rot = 25
+src = "推定"
+note = "沟深约半人，沟底浅灰干泥"
+
+[[block]]
+id = "b08"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "枯麦地里的倒伏宽辙"
+xy = [250, 128]
+size = [120, 6]
+h_m = 0
+rot = -10
+src = "推定"
+note = "收割机械来回碾出的痕迹；机械本身属 shot 层"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p366"
+face = "south"
+count = 3
+name = "霉塌旧草垛（三座）"
+xy = [340, 92]
+size = [22, 6]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+parts = [{asset = "p365", at = [-0.6, 0.1], yaw = 20}, {asset = "p371", at = [0.8, -0.1], yaw = 0}]
+face = "south"
+name = "翻倒的木犁"
+xy = [180, 204]
+size = [3, 1.5]
+h_m = 0.8
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p349"
+face = "south"
+name = "陷进土里的木板车"
+xy = [80, 72]
+size = [4, 2]
+h_m = 1
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg12-c1"
+eye = [200, 258]
+target = [200, 140]
+eye_h = 13.3
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

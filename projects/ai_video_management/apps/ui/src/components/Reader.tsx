@@ -45,6 +45,7 @@ import { ApiError, type FileResult, type TreeNode } from "../types";
 import { SeamPlanModal } from "./SeamPlanModal";
 import { SeamScoreDashboard } from "./SeamScoreDashboard";
 import { SeamScorePanel } from "./SeamScorePanel";
+import { ZoomableImage } from "./ZoomableImage";
 
 const IMAGE_EXTS = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"]);
 const VIDEO_EXTS = new Set([".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v"]);
@@ -53,6 +54,9 @@ const PDF_EXTS = new Set([".pdf"]);
 // White-model meshes handed back by image-to-3D — previewed in-browser so the user
 // can judge a mesh (thin structures, silhouette) without opening Blender.
 const MODEL_EXTS = new Set([".glb", ".gltf"]);
+// Script-built scene files (`_blender/{bg}.blend`): no browser preview, served by
+// /api/media as a plain download (follow-up 173).
+const DOWNLOAD_EXTS = new Set([".blend"]);
 const SHOT_MD_RE = /^ai_videos\/[^_][^/]*\/(?:episodes\/ep\d+\/)?prompts\/shot\d+\/shot\d+\.md$/;
 
 export interface ReaderProps {
@@ -103,8 +107,9 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
   const isMediaAudio = AUDIO_EXTS.has(ext);
   const isMediaPdf = PDF_EXTS.has(ext);
   const isMediaModel = MODEL_EXTS.has(ext);
+  const isMediaDownload = DOWNLOAD_EXTS.has(ext);
   const isMediaOnly =
-    isMediaVideo || isMediaImage || isMediaAudio || isMediaPdf || isMediaModel;
+    isMediaVideo || isMediaImage || isMediaAudio || isMediaPdf || isMediaModel || isMediaDownload;
 
   const load = useCallback(async () => {
     if (!path) return;
@@ -447,7 +452,7 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
   const isModel = isMediaModel;
   const isMarkdown = ext === ".md";
   const isJsonl = ext === ".jsonl";
-  const isCode = ext === ".json" || ext === ".yaml" || ext === ".yml";
+  const isCode = ext === ".json" || ext === ".yaml" || ext === ".yml" || ext === ".toml";
   const isTxt = ext === ".txt";
 
   const shotPair = isMarkdown ? detectShotPair(path) : null;
@@ -668,7 +673,7 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
             </div>
           ) : isMediaImage ? (
             <div className="media-view">
-              <img src={mediaUrl(path)} alt={filename} />
+              <ZoomableImage src={mediaUrl(path)} alt={filename} />
               {!isDeletedFile ? (
                 <div className="reader-media-actions">
                   <button type="button" className="reader-media-archive-btn"
@@ -714,6 +719,11 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
                   </button>
                 </div>
               ) : null}
+            </div>
+          ) : isMediaDownload ? (
+            <div className="media-view">
+              <p className="muted">浏览器里没法预览这个文件，下载后用 Blender 打开。</p>
+              <a href={mediaUrl(path)} download={filename}>⬇ 下载 {filename}</a>
             </div>
           ) : isPdf ? (
             <div className="media-view pdf-view">

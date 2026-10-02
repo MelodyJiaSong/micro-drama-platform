@@ -1,0 +1,77 @@
+# shot02 人体动作表（Cascadeur 层）。位置与朝向一律从 ../planning/overhead.toml 读，这里只写「身体摆成什么样」。
+# 改动作 ＝ 改本文件重跑：
+#   python tools/cascadeur/choreo.py <shot 目录>            # 出 keys_*.json（位置 × 姿态，逐键）
+#   python tools/cascadeur/casc_run.py tools/cascadeur/choreo_run.py 之前先设 CHOREO_SHOT（见 choreo.py 打印的命令）
+# 姿态是若干「部件」用 + 拼起来，后写的覆盖先写的；部件都在共享库 tools/cascadeur/poses.toml（本镜没有独有部件）。
+# 时刻与 shot02.md `动作:` 时间轴逐拍对齐（rule 4h ②）。
+
+[meta]
+origin = [123.6, 213.3]        # 平面图坐标；Cascadeur 原点 ＝ 亚伦在溪岸蹲下的那一点
+fps = 30
+
+# 逐键：[t, "部件+部件"]。gait = [t0, t1, "walk"|"run", "上身部件"] 自动铺步态（走 0.5 s、跑 0.32 s 一步）。
+[actor."亚伦"]
+gait = [[0.0, 0.6, "walk", "shoulder_carry"]]
+keys = [
+  [0.8, "stand+shoulder_carry"],
+  [1.4, "kneel_r+set_down_r"],
+  [2, "kneel_r+cup_drink"],
+  [2.5, "kneel_r+cup_drink"],
+  [2.8, "kneel_r+cup_freeze"],
+  [3.3, "kneel_r+twohand_low"],
+  [3.9, "stand+twohand_low"],
+  [4.3, "step_back+twohand_low"],
+  [5.4, "stance_l+twohand_low"],
+  [5.55, "shake_r+twohand_low"],
+  [5.8, "stance_l+twohand_low"],
+  [6.05, "stance_l+twohand_windup"],
+  [6.4, "lunge+twohand_strike"],
+  [6.9, "lunge+twohand_strike"],
+  [7.4, "stance_l+twohand_low"],
+  [8, "stance_l+twohand_chop_ready"],
+  [8.45, "lunge_small+twohand_chop"],
+  [9, "stance_l+twohand_low"],
+  [10.5, "stand+twohand_rest"],
+  [12, "stand+twohand_rest+breathe"],
+  [13.5, "stand+twohand_rest"],
+  [15, "stand+twohand_rest+breathe"],
+  [16.5, "stand+twohand_rest"],
+  [19.7, "stand+twohand_rest"],
+  [22, "stand+twohand_rest"],
+  [22.3, "stand+twohand_rest+breathe"],
+  [23.5, "stand+twohand_rest"],
+  [26, "stand+twohand_rest"],
+]
+
+[actor."杜克"]
+gait = [[3.1999999999999993, 6.300000000000001, "run", "shield_carry_run"]]
+keys = [
+  [0.0, "stand+shield_low"],
+  [3, "stand+shield_low"],
+  [6.6, "stance_l+shield_guard"],
+  [6.9, "stance_l+shield_brace"],
+  [7.4, "lunge+shield_shove"],
+  [8, "stance_l+shield_guard"],
+  [8.3, "lunge+shield_shove"],
+  [9, "stance_l+shield_guard"],
+  [9.8, "stomp_r+shield_guard"],
+  [10.4, "stance_l+shield_guard"],
+  [10.8, "stance_l+shield_guard"],
+  [11.6, "stand+shield_low"],
+  [12.3, "stand+pat_shield_up"],
+  [12.7, "stand+pat_shield_down"],
+  [13.1, "stand+pat_shield_up"],
+  [13.5, "stand+pat_shield_down"],
+  [14, "stand+shield_low"],
+  [20.1, "stand+shield_low"],
+  [20.35, "kick_back_r+flail"],
+  [20.8, "hop_down+flail"],
+  [21.2, "hop_up+flail"],
+  [21.6, "hop_down+flail"],
+  [22, "hop_down+flail"],
+  [22.3, "stand+shield_low+point_r"],
+  [23.2, "stand+shield_low+point_r"],
+  [24, "stand+shield_low"],
+  [25, "stand+shield_low"],
+  [26, "stand+shield_low"],
+]

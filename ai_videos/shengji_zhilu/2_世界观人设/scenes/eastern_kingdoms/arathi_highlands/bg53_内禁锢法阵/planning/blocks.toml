@@ -1,0 +1,210 @@
+# 内禁锢法阵 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 原版区图法阵图标（359, 387 px，约 [36, 58]）＝ 世界 (1180, 1271) m，落在本场地 (200, 160)（圈心）；本图原点 ＝ 世界 (980, 1111)。
+# 主路与北 / 西 / 东 / 东南四段岩坎从原版区图 7× 裁切量取（区图 1 px ≈ 3.285 m，±15 m）；南面西南海岸山体山脚在场地南缘外约 30 m，要塞废墟在西南场外。
+# 锚点机位：北坎顶 (190, 70)，朝南偏西。
+
+[meta]
+bg = "bg53"
+name_zh = "内禁锢法阵"
+size_m = [360, 300]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "主路与四段岩坎（北坎在圈心北约 90 m、西坎约 170 m）从原版区图 7× 裁切量取；石柱环直径 30 m、九根、圈心石盘 8 m 按世界树画面推定，未实机量取"
+grid_m = 50
+# 世界树画面：草地上一圈等距立起的符文石柱，圈心地面刻着发微光的法阵纹，周围有元素生物游荡
+absent = [
+    "火、烟与任何人工光源",
+    "光柱、发光石柱与外溢的魔法光（只有圈心阵纹槽底极淡的微光）",
+    "任何人物、元素生物与动物（默认无人）",
+    "倒伏、断裂或缺失的石柱（九根俱全）",
+    "焦黑烧斑与积水洼",
+    "贴近画面的要塞城墙（要塞废墟在西南约 380 m，只在西坎顶上露残影）",
+    "成片树林（只有一棵孤树与零星灌木）",
+    "4.0.3 新增的元素之环",
+]
+
+[[ridge]]
+name = "北坎（洼地北沿的矮岩坎，坎顶是东西主路）"
+poly = [[52, 58], [254, 76], [254, 88], [52, 72]]
+height_m = 2
+src = "地图量取"
+
+[[ridge]]
+name = "西坎（激流堡所在高地的东缘，更高更长）"
+poly = [[16, 108], [36, 108], [48, 300], [26, 300]]
+height_m = 8
+src = "地图量取"
+
+[[ridge]]
+name = "东坎（短而矮，坎上一棵孤树）"
+poly = [[312, 146], [330, 146], [340, 218], [322, 218]]
+height_m = 2
+src = "地图量取"
+
+[[ridge]]
+name = "东南坎"
+poly = [[300, 262], [360, 272], [360, 286], [300, 276]]
+height_m = 2
+src = "地图量取"
+
+[[road]]
+name = "东西主路（沿北坎顶，西通双湖、东通谷心岔口）"
+path = [[0, 6], [43, 25], [160, 43], [254, 62], [325, 86], [360, 90]]
+width_m = 8
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p47"
+face = "south"
+name = "石板柱·北"
+xy = [200, 145]
+size = [1.2, 0.6]
+h_m = 6.5
+rot = 0
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p47"
+face = "south"
+name = "石板柱·东北"
+xy = [209.6, 148.5]
+size = [1.2, 0.6]
+h_m = 6.5
+rot = 40
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p47"
+face = "south"
+name = "石板柱·东"
+xy = [214.8, 157.4]
+size = [1.2, 0.6]
+h_m = 6.5
+rot = 80
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p47"
+face = "south"
+name = "石板柱·东南"
+xy = [213, 167.5]
+size = [1.2, 0.6]
+h_m = 6.5
+rot = 120
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p47"
+face = "south"
+name = "石板柱·南偏东"
+xy = [205.1, 174.1]
+size = [1.2, 0.6]
+h_m = 6.5
+rot = 160
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p47"
+face = "south"
+name = "石板柱·南偏西"
+xy = [194.9, 174.1]
+size = [1.2, 0.6]
+h_m = 6.5
+rot = 20
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p47"
+face = "south"
+name = "石板柱·西南"
+xy = [187, 167.5]
+size = [1.2, 0.6]
+h_m = 6.5
+rot = 60
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p47"
+face = "south"
+name = "石板柱·西"
+xy = [185.2, 157.4]
+size = [1.2, 0.6]
+h_m = 6.5
+rot = 100
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p47"
+face = "south"
+name = "石板柱·西北"
+xy = [190.4, 148.5]
+size = [1.2, 0.6]
+h_m = 6.5
+rot = 140
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "圈心刻纹圆石盘（贴地，槽底微光）"
+xy = [200, 160]
+size = [8, 8]
+h_m = 0
+src = "原典方位"
+note = "世界树：圈心地面刻着发微光的法阵纹；直径推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p42"
+face = "south"
+into_ridge = true
+name = "东坎上孤零零的阔叶老树"
+xy = [326, 165]
+size = [10, 10]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p47"
+face = "south"
+name = "北坎脚倒伏的旧界石"
+xy = [190, 94]
+size = [2, 1]
+h_m = 0.6
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg53-c1"
+eye = [180, 276]
+target = [180, 150]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

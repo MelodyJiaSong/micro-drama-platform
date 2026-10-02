@@ -1,0 +1,254 @@
+# 矮人区 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 街区外廓取区级平面图 b903（地图量取 157 × 132.5 m）；西缘运河、东缘要塞台地的相对方位取区级卡；
+# 锻造广场、齿轮隧道口、北部水井、采矿店的相对方位取世界树（原典方位），落点与街巷走向全部推定。
+
+[meta]
+bg = "bg270"
+name_zh = "矮人区"
+size_m = [180, 150]
+px_per_m = 8.0
+scale_src = "推定"
+scale_note = "区级平面图 b903 矮人区 157 × 132.5 m（地图量取）外扩到 180 × 150 m，含西缘运河与东端石壁；街内布局无一手平面出处"
+# 世界树画面：矮胖敦实的石构建筑，门窗比人类区低矮、比例更厚重，铁件与铆钉外露；数处露天广场上并排立着燃着炭火的锻炉与铁砧，橙红火星四溅，整个街区笼在一层不散的灰蓝烟雾里
+absent = [
+    "拍卖行、银行、旅店（4.0.3a 才进矮人区）",
+    "任何人物（铁匠、矮人工匠、卫兵、地铁乘客都属 shot 层）",
+    "火把、灯笼、窗内灯火（唯一人工光源是锻炉炭火）",
+    "熔岩、明火火柱、爆燃（锻炉只是一层暗红炭火）",
+    "可读的招牌、店名、文字（招牌板空白）",
+    "绿地与树（全区石铺，只有烟）",
+    "割喉小巷（技术上属本区但不与街区相连，另立 bg）",
+    "港口、飞行坐骑（旧世没有）",
+]
+
+[[ridge]]
+name = "东端石壁（要塞岩石台地的西缘）"
+poly = [[160, 0], [180, 0], [180, 150], [160, 150], [163, 110], [158, 78], [162, 40]]
+height_m = 25
+src = "推定"
+note = "齿轮隧道口在矮人区东侧（世界树）；「东端一道石壁 ＝ 要塞台地西缘」是推定"
+
+[[water]]
+name = "西缘运河（隔开教堂广场）"
+path = [[8, 0], [8, 150]]
+width_m = 12
+depth_m = 4
+src = "地图量取"
+
+[[road]]
+name = "主街（西口人行桥 → 齿轮隧道口）"
+path = [[15, 82], [80, 80], [156, 78]]
+width_m = 9
+src = "推定"
+note = "锚点机位站在 x≈16 朝东"
+
+[[road]]
+name = "沿水窄街（主街中段 → 东南去旧城区）"
+path = [[110, 82], [138, 115], [158, 148]]
+width_m = 5
+src = "原典方位"
+note = "世界树：旧城区往西北即到矮人区"
+
+[[road]]
+name = "北巷（主街 → 北部水井）"
+path = [[60, 78], [60, 30]]
+width_m = 5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "露天锻造广场·北（四炉）"
+xy = [84, 58]
+size = [34, 22]
+h_m = 0
+src = "推定"
+note = "世界树：数处露天广场上并排立着燃炭锻炉；本档取两处，摆在主街北侧为推定"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p311"
+face = "south"
+count = 4
+name = "并排锻炉四座（燃炭）"
+xy = [84, 50]
+size = [26, 4]
+h_m = 2.2
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+parts = [{asset = "p356", at = [-10.75, -0.55], yaw = 0}, {asset = "p316", at = [-8.55, 0.65], yaw = 0}, {asset = "p356", at = [-4.25, -0.55], yaw = 0}, {asset = "p316", at = [-2.05, 0.65], yaw = 0}, {asset = "p356", at = [2.25, -0.55], yaw = 0}, {asset = "p316", at = [4.45, 0.65], yaw = 0}, {asset = "p356", at = [8.75, -0.55], yaw = 0}, {asset = "p316", at = [10.95, 0.65], yaw = 0}]
+face = "south"
+name = "炉前铁砧与淬火槽"
+xy = [84, 56]
+size = [26, 3]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "兵器挂墙（锻造广场后墙）"
+xy = [84, 46]
+size = [34, 1.5]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "露天锻造场·南（小）"
+xy = [120, 102]
+size = [18, 12]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "mine_portal"
+face = "west"
+count = 1
+into_ridge = true
+name = "巨型齿轮隧道口（下沉拱洞）"
+xy = [165, 78]
+size = [8, 20]
+h_m = 18
+src = "原典方位"
+note = "世界树：矮人区东侧，数层楼高的齿轮嵌在石壁上"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p291"
+face = "north"
+name = "采矿店（门口矿镐、矿石筐、坩埚）"
+xy = [44, 102]
+size = [16, 12]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p306"
+face = "south"
+name = "北部圆井（兼喷泉）"
+xy = [60, 26]
+size = [4, 4]
+h_m = 1.2
+src = "原典方位"
+note = "中文 GM 坐标表「矮人区，北部水井」"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p291"
+face = "south"
+name = "石屋·西口北"
+xy = [32, 62]
+size = [18, 16]
+h_m = 7
+src = "推定"
+note = "锚点近景的第一户门脸"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p291"
+face = "south"
+name = "石屋·北巷东"
+xy = [118, 56]
+size = [22, 18]
+h_m = 7.5
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p291"
+face = "south"
+name = "石屋·井边"
+xy = [36, 30]
+size = [20, 16]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p291"
+face = "south"
+name = "石屋·东北角"
+xy = [140, 28]
+size = [24, 20]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p291"
+face = "north"
+name = "石屋·主街南中"
+xy = [76, 102]
+size = [20, 14]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p291"
+face = "north"
+name = "石屋·南排西"
+xy = [40, 132]
+size = [26, 14]
+h_m = 6.5
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p291"
+face = "north"
+name = "石屋·南排中"
+xy = [92, 132]
+size = [28, 14]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "arch_bridge"
+face = "south"
+count = 1
+over_water = true
+name = "西口窄拱人行桥（去教堂广场）"
+xy = [8, 82]
+size = [14, 4]
+h_m = 2.5
+src = "原典方位"
+note = "区地理页：全城只能确证的三座桥之一"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg270-c1"
+eye = [90, 12]
+target = [90, 75]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

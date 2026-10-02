@@ -3,7 +3,27 @@
 min_s = 540
 max_s = 660
 
-# 新地方先给景（follow-up 011 / concept G10）：bg 在全剧第一次出现的那一镜要有 `- 场景展示:` 行
+# 新地方先给景、景和事一起给（follow-up 011 / 059 / 060，concept G10）：bg 在全剧第一次出现的那一镜要有 `- 场景展示:` 行；
+# 展示窗、走路段超过 idle_max_s 就得有台词或带时刻的节拍（script_tools 剧本阶段查，szzl 引擎 G15 出 prompt 时再查）
 [scenery]
-new_zone_min_s = 12
-new_bg_min_s = 6
+new_zone_min_s = 6
+new_bg_min_s = 3
+idle_max_s = 4
+post_trim_zone_s = 4      # 后期剪辑可剪到的下限（tools/post 的 edl 校验读）
+post_trim_bg_s = 2
+
+# 单集放宽（follow-up 048，用户 2026-09-28 批准：ep02 四条原典线 + 四样本事，约 12 分钟）
+[episode_overrides]
+ep02 = [690, 750]
+
+# 用户批准的 4–6s 碎镜（script_tools 放行；先问过、与邻镜合并会让精简稿超 2000 字）
+[fragment_ok]
+ep02 = ["S40"]   # 用户 2026-09-30：苏伦娜攥灭火那一拍要 2 秒近景，镜长 5s
+
+# 已出片、台词共用一个时间窗的镜（061 同窗多句闸门放行；只减不增——重出一次就从这里删掉）
+# 同一镜里同一人同一句念两遍（script_tools 默认报错；旧集有意的才登记，只减不增）
+[repeat_ok]
+ep02 = ["S08"]          # ep02 暂停，不回溯（用户 2026-10-01）；重做 ep02 时删掉
+
+[shared_window_ok]
+ep01 = ["S03", "S05", "S06", "S10"]          # S09 要重出（整集观感 r3：旧片里亚伦拿的是镐），061 拆窗后退出

@@ -1,0 +1,259 @@
+# 暗色河滩 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 本档只取河滩条带的**西端**（三区河汊口 + 难民营）。换算：本图原点 ＝ 区级平面图（bg126）世界坐标 (40, 180)；
+# 三股河按 bg126 terrain.toml 平移（地图量取，2026-09-24 已按区图重量）；三股在本图 (251, 165) 相交。
+# 营地取经典旧世 NPC 坐标 [7.8, 34.2] → 世界 (192.6, 562.9) → 本图 (153, 383)，与区图西北角的帐篷图标吻合。
+# 泥滩按河道中线向东岸 / 南岸平移约 30 m、随河弯分段（推定）。
+# 锚点机位：营地东南的小土径 (190, 460)，朝北略偏西（约 -5°）平视：营地在左手中景、河汊口在中央偏右远处。
+# 坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg136"
+name_zh = "暗色河滩"
+size_m = [720, 480]
+px_per_m = 2.0
+grid_m = 50
+scale_src = "坐标表"
+scale_note = "营地点位取经典旧世 NPC 坐标 [7.8, 34.2]；三股河道与汇口按区图量取（±40 m）；泥滩宽度、帐篷 / 火塘与小径的尺寸与位置推定"
+absent = [
+    "这一侧的任何火光、烛火、灯笼与人工光（火塘是冷灰余烬）",
+    "越过河面照到这一侧的亮光（西岸灰黄、北岸暖金都只落在对岸与水面倒影上）",
+    "本段两条河上的桥 / 渡船 / 码头（北界河只有东北角一座木桥，西界河只有南面主干道一座有顶木桥，都不在本图）",
+    "对岸的房屋、农田、城墙（西岸只见草坡矮树，北岸只见阔叶林）",
+    "太阳本身 / 蓝天 / 月亮圆盘",
+    "湍流 / 瀑布 / 浪花（河面几乎不动）",
+    "带字的木牌 / 告示",
+    "任何人物、动物、鱼与飞鸟",
+]
+
+[[water]]
+name = "北界河（东股，墨黑缓流，沿北缘向东伸展）"
+path = [[251.3, 165], [330, 189.6], [453.8, 206.8], [577.2, 206.8], [700.7, 184.7], [720, 173.9]]
+width_m = 50
+depth_m = 3
+src = "地图量取"
+
+[[water]]
+name = "北股（自北南下的界河，以西西部荒野、以东艾尔文森林）"
+path = [[249.4, 0], [251.3, 20], [251.3, 165]]
+width_m = 40
+depth_m = 3
+src = "地图量取"
+
+[[water]]
+name = "西南股（西界河，东岸即寂静河岸）"
+path = [[251.3, 165], [182, 240], [108, 290], [70, 367], [71.1, 478.4], [71.5, 480]]
+width_m = 35
+depth_m = 3
+src = "地图量取"
+
+[[road]]
+name = "营地小土径（营地 → 南面枯林，锚点机位所在）"
+path = [[155, 392], [170, 430], [190, 460], [205, 480]]
+width_m = 1.5
+src = "推定"
+
+[[road]]
+name = "上岸小径（河汊口南岸泥坡 → 营地）"
+path = [[272, 214], [236, 262], [196, 322], [160, 376]]
+width_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "西南股东岸泥滩·北段"
+xy = [163, 291]
+size = [90, 28]
+h_m = 0
+rot = -34
+src = "推定"
+note = "湿亮黑褐泥，嵌灰黑卵石与半埋枯枝；靠林一侧发黑倒伏的芦苇"
+
+[[block]]
+id = "b02"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "西南股东岸泥滩·中段（营地背后）"
+xy = [117, 342]
+size = [86, 28]
+h_m = 0
+rot = -64
+src = "推定"
+note = "从水边拖到营地的旧湿痕；被水冲上来的碎木板与破底木桶"
+
+[[block]]
+id = "b03"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "西南股东岸泥滩·南段"
+xy = [102, 423]
+size = [113, 28]
+h_m = 0
+rot = 90
+src = "推定"
+note = "向南接寂静河岸（bg137，场地外）"
+
+[[block]]
+id = "b04"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "东股南岸泥滩·河汊口段"
+xy = [290, 209]
+size = [80, 24]
+h_m = 0
+rot = 17.6
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "上岸泥坡"
+xy = [272, 205]
+size = [6, 18]
+h_m = 0.5
+src = "推定"
+note = "从艾尔文一侧泅渡过来唯一能上岸的斜泥坡，坡面被踩出一道道湿痕"
+
+[[block]]
+id = "b06"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "东股南岸泥滩·东段"
+xy = [515, 238]
+size = [370, 24]
+h_m = 0
+src = "推定"
+note = "向东一直延伸到东北角木桥（场地外）"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p119"
+face = "east"
+name = "帐篷（撑着，打补丁）"
+xy = [145, 380]
+size = [4, 3]
+h_m = 2.2
+src = "原典方位"
+note = "世界树：河滩西端两顶破帐；门帘卷起一角"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p119"
+face = "west"
+name = "帐篷（塌了半边）"
+xy = [161, 386]
+size = [4, 3]
+h_m = 1.2
+src = "原典方位"
+note = "一根撑杆斜倒，帆布耷拉在地"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p118"
+face = "south"
+name = "卵石火塘（冷灰余烬）"
+xy = [153, 383]
+size = [1.6, 1.6]
+h_m = 0.3
+src = "坐标表"
+note = "营地中心 ＝ NPC 坐标 [7.8, 34.2]；世界树写有一堆火，本档默认冷灰余烬（全区暖光只许在夜色镇）；旁边倒扣铁锅、三只木箱、湿铺盖、一捆柴"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p112"
+face = "south"
+over_water = true
+name = "斜伸向水面的枯树"
+xy = [128, 300]
+size = [24, 6]
+h_m = 9
+rot = -30
+src = "推定"
+note = "枝梢垂进水里，缠着干枯发白的水草"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p112"
+face = "south"
+count = 40
+name = "这一侧枯林"
+xy = [480, 285]
+size = [460, 60]
+h_m = 14
+src = "推定"
+note = "近黑蓝绿灰的枯林，夹在东股南岸泥滩与墓地北缘之间，从营地右后方排到河汊口，林冠上悬黑雾"
+
+[[block]]
+id = "b12"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "西岸枯黄草坡（邻区）"
+xy = [105, 100]
+size = [190, 160]
+h_m = 0
+src = "地图量取"
+note = "北股以西、西南股以北的另一区；干草枯黄、稀疏矮树，平而灰黄的天光"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p113"
+face = "south"
+count = 40
+name = "北岸亮林（邻区）"
+xy = [495, 70]
+size = [430, 120]
+h_m = 16
+src = "地图量取"
+note = "北股以东、东股以北的另一区；浓密阔叶林，树冠在暖斜天光里透出金绿"
+
+[[block]]
+id = "b14"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "乌鸦岭墓地西北部（另档）"
+bg = "bg134"
+xy = [500, 396]
+size = [440, 166]
+h_m = 1.5
+src = "坐标表"
+note = "bg134 场地（世界 x ≥ 320、y ≥ 493）落进本图的一角；西北小丘孤屋在营地正东约两百米；锚点机位朝北，墓地在右后方不入画"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg136-c1"
+eye = [58, 240]
+target = [360, 240]
+eye_h = 24.0
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

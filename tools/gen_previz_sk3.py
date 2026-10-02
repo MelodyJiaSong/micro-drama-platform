@@ -35,7 +35,10 @@ sys.stdout.reconfigure(encoding="utf-8")
 REPO = Path(__file__).resolve().parent.parent
 DATA = REPO / "tools" / "sk3_data"
 SHOTS_DIR = REPO / "ai_videos" / "shikong_lvxing" / "sk3" / "5_6_分镜与prompt" / "shots"
-BLENDER = Path(r"C:\Program Files\Blender Foundation\Blender 5.1\blender.exe")
+import sys as _sys, os as _os
+_sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+from blender_exe import BLENDER as _BLENDER_EXE  # noqa: E402  Blender 路径唯一出处
+BLENDER = Path(_BLENDER_EXE)
 ENGINE = REPO / "tools" / "previz" / "build_previz.py"
 
 # previz 是给人看运动/遮挡/尺度/时刻表的灰模动画，不是成片 —— 按 previz 规格给。
@@ -47,6 +50,10 @@ ENGINE = REPO / "tools" / "previz" / "build_previz.py"
 # 而它把一个 22 s 的镜从 176 帧降到 132 帧。
 FPS = 6
 RES = [640, 360]
+# 单镜渲染上限。1800 s 是初版随手定的，太紧：shot49 是 40 s 的全城燃烧远景，
+# 240 帧、视锥里塞着整座城，正常也要半小时以上——它慢是合理的，不是嵌进几何了。
+# 真正嵌进几何的镜单帧会从 3 s 跳到 30 s，一小时同样兜得住并报出来。
+TIMEOUT_S = 3600
 Z_STREET = 3.0          # 与 build_london.py 的 BANK_Z 一致
 Z_DECK = 3.6            # 桥面顶
 
@@ -139,9 +146,12 @@ def config_for(s: dict) -> str:
     (ax, ay, az), (dx, dy, _dz), lens, tilt = ANCHOR[bg]
     dur = float(s["dur"])
     # 航拍/河上镜是飞行与漂流，不是走路——给它 8× 步速，其余按真实步速。
-    speed = WALK_MPS * (8.0 if bg in AERIAL_BG else 1.0)
     frac = max(0.02, float(s["jb"][0]))
-    aerial = bg in AERIAL_BG
+    # **判据是合取，不是二选一。** 这一条我来回错了两次：
+    #   只按占画高判 → bg8 木偶戏棚、bg7 圣保罗这些「远景」地面镜被加了升降，人被抬出画；
+    #   只按 bg 判   → bg10 里既有航拍也有地面镜，shot45（0.45 中景）也被当成航拍。
+    # 真·航拍要同时满足：**场景是航拍场景，且取景也是航拍取景**。
+    aerial = bg in AERIAL_BG and frac <= 0.03
     # **走不走、走多远，由这一镜是什么镜决定，不由 bg 决定。**
     # 第二版按时长算位移（1.33 m/s）仍然错：它给每一镜都套了「走路」，
     # 而 shot19「面包摊三档」是她站在摊前说话的 0.75 近景，却被安排走了 26.6 m，
@@ -152,6 +162,17 @@ def config_for(s: dict) -> str:
     #   航拍（占画高 ≤ 0.03）    → **完全不动**：飞的是相机（`运镜` 的升降段），不是她；
     #     她在这些镜里其实根本不入画，留在原地只是给机位一个稳定的基准主体。
     #     让她跟着"飞" 319 m 的后果是引擎自检直接拦下：「落幅基准主体整个在画框外」。
+    speed = WALK_MPS * (8.0 if aerial else 1.0)   # 飞行 8×，地面镜（含 bg10 里的）照常走路
+    # **地面镜绝不会开始于九十米高空。** bg0/bg10 的锚点 z 是航拍高度（90–120 m），
+    # 而 bg10 里还住着 shot45/49 这种地面中景——照搬锚点就把人吊在半空，
+    # 引擎自检报「落幅基准主体整个在画框外（纵向 1.51–2.04）」，人跑到画框上边去了。
+    if not aerial and az > 20.0:
+        az = Z_STREET
+    # 俯角同理 —— 它也是挂在 bg 上的。bg10 的 32° 是航拍俯角，用在地面中景上就是
+    # 从高处往下压，再叠一个推近，人就顶到画框上边去（纵向 1.51–2.04）。
+    # 这是「一个 bg 一套参数」在 bg10 上崩的第四个面：升降 / 速度 / 锚点高度 / 俯角。
+    if not aerial:
+        tilt = min(tilt, 5.0)
     mobility = 0.0 if aerial else (0.05 if frac >= 0.70 else (0.30 if frac >= 0.40 else 1.0))
     reach = speed * dur * mobility
     norm = (dx * dx + dy * dy) ** 0.5 or 1.0
@@ -194,7 +215,13 @@ def config_for(s: dict) -> str:
         "",
     ]
     if aerial:
-        L += ['[["运镜"]]', '"类型" = "升降"', '"起" = 0.0', '"止" = %.1f' % dur, '"量" = 120.0', ""]
+        # 升降幅度必须相对「相机离基准主体多远」来给，不能拍个大数。
+        # 占画高 0.02 时相机在约 86 m 外，120 m 的升降会把角度整个甩过去——
+        # 引擎自检连报三镜「落幅基准主体整个在画框外」（纵向 −1.01）。
+        # 取相机距离的四分之一：读得出「无人机在爬升」，又不至于把基准主体甩掉。
+        rise = max(8.0, (1.72 / frac) * 0.25)
+        L += ['[["运镜"]]', '"类型" = "升降"', '"起" = 0.0', '"止" = %.1f' % dur,
+              '"量" = %.1f' % rise, ""]
     elif "推" in s.get("lens", "") or "推近" in s.get("lens", ""):
         L += ['[["运镜"]]', '"类型" = "推近"', '"起" = 0.0', '"止" = %.1f' % dur, '"量" = 8.0', ""]
     return "\n".join(L)
@@ -259,10 +286,10 @@ def main() -> int:
         # 否则它会和下一镜抢 CPU、制造假失败（rule 4h ⑥ 说的就是这个）。
         try:
             r = subprocess.run(cmd, capture_output=True, text=True,
-                               encoding="utf-8", errors="replace", timeout=1800)
+                               encoding="utf-8", errors="replace", timeout=TIMEOUT_S)
         except subprocess.TimeoutExpired:
             failed.append(p.parent.name)
-            print("✗ %s  超时 1800 s —— 跳过，继续下一镜" % p.parent.name)
+            print("✗ %s  超时 %d s —— 跳过，继续下一镜" % (p.parent.name, TIMEOUT_S))
             print("    该镜多半是机位嵌进了几何里（窄处的广角镜最常见），单帧会从 3 s 涨到 30 s")
             _kill_orphan_blender()
             continue

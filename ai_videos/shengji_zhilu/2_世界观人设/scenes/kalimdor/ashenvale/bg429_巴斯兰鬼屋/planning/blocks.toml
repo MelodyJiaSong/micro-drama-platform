@@ -1,0 +1,169 @@
+# 巴斯兰鬼屋 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地原点 ＝ 区级平面图 (1588, 663) m；区级块 b902（区图废墟图标约 [32, 22] ＝ 区级 (1698, 773)）落在本场地 (110, 110)。
+
+[meta]
+bg = "bg429"
+name_zh = "巴斯兰鬼屋"
+size_m = [220, 220]
+px_per_m = 5.0
+scale_src = "推定"
+scale_note = "位置取区级平面图 b902（区图废墟图标量取）；东缘山坡按区图上图标东侧的山纹量取。空地直径约 70 m 与四栋木屋尺寸无一手出处，按世界树「几栋烧塌的精灵木屋」推定。南北土路在场地西侧外约三百米，不入本图"
+# 世界树画面：西北林中几栋烧塌的精灵木屋，焦黑梁架斜插进地，屋间浮着淡蓝色的亡魂
+absent = [
+    "亡魂、人物与动物（亡魂属 shot 层）",
+    "发光的雾、光点、鬼火与任何蓝色辉光",
+    "火光、营火、烛火与正在冒烟的焦木（火是多年前烧的，早已冷透）",
+    "完整的屋顶与完好的木屋",
+    "石墙基埋在落叶里的石建筑遗址（那是南边三百米外的另一处）",
+    "道路、营帐与近年人迹",
+    "湖、河与溪流（只有石础间一汪积雨）",
+    "开阔天际线（只有东面能看到山坡）",
+]
+
+[[ridge]]
+name = "东缘灰褐山坡（山墙坡脚）"
+poly = [[152, 0], [220, 0], [220, 220], [162, 220], [152, 165], [146, 112], [150, 60]]
+height_m = 60
+src = "地图量取"
+note = "区图废墟图标东侧紧贴山纹"
+
+[[road]]
+name = "西侧林缝踩秃的小径（通向远处土路）"
+path = [[0, 116], [38, 112], [74, 104]]
+width_m = 1.5
+src = "推定"
+
+[[water]]
+name = "仓棚石础间的一汪积雨"
+path = [[83, 131], [88, 134]]
+width_m = 3
+depth_m = 0.2
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "烧出来的空地（苔盖旧灰土）"
+xy = [110, 110]
+size = [70, 70]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p385"
+face = "south"
+name = "主屋（石地台 + 两道弧形焦梁，屋顶全塌）"
+xy = [110, 108]
+size = [16, 12]
+h_m = 8
+src = "推定"
+note = "塌落的屋面与焦木在台上堆成齐腰一堆"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p385"
+face = "west"
+name = "东侧向东歪倒的木屋（半靠山坡脚）"
+xy = [138, 100]
+size = [12, 9]
+h_m = 4
+rot = 20
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "北侧小屋矮石地台"
+xy = [100, 82]
+size = [9, 8]
+h_m = 0.3
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p377"
+face = "south"
+name = "斜插进土里的焦黑长梁"
+xy = [104, 80]
+size = [10, 0.6]
+h_m = 6
+rot = -30
+src = "推定"
+note = "世界树：焦黑梁架斜插进地"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p388"
+face = "south"
+name = "西南仓棚残存的一圈石础"
+xy = [85, 132]
+size = [9, 9]
+h_m = 0.4
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "西北缓坡（机位）"
+xy = [72, 72]
+size = [14, 10]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p372"
+face = "south"
+name = "空地北缘半边烧焦的老树"
+xy = [120, 70]
+size = [5, 5]
+h_m = 35
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p372"
+face = "south"
+name = "空地南缘半边烧焦的老树"
+xy = [118, 150]
+size = [5, 5]
+h_m = 35
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p372"
+face = "south"
+name = "空地西南缘半边烧焦的老树"
+xy = [70, 146]
+size = [5, 5]
+h_m = 32
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg429-c1"
+eye = [110, 202]
+target = [110, 110]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

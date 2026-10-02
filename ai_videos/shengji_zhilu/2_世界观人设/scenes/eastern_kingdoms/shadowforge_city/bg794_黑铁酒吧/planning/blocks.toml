@@ -1,0 +1,234 @@
+# 黑铁酒吧 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 方位据上层区图 WorldMap-BlackrockDepths1.jpg（酒吧＝城心西侧紫色十字块）：西接熔岩带与机械作坊、东接城心、东北出口通附魔平台。
+# 室内陈设（吧台 / 桌群 / 回廊）无一手尺寸，全部推定。
+
+[meta]
+bg = "bg794"
+name_zh = "黑铁酒吧"
+size_m = [80, 50]
+px_per_m = 16.0
+scale_src = "推定"
+scale_note = "1.12 副本无区图；主厅 34×26 m 参照区级平面图 bg246 的块 b905（47×40 m 含门廊）推定，西侧加一段熔岩沟与对岸隧道口"
+# 世界树画面：两层高的地下酒馆，长木吧台后摆着酒桶，醉醺醺的矮人酒客围着火盆与木桌喧闹，暖橙灯光混着酒气。
+absent = ["天空、日光、月光与任何天气（山腹室内）", "窗户与天井（岩体里没有对外开口）", "任何植被", "水面（唯一的液体是门外熔岩沟与桶里的酒）", "舞台与乐队台", "人物、酒客、酒保与动物（空场态，属 shot 层）", "电弧蓝光与冷色光源", "文字招牌与菜单板"]
+
+[[water]]
+name = "西熔岩沟（酒馆与机械作坊之间，非水）"
+path = [[18, 0], [20, 25], [16, 50]]
+width_m = 10
+depth_m = 4
+src = "地图量取"
+
+[[road]]
+name = "西门外跨熔岩沟的短石桥"
+path = [[10, 25], [27, 25]]
+width_m = 4
+src = "推定"
+
+[[road]]
+name = "东门外往城心的街"
+path = [[75, 27], [80, 27]]
+width_m = 6
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "chamber"
+face = "south"
+count = 1
+name = "主厅（两层通高的方形大堂）"
+xy = [50, 25]
+size = [34, 26]
+h_m = 12
+src = "地图量取"
+note = "区图紫色十字块中央的方厅；尺寸推定"
+
+[[block]]
+id = "b02"
+may_overlap = true
+kind = "tables"
+face = "south"
+count = 1
+name = "长木吧台（北墙）"
+xy = [50, 15.6]
+size = [22, 1.6]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b03"
+may_overlap = true
+kind = "shelves"
+face = "south"
+count = 1
+name = "酒桶墙（三层铁架横卧木桶，通顶）"
+xy = [50, 12.8]
+size = [30, 1.6]
+h_m = 10
+src = "推定"
+
+[[block]]
+id = "b04"
+may_overlap = true
+kind = "asset"
+asset = "p267"
+face = "south"
+count = 2
+name = "吧台西端两只大酒桶"
+xy = [37, 15]
+size = [3, 3]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b05"
+may_overlap = true
+kind = "rock_shelf"
+face = "east"
+count = 1
+name = "西侧二层回廊"
+xy = [34.5, 25]
+size = [3, 26]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b06"
+may_overlap = true
+kind = "rock_shelf"
+face = "west"
+count = 1
+name = "东侧二层回廊"
+xy = [65.5, 25]
+size = [3, 26]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b07"
+may_overlap = true
+kind = "rock_shelf"
+face = "north"
+count = 1
+name = "南侧二层回廊"
+xy = [50, 36.5]
+size = [28, 3]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b08"
+may_overlap = true
+kind = "rock_shelf"
+face = "east"
+count = 1
+name = "西南角上回廊的窄石梯"
+xy = [37.5, 32.5]
+size = [3, 5]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b09"
+may_overlap = true
+kind = "asset"
+asset = "p256"
+face = "south"
+name = "大堂中央宽口铁火盆"
+xy = [50, 25]
+size = [3, 3]
+h_m = 1.2
+src = "原典方位"
+note = "世界树画面：围着火盆与木桌"
+
+[[block]]
+id = "b10"
+may_overlap = true
+kind = "tables"
+face = "south"
+count = 3
+name = "西半圆木桌群"
+xy = [42, 26]
+size = [8, 10]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b11"
+may_overlap = true
+kind = "tables"
+face = "south"
+count = 3
+name = "东半圆木桌群"
+xy = [58, 26]
+size = [8, 10]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "chamber"
+face = "south"
+count = 1
+name = "酿酒间（北墙后，大木酒槽）"
+xy = [52, 6]
+size = [20, 10]
+h_m = 6
+src = "地图量取"
+note = "紫色十字块北臂"
+
+[[block]]
+id = "b13"
+kind = "cave_mouth"
+face = "west"
+count = 1
+name = "西门门洞（低宽，门外石桥）"
+xy = [30, 25]
+size = [6, 6]
+h_m = 4
+src = "地图量取"
+
+[[block]]
+id = "b14"
+kind = "cave_mouth"
+face = "west"
+count = 1
+name = "西岸隧道口（通机械作坊）"
+xy = [5, 25]
+size = [10, 8]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p255"
+face = "east"
+name = "东门（低宽双扇铁门，朝城心）"
+xy = [71, 27]
+size = [8, 6]
+h_m = 4
+src = "地图量取"
+
+[[block]]
+id = "b16"
+kind = "tunnel"
+face = "northeast"
+count = 1
+name = "东北后门甬道（上坡通附魔平台）"
+xy = [70, 8]
+size = [10, 5]
+h_m = 3
+src = "地图量取"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg794-c1"
+eye = [20, 45]
+target = [40, 25]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

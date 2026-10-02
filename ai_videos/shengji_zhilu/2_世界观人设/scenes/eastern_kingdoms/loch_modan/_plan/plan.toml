@@ -1,0 +1,536 @@
+# 洛克莫丹（loch_modan）区级资产规划 —— 区级资产规划师写，tools/apply_asset_plan.py 只读
+# 判据：贴地地坪 / 墙栅 / 洞口 / 岩台走脚本 kind（rule 4g）；其余有边界的物体引用本区资产库。
+# 去重（本区 12 件）：previz 白模只锁几何与剪影（出图从不拿白模当参考，rule 4d ①），剪影同类即共用——
+#   民居 / 窄高石楼 / 国王谷石哨屋共用 a01；旅店与狩猎大屋共用 a02；军需棚 / 铁匠棚 / 畜棚 / 储物棚 / 塌工具棚 / 门廊斜檐共用 a03；
+#   瞭望塔与狮鹫栖台同为「粗原木高架台」共用 a05；三处火塘共用 a06；崩落大石 / 露头 / 碎岩滩 / 渣堆 / 界桩 / 长条石共用 a10。
+# 额度所限走脚本的有界小件（各自 kind 正好对得上形制）：石砌圆井 → well（井圈 + 双柱 + 辘轳梁）；
+#   拒马 → palisade（一排削尖木桩）；草靶 / 晾皮架 / 拴马桩 → post（木柱 + 挂板）；草料垛与鞍具架 → crates；
+#   石烟囱 / 劈柴垛 / 支护原木垛是实心方体 → low_wall；窄轨 / 菜地 / 石器散落区贴地 → yard；国王谷石板台地 → plaza；
+#   碎石怪之谷落脚窝 → rock_shelf。bg214 是区级主体（zone_whole），不在 bg_dirs 里，不写 use。
+
+[meta]
+zone = "loch_modan"
+
+[[use]]
+bg = "bg215"
+block = "b01"
+kind = "low_wall"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg215"
+block = "b02"
+kind = "low_wall"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg215"
+block = "b03"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg215"
+block = "b04"
+kind = "low_wall"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg215"
+block = "b05"
+kind = "low_wall"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg215"
+block = "b06"
+asset = "p21"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg215"
+block = "b07"
+asset = "p202"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg215"
+block = "b08"
+asset = "p202"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg215"
+block = "b09"
+asset = "p202"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg215"
+block = "b10"
+asset = "p201"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg215"
+block = "b11"
+asset = "p363"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg215"
+block = "b12"
+kind = "palisade"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg215"
+block = "b13"
+kind = "palisade"
+face = "northwest"
+count = 1
+
+[[use]]
+bg = "bg215"
+block = "b14"
+asset = "p205"
+face = "south"
+count = 1
+
+# ── bg216 银泉矿洞 ───────────────────────────────
+[[use]]
+bg = "bg216"
+block = "b01"
+kind = "mine_portal"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg216"
+block = "b02"
+kind = "yard"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg216"
+block = "b03"
+asset = "p203"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg216"
+block = "b04"
+asset = "p203"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg216"
+block = "b05"
+asset = "p201"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg216"
+block = "b06"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg216"
+block = "b07"
+asset = "p205"
+face = "south"
+count = 6
+
+[[use]]
+bg = "bg216"
+block = "b08"
+asset = "p205"
+face = "south"
+count = 1
+
+# ── bg217 旅行者营地 ─────────────────────────────
+[[use]]
+bg = "bg217"
+block = "b01"
+asset = "p200"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg217"
+block = "b02"
+asset = "p201"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg217"
+block = "b03"
+kind = "low_wall"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg217"
+block = "b04"
+kind = "low_wall"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg217"
+block = "b05"
+kind = "post"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg217"
+block = "b06"
+kind = "post"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg217"
+block = "b07"
+kind = "post"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg217"
+block = "b08"
+asset = "p363"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg217"
+block = "b09"
+asset = "p201"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg217"
+block = "b10"
+kind = "post"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg217"
+block = "b11"
+kind = "post"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg217"
+block = "b12"
+asset = "p204"
+face = "south"
+count = 5
+
+[[use]]
+bg = "bg217"
+block = "b13"
+asset = "p221"
+face = "south"
+count = 6
+
+# ── bg218 塞尔萨玛 ───────────────────────────────
+[[use]]
+bg = "bg218"
+block = "b01"
+asset = "p200"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg218"
+block = "b02"
+asset = "p199"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg218"
+block = "b03"
+asset = "p201"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg218"
+block = "b04"
+asset = "p199"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg218"
+block = "b05"
+asset = "p199"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg218"
+block = "b06"
+asset = "p199"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg218"
+block = "b07"
+asset = "p199"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg218"
+block = "b08"
+asset = "p199"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg218"
+block = "b09"
+asset = "p21"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg218"
+block = "b10"
+asset = "p201"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg218"
+block = "b11"
+kind = "crates"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg218"
+block = "b12"
+kind = "well"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg218"
+block = "b13"
+kind = "yard"
+face = "south"
+count = 1
+
+# ── bg219 灰爪山 ─────────────────────────────────
+[[use]]
+bg = "bg219"
+block = "b01"
+asset = "p221"
+face = "south"
+count = 48
+
+[[use]]
+bg = "bg219"
+block = "b02"
+asset = "p204"
+face = "south"
+count = 24
+
+[[use]]
+bg = "bg219"
+block = "b03"
+asset = "p221"
+face = "southwest"
+count = 1
+
+[[use]]
+bg = "bg219"
+block = "b04"
+asset = "p206"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg219"
+block = "b05"
+asset = "p206"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg219"
+block = "b06"
+asset = "p206"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg219"
+block = "b07"
+asset = "p205"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg219"
+block = "b08"
+kind = "lawn"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg219"
+block = "b09"
+kind = "lawn"
+face = "south"
+count = 1
+
+# ── bg220 碎石怪之谷 ─────────────────────────────
+[[use]]
+bg = "bg220"
+block = "b01"
+kind = "lawn"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg220"
+block = "b02"
+asset = "p205"
+face = "south"
+count = 14
+
+[[use]]
+bg = "bg220"
+block = "b03"
+kind = "cave_mouth"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg220"
+block = "b04"
+kind = "cave_mouth"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg220"
+block = "b05"
+kind = "cave_mouth"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg220"
+block = "b06"
+asset = "p363"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg220"
+block = "b07"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg220"
+block = "b08"
+asset = "p205"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg220"
+block = "b09"
+asset = "p205"
+face = "east"
+count = 5
+
+[[use]]
+bg = "bg220"
+block = "b10"
+asset = "p205"
+face = "north"
+count = 5
+
+[[use]]
+bg = "bg220"
+block = "b11"
+kind = "rock_shelf"
+face = "west"
+count = 1
+
+# ── bg221 国王谷 ─────────────────────────────────
+[[use]]
+bg = "bg221"
+block = "b01"
+asset = "p199"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg221"
+block = "b02"
+kind = "plaza"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg221"
+block = "b03"
+asset = "p207"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg221"
+block = "b04"
+asset = "p207"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg221"
+block = "b05"
+kind = "lawn"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg221"
+block = "b06"
+asset = "p205"
+face = "south"
+count = 4

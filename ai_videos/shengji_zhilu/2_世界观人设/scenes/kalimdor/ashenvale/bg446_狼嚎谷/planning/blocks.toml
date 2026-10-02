@@ -1,0 +1,153 @@
+# 狼嚎谷 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地原点 ＝ 区级平面图 (2440, 1000) m；坐标表点位 [52, 37] ＝ 区级 (2742, 1300) 落在本场地 (302, 300) 附近，洞口按区图图标贴在石山东南脚下。
+
+[meta]
+bg = "bg446"
+name_zh = "狼嚎谷"
+size_m = [640, 560]
+px_per_m = 2.5
+grid_m = 50
+scale_src = "地图量取"
+scale_note = "石山群轮廓、东侧土路按区级 terrain.toml（狼嚎谷山群 / 东北出路）平移换算；谷长约 300 m、谷宽与洞口尺寸无一手出处，推定"
+# 世界树画面：谷地深处的洞窟，洞口垂着枯藤，洞内散落碎骨，夜里传出狼嚎回声
+absent = [
+    "狼与任何动物（狼嚎是声音层，默认画面无动物）",
+    "任何人物、营地、帐篷与人造建筑",
+    "谷底流水、溪流与水潭（谷底只有一道无水干沟）",
+    "火光、火把、火堆与洞内发光物",
+    "上古白石遗迹、石阶与雕像（本谷没有遗迹）",
+    "谷内道路（土路在谷口以东两三百米外，不进谷）",
+    "雪、沙漠与开阔草原",
+]
+
+[[ridge]]
+name = "北西石山（谷头岩壁所在，连北界山墙）"
+poly = [[0, 0], [480, 0], [495, 60], [470, 150], [420, 200], [340, 205], [295, 225], [250, 250], [210, 310], [170, 420], [0, 470]]
+height_m = 60
+src = "地图量取"
+note = "区级「狼嚎谷山群」约 [38-56, 26-42] 的西北部分；谷头岩壁取其东南面"
+
+[[ridge]]
+name = "南侧矮石梁（梁顶一排歪斜小树）"
+poly = [[250, 330], [330, 325], [420, 390], [470, 460], [430, 520], [300, 470], [220, 400]]
+height_m = 20
+src = "推定"
+note = "区级山群的东南尾巴，比北坡矮得多"
+
+[[road]]
+name = "谷口以东的南北土路（巨树据点 → 中段山口，不进谷）"
+path = [[498, 0], [513, 54], [566, 230], [618, 406], [640, 443]]
+width_m = 6
+src = "地图量取"
+note = "区级「东北出路」平移换算"
+
+[[block]]
+id = "b01"
+kind = "cave_mouth"
+face = "southeast"
+count = 1
+name = "黑洞口（朝东南，十余米宽、八九米高）"
+xy = [285, 240]
+size = [14, 9]
+h_m = 9
+rot = -30
+src = "坐标表"
+note = "坐标表 [52, 37]；区图洞窟图标在山群东南脚"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p390"
+face = "southeast"
+count = 5
+name = "洞沿枯藤帘"
+xy = [287, 245]
+size = [14, 1]
+h_m = 7
+rot = -30
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "洞口内外陈年碎骨散落区"
+xy = [297, 252]
+size = [22, 12]
+h_m = 0
+rot = -30
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "谷底无水干沟（卵石）"
+xy = [410, 300]
+size = [200, 3]
+h_m = 0
+rot = 20
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p377"
+face = "south"
+name = "横躺长苔倒树"
+xy = [405, 330]
+size = [22, 2]
+h_m = 1.5
+rot = -15
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p378"
+face = "south"
+name = "谷底苔石"
+xy = [365, 285]
+size = [8, 6]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p374"
+face = "south"
+count = 3
+name = "北坡枯白老树（两三棵）"
+xy = [360, 185]
+size = [40, 20]
+h_m = 18
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 4
+name = "北坡银灰老树（稀疏）"
+xy = [440, 150]
+size = [50, 40]
+h_m = 22
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg446-c1"
+eye = [320, 515]
+target = [320, 280]
+eye_h = 21.3
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -1,0 +1,194 @@
+# 断矛路口 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地左上角 ＝ 区级平面图（bg303 terrain.toml）的 (300, 560) m；山嘴 / 三条路 / 中央水道由区级量取值平移，精度 ±20 m。
+
+[meta]
+bg = "bg306"
+name_zh = "断矛路口"
+size_m = [300, 240]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "分岔点按区图 (17–21%,50%) 西路分成北路 / 东路处；西墙山嘴、三条路、中央水道起头从 bg303 terrain.toml 平移；断矛、水草丛、倒树无一手出处，断矛位置按世界树「路中央」"
+# 世界树画面：沼泽中的泥路交汇点，路中央插着一支折断的长矛做路标，四面都是齐腰水草
+absent = [
+    "路牌、木指示牌与任何文字标记（唯一的路标就是那支断矛）",
+    "石板路、铺装路面与路边石（三条路都是黑泥路）",
+    "房屋、帐篷、营火与任何聚落设施",
+    "桥（水道在两路之间起头，路不跨水）",
+    "旗帜、纹章与阵营标识",
+    "火、火把、灯笼与任何人工光源",
+    "晴天硬光与长影",
+    "任何人物、坐骑、动物与文字",
+]
+
+[[ridge]]
+name = "西墙东伸山嘴（岔口西北）"
+poly = [[0, 0], [119, 5], [161, 58], [119, 110], [14, 122], [0, 124]]
+height_m = 120
+src = "地图量取"
+note = "山嘴尖在 (161,58)，北路贴它的南脚上坡"
+
+[[water]]
+name = "中央水道起头（两路之间的楔形湿地）"
+path = [[200, 110], [223, 90], [262, 88], [300, 104]]
+width_m = 22
+depth_m = 1.0
+src = "地图量取"
+note = "区级「中央水道」西端"
+
+[[water]]
+name = "岔口正中的浅积水"
+path = [[140, 141], [152, 144]]
+width_m = 8
+depth_m = 0.2
+src = "推定"
+
+[[road]]
+name = "西路（通西面窄谷口）"
+path = [[0, 128], [60, 131], [110, 135], [144, 139]]
+width_m = 6
+src = "地图量取"
+note = "锚点图机位在 (125,137) 朝东"
+
+[[road]]
+name = "北路（绕山嘴南脚上坡向东北）"
+path = [[144, 139], [168, 118], [186, 95], [223, 58], [251, 22], [270, 0]]
+width_m = 5
+src = "地图量取"
+
+[[road]]
+name = "东路（下到低地向东南）"
+path = [[144, 139], [165, 160], [181, 179], [217, 208], [259, 235]]
+width_m = 6
+src = "地图量取"
+
+[[block]]
+id = "b01"
+over_water = true
+kind = "asset"
+asset = "p327"
+face = "northeast"
+name = "断矛路标（斜插路心）"
+xy = [146, 142]
+size = [0.4, 0.4]
+h_m = 1.8
+src = "原典方位"
+note = "世界树「路中央插着一支折断的长矛做路标」；向东北微斜，锈铁矛头横在杆脚"
+
+[[block]]
+id = "b02"
+over_water = true
+kind = "asset"
+asset = "p328"
+face = "south"
+name = "矛杆脚压石堆"
+xy = [146, 143.5]
+size = [1.6, 1.6]
+h_m = 0.4
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p320"
+face = "south"
+count = 30
+name = "水草丛·西路南"
+xy = [80, 180]
+size = [110, 60]
+h_m = 1.0
+src = "原典方位"
+note = "世界树「四面都是齐腰水草」"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p320"
+face = "south"
+count = 10
+name = "水草丛·楔形湿地"
+xy = [215, 140]
+size = [40, 34]
+h_m = 1.0
+src = "原典方位"
+
+[[block]]
+id = "b05"
+may_overlap = true
+kind = "asset"
+asset = "p320"
+face = "south"
+count = 15
+name = "水草丛·东路南"
+xy = [160, 218]
+size = [60, 36]
+h_m = 1.0
+src = "原典方位"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p320"
+face = "south"
+count = 12
+name = "水草丛·北路东"
+xy = [270, 45]
+size = [40, 50]
+h_m = 1.0
+src = "原典方位"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p317"
+face = "south"
+name = "枯死巨树·楔形湿地北"
+xy = [236, 112]
+size = [6, 6]
+h_m = 13
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p317"
+face = "south"
+name = "枯死巨树·东路外"
+xy = [262, 185]
+size = [6, 6]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p318"
+face = "south"
+name = "半沉倒树（路边）"
+xy = [196, 172]
+size = [14, 1.5]
+h_m = 0.8
+rot = 25
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p318"
+face = "south"
+name = "东路路肩碎车板与木轮"
+xy = [176, 186]
+size = [3, 2]
+h_m = 0.3
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg306-c1"
+eye = [150, 19]
+target = [150, 120]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

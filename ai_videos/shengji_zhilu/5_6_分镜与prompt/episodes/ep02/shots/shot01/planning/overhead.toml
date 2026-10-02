@@ -1,0 +1,109 @@
+# shot01 镜头平面图（overhead）的唯一出处：镜头与人各自在哪、往哪走、几秒到。
+# 改走位 ＝ 改本文件重跑 `python tools/gen_shots_szzl_ep02.py --only S01`（闸门）；出审阅图 `python tools/shot_overhead.py <shot 目录>`。
+# 坐标＝bg6 场地平面图（scenes/.../bg6_艾尔文森林林道/planning/blocks.toml）坐标系（米；x 向东、y 向南）。path 路点 [t, x, y] 或 [t, x, y, 面朝x, 面朝y]。
+# 西侧林坡（ridge，高约 30 m）在 x < 150–160；主林道自北 (170, 0) 向南经 (200, 120) 到石桥 (198, 170)；西岔土径从 (199, 130) 上坡。
+# 站位同侧（ep01 S25 起）：两人往南走时亚伦在西、杜克在东——近景段正面拍，亚伦在画左、杜克在画右，S02 照此接（axis_errors 查）。
+
+[meta]
+scene = "bg6"
+view = [120, 10, 270, 235]
+note = "坡顶定点慢摇：0–1s 起幅扫过北边身后那片林缘（空着），1–7s 往东南摇开林海，坡下大道上两人是两个小点，杜克排练前两个开头；7s 切大道上正面近景，镜头在两人前方同速后退：后两个开头在脸上咽回去，12s 起报数、嘴硬"
+
+[[camera]]
+t = 0
+xy = [142.0, 140.0]
+h = 1.7
+look = [152.5, 20.5]
+lens = 18
+tag = "坡顶·摇"
+subject = "c2_Duke"
+note = "西侧林坡上、西岔土径南边一处坡顶（高出路面约二十米），起幅朝北对着来路那片林缘"
+
+[[camera]]
+t = 1
+xy = [142.0, 140.0]
+h = 1.7
+look = [166.9, 22.6]
+lens = 18
+subject = "c2_Duke"
+note = "林缘扫完，开始往东南慢摇"
+
+[[camera]]
+t = 3
+xy = [142.0, 140.0]
+h = 1.7
+look = [226.9, 55.1]
+lens = 18
+subject = "c2_Duke"
+note = "坡下大道上的两人从画右入画"
+
+[[camera]]
+t = 5
+xy = [142.0, 140.0]
+h = 1.7
+look = [257.9, 108.9]
+lens = 18
+subject = "c2_Duke"
+
+[[camera]]
+t = 6.9
+xy = [142.0, 140.0]
+h = 1.7
+look = [257.9, 145.0]
+lens = 18
+subject = "c2_Duke"
+note = "摇到东南收住：林海铺到天边，两人在画左"
+
+[[camera]]
+t = 7
+xy = [199.38, 140.0]
+h = 1.6
+look = [199.38, 135.6]
+lens = 35
+tag = "大道·近"
+subject = "c2_Duke"
+cut = true
+note = "切：大道上杜克正前方约 3.6 m，朝北，近景两人一前一后走向镜头"
+
+[[camera]]
+t = 18
+xy = [198.9, 151.0]
+h = 1.6
+look = [198.9, 146.6]
+lens = 35
+subject = "c2_Duke"
+note = "与两人同速后退约 11 m（< 12 m，不触发 previz）"
+
+[[actor]]
+key = "c2_Duke"
+label = "杜克"
+path = [[0, 200.48, 128.0], [7, 200.14, 136.4], [18, 199.66, 147.4]]
+note = "大道东侧，约 1.2 m/s 往南走（7s 起放慢到 1.0 m/s），前半步；1.2s 抬手比划又落下，4s 停一下又迈步；7.3s 挺胸、9.8s 缩脖子；16s 嘴硬"
+
+[[actor]]
+key = "c1_Aaron"
+label = "亚伦"
+path = [[0, 198.93, 126.8], [7, 198.58, 135.4], [11.6, 198.38, 140.0], [11.7, 198.38, 140.1, 199.2, 141.2], [18, 198.1, 146.4, 198.9, 147.4]]
+note = "大道西侧，落后杜克半步；两人横向相距 1.6 m；11.7s 起边走边转脸看着杜克报数"
+
+[[gaze]]
+who = "c1_Aaron"
+t0 = 11.8
+t1 = 16
+at = "c2_Duke"
+label = "杜克"
+
+[[beat]]
+t0 = 0
+t1 = 1
+text = "空镜：起幅扫过北边身后那片林缘，树影里空着（ep01 S25 那个人站过的地方）"
+
+[[beat]]
+t0 = 1
+t1 = 7
+text = "场景展示：坡顶慢摇到东南；坡下两人往南走：Mum. I didn't make the— / So. The thing is—（远景，画外）"
+
+[[beat]]
+t0 = 7
+t1 = 18
+text = "近景：Mum. Dad. About the Guard— / Hi, Mum. / Four. / Four what? / Four starts. You didn't finish any. / ...I'm warming up."

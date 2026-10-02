@@ -1,0 +1,211 @@
+# 煤渣挖掘场 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg238"
+name_zh = "煤渣挖掘场"
+size_m = [220, 180]
+px_per_m = 5.0
+scale_src = "推定"
+scale_note = "区级图 b901 为 160×120 m 的营地块；本图外扩到 220×180 m，把东南山墙与西北主干道一并框进来。大坑 60×40 m、下陷 8 m 与各件尺寸按卡内描述推定，无一手出处"
+# 世界树画面：侏儒/哥布林式的露天挖掘营地，蒸汽机械与木制吊架，成堆的碎石与翻倒的矿车，空气里全是粉尘
+# 区图：东侧主干道旁孤立营地图标（63.7%, 60.9%）；东南贴东山墙（东北→西南走向），西北擦主干道
+absent = [
+    "任何人物、动物（默认停工空营）",
+    "围墙、寨门、正经房屋（只有废木锈铁工具棚）",
+    "火、炉火、烛火、灯笼、熔岩光（锅炉与钻塔熄火冷透、不冒汽）",
+    "熔渣与熔岩（本档局部没有）",
+    "任何水体、植被与绿色",
+    "东南山墙一侧的路（进出只有西北主干道）",
+    "坑沿护栏（只有几根歪木桩）",
+    "4.0.3a 后的任何改动",
+]
+
+[[ridge]]
+name = "东山墙（东北→西南斜向伸展的红岩山墙，营地背景墙）"
+poly = [[165, 0], [220, 0], [220, 180], [45, 180], [70, 158], [110, 120], [140, 85], [160, 40]]
+height_m = 300
+src = "地图量取"
+
+[[road]]
+name = "主干道（东北通隧道口方向，西南落进炭灰平地）"
+path = [[150, 0], [110, 8], [60, 18], [25, 30], [0, 52]]
+width_m = 8
+src = "地图量取"
+
+[[road]]
+name = "窄轨（坑口西北沿 → 北废石堆脚）"
+path = [[80, 70], [68, 54], [78, 38], [100, 30], [118, 30]]
+width_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+may_overlap = true
+name = "露天大坑（顺山脚斜挖，下陷约 8 m，台阶坑壁）"
+xy = [100.7, 81.7]
+size = [60, 40]
+h_m = 0
+rot = -48
+src = "推定"
+note = "长轴顺山墙东北→西南；坑沿无护栏；h_m 记 0，下陷 8 m 写在这里"
+
+[[block]]
+id = "b02"
+kind = "rock_shelf"
+face = "northwest"
+into_ridge = true
+name = "山脚新鲜开凿面"
+xy = [123, 100]
+size = [55, 4]
+h_m = 15
+rot = -49
+src = "推定"
+note = "山墙脚被挖出的新岩面，棱角锋利、镐痕清楚"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p239"
+face = "southeast"
+name = "铁架钻塔（钻杆斜插岩缝，熄火）"
+xy = [143.6, 59.6]
+size = [6, 6]
+h_m = 18
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p238"
+face = "south"
+name = "蒸汽绞车（圆肚锅炉 + 细烟囱 + 铸铁飞轮，熄火冷透）"
+xy = [88, 44]
+size = [10, 6]
+h_m = 9
+src = "推定"
+note = "坑北；飞轮比人高"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p237"
+face = "southeast"
+name = "西北木吊架（高人字架，空铁斗吊在半空）"
+xy = [74.5, 75]
+size = [6, 6]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p237"
+face = "north"
+name = "南木吊架（矮，横梁歪斜）"
+xy = [100, 117]
+size = [5, 5]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p241"
+face = "south"
+name = "北锥形废石堆（坡上卡半截断木溜槽）"
+xy = [128, 28]
+size = [20, 20]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p241"
+face = "south"
+name = "南锥形废石堆"
+xy = [58, 138]
+size = [18, 18]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p233"
+face = "east"
+name = "工具棚·北（废木板 + 锈铁皮，顶压石块）"
+xy = [22, 70]
+size = [8, 6]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p233"
+face = "east"
+name = "工具棚·中"
+xy = [24, 84]
+size = [7, 5]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p233"
+face = "east"
+name = "工具棚·南（门口堆煤块、铁桶、钢钎）"
+xy = [34, 97]
+size = [8, 6]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "plaza"
+face = "south"
+may_overlap = true
+name = "坑南沿碎石斜坡（唯一下坑通道）"
+xy = [79, 105]
+size = [16, 7]
+h_m = 0
+rot = -48
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p242"
+face = "south"
+count = 2
+name = "翻倒的铁皮矿车 ×2（轮子朝天，近景）"
+xy = [62, 55]
+size = [4, 7]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "rock_shelf"
+face = "southeast"
+name = "西北土坎（锚点机位，朝东南）"
+xy = [40, 38]
+size = [14, 6]
+h_m = 2
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg238-c1"
+eye = [110, 166]
+target = [110, 90]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

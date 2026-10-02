@@ -128,6 +128,25 @@ def tail_verdict(shot_dir: Path, secs: float) -> str:
         "通过" if ok else "不通过", last, body, "收住了" if ok else "声音在镜尾被切断", TAIL_DROP)
 
 
+CAST_WORD = {"pass": "通过", "fail": "不通过", "unchecked": "未查"}
+
+
+def cast_lines(shot_dir: Path) -> list[str]:
+    """R9：每次施法的光落没落在对的人身上（tools/cast_readback.py 机测，逐次结论另存 castcheck.json）。"""
+    import cast_readback
+    if VIDEO is None:
+        return ["- （没有出片）"]
+    try:
+        verdicts, notes = cast_readback.readback(shot_dir, VIDEO)
+    except SystemExit as e:
+        return ["- 未查：%s" % e]
+    if not verdicts:
+        return ["- （本镜无施法）"]
+    cast_readback.save(shot_dir, VIDEO, verdicts, notes)
+    return ["- %s：%s %s %gs" % (CAST_WORD[v.status], v.key, v.name, v.t) + "".join("\n  - " + ln for ln in v.lines)
+            for v in verdicts] + ["- （说明）" + s for s in notes]
+
+
 def checklist(shot_dir: Path, secs: float, hits: list[dict], jumps: list[float], sha: str) -> str:
     md = (shot_dir / (shot_dir.name + ".md")).read_text(encoding="utf-8")
     body = (re.search(FENCE + r"text\n(.*?)\n" + FENCE, md, re.S) or [None, ""])[1]
@@ -151,6 +170,7 @@ def checklist(shot_dir: Path, secs: float, hits: list[dict], jumps: list[float],
     L += ["", "## R7 关键拍兑现：剧本里学会 / 用出本事、亮起 / 变暗 / 稳住这类变化，在出片里看得见、时刻大致对得上"]
     L += ["- %s" % k for k in key_beats(shot_dir)] or ["- （本镜无）"]
     L += ["", "## R8 镜尾声音收住（机测，follow-up 044）", "- " + tail_verdict(shot_dir, secs)]
+    L += ["", "## R9 施法的光落在对的人身上（机测，follow-up 057；不通过 / 未查的那几次看 sheet.png 复核）"] + cast_lines(shot_dir)
     L += ["", "## R5 视线与脸：对着敌人 / 说话对象时不低头、不背对（剧本写了背影的除外）；说话的人看得见脸和嘴",
           "- 台词：" + (field["台词"] or "无"), "", "## R6 其他：剧本里没有的人、物、字、特效", ""]
     return "\n".join(L)

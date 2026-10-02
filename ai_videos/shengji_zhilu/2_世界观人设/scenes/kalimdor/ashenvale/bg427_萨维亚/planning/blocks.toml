@@ -1,0 +1,236 @@
+# 萨维亚 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地原点 ＝ 区级坐标 (3999.3, 1441.1)；区级 b909 [78.5, 44.7]（本身即推定落位）→ 本图 (140, 130)。
+# 北侧山脚与南侧矮坡按区图影线量取（区级 terrain 的北墙 poly 是粗描、偏北约 200 m）；河源水面由 bg413 terrain 平移；废墟内落位全部推定。
+
+[meta]
+bg = "bg427"
+name_zh = "萨维亚"
+size_m = [280, 240]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "世界画面只有「古神殿废墟、残柱间吊兽皮帐幕、满地骨杖」；台基取约 60 × 40 m，场地 280 × 240 m 把北墙山脚、西缘河源水面与南侧矮坡一并框进来。废墟尺度无一手出处"
+# 世界树画面：建在古神殿废墟上的萨特营地，残柱之间吊着兽皮帐幕，地面插满带刺骨杖
+absent = [
+    "任何人物与动物（萨特属 shot 层，不进底图）",
+    "任何火光：火堆、火把、灯笼；鬼火、法阵光与魔法光",
+    "道路（区图这里没有路，只有林间小径）",
+    "新建房屋、木寨与寨墙",
+    "暗紫布幡与地面血色符号（那是南边的萨提纳尔 bg420）",
+    "4.0.3 之后在东北古遗址加的联盟哨站与飞行点",
+    "完整的神殿屋顶与完好立柱",
+    "文字与可辨认的纹章",
+]
+
+[[ridge]]
+name = "北界山墙山脚（碎石坡 + 陡岩壁）"
+poly = [[0, 0], [280, 0], [280, 38], [210, 28], [140, 24], [70, 30], [0, 36]]
+height_m = 60
+src = "地图量取"
+note = "区图图标正北约 100 m 即山群影线"
+
+[[ridge]]
+name = "南侧弧形矮坡（隔开萨提纳尔）"
+poly = [[90, 240], [108, 222], [160, 212], [212, 220], [236, 240]]
+height_m = 8
+src = "地图量取"
+note = "区图萨提纳尔上方的弧形影线"
+
+[[water]]
+name = "弗伦河源头宽浅水面与沼泽口（西缘）"
+path = [[0, 40], [6, 100], [8, 140], [0, 200]]
+width_m = 30
+depth_m = 1.5
+src = "地图量取"
+note = "bg413 terrain 弗伦河上游沼泽口平移；主水面在场地西缘外"
+
+[[road]]
+name = "林间踩出的小径（西南林缘 → 台基南阶）"
+path = [[60, 210], [100, 180], [128, 160], [142, 152]]
+width_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "白石神殿台基"
+xy = [150, 125]
+size = [60, 40]
+h_m = 1.2
+rot = -8
+src = "原典方位"
+note = "世界画面「建在古神殿废墟上」；尺度与朝向推定"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p386"
+face = "south"
+count = 6
+name = "断柱列·北排（高，最高约 8 m）"
+xy = [152, 110]
+size = [52, 3]
+h_m = 8
+rot = -8
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p386"
+face = "south"
+count = 6
+name = "断柱列·南排（矮，多只剩半截）"
+xy = [148, 138]
+size = [52, 3]
+h_m = 1.6
+rot = -8
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p379"
+face = "south"
+name = "兽皮帐幕·西（残柱间横拉）"
+xy = [135, 125]
+size = [16, 16]
+h_m = 4
+rot = -8
+src = "推定"
+note = "世界画面「残柱之间吊着兽皮帐幕」；落位推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p379"
+face = "south"
+name = "兽皮帐幕·东"
+xy = [166, 122]
+size = [14, 16]
+h_m = 3.5
+rot = -8
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p388"
+face = "south"
+name = "白石盆（冷灰）"
+xy = [150, 124]
+size = [2.5, 2.5]
+h_m = 0.8
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "南缘石阶"
+xy = [146, 149]
+size = [14, 5]
+h_m = 0.8
+rot = -8
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p387"
+face = "south"
+count = 15
+name = "骨杖阵（台前泥地）"
+xy = [138, 168]
+size = [60, 24]
+h_m = 2.2
+rot = -8
+src = "推定"
+note = "世界画面「地面插满带刺骨杖」；范围推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p386"
+face = "south"
+name = "无头石雕残座"
+xy = [140, 101]
+size = [2.5, 2.5]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p377"
+face = "south"
+name = "倒塌柱段·台基西北（断成四节）"
+xy = [110, 100]
+size = [12, 1.6]
+h_m = 1.4
+rot = 25
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p377"
+face = "south"
+name = "倒伏柱段·西南林缘（机位点）"
+xy = [80, 192]
+size = [9, 1.5]
+h_m = 1.3
+rot = -30
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "台基东南角塌陷洞"
+xy = [177, 144]
+size = [5, 4]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 37
+name = "古树林·西（废墟与水面之间）"
+xy = [55, 120]
+size = [50, 110]
+h_m = 22
+src = "推定"
+note = "树丛"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 40
+name = "古树林·东"
+xy = [242, 125]
+size = [62, 150]
+h_m = 22
+src = "推定"
+note = "树丛"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg427-c1"
+eye = [140, 221]
+target = [140, 120]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

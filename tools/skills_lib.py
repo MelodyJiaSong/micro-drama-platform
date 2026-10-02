@@ -17,11 +17,12 @@
     python tools/skills_lib.py check  <剧里任意路径>                 # 只跑闸门
     python tools/skills_lib.py md     <剧里任意路径>                 # 重生成全部 skill.md
     python tools/skills_lib.py sample <剧> <键或名> [--no-open]      # 技能样片备料 + 开即梦（「生成」人点）
-    python tools/skills_lib.py adopt  <剧> <键或名> <mp4> [--peak 秒] # 选定的样片收进卡、截峰值图、写进 [sample]
+    python tools/skills_lib.py adopt  <剧> <键或名> [mp4] [--peak 秒] # 选定的样片收进卡、截峰值图、剪施法片段、写进 [sample]；不给 mp4 就收 ~/Downloads 里最新的那条
 """
 from __future__ import annotations
 
 import json
+import math
 import re
 import sys
 import tomllib
@@ -79,8 +80,8 @@ class Card:
     facts: tuple[str, ...]
     liberty: str
     interrupt: str
-    timing: dict[str, tuple[float, float, float]]      # 阶段 → (最短, 默认, 最长) 秒
-    pose: dict[str, str]
+    timing: dict[str, tuple[float, float, float]]      # 阶段 → (最短, 默认, 最长) 秒；三个相同＝锁死（follow-up 065）
+    pose: dict[str, str | list]                        # 阶段 → 手势名，或 [[手势名, 阶段内秒], …] 分几步
     look: dict[str, str]
     tier: dict[str, str]
     call: Call | None
@@ -95,6 +96,15 @@ class Card:
     hue: tuple[float, ...] = ()       # 本卡光的色相带，覆盖法系的（同一法系颜色不同：冲锋暗红、雷霆一击蓝白）
     short: dict[str, str] = field(default_factory=dict)   # 精简稿与跨切重述用的短锁定串（阶段 → 串）；变体的写在 [variant.X.short]
     mark: str = ""                    # 这道光在画面里叫什么（绑定句用，不用技能名）：「暖金色的光和光柱」
+    hue_phase: dict[str, str] = field(default_factory=dict)   # 某阶段的光换一个法系的色相带（k207 放手那一下是圣光金、光壳是银白偏蓝）：阶段 → 法系名
+    flight: tuple[str, ...] = ()      # 有东西从施法者飞向目标的阶段（火球＝effect / 被挡时的 blocked）：弹道闸门量这几段（8f 站位 6）
+    sample_scene: str = ""            # 样片的地点与机位（一句手写）；[sample] prompt 空着时由它 + [look] 时间轴拼出样片 prompt
+    sample_target: str = ""           # 样片里 {目标} 叫什么（「前方那人」）
+    sample_clip: str = ""             # 样片剪出的施法片段（adopt 按 window 剪；镜头参考优先挂它）
+    sample_window: tuple[float, ...] = ()   # 施法在样片里的起止秒 [起, 止]（2–15 s，Seedance 单条参考视频的上下限）
+    sample_peak: float | None = None  # 峰值图截第几秒（光最足的那一刻）
+    sample_keyframes: tuple[dict, ...] = ()   # 手势参考图 [[sample.keyframe]]：name / at（样片里第几秒）/ prompt / ref（拿前一张作图生图参考，保人和场景一致）
+    state: bool = False               # 持续状态类（光壳 / 光环）：余晖是护身状态、不是「上一招还在散」——排程闸门 ② ③ ⑥ 不算它的 linger（8f ep02 S33 / S37）
 
     def file(self, name: str) -> Path | None:
         return (self.dir / name) if name and (self.dir / name).is_file() else None
@@ -111,8 +121,9 @@ class Cast:
     outcome: str = "成"
     at_break: float | None = None       # outcome ＝ 断 时，第几秒被打断
     variant: str = ""
-    dur: tuple[tuple[str, float], ...] = ()     # 覆盖某阶段时长：(("gather", 3.0),)
+    dur: tuple[tuple[str, float], ...] = ()     # 覆盖某阶段时长：(("gather", 3.0),)——卡里锁死的阶段不许写（follow-up 065）
     base: str = "站"                             # 施法时的下身（站 / 跪 / 单膝跪…），previz 姿势 ＝ base + 卡里的手势
+    legacy: bool = False                         # 时长锁死之前写好、还没重排的镜（引擎按 CAST_TIME_LEGACY 标，只减不增）：dur 照旧生效
 
 
 @dataclass(frozen=True)
@@ -176,7 +187,7 @@ def _card(d: Path, reg: dict[str, dict]) -> Card:
         raise SkillError(f"{d.name}：目录名与 registry 的 name「{r['name']}」不一致（目录名由 registry 派生）")
     raw = tomllib.loads((d / CARD).read_text(encoding="utf-8"))
     extra = set(raw) - {"say", "facts", "liberty", "interrupt", "timing", "pose", "look", "tier", "call", "sound", "sample",
-                        "learned", "forbid", "variant", "script", "hue", "short", "mark"}
+                        "learned", "forbid", "variant", "script", "hue", "short", "mark", "state", "hue_phase", "flight"}
     if extra:
         raise SkillError(f"{key} skill.toml 有不认识的键 {sorted(extra)}（写了却没人读＝静默失效）")
     c = raw.get("call")
@@ -190,12 +201,17 @@ def _card(d: Path, reg: dict[str, dict]) -> Card:
                 pose=dict(raw.get("pose", {})), look=dict(raw.get("look", {})), tier=dict(raw.get("tier", {})),
                 call=call, sound=dict(raw.get("sound", {})), sample_video=s.get("video", ""),
                 sample_still=s.get("still", ""), sample_prompt=s.get("prompt", ""),
+                sample_scene=s.get("scene", ""), sample_target=s.get("target", ""), sample_clip=s.get("clip", ""),
+                sample_window=tuple(float(x) for x in s.get("window", ())),
+                sample_peak=float(s["peak"]) if "peak" in s else None,
+                sample_keyframes=tuple(dict(k) for k in s.get("keyframe", [])),
                 learned=tuple(Learned(x["who"], x.get("ep", ""), x.get("shot", ""), x.get("teacher", ""))
                               for x in raw.get("learned", [])),
                 forbid=tuple(raw.get("forbid", [])),
                 script={k: tuple(v) for k, v in raw.get("script", {}).items()},
                 variants=dict(raw.get("variant", {})), hue=tuple(float(x) for x in raw.get("hue", ())),
-                short=dict(raw.get("short", {})), mark=raw.get("mark", ""))
+                short=dict(raw.get("short", {})), mark=raw.get("mark", ""), state=bool(raw.get("state", False)), flight=tuple(raw.get("flight", ())),
+                hue_phase={str(k): str(v) for k, v in raw.get("hue_phase", {}).items()})
 
 
 def load(drama: Path) -> dict[str, Card]:
@@ -227,11 +243,21 @@ def durations(card: Card, cast: Cast) -> dict[str, float]:
     over = dict(cast.dur)
     out = {}
     for ph, (lo, mid, hi) in card.timing.items():
+        if cast.legacy:
+            out[ph] = float(over.get(ph, mid))
+            continue
+        if ph in over and lo == hi:
+            raise SkillError(f"{card.name}：{ph} 按原典锁死 {mid:g}s、每镜一样，镜里不许写 dur（follow-up 065；要拖时间就挪起手时刻 t）")
         v = float(over.get(ph, mid))
         if not lo <= v <= hi:
             raise SkillError(f"{card.name}：{ph} 写了 {v:g}s，卡里允许 {lo:g}–{hi:g}s（rule 45 时长闸门）")
         out[ph] = v
     return out
+
+
+def pose_steps(v: str | list) -> list[tuple[str, float]]:
+    """[pose] 一个阶段的手势：一个名字，或 [[名字, 阶段内秒], …] 分几步。"""
+    return [(v, 0.0)] if isinstance(v, str) else [(str(p), float(t)) for p, t in v]
 
 
 def looks(card: Card, cast: Cast, short: bool = False) -> dict[str, str]:
@@ -280,7 +306,7 @@ def compose(card: Card, cast: Cast, names: dict[str, str], short: bool = False) 
     if card.cast:
         add("gather")
         if cast.outcome == "断":
-            if cast.at_break is None or not cast.t < cast.at_break <= cast.t + d["gather"]:
+            if cast.at_break is None or not cast.t < cast.at_break <= cast.t + d["gather"] + 1e-6:     # 1.4 + 2.8 ＝ 4.199999…（55）
                 raise SkillError(f"{card.name}：outcome＝断 要写 at_break，且落在蓄光段 {cast.t:g}–{cast.t + d['gather']:g}s 内")
             t = cast.at_break
             add("interrupt", "interrupt")
@@ -370,10 +396,17 @@ MARK_MAX = 16
 _LIGHT = re.compile(r"光|火|电|焰|辉|星")
 
 
-def lit_target(card: Card, cast: Cast) -> bool:
-    """目标身上会不会亮：生效 / 余晖的锁定串里写到了目标、又写到了光（冲锋只让目标僵住，不在他身上发光）。"""
+def lit_phases(card: Card, cast: Cast) -> set[str]:
+    """这次施放里画面上真的有光的阶段：锁定串里有光 / 火 / 电…；生效 / 余晖还得写到目标（自施的不要求）。出片回读与绑定句同一口径。"""
     lk = looks(card, cast)
-    return any("{目标}" in lk.get(ph, "") and _LIGHT.search(lk.get(ph, "")) for ph in TARGET_PHASES)
+    self_cast = not cast.target or cast.target == cast.who
+    return {ph for ph, txt in lk.items() if _LIGHT.search(txt)
+            and (ph not in TARGET_PHASES or self_cast or "{目标}" in txt)}
+
+
+def lit_target(card: Card, cast: Cast) -> bool:
+    """目标身上会不会亮：生效 / 余晖里有目标的光（冲锋只让目标僵住，不在他身上发光）。"""
+    return bool(lit_phases(card, cast) & TARGET_PHASES) and bool(cast.target) and cast.target != cast.who
 
 
 def binding_clause(card: Card, cast: Cast, names: dict[str, str]) -> str:
@@ -398,14 +431,14 @@ def casts_record(casts: tuple[Cast, ...] | list[Cast]) -> str:
     """shot md 里机读的施放记录（生成器写；后期音效、出片回读用 casts_in 读回）。"""
     return "<!-- casts: " + json.dumps([{"key": c.key, "who": c.who, "target": c.target, "t": c.t, "tier": c.tier, "outcome": c.outcome,
                                          "at_break": c.at_break, "variant": c.variant, "dur": dict(c.dur), "base": c.base}
-                                        for c in casts], ensure_ascii=False) + " -->"
+                                        | ({"legacy": True} if c.legacy else {}) for c in casts], ensure_ascii=False) + " -->"
 
 
 def casts_in(md: str) -> list[Cast]:
     m = _CASTS_MD.search(md)
     return [Cast(c["key"], c["who"], c.get("target", ""), float(c["t"]), c.get("tier", "熟练"), c.get("outcome", "成"),
                  c.get("at_break"), c.get("variant", ""), tuple((k, float(v)) for k, v in (c.get("dur") or {}).items()),
-                 c.get("base", "站")) for c in (json.loads(m.group(1)) if m else [])]
+                 c.get("base", "站"), bool(c.get("legacy", False))) for c in (json.loads(m.group(1)) if m else [])]
 
 
 def _hue(v: object, where: str) -> tuple[float, float, float, float]:
@@ -425,8 +458,10 @@ def school_hue(drama: Path, school: str) -> tuple[float, float, float, float]:
     return _hue(sc["hue"], f"[school.{school}]")
 
 
-def card_hue(drama: Path, card: Card) -> tuple[float, float, float, float]:
-    """这张卡的光的色相带：卡里写了 hue 用卡的，否则用法系的。"""
+def card_hue(drama: Path, card: Card, phase: str | None = None) -> tuple[float, float, float, float]:
+    """这张卡的光的色相带：phase 在 [hue_phase] 里就用那个法系的；否则卡里写了 hue 用卡的，再否则用法系的。"""
+    if phase and phase in card.hue_phase:
+        return school_hue(drama, card.hue_phase[phase])
     return _hue(card.hue, f"{card.key}") if card.hue else school_hue(drama, card.school)
 
 
@@ -442,13 +477,18 @@ def poses(card: Card, cast: Cast, label: str = "", lead: bool = True) -> list[tu
     end = end_time(card, cast)
     segs: list[tuple[float, float, str]] = []
     t = cast.t
+
+    def steps(ph: str, a: float, b: float) -> None:
+        st = pose_steps(card.pose[ph])
+        for i, (p, off) in enumerate(st):
+            if a + off < b - 1e-6:
+                segs.append((a + off, min(b, a + st[i + 1][1]) if i + 1 < len(st) else b, p))
     if card.cast and card.pose.get("gather"):
-        g_end = cast.at_break if cast.outcome == "断" and cast.at_break is not None else t + d["gather"]
-        segs.append((t, g_end, card.pose["gather"]))
+        steps("gather", t, cast.at_break if cast.outcome == "断" and cast.at_break is not None else t + d["gather"])
     if card.cast:
         t += d["gather"]
     if cast.outcome in ("成", "挡") and card.pose.get("release"):
-        segs.append((t, min(end, t + d.get("release", 0.0) + d.get("effect", 0.0)), card.pose["release"]))
+        steps("release", t, min(end, t + d.get("release", 0.0) + d.get("effect", 0.0)))
     if not segs:
         return []
     out: list[tuple[str, float, str]] = []
@@ -485,14 +525,92 @@ def call_file(card: Card, who: str) -> Path | None:
     return card.file(f"{card.key}_口令_{who}.wav") if card.call else None
 
 
+SAMPLE_LEAD_S, SAMPLE_TAIL_S, SAMPLE_MIN_S = 1.0, 1.0, 4.0
+SAMPLE_TAIL = "画面里没有文字、没有字幕、没有水印；不露正脸；写实电影质感，35mm 胶片颗粒，16:9，{secs} 秒，一个固定机位，声音只有环境声和施法声，不要音乐。"
+
+
+def sample_prompt_of(card: Card) -> tuple[str, float | None]:
+    """(样片 prompt, 峰值秒)。[sample] prompt 手写了就用它；否则 [sample] scene（地点与机位，一句手写）+ 按 [timing] 默认时长
+    把 [look] 各阶段排成时间轴 + 固定收尾——光的样子只在卡的 [look] 写一处，样片跟着卡走。峰值＝最后一个出手 / 生效阶段的中点。"""
+    if card.sample_prompt:
+        return card.sample_prompt, None
+    if not card.sample_scene:
+        return "", None
+    fill = lambda x: x.replace("{施法者}", "施法者").replace("{目标}", card.sample_target or "前方那人").replace("{力度}", "")
+    t, beats, peak = SAMPLE_LEAD_S, [], None
+    for ph, (_lo, d, _hi) in card.timing.items():
+        if ph not in card.look:
+            continue
+        beats.append(("第 %g 秒" % round(t, 1) if d < 0.5 else "%g–%g 秒" % (round(t, 1), round(t + d, 1))) + "：" + fill(card.look[ph]))
+        if ph in ("release", "effect"):
+            peak = round(t + d / 2, 2)
+        t += d
+    secs = max(SAMPLE_MIN_S, math.ceil(t + SAMPLE_TAIL_S))
+    return card.sample_scene.rstrip("。") + "。" + "；".join(beats) + "。" + SAMPLE_TAIL.format(secs="%g" % secs), peak
+
+
+KEYFRAME_MAX = 1500       # 即梦文生图 / 图生图服务端硬限 1600 字，留余量
+
+
+def keyframe_path(card: Card, name: str) -> Path:
+    """手势参考图正本：样片/手势图/{键}_{名}.png（follow-up 068）。资料包里放的是副本——资料包里的文件曾被库外程序批量改名成
+    「资料包N.png」，正本放在资料包外面，副本丢了 / 被改名就用 keyframe_pack 补回。"""
+    return card.dir / SAMPLE_DIR / "手势图" / f"{card.key}_{name}.png"
+
+
+def keyframe_copy(card: Card, name: str) -> Path:
+    return card.dir / SAMPLE_DIR / "资料包" / f"{card.key}_{name}.png"
+
+
+def keyframe_pack(card: Card) -> list[str]:
+    """把手势图正本拷进资料包（缺的、对不上的才拷），并清掉资料包里不认识的 .png（9_对照 除外）。返回做了什么。"""
+    import filecmp
+    import shutil
+    done: list[str] = []
+    want = set()
+    for k in card.sample_keyframes:
+        src, dst = keyframe_path(card, k["name"]), keyframe_copy(card, k["name"])
+        want.add(dst.name)
+        if src.is_file() and not (dst.is_file() and filecmp.cmp(src, dst, shallow=False)):
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(src, dst)
+            done.append(f"补回 {dst.name}")
+    pk = card.dir / SAMPLE_DIR / "资料包"
+    if pk.is_dir():
+        for f in pk.glob("*.png"):
+            if f.name not in want and not f.name.startswith("9_"):
+                f.unlink()
+                done.append(f"清掉 {f.name}")
+    return done
+
+
+def sample_id(card: Card) -> str:
+    """样片 prompt 的第一行：键 + 名 + 样片（角色 / 场景 prompt 同样以键开头）；即梦下载名取 prompt 开头，收片按它认。"""
+    return f"{card.key}_{card.name}_样片"
+
+
+def clip_path(card: Card) -> Path:
+    return card.dir / f"{card.key}_施法片段.mp4"
+
+
+def peak_path(card: Card) -> Path:
+    return card.dir / f"{card.key}_峰值.png"
+
+
 def refs(card: Card, callers: tuple[str, ...] = ()) -> list[tuple[str, Path]]:
-    """定稿了的样片 / 峰值图 / 口令录音 → (参考行项名, 文件)。"""
+    """技能参考 → (参考行项名, 文件)。卡写了样片 prompt 与 window 的，施法片段与峰值图按定好的文件名挂上——文件还没有时
+    资料包建不起来、镜头出不了片（先出样片，follow-up 065）；没写 window 的旧卡只挂已收进来的样片。口令录音有才挂。"""
     out = []
+    planned = bool(card.sample_prompt and len(card.sample_window) == 2)
     v, s = card.file(card.sample_video), card.file(card.sample_still)
-    if v:
-        out.append((f"{card.key}_{card.name}样片(技能样片·只取施法动作与光效)", v))
-    if s:
-        out.append((f"{card.key}_{card.name}峰值(技能峰值图·只取光的形状与颜色)", s))
+    if planned:
+        out.append((f"{card.key}_{card.name}施法片段(技能参考视频)", clip_path(card)))
+        out.append((f"{card.key}_{card.name}峰值(技能参考图)", peak_path(card)))
+    else:
+        if v:
+            out.append((f"{card.key}_{card.name}样片(技能样片·只取施法动作与光效)", v))
+        if s:
+            out.append((f"{card.key}_{card.name}峰值(技能峰值图·只取光的形状与颜色)", s))
     for who in dict.fromkeys(callers):
         f = call_file(card, who)
         if f:
@@ -532,12 +650,25 @@ def check(drama: Path) -> list[str]:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     import facts_registry
     facts = facts_registry.load(str(drama))[0]
+    unlocked = set(cfg.get("timing", {}).get("unlocked", []))
     for c in cards.values():
         tag = f"{c.key} {c.name}"
+        loose = [ph for ph, (lo, _mid, hi) in c.timing.items() if lo != hi]
+        if loose and c.key not in unlocked:
+            bad.append(f"{tag}：[timing] {'/'.join(loose)} 没锁死——按原典写 [x, x, x]、每镜一样（follow-up 065）；还没定的卡列进 skills.toml [timing] unlocked")
+        if not loose and c.key in unlocked:
+            bad.append(f"{tag}：[timing] 已锁死，从 skills.toml [timing] unlocked 删掉（只减不增）")
         if c.school not in schools:
             bad.append(f"{tag}：法系「{c.school}」不在 skills.toml [school]")
         try:
             card_hue(drama, c)
+            for ph in c.hue_phase:
+                if ph not in c.look:
+                    bad.append(f"{tag}：[hue_phase] {ph} 在 [look] 里没有")
+            for ph in c.flight:
+                if ph not in c.timing and ph not in c.look:
+                    bad.append(f"{tag}：flight 的 {ph!r} 不是 [timing] / [look] 里的阶段")
+                card_hue(drama, c, ph)
         except SkillError as e:
             bad.append(f"{tag}：{e}")
         for fid in c.facts:
@@ -583,9 +714,33 @@ def check(drama: Path) -> list[str]:
         for ph, fname in c.sound.items():
             if fname and not (c.dir / fname).is_file():
                 bad.append(f"{tag}：[sound] {ph} 写了 {fname} 但文件不在")
-        for fname in (c.sample_video, c.sample_still):
+        for fname in (c.sample_video, c.sample_still, c.sample_clip):
             if fname and not (c.dir / fname).is_file():
                 bad.append(f"{tag}：[sample] 写了 {fname} 但文件不在")
+        names = [k.get("name", "") for k in c.sample_keyframes]
+        for n in names:
+            src, cp = keyframe_path(c, n), keyframe_copy(c, n)
+            if src.is_file() and not cp.is_file():
+                bad.append(f"{tag}：资料包里的手势图 {cp.name} 不见了（被改名或删了）——python tools/skill_keyframes.py <剧> {c.key} --pack 补回")
+        for i, k in enumerate(c.sample_keyframes):
+            if not k.get("name") or not k.get("prompt") or "at" not in k:
+                bad.append(f"{tag}：[[sample.keyframe]] 第 {i + 1} 张要写 name / at / prompt")
+            elif len(k["prompt"].strip()) > KEYFRAME_MAX:
+                bad.append(f"{tag}：手势参考图「{k['name']}」prompt {len(k['prompt'].strip())} 字 > {KEYFRAME_MAX}（即梦硬限 1600）")
+            if k.get("ref") and k["ref"] not in names[:i]:
+                bad.append(f"{tag}：手势参考图「{k.get('name')}」的 ref「{k['ref']}」不是它前面的某一张")
+        if len(set(names)) != len(names):
+            bad.append(f"{tag}：手势参考图重名 {names}")
+        sample_text = chr(10).join([ln for ln in c.sample_prompt.splitlines() if not ln.startswith("负面词")]
+                                + [k.get("prompt", "") for k in c.sample_keyframes])
+        hit = [w for w in c.forbid if w in sample_text]
+        if hit:
+            bad.append(f"{tag}：样片 prompt / 手势图 prompt 里写了卡的禁写 {hit}（follow-up 074：写了就会被画出来）")
+        if c.sample_prompt and c.sample_prompt.strip().splitlines()[0].strip() != sample_id(c):
+            bad.append(f"{tag}：样片 prompt 第一行要是「{sample_id(c)}」（和角色 / 场景 prompt 一样以键开头，即梦下载名才带键、收片才认得出）")
+        if c.sample_prompt and (len(c.sample_window) != 2 or not 2.0 <= c.sample_window[1] - c.sample_window[0] <= 15.0
+                                or c.sample_peak is None):
+            bad.append(f"{tag}：[sample] 要写 window = [起, 止]（施法在样片里的那几秒，2–15 s）与 peak（峰值秒）——收样片时据此剪施法片段、截峰值图")
         if not c.learned:
             bad.append(f"{tag}：[[learned]] 为空——谁会这个技能、何时学会只在这里写")
         miss = [k for k in SCRIPT_KEYS if not c.script.get(k)]
@@ -597,9 +752,14 @@ def check(drama: Path) -> list[str]:
                     re.compile(pat)
                 except re.error as e:
                     bad.append(f"{tag}：[script] {k} 的正则「{pat}」写错了：{e}")
-        for p in c.pose.values():
-            if p not in _pose_names():
-                bad.append(f"{tag}：[pose] 「{p}」不在 build_previz 的 POSES 里")
+        for ph, v in c.pose.items():
+            st = pose_steps(v)
+            for p, off in st:
+                if p not in _pose_names():
+                    bad.append(f"{tag}：[pose] 「{p}」不在 build_previz 的 POSES 里")
+            offs = [off for _p, off in st]
+            if offs[0] != 0.0 or offs != sorted(offs) or (ph in c.timing and offs[-1] >= c.timing[ph][0]):
+                bad.append(f"{tag}：[pose] {ph} 的分步时刻要从 0 起、递增、落在阶段最短时长内：{offs}")
     return bad
 
 
@@ -635,10 +795,10 @@ def render_md(c: Card) -> str:
 | 读条 | {"有" if c.cast else "瞬发"}；{timing} |
 | 台词里的叫法 | {"、".join(c.say) or "—"}（技能名本身不出口） |
 | 打断 | {c.interrupt or "—"} |
-| 姿势（previz） | {"、".join(f"{phases.get(k, k)}＝{v}" for k, v in c.pose.items()) or "—"} |
+| 姿势（previz） | {"、".join(f"{phases.get(k, k)}＝" + "→".join(p + (f"（{off:g}s 起）" if off else "") for p, off in pose_steps(v)) for k, v in c.pose.items()) or "—"} |
 | 口令 | {call} |
 | 声音 | {"、".join(f"{phases.get(k, k)}＝{v}" for k, v in c.sound.items() if v) or "未定稿（后期不贴）"} |
-| 样片 / 峰值图 | {c.sample_video or "未定稿"} / {c.sample_still or "未定稿"} |
+| 样片 / 施法片段 / 峰值图 | {c.sample_video or "未定稿"} / {c.sample_clip or "未定稿"}{f"（样片 {c.sample_window[0]:g}–{c.sample_window[1]:g}s）" if len(c.sample_window) == 2 else ""} / {c.sample_still or "未定稿"} |
 | 原典出处 | {"、".join(c.facts) or "—"} |
 | 本剧偏离 | {c.liberty or "无"} |
 | 禁写 | {"、".join(c.forbid) or "—"} |
@@ -657,10 +817,14 @@ def render_md(c: Card) -> str:
 |---|---|---|---|
 {learned}
 
-## 技能样片出片 prompt（即梦 · 全能参考 · 定稿一条后写进 skill.toml [sample] video）
+## 技能样片：手势参考图（即梦 · 图片生成，`python tools/skill_keyframes.py <剧> <键>` 自动出）
+
+{chr(10).join(f"- **{k['name']}**（样片第 {k['at']:g} 秒{'，以「' + k['ref'] + '」为参考图生图' if k.get('ref') else ''}）：{k['prompt'].strip()}" for k in c.sample_keyframes) or "（未写）"}
+
+## 技能样片出片 prompt（即梦 · 全能参考 · 上传手势参考图 · 定稿一条后写进 skill.toml [sample] video）
 
 {FENCE}text
-{c.sample_prompt or "（未写）"}
+{sample_prompt_of(c)[0] or "（未写）"}
 {FENCE}
 """
 
@@ -671,17 +835,19 @@ SAMPLE_DIR = "样片"
 def sample_kit(drama: Path, card: Card, open_web: bool = True) -> Path:
     """技能样片备料：prompt 写进卡目录 样片/prompt.txt、进剪贴板、在本剧 seedance.toml 的 Chrome 账号开即梦；「生成」永远人点。"""
     import subprocess
-    if not card.sample_prompt:
-        raise SkillError(f"{card.key} {card.name}：[sample] prompt 还没写")
+    text, peak = sample_prompt_of(card)
+    if not text:
+        raise SkillError(f"{card.key} {card.name}：[sample] 的 prompt 和 scene 都还没写（写一句 scene 即可，时间轴由 [look] 拼）")
     kd = card.dir / SAMPLE_DIR
     kd.mkdir(exist_ok=True)
-    (kd / "prompt.txt").write_text(card.sample_prompt + "\n", encoding="utf-8")
+    (kd / "prompt.txt").write_text(text + "\n", encoding="utf-8")
     (kd / "使用说明.txt").write_text(
         f"{card.key} {card.name} 技能样片（tools/skills_lib.py sample 生成，别手改）\n\n"
         "1. 即梦 → 视频生成 → 全能参考，不挂任何参考素材，粘贴 prompt（已在剪贴板）。\n"
         "2. 抽 3–4 条，挑施法动作与光效最干净、最像卡里锁定串的一条；有字、有人脸、光的颜色或形状不对的都不要。\n"
-        f"3. 下载后跑：python tools/skills_lib.py adopt <剧> {card.key} <下载的 mp4> [--peak 秒]\n"
-        "   —— 它把视频收进卡目录、截峰值定帧图、写进 skill.toml [sample]；此后每个用到这个技能的镜自动挂上。\n",
+        f"3. 下载后跑：python tools/skills_lib.py adopt <剧> {card.key} <下载的 mp4>"
+        + (f"（峰值图默认截第 {peak:g} 秒；光最足的那一刻不在这儿就加 --peak 秒）\n" if peak is not None else " [--peak 秒]\n")
+        + "   —— 它把视频收进卡目录、截峰值定帧图、写进 skill.toml [sample]；此后每个用到这个技能的镜自动挂上。\n",
         encoding="utf-8")
     if open_web:
         import seedance_kit
@@ -692,6 +858,31 @@ def sample_kit(drama: Path, card: Card, open_web: bool = True) -> Path:
     return kd
 
 
+DOWNLOADS = Path.home() / "Downloads"
+
+
+def find_video(card: Card, arg: str = "") -> Path:
+    """要收的样片：给了路径就用（Git-Bash 的 /c/… 也认；即梦下载名里有反引号等字符，shell 常传不全，传不全时按前缀在同目录找）；
+    没给就在 ~/Downloads 找最新的即梦下载——即梦下载名开头是视频 prompt 的参考行，里面有本卡第一张手势图的文件名。"""
+    if arg:
+        a = arg.strip().strip("'\"")
+        if len(a) > 2 and a[0] == "/" and a[2] == "/":            # /c/Users/… → C:/Users/…
+            a = a[1].upper() + ":" + a[2:]
+        p = Path(a)
+        if p.is_file():
+            return p
+        hits = sorted(p.parent.glob(p.name[:24].replace("[", "?").replace("]", "?") + "*.mp4"), key=lambda f: f.stat().st_mtime) if p.parent.is_dir() else []
+        if hits:
+            return hits[-1]
+        raise SkillError(f"没有这个文件：{arg}")
+    tag = f"{card.key}_"
+    old = f"1_{card.sample_keyframes[0]['name']}.png" if card.sample_keyframes else tag     # 改名前的手势图名（2026-10-01 前的下载）
+    hits = sorted((f for f in DOWNLOADS.glob("*.mp4") if tag in f.name or old in f.name), key=lambda f: f.stat().st_mtime)
+    if not hits:
+        raise SkillError(f"{card.key} {card.name}：~/Downloads 里没有名字带「{tag}」的即梦视频（参考行第一个文件名带键，下载名就带键）——把下载的 mp4 路径直接给我")
+    return hits[-1]
+
+
 def adopt(drama: Path, card: Card, video: Path, peak: float | None) -> tuple[Path, Path]:
     """选定的样片收进卡目录（{key}_样片.mp4）+ 峰值定帧（{key}_峰值.png），并写进 skill.toml [sample]。"""
     import shutil
@@ -699,19 +890,31 @@ def adopt(drama: Path, card: Card, video: Path, peak: float | None) -> tuple[Pat
     if not video.is_file():
         raise SkillError(f"没有这个文件：{video}")
     dst = card.dir / f"{card.key}_样片{video.suffix.lower()}"
-    shutil.copy2(video, dst)
+    try:
+        shutil.copy2(video, dst)
+    except PermissionError:
+        raise SkillError(f"{dst.name} 正被别的程序打开着（播放器？），覆盖不了——关掉它再导入")
     probe = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(dst)],
                            capture_output=True, text=True)
     secs = float(probe.stdout.strip() or 0)
     if not 2.0 <= secs <= 15.0:
         raise SkillError(f"样片 {secs:.1f}s：Seedance 参考视频每段要 2–15 s（rule 24）")
-    at = peak if peak is not None else secs * 0.6
-    still = card.dir / f"{card.key}_峰值.png"
+    at = peak if peak is not None else (card.sample_peak or sample_prompt_of(card)[1] or secs * 0.6)
+    still = peak_path(card)
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{at:.2f}", "-i", str(dst), "-frames:v", "1", str(still)], check=True)
+    clip = clip_path(card)
+    if len(card.sample_window) == 2:
+        a, b = card.sample_window
+        if b > secs + 0.05:
+            raise SkillError(f"样片只有 {secs:.1f}s，[sample] window 到 {b:g}s——样片出短了，重出或改 window")
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{a:.2f}", "-to", f"{b:.2f}", "-i", str(dst), "-an",
+                        "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "16", str(clip)], check=True)
     toml = card.dir / CARD
     text = toml.read_text(encoding="utf-8")
     text = re.sub(r'^video = ".*"$', f'video = "{dst.name}"', text, count=1, flags=re.M)
     text = re.sub(r'^still = ".*"$', f'still = "{still.name}"', text, count=1, flags=re.M)
+    if clip.is_file():
+        text = re.sub(r'^clip = ".*"$', f'clip = "{clip.name}"', text, count=1, flags=re.M)
     toml.write_text(text, encoding="utf-8")
     return dst, still
 
@@ -719,7 +922,7 @@ def adopt(drama: Path, card: Card, video: Path, peak: float | None) -> tuple[Pat
 def main() -> int:
     sys.stdout.reconfigure(encoding="utf-8")
     cmds = ("check", "md", "sample", "adopt")
-    if len(sys.argv) < 3 or sys.argv[1] not in cmds:
+    if len(sys.argv) < 3 or sys.argv[1] not in cmds or (sys.argv[1] == "adopt" and len(sys.argv) < 4):
         print(__doc__)
         return 2
     drama = drama_of(Path(sys.argv[2]))
@@ -736,7 +939,10 @@ def main() -> int:
     if sys.argv[1] == "adopt":
         card = find(load(drama), sys.argv[3])
         peak = float(sys.argv[sys.argv.index("--peak") + 1]) if "--peak" in sys.argv else None
-        dst, still = adopt(drama, card, Path(sys.argv[4]), peak)
+        rest = [a for i, a in enumerate(sys.argv[4:], 4) if a != "--peak" and sys.argv[i - 1] != "--peak"]
+        src = find_video(card, rest[0] if rest else "")
+        print(f"收：{src}")
+        dst, still = adopt(drama, card, src, peak)
         (card.dir / CARD_MD).write_text(render_md(find(load(drama), card.key)), encoding="utf-8")
         print(f"已收进 {dst.name} 与 {still.name}；此后用到 {card.name} 的镜自动挂上样片与峰值图")
         return 0

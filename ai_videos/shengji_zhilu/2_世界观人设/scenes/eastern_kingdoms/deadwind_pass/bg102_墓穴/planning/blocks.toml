@@ -1,0 +1,181 @@
+# 墓穴 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg102"
+name_zh = "墓穴"
+size_m = [160, 120]
+px_per_m = 8.0
+scale_src = "推定"
+scale_note = "本档只拍墓门外：崖脚门洞（约 3 × 5 m）+ 约 20 m 长的下沉引道 + 门前石坪；场地取门前来路与两侧崖脚 160 × 120 m。墓在区图上认不出位置，整块都是推定"
+# 世界树画面：崖壁里凿出的墓穴入口，铁栅半开，石阶向下没入黑暗，门楣刻着风化的人形浮雕
+# 方位：推定挂在塔下盆地南侧的南山墙北脚（区级 b907 / b908 一带），墓门朝北；待实机核
+absent = [
+    "任何人物、动物与尸骨",
+    "火把、烛火、灯笼、火盆与任何人工光源（门内全黑）",
+    "完整可辨的浮雕面孔、铭文与任何文字",
+    "完好关闭或崭新的墓门",
+    "河、水潭与桥",
+    "活的绿叶树与草地",
+    "南端黑塔（在机位身后，锚点不拍）",
+    "副本传送门与发光门框",
+    "4.0.3a 后的任何改动",
+]
+
+[[ridge]]
+name = "南山墙北壁（墓门所在高崖）"
+poly = [[0, 64], [40, 68], [70, 72], [90, 72], [120, 66], [160, 60], [160, 120], [0, 120]]
+height_m = 60
+src = "推定"
+note = "区级 terrain「南山墙」北脚；近乎垂直，崖顶一排枯黑秃树"
+
+[[road]]
+name = "荒草小径（北下坡回盆地）"
+path = [[68, 0], [76, 22], [80, 40]]
+width_m = 1.5
+src = "推定"
+
+[[road]]
+name = "下沉引道（石板铺底，南端到墓门）"
+path = [[80, 40], [80, 62]]
+width_m = 4
+src = "推定"
+note = "一路缓降，到门口比外面地面低半人多"
+
+[[block]]
+id = "b01"
+into_ridge = true
+kind = "cave_mouth"
+face = "north"
+count = 1
+name = "墓门门洞（方石门柱 + 人形浮雕门楣）"
+xy = [80, 73]
+size = [5, 2]
+h_m = 4.5
+src = "推定"
+note = "世界树「崖壁里凿出的墓穴入口，门楣刻着风化的人形浮雕」；门朝北"
+
+[[block]]
+id = "b02"
+may_overlap = true
+into_ridge = true
+kind = "palisade"
+face = "north"
+count = 1
+name = "锈铁栅两扇（东关、西半开）"
+xy = [80, 72]
+size = [4, 0.4]
+h_m = 3.5
+src = "推定"
+note = "世界树「铁栅半开」；西扇只剩上合页吊住，下角拖在台阶上"
+
+[[block]]
+id = "b03"
+into_ridge = true
+kind = "plaza"
+face = "north"
+count = 1
+may_overlap = true
+name = "门内下行石阶（没入黑暗）"
+xy = [80, 80]
+size = [2.5, 12]
+h_m = 0
+src = "推定"
+note = "世界树「石阶向下没入黑暗」；只看得见最上面六七级"
+
+[[block]]
+id = "b04"
+kind = "plaza"
+face = "north"
+count = 1
+may_overlap = true
+name = "门前裂石板坪"
+xy = [80, 67]
+size = [14, 8]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "low_wall"
+face = "east"
+count = 1
+name = "引道西侧干砌矮挡墙"
+xy = [77.5, 51]
+size = [0.8, 22]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "low_wall"
+face = "west"
+count = 1
+name = "引道东侧干砌矮挡墙（塌一段）"
+xy = [82.5, 51]
+size = [0.8, 22]
+h_m = 1
+src = "推定"
+note = "中段塌落，碎石滚进引道"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p105"
+face = "south"
+name = "翻倒石瓮（坪西）"
+xy = [75, 66]
+size = [1, 1]
+h_m = 0.8
+src = "推定"
+note = "瓮口摔掉"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p105"
+face = "east"
+name = "翻倒石瓮（滚到挡墙根）"
+xy = [81.5, 58]
+size = [1, 1]
+h_m = 0.8
+src = "推定"
+
+[[block]]
+id = "b09"
+into_ridge = true
+kind = "asset"
+asset = "p101"
+face = "north"
+count = 5
+name = "崖脚东侧滚石坡"
+xy = [102, 66]
+size = [16, 6]
+h_m = 2.5
+src = "推定"
+note = "最大一块半人高、长满干苔"
+
+[[block]]
+id = "b10"
+into_ridge = true
+kind = "asset"
+asset = "p100"
+face = "north"
+count = 7
+name = "崖顶枯黑秃树排"
+xy = [80, 96]
+size = [70, 10]
+h_m = 8
+src = "推定"
+note = "树根从崖沿垂下，悬在门楣上方"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg102-c1"
+eye = [80, 10]
+target = [80, 60]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

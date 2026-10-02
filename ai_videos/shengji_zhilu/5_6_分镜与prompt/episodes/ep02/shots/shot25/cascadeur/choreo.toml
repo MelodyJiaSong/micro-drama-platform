@@ -1,0 +1,68 @@
+# shot25 人体动作表（Cascadeur 层）。位置与朝向一律从 ../planning/overhead.toml 读，这里只写「身体摆成什么样」。
+# 改动作 ＝ 改本文件重跑 `python tools/cascadeur/choreo.py <shot 目录> --build`；部件都在共享库 tools/cascadeur/poses.toml。
+# 时刻与 shot25.md `动作:` 时间轴、overhead 的 [[hit]] / [[cast]] 逐拍对齐（rule 4h ②）。五个鱼人不在这里：色块代理够用。
+# follow-up 052 G13：攻防镜的人体一律 Cascadeur。5.5s / 9.9s / 12.5s 是镜内硬切，人没换位置。
+# ⚠ 本文件只写了逐拍姿势；烘焙（--build，要开着 Cascadeur）与 previz 渲染都还没做（ep02 分段 c 本轮不跑 Cascadeur / Blender）。
+
+[meta]
+origin = [237.7, 178.3]        # 平面图坐标；Cascadeur 原点 ＝ 亚伦站的那一点（芦苇东缘的浅水里）
+fps = 30
+
+# 亚伦：0–1.2s 右手提锤拄在水里；1.2s 左手往前一推——什么也没有；3s 站稳攥锤，3.1s 左手举过头顶（光壳起）；
+# 6.2s 转向东边，6.6 / 7.4s 左拳捶壳壁，8.3s 左掌平推壳壁；9.9s 光壳散、双手横锤护身；12.6s 转回西边、12.8s 横扫到底；
+# 13.8s 左手伸进怀里，14.1s 掏出藻叶举到身前；14.2s 转向杜克，喘着气
+[actor."亚伦"]
+keys = [
+  [0.0, "stand+hammer_r_low"],
+  [1.0, "stand+hammer_r_low"],
+  [1.2, "stance_l+hammer_r_low+point_l"],
+  [1.8, "stance_l+hammer_r_low"],
+  [2.9, "stance_l+hammer_r_low"],
+  [3.0, "stance_l+twohand_low"],
+  [3.4, "stance_l+twohand_low+arm_up_l"],
+  [4.6, "stance_l+twohand_low+arm_up_l"],
+  [5.0, "stance_l+twohand_low"],
+  [6.2, "stance_l+hammer_r_low"],
+  [6.6, "lunge_small+hammer_r_low+point_l"],
+  [6.9, "stance_l+hammer_r_low"],
+  [7.4, "lunge_small+hammer_r_low+point_l"],
+  [7.7, "stance_l+hammer_r_low"],
+  [8.3, "stance_l+hammer_r_low+palm_raise_l"],
+  [9.0, "stance_l+hammer_r_low+palm_raise_l"],
+  [9.6, "stance_l+hammer_r_low"],
+  [9.9, "stance_l+twohand_low"],
+  [12.2, "stance_l+twohand_low"],
+  [12.5, "stance_l+twohand_sweep_a"],
+  [12.8, "lunge_small+twohand_sweep_b"],
+  [13.2, "stance_l+twohand_low"],
+  [13.6, "stand+hammer_r_low"],
+  [13.8, "stand+hammer_r_low+touch_shoulder_r"],
+  [14.1, "stand+hammer_r_low+hold_up_l"],
+  [14.4, "stand+hammer_r_low+hold_up_l+breathe"],
+  [16.0, "stand+hammer_r_low+hold_up_l"],
+  [19.0, "stand+hammer_r_low+hold_up_l"],
+]
+
+# 杜克：0–4.5s 挎盾沿岸跑；4.5–9.9s 蹚水走过来、举盾；10s 抬盾磕开丁的矛；10.4s 半蹲右脚一跺、盾下沿砸进水里；
+# 13.2s 顶盾（丁），13.3–13.7s 跨一步，13.9s 顶盾（丙）；14.2s 起喘着气放低盾，14.8s 走到亚伦跟前；16.5s 盾沿轻磕亚伦的锤柄
+[actor."杜克"]
+gait = [[0.0, 4.4, "run", "shield_carry_run"], [4.5, 9.7, "walk", "shield_guard"], [13.3, 13.7, "walk", "shield_guard"], [14.2, 14.7, "walk", "shield_low"]]
+keys = [
+  [9.9, "stance_l+shield_guard"],
+  [10.0, "stance_l+shield_brace"],
+  [10.2, "stance_l+shield_guard"],
+  [10.4, "brace_sink+shield_brace"],
+  [10.8, "brace_sink+shield_brace"],
+  [11.4, "stance_l+shield_guard"],
+  [12.9, "stance_l+shield_guard"],
+  [13.2, "lunge+shield_shove"],
+  [13.3, "stance_l+shield_guard"],
+  [13.75, "stance_l+shield_guard"],
+  [13.9, "lunge+shield_shove"],
+  [14.1, "stance_l+shield_guard"],
+  [14.8, "stand+shield_low+breathe"],
+  [16.3, "stand+shield_low"],
+  [16.5, "stand+shield_guard"],
+  [16.8, "stand+shield_low"],
+  [19.0, "stand+shield_low+breathe"],
+]

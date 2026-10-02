@@ -30,6 +30,8 @@ import {
 import type { SubtitleLang } from "../api";
 import { announceToast as announce } from "../lib/announce";
 import { ApiError } from "../types";
+import { ZoomableImage } from "./ZoomableImage";
+import { CHARACTER_DIR_SEGMENT } from "../lib/characterDir";
 
 const VIDEO_EXTS = new Set([".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v"]);
 const IMAGE_EXTS = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"]);
@@ -40,7 +42,7 @@ const MEDIA_EXTS = new Set([...VIDEO_EXTS, ...IMAGE_EXTS, ...AUDIO_EXTS, ...MODE
 const ARCHIVE_DIR_NAME = "archive";
 const RENDERS_DIR_NAME = "renders";
 
-/** Matches `ai_videos/{drama}/characters/c{N}[_{slug}]/{file}.{video_ext}`.
+/** Matches `ai_videos/{drama}/characters/{c|m}{N}[_{slug}]/{file}.{video_ext}`.
  * Used to gate the 🖼 three-view + audio + first-2s extraction button so it
  * only appears for character turntable videos (rule #12.5 v10.2 sources).
  * Mirrors the backend `_is_under_character_folder` in character_video__writer.py:
@@ -48,8 +50,10 @@ const RENDERS_DIR_NAME = "renders";
  * one or more stage folders (staged pipeline, e.g. `2_世界观人设/characters/cN`),
  * so an optional intermediate-segment group precedes `characters/`.
  */
-const CHARACTER_VIDEO_PATH_RE =
-  /^ai_videos\/[^/_][^/]*\/(?:[^/]+\/)*characters\/c\d+(?:_[^/]+)?\/[^/]+\.(?:mp4|mov|webm|mkv|avi|m4v)$/i;
+const CHARACTER_VIDEO_PATH_RE = new RegExp(
+  `^ai_videos/[^/_][^/]*/(?:[^/]+/)*characters/${CHARACTER_DIR_SEGMENT}/[^/]+\\.(?:mp4|mov|webm|mkv|avi|m4v)$`,
+  "i",
+);
 
 export function isCharacterVideoPath(path: string): boolean {
   return CHARACTER_VIDEO_PATH_RE.test(path);
@@ -271,7 +275,7 @@ function MediaTile({
           ar-status="not-presenting"
         />
       ) : (
-        <img src={url} alt={filename} loading="lazy" />
+        <ZoomableImage src={url} alt={filename} loading="lazy" />
       )}
       <figcaption>
         {archived ? "📦 " : ""}

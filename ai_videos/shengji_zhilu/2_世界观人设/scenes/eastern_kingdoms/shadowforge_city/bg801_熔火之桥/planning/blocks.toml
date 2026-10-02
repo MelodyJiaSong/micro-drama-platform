@@ -1,0 +1,155 @@
+# 熔火之桥 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 方位据上层区图 WorldMap-BlackrockDepths1.jpg（桥＝召唤者之墓东臂斜向东南、终点画旋涡图标的通道）；长度与走向取区级平面图 bg246 块 b912（81 m、rot 46，即桥向东南约 45°）。
+# 本场地没有真正的水：[[water]] 是熔岩湖（名字带「熔岩」），借水系折线填面。桥墩数与间距推定。
+
+[meta]
+bg = "bg801"
+name_zh = "熔火之桥"
+size_m = [130, 110]
+px_per_m = 10.0
+scale_src = "推定"
+scale_note = "1.12 副本无区图；桥长 81 m、走向东南约 45° 取自 bg246 块 b912（上层区图量取，尺度本身推定）；熔岩湖范围与两端岩台推定"
+grid_m = 50
+# 世界树画面：横跨熔岩湖的黑石长桥，桥面被下方岩浆映成暗红，远端是一团旋转的火红传送门。
+absent = ["天空、日光、月光与任何天气（山腹熔岩洞）", "河流湖泊里的水（湖里只有熔岩）", "任何植被", "桥上的火盆、壁灯与任何人工光源", "桥两侧的建筑与房屋", "第二条桥或岔路（桥是死路，旋涡之外不通别处）", "人物、守卫、火焰生物与动物（空桥态，属 shot 层）", "冷色光与电弧", "文字与招牌"]
+
+[[ridge]]
+name = "西北岩体（墓室东门所在，桥头）"
+poly = [[0, 0], [45, 0], [45, 4], [22, 28], [0, 32]]
+height_m = 35
+src = "地图量取"
+
+[[ridge]]
+name = "北侧洞壁（离桥较近，岩缝渗出细岩浆）"
+poly = [[45, 0], [130, 0], [130, 40], [120, 48], [82, 30], [60, 10], [45, 4]]
+height_m = 35
+src = "推定"
+
+[[ridge]]
+name = "东南洞壁（旋涡所在的岩壁，岩台背后）"
+poly = [[130, 40], [130, 110], [62, 110], [62, 106], [104, 100], [118, 86], [122, 48]]
+height_m = 35
+src = "推定"
+
+[[ridge]]
+name = "南侧洞壁（退得较远）"
+poly = [[0, 62], [40, 88], [62, 106], [62, 110], [0, 110]]
+height_m = 35
+src = "推定"
+
+[[water]]
+name = "北熔岩湖（桥下，非水）"
+path = [[38, 26], [64, 47], [90, 72]]
+width_m = 64
+depth_m = 5
+src = "地图量取"
+
+[[road]]
+name = "桥面行走线（墓室东门→旋涡岩台）"
+path = [[33.5, 16], [90.8, 73.3], [101, 83]]
+width_m = 3
+src = "地图量取"
+
+[[block]]
+id = "b01"
+into_ridge = true
+over_water = true
+kind = "arch_bridge"
+face = "southeast"
+count = 1
+name = "黑石长桥（桥面与石垛护栏）"
+xy = [62.2, 44.6]
+size = [81, 10]
+h_m = 6
+rot = 45
+src = "地图量取"
+note = "bg246 b912：81×10 m、走向东南约 45°、h6"
+
+[[block]]
+id = "b02"
+may_overlap = true
+over_water = true
+kind = "boulders"
+face = "south"
+count = 1
+name = "桥中段塌缺的垛口"
+xy = [65.7, 41.1]
+size = [5, 1.5]
+h_m = 6
+rot = 45
+src = "推定"
+note = "北侧护栏连塌两个垛子"
+
+[[block]]
+id = "b03"
+may_overlap = true
+into_ridge = true
+over_water = true
+kind = "asset"
+asset = "p255"
+face = "southeast"
+name = "墓室东门黑铁门框（桥头）"
+xy = [32, 14.5]
+size = [8, 3]
+h_m = 6
+rot = 135
+src = "原典方位"
+note = "世界树备注：从召唤者之墓通来"
+
+[[block]]
+id = "b04"
+may_overlap = true
+into_ridge = true
+over_water = true
+kind = "rock_shelf"
+face = "south"
+count = 1
+name = "东南岩台（三面临湖）"
+xy = [101.2, 83.2]
+size = [28, 20]
+h_m = 6.5
+rot = 45
+src = "地图量取"
+
+[[block]]
+id = "b05"
+may_overlap = true
+into_ridge = true
+over_water = true
+kind = "cave_mouth"
+face = "northwest"
+count = 1
+name = "岩壁上的火红旋涡"
+xy = [112, 94]
+size = [12, 2]
+h_m = 10
+rot = 135
+src = "原典方位"
+note = "区图旋涡图标；团本入口"
+
+[[block]]
+id = "b06"
+may_overlap = true
+over_water = true
+kind = "arch_bridge"
+face = "southeast"
+count = 1
+name = "桥墩列（自岩浆升起的方石墩）"
+xy = [62.2, 44.6]
+size = [72, 5]
+h_m = 6
+rot = 45
+src = "推定"
+note = "约七根，间距推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg801-c1"
+eye = [65, 101]
+target = [65, 55]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

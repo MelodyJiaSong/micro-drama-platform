@@ -1,4 +1,4 @@
-# 发布元数据 · *Just Enough Light* 第 1 集《Buy Me Three / 撑三下》
+# 发布元数据 · *Just Enough Light* 第 1 集《Buy Me Time / 替我拖住》
 
 > **这一页 ＝ 本集的四站发布页。** 每一站一节，节内自包含——看一节就能把一个站传完。
 > 所有 ```text 围栏里的内容**可直接复制粘贴**，围栏里没有说明文字。
@@ -15,10 +15,10 @@
 |---|---|
 | 成片文件 | `5_6_分镜与prompt/episodes/ep01/ep01.mp4`（待出片） |
 | 画幅 | **16:9 横屏**（concept G9 ⑤） |
-| 时长 | **10:52（652s）** · 27 个 shot |
+| 时长 | **10:57（657s）** · 25 个 shot |
 | 声音 | 英文对白（TTS，voice_id 见 `2_世界观人设/casting.md`）+ 环境音 + 原创配乐；Seedance 自带音全部去掉（concept E1） |
 | 字幕 | 画面零字幕；英文 CC 与中文字幕由各站后台上传 |
-| 片头 / 片尾卡（后期叠） | 片头：*JUST ENOUGH LIGHT*（S01 切黑后）· 世界卡 `Twenty-five years after the Dark Portal opened. Elwynn Forest. Northshire.`；片尾：`An AI-generated fan work. Not affiliated with Blizzard Entertainment.` |
+| 片头 / 片尾卡（后期叠） | 片头：*JUST ENOUGH LIGHT*（S01 切黑后）· 世界卡 `Twenty-five years after the Dark Portal opened. Elwynn Forest. Northshire.`（S01 11–17s 山谷打开时叠）；片尾：`An AI-generated fan work. Not affiliated with Blizzard Entertainment.` |
 | 系列 | *Just Enough Light* 第 1 集；下一集按本集反馈再定 |
 
 ---
@@ -27,11 +27,11 @@
 
 | 优先级 | 帧 | 来源 | 为什么 |
 |---|---|---|---|
-| **首选** | **光柱落下** | `shot23` 第 19 秒左右 | 两个人并肩、一道暖金光柱落在挡在前面的那个人身上——剧名与主题一张图说完，**也是系列识别符** |
+| **首选** | **光柱升起** | `shot21` 第 19 秒左右 | 两个人一前一后、一道暖金光从挡在前面的那个人脚下升起、裹住他——剧名与主题一张图说完，**也是系列识别符** |
 | 次选 | **一只空手** | `shot01` 第 7 秒左右 | 裂开的盾、跪着的人、画面下缘伸进来一只发着微光的手；悬念最强，但信息少 |
 | 备选 | **桥上回望** | `shot17` 第 8 秒左右 | 整条谷收成一只碗，最安全、最「世界」，与同品类区分度低 |
 
-**按站分配**：YouTube → `shot23` 光柱｜ TikTok / 抖音 → `shot01` 空手（竖屏信息流里悬念更抓人）｜ 小红书 → `shot23` 3:4 竖裁（两人在中线）
+**按站分配**：YouTube → `shot21` 光柱｜ TikTok / 抖音 → `shot01` 空手（竖屏信息流里悬念更抓人）｜ 小红书 → `shot21` 3:4 竖裁（两人在中线）
 
 ---
 
@@ -42,13 +42,13 @@
 ### 标题
 
 ```text
-Just Enough Light — Episode 1: Buy Me Three
+Just Enough Light — Episode 1: Buy Me Time
 ```
 
 <details><summary>备选标题</summary>
 
 ```text
-His Light Takes Three Seconds. Someone Has to Hold the Line. | Just Enough Light Ep. 1
+His Light Is Slow to Rise. Someone Has to Hold the Line. | Just Enough Light Ep. 1
 ```
 </details>
 
@@ -57,20 +57,20 @@ His Light Takes Three Seconds. Someone Has to Hold the Line. | Just Enough Light
 ```text
 Two raw recruits walk into a quiet valley abbey.
 
-Aaron wants to become a paladin, but his light takes three counts to come, and he can't hold a line on his own. Duke calls himself "the Unbreakable" and keeps getting knocked flat. By the time they walk out of the valley, each has learned to hold the line for the other.
+Aaron wants to become a paladin, but his light is slow to rise, one hit knocks it out, and he can't hold a line on his own. Duke calls himself "the Unbreakable" and keeps getting knocked flat. By the time they walk out of the valley, each has learned to hold the line for the other.
 
 00:00 The new recruits
-01:30 First fights
-02:20 The light under his feet
-03:04 The mine
-04:40 Three counts long
-05:10 A new lesson
-05:40 Back into the dark
-06:06 Across the river
-07:52 The shack
-08:43 Buy me three
-09:10 After
-09:36 Leaving the valley
+01:49 First fights
+02:44 The light under his feet
+03:40 The mine
+04:26 Not fast enough
+05:26 A new lesson
+06:42 Back into the dark
+07:10 Across the river
+08:22 The shack
+08:49 Buy me time
+09:16 After
+10:31 Leaving the valley
 
 A story drawn from the classic leveling journey. Every episode is one step down the road.
 
@@ -94,22 +94,22 @@ just enough light, fantasy series, paladin, sword and sorcery, ai film, fan film
 | 播放列表 | `Just Enough Light` |
 | 许可 | 标准 YouTube 许可 |
 | 变现 | **关闭**（concept F2：前 10–20 集全程非商业） |
-| 封面 | `shot23` 第 19 秒 · 光柱落下 |
+| 封面 | `shot21` 第 19 秒 · 光柱升起 |
 
 ---
 
 ## 4. TikTok　🇬🇧 English
 
 **字段上限**：caption ≤2200 字符（含 hashtag）｜ 建议 3–5 个 hashtag
-**时长**：完整片 10:52 **超过 App 内 10 分钟上限，须走网页端上传**（网页端上限 60 分钟）；或只发下方精华版。
+**时长**：完整片 10:57 **超过 App 内 10 分钟上限，须走网页端上传**（网页端上限 60 分钟）；或只发下方精华版。
 **画幅**：横屏直投，带上下黑边——接受，换一条母版通吃。
 
 ### Caption
 
 ```text
-His light takes three counts. The fight won't wait three counts.
+His light takes a breath to rise. The fight won't wait a breath.
 
-So someone has to stand in front and count for him.
+So someone has to stand in front and buy him time.
 
 Episode 1 of Just Enough Light. Full episode on the channel.
 
@@ -137,7 +137,7 @@ Episode 1 of Just Enough Light. Full episode on the channel.
 ### 标题
 
 ```text
-他的光要数三下才出来，得有人替他撑住这三下
+他的光要一口气才升得上来，得有人替他拖住
 ```
 
 ### 简介
@@ -145,11 +145,11 @@ Episode 1 of Just Enough Light. Full episode on the channel.
 ```text
 两个新兵走进一座安静山谷里的修道院。
 
-亚伦想当圣骑士，可他的光要数三下才聚得满，一个人根本撑不住；
+亚伦想当圣骑士，可他的光要一口气才从脚下升上来，挨一下就没了，一个人根本撑不住；
 杜克管自己叫「不倒的杜克」，却总是第一个被撞翻。
 等他们走出山谷的时候，两个人都学会了替对方守住那一下。
 
-第 1 集《撑三下》。英文原声，中文字幕。
+第 1 集《替我拖住》。英文原声，中文字幕。
 AI 生成的同人作品，与暴雪娱乐无关。
 ```
 
@@ -174,12 +174,12 @@ AI 生成的同人作品，与暴雪娱乐无关。
 ## 6. 小红书　🇨🇳 中文
 
 **字段上限**：标题 **≤20 字**（超出直接截断）｜ 正文 ≤1000 字 ｜ 话题 ≤10 个 ｜ 封面建议 3:4 竖版
-**画幅**：视频 16:9 横屏直投；**封面单独出一张 3:4 竖版**（`shot23` 第 19 秒中心裁，两人在中线、光柱在上三分之一）。
+**画幅**：视频 16:9 横屏直投；**封面单独出一张 3:4 竖版**（`shot21` 第 19 秒中心裁，两人在中线、光柱在上三分之一）。
 
 ### 标题
 
 ```text
-光要数三下，有人替他撑
+光升得慢，有人替他拖住
 ```
 
 ### 正文
@@ -187,12 +187,12 @@ AI 生成的同人作品，与暴雪娱乐无关。
 ```text
 做了一部奇幻短剧的第一集，讲两个新兵在山谷修道院里的头几天。
 
-主角亚伦的光很慢，要数三下才聚得满，一挨打就念乱；
+主角亚伦的光很慢，要一口气才从脚下升上来，一挨打就退回地里；
 他学这个，是因为小时候跑了半座城去叫人，回来晚了。
 同伴杜克嘴上最硬，每次喊自己外号都被人打断。
 
 第一集最后，两个人被逼到墙角：
-一个说「给我撑三下」，一个说「我数着」。
+一个说「替我拖住」，一个说「你慢慢来」。
 
 英文原声，中文字幕。AI 生成的同人作品，与暴雪娱乐无关。
 
@@ -204,7 +204,7 @@ AI 生成的同人作品，与暴雪娱乐无关。
 | 字段 | 值 |
 |---|---|
 | 笔记类型 | 视频笔记 |
-| 封面 | `shot23` 第 19 秒 · **3:4 竖裁** |
+| 封面 | `shot21` 第 19 秒 · **3:4 竖裁** |
 | 话题 | 见正文末尾（≤10 个） |
 | 位置 | 不填 |
 
@@ -216,13 +216,13 @@ AI 生成的同人作品，与暴雪娱乐无关。
 |---|---|---|---|---|
 | 语言 | **英文** | **英文** | 中文（英文原声 + 中字） | 中文（英文原声 + 中字） |
 | 画幅 | 16:9 原生 | 16:9 直投 | 16:9 直投 | 16:9 直投 + 3:4 封面 |
-| 时长 | 10:52 完整片 | 网页端完整片 / 或精华版 | 完整片 | 完整片 |
-| 封面 | `shot23` 光柱 | `shot01` 空手 | `shot01` 空手 | `shot23` 竖裁 |
+| 时长 | 10:57 完整片 | 网页端完整片 / 或精华版 | 完整片 | 完整片 |
+| 封面 | `shot21` 光柱 | `shot01` 空手 | `shot01` 空手 | `shot21` 竖裁 |
 | 章节 | 有（12 条） | 无 | 无 | 无 |
 | 标题上限 | 100 字符 | — | ~55 字 | **20 字** |
 
-> **精华版剪法（平台限时才用）**：`shot01`(8s) → `shot11`(30s) → `shot22`(27s) → `shot23`(27s) ＝ **92s**。
-> 开场钩 + 第一次败北 + 盾裂 + 撑三下，**不剪掉 `shot23` 末尾那六秒**。
+> **精华版剪法（平台限时才用）**：`shot01`(29s 取前 8s) → `shot11`(30s) → `shot20`(27s) → `shot21`(27s) ＝ **92s**。
+> 开场钩 + 第一次败北 + 盾裂 + 替我拖住，**不剪掉 `shot21` 末尾那五秒**（光扔出去、加瑞克倒出画外）。
 
 ### 发布前检查
 
@@ -239,9 +239,9 @@ AI 生成的同人作品，与暴雪娱乐无关。
 
 ## 声音后期清单（成片前必做）
 
-- [ ] 对白：27 镜的台词配音块逐句出 TTS，voice_id 全剧锁定；画外声（S08 读信、S08 / S14 隔壁的吼声）也配、也 mux
-- [ ] **学会新本事**那两刻（`shot08` 光环亮起、`shot14` 第一次推出光）各响一次原创上行三音动机，**只在配乐层**（concept G9 ②）
-- [ ] 矿洞（`shot09`–`shot12`、`shot15`）：远处凿击声与矿工的叫声做底噪，洞里越走越静
-- [ ] `shot23` 数拍「ONE / TWO / Three」三下，配乐每拍一个重音，光柱落下那一刻收掉音乐只留一口气
-- [ ] 「嗒、嗒」暗号三次（`shot19` / `shot21` / `shot27`）用同一个录音，第三次更轻、更远
+- [ ] 对白：27 镜的台词配音块逐句出 TTS，voice_id 全剧锁定；画外声（S09 读信、S09 / S15 隔壁的吼声）也配、也 mux
+- [ ] **学会新本事**那两刻（`shot09` 光环亮起、`shot15` 第一次推出光）各响一次原创上行三音动机，**只在配乐层**（concept G9 ②）
+- [ ] 矿洞（`shot10`–`shot13`、`shot16`）：远处凿击声与矿工的叫声做底噪，洞里越走越静
+- [ ] `shot24` 数拍「ONE / TWO / Three」三下，配乐每拍一个重音，光柱落下那一刻收掉音乐只留一口气
+- [ ] 「嗒、嗒」暗号三次（`shot20` / `shot22` / `shot27`）用同一个录音，第三次更轻、更远
 - [ ] 全片零字幕进画面（字幕由各站后台上传）

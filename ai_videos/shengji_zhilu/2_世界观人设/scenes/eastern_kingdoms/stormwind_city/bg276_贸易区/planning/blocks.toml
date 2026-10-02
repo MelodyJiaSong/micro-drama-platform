@@ -1,0 +1,296 @@
+# 贸易区 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 坐标原点在场地左上角，x 向东、y 向南，单位 m。岛本体约 140×110 m（bg268 区级图 b909 量取），四周留出运河与对岸堤。
+# 原典只给了方位（银行/旅店/邮箱在西南、拍卖厅在喷泉正北偏西、武器铺在拍卖厅旁、栖台在东侧坡道上）；尺寸与其余铺面全部推定。
+
+[meta]
+bg = "bg276"
+name_zh = "贸易区"
+size_m = [200, 170]
+px_per_m = 7.0
+scale_src = "地图量取"
+scale_note = "岛状街区外廓取 bg268 区级平面图 b909（142.3×110.4 m，区图量取）；四周加一圈运河与对岸堤到 200×170 m。岛内各铺面尺寸无一手出处，一律推定"
+# 世界树画面：全城最中心也最吵的街区，两三层白石商铺围合出一片开阔石板广场，底层开敞为铺面、上层住人，摊位与行商挤满街面，正中一座石砌圆喷泉
+absent = [
+    "港口 / 码头 / 泊船（旧世无港）",
+    "第二家旅店（旧世全城只有这一家）",
+    "4.0.3a 版拍卖厅名称与银行内饰",
+    "淤泥半填的浅水运河、芦苇、露出水面的杂物",
+    "传送门 / 训练假人 / 飞行坐骑",
+    "人物、行商、动物（栖架默认空着）",
+    "可读的招牌文字（招牌只画图案）",
+    "夜景、窗口灯光、壁炉火光、灯笼",
+    "山、森林、田野",
+]
+
+[[water]]
+name = "运河·北侧（隔水对教堂广场与东岛宝库）"
+path = [[0, 10], [200, 10]]
+width_m = 18
+depth_m = 4
+src = "地图量取"
+
+[[water]]
+name = "运河·西侧（隔水对西岛监狱石堡）"
+path = [[10, 0], [10, 150]]
+width_m = 18
+depth_m = 4
+src = "地图量取"
+
+[[water]]
+name = "运河·东侧（隔水对旧城区）"
+path = [[190, 0], [190, 118]]
+width_m = 18
+depth_m = 4
+src = "地图量取"
+
+[[water]]
+name = "运河·西南段（隔水对法师区，向东南汇入谷底水面）"
+path = [[10, 150], [60, 160], [120, 170]]
+width_m = 20
+depth_m = 4
+src = "地图量取"
+
+[[road]]
+name = "入城主路（东南角上岛 ← 英雄谷石桥）"
+path = [[200, 168], [160, 130], [120, 100]]
+width_m = 12
+src = "地图量取"
+
+[[road]]
+name = "西北桥路（→ 教堂广场，过两岛之间的桥）"
+path = [[72, 58], [58, 42], [58, 0]]
+width_m = 8
+src = "推定"
+
+[[road]]
+name = "东桥路（→ 旧城区）"
+path = [[140, 62], [178, 56], [200, 55]]
+width_m = 8
+src = "推定"
+
+[[road]]
+name = "西南桥路（→ 法师区）"
+path = [[70, 113], [60, 124], [40, 140], [20, 150]]
+width_m = 8
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "中心石板广场"
+xy = [105, 85]
+size = [70, 55]
+h_m = 0
+src = "推定"
+note = "世界树：开阔石板广场；尺寸无出处"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p306"
+face = "south"
+name = "圆喷泉（矮圆池 + 单石盆）"
+xy = [105, 85]
+size = [12, 12]
+h_m = 2
+src = "原典方位"
+note = "街区中央；形制无出处，本档锁定为矮圆池 + 单石盆、水柱不高"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p292"
+face = "south"
+name = "拍卖厅（门前矮石讲台）"
+xy = [85, 40]
+size = [34, 22]
+h_m = 12
+src = "原典方位"
+note = "贸易区西部、喷泉正北；1.9.0 起才有"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p289"
+face = "east"
+name = "旅店（木石混构两层）"
+xy = [52, 70]
+size = [20, 26]
+h_m = 10
+src = "原典方位"
+note = "夹在银行与拍卖厅之间；默认态窗后不点灯"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p292"
+face = "east"
+name = "银行（包铁大门的敦实石楼）"
+xy = [52, 105]
+size = [22, 26]
+h_m = 11
+src = "原典方位"
+note = "西南侧、靠正门一侧"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p314"
+face = "east"
+name = "银行门前邮箱"
+xy = [65, 110]
+size = [2, 2]
+h_m = 1.2
+src = "原典方位"
+note = "齐腰高绿铜色斜盖邮箱，立在银行门前石阶旁"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p292"
+face = "north"
+name = "公共接待厅"
+xy = [110, 130]
+size = [26, 18]
+h_m = 10
+src = "推定"
+note = "从谷地进城第一眼能看到；摆在东南入口路旁"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p289"
+face = "south"
+name = "武器铺"
+xy = [117, 38]
+size = [22, 18]
+h_m = 9
+src = "原典方位"
+note = "在拍卖厅旁"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p289"
+face = "southwest"
+name = "护甲铺"
+xy = [145, 45]
+size = [22, 20]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p312"
+face = "west"
+name = "东侧两层石楼与二层露天栖台（机位）"
+xy = [160, 82]
+size = [26, 30]
+h_m = 8
+src = "原典方位"
+note = "东侧一道坡道上去；栖架默认空着；锚点图机位在平台西缘、朝西"
+
+[[block]]
+id = "b11"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "栖台石坡道（沿楼南墙盘上）"
+xy = [160, 100]
+size = [26, 5]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p289"
+face = "northwest"
+name = "弓箭铺（窄门面）"
+xy = [138, 140]
+size = [14, 14]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p289"
+face = "northeast"
+name = "杂货铺"
+xy = [82, 130]
+size = [22, 18]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p289"
+face = "southeast"
+name = "药剂铺"
+xy = [40, 40]
+size = [18, 16]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p289"
+face = "southwest"
+name = "奶酪铺（东北角临水）"
+xy = [168, 30]
+size = [16, 16]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "stalls"
+face = "south"
+count = 8
+may_overlap = true
+name = "广场空摊位环（木台 + 条纹布篷）"
+xy = [105, 85]
+size = [36, 30]
+h_m = 2.5
+src = "推定"
+note = "环绕喷泉的一圈空摊，画面无人"
+
+[[block]]
+id = "b17"
+kind = "asset"
+asset = "p301"
+face = "south"
+name = "苹果树·西南街角"
+xy = [30, 122]
+size = [6, 6]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b18"
+kind = "asset"
+asset = "p301"
+face = "south"
+name = "苹果树·东南街角"
+xy = [178, 128]
+size = [6, 6]
+h_m = 6
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg276-c1"
+eye = [100, 156]
+target = [100, 85]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -1,0 +1,160 @@
+# 杰罗德码头 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg180"
+name_zh = "杰罗德码头"
+size_m = [240, 200]
+px_per_m = 5.0
+scale_src = "推定"
+scale_note = "取码头周边 240 × 200 m：屋在河北岸、栈桥在屋东南紧贴岸线，取自区图裁切（小屋 + 栈桥两个图标）；河宽 40 m 取区级 terrain.toml 南界大河；屋与桥的尺寸为推定"
+# 世界树画面：纳菲瑞提河岸的小木码头，栈桥、系船桩与堆着的板条箱；河水墨绿、两岸林影把光压得很低
+absent = [
+    "桥（区图未画，过河点待实机核；本场地视野内没有桥）",
+    "港口 / 仓库 / 大船 / 帆船 / 起重吊杆（这里只是一栋小屋一条栈桥）",
+    "任何灯火 / 亮着的窗 / 火把 / 营火",
+    "旗帜 / 纹章 / 招牌 / 箱子上的标记与文字",
+    "海岸线 / 沙滩（这是内陆大河）",
+    "训练假人 / 飞行点",
+]
+
+[[water]]
+name = "南界大河（自东北向西南斜流，场地南半）"
+path = [[240, 110], [180, 120], [120, 130], [60, 141], [0, 152]]
+width_m = 40
+depth_m = 3
+src = "地图量取"
+
+[[road]]
+name = "屋后土径（穿北岸橡林向北）"
+path = [[108, 88], [104, 64], [98, 36], [94, 0]]
+width_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p142"
+face = "south"
+name = "码头小木屋（单层，门朝河）"
+xy = [110, 96]
+size = [9, 7]
+h_m = 6
+rot = -10
+src = "地图量取"
+note = "区图裁切红十字正落在小屋图标上；石基、白灰泥墙深褐木构、钴蓝厚瓦"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p157"
+face = "south"
+over_water = true
+name = "木栈桥（垂直岸线伸进河里约 20 m）"
+xy = [130, 118]
+size = [3, 20]
+h_m = 1
+rot = -10
+src = "地图量取"
+note = "裁切图上屋东南紧贴岸线的栈桥图标；桥两侧每隔几步一根系船桩"
+
+[[block]]
+id = "b03"
+kind = "asset"
+parts = [{asset = "p159", at = [-2.2, 0.8], yaw = 0}, {asset = "p159", at = [-1.1, 0.9], yaw = 5}, {asset = "p159", at = [-2, -0.4], yaw = -4}, {asset = "p159", at = [-0.9, -0.3], yaw = 0}, {asset = "p178", at = [0.6, 0.8], yaw = 0}, {asset = "p178", at = [1.4, 0.6], yaw = 0}, {asset = "p178", at = [1, -0.4], yaw = 0}]
+face = "south"
+name = "油布箱堆（板条箱 + 无标记木桶）"
+xy = [121, 104]
+size = [6, 3.5]
+h_m = 2
+rot = -10
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p158"
+face = "south"
+over_water = true
+name = "平底小木船（系在桥头）"
+xy = [135, 126]
+size = [1.6, 5]
+h_m = 0.8
+rot = -10
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "屋前踩实泥滩"
+xy = [118, 106]
+size = [22, 8]
+h_m = 0
+rot = -10
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p161"
+face = "south"
+count = 12
+over_water = true
+name = "北岸水边芦苇带"
+xy = [64, 119]
+size = [44, 5]
+h_m = 1.5
+rot = -10
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p113"
+face = "south"
+count = 30
+name = "北岸暖金橡林（屋后与两侧）"
+xy = [120, 42]
+size = [220, 60]
+h_m = 20
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p113"
+face = "south"
+count = 18
+name = "对岸暗林（南邻区，只作背景）"
+xy = [120, 188]
+size = [240, 24]
+h_m = 20
+src = "地图量取"
+note = "裁切图上河南岸地色转深；区地理页：越往南岸树色越黑"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p167"
+face = "south"
+over_water = true
+name = "水中歪斜旧桩"
+xy = [96, 124]
+size = [0.6, 0.6]
+h_m = 1.2
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）：场地被体块占满，放在室内
+[[anchor]]
+key = "bg180-c1"
+eye = [120, 170]
+target = [120, 40]
+eye_h = 1.65
+lens_mm = 24
+inside = true
+note = "室内南端朝北；自动生成，排镜时按需改"

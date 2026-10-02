@@ -4973,3 +4973,200 @@ Auto-updated:
   的 drama 作用域），与本改动无关——本轮只动 Reader.tsx，`lib/dramas.ts` 未改
 
 No conflicts found in: final_specs/spec.md, validation/, 后端（route / command / writer 均未改）
+
+## Follow-up 172 — 2026-09-20 00:20:00
+Source: user_input/follow_ups/202609.md - section 172
+Summary: 系列共享角色（`_series/characters/`）的三视图/截取/批量提取全部报 `not_a_character_video`；
+在 `drama_ref` 新增 `asset_root_depth()` 区分「剧根」与「资产拥有者」，资产类校验改问它。
+
+复现（改前，打到真实运行的 8766）：
+```
+POST /api/extract-character-views {"path":"ai_videos/shikong_lvxing/_series/characters/c4_艾拉/c4-2.mp4"}
+400 {"detail":{"kind":"not_a_character_video"}}
+```
+
+根因：`drama_depth()` 对 `ai_videos/{series}/_series/…` 返 None，这是**它自己的正确行为**
+（`_series` 不是一部剧，分集/成片/字幕/BGM 的校验依赖这一点），但资产不按集归属——
+被多集复用的角色唯一的家就是 `_series/characters/`（CLAUDE.md § AI video rules, 2026-09-15）。
+两个不同的问题（「谁是一部剧」vs「谁拥有这份资产」）此前共用一个答案，于是共享角色全线不可用。
+前端 `CHARACTER_VIDEO_PATH_RE` 允许 `_series`，所以按钮照常渲染、点下去才 400——
+同一条规则前后端各一份实现，只有前端跟上了 2026-09-15 的规则。
+
+Auto-updated:
+- libs/common/drama_ref.py — 新增 `asset_root_depth()`：先问 `drama_depth`，None 时再认
+  `ai_videos/{series}/_series`（要求 `parts[1]` 非 `_` 开头且该目录真有 `series.json`）。
+  放在 `drama_ref` 是因为 CLAUDE.md 规定这是唯一允许解析剧根的地方；`drama_depth` 语义不动，
+  分集类调用者（episode / takes / subtitle / bgm / production 六处）一个都不受影响
+- libs/infrastructure/writers/character_video__writer.py — `is_under_character_folder`
+  与 `_validate_characters_dir` 改问 `asset_root_depth`（修好 truncate / extract-views / extract-all 三个按钮）
+- libs/infrastructure/readers/character__reader.py — `_validate_characters_dir` 同步
+- tests/test_character_video_path_guard.py — 原来把
+  `ai_videos/my_series/_series/characters/c1_x/a.mp4` 写在 REJECTED 里、注释「系列自己的共享目录不是一集」，
+  **这条断言本身是错的**（2026-09-15 之后共享角色只能住那儿），移入 ACCEPTED；
+  补 `_series/a/b/characters/…` 的边界用例；fixture 建出 `_series/characters/c4_艾拉/`
+
+验证：
+- 改后同一个 POST 返 200，`views` 3 张 + `audio` + `trim`，`failures: []`，盘上 5 个文件落在
+  `_series/characters/c4_艾拉/views/`
+- `tests/test_character_video_path_guard.py` + `test_series_shared_asset_import.py`：23 passed
+- 全量 `pytest tests/`：24 failed / 338 passed。这 24 条与本改动无关：
+  `test_seam_smart_interpolation`(14)、`test_downloads_import_scene_plates`(4)、
+  `test_api_security_three_shapes`(2)、`test_sub_type_lookup`(2)、`test_tree_walker_consumer_walk`(1)
+  是 follow-up 170 已记录的同一批；新增的 `test_previz_render::test_status_endpoint_rejects_paths_outside_previz`
+  是 previz 的错误码命名不一致（`invalid_path` vs 期望的 `invalid_previz_path`），
+  previz 源码这轮一行未动（`git status` 里只有 previz 的 `.txt` 产物）
+
+留给下次：**前后端对同一条路径规则各写一份 gate**，是这个 bug 能存在的结构原因——
+前端 regex 放行、后端 depth 判定拒绝，症状就是「按钮在、点了报错」。
+CLAUDE.md § General coding rules「一个名字只有一处定义」说的就是这件事，
+但路径**形状**规则目前没有共享出处；真要根治得让前端 gate 由后端吐的能力位驱动，
+而不是再维护一条镜像 regex。本轮没做，范围之外。
+
+No conflicts found in: final_specs/spec.md, validation/, apps/ui/（前端 gate 本来就是对的）
+
+## Follow-up 173 — 2026-09-25 08:10:00
+Source: user_input/follow_ups/202609.md - section 173
+Summary: scene 树节点加路由键前缀（bg4 / bg1-1 / bg172-a01 / bg172-a01-1）、`_assets` 资产库与 GLB 在树里可见、下载导入按同一键归位（含嵌套布局与资产三视图）。
+
+Auto-updated:
+- projects/ai_video_management/libs/common/scene_key.py — 新增：scene 路由键唯一语法（`bg{N}` / `bg{N}-{M}` / `bg{Z}-a{NN}` / `bg{Z}-a{NN}-{i}`），
+  `label()` 给树、`first_key()`（文件名里**最左**的键）给导入，两端读同一处定义
+- projects/ai_video_management/libs/infrastructure/readers/scene_registry__reader.py — 新增：`scenes/registry.toml` 全仓唯一解析处，
+  `kind = "zone_whole"` 行 → 区目录的键（按 mtime 缓存；toml 坏了不报错、只是不加前缀）
+- projects/ai_video_management/libs/infrastructure/readers/tree__reader.py — `scenes/` 下带键节点标签 ＝ `{键} {名}`，**只按名字、不读 H1**
+  （主体卡 H1 是「广场 · Seedance 主体」，前一版把嵌套主体都标成了「Seedance 主体」）；区目录挂区级主体键（`bg172 艾尔文森林`），大陆不加；
+  `_assets` → 资产库、`_blender` → 3D 场景、`assets` → 本场景资产；`SceneRegistryReader` 经 DI 注入
+- projects/ai_video_management/libs/common/exposed_tree.py + libs/application/queries/media__query.py — 新增 `DOWNLOAD_ONLY_EXTENSIONS = {.blend}`：
+  树里可见、`/api/media` 以 attachment 下发，但**不算 media**（导入不扫 Downloads 里的 .blend、重命名一趟不碰）
+- projects/ai_video_management/libs/common/asset_link.py — root 的 `resolve()` 按 root 缓存：每个 bg 的 `assets/` 下 4818 个 `.link.json`
+  让 `/api/tree` 从约 5s 涨到约 10s，其中一半是重复 resolve 同一个 root；改后回到约 5.4s（cProfile 实测）
+- projects/ai_video_management/libs/common/series_shared.py — 一趟扫描同时给出主体目录与 `_assets` 资产库（不进主体、不进资产库）；新增 `scene_asset_dirs()`
+- projects/ai_video_management/libs/infrastructure/readers/scene_route__reader.py + daos/scene_route__dao.py — 新增 `SceneKeyRouter`：
+  `bg{N}_{主体}` → 主体目录 `{目录名}.png`（`_` 后须是主体名或其截断）；`bg{N}-{M}` → `bg{N}-{M}_…/` 视图目录 `{视图目录名}.png`（视图卡原话「导入按它归位本 folder」），
+  无视图目录则照旧 `bg{N}-{M}.png`；`bg{Z}-a{NN}-{i}` 图 → 资产目录，文件名取资产卡 ```text 块首行，缺则 正面/侧面/背面；`bg{Z}-a{NN}*.glb` → `mesh/{键}.glb`。同号两处一律不猜
+- projects/ai_video_management/libs/infrastructure/writers/downloads__writer.py — 接入 `SceneKeyRouter`；scene 键出现在候选词之前时 scene 键赢
+  （真实数据干跑 2371 个键名，旧逻辑有 4 个被角色/道具抢走：`bg19_加瑞克的小屋`→`c18_加瑞克`、`bg1-4_溪岸_石拱桥`→`p2_石拱桥`、`bg22_霍格山`→`c12_霍格`、`bg279_巴拉尔废墟`→`c9_拉尔`），
+  shot 匹配永不被覆盖；GLB 只按资产键进 `mesh/`，不进任何 bg / 视图 / `_blender/`（2026-09-25 用户定调：一个 GLB 只装一个物件）；
+  重命名一趟排除 `_blender / planning / ref / _assets / mesh`（`GENERATED_DIR_NAMES`）
+- projects/ai_video_management/apps/api/container.py — 注入 `SceneRegistryReader`、`SceneKeyRouter`
+- projects/ai_video_management/apps/ui/src/components/Reader.tsx — `.blend` 走只下载视图（原先点开会去 `/api/file` 报 415）
+- projects/ai_video_management/apps/ui/src/components/Sidebar.tsx — 行 key 优先 `link_at`：link 叶子的 `path` 是目标，多块指向同一资产时 React key 重复
+- projects/ai_video_management/README.md — follow-up 173 一条（标签规则 / 固定标签 / 导入路由表 / 重命名排除）
+- tests/test_tree_scene_key_labels.py（新，8）、tests/test_downloads_import_scene_keys.py（新，12）；
+  tests/test_tree_display_name_zh.py::test_scene_plate_md_leaf_no_display 与 tests/test_media_glb_preview.py 各改一条断言到新契约
+  （plate md 得键标签而非 H1；`.blend` 从「隐藏」改为只下载叶子）
+
+验证：真实 shengji_zhilu 干跑（804 主体 / 442 资产的全部锚点、视图目录、资产卡首行与 GLB 共 2371 个文件名）0 误路由。全量 `pytest`：改前 25 failed / 338 passed，改后 24 failed / 359 passed。剩下 24 条全是改前就挂的、与本改动无关：
+`test_seam_smart_interpolation`(14)、`test_downloads_import_scene_plates`(4，`s{N}_bg{N}_` 旧命名)、`test_api_security_three_shapes`(2)、
+`test_sub_type_lookup`(2)、`test_tree_walker_consumer_walk`(1)、`test_previz_render`(1)；少掉的那 1 条是 `test_scene_plate_md_leaf_no_display`
+（前一版未提交的树改动弄挂的，本轮按新契约改断言）。UI：`tsc` 0 错、`npm run build` 通过。
+
+留给下次：重命名一趟此前已经在现场改坏过文件，名字回不去、本轮没动：
+`shikong_lvxing/sk1/2_世界观人设/scenes/bianjing/_blender/_blender1–5.png`、`shikong_lvxing/sk2/2_世界观人设/characters/c21_安杜因/ref/ref1–5.jpg`。
+
+No conflicts found in: final_specs/spec.md, validation/
+
+## Follow-up 174 — 2026-09-25 09:55:00
+Source: user_input/follow_ups/202609.md - section 174
+Summary: 区级资产库 `_assets/` 与 `bg{Z}-a{NN}` 键退役，场景物件统一进 `props/p{N}_{名}/`；导入按 prop 键归位（视图名取卡首行、GLB 进 `mesh/p{N}.glb`），树按 prop 键标注、隐藏 `_plan/`。
+
+Auto-updated:
+- projects/ai_video_management/libs/common/prop_key.py — 新增：prop 路由键唯一语法（`p{N}` / `p{N}-{i}`，`first_key()` 取最左、`label()` 给树、`VIEW_NAMES` 1/2/3 → 正面/侧面/背面）
+- projects/ai_video_management/libs/common/scene_key.py — 删掉 `bg{Z}-a{NN}` 资产键与 `ASSET_VIEW_NAMES`，只剩 `bg{N}` / `bg{N}-{M}`；`bg172-a01…` 不再被读成 `bg172`
+- projects/ai_video_management/libs/common/series_shared.py — 删掉 `scene_asset_dirs()` 与扫描里的 `_assets` 分支
+- projects/ai_video_management/libs/infrastructure/daos/scene_route__dao.py — 删 `KIND_ASSET_VIEW / KIND_ASSET_MESH`；新增 daos/prop_route__dao.py（`prop_object_view` / `prop_mesh`）
+- projects/ai_video_management/libs/infrastructure/readers/scene_route__reader.py — 删资产路由，只剩主体 / 视图目录；模型文件一律不走 scene 路由
+- projects/ai_video_management/libs/infrastructure/readers/prop_route__reader.py — 新增 `PropKeyRouter`：场景物件（有 `asset.toml`，与 `tools/props_lib.scene_objects` 同一判据）的 `p{N}-{i}` 图 → 卡里 ```text 块首行（带非法文件名字符的首行不用），缺则约定名；任一 prop 的 `p{N}*.glb` → `mesh/p{N}.glb`；剧情物件的图不经这里、照旧 `p{N}-{M}.png`；同号两处不猜
+- projects/ai_video_management/libs/infrastructure/writers/downloads__writer.py — `_keyed_route()` 取 scene / prop 键里最左的一个（先于候选词出现才赢、shot 永不被覆盖）；模型文件只认 prop 键，其余一律 unmatched（不再按名字词进任何目录）；`GENERATED_DIR_NAMES` 去掉 `_assets`
+- projects/ai_video_management/libs/infrastructure/readers/tree__reader.py — `props/` 下带键节点标 `{键} {名}`（`p15 两层石木旅店` / `p15-1 正面.png`，剧情物件同样）；`_plan/` 不显示；固定标签去掉 `_assets → 资产库`
+- projects/ai_video_management/apps/api/container.py — 注入 `PropKeyRouter`
+- projects/ai_video_management/README.md — follow-up 173 一条改写为 173 / 174（标签规则 / 导入路由表加 prop 两行 / 重命名排除）
+- tests/test_downloads_import_prop_keys.py（新，8）：视图取卡首行 + 约定名兜底、重出只换本视图、GLB → `mesh/p{N}.glb`、剧情物件照旧、无 prop 键的 GLB 不导入、同号不猜、键先于词、shot 不被覆盖；
+  tests/test_downloads_import_scene_keys.py 删 4 条 `_assets` 用例、加「旧 `bg{Z}-a{NN}` 键不归位」；tests/test_tree_scene_key_labels.py 资产库用例换成 props 标签 + `_plan` 隐藏 + 链接指向 props
+
+验证：全量 `pytest`：本轮开工时树处在半迁移状态（前一次尝试改完 common / daos 后停下，reader 仍 import 已删的常量），47 failed / 336 passed；follow-up 173 收尾时是 24 failed / 359 passed。改后 24 failed / 365 passed，剩下 24 条与 173 记录的同一批（`test_seam_smart_interpolation` 14、`test_downloads_import_scene_plates` 4、`test_api_security_three_shapes` 2、`test_sub_type_lookup` 2、`test_tree_walker_consumer_walk` 1、`test_previz_render` 1）。真实仓库 `/api/tree` build 3.6s、40,398 节点无异常，shengji_zhilu 的 p1–p14 标签正确。
+
+留给下次：真实 `props/` 迁移（p15 起的场景物件）本轮还没落盘，只按目标布局在测试里验证过——迁移完再对真实三视图 / GLB 文件名干跑一次导入。
+
+No conflicts found in: final_specs/spec.md, validation/, apps/ui/（树只多了 display_name，UI 无改动）
+
+## Follow-up 175 — 2026-09-25 10:20:54
+Source: user_input/follow_ups/202609.md - section 175
+Summary: 树的目录项按数值排序（p9 < p10，bg2 < bg10）。
+
+Auto-updated:
+- `libs/infrastructure/readers/tree__reader.py` — `_walk_filtered` 的排序键改为 `_natural`（数字段按数值比较）
+
+No conflicts found in: tests（365 passed / 24 failed，与基线同一批）
+
+## Follow-up 176 — 2026-09-25 18:28:15
+Source: user_input/follow_ups/202609.md - section 176
+Summary: 树与阅读器显示 .toml
+
+Auto-updated:
+- `libs/common/exposed_tree.py` — 新增 `TEXT_EXTENSIONS`（含 `.toml`），`ALLOWED_EXTENSIONS` 由它派生
+- `libs/infrastructure/{readers/file__reader,writers/file__writer}.py` — 删掉各自手写的文本扩展名副本（writer 改引用 `TEXT_EXTENSIONS`，reader 里那份本就没用）
+- `apps/ui/src/components/Reader.tsx` — `.toml` 走 CodeView；`apps/api/static` 重新构建
+- `README.md` — 扩展名白名单补 `.toml`
+
+No conflicts found in: final_specs/spec.md
+
+## Follow-up 177 — 2026-09-25 22:08:00
+Source: user_input/follow_ups/202609.md - section 177
+Summary: 装备（equipment）第四类资产：树标签 + 下载导入按 e{N} 键落盘
+
+Auto-updated:
+- `libs/common/key_grammar.py`（新）— p / e 两种键共用一份语法（`KeyGrammar(letter)`、`NumberedKey`、`VIEW_NAMES` 只定义一次）；`prop_key.py` 改为引用它（字段 `prop` → `base`，唯一使用者 `prop_route__reader.py` 同步）
+- `libs/common/equipment_key.py`（新）· `drama_layout.equipment_dir` · `series_shared.equipment_item_dirs` · `asset_key.py` 认 `e{N}` 目录
+- `libs/infrastructure/readers/{equipment_route__reader,card_view__reader}.py` + `daos/equipment_route__dao.py`（新）· `apps/api/container.py` 注入
+- `libs/infrastructure/readers/tree__reader.py` — 装备条目与文件的 `{key} {rest}` 标签
+- `libs/infrastructure/writers/downloads__writer.py` — `_leftmost_grammar` 在 bg / p / e 三种键里取最左；装备只按键路由（没有唯一条目目录就留在 Downloads，不退回名字词匹配）；GLB 不落装备，且装备键在前时也不再误覆盖 prop 的 mesh
+- `tests/test_{equipment_key,downloads_import_equipment_keys,tree_equipment_labels}.py`（新，24 条）；全套 24 failed / 389 passed，失败清单与改动前逐条相同（24 failed / 365 passed）
+- `README.md` — 装备路由一节
+
+No conflicts found in: final_specs/spec.md
+
+## Follow-up 178 — 2026-09-26 09:40:00
+Source: user_input/follow_ups/202609.md - section 178
+Summary: 装备多一层「分类」：条目按名字递归找，不按深度
+
+Auto-updated:
+- `libs/common/drama_layout.py` — `is_equipment_tool_dir`（工具目录的唯一定义）；`series_shared._equipment_items` 改用它
+- `libs/infrastructure/readers/tree__reader.py` — `_keyed_tree` 带上 equipment 与条目之间的中间层，工具目录里的带键名字不再打标签
+- 测试：导入 / 树标签两个测试文件的每条用例在「槽位」与「分类 / 槽位」两种布局上各跑一遍，新增任意深度与工具目录用例；装备测试 41 passed；全套 24 failed / 406 passed，失败清单与改动前逐条相同
+- `README.md` — 分类层一条
+
+No conflicts found in: final_specs/spec.md
+
+## Follow-up 177 — 2026-09-26 15:46:13
+Source: user_input/follow_ups/202609.md - section 177
+Summary: 提取三视图的正面图取第一帧
+
+Auto-updated:
+- `libs/domain/value_objects/character_video__valueobject.py` — front 时间点 0.5 → 0.0，docstring 同步
+
+No conflicts found in: final_specs/spec.md（未钉死具体秒数）、tests（55 个相关用例通过）
+
+## Follow-up 179 — 2026-09-26 16:45:00
+Source: user_input/follow_ups/202609.md - section 179
+Summary: 装备键改层级码，网页端无代码改动
+
+Auto-updated:
+- `libs/common/equipment_key.py` — 文档例子换成层级码（e5103 / 5_近战武器/51_主手）
+
+No conflicts found in: tree__reader（分类 / 槽位目录透明遍历）、downloads__writer（键按 e\d+ 解析）、equipment 测试 41 项全过
+
+## Follow-up 180 — 2026-09-27 15:50:49
+Source: user_input/follow_ups/202609.md - section 180
+Summary: 怪物 / NPC 卡（mN_）也能提取三视图
+
+Auto-updated:
+- `libs/common/character_dir.py`（新）— 角色文件夹判定唯一出处 `^[cm]\d+(_.*)?$`
+- `libs/infrastructure/readers/character__reader.py`、`writers/character_video__writer.py` — 删掉各自的 `^c\d+` 副本，改引用上面
+- `apps/ui/src/lib/characterDir.ts`（新）+ `CharacterGrid.tsx` / `SiblingMedia.tsx` / `lib/dramas.ts` — 同上（前端三份副本收成一份）
+- `tests/test_character_video_path_guard.py` — 加 m1_Kobold 接受、p1_ 拒绝两例（14 过）；全套 408 过 / 24 挂（与改前同一批旧失败）；`tsc --noEmit` 过
+- README — 一条说明
+- 数据：`shengji_zhilu/…/characters/m1_Kobold/views/` 已提取（正 / 侧 / 背 + 音频 + 前 2 s）；其余 m2–m8 暂无 turntable
+
+No conflicts found in: DownloadsImporter（m 键本来就能导入）
+

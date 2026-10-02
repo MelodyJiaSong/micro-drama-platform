@@ -42,6 +42,7 @@ python tools/viewing_packet.py <剧> <ep> [--video PATH]    # 默认 {ep}_final 
 
 审稿人：没写过、没审过这集的子代理，**只读 `viewing/`**——packet.json → transcript.md → sheets 按镜号全看。
 不给剧本、人物卡、立项、shot md：作者知道的东西会替画面把空白补上。意图与标签只用来核对「说好的笑点 / 泪点兑现没有」，不许拿来替画面打分。
+判 animatic 时：previz 卡每 1.5 s 翻一帧；previz 不渲光与法术，卡上印的动作写了闪光 / 光柱就按它在画面上算（shengji ep01 r4 把 S02 已有的「锤头一闪」判成没有）。
 
 把自己当成刷到这条视频的普通观众：
 

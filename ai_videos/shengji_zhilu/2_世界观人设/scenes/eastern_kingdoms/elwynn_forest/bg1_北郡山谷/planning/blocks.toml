@@ -1,0 +1,347 @@
+# 北郡山谷 · 俯视布局的几何唯一出处
+#
+# 改布局 ＝ 改本文件重跑 `python tools/build_floorplan.py <scene 目录>`。
+# **不手改 PNG、不手改 blocks.md**（rule 4i ①：一份东西只有一个出处，副本必漂）。
+#
+# ── 为什么用方位契约建，而不是照搬坐标表 ────────────────────────────────
+# w02 的核验员已判定：北郡那张 `coords` 表**方位与坐标自相矛盾**——
+# 「迪菲亚暴徒区 ≈ [47.9, 41.5]」在修道院入口 [48.9, 41.6] 的**西边**，
+# 而任务原文写的是 `have been seen across the river to the east`（河对岸的东边）。
+# 结论（w02-V 原话）：**方位关系（东/西/南/北、过不过桥）可信，具体小数坐标一律 ⚠**。
+#
+# 所以本表的骨架来自三句**原文空间契约**（w02 §2.1）：
+#   1. "Northshire Valley is surrounded by impenetrable mountains, with the exception of
+#      a pass to the south which is protected by thick stone walls and a guarded entryway."
+#   2. "A river runs through the valley, which eventually exits Northshire and empties into Crystal Lake."
+#   3. 修道院与商人在**河西**，迪菲亚在**河东**（任务文本）
+# 加上 c60 原图上量到的：修道院图标在西、河自北向南穿谷、路向西南出谷、东侧整片山脊。
+
+[meta]
+bg = "bg1"
+name_zh = "北郡山谷"
+size_m = [260, 300]
+px_per_m = 3.0
+scale_src = "推定"
+scale_note = """
+⚠ **尺度是推定的**：艾尔文森林整区按 WoW 标准区尺寸约 3470 × 2313 码，北郡在区图上约占
+x 7% / y 12%，折算约 240 × 280 码 ≈ 220 × 256 m；本表取 **260 × 300 m** 留出边界山体。
+**这个换算没有一手出处**，若日后拿到实测（在 Classic Era 里用坐标差量一次），回来改这一处即可——
+全表都是相对布局，改 `size_m` 不会让内部关系失真。
+"""
+
+# ── 围合山体：四面封山，只有南边一个隘口 ───────────────────────────────
+[[ridge]]
+name = "东侧山脊"
+poly = [[190, 0], [260, 0], [260, 300], [196, 300], [206, 210], [198, 120], [212, 60]]
+height_m = 55
+
+[[ridge]]
+name = "西侧山脊"
+poly = [[0, 0], [58, 0], [46, 70], [54, 150], [40, 230], [52, 300], [0, 300]]
+height_m = 52
+
+[[ridge]]
+name = "北端封口"
+poly = [[46, 0], [214, 0], [206, 34], [150, 20], [92, 30], [56, 26]]
+height_m = 48
+
+[[ridge]]
+name = "南端·隘口西翼"
+poly = [[40, 248], [96, 262], [92, 300], [40, 300]]
+height_m = 38
+
+[[ridge]]
+name = "南端·隘口东翼"
+poly = [[136, 264], [200, 250], [200, 300], [134, 300]]
+height_m = 38
+
+# ── 水系：一条河自北向南穿谷，南出后注入水晶湖 ──────────────────────────
+[[water]]
+name = "北郡河"
+width_m = 7
+depth_m = 2.4
+path = [[150, 18], [146, 58], [138, 96], [142, 134], [134, 172], [128, 214], [126, 252], [124, 300]]
+
+# ── 道路 ──────────────────────────────────────────────────────────────
+[[road]]
+name = "谷内主路"
+width_m = 5
+path = [[96, 60], [92, 104], [96, 140], [104, 182], [110, 226], [114, 264]]
+
+[[road]]
+name = "过河桥道（通河东葡萄园）"
+width_m = 4
+path = [[100, 150], [124, 146], [152, 142], [178, 146]]
+
+[[road]]
+name = "出谷大道（南 → 艾尔文）"
+width_m = 5
+path = [[114, 264], [116, 300]]
+
+# ── 建筑组 ────────────────────────────────────────────────────────────
+# src：原典方位 / 坐标表 / 地图量取 / 推定。**推定的在图上画成虚线。**
+#
+# `h_m` ＝ 体块高度（米），`kind` ＝ 用哪套构件建。
+# **`kind` 不是装饰**：`tools/build_northshire.py` 按它分派建法，
+# **遇到没见过的 kind 直接 raise**——往本表加一块而不说怎么建，blend 根本生成不出来。
+# 现有 kind：abbey_hall / wing / lawn / graveyard / stalls / stable /
+#            kobold_camp / mine_portal / vineyard / hut_camp /
+#            gate_wall / arch_bridge / guard_post
+
+[[block]]
+name = "北郡修道院主厅"
+id = "b01"
+kind = "asset"
+asset = "p168"
+face = "south"
+bg = "bg2"
+xy = [88, 128]
+size = [26, 22]
+h_m = 15
+rot = 0
+src = "原典方位"
+make_prop = false
+note = "河谷正中偏西、河的西岸。c60 图上修道院图标正在此位。主厅 + 武器大厅 + 图书馆三段"
+
+[[block]]
+name = "修道院前庭草坪"
+id = "b02"
+bg = "bg2"
+xy = [90, 160]
+size = [36, 16]
+h_m = 0
+kind = "lawn"
+rot = 0
+src = "原典方位"
+note = "正门朝南、对着谷内主路；草坪与主厅之间是门前石板地。ep01 主角睁眼的地方"
+
+[[block]]
+name = "武器厅（西翼）"
+id = "b03"
+kind = "asset"
+asset = "p169"
+face = "south"
+bg = "bg2"
+xy = [66, 128]
+size = [14, 14]
+h_m = 9
+rot = 0
+src = "原典方位"
+note = "主厅**正南**紧贴主体；圣骑士训练师萨缪尔修士在右起第二间。ep01 S07 光环第一次亮起。 它同时是**门廊 range**：既然原典把两翼判在主厅正南 / 正北，南翼就必然挡在主厅与前庭之间， 正门只能开在南翼南面（低门廊 + 主厅高堂在后，正是修道院的经典体量）。收窄到 16 m， 让主厅 26 m 的立面从两侧各露 5 m。见 specs 的 divergence 记录"
+
+[[block]]
+name = "图书馆翼（东翼）"
+id = "b04"
+kind = "asset"
+asset = "p169"
+face = "south"
+bg = "bg2"
+xy = [110, 128]
+size = [14, 14]
+h_m = 9
+rot = 0
+src = "原典方位"
+note = "与武器厅分居主厅两侧（本厅在**东**）。两层：楼下长桌与书架、楼上二层书阁。⚠ 原按 NPC 坐标判在北，已随西翼一并改判（同一条裁定）"
+
+[[block]]
+name = "修道院墓地"
+id = "b05"
+bg = "bg17"
+xy = [122, 158]
+size = [18, 14]
+h_m = 2
+kind = "graveyard"
+rot = 0
+src = "原典方位"
+note = "正门以东、修道院东南侧那块坡地。术士与恶魔训练师站位"
+
+[[block]]
+name = "商贩区"
+id = "b06"
+kind = "asset"
+asset = "p144"
+face = "south"
+count = 2
+xy = [64, 147]
+size = [16, 10]
+h_m = 3
+rot = 0
+src = "原典方位"
+note = "修道院**西侧**紧贴院墙，四个商人一字排开，全部可修理。ep03 出谷前修装备的地方。⚠ 原 xy/size 有 12 m 陷在西侧山脊里，已东移收窄到西墙根"
+
+[[block]]
+name = "马厩与盗贼区"
+id = "b07"
+kind = "asset"
+asset = "p137"
+face = "south"
+xy = [88, 92]
+size = [20, 12]
+h_m = 5
+rot = 0
+src = "原典方位"
+note = "修道院**后方（北）**（person.026「马厩在修道院后方」——正门朝南就是由这一句反推的）"
+
+[[block]]
+name = "狗头人营地"
+id = "b08"
+kind = "asset"
+asset = "p150"
+face = "south"
+count = 4
+xy = [76, 56]
+size = [30, 22]
+h_m = 3
+rot = 0
+src = "原典方位"
+make_prop = false
+note = "河谷**西北**，林间露天空地，西侧矮帐篷 + 一圈冷火塘（plate bg1-7）。ep01 第一次打怪"
+
+[[block]]
+name = "回音山矿洞洞口"
+id = "b09"
+bg = "bg3"
+into_ridge = true
+xy = [70, 28]
+size = [16, 12]
+h_m = 7
+kind = "mine_portal"
+rot = 0
+src = "原典方位"
+note = "狗头人营地**再往北**。ep02 全集。洞内布局另见 microdungeons 图"
+
+[[block]]
+name = "北郡葡萄园"
+id = "b10"
+bg = "bg18"
+xy = [176, 140]
+size = [44, 34]
+h_m = 3
+kind = "vineyard"
+rot = 0
+src = "原典方位"
+note = "修道院**正东、过河过桥**（bg18）。米莉的葡萄田 + 迪菲亚暴徒。ep03"
+
+[[block]]
+name = "加瑞克的小屋"
+id = "b11"
+kind = "asset"
+asset = "p170"
+face = "west"
+bg = "bg19"
+xy = [182, 186]
+size = [16, 14]
+h_m = 5
+rot = 0
+src = "原典方位"
+note = "葡萄园**再往东南**（bg19）。第一个 BOSS + 两顶随从帐篷。ep03。⚠ 原 xy 越进了东侧山脊，已挪回谷内"
+
+[[block]]
+name = "南墙隘口"
+id = "b12"
+bg = "bg20"
+into_ridge = true
+over_water = true
+xy = [114, 262]
+size = [44, 14]
+h_m = 9
+kind = "gate_wall"
+rot = 0
+src = "原典方位"
+make_prop = true
+note = "河谷**正南唯一出口**，厚石墙 + 守卫的窄门（bg20）。ep03 钩尾走出去的那道门"
+
+[[block]]
+name = "石拱桥"
+id = "b13"
+over_water = true
+xy = [140, 144]
+size = [16, 9]
+h_m = 5
+kind = "arch_bridge"
+rot = 0
+src = "推定"
+make_prop = true
+note = "过河去葡萄园必经；原文只写「过桥」未给位置，**按主路与河的交点推定**。xy ＝「过河桥道 × 北郡河」的真交点 (140, 144)，由闸门复核"
+
+[[block]]
+name = "谷口哨位"
+id = "b14"
+kind = "asset"
+asset = "p147"
+face = "south"
+xy = [114, 240]
+size = [10, 8]
+h_m = 4
+rot = 0
+src = "推定"
+note = "隘口内侧的守卫站位，**推定**——原文只写 guarded entryway"
+
+# ── 校验机位（＝七张 plate 的锚点） ───────────────────────────────────
+# `tools/build_northshire.py` 按本表出灰模透视，**每张 plate 一张**，
+# 用来人眼对账「这个机位站得出来吗、看得见该看见的东西吗」。
+# eye / target 用与 block 同一套平面坐标；高度由脚本从地形算，只写离地量。
+# **这里是机位的唯一出处**——日后做 shot previz 时从本表继承，不另起一份。
+
+[[anchor]]
+key = "bg1-1_谷心_北望修道院"
+eye = [90, 190]
+target = [90, 128]
+eye_h = 1.65
+target_h = 8.0
+lens_mm = 35
+note = "站前庭草坪南缘北望。ep01 主角睁眼看见的那张脸"
+
+[[anchor]]
+key = "bg1-2_谷口_南墙隘口"
+eye = [114, 232]
+target = [114, 262]
+eye_h = 1.65
+target_h = 4.5
+lens_mm = 35
+note = "谷内南望唯一出口。ep03 钩尾走出去的那道门"
+
+[[anchor]]
+key = "bg1-3_崖顶_全谷"
+eye = [232, 120]
+target = [118, 176]
+eye_h = 3.0
+target_h = 0.0
+lens_mm = 24
+note = "东侧山脊顶俯瞰全谷。验「四面封山、只有南边一个口」立不立得住"
+
+[[anchor]]
+key = "bg1-4_溪岸_石拱桥"
+eye = [110, 159]
+target = [133, 146]
+eye_h = 1.6
+target_h = 2.0
+lens_mm = 40
+note = "河西岸看石拱桥。验桥心是否对准河道中线"
+
+[[anchor]]
+key = "bg1-5_藤垄_葡萄架"
+eye = [150, 159]
+target = [180, 138]
+eye_h = 1.6
+target_h = 2.0
+lens_mm = 40
+note = "顺着藤垄看进葡萄园。验成排节奏出不出得来"
+
+[[anchor]]
+key = "bg1-6_院北_栎林苔石"
+eye = [72, 112]
+target = [60, 80]
+eye_h = 1.5
+target_h = 2.0
+lens_mm = 35
+note = "院落西北角外、朝北偏西约 20° 看林缘。ep01 S05：两人绕过北墙，伊根的长苔石在小径西侧，狼从北边林子出来"
+
+[[anchor]]
+key = "bg1-7_营外_林间矮帐"
+eye = [94, 72]
+target = [74, 54]
+eye_h = 8.0
+target_h = 0.0
+lens_mm = 28
+note = "营地 b08 东南角外 8 m 高位俯看、朝西北。ep01 S06 开场建场：帐篷在西，远处崖脚是 b09 矿口"

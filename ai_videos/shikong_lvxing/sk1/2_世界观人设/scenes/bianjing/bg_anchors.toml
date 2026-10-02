@@ -1,0 +1,163 @@
+# 各 bg 主体在【全城俯视图】上的点位 —— `tools/shot_floorplan.py --city` 的输入。
+#
+# ⚠️ 这里**一个坐标都不写**。每条只声明「它挂在 W11 §2.8 的哪一条上」，
+# 由脚本去 `0_research/parts/w11_city_layout.md` 解析并乘 CITY_SCALE。
+# 理由：全城坐标的唯一出处是 W11（CLAUDE.md § AI video rules / rule 4i ①）；
+# 在这里抄一份数，就等于开了第二个出处，**漂了不会报错、只会让图安静地骗人**。
+#
+# anchor.kind：
+#   gate          —— W11 [[gate]] 的 name
+#   landmark      —— W11 [[landmark]] 的 name
+#   river_offset  —— 自某城门沿某条河上溯 N 米（与 build_bianjing.DERIVED_ANCHORS 同法）
+#
+# [[unplaced]] 是**故意没有点位**的主体：全城俯瞰、内景、或 W11 里确实没有对应条目。
+# 列出来是为了让「这张图少标了几个 bg」这个问题有答案，而不是看着像漏了。
+
+[[bg]]
+key = "bg1"
+name = "虹桥"
+anchor = { kind = "landmark", name = "虹桥" }
+
+[[bg]]
+key = "bg2"
+name = "东水门城门"
+anchor = { kind = "gate", name = "东水门" }
+
+[[bg]]
+key = "bg3"
+name = "汴河码头"
+anchor = { kind = "river_offset", river = "汴河", gate = "东水门", upstream_m = 220.0 }
+
+[[bg]]
+key = "bg4"
+name = "州桥御街"
+anchor = { kind = "landmark", name = "州桥（天汉桥）" }
+
+[[bg]]
+key = "bg5"
+name = "正店酒楼"
+anchor = { kind = "landmark", name = "白矾楼（丰乐楼/樊楼）" }
+note = "「孙羊正店」门首；白矾楼是 W11 里唯一有点位的正店，按同一处标"
+
+[[bg]]
+key = "bg6"
+name = "瓦子勾栏"
+anchor = { kind = "landmark", name = "桑家瓦子（中瓦、里瓦）" }
+
+[[bg]]
+key = "bg7"
+name = "坊巷民居"
+anchor = { kind = "landmark", name = "保康门—城角沿城客店带" }
+note = "卡写「临汴河大街往东、沿城一带的客店与坊巷」，对应 W11 这条客店带"
+
+[[bg]]
+key = "bg9"
+name = "今日州桥遗址"
+anchor = { kind = "landmark", name = "州桥（天汉桥）" }
+note = "当代考古坑，与 bg4 同一处地点、不同时代"
+
+[[bg]]
+key = "bg11"
+name = "开封府"
+anchor = { kind = "landmark", name = "开封府" }
+
+[[bg]]
+key = "bg12"
+name = "宣德楼"
+anchor = { kind = "landmark", name = "宣德楼（宫城正门）" }
+
+[[bg]]
+key = "bg13"
+name = "相国寺"
+anchor = { kind = "landmark", name = "相国寺" }
+
+[[bg]]
+key = "bg17"
+name = "州桥夜市"
+anchor = { kind = "landmark", name = "州桥（天汉桥）" }
+note = "州桥南望朱雀门的夜市街，与 bg4 同一处地点、不同时辰"
+
+[[bg]]
+key = "bg18"
+name = "繁塔（天清寺塔）"
+anchor = { kind = "landmark", name = "繁塔（天清寺塔）" }
+note = "2026-09-21 follow-up 028 新建；全剧最高的天际线地标，shot01 逐帧视锥实测入画 7.3 s / 最近 585 m"
+
+[[bg]]
+key = "bg19"
+name = "东水门外关厢"
+anchor = { kind = "river_offset", river = "汴河", gate = "东水门", upstream_m = -260.0 }
+note = "2026-09-21 follow-up 028 新建；upstream_m 为负 ＝ 门外（顺流下行）260 m。它不是 W11 的条目，挂在河上定位；入画依据是航线 0–8 s 全程在它上空"
+
+[[bg]]
+key = "bg20"
+name = "城内汴河河街"
+anchor = { kind = "river_offset", river = "汴河", gate = "东水门", upstream_m = 520.0 }
+note = "2026-09-21 follow-up 028 新建；与 bg3 汴河码头相邻但不是一个主体（码头是仓与纲船，河街是铺面与住家）"
+
+[[bg]]
+key = "bg21"
+name = "迎祥池"
+anchor = { kind = "landmark", name = "迎祥池" }
+note = "2026-09-21 follow-up 028 新建；⚠️ W11 标注「位置未查」，点位 C 级，卡里不写与周边地物的精确位置关系"
+
+[[bg]]
+key = "bg22"
+name = "里城东墙门（旧宋门 + 汴河南岸角门子）"
+anchor = { kind = "gate", name = "旧宋门" }
+note = "2026-09-21 follow-up 028 新建；一张卡管两座门（南边的角门子是 C 级点位）。shot01 逐帧视锥实测：角门子入画 14.4 s / 451 m、旧宋门 13.6 s / 534 m"
+
+# ── 故意没有点位 ─────────────────────────────────────────────────────────────
+
+[[unplaced]]
+key = "bg0"
+name = "汴京全城"
+why = "全城俯瞰本身，没有单点"
+
+[[unplaced]]
+key = "bg8"
+name = "郊外清明踏青路"
+why = "卡只写「一条黄土大路从城门方向伸出来」，没说哪座门；W11 也没有城外这条路。要标点位先定是哪座门"
+
+[[unplaced]]
+key = "bg10"
+name = "赵太丞家"
+why = "《清明上河图》卷尾的医铺门面，W11 没有对应条目"
+
+[[unplaced]]
+key = "bg14"
+name = "客店房间夜"
+why = "内景（＝bg7-2 那间客房的夜态），与 bg7 同一处，不单独标"
+
+[[unplaced]]
+key = "bg15"
+name = "园林雅集"
+why = "「城郊一座春天放人游赏的私家园池」，未指名；金明池 / 琼林苑都在 W11 里，但卡没说是哪一处"
+
+[[unplaced]]
+key = "bg16"
+name = "汴京全城五更"
+why = "全城俯瞰的五更态，没有单点"
+
+# ── 待建主体（shot01 实测入画、但没有主体卡）─────────────────────────────────────
+# 数据不是目测的：`python tools/shot_plan.py <shot 目录> --coverage` 逐帧算相机视锥
+# （水平视场由焦距得出），统计每个 W11 条目「在画面里出现多少秒 / 最近到多少米」。
+# 排序＝该补卡的优先级（入画久 + 离得近 的先补）。
+# 补一个就把它从这里移到上面的 [[bg]]，并在 scenes/bianjing/ 下建 bg{N}_{名} 目录与卡。
+# 2026-09-21：原有的 bg18–bg22 五条已全部转正（见上）；下面是**按新航线重算**后新冒出来的。
+
+[[todo]]
+key = "bg23"
+name = "保康门"
+anchor = { kind = "gate", name = "保康门" }
+"入画" = "19.6s（城区段全程画右）"
+"最近" = "784 m"
+why = "里城南壁东门，新航线的城区段一直在画右的中远景里。距离比 bg22 那两座门远一档、形制同族（里城旱门），所以优先级排在它们之后；真要补时可并进 bg22 那张「里城门」卡，而不是另开一张"
+
+[[todo]]
+key = "bg24"
+name = "铁塔（开宝寺塔）"
+anchor = { kind = "landmark", name = "铁塔（开宝寺塔）" }
+"入画" = "10.2s"
+"最近" = "2136 m"
+why = "城东北的十三层塔，高 55.881 m（`kaifeng.city.038`），两公里外仍在天际线上。**暂不补**：这个距离上它只有几十个像素，bg0 全城航拍的天际线已经覆盖；记在这里是为了让「为什么天际线上那根竖线没有卡」有答案"

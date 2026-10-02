@@ -1,0 +1,217 @@
+# 避难营 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 坐标原点在场地左上角，x 向东、y 向南，单位 m。营地方位取区图 (26%,31%) 棚屋符号；营内布局无一手出处，一律推定。
+
+[meta]
+bg = "bg308"
+name_zh = "避难营"
+size_m = [200, 180]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "区图上只是一个棚屋符号（约 90×80 m 的绿地）；场地取 200×180 m 以装下背后的山嘴坡脚、东侧水面与南下的泥径，营内四棚一塘按「几间草顶棚屋围一堆篝火」推定"
+# 世界树画面：沼泽西侧的小村落，几间草顶棚屋围着一堆篝火，木桩上晾着破布，四周积水没过脚踝
+absent = [
+  "木石房舍、旅店、铁匠铺、商铺（旧世这里只有四间草棚）",
+  "飞行点 / 栖架 / 狮鹫或双足飞龙（旧世本区唯一飞行点在斯通纳德）",
+  "哨塔、寨墙、栅栏围墙、阵营旗帜与布幡",
+  "燃着的篝火、火把、灯笼、烛光、炊烟（默认态火塘是冷灰余烬）",
+  "石板路 / 铺装地面 / 干燥地面（营地脚下全是浅水与黑泥）",
+  "码头、船、栈桥",
+  "晴天硬光、太阳与长影",
+  "4.0.3a 后扩建的较大营地规模",
+  "任何人物 / 动物 / 文字 / 路牌字样",
+]
+
+[[ridge]]
+name = "山嘴（隔开迷雾谷，西北）"
+poly = [[0, 0], [78, 0], [70, 22], [58, 40], [46, 62], [34, 90], [20, 118], [0, 140]]
+height_m = 120
+src = "地图量取"
+note = "区图 (20–25%,20–25%) 那道把迷雾谷与避难营隔开的山嘴；坡脚比营地高两三米后陡升，场内轮廓推定"
+
+[[ridge]]
+name = "北山坡脚"
+poly = [[78, 0], [200, 0], [200, 14], [150, 18], [110, 22], [80, 20]]
+height_m = 220
+src = "推定"
+note = "区界北山的最南一缕坡脚；主山脊在场外北侧"
+
+[[water]]
+name = "东侧沼泽浅水"
+path = [[150, 18], [150, 60], [168, 110], [200, 150]]
+width_m = 40
+depth_m = 0.5
+src = "推定"
+note = "主沼泽水网的最西缘，水面与草坡几乎齐平"
+
+[[water]]
+name = "营南积水洼"
+path = [[40, 150], [90, 150], [135, 140], [170, 150]]
+width_m = 22
+depth_m = 0.2
+src = "推定"
+note = "泥径下坡要涉过的一片没踝积水"
+
+[[road]]
+name = "下坡泥径（→北路）"
+path = [[102, 88], [114, 104], [124, 124], [126, 150], [118, 180]]
+width_m = 1.5
+src = "推定"
+note = "营地唯一出入口；出场后向南约 150 m 接北路（区图量取）"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p325"
+face = "south"
+name = "草棚·北（最大）"
+xy = [100, 64]
+size = [8, 7]
+h_m = 3.5
+src = "推定"
+note = "草顶塌下去一块"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p325"
+face = "southeast"
+name = "草棚·西北"
+xy = [80, 76]
+size = [6.5, 6]
+h_m = 3.2
+src = "推定"
+note = "与西南棚挨得很近"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p325"
+face = "northeast"
+name = "草棚·西南"
+xy = [80, 92]
+size = [6.5, 6]
+h_m = 3.2
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p325"
+face = "west"
+name = "草棚·东（最小，骨架略歪）"
+xy = [120, 80]
+size = [5.5, 5]
+h_m = 2.8
+rot = 8
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p363"
+face = "south"
+name = "卵石火塘（冷灰余烬）"
+xy = [100, 84]
+size = [3, 3]
+h_m = 0.3
+src = "原典方位"
+note = "世界树画面「几间草顶棚屋围着一堆篝火」；默认态熄灭"
+
+[[block]]
+id = "b06"
+kind = "palisade"
+face = "south"
+count = 1
+name = "晾布木桩排"
+xy = [112, 98]
+size = [10, 1]
+h_m = 1.4
+rot = 30
+src = "原典方位"
+note = "世界树画面「木桩上晾着破布」；位置推定在火塘东南"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p318"
+face = "south"
+name = "旧木板堆"
+xy = [100, 50]
+size = [4, 2]
+h_m = 0.3
+src = "推定"
+
+[[block]]
+id = "b08"
+into_ridge = true
+kind = "asset"
+asset = "p317"
+face = "south"
+name = "枯树·坡脚"
+xy = [54, 50]
+size = [5, 5]
+h_m = 9
+src = "推定"
+note = "山嘴坡脚两三株歪斜枯树之一"
+
+[[block]]
+id = "b09"
+over_water = true
+kind = "asset"
+asset = "p317"
+face = "south"
+name = "枯树·东侧水中（最近）"
+xy = [140, 70]
+size = [6, 6]
+h_m = 12
+src = "推定"
+note = "低枝被砍去几截，离东棚不到二十米"
+
+[[block]]
+id = "b10"
+over_water = true
+kind = "asset"
+asset = "p317"
+face = "south"
+name = "枯树·东南水中"
+xy = [176, 128]
+size = [5, 5]
+h_m = 10
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "泥埂（锚点机位）"
+xy = [132, 116]
+size = [16, 4]
+h_m = 0.3
+rot = -20
+src = "推定"
+note = "锚点图机位：营地东南约四十米，朝西北平视"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p318"
+face = "south"
+name = "横倒烂木"
+xy = [124, 110]
+size = [5, 0.8]
+h_m = 0.3
+rot = -15
+src = "推定"
+note = "锚点图前景"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg308-c1"
+eye = [100, 166]
+target = [100, 90]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

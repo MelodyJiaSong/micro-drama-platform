@@ -1,0 +1,192 @@
+# ep01 目标账本（tools/goal_ledger.py，follow-up 038）：观众要跟的每一件事——谁交代、屏幕上哪句说出、为什么、谁接下、
+# 在哪几镜推进、在哪一镜屏幕上了结。引用的原文片段必须真在那一镜的画面动作或台词里（备注、情绪、场景标签不算）。
+# 冷眼观众（ai_videos__冷眼观众）理出的目标线要和这里对得上；对不上改剧本，不许只改账本去迁就。
+
+[ledger]
+breathers = []
+
+[[goal]]
+id = "paladin"
+who = "亚伦"
+self = true
+what = "学着当圣骑士"
+why = "他自己想当（为什么想，留给后面几集）"
+stated = ["S01", "I want to be a paladin."]
+cues = ["paladin", "圣骑士", "修道院", "光", "萨缪尔"]
+pursued = ["S02", "S03", "S04", "S07", "S08", "S13"]
+carry = "ep02"
+
+[[goal]]
+id = "kobolds"
+who = "治安官"
+what = "北边林子里的狗头人营地，先清十个；有工钱"
+why = "狗头人占了北边的矿"
+stated = ["S04", "Kobolds took the north mine"]
+accepted = ["S04", "Ten? Easy!"]
+cues = ["kobold", "狗头人", "camp"]
+pursued = ["S05", "S06"]
+resolved = ["S12", "Your pay."]
+reward = ["S12", "S14"]
+
+[[goal]]
+id = "wolf_meat"
+who = "伊根"
+what = "给他带狼肉"
+why = "他恨森林狼，又爱吃狼排"
+stated = ["S05", "Bring me back some wolf meat"]
+accepted = ["S05", "Then wolves"]
+cues = ["wolf", "狼"]
+pursued = ["S05"]
+resolved = ["S05", "Meat for leather"]
+reward = ["S05"]
+
+[[goal]]
+id = "mine"
+who = "治安官"
+what = "矿里剩下的狗头人"
+why = "狗头人占了北边的矿"
+stated = ["S04", "Kobolds took the north mine"]
+accepted = ["S09", "The rest live in there"]
+cues = ["mine", "矿", "巷", "掌子面"]
+pursued = ["S09", "S10", "S11", "S16"]
+resolved = ["S23", "the mine's quiet"]
+reward = ["S23"]
+
+[[goal]]
+id = "hammer"
+who = "亚伦"
+self = true
+what = "拿回父亲的锤"
+why = "那是他父亲的锤"
+stated = ["S11", "Dad's hammer"]
+cues = ["锤", "hammer"]
+pursued = ["S12", "S15", "S16"]          # 061：S12「Dad's hammer first.」、S15 摸空着的右肩
+resolved = ["S16", "把父亲的锤抱起来"]
+
+[[goal]]
+id = "bandanas"
+who = "维里"
+what = "河对岸红面罩一伙，带十二块面罩回来"
+why = "他们占了米莉的葡萄园（S17 米莉亲口说）"
+stated = ["S12", "Red bandanas"]
+accepted = ["S12", "Twelve? Easy!"]
+cues = ["bandana", "红面罩", "面罩"]
+pursued = ["S17", "S18"]
+resolved = ["S24", "那叠红面罩"]
+reward = ["S24"]
+
+[[goal]]
+id = "grapes"
+who = "米莉"
+what = "把被占的几垄葡萄抢回来"
+why = "再熟三天，过了就烂在藤上"
+stated = ["S17", "they've taken them"]
+accepted = ["S17", "Leave it to us!"]
+cues = ["grape", "葡萄", "垄"]
+pursued = ["S18"]
+resolved = ["S19", "写出货单"]
+reward = ["S23"]
+
+[[goal]]
+id = "bounty"
+who = "维里"
+what = "占了葡萄园的红面罩那伙人的头儿"
+why = "他有悬赏"
+stated = ["S12", "Bounty on their boss"]
+accepted = ["S12", "Twelve? Easy!"]
+cues = ["boss", "加瑞克", "头儿", "小屋"]
+pursued = ["S19", "S20", "S21", "S22"]
+resolved = ["S24", "掂斧子的手停了一下"]
+reward = ["S24"]
+
+[[goal]]
+id = "goldshire"
+who = "治安官"
+what = "去闪金镇找治安官杜汉报到"
+why = "闪金镇缺人手"
+stated = ["S23", "Report to Marshal Dughan"]
+accepted = ["S23", "把信递到他手里"]
+cues = ["Goldshire", "闪金镇", "home", "南墙"]
+pursued = ["S25"]
+carry = "ep02"
+
+[[goal]]
+id = "duke_lie"
+who = "杜克"
+self = true
+what = "瞒着家里：他没进卫队"
+why = "家里以为他进了卫队"
+stated = ["S14", "They think I made the Guard"]
+cues = ["Guard", "卫队", "卫兵", "罩袍", "Goldshire", "闪金镇", "home"]
+pursued = ["S23", "S24", "S25"]
+carry = "ep02"
+
+# ── 本事（follow-up 039：「他们如何能体现各自职业的技能」）：一样一样解锁；学会的那一镜看得出学了什么，
+#    本集内实战用出来一次（或 carry 到下一集），用的时候看得出是同一招。没有 learned ＝ 开场就会的底子。
+[[skill]]
+who = "亚伦"
+what = "治伤的光（圣光术）"
+core = true
+why = ["S07", "Teach me something"]
+idea = ["S07", "It's already in you."]
+demo = ["S07", "一道光柱从亚伦头顶罩下"]
+fail = [["S07", "掌心还是空的"], ["S07", "什么也没有"]]
+method = ["S08", "Who are you standing here for?"]
+trigger = ["S08", "My dad."]
+learned = ["S08", "两只手掌心各拢起一团很淡的暖金色光"]
+effect = ["S08", "血止住了"]
+used = ["S21", "光柱从杜克头顶罩下"]
+casts = [["S08", "两只手掌心又慢慢拢起光"], ["S11", "两只手掌心各拢起一团很淡的暖金色光"], ["S21", "光柱从杜克头顶罩下"]]
+
+[[skill]]
+who = "亚伦"
+what = "指哪落哪的光（审判）"
+idea = ["S13", "goes where you point."]
+trigger = ["S13", "举起"]
+learned = ["S13", "左手朝盾往前一指"]
+used = ["S15", "左手朝那只狼一指"]
+casts = [["S16", "左手朝挤上来的那只一指"], ["S18", "左手朝一个抡棒扑来的暴徒一指"], ["S21", "左手从杜克身旁朝加瑞克一指"]]
+
+[[skill]]
+who = "亚伦"
+what = "送人的光（力量祝福）"
+idea = ["S13", "This one you give away."]
+trigger = ["S13", "从门洞冲进来"]
+learned = ["S13", "伸手按在他胳膊上"]
+used = ["S18", "按住杜克的胳膊"]
+
+[[skill]]
+who = "杜克"
+what = "举盾顶住"
+used = ["S05", "杜克举盾顶在前面"]
+
+[[skill]]
+who = "杜克"
+what = "往前猛冲（冲锋）"
+offscreen = "战士训练师莱恩在隔壁教，只闻其声：S07 隔壁闷响、S13 撞进门"
+learned = ["S13", "刹不住"]
+used = ["S18", "这回站住了"]
+
+# 施法设计一处定义、处处呼应（G7c，follow-up 046 / 047 / 053）：起手 / 手 / 光的走向只在技能卡 [script] 里（rule 45）。
+# 圣光术——S07 萨缪尔示范、S08 演出代价：脚下一乱（被撞），手上的光就散了。
+[[casting]]
+who = "亚伦"
+skill = "治伤的光（圣光术）"
+card = "k201"
+taught = ["S07", "萨缪尔两脚站稳"]
+cost = ["S08", "手上的光一下散了"]
+
+# 审判、祝福——S13 教出来；样子只在技能卡 k202 / k204 里（rule 45，用户 2026-09-30：审判按原典，没有飞行物）。
+[[casting]]
+who = "亚伦"
+skill = "指哪落哪的光（审判）"
+card = "k202"
+taught = ["S13", "左手朝盾往前一指"]
+cost = ["S08", "手上的光一下散了"]
+
+[[casting]]
+who = "亚伦"
+skill = "送人的光（力量祝福）"
+card = "k204"
+taught = ["S13", "伸手按在他胳膊上"]
+cost = ["S08", "手上的光一下散了"]

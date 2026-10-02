@@ -1,0 +1,50 @@
+# 技能卡（tools/skills_lib.py；ai_video.md rule 45）。本剧定稿；原典见 facts 所列事实。改这里即全剧生效。
+say = ["everything you've got, in one go"]
+facts = ["wow.lightvfx.020"]
+liberty = "原典伸手一指、不接触（40 码）；本剧施法者跪稳、两手按在对方胸口（ep02 S39 的写法），代价是施法者脸发白、身子一晃（原典抽干全部法力）。"
+interrupt = "瞬发，不会被打断"
+forbid = []
+
+mark = "缠绕的金色光带"          # 这道光在画面里叫什么（绑定句用，057 E2）
+[timing]
+release = [0.5, 0.8, 1.0]
+effect = [1.8, 2.2, 2.5]
+linger = [1.0, 1.5, 2.0]
+
+[pose]
+release = "按左手"
+
+[look]
+release = "{施法者}跪稳，两手按在{目标}胸口"
+effect = "{目标}胸前绽开一团{力度}缠绕的金色光带，裹着暖白的光亮了两秒"
+linger = "光一收，{施法者}脸一下白了，身子一晃"
+
+
+# 精简稿与跨切重述用的短锁定串（8f #17 / w28 ⑦）：留颜色、形状、挂点；和 [look] 同一件事，只是短
+[short]
+release = "{施法者}跪稳，两手按在{目标}胸口"
+effect = "{目标}胸前绽开{力度}缠绕的金色光带"
+linger = "光一收，{施法者}脸一下白了"
+
+[tier]
+"熟练" = ""
+
+[sample]
+video = ""
+still = ""
+prompt = ""
+
+[[learned]]
+who = "c19_Brother_Wilhelm"
+
+[[learned]]
+who = "c1_Aaron"
+ep = "ep02"
+shot = "S39"
+teacher = "c19_Brother_Wilhelm"
+
+# 剧本里施法那一行要写到的（正则，任一命中；目标账本 G7c 读这里，每集 goals.toml 不再各写一份）
+[script]
+stance = ["跪稳", "跪下"]
+hand = ["按在", "按住"]
+flow = ["光带", "金色"]

@@ -1,0 +1,245 @@
+# 斯通纳德 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地左上角 ＝ 区级平面图（bg303 terrain.toml）的 (825, 640) m；区图坐标 [46,55] 落在本场地 (140,129)。
+
+[meta]
+bg = "bg307"
+name_zh = "斯通纳德"
+size_m = [280, 260]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "裁切图约放大 2.9 倍（STONARD 字样对照原图），1 px ≈ 0.72 m：东北棚屋符号在红十字 (+49,-61) m、大厅符号 (+36,+11) m、西南棚屋符号 (-24,+30) m、飞鸟符号 (-14,-54) m；南山墙脚、东侧水道、中央水道从 bg303 terrain.toml 平移；栅墙、火塘、旗杆无一手出处，推定"
+# 世界树画面：沼泽高地上的兽人要塞，粗木与兽皮搭的圆顶大厅，两座土制地穴入口，红旗插在泥岸边，四周是死水与枯木
+# 区图：东路从西面进来，在红十字西侧上台地
+absent = [
+    "石砌城墙、石屋、石塔（全寨只有原木、兽皮与夯泥）",
+    "第二个飞行点、狮鹫栖木与飞艇塔（旧世本区唯一飞行点就是这座双足飞龙栖架）",
+    "栖架上的飞兽、坐骑、牲口（默认空寨）",
+    "点着的火把、火盆、篝火与灯笼（火塘是冷灰，地穴口内是黑的）",
+    "旗面上的纹章、徽记与文字（长旗是素面暗红）",
+    "4.0.3a 后的重建布局与北部的联盟哨站",
+    "晴天硬光与长影",
+    "任何人物与文字",
+]
+
+[[ridge]]
+name = "南山墙（台地背后陡起）"
+poly = [[0, 190], [60, 193], [117, 197], [222, 197], [280, 205], [280, 260], [0, 260]]
+height_m = 200
+src = "地图量取"
+note = "区级「南墙」北脚；坡面裸露、布满冲刷沟"
+
+[[ridge]]
+name = "高泥台地"
+poly = [[66, 70], [120, 55], [210, 48], [238, 90], [234, 170], [190, 188], [95, 186], [62, 140]]
+height_m = 3
+src = "原典方位"
+note = "世界树「沼泽高地」；边缘是陡泥岸，岸脚泡在死水里"
+
+[[water]]
+name = "中央水道（台地西北）"
+path = [[0, 34], [96, 30], [170, 0]]
+width_m = 30
+depth_m = 1.3
+src = "地图量取"
+
+[[water]]
+name = "东侧南北向死水水道"
+path = [[253, 0], [262, 72], [266, 150], [270, 196]]
+width_m = 22
+depth_m = 1.2
+src = "地图量取"
+note = "南端顶在山墙脚下"
+
+[[water]]
+name = "台地西南死水塘"
+path = [[18, 168], [48, 176]]
+width_m = 16
+depth_m = 0.8
+src = "推定"
+
+[[road]]
+name = "东路尽头（西面上台地的泥坡道）"
+path = [[0, 132], [40, 130], [80, 129], [104, 128]]
+width_m = 6
+src = "地图量取"
+note = "裁切图上道路自西而来、止于红十字西侧；两侧木桩编条护坡；锚点图机位在 (40,130) 朝东"
+
+[[block]]
+id = "b01"
+into_ridge = true
+kind = "asset"
+asset = "p329"
+face = "west"
+name = "粗木兽皮圆顶大厅"
+xy = [176, 140]
+size = [30, 26]
+h_m = 11
+src = "地图量取"
+note = "裁切图大厅符号；正面门洞朝西，原木门廊，门楣兽牙与弯角"
+
+[[block]]
+id = "b02"
+into_ridge = true
+kind = "asset"
+asset = "p330"
+face = "southwest"
+name = "土制地穴入口·东北"
+xy = [189, 72]
+size = [14, 12]
+h_m = 3.5
+src = "地图量取"
+note = "裁切图东北棚屋符号；土丘一侧向下斜坡道，原木立柱框口"
+
+[[block]]
+id = "b03"
+into_ridge = true
+kind = "asset"
+asset = "p330"
+face = "northeast"
+name = "土制地穴入口·西南"
+xy = [116, 159]
+size = [14, 12]
+h_m = 3.5
+src = "地图量取"
+note = "裁切图西南棚屋符号"
+
+[[block]]
+id = "b04"
+into_ridge = true
+kind = "asset"
+asset = "p331"
+face = "south"
+name = "高脚原木飞行栖架（空）"
+xy = [126, 80]
+size = [10, 10]
+h_m = 6
+src = "地图量取"
+note = "裁切图飞鸟符号；寨门内北侧"
+
+[[block]]
+id = "b05"
+into_ridge = true
+kind = "asset"
+asset = "p363"
+face = "south"
+name = "寨心碎石火塘（冷灰）"
+xy = [140, 128]
+size = [4, 4]
+h_m = 0.3
+src = "推定"
+
+[[block]]
+id = "b06"
+into_ridge = true
+kind = "palisade"
+face = "west"
+count = 1
+name = "尖木栅·寨门北段"
+xy = [80, 104]
+size = [1.5, 40]
+h_m = 4.5
+rot = -20
+src = "推定"
+
+[[block]]
+id = "b07"
+into_ridge = true
+kind = "palisade"
+face = "west"
+count = 1
+name = "尖木栅·寨门南段"
+xy = [80, 155]
+size = [1.5, 44]
+h_m = 4.5
+rot = 20
+src = "推定"
+note = "寨门 ＝ 两段之间 y 124–133 的缺口；门两侧栅桩顶各套一只大兽头骨"
+
+[[block]]
+id = "b08"
+into_ridge = true
+kind = "palisade"
+face = "north"
+count = 1
+name = "尖木栅·北沿"
+xy = [150, 58]
+size = [110, 1.5]
+h_m = 4.5
+rot = -5
+src = "推定"
+
+[[block]]
+id = "b09"
+may_overlap = true
+into_ridge = true
+kind = "asset"
+asset = "p332"
+face = "north"
+count = 3
+name = "泥岸长旗·北沿（素面暗红）"
+xy = [200, 56]
+size = [8, 1]
+h_m = 6
+src = "原典方位"
+note = "世界树「红旗插在泥岸边」"
+
+[[block]]
+id = "b10"
+into_ridge = true
+kind = "asset"
+asset = "p332"
+face = "east"
+count = 5
+name = "泥岸长旗·东沿（素面暗红）"
+xy = [232, 125]
+size = [1, 30]
+h_m = 6
+src = "原典方位"
+
+[[block]]
+id = "b11"
+into_ridge = true
+kind = "crates"
+face = "west"
+count = 1
+name = "门廊旁木桶、矛杆捆与晾皮架"
+xy = [156, 150]
+size = [5, 6]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p317"
+face = "south"
+name = "枯死巨树·台地东北泥岸"
+xy = [228, 58]
+size = [7, 7]
+h_m = 15
+src = "推定"
+note = "半边树根露出泥岸"
+
+[[block]]
+id = "b13"
+over_water = true
+kind = "asset"
+asset = "p317"
+face = "south"
+name = "枯死巨树·西北死水"
+xy = [52, 48]
+size = [6, 6]
+h_m = 13
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg307-c1"
+eye = [140, 239]
+target = [140, 130]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

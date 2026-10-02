@@ -1,0 +1,163 @@
+# 瓦尔甘牧场 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 换算：原点 ＝ bg247 区级平面图的 (1900, 540) m（区图 px ≈ (496, 141)，3.83 m/px）。
+# 主道与湖西岸取自 bg247 terrain.toml（地图量取）；牧场本身世界树无坐标，位置沿用 bg247 的推定块 b958，屋 / 栏布局全部推定。
+
+[meta]
+bg = "bg258"
+name_zh = "瓦尔甘牧场"
+size_m = [340, 240]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "区图 WorldMap-Silverpine_c60 宽 1002 px ＝ 区宽 3840 m（bg247 同一换算）；主道、渡口土路与湖岸从 bg247 terrain.toml 平移而来，湖湾深度与屋栏布局为推定"
+# 世界树画面：湖边牧场，木栅圈着空畜栏，草地泛黄
+absent = ["任何牲口 / 牛羊马（畜栏是空的）", "稻草人", "麦田 / 活庄稼 / 田垄（本户只围牧草）", "果树与南瓜地（那是邻档的农场）", "谷仓（只有一间敞开的草棚）", "码头 / 栈桥 / 船（渡口在南面另一档）", "桥", "火堆 / 窗灯 / 烟囱冒烟 / 任何人工光", "雪", "阔叶林", "翠绿草地", "4.0.3a 后的军营帐篷与旗帜"]
+
+[[ridge]]
+name = "北面松林地（比牧场略高，林缘一道浅土棱）"
+poly = [[60, 0], [300, 0], [292, 52], [180, 60], [62, 64]]
+height_m = 4
+src = "推定"
+
+[[water]]
+name = "湖面（西缘即湖西岸）"
+path = [[335, 0], [322, 70], [308, 130], [312, 240]]
+width_m = 60
+depth_m = 6
+src = "地图量取"
+
+[[water]]
+name = "浅湾（岸线向西凹进，小畜栏东栅圈进水里）"
+path = [[212, 165], [290, 165]]
+width_m = 34
+depth_m = 1
+
+[[road]]
+name = "主道（南北，木屋门前）"
+path = [[131, 0], [93, 54], [43, 119], [24, 188], [20, 240]]
+width_m = 6
+src = "地图量取"
+
+[[road]]
+name = "渡口土路（主道→湖畔渡口，出场地南缘）"
+path = [[26, 180], [90, 195], [160, 215], [228, 240]]
+width_m = 4
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p271"
+face = "west"
+name = "原木木屋"
+xy = [82, 98]
+size = [8, 12]
+h_m = 6
+src = "推定"
+note = "单层，长轴南北、门朝西开向主道；两坡深灰木瓦，一侧石砌矮烟囱"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p276"
+face = "west"
+name = "敞开草棚"
+xy = [82, 87]
+size = [8, 8]
+h_m = 4
+src = "推定"
+note = "贴木屋北山墙，单坡顶；棚下一堆发黑的旧干草"
+
+[[block]]
+id = "b03"
+kind = "palisade"
+face = "south"
+name = "大畜栏"
+xy = [145, 118]
+size = [80, 60]
+h_m = 1.5
+src = "推定"
+note = "木栅横三道；西侧栅门半开歪挂；正中一条原木饮水槽"
+
+[[block]]
+id = "b04"
+over_water = true
+kind = "palisade"
+face = "south"
+name = "小畜栏"
+xy = [205, 163]
+size = [40, 30]
+h_m = 1.5
+src = "推定"
+note = "接大畜栏东南角；东栅圈进浅湾，桩脚泡在水里"
+
+[[block]]
+id = "b05"
+may_overlap = true
+kind = "low_wall"
+face = "south"
+name = "原木饮水槽"
+xy = [145, 118]
+size = [6, 1]
+h_m = 0.6
+src = "推定"
+
+[[block]]
+id = "b06"
+into_ridge = true
+kind = "asset"
+asset = "p269"
+face = "south"
+count = 40
+name = "北面松林"
+xy = [170, 28]
+size = [200, 36]
+h_m = 20
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p269"
+face = "south"
+count = 30
+name = "路西松林"
+xy = [20, 40]
+size = [30, 60]
+h_m = 20
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "palisade"
+face = "south"
+name = "倒伏的一段栅栏"
+xy = [140, 156]
+size = [12, 1]
+h_m = 0.3
+rot = 10
+src = "推定"
+
+[[block]]
+id = "b09"
+over_water = true
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "湾边枯芦苇与泥坎"
+xy = [250, 188]
+size = [60, 8]
+h_m = 0.5
+src = "推定"
+note = "半米高泥坎，坎下浅水"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg258-c1"
+eye = [170, 221]
+target = [170, 120]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

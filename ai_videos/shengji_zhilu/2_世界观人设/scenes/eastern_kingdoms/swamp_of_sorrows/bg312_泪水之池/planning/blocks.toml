@@ -1,0 +1,284 @@
+# 泪水之池 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 原点 ＝ 区级平面图 (1186, 500)；本图坐标 ＝ 区级坐标 − (1186, 500)。湖面、水道、南墙按区级 terrain.toml 平移裁切（地图量取）；
+# 石庙位置按区图图标 [71, 53] 量取，尺寸与台阶朝向、环湖泥岛、断柱头一律推定。
+# 锚点机位：b01 西岸低泥岛水边，朝东望湖心石庙。东岸之外的芦苇海滩（bg310）与海（bg315）在场地东缘以外，只作远景。
+
+[meta]
+bg = "bg312"
+name_zh = "泪水之池"
+size_m = [600, 480]
+px_per_m = 2.5
+scale_src = "地图量取"
+scale_note = "湖面与水道按区级平面图（区图 x%×20.974、y%×13.983 m）平移量取；石庙尺寸、台阶朝向、泥岛与断柱头位置为推定"
+# 世界树画面：沼泽东部的大片深水湖，水色近黑，湖心隐约露出淹没神庙的尖顶与破损石阶
+absent = [
+    "湖面上的任何光：绿色召唤火、发光符文、从水下透出的光（那是副本内景）",
+    "码头、栈桥、船只、木筏与湖心的任何浮桥",
+    "湖岸的营帐、哨塔与任何新建木构（4.0.3a 后才有的营地一概没有）",
+    "巨龙虚影、蛇形巨像与任何立在水面上的雕像全身（石庙只露顶层两层台基）",
+    "火、烛火、灯笼、火把与任何人工光源",
+    "晴天、阳光、投影与夕照",
+    "清澈见底的水与沙底（湖水近黑，看不见底）",
+    "任何人物、潜水者与动物",
+]
+
+[[ridge]]
+name = "南墙西段（湖西南岸外起坡）"
+poly = [[0, 361], [70, 379], [154, 421], [206, 452], [233, 480], [0, 480]]
+height_m = 220
+src = "地图量取"
+
+[[water]]
+name = "湖面（东西向）"
+path = [[101, 233], [499, 233]]
+width_m = 320
+depth_m = 6
+src = "地图量取"
+
+[[water]]
+name = "湖面（南北向）"
+path = [[290, 61], [290, 432]]
+width_m = 240
+depth_m = 6
+src = "地图量取"
+
+[[water]]
+name = "湖面（斜向一）"
+path = [[185, 128], [415, 337]]
+width_m = 210
+depth_m = 6
+src = "地图量取"
+
+[[water]]
+name = "湖面（斜向二）"
+path = [[185, 337], [415, 128]]
+width_m = 210
+depth_m = 6
+src = "地图量取"
+
+[[water]]
+name = "中央水道（西岸入湖）"
+path = [[0, 156], [70, 191], [122, 233]]
+width_m = 30
+depth_m = 1.3
+src = "地图量取"
+
+[[water]]
+name = "北岸水道（通东北湿地）"
+path = [[262, 70], [258, 13], [300, 2]]
+width_m = 26
+depth_m = 1.5
+src = "地图量取"
+
+[[water]]
+name = "东北岸水道"
+path = [[440, 110], [447, 65], [431, 2]]
+width_m = 22
+depth_m = 1.5
+src = "地图量取"
+
+[[water]]
+name = "南口浅水道（通南部湿地）"
+path = [[350, 380], [373, 421], [343, 478]]
+width_m = 24
+depth_m = 1
+src = "地图量取"
+
+[[water]]
+name = "东南口水道（沿海滩内侧南下）"
+path = [[450, 360], [489, 404], [556, 478]]
+width_m = 24
+depth_m = 1
+src = "地图量取"
+
+[[block]]
+id = "b01"
+over_water = true
+kind = "yard"
+face = "east"
+count = 1
+may_overlap = true
+name = "西岸低泥岛（锚点机位）"
+xy = [60, 270]
+size = [60, 50]
+h_m = 0.5
+src = "推定"
+note = "机位在岛东缘水边，离地约 1.6 m，朝东"
+
+[[block]]
+id = "b02"
+over_water = true
+kind = "asset"
+asset = "p333"
+face = "west"
+name = "沉没石庙顶层（两层台基 + 石龛）"
+xy = [305, 237]
+size = [36, 36]
+h_m = 8
+src = "地图量取"
+note = "位置按区图图标 [71, 53]；露出水面的尺寸与高度推定"
+
+[[block]]
+id = "b03"
+over_water = true
+kind = "asset"
+asset = "p333"
+face = "west"
+name = "朝西外圈石阶（斜没入水）"
+xy = [279, 237]
+size = [16, 8]
+h_m = 3
+src = "推定"
+note = "朝向区图无从量取，定为朝西，跨镜照此"
+
+[[block]]
+id = "b04"
+over_water = true
+kind = "low_wall"
+face = "south"
+count = 1
+name = "断柱头（西北）"
+xy = [255, 200]
+size = [4, 4]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b05"
+over_water = true
+kind = "low_wall"
+face = "south"
+count = 1
+name = "断柱头（东北）"
+xy = [345, 205]
+size = [4, 4]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b06"
+over_water = true
+kind = "low_wall"
+face = "south"
+count = 1
+name = "翘出水面的方石（东南）"
+xy = [338, 282]
+size = [6, 4]
+h_m = 1
+rot = 25
+src = "推定"
+
+[[block]]
+id = "b07"
+over_water = true
+kind = "low_wall"
+face = "south"
+count = 1
+name = "断柱头（西南）"
+xy = [262, 280]
+size = [4, 4]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b08"
+over_water = true
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "西北泥岛（枯树丛）"
+xy = [60, 95]
+size = [70, 50]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b09"
+over_water = true
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "西南泥岛（贴南墙坡脚）"
+xy = [60, 330]
+size = [70, 40]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b10"
+over_water = true
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "南岸泥岛"
+xy = [270, 458]
+size = [50, 30]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b11"
+over_water = true
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "东北泥岛"
+xy = [545, 90]
+size = [80, 60]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b12"
+over_water = true
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "东岸泥岛排（远景枯树剪影）"
+xy = [560, 260]
+size = [60, 160]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b13"
+over_water = true
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "东南泥岛"
+xy = [560, 400]
+size = [60, 40]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b14"
+over_water = true
+kind = "asset"
+asset = "p318"
+face = "south"
+name = "倒伏枯树干（西岸入水）"
+xy = [108, 290]
+size = [22, 2]
+h_m = 0.8
+rot = -20
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg312-c1"
+eye = [300, 442]
+target = [300, 240]
+eye_h = 20.0
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

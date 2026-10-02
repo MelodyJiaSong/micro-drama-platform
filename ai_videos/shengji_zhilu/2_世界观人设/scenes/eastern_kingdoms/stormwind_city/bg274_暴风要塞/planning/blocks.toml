@@ -1,0 +1,389 @@
+# 暴风要塞 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 本图 ＝ 区级平面图（bg268 terrain.toml）坐标平移 (-840, -190)；台地轮廓沿用区级推定值、南缘收到 y≈160 给内庭让位。
+
+[meta]
+bg = "bg274"
+name_zh = "暴风要塞"
+size_m = [260, 240]
+px_per_m = 6.0
+scale_src = "地图量取"
+scale_note = "取区级平面图 x 840–1100、y 190–430 m 一窗；要塞体块总尺度按区级 b907（约 172 × 135 m，地图量取）；台地、吊桥、门楼、内庭与各厅室位置只有原典相对方位（右手 / 左手 / 正后方），全部推定"
+# 世界树画面：建在全城最高岩石台地上的多体量城堡群，主厅居中、四周簇拥方塔圆塔，塔顶覆深蓝灰石板，建筑之间以带连续券拱的高架廊道相连，明显高出周围街区一大截
+absent = [
+    "露天步道＋大喷泉样式的内庭（4.0.3a 重制；旧世是吊桥 → 围合石庭 → 主厅）",
+    "能俯瞰湖面的花园平台、要塞背后的湖与公墓（4.0.3a）",
+    "第二道入口（旧世进要塞只有这一座吊桥）",
+    "候见厅里的异族使者（TBC 之后才有）",
+    "战火焦痕、爪痕、塌毁的塔（4.0.3a 之后）",
+    "空中坐骑 / 飞艇（旧世天空不能飞）",
+    "夜景 / 火光 / 火盆 / 灯笼（默认态是白天，唯一光源日光）",
+    "披甲卫兵、幼王与摄政（人物归 shot，锚点图无人）",
+    "任何人物、动物",
+]
+
+[[ridge]]
+name = "要塞岩石台地（高出街面约二十米）"
+height_m = 20
+poly = [[18.7, 28.4], [141.4, 16.1], [229.7, 70.1], [244.4, 150.0], [200.0, 160.0], [60.0, 160.0], [18.7, 150.0]]
+src = "推定"
+note = "区级 terrain 同名台地平移；南缘收到 y≈160，让出街面高度的内庭"
+
+[[water]]
+name = "台地脚下的护城运河（吊桥跨过的一段）"
+width_m = 16
+depth_m = 4
+path = [[20.0, 212.0], [240.0, 212.0]]
+src = "推定"
+note = "原典只说吊桥跨过运河、沿运河北上可达；走向推定"
+
+[[water]]
+name = "运河北延段（沿旧城区北上）"
+width_m = 14
+depth_m = 4
+path = [[100.0, 240.0], [100.0, 212.0]]
+src = "推定"
+note = "对应区级「旧城区 → 要塞（沿运河北上到吊桥）」"
+
+[[road]]
+name = "沿运河北上的石街（来自旧城区）"
+width_m = 8
+path = [[122.0, 240.0], [125.0, 226.0]]
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p297"
+face = "south"
+name = "南门楼（小，带木绞盘）"
+xy = [125.0, 236.0]
+size = [20, 8]
+h_m = 9
+src = "推定"
+note = "原典：吊桥两端是石砌门楼与绞盘铁链"
+
+[[block]]
+id = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "桥头方形石台（带石墩铁环）"
+xy = [125.0, 226.0]
+size = [14, 8]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "arch_bridge"
+face = "south"
+count = 1
+over_water = true
+name = "放下的木吊桥"
+xy = [125.0, 212.0]
+size = [10, 20]
+h_m = 1
+src = "原典方位"
+note = "原典：沿运河一路往北、过吊桥进内庭院"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p297"
+face = "south"
+name = "北门楼（拱洞 + 拉起的铁栅 + 铁链方孔）"
+xy = [125.0, 194.0]
+size = [24, 12]
+h_m = 16
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p295"
+face = "south"
+name = "北门楼西侧矮圆塔"
+xy = [108.0, 194.0]
+size = [8, 8]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p295"
+face = "south"
+name = "北门楼东侧矮圆塔"
+xy = [142.0, 194.0]
+size = [8, 8]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "围合石铺内庭"
+xy = [125.0, 172.0]
+size = [66, 24]
+h_m = 0
+src = "原典方位"
+note = "原典：吊桥那头围合的石铺庭院，吊桥直接通到这里"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p299"
+face = "east"
+into_ridge = true
+name = "内庭西侧券拱廊高墙"
+xy = [88.0, 172.0]
+size = [6, 28]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p299"
+face = "west"
+into_ridge = true
+name = "内庭东侧券拱廊高墙"
+xy = [162.0, 172.0]
+size = [6, 28]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "主坡道（内庭 → 主厅，爬升约二十米）"
+xy = [125.0, 146.0]
+size = [18, 20]
+h_m = 10
+src = "推定"
+note = "原典：候见厅在「主坡道上去右手第一间」"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p293"
+face = "south"
+into_ridge = true
+name = "主厅"
+xy = [125.0, 108.0]
+size = [44, 50]
+h_m = 30
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p294"
+face = "south"
+into_ridge = true
+name = "穹顶王座厅（主厅尽头）"
+xy = [125.0, 64.0]
+size = [30, 28]
+h_m = 28
+src = "原典方位"
+note = "原典：主厅尽头，半球形石砌穹窿"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p292"
+face = "south"
+into_ridge = true
+name = "作战地图室（王座厅正后方）"
+xy = [125.0, 38.0]
+size = [18, 14]
+h_m = 14
+src = "原典方位"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p292"
+face = "west"
+into_ridge = true
+name = "候见厅（坡道上去右手第一间）"
+xy = [162.0, 126.0]
+size = [24, 16]
+h_m = 14
+src = "原典方位"
+
+[[block]]
+id = "b15"
+kind = "lawn"
+face = "east"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "小庭院花园（进主厅左手）"
+xy = [80.0, 112.0]
+size = [30, 26]
+h_m = 0
+src = "原典方位"
+
+[[block]]
+id = "b16"
+kind = "asset"
+asset = "p292"
+face = "east"
+into_ridge = true
+name = "藏书厅（花园一侧）"
+xy = [85.0, 84.0]
+size = [24, 14]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b17"
+kind = "asset"
+asset = "p292"
+face = "east"
+into_ridge = true
+name = "陈列室（花园之后、藏书厅旁，三尊石像）"
+xy = [56.0, 88.0]
+size = [18, 18]
+h_m = 12
+src = "推定"
+note = "旧世有、4.0.3a 移除"
+
+[[block]]
+id = "b18"
+kind = "asset"
+asset = "p296"
+face = "south"
+into_ridge = true
+name = "西南方塔"
+xy = [45.0, 140.0]
+size = [14, 14]
+h_m = 40
+src = "推定"
+
+[[block]]
+id = "b19"
+kind = "asset"
+asset = "p295"
+face = "south"
+into_ridge = true
+name = "东南圆塔"
+xy = [205.0, 138.0]
+size = [14, 14]
+h_m = 42
+src = "推定"
+
+[[block]]
+id = "b20"
+kind = "asset"
+asset = "p295"
+face = "south"
+into_ridge = true
+name = "西北圆塔"
+xy = [42.0, 52.0]
+size = [14, 14]
+h_m = 38
+src = "推定"
+
+[[block]]
+id = "b21"
+kind = "asset"
+asset = "p296"
+face = "south"
+into_ridge = true
+name = "东北方塔"
+xy = [200.0, 72.0]
+size = [16, 16]
+h_m = 44
+src = "推定"
+
+[[block]]
+id = "b22"
+kind = "asset"
+asset = "p299"
+face = "south"
+may_overlap = true
+into_ridge = true
+name = "高架券拱廊道·东（主厅 → 东北方塔）"
+xy = [173.5, 83.5]
+size = [58, 5]
+h_m = 22
+rot = -23.5
+src = "推定"
+
+[[block]]
+id = "b23"
+kind = "asset"
+asset = "p299"
+face = "south"
+may_overlap = true
+into_ridge = true
+name = "高架券拱廊道·西（西南方塔 → 内庭西墙）"
+xy = [70.0, 149.0]
+size = [40, 5]
+h_m = 22
+rot = 26.6
+src = "推定"
+
+[[block]]
+id = "b24"
+kind = "low_wall"
+face = "south"
+count = 1
+into_ridge = true
+name = "台地北缘外墙（兼城墙）"
+xy = [80.0, 22.3]
+size = [123, 5]
+h_m = 18
+rot = -5.7
+src = "推定"
+note = "区级：要塞体块本身就是城的东北角，外墙沿台地边缘"
+
+[[block]]
+id = "b25"
+kind = "low_wall"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "台地东北缘外墙（兼城墙）"
+xy = [185.6, 43.1]
+size = [103, 5]
+h_m = 18
+rot = 31.4
+src = "推定"
+
+[[block]]
+id = "b26"
+kind = "low_wall"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "台地东缘外墙（兼城墙）"
+xy = [237.0, 110.0]
+size = [81, 5]
+h_m = 18
+rot = 79.6
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg274-c1"
+eye = [21, 120]
+target = [130, 120]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

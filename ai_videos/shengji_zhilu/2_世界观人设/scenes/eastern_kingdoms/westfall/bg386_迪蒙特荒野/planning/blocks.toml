@@ -1,0 +1,161 @@
+# 迪蒙特荒野 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 本点位在区图上没有图标（区级 b911 就是推定），场地内所有摆放一律 src = "推定"；
+# 相对方位（西 ≈100 m 土崖、南 60–90 m 起丘、东去镇子）取自区级 terrain.toml 与世界树文字。
+
+[meta]
+bg = "bg386"
+name_zh = "迪蒙特荒野"
+size_m = [220, 220]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "世界树只说「月溪镇西侧几乎只剩地基的农庄」，无一手尺寸；主屋 / 谷仓按西部荒野常见农庄尺度推定，崖与丘的距离按区级 terrain.toml 量出"
+# 世界树画面：月溪镇西侧几乎只剩地基的农庄，断墙与半截烟囱立在平地上，看得很远
+absent = [
+    "屋顶 / 完整的房屋（只剩地基与断墙，不能拍内景）",
+    "有人居住的痕迹：晾晒的衣物、新鲜的脚印、帐篷、营地（4.0.3 后的流民营也不在这里）",
+    "火、火堆、冒烟（烟囱炉膛与烧斑都是冷透多年的旧痕）",
+    "水面（海在西侧崖下，本场地内看不见水；丘脚浅沟是干的）",
+    "树林、绿地、湿润草坡（只有枯草与干蓟）",
+    "风车（本场地内没有，只在北面远景里有模糊细影）",
+    "石砌大屋 / 城墙 / 塔",
+]
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p341"
+face = "east"
+name = "主屋毛石地基（断墙膝高到胸高）"
+xy = [120, 100]
+size = [14, 10]
+h_m = 1.2
+src = "推定"
+note = "门口朝东一段完全塌平，留石门槛与半个斜倒门框；地基内横两三根银灰旧屋梁"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p342"
+face = "east"
+name = "半截石烟囱"
+xy = [111.5, 100]
+size = [2.5, 2.5]
+h_m = 5.5
+src = "推定"
+note = "主屋西山墙外，壁炉口朝东；全场地唯一的竖向物"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p341"
+face = "south"
+name = "谷仓地基（几乎贴地，四角剩粗木桩）"
+xy = [145, 80]
+size = [18, 12]
+h_m = 0.4
+src = "推定"
+note = "主屋东北"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p341"
+face = "south"
+name = "小棚屋石圈"
+xy = [138, 121]
+size = [7, 5]
+h_m = 0.3
+src = "推定"
+note = "主屋东南"
+
+[[block]]
+id = "b05"
+kind = "palisade"
+face = "south"
+count = 1
+name = "院栅残段（北，大半倒伏）"
+xy = [128, 66]
+size = [56, 0.6]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "palisade"
+face = "south"
+count = 1
+name = "院栅残段（东南，几根歪桩）"
+xy = [150, 132]
+size = [24, 0.6]
+h_m = 1.2
+rot = -20
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "撂荒旧田（北，枯草干蓟）"
+xy = [125, 32]
+size = [130, 40]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "西侧土崖边沿"
+xy = [16, 110]
+size = [8, 200]
+h_m = 0
+src = "推定"
+note = "崖顶与平地齐平，向西陡落二十多米到沙岸；崖外只见一线海"
+
+[[block]]
+id = "b09"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "丘脚干沟"
+xy = [95, 162]
+size = [50, 4]
+h_m = 0
+rot = 15
+src = "推定"
+note = "沟底龟裂发白泥壳，沟沿几根朽木桩；无水"
+
+[[ridge]]
+name = "南面红褐尖脊丘陵北坡（区级同一列丘陵的北脚）"
+height_m = 120
+poly = [[55, 220], [80, 192], [125, 178], [175, 168], [220, 160], [220, 220]]
+src = "推定"
+
+[[road]]
+name = "车辙土路（东来自镇子，过主屋门口向西没入枯草）"
+width_m = 3
+path = [[220, 98], [175, 98], [132, 97], [126, 92], [100, 91], [60, 94]]
+src = "推定"
+
+[[road]]
+name = "丘脚小径（几乎被草吞掉）"
+width_m = 1.2
+path = [[150, 98], [135, 140], [110, 158]]
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg386-c1"
+eye = [110, 202]
+target = [110, 110]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

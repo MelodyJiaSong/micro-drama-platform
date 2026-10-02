@@ -1,0 +1,212 @@
+# 伊萨里奥斯的洞穴 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 坐标原点在场地左上角，x 向东、y 向南，单位 m。北半是西南山坳坳底（湿草地 + 黑潭南端），南半是山体里的岩道与洞厅。
+# 洞口方位取区级平面图 b905（区图 (13%,70%) 洞口符号，排除法推定）；洞内布局无一手出处，一律推定。
+
+[meta]
+bg = "bg309"
+name_zh = "伊萨里奥斯的洞穴"
+size_m = [120, 170]
+px_per_m = 6.0
+scale_src = "推定"
+scale_note = "区图上只是坳底一个洞口符号；洞厅取约 40×30 m 的中型天然岩洞、岩道约 25 m，场地向北多留 60 m 装下洞外坳底湿地与黑潭南端"
+# 世界树画面：藏在崖壁后的干燥洞窟，洞内比外面亮，一条绿龙化身盘踞在中央，鳞片泛着翡翠光
+absent = [
+  "龙 / 任何生物（角色属 shot 层；场景底图的洞厅是空的）",
+  "自发光的晶石、鳞片光、符文、魔法光、传送门",
+  "火、火把、火盆、烛火、灯笼等任何人工光源",
+  "积水、泥沼、湿雾（洞内是干的，湿只到岩道口为止）",
+  "第二出口 / 暗道 / 通往神庙的地道",
+  "宝物堆、骨骸堆、营地、帐篷、家具",
+  "4.0.3a 之后的任何新增设施",
+  "任何人物 / 动物 / 文字 / 标记",
+]
+
+[[ridge]]
+name = "西南山墙（坳底南壁及山体）"
+poly = [[0, 56], [30, 60], [48, 66], [60, 64], [78, 60], [120, 50], [120, 170], [0, 170]]
+height_m = 220
+src = "地图量取"
+note = "区级 terrain.toml 西南墙；洞厅与岩道整个挖在这片山体里（块画在其上）"
+
+[[ridge]]
+name = "坳西侧岩坡"
+poly = [[0, 0], [22, 0], [18, 30], [10, 56], [0, 56]]
+height_m = 120
+src = "推定"
+
+[[water]]
+name = "黑潭南端"
+path = [[70, 16], [73, 24], [72, 30]]
+width_m = 30
+depth_m = 3
+src = "地图量取"
+note = "区图坳里那泓黑潭 (14–16%,54–61%) 的南端，离洞口一百余米——此处按场地压缩示意"
+
+[[road]]
+name = "坳底踩出的小径（→洞口）"
+path = [[72, 34], [66, 48], [60, 62]]
+width_m = 1.5
+src = "推定"
+
+[[road]]
+name = "岩道（向右弯，约 25 m）"
+path = [[60, 62], [60, 74], [56, 84], [48, 92]]
+width_m = 3
+src = "推定"
+note = "拐弯处岩壁外鼓，挡住洞外视线"
+
+[[block]]
+id = "b01"
+into_ridge = true
+kind = "cave_mouth"
+face = "north"
+count = 1
+name = "洞口（朝北）"
+xy = [60, 62]
+size = [5, 3]
+h_m = 0
+src = "推定"
+note = "区级平面图 b905 的洞口，排除法推定，待实机核"
+
+[[block]]
+id = "b02"
+into_ridge = true
+kind = "chamber"
+face = "north"
+count = 1
+name = "洞厅（椭圆，高顶约三层楼）"
+xy = [40, 112]
+size = [40, 30]
+h_m = 0
+src = "推定"
+note = "h_m=0 表示贴地的空腔地面；顶高约 10 m"
+
+[[block]]
+id = "b03"
+into_ridge = true
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "中央平滑浅凹"
+xy = [38, 114]
+size = [12, 9]
+h_m = 0
+src = "原典方位"
+note = "世界树画面「盘踞在中央」——生物不入底图，只留被压平的浅凹"
+
+[[block]]
+id = "b04"
+into_ridge = true
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "天井投光沙地"
+xy = [48, 110]
+size = [5, 5]
+h_m = 0
+src = "推定"
+note = "天井在洞顶偏东，光柱落在浅凹东侧"
+
+[[block]]
+id = "b05"
+may_overlap = true
+into_ridge = true
+kind = "asset"
+asset = "p328"
+face = "south"
+name = "石柱·东北"
+xy = [55, 100]
+size = [3, 3]
+h_m = 10
+src = "推定"
+
+[[block]]
+id = "b06"
+may_overlap = true
+into_ridge = true
+kind = "asset"
+asset = "p328"
+face = "south"
+name = "石柱·东南"
+xy = [56, 124]
+size = [3, 3]
+h_m = 10
+src = "推定"
+
+[[block]]
+id = "b07"
+may_overlap = true
+into_ridge = true
+kind = "asset"
+asset = "p328"
+face = "south"
+name = "石柱·西南"
+xy = [24, 124]
+size = [3, 3]
+h_m = 10
+src = "推定"
+
+[[block]]
+id = "b08"
+may_overlap = true
+into_ridge = true
+kind = "asset"
+asset = "p328"
+face = "south"
+name = "石柱·西北"
+xy = [25, 101]
+size = [3, 3]
+h_m = 10
+src = "推定"
+
+[[block]]
+id = "b09"
+into_ridge = true
+kind = "rock_shelf"
+face = "north"
+count = 1
+name = "南壁岩龛"
+xy = [40, 128]
+size = [14, 2]
+h_m = 1
+src = "推定"
+note = "比洞厅地面高出半人，积着干枯叶与草籽"
+
+[[block]]
+id = "b10"
+may_overlap = true
+into_ridge = true
+kind = "asset"
+asset = "p328"
+face = "south"
+name = "塌落碎岩堆"
+xy = [22, 112]
+size = [4, 3]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b11"
+into_ridge = true
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "锚点机位（岩道尽头）"
+xy = [48, 94]
+size = [2, 2]
+h_m = 0
+src = "推定"
+note = "朝南略偏西平视洞厅"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg309-c1"
+eye = [60, 156]
+target = [60, 85]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

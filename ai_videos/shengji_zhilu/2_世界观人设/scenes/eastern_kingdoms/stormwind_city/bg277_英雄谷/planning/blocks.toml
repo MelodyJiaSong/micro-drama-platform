@@ -1,0 +1,280 @@
+# 英雄谷 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 坐标原点在场地左上角，x 向东、y 向南，单位 m。本图原点 ＝ bg268 区级图的 (770, 570)，主路走向、城门与谷地外廓取自区级图（区图量取）。
+# 主路是一条西北—东南的直线：P(s) = (80 + 0.707 s, 48 + 0.707 s)，s=0 为岔口、s≈185 为城门；雕像 / 水面按它的法向对称摆。
+
+[meta]
+bg = "bg277"
+name_zh = "英雄谷"
+size_m = [260, 230]
+px_per_m = 6.0
+scale_src = "地图量取"
+scale_note = "谷地外廓与主路走向取 bg268 区级平面图（b910 184×135 m、入城主路、b913 城门，均为区图量取），本图原点 ＝ 区级图 (770, 570)；桥长宽、水道宽度、雕像间距无出处，推定"
+grid_m = 50
+# 世界树画面：城门内外一整块绿意盎然的天然盆地，一座宽阔石桥横跨谷底的窄护城水面，桥两侧立着远超真人尺度的巨型石雕像，主路尽头在雕像前分成左右两岔
+absent = [
+    "塔身焦黑爪痕、塔基震裂（4.0.3a 之后）",
+    "被撞落进水里的雕像（旧世五尊全部立着）",
+    "后期继任的骑马将军形象",
+    "第二道城门（全城陆路只此一口）",
+    "门内的巨弩（巨弩只在门外）",
+    "倒挂在城门拱下的巨龙头颅（事件景观，默认态不挂）",
+    "基座铭牌上的任何文字",
+    "港口 / 码头",
+    "人物、卫兵、马匹、动物",
+    "夜景、火把、灯笼、人工光源",
+    "飞行坐骑、训练假人",
+]
+
+[[ridge]]
+name = "东北草坡（升向旧城区南墙）"
+poly = [[134, 0], [138, 4], [251, 117], [260, 126], [260, 0]]
+height_m = 14
+src = "地图量取"
+
+[[ridge]]
+name = "西南草坡（升向法师区）"
+poly = [[0, 98], [36, 106], [142, 212], [150, 230], [0, 230]]
+height_m = 14
+src = "地图量取"
+
+[[water]]
+name = "护城水面·东北池"
+path = [[125.9, 30.3], [210.8, 115.2]]
+width_m = 50
+depth_m = 5
+src = "地图量取"
+
+[[water]]
+name = "护城水面·西南池"
+path = [[62.3, 93.9], [147.2, 178.8]]
+width_m = 50
+depth_m = 5
+src = "地图量取"
+
+[[water]]
+name = "桥下窄水道（连通两池）"
+path = [[121, 120.2], [152.2, 89]]
+width_m = 22
+depth_m = 4
+src = "推定"
+
+[[road]]
+name = "入城主路（城门 → 岔口）"
+path = [[239.1, 207.1], [210.8, 178.8], [136.6, 104.6], [80, 48]]
+width_m = 14
+src = "地图量取"
+
+[[road]]
+name = "左岔（西南 → 贸易区西南口）"
+path = [[80, 48], [62, 56], [40, 50], [18, 36]]
+width_m = 10
+src = "推定"
+
+[[road]]
+name = "右岔（东北 → 贸易区东南口）"
+path = [[80, 48], [88, 30], [80, 14], [66, 0]]
+width_m = 10
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p298"
+face = "southeast"
+name = "巨型白石正门"
+xy = [210.8, 178.8]
+size = [48, 14]
+h_m = 30
+rot = -45
+src = "地图量取"
+note = "全城唯一陆路口，门洞常年洞开，朝东南开向橡林"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p295"
+face = "southeast"
+may_overlap = true
+name = "门侧白石塔·东北"
+xy = [232, 157.6]
+size = [12, 12]
+h_m = 30
+src = "原典方位"
+note = "俯瞰谷地的双塔之一；旧世完好无焦痕"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p295"
+face = "southeast"
+may_overlap = true
+name = "门侧白石塔·西南"
+xy = [189.6, 200]
+size = [12, 12]
+h_m = 30
+src = "原典方位"
+note = "俯瞰谷地的双塔之二；旧世完好无焦痕"
+
+[[block]]
+id = "b04"
+kind = "low_wall"
+face = "south"
+count = 1
+may_overlap = true
+name = "城墙·东北段"
+xy = [242.6, 147]
+size = [20, 6]
+h_m = 18
+rot = -45
+src = "地图量取"
+
+[[block]]
+id = "b05"
+kind = "low_wall"
+face = "south"
+count = 1
+may_overlap = true
+name = "城墙·西南段"
+xy = [179, 210.6]
+size = [20, 6]
+h_m = 18
+rot = -45
+src = "地图量取"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p315"
+face = "southeast"
+may_overlap = true
+name = "门外巨弩·东北"
+xy = [232, 185.8]
+size = [4, 4]
+h_m = 3
+src = "原典方位"
+note = "只在门外"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p315"
+face = "southeast"
+may_overlap = true
+name = "门外巨弩·西南"
+xy = [217.8, 200]
+size = [4, 4]
+h_m = 3
+src = "原典方位"
+note = "只在门外"
+
+[[block]]
+id = "b08"
+kind = "arch_bridge"
+face = "south"
+count = 1
+over_water = true
+name = "宽石桥（三道低半圆拱）"
+xy = [136.6, 104.6]
+size = [40, 22]
+h_m = 4
+rot = 45
+src = "推定"
+note = "跨桥下窄水道；长宽无出处"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p313"
+face = "northeast"
+over_water = true
+name = "巨像·左一（矮人式战士，高基座）"
+xy = [146.5, 137.1]
+size = [7, 7]
+h_m = 10
+src = "原典方位"
+note = "入城者左手第一尊；位置间距推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p313"
+face = "southwest"
+over_water = true
+name = "巨像·右一（板甲战士）"
+xy = [169.1, 114.5]
+size = [6, 6]
+h_m = 9
+src = "原典方位"
+note = "入城者右手第一尊；旧世立着"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p313"
+face = "northeast"
+over_water = true
+name = "巨像·左二（长袍持杖法师）"
+xy = [104.1, 94.7]
+size = [6, 6]
+h_m = 9
+src = "原典方位"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p313"
+face = "southwest"
+over_water = true
+name = "巨像·右二（持弓精灵式游侠）"
+xy = [126.7, 72.1]
+size = [6, 6]
+h_m = 9
+src = "原典方位"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p313"
+face = "southeast"
+name = "岔口将军像（最大，正对来路）"
+xy = [71.5, 39.5]
+size = [9, 9]
+h_m = 12
+src = "原典方位"
+note = "主路尽头正中，路在像前分左右两岔；锚点图机位在它西南侧后方、朝东南"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p301"
+face = "south"
+count = 3
+into_ridge = true
+name = "东北坡树丛（苹果树与阔叶树）"
+xy = [186, 41]
+size = [14, 10]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p301"
+face = "south"
+count = 3
+into_ridge = true
+name = "西南坡树丛（苹果树与阔叶树）"
+xy = [94.1, 175.3]
+size = [14, 10]
+h_m = 8
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg277-c1"
+eye = [130, 212]
+target = [130, 115]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

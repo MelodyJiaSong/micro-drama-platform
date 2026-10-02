@@ -1,0 +1,173 @@
+# 法拉希姆湖 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 坐标原点在场地左上角，x 向东、y 向南，单位 m。场地左上角 ＝ 区级平面图 (900, 1300)，即区图约 [17.1, 37.0]。
+# 区图量取：湖面约 [19.5–21.2, 41.2–44.2] → 本图 x 130–219、y 147–253；坐标表点位 [21.41, 38.46] → (229, 52)，在湖北侧林中。
+
+[meta]
+bg = "bg439"
+name_zh = "法拉希姆湖"
+size_m = [360, 300]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "湖面轮廓与两道石山按区图放大量取（1 px ≈ 5.26 m，换算见区级 terrain.toml）；湖底沙带、石基、倒木的位置无一手出处，按世界树画面推定"
+absent = [
+    "入水溪与出水口（区图上是一块封闭水面）",
+    "码头、栈桥、船、木桩",
+    "营地、帐篷、瞭望台（迈斯特拉岗哨在东北约 350 m，不入本档）",
+    "道路（南北大路与海岸点线小径都不经过湖边）",
+    "墙、屋、柱等立起来的建筑（石基只剩贴地的长条石）",
+    "芦苇墙与成片浮花（那是另一座小湖的标志）",
+    "瀑布、岩洞",
+    "火、灯笼等任何人工光源",
+]
+
+[[ridge]]
+name = "西界石山（山脚直接没进湖水）"
+poly = [[0, 40], [60, 55], [105, 120], [126, 160], [130, 180], [130, 300], [0, 300]]
+height_m = 140
+src = "地图量取"
+note = "区图 x<19.5% 的西山，y 36–48%"
+
+[[ridge]]
+name = "南侧斜向石山（自湖南岸往东抬升）"
+poly = [[130, 300], [130, 262], [220, 262], [220, 205], [236, 160], [280, 115], [360, 80], [360, 300]]
+height_m = 120
+src = "地图量取"
+note = "区图湖东南起、向东到约 [26, 40] 的山带，与西山在湖西南角合拢"
+
+[[water]]
+name = "法拉希姆湖（清澈见底）"
+path = [[170, 147], [173, 180], [176, 220], [176, 253]]
+width_m = 88
+depth_m = 6
+src = "地图量取"
+note = "湖面约 90 × 105 m，歪卵形"
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "湖底白色细沙带"
+xy = [170, 182]
+size = [14, 66]
+rot = 18
+h_m = 0
+src = "推定"
+note = "从北岸脚下斜伸向湖心偏西（世界树画面）"
+
+[[block]]
+id = "b02"
+kind = "pool"
+face = "south"
+count = 1
+name = "湖心偏东深潭"
+xy = [190, 207]
+size = [26, 26]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "北岸卵石浅滩"
+xy = [172, 141]
+size = [60, 10]
+h_m = 0
+src = "推定"
+note = "唯一方便站人的岸；机位在此朝正南略偏西"
+
+[[block]]
+id = "b04"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "北岸石基（最完整的一段）"
+xy = [172, 134]
+size = [12, 1]
+h_m = 0.4
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "西北岸石基残段"
+xy = [140, 152]
+size = [1, 10]
+rot = 30
+h_m = 0.3
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "东岸浸水石基（覆绿藻）"
+xy = [216, 200]
+size = [1, 14]
+rot = -10
+h_m = 0.2
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "东北岸石基残块"
+xy = [205, 149]
+size = [4, 1]
+rot = -30
+h_m = 0.3
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p377"
+face = "south"
+name = "西北岸倒木（泡成灰白）"
+xy = [134, 162]
+size = [14, 1.2]
+rot = 70
+h_m = 0.8
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p378"
+face = "south"
+count = 6
+name = "南岸崩落碎岩"
+xy = [180, 257]
+size = [30, 8]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p372"
+face = "south"
+name = "北岸林缘银灰古树"
+xy = [176, 122]
+size = [12, 12]
+h_m = 34
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg439-c1"
+eye = [180, 276]
+target = [180, 150]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

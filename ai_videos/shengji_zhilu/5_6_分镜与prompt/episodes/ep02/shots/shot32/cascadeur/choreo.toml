@@ -1,0 +1,37 @@
+# shot32 人体动作表（Cascadeur 层）。位置与朝向一律从 ../planning/overhead.toml 读，这里只写「身体摆成什么样」。
+# 改动作 ＝ 改本文件重跑 `python tools/cascadeur/choreo.py <shot 目录> --build`；部件都在共享库 tools/cascadeur/poses.toml。
+# 时刻与 shot32.md `动作:` 时间轴、overhead 的 [[hit]] / [[guard]] 逐拍对齐（rule 4h ②）。生成器：spawns/shots-d2/scratch/build_choreo2.py。强盗是色块人偶。
+
+[meta]
+origin = [209.4, 136.9]
+fps = 30
+
+# 杜克：1s 盾挡下一刀；1.4s 左肩挨一脚、左臂连盾垂下；1.9s 侧身用后背把往前冲的沃尔特顶回去；2.6s 胸前挨一刀一晃，3s 垂着的盾又挨一棒
+[actor."杜克"]
+keys = [
+  [0, "stance_l+shield_guard"],
+  [0.9, "stance_l+shield_guard"],
+  [1, "brace_sink+shield_brace"],
+  [1.2, "stance_l+shield_guard"],
+  [1.4, "stance_l+hit_shoulder_l"],
+  [1.7, "stance_l+arm_limp_l"],
+  [1.9, "step_back+arm_limp_l+look_back_r"],
+  [2.2, "stance_l+arm_limp_l"],
+  [2.6, "brace_sink+arm_limp_l"],
+  [2.8, "stance_l+arm_limp_l"],
+  [3, "brace_sink+arm_limp_l"],
+  [3.4, "stance_l+arm_limp_l"],
+  [3.9, "stance_l+arm_limp_l"],
+]
+
+# 沃尔特：挺着草叉站在杜克身后；1.5s 弟弟挨了一脚，骂一声挺叉往前冲；1.9s 被杜克侧身用后背顶回去，趔趄半步
+[actor."沃尔特"]
+keys = [
+  [0, "stance_l+twohand_low"],
+  [1.45, "stance_l+twohand_low"],
+  [1.7, "lunge+twohand_chop"],
+  [1.9, "lunge+twohand_chop"],
+  [2.1, "step_back+twohand_low"],
+  [2.4, "stance_l+twohand_low"],
+  [3.9, "stance_l+twohand_low"],
+]

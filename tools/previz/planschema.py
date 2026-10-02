@@ -107,6 +107,78 @@ def sha(owner_dir: str) -> str:
         return hashlib.sha256(f.read()).hexdigest()[:8]
 
 
+# 构件在自身占地之外长出的体块（平面图上没有、却会挡人挡镜头）——build_scene 按它建、shot_overhead 按它查和画，
+# 数值只在这里写一处（follow-up 032：旧 ep01 shot01 两名卫兵整个埋在门塔里，平面图闸门看不见门塔）。
+# 命中用什么打 → previz 里那件东西的名字后缀（「{人}_{后缀}」）：生成器写 [[命中]]、build_previz 造持物、命中贴身自检三处共用。
+HIT_OBJ = {"锤": "锤头", "斧": "斧头", "剑": "剑", "盾": "盾", "镐": "镐头", "棒": "棒", "叉": "叉头"}   # 叉：与 build_previz 持物件名「{人}_叉头」对上（8f ep02 草叉）
+BODY_HITS = ("撞", "咬", "拳", "脚", "爪", "头", "肘", "膝", "肩")    # 身体就是兵器：按身体量贴身，不要兵器件（follow-up 047 G5）
+# 命中打在身上的哪件道具（049 G7：S20 那一斧该落在背上的木盾，previz 只量「碰到杜克身上任何一处」就算过）：
+# overhead [[hit]].part 里出现键 → previz 里那件东西的名字后缀（「{目标}_{后缀}」，与持物件名同一套）
+HIT_PART_OBJ = (("背上的木盾", "背盾"), ("背盾", "背盾"), ("钢盾", "盾"), ("木盾", "盾"), ("盾", "盾"))
+
+# previz 渲染戳（049 G10：审的人拿到的静帧比 mp4 旧、mp4 比平面图旧）：渲整条 / 出静帧时把输入的 sha256 写在旁边，
+# 生成器闸门拿当前输入重算、对不上即 raise。输入＝配置本身 + 后处理钩子 + Cascadeur 模型（及同目录 keys.json / choreo.toml）。
+PREVIZ_STAMP = "_previz.stamp.json"      # previz/{shot}_previz.stamp.json
+STILLS_STAMP = "_stills.stamp.json"      # previz/frames/{shot}_stills.stamp.json
+
+
+def hit_part_obj(part: str) -> str | None:
+    for k, v in HIT_PART_OBJ:
+        if k in part:
+            return v
+    return None
+
+
+PREVIZ_ENGINE = "052"     # 引擎行为变了（052：人偶走路加步态）就改它：旧 mp4 / 静帧的渲染戳随之失效
+
+def render_inputs(cfg_path) -> dict:
+    """previz 一次渲染的全部输入 → {相对配置目录的路径: sha256}。build_previz 写戳、生成器验戳共用这一处。"""
+    import tomllib
+    from pathlib import Path
+    cfg_path = Path(cfg_path)
+    base = cfg_path.parent
+    cfg = tomllib.loads(cfg_path.read_text(encoding="utf-8"))
+    files = [cfg_path]
+    hook = cfg.get("全局", {}).get("后处理")
+    if hook:
+        files.append(base / hook)
+    for a in cfg.get("角色", []):
+        if a.get("模型"):
+            m = (base / a["模型"]).resolve()
+            files += [m, m.parent / "keys.json", m.parent / "choreo.toml"]
+    out = {}
+    for f in files:
+        f = Path(f).resolve()
+        if f.is_file():
+            try:
+                key = f.relative_to(base.resolve()).as_posix()
+            except ValueError:
+                key = "../" + f.relative_to(base.resolve().parent).as_posix()
+            out[key] = hashlib.sha256(f.read_bytes()).hexdigest()
+    out["engine"] = PREVIZ_ENGINE
+    return out
+GATE_TOWER = {"w": 4.4, "gap": 2.2, "extra_depth": 2.0, "extra_h": 3.0}   # gate_wall：门洞两侧各一座，比墙厚 2 m、高 3 m
+
+
+def derived(b: dict) -> list[dict]:
+    if b.get("kind") != "gate_wall":
+        return []
+    gx, gy = b["xy"]
+    _sx, sy = b["size"]
+    gw, T = float(b.get("gate_w", 5.0)), GATE_TOWER
+    return [{"name": nm, "id": "%s%s" % (b.get("id", ""), tag), "xy": [gx + sgn * (gw / 2.0 + T["gap"]), gy],
+             "size": [T["w"], sy + T["extra_depth"]], "h_m": float(b["h_m"]) + T["extra_h"], "kind": "derived",
+             "parent": b.get("id", ""), "src": b.get("src", "推定")}
+            for sgn, nm, tag in ((-1, "门塔西", "w"), (1, "门塔东", "e"))]
+
+
+def with_derived(cfg: dict) -> dict:
+    """平面图 + 构件派生体块（只给消费者用，不写回 blocks.toml：派生量由构件参数算出，写回就成了会漂的副本）。"""
+    out = dict(cfg)
+    out["block"] = list(cfg.get("block", [])) + [d for b in cfg.get("block", []) for d in derived(b)]
+    return out
+
+
 def corners(b: dict) -> list[tuple[float, float]]:
     x, y = b["xy"]
     sx, sy = b["size"]

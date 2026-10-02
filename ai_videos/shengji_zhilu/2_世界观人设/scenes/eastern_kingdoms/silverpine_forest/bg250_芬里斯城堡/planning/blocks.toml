@@ -1,0 +1,219 @@
+# 芬里斯城堡 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 原典：岛顶的石砌庄园，塔楼完好，院墙塌了一角，窗里有灯。区图：城堡图标在月牙形岛的北半部，图标以南一条线顺坡南下。
+# 局部坐标；庄园中心 (120, 121) 对 bg247 区级平面图 b950 (2515, 632)。庄园内部布局无一手出处，一律推定。
+
+[meta]
+bg = "bg250"
+name_zh = "芬里斯城堡"
+size_m = [240, 260]
+px_per_m = 6.0
+scale_src = "推定"
+scale_note = "区级平面图 b950 给庄园 120 m 见方的外接范围（地图量取）；本图取庄园 + 四面坡 + 北面湖岸共 240 × 260 m。北岸距离按区图城堡图标到岛北缘约 40 px（≈150 m）折半取「约百米」，庄园内部尺寸全部推定"
+# 世界树画面：岛顶的石砌庄园，塔楼完好，院墙塌了一角，窗里有灯
+absent = [
+    "人物、亡灵、法师与任何动物（窗里有灯但画面无人）",
+    "吊桥、铁闸门、护城河与门口火盆（那是南部崖顶黑石城堡的标志）",
+    "通往岛上的桥与完好的渡船（区图一座桥都没有，只能游过去）",
+    "火把、灯笼、火堆与冒烟的烟囱（唯一人工光源是几扇窗里的烛光）",
+    "坍塌的塔楼（原典：塔楼完好）",
+    "湖对岸的山与建筑（对岸永远隐在雾里）",
+    "攻城器械、营帐、军旗与战壕（4.0.3a 后的战线元素）",
+    "晴天、蓝天与阳光",
+    "阔叶林与翠绿草坪",
+    "雪与积雪",
+]
+
+[[ridge]]
+name = "岛顶山包（庄园平台四面往下掉的陡坡）"
+poly = [[0, 14], [240, 14], [240, 260], [0, 260]]
+height_m = 30
+src = "推定"
+
+[[water]]
+name = "洛丹米尔湖（庄园北面坡下湖岸）"
+path = [[0, 6], [240, 6]]
+width_m = 12
+depth_m = 10
+src = "推定"
+
+[[road]]
+name = "之字形上山土路（南墙门洞→南坡→岛南端）"
+path = [[120, 147], [120, 156], [98, 172], [136, 196], [108, 226], [118, 260]]
+width_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b01"
+into_ridge = true
+kind = "asset"
+asset = "p274"
+face = "south"
+name = "主楼（两层灰石厅堂，深灰石板双坡顶，门朝南）"
+xy = [113, 118]
+size = [38, 14]
+h_m = 11
+src = "推定"
+note = "二层有两扇窗亮烛光；屋脊两根方石烟囱，冷、不冒烟"
+
+[[block]]
+id = "b02"
+into_ridge = true
+kind = "asset"
+asset = "p275"
+face = "south"
+name = "东端圆塔（完好，尖锥石板顶）"
+xy = [138, 118]
+size = [11, 11]
+h_m = 20
+src = "推定"
+note = "高出主楼两层；上部一两扇窗亮烛光"
+
+[[block]]
+id = "b03"
+into_ridge = true
+kind = "plaza"
+face = "south"
+may_overlap = true
+name = "院内石板地"
+xy = [120, 136]
+size = [66, 18]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b04"
+into_ridge = true
+kind = "low_wall"
+face = "south"
+name = "北院墙"
+xy = [120, 96]
+size = [72, 1]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b05"
+may_overlap = true
+into_ridge = true
+kind = "low_wall"
+face = "south"
+name = "东院墙"
+xy = [156, 121]
+size = [1, 50]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b06"
+may_overlap = true
+into_ridge = true
+kind = "low_wall"
+face = "south"
+name = "西院墙（南端止于塌口）"
+xy = [84, 119]
+size = [1, 46]
+h_m = 3.5
+src = "原典方位"
+note = "原典：院墙塌了一角；塌在西南角为推定"
+
+[[block]]
+id = "b07"
+into_ridge = true
+kind = "low_wall"
+face = "south"
+name = "南院墙西段（西端止于塌口）"
+xy = [103, 146]
+size = [30, 1]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b08"
+may_overlap = true
+into_ridge = true
+kind = "low_wall"
+face = "south"
+name = "南院墙东段"
+xy = [139, 146]
+size = [34, 1]
+h_m = 3.5
+src = "推定"
+note = "与西段之间 4 m 是空拱门洞，门扇不在，两侧锈铁门枢"
+
+[[block]]
+id = "b09"
+into_ridge = true
+kind = "asset"
+asset = "p281"
+face = "south"
+count = 6
+name = "西南角塌口碎石坡"
+xy = [84, 151]
+size = [9, 9]
+h_m = 1
+src = "推定"
+note = "塌口 3–4 m；碎石长苔、石缝里冒小松苗；坡脚压半截朽木梁"
+
+[[block]]
+id = "b10"
+into_ridge = true
+kind = "low_wall"
+face = "south"
+name = "门洞外石阶（十来级）"
+xy = [120, 151]
+size = [4, 8]
+h_m = 1.5
+src = "推定"
+note = "门洞前翻倒一只木桶；台阶旁一块积水的石柱础"
+
+[[block]]
+id = "b11"
+into_ridge = true
+kind = "asset"
+asset = "p269"
+face = "south"
+count = 40
+name = "西坡黑松林"
+xy = [40, 137]
+size = [70, 234]
+h_m = 22
+src = "推定"
+
+[[block]]
+id = "b12"
+into_ridge = true
+kind = "asset"
+asset = "p269"
+face = "south"
+count = 40
+name = "东坡黑松林"
+xy = [200, 137]
+size = [70, 234]
+h_m = 22
+src = "推定"
+
+[[block]]
+id = "b13"
+into_ridge = true
+kind = "asset"
+asset = "p269"
+face = "south"
+count = 40
+name = "北坡黑松林（下到湖岸）"
+xy = [120, 55]
+size = [90, 70]
+h_m = 22
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）：场地被体块占满，放在室内
+[[anchor]]
+key = "bg250-c1"
+eye = [120, 221]
+target = [120, 52]
+eye_h = 1.65
+lens_mm = 24
+inside = true
+note = "室内南端朝北；自动生成，排镜时按需改"

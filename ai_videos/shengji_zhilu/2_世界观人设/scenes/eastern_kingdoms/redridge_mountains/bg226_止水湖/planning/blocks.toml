@@ -1,0 +1,307 @@
+# 止水湖 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 换算：原版区图 1 px ≈ 1.98 m（区 1985 × 1324 m / 1002 × 668 px）；场地原点 ＝ 区坐标 (540, 540) m，只框主湖段（湖口木桥以东、东尾出水口以西）。
+# 湖岸轮廓、北岸崖坡、东岸台地西缘、北路与湖边大道按区图量取（与 bg222 terrain.toml 同一套数）；湖心三岛、窝棚组、树丛与滚石推定。
+# 锚点机位：主湖西半南岸的卵石浅滩 (200, 338)，朝东北（约 45°）望湖；窝棚在右前方岸上、芦苇在左前方水边。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg226"
+name_zh = "止水湖"
+size_m = [640, 480]
+px_per_m = 2.5
+grid_m = 50
+scale_src = "地图量取"
+scale_note = "区 WorldMapArea 1985 × 1324 m × 原版区图量取：主湖东西约 550 m、南北约 350 m，南岸南湾鼓出约 60 m；湖心岛、窝棚与树丛体量推定"
+# 世界树画面：群山围出的深蓝大湖，水面静到能整块映出红岩崖壁；浅滩边有鱼人搭的粗木窝棚，湖心有几座小岛
+absent = [
+    "修好的完整湖口木桥（旧世桥一直架着脚手架、修不完）",
+    "湖面上的船只 / 帆 / 码头货栈（湖上空着，镇边空船属 bg223）",
+    "亮着的火堆 / 烟柱 / 火把 / 灯笼（白天户外零人工光源，窝棚火坑是冷灰余烬）",
+    "湖心岛上的建筑 / 灯塔 / 石桥（岛上只有树与石头）",
+    "北岸沿水的步道或栈道（崖脚直接入水）",
+    "风浪 / 白浪 / 急流（湖面无风如镜，只有东头出水口有缓流）",
+    "冰面 / 雪 / 秋色落叶",
+    "任何人物 / 动物 / 鱼 / 文字 / 路牌字样",
+]
+
+[[ridge]]
+name = "北岸红岩崖坡（伐木场高地南缘）"
+poly = [[175, 3], [330, 0], [500, 0], [572, 43], [591, 122], [492, 148], [353, 82], [214, 56]]
+height_m = 90
+src = "地图量取"
+note = "崖脚直落水边、无岸路；坡上豁口里是废弃伐木场（bg224，场地外北侧）"
+
+[[ridge]]
+name = "东岸红岩台地西缘（要塞所在）"
+poly = [[590, 60], [640, 50], [640, 228], [605, 222], [592, 150]]
+height_m = 40
+src = "地图量取"
+note = "石堡台地只露西缘，要塞本体在场地东外（bg233）"
+
+[[ridge]]
+name = "南墙山脚"
+poly = [[250, 480], [360, 470], [470, 462], [572, 454], [640, 450], [640, 480]]
+height_m = 220
+src = "地图量取"
+note = "湖边大道南侧那道红岩坡的坡脚"
+
+[[water]]
+name = "湖口窄处（桥下，西连西湾）"
+path = [[0, 170], [70, 175]]
+width_m = 90
+depth_m = 6
+src = "地图量取"
+
+[[water]]
+name = "主湖西半"
+path = [[150, 60], [160, 200], [190, 330]]
+width_m = 190
+depth_m = 12
+src = "地图量取"
+
+[[water]]
+name = "主湖中段"
+path = [[240, 205], [420, 230], [560, 250]]
+width_m = 150
+depth_m = 12
+src = "地图量取"
+
+[[water]]
+name = "主湖北缘（北岸崖脚直落水边）"
+path = [[220, 95], [350, 110], [480, 160], [560, 200]]
+width_m = 70
+depth_m = 10
+src = "地图量取"
+note = "区图北岸红岩崖脚与湖岸重合，崖脚无滩"
+
+[[water]]
+name = "南湾"
+path = [[290, 300], [350, 360], [420, 340]]
+width_m = 90
+depth_m = 6
+src = "地图量取"
+
+[[water]]
+name = "东头出水口（流进河道）"
+path = [[560, 250], [640, 240]]
+width_m = 40
+depth_m = 3
+src = "地图量取"
+note = "往东接瀑布下游河道（bg233 / bg234）"
+
+[[road]]
+name = "北路（桥北头→北山口）"
+path = [[28, 124], [46, 82], [85, 3]]
+width_m = 6
+src = "地图量取"
+
+[[road]]
+name = "西路（桥南头→三角路口）"
+path = [[28, 218], [12, 250], [0, 268]]
+width_m = 6
+src = "推定"
+
+[[road]]
+name = "湖边大道（南岸外侧）"
+path = [[0, 478], [115, 479], [194, 473], [254, 466], [314, 453], [373, 440], [413, 420], [453, 393], [492, 360], [532, 334], [572, 314], [621, 294], [640, 287]]
+width_m = 5
+src = "地图量取"
+note = "全线属 bg227；一侧是水一侧是南墙红岩坡"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p223"
+face = "south"
+over_water = true
+name = "湖心大岛（松柏与歪脖榆树）"
+xy = [300, 235]
+size = [46, 28]
+h_m = 7
+src = "推定"
+note = "形如压扁的面包，岛岸一圈灰色岩石"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p223"
+face = "south"
+over_water = true
+name = "西北小岛（几棵矮树）"
+xy = [230, 150]
+size = [20, 12]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p220"
+face = "south"
+over_water = true
+name = "东礁石（光秃红褐岩）"
+xy = [420, 255]
+size = [12, 8]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p218"
+face = "east"
+over_water = true
+name = "窝棚甲（浮木芦苇顶）"
+xy = [226, 330]
+size = [6, 5]
+h_m = 2.2
+src = "推定"
+note = "旧世湖岸窝棚，本档空置"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p218"
+face = "southwest"
+over_water = true
+name = "窝棚乙"
+xy = [238, 326]
+size = [5, 4]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p218"
+face = "north"
+over_water = true
+name = "窝棚丙"
+xy = [233, 339]
+size = [5, 5]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p219"
+face = "south"
+over_water = true
+name = "冷灰火坑（熏黑卵石圈）"
+xy = [232, 332]
+size = [2.5, 2.5]
+h_m = 0.3
+src = "推定"
+note = "余烬冷透、不冒烟"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p224"
+face = "south"
+over_water = true
+name = "晾鱼架（两根叉木）"
+xy = [245, 334]
+size = [7, 1.5]
+h_m = 1.8
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "芦苇浅滩"
+xy = [205, 327]
+size = [30, 10]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p221"
+face = "south"
+count = 8
+over_water = true
+name = "北岸松柏坡"
+xy = [130, 30]
+size = [70, 34]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p222"
+face = "south"
+count = 5
+over_water = true
+name = "南岸榆树丛"
+xy = [160, 410]
+size = [50, 26]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p220"
+face = "south"
+count = 3
+over_water = true
+name = "北岸崖脚落石（长苔）"
+xy = [460, 150]
+size = [12, 9]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p225"
+face = "south"
+over_water = true
+name = "斜插浅水的朽木桩"
+xy = [215, 321]
+size = [1, 1]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p216"
+face = "south"
+over_water = true
+name = "搁浅整木（树皮剥落）"
+xy = [252, 344]
+size = [10, 1.5]
+h_m = 0.6
+rot = 20
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "arch_bridge"
+face = "south"
+count = 1
+over_water = true
+name = "湖口长木桥（带脚手架，只露东侧）"
+xy = [28, 172]
+size = [8, 100]
+h_m = 4
+src = "地图量取"
+note = "南北向横跨湖口，桥本体归 bg223；本档只在朝西的镜里作远景，旧世缺板、脚手架未拆"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg226-c1"
+eye = [320, 442]
+target = [320, 240]
+eye_h = 21.3
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

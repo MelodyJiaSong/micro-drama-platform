@@ -1,0 +1,797 @@
+# 灼热峡谷区级资产规划（区级资产规划师写；tools/apply_asset_plan.py 只读）
+# 新立 19 件（额度上限）；成片的块用单体 + count 散布。blend 里材质会剥掉，所以按「形状」复用：
+#   铁皮棚屋兼工具棚 / 坑沿营棚，圆肚高炉兼脊上熔炉，平顶条石屋兼石营房 / 两处无名石哨屋，
+#   木人字吊架兼挖掘营西界一角，锥形废石堆四处共用，翻倒矿车兼散架手推车，
+#   崩落巨石兼挡风巨石 / 半埋岩块群 / 山墙脚碎岩裙，焦黑枯桩兼烤裂木桩，
+#   倒伏原木兼横倒枯桩 / 倒伏焦木 / 刮皮圆木，铁箍木桶兼侧倒空桶 / 营房前铁桶，
+#   铁砧石槽兼坩埚铁锭模，锈铁轨残骸兼洞口遗留物 / 灰下半露残骸。
+# 全区八个 bg 都「暂无排镜」，所以按去重硬要求激进合并；等排镜真拍到某件、形制又对不上时再另立。
+# judgment calls：
+#   - 岩台 / 土坎 / 坡头 / 开凿面 / 碎屑坡锥 / 扇形缓坡 / 观坑岩嘴 / 石阶顶 / 谷口低岩 走 rock_shelf（地形，不是有界物体）；
+#   - h_m ≤ 0.5 的地面标记（露天坑底、碎石斜坡、自燃火点地缝、余烬点、灰坑、沙垄 / 灰垄带、干沟、熔渣舌、坑沿、碎石槽）走 plaza；
+#     下陷写在 blocks.toml 的 note 里，引擎按地面块处理；自燃火苗与余烬的光由卡与光线写，不进网格；
+#   - 熔岩坑 / 熔渣池 走 pool；矿坑上的原木排架栈桥走 arch_bridge（线性跨越件）；
+#   - 对崖方形矿洞口 / 木框试掘洞 走 mine_portal；熏黑洞口走 cave_mouth、洞内通道走 tunnel；
+#   - 黑石圈火塘走 campfire（石圈 + 柴堆，形制吻合）；省下的额度给岩台唯一上下通道——之字形木坡道（没有能用的 kind）；
+#   - 弯道小平台（待运矿石与空箩筐）走 yard；
+#   - bg245·b14「挖掘营西界一角」只露吊架与碎石堆，用木吊架 ×2 表达。
+
+[meta]
+zone = "searing_gorge"
+
+[[use]]
+bg = "bg238"
+block = "b01"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg238"
+block = "b02"
+kind = "rock_shelf"
+face = "northwest"
+
+[[use]]
+bg = "bg238"
+block = "b03"
+asset = "p239"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg238"
+block = "b04"
+asset = "p238"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg238"
+block = "b05"
+asset = "p237"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg238"
+block = "b06"
+asset = "p237"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg238"
+block = "b07"
+asset = "p241"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg238"
+block = "b08"
+asset = "p241"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg238"
+block = "b09"
+asset = "p233"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg238"
+block = "b10"
+asset = "p233"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg238"
+block = "b11"
+asset = "p233"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg238"
+block = "b12"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg238"
+block = "b13"
+asset = "p242"
+face = "south"
+count = 2
+
+[[use]]
+bg = "bg238"
+block = "b14"
+kind = "rock_shelf"
+face = "southeast"
+
+# ── bg239 制皮匠营地 ──
+
+[[use]]
+bg = "bg239"
+block = "b01"
+kind = "campfire"
+face = "south"
+
+[[use]]
+bg = "bg239"
+block = "b02"
+asset = "p247"
+face = "northeast"
+count = 1
+
+[[use]]
+bg = "bg239"
+block = "b03"
+asset = "p246"
+face = "southwest"
+count = 1
+
+[[use]]
+bg = "bg239"
+block = "b04"
+asset = "p246"
+face = "southwest"
+count = 1
+
+[[use]]
+bg = "bg239"
+block = "b05"
+asset = "p246"
+face = "southwest"
+count = 1
+
+[[use]]
+bg = "bg239"
+block = "b06"
+asset = "p248"
+face = "northeast"
+count = 4
+
+[[use]]
+bg = "bg239"
+block = "b07"
+asset = "p245"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg239"
+block = "b08"
+asset = "p243"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg239"
+block = "b09"
+asset = "p248"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg239"
+block = "b10"
+kind = "rock_shelf"
+face = "southwest"
+
+# ── bg240 瑟银哨塔 ──
+
+[[use]]
+bg = "bg240"
+block = "b01"
+kind = "rock_shelf"
+face = "south"
+
+[[use]]
+bg = "bg240"
+block = "b02"
+asset = "p234"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg240"
+block = "b03"
+asset = "p234"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg240"
+block = "b04"
+face = "south"
+parts = [{asset = "p356", at = [-0.9, 0.2], yaw = 0}, {asset = "p251", at = [1.1, 0.4], yaw = 0}]
+
+[[use]]
+bg = "bg240"
+block = "b05"
+asset = "p233"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg240"
+block = "b06"
+asset = "p233"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg240"
+block = "b07"
+asset = "p233"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg240"
+block = "b08"
+asset = "p233"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg240"
+block = "b09"
+asset = "p233"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg240"
+block = "b10"
+asset = "p233"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg240"
+block = "b11"
+asset = "p240"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg240"
+block = "b12"
+asset = "p240"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg240"
+block = "b13"
+kind = "arch_bridge"
+face = "east"
+
+[[use]]
+bg = "bg240"
+block = "b14"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg240"
+block = "b15"
+kind = "mine_portal"
+face = "west"
+
+[[use]]
+bg = "bg240"
+block = "b16"
+asset = "p250"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg240"
+block = "b17"
+kind = "pool"
+face = "south"
+
+# ── bg241 黑炭谷 ──
+
+[[use]]
+bg = "bg241"
+block = "b01"
+kind = "cave_mouth"
+face = "northeast"
+
+[[use]]
+bg = "bg241"
+block = "b02"
+kind = "tunnel"
+face = "northeast"
+
+[[use]]
+bg = "bg241"
+block = "b03"
+kind = "rock_shelf"
+face = "northeast"
+
+[[use]]
+bg = "bg241"
+block = "b04"
+asset = "p243"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg241"
+block = "b05"
+asset = "p243"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg241"
+block = "b06"
+asset = "p244"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg241"
+block = "b07"
+asset = "p245"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg241"
+block = "b08"
+asset = "p249"
+face = "northeast"
+count = 1
+
+# ── bg242 尘火谷 ──
+
+[[use]]
+bg = "bg242"
+block = "b01"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg242"
+block = "b02"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg242"
+block = "b03"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg242"
+block = "b04"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg242"
+block = "b05"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg242"
+block = "b06"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg242"
+block = "b07"
+asset = "p243"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg242"
+block = "b08"
+asset = "p243"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg242"
+block = "b09"
+asset = "p243"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg242"
+block = "b10"
+kind = "rock_shelf"
+face = "south"
+
+[[use]]
+bg = "bg242"
+block = "b11"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg242"
+block = "b12"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg242"
+block = "b13"
+asset = "p249"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg242"
+block = "b14"
+asset = "p242"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg242"
+block = "b15"
+kind = "rock_shelf"
+face = "north"
+
+[[use]]
+bg = "bg242"
+block = "b16"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg242"
+block = "b17"
+asset = "p244"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg242"
+block = "b18"
+kind = "plaza"
+face = "south"
+
+# ── bg243 观火岭 ──
+
+[[use]]
+bg = "bg243"
+block = "b01"
+asset = "p235"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg243"
+block = "b02"
+asset = "p234"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg243"
+block = "b03"
+asset = "p235"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg243"
+block = "b04"
+asset = "p234"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg243"
+block = "b05"
+asset = "p235"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg243"
+block = "b06"
+asset = "p234"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg243"
+block = "b07"
+asset = "p235"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg243"
+block = "b08"
+kind = "low_wall"
+face = "south"
+
+[[use]]
+bg = "bg243"
+block = "b09"
+asset = "p236"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg243"
+block = "b10"
+asset = "p236"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg243"
+block = "b11"
+asset = "p248"
+face = "south"
+count = 3
+
+[[use]]
+bg = "bg243"
+block = "b12"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg243"
+block = "b13"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg243"
+block = "b14"
+face = "south"
+parts = [{asset = "p356", at = [0, 0], yaw = 0}]
+
+[[use]]
+bg = "bg243"
+block = "b15"
+face = "south"
+parts = [{asset = "p251", at = [0, 0], yaw = 0}]
+
+[[use]]
+bg = "bg243"
+block = "b16"
+asset = "p236"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg243"
+block = "b17"
+kind = "rock_shelf"
+face = "east"
+
+[[use]]
+bg = "bg243"
+block = "b18"
+kind = "pool"
+face = "south"
+
+# ── bg244 大熔炉 ──
+
+[[use]]
+bg = "bg244"
+block = "b01"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg244"
+block = "b02"
+kind = "pool"
+face = "south"
+
+[[use]]
+bg = "bg244"
+block = "b03"
+asset = "p233"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg244"
+block = "b04"
+asset = "p233"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg244"
+block = "b05"
+asset = "p233"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg244"
+block = "b06"
+asset = "p236"
+face = "northeast"
+count = 1
+
+[[use]]
+bg = "bg244"
+block = "b07"
+asset = "p237"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg244"
+block = "b08"
+asset = "p237"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg244"
+block = "b09"
+asset = "p241"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg244"
+block = "b10"
+asset = "p242"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg244"
+block = "b11"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg244"
+block = "b12"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg244"
+block = "b13"
+kind = "mine_portal"
+face = "southeast"
+
+[[use]]
+bg = "bg244"
+block = "b14"
+kind = "mine_portal"
+face = "southeast"
+
+[[use]]
+bg = "bg244"
+block = "b15"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg244"
+block = "b16"
+asset = "p241"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg244"
+block = "b17"
+kind = "rock_shelf"
+face = "south"
+
+# ── bg245 灰烬之海 ──
+
+[[use]]
+bg = "bg245"
+block = "b01"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg245"
+block = "b02"
+asset = "p244"
+face = "south"
+count = 5
+
+[[use]]
+bg = "bg245"
+block = "b03"
+asset = "p244"
+face = "south"
+count = 3
+
+[[use]]
+bg = "bg245"
+block = "b04"
+asset = "p245"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg245"
+block = "b05"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg245"
+block = "b06"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg245"
+block = "b07"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg245"
+block = "b08"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg245"
+block = "b09"
+kind = "rock_shelf"
+face = "southeast"
+
+[[use]]
+bg = "bg245"
+block = "b10"
+asset = "p243"
+face = "south"
+count = 5
+
+[[use]]
+bg = "bg245"
+block = "b11"
+asset = "p243"
+face = "south"
+count = 6
+
+[[use]]
+bg = "bg245"
+block = "b12"
+kind = "rock_shelf"
+face = "north"
+
+[[use]]
+bg = "bg245"
+block = "b13"
+asset = "p249"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg245"
+block = "b14"
+asset = "p237"
+face = "west"
+count = 2

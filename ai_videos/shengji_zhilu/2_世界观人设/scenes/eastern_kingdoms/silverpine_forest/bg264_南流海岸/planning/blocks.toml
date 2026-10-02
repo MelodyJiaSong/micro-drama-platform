@@ -1,0 +1,211 @@
+# 南流海岸 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 本场地 ＝ 区级平面图（bg247）坐标 (1400, 1700) 起的 460 × 700 m 一块：海岸线、北端高崖、南部山地、村路与南墙路都从 bg247/terrain.toml 平移过来。
+# 区图 1 px ≈ 3.833 m；村子西缘木屋按区图 (440–470, 478–500) px 的房屋图标量取。
+
+[meta]
+bg = "bg264"
+name_zh = "南流海岸"
+size_m = [460, 700]
+px_per_m = 2.0
+grid_m = 50
+scale_src = "地图量取"
+scale_note = "海岸线 / 北端高崖 / 南部山地 / 村子房屋图标均从区图量取（1 px ≈ 3.833 m）；沙带宽 40 m、沙坡、松林带、礁石与海蚀柱为推定"
+# 世界树画面：西南海岸，沙色更暗，海雾常年不散
+absent = [
+    "太阳 / 蓝天 / 晴朗海面（本档海雾常年不散）",
+    "浅白或金黄的细沙滩（本档是深灰褐粗沙）",
+    "棕榈 / 椰林 / 热带海滩",
+    "码头 / 栈桥 / 灯塔 / 任何船只（这段海岸没有泊位）",
+    "海鸟与任何动物、人物、脚印",
+    "火光 / 窗灯 / 城堡门口的火盆（属 bg253 / bg263 各自的卡）",
+    "战线营地、攻城器械、战壕与登陆艇（4.0.3a）",
+    "南墙被震开的缺口（4.0.3a；南墙在南部山体背后，本场地看不到）",
+    "积雪",
+]
+
+[[ridge]]
+name = "北端高崖（崖顶黑石城堡属 bg263，城堡本体在场地北缘外）"
+poly = [[188, 0], [360, 0], [325, 71], [248, 82], [188, 32]]
+height_m = 80
+src = "地图量取"
+
+[[ridge]]
+name = "南部山地（整块压到海边成岩岬）"
+poly = [[182, 312], [286, 293], [325, 389], [317, 600], [460, 600], [460, 700], [133, 700], [142, 600], [152, 446]]
+height_m = 180
+src = "地图量取"
+
+[[water]]
+name = "海（近岸浪区；带的东缘即海岸线）"
+path = [[85, 0], [98, 120], [106, 216], [94, 312], [67, 408], [56, 504], [48, 600], [48, 700]]
+width_m = 170
+depth_m = 8
+src = "地图量取"
+
+[[water]]
+name = "海（外海）"
+path = [[22, 0], [22, 700]]
+width_m = 44
+depth_m = 30
+src = "地图量取"
+
+[[road]]
+name = "崖顶山道（村子→北端高崖顶）"
+path = [[460, 124], [447, 120], [409, 51], [332, 24]]
+width_m = 4
+src = "地图量取"
+
+[[road]]
+name = "南墙土路（村子→南部山地谷口，墙在场地外）"
+path = [[460, 320], [447, 350], [401, 427], [363, 484]]
+width_m = 5
+src = "地图量取"
+
+[[road]]
+name = "林间土路（村子→沙坡顶，断头）"
+path = [[300, 215], [270, 222], [242, 228]]
+width_m = 2
+src = "推定"
+
+[[block]]
+id = "b01"
+into_ridge = true
+over_water = true
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "深灰褐沙带"
+xy = [207, 200]
+size = [40, 230]
+h_m = 0
+src = "推定"
+note = "高崖脚与南部山体之间的低地口子；宽约 40 m，越往南越窄"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p283"
+face = "south"
+count = 8
+name = "高潮线浮木带"
+xy = [219, 190]
+size = [6, 150]
+h_m = 1
+rot = 3
+src = "推定"
+note = "泡白剥皮的浮木 + 干海藻"
+
+[[block]]
+id = "b03"
+into_ridge = true
+kind = "rock_shelf"
+face = "south"
+name = "枯草沙坡"
+xy = [238, 200]
+size = [22, 220]
+h_m = 3
+src = "推定"
+note = "坡草被海风压得朝东倒"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p269"
+face = "south"
+count = 40
+name = "风压歪松林带"
+xy = [268, 200]
+size = [38, 190]
+h_m = 22
+src = "推定"
+note = "最靠海一排朝内陆歪斜；林底倒木多年"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p272"
+face = "west"
+count = 6
+name = "尖顶木屋群（村子西缘，远景）"
+bg = "bg253"
+xy = [345, 175]
+size = [100, 70]
+h_m = 9
+src = "地图量取"
+note = "区图房屋图标；门窗紧闭，本档不画窗灯"
+
+[[block]]
+id = "b06"
+over_water = true
+kind = "asset"
+asset = "p281"
+face = "south"
+count = 5
+name = "近岸黑礁群"
+xy = [168, 250]
+size = [26, 18]
+h_m = 3
+src = "推定"
+note = "半没在浪里，藤壶 + 墨绿藻；礁间有潮水坑"
+
+[[block]]
+id = "b07"
+over_water = true
+kind = "rock_shelf"
+face = "south"
+name = "北端崖脚礁石（贴崖绕行的唯一通道）"
+xy = [180, 60]
+size = [14, 40]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b08"
+into_ridge = true
+over_water = true
+kind = "asset"
+asset = "p281"
+face = "south"
+count = 8
+name = "南岬脚乱石滩"
+xy = [165, 380]
+size = [22, 90]
+h_m = 2
+src = "推定"
+note = "浪撞出全画面最高的白沫；过不去"
+
+[[block]]
+id = "b09"
+over_water = true
+kind = "asset"
+asset = "p281"
+face = "south"
+name = "海蚀柱（北）"
+xy = [120, 395]
+size = [14, 12]
+h_m = 18
+src = "推定"
+
+[[block]]
+id = "b10"
+over_water = true
+kind = "asset"
+asset = "p281"
+face = "south"
+name = "海蚀柱（南）"
+xy = [105, 430]
+size = [12, 10]
+h_m = 14
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg264-c1"
+eye = [230, 644]
+target = [230, 350]
+eye_h = 23.3
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -1,0 +1,175 @@
+# 山头营地 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg31"
+name_zh = "山头营地"
+size_m = [200, 280]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "台地舌北端一段取 200 × 280 m：区图上中间那条台地舌宽约 60–80 px（≈150–200 m）；营地本身按三顶帐篷一口火塘的宿营规模推定，无一手尺寸出处"
+# 世界树画面：南端伸进湖里的岬角，扎着辛迪加的帐篷与篝火
+# 区图：坐标 [40, 85] 周围无水面（湖在西北，隔湖东岸山脊）→「岬角」取台地舌伸向低地之形，不画湖（见 md 场景定位）
+# 区图：红十字正北约 80 m、雪山脚下有一个小图标 → 营地块摆在场地北部
+absent = [
+    "湖面与湖岸（世界树写「伸进湖里」，区图此处无水，judgment call 不画）",
+    "任何人物与坐骑（默认空营）",
+    "燃着的篝火与炊烟（火塘是冷余烬）",
+    "木栅寨墙与城门（只是宿营地，没有围墙）",
+    "旗帜纹章与文字标识",
+    "4.0.3a 后并入希尔斯布莱德的新布局",
+]
+
+[[ridge]]
+name = "中央雪山南麓"
+poly = [[0, 0], [200, 0], [200, 30], [150, 38], [100, 42], [50, 36], [0, 44]]
+height_m = 200
+src = "地图量取"
+
+[[ridge]]
+name = "台地舌舌面（高出东侧谷底约 45 m）"
+poly = [[20, 44], [140, 40], [140, 120], [132, 200], [118, 262], [100, 276], [82, 262], [62, 200], [34, 130]]
+height_m = 45
+src = "地图量取"
+
+[[road]]
+name = "西北角车辙小道（唯一上下台地的路）"
+path = [[70, 98], [45, 102], [25, 86], [0, 62]]
+width_m = 3
+src = "推定"
+
+[[block]]
+id = "b01"
+into_ridge = true
+kind = "asset"
+asset = "p22"
+face = "south"
+name = "帐篷·中（最大）"
+xy = [80, 78]
+size = [7, 6]
+h_m = 3
+src = "推定"
+note = "三顶帐篷围火塘成半圆，门帘朝火塘"
+
+[[block]]
+id = "b02"
+into_ridge = true
+kind = "asset"
+asset = "p22"
+face = "west"
+name = "帐篷·东（低矮窄长）"
+xy = [96, 86]
+size = [8, 4]
+h_m = 2
+src = "推定"
+note = "朝南机位的画左"
+
+[[block]]
+id = "b03"
+into_ridge = true
+kind = "asset"
+asset = "p22"
+face = "east"
+name = "帐篷·西（人字形）"
+xy = [64, 86]
+size = [5, 5]
+h_m = 2.5
+src = "推定"
+note = "朝南机位的画右"
+
+[[block]]
+id = "b04"
+into_ridge = true
+kind = "asset"
+asset = "p363"
+face = "south"
+name = "石圈火塘（冷余烬）"
+xy = [80, 94]
+size = [3, 3]
+h_m = 0.3
+src = "推定"
+
+[[block]]
+id = "b05"
+into_ridge = true
+kind = "asset"
+asset = "p33"
+face = "south"
+name = "货箱木桶堆"
+xy = [48, 80]
+size = [8, 6]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b06"
+into_ridge = true
+kind = "asset"
+asset = "p26"
+face = "south"
+name = "挂物木架与缺轮平板车"
+xy = [44, 71]
+size = [6, 3]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b07"
+into_ridge = true
+kind = "asset"
+asset = "p23"
+face = "south"
+name = "拴马木桩"
+xy = [46, 92]
+size = [1, 1]
+h_m = 1.4
+src = "推定"
+
+[[block]]
+id = "b08"
+into_ridge = true
+kind = "asset"
+asset = "p21"
+face = "east"
+name = "崖边原木瞭望台"
+xy = [132, 140]
+size = [4, 4]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b09"
+into_ridge = true
+kind = "asset"
+asset = "p32"
+face = "south"
+count = 5
+name = "舌面灰色漂石群"
+xy = [90, 170]
+size = [14, 10]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b10"
+into_ridge = true
+kind = "asset"
+asset = "p31"
+face = "south"
+count = 4
+name = "崖顶贴地矮灌木"
+xy = [130, 175]
+size = [5, 20]
+h_m = 0.6
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg31-c1"
+eye = [100, 258]
+target = [100, 140]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

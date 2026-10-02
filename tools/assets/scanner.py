@@ -34,7 +34,9 @@ _SKIP_TOP_LEVEL: frozenset[str] = frozenset({"_deleted"})
 # 形制结论已经转写成 `refs.md` 里的中文锁定串（带 source_url），图随时可按 URL 复现。
 # `refs_game98/` 与 `refs_longplay/` 是从公开视频抽的逐场景参考帧，
 # 由 tools/fetch_xianjian_refs.py 随时重抽——派生缓存，同样不进 R2。
-_SKIP_DIRS: frozenset[str] = frozenset({"ref", "refs_game98", "refs_longplay"})
+# `资料包/` 是 Seedance 网页出片资料包（tools/seedance_kit.py）：每镜一份参考素材的**副本**，
+# 由 shot md 与各资产随时重建——同步进 R2 只会每集多存几百 MB 重复字节（ai_video.md rule 12.4-K）。
+_SKIP_DIRS: frozenset[str] = frozenset({"ref", "refs_game98", "refs_longplay", "资料包"})
 _CACHE_NAME: str = ".assets_cache.json"
 _CHUNK: int = 1 << 20
 

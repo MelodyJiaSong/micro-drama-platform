@@ -1,0 +1,424 @@
+# 逆风小径（deadwind_pass）区级资产规划 —— 区级资产规划师写，tools/apply_asset_plan.py 只读
+# 判据：贴地地坪 / 墙栅 / 洞口坑道 / 水潭走脚本 kind（rule 4g）；其余有边界的物体引用本区资产库。
+# 去重：previz 白模只锁几何与剪影（出图从不拿白模当参考，rule 4d ①），剪影同类即共用一件——
+#   三座残屋共用 a01（齐肩墙框 / 塌半边都是它按块高压扁）；全区枯树共用 a03；全区落石 / 滚石 / 碎石锥 / 石堆界标 / 河心黑石共用 a04；
+#   横卡高处的树干、斜插进水的倒伏树干、劈柴垛共用 a07；营前晾皮架与营门两根门柱共用 a09（两根粗原木柱 + 一道横木）。
+# 其余：bg100·b04 孤墙、b06 院墙与 bg102 挡墙走 low_wall；所有木栅 / 尖桩带 / 倒地原木栅 / 锈铁栅走 palisade；
+#   bg102·b01 墓门嵌在崖脚走 cave_mouth；bg102·b03 门内石阶 h_m=0，按贴地走 plaza；
+#   bg103·b03 两壁上沿错叠段＝沟顶被岩体盖住的一段，走 tunnel（沿南北长轴，净高 = h_m）；
+#   bg103·b05 两根锈铁钉在西壁岩体内，走 palisade 占位即可；bg105·b01 是另档 bg101 的占地，走 yard。
+# 注：bg103·b01 的 h_m=22 是悬石的离地高度而非石头自身高度，单件逐轴撑满会出一块 22 m 高的石头——blocks.toml 需另加离地字段，本 plan 不改它。
+
+[meta]
+zone = "deadwind_pass"
+
+[[use]]
+bg = "bg100"
+block = "b01"
+asset = "p98"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg100"
+block = "b02"
+asset = "p98"
+face = "southwest"
+count = 1
+
+[[use]]
+bg = "bg100"
+block = "b03"
+asset = "p98"
+face = "northeast"
+count = 1
+
+[[use]]
+bg = "bg100"
+block = "b04"
+kind = "low_wall"
+face = "northwest"
+count = 1
+
+[[use]]
+bg = "bg100"
+block = "b05"
+asset = "p99"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg100"
+block = "b06"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg100"
+block = "b07"
+asset = "p100"
+face = "south"
+count = 6
+
+[[use]]
+bg = "bg100"
+block = "b08"
+asset = "p101"
+face = "south"
+count = 5
+
+# ── bg101 格罗高克营地 ──
+[[use]]
+bg = "bg101"
+block = "b01"
+asset = "p102"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg101"
+block = "b02"
+asset = "p103"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg101"
+block = "b03"
+asset = "p103"
+face = "southwest"
+count = 1
+
+[[use]]
+bg = "bg101"
+block = "b04"
+asset = "p103"
+face = "northeast"
+count = 1
+
+[[use]]
+bg = "bg101"
+block = "b05"
+asset = "p103"
+face = "northwest"
+count = 1
+
+[[use]]
+bg = "bg101"
+block = "b06"
+asset = "p104"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg101"
+block = "b07"
+asset = "p106"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg101"
+block = "b08"
+kind = "palisade"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg101"
+block = "b09"
+kind = "palisade"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg101"
+block = "b10"
+asset = "p106"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg101"
+block = "b11"
+kind = "palisade"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg101"
+block = "b12"
+kind = "palisade"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg101"
+block = "b13"
+kind = "palisade"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg101"
+block = "b14"
+kind = "palisade"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg101"
+block = "b15"
+kind = "palisade"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg101"
+block = "b16"
+kind = "palisade"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg101"
+block = "b17"
+kind = "palisade"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg101"
+block = "b18"
+asset = "p101"
+face = "south"
+count = 10
+
+[[use]]
+bg = "bg101"
+block = "b19"
+asset = "p101"
+face = "south"
+count = 14
+
+[[use]]
+bg = "bg101"
+block = "b20"
+asset = "p100"
+face = "south"
+count = 8
+
+# ── bg102 墓穴 ──
+[[use]]
+bg = "bg102"
+block = "b01"
+kind = "cave_mouth"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg102"
+block = "b02"
+kind = "palisade"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg102"
+block = "b03"
+kind = "plaza"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg102"
+block = "b04"
+kind = "plaza"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg102"
+block = "b05"
+kind = "low_wall"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg102"
+block = "b06"
+kind = "low_wall"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg102"
+block = "b07"
+asset = "p105"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg102"
+block = "b08"
+asset = "p105"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg102"
+block = "b09"
+asset = "p101"
+face = "north"
+count = 5
+
+[[use]]
+bg = "bg102"
+block = "b10"
+asset = "p100"
+face = "north"
+count = 7
+
+# ── bg103 逆风谷 ──
+[[use]]
+bg = "bg103"
+block = "b01"
+asset = "p101"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg103"
+block = "b02"
+asset = "p101"
+face = "south"
+count = 3
+
+[[use]]
+bg = "bg103"
+block = "b03"
+kind = "tunnel"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg103"
+block = "b04"
+asset = "p104"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg103"
+block = "b05"
+kind = "palisade"
+face = "east"
+count = 1
+
+# ── bg104 沉睡峡谷 ──
+[[use]]
+bg = "bg104"
+block = "b01"
+kind = "plaza"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg104"
+block = "b02"
+kind = "plaza"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg104"
+block = "b03"
+asset = "p101"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg104"
+block = "b04"
+asset = "p104"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg104"
+block = "b05"
+asset = "p101"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg104"
+block = "b06"
+asset = "p101"
+face = "east"
+count = 3
+
+[[use]]
+bg = "bg104"
+block = "b07"
+asset = "p100"
+face = "east"
+count = 8
+
+[[use]]
+bg = "bg104"
+block = "b08"
+asset = "p100"
+face = "west"
+count = 10
+
+# ── bg105 罪恶谷 ──
+[[use]]
+bg = "bg105"
+block = "b01"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg105"
+block = "b02"
+asset = "p101"
+face = "west"
+count = 12
+
+[[use]]
+bg = "bg105"
+block = "b03"
+kind = "palisade"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg105"
+block = "b04"
+kind = "palisade"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg105"
+block = "b05"
+asset = "p100"
+face = "east"
+count = 3
+
+[[use]]
+bg = "bg105"
+block = "b06"
+asset = "p101"
+face = "south"
+count = 8
+
+[[use]]
+bg = "bg105"
+block = "b07"
+kind = "palisade"
+face = "west"
+count = 1

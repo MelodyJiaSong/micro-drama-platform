@@ -1,0 +1,21 @@
+# shot36 人体动作表（Cascadeur 层）。位置与朝向一律从 ../planning/overhead.toml 读，这里只写「身体摆成什么样」。
+# 改动作 ＝ 改本文件重跑 `python tools/cascadeur/choreo.py <shot 目录> --build`；部件都在共享库 tools/cascadeur/poses.toml。
+# 时刻与 shot36.md `动作:` 时间轴、overhead 的 [[hit]] / [[guard]] 逐拍对齐（rule 4h ②）。生成器：spawns/shots-d2/scratch/build_choreo2.py。沃尔特与瘦子这一镜只按着 / 被按着，色块人偶够用；强盗是色块人偶。
+
+[meta]
+origin = [210.9, 136.7]
+fps = 30
+
+# 杜克：3.1s 上前一步挡到亚伦身前；3.5s、4.7s 一盾一个把扑来的强盗顶回去
+[actor."杜克"]
+keys = [
+  [0, "stance_l+shield_guard"],
+  [3.1, "stance_l+shield_guard"],
+  [3.3, "lunge+shield_guard"],
+  [3.5, "lunge+shield_shove"],
+  [3.8, "stance_l+shield_guard"],
+  [4.5, "stance_l+shield_guard"],
+  [4.7, "lunge+shield_shove"],
+  [5, "stance_l+shield_guard"],
+  [7, "stance_l+shield_guard"],
+]

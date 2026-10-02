@@ -1,0 +1,633 @@
+# 诅咒之地区级资产规划（区级资产规划师写；tools/apply_asset_plan.py 只读）
+# 新立 14 件（上限 14）。blend 里材质会剥掉，所以按「形状」复用：
+#   紫黑火成岩巨石兼 塌石坡 / 山脚塌石 / 崩落碎岩 / 塌进海里的岩块群 / 斜插入水的岩板 / 冷凝熔岩块群；
+#   斜插岩柱兼 离岸海蚀岩柱；仪式立石压扁兼 倒伏断裂立石；方塔拉高兼 法师塔；三层主楼压矮兼 军械库；
+#   兽皮巨帐压矮兼 塌了半边的破帐；骨堆杂物堆兼 营心焦骨堆 / 墙根破烂 / 炭黑粗木残段；有角骨骸兼 第二具散架肋笼。
+# judgment calls：
+#   h_m = 0 的地面标记块（冷灰滩 / 砂砾滩 / 泥壳滩 / 烧痕 / 雾池 / 裂痕 / 焦坑 / 山缝 / 鞍部）一律走 plaza / yard
+#     （asset 单件在 h_m=0 时会取 min(size) 当高度，把地面标记立成墩子）；
+#   bg82 的红岩围子三面壁是天然层状岩板，走 rock_shelf；bg83 的石砌栖台是空的平顶台，也走 rock_shelf；
+#   bg83 城墙 12 m 走 low_wall（gate_wall 每段都会开人门）；西门双塔拱门走 gate_wall；城外拒马走 palisade；
+#   bg83 西墙根空木箱与旧脚手架走 crates（背景小件，不值一件 Rodin 额度）；
+#   bg81 南墙外浅沟木刺 h_m=0，走 yard。
+
+[meta]
+zone = "blasted_lands"
+
+[[use]]
+bg = "bg81"
+block = "b01"
+kind = "palisade"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg81"
+block = "b02"
+kind = "palisade"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg81"
+block = "b03"
+kind = "palisade"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg81"
+block = "b04"
+kind = "palisade"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg81"
+block = "b05"
+kind = "palisade"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg81"
+block = "b06"
+asset = "p60"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg81"
+block = "b07"
+asset = "p59"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg81"
+block = "b08"
+asset = "p59"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg81"
+block = "b09"
+asset = "p59"
+face = "southwest"
+count = 1
+
+[[use]]
+bg = "bg81"
+block = "b10"
+asset = "p59"
+face = "northeast"
+count = 1
+
+[[use]]
+bg = "bg81"
+block = "b11"
+asset = "p59"
+face = "northwest"
+count = 1
+
+[[use]]
+bg = "bg81"
+block = "b12"
+face = "south"
+parts = [{asset = "p61", at = [0, 0], yaw = 0}, {asset = "p73", at = [3.7, 0], yaw = 90}, {asset = "p73", at = [2.99, 2.17], yaw = 126}, {asset = "p73", at = [1.14, 3.52], yaw = 162}, {asset = "p73", at = [-1.14, 3.52], yaw = 198}, {asset = "p73", at = [-2.99, 2.17], yaw = 234}, {asset = "p73", at = [-3.7, 0], yaw = 270}, {asset = "p73", at = [-2.99, -2.17], yaw = 306}, {asset = "p73", at = [-1.14, -3.52], yaw = 342}, {asset = "p73", at = [1.14, -3.52], yaw = 18}, {asset = "p73", at = [2.99, -2.17], yaw = 54}]
+
+[[use]]
+bg = "bg81"
+block = "b13"
+asset = "p62"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg81"
+block = "b14"
+face = "north"
+parts = [{asset = "p77", at = [-2.6, 0.9], yaw = 5}, {asset = "p77", at = [-0.2, 1.2], yaw = -8}, {asset = "p74", at = [1.6, 0.8], yaw = 12}, {asset = "p74", at = [2.9, -0.4], yaw = -20}, {asset = "p75", at = [-2.9, -0.7], yaw = 0}, {asset = "p75", at = [0.6, -0.9], yaw = 0}]
+
+[[use]]
+bg = "bg81"
+block = "b15"
+asset = "p64"
+face = "south"
+count = 3
+
+[[use]]
+bg = "bg81"
+block = "b16"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg81"
+block = "b17"
+asset = "p65"
+face = "south"
+count = 2
+
+# ── bg82 巨槌岗哨 ──────────────────────────────────────────────────────
+[[use]]
+bg = "bg82"
+block = "b01"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg82"
+block = "b02"
+kind = "rock_shelf"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg82"
+block = "b03"
+kind = "rock_shelf"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg82"
+block = "b04"
+asset = "p59"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg82"
+block = "b05"
+asset = "p59"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg82"
+block = "b06"
+asset = "p59"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg82"
+block = "b07"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg82"
+block = "b08"
+asset = "p62"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg82"
+block = "b09"
+asset = "p63"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg82"
+block = "b10"
+face = "west"
+parts = [{asset = "p78", at = [-0.4, 1.2], yaw = 10}, {asset = "p78", at = [0.3, 0.3], yaw = -25}, {asset = "p75", at = [-1, -0.9], yaw = 0}, {asset = "p76", at = [0.6, -1.3], yaw = 15}]
+
+[[use]]
+bg = "bg82"
+block = "b11"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg82"
+block = "b12"
+asset = "p64"
+face = "west"
+count = 8
+
+# ── bg83 守望堡 ────────────────────────────────────────────────────────
+[[use]]
+bg = "bg83"
+block = "b01"
+kind = "low_wall"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg83"
+block = "b02"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg83"
+block = "b03"
+kind = "low_wall"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg83"
+block = "b04"
+kind = "low_wall"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg83"
+block = "b05"
+kind = "low_wall"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg83"
+block = "b06"
+kind = "gate_wall"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg83"
+block = "b07"
+asset = "p67"
+face = "northwest"
+count = 1
+
+[[use]]
+bg = "bg83"
+block = "b08"
+asset = "p67"
+face = "northeast"
+count = 1
+
+[[use]]
+bg = "bg83"
+block = "b09"
+asset = "p67"
+face = "southwest"
+count = 1
+
+[[use]]
+bg = "bg83"
+block = "b10"
+asset = "p67"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg83"
+block = "b11"
+asset = "p68"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg83"
+block = "b12"
+asset = "p67"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg83"
+block = "b13"
+asset = "p68"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg83"
+block = "b14"
+kind = "rock_shelf"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg83"
+block = "b15"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg83"
+block = "b16"
+kind = "plaza"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg83"
+block = "b17"
+kind = "palisade"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg83"
+block = "b18"
+asset = "p64"
+face = "south"
+count = 8
+
+[[use]]
+bg = "bg83"
+block = "b19"
+kind = "crates"
+face = "east"
+count = 5
+
+# ── bg84 污染者高地 ────────────────────────────────────────────────────
+[[use]]
+bg = "bg84"
+block = "b01"
+asset = "p66"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg84"
+block = "b02"
+asset = "p66"
+face = "northwest"
+count = 1
+
+[[use]]
+bg = "bg84"
+block = "b03"
+asset = "p66"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg84"
+block = "b04"
+asset = "p66"
+face = "northeast"
+count = 1
+
+[[use]]
+bg = "bg84"
+block = "b05"
+asset = "p66"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg84"
+block = "b06"
+asset = "p66"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg84"
+block = "b07"
+asset = "p66"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg84"
+block = "b08"
+asset = "p66"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg84"
+block = "b09"
+asset = "p66"
+face = "southwest"
+count = 1
+
+[[use]]
+bg = "bg84"
+block = "b10"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg84"
+block = "b11"
+face = "east"
+parts = [{asset = "p77", at = [-0.8, 1.6], yaw = 85}, {asset = "p77", at = [0.6, 0.9], yaw = 100}, {asset = "p77", at = [-0.1, -1.7], yaw = 75}]
+
+[[use]]
+bg = "bg84"
+block = "b12"
+kind = "plaza"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg84"
+block = "b13"
+asset = "p64"
+face = "north"
+count = 6
+
+# ── bg85 盘蛇谷 ────────────────────────────────────────────────────────
+[[use]]
+bg = "bg85"
+block = "b01"
+asset = "p69"
+face = "south"
+count = 12
+
+[[use]]
+bg = "bg85"
+block = "b02"
+asset = "p70"
+face = "south"
+count = 6
+
+[[use]]
+bg = "bg85"
+block = "b03"
+asset = "p71"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg85"
+block = "b04"
+asset = "p69"
+face = "south"
+count = 6
+
+[[use]]
+bg = "bg85"
+block = "b05"
+asset = "p64"
+face = "south"
+count = 10
+
+[[use]]
+bg = "bg85"
+block = "b06"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg85"
+block = "b07"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg85"
+block = "b08"
+asset = "p65"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg85"
+block = "b09"
+asset = "p65"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg85"
+block = "b10"
+asset = "p64"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg85"
+block = "b11"
+kind = "plaza"
+face = "east"
+count = 1
+
+# ── bg86 荒芜之海 ──────────────────────────────────────────────────────
+[[use]]
+bg = "bg86"
+block = "b01"
+kind = "plaza"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg86"
+block = "b02"
+asset = "p64"
+face = "east"
+count = 8
+
+[[use]]
+bg = "bg86"
+block = "b03"
+asset = "p65"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg86"
+block = "b04"
+asset = "p64"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg86"
+block = "b05"
+asset = "p64"
+face = "east"
+count = 10
+
+[[use]]
+bg = "bg86"
+block = "b06"
+kind = "plaza"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg86"
+block = "b07"
+asset = "p65"
+face = "east"
+count = 1
+
+# ── bg87 腐烂之痕 ──────────────────────────────────────────────────────
+[[use]]
+bg = "bg87"
+block = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg87"
+block = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg87"
+block = "b03"
+asset = "p72"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg87"
+block = "b04"
+asset = "p72"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg87"
+block = "b05"
+asset = "p64"
+face = "south"
+count = 10
+
+[[use]]
+bg = "bg87"
+block = "b06"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg87"
+block = "b07"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg87"
+block = "b08"
+asset = "p65"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg87"
+block = "b09"
+kind = "plaza"
+face = "southwest"
+count = 1

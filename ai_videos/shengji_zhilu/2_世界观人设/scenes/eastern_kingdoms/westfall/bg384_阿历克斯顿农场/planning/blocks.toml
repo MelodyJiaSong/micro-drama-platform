@@ -1,0 +1,195 @@
+# 阿历克斯顿农场 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg384"
+name_zh = "阿历克斯顿农场"
+size_m = [200, 200]
+px_per_m = 6.0
+scale_src = "推定"
+scale_note = "取 200 m 见方：区图上田垄图标在西北、屋舍图标在东南，北侧紧贴东西向土路（区级平面图 b901，约 44%,35%）——这三件事是地图量取；合院内各屋尺寸与朝向全为推定"
+# 世界树画面：中北部的老农庄，土墙剥落、木梁裸露，院里一口砖井，井绳还在
+absent = [
+    "塌陷巨坑 / 地裂（4.0.3a 才有；1.12 农庄完整）",
+    "收割机械 / 铁皮傀儡（本档田里没有，那是别家农场）",
+    "南瓜地 / 还在耕作的青麦（麦田已荒）",
+    "焦黑烧毁的谷仓（本档谷仓是塌顶，不是烧毁）",
+    "红色面罩 / 匪帮旗帜（占过的痕迹只有冷火塘与撬开的空箱）",
+    "燃着的火 / 炊烟（火塘是冷灰余烬）",
+    "飞行点 / 狮鹫栖架",
+    "任何人物与牲口",
+]
+
+[[road]]
+name = "北侧东西土路（北部岔路口 → 西北矿洞段）"
+path = [[0, 8], [100, 10], [200, 14]]
+width_m = 6
+src = "地图量取"
+
+[[road]]
+name = "进院小道（自土路南下到院东豁口）"
+path = [[172, 13], [174, 60], [166, 110], [151, 127]]
+width_m = 3
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p336"
+face = "south"
+name = "主屋（一层半，夯土墙木骨架，东西向）"
+xy = [126, 116]
+size = [24, 11]
+h_m = 7
+src = "推定"
+note = "墙皮大片剥落露斜撑木骨；旧茅草顶屋脊塌一截；窗钉死，门歪挂"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p340"
+face = "south"
+name = "灶间披屋与歪烟囱"
+xy = [142, 116]
+size = [7, 8]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p337"
+face = "east"
+name = "高顶木谷仓（屋顶塌半边）"
+xy = [96, 138]
+size = [14, 20]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p338"
+face = "west"
+name = "草料棚（三面敞开，只剩檩条）"
+xy = [145, 140]
+size = [8, 12]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p348"
+face = "south"
+name = "院心砖井（木辘轳、井绳与木桶）"
+xy = [122, 138]
+size = [2.5, 2.5]
+h_m = 2.5
+src = "推定"
+note = "世界树画面只说院里有一口砖井；合院本身是推定布局，井位随之推定，井绳还在；井台高约 0.4 m，井架高约 2.5 m"
+
+[[block]]
+id = "b06"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "北院墙残段（主屋以西）"
+xy = [101, 110]
+size = [24, 1]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "南院墙（大半塌成土垄，东头一小段仍立）"
+xy = [120, 160]
+size = [60, 1.2]
+h_m = 0.6
+src = "推定"
+note = "锚点机位站在它东头外侧"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p344"
+face = "west"
+name = "独帆风车（四片帆只剩一片，停转）"
+xy = [162, 98]
+size = [5, 5]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p363"
+face = "south"
+name = "院角冷火塘（石圈，冷灰余烬）"
+xy = [138, 152]
+size = [2, 2]
+h_m = 0.3
+src = "推定"
+note = "旁边几只撬开的空木箱"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p349"
+face = "south"
+name = "翻倒的缺轮板车"
+xy = [154, 132]
+size = [4, 2]
+h_m = 1.2
+rot = 20
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "西北荒麦田"
+xy = [60, 60]
+size = [100, 80]
+h_m = 0
+src = "地图量取"
+note = "区图田垄图标在屋舍西北"
+
+[[block]]
+id = "b12"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "东北小块荒田"
+xy = [178, 55]
+size = [26, 60]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "井旁倒扣石槽"
+xy = [126, 141]
+size = [2.5, 1]
+h_m = 0.5
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg384-c1"
+eye = [100, 16]
+target = [100, 100]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

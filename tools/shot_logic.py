@@ -33,6 +33,11 @@ shot05 的矛盾（剖视段展示成品，下一段又在挖）就是在补账�
 顺带：**探入类动作必须写明身体与开口的距离**，否则模型按构图需要拉长手臂。
 这一条判不准（次序词的写法太多），所以只报 warning + 附原句。
 
+## L3（blocker，调用方 opt_in 才拦）：`镜内状态:` 写「已 X」不能早于 `动作:` 做完 X
+
+shot10（follow-up 047）：`镜内状态: 8–22s 箱盖已撬开` 而 `动作: 8–12s 亚伦蹲下撬开箱盖`——
+8s 那一帧同时是「已开」和「正要撬」，模型挑一个画、再补一段发呆。按动词逐段比时刻。
+
 用法：
     import shot_logic
     shot_logic.gate(emitted, legacy={"shot01"})     # 生成器构建闸门
@@ -46,7 +51,7 @@ from dataclasses import dataclass
 
 BUILD_VERBS: tuple[str, ...] = ("挖", "铺", "盖", "绑", "垒", "架", "封", "剥", "砌", "编", "捆")
 # 含建造字的名词不是建造动作（sk1 实测误报：军巡铺兵、纸马铺、本子封面、考古脚手架、地名开封）。只收无歧义的名词，「铺满」「石砌」这类可能真在建造的不收。
-NOT_BUILD: tuple[str, ...] = ("军巡铺", "铺兵", "铺屋", "纸马铺", "店铺", "铺子", "封面", "信封", "脚手架", "书架", "衣架", "开封", "封丘")
+NOT_BUILD: tuple[str, ...] = ("军巡铺", "铺兵", "铺屋", "纸马铺", "店铺", "铺子", "封面", "信封", "脚手架", "书架", "衣架", "开封", "封丘", "膝盖")   # 膝盖：szzl S21「膝盖往下一沉」
 REACH_VERBS: tuple[str, ...] = ("伸进", "塞进", "掏开", "掏出", "探进", "伸手进", "够进", "插进")
 MOVE_VERBS: tuple[str, ...] = ("起身", "退开", "走开", "转身", "离开", "站起来", "退到", "走向")
 ORDER_MARKS: tuple[str, ...] = ("然后才", "先把", "再去", "收回", "退出洞", "之后才", "先…", "然后")
@@ -119,16 +124,69 @@ def check(shot: str, md: str) -> list[Issue]:
                              "同一段里既有「%s」又有「%s」却没写先后——模型会把两者叠在同一时刻"
                              "（手留在洞里、身体走开 → 橡皮手，rule 16.11）。原句：…%s…"
                              % (r[0], m[0], cl.strip()[:56])))
+    out += _state_timing(shot, pos)
     return out
 
 
-def gate(md_by_shot: dict[str, str], legacy: set[str] | None = None) -> list[Issue]:
+_DONE = re.compile(r"已(?:经)?([一-鿿]{2})")
+_WIN = re.compile(r"(\d+(?:\.\d+)?)\s*[–-]\s*(\d+(?:\.\d+)?)\s*s")
+_DONE_SKIP = ("没有", "不在", "在洞", "在画", "在他", "在她")
+
+
+def _windows(line: str) -> list[tuple[float, float, str]]:
+    body = line.split(":", 1)[1] if ":" in line else ""
+    ms = list(_WIN.finditer(body))
+    return [(float(m.group(1)), float(m.group(2)), body[m.end():ms[i + 1].start() if i + 1 < len(ms) else len(body)])
+            for i, m in enumerate(ms)]
+
+
+_AT = re.compile(r"(\d+(?:\.\d+)?)\s*s(?![\d–-])")
+
+
+def _clause_time(text: str, pos: int) -> float | None:
+    """pos 所在小句里、pos 之前最近的一个时刻（「21s 前钢盾已背回」→ 21）；没有就 None。"""
+    head = re.split(r"[，；、。]", text[:pos])[-1]
+    ts = _AT.findall(head)
+    return float(ts[-1]) if ts else None
+
+
+def _state_timing(shot: str, pos: str) -> list[Issue]:
+    """L3（follow-up 047 · shot10：切过去就写「箱盖已撬开」，动作却 8–12s 才撬）：`镜内状态:` 写「已 X」的时刻
+    （小句里写了秒数用它，否则用段起点）不得早于 `动作:` 里做完 X 的时刻（小句里写了秒数用它，否则用那一窗的终点）。"""
+    out: list[Issue] = []
+    acts = _windows(_field(pos, "动作"))
+    for a0, _b0, seg in _windows(_field(pos, "镜内状态")):
+        for m in _DONE.finditer(seg):
+            v = m.group(1)
+            if v in _DONE_SKIP:
+                continue
+            ts = _clause_time(seg, m.start())
+            ts = a0 if ts is None else ts
+            for a, b, txt in acts:
+                k = txt.find(v)
+                if k < 0 or b <= ts + 0.3:
+                    continue
+                ta = _clause_time(txt, k)
+                done = b if ta is None else ta
+                if a >= a0 - 1e-6 and done > ts + 0.3:
+                    out.append(Issue(shot, "blocker", "L3",
+                                     "`镜内状态:` %gs 起写「已%s」，`动作:` %g–%gs 才%s——状态段的起点改到动作做完之后，"
+                                     "或把这一段写成「%g–%gs 正在%s」（follow-up 047）" % (ts, v, a, b, v, a, b, v)))
+                    break
+    return out
+
+
+NEW_CODES = frozenset({"L3"})      # 规则变更不回溯旧剧：新码只在调用方点名时拦，巡检照常报
+
+
+def gate(md_by_shot: dict[str, str], legacy: set[str] | None = None, opt_in: frozenset[str] = frozenset()) -> list[Issue]:
     legacy = legacy or set()
     issues = [i for s in sorted(md_by_shot) for i in check(s, md_by_shot[s])]
-    hard = [i for i in issues if i.level == "blocker" and i.shot not in legacy]
+    hard = [i for i in issues if i.level == "blocker" and i.shot not in legacy
+            and (i.code not in NEW_CODES or i.code in opt_in)]
     if hard:
         raise SystemExit(
-            "镜内逻辑不合格 %d 处（rule 16.10/16.11 · 格式契约 K33）：\n" % len(hard)
+            "镜内逻辑不合格 %d 处（rule 16.10/16.11/16.12 · 格式契约 K33）：\n" % len(hard)
             + "\n".join("  %s [%s] %s" % (i.shot, i.code, i.detail) for i in hard))
     return issues
 

@@ -1,0 +1,162 @@
+# 寂静河岸 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 本档只取东岸带的**有顶木桥段**（主干道西端过河处）。换算：本图原点 ＝ 区级平面图（bg126）世界坐标 (0, 780)；
+# 西界河及其下游、主干道按 bg126 terrain.toml 平移（地图量取）。桥按区图主路西端过河处，略移到折弯以北河道笔直的一段（推定）。
+# 锚点机位：东岸碎石滩、桥北约 50 m (195, 220)，朝南偏西平视。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg137"
+name_zh = "寂静河岸"
+size_m = [520, 440]
+px_per_m = 3.0
+grid_m = 20
+scale_src = "地图量取"
+scale_note = "界河走向、折弯点与主路过河处按区图量取（±50 m）；桥长、桥墩、岸带宽度与蛛网枯树丛推定"
+# 世界树画面：西侧那条河的东岸带，黑水从北端三区交界的河汊一直向南流到荆棘谷方向；通往西部荒野的有顶木桥架在这段岸上，桥洞里一片漆黑，岸边蛛网挂在枯枝间
+absent = [
+    "任何火、烛火、灯笼与人工光（桥头无灯，桥洞全黑）",
+    "第二座桥 / 渡船 / 码头（西界河上只有这一座桥）",
+    "难民营与帐篷（在北面约 500 m，归 bg136）",
+    "越过河面照到东岸的亮光（对岸灰黄天光只落在河西）",
+    "4.0.3a 后的盗墓者营地、熊与猫头鹰",
+    "蜘蛛本体（只有网）",
+    "带字的桥牌 / 路牌 / 告示",
+    "太阳 / 蓝天 / 月亮圆盘",
+    "任何人物、动物与飞鸟",
+]
+
+[[water]]
+name = "西界河（自北向南）"
+path = [[138.4, 0], [148, 43], [172.8, 174.6], [172.8, 273.4]]
+width_m = 35
+depth_m = 3
+src = "地图量取"
+
+[[water]]
+name = "西界河下游（桥南折向东南，流往荆棘谷方向）"
+path = [[172.8, 273.4], [246.9, 372.1], [331.5, 440]]
+width_m = 35
+depth_m = 2
+src = "地图量取"
+
+[[road]]
+name = "主干道西端（对岸草坡 → 木桥 → 东岸爬坡）"
+path = [[0, 272], [146, 268], [199, 268], [280, 266], [370, 257], [520, 190]]
+width_m = 6
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p131"
+face = "east"
+over_water = true
+name = "有顶木桥"
+xy = [172.8, 268]
+size = [52, 7]
+h_m = 8
+src = "地图量取"
+note = "毛石桥墩 + 木桁架 + 齐肩竖板墙 + 陡坡木瓦顶（发黑长苔、缺瓦）；两端方形桥洞，洞里全黑；桥身中段微塌"
+
+[[block]]
+id = "b02"
+kind = "low_wall"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "东桥墩"
+xy = [196, 268]
+size = [6, 9]
+h_m = 4.5
+src = "推定"
+note = "桥墩脚下漂着一小片被挡住的枯叶；歪倒的拴马桩在桥头路边"
+
+[[block]]
+id = "b03"
+kind = "low_wall"
+face = "south"
+count = 1
+may_overlap = true
+name = "西桥墩"
+xy = [149.5, 268]
+size = [6, 9]
+h_m = 4.5
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "东岸碎石窄岸"
+xy = [205, 170]
+size = [22, 180]
+h_m = 0.6
+rot = -6
+src = "推定"
+note = "湿灰扁石 + 黑泥，水线上堆着泡烂的朽木与枯叶；锚点机位在此"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p112"
+face = "south"
+count = 7
+name = "挂满蛛网的枯树丛（桥北）"
+xy = [222, 215]
+size = [16, 70]
+h_m = 6
+src = "原典方位"
+note = "世界树：岸边蛛网挂在枯枝间；一直缠到东桥洞两根立柱"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p112"
+face = "south"
+count = 4
+over_water = true
+name = "挂满蛛网的枯树丛（桥南）"
+xy = [225, 305]
+size = [18, 40]
+h_m = 6
+rot = 37
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p112"
+face = "south"
+count = 40
+may_overlap = true
+name = "东岸枯林"
+xy = [366, 125]
+size = [290, 230]
+h_m = 14
+src = "推定"
+note = "近黑枯林一坡一坡向东升高，林冠上悬黑雾；主干道从其南缘穿过"
+
+[[block]]
+id = "b08"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "对岸枯黄草坡（邻区）"
+xy = [60, 200]
+size = [110, 380]
+h_m = 0
+src = "地图量取"
+note = "另一区的枯黄干草坡，稀疏矮树，天色亮一档（平而灰黄）"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg137-c1"
+eye = [260, 405]
+target = [260, 220]
+eye_h = 17.3
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

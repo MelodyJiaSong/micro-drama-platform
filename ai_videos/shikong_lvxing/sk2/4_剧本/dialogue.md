@@ -3,11 +3,11 @@
 ## English（视频原声）
 
 **S02**〔内心独白〕Nothing special about today. You're in Stormwind — a place millions have walked through, and no one has ever been to. Everything is as the lore says — except I'm here.
-**S03**〔正常台词〕I'm Ella, with the Timeline Survey. One gold piece, one day. Eight districts, three meals, one night — on a day when nothing happens. Bread: one silver twenty-five. A laborer earns about a silver a day — my estimate, not the lore's.
-**S04**〔内心独白〕Every single person who ever entered this city walked in under these. Five statues. All of them heroes of the Second War.
-**S05**〔内心独白〕This one's a mage — you can tell by the staff. And that's a gryphon, mid-take-off, carved in stone. Nobody does subtle here.
-**S06**〔内心独白〕Five plaques. Four of them end with the same two words: presumed deceased. Only one doesn't — hers. Alleria's. Nobody ever wrote her off.
-**S07**〔内心独白〕He doesn't say anything. He doesn't have to. That's the whole exchange — and honestly, that's most of my conversations today.
+**S03**〔内心独白〕He doesn't say anything. He doesn't have to. That's the whole exchange — and honestly, that's most of my conversations today.
+**S04**〔正常台词〕I'm Ella, with the Timeline Survey. One gold piece, one day. Eight districts, three meals, one night — on a day when nothing happens. Bread: one silver twenty-five. A laborer earns about a silver a day — my estimate, not the lore's.
+**S05**〔内心独白〕Every single person who ever entered this city walked in under these. Five statues. All of them heroes of the Second War.
+**S06**〔内心独白〕This one's a mage — you can tell by the staff. And that's a gryphon, mid-take-off, carved in stone. Nobody does subtle here.
+**S07**〔内心独白〕Five plaques. Four of them end with the same two words: presumed deceased. Only one doesn't — hers. Alleria's. Nobody ever wrote her off.
 **S08**〔内心独白〕Bank. Auction house. Mailbox. Three stops, twenty paces apart. If you ever played here, this was your whole routine — and you never once looked up at the roofs.
 **S09**〔内心独白〕Twenty-five copper for the cheap one. And yes — I just lost count. Twice.
 **S09**〔面包小贩 Thomas Miller·逐字原文〕Rolls, buns and bread. Baked fresh!
@@ -46,18 +46,18 @@
 **S40**〔内心独白〕Two fortresses, standing in the water, in the middle of the city. One of them is a prison — and right now the prisoners are running it. The guards were thrown out. Nobody on this bank seems especially bothered.
 **S41**〔内心独白〕That's the second one. Two doors in this city that have never opened, and the city just built itself around both of them. And look up — the sky is completely empty. No mounts, no dragons, nothing. Just dark.
 **S41**〔暴风城卫兵·逐字原文〕Light be with you, sir.
-**S42**〔正常台词〕Bread, twenty-five copper. Ribs, one silver. This meal, two silver. The robe, thirty-five copper. The tram — free. The bed tonight — also free. And the one thing I actually paid a premium for? Sending a letter. Thirty copper a slot. In a city where sleeping is free, the post office is the expensive part.
+**S42**〔正常台词〕Bread, one silver twenty-five. Ribs, one silver. This meal, two silver. The robe, thirty-five copper. The tram — free. The bed tonight — also free. And the one thing I actually paid a premium for? Sending a letter. Thirty copper a slot. In a city where sleeping is free, the post office is the expensive part.
 **S43**〔内心独白〕Same room. Same innkeeper. Same stone on the table. Goodnight, Stormwind.
 **S44**〔正常台词〕The bed: free, quiet, nine out of ten. One last thing — everyone thinks this was the Alliance capital. It wasn't. Back then people hung around Ironforge, where the auction house was. They called it Lagforge. Tell me in the comments: which locked door would you open? I changed nothing. I was just there. History doesn't do refunds — see you at the next stop.
 
 ## 中文（译配轨）
 
 **S02**〔内心独白〕今天没什么特别的。你在暴风城——一座几千万人走过、却从没有人真的去过的城。一切都和设定里一样——只是，多了一个我。
-**S03**〔正常台词〕我是艾拉，时空考察队的旅行者。一枚金币，一天。我要走完八个城区、吃三顿、住一晚——看看在什么都没发生的一天里，这座城长什么样。一条面包一银二十五铜。一个平民一天挣大约一银——这个数字是我推的，设定里没写。
-**S04**〔内心独白〕所有进过这座城的人，都从这几尊像脚下走过。五尊。全是第二次战争的英雄。
-**S05**〔内心独白〕这尊是法师，看法杖就知道。那是一只狮鹫，正要起飞，用石头刻的。这座城不讲含蓄。
-**S06**〔内心独白〕五块铭牌。四块用同样两个词收尾：推定已故。只有一块没有——她的。奥蕾莉亚。没有人把她算作失踪。
-**S07**〔内心独白〕他一句话没说。也不用说。整个交流就这些——老实讲，我今天大部分对话都是这样。
+**S03**〔内心独白〕他一句话没说。也不用说。整个交流就这些——老实讲，我今天大部分对话都是这样。
+**S04**〔正常台词〕我是艾拉，时空考察队的旅行者。一枚金币，一天。我要走完八个城区、吃三顿、住一晚——看看在什么都没发生的一天里，这座城长什么样。一条面包一银二十五铜。一个平民一天挣大约一银——这个数字是我推的，设定里没写。
+**S05**〔内心独白〕所有进过这座城的人，都从这几尊像脚下走过。五尊。全是第二次战争的英雄。
+**S06**〔内心独白〕这尊是法师，看法杖就知道。那是一只狮鹫，正要起飞，用石头刻的。这座城不讲含蓄。
+**S07**〔内心独白〕五块铭牌。四块用同样两个词收尾：推定已故。只有一块没有——她的。奥蕾莉亚。没有人把她算作失踪。
 **S08**〔内心独白〕银行。拍卖行。邮箱。三站，相隔二十步。你要是在这儿待过，这就是你的全部日常——而你一次都没抬头看过屋顶。
 **S09**〔内心独白〕最便宜那档二十五个铜板。是的——我刚数错了。两次。
 **S09**〔面包小贩 Thomas Miller·逐字原文〕Rolls, buns and bread. Baked fresh!
@@ -96,6 +96,6 @@
 **S40**〔内心独白〕两座从水里立起来的堡垒，就在城正中间。其中一座是监狱——而此刻里面是囚犯说了算。守卫被赶出来了。这岸上好像没什么人特别在意。
 **S41**〔内心独白〕这是第二道。这座城里有两道从没开过的门，而这座城就绕着它们俩长起来了。抬头看——天空完全是空的。没有坐骑，没有龙，什么都没有。只有黑。
 **S41**〔暴风城卫兵·逐字原文〕Light be with you, sir.
-**S42**〔正常台词〕面包，二十五铜。肋排，一银。这顿饭，二银。袍子，三十五铜。地铁——免费。今晚的床——也免费。而我真正多花钱的那一项？寄一封信。一格三十铜。在一个睡觉不要钱的城里，邮局才是贵的那部分。
+**S42**〔正常台词〕面包，一银二十五。肋排，一银。这顿饭，二银。袍子，三十五铜。地铁——免费。今晚的床——也免费。而我真正多花钱的那一项？寄一封信。一格三十铜。在一个睡觉不要钱的城里，邮局才是贵的那部分。
 **S43**〔内心独白〕同一间屋。同一个老板。桌上同一块石头。晚安，暴风城。
 **S44**〔正常台词〕床：免费、安静，我比老板醒得还早。九分。最后一件事——所有人都以为这儿是联盟的首都。不是。那会儿大家其实都泡在铁炉堡，因为拍卖行在那儿。他们管它叫「卡炉堡」。暴风城要到后来才真正热闹起来。评论里告诉我：这座城里那些空房间，你会搬进哪一间？我什么都没改，我只是在场。历史不退款——下一站见。

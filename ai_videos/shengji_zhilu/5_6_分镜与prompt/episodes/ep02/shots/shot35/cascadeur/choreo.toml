@@ -1,0 +1,66 @@
+# shot35 人体动作表（Cascadeur 层）。位置与朝向一律从 ../planning/overhead.toml 读，这里只写「身体摆成什么样」。
+# 改动作 ＝ 改本文件重跑 `python tools/cascadeur/choreo.py <shot 目录> --build`；部件都在共享库 tools/cascadeur/poses.toml。
+# 时刻与 shot35.md `动作:` 时间轴、overhead 的 [[hit]] / [[guard]] 逐拍对齐（rule 4h ②）。生成器：spawns/shots-d2/scratch/build_choreo2.py。强盗是色块人偶；亚伦的制裁之锤手势写在这里（Cascadeur 体：一推、抬胳膊挡脸、回头）。
+
+[meta]
+origin = [210.3, 138]
+fps = 30
+
+# 亚伦：2.5s 站稳、左手往前一推（技能卡 k206）；3.8s 听见口令抬起左胳膊挡在脸前；4.6s 火炸开后转头看沃尔特
+[actor."亚伦"]
+keys = [
+  [0, "stand"],
+  [2.2, "stance_l"],
+  [2.5, "stance_l+point_l"],
+  [3, "stance_l+point_l"],
+  [3.4, "stance_l"],
+  [3.8, "stance_l+palm_raise_l+look_down"],
+  [4.5, "stance_l+palm_raise_l+look_down"],
+  [4.9, "stance_l+look_back_r"],
+  [8, "stance_l+look_back_r"],
+]
+
+# 杜克：0.8s、2.2s 盾面一顶，把发慢的强盗往东北顶回去；1.4s 一刀磕在盾上；3.6s 横跨一步挡进火线，4.5s 盾把火磕偏、盾臂往后一荡
+[actor."杜克"]
+keys = [
+  [0, "stance_l+shield_guard"],
+  [0.6, "stance_l+shield_guard"],
+  [0.8, "lunge+shield_shove"],
+  [1.1, "stance_l+shield_guard"],
+  [1.4, "stance_l+shield_brace"],
+  [1.7, "stance_l+shield_guard"],
+  [2, "stance_l+shield_guard"],
+  [2.2, "lunge+shield_shove"],
+  [2.5, "stance_l+shield_guard"],
+  [3.6, "stance_l+shield_guard"],
+  [4.1, "stance_l+shield_guard"],
+  [4.4, "stance_l+shield_brace"],
+  [4.5, "brace_sink+shield_brace"],
+  [4.9, "stance_l+shield_guard"],
+  [8, "stance_l+shield_guard"],
+]
+
+# 沃尔特：背靠南瓜堆挺着叉看弟弟；4.6s 被炸声惊得回身，和举刀的瘦子脸对脸一愣；绕到他南边，6.1s 一叉，叉股卡住瘦子的脖子往下按
+[actor."沃尔特"]
+gait = [[5, 6, "run", "twohand_low"]]
+keys = [
+  [0, "stance_l+twohand_low"],
+  [4.6, "stance_l+twohand_low"],
+  [4.9, "stand+twohand_low"],
+  [5, "stand+twohand_low"],
+  [6, "stance_l+twohand_low"],
+  [6.2, "lunge+twohand_chop"],
+  [6.5, "lunge+twohand_strike"],
+  [8, "lunge+twohand_strike"],
+]
+
+# 瘦子：0–2.3s 沿南瓜堆东边摸过来；2.9s 举刀贴到沃尔特背后，3s 被定住（刀举着）；6.2s 被叉股按倒在南瓜堆东北角上
+[actor."瘦子"]
+gait = [[0, 2.3, "run", "hammer_r_low"]]
+keys = [
+  [2.4, "stance_l+onehand_windup_r"],
+  [2.9, "stance_l+onehand_windup_r"],
+  [6.1, "stance_l+onehand_windup_r"],
+  [6.5, "sit_ground"],
+  [8, "sit_ground"],
+]

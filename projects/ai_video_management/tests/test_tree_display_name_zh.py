@@ -92,12 +92,13 @@ def test_scene_main_md_leaf_has_zh_display(tmp_path: Path) -> None:
 
 
 def test_scene_plate_md_leaf_no_display(tmp_path: Path) -> None:
-    # a plate .md (parent.parent != scenes) must NOT get a scene display_name
+    # a plate .md never takes its H1 (a prompt title) as label — only the
+    # routing-key label every keyed scenes-tree node gets (follow-up 173)
     plate = tmp_path / "ai_videos" / "d" / "2_世界观人设" / "scenes" / "jishi_changjie" / "bg1_顺街_全景"
     plate.mkdir(parents=True)
     f = plate / "bg1_顺街_全景.md"
     f.write_text("# bg1_顺街_全景 · 集市长街 顺街全景\n", encoding="utf-8")
-    assert "display_name" not in _reader(tmp_path)._leaf_for(f)
+    assert _reader(tmp_path)._leaf_for(f)["display_name"] == "bg1 顺街_全景.md"
 
 
 def test_shot_md_leaf_no_display(tmp_path: Path) -> None:

@@ -1,0 +1,223 @@
+# 破碎岭城堡 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 区图点位 [47, 42] 落在本场地 (200, 150)；区图 1 px ≈ 2.555 m。
+
+[meta]
+bg = "bg24"
+name_zh = "破碎岭城堡"
+size_m = [360, 280]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "区图裁切量取：点位西 ~57 px 方形塔图标（≈146 m）、北 ~49 px 与东南 ~25 px 两个营地图标，营寨据此摊成约 150 × 200 m；帐篷 / 柴堆尺寸按食人魔身量（约两人高）推定"
+# 世界树画面：雪坡上的食人魔营地，粗木栅栏、兽皮帐篷与巨大的柴堆火
+absent = [
+    "燃着的柴堆火与炊烟（默认态柴堆未点，火坑是冷灰）",
+    "任何人物、食人魔与坐骑（默认空营）",
+    "石砌城墙与城楼（营寨全是木栅，名字里的「城堡」指山头）",
+    "湖面（湖在西面，被山挡住，本场地任何机位都看不到）",
+    "旗帜纹章与文字标识",
+    "成片树林（只有栅桩与柴堆用的伐下松木）",
+    "4.0.3a 后并入希尔斯布莱德丘陵的新布局",
+]
+
+[[ridge]]
+name = "西南雪岭（西北—东南走向，岭尖收在营寨南门西侧）"
+poly = [[0, 150], [80, 122], [150, 138], [200, 160], [228, 190], [226, 238], [180, 236], [120, 222], [40, 232], [0, 246]]
+height_m = 55
+src = "地图量取"
+
+[[ridge]]
+name = "北侧上抬雪坡（接更高的北脊）"
+poly = [[0, 0], [360, 0], [360, 12], [260, 14], [170, 10], [80, 16], [0, 22]]
+height_m = 25
+src = "推定"
+
+[[road]]
+name = "南门下坡泥雪小路（往东南的路口）"
+path = [[253, 228], [262, 250], [285, 268], [310, 280]]
+width_m = 4
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "palisade"
+face = "south"
+count = 1
+name = "北栅（整棵削尖松木）"
+xy = [244, 24]
+size = [148, 3]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "palisade"
+face = "south"
+count = 1
+name = "东栅"
+xy = [318, 125.5]
+size = [3, 200]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b03"
+may_overlap = true
+kind = "palisade"
+face = "south"
+count = 1
+name = "南栅·东段"
+xy = [290, 225]
+size = [56, 3]
+h_m = 6
+src = "推定"
+note = "b03 与 b04 之间 x 244–262 是唯一的门（无门扇，两根粗门柱 + 横木）"
+
+[[block]]
+id = "b04"
+kind = "palisade"
+face = "south"
+count = 1
+name = "南栅·西段（接雪岭岭尖）"
+xy = [236, 225]
+size = [16, 3]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b05"
+may_overlap = true
+kind = "palisade"
+face = "south"
+count = 1
+name = "西栅北段（雪岭以北，西南面其余靠岭不设栅）"
+xy = [171, 80]
+size = [3, 110]
+h_m = 6
+src = "推定"
+note = "下端接到雪岭坡脚"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p22"
+face = "south"
+name = "北头最大兽皮大帐"
+xy = [222, 52]
+size = [24, 18]
+h_m = 8
+src = "地图量取"
+note = "区图北侧营地图标附近"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p22"
+face = "southwest"
+name = "东北兽皮帐"
+xy = [288, 62]
+size = [16, 14]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p22"
+face = "northwest"
+name = "东南兽皮帐"
+xy = [278, 196]
+size = [18, 14]
+h_m = 6.5
+src = "地图量取"
+note = "区图东南营地图标"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p22"
+face = "south"
+name = "中部兽皮帐"
+xy = [268, 128]
+size = [14, 12]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p33"
+face = "south"
+name = "巨型柴堆（未点燃，顶上积雪）"
+xy = [220, 118]
+size = [12, 12]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p363"
+face = "south"
+name = "冷灰火坑（粗石围沿）"
+xy = [238, 140]
+size = [10, 10]
+h_m = 0.3
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p21"
+face = "south"
+name = "叉桩铁锅"
+xy = [250, 150]
+size = [4, 4]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p33"
+face = "southeast"
+name = "兽骨堆与战利品杆"
+xy = [190, 44]
+size = [12, 8]
+h_m = 3
+src = "推定"
+note = "栅内西北角"
+
+[[block]]
+id = "b14"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "半埋旧石墙（被当作北栅地基）"
+xy = [255, 20]
+size = [60, 2]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p18"
+face = "east"
+name = "旧方石塔残身（塌半顶）"
+xy = [54, 114]
+size = [9, 9]
+h_m = 14
+src = "地图量取"
+note = "区图点位正西 ~57 px 的方形塔图标"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg24-c1"
+eye = [180, 258]
+target = [180, 140]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

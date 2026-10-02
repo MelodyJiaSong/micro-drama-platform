@@ -1,0 +1,323 @@
+# 碎木岗哨 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地中心 ≈ 区图 [74, 61.5]（区级 b907，地图量取）；南面主干道、北去萨特营的支路按 bg413 terrain 平移换算；弗伦河在场地西外约 200 m、东支在东外约 300 m，都不入本图。寨内落位全部推定。
+
+[meta]
+bg = "bg423"
+name_zh = "碎木岗哨"
+size_m = [360, 320]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "世界画面只有「木栅要塞、瞭望塔、中央大帐、新伐木料」；方寨取约 100 × 95 m，场地放大到 360 × 320 m 把寨外秃地、南面主干道与北去支路框进来。寨内尺度无一手出处"
+# 世界树画面：东部林中的兽人木栅要塞，削尖原木围墙、瞭望塔与中央大帐，地上堆着新伐的木料
+absent = [
+    "任何人物与双足飞龙（栖架上是空的；骑手、管理员属 shot 层）",
+    "任何火光：火塘只剩冷灰、铁匠炉冷着，没有火把、火盆、灯笼，没有炉烟",
+    "伐木机、机械锯与冒烟的炉口（那是东面伐木营地的景观，不在这里）",
+    "石砌城墙、石塔与砖房（这里只有原木与兽皮）",
+    "河流与湖面（两条河都在场地之外的林子里）",
+    "东西两面的寨门（只有南正门与北小门）",
+    "文字招牌与纹章旗帜",
+    "4.0.3 之后的新建筑、扩建工事与战争机械",
+]
+
+[[ridge]]
+name = "东北林丘（树墙后隆起）"
+poly = [[250, 0], [360, 0], [360, 110], [320, 90], [280, 50]]
+height_m = 45
+src = "地图量取"
+note = "bg413 terrain「东部丘陵」的西南角，平面按区图相对方位摆，高度推定"
+
+[[road]]
+name = "东西主干道（西去河桥、东去伐木营地）"
+path = [[0, 300], [120, 308], [240, 306], [360, 296]]
+width_m = 8
+src = "地图量取"
+note = "bg413 terrain「主干道」，寨门正南约 150 m"
+
+[[road]]
+name = "深辙寨门路（南正门 → 主干道）"
+path = [[180, 158], [182, 230], [184, 305]]
+width_m = 5
+src = "推定"
+note = "拖木头的车轮压出两道深辙"
+
+[[road]]
+name = "北门支路（穿林上坡去萨特营）"
+path = [[180, 62], [186, 30], [200, 0]]
+width_m = 3
+src = "地图量取"
+note = "bg413 terrain「木寨—萨特营—东北古遗址路」起头一段"
+
+[[block]]
+id = "b01"
+kind = "palisade"
+face = "south"
+count = 1
+name = "削尖原木栅墙（方寨）"
+xy = [180, 110]
+size = [100, 95]
+h_m = 5
+src = "原典方位"
+note = "世界画面「削尖原木围墙」；尺寸推定。南正门、北小门，东西无门"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p381"
+face = "south"
+name = "南正门原木门楼·西"
+xy = [172, 158]
+size = [5, 5]
+h_m = 8
+src = "推定"
+note = "门楣正中挂灰白巨兽头骨"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p381"
+face = "south"
+name = "南正门原木门楼·东"
+xy = [188, 158]
+size = [5, 5]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p379"
+face = "south"
+name = "中央兽皮大帐（兽骨肋撑弧顶）"
+xy = [180, 108]
+size = [22, 16]
+h_m = 9
+src = "原典方位"
+note = "世界画面「中央大帐」；帐顶一片暗红粗布"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p388"
+face = "south"
+name = "石圈火塘（冷灰余烬）"
+xy = [180, 124]
+size = [3, 3]
+h_m = 0.4
+src = "推定"
+note = "大帐前；不冒烟"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p381"
+face = "south"
+name = "原木瞭望塔（东北角）"
+xy = [222, 70]
+size = [7, 7]
+h_m = 14
+src = "推定"
+note = "世界画面「瞭望塔」；落在东北角为推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p391"
+face = "south"
+name = "原木栖架塔（西北角，空）"
+xy = [138, 70]
+size = [8, 8]
+h_m = 10
+src = "推定"
+note = "飞行点栖架；顶端粗横杆铺干草"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p380"
+face = "east"
+name = "长屋（兽骨尖刺屋脊）"
+xy = [150, 110]
+size = [12, 26]
+h_m = 6
+src = "推定"
+note = "大帐西侧"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p380"
+face = "west"
+name = "铁匠棚（三面敞开，冷炉）"
+xy = [210, 110]
+size = [12, 10]
+h_m = 4.5
+src = "推定"
+note = "大帐东侧；黑铁砧与大木风箱"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p391"
+face = "south"
+name = "晾皮粗绳（长屋与大帐之间）"
+xy = [162, 104]
+size = [8, 0.5]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p376"
+face = "south"
+name = "备用尖木桩堆（塔脚）"
+xy = [214, 78]
+size = [5, 3]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p375"
+face = "south"
+count = 40
+name = "新伐秃地（东南，满地新鲜树桩）"
+xy = [285, 205]
+size = [130, 110]
+h_m = 0.5
+src = "推定"
+note = "世界画面「地上堆着新伐的木料」；范围推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p376"
+face = "south"
+name = "原木垛·一"
+xy = [258, 185]
+size = [14, 5]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p376"
+face = "south"
+name = "原木垛·二"
+xy = [262, 200]
+size = [12, 5]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p376"
+face = "south"
+name = "原木垛·三"
+xy = [300, 190]
+size = [16, 5]
+h_m = 2
+rot = 10
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "asset"
+asset = "p391"
+face = "south"
+name = "大锯木架·一（架下锯末小丘）"
+xy = [285, 220]
+size = [6, 3]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b17"
+kind = "asset"
+asset = "p391"
+face = "south"
+name = "大锯木架·二"
+xy = [310, 232]
+size = [6, 3]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b18"
+kind = "asset"
+asset = "p391"
+face = "south"
+name = "卸空的拖木板车"
+xy = [192, 190]
+size = [5, 2.5]
+h_m = 1.2
+rot = 20
+src = "推定"
+
+[[block]]
+id = "b19"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "寨外秃洼（树桩地，寨子坐在洼底偏北）"
+xy = [180, 130]
+size = [200, 190]
+h_m = 0.4
+src = "推定"
+note = "林线离木栅二三十米起"
+
+[[block]]
+id = "b20"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 40
+name = "深林树墙·西"
+xy = [35, 150]
+size = [70, 280]
+h_m = 30
+src = "推定"
+note = "树丛"
+
+[[block]]
+id = "b21"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 35
+name = "深林树墙·北（北门支路两侧）"
+xy = [140, 12]
+size = [220, 24]
+h_m = 30
+src = "推定"
+note = "树丛"
+
+[[block]]
+id = "b22"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 40
+name = "深林树墙·南（主干道以北）"
+xy = [95, 262]
+size = [150, 50]
+h_m = 30
+src = "推定"
+note = "树丛"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg423-c1"
+eye = [180, 294]
+target = [180, 160]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

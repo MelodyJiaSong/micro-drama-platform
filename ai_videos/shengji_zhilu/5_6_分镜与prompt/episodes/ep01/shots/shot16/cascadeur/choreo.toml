@@ -1,0 +1,66 @@
+# shot16 人体动作表（Cascadeur 层）。位置与朝向一律从 ../planning/overhead.toml 读，这里只写「身体摆成什么样」。
+# 改动作 ＝ 改本文件重跑 `python tools/cascadeur/choreo.py <shot 目录> --build`；部件都在共享库 tools/cascadeur/poses.toml。
+# 时刻与 shot16.md `动作:` 时间轴、overhead 的 [[hit]] / [[cast]] 逐拍对齐（rule 4h ②）。矿工不在这里：色块人偶够用。
+# follow-up 052 G13：攻防镜的人体一律 Cascadeur。9s / 19s 是镜内硬切、人换位置：换位放在切点前 0.1 s（8.9→9s、18.9→19s），切过去人已站好。
+
+[meta]
+origin = [26.0, 17.0]          # 平面图坐标；Cascadeur 原点 ＝ 支巷东口（杜克堵口子的那一点）
+fps = 30
+
+# 杜克：0–4.5s 举着钢盾抢到前头、往东口走；4.5s 侧身堵在口子上，5.2 / 6.8s 扛镐，7.4s 盾沿往前一撞、撞落矿工帽顶的蜡烛；
+# 9s（切）到掌子面东墙缝前，站在亚伦身后，右手把蜡烛举过他头顶照着缝里；19s（切）往南走到岔口，停在皮袋前
+[actor."杜克"]
+gait = [[0.0, 4.0, "walk", "shield_guard"], [19.0, 21.0, "walk", "shield_low"]]
+keys = [
+  [4.5, "stance_l+shield_guard"],
+  [5.0, "stance_l+shield_guard"],
+  [5.2, "stance_l+shield_brace"],
+  [5.6, "stance_l+shield_guard"],
+  [6.6, "stance_l+shield_guard"],
+  [6.8, "stance_l+shield_brace"],
+  [7.1, "stance_l+shield_guard"],
+  [7.4, "lunge+shield_shove"],
+  [7.8, "stance_l+shield_guard"],
+  [8.6, "stand+shield_low"],
+  [8.9, "stand+shield_low"],
+  [9.0, "stand+shield_low"],
+  [9.8, "stand+shield_low+hold_up_r"],
+  [18.8, "stand+shield_low+hold_up_r"],
+  [18.9, "stand+shield_low"],
+  [21.6, "stand+shield_low"],
+  [28.0, "stand+shield_low"],
+]
+
+# 亚伦：0–4.5s 右手提着练习锤跟在后面；4.5s 站稳；5s / 7s 双手金光一闪、左手从杜克肩后朝矿工一指（审判，技能卡 k202：放 1 s、胸口炸光 0.4 s）；
+# 8.45s 弯腰捡起滚到脚边的蜡烛；9s（切）练习锤挂回腰上，蹲在缝前，11s 把点着的蜡烛头递过去；17.4s 双手抱起父亲的锤、18.7s 扛上肩；
+# 19s（切）扛着锤往南走到岔口，23s 低头看撕开的裤膝，24.6s 左手从地上拎起那条长裤比划
+[actor."亚伦"]
+gait = [[0.0, 4.0, "walk", "hammer_r_low"], [19.0, 20.7, "walk", "shoulder_carry"]]
+keys = [
+  [4.5, "stance_l+hammer_r_low"],
+  [5.0, "stance_l+hammer_r_low+palm_up_l"],
+  [5.4, "stance_l+hammer_r_low+point_l"],
+  [6.3, "stance_l+hammer_r_low+point_l"],
+  [6.6, "stance_l+hammer_r_low"],
+  [7.0, "stance_l+hammer_r_low+palm_up_l"],
+  [7.4, "stance_l+hammer_r_low+point_l"],
+  [8.2, "stance_l+hammer_r_low+point_l"],
+  [8.45, "stand+hammer_r_low+pick_up_l"],
+  [8.8, "stand+hammer_r_low+palm_up_l"],
+  [8.9, "stand+hammer_r_low+palm_up_l"],
+  [9.0, "stand+palm_up_l"],
+  [9.8, "squat+palm_up_l"],
+  [11.0, "squat+offer_r"],
+  [15.6, "squat+offer_r"],
+  [16.2, "squat"],
+  [17.2, "squat+twohand_low"],
+  [18.2, "stand+twohand_low"],
+  [18.7, "stand+shoulder_carry"],
+  [18.9, "stand+shoulder_carry"],
+  [21.3, "stand+shoulder_carry"],
+  [23.0, "stand+shoulder_carry+look_down"],
+  [24.0, "stand+shoulder_carry"],
+  [24.6, "stand+shoulder_carry+pick_up_l"],
+  [25.2, "stand+shoulder_carry+hold_up_l"],
+  [28.0, "stand+shoulder_carry+hold_up_l"],
+]

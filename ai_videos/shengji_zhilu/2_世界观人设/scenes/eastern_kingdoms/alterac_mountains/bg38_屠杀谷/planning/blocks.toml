@@ -1,0 +1,195 @@
+# 屠杀谷 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg38"
+name_zh = "屠杀谷"
+size_m = [300, 255]
+px_per_m = 5.0
+scale_src = "推定"
+scale_note = "世界树无坐标；wiki 只说紧邻破碎岭城堡。推定中心约 [47, 25.5]（区 m ≈ 1203, 436）：营寨（bg24，[47, 42]）北栅外那道山（区级 terrain「中央雪山·北脊」西端与「高地内小山群」之间）上切进去的一道凹口，谷口距营寨北栅约 30 m；北墙顶止于高地（bg40）西臂窄谷南沿，不与两边的场地相叠。谷底约 100 × 210 m、岩壁高度与棚帐尺寸按食人魔身量（约两人高）推定"
+# 世界树画面：夹在岩壁间的凹谷，地上尽是骨头与血迹，帐篷边插着战利品杆
+# 南口外下坡的营寨（bg24）在场地之外，只写在 md
+absent = [
+    "木栅、寨门、巨型柴堆（那是南面营寨 bg24 的东西，本谷两壁就是墙）",
+    "燃着的火、火堆、炊烟、任何人工光源（谷里没有烧过的痕迹）",
+    "新鲜的、流淌的红血（只有多年冻透的暗褐旧渍）",
+    "人物、坐骑、动物（木笼是空的）",
+    "湖、河与任何远景地平线（三面岩壁封死，朝北只有后壁与窄天）",
+    "第二个出入口（只有南口）",
+    "正在下的雪、夜景",
+    "4.0.3a 后并入希尔斯布莱德的新布局",
+]
+
+[[ridge]]
+name = "西壁（四五十米，竖裂缝与冰挂）"
+poly = [[0, 0], [95, 0], [100, 51], [104, 119], [100, 187], [108, 222.7], [118, 255], [0, 255]]
+height_m = 45
+src = "推定"
+
+[[ridge]]
+name = "东壁（比西壁略高）"
+poly = [[205, 0], [300, 0], [300, 255], [182, 255], [192, 222.7], [200, 187], [196, 119], [200, 51]]
+height_m = 60
+src = "推定"
+
+[[ridge]]
+name = "北面后壁（最高，雪沟竖挂，封死谷底）"
+poly = [[95, 0], [205, 0], [200, 38.2], [150, 46.8], [100, 38.2]]
+height_m = 110
+src = "推定"
+
+[[road]]
+name = "南口直通屠案的泥雪小路"
+path = [[150, 255], [150, 212.5], [148, 170], [150, 134.3]]
+width_m = 3
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p32"
+face = "south"
+name = "平顶屠案巨石（砍满深痕）"
+xy = [150, 127.5]
+size = [6, 4]
+h_m = 1.1
+src = "推定"
+note = "本档标志；机位在南口落石上朝北看它"
+
+[[block]]
+id = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "冻透的旧血渍区（屠案四周）"
+xy = [150, 129.2]
+size = [26, 18]
+h_m = 0
+src = "推定"
+note = "暗褐、多年积下；边缘被薄雪盖住一半"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p25"
+face = "south"
+name = "空钩粗木晾架（屠案北侧）"
+xy = [150, 108.8]
+size = [14, 2]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p33"
+face = "south"
+name = "北端骨堆（贴后壁，半人高）"
+xy = [150, 59.5]
+size = [30, 12]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p22"
+face = "east"
+name = "西壁兽皮窝棚·北（整树干斜靠岩壁）"
+xy = [114, 100.3]
+size = [16, 12]
+h_m = 6
+src = "推定"
+note = "棚口约两人高，朝东"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p22"
+face = "east"
+name = "西壁兽皮窝棚·南"
+xy = [113, 166.6]
+size = [14, 11]
+h_m = 5.5
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p22"
+face = "west"
+name = "东壁圆锥兽皮大帐（帐顶交叉木杆）"
+xy = [182, 149.6]
+size = [16, 16]
+h_m = 8
+src = "推定"
+note = "帐门朝西"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p24"
+face = "east"
+name = "战利品杆·北窝棚门边"
+xy = [125, 93.5]
+size = [2, 2]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p24"
+face = "east"
+name = "战利品杆·南窝棚门边"
+xy = [123, 159.8]
+size = [2, 2]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p24"
+face = "west"
+name = "战利品杆·大帐门边"
+xy = [171, 142.8]
+size = [2, 2]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p21"
+face = "west"
+name = "东壁根空木笼（笼门半开）"
+xy = [188, 103.7]
+size = [4, 4]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p32"
+face = "south"
+name = "谷口内侧落石（机位）"
+xy = [142, 239.7]
+size = [5, 4]
+h_m = 1.8
+src = "推定"
+note = "机位站此，平视略俯朝北"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg38-c1"
+eye = [150, 235]
+target = [150, 128]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

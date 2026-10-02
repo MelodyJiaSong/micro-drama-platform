@@ -43,7 +43,7 @@ shot42_法师区
 镜头: 室内平机位正对；景别 中景；16:9
 走位: 她坐在桌边正面朝镜头，采访本摊在桌上；背景是餐馆的暖光与人影
 动作: 0–7s 她坐下、摊开本子；7–18s 逐笔念账，手指在纸上点过；18–21s 她合上本子，靠回椅背
-台词: 艾拉〔正常台词，入画对镜说话〕Bread, twenty-five copper. Ribs, one silver. This meal, two silver. The robe, thirty-five copper. The tram — free. The bed tonight — also free. And the one thing I actually paid a premium for? Sending a letter. Thirty copper a slot. In a city where sleeping is free, the post office is the expensive part.
+台词: 艾拉〔正常台词，入画对镜说话〕Bread, one silver twenty-five. Ribs, one silver. This meal, two silver. The robe, thirty-five copper. The tram — free. The bed tonight — also free. And the one thing I actually paid a premium for? Sending a letter. Thirty copper a slot. In a city where sleeping is free, the post office is the expensive part.
 声音: 艾拉的声音：二十八岁美国女声，说英语，**美式口音**（太平洋西北／波特兰一带的通用美音，没有明显地域腔、r 音卷、t 在词中常弱化成 d 音）；清亮的中高音，语速快、一句接一句，句尾常常往上扬、带着笑；自嘲时压低半度、拖长一个词；惊讶时先吸一口气再说话；气息足、边走边说不喘；不说中文、不播音腔、不刻意夸张口音
 光线: 夜；室内暖光，烛光在她脸上，背景的人影虚化；**本镜画面里没有紫色光源，也没有任何炉火**。本镜画面里没有任何炉火，也没有任何暖橙色光源；画面里没有自发光的水面或魔法光源
 节奏: 21 秒一镜；节奏平稳
@@ -61,7 +61,7 @@ shot42_法师区
 情绪: 轻快、好奇
 语速: 英语 ≤ 2.8 词/秒
 类型: 正常台词
-台词: Bread, twenty-five copper. Ribs, one silver. This meal, two silver. The robe, thirty-five copper. The tram — free. The bed tonight — also free. And the one thing I actually paid a premium for? Sending a letter. Thirty copper a slot. In a city where sleeping is free, the post office is the expensive part.
-中文译配: 面包，二十五铜。肋排，一银。这顿饭，二银。袍子，三十五铜。地铁——免费。今晚的床——也免费。而我真正多花钱的那一项？寄一封信。一格三十铜。在一个睡觉不要钱的城里，邮局才是贵的那部分。
+台词: Bread, one silver twenty-five. Ribs, one silver. This meal, two silver. The robe, thirty-five copper. The tram — free. The bed tonight — also free. And the one thing I actually paid a premium for? Sending a letter. Thirty copper a slot. In a city where sleeping is free, the post office is the expensive part.
+中文译配: 面包，一银二十五。肋排，一银。这顿饭，二银。袍子，三十五铜。地铁——免费。今晚的床——也免费。而我真正多花钱的那一项？寄一封信。一格三十铜。在一个睡觉不要钱的城里，邮局才是贵的那部分。
 时长目标: 21 秒以内
 ```

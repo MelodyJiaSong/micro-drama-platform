@@ -15,11 +15,11 @@
 | 107 | 画风＝**纯实拍感 / 权游质感**（sk1 follow-up 014：画类参考一律退出上传窗口） | 画风＝**半写实**：建筑形制 / 比例 / 配色（蓝瓦白石、狮子与狮鹫纹章）忠于游戏，让观众一眼认出是暴风城；材质、光线、皮肤、大气走写实电影级 | 用户 2026-09-18 拍板。纯写实会让老玩家认不出这是暴风城（辨识度正来自游戏的夸张形制）；纯游戏风又与系列实拍基调正面冲突 |
 | 108 | **游戏截图 / 官方原画**（本站的「参考图」）＝ 形制依据 | **只作形制依据与作者对账，不入画、不上传给生成模型**。生成模型的上传窗口只给**我们自己生成的锚点图**（世界锚点 + 地点锚点）。参考图库仍按 ≥ 8 张/资产 建，`refs.md` 每条标「暴雪版权 · 不入画」 | 两个理由叠加：① 版权——暴雪美术资产不可再分发；② 画风——sk1 follow-up 014 的实测教训「模型对参考图的风格吸收强于对文字否定的服从，喂画出画」，喂游戏截图必然出游戏截图质感，直接打掉 #107 的半写实 |
 | 109 | 旅行者说**普通话**，视频原声中文、英文为译配轨（sk1 用 c1 林问） | 旅行者＝ **c4 艾拉 / Ella Hart**（英国），**视频原声英语**，中文为译配轨（先人声分离去原声再 mux） | 名册规则「欧美题材用欧美面孔」（proposal A §3）；用户 2026-09-18 选定 |
-| 110 | 系列定性＝「AI 历史情景科普节目」，合规风险为历史题材的平台分级（proposal E） | **新增 IP 合规维度**：暴风城是暴雪 IP。非商业同人在 Blizzard fan content policy 下通常可行，**四站商业分发 / 开收益是风险点**。**待用户在阶段 6 `publish.md` 之前拍板**（同人标注 / 不开收益 / 换名致敬）；阶段 0–5 不受阻 | 历史题材无版权方，虚构站有。这是虚拟城支线相对历史站**唯一的新增风险类别**，必须显式登记而不是默认沿用 |
+| 110 | 系列定性＝「AI 历史情景科普节目」，合规风险为历史题材的平台分级（proposal E） | **新增 IP 合规维度 · 已定（2026-09-20，见下文「2026-09-20 裁定 · #110」）**：本片定性为**「暴雪明确不许可、但长期不执行的一类非商业同人」**——**不是**「在 Blizzard fan content policy 下通常可行」（该文件在暴雪现行公开法务目录里**不存在**，原前提已被推翻）。**结论：继续用暴风城，走 A− 命名口径 + 四站简介首屏免责声明 + 四站一律不开收益。** 风险分级**中**；真实最大风险不是被起诉，而是**老频道的 YPP 资格被连累** | 历史题材无版权方，虚构站有。这是虚拟城支线相对历史站**唯一的新增风险类别**，必须显式登记而不是默认沿用 |
 
 ## 平台说明
 
-四站同发（抖音 / 小红书中文，YouTube / TikTok 英文），沿用 sk1。**发布前须先解决 #110。**
+四站同发（抖音 / 小红书中文，YouTube / TikTok 英文），沿用 sk1。**#110 已于 2026-09-20 裁定：A− 命名口径 + 四站简介首屏免责声明 + 四站一律不开收益（见下方裁定节）。**
 
 ## 设定纪律（本站）
 
@@ -76,3 +76,190 @@
 | 英雄谷石桥 | 乔纳森将军 | **档 1，无台词**：她敬礼 → 他回礼；她挥手 → 他点头回挥 | `person.015/016` |
 
 **阶段 4 写剧本前必做**：把上表每句的 `source_url` + `quote` 逐条补进 `parts/w10_*`（现有的 `stormwind.line.001–007` 是《假面舞会》的，本集不用；**档 2 这批要另立编号**）。
+
+## 2026-09-20 裁定 · #110（IP 定性：已定）
+
+> **这是工程风险评估，不是法律意见。** 下文每条结论都注明了它所依据的、**实际读过的**页面；查不到权威来源的，写明「未查到」。要做法律判断请找律师。
+> 本节只管 `sk2` 与后续虚拟城站；按 `CLAUDE.md`「规则变更只对新增与改动的产物生效」，不回溯 sk1 与任何历史城站（历史题材无权利人，本节对它们无意义）。
+
+### A. 定性结论
+
+本片是**零素材的 AI 重建 + 介绍/评论性解说**，既不是「游戏实录 / 剪辑二创」，也不是「完全原创」，而是第三类。分三层看，**只有把三层拆开，结论才是准的**：
+
+| 层 | 内容 | 判断 |
+|---|---|---|
+| **A 素材层** | 全片**零**游戏截图 / 官方原画 / 暴雪音频 / UI / 字体（`divergence #108` 已定死） | **风险最低，且它让两份最常被援引的文件失效**：暴雪 Video Policy 字面管的是 "Productions using video images, footage, music, sounds, speech, **or other assets from** Blizzard's copyrighted products"；YouTube 的变现口径管的是 "video game content"。本片两样都不含 |
+| **B 表达层** | 画面**确实**再现了暴雪的**具体表达**：大教堂 / 要塞 / 月亮井 / 矮人门洞的建筑造型、狮子与狮鹫纹章、以及**七张具名角色卡**（`c21 安杜因` `c22 伯瓦尔` `c23 普瑞斯托` `c25 乔纳森` `c27 本尼迪塔斯` 等）的形象服装；另逐字引用四句 NPC 台词 | **这是真实风险所在。** 这些**不是「风格」，是具体表达**，正落在暴雪 Fan Art 条款自述的 "Blizzard Property" 定义里（该定义明列 `characters, character names, stories, dialog, catch phrases, locations, concepts, artwork, structural or landscape designs`）。**「AI 生成的、没喂参考图」不改变这一层**——版权看产出像不像，不看怎么做出来的 |
+| **C 合同层** | 暴雪 EULA（LAST REVISED March 21, 2024）§2.A.ix：玩家 "will not create any work based on the Platform, except as expressly set forth in this Agreement or otherwise by Blizzard in certain contest rules, **Blizzard's Fan Policies**, or addenda"；而 Blizzard Legal FAQ 对「Can I write novels, screenplays, theatrical productions **or other adaptations** based on your games?」明确答 **"No."** | **最容易被忽略、必须诚实说出来的一层。** 本片有剧本、有角色、有台词，在暴雪自己的口径里更像被明确拒绝的 "other adaptations"，而不是被默许的 "Production" |
+
+**⚠️ 本次裁定推翻了原 #110 的前提。** 原文写「非商业同人在 Blizzard fan content policy 下通常可行」——**暴雪现行公开法务目录里根本没有这份文件**（2026-09-20 实抓 `https://www.blizzard.com/en-us/legal`，全目录 16 条，与同人相关的只有 **Video Policy**（管带素材的视频）、**Legal FAQ**（对 adaptations 答 No）、**Fan Art 投稿条款**（管投给暴雪的画）三份）。EULA 提到的 "Fan Policies" 未给链接、未给文件。**那条乐观结论建立在一份不存在的文件上。**
+
+> **定性（一句话）**：本片属于**「暴雪明确不许可、但长期不执行的一类非商业同人」**。实际暴露面不靠许可，靠四件事撑着——① 非商业 ② 零素材 ③ 不造成来源混淆 ④ 随时可下架。**这四条里任何一条被破坏，定性立刻变差。**
+
+> **决定：继续做，继续用暴风城。** 走 A− 命名口径 + 四站简介首屏免责声明 + **四站一律不开收益**。
+
+### B. 可执行约束清单（回填 `publish.md` 用；本裁定不改 `publish.md`）
+
+#### ① 标题 / 描述 / 标签：能否出现作品名与城名
+
+**`publish.md` 的 A 版（直呼作品名）/ B 版（只描述不点名）二选一是个伪选择，本裁定替换掉它。** 真实分界线不是「点不点名」，而是「**是在描述题材，还是在充当来源标识**」。
+
+**解锁 A− 版**：
+
+| 位置 | 可以 | 禁止 |
+|---|---|---|
+| **标题** | `Stormwind` / `暴风城` **可用**（名称本身不受版权保护——美国版权局 Circular 33：`Words and short phrases, such as names, titles, and slogans, are uncopyrightable`） | `官方` `Official` `联名` `授权` `Licensed` `合作` `暴雪出品` `Blizzard Presents`——四站全字段 |
+| **描述** | **必须点明作品名与权利人**（见下方免责声明原文）。这既是中国法下的义务，也是美国法下「我们没在冒充」的证据 | 任何暗示关联、背书、赞助的措辞 |
+| **标签** | `World of Warcraft` / `魔兽世界` / `WoW` / `Classic` / `经典旧世` **可用**——标签是题材索引，指称性最强的位置 | **`Blizzard` / `暴雪` 不做标签**——涨量收益接近零，被判为「关联」的概率最高，性价比最差 |
+| **账号 / 频道 / 栏目 / 系列名 / 域名** | —— | **绝不得含作品名或权利人名。** 这是「用作来源标识」，不是指称性使用。暴雪 Legal FAQ 对域名问题答 `No`，理由正是 `We are concerned that such use could cause confusion for our customers who may assume that the domain is associated with Blizzard Entertainment` |
+
+**为什么「点名」比「回避」更安全（反直觉，但有法条）**：中国《著作权法》第二十四条（二）「**为介绍、评论某一作品**或者说明某一问题，在作品中适当引用他人已经发表的作品」——但该条的前提句写死了 **「应当指明作者姓名或者名称、作品名称」**。**在抖音 / 小红书，回避作品名反而直接削弱合理使用的抗辩**，把「介绍评论一个已发表作品」变成「抄了长相还不承认」。所以 B 版（只描述不点名）**在中国两站是更差的选择**，不是更保守的选择。
+
+**封面字**：`publish.md` 的 B 版（`STORMWIND` / `暴风城`）**照原样用，不必降级到 B−**；B− 兜底方案可以删。封面**绝不使用**暴雪或魔兽的 logo、字标、官方字体、狮鹫盾徽的官方矢量形。
+
+#### ② 免责声明：要，放两处，原文如下
+
+**放哪**：① 片头字卡（`publish.md` 第 1 节已有，**照原样保留、不改**）；② **四站简介的首屏第一段**——必须在「展开更多」之前可见，折叠起来等于没有。
+
+**中文版（抖音 / 小红书，可直接复制）**
+
+```text
+本片为非商业同人作品，与暴雪娱乐（Blizzard Entertainment, Inc.）无任何关联，未获其授权、赞助或认可。《魔兽世界》及暴风城相关名称、角色、场景与设定的一切权利归暴雪娱乐所有。本片画面全部由 AI 生成，未使用任何游戏截图、官方美术或游戏原声音乐；配乐为原创。
+```
+
+**英文版（YouTube / TikTok，可直接复制）**
+
+```text
+This is a non-commercial fan work. It is not affiliated with, authorized, sponsored, or endorsed by Blizzard Entertainment, Inc. World of Warcraft, Stormwind, and all related names, characters, locations and lore are the property of Blizzard Entertainment, Inc. Every frame of this video is AI-generated — no game footage, official artwork, or in-game music was used. All music is original.
+```
+
+**这段话同时干三件事**（缺一条都会失效，所以措辞不要「精简优化」）：① **否认关联** → 打掉商标层的混淆主张，也正面回应暴雪自己表述过的那个关切；② **指明作者与作品名** → 满足中国《著作权法》§24 合理使用的前提要件；③ **写明零素材、零原声** → 让 Video Policy 与平台的 "video game content" 变现口径在事实上不适用。
+
+#### ③ 变现：四站一律不开
+
+**诚实地先说对我们有利的那一条**：暴雪 Video Policy 里**明文写着一个 YouTube 例外**——`The only exceptions to this rule are if you participate in partner programs with YouTube, Justin.tv, Blip.tv, Own3d.tv, or Ustream.tv ... whereby a Production Website may pay you for views of a Production if you are accepted into their partner program.` 即便本片被当成含暴雪素材的 Production，**YPP 广告分成是暴雪自己写下的例外**。这是四站里唯一有明文背书的变现口径。
+
+**但三条压过它，所以仍然不开**：
+
+1. **那份例外清单已经烂掉了。** Justin.tv / Blip.tv / Own3d.tv / Ustream.tv 分别在 2013–2015 年间关停——这份政策**十余年未更新**。把一份列着四个死网站的文件当作对 2026 年四站分发的现行授权，是过度解读。
+2. **TikTok / 抖音 / 小红书不在清单里**，也没有任何暴雪文本覆盖它们。开这三站的收益 ＝ **零明文依据的商业化**。
+3. **非商业是层 C 仅剩的缓冲。** 本片踩的是 EULA + Legal FAQ 的 "adaptations: No"；一旦开收益，唯一的缓冲就没了。**一个 pilot 的广告收入，远不值这个缓冲。**
+
+**操作性陷阱（务必执行）**：YouTube 用的是**已入 YPP** 的老频道，**上传即默认带广告**。必须在上传时**对本片逐条关闭 Monetization**，不是「不申请」就完事。TikTok / 抖音 / 小红书同理：商业化、挂车、星图、合作标记一律不开。
+
+**解禁条件（写死，避免日后凭感觉开）**：本站发布后累计满 **3 个月零权利人投诉、零平台下架**，且**只解禁 YouTube 一站**，且仍不接任何商单 / 挂车 / 会员，方可重新评估。**TikTok / 抖音 / 小红书的商业化不设解禁条件**——没有明文依据的东西，等多久也不会变成有。
+
+#### ④ 必须避开的元素
+
+**硬红线（一条都不能破）**
+
+1. **暴雪的任何素材字节**——截图、官方原画、CG、UI、字体、logo、纹章矢量、音频。**既不入画，也不上传给生成模型**（`divergence #108` 已定，本裁定确认并升级为 IP 红线）。依据：Blizzard 网站使用条款的 Limited License 明确**不包含** `(a) any commercial use of the Site or the Materials therein` 与 `(c) modifying or otherwise making any derivative uses of the Site or the Materials`。**把官方原画喂进图像模型，字面上就是 (c)。**
+2. **暴雪原声音乐，以及任何可辨的旋律引用**（已定，不因本裁定放宽）。
+3. **logo / 商标不得做包装装饰**——封面、片头、水印、频道横幅一律不得出现暴雪或魔兽的 logo、字标、官方盾徽矢量形。**注意分界**：片中作为**场景内道具**画出来的狮子与狮鹫纹章是叙事内容（保留）；把同一图形**抽出来做品牌装饰**则不可以。分界是「在画面世界里」还是「在包装层上」。
+4. **自编 NPC 台词**（`#111` / `#113` 已定）。**IP 上它还额外有一个作用**：证明我们没有创作暴雪角色的对白——这是对 Legal FAQ "adaptations" 那一问最有力的事实区隔。四句逐字原文属于评论性引用（美国 17 U.S.C. §107 四要素；中国《著作权法》§24(2)），**且正因为只有四句、极短、服务于解说，第三要素与第四要素都站得住**。
+5. **不得暗示关联**——`官方` `授权` `联名` `合作` `暴雪出品` `与暴雪共同` 等字样，四站全字段全禁。
+6. **不做剧情原创**——本片**不得**让暴雪角色做设定里没有的事、说设定里没有的话、产生设定里没有的关系。这条原本是考据纪律，**本裁定把它升级为 IP 约束**：一旦开始编剧情，本片就从「介绍 / 评论一个作品」滑向 Legal FAQ 明确说 No 的 "adaptations"。**王座厅那一幕（S28–S30）是全片离这条线最近的地方**——「只如实描述、不揭穿、不加戏、不给音乐提示」的设计**正是它安全的原因**，后续任何修改都不许给它加剧情。
+7. **不得注册或使用含作品名的域名 / 账号名 / 频道名**（暴雪 Legal FAQ 对域名明确答 No）。
+8. **不做周边、不卖任何东西**（Video Policy 的 non-commercial 与 EULA 双重覆盖）。
+
+**AI 标识（强制，不是可选）**——中国《人工智能生成合成内容标识办法》（网信办等四部门，国信办通字〔2025〕2 号，**2025 年 9 月 1 日起施行**）第十条：「**用户使用网络信息内容传播服务发布生成合成内容的，应当主动声明并使用服务提供者提供的标识功能进行标识。**」抖音 / 小红书的 AI 声明开关**必须打开**，且第十条同时禁止「恶意删除、篡改、伪造、隐匿」标识——mux 与转码**不得剥离元数据**。YouTube 侧按其 GenAI 披露要求勾选（其规则对「非写实的幻想世界」本可豁免，例子里明写 `Someone riding a unicorn through a fantastical world` 无需披露；**但本片是写实质感的虚构世界，边界模糊，一律勾选，零成本**）。
+
+**软约束（可做，但心里要有数）**
+
+- **具名角色（`c21`–`c27`）是全片版权暴露面最高的一层。** 日后若需降风险，**第一个该砍的是具名角色的正脸特写**，不是城市。
+- **大教堂 / 要塞 / 月亮井这类地标**也落在暴雪自述的 `structural or landscape designs` 里；但它们就是本片的全部价值，**砍了就没片了——不砍，接受这层风险**。这是一个明知代价的取舍，不是疏漏。
+
+#### ⑤ 若要彻底规避的改名方案与代价（诚实评估）
+
+| 方案 | 做法 | 代价（不粉饰） | 判断 |
+|---|---|---|---|
+| **R0 不改（采用）** | 保留暴风城 / 具名角色 / 纹章；A− 口径 + 免责声明 + 零收益 | 承担 B 层与 C 层风险。**最可能的实际后果是下架或版权声明，不是诉讼**——四站都走 notice-and-takedown（TikTok IP Policy 明写重复侵权封号）。成片可重发，代价本身很低 | ✅ **采用** |
+| **R1 去名化（换名致敬）** | 城不叫暴风城、角色不具名、纹章换自创纹样，只留「运河穿城的人类王都」设定层 | **摧毁全片。** 第一情感钩子「诶，这地方我站过」归零；`parts/w9` 的 **33 个玩家共同记忆讲解点全部失效**（`#112` 写死：它们是本站真正的主线）；王座厅的戏剧反讽王牌**完全不成立**（观众认不出那位女士，整幕作废）；四句逐字原文失去出处、沦为自编台词，**直接违反 `#111`/`#113`**。**而且它甚至不解决问题**——留下的建筑形制与城市布局仍是暴雪的具体表达，只是丢掉了「介绍 / 评论一个已发表作品」这个最有力的抗辩定性。**版权上不一定更安全，商标上安全一点，内容上是灾难。** | ❌ **不推荐** |
+| **R2 换一座原创虚拟城** | 放弃暴风城，自创虚构城做第 2 站 | 阶段 0–5 全部产物作废：**650 条事实注册表 + 7 张场景卡 + 17 张人物卡 + 44 镜分镜 + 整城 Blender**。约等于本站从零重做 | 这**不是「改名」，是换选题**。只有收到权利人正式通知后才值得考虑；现在做 ＝ 用确定的巨大成本买一个未发生的风险 |
+
+**取舍建议：R0 ＋ 换一个新频道发虚拟城支线。**
+
+理由要说直白：**R0 的真实痛点不是「会不会被告」（不会），而是「老频道会不会被连累」。** `proposal.md` §0 决定 9 定的是用**已入 YPP 的《荒野生活》老频道**发——那等于**把一个已变现的存量资产押在一部 pilot 上**。一次 copyright strike 对老频道的代价，远大于本片的全部收益。**这个痛点不需要改名来解决，换个新频道就隔离掉了**，而且不损失一个字的内容。代价是重新起量——但一个 pilot 本来就是拿来试反响的，本来就不该靠老频道的存量。**这是频道决策，超出本裁定范围，留给用户拍板；本裁定只负责把代价摆出来。**
+
+### C. 风险分级：**中**
+
+| 分项 | 级 | 理由 |
+|---|---|---|
+| 被暴雪起诉 | **低** | 零收益、零素材、不造成来源混淆；且暴雪对非商业同人长期不执行（Video Policy 的存在本身即默许姿态）。**但注意：这是「不执行」，不是「许可」**——Legal FAQ 对 adaptations 明确答 No |
+| 平台下架 / 版权声明 | **中** | 四站都是 notice-and-takedown。一旦权利人或第三方投诉，**具名角色与地标建筑足以支撑一次成功的 claim**。TikTok IP Policy 明写重复侵权封号 |
+| **老频道 YPP 资格被连累** | **中高 ← 本项目的真实最大风险** | 《荒野生活》是已变现存量资产；一次 strike 的代价远大于本片全部收益。**「换新频道」的建议来自这一项，不是来自法律风险** |
+| 中国站 AI 标识合规 | **低，但强制** | 《标识办法》2025-09-01 施行，第十条是**义务**不是建议。开关打开即合规，零成本 |
+| **若开收益** | **高** | Video Policy 的 non-commercial 基本规则被正面突破，且三个短视频站无任何例外条款覆盖。**这是唯一会把总分级从「中」推到「高」的动作** |
+
+### D. 本裁定读过的一手页面
+
+| # | 页面 | 支撑哪条结论 |
+|---|---|---|
+| 1 | `https://www.blizzard.com/en-us/legal`（目录，2026-09-20 抓取） | **无独立 Fan Content Policy** → 推翻原 #110 前提 |
+| 2 | `https://www.blizzard.com/en-us/legal/dd76b654-f2c4-4aaa-ba49-ca3122de2376/blizzard-video-policy` | 「Blizzard Content」的定义（→ 层 A 不适用）· non-commercial 基本规则 · **YouTube 合作计划例外** · 清单已烂（→ ③） |
+| 3 | `https://www.blizzard.com/en-us/legal/c1ae32ac-7ff9-4ac3-a03b-fc04b8697010/blizzard-legal-faq` | **「other adaptations ... No.」**（→ 层 C、约束 ⑥）· 域名混淆关切（→ 约束 ①⑦） |
+| 4 | `https://www.blizzard.com/en-us/legal/a6def1da-48b1-41ba-8e8c-8b849efa1f24/terms-and-conditions-of-fan-art-submissions-to-blizzard-entertainment` | **"Blizzard Property" 的自述定义**（含 characters / dialog / locations / structural or landscape designs）→ 层 B |
+| 5 | `https://www.blizzard.com/en-us/legal/fba4d00f-c7e4-4883-b8b9-1b4500a402ea/blizzard-end-user-license-agreement`（LAST REVISED 2024-03-21） | §2.A.ix 不得创作 derivative works → 层 C |
+| 6 | `https://www.blizzard.com/en-us/legal/511dbf9e-2b2d-4047-8243-4c5c65e0ebf1/terms-of-use-for-blizzards-websites` | Limited License 不含商业使用与 derivative uses → 确认 `#108`、约束 ① |
+| 7 | `https://www.copyright.gov/ai/Copyright-and-Artificial-Intelligence-Part-3-Generative-AI-Training-Report-Pre-Publication-Version.pdf`（USCO，2025-05） | **「AI outputs that imitate a creator's style, which copyright does not protect」**；脚注 376「There may, however, be cases where the replication of "style" does capture protectible elements」→ **风格 / 具体表达的分界线** |
+| 8 | `https://www.copyright.gov/help/faq/faq-protect.html` · `https://www.copyright.gov/circs/circ33.pdf` | 思想 / 表达二分；**名称、标题、短语不受版权保护** → 约束 ① |
+| 9 | `https://www.law.cornell.edu/uscode/text/17/102` · `/17/107` · `/15/1115` | §102(b) 思想不受保护 · §107 合理使用四要素 · §1115(b)(4) 描述性合理使用 |
+| 10 | `https://www.gov.cn/guoqing/2021-10/29/content_5647633.htm`（《著作权法》） | **§24(2) 介绍评论引用，前提是「指明作者姓名或者名称、作品名称」** → 约束 ①② 的核心论据 |
+| 11 | `https://www.cac.gov.cn/2025-03/14/c_1743654684782215.htm`（《标识办法》，2025-09-01 施行） | **第十条**用户发布须主动声明并标识 → AI 标识强制 |
+| 12 | `https://support.google.com/youtube/answer/138161`（Video game and software content） | YouTube 变现口径**取决于发行商许可**，且管的是 "video game content" → 层 A |
+| 13 | `https://support.google.com/youtube/answer/14328491`（GenAI 披露） | 写实内容须披露；`fantastical world` 例子可豁免 → 边界模糊，一律勾选 |
+| 14 | `https://support.google.com/youtube/answer/2797466`（Copyright on YouTube） | 「ideas, facts, and processes aren't subject to copyright」 |
+| 15 | `https://www.tiktok.com/legal/page/global/copyright-policy/en`（Released 2025-03-27 / Effective 2025-04-26） | 表达 / 思想二分 · 承认各国合理使用例外 · **重复侵权封号** |
+
+### E. 未查到权威来源（不猜、不编）
+
+1. **抖音、小红书的二创 / 游戏 IP / 商业化规则原文**——两站规则页均为 JS 渲染，`curl` 与 `WebFetch` 都取不到正文（本次会话 WebSearch 配额已耗尽，无法换路检索）。**本裁定对这两站的口径是从《标识办法》＋《著作权法》推出的保守下限，不是读过平台原文的结论。** **发布前必须由用户在 App 内打开两站规则中心逐条核一遍**，重点是「是否允许游戏 IP 二创」与「AI 内容标识开关位置」。
+2. **TikTok 的 AIGC 标注细则与 Creator Rewards 变现条款**——只读到 IP Policy；社区规范与变现条款页同为 JS 渲染，未取到。
+3. **指称性合理使用（nominative fair use）的判例原文**（New Kids on the Block v. News America, 971 F.2d 302 (9th Cir. 1992)）——CourtListener / Justia / OpenJurist 均 403 或返回空体。**本裁定在商标层只引成文法 15 U.S.C. §1115(b)(4) 与暴雪自己表述的关切，不引判例。**
+4. **Blizzard Video Policy 的生效 / 修订日期**——页面未标注。「十余年未更新」是**从其例外清单里的服务均已于 2013–2015 年关停推出来的**，不是读到的日期。
+
+---
+
+## 2026-09-20 复议 · #110 变现与频道两条放宽（用户质疑后重审）
+
+用户问：「为什么很多其他人可以发，我不能拍同人么，需要什么流程」。重审下来，**裁定的定性与约束都站得住，但变现与频道两条偏保守了**，据此放宽。
+
+### 复议一：变现改为「YouTube 可开，另外三站不开」
+
+原裁定的逻辑链是：**若本片被归为 Legal FAQ 说 No 的 "other adaptations"**，
+则 Video Policy 的 YouTube 例外不适用 → 非商业是仅剩缓冲 → 四站都不开。
+
+**这条链的第一环是保守假设，不是事实。** Legal FAQ 那一问问的是
+「novels, screenplays, theatrical productions or other adaptations」——**改编作品**；
+而本片是「一个 vlogger 逛一座城、边走边讲可核对的事实」，形态上更接近**介绍与评论**，
+且已由约束 ⑥（不给暴雪角色加戏）从事实层面钉死。把它读成 adaptation 是一种可能的读法，不是唯一读法。
+
+**放宽后**：
+
+| 站 | 收益 | 依据 |
+|---|---|---|
+| **YouTube** | **可开** | 暴雪 Video Policy **自己写明的例外**（YPP 广告分成）。这是四站里唯一有明文背书的变现口径 |
+| TikTok / 抖音 / 小红书 | **不开** | **没有任何暴雪文本覆盖这三站**，开了就是零明文依据的商业化。这一条不放宽 |
+
+**不变的是**：不卖周边、不做任何商品（Video Policy 的 non-commercial 与 EULA 双重覆盖）。
+
+### 复议二：老频道可用（原「建议换新频道」降级为提醒）
+
+原建议的理由是「一次 copyright strike 对已变现老频道的代价远大于本片收益」。
+**但裁定自己也写明：实际后果是 notice-and-takedown，不是诉讼。** 下架一条片子不等于封号，
+strike 要累积到三次才封。在守住约束清单的前提下，用老频道**可以接受**。
+
+**降级为提醒**：若日后本片真的收到版权声明，**立刻改用新频道发后续 IP 站**，不要在老频道上累积第二次。
+
+### 不变的部分（这几条是定性的支柱，动一条定性就变差）
+
+① 零暴雪素材 ② 不冒充关联（频道名/域名绝不含作品名）③ 不给暴雪角色加戏
+④ 不卖周边 ⑤ 免责声明放片头字卡 + 各站简介首屏第一段 ⑥ AIGC 如实标注
+
+### 顺带更正原 #110 的一处措辞
+
+「需要什么流程」的答案是：**没有流程可走。暴雪没有可申请的同人授权**——
+实抓法务目录 16 条，只有 Video Policy / Legal FAQ / Fan Art 投稿条款三份，
+**没有 "fan content licence" 这种东西**。只能照已公布的政策做，然后发。
+（原 #110 写的「在 Blizzard fan content policy 下通常可行」本身就建立在一份不存在的文件上，
+已于 2026-09-20 裁定推翻。）

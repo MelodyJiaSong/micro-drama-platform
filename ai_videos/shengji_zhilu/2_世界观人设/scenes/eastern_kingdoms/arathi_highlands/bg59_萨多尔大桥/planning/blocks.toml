@@ -1,0 +1,242 @@
+# 萨多尔大桥 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 取景：区级图 b959（北桥头，南下主路终点）为北部；深谷东西走向横在场地中部；机位在桥头石坪北端朝正南。
+# 桥面标高 ＝ 高地谷沿；桥墩 h_m 自谷底量起（谷底比桥面低约百米）。
+
+[meta]
+bg = "bg59"
+name_zh = "萨多尔大桥"
+size_m = [500, 600]
+px_per_m = 2.5
+grid_m = 50
+scale_src = "推定"
+scale_note = "区图只给出桥头方位（南缘河口，约 [45,90]）；桥长约 270 m、两桥中心距约 60 m、谷深约百米均按原典「巨型双桥、塔楼般桥墩、深不见底的峡谷」推定，未实测"
+# 世界树画面：高地南缘峡谷上两座巨型灰白石拱桥的北端桥头，桥墩粗如塔楼，桥面宽可并行车马；从阿拉希一侧望去，桥对岸是湿地的雾气与暗绿沼林，脚下是深不见底的峡谷。
+absent = ["完整的双桥（旧世只余一桥可走）", "木桥 / 吊桥 / 尖拱桥", "桥头驻军营地、帐篷与旗帜", "任何聚落与房屋", "树林（两侧岩山只有矮灌木）", "高地的金褐草甸（被岩山挡在身后）", "人工光源与营火", "断口正在冒烟或起火", "4.0.3a 后的大桥改动（修复 / 重建）"]
+
+[[ridge]]
+name = "西侧海岸山体（河谷西壁以西）"
+poly = [[0, 0], [95, 0], [100, 80], [90, 150], [70, 195], [0, 200]]
+height_m = 220
+src = "地图量取"
+
+[[ridge]]
+name = "东侧山肩（东南山体西端，层理横向）"
+poly = [[360, 0], [500, 0], [500, 200], [345, 195], [335, 120], [350, 50]]
+height_m = 260
+src = "地图量取"
+
+[[ridge]]
+name = "河谷东壁（河与土路之间的陡岩）"
+poly = [[150, 0], [170, 0], [175, 100], [165, 185], [150, 190], [148, 100]]
+height_m = 30
+src = "推定"
+
+[[water]]
+name = "峡谷河（在陡壁间南流，到谷沿泻进深谷）"
+path = [[125, 0], [120, 100], [130, 195]]
+width_m = 18
+depth_m = 3
+src = "地图量取"
+
+[[water]]
+name = "深谷底暗水（东西走向，比桥面低约百米；图上宽度＝谷口宽）"
+path = [[0, 325], [500, 325]]
+width_m = 270
+depth_m = 8
+src = "推定"
+
+[[road]]
+name = "南下主路（沿河谷东侧爬上来接桥头石坪）"
+path = [[215, 0], [212, 70], [230, 115], [255, 135]]
+width_m = 8
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "桥头石坪（机位）"
+xy = [260, 135]
+size = [150, 40]
+h_m = 0
+src = "推定"
+note = "青灰条石铺地，两道车轮磨出的浅凹槽伸上桥面"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p50"
+face = "south"
+name = "西桥北桥台"
+xy = [230, 175]
+size = [40, 30]
+h_m = 12
+src = "推定"
+note = "比桥面高一层，四角粗矮方石墩柱"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p50"
+face = "south"
+name = "东桥北桥台"
+xy = [290, 175]
+size = [40, 30]
+h_m = 12
+src = "推定"
+note = "同上"
+
+[[block]]
+id = "b04"
+kind = "arch_bridge"
+face = "south"
+count = 1
+over_water = true
+name = "西桥（完好，唯一可走）"
+xy = [230, 325]
+size = [16, 270]
+h_m = 2
+src = "推定"
+note = "旧世只余一桥可走（原典）；哪一座完好原典未写方位，本档取西桥（推定）。h_m ＝ 护墙高"
+
+[[block]]
+id = "b05"
+kind = "arch_bridge"
+face = "south"
+count = 1
+over_water = true
+name = "东桥北段（至谷心断口）"
+xy = [290, 262.5]
+size = [16, 145]
+h_m = 2
+src = "推定"
+note = "断口在 y≈335，参差石芯外露"
+
+[[block]]
+id = "b06"
+kind = "arch_bridge"
+face = "south"
+count = 1
+over_water = true
+name = "东桥南段残桥（连对岸）"
+xy = [290, 417.5]
+size = [16, 85]
+h_m = 2
+src = "推定"
+note = "与北段之间约 40 m 空档"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p50"
+face = "south"
+may_overlap = true
+over_water = true
+name = "西桥北墩"
+xy = [230, 265]
+size = [24, 24]
+h_m = 100
+src = "推定"
+note = "塔楼般方墩，自谷底升起，分段收檐"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p50"
+face = "south"
+may_overlap = true
+over_water = true
+name = "西桥南墩"
+xy = [230, 395]
+size = [24, 24]
+h_m = 100
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p50"
+face = "south"
+may_overlap = true
+over_water = true
+name = "东桥北墩"
+xy = [290, 265]
+size = [24, 24]
+h_m = 100
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p50"
+face = "south"
+may_overlap = true
+over_water = true
+name = "东桥南墩"
+xy = [290, 425]
+size = [24, 24]
+h_m = 100
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p44"
+face = "south"
+count = 6
+over_water = true
+name = "断口下谷底崩落石堆"
+xy = [310, 355]
+size = [50, 30]
+h_m = 8
+src = "推定"
+note = "在谷底，平面上与东桥投影重叠；有的方石斜插水边"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p50"
+face = "north"
+name = "西桥南桥台（对岸）"
+xy = [230, 475]
+size = [40, 30]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p50"
+face = "north"
+name = "东桥南桥台（对岸）"
+xy = [290, 475]
+size = [40, 30]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p42"
+face = "south"
+count = 30
+name = "对岸雾中沼林"
+xy = [250, 548]
+size = [500, 100]
+h_m = 15
+src = "推定"
+note = "低平暗绿沼林与歪斜枯树剪影，只作远景层"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg59-c1"
+eye = [250, 48]
+target = [250, 300]
+eye_h = 20.0
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -1,0 +1,225 @@
+# 佐拉姆加前哨站 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地中心 ≈ 区级平面图 b428（坐标 [12, 35] ＝ 区级 (632.8, 1230.1)）；营寨中心落在本场地 (130, 120)。
+
+[meta]
+bg = "bg428"
+name_zh = "佐拉姆加前哨站"
+size_m = [240, 240]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "位置取坐标表 [12, 35]；海在西、山崖在南与东南、沙滩向北、密林在东北，按区图裁切量取。寨墙约 70 × 60 m 与院内各建筑尺寸无一手出处，按世界树「沙滩上的木栅营地 + 简易码头」推定"
+# 世界树画面：沙滩上的兽人木栅营地，尖木围墙插着红黑旗帜，简易码头伸进浅海
+absent = [
+    "船只与航运（码头末端没有船，旧世这里不是航线港口）",
+    "石砌城墙、石屋与精灵式或人类式建筑",
+    "第二条海岸（海只在西侧）",
+    "农田与菜园",
+    "燃着的火塘、火把与任何火光（默认冷灰）",
+    "旗面纹章、图案与文字",
+    "任何人物与动物（栖架是空的）",
+    "可骑乘的飞行坐骑",
+]
+
+[[water]]
+name = "外海（西侧浅水，退浪泡沫线）"
+path = [[30, 0], [32, 120], [28, 240]]
+width_m = 64
+depth_m = 6
+src = "地图量取"
+note = "区图上营地图标正西就是海"
+
+[[ridge]]
+name = "南面灰褐陡崖（西北角山块外缘，一直插进海里）"
+poly = [[0, 205], [60, 188], [92, 160], [130, 156], [166, 157], [200, 150], [240, 140], [240, 240], [0, 240]]
+height_m = 45
+src = "地图量取"
+
+[[ridge]]
+name = "东南山体（寨子东侧的崖）"
+poly = [[190, 80], [240, 60], [240, 140], [205, 150], [186, 128]]
+height_m = 40
+src = "地图量取"
+
+[[ridge]]
+name = "东南角突出岩台（瞭望塔所在）"
+poly = [[166, 150], [190, 146], [198, 166], [176, 172]]
+height_m = 6
+src = "推定"
+
+[[road]]
+name = "北门外沙土小路（沿海滩北上，远处折东进林）"
+path = [[130, 90], [126, 60], [118, 25], [114, 0]]
+width_m = 3
+src = "地图量取"
+note = "区图点线小路自沙滩折向东"
+
+[[block]]
+id = "b01"
+kind = "palisade"
+face = "north"
+count = 1
+name = "北寨墙（正中寨门，两扇原木门板）"
+xy = [130, 90]
+size = [70, 1.5]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "palisade"
+face = "south"
+count = 1
+name = "南寨墙（贴崖脚）"
+xy = [130, 150]
+size = [70, 1.5]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "palisade"
+face = "west"
+count = 1
+name = "西寨墙（对海小门）"
+xy = [95, 120]
+size = [1.5, 60]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "palisade"
+face = "south"
+count = 1
+name = "东寨墙"
+xy = [165, 120]
+size = [1.5, 60]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p380"
+face = "north"
+name = "兽皮长屋（院子正中，门朝北）"
+xy = [130, 118]
+size = [22, 10]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p379"
+face = "east"
+name = "西侧圆顶小屋"
+xy = [108, 116]
+size = [8, 8]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p379"
+face = "west"
+name = "东侧圆顶小屋"
+xy = [152, 116]
+size = [8, 8]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p391"
+face = "south"
+name = "空木栖架（西南角，飞行点）"
+xy = [105, 140]
+size = [8, 8]
+h_m = 6
+src = "推定"
+note = "原典：寨内带飞行点；位置推定在西南角"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p388"
+face = "south"
+name = "石砌火塘（冷灰）"
+xy = [130, 104]
+size = [4, 4]
+h_m = 0.4
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p387"
+face = "south"
+count = 3
+name = "红黑长旗杆（北门内侧）"
+xy = [130, 95]
+size = [18, 1]
+h_m = 9
+src = "推定"
+note = "世界树：尖木围墙插着红黑旗帜"
+
+[[block]]
+id = "b11"
+kind = "asset"
+parts = [{asset = "p389", at = [-3.8, 0.8], yaw = 0}, {asset = "p389", at = [-2.7, 0.9], yaw = 4}, {asset = "p389", at = [-3.3, -0.3], yaw = -6}, {asset = "p178", at = [-1.2, 1], yaw = 0}, {asset = "p178", at = [-0.5, 1.2], yaw = 0}, {asset = "p178", at = [-0.9, 0.3], yaw = 0}, {asset = "p389", at = [1.5, 0.9], yaw = 0}, {asset = "p389", at = [2.6, 0.8], yaw = -3}, {asset = "p178", at = [3.8, 1.1], yaw = 0}, {asset = "p178", at = [4.3, 0.3], yaw = 0}]
+face = "west"
+name = "木箱、木桶与长矛架（东墙内侧）"
+xy = [159, 140]
+size = [4, 10]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p391"
+face = "west"
+name = "简易木码头（伸进浅海约二十米）"
+xy = [66, 120]
+size = [30, 3]
+h_m = 1.5
+src = "原典方位"
+note = "世界树：简易码头伸进浅海"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p381"
+face = "south"
+name = "粗木瞭望塔（东南岩台上）"
+xy = [182, 160]
+size = [6, 6]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 20
+name = "东北坡上的蓝绿密林"
+xy = [205, 35]
+size = [60, 50]
+h_m = 25
+src = "地图量取"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg428-c1"
+eye = [120, 221]
+target = [120, 120]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

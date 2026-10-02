@@ -1,0 +1,270 @@
+# 教堂广场 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 广场与大教堂的尺度取区级平面图 b901 / b902（地图量取）；各公共建筑的相对方位取世界树（原典方位），落点与尺寸推定。
+# 广场按「北端大教堂、南缘运河」摆正成南北纵深；区图上它其实略斜，镜头方位以本图为准。
+
+[meta]
+bg = "bg269"
+name_zh = "教堂广场"
+size_m = [200, 190]
+px_per_m = 7.5
+scale_src = "推定"
+scale_note = "区级平面图 b901 广场 159.5 × 85.9 m、b902 大教堂 92 × 67.5 m（地图量取）拼成 200 × 190 m 场地；两侧建筑尺寸推定"
+# 世界树画面：一片开阔石铺广场，北端被一座多侧翼、多尖塔的巨大教堂立面完全统治，广场两侧是较矮的市政厅与孤儿院，衬得教堂更高
+absent = [
+    "持战锤的骑士雕像 / 刻名铭牌（4.0.3a 才替换掉教士纪念碑）",
+    "大教堂后面的湖与公墓（4.0.3a 才加）",
+    "港口、码头、泊船（3.0.2 才有）",
+    "任何人物（市民、卫兵、教士、孤儿都属 shot 层）",
+    "点亮的街灯、烛火、火盆（默认态白天零人工光源）",
+    "矮人区的锻炉火光（本档只见东北屋顶上方的灰蓝薄烟）",
+    "碑面文字、人像浮雕、可读招牌",
+    "淤泥浅水运河、芦苇（4.0.3a 后）",
+]
+
+[[water]]
+name = "南缘运河（去贸易区）"
+path = [[0, 181], [100, 180], [200, 178]]
+width_m = 14
+depth_m = 4
+src = "地图量取"
+
+[[water]]
+name = "东北角运河（去矮人区）"
+path = [[150, 0], [172, 30], [200, 52]]
+width_m = 18
+depth_m = 4
+src = "地图量取"
+
+[[road]]
+name = "中轴礼仪通道（南桥 → 纪念碑 → 教堂正门）"
+path = [[100, 175], [100, 110], [100, 78]]
+width_m = 10
+src = "推定"
+
+[[road]]
+name = "去矮人区的街（广场东北角 → 人行桥）"
+path = [[140, 100], [160, 70], [172, 40]]
+width_m = 6
+src = "推定"
+
+[[road]]
+name = "去法师区 / 花园区的街（广场西南角下坡）"
+path = [[60, 150], [30, 162], [0, 170]]
+width_m = 7
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p288"
+face = "south"
+over_water = true
+name = "大教堂（南立面朝广场）"
+xy = [100, 40]
+size = [92, 68]
+h_m = 45
+src = "地图量取"
+note = "区级 b902；中殿内景另立 bg10"
+bg = "bg10"
+
+[[block]]
+id = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "石铺广场"
+xy = [100, 118]
+size = [120, 76]
+h_m = 0
+src = "地图量取"
+note = "区级 b901 缩到广场本体"
+
+[[block]]
+id = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "教堂正门宽台阶"
+xy = [100, 77]
+size = [60, 6]
+h_m = 1.7
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p305"
+face = "south"
+name = "素面教士纪念碑（三级台阶 + 碑）"
+xy = [100, 100]
+size = [6, 6]
+h_m = 5
+src = "原典方位"
+note = "世界树：大教堂正前方；碑体形制无文字来源，按 best effort"
+
+[[block]]
+id = "b05"
+kind = "pool"
+face = "south"
+count = 1
+name = "碑脚浅池"
+xy = [100, 106]
+size = [8, 5]
+h_m = 0.4
+src = "原典方位"
+note = "区地理页：纪念碑与喷泉"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p289"
+face = "east"
+name = "城市大厅（西侧，半木构两层）"
+xy = [26, 112]
+size = [28, 40]
+h_m = 13
+src = "推定"
+note = "世界树只说广场一侧的矮公共建筑；摆在西侧为推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p289"
+face = "southeast"
+name = "兵器铺（大教堂西南角）"
+xy = [40, 72]
+size = [16, 12]
+h_m = 8
+src = "原典方位"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p289"
+face = "west"
+name = "孤儿院（东侧，两层）"
+xy = [170, 108]
+size = [20, 16]
+h_m = 9
+src = "原典方位"
+note = "sk2 核验：孤儿院在大教堂东南侧"
+
+[[block]]
+id = "b09"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "孤儿院门前踩秃空地"
+xy = [155, 108]
+size = [8, 10]
+h_m = 0
+src = "原典方位"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p303"
+face = "west"
+name = "孤儿院后的冷清石屋"
+xy = [190, 108]
+size = [12, 12]
+h_m = 6
+src = "原典方位"
+note = "世界树：孤儿院后方"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p289"
+face = "north"
+name = "护甲铺（南缘偏西，门口板甲木人台）"
+xy = [72, 162]
+size = [22, 12]
+h_m = 9
+src = "原典方位"
+note = "世界树：大教堂正南"
+
+[[block]]
+id = "b12"
+kind = "arch_bridge"
+face = "south"
+count = 1
+over_water = true
+name = "南缘石拱桥（去贸易区）"
+xy = [100, 180]
+size = [10, 18]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "arch_bridge"
+face = "south"
+count = 1
+over_water = true
+name = "东北角窄拱人行桥（去矮人区）"
+xy = [172, 32]
+size = [5, 22]
+h_m = 2.5
+rot = 40
+src = "原典方位"
+note = "区地理页：全城只能确证的三座桥之一"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p301"
+face = "south"
+name = "苹果树与弧形石凳（西）"
+xy = [76, 112]
+size = [8, 8]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p301"
+face = "south"
+name = "苹果树（东）"
+xy = [128, 104]
+size = [7, 7]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "asset"
+asset = "p308"
+face = "south"
+name = "黑铁立杆街灯（未点亮）"
+xy = [88, 150]
+size = [1, 1]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b17"
+kind = "asset"
+asset = "p309"
+face = "south"
+name = "广场入口旗幡石柱"
+xy = [124, 155]
+size = [1.5, 1.5]
+h_m = 6
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg269-c1"
+eye = [184, 95]
+target = [100, 95]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

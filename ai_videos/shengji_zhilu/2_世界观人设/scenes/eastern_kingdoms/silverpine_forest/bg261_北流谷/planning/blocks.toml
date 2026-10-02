@@ -1,0 +1,163 @@
+# 北流谷 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 换算：原点 ＝ 区图 px (360, 150)；x = (px − 360) × 3.83，y = (py − 150) × 3.83（与 bg247 同一比例）。
+# 世界树坐标 [41, 29] → 区图 px (410.8, 193.7) → 本图 (195, 167)，落在洼地正中。
+
+[meta]
+bg = "bg261"
+name_zh = "北流谷"
+size_m = [440, 380]
+px_per_m = 3.5
+scale_src = "地图量取"
+scale_note = "区图 WorldMap-Silverpine_c60 宽 1002 px ＝ 区宽 3840 m（bg247 同一换算，3.83 m/px）；海岸线、北侧小山群与南岭从区图 px x 360–475、y 150–249 量取，洼地内的积水 / 骨滩 / 洞口位置为推定"
+# 世界树画面：海岸边的洼地与一个洞口，遍地鱼人骨
+absent = ["任何建筑 / 棚屋 / 帐篷（本档零人造物）", "码头与船", "道路（只有一条踩出来的泥径）", "农田", "火堆与任何火光 / 人工光", "洞内亮光（洞口漆黑）", "血迹与腐肉（骨头全是旧骨）", "沙滩椰林", "雪", "阔叶林", "翠绿草地"]
+
+[[water]]
+name = "近岸海面（灰白翻浪，东缘即海岸线）"
+path = [[-1, 0], [14, 96], [37, 191], [48, 268], [60, 345], [64, 380]]
+width_m = 64
+depth_m = 4
+
+[[water]]
+name = "外海"
+path = [[10, 0], [10, 380]]
+width_m = 52
+depth_m = 20
+
+[[ridge]]
+name = "北缘低缓草坡"
+poly = [[100, 0], [260, 0], [245, 35], [180, 60], [115, 45]]
+height_m = 15
+src = "地图量取"
+
+[[ridge]]
+name = "东北小山群（机位在其西南山肩）"
+poly = [[190, 120], [212, 72], [250, 48], [300, 52], [322, 90], [308, 128], [252, 138]]
+height_m = 35
+src = "地图量取"
+
+[[ridge]]
+name = "南岭（自内陆伸进海里，末端低崖；岭脚北坡有洞口）"
+poly = [[92, 300], [150, 252], [191, 226], [232, 210], [306, 232], [383, 210], [440, 192], [440, 380], [100, 380]]
+height_m = 65
+src = "地图量取"
+
+[[block]]
+id = "b01"
+into_ridge = true
+over_water = true
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "灰白碎石滩"
+xy = [75, 190]
+size = [376, 24]
+h_m = 0
+rot = 80.3
+src = "地图量取"
+note = "沿海岸线一条窄滩"
+
+[[block]]
+id = "b02"
+into_ridge = true
+kind = "low_wall"
+face = "south"
+name = "卵石风暴堤"
+xy = [94, 180]
+size = [300, 12]
+h_m = 3
+rot = 80
+src = "推定"
+note = "一人多高，把海挡在洼地外；内侧坡上有被浪冲下来的卵石扇"
+
+[[block]]
+id = "b03"
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "洼地积水与盐渍泥沼"
+xy = [175, 170]
+size = [90, 55]
+h_m = 0
+src = "推定"
+note = "洼地底，比堤顶低三四米；几摊浑绿积水"
+
+[[block]]
+id = "b04"
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "洞前骨滩"
+xy = [228, 197]
+size = [50, 18]
+h_m = 0
+src = "推定"
+note = "骨头越近洞口越密"
+
+[[block]]
+id = "b05"
+into_ridge = true
+kind = "cave_mouth"
+face = "north"
+name = "岭脚洞口"
+xy = [240, 214]
+size = [14, 8]
+h_m = 3
+src = "推定"
+note = "南岭北坡岭脚，面朝北，约一人半高；洞内不建"
+
+[[block]]
+id = "b06"
+into_ridge = true
+kind = "asset"
+asset = "p269"
+face = "south"
+count = 40
+name = "南岭松林"
+xy = [330, 300]
+size = [160, 80]
+h_m = 20
+src = "推定"
+
+[[block]]
+id = "b07"
+over_water = true
+kind = "asset"
+asset = "p281"
+face = "south"
+count = 4
+name = "近岸礁石"
+xy = [52, 250]
+size = [20, 14]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b08"
+may_overlap = true
+kind = "asset"
+asset = "p283"
+face = "south"
+count = 3
+name = "堤顶漂木与海藻团"
+xy = [80, 120]
+size = [14, 6]
+h_m = 1
+src = "推定"
+
+[[road]]
+name = "踩踏泥径（卵石堤→洼地→洞口）"
+path = [[90, 150], [140, 168], [200, 186], [238, 208]]
+width_m = 2
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg261-c1"
+eye = [220, 350]
+target = [220, 190]
+eye_h = 14.7
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

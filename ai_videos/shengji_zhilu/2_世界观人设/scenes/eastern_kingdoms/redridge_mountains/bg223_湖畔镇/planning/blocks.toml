@@ -1,0 +1,246 @@
+# 湖畔镇 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 换算：原版区图 1 px ≈ 1.98 m（区 1985 × 1324 m / 1002 × 668 px）；场地原点 ＝ 区坐标 (240, 470) m。
+# 湖湾、湖口木桥、北路、四枚房屋图标按区图量取（与 bg222 terrain.toml 同一套数）；单栋房子的归属与体量推定。
+# 锚点机位：湖湾南岸草坡 (190, 290)，朝正北隔湾看镇。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg223"
+name_zh = "湖畔镇"
+size_m = [400, 300]
+px_per_m = 4.0
+grid_m = 50
+scale_src = "地图量取"
+scale_note = "区 WorldMapArea 1985 × 1324 m × 原版区图量取；湖湾宽约 100 m、湖口木桥长约 110 m、四枚房屋图标散在湾北岸 60–120 m 纵深内；单栋房子推定"
+# 世界树画面：止水湖西岸的木造小镇，深棕木屋、石砌烟囱与伸进水里的木栈道；镇边那座长木桥一直架着修桥的脚手架，湖面把整镇倒着映一遍
+absent = [
+    "修好的完整木桥（旧世桥一直缺板、架着脚手架）",
+    "4.0.3a 后的新剧情建筑 / 营房 / 军旗 / 战地帐篷",
+    "白石墙 + 蓝板岩瓦的王城式建筑（这里是深棕原木 + 灰石墙基）",
+    "城墙 / 寨墙 / 石砌塔楼（小镇不设防）",
+    "可见的火苗 / 炉火 / 烛光 / 灯笼（白天户外，炉膛是冷的、窗户是暗的）",
+    "烟囱冒烟",
+    "栖台上的坐骑与任何动物",
+    "任何人物 / 文字招牌 / 路牌字样",
+]
+
+[[ridge]]
+name = "镇北坡（稀疏榆树松柏，再往上是红岩崖）"
+poly = [[0, 0], [290, 0], [275, 32], [200, 42], [110, 50], [0, 58]]
+height_m = 25
+src = "地图量取"
+note = "区图房屋图标北侧那道短排线坡；坡顶以北接锈红砂岩山体"
+
+[[water]]
+name = "湖湾（镇前，东西向）"
+path = [[0, 232], [150, 229], [300, 226], [372, 214]]
+width_m = 100
+depth_m = 6
+src = "地图量取"
+
+[[water]]
+name = "主湖西缘（湖口东侧）"
+path = [[375, 110], [376, 300]]
+width_m = 48
+depth_m = 10
+src = "地图量取"
+
+[[road]]
+name = "北路（桥北头→东北坡→北山口）"
+path = [[332, 182], [346, 152], [372, 100], [392, 60], [400, 48]]
+width_m = 6
+src = "地图量取"
+
+[[road]]
+name = "桥南接西路"
+path = [[330, 292], [326, 300]]
+width_m = 6
+src = "地图量取"
+
+[[road]]
+name = "镇中土路（东西向）"
+path = [[340, 150], [260, 132], [180, 116], [100, 112], [30, 138]]
+width_m = 5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "arch_bridge"
+face = "south"
+count = 1
+over_water = true
+name = "湖口长木桥（缺板一段搭脚手架）"
+xy = [331, 237]
+size = [8, 110]
+h_m = 6
+src = "地图量取"
+note = "南北向跨湖口；中段缺板，外侧满架木脚手架、吊绳、滑轮，桥头堆新木料与石块"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p208"
+face = "south"
+name = "坡顶木石混构大屋（门前石阶与空旗杆）"
+xy = [168, 80]
+size = [26, 18]
+h_m = 12
+src = "地图量取"
+note = "区图第二枚房屋图标；下半灰石上半深棕木，全镇最大"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p209"
+face = "south"
+name = "临水两层木楼（二楼开窗、外悬平台）"
+xy = [262, 158]
+size = [22, 14]
+h_m = 10
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p210"
+face = "south"
+name = "民居·镇西坡"
+xy = [112, 104]
+size = [12, 9]
+h_m = 8
+src = "地图量取"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p210"
+face = "south"
+name = "民居·坡中"
+xy = [206, 112]
+size = [12, 9]
+h_m = 8
+src = "地图量取"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p210"
+face = "south"
+name = "民居·镇东"
+xy = [236, 106]
+size = [11, 9]
+h_m = 8
+src = "地图量取"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p210"
+face = "south"
+over_water = true
+name = "高脚民居（半压水面）"
+xy = [84, 180]
+size = [12, 9]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p210"
+face = "south"
+name = "民居·镇西临路"
+xy = [60, 128]
+size = [11, 8]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p211"
+face = "south"
+name = "半敞木棚（冷炉台与铁砧）"
+xy = [146, 142]
+size = [12, 8]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "lawn"
+face = "south"
+count = 1
+may_overlap = true
+name = "临水木栏围场"
+xy = [38, 166]
+size = [30, 20]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p211"
+face = "south"
+name = "干草敞棚"
+xy = [16, 148]
+size = [10, 8]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p212"
+face = "south"
+name = "东北坡高木架平台（空）"
+xy = [318, 96]
+size = [14, 14]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p213"
+face = "south"
+over_water = true
+name = "木栈道·镇西"
+xy = [100, 196]
+size = [4, 30]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p213"
+face = "south"
+over_water = true
+name = "木栈道·镇中（系空平底船）"
+xy = [186, 196]
+size = [4, 34]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p213"
+face = "south"
+over_water = true
+name = "木栈道·木楼前"
+xy = [262, 186]
+size = [4, 26]
+h_m = 1
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg223-c1"
+eye = [200, 276]
+target = [200, 150]
+eye_h = 13.3
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

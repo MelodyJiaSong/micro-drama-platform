@@ -1,0 +1,193 @@
+# 萨丁农场 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 坐标表点位 [56, 31] 落在场地 (180, 190)。裁切图（ref/bg388_萨丁农场_map_crop.png，1 crop px ≈ 1.2 m）量取：
+# 屋舍图标在红十字西北约 30 m、斜长田块在屋西南（约 170×70 m）、中央大道在东约 58 m、西来土路在北约 150 m 并入大道、大道东北一片矮丘。
+# 谷仓 / 风车 / 机械 / 水槽等区图不画的，一律推定。
+
+[meta]
+bg = "bg388"
+name_zh = "萨丁农场"
+size_m = [320, 320]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "按区图裁切量取（区图 1 px ≈ 3.19 m，裁切放大约 2.67 倍）；田块、屋舍、道路的相对位置取自裁切，建筑尺寸推定"
+# 世界树画面：少数还在耕作的农场，麦子半黄半青；木屋、谷仓与一座转动的风车，田里立着铁皮收割傀儡
+absent = [
+    "收割后的麦茬地（本档麦子未收，半黄半青立在田里）",
+    "烧毁的谷仓 / 焦黑骨架（那是东南角另一处农地）",
+    "火、炊烟、亮灯的窗、机械冒烟或发光",
+    "河流与水面（界河在东面两百多米外，场地内只有屋前水槽）",
+    "树林与绿地",
+    "石砌大屋 / 围墙 / 哨塔",
+    "马、牛与任何牲口（主人夫妇与牲口属 shot 层）",
+]
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p336"
+face = "east"
+name = "木屋（门朝东对大道）"
+xy = [172, 160]
+size = [12, 8]
+h_m = 6
+src = "地图量取"
+note = "裁切图屋舍图标，在坐标点西北约 30 m"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p337"
+face = "south"
+name = "高顶谷仓（门朝南）"
+xy = [148, 140]
+size = [16, 11]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p343"
+face = "west"
+name = "高木架风车"
+xy = [192, 145]
+size = [7, 7]
+h_m = 18
+src = "推定"
+note = "世界树有风车、无点位；推定在屋东北，朝西拍时顶着逆光成剪影"
+
+[[block]]
+id = "b04"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "半黄半青麦田（斜长，长边朝东南）"
+xy = [108, 220]
+size = [168, 72]
+h_m = 0
+rot = 38
+src = "地图量取"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p350"
+face = "south"
+name = "铁皮收割机械甲（略前倾）"
+xy = [90, 205]
+size = [2.5, 2.5]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p350"
+face = "south"
+name = "铁皮收割机械乙"
+xy = [122, 232]
+size = [2.5, 2.5]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p350"
+face = "south"
+name = "铁皮收割机械丙"
+xy = [150, 256]
+size = [2.5, 2.5]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "屋前木水槽"
+xy = [181, 160]
+size = [2.5, 0.8]
+h_m = 0.7
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p366"
+face = "south"
+count = 2
+name = "谷仓门口麦秸垛"
+xy = [148, 149]
+size = [5, 3]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "大道西侧干排水沟"
+xy = [231, 190]
+size = [1.5, 220]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "谷仓西南角冲沟"
+xy = [129, 164]
+size = [42, 2]
+h_m = 0
+rot = -59
+src = "推定"
+note = "自谷仓西南角斜到麦田边，沟里只有干裂泥片"
+
+[[block]]
+id = "b12"
+kind = "palisade"
+face = "south"
+count = 1
+name = "岔口歪木桩"
+xy = [229, 46]
+size = [0.4, 0.4]
+h_m = 1.5
+src = "推定"
+
+[[ridge]]
+name = "大道东侧矮土丘"
+height_m = 25
+poly = [[262, 0], [320, 0], [320, 120], [285, 110], [262, 50]]
+src = "地图量取"
+
+[[road]]
+name = "南北中央大道"
+width_m = 8
+path = [[232, 0], [236, 60], [238, 140], [240, 200], [236, 260], [240, 320]]
+src = "地图量取"
+
+[[road]]
+name = "西来土路（自西北弯来并入大道）"
+width_m = 5
+path = [[0, 95], [34, 82], [100, 70], [154, 58], [235, 42]]
+src = "地图量取"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg388-c1"
+eye = [160, 294]
+target = [160, 160]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -1,0 +1,188 @@
+# 撕裂者之石 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 本图 ＝ 撕裂者营地 bg229 场地的西北一角：本图 (x, y) ＝ bg229 场地 (x, y + 20)。巨岩与洞口落在区图营地帐篷图标西侧约 70 m 的洞穴图标上（区级约 (551, 89) m）。
+# 世界树坐标 [63.4, 83]（区东南南墙山体）与父节点「撕裂者营地」、wiki「西北、燃烧平原入口附近的大洞穴」三方矛盾，判为录入错误，不用。
+# 锚点机位：两顶西侧小帐之间偏东 (110, 72)，朝正西；两顶小帐分别落在画面左右边缘（约 ±40°），中央火塘在机位身后约 10 m。
+
+[meta]
+bg = "bg230"
+name_zh = "撕裂者之石"
+size_m = [160, 140]
+px_per_m = 8.0
+scale_src = "推定"
+scale_note = "落点取区图营地旁的洞穴图标（区图精度约 ±20 m）；巨岩 24×26×18 m、洞口 8×6 m、栅墙与帐篷沿用 bg229 场地（推定）"
+# 世界树画面：营地边一块突出的巨岩，顶上平坦，被兽人当成点将台
+absent = [
+  "上岩顶的梯子 / 石阶 / 小路（岩顶无路，进出只走洞口）",
+  "洞里的火光 / 火把 / 灯笼（洞口几米后全黑）",
+  "营地中央的火堆入画（它在机位身后）",
+  "旗杆 / 旗帜 / 纹章",
+  "东南南墙山脚的平顶孤岩（那是世界树错坐标的落点，不是本档）",
+  "火山口 / 焦土 / 爆炸坑（4.0.3 后的东西）",
+  "雨 / 雪 / 夜景",
+  "任何人物 / 动物 / 文字",
+]
+
+[[ridge]]
+name = "营地北崖"
+poly = [[0, 0], [160, 0], [160, 4], [90, 2], [40, 8], [0, 10]]
+height_m = 45
+src = "推定"
+note = "bg229「北侧崖壁」的西段"
+
+[[ridge]]
+name = "营地西崖（巨岩从这里鼓出）"
+poly = [[0, 10], [40, 8], [44, 47], [40, 73], [44, 110], [42, 140], [0, 140]]
+height_m = 50
+src = "推定"
+note = "bg229「西侧崖壁」；崖顶暗绿松柏"
+
+[[road]]
+name = "岩前踩实土道（营地→洞口）"
+path = [[120, 75], [110, 72], [88, 68], [63, 60]]
+width_m = 5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "rock_shelf"
+face = "east"
+count = 1
+into_ridge = true
+name = "平顶巨岩"
+xy = [51, 60]
+size = [24, 26]
+h_m = 18
+src = "地图量取"
+note = "区图营地西侧的洞穴图标；锈红水平分层砂岩，四壁陡直、顶面平，岩顶无路"
+
+[[block]]
+id = "b02"
+kind = "cave_mouth"
+face = "east"
+count = 1
+may_overlap = true
+name = "岩脚洞口（朝东）"
+xy = [62, 60]
+size = [2, 8]
+h_m = 6
+src = "推定"
+note = "宽约 8 m、高约 6 m 的粗拱；往里几米后全黑；上沿一片冷透的暗褐烟熏旧痕"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p225"
+face = "east"
+name = "洞口北侧削尖木桩"
+xy = [65, 55]
+size = [1, 1]
+h_m = 2.2
+src = "推定"
+note = "缠褪色皮绳"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p225"
+face = "east"
+name = "洞口南侧削尖木桩"
+xy = [65, 65]
+size = [1, 1]
+h_m = 2.2
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "palisade"
+face = "east"
+count = 1
+name = "木栅·西段北（顶到岩根）"
+xy = [60, 33.5]
+size = [1.5, 27]
+h_m = 4.5
+src = "推定"
+note = "bg229 西段栅墙被巨岩截成南北两段"
+
+[[block]]
+id = "b06"
+kind = "palisade"
+face = "east"
+count = 1
+name = "木栅·西段南（顶到岩根）"
+xy = [60, 101.5]
+size = [1.5, 57]
+h_m = 4.5
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "palisade"
+face = "south"
+count = 1
+may_overlap = true
+name = "木栅·北段（西头）"
+xy = [110, 20]
+size = [100, 1.5]
+h_m = 4.5
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p229"
+face = "southeast"
+name = "兽皮小帐·西北（画面右侧近处）"
+xy = [82, 50]
+size = [9, 7]
+h_m = 4
+src = "推定"
+note = "即 bg229 b03"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p229"
+face = "northeast"
+name = "兽皮小帐·西南（画面左缘）"
+xy = [80, 100]
+size = [9, 7]
+h_m = 4
+src = "推定"
+note = "即 bg229 b05"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p219"
+face = "south"
+name = "营地中央大火塘（机位身后，不入画）"
+xy = [120, 75]
+size = [5, 5]
+h_m = 1.5
+src = "推定"
+note = "即 bg229 b01；本档画面里只有它的一缕烟"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p228"
+face = "south"
+into_ridge = true
+name = "岩脚塌落碎岩"
+xy = [44, 80]
+size = [8, 6]
+h_m = 2
+src = "推定"
+note = "塌落多年，断口长苔"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg230-c1"
+eye = [13, 70]
+target = [80, 70]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

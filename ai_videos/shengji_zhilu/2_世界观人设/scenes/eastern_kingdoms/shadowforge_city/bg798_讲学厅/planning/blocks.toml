@@ -1,0 +1,199 @@
+# 讲学厅 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 方位据上层区图 WorldMap-BlackrockDepths1.jpg（讲学厅＝北缘最大的方厅）：西南角斜甬道接召唤者之墓，东墙巨门接钢铁大厅。
+# 厅内陈设（阶梯石席 / 讲台 / 列柱）无一手尺寸，全部推定。
+
+[meta]
+bg = "bg798"
+name_zh = "讲学厅"
+size_m = [150, 120]
+px_per_m = 10.0
+scale_src = "推定"
+scale_note = "1.12 副本无区图；主厅 113×88 m 取自区级平面图 bg246 块 b909（上层区图量取，尺度本身推定），四周留出甬道口与东门外一段"
+# 世界树画面：宽阔的黑石讲堂，成群矮人挤在阶梯席位间，尽头一对火盆夹着一扇封死的巨门。
+absent = ["天空、日光、月光与任何天气（山腹室内）", "熔岩与熔岩沟（讲学厅不临熔岩）", "窗户与天井（岩体里没有对外开口）", "任何植被与水面", "木质长椅、布幔与旗帜", "人物、听众、守卫与动物（空场态，属 shot 层）", "门前两只大火盆的火焰（默认未点燃）", "电弧蓝光与冷色光源", "文字、铭牌与招牌"]
+
+[[road]]
+name = "西南入口斜坡甬道（下接环形墓室）"
+path = [[2, 118], [20, 102], [30, 92]]
+width_m = 7
+src = "地图量取"
+
+[[road]]
+name = "东门外往巨像仪仗通道"
+path = [[132, 60], [150, 60]]
+width_m = 12
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "chamber"
+face = "south"
+count = 1
+name = "主厅（巨型方形讲堂外廓）"
+xy = [75, 60]
+size = [113, 88]
+h_m = 20
+src = "地图量取"
+note = "区图北缘大方厅；尺寸取自 bg246 b909"
+
+[[block]]
+id = "b02"
+may_overlap = true
+kind = "rock_shelf"
+face = "east"
+count = 1
+name = "弧形阶梯石席（自西向东逐级下降）"
+xy = [66, 60]
+size = [72, 56]
+h_m = 8
+src = "原典方位"
+note = "世界树画面：阶梯席位；级数与范围推定"
+
+[[block]]
+id = "b03"
+may_overlap = true
+kind = "rock_shelf"
+face = "west"
+count = 1
+name = "方石讲台（全厅最低处之上半人高）"
+xy = [116, 60]
+size = [12, 18]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b04"
+may_overlap = true
+kind = "asset"
+asset = "p255"
+face = "west"
+name = "东墙封死的黑铁巨门"
+xy = [130, 60]
+size = [3, 14]
+h_m = 13
+src = "原典方位"
+note = "世界树画面：一对火盆夹着一扇封死的巨门"
+
+[[block]]
+id = "b05"
+may_overlap = true
+kind = "asset"
+asset = "p256"
+face = "west"
+name = "门北铸铁大火盆（冷）"
+xy = [127, 49]
+size = [3, 3]
+h_m = 2.2
+src = "原典方位"
+
+[[block]]
+id = "b06"
+may_overlap = true
+kind = "asset"
+asset = "p256"
+face = "west"
+name = "门南铸铁大火盆（冷）"
+xy = [127, 71]
+size = [3, 3]
+h_m = 2.2
+src = "原典方位"
+
+[[block]]
+id = "b07"
+may_overlap = true
+kind = "asset"
+asset = "p257"
+face = "south"
+count = 6
+name = "北列方柱（六根）"
+xy = [72, 26]
+size = [84, 4]
+h_m = 20
+src = "推定"
+
+[[block]]
+id = "b08"
+may_overlap = true
+kind = "asset"
+asset = "p257"
+face = "north"
+count = 6
+name = "南列方柱（六根）"
+xy = [72, 94]
+size = [84, 4]
+h_m = 20
+src = "推定"
+
+[[block]]
+id = "b09"
+may_overlap = true
+kind = "rock_shelf"
+face = "south"
+count = 1
+name = "北侧走道"
+xy = [72, 20]
+size = [100, 7]
+h_m = 8
+src = "推定"
+note = "与最高一排石席齐平"
+
+[[block]]
+id = "b10"
+may_overlap = true
+kind = "rock_shelf"
+face = "north"
+count = 1
+name = "南侧走道"
+xy = [72, 100]
+size = [100, 7]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b11"
+may_overlap = true
+kind = "asset"
+asset = "p255"
+face = "west"
+name = "讲台北侧钉铁板窄侧门"
+xy = [130, 40]
+size = [2, 4]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b12"
+may_overlap = true
+kind = "asset"
+asset = "p255"
+face = "west"
+name = "讲台南侧钉铁板窄侧门"
+xy = [130, 80]
+size = [2, 4]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b13"
+may_overlap = true
+kind = "cave_mouth"
+face = "southwest"
+count = 1
+name = "西南角入口门洞（低而宽）"
+xy = [24, 98]
+size = [8, 8]
+h_m = 4
+rot = 45
+src = "地图量取"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg798-c1"
+eye = [12, 60]
+target = [75, 60]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

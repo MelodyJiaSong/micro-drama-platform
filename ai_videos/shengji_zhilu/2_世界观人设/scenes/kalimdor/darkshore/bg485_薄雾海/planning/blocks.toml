@@ -1,0 +1,185 @@
+# 薄雾海 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 本档取木镇以北约 1 km 的海滩中段（区图约 (40, 32) 一带）；木镇在场地外南面约 1 km，北湾礁屿在场地外北面，只作远景。
+# 海岸线（浪线）：(330,0)→(318,150)→(300,300)→(285,450)→(272,600)→(260,800)；以西是海，以东依次湿沙带 / 干沙坡 / 林缘。
+# 锚点机位：湿沙带 [278, 700]，离地约 1.6 m，朝北顺滩平视。
+
+[meta]
+bg = "bg485"
+name_zh = "薄雾海"
+size_m = [500, 800]
+px_per_m = 2.0
+grid_m = 50
+scale_src = "推定"
+scale_note = "海岸走向按区图 (43,22)→(37,42) 的整段海岸线取近南北、北端略偏东；滩宽（湿沙约 20 m、干沙约 40 m）、礁岩与浮木的位置尺寸无一手出处，推定"
+# 世界树画面：黑海岸最长的一段海滩，湿沙上散着贝壳与浮木，海面永远压着一层齐腰高的白雾
+absent = [
+    "任何建筑、栈桥、码头与船（木镇在场地外南面约 1 km）",
+    "沉船残骸（本段不设）",
+    "道路与小径（只有海滩本身）",
+    "火、营火与任何人工光源",
+    "清晰的海平线、晴空与太阳",
+    "巨型贝壳与退潮大岩坪（那是南段暮光海岸）",
+    "悬崖与高岸（全段是缓坡沙滩）",
+    "热带棕榈、白沙与碧蓝海水",
+    "雪、冰",
+]
+
+[[water]]
+name = "迷雾之海·近岸浅水（浪线向西 100 m）"
+path = [[280, 0], [268, 150], [250, 300], [235, 450], [222, 600], [210, 800]]
+width_m = 100
+depth_m = 2
+src = "推定"
+
+[[water]]
+name = "迷雾之海·外海（压着齐腰白雾）"
+path = [[130, 0], [118, 150], [100, 300], [85, 450], [72, 600], [60, 800]]
+width_m = 200
+depth_m = 20
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "湿沙带（浪线以上约 20 m，积水反光）"
+xy = [305, 400]
+size = [20, 780]
+h_m = 0
+rot = 5
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "干沙坡（风纹细沙，浮木堆积）"
+xy = [335, 400]
+size = [40, 780]
+h_m = 0
+rot = 5
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p414"
+face = "west"
+count = 40
+name = "林缘高松（坎上一堵墨绿松墙）"
+xy = [410, 400]
+size = [90, 760]
+h_m = 25
+rot = 5
+src = "地图量取"
+note = "区图上海岸线以东紧贴的绿色林带"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p416"
+face = "south"
+name = "连根冲上岸的枯松（根盘朝天）"
+xy = [305, 640]
+size = [20, 3]
+h_m = 3
+rot = 30
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p416"
+face = "south"
+name = "浮木一（半埋、长地衣）"
+xy = [318, 420]
+size = [10, 2]
+h_m = 0.6
+rot = -15
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p416"
+face = "south"
+name = "浮木二"
+xy = [330, 250]
+size = [8, 2]
+h_m = 0.5
+rot = 40
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p416"
+face = "south"
+name = "浮木三"
+xy = [298, 530]
+size = [7, 2]
+h_m = 0.4
+rot = 10
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p417"
+face = "south"
+name = "近岸黑礁一"
+xy = [248, 620]
+size = [12, 8]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p417"
+face = "south"
+name = "近岸黑礁二"
+xy = [232, 560]
+size = [8, 6]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p417"
+face = "south"
+name = "近岸黑礁三"
+xy = [258, 490]
+size = [10, 6]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "湿沙带锚点机位"
+xy = [278, 700]
+size = [2, 2]
+h_m = 0
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）：场地被体块占满，放在室内
+[[anchor]]
+key = "bg485-c1"
+eye = [250, 680]
+target = [250, 160]
+eye_h = 1.65
+lens_mm = 24
+inside = true
+note = "室内南端朝北；自动生成，排镜时按需改"

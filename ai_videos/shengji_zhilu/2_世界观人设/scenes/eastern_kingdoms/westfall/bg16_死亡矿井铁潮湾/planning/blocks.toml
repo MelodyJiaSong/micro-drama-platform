@@ -1,0 +1,201 @@
+# 死亡矿井铁潮湾 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg16"
+name_zh = "死亡矿井铁潮湾"
+size_m = [260, 200]
+px_per_m = 6.0
+scale_src = "推定"
+scale_note = "副本内部洞窟，区图无坐标；取 260 × 200 m 通海洞窟（顶高约 50 m），入口在东壁高处、洞口朝西通外海——取自区地理页「地下海湾 + 半成型铁甲战舰」与副本路线（大门在最后）。水面以东（x > 185）即石码头岩面，不单列块。船长约 70 m 为推定。h_m 以水面为 0"
+absent = [
+    "日光直射 / 晴天蓝天（洞口只透进冷灰天光）",
+    "船上的灯火 / 火把 / 魔法光（主光只有码头与栈桥的铁火盆）",
+    "完工下水的铁壳巨轮 / 蒸汽明轮 / 现代军舰（是木壳三桅、下半截在钉铁甲）",
+    "高炉 / 铁水（那是上游的铸造厂 bg15）",
+    "入口大门的门扇完好态（本档默认门已被轰开、硝烟已散）",
+    "海面上的其他船只",
+    "任何人物、首领与船员（shot 层）",
+]
+
+[[ridge]]
+name = "北侧洞壁（湿黑岩，潮线以下挂海藻）"
+poly = [[0, 0], [260, 0], [260, 28], [200, 32], [130, 36], [60, 48], [0, 66]]
+height_m = 50
+src = "推定"
+
+[[ridge]]
+name = "南侧洞壁"
+poly = [[0, 134], [50, 150], [120, 166], [185, 170], [260, 172], [260, 200], [0, 200]]
+height_m = 50
+src = "推定"
+
+[[water]]
+name = "地下海湾（墨黑，近洞口转幽蓝）"
+path = [[0, 100], [90, 104], [185, 108]]
+width_m = 110
+depth_m = 12
+src = "推定"
+
+[[road]]
+name = "东壁木坡道下段（码头上的去栈桥通路）"
+path = [[248, 106], [230, 122], [200, 126], [182, 126]]
+width_m = 3
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p360"
+face = "west"
+over_water = true
+name = "三桅铁甲战舰（船首朝西，艉楼在东）"
+xy = [130, 110]
+size = [70, 16]
+h_m = 45
+src = "推定"
+note = "木壳，下半截钉铅灰铁甲、船首一段露木肋；三桅已立、帆收卷；船尾上层甲板大木舵轮；桅顶高约 45 m"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p346"
+face = "south"
+over_water = true
+name = "南舷长木栈桥（每十来米一只铁火盆）"
+xy = [140, 126]
+size = [84, 5]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p346"
+face = "south"
+over_water = true
+name = "跳板（栈桥中段搭上船腰）"
+xy = [140, 120.5]
+size = [3, 4]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p346"
+face = "west"
+name = "东壁高处入口平台（门洞在东侧，锚点机位）"
+xy = [245, 40]
+size = [22, 14]
+h_m = 24
+src = "推定"
+note = "门被轰开，碎门板与扭弯铁箍散在门洞边；门后坑道通回桅杆高厅与 bg15"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p346"
+face = "west"
+name = "东壁木坡道（两折下到码头）"
+xy = [248, 78]
+size = [8, 50]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p353"
+face = "south"
+count = 2
+over_water = true
+name = "码头木吊臂（两台）"
+xy = [200, 100]
+size = [8, 6]
+h_m = 18
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p358"
+face = "south"
+over_water = true
+name = "铁甲板垛"
+xy = [214, 140]
+size = [12, 8]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p364"
+face = "south"
+count = 6
+name = "火药木桶排"
+xy = [232, 150]
+size = [10, 5]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p364"
+face = "south"
+count = 3
+over_water = true
+name = "缆绳盘"
+xy = [198, 150]
+size = [6, 5]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p361"
+face = "west"
+name = "翻扣的小舢板与锈铁锚"
+xy = [236, 162]
+size = [8, 4]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p359"
+face = "south"
+over_water = true
+name = "洞口拦门铁链（半沉）"
+xy = [8, 100]
+size = [1.5, 60]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "cave_mouth"
+face = "east"
+count = 1
+over_water = true
+name = "西端通海洞口岩拱"
+xy = [2, 100]
+size = [3, 64]
+h_m = 30
+src = "推定"
+note = "参差岩拱框住外海与一线天；冷灰天光由此入"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg16-c1"
+eye = [130, 184]
+target = [130, 100]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -4,7 +4,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from libs.application.dtos.media__dto import MediaFileQdto
-from libs.common.exposed_tree import MEDIA_EXTENSIONS, ExposedTree
+from libs.common.exposed_tree import DOWNLOAD_ONLY_EXTENSIONS, MEDIA_EXTENSIONS, ExposedTree
 from libs.common.safe_resolve import SafeResolver
 from libs.domain.errors.file__error import (
     FileNotInSandboxError,
@@ -48,7 +48,7 @@ class MediaQuery:
 
     def serve(self, rel_path: str) -> MediaFileQdto:
         ext = Path(rel_path).suffix.lower() if isinstance(rel_path, str) else ""
-        if ext not in MEDIA_EXTENSIONS:
+        if ext not in MEDIA_EXTENSIONS and ext not in DOWNLOAD_ONLY_EXTENSIONS:
             raise UnsupportedFileExtensionError(ext)
         if not self._exposed.is_inside(rel_path):
             raise FileNotInSandboxError(rel_path)

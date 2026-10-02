@@ -1,0 +1,171 @@
+# 禁忌之海 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 取景：阿拉希东岸一段（区级图 b958 附近），西缘岩山直插海岸，东半部全是外海；机位在正中偏西的岩岬顶（b01）朝正东。
+
+[meta]
+bg = "bg58"
+name_zh = "禁忌之海"
+size_m = [800, 800]
+px_per_m = 2.0
+grid_m = 100
+scale_src = "推定"
+scale_note = "东岸在区图上只是右缘一条岩脚线，无一手尺寸；按「岩岬—碎石滩—礁带—外海」的镜头纵深取 800 m 见方，礁带离岸约百米、海蚀柱二十来米高均为推定"
+# 世界树画面：高地东岸外的深色外海，灰绿浪涌拍在礁石上，远处只有海雾没有陆地
+absent = ["任何道路（区图东岸无路）", "码头 / 栈桥 / 石阶 / 系船桩", "船只、船帆与桅杆", "海面上的岛屿或对岸陆地", "沙滩", "树林与任何树", "聚落、帐篷、营火", "海鸟与海兽", "灯塔", "冰山与浮冰", "人工光源", "4.0.3a 后的海岸改动（本段旧世与后世无差别，仍按 1.12 写）"]
+
+[[ridge]]
+name = "东界岩山（机位身后与北侧，山脚直插海岸）"
+poly = [[0, 0], [205, 0], [215, 150], [195, 320], [230, 430], [205, 560], [180, 690], [150, 800], [0, 800]]
+height_m = 260
+src = "地图量取"
+
+[[ridge]]
+name = "机位岩岬（向东伸进海里，岬顶高出海面二三十米）"
+poly = [[195, 320], [290, 335], [345, 370], [340, 410], [290, 430], [230, 430]]
+height_m = 25
+src = "推定"
+
+[[ridge]]
+name = "南湾口矮岩岬"
+poly = [[180, 690], [270, 680], [305, 715], [250, 760], [160, 780]]
+height_m = 15
+src = "推定"
+
+[[water]]
+name = "外海（礁带外骤深，墨绿到铅灰，一排排长涌自东推来）"
+path = [[580, 0], [580, 800]]
+width_m = 460
+depth_m = 40
+src = "地图量取"
+
+[[water]]
+name = "岬北回水区（礁带内侧浅水，水色浅一档）"
+path = [[285, 0], [290, 322]]
+width_m = 130
+depth_m = 4
+src = "推定"
+
+[[water]]
+name = "岬南回水区与浅湾"
+path = [[288, 432], [282, 680]]
+width_m = 130
+depth_m = 4
+src = "推定"
+
+[[water]]
+name = "南湾口外侧浅水"
+path = [[330, 680], [330, 800]]
+width_m = 60
+depth_m = 6
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+over_water = true
+name = "岬顶岩面与积水小坑（机位）"
+xy = [300, 385]
+size = [50, 40]
+h_m = 0
+src = "推定"
+note = "盐霜岩面、枯黄硬草、几汪浅积水小坑；锚点 prompt 的近景"
+
+[[block]]
+id = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "碎石滩·北段"
+xy = [225, 220]
+size = [20, 190]
+h_m = 0
+src = "推定"
+note = "十几米宽，湿黑卵石，满潮时浪舔到山脚"
+
+[[block]]
+id = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+over_water = true
+name = "碎石滩·南段"
+xy = [215, 560]
+size = [20, 200]
+h_m = 0
+src = "推定"
+note = "同上，向南弯成浅湾"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p44"
+face = "south"
+count = 10
+over_water = true
+name = "北礁带"
+xy = [330, 250]
+size = [150, 24]
+h_m = 2
+rot = 15
+src = "推定"
+note = "断续礁头，挂深褐海藻，离岸约百米"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p44"
+face = "south"
+count = 10
+over_water = true
+name = "南礁带"
+xy = [360, 540]
+size = [170, 24]
+h_m = 2
+rot = -15
+src = "推定"
+note = "同上"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p44"
+face = "south"
+over_water = true
+name = "海蚀柱·粗"
+xy = [440, 330]
+size = [30, 30]
+h_m = 24
+src = "推定"
+note = "横向浪蚀凹槽、底部半拱洞、柱顶平秃"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p44"
+face = "south"
+over_water = true
+name = "海蚀柱·细"
+xy = [475, 460]
+size = [16, 16]
+h_m = 18
+src = "推定"
+note = "比粗的矮"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg58-c1"
+eye = [400, 736]
+target = [400, 400]
+eye_h = 26.7
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

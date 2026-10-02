@@ -1,0 +1,857 @@
+# 铁炉堡区级资产规划（区级资产规划师写；tools/apply_asset_plan.py 只读）
+# 新立 18 件（≤19）；bg202（区级主体 zone_whole）不在判定范围。blend 里材质会剥掉，所以按「形状」复用：
+#   直跑宽石阶 ×10 段（各厅石阶，逐轴撑满占地与 h_m）；方肩拱石门洞兼 探险者大厅东南拱门 / 秘法大厅入口 / 王座厅通旧层厚石门；
+#   方形叠涩石柱兼 武器大厅、秘法大厅、旧铁炉堡三处柱列（铁环 / 日轮浮雕是贴面细节，不进几何）；
+#   粗凿石火盆兼 旧铁炉堡三只冷火盆 + 军事区旅店方形火塘（压扁拉宽）；三足黑铁火盆兼 武器大厅两只 + 军事区四只；
+#   矮宽拱门店铺门脸兼 平民区四排店铺 + 拍卖行（锚点画面外，拉伸占形）；钝头矮石笋兼 石笋群 / 踏脚扁石 / 潭心圆背黑岩 / 石阶顶粗岩柱。
+# judgment calls：
+#   h_m = 0 的厅 / 广场 / 石室 / 甬道口 / 回纹石带一律 plaza（高度未记录，只铺地坪；黑石山同例）；有高度的掏岩石屋 / 岩室 / 炉边酒馆走 chamber；
+#   熔岩坑 / 熔岩池 / 八角水池 / 螺纹水池走 pool；祭台、王座台、旧层空石台走 altar（抬高的叠层石台）；
+#   后殿战旗弧墙与王座背后刻纹石壁走 low_wall（旗面平贴墙面、刻纹是浅浮雕，不改几何）；洞穴东口粗石阶走 rock_shelf（就着岩层凿出的台阶）；
+#   狮鹫场是一段开放石台走 yard（栖架与干草暂不进几何，排镜要拍时再立件）；军事区圆形坡道口 h_m 仅 1.8 m，按地坪走 plaza。
+#   石阶资产正面（南）是阶脚，face ＝ 阶脚朝向。
+
+[meta]
+zone = "ironforge"
+
+[[use]]
+bg = "bg203"
+block = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg203"
+block = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg203"
+block = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg203"
+block = "b04"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg203"
+block = "b05"
+asset = "p184"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg203"
+block = "b06"
+asset = "p184"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg203"
+block = "b07"
+asset = "p182"
+face = "south"
+count = 5
+
+[[use]]
+bg = "bg203"
+block = "b08"
+asset = "p182"
+face = "north"
+count = 5
+
+[[use]]
+bg = "bg203"
+block = "b09"
+asset = "p186"
+face = "south"
+count = 13
+
+[[use]]
+bg = "bg203"
+block = "b10"
+asset = "p186"
+face = "north"
+count = 14
+
+[[use]]
+bg = "bg203"
+block = "b11"
+kind = "low_wall"
+face = "west"
+count = 1
+
+# ── bg204 ────────────────────────────────────────────────
+[[use]]
+bg = "bg204"
+block = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg204"
+block = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg204"
+block = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg204"
+block = "b04"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg204"
+block = "b05"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg204"
+block = "b06"
+asset = "p187"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg204"
+block = "b07"
+asset = "p188"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg204"
+block = "b08"
+asset = "p189"
+face = "south"
+count = 8
+
+[[use]]
+bg = "bg204"
+block = "b09"
+asset = "p180"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg204"
+block = "b10"
+asset = "p181"
+face = "north"
+count = 1
+
+# ── bg205 ────────────────────────────────────────────────
+[[use]]
+bg = "bg205"
+block = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg205"
+block = "b02"
+kind = "pool"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg205"
+block = "b03"
+asset = "p182"
+face = "northeast"
+count = 6
+
+[[use]]
+bg = "bg205"
+block = "b04"
+asset = "p182"
+face = "southwest"
+count = 6
+
+[[use]]
+bg = "bg205"
+block = "b05"
+kind = "altar"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg205"
+block = "b06"
+asset = "p181"
+face = "southeast"
+count = 1
+
+# ── bg206 ────────────────────────────────────────────────
+[[use]]
+bg = "bg206"
+block = "b01"
+asset = "p180"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg206"
+block = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg206"
+block = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg206"
+block = "b04"
+asset = "p182"
+face = "south"
+count = 2
+
+[[use]]
+bg = "bg206"
+block = "b05"
+asset = "p182"
+face = "north"
+count = 2
+
+[[use]]
+bg = "bg206"
+block = "b06"
+kind = "altar"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg206"
+block = "b07"
+asset = "p185"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg206"
+block = "b08"
+asset = "p185"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg206"
+block = "b09"
+asset = "p185"
+face = "south"
+count = 1
+
+# ── bg207 ────────────────────────────────────────────────
+[[use]]
+bg = "bg207"
+block = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg207"
+block = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg207"
+block = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg207"
+block = "b04"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg207"
+block = "b05"
+asset = "p190"
+face = "east"
+count = 14
+
+[[use]]
+bg = "bg207"
+block = "b06"
+asset = "p190"
+face = "west"
+count = 11
+
+[[use]]
+bg = "bg207"
+block = "b07"
+asset = "p190"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg207"
+block = "b08"
+asset = "p191"
+face = "southwest"
+count = 1
+
+[[use]]
+bg = "bg207"
+block = "b09"
+asset = "p190"
+face = "north"
+count = 14
+
+[[use]]
+bg = "bg207"
+block = "b10"
+asset = "p190"
+face = "south"
+count = 10
+
+[[use]]
+bg = "bg207"
+block = "b11"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg207"
+block = "b12"
+asset = "p180"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg207"
+block = "b13"
+asset = "p180"
+face = "southeast"
+count = 1
+
+# ── bg208 ────────────────────────────────────────────────
+[[use]]
+bg = "bg208"
+block = "b01"
+kind = "chamber"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg208"
+block = "b02"
+kind = "chamber"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg208"
+block = "b03"
+kind = "chamber"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg208"
+block = "b04"
+kind = "chamber"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg208"
+block = "b05"
+kind = "rock_shelf"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg208"
+block = "b06"
+asset = "p192"
+face = "south"
+count = 3
+
+[[use]]
+bg = "bg208"
+block = "b07"
+asset = "p192"
+face = "south"
+count = 8
+
+[[use]]
+bg = "bg208"
+block = "b08"
+asset = "p192"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg208"
+block = "b09"
+asset = "p192"
+face = "south"
+count = 1
+
+# ── bg209 ────────────────────────────────────────────────
+[[use]]
+bg = "bg209"
+block = "b01"
+face = "south"
+parts = [{asset = "p193", at = [0, 0], yaw = 0}, {asset = "p198", at = [5.2, 0], yaw = 0}, {asset = "p198", at = [3.68, 3.68], yaw = 45}, {asset = "p198", at = [0, 5.2], yaw = 90}, {asset = "p198", at = [-3.68, 3.68], yaw = 135}, {asset = "p198", at = [-5.2, 0], yaw = 180}, {asset = "p198", at = [-3.68, -3.68], yaw = 225}, {asset = "p198", at = [-0, -5.2], yaw = 270}, {asset = "p198", at = [3.68, -3.68], yaw = 315}]
+
+[[use]]
+bg = "bg209"
+block = "b02"
+kind = "pool"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg209"
+block = "b03"
+kind = "pool"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg209"
+block = "b04"
+kind = "pool"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg209"
+block = "b05"
+asset = "p194"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg209"
+block = "b06"
+asset = "p194"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg209"
+block = "b07"
+asset = "p194"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg209"
+block = "b08"
+asset = "p194"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg209"
+block = "b09"
+kind = "yard"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg209"
+block = "b10"
+kind = "chamber"
+face = "northeast"
+count = 1
+
+[[use]]
+bg = "bg209"
+block = "b11"
+asset = "p180"
+face = "east"
+count = 1
+
+# ── bg210 ────────────────────────────────────────────────
+[[use]]
+bg = "bg210"
+block = "b01"
+kind = "altar"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg210"
+block = "b02"
+asset = "p195"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg210"
+block = "b03"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg210"
+block = "b04"
+kind = "pool"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg210"
+block = "b05"
+kind = "pool"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg210"
+block = "b06"
+kind = "pool"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg210"
+block = "b07"
+kind = "pool"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg210"
+block = "b08"
+asset = "p180"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg210"
+block = "b09"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg210"
+block = "b10"
+asset = "p181"
+face = "east"
+count = 1
+
+# ── bg211 ────────────────────────────────────────────────
+[[use]]
+bg = "bg211"
+block = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg211"
+block = "b02"
+asset = "p180"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg211"
+block = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg211"
+block = "b04"
+asset = "p185"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg211"
+block = "b05"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg211"
+block = "b06"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg211"
+block = "b07"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg211"
+block = "b08"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg211"
+block = "b09"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg211"
+block = "b10"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg211"
+block = "b11"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg211"
+block = "b12"
+asset = "p184"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg211"
+block = "b13"
+asset = "p184"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg211"
+block = "b14"
+asset = "p184"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg211"
+block = "b15"
+asset = "p184"
+face = "south"
+count = 1
+
+# ── bg212 ────────────────────────────────────────────────
+[[use]]
+bg = "bg212"
+block = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg212"
+block = "b02"
+kind = "pool"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg212"
+block = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg212"
+block = "b04"
+asset = "p180"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg212"
+block = "b05"
+asset = "p180"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg212"
+block = "b06"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg212"
+block = "b07"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg212"
+block = "b08"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg212"
+block = "b09"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg212"
+block = "b10"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg212"
+block = "b11"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg212"
+block = "b12"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg212"
+block = "b13"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg212"
+block = "b14"
+asset = "p183"
+face = "southeast"
+count = 5
+
+[[use]]
+bg = "bg212"
+block = "b15"
+asset = "p183"
+face = "northwest"
+count = 5
+
+# ── bg213 ────────────────────────────────────────────────
+[[use]]
+bg = "bg213"
+block = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg213"
+block = "b02"
+kind = "plaza"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg213"
+block = "b03"
+asset = "p196"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg213"
+block = "b04"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg213"
+block = "b05"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg213"
+block = "b06"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg213"
+block = "b07"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg213"
+block = "b08"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg213"
+block = "b09"
+asset = "p197"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg213"
+block = "b10"
+kind = "plaza"
+face = "south"
+count = 1

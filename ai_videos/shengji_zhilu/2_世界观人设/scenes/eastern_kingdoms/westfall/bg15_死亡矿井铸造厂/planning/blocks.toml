@@ -1,0 +1,240 @@
+# 死亡矿井铸造厂 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg15"
+name_zh = "死亡矿井铸造厂"
+size_m = [110, 80]
+px_per_m = 12.0
+scale_src = "推定"
+scale_note = "副本内部大厅，区图无坐标；取一个 110 × 80 m 的下陷圆厅（顶高约 25 m），入口平台在西北高处、出口在东南底部，取自区地理页「高炉与熔铁槽的大厅」+ 副本路线（坑道 → 熔炉 → 桅杆厅 → 海湾大门）；厅内全部尺寸为推定。h_m 以厅底为 0"
+absent = [
+    "日光 / 天窗 / 任何通到地面的竖井透光（厅在月溪镇地底深处）",
+    "火把 / 油灯 / 提灯 / 魔法光（唯一光源是高炉与铁水）",
+    "海水 / 船体 / 船坞（那是下游的铁甲湾 bg16）",
+    "堆放船桅的高厅本体（在东南出口坑道之外，只在坑道深处露一截圆木）",
+    "海湾大门与轰门的炮（在桅杆厅之后，归 bg16 一侧）",
+    "传送带 / 电灯 / 现代钢铁厂结构",
+    "任何人物、首领与工人（shot 层）",
+]
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p354"
+face = "southwest"
+name = "砖石高炉（立在一米半高的石砌炉台上，炉口朝西南）"
+xy = [58, 40]
+size = [12, 12]
+h_m = 12
+src = "推定"
+note = "厅心；炉身耐火砖加铁箍，下部两个拱形风口与一只大风箱，炉顶粗铁烟管贴洞顶往东拐进岩缝"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p353"
+face = "south"
+name = "龙门吊与大铁坩埚"
+xy = [44, 32]
+size = [10, 6]
+h_m = 14
+src = "推定"
+note = "木铁合造，粗铁链过几只大齿轮，吊着半人高的坩埚，略倾"
+
+[[block]]
+id = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "铁水导槽（石凿，自炉口斜通西南）"
+xy = [44, 52]
+size = [20, 1.5]
+h_m = 0
+rot = -37
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "砂模床（浇好的弧形铁板在冷却）"
+xy = [28, 64]
+size = [18, 10]
+h_m = 0.3
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "pool"
+face = "south"
+count = 1
+name = "淬火石池"
+xy = [22, 50]
+size = [10, 6]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p355"
+face = "south"
+name = "蒸汽锻锤"
+xy = [76, 50]
+size = [6, 5]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p356"
+face = "south"
+count = 8
+name = "铁砧列（七八座）"
+xy = [84, 62]
+size = [16, 3]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p358"
+face = "south"
+name = "船用弧形铁甲板垛"
+xy = [94, 46]
+size = [10, 6]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p359"
+face = "south"
+name = "巨型锚链堆"
+xy = [92, 34]
+size = [7, 6]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p346"
+face = "south"
+name = "西北入口木平台（机位所在）"
+xy = [10, 14]
+size = [12, 10]
+h_m = 15
+src = "推定"
+note = "比厅底高约 15 m；锚点图机位站在平台东南沿"
+
+[[block]]
+id = "b11"
+kind = "mine_portal"
+face = "south"
+count = 1
+name = "上游坑道口（窄轨与空矿车）"
+xy = [2, 14]
+size = [3.5, 4]
+h_m = 15
+src = "推定"
+note = "接 bg14 木支撑坑道"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p346"
+face = "south"
+name = "木栈坡道·北墙段"
+xy = [50, 5]
+size = [56, 4]
+h_m = 10
+src = "推定"
+note = "自入口平台下降，平台 15 m → 转角约 7 m"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p346"
+face = "west"
+name = "木栈坡道·东墙段（下到厅底）"
+xy = [104, 28]
+size = [4, 40]
+h_m = 5
+src = "推定"
+note = "转角 7 m → 厅底 0 m；转角处各有一块歇脚木台"
+
+[[block]]
+id = "b14"
+kind = "mine_portal"
+face = "northwest"
+count = 1
+name = "东南出口坑道口（通桅杆高厅与海湾大门）"
+xy = [104, 70]
+size = [8, 8]
+h_m = 0
+src = "推定"
+note = "口上横一根熏黑粗梁；坑道上坡，深处露一截斜架的巨大圆木"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p349"
+face = "south"
+name = "钉桶与平板运板车"
+xy = [96, 72]
+size = [5, 4]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "asset"
+asset = "p359"
+face = "south"
+name = "废齿轮与裂坩埚堆"
+xy = [40, 74]
+size = [8, 5]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b17"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "洞顶蒸汽主管"
+xy = [78, 24]
+size = [40, 1.2]
+h_m = 1.2
+src = "推定"
+note = "吊在洞顶约 20 m 处、贴顶东西走向；场景引擎不支持离地高度，blend 里只示走向（原 h_m=20 是离地高，会建成一堵 20 m 高墙）"
+
+[[block]]
+id = "b18"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "北墙工具挂板"
+xy = [86, 9]
+size = [8, 1]
+h_m = 2
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg15-c1"
+eye = [55, 74]
+target = [55, 40]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

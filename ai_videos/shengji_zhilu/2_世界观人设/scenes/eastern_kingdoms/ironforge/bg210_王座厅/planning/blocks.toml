@@ -1,0 +1,181 @@
+# 王座厅 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+# 量取：原版区图 WorldMap-Ironforge_c60.jpg（1002×668 px）上 x∈[262,400] px、y∈[238,365] px 一窗，
+#   本地 m ＝ (px − 262, py − 238) × (0.7215, 0.7222)（与区级 terrain.toml 同一换算）。
+# 四块熔岩池（区图红色回纹）、北端王座凹室、南沿斜廊按区图量取；石阶宽度、王座台 / 王座 / 石门 / 火盆为推定。
+
+[meta]
+bg = "bg210"
+name_zh = "王座厅"
+size_m = [99.6, 91.7]
+px_per_m = 12.0
+grid_m = 25
+scale_src = "地图量取"
+scale_note = "区图大锻炉西侧橙色区块量取：正殿南北约 75 m、东西约 80 m，四块熔岩池按红色回纹外框；换算同区级 terrain.toml（0.7215 / 0.7222 m/px）"
+# 世界树画面：大锻炉尽头抬高的王座厅，一条石阶直上，厅中一张黑铁王座背靠雕满符文的石壁，两侧立着持斧卫兵
+absent = ["天空 / 日光 / 光柱（山腹正殿）", "成排铁链吊灯（本殿光来自熔岩池与两只火盆）", "卫兵 / 国王 / 任何人物（本卡只锁空间）", "石壁与垂幡上的可读文字 / 字母符文", "4.0.3 后的议事席与三座高座（那是旧铁炉堡开放后的布置）", "冷蓝光（只属于秘法区）", "雪 / 植被", "玻璃 / 电灯 / 现代器物"]
+
+[[ridge]]
+name = "北岩壁"
+poly = [[0, 0], [99.6, 0], [99.6, 3], [0, 3]]
+height_m = 30
+src = "地图量取"
+note = "王座背后整面几何刻纹石壁就凿在这道岩壁上"
+
+[[ridge]]
+name = "西岩壁"
+poly = [[0, 3], [24, 3], [24, 6], [10, 6], [7, 20], [6, 76], [0, 78]]
+height_m = 30
+src = "地图量取"
+note = "旧铁炉堡的石阶就在这片岩体里往下走"
+
+[[ridge]]
+name = "东岩壁"
+poly = [[88, 3], [99.6, 3], [99.6, 56], [88, 62]]
+height_m = 30
+src = "地图量取"
+note = "隔开熔炉场西缘；本殿东侧没有出口"
+
+[[road]]
+name = "南沿斜廊"
+path = [[0, 85], [7.9, 83.2], [99.6, 61]]
+width_m = 12
+src = "地图量取"
+note = "西南接平民区西弧、东北下到熔炉场内环廊；本殿从它北侧开口，锚点机位身后"
+
+[[block]]
+id = "b01"
+kind = "altar"
+face = "south"
+count = 1
+name = "王座台"
+xy = [37, 12]
+size = [24, 12]
+h_m = 4
+src = "推定"
+note = "北端凹室里三级抬高的方形台，全殿最高点"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p195"
+face = "south"
+may_overlap = true
+name = "黑铁王座"
+xy = [37, 8.5]
+size = [4, 3]
+h_m = 3
+src = "推定"
+note = "椅背方正高耸、顶端一排方齿；两侧各一只三足铁火盆（唯一明火）"
+
+[[block]]
+id = "b03"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "刻纹石壁"
+xy = [37, 4]
+size = [26, 2]
+h_m = 14
+src = "推定"
+note = "直线、菱形、同心方框刻纹，正中一块方印状浮雕；无可读字；两侧各垂一幅深红垂幡"
+
+[[block]]
+id = "b04"
+kind = "pool"
+face = "south"
+count = 1
+name = "熔岩池·西北"
+xy = [26.4, 37.6]
+size = [31.2, 39]
+h_m = 0
+src = "地图量取"
+note = "石阶左侧大池，回纹石沿层层内收"
+
+[[block]]
+id = "b05"
+kind = "pool"
+face = "south"
+count = 1
+may_overlap = true
+name = "熔岩池·东北"
+xy = [67.65, 29.3]
+size = [39.3, 41.1]
+h_m = 0
+src = "地图量取"
+note = "石阶右侧大池"
+
+[[block]]
+id = "b06"
+kind = "pool"
+face = "south"
+count = 1
+may_overlap = true
+name = "熔岩池·西南"
+xy = [20.2, 65.5]
+size = [24.6, 17]
+h_m = 0
+src = "地图量取"
+note = "前庭左侧小池"
+
+[[block]]
+id = "b07"
+kind = "pool"
+face = "south"
+count = 1
+name = "熔岩池·东南"
+xy = [79, 56]
+size = [16.6, 10.8]
+h_m = 0
+src = "地图量取"
+note = "前庭右侧小池"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p180"
+face = "south"
+name = "长石阶"
+xy = [45, 37.75]
+size = [6, 39.5]
+h_m = 4
+src = "推定"
+note = "夹在两大池之间的窄长石阶，宽三四步、长约三十步，两侧矮方石栏包铜角；从前庭一口气抬高到王座台"
+
+[[block]]
+id = "b09"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "前庭"
+xy = [51.5, 62.75]
+size = [37, 10.5]
+h_m = 0
+src = "地图量取"
+note = "大块深灰石板地；与石阶交接处两根四方石柱与一道暗铜门槛；锚点机位在其南缘"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p181"
+face = "east"
+may_overlap = true
+name = "通旧层的厚石门"
+xy = [24.5, 12]
+size = [2, 5]
+h_m = 4
+src = "推定"
+note = "王座台左（西）侧，虚掩一条窄缝、门前积灰无脚印；门后窄石阶下到旧铁炉堡（1.12 不可进入）"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg210-c1"
+eye = [50, 84]
+target = [50, 46]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

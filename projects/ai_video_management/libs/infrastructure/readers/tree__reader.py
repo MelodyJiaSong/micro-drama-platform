@@ -3,14 +3,17 @@ from __future__ import annotations
 import json
 import os
 import re
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
-from libs.common import asset_link, drama_ref
+from libs.common import asset_link, drama_ref, equipment_key, prop_key, scene_key
+from libs.common.drama_layout import EQUIPMENT_DIR_NAME, is_equipment_tool_dir
 from libs.common.exposed_tree import ExposedTree, TREE_VISIBLE_EXTENSIONS
 from libs.common.sub_type_lookup import lookup as sub_type_lookup
 from libs.domain.value_objects.bgm__valueobject import CATEGORY_LABELS_ZH as BGM_CATEGORY_LABELS_ZH
 from libs.domain.value_objects.novel__valueobject import CANONICAL_NOVELS, categories as novel_categories
+from libs.infrastructure.readers.scene_registry__reader import SceneRegistryReader
 
 _IMAGE_EXTENSIONS: frozenset[str] = frozenset({".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"})
 _VIDEO_EXTENSIONS: frozenset[str] = frozenset({".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v"})
@@ -23,6 +26,12 @@ _MODEL_EXTENSIONS: frozenset[str] = frozenset({".glb", ".gltf"})
 _CJK_RE = re.compile("[\u4e00-\u9fff]")
 _ACTOR_FOLDER_RE = re.compile(r"^actor_\d{4,}$")
 _VOICE_FOLDER_RE = re.compile(r"^voice_\d{4,}$")
+_DIGITS_RE = re.compile(r"(\d+)")
+
+
+def _natural(name: str) -> list[str | int]:
+    """Sort key that orders embedded numbers by value (p9 < p10, bg2 < bg10)."""
+    return [int(t) if t.isdigit() else t for t in _DIGITS_RE.split(name.lower())]
 # Chinese display labels for the shared system folders under `ai_videos/` (they
 # carry no README/concept H1 to derive a title from). Each of these is its own
 # "library" main page in the UI.
@@ -31,6 +40,27 @@ _SYSTEM_FOLDER_LABELS_ZH: dict[str, str] = {
     "_bgm": "背景音乐库",
     "_research": "选题调研",
 }
+SCENES_DIR_NAME: str = "scenes"
+PROPS_DIR_NAME: str = "props"
+# Asset trees whose keyed entries are labelled by their grammar alone
+# (`p15 两层石木旅店`, `e12 蓝_维里甘之拳`); an unkeyed name — an equipment
+# category / slot folder, `item.toml`, `registry.toml` — keeps its own.
+_KEY_LABELS: dict[str, Callable[[str], str | None]] = {
+    PROPS_DIR_NAME: prop_key.label,
+    EQUIPMENT_DIR_NAME: equipment_key.label,
+}
+# The asset trees whose entries are labelled `{key} {rest}` (follow-ups 173 / 174).
+_KEYED_TREES: frozenset[str] = frozenset({SCENES_DIR_NAME, *_KEY_LABELS})
+# Tool-owned folders inside a scenes tree, labelled because their names say
+# nothing to a reader (follow-up 173): a subject's script-built 3D scene, and a
+# subject's per-block links into `props/`.
+_SCENE_DIR_LABELS_ZH: dict[str, str] = {
+    "_blender": "3D 场景",
+    "assets": "本场景资产",
+}
+# A zone's layout input (`scenes/{大陆}/{区}/_plan/plan.toml` + apply report) is
+# tool state, not an asset library — never shown (follow-up 174).
+_HIDDEN_DIR_NAMES: frozenset[str] = frozenset({"_plan"})
 
 
 class TreeReader:
@@ -39,10 +69,11 @@ class TreeReader:
     Single section: "AI Videos".
     """
 
-    def __init__(self, exposed: ExposedTree) -> None:
+    def __init__(self, exposed: ExposedTree, scene_registry: SceneRegistryReader | None = None) -> None:
         self._exposed = exposed
         self._root = exposed.root
         self._root_prefix = str(self._root).rstrip(os.sep) + os.sep
+        self._scene_registry = scene_registry or SceneRegistryReader()
 
     def build(self) -> dict[str, Any]:
         return {
@@ -316,9 +347,11 @@ class TreeReader:
         1) Performance-library emotion folders (`_performances/{emotion}/`) hold
            the Chinese name in `_emotion.md`'s H1 (`# 压抑隐忍（yayi_yinren）`) —
            return the head, dropping the trailing `（pinyin）` annotation.
-        2) Scene folders (staged pipeline `…/scenes/{pinyin}/`) hold the Chinese
-           name in `{pinyin}.md`'s H1 (`# zhenbei_wangfu_zhengting（镇北王府正厅）`)
-           — return the `（中文）` group.
+        2) Anything under `scenes/` — key-prefixed label, see `_scene_dir_label`
+           (an unkeyed pinyin folder still reads its `{pinyin}.md` H1
+           `# zhenbei_wangfu_zhengting（镇北王府正厅）` → the `（中文）` group).
+           A keyed folder under `props/` / `equipment/` likewise:
+           `p15_两层石木旅店` → `p15 两层石木旅店`, `e12_蓝_维里甘之拳` → `e12 蓝_维里甘之拳`.
         3) BGM emotion-category folders (`_bgm/{category}/`) have no sidecar; the
            Chinese label comes from the closed `BGM_CATEGORY_LABELS_ZH` enum
            (`suspense` → 悬疑).
@@ -340,8 +373,11 @@ class TreeReader:
                             break
             except OSError:
                 pass
-        if directory.parent.name == "scenes":
-            label = self._h1_zh(directory / f"{directory.name}.md")
+        tree = self._keyed_tree(directory)
+        if tree is not None:
+            kind, tree_root, inner = tree
+            label = (self._scene_dir_label(directory, tree_root) if kind == SCENES_DIR_NAME
+                     else self._key_label(kind, directory.name, inner))
             if label:
                 return label
         if directory.parent.name == "_bgm":
@@ -349,6 +385,49 @@ class TreeReader:
             if label:
                 return label
         return None
+
+    def _keyed_tree(self, p: Path) -> tuple[str, Path, tuple[str, ...]] | None:
+        """(`scenes` | `props` | `equipment`, that folder, the folder names
+        between it and `p`) for the nearest such folder above `p`, or None
+        outside all of them."""
+        parts = self._rel(p).split("/")[:-1]
+        for i in range(len(parts) - 1, -1, -1):
+            if parts[i] in _KEYED_TREES:
+                return parts[i], self._root.joinpath(*parts[: i + 1]), tuple(parts[i + 1:])
+        return None
+
+    @staticmethod
+    def _key_label(kind: str, name: str, inner: tuple[str, ...]) -> str | None:
+        """`{key} {rest}` for a keyed name under `props/` / `equipment/`. An
+        equipment item is found by its name at any depth (`equipment/板甲/胸/e79_…`
+        or `equipment/主手/e12_…`), so nesting never matters — except that nothing
+        inside a tool-owned folder (`loadouts/`, `_*`, `.*`) is an item, a card or
+        a view."""
+        if kind == EQUIPMENT_DIR_NAME and any(map(is_equipment_tool_dir, inner)):
+            return None
+        return _KEY_LABELS[kind](name)
+
+    def _scene_dir_label(self, directory: Path, scenes_root: Path) -> str | None:
+        """Every scenes-tree label opens with its routing key (follow-up 173).
+
+        A keyed name is labelled from the name itself — `bg1-1 谷心_北望修道院` —
+        never from its md's H1: a subject H1 reads `广场 · Seedance 主体` and a
+        view H1 is a prompt title, so the name is the only label that is always
+        right. An unkeyed folder (continent / zone / legacy pinyin scene) keeps
+        its `{dir}.md` H1; a zone gets its zone-level subject's key in front.
+        """
+        name = directory.name
+        fixed = _SCENE_DIR_LABELS_ZH.get(name)
+        if fixed:
+            return fixed
+        keyed = scene_key.label(name)
+        if keyed:
+            return keyed
+        h1 = self._h1_zh(directory / f"{name}.md")
+        if h1 is None:
+            return None
+        zone = self._scene_registry.zone_key(scenes_root, directory)
+        return scene_key.prefixed(zone, h1) if zone else h1
 
     def _walk_filtered(
         self, directory: Path, leaf_predicate: Any, dirs: bool = True
@@ -369,13 +448,14 @@ class TreeReader:
                            for e in it]
         except OSError:
             return children
-        scanned.sort(key=lambda row: (not row[2], row[1].lower()))
+        # 数字按数值排：p9 在 p10 前、bg2 在 bg10 前（p1–p463 / bg1–bg804 按字面排会乱成 p1, p10, p100 …）
+        scanned.sort(key=lambda row: (not row[2], _natural(row[1])))
         for entry, name, is_dir, is_file, is_symlink in scanned:
             if is_symlink:
                 continue
             if name in excluded:
                 continue
-            if is_dir and not dirs:
+            if is_dir and (not dirs or name in _HIDDEN_DIR_NAMES):
                 continue
             if is_dir:
                 collapsed = self._collapsed_actor_leaf(entry)
@@ -509,18 +589,23 @@ class TreeReader:
         else:
             node_type = "file"
         node: dict[str, Any] = {"type": node_type, "name": f.name, "path": self._rel(f)}
-        # A scene's main sidecar `.md` (`…/scenes/{pinyin}/{pinyin}.md`) is shown
-        # in Chinese in the nav (from its H1 `（中文）`), mirroring the scene
-        # folder's display_name. Only the display label changes — `name`/`path`
-        # stay pinyin, so import routing / download / open are unaffected.
-        if (
-            f.suffix.lower() == ".md"
-            and f.stem == f.parent.name
-            and f.parent.parent.name == "scenes"
-        ):
-            zh = self._h1_zh(f)
-            if zh:
-                node["display_name"] = zh
+        # Scenes / props / equipment leaves: a keyed file shows `{key} {rest}`
+        # (`bg1-1 谷心.png`, `p15-1 正面.png`, `e12-1 正面.png`); in a scenes
+        # tree an unkeyed folder's main sidecar `.md` mirrors its folder's
+        # label. Only the label changes —
+        # `name`/`path` stay as on disk, so import routing / download / open are
+        # unaffected.
+        tree = self._keyed_tree(f)
+        if tree is not None:
+            kind, tree_root, inner = tree
+            if kind == SCENES_DIR_NAME:
+                label = scene_key.label(f.name)
+                if label is None and ext == ".md" and f.stem == f.parent.name:
+                    label = self._scene_dir_label(f.parent, tree_root)
+            else:
+                label = self._key_label(kind, f.name, inner)
+            if label:
+                node["display_name"] = label
         return node
 
     def _rel(self, p: Path) -> str:

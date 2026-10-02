@@ -1,0 +1,75 @@
+# shot38 人体动作表（Cascadeur 层）。位置与朝向一律从 ../planning/overhead.toml 读，这里只写「身体摆成什么样」。
+# 改动作 ＝ 改本文件重跑 `python tools/cascadeur/choreo.py <shot 目录> --build`；部件都在共享库 tools/cascadeur/poses.toml。
+# 时刻与 shot38.md `动作:` 时间轴、overhead 的 [[hit]] / [[guard]] 逐拍对齐（rule 4h ②）。生成器：spawns/shots-d2/scratch/build_choreo2.py。强盗是色块人偶（1.8s 前跑出画外）。
+
+[meta]
+origin = [206.1, 133.2]
+fps = 30
+
+# 杜克：1.2s 斧枪杆横砸在左肩，1.6s 单膝跪进南瓜泥，2s、2.8s 撑两下起不来；5s 伸手去够大哥的衣角
+[actor."杜克"]
+keys = [
+  [0, "stance_l+shield_guard"],
+  [1, "stance_l+shield_guard"],
+  [1.2, "stance_l+hit_shoulder_l"],
+  [1.6, "kneel_r+arm_limp_l"],
+  [1.9, "kneel_r+arm_limp_l"],
+  [2.1, "brace_sink+arm_limp_l"],
+  [2.4, "kneel_r+arm_limp_l"],
+  [2.7, "kneel_r+arm_limp_l"],
+  [2.9, "brace_sink+arm_limp_l"],
+  [3.2, "kneel_r+arm_limp_l"],
+  [4.8, "kneel_r+arm_limp_l"],
+  [5.1, "kneel_r+arm_limp_l+offer_r+look_up"],
+  [5.8, "kneel_r+arm_limp_l"],
+  [9.5, "kneel_r+arm_limp_l"],
+]
+
+# 亚伦：1.2s 看见杜克挨砸扑上来，1.8s 一把架住杜克；2.8s 看着他又跌回去，呼吸一停；8s 绕到杜克西侧跪下，一只手还架着他（蓝人偶，用 Cascadeur 体）
+[actor."亚伦"]
+gait = [[8, 8.7, "walk", "catch_r"]]
+keys = [
+  [0, "stance_l"],
+  [1.2, "stance_l"],
+  [1.5, "lunge"],
+  [1.8, "lunge+catch_r"],
+  [2.8, "lunge+catch_r+breathe"],
+  [3.3, "lunge+catch_r"],
+  [8, "lunge+catch_r"],
+  [8.8, "kneel_r+catch_r"],
+  [9.5, "kneel_r+catch_r"],
+]
+
+# 埃尔兰：0.6s 抡圆斧枪，1.2s 越过盾沿横砸；往后收一步举杆；4.6s 上前还要砸；5.8s 被叉股顶退半步，背对门口退进火线
+[actor."埃尔兰"]
+keys = [
+  [0, "stance_l+twohand_low"],
+  [0.6, "stance_l+twohand_sweep_a"],
+  [1.2, "lunge+twohand_sweep_b"],
+  [1.7, "stance_l+twohand_low"],
+  [2, "step_back+twohand_low"],
+  [3.2, "stance_l+twohand_low"],
+  [4.2, "stance_l+twohand_windup"],
+  [4.6, "stance_l+twohand_windup"],
+  [5.8, "stance_l+twohand_windup"],
+  [6, "step_back+twohand_low"],
+  [6.4, "step_back+twohand_low"],
+  [6.9, "stance_l+twohand_low"],
+  [9.5, "stance_l+twohand_low"],
+]
+
+# 沃尔特：按着瘦子；1.6s 看见杜克跪下猛抬头；3.4s 拔起草叉丢下瘦子冲过来；4.7s 挡在跪着的杜克前面；5.8s 叉股一顶
+[actor."沃尔特"]
+gait = [[3.6, 4.6, "run", "twohand_low"]]
+keys = [
+  [0, "lunge+twohand_strike"],
+  [1.6, "lunge+twohand_strike+look_up"],
+  [2, "stance_l+twohand_strike"],
+  [3.4, "stance_l+twohand_pull_up"],
+  [3.6, "stand+twohand_low"],
+  [4.7, "stance_l+twohand_low"],
+  [5.6, "stance_l+twohand_low"],
+  [5.8, "lunge+twohand_chop"],
+  [6.2, "stance_l+twohand_low"],
+  [9.5, "stance_l+twohand_low"],
+]

@@ -1,0 +1,200 @@
+# 奥布瑞恩营地 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg46"
+name_zh = "奥布瑞恩营地"
+size_m = [160, 140]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "场地取 160 × 140 m：营地本身按三顶帐篷一口余烬坑的野营规模推定（约 25 m 见方），外扩到南山脚与坡下草甸边；点位本身也是区级平面图推定的（南山脚、石拳大厅洞口东侧；区图上没有它的图标），无一手尺寸出处"
+# 世界树画面：荒坡上的小型盗匪营，两三顶破帆布帐围着一堆余烬，旁边拴着驮马
+# 机位（锚点图）：站在 b01 巨岩顶上朝北俯看
+absent = [
+    "围栏、寨墙与大门（野营没有任何围合）",
+    "车路与车辙（只有一条踩踏小径）",
+    "燃着的篝火与炊烟（余烬坑是冷灰）",
+    "任何人物、驮马与牲口（默认空营）",
+    "旗帜、纹章与文字标识",
+    "石砌或木构房屋",
+    "成片树林（只有刺灌与硬草）",
+    "4.0.3a 后营地被移除的空坡（本档是旧世有营地的版本）",
+]
+
+[[ridge]]
+name = "南山墙山脚乱石坡（几乎直立，营地的退路被它封死）"
+poly = [[0, 112], [30, 106], [62, 110], [100, 108], [128, 101], [160, 106], [160, 140], [0, 140]]
+height_m = 60
+src = "推定"
+
+[[ridge]]
+name = "营地所在的荒坡台面（比北面坡下草甸高约 10 m）"
+poly = [[10, 60], [150, 56], [160, 106], [128, 101], [100, 108], [62, 110], [30, 106], [0, 112], [0, 70]]
+height_m = 10
+src = "推定"
+
+[[road]]
+name = "东北踩踏小径（唯一进出，贴着箱堆进营）"
+path = [[160, 30], [134, 48], [112, 66], [98, 78]]
+width_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p44"
+face = "north"
+into_ridge = true
+name = "挡风巨岩（灰白层理，比帐篷高两倍）"
+xy = [80, 99]
+size = [22, 10]
+h_m = 8
+src = "推定"
+note = "锚点图机位在它顶上朝北"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p39"
+face = "north"
+into_ridge = true
+name = "东帐·塌脊两坡长方帐"
+xy = [89, 84]
+size = [6, 4]
+h_m = 2.4
+src = "推定"
+note = "顶脊塌一截，木杆顶住"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p39"
+face = "north"
+into_ridge = true
+name = "中帐·拴进岩缝的单坡披棚"
+xy = [80, 91]
+size = [5, 3]
+h_m = 1.8
+src = "推定"
+note = "一边拴进巨岩石缝，布面有烧穿的焦洞"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p38"
+face = "north"
+into_ridge = true
+name = "西帐·底边压石的圆锥小帐"
+xy = [71, 84]
+size = [3.5, 3.5]
+h_m = 2.6
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p363"
+face = "south"
+into_ridge = true
+name = "余烬浅坑（冷灰，不冒烟）"
+xy = [80, 83]
+size = [2, 2]
+h_m = 0.1
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p41"
+face = "south"
+into_ridge = true
+name = "拴马桩（空缰绳）"
+xy = [64, 80]
+size = [0.6, 0.6]
+h_m = 1.3
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+parts = [{asset = "p45", at = [-0.6, 0.1], yaw = 0}, {asset = "p45", at = [0.65, -0.05], yaw = 8}]
+face = "south"
+into_ridge = true
+name = "卸下的驮鞍与帆布货包"
+xy = [63, 85]
+size = [2.5, 1.5]
+h_m = 0.6
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+parts = [{asset = "p45", at = [-1.3, 0.7], yaw = 0}, {asset = "p45", at = [-0.05, 0.75], yaw = 4}, {asset = "p45", at = [1.25, 0.6], yaw = -3}, {asset = "p45", at = [-0.7, -0.55], yaw = 10}, {asset = "p45", at = [0.8, -0.7], yaw = -6}]
+face = "south"
+into_ridge = true
+name = "劫来的木箱堆（一只被撬开）"
+xy = [96, 79]
+size = [4, 3]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "巨岩脚下的老篝火痕（熏黑石块）"
+xy = [95, 93]
+size = [2, 2]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p44"
+face = "south"
+into_ridge = true
+name = "坡上滚石·西（挡住坡下视线）"
+xy = [70, 70]
+size = [5, 3]
+h_m = 1.8
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p44"
+face = "south"
+into_ridge = true
+name = "坡上滚石·东"
+xy = [90, 69]
+size = [4, 3]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p43"
+face = "south"
+count = 3
+into_ridge = true
+name = "刺灌丛"
+xy = [42, 96]
+size = [8, 5]
+h_m = 0.8
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg46-c1"
+eye = [80, 129]
+target = [80, 70]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

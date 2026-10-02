@@ -1,0 +1,165 @@
+# 索菲亚高地 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg39"
+name_zh = "索菲亚高地"
+size_m = [400, 400]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "场地中心 ＝ 坐标 [59, 70]（区 m ≈ 1511, 1195）。区图 2.555 m/px：裁切图上舌状台地东西约 45–50 px ≈ 120 m，点位在岬角内侧、距东缘陡坎约 25 m、南缘约 30 m；西侧南口大道约 60 px ≈ 150 m；东侧山群坡脚约 35 px ≈ 90 m。台面上的岩舌 / 巨石 / 灌丛 / 兽径为推定"
+# 世界树画面：东南方的高地台，视野开阔，地上是碎石与低矮灌木
+# 西南约 250 m 的刀脊（bg34）、正南的起伏低地与远丘都在场地之外，只写在 md，不画
+absent = [
+    "任何建筑、营地、帐篷、围栏、路标、石堆",
+    "人物、坐骑、动物",
+    "火、炊烟、任何人工光源",
+    "台面与低地上的积雪（只有东面山顶残雪）",
+    "河流与湖（东部山河在山群背后，看不到）",
+    "成片森林（只有贴地刺柏、矮灌与零星松树、孤树）",
+    "4.0.3a 后并入希尔斯布莱德的新布局",
+]
+
+[[ridge]]
+name = "舌状台面（北接山群南麓，东、南两缘三四十米陡坎）"
+poly = [[118, 0], [232, 0], [236, 80], [234, 160], [226, 212], [206, 234], [165, 236], [128, 216], [112, 170], [108, 100], [112, 40]]
+height_m = 35
+src = "地图量取"
+
+[[ridge]]
+name = "西北侧低坎（台面西缘向西北延出的一道小台阶）"
+poly = [[45, 112], [110, 146], [112, 160], [45, 126]]
+height_m = 8
+src = "地图量取"
+
+[[ridge]]
+name = "东侧山群西麓（坡脚零星松树，山顶残雪）"
+poly = [[290, 40], [400, 20], [400, 300], [340, 290], [300, 200], [285, 110]]
+height_m = 180
+src = "地图量取"
+
+[[road]]
+name = "南口大道（自希尔斯布莱德北上，压着车辙）"
+path = [[0, 20], [3, 100], [18, 168], [30, 240], [45, 330], [54, 400]]
+width_m = 8
+src = "地图量取"
+
+[[road]]
+name = "旧兽径（台面北头斜下西坡到大道）"
+path = [[190, 0], [178, 70], [150, 120], [115, 175], [70, 200], [24, 215]]
+width_m = 1
+src = "推定"
+
+[[block]]
+id = "b01"
+into_ridge = true
+kind = "rock_shelf"
+face = "south"
+count = 1
+name = "岬角平顶岩舌（探出崖外）"
+xy = [206, 236]
+size = [6, 2]
+h_m = 1
+rot = 20
+src = "推定"
+note = "本档标志；机位站在岬角尖上朝南偏西看"
+
+[[block]]
+id = "b02"
+into_ridge = true
+kind = "asset"
+asset = "p32"
+face = "south"
+count = 2
+name = "并排风蚀巨石 ×2"
+xy = [200, 218]
+size = [7, 4]
+h_m = 2.2
+src = "推定"
+note = "岩舌后面十几步"
+
+[[block]]
+id = "b03"
+into_ridge = true
+kind = "asset"
+asset = "p31"
+face = "south"
+count = 3
+name = "刺柏丛·岬角东侧"
+xy = [222, 196]
+size = [8, 6]
+h_m = 0.6
+src = "推定"
+
+[[block]]
+id = "b04"
+into_ridge = true
+kind = "asset"
+asset = "p31"
+face = "south"
+count = 4
+name = "刺柏丛·台面西侧"
+xy = [150, 200]
+size = [12, 8]
+h_m = 0.6
+src = "推定"
+
+[[block]]
+id = "b05"
+into_ridge = true
+kind = "asset"
+asset = "p31"
+face = "south"
+count = 12
+name = "褐红矮灌带（台面中部）"
+xy = [175, 150]
+size = [60, 30]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b06"
+into_ridge = true
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "南缘陡坎雨水冲沟"
+xy = [178, 240]
+size = [4, 14]
+h_m = 0
+rot = 15
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p33"
+face = "south"
+name = "南缘坎脚碎石扇"
+xy = [190, 258]
+size = [60, 18]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p33"
+face = "east"
+name = "东缘坎脚碎石扇"
+xy = [250, 150]
+size = [16, 50]
+h_m = 5
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg39-c1"
+eye = [200, 368]
+target = [200, 200]
+eye_h = 13.3
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

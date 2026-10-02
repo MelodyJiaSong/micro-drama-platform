@@ -45,7 +45,7 @@ CAPABILITY: list[tuple[str, dict[str, object], BackendKind, dict[str, str | None
     ("C12", {"refs": refs(videos=11)}, BackendKind.WEB, {"reference_limit_exceeded": 'model_limits.models."seedance2.5".max_videos'}),
     ("C13", {"model": "seedance2.0_vip", "duration": 10, "refs": refs(10)}, BackendKind.WEB, {"reference_limit_exceeded": 'model_limits.models."seedance2.0_vip".max_images'}),
     ("C14", {"refs": refs(30, first_frames=1)}, BackendKind.WEB, {"reference_limit_exceeded": 'model_limits.models."seedance2.5".max_images'}),
-    ("C15", {"refs": refs(3)}, BackendKind.CLI, {"backend_unsupported": "routing.video"}),
+    ("C15", {"refs": refs(3)}, BackendKind.CLI, {}),  # 2.5 自 2026-09-20 起 cli 可用
     ("C16", {"model": "seedance2.0_vip", "duration": 15, "refs": refs(9, 3, 3)}, BackendKind.CLI, {}),
     ("C17", {"model": "seedance2.0_vip", "duration": 12, "refs": refs(2, entities=1)}, BackendKind.CLI, {"entities_unsupported_on_backend": "routing.video"}),
     ("C25", {"refs": refs(1), "prompt": "字" * 5000}, BackendKind.WEB, {}),

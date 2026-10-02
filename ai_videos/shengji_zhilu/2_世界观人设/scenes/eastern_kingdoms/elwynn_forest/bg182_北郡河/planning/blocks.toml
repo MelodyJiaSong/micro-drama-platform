@@ -1,0 +1,165 @@
+# 北郡河 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg182"
+name_zh = "北郡河"
+size_m = [300, 600]
+px_per_m = 2.5
+scale_src = "推定"
+scale_note = "取北郡山谷内的整段河道（北壁跌水→南端隘口）约 600 m：河贴谷地东侧南流取自区级 terrain.toml；溪宽 4 m 取世界树画面（三四米宽），区级图上的 25 m 是全区尺度的绘图宽度，不是实宽；院落 / 葡萄园 / 桥的位置按 bg1、bg18 卡的相对方位推定"
+# 世界树画面：谷底一条三四米宽的浅溪，水清见底露出卵石，两岸是齐膝湿草与低垂柳枝，水面把午后金光揉成一片晃动的亮斑
+absent = [
+    "大河 / 急流 / 瀑布式落差（谷底段是清浅缓流，只有北壁源头是跌水）",
+    "第二座桥 / 渡船 / 码头（全段只有一座单拱石桥）",
+    "石砌护岸 / 堤坝 / 水车 / 磨坊",
+    "任何灯火 / 火把 / 营火",
+    "燃烧的葡萄园 / 火场 / 浓烟（那是 4.0.3a 后的样子，旧世完好）",
+    "谷外的平原 / 远处城市剪影（四面封山，视线出不了谷）",
+    "训练假人 / 飞行点",
+]
+
+[[ridge]]
+name = "北壁山墙（河源跌水所在）"
+poly = [[0, 0], [300, 0], [300, 40], [220, 44], [150, 30], [90, 42], [0, 50]]
+height_m = 60
+src = "地图量取"
+
+[[ridge]]
+name = "谷东侧山脊（葡萄园坡以东）"
+poly = [[300, 40], [300, 600], [276, 600], [262, 480], [258, 340], [250, 200], [256, 90], [270, 50]]
+height_m = 80
+src = "地图量取"
+
+[[water]]
+name = "北郡河（北壁发源，贴谷地东侧南流，出南端隘口）"
+path = [[140, 34], [144, 90], [152, 160], [146, 240], [150, 330], [160, 420], [168, 510], [172, 600]]
+width_m = 4
+depth_m = 0.5
+src = "地图量取"
+
+[[road]]
+name = "谷内主路（西岸，南端隘口→院落）"
+path = [[90, 600], [86, 480], [80, 360], [76, 240], [70, 150]]
+width_m = 5
+src = "推定"
+
+[[road]]
+name = "过桥小路（主路→石桥→葡萄园西头）"
+path = [[80, 330], [120, 332], [150, 330], [178, 326], [200, 320]]
+width_m = 3
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "arch_bridge"
+face = "south"
+count = 1
+over_water = true
+name = "单拱灰石小桥（全段唯一过水点）"
+xy = [150, 330]
+size = [8, 4]
+h_m = 2
+src = "推定"
+note = "子节点北郡溪上石拱桥：主路一侧通往东岸葡萄园；位置按 bg18「正西是田的入口——一座单拱灰石小桥跨过浅溪」推定"
+
+[[block]]
+id = "b02"
+kind = "proxy"
+face = "south"
+count = 1
+into_ridge = true
+over_water = true
+name = "北壁多层跌水（河源）"
+xy = [140, 32]
+size = [6, 4]
+h_m = 25
+src = "推定"
+note = "北郡瀑布：修道院侧后方山壁上三四层跌水；本图只示河源位置"
+
+[[block]]
+id = "b03"
+kind = "proxy"
+face = "east"
+count = 1
+name = "西岸院落（远景，属修道院主体）"
+bg = "bg2"
+xy = [60, 110]
+size = [60, 50]
+h_m = 18
+src = "推定"
+note = "院落在谷北偏西、河西岸；本档只作远景剪影"
+
+[[block]]
+id = "b04"
+kind = "vineyard"
+face = "west"
+count = 1
+may_overlap = true
+name = "东岸葡萄园坡（属葡萄园主体）"
+bg = "bg18"
+xy = [212, 300]
+size = [70, 150]
+h_m = 1.5
+src = "推定"
+note = "溪东缓坡，自西向东抬升；西头由石桥接入"
+
+[[block]]
+id = "b05"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "桥下游西岸卵石滩（锚点机位）"
+xy = [146, 362]
+size = [6, 14]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p151"
+face = "south"
+count = 3
+name = "桥上游西岸柳丛"
+xy = [141, 296]
+size = [8, 26]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p151"
+face = "south"
+count = 3
+over_water = true
+name = "桥下游东岸柳丛"
+xy = [160, 380]
+size = [8, 30]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "palisade"
+face = "south"
+count = 1
+name = "桥头旧木栅（东头连向田里）"
+xy = [168, 326]
+size = [16, 1]
+h_m = 1
+rot = -10
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg182-c1"
+eye = [150, 552]
+target = [150, 300]
+eye_h = 20.0
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

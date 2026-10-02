@@ -1,0 +1,60 @@
+# 技能卡（tools/skills_lib.py；ai_video.md rule 45）。本剧定稿；原典见 facts 所列事实。改这里即全剧生效。
+say = ["three heartbeats"]
+facts = ["wow.skill.paladin.002"]
+liberty = "原典目标头顶挂眩晕圈 3 秒；本剧不画头顶的圈，只演人僵住（像游戏 UI 的记号不进画面）。施法手势按原典是徒手一击：左手松开锤柄往前一推。"
+interrupt = "瞬发，不会被打断"
+forbid = ["头顶的圈", "头顶转圈", "小星星", "虚影金锤"]
+
+mark = "金色的月牙光"          # 这道光在画面里叫什么（绑定句用，057 E2）
+[timing]
+release = [0.3, 0.5, 0.7]
+effect = [0.6, 0.7, 1.0]
+linger = [2.5, 3.0, 3.0]
+
+[pose]
+release = "伸左手"
+
+[look]
+release = "{施法者}左手松开锤柄，空手往前一推"
+effect = "一道{力度}金色的月牙光贴着地面从{施法者}脚前扫出去，{目标}胸口一闪金光，整个人僵在半步里"
+fizzle = "{施法者}左手松开锤柄空手往前一推，手掌前面的空气纹丝不动，{目标}照样往前逼"   # ep02 S25：学会前那一推（正面措辞，压缩器会删「没有」句）
+linger = "{目标}僵着不动，过了三下心跳才缓过来"
+
+
+# 精简稿与跨切重述用的短锁定串（8f #17 / w28 ⑦）：留颜色、形状、挂点；和 [look] 同一件事，只是短
+[short]
+release = "{施法者}左手松开锤柄往前一推"
+effect = "{力度}金色月牙光贴地扫出，{目标}胸口一闪金光、僵在半步里"
+linger = "{目标}僵着不动"
+fizzle = "{施法者}空手往前一推，{目标}照样往前逼"
+
+# 空手施放（ep02 S21 修士示范：他手里本来就没有锤）
+[variant."空手".look]
+release = "{施法者}左手往前一推，空着的掌心朝前"
+
+[variant."空手".short]
+release = "{施法者}左手空掌往前一推"
+
+[tier]
+"熟练" = ""
+"全力" = "明亮的"
+
+[sample]
+video = ""
+still = ""
+prompt = ""
+
+[[learned]]
+who = "c19_Brother_Wilhelm"
+
+[[learned]]
+who = "c1_Aaron"
+ep = "ep02"
+shot = "S21"
+teacher = "c19_Brother_Wilhelm"
+
+# 剧本里施法那一行要写到的（正则，任一命中；目标账本 G7c 读这里，每集 goals.toml 不再各写一份）
+[script]
+stance = ["站稳", "松开锤柄"]
+hand = ["一推"]
+flow = ["月牙"]

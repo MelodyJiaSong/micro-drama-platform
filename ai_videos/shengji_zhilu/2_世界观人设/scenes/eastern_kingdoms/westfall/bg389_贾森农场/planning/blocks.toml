@@ -1,0 +1,170 @@
+# 贾森农场 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 坐标表点位 [60, 19.2] 落在场地 (170, 130)。裁切图（ref/bg389_贾森农场_map_crop.png，1 crop px ≈ 0.83 m）量取：
+# 屋舍图标在红十字西约 120 m、斜块田在屋东北、大道自西南斜上到桥头、河在桥口收窄后折向东南、路南小丘、西北矮丘。
+# 披棚 / 机械 / 石墩等区图不画的，一律推定。
+
+[meta]
+bg = "bg389"
+name_zh = "贾森农场"
+size_m = [300, 280]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "按区图裁切量取（区图 1 px ≈ 3.19 m，裁切放大约 3.87 倍）；屋、田、路、桥、河、丘的相对位置取自裁切，建筑尺寸推定"
+# 世界树画面：西部荒野最北端的农场，麦田已荒成灰黄；屋旁就是跨河的石桥，桥那头的树色明显更绿
+absent = [
+    "木桥 / 断桥（这里是完好的低拱石桥）",
+    "稻草人（旧世田里是铁皮收割机械）",
+    "火、炊烟、亮灯的窗（屋被占过后空着）",
+    "飞行点 / 狮鹫栖架",
+    "石砌大屋 / 城墙 / 哨塔",
+    "马、牛与任何牲口",
+    "桥两头同色（桥西灰黄、桥东转绿是本档的硬约束）",
+]
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p336"
+face = "southeast"
+name = "旧木屋（一层半，门朝东南）"
+xy = [49, 128]
+size = [12, 9]
+h_m = 7
+src = "地图量取"
+note = "裁切图屋舍图标"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p340"
+face = "southeast"
+name = "屋侧披棚"
+xy = [49, 139]
+size = [8, 4]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "斜放小麦田（荒）"
+xy = [112, 97]
+size = [65, 60]
+h_m = 0
+rot = -37
+src = "地图量取"
+
+[[block]]
+id = "b04"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "屋南撂荒麦田"
+xy = [50, 200]
+size = [80, 90]
+h_m = 0
+src = "推定"
+note = "机位前景；区图田垄图标只画了屋东北那一块，这块按世界树「麦田已荒成灰黄」推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p350"
+face = "south"
+name = "铁皮收割机械甲（直立）"
+xy = [104, 92]
+size = [2.5, 2.5]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p350"
+face = "south"
+name = "铁皮收割机械乙（半侧歪倒）"
+xy = [124, 106]
+size = [3.5, 2.5]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "arch_bridge"
+face = "south"
+count = 1
+over_water = true
+name = "低拱石桥"
+xy = [236, 91]
+size = [34, 8]
+h_m = 4
+rot = -27
+src = "原典方位"
+note = "wiki 明写农场就在通往北邻区的桥边；位置按裁切图河口收窄处量取"
+
+[[block]]
+id = "b08"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "桥头粗石墩"
+xy = [212, 108]
+size = [0.8, 0.8]
+h_m = 1.0
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "东南灰绿河岸带"
+xy = [230, 160]
+size = [40, 60]
+h_m = 0
+rot = 30
+src = "地图量取"
+note = "裁切图上大道与河之间的绿色带"
+
+[[ridge]]
+name = "路南小丘（坡上已见绿意）"
+height_m = 40
+poly = [[140, 200], [190, 186], [240, 205], [250, 250], [205, 278], [150, 268]]
+src = "地图量取"
+
+[[ridge]]
+name = "西北矮丘"
+height_m = 35
+poly = [[10, 0], [110, 0], [100, 22], [60, 30], [20, 20]]
+src = "地图量取"
+
+[[water]]
+name = "界河西支（北来，桥口收窄，过桥后折向东南变宽）"
+width_m = 26
+depth_m = 2
+path = [[222, 0], [228, 50], [242, 90], [262, 140], [286, 200], [300, 220]]
+src = "地图量取"
+
+[[road]]
+name = "黄土大道（西南来，过桥往东北出区）"
+width_m = 7
+path = [[96, 280], [96, 230], [100, 175], [120, 151], [150, 140], [200, 112], [236, 92], [262, 80], [300, 62]]
+src = "地图量取"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg389-c1"
+eye = [150, 258]
+target = [150, 140]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

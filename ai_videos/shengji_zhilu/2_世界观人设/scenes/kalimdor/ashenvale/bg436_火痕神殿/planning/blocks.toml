@@ -1,0 +1,308 @@
+# 火痕神殿 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+# 量法：ref/bg436_火痕神殿_map_crop.png 只给出「西南山块里一处朝东北开口的小山坳、坳心一座废墟」这层相对方位；
+# 区图上没有可量的尺寸，坳的轮廓、石台、图腾、枯桩全部推定。坳心约 (105, 115)，东北口在 (180, 40) 一带。
+
+[meta]
+bg = "bg436"
+name_zh = "火痕神殿"
+size_m = [220, 220]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "区图只画一个废墟图标与朝东北开口的山坳；坳宽约 110 m、石台 26 × 20 m、图腾圈半径约 22 m 均按原典描述（焚毁的小圣所 + 骨制图腾）推定"
+# 世界树画面：林中被焚毁的神殿遗址，石台熏黑开裂，四周立着萨特的骨制图腾
+absent = [
+    "火、火盆、营火、烛火、灯笼与任何人工光源（烧痕全部冷透）",
+    "冒烟、带火星或发红的焦木与石头",
+    "发光的符文、法阵、传送门与祭坛光效",
+    "完好的神殿、屋顶与墙体（只剩台基、断柱与倒地拱框）",
+    "水面、溪流与水潭",
+    "木寨、帐篷、伐木营与任何有人住的建筑",
+    "4.0.3 之后才有的营地与哨站",
+    "任何人物、恶魔与动物",
+    "雪、冰面、沙漠与开阔草原",
+]
+
+[[ridge]]
+name = "西面陡起的灰褐山体"
+poly = [[0, 0], [45, 0], [58, 55], [52, 150], [58, 220], [0, 220]]
+height_m = 180
+src = "推定"
+note = "裁切图上红十字以西整片短线坡"
+
+[[ridge]]
+name = "南面陡起的灰褐山体"
+poly = [[58, 220], [56, 178], [110, 168], [160, 172], [185, 178], [220, 176], [220, 220]]
+height_m = 150
+src = "推定"
+note = "裁切图上红十字以南整片短线坡"
+
+[[ridge]]
+name = "东南山肩（把开口收窄到东北）"
+poly = [[220, 95], [200, 108], [184, 140], [185, 176], [220, 176]]
+height_m = 60
+src = "推定"
+
+[[ridge]]
+name = "北面矮山嘴（嘴上只剩黑桩）"
+poly = [[45, 0], [150, 0], [140, 20], [95, 38], [58, 40]]
+height_m = 45
+src = "推定"
+
+[[road]]
+name = "东北口踩踏土径（进坳直通石阶）"
+path = [[220, 22], [182, 45], [148, 88], [123, 115]]
+width_m = 2
+src = "推定"
+
+[[road]]
+name = "绕向倒地拱框的浅踩痕"
+path = [[148, 88], [130, 92], [111, 96]]
+width_m = 1
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "熏黑开裂的矩形石台（高近 2 m）"
+xy = [105, 115]
+size = [26, 20]
+h_m = 1.8
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "low_wall"
+face = "east"
+count = 1
+name = "朝东的宽石阶"
+xy = [120.5, 115]
+size = [5, 12]
+h_m = 1.8
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p386"
+face = "south"
+name = "断柱·西北角（齐腰高）"
+xy = [94, 106]
+size = [1.2, 1.2]
+h_m = 2.8
+src = "推定"
+note = "h_m 含台高 1.8 m"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p386"
+face = "south"
+name = "断柱·东北角（一人半高）"
+xy = [116, 106]
+size = [1.2, 1.2]
+h_m = 4.4
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p386"
+face = "south"
+name = "断柱·西南角（一人半高）"
+xy = [94, 124]
+size = [1.2, 1.2]
+h_m = 4.2
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p386"
+face = "south"
+name = "断柱·东南角（齐腰高）"
+xy = [116, 124]
+size = [1.2, 1.2]
+h_m = 2.9
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p378"
+face = "south"
+count = 3
+name = "倒地断成三截的拱形石框"
+xy = [104, 99]
+size = [10, 2]
+h_m = 0.8
+rot = 8
+src = "推定"
+note = "石台北侧地上，弧顶一截半埋焦土"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p388"
+face = "south"
+name = "台角冷灰石圈（只剩冷灰与黑炭）"
+xy = [97, 121]
+size = [2.5, 2.5]
+h_m = 2.2
+src = "推定"
+note = "在台面西南角；冷透多年，不冒烟"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p387"
+face = "south"
+name = "骨制图腾·东北"
+xy = [124, 104]
+size = [1, 1]
+h_m = 2.3
+src = "推定"
+note = "六根图腾围石台一圈，半径约 22 m"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p387"
+face = "south"
+name = "骨制图腾·北"
+xy = [105, 92]
+size = [1, 1]
+h_m = 2.3
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p387"
+face = "south"
+name = "骨制图腾·西北"
+xy = [86, 104]
+size = [1, 1]
+h_m = 2.3
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p387"
+face = "south"
+name = "骨制图腾·西南"
+xy = [86, 126]
+size = [1, 1]
+h_m = 2.3
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p387"
+face = "south"
+name = "骨制图腾·南"
+xy = [105, 138]
+size = [1, 1]
+h_m = 2.3
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p387"
+face = "south"
+name = "骨制图腾·东南"
+xy = [124, 126]
+size = [1, 1]
+h_m = 2.3
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "灰白焦土（雨压成硬壳，缝里零星新草）"
+xy = [108, 116]
+size = [90, 80]
+h_m = 0
+src = "推定"
+note = "草与焦土的交界在东北口进坳十几步处"
+
+[[block]]
+id = "b16"
+kind = "asset"
+asset = "p374"
+face = "south"
+count = 11
+name = "西山脚焦黑枯树残桩带"
+xy = [66, 112]
+size = [12, 110]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b17"
+kind = "asset"
+asset = "p374"
+face = "south"
+count = 8
+name = "南山脚焦黑枯树残桩带"
+xy = [118, 164]
+size = [100, 10]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b18"
+kind = "asset"
+asset = "p378"
+face = "south"
+count = 4
+name = "西山脚崩落碎岩堆"
+xy = [70, 80]
+size = [14, 20]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b19"
+kind = "asset"
+asset = "p390"
+face = "south"
+count = 3
+name = "东北口没烧到的深绿灌木·北丛"
+xy = [172, 36]
+size = [8, 6]
+h_m = 2
+src = "推定"
+note = "与南丛夹住土径；锚点机位约 (180, 45)，朝西南望坳心"
+
+[[block]]
+id = "b20"
+kind = "asset"
+asset = "p390"
+face = "south"
+count = 3
+name = "东北口没烧到的深绿灌木·南丛"
+xy = [190, 54]
+size = [8, 6]
+h_m = 2
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg436-c1"
+eye = [110, 18]
+target = [110, 110]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

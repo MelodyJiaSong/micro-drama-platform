@@ -8,7 +8,7 @@ from email.utils import format_datetime, parsedate_to_datetime
 from pathlib import Path
 from typing import Any
 
-from libs.common.exposed_tree import ALLOWED_EXTENSIONS, MAX_FILE_BYTES, ExposedTree
+from libs.common.exposed_tree import ALLOWED_EXTENSIONS, MAX_FILE_BYTES, TEXT_EXTENSIONS, ExposedTree
 from libs.common.safe_resolve import SafeResolver
 from libs.domain.errors.file__error import (
     FileNotInSandboxError,
@@ -19,9 +19,6 @@ from libs.domain.errors.file__error import (
     UnsupportedFileExtensionError,
 )
 
-_TEXT_EXTENSIONS: frozenset[str] = frozenset(
-    {".md", ".json", ".yaml", ".yml", ".jsonl", ".txt"}
-)
 _IMAGE_EXTENSIONS: frozenset[str] = frozenset({".png", ".jpg"})
 
 
@@ -60,7 +57,7 @@ class FileWriter:
             raise UnsupportedFileExtensionError(ext)
         if ext in _IMAGE_EXTENSIONS:
             raise UnsupportedFileExtensionError(ext)
-        if ext not in _TEXT_EXTENSIONS:
+        if ext not in TEXT_EXTENSIONS:
             raise UnsupportedFileExtensionError(ext)
 
         body = content.encode("utf-8")

@@ -1,0 +1,299 @@
+# 格罗高克营地 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg101"
+name_zh = "格罗高克营地"
+size_m = [200, 200]
+px_per_m = 6.0
+scale_src = "推定"
+scale_note = "营寨栅墙约 80 × 80 m、四座巨人尺度兽皮棚；场地取罪恶谷袋北端两崖之间（约百来步宽）+ 门外来路 + 营后滚石段，共 200 × 200 m，无一手尺寸出处"
+# 世界树画面：罪恶谷里的食人魔营地，歪斜的木栅与兽皮棚，营中一堆常年不灭的火，四周插满削尖的木桩
+# 区图：罪恶谷袋北端 59%,61% 的圆顶营寨图标（区级 b902）→ 西邻谷心东岭、东贴东山墙，东绕行道自西北进袋贴西栅南下
+absent = [
+    "任何人物与动物（空营）",
+    "营门门扇、石墙与石屋",
+    "瞭望塔、木楼与高架平台",
+    "火塘之外的任何火：火把、灯笼、烛火、第二堆营火",
+    "旗帜、图腾柱、画有纹章的盾牌与任何文字",
+    "河、水潭与井",
+    "活的绿叶树与草地",
+    "南端黑塔（被东岭挡住，不入画）",
+    "4.0.3a 后的任何改动",
+]
+
+[[ridge]]
+name = "谷心东岭东坡（营西陡坡）"
+poly = [[0, 0], [38, 0], [44, 60], [40, 130], [58, 200], [0, 200]]
+height_m = 45
+src = "推定"
+note = "区级 terrain「谷心东岭（南段）」东脚；坡上枯黑秃树"
+
+[[ridge]]
+name = "东山墙崖壁（营东高崖）"
+poly = [[172, 0], [200, 0], [200, 200], [152, 200], [166, 140], [164, 70]]
+height_m = 65
+src = "推定"
+note = "区级 terrain「东山墙」西壁；层理外露，比西坡高陡"
+
+[[road]]
+name = "东绕行道（西北进袋 → 贴西栅南下）"
+path = [[48, 0], [56, 40], [58, 100], [62, 150], [80, 200]]
+width_m = 5
+src = "推定"
+note = "区级「东绕行道」穿罪恶谷袋的一段"
+
+[[road]]
+name = "营门岔路"
+path = [[56, 34], [90, 44], [111, 52]]
+width_m = 4
+src = "推定"
+note = "从绕行道分出、通到北面营门；门外缓坡"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p102"
+face = "north"
+name = "营心石圈火塘（常年不灭的低火）"
+xy = [111, 98]
+size = [5, 5]
+h_m = 0.5
+src = "推定"
+note = "世界树「营中一堆常年不灭的火」；全区唯一人工光源"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p103"
+face = "southeast"
+name = "西北大兽皮棚"
+xy = [91, 79]
+size = [18, 14]
+h_m = 7
+src = "推定"
+note = "弯树干圆拱骨架蒙缝合生皮，门洞比常人高一倍"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p103"
+face = "southwest"
+name = "东北大兽皮棚"
+xy = [131, 79]
+size = [18, 14]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p103"
+face = "northeast"
+name = "西南小兽皮棚"
+xy = [91, 118]
+size = [12, 10]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p103"
+face = "northwest"
+name = "东南塌半边的兽皮棚"
+xy = [131, 118]
+size = [12, 10]
+h_m = 2.5
+src = "推定"
+note = "骨架塌了半边，皮子耷拉在地"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p104"
+face = "south"
+name = "劈柴垛（火塘东侧）"
+xy = [118, 95]
+size = [3, 1.5]
+h_m = 1.4
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p106"
+face = "south"
+name = "空晾皮木架（棚前）"
+xy = [111, 72]
+size = [8, 1]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "palisade"
+face = "north"
+count = 1
+name = "北栅墙（门西段）"
+xy = [88, 58]
+size = [32, 1.5]
+h_m = 3.5
+src = "推定"
+note = "世界树「歪斜的木栅」；不剥皮原木劈尖、生皮条捆"
+
+[[block]]
+id = "b09"
+kind = "palisade"
+face = "north"
+count = 1
+name = "北栅墙（门东段）"
+xy = [134, 58]
+size = [32, 1.5]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p106"
+face = "north"
+name = "营门两根粗门柱（门扇已无）"
+xy = [111, 58]
+size = [14, 2]
+h_m = 6
+src = "推定"
+note = "营门朝北，正对门外岔路"
+
+[[block]]
+id = "b11"
+may_overlap = true
+kind = "palisade"
+face = "west"
+count = 1
+name = "西栅墙"
+xy = [72, 98]
+size = [1.5, 80]
+h_m = 3.5
+src = "推定"
+note = "西南角一段斜倒、搭在外面的木桩上"
+
+[[block]]
+id = "b12"
+may_overlap = true
+kind = "palisade"
+face = "east"
+count = 1
+name = "东栅墙"
+xy = [150, 98]
+size = [1.5, 80]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b13"
+may_overlap = true
+kind = "palisade"
+face = "south"
+count = 1
+name = "南栅墙"
+xy = [111, 138]
+size = [78, 1.5]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "palisade"
+face = "north"
+count = 1
+name = "北尖桩带（尖头朝外）"
+xy = [111, 54]
+size = [84, 3]
+h_m = 1.5
+src = "推定"
+note = "世界树「四周插满削尖的木桩」；门口一段留空"
+
+[[block]]
+id = "b15"
+kind = "palisade"
+face = "west"
+count = 1
+name = "西尖桩带"
+xy = [68, 98]
+size = [3, 84]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "palisade"
+face = "east"
+count = 1
+name = "东尖桩带"
+xy = [154, 98]
+size = [3, 84]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b17"
+kind = "palisade"
+face = "south"
+count = 1
+name = "南尖桩带"
+xy = [111, 142]
+size = [84, 3]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b18"
+into_ridge = true
+kind = "asset"
+asset = "p101"
+face = "south"
+count = 10
+name = "东栅与崖脚之间的滚石"
+xy = [161, 100]
+size = [8, 70]
+h_m = 3
+src = "推定"
+note = "世界树（罪恶谷）「谷底堆着滚落的碎石」"
+
+[[block]]
+id = "b19"
+kind = "asset"
+asset = "p101"
+face = "south"
+count = 14
+name = "营后谷底滚石堆（夹零散木桩）"
+xy = [112, 178]
+size = [70, 30]
+h_m = 3
+src = "推定"
+note = "窄谷向南收窄、被拐弯崖壁挡住视线"
+
+[[block]]
+id = "b20"
+into_ridge = true
+kind = "asset"
+asset = "p100"
+face = "south"
+count = 8
+name = "西坡枯黑秃树"
+xy = [20, 80]
+size = [20, 60]
+h_m = 8
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg101-c1"
+eye = [50, 180]
+target = [100, 100]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

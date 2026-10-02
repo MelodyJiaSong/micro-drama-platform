@@ -1,0 +1,141 @@
+# 詹戈洛德矿洞 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg393"
+name_zh = "詹戈洛德矿洞"
+size_m = [240, 200]
+px_per_m = 5.0
+scale_src = "地图量取"
+scale_note = "区级平面图：矿洞山丘多边形与西线土路按区图量取（1 px ≈ 3.2 m），洞口块 b905 在丘南脚；本图原点取区级 (1343, 416) m、裁 240 × 200 m。洞口与卸矿设施尺寸推定"
+# 世界树画面：西北的矿洞口，木架与矿车轨道从洞里伸出来，洞内潮湿昏暗、岩壁颜色比外面的土黄深一个色阶
+# 微型地下城图：坑道从南端入口往北绕，入口朝南 → 与区图洞口在丘南脚一致；坑道内景不画
+absent = [
+    "任何人物与动物（原典占据矿洞的匪徒与矿工小怪属 shot 层）",
+    "亮着的提灯、蜡烛、火把与火堆（提灯全部熄灭）",
+    "坑道内景（用到才另建 plate）",
+    "露天采石坑与台阶岩壁（那是西南的另一处矿）",
+    "水体（只有洞口一洼浑水与岩壁渗水）",
+    "石砌矿场建筑与围墙（只有木板工具棚与木卸矿架）",
+    "4.0.3a 后的新增营地与任务道具",
+]
+
+[[ridge]]
+name = "西北矿洞山丘（上陡下缓，洞口在南坡脚）"
+poly = [[0, 0], [240, 0], [240, 40], [200, 62], [160, 78], [128, 88], [100, 90], [70, 82], [40, 70], [0, 60]]
+height_m = 45
+src = "地图量取"
+
+[[road]]
+name = "西线土路（北部岔路口—月溪镇段）"
+path = [[240, 132], [158, 159], [78, 184], [0, 199]]
+width_m = 6
+src = "地图量取"
+
+[[road]]
+name = "洞口前缓坡小路（土场下到土路）"
+path = [[112, 118], [118, 140], [124, 166]]
+width_m = 3
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "mine_portal"
+face = "south"
+count = 1
+name = "木框矿洞口（朝南）"
+xy = [110, 93]
+size = [7, 4]
+h_m = 4
+src = "地图量取"
+note = "区图矿洞图标在丘南脚；洞内一架接一架木支护往北没进黑暗"
+
+[[block]]
+id = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "出洞窄轨"
+xy = [110, 104]
+size = [1.5, 14]
+h_m = 0.2
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p346"
+face = "southeast"
+name = "木卸矿架与铁皮包边斜槽"
+xy = [132, 104]
+size = [8, 6]
+h_m = 6
+src = "推定"
+note = "窄轨岔道爬上架顶，斜槽朝东南伸向渣堆"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p368"
+face = "south"
+name = "灰褐矿渣堆"
+xy = [144, 114]
+size = [14, 12]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p340"
+face = "south"
+name = "塌顶木板工具棚"
+xy = [86, 104]
+size = [8, 6]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p367"
+face = "south"
+name = "备用支护原木垛"
+xy = [96, 112]
+size = [6, 3]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p370"
+face = "south"
+name = "脱轨空矿车"
+xy = [102, 116]
+size = [3, 2]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p368"
+face = "south"
+name = "坡上滑落的大岩"
+xy = [122, 94]
+size = [5, 4]
+h_m = 2.5
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg393-c1"
+eye = [120, 184]
+target = [120, 100]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

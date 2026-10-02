@@ -1,0 +1,200 @@
+# 腐草农场 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 换算：本图原点 ＝ 区级平面图（bg126）世界坐标 (400, 1015)，区图 1 px ≈ 2.46 m；区图 [21, 69] 处田的图标在北、房屋图标在南，
+# 两者相距约 80 m——据此摆「田在北半、谷仓与小屋在南半」。主干道从本图西北角外擦过（世界 y≈1020），西界河与西南浅溪都在场地外。
+# 锚点机位：田东北角地头 (195, 55)，朝西南。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg127"
+name_zh = "腐草农场"
+size_m = [260, 240]
+px_per_m = 4.0
+grid_m = 20
+scale_src = "地图量取"
+scale_note = "田与房屋两个区图图标的间距（约 80 m）按区图量取；谷仓 / 木屋 / 栅栏 / 车辙路的尺寸与位置全部推定"
+# 世界树画面：西南的废弃农场，一座谷仓与一间小屋都空着，田里只剩黑色腐草，谷仓门在风里自己开合
+absent = [
+    "任何火、烛火、灯笼、窗火与炊烟（谷仓与木屋都是黑的）",
+    "太阳 / 蓝天 / 月亮圆盘 / 直射光",
+    "绿色作物 / 在耕的麦田 / 南瓜 / 转动的风车或磨坊",
+    "院墙 / 石墙 / 塔楼 / 第三栋建筑",
+    "水井（那是南部另一座农庄的标志）",
+    "稻草人（远看像人影）",
+    "挂着字的招牌 / 木牌文字",
+    "任何人物、鬼影、牲畜、乌鸦与飞鸟",
+]
+
+[[road]]
+name = "车辙小路（北接主干道，唯一出入口）"
+path = [[30, 0], [45, 60], [52, 150], [85, 182]]
+width_m = 3
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "黑腐草田"
+xy = [125, 100]
+size = [130, 85]
+h_m = 0.3
+src = "地图量取"
+note = "区图 [21, 69] 的田块图标；东西向田垄，垄上倒伏发黑的腐草，垄沟积黑水；田中央半埋一架旧犁"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p115"
+face = "north"
+name = "高谷仓"
+xy = [140, 180]
+size = [16, 24]
+h_m = 11
+src = "推定"
+note = "双坡顶、灰褐竖板墙、木瓦缺片露椽；大门在北山墙正对田，右扇只挂一只铰链斜着半开；山墙高处草料窗垂朽麻绳"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p107"
+face = "south"
+name = "单层小木屋"
+xy = [102, 190]
+size = [10, 8]
+h_m = 5.5
+src = "地图量取"
+note = "区图田块南面的房屋图标；毛石墙脚、深褐板墙、陡坡黑木瓦顶、屋侧石砌烟囱（冷、无烟），窗板脱钩歪挂"
+
+[[block]]
+id = "b04"
+kind = "asset"
+parts = [{asset = "p130", at = [-2.2, 0.6], yaw = 0}, {asset = "p130", at = [0.2, 0.8], yaw = 8}, {asset = "p130", at = [2.2, -1], yaw = -8}]
+face = "south"
+name = "门前烂干草堆"
+xy = [140, 162]
+size = [7, 4]
+h_m = 0.6
+src = "推定"
+note = "烂成黑泥的干草；门框斜靠一把断柄草叉"
+
+[[block]]
+id = "b05"
+kind = "asset"
+parts = [{asset = "p134", at = [0, 0], yaw = 0}]
+face = "south"
+name = "倒扣木水桶"
+xy = [104, 181]
+size = [1, 1]
+h_m = 0.6
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+parts = [{asset = "p130", at = [0, 0], yaw = 0}]
+face = "south"
+name = "旧犁"
+xy = [128, 102]
+size = [3, 1.5]
+h_m = 1
+src = "推定"
+note = "铁铧锈成赭褐，木辕裂缝，半截陷在泥里"
+
+[[block]]
+id = "b07"
+kind = "palisade"
+face = "south"
+count = 1
+name = "田北栅栏"
+xy = [125, 57]
+size = [130, 0.5]
+h_m = 1.1
+src = "推定"
+note = "齐腰劈木栅栏，横杆发灰，几段塌进草里"
+
+[[block]]
+id = "b08"
+kind = "palisade"
+face = "south"
+count = 1
+name = "田东栅栏"
+xy = [190, 100]
+size = [0.5, 85]
+h_m = 1.1
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "palisade"
+face = "south"
+count = 1
+name = "田南栅栏"
+xy = [125, 143]
+size = [130, 0.5]
+h_m = 1.1
+src = "推定"
+note = "田西缘无栅栏，朝车辙小路敞开"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p112"
+face = "south"
+count = 36
+name = "北侧枯林带"
+xy = [165, 15]
+size = [180, 30]
+h_m = 14
+src = "推定"
+note = "弯折缠结的黑枯林，林冠上悬黑雾"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p112"
+face = "south"
+count = 40
+name = "东侧枯林带"
+xy = [240, 130]
+size = [40, 200]
+h_m = 14
+src = "推定"
+note = "田边几棵枯树朝田里倾，枯枝伸到栅栏上方；林外东面隔一片林是食人魔盆地的环山（bg141，本图不画）"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p112"
+face = "south"
+count = 36
+may_overlap = true
+name = "南侧枯林带"
+xy = [150, 222]
+size = [180, 30]
+h_m = 14
+src = "推定"
+note = "树梢之上露出南界山墙西段的锯齿剪影（场地外）"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p112"
+face = "south"
+count = 8
+name = "西南稀林（林隙望河）"
+xy = [25, 205]
+size = [40, 60]
+h_m = 10
+src = "推定"
+note = "林木稀疏，漏出场地外西南那段界河的一线灰白水光"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg127-c1"
+eye = [21, 120]
+target = [130, 120]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -1,0 +1,300 @@
+# 花园区 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 本图原点 ≈ 区级平面图 bg268 的 (355, 440) m；区级 b908 花园区 147 × 147 m，本图外扩到带上西 / 南城墙与东北那段运河。
+
+[meta]
+bg = "bg275"
+name_zh = "花园区"
+size_m = [210, 190]
+px_per_m = 6.0
+scale_src = "地图量取"
+scale_note = "外廓按区级平面图 b908（147 × 147 m，地图量取）外扩；园内布局除「月亮井居中、入口挂旗幡、西南两面是城墙」外无一手出处，全部推定"
+# 世界树画面：与全城的白石硬铺完全相反——地面是草与土径，高大乔木成荫、树影斑驳，建筑稀疏矮小依树而建，整体色调比别处更绿更柔；正中一口自发光的乳白偏冷蓝月亮井
+absent = [
+    "焦土大坑、倒伏断树、翻起的地皮、城墙焦黑爪痕（4.0.3a 死亡之翼掀飞本区之后）",
+    "雄狮之眠纪念馆（7.0.3 原址新建）",
+    "港口 / 码头 / 墙外海湾里的船（3.0.2；旧世西墙外是海崖，园内看不见海）",
+    "白石硬铺广场、喷泉、雕像（本区地面是草与土径）",
+    "精灵树屋 / 高耸弧形木构 / 发光的紫蓝植物（园内唯一的精灵式石作是圆池与四根藤柱）",
+    "训练假人",
+    "夜景 / 火光 / 灯笼 / 火把（默认态是傍晚前日光 + 池水微光）",
+    "旗幡上的文字",
+    "任何人物、动物（坐骑、豹类坐骑都不入画，木棚是空的）",
+]
+
+[[water]]
+name = "运河·教堂广场西南↔花园区段（东北角）"
+width_m = 18
+depth_m = 4
+path = [[186, 0], [190, 24], [200, 45], [208, 60]]
+src = "地图量取"
+note = "对应区级 terrain.toml 同名段；北端延到场地边为推定"
+
+[[road]]
+name = "东北入口石径（过运河石拱桥 → 空场）"
+width_m = 7
+path = [[210, 8], [186, 20], [148, 45], [104, 80]]
+src = "推定"
+note = "区级「教堂广场 → 花园区」同一条路；浅色碎石 + 自然石板，缓坡下到空场"
+
+[[road]]
+name = "东南土石径（通法师区）"
+width_m = 5
+path = [[98, 104], [117, 146], [136, 190]]
+src = "推定"
+note = "区级「花园区 → 法师区」"
+
+[[road]]
+name = "北侧土径（通城墙根）"
+width_m = 3
+path = [[86, 72], [80, 40], [70, 8]]
+src = "推定"
+
+[[road]]
+name = "西侧土径（通西墙根）"
+width_m = 3
+path = [[70, 91], [50, 93], [34, 95]]
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "城墙·西段"
+xy = [25, 80]
+size = [150, 6]
+h_m = 18
+rot = -81.4
+src = "地图量取"
+note = "区级 b945；白石墙，墙顶垛口连续，墙外海崖不入画"
+
+[[block]]
+id = "b02"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "城墙·南段（西南角起）"
+xy = [40, 173]
+size = [58, 6]
+h_m = 18
+rot = 26.6
+src = "地图量取"
+note = "区级 b944 的西北端；其余在场地外"
+
+[[block]]
+id = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "中心草地空场"
+xy = [88, 90]
+size = [40, 40]
+h_m = 0
+src = "原典方位"
+note = "树冠围合的近圆草坪，四条路在此汇合"
+
+[[block]]
+id = "b04"
+kind = "pool"
+face = "south"
+count = 1
+name = "自发光圆池（月亮井）"
+xy = [88, 90]
+size = [12, 12]
+h_m = 0.4
+src = "原典方位"
+note = "园区广场正中；花瓣状浅乳白石沿，池面比草坪低一拃"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p310"
+face = "southwest"
+name = "缠藤石柱·东北"
+xy = [97, 81]
+size = [1.2, 1.2]
+h_m = 4
+src = "推定"
+note = "原典只说台边立着缠藤雕花石柱，根数未载；取四根"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p310"
+face = "southeast"
+name = "缠藤石柱·西北"
+xy = [79, 81]
+size = [1.2, 1.2]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p310"
+face = "northwest"
+name = "缠藤石柱·东南"
+xy = [97, 99]
+size = [1.2, 1.2]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p310"
+face = "northeast"
+name = "缠藤石柱·西南"
+xy = [79, 99]
+size = [1.2, 1.2]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p302"
+face = "south"
+count = 4
+name = "乔木丛·北"
+xy = [110, 45]
+size = [30, 26]
+h_m = 20
+src = "推定"
+note = "阔叶老乔木，树冠约 20 m 处连成穹顶；树脚蕨丛与白花矮灌木"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p302"
+face = "south"
+count = 4
+name = "乔木丛·西北"
+xy = [55, 52]
+size = [26, 30]
+h_m = 20
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p302"
+face = "south"
+count = 5
+may_overlap = true
+name = "乔木丛·西南"
+xy = [52, 130]
+size = [30, 30]
+h_m = 20
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p302"
+face = "south"
+count = 5
+name = "乔木丛·东南"
+xy = [140, 115]
+size = [34, 30]
+h_m = 20
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p302"
+face = "south"
+count = 3
+name = "乔木丛·东"
+xy = [150, 78]
+size = [28, 22]
+h_m = 20
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p303"
+face = "south"
+name = "单层白石小屋·北"
+xy = [134, 26]
+size = [12, 9]
+h_m = 6
+src = "推定"
+note = "蓝灰石板坡顶；从入口看在右前方树丛边"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p303"
+face = "north"
+name = "单层白石小屋·南墙根"
+xy = [80, 160]
+size = [12, 9]
+h_m = 6
+src = "推定"
+note = "从入口看在左后方，半截在树影里"
+
+[[block]]
+id = "b16"
+kind = "asset"
+asset = "p304"
+face = "southeast"
+name = "敞开木棚（马厩）"
+xy = [58, 18]
+size = [14, 8]
+h_m = 4
+src = "推定"
+note = "原典：园内有马厩管理员；棚位推定。棚是空的，只有草料架与倒扣木槽"
+
+[[block]]
+id = "b17"
+kind = "arch_bridge"
+face = "south"
+count = 1
+over_water = true
+name = "运河小石拱桥"
+xy = [189, 18]
+size = [20, 7]
+h_m = 3
+rot = -26.6
+src = "推定"
+note = "区图上入口路跨运河处画有桥；形制与位置推定"
+
+[[block]]
+id = "b18"
+kind = "asset"
+asset = "p309"
+face = "south"
+name = "入口竖幅旗幡"
+xy = [178, 17]
+size = [1, 1]
+h_m = 6
+src = "原典方位"
+note = "各城区入口都挂这种标识旗幡；蓝底金纹、无字"
+
+[[block]]
+id = "b19"
+kind = "asset"
+asset = "p301"
+face = "south"
+name = "入口苹果树"
+xy = [174, 35]
+size = [5, 5]
+h_m = 5
+src = "推定"
+note = "全城每个街区角落都有结果的苹果树（区级画面）"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg275-c1"
+eye = [105, 175]
+target = [105, 95]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

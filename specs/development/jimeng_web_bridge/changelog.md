@@ -18,3 +18,17 @@ Auto-updated:
 - final_specs/spec.md §11 — 追加一行修订记录。
 
 No conflicts found in: interview/qa.md, findings/*, validation/*
+
+## Follow-up 001 — 2026-09-20 09:30:00
+Source: user_input/follow_ups/202609.md - section 001
+Summary: 实测证明 dreamina CLI 可直出 Seedance 2.5 的 30s 视频，修正能力矩阵中 seedance2.5 漏掉 cli 后端的错误。
+
+Auto-updated:
+- projects/jimeng_web_bridge/config/global.toml — `model_limits.models."seedance2.5".backends` 由 `["web"]` 改为 `["web", "cli"]`，附实测证据注释。
+- projects/jimeng_web_bridge/tests/libs/domain/value_objects/test_model_limits__valueobject.py — FR1_ROWS 中 seedance2.5 的期望后端补 `BackendKind.CLI`。
+- projects/jimeng_web_bridge/tests/libs/domain/value_objects/test_precheck__valueobject.py — 用例 C15（2.5 + 3 图 + CLI）期望由 `backend_unsupported` 改为无错。
+
+No conflicts found in: final_specs/spec.md, interview/qa.md, findings/*, validation/*
+
+Verification: `uv run pytest tests/ -q` → 2539 passed, 2 skipped.
+Unverified: CLI 侧 2.5 的参考图上限（30/10/10）、1080p、`--ratio=9:16` 均未实测。

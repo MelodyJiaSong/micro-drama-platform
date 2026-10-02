@@ -79,6 +79,14 @@ def api_key() -> str:
     return key
 
 
+def path_hint(cmd: list[str]) -> str:
+    """从 curl 命令里只取 URL，**绝不带 -H 里的 key**。"""
+    for x in cmd:
+        if x.startswith("http"):
+            return x
+    return "(未知 URL)"
+
+
 def _curl(args: list[str], *, timeout: int) -> tuple[int, bytes]:
     """所有 HTTP 都走 curl。
 
@@ -92,7 +100,13 @@ def _curl(args: list[str], *, timeout: int) -> tuple[int, bytes]:
            "--retry-connrefused",
            "-m", str(timeout), "-o", str(out), "-w", "%{http_code}", *args]
     try:
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout + 60)
+        try:
+            r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout + 60)
+        except subprocess.TimeoutExpired as e:
+            # 不要把原异常抛出去：它的 str() 含**完整 curl 命令行**，
+            # 其中 `-H "xi-api-key: sk_..."` 会把 key 明文打进日志
+            # （2026-09-21 实测，p26 那次超时就把 key 写进了任务日志）。
+            raise SystemExit(f"curl 超时（{timeout + 60}s）：{path_hint(cmd)}") from None
         code = int((r.stdout or "0").strip() or 0)
         data = out.read_bytes() if out.is_file() else b""
         if code == 0 and r.stderr:
@@ -174,7 +188,9 @@ def prompt_blocks(md: Path) -> list[tuple[str, str]]:
     for m in re.finditer("```text" + chr(10) + "((?s:.)*?)" + chr(10) + "```", md.read_text(encoding="utf-8")):
         body = m.group(1)
         rk = body.split(chr(10))[0].strip().split("_")[0]
-        if not re.fullmatch(r"(?:bg|p|c)\d+-\d+", rk):
+        # 前缀白名单：bg=场景主体 / p=物件 / c=人物 / s=雕像等场景内的具名主体
+        # （2026-09-21 加 s：英雄谷五尊雕像按「一个目录一个主体」与 bg* 并列）
+        if not re.fullmatch(r"(?:bg|p|c|s)\d+-\d+", rk):
             continue
         lines = [l for l in body.split(chr(10))[1:] if not l.startswith(DROP_FIELDS)]
         out.append((rk, chr(10).join(lines).strip()))

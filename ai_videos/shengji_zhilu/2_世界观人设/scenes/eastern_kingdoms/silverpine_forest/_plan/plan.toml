@@ -1,0 +1,1355 @@
+# 银松森林（silverpine_forest）区级资产规划 —— 区级资产规划师写，tools/apply_asset_plan.py 只读
+# 库里原为空；本区新立 p269…a20 共 20 件（上限 20）。成片的块用单体 + count 散布（上限 40）。
+# 判据：贴地地坪 / 墙栅 / 拱桥 / 洞口洞室 / 岩台走脚本 kind（rule 4g）；其余有边界的物体引用本区资产库。
+# 去重（白模只锁几何与剪影，出图从不拿白模当参考，rule 4d ①）：
+#   针叶松 a01 兼全区松林、湖岛黑松、海边风压歪松、林缘老松；枯松 a02 兼路边孤松 / 湖岛枯松 / 蛛洞前被丝缠的枯松；
+#   原木小屋 a03 兼各农庄主屋、小木屋、墓园坡脚木板屋、歪斜木屋；石基陡顶民居 a04 兼安伯米尔八座石屋与焚木村尖顶木屋；
+#   两层灰石厅堂 a06 兼安伯米尔大屋 / 湖心庄园主楼 / 焚木村议事厅；尖锥顶圆石塔 a07 兼庄园圆塔与城堡四角塔、细长高塔；
+#   敞棚 a08 兼铁匠棚 / 船棚 / 柴棚 / 草棚；巨石 a14 兼落石、礁岩、乱石滩、塌口碎石、海蚀柱；倒木 a16 兼断松干与各处漂木浮木；
+#   木船 a17 兼半沉渡船与两条破船；板车 a20 兼翻倒板车与没轮子的独轮车；树桩 a19 兼伐木树桩与啃断树桩。
+# judgment calls（为守 20 件上限，下列有边界的小件走引擎已登记的脚本 kind，并记在这里，不静默）：
+#   bg257·b01 石砌墓室 → crypt（引擎的墓室 kind：厚墙体 + 檐 + 拱口，正合 previz 所需；陡石板顶由 shot 层写）；
+#   bg248·b12 四层方石塔 → tower（方塔身 + 战台 + 锥顶，正是「方石塔尖锥顶」，与 a07 的圆塔剪影不同故不共用）；
+#   bg252·b03 石井 → well（井圈 + 辘轳架）；bg251·b08 空果箱、bg255·b04 朽木箱与木桶 → crates；
+#   bg254·b04/b05 沤烂麦捆、bg256·b02 屋后南瓜堆 → boulders（贴地锥形堆，只占剪影与遮挡）；
+#   柴垛（bg249·b05、bg252·b05）、原木饮水槽（bg258·b05）、城堡门洞外石阶（bg250·b10）、风暴堤（bg261·b02）、
+#     砂岸上缘土坎（bg266·b06）、城堡幕墙（bg263·b03–b07）→ low_wall（实心条块）；
+#   晾衣绳（bg252·b04）→ post（只需院东那根歪木桩，绳与破布由 shot 层写）；缆桩与木绞盘（bg255·b05）→ post；
+#   坡顶铁栏栖架（bg257·b13，两柱一横杆）→ guard_post（柱 + 顶框）；进院门桩 / 各段栅栏 / 畜栏 / 铁栅栏 → palisade；
+#   芦苇带（bg255·b06、bg258·b09）→ yard（软质、不成体块）；影牙城堡岩沟（bg263·b13/b14，h=0）→ yard（只示走向）；
+#   木吊桥（bg263·b15）→ arch_bridge（东西跨沟，默认放平）；
+#   另卡的远景块：bg260·b01 岛顶庄园 → proxy（几何以 bg250 为准）；bg263·b18、bg264·b05 崖下村子 → a04 × count；
+#   bg262·b07 海边湿洼地 → yard；bg262·b08 蛛洞洞口 → cave_mouth；
+#   湖岛（bg265·b01–b05）、礁台机位（bg262·b05）、崖下碎石坡（bg267·b04）、土坎机位（bg248·b17）、
+#     内岸岩阶陡坡（bg260·b02）、沙坡 / 崖脚礁石通道（bg264·b03/b07）、巢穴坡脚土石崖（bg259·b02）→ rock_shelf；
+#   粘丝洞洞喉（bg267·b02/b03）走 chamber（tunnel 沿 rot 走向，而本块长轴沿 y）。
+#   bg247 区级全境卡的块由 gen_world_scenes_szzl.py 重写，不在本 plan 内（apply_asset_plan.bg_dirs 排除 zone_whole）。
+
+[meta]
+zone = "silverpine_forest"
+
+[[use]]
+bg = "bg248"
+block = "b01"
+asset = "p273"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg248"
+block = "b02"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg248"
+block = "b03"
+asset = "p272"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg248"
+block = "b04"
+asset = "p272"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg248"
+block = "b05"
+asset = "p272"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg248"
+block = "b06"
+asset = "p272"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg248"
+block = "b07"
+asset = "p272"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg248"
+block = "b08"
+asset = "p272"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg248"
+block = "b09"
+asset = "p272"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg248"
+block = "b10"
+asset = "p272"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg248"
+block = "b11"
+asset = "p274"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg248"
+block = "b12"
+kind = "tower"
+face = "west"
+
+[[use]]
+bg = "bg248"
+block = "b13"
+asset = "p271"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg248"
+block = "b14"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg248"
+block = "b15"
+kind = "low_wall"
+face = "south"
+
+[[use]]
+bg = "bg248"
+block = "b16"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg248"
+block = "b17"
+kind = "rock_shelf"
+face = "south"
+
+[[use]]
+bg = "bg249"
+block = "b01"
+asset = "p269"
+face = "south"
+count = 40
+
+[[use]]
+bg = "bg249"
+block = "b02"
+asset = "p269"
+face = "south"
+count = 35
+
+[[use]]
+bg = "bg249"
+block = "b03"
+asset = "p271"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg249"
+block = "b04"
+asset = "p271"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg249"
+block = "b05"
+kind = "low_wall"
+face = "south"
+
+[[use]]
+bg = "bg249"
+block = "b06"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg249"
+block = "b07"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg249"
+block = "b08"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg249"
+block = "b09"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg249"
+block = "b10"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg249"
+block = "b11"
+asset = "p286"
+face = "south"
+count = 8
+
+[[use]]
+bg = "bg249"
+block = "b12"
+asset = "p286"
+face = "south"
+count = 8
+
+[[use]]
+bg = "bg249"
+block = "b13"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg250"
+block = "b01"
+asset = "p274"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg250"
+block = "b02"
+asset = "p275"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg250"
+block = "b03"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg250"
+block = "b04"
+kind = "low_wall"
+face = "south"
+
+[[use]]
+bg = "bg250"
+block = "b05"
+kind = "low_wall"
+face = "south"
+
+[[use]]
+bg = "bg250"
+block = "b06"
+kind = "low_wall"
+face = "south"
+
+[[use]]
+bg = "bg250"
+block = "b07"
+kind = "low_wall"
+face = "south"
+
+[[use]]
+bg = "bg250"
+block = "b08"
+kind = "low_wall"
+face = "south"
+
+[[use]]
+bg = "bg250"
+block = "b09"
+asset = "p281"
+face = "south"
+count = 6
+
+[[use]]
+bg = "bg250"
+block = "b10"
+kind = "low_wall"
+face = "south"
+
+[[use]]
+bg = "bg250"
+block = "b11"
+asset = "p269"
+face = "south"
+count = 40
+
+[[use]]
+bg = "bg250"
+block = "b12"
+asset = "p269"
+face = "south"
+count = 40
+
+[[use]]
+bg = "bg250"
+block = "b13"
+asset = "p269"
+face = "south"
+count = 40
+
+[[use]]
+bg = "bg251"
+block = "b01"
+asset = "p282"
+face = "south"
+count = 40
+
+[[use]]
+bg = "bg251"
+block = "b02"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg251"
+block = "b03"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg251"
+block = "b04"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg251"
+block = "b05"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg251"
+block = "b06"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg251"
+block = "b07"
+asset = "p271"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg251"
+block = "b08"
+kind = "crates"
+face = "south"
+
+[[use]]
+bg = "bg251"
+block = "b09"
+asset = "p269"
+face = "south"
+count = 30
+
+[[use]]
+bg = "bg251"
+block = "b10"
+asset = "p287"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg251"
+block = "b11"
+asset = "p281"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg252"
+block = "b01"
+asset = "p271"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg252"
+block = "b02"
+asset = "p271"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg252"
+block = "b03"
+kind = "well"
+face = "south"
+
+[[use]]
+bg = "bg252"
+block = "b04"
+kind = "post"
+face = "south"
+
+[[use]]
+bg = "bg252"
+block = "b05"
+kind = "low_wall"
+face = "south"
+
+[[use]]
+bg = "bg252"
+block = "b06"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg252"
+block = "b07"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg252"
+block = "b08"
+asset = "p270"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg253"
+block = "b01"
+asset = "p274"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg253"
+block = "b02"
+kind = "plaza"
+face = "south"
+
+[[use]]
+bg = "bg253"
+block = "b03"
+asset = "p276"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg253"
+block = "b04"
+asset = "p272"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg253"
+block = "b05"
+asset = "p272"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg253"
+block = "b06"
+asset = "p272"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg253"
+block = "b07"
+asset = "p272"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg253"
+block = "b08"
+asset = "p277"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg253"
+block = "b09"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg253"
+block = "b10"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg253"
+block = "b11"
+kind = "gate_wall"
+face = "south"
+
+[[use]]
+bg = "bg254"
+block = "b01"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg254"
+block = "b02"
+asset = "p278"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg254"
+block = "b03"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg254"
+block = "b04"
+kind = "boulders"
+face = "south"
+
+[[use]]
+bg = "bg254"
+block = "b05"
+kind = "boulders"
+face = "south"
+
+[[use]]
+bg = "bg254"
+block = "b06"
+asset = "p287"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg254"
+block = "b07"
+asset = "p271"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg254"
+block = "b08"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg255"
+block = "b01"
+asset = "p285"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg255"
+block = "b02"
+asset = "p284"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg255"
+block = "b03"
+asset = "p276"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg255"
+block = "b04"
+kind = "crates"
+face = "south"
+
+[[use]]
+bg = "bg255"
+block = "b05"
+kind = "post"
+face = "south"
+
+[[use]]
+bg = "bg255"
+block = "b06"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg256"
+block = "b01"
+asset = "p271"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg256"
+block = "b02"
+kind = "boulders"
+face = "south"
+
+[[use]]
+bg = "bg256"
+block = "b03"
+asset = "p276"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg256"
+block = "b04"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg256"
+block = "b05"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg256"
+block = "b06"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg256"
+block = "b07"
+asset = "p281"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg257"
+block = "b01"
+kind = "crypt"
+face = "south"
+
+[[use]]
+bg = "bg257"
+block = "b02"
+asset = "p163"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg257"
+block = "b03"
+asset = "p163"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg257"
+block = "b04"
+kind = "graveyard"
+face = "south"
+
+[[use]]
+bg = "bg257"
+block = "b05"
+kind = "graveyard"
+face = "south"
+
+[[use]]
+bg = "bg257"
+block = "b06"
+kind = "graveyard"
+face = "south"
+
+[[use]]
+bg = "bg257"
+block = "b07"
+kind = "graveyard"
+face = "south"
+
+[[use]]
+bg = "bg257"
+block = "b08"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg257"
+block = "b09"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg257"
+block = "b10"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg257"
+block = "b11"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg257"
+block = "b12"
+asset = "p271"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg257"
+block = "b13"
+kind = "guard_post"
+face = "south"
+
+[[use]]
+bg = "bg258"
+block = "b01"
+asset = "p271"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg258"
+block = "b02"
+asset = "p276"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg258"
+block = "b03"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg258"
+block = "b04"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg258"
+block = "b05"
+kind = "low_wall"
+face = "south"
+
+[[use]]
+bg = "bg258"
+block = "b06"
+asset = "p269"
+face = "south"
+count = 40
+
+[[use]]
+bg = "bg258"
+block = "b07"
+asset = "p269"
+face = "south"
+count = 30
+
+[[use]]
+bg = "bg258"
+block = "b08"
+kind = "palisade"
+face = "south"
+
+[[use]]
+bg = "bg258"
+block = "b09"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg259"
+block = "b01"
+asset = "p286"
+face = "south"
+count = 30
+
+[[use]]
+bg = "bg259"
+block = "b02"
+kind = "rock_shelf"
+face = "south"
+
+[[use]]
+bg = "bg259"
+block = "b03"
+kind = "cave_mouth"
+face = "south"
+
+[[use]]
+bg = "bg259"
+block = "b04"
+asset = "p283"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg259"
+block = "b05"
+asset = "p283"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg259"
+block = "b06"
+asset = "p269"
+face = "south"
+count = 40
+
+[[use]]
+bg = "bg259"
+block = "b07"
+asset = "p269"
+face = "south"
+count = 20
+
+[[use]]
+bg = "bg259"
+block = "b08"
+asset = "p269"
+face = "south"
+count = 20
+
+[[use]]
+bg = "bg259"
+block = "b09"
+asset = "p269"
+face = "south"
+count = 18
+
+[[use]]
+bg = "bg260"
+block = "b01"
+kind = "proxy"
+face = "south"
+
+[[use]]
+bg = "bg260"
+block = "b02"
+kind = "rock_shelf"
+face = "east"
+
+[[use]]
+bg = "bg260"
+block = "b03"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg260"
+block = "b04"
+asset = "p269"
+face = "south"
+count = 40
+
+[[use]]
+bg = "bg260"
+block = "b05"
+asset = "p281"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg260"
+block = "b06"
+asset = "p269"
+face = "south"
+count = 40
+
+[[use]]
+bg = "bg260"
+block = "b07"
+asset = "p269"
+face = "south"
+count = 8
+
+[[use]]
+bg = "bg260"
+block = "b08"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg261"
+block = "b01"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg261"
+block = "b02"
+kind = "low_wall"
+face = "south"
+
+[[use]]
+bg = "bg261"
+block = "b03"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg261"
+block = "b04"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg261"
+block = "b05"
+kind = "cave_mouth"
+face = "north"
+
+[[use]]
+bg = "bg261"
+block = "b06"
+asset = "p269"
+face = "south"
+count = 40
+
+[[use]]
+bg = "bg261"
+block = "b07"
+asset = "p281"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg261"
+block = "b08"
+asset = "p283"
+face = "south"
+count = 3
+
+[[use]]
+bg = "bg262"
+block = "b01"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg262"
+block = "b02"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg262"
+block = "b03"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg262"
+block = "b04"
+asset = "p281"
+face = "south"
+count = 6
+
+[[use]]
+bg = "bg262"
+block = "b05"
+kind = "rock_shelf"
+face = "south"
+
+[[use]]
+bg = "bg262"
+block = "b06"
+asset = "p281"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg262"
+block = "b07"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg262"
+block = "b08"
+kind = "cave_mouth"
+face = "southwest"
+
+[[use]]
+bg = "bg263"
+block = "b01"
+asset = "p279"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg263"
+block = "b02"
+asset = "p275"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg263"
+block = "b03"
+kind = "low_wall"
+face = "south"
+
+[[use]]
+bg = "bg263"
+block = "b04"
+kind = "low_wall"
+face = "south"
+
+[[use]]
+bg = "bg263"
+block = "b05"
+kind = "low_wall"
+face = "south"
+
+[[use]]
+bg = "bg263"
+block = "b06"
+kind = "low_wall"
+face = "south"
+
+[[use]]
+bg = "bg263"
+block = "b07"
+kind = "low_wall"
+face = "south"
+
+[[use]]
+bg = "bg263"
+block = "b08"
+asset = "p280"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg263"
+block = "b09"
+asset = "p275"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg263"
+block = "b10"
+asset = "p275"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg263"
+block = "b11"
+asset = "p275"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg263"
+block = "b12"
+asset = "p275"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg263"
+block = "b13"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg263"
+block = "b14"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg263"
+block = "b15"
+kind = "arch_bridge"
+face = "east"
+
+[[use]]
+bg = "bg263"
+block = "b16"
+asset = "p163"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg263"
+block = "b17"
+asset = "p163"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg263"
+block = "b18"
+asset = "p272"
+face = "north"
+count = 4
+
+[[use]]
+bg = "bg264"
+block = "b01"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg264"
+block = "b02"
+asset = "p283"
+face = "south"
+count = 8
+
+[[use]]
+bg = "bg264"
+block = "b03"
+kind = "rock_shelf"
+face = "south"
+
+[[use]]
+bg = "bg264"
+block = "b04"
+asset = "p269"
+face = "south"
+count = 40
+
+[[use]]
+bg = "bg264"
+block = "b05"
+asset = "p272"
+face = "west"
+count = 6
+
+[[use]]
+bg = "bg264"
+block = "b06"
+asset = "p281"
+face = "south"
+count = 5
+
+[[use]]
+bg = "bg264"
+block = "b07"
+kind = "rock_shelf"
+face = "south"
+
+[[use]]
+bg = "bg264"
+block = "b08"
+asset = "p281"
+face = "south"
+count = 8
+
+[[use]]
+bg = "bg264"
+block = "b09"
+asset = "p281"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg264"
+block = "b10"
+asset = "p281"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg265"
+block = "b01"
+kind = "rock_shelf"
+face = "south"
+
+[[use]]
+bg = "bg265"
+block = "b02"
+kind = "rock_shelf"
+face = "south"
+
+[[use]]
+bg = "bg265"
+block = "b03"
+kind = "rock_shelf"
+face = "south"
+
+[[use]]
+bg = "bg265"
+block = "b04"
+kind = "rock_shelf"
+face = "south"
+
+[[use]]
+bg = "bg265"
+block = "b05"
+kind = "rock_shelf"
+face = "south"
+
+[[use]]
+bg = "bg265"
+block = "b06"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg265"
+block = "b07"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg265"
+block = "b08"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg265"
+block = "b09"
+asset = "p270"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg265"
+block = "b10"
+asset = "p283"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg265"
+block = "b11"
+asset = "p283"
+face = "south"
+count = 2
+
+[[use]]
+bg = "bg266"
+block = "b01"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg266"
+block = "b02"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg266"
+block = "b03"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg266"
+block = "b04"
+asset = "p284"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg266"
+block = "b05"
+asset = "p284"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg266"
+block = "b06"
+kind = "low_wall"
+face = "south"
+
+[[use]]
+bg = "bg266"
+block = "b07"
+asset = "p269"
+face = "south"
+count = 40
+
+[[use]]
+bg = "bg266"
+block = "b08"
+asset = "p269"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg266"
+block = "b09"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg267"
+block = "b01"
+kind = "cave_mouth"
+face = "southwest"
+
+[[use]]
+bg = "bg267"
+block = "b02"
+kind = "chamber"
+face = "southwest"
+
+[[use]]
+bg = "bg267"
+block = "b03"
+kind = "chamber"
+face = "southwest"
+
+[[use]]
+bg = "bg267"
+block = "b04"
+kind = "rock_shelf"
+face = "south"
+
+[[use]]
+bg = "bg267"
+block = "b05"
+asset = "p270"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg267"
+block = "b06"
+asset = "p270"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg267"
+block = "b07"
+kind = "yard"
+face = "south"
+
+[[use]]
+bg = "bg267"
+block = "b08"
+kind = "yard"
+face = "south"

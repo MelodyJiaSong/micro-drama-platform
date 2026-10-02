@@ -227,8 +227,11 @@ def check_card(path: str, is_mob: bool) -> list[Issue]:
 
         if "voice_id" not in text:
             out.append(Issue(name, "blocker", "K7", "缺 voice_id"))
-        if "turntable" not in text:
-            out.append(Issue(name, "warning", "12.5", "缺 turntable 建立视频块"))
+
+    # 每个角色（含群体怪）都要有立绘 + 4 秒建立视频：两者一起建 Seedance 角色资产包（rule 22.2，2026-09-25 起不分出场方式）
+    heads = [f.split("\n")[0].strip() for f in re.findall(r"```(?:text)?\n(.*?)\n```", text, re.S)]
+    if name + "_turntable" not in heads:
+        out.append(Issue(name, "blocker", "22.2", "缺首行为 `%s_turntable` 的 4 秒建立视频 prompt（跑 tools/gen_turntables_szzl.py）" % name))
 
     out.extend(_check_self_negative(name, text))
     out.extend(_check_g1(name, text))
@@ -296,7 +299,7 @@ def check_scene(path: str, used_tokens: dict[str, str]) -> list[Issue]:
     # index 行 ↔ plate 目录 ↔ 首行 handle 三方一致（K23）
     root = os.path.dirname(path)
     # `planning/`（floor plan 的产物）不是 plate —— 它是 3D 链条的目录，不参与 K23 三方一致
-    NOT_PLATE = {"planning", "_blender", "ref", "renders"}
+    NOT_PLATE = {"planning", "_blender", "ref", "renders", "assets"}   # assets/ ＝ 本场景用到的资产链接（tools/link_bg_assets.py）
     plates = sorted(d for d in os.listdir(root)
                     if os.path.isdir(os.path.join(root, d)) and d not in NOT_PLATE)
     if anchor_only:
@@ -375,6 +378,8 @@ def main() -> int:
     issues: list[Issue] = []
     cards: dict[str, str] = {}
     for d in sorted(os.listdir(cdir)):
+        if not os.path.isdir(os.path.join(cdir, d)):
+            continue            # 旁挂文件（如 .turntable_jobs.json）不是角色目录
         p = os.path.join(cdir, d, d + ".md")
         if not os.path.exists(p):
             alt = [f for f in os.listdir(os.path.join(cdir, d)) if f.endswith(".md")]

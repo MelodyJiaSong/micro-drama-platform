@@ -30,9 +30,9 @@ from __future__ import annotations
 
 import re
 
-# `p3_抹泥板与黏土壁炉` -> `p3`; `bg10_崖下砾石滩` -> `bg10`; `c1_砌炉的老人` -> `c1`.
-# A bare `p3` (no trailing `_名字`) is accepted too.
-_FOLDER_KEY_RE = re.compile(r"^((?:bg|[cp])\d+)(?:_|$)", re.IGNORECASE)
+# `p3_抹泥板与黏土壁炉` -> `p3`; `bg10_崖下砾石滩` -> `bg10`; `c1_砌炉的老人` -> `c1`;
+# `e12_蓝_维里甘之拳` -> `e12`. A bare `p3` (no trailing `_名字`) is accepted too.
+_FOLDER_KEY_RE = re.compile(r"^((?:bg|[cpe])\d+)(?:_|$)", re.IGNORECASE)
 
 
 def folder_key(folder_name: str) -> str | None:

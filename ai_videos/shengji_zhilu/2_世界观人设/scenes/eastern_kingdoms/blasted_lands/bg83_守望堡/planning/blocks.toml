@@ -1,0 +1,264 @@
+# 守望堡 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg83"
+name_zh = "守望堡"
+size_m = [300, 260]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "取 300 × 260 m：约 150 × 130 m 的方城 + 北侧山脚 + 西侧支路与门前石板场 + 西南建场机位的退让；无一手尺寸出处"
+# 世界树画面：荒原北缘的白石要塞，方形塔楼与雉堞在红土上格外突兀，蓝色旗帜猎猎，塔顶有法师的紫光结界
+# 区级平面图 b903（地图量取）：北缘山墙东段山脚下；支路自主干道先东后北绕上来、从西侧来到要塞
+absent = [
+    "任何人物与动物（默认空城；栖台是空的，没有坐骑）",
+    "火把、火盆、灯笼与任何明火（库房炉火关在门里看不到）",
+    "旗面纹章与任何文字",
+    "发光的符文、传送门与大面积能量幕（只有塔顶一层弱光罩）",
+    "木构民居与帐篷（全城是石砌）",
+    "草地、树木与任何绿色植被",
+    "河流、水潭与任何水面",
+    "4.0.3 之后的改建与新增建筑",
+]
+
+[[ridge]]
+name = "北缘山墙东段山脚（紫黑火成岩，高出城头 30–40 m）"
+poly = [[0, 0], [300, 0], [300, 58], [260, 50], [210, 46], [150, 44], [100, 46], [60, 54], [20, 56], [0, 48]]
+height_m = 45
+src = "推定"
+
+[[road]]
+name = "支路（自主干道东折，从西来直抵西门）"
+path = [[0, 158], [30, 142], [60, 128], [92, 120]]
+width_m = 5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "low_wall"
+face = "north"
+count = 1
+name = "城墙·北段（贴山脚）"
+xy = [170, 55]
+size = [138, 3]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "城墙·南段"
+xy = [170, 185]
+size = [138, 3]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "low_wall"
+face = "east"
+count = 1
+name = "城墙·东段"
+xy = [245, 120]
+size = [3, 118]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "low_wall"
+face = "west"
+count = 1
+name = "城墙·西段北"
+xy = [95, 85.5]
+size = [3, 49]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "low_wall"
+face = "west"
+count = 1
+name = "城墙·西段南"
+xy = [95, 154.5]
+size = [3, 49]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "gate_wall"
+face = "west"
+count = 1
+name = "西门（双塔夹圆拱门洞，包铁厚木门扇敞开）"
+xy = [95, 120]
+size = [10, 20]
+h_m = 14
+src = "推定"
+note = "唯一城门；朝向按区图支路从西来推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p67"
+face = "northwest"
+name = "角塔·西北"
+xy = [95, 55]
+size = [12, 12]
+h_m = 18
+src = "推定"
+note = "世界树「方形塔楼与雉堞」"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p67"
+face = "northeast"
+into_ridge = true
+name = "角塔·东北"
+xy = [245, 55]
+size = [12, 12]
+h_m = 18
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p67"
+face = "southwest"
+name = "角塔·西南（雉堞缺两块、新石补过）"
+xy = [95, 185]
+size = [12, 12]
+h_m = 18
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p67"
+face = "southeast"
+name = "角塔·东南"
+xy = [245, 185]
+size = [12, 12]
+h_m = 18
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p68"
+face = "south"
+name = "主楼（三层石砌，深青灰石板坡顶，贴北墙）"
+xy = [165, 78]
+size = [44, 26]
+h_m = 20
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p67"
+face = "south"
+name = "法师塔（方形，约 30 m，塔顶淡紫光罩）"
+xy = [220, 80]
+size = [12, 12]
+h_m = 30
+src = "推定"
+note = "世界树「塔顶有法师的紫光结界」；光罩是本档唯一的非日光光源"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p68"
+face = "north"
+name = "军械库（石造，南墙内侧，门窗紧闭）"
+xy = [190, 168]
+size = [24, 14]
+h_m = 9
+src = "推定"
+note = "世界树子节点「要塞军械库」；内有铁砧与炉火，外景不可见"
+
+[[block]]
+id = "b14"
+kind = "rock_shelf"
+face = "north"
+count = 1
+name = "石砌栖台（城墙内侧，空）"
+xy = [140, 172]
+size = [14, 10]
+h_m = 4
+src = "推定"
+note = "世界树子节点「飞行点：城墙内侧的石砌栖台」；本卡无动物"
+
+[[block]]
+id = "b15"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "中央石板院"
+xy = [165, 130]
+size = [100, 50]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "plaza"
+face = "west"
+count = 1
+may_overlap = true
+name = "门前方石板场（缓坡）"
+xy = [79, 120]
+size = [26, 34]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b17"
+kind = "palisade"
+face = "west"
+count = 1
+name = "城外木制拒马（半埋，尖头朝外）"
+xy = [55, 172]
+size = [30, 3]
+h_m = 1.5
+rot = -20
+src = "推定"
+
+[[block]]
+id = "b18"
+kind = "asset"
+asset = "p64"
+face = "south"
+count = 8
+name = "北墙外山脚塌石（城墙北段半埋其中）"
+xy = [150, 49]
+size = [60, 6]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b19"
+kind = "crates"
+face = "east"
+count = 5
+name = "西墙根空木箱与旧木脚手架"
+xy = [88, 150]
+size = [6, 4]
+h_m = 1.5
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg83-c1"
+eye = [24, 130]
+target = [150, 130]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

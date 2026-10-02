@@ -1,0 +1,245 @@
+# 尘埃平原 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 原点 ＝ 区级 [1700, 1340] m。丘陵、界河、大道由区级 terrain.toml 平移（区级坐标 − [1700, 1340]）裁入，记「地图量取」；
+# 孤塔用 bg394 同一坐标（坐标表 [70, 74]）；营地、枯树、碎岩、旧田栅属推定（世界树只说「豺狼人的营火是唯一亮点」）。
+
+[meta]
+bg = "bg399"
+name_zh = "尘埃平原"
+size_m = [800, 560]
+px_per_m = 2.0
+grid_m = 50
+scale_src = "地图量取"
+scale_note = "按区级 terrain.toml（原版区图 1 px ≈ 3.194 m）平移裁出；平原主体取南部丘陵北麓到东西大道之间这条平地，东缘到孤塔与界河。区级 blocks.toml 的落点块 b909 [1996, 1821] 大半压在丘陵多边形上，本图不跟它"
+# 世界树画面：最南端的浮尘平原，地面裂成龟纹，起风时能见度骤降成一片黄白；豺狼人的营火是唯一亮点
+absent = [
+    "燃烧的营火、火苗、烟（默认态火塘是冷透的灰白余烬；要亮就另立夜景变体）",
+    "麦田、风车、农舍（这里是龟裂荒地，不是农田；农场都在大道以北）",
+    "鲜绿草坡与高林（只有东缘河岸一条灰绿窄带，高林在对岸）",
+    "海（海在区的西面与北面）",
+    "白色盐滩 / 石林 / 盐碱硬壳（那是别的区，这里是灰黄龟裂土）",
+    "第二座塔 / 石墙 / 寨门（孤塔是唯一竖向建筑，营地只有兽皮棚与削尖木桩）",
+    "塌陷巨坑 / 流民帐篷 / 焦黑哨塔（4.0.3a 之后的西部荒野）",
+    "场地内的桥（界桥在场地北沿之外的河上，只作远景剪影）",
+    "任何人物与动物（营地里的住户属 shot 层）",
+]
+
+[[ridge]]
+name = "南部尖脊丘陵东段（平原南墙，红褐）"
+poly = [[89, 193], [216, 200], [376, 231], [504, 273], [584, 321], [616, 385], [536, 465], [408, 528], [323, 560], [110, 560], [89, 544], [89, 353]]
+height_m = 90
+src = "地图量取"
+
+[[ridge]]
+name = "西侧尖脊丘陵（匕首岭东端）"
+poly = [[0, 166], [89, 193], [89, 353], [25, 497], [0, 520]]
+height_m = 120
+src = "地图量取"
+
+[[water]]
+name = "东界河（自北向东南，塔东北）"
+path = [[526, 0], [536, 97], [600, 209], [696, 305], [759, 385], [800, 446]]
+width_m = 45
+depth_m = 2.5
+src = "地图量取"
+
+[[road]]
+name = "南部东西大道（平原北沿，东去界桥）"
+path = [[0, 47], [57, 62], [137, 55], [232, 49], [328, 30], [408, 0]]
+width_m = 8
+src = "地图量取"
+
+[[road]]
+name = "中央大道南端（自北来，在西北路口汇入）"
+path = [[130, 0], [137, 55]]
+width_m = 8
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "龟裂浮尘平地（平原主体）"
+xy = [275, 125]
+size = [390, 100]
+h_m = 0
+src = "地图量取"
+note = "丘陵北麓与大道之间的平地；东接河岸窄带"
+
+[[block]]
+id = "b02"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "裂纹最深的低洼地"
+xy = [200, 130]
+size = [70, 40]
+h_m = 0
+src = "推定"
+note = "低于周围一两米，边缘一圈碎土坎"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p363"
+face = "south"
+name = "营地火塘（冷灰余烬）"
+xy = [300, 196]
+size = [3, 3]
+h_m = 0.3
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p340"
+face = "south"
+name = "兽皮斜棚 A（西）"
+xy = [289, 203]
+size = [5, 4]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p340"
+face = "south"
+name = "兽皮斜棚 B（东）"
+xy = [311, 205]
+size = [5, 4]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p340"
+face = "south"
+name = "兽皮斜棚 C（北）"
+xy = [300, 185]
+size = [5, 4]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "palisade"
+face = "south"
+count = 1
+name = "营地北侧半圈削尖木桩"
+xy = [300, 178]
+size = [34, 1]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p346"
+face = "south"
+name = "晾皮木架（空）"
+xy = [322, 196]
+size = [3, 1]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p352"
+face = "northwest"
+name = "灰石圆身孤塔（平原东缘，另见 bg394）"
+bg = "bg394"
+xy = [540, 239]
+size = [10, 10]
+h_m = 18
+src = "坐标表"
+note = "坐标表 [70, 74]，与 bg394 同一点"
+
+[[block]]
+id = "b10"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "界河西岸灰绿窄带"
+xy = [522, 149]
+size = [30, 260]
+h_m = 0
+rot = -19.5
+src = "地图量取"
+note = "区图东界河西岸那条绿带；孤塔立在它的西沿"
+
+[[block]]
+id = "b11"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "丘东端外沿河南伸的狭长浮尘地"
+xy = [700, 445]
+size = [70, 180]
+h_m = 0
+rot = -30
+src = "地图量取"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p369"
+face = "south"
+name = "丘脚枯死孤树"
+xy = [420, 225]
+size = [6, 6]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "palisade"
+face = "south"
+count = 1
+name = "路南倒伏的旧田栅"
+xy = [220, 66]
+size = [90, 1]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p368"
+face = "south"
+count = 6
+name = "丘脚滚落的红褐碎岩群"
+xy = [150, 185]
+size = [30, 12]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p368"
+face = "south"
+name = "机位矮岩（西端丘脚）"
+xy = [95, 180]
+size = [8, 6]
+h_m = 2
+src = "推定"
+note = "锚点图机位所在"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg399-c1"
+eye = [400, 515]
+target = [400, 280]
+eye_h = 26.7
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

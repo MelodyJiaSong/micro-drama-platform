@@ -1,0 +1,228 @@
+# 斯坦恩布莱德 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 镇内布局无一手平面出处：主街东西走向与出镇拐向东北取自区图（地图量取），房屋落位全部推定。
+
+[meta]
+bg = "bg30"
+name_zh = "斯坦恩布莱德"
+size_m = [240, 180]
+px_per_m = 5.0
+scale_src = "推定"
+scale_note = "东西向单街小镇取 240 × 180 m：区图上镇区图标约 6 px 宽（≈ 150 m），加两侧山脚；无一手尺寸出处"
+# 世界树画面：山间的人类小镇，屋顶积雪，铁匠铺与镇政厅还在，街上没有平民只有持刀的强盗
+absent = [
+    "任何人物（平民已散尽；强盗与俘虏属 shot 层，不进底图）",
+    "炊烟、亮着的锻炉、窗内灯火（默认态人走灶冷）",
+    "城墙与城门（小镇只有路边木栅）",
+    "文字招牌与可读的牌匾（招牌板面已冲光，牌匾只剩锈钉）",
+    "有人耕作的田地（屋后只有荒掉的小菜园）",
+    "4.0.3a 后并入希尔斯布莱德的新布局与新建筑",
+]
+
+[[ridge]]
+name = "镇北陡坡"
+poly = [[0, 0], [240, 0], [240, 30], [200, 45], [150, 52], [100, 55], [40, 58], [0, 60]]
+height_m = 120
+src = "地图量取"
+
+[[ridge]]
+name = "镇南雪山"
+poly = [[0, 150], [80, 146], [160, 148], [240, 144], [240, 180], [0, 180]]
+height_m = 260
+src = "地图量取"
+
+[[water]]
+name = "南沟结冰细水"
+path = [[0, 140], [80, 139], [160, 141], [240, 137]]
+width_m = 2
+depth_m = 0.4
+src = "推定"
+
+[[road]]
+name = "主街（过境山道）"
+path = [[0, 104], [60, 102], [120, 100], [180, 98], [215, 90], [240, 70]]
+width_m = 7
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p15"
+face = "south"
+name = "镇政厅大屋（两层）"
+xy = [118, 70]
+size = [24, 15]
+h_m = 11
+src = "推定"
+note = "世界树画面：镇政厅还在；街北正中，东山墙石烟囱、西侧木外楼梯"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p15"
+face = "north"
+name = "铁匠铺石屋"
+xy = [150, 126]
+size = [12, 9]
+h_m = 5
+src = "推定"
+note = "世界树画面：铁匠铺还在；街南，与大屋斜对"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p15"
+face = "north"
+name = "铁匠敞棚（铁砧与冷锻炉）"
+xy = [138, 118]
+size = [9, 7]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p15"
+face = "south"
+name = "民居·西口北（檐最低）"
+xy = [52, 80]
+size = [11, 8]
+h_m = 5.5
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p15"
+face = "south"
+name = "民居·中段北（木门廊）"
+xy = [84, 78]
+size = [12, 9]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p15"
+face = "south"
+name = "民居·东头北（阁楼窗）"
+xy = [176, 72]
+size = [12, 9]
+h_m = 6.5
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p15"
+face = "north"
+name = "民居·西口南（檐最低）"
+xy = [60, 122]
+size = [11, 8]
+h_m = 5.5
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p15"
+face = "north"
+name = "民居·中段南（窗板钉死）"
+xy = [96, 124]
+size = [12, 9]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p15"
+face = "north"
+name = "民居·东头南（窗板钉死）"
+xy = [190, 120]
+size = [12, 9]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p363"
+face = "south"
+name = "石砌圆井"
+xy = [160, 100]
+size = [3, 3]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "屋后荒菜园与柴棚"
+xy = [84, 62]
+size = [16, 6]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b12"
+over_water = true
+kind = "arch_bridge"
+face = "south"
+count = 1
+name = "原木小桥"
+xy = [120, 140]
+size = [3, 8]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "palisade"
+face = "south"
+count = 1
+name = "西口界石与歪倒木栅"
+xy = [8, 110]
+size = [6, 2]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b14"
+into_ridge = true
+kind = "asset"
+asset = "p28"
+face = "south"
+count = 8
+name = "北坡冷杉丛"
+xy = [140, 30]
+size = [60, 20]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p28"
+face = "south"
+count = 3
+name = "坳口歪冷杉"
+xy = [226, 50]
+size = [18, 14]
+h_m = 12
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg30-c1"
+eye = [120, 166]
+target = [120, 90]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

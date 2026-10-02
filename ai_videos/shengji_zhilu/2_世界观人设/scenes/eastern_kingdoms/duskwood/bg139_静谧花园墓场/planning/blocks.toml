@@ -1,0 +1,202 @@
+# 静谧花园墓场 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 换算：本图原点 ＝ 区级平面图（bg126）世界坐标 (1870, 1060)；区图裁切 1 px ≈ 0.62 m（裁切 4× 放大，区图 1 px ≈ 2.46 m）。
+# 裁切上教堂图标在 [81, 72]（世界 2000, 1185 → 本图 130, 125），五个墓碑图标在它北侧与西北侧 35–70 m；
+# 东面山影离教堂约 45 m 起坡、南面矮岭约 35 m、西南一道低丘；墓园支路从西北角进来。
+# 锚点机位：北墙铁门 (85, 40)，离地约 1.6 m，朝南偏东看教堂正门。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg139"
+name_zh = "静谧花园墓场"
+size_m = [260, 220]
+px_per_m = 5.0
+grid_m = 20
+scale_src = "地图量取"
+scale_note = "教堂与墓碑图标的相对位置、东坡与南岭的起坡距离按区图裁切量取（±15 m）；矮墙、铁门、甬道、枯橡的尺寸与位置全部推定"
+# 世界树画面：夜色镇东南的小墓园，一座塌了半边的教堂立在中间，碑石排得规整但全都歪了，雾比乌鸦岭薄一些
+absent = [
+    "任何火、烛火、灯笼、窗火与点着的蜡烛（烛台是空的）",
+    "太阳 / 蓝天 / 月亮圆盘 / 硬直射光",
+    "河流与水面（这里看不见河）",
+    "小镇房屋与灯火（被枯林挡在西北方）",
+    "完好的彩色玻璃窗 / 挂着的钟",
+    "新坟 / 鲜花 / 新鲜断茬",
+    "墓碑上可读的文字",
+    "运棺板车（那是西部空村的标志）",
+    "任何人物、亡灵、乌鸦与飞鸟",
+]
+
+[[ridge]]
+name = "东坡（东南山群的坡脚，贴着墓园东墙起坡）"
+poly = [[188, 0], [260, 0], [260, 220], [205, 220], [195, 170], [190, 110], [192, 50]]
+height_m = 80
+src = "地图量取"
+
+[[ridge]]
+name = "南岭（横在教堂背后的矮岭）"
+poly = [[40, 168], [110, 166], [190, 172], [205, 220], [40, 220]]
+height_m = 45
+src = "地图量取"
+
+[[ridge]]
+name = "西南低丘"
+poly = [[0, 150], [35, 140], [55, 165], [40, 220], [0, 220]]
+height_m = 25
+src = "地图量取"
+
+[[road]]
+name = "墓园支路（西北接主干道，唯一来路）"
+path = [[0, 4], [40, 18], [85, 38]]
+width_m = 4
+src = "地图量取"
+
+[[road]]
+name = "碎石甬道（铁门 → 教堂正门石阶）"
+path = [[85, 41], [125, 101]]
+width_m = 2
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p125"
+face = "north"
+name = "半塌石木教堂"
+xy = [125, 115]
+size = [14, 26]
+h_m = 12
+src = "地图量取"
+note = "区图裁切中心的教堂图标；长轴南北，正门尖拱在北山墙，门楣上空圆花窗石框，山墙顶无钟小钟架；东半屋顶与东墙上半截塌落、西半屋顶正中破大洞；中殿翻倒长凳 + 石讲台"
+
+[[block]]
+id = "b02"
+kind = "asset"
+parts = [{asset = "p130", at = [-2.9, -0.1], yaw = -6}, {asset = "p130", at = [2.6, 0.3], yaw = 10}, {asset = "p132", at = [0.1, -1.1], yaw = 4}]
+face = "north"
+name = "门前石阶与碎瓦断梁"
+xy = [125, 99.5]
+size = [9, 3]
+h_m = 0.5
+src = "推定"
+note = "三级石阶；一扇木门拍倒在阶上；碎石板瓦与断梁，断口发灰长苔"
+
+[[block]]
+id = "b03"
+kind = "graveyard"
+face = "south"
+count = 1
+may_overlap = true
+name = "西碑区"
+xy = [95, 75]
+size = [42, 36]
+h_m = 1.2
+src = "地图量取"
+note = "裁切上西北三个墓碑图标；东西向横排、间距一致、每块都歪；夹几座横木歪斜的木十字架"
+
+[[block]]
+id = "b04"
+kind = "graveyard"
+face = "south"
+count = 1
+may_overlap = true
+name = "东碑区"
+xy = [152, 76]
+size = [44, 28]
+h_m = 1.2
+src = "地图量取"
+note = "裁切上北侧两个墓碑图标；碑前倒着空铁烛台"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p112"
+face = "south"
+name = "扭曲枯橡"
+xy = [80, 125]
+size = [10, 10]
+h_m = 11
+src = "推定"
+note = "墙内西侧，秃枝伸到碑列上方"
+
+[[block]]
+id = "b06"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "北墙·门西段"
+xy = [73, 40]
+size = [16, 0.8]
+h_m = 1.1
+src = "推定"
+note = "齐腰毛石矮墙"
+
+[[block]]
+id = "b07"
+kind = "palisade"
+face = "north"
+count = 1
+name = "北墙锈铁门"
+xy = [85, 40]
+size = [8, 0.5]
+h_m = 2.2
+src = "推定"
+note = "唯一入口；只挂住一边，锈成黑褐，斜着敞开；锚点机位在此"
+
+[[block]]
+id = "b08"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "北墙·门东段"
+xy = [137, 40]
+size = [96, 0.8]
+h_m = 1.1
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "low_wall"
+face = "south"
+count = 1
+may_overlap = true
+name = "西墙"
+xy = [65, 100]
+size = [0.8, 120]
+h_m = 1.1
+src = "推定"
+note = "数段塌成乱石"
+
+[[block]]
+id = "b10"
+kind = "low_wall"
+face = "south"
+count = 1
+may_overlap = true
+name = "东墙"
+xy = [185, 100]
+size = [0.8, 120]
+h_m = 1.1
+src = "推定"
+note = "墙外即东坡坡脚"
+
+[[block]]
+id = "b11"
+kind = "low_wall"
+face = "south"
+count = 1
+may_overlap = true
+name = "南墙"
+xy = [125, 160]
+size = [120, 0.8]
+h_m = 1.1
+src = "推定"
+note = "墙外即南岭"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg139-c1"
+eye = [195, 198]
+target = [130, 110]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

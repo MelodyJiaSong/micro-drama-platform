@@ -1,0 +1,356 @@
+# 影牙城堡（户外区域与入口）· 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 换算：原点 ＝ 区图 px (400, 425)；x = (px − 400) × 3.83，y = (py − 425) × 3.83（与 bg247 同一比例）。
+# 世界树坐标 [47, 66] → 区图 px (470.9, 440.9) → 本图 (272, 61)，落在山道回头弯。城堡图标 px 412–446 × 437–454。
+# 城堡内部（庭院 / 厨房 / 塔顶）属副本，本图只画外轮廓；院内块只为给门外镜头定塔楼位置。
+
+[meta]
+bg = "bg263"
+name_zh = "影牙城堡"
+size_m = [420, 300]
+px_per_m = 3.6
+grid_m = 50
+scale_src = "地图量取"
+scale_note = "区图 WorldMap-Silverpine_c60 宽 1002 px ＝ 区宽 3840 m（bg247 同一换算，3.83 m/px）；城堡位置、海岸线、山道回头弯、崖下村子量自区图 px x 400–510、y 425–503；城堡院落与塔楼尺寸为推定（区图图标是示意，不代表真实大小）"
+# 世界树画面：悬崖顶上的黑石城堡剪影，吊桥、铁闸门与两侧火盆，山道盘旋而上
+absent = ["第二道城门 / 后门 / 绕后的路", "注满水的护城河（岩沟是干的）", "窗灯、烛火、灯笼、火把（桥头两只火盆是唯一人工光）", "夜景与幽绿魔法光（属副本内景）", "旗帜与纹章", "攻城器械与城堡着火", "码头 / 船", "雪", "阔叶林", "翠绿草地", "白墙彩顶的童话城堡"]
+
+[[ridge]]
+name = "北面灰岩山体（稀疏针叶松）"
+poly = [[0, 0], [420, 0], [420, 50], [330, 32], [250, 18], [200, 12], [40, 15], [0, 30]]
+height_m = 90
+src = "地图量取"
+
+[[ridge]]
+name = "城堡岩台（南、西两面绝壁）"
+poly = [[35, 25], [185, 20], [200, 50], [200, 120], [180, 145], [60, 148], [30, 110]]
+height_m = 45
+src = "地图量取"
+
+[[block]]
+id = "b01"
+into_ridge = true
+kind = "asset"
+asset = "p279"
+face = "east"
+name = "多层方形主堡"
+xy = [95, 77]
+size = [60, 44]
+h_m = 30
+src = "推定"
+note = "陡峭深灰石板尖顶"
+
+[[block]]
+id = "b02"
+into_ridge = true
+kind = "asset"
+asset = "p275"
+face = "east"
+name = "细长高塔"
+xy = [140, 62]
+size = [14, 14]
+h_m = 60
+src = "推定"
+note = "比其他塔高出一倍，全画最高点，天际线识别物"
+
+[[block]]
+id = "b03"
+into_ridge = true
+kind = "low_wall"
+face = "south"
+name = "北幕墙"
+xy = [111.5, 36]
+size = [117, 4]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b04"
+into_ridge = true
+kind = "low_wall"
+face = "south"
+name = "南幕墙（贴南面绝壁）"
+xy = [111.5, 118]
+size = [117, 4]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b05"
+into_ridge = true
+kind = "low_wall"
+face = "south"
+name = "西幕墙（贴海崖）"
+xy = [47, 77]
+size = [4, 70]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b06"
+into_ridge = true
+kind = "low_wall"
+face = "south"
+name = "东幕墙·北段"
+xy = [176, 57.5]
+size = [4, 31]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b07"
+into_ridge = true
+kind = "low_wall"
+face = "south"
+name = "东幕墙·南段"
+xy = [176, 103.5]
+size = [4, 17]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b08"
+into_ridge = true
+kind = "asset"
+asset = "p280"
+face = "east"
+name = "门楼（尖拱门洞＋铁闸门，两侧圆塔）"
+xy = [178, 84]
+size = [14, 22]
+h_m = 16
+src = "推定"
+note = "朝东；铁闸门默认落下一半"
+
+[[block]]
+id = "b09"
+into_ridge = true
+kind = "asset"
+asset = "p275"
+face = "east"
+name = "西北角塔"
+xy = [47, 36]
+size = [12, 12]
+h_m = 28
+src = "推定"
+
+[[block]]
+id = "b10"
+into_ridge = true
+kind = "asset"
+asset = "p275"
+face = "east"
+name = "东北角塔"
+xy = [176, 36]
+size = [12, 12]
+h_m = 28
+src = "推定"
+
+[[block]]
+id = "b11"
+into_ridge = true
+over_water = true
+kind = "asset"
+asset = "p275"
+face = "east"
+name = "西南角塔"
+xy = [47, 118]
+size = [12, 12]
+h_m = 28
+src = "推定"
+
+[[block]]
+id = "b12"
+into_ridge = true
+kind = "asset"
+asset = "p275"
+face = "east"
+name = "东南角塔"
+xy = [176, 118]
+size = [12, 12]
+h_m = 28
+src = "推定"
+
+[[block]]
+id = "b13"
+into_ridge = true
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "岩沟·北段"
+xy = [192, 63]
+size = [10, 30]
+h_m = 0
+src = "推定"
+note = "深约十米、两壁垂直，沟底乱石积水（干沟）"
+
+[[block]]
+id = "b14"
+into_ridge = true
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "岩沟·南段"
+xy = [192, 105]
+size = [10, 30]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b15"
+into_ridge = true
+kind = "arch_bridge"
+face = "east"
+name = "木吊桥"
+xy = [192, 84]
+size = [10, 8]
+h_m = 0
+src = "推定"
+note = "默认放平，两根粗铁链从门楼上方拉住桥头"
+
+[[block]]
+id = "b16"
+kind = "asset"
+asset = "p163"
+face = "south"
+name = "桥头北火盆"
+xy = [201, 78]
+size = [2, 2]
+h_m = 2
+src = "推定"
+note = "全画唯一人工光（与南火盆一对），只染周围两三米"
+
+[[block]]
+id = "b17"
+kind = "asset"
+asset = "p163"
+face = "south"
+name = "桥头南火盆"
+xy = [201, 90]
+size = [2, 2]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b18"
+kind = "asset"
+asset = "p272"
+face = "north"
+count = 4
+name = "崖下尖顶木屋村（另卡）"
+bg = "bg253"
+xy = [190, 245]
+size = [170, 100]
+h_m = 6
+src = "地图量取"
+note = "区图四座屋子图标 px 431–468 × 476–502；从山道只看得见一排深灰木瓦屋顶"
+
+[[road]]
+name = "盘山道（桥头→沿崖石台→回头弯→下到路口）"
+path = [[198, 84], [225, 72], [250, 58], [272, 58], [285, 75], [295, 110], [305, 140], [322, 168], [345, 203], [400, 206], [420, 207]]
+width_m = 4
+
+[[road]]
+name = "下村路（路口→村子）"
+path = [[345, 203], [250, 203], [160, 210]]
+width_m = 4
+
+[[water]]
+name = "海面·1"
+path = [[0, 10], [3, 10]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·2"
+path = [[0, 30], [9, 30]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·3"
+path = [[0, 50], [15, 50]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·4"
+path = [[0, 70], [20, 70]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·5"
+path = [[0, 90], [26, 90]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·6"
+path = [[0, 110], [34, 110]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·7"
+path = [[0, 130], [42, 130]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·8"
+path = [[0, 150], [50, 150]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·9"
+path = [[0, 170], [58, 170]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·10"
+path = [[0, 190], [65, 190]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·11"
+path = [[0, 210], [72, 210]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·12"
+path = [[0, 230], [78, 230]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·13"
+path = [[0, 250], [85, 250]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·14"
+path = [[0, 270], [90, 270]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·15"
+path = [[0, 290], [94, 290]]
+width_m = 22
+depth_m = 10
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg263-c1"
+eye = [210, 24]
+target = [210, 150]
+eye_h = 14.0
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

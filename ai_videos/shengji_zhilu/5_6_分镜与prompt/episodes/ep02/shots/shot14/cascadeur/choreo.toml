@@ -1,0 +1,57 @@
+# shot14 人体动作表（Cascadeur 层）。位置与朝向一律从 ../planning/overhead.toml 读，这里只写「身体摆成什么样」。
+# 改动作 ＝ 改本文件重跑 `python tools/cascadeur/choreo.py <shot 目录> --build`；部件都在共享库 tools/cascadeur/poses.toml。
+# 时刻与 shot14.md `动作:` 时间轴、overhead 的 [[hit]] / [[guard]] 逐拍对齐（rule 4h ②）。鼠面矿工与鬣狗人监工不在这里：色块人偶够用。
+# follow-up 052 G13：攻防镜的人体一律 Cascadeur（杜克挨棒挡在盾上；亚伦冲上去挡鞭）。
+# qc5（剧本 15.5 s）：鞭子 6.2 s 抽在亚伦右腕上，右手一甩、锤从肩上滑下来拄地；10–10.6 s 杜克横跨半步挡到他前面。
+
+[meta]
+origin = [19.4, 40.0]          # 平面图坐标；Cascadeur 原点 ＝ 巷子中段、两人停步处北边
+fps = 30
+
+[parts]
+wrist_fling_r = {armR = [38, 62, 0], elbowR = 18, lean = -6, head = 6}       # 右腕挨了一鞭，右手被抽得往外一甩（本镜独有）
+rub_wrist_r = {armL = [42, -40, 0], elbowL = 112, armR = [22, 4, 0], elbowR = 60, head = 16}   # 低头，左手摸右腕的护腕（右手仍提着锤）
+
+# 杜克：0–3s 举着钢盾顺轨往里走；3.2s 站住、扭头问亚伦；5.2s 起举着盾往前挤；10–10.6s 横跨半步挡到亚伦前面；
+# 10.8 / 12.6 / 14.4s 木棒砸在盾面上，每一下盾往下一沉再顶回去，11.3s 盾往前一顶
+[actor."杜克"]
+gait = [[0.0, 2.9, "walk", "shield_guard"], [5.2, 9.9, "walk", "shield_guard"]]
+keys = [
+  [3.0, "stand+shield_guard"],
+  [3.2, "stand+shield_guard"],
+  [4.8, "stand+shield_guard"],
+  [10.0, "stance_l+shield_guard"],
+  [10.3, "lunge_small+shield_guard"],
+  [10.6, "stance_l+shield_guard"],
+  [10.7, "stance_l+shield_guard"],
+  [10.8, "stance_l+shield_brace"],
+  [11.3, "stance_l+shield_shove"],
+  [11.8, "stance_l+shield_guard"],
+  [12.5, "stance_l+shield_guard"],
+  [12.6, "stance_l+shield_brace"],
+  [13.1, "stance_l+shield_guard"],
+  [14.3, "stance_l+shield_guard"],
+  [14.4, "stance_l+shield_brace"],
+  [14.9, "stance_l+shield_guard"],
+  [15.5, "stance_l+shield_guard"],
+]
+
+# 亚伦：0–3s 扛着锤走；3.2s 站住；4.9s 起冲过去；6s 挡在挖得慢的矿工前面；6.2s 鞭梢抽在右腕护腕上，右手一甩；
+# 6.4s 锤从肩上滑下来、右手攥住柄中段拄地；6.8s 往小矿工身前再挪半步；13.6s 左手摸右腕的护腕；15s 甩一下手腕
+[actor."亚伦"]
+gait = [[0.0, 2.9, "walk", "shoulder_carry"], [4.9, 5.9, "run", "shoulder_carry"]]
+keys = [
+  [3.0, "stand+shoulder_carry"],
+  [3.2, "stand+shoulder_carry"],
+  [4.8, "stand+shoulder_carry"],
+  [6.0, "stance_l+shoulder_carry"],
+  [6.2, "stance_l+wrist_fling_r"],
+  [6.4, "stance_l+hammer_r_low"],
+  [6.8, "stance_l+hammer_r_low"],
+  [9.0, "stance_l+hammer_r_low"],
+  [13.4, "stand+hammer_r_low"],
+  [13.6, "stand+rub_wrist_r"],
+  [14.6, "stand+rub_wrist_r"],
+  [15.0, "stand+hammer_r_low"],
+  [15.5, "stand+hammer_r_low"],
+]

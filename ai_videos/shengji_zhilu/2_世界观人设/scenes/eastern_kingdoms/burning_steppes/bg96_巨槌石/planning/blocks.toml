@@ -1,0 +1,230 @@
+# 巨槌石 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 本图原点 ＝ 区级平面图（bg89）坐标 (1950, 520)：本地 x = 区 x − 1950，本地 y = 区 y − 520。
+
+[meta]
+bg = "bg96"
+name_zh = "巨槌石"
+size_m = [500, 500]
+px_per_m = 3.2
+scale_src = "推定"
+# 2026-09-25 场景总审：删去「东山墙（隔窄沟）」——区级 terrain 的东山墙在本场地东缘外约 50–70 m，中间是南北窄谷 bg98；熔炉位置改 推定（原典只说「丘顶」）；熔岩溪延到丘脚外。
+scale_note = "场地取区级平面图 b907（≈2170,754，380 × 360 m）外扩到 500 × 500 m。岩丘轮廓、熔岩溪与东南支路由区级图 terrain.toml 平移换算（地图量取）；熔炉、营棚、骨堆、坡道、台地的位置与尺寸无一手出处——区图两处图标（≈220,230 / ≈112,319）只给出营地大致落在丘顶与西坡，其余按世界树「坡上营棚与骨堆 · 丘顶熔炉」推定"
+# 世界树画面：东北角一座顶部平坦的巨大岩丘，坡上散着食人魔的粗木营棚与骨堆，丘顶有一口熔炉
+absent = [
+    "任何人物、巨人住户与动物（默认空营）",
+    "燃着的炉火、营火、火把、灯笼（熔炉与火塘是冷的；暖光只来自熔岩溪与泉眼）",
+    "石砌城墙、塔楼、城门（营地只有粗木棚与木桩）",
+    "南坡与东坡的上下路（只有西坡一条坡道）",
+    "旗帜、图腾上的文字与任何标识",
+    "任何水体、草木与绿色",
+    "4.0.3a 之后的任何改动",
+]
+
+[[ridge]]
+name = "平顶巨岩丘（丘顶高约 120 m）"
+src = "地图量取"
+height_m = 120
+poly = [[81, 28], [188, 9], [301, 52], [381, 148], [397, 282], [354, 394], [242, 421], [108, 367], [28, 260], [17, 121]]
+
+[[water]]
+name = "熔岩溪（丘顶泉眼→西→顺西南岩缝淌到丘脚）"
+src = "地图量取"
+width_m = 12
+depth_m = 2
+path = [[215, 76], [205, 148], [103, 169], [90, 228], [111, 282], [167, 330], [162, 375], [160, 398]]
+
+[[road]]
+name = "东南支路（掠过西南角，通东南山口）"
+src = "地图量取"
+width_m = 7
+path = [[0, 428], [95, 490], [110, 500]]
+
+[[road]]
+name = "上丘坡道（唯一上下路，爬西坡）"
+src = "推定"
+width_m = 6
+path = [[40, 453], [45, 400], [70, 350], [80, 300], [60, 250], [60, 192], [70, 160], [130, 110], [185, 96]]
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p93"
+face = "southwest"
+into_ridge = true
+name = "丘顶熔炉（黑石红泥垒，炉口朝西南，冷）"
+xy = [195, 78]
+size = [8, 8]
+h_m = 4
+src = "推定"
+note = "世界树「丘顶有一口熔炉」；位置推定在泉眼西侧。旁靠整张兽皮缝的大风箱"
+
+[[block]]
+id = "b02"
+kind = "pool"
+face = "south"
+into_ridge = true
+over_water = true
+name = "丘顶熔岩泉眼"
+xy = [215, 76]
+size = [10, 8]
+h_m = 0
+src = "地图量取"
+note = "区图熔岩溪的起点"
+
+[[block]]
+id = "b03"
+kind = "rock_shelf"
+face = "south"
+into_ridge = true
+name = "西坡半坡台地"
+xy = [55, 192]
+size = [50, 44]
+h_m = 45
+src = "推定"
+note = "比丘脚高四五十米；区图西坡图标（≈112,319）落在熔岩溪下游，台地上移到溪西侧的西坡中段（推定）"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p94"
+face = "south"
+may_overlap = true
+into_ridge = true
+name = "半坡营棚·北"
+xy = [45, 178]
+size = [12, 10]
+h_m = 8
+src = "推定"
+note = "整棵树干捆墙、兽皮压顶，门洞高过常人两倍"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p94"
+face = "west"
+may_overlap = true
+into_ridge = true
+name = "半坡营棚·东"
+xy = [70, 196]
+size = [12, 10]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p94"
+face = "north"
+may_overlap = true
+into_ridge = true
+name = "半坡营棚·南"
+xy = [44, 206]
+size = [12, 10]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "yard"
+face = "south"
+may_overlap = true
+into_ridge = true
+name = "木桩兽皮绳围出的踩平空地"
+xy = [56, 192]
+size = [22, 16]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p85"
+face = "south"
+may_overlap = true
+into_ridge = true
+name = "石围火塘（冷灰余烬）"
+xy = [56, 192]
+size = [4, 4]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p94"
+face = "south"
+name = "南坡脚营棚·西"
+xy = [190, 425]
+size = [12, 10]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p94"
+face = "south"
+name = "南坡脚营棚·东"
+xy = [226, 432]
+size = [12, 10]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p92"
+face = "south"
+may_overlap = true
+into_ridge = true
+name = "骨堆·半坡"
+xy = [32, 192]
+size = [8, 6]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p92"
+face = "south"
+name = "骨堆·南坡脚"
+xy = [208, 446]
+size = [8, 6]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p84"
+face = "southwest"
+name = "坡道口粗木柱·西"
+xy = [36, 446]
+size = [2, 2]
+h_m = 6
+src = "推定"
+note = "比人高三倍，柱顶绑兽骨，营地入口标记"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p84"
+face = "southwest"
+name = "坡道口粗木柱·东"
+xy = [48, 446]
+size = [2, 2]
+h_m = 6
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg96-c1"
+eye = [250, 460]
+target = [250, 250]
+eye_h = 16.7
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

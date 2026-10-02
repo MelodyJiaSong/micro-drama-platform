@@ -1,0 +1,242 @@
+# 林中树居 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地中心 ≈ 区图 [62, 50.5]（区级 b906，地图量取）；巨树东侧南北土路 = bg413 terrain「东北出路」、东与东南弧形矮坡 = 「林中树居环丘」、西北山体 = 「狼嚎谷山群」南缘，均平移换算后按区图相对方位摆；树上结构全部推定。
+
+[meta]
+bg = "bg419"
+name_zh = "林中树居"
+size_m = [360, 360]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "世界画面只有「参天巨树 + 多层木台与旋梯」；主干直径约 18 m、三层平台 8 / 20 / 34 m 为推定。场地放大到 360 × 360 m 把东侧土路、路外弧形矮坡与西北山脚一并框进来"
+# 世界树画面：一株参天巨树周围搭起的多层木台与旋梯，树干上开出窗口，平台边缘垂下绳梯
+absent = [
+    "任何人物、坐骑与角鹰兽（平台上的居民属 shot 层，不进底图）",
+    "任何火光：篝火、火把、灯笼、烛火，窗洞里没有灯",
+    "树下另建的房屋、石砌建筑、围墙与寨门（整座据点就是这一棵树）",
+    "第二株同等高度的巨树（全区只有这一株高出林冠）",
+    "飞行点与栖架（旧世灰谷唯一的联盟飞行点在湖心小镇）",
+    "河流与湖面（最近的河在东面矮坡之外）",
+    "文字招牌、纹章旗帜与训练假人",
+    "4.0.3 之后的新建筑与新营地",
+]
+
+[[ridge]]
+name = "弧形矮坡（土路外侧，由北向东南半包巨树）"
+poly = [[278, 30], [322, 55], [350, 160], [342, 280], [296, 352], [266, 342], [298, 262], [308, 158], [288, 72]]
+height_m = 40
+src = "地图量取"
+note = "区图围着巨树的一圈短线坡；平面走向按区图相对方位摆，高度推定"
+
+[[ridge]]
+name = "西北山体南缘（林梢之上的灰褐山体）"
+poly = [[0, 0], [130, 0], [100, 38], [48, 78], [0, 100]]
+height_m = 150
+src = "地图量取"
+note = "bg413 terrain「狼嚎谷山群」的南缘伸进本场地西北角；只画入画的一截"
+
+[[road]]
+name = "南北土路（巨树东侧约 80 m，北上费伍德口、南下主干道）"
+path = [[252, 0], [254, 120], [250, 240], [242, 360]]
+width_m = 6
+src = "地图量取"
+note = "bg413 terrain「东北出路」，压着双车辙"
+
+[[road]]
+name = "南侧窄土径（空地 → 蕨丛 → 土路）"
+path = [[172, 226], [178, 268], [212, 298], [250, 300]]
+width_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p373"
+face = "south"
+name = "巨树主干（深灰泛银，树瘤掏成拱窗）"
+xy = [170, 180]
+size = [18, 18]
+h_m = 90
+src = "原典方位"
+note = "世界画面「一株参天巨树」；高度推定，只有它高出林冠"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p391"
+face = "south"
+name = "一层环干木平台"
+xy = [170, 180]
+size = [34, 34]
+h_m = 8
+src = "推定"
+note = "镂空弧形木栏，栏上缠开白花的藤"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p391"
+face = "southeast"
+name = "二层木平台（朝东南）"
+xy = [184, 194]
+size = [14, 10]
+h_m = 20
+rot = 45
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p391"
+face = "northwest"
+name = "三层木平台（朝西北）"
+xy = [157, 167]
+size = [12, 9]
+h_m = 34
+rot = 45
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p391"
+face = "south"
+name = "贴干木旋梯（唯一一道）"
+xy = [170, 192]
+size = [5, 5]
+h_m = 34
+src = "推定"
+note = "绕干盘旋串联三层；一块断踏板用绳绑住"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p387"
+face = "east"
+name = "粗麻绳梯（平台东缘垂下）"
+xy = [188, 178]
+size = [1.5, 1.5]
+h_m = 8
+src = "推定"
+note = "下端离地一人多高"
+
+[[block]]
+id = "b07"
+kind = "asset"
+parts = [{asset = "p389", at = [-1.2, 0.4], yaw = 0}, {asset = "p389", at = [-0.1, 0.5], yaw = -5}, {asset = "p389", at = [1.2, 0.3], yaw = 8}]
+face = "south"
+name = "储物木箱（深紫布）与低木凳"
+xy = [178, 168]
+size = [4, 2.5]
+h_m = 9
+src = "推定"
+note = "摆在一层平台上"
+
+[[block]]
+id = "b08"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "巨根台地（根脊分割的鼓起空地）"
+xy = [170, 180]
+size = [90, 90]
+h_m = 1.5
+src = "推定"
+note = "根脊辐射十几米；外缘齐腰蕨丛与淡紫野花"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p377"
+face = "south"
+name = "折断巨枝（空地北侧，断口长苔）"
+xy = [166, 142]
+size = [26, 3]
+h_m = 2
+rot = 15
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p386"
+face = "south"
+name = "灰白石础（刻磨浅的叶纹）"
+xy = [134, 148]
+size = [1.2, 1.2]
+h_m = 0.8
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p391"
+face = "south"
+name = "倒扣藤篮的矮木架"
+xy = [186, 202]
+size = [3, 1.5]
+h_m = 1.6
+src = "推定"
+note = "东南两道根脊之间"
+
+[[block]]
+id = "b12"
+kind = "palisade"
+face = "south"
+count = 1
+name = "拴缰木桩列（土路西侧）"
+xy = [246, 200]
+size = [1, 18]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 40
+name = "古树林·西（只到巨树腰部）"
+xy = [55, 230]
+size = [100, 250]
+h_m = 45
+src = "推定"
+note = "树丛；银灰树干又直又密"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 40
+name = "古树林·北"
+xy = [185, 60]
+size = [120, 70]
+h_m = 45
+src = "推定"
+note = "树丛"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 40
+name = "古树林·南（窄土径两侧）"
+xy = [150, 310]
+size = [120, 90]
+h_m = 45
+src = "推定"
+note = "树丛"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg419-c1"
+eye = [331, 180]
+target = [180, 180]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

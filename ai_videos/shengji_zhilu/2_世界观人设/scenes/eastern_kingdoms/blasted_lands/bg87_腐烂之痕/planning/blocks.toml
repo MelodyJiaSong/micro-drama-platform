@@ -1,0 +1,175 @@
+# 腐烂之痕 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg87"
+name_zh = "腐烂之痕"
+size_m = [700, 680]
+px_per_m = 2.2
+grid_m = 50
+scale_src = "推定"
+scale_note = "盆地本体取区级平面图 b907（区图灰色盆地，地图量取；2026-09-24 区级重量为 560 × 500 m），四周外放一圈把西 / 南 / 东外环山的内坡框进来；外环山线形与盆内一切块均为推定"
+# 世界树画面：大地上一道巨大的焦黑裂痕，坑底冒着绿色毒雾，恶魔的骨骸与烧融的岩块混在一起
+# 区图：西南一片灰色盆地，西 / 南 / 东三面外环山，北面隔一道矮脊接西北山体；东北角山缝通红原西南角与主干道尽头（2026-09-24 人审改）
+absent = [
+    "任何人物、动物与活着的怪物（默认空场）",
+    "建筑、营帐、祭坛、传送门、旗帜与任何人造物",
+    "会发光的雾、裂缝、骨头与符文（雾是冷的，不发光）",
+    "火、火星、流动的熔岩与冒烟的余烬（熔岩早已冷凝）",
+    "草、灌木、树与任何活的植被",
+    "河流、湖泊与积水",
+    "红原那种铁锈红龟裂地（这里是焦黑与灰）",
+    "雪、雨、雷电与夜景",
+    "4.0.3 之后本区新增的任何地貌与据点",
+]
+
+[[ridge]]
+name = "西外环山（隔开西邻区）"
+poly = [[0, 0], [130, 0], [95, 140], [60, 300], [70, 480], [110, 600], [0, 640]]
+height_m = 55
+src = "推定"
+
+[[ridge]]
+name = "北侧矮脊（与西北山体之间）"
+poly = [[130, 0], [520, 0], [500, 38], [310, 62], [160, 42]]
+height_m = 30
+src = "推定"
+
+[[ridge]]
+name = "东外环山（隔开黑暗之门坑地一侧）"
+poly = [[560, 0], [700, 0], [700, 440], [660, 420], [600, 260], [575, 110]]
+height_m = 50
+src = "推定"
+
+[[ridge]]
+name = "南外环山 + 区南界"
+poly = [[0, 640], [110, 600], [260, 590], [420, 620], [570, 596], [700, 540], [700, 680], [0, 680]]
+height_m = 55
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "焦黑主裂痕（东北→西南斜贯盆底，深不见底）"
+xy = [345, 330]
+size = [440, 32]
+h_m = 0
+rot = -40
+src = "推定"
+note = "世界树「大地上一道巨大的焦黑裂痕」；块只标平面位置，裂缝向下深陷"
+
+[[block]]
+id = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "低洼雾池（灰绿冷雾最浓处）"
+xy = [210, 430]
+size = [150, 100]
+h_m = 0
+src = "推定"
+note = "世界树「坑底冒着绿色毒雾」；雾贴地、不发光"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p72"
+face = "south"
+name = "巨型有角骨骸（半陷在裂痕北沿）"
+xy = [400, 225]
+size = [42, 18]
+h_m = 7
+rot = -40
+src = "推定"
+note = "世界树「恶魔的骨骸」；头骨带一对向后弯的巨角"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p72"
+face = "south"
+name = "散架肋笼（第二具骨骸）"
+xy = [300, 470]
+size = [26, 20]
+h_m = 4
+rot = -15
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p64"
+face = "south"
+count = 10
+name = "冷凝熔岩块群（与骨骸混堆）"
+xy = [255, 225]
+size = [70, 48]
+h_m = 5
+rot = 20
+src = "推定"
+note = "世界树「烧融的岩块」；早已冷凝，玻璃质黑壳，不发光不发烫"
+
+[[block]]
+id = "b06"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "烧结玻璃壳地面"
+xy = [480, 440]
+size = [120, 80]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "塌陷焦坑（圆形，坑壁焦黑）"
+xy = [555, 300]
+size = [44, 44]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p65"
+face = "south"
+name = "斜插紫黑岩柱"
+xy = [165, 150]
+size = [12, 10]
+h_m = 18
+rot = 25
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "plaza"
+face = "southwest"
+count = 1
+may_overlap = true
+name = "东北山缝（通红原西南角与主干道尽头）"
+xy = [538, 40]
+size = [36, 26]
+h_m = 0
+rot = -30
+src = "推定"
+note = "区图上红原西南角与灰色盆地相接的豁口；缝外南侧是 bg84 台地"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg87-c1"
+eye = [350, 626]
+target = [350, 340]
+eye_h = 23.3
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

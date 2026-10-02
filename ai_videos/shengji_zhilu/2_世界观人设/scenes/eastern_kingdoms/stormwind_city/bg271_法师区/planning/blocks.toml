@@ -1,0 +1,265 @@
+# 法师区 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 街区外廓取区级平面图 b904（地图量取 147.2 × 128.8 m）；东北运河、西北花园区、南西城墙的相对方位取区级卡与世界树；
+# 高塔居中、水井在街心取世界树（原典方位），各店铺落位与街巷走向全部推定。
+
+[meta]
+bg = "bg271"
+name_zh = "法师区"
+size_m = [180, 160]
+px_per_m = 8.0
+scale_src = "推定"
+scale_note = "区级平面图 b904 法师区 147.2 × 128.8 m（地图量取）外扩到 180 × 160 m，含东北角运河与南西两面城墙；坡顶比桥头高约 10 m 为推定（世界树：塔区入口比花园区高约 40 码）"
+# 世界树画面：一座爬满深绿藤蔓的高塔统领全区，四周是两层的裁缝铺与仓库，门口堆着捆扎布匹与封蜡陶罐，沿街摆着露天咖啡座
+absent = [
+    "成排传送门的塔内大厅（8.1.5）",
+    "发光符文、悬浮书本、法阵光、魔法粒子（街面默认态零魔法光）",
+    "任何人物（法师、裁缝、食客都属 shot 层）",
+    "火、烛火、灯笼、炼金炉火（都在室内，不入本档）",
+    "可读的招牌与店名（招牌板空白）",
+    "城门（南西两面只有城墙，没有门）",
+    "港口、飞行坐骑（旧世没有）",
+]
+
+[[ridge]]
+name = "塔丘（坡顶台地，全城海拔最高）"
+poly = [[50, 75], [110, 70], [120, 110], [100, 135], [55, 130], [40, 105]]
+height_m = 10
+src = "推定"
+note = "世界树：全城海拔最高的一块；台地轮廓与位置推定"
+
+[[water]]
+name = "东北角运河（隔开教堂广场 / 贸易区）"
+path = [[110, 0], [145, 25], [180, 50]]
+width_m = 18
+depth_m = 4
+src = "地图量取"
+
+[[road]]
+name = "主街（桥头 → 圆井 → 塔脚）"
+path = [[150, 32], [118, 58], [92, 84]]
+width_m = 8
+src = "推定"
+note = "锚点机位站在桥头朝西南仰看"
+
+[[road]]
+name = "下坡窄街（圆井 → 西北花园区）"
+path = [[118, 58], [70, 42], [12, 30]]
+width_m = 5
+src = "原典方位"
+note = "世界树：法师区往西北即花园区"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p295"
+face = "south"
+into_ridge = true
+name = "藤蔓细高石塔"
+xy = [80, 100]
+size = [16, 16]
+h_m = 45
+src = "原典方位"
+note = "世界树：法师区正中，全城采样点海拔最高"
+
+[[block]]
+id = "b02"
+kind = "stair"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "塔外螺旋坡道（外圈）"
+xy = [80, 100]
+size = [22, 22]
+h_m = 45
+src = "原典方位"
+note = "世界树：露天螺旋石坡道盘绕数圈直通塔顶，矮石栏"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p307"
+face = "south"
+name = "街心木架辘轳圆井"
+xy = [116, 62]
+size = [4, 4]
+h_m = 3
+src = "原典方位"
+note = "中文 GM 坐标表「法师区，水井」"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p289"
+face = "west"
+name = "街角餐馆"
+xy = [130, 80]
+size = [16, 12]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "tables"
+face = "south"
+count = 3
+name = "餐馆门外露天木桌"
+xy = [128, 69]
+size = [10, 5]
+h_m = 0.8
+src = "推定"
+note = "世界树：沿街摆着露天咖啡座；摆在餐馆门外为推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p289"
+face = "southwest"
+name = "布料铺（桥头右，门口布捆与封蜡陶罐）"
+xy = [124, 38]
+size = [14, 10]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p289"
+face = "southwest"
+name = "法杖铺（窄高店面）"
+xy = [146, 52]
+size = [8, 12]
+h_m = 10
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p289"
+face = "southwest"
+name = "草药铺（檐下倒挂干草药）"
+xy = [98, 58]
+size = [14, 12]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p289"
+face = "west"
+name = "仓库（木吊门与滑轮吊杆）"
+xy = [140, 104]
+size = [18, 14]
+h_m = 11
+src = "推定"
+note = "世界树：四周是两层的裁缝铺与仓库；位置推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p289"
+face = "southeast"
+name = "成衣铺"
+xy = [60, 62]
+size = [16, 12]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p289"
+face = "northeast"
+name = "门面不起眼的小酒馆（地下地窖另立 bg）"
+xy = [34, 122]
+size = [14, 12]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p289"
+face = "east"
+count = 3
+name = "街屋群·西坡"
+xy = [26, 82]
+size = [20, 24]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "南城墙"
+xy = [90, 154]
+size = [180, 8]
+h_m = 14
+src = "推定"
+note = "法师区在城西南角（世界树），南、西贴城墙；区级城墙这两段也是推定"
+
+[[block]]
+id = "b14"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "西城墙"
+xy = [4, 80]
+size = [8, 140]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p302"
+face = "south"
+count = 3
+may_overlap = true
+name = "花园区树冠（界外西北，属 bg275）"
+xy = [22, 14]
+size = [30, 18]
+h_m = 15
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "arch_bridge"
+face = "south"
+count = 1
+over_water = true
+name = "桥头石拱桥"
+xy = [150, 26]
+size = [5, 18]
+h_m = 2.5
+rot = 54
+src = "推定"
+note = "锚点机位就站在这座桥的西南桥头"
+
+[[block]]
+id = "b17"
+kind = "arch_bridge"
+face = "south"
+count = 1
+over_water = true
+name = "下游较宽石拱桥（去商业街区）"
+xy = [128, 13]
+size = [7, 16]
+h_m = 2.5
+rot = 54
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg271-c1"
+eye = [90, 13]
+target = [90, 80]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

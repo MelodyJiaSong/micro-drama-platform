@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 
 LINK_SUFFIX: str = ".link.json"
@@ -39,6 +40,14 @@ class AssetLink:
 
 def is_link_file(path: Path) -> bool:
     return path.name.endswith(LINK_SUFFIX)
+
+
+@lru_cache(maxsize=8)
+def _resolved_root(root: Path) -> Path:
+    # The tree reads thousands of links per build (follow-up 173: one per
+    # block under every bg's `assets/`); re-resolving the same root for each
+    # was half of all `resolve()` time in `/api/tree`.
+    return root.resolve(strict=False)
 
 
 def read(root: Path, link_file: Path) -> AssetLink | None:
@@ -64,7 +73,7 @@ def read(root: Path, link_file: Path) -> AssetLink | None:
         return None
 
     resolved = (root / normalized).resolve(strict=False)
-    root_resolved = root.resolve(strict=False)
+    root_resolved = _resolved_root(root)
     if root_resolved not in resolved.parents:
         return None
     if resolved.is_symlink() or not resolved.is_file():

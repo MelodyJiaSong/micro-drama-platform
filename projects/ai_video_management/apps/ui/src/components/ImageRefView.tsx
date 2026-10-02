@@ -13,6 +13,7 @@ import { extractFirstFencedCode, replaceFirstFencedCode } from "../lib/promptEdi
 import { ApiError, type FileResult } from "../types";
 import { Renderer } from "../markdown/renderer";
 import { ParseFallback } from "./ParseFallback";
+import { ZoomableImage } from "./ZoomableImage";
 
 export interface ImageRefViewProps {
   primaryFile: FileResult;
@@ -95,7 +96,7 @@ export function ImageRefView({ primaryFile, primaryPath, knownPaths, onSaved }: 
       <div className="image-ref-view image-ref-view-img-only">
         <header><h2>{layout.filename}</h2></header>
         <div className="image-ref-img-wrapper">
-          <img
+          <ZoomableImage
             src={mediaUrl(primaryPath, primaryFile.mtime)}
             alt={`${layout.filename} 立绘`}
             className="image-ref-img"
@@ -183,7 +184,7 @@ export function ImageRefView({ primaryFile, primaryPath, knownPaths, onSaved }: 
             </header>
             {companionImage ? (
               <div className="image-ref-img-wrapper">
-                <img
+                <ZoomableImage
                   src={mediaUrl(layout.expectedPngPath.endsWith(".png") && !companionMissing
                     ? layout.expectedPngPath : layout.expectedJpgPath, companionImage.mtime)}
                   alt={`${layout.stem} 立绘`}

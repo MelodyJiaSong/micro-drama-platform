@@ -1,4 +1,5 @@
 import type { TreeNode } from "../types";
+import { CHARACTER_DIR_RE } from "./characterDir";
 
 export interface DramaChoice {
   path: string;
@@ -47,7 +48,7 @@ export function extractDramas(tree: TreeNode | null): DramaChoice[] {
     const chDir = findAssetDir(drama, "characters");
     if (chDir) {
       for (const c of chDir.children ?? []) {
-        if (c.type === "directory" && /^c\d+(_.*)?$/.test(c.name)) {
+        if (c.type === "directory" && CHARACTER_DIR_RE.test(c.name)) {
           characters.push(c.name);
         }
       }
@@ -64,7 +65,7 @@ export interface DramaAssets {
   scenes: string[];
 }
 
-const _CHAR_DIR_RE = /^c\d+(?:_(.*))?$/;
+const _CHAR_DIR_RE = CHARACTER_DIR_RE;
 const _SCENE_DIR_RE = /^s\d+(?:_(.*))?$/;
 
 function _stripPrefix(folder: string, re: RegExp): string {

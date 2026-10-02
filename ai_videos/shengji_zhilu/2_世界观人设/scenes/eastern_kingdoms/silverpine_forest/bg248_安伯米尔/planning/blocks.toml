@@ -1,0 +1,254 @@
+# 安伯米尔 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 本图原点 ＝ 区级 bg247 坐标 (2180, 1400)；山脊 / 村路按 bg247 terrain.toml 平移裁切，磨坊 / 石塔 / 农舍按区图图标量取。
+
+[meta]
+bg = "bg248"
+name_zh = "安伯米尔"
+size_m = [400, 360]
+px_per_m = 3.5
+scale_src = "地图量取"
+scale_note = "区图 1 px ≈ 3.833 m（bg247 WorldMapArea 换算）；场地取谷底盆地 400 × 360 m，原点 ＝ bg247 (2180, 1400)。坐标点 [61, 57] 落在北坡 (163, 59)；磨坊 / 城堡 / 农舍+田三枚图标在其东南谷底，按图标量取。民居八座的具体位置、溪流走向为推定"
+# 世界树画面：山谷里的人类村落，石屋加木顶，中央一座水车磨坊，窗里透着灯火
+absent = [
+    "人物、牲畜与坐骑（默认态画面空无一人）",
+    "烟囱冒烟、火堆、火把、灯笼与路灯（小窗里的暖黄灯光是唯一人工光源）",
+    "桥（村路不跨溪，只在磨坊门前有一块压在水渠上的厚木板）",
+    "环村城墙与城门（村子没有围墙）",
+    "紫色魔法光、发光符文与地上法阵",
+    "整村被传送走后的空谷（4.0.3a 剧情）",
+    "雪与积雪",
+    "阔叶林、翠绿草地与丰收的庄稼",
+]
+
+[[ridge]]
+name = "北坡与东坡松林山（中东山地南麓）"
+poly = [[0, 0], [400, 0], [400, 330], [357, 294], [319, 209], [328, 125], [292, 75], [165, 102], [112, 163], [35, 209], [0, 228]]
+height_m = 140
+src = "地图量取"
+
+[[ridge]]
+name = "南面三角山（西段）"
+poly = [[0, 338], [60, 322], [119, 313], [200, 318], [215, 330], [215, 360], [0, 360]]
+height_m = 100
+src = "地图量取"
+
+[[ridge]]
+name = "东南山脚（豁口东侧）"
+poly = [[245, 360], [248, 335], [290, 320], [357, 294], [400, 330], [400, 360]]
+height_m = 120
+src = "地图量取"
+
+[[water]]
+name = "磨坊溪（东北山坳→水车→西口外）"
+path = [[322, 152], [290, 155], [230, 160], [160, 168], [110, 188], [50, 212], [0, 240]]
+width_m = 4
+depth_m = 1
+src = "推定"
+
+[[road]]
+name = "磨坊村路（西口→谷底南缘→东南豁口出谷）"
+path = [[0, 262], [43, 256], [196, 256], [222, 300], [230, 340], [230, 360]]
+width_m = 5
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p273"
+face = "south"
+name = "水车磨坊（下石上木两层，水车在南侧溪上）"
+xy = [150, 158]
+size = [16, 12]
+h_m = 11
+src = "地图量取"
+note = "区图磨坊图标；直径约 5 m 的木水车贴南墙立在石砌水渠上"
+
+[[block]]
+id = "b02"
+kind = "plaza"
+face = "south"
+may_overlap = true
+name = "石板空场"
+xy = [175, 215]
+size = [36, 30]
+h_m = 0
+src = "推定"
+note = "西侧一座石砌饮马槽"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p272"
+face = "east"
+name = "民居·空场西北"
+xy = [132, 200]
+size = [12, 9]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p272"
+face = "east"
+name = "民居·空场西南"
+xy = [130, 232]
+size = [12, 9]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p272"
+face = "south"
+name = "民居·溪南（磨坊东）"
+xy = [160, 185]
+size = [11, 8]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p272"
+face = "south"
+name = "民居·溪南（空场东北）"
+xy = [195, 183]
+size = [12, 8]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p272"
+face = "west"
+name = "民居·二层木构出挑（空场东）"
+xy = [222, 205]
+size = [12, 9]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p272"
+face = "west"
+name = "民居·二层木构出挑（空场东南）"
+xy = [218, 238]
+size = [12, 9]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p272"
+face = "south"
+name = "民居·路北（西）"
+xy = [165, 246]
+size = [12, 8]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p272"
+face = "south"
+name = "民居·路北（东）"
+xy = [195, 247]
+size = [12, 8]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p274"
+face = "west"
+name = "两层石砌大屋（包铁木门、三级石阶）"
+xy = [245, 190]
+size = [20, 14]
+h_m = 11
+src = "地图量取"
+note = "区图城堡图标；全村最齐整的建筑"
+
+[[block]]
+id = "b12"
+kind = "tower"
+face = "west"
+name = "四层方石塔（尖锥石板顶）"
+xy = [262, 186]
+size = [9, 9]
+h_m = 22
+src = "地图量取"
+note = "区图城堡图标；连在大屋东端"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p271"
+face = "south"
+name = "东北坳口木屋"
+xy = [285, 98]
+size = [10, 7]
+h_m = 6
+src = "地图量取"
+note = "区图农舍图标 (640, 385) px 原落在坡上，下移到坳口平地"
+
+[[block]]
+id = "b14"
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "坳口田（翻过、空着）"
+xy = [300, 128]
+size = [36, 26]
+h_m = 0
+src = "地图量取"
+note = "区图田地图标"
+
+[[block]]
+id = "b15"
+kind = "low_wall"
+face = "south"
+name = "北坡脚乱石挡土墙"
+xy = [85, 184]
+size = [45, 1]
+h_m = 1
+rot = -31
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "palisade"
+face = "south"
+name = "路边歪倒的木栅栏"
+xy = [100, 263]
+size = [20, 1]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b17"
+kind = "rock_shelf"
+face = "south"
+name = "西口土坎（机位）"
+xy = [14, 272]
+size = [12, 8]
+h_m = 2
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg248-c1"
+eye = [200, 331]
+target = [200, 180]
+eye_h = 13.3
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

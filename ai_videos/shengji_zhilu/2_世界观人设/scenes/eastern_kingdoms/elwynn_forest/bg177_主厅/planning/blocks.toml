@@ -1,0 +1,190 @@
+# 主厅 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 室内局部坐标：x 轴 ＝ 中厅纵轴（x 小的一端是正门，x 大的一端是祭台）；y 小的一侧通图书馆侧厅、y 大的一侧通武器大厅
+# （世界树：图书馆在北、武器大厅在南）。**不代表精确罗盘方位**——bg2 v3 卡判为南北向长厅，见 md 场景定位。
+
+[meta]
+bg = "bg177"
+name_zh = "主厅"
+size_m = [40, 20]
+interior = true
+px_per_m = 30.0
+grid_m = 5
+scale_src = "推定"
+scale_note = "室内尺寸无一手出处：中厅约 38×18 m、中殿脊高约 9 m、侧廊约为其一半高，按乡间修道院体量推定；实机截图到手后校正"
+# 世界树画面：进门即是的长条中厅，两排灰石立柱撑起外露木桁架，高窗把斜光切成一道道光柱落在磨亮的石板地上，尽头墙面挂着暴风城纹章挂毯
+absent = ["整面彩绘玫瑰窗 / 镀金（乡间修道院减等，只有巴掌大一块钴蓝玻璃）", "尖拱石穹顶（是外露木桁架）", "训练假人 / 木桩靶（4.0.3a 才加进北郡）", "火把 / 火盆 / 吊灯（唯一人工光源是祭台两座铁烛架）", "回廊庭院 / 地下室", "剧情道具（分面包的柳条筐、任务羊皮纸等归 shot 层）"]
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p164"
+face = "east"
+opening = true
+name = "双开橡木正门（通前庭）"
+xy = [0.8, 10]
+size = [1.5, 4]
+h_m = 4.5
+src = "推定"
+note = "机位就站在正门里侧朝 x 正向看；ep03 S07 主角在此回头"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p165"
+face = "south"
+count = 5
+layout = "row"
+name = "左排灰石圆柱（五根）"
+xy = [21, 5.5]
+size = [26, 1]
+h_m = 9
+src = "推定"
+note = "世界树画面「两排灰石立柱」；根数推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p165"
+face = "south"
+count = 5
+layout = "row"
+name = "右排灰石圆柱（五根）"
+xy = [21, 14.5]
+size = [26, 1]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "tables"
+face = "east"
+count = 3
+name = "近门数排长木凳"
+xy = [12, 10]
+size = [9, 6]
+h_m = 0.5
+src = "推定"
+note = "凳间留过人窄道"
+
+[[block]]
+id = "b05"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "浅色旧石板（治安官站位）"
+xy = [30, 10]
+size = [1.2, 1.2]
+h_m = 0
+src = "推定"
+note = "bg2 / c7 卡锁定的「颜色浅一圈的旧石板」；跨集不许挪"
+
+[[block]]
+id = "b06"
+kind = "altar"
+face = "west"
+count = 1
+name = "尽端石砌祭台（两侧铁烛架）"
+xy = [37, 10]
+size = [2, 4]
+h_m = 1.1
+src = "推定"
+note = "唯一人工光源；台前一级宽石阶"
+
+[[block]]
+id = "b07"
+kind = "low_wall"
+face = "west"
+count = 1
+name = "祭台后墙长挂毯（深蓝底金色立狮纹章）"
+xy = [39.4, 10]
+size = [0.4, 5]
+h_m = 7
+src = "推定"
+note = "上方小圆窗嵌巴掌大一块钴蓝玻璃"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p164"
+face = "south"
+opening = true
+name = "中段侧拱门（通图书馆侧厅）"
+xy = [24, 0.8]
+size = [3, 1.5]
+h_m = 3.5
+src = "原典方位"
+note = "wiki：主厅通向图书馆侧厅；世界树按 NPC 坐标判在北侧"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p164"
+face = "north"
+opening = true
+name = "中段侧拱门（通武器大厅）"
+xy = [24, 19.2]
+size = [3, 1.5]
+h_m = 3.5
+src = "原典方位"
+note = "wiki：主厅通向武器大厅；世界树按 NPC 坐标判在南侧；与 b08 正对"
+
+[[block]]
+id = "b10"
+kind = "hall_shell"
+face = "south"
+count = 1
+name = "左侧耳房（草垫木床与陶水盆）"
+xy = [9, 2.5]
+size = [6, 4]
+h_m = 3.2
+src = "原典方位"
+note = "wiki：主厅两侧房间躺着受伤学员；在近门一半为推定"
+
+[[block]]
+id = "b11"
+kind = "hall_shell"
+face = "north"
+count = 1
+name = "右侧耳房（草垫木床与陶水盆）"
+xy = [9, 17.5]
+size = [6, 4]
+h_m = 3.2
+src = "原典方位"
+note = "同上"
+
+[[block]]
+id = "b12"
+kind = "stair"
+face = "south"
+count = 1
+name = "石旋梯口（上钟塔）"
+xy = [2.5, 17.5]
+size = [3, 3]
+h_m = 9
+src = "推定"
+note = "wiki：主厅通向钟塔；梯口位置推定。旁有空粗木长桌与空木桶"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）：场地被体块占满，放在室内
+[[anchor]]
+key = "bg177-c1"
+eye = [20, 17]
+target = [20, 4]
+eye_h = 1.65
+lens_mm = 24
+inside = true
+note = "室内南端朝北；自动生成，排镜时按需改"
+
+[[anchor]]
+key = "bg177-c2"
+eye = [2.5, 10]
+target = [37, 10]
+eye_h = 1.35
+target_h = 2.2
+lens_mm = 24
+inside = true
+image = "bg177_主厅.png"
+note = "锚点图机位：与场景卡 `场景:` 行同一机位（进门里侧顺纵轴看尽端）；场景图挂成这台相机的背景对账"

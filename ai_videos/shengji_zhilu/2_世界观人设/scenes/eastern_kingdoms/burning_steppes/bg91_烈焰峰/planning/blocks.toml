@@ -1,0 +1,217 @@
+# 烈焰峰 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地 ＝ 区级平面图 b902 的范围（中心 ≈ 1759, 409，220×200 m）；本场地原点 ≈ 区级 (1649, 309)。
+# 北山墙与熔岩河北源的相对方位按区图量取；岩台轮廓、帐篷布局、小道走向无一手出处，全部推定。
+
+[meta]
+bg = "bg91"
+name_zh = "烈焰峰"
+size_m = [220, 200]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "场地外框取区级平面图 b902（区图图标 65.7%, 22.9% 处 220×200 m）；岩台约 130×75 m、高出平原约 60 m 与营内各帐尺寸按小型前哨常识推定"
+# 世界树画面：火山岩台地上的小型部落前哨，几顶兽皮帐与一根图腾柱，红旗被热风吹得笔直，脚下岩缝透出橘光
+absent = [
+    "任何人物、坐骑与动物（栖架上空无一物）",
+    "火把、篝火、灯笼与明火（火塘默认是冷灰余烬）",
+    "草、树与任何绿色植被",
+    "任何水体（崖下那条是熔岩河，不是河水）",
+    "围栏、城墙、石屋与铁刺寨墙（这是兽皮帐前哨，不是营寨）",
+    "第二条上下岩台的路（唯一通道是西南角之字小道）",
+    "4.0.3a 之后的营地改建与新增设施",
+]
+
+[[ridge]]
+name = "北山墙崖壁（向北直上几百米）"
+poly = [[0, 0], [220, 0], [220, 58], [185, 50], [140, 44], [100, 46], [60, 52], [22, 60], [0, 66]]
+height_m = 400
+src = "地图量取"
+
+[[ridge]]
+name = "岩台（高出平原约 60 m，三面陡坎）"
+poly = [[36, 60], [60, 52], [100, 46], [140, 44], [172, 52], [178, 80], [172, 112], [140, 122], [80, 124], [50, 116], [36, 90]]
+height_m = 60
+src = "推定"
+
+[[water]]
+name = "熔岩河北源（Y 形熔岩河的上游，向南流进废墟）"
+path = [[78, 132], [72, 151], [88, 176], [102, 200]]
+width_m = 18
+depth_m = 3
+src = "地图量取"
+
+[[road]]
+name = "之字碎石小道（唯一上下路，下坡接旧都岔道）"
+path = [[52, 116], [38, 134], [60, 146], [42, 162], [58, 180], [54, 200]]
+width_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p83"
+face = "southeast"
+into_ridge = true
+name = "兽皮帐·西一"
+xy = [66, 72]
+size = [7, 7]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p83"
+face = "southeast"
+into_ridge = true
+name = "兽皮帐·西二"
+xy = [86, 63]
+size = [7, 7]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p83"
+face = "south"
+into_ridge = true
+name = "兽皮帐·正中（最大，门帘卷起）"
+xy = [108, 59]
+size = [10, 10]
+h_m = 5.5
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p83"
+face = "southwest"
+into_ridge = true
+name = "兽皮帐·东二"
+xy = [130, 60]
+size = [7, 7]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p83"
+face = "southwest"
+into_ridge = true
+name = "兽皮帐·东一"
+xy = [150, 67]
+size = [7, 7]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p84"
+face = "south"
+into_ridge = true
+name = "图腾柱（三兽首叠刻，顶架弯角）"
+xy = [108, 86]
+size = [2, 2]
+h_m = 10
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p85"
+face = "south"
+into_ridge = true
+name = "石圈火塘（冷灰余烬）"
+xy = [108, 93]
+size = [4, 4]
+h_m = 0.4
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+parts = [{asset = "p82", at = [0, 0.35], yaw = 0}, {asset = "p96", at = [1.35, -0.62], yaw = 0}]
+face = "south"
+into_ridge = true
+name = "剥皮木框与矮鼓"
+xy = [116, 96]
+size = [4, 2]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p81"
+face = "south"
+into_ridge = true
+name = "旗杆·西（正红长旗）"
+xy = [46, 92]
+size = [1, 1]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p81"
+face = "south"
+into_ridge = true
+name = "旗杆·东（正红长旗）"
+xy = [168, 84]
+size = [1, 1]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p80"
+face = "south"
+into_ridge = true
+name = "木栖架（四柱一梁，空）"
+xy = [158, 108]
+size = [10, 4]
+h_m = 7
+rot = -15
+src = "推定"
+note = "架下干草捆与空木槽"
+
+[[block]]
+id = "b12"
+kind = "palisade"
+face = "south"
+name = "护栏木桩列（小道头）"
+xy = [46, 122]
+size = [2, 12]
+h_m = 1.2
+rot = 30
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "plaza"
+face = "south"
+may_overlap = true
+into_ridge = true
+name = "透橘光的细岩缝"
+xy = [96, 100]
+size = [70, 1.5]
+h_m = 0
+rot = 22
+src = "推定"
+note = "世界树画面：脚下岩缝透出橘光"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg91-c1"
+eye = [110, 184]
+target = [110, 100]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

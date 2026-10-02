@@ -1,0 +1,175 @@
+# 摩尔森农场 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg390"
+name_zh = "摩尔森农场"
+size_m = [300, 260]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "区级平面图 b903 给的田垄 + 屋舍范围约 180 × 200 m（区图 1 px ≈ 3.2 m）；本图原点 ＝ 区级 [1089, 994] m，外扩到东北侧土路、取 300 × 260 m。屋舍尺寸按两层农舍与高顶谷仓的常规规模推定，无一手尺寸出处"
+# 世界树画面：荒田中的空农舍，门开着没人，麦茬地里机械收割傀儡一趟趟来回，动作规律得发瘆
+# 区图：斜放的田垄图标在北、两枚屋舍图标在南，西线土路贴东缘南北走过（区级 terrain.toml 西线路段）
+absent = [
+    "任何人物与动物（收割机械是停住的静物，走动属 shot 层）",
+    "燃着的火、炊烟、亮着的灯（马灯不点，烟囱不冒烟）",
+    "风车帆布（本档风车只剩十字木臂，区别于还在转的破帆风车）",
+    "绿色庄稼与青苗（田已荒成灰黄麦茬）",
+    "石砌院墙与围墙（只有半倒的木栅）",
+    "海岸与沙滩（在场地以西两三百米外，画面里只露崖坎上沿与一线海）",
+    "4.0.3a 后的塌陷巨坑与流民帐篷",
+    "飞行点与狮鹫栖架",
+]
+
+[[road]]
+name = "西线土路（区级大道西线，南下月溪镇）"
+path = [[158, 0], [189, 28], [243, 102], [290, 165], [296, 226], [298, 260]]
+width_m = 6
+src = "地图量取"
+
+[[road]]
+name = "院子东侧短车道"
+path = [[170, 232], [240, 230], [296, 226]]
+width_m = 4
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "斜垄荒田（西北—东南斜放，长边顺着土路）"
+xy = [141, 108]
+size = [165, 120]
+h_m = 0
+rot = 45
+src = "地图量取"
+note = "区图上的斜放田垄图标，四角量取 ≈ (39,92)(125,7)(242,124)(157,209)；长边与土路平行，垄沟顺路"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p336"
+face = "east"
+name = "两层木石农舍（前门朝东敞开）"
+xy = [110, 228]
+size = [16, 11]
+h_m = 8
+src = "地图量取"
+note = "区图南端西侧的屋舍图标；下层毛石上层竖木板，石烟囱贴西山墙"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p337"
+face = "northeast"
+name = "高顶木谷仓（大门朝路）"
+xy = [158, 232]
+size = [20, 13]
+h_m = 10
+src = "地图量取"
+note = "区图南端东侧的屋舍图标；一扇门拍倒在地"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p344"
+face = "west"
+name = "秃臂风车（帆布全无）"
+xy = [88, 218]
+size = [6, 6]
+h_m = 14
+src = "推定"
+note = "区图未画风车；按区级「每处农场一架风车」推定，放院子西北角"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p348"
+face = "south"
+name = "圆石井"
+xy = [134, 244]
+size = [3, 3]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "干木水槽"
+xy = [134, 251]
+size = [6, 1.2]
+h_m = 0.8
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "palisade"
+face = "south"
+count = 1
+name = "半倒木栅（院子与田之间）"
+xy = [112, 206]
+size = [80, 1]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p350"
+face = "south"
+name = "锈铁收割机械·前（镰刀臂举着）"
+xy = [128, 34]
+size = [4, 3]
+h_m = 3
+rot = 45
+src = "推定"
+note = "田垄北尾；静物"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p350"
+face = "south"
+name = "锈铁收割机械·后（歪向一侧）"
+xy = [142, 48]
+size = [4, 3]
+h_m = 3
+rot = 45
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p349"
+face = "south"
+name = "缺轮板车"
+xy = [182, 246]
+size = [4, 2]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p346"
+face = "south"
+name = "晾衣绳"
+xy = [98, 246]
+size = [8, 0.4]
+h_m = 2
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg390-c1"
+eye = [150, 21]
+target = [150, 130]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

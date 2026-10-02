@@ -1,0 +1,244 @@
+# 索瑞森神殿 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 方位据上层区图 WorldMap-BlackrockDepths1.jpg（神殿＝法环东北、住宅区正南隔南熔岩沟）与 bg246 块 b913 / 道路「神殿前石桥」。
+# 南北中轴：北桥头 → 殿前平台 → 宽石阶 → 纪念碑 → 巨像（面朝北）→ 南墙下行门洞。殿内陈设无一手尺寸，全部推定。
+# 本场地没有真正的水：[[water]] 是熔岩沟（名字带「熔岩」），借水系折线填面。
+
+[meta]
+bg = "bg802"
+name_zh = "索瑞森神殿"
+size_m = [120, 110]
+px_per_m = 10.0
+scale_src = "推定"
+scale_note = "1.12 副本无区图；相对方位取自上层区图与 bg246 块 b913（40×35 m 只是殿心量取，尺度本身推定）；殿宽 100 m、桥头到南墙约百米、岩顶约 36 m 均为推定"
+grid_m = 50
+# 世界树画面：岩窟中的祭祀大殿，正中立着巨大的矮人先王黑石雕像，石阶两侧火盆长明，殿前一座石桥跨向对岸的住宅区。
+absent = ["天空、日光、月光与任何天气（山腹岩窟）", "殿内的熔岩池与熔岩沟（熔岩只在桥下北沟）", "真正的水、植被与苔藓", "纪念碑凹槽里的铁锤（默认槽空着）", "壁龛里的神像、供品与布幔", "第五只火盆、壁灯与任何冷色光源", "旗帜、纹章与带文字的碑铭", "人物、守卫、祭司与动物（空殿态，属 shot 层）"]
+
+[[ridge]]
+name = "对岸住宅区岩壁（沟北，层叠民居的底脚）"
+poly = [[0, 0], [120, 0], [120, 4], [0, 4]]
+height_m = 30
+src = "地图量取"
+
+[[ridge]]
+name = "西侧实心岩壁（西墙）"
+poly = [[0, 20], [10, 20], [10, 110], [0, 110]]
+height_m = 36
+src = "推定"
+
+[[ridge]]
+name = "东侧实心岩壁（东墙）"
+poly = [[110, 20], [120, 20], [120, 110], [110, 110]]
+height_m = 36
+src = "推定"
+
+[[ridge]]
+name = "南侧实心岩壁（雕像身后南墙）"
+poly = [[10, 101], [110, 101], [110, 110], [10, 110]]
+height_m = 36
+src = "推定"
+
+[[water]]
+name = "南熔岩沟（桥下，东西横贯，非水）"
+path = [[0, 12], [60, 11], [120, 13]]
+width_m = 14
+depth_m = 7
+src = "地图量取"
+
+[[road]]
+name = "中轴磨亮路心（桥头→石阶脚）"
+path = [[60, 4], [60, 43]]
+width_m = 3
+src = "推定"
+
+[[road]]
+name = "西墙南门洞外往法环"
+path = [[10, 88], [0, 88]]
+width_m = 8
+src = "地图量取"
+
+[[road]]
+name = "南墙门洞下行石阶（往下层岩道）"
+path = [[60, 101], [60, 110]]
+width_m = 3
+src = "推定"
+
+[[block]]
+id = "b01"
+into_ridge = true
+over_water = true
+kind = "arch_bridge"
+face = "north"
+count = 1
+name = "跨沟石桥（矮壮黑石桥栏）"
+xy = [60, 12]
+size = [10, 18]
+h_m = 7
+src = "地图量取"
+note = "bg246 道路「神殿前石桥」；桥面高出熔岩约两层楼（推定）"
+
+[[block]]
+id = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "殿前大石板平台"
+xy = [60, 32]
+size = [80, 22]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "rock_shelf"
+face = "north"
+count = 1
+name = "十几级宽石阶（抬高内殿一层）"
+xy = [60, 49]
+size = [40, 10]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "altar"
+face = "north"
+count = 1
+name = "齐腰高黑石纪念碑（碑顶横长凹槽空着）"
+xy = [60, 64]
+size = [3, 1.2]
+h_m = 1.1
+src = "原典方位"
+note = "世界树备注：1.12 用铁锤在此纪念碑换暗炉钥匙"
+
+[[block]]
+id = "b05"
+kind = "rock_shelf"
+face = "north"
+count = 1
+name = "三级方形基座（四面方折回纹）"
+xy = [60, 76]
+size = [18, 18]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b06"
+may_overlap = true
+kind = "asset"
+asset = "p263"
+face = "north"
+name = "先王黑石巨像（面朝北，双手按立地巨锤）"
+xy = [60, 77]
+size = [10, 8]
+h_m = 24
+src = "原典方位"
+note = "世界树画面：正中巨大的先王黑石雕像；高约 24 m 为推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p256"
+face = "north"
+name = "石阶西侧铁火盆"
+xy = [36, 49]
+size = [1.6, 1.6]
+h_m = 1.4
+src = "原典方位"
+note = "世界树画面：石阶两侧火盆长明"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p256"
+face = "north"
+name = "石阶东侧铁火盆"
+xy = [84, 49]
+size = [1.6, 1.6]
+h_m = 1.4
+src = "原典方位"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p256"
+face = "north"
+name = "雕像西侧铁火盆"
+xy = [45, 76]
+size = [1.6, 1.6]
+h_m = 1.4
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p256"
+face = "north"
+name = "雕像东侧铁火盆"
+xy = [75, 76]
+size = [1.6, 1.6]
+h_m = 1.4
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p257"
+face = "east"
+count = 7
+name = "西列方石柱（阶梯形外挑柱头，柱间浅龛）"
+xy = [15, 61]
+size = [4, 76]
+h_m = 36
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p257"
+face = "west"
+count = 7
+name = "东列方石柱（阶梯形外挑柱头，柱间浅龛）"
+xy = [105, 61]
+size = [4, 76]
+h_m = 36
+src = "推定"
+
+[[block]]
+id = "b13"
+into_ridge = true
+kind = "cave_mouth"
+face = "west"
+count = 1
+name = "西墙靠南低宽门洞（往法环）"
+xy = [9, 88]
+size = [2, 10]
+h_m = 5
+src = "地图量取"
+
+[[block]]
+id = "b14"
+into_ridge = true
+kind = "cave_mouth"
+face = "south"
+count = 1
+name = "南墙根窄门洞（下行石阶口）"
+xy = [60, 100]
+size = [4, 2]
+h_m = 4
+src = "推定"
+note = "「三处入口之一」出自世界树备注；开在雕像身后南墙根是推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）：场地被体块占满，放在室内
+[[anchor]]
+key = "bg802-c1"
+eye = [60, 94]
+target = [60, 22]
+eye_h = 1.65
+lens_mm = 24
+inside = true
+note = "室内南端朝北；自动生成，排镜时按需改"

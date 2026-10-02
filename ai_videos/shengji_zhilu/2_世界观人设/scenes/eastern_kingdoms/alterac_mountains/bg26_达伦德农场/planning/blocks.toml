@@ -1,0 +1,145 @@
+# 达伦德农场 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 区图点位 [42, 17] 落在本场地 (180, 150)；区图 1 px ≈ 2.555 m。
+
+[meta]
+bg = "bg26"
+name_zh = "达伦德农场"
+size_m = [320, 280]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "区图裁切量取：农舍图标在点位西北偏西 ~22 px（≈57 m），矮石丘在西南 ~19 px（≈49 m）、宽 ~33 px（≈85 m），湖东岸在正西 ~47 px（≈120 m），北山脚在正北 ~30 px；农舍 / 谷仓 / 畜栏尺寸按人类农庄常识推定"
+# 世界树画面：被雪埋了一半的农舍与畜栏，木头发黑，雪面没有脚印
+absent = [
+    "任何人物、牲畜与脚印车辙（雪面完全干净）",
+    "炊烟、灯火与任何人工光源（农庄荒了二十来年）",
+    "火烧痕迹（木头发黑是风吹雨淋的旧色）",
+    "有人耕作的田（只剩雪下的旧田埂）",
+    "厚积雪雪原（这里是雪线附近的薄雪缓坡）",
+    "围墙、哨塔与守卫（只是一户农家）",
+    "4.0.3a 后并入希尔斯布莱德丘陵的新布局",
+]
+
+[[water]]
+name = "湖东岸（只入画面左侧远景）"
+path = [[35, 0], [25, 140], [15, 280]]
+width_m = 80
+depth_m = 8
+src = "地图量取"
+
+[[ridge]]
+name = "北缘雪山山脚（向北陡起，东北更高）"
+poly = [[60, 0], [320, 0], [320, 110], [270, 90], [220, 70], [170, 62], [120, 52], [60, 42]]
+height_m = 120
+src = "地图量取"
+
+[[ridge]]
+name = "西南矮石丘"
+poly = [[104, 178], [150, 170], [186, 186], [184, 216], [150, 226], [110, 218], [100, 198]]
+height_m = 12
+src = "地图量取"
+
+[[ridge]]
+name = "东南远处山棱"
+poly = [[250, 280], [290, 240], [320, 228], [320, 280]]
+height_m = 50
+src = "地图量取"
+
+[[road]]
+name = "旧车道（雪面上一道浅凹，往东南伸进高地）"
+path = [[123, 133], [126, 160], [160, 168], [240, 168], [320, 190]]
+width_m = 3
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p15"
+face = "south"
+name = "农舍（石基木架两层，门朝南）"
+xy = [123, 127]
+size = [14, 9]
+h_m = 8
+src = "地图量取"
+note = "北墙、西墙外有齐檐雪堆"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p15"
+face = "south"
+name = "谷仓（靠山一头塌）"
+xy = [146, 108]
+size = [18, 11]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "palisade"
+face = "south"
+count = 1
+name = "劈木栏杆畜栏（半埋）"
+xy = [148, 146]
+size = [26, 18]
+h_m = 1.4
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p363"
+face = "south"
+name = "灰石井台与辘轳"
+xy = [110, 140]
+size = [2, 2]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p29"
+face = "south"
+count = 2
+name = "两棵枯树"
+xy = [108, 112]
+size = [8, 5]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b06"
+into_ridge = true
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "雪下旧田埂格"
+xy = [250, 220]
+size = [110, 64]
+h_m = 0
+src = "推定"
+note = "机位所在的田坡；田里一把歪倒的旧犁"
+
+[[block]]
+id = "b07"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "矮石田墙（塌了几段）"
+xy = [240, 175]
+size = [150, 1]
+h_m = 1
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg26-c1"
+eye = [160, 258]
+target = [160, 140]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

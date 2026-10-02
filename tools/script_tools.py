@@ -18,9 +18,13 @@ playbook 要求每集出两份文件：`script.md`（画面 + 台词）与 `dial
   （目标 ≈ 2.5）折算，同一镜可以混排。念不完就是念不完。
   台词行尾注释里若带时间窗 `【a–bs】`，还要**逐窗**核：同一窗里的念白需时 ≤ 窗长。整镜平均合格、
   局部挤成 4–5 词/秒的情况只有这样才抓得到；一镜里只要有一句带窗，本镜每句都得带。
-- **时长**：每镜 3–30s（`ai_video.md` 全局）；**本仓库还有一条偏好**——避免 4–6s 碎镜。
+  **慢嗓**（剧的 `2_世界观人设/casting.md` 语速栏以「慢 / 很慢 / 极慢」开头的角色）逐窗按 ≤ 2.3 词/秒；
+  casting 写了「那一句反而快」这类例外的，在台词行尾注释里写「语速快」放行（shengji_zhilu ep02 时长节奏审 M9：慢嗓被排到 3 词/秒的天花板）。
+- **时长**：每镜 3–30s（`ai_video.md` 全局）；**本仓库还有一条偏好**——避免 4–6s 碎镜。问过用户、合不了的，
+  列进同一份 `script.toml` 的 `[fragment_ok]`（`ep02 = ["S40"]`，键＝ep 目录名），闸门放行。
 - **合计**：各镜时长之和必须等于文件头声明的本集总时长，且落在单集区间内——
-  默认 90–120s；剧可在 `4_剧本/script.toml` 的 `[episode] min_s / max_s` 改写（取离 ep 最近的一份）。
+  默认 90–120s；剧可在 `4_剧本/script.toml` 的 `[episode] min_s / max_s` 改写（取离 ep 最近的一份）；
+  单集放宽写在同一份的 `[episode_overrides]`（`ep02 = [690, 750]`，键＝ep 目录名）。
 - **场景展示**（剧级 opt-in：`script.toml` 有 `[scenery]` 才启用）：每个场景主体（`场景:` 行第一个 `bgN`）
   在全剧**第一次出现**的那一镜必须有 `- 场景展示: 【a–bs】{方式}：{特点}`，窗长 ≥ 阈值——
   该 bg 所在的区也是第一次出现用 `new_zone_min_s`，否则用 `new_bg_min_s`。「第一次」按集序跨集算；
@@ -55,6 +59,9 @@ _CJK = re.compile(r"[\u4e00-\u9fff]")
 _WIN = re.compile(r"【\s*([0-9.]+)\s*[–-]\s*([0-9.]+)\s*s\s*】")
 CN_CPS_MAX = 5.0
 EN_WPS_MAX = 3.0
+SLOW_WPS_MAX = 2.3          # 慢嗓角色（casting.md 语速栏以 慢 / 很慢 / 极慢 开头）
+_SLOW = re.compile(r"(极慢|很慢|慢)")
+SLOW_EXEMPT = "语速快"      # 行尾注释写了它，这一句不按慢嗓算
 _TOTAL = re.compile(r"\*\*(\d+)s\*\*")
 _SCENERY = re.compile(r"^-\s*场景展示:\s*【\s*([0-9.]+)\s*[–-]\s*([0-9.]+)\s*s\s*】\s*(.*)$", re.M)
 _BG_KEY = re.compile(r"`(bg\d+)`")
@@ -67,7 +74,16 @@ ARCHAIC: tuple[str, ...] = (
 )
 EP_RANGE_DEFAULT: tuple[float, float] = (90.0, 120.0)
 _CFG_KEYS: dict[str, set[str]] = {"episode": {"min_s", "max_s"},
-                                  "scenery": {"new_zone_min_s", "new_bg_min_s"}}
+                                  "scenery": {"new_zone_min_s", "new_bg_min_s", "idle_max_s", "post_trim_zone_s", "post_trim_bg_s"}}
+# 单集覆盖：键是 ep 目录名、值是 [min_s, max_s]（shengji_zhilu follow-up 048：ep02 用户批准放宽）
+_OVERRIDES = "episode_overrides"
+# 用户批准的 4–6s 碎镜：键是 ep 目录名、值是镜号列表（shengji_zhilu ep02 S40，用户 2026-09-30：合并会让精简稿超 2000 字）
+_FRAG_OK = "fragment_ok"
+# 已出片、台词共用一个时间窗的镜（061：一窗多句，字幕只显示得出第一句、对口型也乱；新镜一律一窗一句）：键 epNN、值镜号列表，只减不增
+_SHARED_OK = "shared_window_ok"
+# 同一镜里同一个人说同一句（> 12 字符）两遍：默认报错（用户 2026-10-01，S04 治安官「Hey, citizen!」念了两遍）；确属有意的登记在这里，只减不增：键 epNN、值镜号列表
+_REPEAT_OK = "repeat_ok"
+_EP_DIR = re.compile(r"ep\d{2,}$")
 
 ARCHAIC_EN: re.Pattern[str] = re.compile(
     r"\b(thou|thee|thy|thine|hath|doth|verily|forsooth|'tis|henceforth|hither|thither|whence|wherefore)\b",
@@ -97,17 +113,17 @@ class Shot:
         return [t for k, _w, t, _tail in self.lines if k in ("对白", "OS")]
 
     @staticmethod
-    def need_of(text: str) -> float:
-        return len(_CJK.findall(text)) / CN_CPS_MAX + len(_EN_WORD.findall(text)) / EN_WPS_MAX
+    def need_of(text: str, en_wps: float = EN_WPS_MAX) -> float:
+        return len(_CJK.findall(text)) / CN_CPS_MAX + len(_EN_WORD.findall(text)) / en_wps
 
-    def window_errors(self, tag: str) -> list[str]:
-        spoken = [(t, tail) for k, _w, t, tail in self.lines if k in ("对白", "OS")]
-        wins = [(_WIN.search(tail), t) for t, tail in spoken]
-        if not any(w for w, _t in wins):
+    def window_errors(self, tag: str, slow: frozenset[str] = frozenset()) -> list[str]:
+        spoken = [(who, t, tail) for k, who, t, tail in self.lines if k in ("对白", "OS")]
+        wins = [(_WIN.search(tail), t, who in slow and SLOW_EXEMPT not in tail) for who, t, tail in spoken]
+        if not any(w for w, _t, _s in wins):
             return []
         errs: list[str] = []
         need: dict[tuple[float, float], float] = {}
-        for w, t in wins:
+        for w, t, is_slow in wins:
             if w is None:
                 errs.append("%s %s: 本镜有台词带时间窗，「%s」却没带" % (tag, self.key, t[:24]))
                 continue
@@ -115,7 +131,7 @@ class Shot:
             if not 0 <= a < b <= self.dur:
                 errs.append("%s %s: 时间窗【%g–%gs】不在 0–%gs 内" % (tag, self.key, a, b, self.dur))
                 continue
-            need[(a, b)] = need.get((a, b), 0.0) + self.need_of(t)
+            need[(a, b)] = need.get((a, b), 0.0) + self.need_of(t, SLOW_WPS_MAX if is_slow else EN_WPS_MAX)
         for (a, b), n in sorted(need.items()):
             if n > b - a + 1e-6:
                 errs.append("%s %s: 时间窗【%g–%gs】念白需 %.1fs > 窗长 %gs，念不完"
@@ -161,6 +177,18 @@ def _config(path: str) -> tuple[dict, str | None]:
             with open(f, "rb") as fh:
                 cfg = tomllib.load(fh)
             for sec, body in cfg.items():
+                if sec == _OVERRIDES and isinstance(body, dict):
+                    bad = {k for k, v in body.items() if not _EP_DIR.match(k) or not isinstance(v, list)
+                           or len(v) != 2 or not all(isinstance(x, (int, float)) for x in v)}
+                    if bad:
+                        raise SystemExit("%s: [%s] 键须为 epNN、值须为 [min_s, max_s]：%s" % (f, sec, sorted(bad)))
+                    continue
+                if sec in (_FRAG_OK, _SHARED_OK, _REPEAT_OK) and isinstance(body, dict):
+                    bad = {k for k, v in body.items() if not _EP_DIR.match(k) or not isinstance(v, list)
+                           or not all(isinstance(x, str) and re.fullmatch(r"S\d{2,}", x) for x in v)}
+                    if bad:
+                        raise SystemExit("%s: [%s] 键须为 epNN、值须为镜号列表 [\"S40\"]：%s" % (f, sec, sorted(bad)))
+                    continue
                 bad = set(body) - _CFG_KEYS.get(sec, set()) if isinstance(body, dict) else {sec}
                 if sec not in _CFG_KEYS or bad:
                     raise SystemExit("%s: 未知配置 [%s] %s" % (f, sec, sorted(bad)))
@@ -174,6 +202,9 @@ def ep_range(path: str) -> tuple[float, float]:
     ep = cfg.get("episode", {})
     lo = float(ep.get("min_s", EP_RANGE_DEFAULT[0]))
     hi = float(ep.get("max_s", EP_RANGE_DEFAULT[1]))
+    ov = cfg.get(_OVERRIDES, {}).get(os.path.basename(os.path.dirname(os.path.abspath(path))))
+    if ov:
+        lo, hi = float(ov[0]), float(ov[1])
     if not 0 < lo < hi <= 3600:
         raise SystemExit("%s: [episode] 区间 %g–%g 不合法" % (f, lo, hi))
     return lo, hi
@@ -190,12 +221,29 @@ def _zones(scenes_root: str) -> dict[str, str]:
     return out
 
 
+def scenery_cfg(drama: str) -> dict:
+    """剧级 `4_剧本/script.toml` 的 [scenery]（景与空走的阈值一处定义：script_tools、szzl 引擎 G15、后期 edl 校验都读这里）。"""
+    return _config(os.path.join(str(drama), "4_剧本", "episodes", "_"))[0].get("scenery", {})
+
+
+_BEAT_T = re.compile(r"(?<![\d.–-])(\d+(?:\.\d+)?)s(?![\d–])")
+
+
+def _has_beat(s: "Shot", a: float, b: float) -> bool:
+    """窗里有没有「事」：一句台词的时间窗压在里面，或画面动作里有一个落在窗内的带时刻节拍（059 / 060：景和事一起给）。"""
+    if any((w := _WIN.search(tail)) and float(w.group(1)) < b and float(w.group(2)) > a for k, _w, _t, tail in s.lines if k in ("对白", "OS")):
+        return True
+    act = s.body.split("- 台词:")[0]
+    return any(a < float(m.group(1)) < b for m in _BEAT_T.finditer(act))
+
+
 def scenery_errors(path: str) -> list[str]:
     cfg, f = _config(path)
     sc = cfg.get("scenery")
     if not sc or not f:
         return []
     zone_min, bg_min = float(sc["new_zone_min_s"]), float(sc["new_bg_min_s"])
+    idle_max = float(sc.get("idle_max_s", 0) or 0)
     drama = os.path.dirname(os.path.dirname(f))
     zones = _zones(os.path.join(drama, "2_世界观人设", "scenes"))
     seen_bg: set[str] = set()
@@ -230,28 +278,85 @@ def scenery_errors(path: str) -> list[str]:
             for a, b in wins:
                 if not 0 <= a < b <= s.dur:
                     errs.append("%s %s: 场景展示窗【%g–%gs】不在 0–%gs 内" % (tag, s.key, a, b, s.dur))
+                elif idle_max and b - a > idle_max + 1e-6 and not _has_beat(s, a, b):
+                    errs.append("%s %s: 场景展示窗【%g–%gs】%gs 里没台词、没带时刻的节拍——景和事一起给（> %gs 就要有事，059 / 060 G10）"
+                                % (tag, s.key, a, b, b - a, idle_max))
         if mine:
             break
     return errs
 
 
+_TITLES = frozenset({"Brother", "Marshal", "Auntie", "Sister", "Father"})
+
+
+def slow_voices(path: str) -> frozenset[str]:
+    """casting.md 里语速栏以 慢 / 很慢 / 极慢 开头的角色名：粗体名按 ` / ` 拆，每段认整段与名字（头衔后那个词或第一个词）。
+    `seedance.toml` 的 legacy_eps 里的集不查（规则变更不回溯旧剧）。"""
+    d = os.path.dirname(os.path.abspath(path))
+    ep = os.path.basename(d)
+    while d.startswith(REPO) and d != REPO and not os.path.isdir(os.path.join(d, "2_世界观人设")):
+        d = os.path.dirname(d)
+    f = os.path.join(d, "2_世界观人设", "casting.md")
+    if not os.path.isfile(f):
+        return frozenset()
+    sys.path.insert(0, os.path.join(REPO, "tools"))
+    import seedance_kit
+    from pathlib import Path
+    if ep in seedance_kit.config_or_empty(Path(d)).get("legacy_eps", []):
+        return frozenset()
+    out: set[str] = set()
+    for ln in io.open(f, encoding="utf-8"):
+        m = re.match(r"\|\s*\*\*(.+?)\*\*[^|]*\|[^|]*\|[^|]*\|([^|]*)\|", ln)
+        if m and _SLOW.match(m.group(2).replace("*", "").strip()):
+            for part in m.group(1).replace('"', "").split(" / "):
+                words = part.split()
+                out.add(part.strip())
+                if words:
+                    out.add(words[1] if words[0] in _TITLES and len(words) > 1 else words[0])
+    return frozenset(out)
+
+
 def check(path: str) -> list[str]:
     shots, declared = parse(path)
     tag = os.path.basename(os.path.dirname(path))
+    frag_ok = set(_config(path)[0].get(_FRAG_OK, {}).get(tag, []))
+    slow = slow_voices(path)
+    stale = frag_ok - {s.key for s in shots if 4.0 <= s.dur <= 6.0}
+    errs_ok = ["%s: [fragment_ok] 里的 %s 已不是 4–6s 碎镜（或镜号不存在），从名单删掉" % (tag, k) for k in sorted(stale)]
     errs: list[str] = []
     if not shots:
         return ["%s: 一个 `### 镜 X` 都没有" % tag]
+    errs += errs_ok
+    shared_ok = set(_config(path)[0].get(_SHARED_OK, {}).get(tag, []))
+    repeat_ok = set(_config(path)[0].get(_REPEAT_OK, {}).get(tag, []))
 
     for s in shots:
+        wins = [(float(w.group(1)), float(w.group(2)), txt) for k, _who, txt, tail in s.lines
+                if k in ("对白", "OS") and (w := _WIN.search(tail))]
+        if s.key not in shared_ok:
+            for i, (a1, b1, t1) in enumerate(wins):
+                for a2, b2, t2 in wins[i + 1:]:
+                    if a1 < b2 - 1e-6 and a2 < b1 - 1e-6:
+                        errs.append("%s %s: 「%s」【%g–%gs】与「%s」【%g–%gs】时间窗重叠——一窗一句，按说话先后排开（061）"
+                                    % (tag, s.key, t1[:16], a1, b1, t2[:16], a2, b2))
+        if s.key not in repeat_ok:
+            seen: dict[tuple[str, str], int] = {}
+            for k, who, txt, tail in s.lines:
+                if k in ("对白", "OS") and len(txt) > 12 and not txt.startswith("Pheta"):
+                    seen[(who, txt)] = seen.get((who, txt), 0) + 1
+            for (who, txt), n in seen.items():
+                if n > 1:
+                    errs.append("%s %s: %s 的「%s」在同一镜念了 %d 遍——换成不同的话；确属有意的登记 script.toml [repeat_ok]"
+                                % (tag, s.key, who, txt[:24], n))
         if not 3.0 <= s.dur <= 30.0:
             errs.append("%s %s: 时长 %gs 不在 3–30s" % (tag, s.key, s.dur))
-        if 4.0 <= s.dur <= 6.0:
+        if 4.0 <= s.dur <= 6.0 and s.key not in frag_ok:
             errs.append("%s %s: 时长 %gs 落在 4–6s 碎镜区——先问能不能与邻镜合并"
                         % (tag, s.key, s.dur))
         if s.need_s > s.dur:
             errs.append("%s %s: 念白 %s 需 %.1fs > 本镜 %gs（中文 ≤%g 字/秒、英文 ≤%g 词/秒），念不完"
                         % (tag, s.key, s.amount, s.need_s, s.dur, CN_CPS_MAX, EN_WPS_MAX))
-        errs.extend(s.window_errors(tag))
+        errs.extend(s.window_errors(tag, slow))
         if not s.mood:
             errs.append("%s %s: 缺 `- 情绪氛围:` 行" % (tag, s.key))
         for kind, who, txt, tail in s.lines:
@@ -321,10 +426,57 @@ def episodes(root: str) -> list[str]:
     return sorted(hits)
 
 
+def shot_screen(s: "Shot") -> list[str]:
+    """一镜里观众看得到、听得到的：场景展示、画面动作（去 ⚠ 注记）、说出口的台词（不带行尾说明与中文意思）。
+    冷眼观众的输入与目标账本的机检都只认这一份（follow-up 038）。"""
+    out = ["【%s–%ss】（景）%s" % (a, b, txt.strip()) for a, b, txt in _SCENERY.findall(s.body)]
+    m = re.search(r"^- 画面动作: (.*?)(?=^- [^\n]*?:|\Z)", s.body, re.S | re.M)
+    out += [line.strip() for line in (m.group(1).splitlines() if m else [])
+            if line.strip() and not line.strip().startswith("⚠")]
+    for k, who, txt, tail in s.lines:
+        if k in ("对白", "OS"):
+            out.append('- %s%s: "%s"' % (who, "（画外音）" if ("画外" in tail or k == "OS") else "", txt))
+    return out
+
+
+def snippet_window(s: "Shot", snip: str) -> tuple[float, float] | None:
+    """片段在这一镜的哪个时间窗：画面动作的【a–bs】行，或台词行尾的【a–bs】（follow-up 043 演示拍特写闸门用）。"""
+    m = re.search(r"^- 画面动作: (.*?)(?=^- [^\n]*?:|\Z)", s.body, re.S | re.M)
+    for line in (m.group(1).splitlines() if m else []):
+        w = _WIN.match(line.strip())
+        if w and snip in line:
+            return float(w.group(1)), float(w.group(2))
+    for _k, _who, txt, tail in s.lines:
+        w = _WIN.search(tail)
+        if w and snip in txt:
+            return float(w.group(1)), float(w.group(2))
+    return None
+
+
+def screen_text(path: str) -> str:
+    """观众看得到、听得到的全部（follow-up 038 冷眼观众）：每镜的场景展示、画面动作与台词；
+    不给备注、情绪氛围、⚠ 制作注记、台词行尾的表演说明与中文意思——作者知道、观众不知道的东西一律拿掉。"""
+    shots, _ = parse(path)
+    out = ["# 观众看得到、听得到的全部（只有画面与台词；不含备注、情绪说明、制作注记）", ""]
+    for s in shots:
+        out.append("## %s（%gs）" % (s.key, s.dur))
+        out += shot_screen(s) + [""]
+    return "\n".join(out)
+
+
 def main() -> None:
-    if len(sys.argv) < 3 or sys.argv[1] not in ("check", "gen"):
+    if len(sys.argv) < 3 or sys.argv[1] not in ("check", "gen", "screen"):
         raise SystemExit(__doc__)
     mode, target = sys.argv[1], sys.argv[2]
+    if mode == "screen":                     # python tools/script_tools.py screen <script.md> [输出路径]
+        txt = screen_text(target if target.endswith(".md") else os.path.join(target, "script.md"))
+        if len(sys.argv) > 3:
+            io.open(sys.argv[3], "w", encoding="utf-8").write(txt)
+            print("→ %s" % sys.argv[3])
+        else:
+            sys.stdout.reconfigure(encoding="utf-8")
+            print(txt)
+        return
     paths = episodes(target)
     if not paths:
         raise SystemExit("%s 下没有 script.md" % target)

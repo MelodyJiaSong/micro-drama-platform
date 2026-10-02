@@ -5335,3 +5335,54 @@ a.research-vx-channel:hover { color: var(--accent); }
   color: var(--text); border-radius: 6px; padding: 3px 12px; font-size: 12px; cursor: pointer;
 }
 .tools-copy:hover { background: var(--bg-hover); }
+
+/* ZoomableImage — click any preview image to open a fullscreen zoom/pan viewer */
+.zoomable-img { cursor: zoom-in; }
+.zoom-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(10, 10, 12, 0.92);
+}
+.zoom-viewer-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+.zoom-viewer-stage:active { cursor: grabbing; }
+.zoom-viewer-stage img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  max-width: none;
+  max-height: none;
+  transform-origin: 0 0;
+}
+.zoom-viewer-toolbar {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(30, 30, 34, 0.85);
+  color: #eee;
+  font-size: 13px;
+}
+.zoom-viewer-toolbar button {
+  min-width: 32px;
+  padding: 4px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.zoom-viewer-toolbar button:hover { background: rgba(255, 255, 255, 0.12); }
+.zoom-viewer-pct { min-width: 48px; text-align: center; font-variant-numeric: tabular-nums; }

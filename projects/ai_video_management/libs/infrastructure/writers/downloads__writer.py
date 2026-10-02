@@ -34,7 +34,7 @@ import shutil
 import time
 from dataclasses import dataclass, field
 from io import BytesIO
-from libs.common import asset_key, drama_layout, series_shared
+from libs.common import asset_key, drama_layout, equipment_key, prop_key, scene_key, series_shared
 from pathlib import Path
 
 from PIL import Image
@@ -51,6 +51,13 @@ from libs.infrastructure.writers.actor__writer import (
     _attrs_to_body_filename,
     _attrs_to_filename,
 )
+from libs.infrastructure.daos.equipment_route__dao import KIND_EQUIPMENT_VIEW, EquipmentRouteDao
+from libs.infrastructure.daos.prop_route__dao import KIND_PROP_MESH, KIND_PROP_VIEW, PropRouteDao
+from libs.infrastructure.daos.scene_route__dao import KIND_SUBJECT, KIND_VIEW, SceneRouteDao
+from libs.infrastructure.readers.equipment_route__reader import EquipmentKeyRouter
+from libs.infrastructure.readers.prop_route__reader import MODEL_EXTS, PropKeyRouter
+from libs.infrastructure.readers.scene_route__reader import SceneKeyRouter
+from libs.infrastructure.writers.character_video__writer import _VIEWS_SUBDIR
 from libs.infrastructure.writers.media__writer import MediaRenamer, RenameResult
 
 NOT_MATCHED_DIR_NAME = "not_matched"
@@ -139,7 +146,16 @@ _SUBJECT_KEY = re.compile(r"bg(\d+)-(\d+)")
 # from the folder-name rename pass, which would otherwise collapse
 # `whitemodel/angles/f80_ferrari_front.png` … to `angles1.png` … and break every
 # downstream reference to the `{name}_{tag}.png` naming contract.
-GENERATED_DIR_NAMES = frozenset({"whitemodel", "previz", "_clay"})
+# A scenes tree has the same kind of tool-owned folders (follow-up 173), and the
+# pass was collapsing them in the field (`_blender/_blender1.png`, `ref/ref1.jpg`):
+# `_blender/` (`{bg}.blend` / `check_*.png`), `planning/`
+# (`{bg}_floorplan.png`, shot flight plans), `ref/` (`r1.jpg`, named in
+# `refs.md`), and a prop's `mesh/` (`p{N}.glb` + `p{N}_preview_*.png`).
+# A character's `views/` (`{char}_{front|side|back}.png`, `CharacterViewExtractor`)
+# was collapsed by name order to `views1/2/3.png` = back/front/side (shengji_zhilu follow-up 048).
+GENERATED_DIR_NAMES = frozenset(
+    {"whitemodel", "previz", "_clay", "_blender", "planning", "ref", "mesh", _VIEWS_SUBDIR}
+)
 # A character-matched download that is an intro-card nameplate (its prompt opens
 # with `{角色} · 出场名牌卡 …`, ai_video.md rule 11d) routes to the character
 # folder's canonical `intro_card.{ext}` rather than landing under its raw name.
@@ -151,6 +167,10 @@ _INTRO_CARD_MARKER = re.compile(r"名牌|出场卡|intro[ _]?card")
 # scene description (`小神庙内部` → spurious `庙内` plate match).
 _SCENE_ROOT_MARKER = re.compile(r"场景立绘|全局|建场|底图|巡游|环视|walk")
 _IMAGE_EXTS_LC = frozenset({".png", ".webp", ".jpg", ".jpeg"})
+# The grammars a download's routing key can belong to (`_leftmost_grammar`).
+_KEY_SCENE: str = "scene"
+_KEY_PROP: str = "prop"
+_KEY_EQUIPMENT: str = "equipment"
 
 
 def _view_key(stem: str, folder_name: str) -> str | None:
@@ -204,10 +224,16 @@ class DownloadsImporter:
         renamer: MediaRenamer,
         downloads_dir: Path | None = None,
         time_window_seconds: int = DEFAULT_TIME_WINDOW_SECONDS,
+        scene_router: SceneKeyRouter | None = None,
+        prop_router: PropKeyRouter | None = None,
+        equipment_router: EquipmentKeyRouter | None = None,
     ) -> None:
         self._exposed = exposed
         self._resolver = resolver
         self._renamer = renamer
+        self._scene_router = scene_router or SceneKeyRouter()
+        self._prop_router = prop_router or PropKeyRouter()
+        self._equipment_router = equipment_router or EquipmentKeyRouter()
         self._downloads_dir = (downloads_dir or self._resolve_default_downloads_dir()).resolve()
         self._window = time_window_seconds
 
@@ -230,8 +256,24 @@ class DownloadsImporter:
             if not self._is_safe_basename(src.name):
                 result.errors.append({"path": self._display_src(src), "message": "invalid_basename"})
                 continue
+            keyed_name: str | None = None
             chosen = self._classify(src.name, candidates)
-            if chosen is None:
+            grammar = self._leftmost_grammar(src.name, chosen)
+            keyed = self._keyed_route(src.name, grammar, drama_dir)
+            if keyed is not None:
+                dst_folder, kind, keyed_name = keyed.folder, keyed.kind, keyed.name
+            elif grammar == _KEY_EQUIPMENT:
+                # Equipment is imported by key only: an `e{N}` no single item
+                # folder takes stays in Downloads, never handed to a word match
+                # on whatever its `参考:` line quoted.
+                item = equipment_key.first_key(src.stem)
+                conflict = conflicts.for_key(item.base) if item is not None else None
+                if conflict is not None and src.suffix.lower() not in MODEL_EXTS:
+                    result.errors.append({"path": self._display_src(src), "message": conflict.message(self._rel)})
+                else:
+                    result.unmatched.append({"from": self._display_src(src), "kind": "unmatched"})
+                continue
+            elif chosen is None:
                 # Fallback: a scene background-plate download often carries only
                 # the 方位 token (`bg1_朝北_…`) with NO pinyin scene-name token —
                 # the out-of-image tool (kling/jimeng) truncates the filename to
@@ -245,8 +287,7 @@ class DownloadsImporter:
                     # Same shape one level over: an object prop's view download
                     # carries only its 视角 token (`车外全景`), never the pinyin
                     # prop handle, so it matches no prop by name.
-                    view = (self._match_subject_any_scene(src.name, drama_dir)
-                            or self._match_view_any_prop(src.name, drama_dir))
+                    view = self._match_view_any_prop(src.name, drama_dir)
                     if view is None:
                         # A `bg{N}` subject owned by both the episode and `_series/`
                         # makes the any-scene fallback refuse — report why.
@@ -259,8 +300,7 @@ class DownloadsImporter:
                         # untouched, only report it back (no not_matched/ folder).
                         result.unmatched.append({"from": self._display_src(src), "kind": "unmatched"})
                         continue
-                    dst_folder, kind = view, (
-                        "scene_subject" if self._is_subject_folder(view) else "prop_view")
+                    dst_folder, kind = view, "prop_view"
             else:
                 dst_folder, kind = chosen.folder, chosen.kind
                 if chosen.kind == "scene":
@@ -272,6 +312,12 @@ class DownloadsImporter:
                     if view is not None:
                         dst_folder, kind = view, (
                         "scene_subject" if self._is_subject_folder(view) else "prop_view")
+            if src.suffix.lower() in MODEL_EXTS and kind != KIND_PROP_MESH:
+                # A GLB holds one object (2026-09-25) and every object is a prop:
+                # it lands only in `props/p{N}_*/mesh/`, by prop key — never by a
+                # name token, never in a character / scene / shot folder.
+                result.unmatched.append({"from": self._display_src(src), "kind": "unmatched"})
+                continue
             conflict = conflicts.owning(dst_folder)
             if conflict is not None:
                 result.errors.append({"path": self._display_src(src), "message": conflict.message(self._rel)})
@@ -282,13 +328,12 @@ class DownloadsImporter:
             # original download name (shot renders,立绘, scene plates).
             ext = src.suffix.lower()
             dst_name = src.name
-            if kind == "character" and _INTRO_CARD_MARKER.search(src.name.lower()):
-                kind, dst_name = "intro_card", f"intro_card{ext}"
-            elif kind == "scene_subject":
+            if keyed_name is not None:
                 # Named from the routing key alone — immune to whatever prefix or
                 # suffix the generator wrapped around it.
-                _m = _SUBJECT_KEY.search(src.stem)
-                dst_name = f"bg{_m.group(1)}-{_m.group(2)}{ext}"
+                dst_name = keyed_name
+            elif kind == "character" and _INTRO_CARD_MARKER.search(src.name.lower()):
+                kind, dst_name = "intro_card", f"intro_card{ext}"
             elif kind in ("prop", "scene", "character"):
                 # A subject folder holds several named views of one subject
                 # (`广场/广场正向.png`, `玉佩/玉佩_完整.png`). The download is named
@@ -317,7 +362,8 @@ class DownloadsImporter:
             # same character folder).
             if kind in ("scene_plate", "prop_view"):
                 self._clear_folder_media(dst_folder)
-            elif kind in ("prop", "scene", "scene_subject", "character"):
+            elif kind in ("prop", "scene", "character", KIND_SUBJECT, KIND_VIEW, KIND_PROP_VIEW,
+                          KIND_EQUIPMENT_VIEW):
                 # Overwrite only THIS view, never the folder's other views.
                 self._clear_named_media(dst_folder, Path(dst_name).stem)
             elif kind == "intro_card":
@@ -605,6 +651,8 @@ class DownloadsImporter:
         out: list[_Candidate] = []
         # Props (`2_世界观人设/props/{道具名}/`) are a sibling of characters/scenes.
         # A series member also owns its series' `_series/` assets (episode first).
+        # Equipment is deliberately absent: it routes by `e{N}-{M}` key only
+        # (`_keyed_route`), so an item's name words never pull other downloads in.
         for kind, layout_dir in (
             ("character", drama_layout.characters_dir),
             ("scene", drama_layout.scenes_dir),
@@ -730,6 +778,60 @@ class DownloadsImporter:
         return best[3] if best is not None else None
 
     @staticmethod
+    def _leftmost_grammar(filename: str, chosen: _Candidate | None) -> str | None:
+        """Whose routing key a download carries: the grammar of the LEFTMOST
+        scene / prop / equipment key in its stem — the prompt's first line
+        precedes anything quoted from its `参考:` line. It beats a token match
+        that only starts after it: that token is a word inside the key's own
+        name (`bg19_加瑞克的小屋` ⊃ character `加瑞克`). A shot match is never
+        overridden — renders quote keys from `参考:`."""
+        if chosen is not None and chosen.kind == "shot":
+            return None
+        stem = Path(filename).stem
+        starts = {
+            grammar: key.start
+            for grammar, key in (
+                (_KEY_SCENE, scene_key.first_key(stem)),
+                (_KEY_PROP, prop_key.first_key(stem)),
+                (_KEY_EQUIPMENT, equipment_key.first_key(stem)),
+            )
+            if key is not None
+        }
+        if not starts:
+            return None
+        grammar = min(starts, key=starts.__getitem__)
+        if chosen is not None:
+            name = filename.lower()
+            hits = [pos for token in chosen.tokens if token and (pos := _token_pos(token, name)) >= 0]
+            if hits and starts[grammar] > min(hits):
+                return None
+        return grammar
+
+    def _keyed_route(
+        self, filename: str, grammar: str | None, drama_dir: Path
+    ) -> SceneRouteDao | PropRouteDao | EquipmentRouteDao | None:
+        """Route by the download's routing key (`_leftmost_grammar`), which names
+        both destination and file name: a scene key (`bg4_闪金镇` / `bg1-1`), a
+        prop key (`p15-1_正面` / `p15.glb`) or an equipment key (`e12-1_正面`).
+
+        A model file has no other route than its prop key, so it skips the token
+        check (follow-up 174); one whose equipment key comes first is an
+        equipment model, which is never imported."""
+        src = Path(filename)
+        if src.suffix.lower() in MODEL_EXTS:
+            prop, item = prop_key.first_key(src.stem), equipment_key.first_key(src.stem)
+            if prop is None or (item is not None and item.start < prop.start):
+                return None
+            return self._prop_router.route(filename, drama_dir)
+        if grammar == _KEY_EQUIPMENT:
+            return self._equipment_router.route(filename, drama_dir)
+        if grammar == _KEY_PROP:
+            return self._prop_router.route(filename, drama_dir)
+        if grammar == _KEY_SCENE:
+            return self._scene_router.route(filename, drama_dir)
+        return None
+
+    @staticmethod
     def _clear_folder_media(folder: Path) -> None:
         """Delete top-level media files in a folder (overwrite support for
         single-image scene-plate folders). Subfolders, non-media, and symlinks
@@ -786,31 +888,19 @@ class DownloadsImporter:
                 and (folder / (folder.name + ".md")).is_file())
 
     def _match_subject_any_scene(self, filename: str, drama_dir: Path) -> Path | None:
-        """Route a subject-view download by the `bg{N}_` its filename opens with.
+        """The subject folder a `bg{N}-{M}` download belongs to, at any depth.
 
         Refuses to guess: if two scenes own the same `bg{N}_`, the drama has
         violated the "subject numbers are unique across the drama" convention
         and the file is reported unmatched rather than misrouted. A series
-        member's `_series/` scenes count as the drama's own here.
+        member's `_series/` scenes count as the drama's own here. The import
+        itself goes through `SceneKeyRouter.route`, which also picks the view
+        folder inside; this is the subject lookup on its own.
         """
-        m = _SUBJECT_KEY.search(Path(filename).stem)
-        if m is None:
+        key = scene_key.first_key(Path(filename).stem)
+        if key is None or key.view is None:
             return None
-        want = int(m.group(1))
-        hits: list[Path] = []
-        for scene in series_shared.asset_dirs(drama_dir, drama_layout.scenes_dir):
-            try:
-                children = sorted(scene.iterdir(), key=lambda p: p.name)
-            except OSError:
-                continue
-            for child in children:
-                if not child.is_dir() or child.is_symlink():
-                    continue
-                if (self._subject_number(child.name) == want
-                        and self._is_subject_folder(child)):
-                    hits.append(child)
-        unique = {p.resolve() for p in hits}
-        return hits[0] if len(unique) == 1 else None
+        return self._scene_router.subject(key.subject, drama_dir)
 
     @classmethod
     def _match_scene_plate(cls, filename: str, scene_folder: Path) -> Path | None:
@@ -1014,16 +1104,21 @@ def _token_hit(token: str, name: str) -> bool:
     Only ASCII edges are guarded, so a Chinese token stays a plain substring
     match and the normal `c9_白发老妇` → `c9_姥姥` join key keeps working.
     """
+    return _token_pos(token, name) >= 0
+
+
+def _token_pos(token: str, name: str) -> int:
+    """Index of `token`'s first edge-guarded hit in `name` (see `_token_hit`), or -1."""
     start = 0
     while True:
         i = name.find(token, start)
         if i < 0:
-            return False
+            return -1
         j = i + len(token)
         left_clash = _ASCII_ALNUM.match(token[0]) and i > 0 and _ASCII_ALNUM.match(name[i - 1])
         right_clash = _ASCII_ALNUM.match(token[-1]) and j < len(name) and _ASCII_ALNUM.match(name[j])
         if not left_clash and not right_clash:
-            return True
+            return i
         start = i + 1
 
 

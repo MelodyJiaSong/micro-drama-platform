@@ -1,0 +1,237 @@
+# 工艺之厅 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+# 方位：只在下层区图 WorldMap-BlackrockDepths.jpg 东北角（紫色十字块）；上层接城心东通道的位置按 bg246 块 b906 推定。
+# 回旋梯一圈约升 24 m，平面上四段各记一个 h_m（＝该段梯面标高），实际盘旋约三圈，平面只画外圈一周。
+
+[meta]
+bg = "bg795"
+name_zh = "工艺之厅"
+size_m = [70, 70]
+px_per_m = 16.0
+scale_src = "推定"
+scale_note = "1.12 副本无区图；方井外廓 36×36 m、井深约 24 m 按下层区图十字块形状与 bg246 块 b906（45×40 m）推定"
+# 世界树画面：一座方形回旋大石梯从下方铁砧平台盘旋而上，梯道两侧是雕到一半的泥石魔像与工匠的凿具。
+absent = ["天空、天井透光、日光与月光（山腹竖井）", "熔岩湖与熔岩沟（井里没有）", "任何植被与水面", "电弧蓝光与冷色光源", "完工的、能动的或发光的魔像", "升降机、绞盘吊篮等机械（只有石梯）", "人物、工匠与动物（空场态，属 shot 层）", "文字与招牌"]
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "井底铁砧平台"
+xy = [35, 37]
+size = [26, 26]
+h_m = 0
+src = "地图量取"
+note = "紫色十字块中央方形；尺寸推定"
+
+[[block]]
+id = "b02"
+kind = "rock_shelf"
+face = "west"
+count = 1
+name = "回旋梯东段"
+xy = [50.5, 37]
+size = [5, 36]
+h_m = 22
+src = "推定"
+note = "三圈梯段在平面上叠在同一位置，h_m 只标最上一圈；每圈落差约 8 m（南→东→北→西依次下降 2 m）"
+
+[[block]]
+id = "b03"
+kind = "rock_shelf"
+face = "south"
+count = 1
+name = "回旋梯北段"
+xy = [35, 21.5]
+size = [26, 5]
+h_m = 20
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "rock_shelf"
+face = "east"
+count = 1
+name = "回旋梯西段"
+xy = [19.5, 37]
+size = [5, 36]
+h_m = 18
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "rock_shelf"
+face = "north"
+count = 1
+name = "回旋梯南段（最高一段，接井顶出口）"
+xy = [35, 52.5]
+size = [26, 5]
+h_m = 24
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "tunnel"
+face = "west"
+count = 1
+name = "井顶西出口甬道（通上城）"
+xy = [8.5, 52.5]
+size = [17, 6]
+h_m = 3
+src = "推定"
+note = "标高约 24 m；经银库通城心东通道"
+
+[[block]]
+id = "b07"
+kind = "tunnel"
+face = "north"
+count = 1
+name = "井底北拱门与通下层的甬道"
+xy = [35, 8]
+size = [8, 16]
+h_m = 4
+src = "地图量取"
+note = "十字块北臂；从北段梯下穿过"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p265"
+face = "south"
+name = "井底锻炉（北拱门内侧炉口）"
+xy = [35, 26]
+size = [8, 3]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p256"
+face = "south"
+name = "井底西火盆"
+xy = [26, 44]
+size = [2, 2]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p256"
+face = "south"
+name = "井底东火盆"
+xy = [44, 44]
+size = [2, 2]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p264"
+face = "south"
+count = 3
+name = "三座黑铁大砧（一字排开）"
+xy = [35, 37]
+size = [12, 2.5]
+h_m = 1
+src = "原典方位"
+note = "世界树画面：铁砧平台"
+
+[[block]]
+id = "b12"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "冷却水槽（干涸）"
+xy = [35, 41]
+size = [6, 1.5]
+h_m = 0.8
+src = "推定"
+
+[[block]]
+id = "b13"
+may_overlap = true
+kind = "crates"
+face = "south"
+count = 3
+name = "四轮石料车（最低一圈的东段梯面）"
+xy = [50.5, 45]
+size = [2, 3.5]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p266"
+face = "west"
+count = 5
+name = "东段靠墙深龛·半成石魔像胚一排"
+xy = [54.5, 37]
+size = [3, 28]
+h_m = 5
+src = "原典方位"
+note = "世界树画面：梯道两侧雕到一半的泥石魔像"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p266"
+face = "south"
+count = 5
+name = "北段靠墙深龛·半成石魔像胚一排"
+xy = [35, 17.5]
+size = [28, 3]
+h_m = 5
+src = "原典方位"
+
+[[block]]
+id = "b16"
+kind = "asset"
+asset = "p266"
+face = "east"
+count = 4
+name = "西段靠墙深龛·半成石魔像胚一排"
+xy = [15.5, 37]
+size = [3, 24]
+h_m = 5
+src = "原典方位"
+
+[[block]]
+id = "b17"
+kind = "asset"
+asset = "p266"
+face = "north"
+count = 5
+name = "南段靠墙深龛·半成石魔像胚一排"
+xy = [35, 56.5]
+size = [28, 3]
+h_m = 5
+src = "原典方位"
+
+[[block]]
+id = "b18"
+kind = "boulders"
+face = "south"
+count = 1
+name = "井底西北角碎石山"
+xy = [25, 27]
+size = [4, 4]
+h_m = 2
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg795-c1"
+eye = [18, 63]
+target = [35, 35]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

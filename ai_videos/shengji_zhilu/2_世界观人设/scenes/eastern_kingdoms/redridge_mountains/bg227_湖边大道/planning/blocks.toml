@@ -1,0 +1,156 @@
+# 湖边大道 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 本图原点 ＝ 区级平面图 bg222 的 (630, 800) m；路 / 湖 / 南墙三条线由区级 terrain.toml 平移而来。
+
+[meta]
+bg = "bg227"
+name_zh = "湖边大道"
+size_m = [480, 320]
+px_per_m = 3.2
+scale_src = "地图量取"
+scale_note = "取区级 terrain.toml「湖边大道」x≈630–1110 m 一段（区图 x≈32–56%），长约 450 m；路—湖岸距离、南墙坡脚按区图量取（±20 m）"
+# 世界树画面：沿湖铺开的土石主路，一侧是水一侧是红岩坡，路面被车辙压出两道深沟
+absent = [
+  "桥 / 分岔路口 / 路牌 / 界碑刻字（这一段不分岔、无桥、无字）",
+  "铺石路面 / 石砌路缘（旧世是土石车辙路）",
+  "农舍 / 栅栏 / 任何建筑（沿途无人居）",
+  "路向东越过石堡继续延伸（旧世东侧山口未开，路到石堡为止）",
+  "积水 / 雨 / 雪 / 夜景",
+  "火堆 / 灯笼 / 任何人工光源",
+  "任何人物 / 动物 / 车马 / 船只 / 文字",
+]
+
+[[water]]
+name = "止水湖·南湾"
+path = [[0, 50], [120, 62], [224, 70], [330, 52], [420, 25], [480, 0]]
+width_m = 80
+depth_m = 10
+src = "地图量取"
+note = "区级「主湖南半」平移；南岸线 ≈ y 95–115，湖北半在本图北缘外"
+
+[[road]]
+name = "湖边大道"
+path = [[0, 221], [25, 219], [104, 213], [164, 206], [224, 193], [283, 180], [323, 160], [363, 133], [402, 100], [442, 74], [480, 55]]
+width_m = 5
+src = "地图量取"
+note = "两道深车辙；自西南向东北缓升、渐向北弯。东出本图后贴着湖东尾窄河道南岸走、爬上石堡台地（bg233）"
+
+[[ridge]]
+name = "南墙坡脚（草坡与滚石带）"
+poly = [[0, 229], [104, 221], [224, 201], [323, 168], [402, 108], [480, 63], [480, 205], [380, 232], [283, 259], [180, 245], [65, 233], [0, 236]]
+height_m = 35
+src = "推定"
+note = "路肩往南即起坡；坡上松柏、榆树、红土冲沟"
+
+[[ridge]]
+name = "南墙"
+poly = [[0, 236], [65, 233], [180, 245], [283, 259], [380, 232], [480, 205], [480, 320], [0, 320]]
+height_m = 220
+src = "地图量取"
+note = "区级「南墙」北缘平移；水平分层锈红砂岩，崖顶平钝"
+
+[[block]]
+id = "b01"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "深绿湿草带"
+xy = [240, 150]
+size = [200, 64]
+h_m = 0
+rot = -14
+src = "推定"
+note = "路与湖之间，宽 50–130 m 不等（西段宽、东段窄）；零星芦苇与灯芯草，越靠水越密"
+
+[[block]]
+id = "b02"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "湖岸砂砾滩"
+xy = [225, 114]
+size = [150, 8]
+h_m = 0
+rot = -6
+src = "推定"
+note = "浅灰砂砾 + 被浪打湿发黑的石头 + 几段发白的漂流木"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p220"
+face = "south"
+count = 4
+into_ridge = true
+name = "坡脚滚落巨石群"
+xy = [200, 222]
+size = [30, 14]
+h_m = 5
+rot = -10
+src = "推定"
+note = "比人高，棱角磨圆、背阴面长苔；多年前塌落，断口长苔"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p220"
+face = "south"
+into_ridge = true
+name = "坡脚滚落巨石"
+xy = [335, 178]
+size = [14, 10]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p216"
+face = "south"
+into_ridge = true
+name = "朽透的旧木桩"
+xy = [150, 214]
+size = [4, 1.5]
+h_m = 0.5
+rot = 20
+src = "推定"
+note = "南侧路肩斜倒，发黑长苔"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p221"
+face = "south"
+count = 4
+into_ridge = true
+name = "坡上松柏丛"
+xy = [120, 238]
+size = [30, 12]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p222"
+face = "south"
+into_ridge = true
+name = "高瘦榆树"
+xy = [390, 160]
+size = [8, 8]
+h_m = 16
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg227-c1"
+eye = [240, 294]
+target = [240, 160]
+eye_h = 16.0
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

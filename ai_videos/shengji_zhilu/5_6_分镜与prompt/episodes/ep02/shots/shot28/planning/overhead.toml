@@ -1,0 +1,95 @@
+# shot28 镜头平面图（overhead）的唯一出处：镜头与人各自在哪、往哪走、几秒到。
+# 改走位 ＝ 改本文件重跑 `python tools/gen_shots_szzl_ep02.py --only S28`（闸门）；出审阅图 `python tools/shot_overhead.py <shot 目录>`。
+# 坐标＝bg4 场地平面图（scenes/.../bg4_闪金镇/planning/blocks.toml）坐标系（米；x 向东、y 向南）。path 路点 [t, x, y] 或 [t, x, y, 看向x, 看向y]。
+# 后院 b03：x 105–127、y 109–127。qc5 站位 M：续 S27 的世界站位——修士（西）与亚伦（东）面对面隔一臂，两人都略朝南侧开（各离 S27 结尾 ≤ 1.2 m）。
+# 机位都在两人南侧，接 S27 结尾：修士画左、亚伦画右。杜克与里瑞亚在这一镜不入画（杜克收剑退到亚伦东北身后，机位都贴着两人）。
+
+[meta]
+scene = "bg4"
+view = [112, 116, 120, 125]
+note = "0–7.5s 两人正南近景：修士手掌平按在亚伦胸口，不出光，讲最后一样的规矩，5.5s 亚伦胸口在他掌下一起一伏；7.5s 切越过修士右肩的亚伦特写：低头看自己的手，问一句；10.4s 切正南中景：修士纠正一个词、收手，亚伦皱眉、懂了、攥拳"
+
+[[camera]]
+t = 0
+xy = [115.65, 123.3]
+h = 1.5
+look = [115.65, 119.9]
+lens = 40
+tag = "后院雾·两人近景"
+subject = "c1_Aaron"
+note = "两人正南三米多，胸口以上的双人近景：修士的手与亚伦的胸口在画里"
+
+[[camera]]
+t = 7.4
+xy = [115.65, 123.3]
+h = 1.5
+look = [115.65, 119.9]
+lens = 40
+subject = "c1_Aaron"
+
+[[camera]]
+t = 7.5
+xy = [114.55, 120.75]
+h = 1.45
+look = [116.0, 120.0]
+lens = 50
+tag = "后院雾·亚伦特写"
+subject = "c1_Aaron"
+cut = true
+aim_h = 1.45
+note = "切：修士右肩后越肩，亚伦的脸与低头看的两只手"
+
+[[camera]]
+t = 10.3
+xy = [114.55, 120.75]
+h = 1.45
+look = [116.0, 120.0]
+lens = 50
+subject = "c1_Aaron"
+aim_h = 1.45
+
+[[camera]]
+t = 10.4
+xy = [115.65, 123.8]
+h = 1.6
+look = [115.65, 120.0]
+lens = 38
+tag = "后院雾·南中近景"
+subject = "c1_Aaron"
+cut = true
+note = "切：两人正南的中近景，两人都是 3/4 侧脸：修士画左纠正，亚伦画右皱眉、攥拳"
+
+[[camera]]
+t = 14
+xy = [115.65, 123.8]
+h = 1.6
+look = [115.65, 120.0]
+lens = 38
+subject = "c1_Aaron"
+
+[[actor]]
+key = "c1_Aaron"
+label = "亚伦"
+path = [[0, 116.0, 120.0, 113.95, 121.43], [14, 116.0, 120.0, 113.95, 121.43]]
+note = "面朝修士（略朝南侧开），整镜不挪步"
+
+[[actor]]
+key = "c19_Brother_Wilhelm"
+label = "修士"
+path = [[0, 115.3, 120.0, 117.35, 121.43], [14, 115.3, 120.0, 117.35, 121.43]]
+note = "面朝亚伦隔一臂，右手平按在他胸口，13s 说完收回"
+
+[[beat]]
+t0 = 0
+t1 = 7.5
+text = "There's one more. Everything you've got, in one go. After that you've nothing — not for an hour.（手按胸口，不出光；5.5s 胸口在掌下一起一伏）"
+
+[[beat]]
+t0 = 7.5
+t1 = 10.4
+text = "亚伦低头看两只手：...For when it's too late."
+
+[[beat]]
+t0 = 10.4
+t1 = 14
+text = "For when it's nearly too late.（重读 nearly）；收手；亚伦先皱眉、眼睛一动、才攥拳"

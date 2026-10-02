@@ -1,0 +1,201 @@
+# 探险者大厅 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 量取：原版区图 WorldMap-Ironforge_c60.jpg（1002×668 px）上 x∈[580,816] px、y∈[5,254] px 一窗，
+#   本地 m ＝ (px − 580, py − 5) × (0.7215, 0.7222)（与区级 terrain.toml 同一换算）。
+# 区图只画出「米色斜向长廊 + 青绿色大厅群」的外轮廓；哪一翼是书库、哪一翼是展廊，以及厅内陈设，按世界树画面推定。
+
+[meta]
+bg = "bg204"
+name_zh = "探险者大厅"
+size_m = [170, 180]
+px_per_m = 8.0
+grid_m = 50
+scale_src = "地图量取"
+scale_note = "区图右上青绿色大块 + 其前的米色斜向长廊量取：总外廓约 166×170 m；换算同区级 terrain.toml（0.7215 / 0.7222 m/px）"
+# 世界树画面：高穹顶的展陈大厅，中庭立着完整的恐龙骨架与泰坦石碑残块，四壁是书架与玻璃展柜
+absent = ["天空 / 日光 / 天窗（山腹内厅）", "熔岩 / 锻炉 / 炉火（本厅只用油灯）", "活的动物（骨架是化石）", "有文字的招牌 / 标签 / 地图注记", "电灯 / 霓虹 / 现代展柜灯", "机械管道密集区（在南边的机械作坊区，不在本厅）", "4.0.3 之后新增的展品与考古工具台"]
+
+[[ridge]]
+name = "西北外岩（长廊以北）"
+poly = [[0, 0], [25, 0], [25, 40], [0, 66]]
+height_m = 50
+src = "地图量取"
+note = "长廊西北端石阶以北的实心岩；与荒弃洞穴之间的岩脊"
+
+[[ridge]]
+name = "东北外岩"
+poly = [[110, 0], [170, 0], [170, 40], [150, 30], [135, 28], [118, 42], [110, 20]]
+height_m = 50
+src = "地图量取"
+note = "北翼展廊与圆形书库之间及以外的岩体"
+
+[[ridge]]
+name = "东外岩"
+poly = [[152, 70], [170, 60], [170, 180], [160, 180], [165, 120]]
+height_m = 50
+src = "地图量取"
+note = "东南侧厅东墙以外"
+
+[[ridge]]
+name = "西南外岩（长廊以南）"
+poly = [[0, 90], [20, 110], [50, 150], [30, 160], [0, 160]]
+height_m = 50
+src = "地图量取"
+note = "长廊西南长边以外；主入口甬道从它东南端穿过"
+
+[[road]]
+name = "主入口甬道（接城心内环廊）"
+path = [[30, 180], [42, 165], [55, 150]]
+width_m = 12
+src = "地图量取"
+note = "区级 terrain.toml「探险者大厅甬道」的末段；从西南撞进长廊中段"
+
+[[road]]
+name = "南口通道（接机械作坊区）"
+path = [[98, 158], [100, 170], [100, 180]]
+width_m = 10
+src = "地图量取"
+note = "长廊东南端拱门往南，区图上接侏儒区的绿色甬道"
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "斜向入口长廊"
+xy = [63, 108]
+size = [140, 28]
+h_m = 0
+rot = 46
+src = "地图量取"
+note = "区图米色斜带：西北端石阶、东南端拱门，西南长边中段接主入口甬道；东北长边整面敞向中庭"
+
+[[block]]
+id = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "中庭大穹厅"
+xy = [97, 87]
+size = [80, 70]
+h_m = 0
+src = "地图量取"
+note = "青绿色主体，西缘是一道大弧面敞向长廊（矩形只是近似，与长廊的重叠即那道弧面敞口）；高穹顶，全厅最高"
+
+[[block]]
+id = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "北翼展廊"
+xy = [58, 40]
+size = [72, 48]
+h_m = 0
+rot = -30
+src = "地图量取"
+note = "区图向北凸出的大翼；玻璃展柜与古代石板陈列（推定用途）"
+
+[[block]]
+id = "b04"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "圆形书库"
+xy = [131, 52]
+size = [32, 36]
+h_m = 0
+src = "地图量取"
+note = "区图东北那团圆形小翼；环形书架直抵穹顶（按形状推定为书库）"
+
+[[block]]
+id = "b05"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "东南侧厅"
+xy = [131, 130]
+size = [42, 64]
+h_m = 0
+src = "地图量取"
+note = "中庭往东南延伸的长翼；长桌摊着无字手绘地图（推定用途）"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p187"
+face = "west"
+name = "巨兽化石骨架"
+xy = [95, 90]
+size = [24, 8]
+h_m = 8
+rot = 20
+src = "推定"
+note = "中庭正中；双足巨兽整副骨架立在低矮石台上，头朝西南对着长廊"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p188"
+face = "south"
+name = "巨石碑残块"
+xy = [112, 70]
+size = [7, 3]
+h_m = 4.5
+src = "推定"
+note = "骨架东北侧，青灰巨石碑断成的两截，刻满几何浮雕"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p189"
+face = "south"
+count = 8
+name = "中庭玻璃展柜列"
+xy = [108, 108]
+size = [26, 3]
+h_m = 1.4
+src = "推定"
+note = "骨架南侧一排木框玻璃柜：陶片、化石、金属残件"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p180"
+face = "southeast"
+into_ridge = true
+name = "西北石阶"
+xy = [16, 57]
+size = [10, 18]
+h_m = 3
+rot = 40
+src = "地图量取"
+note = "长廊西北端上行的宽石阶，通往北侧洞穴"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p181"
+face = "north"
+name = "东南拱门"
+xy = [98, 156]
+size = [22, 8]
+h_m = 6
+src = "地图量取"
+note = "长廊东南端的圆拱门，往南接机械作坊区"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg204-c1"
+eye = [85, 166]
+target = [85, 90]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

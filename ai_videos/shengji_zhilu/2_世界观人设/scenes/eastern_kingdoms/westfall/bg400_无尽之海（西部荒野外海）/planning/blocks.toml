@@ -1,0 +1,140 @@
+# 无尽之海（西部荒野外海） · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 原点 ＝ 区级 [0, 700] m。西岸土崖由区级 terrain.toml 平移（区级坐标 − [0, 700]）；水边线 ＝ 崖脚向西约 40 m（区级卡口径）。
+# 海没有 polygon 可写，照区级做法用几条宽 [[water]] 带子填成面；三座小礁岛按原版区图（1 px ≈ 3.194 m）量取。
+
+[meta]
+bg = "bg400"
+name_zh = "无尽之海（西部荒野外海）"
+size_m = [1050, 700]
+px_per_m = 1.5
+grid_m = 100
+scale_src = "地图量取"
+scale_note = "只画近岸约 1 km 的海面 + 西岸崖与沙岸，用来给「朝西 / 朝东」两种机位定方位；海本身向西无边。崖与水边线取区级 terrain.toml，礁岛在区图 [23.7%, 41.9%]、[23.6%, 56.9%]、[22.7%, 64.2%] 量取"
+# 世界树画面：西部荒野以西的开阔海面，深蓝转墨绿，浪涌平缓，天海之间没有任何遮挡物
+absent = [
+    "船只、帆影、港口码头、栈桥（旧世这片海上没有固定航线，船属 shot 层）",
+    "朝西视野里的岛屿、礁石、陆地（天海之间没有任何遮挡；礁岛只在近岸、机位身后）",
+    "灯塔光束（灯塔在南岸，是另一档；本档默认白天）",
+    "暴风雨巨浪、浓雾墙、夜景",
+    "冰山、浮冰、热带碧绿浅海（这里是冷色的温带外海）",
+    "海鸟、鱼群与任何动物",
+    "任何人物",
+]
+
+[[water]]
+name = "外海 · 远带（场地西半，宽带填成面）"
+path = [[250, 0], [250, 700]]
+width_m = 500
+depth_m = 60
+src = "地图量取"
+
+[[water]]
+name = "外海 · 近带（宽带填成面）"
+path = [[640, 0], [640, 700]]
+width_m = 280
+depth_m = 25
+src = "地图量取"
+
+[[water]]
+name = "近岸浅水带（东缘对齐水边线）"
+path = [[823, 0], [804, 67], [788, 156], [772, 265], [762, 392], [772, 552], [804, 680], [810, 700]]
+width_m = 120
+depth_m = 6
+src = "地图量取"
+
+[[ridge]]
+name = "西岸干土崖（崖脚到水边约 40 m 沙岸）"
+poly = [[923, 0], [1006, 0], [977, 92], [958, 175], [945, 277], [939, 399], [949, 552], [977, 673], [985, 700], [910, 700], [904, 680], [872, 552], [862, 392], [872, 265], [888, 156], [904, 67]]
+height_m = 25
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+over_water = true
+name = "灰白沙岸（崖脚窄条，中段示意；另见 bg395）"
+bg = "bg395"
+xy = [855, 275]
+size = [36, 250]
+h_m = 0
+rot = 6
+src = "地图量取"
+note = "沙岸沿整条海岸弯曲延伸，块只标中段"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p368"
+face = "south"
+over_water = true
+name = "近岸小礁岛（北）"
+xy = [759, 194]
+size = [25, 18]
+h_m = 4
+src = "地图量取"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p368"
+face = "south"
+over_water = true
+name = "近岸小礁岛（中）"
+xy = [754, 514]
+size = [22, 16]
+h_m = 3
+src = "地图量取"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p368"
+face = "south"
+over_water = true
+name = "近岸小礁岛（南）"
+xy = [727, 670]
+size = [24, 18]
+h_m = 3
+src = "地图量取"
+
+[[block]]
+id = "b05"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "锚点机位（海面上方三四米，朝正西）"
+xy = [450, 380]
+size = [6, 6]
+h_m = 0
+src = "推定"
+note = "离水边线约 370 m；朝西的视野里没有任何遮挡物"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p367"
+face = "south"
+over_water = true
+name = "漂浮的旧船板（随浪漂，位置不固定）"
+xy = [436, 380]
+size = [3, 1]
+h_m = 0
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg400-c1"
+eye = [525, 644]
+target = [525, 350]
+eye_h = 35.0
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

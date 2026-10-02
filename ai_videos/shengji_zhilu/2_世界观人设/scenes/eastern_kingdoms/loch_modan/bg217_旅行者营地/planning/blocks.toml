@@ -1,0 +1,195 @@
+# 旅行者营地 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg217"
+name_zh = "旅行者营地"
+size_m = [120, 100]
+px_per_m = 10.0
+scale_src = "推定"
+scale_note = "点位按区图木屋图标 [82, 63] 取（世界树 [73, 52] 有误，ref 裁切图按错坐标裁出、不可用；与 bg214 terrain.toml 一致）；盆地四周山丘方位取区图，院落与各构件尺寸无一手出处，按「猎人木屋 + 草靶 + 晾皮架」推定"
+# 世界树画面：湖东岸林边一座猎人木屋，门廊挂着兽皮与鹿角，屋前拴着猎犬，院里立着射箭靶
+absent = [
+    "任何人物、猎犬与动物（默认空院）",
+    "飞行点、飞行坐骑栖架（4.0.3 才加）",
+    "湖面（湖在西面五六百米外，院里只有顺来路豁口才远远望见一线）",
+    "燃着的火、冒烟的烟囱、亮灯的窗",
+    "其它民居与村镇（这里只有一座猎屋）",
+    "训练假人等 4.0.3a 元素",
+]
+
+[[ridge]]
+name = "东侧界山山脚（屋后陡起）"
+poly = [[104, 0], [120, 0], [120, 100], [110, 100], [100, 70], [98, 35]]
+height_m = 60
+src = "地图量取"
+
+[[ridge]]
+name = "南坡松林缓坡（兼作挡箭坡）"
+poly = [[0, 84], [50, 81], [100, 90], [110, 100], [0, 100]]
+height_m = 12
+src = "推定"
+
+[[road]]
+name = "来路（西口进院，顺豁口通湖东岸）"
+path = [[0, 44], [30, 45], [45, 45]]
+width_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p200"
+face = "west"
+name = "狩猎大屋（石基粗原木墙，陡双坡深赭红木瓦顶）"
+xy = [60, 45]
+size = [22, 14]
+h_m = 10
+src = "地图量取"
+note = "区图木屋图标 [82, 63]；正门朝西"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p201"
+face = "west"
+name = "门廊（通长斜檐，梁挂鹿角兽皮）"
+xy = [47, 45]
+size = [4, 14]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "low_wall"
+face = "north"
+count = 1
+name = "石烟囱（北山墙外）"
+xy = [60, 36.5]
+size = [2, 3]
+h_m = 13
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "low_wall"
+face = "north"
+count = 1
+name = "劈柴垛（屋北墙根）"
+xy = [66, 35.5]
+size = [6, 1.5]
+h_m = 1.8
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "post"
+face = "north"
+count = 1
+name = "草靶一"
+xy = [18, 78]
+size = [1.4, 0.5]
+h_m = 1.6
+src = "推定"
+note = "三只草靶沿南坡脚排开、靶面朝北"
+
+[[block]]
+id = "b06"
+kind = "post"
+face = "north"
+count = 1
+name = "草靶二"
+xy = [26, 78]
+size = [1.4, 0.5]
+h_m = 1.6
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "post"
+face = "north"
+count = 1
+name = "草靶三"
+xy = [34, 78]
+size = [1.4, 0.5]
+h_m = 1.6
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p363"
+face = "south"
+name = "火塘（石圈，冷灰；叉木横杆）"
+xy = [38, 56]
+size = [2.5, 2.5]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p201"
+face = "west"
+name = "储物小棚（单坡木板顶）"
+xy = [79, 58]
+size = [6, 5]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "post"
+face = "west"
+count = 1
+name = "晾皮木架"
+xy = [80, 67]
+size = [4, 1]
+h_m = 2.2
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "post"
+face = "south"
+count = 1
+name = "拴马木桩（空）"
+xy = [18, 41]
+size = [0.4, 0.4]
+h_m = 1.1
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p204"
+face = "south"
+count = 5
+name = "白桦丛（院北）"
+xy = [40, 14]
+size = [16, 8]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p221"
+face = "south"
+count = 6
+name = "屋后松林"
+xy = [91, 30]
+size = [10, 24]
+h_m = 18
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg217-c1"
+eye = [60, 92]
+target = [60, 50]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

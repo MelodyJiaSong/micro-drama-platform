@@ -1,0 +1,159 @@
+# 哨兵塔 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 本档是 bg11_哨兵岭 坡顶那座塔的特写场地：130 × 140 m，塔放在 (60, 60)。
+# 与 bg11 共用同一套落位——本文件坐标 ＝ bg11 blocks.toml 坐标 − [110, 58]；改其一必同步另一（塔、屋舍、大道都按它平移）。
+# 塔门与木梯在西墙是本档新增的推定；锚点图默认机位约在 (36, 70)，朝东北偏东仰望（机位不是实物，不写成 block）。
+
+[meta]
+bg = "bg396"
+name_zh = "哨兵塔"
+size_m = [130, 140]
+px_per_m = 10.0
+scale_src = "地图量取"
+scale_note = "塔位取坐标表 [56.2, 47.6]；周边落位全部由 bg11_哨兵岭 的平面图平移（区图裁切 1 px ≈ 1.06 m 量取：塔到东脚大道约五六十米、台地东沿约 40 m）。塔身 12 m 见方、高 22 m 与 bg11 一致（推定）"
+# 世界树画面：坡顶方形哨塔，下层石砌上层木构，顶上瞭望台与旗杆；从塔顶能一眼看完半个西部荒野
+absent = [
+    "厚石墙 / 在建石墙 / 脚手架（4.0.3 后才有）",
+    "焦黑的塔身与屋舍（旧世完好）",
+    "塔内楼梯的外露旋梯 / 石砌外梯（上塔只有西墙两折外挂木梯）",
+    "瞭望台上的火盆、灯笼、烽火（默认白天空台）",
+    "亮着的炉火与烟（炉台冷灰）",
+    "城门与寨墙",
+    "塌陷巨坑与地裂（4.0.3a 才有）",
+    "绿草坡与高林",
+    "任何人物与动物（守卫、首领、坐骑属 shot 层）",
+]
+
+[[ridge]]
+name = "坡顶台地（东沿之外是陡坡）"
+poly = [[0, 0], [98, 0], [100, 30], [102, 62], [98, 100], [88, 140], [0, 140]]
+height_m = 16
+src = "地图量取"
+
+[[road]]
+name = "南北中央大道（贴坡东脚）"
+path = [[125, 0], [118, 52], [112, 102], [100, 140]]
+width_m = 8
+src = "地图量取"
+
+[[road]]
+name = "爬坡车辙土路（东南坡脚→坡顶）"
+path = [[80, 120], [66, 92], [58, 74]]
+width_m = 4
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p345"
+face = "west"
+into_ridge = true
+name = "方形哨塔（下石上木）"
+xy = [60, 60]
+size = [12, 12]
+h_m = 22
+src = "坐标表"
+note = "粗石方墩约 9 m + 深棕木框架 + 木栏瞭望台 + 四坡木瓦小顶 + 细高旗杆与褪色深蓝布旗；塔门在西墙梯脚边（推定）"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p346"
+face = "west"
+into_ridge = true
+name = "西墙两折外挂木梯（中段歇脚台）"
+xy = [53, 60]
+size = [1.5, 10]
+h_m = 20
+src = "推定"
+note = "bg11 锁定描述符：塔西侧折两段的外挂木梯"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p364"
+face = "south"
+into_ridge = true
+name = "塔脚倒扣空木桶"
+xy = [52, 67]
+size = [2, 1]
+h_m = 0.8
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p336"
+face = "south"
+into_ridge = true
+name = "兵营式长屋（旅店）"
+xy = [18, 94]
+size = [32, 10]
+h_m = 7
+rot = 12
+src = "推定"
+note = "= bg11 b02；默认机位身后"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p336"
+face = "south"
+into_ridge = true
+name = "小石木屋·北"
+xy = [38, 10]
+size = [10, 8]
+h_m = 5
+src = "推定"
+note = "= bg11 b04；画框外"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p336"
+face = "south"
+into_ridge = true
+name = "小石木屋·南"
+xy = [46, 128]
+size = [10, 8]
+h_m = 5
+src = "推定"
+note = "= bg11 b06；画框外"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p357"
+face = "south"
+into_ridge = true
+name = "露天石炉台与铁砧"
+xy = [80, 92]
+size = [7, 5]
+h_m = 3
+src = "推定"
+note = "= bg11 b07；默认态冷灰不冒烟，画框外"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p346"
+face = "south"
+count = 3
+into_ridge = true
+name = "坐骑栖架空地（高木栖架 + 谷袋堆）"
+xy = [86, 12]
+size = [20, 14]
+h_m = 4
+src = "推定"
+note = "= bg11 b08；默认机位里只露出栖架顶端"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg396-c1"
+eye = [65, 129]
+target = [65, 70]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

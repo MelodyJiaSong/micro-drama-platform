@@ -23,6 +23,7 @@ from pathlib import Path
 import imageio_ffmpeg
 
 from libs.common import video_canvas
+from libs.common.character_dir import CHARACTER_DIR_RE as _CHARACTER_DIR_RE
 from libs.common.exposed_tree import ExposedTree
 from libs.common.safe_resolve import SafeResolver
 
@@ -68,16 +69,20 @@ _TRUNCATE_DURATION_S: float = 2.0
 
 # Path shape: ai_videos / {drama} / characters / {cN_xxx} / {filename}.{ext}
 # (`{drama}` is one OR two segments — a series member is `{series}/{drama}`.)
-_CHARACTER_DIR_RE: re.Pattern[str] = re.compile(r"^c\d+(_.*)?$")
 
 
 def is_under_character_folder(root: Path, rel: str) -> bool:
     """True when `rel` points inside `…/characters/{cN_xxx}/`.
 
-    Needs `root` because the drama root is **two or three** segments depending
-    on whether the second one is a series folder, and that question is only
-    answerable against the filesystem (`libs.common.drama_ref` — the single
+    Needs `root` because the owning folder is **two or three** segments
+    depending on whether the second one is a series folder, and that question is
+    only answerable against the filesystem (`libs.common.drama_ref` — the single
     place allowed to resolve it; CLAUDE.md forbids re-deriving it from depth).
+
+    `asset_root_depth`, not `drama_depth`: a character shared by several
+    episodes lives in `ai_videos/{series}/_series/characters/`, which is not a
+    drama, so `drama_depth` answers None for it and every extraction on a shared
+    character's turntable video came back `not_a_character_video`.
 
     Module-level on purpose: two writers need it, and the previous shape —
     a `@staticmethod` whose body reached for `self._resolver.root` — raised
@@ -86,7 +91,7 @@ def is_under_character_folder(root: Path, rel: str) -> bool:
     (regression in 8907992, the series-nesting refactor).
     """
     parts = rel.split("/")
-    depth = drama_ref.drama_depth(root, parts)
+    depth = drama_ref.asset_root_depth(root, parts)
     if depth is None:
         return False
     # `characters/` sits at the drama root (legacy) or under a stage folder
@@ -166,7 +171,7 @@ class CharacterVideoTruncator:
             raise NotCharacterVideoError("extension is not a video type")
         if not is_under_character_folder(self._resolver.root, rel):
             raise NotCharacterVideoError(
-                "path must be under ai_videos/{drama}/characters/{cN_xxx}/"
+                "path must be under ai_videos/{drama}/characters/{cN_xxx|mN_xxx}/"
             )
         resolved = self._resolver.resolve(rel)
         if resolved is None:
@@ -1070,7 +1075,7 @@ class CharacterViewExtractor:
             raise NotCharacterVideoError("extension is not a video type")
         if not is_under_character_folder(self._resolver.root, rel):
             raise NotCharacterVideoError(
-                "path must be under ai_videos/{drama}/characters/{cN_xxx}/"
+                "path must be under ai_videos/{drama}/characters/{cN_xxx|mN_xxx}/"
             )
         resolved = self._resolver.resolve(rel)
         if resolved is None:
@@ -1127,7 +1132,9 @@ class CharacterViewExtractor:
         if not self._exposed.is_inside(rel):
             raise InvalidCharactersDirError("path outside sandbox")
         parts = rel.split("/")
-        depth = drama_ref.drama_depth(self._resolver.root, parts)
+        # `asset_root_depth`: a series' shared `_series/characters/` owns the
+        # characters its episodes reuse, and is not a drama.
+        depth = drama_ref.asset_root_depth(self._resolver.root, parts)
         if depth is None or len(parts) < depth + 1:
             raise InvalidCharactersDirError("path must be ai_videos/{drama}/.../characters/")
         if parts[-1] != "characters":

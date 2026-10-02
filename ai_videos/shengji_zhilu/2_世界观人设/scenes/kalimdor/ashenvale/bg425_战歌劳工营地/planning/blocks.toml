@@ -1,0 +1,274 @@
+# 战歌劳工营地 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地中心 ≈ 区图 [71.8, 80.5]（区级 b921，本身即推定落位）；东南山脚与支路走向读自区图，营内落位全部推定。
+
+[meta]
+bg = "bg425"
+name_zh = "战歌劳工营地"
+size_m = [240, 200]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "世界画面只有「泥地工场、成堆原木与简易棚屋、深车辙」；工场取约 70 × 60 m，场地放大到 240 × 200 m 把东南山脚与西南来的支路一并框进来。营内尺度无一手出处"
+# 世界树画面：林间空出的泥地工场，成堆原木与简易棚屋，地上是深深的车辙
+absent = [
+    "任何人物与牲口（苦力、运木的牲口属 shot 层）",
+    "任何火光：燃着的火堆、火把、灯笼、炉火与炉烟",
+    "寨墙、栅栏、瞭望塔与大帐（那是碎木岗哨与卡加希亚要塞）",
+    "伐木机械、锯木台与熔炉（那是东北的大伐木营 bg426）",
+    "湖面（坠星湖在西侧林子外约 280 m，营内看不见）",
+    "飞行点与双足飞龙栖架",
+    "旗帜纹章与文字招牌",
+]
+
+[[ridge]]
+name = "屠魔山赤褐高脊（东南背墙）"
+poly = [[220, 0], [240, 0], [240, 200], [100, 200]]
+height_m = 60
+src = "地图量取"
+note = "区图营地东南紧贴山群影线，走向东北—西南；落位按区级 terrain 屠魔山 poly 西北缘平移"
+
+[[road]]
+name = "西南支路（大道 → 工场）"
+path = [[0, 190], [40, 160], [76, 122]]
+width_m = 4
+src = "地图量取"
+note = "区图南出路向东北岔出的支路"
+
+[[road]]
+name = "工场内车辙道（两道深辙）"
+path = [[76, 122], [108, 118], [140, 114]]
+width_m = 3
+src = "推定"
+
+[[road]]
+name = "绕东回北支路（沿山脚回林）"
+path = [[140, 114], [152, 100], [164, 72], [160, 36], [150, 0]]
+width_m = 3.5
+src = "地图量取"
+note = "区图支路在营地东侧向北回弯"
+
+[[block]]
+id = "b01"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "泥地工场"
+xy = [110, 95]
+size = [70, 60]
+h_m = 0
+src = "推定"
+note = "踩烂的黑褐泥地；车辙从西南口切进堆料场"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p380"
+face = "southwest"
+name = "斜顶原木棚屋·最新（最靠里）"
+xy = [140, 71]
+size = [8, 5]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p380"
+face = "southwest"
+name = "斜顶原木棚屋·中"
+xy = [126, 69]
+size = [8, 5]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p380"
+face = "southwest"
+name = "斜顶原木棚屋·最旧（兽皮塌陷）"
+xy = [112, 68]
+size = [8, 5]
+h_m = 3.2
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p376"
+face = "south"
+name = "原木垛·西"
+xy = [94, 96]
+size = [12, 4]
+h_m = 1.9
+rot = 30
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p376"
+face = "south"
+name = "原木垛·中"
+xy = [112, 104]
+size = [12, 4]
+h_m = 1.9
+rot = 30
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p376"
+face = "south"
+name = "原木垛·东"
+xy = [126, 90]
+size = [12, 4]
+h_m = 2
+rot = 30
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p391"
+face = "south"
+name = "双轮运木车（空，无牲口）"
+xy = [136, 110]
+size = [4, 2]
+h_m = 1.5
+rot = -8
+src = "推定"
+note = "停在车辙尽头"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p388"
+face = "south"
+name = "石圈火堆（冷灰）"
+xy = [100, 112]
+size = [3, 3]
+h_m = 0.4
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p375"
+face = "south"
+name = "劈木墩（插大斧）"
+xy = [88, 80]
+size = [1.2, 1.2]
+h_m = 0.7
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p391"
+face = "south"
+name = "锯木架（半截原木）"
+xy = [100, 70]
+size = [4, 1]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p376"
+face = "south"
+name = "弃置树梢枝杈堆（山脚下）"
+xy = [150, 124]
+size = [10, 6]
+h_m = 1.5
+rot = -60
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "rock_shelf"
+face = "south"
+count = 1
+name = "东南山脚碎土坡"
+xy = [172, 92]
+size = [14, 150]
+h_m = 6
+rot = 29
+src = "推定"
+note = "赤褐岩石与碎土；工场地面向这里微微抬起"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p375"
+face = "south"
+count = 12
+name = "树桩带·西"
+xy = [60, 95]
+size = [22, 80]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p375"
+face = "south"
+count = 13
+name = "树桩带·北"
+xy = [110, 48]
+size = [90, 22]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "asset"
+asset = "p375"
+face = "south"
+count = 7
+name = "树桩带·南"
+xy = [95, 142]
+size = [60, 18]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b17"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 40
+name = "原生古林·西（林缘留着没砍完的斧口）"
+xy = [22, 80]
+size = [40, 150]
+h_m = 22
+src = "推定"
+note = "树丛"
+
+[[block]]
+id = "b18"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 22
+name = "原生古林·北"
+xy = [95, 16]
+size = [110, 30]
+h_m = 22
+src = "推定"
+note = "树丛"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg425-c1"
+eye = [120, 184]
+target = [120, 100]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

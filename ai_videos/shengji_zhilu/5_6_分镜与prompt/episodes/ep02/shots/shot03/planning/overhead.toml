@@ -1,0 +1,108 @@
+# shot03 镜头平面图（overhead）的唯一出处：镜头与人各自在哪、往哪走、几秒到。
+# 改走位 ＝ 改本文件重跑 `python tools/gen_shots_szzl_ep02.py --only S03`；出审阅图 `python tools/shot_overhead.py <shot 目录>`。
+# 坐标＝bg4 场地平面图坐标系（米；x 向东、y 向南）。杜汉岗位 (153.3, 117.9)，两栋楼正中。
+# 机位全在「亚伦—杜克」连线的北侧（接 S02）：亚伦画左、杜克画中、杜汉画右——S04 从西北侧拍同一个排列。
+
+[meta]
+scene = "bg4"
+skip = "上一镜结尾杜克刚从主街北段迈步，这一镜两人已经走到杜汉面前、信递了过去（跳过二十来米的路）"
+view = [146, 108, 162, 124]
+note = "交信：杜汉特写拆信翻页（纸背朝镜头）；4.5s 切两人身后偏西北越过杜克肩的中景，杜汉照纸念、抬眼看杜克，杜克的肩一挺一沉；14.6s 切两人近景：杜克扭头找亚伦，Deputy / Acting"
+
+[[camera]]
+t = 0
+xy = [151.2, 114.95]
+h = 1.7
+look = [153.3, 117.9]
+lens = 65
+tag = "岗位·特写"
+subject = "c8_Marshal_Dughan"
+aim_h = 1.55
+note = "杜汉正前方偏西北约 3.6 m，长焦特写框住他的脸和手里的纸，两人在画外"
+
+[[camera]]
+t = 4.4
+xy = [151.2, 114.95]
+h = 1.7
+look = [153.3, 117.9]
+lens = 65
+subject = "c8_Marshal_Dughan"
+
+[[camera]]
+t = 4.5
+xy = [153.2, 112.3]
+h = 1.7
+look = [154.1, 117.2]
+lens = 35
+tag = "两人身后·中"
+subject = "c8_Marshal_Dughan"
+cut = true
+note = "切：两人身后偏西北，越过杜克的右肩对着杜汉；亚伦画左、杜克画中、杜汉画右"
+
+[[camera]]
+t = 14.5
+xy = [153.2, 112.3]
+h = 1.7
+look = [154.1, 117.2]
+lens = 35
+subject = "c2_Duke"
+
+[[camera]]
+t = 14.6
+xy = [153.5, 114.0]
+h = 1.65
+look = [154.6, 116.25]
+lens = 35
+tag = "两人身后·近"
+subject = "c2_Duke"
+cut = true
+note = "切：往前 1.7 m 的两人近景，杜克扭头朝画左找亚伦（3/4），亚伦在画左；杜汉出画"
+
+[[camera]]
+t = 18
+xy = [153.5, 114.0]
+h = 1.65
+look = [154.6, 116.25]
+lens = 35
+subject = "c2_Duke"
+
+[[actor]]
+key = "c8_Marshal_Dughan"
+label = "杜汉"
+path = [[0, 153.3, 117.9, 153.7, 116.5], [18, 153.3, 117.9, 153.7, 116.5]]
+note = "面朝杜克站着，写字木板夹在左腋下，两手拿着拆开的信纸"
+
+[[actor]]
+key = "c2_Duke"
+label = "杜克"
+path = [[0, 153.9, 116.6, 153.3, 117.9], [14.6, 153.9, 116.6, 153.3, 117.9], [14.7, 153.9, 116.6, 155.2, 115.1], [18, 153.9, 116.6, 155.2, 115.1]]
+note = "0.5s 把信递到杜汉手里；听到 Deputy 肩膀一挺，Acting 一出来肩往下沉；14.6s 扭头转身找亚伦（身子半朝镜头）"
+
+[[actor]]
+key = "c1_Aaron"
+label = "亚伦"
+path = [[0, 155.4, 116.0, 153.4, 117.9], [14.6, 155.4, 116.0, 153.4, 117.9], [14.7, 155.4, 116.0, 154.2, 116.0], [18, 155.4, 116.0, 154.2, 116.0]]
+note = "杜克身后偏东半步；14.7s 起转向杜克（半朝镜头）"
+
+[[gaze]]
+who = "c8_Marshal_Dughan"
+t0 = 9
+t1 = 14.6
+at = "c2_Duke"
+label = "递信来的杜克"
+key = true
+
+[[beat]]
+t0 = 0
+t1 = 4.5
+text = "杜汉叹气、接信、拆火漆、翻页（纸背朝镜头）"
+
+[[beat]]
+t0 = 4.5
+t1 = 14.6
+text = "'The bearer of these documents is to be awarded Deputy status...' / Well. It says here you've been awarded Acting Deputy Status… Congratulations."
+
+[[beat]]
+t0 = 14.6
+t1 = 18
+text = "杜克愣住看亚伦：...Deputy. / Acting."

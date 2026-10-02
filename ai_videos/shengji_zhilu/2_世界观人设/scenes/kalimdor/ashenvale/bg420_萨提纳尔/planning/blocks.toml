@@ -1,0 +1,239 @@
+# 萨提纳尔 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地中心 ≈ 区图 [80.5, 49]（区级 b908，地图量取）；南侧林间路 = bg413 terrain「木寨—萨特营—东北古遗址路」、路南林丘 = 「东部丘陵」、西南角河 = 「弗伦河东支」，均平移换算；废墟内落位全部推定。
+
+[meta]
+bg = "bg420"
+name_zh = "萨提纳尔"
+size_m = [320, 280]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "世界画面只有「废墟改成的聚落、断墙兽骨暗紫幡、地面血色符号」；半圆残墙取约 90 × 70 m，场地放大到 320 × 280 m 把南侧林间路、路南林丘与西南角河面框进来。废墟内尺度无一手出处"
+# 世界树画面：废墟改成的萨特聚落，断墙上钉着兽骨与暗紫布幡，地面画着血色符号
+absent = [
+    "任何人物与动物（占据者属 shot 层；窝棚与广场都是空的）",
+    "任何火光：火盆冷着，没有火把、篝火、烛火、灯笼",
+    "发光的符号、法阵光雾与绿色鬼火（鬼火属东南的枯木丘）",
+    "完好的精灵建筑、紫顶帐篷与哨兵营地（这里只剩被占据的废墟）",
+    "木栅、兽人式大帐与原木塔（那是西南的木寨）",
+    "湖面与瀑布（最近的水是西南角的河支流）",
+    "文字招牌与纹章旗帜",
+    "4.0.3 之后的新营地与新建筑",
+]
+
+[[ridge]]
+name = "路南林丘（木寨与萨特营之间）"
+poly = [[40, 280], [90, 236], [180, 226], [270, 214], [320, 222], [320, 280]]
+height_m = 50
+src = "地图量取"
+note = "bg413 terrain「东部丘陵」北缘；平面按区图相对方位摆，高度推定"
+
+[[water]]
+name = "弗伦河东支（西南角，南流）"
+path = [[0, 196], [36, 236], [62, 280]]
+width_m = 40
+depth_m = 3
+src = "地图量取"
+note = "由 bg413 terrain 弗伦河东支 [76,49]→[78,53] 平移换算"
+
+[[road]]
+name = "林间土路（西南来自木寨北门，东北去伐木营地与古遗址）"
+path = [[0, 232], [90, 212], [170, 190], [250, 168], [320, 150]]
+width_m = 5
+src = "地图量取"
+note = "bg413 terrain「木寨—萨特营—东北古遗址路」"
+
+[[road]]
+name = "烂泥小道（林间路 → 南口石门）"
+path = [[172, 190], [176, 176], [178, 166]]
+width_m = 2
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "半圆残墙（开口朝南，钉满兽骨与暗紫幡）"
+xy = [178, 118]
+size = [90, 70]
+h_m = 4
+src = "推定"
+note = "世界画面「断墙上钉着兽骨与暗紫布幡」；形状与尺寸推定"
+
+[[block]]
+id = "b02"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "中央圆形石台（干涸暗红褐符号）"
+xy = [178, 124]
+size = [18, 18]
+h_m = 0.6
+src = "推定"
+note = "世界画面「地面画着血色符号」；颜料早已干透不发光"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p385"
+face = "east"
+name = "塌顶弧檐石屋·西（屋顶塌洞、残梁斜插）"
+xy = [146, 110]
+size = [16, 13]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p385"
+face = "west"
+name = "三面墙小石屋·东"
+xy = [212, 108]
+size = [11, 10]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "gate_wall"
+face = "south"
+count = 1
+name = "尖拱石门（南口唯一出入口，三级石阶）"
+xy = [178, 157]
+size = [8, 3]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p388"
+face = "south"
+name = "冷石火盆·西"
+xy = [171, 161]
+size = [1.2, 1.2]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p388"
+face = "south"
+name = "冷石火盆·东"
+xy = [185, 161]
+size = [1.2, 1.2]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p379"
+face = "south"
+count = 5
+name = "兽皮窝棚列（北墙根，四五座）"
+xy = [180, 90]
+size = [40, 6]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p387"
+face = "south"
+count = 8
+name = "带刺骨杖圈（石台四周）"
+xy = [178, 124]
+size = [26, 26]
+h_m = 2
+src = "推定"
+note = "七八根一人多高"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p377"
+face = "south"
+name = "倒伏雕纹细石柱（岩坡边）"
+xy = [236, 176]
+size = [9, 1]
+h_m = 0.8
+rot = 25
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "旧石基残段（西侧墙外，没入蕨丛）"
+xy = [120, 144]
+size = [22, 2]
+h_m = 0.6
+rot = 40
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "rock_shelf"
+face = "south"
+count = 1
+name = "机位岩坡（东南，约五米）"
+xy = [248, 188]
+size = [14, 10]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 40
+name = "深林·北（林冠几乎合拢）"
+xy = [170, 30]
+size = [300, 50]
+h_m = 30
+src = "推定"
+note = "树丛"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 40
+name = "深林·西"
+xy = [55, 130]
+size = [90, 110]
+h_m = 30
+src = "推定"
+note = "树丛"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 40
+name = "深林·东"
+xy = [285, 95]
+size = [60, 110]
+h_m = 30
+src = "推定"
+note = "树丛"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg420-c1"
+eye = [160, 258]
+target = [160, 140]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

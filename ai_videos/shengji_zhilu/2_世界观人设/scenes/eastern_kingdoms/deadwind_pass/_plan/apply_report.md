@@ -1,0 +1,42 @@
+# 资产落地报告 · deadwind_pass
+
+- ⚙ bg100_死者十字·b07「北坡枯黑秃树丛」：引擎报错，自动声明 into_ridge = true
+- ✓ bg100_死者十字：blend 已建（占位 4 件）
+- ⚙ bg101_格罗高克营地·b11「西栅墙」：引擎报错，自动声明 may_overlap = true
+- ⚙ bg101_格罗高克营地·b12「东栅墙」：引擎报错，自动声明 may_overlap = true
+- ⚙ bg101_格罗高克营地·b13「南栅墙」：引擎报错，自动声明 may_overlap = true
+- ⚙ bg101_格罗高克营地·b13「南栅墙」：引擎报错，自动声明 may_overlap = true
+- ⚙ bg101_格罗高克营地·b18「东栅与崖脚之间的滚石」：引擎报错，自动声明 into_ridge = true
+- ⚙ bg101_格罗高克营地·b20「西坡枯黑秃树」：引擎报错，自动声明 into_ridge = true
+- ✓ bg101_格罗高克营地：blend 已建（占位 6 件）
+- ⚙ bg102_墓穴·b02「锈铁栅两扇（东关、西半开）」：引擎报错，自动声明 may_overlap = true
+- ⚙ bg102_墓穴·b01「墓门门洞（方石门柱 + 人形浮雕门楣）」：引擎报错，自动声明 into_ridge = true
+- ⚙ bg102_墓穴·b02「锈铁栅两扇（东关、西半开）」：引擎报错，自动声明 into_ridge = true
+- ⚙ bg102_墓穴·b03「门内下行石阶（没入黑暗）」：引擎报错，自动声明 into_ridge = true
+- ⚙ bg102_墓穴·b09「崖脚东侧滚石坡」：引擎报错，自动声明 into_ridge = true
+- ⚙ bg102_墓穴·b10「崖顶枯黑秃树排」：引擎报错，自动声明 into_ridge = true
+- ✓ bg102_墓穴：blend 已建（占位 3 件）
+- ⚙ bg103_逆风谷·b03「两壁上沿错叠段（天缝断成两截）」：引擎报错，自动声明 may_overlap = true
+- ⚙ bg103_逆风谷·b03「两壁上沿错叠段（天缝断成两截）」：引擎报错，自动声明 may_overlap = true
+- ⚙ bg103_逆风谷·b01「卡在两壁间的悬空巨石」：引擎报错，自动声明 into_ridge = true
+- ⚙ bg103_逆风谷·b02「悬石下的碎块堆」：引擎报错，自动声明 into_ridge = true
+- ⚙ bg103_逆风谷·b03「两壁上沿错叠段（天缝断成两截）」：引擎报错，自动声明 into_ridge = true
+- ⚙ bg103_逆风谷·b04「横卡高处的枯黑树干」：引擎报错，自动声明 into_ridge = true
+- ⚙ bg103_逆风谷·b05「西壁两根锈铁钉」：引擎报错，自动声明 into_ridge = true
+- ⚙ bg103_逆风谷·b01「卡在两壁间的悬空巨石」：引擎报错，自动声明 over_water = true
+- ⚙ bg103_逆风谷·b02「悬石下的碎块堆」：引擎报错，自动声明 over_water = true
+- ⚙ bg103_逆风谷·b03「两壁上沿错叠段（天缝断成两截）」：引擎报错，自动声明 over_water = true
+- ✓ bg103_逆风谷：blend 已建（占位 2 件）
+- ⚙ bg104_沉睡峡谷·b07「西崖顶枯树」：引擎报错，自动声明 into_ridge = true
+- ⚙ bg104_沉睡峡谷·b08「东岭坡枯树列」：引擎报错，自动声明 into_ridge = true
+- ⚙ bg104_沉睡峡谷·b02「浅白砾石沙嘴」：引擎报错，自动声明 over_water = true
+- ⚙ bg104_沉睡峡谷·b03「圆顶黑石（河心偏西）」：引擎报错，自动声明 over_water = true
+- ⚙ bg104_沉睡峡谷·b04「倒伏枯树干（斜插进水）」：引擎报错，自动声明 over_water = true
+- ✓ bg104_沉睡峡谷：blend 已建（占位 3 件）
+- ⚙ bg105_罪恶谷·b02「腰口碎石锥（东壁崩塌）」：引擎报错，自动声明 into_ridge = true
+- ⚙ bg105_罪恶谷·b03「倒地粗原木栅（中段豁口）」：引擎报错，自动声明 into_ridge = true
+- ⚙ bg105_罪恶谷·b04「削尖粗木桩丛」：引擎报错，自动声明 into_ridge = true
+- ⚙ bg105_罪恶谷·b05「西壁脚枯树」：引擎报错，自动声明 into_ridge = true
+- ⚙ bg105_罪恶谷·b06「乱石滩巨石群」：引擎报错，自动声明 into_ridge = true
+- ⚙ bg105_罪恶谷·b07「东壁脚木栅残段」：引擎报错，自动声明 into_ridge = true
+- ✓ bg105_罪恶谷：blend 已建（占位 2 件）

@@ -1,0 +1,190 @@
+# 粘丝洞 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 换算：世界树坐标 [38, 18] → bg247 的 (1459.4, 460.9) m → 本图 (220, 190)，即原点 ＝ bg247 的 (1239.4, 270.9) m。
+# 裁切图 ≈0.958 m/px（区图 180 px 宽的窗口放大 4 倍），红十字在 (362, 240) px；崖脚线、海岸线、南边小石岭由裁切图量取。
+# 裁切图崖脚 (265, 110) px 处有一枚小图标，推定即洞口 → 本图 (127, 74)。崖脚线在此段走向西北偏西—东南偏东（约 19°），洞口因此面朝南偏西。
+# 海用 6 条横向水带从海岸线往西铺到场地西缘（场地西南角是海湾）。
+
+[meta]
+bg = "bg267"
+name_zh = "粘丝洞"
+size_m = [360, 300]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "区图 WorldMap-Silverpine_c60 宽 1002 px ＝ 区宽 3840 m（bg247 同一换算）；裁切图放大 4 倍（≈0.958 m/px），崖脚线、海岸线与南边小石岭由裁切图量取；洞口按崖脚小图标推定，洞喉进深、碎石坡与崖前树木为推定"
+# 世界树画面：崖壁上的洞口，内壁糊满蛛网与卵囊，只有零星幽光
+absent = ["任何建筑 / 棚屋 / 栅栏 / 帐篷（本档零人造物）", "蜘蛛与任何活物（只写网、卵囊与空卵壳）", "尸体 / 血迹 / 茧里裹着的人形", "火把 / 火堆 / 任何火光与人工光", "发光的卵囊 / 荧光菌 / 魔法光（洞里唯一的光是岩缝漏下的天光）", "平地上的洞口（洞口在崖壁半腰，要爬碎石坡）", "树桩空地（那是 bg259）", "遍地骨头（那是 bg261）", "路（草洼里只有兽径）", "雪", "阔叶林", "翠绿草地"]
+
+[[ridge]]
+name = "北面山块（海岸后的西北山地；南脚是二三十米高的灰黑岩崖，洞开在崖壁半腰）"
+poly = [[0, 0], [360, 0], [360, 156], [314, 147], [256, 123], [189, 94], [127, 76], [65, 52], [7, 42], [0, 40]]
+height_m = 150
+src = "地图量取"
+
+[[ridge]]
+name = "南边小石岭（红十字正南，自西北向东南伸）"
+poly = [[180, 211], [218, 198], [275, 211], [333, 233], [360, 246], [360, 300], [300, 300], [244, 292], [196, 277], [172, 248]]
+height_m = 40
+src = "地图量取"
+
+[[water]]
+name = "海·带1"
+path = [[0, 165], [14, 165]]
+width_m = 24
+depth_m = 6
+src = "地图量取"
+
+[[water]]
+name = "海·带2"
+path = [[0, 190], [24, 190]]
+width_m = 24
+depth_m = 6
+src = "地图量取"
+
+[[water]]
+name = "海·带3"
+path = [[0, 215], [88, 215]]
+width_m = 24
+depth_m = 6
+src = "地图量取"
+
+[[water]]
+name = "海·带4"
+path = [[0, 240], [105, 240]]
+width_m = 24
+depth_m = 6
+src = "地图量取"
+
+[[water]]
+name = "海·带5"
+path = [[0, 265], [118, 265]]
+width_m = 24
+depth_m = 6
+src = "地图量取"
+
+[[water]]
+name = "海·带6"
+path = [[0, 290], [128, 290]]
+width_m = 20
+depth_m = 6
+src = "地图量取"
+
+[[road]]
+name = "兽径（草洼东南 → 碎石坡 → 洞口）"
+path = [[260, 190], [200, 158], [150, 118], [126, 90], [127, 78]]
+width_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b01"
+into_ridge = true
+kind = "cave_mouth"
+face = "southwest"
+name = "洞口（崖壁半腰，面朝南偏西）"
+xy = [127, 74]
+size = [9, 4]
+h_m = 7
+rot = 19
+src = "推定"
+note = "约两人高、三人宽；洞底高出崖脚三四米；位置取裁切图崖脚小图标"
+
+[[block]]
+id = "b02"
+may_overlap = true
+into_ridge = true
+kind = "chamber"
+face = "southwest"
+name = "洞喉前段（糊满蛛网与卵囊）"
+xy = [131, 63]
+size = [8, 20]
+h_m = 6
+rot = 19
+src = "推定"
+note = "进深约二十米，洞顶两三道岩缝漏天光"
+
+[[block]]
+id = "b03"
+may_overlap = true
+into_ridge = true
+kind = "chamber"
+face = "southwest"
+name = "洞喉拐弯处（以里全黑，本档不建）"
+xy = [128, 51]
+size = [12, 6]
+h_m = 5
+rot = 19
+src = "推定"
+
+[[block]]
+id = "b04"
+may_overlap = true
+kind = "rock_shelf"
+face = "south"
+name = "崖下碎石坡"
+xy = [124, 85]
+size = [18, 14]
+h_m = 3.5
+rot = 19
+src = "推定"
+note = "塌落多年的落石堆成，坡度约三十度；标准机位在坡腰朝北偏东看进洞"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p270"
+face = "south"
+name = "被丝缠满的枯松"
+xy = [141, 88]
+size = [3, 3]
+h_m = 14
+src = "推定"
+note = "洞口岩檐拉下几根粗丝缆到这棵树"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p270"
+face = "south"
+count = 4
+name = "崖脚稀疏枯松"
+xy = [100, 76]
+size = [16, 8]
+h_m = 12
+rot = 19
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "崖前枯草洼（起雾）"
+xy = [200, 160]
+size = [140, 56]
+h_m = 0
+src = "地图量取"
+note = "裁切图上崖脚与小石岭之间一块雾蒙蒙的草地；红十字在其南缘"
+
+[[block]]
+id = "b08"
+over_water = true
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "海岸碎石滩"
+bg = "bg262"
+xy = [10, 118]
+size = [10, 90]
+h_m = 0
+src = "地图量取"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg267-c1"
+eye = [180, 276]
+target = [180, 150]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

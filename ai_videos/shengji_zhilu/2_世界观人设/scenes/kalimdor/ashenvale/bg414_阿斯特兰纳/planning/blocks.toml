@@ -1,0 +1,259 @@
+# 阿斯特兰纳 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg414"
+name_zh = "阿斯特兰纳"
+size_m = [400, 340]
+px_per_m = 3.5
+scale_src = "地图量取"
+scale_note = "裁切图约放大 5.9 倍（ASTRANAAR 字样对照原图 61 px），1 裁切 px ≈ 0.89 m；本图原点 ＝ 裁切图 (150, 90) px。湖、岛身、两桥、东岸弧坡按裁切量取；岛上屋舍布局无一手出处，按旅店 / 驻所 / 塔楼 / 飞行点四项功能推定"
+# 世界树画面：湖心小岛上的精灵小镇，两座木桥连向岸边，紫顶塔楼与哨兵驻所围着中央空地
+# 区图：红十字 ＝ 岛心；旅店图标在红十字东南约 40 m；西来林道沿湖北岸到岛头，东南桥头接南岸林道先南后东
+absent = [
+    "城墙、城门楼与石砌大城（湖水就是围合，进出只有两座木桥）",
+    "兽人式尖木寨墙、兽皮帐篷与红黑战旗",
+    "被焚毁或塌落的屋舍（默认完好；突袭后的残破态须另立 bg）",
+    "点亮的灯、火把、火盆与任何人工光源（白天默认，灯架全不亮）",
+    "码头、船只与渡口",
+    "发光的井水（岛上的井只是清水）",
+    "任何人物、哨兵、角鹰兽与坐骑",
+    "文字招牌与路牌上的字",
+    "4.0.3a 后的任何改建",
+]
+
+[[ridge]]
+name = "东岸弧形高坡（古树林，挡住东面天际）"
+poly = [[150, 5], [300, 0], [400, 40], [400, 262], [380, 250], [365, 160], [348, 92], [270, 40], [160, 30]]
+height_m = 40
+src = "地图量取"
+note = "裁切图湖东侧那道弧形短线坡，从湖北岸一直弯到东南"
+
+[[ridge]]
+name = "西南低丘"
+poly = [[10, 300], [80, 280], [160, 285], [170, 322], [10, 334]]
+height_m = 18
+src = "地图量取"
+note = "裁切图左下角的短线坡"
+
+[[water]]
+name = "北湖面（最宽）"
+path = [[133, 67], [222, 62], [294, 89]]
+width_m = 55
+depth_m = 8
+src = "地图量取"
+
+[[water]]
+name = "东湖臂"
+path = [[294, 89], [305, 130], [312, 180]]
+width_m = 40
+depth_m = 6
+src = "地图量取"
+
+[[water]]
+name = "西南窄湖湾"
+path = [[80, 116], [89, 187]]
+width_m = 50
+depth_m = 5
+src = "地图量取"
+
+[[water]]
+name = "南湖面"
+path = [[142, 205], [222, 231], [262, 222]]
+width_m = 48
+depth_m = 6
+src = "地图量取"
+
+[[road]]
+name = "西来林道（沿湖北岸，通西部哨营与北出路）"
+path = [[0, 86], [60, 82], [100, 84]]
+width_m = 6
+src = "地图量取"
+
+[[road]]
+name = "岛上主街（顺岛身连两桥）"
+path = [[125, 108], [187, 150], [250, 195], [268, 218]]
+width_m = 5
+src = "推定"
+
+[[road]]
+name = "南岸林道（先南后东，接东西主干道）"
+path = [[270, 262], [262, 305], [290, 318], [400, 318]]
+width_m = 6
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "rock_shelf"
+face = "south"
+count = 1
+name = "湖心长岛（岛身）"
+xy = [187, 153]
+size = [205, 65]
+h_m = 2
+rot = 34
+src = "地图量取"
+note = "西北—东南走向，边缘一圈灰白石砌矮护岸"
+
+[[block]]
+id = "b02"
+kind = "arch_bridge"
+face = "south"
+count = 1
+name = "西北木桥"
+xy = [112, 92]
+size = [45, 6]
+h_m = 2
+rot = 34
+src = "地图量取"
+note = "接西来林道"
+
+[[block]]
+id = "b03"
+kind = "arch_bridge"
+face = "south"
+count = 1
+name = "东南木桥"
+xy = [270, 240]
+size = [6, 45]
+h_m = 2
+rot = 0
+src = "地图量取"
+note = "接南岸林道"
+
+[[block]]
+id = "b04"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "岛心空地（石沿围合）"
+xy = [187, 153]
+size = [50, 30]
+h_m = 0
+rot = 34
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p384"
+face = "south"
+name = "两层长屋（旅店）"
+xy = [218.5, 159.5]
+size = [30, 16]
+h_m = 12
+rot = 34
+src = "地图量取"
+note = "裁切图旅店图标位置；底层拱形门洞，二层外廊"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p384"
+face = "east"
+name = "单层驻所"
+xy = [155.5, 146.5]
+size = [22, 12]
+h_m = 8
+rot = 34
+src = "推定"
+note = "门前一排空兵器架"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p383"
+face = "south"
+name = "岛头紫顶塔楼"
+xy = [129, 114.5]
+size = [9, 9]
+h_m = 18
+rot = 0
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p383"
+face = "south"
+name = "岛尾紫顶塔楼"
+xy = [245, 191.5]
+size = [9, 9]
+h_m = 18
+rot = 0
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p383"
+face = "south"
+name = "圆形小木屋·北"
+xy = [192.75, 135.35]
+size = [12, 10]
+h_m = 7
+rot = 34
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p383"
+face = "south"
+name = "圆形小木屋·西南"
+xy = [150, 128]
+size = [10, 10]
+h_m = 6
+rot = 0
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p391"
+face = "southeast"
+name = "水边石台与空栖架（飞行点）"
+xy = [221.6, 199.9]
+size = [10, 8]
+h_m = 3
+rot = 34
+src = "推定"
+note = "岛尾靠东南桥头；架子默认空着"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p388"
+face = "south"
+name = "石砌圆井（雕花井栏）"
+xy = [174.9, 171.3]
+size = [3, 3]
+h_m = 1
+rot = 0
+src = "推定"
+note = "普通清水，不发光"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p378"
+face = "south"
+name = "礁石小岛（两三棵小树）"
+xy = [178, 240]
+size = [10, 8]
+h_m = 1
+rot = 0
+src = "地图量取"
+note = "裁切图岛南湖面上的深色小点"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg414-c1"
+eye = [200, 313]
+target = [200, 170]
+eye_h = 13.3
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

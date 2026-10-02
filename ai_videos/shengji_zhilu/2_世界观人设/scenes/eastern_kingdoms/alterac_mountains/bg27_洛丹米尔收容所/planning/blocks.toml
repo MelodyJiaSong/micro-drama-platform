@@ -1,0 +1,227 @@
+# 洛丹米尔收容所 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地原点 ＝ 区级平面图 (407.7, 1255.5) m；区图点位 [21, 80] 落在本场地 (130, 110)；区图 1 px ≈ 2.555 m。
+# 穹顶、南城门与出城小路归 bg25（几何唯一出处在 bg25/planning/blocks.toml）：穹顶是圆心在本场地 (25, -122)、半径 275 m 的圆，
+#   本图的弧段与路按它换算，不另起一套。区图点位落在穹顶南缘以内约 20 m（城廓东南缘、出城小路起点旁），营寨只能摆在穹顶外——推定。
+# 湖臂（推定）在场地以西约 350 m，不在图内（只入远景）。
+
+[meta]
+bg = "bg27"
+name_zh = "洛丹米尔收容所"
+size_m = [300, 300]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "区图裁切量取：城南门（出城小路起点）在点位西北 ~24 px（≈61 m），小路过点位向东南 ~35 px（≈90 m）到一处圆形标记（直径 ~24 px ≈ 60 m）；穹顶弧按 bg25 的 550 m 正圆换算；营寨 90 × 70 m 与内部布局推定（区图无营寨图标）"
+absent = [
+    "4.0.3 以后此处的农场（布雷泽农场）",
+    "任何人物、看守与被关押者（默认空营）",
+    "燃着的火盆、灯火与炊烟（火盆是冷灰）",
+    "积雪（本档在雪线以下的湖边低地）",
+    "穹顶上的门洞（穹顶属 bg25，完整封闭）",
+    "旗帜纹章与文字标识",
+    "石砌城墙（营寨全是原木栅）",
+]
+
+[[road]]
+name = "城南门—希尔斯布莱德小路（属 bg25，按其换算）"
+path = [[103, 56], [143, 127], [180, 184], [190, 300]]
+width_m = 5
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "proxy"
+face = "south"
+count = 1
+name = "穹顶南缘·西段（属 bg25）"
+xy = [66.5, 141.5]
+size = [128, 3]
+h_m = 150
+rot = -8.5
+src = "地图量取"
+note = "半径 275 m 圆弧的弦段示意；光膜从地面拱起，营寨北栅外约 35 m"
+
+[[block]]
+id = "b02"
+may_overlap = true
+kind = "proxy"
+face = "south"
+count = 1
+name = "穹顶南缘·中段（属 bg25）"
+xy = [180, 96.5]
+size = [122, 3]
+h_m = 150
+rot = -35.4
+src = "地图量取"
+note = "出城小路在此段穿出光膜；南城门在光膜内"
+
+[[block]]
+id = "b03"
+may_overlap = true
+kind = "proxy"
+face = "south"
+count = 1
+name = "穹顶南缘·东段（属 bg25）"
+xy = [250, 33]
+size = [68, 3]
+h_m = 150
+rot = -54.5
+src = "地图量取"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p20"
+face = "southeast"
+name = "南城门（在穹顶内，属 bg25）"
+xy = [103, 56]
+size = [20, 10]
+h_m = 15
+src = "地图量取"
+
+[[block]]
+id = "b05"
+kind = "palisade"
+face = "east"
+count = 1
+name = "东栅（正中营门朝东开向小路）"
+xy = [140, 215]
+size = [2, 70]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b06"
+may_overlap = true
+kind = "palisade"
+face = "south"
+count = 1
+name = "北栅"
+xy = [95, 180]
+size = [90, 2]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b07"
+may_overlap = true
+kind = "palisade"
+face = "south"
+count = 1
+name = "西栅"
+xy = [50, 215]
+size = [2, 70]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b08"
+may_overlap = true
+kind = "palisade"
+face = "south"
+count = 1
+name = "南栅"
+xy = [95, 250]
+size = [90, 2]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p15"
+face = "south"
+name = "兵营长屋·北排"
+xy = [83, 195]
+size = [50, 8]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p15"
+face = "south"
+name = "兵营长屋·中排"
+xy = [83, 213]
+size = [50, 8]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p15"
+face = "south"
+name = "兵营长屋·南排"
+xy = [83, 231]
+size = [50, 8]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p21"
+face = "south"
+name = "东北角瞭望塔"
+xy = [135, 185]
+size = [4, 4]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p21"
+face = "south"
+name = "西南角瞭望塔"
+xy = [55, 245]
+size = [4, 4]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "palisade"
+face = "south"
+count = 1
+name = "铁条加固关押围栏（角柱挂锁链）"
+xy = [125, 238]
+size = [16, 14]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p21"
+face = "east"
+name = "营门内冷火盆"
+xy = [133, 215]
+size = [1.5, 1.5]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "圆形空地（区图环形标记）"
+xy = [182, 186]
+size = [60, 60]
+h_m = 0
+src = "地图量取"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg27-c1"
+eye = [150, 276]
+target = [150, 150]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

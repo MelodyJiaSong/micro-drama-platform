@@ -1,0 +1,181 @@
+# 侏儒区 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 量取：原版区图 WorldMap-Ironforge_c60.jpg（1002×668 px）上 x∈[610,820] px、y∈[225,425] px 一窗，
+#   本地 m ＝ (px − 610, py − 225) × (0.7215, 0.7222)（与区级 terrain.toml 同一换算）。
+# 十字厅外形与四条甬道是区图绿色块（地图量取）；侧间功能、中央球形机械、工作台、熔炉按世界树推定（虚线）。
+# 锚点机位：西端半圆厅门口平台（约 12, 62）朝东偏南，广角；要避开中央大球才看得到东头齿轮门。
+
+[meta]
+bg = "bg213"
+name_zh = "侏儒区"
+size_m = [152, 145]
+px_per_m = 10.0
+scale_src = "地图量取"
+scale_note = "区图右侧绿色十字块一窗量取：主厅约 95×52 m（东西主轴），西端半圆厅约 33 m 径，东甬道约 60 m 长到齿轮门；换算同区级 terrain.toml（0.7215 / 0.7222 m/px）"
+# 世界树画面：挤满黄铜管道与蒸汽阀的侏儒区，中央一台巨大的球形机械上架着一把小王座，四周是零件摊与冒火花的工作台（火花要有人干活，空场不画）
+absent = ["天空 / 日光 / 窗（山腹内厅）", "熔岩坑（在城心，不在本厅）", "冷蓝水光（在秘法区）", "工作台火花（空场无人干活）", "电灯 / 霓虹 / 玻璃幕墙 / 现代机器人", "可读的字与数字（表盘只有刻度线）", "木构房屋 / 瓦顶", "飞行器 / 飞行坐骑", "任何人物与动物"]
+
+[[road]]
+name = "通城心甬道"
+path = [[0, 58], [12, 66]]
+width_m = 12
+src = "地图量取"
+note = "西端半圆厅接大锻炉内环廊东侧（区级 terrain.toml「提克镇甬道」）"
+
+[[road]]
+name = "北臂长甬道（上探险者大厅）"
+path = [[75, 50], [75, 20], [73, 0]]
+width_m = 10
+src = "地图量取"
+
+[[road]]
+name = "南甬道（下军事区）"
+path = [[61, 104], [58, 125], [55, 145]]
+width_m = 10
+src = "地图量取"
+
+[[road]]
+name = "东直甬道（下轨道站台）"
+path = [[100, 86], [122, 87], [141, 88]]
+width_m = 10
+src = "地图量取"
+note = "地上两道铁轨，两侧排灯；向东微微下斜"
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "十字主厅地面"
+xy = [55, 78]
+size = [95, 52]
+h_m = 0
+src = "地图量取"
+note = "铆钉铁板拼铺，板缝下是管沟；岩顶约三人高、挂满管道"
+
+[[block]]
+id = "b02"
+kind = "plaza"
+face = "west"
+count = 1
+may_overlap = true
+name = "西端半圆厅与门口平台"
+xy = [20, 72]
+size = [26, 33]
+h_m = 1
+src = "地图量取"
+note = "区图上主厅西头的半圆；门口平台比厅面高四级（高差推定），锚点机位在此"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p196"
+face = "west"
+name = "中央球形机械"
+xy = [58, 78]
+size = [8, 8]
+h_m = 9
+src = "推定"
+note = "铆铁球壳两人多高，球顶小高背铁座椅与拉杆；脚下一圈高一级的圆形铁台（约 16 m 径）"
+
+[[block]]
+id = "b04"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "球脚圆形铁台"
+xy = [58, 78]
+size = [16, 16]
+h_m = 0.3
+src = "推定"
+note = "台沿矮铁栏，栏边四张工作台"
+
+[[block]]
+id = "b05"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "北侧熔炉间"
+xy = [47.4, 47.5]
+size = [18.5, 21.7]
+h_m = 0
+src = "推定"
+note = "区图北臂外形地图量取；功能推定。几口壁炉式小熔炉，是本厅主光源"
+
+[[block]]
+id = "b06"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "东北药水铺"
+xy = [94.9, 64.5]
+size = [18.5, 16.4]
+h_m = 0
+src = "推定"
+note = "侧间外形地图量取；功能推定。彩色瓶罐与盘管蒸馏器"
+
+[[block]]
+id = "b07"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "东南零件铺"
+xy = [90.7, 95.5]
+size = [18.5, 16.5]
+h_m = 0
+src = "推定"
+note = "侧间外形地图量取；功能推定。成箱齿轮、弹簧、铜管件"
+
+[[block]]
+id = "b08"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "西南火药铺"
+xy = [41.2, 101.5]
+size = [22.7, 16.6]
+h_m = 0
+src = "推定"
+note = "侧间外形地图量取；功能推定。锚点机位看不到"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p197"
+face = "west"
+name = "巨型齿轮门"
+xy = [142.5, 88]
+size = [2, 16]
+h_m = 14
+src = "地图量取"
+note = "东甬道与站台厅交界；一整只竖嵌的铁齿轮框住隧道口"
+
+[[block]]
+id = "b10"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "轨道站台厅（西缘）"
+xy = [148.5, 88]
+size = [7, 80]
+h_m = 0
+src = "地图量取"
+note = "矿道地铁铁炉堡站只露西缘；站台本体不属本档"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg213-c1"
+eye = [76, 133]
+target = [76, 72]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

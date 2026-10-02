@@ -1,0 +1,222 @@
+# 农田避难所 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地左上角 ＝ 区级平面图（bg303 terrain.toml）的 (1203, 214) m；山坡 / 水道 / 泥路由区级量取值平移而来，精度 ±20 m。
+
+[meta]
+bg = "bg304"
+name_zh = "农田避难所"
+size_m = [240, 200]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "区图两处棚屋符号 (65%,19%) / (61%,25%) 相距约 125 m，北路终点、东侧水道、北山墙坡脚均从 bg303 terrain.toml 平移；田格、残垣、火塘无一手出处，按世界树画面推定"
+# 世界树画面：荒废的农田与残垣，泥水漫过田埂，失落者搭的简陋窝棚散在田间，木栅东倒西歪
+absent = [
+    "完好的农舍、谷仓与任何有屋顶的石木房屋（只剩墙基与断墙）",
+    "水道上的桥、码头与船",
+    "在长的庄稼、麦田与菜畦（田早已荒废）",
+    "燃着的火、火把、灯笼与任何人工光源（火塘是冷灰）",
+    "石板路与铺装路面（只有一条泥路）",
+    "晴天硬光与长影",
+    "任何人物、牲口、动物与文字",
+]
+
+[[ridge]]
+name = "北山墙坡脚（西北）"
+poly = [[0, 0], [168, 0], [150, 30], [112, 69], [63, 131], [11, 159], [0, 160]]
+height_m = 180
+src = "地图量取"
+note = "北山墙南缘在此向西南斜下；坡脚堆着滚落碎石"
+
+[[water]]
+name = "东侧南北向水道（北通海岸）"
+path = [[162, 200], [172, 150], [183, 100], [189, 0]]
+width_m = 24
+depth_m = 1.2
+src = "地图量取"
+note = "区级「农田东侧水道」；无桥（推定）"
+
+[[road]]
+name = "北路尽头"
+path = [[0, 149], [47, 127], [74, 121]]
+width_m = 5
+src = "地图量取"
+note = "自断矛路口沿北山脚来，到田庄西南角即止；锚点图机位在 (74,121) 朝东北"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p326"
+face = "south"
+name = "旧农舍墙基残垣（齐腰高毛石）"
+xy = [112, 95]
+size = [14, 9]
+h_m = 1.1
+src = "推定"
+note = "墙角残存半截门框石"
+
+[[block]]
+id = "b02"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "谷仓断墙（高出一人）"
+xy = [140, 78]
+size = [12, 1.2]
+h_m = 2.2
+rot = 15
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p324"
+face = "south"
+name = "窝棚·北角坡脚下"
+xy = [158, 55]
+size = [5, 5]
+h_m = 1.8
+src = "地图量取"
+note = "区图棚屋符号 (65%,19%)"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p324"
+face = "southwest"
+name = "窝棚·路尽头旁"
+xy = [82, 136]
+size = [5, 4]
+h_m = 1.6
+src = "地图量取"
+note = "区图棚屋符号 (61%,25%)"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p324"
+face = "south"
+name = "窝棚·倚残垣"
+xy = [102, 96]
+size = [5, 4]
+h_m = 1.6
+src = "推定"
+note = "门口斜靠缺齿木耙、倒扣豁边陶罐"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p324"
+face = "west"
+name = "窝棚·东侧田埂高处"
+xy = [160, 125]
+size = [5, 5]
+h_m = 1.8
+src = "推定"
+note = "旁有一株半枯矮柳"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p363"
+face = "south"
+name = "碎石火塘（冷灰余烬）"
+xy = [122, 118]
+size = [3, 3]
+h_m = 0.3
+src = "推定"
+note = "早已冷透、不冒烟"
+
+[[block]]
+id = "b08"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "水淹田格·北"
+xy = [150, 100]
+size = [26, 22]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "水淹田格·中"
+xy = [120, 145]
+size = [40, 26]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "水淹田格·东南"
+xy = [134, 180]
+size = [30, 24]
+h_m = 0
+src = "推定"
+note = "田角半埋一架断辕木犁"
+
+[[block]]
+id = "b11"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "水淹田格·西南"
+xy = [92, 176]
+size = [34, 24]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "palisade"
+face = "south"
+count = 1
+name = "木栅·西段（整片扑进泥水）"
+xy = [58, 158]
+size = [30, 0.8]
+h_m = 0.3
+rot = -30
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "palisade"
+face = "south"
+count = 1
+name = "木栅·南段（歪斜撑住）"
+xy = [118, 195]
+size = [36, 0.8]
+h_m = 1.0
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "low_wall"
+face = "east"
+count = 1
+name = "田与水道间的矮土堤（多处豁口）"
+xy = [153, 160]
+size = [2, 40]
+h_m = 0.4
+rot = 12
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg304-c1"
+eye = [120, 16]
+target = [120, 100]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

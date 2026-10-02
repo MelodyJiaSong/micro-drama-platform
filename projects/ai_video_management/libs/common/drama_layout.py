@@ -28,6 +28,17 @@ WORLD_STAGE: str = "2_世界观人设"
 SCRIPT_STAGE: str = "4_剧本"
 SHOTS_STAGE: str = "5_6_分镜与prompt"
 
+EQUIPMENT_DIR_NAME: str = "equipment"
+# Per-character loadout tables beside the category / slot folders — never an item.
+EQUIPMENT_LOADOUTS_DIR_NAME: str = "loadouts"
+
+
+def is_equipment_tool_dir(name: str) -> bool:
+    """A folder under `equipment/` that holds no items, at any depth: `loadouts/`,
+    and anything `_`- or `.`-prefixed. Every other unkeyed folder (a category
+    `板甲/`, a slot `胸/` — per-drama, any nesting) is walked through to its items."""
+    return name == EQUIPMENT_LOADOUTS_DIR_NAME or name.startswith((".", "_"))
+
 
 def _first_existing_dir(*candidates: Path) -> Path:
     for c in candidates:
@@ -69,6 +80,13 @@ def props_dir(drama_dir: Path) -> Path:
     props but no character folder silently fell back to the flat root."""
     return _first_existing_dir(
         drama_dir / "props", drama_dir / WORLD_STAGE / "props"
+    )
+
+
+def equipment_dir(drama_dir: Path) -> Path:
+    """`equipment/` — flat root or `2_世界观人设/`, resolved on its own like `props_dir`."""
+    return _first_existing_dir(
+        drama_dir / EQUIPMENT_DIR_NAME, drama_dir / WORLD_STAGE / EQUIPMENT_DIR_NAME
     )
 
 

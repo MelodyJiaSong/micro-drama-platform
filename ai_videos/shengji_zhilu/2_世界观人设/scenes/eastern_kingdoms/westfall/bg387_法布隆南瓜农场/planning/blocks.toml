@@ -1,0 +1,142 @@
+# 法布隆南瓜农场 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地原点 ＝ 区级坐标 (1523, 357) m；南瓜地、西去土路、北部岔路口、矿洞土丘东坡按区级 terrain.toml / 区图田垄图标量取，
+# 农舍 / 板车 / 木栅等小件区图上没有，一律推定。北面临海土崖在场地外约 170 m（区级 y≈190）。
+
+[meta]
+bg = "bg387"
+name_zh = "法布隆南瓜农场"
+size_m = [200, 220]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "场地框按区图（1 px ≈ 3.19 m）量取：田垄图标约 70×45 m、土路与岔路口取区级 terrain.toml；农舍等小件尺寸推定"
+# 世界树画面：北部路边的南瓜地，橙黄果实散在灰绿藤上；一栋小农舍、一辆板车，老白马拴在车辕边
+absent = [
+    "飞行点 / 狮鹫栖架（旧世这里没有，4.0.3 才加）",
+    "马与任何牲口（老马属 shot 层，不入底图）",
+    "火、炊烟、亮灯的窗（屋空着，烟囱是冷的）",
+    "水面（海在北面场地外的土崖下）",
+    "麦田（本块田种的是南瓜，不是麦）",
+    "石砌大屋 / 围墙 / 塔",
+]
+
+[[block]]
+id = "b01"
+kind = "vineyard"
+face = "south"
+count = 1
+may_overlap = true
+name = "南瓜地（斜铺缓坡，长边朝东北）"
+xy = [105, 120]
+size = [70, 45]
+h_m = 0
+rot = -25
+src = "地图量取"
+note = "区图田垄图标；田面自南向北抬升两三米"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p336"
+face = "south"
+name = "小农舍（石脚木墙茅草顶，门朝南）"
+xy = [158, 128]
+size = [9, 7]
+h_m = 5.5
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p340"
+face = "south"
+name = "屋后矮木棚（茅草塌一角）"
+xy = [160, 118]
+size = [6, 4]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+parts = [{asset = "p371", at = [-0.9, 0.1], yaw = 0}, {asset = "p371", at = [0, 0.25], yaw = 15}, {asset = "p371", at = [0.9, -0.05], yaw = -10}]
+face = "south"
+name = "屋檐下南瓜堆"
+xy = [156, 134]
+size = [3, 1.5]
+h_m = 0.8
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p349"
+face = "south"
+name = "空板车（车辕落地）"
+xy = [95, 181]
+size = [4.5, 1.8]
+h_m = 1.8
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "palisade"
+face = "south"
+count = 1
+name = "拴马桩"
+xy = [101, 180]
+size = [0.4, 0.4]
+h_m = 1.3
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "palisade"
+face = "south"
+count = 1
+name = "路北矮木栅"
+xy = [110, 176]
+size = [110, 0.5]
+h_m = 1.0
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "palisade"
+face = "south"
+count = 1
+name = "田北缘歪栅"
+xy = [95, 97]
+size = [60, 0.5]
+h_m = 1.0
+rot = -25
+src = "推定"
+
+[[ridge]]
+name = "西侧矿洞土丘东坡（区级同一簇土丘）"
+height_m = 70
+poly = [[0, 40], [26, 58], [48, 138], [20, 170], [0, 178]]
+src = "地图量取"
+
+[[road]]
+name = "西去矿洞的黄土路（东端接北部岔路口）"
+width_m = 5
+path = [[0, 201], [58, 192], [154, 186], [200, 183]]
+src = "地图量取"
+
+[[road]]
+name = "岔路口折向东北的大道（去另一处农场与跨河石桥）"
+width_m = 7
+path = [[154, 186], [200, 166]]
+src = "地图量取"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg387-c1"
+eye = [100, 18]
+target = [100, 110]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

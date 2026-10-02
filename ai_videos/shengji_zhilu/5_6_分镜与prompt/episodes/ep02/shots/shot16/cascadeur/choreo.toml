@@ -1,0 +1,28 @@
+# shot16 人体动作表（Cascadeur 层）。位置与朝向一律从 ../planning/overhead.toml 读，这里只写「身体摆成什么样」。
+# 改动作 ＝ 改本文件重跑 `python tools/cascadeur/choreo.py <shot 目录> --build`；部件都在共享库 tools/cascadeur/poses.toml。
+# 时刻与 shot16.md `动作:` 时间轴、overhead 的 [[hit]] / [[cast]] 逐拍对齐（rule 4h ②）。亚伦与金牙不在这里：本镜只有杜克出手（冲锋），色块人偶够用。
+# follow-up 052 G13：攻防镜的人体一律 Cascadeur。⚠ 0–2.8s 下坡那段 blend 里是平地（两层同一地坪），previz 只锁时刻与方向。
+
+[meta]
+origin = [14.3, 4.4]          # 平面图坐标；Cascadeur 原点 ＝ 钢盾把金牙顶在岩壁上的那一点
+fps = 30
+
+# 杜克：0–2.8s 下坡（2.8s 钉一个站定键：只靠步态键插值，烘出来 2.8s 两脚中点比坡脚落后 0.58 m，build_previz 根偏差自检不过）；3.6s 坡脚站定、钢盾在前；4.4s 放低身子往前一冲（冲锋），5.6s 钢盾把金牙顶在岩壁上；
+# 7.2s 起去捡项链，9.6s 右手捡起、10s 举起来一晃；16.2s 伸右手扯亚伦的袖子
+[actor."杜克"]
+gait = [[0.0, 2.5, "walk", "shield_guard"], [2.9, 3.4, "walk", "shield_guard"], [4.4, 5.4, "run", "shield_guard"], [7.2, 9.2, "walk", "shield_low"]]
+keys = [
+  [2.8, "stand+shield_guard"],
+  [3.6, "stance_l+shield_guard"],
+  [4.2, "lunge_small+shield_guard"],
+  [5.6, "lunge+shield_shove"],
+  [6.6, "lunge+shield_shove"],
+  [7.0, "stand+shield_guard"],
+  [9.3, "stand+shield_low"],
+  [9.6, "stand+shield_low+set_down_r"],
+  [10.0, "stand+shield_low+hold_up_r"],
+  [10.8, "stand+shield_low"],
+  [16.0, "stand+shield_low"],
+  [16.4, "stand+shield_low+catch_r"],
+  [17.0, "stand+shield_low+catch_r"],
+]

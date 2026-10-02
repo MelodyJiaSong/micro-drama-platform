@@ -1,0 +1,229 @@
+# 博德戈尔 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 区图点位 [35, 44] 落在本场地 (130, 110)（谷底中心）；裁切图 4× 放大，区图 1 px ≈ 3.285 m。
+
+[meta]
+bg = "bg50"
+name_zh = "博德戈尔"
+size_m = [260, 280]
+px_per_m = 5.0
+scale_src = "推定"
+scale_note = "只有主路距离是裁切量取（点位南约 44 区图 px ≈ 145 m）；乱石图标只是符号，谷地 130 × 90 m 平底、6–8 m 下陷与棚屋尺寸都按食人魔身量（约两人高）推定"
+# 世界树画面：高地中部一道下陷的乱石谷地，谷底支着食人魔的粗木棚与火堆，四壁是灰白巨岩
+absent = [
+    "燃着的火与炊烟（默认态火塘、火篮都是冷灰）",
+    "任何人物、食人魔与牲畜（默认空营）",
+    "石砌房屋、城墙与帐篷（只有倚岩粗木棚）",
+    "水面、溪流与水井",
+    "成片树林（只有岩缝灌木与远处孤树）",
+    "旗帜纹章与文字标识",
+    "4.0.3a 后的新布局与新地名",
+]
+
+[[ridge]]
+name = "北壁巨岩（最高最陡，层叠到十来米）"
+poly = [[52, 36], [130, 30], [208, 38], [218, 60], [196, 70], [130, 64], [64, 70], [44, 58]]
+height_m = 12
+src = "推定"
+
+[[ridge]]
+name = "西壁巨岩（中段一道走不通的窄石缝）"
+poly = [[40, 60], [64, 70], [66, 110], [66, 150], [98, 166], [92, 182], [58, 172], [38, 136], [34, 96]]
+height_m = 8
+src = "推定"
+
+[[ridge]]
+name = "东壁巨岩（壁顶悬岩探出）"
+poly = [[196, 70], [218, 60], [228, 100], [224, 146], [206, 176], [166, 184], [162, 168], [194, 152], [195, 110]]
+height_m = 9
+src = "推定"
+
+[[road]]
+name = "东西主路（点位南约 145 m）"
+path = [[0, 262], [130, 256], [260, 266]]
+width_m = 8
+src = "地图量取"
+
+[[road]]
+name = "谷口踩秃的黄土缓坡（接主路）"
+path = [[130, 150], [130, 180], [126, 220], [130, 256]]
+width_m = 12
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p363"
+face = "south"
+name = "冷火塘（熏黑石块围圈）"
+xy = [130, 112]
+size = [7, 7]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p37"
+face = "south"
+name = "倚岩木棚·北壁西"
+xy = [98, 80]
+size = [14, 9]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p37"
+face = "south"
+name = "倚岩木棚·北壁东"
+xy = [152, 79]
+size = [16, 10]
+h_m = 5.5
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p37"
+face = "west"
+name = "倚岩木棚·东壁"
+xy = [184, 122]
+size = [10, 15]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p40"
+face = "south"
+name = "晾皮木架"
+xy = [183, 106]
+size = [6, 2]
+h_m = 3
+src = "推定"
+note = "东壁木棚旁；搭着干硬旧兽皮"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p48"
+face = "south"
+count = 6
+name = "大骨堆"
+xy = [168, 96]
+size = [6, 5]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+parts = [{asset = "p178", at = [-2.2, 1], yaw = 0}, {asset = "p178", at = [-1.4, 1.3], yaw = 0}, {asset = "p178", at = [-0.3, 0.2], yaw = 0}, {asset = "p178", at = [1.2, 0.9], yaw = 0}, {asset = "p178", at = [2.3, -1.1], yaw = 0}]
+face = "south"
+name = "翻倒的箍铁破木桶"
+xy = [82, 98]
+size = [6, 4]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p48"
+face = "south"
+count = 2
+name = "坐凳粗树干（两根）"
+xy = [130, 124]
+size = [10, 4]
+h_m = 0.8
+src = "推定"
+note = "火塘南侧"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p48"
+face = "east"
+name = "箍铁巨木棒（斜靠岩石）"
+xy = [72, 124]
+size = [1.5, 4]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "干泥壳洼地"
+xy = [110, 138]
+size = [16, 10]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p44"
+face = "south"
+into_ridge = true
+name = "壁顶滚落巨石"
+xy = [76, 150]
+size = [9, 7]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p41"
+face = "south"
+count = 4
+name = "头骨木桩列·谷口西"
+xy = [110, 172]
+size = [16, 2]
+h_m = 3.5
+rot = -15
+src = "原典方位"
+note = "石拳前哨：谷口插头骨的木桩（世界树地标描述）；具体排布推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p41"
+face = "south"
+count = 4
+name = "头骨木桩列·谷口东"
+xy = [150, 172]
+size = [16, 2]
+h_m = 3.5
+rot = 15
+src = "原典方位"
+note = "同上"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p40"
+face = "south"
+name = "望火台（四柱木台，顶架冷火篮）"
+xy = [168, 188]
+size = [5, 5]
+h_m = 7
+src = "原典方位"
+note = "石拳前哨的望火台；放在谷口东侧为推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg50-c1"
+eye = [130, 258]
+target = [130, 140]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

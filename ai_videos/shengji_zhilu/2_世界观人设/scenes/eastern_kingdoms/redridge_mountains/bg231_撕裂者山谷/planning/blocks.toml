@@ -1,0 +1,188 @@
+# 撕裂者山谷 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地原点 ＝ 区级平面图 (1189, 843) m；区图坐标 [71, 78] 落在本图 (220, 190)。河湾折线由区级 terrain.toml「河道南湾」平移而来。
+
+[meta]
+bg = "bg231"
+name_zh = "撕裂者山谷"
+size_m = [420, 360]
+px_per_m = 3.5
+scale_src = "推定"
+scale_note = "边长按区图裁切目估（谷底约 240 × 180 m，东南山群与南墙夹出的西开口袋谷），区图本身精度约 ±20 m；帐篷与火塘位置无一手出处"
+# 世界树画面：东南谷地里的兽人前哨，谷壁红褐、谷底是踩实的土场与几顶矮帐，规模比北面营地小
+absent = ["火山口 / 焦土大坑 / 爆炸冲击痕（4.0.3 后的撕裂者火山口）", "寨墙与望塔（那是北山口的大营 bg229）", "燃烧的火堆与烟柱（默认态火塘冷灰）", "东端翻山的路或山口（旧世不通任何邻区）", "湖面（主湖在西北石堡南山背后，谷内看不见）", "北面的崖壁（北面是长草缓坡）", "桥", "任何人物 / 动物 / 文字"]
+
+[[ridge]]
+name = "北侧长草缓坡（区图上是草地，不是崖）"
+poly = [[150, 0], [330, 0], [330, 95], [250, 92], [175, 72]]
+height_m = 15
+src = "地图量取"
+note = "坡顶后面是瀑布深潭那一圈锯齿红崖（本图北缘外）"
+
+[[ridge]]
+name = "东北崖（东南山群北臂）"
+poly = [[330, 0], [420, 0], [420, 105], [330, 95]]
+height_m = 70
+src = "地图量取"
+
+[[ridge]]
+name = "东端山脊（封死谷底）"
+poly = [[330, 95], [420, 105], [420, 288], [365, 275], [345, 190]]
+height_m = 120
+src = "地图量取"
+
+[[ridge]]
+name = "南壁（区界南墙北缘）"
+poly = [[0, 330], [120, 302], [200, 288], [262, 292], [365, 275], [420, 288], [420, 360], [0, 360]]
+height_m = 110
+src = "地图量取"
+
+[[water]]
+name = "河湾（瀑布下游河道南湾，谷口西北外侧）"
+path = [[50, 0], [62, 18], [81, 51], [42, 71], [2, 57]]
+width_m = 22
+depth_m = 3
+src = "地图量取"
+
+[[road]]
+name = "进谷踩出的小径（西口→土场）"
+path = [[0, 205], [80, 200], [150, 198], [205, 192]]
+width_m = 3
+src = "推定"
+
+[[road]]
+name = "洞口小径（南崖洞口→土场）"
+path = [[245, 283], [242, 250], [238, 212]]
+width_m = 2
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "踩实土场"
+xy = [235, 190]
+size = [60, 40]
+h_m = 0
+src = "推定"
+note = "近椭圆的光秃黄褐硬土，长约 60 m；区图坐标点落在其西缘"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p229"
+face = "southeast"
+name = "兽皮帐·西北"
+xy = [216, 176]
+size = [7, 7]
+h_m = 2.8
+src = "推定"
+note = "木杆斜撑尖顶，门朝火塘"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p229"
+face = "southwest"
+name = "兽皮帐·东北"
+xy = [252, 174]
+size = [7, 7]
+h_m = 2.8
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p229"
+face = "northwest"
+name = "兽皮帐·东南"
+xy = [254, 206]
+size = [7, 7]
+h_m = 2.8
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p229"
+face = "northeast"
+name = "兽皮帐·西南"
+xy = [218, 205]
+size = [7, 7]
+h_m = 2.8
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p219"
+face = "south"
+name = "石圈火塘（冷灰）"
+xy = [236, 190]
+size = [3, 3]
+h_m = 0.4
+src = "推定"
+note = "默认态冷灰余烬、不冒烟"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p215"
+face = "south"
+name = "柴垛与原木坐凳"
+xy = [243, 186]
+size = [4, 2]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "cave_mouth"
+face = "north"
+count = 1
+name = "南崖洞口"
+xy = [245, 288]
+size = [8, 5]
+h_m = 0
+src = "地图量取"
+note = "区图南墙崖脚的洞口图标（约 [72, 85]），口朝北正对土场"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p225"
+face = "west"
+count = 14
+name = "谷口削尖木桩列"
+xy = [150, 198]
+size = [3, 40]
+h_m = 1.8
+src = "推定"
+note = "桩尖朝西，正中留一道能过人的缺口（小径从缺口穿过）"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p222"
+face = "south"
+count = 4
+into_ridge = true
+name = "北坡榆松"
+xy = [300, 40]
+size = [40, 20]
+h_m = 15
+src = "推定"
+note = "自然块：零星高瘦榆树与暗绿松"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg231-c1"
+eye = [210, 331]
+target = [210, 180]
+eye_h = 14.0
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -1,0 +1,182 @@
+# 巨槌岗哨 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg82"
+name_zh = "巨槌岗哨"
+size_m = [150, 130]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "取 150 × 130 m：一个约 35 × 30 m 的红岩凹处 + 东侧岩丘丘脚 + 西南荒原上建场机位的退让；无一手尺寸出处"
+# 世界树画面：荒原上的小股食人魔前哨，三两顶破帐与一根插着头骨的木杆，周围是裸露的红岩
+# 区级平面图 b902（推定，2026-09-24 人审移位）：红原中部、一座孤立岩丘的西脚；主干道绕丘东、南两面，最近处在凹口南面约 150 m（出本图）
+absent = [
+    "任何人物与动物（默认空哨）",
+    "燃着的火、火星与烟（凹底一滩冷灰）",
+    "围栏、寨墙、门楼与望塔（只是丘脚哨点）",
+    "火塘石圈与大锅",
+    "石砌或木构房屋",
+    "旗帜、纹章与文字标识",
+    "草地、树木与任何绿色植被",
+    "河流、水潭与任何水面",
+]
+
+[[ridge]]
+name = "背后的孤立岩丘（紫黑火成岩，高出约 35 m，丘顶参差岩齿）"
+poly = [[150, 0], [150, 130], [132, 130], [118, 104], [112, 76], [114, 46], [124, 18], [134, 0]]
+height_m = 35
+src = "推定"
+
+[[road]]
+name = "凹口出来的踩平窄径（向南绕过丘脚，约 150 m 外接主干道）"
+path = [[58, 66], [46, 74], [40, 92], [48, 112], [60, 130]]
+width_m = 2
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "rock_shelf"
+face = "south"
+count = 1
+name = "红岩围子·北壁（层状岩板，有并排刻痕）"
+xy = [76, 50]
+size = [36, 6]
+h_m = 3.5
+src = "推定"
+note = "世界树「周围是裸露的红岩」；U 形凹口朝西（judgment call，对着开阔红原）"
+
+[[block]]
+id = "b02"
+kind = "rock_shelf"
+face = "west"
+count = 1
+name = "红岩围子·东壁（东南角最高）"
+xy = [93, 65.5]
+size = [6, 25]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "rock_shelf"
+face = "north"
+count = 1
+name = "红岩围子·南壁（齐肩）"
+xy = [76, 80.5]
+size = [36, 5]
+h_m = 1.8
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p59"
+face = "west"
+name = "破帐·里（最完整，约 5 m）"
+xy = [84, 63]
+size = [9, 8]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p59"
+face = "west"
+name = "破帐·中（主杆折断，塌了半边）"
+xy = [74, 70]
+size = [8, 8]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p59"
+face = "west"
+name = "破帐·外（最小，蒙皮撕开）"
+xy = [66, 60]
+size = [6, 6]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "凹底冷灰一滩（无石圈，不冒烟）"
+xy = [75, 58]
+size = [3, 3]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p62"
+face = "west"
+name = "凹口外颅骨杆（约 7 m，脚下垒石）"
+xy = [52, 62]
+size = [1.5, 1.5]
+h_m = 7
+src = "推定"
+note = "世界树「一根插着头骨的木杆」；凹口外，眼窝朝西面荒原"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p63"
+face = "west"
+name = "靠岩的包铁巨棒"
+xy = [60, 55]
+size = [1, 3]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+parts = [{asset = "p78", at = [-0.4, 1.2], yaw = 10}, {asset = "p78", at = [0.3, 0.3], yaw = -25}, {asset = "p75", at = [-1, -0.9], yaw = 0}, {asset = "p76", at = [0.6, -1.3], yaw = 15}]
+face = "west"
+name = "大骨头、瘪铁皮桶与旧兽皮卷"
+xy = [85, 74]
+size = [4, 3]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "丘脚裸露红岩板地面（由土变岩）"
+xy = [102, 105]
+size = [16, 30]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p64"
+face = "west"
+count = 8
+name = "丘脚塌石坡（紫黑到暗赭的碎石）"
+xy = [104, 60]
+size = [8, 50]
+h_m = 2
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg82-c1"
+eye = [75, 120]
+target = [75, 65]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

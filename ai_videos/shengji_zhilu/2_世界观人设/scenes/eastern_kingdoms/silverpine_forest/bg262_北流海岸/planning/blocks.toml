@@ -1,0 +1,351 @@
+# 北流海岸 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 换算：原点 ＝ 区图 px (318, 100)；x = (px − 318) × 3.83，y = (py − 100) × 3.83（与 bg247 同一比例）。
+# 海岸线从区图量取；海面用逐行 [[water]] 铺满海岸线以西。bg261 洼地与 bg267 洞口按世界树坐标换算落点。
+
+[meta]
+bg = "bg262"
+name_zh = "北流海岸"
+size_m = [400, 600]
+px_per_m = 2.6
+grid_m = 50
+scale_src = "地图量取"
+scale_note = "区图 WorldMap-Silverpine_c60 宽 1002 px ＝ 区宽 3840 m（bg247 同一换算，3.83 m/px）；海岸线量自区图 px x 318–422、y 100–257；世界树无本子区域坐标，南北范围（界山脚→伸进海里的南岭）为推定"
+# 世界树画面：西北海岸的碎石滩，浪灰白，崖上是松林
+absent = ["船 / 帆 / 码头 / 栈桥", "灯塔与任何火光 / 人工光", "房屋与任何人造物", "道路（只有碎石滩可走）", "金黄沙滩与碧蓝海水", "沙滩椰林", "海平线（永远没进雾里）", "雪", "阔叶林", "翠绿草地"]
+
+[[ridge]]
+name = "北端灰岩山墙（界山，把海岸截住）"
+poly = [[30, 0], [400, 0], [400, 30], [250, 40], [150, 30], [60, 22]]
+height_m = 55
+src = "地图量取"
+
+[[ridge]]
+name = "岩石海角（顶上一撮黑松）"
+poly = [[58, 82], [110, 70], [160, 95], [170, 140], [130, 158], [92, 142], [64, 118]]
+height_m = 18
+src = "地图量取"
+
+[[ridge]]
+name = "崖后松林山（西北坡有蛛洞洞口）"
+poly = [[200, 90], [260, 70], [330, 80], [372, 110], [360, 160], [290, 165], [220, 140]]
+height_m = 40
+src = "地图量取"
+
+[[ridge]]
+name = "板岩低崖（崖顶松林；洼地口处断开）"
+poly = [[134, 170], [154, 200], [170, 230], [189, 280], [201, 318], [227, 318], [215, 280], [196, 230], [180, 200], [160, 170], [150, 160]]
+height_m = 12
+src = "推定"
+
+[[ridge]]
+name = "洼地北缘草坡（属 bg261）"
+poly = [[261, 191], [400, 191], [400, 230], [341, 251], [276, 236]]
+height_m = 15
+src = "地图量取"
+
+[[ridge]]
+name = "洼地东北小山（属 bg261）"
+poly = [[351, 312], [373, 264], [400, 240], [400, 320], [365, 329]]
+height_m = 35
+src = "地图量取"
+
+[[ridge]]
+name = "南岭（伸进海里成低崖，收住本段）"
+poly = [[245, 495], [311, 443], [352, 417], [400, 395], [400, 600], [245, 600]]
+height_m = 65
+src = "地图量取"
+
+[[block]]
+id = "b01"
+into_ridge = true
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "碎石滩·海角北窄段"
+xy = [50, 58]
+size = [60, 14]
+h_m = 0
+rot = 72
+src = "地图量取"
+
+[[block]]
+id = "b02"
+into_ridge = true
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "碎石滩·中段（低崖脚下）"
+xy = [168, 248]
+size = [171, 24]
+h_m = 0
+rot = 65.8
+src = "地图量取"
+note = "宽二三十米，弧形卵石坎、漂木、海藻团；本档机位在此段南端礁岩上朝北"
+
+[[block]]
+id = "b03"
+into_ridge = true
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "碎石滩·南段（洼地口）"
+xy = [234, 403]
+size = [165, 24]
+h_m = 0
+rot = 68.7
+src = "地图量取"
+
+[[block]]
+id = "b04"
+over_water = true
+kind = "asset"
+asset = "p281"
+face = "south"
+count = 6
+name = "海角礁岩群"
+xy = [38, 108]
+size = [24, 30]
+h_m = 5
+src = "推定"
+note = "浪在海角外沿打出最高的一道白沫"
+
+[[block]]
+id = "b05"
+over_water = true
+kind = "rock_shelf"
+face = "south"
+name = "机位礁岩"
+xy = [168, 322]
+size = [14, 10]
+h_m = 6
+src = "推定"
+note = "锚点图机位：滩南段礁岩，离滩面约六米，朝正北"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p281"
+face = "south"
+name = "滩上半埋大方石"
+xy = [150, 222]
+size = [8, 6]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "海边湿洼地（另卡）"
+bg = "bg261"
+xy = [356, 359]
+size = [80, 70]
+h_m = 0
+src = "坐标表"
+note = "世界树坐标 [41, 29]；卵石风暴堤、骨滩、岭脚洞口都在那张卡"
+
+[[block]]
+id = "b08"
+into_ridge = true
+kind = "cave_mouth"
+face = "southwest"
+name = "蛛洞洞口（另卡）"
+bg = "bg267"
+xy = [240, 80]
+size = [16, 12]
+h_m = 10
+src = "坐标表"
+note = "世界树坐标 [38, 18]，崖后松林山西北坡"
+
+[[water]]
+name = "海面·1"
+path = [[0, 10], [19, 10]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·2"
+path = [[0, 30], [23, 30]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·3"
+path = [[0, 50], [28, 50]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·4"
+path = [[0, 70], [34, 70]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·5"
+path = [[0, 90], [38, 90]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·6"
+path = [[0, 110], [41, 110]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·7"
+path = [[0, 130], [50, 130]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·8"
+path = [[0, 150], [60, 150]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·9"
+path = [[0, 170], [100, 170]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·10"
+path = [[0, 190], [113, 190]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·11"
+path = [[0, 210], [125, 210]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·12"
+path = [[0, 230], [136, 230]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·13"
+path = [[0, 250], [144, 250]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·14"
+path = [[0, 270], [151, 270]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·15"
+path = [[0, 290], [158, 290]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·16"
+path = [[0, 310], [165, 310]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·17"
+path = [[0, 330], [172, 330]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·18"
+path = [[0, 350], [181, 350]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·19"
+path = [[0, 370], [191, 370]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·20"
+path = [[0, 390], [200, 390]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·21"
+path = [[0, 410], [208, 410]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·22"
+path = [[0, 430], [216, 430]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·23"
+path = [[0, 450], [222, 450]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·24"
+path = [[0, 470], [227, 470]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·25"
+path = [[0, 490], [232, 490]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·26"
+path = [[0, 510], [237, 510]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·27"
+path = [[0, 530], [238, 530]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·28"
+path = [[0, 550], [235, 550]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·29"
+path = [[0, 570], [233, 570]]
+width_m = 22
+depth_m = 10
+
+[[water]]
+name = "海面·30"
+path = [[0, 590], [231, 590]]
+width_m = 22
+depth_m = 10
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg262-c1"
+eye = [200, 552]
+target = [200, 300]
+eye_h = 20.0
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

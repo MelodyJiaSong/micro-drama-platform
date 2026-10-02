@@ -1,0 +1,170 @@
+# 奥迪拉兰废墟 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地原点 ＝ 区级平面图 (1561, 990) m；区级块 b903（区图废墟图标约 [31.5, 31] ＝ 区级 (1661, 1090)）落在本场地 (100, 100)。
+
+[meta]
+bg = "bg447"
+name_zh = "奥迪拉兰废墟"
+size_m = [200, 200]
+px_per_m = 7.0
+scale_src = "推定"
+scale_note = "位置取区级平面图 b903（区图废墟图标量取）；厅堂墙基 36 × 22 m 与各残件尺寸无一手出处，按世界树「几段矮墙与倾倒的柱础」推定。场地内无山脊、无水、无路（最近的土路在场地西侧外一两百米）"
+# 世界树画面：西北林中的小片废墟，几段矮墙与倾倒的柱础埋在落叶里
+absent = [
+    "屋顶、完整门洞与高墙（墙最高齐胸，厅堂早已塌尽）",
+    "大片遗址群、白石半圆列柱与地面星形镶嵌（那是南部另一处遗址）",
+    "水面、溪流与湖岸",
+    "道路、营帐、瞭望台与任何近年人迹",
+    "火光、火塘、烛火与发光的符文",
+    "任何人物与动物",
+    "开阔空地与天际线（四面都是密林）",
+]
+
+[[block]]
+id = "b01"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "北墙（齐胸高、最完整，残存藤叶浮雕）"
+xy = [100, 89]
+size = [36, 1.2]
+h_m = 1.4
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "西墙（断成三截、齐腰）"
+xy = [82.6, 100]
+size = [1.2, 22]
+h_m = 0.9
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "东墙残根（齐膝）"
+xy = [117.4, 103]
+size = [1.2, 16]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "南墙残基与正门缺口"
+xy = [100, 111]
+size = [36, 1.0]
+h_m = 0.4
+src = "推定"
+note = "正中留缺口，门外接三级残阶"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p378"
+face = "south"
+count = 5
+name = "厅内中线五个倒伏柱础"
+xy = [100, 100]
+size = [28, 3]
+h_m = 0.8
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p377"
+face = "south"
+name = "东南角外断成数节的倒柱"
+xy = [126, 116]
+size = [10, 1.2]
+h_m = 1.2
+rot = 25
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "南侧三级残阶（通向空处）"
+xy = [100, 114]
+size = [8, 3]
+h_m = 0.6
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p373"
+face = "south"
+name = "西北角撑裂墙体的上古老树"
+xy = [80, 87]
+size = [7, 7]
+h_m = 38
+src = "推定"
+note = "根系把西北墙角顶翘、墙面斜裂"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 2
+name = "厅内从石板缝钻出的两棵细树"
+xy = [108, 95]
+size = [6, 3]
+h_m = 20
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p372"
+face = "south"
+name = "东北侧银灰巨树"
+xy = [140, 70]
+size = [5, 5]
+h_m = 40
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p372"
+face = "south"
+name = "西南侧银灰巨树（机位旁）"
+xy = [60, 130]
+size = [5, 5]
+h_m = 40
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p377"
+face = "south"
+name = "东侧倒木"
+xy = [150, 110]
+size = [16, 1.5]
+h_m = 1.2
+rot = -40
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg447-c1"
+eye = [100, 184]
+target = [100, 100]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

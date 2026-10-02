@@ -1,0 +1,207 @@
+# 索瑞森废墟 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地 ＝ 区级平面图 b904 的范围（中心 ≈ 1743, 620，420×340 m）；本场地原点 ≈ 区级 (1533, 450)。
+# Y 形熔岩河三支与旧都岔道由区级 terrain.toml 平移换算（地图量取）；城内各残构无一手出处，全部推定。
+
+[meta]
+bg = "bg93"
+name_zh = "索瑞森废墟"
+size_m = [420, 340]
+px_per_m = 3.5
+scale_src = "地图量取"
+scale_note = "场地外框取区级平面图 b904（区图 Y 形熔岩河与废墟标签 65%, 35% 处 420×340 m）；城内拱门、大厅、方塔、街屋尺寸按矮人式石城常识推定"
+# 世界树画面：大片被熔岩吞掉一半的矮人城市废墟，石砌拱门与方塔焦黑倾斜，街道被凝固的岩浆封死，缝隙里仍透出橘光
+absent = [
+    "任何人物、驻军、营帐、旗帜与动物（空城）",
+    "火把、篝火、灯笼、炉火与任何人工光源",
+    "完整的屋顶与可用的建筑（全城只剩残壳）",
+    "草、树与任何绿色植被",
+    "任何水体（Y 形那条是熔岩河；凝岩壳是冷的，只有细缝透光）",
+    "木构建筑与兽皮帐（这是整石砌的矮人式城）",
+    "西、北、东三面的入口（唯一入口在南，其余被熔岩河与崖隔断）",
+    "4.0.3a 之后的废墟改建与新增设施",
+]
+
+[[ridge]]
+name = "北山墙崖脚（崖上是岩台前哨）"
+poly = [[0, 0], [420, 0], [420, 20], [320, 26], [250, 8], [200, 4], [120, 6], [0, 10]]
+height_m = 300
+src = "地图量取"
+
+[[water]]
+name = "熔岩河·主干（自北山墙崖脚南流）"
+path = [[186, 10], [218, 71], [237, 119]]
+width_m = 32
+depth_m = 3
+src = "地图量取"
+
+[[water]]
+name = "熔岩河·东支（横穿城北）"
+path = [[237, 119], [338, 117], [420, 112]]
+width_m = 28
+depth_m = 3
+src = "地图量取"
+
+[[water]]
+name = "熔岩河·西南支（斜穿被淹的半城）"
+path = [[237, 119], [178, 191], [79, 250]]
+width_m = 32
+depth_m = 3
+src = "地图量取"
+
+[[road]]
+name = "旧都岔道（唯一入口，自南面主干道北上）"
+path = [[205, 340], [218, 304], [210, 258]]
+width_m = 5
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p88"
+face = "south"
+over_water = true
+name = "半圆大拱门（下半截埋进凝岩）"
+xy = [222, 148]
+size = [26, 6]
+h_m = 16
+src = "推定"
+note = "全城最高的残构，主街北端"
+
+[[block]]
+id = "b02"
+kind = "plaza"
+face = "south"
+may_overlap = true
+over_water = true
+name = "凝岩封死的主街"
+xy = [215, 205]
+size = [14, 104]
+h_m = 0
+src = "推定"
+note = "黑色凝岩壳，只有板块细缝透橘光"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p87"
+face = "west"
+name = "柱列大厅空壳（屋顶全塌）"
+xy = [265, 205]
+size = [60, 40]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p89"
+face = "south"
+name = "方塔·东北（向东歪）"
+xy = [330, 150]
+size = [14, 14]
+h_m = 22
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p89"
+face = "south"
+name = "方塔·南（向西歪）"
+xy = [300, 272]
+size = [12, 12]
+h_m = 16
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p87"
+face = "west"
+count = 12
+name = "塌顶街屋群·东"
+xy = [365, 215]
+size = [44, 60]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p87"
+face = "east"
+count = 8
+name = "塌顶街屋群·主街西侧"
+xy = [182, 250]
+size = [30, 50]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "rock_shelf"
+face = "south"
+name = "被凝岩吞没的西北半城"
+xy = [105, 110]
+size = [110, 100]
+h_m = 3
+src = "推定"
+note = "凝岩层三四米厚，只露塔顶、墙头与倒伏石柱"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p89"
+face = "south"
+may_overlap = true
+name = "露出凝岩的塔顶"
+xy = [80, 80]
+size = [9, 9]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "arch_bridge"
+face = "south"
+over_water = true
+name = "断石桥（跨东支，塌了中段）"
+xy = [300, 118]
+size = [10, 34]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "low_wall"
+face = "south"
+name = "南城墙残段（带入口缺口）"
+xy = [300, 318]
+size = [160, 4]
+h_m = 5
+rot = -4
+src = "推定"
+note = "它与西段之间的缺口就是入城口，锚点机位站在缺口上顺主街朝北"
+
+[[block]]
+id = "b12"
+kind = "low_wall"
+face = "south"
+name = "南城墙残段·西"
+xy = [120, 318]
+size = [150, 4]
+h_m = 4
+rot = 3
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg93-c1"
+eye = [210, 313]
+target = [210, 170]
+eye_h = 14.0
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

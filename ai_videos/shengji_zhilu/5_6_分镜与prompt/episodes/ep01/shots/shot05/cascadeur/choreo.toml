@@ -1,0 +1,53 @@
+# shot05 人体动作表（Cascadeur 层）。位置与朝向一律从 ../planning/overhead.toml 读，这里只写「身体摆成什么样」。
+# 改动作 ＝ 改本文件重跑 `python tools/cascadeur/choreo.py <shot 目录> --build`；部件都在共享库 tools/cascadeur/poses.toml。
+# 时刻与 shot05.md `动作:` 时间轴、overhead 的 [[guard]] 逐拍对齐（rule 4h ②）。伊根不在这里：他坐着、走开、回来，色块人偶够用。
+
+[meta]
+origin = [64.3, 88.9]          # 平面图坐标；Cascadeur 原点 ＝ 杜克顶盾的那一点
+fps = 30
+# 18s 是镜内硬切、人换位置：切点前 0.1 s 各补一键，免得切前两帧人在滑
+
+# 杜克：0–7s 挎着盾从南边走来；7s 吼一声举盾、上前两步顶到亚伦北侧；10s 头狼扑在盾上、他一顶把它推回去；
+# 12–17s 盾一直朝北压着；18s（切）起在树桩旁，24s 弯腰拿起软鞋塞进挎包
+[actor."杜克"]
+gait = [[0.0, 6.8, "walk", "shield_low"], [7.3, 8.3, "walk", "shield_guard"]]
+keys = [
+  [7.0, "stand+shield_guard"],
+  [8.5, "stance_l+shield_guard"],
+  [9.8, "stance_l+shield_guard"],
+  [10.0, "stance_l+shield_brace"],
+  [10.3, "lunge+shield_shove"],
+  [10.8, "stance_l+shield_guard"],
+  [16.5, "stance_l+shield_guard"],
+  [17.4, "stand+shield_low"],
+  [17.9, "stand+shield_low"],
+  [18.0, "stand+shield_low"],
+  [23.5, "stand+shield_low"],
+  [24.2, "stand+set_down_r"],
+  [25.0, "stand+shield_low"],
+  [28.0, "stand+shield_low"],
+]
+
+# 亚伦：0–7s 扛锤走来；8s 双手握锤站在杜克东侧；12.1s 抡得太满、12.5s 砸在狼肩上；13.9s 收到右肩、14.3s 短劈；
+# 17s 起拄锤喘；18s（切）站到树桩旁，23.5s 弯腰拿起护腕、左手托着看
+[actor."亚伦"]
+gait = [[0.0, 6.8, "walk", "shoulder_carry"]]
+keys = [
+  [7.0, "stand+shoulder_carry"],
+  [8.0, "stance_l+twohand_low"],
+  [8.5, "stance_l+twohand_low"],       # 049：平面图 8.5s 到位，这里不钉一帧 Cascadeur 会拖到 11.8s 才走到（previz 根位置偏 0.5 m）
+  [11.8, "stance_l+twohand_low"],
+  [12.1, "stance_l+twohand_windup"],
+  [12.5, "lunge+twohand_strike"],
+  [13.0, "stance_l+twohand_low"],
+  [13.9, "stance_l+twohand_chop_ready"],
+  [14.3, "lunge_small+twohand_chop"],
+  [14.8, "stance_l+twohand_low"],
+  [17.0, "stand+twohand_rest"],
+  [17.9, "stand+twohand_rest"],
+  [18.0, "stand+twohand_rest"],
+  [23.3, "stand+twohand_rest"],
+  [23.8, "stand+set_down_r"],
+  [24.6, "stand+hammer_r_low+palm_up_l"],
+  [28.0, "stand+hammer_r_low+palm_up_l"],
+]

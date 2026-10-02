@@ -1,0 +1,289 @@
+# ep02 目标账本（tools/goal_ledger.py，follow-up 038 / 048）：观众要跟的每一件事——谁交代、屏幕上哪句说出、为什么、谁接下、
+# 在哪几镜推进、在哪一镜屏幕上了结。引用的原文片段必须真在那一镜的画面动作或台词里（备注、情绪、场景标签不算）。
+# 冷眼观众（ai_videos__冷眼观众）理出的目标线要和这里对得上；对不上改剧本，不许只改账本去迁就。
+# ep01 carry 过来的三件（paladin / goldshire / duke_lie）在本集重新上屏交代（账本按集独立）。
+
+[ledger]
+breathers = ["S47", "S48"]   # S47 父亲叫名字、S48 挂盾：谎已说完，纯情感收束
+
+[[goal]]
+id = "duke_lie"
+who = "杜克"
+self = true
+what = "瞒着家里：他没选上卫兵队"
+why = "家里以为他进了卫兵队（上一集他说过），他一直没纠正"
+stated = ["S01", "Mum. I didn't make the—"]
+cues = ["Guard", "deputy", "grip", "握带", "family", "卫兵", "罩袍"]
+pursued = ["S05", "S07", "S10", "S11", "S44"]
+resolved = ["S46", "I didn't make the Guard."]
+
+[[goal]]
+id = "goldshire"
+who = "治安官玛克布莱德（上一集的信）"
+what = "把信交给闪金镇的治安官杜汉"
+why = "闪金镇缺人手（上一集）"
+stated = ["S02", "Marshal Dughan."]
+accepted = ["S02", "...Right."]
+cues = ["Dughan", "信", "documents"]
+pursued = ["S03"]
+resolved = ["S03", "Congratulations."]
+reward = ["S04"]
+
+[[goal]]
+id = "paladin"
+who = "亚伦"
+self = true
+what = "学着当圣骑士"
+why = "他要当那个本来就在场的人（上一集）"
+stated = ["S05", "Learning to be a paladin."]
+cues = ["paladin", "修士", "光"]
+pursued = ["S06", "S20", "S21", "S26", "S27", "S28"]
+carry = "ep03"
+
+[[goal]]
+id = "fargodeep"
+who = "治安官杜汉"
+what = "去法戈第矿洞看看是不是真有狗头人"
+why = "有报告说矿里全是狗头人"
+stated = ["S04", "Fargodeep Mine, due south."]
+accepted = ["S04", "We've done kobolds!"]
+cues = ["Fargodeep", "kobold", "矿", "狗头人"]
+pursued = ["S13", "S14", "S15", "S16"]
+resolved = ["S18", "It's true."]
+reward = ["S18"]
+
+[[goal]]
+id = "silver"
+who = "亚伦"
+self = true
+what = "凑够学本事的钱（一样一银）"
+why = "修士开价，两人的钱不够"
+stated = ["S06", "A silver a lesson."]
+cues = ["silver", "钱", "lesson"]
+pursued = ["S20", "S21", "S22"]
+resolved = ["S20", "...Two hundred."]
+
+[[goal]]
+id = "pig"
+who = "斯通菲尔德妈妈"
+what = "把布莱克威尔家那头母猪「公主」的项圈带回来"
+why = "它天天夜里来啃她的菜园子"
+stated = ["S08", "Bring me her collar."]
+accepted = ["S08", "Leave it to me!"]
+cues = ["Princess", "pig", "猪", "collar", "项圈"]
+pursued = ["S30", "S31", "S42"]
+resolved = ["S45", "Good enough."]
+reward = ["S45"]
+
+[[goal]]
+id = "necklace"
+who = "波尼斯姑妈"
+what = "找回她的项链"
+why = "她说是马科伦家的小无赖比利拿的"
+stated = ["S08", "My necklace!"]
+accept_note = "S08 杜克第二次拍胸口 \"Leave it to me!\"（同一句台词第二次出口，片段无法区分，故写在这里）"
+cues = ["necklace", "项链", "Billy", "gold tooth", "金牙"]
+pursued = ["S13", "S16"]
+resolved = ["S17", "波尼斯接过项链"]
+reward = ["S17"]
+
+[[goal]]
+id = "lovers"
+who = "梅贝尔"
+what = "把信送给汤米·乔，让两人见上一面"
+why = "两家是世仇，她家里人不许"
+stated = ["S09", "For Tommy Joe Stonefield"]
+accepted = ["S09", "...Leave it to me."]
+cues = ["Tommy Joe", "Maybell", "Mildred", "note", "便条", "liquor", "kelp", "藻"]
+pursued = ["S12", "S23", "S24", "S25"]
+resolved = ["S44", "汤米·乔踮着脚张望"]
+
+[[goal]]
+id = "kelp"
+who = "药剂师匹斯特"
+what = "拿四片水晶藻叶来配隐形水"
+why = "隐形水能让梅贝尔神不知鬼不觉地溜出来"
+stated = ["S23", "I'll need four fronds of crystal kelp."]
+accept_note = "两人没应声，直接去了水晶湖（S24）——接活靠行动"
+cues = ["kelp", "藻", "murloc", "鱼人", "Crystal Lake", "水晶湖"]
+pursued = ["S24", "S25"]
+resolved = ["S25", "手里攥着四片藻叶"]
+
+[[goal]]
+id = "schedule"
+who = "亚伦"
+self = true
+what = "卷纸上写的是什么"
+why = "矿里的豺狼人逃跑时掉的"
+stated = ["S16", "Twelve-thirty."]
+cues = ["Collector", "卷纸", "Gold"]
+resolved = ["S18", "A party from the Brotherhood"]
+
+[[goal]]
+id = "collector"
+who = "治安官杜汉"
+what = "把收货人带回来"
+why = "有人在偷艾尔文矿里的金子，而杜汉好几个月没派人进矿"
+stated = ["S19", "Bring the Collector in."]
+accepted = ["S19", "Tomorrow, then."]
+cues = ["Collector", "收货人", "Brackwell", "布莱克威尔", "瘦子", "木箱", "戒指"]
+pursued = ["S29", "S30", "S31", "S32", "S33", "S34", "S35", "S36", "S37", "S38", "S39", "S40", "S41", "S42"]
+resolved = ["S43", "杜汉撸下收货人手上的戒指"]
+reward = ["S43"]
+
+[[goal]]
+id = "walt"
+who = "沃尔特"
+what = "跟着去布莱克威尔"
+why = "布莱克威尔家的地被那帮人占了，下一个就是他们家"
+stated = ["S29", "I'm coming."]
+accept_note = "杜克拦不住（S29 \"Walt—\"），只能让他跟着"
+cues = ["Walt", "沃尔特", "草叉"]
+pursued = ["S31", "S32", "S34", "S35", "S36", "S38", "S39", "S41", "S42"]
+resolved = ["S45", "He stood in front of me."]
+
+[[goal]]
+id = "stormwind"
+who = "修士 / 里瑞亚"
+what = "去暴风城：大教堂有人在打听亚伦；杜克去旧城区找哈里（能让他多活几年的人）"
+why = "两人接下来的本事都在暴风城"
+stated = ["S49", "Someone at the cathedral in Stormwind has been asking about you."]
+accepted = ["S49", "...I'm going home."]
+cues = ["Stormwind", "暴风城"]
+carry = "ep03"
+
+# ── 本事（follow-up 039 / 045–047）：一样一样解锁；学会的那一镜看得出学了什么，本集内实战用出来（或 carry）。
+#    本集四样新光都是「一下子」的（瞬发），与圣光术的「一口气」对照；每样都有价码，当场演出来。
+
+[[skill]]
+who = "亚伦"
+what = "光罩住自己（圣佑术）"
+idea = ["S20", "This one's for you."]
+trigger = ["S20", "里瑞亚冷不防一剑劈向亚伦"]
+learned = ["S20", "一层暖金的光从脚下往上一涌罩住他"]
+used = ["S25", "暖金的光从脚下往上一涌罩住他，罩成一个光壳"]
+casts = [["S33", "暖金的光从脚下往上一涌罩住他，罩成一个光壳"]]
+
+[[skill]]
+who = "亚伦"
+what = "一推定住三下心跳（制裁之锤）"
+idea = ["S21", "Stops a man for three heartbeats."]
+trigger = ["S21", "喊完就放低身子往前一冲"]
+learned = ["S21", "一道金色月牙光贴地扫出去"]
+used = ["S24", "金色月牙光贴地扫出，它胸口一闪"]
+casts = [["S35", "金色月牙光贴地扫出，瘦子胸口一闪"]]
+
+[[skill]]
+who = "亚伦"
+what = "给出去的光（保护祝福）"
+core = true
+why = ["S21", "is there one for him?"]
+idea = ["S26", "This one's for him."]
+demo = ["S26", "里瑞亚脚下升起一根白到橙的光带柱"]
+fail = [["S27", "光停在他掌心，不肯过去"], ["S27", "光壳罩住的是他自己"]]
+method = ["S27", "Let him have all of it."]
+trigger = ["S27", "手指碰到那条磨亮的旧握带"]
+learned = ["S27", "这回没停"]
+effect = ["S27", "剑刃碰到壳内壁就停住"]
+used = ["S37", "杜克脚下升起一根白到橙的光带柱——埃尔兰"]
+
+[[skill]]
+who = "亚伦"
+what = "一次倒光（圣疗术）"
+idea = ["S28", "Everything you've got, in one go."]
+trigger = ["S38", "想撑起来，撑不起来"]
+learned = ["S39", "杜克胸前一团金色光带球一亮"]
+carry = "ep03"   # S39 学成的那一下就是实战；下一次用在以后的集
+
+[[skill]]
+who = "亚伦"
+what = "慢的光（圣光术）"
+used = ["S33", "双手掌心重新聚起暖金的光"]
+
+[[skill]]
+who = "亚伦"
+what = "把光扔出去（审判）"
+used = ["S15", "左手往前一指——豺狼人胸口炸开一团黄白的光"]
+
+[[skill]]
+who = "杜克"
+what = "跺地一击（雷霆一击）"
+idea = ["S22", "Stomp."]
+trigger = ["S22", "四只鸡扑棱着围上来啄他的靴子"]
+learned = ["S22", "一圈贴地的冲击环推开约七步就停"]
+used = ["S25", "一圈环形水花和泥浪推开"]
+casts = [["S34", "冲击环推开，压上来的两个强盗一齐踉跄"]]
+
+[[skill]]
+who = "杜克"
+what = "往前猛冲（冲锋，开打前）"
+used = ["S16", "开打前放低身子往前一冲"]
+
+[[skill]]
+who = "杜克"
+what = "举盾顶住"
+used = ["S14", "钢盾顶住那一棒"]
+
+[[skill]]
+who = "苏伦娜"
+what = "火球（NPC 火球术）"
+used = ["S33", "把托着的那团火往前一推"]
+casts = [["S35", "右手托着那团火朝发光的亚伦一推"], ["S37", "右手托着那团火一推"]]
+
+# 施法设计一处定义、处处呼应（G7c，follow-up 046 / 047）：
+# 起手 / 手 / 光的走向只在技能卡里定义（2_世界观人设/skills/，rule 45）；这里只写谁、在哪一镜教、代价在哪一镜说。
+[[casting]]
+who = "亚伦"
+skill = "慢的光（圣光术）"
+card = "k201"
+taught = ["S20", "掌心聚起一团暖金的光"]
+cost = ["S20", "光一下散了"]
+
+[[casting]]
+who = "亚伦"
+skill = "光罩住自己（圣佑术）"
+card = "k205"
+taught = ["S20", "This one's for you."]
+cost = ["S20", "You can't swing in it."]
+
+[[casting]]
+who = "亚伦"
+skill = "一推定住三下心跳（制裁之锤）"
+card = "k206"
+taught = ["S21", "Stops a man for three heartbeats."]
+cost = ["S21", "Then you wait for the light to come back."]
+
+[[casting]]
+who = "亚伦"
+skill = "给出去的光（保护祝福）"
+card = "k207"
+taught = ["S26", "修士两脚站稳、手按在里瑞亚背上"]
+cost = ["S26", "拳头停在壳内壁上"]
+
+[[casting]]
+who = "亚伦"
+skill = "一次倒光（圣疗术）"
+card = "k208"
+taught = ["S28", "修士把手掌平按在亚伦胸口"]
+cost = ["S28", "After that you've nothing"]
+
+[[casting]]
+who = "杜克"
+skill = "跺地一击（雷霆一击）"
+card = "k102"
+taught = ["S22", "她示范：半蹲、右脚一跺"]
+cost = ["S22", "推到七八步外就停"]
+
+[[casting]]
+who = "杜克"
+skill = "往前猛冲（冲锋，开打前）"
+card = "k101"
+taught = ["S16", "开打前放低身子往前一冲"]
+cost = ["S16", "开打前"]   # 只能开打前用（原典战斗中不能冲锋）；ep01 学会，本集第一次上屏就是这一下
+
+[[casting]]
+who = "苏伦娜"
+skill = "火球（NPC 火球术）"
+card = "k401"
+taught = ["S19", "One throws fire."]
+cost = ["S33", "两手各聚起一簇橙黄的火苗"]   # 要双手托着聚约三秒才推得出去——看得见它来

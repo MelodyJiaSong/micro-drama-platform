@@ -1,0 +1,101 @@
+# shot20 人体动作表（Cascadeur 层）。位置与朝向一律从 ../planning/overhead.toml 读，这里只写「身体摆成什么样」。
+# 改动作 ＝ 改本文件重跑 `python tools/cascadeur/choreo.py <shot 目录> --build`；部件都在共享库 tools/cascadeur/poses.toml。
+# 时刻与 shot20.md `动作:` 时间轴、overhead 的 [[hit]] 逐拍对齐（rule 4h ②）。暴徒不在这里：色块人偶够用。
+# follow-up 052 G13：攻防镜的人体一律 Cascadeur。加瑞克的阔刃斧是单手斧（e5113，全长约 70 cm）：一律右手握。
+
+[meta]
+origin = [11.3, 15.2]          # 平面图坐标；Cascadeur 原点 ＝ 杜克迎着加瑞克站定的那一点
+fps = 30
+
+# 加瑞克：0–14s 坐在劈柴墩上低头磨斧，7.5s 拇指把红面罩往上推、抬眼；14s 起身，15s 起贴到杜克面前，
+# 16.2 / 17.4 / 18.6 / 19.8s 四斧专砍钢盾；20.3s 转向扑来的亚伦，20.5s 斧柄往右外一磕格开锤头，21s 一脚蹬在他肚子上；
+# 22s 转向地上的亚伦、举斧，22.4s 上步，23s 劈在扑过来的杜克背上的木盾上，斧刃卡住，23.6s 起攥着斧柄往回拽
+[actor."加瑞克"]
+keys = [
+  [0.0, "sit_stool+sharpen"],
+  [7.2, "sit_stool+sharpen"],
+  [7.5, "sit_stool+hand_to_face_r+look_up"],
+  [8.0, "sit_stool+sharpen+look_up"],
+  [13.6, "sit_stool+sharpen+look_up"],
+  [14.0, "stand+hammer_r_low"],
+  [15.0, "walk_a+hammer_r_low"],
+  [15.5, "walk_b+hammer_r_low"],
+  [15.9, "stance_l+onehand_windup_r"],
+  [16.2, "lunge_small+onehand_swing_r"],
+  [16.6, "stance_l+hammer_r_low"],
+  [17.1, "stance_l+onehand_windup_r"],
+  [17.4, "lunge_small+onehand_swing_r"],
+  [17.8, "stance_l+hammer_r_low"],
+  [18.3, "stance_l+onehand_windup_r"],
+  [18.6, "lunge_small+onehand_swing_r"],
+  [19.0, "stance_l+hammer_r_low"],
+  [19.5, "stance_l+onehand_windup_r"],
+  [19.8, "lunge_small+onehand_swing_r"],
+  [20.1, "stance_l+hammer_r_low"],
+  [20.3, "stance_l+hammer_r_low"],
+  [20.5, "stance_l+onehand_parry_r"],
+  [20.75, "stance_l+hammer_r_low"],
+  [21.0, "kick_r+hammer_r_low"],
+  [21.4, "stance_l+hammer_r_low"],
+  [22.0, "stance_l+onehand_windup_r"],
+  [22.4, "lunge+onehand_windup_r"],
+  [23.0, "lunge+onehand_chop_low_r"],
+  [23.6, "stance_l+onehand_tug_r"],
+  [24.4, "step_back+onehand_tug_r"],
+  [25.2, "stance_l+onehand_tug_r"],
+  [27.0, "stance_l+onehand_tug_r"],
+]
+
+# 杜克：0–6s 挎着钢盾从林隙走到空场；15s 举盾迎上加瑞克，每挨一斧膝盖一沉、退半步；22.3s 看见斧子转向地上的亚伦，
+# 22.8s 扑过去跪在亚伦身前、背对斧子俯身罩住他，钢盾垂在身侧；23s 那一斧劈在背上的木盾上
+[actor."杜克"]
+gait = [[0.0, 5.5, "walk", "shield_low"]]
+keys = [
+  [6.0, "stand+shield_low"],
+  [14.6, "stand+shield_low"],
+  [15.0, "stance_l+shield_guard"],
+  [16.0, "stance_l+shield_guard"],
+  [16.2, "brace_sink+shield_brace"],
+  [16.5, "step_back+shield_guard"],
+  [17.2, "stance_l+shield_guard"],
+  [17.4, "brace_sink+shield_brace"],
+  [17.7, "step_back+shield_guard"],
+  [18.4, "stance_l+shield_guard"],
+  [18.6, "brace_sink+shield_brace"],
+  [18.9, "step_back+shield_guard"],
+  [19.6, "stance_l+shield_guard"],
+  [19.8, "brace_sink+shield_brace"],
+  [20.1, "step_back+shield_guard"],
+  [22.0, "stance_l+shield_guard"],
+  [22.3, "stance_l+shield_low"],
+  [22.8, "kneel_r+cover+shield_low"],
+  [23.0, "kneel_r+cover+shield_low"],
+  [23.2, "kneel_r+cover+shield_low+breathe"],
+  [27.0, "kneel_r+cover+shield_low+breathe"],
+]
+
+# 亚伦：0–6s 右肩扛着父亲的锤走来；14.6s 把锤从肩上取下双手握；15.9s 迎上暴徒，16.1s 锤柄举过头顶架住那一棒，16.5s 一锤横扫；
+# 17.2–19.6s 从杜克身后绕到加瑞克右前；20s 举锤、20.3s 砸他肋下，20.5s 被斧柄格开、失了重心；21s 挨一脚，
+# 弯腰捂着肚子踉跄退三步，21.9s 跌坐在土里，右手还拖着锤
+[actor."亚伦"]
+gait = [[0.0, 5.5, "walk", "shoulder_carry"], [17.2, 19.2, "walk", "twohand_low"]]
+keys = [
+  [6.0, "stand+shoulder_carry"],
+  [14.6, "stand+shoulder_carry"],
+  [15.0, "stand+twohand_low"],
+  [15.9, "stance_l+twohand_low"],
+  [16.1, "stance_l+twohand_block_high"],
+  [16.3, "stance_l+twohand_sweep_a"],
+  [16.5, "lunge+twohand_sweep_b"],
+  [17.0, "stance_l+twohand_low"],
+  [19.7, "stance_l+twohand_low"],
+  [20.0, "stance_l+twohand_windup"],
+  [20.3, "lunge+twohand_strike"],
+  [20.5, "stance_l+flail"],
+  [20.8, "stand+twohand_low"],
+  [21.0, "stand+hammer_r_low+hit_belly_l"],
+  [21.3, "step_back+hammer_r_low+hit_belly_l"],
+  [21.6, "step_back+hammer_r_low+hit_belly_l"],
+  [21.9, "sit_ground+hammer_r_low+hit_belly_l"],
+  [27.0, "sit_ground+hammer_r_low+hit_belly_l"],
+]

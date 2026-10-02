@@ -1,0 +1,238 @@
+# 光明大教堂 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 室内局部坐标：y 轴 ＝ 中殿纵轴（y 大的一端是正门，y 小的一端是祭坛与后殿）。**不代表罗盘方位**——区图上教堂体块是斜放的十字形。
+# 十字形总外廓取区级平面图 b902（92 × 67.5 m）量级；内部分隔无一手平面出处，全部推定。
+
+[meta]
+bg = "bg10"
+name_zh = "光明大教堂"
+size_m = [110, 100]
+px_per_m = 12.0
+grid_m = 10
+scale_src = "推定"
+scale_note = "外廓按区级平面图 b902（地图量取 92 × 67.5 m）放大到 110 × 100 m 场地；中殿宽、柱距、拱顶高（约 30 m）与交叉穹窿高（约 42 m）按「全城最高的尖塔群」与常见十字形教堂比例推定，实机截图到手后校正"
+# 世界树画面：极高的石造教堂，主体两侧伸出多组侧翼，屋脊上林立着数量众多的细长尖塔、越靠中心越高；内厅是浅暖白石砌筑、嵌着饱和钴蓝色石材条带，高窗斜落的光柱把空间切开
+absent = [
+    "任何人物（训练师、牧师、伤员都属 shot 层）",
+    "点燃的蜡烛 / 烛台火 / 火盆 / 油灯（默认态唯一光源是高窗日光）",
+    "玫瑰窗 / 彩绘人像花窗（sk2 核验：文字来源查无实据）",
+    "全金内饰 / 木质内饰 / 暗色内饰",
+    "持战锤的骑士雕像（那是 4.0.3a 后的广场雕像，殿内也不放）",
+    "成排的训练假人（4.0.3a 以后）",
+    "对外的第二道门（正门是唯一对外口；两侧下行石阶只通地下墓穴）",
+    "可读的文字、碑铭、牌匾",
+]
+
+[[block]]
+id = "b01"
+kind = "hall_shell"
+face = "south"
+count = 1
+name = "中殿（主长厅，拱顶约 30 m）"
+xy = [55, 63]
+size = [22, 58]
+h_m = 30
+src = "推定"
+note = "机位站在南端正门里侧，朝 y 减小方向看"
+
+[[block]]
+id = "b02"
+kind = "chamber"
+face = "south"
+count = 1
+name = "西侧廊"
+xy = [38, 62]
+size = [10, 56]
+h_m = 16
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "chamber"
+face = "south"
+count = 1
+name = "东侧廊"
+xy = [72, 62]
+size = [10, 56]
+h_m = 16
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "chamber"
+face = "south"
+count = 1
+name = "十字交叉方形高穹窿（中央最高尖塔之下）"
+xy = [55, 27]
+size = [22, 14]
+h_m = 42
+src = "推定"
+note = "钟室在这座塔的顶上，殿内看不见钟"
+
+[[block]]
+id = "b05"
+kind = "chamber"
+face = "south"
+count = 1
+name = "西横翼"
+xy = [26, 27]
+size = [36, 14]
+h_m = 30
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "chamber"
+face = "south"
+count = 1
+name = "东横翼"
+xy = [84, 27]
+size = [36, 14]
+h_m = 30
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "chamber"
+face = "south"
+count = 1
+name = "半圆后殿（三扇细尖拱窗）"
+xy = [55, 12]
+size = [22, 16]
+h_m = 26
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "altar"
+face = "south"
+count = 1
+may_overlap = true
+name = "祭坛台（五级台阶）与白石祭台"
+xy = [55, 16]
+size = [12, 6]
+h_m = 1.1
+src = "推定"
+note = "祭坛在后殿前、长轴尽端为推定；两侧石阶口的相对方位才是世界树原文"
+
+[[block]]
+id = "b09"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "西下行石阶口（通地下墓穴）"
+xy = [46, 18]
+size = [3, 6]
+h_m = 0
+src = "原典方位"
+note = "隐在最后一对列柱的阴影里；阶下空间另立 bg"
+
+[[block]]
+id = "b10"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "东下行石阶口（通地下墓穴）"
+xy = [64, 18]
+size = [3, 6]
+h_m = 0
+src = "原典方位"
+
+[[block]]
+id = "b11"
+kind = "low_wall"
+face = "south"
+count = 1
+may_overlap = true
+name = "西列柱（束柱一排）"
+xy = [44, 63]
+size = [2, 56]
+h_m = 30
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "low_wall"
+face = "south"
+count = 1
+may_overlap = true
+name = "东列柱（束柱一排）"
+xy = [66, 63]
+size = [2, 56]
+h_m = 30
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p298"
+face = "south"
+name = "南正门（半圆拱门洞，唯一对外口）"
+xy = [55, 94]
+size = [10, 4]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "钴蓝中轴条带（地面嵌石）"
+xy = [55, 57]
+size = [1.5, 70]
+h_m = 0
+src = "推定"
+note = "世界树：内厅嵌饱和钴蓝色石材条带；中轴 + 按柱距横向分格为本档设定"
+
+[[block]]
+id = "b15"
+kind = "tables"
+face = "south"
+count = 8
+may_overlap = true
+name = "西侧廊木长凳"
+xy = [34.5, 60]
+size = [1, 30]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "tables"
+face = "south"
+count = 8
+may_overlap = true
+name = "东侧廊木长凳"
+xy = [75.5, 60]
+size = [1, 30]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b17"
+kind = "asset"
+asset = "p308"
+face = "south"
+count = 2
+may_overlap = true
+name = "祭台两侧黑铁高烛架（未点燃）"
+xy = [55, 12.5]
+size = [9, 1]
+h_m = 1.8
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）：场地被体块占满，放在室内
+[[anchor]]
+key = "bg10-c1"
+eye = [55, 85]
+target = [55, 20]
+eye_h = 1.65
+lens_mm = 24
+inside = true
+note = "室内南端朝北；自动生成，排镜时按需改"

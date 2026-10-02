@@ -1,0 +1,227 @@
+# 绿爪村 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg416"
+name_zh = "绿爪村"
+size_m = [200, 180]
+px_per_m = 5.0
+scale_src = "推定"
+scale_note = "区图无图标、wiki 无坐标；只知「灰谷中部、林中树居以南」。区级图推定点位北距主干道约 200 m，故出村小径朝北。碗径 120 m、六座草棚按「圆顶草棚围中央火堆」推定"
+# 世界树画面：林中熊怪的木棚村落，圆顶草棚围着中央火堆，木架上晾着兽皮
+absent = [
+    "兽人式兽皮帐篷、削尖拒马与挂兽头木桩（那是同区兽人营的形制）",
+    "寨墙、瞭望塔与任何石砌建筑",
+    "点着的火堆、火把与任何人工光源（火堆默认冷灰余烬）",
+    "发光的腐化雾气、绿光与任何特效（腐化只写成枯黄植被与碎骨）",
+    "河流与湖面（碗底只有泥窝积水）",
+    "旅店、飞行点",
+    "任何人物、熊怪与动物",
+    "文字",
+    "4.0.3a 后的任何改建",
+]
+
+[[ridge]]
+name = "北缘土坎（小径从此下坡）"
+poly = [[45, 22], [155, 22], [160, 36], [40, 36]]
+height_m = 4
+src = "推定"
+
+[[ridge]]
+name = "东缘土坎"
+poly = [[160, 36], [176, 40], [180, 140], [162, 146], [158, 92]]
+height_m = 3
+src = "推定"
+
+[[ridge]]
+name = "南沿土坎"
+poly = [[40, 150], [162, 146], [158, 162], [42, 166]]
+height_m = 2
+src = "推定"
+
+[[ridge]]
+name = "西缘土坎"
+poly = [[24, 40], [40, 36], [42, 92], [40, 150], [22, 144]]
+height_m = 3
+src = "推定"
+
+[[water]]
+name = "碗底泥窝积水"
+path = [[72, 118], [80, 122]]
+width_m = 4
+depth_m = 0.2
+src = "推定"
+
+[[road]]
+name = "北坡出村小径（通主干道方向）"
+path = [[100, 62], [98, 30], [95, 0]]
+width_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "碗底村心泥地"
+xy = [100, 92]
+size = [44, 40]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p388"
+face = "south"
+name = "中央火堆（石块围圈 · 冷余烬）"
+xy = [100, 92]
+size = [5, 5]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p379"
+face = "south"
+name = "圆顶草棚·北"
+xy = [100, 62]
+size = [9, 9]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p379"
+face = "southwest"
+name = "圆顶草棚·东北"
+xy = [127, 76]
+size = [9, 9]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p379"
+face = "northwest"
+name = "圆顶草棚·东南"
+xy = [127, 108]
+size = [9, 9]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p379"
+face = "north"
+name = "圆顶草棚·南（最大）"
+xy = [100, 124]
+size = [12, 12]
+h_m = 4
+src = "推定"
+note = "门口旧兽皮垫、门边两根削尖长木棍"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p379"
+face = "northeast"
+name = "圆顶草棚·西南"
+xy = [73, 108]
+size = [9, 9]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p379"
+face = "southeast"
+name = "圆顶草棚·西北"
+xy = [73, 76]
+size = [9, 9]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p391"
+face = "south"
+name = "晾皮木架·东"
+xy = [114, 92]
+size = [1.5, 6]
+h_m = 2.2
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p391"
+face = "south"
+name = "晾皮木架·西"
+xy = [86, 92]
+size = [1.5, 6]
+h_m = 2.2
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p387"
+face = "south"
+name = "图腾柱·西北（顶绑兽颅）"
+xy = [89, 81]
+size = [1.2, 1.2]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p387"
+face = "south"
+name = "图腾柱·东南（顶绑兽颅）"
+xy = [111, 103]
+size = [1.2, 1.2]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p378"
+face = "south"
+name = "碎骨堆"
+xy = [140, 122]
+size = [6, 4]
+h_m = 0.6
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p377"
+face = "south"
+name = "横倒巨木（西南碗沿）"
+xy = [50, 138]
+size = [30, 3]
+h_m = 2.5
+rot = 30
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg416-c1"
+eye = [100, 166]
+target = [100, 90]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -1,0 +1,253 @@
+# 大熔炉 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 原点 ≈ 区级平面图 (840, 480)。坑口 ≈ 椭圆，中心 (240,215)、半轴 170×135 m（x 70–410、y 80–350），坑深约 100 m；
+# 平面图画不出凹陷：坑口不画线，由螺旋坡道（外圈 ≈ 坑口、内圈 ≈ 坑底边）读出碗形。坡道点列按
+#   r = 0.93→0.43、2.5 圈、顺时针、中心 (240,215)→(240,250) 生成。
+# 区级 terrain.toml 的熔渣河落在坑壁中段、与坑底对不上——本档把它平移到坑底，记推定。
+# 锚点机位：北沿观坑岩嘴 b17（≈236,76），离坑口两人高，朝正南俯瞰。
+
+[meta]
+bg = "bg244"
+name_zh = "大熔炉"
+size_m = [480, 400]
+px_per_m = 3.0
+grid_m = 50
+scale_src = "地图量取"
+scale_note = "坑口外廓、营棚群、坑内哨屋与主干道按区级平面图（区图 px×2.0362 m）平移量取；坑深、台阶级数、坡道圈数与坑底布置为推定"
+# 世界树画面：峡谷中央巨大的圆形下沉矿坑，像一口锅，坑壁盘旋着一圈圈作业平台，坑底是发亮的熔渣与火光
+absent = [
+    "人物、奴工、守卫与任何动物（空场）",
+    "火把、篝火、灯笼、炉火与任何人工光源（营棚与哨屋不点火，唯一的暖光是坑底熔渣）",
+    "悬在坑上的栈桥与飞行栖台（那是北谷聚落 bg240）",
+    "水、积水、河、湖（坑底发亮的是熔渣，不是水）",
+    "树、草与任何绿色植被",
+    "坡道以外的上下通路（坑壁陡直，只有螺旋坡道）",
+    "旗帜、纹章与任何文字标牌",
+    "蓝天、白云、雨雪",
+    "飞行坐骑与任何 4.0.3a 之后的设施",
+]
+
+[[ridge]]
+name = "北沿红岩坎（高出坑口约 45 m，锚点岩嘴自此探出）"
+poly = [[40, 30], [200, 20], [390, 40], [420, 90], [330, 72], [240, 66], [150, 80], [70, 105]]
+height_m = 45
+src = "地图量取"
+
+[[water]]
+name = "熔渣河·坑底（自西北流向东南）"
+path = [[190, 238], [218, 250], [246, 260], [262, 265]]
+width_m = 12
+depth_m = 2
+src = "推定"
+
+[[road]]
+name = "螺旋运矿坡道（北沿起步，顺时针绕壁两圈半落到坑底南侧）"
+path = [[240, 89], [306, 104], [357, 139], [386, 187], [386, 239], [360, 286], [312, 320], [252, 334], [192, 327], [143, 301], [114, 261], [108, 217], [128, 175], [167, 145], [218, 131], [272, 135], [317, 157], [347, 192], [356, 232], [343, 271], [311, 302], [268, 319], [222, 319], [180, 305], [152, 279], [141, 246], [149, 214], [173, 188], [209, 174], [248, 172], [284, 184], [310, 206], [321, 235], [317, 264], [300, 288], [272, 303], [240, 308]]
+width_m = 6
+src = "推定"
+
+[[road]]
+name = "主干道（贴坑东坡绕过，再南折）"
+path = [[480, 283], [408, 320], [341, 355], [260, 369], [197, 400]]
+width_m = 8
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+may_overlap = true
+over_water = true
+name = "坑底碎渣平地（最低处，向东南微倾）"
+xy = [240, 255]
+size = [120, 70]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "pool"
+face = "south"
+over_water = true
+name = "熔渣池（坑底东南角最低处）"
+xy = [278, 272]
+size = [36, 24]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p233"
+face = "southeast"
+name = "营棚·西（西北上层平台，粗木铁皮）"
+xy = [120, 150]
+size = [20, 10]
+h_m = 3
+rot = -35
+src = "地图量取"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p233"
+face = "southeast"
+may_overlap = true
+name = "营棚·中"
+xy = [140, 132]
+size = [20, 10]
+h_m = 3
+rot = -30
+src = "地图量取"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p233"
+face = "southeast"
+name = "营棚·东"
+xy = [165, 117]
+size = [20, 10]
+h_m = 3
+rot = -22
+src = "地图量取"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p236"
+face = "northeast"
+name = "坑内西南低台石哨屋（区图图标 · 无名）"
+xy = [172, 272]
+size = [10, 10]
+h_m = 6
+src = "地图量取"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p237"
+face = "south"
+name = "北沿木吊架（吊臂伸向坑心）"
+xy = [285, 84]
+size = [6, 6]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p237"
+face = "west"
+name = "东沿木吊架"
+xy = [414, 205]
+size = [6, 6]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p241"
+face = "south"
+name = "北沿锥形废石堆（坡道起点旁）"
+xy = [205, 88]
+size = [24, 16]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p242"
+face = "south"
+name = "翻倒矿车（中圈弯道外沿，碎矿泼坡）"
+xy = [357, 222]
+size = [3, 2]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "弯道小平台·东北（待运矿石与空箩筐）"
+xy = [360, 142]
+size = [16, 10]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "弯道小平台·西南"
+xy = [140, 298]
+size = [16, 10]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "mine_portal"
+face = "southeast"
+name = "试掘洞一（营棚下方坑壁，木框方口）"
+xy = [112, 176]
+size = [3, 3]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "mine_portal"
+face = "southeast"
+name = "试掘洞二"
+xy = [132, 166]
+size = [3, 3]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "plaza"
+face = "south"
+may_overlap = true
+name = "坑底南侧坡道落地处"
+xy = [240, 312]
+size = [14, 8]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "asset"
+asset = "p241"
+face = "south"
+name = "东坑沿外、主干道旁的废石堆"
+xy = [430, 150]
+size = [20, 14]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b17"
+kind = "rock_shelf"
+face = "south"
+name = "北沿观坑岩嘴（锚点机位）"
+xy = [236, 76]
+size = [8, 6]
+h_m = 45
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg244-c1"
+eye = [240, 368]
+target = [240, 200]
+eye_h = 16.0
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

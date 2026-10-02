@@ -20,6 +20,7 @@
     python tools/hyper3d_fetch.py --prompt "a Song dynasty wooden handcart" --out raw.glb
     python tools/hyper3d_fetch.py --prompt "..." --image ref/a.png --image ref/b.png --out raw.glb
     python tools/hyper3d_fetch.py --prompt "..." --bbox 2.4 1.1 1.0 --out raw.glb --tier Regular
+    python tools/hyper3d_fetch.py --prompt "..." --format fbx|obj --out raw.fbx
 
 key 只从环境 / 仓库根 gitignored `.env` 里读（`HYPER3D_API_KEY`），**不进任何被 git 跟踪的文件**。
 """
@@ -130,11 +131,13 @@ def post_json(path: str, key: str, payload: dict) -> dict:
 
 
 def create_job(key: str, prompt: str | None, images: list[Path], bbox: list[float] | None,
-               tier: str, mesh_mode: str) -> dict:
+               tier: str, mesh_mode: str, fmt: str = "glb") -> dict:
     fields: list[tuple[str, str | None, bytes | None, str | None]] = []
     for i, p in enumerate(images):
         fields.append(("images", None, p.read_bytes(), f"{i:04d}{p.suffix}"))
     fields += [("tier", tier, None, None), ("mesh_mode", mesh_mode, None, None)]
+    if fmt != "glb":  # glb 是 API 默认值，保持请求体与已验证形状一致
+        fields.append(("geometry_file_format", fmt, None, None))
     # 白模只承载几何，材质在闸门里会被无条件剥掉 —— 贴图给最低档就行（API 不接受 "None"，
     # 合法值只有 legacy/minimum/extreme-low/low/medium/high/extreme-high）
     fields.append(("texture_mode", "minimum" if mesh_mode == "Raw" else "high", None, None))
@@ -170,12 +173,12 @@ def wait(key: str, sub_key: str, timeout_s: int) -> None:
         time.sleep(5)
 
 
-def download(key: str, task_uuid: str, out: Path) -> Path:
+def download(key: str, task_uuid: str, out: Path, fmt: str = "glb") -> Path:
     data = post_json("download", key, {"task_uuid": task_uuid})
     items = data.get("list", [])
-    glb = next((i for i in items if i["name"].lower().endswith(".glb")), None)
+    glb = next((i for i in items if i["name"].lower().endswith(f".{fmt}")), None)
     if glb is None:
-        raise SystemExit(f"下载列表里没有 .glb：{[i.get('name') for i in items]}")
+        raise SystemExit(f"下载列表里没有 .{fmt}：{[i.get('name') for i in items]}")
     out.parent.mkdir(parents=True, exist_ok=True)
 
     cmd = ["curl", "-sS", "-L", "--retry", "6", "--retry-all-errors", "--retry-delay", "4",
@@ -195,6 +198,8 @@ def main() -> None:
     ap.add_argument("--tier", default="Sketch", choices=("Sketch", "Regular"),
                     help="Sketch 快而糙、适合试；Regular 慢而细")
     ap.add_argument("--mesh-mode", default="Raw", choices=("Raw", "Quad"))
+    ap.add_argument("--format", default="glb", choices=("glb", "fbx", "obj"),
+                    help="输出格式；fbx 给 Cascadeur 等只吃 FBX 的下游。闸门（whitemodel_normalize）仍吃 glb")
     ap.add_argument("--timeout", type=int, default=900)
     ap.add_argument("--out", required=True, type=Path)
     args = ap.parse_args()
@@ -203,12 +208,14 @@ def main() -> None:
 
     key = api_key()
     print(f"→ 建任务：tier={args.tier} mesh={args.mesh_mode} images={len(args.image)} bbox={args.bbox}")
-    job = create_job(key, args.prompt, args.image, args.bbox, args.tier, args.mesh_mode)
+    job = create_job(key, args.prompt, args.image, args.bbox, args.tier, args.mesh_mode, args.format)
     task_uuid, sub = job["uuid"], job["jobs"]["subscription_key"]
     print(f"  uuid={task_uuid}")
     wait(key, sub, args.timeout)
-    out = download(key, task_uuid, args.out)
+    out = download(key, task_uuid, args.out, args.format)
     print(f"✓ {out}  {out.stat().st_size / 1024:.0f} KB")
+    if args.format != "glb":
+        return
     print(f"  下一步（闸门，vendor 无关）：blender -b --factory-startup "
           f"--python tools/whitemodel_normalize.py -- --src {out} --spec <object.toml> --out <{out.stem}.blend>")
 

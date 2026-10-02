@@ -30,7 +30,10 @@ from dataclasses import dataclass, field
 import yaml
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-DEFAULT_SRC = os.path.join(REPO, "ai_videos", "_research", "wow", "map")
+# 地理片区 YAML 的真实位置。**曾经写成 `ai_videos/_research/wow/map`，那个目录从来没存在过**——
+# 不带 `--src` 跑就直接 FileNotFoundError，而报错里只有路径、没有「你大概是想跑哪个剧」。
+# 这是「手写死的路径片段漂了不会报错、只会在别处炸」的同一类问题（CLAUDE.md § 一个名字只有一处定义）。
+DEFAULT_SRC = os.path.join(REPO, "ai_videos", "shengji_zhilu", "0_research", "map")
 
 TYPES: tuple[str, ...] = (
     "world", "continent", "region", "zone", "city", "district",
@@ -113,6 +116,11 @@ class WorldTree:
         return [i for i in self.issues if i.level == "blocker"]
 
     def load(self, src: str) -> None:
+        if not os.path.isdir(src):
+            raise SystemExit(
+                "找不到地理片区目录：%s\n"
+                "片区 YAML 住在 `ai_videos/{剧}/0_research/map/`；"
+                "换剧用 `--src <那个剧的 map 目录>`。" % src)
         names = sorted(n for n in os.listdir(src) if n.endswith((".yaml", ".yml")) and not n.startswith("world_"))
         if not names:
             self.issues.append(Issue("blocker", "-", f"{src} 下没有任何片区 YAML"))
@@ -192,6 +200,13 @@ class WorldTree:
         for node in self.nodes.values():
             if node.parent is None:
                 self.roots.append(node.node_id)
+            elif node.parent == node.node_id:
+                # 自环。`_check_cycles` 抓不到它——那个循环一进去就 `cur = node.parent`，
+                # 于是第二轮才发现 `cur in seen`，而 seen 里恰好只有它自己，报的是
+                # 「parent 链成环」这种查不出病根的话。实测来源：别名解析器把六个飞行点
+                # 的 parent 解析成了它们自己，**树照样生成、照样渲染，只是那六个点从树上消失了**。
+                self.issues.append(Issue("blocker", node.node_id,
+                                         "parent 指向自己——多半是别名解析把它解到了自身"))
             elif node.parent not in self.nodes:
                 self.issues.append(Issue("blocker", node.node_id, f"parent 不存在：{node.parent}（片区间命名没对齐）"))
             else:
@@ -288,22 +303,54 @@ class TreeRenderer:
                 out.append("")
         return "\n".join(out) + "\n"
 
+    def _region_zones(self, region_id: str) -> list[str]:
+        """收集该分区下的 zone / city —— **要穿过嵌套的分区**。
+
+        分区可以套分区（东部王国 → 艾泽拉斯次大陆 → 暴风王国 → 艾尔文森林）。
+        只看直接子节点会让本剧最重要的四个区（艾尔文 / 西部荒野 / 赤脊山 / 暮色森林）
+        在总览里整个消失——初版就是这么把主战场漏掉的。
+        """
+        out: list[str] = []
+        for kid in self.tree.children.get(region_id, []):
+            node = self.tree.nodes[kid]
+            if node.node_type in ("zone", "city"):
+                out.append(kid)
+            elif node.node_type == "region":
+                out.extend(self._region_zones(kid))
+        return out
+
+    def _region_groups(self, node_id: str) -> list[tuple[str, list[str]]]:
+        """按「**直接**拥有 zone 的那个分区」分组 —— 不是按顶层分区。
+
+        分区可以套好几层（东部王国 → 艾泽拉斯次大陆 → 暴风王国 → 艾尔文森林）。
+        按顶层分组会把「暴风王国」这个名字整个压没，而它正是本剧的主战场。
+        """
+        groups: list[tuple[str, list[str]]] = []
+        own = [k for k in self.tree.children.get(node_id, [])
+               if self.tree.nodes[k].node_type in ("zone", "city")]
+        if own:
+            groups.append((node_id, own))
+        for kid in self.tree.children.get(node_id, []):
+            if self.tree.nodes[kid].node_type == "region":
+                groups.extend(self._region_groups(kid))
+        return groups
+
     def _continent_rows(self, cont_id: str) -> list[str]:
         rows: list[str] = []
-        for region_id in self.tree.children.get(cont_id, []):
-            region = self.tree.nodes[region_id]
-            kids = self.tree.children.get(region_id, [])
-            zone_ids = [k for k in kids if self.tree.nodes[k].node_type in ("zone", "city")]
-            if not zone_ids:
-                rows.append(f"| {region.label} | — | | | {self.tree.descendants(region_id)} | {region.look_zh} |")
-                continue
+        groups = self._region_groups(cont_id)
+        seen_empty = {g[0] for g in groups}
+        for region_id, zone_ids in groups:
+            label = "（直属大陆）" if region_id == cont_id else self.tree.nodes[region_id].label
             for i, zid in enumerate(zone_ids):
                 z = self.tree.nodes[zid]
-                head = region.label if i == 0 else ""
                 rows.append(
-                    f"| {head} | {z.label} | {z.level} | {FACTION_MARK.get(z.faction, '')} "
+                    f"| {label if i == 0 else ''} | {z.label} | {z.level} | {FACTION_MARK.get(z.faction, '')} "
                     f"| {self.tree.descendants(zid)} | {z.look_zh} |"
                 )
+        for kid in self.tree.children.get(cont_id, []):
+            node = self.tree.nodes[kid]
+            if node.node_type == "region" and kid not in seen_empty and not self._region_zones(kid):
+                rows.append(f"| {node.label} | — | | | {self.tree.descendants(kid)} | {node.look_zh} |")
         return rows
 
     def zone_page(self, zone: WorldNode) -> str:

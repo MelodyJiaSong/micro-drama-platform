@@ -1,0 +1,166 @@
+# 奥特兰克山谷（入口） · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg32"
+name_zh = "奥特兰克山谷（入口）"
+size_m = [240, 360]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "世界树无坐标，区图上无入口图标，无一手尺寸出处；按「谷口 25 m、通道深 200 m 收到 10 m、两壁 40–50 m」的雪谷形制推定，谷口外留 130 m 丘陵缓坡"
+# 世界树画面：山脉北端的雪谷谷口，两侧崖壁夹出一条通道，谷口立着双方的旗与传送法阵
+# 方位 judgment call：备注与 wiki 写入口在区南缘（南海镇正北 / 塔伦米尔东北），取南缘山墙、口朝南、通道向北；两阵营两处入口合写成一处（见 md 场景定位）
+# 通道尽头岩洞 ＝ 同区「丘陵洞穴」条目（洞深处有蓝白冷光），洞内光幕是本档唯一的非日光光源
+absent = [
+    "战场内部（征战平原、两端石堡与木寨、碉堡、墓地、矿洞一律不入本档）",
+    "任何人物、坐骑与守卫（默认空谷口）",
+    "旗面纹章与任何文字标识（两面长旗只有褪色布面）",
+    "火、火把、火盆与任何暖色人工光源",
+    "木寨门、石门楼、城墙等人造门禁（谷口只有两根旗杆与一个石堆）",
+    "树林（谷内无树，只有坡下几丛枯灌木）",
+    "4.0.3a 后并入希尔斯布莱德的新布局",
+]
+
+[[ridge]]
+name = "西壁山体（左壁·上午受光）"
+poly = [[0, 0], [115, 0], [115, 40], [112, 130], [107, 230], [70, 244], [0, 250]]
+height_m = 45
+src = "推定"
+
+[[ridge]]
+name = "东壁山体（右壁·上午背光）"
+poly = [[125, 0], [240, 0], [240, 250], [170, 244], [133, 230], [128, 130], [125, 40]]
+height_m = 48
+src = "推定"
+
+[[ridge]]
+name = "北端山体（岩洞所在）"
+poly = [[112, 0], [128, 0], [128, 24], [112, 24]]
+height_m = 60
+src = "推定"
+
+[[road]]
+name = "踩实的雪道（自坡下伸进通道，北端抵洞口）"
+path = [[120, 360], [120, 300], [120, 240], [119, 160], [120, 90], [120, 36]]
+width_m = 6
+src = "推定"
+
+[[block]]
+id = "b01"
+into_ridge = true
+kind = "cave_mouth"
+face = "south"
+count = 1
+name = "天然岩洞口"
+xy = [120, 30]
+size = [10, 8]
+h_m = 14
+src = "推定"
+note = "同区「丘陵洞穴」：山壁上的天然洞窟入口，洞深处有蓝白冷光（原典只有这句形制、无方位）；放在通道北端是推定"
+
+[[block]]
+id = "b02"
+may_overlap = true
+kind = "proxy"
+face = "south"
+count = 1
+name = "洞内冷光幕"
+xy = [120, 27]
+size = [8, 2]
+h_m = 10
+src = "推定"
+note = "旋转的冷白偏蓝雾状光幕；本档唯一的非日光光源，只照亮洞口一圈岩石"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p24"
+face = "south"
+name = "西旗杆（灰蓝米白长旗）"
+xy = [108, 236]
+size = [2, 2]
+h_m = 7
+src = "推定"
+note = "世界树画面「谷口立着双方的旗」；旗面无纹章；朝北机位的画左"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p24"
+face = "south"
+name = "东旗杆（暗红炭黑长旗）"
+xy = [132, 236]
+size = [2, 2]
+h_m = 7
+src = "推定"
+note = "朝北机位的画右"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p33"
+face = "south"
+name = "石堆路标"
+xy = [120, 240]
+size = [2, 2]
+h_m = 1.1
+src = "推定"
+
+[[block]]
+id = "b06"
+into_ridge = true
+kind = "palisade"
+face = "south"
+count = 1
+name = "半埋的木栅与拒马残骸"
+xy = [110, 205]
+size = [6, 3]
+h_m = 0.8
+src = "推定"
+
+[[block]]
+id = "b07"
+into_ridge = true
+kind = "asset"
+asset = "p32"
+face = "south"
+name = "崖顶滚落的巨石"
+xy = [127, 150]
+size = [5, 6]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "东崖脚背风凹坑（冷烧斑）"
+xy = [130, 212]
+size = [3, 3]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p31"
+face = "south"
+count = 4
+name = "坡下枯灌木丛"
+xy = [96, 300]
+size = [10, 6]
+h_m = 1.2
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg32-c1"
+eye = [120, 331]
+target = [120, 180]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

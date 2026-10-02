@@ -1,0 +1,204 @@
+# 武器大厅 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 量取：原版区图 WorldMap-Ironforge_c60.jpg（1002×668 px）上 x∈[630,782] px、y∈[520,631] px 一窗，
+#   本地 m ＝ (px − 630, py − 520) × (0.7215, 0.7222)（与区级 terrain.toml 同一换算）。
+# 厅内陈设（擂台 / 火盆 / 兵器架 / 石柱 / 战旗）区图上不画，按世界树画面推定。
+
+[meta]
+bg = "bg203"
+name_zh = "武器大厅"
+size_m = [110, 80]
+px_per_m = 10.0
+scale_src = "地图量取"
+scale_note = "区图蓝紫色大块量取：西北斜向门厅约 30×16 m，主厅约 65×48 m，东端半圆后殿约 27 m 径；换算同区级 terrain.toml（0.7215 / 0.7222 m/px）"
+# 世界树画面：军事区里的大练武厅，中央一圈沙地擂台，四周兵器架列满长柄武器，墙上是历代矮人战旗
+absent = ["天空 / 日光 / 窗（山腹内厅）", "训练假人 / 木桩靶（旧世城里没有）", "熔岩 / 锻炉（在城心，不在本厅）", "看台 / 观众席", "木构房屋 / 瓦顶", "玻璃 / 电灯 / 现代器物", "任何文字：旗面与墙上只有几何纹", "第二道出口：本厅只有西北门厅一个口"]
+
+[[ridge]]
+name = "北侧岩体"
+poly = [[40, 0], [110, 0], [110, 36], [83, 36], [83, 18], [40, 18]]
+height_m = 40
+src = "地图量取"
+note = "主厅北墙以外未凿开的实心岩"
+
+[[ridge]]
+name = "西侧岩体"
+poly = [[0, 31], [13, 31], [18, 28], [18, 66], [0, 66]]
+height_m = 40
+src = "地图量取"
+note = "门厅以南、主厅西墙以外的岩体"
+
+[[ridge]]
+name = "南侧岩体"
+poly = [[0, 66], [80, 66], [80, 63], [110, 63], [110, 80], [0, 80]]
+height_m = 40
+src = "地图量取"
+note = "主厅与后殿南墙以外的岩体"
+
+[[ridge]]
+name = "东侧岩体"
+poly = [[106, 36], [110, 36], [110, 63], [106, 63]]
+height_m = 40
+src = "地图量取"
+note = "后殿弧墙以外的岩体；本厅没有东出口"
+
+[[road]]
+name = "军事区长廊"
+path = [[0, 12], [10, 6], [24, 0]]
+width_m = 6
+src = "地图量取"
+note = "门厅西北长边外即军事区大厅地面；本图只画一条边"
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "西北斜向门厅"
+xy = [22, 16]
+size = [30, 16]
+h_m = 0
+rot = -30
+src = "地图量取"
+note = "区图上与军事区斜边平行的长方间；靠墙磨刀石台与挂钩皮护具；唯一出入口"
+
+[[block]]
+id = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "主厅"
+xy = [50.5, 42]
+size = [65, 48]
+h_m = 0
+src = "地图量取"
+note = "平缓拱形岩顶，高约四五人身高；六盏铁链吊灯"
+
+[[block]]
+id = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "东端半圆后殿"
+xy = [92.5, 49.5]
+size = [27, 27]
+h_m = 0
+src = "地图量取"
+note = "区图上主厅东端的一圈半圆；弧墙挂满长条战旗"
+
+[[block]]
+id = "b04"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "沉沙圆擂台"
+xy = [50, 42]
+size = [18, 18]
+h_m = 0
+src = "推定"
+note = "比厅面低约半膝，一级宽石阶下；黑岩石沿齐小腿高；铺浅赭黄粗沙"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p184"
+face = "south"
+name = "西火盆"
+xy = [37, 42]
+size = [2, 2]
+h_m = 1.1
+src = "推定"
+note = "三足黑铁大火盆，燃炭火；与东火盆一起是本厅主光"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p184"
+face = "south"
+name = "东火盆"
+xy = [63, 42]
+size = [2, 2]
+h_m = 1.1
+src = "推定"
+note = "同西火盆，隔擂台对称"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p182"
+face = "south"
+count = 5
+name = "北列方柱"
+xy = [50, 27]
+size = [48, 2.5]
+h_m = 9
+src = "推定"
+note = "五根方形叠涩石柱一列，柱身钉铁环"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p182"
+face = "north"
+count = 5
+name = "南列方柱"
+xy = [50, 57]
+size = [48, 2.5]
+h_m = 9
+src = "推定"
+note = "与北列对称，把擂台夹在中间"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p186"
+face = "south"
+count = 13
+name = "北墙长兵器架"
+xy = [52, 19.5]
+size = [52, 1.5]
+h_m = 2.6
+src = "推定"
+note = "铁箍深褐硬木架，竖插长戟 / 长柄战斧 / 钩镰 / 长锤 / 长矛，刃口朝上；架脚一排包铁圆盾"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p186"
+face = "north"
+count = 14
+name = "南墙长兵器架"
+xy = [50.5, 64.5]
+size = [58, 1.5]
+h_m = 2.6
+src = "推定"
+note = "同北墙；墙角堆断柄与一只裂盾"
+
+[[block]]
+id = "b11"
+kind = "low_wall"
+face = "west"
+count = 1
+name = "后殿战旗弧墙"
+xy = [104.5, 49.5]
+size = [1.5, 22]
+h_m = 8
+src = "推定"
+note = "黑铁横杆吊长条呢料战旗，只有斧 / 锤 / 山形 / 回纹几何图样，无字；旗下一排长柄武器"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg203-c1"
+eye = [9, 40]
+target = [55, 40]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

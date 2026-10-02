@@ -1,0 +1,471 @@
+# 芬里斯岛 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 换算：原点 ＝ 区图 px (620, 108)；x = (px − 620) × 3.83，y = (py − 108) × 3.83（与 bg247 同一比例）。
+# 岛轮廓（开口朝东的月牙）从区图量取；湖面用逐行 [[water]] 把岛以外的部分铺满，地面底色即岛。
+
+[meta]
+bg = "bg260"
+name_zh = "芬里斯岛"
+size_m = [500, 580]
+px_per_m = 2.8
+grid_m = 50
+scale_src = "地图量取"
+scale_note = "区图 WorldMap-Silverpine_c60 宽 1002 px ＝ 区宽 3840 m（bg247 同一换算，3.83 m/px）；岛轮廓量自区图 px x 630–742、y 118–251，东西约 430 m、南北约 510 m"
+# 世界树画面：洛丹米尔湖心的岛，陡坡上长着黑松，山顶一座庄园的轮廓
+absent = ["桥（全岛无桥，只能泅渡）", "码头 / 栈桥（渡口在西岸，属 bg255）", "渡船 / 帆船 / 任何船", "车辙道路", "农田与农舍", "村落", "雪", "阔叶林", "溪流 / 瀑布", "窗灯与任何火光（白天默认态；夜间窗灯属 bg250）", "对岸的山（永远隐在雾里）"]
+
+[[ridge]]
+name = "西半高地（岛脊最高处，庄园坐其北坡顶）"
+poly = [[55, 150], [120, 110], [210, 105], [270, 150], [280, 220], [240, 270], [200, 300], [110, 300], [60, 250]]
+height_m = 40
+src = "地图量取"
+
+[[block]]
+id = "b01"
+into_ridge = true
+kind = "proxy"
+face = "south"
+name = "岛顶石砌庄园（另卡）"
+bg = "bg250"
+xy = [146, 205]
+size = [90, 70]
+h_m = 15
+src = "地图量取"
+note = "区图城堡图标位置（px 642–674, 156–172）；两座尖顶塔、院墙塌一角；院落 / 门楼 / 窗灯细节属 bg250"
+
+[[block]]
+id = "b02"
+over_water = true
+kind = "rock_shelf"
+face = "east"
+name = "内岸风化岩阶陡坡"
+xy = [215, 350]
+size = [30, 100]
+h_m = 30
+src = "地图量取"
+note = "区图内岸画成一级一级的陡岸（px 670–685, 185–215）；内湾直上高地的唯一陡坡"
+
+[[block]]
+id = "b03"
+over_water = true
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "西岸卵石登岸小湾"
+xy = [84, 440]
+size = [26, 20]
+h_m = 0
+src = "地图量取"
+note = "区图西岸的小缺口（px 640–646, 221–225）；全岛唯一能从水里爬上岸的地方"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p269"
+face = "south"
+count = 40
+name = "北臂脊上黑松林"
+xy = [290, 85]
+size = [150, 40]
+h_m = 18
+src = "推定"
+note = "窄长北臂背脊上的一排黑松"
+
+[[block]]
+id = "b05"
+over_water = true
+kind = "asset"
+asset = "p281"
+face = "south"
+name = "北臂末端圆礁"
+xy = [418, 100]
+size = [18, 14]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b06"
+may_overlap = true
+into_ridge = true
+over_water = true
+kind = "asset"
+asset = "p269"
+face = "south"
+count = 40
+name = "高地西坡黑松林"
+xy = [80, 300]
+size = [50, 160]
+h_m = 18
+src = "推定"
+note = "陡坡密松，越往坡顶越稀"
+
+[[block]]
+id = "b07"
+over_water = true
+kind = "asset"
+asset = "p269"
+face = "south"
+count = 8
+name = "南臂枯草坡与疏松"
+xy = [320, 500]
+size = [140, 50]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b08"
+over_water = true
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "南臂尽头卵石滩"
+xy = [452, 512]
+size = [30, 26]
+h_m = 0
+src = "地图量取"
+note = "全岛唯一缓缓入水的岸"
+
+[[road]]
+name = "岛脊小径（庄园门前→南臂）"
+path = [[146, 240], [142, 300], [138, 360], [140, 417], [160, 470], [210, 515], [280, 520]]
+width_m = 3
+
+[[road]]
+name = "登岸小径（西岸小湾→岛脊）"
+path = [[92, 440], [115, 432], [139, 418]]
+width_m = 2
+
+[[water]]
+name = "湖面·1"
+path = [[0, 10], [500, 10]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·2"
+path = [[0, 30], [500, 30]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·3"
+path = [[0, 50], [124, 50]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·4"
+path = [[334, 50], [500, 50]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·5"
+path = [[0, 70], [82, 70]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·6"
+path = [[397, 70], [500, 70]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·7"
+path = [[0, 90], [58, 90]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·8"
+path = [[420, 90], [500, 90]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·9"
+path = [[0, 110], [45, 110]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·10"
+path = [[417, 110], [500, 110]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·11"
+path = [[0, 130], [35, 130]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·12"
+path = [[316, 130], [500, 130]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·13"
+path = [[0, 150], [33, 150]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·14"
+path = [[309, 150], [500, 150]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·15"
+path = [[0, 170], [31, 170]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·16"
+path = [[305, 170], [500, 170]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·17"
+path = [[0, 190], [29, 190]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·18"
+path = [[305, 190], [500, 190]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·19"
+path = [[0, 210], [29, 210]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·20"
+path = [[305, 210], [500, 210]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·21"
+path = [[0, 230], [31, 230]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·22"
+path = [[303, 230], [500, 230]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·23"
+path = [[0, 250], [32, 250]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·24"
+path = [[299, 250], [500, 250]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·25"
+path = [[0, 270], [34, 270]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·26"
+path = [[268, 270], [500, 270]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·27"
+path = [[0, 290], [36, 290]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·28"
+path = [[243, 290], [500, 290]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·29"
+path = [[0, 310], [39, 310]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·30"
+path = [[230, 310], [500, 310]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·31"
+path = [[0, 330], [43, 330]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·32"
+path = [[229, 330], [500, 330]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·33"
+path = [[0, 350], [47, 350]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·34"
+path = [[230, 350], [500, 350]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·35"
+path = [[0, 370], [51, 370]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·36"
+path = [[232, 370], [500, 370]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·37"
+path = [[0, 390], [55, 390]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·38"
+path = [[236, 390], [500, 390]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·39"
+path = [[0, 410], [60, 410]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·40"
+path = [[240, 410], [500, 410]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·41"
+path = [[0, 430], [65, 430]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·42"
+path = [[262, 430], [500, 430]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·43"
+path = [[0, 450], [74, 450]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·44"
+path = [[298, 450], [500, 450]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·45"
+path = [[0, 470], [84, 470]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·46"
+path = [[379, 470], [500, 470]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·47"
+path = [[0, 490], [92, 490]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·48"
+path = [[461, 490], [500, 490]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·49"
+path = [[0, 510], [99, 510]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·50"
+path = [[475, 510], [500, 510]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·51"
+path = [[0, 530], [124, 530]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·52"
+path = [[463, 530], [500, 530]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·53"
+path = [[0, 550], [500, 550]]
+width_m = 22
+depth_m = 12
+
+[[water]]
+name = "湖面·54"
+path = [[0, 570], [500, 570]]
+width_m = 22
+depth_m = 12
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg260-c1"
+eye = [460, 290]
+target = [250, 290]
+eye_h = 19.3
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

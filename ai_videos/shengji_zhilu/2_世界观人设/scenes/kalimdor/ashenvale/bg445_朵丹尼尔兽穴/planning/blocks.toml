@@ -1,0 +1,194 @@
+# 朵丹尼尔兽穴 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地中心 (120, 120) ＝ 区级平面图 b928（推定点位，未核）。场内布局全部按世界树画面推定。
+# 锚点机位：小空地上的倒落方石 (152, 142)，顺石阶轴线朝西北；林冠缺口在石阶正上方。
+
+[meta]
+bg = "bg445"
+name_zh = "朵丹尼尔兽穴"
+size_m = [240, 240]
+px_per_m = 6.0
+scale_src = "推定"
+scale_note = "位置取区级平面图 b928（按「绿爪村东南、弗伦河西岸」推定，未核）；土丘 70 × 55 m、石阶 16 m、落差 5 m 均无一手出处，按世界树「树根缠绕的地下墓穴入口、向下的石阶两侧刻着精灵浮雕」推定"
+# 世界树画面：树根缠绕的地下墓穴入口，向下的石阶两侧刻着精灵浮雕，洞内漂着淡绿雾气
+absent = [
+    "第二个入口、窗洞与地面上的石屋（丘外只有这一道门）",
+    "水面、溪流与湖岸（河在场地东南三百多米外）",
+    "开阔天空与天际线（四面密林，头顶只有一块林冠缺口）",
+    "火把、火盆、烛火、灯笼与任何人工光源",
+    "发光的雾、发光的毒液、鬼火与发光符文（淡绿雾不发光）",
+    "骨堆、尸骸与血迹",
+    "木栅、帐篷、草棚与营火（熊怪村与兽人营在西北、西南，另有其卡）",
+    "任何人物与动物",
+]
+
+[[ridge]]
+name = "长满深苔的低矮土丘（高约 9 m）"
+poly = [[150.0, 105.0], [145.3, 118.8], [132.5, 128.8], [115.0, 132.5], [97.5, 128.8], [84.7, 118.8], [80.0, 105.0], [84.7, 91.2], [97.5, 81.2], [115.0, 77.5], [132.5, 81.2], [145.3, 91.2]]
+height_m = 9
+src = "推定"
+
+[[road]]
+name = "空地向东南没进林子的踩痕小道（通往河岸方向）"
+path = [[165, 158], [190, 185], [215, 212], [240, 232]]
+width_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p373"
+face = "south"
+name = "丘顶偏北的粗壮老树（巨根顺坡垂过门框）"
+xy = [108, 96]
+size = [9, 9]
+h_m = 42
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "cave_mouth"
+face = "southeast"
+count = 1
+name = "丘脚尖拱石门（门面朝东南，门内漆黑）"
+xy = [136.6, 126.6]
+size = [2, 4.5]
+h_m = 3
+rot = 45
+src = "推定"
+note = "拱心石被树根挤裂；淡绿薄雾自门内贴着台阶淌出，不发光"
+
+[[block]]
+id = "b03"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "下沉石阶（朝西北下切 16 m、落差约 5 m）"
+xy = [142.3, 132.3]
+size = [16, 3]
+h_m = 0
+rot = 45
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "石阶西南侧浮雕挡土墙（含大树月牙浮雕板）"
+xy = [140.7, 133.9]
+size = [16, 0.8]
+h_m = 0
+rot = 45
+src = "推定"
+note = "下沉式：墙顶与空地齐平，自空地往下一人多高，越往门口越高"
+
+[[block]]
+id = "b05"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "石阶东北侧浮雕挡土墙"
+xy = [143.9, 130.7]
+size = [16, 0.8]
+h_m = 0
+rot = 45
+src = "推定"
+note = "墙头两处塌口"
+
+[[block]]
+id = "b06"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "丘前小空地（褐苔与枯梢蕨丛）"
+xy = [160, 150]
+size = [28, 24]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p378"
+face = "south"
+name = "从墙顶倒落的雕花方石（锚点机位踩的那块）"
+xy = [152, 142]
+size = [3, 2]
+h_m = 0.8
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p378"
+face = "south"
+count = 3
+name = "空地边缘另几块倒落方石"
+xy = [168, 140]
+size = [5, 3]
+h_m = 0.6
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 40
+name = "北面密林（银灰巨干）"
+xy = [120, 25]
+size = [220, 40]
+h_m = 38
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 37
+name = "西面密林"
+xy = [25, 130]
+size = [40, 140]
+h_m = 38
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 36
+name = "南面密林"
+xy = [100, 220]
+size = [150, 36]
+h_m = 38
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 32
+name = "东面密林"
+xy = [218, 110]
+size = [40, 120]
+h_m = 38
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg445-c1"
+eye = [180, 216]
+target = [120, 120]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -1,0 +1,236 @@
+# 军事区 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 量取：原版区图 WorldMap-Ironforge_c60.jpg（1002×668 px）上 x∈[520,800] px、y∈[395,660] px 一窗，
+#   本地 m ＝ (px − 520, py − 395) × (0.7215, 0.7222)（与区级 terrain.toml 同一换算）。
+# 石室外形是区图上的蓝紫色小块（地图量取）；哪一间是旅店 / 酒吧台 / 铺面区图不标，按世界树备注推定（虚线）。
+# 炭火盆、火塘是锚点 prompt 的陈设，区图不画，推定。锚点机位：西南石阶顶（约 14, 84）朝东偏北。
+
+[meta]
+bg = "bg211"
+name_zh = "军事区"
+size_m = [202, 191]
+px_per_m = 7.0
+scale_src = "地图量取"
+scale_note = "区图东南蓝紫色区块一窗量取：斜长大厅约 110×60 m（长轴西南—东北），西南石阶、北侧甬道、东北圆坡道三口；换算同区级 terrain.toml（0.7215 / 0.7222 m/px）"
+# 世界树画面：墙上挂满盾牌与战斧的环形厅，地面铺深色石板，角落是训练假人与兵器架，灯光偏暗偏红（训练假人是 4.x 后加的，不入画）
+absent = ["天空 / 日光 / 窗（山腹内厅）", "训练假人 / 木桩靶 / 稻草人靶（旧世城里没有）", "熔岩坑（在城心；本区只在北侧甬道深处见一线光）", "沙地擂台 / 战旗墙（在武器大厅 bg203 里，不在本厅）", "木构房屋 / 瓦顶", "玻璃 / 电灯 / 现代器物", "任何文字 / 可辨纹章", "狮鹫 / 坐骑 / 飞行坐骑", "任何人物与动物"]
+
+[[road]]
+name = "平民区外环廊（来路）"
+path = [[18, 128], [6, 150], [0, 160]]
+width_m = 14
+src = "地图量取"
+note = "外环廊东端在西南石阶脚下收口"
+
+[[road]]
+name = "通城心甬道"
+path = [[62, 42], [58, 4], [57, 0]]
+width_m = 12
+src = "地图量取"
+note = "大锻炉内环廊东南角向南接进本厅西北墙中段（区级 terrain.toml「军事区甬道」）"
+
+[[road]]
+name = "通侏儒区坡道"
+path = [[112, 25], [122, 10], [126, 0]]
+width_m = 10
+src = "地图量取"
+note = "区图上东北角那圈圆形阶口向北接侏儒区南甬道"
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "斜长大厅地面"
+xy = [85, 70]
+size = [110, 60]
+h_m = 0
+rot = -40
+src = "地图量取"
+note = "深色石板斜嵌铁条分菱形格；低平岩顶约三四人高，每十来步一道方形石梁"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p180"
+face = "west"
+name = "西南宽石阶"
+xy = [13, 105]
+size = [12, 40]
+h_m = 1.2
+rot = -15
+src = "地图量取"
+note = "下接外环廊；顶端是锚点机位；比厅面高六级（高差推定）"
+
+[[block]]
+id = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "石砌旅店"
+xy = [84, 33]
+size = [19, 25]
+h_m = 0
+src = "推定"
+note = "石室外形地图量取；功能归属推定。门口熏黑酒旗，屋正中方形火塘"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p185"
+face = "south"
+name = "旅店方形火塘"
+xy = [84, 35]
+size = [3, 3]
+h_m = 0.4
+src = "推定"
+note = "默认态燃着柴火，是本区唯一的暖黄大光源"
+
+[[block]]
+id = "b05"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "北侧石室"
+xy = [43, 28]
+size = [24, 27]
+h_m = 0
+src = "地图量取"
+note = "训练间；锚点机位看不到"
+
+[[block]]
+id = "b06"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "东北圆形坡道口"
+xy = [112, 25]
+size = [17, 17]
+h_m = 1.8
+src = "地图量取"
+note = "石坡绕半圈向北拐出；坡口上方露黄铜管道与阀轮"
+
+[[block]]
+id = "b07"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "东北拐角小酒吧台"
+xy = [144, 36]
+size = [19, 24]
+h_m = 0
+src = "推定"
+note = "石室外形地图量取；功能归属推定。厚石台面、箍铁酒桶、铜罩吊灯"
+
+[[block]]
+id = "b08"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "东墙铺面一排"
+xy = [148, 69]
+size = [21, 38]
+h_m = 0
+src = "推定"
+note = "石室外形地图量取；功能归属推定。磨刀石、箭杆、长管火枪"
+
+[[block]]
+id = "b09"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "武器大厅"
+bg = "bg203"
+xy = [131.7, 137.2]
+size = [101, 89]
+h_m = 0
+src = "地图量取"
+note = "东南墙那道大门进去的练武厅（西北斜向门厅约在 100, 90）"
+
+[[block]]
+id = "b10"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "西侧石室"
+xy = [29, 78]
+size = [22, 15]
+h_m = 0
+src = "地图量取"
+note = "训练间；在锚点机位左后方"
+
+[[block]]
+id = "b11"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "南侧小石室"
+xy = [72, 137]
+size = [14, 12]
+h_m = 0
+src = "地图量取"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p184"
+face = "south"
+name = "炭火盆一"
+xy = [40, 78]
+size = [1.2, 1.2]
+h_m = 0.9
+src = "推定"
+note = "兽爪三足黑铁盆，暗红炭火；四只沿长轴排开"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p184"
+face = "south"
+name = "炭火盆二"
+xy = [64, 66]
+size = [1.2, 1.2]
+h_m = 0.9
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p184"
+face = "south"
+name = "炭火盆三"
+xy = [88, 54]
+size = [1.2, 1.2]
+h_m = 0.9
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p184"
+face = "south"
+name = "炭火盆四"
+xy = [112, 42]
+size = [1.2, 1.2]
+h_m = 0.9
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg211-c1"
+eye = [101, 176]
+target = [101, 96]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

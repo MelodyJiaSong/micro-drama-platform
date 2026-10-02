@@ -1,0 +1,152 @@
+# 玉石矿洞 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg179"
+name_zh = "玉石矿洞"
+size_m = [240, 240]
+px_per_m = 5.0
+scale_src = "推定"
+scale_note = "只取矿口外景一块 240 m 见方：北半是山脊南坡，南半是口外缓坡到坡下大道；口朝南、位于山脊南麓取自区图裁切（矿口图标在红十字正南），场地内尺寸全为推定"
+# 世界树画面：东北山坡上一个窄矿洞口，坑道越深越湿、岩壁渗水发亮，最深处结满灰白蛛网
+absent = [
+    "任何灯火 / 亮着的提灯 / 火把（洞内洞外都没有人工光源）",
+    "封口的闸门 / 铁栅 / 钉死的木板（旧世矿口敞开可进）",
+    "帐篷 / 营火 / 矿工营地",
+    "湖面与湖岸（湖在东坡外与坡下远处，不入本场地）",
+    "北郡山谷的院落与田垄（被山脊挡住，本场地看不到）",
+    "训练假人 / 木桩靶",
+    "飞行点",
+]
+
+[[ridge]]
+name = "北郡谷东侧山脊南坡（整面长满阔叶橡林，矿口开在坡脚）"
+poly = [[0, 0], [240, 0], [240, 96], [190, 100], [150, 104], [126, 106], [114, 106], [90, 104], [50, 99], [0, 92]]
+height_m = 40
+src = "地图量取"
+
+[[water]]
+name = "洞口渗水沟（自门框下淌出、顺坡而下）"
+path = [[120, 107], [118, 116], [122, 126], [119, 138], [124, 156], [121, 175]]
+width_m = 0.4
+depth_m = 0.05
+src = "推定"
+
+[[road]]
+name = "口东小土径（贴山脚绕下坡）"
+path = [[124, 110], [138, 116], [150, 132], [156, 165], [160, 200], [164, 226]]
+width_m = 1.5
+src = "推定"
+
+[[road]]
+name = "坡下东西大道（场地南缘外沿，只示方向）"
+path = [[0, 232], [120, 228], [240, 222]]
+width_m = 8
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "mine_portal"
+face = "south"
+count = 1
+over_water = true
+name = "矿口木框（两柱一梁，口朝南）"
+xy = [120, 107]
+size = [4, 1.5]
+h_m = 2.5
+src = "地图量取"
+note = "区图裁切上矿口图标在山脊红十字正南坡脚；口宽约 3 m、高约 2.5 m"
+
+[[block]]
+id = "b02"
+kind = "tunnel"
+face = "south"
+count = 1
+into_ridge = true
+name = "入口坑道（地下，向北弯折深入）"
+xy = [118, 80]
+size = [4, 44]
+h_m = 3.0
+src = "推定"
+note = "微型地下城图：入口坑道自南向北，前段西侧有小支洞，更深处绕成一环、环心原生巨岩柱——都在本图北缘之外的山体里，只示走向"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p155"
+face = "south"
+name = "西侧碎石扇"
+xy = [109, 116]
+size = [13, 10]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p155"
+face = "south"
+name = "东侧碎石扇"
+xy = [132, 116]
+size = [12, 9]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "出洞断轨"
+xy = [120.5, 111]
+size = [1, 5]
+h_m = 0.2
+src = "推定"
+note = "出洞四五米即断"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p156"
+face = "east"
+name = "侧翻空木斗矿车"
+xy = [123, 115]
+size = [2.2, 1.3]
+h_m = 1
+rot = 30
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "guard_post"
+face = "south"
+count = 1
+name = "无顶旧工棚架（四柱一横杆）"
+xy = [98, 121]
+size = [6, 4]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "口外踩秃泥地"
+xy = [120, 124]
+size = [16, 14]
+h_m = 0
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg179-c1"
+eye = [120, 221]
+target = [120, 120]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

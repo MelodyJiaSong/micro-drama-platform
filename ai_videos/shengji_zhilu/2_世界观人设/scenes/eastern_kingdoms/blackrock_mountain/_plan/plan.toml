@@ -1,0 +1,202 @@
+# 黑石山区级资产规划（区级资产规划师写；tools/apply_asset_plan.py 只读）
+# 新立 6 件；bg76（区级主体 zone_whole）不在判定范围。blend 里材质会剥掉，所以按「形状」复用：
+#   粗凿方石块兼 石坯排 / 锚墩 / 切石大案 / 横卧半凿立柱 / 方砖垛（单件逐轴撑满块占地，长方块拉成板、墩、横柱都成立）；
+#   碎石堆兼 凹室口碎石堆 / 边角碎料堆 / 埋轨碎石带；侧翻铁皮矿车兼 断腿手推车（全区暂无排镜，两者包围盒几乎相同）。
+# judgment calls：
+#   岩门 / 东口 / 矿道口 / 南北门洞一律 cave_mouth（嵌在岩体里的洞口；mine_portal 带木框木柱，与 bg77 absent「木梁支架」冲突）；
+#   东北高大石门走 gate_wall（门洞 + 过梁 + 门塔，最接近要塞大门）；采石凹室三级退台走 rock_shelf（默认 3 层正合三级退台）；
+#   h_m=0 的岩台 / 子区域标记块走 plaza / yard；拱起的一截铁轨贴地走 plaza；敞口石坎、西墙下齐腰石台走 low_wall。
+
+[meta]
+zone = "blackrock_mountain"
+
+[[use]]
+bg = "bg77"
+block = "b01"
+kind = "cave_mouth"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg77"
+block = "b02"
+kind = "cave_mouth"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg77"
+block = "b03"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg77"
+block = "b04"
+asset = "p57"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg77"
+block = "b05"
+asset = "p58"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg77"
+block = "b06"
+asset = "p58"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg77"
+block = "b07"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg77"
+block = "b08"
+asset = "p57"
+face = "south"
+count = 3
+
+# ── bg78 石匠区 ────────────────────────────────────────────────────────
+[[use]]
+bg = "bg78"
+block = "b01"
+asset = "p54"
+face = "north"
+count = 24
+
+[[use]]
+bg = "bg78"
+block = "b02"
+asset = "p55"
+face = "west"
+count = 8
+
+[[use]]
+bg = "bg78"
+block = "b03"
+asset = "p54"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg78"
+block = "b04"
+asset = "p56"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg78"
+block = "b05"
+asset = "p54"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg78"
+block = "b06"
+asset = "p54"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg78"
+block = "b07"
+asset = "p57"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg78"
+block = "b08"
+kind = "low_wall"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg78"
+block = "b09"
+kind = "low_wall"
+face = "east"
+count = 1
+
+# ── bg79 熔岩之桥 ──────────────────────────────────────────────────────
+[[use]]
+bg = "bg79"
+block = "b01"
+asset = "p53"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg79"
+block = "b02"
+asset = "p54"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg79"
+block = "b03"
+asset = "p54"
+face = "southwest"
+count = 1
+
+[[use]]
+bg = "bg79"
+block = "b04"
+asset = "p54"
+face = "northwest"
+count = 1
+
+[[use]]
+bg = "bg79"
+block = "b05"
+kind = "plaza"
+face = "northeast"
+count = 1
+
+[[use]]
+bg = "bg79"
+block = "b06"
+kind = "cave_mouth"
+face = "northeast"
+count = 1
+
+[[use]]
+bg = "bg79"
+block = "b07"
+kind = "gate_wall"
+face = "southwest"
+count = 1
+
+[[use]]
+bg = "bg79"
+block = "b08"
+kind = "cave_mouth"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg79"
+block = "b09"
+kind = "cave_mouth"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg79"
+block = "b10"
+kind = "yard"
+face = "northwest"
+count = 1

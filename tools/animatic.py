@@ -4,8 +4,8 @@
     python tools/animatic.py <剧> <ep>            # → {ep}_animatic.mp4 + {ep}_animatic.segments.json + animatic/animatic.json
     python tools/animatic.py <剧> <ep> --check    # animatic 与当前分镜结构、与 viewing_animatic/review.md 还对不对得上
 
-每镜每个分镜段一张图：已出片的镜直接用成片（animatic 随出片逐步变成成片）；没出片的按
-`keyframe/k{段号}.png` → previz 在段中点的一帧 → 参考行里第一张场景图 → 纯色底 取图，印上镜号、段、景别与动作摘要；
+每镜按分镜段取图：已出片的镜直接用成片（animatic 随出片逐步变成成片）；没出片的按
+`keyframe/k{段号}.png` → previz（每 PV_STEP 秒取一帧翻页，段内的动作看得见）→ 参考行里第一张场景图 → 纯色底 取图，印上镜号、段、景别与动作摘要；
 台词按时间窗烧字幕（tools/post/subs.py 同一套样式）；已出片的镜带它自己的声音，其余静音。
 结构指纹 ＝ 每镜时长 + 分镜段 + 台词（人 / 句 / 时间窗）：prompt 措辞改了不作废，镜长、分段、台词改了才要重拼重审。
 """
@@ -14,6 +14,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import re
 import sys
 import time
@@ -37,19 +38,21 @@ REVIEW_DIR = "viewing_animatic"
 REVIEW = "review.md"
 SHA_TAG = "视频 sha256:"
 FPS = 24
+PV_STEP = 1.5      # previz 段每隔几秒取一帧：一段一张时 22 s 的段只剩一张定格，审稿看不见段里的动作（061 收尾）
 FENCE = "`" * 3
 IMAGE = (".png", ".jpg", ".jpeg", ".webp")
 
 
 @dataclass(frozen=True)
 class Frame:
-    a: int
-    b: int
+    a: float
+    b: float
     head: str
     summary: str
     src: Path | None
     how: str
     t: float | None = None      # 从视频里取帧时的秒数
+    seg: tuple[int, float, float] = (0, 0.0, 0.0)   # 所属分镜段（段号, 起, 止）：previz 一段翻好几页，卡头印的是段
 
 
 def design_block(md: Path) -> str:
@@ -123,17 +126,20 @@ def frames(d: Path) -> list[Frame]:
     for i, (s, acts) in enumerate(prompt_compact.timeline(design_block(md), secs), 1):
         summary = "；".join(acts)[:160]
         key = d / "keyframe" / f"k{i}.png"
-        mid = (s.a + s.b) / 2
+        seg = (i, s.a, s.b)
         if key.is_file():
-            out.append(Frame(s.a, s.b, s.head, summary, key, "首帧图"))
+            out.append(Frame(s.a, s.b, s.head, summary, key, "首帧图", seg=seg))
         elif has_pv:
-            out.append(Frame(s.a, s.b, s.head, summary, previz, "previz", mid))
+            n = max(1, math.ceil((s.b - s.a) / PV_STEP - 1e-6))
+            for k in range(n):
+                a0, b0 = s.a + (s.b - s.a) * k / n, s.a + (s.b - s.a) * (k + 1) / n
+                out.append(Frame(a0, b0, s.head, summary, previz, "previz", (a0 + b0) / 2, seg))
         elif scene:
-            out.append(Frame(s.a, s.b, s.head, summary, scene, "场景图"))
+            out.append(Frame(s.a, s.b, s.head, summary, scene, "场景图", seg=seg))
         elif plan.is_file():
-            out.append(Frame(s.a, s.b, s.head, summary, plan, "平面图"))
+            out.append(Frame(s.a, s.b, s.head, summary, plan, "平面图", seg=seg))
         else:
-            out.append(Frame(s.a, s.b, s.head, summary, None, "无图"))
+            out.append(Frame(s.a, s.b, s.head, summary, None, "无图", seg=seg))
     return out
 
 
@@ -162,7 +168,8 @@ def _card(fr: Frame, shot: str, i: int, w: int, h: int, work: Path) -> Path:
     rows = (rows + [cur])[:3]
     band = 16 + f1.size + len(rows) * (f2.size + 4)
     dr.rectangle([0, 0, w, band], fill=(0, 0, 0))
-    dr.text((16, 8), f"{shot} · 镜头{i} · {fr.a}–{fr.b}秒 · {fr.head}（{fr.how}）", font=f1, fill=(255, 220, 120))
+    k, a, b = fr.seg
+    dr.text((16, 8), f"{shot} · 镜头{k} · {a:g}–{b:g}秒 · {fr.head}（{fr.how}）", font=f1, fill=(255, 220, 120))
     for k, r in enumerate(rows):
         dr.text((16, 12 + f1.size + k * (f2.size + 4)), r, font=f2, fill=(235, 235, 235))
     out = work / f"{shot}_k{i}.png"
@@ -171,7 +178,7 @@ def _card(fr: Frame, shot: str, i: int, w: int, h: int, work: Path) -> Path:
 
 
 def shot_clip(d: Path, w: int, h: int, work: Path) -> Path:
-    """一镜一条（逐镜落盘、输入没变就跳过）：已出片用成片；否则每段一张卡、按段长摆，配静音音轨。"""
+    """一镜一条（逐镜落盘、输入没变就跳过）：已出片用成片；否则按 frames() 的卡（previz 段每 PV_STEP 秒一张）按时长摆，配静音音轨。"""
     out = work / f"{d.name}.mp4"
     md, mp4 = pc.shot_md(d), pc.shot_mp4(d)
     secs = duration(md)
@@ -192,7 +199,7 @@ def shot_clip(d: Path, w: int, h: int, work: Path) -> Path:
         return out
     cards = [_card(f, d.name, i, w, h, work) for i, f in enumerate(frs, 1)]
     lst = work / f"{d.name}.txt"
-    lst.write_text("".join(f"file '{c.name}'\nduration {f.b - f.a}\n" for c, f in zip(cards, frs))
+    lst.write_text("".join(f"file '{c.name}'\nduration {f.b - f.a:.3f}\n" for c, f in zip(cards, frs))
                    + f"file '{cards[-1].name}'\n", encoding="utf-8")
     pc.run([pc.FFMPEG, "-y", "-f", "concat", "-safe", "0", "-i", lst.name, "-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo",
             "-vf", scale, "-t", f"{secs:.3f}", "-map", "0:v", "-map", "1:a", "-c:v", "libx264", "-crf", "23",

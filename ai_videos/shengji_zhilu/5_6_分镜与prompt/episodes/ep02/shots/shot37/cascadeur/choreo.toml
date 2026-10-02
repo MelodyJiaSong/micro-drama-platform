@@ -1,0 +1,54 @@
+# shot37 人体动作表（Cascadeur 层）。位置与朝向一律从 ../planning/overhead.toml 读，这里只写「身体摆成什么样」。
+# 改动作 ＝ 改本文件重跑 `python tools/cascadeur/choreo.py <shot 目录> --build`；部件都在共享库 tools/cascadeur/poses.toml。
+# 时刻与 shot37.md `动作:` 时间轴、overhead 的 [[hit]] / [[guard]] 逐拍对齐（rule 4h ②）。生成器：spawns/shots-d2/scratch/build_choreo2.py。强盗这一镜不入画；亚伦的保护祝福手势写在这里（Cascadeur 体）。
+
+[meta]
+origin = [206.2, 133.8]
+fps = 30
+
+# 杜克：堵在窄口；壳面挨的两下只晃一晃；7.5s 握剑的手本能一抬、停在壳内壁上；9s 剑放低、盾平举；10.2s 火球出手，举盾硬接，10.5s 砸在盾上、脚跟往后一犁
+[actor."杜克"]
+keys = [
+  [0, "stance_l+shield_guard"],
+  [5.5, "stance_l+shield_guard"],
+  [5.6, "stance_l+shield_brace"],
+  [6, "stance_l+shield_guard"],
+  [7.4, "stance_l+shield_guard"],
+  [7.6, "stance_l+shield_guard+point_r"],
+  [8.6, "stance_l+shield_guard+point_r"],
+  [9, "stance_l+shield_guard"],
+  [10.2, "stance_l+shield_guard"],
+  [10.5, "brace_sink+shield_brace"],
+  [11, "stance_l+shield_guard"],
+  [13, "stance_l+shield_guard"],
+]
+
+# 亚伦：在杜克身后一步，3.5s 两脚站稳、左手按在杜克背上（技能卡 k207）；10.2s 火球冲来，一缩（蓝人偶撞保护祝福的色带，用 Cascadeur 体，057 E3）
+[actor."亚伦"]
+keys = [
+  [0, "stand"],
+  [3.2, "stance_l"],
+  [3.5, "stance_l+point_l"],
+  [10.1, "stance_l+point_l"],
+  [10.3, "stance_l+point_l+breathe"],
+  [11, "stance_l+point_l"],
+  [13, "stance_l+point_l"],
+]
+
+# 埃尔兰：3.5s 亚伦一亮就扑窄口；5.6s、7.5s 斧枪砍在杜克的光壳上滑开；9.1s 听见口令往西闪开
+[actor."埃尔兰"]
+gait = [[3.5, 4.4, "run", "twohand_low"]]
+keys = [
+  [0, "stand+twohand_low"],
+  [3.5, "stand+twohand_low"],
+  [4.5, "stance_l+twohand_windup"],
+  [5.6, "lunge+twohand_strike"],
+  [6.1, "stance_l+twohand_low"],
+  [6.8, "stance_l+twohand_windup"],
+  [7.5, "lunge+twohand_strike"],
+  [8, "stance_l+twohand_low"],
+  [9.1, "stance_l+twohand_low"],
+  [9.4, "step_back+twohand_low"],
+  [10, "stance_l+twohand_low"],
+  [13, "stance_l+twohand_low"],
+]

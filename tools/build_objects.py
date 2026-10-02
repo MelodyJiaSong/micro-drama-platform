@@ -51,7 +51,10 @@ sys.stdout.reconfigure(encoding="utf-8")
 REPO = Path(__file__).resolve().parent.parent
 SK1 = REPO / "ai_videos" / "shikong_lvxing" / "sk1" / "2_世界观人设"
 PROPS = SK1 / "props"
-BLENDER = Path(r"C:\Program Files\Blender Foundation\Blender 5.1\blender.exe")
+import sys as _sys, os as _os
+_sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+from blender_exe import BLENDER as _BLENDER_EXE  # noqa: E402  Blender 路径唯一出处
+BLENDER = Path(_BLENDER_EXE)
 
 
 def inventory() -> list[dict]:

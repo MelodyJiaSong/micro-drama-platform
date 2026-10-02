@@ -12,6 +12,27 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "python \"$CLAUDE_PROJECT_DIR/tools/seedance_kit.py\" sync --all --quiet",
+            "timeout": 60
+          },
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "python \"$CLAUDE_PROJECT_DIR/tools/check_canon.py\" --quiet",
+            "timeout": 10
+          }
+        ]
+      }
     ]
+  },
+  "env": {
+    "PYTHONIOENCODING": "utf-8"
   }
 }

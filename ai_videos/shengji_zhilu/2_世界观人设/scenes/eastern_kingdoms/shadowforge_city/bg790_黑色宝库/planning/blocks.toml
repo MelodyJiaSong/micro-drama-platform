@@ -1,0 +1,215 @@
+# 黑色宝库 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 石库内净 30 × 24 m 摆在 (15–45, 10–34)；x=10–15 是西墙厚度，门在西墙正中；x=0–10 是门外南北向石廊。
+
+[meta]
+bg = "bg790"
+name_zh = "黑色宝库"
+size_m = [56, 44]
+px_per_m = 24.0
+scale_src = "推定"
+scale_note = "1.12 副本无地图，黑色宝库只画在现行区图下层且无比例尺；库内 30 × 24 m、顶高 9 m 按「十二口齐腰宝箱贴墙、箱间一步」加四角魔像的占地推算，与区级图 b901（30 × 24 m）同尺"
+# 世界树画面：厚重铁门后的密闭石库，四壁排着十二口铁箍宝箱，四尊石魔像立在角落，只有壁灯的暗红光。
+absent = [
+    "熔岩、熔炉与火盆（库内唯一光源是八盏铁壁灯）",
+    "日光、天光与任何窗洞",
+    "第二道门与穿堂过道（死胡同石库）",
+    "发光的符文、魔法光与魔像眼光（默认态魔像静止）",
+    "打开的宝箱与散落的财宝（默认态十二箱全合）",
+    "任何人物、看守与动物",
+    "木构件、挂毯与旗帜纹章",
+]
+
+[[ridge]]
+name = "北侧实心黑岩"
+poly = [[10, 0], [56, 0], [56, 10], [10, 10]]
+height_m = 12
+src = "推定"
+
+[[ridge]]
+name = "南侧实心黑岩"
+poly = [[10, 34], [56, 34], [56, 44], [10, 44]]
+height_m = 12
+src = "推定"
+
+[[ridge]]
+name = "东侧实心黑岩（暗柜嵌在它里面）"
+poly = [[45, 10], [56, 10], [56, 34], [45, 34]]
+height_m = 12
+src = "推定"
+
+[[ridge]]
+name = "西墙·北段（门洞以北）"
+poly = [[10, 10], [15, 10], [15, 19], [10, 19]]
+height_m = 12
+src = "推定"
+
+[[ridge]]
+name = "西墙·南段（门洞以南）"
+poly = [[10, 25], [15, 25], [15, 34], [10, 34]]
+height_m = 12
+src = "推定"
+
+[[road]]
+name = "门外南北向石廊（南回住宅区、北通工艺之厅石梯）"
+path = [[5, 44], [5, 0]]
+width_m = 6
+src = "推定"
+
+[[road]]
+name = "门槛到库心的两道拖痕"
+path = [[15, 22], [30, 22]]
+width_m = 2
+src = "推定"
+
+[[block]]
+id = "b01"
+into_ridge = true
+kind = "asset"
+asset = "p255"
+face = "west"
+name = "对开厚铁门（半开，门槛高出库内一级）"
+xy = [12.5, 22]
+size = [5, 6]
+h_m = 3.2
+src = "推定"
+note = "铁门本身出自世界树「厚重铁门后的密闭石库」；开在西墙是推定"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p252"
+face = "south"
+count = 4
+name = "北墙宝箱一排（四口）"
+xy = [30, 11]
+size = [20, 1.4]
+h_m = 1.0
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p252"
+face = "north"
+count = 4
+name = "南墙宝箱一排（四口）"
+xy = [30, 33]
+size = [20, 1.4]
+h_m = 1.0
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p252"
+face = "west"
+count = 2
+name = "东墙宝箱（两口，夹着暗柜门）"
+xy = [44, 22]
+size = [1.4, 14]
+h_m = 1.0
+src = "推定"
+note = "十二口的总数是原典；北 4 / 南 4 / 东 2 / 门侧 2 的分配是推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p252"
+face = "east"
+name = "门北侧宝箱（一口）"
+xy = [16, 16.5]
+size = [1.4, 2]
+h_m = 1.0
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p252"
+face = "east"
+name = "门南侧宝箱（一口）"
+xy = [16, 27.5]
+size = [1.4, 2]
+h_m = 1.0
+src = "推定"
+
+[[block]]
+id = "b07"
+into_ridge = true
+kind = "asset"
+asset = "p254"
+face = "west"
+name = "东墙暗柜门（四道横闩、转盘锁）"
+xy = [45.5, 22]
+size = [1, 2.5]
+h_m = 2.2
+src = "推定"
+note = "山之心出自暗柜（原典）；门嵌东墙正中是推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p253"
+face = "southeast"
+name = "西北角石魔像"
+xy = [17, 12]
+size = [2.5, 2.5]
+h_m = 4.0
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p253"
+face = "southwest"
+name = "东北角石魔像"
+xy = [43, 12]
+size = [2.5, 2.5]
+h_m = 4.0
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p253"
+face = "northeast"
+name = "西南角石魔像"
+xy = [17, 32]
+size = [2.5, 2.5]
+h_m = 4.0
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p253"
+face = "northwest"
+name = "东南角石魔像"
+xy = [43, 32]
+size = [2.5, 2.5]
+h_m = 4.0
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "库心深色方石（空地）"
+xy = [30, 22]
+size = [4, 4]
+h_m = 0
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg790-c1"
+eye = [4, 22]
+target = [28, 22]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

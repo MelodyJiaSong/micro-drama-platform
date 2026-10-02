@@ -90,4 +90,6 @@ def test_mesh_in_whitemodel_subfolder_is_reachable_from_the_tree(tmp_path: Path)
     )
 
     names = {c["name"]: c["type"] for c in children}
-    assert names == {"raw.glb": "model"}  # .blend has no browser preview, stays hidden
+    # `.blend` has no browser preview but is listed as a plain download leaf
+    # (follow-up 173: `_blender/{bg}.blend` must be findable in the tree).
+    assert names == {"raw.glb": "model", "p19.blend": "file"}

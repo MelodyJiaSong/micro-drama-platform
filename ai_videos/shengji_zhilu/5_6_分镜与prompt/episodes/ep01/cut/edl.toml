@@ -1,0 +1,104 @@
+# 剪辑决定（唯一出处）：锚点只从 edl.py candidates 里挑，改完跑 edl.py verify；status 只在用户批准后改
+# v2 草稿（ai_videos__cut，2026-09-30，用户睡前授权「不问、自己拿主意」）：只在 v1 的三镜上剪。依据 viewing_animatic/review.md
+# （r2，视频 sha 119fd875，viewing_packet --check --animatic 有效）与 post/cut/candidates.json（用 cut: 锚点的 e03 / e05 抄了 basis）。
+# 代理片：post/proxy/ep01_v002_proxy.mp4（71.08 s），观片包 viewing_proxy/ep01_v002_proxy/；v1 的在 viewing_proxy/ep01_v001_proxy/。
+# *(judgment call — base_version = 0 而不是 1：V10 拿 cut/approved.json 里最新批准的版本比；v1 从没批准过，approved.json 不存在)*
+# *(judgment call — 不加 shot09 / shot10：补丁菜单没有「加镜」，任务把 v2 限在这三镜。V3 / V6 因 shot09 已出片却不在剪辑里而不过，
+#   v1 起就有，代理片只报告；要收进来得另起整镜草稿 `edl.py init --force --shots 3,5,6,9,10`，由用户定)*
+# *(judgment call — 2026-10-01 basis 重抄 b09c4e601817 → 468ab71e4f87：align v5、edl.basis 改为连句子状态与起止帧一起指纹；
+#   shot06 的 cut:2 / cut:3 仍解析到 16.50 / 21.25 s，剪辑一帧没变)*
+version = 2
+base_version = 0
+status = "draft"
+approved_by = ""
+fps = 24
+
+# shot03：v1 0–22.04 s → v2 2.50–22.04 s（−2.50 s）
+# *(judgment call — 入点 2.5 s 而不是 3.0 s：2.5 s 上摇刚落到整面立面、瓦顶入画，杜克 2.75 s 起回头；再晚丢建立镜，再早是腿和土)*
+# *(judgment call — 撤回剪尾：第一版出点取第 4 句尾 +0.9 s（21.04 s），代理片 QC Q6 回读 e01→e02 接缝两侧 2 s 内都有对白，
+#   维里 -11.9 → 伊根 -14.0 LUFS 跳 2.1 LU > 2；留着维里下台阶的 1.9 s，两段对白隔开 2.4 s，本来就不该并排比。
+#   只剪到 ≥ 21.74 s 才躲得开 Q6 的窗，那只省 0.3 s，不值一剪)*
+# *(judgment call — 不删 11.92–12.86 s 亚伦走进三人景：那是他「到了阶下站定」的一拍，也是冷笑话后唯一的气口；省 0.8 s 不值一条新接缝)*
+# *(judgment call — 不删第 3 句世界观说明 12.86–16.70 s：镜的意图写明「世界的前提（人手不够）」，杜克扫一眼罩袍的谎也埋在这句；
+#   审稿嫌慢，但删句不在「空走 / 死区 / 笑点气口」之列)*
+[[event]]
+id = "e01"
+shot = "shot03"
+take = "742c7d40e919"
+in = 2.5
+out = "end"
+kind = "shot"
+why = "剪头 0–2.5 s：土路腿部空走与上摇前半（审稿 shot03 行只要留「抢台阶」；candidates 静段 0–8.12 s），2.5 s 起立面瓦顶已全，杜克 3.75 s 咧嘴、4.25 s 起跑——本剪辑开场即钩（同审稿 #1 的前移钩子）；展示窗 0–6 s 留 3.5 s ≥ post_trim_bg_s 2（V6）。尾不剪：维里下台阶那 1.9 s 把他和伊根的对白隔开（QC Q6）"
+
+# shot05：不动（v1 = v2 0–28.04 s）。goals.toml 锚点占满：wolf_meat stated / accepted（第 1、2 句 0.48–6.74 s）、resolved（第 6 句
+# 18.68–21.50 s）、技能「锤头一闪」「杜克举盾顶在前面」（剧本窗 7–18 s 整段）；其余是台词和 27.2 s 起的护腕特写（审稿「收在暖上」）。
+# candidates 无死区、无 > idle_max_s 的静段；0.38 s 镜首空隙不值一剪。审稿嫌的画面问题见 [[note]] shot05。
+[[event]]
+id = "e02"
+shot = "shot05"
+take = "111d6dad2c5f"
+in = "start"
+out = "end"
+kind = "shot"
+why = ""
+
+# shot06：v1 0–27.00 s → v2 2.00–16.50 + 17.25–20.50 + 21.25–27.00 s（−3.50 s）
+# *(judgment call — S06 的 bg1 在 S01/S02 已出现，V6 不给营地设下限；但狗头人营地第一次露面，仍按 post_trim_bg_s 2 s 自守，实际留 3.8 s)*
+[[event]]
+id = "e03"
+shot = "shot06"
+take = "6edca49f5050"
+in = 2.0
+out = "cut:2"
+kind = "shot"
+basis = "468ab71e4f87"
+why = "剪头 0–2.0 s：空营地高位俯拍，画里还没有一只狗头人（2.0 s 第一簇烛火、2.4 s 亚伦探头；candidates 静段 0–13.58 s）。出点 = 镜内切点 2（16.50 s，逃散→草里蜡烛头）"
+
+# *(judgment call — 入点 17.25 s：蜡烛头在草里先露 0.4 s 再进手，17.65–18.9 s 捡起的动作把眼睛带过去)*
+# *(judgment call — 摊掌留到 20.50 s（掌心蜡烛头完整亮出 0.75 s）而不是 20.25 s：镜的意图是「特写他手里的蜡烛头：一个会用上的
+#   小东西」（S16 的钥匙）；宁可「Me run!」后静 4.18 s、比 idle_max_s 多 0.18 s——剧本在这里有拍子，V7 放行)*
+[[event]]
+id = "e04"
+shot = "shot06"
+take = "6edca49f5050"
+in = 17.25
+out = 20.5
+kind = "shot"
+why = "删整段（两头）：16.50–17.25 s 草里蜡烛头的静止空镜（手 17.65 s 才入画）、20.50–21.25 s 摊掌静持。candidates 列 16.18–21.86 s 静段 5.68 s > idle_max_s 4；剪后「Me run!」到「That's ten!」静 4.18 s，捡起、托在掌心两拍都在，节奏「17 s 后一拍安静」保留"
+match_ok = "新接缝落在 take 自己 16.50 s 的硬切上（逃散全景 → 低机位草地里的蜡烛头），两侧取景与原切口相同，只晚进 0.75 s；两段都在分镜中段，景别档推不出"
+
+[[event]]
+id = "e05"
+shot = "shot06"
+take = "6edca49f5050"
+in = "cut:3"
+out = "end"
+kind = "shot"
+basis = "468ab71e4f87"
+why = "入点 = 镜内切点 3（21.25 s）：e04 摊掌静持剪到 20.50 s 后接回原切口。结尾不动：「……Each. Obviously.」句尾 26.86 s 距 take 末帧只 0.14 s，edl 不开放定格补气口——审稿 #3 开票"
+match_ok = "新接缝落在 take 自己 21.25 s 的硬切上（手部特写 → 两人中近景），两侧取景与原切口相同，只早出 0.75 s；take 把手部特写放在中段、与 md 景别档次序相反，取景推不出"
+
+[[note]]
+ref = "viewing_animatic 119fd875 #1"
+status = "ticket"
+detail = "shot01 开头 5 s 没钩子：shot01（和闪前要用的 shot20）都没有采用的出片，这版 edl 无从下剪。交剧本层：问答压紧，让「……我想学着当」进 5 s 内，00:14 的低吼压到问答底下，望谷慢升收到 2 s 内；shot20 出片后剪辑层再评估 kind = \"flash\" 冷开场（08:13–08:16 斧落前切走，≤ 4 s，V5）。本 demo 从 shot03 开场，同一原则已用在 e01（剪头 2.5 s，钩子提前到 1.25–1.75 s）"
+
+[[note]]
+ref = "viewing_animatic 119fd875 #2"
+status = "ticket"
+detail = "shot12–shot15 软中段：四镜都没出片，本 demo 不含。交剧本层：「回矿里去，先拿回我爸的锤」前移到 shot12（04:48「……我自己能行」前后）；出片后剪辑层再剪：shot12 治疗只留光起一眼、shot14 数钱买甲收到 ~10 s（留「只有一条左胳膊」与 05:50 摘盔）、shot15 从狼扑出开始"
+
+[[note]]
+ref = "viewing_animatic 119fd875 #3"
+status = "ticket"
+detail = "同窗多句：本剪辑里只有 shot06。代理片字幕按强制对齐逐句出窗，「……一人十个。那还用说。」已是独立一条（源片 25.88–26.86 s），这一半不用再修；落点句后 1 s 听话人反应剪不出来：句尾距 take 末帧只 0.14 s，edl 不开放定格 / 延长（同一原因，这条中文字幕只能挂 1.12 s，QC Q7 CPS 10.7 > 9）。交剧本层：S06 下次重出片在落点句后给 ≥ 1 s 杜克的脸（S06 在 script.toml shared_window_ok 里，重出即删）。shot11 / shot19 / shot23 没出片，出片后按同一条查"
+
+[[note]]
+ref = "viewing_animatic 119fd875 shot03"
+status = "ticket"
+detail = "审稿 shot03：「Seventh. Today.」时说话的维里只给后脑勺，冷笑话落在杜克还没收的笑脸上——要换机位 / 表演，剪不出来；v2 保住了句后 10.72–11.92 s 杜克塌下去的反应"
+
+[[note]]
+ref = "viewing_animatic 119fd875 shot05"
+status = "ticket"
+detail = "审稿 shot05：前 7 s 大远景人太小、长句只挂在字幕上（第 1、2 句是 goals 锚点，不能剪）；杜克右肩多扛一把锤（CFR 第 180 帧 7.5 s 盾和锤同在），与 shot04 / shot20「锤子。盾牌。」的识别码打架；另见伊根手里的剥皮刀在第 180、372 帧像一把小锤。都是画面，交出片层（ai_videos__出片审片）。另：take 把第 8 句（杜克「Dad's boots are fine.」，ASR 22.90–23.52 s）说在第 7 句前面，对齐把第 7 句拉成 22.74–26.46 s、第 8 句记 missing，代理片字幕两句错位、第 7 句只显示 1.82 s（QC Q7；成片 finish_ep 会在母带前停）——剪辑动不了，交剧本层（md 台词顺序照 take 改后重对齐，或重出片）"

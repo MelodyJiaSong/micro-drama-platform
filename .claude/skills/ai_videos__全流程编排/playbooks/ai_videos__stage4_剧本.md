@@ -99,6 +99,14 @@
   `tools/script_tools.py check` 会逐窗核「念白需时 ≤ 窗长」（中文 5 字/秒、英文 3 词/秒）——实测 shengji_zhilu ep01 有 7 镜整镜合格、局部挤到 4–5 词/秒（2026-09-25）。
   单集时长区间不写死：剧级 `4_剧本/script.toml` 的 `[episode] min_s / max_s`，缺省 90–120s。
 
+先写 **`4_剧本/episodes/{ep}/goals.toml` 目标账本**（rule 35）：观众要跟的每件事——谁交代、屏幕上哪句说出、为什么、谁接下、在哪了结；写不出屏幕上的那一句，就是剧本还没交代。学本事的镜（rule 39）：goals.toml `[[skill]]` 写齐 idea / trigger（入门课再加 why / demo / method / effect、fail ≥ 2，rule 40），施法的起手 / 手 / 光的走向写一份 `[[casting]]`、此后每次施法照着写，成的那一下由人物灵魂里的东西引出来，不花镜头教常识，本事的意义查 0_research 职业手册按原典写。
+
+再跑 **`ai_videos__冷眼观众`**：子代理只看 `script_tools.py screen` 抽出的画面与台词逐镜通读，理出的目标线要和账本对得上。
+
+再跑 **`ai_videos__对白通读`**（rule 34）：没写过这集的子代理带全剧上下文把整集对话读一遍——接得上、母语口语、声口、称呼、信息边界；改完 `--dialogue-stamp` 盖章，之后台词或动作再改就要再读。
+
+再跑 **`ai_videos__逻辑因果` §2b 全集上下文通读**：没写过这集的子代理读整集剧本、出场人物卡和 `states.toml`，逐拍问必要 / 分量 / 人物 / 世界 / 铺垫。摔倒、瘸、没来由的意外都是在剧本里写出来的，到分镜阶段才查就晚了（follow-up 035）。
+
 发现不合格 → 当场 surgical 改写，三处同步（shot 台词 / dialogue.md / script.md）。**blocker 必须清零**方可进阶段 5。
 
 ---
@@ -119,5 +127,5 @@
 
 ## 9. 机制（贯穿）
 
-- **每次 update 默认复核**：任何对 script.md / dialogue.md 的改动/重生，默认跑受影响范围的 `ai_videos__台词大师`（必要时连带相邻镜连贯性 check）+ 在 `specs/ai_video/{name}/changelog.md` 记一条。
+- **每次 update 默认复核**：任何对 script.md / dialogue.md 的改动/重生，默认跑受影响范围的 `ai_videos__台词大师`（必要时连带相邻镜连贯性 check）+ 整集范围的 `ai_videos__逻辑因果` §2b + 在 `specs/ai_video/{name}/changelog.md` 记一条。
 - **反馈→进化**：用户每条实战台词反馈 → surgical 更新本 playbook / `台词大师` 准则表 / agent_refs + 记一条「教训」（带来源镜号/反馈引用）。流程越用越强。

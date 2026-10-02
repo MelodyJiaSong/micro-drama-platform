@@ -1,0 +1,245 @@
+# 枯木村 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg49"
+name_zh = "枯木村"
+size_m = [320, 300]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "区图 1 px ≈ 3.285 m（区级 terrain.toml 同口径）。场地原点 ＝ 区级坐标 (2100, 1320) m。湖（区级「巨魔村旁的湖」）与东界山墙边线按区级 terrain.toml 平移过来；主村按区图湖东南岸帐篷图标落位，湖西岸另一枚帐篷图标给一小撮帐篷。村内帐篷、图腾柱、晾架的尺寸与摆位是推定"
+# 世界树画面：高地东北的丛林巨魔营地，圆锥形兽皮帐与插满骨头的图腾柱，地上是燃着的火坑与晾肉架
+# 注：世界树写「东北」，区图与区级平面图都在东南（湖东南岸、东界山墙脚下），以区图为准
+# 机位（锚点图）：湖南岸土路（约 [150, 185]）朝东
+absent = [
+    "石砌或木板房屋（只有兽皮帐）",
+    "木栅寨墙与城门（只有村口一道骨饰拒马）",
+    "除正中火坑外的任何火光、火把与灯笼（洞口漆黑）",
+    "任何人物、巨魔、牲口与动物（默认空村）",
+    "文字、符文招牌与旗帜纹章",
+    "成片树林（只有几棵零星老阔叶树）",
+    "东、南两面的出口（山墙封死）",
+]
+
+[[water]]
+name = "村旁的湖（青灰，岸边芦苇）"
+path = [[80, 60], [180, 130]]
+width_m = 90
+depth_m = 6
+src = "地图量取"
+
+[[ridge]]
+name = "东界山墙（东面岩壁几乎直立，南面碎石坡稍缓）"
+poly = [[285, 0], [320, 0], [320, 300], [150, 300], [167, 290], [230, 262], [282, 224], [298, 60]]
+height_m = 260
+src = "地图量取"
+
+[[road]]
+name = "进村土路（沿湖南岸自西而来，唯一入口）"
+path = [[0, 176], [70, 182], [130, 190], [160, 200], [176, 206]]
+width_m = 3
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p363"
+face = "south"
+name = "正中火坑（燃着一小堆低火，全档唯一人工光源）"
+xy = [205, 205]
+size = [4, 4]
+h_m = 0.3
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p38"
+face = "west"
+name = "圆锥兽皮帐·大（两人多高）"
+xy = [186, 188]
+size = [8, 8]
+h_m = 7
+src = "地图量取"
+note = "主村帐篷组按区图湖东南岸帐篷图标落位"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p38"
+face = "west"
+name = "圆锥兽皮帐·东北"
+xy = [228, 186]
+size = [6, 6]
+h_m = 5.5
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p38"
+face = "west"
+name = "圆锥兽皮帐·东南"
+xy = [224, 230]
+size = [6, 6]
+h_m = 5.5
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p38"
+face = "west"
+name = "圆锥兽皮帐·西南"
+xy = [182, 228]
+size = [5, 5]
+h_m = 4.5
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p38"
+face = "west"
+name = "圆锥兽皮帐·北（近湖）"
+xy = [210, 170]
+size = [5, 5]
+h_m = 4.5
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p38"
+face = "east"
+count = 3
+name = "湖西岸的一小撮兽皮帐"
+xy = [26, 96]
+size = [12, 10]
+h_m = 4.5
+src = "地图量取"
+note = "区图湖西岸另一枚帐篷图标"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p41"
+face = "south"
+name = "高图腾柱（插满兽骨、獠牙、兽颅，顶插长角）"
+xy = [212, 197]
+size = [1.5, 1.5]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p41"
+face = "south"
+name = "村口图腾柱（矮一些）"
+xy = [166, 196]
+size = [1.2, 1.2]
+h_m = 4.5
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "palisade"
+face = "south"
+count = 1
+name = "骨饰尖木桩拒马（中间留一人宽的缝）"
+xy = [168, 212]
+size = [2, 20]
+h_m = 1.8
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p40"
+face = "south"
+name = "晾肉架·东"
+xy = [242, 208]
+size = [8, 2]
+h_m = 2.2
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p40"
+face = "south"
+name = "晾肉架·南"
+xy = [204, 242]
+size = [6, 2]
+h_m = 2.2
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+parts = [{asset = "p178", at = [-1.2, 0.6], yaw = 0}, {asset = "p178", at = [-0.4, 0.8], yaw = 0}, {asset = "p45", at = [1, -0.4], yaw = 15}]
+face = "south"
+name = "啃净的大骨堆与破陶瓮"
+xy = [236, 246]
+size = [4, 3]
+h_m = 0.8
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "cave_mouth"
+face = "west"
+count = 1
+name = "岩壁洞口（熏黑、半挂破兽皮帘；洞内属子区域）"
+xy = [276, 182]
+size = [8, 4]
+h_m = 4
+src = "推定"
+note = "世界树：村旁岩壁上的一处洞口"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p43"
+face = "south"
+count = 5
+over_water = true
+name = "湖南岸芦苇丛"
+xy = [150, 160]
+size = [26, 6]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "asset"
+asset = "p42"
+face = "south"
+name = "老阔叶树·村西"
+xy = [128, 232]
+size = [10, 10]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b17"
+kind = "asset"
+asset = "p42"
+face = "south"
+name = "老阔叶树·湖北岸"
+xy = [175, 55]
+size = [9, 9]
+h_m = 11
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg49-c1"
+eye = [160, 276]
+target = [160, 150]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

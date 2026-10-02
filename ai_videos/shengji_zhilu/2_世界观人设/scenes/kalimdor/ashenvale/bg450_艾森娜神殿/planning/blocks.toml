@@ -1,0 +1,160 @@
+# 艾森娜神殿 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+# 场地原点 ＝ 区图 [19, 48.5]（区级 (1001.9, 1704.6) m）；遗址图标 [22.1, 53] ＝ 本场地 (163, 158)。
+
+[meta]
+bg = "bg450"
+name_zh = "艾森娜神殿"
+size_m = [360, 320]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "三角台地的三个角与东南石山按区图（1 px ≈ 5.26 m）量取；台高、池径、石像高无一手出处，推定"
+# 世界树画面：林中的自然女神祭坛，藤蔓缠绕的石像立在浅水中，四周开着白色小花
+absent = [
+    "任何人物、动物、光团与发光的精灵生灵",
+    "发光的池水、冷蓝井光与水面光点（这不是月亮井）",
+    "火烧痕、焦黑石台与骨制图腾（那是南面的焚毁圣所）",
+    "营帐、哨站、旗帜与近年的供品",
+    "火光、火堆、火把与任何人工光源",
+    "完整的神殿屋顶、廊柱与院墙（只剩池、石座、石像与残石）",
+    "雪、沙漠与草原",
+]
+
+[[ridge]]
+name = "三角形祭坛台地（四面陡土坎）"
+poly = [[53, 105], [150, 75], [316, 46], [250, 140], [170, 230], [132, 281], [90, 264], [60, 190]]
+height_m = 7
+src = "地图量取"
+note = "区图 [20-25, 49.5-56.5] 短线朝外的三角轮廓；台高推定"
+
+[[ridge]]
+name = "东南石山"
+poly = [[270, 215], [360, 190], [360, 320], [220, 320]]
+height_m = 60
+src = "地图量取"
+note = "区图 [24-30, 54-60] 的石山西北角"
+
+[[water]]
+name = "台心浅水圆池"
+path = [[158, 158], [170, 158]]
+width_m = 11
+depth_m = 0.5
+src = "推定"
+note = "池径十来米"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p386"
+face = "south"
+name = "池中石座与藤缠长袍石像"
+xy = [164, 158]
+size = [3, 3]
+h_m = 6
+src = "地图量取"
+note = "遗址图标 [22.1, 53]"
+
+[[block]]
+id = "b02"
+kind = "pool"
+face = "south"
+count = 1
+name = "断成几截的低矮石沿"
+xy = [164, 158]
+size = [16, 16]
+h_m = 0.4
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "白色小花花毯（池南最密）"
+xy = [150, 200]
+size = [60, 50]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "南尖缓坡与半埋苔阶（唯一上台处）"
+xy = [128, 262]
+size = [14, 26]
+h_m = 0
+rot = 20
+src = "推定"
+note = "机位在坡顶朝北"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p378"
+face = "south"
+name = "倒在花丛里的卷叶纹石板"
+xy = [140, 185]
+size = [4, 2]
+h_m = 0.3
+rot = 25
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p373"
+face = "south"
+name = "北缘坎边老树"
+xy = [150, 88]
+size = [12, 12]
+h_m = 38
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p373"
+face = "south"
+name = "东北角坎边老树"
+xy = [260, 70]
+size = [12, 12]
+h_m = 36
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p373"
+face = "south"
+name = "东南坎边老树"
+xy = [205, 180]
+size = [12, 12]
+h_m = 38
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p373"
+face = "south"
+name = "西缘坎边老树"
+xy = [72, 170]
+size = [12, 12]
+h_m = 35
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg450-c1"
+eye = [180, 294]
+target = [180, 160]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

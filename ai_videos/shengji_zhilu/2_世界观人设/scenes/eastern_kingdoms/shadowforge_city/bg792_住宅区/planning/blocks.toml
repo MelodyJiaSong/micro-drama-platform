@@ -1,0 +1,162 @@
+# 住宅区 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 西→东：三层民居台地（x 0–28，逐层退进岩壁）· 主街（x 28–46）· 街东矮屋（x 48–60）· 窄巷 · 铁栏观台（x 64–70）· 东熔岩海（x 72 起）。
+
+[meta]
+bg = "bg792"
+name_zh = "住宅区"
+size_m = [100, 70]
+px_per_m = 14.0
+scale_src = "推定"
+scale_note = "1.12 副本无地图；相对方位取自现行区图上层（城心正南、东熔岩海西岸、南经石桥到神殿），绝对尺寸按区级图 b903（69 × 44 m）放大到含熔岩观台的 100 × 70 m 推定，三层台地每层高约 4 m 为推定"
+# 世界树画面：沿岩壁层叠的黑石民居与回廊，窗洞里透出炉火橙光，狭窄石阶在住户门前折来折去。
+absent = [
+    "日光、天光、月光与任何露天（头顶是岩顶）",
+    "木构民居、茅草顶与坡屋顶（全是平顶黑石方屋）",
+    "树木草地与任何植被",
+    "真正的水、水井与水渠（液体只有熔岩）",
+    "蓝光与冷光",
+    "任何人物、牲畜与动物（门扇半掩、街上无人）",
+    "摊位招牌与带文字的门牌",
+]
+
+[[ridge]]
+name = "西侧岩壁（三层民居凿在它里面）"
+poly = [[0, 0], [6, 0], [6, 70], [0, 70]]
+height_m = 20
+src = "推定"
+
+[[water]]
+name = "东熔岩海（观台铁栏外，非水）"
+path = [[85, 0], [84, 35], [85, 70]]
+width_m = 28
+depth_m = 7
+src = "地图量取"
+
+[[road]]
+name = "南北主街（北接城心广场、南到石桥桥头）"
+path = [[37, 0], [37, 64]]
+width_m = 14
+src = "地图量取"
+
+[[road]]
+name = "东北小巷（往黑色宝库门外石廊）"
+path = [[44, 8], [52, 3], [60, 0]]
+width_m = 3
+src = "推定"
+
+[[road]]
+name = "矮屋后窄巷"
+path = [[61, 6], [61, 64]]
+width_m = 2
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p258"
+face = "east"
+count = 6
+name = "一层民居排（临街）"
+xy = [23, 35]
+size = [10, 58]
+h_m = 4
+src = "推定"
+note = "世界树「沿岩壁层叠的黑石民居」；分三层、每层 4 m 为推定"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p258"
+face = "east"
+count = 6
+name = "二层民居排（退进岩壁一截）"
+xy = [14.5, 35]
+size = [7, 58]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p258"
+face = "east"
+count = 6
+name = "三层民居排（再退一截）"
+xy = [8.5, 35]
+size = [5, 58]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b04"
+may_overlap = true
+kind = "rock_shelf"
+face = "east"
+count = 1
+name = "北段折返石阶（一层→二层→三层）"
+xy = [26, 16]
+size = [3, 8]
+h_m = 8
+src = "推定"
+note = "世界树「狭窄石阶在住户门前折来折去」"
+
+[[block]]
+id = "b05"
+may_overlap = true
+kind = "rock_shelf"
+face = "east"
+count = 1
+name = "南段折返石阶（一层→二层→三层）"
+xy = [26, 50]
+size = [3, 8]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p258"
+face = "west"
+count = 5
+name = "街东一层平顶矮屋排"
+xy = [54, 36]
+size = [12, 48]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "low_wall"
+face = "east"
+count = 1
+name = "临熔岩铁栏观台（比街面低一级）"
+xy = [67, 35]
+size = [6, 64]
+h_m = 0
+src = "推定"
+note = "东熔岩海西岸（区图）；观台与铁栏形制为推定"
+
+[[block]]
+id = "b08"
+kind = "arch_bridge"
+face = "south"
+count = 1
+name = "南口石桥桥头（跨南熔岩沟往神殿）"
+xy = [37, 67]
+size = [10, 6]
+h_m = 0
+src = "原典方位"
+note = "世界树「从神殿过桥即达」"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）：场地被体块占满，放在室内
+[[anchor]]
+key = "bg792-c1"
+eye = [50, 60]
+target = [50, 14]
+eye_h = 1.65
+lens_mm = 24
+inside = true
+note = "室内南端朝北；自动生成，排镜时按需改"

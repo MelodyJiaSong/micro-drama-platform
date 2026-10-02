@@ -1,0 +1,203 @@
+# 浇铸间 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 方位据上层区图 WorldMap-BlackrockDepths1.jpg（浇铸间＝西熔岩带与北熔岩湖之间、南北长、北端带圆圈的厅）：东北口通召唤者之墓，东南口回魔法之厅。
+# 圆熔炉取区图北端的圆圈；铁水槽、模架、空壳列无一手尺寸，全部推定。
+
+[meta]
+bg = "bg800"
+name_zh = "浇铸间"
+size_m = [80, 80]
+px_per_m = 16.0
+scale_src = "推定"
+scale_note = "1.12 副本无区图；车间 47×51 m 取自区级平面图 bg246 块 b911（上层区图量取，尺度本身推定），东北、东南各留一段甬道"
+# 世界树画面：低矮的铸造车间，铁水槽与铸模架排成几列，熔炉口喷出的橙光在黑铁魔像的躯壳上跳动。
+absent = ["天空、日光、月光与任何天气（山腹室内）", "熔岩与熔岩沟（车间两侧是实心岩，看不到熔岩）", "铁水槽里流动的铁水（默认停浇态）", "火盆与铁壁灯（唯一光源是圆熔炉）", "窗户与天井", "任何植被与水面", "人物、工匠、活动的魔像与动物（停浇空场态，属 shot 层）", "高大空间与高穹顶（岩顶只有约六米）", "文字与招牌"]
+
+[[ridge]]
+name = "西侧实心岩（西熔岩带方向）"
+poly = [[0, 0], [12, 0], [12, 80], [0, 80]]
+height_m = 30
+src = "地图量取"
+
+[[road]]
+name = "东北口上坡甬道（往环形墓室）"
+path = [[54, 18], [66, 8], [80, 2]]
+width_m = 5
+src = "地图量取"
+
+[[road]]
+name = "东南口下坡甬道（往附魔平台）"
+path = [[54, 62], [66, 70], [80, 76]]
+width_m = 5
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "chamber"
+face = "south"
+count = 1
+name = "车间主厅（南北狭长低顶石厅外廓）"
+xy = [35, 40]
+size = [40, 51]
+h_m = 6
+src = "地图量取"
+note = "取自 bg246 b911（47×51 m 含甬道口），厅宽收为 40 m"
+
+[[block]]
+id = "b02"
+may_overlap = true
+kind = "rock_shelf"
+face = "south"
+count = 1
+name = "北端圆弧后殿台（高一级）"
+xy = [35, 20]
+size = [22, 10]
+h_m = 0.3
+src = "地图量取"
+
+[[block]]
+id = "b03"
+may_overlap = true
+kind = "asset"
+asset = "p265"
+face = "south"
+name = "蜂巢形圆熔炉（炉口朝南）"
+xy = [35, 20]
+size = [9, 9]
+h_m = 4
+src = "地图量取"
+note = "区图北端的圆圈"
+
+[[block]]
+id = "b04"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "炉前石砌主槽与三道铁闸板"
+xy = [35, 28]
+size = [3, 5]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "西铁水槽"
+xy = [31, 46]
+size = [0.8, 30]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "中铁水槽"
+xy = [35, 46]
+size = [0.8, 30]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "东铁水槽"
+xy = [39, 46]
+size = [0.8, 30]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b08"
+may_overlap = true
+kind = "shelves"
+face = "east"
+count = 6
+name = "西列铸模架"
+xy = [26, 46]
+size = [2.5, 30]
+h_m = 1.8
+src = "原典方位"
+note = "世界树画面：铸模架排成几列"
+
+[[block]]
+id = "b09"
+may_overlap = true
+kind = "shelves"
+face = "west"
+count = 6
+name = "东列铸模架"
+xy = [44, 46]
+size = [2.5, 30]
+h_m = 1.8
+src = "原典方位"
+
+[[block]]
+id = "b10"
+may_overlap = true
+kind = "asset"
+asset = "p253"
+face = "east"
+count = 6
+name = "西墙下六具黑铁魔像空壳"
+xy = [17, 44]
+size = [3, 26]
+h_m = 3.2
+src = "原典方位"
+note = "世界树画面：黑铁魔像的躯壳"
+
+[[block]]
+id = "b11"
+may_overlap = true
+kind = "crates"
+face = "west"
+count = 5
+name = "东墙下旧模具与砂箱堆"
+xy = [52, 44]
+size = [4, 16]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b12"
+may_overlap = true
+kind = "cave_mouth"
+face = "east"
+count = 1
+name = "东北口拱门"
+xy = [53, 19]
+size = [3, 4]
+h_m = 3
+src = "地图量取"
+
+[[block]]
+id = "b13"
+may_overlap = true
+kind = "cave_mouth"
+face = "east"
+count = 1
+name = "东南口拱门"
+xy = [53, 61]
+size = [3, 4]
+h_m = 3
+src = "地图量取"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg800-c1"
+eye = [40, 74]
+target = [40, 40]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

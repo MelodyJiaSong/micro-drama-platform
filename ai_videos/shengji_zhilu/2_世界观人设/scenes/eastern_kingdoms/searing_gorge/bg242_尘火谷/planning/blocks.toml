@@ -1,0 +1,261 @@
+# 尘火谷 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 原点 ≈ 区级平面图 (1020, 200)；山墙轮廓按区级 terrain.toml 的北山墙 / 东山墙平移描摹（区级数据里主干道压在山墙多边形上，
+# 本档把窄谷让开、使主干道落在两道山体之间，岩嘴与窄谷细部因此记推定）。
+# 锚点机位：谷口低岩 b15（≈262,388），离地两人高，朝正北。
+
+[meta]
+bg = "bg242"
+name_zh = "尘火谷"
+size_m = [600, 420]
+px_per_m = 2.5
+grid_m = 50
+scale_src = "地图量取"
+scale_note = "谷的外廓与主干道按区级平面图（区图 px×2.0362 m）平移量取；谷内火点、巨石、干沟与遗留物位置全为推定"
+# 世界树画面：常年扬尘的浅谷，风把红色细尘卷成低矮的旋涡，地上零散烧着几处自燃的火点
+absent = [
+    "任何建筑、营地、帐篷、哨塔与高炉（本谷是无人野外，聚落属 bg240 / bg243 / bg238）",
+    "熔岩、熔渣与任何红亮的流体（那是大矿坑与西侧岩台）",
+    "水、积水、河道与湿地（全区没有一滴水）",
+    "树、草与任何绿色植被",
+    "火把、篝火、灯笼、炉火与人工光源（唯一的火是地缝里膝高的自燃火苗）",
+    "北面、西面的出入口（谷只向南敞口）",
+    "蓝天、白云、雨雪",
+    "飞行坐骑与任何 4.0.3a 之后的设施",
+]
+
+[[ridge]]
+name = "北山墙（含西侧隔开北谷的岩舌与东侧岩嘴，三面围住本谷）"
+poly = [[0, 0], [520, 0], [500, 80], [470, 170], [445, 270], [420, 300], [395, 260], [370, 160], [330, 70], [240, 45], [150, 65], [100, 130], [80, 200], [40, 245], [0, 255]]
+height_m = 360
+src = "地图量取"
+
+[[ridge]]
+name = "东山墙（窄谷东侧，通荒原方向的界山）"
+poly = [[560, 0], [600, 0], [600, 420], [520, 420], [540, 330], [560, 220], [575, 100]]
+height_m = 360
+src = "地图量取"
+
+[[road]]
+name = "主干道（东北隧道口顺窄谷南下）"
+path = [[545, 0], [530, 100], [510, 200], [490, 290], [470, 340], [440, 380], [400, 420]]
+width_m = 8
+src = "地图量取"
+
+[[road]]
+name = "谷口岔道（自主干道向西横过谷口，去大矿坑东北沿）"
+path = [[478, 330], [420, 350], [330, 368], [240, 375], [150, 385], [60, 400]]
+width_m = 5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+may_overlap = true
+name = "自燃火点·近（画面右下，火苗被风压得朝北倒伏）"
+xy = [320, 335]
+size = [3, 3]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "plaza"
+face = "south"
+may_overlap = true
+name = "自燃火点·谷中西"
+xy = [220, 285]
+size = [3, 3]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "plaza"
+face = "south"
+may_overlap = true
+name = "自燃火点·谷中东"
+xy = [290, 230]
+size = [3, 3]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "plaza"
+face = "south"
+may_overlap = true
+name = "自燃火点·西崖下"
+xy = [180, 190]
+size = [3, 3]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "plaza"
+face = "south"
+may_overlap = true
+name = "自燃火点·东岩嘴下"
+xy = [330, 150]
+size = [3, 3]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "plaza"
+face = "south"
+may_overlap = true
+name = "自燃火点·谷底深处"
+xy = [240, 120]
+size = [3, 3]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p243"
+face = "south"
+name = "崩落巨石·西崖脚（半埋，棱角风蚀圆钝）"
+xy = [130, 200]
+size = [10, 8]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p243"
+face = "south"
+name = "崩落巨石·谷中（半埋，背风拖积尘尾）"
+xy = [270, 180]
+size = [8, 6]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p243"
+face = "south"
+name = "崩落巨石·东岩嘴脚"
+xy = [360, 250]
+size = [12, 8]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "rock_shelf"
+face = "south"
+name = "北崖脚灰红碎屑锥（带冷透的旧烧斑）"
+xy = [240, 72]
+size = [80, 20]
+h_m = 15
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "plaza"
+face = "south"
+may_overlap = true
+name = "波纹沙垄带（垄脊朝东北弯）"
+xy = [250, 262]
+size = [160, 30]
+h_m = 0.5
+rot = -20
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "plaza"
+face = "south"
+may_overlap = true
+name = "谷底正中南北向浅干沟"
+xy = [250, 205]
+size = [6, 180]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p249"
+face = "south"
+name = "废弃窄轨铁轨（数截，锈成暗褐）"
+xy = [205, 360]
+size = [20, 2]
+h_m = 0.2
+rot = -8
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p242"
+face = "south"
+name = "散架木板手推车（只剩一只铁箍轮）"
+xy = [182, 366]
+size = [3, 2]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "rock_shelf"
+face = "north"
+name = "谷口低岩（锚点机位）"
+xy = [262, 390]
+size = [8, 6]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "plaza"
+face = "south"
+may_overlap = true
+name = "大矿坑东北沿（坑口边，向西南陡落）"
+bg = "bg244"
+xy = [90, 405]
+size = [160, 20]
+h_m = 0
+src = "地图量取"
+
+[[block]]
+id = "b17"
+kind = "asset"
+asset = "p244"
+face = "south"
+name = "东岩嘴脚烤裂木桩（早年拴矿车绳索，绳已烂光）"
+xy = [385, 290]
+size = [1, 1]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b18"
+kind = "plaza"
+face = "south"
+may_overlap = true
+into_ridge = true
+name = "东岩嘴与北崖间的崩塌碎石槽（陡，不可走）"
+xy = [352, 105]
+size = [14, 50]
+h_m = 0
+rot = -20
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg242-c1"
+eye = [300, 386]
+target = [300, 210]
+eye_h = 20.0
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

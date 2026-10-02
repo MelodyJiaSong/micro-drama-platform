@@ -1,0 +1,252 @@
+# 西区兵营 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 方位据上层区图 WorldMap-BlackrockDepths1.jpg（西区兵营＝城西南、制造厂正南那块带石阶符号的厅）与 bg246 块 b915 / b917 / 道路「西区兵营→制造厂隧道」。
+# 北→南：北口隧道（往制造厂）· 上层营堂平台（高 6 m）· 两段宽石阶（铁甲武士像夹守）· 下庭石场 · 东南角石道 · 进城巨门背面。
+# h_m 一律自下庭地面量起（平台上的栏杆 / 火盆 / 通铺 / 兵器架 ＝ 6 m + 自身高）。
+# 本场地没有熔岩：光只来自四只压着炭火的铁火盆。陈设与尺寸无一手出处，推定。
+
+[meta]
+bg = "bg804"
+name_zh = "西区兵营"
+size_m = [100, 90]
+px_per_m = 12.0
+scale_src = "推定"
+scale_note = "1.12 副本无区图；bg246 块 b915（40×33 m）只量到营堂外廓，巨门 b917 在其东南约 40 m（推定）；平台高 6 m、巨门高 14 m 与各陈设尺寸推定"
+# 世界树画面：与东侧对称的黑石兵营，列队的矮人士兵与铁甲雕像守在石阶上，暗红火光照着粗粝的黑铁栏杆。
+absent = ["天空、日光、月光与任何天气（山腹岩厅）", "熔岩与熔岩沟（本厅不临熔岩）", "射击孔与临空俯瞰大道的岩廊（那是东区兵营）", "木栅、帐篷、布幔与旗帜", "打开的进城巨门（默认紧闭，门闩在城内一侧）", "明亮的橙黄火焰、壁灯与冷色光源", "树木草地与任何植被、真正的水", "列队守军、守将、人物与动物（空营态，属 shot 层）", "文字、铭牌与纹章"]
+
+[[ridge]]
+name = "西侧实心黑岩"
+poly = [[0, 0], [18, 0], [18, 90], [0, 90]]
+height_m = 40
+src = "地图量取"
+
+[[ridge]]
+name = "北侧实心黑岩（隧道从中穿出）"
+poly = [[18, 0], [100, 0], [100, 8], [18, 8]]
+height_m = 40
+src = "推定"
+
+[[ridge]]
+name = "营堂以东实心黑岩"
+poly = [[72, 8], [100, 8], [100, 52], [72, 52]]
+height_m = 40
+src = "推定"
+
+[[ridge]]
+name = "巨门石道以东岩壁"
+poly = [[88, 52], [100, 52], [100, 90], [88, 90]]
+height_m = 40
+src = "推定"
+
+[[ridge]]
+name = "下庭以南实心黑岩"
+poly = [[18, 74], [62, 74], [62, 90], [18, 90]]
+height_m = 40
+src = "推定"
+
+[[road]]
+name = "北口隧道（往制造厂）"
+path = [[45, 11], [45, 0]]
+width_m = 6
+src = "地图量取"
+
+[[road]]
+name = "巨门内侧石道（自巨门北上、折向西进下庭）"
+path = [[78, 84], [78, 66], [66, 62]]
+width_m = 14
+src = "推定"
+
+[[block]]
+id = "b01"
+into_ridge = true
+kind = "rock_shelf"
+face = "south"
+count = 1
+name = "上层营堂平台（高出下庭约 6 m）"
+xy = [45, 23]
+size = [54, 28]
+h_m = 6
+src = "地图量取"
+note = "区图绿色大块；平台高度推定"
+
+[[block]]
+id = "b02"
+into_ridge = true
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "下庭石场（北缘即平台下的垂直岩坎）"
+xy = [45, 56]
+size = [50, 36]
+h_m = 0
+src = "地图量取"
+note = "区图石阶符号以南的小厅"
+
+[[block]]
+id = "b03"
+kind = "rock_shelf"
+face = "south"
+count = 1
+name = "两段宽石阶（半高一块方形歇脚台）"
+xy = [45, 44]
+size = [16, 14]
+h_m = 6
+src = "原典方位"
+note = "世界树画面：铁甲雕像守在石阶上；区图厅中石阶符号"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p261"
+face = "east"
+count = 2
+name = "石阶西侧两尊铁甲武士像（歇脚台一尊、阶脚一尊）"
+xy = [35, 44]
+size = [2.5, 11]
+h_m = 5
+src = "原典方位"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p261"
+face = "west"
+count = 2
+name = "石阶东侧两尊铁甲武士像（歇脚台一尊、阶脚一尊）"
+xy = [55, 44]
+size = [2.5, 11]
+h_m = 5
+src = "原典方位"
+
+[[block]]
+id = "b06"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "平台南缘黑铁栏杆·西段"
+xy = [26.5, 37.3]
+size = [17, 0.6]
+h_m = 7.1
+src = "原典方位"
+note = "世界树画面：粗粝的黑铁栏杆"
+
+[[block]]
+id = "b07"
+into_ridge = true
+kind = "low_wall"
+face = "south"
+count = 1
+name = "平台南缘黑铁栏杆·东段"
+xy = [63.5, 37.3]
+size = [17, 0.6]
+h_m = 7.1
+src = "原典方位"
+
+[[block]]
+id = "b08"
+may_overlap = true
+kind = "asset"
+asset = "p256"
+face = "south"
+name = "阶顶西宽口铁火盆（炭火压低）"
+xy = [35, 35]
+size = [1.8, 1.8]
+h_m = 7.2
+src = "推定"
+
+[[block]]
+id = "b09"
+may_overlap = true
+kind = "asset"
+asset = "p256"
+face = "south"
+name = "阶顶东宽口铁火盆（炭火压低）"
+xy = [55, 35]
+size = [1.8, 1.8]
+h_m = 7.2
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p256"
+face = "south"
+name = "阶脚西宽口铁火盆（炭火压低）"
+xy = [34, 53]
+size = [1.8, 1.8]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p256"
+face = "south"
+name = "阶脚东宽口铁火盆（炭火压低）"
+xy = [56, 53]
+size = [1.8, 1.8]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b12"
+may_overlap = true
+kind = "shelves"
+face = "east"
+count = 4
+name = "西墙三层石砌通铺（铺位空着）"
+xy = [22, 22]
+size = [6, 22]
+h_m = 8.5
+src = "推定"
+
+[[block]]
+id = "b13"
+may_overlap = true
+kind = "shelves"
+face = "west"
+count = 4
+name = "东墙黑铁兵器架一排"
+xy = [69, 22]
+size = [2, 20]
+h_m = 8.2
+src = "推定"
+
+[[block]]
+id = "b14"
+may_overlap = true
+kind = "cave_mouth"
+face = "south"
+count = 1
+name = "北墙正中低拱隧道口"
+xy = [45, 9.5]
+size = [8, 3]
+h_m = 10
+src = "原典方位"
+note = "世界树备注：通往制造厂与深处各区的必经之地"
+
+[[block]]
+id = "b15"
+into_ridge = true
+kind = "asset"
+asset = "p255"
+face = "north"
+name = "进城巨门背面（两扇紧闭，铁梁与横闩在城内一侧）"
+xy = [78, 86]
+size = [20, 3]
+h_m = 14
+src = "原典方位"
+note = "世界树备注：由东区兵营的门锁机关控制开合；与 bg793 b07 是同一对门"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg804-c1"
+eye = [50, 83]
+target = [50, 45]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

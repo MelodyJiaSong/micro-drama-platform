@@ -1,0 +1,207 @@
+# 瑟伯切尔 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地挂在区级平面图 bg247 的坐标系上：本地坐标 ＝ 区坐标 − (1620, 860)。坐标表点位 [46, 37] → 本地 (147, 87)。
+# 北侧山体、南侧山脚与支路取自 bg247 terrain.toml（区图量取）；区图镇子图标在本地 (28, 182) 附近，支路在图标东侧到头。
+# 镇内各件（墓室 / 碑群 / 栅栏 / 木屋 / 栖架）按世界树画面与地理页子节点推定摆放。
+
+[meta]
+bg = "bg257"
+name_zh = "瑟伯切尔"
+size_m = [260, 260]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "场地 260 m 见方按「一坡墓园 + 坡脚支路」推定；无一手尺寸出处"
+# 世界树画面：山坡上一座石砌墓室与一间小木屋，四周是成片墓碑与铁栅栏，火盆点着绿火
+absent = [
+    "暖橙火光、火把、烛火、灯笼与窗灯（唯一人工光源是墓室门前两盆幽绿火）",
+    "教堂、钟楼、石墙城镇与多层建筑（这里只有一座墓室、一间木屋）",
+    "湖面、河流与海面（湖在东北被林子挡住，海在西面山后只剩海雾）",
+    "栖架上挂着的蝙蝠与任何动物（属 shot 层）",
+    "旗帜与布幔上的纹章、骷髅徽记、文字",
+    "晴天、蓝天与直射阳光",
+    "新鲜的血迹、正在被掘开的墓（推开的墓盖是多年前的旧痕）",
+    "4.0.3a 后整区战役重写加的营地、攻城器械与军旗",
+]
+
+[[ridge]]
+name = "北侧山体（西北山地南缘，墓室背靠）"
+poly = [[0, 0], [176, 0], [124, 79], [28, 90], [0, 84]]
+height_m = 60
+src = "地图量取"
+
+[[ridge]]
+name = "西侧山（往海岸方向）"
+poly = [[0, 84], [28, 90], [40, 130], [30, 170], [0, 200]]
+height_m = 40
+src = "地图量取"
+
+[[ridge]]
+name = "南侧山脚（中西山地北缘）"
+poly = [[0, 238], [150, 226], [260, 242], [260, 260], [0, 260]]
+height_m = 40
+src = "地图量取"
+
+[[road]]
+name = "墓园支路（东面大路岔口 → 坡脚 → 木屋前到头）"
+path = [[260, 104], [239, 117], [189, 167], [93, 182]]
+width_m = 4
+src = "地图量取"
+
+[[road]]
+name = "石板小径（栅门 → 墓室门）"
+path = [[120, 176], [120, 100]]
+width_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "crypt"
+face = "south"
+name = "石砌墓室（门朝南，门内石阶往下）"
+xy = [126, 90]
+size = [22, 16]
+h_m = 9
+src = "推定"
+note = "背靠北侧山体；旅店在墓室地下"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p163"
+face = "south"
+name = "墓室门前火盆·西（幽绿火）"
+xy = [120, 100]
+size = [1.2, 1.2]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p163"
+face = "south"
+name = "墓室门前火盆·东（幽绿火）"
+xy = [132, 100]
+size = [1.2, 1.2]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "graveyard"
+face = "south"
+may_overlap = true
+name = "东坡碑群（密）"
+xy = [163, 125]
+size = [40, 32]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "graveyard"
+face = "south"
+may_overlap = true
+name = "西坡碑群（疏）"
+xy = [85, 122]
+size = [36, 30]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "graveyard"
+face = "south"
+may_overlap = true
+name = "坡下碑群·西（稀疏）"
+xy = [92, 148]
+size = [44, 12]
+h_m = 1.0
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "graveyard"
+face = "south"
+may_overlap = true
+name = "坡下碑群·东（稀疏）"
+xy = [150, 148]
+size = [48, 12]
+h_m = 1.0
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "palisade"
+face = "south"
+name = "南侧铁栅栏·西段"
+xy = [88, 160]
+size = [56, 1]
+h_m = 1.4
+src = "推定"
+note = "与东段之间留 8 m 栅门，正对石板小径"
+
+[[block]]
+id = "b09"
+kind = "palisade"
+face = "south"
+name = "南侧铁栅栏·东段"
+xy = [152, 160]
+size = [56, 1]
+h_m = 1.4
+src = "推定"
+
+[[block]]
+id = "b10"
+may_overlap = true
+kind = "palisade"
+face = "south"
+name = "西侧铁栅栏"
+xy = [60, 125]
+size = [1, 70]
+h_m = 1.4
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "palisade"
+face = "south"
+name = "东侧铁栅栏"
+xy = [186, 110]
+size = [1, 100]
+h_m = 1.4
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p271"
+face = "east"
+name = "坡脚木板小屋"
+xy = [84, 183]
+size = [9, 7]
+h_m = 5
+src = "推定"
+note = "支路尽头；区图镇子图标在其西侧"
+
+[[block]]
+id = "b13"
+kind = "guard_post"
+face = "south"
+name = "坡顶铁栏栖架（空）"
+xy = [158, 70]
+size = [6, 1]
+h_m = 4
+src = "推定"
+note = "本区唯一飞行点；本档无动物"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg257-c1"
+eye = [130, 239]
+target = [130, 130]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

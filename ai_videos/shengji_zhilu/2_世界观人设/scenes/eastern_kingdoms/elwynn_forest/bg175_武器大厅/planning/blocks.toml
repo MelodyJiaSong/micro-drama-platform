@@ -1,0 +1,163 @@
+# 武器大厅 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 室内局部坐标：x 轴 ＝ 长厅纵轴（x 小的一端是通主厅的拱门），y 大的一侧 ＝ 进门右手。**不代表罗盘方位**
+# （世界树判本厅在主厅南侧，bg2 v3 卡判在西侧，待实机核，见 md 场景定位）。
+
+[meta]
+bg = "bg175"
+name_zh = "武器大厅"
+size_m = [40, 24]
+interior = true
+px_per_m = 30.0
+grid_m = 5
+scale_src = "推定"
+scale_note = "室内尺寸无一手出处：长厅约 36×14 m、净高约 4.5 m、右手三间小室各约 7×6 m，按剧本「低矮的武器厅」与乡间修道院体量推定；实机截图到手后校正"
+# 世界树画面：修道院南翼的练武厅，粗石墙上挂满剑盾与长戟，地面铺深色木板，靠墙立一排稻草假人，角落的铁火盆把墙面烤出一圈暖橙
+# ↑「稻草假人」是 4.0.3a 才加进北郡的（w02 patch.080），本图与锚点 prompt 均已删去。
+absent = ["训练假人 / 草人靶 / 木桩靶（4.0.3a 才加进北郡）", "对院外开的门（唯一出入口是通主厅的拱门）", "烛台 / 火把 / 油灯（唯一人工光源是角落炭火盆）", "彩色玻璃窗", "高耸穹顶 / 石拱顶（是低平的外露木梁顶）", "二层 / 楼梯", "明火火苗与浓烟"]
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p164"
+face = "east"
+opening = true
+name = "通主厅的半圆拱门（唯一出入口）"
+xy = [1.5, 9]
+size = [3, 3]
+h_m = 3.2
+src = "推定"
+note = "机位就站在这道拱门里侧朝 x 正向看"
+
+[[block]]
+id = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "对练空地（磨得最亮的深色木板）"
+xy = [20, 9]
+size = [16, 7]
+h_m = 0
+src = "推定"
+note = "空地上不立任何靶子"
+
+[[block]]
+id = "b03"
+kind = "shelves"
+face = "south"
+count = 1
+name = "左手兵器架（外墙下一整排，墙高处开小方窗）"
+xy = [20, 2.8]
+size = [28, 0.8]
+h_m = 1.6
+src = "推定"
+note = "长剑 / 单手锤 / 长柄戟 / 短矛；架上方墙钉铁钩挂圆木盾"
+
+[[block]]
+id = "b04"
+kind = "hall_shell"
+face = "north"
+count = 1
+name = "右起第一间小室（码圆盾）"
+xy = [9.5, 19]
+size = [7, 6]
+h_m = 3.4
+src = "推定"
+note = "「第二间」存在即推得有第一间；陈设为推定"
+
+[[block]]
+id = "b05"
+kind = "hall_shell"
+face = "north"
+count = 1
+name = "右起第二间小室（圣骑士训练室）"
+xy = [17.5, 19]
+size = [7, 6]
+h_m = 3.4
+src = "原典方位"
+note = "NPC 页：Brother Sammuel 站位；ep01 S07 在此。门里可见厚木桌一角与素白布幡"
+
+[[block]]
+id = "b06"
+kind = "hall_shell"
+face = "north"
+count = 1
+name = "右起第三间小室（战士训练室）"
+xy = [25.5, 19]
+size = [7, 6]
+h_m = 3.4
+src = "原典方位"
+note = "NPC 页：Llane Beshere 站位；四壁木质兵器架"
+
+[[block]]
+id = "b07"
+kind = "shelves"
+face = "west"
+count = 12
+name = "尽端圆盾墙（从地到梁）"
+xy = [37.6, 9]
+size = [0.8, 12]
+h_m = 4.5
+src = "推定"
+note = "画面消失点"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p163"
+face = "south"
+name = "尽端右角三足铁火盆（唯一人工光源）"
+xy = [36, 14.5]
+size = [1.2, 1.2]
+h_m = 0.9
+src = "推定"
+note = "暗红炭火，不起火苗不冒烟；身后墙面一片暗褐旧烟迹"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p162"
+face = "south"
+name = "矮木墩（磨刀石与油布）"
+xy = [20, 9]
+size = [0.8, 0.8]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "shelves"
+face = "south"
+count = 1
+may_overlap = true
+name = "墙角成捆木制练习剑"
+xy = [33, 3.2]
+size = [1.6, 0.8]
+h_m = 1.2
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）：场地被体块占满，放在室内
+[[anchor]]
+key = "bg175-c1"
+eye = [20, 20]
+target = [20, 5]
+eye_h = 1.65
+lens_mm = 24
+inside = true
+note = "室内南端朝北；自动生成，排镜时按需改"
+
+[[anchor]]
+key = "bg175-c2"
+eye = [3.5, 9]
+target = [37, 9]
+eye_h = 1.35
+target_h = 1.8
+lens_mm = 24
+inside = true
+image = "bg175_武器大厅.png"
+note = "锚点图机位：与场景卡 `场景:` 行同一机位（进门里侧顺纵轴看尽端）；场景图挂成这台相机的背景对账"
+props = ["p163", "p164"]
+

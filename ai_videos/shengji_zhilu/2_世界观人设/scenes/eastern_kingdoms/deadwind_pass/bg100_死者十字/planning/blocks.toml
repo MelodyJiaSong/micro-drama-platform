@@ -1,0 +1,165 @@
+# 死者十字 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg100"
+name_zh = "死者十字"
+size_m = [200, 160]
+px_per_m = 6.0
+scale_src = "推定"
+scale_note = "四座小民房围一个路口的小村，村心约 60 × 60 m；场地取村子 + 南北两侧坡脚 + 西南机位来路能装下的 200 × 160 m，无一手尺寸出处"
+# 世界树画面：谷中一处废弃的人类村落十字路口，石砌房屋只剩墙框，屋顶早塌，路边一座倒地的木制路牌
+# 区图：推定为 52%,34% 东北口道旁的无标注小图标（区级 b903）→ 主路西南→东北斜穿，北贴北山陡坡、南邻东山墙西北端的矮岭
+absent = [
+    "任何人物、动物与尸骨（空村）",
+    "完整的屋顶、门窗与烟囱冒烟",
+    "燃着的火、壁炉火光、烛火与灯笼",
+    "路牌上的任何文字、符号与纹章",
+    "活的绿叶树、草地、菜园与农田",
+    "河、井、水潭与桥",
+    "卫兵、营地与任何新建的木构",
+    "4.0.3a 后的任何改动",
+]
+
+[[ridge]]
+name = "北山南坡（村北陡坡）"
+poly = [[0, 0], [200, 0], [200, 22], [150, 32], [110, 42], [60, 54], [0, 68]]
+height_m = 45
+src = "推定"
+note = "区级 terrain「北山·封闭洼地外环」的南缘；坡上枯黑秃树"
+
+[[ridge]]
+name = "东山墙西北端（村南岩岭）"
+poly = [[0, 160], [0, 150], [60, 142], [120, 136], [160, 124], [200, 112], [200, 160]]
+height_m = 35
+src = "推定"
+note = "区级 terrain「东山墙」西北尖；岭脚滚石"
+
+[[road]]
+name = "主路（西南谷心 → 东北出谷豁口）"
+path = [[0, 120], [60, 102], [100, 86], [140, 72], [200, 50]]
+width_m = 6
+src = "推定"
+note = "区级「东北口道」；两道浅车辙"
+
+[[road]]
+name = "南北荒草小径"
+path = [[98, 44], [100, 86], [104, 136]]
+width_m = 2
+src = "推定"
+note = "世界树「十字路口」的另一条路；区图上未画，按字面推定；一半被枯草吃掉"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p98"
+face = "southeast"
+name = "西北残屋（两面尖山墙尚存，屋顶塌进屋里）"
+xy = [80, 70]
+size = [12, 10]
+h_m = 6
+rot = -20
+src = "推定"
+note = "焦黑旧椽木斜插碎瓦堆，冷透长苔"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p98"
+face = "southwest"
+name = "东北残屋（齐肩墙框）"
+xy = [122, 58]
+size = [11, 9]
+h_m = 1.6
+rot = -20
+src = "推定"
+note = "门上木过梁塌落一头"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p98"
+face = "northeast"
+name = "西南塌屋（一面墙倒向路面）"
+xy = [82, 110]
+size = [12, 10]
+h_m = 2.5
+rot = -20
+src = "推定"
+note = "倒墙碎石摊成斜坡，伸向主路"
+
+[[block]]
+id = "b04"
+kind = "low_wall"
+face = "northwest"
+count = 1
+name = "东南孤墙（带缺角石烟囱的山墙）"
+xy = [126, 96]
+size = [10, 2]
+h_m = 7
+rot = -20
+src = "推定"
+note = "炉膛只有旧烟痕，无灰烬"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p99"
+face = "south"
+name = "倒地木路牌（路口东南角）"
+xy = [108, 92]
+size = [3, 1]
+h_m = 0.4
+rot = 30
+src = "推定"
+note = "世界树「路边一座倒地的木制路牌」；折断的桩留在原位，两块指向牌板面空白"
+
+[[block]]
+id = "b06"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "院墙残段（西北屋后）"
+xy = [66, 76]
+size = [14, 1]
+h_m = 1
+rot = 70
+src = "推定"
+note = "连着一扇朽成木条的院门"
+
+[[block]]
+id = "b07"
+into_ridge = true
+kind = "asset"
+asset = "p100"
+face = "south"
+count = 6
+name = "北坡枯黑秃树丛"
+xy = [150, 18]
+size = [30, 10]
+h_m = 8
+src = "推定"
+note = "枝桠被风压向东方"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p101"
+face = "south"
+count = 5
+name = "南岭脚滚石"
+xy = [150, 118]
+size = [12, 6]
+h_m = 2
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg100-c1"
+eye = [100, 147]
+target = [100, 80]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

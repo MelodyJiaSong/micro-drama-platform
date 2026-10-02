@@ -1,0 +1,222 @@
+# 乌鸦岭 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 换算：本图原点 ＝ 区级平面图（bg126）世界坐标 (374, 810)；主干道与墓地岔路按 bg126 terrain.toml 的折线平移过来（地图量取）。
+# 区图 [19, 55] / [21, 55] 两个房屋图标落在本图 (94, 102) / (156, 107)；其余木屋、板车、菜地为推定。
+# 锚点机位：村口东侧主干道 (232, 140)，朝西北顺主街仰视。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg129"
+name_zh = "乌鸦岭"
+size_m = [240, 240]
+px_per_m = 4.0
+grid_m = 20
+scale_src = "地图量取"
+scale_note = "主干道、岔路与两个房屋图标按区图量取（±30 m）；单栋尺寸、其余建筑与菜地推定"
+# 世界树画面：西部的空村，房子还立着但门窗全黑，没有炊烟没有人声，只有风吹旧木招牌的响动；村口一辆空的运棺板车
+absent = [
+    "任何亮着的窗、灯笼、烛火、炊烟与火（全村没有一盏灯）",
+    "狼人难民营 / 帐篷 / 飞行点木台（都是 4.0.3a 之后才加的）",
+    "棺材本身 / 车上的货物 / 挽车的牲口（板车是空的）",
+    "带字的招牌 / 告示 / 路牌（招牌板面磨白无字）",
+    "水井 / 磨坊 / 石砌教堂（村里只有木屋）",
+    "太阳 / 蓝天 / 月亮圆盘",
+    "任何人物、动物、乌鸦与飞鸟",
+]
+
+[[ridge]]
+name = "北坡（墓地缓丘的南坡）"
+poly = [[0, 0], [240, 0], [240, 22], [120, 30], [0, 40]]
+height_m = 15
+src = "地图量取"
+note = "区图墓地在村北、地势抬起；坡顶即 bg134 墓碑群"
+
+[[road]]
+name = "主干道（西南→东北擦过村子南缘）"
+path = [[0, 227], [110, 178], [218, 128], [240, 131]]
+width_m = 8
+src = "地图量取"
+
+[[road]]
+name = "村内主街（村口岔路，西北再折北上坡进墓地）"
+path = [[218, 128], [180, 104], [144, 79], [132, 40], [122, 0]]
+width_m = 5
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p111"
+face = "south"
+name = "空运棺板车"
+xy = [206, 118]
+size = [5, 2]
+h_m = 1.3
+rot = -35
+src = "推定"
+note = "村口，顺主街方向停；长车斗空、两只大木轮、一只陷泥半尺，车辕杵地、无牲口"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p107"
+face = "south"
+name = "挂招牌的前铺面屋"
+xy = [185, 124]
+size = [13, 10]
+h_m = 8
+rot = -30
+src = "推定"
+note = "比别家宽；门廊铁臂吊旧木招牌，一边铁链断，板面磨白无字"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p107"
+face = "east"
+name = "主街西侧木屋（图标）"
+xy = [156, 107]
+size = [10, 9]
+h_m = 7
+src = "地图量取"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p107"
+face = "south"
+name = "西侧支路木屋（图标）"
+xy = [94, 102]
+size = [10, 9]
+h_m = 7
+src = "地图量取"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p107"
+face = "east"
+name = "主街西侧坡上木屋"
+xy = [112, 62]
+size = [9, 8]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p107"
+face = "west"
+name = "主街东侧木屋"
+xy = [175, 80]
+size = [9, 8]
+h_m = 7
+src = "推定"
+note = "锚点画面右手第一栋"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p107"
+face = "west"
+name = "带阳台的高木屋"
+xy = [160, 55]
+size = [10, 9]
+h_m = 10
+src = "推定"
+note = "锚点画面右手第二栋，全村最高；二楼挑窄木阳台、栏杆断两根、阳台门大敞"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p107"
+face = "south"
+into_ridge = true
+name = "坡顶脚下木屋"
+xy = [140, 24]
+size = [9, 8]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "西侧荒菜地"
+xy = [70, 135]
+size = [40, 25]
+h_m = 0.3
+src = "推定"
+note = "篱笆塌到膝盖高，只剩黑杂草"
+
+[[block]]
+id = "b10"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "东侧荒菜地"
+xy = [205, 70]
+size = [30, 20]
+h_m = 0.3
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "graveyard"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "坡顶墓碑群（另档）"
+bg = "bg134"
+xy = [110, 8]
+size = [100, 14]
+h_m = 1.5
+src = "推定"
+note = "本档只作北面天际线：墓碑与歪十字架剪影没入浓雾"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p112"
+face = "south"
+count = 32
+name = "路南枯林"
+xy = [175, 215]
+size = [120, 40]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p112"
+face = "south"
+count = 26
+name = "村西枯林"
+xy = [20, 95]
+size = [36, 110]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "palisade"
+face = "south"
+count = 1
+name = "村口无字木桩"
+xy = [226, 120]
+size = [0.5, 0.5]
+h_m = 1.5
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg129-c1"
+eye = [120, 19]
+target = [120, 120]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

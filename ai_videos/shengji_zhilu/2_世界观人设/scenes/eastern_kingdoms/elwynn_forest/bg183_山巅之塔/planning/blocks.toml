@@ -1,0 +1,178 @@
+# 山巅之塔 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 量取口径：区图 WorldMap-Elwynn_c60.jpg 塔图标约 [86, 78]（1 px ≈ 3.17 m）；大道在塔北约 40 px、大河在塔南约 45 px、东界山脚在塔东约 60 px。
+
+[meta]
+bg = "bg183"
+name_zh = "山巅之塔"
+size_m = [500, 400]
+px_per_m = 3.0
+scale_src = "地图量取"
+scale_note = "区图塔图标与北侧大道、南侧大河、东侧山脚的像素距离 × 3.17 m/px 量取；塔身尺寸（约 8 m 见方、塔顶平台约 18 m 高）为推定"
+# 世界树画面：东南高地上的孤立哨塔，石基木顶，塔顶一盆常燃的火；塔下能俯瞰通往赤脊山与暮色森林的岔路
+absent = [
+    "桥（区图未画过河点，本档不出现任何桥）",
+    "民居 / 农舍 / 旅店 / 聚落（孤塔，塔下无人家）",
+    "飞行点 / 狮鹫栖木 / 飞行管理员（旧世本区零飞行点）",
+    "城墙 / 城堡 / 石砌围墙（只有木桩栅栏小院）",
+    "夜景 / 火把阵 / 营火（塔顶火盆是唯一人工光源）",
+    "训练假人 / 木桩靶",
+    "秋色枯叶 / 雪 / 浓雾（本区是正午偏午后的饱和翠绿）",
+    "针叶林（是阔叶橡林）",
+]
+
+[[ridge]]
+name = "东界山墙山脚（灰白裸岩带赭纹，下覆深绿坡林）"
+poly = [[420, 0], [500, 0], [500, 400], [478, 400], [462, 330], [440, 250], [425, 170], [438, 90], [410, 40]]
+height_m = 120
+src = "地图量取"
+
+[[ridge]]
+name = "塔下圆背缓丘（草坡高地，四面缓坡无崖）"
+poly = [[160, 150], [250, 132], [310, 160], [330, 220], [300, 280], [220, 296], [165, 270], [140, 210]]
+height_m = 12
+src = "地图量取"
+
+[[road]]
+name = "东出大道（东北钻进山口）"
+path = [[0, 92], [120, 86], [240, 80], [340, 72], [400, 52], [440, 20], [456, 0]]
+width_m = 8
+src = "地图量取"
+
+[[road]]
+name = "贴山脚南下的岔路（推定）"
+path = [[370, 66], [392, 130], [405, 210], [410, 290], [404, 336]]
+width_m = 3
+src = "推定"
+
+[[road]]
+name = "塔脚踏痕小径"
+path = [[210, 84], [216, 130], [226, 176], [229, 200]]
+width_m = 1.5
+src = "推定"
+
+[[water]]
+name = "南界大河（东入西出，对岸黑林）"
+path = [[500, 352], [420, 350], [320, 356], [220, 362], [120, 364], [0, 360]]
+width_m = 40
+depth_m = 3
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p147"
+face = "north"
+into_ridge = true
+name = "石基木顶瞭望塔"
+xy = [230, 210]
+size = [8, 8]
+h_m = 18
+src = "地图量取"
+note = "区图孤塔图标位置；下三分之二灰色粗琢石、上层外挑原木瞭望间、顶部木板平台与三足铁火盆；门朝北"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p166"
+face = "east"
+into_ridge = true
+name = "外置折梯"
+xy = [230, 203]
+size = [6, 2]
+h_m = 12
+src = "推定"
+note = "贴塔北墙，折两次通瞭望间侧门"
+
+[[block]]
+id = "b03"
+kind = "yard"
+face = "north"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "塔脚木桩栅栏小院"
+xy = [230, 212]
+size = [30, 26]
+h_m = 0
+src = "推定"
+note = "半人高木桩栅栏，北侧留无门扇缺口对小径"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p160"
+face = "south"
+into_ridge = true
+name = "柴垛"
+xy = [240, 222]
+size = [5, 2]
+h_m = 1.5
+src = "推定"
+note = "塔顶火盆的燃料，靠塔东南墙码齐"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p151"
+face = "south"
+count = 4
+over_water = true
+name = "河岸柳丛"
+xy = [395, 330]
+size = [40, 16]
+h_m = 8
+src = "推定"
+note = "岔路消失处"
+
+[[block]]
+id = "b06"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "河岸土坎与卵石滩"
+xy = [230, 336]
+size = [300, 10]
+h_m = 0
+src = "推定"
+note = "一人多高的土坎，坎下卵石滩"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p113"
+face = "south"
+count = 10
+name = "大道南侧橡树丛"
+xy = [60, 140]
+size = [70, 50]
+h_m = 20
+src = "推定"
+note = "大道向西退回的林子"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p113"
+face = "south"
+count = 30
+over_water = true
+name = "对岸黑绿密林"
+xy = [250, 390]
+size = [500, 20]
+h_m = 22
+src = "地图量取"
+note = "河对岸树色明显更黑更沉（南邻区的开始）"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg183-c1"
+eye = [250, 32]
+target = [250, 200]
+eye_h = 16.7
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

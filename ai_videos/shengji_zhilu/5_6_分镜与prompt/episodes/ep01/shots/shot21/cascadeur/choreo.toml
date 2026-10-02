@@ -1,0 +1,149 @@
+# shot21 人体动作表（Cascadeur 层）。位置与朝向一律从 ../planning/overhead.toml 读，这里只写「身体摆成什么样」。
+# 改动作 ＝ 改本文件重跑 `python tools/cascadeur/choreo.py <shot 目录> --build`；部件都在共享库 tools/cascadeur/poses.toml。
+# 时刻与 shot21.md `动作:` 时间轴、overhead 的 [[hit]] / [[react]] / [[cast]] 逐拍对齐（rule 4h ②；follow-up 049 重排：先有光再扑；
+# follow-up 065：读条按原典 2.5 s——光 14.9s 起，加瑞克 15.1s 才扑，之前杜克多扛两斧）。
+
+[meta]
+origin = [11.5, 16.5]          # 平面图坐标；Cascadeur 原点 ＝ 杜克起身后挡在亚伦前面的那一点
+fps = 30
+
+# 杜克：0–0.8s 跪着罩住亚伦（斧刃卡在背上的木盾里，0.8s 背带崩断往前一扑）；0.8–2.8s 起身、转身、钢盾举起；
+# 4 / 5.6 / 7.2 / 8.8 / 10.4 / 11.4 / 12.6 / 13.8s 扛斧；15.1–15.5s 往东横跨截住（一）、15.7s 扛；16.1–16.6s 往西横跨截住（二）、16.8s 扛一斧膝盖一沉；
+# 17.7s 光柱落下，18.3s 站直；19.4s 扛第四斧、20.2s 钢盾一顶；21.6s 往东让开那条线；23.4s 冲上去盾沿磕下巴
+[actor."杜克"]
+keys = [
+  [0.0, "kneel_r"],
+  [0.8, "kneel_r"],
+  [1.6, "stand"],
+  [2.2, "stance_l+shield_guard"],
+  [3.7, "stance_l+shield_guard"],
+  [4.1, "stance_l+shield_brace"],
+  [4.6, "stance_l+shield_guard"],
+  [5.3, "stance_l+shield_guard"],
+  [5.7, "stance_l+shield_brace"],
+  [6.2, "stance_l+shield_guard"],
+  [6.9, "stance_l+shield_guard"],
+  [7.3, "stance_l+shield_brace"],
+  [7.8, "stance_l+shield_guard"],
+  [8.5, "stance_l+shield_guard"],
+  [8.9, "stance_l+shield_brace"],
+  [9.4, "stance_l+shield_guard"],
+  [10.1, "stance_l+shield_guard"],
+  [10.5, "stance_l+shield_brace"],
+  [11.0, "stance_l+shield_guard"],
+  [11.5, "stance_l+shield_brace"],
+  [12.0, "stance_l+shield_guard"],
+  [12.3, "stance_l+shield_guard"],
+  [12.7, "stance_l+shield_brace"],
+  [13.2, "stance_l+shield_guard"],
+  [13.5, "stance_l+shield_guard"],
+  [13.9, "stance_l+shield_brace"],
+  [14.4, "stance_l+shield_guard"],
+  [15.1, "stance_l+shield_guard"],
+  [15.5, "lunge+shield_guard"],
+  [15.8, "stance_l+shield_brace"],
+  [16.1, "stance_l+shield_guard"],
+  [16.6, "lunge+shield_guard"],
+  [16.9, "brace_sink+shield_brace"],
+  [17.4, "brace_sink+shield_guard"],
+  [17.7, "brace_sink+shield_guard"],
+  [18.3, "stance_l+shield_guard"],
+  [19.1, "stance_l+shield_guard"],
+  [19.5, "stance_l+shield_brace"],
+  [20.2, "lunge+shield_shove"],
+  [20.6, "stance_l+shield_guard"],
+  [21.6, "stance_l+shield_guard"],
+  [23.0, "stance_l+shield_guard"],
+  [23.4, "lunge+shield_shove"],
+  [24.0, "stance_l+shield_guard"],
+  [25.0, "stand+shield_low+breathe"],
+  [27.0, "stand+shield_low+breathe"],
+]
+
+# 加瑞克：0–0.8s 拽卡在杜克背上木盾里的斧、0.8s 背带崩断往后踉跄；1.6–3.2s 右脚踩住木头把斧刃拔出来；4s 起每一斧不超过两秒；
+# 12.6 / 13.8s 再两斧；15.1s（光亮之后）才起跑往东绕，15.7s 撞上钢盾；16s 从北侧绕到西边，16.8s 又撞上；
+# 17.7s 光柱落下，18s 被晃得往后一缩；19.4s 回来劈第四斧，20.2s 被钢盾顶退；21.5s 抡圆了；23s 光打胸口、23.4s 盾沿磕下巴，踉跄两步、24.6s 仰面倒
+[actor."加瑞克"]
+gait = [[15.1, 15.5, "run", "twohand_chop_ready"], [15.95, 16.6, "run", "twohand_chop_ready"]]
+keys = [
+  [0.0, "stance_l+twohand_tug"],
+  [0.8, "stance_l+twohand_tug"],
+  [1.2, "step_back+twohand_tug"],
+  [1.6, "step_back+twohand_tug"],
+  [2.0, "stomp_r+twohand_pull_up"],
+  [2.6, "stomp_r+twohand_pull_up"],
+  [3.2, "stand+twohand_chop_ready"],
+  [3.5, "walk_a+twohand_windup"],
+  [3.75, "walk_b+twohand_windup"],
+  [4.0, "lunge_small+twohand_chop"],
+  [4.5, "stance_l+twohand_low"],
+  [5.3, "stance_l+twohand_windup"],
+  [5.6, "lunge_small+twohand_chop"],
+  [6.1, "stance_l+twohand_low"],
+  [6.9, "stance_l+twohand_windup"],
+  [7.2, "lunge_small+twohand_chop"],
+  [7.7, "stance_l+twohand_low"],
+  [8.5, "stance_l+twohand_windup"],
+  [8.8, "lunge_small+twohand_chop"],
+  [9.3, "stance_l+twohand_low"],
+  [10.1, "stance_l+twohand_windup"],
+  [10.4, "lunge_small+twohand_chop"],
+  [10.8, "stance_l+twohand_low"],
+  [11.1, "stance_l+twohand_windup"],
+  [11.4, "lunge_small+twohand_chop"],
+  [11.9, "stance_l+twohand_low"],
+  [12.3, "stance_l+twohand_windup"],
+  [12.6, "lunge_small+twohand_chop"],
+  [13.1, "stance_l+twohand_low"],
+  [13.5, "stance_l+twohand_windup"],
+  [13.8, "lunge_small+twohand_chop"],
+  [14.3, "stance_l+twohand_low"],
+  [14.9, "stance_l+twohand_chop_ready"],
+  [15.7, "lunge+twohand_chop"],
+  [15.95, "stance_l+twohand_chop_ready"],
+  [16.8, "lunge+twohand_chop"],
+  [17.2, "stance_l+twohand_low"],
+  [18.0, "step_back+twohand_low"],
+  [18.8, "stance_l+twohand_low"],
+  [19.1, "stance_l+twohand_windup"],
+  [19.4, "lunge_small+twohand_chop"],
+  [19.9, "stance_l+twohand_low"],
+  [20.2, "step_back+twohand_low"],
+  [20.6, "stance_l+twohand_low"],
+  [21.5, "stance_l+twohand_windup"],
+  [23.0, "stance_l+twohand_windup"],
+  [23.4, "step_back+twohand_low"],
+  [24.0, "step_back+twohand_low"],
+  [24.6, "fall_back"],
+  [27.0, "fall_back"],
+]
+
+# 亚伦：0–1s 坐在土里（跪着撑地）；2s 撑起来，2–5.5s 捂着肚子挪到杜克身后两步；6.9–7.8s 左掌一亮、攥灭；14.4s 喘匀站稳，
+# 14.9s 左掌在腰侧起光、15.4s 抬到头侧（技能卡 k201 蓄光两段）；17.4s 左手笔直举过头顶放光，18.4s 放下；21.8s 双手金光一闪、22.2s 左手朝加瑞克一指（审判）
+[actor."亚伦"]
+gait = [[2.0, 5.5, "walk", "hammer_r_low"]]
+keys = [
+  [0.0, "kneel_r+hammer_r_low"],
+  [1.0, "kneel_r+hammer_r_low"],
+  [2.0, "stand+hammer_r_low+breathe"],
+  [5.5, "stand+hammer_r_low+breathe"],
+  [6.4, "stand+hammer_r_low"],
+  [6.9, "stand+hammer_r_low+palm_up_l"],
+  [7.8, "stand+hammer_r_low+palm_up_l"],
+  [8.3, "stand+hammer_r_low"],
+  [14.4, "stand+hammer_r_low"],
+  [14.9, "stand+hammer_r_low+light_low_l"],
+  [15.2, "stand+hammer_r_low+light_low_l"],
+  [15.4, "stand+hammer_r_low+light_high_l"],
+  [17.2, "stand+hammer_r_low+light_high_l"],
+  [17.4, "stand+hammer_r_low+arm_up_l"],
+  [17.9, "stand+hammer_r_low+arm_up_l"],
+  [18.4, "stand+hammer_r_low"],
+  [21.6, "stand+hammer_r_low"],
+  [21.8, "stand+hammer_r_low+palm_up_l"],
+  [22.2, "stance_l+hammer_r_low+point_l"],
+  [23.0, "stance_l+hammer_r_low+point_l"],
+  [23.4, "stance_l+hammer_r_low"],
+  [25.0, "stand+hammer_r_low+breathe"],
+  [27.0, "stand+hammer_r_low+breathe"],
+]

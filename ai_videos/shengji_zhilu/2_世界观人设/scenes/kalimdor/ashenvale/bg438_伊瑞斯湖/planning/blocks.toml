@@ -1,0 +1,215 @@
+# 伊瑞斯湖 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+# 场地原点 ＝ 区级平面图 (2240, 1420) m；区级「伊瑞斯湖」水面中心 (2441, 1622) 落在本场地 (201, 202)。
+
+[meta]
+bg = "bg438"
+name_zh = "伊瑞斯湖"
+size_m = [400, 400]
+px_per_m = 3.0
+scale_src = "地图量取"
+scale_note = "湖面位置与大小、两道林梁、北面石山脚按区级 terrain.toml（伊瑞斯湖 / 狼嚎谷山群）与区图 4× 放大量取平移换算；泥岛大小、花带宽度推定"
+# 世界树画面：阿斯特兰纳以东的椭圆小湖，水面浮着成片鸢尾，岸边芦苇高过人
+absent = [
+    "干涸湖床、裸露泥底与湖底遗迹（4.0.3 后才被抽干；旧世湖水是满的）",
+    "任何建筑、码头、栈桥、石阶与石基",
+    "通到湖边的道路（主干道在南面约 350 m 外）",
+    "湖心小镇的紫色尖顶（被西南林梁挡住，不入画）",
+    "火光、火堆、灯笼与任何人工光源；发光的湖水或花",
+    "任何人物与动物",
+    "雪、冰面、沙滩与开阔草原",
+]
+
+[[ridge]]
+name = "北面石山山脚（北中部石山群南缘）"
+poly = [[30, 0], [400, 0], [400, 70], [343, 56], [250, 40], [150, 20]]
+height_m = 120
+src = "地图量取"
+note = "区级「狼嚎谷山群」南缘 (2267,1405)→(2583,1476) 平移换算"
+
+[[ridge]]
+name = "西林梁（顺湖岸向西南）"
+poly = [[140, 215], [165, 250], [135, 300], [95, 360], [55, 400], [10, 400], [50, 330], [95, 260]]
+height_m = 15
+src = "地图量取"
+note = "区图湖西南那道坡线，约 [45, 47-50]"
+
+[[ridge]]
+name = "东林梁（自湖东南角斜伸向东北）"
+poly = [[255, 255], [300, 235], [355, 200], [400, 165], [400, 230], [345, 262], [285, 290]]
+height_m = 18
+src = "地图量取"
+note = "区图湖东南那道坡线，约 [46.5-50, 43.5-47.5]，比西梁稍陡"
+
+[[water]]
+name = "湖面（椭圆，南北略长）"
+path = [[201, 140], [201, 264]]
+width_m = 125
+depth_m = 5
+src = "地图量取"
+note = "区图约 [46.3, 46]，约 130 × 145 m"
+
+[[water]]
+name = "南岸溢水细溪（流向小镇东侧长潭）"
+path = [[200, 266], [180, 315], [150, 365], [120, 400]]
+width_m = 3
+depth_m = 0.4
+src = "地图量取"
+note = "区图湖下方那道细水线，南流约 200 m 注入 [44.8, 52.7] 的长潭"
+
+[[block]]
+id = "b01"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "湖心低泥岛（芦苇与鸢尾丛生）"
+xy = [203, 185]
+size = [45, 38]
+h_m = 0.4
+rot = 0
+src = "地图量取"
+note = "区图湖心那块深色小岛；岛面只高出水面一尺多"
+
+[[block]]
+id = "b02"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "南岸泥滩与溢水口（机位所在）"
+xy = [200, 270]
+size = [60, 16]
+h_m = 0
+rot = 0
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p390"
+face = "south"
+count = 17
+name = "南岸芦苇墙·西"
+xy = [165, 262]
+size = [18, 24]
+h_m = 2.5
+rot = 0
+src = "推定"
+note = "秆高过人一头多"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p390"
+face = "south"
+count = 17
+name = "南岸芦苇墙·东"
+xy = [237, 262]
+size = [18, 24]
+h_m = 2.5
+rot = 0
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p390"
+face = "south"
+count = 30
+name = "鸢尾花带·北岸浅水"
+xy = [201, 150]
+size = [90, 14]
+h_m = 0.6
+rot = 0
+src = "推定"
+note = "环岸一整圈浅水花带，四段合成一圈"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p390"
+face = "south"
+count = 30
+name = "鸢尾花带·南岸浅水"
+xy = [201, 252]
+size = [90, 14]
+h_m = 0.6
+rot = 0
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p390"
+face = "south"
+count = 30
+name = "鸢尾花带·西岸浅水"
+xy = [148, 202]
+size = [14, 90]
+h_m = 0.6
+rot = 0
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p390"
+face = "south"
+count = 30
+name = "鸢尾花带·东岸浅水"
+xy = [254, 202]
+size = [14, 90]
+h_m = 0.6
+rot = 0
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p377"
+face = "south"
+name = "倒入水中的灰白古树（泡水多年）"
+xy = [262, 170]
+size = [30, 3]
+h_m = 1
+rot = -25
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p378"
+face = "south"
+name = "带旧水位线的半埋圆石"
+xy = [140, 245]
+size = [3, 3]
+h_m = 1.2
+rot = 0
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p372"
+face = "south"
+count = 40
+name = "北岸抬升林坡（银灰古树）"
+xy = [200, 95]
+size = [220, 70]
+h_m = 25
+rot = 0
+src = "推定"
+note = "湖北岸到石山脚之间的林坡，连续抬升几十米"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg438-c1"
+eye = [200, 368]
+target = [200, 200]
+eye_h = 13.3
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

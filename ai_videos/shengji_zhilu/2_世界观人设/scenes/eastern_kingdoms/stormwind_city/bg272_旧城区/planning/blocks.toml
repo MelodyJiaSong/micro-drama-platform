@@ -1,0 +1,245 @@
+# 旧城区 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg272"
+name_zh = "旧城区"
+size_m = [200, 200]
+px_per_m = 6.0
+scale_src = "推定"
+scale_note = "区级平面图 b905 量得旧城区约 145 × 145 m（地图量取），本图外扩到 200 m 以带上西侧运河、南墙下宽水与东城墙；街区内部布局无一手出处，全部推定"
+# 世界树画面：墙体是发黄发灰的旧石与外露的深褐木构架，街道狭窄曲折、地面湿污，墙面爬着水渍霉斑，屋檐低垂几乎相接，晾衣绳横跨巷口
+absent = [
+    "旅店客房 / 可住宿的旅店（旧世这里只有一间酒馆，旅店老板 4.0.1 才加）",
+    "集中全部职业训练师的训练大厅（9.0.1；旧世营院只是城军指挥所，训练师分散各区）",
+    "升起或拆掉的铁闸门（旧世一直紧闭，4.0.3a 才移除）",
+    "城墙与屋顶上的焦黑爪痕、塌毁的街区（4.0.3a 之后）",
+    "港口 / 码头（3.0.2）；运河淤泥、芦苇、露出水面的杂物（4.0.3a）",
+    "招牌上的文字；夜景 / 火光 / 灯笼（默认态是白天，唯一光源日光）",
+    "任何人物、动物",
+]
+
+[[water]]
+name = "运河·贸易区↔旧城区段（西缘）"
+width_m = 20
+depth_m = 4
+path = [[10, 0], [10, 184]]
+src = "推定"
+note = "对应区级 terrain.toml 同名段；本图把它拉直成西缘"
+
+[[water]]
+name = "英雄谷护城水面·东片（南墙下宽水）"
+width_m = 16
+depth_m = 5
+path = [[0, 192], [200, 192]]
+src = "推定"
+note = "对应区级 terrain.toml「英雄谷护城水面·东片」"
+
+[[road]]
+name = "主街（西桥头 → 小广场）"
+width_m = 6
+path = [[22, 75], [50, 78], [75, 80], [95, 92]]
+src = "推定"
+
+[[road]]
+name = "东北巷（小广场 → 要塞吊桥方向，爬坡）"
+width_m = 4
+path = [[108, 80], [125, 60], [150, 38], [160, 0]]
+src = "推定"
+note = "区级平面图「旧城区 → 要塞（沿运河北上到吊桥）」"
+
+[[road]]
+name = "东南巷（小广场 → 封闭石厅）"
+width_m = 4
+path = [[110, 108], [128, 138], [150, 152]]
+src = "推定"
+
+[[road]]
+name = "北巷（主街 → 北侧民居）"
+width_m = 3
+path = [[60, 70], [78, 45], [95, 18]]
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "arch_bridge"
+face = "south"
+count = 1
+over_water = true
+name = "西桥（过运河的主入口石桥）"
+xy = [11, 75]
+size = [22, 8]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "临河石墙与紧闭的铁栅闸门"
+xy = [26, 38]
+size = [5, 22]
+h_m = 9
+src = "推定"
+note = "旧世独有，常年紧闭；原典只说在旧城区与贸易区之间，具体位置推定在桥北"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p290"
+face = "south"
+name = "主街北侧铺面排（毒药 / 皮甲 / 鞋靴等窄门脸）"
+xy = [50, 62]
+size = [44, 14]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p290"
+face = "north"
+name = "主街南侧铺面排（刀剑 / 盾牌 / 护甲等窄门脸）"
+xy = [50, 94]
+size = [44, 14]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "小广场（湿石板）"
+xy = [95, 95]
+size = [40, 32]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p289"
+face = "south"
+name = "低矮两层木构酒馆"
+xy = [95, 67]
+size = [22, 14]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p301"
+face = "south"
+name = "广场角苹果树"
+xy = [111, 108]
+size = [6, 6]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p292"
+face = "southwest"
+name = "不挂招牌的封闭石楼（情报机构）"
+xy = [140, 50]
+size = [18, 16]
+h_m = 10
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p289"
+face = "south"
+count = 5
+name = "北侧民居群"
+xy = [95, 30]
+size = [40, 24]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p289"
+face = "north"
+count = 6
+name = "南侧民居群"
+xy = [70, 140]
+size = [50, 26]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p292"
+face = "south"
+name = "城军营楼（指挥所）"
+xy = [152, 96]
+size = [46, 14]
+h_m = 11
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "露天沙地训练场"
+xy = [148, 124]
+size = [36, 26]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p304"
+face = "west"
+name = "木栅马厩"
+xy = [181, 124]
+size = [12, 26]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p292"
+face = "northwest"
+name = "东南端封闭石厅"
+xy = [160, 164]
+size = [30, 18]
+h_m = 12
+src = "推定"
+note = "原典：旧城区东南端"
+
+[[block]]
+id = "b15"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "城墙·东段"
+xy = [196, 92]
+size = [6, 184]
+h_m = 18
+src = "推定"
+note = "对应区级「城墙·旧城区东段」"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg272-c1"
+eye = [100, 184]
+target = [100, 100]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

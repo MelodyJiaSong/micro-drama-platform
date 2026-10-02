@@ -1,0 +1,174 @@
+# 博伦的巢穴 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 换算：世界树坐标 [61, 76] → bg247 的 (2342.7, 1945.8) m → 本图 (240, 200)，即原点 ＝ bg247 的 (2102.7, 1745.8) m。
+# 两条路与三面山从 ref/ 裁切图量取（裁切图约 0.91 m/px，红十字在 (362, 242) px）；洞口、空地、松林带为推定。
+
+[meta]
+bg = "bg259"
+name_zh = "博伦的巢穴"
+size_m = [480, 360]
+px_per_m = 3.2
+scale_src = "地图量取"
+scale_note = "区图 WorldMap-Silverpine_c60 宽 1002 px ＝ 区宽 3840 m（bg247 同一换算）；裁切图放大约 4.2 倍（≈0.91 m/px），两条路与山体轮廓由裁切图量取，洞口与树桩空地的位置、尺寸为推定"
+# 世界树画面：密林深处的洞穴口，四周是被啃断的粗树桩
+absent = ["任何建筑 / 棚屋 / 帐篷 / 图腾（本档零人造物）", "斧锯的平口树桩 / 伐木场 / 木材堆（树桩一律是啃断的）", "营火与任何火光 / 人工光", "洞内亮光（洞口漆黑）", "水体（本档没有溪与潭）", "血迹与腐肉", "农田", "雪", "阔叶林", "翠绿草地"]
+
+[[ridge]]
+name = "北面松林山（磨坊村南三角山的南坡；坡脚土石崖上开洞）"
+poly = [[0, 20], [60, 0], [255, 0], [270, 60], [285, 120], [280, 160], [230, 168], [160, 162], [90, 160], [30, 158], [0, 140]]
+height_m = 60
+src = "地图量取"
+
+[[ridge]]
+name = "东面山地（南北路以东）"
+poly = [[290, 0], [480, 0], [480, 285], [400, 258], [370, 235], [335, 165], [305, 90]]
+height_m = 80
+src = "地图量取"
+
+[[ridge]]
+name = "南面山地（东南大路以南）"
+poly = [[0, 265], [120, 275], [250, 280], [380, 292], [480, 325], [480, 360], [0, 360]]
+height_m = 100
+src = "地图量取"
+
+[[road]]
+name = "东南大路（村口岔口→东南出区）"
+path = [[0, 150], [56, 189], [184, 244], [293, 253], [366, 262], [475, 298]]
+width_m = 6
+src = "地图量取"
+
+[[road]]
+name = "磨坊村南下路（在东南角并入大路）"
+path = [[268, 0], [293, 89], [320, 162], [356, 244], [370, 262]]
+width_m = 5
+src = "地图量取"
+
+[[road]]
+name = "踩踏兽径（洞口→空地西南角→大路）"
+path = [[220, 172], [205, 195], [185, 218], [165, 235]]
+width_m = 1.5
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p286"
+face = "south"
+count = 30
+name = "树桩空地"
+xy = [225, 200]
+size = [70, 60]
+h_m = 1
+src = "推定"
+note = "几十个齐膝到齐腰的粗树桩，锯齿状啃口；中间踩成寸草不生的光地"
+
+[[block]]
+id = "b02"
+into_ridge = true
+kind = "rock_shelf"
+face = "south"
+name = "坡脚土石崖"
+xy = [220, 164]
+size = [70, 6]
+h_m = 6
+src = "推定"
+note = "两三人高，崖顶垂下裸露松根"
+
+[[block]]
+id = "b03"
+may_overlap = true
+kind = "cave_mouth"
+face = "south"
+name = "巢穴洞口"
+xy = [220, 169]
+size = [8, 3]
+h_m = 2
+src = "推定"
+note = "面朝南，约一人高、两人宽，洞内不建；区图巢穴小图标画在北坡上 (211, 107)，洞口按常理落在南麓坡脚"
+
+[[block]]
+id = "b04"
+may_overlap = true
+kind = "asset"
+asset = "p283"
+face = "south"
+name = "洞前横倒的半截松干"
+xy = [222, 177]
+size = [16, 1.5]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b05"
+may_overlap = true
+kind = "asset"
+asset = "p283"
+face = "south"
+name = "空地西侧的啃断老松"
+xy = [194, 196]
+size = [22, 1.2]
+h_m = 1
+rot = 30
+src = "推定"
+
+[[block]]
+id = "b06"
+into_ridge = true
+kind = "asset"
+asset = "p269"
+face = "south"
+count = 40
+name = "空地东侧密松"
+xy = [295, 195]
+size = [40, 70]
+h_m = 20
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p269"
+face = "south"
+count = 20
+name = "空地西侧密松"
+xy = [160, 180]
+size = [40, 30]
+h_m = 20
+src = "推定"
+
+[[block]]
+id = "b08"
+may_overlap = true
+kind = "asset"
+asset = "p269"
+face = "south"
+count = 20
+name = "西南角松林（兽径穿过）"
+xy = [170, 214]
+size = [50, 22]
+h_m = 20
+src = "推定"
+
+[[block]]
+id = "b09"
+may_overlap = true
+kind = "asset"
+asset = "p269"
+face = "south"
+count = 18
+name = "路北松林带（挡住路上视线）"
+xy = [250, 238]
+size = [130, 8]
+h_m = 20
+rot = 4
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg259-c1"
+eye = [240, 331]
+target = [240, 180]
+eye_h = 16.0
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -1,0 +1,195 @@
+# 巴克布雷农场 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 原典只有「林边的小农场，两间木屋与南瓜地」，区图无点位 → 全部推定，局部坐标，不挂 bg247 坐标系。
+
+[meta]
+bg = "bg249"
+name_zh = "巴克布雷农场"
+size_m = [160, 140]
+px_per_m = 6.0
+scale_src = "推定"
+scale_note = "区图无高亮块、坐标表无记录（客户端区域表有名、后被移除），位置与尺寸都没有一手出处；按「两间木屋 + 一块南瓜地」的小农场取 160 × 140 m 局部场地。排镜前须先在区图上定点位"
+# 世界树画面：林边的小农场，两间木屋与南瓜地
+absent = [
+    "人物、牲畜与看门狗（默认态人去屋空）",
+    "水井、谷仓、晾衣绳（本区另两处农庄的标志，本卡没有）",
+    "稻草人与南瓜灯",
+    "火光、烟囱冒烟与窗灯（白天零人工光源）",
+    "饱满鲜亮的活南瓜与丰收景象（本区田地一律枯死）",
+    "雪与积雪",
+    "阔叶林与翠绿草地",
+    "区级坐标（位置存疑，未挂 bg247 坐标系）",
+]
+
+[[road]]
+name = "西边车辙土路（林间→泥院）"
+path = [[0, 57], [25, 59], [48, 60]]
+width_m = 3
+src = "推定"
+
+[[water]]
+name = "院东浅排水沟（→东侧林边）"
+path = [[92, 62], [110, 64], [130, 72]]
+width_m = 1
+depth_m = 0.3
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p269"
+face = "south"
+count = 40
+name = "北侧松林（林线）"
+xy = [80, 15]
+size = [160, 30]
+h_m = 25
+src = "推定"
+note = "高瘦针叶松，林线在屋后约 10 m"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p269"
+face = "south"
+count = 35
+name = "东侧松林（林线拐弯半包农场）"
+xy = [147, 85]
+size = [26, 110]
+h_m = 25
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p271"
+face = "south"
+name = "大原木屋（一门两窗、西山墙外矮烟囱）"
+xy = [60, 46]
+size = [12, 8]
+h_m = 6
+src = "推定"
+note = "门朝南；门虚掩"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p271"
+face = "south"
+name = "小原木屋（一门、门口靠锄头）"
+xy = [82, 47]
+size = [8, 6]
+h_m = 4.5
+src = "推定"
+note = "墙角四块平石垫高"
+
+[[block]]
+id = "b05"
+kind = "low_wall"
+face = "south"
+name = "劈柴垛（大屋西侧）"
+xy = [50, 47]
+size = [2, 6]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "湿黑泥院"
+xy = [70, 61]
+size = [40, 12]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "南瓜地（藤枯、瓜烂）"
+xy = [70, 96]
+size = [56, 40]
+h_m = 0
+src = "推定"
+note = "向南微倾，雨水顺垄南淌"
+
+[[block]]
+id = "b08"
+kind = "palisade"
+face = "south"
+name = "南瓜地西侧横木栅栏"
+xy = [41, 96]
+size = [1, 40]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "palisade"
+face = "south"
+name = "南瓜地南侧横木栅栏（残段）"
+xy = [85, 117]
+size = [26, 1]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "palisade"
+face = "south"
+name = "倒进田里的一段栅栏（机位旁）"
+xy = [57, 115]
+size = [28, 1]
+h_m = 0.3
+rot = 8
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p286"
+face = "south"
+count = 8
+name = "清地西缘伐木树桩"
+xy = [18, 100]
+size = [24, 50]
+h_m = 0.6
+src = "推定"
+note = "旁边躺着几根没劈的原木"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p286"
+face = "south"
+count = 8
+name = "清地东缘伐木树桩"
+xy = [122, 95]
+size = [16, 70]
+h_m = 0.6
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "palisade"
+face = "south"
+name = "进院门桩（一对，无横梁）"
+xy = [40, 60]
+size = [1, 5]
+h_m = 2
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）：场地被体块占满，放在室内
+[[anchor]]
+key = "bg249-c1"
+eye = [80, 119]
+target = [80, 28]
+eye_h = 1.65
+lens_mm = 24
+inside = true
+note = "室内南端朝北；自动生成，排镜时按需改"

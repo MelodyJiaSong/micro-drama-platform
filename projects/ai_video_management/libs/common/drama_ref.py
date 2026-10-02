@@ -89,6 +89,35 @@ def drama_depth(root: Path, parts: Sequence[str]) -> int | None:
     return 3
 
 
+def asset_root_depth(root: Path, parts: Sequence[str]) -> int | None:
+    """How many leading segments name the folder that OWNS the asset at `parts`.
+
+    A drama root owns its own `characters/` / `scenes/` / `props/` — but so does
+    a series' shared `ai_videos/{series}/_series/` dir, which is where a
+    character reused by several episodes lives and where its only copy is
+    allowed to live (CLAUDE.md § AI video rules, 2026-09-15).
+
+    `drama_depth` cannot answer this: it returns None for `_series` precisely
+    because `_series` is not a drama, and that is correct for everything keyed
+    to an episode (episodes, takes, subtitles, bgm). Anything validating an
+    ASSET path has to accept both owners, so it asks this instead. Returns 2 or
+    3 for a drama root, 3 for a series' shared dir, None otherwise.
+    """
+    depth = drama_depth(root, parts)
+    if depth is not None:
+        return depth
+    if (
+        len(parts) >= 3
+        and parts[0] == AI_VIDEOS_DIR_NAME
+        and parts[1]
+        and not parts[1].startswith("_")
+        and parts[2] == SERIES_SHARED_DIR_NAME
+        and is_series_dir(root / AI_VIDEOS_DIR_NAME / parts[1])
+    ):
+        return 3
+    return None
+
+
 def drama_root_rel(root: Path, parts: Sequence[str]) -> str | None:
     """`ai_videos/{drama}` or `ai_videos/{series}/{drama}` for `parts`, else None."""
     depth = drama_depth(root, parts)

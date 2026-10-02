@@ -1,0 +1,244 @@
+# 奥特兰克废墟 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 城背靠西、北山坡、东敞雪原取自区图裁切（地图量取）；城门朝东来自区级平面图「废墟山道」（推定）的来向；城内落位全部推定。
+
+[meta]
+bg = "bg29"
+name_zh = "奥特兰克废墟"
+size_m = [260, 220]
+px_per_m = 5.0
+scale_src = "推定"
+scale_note = "区级平面图覆盖块 180 × 180 m 为城区本体，本图加上背后山坡与门外雪坡取 260 × 220 m；无一手尺寸出处"
+# 世界树画面：雪中的石城废墟：还立着的宫殿主体、塌掉的教堂与议事厅、一道高大城门与两处墓地，散落着投石机残骸
+absent = [
+    "任何人物（占城的食人魔与城外强盗属 shot 层，不进底图）",
+    "火堆、火把、窗内灯火、炊烟（默认态全冷）",
+    "完整的门扇与完整城墙（城门空洞，城墙只剩残段）",
+    "可读的碑文、匾额与纹章（碑面雪填平，纹章被凿花）",
+    "湖面与紫色穹顶（被西面山群挡住，从城里看不见）",
+    "新修的木构、帐篷与营地设施",
+    "4.0.3a 后并入希尔斯布莱德的新布局",
+]
+
+[[ridge]]
+name = "城西裸岩山坡"
+poly = [[0, 0], [70, 0], [48, 30], [42, 90], [35, 150], [25, 220], [0, 220]]
+height_m = 160
+src = "地图量取"
+
+[[ridge]]
+name = "城北山坡"
+poly = [[70, 0], [260, 0], [260, 18], [190, 24], [120, 22]]
+height_m = 120
+src = "地图量取"
+
+[[ridge]]
+name = "东南山嘴"
+poly = [[200, 220], [260, 185], [260, 220]]
+height_m = 60
+src = "地图量取"
+
+[[road]]
+name = "废墟山道—东门—主街（雪埋石板）"
+path = [[260, 146], [233, 140], [200, 128], [160, 112], [120, 96], [90, 82], [75, 79]]
+width_m = 7
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p17"
+face = "southeast"
+name = "王宫主楼（三层·两座尖锥顶细塔）"
+xy = [75, 55]
+size = [40, 30]
+h_m = 22
+src = "推定"
+note = "世界树画面：还立着的宫殿主体；西北角高台、背贴山坡；塔尖约 30 m"
+
+[[block]]
+id = "b02"
+kind = "low_wall"
+face = "southeast"
+count = 1
+name = "王宫前石阶（雪埋）"
+xy = [75, 76]
+size = [18, 6]
+h_m = 3
+src = "推定"
+note = "高台比城门高一层楼有余；台壁为灰石挡土墙"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p18"
+face = "south"
+name = "议事厅残躯（两层半塌）"
+xy = [130, 62]
+size = [26, 18]
+h_m = 10
+src = "推定"
+note = "世界树画面：塌掉的议事厅；主街北侧中段，正面山墙还立着，二层楼板斜垂"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p18"
+face = "west"
+name = "教堂残墙（三面墙·无顶）"
+xy = [190, 55]
+size = [22, 32]
+h_m = 12
+src = "推定"
+note = "世界树画面：塌掉的教堂；东北角，屋顶塌进厅内"
+
+[[block]]
+id = "b05"
+kind = "graveyard"
+face = "south"
+count = 1
+may_overlap = true
+name = "教堂东侧墓园"
+xy = [225, 52]
+size = [22, 26]
+h_m = 1
+src = "推定"
+note = "两处墓地之一；比街面低半级"
+
+[[block]]
+id = "b06"
+kind = "graveyard"
+face = "south"
+count = 1
+may_overlap = true
+name = "南城墙根墓园"
+xy = [120, 160]
+size = [30, 16]
+h_m = 1
+src = "推定"
+note = "两处墓地之二"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p20"
+face = "east"
+name = "东门双塔拱门（无门扇）"
+xy = [228, 140]
+size = [10, 24]
+h_m = 14
+src = "推定"
+note = "唯一正面入口"
+
+[[block]]
+id = "b08"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "东城墙残段·北"
+xy = [228, 100]
+size = [3, 50]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "东城墙残段·南"
+xy = [228, 166]
+size = [3, 24]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "南城墙残段（断续）"
+xy = [150, 178]
+size = [120, 3]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p27"
+face = "east"
+name = "门外投石器残骸"
+xy = [245, 122]
+size = [8, 6]
+h_m = 3
+src = "推定"
+note = "世界树画面：散落着投石机残骸；木臂折断、半埋雪中"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p27"
+face = "north"
+name = "门内南墙根投石器残骸（翻倒）"
+xy = [195, 155]
+size = [8, 6]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "民居石基·街北"
+xy = [160, 88]
+size = [18, 12]
+h_m = 1
+src = "推定"
+note = "只剩齐膝石基圈"
+
+[[block]]
+id = "b14"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "民居石基·街南"
+xy = [165, 135]
+size = [20, 14]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p18"
+face = "southeast"
+name = "王宫东侧翼（矮一层·屋顶塌洞）"
+xy = [105, 58]
+size = [18, 18]
+h_m = 8
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "北城墙残段（齐腰豁口）"
+xy = [160, 32]
+size = [80, 3]
+h_m = 4
+src = "推定"
+note = "豁口外是陡坡，不通路"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg29-c1"
+eye = [21, 110]
+target = [130, 110]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -1,0 +1,109 @@
+# Cascadeur 共享姿势库（follow-up 032 起步：ep01 shot02 溪边打狼）。每镜 `cascadeur/choreo.toml` 用 `部件+部件` 拼姿势，
+# 后写的覆盖先写的；镜头自己的 [parts] 只放本镜独有的部件，**不许与本库重名**（choreo.py 会拦）。
+# 关节角定义见 tools/cascadeur/casc_fk.py 头注（度）：armL/armR = [前举, 外展, 扭转]、elbowL/R = 屈、hipL/R = [前屈, 外展]、
+# kneeL/R = 屈、lean = 躯干前倾、twist = 躯干转、head = 低头(+)/抬头(-)、drop / lift = 骨盆额外下沉 / 抬起(cm)、ground = "knee" 跪地贴地。
+# 新增部件：先在本库找近似的改一份另起名，截静帧看过再用；数值只写在这里一处。
+
+[gait]
+walk = 0.5     # 一步几秒（choreo 的 gait 段按它交替 _a / _b）
+run = 0.32
+
+[parts]
+# ── 下身：站、走、跑、跪、架势 ──
+stand = {}
+walk_a = {hipL = [24, 0], kneeL = 6, hipR = [-16, 0], kneeR = 28, armL = [-18, 0, 0], armR = [18, 0, 0]}
+walk_b = {hipR = [24, 0], kneeR = 6, hipL = [-16, 0], kneeL = 28, armR = [-18, 0, 0], armL = [18, 0, 0]}
+run_a = {hipL = [48, 0], kneeL = 35, hipR = [-26, 0], kneeR = 75, lean = 14, armR = [40, 0, 0], elbowR = 80}
+run_b = {hipR = [48, 0], kneeR = 35, hipL = [-26, 0], kneeL = 75, lean = 14, armR = [-30, 0, 0], elbowR = 80}
+kneel_r = {hipL = [80, 8], kneeL = 95, hipR = [-4, 0], kneeR = 100, ground = "knee"}          # 右膝着地的单膝跪
+stance_l = {hipL = [30, 4], kneeL = 35, hipR = [-15, 4], kneeR = 25}                          # 左脚在前的应战架势
+step_back = {hipL = [-8, 0], kneeL = 12, hipR = [12, 0], kneeR = 14}                          # 退半步
+shake_r = {hipL = [5, 0], kneeL = 12, hipR = [22, 0], kneeR = 45}                             # 甩右脚（被咬住靴子）
+lunge = {hipL = [55, 4], kneeL = 62, hipR = [-24, 4], kneeR = 16}                             # 大弓步（砸空踉跄 / 顶盾）
+lunge_small = {hipL = [42, 4], kneeL = 48, hipR = [-20, 4], kneeR = 18}                       # 小弓步（短劈）
+kick_back_r = {hipL = [8, 0], kneeL = 18, hipR = [-42, 0], kneeR = 62, lean = 22}             # 右脚往后踢
+hop_down = {hipL = [10, 0], kneeL = 22, hipR = [28, 0], kneeR = 95}                           # 单脚跳·落
+hop_up = {hipL = [2, 0], kneeL = 6, hipR = [30, 0], kneeR = 100, lift = 9}                    # 单脚跳·起
+brace_sink = {hipL = [42, 4], kneeL = 70, hipR = [-12, 4], kneeR = 55, drop = 16}             # 扛住重击、膝盖往下一沉（shot20）
+stomp_r = {hipR = [40, 0], kneeR = 72, hipL = [-4, 0], kneeL = 12}                            # 右脚抬起踩住地上的东西
+fall_back = {lean = -40, head = -25, armL = [70, 40, 0], elbowL = 20, armR = [70, 40, 0], elbowR = 20, hipL = [12, 6], kneeL = 14}  # 挨了一下仰面倒
+sit_ground = {hipL = [88, 8], kneeL = 12, hipR = [84, 12], kneeR = 22, lean = -6}             # 坐倒在地、两腿往前伸（052 shot11）
+
+# ── 上身·双手长柄武器（锤 / 斧 / 长棍；长柄本身由 previz 钩子挂在手上）──
+shoulder_carry = {armR = [70, 30, 0], elbowR = 140}                                           # 右肩扛着赶路
+set_down_r = {armR = [35, 12, 0], elbowR = 15, lean = 30, head = 15}                          # 弯腰把东西放到右脚边
+set_down_l_x = {armR = [38, -35, 0], elbowR = 12, lean = 30, twist = 30, head = 15}          # 右手越过身前把东西撂到左前方地上（052 shot11 跪下撂锤）
+twohand_low = {armL = [38, -12, 0], elbowL = 55, armR = [32, 8, 0], elbowR = 48, lean = 6}   # 双手低位持握
+twohand_windup = {armL = [165, -6, 0], elbowL = 40, armR = [168, 6, 0], elbowR = 38, lean = -8, head = -12}  # 高举过头
+twohand_strike = {armL = [42, -6, 0], elbowL = 6, armR = [44, 6, 0], elbowR = 6, lean = 46, head = 22}      # 大抡砸到底
+twohand_chop_ready = {armR = [82, 32, 0], elbowR = 132, armL = [72, -22, 0], elbowL = 108, lean = 6}         # 握短、收在右肩
+twohand_chop = {armR = [48, 10, 0], elbowR = 22, armL = [46, -12, 0], elbowL = 30, lean = 26, head = 16}    # 短劈
+twohand_rest = {armL = [24, -10, 0], elbowL = 40, armR = [24, 10, 0], elbowR = 40, lean = 9, head = 4}      # 头拄地、喘气
+twohand_tug = {armL = [50, -10, 0], elbowL = 25, armR = [50, 10, 0], elbowR = 25, lean = -16, head = 6}    # 往回拽卡住的斧 / 锤
+twohand_pull_up = {armL = [30, -10, 0], elbowL = 30, armR = [30, 10, 0], elbowR = 30, lean = 30, head = 20}  # 脚踩住、弯腰往上拔
+
+# ── 上身·单手（锤在右手、左手空）──
+hammer_r_low = {armR = [18, 8, 0], elbowR = 25}                                               # 右手垂着提锤
+onehand_windup_r = {armR = [165, 18, 0], elbowR = 70, lean = -6, head = -8}                   # 右手举锤过头
+onehand_swing_r = {armR = [70, 8, 0], elbowR = 8, lean = 18, head = 6}                        # 右手往前抡到底（扔光）
+palm_up_l = {armL = [55, -8, 0], elbowL = 75}                                                 # 左手掌心朝上托在胸前
+palms_up = {armL = [58, -12, 0], elbowL = 72, armR = [58, 12, 0], elbowR = 72, head = 10}          # 两只手掌心朝上托在胸前（起光、聚光，052）
+press_r = {armR = [55, -10, 0], elbowR = 30, lean = 18, head = 12}                          # 右手往前下按住身前那人的肩（052）
+palm_raise_l = {armL = [85, -5, 0], elbowL = 40, head = -6}                                   # 左手举到面前（念祷告、掌心发光）
+arm_up_l = {armL = [172, -4, 0], elbowL = 6, head = -10}                                   # 左手笔直举过头顶（圣光术放出去的那一下，w25 wow.lightvfx.003）
+light_waist = {armL = [18, 20, 0], elbowL = 68, armR = [18, 20, 0], elbowR = 68, head = 8}     # 圣光术蓄光起手：两只手掌心朝上拢在腰侧（w25 hl01，follow-up 065）
+light_low_l = {armL = [18, 20, 0], elbowL = 68}                                              # 同上，只有左手（右手握锤）
+light_high_l = {armL = [15, 70, 90], elbowL = 110, head = 4}                                  # 蓄光 0.5 s 起：左手抬到头侧托着光（w25 hl02–hl03）；右手留在腰侧 / 握锤
+
+# ── 上身·左臂挎盾（盾由 previz 钩子绑在左前臂手背一侧）──
+shield_carry_run = {armL = [42, -16, 0], elbowL = 96}                                         # 跑动中挎盾
+shield_guard = {armL = [52, -26, 0], elbowL = 102, armR = [24, 10, 0], elbowR = 70, lean = 15}   # 举盾护前（前臂竖在胸前）
+shield_brace = {armL = [48, -26, 0], elbowL = 106, armR = [24, 10, 0], elbowR = 75, lean = 5, drop = 5}  # 挨撞那一下
+shield_shove = {armL = [62, -20, 0], elbowL = 94, armR = [36, 10, 0], elbowR = 60, lean = 28}   # 顶盾：前臂保持竖直、靠前压的身体发力
+shield_low = {armL = [16, -10, 0], elbowL = 82, armR = [8, 6, 0], elbowR = 18}               # 盾放低
+strap_tear = {armL = [38, -12, 0], elbowL = 88, armR = [46, -44, 0], elbowR = 96, lean = 10, head = 12}   # 右手扯左前臂上的盾带
+reach_back_r = {armR = [160, 28, 0], elbowR = 135, armL = [20, -8, 0], elbowL = 40, head = -4}            # 右手越过右肩去够背上的盾
+pat_shield_up = {armL = [18, -10, 0], elbowL = 84, armR = [42, -46, 0], elbowR = 92}         # 右手拍盾·抬
+pat_shield_down = {armL = [18, -10, 0], elbowL = 84, armR = [34, -46, 0], elbowR = 106}      # 右手拍盾·落
+flail = {armL = [30, -12, 0], elbowL = 82, armR = [46, 34, 0], elbowR = 28}                  # 失衡时右手乱挥
+
+# ── 上身·通用 ──
+cup_drink = {lean = 38, head = 22, armL = [58, -18, 0], elbowL = 125, armR = [58, 18, 0], elbowR = 125}   # 捧水到嘴边
+cup_freeze = {lean = 18, head = -12, armL = [45, -15, 0], elbowL = 110, armR = [45, 15, 0], elbowR = 110}  # 捧着水抬头愣住
+breathe = {lean = 13, head = 8}                                                               # 喘一口（叠在别的上身部件后）
+# ── 052 shot11：挨打、拖人、互相架着走 ──
+twohand_sweep_a = {armL = [70, -20, 0], elbowL = 30, armR = [72, 10, 0], elbowR = 25, twist = -40, lean = 6}  # 横扫·抡到右边
+twohand_sweep_b = {armL = [66, -10, 0], elbowL = 15, armR = [68, 20, 0], elbowR = 10, twist = 40, lean = 16}  # 横扫·扫到左边
+hit_shoulder_l = {armL = [10, -8, 0], elbowL = 30, armR = [40, -40, 0], elbowR = 110, lean = 18, twist = -12, head = 14}  # 左肩挨一下：左臂一软、右手去捂
+clutch_l = {armL = [4, -6, 0], elbowL = 12, armR = [45, -48, 0], elbowR = 125, head = 10}   # 右手捂着左肩，左臂软软垂着
+arm_limp_l = {armL = [4, -6, 0], elbowL = 12}                                              # 左臂垂着不动（伤臂）
+drag_l = {armL = [45, 5, 0], elbowL = 25, lean = 28, head = 10}                              # 弯腰、左手揪住身前坐着那人的后领往后拖
+arm_over_r = {armR = [80, 75, 0], elbowR = 80}                                              # 右胳膊搭在右边那人的肩上（被架着走）
+arm_around_l = {armL = [15, 70, 0], elbowL = 100}                                           # 左胳膊揽住左边那人的腰（架着人走）
+look_back_r = {twist = -35, head = -5}                                                      # 走着往右后方偏过头
+point_r = {armR = [80, 10, 0], elbowR = 10}                                                 # 右手往前指
+point_l = {armL = [80, -10, 0], elbowL = 10}                                                # 左手往前指（审判出手，技能卡 k202 · 053）
+point_self_r = {armR = [40, -40, 0], elbowR = 120}                                          # 右手指自己胸口
+# ── 052 shot15 / shot16 / shot20：大笑、俯身短砸、蹲、递东西、举烛、坐墩、磨斧、格挡、罩住人 ──
+laugh_back = {lean = -6, head = -18}                                                        # 仰头大笑（叠在别的部件后）
+onehand_chop_low_r = {armR = [35, 8, 0], elbowR = 10, lean = 40, head = 25}                 # 俯身、右手往前下短砸（打低处的狼鼻子）
+touch_shoulder_r = {armL = [60, -50, 0], elbowL = 120, head = 8}                            # 左手摸右肩
+squat = {hipL = [105, 10], kneeL = 125, hipR = [105, 10], kneeR = 125, lean = 25}           # 蹲下
+offer_r = {armR = [70, 0, 0], elbowR = 20}                                                  # 右手往前递东西
+hold_up_r = {armR = [150, 10, 0], elbowR = 30}                                              # 右手把东西举过头顶
+hold_up_l = {armL = [75, -5, 0], elbowL = 15}                                               # 左手把东西拎到身前比划
+look_down = {head = 30}                                                                     # 低头看
+sit_stool = {hipL = [90, 8], kneeL = 90, hipR = [90, 10], kneeR = 90, lean = 15}            # 坐在墩子上，两脚着地
+sharpen = {armL = [40, -10, 0], elbowL = 80, armR = [45, 10, 0], elbowR = 70, lean = 25, head = 25}   # 低头在膝上磨斧
+twohand_parry = {armL = [60, -30, 0], elbowL = 60, armR = [60, 30, 0], elbowR = 60, twist = 30, lean = 5}   # 双手横握柄往外一磕
+cover = {lean = 35, head = 20, armR = [60, 20, 0], elbowR = 40}                             # 俯身罩住身前的人
+pick_up_l = {armL = [35, -12, 0], elbowL = 15, lean = 38, head = 18}                        # 弯腰用左手从脚边捡东西
+hand_to_face_r = {armR = [110, -25, 0], elbowR = 135, head = -5}                           # 右手拇指把面罩往上推
+look_up = {head = -12}                                                                      # 抬眼
+kick_r = {hipR = [70, 0], kneeR = 20, hipL = [-5, 0], kneeL = 10, lean = -10}               # 右脚往前一蹬（踹人）
+twohand_block_high = {armL = [110, -10, 0], elbowL = 60, armR = [110, 10, 0], elbowR = 60, head = -8}   # 双手横握柄举过头顶架住劈下来的一下
+hit_belly_l = {lean = 40, head = 25, armL = [30, -30, 0], elbowL = 100}                     # 挨了一脚，弯腰、左手捂肚子
+onehand_parry_r = {armR = [60, 45, 0], elbowR = 40, twist = -25}                           # 右手斧柄往右外一磕，把打过来的兵器格开
+onehand_tug_r = {armR = [50, 10, 0], elbowR = 25, lean = -16, head = 6}                     # 右手攥着卡住的兵器往回拽
+reach_down_back_r = {armR = [-25, 25, 0], elbowR = 10, lean = 35, twist = -35, head = 20}   # 弯腰、右手往右后方地上够东西（052 shot11 去捡锤）
+catch_r = {armR = [60, -40, 0], elbowR = 60}                                                # 右手横过身前架住左边往下坠的人

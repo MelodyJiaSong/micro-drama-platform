@@ -1,0 +1,219 @@
+# 雄鹿沼泽 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 原点 ＝ 区级平面图 (1300, 880)；本图坐标 ＝ 区级坐标 − (1300, 880)。南墙、湖南缘、两条东南水道按区级 terrain.toml 平移裁切（地图量取）。
+# 洞口：区图洞口符号 (66%,77%) 换算为本图 (84, 197)，落在区级南墙多边形内约 90 m（多边形在这段画得偏北）；
+#       本图按「东南水道一」末端贴山脚取 (172, 190)，推定，待实机核。睡莲片、泥岛、枯木、碎石带一律推定。
+# 锚点机位：b01 北部泥岛南岸浅水边，朝西南望洞口。芦苇岗哨（bg305）在机位左后方约 75° 外，不入画。
+
+[meta]
+bg = "bg314"
+name_zh = "雄鹿沼泽"
+size_m = [560, 400]
+px_per_m = 2.5
+scale_src = "推定"
+scale_note = "山体与水道按区级平面图（区图 x%×20.974、y%×13.983 m）平移量取，但本 bg 的区级落点本身是推定；洞口、睡莲片、泥岛位置尺寸推定"
+# 世界树画面：南部的浅水湿地，成片的睡莲与浮草，水下能看到游动的鳄鱼背脊
+absent = [
+    "水下或水面的任何动物（世界树里的背脊属 shot 层，底图不放）",
+    "深水与黑水（这里水只到小腿到膝盖，茶绿透亮）",
+    "洞口里的任何光、火与发光物（洞内全黑；洞内景另议）",
+    "路、桥、木桩、栈道与任何人工搭建物",
+    "滩头小木哨所（bg305，在机位左后方，不入画）",
+    "火、烛火、灯笼、火把与任何人工光源",
+    "阳光、投影与晴天",
+    "焦土与赤红裂土（那是南山外的邻区，本档山墙是土黄裸坡）",
+    "任何人物",
+]
+
+[[ridge]]
+name = "南墙北坡（坡脚自西北斜向东南）"
+poly = [[0, 20], [40, 41], [92, 72], [144, 125], [176, 188], [197, 261], [228, 334], [262, 400], [0, 400]]
+height_m = 220
+src = "地图量取"
+
+[[water]]
+name = "深水湖南缘（北界）"
+path = [[80, 18], [300, 18]]
+width_m = 36
+depth_m = 6
+src = "地图量取"
+
+[[water]]
+name = "浅水湿地（小腿深，睡莲区）"
+path = [[230, 110], [400, 260]]
+width_m = 180
+depth_m = 0.4
+src = "推定"
+
+[[water]]
+name = "东南水道一（湖南口→洞口）"
+path = [[259, 41], [218, 121], [176, 188]]
+width_m = 24
+depth_m = 0.6
+src = "地图量取"
+
+[[water]]
+name = "东南水道二（沿海滩内侧南下）"
+path = [[375, 24], [448, 104], [483, 192], [496, 275], [469, 355]]
+width_m = 24
+depth_m = 0.8
+src = "地图量取"
+
+[[block]]
+id = "b01"
+over_water = true
+kind = "yard"
+face = "southwest"
+count = 1
+may_overlap = true
+name = "北部泥岛（锚点机位在南岸）"
+xy = [315, 75]
+size = [60, 30]
+h_m = 0.4
+src = "推定"
+note = "机位在岛南缘浅水边，离地约 1 m，朝西南"
+
+[[block]]
+id = "b02"
+into_ridge = true
+over_water = true
+kind = "cave_mouth"
+face = "northeast"
+count = 1
+name = "半淹洞口（朝东北）"
+xy = [172, 190]
+size = [12, 4]
+h_m = 0
+rot = 63
+src = "推定"
+note = "口宽约 12 m、高约 4 m，下半截在水里；区图有洞口符号，落点见文件头注"
+
+[[block]]
+id = "b03"
+over_water = true
+kind = "asset"
+asset = "p328"
+face = "northeast"
+count = 8
+name = "坡脚崩落碎石带"
+xy = [170, 150]
+size = [50, 8]
+h_m = 1.5
+rot = 63
+src = "推定"
+
+[[block]]
+id = "b04"
+over_water = true
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "睡莲浮草片（中近景）"
+xy = [255, 150]
+size = [80, 50]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b05"
+over_water = true
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "睡莲片（洞前，最密）"
+xy = [215, 215]
+size = [50, 30]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b06"
+over_water = true
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "东侧小泥岛"
+xy = [385, 170]
+size = [60, 40]
+h_m = 0.4
+src = "推定"
+
+[[block]]
+id = "b07"
+over_water = true
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "南部小泥岛"
+xy = [330, 270]
+size = [70, 40]
+h_m = 0.4
+src = "推定"
+
+[[block]]
+id = "b08"
+over_water = true
+kind = "asset"
+asset = "p335"
+face = "south"
+name = "矮枯树丛"
+xy = [280, 200]
+size = [16, 10]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b09"
+over_water = true
+kind = "asset"
+asset = "p318"
+face = "south"
+name = "倒伏枯木（浅水里）"
+xy = [235, 110]
+size = [14, 2]
+h_m = 0.5
+rot = 15
+src = "推定"
+
+[[block]]
+id = "b10"
+over_water = true
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "芦苇岗哨（滩头，不入画）"
+xy = [410, 244]
+size = [60, 60]
+h_m = 4
+src = "地图量取"
+bg = "bg305"
+note = "区图棚屋符号 (82%,80%)"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p319"
+face = "west"
+count = 25
+name = "芦苇海滩内缘（东缘）"
+xy = [530, 260]
+size = [40, 270]
+h_m = 2
+src = "地图量取"
+bg = "bg310"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg314-c1"
+eye = [280, 368]
+target = [280, 200]
+eye_h = 18.7
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

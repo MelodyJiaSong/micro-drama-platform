@@ -1,0 +1,259 @@
+# 瑟银哨塔 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg240"
+name_zh = "瑟银哨塔"
+size_m = [300, 300]
+px_per_m = 5.0
+scale_src = "推定"
+scale_note = "区级图 b240 为 220×220 m；本图外扩到 300×300 m，把北谷两侧谷壁与东南谷底的熔岩坑（区级 b911，相对岩台约东 134 m、南 146 m）框进来。岩台 120×90 m、高 25 m，栈桥 60 m，矿坑深 30 m 与各件尺寸均按卡内描述推定，无一手出处"
+# 世界树画面：建在岩台上的黑铁矮人聚落，铁皮棚屋与高炉挤在一起，炉火把矮人的脸映成橘色，栈桥悬在矿坑上方
+# 区图：盆地西北北谷（36%, 27%），夹在北山墙伸进盆地的两道岩脊之间，北面合拢、南面敞开
+absent = [
+    "任何人物、动物（栖台空着，默认空场）",
+    "火把、灯笼、烛火、篝火、点亮的矿灯（唯一人工光源是西高炉炉口的炉火；东高炉熄火）",
+    "石砌城墙、城门、寨墙（岩台四面是天然陡崖）",
+    "南坡道以外的上下通道（栈桥只通对崖矿洞，不是出口）",
+    "任何水体、植被与绿色",
+    "蓝天、月光、雨雪",
+    "4.0.3a 之后扩建的建筑与设施",
+]
+
+[[ridge]]
+name = "北面谷壁（北山墙在岩台背后合拢，锯齿顶缘）"
+poly = [[0, 0], [300, 0], [300, 30], [230, 45], [150, 40], [55, 55], [0, 70]]
+height_m = 380
+src = "地图量取"
+
+[[ridge]]
+name = "西侧谷壁（层状赤褐岩脊）"
+poly = [[0, 70], [55, 55], [50, 120], [45, 180], [30, 240], [0, 270]]
+height_m = 300
+src = "地图量取"
+
+[[ridge]]
+name = "东侧谷壁（矿坑对崖，崖面开方形矿洞口）"
+poly = [[300, 30], [230, 45], [242, 80], [246, 130], [240, 180], [255, 215], [300, 230]]
+height_m = 300
+src = "地图量取"
+
+[[road]]
+name = "黑灰土路（坡道脚 → 向南出谷，接西北支路）"
+path = [[100, 186], [108, 220], [130, 260], [150, 300]]
+width_m = 5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "rock_shelf"
+face = "south"
+name = "平顶岩台（削平的赤褐岩盘，四面陡崖）"
+xy = [120, 110]
+size = [120, 90]
+h_m = 25
+src = "坐标表"
+note = "中心取坐标表点位；尺寸与高度推定"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p234"
+face = "south"
+may_overlap = true
+name = "西高炉（炉口敞开，唯一炉火）"
+xy = [95, 80]
+size = [10, 10]
+h_m = 14
+src = "推定"
+note = "下石上铁箍，顶上细高铁皮烟囱"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p234"
+face = "south"
+may_overlap = true
+name = "东高炉（炉门紧闭，熄火）"
+xy = [135, 78]
+size = [10, 10]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+parts = [{asset = "p356", at = [-0.9, 0.2], yaw = 0}, {asset = "p251", at = [1.1, 0.4], yaw = 0}]
+face = "south"
+may_overlap = true
+name = "炉前铁砧与盛水石槽"
+xy = [95, 93]
+size = [6, 4]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p233"
+face = "south"
+may_overlap = true
+name = "铁皮棚屋·西南"
+xy = [76, 124]
+size = [12, 9]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p233"
+face = "south"
+may_overlap = true
+name = "铁皮棚屋·南"
+xy = [92, 136]
+size = [12, 9]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p233"
+face = "south"
+may_overlap = true
+name = "铁皮棚屋·中"
+xy = [110, 118]
+size = [11, 8]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p233"
+face = "south"
+may_overlap = true
+name = "铁皮棚屋·中南"
+xy = [127, 132]
+size = [12, 9]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p233"
+face = "south"
+may_overlap = true
+name = "铁皮棚屋·东"
+xy = [146, 120]
+size = [11, 8]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p233"
+face = "south"
+may_overlap = true
+name = "铁皮棚屋·东北"
+xy = [160, 100]
+size = [10, 8]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p240"
+face = "south"
+may_overlap = true
+name = "木塔栖台·西端（空）"
+xy = [68, 82]
+size = [8, 8]
+h_m = 16
+src = "推定"
+note = "两阵营各一名飞行管理员，故两端各一座栖台"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p240"
+face = "south"
+may_overlap = true
+name = "木塔栖台·东端（空）"
+xy = [170, 142]
+size = [8, 8]
+h_m = 16
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "arch_bridge"
+face = "east"
+into_ridge = true
+name = "木栈桥（原木排架，绳索扶手，跨矿坑）"
+xy = [212.5, 100]
+size = [65, 4]
+h_m = 25
+src = "推定"
+note = "桥面与岩台顶面齐平"
+
+[[block]]
+id = "b14"
+kind = "plaza"
+face = "south"
+may_overlap = true
+name = "矿坑（垂直坑壁，深约 30 m）"
+xy = [212, 110]
+size = [50, 70]
+h_m = 0
+src = "推定"
+note = "h_m 记 0，下陷写在这里；坑底碎石与锈断窄轨"
+
+[[block]]
+id = "b15"
+kind = "mine_portal"
+face = "west"
+may_overlap = true
+into_ridge = true
+name = "对崖方形矿洞口"
+xy = [247, 100]
+size = [6, 8]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "asset"
+asset = "p250"
+face = "south"
+name = "南侧之字形木坡道（岩台唯一上下通道，锚点机位在顶端）"
+xy = [100, 170]
+size = [16, 30]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b17"
+kind = "pool"
+face = "south"
+name = "东南谷底熔岩坑（远景一点暗红）"
+xy = [262, 262]
+size = [50, 40]
+h_m = 0
+src = "地图量取"
+note = "区级 b911 熔岩坑·北谷"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg240-c1"
+eye = [150, 276]
+target = [150, 150]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

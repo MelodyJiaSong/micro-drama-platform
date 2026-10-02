@@ -1,0 +1,233 @@
+# 雷姆塔维尔挖掘场 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg486"
+name_zh = "雷姆塔维尔挖掘场"
+size_m = [300, 180]
+px_per_m = 5.0
+scale_src = "推定"
+scale_note = "坑心 (180,90) ＝ 坐标 [35,85] ＝ 区图 (2096,3394) m；区级平面图海岸线在坑心以西约 120 m → 本图 x≈60；坑与营地尺寸按一处小型考古工地推定，无一手尺寸出处"
+# 世界树画面：南部海边的考古工地，木架与绳梯搭在半掘开的土坑上，散落着箱子、铲子与半埋的巨大骨骼
+# 区图：红十字落在灰色滩涂与绿色林带交界；东侧约 120 m 一团深绿圆形林丛；东南偏东约 250 m 是黑刃所在的环形坑
+absent = [
+    "任何人物、动物（默认停工空营）",
+    "燃着的火塘、点亮的提灯与炊烟（提灯熄灭、火塘冷灰）",
+    "码头、栈桥、船只（本档只是海边台地上的工地）",
+    "寨墙、木栅、石砌建筑（营地只有一顶帆布帐）",
+    "矿车轨道、蒸汽机械、现代挖掘设备",
+    "晴空烈日与硬边阴影（常年阴天海雾）",
+    "4.0.3a 后的任何改动（被海浪冲毁的海岸等）",
+]
+
+[[water]]
+name = "海（雾海贴岸带）"
+path = [[30, 0], [30, 180]]
+width_m = 60
+depth_m = 4
+src = "地图量取"
+note = "区级平面图海岸线在坑心以西约 120 m；海面压着齐腰白雾"
+
+[[ridge]]
+name = "台地西缘沙土陡坎（高出滩面 3–4 m）"
+poly = [[132, 0], [140, 0], [142, 180], [134, 180]]
+height_m = 4
+src = "推定"
+note = "坎壁露出分层沙土与贝壳层；坎西是碎石滩"
+
+[[road]]
+name = "西南小径尽头（自东南出林到营地）"
+path = [[300, 172], [262, 140], [228, 116]]
+width_m = 2.5
+src = "推定"
+note = "区级平面图的西南小径自东北主干道岔出、在本场地东南方经过；入营一段按地形推定"
+
+[[block]]
+id = "b01"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "阶梯大土坑（四级台阶，深约 5 m）"
+xy = [180, 90]
+size = [40, 30]
+h_m = 0
+src = "坐标表"
+note = "坑心即坐标 [35,85]；木桩横板护壁，坑底积浅层灰色渗水"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p427"
+face = "south"
+name = "北壁半挖出的巨兽肋骨排"
+xy = [182, 77]
+size = [22, 4]
+h_m = 4
+src = "推定"
+note = "世界树「半埋的巨大骨骼」；肋骨从北壁拱出"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p427"
+face = "south"
+name = "巨兽头骨（北壁上方偏西）"
+xy = [166, 76]
+size = [6, 4]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p429"
+face = "west"
+name = "三脚木吊架（东北坑沿）"
+xy = [202, 74]
+size = [4, 4]
+h_m = 7
+src = "推定"
+note = "顶挂木滑轮、麻绳与空吊筐"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p429"
+face = "west"
+name = "东壁绳梯与木直梯"
+xy = [199, 92]
+size = [2, 14]
+h_m = 5
+src = "推定"
+note = "世界树「木架与绳梯」；人物下坑只走东壁"
+
+[[block]]
+id = "b06"
+kind = "asset"
+parts = [{asset = "p430", at = [-0.8, 0.8], yaw = 0}, {asset = "p430", at = [0, 1], yaw = 0}, {asset = "p430", at = [-0.4, 0.1], yaw = 0}, {asset = "p413", at = [0.8, -0.9], yaw = 10}]
+face = "west"
+name = "坑底木板垫台（空木桶、皮囊）"
+xy = [190, 98]
+size = [4, 3]
+h_m = 0.6
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p426"
+face = "west"
+name = "灰白帆布工作帐"
+xy = [222, 96]
+size = [6, 5]
+h_m = 2.8
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+parts = [{asset = "p413", at = [0, -1.6], yaw = 90}, {asset = "p413", at = [0, -0.5], yaw = 90}, {asset = "p413", at = [0, 0.6], yaw = 90}, {asset = "p413", at = [0, 1.7], yaw = 90}]
+face = "west"
+name = "木板长工作台与铁丝筛"
+xy = [214, 104]
+size = [5, 2]
+h_m = 1
+src = "推定"
+note = "台上刷子、凿子、熄灭的铁皮提灯"
+
+[[block]]
+id = "b09"
+kind = "asset"
+parts = [{asset = "p413", at = [-1.5, 2.2], yaw = 0}, {asset = "p413", at = [-0.4, 2.3], yaw = 4}, {asset = "p413", at = [0.7, 2.2], yaw = -3}, {asset = "p413", at = [-1, 1.1], yaw = 8}, {asset = "p413", at = [0.3, 1], yaw = -6}, {asset = "p413", at = [1.6, 1.2], yaw = 12}, {asset = "p430", at = [-1.6, -0.8], yaw = 0}, {asset = "p413", at = [0.8, -2.2], yaw = 20}]
+face = "west"
+name = "板条木箱堆与铁锹十字镐独轮车"
+xy = [220, 84]
+size = [7, 5]
+h_m = 1.8
+src = "推定"
+note = "世界树「散落着箱子、铲子」"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p418"
+face = "south"
+name = "石圈火塘（冷灰余烬）"
+xy = [230, 108]
+size = [2.5, 2.5]
+h_m = 0.3
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p418"
+face = "south"
+count = 5
+name = "弃土堆（灰褐夹贝壳，高约 3 m）"
+xy = [160, 118]
+size = [18, 10]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "林缘缓土坡（锚点机位，朝西）"
+xy = [240, 92]
+size = [12, 16]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p414"
+face = "south"
+count = 29
+name = "东侧高松林缘"
+xy = [276, 80]
+size = [48, 150]
+h_m = 24
+src = "地图量取"
+note = "区图红十字东侧约 120 m 那团深绿圆形林丛的西缘"
+
+[[block]]
+id = "b14"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "碎石滩上的平行沙脊与积水浅槽"
+xy = [98, 90]
+size = [60, 150]
+h_m = 0.5
+src = "地图量取"
+note = "区图滩涂上与海岸平行的褐色条纹"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p416"
+face = "south"
+count = 3
+name = "浪线漂木与海藻"
+xy = [70, 110]
+size = [8, 40]
+h_m = 0.4
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg486-c1"
+eye = [150, 166]
+target = [150, 90]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -1,0 +1,137 @@
+# 石堡瀑布 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地原点 ＝ 区级平面图 (1300, 660) m。潭心取区级 terrain.toml「石堡瀑布潭」中点 (1489, 788) → 本图 (189, 128)；
+# 石堡要塞在本图西北界外约 (-69, 55)，只从潭边仰望得见崖顶一角。
+
+[meta]
+bg = "bg234"
+name_zh = "石堡瀑布"
+size_m = [400, 320]
+px_per_m = 3.5
+scale_src = "地图量取"
+scale_note = "潭径约 110 m 与出水河道取区级 terrain.toml（区图量取，精度约 ±20 m）；瀑布落差约 35 m、水帘宽约 40 m、环崖高度为推定"
+# 世界树画面：从石堡下方的红岩断崖整幅跌落的大瀑布，水汽在崖壁前结成一条常驻的白雾带，逆光时会出彩虹
+absent = ["栈道 / 木桥 / 石阶 / 水车 / 磨坊（潭边零人工痕迹）", "潭东或潭南的出口（只有西南河口）", "浑浊黄水 / 结冰 / 断流", "火与任何人工光源", "任何人物 / 动物 / 文字"]
+
+[[ridge]]
+name = "西北瀑布崖（石堡台地东南脚）"
+poly = [[0, 0], [230, 0], [210, 50], [180, 66], [150, 72], [120, 82], [90, 100], [0, 112]]
+height_m = 38
+src = "推定"
+
+[[ridge]]
+name = "东南环崖（锯齿红岩）"
+poly = [[230, 0], [400, 0], [400, 320], [150, 320], [170, 240], [215, 190], [248, 150], [250, 100], [235, 70], [210, 50]]
+height_m = 40
+src = "地图量取"
+
+[[ridge]]
+name = "西南崖（河口南侧）"
+poly = [[0, 215], [100, 192], [150, 190], [170, 240], [150, 320], [0, 320]]
+height_m = 30
+src = "推定"
+
+[[water]]
+name = "瀑布深潭（环形折线 ＝ 直径约 110 m 的圆潭）"
+path = [[217, 128], [213, 142], [203, 152], [189, 156], [175, 152], [165, 142], [161, 128], [165, 114], [175, 104], [189, 100], [203, 104], [213, 114], [217, 128], [213, 142], [203, 152]]
+width_m = 56
+depth_m = 8
+src = "地图量取"
+
+[[water]]
+name = "出水河道（西南口→西，绕石堡台地入湖）"
+path = [[140, 150], [100, 158], [50, 160], [0, 168]]
+width_m = 28
+depth_m = 3
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "proxy"
+face = "southeast"
+count = 1
+into_ridge = true
+name = "瀑布水帘"
+xy = [165, 72]
+size = [40, 4]
+h_m = 35
+rot = -18
+src = "推定"
+note = "水帘宽约 40 m、朝东南；崖顶唇边光滑，水先青绿后炸白"
+
+[[block]]
+id = "b02"
+kind = "plaza"
+face = "southeast"
+count = 1
+may_overlap = true
+over_water = true
+name = "崖前白雾带"
+xy = [168, 86]
+size = [70, 14]
+h_m = 12
+rot = -18
+src = "推定"
+note = "常驻；太阳在机位身后时雾里出淡彩虹"
+
+[[block]]
+id = "b03"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "西南岸卵石滩（机位）"
+xy = [142, 178]
+size = [30, 12]
+h_m = 0.3
+src = "推定"
+note = "机位在此朝北偏西（约 340°）：瀑布在右前方约 12°、崖顶要塞一角在左侧约 300°；石缝卡着漂木"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p220"
+face = "south"
+over_water = true
+name = "半泡巨石·东岸"
+xy = [238, 150]
+size = [8, 6]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p220"
+face = "south"
+name = "半泡巨石·西北岸"
+xy = [128, 100]
+size = [7, 5]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p221"
+face = "south"
+count = 3
+into_ridge = true
+name = "瀑布崖顶暗绿松"
+xy = [150, 30]
+size = [30, 15]
+h_m = 12
+src = "推定"
+note = "自然块；一株斜探出崖缝垂向水帘"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg234-c1"
+eye = [200, 294]
+target = [200, 160]
+eye_h = 13.3
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

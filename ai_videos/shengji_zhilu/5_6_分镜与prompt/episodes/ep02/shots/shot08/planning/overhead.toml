@@ -1,0 +1,83 @@
+# shot08 镜头平面图（overhead）的唯一出处：镜头与人各自在哪、往哪走、几秒到。
+# 改走位 ＝ 改本文件重跑 `python tools/gen_shots_szzl_ep02.py --only S08`；出审阅图 `python tools/shot_overhead.py <shot 目录>`。
+# 坐标＝bg805 场地平面图坐标系（米；x 向东、y 向南）。农舍南墙 y = 27.25，门在 x ≈ 44；门廊 b02：x 42.7–45.3、y 27.25–29.25（两根木柱在南角）。
+# 机位在门廊西侧（「杜克—邻居」连线的西边，杜克家整场同一侧）：杜克在画左、邻居在画右。
+
+[meta]
+scene = "bg805"
+skip = "上一镜黄昏在栅口外，这一镜天擦黑、杜克已经站在门口（隔了一阵，邻居闻声赶来）"
+view = [34, 22, 50, 34]
+walkable = ["b02"]
+note = "门廊天擦黑：斯通菲尔德妈妈近景（公主必须死！）；8.5s 切门廊西侧全景：杜克拍胸口，波尼斯姑妈登上门廊攥着木柱讨项链，杜克又拍胸口"
+
+[[camera]]
+t = 0
+xy = [40.9, 28.2]
+h = 1.55
+look = [43.9, 30.0]
+lens = 35
+tag = "门廊西北·近"
+subject = "c25_Ma_Stonefield"
+note = "门廊西头外侧，朝东南：斯通菲尔德妈妈的近景，杜克在画外左边"
+
+[[camera]]
+t = 9.2
+xy = [40.9, 28.2]
+h = 1.55
+look = [43.9, 30.0]
+lens = 35
+subject = "c25_Ma_Stonefield"
+
+[[camera]]
+t = 9.3
+xy = [37.6, 28.8]
+h = 1.6
+look = [44.0, 28.7]
+lens = 35
+tag = "门廊西·全"
+subject = "c2_Duke"
+cut = true
+note = "切：门廊西侧约 6.4 m，朝东：杜克在门口（画左）、两个女人在台阶上（画右），背景是院子与谷仓西墙"
+
+[[camera]]
+t = 20
+xy = [37.6, 28.8]
+h = 1.6
+look = [44.0, 28.7]
+lens = 35
+subject = "c2_Duke"
+
+[[actor]]
+key = "c2_Duke"
+label = "杜克"
+path = [[0, 44.0, 27.6, 43.3, 29.2], [16.7, 44.0, 27.6, 43.3, 29.2], [16.8, 44.0, 27.6, 43.5, 29.5], [20, 44.0, 27.6, 43.5, 29.5]]
+note = "站在门口、门槛外，面朝台阶上的邻居；钢盾靠在门框边；9.3s 拍胸口（响）；16.8s 转向波尼斯，17s 再拍（轻）"
+
+[[actor]]
+key = "c25_Ma_Stonefield"
+label = "斯通菲尔德妈妈"
+path = [[0, 43.9, 30.2, 43.5, 28.9], [20, 43.9, 30.2, 43.5, 28.9]]
+note = "门廊台阶下，一手叉腰，一手指头往坡下戳；面朝杜克、半朝镜头"
+
+[[actor]]
+key = "c26_Bernice_Stonefield"
+label = "波尼斯姑妈"
+enter = 9.5
+path = [[9.5, 45.2, 32.6, 44.3, 29.4], [10.8, 44.6, 29.0, 43.4, 27.9], [20, 44.6, 29.0, 43.4, 27.9]]
+note = "9.5s 从斯通菲尔德妈妈身后（坡下那边）上来，登上门廊东头，一手攥着门廊木柱，面朝杜克"
+
+[[object]]
+label = "靠在门框边的钢盾"
+xy = [43.3, 27.5]
+size = [0.5, 0.2]
+h = 0.8
+
+[[beat]]
+t0 = 0
+t1 = 9.3
+text = "So Nell's boy made the Guard! That Brackwell sow — Princess — eats my garden every night. / Princess must die! Bring me her collar."
+
+[[beat]]
+t0 = 9.3
+t1 = 20
+text = "Leave it to me!（拍胸口）/ My necklace! That guttersnipe Billy Maclure took it. You'd warm an old widow's heart. / Leave it to me!（又拍）"

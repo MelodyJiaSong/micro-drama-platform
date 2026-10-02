@@ -1,0 +1,2294 @@
+# 艾萨拉（azshara）区级资产规划 —— 区级资产规划师写，tools/apply_asset_plan.py 只读
+# 库里原有 0 件；本区新立 p392…a18 共 18 件（≤20）。成片的块用单体 + count 散布。
+# 判据：贴地地坪 / 墙坎 / 桥 / 洞口坑道 / 水潭走脚本 kind（rule 4g）；其余有边界的物体引用本区资产库。
+# 去重（白模只锁几何与剪影，出图从不拿白模当参考，rule 4d ①）：同剪影的东西共用一件，外观差别由各卡的锁定描述符写。
+#   秋树 a01 兼全区秋林 / 孤树 / 歪脖红枫 / 风压矮树 / 矮灌丛；兽皮帐 a02 兼三处营地的兽皮棚与尖顶帐；
+#   布面帐 a03 兼紫顶帐 / 帆布方帐 / 卷轴小帐 / 遮阳棚 / 吊挂布幔；立杆 a04 兼图腾柱 / 头骨木杆 / 旗杆 / 不亮的弯木灯柱 / 弯月木桩 / 三脚架；
+#   断柱残桩 a08 兼柱基 / 柱墩 / 圆石盆 / 不亮的石灯座 / 树桩带；巨石 a09 兼熊首巨岩 / 熊形石雕 / 巨像残块；
+#   方形石料 a13 兼基座 / 石碑 / 门楣 / 沉没石构露头；圆塔 a15 兼熊头崖顶细塔与东岬孤塔；箱垛 a17 兼柴垛 / 木槽 / 碾台 / 骨堆。
+# judgment calls：
+#   h_m = 0 的块（机位点、崖沿线、滩、谷、石阶道、石径、探沟、烧斑、水下柱圈、深礁暗斑）一律 plaza；营心 / 踩实泥地 → yard；
+#   礁石岛 / 岩岬 / 岩脊机位 / 草丘 / 潮池岩台 / 圆形殿基 / 残殿基（抬高平顶地块）→ rock_shelf；土坎与弧墙 / 半圆墙 / 月牙矮墙 / 断墙 → low_wall；
+#   潮水坑、半沉圆殿中央深水 → pool；木喉洞口原木门框 → mine_portal、门帘后洞道 → tunnel；小岛岩洞口 → cave_mouth；两座木桥 → arch_bridge。
+#   柱廊排成行、柱圈围成圈都用 a06 + count；风暴海湾水下柱圈（柱顶在水下一臂深）走 plaza 不立柱。
+#   秋林 count ＝ 占地 ÷ 150 m²，夹在 3–40 之间。
+
+[meta]
+zone = "azshara"
+
+[[use]]
+bg = "bg454"
+block = "b01"
+asset = "p396"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg454"
+block = "b02"
+asset = "p393"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg454"
+block = "b03"
+asset = "p393"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg454"
+block = "b04"
+asset = "p393"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg454"
+block = "b05"
+asset = "p393"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg454"
+block = "b06"
+asset = "p398"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg454"
+block = "b07"
+asset = "p395"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg454"
+block = "b08"
+asset = "p408"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg454"
+block = "b09"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg454"
+block = "b10"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg454"
+block = "b11"
+asset = "p392"
+face = "south"
+count = 40
+
+[[use]]
+bg = "bg454"
+block = "b12"
+asset = "p392"
+face = "south"
+count = 27
+
+[[use]]
+bg = "bg454"
+block = "b13"
+asset = "p392"
+face = "south"
+count = 24
+
+[[use]]
+bg = "bg454"
+block = "b14"
+asset = "p392"
+face = "south"
+count = 36
+
+[[use]]
+bg = "bg454"
+block = "b15"
+asset = "p397"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg454"
+block = "b16"
+asset = "p392"
+face = "south"
+count = 14
+
+[[use]]
+bg = "bg454"
+block = "b17"
+asset = "p399"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg454"
+block = "b18"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg454"
+block = "b19"
+asset = "p399"
+face = "south"
+count = 1
+
+# ── bg455_雷加什营地 ──
+
+[[use]]
+bg = "bg455"
+block = "b01"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg455"
+block = "b02"
+asset = "p394"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg455"
+block = "b03"
+asset = "p394"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg455"
+block = "b04"
+asset = "p394"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg455"
+block = "b05"
+asset = "p393"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg455"
+block = "b06"
+asset = "p393"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg455"
+block = "b07"
+asset = "p396"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg455"
+block = "b08"
+asset = "p395"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg455"
+block = "b09"
+asset = "p395"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg455"
+block = "b10"
+asset = "p395"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg455"
+block = "b11"
+asset = "p395"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg455"
+block = "b12"
+asset = "p395"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg455"
+block = "b13"
+asset = "p395"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg455"
+block = "b14"
+asset = "p395"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg455"
+block = "b15"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg455"
+block = "b16"
+kind = "low_wall"
+face = "south"
+count = 1
+
+# ── bg456_塔伦迪斯营地 ──
+
+[[use]]
+bg = "bg456"
+block = "b01"
+kind = "arch_bridge"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg456"
+block = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg456"
+block = "b03"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg456"
+block = "b04"
+asset = "p395"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg456"
+block = "b05"
+asset = "p395"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg456"
+block = "b06"
+asset = "p394"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg456"
+block = "b07"
+asset = "p394"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg456"
+block = "b08"
+asset = "p394"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg456"
+block = "b09"
+asset = "p394"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg456"
+block = "b10"
+asset = "p409"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg456"
+block = "b11"
+asset = "p408"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg456"
+block = "b12"
+asset = "p395"
+face = "south"
+count = 2
+
+[[use]]
+bg = "bg456"
+block = "b13"
+asset = "p398"
+face = "south"
+count = 1
+
+# ── bg457_萨拉斯营地 ──
+
+[[use]]
+bg = "bg457"
+block = "b01"
+asset = "p394"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg457"
+block = "b02"
+asset = "p394"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg457"
+block = "b03"
+asset = "p408"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg457"
+block = "b04"
+asset = "p395"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg457"
+block = "b05"
+asset = "p408"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg457"
+block = "b06"
+asset = "p396"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg457"
+block = "b07"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg457"
+block = "b08"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg457"
+block = "b09"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg457"
+block = "b10"
+asset = "p394"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg457"
+block = "b11"
+asset = "p394"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg457"
+block = "b12"
+asset = "p394"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg457"
+block = "b13"
+asset = "p394"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg457"
+block = "b14"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg457"
+block = "b15"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg457"
+block = "b16"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg457"
+block = "b17"
+asset = "p392"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg457"
+block = "b18"
+asset = "p392"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg457"
+block = "b19"
+asset = "p392"
+face = "south"
+count = 1
+
+# ── bg458_瓦罗莫克 ──
+
+[[use]]
+bg = "bg458"
+block = "b01"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg458"
+block = "b02"
+kind = "palisade"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg458"
+block = "b03"
+kind = "palisade"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg458"
+block = "b04"
+kind = "palisade"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg458"
+block = "b05"
+kind = "palisade"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg458"
+block = "b06"
+kind = "palisade"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg458"
+block = "b07"
+kind = "palisade"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg458"
+block = "b08"
+asset = "p396"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg458"
+block = "b09"
+asset = "p393"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg458"
+block = "b10"
+asset = "p393"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg458"
+block = "b11"
+asset = "p393"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg458"
+block = "b12"
+asset = "p395"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg458"
+block = "b13"
+asset = "p408"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg458"
+block = "b14"
+asset = "p409"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg458"
+block = "b15"
+asset = "p409"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg458"
+block = "b16"
+asset = "p408"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg458"
+block = "b17"
+asset = "p399"
+face = "south"
+count = 8
+
+[[use]]
+bg = "bg458"
+block = "b18"
+kind = "plaza"
+face = "south"
+count = 1
+
+# ── bg459_风暴海湾 ──
+
+[[use]]
+bg = "bg459"
+block = "b01"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg459"
+block = "b02"
+kind = "cave_mouth"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg459"
+block = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg459"
+block = "b04"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg459"
+block = "b05"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg459"
+block = "b06"
+asset = "p404"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg459"
+block = "b07"
+asset = "p404"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg459"
+block = "b08"
+asset = "p404"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg459"
+block = "b09"
+asset = "p404"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg459"
+block = "b10"
+asset = "p404"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg459"
+block = "b11"
+asset = "p404"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg459"
+block = "b12"
+asset = "p404"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg459"
+block = "b13"
+asset = "p404"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg459"
+block = "b14"
+asset = "p404"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg459"
+block = "b15"
+kind = "rock_shelf"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg459"
+block = "b16"
+kind = "plaza"
+face = "south"
+count = 1
+
+# ── bg460_熊头 ──
+
+[[use]]
+bg = "bg460"
+block = "b01"
+asset = "p400"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg460"
+block = "b02"
+asset = "p406"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg460"
+block = "b03"
+asset = "p400"
+face = "south"
+count = 5
+
+[[use]]
+bg = "bg460"
+block = "b04"
+asset = "p392"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg460"
+block = "b05"
+asset = "p392"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg460"
+block = "b06"
+asset = "p392"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg460"
+block = "b07"
+kind = "plaza"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg460"
+block = "b08"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg460"
+block = "b09"
+asset = "p397"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg460"
+block = "b10"
+asset = "p400"
+face = "south"
+count = 3
+
+# ── bg461_痛苦海岸 ──
+
+[[use]]
+bg = "bg461"
+block = "b01"
+kind = "plaza"
+face = "northwest"
+count = 1
+
+[[use]]
+bg = "bg461"
+block = "b02"
+asset = "p400"
+face = "south"
+count = 5
+
+[[use]]
+bg = "bg461"
+block = "b03"
+asset = "p400"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg461"
+block = "b04"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg461"
+block = "b05"
+asset = "p402"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg461"
+block = "b06"
+asset = "p401"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg461"
+block = "b07"
+asset = "p392"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg461"
+block = "b08"
+asset = "p401"
+face = "south"
+count = 1
+
+# ── bg462_凄凉山 ──
+
+[[use]]
+bg = "bg462"
+block = "b01"
+asset = "p400"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg462"
+block = "b02"
+asset = "p402"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg462"
+block = "b03"
+asset = "p400"
+face = "south"
+count = 6
+
+[[use]]
+bg = "bg462"
+block = "b04"
+asset = "p397"
+face = "south"
+count = 8
+
+# ── bg463_无尽之海 ──
+
+[[use]]
+bg = "bg463"
+block = "b01"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg463"
+block = "b02"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg463"
+block = "b03"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg463"
+block = "b04"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg463"
+block = "b05"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg463"
+block = "b06"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg463"
+block = "b07"
+asset = "p401"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg463"
+block = "b08"
+asset = "p401"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg463"
+block = "b09"
+asset = "p401"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg463"
+block = "b10"
+asset = "p403"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg463"
+block = "b11"
+kind = "plaza"
+face = "south"
+count = 1
+
+# ── bg464_锯齿暗礁 ──
+
+[[use]]
+bg = "bg464"
+block = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg464"
+block = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg464"
+block = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg464"
+block = "b04"
+asset = "p403"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg464"
+block = "b05"
+asset = "p402"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg464"
+block = "b06"
+asset = "p401"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg464"
+block = "b07"
+asset = "p401"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg464"
+block = "b08"
+asset = "p401"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg464"
+block = "b09"
+asset = "p401"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg464"
+block = "b10"
+asset = "p401"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg464"
+block = "b11"
+asset = "p401"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg464"
+block = "b12"
+asset = "p401"
+face = "south"
+count = 4
+
+# ── bg465_门纳尔湖 ──
+
+[[use]]
+bg = "bg465"
+block = "b01"
+asset = "p397"
+face = "south"
+count = 8
+
+[[use]]
+bg = "bg465"
+block = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg465"
+block = "b03"
+asset = "p400"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg465"
+block = "b04"
+asset = "p400"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg465"
+block = "b05"
+asset = "p398"
+face = "south"
+count = 3
+
+[[use]]
+bg = "bg465"
+block = "b06"
+asset = "p392"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg465"
+block = "b07"
+asset = "p402"
+face = "south"
+count = 1
+
+# ── bg466_拉文凯斯雕像 ──
+
+[[use]]
+bg = "bg466"
+block = "b01"
+asset = "p405"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg466"
+block = "b02"
+asset = "p404"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg466"
+block = "b03"
+asset = "p400"
+face = "south"
+count = 3
+
+[[use]]
+bg = "bg466"
+block = "b04"
+kind = "rock_shelf"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg466"
+block = "b05"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg466"
+block = "b06"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg466"
+block = "b07"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg466"
+block = "b08"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg466"
+block = "b09"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg466"
+block = "b10"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg466"
+block = "b11"
+kind = "plaza"
+face = "south"
+count = 1
+
+# ── bg467_埃达拉斯废墟 ──
+
+[[use]]
+bg = "bg467"
+block = "b01"
+asset = "p407"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg467"
+block = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg467"
+block = "b03"
+asset = "p397"
+face = "south"
+count = 12
+
+[[use]]
+bg = "bg467"
+block = "b04"
+asset = "p397"
+face = "south"
+count = 15
+
+[[use]]
+bg = "bg467"
+block = "b05"
+asset = "p397"
+face = "south"
+count = 16
+
+[[use]]
+bg = "bg467"
+block = "b06"
+asset = "p397"
+face = "south"
+count = 16
+
+[[use]]
+bg = "bg467"
+block = "b07"
+asset = "p397"
+face = "south"
+count = 14
+
+[[use]]
+bg = "bg467"
+block = "b08"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg467"
+block = "b09"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg467"
+block = "b10"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg467"
+block = "b11"
+asset = "p397"
+face = "south"
+count = 8
+
+[[use]]
+bg = "bg467"
+block = "b12"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg467"
+block = "b13"
+asset = "p399"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg467"
+block = "b14"
+asset = "p399"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg467"
+block = "b15"
+asset = "p392"
+face = "south"
+count = 5
+
+[[use]]
+bg = "bg467"
+block = "b16"
+asset = "p398"
+face = "south"
+count = 3
+
+[[use]]
+bg = "bg467"
+block = "b17"
+asset = "p397"
+face = "south"
+count = 8
+
+[[use]]
+bg = "bg467"
+block = "b18"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg467"
+block = "b19"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg467"
+block = "b20"
+asset = "p392"
+face = "south"
+count = 40
+
+# ── bg468_影歌神殿 ──
+
+[[use]]
+bg = "bg468"
+block = "b01"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b02"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b03"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b04"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b05"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b06"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b07"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b08"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b09"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b10"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b11"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b12"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b13"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b14"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b15"
+asset = "p397"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b16"
+asset = "p397"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b17"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b18"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b19"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b20"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b21"
+asset = "p404"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b22"
+asset = "p398"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b23"
+asset = "p399"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b24"
+asset = "p392"
+face = "south"
+count = 7
+
+[[use]]
+bg = "bg468"
+block = "b25"
+asset = "p404"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg468"
+block = "b26"
+kind = "arch_bridge"
+face = "south"
+count = 1
+
+# ── bg469_怒水河 ──
+
+[[use]]
+bg = "bg469"
+block = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg469"
+block = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg469"
+block = "b03"
+asset = "p402"
+face = "south"
+count = 3
+
+[[use]]
+bg = "bg469"
+block = "b04"
+asset = "p402"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg469"
+block = "b05"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg469"
+block = "b06"
+asset = "p392"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg469"
+block = "b07"
+asset = "p392"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg469"
+block = "b08"
+asset = "p392"
+face = "northwest"
+count = 5
+
+# ── bg470_南山海滩 ──
+
+[[use]]
+bg = "bg470"
+block = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg470"
+block = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg470"
+block = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg470"
+block = "b04"
+asset = "p402"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg470"
+block = "b05"
+asset = "p402"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg470"
+block = "b06"
+asset = "p402"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg470"
+block = "b07"
+asset = "p400"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg470"
+block = "b08"
+asset = "p400"
+face = "south"
+count = 4
+
+[[use]]
+bg = "bg470"
+block = "b09"
+kind = "pool"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg470"
+block = "b10"
+asset = "p401"
+face = "south"
+count = 6
+
+[[use]]
+bg = "bg470"
+block = "b11"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg470"
+block = "b12"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg470"
+block = "b13"
+kind = "plaza"
+face = "east"
+count = 1
+
+# ── bg471_辛玛洛神殿 ──
+
+[[use]]
+bg = "bg471"
+block = "b01"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b03"
+asset = "p404"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b04"
+kind = "plaza"
+face = "southwest"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b05"
+asset = "p397"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b06"
+asset = "p399"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b07"
+asset = "p397"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b08"
+asset = "p399"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b09"
+asset = "p397"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b10"
+asset = "p399"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b11"
+asset = "p397"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b12"
+asset = "p399"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b13"
+asset = "p399"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b14"
+asset = "p399"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b15"
+asset = "p398"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b16"
+asset = "p398"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b17"
+asset = "p398"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b18"
+asset = "p392"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b19"
+asset = "p400"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b20"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg471"
+block = "b21"
+asset = "p392"
+face = "south"
+count = 40
+
+[[use]]
+bg = "bg471"
+block = "b22"
+asset = "p392"
+face = "south"
+count = 27
+
+[[use]]
+bg = "bg471"
+block = "b23"
+asset = "p392"
+face = "south"
+count = 40
+
+# ── bg472_废墟海岸 ──
+
+[[use]]
+bg = "bg472"
+block = "b01"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg472"
+block = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg472"
+block = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg472"
+block = "b04"
+asset = "p404"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg472"
+block = "b05"
+asset = "p407"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg472"
+block = "b06"
+asset = "p399"
+face = "south"
+count = 5
+
+[[use]]
+bg = "bg472"
+block = "b07"
+asset = "p398"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg472"
+block = "b08"
+asset = "p404"
+face = "south"
+count = 8
+
+[[use]]
+bg = "bg472"
+block = "b09"
+asset = "p401"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg472"
+block = "b10"
+asset = "p401"
+face = "south"
+count = 5
+
+[[use]]
+bg = "bg472"
+block = "b11"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg472"
+block = "b12"
+asset = "p392"
+face = "south"
+count = 40
+
+[[use]]
+bg = "bg472"
+block = "b13"
+asset = "p405"
+face = "south"
+count = 1
+
+# ── bg473_破碎海岸 ──
+
+[[use]]
+bg = "bg473"
+block = "b01"
+asset = "p404"
+face = "south"
+count = 10
+
+[[use]]
+bg = "bg473"
+block = "b02"
+asset = "p404"
+face = "south"
+count = 3
+
+[[use]]
+bg = "bg473"
+block = "b03"
+asset = "p404"
+face = "south"
+count = 6
+
+[[use]]
+bg = "bg473"
+block = "b04"
+asset = "p404"
+face = "south"
+count = 8
+
+[[use]]
+bg = "bg473"
+block = "b05"
+asset = "p404"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg473"
+block = "b06"
+asset = "p397"
+face = "south"
+count = 10
+
+[[use]]
+bg = "bg473"
+block = "b07"
+kind = "pool"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg473"
+block = "b08"
+asset = "p392"
+face = "south"
+count = 40
+
+[[use]]
+bg = "bg473"
+block = "b09"
+asset = "p404"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg473"
+block = "b10"
+asset = "p402"
+face = "south"
+count = 3
+
+[[use]]
+bg = "bg473"
+block = "b11"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+# ── bg474_木喉要塞 ──
+
+[[use]]
+bg = "bg474"
+block = "b01"
+kind = "mine_portal"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg474"
+block = "b02"
+kind = "tunnel"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg474"
+block = "b03"
+asset = "p396"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg474"
+block = "b04"
+asset = "p395"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg474"
+block = "b05"
+asset = "p396"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg474"
+block = "b06"
+asset = "p408"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg474"
+block = "b07"
+asset = "p408"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg474"
+block = "b08"
+asset = "p402"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg474"
+block = "b09"
+kind = "yard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg474"
+block = "b10"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg474"
+block = "b11"
+asset = "p400"
+face = "south"
+count = 3
+
+[[use]]
+bg = "bg474"
+block = "b12"
+asset = "p392"
+face = "south"
+count = 40
+
+[[use]]
+bg = "bg474"
+block = "b13"
+asset = "p392"
+face = "south"
+count = 33
+
+# ── bg475_埃达拉之塔 ──
+
+[[use]]
+bg = "bg475"
+block = "b01"
+asset = "p406"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg475"
+block = "b02"
+kind = "low_wall"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg475"
+block = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg475"
+block = "b04"
+asset = "p398"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg475"
+block = "b05"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg475"
+block = "b06"
+asset = "p398"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg475"
+block = "b07"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg475"
+block = "b08"
+asset = "p392"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg475"
+block = "b09"
+asset = "p392"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg475"
+block = "b10"
+kind = "rock_shelf"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg475"
+block = "b11"
+asset = "p401"
+face = "south"
+count = 1
+
+# ── bg476_乌索兰 ──
+
+[[use]]
+bg = "bg476"
+block = "b01"
+asset = "p404"
+face = "northeast"
+count = 1
+
+[[use]]
+bg = "bg476"
+block = "b02"
+asset = "p400"
+face = "southeast"
+count = 1
+
+[[use]]
+bg = "bg476"
+block = "b03"
+asset = "p399"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg476"
+block = "b04"
+asset = "p399"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg476"
+block = "b05"
+asset = "p399"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg476"
+block = "b06"
+asset = "p399"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg476"
+block = "b07"
+asset = "p399"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg476"
+block = "b08"
+asset = "p399"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg476"
+block = "b09"
+asset = "p399"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg476"
+block = "b10"
+asset = "p399"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg476"
+block = "b11"
+kind = "rock_shelf"
+face = "southwest"
+count = 1
+
+[[use]]
+bg = "bg476"
+block = "b12"
+asset = "p398"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg476"
+block = "b13"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg476"
+block = "b14"
+asset = "p400"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg476"
+block = "b15"
+asset = "p392"
+face = "south"
+count = 40
+
+[[use]]
+bg = "bg476"
+block = "b16"
+asset = "p392"
+face = "south"
+count = 40
+
+[[use]]
+bg = "bg476"
+block = "b17"
+asset = "p392"
+face = "south"
+count = 40

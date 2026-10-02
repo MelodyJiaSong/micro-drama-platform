@@ -1,0 +1,497 @@
+# 达纳苏斯（darnassus）区级资产规划 —— 区级资产规划师写，tools/apply_asset_plan.py 只读
+# 判据：贴地地坪 / 石台 / 草坪 / 水池 / 墓园走脚本 kind（rule 4g）；其余有边界的物体引用本区资产库（新立 10 件）。
+# 去重：previz 白模只锁几何与剪影、材质会剥掉（rule 4d ①），剪影同类即共用一件——
+#   三棵守护巨树 / 墓园古树 / 大道古树丛共用 a01；银行空心古树与旅店空心树屋共用 a03（单件逐轴撑满占地，旅店被压成矮胖两层）；
+#   工匠区全部开敞工棚（含 U 形冷炉棚）、战士区两座方亭、贸易区四座小货亭与开敞木构拍卖大厅共用 a04；
+#   贸易区八座有墙货馆共用 a05；月神殿穹顶大殿与贸易区两座圆顶小馆共用 a06；月神殿门厅用 a09（两翼在区图上是阶纹宽石阶，走 plaza）。
+# judgment calls：
+#   石台 / 阶台 / 圆形石台 / 桥头台 / 细廊 / 入台石阶 / 西翼窄高台 / 月神殿两翼宽石阶一律走 plaza（stair 是旋梯；stormwind 的坡道台阶同样走 plaza）；
+#   有白石矮栏或石条镶边的草坪（林间空地、湖心绿岛、工匠区草坪、神殿花圃）走 lawn，没有栏的草洲走 plaza。
+#   圆形沙地是下沉的空场，走 yard（不放假人，1.12 没有）；树下墓园走 graveyard（引擎出十字碑，previz 只锁碑群体量，碑形归 shot 层）。
+#   bg496·b05「第三巨树与环干树屋」按树的剪影判 a01，环干小树屋属表面细节不进白模；b02 螺旋平台单立 a02（主树外包的一圈木台，剪影独特）。
+#   bg497 只写了「草坪」而没写工棚的 b10 / b11 / b12 走 lawn。
+#   全区暂无排镜（主角线在东部王国），故不为 U 形炉棚、拍卖大厅另立资产。
+
+[meta]
+zone = "darnassus"
+
+[[use]]
+bg = "bg496"
+block = "b01"
+asset = "p431"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg496"
+block = "b02"
+asset = "p432"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg496"
+block = "b03"
+asset = "p431"
+face = "southwest"
+count = 1
+
+[[use]]
+bg = "bg496"
+block = "b04"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg496"
+block = "b05"
+asset = "p431"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg496"
+block = "b06"
+kind = "lawn"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg496"
+block = "b07"
+kind = "plaza"
+face = "south"
+count = 1
+
+# ── bg497 工匠区 ──
+[[use]]
+bg = "bg497"
+block = "b01"
+asset = "p434"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg497"
+block = "b02"
+asset = "p434"
+face = "southwest"
+count = 1
+
+[[use]]
+bg = "bg497"
+block = "b03"
+asset = "p433"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg497"
+block = "b04"
+asset = "p434"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg497"
+block = "b05"
+asset = "p434"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg497"
+block = "b06"
+asset = "p434"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg497"
+block = "b07"
+asset = "p434"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg497"
+block = "b08"
+asset = "p434"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg497"
+block = "b09"
+asset = "p434"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg497"
+block = "b10"
+kind = "lawn"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg497"
+block = "b11"
+kind = "lawn"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg497"
+block = "b12"
+kind = "lawn"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg497"
+block = "b13"
+asset = "p434"
+face = "north"
+count = 1
+
+# ── bg498 月神殿 ──
+[[use]]
+bg = "bg498"
+block = "b01"
+kind = "plaza"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg498"
+block = "b02"
+kind = "plaza"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg498"
+block = "b03"
+asset = "p439"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg498"
+block = "b04"
+asset = "p436"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg498"
+block = "b05"
+kind = "pool"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg498"
+block = "b06"
+kind = "plaza"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg498"
+block = "b07"
+kind = "plaza"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg498"
+block = "b08"
+kind = "lawn"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg498"
+block = "b09"
+kind = "lawn"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg498"
+block = "b10"
+kind = "plaza"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg498"
+block = "b11"
+kind = "plaza"
+face = "north"
+count = 1
+
+# ── bg499 神殿花园 ──
+[[use]]
+bg = "bg499"
+block = "b01"
+kind = "lawn"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg499"
+block = "b02"
+asset = "p433"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg499"
+block = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg499"
+block = "b04"
+asset = "p440"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg499"
+block = "b05"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg499"
+block = "b06"
+kind = "plaza"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg499"
+block = "b07"
+kind = "plaza"
+face = "south"
+count = 1
+
+# ── bg500 贸易区 ──
+[[use]]
+bg = "bg500"
+block = "b01"
+kind = "plaza"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg500"
+block = "b02"
+asset = "p436"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg500"
+block = "b03"
+asset = "p435"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg500"
+block = "b04"
+asset = "p434"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg500"
+block = "b05"
+asset = "p435"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg500"
+block = "b06"
+asset = "p435"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg500"
+block = "b07"
+asset = "p434"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg500"
+block = "b08"
+asset = "p434"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg500"
+block = "b09"
+asset = "p434"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg500"
+block = "b10"
+asset = "p435"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg500"
+block = "b11"
+asset = "p435"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg500"
+block = "b12"
+asset = "p435"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg500"
+block = "b13"
+asset = "p434"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg500"
+block = "b14"
+asset = "p436"
+face = "northeast"
+count = 1
+
+[[use]]
+bg = "bg500"
+block = "b15"
+asset = "p435"
+face = "north"
+count = 1
+
+# ── bg501 战士区 ──
+[[use]]
+bg = "bg501"
+block = "b01"
+kind = "plaza"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg501"
+block = "b02"
+kind = "yard"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg501"
+block = "b03"
+kind = "plaza"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg501"
+block = "b04"
+kind = "plaza"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg501"
+block = "b05"
+kind = "plaza"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg501"
+block = "b06"
+asset = "p434"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg501"
+block = "b07"
+kind = "plaza"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg501"
+block = "b08"
+asset = "p434"
+face = "west"
+count = 1
+
+[[use]]
+bg = "bg501"
+block = "b09"
+kind = "plaza"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg501"
+block = "b10"
+asset = "p438"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg501"
+block = "b11"
+asset = "p438"
+face = "north"
+count = 1
+
+[[use]]
+bg = "bg501"
+block = "b12"
+asset = "p437"
+face = "east"
+count = 1
+
+[[use]]
+bg = "bg501"
+block = "b13"
+kind = "graveyard"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg501"
+block = "b14"
+asset = "p431"
+face = "south"
+count = 1
+
+[[use]]
+bg = "bg501"
+block = "b15"
+asset = "p431"
+face = "south"
+count = 3

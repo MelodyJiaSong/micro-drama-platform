@@ -1,0 +1,317 @@
+# 钢铁大厅 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+# 方位据上层区图：讲学厅（bg798）东门 → 本通道 → 帝王之座（bg796）西门；长度取 bg246 块 b908（73 m，地图量取），净宽取 bg246 仪仗轴线 road 宽 12 m。
+
+[meta]
+bg = "bg797"
+name_zh = "钢铁大厅"
+size_m = [90, 32]
+px_per_m = 16.0
+scale_src = "推定"
+scale_note = "通道长约 70 m 取区级平面图 bg246 块 b908（地图量取的相对长度 + 推定尺度）；净宽 12 m 取 bg246 仪仗轴线；龛深、巨像间距与净高（约 24 m）推定"
+# 世界树画面：短而高的通道，两侧并排立着巨大的黑铁武士雕像，雕像口中不时喷出火舌，地面被烤得泛红。
+absent = ["天空、天窗、日光与月光（山腹内层）", "巨像喷口的火舌、火星与烟（战斗态，本档默认喷口全熄）", "正在发红发烫的地面（烧斑早已冷透）", "巨像眼孔里的光", "任何植被与水面", "冷色光源与电弧蓝光", "文字匾额与带字的旗幡", "人物、守将、卫兵与动物（空场态，属 shot 层）", "侧向出入口（只有东西两端两个门）"]
+
+[[road]]
+name = "仪仗中轴（纵铺黑岩长条石板）"
+path = [[0, 16], [90, 16]]
+width_m = 6
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "chamber"
+face = "south"
+count = 1
+name = "通道身（含两侧深龛）"
+xy = [45, 16]
+size = [70, 18]
+h_m = 24
+src = "地图量取"
+note = "净宽 12 m，南北各 3 m 深龛；净高约为净宽两倍（推定）"
+
+[[block]]
+id = "b02"
+may_overlap = true
+kind = "asset"
+asset = "p255"
+face = "east"
+name = "西端封门（巨型铁门，通讲堂）"
+xy = [11, 16]
+size = [2, 10]
+h_m = 13
+src = "原典方位"
+note = "从本侧看紧闭；相机机位在其内侧；与 bg798 b04 是同一扇门（同高 13 m）"
+
+[[block]]
+id = "b03"
+may_overlap = true
+kind = "asset"
+asset = "p255"
+face = "west"
+name = "东端门洞（黑铁双扇门敞开）"
+xy = [79, 16]
+size = [2, 12]
+h_m = 9
+src = "原典方位"
+note = "比西门更宽，与 bg796 b02 西门是同一对门（同高 9 m）"
+
+[[block]]
+id = "b04"
+kind = "plaza"
+face = "east"
+count = 1
+may_overlap = true
+name = "东端三级宽台阶"
+xy = [83, 16]
+size = [4, 12]
+h_m = 0
+src = "推定"
+note = "往下接进王座殿中轴甬道"
+
+[[block]]
+id = "b05"
+may_overlap = true
+kind = "asset"
+asset = "p261"
+face = "south"
+name = "北1 铸铁武士巨像（嵌龛，含石座）"
+xy = [22, 8.5]
+size = [6, 3]
+h_m = 12
+src = "推定"
+note = "面朝中线；嘴部圆形喷口熄着"
+
+[[block]]
+id = "b06"
+may_overlap = true
+kind = "asset"
+asset = "p261"
+face = "south"
+name = "北2 铸铁武士巨像（嵌龛，含石座）"
+xy = [42, 8.5]
+size = [6, 3]
+h_m = 12
+src = "推定"
+note = "面朝中线；嘴部圆形喷口熄着"
+
+[[block]]
+id = "b07"
+may_overlap = true
+kind = "asset"
+asset = "p261"
+face = "south"
+name = "北3 铸铁武士巨像（嵌龛，含石座）"
+xy = [62, 8.5]
+size = [6, 3]
+h_m = 12
+src = "推定"
+note = "面朝中线；嘴部圆形喷口熄着"
+
+[[block]]
+id = "b08"
+may_overlap = true
+kind = "asset"
+asset = "p261"
+face = "north"
+name = "南1 铸铁武士巨像（嵌龛，含石座）"
+xy = [22, 23.5]
+size = [6, 3]
+h_m = 12
+src = "推定"
+note = "面朝中线；嘴部圆形喷口熄着"
+
+[[block]]
+id = "b09"
+may_overlap = true
+kind = "asset"
+asset = "p261"
+face = "north"
+name = "南2 铸铁武士巨像（嵌龛，含石座）"
+xy = [42, 23.5]
+size = [6, 3]
+h_m = 12
+src = "推定"
+note = "面朝中线；嘴部圆形喷口熄着"
+
+[[block]]
+id = "b10"
+may_overlap = true
+kind = "asset"
+asset = "p261"
+face = "north"
+name = "南3 铸铁武士巨像（嵌龛，含石座）"
+xy = [62, 23.5]
+size = [6, 3]
+h_m = 12
+src = "推定"
+note = "面朝中线；嘴部圆形喷口熄着"
+
+[[block]]
+id = "b11"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "北1 巨像前扇形旧烧斑"
+xy = [22, 12.5]
+size = [5, 4]
+h_m = 0
+src = "推定"
+note = "暗红褐，早已冷透"
+
+[[block]]
+id = "b12"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "北2 巨像前扇形旧烧斑"
+xy = [42, 12.5]
+size = [5, 4]
+h_m = 0
+src = "推定"
+note = "暗红褐，早已冷透"
+
+[[block]]
+id = "b13"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "北3 巨像前扇形旧烧斑"
+xy = [62, 12.5]
+size = [5, 4]
+h_m = 0
+src = "推定"
+note = "暗红褐，早已冷透"
+
+[[block]]
+id = "b14"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "南1 巨像前扇形旧烧斑"
+xy = [22, 19.5]
+size = [5, 4]
+h_m = 0
+src = "推定"
+note = "暗红褐，早已冷透"
+
+[[block]]
+id = "b15"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "南2 巨像前扇形旧烧斑"
+xy = [42, 19.5]
+size = [5, 4]
+h_m = 0
+src = "推定"
+note = "暗红褐，早已冷透"
+
+[[block]]
+id = "b16"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "南3 巨像前扇形旧烧斑"
+xy = [62, 19.5]
+size = [5, 4]
+h_m = 0
+src = "推定"
+note = "暗红褐，早已冷透"
+
+[[block]]
+id = "b17"
+may_overlap = true
+kind = "asset"
+asset = "p257"
+face = "south"
+name = "北壁柱1（挂铁笼壁灯）"
+xy = [32, 7.5]
+size = [2, 1]
+h_m = 14
+src = "推定"
+note = "六盏壁灯为本档主光"
+
+[[block]]
+id = "b18"
+may_overlap = true
+kind = "asset"
+asset = "p257"
+face = "south"
+name = "北壁柱2（挂铁笼壁灯）"
+xy = [52, 7.5]
+size = [2, 1]
+h_m = 14
+src = "推定"
+note = "六盏壁灯为本档主光"
+
+[[block]]
+id = "b19"
+may_overlap = true
+kind = "asset"
+asset = "p257"
+face = "south"
+name = "北壁柱3（挂铁笼壁灯）"
+xy = [72, 7.5]
+size = [2, 1]
+h_m = 14
+src = "推定"
+note = "六盏壁灯为本档主光"
+
+[[block]]
+id = "b20"
+may_overlap = true
+kind = "asset"
+asset = "p257"
+face = "north"
+name = "南壁柱1（挂铁笼壁灯）"
+xy = [32, 24.5]
+size = [2, 1]
+h_m = 14
+src = "推定"
+note = "六盏壁灯为本档主光"
+
+[[block]]
+id = "b21"
+may_overlap = true
+kind = "asset"
+asset = "p257"
+face = "north"
+name = "南壁柱2（挂铁笼壁灯）"
+xy = [52, 24.5]
+size = [2, 1]
+h_m = 14
+src = "推定"
+note = "六盏壁灯为本档主光"
+
+[[block]]
+id = "b22"
+may_overlap = true
+kind = "asset"
+asset = "p257"
+face = "north"
+name = "南壁柱3（挂铁笼壁灯）"
+xy = [72, 24.5]
+size = [2, 1]
+h_m = 14
+src = "推定"
+note = "六盏壁灯为本档主光"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）：场地被体块占满，放在室内
+[[anchor]]
+key = "bg797-c1"
+eye = [45, 27]
+target = [45, 6]
+eye_h = 1.65
+lens_mm = 24
+inside = true
+note = "室内南端朝北；自动生成，排镜时按需改"

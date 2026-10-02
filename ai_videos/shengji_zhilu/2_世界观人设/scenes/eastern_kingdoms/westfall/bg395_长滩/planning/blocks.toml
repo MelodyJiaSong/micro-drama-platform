@@ -1,0 +1,230 @@
+# 长滩 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 世界树无坐标。场地是整条西海岸中段一段有代表性的 1 km 沙岸（约区级 x 870–1270 / y 1000–2000 一带），
+# 崖—沙—海的层次与宽度取区级 terrain.toml 的「西岸崖坎」与近岸海带（地图量取）；沙上的船骸、窝棚、漂流木逐件推定。
+
+[meta]
+bg = "bg395"
+name_zh = "长滩"
+size_m = [400, 1000]
+px_per_m = 1.4
+grid_m = 100
+scale_src = "推定"
+scale_note = "世界树无坐标；取西海岸中段 1 km 作代表段。崖高 25 m、崖脚到水边约 40–60 m 沙带按区级 terrain.toml（地图量取）；沙滩全长两公里多，本图只截一段"
+# 世界树画面：西侧漫长的灰白沙岸，浪线笔直；沙上散着搁浅的沉船肋骨与断桅，海风把沙吹成流动的纹路
+absent = [
+    "码头 / 港口 / 栈桥 / 防波堤（长滩是荒岸，不是港）",
+    "石砌建筑与城墙（人造物只有搁浅的船、窝棚与漂流木）",
+    "下崖的台阶与木梯（只有几道冲沟）",
+    "燃着的火堆与青烟（默认态火堆是冷灰余烬）",
+    "亮着的灯塔光束（灯塔在南端、属 bg391，默认白天不亮）",
+    "椰树 / 热带植被（沙上只有枯枝与干海藻）",
+    "绿草坡（崖顶是枯黄平原）",
+    "风暴巨浪 / 雨（默认晴朗下午、浪线平缓笔直）",
+    "任何人物与动物（水栖怪物、渔民、海鸟属 shot 层）",
+]
+
+[[ridge]]
+name = "西岸干土崖（黄褐横向土层，高 25 m）"
+poly = [[322, 0], [344, 0], [340, 250], [336, 500], [340, 750], [350, 1000], [328, 1000], [318, 750], [314, 500], [318, 250]]
+height_m = 25
+src = "地图量取"
+
+[[water]]
+name = "近岸灰蓝浅海"
+path = [[205, 0], [200, 250], [196, 500], [200, 750], [210, 1000]]
+width_m = 110
+depth_m = 3
+src = "地图量取"
+
+[[water]]
+name = "深蓝外海"
+path = [[78, 0], [78, 1000]]
+width_m = 160
+depth_m = 20
+src = "地图量取"
+
+[[road]]
+name = "下崖冲沟（崖顶平原→沙滩）"
+path = [[398, 300], [360, 318], [336, 332], [316, 340]]
+width_m = 3
+src = "推定"
+
+[[road]]
+name = "南段下崖冲沟"
+path = [[398, 810], [362, 800], [340, 790], [318, 786]]
+width_m = 3
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "干沙带（风纹灰白细沙）"
+xy = [290, 500]
+size = [44, 1000]
+h_m = 0
+src = "地图量取"
+note = "崖脚到湿沙之间；全长沿海岸延伸出场地"
+
+[[block]]
+id = "b02"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "湿沙反光带与浪线"
+xy = [260, 500]
+size = [16, 1000]
+h_m = 0
+src = "地图量取"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p362"
+face = "south"
+name = "搁浅大船肋骨架（半埋沙中）"
+xy = [288, 400]
+size = [12, 38]
+h_m = 6
+rot = 12
+src = "推定"
+note = "世界树：沙上散着搁浅的沉船肋骨；青灰旧木、藤壶、盐霜"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p367"
+face = "south"
+name = "横躺断桅（缠朽缆绳）"
+xy = [296, 470]
+size = [2, 22]
+h_m = 1
+rot = 55
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p361"
+face = "south"
+over_water = true
+name = "半沉浅水的修长船体（船首高翘）"
+xy = [228, 560]
+size = [10, 44]
+h_m = 8
+rot = -15
+src = "推定"
+note = "世界树子节点「长滩沉船群」：半沉在浅水里的船体，含一艘修长的驱逐舰残骸"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p347"
+face = "south"
+count = 3
+name = "北窝棚簇（鱼骨枯枝圆顶窝棚 ×3）"
+xy = [306, 240]
+size = [20, 16]
+h_m = 2.5
+src = "推定"
+note = "世界树子节点「长滩鱼人海岸」；默认态空无一物"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p363"
+face = "south"
+name = "北窝棚冷灰火堆"
+xy = [292, 246]
+size = [3, 3]
+h_m = 0
+src = "推定"
+note = "默认态冷灰余烬、不冒烟"
+
+[[block]]
+id = "b08"
+kind = "palisade"
+face = "south"
+count = 1
+name = "鱼骨图腾杆"
+xy = [293, 232]
+size = [1, 1]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p347"
+face = "south"
+count = 2
+name = "南窝棚簇（鱼骨枯枝圆顶窝棚 ×2）"
+xy = [304, 720]
+size = [16, 14]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p367"
+face = "south"
+name = "漂流木堆"
+xy = [300, 620]
+size = [10, 4]
+h_m = 1
+rot = 20
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p368"
+face = "south"
+count = 5
+over_water = true
+name = "近岸黑礁石群"
+xy = [236, 880]
+size = [30, 20]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p368"
+face = "south"
+count = 4
+name = "崖脚落石锥"
+xy = [310, 430]
+size = [10, 8]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "崖顶枯黄平原"
+xy = [375, 500]
+size = [40, 1000]
+h_m = 0
+src = "地图量取"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg395-c1"
+eye = [200, 920]
+target = [200, 500]
+eye_h = 33.3
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -1,0 +1,300 @@
+# 避难谷地 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg47"
+name_zh = "避难谷地"
+size_m = [320, 280]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "区图 1 px ≈ 3.285 m（区级 terrain.toml 同口径）：REFUGE POINTE 字样外那道弧形崖线宽约 40 px ≈ 130 m，岩丘台面按它取约 150 × 145 m；主路岔口在点位以南约 58 px ≈ 190 m（在本场地南缘外）。营内帐篷、栅栏的尺寸与摆位是推定"
+# 世界树画面：大路旁一圈木栅与帆布营帐围成的联盟驻地，篝火、拴马桩与伤兵帐篷挤在一起，栅栏外就是空旷草坡
+# 机位（锚点图）：东门外上坡土路（约 [235, 124]）朝西略仰
+absent = [
+    "石砌城墙、城堡与石砌房屋（只有西缘一段半人高旧石墙基）",
+    "燃着的篝火与炊烟（火塘是冷灰）",
+    "任何人物、马匹、飞禽与坐骑（默认空营）",
+    "战场传送门与任何魔法光",
+    "旗帜上的纹章、徽记与文字（长幡无纹）",
+    "北门、西门（北、西两面是断崖）",
+    "成片树林",
+    "空中飞行的坐骑与航线",
+]
+
+[[ridge]]
+name = "岩丘台面（高出四周约 12 m；北缘、西缘是灰白断崖，东、南为缓坡）"
+poly = [[96, 66], [150, 56], [212, 58], [238, 74], [250, 112], [244, 168], [214, 198], [160, 208], [118, 200], [98, 160], [92, 110]]
+height_m = 12
+src = "地图量取"
+
+[[road]]
+name = "东北土路（出东门，通往东北农庄）"
+path = [[216, 125], [246, 122], [276, 104], [300, 76], [320, 52]]
+width_m = 5
+src = "地图量取"
+
+[[road]]
+name = "南门下坡小路（接坡底东西主路与岔口）"
+path = [[165, 174], [168, 206], [176, 244], [184, 280]]
+width_m = 3
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "palisade"
+face = "south"
+count = 1
+into_ridge = true
+name = "木栅·北段（沿崖边，一人多高削尖原木）"
+xy = [165, 82]
+size = [100, 1.5]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "palisade"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "木栅·东段北"
+xy = [215, 100]
+size = [1.5, 36]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p41"
+face = "east"
+count = 2
+into_ridge = true
+name = "东门（两根粗门柱 + 敞开的木栅门）"
+xy = [215, 123]
+size = [3, 10]
+h_m = 4
+src = "推定"
+note = "锚点图机位就在门外上坡路上"
+
+[[block]]
+id = "b04"
+kind = "palisade"
+face = "south"
+count = 1
+into_ridge = true
+name = "木栅·东段南"
+xy = [215, 150]
+size = [1.5, 44]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "palisade"
+face = "south"
+count = 1
+into_ridge = true
+name = "木栅·南段西"
+xy = [138, 172]
+size = [46, 1.5]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "gate_wall"
+face = "south"
+count = 1
+into_ridge = true
+name = "南门（比东门窄，碎石木桶当门墩）"
+xy = [165, 172]
+size = [6, 3]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "palisade"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "木栅·南段东"
+xy = [192, 172]
+size = [46, 1.5]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "palisade"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "木栅·西段（沿崖边，中间接旧石墙基）"
+xy = [115, 110]
+size = [1.5, 56]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "low_wall"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "旧石墙基（半人高，风化发白，拿来挡风）"
+xy = [115, 155]
+size = [2, 34]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p39"
+face = "south"
+into_ridge = true
+name = "指挥帐（方形两坡，最大）"
+xy = [160, 104]
+size = [10, 7]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p39"
+face = "east"
+into_ridge = true
+name = "营帐·西（灰蓝）"
+xy = [143, 108]
+size = [6, 5]
+h_m = 2.8
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p39"
+face = "west"
+into_ridge = true
+name = "营帐·东（灰蓝）"
+xy = [177, 108]
+size = [6, 5]
+h_m = 2.8
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p40"
+face = "south"
+into_ridge = true
+name = "飞禽栖架（带杈原木高台，粗绳锚进岩地）"
+xy = [132, 90]
+size = [8, 6]
+h_m = 5
+src = "推定"
+note = "营地最高的剪影；飞行点在营内（原典），摆在西北崖边风口是推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p40"
+face = "south"
+into_ridge = true
+name = "原木瞭望台"
+xy = [121, 88]
+size = [4, 4]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "战旗空地（矮木栅小围场，两根空旗杆）"
+xy = [198, 96]
+size = [16, 14]
+h_m = 1.2
+src = "推定"
+note = "战场入口在营内（原典）；位置推定"
+
+[[block]]
+id = "b16"
+kind = "asset"
+asset = "p39"
+face = "east"
+into_ridge = true
+name = "伤兵帐（窄长，帘子撩开）"
+xy = [140, 150]
+size = [16, 6]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b17"
+kind = "asset"
+asset = "p363"
+face = "south"
+into_ridge = true
+name = "石圈火塘（冷灰，挂空铁锅）"
+xy = [163, 133]
+size = [3, 3]
+h_m = 0.3
+src = "推定"
+
+[[block]]
+id = "b18"
+kind = "asset"
+asset = "p39"
+face = "west"
+into_ridge = true
+name = "补给帐"
+xy = [194, 146]
+size = [7, 6]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b19"
+kind = "asset"
+parts = [{asset = "p178", at = [-2.3, 1.1], yaw = 0}, {asset = "p178", at = [-1.5, 1.3], yaw = 0}, {asset = "p178", at = [-1.9, 0.4], yaw = 0}, {asset = "p45", at = [0.2, 1.2], yaw = 0}, {asset = "p45", at = [1.45, 1.3], yaw = 4}, {asset = "p45", at = [0.8, 0.1], yaw = -7}, {asset = "p45", at = [2.2, -0.9], yaw = 12}]
+face = "south"
+into_ridge = true
+name = "草料捆、木桶与木箱堆"
+xy = [183, 156]
+size = [6, 4]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b20"
+kind = "asset"
+asset = "p40"
+face = "south"
+into_ridge = true
+name = "拴马桩一排（空缰绳）"
+xy = [205, 163]
+size = [12, 1]
+h_m = 1.3
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg47-c1"
+eye = [160, 258]
+target = [160, 140]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

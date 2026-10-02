@@ -1,0 +1,289 @@
+# 水晶湖 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 场地 ＝ ref/bg8_水晶湖_map_crop.png 的整幅裁切（区图 18% × 18%，571 × 381 m），1 裁切 px ≈ 1.052 m；
+# 湖心小岛（坐标 [49, 65.7]）落在 (286, 192)。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 湖是葫芦形：西半湖近圆（两条粗水线叠出）、中段窄水道、东半湖狭长——区图量取，不是正圆。
+# 2026-09-30（floorplans-ep02）：加栈桥西南侧的岸边芦苇浅滩（ep02 S24 亚伦下到的芦苇边 / S25 鱼人从这里站起；锚点图右侧近处的芦苇与烂树桩即这一带）；锚点机位改到栈桥根（bg8-c1）。
+# ⚠ 湖面是折线加宽：build_scene 按到折线的距离判水（端头是圆的），栈桥根与这片浅滩都落在「水里」——校验渲前先核机位 z。
+
+[meta]
+bg = "bg8"
+name_zh = "水晶湖"
+size_m = [570, 380]
+px_per_m = 2.5
+grid_m = 50
+scale_src = "坐标表"
+scale_note = "区 WorldMapArea 3173.7 × 2116.5 m（bg172 blocks.toml）× 区图裁切 18%；湖心小岛与西北岸码头两点来自 wiki 坐标，湖岸轮廓按裁切图量取"
+# 世界树画面：闪金镇正东一片近圆形的清澈湖泊，湖水呈通透的蓝绿色，环岸是芦苇丛与低垂柳枝，湖心一座长着几棵细树的小岛，午后整片湖面碎成一片金鳞
+absent = [
+    "湖心岛上的纪念碑 / 提灯 / 狐狸雕刻（10.1.5 才加，旧世是空岛）",
+    "桥（区图上湖面与入湖口都没有桥）",
+    "码头上的船 / 帆 / 渡口（只有一条短栈桥）",
+    "绕湖的石砌堤岸 / 围墙（湖岸是自然泥滩与草坡）",
+    "瀑布 / 急流（北来的是平缓清溪）",
+    "任何火、烛火、灯笼、营火与人工光源（白天户外）",
+    "秋色枯叶 / 浓雾 / 雪",
+    "任何人物与动物（钓鱼的人、湖里的生物都在 shot 层加）",
+]
+
+[[water]]
+name = "西半湖（近圆，横向）"
+path = [[215, 198], [350, 202]]
+width_m = 100
+depth_m = 5
+src = "地图量取"
+
+[[water]]
+name = "西半湖（近圆，纵向）"
+path = [[283, 142], [285, 258]]
+width_m = 110
+depth_m = 5
+src = "地图量取"
+
+[[water]]
+name = "中段窄水道"
+path = [[345, 228], [420, 232]]
+width_m = 50
+depth_m = 3
+src = "地图量取"
+
+[[water]]
+name = "东半湖（狭长）"
+path = [[415, 205], [565, 200]]
+width_m = 100
+depth_m = 5
+src = "地图量取"
+
+[[water]]
+name = "北来清溪（入湖口）"
+path = [[276, 0], [268, 63], [265, 140]]
+width_m = 12
+depth_m = 1
+src = "地图量取"
+
+[[road]]
+name = "东出镇大道（走湖南岸外三四十米）"
+path = [[0, 250], [140, 255], [275, 280], [420, 305], [570, 318]]
+width_m = 8
+src = "地图量取"
+
+[[road]]
+name = "镇北出镇路（去北面小谷）"
+path = [[80, 165], [160, 40], [220, 0]]
+width_m = 6
+src = "地图量取"
+
+[[road]]
+name = "北岸踩出来的小径"
+path = [[250, 122], [320, 124], [380, 138], [420, 141], [470, 139]]
+width_m = 1.5
+src = "推定"
+
+[[ridge]]
+name = "大路以南一线矮丘"
+poly = [[100, 335], [200, 320], [330, 345], [450, 350], [570, 338], [570, 380], [100, 380]]
+height_m = 30
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "rock_shelf"
+face = "south"
+count = 1
+over_water = true
+name = "湖心小岛（空岛）"
+xy = [286, 192]
+size = [28, 18]
+h_m = 1
+src = "坐标表"
+note = "{{Co|49|65.7}}；三四棵细树、没过脚踝的浅草、卵石浅滩；无碑无灯无石刻"
+
+[[block]]
+id = "b02"
+kind = "rock_shelf"
+face = "south"
+count = 1
+over_water = true
+name = "西半湖小礁岛"
+xy = [335, 218]
+size = [14, 9]
+h_m = 0.5
+src = "地图量取"
+
+[[block]]
+id = "b03"
+kind = "rock_shelf"
+face = "south"
+count = 1
+over_water = true
+name = "东半湖小岛（西）"
+xy = [468, 195]
+size = [34, 20]
+h_m = 1
+src = "地图量取"
+
+[[block]]
+id = "b04"
+kind = "rock_shelf"
+face = "south"
+count = 1
+over_water = true
+name = "东半湖小岛（东）"
+xy = [518, 216]
+size = [28, 16]
+h_m = 1
+src = "地图量取"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p157"
+face = "south"
+over_water = true
+name = "西北岸短木栈桥"
+xy = [250, 146]
+size = [4, 22]
+h_m = 1
+rot = -35
+src = "坐标表"
+note = "码头坐标 [47.5, 62.3]（钓鱼训练师站位）；桥根在岸、向东南伸进水里约 20 m；锚点机位就在桥根"
+
+[[block]]
+id = "b06"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "入湖口沙嘴"
+xy = [270, 142]
+size = [16, 8]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p143"
+face = "east"
+name = "湖西北岸两层民居（属镇外围）"
+xy = [205, 112]
+size = [14, 10]
+h_m = 9
+src = "坐标表"
+note = "按屋前三名 NPC 坐标 [46.3–47.4, 62.2] 摆；wiki 定它属镇子外围，不属本子区域"
+
+[[block]]
+id = "b08"
+kind = "proxy"
+face = "east"
+count = 1
+name = "镇子（另档）"
+bg = "bg4"
+xy = [64, 196]
+size = [110, 90]
+h_m = 8
+src = "坐标表"
+note = "镇中心坐标 [42, 65.9]；本档只把它当西侧邻居标位置"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p113"
+face = "south"
+count = 7
+over_water = true
+name = "北岸缓坡橡树丛"
+xy = [360, 115]
+size = [60, 40]
+h_m = 15
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "南岸芦苇浅滩"
+xy = [335, 266]
+size = [170, 16]
+h_m = 0
+src = "推定"
+note = "区地理页：南岸与东岸的泥泞浅滩（描述性标签），宽窄推定"
+
+[[block]]
+id = "b11"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "东岸芦苇浅滩"
+xy = [548, 205]
+size = [30, 60]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p150"
+face = "north"
+count = 3
+name = "南岸空窝棚群"
+xy = [395, 272]
+size = [26, 10]
+h_m = 1.5
+src = "推定"
+note = "芦苇秆与大贝壳扎的低矮圆顶窝棚三四座，空的；一座塌了一角"
+
+[[block]]
+id = "b13"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "栈桥西南岸边芦苇浅滩（S24 / S25）"
+xy = [235, 176]
+size = [22, 36]   # 东沿扩到 x 246（S25 机位与往东逃的鱼人丁都在浅水里，2026-09-30 shots-c）
+h_m = 0
+shallow_m = 0.3   # 没过小腿的浅水：块里地面抬到水面下 0.3 m（湖面折线在这里叠成湖心那么深，2026-09-30）
+src = "推定"
+note = "齐腰到齐胸的青黄芦苇、几根发黑的烂树桩、没过小腿的浅水与泥滩；离栈桥头约 20 m。S24 杜克站栈桥头 (256, 155)、亚伦下到芦苇边；S25 五六个鱼人从芦苇里站起、把亚伦围在浅水里，杜克跳下栈桥沿岸跑过来"
+
+[[block]]
+id = "b14"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "栈桥头下到芦苇浅滩的泥岸（S25）"
+xy = [247, 163]
+size = [20, 18]
+h_m = 0
+shallow_m = 0.2
+src = "推定"
+note = "S25 杜克从栈桥头 (256, 155) 跳下、蹚水跑到浅滩；没过脚踝的泥水，与芦苇浅滩 b13 连着"
+
+# 锚点图视点（bg8_水晶湖.md 步骤一）：西北岸栈桥根部、离水面约一人高，朝东南平视略俯
+[[anchor]]
+key = "bg8-c1"
+eye = [242, 134]
+target = [300, 205]
+eye_h = 1.8
+lens_mm = 24
+note = "近景栈桥与脚下湖岸，左手清溪入湖口与沙嘴，中景湖心空小岛，右侧近处芦苇与烂树桩（b13 方向），远景收窄的水道与东半湖。⚠ 眼位按折线水面判在水里，渲前核 z"
+
+# 芦苇浅滩傍晚 plate（2026-09-30 assets-extra；qc5 光线 M1）：b13 芦苇浅滩东南沿、低机位朝北偏东看栈桥头——S24 6s 起与 S25 全镜的方向。
+#   近 芦苇与浅水 · 中 b14 泥岸与栈桥头 · 远 栈桥根、入湖口沙嘴、北岸草坡橡树 · 右 开阔湖面。傍晚金光从西（画左后方）来
+[[anchor]]
+key = "bg8-1_苇滩_傍晚望栈桥"
+eye = [234, 187]
+target = [248, 160]
+eye_h = 1.3
+lens_mm = 24
+note = "S24 (234.6, 183.3)→(239.5, 176)、S25 (234.6, 186.3)→(238.6, 177) 都在这个朝向里；S24 0–6s 栈桥根朝东南那段是反打，只借光与水色。⚠ 眼位按折线水面判在水里（b13 shallow 0.3 m）"

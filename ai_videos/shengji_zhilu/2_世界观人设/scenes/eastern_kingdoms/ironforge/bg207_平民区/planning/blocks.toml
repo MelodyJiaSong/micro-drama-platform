@@ -1,0 +1,240 @@
+# 平民区 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+# 量取：原版区图 WorldMap-Ironforge_c60.jpg（1002×668 px）上 x∈[150,560] px、y∈[180,610] px 一窗，
+#   本地 m ＝ (px − 150, py − 180) × (0.7215, 0.7222)（与区级 terrain.toml 同一换算）。
+# 店铺排、回纹石带、石阶、甬道口按区图量取；拍卖行 / 金库落在哪一块按旧世游戏内位置推定。
+
+[meta]
+bg = "bg207"
+name_zh = "平民区"
+size_m = [296, 311]
+px_per_m = 5.0
+grid_m = 50
+scale_src = "地图量取"
+scale_note = "区图黄色新月形区块量取：弧廊中线约 400 m 长、宽约 22 m（外排店铺面到内排店铺面）；换算同区级 terrain.toml（0.7215 / 0.7222 m/px）"
+# 世界树画面：进城后第一圈宽环廊，两侧一长排石砌商铺与摊位，穹顶垂下铁链吊灯，地面被人流踩出光亮的石板道
+absent = ["天空 / 日光 / 窗（山腹内廊）", "熔岩与火塘（环廊里没有；熔岩只在斜廊尽头的城心）", "树木 / 草地 / 任何植被", "露天广场 / 城墙 / 护城河", "木构房屋 / 瓦顶 / 茅草", "招牌字 / 告示文字 / 任何文字", "玻璃橱窗 / 电灯 / 霓虹 / 现代器物", "训练假人 / 木桩靶", "4.0.3 后才有的黑铁大使馆"]
+
+[[ridge]]
+name = "西侧外山壁"
+poly = [[0, 0], [48, 0], [38, 20], [22, 60], [18, 160], [28, 195], [0, 215]]
+height_m = 40
+src = "地图量取"
+note = "外排店铺背后的实心山壁；环廊外侧没有任何出口"
+
+[[road]]
+name = "平民区环廊"
+path = [[68.5, 18.1], [56.3, 50.6], [51.9, 86.7], [51.9, 122.8], [57.7, 158.9], [72.2, 191.4], [97.4, 220.3], [129.9, 241.9], [173.2, 257.8], [216.5, 263.6], [263.3, 260.0]]
+width_m = 22
+src = "地图量取"
+note = "新月形主动线：西北秘法区石阶 → 城西 → 西南大门甬道口 → 城南 → 东南军事区石阶"
+
+[[road]]
+name = "大门甬道"
+path = [[97.4, 249.2], [74, 278], [52, 308]]
+width_m = 14
+src = "地图量取"
+note = "向西南凿穿山壁通往城门厅（门厅在本窗外）"
+
+[[road]]
+name = "通大锻炉斜廊"
+path = [[180.4, 238.3], [202.0, 187.8], [227.3, 148.1]]
+width_m = 14
+src = "地图量取"
+note = "内排店铺之间岔出，东北向直通城心熔炉场；尽头透出熔岩橙光"
+
+[[road]]
+name = "通王座厅窄甬道"
+path = [[80.8, 187.8], [108.2, 155.3], [133.5, 130.0]]
+width_m = 10
+src = "地图量取"
+note = "西弧内排之间岔出，东北向上到王座厅"
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "回纹石带·西弧段"
+xy = [62.0, 101.1]
+size = [8, 128]
+h_m = 0
+src = "地图量取"
+note = "区图红色长条；形制推定为嵌地的暗红回纹条石带、暗铜包边，比路面低一指"
+
+[[block]]
+id = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "回纹石带·西南段"
+xy = [80.4, 187.0]
+size = [38.5, 8]
+h_m = 0
+rot = 52
+src = "地图量取"
+note = "同上，段间留横穿缺口"
+
+[[block]]
+id = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "回纹石带·南弧西段"
+xy = [110.4, 222.4]
+size = [39.3, 8]
+h_m = 0
+rot = 47
+src = "地图量取"
+
+[[block]]
+id = "b04"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "回纹石带·南弧东段"
+xy = [191.9, 254.2]
+size = [125.5, 8]
+h_m = 0
+rot = 15
+src = "地图量取"
+note = "锚点图里顺着弧线弯向远处的那一段"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p190"
+face = "east"
+count = 14
+into_ridge = true
+name = "外排店铺·西弧"
+xy = [33.9, 86.7]
+size = [24, 144]
+h_m = 8
+src = "地图量取"
+note = "背靠山壁的一排矮宽方肩拱门脸，比路面高一级石阶"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p190"
+face = "west"
+count = 11
+name = "内排店铺·西弧"
+xy = [81.5, 84.5]
+size = [23, 112]
+h_m = 8
+src = "地图量取"
+note = "隔开王座厅一侧的门脸排，与路面平齐"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p190"
+face = "east"
+name = "拍卖行"
+xy = [75.8, 221.7]
+size = [34, 30]
+h_m = 10
+rot = -40
+src = "推定"
+note = "区图大门甬道口北侧外排的黄色块；归属按旧世位置推定。高拱门厅，锚点机位的左后方、不入画"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p191"
+face = "southwest"
+name = "金库"
+xy = [145.7, 163.9]
+size = [44, 40]
+h_m = 10
+src = "推定"
+note = "区图南弧内排最大的黄色块；归属按旧世位置推定。正面一道圆形暗铜闸门，门前两级宽石阶"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p190"
+face = "north"
+count = 14
+name = "外排店铺·南弧"
+xy = [209.2, 280.2]
+size = [148, 30]
+h_m = 8
+rot = 8
+src = "地图量取"
+note = "锚点图右手一侧"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p190"
+face = "south"
+count = 10
+may_overlap = true
+name = "内排店铺·南弧"
+xy = [212.8, 234.7]
+size = [108, 30]
+h_m = 8
+rot = 6
+src = "地图量取"
+note = "锚点图左手一侧，斜廊从其西端岔出"
+
+[[block]]
+id = "b11"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "大门甬道口"
+xy = [97.4, 249.2]
+size = [24, 26]
+h_m = 0
+rot = -45
+src = "地图量取"
+note = "锚点机位所在：甬道汇进环廊处"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p180"
+face = "southeast"
+may_overlap = true
+name = "西北端石阶"
+xy = [73.6, 17]
+size = [28, 14]
+h_m = 3
+rot = -30
+src = "地图量取"
+note = "上到秘法区"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p180"
+face = "southeast"
+may_overlap = true
+name = "东南端石阶"
+xy = [275.6, 256.4]
+size = [16, 34]
+h_m = 3
+rot = -20
+src = "地图量取"
+note = "下到军事区；锚点图里弧墙尽头隐约可见的那段石阶，两侧方柱各挂一盏铁笼灯"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg207-c1"
+eye = [148, 25]
+target = [148, 156]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -1,0 +1,195 @@
+# 达拉然 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地原点 ＝ 区级平面图 (61, 678) m；区图点位 [18, 62] 落在本场地 (400, 380)；区图 1 px ≈ 2.555 m。
+
+[meta]
+bg = "bg25"
+name_zh = "达拉然"
+size_m = [880, 880]
+px_per_m = 1.8
+grid_m = 50
+scale_src = "地图量取"
+scale_note = "区图城廓东西 ~180 px（≈460 m）、南北连南端圆台 ~220 px（≈560 m），穹顶按罩住整座城取直径 550 m 正圆；南城门取区图出城小路起点（城廓东南缘，罩内）；湖岸、湖臂、东侧山脊与南出口小路按区级 terrain.toml 平移换算；城内塔位按区图图标量取，高度推定"
+# 世界树画面：湖边一座巨大的半透明紫色魔法穹顶，罩着城市废墟的尖塔，穹顶表面有符文缓缓流动
+absent = [
+    "达拉然巨坑与悬在空中的城（巫妖王之怒以后的状态）",
+    "穹顶上的门洞或缺口（穹顶完整封闭，城南门在罩内）",
+    "任何人物、守卫与元素生物（默认空镜）",
+    "火光、灯笼与城内亮着的窗（唯一非日光光源是穹顶的冷紫微光）",
+    "被染紫的天空与湖面（紫色只在穹顶上）",
+    "积雪雪原（本档在雪线以下，只有残雪）",
+    "可读的文字（膜面光纹是抽象几何花纹）",
+]
+
+[[water]]
+name = "湖·南岸湖面（城北，只隔一条窄草岸）"
+path = [[0, 40], [240, 50], [390, 70], [470, 100]]
+width_m = 180
+depth_m = 10
+src = "地图量取"
+
+[[water]]
+name = "湖·西侧窄湖臂（顺城墙外南伸；区图在此已出图框，按湖向南延伸推定）"
+path = [[30, 150], [35, 400], [45, 650], [60, 880]]
+width_m = 100
+depth_m = 8
+src = "推定"
+
+[[ridge]]
+name = "城东山脊（机位所在坡，坡顶铁灰裸岩）"
+poly = [[670, 170], [830, 170], [860, 344], [840, 523], [760, 650], [690, 753], [665, 650], [665, 446], [675, 293]]
+height_m = 45
+src = "地图量取"
+
+[[road]]
+name = "南城门外碎石土路（往东南下坡）"
+path = [[450, 638], [490, 705], [526, 765], [539, 880]]
+width_m = 5
+src = "地图量取"
+
+[[block]]
+id = "b01"
+over_water = true
+kind = "proxy"
+face = "south"
+count = 1
+name = "淡紫半球光膜穹顶（外接方块示意）"
+xy = [372, 455]
+size = [550, 550]
+h_m = 150
+src = "地图量取"
+note = "实为直径 550 m 的正圆半球，完整罩住城墙环，无门洞"
+
+[[block]]
+id = "b02"
+may_overlap = true
+kind = "asset"
+asset = "p19"
+face = "south"
+name = "西北环台最高尖塔"
+xy = [271, 262]
+size = [140, 140]
+h_m = 120
+src = "地图量取"
+note = "区图上一圈套一圈的环形图标"
+
+[[block]]
+id = "b03"
+may_overlap = true
+kind = "asset"
+asset = "p19"
+face = "south"
+name = "西侧大圆塔"
+xy = [146, 403]
+size = [70, 70]
+h_m = 60
+src = "地图量取"
+
+[[block]]
+id = "b04"
+may_overlap = true
+kind = "asset"
+asset = "p19"
+face = "south"
+name = "西南大圆塔"
+xy = [150, 523]
+size = [60, 60]
+h_m = 50
+src = "地图量取"
+
+[[block]]
+id = "b05"
+may_overlap = true
+kind = "asset"
+asset = "p18"
+face = "south"
+name = "中部方形大厅废墟"
+xy = [236, 446]
+size = [70, 50]
+h_m = 25
+src = "地图量取"
+
+[[block]]
+id = "b06"
+may_overlap = true
+kind = "asset"
+asset = "p19"
+face = "south"
+count = 4
+name = "南部圆顶塔群"
+xy = [347, 489]
+size = [90, 80]
+h_m = 40
+src = "地图量取"
+
+[[block]]
+id = "b07"
+may_overlap = true
+kind = "asset"
+asset = "p19"
+face = "south"
+count = 3
+name = "东部塔群"
+xy = [458, 370]
+size = [80, 70]
+h_m = 45
+src = "地图量取"
+
+[[block]]
+id = "b08"
+may_overlap = true
+kind = "asset"
+asset = "p19"
+face = "south"
+count = 3
+name = "东南圆塔组"
+xy = [570, 515]
+size = [90, 50]
+h_m = 35
+src = "地图量取"
+
+[[block]]
+id = "b09"
+may_overlap = true
+kind = "asset"
+asset = "p20"
+face = "southeast"
+name = "南城门（在穹顶内）"
+xy = [450, 633]
+size = [20, 10]
+h_m = 15
+src = "地图量取"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p26"
+face = "southeast"
+name = "翻倒的无轮朽木车"
+xy = [515, 738]
+size = [3, 2]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b11"
+may_overlap = true
+kind = "asset"
+asset = "p33"
+face = "south"
+name = "城上崩落的浅灰石块"
+xy = [650, 600]
+size = [16, 12]
+h_m = 1
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg25-c1"
+eye = [440, 810]
+target = [440, 440]
+eye_h = 29.3
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

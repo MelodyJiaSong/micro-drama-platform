@@ -1,0 +1,256 @@
+# 巴莎兰 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 换算：遗址中心 ＝ 坐标表 [45, 36] ≈ 区级平面图 (2695, 1437)；本场地原点 ≈ 区级 (2490, 1262)。1 区图 px ≈ 5.98 m。
+
+[meta]
+bg = "bg481"
+name_zh = "巴莎兰"
+size_m = [360, 320]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "点位按坐标表 [45, 36]；主干道走向与擦边距离（西北约 50 m）从原版区图裁切量取，1 px ≈ 6 m，精度约 ±30 m；环形下沉台、井池、柱位与残壁尺寸为推定"
+# 世界树画面：北部林间的环形遗址，残破石阶围着一口枯竭的月亮井，藤蔓爬满倾倒的立柱
+absent = [
+  "井里的水 / 发光的水面 / 蓝色或银白的井光 / 月光（井是干的）",
+  "半透明的幽魂 / 发光符文 / 魔法阵（亡魂属 shot 层）",
+  "海平线与海滩（海岸在西面约 300 m，被松林挡住）",
+  "河 / 溪 / 瀑布（壁泉河在东北约 450 m 外）",
+  "完整的建筑 / 屋顶 / 围墙 / 门楼 / 帐篷 / 营地",
+  "坡地与台地（空地是平的，只有遗址向下沉）",
+  "火 / 营火 / 火盆 / 烛火 / 灯笼 / 任何人工光源",
+  "阳光光柱 / 蓝天 / 硬边阴影",
+  "阔叶橡木林与暖金树冠 / 草甸 / 花田",
+  "雪 / 冰 / 霜",
+  "4.0.3a 之后的重建营地与毁损",
+  "人物 / 动物",
+]
+
+[[road]]
+name = "主干道（东北涉水口 → 西南奥伯丁东侧）"
+path = [[232, 0], [205, 60], [178, 105], [148, 150], [122, 220], [96, 320]]
+width_m = 6
+src = "地图量取"
+note = "在遗址西北约 50 m 擦边而过；压实的灰褐泥，两道浅辙积雨水"
+
+[[road]]
+name = "路边短径（主干道 → 外圈平台）"
+path = [[154, 140], [168, 160], [182, 172]]
+width_m = 2
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "林间空地（平地）"
+xy = [205, 175]
+size = [110, 100]
+h_m = 0
+src = "推定"
+note = "厚松针 + 齐膝蕨；靠近遗址露出月白方石铺面，被松根顶裂拱起"
+
+[[block]]
+id = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "环形下沉台（四级弧形石阶）"
+xy = [205, 175]
+size = [44, 44]
+h_m = 0
+src = "推定"
+note = "外圈与林地齐平，四级石阶共下沉约 2.5 m，像一只浅石碗"
+
+[[block]]
+id = "b03"
+kind = "pool"
+face = "south"
+count = 1
+name = "干涸圆形石砌井池"
+xy = [205, 175]
+size = [9, 9]
+h_m = 0.9
+src = "推定"
+note = "井沿半人高、浅刻弯月纹、缺三四段；井底龟裂干泥 + 枯叶，井壁一道灰白旧水线"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p419"
+face = "south"
+name = "立柱·西（锚点相机位旁）"
+xy = [183, 175]
+size = [1.6, 1.6]
+h_m = 7
+src = "推定"
+note = "细高柱身，顶端向外弯出一道叶形弧；方形石础"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p416"
+face = "south"
+name = "倒柱·西北（缠满藤）"
+xy = [193, 163]
+size = [8, 1.4]
+h_m = 0.8
+rot = 35
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p416"
+face = "south"
+name = "倒柱·北（横跨两级石阶）"
+xy = [205, 158]
+size = [8, 1.4]
+h_m = 0.8
+rot = 80
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p419"
+face = "south"
+name = "立柱·东北"
+xy = [220.6, 159.4]
+size = [1.6, 1.6]
+h_m = 7
+src = "推定"
+note = "细高柱身，顶端向外弯出一道叶形弧；方形石础"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p416"
+face = "south"
+name = "倒柱·东"
+xy = [222, 175]
+size = [7, 1.4]
+h_m = 0.8
+rot = 10
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p419"
+face = "south"
+name = "立柱·东南"
+xy = [220.6, 190.6]
+size = [1.6, 1.6]
+h_m = 7
+src = "推定"
+note = "细高柱身，顶端向外弯出一道叶形弧；方形石础"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p416"
+face = "south"
+name = "倒柱·南"
+xy = [205, 192]
+size = [8, 1.4]
+h_m = 0.8
+rot = 100
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p416"
+face = "south"
+name = "倒柱·西南（断成三截滑到碗底）"
+xy = [193, 187]
+size = [11, 1.4]
+h_m = 0.8
+rot = -40
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "low_wall"
+face = "west"
+count = 1
+name = "半圆形石座残壁（东侧）"
+xy = [234, 175]
+size = [4, 26]
+h_m = 1.3
+src = "推定"
+note = "齐胸高，内侧座面被磨得微凹，壁面布满藤根"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p416"
+face = "south"
+name = "倒伏老松·北缘（朽成空壳）"
+xy = [180, 128]
+size = [20, 1.2]
+h_m = 1
+rot = 15
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p416"
+face = "south"
+name = "倒伏老松·南缘"
+xy = [238, 219]
+size = [18, 1.2]
+h_m = 1
+rot = -20
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p418"
+face = "south"
+name = "路边斜倒的光秃方石"
+xy = [150, 132]
+size = [1.5, 1]
+h_m = 0.8
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "asset"
+asset = "p414"
+face = "south"
+count = 40
+name = "西侧松林（挡住海岸）"
+xy = [70, 200]
+size = [100, 220]
+h_m = 28
+src = "地图量取"
+
+[[block]]
+id = "b17"
+kind = "asset"
+asset = "p414"
+face = "south"
+count = 40
+name = "东侧松林"
+xy = [310, 175]
+size = [90, 290]
+h_m = 30
+src = "地图量取"
+note = "树缝里偶见东面约 370 m 外的山墙顶"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg481-c1"
+eye = [180, 26]
+target = [180, 160]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

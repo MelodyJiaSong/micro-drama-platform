@@ -1,0 +1,209 @@
+# 污染者高地 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg84"
+name_zh = "污染者高地"
+size_m = [320, 320]
+px_per_m = 4.0
+scale_src = "推定"
+scale_note = "取区级默认 320 m 见方：约 160 × 140 m 的台地基座 + 东侧洼地与隔开坑地的山体 + 西坡上顶路；无一手尺寸出处"
+# 世界树画面：荒原上突起的台地，顶部一圈焦黑的仪式石，紫色的余烬从地缝里往上飘
+# 区级平面图 b904（推定，2026-09-24 人审移位）：红原通往腐烂之痕的豁口南侧；西坡脚＝豁口与主干道尽头，东侧山体背后 ~250 m 是坑地岩缘
+absent = [
+    "任何人物与动物",
+    "火、火焰、火星与烟（立石与地面冷透；紫色光点不是火）",
+    "建筑、营帐、祭坛台阶与任何人工铺装",
+    "发光符文、法阵光圈与能量幕",
+    "文字、旗帜与标识",
+    "草地、树木与任何绿色植被",
+    "河流、水潭与任何水面",
+    "4.0.3a 之后新增的地貌与建筑",
+]
+
+[[ridge]]
+name = "平顶台地（红岩层状陡壁，高出荒原约 25 m；台顶约 120 × 100 m）"
+poly = [[70, 110], [100, 90], [190, 88], [228, 105], [232, 200], [205, 228], [110, 232], [74, 210]]
+height_m = 25
+src = "推定"
+
+[[ridge]]
+name = "坑地西侧紫黑山体（隔开台地与黑暗之门坑地，高出台顶 20–30 m）"
+poly = [[255, 0], [320, 0], [320, 320], [262, 320], [250, 220], [258, 120]]
+height_m = 50
+src = "推定"
+
+[[road]]
+name = "西坡碎石缓坡（唯一上顶路）"
+path = [[0, 176], [40, 170], [72, 165], [96, 160]]
+width_m = 12
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p66"
+face = "west"
+into_ridge = true
+name = "立石·东"
+xy = [190.0, 158.0]
+size = [3, 1.5]
+h_m = 4.5
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p66"
+face = "northwest"
+into_ridge = true
+name = "立石·东南（向圈内倾斜，垫着碎石）"
+xy = [185.3, 170.9]
+size = [3, 1.5]
+h_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p66"
+face = "north"
+into_ridge = true
+name = "立石·南"
+xy = [173.5, 177.7]
+size = [3, 1.5]
+h_m = 4.5
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p66"
+face = "northeast"
+into_ridge = true
+name = "立石·西南"
+xy = [160.0, 175.3]
+size = [3, 1.5]
+h_m = 4.5
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p66"
+face = "east"
+into_ridge = true
+name = "立石·西（倒伏，断成两截）"
+xy = [151.2, 164.8]
+size = [5, 2]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p66"
+face = "southeast"
+into_ridge = true
+name = "立石·西北"
+xy = [151.2, 151.2]
+size = [3, 1.5]
+h_m = 4.5
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p66"
+face = "south"
+into_ridge = true
+name = "立石·北"
+xy = [160.0, 140.7]
+size = [3, 1.5]
+h_m = 4.5
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p66"
+face = "south"
+into_ridge = true
+name = "立石·东北偏北（倒伏）"
+xy = [173.5, 138.3]
+size = [5, 2]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p66"
+face = "southwest"
+into_ridge = true
+name = "立石·东北"
+xy = [185.3, 145.1]
+size = [3, 1.5]
+h_m = 4.5
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "石圈中心暗褐烧痕与放射状地缝（缝里飘淡紫光点）"
+xy = [170, 158]
+size = [24, 24]
+h_m = 0
+src = "推定"
+note = "世界树「紫色的余烬从地缝里往上飘」；本档唯一的非日光光源，弱"
+
+[[block]]
+id = "b11"
+kind = "asset"
+parts = [{asset = "p77", at = [-0.8, 1.6], yaw = 85}, {asset = "p77", at = [0.6, 0.9], yaw = 100}, {asset = "p77", at = [-0.1, -1.7], yaw = 75}]
+face = "east"
+into_ridge = true
+name = "炭黑粗木残段（石圈外西侧，冷透）"
+xy = [130, 140]
+size = [6, 3]
+h_m = 0.3
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "plaza"
+face = "west"
+count = 1
+may_overlap = true
+name = "东缘陡坎下洼地（积砖红细沙）"
+xy = [243, 160]
+size = [12, 120]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p64"
+face = "north"
+count = 6
+name = "台地北壁崩塌缺口与滚落碎岩"
+xy = [150, 82]
+size = [20, 8]
+h_m = 2
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg84-c1"
+eye = [160, 294]
+target = [160, 160]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

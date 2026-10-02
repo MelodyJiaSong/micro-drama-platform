@@ -1,0 +1,243 @@
+# 主宰之剑 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 量取口径：ref/bg489_主宰之剑_map_crop.png（区图 18% 见方 ≈ 1078 × 719 m，裁切图 1 px ≈ 1.5 m）；场地中心 (210, 210) ＝ 坐标 [39, 87]。
+
+[meta]
+bg = "bg489"
+name_zh = "主宰之剑"
+size_m = [420, 420]
+px_per_m = 3.0
+grid_m = 50
+scale_src = "地图量取"
+scale_note = "洼地轮廓与主干道、西南小径、西侧暗林丘、南面低丘按区图裁切量取（±1.5 m/px，约 ±20 m）；战刃高度、营地与兽骨位置无一手出处，按世界树画面「刃身高过树冠」与备注「旁有黑暗信徒营地」推定"
+# 世界树画面：一柄巨大的黑色古神战刃斜插在荒地中央，刃身高过树冠，周围地面龟裂发黑，散落兽骨
+absent = ["任何水体（河 / 湖 / 海都在场地外；坑底只有几小摊雨后积水）", "熔岩 / 火光 / 冒烟 / 焦土 / 深地裂（坑底是冷透的灰黑干裂硬土，裂缝只有手指宽）", "刃身发光 / 光晕 / 能量光效 / 漂浮符文", "石砌或木构建筑、塔、城墙（营地只有三顶布篷）", "亮着的火塘（默认冷灰）", "4.0.3a 之后的战营 / 被撕开的裂谷 / 洪水冲刷痕", "坑底的树木与草地（坑底寸草不生）", "人物 / 动物 / 旗帜"]
+
+[[ridge]]
+name = "坑缘土石唇边（外轮廓，坑底画在其上）"
+poly = [[168, 82], [222, 86], [262, 118], [282, 172], [280, 232], [258, 282], [214, 306], [168, 300], [128, 262], [110, 204], [118, 142], [138, 102]]
+height_m = 1.2
+src = "地图量取"
+note = "裁切图上那一圈褐色坑缘；唇边比林地高约一米，向内是 6–7 m 的陡壁"
+
+[[ridge]]
+name = "南界山北麓低丘（西南角）"
+poly = [[0, 292], [90, 300], [130, 340], [112, 398], [62, 420], [0, 420]]
+height_m = 40
+src = "地图量取"
+note = "裁切图左下那几道褐色山影线，是南界山伸到林里的北麓"
+
+[[road]]
+name = "主干道（南北向，贴东侧）"
+path = [[325, 0], [327, 210], [352, 300], [375, 345], [418, 412]]
+width_m = 6
+
+[[road]]
+name = "西南小径（自主干道岔向海边）"
+path = [[358, 318], [330, 360], [262, 418]]
+width_m = 3
+
+[[road]]
+name = "坑东细土径（缓坡顶 → 主干道）"
+path = [[276, 212], [300, 214], [326, 218]]
+width_m = 2.5
+
+[[block]]
+id = "b01"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "坑底（灰黑干裂硬土）"
+xy = [198, 192]
+size = [118, 168]
+h_m = 0
+rot = -15
+src = "地图量取"
+note = "裁切图里灰色的洼地底；比林地低 6–7 m；寸草不生，低洼处几小摊雨后积水"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p423"
+face = "south"
+name = "巨刃（地面投影）"
+xy = [214, 186]
+size = [12, 44]
+h_m = 48
+rot = 35
+src = "推定"
+note = "刃尖扎在坑底中心略偏东，刃背与柄端朝东北斜指、倾角约 30°；投影条带即刃身在地面上的影子方向；顶端比松冠高十几米"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p418"
+face = "south"
+count = 8
+name = "刃根崩裂岩块堆"
+xy = [206, 206]
+size = [38, 28]
+h_m = 3
+rot = 0
+src = "推定"
+note = "刃尖入土处翻起的一圈岩块与土块，碎石一直溅到坑壁脚"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p426"
+face = "southeast"
+name = "黑布篷一"
+xy = [158, 132]
+size = [6, 5]
+h_m = 2.6
+rot = -20
+src = "推定"
+note = "坑底西北角的营地；三顶低矮黑布篷，木桩麻绳拉紧"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p426"
+face = "southeast"
+name = "黑布篷二"
+xy = [146, 150]
+size = [6, 5]
+h_m = 2.6
+rot = 10
+src = "推定"
+note = "同上；这一顶一根麻绳松了，篷角垂地"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p426"
+face = "southeast"
+name = "黑布篷三"
+xy = [170, 118]
+size = [5, 4]
+h_m = 2.2
+rot = -35
+src = "推定"
+note = "同上"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p418"
+face = "south"
+name = "石圈冷火塘"
+xy = [166, 146]
+size = [3, 3]
+h_m = 0.3
+rot = 0
+src = "推定"
+note = "默认冷灰加半截焦木，不冒烟、不亮"
+
+[[block]]
+id = "b08"
+kind = "asset"
+parts = [{asset = "p413", at = [-1.2, 0.1], yaw = 0}, {asset = "p413", at = [-0.1, 0.2], yaw = 5}]
+face = "south"
+name = "木箱与斜面木架"
+xy = [178, 136]
+size = [4, 2]
+h_m = 1.3
+rot = -20
+src = "推定"
+note = "两只钉铁角的木箱 + 一张空着的斜面木架"
+
+[[block]]
+id = "b09"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "兽骨散落区"
+xy = [196, 262]
+size = [60, 30]
+h_m = 0.5
+rot = -15
+src = "推定"
+note = "坑底南半，漂白的肋骨与长骨半埋在硬土里"
+
+[[block]]
+id = "b10"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "东缘缓坡（唯一下坑处）"
+xy = [270, 210]
+size = [18, 26]
+h_m = 0
+rot = -10
+src = "推定"
+note = "坑壁唯一坍缓的一段；人物进出洼地只走这里"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p414"
+face = "south"
+count = 22
+name = "西侧圆形暗林丘"
+xy = [44, 165]
+size = [70, 80]
+h_m = 32
+rot = 0
+src = "地图量取"
+note = "裁切图洼地正西那团褐边圆形深绿斑；比周围松林更浓密"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p416"
+face = "south"
+name = "坑沿倒伏老松"
+xy = [248, 110]
+size = [4, 26]
+h_m = 1.5
+rot = 40
+src = "推定"
+note = "贴坑沿被连根掀倒的几棵松之一，横架在坑沿上、树皮剥成灰白"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p414"
+face = "south"
+count = 40
+name = "北侧松林"
+xy = [210, 34]
+size = [300, 56]
+h_m = 34
+rot = 0
+src = "推定"
+note = "洼地外一圈都是高松林；这里只画北、东两块示意，其余林地不单画"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p414"
+face = "south"
+count = 40
+name = "主干道东侧松林"
+xy = [385, 160]
+size = [60, 280]
+h_m = 34
+rot = 0
+src = "推定"
+note = "同上"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg489-c1"
+eye = [210, 386]
+target = [210, 210]
+eye_h = 14.0
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

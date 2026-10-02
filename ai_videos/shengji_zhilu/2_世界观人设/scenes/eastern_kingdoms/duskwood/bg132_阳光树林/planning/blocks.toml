@@ -1,0 +1,184 @@
+# 阳光树林 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 本场地原点 ＝ 区级平面图（bg126）的 (1390, 640) m；点位取研究笔记世界坐标换算的区图 (64%, 49%) → 本图 (200, 170)。
+# bg126 的块 b905 已于 2026-09-24 场景总审改到本卡点位 (1550, 760) m（原推定的 (65%, 68%) 与世界坐标不符）。
+
+[meta]
+bg = "bg132"
+name_zh = "阳光树林"
+size_m = [400, 360]
+px_per_m = 4.0
+scale_src = "坐标表"
+scale_note = "点位由 g02_stormwind_kingdom_core_notes.md ③ 世界坐标（夜色镇 / 本地两点）换算到 bg126 米制；两侧山脊取 bg126 terrain.toml；田、废屋、窝棚的尺寸无一手出处，一律推定"
+# 世界树画面：夜色镇西侧的林间空地，边缘立着几处房屋废墟，中间是连片黑田——名字叫阳光，画面里一丝阳光都没有，这个反差本身就是一个镜头
+absent = ["阳光 / 太阳 / 光柱 / 蓝天（名字叫阳光，画面里一丝都没有）", "燃着的营火（默认冷灰余烬；要亮须在 shot 层立据）", "镇上的灯笼与窗火（被东脊挡住）", "在耕的庄稼 / 新鲜的绿", "完好的房屋 / 有人住的迹象", "河流与水面（只有垄沟里的黑泥水）", "狼人本体（属 shot 层）", "4.0.3a 后的新布置"]
+
+[[ridge]]
+name = "西侧·环形山东外壁"
+poly = [[0, 0], [86, 0], [85, 18], [75, 97], [44, 171], [0, 236]]
+height_m = 120
+src = "地图量取"
+note = "bg126 terrain『中央环形山·东弧』外缘在本场地内的一段；陡坡、缠结枯林"
+
+[[ridge]]
+name = "东侧·小镇西脊（背后是镇子）"
+poly = [[252, 0], [400, 0], [400, 210], [338, 265], [276, 282], [252, 117]]
+height_m = 60
+src = "地图量取"
+note = "bg126 terrain『小镇西脊』；空地比镇子高约 20 m，脊顶高出空地七八十米，坡缓、倒木与黑巨石"
+
+[[road]]
+name = "主干道（西 → 夜色镇）"
+path = [[0, 356], [165, 347], [313, 298], [400, 211]]
+width_m = 8
+src = "地图量取"
+note = "bg126 terrain『主干道』在本场地内的一段；空地南口"
+
+[[road]]
+name = "穿田窄土径（南口 → 北端林口）"
+path = [[165, 347], [160, 280], [155, 180], [150, 80], [148, 0]]
+width_m = 2.5
+src = "推定"
+note = "踩实的小径，土面上有深爪痕"
+
+[[block]]
+id = "b01"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "黑腐草荒田"
+xy = [150, 200]
+size = [150, 150]
+h_m = 0
+src = "推定"
+note = "田垄条纹尚在，齐腰高黑褐腐草，垄沟积黑泥水，边上残留几道塌沿的灌渠"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p116"
+face = "south"
+name = "山墙木屋残骸（西北）"
+xy = [95, 95]
+size = [12, 9]
+h_m = 5
+src = "推定"
+note = "只剩两面山墙与半根脊梁，屋顶塌进屋里"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p116"
+face = "south"
+name = "半塌石基木屋（东北）"
+xy = [215, 90]
+size = [14, 10]
+h_m = 4
+src = "推定"
+note = "塌了一半，剩下半边倚着枯树；梁上旧烧痕早已冷透"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p112"
+face = "south"
+name = "倚屋粗枯树"
+xy = [225, 82]
+size = [5, 5]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p117"
+face = "north"
+name = "窝棚·西"
+xy = [205, 104]
+size = [5, 4]
+h_m = 2
+src = "推定"
+note = "断木、烂门板、破帆布斜搭在残墙外，棚口朝里"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p117"
+face = "north"
+name = "窝棚·东"
+xy = [221, 104]
+size = [5, 4]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p118"
+face = "south"
+name = "冷火塘·西"
+xy = [205, 113]
+size = [3, 3]
+h_m = 0.3
+src = "推定"
+note = "乱石圈，只剩冷灰与烧黑的木头；默认不燃"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p118"
+face = "south"
+name = "冷火塘·东"
+xy = [220, 114]
+size = [3, 3]
+h_m = 0.3
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p116"
+face = "south"
+name = "谷仓框架（东南坡脚）"
+xy = [238, 255]
+size = [16, 12]
+h_m = 7
+src = "推定"
+note = "横梁歪成菱形，立柱断半截，框架下压着散轮木车"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p112"
+face = "south"
+count = 36
+name = "北端密林（林口枯树拱）"
+xy = [170, 20]
+size = [150, 36]
+h_m = 14
+src = "推定"
+note = "封住长槽北端；小径从两棵枝条相搭的枯树之间钻进去"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p129"
+face = "south"
+name = "西坡滚落巨石"
+xy = [78, 185]
+size = [6, 5]
+h_m = 3
+src = "推定"
+note = "半截埋进田边"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg132-c1"
+eye = [200, 331]
+target = [200, 180]
+eye_h = 13.3
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

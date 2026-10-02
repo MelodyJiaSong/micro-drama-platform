@@ -702,6 +702,11 @@ def render_checks():
 
     def shoot(name, loc, rot, ortho=None):
         cam_d = bpy.data.cameras.new(name)
+        # 裁剪面必须跟着 span 走：加了城墙与南侧引道之后世界横跨约 900 单位，
+        # 透视校验机位退到约 1259 单位外，**超过默认 clip_end 就整幅全黑**
+        # （2026-09-19 实测 check_persp.png 只剩两级灰）。ortho 的 check_plan 也吃这条。
+        cam_d.clip_start = 0.05
+        cam_d.clip_end = max(1000.0, span * 4.0)
         cam = bpy.data.objects.new(name, cam_d)
         bpy.context.scene.collection.objects.link(cam)
         cam.location, cam.rotation_euler = loc, rot
@@ -752,4 +757,9 @@ def main():
     print("[stormwind] 校验图已出：check_plan.png / check_persp.png")
 
 
-main()
+# 只在被 `blender --python` 直接跑时建城。加这个守卫是为了让别的脚本能
+# **只 import 它的表**（ANCHORS / CORRIDORS / LANDMARKS）而不触发整城重建 ——
+# tools/plan_stormwind.py 就靠这一点派生平面图输入。裸 main() 时 import 一次
+# 要重建 3411 个网格、覆写 blend、还重渲两张校验图。
+if __name__ == "__main__":
+    main()

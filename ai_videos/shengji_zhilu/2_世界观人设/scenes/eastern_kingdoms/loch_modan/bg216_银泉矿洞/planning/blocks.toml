@@ -1,0 +1,162 @@
+# 银泉矿洞 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg216"
+name_zh = "银泉矿洞"
+size_m = [240, 200]
+px_per_m = 6.0
+scale_src = "推定"
+scale_note = "裁切图（约 300 × 200 m 视野）量取：矿洞图标挂在石丘北缘、北面一座小石丘、东约 110 m 湖岸石崖、西约 150 m 主干道；石丘外形按裁切图描出、高度推定；洞口与洞前遗留物尺寸无一手出处"
+# 世界树画面：北岸崖壁上一个木框加固的矿洞口，洞外停着两辆翻倒的矿车，洞内壁面泛着银灰色的矿脉光
+absent = [
+    "任何人物、矿工、穴居怪物与动物（默认空矿）",
+    "点着的火把、矿灯、烛火（洞内唯一的光是洞口透进的天光）",
+    "自发光的矿石与晶体（矿线只反光）",
+    "洞内深处的内景（另立 bg）",
+    "建筑群与民居（只有一座塌半边的工具棚）",
+    "湖床裸露、水位下降（4.0.3 后才有；旧世湖是满的）",
+]
+
+[[ridge]]
+name = "灰白花岗岩石丘（矿洞所在，北坡被凿成竖壁）"
+poly = [[40, 110], [70, 80], [100, 72], [125, 72], [150, 80], [185, 108], [200, 160], [182, 200], [50, 200], [28, 160]]
+height_m = 45
+src = "地图量取"
+
+[[ridge]]
+name = "北面小石丘"
+poly = [[70, 0], [150, 0], [142, 16], [104, 22], [76, 14]]
+height_m = 20
+src = "地图量取"
+
+[[ridge]]
+name = "湖西岸低石崖（崖下入湖）"
+poly = [[214, 0], [226, 0], [230, 100], [226, 200], [214, 200], [218, 100]]
+height_m = 8
+src = "地图量取"
+
+[[water]]
+name = "湖（西岸边缘，场地外是整片湖面）"
+path = [[235, 0], [235, 200]]
+width_m = 8
+depth_m = 20
+src = "地图量取"
+
+[[water]]
+name = "洞口侧岩脚渗水细流"
+path = [[104, 72], [102, 64], [100, 58]]
+width_m = 0.6
+depth_m = 0.05
+src = "推定"
+
+[[road]]
+name = "运矿土路（轨道端头 → 向西接主干道）"
+path = [[112, 46], [90, 42], [40, 36], [0, 34]]
+width_m = 3.5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "mine_portal"
+face = "north"
+count = 1
+name = "矿洞口（三道原木框加固，朝北）"
+xy = [112, 69.5]
+size = [5, 2]
+h_m = 3.5
+src = "地图量取"
+note = "区图矿洞图标挂在石丘北缘；洞口约 3.5 m 高、3.5 m 宽（两人高、三人并肩宽），框外斜撑"
+
+[[block]]
+id = "b02"
+kind = "yard"
+face = "north"
+count = 1
+may_overlap = true
+name = "窄轨（洞口 → 北 20 m，断在草里）"
+xy = [112, 58.5]
+size = [1.2, 20]
+h_m = 0.2
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p203"
+face = "north"
+name = "矿车一（侧躺，车斗朝外）"
+xy = [106, 51]
+size = [2.4, 1.6]
+rot = 30
+h_m = 1.1
+src = "推定"
+note = "世界树「两辆翻倒的矿车」"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p203"
+face = "south"
+name = "矿车二（倒扣，一轮悬空）"
+xy = [119, 50]
+size = [2.4, 1.6]
+rot = -50
+h_m = 0.9
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p201"
+face = "east"
+name = "工具棚（塌了半边，单坡顶一头落地）"
+xy = [92, 60]
+size = [7, 5]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "支护原木垛"
+xy = [96, 66]
+size = [6, 2]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p205"
+face = "south"
+count = 6
+name = "废矿石堆（顶插鹤嘴锄）"
+xy = [128, 62]
+size = [9, 7]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p205"
+face = "south"
+name = "崩落大石（石丘西肩坡脚）"
+xy = [48, 92]
+size = [6, 5]
+h_m = 2.5
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg216-c1"
+eye = [120, 184]
+target = [120, 100]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -1,0 +1,207 @@
+# 碎石怪之谷 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 地形取自区级平面图 bg214 的 terrain.toml（区图量取）平移到本场地：本地坐标 ＝ 区坐标 − (640, 1080)；
+# 三道山的边线按区图微调成连续的谷（区级几个多边形在这里本来就接不上）。洞口与谷底细节与锚点 prompt 一一对应。
+
+[meta]
+bg = "bg220"
+name_zh = "碎石怪之谷"
+size_m = [460, 480]
+px_per_m = 3.2
+grid_m = 50
+scale_src = "地图量取"
+scale_note = "按区级平面图换算（区图 x% × 25.222 m、y% × 16.821 m）截取 [25.4–43.6, 64.2–92.7] 一块 460 × 480 m；原点 ＝ 区坐标 (640, 1080)"
+# 世界树画面：西南一条乱石谷，谷壁裂出数个穴居人洞口，地上满是碎岩与粗糙的石制工具
+absent = [
+    "任何砌筑的建筑、木构、帐篷、栅栏与金属器物（这里只有石头敲出来、堆出来的东西）",
+    "木框加固的矿洞口与矿车（那是北岸的 bg216）",
+    "纵深洞厅与深层洞穴系统（4.0.3 才扩的；1.12 洞口几步就到黑）",
+    "燃着的火、火把与洞内光源（冷灰堆早已冷透）",
+    "湖面与任何水体（四面被山挡住）",
+    "整片的松林（松树只零星长在山顶）",
+    "住在洞里的生物与任何动物（属 shot 层）",
+    "积雪",
+]
+
+[[ridge]]
+name = "西侧山块（隔开西边笔直石谷）"
+poly = [[0, 70], [110, 60], [125, 140], [200, 215], [205, 300], [195, 380], [175, 480], [0, 480]]
+height_m = 150
+src = "地图量取"
+
+[[ridge]]
+name = "镇南低丘（谷北壁）"
+poly = [[130, 0], [380, 0], [372, 40], [270, 97], [170, 66]]
+height_m = 110
+src = "地图量取"
+
+[[ridge]]
+name = "南界山墙西端（谷东壁与东南壁）"
+poly = [[370, 125], [460, 105], [460, 480], [250, 480], [245, 400], [262, 330], [290, 270], [330, 200]]
+height_m = 170
+src = "地图量取"
+
+[[road]]
+name = "谷底小径（主干道岔出 → 西北谷口 → 谷底）"
+path = [[70, 0], [100, 40], [142, 81], [218, 148], [243, 249], [268, 299]]
+width_m = 1.5
+src = "地图量取"
+
+[[road]]
+name = "谷底小径·入峡段"
+path = [[268, 299], [240, 360], [225, 420], [215, 480]]
+width_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "lawn"
+face = "south"
+count = 1
+may_overlap = true
+name = "谷口草甸"
+xy = [260, 150]
+size = [150, 80]
+h_m = 0
+src = "地图量取"
+note = "区图谷内那片绿；默认机位在它南缘的半埋圆石上，朝东南看"
+
+[[block]]
+id = "b02"
+into_ridge = true
+kind = "asset"
+asset = "p205"
+face = "south"
+count = 14
+name = "谷底碎岩滩"
+xy = [245, 270]
+size = [70, 60]
+h_m = 1
+src = "原典方位"
+note = "世界树：地上满是碎岩；范围推定为草甸以南到峡口"
+
+[[block]]
+id = "b03"
+into_ridge = true
+kind = "cave_mouth"
+face = "west"
+count = 1
+name = "东壁半腰扁洞口"
+xy = [318, 222]
+size = [14, 6]
+h_m = 4
+rot = -55
+src = "推定"
+note = "世界树：谷壁裂出数个洞口；本口位置推定"
+
+[[block]]
+id = "b04"
+into_ridge = true
+kind = "cave_mouth"
+face = "east"
+count = 1
+name = "峡口西壁窄高洞口"
+xy = [202, 330]
+size = [8, 8]
+h_m = 6
+src = "地图量取"
+note = "区图洞穴图标 [34.4, 83.8]（本地约 228, 330），贴到西壁脚"
+
+[[block]]
+id = "b05"
+into_ridge = true
+kind = "cave_mouth"
+face = "west"
+count = 1
+name = "峡口东壁大洞口（最大）"
+xy = [256, 368]
+size = [14, 10]
+h_m = 7
+rot = -70
+src = "地图量取"
+note = "区图洞穴图标 [37.7, 86.5]（本地约 311, 375），向西挪到峡壁脚 55 m"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p363"
+face = "south"
+name = "西壁洞口前的石圈冷灰堆"
+xy = [220, 336]
+size = [4, 4]
+h_m = 0.3
+src = "推定"
+note = "默认态冷透不冒烟"
+
+[[block]]
+id = "b07"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "石器与碎石片散落区"
+xy = [232, 318]
+size = [30, 18]
+h_m = 0
+src = "原典方位"
+note = "世界树：粗糙的石制工具；落点推定在两洞口之间的峡口地面"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p205"
+face = "south"
+name = "谷心崩落巨石"
+xy = [232, 222]
+size = [10, 8]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p205"
+face = "east"
+count = 5
+name = "西壁洞口下的出土碎石坡"
+xy = [210, 316]
+size = [10, 8]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p205"
+face = "north"
+count = 5
+name = "大洞口前的长条石半圈"
+xy = [240, 360]
+size = [9, 6]
+h_m = 0.5
+src = "推定"
+note = "几根长条石排成歪斜半圈，石面磨光"
+
+[[block]]
+id = "b11"
+into_ridge = true
+kind = "rock_shelf"
+face = "west"
+count = 1
+name = "东壁扁洞口下的落脚窝"
+xy = [310, 236]
+size = [6, 14]
+h_m = 3
+rot = -55
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg220-c1"
+eye = [230, 442]
+target = [230, 240]
+eye_h = 16.0
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -1,0 +1,110 @@
+# shot23 镜头平面图（overhead）的唯一出处：镜头与人各自在哪、往哪走、几秒到。
+# 改走位 ＝ 改本文件重跑 `python tools/gen_shots_szzl_ep02.py --only S23`（闸门）；出审阅图 `python tools/shot_overhead.py <shot 目录>`。
+# 坐标＝bg5 场地平面图（scenes/.../bg5_狮王之傲旅店/planning/blocks.toml）坐标系（米；x 向东、y 向南）。path 路点 [t, x, y] 或 [t, x, y, 看向x, 看向y]。
+# 旅店 b01：x 46.3–84.3、y 33–46，正门在西立面 (46.3, 41.5)（两扇门，门洞约 y 40.7–42.3）；门廊 b11 x 43.55–46.05；
+# 门内药剂桌 b15 (48.6, 38.6) 0.8 × 1.6、长轴南北；匹斯特坐在桌东边、面朝门。
+# 旅店只拍门廊望进门内（剧本备注）：机位 0–6s 从前院推到门廊，8.4s 以后才进门里。
+
+[meta]
+scene = "bg5"
+view = [34, 34, 54, 46]
+walkable = ["b01", "b11"]
+note = "0–4s 前院全景推到门廊：两人踏上门廊，越肩望进门里，3s 亚伦把便条递到药剂桌；4s 切匹斯特近景：把便条举到一臂远读、笑；7s 切门里中景：他放下便条，说清配什么、要几片、去哪找"
+
+[[camera]]
+t = 0
+xy = [38.0, 43.0]
+h = 1.6
+look = [46.3, 41.2]
+lens = 24
+tag = "前院·推门廊"
+subject = "c1_Aaron"
+note = "前院土径上，朝东平视整面正门：门廊、石墩信箱在画左、酒桶在画右"
+
+[[camera]]
+t = 3.9
+xy = [44.4, 43.0]
+h = 1.6
+look = [48.9, 38.8]
+lens = 28
+subject = "c1_Aaron"
+note = "推到门廊南沿，越过杜克的肩望进门里：药剂桌、匹斯特与亚伦在门洞里（机位走了约 6.4 m）"
+
+[[camera]]
+t = 4.0
+xy = [48.4, 41.4]
+h = 1.3
+look = [49.2, 38.4]
+lens = 35
+tag = "门内·匹斯特近景"
+subject = "c30_William_Pestle"
+cut = true
+aim_h = 1.1
+note = "切：门里、桌子南边三米，匹斯特坐着的近景（杜克在画外，不挡他）"
+
+[[camera]]
+t = 6.9
+xy = [48.4, 41.4]
+h = 1.3
+look = [49.2, 38.4]
+lens = 35
+subject = "c30_William_Pestle"
+aim_h = 1.1
+
+[[camera]]
+t = 7.0
+xy = [47.8, 41.9]
+h = 1.5
+look = [48.7, 38.5]
+lens = 24
+tag = "门内·药剂桌中景"
+subject = "c30_William_Pestle"
+cut = true
+note = "切：门里、桌子西南三米多，从匹斯特近景拉开到中景（24 mm，景别跳一档以上），匹斯特在画右坐着说，亚伦在桌前画中偏左，杜克在他左后"
+
+[[camera]]
+t = 16.5
+xy = [47.8, 41.9]
+h = 1.5
+look = [48.7, 38.5]
+lens = 24
+subject = "c30_William_Pestle"
+
+[[actor]]
+key = "c1_Aaron"
+label = "亚伦"
+path = [[0, 45.3, 41.1], [0.8, 46.5, 41.2], [2.6, 47.9, 38.6, 49.2, 38.4], [16.5, 47.9, 38.6, 49.2, 38.4]]
+note = "踏上门廊，进门右拐到药剂桌前，3s 把便条递过去"
+
+[[actor]]
+key = "c2_Duke"
+label = "杜克"
+path = [[0, 45.3, 42.1], [1.0, 46.4, 41.6], [2.8, 47.4, 39.5, 49.2, 38.4], [16.5, 47.4, 39.5, 49.2, 38.4]]
+note = "跟着踏上门廊、进门，站在亚伦左后一步"
+
+[[actor]]
+key = "c30_William_Pestle"
+label = "匹斯特"
+path = [[0, 49.2, 38.4, 47.0, 39.6], [16.5, 49.2, 38.4, 47.0, 39.6]]
+note = "坐在药剂桌东边，面朝门口的两人"
+
+[[object]]
+label = "药剂桌"
+xy = [48.6, 38.6]
+size = [0.8, 1.6]
+h = 0.8
+
+[[beat]]
+t0 = 0
+t1 = 4
+text = "门廊揭示：两人踏上钴蓝顶门廊，越肩望进门里（长厅粗木梁、深处壁炉火、吧台后酒桶、楼梯）；3s 亚伦把便条递到药剂桌"
+
+[[beat]]
+t0 = 4
+t1 = 7
+text = "匹斯特把便条举到一臂远读，笑，拇指在纸上摩挲一下：Mildred, Mildred! Haven't seen her in years."
+
+[[beat]]
+t0 = 7
+t1 = 16.5
+text = "An invisibility liquor — that'd get the girl out unseen. I'll need four fronds of crystal kelp. Crystal Lake murlocs hoard it.（12s 四根手指，亚伦无声念 four、点头）"

@@ -1,0 +1,12 @@
+# Seedance 网页出片资料包的本剧设置（tools/seedance_kit.py；ai_video.md rule 12.4-K）
+alias = ["魔兽世界", "wow"]          # open 时可以用的剧名
+entity_prefix = "wow"                # 即梦「主体」里本剧角色 entity 的前缀：c1_Aaron → wow_c1_aaron
+chrome_profile = "Work"              # 在哪个 Chrome 账号里开即梦——Jia 的账号（Local State 里显示名 Work）
+url = "https://jimeng.jianying.com/ai-tool/generate?type=video"
+model = "即梦 Seedance 2.5"
+mode = "全能参考"
+resolution = "720P"
+max_seconds = 30                     # 网页单条上限（2026-09-27 实测滑杆 0–30s）
+audio_mode = "native"                # 台词人声（ai_video.md rule 12.4-H2）：native＝画内台词用 Seedance 原生人声（entity 绑声样），画外 / 内心独白后期 IndexTTS；tts_first＝TTS 先生成、作 @音频 上传对口型
+legacy_eps = ["ep01"]                # 这些集在流程改版（2026-09-28）前已开始出片：不查 animatic 闸门、精简 prompt 超长只警告（只减不增）
+negatives = "游戏界面与 HUD 元素，游戏引擎渲染感，游戏截图质感，塑料感材质，卡通渲染，三维动画感"   # 精简 Seedance prompt【不要】在通用项之后追加的画风项（rule 12.4-P；不点名具体物件）

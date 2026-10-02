@@ -1,0 +1,289 @@
+# 观火岭 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 原点 ≈ 区级平面图 (470, 560)。岩台、熔岩溪、西北支路、熔岩坑、岔口哨屋按区级 terrain.toml / blocks 平移量取；
+# 区图上塔 / 营图标散在 33–44% × 52–62%，「排成一线」的主脊走向与塔炉逐座位置为推定。
+# 锚点机位：主脊西端石阶顶 b17（≈195,128），离地一人高，朝东偏南顺塔列望向盆地。
+
+[meta]
+bg = "bg243"
+name_zh = "观火岭"
+size_m = [500, 400]
+px_per_m = 3.0
+grid_m = 50
+scale_src = "地图量取"
+scale_note = "岩台轮廓、熔岩溪、支路与两处区图图标按区级平面图（区图 px×2.0362 m）平移量取；主脊宽约 30 m、塔 9 m 见方、炉径 7 m 为推定"
+# 世界树画面：西侧高地上的黑铁矮人营区，石砌哨塔与熔炉排成一线，岩脊上望下去是整条冒烟的峡谷
+absent = [
+    "人物、守卫、奴工与任何动物（空营）",
+    "火把、灯笼、篝火与炉口以外的任何人工光源（哨塔上不挂火）",
+    "旗帜、纹章与任何文字标牌",
+    "木栅栏、帐篷、兽皮棚（本营全是石与铁）",
+    "水、河、湖（脊脚发亮的是熔岩溪，不是水）",
+    "树、草与任何绿色植被",
+    "西侧的出入口（身后只有封死的西山墙）",
+    "蓝天、白云、雨雪",
+    "飞行坐骑与任何 4.0.3a 之后的设施",
+]
+
+[[ridge]]
+name = "西侧高地岩台（营房所在，高出盆地底约 60 m）"
+poly = [[19, 51], [141, 20], [222, 51], [247, 132], [206, 214], [120, 254], [39, 234], [0, 153]]
+height_m = 60
+src = "地图量取"
+
+[[ridge]]
+name = "主脊（自岩台东缘伸出的东西向窄岩脊，塔炉一字排开）"
+poly = [[195, 122], [300, 126], [415, 138], [420, 166], [300, 160], [195, 155]]
+height_m = 55
+src = "推定"
+
+[[ridge]]
+name = "南次脊（熔岩溪南侧，光秃无建筑）"
+poly = [[140, 250], [250, 270], [340, 300], [330, 318], [240, 292], [135, 272]]
+height_m = 30
+src = "推定"
+
+[[ridge]]
+name = "西南山墙脚"
+poly = [[0, 330], [20, 336], [70, 377], [82, 400], [0, 400]]
+height_m = 360
+src = "地图量取"
+
+[[water]]
+name = "熔岩溪·主脊南脚（橘红岩浆，向东南淌）"
+path = [[310, 177], [336, 206], [365, 238]]
+width_m = 6
+depth_m = 2
+src = "地图量取"
+
+[[road]]
+name = "西北支路（盆地南口 → 贴脊脚 → 上岩台 → 北谷聚落，走向推定）"
+path = [[500, 319], [440, 289], [355, 255], [273, 224], [202, 153], [172, 0]]
+width_m = 5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p235"
+face = "east"
+into_ridge = true
+name = "哨塔一（最近，锚点画面左侧）"
+xy = [222, 132]
+size = [9, 9]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p234"
+face = "south"
+into_ridge = true
+name = "熔炉一"
+xy = [252, 140]
+size = [7, 7]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p235"
+face = "east"
+into_ridge = true
+name = "哨塔二"
+xy = [282, 137]
+size = [9, 9]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p234"
+face = "south"
+into_ridge = true
+name = "熔炉二（炉口前架倾斜石槽）"
+xy = [312, 145]
+size = [7, 7]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p235"
+face = "east"
+into_ridge = true
+name = "哨塔三"
+xy = [342, 143]
+size = [9, 9]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p234"
+face = "south"
+into_ridge = true
+name = "熔炉三"
+xy = [372, 150]
+size = [7, 7]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p235"
+face = "east"
+into_ridge = true
+name = "哨塔四（脊东端陡坎沿，铁皮檐缺一角）"
+xy = [404, 152]
+size = [9, 9]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "low_wall"
+face = "south"
+may_overlap = true
+into_ridge = true
+name = "南沿及腰矮护墙（墙头短铁桩）"
+xy = [305, 158]
+size = [200, 1]
+h_m = 1.1
+rot = 3.4
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p236"
+face = "east"
+into_ridge = true
+name = "石营房北排（平顶厚墙，铁皮门）"
+xy = [130, 110]
+size = [18, 8]
+h_m = 4
+rot = 10
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p236"
+face = "east"
+into_ridge = true
+name = "石营房南排"
+xy = [150, 150]
+size = [18, 8]
+h_m = 4
+rot = 10
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p248"
+face = "south"
+count = 3
+into_ridge = true
+name = "营房前煤堆与铁桶"
+xy = [168, 128]
+size = [6, 5]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "plaza"
+face = "south"
+may_overlap = true
+name = "脊南坡熔渣舌·西（冷成黑色玻璃状）"
+xy = [285, 168]
+size = [6, 14]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "plaza"
+face = "south"
+may_overlap = true
+name = "脊南坡熔渣舌·东"
+xy = [350, 172]
+size = [6, 14]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+parts = [{asset = "p356", at = [0, 0], yaw = 0}]
+face = "south"
+into_ridge = true
+name = "铁砧（熔炉一旁）"
+xy = [259, 134]
+size = [1, 1]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+parts = [{asset = "p251", at = [0, 0], yaw = 0}]
+face = "south"
+may_overlap = true
+into_ridge = true
+name = "护墙根裂开的铸铁坩埚与铁锭模"
+xy = [330, 154]
+size = [2, 1]
+h_m = 0.5
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "asset"
+asset = "p236"
+face = "south"
+name = "岔口石哨屋（区图图标 · 无名）"
+xy = [432, 272]
+size = [10, 10]
+h_m = 6
+src = "地图量取"
+
+[[block]]
+id = "b17"
+kind = "rock_shelf"
+face = "east"
+into_ridge = true
+name = "主脊西端石阶顶（锚点机位）"
+xy = [197, 130]
+size = [5, 6]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b18"
+kind = "pool"
+face = "south"
+name = "熔岩坑·西缘（透红，区图图标）"
+xy = [110, 305]
+size = [50, 50]
+h_m = 0
+src = "地图量取"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg243-c1"
+eye = [250, 368]
+target = [250, 200]
+eye_h = 16.7
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

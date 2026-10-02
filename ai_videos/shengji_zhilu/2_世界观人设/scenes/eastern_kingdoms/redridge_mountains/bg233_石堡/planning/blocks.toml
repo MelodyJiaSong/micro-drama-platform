@@ -1,0 +1,223 @@
+# 石堡 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地原点 ＝ 区级平面图 (1060, 560) m。要塞图标 [62, 54] → 本图约 (171, 155)；高塔图标 [57.5, 49] → (81, 89)。
+# 河道 / 南山 / 北路由区级 terrain.toml 平移而来；沿湖大道在区级数据里与河道重叠，本图按「河口浅滩涉水」推定。
+
+[meta]
+bg = "bg233"
+name_zh = "石堡"
+size_m = [360, 300]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "要塞与高塔的相对位置取区图两个图标（区图精度约 ±20 m）；城墙圈 110 × 90 m、主楼 36 × 30 m、各建筑高度为推定"
+# 世界树画面：湖东红岩高台上的人类要塞群，方正石墙与角楼层层叠上去；旧世墙头插的是黑石兽人的旗，墙根堆着攻城后的碎石
+absent = ["白石墙 + 蓝板岩瓦的王城式建筑（这里是灰石山地要塞）", "旗面文字与纹章", "燃烧的火盆 / 浓烟（默认态冷灰）", "修好的完整木桥", "训练假人 / 4.0.3 后新增的营地与哨塔", "高塔与主楼相连的廊桥（两者分开）", "任何人物 / 动物 / 文字"]
+
+[[ridge]]
+name = "红岩台地（高出湖面约 40 m）"
+poly = [[60, 50], [120, 40], [250, 45], [290, 90], [285, 190], [240, 225], [140, 228], [85, 215], [62, 160], [55, 95]]
+height_m = 40
+src = "推定"
+
+[[ridge]]
+name = "石堡南山（河南岸）"
+poly = [[150, 285], [250, 262], [330, 282], [360, 288], [360, 300], [150, 300]]
+height_m = 80
+src = "地图量取"
+
+[[water]]
+name = "止水湖东尾"
+path = [[0, 160], [22, 205]]
+width_m = 60
+depth_m = 8
+src = "地图量取"
+
+[[water]]
+name = "瀑布下游河道（东→西入湖）"
+path = [[22, 205], [71, 234], [111, 254], [171, 266], [230, 254], [290, 241], [360, 228]]
+width_m = 28
+depth_m = 3
+src = "地图量取"
+
+[[road]]
+name = "北面上坡路（湖北岸路→西门）"
+path = [[151, 0], [158, 40], [140, 75], [108, 108], [108, 140], [115, 150]]
+width_m = 5
+src = "地图量取"
+
+[[road]]
+name = "沿湖大道尽头（河口浅滩→之字坡→西门）"
+path = [[0, 292], [60, 275], [98, 252], [108, 225], [100, 195], [110, 170], [115, 152]]
+width_m = 5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p232"
+face = "west"
+into_ridge = true
+name = "外围城墙圈"
+xy = [175, 150]
+size = [110, 90]
+h_m = 8
+src = "地图量取"
+note = "灰石厚墙，平顶垛口；唯一城门在西墙"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p230"
+face = "west"
+may_overlap = true
+into_ridge = true
+name = "主楼"
+xy = [185, 148]
+size = [36, 30]
+h_m = 22
+src = "推定"
+note = "厚墙窄窗，楼顶垛口；内景（石梯、火盆、顶层大厅）用到时另立 bg"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p231"
+face = "west"
+may_overlap = true
+into_ridge = true
+name = "西北角楼"
+xy = [125, 110]
+size = [10, 10]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p231"
+face = "west"
+may_overlap = true
+into_ridge = true
+name = "东北角楼"
+xy = [225, 110]
+size = [10, 10]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p231"
+face = "west"
+may_overlap = true
+into_ridge = true
+name = "东南角楼"
+xy = [225, 190]
+size = [10, 10]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p231"
+face = "west"
+may_overlap = true
+into_ridge = true
+name = "西南角楼（上半截被打塌）"
+xy = [125, 190]
+size = [10, 10]
+h_m = 7
+src = "推定"
+note = "断口参差，露出石梯与断木楼板"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p231"
+face = "west"
+into_ridge = true
+name = "高塔"
+xy = [81, 89]
+size = [10, 10]
+h_m = 30
+src = "地图量取"
+note = "单独立在台地西北边缘，比主楼高；塔顶环形垛口，俯瞰沿湖大道"
+
+[[block]]
+id = "b08"
+kind = "gate_wall"
+face = "west"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "西门（石拱门洞 + 包铁木门）"
+xy = [122, 150]
+size = [6, 12]
+h_m = 11
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p225"
+face = "west"
+count = 8
+into_ridge = true
+name = "削尖木桩路障"
+xy = [110, 150]
+size = [3, 16]
+h_m = 1.8
+src = "推定"
+note = "桩尖朝外，交叉绑扎"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p228"
+face = "south"
+into_ridge = true
+name = "塌楼碎石堆（西南角楼下）"
+xy = [127, 206]
+size = [18, 10]
+h_m = 2.5
+src = "推定"
+note = "塌落多年，长满青苔杂草"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p228"
+face = "south"
+count = 4
+into_ridge = true
+name = "南墙根碎石带"
+xy = [178, 202]
+size = [40, 6]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+over_water = true
+name = "河口鹅卵石浅滩"
+xy = [98, 250]
+size = [14, 10]
+h_m = 0
+src = "推定"
+note = "沿湖大道在此涉水，水只没过卵石一半"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg233-c1"
+eye = [180, 276]
+target = [180, 150]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

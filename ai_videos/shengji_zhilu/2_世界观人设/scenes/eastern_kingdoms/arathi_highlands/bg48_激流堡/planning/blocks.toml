@@ -1,0 +1,335 @@
+# 激流堡 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg48"
+name_zh = "激流堡"
+size_m = [600, 440]
+px_per_m = 2.6
+grid_m = 50
+scale_src = "地图量取"
+scale_note = "区图 1 px ≈ 3.285 m（区级 terrain.toml 同口径）。场地原点 ＝ 区级坐标 (380, 1180) m。城堡图标 [25,65] 与塔楼图标 [18,69] 相距约 70 px ≈ 230 m，法师塔按塔楼图标落位（地图量取）；西岸海线、南侧山体、东北支路按区级 terrain.toml 平移过来。城墙轮廓、内堡与街区的尺寸与摆位是推定"
+# 世界树画面：高地西南角的巨型石砌要塞废墟，塌陷的城墙与被投石弩打穿的塔楼，城内街巷长满野草、随处是碎石堆
+# 机位（锚点图）：东北支路坡顶（约 [560, 60]）朝西南俯看
+absent = [
+    "任何新建或重修的工事（脚手架、新砌城墙、新立的营寨——都是很多年后的版本）",
+    "通往西南海湾的山路（4.0.3 才开）",
+    "城外其他阵营的新营地（4.0.3 后才有）",
+    "完好的城门与门扇",
+    "燃着的火把、火盆、篝火与炊烟（法师区火坑是冷灰）",
+    "任何人物、食人魔与坐骑（默认空城）",
+    "旗帜上的纹章与文字",
+    "临城的水面（西墙外还隔一两百米草坡才到海崖）",
+    "成片树林（只有墙缝里的小树）",
+]
+
+[[water]]
+name = "外海（西岸，海崖下）"
+path = [[30, 0], [20, 120], [35, 250], [60, 360], [110, 440]]
+width_m = 60
+depth_m = 30
+src = "地图量取"
+
+[[ridge]]
+name = "西南海岸山体（压到法师区南墙外，挡死南面天际线）"
+poly = [[100, 440], [120, 405], [220, 388], [300, 380], [340, 340], [507, 318], [600, 308], [600, 440]]
+height_m = 220
+src = "地图量取"
+
+[[road]]
+name = "城外东北支路（自双湖方向下坡，进东墙北段城门）"
+path = [[600, 10], [556, 52], [530, 110], [515, 137]]
+width_m = 6
+src = "地图量取"
+
+[[road]]
+name = "主街（城门 → 内堡北门）"
+path = [[512, 137], [470, 150], [445, 178]]
+width_m = 8
+src = "推定"
+
+[[road]]
+name = "西街（主街岔出 → 小广场 → 旧法师区）"
+path = [[470, 150], [400, 160], [360, 185], [300, 200], [262, 240], [238, 300], [226, 322]]
+width_m = 6
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "北城墙（垛口，多段塌成碎石坡）"
+xy = [345, 92]
+size = [330, 5]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p50"
+face = "south"
+may_overlap = true
+name = "北墙方塔（塔身被巨石砸穿）"
+xy = [300, 92]
+size = [14, 14]
+h_m = 18
+src = "推定"
+note = "天际线三件套之一"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p50"
+face = "south"
+may_overlap = true
+name = "东北角塔"
+xy = [512, 92]
+size = [16, 16]
+h_m = 20
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "东城墙·北段"
+xy = [512, 114]
+size = [5, 22]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p50"
+face = "east"
+name = "城门楼残骸（北门塔塌成碎石，拱门在、门扇无）"
+xy = [512, 137]
+size = [14, 24]
+h_m = 16
+src = "推定"
+note = "唯一的城门；支路从东北进来（地图量取）"
+
+[[block]]
+id = "b06"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "东城墙·南段"
+xy = [512, 217]
+size = [5, 136]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "南城墙·东段"
+xy = [405, 288]
+size = [214, 5]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p44"
+face = "south"
+count = 5
+may_overlap = true
+name = "南墙塌口（碎石斜坡，人可翻越）"
+xy = [420, 288]
+size = [24, 8]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "法师区东墙"
+xy = [295, 329]
+size = [5, 82]
+h_m = 10
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "low_wall"
+face = "south"
+count = 1
+may_overlap = true
+name = "法师区南墙"
+xy = [235, 370]
+size = [120, 5]
+h_m = 10
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "low_wall"
+face = "south"
+count = 1
+may_overlap = true
+name = "西城墙（临海一侧）"
+xy = [175, 231]
+size = [5, 278]
+h_m = 12
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "low_wall"
+face = "south"
+count = 1
+may_overlap = true
+name = "西墙塌段"
+xy = [175, 200]
+size = [8, 40]
+h_m = 3
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p51"
+face = "north"
+name = "内堡（方形巨石楼堡，四角方塔）"
+xy = [445, 215]
+size = [80, 70]
+h_m = 20
+src = "地图量取"
+note = "按区图城堡图标 [25,65] 落位；守军所占"
+
+[[block]]
+id = "b14"
+kind = "gate_wall"
+face = "south"
+count = 1
+may_overlap = true
+name = "内堡北门（厚木板封死 + 碎石矮墙，只留侧门）"
+xy = [445, 181]
+size = [12, 4]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p34"
+face = "south"
+count = 8
+name = "塌顶石屋街区·北"
+xy = [320, 125]
+size = [150, 50]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b16"
+kind = "asset"
+asset = "p34"
+face = "south"
+count = 5
+name = "塌顶石屋街区·西"
+xy = [225, 180]
+size = [80, 60]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b17"
+kind = "asset"
+asset = "p34"
+face = "south"
+count = 5
+name = "塌顶石屋街区·南"
+xy = [350, 250]
+size = [90, 60]
+h_m = 5
+src = "推定"
+
+[[block]]
+id = "b18"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "小广场（干涸石井）"
+xy = [360, 185]
+size = [30, 30]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b19"
+kind = "asset"
+asset = "p39"
+face = "south"
+name = "帆布遮棚（盗匪所占的门洞前）"
+xy = [348, 196]
+size = [8, 5]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b20"
+kind = "asset"
+asset = "p52"
+face = "south"
+name = "圆形法师塔（顶层露天，塔身纵向裂口）"
+xy = [212, 334]
+size = [22, 22]
+h_m = 35
+src = "地图量取"
+note = "世界树坐标 [18,69] ＝ 区图塔楼小图标；全城最高"
+
+[[block]]
+id = "b21"
+kind = "asset"
+asset = "p37"
+face = "south"
+name = "粗木兽皮大棚（食人魔所占）"
+xy = [260, 345]
+size = [18, 12]
+h_m = 4.5
+src = "推定"
+
+[[block]]
+id = "b22"
+kind = "asset"
+asset = "p363"
+face = "south"
+name = "冷火坑"
+xy = [245, 318]
+size = [4, 4]
+h_m = 0.2
+src = "推定"
+
+[[block]]
+id = "b23"
+kind = "asset"
+parts = [{asset = "p178", at = [-1.9, 1.3], yaw = 0}, {asset = "p178", at = [-1, 1.6], yaw = 0}, {asset = "p178", at = [-1.4, 0.5], yaw = 0}, {asset = "p178", at = [1, 0.2], yaw = 0}, {asset = "p178", at = [2.1, -1.4], yaw = 0}]
+face = "south"
+name = "啃剩的大骨与破木桶堆"
+xy = [272, 318]
+size = [6, 5]
+h_m = 1
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg48-c1"
+eye = [300, 405]
+target = [300, 220]
+eye_h = 20.0
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

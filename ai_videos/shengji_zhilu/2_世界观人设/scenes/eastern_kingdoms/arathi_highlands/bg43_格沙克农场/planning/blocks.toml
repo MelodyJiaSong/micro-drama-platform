@@ -1,0 +1,213 @@
+# 格沙克农场 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 换算：本图原点 ＝ 区级平面图（bg41）世界坐标 (1900, 1100)；车路按 bg41 terrain.toml「东侧农庄下路」折线平移，小水潭按「巨魔村西侧小水潭」平移，三面岩坎按区图农庄外那道弧形坎线量取（地图量取）。
+# 区图 [62, 58] 农庄图标落在本图约 (137, 165)，主屋按图标摆；东界山体岩坡在东岩坎外约 300 m（世界 x≈2360–2480），巨魔村旁的湖在东南场外——都不画进本图。
+# 锚点机位：院东荒田西侧木栅边 (184, 140)，朝正西。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg43"
+name_zh = "格沙克农场"
+size_m = [300, 340]
+px_per_m = 4.0
+grid_m = 20
+scale_src = "地图量取"
+scale_note = "车路、小水潭与农庄图标的相对位置按区图量取（1 px ≈ 3.3 m，±30 m）；主屋、风车、谷仓、荒田的尺寸与相对位置推定"
+# 世界树画面：大路东侧的农庄，主屋与磨坊尚完整，木栅围出的田地已荒，谷仓阁楼可上人
+absent = [
+    "石砌院墙（这里只有木栅栏）",
+    "水车 / 溪流（磨坊是风车，没有能推水车的流水）",
+    "任何火、烛火、灯笼与炊烟（烟囱是冷的）",
+    "倒塌的屋顶（主屋、谷仓、风车都还完整）",
+    "成片树林（只有水潭边两棵树）",
+    "帐篷与营地",
+    "旗帜、徽记与带字的招牌",
+    "任何人物、牲畜与飞鸟",
+    "夜景、雨与雾",
+]
+
+[[road]]
+name = "车路（主路东南折点向东的农庄下路，经水潭北侧折向北，止于场院西南角）"
+path = [[0, 247], [71, 257], [114, 221], [118, 195], [132, 182]]
+width_m = 4
+src = "地图量取"
+
+[[ridge]]
+name = "三面岩坎（西、北、东半围场院的两三米灰白岩坎，只朝南开口）"
+poly = [[30, 220], [30, 50], [262, 50], [262, 200], [250, 200], [250, 62], [42, 62], [42, 220]]
+height_m = 3
+src = "地图量取"
+
+[[water]]
+name = "小水潭（枯苇一圈）"
+path = [[104, 306], [143, 319]]
+width_m = 40
+depth_m = 2
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p34"
+face = "west"
+name = "两层主屋"
+xy = [145, 125]
+size = [16, 11]
+h_m = 10
+src = "地图量取"
+note = "区图农庄图标；毛石勒脚 + 灰白抹灰深褐木筋、二层外挑、深灰石板瓦、两根砖石烟囱（冷）；门朝西迎车路，东面两排小方窗无窗扇；抹灰几处剥落露编条"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p36"
+face = "south"
+name = "风车磨坊"
+xy = [162, 112]
+size = [9, 9]
+h_m = 16
+src = "推定"
+note = "主屋东北角；石砌圆塔身上窄下宽、木帽顶，四片风叶只剩木骨架挂碎帆布；全场最高点"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p35"
+face = "north"
+name = "阁楼谷仓"
+xy = [145, 168]
+size = [14, 22]
+h_m = 11
+src = "推定"
+note = "场院南侧，比主屋高；北山墙朝院心，上开阁楼门（向外敞、露陈年干草、下靠木梯），底层一对大车门半开"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p47"
+face = "south"
+name = "石水槽"
+xy = [160, 145]
+size = [4, 1.2]
+h_m = 0.8
+src = "推定"
+note = "院心，干透，槽底落叶与干泥"
+
+[[block]]
+id = "b05"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "东侧木栅荒田"
+xy = [212, 135]
+size = [60, 110]
+h_m = 0.9
+src = "推定"
+note = "银灰木栅围着，横杆多处脱落；齐腰枯黄杂草与野胡萝卜；锚点机位在它西侧栅栏边"
+
+[[block]]
+id = "b06"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "南侧木栅荒田"
+xy = [190, 235]
+size = [120, 60]
+h_m = 0.9
+src = "推定"
+note = "谷仓以南，栅栏桩头削尖、有的朽断"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p48"
+face = "south"
+name = "旧柴垛"
+xy = [155.5, 127]
+size = [3, 1.5]
+h_m = 1.5
+src = "推定"
+note = "主屋背阴东墙角，盖一块发黑木板，旁立空木桶"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p46"
+face = "south"
+name = "卸轮旧木车"
+xy = [154, 172]
+size = [3, 1.6]
+h_m = 1.2
+src = "推定"
+note = "谷仓东墙根"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p47"
+face = "south"
+name = "磨盘碎块"
+xy = [168.5, 118.5]
+size = [1.5, 1.5]
+h_m = 0.4
+src = "推定"
+note = "风车塔脚"
+
+[[block]]
+id = "b10"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "旧烧斑"
+xy = [175, 150]
+size = [5, 4]
+h_m = 0
+src = "推定"
+note = "场院东南角，暗褐色、早已冷透，长出新草"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p44"
+face = "south"
+count = 3
+name = "北坡滚石"
+xy = [150, 85]
+size = [12, 8]
+h_m = 1
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p42"
+face = "south"
+over_water = true
+name = "潭西阔叶树"
+xy = [85, 300]
+size = [8, 8]
+h_m = 9
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p42"
+face = "south"
+over_water = true
+name = "潭东阔叶树"
+xy = [160, 318]
+size = [8, 8]
+h_m = 9
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg43-c1"
+eye = [150, 313]
+target = [150, 170]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

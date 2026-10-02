@@ -47,6 +47,13 @@ from mathutils.bvhtree import BVHTree
 
 sys.stdout.reconfigure(encoding="utf-8")
 
+# 共用出处：CITY_SCALE 与 W11 §2.8 的解析住在 tools/previz/city_layout.py，
+# 这样普通 Python 的 tools/shot_plan.py 与 tools/gen_route_sk1.py 读得到同一套尺度（本文件 import bpy，它进不来）。
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from tools.previz.city_layout import CityLayoutError, CITY_SCALE, read_w11  # noqa: E402
+# 单调插值与侧向加速度同理（航线生成端 tools/gen_route_sk1.py 要用同一套判据）：
+from tools.previz.curves import curve_lateral, mono_hermite  # noqa: E402,F401
+
 REPO = Path(__file__).resolve().parent.parent
 SK1 = REPO / "ai_videos" / "shikong_lvxing" / "sk1" / "2_世界观人设"
 BLENDER_DIR = SK1 / "scenes" / "bianjing" / "_blender"
@@ -119,7 +126,7 @@ SCRIPT_KEYS = ("河道", "土坡", "街", "城墙", "水门", "旱门", "拐子�
                "宫墙", "墩台", "门扇", "门楼", "朵楼", "阙亭", "金水河", "廊庑", "大殿", "刻漏楼",
                "仓门", "仓廒", "院墙", "府门", "内门", "廊房", "戒石", "正厅", "殿宇",
                "寺墙", "寺东门", "大三门", "资圣门", "东西廊", "栅栏", "布招杆", "大看棚", "看棚群",
-               "大路", "横路", "田埂", "农舍")
+               "大路", "横路", "田埂", "农舍", "关厢街面")
 ABSORBED: dict[str, str] = {"岸边桃李梨杏": "御沟"}
 
 
@@ -596,7 +603,6 @@ def place_asset(row: Row, col_base: str, origin_z: float = Z_STREET, jitter: boo
 # ── 布局层 ① 全城体块层（航拍精度）───────────────────────────────────────────────
 # 城墙/城门/壕/河/主街 + 同尺寸盒子街区，每个盒子带方块号 → 资产键（box N → pN），
 # 替身换白模不动布局代码（同 place_asset）。坐标只来自 w11 的米制坐标表，绝不自编。
-W11_LAYOUT = SK1.parent / "0_research" / "parts" / "w11_city_layout.md"
 NOTES: list[str] = []
 Pt = tuple[float, float]
 
@@ -706,59 +712,11 @@ def load_corridor(md: str, cfg: dict) -> Corridor:
     return Corridor(cfg, spec)
 
 
-# ── 拍摄用尺度（follow-up 017，2026-09-18 用户定调「城市面积可以缩小，只需要够拍」）──
-# W11 的**坐标**统一乘 CITY_SCALE，**尺寸不乘**：街还是 25 m 宽、房还是 11 m 面宽、墙还是 8.7 m 高，
-# 变的只是「两处地点之间有多远」。为什么这是对的取舍：
-#   · 一镜到底的航线原本 4 km / 60 s ＝ 67 m/s 平均、城内汴河那段要 95 m/s，比真无人机快一倍；
-#     压到 0.5 之后全程 33–45 m/s，**速度问题从根上消失，而且不用切镜**（follow-up 010 的一镜到底照旧）。
-#   · 全片没有俯视全城的镜头了（follow-up 014 把末段爬升取消），观众无从对照城的总尺寸；
-#     能看出比例的只有「街多宽、房多高、门洞多大」——这些保持 1:1。
-# 代价（已登记 divergence #28）：几何不再与「外城周长五十里」这类**距离类**史料对得上。
-# 几何只服务 previz，不进 prompt；口播里的里程数照旧引 W11，不引 blend。
-CITY_SCALE = 0.5
-# 压缩后个别 Place 的 1:1 足迹会压到河/街上（足迹不缩、中心距缩）。逐个挪开，只挪不在航线上的：
-#   开封府（Place F）——压缩后汴河从它足迹里穿过（实测 k≤0.7 起冲突）。它是地面镜地点、不在一镜到底的
-#   航线上，往北挪 70 m 即让出河道；相对州桥的方位不变（仍在州桥西北），地面镜的取景不受影响。
-SCALE_NUDGE: dict[str, tuple[float, float]] = {"开封府": (0.0, 70.0)}
-_SCALE_XY = {"gate": ("xy",), "landmark": ("xy",), "place_anchor": ("xy",)}
-_SCALE_PTS = {"wall": ("points",), "river": ("points",), "street": ("points",)}
-
-
-def scale_w11(cfg: dict) -> dict:
-    """只缩坐标：xy / points / waypoint 的 pos 与 look_at。宽度、高度、足迹尺寸原样。"""
-    k = CITY_SCALE
-    if k == 1.0:
-        return cfg
-    for sec, fields in _SCALE_XY.items():
-        for row in cfg.get(sec, []):
-            for f in fields:
-                row[f] = [float(v) * k for v in row[f]]
-    for sec, fields in _SCALE_PTS.items():
-        for row in cfg.get(sec, []):
-            for f in fields:
-                row[f] = [[float(a) * k, float(b) * k] for a, b in row[f]]
-    for row in cfg.get("waypoint", []):
-        for f in ("pos", "look_at"):
-            if f in row:
-                v = [float(x) for x in row[f]]
-                row[f] = [v[0] * k, v[1] * k] + v[2:]          # z 是高度，不缩
-    for row in cfg.get("landmark", []):
-        for name, (dx, dy) in SCALE_NUDGE.items():
-            if row["name"].startswith(name):
-                row["xy"] = [row["xy"][0] + dx, row["xy"][1] + dy]
-    return cfg
-
-
 def load_w11() -> dict:
-    md = W11_LAYOUT.read_text(encoding="utf-8")
-    sec = md.split("### 2.8", 1)
-    m = re.search(r"```toml\n(.*?)```", sec[1] if len(sec) == 2 else "", re.S)
-    if not m:
-        raise PlanError("w11_city_layout.md §2.8 缺 toml 块")
-    cfg = scale_w11(tomllib.loads(m.group(1)))
-    for key in ("wall", "gate", "river", "street", "landmark", "place_anchor", "waypoint"):
-        if not cfg.get(key):
-            raise PlanError(f"W11 TOML 缺 [[{key}]]")
+    try:
+        cfg = read_w11()
+    except CityLayoutError as exc:
+        raise PlanError(str(exc)) from exc
     FRAMES.clear()
     for a in cfg["place_anchor"]:
         pm = re.match(r"Place ([A-Z])\b", a["name"])
@@ -1826,6 +1784,7 @@ def build_suburbs(world: World, keys: tuple[str, ...]) -> tuple[int, int]:
     # B 足迹内那一段关厢属于 B 自己的活，要建就加 city_plan 的 Place B 表行，不能从城层伸进去。
     keep = [lm_rect(lm, 6.0) for lm in world.cfg["landmark"]] + moat_quads(world)
     keep += [place_poly(pl, 18.0 if pl != "B" else 0.0) for pl in PLACES]
+    keep += camera_keepouts()          # 相机贴地飞过的那条管：房子不许长在航线上（rule 4g ④）
     for wl in world.cfg["wall"]:
         rg = world.rings[ring_key(wl["name"])]
         keep += [seg_quad(q, rg[(i + 1) % len(rg)], float(wl["base_m"]) / 2 + 12.0, 12.0) for i, q in enumerate(rg)]
@@ -1845,7 +1804,14 @@ def build_suburbs(world: World, keys: tuple[str, ...]) -> tuple[int, int]:
             while s < ln:
                 p0 = (a[0] + tu[0] * s, a[1] + tu[1] * s)
                 dw = d_wall(p0)
-                if p0[0] < ocx or point_in_poly(p0, outer) or dw < moat_out + 6.0:
+                # Place B 的足迹一直伸到门外 120 m —— 那正是相机最后 3 秒飞过的地方，
+                # 原来整块排除，于是城门外是一片保证空无一物的场地。B 在墙外只建了护龙河、
+                # 木桥与两块铺装台地，**护龙河外沿以外没有它的东西**，所以那一圈放行；
+                # 其余 Place 照旧留 18 m 余量。真实的关厢也正是从护龙河外岸就开始密起来的。
+                blocked = any(point_in_poly(p0, place_poly(pl, 18.0)) for pl in PLACES if pl != "B")
+                if not blocked and point_in_poly(p0, place_poly("B", 0.0)):
+                    blocked = dw < moat_out + 14.0
+                if p0[0] < ocx or point_in_poly(p0, outer) or dw < moat_out + 6.0 or blocked:
                     s += 12.0
                     continue
                 sp = max(0.08, math.exp(-max(0.0, dw - moat_out) / 320.0))     # 越靠城门越繁华
@@ -1943,6 +1909,43 @@ class HouseChunks:
             self.trees.bm.free()
 
 
+SHOTS_DIR = REPO / "ai_videos" / "shikong_lvxing" / "sk1" / "5_6_分镜与prompt" / "shots"
+
+
+def camera_keepouts(radius: float = 13.0, z_low: float = 15.0) -> list[list[Pt]]:
+    """每个 shot 的 previz 相机路径里**贴地飞的那几段**，在城层挖出一条 keep-out 管。
+
+    为什么必须有（2026-09-19，rule 4g ④「镜头先于几何」的机器化）：把关厢从「两排散盒子」
+    改成「共墙连排街面」之后，房子一下子从 484 栋变成 9396 栋，**其中一栋正好长在 shot01
+    的航线上**——闸门报 2.92s 处净空 0.1 m。城层此前只认 city_plan §8.2 的**河/街折线**走廊
+    （那是「建到多远」的范围问题），从不认**相机实际飞的那条线**（这是「哪里不许有东西」的
+    净空问题）。两者不是一回事：相机沿门洞轴飞，而走廊是沿河量的。
+
+    只在低空段挖：相机爬到 15 m 以上时屋脊（最高约 9 m）本来就够不着，挖了反而把城掏空。
+    """
+    out: list[list[Pt]] = []
+    if not SHOTS_DIR.is_dir():
+        return out
+    for cfg_path in sorted(SHOTS_DIR.glob("*/previz_config.toml")):
+        try:
+            rows = load_aerial(cfg_path).get("机位", [])
+        except Exception:
+            continue
+        pts: list[tuple[float, float, float]] = []
+        for k in rows:
+            pos = k.get("位置")
+            if not pos or str(pos[0]) != "世界" or len(pos) < 4:
+                continue
+            pts.append((float(pos[1]), float(pos[2]), float(pos[3])))
+        for a, b in zip(pts, pts[1:]):
+            if min(a[2], b[2]) > z_low:
+                continue
+            if math.hypot(b[0] - a[0], b[1] - a[1]) < 1e-6:
+                continue
+            out.append(seg_quad((a[0], a[1]), (b[0], b[1]), radius))
+    return out
+
+
 def outside_keep(world: World, river_pad: float, place_pad: float) -> KeepIndex:
     # 城外不用城内的 world.keepout（街道 +3 m 会把紧贴出城大道的第一排房全挡掉）：只避地标、池、窄街宽
     keep = [lm_rect(lm, 6.0) for lm in world.cfg["landmark"]] + moat_quads(world) + [place_poly(p, place_pad) for p in PLACES]
@@ -1958,6 +1961,66 @@ def outside_keep(world: World, river_pad: float, place_pad: float) -> KeepIndex:
 
 
 SUBURB_ROAD_LEN, SUBURB_ROAD_W = 1200.0, 12.0   # follow-up 011：郊区收窄（用户：郊区尤其要小，应该很快就进城）
+
+
+CROPS = ("麦苗", "菜畦", "翻耕", "休耕")      # 四种地色，look 层按名字给不同的绿/黄/土
+
+
+def build_farmland(world: World) -> tuple[int, int]:
+    """城外农田：田块 + 田埂（2026-09-19）。
+
+    为什么必须有（用户：前几秒「太像劣质 CG」）：航拍前 6 秒画面里**地面占一半以上**，
+    而全城层此前**一块田都没有**——`田埂` 只在 Place J 建过——于是镜头掠过的是
+    一整片零细节的纯色平地。真实的汴京城外是连片的田块：不同作物不同颜色、
+    每块之间一道抬高的田埂，从空中看是一张拼布。
+    这是**大尺度地物结构（几何 + 色块）**，不是材质细节：previz 给几何，出片模型会继承它；
+    砖缝瓦垄那种微观质感才交给出片模型重绘。
+    """
+    outer = world.rings["外城"]
+    ocx = sum(p[0] for p in outer) / len(outer)
+    idx = outside_keep(world, 45.0, 30.0)          # 河两侧 45 m 留给关厢街面，别把田铺到街上
+    plots = {c: Batch() for c in CROPS}
+    ridge = Batch()
+    rng = random.Random(31000)
+    x0, x1, y0, y1 = G_EXTENT
+    W, D = 46.0, 30.0                              # 田块尺寸：从 15 m 高掠过时约占画面三分之一
+    n_plot = 0
+    gx = x0
+    while gx < x1:
+        gy = y0
+        while gy < y1:
+            gy += D
+            c = (gx + W / 2, gy - D / 2)
+            if c[0] < ocx or point_in_poly(c, outer):
+                continue
+            q = [(gx, gy - D), (gx + W, gy - D), (gx + W, gy), (gx, gy)]
+            if idx.hits(q) or any(point_in_poly(pp, outer) for pp in q):
+                continue
+            # 套走廊：`house()` 自带 CORRIDOR 闸，田块是直接摆的 slab，必须自己判，
+            # 否则会把整片 G_EXTENT 铺满（实测 121007 块，几何量失控）。
+            if CORRIDOR is not None and CORRIDOR.level(c) is None:
+                continue
+            crop = CROPS[rng.randrange(len(CROPS))]
+            pad = rng.uniform(0.6, 1.4)            # 田块之间留出田埂的宽度，别拼成一整张
+            slab(plots[crop], gx + pad, gx + W - pad, gy - D + pad, gy - pad, Z_STREET, Z_STREET + 0.06)
+            for a, b, ya, yb in ((gx, gx + W, gy - D, gy - D + 0.5), (gx, gx + W, gy - 0.5, gy),
+                                 (gx, gx + 0.5, gy - D, gy), (gx + W - 0.5, gx + W, gy - D, gy)):
+                slab(ridge, a, b, ya, yb, Z_STREET, Z_STREET + 0.22)      # 田埂：抬高 22 cm，空中看得见
+            if rng.random() < 0.45:                # 块内再分垄：一条中埂，避免大块死板
+                if rng.random() < 0.5:
+                    slab(ridge, gx, gx + W, (gy - D / 2) - 0.25, (gy - D / 2) + 0.25, Z_STREET, Z_STREET + 0.18)
+                else:
+                    slab(ridge, gx + W / 2 - 0.25, gx + W / 2 + 0.25, gy - D, gy, Z_STREET, Z_STREET + 0.18)
+            n_plot += 1
+        gx += W
+    for i, (crop, b) in enumerate(plots.items()):
+        if b.bm.verts:
+            b.finish(f"G_3100{i}_field_{crop}", "G_FIELDS", 31000 + i)
+        else:
+            b.bm.free()
+    ridge.finish("G_31099_field_ridges", "G_FIELDS", 31099)
+    NOTES.append(f"G 农田（城外，走廊内）：{n_plot} 块田、四种地色 + 田埂")
+    return n_plot, len(CROPS)
 
 
 def build_gate_suburbs(world: World, keys: tuple[str, ...]) -> tuple[int, int]:
@@ -2370,6 +2433,7 @@ def build_global_layer(md: str) -> dict[str, object]:
     lm_counts = build_landmarks(world, plans, keys)
     n_halls = build_palace(world)
     n_blocks, n_boxes = build_blocks(world, keys)
+    n_plot, _n_crop = build_farmland(world)
     n_sub, n_sub_boxes = build_suburbs(world, keys)
     n_gate_sub, n_gate_houses = build_gate_suburbs(world, keys)
     n_hamlets, n_hamlet_houses = build_hamlets(world, keys)
@@ -2646,6 +2710,47 @@ def b_guaizi(r: Row) -> None:
         solid_box(f"B_23_guaizi_{tag}", "B_WALL", (px / 2, ya, Z_WATER), (x_end, yb, Z_STREET + GUAIZI_H), 23)
     NOTES.append("方块 23：y=±14 取为墙外皮（|y| 11…14）——取中线会压住 4 m 宽的门道与木桥（y 14…18）；x 0…7 在旱门台内，从 x=7 起建，"
                  "止于护龙河内沿（判断：夹岸百余丈的其余段不入镜）")
+
+
+def b_guanxiang(r: Row) -> None:
+    """门外关厢街面：墙壕之间 + 护龙河外两段，河两岸各两进共墙铺面（2026-09-19）。
+
+    为什么由 Place B 自己建：城门外 120 m 都在 B 的足迹里，而「全城层在 Place 足迹内让位」
+    是硬不变式（Place 的地面开了洞，城层房子摆进去就浮在洞上）。城层的关厢只能建到 B 的
+    边界为止，B 足迹内这一段——恰恰是《清明上河图》最挤、相机贴得最近的一段——必须由 B 自建，
+    否则成片里城门外就是一片空地（用户 2026-09-19 反馈「城门外的建筑规划像劣质动画」）。
+
+    前排退到 |y| 22：§4 步 5 的入城镜走廊走 y 16…18、判据半径 2 m，前排压到 19 会判侵入。
+    """
+    r.need("共墙连排铺面", "进深 8…13")
+    global CORRIDOR
+    bands = [(float(a), float(b)) for a, b in re.findall(rf"x\s*({NUM})…({NUM})", r.where)]
+    if len(bands) < 2:
+        raise PlanError(f"方块 {r.block}：位置列要给两段 x 区间（墙壕之间 + 护龙河外），现在只解析出 {bands}")
+    rng = random.Random(23001)
+    b = Batch()
+    n = 0
+    keep, CORRIDOR = CORRIDOR, None      # house() 的走廊闸按世界坐标判，这里是 Place 局部坐标；
+    try:                                 # 且 Place 本就是 A 档 hero 区，不参与走廊分级
+        for x0, x1 in bands:
+            for side in (1.0, -1.0):
+                for y_front, d_lo, d_hi, two_p in ((22.0, 9.0, 13.0, 0.40), (36.0, 5.0, 7.5, 0.10)):
+                    x = x0
+                    while x < x1 - 3.0:
+                        lx = rng.choice((1, 2, 2, 3, 3, 4)) * rng.uniform(3.1, 4.4)
+                        if x + lx > x1:
+                            break
+                        ly = rng.uniform(d_lo, d_hi)
+                        h = rng.uniform(7.4, 9.2) if rng.random() < two_p else rng.uniform(4.3, 6.2)
+                        if rng.random() > 0.06:
+                            house(b, (x + lx / 2, side * (y_front + ly / 2)), (1.0, 0.0), (0.0, -side),
+                                  (lx, ly, h), "A")
+                            n += 1
+                        x += lx + rng.choice((0.0, 0.0, 0.0, 0.0, 0.0, 1.2, 2.5))
+    finally:
+        CORRIDOR = keep
+    b.finish(f"B_{r.block}_guanxiang", "B_HOUSES", r.block)
+    NOTES.append(f"B 关厢街面：{n} 户共墙铺面（{'、'.join(f'x {a:g}…{b2:g}' for a, b2 in bands)}，河两岸各两进）")
 
 
 def b_moat(r: Row) -> None:
@@ -3573,7 +3678,7 @@ SCRIPTS: dict[tuple[str, str], callable] = {
     ("A", "河道"): a_river, ("A", "土坡"): a_slope, ("A", "街"): s_street, ("A", "码头"): a_dock, ("A", "仓"): a_granary,
     ("A", "表木"): a_poles, ("A", "柳"): s_willow,
     ("B", "水门"): b_water_gate, ("B", "旱门"): b_dry_gate, ("B", "城墙"): b_wall, ("B", "拐子城"): b_guaizi,
-    ("B", "护龙河"): b_moat, ("B", "木桥"): b_bridge, ("B", "柳"): s_willow,
+    ("B", "护龙河"): b_moat, ("B", "木桥"): b_bridge, ("B", "柳"): s_willow, ("B", "关厢街面"): b_guanxiang,
     ("C", "州桥"): c_zhouqiao, ("C", "石壁"): c_stone_walls, ("C", "街"): s_street, ("C", "杈子"): c_chazi,
     ("C", "御沟"): c_ditch, ("C", "御廊"): c_gallery, ("C", "阙楼"): c_que, ("C", "望火楼"): c_fire_tower, ("C", "井"): c_well,
     ("C", "正店"): c_zhengdian,
@@ -3977,7 +4082,7 @@ def qc(one_take: list[Vector], entry: list[Vector], qc_only: bool) -> int:
 
 # ── previz 公用：S 档航拍（shotNN_previz.py 只调这里；本镜编排只写在 shots/shotNN/previz_config.toml）──────────
 AERIAL_SCHEMA: dict[str, set[str]] = {
-    "全局": {"shot", "fps", "total_sec", "分辨率", "匀速", "平滑"},
+    "全局": {"shot", "fps", "total_sec", "分辨率", "匀速", "平滑", "倒飞"},
     # 停留：该关键帧附近「每米花多少秒」的相对倍数（默认 1.0）。时间按弧长 × 停留分配，
     # 权重再经 ±1.5 s 宽窗平滑——既能给某一拍多几秒，又不会出现一脚油门。
     "机位": {"t", "位置", "看向", "焦距", "切", "停留"},
@@ -4091,34 +4196,34 @@ def aerial_keys(cfg_path: Path) -> list[dict]:
                      "看向": resolve_spec(world, k["看向"], "看向", cfg_path), "焦距": lens,
                      "切": bool(k.get("切", False)), "承接": inherit,
                      "停留": float(k.get("停留", 1.0))})
+    check_world_scale(keys, cfg_path, world)
     return keys
 
 
-def mono_hermite(ts: list[float], vs: list[float], t: float, ease_in: bool) -> float:
-    """Fritsch–Carlson 单调三次插值：关键帧之间不过冲；相邻两帧同值＝悬停（速度归零）。"""
-    n = len(ts)
-    if n == 1 or t <= ts[0]:
-        return vs[0]
-    if t >= ts[-1]:
-        return vs[-1]
-    d = [(vs[i + 1] - vs[i]) / (ts[i + 1] - ts[i]) for i in range(n - 1)]
-    m = [d[0]] + [0.0 if d[i - 1] * d[i] <= 0 else (d[i - 1] + d[i]) / 2 for i in range(1, n - 1)] + [d[-1]]
-    if ease_in:
-        m[0] = 0.0
-    for i in range(n - 1):
-        if d[i] == 0.0:
-            m[i] = m[i + 1] = 0.0
-            continue
-        a0, b0 = max(0.0, m[i] / d[i]), max(0.0, m[i + 1] / d[i])
-        m[i], m[i + 1] = a0 * d[i], b0 * d[i]
-        if a0 * a0 + b0 * b0 > 9.0:
-            tau = 3.0 / math.sqrt(a0 * a0 + b0 * b0)
-            m[i], m[i + 1] = tau * a0 * d[i], tau * b0 * d[i]
-    i = max(k for k in range(n - 1) if ts[k] <= t)
-    h = ts[i + 1] - ts[i]
-    u = (t - ts[i]) / h
-    return ((2 * u ** 3 - 3 * u ** 2 + 1) * vs[i] + (u ** 3 - 2 * u ** 2 + u) * h * m[i]
-            + (-2 * u ** 3 + 3 * u ** 2) * vs[i + 1] + (u ** 3 - u ** 2) * h * m[i + 1])
+def check_world_scale(keys: list[dict], cfg_path: Path, world: World) -> None:
+    """手写的 `["世界", x, y, z]` 有没有跟上 CITY_SCALE —— 落在城外老远就是没缩尺（2026-09-20）。
+
+    实测事故（shot35）：CITY_SCALE 0.5 落地时，`["Place", …]` 与 `["汴河@REF", …]` 这类
+    **派生**坐标自动跟着缩了，而 previz 配置里**手写死的世界坐标**没有任何东西会去改它。
+    于是一条约 200 m 的拔高退镜被拉成 2277 m、时速 114 m/s，闸门只报得出「侧向 1054 m/s²」
+    这个下游症状，看不出病根。凡这类「一个常数改了、另一处手写副本没改」的错，
+    都要在**读进来的那一刻**判掉，而不是等下游某个数值离谱。
+    """
+    ring = world.rings["外城"]
+    x0 = min(p[0] for p in ring) - 2000.0
+    x1 = max(p[0] for p in ring) + 2000.0
+    y0 = min(p[1] for p in ring) - 2000.0
+    y1 = max(p[1] for p in ring) + 2000.0
+    for k in keys:
+        for field in ("位置", "看向"):
+            x, y = k[field][0], k[field][1]
+            if x0 <= x <= x1 and y0 <= y <= y1:
+                continue
+            raise PlanError(
+                f"{cfg_path}：{field} ({x:.0f}, {y:.0f}) 落在外城外 2 km 以上（城的范围 "
+                f"x {x0 + 2000:.0f}…{x1 - 2000:.0f} / y {y0 + 2000:.0f}…{y1 - 2000:.0f}）。"
+                f"手写世界坐标多半是 CITY_SCALE={CITY_SCALE:g} 缩尺之前的值——xy 折半即可"
+                f"（z 是高度，不缩）。")
 
 
 UNIFORM_ON = False        # build_aerial 打开匀速时置 True（见 camera_at 的 ease 判断）
@@ -4137,25 +4242,6 @@ def camera_at(keys: list[dict], t: float) -> tuple[Vector, Vector, float]:
     pos = Vector([mono_hermite(ts, [k["位置"][i] for k in seg], t, ease) for i in range(3)])
     look = Vector([mono_hermite(ts, [k["看向"][i] for k in seg], t, ease) for i in range(3)])
     return pos, look, mono_hermite(ts, [k["焦距"] for k in seg], t, ease)
-
-
-def curve_lateral(pts: list[Vector], fps: int) -> tuple[float, float]:
-    """逐帧位置 → 最大侧向加速度 (t, a)：二阶差分取加速度，再取垂直于速度的分量。
-
-    为什么是这个量：相机就是**按帧**被 key 的，帧率下的二阶差分就是它真实经历的加速度；
-    而「相邻速度夹角 ÷ dt」随采样间隔漂移（密采样上任何抖动都读成几十 g，闸门失灵），
-    三点外接圆半径在近共线时又会数值退化 —— 两个都试过，都不能用（2026-09-18）。
-    """
-    worst = (0.0, 0.0)
-    for i in range(1, len(pts) - 1):
-        v = (pts[i + 1] - pts[i - 1]) * (fps / 2.0)
-        if v.length < 1.0:                       # 近乎悬停：侧向加速度无意义
-            continue
-        a = (pts[i + 1] - pts[i] * 2.0 + pts[i - 1]) * (fps * fps)
-        a_lat = (a - v.normalized() * a.dot(v.normalized())).length
-        if a_lat > worst[1]:
-            worst = ((i + 1) / fps, a_lat)
-    return worst
 
 
 def aerial_path(keys: list[dict], total: float, fps: int, n_frames: int,
@@ -4328,7 +4414,7 @@ def aerial_path(keys: list[dict], total: float, fps: int, n_frames: int,
     return sol
 
 
-def verify_camera(cfg_path: Path, fps: int, n: int, smooth_g: float) -> dict:
+def verify_camera(cfg_path: Path, fps: int, n: int, smooth_g: float, backward: bool = False) -> dict:
     """从 blend 里**已打好关键帧的相机**回读，逐帧重算四项判据。
 
     为什么必须这样（2026-09-19 事故）：净空修正一度写在打帧之后，于是闸门量的是修正后的数组、
@@ -4368,6 +4454,10 @@ def verify_camera(cfg_path: Path, fps: int, n: int, smooth_g: float) -> dict:
         if v2.length < 1e-6 or d2.length < 1e-6:
             continue
         a = math.degrees(v2.normalized().angle(d2.normalized(), 0.0))
+        if backward:
+            # 倒飞镜（边后退边拔高、镜头回看）：视线与速度本就相反，按「偏离**反向**速度多少」量。
+            # 不做这个豁免，任何合法的后退镜都会被判成「边往前飞边回头看」（2026-09-20 shot35）。
+            a = 180.0 - a
         if a > view[1]:
             view = ((i + 1) / fps, a)
     chord = pos[-1] - pos[0]
@@ -4391,7 +4481,8 @@ def verify_camera(cfg_path: Path, fps: int, n: int, smooth_g: float) -> dict:
     if lat[1] > smooth_g * 1.2 * 9.81:
         raise PlanError(f"{cfg_path}：{lat[0]:.2f}s 侧向 {lat[1]:.1f} m/s² 超 1.2 g —— 这个速度转不过来。")
     if view[1] > 100.0:
-        raise PlanError(f"{cfg_path}：{view[0]:.2f}s 视线偏航向 {view[1]:.0f}° —— 边往前飞边回头看。")
+        raise PlanError(f"{cfg_path}：{view[0]:.2f}s 视线偏{'反向' if backward else '航'}向 {view[1]:.0f}° —— "
+                        f"{'倒飞镜的镜头没有对准来路' if backward else '边往前飞边回头看'}。")
     if back[1] > 3.0:
         raise PlanError(f"{cfg_path}：{back[0]:.2f}s 折返 {back[1]:.1f} m —— 一镜到底不许折返。")
     return out
@@ -4629,7 +4720,7 @@ def build_aerial(cfg_path: Path) -> dict:
     sc.render.filepath = f"//{g['shot']}_previz.mp4"
     cuts = [k["t"] for k in keys if k["切"]]
     info = {"frames": n, "fps": fps, "first": keys[0], "last": keys[-1], "cuts": cuts}
-    info["verify"] = verify_camera(cfg_path, fps, n, smooth_g)
+    info["verify"] = verify_camera(cfg_path, fps, n, smooth_g, bool(g.get("倒飞", False)))
     if sol:
         # 云台闸门：一边往前飞、一边把镜头拧到后方，看着就是「原地打转」。
         # 视线与航向夹角 > 100° 直接报错（2026-09-19 用户实测 shot01 摇到 176°）。

@@ -1,0 +1,168 @@
+# 旧铁炉堡 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 旧世区图上不画这一层（玩家不可进入），整张图都是推定：只有「在王座厅下方、从王座厅侧门下去」是原典方位。
+# 布局故意只写到「一道下行阶 → 一段前窟 → 一座方厅」这一层，不补 4.0.3 开放后的陈设。
+
+[meta]
+bg = "bg206"
+name_zh = "旧铁炉堡"
+size_m = [60, 60]
+px_per_m = 16.0
+scale_src = "推定"
+scale_note = "区图不显示本层；场地按区级平面图 b907「旧城石窟」50×50 m 外扩到 60 m，方位按「王座厅侧门之后、正下方」推定"
+# 世界树画面：王座厅下方一层更古老的石窟，柱式粗笨、没有黄铜装饰，只有裸岩与旧火盆，空气里有陈年的冷
+absent = ["黄铜管道 / 铁链吊灯 / 铁轨（上面那座城才有）", "熔岩与锻炉", "天空 / 日光", "王座 / 议事席 / 三座并列的高座（4.0.3 开放后的陈设）", "燃着的火盆（旧世默认态全部冷透）", "任何文字与铭文", "人物、守卫、动物"]
+
+[[ridge]]
+name = "北侧岩体"
+poly = [[0, 0], [44, 0], [44, 18], [31, 18], [31, 24], [0, 24]]
+height_m = 30
+src = "推定"
+note = "方厅北墙与前窟北墙以外的实心岩"
+
+[[ridge]]
+name = "西侧岩体"
+poly = [[0, 24], [4, 24], [4, 52], [0, 52]]
+height_m = 30
+src = "推定"
+note = "方厅西端石台背后的岩壁"
+
+[[ridge]]
+name = "南侧岩体"
+poly = [[0, 52], [34, 52], [34, 36], [60, 36], [60, 60], [0, 60]]
+height_m = 30
+src = "推定"
+note = "方厅南墙与前窟南墙以外"
+
+[[ridge]]
+name = "东北岩体"
+poly = [[52, 0], [60, 0], [60, 36], [49, 36], [49, 18], [52, 18]]
+height_m = 30
+src = "推定"
+note = "下行阶东侧；上面一层就是王座厅"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p180"
+face = "south"
+into_ridge = true
+name = "下行石阶"
+xy = [48, 9]
+size = [8, 18]
+h_m = 4
+src = "原典方位"
+note = "从上层王座厅侧门下来的窄石阶；顶端那道厚石门没关严，门缝漏下本层唯一的光"
+
+[[block]]
+id = "b02"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "前窟"
+xy = [40, 27]
+size = [18, 18]
+h_m = 0
+src = "推定"
+note = "阶底一段低矮的天然石窟，顶上只粗凿过；西南角豁口通方厅（机位在阶底朝西南）"
+
+[[block]]
+id = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+into_ridge = true
+name = "方厅"
+xy = [19, 38]
+size = [30, 28]
+h_m = 0
+src = "推定"
+note = "更深的一座方厅，四根粗笨方柱撑顶；墙上古拙浮雕；即后来开放的领主大厅，旧世空置"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p182"
+face = "south"
+count = 2
+name = "北对方柱"
+xy = [19, 31]
+size = [16, 3]
+h_m = 6
+src = "推定"
+note = "两根矮粗方柱，柱身无线脚、无金属箍"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p182"
+face = "north"
+count = 2
+name = "南对方柱"
+xy = [19, 45]
+size = [16, 3]
+h_m = 6
+src = "推定"
+note = "同北对"
+
+[[block]]
+id = "b06"
+kind = "altar"
+face = "east"
+count = 1
+name = "西端空石台"
+xy = [7, 38]
+size = [5, 10]
+h_m = 0.6
+src = "推定"
+note = "一块低矮粗糙的方石台，台上空无一物（不放任何座椅）"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p185"
+face = "south"
+name = "中央大石火盆"
+xy = [19, 38]
+size = [3, 3]
+h_m = 0.9
+src = "推定"
+note = "方厅正中四柱之间，齐腰高的粗石盆，盆里是冷透的灰烬，不冒烟"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p185"
+face = "south"
+name = "石台北侧小火盆"
+xy = [7, 31.5]
+size = [1.5, 1.5]
+h_m = 0.7
+src = "推定"
+note = "冷透，积灰"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p185"
+face = "south"
+name = "石台南侧小火盆"
+xy = [7, 44.5]
+size = [1.5, 1.5]
+h_m = 0.7
+src = "推定"
+note = "冷透，积灰"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg206-c1"
+eye = [30, 55]
+target = [30, 30]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

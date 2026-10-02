@@ -1,0 +1,159 @@
+# 魔法之厅 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 十字形石厅：中央 32 m 见方摆在 (12–44, 12–44)；四臂宽 12 m（x 或 y 22–34）、深 8 m；南北两臂尽头是门，东西两臂是死端壁龛。
+
+[meta]
+bg = "bg791"
+name_zh = "魔法之厅"
+size_m = [56, 56]
+px_per_m = 20.0
+scale_src = "推定"
+scale_note = "1.12 副本无地图；十字形平面取自现行区图上层（粉色十字块）的形状，绝对尺寸按区级图 b902（55 × 44 m）量级推定为连臂 48 × 48 m，圆台直径 24 m、穹顶 14 m 为推定"
+# 世界树画面：近乎空旷的圆形大平台，四周岩壁刻满符文，中央一团火元素的红光把黑石地面照得发亮。
+absent = [
+    "任何生物与悬浮的火团（默认态不画守厅的火焰使者，红光落在台心火池）",
+    "熔岩、火盆与铁壁灯（唯一光源是台心火池）",
+    "日光、天光与任何窗洞",
+    "发光的符文、魔法光柱与光阵",
+    "第三道门（东西两臂是死端壁龛）",
+    "桌案、器物、宝箱与兵器架（平台空旷）",
+    "木构件、挂毯与旗帜纹章",
+]
+
+[[ridge]]
+name = "西北角实心黑岩"
+poly = [[0, 0], [22, 0], [22, 12], [12, 12], [12, 22], [0, 22]]
+height_m = 14
+src = "推定"
+
+[[ridge]]
+name = "东北角实心黑岩"
+poly = [[34, 0], [56, 0], [56, 22], [44, 22], [44, 12], [34, 12]]
+height_m = 14
+src = "推定"
+
+[[ridge]]
+name = "西南角实心黑岩"
+poly = [[0, 34], [12, 34], [12, 44], [22, 44], [22, 56], [0, 56]]
+height_m = 14
+src = "推定"
+
+[[ridge]]
+name = "东南角实心黑岩"
+poly = [[44, 34], [56, 34], [56, 56], [34, 56], [34, 44], [44, 44]]
+height_m = 14
+src = "推定"
+
+[[ridge]]
+name = "东臂尽头岩体（东北隔岩是北熔岩湖）"
+poly = [[52, 22], [56, 22], [56, 34], [52, 34]]
+height_m = 14
+src = "推定"
+
+[[ridge]]
+name = "西臂尽头岩体"
+poly = [[0, 22], [4, 22], [4, 34], [0, 34]]
+height_m = 14
+src = "推定"
+
+[[road]]
+name = "南门外石廊（通城心广场与酒吧方向）"
+path = [[28, 56], [28, 52]]
+width_m = 6
+src = "地图量取"
+
+[[road]]
+name = "北门外石廊（向西北拐往浇铸间）"
+path = [[28, 4], [28, 1], [22, 0]]
+width_m = 6
+src = "地图量取"
+
+[[road]]
+name = "南门到圆台的哑光路心"
+path = [[28, 52], [28, 40]]
+width_m = 3
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "rock_shelf"
+face = "south"
+count = 1
+name = "圆形大平台（高三级、黑铁包边）"
+xy = [28, 28]
+size = [24, 24]
+h_m = 0.6
+src = "原典方位"
+note = "世界树「近乎空旷的圆形大平台」；直径 24 m 为推定"
+
+[[block]]
+id = "b02"
+may_overlap = true
+kind = "pool"
+face = "south"
+count = 1
+name = "台心下沉圆火池（本厅唯一光源）"
+xy = [28, 28]
+size = [4, 4]
+h_m = 0
+src = "推定"
+note = "世界树「中央一团红光」的空厅落法；池底比台面低约 1 m"
+
+[[block]]
+id = "b03"
+kind = "cave_mouth"
+face = "south"
+count = 1
+name = "南门门洞（黑铁包边、门扇外敞）"
+xy = [28, 52]
+size = [8, 1.5]
+h_m = 3.5
+src = "地图量取"
+
+[[block]]
+id = "b04"
+kind = "cave_mouth"
+face = "north"
+count = 1
+name = "北门门洞（出厅往浇铸间）"
+xy = [28, 4]
+size = [8, 1.5]
+h_m = 3.5
+src = "地图量取"
+
+[[block]]
+id = "b05"
+into_ridge = true
+kind = "plaza"
+face = "west"
+count = 1
+may_overlap = true
+name = "东臂死端壁龛（整面符文墙）"
+xy = [48, 28]
+size = [8, 12]
+h_m = 0
+src = "地图量取"
+
+[[block]]
+id = "b06"
+into_ridge = true
+kind = "plaza"
+face = "east"
+count = 1
+may_overlap = true
+name = "西臂死端壁龛（整面符文墙）"
+xy = [8, 28]
+size = [8, 12]
+h_m = 0
+src = "地图量取"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg791-c1"
+eye = [4, 28]
+target = [28, 28]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

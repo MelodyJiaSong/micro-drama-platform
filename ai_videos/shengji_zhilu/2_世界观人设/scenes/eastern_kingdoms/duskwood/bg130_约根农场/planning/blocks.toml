@@ -1,0 +1,209 @@
+# 约根农场 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 换算：本图原点 ＝ 区级平面图（bg126）世界坐标 (1080, 1090)；南路按 bg126 terrain.toml 折线平移（地图量取）。
+# 区图 [50, 73] 田块图标在北、[51, 77] 房屋图标在东南，落在本图约 (127, 112) / (172, 181)。
+# 南界山墙中段北缘在本图南边界外约 50–150 m（世界 y≈1300–1380），西面越过南路是食人魔盆地环山的东弧（场地外）——都不画进本图，写在锚点 prompt 的远景里。
+# 锚点机位：院子西侧篱笆门外 (115, 165)，朝东偏南。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+
+[meta]
+bg = "bg130"
+name_zh = "约根农场"
+size_m = [260, 240]
+px_per_m = 4.0
+grid_m = 20
+scale_src = "地图量取"
+scale_note = "南路、田块与房屋两个区图图标的相对位置按区图量取（±30 m）；院子、井、柴棚、篱笆的尺寸与位置推定"
+# 世界树画面：南部的空农庄，篱笆倒了一半，院里一口废井，屋里桌椅还摆着像是刚走开
+absent = [
+    "任何火、烛火、灯笼、窗火与炊烟（屋里桌椅只靠窗漏的冷光看出轮廓）",
+    "烧毁 / 被砸烂的痕迹（人是自己走的，屋子完好）",
+    "谷仓 / 风车 / 磨坊（这里只有一栋住屋和一间柴棚）",
+    "帐篷 / 营地 / 路障",
+    "带字的招牌 / 告示",
+    "太阳 / 蓝天 / 月亮圆盘",
+    "任何人物、牲畜、狗与飞鸟",
+]
+
+[[road]]
+name = "南路（北接主干道，南穿山墙缺口出境）"
+path = [[31, 0], [43, 95], [43, 227], [45, 240]]
+width_m = 6
+src = "地图量取"
+
+[[road]]
+name = "进院短土路（南路东岔 → 西侧篱笆门）"
+path = [[43, 160], [90, 162], [122, 165]]
+width_m = 3
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "荒田"
+xy = [135, 102]
+size = [110, 56]
+h_m = 0.6
+src = "地图量取"
+note = "区图田块图标；齐膝灰褐杂草里站着几排歪倒的枯秸秆"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p107"
+face = "north"
+name = "一层半住屋"
+xy = [170, 186]
+size = [12, 9]
+h_m = 7.5
+src = "地图量取"
+note = "区图房屋图标；毛石墙脚、深棕板墙、黑木瓦斜顶、阁楼小窗、石砌烟囱（冷）；门在北墙正对院心大敞，门里木桌摆两只陶碗、椅子拉开；南墙一扇小窗漏进冷光；门前两级石阶"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p127"
+face = "south"
+name = "废井"
+xy = [170, 158]
+size = [2.4, 2.4]
+h_m = 1
+src = "推定"
+note = "毛石井台齐腰、木辘轳绳断、木桶翻在井台边、旁有三腿木凳；与屋门同在 x=170 的南北线上"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p123"
+face = "southwest"
+name = "塌顶柴棚"
+xy = [189, 142]
+size = [8, 6]
+h_m = 3.5
+src = "推定"
+note = "院子东北角，顶塌半边，柴垛码得整齐"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p110"
+face = "south"
+count = 2
+name = "晾衣绳"
+xy = [148, 174]
+size = [14, 0.3]
+h_m = 1.8
+src = "推定"
+note = "只剩一根发白的旧布条"
+
+[[block]]
+id = "b06"
+kind = "palisade"
+face = "south"
+count = 1
+name = "西侧篱笆（立着，含脱落的门）"
+xy = [122.5, 165]
+size = [0.5, 60]
+h_m = 1.5
+src = "推定"
+note = "篱笆门在 y≈165：一扇门板斜靠门柱，一扇倒在泥里"
+
+[[block]]
+id = "b07"
+kind = "palisade"
+face = "south"
+count = 1
+may_overlap = true
+name = "南侧篱笆（立着）"
+xy = [160, 195]
+size = [75, 0.5]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "palisade"
+face = "south"
+count = 1
+may_overlap = true
+name = "北侧篱笆西段（立着）"
+xy = [141, 135]
+size = [37, 0.5]
+h_m = 1.5
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "palisade"
+face = "south"
+count = 1
+name = "北侧篱笆东段（倒伏）"
+xy = [179, 135]
+size = [37, 0.5]
+h_m = 0.3
+src = "推定"
+note = "向外倒进荒田的草里"
+
+[[block]]
+id = "b10"
+kind = "palisade"
+face = "south"
+count = 1
+may_overlap = true
+name = "东侧篱笆（倒伏）"
+xy = [197.5, 165]
+size = [0.5, 60]
+h_m = 0.3
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p112"
+face = "south"
+count = 40
+name = "北侧枯林带"
+xy = [160, 25]
+size = [180, 40]
+h_m = 14
+src = "推定"
+note = "林冠上悬黑雾"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p112"
+face = "south"
+count = 40
+may_overlap = true
+name = "东侧枯林带"
+xy = [235, 130]
+size = [40, 200]
+h_m = 14
+src = "推定"
+note = "林外东约 250 m 是枯果园（bg138，场地外）"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p112"
+face = "south"
+count = 30
+may_overlap = true
+name = "南侧枯林带"
+xy = [150, 225]
+size = [180, 25]
+h_m = 14
+src = "推定"
+note = "树梢之上压着近处的南界山墙（场地外，高出林地上百米）"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg130-c1"
+eye = [21, 120]
+target = [130, 120]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

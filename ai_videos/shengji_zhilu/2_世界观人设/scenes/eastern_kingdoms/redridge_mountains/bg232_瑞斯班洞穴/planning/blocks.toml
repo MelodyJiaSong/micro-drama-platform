@@ -1,0 +1,189 @@
+# 瑞斯班洞穴 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 洞穴内景图：[[ridge]] ＝ 实心岩体（height_m 取岩体在洞底以上的厚度），洞厅 / 小洞块 h_m=0 表示可走的洞底；[[road]] ＝ 隧道与支洞。
+
+[meta]
+bg = "bg232"
+name_zh = "瑞斯班洞穴"
+size_m = [160, 130]
+px_per_m = 8.0
+scale_src = "推定"
+scale_note = "洞内无一手尺寸；主厅 45 × 35 m、顶高七八米与入口隧道约 40 m 均按「中型天然洞穴 + 一个营地大小的主厅」推定。洞口位置取区级 terrain.toml（区图洞口图标约 [15, 27]，世界树无坐标）"
+# 世界树画面：西北崖壁上的洞口，洞内岩壁泛铁锈红，深处有豺狼人的火堆与骨堆，回声很重
+absent = ["日光 / 天窗透光（洞口在拐弯外，主厅见不到天光）", "发光矿石 / 发光水晶 / 荧光菌（矿脉只反光不发光）", "木支架矿道 / 铁轨 / 矿车（这是天然岩洞，不是人修的矿坑）", "熔岩 / 地下河", "火把 / 灯笼（主厅唯一光源是中央柴火）", "任何人物 / 动物 / 文字"]
+
+[[ridge]]
+name = "北侧岩体"
+poly = [[0, 0], [128, 0], [100, 36], [57, 37], [37, 42], [0, 42]]
+height_m = 30
+src = "推定"
+
+[[ridge]]
+name = "东南岩体（矿脉所在的东壁以东）"
+poly = [[160, 8], [160, 130], [62, 130], [65, 110], [86, 100], [86, 73], [103, 73], [106, 40], [120, 34], [150, 12]]
+height_m = 30
+src = "推定"
+
+[[ridge]]
+name = "西南岩体"
+poly = [[0, 55], [57, 56], [57, 73], [76, 73], [76, 96], [56, 106], [50, 130], [0, 130]]
+height_m = 30
+src = "推定"
+
+[[ridge]]
+name = "西侧岩体（骨堆小洞是死胡同）"
+poly = [[0, 42], [39, 42], [39, 55], [0, 55]]
+height_m = 30
+src = "推定"
+
+[[road]]
+name = "入口隧道（主厅南口→拐弯→崖壁洞口）"
+path = [[80, 73], [80, 97], [62, 107], [56, 130]]
+width_m = 4
+src = "推定"
+
+[[road]]
+name = "东北支洞（通深处，火光只照进几步）"
+path = [[101, 40], [115, 26], [135, 8], [142, 0]]
+width_m = 3
+src = "推定"
+
+[[water]]
+name = "渗水小水洼（火塘东南）"
+path = [[86, 63], [89, 65]]
+width_m = 2
+depth_m = 0.1
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "chamber"
+face = "south"
+count = 1
+name = "主洞厅"
+xy = [80, 55]
+size = [45, 35]
+h_m = 0
+src = "推定"
+note = "洞底；顶高中央七八米、洞壁边三四米；洞底向北微降"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p219"
+face = "south"
+may_overlap = true
+name = "中央火塘（燃着）"
+xy = [80, 57]
+size = [3, 3]
+h_m = 0.8
+src = "推定"
+note = "本档唯一光源；挂锅木架横在旁边"
+
+[[block]]
+id = "b03"
+kind = "chamber"
+face = "east"
+count = 1
+name = "西侧骨堆小洞"
+xy = [46, 48]
+size = [14, 10]
+h_m = 0
+src = "推定"
+note = "洞口只到人胸口，比主厅高半米岩坎"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p228"
+face = "south"
+may_overlap = true
+name = "骨堆"
+xy = [60, 49]
+size = [5, 4]
+h_m = 0.8
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "ore_vein"
+face = "west"
+count = 1
+may_overlap = true
+name = "东壁矿脉"
+xy = [101.5, 54]
+size = [2, 16]
+h_m = 4
+src = "推定"
+note = "带锈的暗红褐矿脉斜穿洞壁，墙脚堆碎矿与凿痕"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p218"
+face = "southeast"
+may_overlap = true
+name = "兽皮窝棚·西北"
+xy = [64, 41]
+size = [4, 3]
+h_m = 1.6
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p218"
+face = "south"
+may_overlap = true
+name = "兽皮窝棚·北"
+xy = [84, 40]
+size = [4, 3]
+h_m = 1.6
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p218"
+face = "northeast"
+may_overlap = true
+name = "兽皮窝棚·西南"
+xy = [62, 68]
+size = [4, 3]
+h_m = 1.6
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p224"
+face = "south"
+may_overlap = true
+name = "晾皮架"
+xy = [93, 68]
+size = [3, 1]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "cave_mouth"
+face = "south"
+count = 1
+name = "崖壁洞口（朝南）"
+xy = [56, 127]
+size = [8, 5]
+h_m = 0
+src = "推定"
+note = "开在西北山群南缘崖壁上；从这里看不见主厅"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg232-c1"
+eye = [80, 120]
+target = [80, 65]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

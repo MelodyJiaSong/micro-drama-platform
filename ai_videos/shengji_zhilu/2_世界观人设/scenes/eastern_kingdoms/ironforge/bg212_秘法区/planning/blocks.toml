@@ -1,0 +1,251 @@
+# 秘法区 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 量取：原版区图 WorldMap-Ironforge_c60.jpg（1002×668 px）上 x∈[170,411] px、y∈[5,215] px 一窗，
+#   本地 m ＝ (px − 170, py − 5) × (0.7215, 0.7222)（与区级 terrain.toml 同一换算）。
+# 石室外形是区图上的紫色小块（地图量取）；哪间是铺面 / 训练间区图不标，推定。
+# 石柱、悬挂水盆、壁槽是锚点 prompt 的陈设，区图不画，推定。锚点机位：西南石阶顶（约 60, 125）朝东北。
+
+[meta]
+bg = "bg212"
+name_zh = "秘法区"
+size_m = [174, 152]
+px_per_m = 9.0
+scale_src = "地图量取"
+scale_note = "区图左上紫色区块一窗量取：斜长广场约 120×55 m（长轴西南—东北），中央螺纹水池外圈约 26 m 径；换算同区级 terrain.toml（0.7215 / 0.7222 m/px）"
+# 世界树画面：一圈安静的蓝调厅堂，石柱之间悬着发光的符文水盆，水从壁槽流下来，光线比别处冷得多
+absent = ["天空 / 日光 / 窗（山腹内广场）", "火盆 / 炉火 / 熔岩 / 铁笼灯（本区只有冷蓝水光与大厅门口的烛光）", "传送门 / 悬浮光球 / 漫天光效", "可读的字与符文字母（刻纹只有几何螺纹与同心圈）", "训练假人 / 木桩靶", "木构房屋 / 瓦顶", "玻璃 / 电灯 / 现代器物", "任何人物与动物"]
+
+[[road]]
+name = "平民区外环廊（来路）"
+path = [[40, 150], [58, 140]]
+width_m = 14
+src = "地图量取"
+note = "外环廊西北端在西南石阶脚下收口"
+
+[[road]]
+name = "通城心斜甬道"
+path = [[118, 94], [132, 110], [140, 132], [142, 152]]
+width_m = 10
+src = "地图量取"
+note = "广场东南角带台阶的斜甬道，向南接大锻炉内环廊西北角（走向粗量）"
+
+[[water]]
+name = "西侧导水沟"
+path = [[40, 108], [70, 95], [92, 84]]
+width_m = 0.3
+depth_m = 0.1
+src = "推定"
+note = "墙根壁槽来水，放射状流进中央水池（示意一条，实际每隔几步一道）"
+
+[[water]]
+name = "东侧导水沟"
+path = [[150, 70], [128, 76], [106, 79]]
+width_m = 0.3
+depth_m = 0.1
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "秘法区广场地面"
+xy = [95, 88]
+size = [120, 55]
+h_m = 0
+rot = -42
+src = "地图量取"
+note = "青灰石板以水池为心同心铺开；浅穹岩顶约五六人高"
+
+[[block]]
+id = "b02"
+kind = "pool"
+face = "south"
+count = 1
+name = "中央螺纹水池"
+xy = [99, 80]
+size = [26, 26]
+h_m = 0.5
+src = "地图量取"
+note = "区图上的旋涡圈；深蓝灰石沿齐膝高，池底螺旋刻纹透冷蓝光；池面比地面低一级"
+
+[[block]]
+id = "b03"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "秘法大厅"
+bg = "bg205"
+xy = [65, 39]
+size = [72, 38]
+h_m = 0
+rot = 40
+src = "地图量取"
+note = "广场西北侧整面外墙；唯一门在东南头（约 92, 62），正对水池"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p180"
+face = "south"
+name = "西南宽石阶"
+xy = [58, 138]
+size = [40, 11]
+h_m = 1.6
+rot = 20
+src = "地图量取"
+note = "下接外环廊；顶端是锚点机位；比广场高八级（高差推定）"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p180"
+face = "south"
+name = "东缘窄石阶"
+xy = [166, 55]
+size = [10, 34]
+h_m = 3
+src = "地图量取"
+note = "区图东缘画作阶梯；向上没入暗处，去向区图不清"
+
+[[block]]
+id = "b06"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "西侧石室一"
+xy = [21.6, 93]
+size = [28.9, 23.5]
+h_m = 0
+src = "地图量取"
+
+[[block]]
+id = "b07"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "西侧石室二"
+xy = [28, 122.8]
+size = [27, 21.7]
+h_m = 0
+src = "地图量取"
+
+[[block]]
+id = "b08"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "大厅南侧石室"
+xy = [45.5, 79]
+size = [28, 22.6]
+h_m = 0
+src = "地图量取"
+note = "贴着秘法大厅西南墙；锚点机位看不到"
+
+[[block]]
+id = "b09"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "东侧药草铺面"
+xy = [150.6, 85.7]
+size = [30.7, 16.3]
+h_m = 0
+src = "推定"
+note = "石室外形地图量取；功能推定。门口成排小陶罐与干草药捆"
+
+[[block]]
+id = "b10"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "东侧书室"
+xy = [138.4, 106]
+size = [26, 22.6]
+h_m = 0
+src = "推定"
+note = "石室外形地图量取；功能推定。靠墙书架与石桌"
+
+[[block]]
+id = "b11"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "南侧石室"
+xy = [95, 128]
+size = [26, 21.6]
+h_m = 0
+src = "地图量取"
+
+[[block]]
+id = "b12"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "北侧石室一"
+xy = [115.5, 21.7]
+size = [39.7, 29]
+h_m = 0
+src = "地图量取"
+
+[[block]]
+id = "b13"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "北侧石室二"
+xy = [152.9, 19.9]
+size = [31.6, 25.3]
+h_m = 0
+src = "地图量取"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p183"
+face = "southeast"
+count = 5
+may_overlap = true
+name = "西北列八棱石柱与悬挂水盆"
+xy = [81.6, 73.1]
+size = [44, 3]
+h_m = 6
+rot = -42
+src = "推定"
+note = "五根八棱柱，柱间铁链吊石水盆（盆沿同心纹透冷蓝）"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p183"
+face = "northwest"
+count = 5
+may_overlap = true
+name = "东南列八棱石柱与悬挂水盆"
+xy = [108.4, 102.9]
+size = [44, 3]
+h_m = 6
+rot = -42
+src = "推定"
+note = "同西北列；两列沿长墙夹着水池"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg212-c1"
+eye = [87, 140]
+target = [87, 76]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

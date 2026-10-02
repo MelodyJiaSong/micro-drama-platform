@@ -1,0 +1,199 @@
+# 回音山矿洞 · 俯视布局的几何唯一出处
+#
+# 改布局 ＝ 改本文件重跑
+#   blender -b --factory-startup --python tools/build_scene.py -- "<本 scene 目录>"
+# **不手改 PNG、不手改 blocks.md、不拷引擎**（rule 4i ① / rule 4h ③/④）。
+#
+# 几何回指 `../bg3_回音山矿洞.md` 的「## 锁定描述符」字段 2「空间结构 + 方位」——
+# 那是原典方位契约。**方位关系可信、小数坐标一律 ⚠**（w02-V 裁定），所以本表只用方位与步距。
+#
+# `h_m` ＝ 体块高度（米），`kind` ＝ 用哪套构件建，`face` ＝ 正面朝哪（门与窗开在这一面）。
+# **未登记的 kind 直接 raise**；扎进山脊 / 块压块 / 坐在河道上同样在生成时 raise。
+
+[meta]
+bg = "bg3"
+name_zh = "回音山矿洞"
+size_m = [60, 56]
+px_per_m = 10.0
+interior = true
+slope_m = 0
+# 这里**没有**什么 —— 原本躺在注释里，够不着任何读者与负面词生成器（rule 4k）
+absent = [
+    "铁栅门",
+    "封死的矿口（4.0.3a，patch.082）",
+    "任何门扇",
+    "均匀补光（3 米以后必须黑到看不见细节）",
+]
+scale_src = "原典"
+scale_note = """
+⚠ **尺度取自卡里的原文量**：净宽约 2.2 m、净高约 2 m、总纵深约 35 m。
+这三个数是卡里写死的，**不是推的**；场地 60 × 56 m 只是给洞外留出余量。
+`interior = true` 让地面取平、不生成谷地缓坡。
+"""
+
+# ── 坑道 ──────────────────────────────────────────────────────────────
+# 卡里的纵深链：洞口（东南）→ 3 m 天光尽头 → 10 m 主巷 → 20 m 岔口（西出支巷）
+# → 35 m 尽端掌子面。净宽约 2.2 m、净高约 2 m（成人须略低头）；西侧支巷净宽约一人（0.9 m）。
+# ⚠ 本表把「洞口朝东南」简化成**朝南**——坑道走向是推定项（w02 §11 Q8：wiki 只有一句话），
+#   轴对齐能让净宽净高的量尺对得上，而方位靠 shot 的 `走位:` 行承载。已在 divergence 留痕。
+# ❌ 铁栅门 / 封死的矿口 ＝ 4.0.3a，整张作废（patch.082）。
+
+[[block]]
+name = "洞口"
+id = "b01"
+xy = [30, 44]
+size = [9, 6]
+h_m = 4.5
+kind = "mine_portal"
+src = "原典方位"
+note = "木框支撑，**敞开无门**。洞外碎石与废弃工具"
+
+[[block]]
+name = "洞外碎石坡"
+id = "b02"
+kind = "asset"
+asset = "p154"
+face = "south"
+count = 6
+xy = [30, 50]
+size = [14, 4]
+h_m = 1.4
+src = "原典方位"
+
+[[block]]
+name = "主巷"
+id = "b03"
+may_overlap = true
+xy = [30, 30]
+size = [22, 2.4]
+h_m = 2.1
+rot = 90
+kind = "tunnel"
+src = "原典方位"
+note = "木撑排架最密的一段；第一盏油灯在此现身。地面向深处微微下倾"
+
+[[block]]
+name = "岔口"
+id = "b04"
+xy = [30, 17]
+size = [5.5, 5.5]
+h_m = 2.4
+kind = "chamber"
+src = "原典方位"
+note = "约二十米处，向**西**分出一条约六米的短支巷"
+
+[[block]]
+name = "支巷"
+id = "b05"
+xy = [22, 17]
+size = [10, 0.9]
+h_m = 2.0
+kind = "tunnel"
+may_overlap = true
+src = "原典方位"
+note = "**净宽约一人**（0.9 m，成人只能侧身挤过）——ep01 S16 地形解依赖它：杜克堵巷口，苦力只能一只一只来。与 bg3 卡锁定描述符 #2、bg3-4 plate 同值"
+
+[[block]]
+name = "油灯壁龛"
+id = "b06"
+xy = [16.5, 17]
+size = [1.6, 1.2]
+h_m = 1.1
+kind = "crates"
+count = 2
+may_overlap = true
+src = "原典方位"
+note = "巷壁凿的浅壁龛，龛内一盏粗陶油灯（火苗小而稳）。灯具本体属 prop 层，此处只占位"
+
+[[block]]
+name = "掌子面过道"
+id = "b10"
+xy = [30, 13.375]
+size = [1.75, 3.6]
+h_m = 2.4
+rot = 90
+kind = "tunnel"
+may_overlap = true
+src = "推定"
+note = "岔口与尽端掌子面之间的短过道（2026-09-27 补：原先两个洞室之间是 1.75 m 实心岩，previz 里掌子面进不去）。宽 3.6 m，让岔口里的机位看得见掌子面"
+
+[[block]]
+name = "尽端掌子面"
+id = "b07"
+xy = [30, 8]
+size = [11, 9]
+h_m = 2.6
+kind = "chamber"
+src = "原典方位"
+note = "新凿岩面，狗头人的作业与宿营处，群烛"
+
+[[block]]
+name = "金矿脉"
+id = "b08"
+xy = [30, 4.4]
+size = [8, 0.6]
+h_m = 2.2
+kind = "ore_vein"
+count = 4
+may_overlap = true
+src = "原典方位"
+
+[[block]]
+name = "狗头人宿营"
+id = "b09"
+kind = "asset"
+asset = "p150"
+face = "south"
+count = 1
+xy = [34.0, 11.0]
+size = [3, 3]
+h_m = 2.0
+may_overlap = true
+src = "原典方位"
+note = "狗头人本体属 shot 层，不入背景板（rule 12.3 2026-07-03 (a)）。2026-09-27 挪到掌子面东南角、只留一顶：原先 7×5 占在洞室正中，唯一的入口一进来就撞进窝棚（ep01 S11 / S16 previz 实测人站进窝棚）"
+
+# ── 校验机位 ──────────────────────────────────────────────────────────
+
+[[anchor]]
+key = "bg3-1_洞口_山壁矿口"
+eye = [30, 53]
+target = [30, 44]
+eye_h = 1.6
+target_h = 2.4
+lens_mm = 35
+
+[[anchor]]
+key = "bg3-2_回望_逆光剪影"
+inside = true
+eye = [30, 34]
+target = [30, 48]
+eye_h = 1.6
+target_h = 2.2
+lens_mm = 28
+note = "站主巷口内回望洞口：唯一的亮面在身后，人是剪影"
+
+[[anchor]]
+key = "bg3-3_主巷_木撑纵深"
+inside = true
+eye = [30, 38]
+target = [30, 18]
+eye_h = 1.6
+target_h = 1.6
+lens_mm = 24
+
+[[anchor]]
+key = "bg3-4_支巷_油灯壁龛"
+eye = [27, 17]
+target = [17, 17]
+eye_h = 1.5
+target_h = 1.2
+lens_mm = 35
+
+[[anchor]]
+key = "bg3-5_尽端_掌子面群烛"
+eye = [30, 14]
+inside = true
+target = [30, 5]
+eye_h = 1.6
+target_h = 1.6
+lens_mm = 28

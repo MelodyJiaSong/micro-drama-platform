@@ -1,0 +1,232 @@
+# 亚米萨兰 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 换算：遗址中心 ＝ 坐标表 [43.6, 60.4] ≈ 区级平面图 (2611, 2412)；本场地原点 ≈ 区级 (2351, 2252)。1 区图 px ≈ 5.98 m。
+
+[meta]
+bg = "bg480"
+name_zh = "亚米萨兰"
+size_m = [440, 320]
+px_per_m = 3.5
+scale_src = "地图量取"
+scale_note = "点位按坐标表 [43.6, 60.4]；主干道（西约 220 m）与东界山墙（东约 150 m）的距离从原版区图裁切量取，1 px ≈ 6 m，精度约 ±30 m；遗址内部的柱列、残殿、小屋与碑的摆位为推定"
+# 世界树画面：海边草坡上的断柱废墟群，白石被海风蚀出凹坑，柱间飘着半透明的蓝色幽魂
+absent = [
+  "海滩 / 浪线 / 礁石（海在西面四百多米外，只作为松冠上的一条雾带出现）",
+  "河 / 溪 / 水潭（遗址周边没有水面，只有石缝积的雨水）",
+  "完整的屋顶 / 有人住的建筑 / 帐篷 / 营地",
+  "围墙与城门（遗址四面敞开，只有西坡一条土径）",
+  "半透明的幽魂 / 蓝色或绿色的幽光 / 发光符文 / 魔法阵（幽魂属 shot 层）",
+  "火 / 营火 / 火盆 / 烛火 / 灯笼 / 任何人工光源",
+  "阳光光柱 / 蓝天 / 硬边阴影",
+  "阔叶橡木林与暖金树冠 / 花田",
+  "雪 / 冰 / 霜",
+  "4.0.3a 之后的海啸冲毁痕迹与重建营地",
+  "人物 / 动物",
+]
+
+# ── 地形 ──
+[[ridge]]
+name = "东界山墙（褐黑岩壁）"
+poly = [[405, 0], [440, 0], [440, 320], [398, 320], [402, 240], [410, 160], [408, 80]]
+height_m = 250
+src = "地图量取"
+note = "区图裁切红十字以东约 150 m 起的褐色山影"
+
+[[ridge]]
+name = "林下碎石坡（东缘抬升段）"
+poly = [[352, 20], [408, 80], [410, 160], [402, 240], [398, 300], [352, 300]]
+height_m = 35
+src = "推定"
+note = "草坡东缘没入松林后，林下一路抬升成碎石坡直到岩脚"
+
+# ── 道路 ──
+[[road]]
+name = "南北主干道"
+path = [[40, 0], [34, 80], [30, 160], [34, 240], [42, 320]]
+width_m = 6
+src = "地图量取"
+note = "遗址中心以西约 220 m；台地比路高十几米"
+
+[[road]]
+name = "西坡土径（主干道 → 断柱列）"
+path = [[30, 190], [80, 186], [130, 176], [183, 162]]
+width_m = 2
+src = "推定"
+
+[[road]]
+name = "柱基窄土路"
+path = [[183, 112], [183, 208]]
+width_m = 1.5
+src = "推定"
+note = "贴着断柱列柱基踩出来的发白土路"
+
+# ── 遗址 ──
+[[block]]
+id = "b01"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "草坡空地（东高西低）"
+xy = [260, 160]
+size = [180, 150]
+h_m = 0
+src = "推定"
+note = "灰绿短草贴地，草皮下拱出方整白石铺地；东缘渐陡成碎石"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p419"
+face = "west"
+count = 7
+name = "断柱列（七根，南北向）"
+xy = [187, 160]
+size = [4, 88]
+h_m = 6
+src = "推定"
+note = "台地西缘坡顶；最高一根约三人高，最矮只剩齐膝柱墩"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p420"
+face = "west"
+name = "弧形残墙主殿"
+xy = [245, 118]
+size = [34, 24]
+h_m = 9
+src = "推定"
+note = "东北高处；向内弯的长弧墙 + 两扇尖拱门洞，无顶；墙内地面低一级"
+
+[[block]]
+id = "b04"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "殿前宽石阶（塌了一半）"
+xy = [224, 124]
+size = [8, 14]
+h_m = 2.2
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p420"
+face = "south"
+name = "西北塌顶小石屋（三面墙）"
+xy = [200, 100]
+size = [14, 12]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "南侧小屋墙基与门框"
+xy = [232, 220]
+size = [14, 10]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p419"
+face = "west"
+name = "古碑（北）"
+xy = [265, 94]
+size = [3, 2]
+h_m = 2
+src = "推定"
+note = "方石座 + 顶部弧形碑身，浮刻磨成浅痕"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p419"
+face = "west"
+name = "古碑（南）"
+xy = [280, 214]
+size = [3, 2]
+h_m = 2
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p416"
+face = "south"
+name = "倒伏柱段与卷叶纹柱头（相机位旁）"
+xy = [212, 226]
+size = [9, 1.8]
+h_m = 1
+rot = 12
+src = "推定"
+note = "锚点图相机站在它旁边朝北望"
+
+# ── 松林 ──
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p414"
+face = "south"
+count = 40
+name = "西坡松林"
+xy = [110, 160]
+size = [120, 300]
+h_m = 28
+src = "地图量取"
+note = "台地与主干道之间；越过它的冠顶可见西面雾海"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p414"
+face = "south"
+count = 40
+name = "东侧松林（贴山脚）"
+xy = [375, 160]
+size = [44, 280]
+h_m = 30
+rot = 0
+src = "地图量取"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p414"
+face = "south"
+count = 36
+name = "北侧松林"
+xy = [260, 42]
+size = [180, 50]
+h_m = 28
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p414"
+face = "south"
+count = 40
+name = "南侧松林（渐粗渐暗，接暮光谷）"
+xy = [260, 278]
+size = [180, 60]
+h_m = 30
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）：场地被体块占满，放在室内
+[[anchor]]
+key = "bg480-c1"
+eye = [220, 272]
+target = [220, 64]
+eye_h = 1.65
+lens_mm = 24
+inside = true
+note = "室内南端朝北；自动生成，排镜时按需改"

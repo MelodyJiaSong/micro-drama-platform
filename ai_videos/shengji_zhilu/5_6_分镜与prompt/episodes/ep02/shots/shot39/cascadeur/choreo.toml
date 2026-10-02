@@ -1,0 +1,55 @@
+# shot39 人体动作表（Cascadeur 层）。位置与朝向一律从 ../planning/overhead.toml 读，这里只写「身体摆成什么样」。
+# 改动作 ＝ 改本文件重跑 `python tools/cascadeur/choreo.py <shot 目录> --build`；部件都在共享库 tools/cascadeur/poses.toml。
+# 时刻与 shot39.md `动作:` 时间轴、overhead 的 [[hit]] / [[guard]] 逐拍对齐（rule 4h ②）。生成器：spawns/shots-d2/scratch/build_choreo2.py。四个人都是 Cascadeur 体（杜克的盾由钩子挂在左前臂上：跪着时垂在身侧，4.2s 站起来就把盾收到身前，不横在他和亚伦之间）。
+
+[meta]
+origin = [206, 133.4]
+fps = 30
+
+# 杜克：单膝跪着，0.8s 侧过身转向亚伦；4.2s 圣疗术落下，一口气站起来；6.5s 回头看亚伦；8s 转回身，盾一抬，迈一步
+[actor."杜克"]
+keys = [
+  [0, "kneel_r+arm_limp_l"],
+  [1.4, "kneel_r+arm_limp_l"],
+  [3.9, "kneel_r+arm_limp_l"],
+  [4.2, "stand+shield_guard"],
+  [6.4, "stand+shield_guard"],
+  [6.7, "stand+shield_guard+look_back_r"],
+  [7.9, "stand+shield_guard+look_back_r"],
+  [8.2, "stance_l+shield_guard"],
+  [9, "stance_l+shield_guard"],
+]
+
+# 亚伦：跪在杜克西侧；两手先悬在杜克胸口上发抖，1.4s 整掌压下去（技能卡 k208）；4.4s 光一收，低头看自己的两只手、身子一晃；5.4s 抬头说「来得及」
+[actor."亚伦"]
+keys = [
+  [0, "kneel_r+palms_up"],
+  [1.2, "kneel_r+palms_up"],
+  [1.4, "kneel_r+cover+hold_up_l"],
+  [4.3, "kneel_r+cover+hold_up_l"],
+  [4.6, "kneel_r+palms_up+look_down"],
+  [5.1, "kneel_r+palms_up+breathe"],
+  [5.4, "kneel_r+look_up"],
+  [6.5, "kneel_r+breathe"],
+  [9, "kneel_r+breathe"],
+]
+
+# 埃尔兰：2.6s 扭头要扑发光的亚伦，2.9s 斧枪杆被叉股别住，一直往回拽
+[actor."埃尔兰"]
+keys = [
+  [0, "stance_l+twohand_low"],
+  [2.6, "stance_l+twohand_low"],
+  [2.8, "lunge+twohand_sweep_a"],
+  [3, "lunge+twohand_tug"],
+  [9, "lunge+twohand_tug"],
+]
+
+# 沃尔特：挡在两人前面；2.8s 叉股卡住埃尔兰的斧枪杆中段，脚跟蹬地、身子前压，一直较着劲
+[actor."沃尔特"]
+keys = [
+  [0, "stance_l+twohand_low"],
+  [2.6, "stance_l+twohand_low"],
+  [2.8, "lunge+twohand_parry"],
+  [3, "lunge+twohand_chop"],
+  [9, "lunge+twohand_chop"],
+]

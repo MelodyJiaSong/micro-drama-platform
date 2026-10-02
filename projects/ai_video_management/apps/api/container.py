@@ -76,6 +76,10 @@ from libs.infrastructure.readers.perf_check__reader import PerfCheckPromptReader
 from libs.infrastructure.readers.performance_library__reader import PerformanceLibraryReader
 from libs.infrastructure.readers.shot_regen__reader import ShotRegenPromptReader
 from libs.infrastructure.readers.character__reader import CharacterReader
+from libs.infrastructure.readers.equipment_route__reader import EquipmentKeyRouter
+from libs.infrastructure.readers.prop_route__reader import PropKeyRouter
+from libs.infrastructure.readers.scene_registry__reader import SceneRegistryReader
+from libs.infrastructure.readers.scene_route__reader import SceneKeyRouter
 from libs.infrastructure.readers.tree__reader import TreeReader
 from libs.infrastructure.writers.actor__writer import ActorPool
 from libs.infrastructure.writers.bgm__writer import BgmPool
@@ -128,8 +132,11 @@ class Container(containers.DeclarativeContainer):
     file_writer: providers.Singleton[FileWriter] = providers.Singleton(
         FileWriter, exposed=exposed_tree, resolver=safe_resolver
     )
+    scene_registry_reader: providers.Singleton[SceneRegistryReader] = providers.Singleton(
+        SceneRegistryReader
+    )
     tree_reader: providers.Singleton[TreeReader] = providers.Singleton(
-        TreeReader, exposed=exposed_tree
+        TreeReader, exposed=exposed_tree, scene_registry=scene_registry_reader
     )
     media_renamer: providers.Singleton[MediaRenamer] = providers.Singleton(
         MediaRenamer, exposed=exposed_tree, resolver=safe_resolver
@@ -196,11 +203,17 @@ class Container(containers.DeclarativeContainer):
         resolver=safe_resolver,
         library=performance_library_reader,
     )
+    scene_key_router: providers.Singleton[SceneKeyRouter] = providers.Singleton(SceneKeyRouter)
+    prop_key_router: providers.Singleton[PropKeyRouter] = providers.Singleton(PropKeyRouter)
+    equipment_key_router: providers.Singleton[EquipmentKeyRouter] = providers.Singleton(EquipmentKeyRouter)
     downloads_importer: providers.Singleton[DownloadsImporter] = providers.Singleton(
         DownloadsImporter,
         exposed=exposed_tree,
         resolver=safe_resolver,
         renamer=media_renamer,
+        scene_router=scene_key_router,
+        prop_router=prop_key_router,
+        equipment_router=equipment_key_router,
     )
     actor_pool: providers.Singleton[ActorPool] = providers.Singleton(
         ActorPool, exposed=exposed_tree, resolver=safe_resolver

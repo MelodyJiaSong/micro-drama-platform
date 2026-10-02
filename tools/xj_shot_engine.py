@@ -18,6 +18,8 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+import seedance_kit
+
 REPO = Path(__file__).resolve().parent.parent
 DRAMA = REPO / "ai_videos" / "xianjian_yi"
 
@@ -353,6 +355,8 @@ def run(ep: str, shots: tuple[Shot, ...], argv: list[str] | None = None) -> int:
     if args.check:
         return 0
 
+    paths = [ep_dir / "shots" / f"shot{s.n:02d}" / f"shot{s.n:02d}.md" for s in shots]
+    before = {p: (p.read_bytes() if p.is_file() else None) for p in paths}
     for s in shots:
         d = ep_dir / "shots" / f"shot{s.n:02d}"
         d.mkdir(parents=True, exist_ok=True)
@@ -366,4 +370,5 @@ def run(ep: str, shots: tuple[Shot, ...], argv: list[str] | None = None) -> int:
     dlg.parent.mkdir(parents=True, exist_ok=True)
     dlg.write_text(dialogue_doc(ep, shots), encoding="utf-8")
     print(f"已写出 {len(shots)} 个 shot 文件 + all_shot_prompts.md + 4_剧本/dialogue.md → {ep_dir.parent}")
+    seedance_kit.after_write(before)
     return 0

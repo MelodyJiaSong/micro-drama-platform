@@ -17,11 +17,12 @@ import {
   mediaUrl,
 } from "../api";
 import { extractDramas, findAssetDir, type DramaChoice } from "../lib/dramas";
+import { CHARACTER_DIR_RE } from "../lib/characterDir";
 import { announceToast } from "../lib/announce";
 import { ApiError, type TreeNode } from "../types";
 
 const IMAGE_EXTS = [".png", ".jpg", ".jpeg", ".webp"];
-const CHAR_DIR_RE = /^c\d+(?:_.*)?$/;
+const CHAR_DIR_RE = CHARACTER_DIR_RE;
 
 interface CharacterTile {
   folder: string; // e.g. "c1_裴知秋"

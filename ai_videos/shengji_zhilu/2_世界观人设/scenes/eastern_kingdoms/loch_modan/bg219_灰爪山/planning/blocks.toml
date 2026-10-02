@@ -1,0 +1,194 @@
+# 灰爪山 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 地形取自区级平面图 bg214 的 terrain.toml（区图量取）平移到本场地：本地坐标 ＝ 区坐标 − (860, 988)。
+# 林中细节（爪痕老松 / 倒松 / 岩块 / 白桦带）区图不画，全部推定，与锚点 prompt 一一对应。
+
+[meta]
+bg = "bg219"
+name_zh = "灰爪山"
+size_m = [600, 480]
+px_per_m = 2.5
+grid_m = 50
+scale_src = "地图量取"
+scale_note = "按区级平面图换算（区图 x% × 25.222 m、y% × 16.821 m）截取以坐标 [46, 73] 为中心的 600 × 480 m；原点 ＝ 区坐标 (860, 988)"
+# 世界树画面：南岸一道长满松林的缓岭，林下是厚厚的松针与倒木，常能看到熊与山猫在坡上活动
+absent = [
+    "任何建筑、木屋、帐篷、围栏（猎人木屋是东岸的 bg217，不在本岭）",
+    "伐木桩、营火、火堆与任何人工光源",
+    "尖锐岩脊与需要攀爬的陡崖（岭顶是缓圆的松林线）",
+    "阔叶硬木林与秋色落叶（本区只有松与白桦）",
+    "积雪与雪线（残雪只在西侧两条山口）",
+    "熊、山猫与任何动物（属 shot 层）",
+    "排干的湖床与裸露泥滩（4.0.3 才有；旧世湖是满的）",
+    "石阶、路牌、栏杆等修整过的步道设施",
+]
+
+[[ridge]]
+name = "灰爪山松林岭（南界山墙伸出的缓山肩）"
+poly = [[0, 300], [90, 228], [180, 212], [300, 196], [420, 226], [520, 250], [600, 262], [600, 480], [0, 480]]
+height_m = 160
+src = "地图量取"
+
+[[ridge]]
+name = "镇南低草丘（东坡）"
+poly = [[0, 0], [170, 0], [178, 30], [150, 120], [60, 186], [0, 200]]
+height_m = 110
+src = "地图量取"
+
+[[water]]
+name = "湖南湾末端"
+path = [[440, 0], [470, 80]]
+width_m = 170
+depth_m = 20
+src = "地图量取"
+
+[[water]]
+name = "湖南尖"
+path = [[470, 80], [492, 150]]
+width_m = 70
+depth_m = 8
+src = "地图量取"
+
+[[road]]
+name = "翻岭南去的虚线小径（湖南尖西侧草谷 → 东缘鞍部 → 南界山）"
+path = [[401, 206], [338, 273], [325, 357], [335, 480]]
+width_m = 1
+src = "地图量取"
+
+[[block]]
+id = "b01"
+into_ridge = true
+kind = "asset"
+asset = "p221"
+face = "south"
+count = 48
+name = "北坡密松林"
+xy = [300, 370]
+size = [520, 190]
+h_m = 25
+src = "原典方位"
+note = "世界树：长满松林的缓岭；林带范围推定为岭体北坡到岭顶"
+
+[[block]]
+id = "b02"
+into_ridge = true
+kind = "asset"
+asset = "p204"
+face = "south"
+count = 24
+name = "林缘白桦带"
+xy = [290, 222]
+size = [340, 24]
+h_m = 15
+rot = -3
+src = "推定"
+note = "松林下缘掺进的几棵白桦（区级卡：本区松 + 白桦混生）"
+
+[[block]]
+id = "b03"
+into_ridge = true
+kind = "asset"
+asset = "p221"
+face = "southwest"
+name = "带旧爪痕的老松（机位左前景）"
+xy = [292, 268]
+size = [3, 3]
+h_m = 28
+src = "推定"
+note = "齐胸高四道平行旧爪痕；默认机位在它右后方约 4 m、朝北偏东"
+
+[[block]]
+id = "b04"
+may_overlap = true
+into_ridge = true
+kind = "asset"
+asset = "p206"
+face = "south"
+name = "交叠倒松·翻根盘的那根"
+xy = [312, 246]
+size = [24, 5]
+h_m = 3
+rot = 30
+src = "推定"
+note = "根盘翻起立成土墙，在东头"
+
+[[block]]
+id = "b05"
+may_overlap = true
+into_ridge = true
+kind = "asset"
+asset = "p206"
+face = "north"
+name = "交叠倒松·朽断口的那根"
+xy = [318, 250]
+size = [20, 3]
+h_m = 1.2
+rot = -20
+src = "推定"
+note = "断口朽成海绵状、苔与白色菌褶"
+
+[[block]]
+id = "b06"
+may_overlap = true
+into_ridge = true
+kind = "asset"
+asset = "p206"
+face = "south"
+name = "交叠倒松·压在最上的那根"
+xy = [306, 252]
+size = [18, 2]
+h_m = 1.8
+rot = 70
+src = "推定"
+
+[[block]]
+id = "b07"
+may_overlap = true
+into_ridge = true
+kind = "asset"
+asset = "p205"
+face = "south"
+name = "地衣花岗岩露头"
+xy = [260, 290]
+size = [8, 6]
+h_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b08"
+over_water = true
+kind = "lawn"
+face = "south"
+count = 1
+may_overlap = true
+name = "坡脚黄绿草谷"
+xy = [320, 155]
+size = [150, 80]
+h_m = 0
+src = "地图量取"
+note = "区图上湖南尖西侧的绿地"
+
+[[block]]
+id = "b09"
+over_water = true
+kind = "lawn"
+face = "south"
+count = 1
+may_overlap = true
+name = "湖南尖外湿草滩"
+xy = [500, 188]
+size = [70, 36]
+h_m = 0
+src = "推定"
+note = "区级卡：尖角外是一片湿润的草滩"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg219-c1"
+eye = [300, 38]
+target = [300, 240]
+eye_h = 20.0
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

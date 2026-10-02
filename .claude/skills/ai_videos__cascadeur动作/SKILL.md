@@ -49,6 +49,18 @@ description: 用 Claude 驱动 Cascadeur（2026.2.x）做 AI 短剧的人物动�
 - **求值异步、只算可视范围**（2026-09-06，耗掉半天的坑）：`set_anim_size` 扩出来的帧在 `set_visible_range` 之前**不求值**，`gpos` 读到的全是最后一个可视帧的姿态（整段第二幕曾僵成第一幕末姿势，只有键帧本身对）。扩长后立刻 `set_visible_range(0, last)`；读非键帧前先 `goto` 扫几帧 + sleep 5 s，再读两遍确认稳定。扩展区间里 BEZIER 段曾整段平直，先设 LINEAR 让求值可靠、finish 再换 BEZIER。
 - **菜单工具的脚本入口**：AutoPosing / AutoPhysics / Motion Generation / Unbaking / Retargeting 没有直接 API 函数，但有 **action id**（见 §4.2），`app.get_action_manager().call_action(id)`；需要与 GUI 相同的选区/区间前置状态；**本仓库尚未实测**。
 
+- **镜头人体动作的现成链路**（2026-09-26，shengji_zhilu ep01 shot02，follow-up 032）：`shots/shotNN/cascadeur/choreo.toml` 只写姿态部件与逐拍时刻，
+  位置与朝向读 `planning/overhead.toml`；`python tools/cascadeur/choreo.py <shot 目录> --build` 逐角色 reload Cascy → `tools/cascadeur/casc_fk.py`
+  按关节角摆全身 IK 点（肘先于肩、膝先于髋、四肢先于躯干前倾，再整体偏航 + 贴地）→ 设插值 → 导 FBX 到 ASCII 临时目录再拷回。
+  previz 引擎 `[[角色]].模型` 导入、NLA 按帧率重定时、逐帧贴地；手持物件在每镜 `previz/shotNN_previz.py` 钩子里逐帧挂。
+- **共享姿势库 `tools/cascadeur/poses.toml`**（2026-09-26）：站 / 走 / 跑 / 跪 / 架势 / 双手长柄武器 / 左臂挎盾 / 通用上身部件，镜头的 `choreo.toml` 只写逐拍用哪些部件；本镜独有的部件写进镜头自己的 [parts]，**与库重名 choreo.py 直接拦**。新部件先截静帧看过再入库。
+- **Cascy 坐标实测**：静止姿态面朝 +Z、左手在 +X；导出 FBX 单位 cm，Blender 导入后骨架 scale 0.01，
+  Blender (X, Y, Z) ＝ (cx, −cz, cy) / 100——所以取 `cx = (x − ox)·100、cz = (y − oy)·100` 就正好落在平面图 (x 东, y 南) 的 previz 坐标上；
+  Cascadeur 帧 0–840 → Blender action 1–841（30 fps）。**前臂骨 `forearm_l` 的 −Z ＝ 手背方向**：盾面法线用它，姿势怎么变都不会翻。双手长柄（斧 / 锤）＝ 两只手 `hand_* − forearm_*` 的平均指向、握点在两手中间（shot20 实测：举斧、劈下、拽斧都跟着姿势走，不用逐拍写俯仰表）。
+- **分批投递时静止姿态只能读一次**：第二批起第 0 帧早已摆过姿势，再 `gpos(n, 0)` 当静止姿态会让后面每个键都叠在转过向的底子上
+  （实测：13.8 s 起杜克整个人朝反）。`casc_fk` 在载入后把静止姿态写缓存，后续批次读缓存。
+- **窗口最小化时截图不落盘，而 ShowWindow 不一定还原得了**（用户那边有意最小化时）：验姿态改走「Blender 导入 FBX 渲静帧」，不必动用户的窗口。
+
 ## 3. 工作纪律（用户裁定，违反会空转一轮反馈）
 
 1. **调试只看截图**：改姿态只重跑对应 STAGE（~5 s）+ 单帧截图核对；不出 mp4、不导 FBX、不碰 Blender，全部关键帧确认后才全渲。

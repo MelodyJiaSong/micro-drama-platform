@@ -791,3 +791,153 @@ Auto-updated:
 - ai_videos/.../_blender/city_plan.md §8.2 — 汴河 leg `s1` 11600 → 11850（未缩尺），覆盖 shot01 门外 320 m 的起飞点
 
 No conflicts found in: shot01 航线与四项闸门（本次未动机位）；shot02（其航段在城内，不经关厢）
+
+## Follow-up 024 — 2026-09-19 19:30:00
+Source: user_input/follow_ups/202609.md - section 024
+Summary: 按声画接缝重排 shot01 航线并钉死 shot02 缝后 70 m；城门加高加重檐；关厢改共墙连排。
+
+Auto-updated:
+- ai_videos/.../shot01/previz_config.toml — 航线在里程中点 1272 m 截断；进场改「先 15 m 平飞、最后 145 m 俯冲」（原 profile 中段只剩 9 m，实测穿过关厢屋顶，净空 0.0 m）；末段 25→16 m 落平
+- ai_videos/.../shot02/previz_config.toml — 新增接缝续飞关键帧（缝后 70 m 直线平飞）；首段 `停留` 0.95→1.0 与全片同速
+- ai_videos/.../shot01/shot01.md、shot02.md — 新增「声画接缝」与「接缝选址」两节
+- tools/build_bianjing.py — `b_water_gate()` 加 `B_20_plinth`（城台高出城墙 3.6 m）+ 重檐两层楼身 + 垛口；`build_suburbs()` 重写为共墙连排街面（密度随离城门距离衰减、建到护龙河外岸）
+- ai_videos/.../_blender/city_plan.md §8.2 — 走廊 s1 11600→11850（原走廊止于门外 288 m，而 shot01 起飞点在门外 320 m，开镜那段在走廊外、什么都没建）
+- .claude/agent_refs/project/ai_video.md — rule 4h §B 新增第 5 条（两条 clip 拼一镜到底的接缝设计法）
+
+闸门（从相机回读）：shot01 净空 3.9 m · 侧向 0.56 g · 34–45 m/s · 折返 0；shot02 41–44 m/s · 侧向 0.72 g · 折返 0。
+接缝：位置一帧之差 · 44.8→43.5 m/s · 航向 97.9°→97.7° · 垂直速率 0.00/0.00 · 24mm/24mm。
+
+No conflicts found in: shot02 后段（相国寺/御街段未动，仅由求解器按新里程重配时间）
+
+## Follow-up 025 — 2026-09-20 08:30:00
+Source: user_input/follow_ups/202609.md - section 025
+Summary: 自主完成 shot01 收尾并把同一标准推到全 36 镜；修 3 个系统性 bug。
+
+Auto-updated:
+- tools/build_bianjing.py — ① `camera_keepouts()`：城层按各镜相机低空段挖 keep-out 管（rule 4g ④ 机器化）；② `b_guanxiang()` + Place B 方块 29：门外关厢由 B 自建（城层不得进 Place 足迹）；③ `verify_camera(backward=)` + `[全局] 倒飞`：倒飞镜按反向速度量视线；④ `check_world_scale()`：手写世界坐标落在城外 2 km 以上即 raise（CITY_SCALE 入口校验）
+- ai_videos/.../_blender/city_plan.md — 新增 Place B 方块 29「关厢街面」；§8.2 汴河 leg s1 延到门外 415 m
+- ai_videos/.../shots/shot35/previz_config.toml — 手写世界坐标按 CITY_SCALE 折半（航线由 2277 m 还原为 171 m、114 m/s → 13 m/s）；逐帧生成 + smoothstep 收尾（悬停改用速度曲线表达）；声明 `倒飞 = true`
+- ai_videos/.../shots/shot01/shot01.md — `镜头:`/`动作:` 时间轴按当前航线重写
+- ai_videos/.../shots/shot0{1,2}/shot0*_look.mp4 — 彩色成片 v5（各 30.000 s）
+- ai_videos/.../scenes/bianjing/_blender/sets/ — 9 个套景 blend（12 个 shot 此前因缺套景无法建 previz）
+- CLAUDE.md — 新增「改全局常数时手写副本不会跟着改，要在读入时判掉」
+- .claude/agent_refs/project/ai_video.md — rule 4h §B 新增第 5、6 条（相机 keep-out / Place 足迹归属；悬停·倒飞·折线磨圆三条机位契约）
+
+已知遗留（未改，已记档）：shot03/05/11/32 的通用引擎报「基准主体占画高 1.7% vs 目标 50%」——
+实测相机离主体 2.0–2.9 m、50mm，取景本身正确；`基准主体` 指向的是小道具「胸口标记」而非人物，
+是**度量管线**把道具的画高比去对人物尺度的目标，属引擎侧待修，非画面缺陷。
+
+No conflicts found in: shot02 承接关系（首帧＝shot01 末帧，逐值一致）
+
+## Follow-up 026 — 2026-09-20 01:10:00
+Source: user_input/follow_ups/202609.md - section 026
+Summary: 新增「出片前先出 floor plan 对账」工序 + `tools/shot_floorplan.py`；
+第一版图即查出航线与 prompt 所写的「贴汴河飞」互相矛盾。
+
+Auto-updated:
+- tools/previz/city_layout.py（新增）— 从 `build_bianjing.py` 拆出 W11 §2.8 的解析与
+  `CITY_SCALE` 缩放。拆的理由是 `build_bianjing.py` 顶上就 `import bpy`、只能在 Blender 里跑，
+  而俯视图要在普通 Python 里一秒出图；把尺度抄第二份正是 CLAUDE.md「一个名字只有一处定义」
+  点名的坑——**尺度漂了不会报错，只会让图上的城市与航线错位，而且看上去毫无破绽**
+- tools/build_bianjing.py — 改为 import 该模块（`CITY_SCALE` / `read_w11` / `CityLayoutError`），
+  删掉原处的 `CITY_SCALE` / `SCALE_NUDGE` / `_SCALE_XY` / `_SCALE_PTS` / `scale_w11` 与
+  `load_w11` 的解析前半段；`load_w11` 的 Place/FRAMES 逻辑原样保留
+- tools/shot_floorplan.py（新增）— 读 `previz_config.toml` 的 `[[机位]]` + W11，
+  用 Pillow（已是 pyproject 里的依赖，不引 matplotlib）出俯视图 + 高度剖面 + 航点表。
+  地图画在独立画布再贴入（城墙多边形远伸出框，直接画会盖住剖面条）；
+  城门/地标标签按「离航点圆圈最远的一侧」自动避让
+- ai_videos/…/shots/shot01/planning/（新增）— `shot01_floorplan.png` + `shot01_route.md`
+  + `README.md`（目录用途、重跑命令、当前航线的问题与三条候选改法）
+
+验证：
+- `python tools/shot_floorplan.py <shot01>` 约 1 秒出图；`build_bianjing.py` 语法通过，
+  `read_w11()` 在普通 Python 下读出 37 门 / 5 河 / CITY_SCALE=0.5
+- 航线与河道的距离由脚本算出，非目测：①150 m ②2 m ③96 m ④318 m ⑤205 m
+
+未做（等用户定）：航线本身一行未改。三条候选——① 航线改为沿河偏置折线（R120–180 过渡，
+需重核 1.2 g 侧向上限）② 改 prompt 承认这是掠屋顶穿门切城区的航线 ③ 0–11s 贴河、
+11–30s 明确转城区并分段写 prompt。推荐 ① 或 ③（汴河是本集视觉主线，
+`bg3_汴河码头` 参考图按「河在画面里」画的）。
+
+No conflicts found in: 其余 shot（本轮只碰 shot01 的 planning/，未改任何 shot 的几何与 prompt）
+
+## Follow-up 027 — 2026-09-20 02:00:00
+Source: user_input/follow_ups/202609.md - section 027
+Summary: 方块标 bg 归属；新增 `--city` 全城 bg 分布图。
+
+Auto-updated:
+- tools/shot_floorplan.py — `blocks.toml` 支持 `bg` 键，方块标签渲染成 `bg3 仓廒长排·仓前码头`，
+  无 bg 的块显式打「无专属 bg」；新增 `--city` 模式（无航线、无箭头、无高度剖面），
+  读 `bg_anchors.toml` + W11 出全城图；同点位的多个主体自动合成一个点一条标签
+  （州桥 bg4/bg9/bg17 三卡同点，分开画只会叠成糊的一团）；
+  地图与底部说明条各自画布再拼，避免说明条压掉比例尺与最外侧的虹桥点
+- ai_videos/…/scenes/bianjing/bg_anchors.toml（新增）— 18 个 bg 的点位声明。
+  **一个坐标都不写**，只声明挂在 W11 §2.8 的哪一条（gate / landmark / river_offset），
+  由脚本解析；全城坐标的唯一出处仍是 W11（rule 4i ①）
+- ai_videos/…/scenes/bianjing/{bianjing_bg_floorplan.png, bg_index.md}（新增）— 全城图 + 索引表
+- ai_videos/…/shots/shot01/planning/blocks.toml — 7 个方块补 `bg` 归属，
+  新增 `[[offmap]]` 虹桥（bg1，离本镜取景框 2.0 km，只在需要时提示）
+- 两处 README 互指
+
+覆盖率：18 个 bg **标出 12 个**；未标的 6 个逐条写明原因并印在图上——
+bg0/bg16 是全城俯瞰本身没有单点、bg8 卡只写「从城门方向伸出」没说哪座门、
+bg10 赵太丞家 W11 无对应条目、bg14 是 bg7-2 那间客房的夜态内景、bg15 未指名是哪座园池。
+**把「漏标」与「本来就没有点位」分开**，否则每看一次图都要再问一遍。
+
+同理，shot01 的 `关厢屋舍（南/北岸）`、`城内街区`、`城内河街铺面` 三块**确实没有主体卡**，
+出图只能借 bg0 全城航拍的长相。要不要补卡是独立决定，本轮没做。
+
+No conflicts found in: 航线与 shot prompt（本轮只加标注，几何一行未改）
+
+## Follow-up 028 — 2026-09-22
+Source: user_input/follow_ups/202609.md - section 028
+Summary: 航线图上「无专属 bg」的建筑补齐成五张主体卡（卡＋图＋3D），航线按「贴河穿门 + 城区大弧」
+重排并与 prompt 对齐，每个 bg 补一份 3D 体块集，图与工具改名 flight plan / ground plan。
+
+Auto-updated:
+- tools/gen_route_sk1.py（新增）— **航线生成器**：航点表（沿河第几米 / 偏哪一岸 / 多快 / 多高）
+  → 逐帧 `[[机位]]`。弦长参数化样条 + 等距低通（判据是**逐帧产物**上的侧向加速度）+ 速度剖面积分配时间；
+  闸门不过不写盘：侧向 ≤1.15 g、切向、速度区间、穿门走廊与高度、贴河段离河距离、视线偏航向、
+  实测走廊 `corridor` / 高度下限 `alt_floor`、交接帧位置与航向逐值相等、末帧速度自动解到 44.8 m/s
+- tools/previz/curves.py（新增）— `mono_hermite` / `curve_lateral` / `resample` / `low_pass` /
+  `low_pass_pinned` 从 `build_bianjing.py` 提出来共用（生成端与渲染端必须用同一套判据）
+- tools/build_bianjing.py — 改为从 `tools/previz/curves` 导入上述两个函数（删本地副本）
+- tools/shot_floorplan.py → **tools/shot_plan.py** — 改名 + `--kind flight|ground`
+  （产物 `shotNN_flightplan.png` / `_groundplan.png`）+ **新增 `--coverage`**（逐帧视锥：
+  每个 W11 条目入画多少秒、最近多少米、有没有主体卡）；全城图产物改名 `{world}_bg_map.png`；
+  `river_offset` 支持负值（＝门外下行），门洞判据改为「垂直航向的错开量」且覆盖整段穿门走廊
+- tools/build_bg_sets_sk1.py（新增）— **每个 bg 一份 3D**：21 份 `bg{N}_set.blend` + `.glb`
+  （6–55 个 object），bg0 / bg16 落 `.link.json` 指向全城 blend；`--check` 不开 Blender 就能核对
+- ai_videos/…/scenes/bianjing/{bg18_繁塔, bg19_东水门外关厢, bg20_城内汴河河街, bg21_迎祥池,
+  bg22_里城东墙门}（新增五张主体卡）— 每张含 description / 锁定描述符 / 形制词对账（挂 fact_id）/
+  验收清单 / 图 prompt（1360–1532 字，look 层由 `gen_scene_prompts_sk1.py` 盖章）/ 专属负向块；
+  五张图已出（`bg{N}-1.png`，ELEVENLabs flows + gpt-image-2，16:9 2K）
+- tools/gen_scene_prompts_sk1.py — LOOK 表补五个键（卯/辰时低空、GoT 影调、aerial）
+- ai_videos/…/scenes/bianjing/bg_anchors.toml — 五个 `[[todo]]` 转正为 `[[bg]]`（17/23 有点位）；
+  新增 `bg23 保康门` / `bg24 铁塔` 两条 todo（按新航线重算的入画数据）
+- ai_videos/…/scenes/bianjing/{bg_index.md, bianjing_bg_map.png} — 重出
+- ai_videos/…/shots/shot01/previz_config.toml — 750 帧机位全部由生成器重出
+- ai_videos/…/shots/shot01/shot01.md — `情节:` / `镜头:` / `动作:` / `节奏:` / 空间核验 / 接缝一节
+  按新航线重写；`参考:` 补 bg19-1 / bg20-1（裸 `=>@`）
+- ai_videos/…/shots/shot01/{shot01_previz.blend, shot01_previz.mp4} — 重建 + 重渲（PREVIZ OK）
+- ai_videos/…/scenes/bianjing/_blender/bianjing.blend — 按新航线重建（`camera_keepouts()` 让路）
+- ai_videos/…/shots/shot01/planning/{README.md, blocks.toml, shot01_flightplan.png,
+  shot01_route.md, shot01_coverage.md} — 重出；旧 `shot01_floorplan.png` 已删
+- CLAUDE.md / .claude/agent_refs/project/ai_video.md rule 4j / 两个 stage playbook —
+  改名 flight plan / ground plan、航线生成器与覆盖表、**每个 bg 一份 3D** 的契约
+
+新航线（v2）：全程 1177 m / 30 s、均速 39.2 m/s、峰值侧向 1.03 g、速度 22–54 m/s。
+0–8 s 贴汴河水面（离中线 14 → 3 m）减速俯冲穿东水门（贴水 3.6 m、离门楣 4.2 m）；
+8–30 s 一整段 R=695 m 相切大弧转上城区，码头在画右 130 m、繁塔在画左天际线，末段平飞交接 shot02。
+**交接帧逐值未动**（位置 / 航向 97.9° / 24 mm；末帧速度自动解到 44.6 m/s），所以 shot02 一行没改。
+
+代价与已知偏差（写明）：
+- 仓前码头从「沿北岸贴身掠过」变成「画右 130 m 外的中景」——换来的是一镜到底真的飞得动
+  （回河再出去要在 40–60 m 内连转两次，实测 2.4–3.3 g）。
+- 门区速度降到 22 m/s（原 34），因为「40 m 内完成 13→3.6→9 m 的俯冲拉起」在 30 m/s 上是 2 g 起步。
+- 侧向峰值 1.03 g > 原定 1.0 g 的软目标，仍在 build_bianjing 的 1.2 g 硬线内；切向 9.7 m/s²
+  全部落在门前刹车与出洞加速上。
+- `城内街区` 仍无主体卡：它是生成式城内肌理、不是一个主体（有意为之，已写进 blocks.toml）。
+
+No conflicts found in: shot02（交接帧未动）、bg0–bg17 既有卡（look 层只重新盖章、内容层未改）、
+其余 shot 的 previz（本轮只动 shot01）

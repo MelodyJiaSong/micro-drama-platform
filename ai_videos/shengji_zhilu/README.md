@@ -24,12 +24,13 @@
 |---|---|---|
 | **0 设定考据** | `0_research/` | ✅ **1857 条事实**（`ai_read` 1744）· 20 路调研 + 13 路地理测绘 |
 | **1 立项** | `1_立项/concept.md` | ✅ 70 条创作裁定 + **G 组（G1–G9，剧集化转向，优先于其余条目）**；旧 20 集骨架暂停 |
-| **2 世界观人设** | `2_世界观人设/` | ✅ **24 张卡** + casting + 人物网 |
+| **2 世界观人设** | `2_世界观人设/` | ✅ **26 张卡**（含 follow-up 032 新建的 `m7_Wolf` 野狼、`m8_Northshire_Guard` 门卫）+ casting + 人物网 |
 | **2a 全图场景** | `2_世界观人设/scenes/{大陆}/{区}/bg{N}_*/` | 🔸 **两片大陆 49 区 · 804 个 bg**（编号唯一出处 `scenes/registry.toml`，总表 `scenes/scenes_index.md`）；每个 bg 一张锚点级主体卡 + 原版区图 ref + 场地平面图（rule 4k），bg1–3 / 17–22 是 v3 五 plate 档；写卡工作流进行中 |
 | **2b 场景图 + 3D 层** | 场景图 `bg*/{目录}.png` + plate 图；`bg*/_blender/{bg}.blend`；物件 `2_世界观人设/props/p{N}_{名}/`（编号 `props/registry.toml`） | 🔸 **ep01 的 9 个场景齐了**：41 张场景图（9 锚点 + 32 plate，全 16:9，挂场景主要物件的 prop 正面图作参考）、9 份 blend（场景图挂同名机位相机背景 + prompt 文本块 + 单物体 GLB，占位 0）；**GLB 只装单个物体**；各区资产库已并进 props（462 → 449 件，p15–p463），场景只引用；其余 795 个 bg 还没出图 |
+| **2c 装备** | `2_世界观人设/equipment/{C}_{分类}/{C}{S}_{槽位}/e{C}{S}{NN}_{品质}_{名}/`（键即路径：`e5103` ＝ `5_近战武器/51_主手/` 第 03 件） | 🔸 **第四类资产**（rule 4m，follow-up 021–023）：兵器 / 盾 / 甲胄一律是装备卡，按槽位分目录、按 1.12 品质六档分档（做工逐档递进）；**370 件**（灰 66 · 白 70 · 绿 75 · 蓝 80 · 紫 72 · 橙 7），按魔兽分类放在 `equipment/{1_布甲,2_皮甲,3_锁甲,4_板甲,5_近战武器,6_法系与远程}/{C}{S}_{槽位}/`（follow-up 024；每类每档 ≥10，板甲灰档 1.12 全库只有 8 件）：图鉴 + 亚伦 / 杜克 1–60 级路线（两人各 16–17 个阶段，同检查点撞衫 ≤1 件）+ 光铸 / 勇气 T0 + 1.12 全部可得橙装 + D18 骰点件；**灰白绿不发光，蓝紫橙必须带本档颜色的特效光**（follow-up 027）；装备表 `equipment/loadouts/{角色}.md`（空槽反向声明由它自动进 shot）；三视图：蓝档以上的武器走 ElevenLabs、其余即梦（follow-up 027 / 029）；总表 `equipment/equipment_index.md` |
 | **3 分集大纲** | `3_大纲/arc_outline.md` | ⏸ v3 暂停使用：旧 ep01–03 已并入新 ep01，ep02+ 按第一集反馈重排 |
-| **4 文学剧本** | `4_剧本/episodes/epNN/` | 🔸 **ep01 *Buy Me Three*（撑三下）**：27 镜 / 652s，英文台词 + 中文意思，逐窗念白闸门与「新地方先给景」闸门全过；两轮审查已落地 blocker / major |
-| **5/6 分镜与 prompt** | `5_6_分镜与prompt/episodes/epNN/` | 🔸 **ep01 已出**：27 个 `shotNN.md`（Seedance 五层 prompt + 英文配音块）+ `shotlist.md`（含切口审计）+ `all_shot_prompts.md`；生成器 `tools/gen_shots_szzl_ep01.py`（引擎 `tools/szzl_shot_engine.py`）。**previz 未做**（等北郡 blend 定稿）；阶段 5 五道审查未跑 |
+| **4 文学剧本** | `4_剧本/episodes/epNN/` | 🔸 **ep01 *Buy Me Time*（替我拖住）**：25 镜 / 657s，英文台词 + 中文意思，逐窗念白闸门与「新地方先给景」闸门全过；两轮审查已落地 blocker / major；跨镜伤与状态登记在 `states.toml`（follow-up 034） |
+| **5/6 分镜与 prompt** | `5_6_分镜与prompt/episodes/epNN/` | 🔸 **ep01 已出**：24 个 `shotNN.md`（Seedance 五层 prompt + 英文配音块）+ `shotlist.md`（含切口审计）+ `all_shot_prompts.md`；生成器 `tools/gen_shots_szzl_ep01.py`（引擎 `tools/szzl_shot_engine.py`），build 时跑平面图物理闸门与上下文逻辑闸门（`tools/beat_logic.py`）。previz：12 镜要做，全部过静帧审阅与自检；**shot02 / shot21 人体由 Cascadeur 出**（`shots/shotNN/cascadeur/choreo.toml` → FBX，盾 / 锤 / 斧 / 狼 / 光在 previz 钩子里挂），其余用色块人偶；超 15 s 自动切成两段上传；阶段 5 五道审查未跑 |
 
 ### 几何与台词的两道生成时闸门（**不合格就生成不出产物**）
 
@@ -37,9 +38,11 @@
 |---|---|
 | `blender -b --factory-startup --python tools/build_scene.py -- --all "<scenes 目录>"` | 场景几何：未登记的 `kind` / 块扎进山脊 / 块压块 / 块坐在河道上 / 机位埋在体块内部 |
 | `python tools/script_tools.py check 4_剧本` | 台词：中文 ≤5 字/秒、英文 ≤3 词/秒，**逐时间窗核**（行尾【a–bs】）· 每镜 3–30s 且避开 4–6s 碎镜 · 单集区间读 `4_剧本/script.toml`（本剧 540–660s）· 新地方第一次出现须有 `场景展示`（新区 ≥12s / 新地点 ≥6s）· 禁古语与伪古英语 |
-| `python tools/gen_shots_szzl_ep01.py` | 分镜与 prompt：切口比值（K31）· 共用串不点名光源（K32）· 镜内自洽（K33）· 版本红线 · 5000 字 · 零 hex · 裸 `=>@` · IP 红 / 黄级专名 · 台词与锁定串从源头读 · 写盘后回读 |
+| `python tools/gen_shots_szzl_ep01.py` | 分镜与 prompt：切口比值（K31）· 共用串不点名光源（K32）· 镜内自洽（K33）· 版本红线 · 5000 字 · 零 hex · 裸 `=>@` · IP 红 / 黄级专名 · 台词与锁定串从源头读 · **说话的人不许背对镜头（rule 32）** · **场景图没审过不许挂（rule 33）** · **六道产物闸门（rule 41）：有人在画就得做事 / 镜内状态对时 / 拿法引用装备卡 [carry] / 看的东西登记 [[gaze]] / previz 群体与兵器件不许缺 / 圣光外观经 look() 挂 w25 实机事实** · 写盘后回读 |
+| `python tools/gen_equipment.py build ai_videos/shengji_zhilu` | 装备：一槽一件 · 双手武器不配盾 · 需求等级不超前 · 锁定串 ≤30 字 · prompt 无物品原名 / 黄级专名 / hex · 光色＝品质色、蓝以上必发光 · 即梦 1600 字 / ElevenLabs 3000 字 · 写盘后回读 |
 | `python tools/check_stage2.py ai_videos/shengji_zhilu` | 人设契约：零 hex · 锁定串 ≤30 · 人物灵魂 12 维 · voice_id ↔ casting（须 `en-`）· **零玩家概念（G1）** · **自负向** |
 | `python tools/check_world_scenes_szzl.py [区目录或 bg 目录]` | 全图场景：登记簿落点 · 占位填完 · 锚点 prompt 1500–2000 字 · 版本红线 · **正文与一句话锁定零黄级专名（C3）** · 平面图最新 · 原版区图 ref（W1–W10） |
+| `python tools/scene_review.py todo <场景目录>` | 场景图审图（rule 33）：出图后 Claude 看图过 S1–S6（承重连续 / 通得到 / 不悬空 / 尺度 / 无文字 / 对得上卡），`set` 写进图的 md；结论绑 sha256，图重出即作废。ep01 九个场景 40 张已审（2026-09-27），bg177 主厅与 bg3-4 支巷壁龛重出后通过 |
 
 **第一季的 3D 范围**（2026-09-21 用户定调）：只建**北郡山谷**与**闪金镇**；
 暴风城复用 `shikong_lvxing/sk2` 的整城 blend；哨兵岭 / 西部荒野第一季不建。

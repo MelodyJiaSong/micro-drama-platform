@@ -1,0 +1,178 @@
+# 玛尔丁果园 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 原典：北部路边的果园，果树全枯，篱笆倒了一半，木屋门开着。裁切图：坐标点 [59, 12] 落在主道上，
+# 带篱笆的果树图标在主道西北侧、背靠北面界山；路东南一侧缓坡下到湖（湖在场地外）。局部坐标，场地中心对 bg247 的 b251。
+
+[meta]
+bg = "bg251"
+name_zh = "玛尔丁果园"
+size_m = [180, 180]
+px_per_m = 8.0
+scale_src = "推定"
+scale_note = "区级平面图 b251 给 140 m 见方的点位范围（坐标表）；果园本身尺寸无一手出处，按「六行 × 七八棵、株距约 12 m」的小果园取约 100 × 90 m，连同路与山脚取 180 × 180 m 局部场地"
+# 世界树画面：北部路边的果园，果树全枯，篱笆倒了一半，木屋门开着
+absent = [
+    "人物、牲畜与看门狗（默认态人去屋空）",
+    "挂满果子的活果树、绿叶与花（果树全枯，一片叶子也没有）",
+    "水井、谷仓、晾衣绳、麦田与南瓜地（本区其他农庄的标志，本卡没有）",
+    "军营、营帐、军旗、瞭望塔与攻城器械（4.0.3a 原址改建的指挥部）",
+    "火光、烛火、窗灯与冒烟的烟囱（白天零人工光源）",
+    "湖对岸的山与建筑（对岸隐在雾里）",
+    "晴天、蓝天与阳光",
+    "雪与积雪",
+    "阔叶高林与翠绿草地",
+]
+
+[[ridge]]
+name = "北面界山山脚（灰岩坡与冲沟）"
+poly = [[0, 0], [180, 0], [180, 14], [120, 18], [60, 16], [0, 20]]
+height_m = 80
+src = "地图量取"
+
+[[water]]
+name = "山脚干涸碎石冲沟（果园与岩坡之间）"
+path = [[0, 24], [70, 22], [140, 22], [180, 20]]
+width_m = 2
+depth_m = 0.4
+src = "推定"
+
+[[road]]
+name = "主道（西南→东北，往东北进山口）"
+path = [[40, 180], [110, 140], [180, 100]]
+width_m = 6
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p282"
+face = "south"
+count = 40
+name = "枯果树林（六行 × 七八棵，东西成行）"
+xy = [68, 76]
+size = [88, 80]
+h_m = 5
+src = "原典方位"
+note = "原典：果树全枯；行数、株距为推定。两棵断倒在行间，一棵斜靠缺档木梯"
+
+[[block]]
+id = "b02"
+kind = "palisade"
+face = "south"
+name = "北篱笆（歪斜立着）"
+xy = [70, 32]
+size = [100, 1]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b03"
+may_overlap = true
+kind = "palisade"
+face = "south"
+name = "西篱笆（歪斜立着）"
+xy = [20, 76]
+size = [1, 88]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b04"
+may_overlap = true
+kind = "palisade"
+face = "south"
+name = "南篱笆西段（还立着）"
+xy = [38, 120]
+size = [36, 1]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "palisade"
+face = "south"
+name = "南篱笆东段（整段拍倒在泥里，即进出口）"
+xy = [89, 121]
+size = [62, 1]
+h_m = 0.3
+rot = 3
+src = "原典方位"
+note = "原典：篱笆倒了一半；倒的是沿路这面为推定。几根横木被车碾断"
+
+[[block]]
+id = "b06"
+may_overlap = true
+kind = "palisade"
+face = "south"
+name = "东篱笆（倒了半截）"
+xy = [120, 76]
+size = [1, 88]
+h_m = 0.6
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p271"
+face = "south"
+name = "单坡顶木屋（门朝南，门板斜挂大敞）"
+xy = [138, 44]
+size = [9, 7]
+h_m = 4.5
+src = "原典方位"
+note = "原典：木屋门开着；位置在果园东北角为推定。屋侧一个无扇窗洞，窗台倒扣陶罐"
+
+[[block]]
+id = "b08"
+kind = "crates"
+face = "south"
+name = "门前散架的空木果箱"
+xy = [138, 52]
+size = [4, 2]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p269"
+face = "south"
+count = 30
+name = "西侧松林线"
+xy = [9, 90]
+size = [16, 130]
+h_m = 22
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p287"
+face = "south"
+name = "路边没了轮子的独轮小车"
+xy = [118, 128]
+size = [2, 1]
+h_m = 0.6
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p281"
+face = "south"
+name = "山脚滚落的大岩块"
+xy = [150, 26]
+size = [6, 4]
+h_m = 2.5
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg251-c1"
+eye = [90, 166]
+target = [90, 90]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -1,0 +1,243 @@
+# 闪光湖岸 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 换算：世界树坐标 [59, 18] → bg247 的 (2265.9, 460.9) m → 本图 (180, 150)，即原点 ＝ bg247 的 (2085.9, 310.9) m。
+# 岸线、主道与湖心岛西岸从 ref/ 裁切图量取（裁切图约 1.35 m/px，红十字在 (272, 180) px）；湖面用 30 m 宽的横向水带从岸线铺到东缘。
+# 注：量取出的岸线拐角在本图 (83, 150)，红十字（世界树点位）落在东北段岸线上、拐角以东约百米，两者都在砂岸上。
+
+[meta]
+bg = "bg266"
+name_zh = "闪光湖岸"
+size_m = [420, 320]
+px_per_m = 3.6
+scale_src = "地图量取"
+scale_note = "区图 WorldMap-Silverpine_c60 宽 1002 px ＝ 区宽 3840 m（bg247 同一换算）；裁切图放大约 2.8 倍（≈1.35 m/px，由湖心岛城堡图标与红十字的间距反算），岸线与主道量取，砂岸宽度与破船位置为推定"
+# 世界树画面：洛丹米尔湖西岸的浅白砂岸，湖水反着冷光，岸边泊着破船
+absent = ["金黄沙滩 / 热带海滩 / 椰林（砂是浅白偏灰的湖砂）", "码头 / 栈桥 / 船棚（本档零人造建筑）", "桥（湖心岛只能游过去）", "完好能用的船 / 帆船", "灯塔 / 窗灯 / 火堆 / 任何人工光", "芦苇丛（本段是白砂岸，芦苇泥岸在南边渡口）", "湖对岸（永远在雾里）", "雪", "阔叶林", "翠绿草地"]
+
+[[ridge]]
+name = "湖心岛西侧陡坡（长黑松；岛顶庄园在场地东南外）"
+poly = [[362, 172], [420, 158], [420, 320], [332, 320], [333, 240], [342, 196]]
+height_m = 30
+src = "地图量取"
+
+[[ridge]]
+name = "岸后草坡与松林地（比水面高五六米）"
+poly = [[0, 0], [350, 0], [300, 30], [255, 70], [210, 115], [170, 128], [75, 132], [62, 170], [70, 250], [80, 320], [0, 320]]
+height_m = 6
+src = "推定"
+
+[[water]]
+name = "湖面·带1"
+path = [[340, 15], [420, 15]]
+width_m = 30
+depth_m = 8
+src = "地图量取"
+
+[[water]]
+name = "湖面·带2"
+path = [[292, 45], [420, 45]]
+width_m = 30
+depth_m = 8
+src = "地图量取"
+
+[[water]]
+name = "湖面·带3"
+path = [[258, 75], [420, 75]]
+width_m = 30
+depth_m = 8
+src = "地图量取"
+
+[[water]]
+name = "湖面·带4"
+path = [[232, 105], [420, 105]]
+width_m = 30
+depth_m = 8
+src = "地图量取"
+
+[[water]]
+name = "湖面·带5"
+path = [[198, 135], [420, 135]]
+width_m = 30
+depth_m = 8
+src = "地图量取"
+
+[[water]]
+name = "湖面·带6（拐角外）"
+path = [[82, 165], [400, 165]]
+width_m = 30
+depth_m = 6
+src = "地图量取"
+
+[[water]]
+name = "湖面·带7（岸与岛之间的水道）"
+path = [[78, 195], [345, 195]]
+width_m = 30
+depth_m = 8
+src = "地图量取"
+
+[[water]]
+name = "湖面·带8"
+path = [[84, 225], [335, 225]]
+width_m = 30
+depth_m = 8
+src = "地图量取"
+
+[[water]]
+name = "湖面·带9"
+path = [[89, 255], [333, 255]]
+width_m = 30
+depth_m = 8
+src = "地图量取"
+
+[[water]]
+name = "湖面·带10"
+path = [[95, 285], [332, 285]]
+width_m = 30
+depth_m = 8
+src = "地图量取"
+
+[[water]]
+name = "湖面·带11"
+path = [[100, 310], [332, 310]]
+width_m = 20
+depth_m = 8
+src = "地图量取"
+
+[[road]]
+name = "主道（贴湖西岸南下，只擦过场地西北角）"
+path = [[0, 120], [69, 35], [110, 0]]
+width_m = 6
+src = "地图量取"
+
+[[block]]
+id = "b01"
+into_ridge = true
+over_water = true
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "白砂岸·东北段"
+xy = [218, 92]
+size = [130, 18]
+h_m = 0
+rot = -43
+src = "推定"
+note = "沿东北段岸线，宽十几二十米；世界树点位在这一段"
+
+[[block]]
+id = "b02"
+into_ridge = true
+over_water = true
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "白砂岸·拐角段"
+xy = [128, 138]
+size = [96, 18]
+h_m = 0
+rot = -4
+src = "推定"
+
+[[block]]
+id = "b03"
+into_ridge = true
+over_water = true
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "白砂岸·南段"
+xy = [70, 205]
+size = [110, 16]
+h_m = 0
+rot = 86
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p284"
+face = "south"
+name = "翻扣的破船"
+xy = [96, 138]
+size = [6, 2.2]
+h_m = 1
+rot = 12
+src = "推定"
+note = "拐角处的砂上，船底朝天；标准机位的近景"
+
+[[block]]
+id = "b05"
+over_water = true
+kind = "asset"
+asset = "p284"
+face = "south"
+name = "半沉的破船"
+xy = [168, 150]
+size = [7, 2.4]
+h_m = 0.6
+rot = -60
+src = "推定"
+note = "东北段岸外几米的浅水里，船头朝岸、船尾没进水中"
+
+[[block]]
+id = "b06"
+into_ridge = true
+kind = "low_wall"
+face = "south"
+name = "砂岸上缘枯草土坎"
+xy = [205, 90]
+size = [150, 2]
+h_m = 0.5
+rot = -43
+src = "推定"
+
+[[block]]
+id = "b07"
+may_overlap = true
+into_ridge = true
+kind = "asset"
+asset = "p269"
+face = "south"
+count = 40
+name = "岸后松林"
+xy = [150, 50]
+size = [70, 40]
+h_m = 20
+src = "推定"
+
+[[block]]
+id = "b08"
+may_overlap = true
+into_ridge = true
+kind = "asset"
+asset = "p269"
+face = "south"
+name = "林缘斜向湖面的老松"
+xy = [185, 105]
+size = [12, 8]
+h_m = 15
+src = "推定"
+
+[[block]]
+id = "b09"
+over_water = true
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "浅水卵石"
+xy = [205, 142]
+size = [20, 8]
+h_m = 0.3
+rot = -20
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg266-c1"
+eye = [210, 294]
+target = [210, 160]
+eye_h = 14.0
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

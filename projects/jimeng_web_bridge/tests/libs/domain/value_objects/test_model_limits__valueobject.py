@@ -15,7 +15,7 @@ def limits(data: dict[str, object] | None = None) -> ModelLimits:
 
 
 FR1_ROWS: list[tuple[str, set[BackendKind], tuple[int, int] | None, tuple[str, ...], tuple[int, int, int], bool]] = [
-    ("seedance2.5", {BackendKind.WEB}, (4, 30), ("480p", "720p"), (30, 10, 10), True),
+    ("seedance2.5", {BackendKind.WEB, BackendKind.CLI}, (4, 30), ("480p", "720p"), (30, 10, 10), True),
     ("seedance2.0_vip", {BackendKind.WEB, BackendKind.CLI}, (4, 15), ("720p", "1080p"), (9, 3, 3), True),
     ("seedance2.0fast_vip", {BackendKind.WEB, BackendKind.CLI}, (4, 15), ("720p",), (9, 3, 3), True),
     ("seedance2.0", {BackendKind.WEB, BackendKind.CLI}, (4, 15), ("720p",), (9, 3, 3), True),

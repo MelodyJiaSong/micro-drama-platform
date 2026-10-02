@@ -30,6 +30,7 @@ python tools/render_review.py <shot 目录> [视频.mp4]     # 不给视频就�
 | R6 其他 | 剧本里没有的人、物、字、特效 | 多出来的人、字幕、光效 | prompt 负面词 / 光源闸门 |
 | R7 关键拍兑现 | 学会 / 用出本事、亮起 / 变暗 / 稳住这类变化看得见、时刻大致对 | 光一直亮着没变、演示埋在全景里 | rule 37：学会那一刻给特写、变化写到秒 |
 | R8 镜尾收住（机测） | 最后 0.25 s 比前 2 s 低 ≥ 12 dB：环境声 / 台词在切点前收住（Seedance 不出音乐，ai_video.md 12.4-H2） | 环境声 / 台词在镜尾被切断 | rule 38：最后一句离镜尾 ≥ 0.8 s；仍不过就重出 |
+| R9 施法回读（机测） | `tools/cast_readback.py`：每次施法手上 / 目标身上亮没亮、光起早晚、落没落反、串没串到旁人（castcheck.json）；「未查」的看图补判 | ✗ 行 | 排程闸门错开同色施法；只错一个人用 `tools/cast_repair.py` 局部重拍 |
 
 结论写进同目录 `verdict.md`：首行以 `通过` 或 `不通过` 开头，下一行照抄 checklist.md 的 `take_sha256:` 行（剪辑校验 edl verify V1 经 `render_review.verdict_ok` 按它认 take，缺了或对不上＝没审过）。
 

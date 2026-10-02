@@ -1,0 +1,206 @@
+# 拉文霍德庄园 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 世界树无坐标，区级落位本身就是推定（bg23 b901）；「台地 + 盘山小道 + 山洞」取自世界树画面，具体落位全部推定。
+# 南缘 y≈150 是十几米的陡坎，坎下（y>150）是向河谷倾斜的乱石坡，比台地低，故不画 ridge。
+
+[meta]
+bg = "bg28"
+name_zh = "拉文霍德庄园"
+size_m = [200, 180]
+px_per_m = 6.0
+scale_src = "推定"
+scale_note = "单栋庄园 + 后院训练场 + 前庭的台地取 200 × 180 m（含三面崖脚与南坎下一段小径）；无一手尺寸出处"
+# 世界树画面：山间台地上的橙顶石砌庄园，后院是训练场与靶子，只有一条盘山小道与一个山洞通进来
+absent = [
+    "任何人物（会馆成员属 shot 层，不进底图）",
+    "人形训练假人（4.0.3a 才有；训练场只有圆形草靶与木桩）",
+    "火把、灯笼、窗内灯火、炊烟（默认态全冷）",
+    "积雪地面（台地在雪线以下，雪只在四周峰顶与背阴崖脚）",
+    "第三条出入路（只有南坎小道与西北山洞）",
+    "旗帜、招牌、纹章与任何文字",
+    "飞行坐骑与飞行点设施",
+]
+
+[[ridge]]
+name = "北崖（接雪峰）"
+poly = [[0, 0], [200, 0], [200, 28], [175, 30], [130, 34], [80, 32], [40, 34], [0, 28]]
+height_m = 150
+src = "推定"
+
+[[ridge]]
+name = "西崖"
+poly = [[0, 28], [40, 34], [32, 90], [24, 150], [0, 165]]
+height_m = 110
+src = "推定"
+
+[[ridge]]
+name = "东崖"
+poly = [[175, 30], [200, 28], [200, 160], [180, 150], [170, 90]]
+height_m = 130
+src = "推定"
+
+[[road]]
+name = "之字形盘山小道（下河谷）"
+path = [[120, 180], [150, 170], [118, 162], [140, 152], [112, 140], [100, 131]]
+width_m = 3
+src = "推定"
+
+[[road]]
+name = "后院—山洞土路"
+path = [[115, 52], [80, 46], [50, 48]]
+width_m = 2.5
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p16"
+face = "south"
+name = "庄园主楼（两层半·橙红陶瓦）"
+xy = [95, 78]
+size = [48, 24]
+h_m = 16
+src = "推定"
+note = "世界树画面：橙顶石砌庄园；坐北朝南，两道尖山墙、三四根方石烟囱"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p16"
+face = "south"
+name = "主楼门廊（双石柱）"
+xy = [95, 94]
+size = [10, 6]
+h_m = 6
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p16"
+face = "west"
+name = "东翼附屋（马厩与仓房）"
+xy = [138, 92]
+size = [16, 24]
+h_m = 7
+src = "推定"
+note = "矮一层，同样的橙红瓦顶"
+
+[[block]]
+id = "b04"
+kind = "yard"
+face = "south"
+count = 1
+may_overlap = true
+name = "后院训练场（夯土）"
+xy = [140, 52]
+size = [50, 24]
+h_m = 0
+src = "推定"
+note = "世界树画面：后院是训练场；主楼背后偏东"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p23"
+face = "south"
+count = 8
+name = "圆形草靶一排（木三脚架）"
+xy = [140, 44]
+size = [34, 2]
+h_m = 1.8
+src = "推定"
+note = "世界树画面：靶子；七八只，不是人形假人"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p23"
+face = "south"
+count = 6
+name = "木桩群（旧刀痕）"
+xy = [155, 58]
+size = [16, 8]
+h_m = 1.6
+src = "推定"
+
+[[block]]
+id = "b07"
+kind = "cave_mouth"
+face = "southeast"
+count = 1
+name = "西北岩壁山洞口"
+xy = [45, 48]
+size = [8, 5]
+h_m = 4
+src = "推定"
+note = "世界树画面：一个山洞通进来；穿山，另一头原典未明"
+
+[[block]]
+id = "b08"
+kind = "plaza"
+face = "south"
+count = 1
+may_overlap = true
+name = "前庭（青灰石板）"
+xy = [95, 116]
+size = [44, 26]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "low_wall"
+face = "south"
+count = 1
+name = "前庭南毛石矮墙（中留缺口）"
+xy = [95, 132]
+size = [50, 2]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p33"
+face = "south"
+name = "柴堆（盖旧油布）"
+xy = [76, 106]
+size = [4, 2]
+h_m = 1.2
+src = "推定"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p28"
+face = "south"
+count = 6
+name = "冷杉丛·台地西缘"
+xy = [55, 120]
+size = [26, 30]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p28"
+face = "south"
+count = 4
+name = "冷杉丛·南坎东侧"
+xy = [160, 135]
+size = [20, 16]
+h_m = 12
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg28-c1"
+eye = [100, 166]
+target = [100, 90]
+eye_h = 1.65
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

@@ -1,0 +1,267 @@
+# 石碑湖 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 量取口径：场地中心 [280, 280] ＝ 区级 terrain.toml 石碑湖环形水带的圆心 (2366, 1071)；水带、两侧山体、西南矮丘直接平移自区级 terrain.toml；
+# 岛缘巨石按 ref/bg184_石碑湖_map_crop.png（1 crop px ≈ 0.8 m）量取。
+
+[meta]
+bg = "bg184"
+name_zh = "石碑湖"
+size_m = [560, 560]
+px_per_m = 2.8
+scale_src = "坐标表"
+scale_note = "湖心坐标 [74.4, 51.9] × WorldMapArea 换算；水带半径 143/158 m、宽 82 m 取自区级 terrain.toml（区图量取）；石冢与窝棚尺寸为推定"
+# 世界树画面：东北的环形湖，湖心一座大岛把水面挤成一圈环带；南岸是鱼人搭的粗木窝棚，岸边铜矿脉裸露
+absent = [
+    "路 / 桥 / 码头 / 栈桥（湖边无路，上岛只能涉水）",
+    "房屋 / 农舍 / 石砌建筑（只有岛心石冢与南岸泥草窝棚）",
+    "火堆 / 营火 / 烟（窝棚区没有火）",
+    "墓碑 / 提灯 / 雕像（石冢只是粗石垒起的锥形冢）",
+    "旗面纹章 / 文字（布旗褪成灰白、空白无纹样）",
+    "瀑布（湖水只从南岸出水口流出）",
+    "秋色枯叶 / 雪 / 浓雾",
+    "飞行点 / 狮鹫栖木",
+]
+
+[[ridge]]
+name = "西侧山脊（隔开碗形小谷，下覆深绿坡林）"
+poly = [[0, 0], [60, 0], [40, 40], [42, 160], [36, 286], [0, 360]]
+height_m = 170
+src = "地图量取"
+
+[[ridge]]
+name = "东界山墙（高厚，灰白裸岩）"
+poly = [[540, 0], [560, 0], [560, 540], [543, 508], [480, 413], [486, 255], [527, 128]]
+height_m = 200
+src = "地图量取"
+
+[[ridge]]
+name = "湖西南矮丘（建立镜机位所在）"
+poly = [[0, 397], [131, 413], [163, 540], [120, 560], [0, 560]]
+height_m = 60
+src = "地图量取"
+
+[[ridge]]
+name = "湖心大岛（圆背草坡，高出水面五六米）"
+poly = [[280, 166], [318, 175], [351, 199], [372, 236], [380, 280], [372, 324], [351, 361], [318, 385], [280, 394], [242, 385], [209, 361], [188, 324], [180, 280], [188, 236], [209, 199], [242, 175]]
+height_m = 6
+src = "地图量取"
+
+[[water]]
+name = "环形水带（近岸浅黄泥水、中间青绿深水）"
+path = [[280, 122], [335, 134], [381, 168], [412, 220], [423, 280], [412, 340], [381, 392], [335, 426], [280, 438], [225, 426], [179, 392], [148, 340], [137, 280], [148, 220], [179, 168], [225, 134], [280, 122], [335, 134]]
+width_m = 82
+depth_m = 6
+src = "地图量取"
+
+[[water]]
+name = "出水细河（南岸正中流出，南下入大河）"
+path = [[280, 470], [283, 510], [278, 560]]
+width_m = 20
+depth_m = 1.5
+src = "地图量取"
+
+[[block]]
+id = "b01"
+kind = "asset"
+asset = "p149"
+face = "south"
+into_ridge = true
+name = "锥形石冢"
+xy = [280, 280]
+size = [8, 8]
+h_m = 6
+src = "原典方位"
+note = "岛心空地正中；粗石垒成，冢前斜插锈剑、歪木杆垂灰白布旗（无纹样）"
+
+[[block]]
+id = "b02"
+kind = "asset"
+asset = "p154"
+face = "south"
+into_ridge = true
+name = "岛缘巨石·北"
+xy = [276, 196]
+size = [10, 12]
+h_m = 4
+src = "地图量取"
+note = "区图裁切上岛缘一圈石块之一，一两人高、棱角磨圆"
+
+[[block]]
+id = "b03"
+kind = "asset"
+asset = "p154"
+face = "south"
+into_ridge = true
+name = "岛缘巨石·东北"
+xy = [316, 224]
+size = [10, 12]
+h_m = 4
+src = "地图量取"
+note = "区图裁切上岛缘一圈石块之一，一两人高、棱角磨圆"
+
+[[block]]
+id = "b04"
+kind = "asset"
+asset = "p154"
+face = "south"
+into_ridge = true
+name = "岛缘巨石·东"
+xy = [344, 276]
+size = [10, 12]
+h_m = 4
+src = "地图量取"
+note = "区图裁切上岛缘一圈石块之一，一两人高、棱角磨圆"
+
+[[block]]
+id = "b05"
+kind = "asset"
+asset = "p154"
+face = "south"
+into_ridge = true
+name = "岛缘巨石·东南"
+xy = [320, 324]
+size = [10, 12]
+h_m = 4
+src = "地图量取"
+note = "区图裁切上岛缘一圈石块之一，一两人高、棱角磨圆"
+
+[[block]]
+id = "b06"
+kind = "asset"
+asset = "p154"
+face = "south"
+into_ridge = true
+name = "岛缘巨石·南"
+xy = [284, 352]
+size = [10, 12]
+h_m = 4
+src = "地图量取"
+note = "区图裁切上岛缘一圈石块之一，一两人高、棱角磨圆"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p154"
+face = "south"
+into_ridge = true
+name = "岛缘巨石·西南"
+xy = [256, 340]
+size = [10, 12]
+h_m = 4
+src = "地图量取"
+note = "区图裁切上岛缘一圈石块之一，一两人高、棱角磨圆"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p154"
+face = "south"
+into_ridge = true
+name = "岛缘巨石·西"
+xy = [224, 324]
+size = [10, 12]
+h_m = 4
+src = "地图量取"
+note = "区图裁切上岛缘一圈石块之一，一两人高、棱角磨圆"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p154"
+face = "south"
+into_ridge = true
+name = "岛缘巨石·西北·下"
+xy = [220, 276]
+size = [10, 12]
+h_m = 4
+src = "地图量取"
+note = "区图裁切上岛缘一圈石块之一，一两人高、棱角磨圆"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p154"
+face = "south"
+into_ridge = true
+name = "岛缘巨石·西北·上"
+xy = [224, 228]
+size = [10, 12]
+h_m = 4
+src = "地图量取"
+note = "区图裁切上岛缘一圈石块之一，一两人高、棱角磨圆"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p150"
+face = "north"
+count = 4
+name = "南岸窝棚群·西"
+xy = [245, 500]
+size = [40, 24]
+h_m = 3
+src = "原典方位"
+note = "圆顶泥草窝棚四座，弯木骨架糊泥与芦苇；空棚无火"
+
+[[block]]
+id = "b12"
+kind = "asset"
+asset = "p150"
+face = "north"
+count = 4
+name = "南岸窝棚群·东"
+xy = [318, 500]
+size = [40, 24]
+h_m = 3
+src = "原典方位"
+note = "圆顶泥草窝棚三四座，其中两座塌了半边"
+
+[[block]]
+id = "b13"
+kind = "ore_vein"
+face = "east"
+count = 1
+over_water = true
+name = "铜矿脉裸岩·西岸"
+xy = [92, 260]
+size = [14, 8]
+h_m = 2
+src = "推定"
+note = "灰岩嵌铜橙矿脉、边缘绿锈；西岸贴山脚一道岩坎"
+
+[[block]]
+id = "b14"
+kind = "ore_vein"
+face = "west"
+count = 1
+name = "铜矿脉裸岩·东岸"
+xy = [470, 300]
+size = [14, 8]
+h_m = 2
+src = "推定"
+note = "同上，靠东界山脚"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p161"
+face = "south"
+count = 30
+over_water = true
+name = "南岸芦苇带"
+xy = [280, 478]
+size = [200, 10]
+h_m = 1.5
+src = "推定"
+note = "出水口两侧齐腰高芦苇，根部发褐、梢头泛黄"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）
+[[anchor]]
+key = "bg184-c1"
+eye = [280, 45]
+target = [280, 280]
+eye_h = 18.7
+lens_mm = 28
+note = "场地边缘朝场地中心；自动生成，排镜时按需改"

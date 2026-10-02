@@ -299,7 +299,9 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
           const isRenamingThis = renamingPath === item.node.path;
           const treeItem = (
             <div
-              key={item.node.path || item.node.name}
+              // Link leaves carry their TARGET as `path`, and several blocks can
+              // link one library asset — the manifest path is what is unique.
+              key={item.node.link_at || item.node.path || item.node.name}
               role="treeitem"
               tabIndex={isFocused || (focusedPath === null && item === flat[0]) ? 0 : -1}
               data-path={item.node.path}

@@ -1,0 +1,237 @@
+# 黑石要塞 · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑
+#   python tools/build_floorplan.py "<本目录>"
+# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。
+# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。
+# 场地 ＝ 区级平面图 b901 的范围（中心 ≈ 1083, 575，300×260 m）；本场地原点 ≈ 区级 (933, 445)。
+# 北山墙、西侧熔岩环、火山锥东麓的相对方位按区图量取；营内布局无一手出处，全部推定。
+
+[meta]
+bg = "bg90"
+name_zh = "黑石要塞"
+size_m = [300, 260]
+px_per_m = 4.0
+scale_src = "地图量取"
+scale_note = "场地外框取区级平面图 b901（区图图标 40.4%, 32.2% 处的营寨范围 300×260 m）；围栏 210×170 m 与营内各屋尺寸按兽人驻军营常识推定"
+# 世界树画面：山脚下的黑石兽人营寨，黑铁尖刺围栏与烧红的炉膛，营中竖着黑色狼头旗，地面被踩成焦黑硬土
+absent = [
+    "任何人物、坐骑与动物（活营，但锚点图里一个人都没有）",
+    "火把、篝火、灯笼与明火（唯一人工光源是锻炉里压着的暗红炭火）",
+    "草、树与任何绿色植被",
+    "任何水体（西侧那道是熔岩沟，不是河）",
+    "石砌城墙与城堡（这是铁刺围栏围的营寨，不是城）",
+    "第二道寨门（唯一出入口在南）",
+    "4.0.3a 之后的营地改建与新增设施",
+]
+
+[[ridge]]
+name = "北山墙崖脚（向北直上几百米）"
+poly = [[0, 0], [300, 0], [300, 38], [240, 46], [180, 42], [120, 48], [60, 44], [0, 52]]
+height_m = 300
+src = "地图量取"
+
+[[ridge]]
+name = "火山锥东麓（场地西缘，向西陡起）"
+poly = [[0, 52], [22, 60], [30, 130], [24, 200], [12, 260], [0, 260]]
+height_m = 400
+src = "地图量取"
+
+[[water]]
+name = "熔岩沟（火山锥东麓的熔岩环外缘）"
+path = [[40, 50], [48, 120], [44, 190], [34, 260]]
+width_m = 16
+depth_m = 2
+src = "地图量取"
+
+[[road]]
+name = "寨门外车辙土路（下坡接平原主干道）"
+path = [[175, 234], [180, 248], [186, 260]]
+width_m = 7
+src = "推定"
+
+[[block]]
+id = "b01"
+kind = "palisade"
+face = "south"
+name = "尖刺围栏·北段"
+xy = [175, 62]
+size = [210, 3]
+h_m = 4
+src = "推定"
+note = "黑铁包木尖桩朝外斜伸，两道横铁链"
+
+[[block]]
+id = "b02"
+kind = "palisade"
+face = "east"
+may_overlap = true
+name = "尖刺围栏·东段"
+xy = [280, 146]
+size = [3, 168]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b03"
+kind = "palisade"
+face = "west"
+may_overlap = true
+name = "尖刺围栏·西段（贴熔岩沟）"
+xy = [70, 146]
+size = [3, 168]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b04"
+kind = "palisade"
+face = "south"
+may_overlap = true
+name = "尖刺围栏·南段西半"
+xy = [117, 230]
+size = [94, 3]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b05"
+kind = "palisade"
+face = "south"
+may_overlap = true
+name = "尖刺围栏·南段东半"
+xy = [233, 230]
+size = [94, 3]
+h_m = 4
+src = "推定"
+
+[[block]]
+id = "b06"
+kind = "gate_wall"
+face = "south"
+name = "南寨门（两座尖顶门塔夹铁条对开门）"
+xy = [175, 230]
+size = [22, 6]
+h_m = 9
+src = "推定"
+note = "唯一出入口"
+
+[[block]]
+id = "b07"
+kind = "asset"
+asset = "p80"
+face = "south"
+name = "望塔·西北角"
+xy = [80, 72]
+size = [8, 8]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b08"
+kind = "asset"
+asset = "p80"
+face = "south"
+name = "望塔·东北角"
+xy = [270, 72]
+size = [8, 8]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b09"
+kind = "asset"
+asset = "p80"
+face = "south"
+name = "望塔·东南角"
+xy = [270, 220]
+size = [8, 8]
+h_m = 14
+src = "推定"
+
+[[block]]
+id = "b10"
+kind = "asset"
+asset = "p79"
+face = "south"
+name = "大长屋（营里最大，门朝南）"
+xy = [175, 90]
+size = [48, 24]
+h_m = 11
+src = "推定"
+note = "原木 + 黑铁板包边，兽皮铁条顶，屋脊两端兽牙状铁刺"
+
+[[block]]
+id = "b11"
+kind = "asset"
+asset = "p81"
+face = "south"
+name = "旗杆（黑色兽皮狼头旗）"
+xy = [175, 118]
+size = [2, 2]
+h_m = 16
+src = "推定"
+
+[[block]]
+id = "b12"
+kind = "yard"
+face = "south"
+may_overlap = true
+name = "校场（踩实的焦黑硬土）"
+xy = [175, 165]
+size = [70, 56]
+h_m = 0
+src = "推定"
+
+[[block]]
+id = "b13"
+kind = "asset"
+asset = "p79"
+face = "east"
+name = "兵营长屋·西"
+xy = [105, 150]
+size = [16, 34]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b14"
+kind = "asset"
+asset = "p79"
+face = "west"
+name = "兵营长屋·东"
+xy = [245, 145]
+size = [16, 34]
+h_m = 7
+src = "推定"
+
+[[block]]
+id = "b15"
+kind = "asset"
+asset = "p79"
+face = "north"
+name = "锻炉棚（炭火炉膛 + 铁砧 + 冷油石槽）"
+xy = [232, 200]
+size = [20, 14]
+h_m = 6
+src = "推定"
+note = "本档唯一人工光源：压着的暗红炭火"
+
+[[block]]
+id = "b16"
+kind = "asset"
+parts = [{asset = "p82", at = [-9.75, 1.2], yaw = 0}, {asset = "p82", at = [-3.25, 1.2], yaw = 0}, {asset = "p82", at = [3.25, 1.2], yaw = 0}, {asset = "p82", at = [9.75, 1.2], yaw = 0}, {asset = "p96", at = [-6.5, -0.6], yaw = 6}, {asset = "p96", at = [-5.6, -1.4], yaw = -4}, {asset = "p96", at = [6.6, -0.8], yaw = -8}]
+face = "north"
+name = "兵器架（西南墙根）"
+xy = [105, 215]
+size = [26, 5]
+h_m = 2.5
+src = "推定"
+
+# 默认校验机位（tools/apply_asset_plan.py，follow-up 007）：场地被体块占满，放在室内
+[[anchor]]
+key = "bg90-c1"
+eye = [150, 221]
+target = [150, 52]
+eye_h = 1.65
+lens_mm = 24
+inside = true
+note = "室内南端朝北；自动生成，排镜时按需改"
