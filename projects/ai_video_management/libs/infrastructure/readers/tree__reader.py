@@ -9,11 +9,16 @@ from typing import Any
 
 from libs.common import asset_link, drama_ref, equipment_key, prop_key, scene_key
 from libs.common.drama_layout import EQUIPMENT_DIR_NAME, is_equipment_tool_dir
+from libs.common.episode_workflow import MODULE_NAV_LABELS, MODULES, WORLD_FACTS_FILE, WORKFLOW_ID, WORKFLOW_MARKER
+from libs.common.production_key import BACKGROUND_DIR_NAME, SCENES_DIR_NAME, first_shot_key, shot_key
+from urllib.parse import urlencode
 from libs.common.exposed_tree import ExposedTree, TREE_VISIBLE_EXTENSIONS
+from libs.common.story_runs import STORY_INPUT_FILE, STORY_INPUT_NODE_TYPE, STORY_RUNS_FILE, STORY_RUNS_NODE_TYPE, STORY_RUN_VIEWS, STORY_RUN_DOCUMENT_FILES
 from libs.common.sub_type_lookup import lookup as sub_type_lookup
-from libs.domain.value_objects.bgm__valueobject import CATEGORY_LABELS_ZH as BGM_CATEGORY_LABELS_ZH
 from libs.domain.value_objects.novel__valueobject import CANONICAL_NOVELS, categories as novel_categories
 from libs.infrastructure.readers.scene_registry__reader import SceneRegistryReader
+from libs.infrastructure.readers.story_runs__reader import StoryRunsReader
+from libs.infrastructure.readers.story_selection__reader import StorySelectionReader
 
 _IMAGE_EXTENSIONS: frozenset[str] = frozenset({".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"})
 _VIDEO_EXTENSIONS: frozenset[str] = frozenset({".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v"})
@@ -37,10 +42,8 @@ def _natural(name: str) -> list[str | int]:
 # "library" main page in the UI.
 _SYSTEM_FOLDER_LABELS_ZH: dict[str, str] = {
     "_actors": "演员库",
-    "_bgm": "背景音乐库",
     "_research": "选题调研",
 }
-SCENES_DIR_NAME: str = "scenes"
 PROPS_DIR_NAME: str = "props"
 # Asset trees whose keyed entries are labelled by their grammar alone
 # (`p15 两层石木旅店`, `e12 蓝_维里甘之拳`); an unkeyed name — an equipment
@@ -50,7 +53,7 @@ _KEY_LABELS: dict[str, Callable[[str], str | None]] = {
     EQUIPMENT_DIR_NAME: equipment_key.label,
 }
 # The asset trees whose entries are labelled `{key} {rest}` (follow-ups 173 / 174).
-_KEYED_TREES: frozenset[str] = frozenset({SCENES_DIR_NAME, *_KEY_LABELS})
+_KEYED_TREES: frozenset[str] = frozenset({SCENES_DIR_NAME, BACKGROUND_DIR_NAME, *_KEY_LABELS})
 # Tool-owned folders inside a scenes tree, labelled because their names say
 # nothing to a reader (follow-up 173): a subject's script-built 3D scene, and a
 # subject's per-block links into `props/`.
@@ -252,10 +255,174 @@ class TreeReader:
         # that from path depth.
         if not project_dir.name.startswith("_"):
             node["is_drama"] = True
+        marker = project_dir / WORKFLOW_MARKER
+        if marker.is_file():
+            config = json.loads(marker.read_text(encoding="utf-8"))
+            if config.get("workflow") == WORKFLOW_ID:
+                node["workflow"] = WORKFLOW_ID
+                node["children"] = [child for child in sub if child["name"] in {"0_research", "2_世界观人设"}]
+                for child in node["children"]:
+                    child["display_name"] = "0_research" if child["name"] == "0_research" else "1_资产库"
+                    child["lifetime"] = "persistent"
+                    if child["name"] == "2_世界观人设":
+                        for asset in child.get("children", []):
+                            if asset["name"] == WORLD_FACTS_FILE:
+                                asset["display_name"] = "世界规则"
+                            elif asset["name"] == BACKGROUND_DIR_NAME:
+                                asset["display_name"] = "background · 环境资产"
+                episodes_root = project_dir / "episodes"
+                episodes = sorted((p for p in episodes_root.iterdir() if p.is_dir() and not p.is_symlink()
+                                   and re.fullmatch(r"ep\d+", p.name)), key=lambda p: _natural(p.name)) if episodes_root.is_dir() else []
+                for module in MODULES:
+                    outputs = []
+                    for episode in episodes:
+                        output = {"type": "workflow", "name": episode.name,
+                                  "display_name": f"EP{int(episode.name[2:])}",
+                                  "path": f"{node['path']}/episodes/{episode.name}/{module}.json",
+                                  "drama_path": node["path"], "workflow_module": module,
+                                  "workflow_episode": episode.name}
+                        if module == "story":
+                            output["display_name"] = "故事正文"
+                            output["lifetime"] = "workspace"
+                            episode_path = f"{node['path']}/episodes/{episode.name}"
+                            children = []
+                            shared_input = episode / STORY_INPUT_FILE
+                            if shared_input.is_file() and not shared_input.is_symlink():
+                                inputs = [{"type": STORY_INPUT_NODE_TYPE, "name": view,
+                                           "display_name": label, "path": f"{episode_path}/{file}",
+                                           "episode_path": episode_path, "story_input_view": view,
+                                           "lifetime": "persistent"}
+                                          for view, label, file in (("input", "创作输入", STORY_INPUT_FILE),
+                                                                    ("rules", "创作规则", "shared/rules-view.json"))]
+                                children.append({"type": "directory", "name": "shared", "display_name": "共享配置 · Persistent",
+                                                 "path": f"{episode_path}/shared", "lifetime": "persistent", "children": inputs})
+                            runs = episode / STORY_RUNS_FILE
+                            run_tree = None
+                            if runs.is_file() and not runs.is_symlink():
+                                run_tree = self._story_runs_node(episode_path)
+                            children.append(self._story_current_link(episode_path, int(episode.name[2:]), run_tree))
+                            if run_tree is not None:
+                                children.append(run_tree)
+                            outputs.append({"type": "directory", "name": episode.name,
+                                            "display_name": f"EP{int(episode.name[2:])}",
+                                            "path": f"{node['path']}/stages/{module}/{episode.name}", "children": children})
+                        else:
+                            file = episode / f"{module}.json"
+                            if file.is_file() and not file.is_symlink():
+                                content = json.loads(file.read_text(encoding="utf-8"))["content"]
+                                scenes = content.get("scenes", [])
+                                if scenes:
+                                    output["type"] = "directory"
+                                    output["navigation_href"] = self._workflow_url(node["path"], episode.name, module)
+                                    output["children"] = self._workflow_scenes(node["path"], episode.name, module, scenes)
+                            outputs.append(output)
+                    node["children"].append({
+                        "type": "directory", "name": module, "display_name": MODULE_NAV_LABELS[module],
+                        "path": f"{node['path']}/stages/{module}",
+                        "children": outputs,
+                    })
         zh_title = _SYSTEM_FOLDER_LABELS_ZH.get(project_dir.name) or self._project_zh_title(project_dir)
         if zh_title:
             node["display_name"] = zh_title
         return node
+
+    def _story_current_link(self, episode_path: str, number: int, runs: dict[str, Any] | None) -> dict[str, Any]:
+        node: dict[str, Any] = {"type": "directory", "name": "current", "display_name": f"当前 EP{number} · 未选用",
+                                "path": f"{episode_path}/current", "children": []}
+        selection = StorySelectionReader(self._root).read(episode_path)
+        if selection is None or runs is None:
+            return node
+        target = next((run for run in runs["children"] if run["story_run_id"] == selection["run_id"]), None)
+        if target is None or target.get("story_run_status") == "unavailable":
+            node["display_name"] = f"当前 EP{number} · 目标不可用"
+            return node
+        node.pop("children")
+        node.update(type=STORY_RUNS_NODE_TYPE, display_name=f"当前 EP{number} → {target['display_name']}",
+                    is_link=True, link_note="指向当前选用的 run，文档统一保存在 runs 下",
+                    episode_path=episode_path, story_run_id=selection["run_id"], story_run_view="output",
+                    story_run_source=f"{target['audit_folder']}/{STORY_RUN_DOCUMENT_FILES['output']}")
+        return node
+
+    @staticmethod
+    def _workflow_url(drama: str, episode: str, module: str, scene: str = "", shot: str = "") -> str:
+        params = {"drama": drama, "episode": episode, "module": module}
+        if scene:
+            params["scene"] = scene
+        if shot:
+            params["shot"] = shot
+        return "/drama?" + urlencode(params)
+
+    def _workflow_scenes(self, drama: str, episode: str, module: str, scenes: list[dict]) -> list[dict]:
+        nodes = []
+        base = f"{drama}/episodes/{episode}"
+        for scene in scenes:
+            path = f"{base}/{module}.json/scenes/{scene['id']}"
+            children = []
+            for shot in scene["shots"]:
+                key = shot_key(episode, scene["id"], shot["id"]) if module == "filming" else first_shot_key(shot["id"])
+                if key is None:
+                    continue
+                folder = key.folder(self._root / base)
+                children.append({"type": "directory", "name": f"st{key.shot}", "display_name": key.value,
+                                 "path": f"{path}/shots/st{key.shot}",
+                                 "navigation_href": self._workflow_url(drama, episode, module, scene["id"], key.value),
+                                 "children": self._walk_filtered(folder, self._is_allowed_leaf) if folder.is_dir() and not folder.is_symlink() else []})
+            nodes.append({"type": "directory", "name": scene["id"],
+                          "display_name": f"{scene['id']} · {scene.get('location', '场次')}", "path": path,
+                          "navigation_href": self._workflow_url(drama, episode, module, scene["id"]), "children": children})
+        return nodes
+
+    def _story_runs_node(self, episode_path: str) -> dict[str, Any]:
+        reader = StoryRunsReader(self._root)
+        _, entries = reader.index(episode_path)
+        runs = []
+        for index, entry in enumerate(entries, 1):
+            run_id = entry["run_id"]
+            path = f"{episode_path}/runs/{run_id}"
+            documents = [{"type": STORY_RUNS_NODE_TYPE, "name": view, "display_name": label,
+                          "path": f"{path}/{view}.json", "episode_path": episode_path,
+                          "story_run_id": run_id, "story_run_view": view,
+                          "lifetime": "transient",
+                          "story_run_source": f"{entry['audit_path'].rsplit('/', 1)[0]}/{STORY_RUN_DOCUMENT_FILES[view]}"}
+                         for view, label in STORY_RUN_VIEWS.items()]
+            run_node = {"type": "directory", "name": run_id, "display_name": f"run{index}",
+                        "path": path, "episode_path": episode_path, "story_run_id": run_id,
+                        "lifetime": "transient", "audit_folder": entry["audit_path"].rsplit("/", 1)[0],
+                        "children": [{"type": "directory", "name": "inputs", "display_name": "输入与规则",
+                                      "path": f"{path}/inputs", "lifetime": "transient", "children": [documents[2]]},
+                                     {"type": "directory", "name": "outputs", "display_name": "产出",
+                                      "path": f"{path}/outputs", "lifetime": "transient", "children": documents[:2]},
+                                     {"type": "directory", "name": "process_documents", "display_name": "过程",
+                                      "path": f"{path}/process_documents", "lifetime": "transient", "children": [documents[3]]}]}
+            try:
+                run = reader.detail(episode_path, run_id)
+                run_node["story_run_title"] = run["candidate"].get("title") or run["candidate"]["brief"]
+                run_node["story_run_status"] = run["status"]
+                io = reader.describe(run)
+                links: dict[str, list[dict[str, Any]]] = {}
+                for item in io["items"]:
+                    links.setdefault(item["group"], []).append({
+                        "type": STORY_RUNS_NODE_TYPE, "name": item["id"], "display_name": item["name"],
+                        "path": f"{path}/links/{item['id']}.json", "episode_path": episode_path,
+                        "story_run_id": run_id, "story_run_view": "item", "story_run_item_id": item["id"],
+                        "story_run_source": item["target"], "is_link": True, "lifetime": "transient",
+                        "link_note": "关联本次运行记录的实际版本"})
+                input_groups = [{"type": "directory", "name": group, "display_name": label,
+                                 "path": f"{path}/inputs/{group}", "children": links.get(group, [])}
+                                for group, label in (("settings", "故事设定"), ("sources", "背景与事实来源"),
+                                                     ("rules", "流程规则"), ("tasks", "实际任务指令"), ("runtime", "运行与模型设置"))]
+                run_node["children"] = [
+                    {"type": "directory", "name": "inputs", "display_name": "输入与规则",
+                     "path": f"{path}/inputs", "lifetime": "transient", "children": [documents[2], *input_groups]},
+                    {"type": "directory", "name": "outputs", "display_name": "产出",
+                     "path": f"{path}/outputs", "lifetime": "transient", "children": [*documents[:2], *links.get("outputs", [])]},
+                    {"type": "directory", "name": "process_documents", "display_name": "过程",
+                     "path": f"{path}/process_documents", "lifetime": "transient", "children": [documents[3], *links.get("process", [])]}]
+            except (ValueError, FileNotFoundError, OSError):
+                run_node["story_run_status"] = "unavailable"
+            runs.append(run_node)
+        return {"type": "directory", "name": "runs", "display_name": "runs · Transient",
+                "path": f"{episode_path}/runs", "lifetime": "transient", "children": runs}
 
     def _walk_series(self, series_dir: Path) -> dict[str, Any] | None:
         """A series folder (`series.json`) renders as one collapsible node whose
@@ -352,9 +519,6 @@ class TreeReader:
            `# zhenbei_wangfu_zhengting（镇北王府正厅）` → the `（中文）` group).
            A keyed folder under `props/` / `equipment/` likewise:
            `p15_两层石木旅店` → `p15 两层石木旅店`, `e12_蓝_维里甘之拳` → `e12 蓝_维里甘之拳`.
-        3) BGM emotion-category folders (`_bgm/{category}/`) have no sidecar; the
-           Chinese label comes from the closed `BGM_CATEGORY_LABELS_ZH` enum
-           (`suspense` → 悬疑).
         None when no recognizable sidecar.
         """
         emotion = directory / "_emotion.md"
@@ -376,12 +540,8 @@ class TreeReader:
         tree = self._keyed_tree(directory)
         if tree is not None:
             kind, tree_root, inner = tree
-            label = (self._scene_dir_label(directory, tree_root) if kind == SCENES_DIR_NAME
+            label = (self._scene_dir_label(directory, tree_root) if kind in {SCENES_DIR_NAME, BACKGROUND_DIR_NAME}
                      else self._key_label(kind, directory.name, inner))
-            if label:
-                return label
-        if directory.parent.name == "_bgm":
-            label = BGM_CATEGORY_LABELS_ZH.get(directory.name)
             if label:
                 return label
         return None
@@ -393,6 +553,8 @@ class TreeReader:
         parts = self._rel(p).split("/")[:-1]
         for i in range(len(parts) - 1, -1, -1):
             if parts[i] in _KEYED_TREES:
+                if parts[i] == SCENES_DIR_NAME and "episodes" in parts[:i]:
+                    continue
                 return parts[i], self._root.joinpath(*parts[: i + 1]), tuple(parts[i + 1:])
         return None
 
@@ -598,7 +760,7 @@ class TreeReader:
         tree = self._keyed_tree(f)
         if tree is not None:
             kind, tree_root, inner = tree
-            if kind == SCENES_DIR_NAME:
+            if kind in {SCENES_DIR_NAME, BACKGROUND_DIR_NAME}:
                 label = scene_key.label(f.name)
                 if label is None and ext == ".md" and f.stem == f.parent.name:
                     label = self._scene_dir_label(f.parent, tree_root)

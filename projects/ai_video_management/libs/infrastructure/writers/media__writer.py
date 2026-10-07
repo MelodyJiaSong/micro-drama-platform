@@ -310,7 +310,7 @@ class MediaRenamer:
         parts = normalized.split("/")
         # A drama root (`ai_videos/{drama}` or `ai_videos/{series}/{drama}`) — or one
         # of the shared system libraries, which DownloadsImporter targets the same
-        # way it targets a drama (`_performances`, `_actors`, `_bgm`).
+        # way it targets a drama (`_performances`, `_actors`).
         is_drama_root = drama_ref.drama_depth(self._resolver.root, parts) == len(parts)
         is_system_library = (
             len(parts) == 2 and parts[0] == "ai_videos" and parts[1].startswith("_")
@@ -366,6 +366,9 @@ class MediaRenamer:
         # whose filenames carry the view identity and must survive.
         multi_view = _SINGLE_IMAGE_FOLDER.match(parent_name) is None
         for p in entries:
+            if "characters" in p.parts and re.fullmatch(r"[cm]\d+(?:-\d+)?(?:_[^/]+)?_(?:front|side|back|audio|views)", p.stem):
+                skipped.append(self._rel(p))
+                continue
             if p.stem.lower() in _RESERVED_STEMS:
                 continue  # leave intro_card.* etc. at their fixed canonical name
             # A subject folder holds SEVERAL named views of one subject

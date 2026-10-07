@@ -1,5 +1,9 @@
 # Findings dossier — ai_video_management
 
+## Follow-up 199 — 覆盖审计发现
+
+原目录仅提取模块/类级大写常量，遗漏函数/CLI默认值、部分环境覆盖名称及嵌入模板；Prompt 编译实现、角色/声线描述池和共用指南引用工具也缺少入口。历史来源核对只扫描平铺剧的 run 索引，漏系列成员。现补齐共用源及历史参考登记，静态提取扩展，系列遍历复用 drama_dirs；覆盖页实时报告目录健康与文档现存引用未登记。215份源已编号，已有90个编号保持；4份可选配置未配置。依据与验证：`.audit/adhoc_agents/2026-10-06/workflow-coverage/`。
+
 Run: ai_video_management-20260505-002710
 Stage: 3 (research)
 Researchers: 4 parallel angle workers, all returned

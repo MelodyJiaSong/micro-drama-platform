@@ -47,7 +47,7 @@ from tools.gen_world_scenes_szzl import TREE  # noqa: E402
 from tools import props_lib  # noqa: E402
 
 DRAMA = os.path.join(REPO, "ai_videos", "shengji_zhilu")
-SCENES = os.path.join(DRAMA, "2_世界观人设", "scenes")
+SCENES = os.path.join(DRAMA, "2_世界观人设", "background")
 REGISTRY = os.path.join(SCENES, "registry.toml")
 FILL = "〔作者填写〕"
 HEX = re.compile(r"#[0-9A-Fa-f]{6}\b")
@@ -258,7 +258,7 @@ def check_zone(zdir: str, bgs: list[str]) -> list[Issue]:
 
 
 def walk(scope: str) -> tuple[list[str], list[str]]:
-    """→ (bg 目录, 区目录)。bg 目录 ＝ `bg\\d+_` + 同名 md；区目录 ＝ scenes/{大陆}/{区}。"""
+    """→ (bg 目录, 区目录)。bg 目录 ＝ `bg\\d+_` + 同名 md；区目录 ＝ background/{大陆}/{区}。"""
     bgs, zones = [], []
     for dp, dirs, _ in os.walk(scope):
         dirs[:] = sorted(x for x in dirs if x not in SKIP and not x.startswith("."))

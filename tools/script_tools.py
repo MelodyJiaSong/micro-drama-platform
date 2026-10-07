@@ -245,7 +245,10 @@ def scenery_errors(path: str) -> list[str]:
     zone_min, bg_min = float(sc["new_zone_min_s"]), float(sc["new_bg_min_s"])
     idle_max = float(sc.get("idle_max_s", 0) or 0)
     drama = os.path.dirname(os.path.dirname(f))
-    zones = _zones(os.path.join(drama, "2_世界观人设", "scenes"))
+    asset_root = os.path.join(drama, "2_世界观人设", "background")
+    if not os.path.isdir(asset_root):
+        asset_root = os.path.join(drama, "2_世界观人设", "scenes")
+    zones = _zones(asset_root)
     seen_bg: set[str] = set()
     seen_zone: set[str] = set()
     errs: list[str] = []

@@ -31,8 +31,8 @@ const tree: TreeNode = {
   children: [
     {
       type: "section",
-      name: "Claude Settings & Shared Context",
-      path: "_claude",
+      name: "Agent Conventions & Shared Context",
+      path: "",
       children: [
         {
           type: "file",
@@ -41,40 +41,40 @@ const tree: TreeNode = {
         },
         {
           type: "directory",
-          name: ".claude",
-          path: ".claude",
+          name: ".agents",
+          path: ".agents",
           children: [
             {
               type: "directory",
-              name: "agent_refs",
-              path: ".claude/agent_refs",
+              name: "references",
+              path: ".agents/references",
               children: [
                 {
                   type: "directory",
                   name: "validation",
-                  path: ".claude/agent_refs/validation",
+                  path: ".agents/references/validation",
                   children: [
                     {
                       type: "file",
                       name: "general.md",
-                      path: ".claude/agent_refs/validation/general.md",
+                      path: ".agents/references/validation/general.md",
                     },
                     {
                       type: "file",
                       name: "development.md",
-                      path: ".claude/agent_refs/validation/development.md",
+                      path: ".agents/references/validation/development.md",
                     },
                   ],
                 },
                 {
                   type: "directory",
                   name: "project",
-                  path: ".claude/agent_refs/project",
+                  path: ".agents/references/project",
                   children: [
                     {
                       type: "file",
                       name: "development.md",
-                      path: ".claude/agent_refs/project/development.md",
+                      path: ".agents/references/project/development.md",
                     },
                   ],
                 },
@@ -157,17 +157,17 @@ describe("Sidebar — recursive walk via uniform `children` (move 2, AC-26)", ()
     expect(screen.getAllByText("spec.md").length).toBeGreaterThan(0);
   });
 
-  it("renders top-level section names: 'Claude Settings & Shared Context' and 'Specs'", () => {
+  it("renders top-level section names: 'Agent Conventions & Shared Context' and 'Specs'", () => {
     renderSidebar(tree);
     expect(
-      screen.getByText("Claude Settings & Shared Context"),
+      screen.getByText("Agent Conventions & Shared Context"),
     ).toBeInTheDocument();
     expect(screen.getByText("Specs")).toBeInTheDocument();
   });
 
   it("descends through arbitrarily-deep children chains (regression for spec_driven-20260502-clean)", () => {
     renderSidebar(tree);
-    // Deepest file is .claude/agent_refs/project/development.md and
+    // Deepest file is .agents/references/project/development.md and
     // specs/development/spec_driven/final_specs/spec.md — must be visible.
     const devEntries = screen.getAllByText("development.md");
     expect(devEntries.length).toBeGreaterThanOrEqual(2);

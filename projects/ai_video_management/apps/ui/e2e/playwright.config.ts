@@ -13,11 +13,12 @@ export default defineConfig({
   retries: 0,
   use: {
     headless: true,
+    channel: process.env.PLAYWRIGHT_CHANNEL,
   },
   projects: [
     {
       name: "prod-mode",
-      use: { ...devices["Desktop Chrome"], baseURL: "http://127.0.0.1:8766" },
+      use: { ...devices["Desktop Chrome"], baseURL: process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:8766" },
     },
     {
       name: "dev-mode",

@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from libs.common.exposed_tree import ALLOWED_EXTENSIONS, ExposedTree
+from libs.common.exposed_tree import ALLOWED_EXTENSIONS, CONTEXT_DIRS, ExposedTree
 
 
 class TreeReader:
@@ -17,69 +17,33 @@ class TreeReader:
             "name": "root",
             "path": "",
             "children": [
-                self._claude_section(),
+                self._context_section(),
                 self._projects_section(),
             ],
         }
 
-    def _claude_section(self) -> dict[str, Any]:
+    def _context_section(self) -> dict[str, Any]:
         children: list[dict[str, Any]] = []
 
-        for f in self._exposed.claude_root_files():
+        for f in self._exposed.context_root_files():
             children.append(self._leaf_for(f))
 
-        dotclaude_node = self._build_dotclaude_node()
-        if dotclaude_node is not None:
-            children.append(dotclaude_node)
+        for name in CONTEXT_DIRS:
+            directory = self._root / name
+            if directory.is_dir():
+                children.append({
+                    "type": "directory", "name": name, "path": name,
+                    "children": self._walk_filtered(
+                        directory,
+                        lambda p: self._exposed.is_inside(self._rel(p)) and self._is_allowed_leaf(p),
+                    ),
+                })
 
         return {
             "type": "section",
-            "name": "Claude Settings & Shared Context",
+            "name": "Agent Conventions & Shared Context",
             "path": "",
             "children": children,
-        }
-
-    def _build_dotclaude_node(self) -> dict[str, Any] | None:
-        dotclaude = self._root / ".claude"
-        if not dotclaude.is_dir():
-            return None
-        sub_children: list[dict[str, Any]] = []
-
-        skills_dir = dotclaude / "skills"
-        if skills_dir.is_dir():
-            skills_children = self._walk_filtered(
-                skills_dir,
-                lambda p: p.name == "SKILL.md"
-                or (p.parent.name == "playbooks" and p.suffix == ".md"),
-            )
-            if skills_children:
-                sub_children.append(
-                    {
-                        "type": "directory",
-                        "name": "skills",
-                        "path": self._rel(skills_dir),
-                        "children": skills_children,
-                    }
-                )
-
-        refs_dir = dotclaude / "agent_refs"
-        if refs_dir.is_dir():
-            refs_children = self._walk_filtered(refs_dir, lambda p: p.suffix == ".md")
-            if refs_children:
-                sub_children.append(
-                    {
-                        "type": "directory",
-                        "name": "agent_refs",
-                        "path": self._rel(refs_dir),
-                        "children": refs_children,
-                    }
-                )
-
-        return {
-            "type": "directory",
-            "name": ".claude",
-            "path": self._rel(dotclaude),
-            "children": sub_children,
         }
 
     def _projects_section(self) -> dict[str, Any]:

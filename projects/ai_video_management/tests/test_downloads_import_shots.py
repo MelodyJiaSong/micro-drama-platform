@@ -28,6 +28,47 @@ def _touch(path: Path) -> None:
     path.write_bytes(b"x")
 
 
+def test_scene_scoped_keys_route_exactly_and_preserve_unknown_downloads(tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    drama = root / "ai_videos/td"
+    folders = {}
+    for ep, scene, shot in ((1, 1, 1), (1, 10, 1), (1, 1, 10), (2, 1, 1)):
+        folder = drama / f"episodes/ep{ep:02d}/scenes/s{scene}/shots/st{shot}"
+        folder.mkdir(parents=True)
+        folders[f"ep{ep}_s{scene}_st{shot}"] = folder
+    background = drama / "2_世界观人设/background/bg2_修道院"
+    _touch(background / "bg2_修道院.md")
+    downloads = tmp_path / "Downloads"
+    names = [f"generator_{key}_参考_bg2_修道院.mp4" for key in folders]
+    for name in names:
+        _touch(downloads / name)
+    unknown = ["ep1_s1_st_参考_bg2_修道院.mp4", "ep1_s1_st99_bg2_修道院.mp4",
+               "ep1_s1_st1x_bg2_修道院.mp4", "ep1_s1_st_参考_ep2_s1_st1.mp4"]
+    for name in unknown:
+        _touch(downloads / name)
+    result = _make_importer(root, downloads).import_drama("ai_videos/td")
+    assert len(result.moved) == 4
+    assert {item["kind"] for item in result.moved} == {"shot"}
+    assert len(result.unmatched) == len(unknown)
+    assert not result.errors
+    for key, folder in folders.items():
+        assert (folder / "renders" / f"generator_{key}_参考_bg2_修道院.mp4").is_file()
+    assert all((downloads / name).is_file() for name in unknown)
+    assert not list(background.glob("*.mp4"))
+
+
+def test_duplicate_episode_keys_are_reported_without_moving(tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    for ep in ("ep01", "ep1"):
+        (root / f"ai_videos/td/episodes/{ep}/scenes/s1/shots/st1").mkdir(parents=True)
+    downloads = tmp_path / "Downloads"
+    _touch(downloads / "ep1_s1_st1.mp4")
+    result = _make_importer(root, downloads).import_drama("ai_videos/td")
+    assert not result.moved
+    assert result.unmatched[0]["reason"] == "ambiguous_shot_key"
+    assert (downloads / "ep1_s1_st1.mp4").is_file()
+
+
 def test_import_routes_into_renders_keeping_original_names(tmp_path: Path) -> None:
     root = tmp_path / "repo"
     shot_dir = root / "ai_videos" / "td" / "episodes" / "ep01" / "shots" / "shot01"

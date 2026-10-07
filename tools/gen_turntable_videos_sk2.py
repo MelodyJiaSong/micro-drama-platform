@@ -36,6 +36,8 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 REPO = Path(__file__).resolve().parent.parent
 CHARS = REPO / "ai_videos" / "shikong_lvxing" / "sk2" / "2_世界观人设" / "characters"
+sys.path.insert(0, str(REPO))
+from tools.service_request import RequestLog
 CLI = Path.home() / "bin" / "dreamina.exe"
 
 MODEL = "seedance2.0"
@@ -47,8 +49,8 @@ POLL_MAX = 900            # 15 分钟还没好就判失败，继续下一条
 DROP = ("参考:", "参考用法:")
 
 
-def cli(*args: str, timeout: int = 300) -> dict | None:
-    p = subprocess.run([str(CLI), *args], capture_output=True, text=True,
+def cli(*args: str, timeout: int = 300, target: Path = CHARS) -> dict | None:
+    p = RequestLog(target).cli([str(CLI), *args], capture_output=True, text=True,
                        encoding="utf-8", errors="replace", timeout=timeout)
     raw = (p.stdout or "") + (p.stderr or "")
     i = raw.find("{")
@@ -119,7 +121,7 @@ def rebuild_ledger() -> dict[str, str]:
     """
     tasks = cli("list_task", timeout=180)
     if not isinstance(tasks, list):
-        p = subprocess.run([str(CLI), "list_task"], capture_output=True, text=True,
+        p = RequestLog(CHARS).cli([str(CLI), "list_task"], capture_output=True, text=True,
                            encoding="utf-8", errors="replace", timeout=180)
         raw = (p.stdout or "") + (p.stderr or "")
         i = raw.find("[")
@@ -181,11 +183,7 @@ def harvest() -> None:
 
 
 def download(url: str, dst: Path) -> int:
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=300) as r, dst.open("wb") as f:
-        while chunk := r.read(1 << 20):
-            f.write(chunk)
-    return dst.stat().st_size
+    return RequestLog(dst).download("dreamina", url, dst, timeout=300)
 
 
 def one(key: str, png: Path, dst: Path, prompt: str, dry: bool) -> str:
@@ -194,7 +192,7 @@ def one(key: str, png: Path, dst: Path, prompt: str, dry: bool) -> str:
         return "dry"
     sub = cli("image2video", "--image", str(png), f"--prompt={prompt}",
               "--duration", str(DURATION), "--video_resolution", RESOLUTION,
-              "--model_version", MODEL, "--poll", "0", timeout=600)
+              "--model_version", MODEL, "--poll", "0", timeout=600, target=dst)
     sid = (sub or {}).get("submit_id")
     if not sid:
         return f"提交失败：{str(sub)[:120]}"
@@ -204,7 +202,7 @@ def one(key: str, png: Path, dst: Path, prompt: str, dry: bool) -> str:
     while waited < POLL_MAX:
         time.sleep(POLL_EVERY)
         waited += POLL_EVERY
-        r = cli("query_result", f"--submit_id={sid}", timeout=120) or {}
+        r = cli("query_result", f"--submit_id={sid}", timeout=120, target=dst) or {}
         st = r.get("gen_status")
         if st == "success":
             vids = (r.get("result_json") or {}).get("videos") or []

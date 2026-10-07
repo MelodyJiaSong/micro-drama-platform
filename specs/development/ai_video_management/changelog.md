@@ -1,5 +1,54 @@
 # Changelog — ai_video_management
 
+## Follow-up 197 — 2026-10-05 10:53:08
+
+Source: user_input/follow_ups/202610.md - section 197
+Summary: 将Seedance无背景配乐、保留指定对白及自然环境/动作声写入三模块规则和确定性编译。
+
+Auto-updated:
+- 共用pipeline、filming/prompts指南、CONVENTIONS与当前制作参考 — 显式声音要求，无对白镜不生成人声，实际音轨出片试听。
+- common/episode_workflow与domain编译器 — compiler v3，key后及末尾固定加入声音约束；旧版本待更新。
+- 软件/剧README、需求日志、规格和验证 — 同步规则，不恢复legacy BGM，不改历史或当前EP内容。
+
+Validation: 三模块、故事profile、拼接与单镜/整集字幕相关91项测试通过，包含有/无对白、旧版本失效、确定性及字幕兼容。canon与25个skills/50个Claude入口检查通过。当前EP1无镜头/kit，无资料包sync/check范围；没有调用生成服务。审计：`.audit/adhoc_agents/2026-10-05/seedance-no-background-music/`。
+
+## Follow-up 196 — 2026-10-05 10:42:32
+
+Source: user_input/follow_ups/202610.md - section 196
+Summary: 删除legacy BGM，解除旧库、情绪预设、cue格式与生成实现对新配乐创作的影响。
+
+Auto-updated:
+- 管理应用UI/API/DI、下载导入、启动与导航 — 移除旧音乐库、cue和BGM合成页面及接口，启动不重建目录。
+- ai_videos/_bgm、旧集bgm目录及旧带配乐派生视频 — 删除本地legacy产物；媒体索引删除6条旧引用，未调用远端服务。
+- 共用pipeline与当前制作参考、README/final_specs/validation — 明确旧机制停用，新的cue流程另行设计；保留独立音乐资产、通用音频技术工具及历史审计。
+- specs/development/bgm_library — 规格/访谈/研究/验证标已停用，原需求与历史证据保留。
+
+Validation: 104项后端范围回归、9项静态页面测试、100项全量前端测试、生产构建通过；527项后端测试可正常收集。canon和25个skills/50个Claude入口检查通过。53个删除文件核对无残留；72份历史故事/run文件SHA256未变。浏览器结论与完整审计见 `.audit/adhoc_agents/2026-10-05/retire-legacy-bgm/`。
+
+## Follow-up 195 — 2026-10-05 09:17:23
+
+Source: user_input/follow_ups/202610.md - section 195
+Summary: 分离 background 环境资产与剧情 scene，增加集→场→镜头层级，统一 ep1_s1_st1 key。
+
+同步分镜/编译 JSON 契约、稳定编号与数组播放顺序、派生 prompt.txt、侧栏与精确导航、下载唯一 key 路由、定版/拼接/字幕/首尾帧消费者。其他剧仍兼容旧 scenes/shotNN。历史故事与媒体保全，不自动确定 EP1。
+
+Validation: 后端相关回归151项与后续补充44项、工具29项、前端全量99项通过；生产构建及4项浏览器用例通过。新场次浏览器使用模拟 tree/workflow，现有EP1用实际本地数据；没有付费服务调用。canon与25个skills/50个Claude入口同步检查通过。证据：`.audit/adhoc_agents/2026-10-05/scene-background-migration-20261005-091723/`。
+
+## Follow-up 181 — 2026-10-03 09:47:03
+
+Source: user_input/follow_ups/202610.md - section 181
+Summary: 四个服务调用文档、先落盘后请求的审计与按集/资产集合查看的 UI。
+
+Auto-updated:
+- 共用 `paid_services.md`、CONVENTIONS、pipeline skill — 服务说明、日志归属与调用前必经步骤。
+- `tools/service_request.py`、`service_call.py` 与既有生成适配器、Cascadeur 桥、Blender addon — 完整请求与结果关联、脱敏、日志失败阻断、未知提交不重提。
+- 管理应用 reader/query/DTO/route、侧栏与请求日志页 — 只读分页审查；普通编辑路径不能覆盖日志。
+- final_specs/spec.md、validation/{strategy,acceptance_criteria}.md、user_input/revised_prompt.md — 同步新增需求和局部验证。
+
+边界：不提交付费任务；不补造历史；Dreamina CLI 内部 HTTP 不可逐条观测，外部安装的 addon 必须更新重载才生效。
+
+Validation: 17 个日志/适配器测试、10 个后端/启动测试、2 个前端组件测试、生产/开发两种模式的 2 个浏览器测试通过；生产构建、skill 入口同步与 canon 检查通过。浏览器使用本机 Edge（默认 Playwright 浏览器未安装），tree 与日志数据均为模拟，不产生服务请求。生产包现有 WebAssembly CSP 报错在首页和请求日志页均可复现，作为既有问题记录；本次浏览器检查断言新页面不增加首页基线之外的错误。
+
 Append-only follow-up audit log. Each entry records what the follow-up changed and which downstream artifacts were patched in the same turn.
 
 ## Follow-up 112 — 2026-05-24 10:04:44
@@ -5170,3 +5219,161 @@ Auto-updated:
 
 No conflicts found in: DownloadsImporter（m 键本来就能导入）
 
+## Proposal — 2026-10-02 · Multi-Agent 编剧系统（未实施）
+
+用户要求先检查现有项目，提出 Writer's Room / Character Simulation / Story Memory / Script QA 的完整设计，一次性收集影响架构的关键问题，回答后再实现。
+
+- 已检查管理应用、现有 LLM 调用、独立评测系统、工作流 UI、短剧布局与剧本/状态/目标/审稿指纹工具。
+- 设计草案：`findings/writers_room_proposal.md`（`proposal_pending_answers`）。建议复用管理应用与独立评测，增加可恢复编剧运行器与文件事件记忆；保留 `script.md` 台词唯一源及现有媒体人工关卡。
+- 待用户回答：真实模型后端、运行预算/范围、自主改动及正式接受策略。本文尚未批准为实现规格；未修改应用代码、skills 或短剧产物，未执行付费模型调用。
+
+
+## Follow-up 182–183 — 2026-10-03 20:58:16
+Source: user_input/follow_ups/202610.md - sections 182–183
+Summary: 三模块最小POC及魔兽世界五项左侧导航，移除EP1创作入口。
+
+Auto-updated:
+- final_specs/spec.md、validation/acceptance_criteria.md、README.md — 三模块职责、交接与导航约定。
+- tree__reader、Sidebar、DramaPage、EpisodeWorkflowPage — 独立研究/资产，模块直达结构化主工作区。
+- episode_workflow相关API及分层实现 — 版本冲突、单模块保存与固定编译。
+- 工作流图及共用ai-videos-pipeline — 删除旧阶段，最小模块及支持指南。
+
+其他剧保持现有结构。旧角色访谈与服务日志API保留兼容，不进入新创作主线。为现有模型预览器允许WASM执行，JS unsafe-eval仍禁止。
+
+
+## Follow-up 184 — 2026-10-03 21:04:17
+Source: user_input/follow_ups/202610.md - section 184
+Summary: 创作stage改为可展开目录，选择EP1子项进入产物编辑。
+
+Auto-updated:
+- tree__reader、Sidebar — stage目录及按集子项；点击stage仅展开/收起。
+- EpisodeWorkflowPage、DramaPage — 选择具体内容后显示单一编辑区，无重复模块卡片。
+- final_specs/spec.md、validation/acceptance_criteria.md、README.md — stage与产物层级。
+- tree显示测试、episode_workflow.spec.ts — 按集发现、展开折叠、stage不跳页及子项导航。
+
+## Follow-up 185 — 2026-10-03 21:27:59
+Source: user_input/follow_ups/202610.md - section 185
+Summary: 新增最小世界规则及EP1状态变化记录；故事stage的EP1展开为故事正文、状态变化。复用文档编辑能力，当前承接由人工核对；既有资产卡只作候选资料，不自动继承旧剧情。
+
+更新：世界规则、state_changes.md、树导航与支持文档编辑入口；共用story/assets指南明确事实生命周期。故事、分镜和prompt内容保持原版本。
+
+
+## Follow-up 186 — 2026-10-03 22:30:19
+Source: user_input/follow_ups/202610.md - section 186
+Summary: 实现独立run创建CLI、只读索引/详情API和友好创作记录页；EP新增共享创作输入及记录入口。UI移除三模块和支持文档编辑入口；共享流程固定输入、独立作者/审稿与逐项主编决策。run story-run-20261003-214907-dd638b81生成《一枚铜币》候选：四项作者提案采纳，审稿的魔兽辨识度建议暂缓，无真实否决；正文载入草稿，世界规则与已接受状态未写入候选。技术团队单独标scope。
+
+规则唯一源：.agents/skills/ai-videos-pipeline/modules/story-runs.md；实现与验证记录：.audit/adhoc_agents/2026-10-03/story-run-20261003-214907-dd638b81/。先前支持文档手工编辑约定由本次只读要求替代。
+
+
+## Follow-up 187 — 2026-10-03 23:18:33
+Source: user_input/follow_ups/202610.md - section 187
+Summary: 建立EP/shared明确profile及分离input/rules，保留两次完全相同冻结输入。Run1《一枚铜币》，Run2《少掉的两枚铜币》，作者/审稿均新独立上下文；两稿差异和高度相近结构如实保留。新增共享输入/规则友好页面、A/B比较、soft promote CLI和current selection历史/指纹。左侧EP1分共享配置、当前EP1、runs；每run再分产出与过程。UI只读，复制选用命令。
+
+Run2: .audit/adhoc_agents/2026-10-03/story-run-20261003-144640-85f316d4/。共用要求在story-runs.md；旧story_input.json原样移shared/previous_configuration.json，未丢失配置。当前EP1仍选Run1草稿，Run2未自动覆盖；两次同规则不是单条规则的因果验证。验证详情见本run validation.json。
+
+## Follow-up 188 — 2026-10-04 09:49:27
+Source: user_input/follow_ups/202610.md - section 188
+Summary: 左nav每文档独立页面，移除聚合tab，独立对比及路由高亮。
+
+Auto-updated:
+- final_specs/spec.md、validation/acceptance_criteria.md — 独立页及导航验收。
+- projects/ai_video_management/apps/ui/、README.md — 独立文档组件和路由。
+- .agents/skills/ai-videos-pipeline/modules/story-runs.md — 共用UI约束。
+
+No conflicts found in: 故事候选、历史run、共享profile、后端契约与已确定状态；访谈与研究资料不受本次UI局部调整影响。
+
+## Follow-up 189 — 2026-10-04 10:29:04
+Source: user_input/follow_ups/202610.md - section 189
+Summary: 当前EP导航只作为所选run的soft link，去掉另一套正文/状态子文档。
+
+Auto-updated:
+- final_specs/spec.md、validation/acceptance_criteria.md、README.md、story-runs.md — 当前入口指针语义。
+- tree__reader.py、Sidebar.tsx及相关测试 — 根据selection构建链接并定位真实run文档。
+
+No conflicts found in: 故事候选、冻结输入、promote业务、已确定状态；访谈/研究不受本次局部导航调整影响。
+
+## Follow-up 191 — 2026-10-04 22:41:46
+
+Source: user_input/follow_ups/202610.md - section 191
+Summary: 全局影视改编下记录可复用的镜头类型、景别及选用知识，去掉视频时间轴。
+
+Auto-updated:
+- `.agents/references/project/ai_video_shot_sizes.md` — 唯一知识正文：三类功能、七种景别、定义/信息/使用边界、定性比较与改编落点，保留字幕来源和口径限制。
+- `.agents/skills/ai-videos-pipeline/modules/filming.md` — 引用同源知识，不增加字段或QC。
+- `projects/ai_video_management/apps/ui/src/components/FilmingKnowledgePage.{tsx,css}`、`src/vite-env.d.ts` — 直接打包共用Markdown，安全只读渲染，可滚动表格。
+- `projects/ai_video_management/apps/ui/src/{App.tsx,components/WorkflowPage.tsx,components/Sidebar.tsx}` — 全局入口和深链接；树加载/失败时仍展示全局导航。
+- `projects/ai_video_management/README.md`、`final_specs/spec.md`、`validation/{strategy,acceptance_criteria}.md`、`user_input/{follow_ups/202610,revised_prompt}.md` — 记录入口、来源及验收。
+
+Validation: 前端构建通过；12个测试文件/90项测试通过；生产与开发模式均验证入口、刷新、六张表、窄屏滚动和树失败导航；共用引用、25个skill/50个适配入口及check_canon通过。浏览器证据在 `.audit/adhoc_agents/2026-10-04/filming-knowledge/`。构建仍提示大bundle，现有测试提示React Router未来选项。
+
+No conflicts found in: interview/qa.md、findings/dossier.md及相关angle、后端/安全验收、已有剧集产物与既有景别机检规则；未改这些内容。
+
+## Follow-up 190 / 192 — 2026-10-04
+
+Source: user_input/follow_ups/202610.md - sections 190、192
+Summary: 每run显式输入与规则/产出/过程；用户休息期间自主完成本范围实现、溯源核对及验证。
+
+更新：只读详情派生实际关联清单；设定、背景、三份流程快照、实际任务、用户要求与可观察运行条件逐项打开，显示来源、取用范围、当时指纹及源版本变化。审稿实际输入包、作者初稿、真实追加指令、完整事件及逐项取舍独立关联。独立审计文件仅在历史SHA256一致时显示内容，不能把未采用的后续profile登记当成生成输入。历史缺失条件明确标缺口；原run与输入不改。
+
+UI：每软链接有独立EP/run/item深链接、唯一标题及选中状态；修复空currentPath导致多处高亮的问题。文件元数据单独展示，规则内部引用打开同run冻结版本，未记录引用不误跳页面。README、共用story-runs、spec与验收约定同步；魔兽两run完整清单在 `specs/ai_video/shengji_zhilu/findings/run-input-inventory-20261004.md`。
+
+Validation: 相关后端69项通过、1项因Windows符号链接权限跳过；前端12个文件91项通过；生产构建通过。生产5项浏览器检查通过，增加审稿包/初稿后专项复验通过；开发4项通过、专项复验通过。开发中曾有一次tree HTTP500，六次直接API读取及之后深链接复验均通过，未证明具体原因。共用规则与25个skill/50个入口检查通过；本范围diff检查通过。证据与原文件指纹在 `.audit/adhoc_agents/2026-10-04/run-explicit-io/`。
+
+并发维护：保留其他会话的镜头知识与故事指南改动；将本次自主执行记录编号为192、剧记录编号为007，避免与其他会话191/006重号。两项目revised_prompt由原始输入与全部follow-ups重新汇总。未改访谈/研究结论、候选故事、选择记录、已确定状态、资产或媒体。
+
+## Follow-up 193 — 2026-10-05 07:40:08
+Source: user_input/follow_ups/202610.md - section 193
+Summary: 工作流从工具栏按钮移入普通左侧导航树，三个模块为第二层项，影视改编下可继续展开镜头类型与景别。
+
+Auto-updated:
+- Sidebar、workflowData、TreeNode、App与WorkflowPage — 复用树的行样式、缩进、鼠标/键盘展开、精确路由高亮、深链接祖先展开及折叠全部；故事和Prompt模块说明可独立打开，原影视知识URL保留，文件树不可用时全局项仍可访问。
+- README、spec、validation/strategy、revised_prompt — 固化导航层级与局部验证范围；现有故事记录测试按具体叶子选取节点，新增导航行为浏览器用例。
+
+Validation: 前端12个文件91项通过；最终生产构建通过，生产/开发导航4项浏览器检查通过。独立生产核验环境加载完整真实文件树并截图；生产/开发均验证文件树503时全局导航可用，无JS页面错误。首次默认Playwright浏览器缺失，改用已安装Chrome完成；额外完整文件树检查在原8766服务观察超时，独立8767服务通过，未确认原服务超时原因。diff检查通过；大bundle警告及React Router未来选项提示仍在。证据：.audit/adhoc_agents/2026-10-05/workflow-navigation-20261005-074008/。
+
+No conflicts found in: 既有各剧导航、后端API与安全契约、故事/状态/选用记录、资产及媒体；未改访谈与研究结论、共用制作流程。现有服务保留，临时核验服务收尾关闭。
+
+
+## Follow-up 194 — 2026-10-05 07:57:09 — 全局设置纳入工作流
+
+Source: user_input/follow_ups/202610.md - section 194
+
+目录统一跨剧创作、代理执行、服务模型、制作验收及共享支持源；动态只读导航、脱敏配置、版本与run来源核对已实现。魔兽世界EP1两run的6个关联/3份共用源全部登记，冻结输入与run日志不变。后端40通过/2项原生symlink跳过（junction验证通过），前端94通过，生产/开发导航和真实文件树共存通过；构建、canon及25 skills/50 Claude入口一致性通过。审计：.audit/adhoc_agents/2026-10-05/global-workflow-settings/。
+
+## Follow-up 198 — 2026-10-05 20:41:15
+
+Source: user_input/follow_ups/202610.md - section 198
+Summary: 目录增加两类与稳定编号注册表；90份当前全局源已编号。左nav按类别→模块/设置组→源分层，run输入与来源核对展示当前编号；保留路径身份和历史冻结内容，未编号新发现项明确显示待编号。
+
+Auto-updated:
+- .agents/references/project/workflow_catalog.json — 类别、组编号及90个源编号映射
+- CONVENTIONS.md — 稳定全局引用编号与历史版本边界
+- projects/ai_video_management/libs/{infrastructure/{daos,readers},application/{dtos,queries}}/global_workflow__*.py — 编号验证与只读API投影
+- projects/ai_video_management/apps/ui/src/lib/{globalWorkflow,workflowData}.ts — 同源类别和编号导航
+- projects/ai_video_management/apps/ui/src/{App.tsx,components/{GlobalWorkflowPage,WorkflowPage,StoryRunItemPage}.tsx} — 页面、深链接和run引用显示
+- projects/ai_video_management/{tests/test_global_workflow.py,apps/ui/{test/global-workflow.test.ts,e2e/global_workflow.spec.ts}} — 稳定编号及新层级验证
+- projects/ai_video_management/README.md及本项目specs的指令/规格/验证/变更记录
+
+No conflicts found in: interview/qa.md、findings/dossier.md及相关angle；已有收费调用授权、源文件安全/脱敏边界；原source_id与剧集/run冻结输入。
+
+Validation: 100 frontend tests passed; 9 global backend tests passed / 1 Windows symlink test skipped; 6 prod/dev e2e checks passed; final navigation tests passed; numbered run reference visible in visual check. Skill adapters and canon checks passed. Evidence: .audit/adhoc_agents/2026-10-05/global-settings-numbering/.
+
+## Follow-up 199 — 2026-10-06 — 工作流覆盖与跨 session 接续
+
+补齐跨剧指南引用、Prompt 编译实现、角色/声线描述池与工具默认值；215份来源已编号，已有90个编号不变，59份历史来源标历史。覆盖页实时核对可读性、编号、分类、现存共用文件引用与 run 来源；系列成员纳入扫描。默认值提取包含函数、CLI与环境名称，不执行源码。共用 AGENTS/CONVENTIONS/pipeline/ai_video_workflow.md 写明维护与跨 session 接续；局部输入、历史快照与隐藏外部上下文有明确边界。
+
+Auto-updated: 共用入口与目录；global_workflow reader/query/common 和静态投影/引用解析；UI覆盖页/导航/API类型；后端及浏览器测试；项目README与本项目 user_input/interview/findings/final_specs/validation。No conflicts found in: 已有编号、收费授权和审计规则、剧内内容与历史run冻结输入。
+
+Validation: 13 backend checks passed / 1 Windows symlink privilege skip; 100 frontend tests passed; UI build passed; 6 prod/dev browser checks passed; 390px/1440px视觉检查无页面溢出或运行错误；skill adapters / canon checks passed。全仓diff检查报告其他会话的10处剧内文件EOF空行，本次不改这些文件；本次范围另行检查。Evidence: `.audit/adhoc_agents/2026-10-06/workflow-coverage/`。
+
+
+## Follow-up 200 — 2026-10-06 09:18:47
+
+Source: user_input/follow_ups/202610.md - section 200
+Summary: 故事创作拆成内容与执行两类、各六个主题；章节独立只读查看，原文与稳定编号保留。
+
+Auto-updated: workflow_catalog.json、story_guidelines.md、story-runs.md、story.md和ai_video_workflow.md；UI导航/目录/章节阅读及相关测试；项目README与user_input/final_specs/validation。
+
+No conflicts found in: interview/qa.md、findings/dossier.md及相关angle；既有收费授权、读取安全边界、规则ID和源编号；剧集故事、选用记录、profile与历史run冻结输入。
+
+Validation: 前端14文件104项通过；后端13通过/1项Windows符号链接权限跳过；生产/开发各4项浏览器检查通过，涵盖12主题、唯一高亮、深链接/刷新、原文回跳及390px无页面溢出。构建、25 skills/50适配入口、canon、引用/编号/规则ID/剧集JSON指纹及本次空白检查通过。一次生产请求与构建并发时返回404，构建完成后专项复验通过；测试脚本的导入、扫描和导航问题已修正后复验。大bundle及React Router未来选项提示仍在。Evidence: `.audit/adhoc_agents/2026-10-06/story-content-execution/`。

@@ -9,9 +9,13 @@ file defines its own `APIRouter()`.
 from __future__ import annotations
 
 from fastapi import APIRouter
+from apps.api.routes.global_workflow__route import router as _global_workflow_router
+from apps.api.routes.request_log__route import router as _request_log_router
+from apps.api.routes.episode_workflow__route import router as _episode_workflow_router
+from apps.api.routes.story_runs__route import router as _story_runs_router
+from apps.api.routes.story_input__route import router as _story_input_router
 
 from apps.api.routes.actor__route import router as _actor_router
-from apps.api.routes.bgm__route import router as _bgm_router
 from apps.api.routes.casting__route import router as _casting_router
 from apps.api.routes.character__route import router as _character_router
 from apps.api.routes.character_video__route import router as _character_video_router
@@ -19,14 +23,12 @@ from apps.api.routes.downloads__route import router as _downloads_router
 from apps.api.routes.health__route import router as _health_router
 from apps.api.routes.drama__route import router as _drama_router
 from apps.api.routes.episode__route import router as _episode_router
-from apps.api.routes.episode_bgm__route import router as _episode_bgm_router
 from apps.api.routes.eval_center__route import router as _eval_center_router
 from apps.api.routes.file__route import router as _file_router
 from apps.api.routes.frame__route import router as _frame_router
 from apps.api.routes.intro_card__route import router as _intro_card_router
 from apps.api.routes.scene_plate__route import router as _scene_plate_router
 from apps.api.routes.media__route import router as _media_router
-from apps.api.routes.mux__route import router as _mux_router
 from apps.api.routes.novel__route import router as _novel_router
 from apps.api.routes.previz__route import router as _previz_router
 from apps.api.routes.perf_check__route import router as _perf_check_router
@@ -40,7 +42,15 @@ from apps.api.routes.subtitle__route import router as _subtitle_router
 from apps.api.routes.tree__route import router as _tree_router
 from apps.api.routes.voice__route import router as _voice_router
 
+from apps.api.routes.writers_room__route import router as _writers_room_router
+
 router = APIRouter()
+router.include_router(_global_workflow_router)
+router.include_router(_episode_workflow_router)
+router.include_router(_story_runs_router)
+router.include_router(_story_input_router)
+router.include_router(_request_log_router)
+router.include_router(_writers_room_router)
 router.include_router(_tree_router)
 router.include_router(_file_router)
 router.include_router(_media_router)
@@ -49,12 +59,10 @@ router.include_router(_scene_plate_router)
 router.include_router(_downloads_router)
 router.include_router(_health_router)
 router.include_router(_actor_router)
-router.include_router(_bgm_router)
 router.include_router(_casting_router)
 router.include_router(_character_router)
 router.include_router(_character_video_router)
 router.include_router(_episode_router)
-router.include_router(_episode_bgm_router)
 router.include_router(_novel_router)
 router.include_router(_voice_router)
 router.include_router(_prompt_router)
@@ -69,4 +77,3 @@ router.include_router(_drama_router)
 router.include_router(_eval_center_router)
 router.include_router(_research_router)
 router.include_router(_previz_router)
-router.include_router(_mux_router)

@@ -14,7 +14,14 @@ import sys
 import tomllib
 from pathlib import Path
 
-LIMITS = {"min_s": 2.0, "max_s": 15.0, "min_fps": 24, "max_fps": 60, "min_pixels": 409_600, "max_videos": 10}
+MODEL_LIMITS = {
+    "seedance2.5": {"max_images": 30, "max_videos": 10, "max_audios": 10, "max_seconds": 30},
+    "seedance2.0": {"max_images": 9, "max_videos": 3, "max_audios": 3, "max_seconds": 15},
+}
+MODEL_SOURCE = "https://seed.bytedance.com/en/blog/one-take-creation-flexible-referencing-introducing-seedance-2-5"
+MODEL_ALIASES = {model: "seedance2.0" for model in ("seedance2.0fast", "seedance2.0_vip", "seedance2.0fast_vip")}
+LIMITS = {"min_s": 2.0, "max_s": 15.0, "min_fps": 24, "max_fps": 60, "min_pixels": 409_600,
+          "max_videos": MODEL_LIMITS["seedance2.5"]["max_videos"]}
 SNAP_S = 3.0      # 均分点 ±3 s 内有镜内硬切就对齐到它
 
 

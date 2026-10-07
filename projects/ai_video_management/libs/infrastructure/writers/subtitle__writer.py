@@ -1,7 +1,7 @@
 """Burn per-shot dialogue subtitles into a rendered shot mp4, and scaffold
 the per-shot `subtitles.md` dialogue-timeline file.
 
-Layout contract (per `.claude/agent_refs/project/ai_video.md`): a shot lives
+Layout contract (per `.agents/references/project/ai_video.md`): a shot lives
 at `…/shots/shot{NN}/`, holding `shot{NN}.md` plus one or more rendered takes
 under `…/shots/shot{NN}/renders/`. The dialogue timeline is a single
 `…/shots/shot{NN}/subtitles.md` shared by every take.
@@ -31,6 +31,7 @@ import subprocess
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path
+from libs.common.production_key import folder_shot_key, shot_identity
 
 import imageio_ffmpeg
 
@@ -137,7 +138,7 @@ class SubtitleBurner:
         # the shot's imported takes can be burned; the output name is stable, so
         # re-burning overwrites the same language master. Episode concat then
         # picks these by language.
-        out_path = shot_folder / f"{shot_folder.name}_{_LANG_SUFFIX[lang]}.mp4"
+        out_path = shot_folder / f"{shot_identity(shot_folder)}_{_LANG_SUFFIX[lang]}.mp4"
         with tempfile.TemporaryDirectory() as tmp:
             ass_path = Path(tmp) / "sub.ass"
             ass_path.write_text(cues_to_ass(cues, lang), encoding="utf-8")
@@ -248,13 +249,25 @@ class SubtitleBurner:
         the nearest `shotNN` ancestor so a render nested anywhere under
         `renders/` still maps to the shot root."""
         for anc in (src.parent, *src.parent.parents):
-            if _SHOT_DIR_RE.match(anc.name):
+            if _SHOT_DIR_RE.match(anc.name) or folder_shot_key(anc) is not None:
                 return anc
         if src.parent.name == RENDERS_DIR_NAME:
             return src.parent.parent
         return src.parent
 
     def _read_shot_dialogue(self, shot_folder: Path) -> tuple[float, list[str]]:
+        key = folder_shot_key(shot_folder)
+        if key is not None:
+            prompt = self._resolver.resolve(self._rel(shot_folder / "prompt.txt"))
+            if prompt is None or not prompt.is_file():
+                return 5.0, []
+            text = prompt.read_text(encoding="utf-8")
+            if not text.splitlines() or text.splitlines()[0] != key.value:
+                return 5.0, []
+            duration = re.search(r"^时长：(\d+)秒。$", text, re.M)
+            dialogue = re.search(r"^对白：(.*?)\n连续镜头，不要切镜。", text, re.M | re.S)
+            lines = dialogue[1].strip().splitlines() if dialogue and dialogue[1].strip() != "无" else []
+            return float(duration[1]) if duration else 5.0, lines
         shot_md = shot_folder / f"{shot_folder.name}.md"
         if not shot_md.is_file():
             candidates = sorted(shot_folder.glob("shot*.md"))

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """镜间切口（接缝）判定 —— 全仓唯一一份实现。
 
-契约出处：`CLAUDE.md` 【TOP PRIORITY】· `.claude/agent_refs/project/ai_video_jingbie.md` §2.0 ·
+契约出处：`CLAUDE.md` 【TOP PRIORITY】· `.agents/references/project/ai_video_jingbie.md` §2.0 ·
 `ai_video.md` rule 16.5–16.7 · `ai_videos__格式契约` K31。
 
 用户要的是**两条 clip 首尾直接相接就成片**，不需要转场、补帧、色彩对齐或任何接缝处理。

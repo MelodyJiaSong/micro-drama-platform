@@ -52,7 +52,8 @@ def _section_title(source: str) -> str | None:
 
 
 def _duration_seconds(source: str) -> int:
-    match = re.search(r"^时长:\s*`?\s*(\d+)", source, re.M)
+    match = (re.search(r"^duration_s:\s*(\d+)", source, re.M)
+             or re.search(r"^时长:\s*`?\s*(\d+)", source, re.M))
     return int(match.group(1)) if match else 0
 
 
@@ -93,15 +94,18 @@ def build_episode(ep_dir: str) -> tuple[int, int]:
         source = _read(shot_file)
         name = os.path.basename(os.path.dirname(shot_file))
         title = _section_title(source) or name
-        video = _text_block(source, VIDEO_HEADING)
+        single = bool(re.search(r"^prompt_format: single_full$", source, re.M))
+        english = bool(re.search(r"^prompt_language: en$", source, re.M))
+        video = _text_block(source, "Seedance prompt") if single or english else _text_block(source, VIDEO_HEADING)
         if video is None:
             raise SystemExit(f"{shot_file}: missing `## {VIDEO_HEADING}` block")
         total_seconds += _duration_seconds(source)
 
         parts.append(f"\n## {title}\n```text\n{video}\n```\n")
-        tts = _text_block(source, TTS_HEADING)
-        if tts is not None:
-            parts.append(f"\n### 台词配音 prompt\n```text\n{tts}\n```\n")
+        section = re.search(r"^## 台词配音 prompt[^\n]*\n(.*?)(?=^## |\Z)", source, re.S | re.M)
+        voices = re.findall(r"```text\n(.*?)\n```", section[1], re.S) if section else []
+        for index, voice in enumerate(voices, 1):
+            parts.append(f"\n### 台词配音 prompt {index}\n```text\n{voice}\n```\n")
 
     with open(snapshot_path, "w", encoding="utf-8", newline="\n") as fh:
         fh.write("".join(parts))

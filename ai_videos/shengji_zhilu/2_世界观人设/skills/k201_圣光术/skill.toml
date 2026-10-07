@@ -128,21 +128,3 @@ who = "c14_Brother_Sammuel"
 [[learned]]
 who = "c19_Brother_Wilhelm"
 
-[[learned]]
-who = "c1_Aaron"
-ep = "ep01"
-shot = "S08"
-teacher = "c14_Brother_Sammuel"
-
-# 剧本里施法那一行要写到的（正则，任一命中；目标账本 G7c 读这里，每集 goals.toml 不再各写一份）
-[script]
-stance = ["站稳", "跪稳"]
-hand = ["掌心"]
-flow = ["拢[起着][^，。；]{0,12}光", "光柱", "罩下", "罩住"]
-
-# 一只手握着兵器时（S21 右手握锤）：握锤的右手垂在腰侧、指缝里透光，空着的左手拢光抬到头侧
-[variant."持锤".look]
-gather = "{施法者}右手握锤柄垂在腰侧，左手掌心拢着一团{力度}暖金色的光、随即抬到头侧，握锤的右手指缝里也透出光，光只亮在手上"
-
-[variant."持锤".short]
-gather = "{施法者}右手握锤垂在腰侧，左手掌心拢着一团{力度}暖金色的光抬在头侧"

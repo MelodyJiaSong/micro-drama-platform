@@ -48,7 +48,7 @@ ETHNIC = re.compile(r"白人|欧洲|西欧|北欧|东亚|中国|华人|汉族|�
 # （projects/ai_video_management/libs/domain/value_objects/character_video__valueobject.py）。
 VIEWS_DIR = "views"
 # 旧名：导入器的改名 pass 曾把 views/ 按文件名排序改成 views1/2/3.png（back < front < side；
-# shengji_zhilu follow-up 048，c2_Duke 看图核实）。盘上旧图不改名——已进 R2 索引 assets.json。
+# shengji_zhilu follow-up 048，c2_Duke 看图核实）。旧剧保留回读；魔兽世界2026-10-03按用户要求迁移为英文方向后缀。
 LEGACY_VIEW_INDEX: dict[str, int] = {"back": 1, "front": 2, "side": 3}
 
 
@@ -110,7 +110,7 @@ def run_one(j: Job, engine: str, args: argparse.Namespace) -> str:
         # 网络超时先退避重试，别一失败就退贵的 ElevenLabs（实测 2026-09-25 即梦接口 2–5s 才回头，CLI 频繁超时）
         for attempt in range(bgi.UPLOAD_RETRIES + 1):
             try:
-                url, cost = gba._dm_submit(j.prompt, [], j.aspect, wait_s=900)
+                url, cost = gba._dm_submit(j.prompt, [], j.aspect, wait_s=900, target=j.out)
                 break
             except RuntimeError as e:
                 if not bgi.RETRYABLE.search(str(e)) or attempt == bgi.UPLOAD_RETRIES:
@@ -122,7 +122,7 @@ def run_one(j: Job, engine: str, args: argparse.Namespace) -> str:
         return f"credits={cost}"
     key = el.api_key()
     gid = el.create(key, j.prompt, model=args.model, quality=args.quality,
-                    aspect=j.aspect, resolution=args.resolution)
+                    aspect=j.aspect, resolution=args.resolution, target=j.out)
     el.wait_download(key, gid, part)
     part.replace(j.out)
     return f"gid={gid}"

@@ -1,6 +1,6 @@
 # k401 · 火球术（Fireball）
 
-> 由 `skill.toml` 生成，别手改（`python tools/skills_lib.py md <剧>`）。技能库规则见 `.claude/agent_refs/project/ai_video.md` rule 45。
+> 由 `skill.toml` 生成，别手改（`python tools/skills_lib.py md <剧>`）。技能库规则见 `.agents/references/project/ai_video.md` rule 45。
 
 | 项 | 内容 |
 |---|---|

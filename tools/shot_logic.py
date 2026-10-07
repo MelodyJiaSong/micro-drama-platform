@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """镜内逻辑自洽检查 —— 全仓唯一一份实现（格式契约 K33 的可执行版）。
 
-契约出处：`.claude/agent_refs/project/ai_video.md` rule 16.10 / 16.11。
+契约出处：`.agents/references/project/ai_video.md` rule 16.10 / 16.11。
 
 ## 这两个 bug 是同一个病
 

@@ -16,16 +16,29 @@ from __future__ import annotations
 from pathlib import Path
 
 from dependency_injector import containers, providers
+from libs.application.queries.request_log__query import RequestLogQuery
+from libs.infrastructure.readers.request_log__reader import RequestLogReader
+from libs.application.commands.episode_workflow__command import EpisodeWorkflowCommand
+from libs.application.queries.episode_workflow__query import EpisodeWorkflowQuery
+from libs.infrastructure.readers.episode_workflow__reader import EpisodeWorkflowReader
+from libs.infrastructure.writers.episode_workflow__writer import EpisodeWorkflowWriter
+from libs.application.queries.story_runs__query import StoryRunsQuery
+from libs.application.queries.global_workflow__query import GlobalWorkflowQuery
+from libs.infrastructure.readers.global_workflow__reader import GlobalWorkflowReader
+from libs.infrastructure.readers.story_runs__reader import StoryRunsReader
+from libs.application.commands.story_run__command import StoryRunCommand
+from libs.infrastructure.writers.story_runs__writer import StoryRunsWriter
+from libs.infrastructure.readers.story_input__reader import StoryInputReader
+from libs.application.queries.story_input__query import StoryInputQuery
+from libs.infrastructure.readers.story_selection__reader import StorySelectionReader
 
 from libs.application.commands.actor__command import ActorCommand
-from libs.application.commands.bgm__command import BgmCommand
 from libs.application.commands.casting__command import CastingCommand
 from libs.application.commands.character_video__command import CharacterVideoCommand
 from libs.application.queries.character__query import CharacterQuery
 from libs.application.commands.downloads__command import DownloadsCommand
 from libs.application.commands.episode__command import EpisodeCommand
 from libs.application.commands.eval_center__command import EvalCenterCommand
-from libs.application.commands.episode_bgm__command import EpisodeBgmCommand
 from libs.application.commands.episode_takes__command import EpisodeTakesCommand
 from libs.application.commands.drama_takes__command import DramaTakesCommand
 from libs.application.queries.drama_episodes__query import DramaEpisodesQuery
@@ -35,7 +48,6 @@ from libs.application.commands.frame__command import FrameCommand
 from libs.application.commands.scene_plate__command import ScenePlateCommand
 from libs.application.commands.intro_card__command import IntroCardCommand
 from libs.application.commands.media__command import MediaCommand
-from libs.application.commands.mux__command import MuxCommand
 from libs.application.commands.novel__command import NovelCommand
 from libs.application.commands.perf_score__command import PerfScoreCommand
 from libs.application.commands.production__command import ProductionCommand
@@ -44,10 +56,8 @@ from libs.application.commands.subtitle__command import SubtitleCommand
 from libs.application.commands.subtitle_batch__command import SubtitleBatchCommand
 from libs.application.commands.voice__command import VoiceCommand
 from libs.application.queries.actor__query import ActorQuery
-from libs.application.queries.bgm__query import BgmQuery
 from libs.application.queries.casting__query import CastingQuery
 from libs.application.queries.episode__query import EpisodeQuery
-from libs.application.queries.episode_bgm__query import EpisodeBgmQuery
 from libs.application.queries.file__query import FileQuery
 from libs.application.queries.eval_center__query import EvalCenterQuery
 from libs.application.commands.research__command import ResearchCommand
@@ -66,11 +76,9 @@ from libs.common.exposed_tree import ExposedTree
 from libs.common.origin import BoundOrigin
 from libs.common.safe_resolve import SafeResolver
 from libs.infrastructure.clients.anthropic__client import AnthropicClient
-from libs.infrastructure.readers.bgm_reference__reader import BgmReferenceReader
 from libs.infrastructure.readers.file__reader import FileReader
 from libs.infrastructure.readers.eval_center__reader import EvalCenterReader
 from libs.infrastructure.readers.research__reader import ResearchReader
-from libs.infrastructure.writers.mux__writer import BgmMuxer
 from libs.infrastructure.writers.research__writer import ResearchWriter
 from libs.infrastructure.readers.perf_check__reader import PerfCheckPromptReader
 from libs.infrastructure.readers.performance_library__reader import PerformanceLibraryReader
@@ -82,7 +90,6 @@ from libs.infrastructure.readers.scene_registry__reader import SceneRegistryRead
 from libs.infrastructure.readers.scene_route__reader import SceneKeyRouter
 from libs.infrastructure.readers.tree__reader import TreeReader
 from libs.infrastructure.writers.actor__writer import ActorPool
-from libs.infrastructure.writers.bgm__writer import BgmPool
 from libs.infrastructure.writers.casting__writer import Casting
 from libs.infrastructure.writers.character_video__writer import (
     CharacterVideoTruncator,
@@ -91,7 +98,6 @@ from libs.infrastructure.writers.character_video__writer import (
 )
 from libs.infrastructure.writers.downloads__writer import DownloadsImporter
 from libs.infrastructure.writers.episode__writer import EpisodeConcatBuilder
-from libs.infrastructure.writers.episode_bgm__writer import EpisodeBgmManager
 from libs.infrastructure.writers.episode_takes__writer import EpisodeTakesSelector
 from libs.infrastructure.writers.drama_takes__writer import DramaTakesSelector
 from libs.infrastructure.readers.drama_episodes__reader import DramaEpisodesReader
@@ -112,11 +118,38 @@ from libs.infrastructure.writers.previz__writer import PrevizRenderer
 from libs.infrastructure.writers.voice__writer import VoicePool
 
 
+from libs.application.commands.character_interview__command import CharacterInterviewCommand
+from libs.application.queries.writers_room__query import WritersRoomQuery
+from libs.infrastructure.readers.writers_room__reader import WritersRoomReader
+from libs.infrastructure.writers.writers_room__writer import WritersRoomWriter
+
+
 class Container(containers.DeclarativeContainer):
     wiring_config = containers.WiringConfiguration(packages=["apps.api.routes"])
 
     repo_root_path: providers.Dependency[Path] = providers.Dependency()
     bound_origin: providers.Dependency[BoundOrigin] = providers.Dependency()
+
+    episode_workflow_reader = providers.Singleton(EpisodeWorkflowReader, repo_root=repo_root_path)
+    story_runs_reader = providers.Singleton(StoryRunsReader, repo_root=repo_root_path)
+    global_workflow_reader = providers.Singleton(GlobalWorkflowReader, repo_root=repo_root_path)
+    global_workflow_query = providers.Factory(GlobalWorkflowQuery, reader=global_workflow_reader, runs=story_runs_reader)
+    story_input_reader = providers.Singleton(StoryInputReader, repo_root=repo_root_path)
+    story_input_query = providers.Factory(StoryInputQuery, reader=story_input_reader)
+    story_selection_reader = providers.Singleton(StorySelectionReader, repo_root=repo_root_path)
+    story_runs_query = providers.Factory(StoryRunsQuery, reader=story_runs_reader,
+                                        selections=story_selection_reader, workflows=episode_workflow_reader)
+    story_runs_writer = providers.Singleton(StoryRunsWriter, repo_root=repo_root_path)
+    story_run_command = providers.Factory(StoryRunCommand, reader=story_runs_reader, writer=story_runs_writer,
+                                          inputs=story_input_reader, selections=story_selection_reader, workflows=episode_workflow_reader)
+    episode_workflow_writer = providers.Singleton(EpisodeWorkflowWriter, repo_root=repo_root_path)
+    episode_workflow_query = providers.Factory(EpisodeWorkflowQuery, reader=episode_workflow_reader)
+    episode_workflow_command = providers.Factory(EpisodeWorkflowCommand, reader=episode_workflow_reader, writer=episode_workflow_writer)
+
+    writers_room_reader = providers.Singleton(WritersRoomReader, repo_root=repo_root_path)
+    writers_room_writer = providers.Singleton(WritersRoomWriter, repo_root=repo_root_path)
+    writers_room_query = providers.Factory(WritersRoomQuery, reader=writers_room_reader)
+    character_interview_command = providers.Factory(CharacterInterviewCommand, reader=writers_room_reader, writer=writers_room_writer)
 
     # --- Infrastructure singletons -----------------------------------------
     exposed_tree: providers.Singleton[ExposedTree] = providers.Singleton(
@@ -177,9 +210,6 @@ class Container(containers.DeclarativeContainer):
     research_reader: providers.Singleton[ResearchReader] = providers.Singleton(
         ResearchReader, repo_root=repo_root_path
     )
-    bgm_muxer: providers.Singleton[BgmMuxer] = providers.Singleton(
-        BgmMuxer, repo_root=repo_root_path
-    )
     research_writer: providers.Singleton[ResearchWriter] = providers.Singleton(
         ResearchWriter, repo_root=repo_root_path, reader=research_reader
     )
@@ -220,12 +250,6 @@ class Container(containers.DeclarativeContainer):
     )
     voice_pool: providers.Singleton[VoicePool] = providers.Singleton(
         VoicePool, exposed=exposed_tree, resolver=safe_resolver
-    )
-    bgm_pool: providers.Singleton[BgmPool] = providers.Singleton(
-        BgmPool, exposed=exposed_tree, resolver=safe_resolver
-    )
-    bgm_reference_reader: providers.Singleton[BgmReferenceReader] = providers.Singleton(
-        BgmReferenceReader, exposed=exposed_tree, resolver=safe_resolver
     )
     casting: providers.Singleton[Casting] = providers.Singleton(
         Casting,
@@ -268,12 +292,6 @@ class Container(containers.DeclarativeContainer):
         resolver=safe_resolver,
         burner=subtitle_burner,
     )
-    episode_bgm_manager: providers.Singleton[EpisodeBgmManager] = providers.Singleton(
-        EpisodeBgmManager,
-        exposed=exposed_tree,
-        resolver=safe_resolver,
-        bgm_pool=bgm_pool,
-    )
     downloaded_novels_root: providers.Singleton[Path] = providers.Singleton(
         lambda root: root / "downloaded_novels", repo_root_path
     )
@@ -295,9 +313,6 @@ class Container(containers.DeclarativeContainer):
     )
     casting_command: providers.Factory[CastingCommand] = providers.Factory(
         CastingCommand, casting=casting
-    )
-    bgm_command: providers.Factory[BgmCommand] = providers.Factory(
-        BgmCommand, pool=bgm_pool, references=bgm_reference_reader
     )
     media_command: providers.Factory[MediaCommand] = providers.Factory(
         MediaCommand, archiver=media_archiver, renamer=media_renamer, casting=casting
@@ -337,9 +352,6 @@ class Container(containers.DeclarativeContainer):
     )
     research_command: providers.Factory[ResearchCommand] = providers.Factory(
         ResearchCommand, writer=research_writer
-    )
-    mux_command: providers.Factory[MuxCommand] = providers.Factory(
-        MuxCommand, muxer=bgm_muxer
     )
     previz_command: providers.Factory[PrevizCommand] = providers.Factory(
         PrevizCommand, renderer=previz_renderer
@@ -391,18 +403,9 @@ class Container(containers.DeclarativeContainer):
     episode_query: providers.Factory[EpisodeQuery] = providers.Factory(
         EpisodeQuery, builder=episode_concat_builder
     )
-    episode_bgm_command: providers.Factory[EpisodeBgmCommand] = providers.Factory(
-        EpisodeBgmCommand, manager=episode_bgm_manager
-    )
-    episode_bgm_query: providers.Factory[EpisodeBgmQuery] = providers.Factory(
-        EpisodeBgmQuery, manager=episode_bgm_manager
-    )
 
     actor_query: providers.Factory[ActorQuery] = providers.Factory(
         ActorQuery, pool=actor_pool, casting=casting
-    )
-    bgm_query: providers.Factory[BgmQuery] = providers.Factory(
-        BgmQuery, pool=bgm_pool, references=bgm_reference_reader
     )
     voice_command: providers.Factory[VoiceCommand] = providers.Factory(
         VoiceCommand, pool=voice_pool, casting=casting
@@ -419,6 +422,8 @@ class Container(containers.DeclarativeContainer):
     file_query: providers.Factory[FileQuery] = providers.Factory(
         FileQuery, reader=file_reader
     )
+    request_log_reader = providers.Singleton(RequestLogReader, exposed_tree=exposed_tree)
+    request_log_query = providers.Factory(RequestLogQuery, reader=request_log_reader)
     tree_query: providers.Factory[TreeQuery] = providers.Factory(
         TreeQuery, reader=tree_reader
     )

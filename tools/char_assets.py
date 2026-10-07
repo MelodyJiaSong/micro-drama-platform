@@ -30,6 +30,7 @@ sys.path.insert(0, str(REPO))
 from tools import gen_char_images as gci  # noqa: E402
 from tools import gen_turntable_videos as gtv  # noqa: E402
 from tools import seedance_kit as kit  # noqa: E402
+from tools.character_sheet import compose  # noqa: E402
 
 AI = REPO / "ai_videos"
 WEBAPP = REPO / "projects" / "ai_video_management"
@@ -156,6 +157,10 @@ def run(rel: str, only: list[str], steps: set[str], model: str, dry: bool) -> in
             print(f"  三视图：要补 {len(left)} 个", flush=True)
             if not dry:
                 bad += extract_views(left)
+                for row in rows(chars, only):
+                    folder = row.dir / 'views'
+                    if all((folder / f'{row.dir.name}_{role}.png').is_file() for role in ('front', 'side', 'back')):
+                        compose(folder, row.dir.name)
     print(f"\n完成，失败 {bad}" if bad else "\n完成")
     return 1 if bad else 0
 

@@ -15,6 +15,7 @@ The real ffmpeg concat is stubbed here — these assert the orchestration
 from __future__ import annotations
 
 import os
+import json
 import subprocess
 from pathlib import Path
 
@@ -61,6 +62,24 @@ def _make_builder(root: Path) -> tuple[EpisodeConcatBuilder, list[list[Path]]]:
 
     builder._ffmpeg_concat = fake_concat  # type: ignore[method-assign]
     return builder, captured
+
+
+def test_scene_shots_concat_in_compiled_order_with_full_keys(tmp_path: Path) -> None:
+    ep = tmp_path / "ai_videos/td/episodes/ep01"
+    ordered = [("s10", "st10"), ("s10", "st1"), ("s1", "st1")]
+    inputs = []
+    for scene, shot in ordered:
+        video = ep / f"scenes/{scene}/shots/{shot}/renders/take.mp4"
+        _touch(video)
+        inputs.append(video)
+    (ep / "prompts.json").write_text(json.dumps({"content": {"scenes": [
+        {"id": "s10", "shots": [{"id": "ep1_s10_st10"}, {"id": "ep1_s10_st1"}]},
+        {"id": "s1", "shots": [{"id": "ep1_s1_st1"}]},
+    ]}}), encoding="utf-8")
+    builder, captured = _make_builder(tmp_path)
+    result = builder.build("ai_videos/td/episodes/ep01")
+    assert captured == [inputs]
+    assert [clip.shot for clip in result.used] == ["ep1_s10_st10", "ep1_s10_st1", "ep1_s1_st1"]
 
 
 def test_concat_picks_newest_render_per_shot_and_skips_empty(tmp_path: Path) -> None:

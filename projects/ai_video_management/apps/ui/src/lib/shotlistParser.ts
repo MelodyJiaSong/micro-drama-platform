@@ -1,7 +1,7 @@
 /** Parse shotlist.md to extract shot rows for navigation (FR-55..FR-58).
  *
  * Shotlist column 1 must contain the shot id (per `wukong_juexing/shotlist.md`
- * precedent + `agent_refs/project/ai_video.md` rule 4 implicit convention).
+ * precedent + `.agents/references/project/ai_video.md` rule 4 implicit convention).
  */
 
 const SHOT_ROW_RE = /^\|\s*`?(shot\d+)`?\s*\|/;

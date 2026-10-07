@@ -1,5 +1,7 @@
 # Findings dossier — bgm_library
 
+> Retired by follow-up008 (2026-10-05). Historical evidence only; this legacy implementation and its requirements are removed.
+
 Run: bgm_library-20260616-123238
 
 ## Angles researched

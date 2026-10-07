@@ -13,6 +13,7 @@ from imageio-ffmpeg.
 from __future__ import annotations
 
 from libs.common import drama_ref
+from libs.common.production_key import first_shot_key
 
 import json
 import re
@@ -107,8 +108,12 @@ class EpisodeSubtitleBurner:
         cues: list[SubtitleCue] = []
         shots_with_cues = 0
         for seg in segments:
+            key = first_shot_key(str(seg["shot"]))
+            folder = key.folder(shots_dir.parent) if key else shots_dir / str(seg["shot"])
+            if key is not None and key.episode != int(shots_dir.parent.name[2:]):
+                raise EpisodeNotConcatenatedError("字幕片段key与所属集不一致")
             seg_cues = self._burner.segment_cues(
-                shots_dir / str(seg["shot"]), float(seg["dur_s"])
+                folder, float(seg["dur_s"])
             )
             if not seg_cues:
                 continue

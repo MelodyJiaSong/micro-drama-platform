@@ -61,6 +61,28 @@ def _importer(root: Path, downloads: Path) -> DownloadsImporter:
     )
 
 
+def test_character_canonical_roles_survive_plain_rename(repo: tuple[Path, Path]) -> None:
+    root, _ = repo
+    char = root / DRAMA_REL / '2_世界观人设/characters/c1_Person'
+    views = char / 'views'
+    outfit = char / 'c1-2_换装'
+    views.mkdir(parents=True)
+    outfit.mkdir()
+    expected = {}
+    for role in ('front', 'side', 'back', 'audio', 'views'):
+        path = views / f'c1_Person_{role}.{"mp3" if role == "audio" else "png"}'
+        path.write_bytes(role.encode())
+        expected[path] = role.encode()
+    for role in ('front', 'side', 'back', 'views'):
+        path = outfit / f'c1-2_{role}.png'
+        path.write_bytes(('outfit-' + role).encode())
+        expected[path] = ('outfit-' + role).encode()
+    exposed, resolver = ExposedTree(repo_root=root), SafeResolver(root=root)
+    result = MediaRenamer(exposed=exposed, resolver=resolver).rename_drama(DRAMA_REL)
+    assert not result.errors
+    assert all(path.is_file() and path.read_bytes() == payload for path, payload in expected.items())
+
+
 def test_two_prop_views_import_to_distinct_files(repo: tuple[Path, Path]) -> None:
     root, downloads = repo
     for name, payload in ((DL_P3_1, b"one"), (DL_P3_2, b"two")):

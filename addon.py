@@ -1951,6 +1951,25 @@ class BlenderMCPServer:
             case _:
                 return f"Error: Unknown Hyper3D Rodin mode!"
 
+    def _logged_rodin_request(self, method, url, **kwargs):
+        from pathlib import Path
+        import os
+        import sys
+        target = os.environ.get("REQUEST_LOG_TARGET") or bpy.data.filepath
+        if not target:
+            raise RuntimeError("Hyper3D 请求缺少归属：保存 ai_videos 下的工程或设置 REQUEST_LOG_TARGET")
+        target = Path(target).resolve()
+        root = next((p for p in [target, *target.parents] if (p / "tools" / "service_request.py").is_file()), None)
+        if root is None:
+            raise RuntimeError("找不到共用请求日志入口；不得直接调用 Hyper3D")
+        sys.path.insert(0, str(root))
+        from tools.service_request import RequestLog
+        kwargs.setdefault("timeout", 180)
+        return RequestLog(target).invoke("hyper3d", method.upper() + " " + url,
+            {"url": url, "body": kwargs.get("json", kwargs.get("data")), "headers": kwargs.get("headers"),
+             "files": kwargs.get("files"), "timeout_s": kwargs["timeout"]},
+            lambda: requests.request(method, url, **kwargs))
+
     def create_rodin_job_main_site(
             self,
             text_prompt: str=None,
@@ -1974,7 +1993,7 @@ class BlenderMCPServer:
                 files.append(("prompt", (None, text_prompt)))
             if bbox_condition:
                 files.append(("bbox_condition", (None, json.dumps(bbox_condition))))
-            response = requests.post(
+            response = self._logged_rodin_request("post",
                 "https://hyperhuman.deemos.com/api/v2/rodin",
                 headers={
                     "Authorization": f"Bearer {api_key}",
@@ -2005,7 +2024,7 @@ class BlenderMCPServer:
                 req_data["prompt"] = text_prompt
             if bbox_condition:
                 req_data["bbox_condition"] = bbox_condition
-            response = requests.post(
+            response = self._logged_rodin_request("post",
                 "https://queue.fal.run/fal-ai/hyper3d/rodin",
                 headers={
                     "Authorization": f"Key {api_key}",
@@ -2032,7 +2051,7 @@ class BlenderMCPServer:
         api_key = self._get_hyper3d_api_key()
         if not api_key:
             return {"error": "Hyper3D API key is not given"}
-        response = requests.post(
+        response = self._logged_rodin_request("post",
             "https://hyperhuman.deemos.com/api/v2/status",
             headers={
                 "Authorization": f"Bearer {api_key}",
@@ -2051,7 +2070,7 @@ class BlenderMCPServer:
         api_key = self._get_hyper3d_api_key()
         if not api_key:
             return {"error": "Hyper3D API key is not given"}
-        response = requests.get(
+        response = self._logged_rodin_request("get",
             f"https://queue.fal.run/fal-ai/hyper3d/requests/{request_id}/status",
             headers={
                 "Authorization": f"KEY {api_key}",
@@ -2141,7 +2160,7 @@ class BlenderMCPServer:
         api_key = self._get_hyper3d_api_key()
         if not api_key:
             return {"succeed": False, "error": "Hyper3D API key is not given"}
-        response = requests.post(
+        response = self._logged_rodin_request("post",
             "https://hyperhuman.deemos.com/api/v2/download",
             headers={
                 "Authorization": f"Bearer {api_key}",
@@ -2162,7 +2181,7 @@ class BlenderMCPServer:
 
                 try:
                     # Download the content
-                    response = requests.get(i["url"], stream=True)
+                    response = self._logged_rodin_request("get", i["url"], stream=True)
                     response.raise_for_status()  # Raise an exception for HTTP errors
 
                     # Write the content to the temporary file
@@ -2210,7 +2229,7 @@ class BlenderMCPServer:
         api_key = self._get_hyper3d_api_key()
         if not api_key:
             return {"succeed": False, "error": "Hyper3D API key is not given"}
-        response = requests.get(
+        response = self._logged_rodin_request("get",
             f"https://queue.fal.run/fal-ai/hyper3d/requests/{request_id}",
             headers={
                 "Authorization": f"Key {api_key}",
@@ -2227,7 +2246,7 @@ class BlenderMCPServer:
 
         try:
             # Download the content
-            response = requests.get(data_["model_mesh"]["url"], stream=True)
+            response = self._logged_rodin_request("get", data_["model_mesh"]["url"], stream=True)
             response.raise_for_status()  # Raise an exception for HTTP errors
 
             # Write the content to the temporary file

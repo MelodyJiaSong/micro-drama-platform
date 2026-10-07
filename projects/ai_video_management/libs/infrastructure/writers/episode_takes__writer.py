@@ -19,6 +19,7 @@ import re
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
+from libs.common.production_key import shot_identity
 
 from libs.common import drama_layout
 from libs.common.exposed_tree import ExposedTree
@@ -74,10 +75,7 @@ class EpisodeTakesSelector:
 
     def select(self, rel: str) -> SelectTakesResult:
         episode_dir = self._validate_episode(rel)
-        shots_dir = episode_dir / "shots"
-        if not shots_dir.is_dir():
-            raise NoShotsError("episode has no shots/ folder")
-        shot_dirs = self._shot_dirs(shots_dir)
+        shot_dirs = drama_layout.episode_shot_dirs(episode_dir)
         if not shot_dirs:
             raise NoShotsError("shots/ folder contains no shot{NN} subfolders")
         selected: list[TakeSelection] = []
@@ -85,12 +83,12 @@ class EpisodeTakesSelector:
         for shot_dir in shot_dirs:
             take = newest_render(shot_dir)
             if take is None:
-                skipped.append(TakeSkip(shot_dir.name, "no_render_mp4"))
+                skipped.append(TakeSkip(shot_identity(shot_dir), "no_render_mp4"))
                 continue
-            dst = shot_dir / f"{shot_dir.name}{_MP4_EXT}"
+            dst = shot_dir / f"{shot_identity(shot_dir)}{_MP4_EXT}"
             shutil.copy2(take, dst)
             selected.append(
-                TakeSelection(shot_dir.name, self._rel(take), self._rel(dst))
+                TakeSelection(shot_identity(shot_dir), self._rel(take), self._rel(dst))
             )
         if not selected:
             raise NoShotVideosError("no shot has a renders/ mp4 to select")

@@ -2,7 +2,7 @@
 
 Per follow-up 093: extract 3 still frames (front / side / back) + the full
 audio track from a character turntable mp4 (per
-`.claude/agent_refs/project/ai_video.md` rule #12.5). The turntable keeps
+`.agents/references/project/ai_video.md` rule #12.5). The turntable keeps
 3 static landings (front / side / back) joined by 2 short motion bridges so
 each pick is taken from a guaranteed-static moment.
 

@@ -218,9 +218,9 @@ def test_delete_endpoint_not_found_404(client, good_headers) -> None:
 
 
 @pytest.fixture()
-def prod_client(repo_root, bound) -> TestClient:
+def prod_client(container) -> TestClient:
     """A TestClient with serve_static=True — exercises the static-mount-shadowing path."""
-    return TestClient(create_app(repo_root=repo_root, bound=bound, serve_static=True))
+    return TestClient(create_app(container, serve_static=True))
 
 
 def test_delete_endpoint_reachable_with_static_mount(prod_client, good_headers) -> None:

@@ -7,6 +7,7 @@ not an app instance).
 from __future__ import annotations
 
 from pathlib import Path
+import os
 
 from libs.common.env_loader import load_env_file
 
@@ -21,7 +22,7 @@ from libs.common.origin import BoundOrigin
 _install_force_exit_watchdog()
 
 HOST: str = "127.0.0.1"
-PORT: int = 8766
+PORT: int = int(os.environ.get("BACKEND_PORT", "8766"))
 
 
 def _build_app():

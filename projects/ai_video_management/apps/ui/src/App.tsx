@@ -7,10 +7,24 @@ import { ActorGrid } from "./components/ActorGrid";
 import { CharacterGrid } from "./components/CharacterGrid";
 import { DramaPage } from "./components/DramaPage";
 import { DeletedView } from "./components/DeletedView";
-import { BgmGrid } from "./components/BgmGrid";
 import { WorkflowPage } from "./components/WorkflowPage";
+import { FilmingKnowledgePage } from "./components/FilmingKnowledgePage";
+import { GlobalWorkflowProvider } from "./components/GlobalWorkflowContext";
+import { GlobalWorkflowCategoryPage, GlobalWorkflowGroupPage, GlobalWorkflowSourcePage } from "./components/GlobalWorkflowPage";
+import { GLOBAL_SOURCE_PATH } from "./lib/globalWorkflow";
+import { FILMING_KNOWLEDGE_PATH, WORKFLOW_PATH } from "./lib/workflowData";
 import { ResearchPage } from "./components/ResearchPage";
-import { ToolsPage } from "./components/ToolsPage";
+import { WritersRoomPage } from "./components/WritersRoomPage";
+import { RequestLogsPage } from "./components/RequestLogsPage";
+import { StoryRunsPage } from "./components/StoryRunsPage";
+import { StoryRunStoryPage } from "./components/StoryRunStoryPage";
+import { StoryRunStatePage } from "./components/StoryRunStatePage";
+import { StoryRunInputPage } from "./components/StoryRunInputPage";
+import { StoryRunItemPage } from "./components/StoryRunItemPage";
+import { StoryRunProcessPage } from "./components/StoryRunProcessPage";
+import { StoryRunComparePage } from "./components/StoryRunComparePage";
+import { STORY_RUN_PAGES } from "./lib/storyRunRoutes";
+import { SharedStoryInputPage } from "./components/SharedStoryInputPage";
 import { bumpMediaCacheBuster, fetchTree } from "./api";
 import { collectFilePaths } from "./lib/linkResolver";
 import type { TreeNode } from "./types";
@@ -66,7 +80,7 @@ export default function App(): JSX.Element {
   };
 
   return (
-    <div className="app-root">
+    <GlobalWorkflowProvider><div className="app-root">
       <a className="skip-link" href="#main" onClick={onSkipToMain}>
         Skip to main content
       </a>
@@ -80,6 +94,15 @@ export default function App(): JSX.Element {
       <main id="main" className="main-pane" aria-label="Main content">
         <div className="a11y-live-region" aria-live="polite" id="aria-live-toast" />
         <Routes>
+          <Route path="/story-runs" element={<StoryRunsPage />} />
+          <Route path={STORY_RUN_PAGES.output.path} element={<StoryRunStoryPage />} />
+          <Route path={STORY_RUN_PAGES.state.path} element={<StoryRunStatePage />} />
+          <Route path={STORY_RUN_PAGES.input.path} element={<StoryRunInputPage />} />
+          <Route path={STORY_RUN_PAGES.item.path} element={<StoryRunItemPage />} />
+          <Route path={STORY_RUN_PAGES.process.path} element={<StoryRunProcessPage />} />
+          <Route path={STORY_RUN_PAGES.compare.path} element={<StoryRunComparePage />} />
+          <Route path="/story-input" element={<SharedStoryInputPage />} />
+          <Route path="/request-logs" element={<RequestLogsPage />} />
           <Route path="/" element={<Home tree={tree} />} />
           <Route
             path="/file/*"
@@ -97,13 +120,15 @@ export default function App(): JSX.Element {
             path="/drama"
             element={<DramaPage tree={tree} onChange={() => setRefreshKey((k) => k + 1)} />}
           />
-          <Route
-            path="/bgm"
-            element={<BgmGrid onChange={() => setRefreshKey((k) => k + 1)} />}
-          />
-          <Route path="/workflow" element={<WorkflowPage />} />
+          <Route path={WORKFLOW_PATH} element={<WorkflowPage />} />
+          <Route path={GLOBAL_SOURCE_PATH} element={<GlobalWorkflowSourcePage />} />
+          <Route path={`${WORKFLOW_PATH}/category/:category`} element={<GlobalWorkflowCategoryPage />} />
+          <Route path={`${WORKFLOW_PATH}/settings/:group`} element={<GlobalWorkflowGroupPage />} />
+          <Route path={`${WORKFLOW_PATH}/:module`} element={<WorkflowPage />} />
+          <Route path={`${WORKFLOW_PATH}/:module/:storySection`} element={<WorkflowPage />} />
+          <Route path={FILMING_KNOWLEDGE_PATH} element={<FilmingKnowledgePage />} />
           <Route path="/research" element={<ResearchPage />} />
-          <Route path="/tools" element={<ToolsPage />} />
+          <Route path="/writers-room" element={<WritersRoomPage />} />
           <Route
             path="/deleted"
             element={<DeletedView tree={tree} onChange={() => setRefreshKey((k) => k + 1)} />}
@@ -111,6 +136,6 @@ export default function App(): JSX.Element {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
-    </div>
+    </div></GlobalWorkflowProvider>
   );
 }

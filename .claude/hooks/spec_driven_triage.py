@@ -3,7 +3,7 @@
 When the user's prompt references a spec-driven project (either by mentioning
 the literal phrase "spec[-_ ]driven", or by naming a project folder X for
 which specs/<type>/X/ exists in the repo), inject a system-reminder telling
-Claude to run CLAUDE.md's "Follow-up prompt handling" triage BEFORE making
+Claude to run CONVENTIONS.md's "Follow-up prompt handling" triage BEFORE making
 any code edits.
 
 Stdin: the standard UserPromptSubmit JSON payload from Claude Code.
@@ -21,7 +21,7 @@ import sys
 
 REMINDER_TEMPLATE: str = (
     "This prompt references a spec-driven project (matched: {matched}). "
-    "Per CLAUDE.md -> 'Follow-up prompt handling', BEFORE editing any code: "
+    "Per CONVENTIONS.md -> 'Follow-up prompt handling', BEFORE editing any code: "
     "(1) triage which project is impacted (ask the user if ambiguous); "
     "(2) persist abstracted intent at "
     "specs/{{type}}/{{name}}/user_input/follow_ups/NNN-{{YYYYMMDD-HHmmss}}-{{slug}}.md; "

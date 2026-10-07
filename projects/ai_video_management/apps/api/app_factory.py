@@ -20,6 +20,10 @@ from starlette.types import Scope
 
 from apps.api.container import Container
 from apps.api.routes import router
+from libs.common.story_runs import StoryRunsError
+from libs.common.global_workflow import GlobalWorkflowError
+from libs.domain.errors.writers_room__error import WritersRoomError
+from libs.domain.errors.episode_workflow__error import EpisodeWorkflowError
 from libs.domain.errors.actor__error import (
     ActorAlreadyAssignedError,
     ActorAlreadyDeletedError,
@@ -30,19 +34,6 @@ from libs.domain.errors.actor__error import (
     AssignmentsScanFailedError,
     InvalidActorAttributeError,
     InvalidActorIdError,
-)
-from libs.domain.errors.bgm__error import (
-    BgmAlreadyAssignedError,
-    BgmDeleteFailedError,
-    BgmDeleteTargetExistsError,
-    BgmGenerationDirMissingError,
-    BgmNotFoundError,
-    BgmReferenceScanFailedError,
-    BgmSidecarUnreadableError,
-    InvalidBgmAttributeError,
-    InvalidBgmIdError,
-    StableAudioFailedError,
-    StableAudioMissingError,
 )
 from libs.domain.errors.casting__error import (
     DramaNotFoundError,
@@ -80,18 +71,6 @@ from libs.domain.errors.episode__error import (
     NoShotsError,
     NoShotVideosError,
     NotEpisodePathError,
-)
-from libs.domain.errors.episode_bgm__error import (
-    BgmCueNotFoundError,
-    BgmTrackAudioMissingError,
-    EpisodeBgmCueFileMissingError,
-    EpisodeBgmFfmpegMissingError,
-    EpisodeBgmMuxFailedError,
-    InvalidBgmCueError,
-    InvalidEpisodeBgmPathError,
-    NoAssignedBgmCuesError,
-    NotEpisodeBgmPathError,
-    SubtitledEpisodeMissingError,
 )
 from libs.domain.errors.prompt__error import (
     InvalidSuggestionRequestError,
@@ -211,17 +190,6 @@ _PLAIN: tuple[tuple[type[Exception], int, str, bool], ...] = (
     (NoShotVideosError, 400, "no_shot_videos", False),
     (EpisodeFfmpegMissingError, 500, "ffmpeg_missing", True),
     (EpisodeConcatFailedError, 500, "concat_failed", True),
-    # episode bgm (sparse cue timeline + burn)
-    (InvalidEpisodeBgmPathError, 400, "invalid_path", False),
-    (NotEpisodeBgmPathError, 400, "not_an_episode", False),
-    (EpisodeBgmCueFileMissingError, 404, "bgm_cue_file_missing", True),
-    (BgmCueNotFoundError, 404, "bgm_cue_not_found", True),
-    (InvalidBgmCueError, 400, "invalid_bgm_cue", True),
-    (NoAssignedBgmCuesError, 400, "no_assigned_bgm_cues", True),
-    (SubtitledEpisodeMissingError, 404, "subtitled_episode_missing", True),
-    (BgmTrackAudioMissingError, 404, "bgm_track_audio_missing", True),
-    (EpisodeBgmFfmpegMissingError, 500, "ffmpeg_missing", True),
-    (EpisodeBgmMuxFailedError, 500, "bgm_mux_failed", True),
     # downloads
     # (DownloadsDirMissingError handled specially — payload key is `path`, not `message`.)
     # file
@@ -273,16 +241,6 @@ _PLAIN: tuple[tuple[type[Exception], int, str, bool], ...] = (
     (VoiceMp4MissingError, 400, "mp4_missing", True),
     (VoiceFfmpegMissingError, 500, "ffmpeg_missing", True),
     (VoiceAudioExtractFailedError, 500, "audio_extract_failed", True),
-    # bgm (background-music library)
-    (InvalidBgmAttributeError, 400, "invalid_attribute", True),
-    (InvalidBgmIdError, 400, "invalid_bgm_id", True),
-    (BgmNotFoundError, 404, "bgm_not_found", False),
-    (BgmDeleteFailedError, 500, "move_failed", True),
-    (BgmGenerationDirMissingError, 500, "bgm_dir_unwritable", True),
-    (BgmReferenceScanFailedError, 500, "references_scan_failed", True),
-    (StableAudioMissingError, 500, "stableaudio_missing", True),
-    (StableAudioFailedError, 500, "stableaudio_failed", True),
-    (BgmSidecarUnreadableError, 422, "bgm_sidecar_unreadable", True),
     # prompt suggestions (follow-up 117)
     (InvalidSuggestionRequestError, 400, "invalid_suggestion_request", True),
     (SuggestionProviderUnavailableError, 503, "suggestion_unavailable", True),
@@ -301,6 +259,22 @@ def _make_plain_handler(status: int, kind: str, include_message: bool):
 
 
 def _register_exception_handlers(app: FastAPI) -> None:
+    @app.exception_handler(GlobalWorkflowError)
+    def _global_workflow_error(_req: Request, exc: GlobalWorkflowError) -> Response:
+        return _err(exc.status_code, "global_workflow", message=str(exc))
+
+    @app.exception_handler(StoryRunsError)
+    def _story_runs_error(_req: Request, exc: StoryRunsError) -> Response:
+        return _err(exc.status_code, "story_runs", message=str(exc))
+
+    @app.exception_handler(EpisodeWorkflowError)
+    def _workflow_error(_req: Request, exc: EpisodeWorkflowError) -> Response:
+        return _err(exc.status_code, "episode_workflow", message=str(exc))
+
+    @app.exception_handler(WritersRoomError)
+    def _writers_room_error(_req: Request, exc: WritersRoomError) -> Response:
+        return _err(exc.status_code, exc.kind, message=str(exc))
+
     for exc_cls, status, kind, include_message in _PLAIN:
         app.add_exception_handler(exc_cls, _make_plain_handler(status, kind, include_message))
 
@@ -324,13 +298,7 @@ def _register_exception_handlers(app: FastAPI) -> None:
     def _voice_target_exists(_req: Request, exc: VoiceDeleteTargetExistsError) -> Response:  # type: ignore[unused-function]
         return _err(409, "target_exists", target=str(exc))
 
-    @app.exception_handler(BgmAlreadyAssignedError)
-    def _bgm_assigned(_req: Request, exc: BgmAlreadyAssignedError) -> Response:  # type: ignore[unused-function]
-        return _err(409, "bgm_is_referenced", bgm_id=exc.bgm_id, assignments=exc.assignments)
 
-    @app.exception_handler(BgmDeleteTargetExistsError)
-    def _bgm_target_exists(_req: Request, exc: BgmDeleteTargetExistsError) -> Response:  # type: ignore[unused-function]
-        return _err(409, "target_exists", target=str(exc))
 
     @app.exception_handler(MediaTargetExistsError)
     def _media_target_exists(_req: Request, exc: MediaTargetExistsError) -> Response:  # type: ignore[unused-function]
@@ -387,8 +355,6 @@ def create_app(container: Container, serve_static: bool = True) -> FastAPI:
     container.actor_pool().actors_dir().mkdir(parents=True, exist_ok=True)
     # Same posture for the voice pool folder (follow-up 115).
     container.voice_pool().voices_dir().mkdir(parents=True, exist_ok=True)
-    # Same posture for the shared BGM library folder.
-    container.bgm_pool().bgm_dir().mkdir(parents=True, exist_ok=True)
 
     app.add_middleware(SecurityHeadersMiddleware)
     app.add_middleware(OriginHostMiddleware, bound=container.bound_origin())

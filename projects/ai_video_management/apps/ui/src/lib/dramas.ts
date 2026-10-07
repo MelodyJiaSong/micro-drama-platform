@@ -66,7 +66,7 @@ export interface DramaAssets {
 }
 
 const _CHAR_DIR_RE = CHARACTER_DIR_RE;
-const _SCENE_DIR_RE = /^s\d+(?:_(.*))?$/;
+const _SCENE_DIR_RE = /^(?:s\d+|bg\d+(?:-\d+)?)(?:_(.*))?$/;
 
 function _stripPrefix(folder: string, re: RegExp): string {
   const m = re.exec(folder);
@@ -97,13 +97,16 @@ export function extractDramaAssets(tree: TreeNode | null, filePath: string | nul
       }
     }
   }
-  const scDir = findAssetDir(drama, "scenes");
+  const scDir = findAssetDir(drama, "background") || findAssetDir(drama, "scenes");
   if (scDir) {
-    for (const s of scDir.children ?? []) {
-      if (s.type === "directory" && _SCENE_DIR_RE.test(s.name)) {
-        scenes.push(_stripPrefix(s.name, _SCENE_DIR_RE));
+    const walk = (node: TreeNode): void => {
+      for (const s of node.children ?? []) {
+        if (s.type !== "directory") continue;
+        if (_SCENE_DIR_RE.test(s.name)) scenes.push(_stripPrefix(s.name, _SCENE_DIR_RE));
+        walk(s);
       }
-    }
+    };
+    walk(scDir);
   }
   return { characters, scenes };
 }

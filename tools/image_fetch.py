@@ -36,6 +36,7 @@ from __future__ import annotations
 
 import argparse
 import base64
+import hashlib
 import json
 import os
 import re
@@ -52,6 +53,8 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 
 REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO))
+from tools.service_request import RequestLog
 # 资产根按剧切换（原先写死在 sk1；sk3 开站后必须能指到别的剧）。
 # `--drama shikong_lvxing/sk3` 覆盖它；不传则沿用 sk1，旧命令行为不变。
 DRAMA_DEFAULT = "shikong_lvxing/sk1"
@@ -63,6 +66,7 @@ DEFAULT_MODEL = "gpt-image-2"
 # 这几行是给出图的人看的上传说明，不是画面内容 —— 发给模型只会污染 prompt
 DROP_FIELDS = ("参考:", "参考用法:", "比例:", "上传:")
 MIME = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp"}
+REFERENCE_FILES: dict[str, Path] = {}
 
 
 def api_key() -> str:
@@ -91,13 +95,12 @@ def _curl(args: list[str], *, timeout: int) -> tuple[int, bytes]:
     """所有 HTTP 都走 curl。
 
     2026-09-17 实测：urllib 打 `api.elevenlabs.io` 与 `storage.googleapis.com` 会间歇性
-    `SSLEOFError` / `RemoteDisconnected`（同一个请求一分钟前还好好的），curl 带 --retry 稳。
+    `SSLEOFError` / `RemoteDisconnected`，因此使用 curl；每次请求只发送一次，重试必须单独留痕。
     另外 curl 是 Windows 原生二进制，**不能直接写中文路径**（会报 `client returned ERROR on write`），
     所以一律先落 ASCII 临时文件，再由 Python 搬到目标位置。
     """
     out = TMP / f"curl_{uuid.uuid4().hex}.bin"
-    cmd = ["curl", "-sS", "--retry", "8", "--retry-all-errors", "--retry-delay", "5",
-           "--retry-connrefused",
+    cmd = ["curl", "-sS",
            "-m", str(timeout), "-o", str(out), "-w", "%{http_code}", *args]
     try:
         try:
@@ -116,7 +119,15 @@ def _curl(args: list[str], *, timeout: int) -> tuple[int, bytes]:
         out.unlink(missing_ok=True)
 
 
-def _api(method: str, path: str, key: str, payload: dict | None = None, *, timeout: int = 600) -> dict:
+def _api(method: str, path: str, key: str, payload: dict | None = None, *, target: Path, timeout: int = 600) -> dict:
+    files = [REFERENCE_FILES[digest] for image in (payload or {}).get("images", [])
+             if (digest := hashlib.sha256(image.get("content_base64", "").encode()).hexdigest()) in REFERENCE_FILES]
+    return RequestLog(target).invoke("elevenlabs", method + " " + path,
+        {"method": method, "url": API + path, "body": payload, "files": files, "timeout_s": timeout, "attempt": 1},
+        lambda: _api_once(method, path, key, payload, timeout=timeout))
+
+
+def _api_once(method: str, path: str, key: str, payload: dict | None = None, *, timeout: int = 600) -> dict:
     args = ["-X", method, f"{API}{path}", "-H", f"xi-api-key: {key}"]
     body_file = None
     if payload is not None:
@@ -139,7 +150,8 @@ def _api(method: str, path: str, key: str, payload: dict | None = None, *, timeo
 
 
 def download(url: str, dest: Path) -> Path:
-    code, data = _curl(["-L", url], timeout=300)
+    code, data = RequestLog(dest).invoke("elevenlabs", "GET artifact",
+        {"url": url, "output": str(dest), "timeout_s": 300}, lambda: _curl(["-L", url], timeout=300))
     if not 200 <= code < 300 or not data:
         raise SystemExit(f"下载失败 HTTP {code}（signed URL 约 1 小时过期）")
     dest.parent.mkdir(parents=True, exist_ok=True)
@@ -148,12 +160,14 @@ def download(url: str, dest: Path) -> Path:
 
 
 def inline(p: Path) -> dict:
+    encoded = base64.b64encode(p.read_bytes()).decode()
+    REFERENCE_FILES[hashlib.sha256(encoded.encode()).hexdigest()] = p
     return {"type": "inline_base64", "mime_type": MIME.get(p.suffix.lower(), "image/png"),
-            "content_base64": base64.b64encode(p.read_bytes()).decode()}
+            "content_base64": encoded}
 
 
 def create(key: str, prompt: str, *, model: str, quality: str, aspect: str, resolution: str,
-           refs: list[dict] | None = None) -> str:
+           target: Path, refs: list[dict] | None = None) -> str:
     payload = {"model_id": model, "prompt": prompt,
                "aspect_ratio": aspect, "resolution": resolution}
     # `quality` 只有 OpenAI 那一族收；seedream / gemini 传了直接 422 extra_forbidden
@@ -161,7 +175,7 @@ def create(key: str, prompt: str, *, model: str, quality: str, aspect: str, reso
         payload["quality"] = quality
     if refs:
         payload["images"] = refs
-    data = _api("POST", "/flows/image", key, payload)
+    data = _api("POST", "/flows/image", key, payload, target=target)
     gid = data.get("id") or data.get("generation_id")
     if not gid:
         raise SystemExit(f"没拿到 generation id：{json.dumps(data, ensure_ascii=False)[:300]}")
@@ -171,7 +185,7 @@ def create(key: str, prompt: str, *, model: str, quality: str, aspect: str, reso
 def wait_download(key: str, gid: str, out: Path, timeout_s: int = 600) -> Path:
     t0 = time.time()
     while True:
-        d = _api("GET", f"/flows/image/{gid}", key, timeout=120)
+        d = _api("GET", f"/flows/image/{gid}", key, target=out, timeout=120)
         st = d.get("status")
         if st == "completed":
             return download(d["content_url"], out)
@@ -227,7 +241,7 @@ def run_object(key: str, pkey: str, args) -> None:
                     raise SystemExit(f"{rk} 要拿 {f.name} 当参考，但它还没出来")
                 refs = [inline(f)]
         gid = create(key, prompt, model=args.model, quality=args.quality,
-                     aspect=args.aspect, resolution=args.resolution, refs=refs)
+                     aspect=args.aspect, resolution=args.resolution, refs=refs, target=out)
         wait_download(key, gid, out)
         if i == 0:
             front_gid = gid
@@ -254,7 +268,7 @@ def run_scene(key: str, rk: str, args) -> None:
         return
     t0 = time.time()
     gid = create(key, block, model=args.model, quality=args.quality,
-                 aspect=args.scene_aspect, resolution=args.scene_resolution)
+                 aspect=args.scene_aspect, resolution=args.scene_resolution, target=out)
     wait_download(key, gid, out)
     print(f"✓ {out.relative_to(REPO)}  {out.stat().st_size // 1024} KB  {time.time() - t0:.0f}s")
 

@@ -1,5 +1,7 @@
 # Spec — bgm_library
 
+**已停用（2026-10-05，follow-up008）**：用户要求删除现有 legacy BGM，以免影响新流程创意。下文为历史规格；不再要求实现、生成目录或提供UI/API，不作为三模块配乐需求。现有实现及本地库已删除，历史审计保留。
+
 Run: bgm_library-20260616-123238
 task_type: development · target: `projects/ai_video_management/`
 Compiled from: revised_prompt.md + interview/qa.md + findings/dossier.md (含 2026-06-16 后续决议)

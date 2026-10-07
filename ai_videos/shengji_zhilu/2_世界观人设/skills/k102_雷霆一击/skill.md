@@ -1,6 +1,6 @@
 # k102 · 雷霆一击（Thunder Clap）
 
-> 由 `skill.toml` 生成，别手改（`python tools/skills_lib.py md <剧>`）。技能库规则见 `.claude/agent_refs/project/ai_video.md` rule 45。
+> 由 `skill.toml` 生成，别手改（`python tools/skills_lib.py md <剧>`）。技能库规则见 `.agents/references/project/ai_video.md` rule 45。
 
 | 项 | 内容 |
 |---|---|
@@ -32,7 +32,6 @@
 | 谁 | 学会的集 | 镜 | 老师 |
 |---|---|---|---|
 | c20_Lyria_DuLac | 底子 | — | — |
-| c2_Duke | ep02 | S22 | c20_Lyria_DuLac |
 
 ## 技能样片：手势参考图（即梦 · 图片生成，`python tools/skill_keyframes.py <剧> <键>` 自动出）
 

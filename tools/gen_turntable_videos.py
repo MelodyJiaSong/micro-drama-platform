@@ -37,6 +37,8 @@ sys.path.insert(0, str(REPO))
 from tools import gen_char_images as gci  # noqa: E402  views 锚点帧在哪
 
 DELETED = REPO / "ai_videos" / "_deleted"
+from tools.service_request import RequestLog
+LOG_TARGET: Path | None = None
 CLI = Path.home() / "bin" / "dreamina.exe"
 # seedance2.5：CLI 帮助没列、服务端收（2026-09-30 实测，4–30 s）；会员账号 priority 7、零排队，80 分 / 条
 MODELS = ("seedance2.5", "seedance2.0", "seedance2.0fast", "seedance2.0_vip", "seedance2.0fast_vip")
@@ -77,8 +79,8 @@ def creature_sound(d: Path) -> dict | None:
             "neg": [n.strip() for n in re.split(r"[，,、]", field["负向"]) if n.strip()], "refs": refs}
 
 
-def cli(*args: str, timeout: int = 300) -> dict | list | None:
-    p = subprocess.run([str(CLI), *args], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=timeout)
+def cli(*args: str, timeout: int = 300, target: Path | None = None) -> dict | list | None:
+    p = RequestLog(target or LOG_TARGET or os.environ["REQUEST_LOG_TARGET"]).cli([str(CLI), *args], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=timeout)
     raw = (p.stdout or "") + (p.stderr or "")
     for o, c in (("{", "}"), ("[", "]")):
         i = raw.find(o)
@@ -189,10 +191,7 @@ def land(url: str, d: Path, stem: str) -> int:
     part = d / f"{stem}.part.mp4"
     for i in range(4):
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-            with urllib.request.urlopen(req, timeout=300) as r, part.open("wb") as f:
-                while chunk := r.read(1 << 20):
-                    f.write(chunk)
+            RequestLog(dst).download("dreamina", url, part, timeout=300, attempt=i + 1)
             break
         except OSError:
             if i == 3:
@@ -233,7 +232,7 @@ def video_url(r: dict) -> str | None:
 def wait(sid: str, d: Path, stem: str) -> str:
     t0 = time.time()
     while time.time() - t0 < POLL_MAX:
-        r = cli("query_result", f"--submit_id={sid}", timeout=120) or {}
+        r = cli("query_result", f"--submit_id={sid}", timeout=120, target=d) or {}
         st = r.get("gen_status") if isinstance(r, dict) else None
         if st == "success" and video_url(r):
             kb = land(video_url(r), d, stem) // 1024
@@ -268,12 +267,12 @@ def one(d: Path, dry: bool, model: str) -> str:
         args += ["--audio", str(a)]
     args += [f"--prompt={prompt}", f"--duration={dur}", f"--ratio={ratio}", f"--video_resolution={RESOLUTION}",
              f"--model_version={model}", "--poll=0"]
-    sub = cli(*args, timeout=600) or {}
+    sub = cli(*args, timeout=600, target=d) or {}
     sid = sub.get("submit_id") if isinstance(sub, dict) else None
     if not sid or sub.get("gen_status") == "fail":
         return f"提交失败：{str(sub)[:300]}"
     ledger(d.parent, sid, d.name)
-    q = (cli("query_result", f"--submit_id={sid}", timeout=120) or {}).get("queue_info") or {}
+    q = (cli("query_result", f"--submit_id={sid}", timeout=120, target=d) or {}).get("queue_info") or {}
     print(f"  {d.name}: 已提交 {sid[:8]}（{head}）· priority {q.get('priority')} · 排第 {q.get('queue_idx')} / {q.get('queue_length')}",
           flush=True)
     return wait(sid, d, stem)
@@ -285,7 +284,7 @@ def harvest(chars: Path) -> None:
         stem = f"{name}_turntable"
         if (d / f"{stem}.mp4").is_file():
             continue
-        r = cli("query_result", f"--submit_id={sid}", timeout=120) or {}
+        r = cli("query_result", f"--submit_id={sid}", timeout=120, target=d) or {}
         if isinstance(r, dict) and r.get("gen_status") == "success" and video_url(r):
             print(f"  {name}: 补收 · " + verdict(d, stem, f"{land(video_url(r), d, stem) // 1024} KB"))
 
@@ -298,6 +297,7 @@ def todo(chars: Path, only: list[str], cry: bool = False, force: bool = False) -
 
 
 def main() -> int:
+    global LOG_TARGET
     ap = argparse.ArgumentParser()
     ap.add_argument("--drama", required=True, help="相对 ai_videos/，如 shengji_zhilu")
     ap.add_argument("--only", default="", help="逗号分隔的卡号，如 m2,c12")
@@ -309,6 +309,7 @@ def main() -> int:
                     help="默认 seedance2.5（会员 priority 7、零排队）；普通 seedance2.0 实测排队 3 万位、几乎不动")
     args = ap.parse_args()
     chars = chars_dir(args.drama)
+    LOG_TARGET = chars
     if args.harvest:
         harvest(chars)
         return 0

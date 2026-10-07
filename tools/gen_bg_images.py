@@ -11,19 +11,19 @@ bg 卡 `{dir}/{dir}.md` 里首行 ＝ 目录名的 ```text 块 → `{dir}/{dir}.
   行解析（通常是所属 bg 的锚点图）。按依赖分层出：世界锚点 → bg 锚点 → plate；并发进程遇到参考图未出就等。
 · 送审稿 ＝ 卡 prompt 去掉 `参考:` 与画幅 / 参数行——参考图与画幅作参数传入，不该占字数。
 · **场景引用物件**（follow-up 013）：所属 bg 的 blocks.toml 里占地最大的前 3 件 prop 的正面图跟着世界基调图一起上传，
-  送审稿末尾加一行「物件参考」说明它们是谁、只借长相——场景图里的物件与它的 GLB 才长得一样。即梦字数容不下就逐件减。
-· 引擎按 `tools/image_engine.py`（rule 4l）：世界锚点与 bg 锚点先走 ElevenLabs，plate 先走即梦；
-  首选失败再退另一家（送审稿超即梦 1600 字硬限时只能走 ElevenLabs）。
+  送审稿末尾加一行「物件参考」说明它们是谁、只借长相——场景图里的物件与它的 GLB 才长得一样。场景图片保留完整合适物件参考，不通过缩字数退即梦。
+· 引擎按 `tools/image_engine.py`（rule 4l）：所有世界 / bg / plate / 变体图片只用最新 GPT 或 ElevenLabs，禁止即梦与失败回退；
+  当前 ElevenLabs 明确指定 gpt-image-2.5-sunburst，失败报告并保存任务记录，不自动重交。
 · 骨架卡（正文不足 800 字）不出图。
 · 状态变体卡（正文有 `只改:` 行，rule 4f）照参考图的构图：参考说明换成 KEEP_IN，不加 KEEP_OUT。
-· plan 打两个数：「正文」＝ `check_world_scenes_szzl.prompt_len`（W4 同一把尺，rule 4f 的 1500–1600 说的是它）；
-  「送审」＝ 正文 + 参考 / 物件说明行 + 负向，只按引擎硬限判（即梦 `PROMPT_MAX`，超了只能走 ElevenLabs）。
+· plan 打两个数（历史字数范围仍显示，服务一律 ElevenLabs）：「正文」＝ `check_world_scenes_szzl.prompt_len`（W4 同一把尺，rule 4f 的 1500–1600 说的是它）；
+  「送审」＝ 正文 + 参考 / 物件说明行 + 负向；不再套用即梦字数硬限或削减参考。
 · `ref/` 里的原版区图是权利人的图，**绝不进模型**（divergence #8 / #108）；只有世界锚点图作参考。
 
 用法（仓库根目录；范围可以是 bg 目录、区目录或 scenes 根）：
     python tools/gen_bg_images.py plan <范围…>        # 每个 bg 的正文 / 送审字数、引擎、参考图，不花钱
-    python tools/gen_bg_images.py run  <范围…> [--shard k/n] [--force] [--engine auto|dreamina|elevenlabs]
-已出图的跳过（`--force` 重出），可中断可续跑；即梦按 prompt 全文找回任务，多进程并发安全。
+    python tools/gen_bg_images.py run  <范围…> [--shard k/n] [--force] [--engine auto|elevenlabs]
+已出图的跳过（`--force` 重出）；禁止 dreamina，即使显式传入也在提交前拒绝。
 """
 from __future__ import annotations
 
@@ -64,7 +64,7 @@ KEEP_OUT = ("参考用法补充: 参考图一只给材质、配色、光与胶�
 VARIANT = re.compile(r"^只改[:：]", re.M)
 KEEP_IN = "参考用法补充: 构图、机位、焦段与裁切与参考图一致，只改上文「只改」列出的项。"
 UPLOAD_RETRIES = 3   # 即梦上传 / 连接阶段失败的重试次数（请求没发出去，不扣费）
-RETRYABLE = re.compile(r"upload|do request|connection|timeout|deadline|EOF|reset|没回 JSON", re.I)
+RETRYABLE = re.compile(r"^(?!.*(?:已扣|可能已提交|生成失败)).*(?:upload|上传).*?(?:fail|失败)", re.I | re.S)
 DM_WAIT_S = 900     # 即梦排队慢时（实测 2026-09-25 上午 >20 分钟）多等：提交即扣费，放弃就换引擎、基调会岔
 RATIOS = ("21:9", "16:9", "3:2", "4:3", "1:1", "3:4", "2:3", "9:16")
 PARAM_LINE = re.compile(r"^(参考:|比例:|参数:|\[参数\]|画幅)")
@@ -138,9 +138,9 @@ def find_jobs(paths: list[str]) -> list[Job]:
 
 def scenes_root(d: Path) -> Path:
     for p in d.parents:
-        if p.name == "scenes":
+        if p.name in ("background", "scenes"):
             return p
-    raise SystemExit(f"{d} 不在任何 scenes/ 目录下")
+    raise SystemExit(f"{d} 不在任何环境资产 background/（旧scenes/）目录下")
 
 
 class World:
@@ -255,8 +255,8 @@ def prop_line(props: list[tuple[str, str, Path]]) -> str:
 
 
 def plan_for(j: Job, world: World, engine: str) -> tuple[str, str, list[Path]]:
-    """引擎、送审稿与参考图。物件参考图在即梦字数容得下时才挂（容不下就逐件减）；正文与负向词一个字都不丢——
-    带着负向词塞不进即梦就改走 ElevenLabs（实测 bg807-1 三次都被悄悄删掉「不要楼梯」，斜坡三次画成楼梯，2026-09-30）。"""
+    """所有 scene/bg 保留完整正文、负向及合适物件参考；禁即梦与静默删参考。"""
+    engine = ie.scene_choice(engine)
     base = world.refs(j)
     # 世界锚点守 rule 4e ② 零参考、纯文字：实测挂物件图的 bg1 两次都卡死在即梦「生成中」（>12 / >50 分钟），
     # 同一时段别的带参考图任务照常出图；它的物件一致性交给挂它的 bg 锚点与 plate
@@ -267,11 +267,6 @@ def plan_for(j: Job, world: World, engine: str) -> tuple[str, str, list[Path]]:
         raise SystemExit(f"{j.name}：prompt 里有「{'、'.join(sorted(set(hit)))}」——会被画成一台实物相机，改成「视点在…」再出图")
     # 挂了参考图就一定加这一句：实测 plate 与 bg 锚点会照搬参考图的整幅构图（QC 2026-09-25，bg1-1…4 / bg18 / bg20 各镜）
     body += ("\n" + (KEEP_IN if VARIANT.search(body) else KEEP_OUT)) if base else ""
-    for n in range(len(props), -1, -1):
-        extra = ("\n" + prop_line(props[:n])) if n else ""
-        text = body + extra + (("\n" + j.neg) if j.neg else "")
-        if engine == "dreamina" and len(text) <= dm.PROMPT_MAX:
-            return "dreamina", text, base + [p for _, _, p in props[:n]]
     extra = ("\n" + prop_line(props)) if props else ""
     return "elevenlabs", body + extra + (("\n" + j.neg) if j.neg else ""), base + [p for _, _, p in props]
 
@@ -308,10 +303,11 @@ def _fetch(url: str, dest: Path) -> None:
 
 
 def _dreamina(j: Job, text: str, refs: list[Path], t0: float) -> bool:
+    ie.reject_dreamina_scene(j.out, text)
     # 上传阶段失败没提交、不扣费（实测多进程同时传同一张 6 MB 大图就会撞上），先退避重试，别急着换引擎
     for attempt in range(UPLOAD_RETRIES + 1):
         try:
-            url, cost = gba._dm_submit(text, [_upload_copy(r) for r in refs], j.ratio, wait_s=DM_WAIT_S)
+            url, cost = gba._dm_submit(text, [_upload_copy(r) for r in refs], j.ratio, wait_s=DM_WAIT_S, target=j.out)
             _fetch(url, j.out)
             log(j, engine="dreamina", ratio=j.ratio, chars=len(text), ref=[r.name for r in refs], credits=cost)
             print(f"  ✓ {j.name} 即梦 {len(text)} 字 {j.ratio} {time.time() - t0:.0f}s", flush=True)
@@ -327,18 +323,18 @@ def _dreamina(j: Job, text: str, refs: list[Path], t0: float) -> bool:
 
 def _elevenlabs(j: Job, text: str, refs: list[Path], t0: float) -> None:
     key = el.api_key()
-    gid = el.create(key, text, model=el.DEFAULT_MODEL, quality="medium", aspect=j.ratio,
-                    resolution="2K", refs=[el.inline(_upload_copy(p)) for p in refs] or None)
+    gid = el.create(key, text, model=ie.SCENE_MODEL, quality="high", aspect=j.ratio,
+                    resolution="2K", refs=[el.inline(_upload_copy(p)) for p in refs] or None, target=j.out)
     part = j.out.with_name(j.out.stem + ".part" + j.out.suffix)
     el.wait_download(key, gid, part)
     part.replace(j.out)
-    log(j, engine="elevenlabs", ratio=j.ratio, chars=len(text), ref=[r.name for r in refs], gid=gid)
+    log(j, engine="elevenlabs", model=ie.SCENE_MODEL, quality="high", ratio=j.ratio, chars=len(text), ref=[r.name for r in refs], gid=gid)
     print(f"  ✓ {j.name} ElevenLabs {len(text)} 字 {j.ratio} {time.time() - t0:.0f}s", flush=True)
 
 
 def generate(j: Job, world: World, engine: str) -> None:
     j = Job(j.dir)      # 出图前重读卡：长批次里卡常被同时修（实测 bg19-5 进程启动后才压字数）
-    eng, text, refs = plan_for(j, world, ie.first_choice(not j.plate, engine))
+    eng, text, refs = plan_for(j, world, ie.scene_choice(engine))
     waited = 0
     while refs and not refs[0].is_file():      # 别的进程还在出上一层；等，不重交
         if waited >= REF_WAIT_S:
@@ -346,32 +342,20 @@ def generate(j: Job, world: World, engine: str) -> None:
         time.sleep(15)
         waited += 15
     t0 = time.time()
-    if eng == ie.DREAMINA:
-        if not _dreamina(j, text, refs, t0):
-            _, text, refs = plan_for(j, world, ie.ELEVENLABS)   # 同一套物件参考，外加 ElevenLabs 不受字数限制的完整负向
-            _elevenlabs(j, text, refs, t0)
-        return
-    try:
-        _elevenlabs(j, text, refs, t0)
-    except (Exception, SystemExit) as e:   # noqa: BLE001 —— 锚点 ElevenLabs 失败（审核 / 超时）退即梦，字数容不下就放弃
-        eng2, text2, refs2 = plan_for(j, world, ie.DREAMINA)
-        if eng2 != ie.DREAMINA:
-            raise
-        print(f"  ! {j.name} ElevenLabs 失败，退即梦：{str(e)[:200]}", flush=True)
-        if not _dreamina(j, text2, refs2, t0):
-            raise RuntimeError(f"{j.name}：ElevenLabs 与即梦都失败") from e
+    _elevenlabs(j, text, refs, t0)  # 失败原样报出，禁止退即梦或自动再次付费提交
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("step", choices=("plan", "run"))
     ap.add_argument("paths", nargs="+")
-    ap.add_argument("--engine", default=ie.AUTO, choices=ie.CHOICES, help="auto ＝ 按 rule 4l：锚点 ElevenLabs、plate 即梦")
+    ap.add_argument("--engine", default=ie.AUTO, choices=ie.CHOICES, help="scene/bg/plate 一律 ElevenLabs；dreamina 禁用")
     ap.add_argument("--shard", default="0/1")
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--no-props", action="store_true",
                     help="不挂物件参考图（实测个别 prop 组合让即梦卡死在「生成中」时用；只挂世界 / 所属 bg 锚点图）")
     args = ap.parse_args()
+    ie.scene_choice(args.engine)  # 即使文件已存在或范围为空，禁用选项仍明确报错
     global NO_PROPS
     NO_PROPS = args.no_props
     k, n = (int(x) for x in args.shard.split("/"))
@@ -386,7 +370,7 @@ def main() -> int:
     if args.step == "plan":
         c = collections.Counter()
         for j in todo:
-            eng, text, refs = plan_for(j, world, ie.first_choice(not j.plate, args.engine))
+            eng, text, refs = plan_for(j, world, ie.scene_choice(args.engine))
             c[eng] += 1
             print(f"  {j.name:<24} {eng:<10} 正文 {cws.prompt_len(j.body):>5} · 送审 {len(text):>5} 字 {j.ratio:<5} "
                   f"参考={refs[0].parent.name if refs else '无（世界锚点）'}"
@@ -402,7 +386,7 @@ def main() -> int:
             print(f"  ⏭ {j.name}：{str(e)[:200]}", flush=True)
             skipped.append(j.name)
     print(f"\n完成 {len(todo) - len(skipped)} / {len(todo)}；跳过 {len(skipped)} {' '.join(skipped)}")
-    return 0
+    return 1 if skipped else 0
 
 
 if __name__ == "__main__":

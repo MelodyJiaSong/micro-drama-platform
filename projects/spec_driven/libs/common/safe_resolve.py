@@ -3,6 +3,8 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from libs.common.exposed_tree import CONTEXT_DIRS, CONTEXT_FILES, CONTEXT_ROOT_FILES
+
 _WIN_RESERVED = re.compile(
     r"^(con|prn|aux|nul|com[1-9]|lpt[1-9])(\..*)?$",
     re.IGNORECASE,
@@ -12,7 +14,7 @@ _EXCLUDED_TOP_LEVEL: frozenset[str] = frozenset(
     {"node_modules", ".git", ".audit", "__pycache__", ".pytest_cache", "dist", "build", ".vite"}
 )
 _ALLOWED_TOP_LEVEL: frozenset[str] = frozenset(
-    {"CLAUDE.md", ".claude", "specs", "projects", "prompt_lab"}
+    {*CONTEXT_ROOT_FILES, ".agents", ".claude", "specs", "projects", "prompt_lab"}
 )
 
 
@@ -62,8 +64,8 @@ class SafeResolver:
             return None
         if first not in _ALLOWED_TOP_LEVEL:
             return None
-        if first == ".claude":
-            if len(parts) < 2 or parts[1] not in {"skills", "agent_refs"}:
+        if first in CONTEXT_DIRS:
+            if rel not in CONTEXT_FILES and (len(parts) < 2 or parts[1] not in CONTEXT_DIRS[first]):
                 return None
         for seg in parts:
             if seg in _EXCLUDED_TOP_LEVEL:

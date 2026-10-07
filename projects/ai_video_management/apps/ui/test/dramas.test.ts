@@ -15,7 +15,7 @@ const tree: TreeNode = {
   path: "",
   children: [
     dir("ai_videos", "ai_videos", [
-      dir("feng_shou_lu", "ai_videos/feng_shou_lu", [
+      { ...dir("feng_shou_lu", "ai_videos/feng_shou_lu", [
         dir("characters", "ai_videos/feng_shou_lu/characters", [
           dir("c1_裴知秋", "ai_videos/feng_shou_lu/characters/c1_裴知秋"),
           dir("c2_裴长砚", "ai_videos/feng_shou_lu/characters/c2_裴长砚"),
@@ -25,17 +25,25 @@ const tree: TreeNode = {
           dir("s1_无寿崖", "ai_videos/feng_shou_lu/scenes/s1_无寿崖"),
           dir("s2_落雁渊", "ai_videos/feng_shou_lu/scenes/s2_落雁渊"),
         ]),
-      ]),
-      dir("other_drama", "ai_videos/other_drama", [
+      ]), is_drama: true },
+      { ...dir("other_drama", "ai_videos/other_drama", [
         dir("characters", "ai_videos/other_drama/characters", [
           dir("c1_别人", "ai_videos/other_drama/characters/c1_别人"),
         ]),
-      ]),
+      ]), is_drama: true },
     ]),
   ],
 };
 
 describe("extractDramaAssets", () => {
+  it("finds background subjects and views beneath the world hierarchy", () => {
+    const drama = { ...dir("demo", "ai_videos/demo", [dir("2_世界观人设", "ai_videos/demo/2_世界观人设", [
+      dir("background", "ai_videos/demo/2_世界观人设/background", [dir("eastern_kingdoms", "world", [
+        dir("elwynn_forest", "zone", [dir("bg2_修道院", "bg2", [dir("bg2-2_中庭", "bg2-2")])]),
+      ])]),
+    ])]), is_drama: true };
+    expect(extractDramaAssets(dir("root", "", [drama]), "ai_videos/demo/episodes/ep01/filming.json").scenes).toEqual(["修道院", "中庭"]);
+  });
   it("lists characters + scenes (prefix stripped) for the file's drama", () => {
     const a = extractDramaAssets(tree, "ai_videos/feng_shou_lu/episodes/ep01/shots/shot01/shot01.md");
     expect(a.characters).toEqual(["裴知秋", "裴长砚"]);

@@ -1,5 +1,13 @@
 # Final spec — ai_video_management
 
+## Follow-up 199 — 工作流覆盖与接续契约
+
+工作流目录除模块/指南外，须索引制作模板、编译实现、工具声明默认值及执行规则；历史专用来源标历史，不自动加入三模块输入。覆盖页同时显示源可读性、稳定编号、分类可达性、共用文档现存引用未登记，以及平铺/系列剧已保存 run 的全局来源。静态 Python 投影包含函数与 CLI 默认值、嵌套常量、环境名称，不执行代码或取秘密值。局部输入继续在剧导航与冻结快照；外部隐藏上下文不能声称全部覆盖。接续维护要求在 AGENTS/CONVENTIONS 与共用 ai_video_workflow.md；UI仍只读，源正文不复制到代理私有入口。
+
+Follow-up197：Seedance无配乐生成规则由compiler v3固定编译：保留本镜指定对白、自然环境声和动作声，禁止背景音乐或配乐，无对白镜声明没有人说话。key首行不变，声音规则位于key后及末尾；相同输入/版本确定性输出。旧编译版本标待更新，不改故事/分镜或自动确定版本；音轨须出片试听核对，新音乐流程另行设计。
+
+**Follow-up196（2026-10-05）**：删除 legacy BGM 公共库、旧集 cue 文件、固定情绪分类、UI/API/自动创建与导入分支；旧 BGM 相关需求全部停用。新配乐流程从创作需求设计，不继承 bgm.md 契约或默认预设。历史规格/审计与独立音乐资产保留，通用音频处理工具继续供对白/响度等功能使用。
+
 Run: ai_video_management-20260505-002710
 Stage: 4 (spec compilation)
 Inputs consumed: `revised_prompt.md`, `interview/qa.md`, `findings/dossier.md`, `findings/angle-{spec-driven-parallel-audit, ai-video-render-mode-design, regen-prompt-ai-video-semantics, ai-video-tree-and-detection}.md`
@@ -386,6 +394,32 @@ Mirror of the actor pool (FR-9f – FR-91 / FR-95) for the auditory identity leg
 - **FR-105** (drama production console) `POST /api/select-drama-takes` — **全局定版**: lock every episode's takes in one drama-wide pass. Body `{path}` (any file/folder under `ai_videos/{drama}`; drama-scope validation reuses `InvalidBatchScopeError` → `400 invalid_batch_scope`, like FR for export-production). `DramaTakesCommand.select_all` → `DramaTakesSelector` walks `episodes/ep{NN}/` (via `drama_layout.episodes_dir`, both flat-root and staged `5_6_分镜与prompt/` layouts) and delegates each episode to the SAME per-episode `EpisodeTakesSelector` the single-episode 定版 uses (no drift) — each shot's newest `renders/` mp4 is copied to a stable `shot{NN}.mp4` (`renders/` untouched). A single episode failing (no shots / no render mp4) is reported, not fatal — the other episodes still lock. Does NOT concat. Response: `{drama, outcomes:[{episode, episode_rel, ok, selected, skipped, reason}]}` (`reason` = the per-episode `EpisodeDomainError` class name when `ok=false`). Status: `200` (even on partial per-episode failure), `400 invalid_batch_scope`, `405 method_not_allowed`. Surfaced as the `🔒 全局定版` button on the `DramaDashboard` main page.
 - **FR-106** (drama production console) `POST /api/list-drama-episodes` — list a drama's episodes to drive the dashboard's per-episode 拼接成片 rows. Body `{path}` (same drama scope + validation as FR-105). `DramaEpisodesQuery.list` → read-only `DramaEpisodesReader` walks `episodes/ep{NN}/` and reports `{episode, episode_rel, shots, locked, has_master}` per episode — `shots` = `shot{NN}` subfolder count, `locked` = shots with a 定版 `shot{NN}.mp4`, `has_master` = stitched `ep{NN}.mp4` exists. Response: `{drama, episodes:[…]}`. Status: `200`, `400 invalid_batch_scope`, `405 method_not_allowed`. The `DramaDashboard` renders one row per episode (status + a `🎬 拼接成片` button that calls `POST /api/concat-episode` (FR-102) with that episode's `episode_rel`, defaults `lang=original, rife=false, plan=null`; disabled when `locked=0`).
 
+### 外部服务请求日志（follow-up 181）
+
+- 共用调用文档在 `.agents/references/project/paid_services.md`，覆盖 Dreamina CLI、ElevenLabs、Hyper3D/Rodin 与 Cascadeur 本地脚本 API，区分当前官方 API 和本仓库旧接口，不虚构实时费用。
+- 每次仓库调用必须先追加 request 事件并落盘，再发送请求；日志写入失败即禁止调用。生成提交、状态查询、余额查询、结果下载及每次重试均留痕；CLI 内部不可观测的 HTTP 请求明确说明边界。
+- 记录完整 prompt/台词/代码、实际 JSON/multipart 文本参数或 CLI argv、模型与输出参数、参考顺序/路径/大小/SHA256、时间、目标、PID、超时和请求指纹；媒体本体只记元信息，API key/cookie/签名 URL 鉴权字段脱敏。
+- 请求和结果/错误由 request_id 关联；保存任务 ID、状态、返回的费用字段。未返回费用视为未知；提交结果未知不自动重复收费请求。
+- 按既有路径归属：每个 epNN 一份 request_log.md；characters、scenes、props、equipment、voices、music、skills 等各自集合根共用一份；系列共用资产归 `_series`，不复制到成员剧。不修改既有剧目录。
+- UI 侧栏「请求日志」进入 `/request-logs`，选择范围，最新事件在前，分页展开完整 JSON，可查看原始 Markdown。后端只提供 GET 列表和分页读取；普通文件编辑器和写入 API 禁止覆盖日志。
+- 只接入日志能力，不替用户发起生成或增加审批流程；既有生成/剪辑授权规范继续有效。外部未更新插件及用户直接终端/MCP 调用不自动拦截，必须先接入记录入口。
+
+## 全局影视改编知识（follow-up 191）
+
+全局工作流的影视改编模块与侧栏提供 `/workflow/filming` 只读入口，不绑定具体剧或EP。内容唯一源为 `.agents/references/project/ai_video_shot_sizes.md`，前端构建直接读取该Markdown，不开放通用参考库文件读写API。正文去掉时间轴，包含功能分类、景别、定义/边界、包含/省略信息、使用/避免原则、定性比较与camera选镜方法；区分字幕来源与整理建议。影视改编共用指南引用同源正文；不新增filming.json字段、不修改故事、不新增硬性QC。正文更新后生产UI需重新构建。
+
+### 全局工作流导航树（follow-up 193）
+
+#### 跨剧设置目录（follow-up194）
+
+工作流下的三模块可继续展开共用模块指南；其他下一层分类为全局创作规则、代理与执行设置、服务与模型设置、制作与验收规则、调研与共享资产。共用目录在 `.agents/references/project/workflow_catalog.json`，登记源路径、分类及受控自动发现范围，正文沿用唯一源。新共用skill/参考文件自动出现；仓库级与用户级配置、缺失文件和历史参考显式标注。管理应用开发规则标明用途，不隐式附加到故事生产。
+
+专用只读接口提供目录、源内容及run输入覆盖核对；只接受登记的source_id，拒绝路径穿越、链接与超限文件，不暴露通用任意文件读取。配置JSON/TOML脱敏，Python工具只解析源码常量，不执行。当前配置声明与运行时实际模型/权限分开。
+
+历史输入保留冻结正文与SHA，跨剧来源增加当前全局源跳转；核对页列出每个已留存关联、登记状态与无法核验的索引，不把当前规则替换进旧run。魔兽世界EP1两run各三份共用规则纳入目录；未留存的历史代理上下文继续标未知。剧内世界规则、素材、profile、故事草稿及选用关系保留原归属。
+
+“工作流”从工具栏按钮改为普通一级左nav项；展开后，故事创作、影视改编、Prompt编译为第二层项。影视改编可继续展开已有“镜头类型与景别”第三层项；后续内容按子项组织。全局项共用普通树的行样式、缩进、展开/折叠、键盘导航与精确路由高亮，直接打开子项URL自动展开祖先；“折叠全部”包括工作流。故事和Prompt模块各显示对应说明，影视知识页保持只读、原URL可用；全局导航不依赖文件树API成功加载，各剧模块导航保持原有结构。
+
 ## Non-functional requirements
 
 - **NFR-1 — Tool / library version pinning.** Backend: Python ≥3.11 (per `str | None` syntax); FastAPI ≥0.110; uvicorn[standard]; pip-only (NO `uv` per CLAUDE.md project rules + spec_driven precedent). Frontend: React ^18, Vite ^5, react-resizable-panels ^4. All other versions inherit from spec_driven `package.json` and `requirements.txt`.
@@ -434,3 +468,33 @@ Deferred to potential v2 follow-up:
 - Reverse cross-tree link (specs → ai_videos).
 - A "compare two shots side-by-side across projects" power-user view.
 - User-toggleable theme picker.
+
+
+## 三模块 POC（follow-up 182–183）
+
+每run完整输入与产出（follow-up190）：run下设输入与规则/产出/过程。输入按故事设定、背景事实、流程规则、实际任务指令、运行与模型设置展开；每项逻辑soft link打开独立页面，关联冻结字段及源文件路径、取用范围、当时指纹与当前源状态。实际任务中的约束、用户追加要求、对照设计与审稿实际输入包也分别留存；模型或采样条件缺失明确显示。后续配置整理文件不算生成输入。产出关联正文、候选变化、虚构设定、完整候选和作者初稿；过程关联原始回复、审稿、事件与逐项决策。独立审计文件只有与历史登记SHA256一致才展示内容，变化/丢失/无法核验明确标缺口；规则内部引用只跳到同run已留存版本。只读投影不得修改历史run或冻结输入，深链接按EP/run/item精确定位。
+
+标识three-module-v1的剧以故事创作、影视改编、Prompt编译替换旧阶段。Research与资产独立；其他剧不批量迁移。
+魔兽世界左侧固定0_research、1_资产库、2_故事、3_影视改编、4_prompt编译，无“EP1 创作”独立入口。2/3/4均为可展开stage目录，点击只展开/收起；当前各含EP1子项，选择子项后主工作区只读展示该集对应产物。集来自实际episodes目录，module/episode参数绑定所选内容；右侧不重复展示模块切换卡片。
+每模块独立JSON；保存/确定仅写当前模块，输入绑定已确定上游版本，冲突返回409。上游变化保留下游内容并显示待更新/等待上游。
+故事仅方向及正文。分镜 content.scenes 按场组织，每场为 id（sN）、background（bgN 或空）、location、time、purpose、shots；镜头为 id（stN）、duration、action、camera、dialogue。编译固定模板，相同输入及编译器版本产生相同字节，不调用模型。
+
+Follow-up195：环境资产从场次概念中分离，魔兽世界资产目录改为 background，其他剧兼容旧 scenes。集→场→镜头层级在影视改编、Prompt 编译导航中展开；查询参数 scene/shot 精确定位。编译结果 content.scenes[].shots[].id 与 prompt 首行使用完整 ep1_s1_st1 key，派生 prompt.txt 位于 episodes/ep01/scenes/s1/shots/st1/。sN/stN 是稳定身份，同场镜头不能重号；调序以数组顺序播放，不能重新编号。下载导入仅按存在且唯一的完整 key 路由到该镜头 renders；未知、不完整或冲突 key 留在下载目录并报原因，其他参考资产 key 不抢占镜头归属。定版、拼接、字幕和计数识别新层级；首尾帧自动传递只在同场。保留旧剧的 shotNN 路径兼容、历史 run 与原媒体内容；不自动编写场次、不确定故事、不提交付费生成。
+修改、保存、版本确定与编译通过Claude Code/Codex；UI不提供编辑或写入操作。故事run支持真实协作留痕，资产引用与视频生成按需增加。
+
+长期事实与每集状态：资产库世界规则/选定资产卡为共享资料；故事stage的EP含共享配置、所选run链接与runs；已确定变化仍记录在EP/state_changes.md，不作为当前run链接的子文档。支持文档独立只读；人工按集序核对已确定变化，草稿不成为后续集事实。
+
+独立故事run：EP/shared/独立保存明确版本的input.json与rules.json，index.json登记profile；story_runs.json仅索引独立run。六问Who/What/Why/When/Where/How；每次begin新ID，完整冻结组装输入及哈希，不隐式读旧候选或最新规则。只读历史API验证EP、索引、路径及输入指纹，坏记录显式报错。
+UI分别标input/output/process用途、shared/run/canonical范围；persistent共享来源跨run复用，transient候选与过程按run保留。实际agent身份、完整任务/回复、逐项建议/决定/理由/证据及时间线可展开查看；切换run清除旧详情并取消请求。作者、独立审稿与主编属于故事scope，实施人员单独标识；未知时间/模型如实为空。规则唯一来源为共用story-runs.md。
+共享输入使用友好只读页：六问、方向、假设、选用背景与规则分块，完整内容可展开，路径/哈希作为证据，不以JSON代码页作默认展示。profile切换仅查看明确版本。
+左nav：2_故事→EP1先分共享配置·Persistent（创作输入/规则）、当前EP1→runN（单一soft link，指向所选run，无子文档）、runs·Transient。runs下run1/run2分输入与规则、产出（候选故事/候选变化）及过程（创作日志）。编号按该EP索引追加顺序，导航关联实际独立audit folder及文档。目录仅展开，叶文档绑定run_id/view并分别选中，不能全部跳到同一默认run；Persistent指存储与跨run复用，不代表假设已成为世界事实。
+双run只读对比显示各自文件夹、候选、六问与状态变化、审稿证据和输入是否一致；不把逐字相似率当作质量或声称两次同规则创作证明规则因果。选用通过promote CLI，将任意可选候选载入EP草稿；story_selection.json保存当前绑定和历史。原run不改，不审批、不写永久事实/已接受状态；工作区正文改变后绑定须显示失配。UI只复制选用命令与展示当前选择。
+每个run叶文档有独立路由与页面：候选故事、候选状态变化、输入快照、创作过程；右侧标题与主体只呈现该文档，无聚合页tab或重复运行历史栏。对比为独立页面，切页重置局部状态及滚动。
+
+## 全局设置分类与稳定编号（follow-up 198）
+
+工作流仅两类设置根：1_AI Video与2_Claude Code与Codex。AI Video前三个子项为1.1_故事创作、1.2_影视改编、1.3_Prompt编译；其他共用制作/服务/资产规则继续归AI Video，代理配置归另一类。具体源三级编号保存在workflow_catalog.json的source_numbers，以scope:path为身份，不以列表位置计算，不重命名正文文件。标题/排序变化保留编号；删除后保留预留号，不复用。自动发现未登记编号的项标待编号；重复/非法号拒绝读取。run展示当前目录对应编号及名称、来源路径、冻结与当前指纹，不回写历史run或冒充当时已记录编号。三模块与历史source_id深链接继续可用，UI只读。
+
+## 故事内容与执行导航（follow-up 200）
+
+1.1故事创作下仅两类：A_故事内容（人物动机、目标冲突、行动因果、世界边界、情绪变化、结构推进）与B_执行与验证（输入冻结、创建运行、分工审稿、保存溯源、验证比较、选用交接）。类别有目录页，主题只展示唯一源的对应章节，并可打开完整原文与来源版本。目录在workflow_catalog.json声明；原source_id、R01–R14与源编号保持稳定，不改历史run或profile。源码新增section深链接须精确选中一项、自动展开祖先并支持刷新；缺失章节明确提示，不回退显示其他主题。

@@ -10,7 +10,7 @@ export default defineConfig({
     host: "127.0.0.1",
     port: 5174,
     proxy: (() => {
-      const target = "http://127.0.0.1:8766";
+      const target = `http://127.0.0.1:${process.env.BACKEND_PORT || "8766"}`;
       const rewriteOrigin: ProxyOptions = {
         target,
         changeOrigin: true,

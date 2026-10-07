@@ -1,0 +1,16 @@
+[project]
+name = "youtube-downloader-local"
+version = "0.1.0"
+description = "本机 YouTube 视频下载窗口"
+requires-python = ">=3.11"
+dependencies = ["yt-dlp[default]>=2026.8.19", "dependency-injector>=4.41"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.uv]
+package = false

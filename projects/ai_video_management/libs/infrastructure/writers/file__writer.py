@@ -49,6 +49,8 @@ class FileWriter:
         content: str,
         if_unmodified_since: str | None = None,
     ) -> WriteResult:
+        if Path(rel).name.lower() == "request_log.md":
+            raise UnsupportedFileExtensionError("request_log.md 是只追加的审计日志，不能通过编辑器覆盖")
         resolved = self._resolver.resolve(rel)
         if resolved is None:
             raise FileNotInSandboxError()

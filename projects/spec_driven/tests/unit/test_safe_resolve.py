@@ -2,7 +2,7 @@
 Group 1 — safe_resolve / path sandbox.
 
 Spec anchors: FR-2, FR-4, NFR-5, NFR-10, NFR-11, NFR-12. Severity: critical for
-any sandbox-escape failure (per agent_refs/validation/general.md).
+any sandbox-escape failure (per .agents/references/validation/general.md).
 
 Surface under test: `SafeResolver.resolve(rel) -> Path | None`.
 - Inside-tree, well-formed → absolute Path
@@ -41,12 +41,43 @@ def test_resolves_nested_spec_path(resolver, repo_root):
 
 
 def test_resolves_dotclaude_skill(resolver):
-    p = resolver.resolve(".claude/skills/agent_team/SKILL.md")
+    p = resolver.resolve(".agents/skills/agent-team/SKILL.md")
     # Skill file may or may not exist depending on harness state, but it MUST
     # not be rejected pre-FS — i.e., it should resolve to an absolute path
     # under repo_root.
     if p is not None:
         assert p.is_absolute()
+
+
+@pytest.mark.parametrize("rel", [
+    "AGENTS.md", "CONVENTIONS.md", ".agents/skill-aliases.json",
+    ".agents/skills/ai-videos-pipeline/SKILL.md",
+    ".agents/references/project/ai_video.md",
+    ".agents/skills/ai-videos-pipeline/playbooks/ai_videos__stage2_世界观人设.md",
+    ".claude/skills/ai_videos__全流程编排/SKILL.md",
+])
+def test_resolves_shared_agent_context(resolver, rel):
+    path = resolver.resolve(rel)
+    assert path is not None and path.is_file()
+
+
+@pytest.mark.parametrize("rel", [
+    ".agents/settings.json", ".agents/private/SKILL.md", ".agents/../.env",
+    ".claude/settings.json", ".mcp.json",
+    ".claude/agent_refs/project/ai_video.md",
+])
+def test_shared_agent_context_does_not_expose_runtime_config(resolver, rel):
+    assert resolver.resolve(rel) is None
+
+
+def test_repository_root_found_without_claude(tmp_path):
+    from libs.common.repo_root import RepoRoot
+
+    (tmp_path / "AGENTS.md").write_text("Shared entry", encoding="utf-8")
+    (tmp_path / ".agents").mkdir()
+    nested = tmp_path / "projects" / "example"
+    nested.mkdir(parents=True)
+    assert RepoRoot.find(nested).path == tmp_path.resolve()
 
 
 # ---------------------------------------------------------------------------

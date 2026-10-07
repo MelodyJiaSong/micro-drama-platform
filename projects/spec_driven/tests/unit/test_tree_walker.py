@@ -2,7 +2,7 @@
 Group 4 — tree_walker uniform `children` field (consumer-walk regression).
 
 Spec anchors: FR-3, FR-15. Severity: blocker on consumer-walk regression
-(per agent_refs/validation/development.md move 2). The 2026-05-02-clean run
+(per .agents/references/validation/development.md move 2). The 2026-05-02-clean run
 shipped a tree using `task_type.projects` / `project.stages` keys; this group
 guards against a regression to that shape.
 
@@ -31,12 +31,12 @@ def tree(client) -> dict[str, Any]:
 
 
 def test_root_has_two_top_level_sections(tree):
-    """FR-3 — top-level `Claude Settings & Shared Context` + `Specs`."""
+    """FR-3 — top-level `Agent Conventions & Shared Context` + `Specs`."""
     children = tree["children"]
     assert isinstance(children, list)
     assert len(children) >= 2
     names = [c["name"] for c in children]
-    assert "Claude Settings & Shared Context" in names
+    assert "Agent Conventions & Shared Context" in names
     assert "Specs" in names
 
 
@@ -66,7 +66,7 @@ def test_tree_consumer_walk(tree):
     each top-level section."""
     children = tree["children"]
     # locate the two canonical sections
-    settings = next(c for c in children if c["name"] == "Claude Settings & Shared Context")
+    settings = next(c for c in children if c["name"] == "Agent Conventions & Shared Context")
     specs = next(c for c in children if c["name"] == "Specs")
 
     settings_leaves = [n for n in _walk(settings) if n.get("type") == "file"]
@@ -78,7 +78,8 @@ def test_tree_consumer_walk(tree):
 def test_consumer_walk_finds_known_files(tree):
     leaves = [n for n in _walk(tree) if n.get("type") == "file"]
     paths = [n["path"] for n in leaves]
-    assert "CLAUDE.md" in paths
+    assert {"AGENTS.md", "CONVENTIONS.md", "CLAUDE.md"} <= set(paths)
+    assert ".agents/skills/ai-videos-pipeline/SKILL.md" in paths
     assert any(
         "specs/development/spec_driven/final_specs/spec.md".replace("/", p[0]) in p
         for p in paths
@@ -117,10 +118,12 @@ def test_every_non_leaf_children_is_list(tree):
             assert isinstance(node.get("children"), list)
 
 
-def test_dotclaude_subtree_includes_agent_refs_recursively(tree):
-    """FR-2 — `.claude/agent_refs/**/*.md` recursive discovery."""
+def test_shared_context_includes_references_and_playbooks(tree):
+    """FR-2 — `.agents/references/**/*.md` recursive discovery."""
     leaves = [n["path"] for n in _walk(tree) if n.get("type") == "file"]
-    # The test repo definitely has agent_refs general.md files for at least
-    # one of the stages — assert at least one shows up.
-    has_agent_refs = any("agent_refs" in p and p.endswith(".md") for p in leaves)
-    assert has_agent_refs, "agent_refs/*.md must appear in tree response"
+    assert ".agents/references/project/ai_video.md" in leaves
+    assert ".agents/skills/agent-team/playbooks/interview.md" in leaves
+    assert ".agents/skills/ai-videos-pipeline/BLUEPRINT.md" in leaves
+    assert ".claude/skills/ai_videos__全流程编排/SKILL.md" in leaves
+    assert not any(p.startswith(".claude/agent_refs/") for p in leaves)
+    assert not any(p.startswith((".agents/private/", ".claude/hooks/")) for p in leaves)

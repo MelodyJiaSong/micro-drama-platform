@@ -1,18 +1,17 @@
+> 当前资产卡只保留外观、声音资产与原典参考。人物行为、关系和能力按当前 writers_room 与剧本启用；历史剧情不作为本轮事实。建立视频内的声样仅用于音色参考，不作剧情或声口台词。
+
 # m8 Northshire Guard · 北郡门卫
 
 > **图鉴卡**（人类 / 非具名群体资产）。南墙隘口门洞两侧常驻两名（`bg20` 卡「凡用 bg20 的 shot 必须写死两名卫兵的站位」）。
 > 非具名：**无人物灵魂 12 维**。全体共用 voice_id `en-m-szzl-guard-01`（`casting.md`）。
-> 装束取 `shikong_lvxing/sk2` 暴风城卫兵卡 `c31` 的读图结论（全覆式圆穹盔 + T 形面甲开口 + 群青蓝罩袍金狮），**持物按本剧 `bg20` 卡与 ep01 剧本约束 #9 改成长戟**。
-> **建卡起因**（follow-up 032）：ep01 S01 卫兵开口问话——说话的人要有卡、有声音，才挂得进 Seedance entity。
+> 装束取 `shikong_lvxing/sk2` 暴风城卫兵卡 `c31` 的读图结论（全覆式圆穹盔 + T 形面甲开口 + 群青蓝罩袍金狮），**持物按本剧 `bg20` 卡 改成长戟**。
 > *(judgment call — 头盔整张罩住脸：说话时画面里看不到嘴，口型问题自然消失，也和 c13 维里的露脸锁子甲拉开层级。)*
 
 ---
 
-## 角色定位
+## 当前人物入口
 
-**谷口的门。** 他们不拦人、不寒暄，只问两个词，然后用头盔朝谷里一点。人手不够（S03 维里：「卫兵一半都派到远方去了」），所以门口只剩两个人，站得笔直、问得很短。
-
----
+本卡为保留资产。人格、私人前史、关系、称呼与出场职责待当前故事启用，由当前 writers_room 明确；原典身份与参考资料不构成已经发生的本剧情节。旧台词与旧成长路径均不继承。声音资产保留如下。
 
 ## 锁定描述符（跨镜 byte-identical · 自然色名无 hex）
 
@@ -44,7 +43,6 @@
 | **口吻** | 短、干、公事公办；军人腔（`casting.md` 口音表） |
 | **voice_id** | **`en-m-szzl-guard-01`**——两名卫兵共用 |
 | **口型** | 头盔罩脸，画面里看不到嘴；声音从面甲后面出来，略闷 |
-| **ep01 落点** | S01 "Name. Business." |
 
 ---
 
@@ -70,8 +68,8 @@
 
 ## turntable 说明（4 s 建立视频 reference · rule 12.5 / 22.2）
 
-> 由 `tools/gen_turntables_szzl.py` 从本卡立绘 prompt 与 `casting.md` 生成，**勿手改**——改立绘 prompt 或 casting 后重跑。
-> 立绘定**脸**，turntable 定**体型 + 服装 + 随身物 + 站姿 + 声音**；两者一起建 Seedance 角色资产包 entity。
+> 建立视频为保留的音色与外观资产；本轮维护不触发旧资产生成器。
+> 立绘定**脸**，turntable 定**体型 + 服装 + 随身物 + 站姿 + 声音**；建立素材派生三张人物视图及声样MP3，shot按需上传真实文件，不预建entity。
 > 画幅 **9:16**｜时长 **4 s**｜5-phase locked-framing single-take｜抽帧 front 0.5 s / side 2.0 s / back 3.5 s。
 
 - **路由键 / prompt 首行**：`m8_Northshire_Guard_turntable`　**落盘**：`characters/m8_Northshire_Guard/m8_Northshire_Guard_turntable.mp4`

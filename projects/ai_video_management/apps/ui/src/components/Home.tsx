@@ -22,7 +22,7 @@ export function Home({ tree }: HomeProps): JSX.Element {
         Seedream立绘 prompt, or publish metadata file.
       </p>
       <Link to="/workflow" className="home-workflow-link">
-        🗺 查看 AI 短剧端到端工作流（六阶段 · QC 关卡 · skill / ref 调用）
+        查看创作流程：故事创作 → 影视改编 → Prompt 编译
       </Link>
       {tree === null ? (
         <p className="muted">Loading tree…</p>

@@ -4,7 +4,7 @@ Group 8 — API routes (negative-status surface) + critical Group 5 (api_securit
 Spec anchors: FR-4, FR-7..9, NFR-6, NFR-7, AC-11, AC-12.
 
 Group 5 sub-tests are the regression set for run `spec_driven-006` (proxy
-rewrite contract). Per agent_refs/validation/development.md move 11, BOTH
+rewrite contract). Per .agents/references/validation/development.md move 11, BOTH
 shapes (pre-rewrite raw browser request, and post-rewrite Vite-proxied
 request) are tested. Missing the pre-rewrite case is a blocker.
 """
@@ -29,7 +29,7 @@ def test_get_tree_returns_recursive_shape(client):
     assert isinstance(body["children"], list)
     assert len(body["children"]) >= 2
     names = [c["name"] for c in body["children"]]
-    assert "Claude Settings & Shared Context" in names
+    assert "Agent Conventions & Shared Context" in names
     assert "Specs" in names
 
 

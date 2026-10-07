@@ -10,8 +10,7 @@ from starlette.types import ASGIApp
 
 logger = logging.getLogger("ai_video_management.api_security")
 
-# Only PUT /api/file is a state-changing endpoint.
-GUARDED_ROUTES: frozenset[tuple[str, str]] = frozenset({("PUT", "/api/file")})
+GUARDED_ROUTES: frozenset[tuple[str, str]] = frozenset({("PUT", "/api/file"), ("POST", "/api/episode-workflow")})
 
 
 @dataclass(frozen=True)
@@ -49,7 +48,7 @@ class OriginHostMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):  # type: ignore[no-untyped-def]
         method = request.method.upper()
         path = request.url.path
-        if (method, path) in GUARDED_ROUTES:
+        if (method, path) in GUARDED_ROUTES or (path.startswith("/api/writers-room/") and method in {"PUT", "POST", "DELETE", "PATCH"}):
             origin = request.headers.get("origin")
             host = request.headers.get("host")
             if origin not in self._origin_allow or host not in self._host_allow:
@@ -74,7 +73,7 @@ CSP_HEADER: str = (
     "default-src 'self'; "
     "img-src 'self'; "
     "style-src 'self' 'unsafe-inline'; "
-    "script-src 'self'; "
+    "script-src 'self' 'wasm-unsafe-eval'; "
     "connect-src 'self'; "
     "object-src 'none'; "
     "base-uri 'self'"

@@ -1,120 +1,37 @@
-# 《圣光刚好够用》 · shengji_zhilu
+# 魔兽世界
 
-> *Just Enough Light* —— 一个刚到北郡修道院的圣骑士新兵，在这个世界里一步步长成能替别人撑住的人。
-> **2026-09-24 剧集化转向**（concept G 组）：片中不出现游戏与玩家概念 · 面向英语观众（英文台词）· 16:9 · 单集约 10 分钟 · Seedance 出片
-> 版本锚点：**经典旧世 Vanilla / Classic Era（1.12 口径）· 黑暗之门后第 25 年**
+从 EP1 重新开始。Research 与人物、场景等资产独立保留，旧剧情不继承。
 
----
+Legacy BGM 库、cue 时间线与管理入口已移除，新流程不继承其固定分类、格式或生成预设。配乐与 cue 将按新的创作需求设计；现有独立音乐资产及历史 run 不变。
 
-## 一句话
+EP1 的 `episodes/ep01/cue/` 为集级配乐 cue 占位目录，与 `scenes/` 并列；当前仅有 `.gitkeep`，具体音乐流程与数据格式待后续补充。
 
-**练级不是为了变强到碾压谁，是为了在别人需要的时候还站得住。**
+Seedance prompt 固定声明：仅保留本镜指定对白、自然环境声和动作声，不要背景音乐或配乐；无对白镜明确没有人说话。配乐后期独立处理，出片后试听确认。编译器v3自动加入该规则，旧编译版本标待更新。
 
-他打怪慢得要命、被队伍当 buff 机器使唤、**但死不了**——
-这不是设定，是经典旧世圣骑士的真实数据。全剧的主题就长在这条数据上：
-**他的高光永远是救人，不是杀敌。**
+制作结构为剧 → 集（episode）→ 场（scene）→ 镜头（shot）。可复用的环境资产在 `2_世界观人设/background/`，通过 `bgN` 绑定到场次；同一背景可以用于多场。原资产 `scenes/` 已迁移，媒体内容与历史 run 保留。
 
-第一季的终点不是一件装备，是**五个人终于愿意再一起上线一次**。
+`filming.json` 的 `content.scenes` 按场组织，每场有 `id`（s1）、`background`（bg2 或空）、`location`、`time`、`purpose` 和 `shots`；镜头有 `id`（st1）、`duration`、`action`、`camera`、`dialogue`。编号是稳定身份，数组顺序决定播放顺序，不因调序重新编号。当前 EP1 分镜仍为空，故事仍是未确定草稿。
 
----
+编译结果按场保存在 `prompts.json`，镜头 key 与 prompt 第一行均为 `ep1_s1_st1`。派生文件落在 `episodes/ep01/scenes/s1/shots/st1/prompt.txt`；包含完整 key 的下载文件导入同镜头的 `renders/`，不改原文件名。缺失、不完整或找不到唯一对应镜头的 key 不导入。
 
-## 目录导航
+之后剧情以魔兽游戏主线为骨架，允许适度补写，按[通用故事指南](../../.agents/references/project/story_guidelines.md)滚动组织EP。每次创作明确选用游戏版本、阶段锚点及可改边界；当前候选和旧run不因新规则自动重写。[本次研究](../../specs/ai_video/shengji_zhilu/findings/story-guideline-research-20261004.md)保存来源与适用性。
 
-| 阶段 | 落点 | 状态 |
+| 模块 | 文件 | 内容 |
 |---|---|---|
-| **0 设定考据** | `0_research/` | ✅ **1857 条事实**（`ai_read` 1744）· 20 路调研 + 13 路地理测绘 |
-| **1 立项** | `1_立项/concept.md` | ✅ 70 条创作裁定 + **G 组（G1–G9，剧集化转向，优先于其余条目）**；旧 20 集骨架暂停 |
-| **2 世界观人设** | `2_世界观人设/` | ✅ **26 张卡**（含 follow-up 032 新建的 `m7_Wolf` 野狼、`m8_Northshire_Guard` 门卫）+ casting + 人物网 |
-| **2a 全图场景** | `2_世界观人设/scenes/{大陆}/{区}/bg{N}_*/` | 🔸 **两片大陆 49 区 · 804 个 bg**（编号唯一出处 `scenes/registry.toml`，总表 `scenes/scenes_index.md`）；每个 bg 一张锚点级主体卡 + 原版区图 ref + 场地平面图（rule 4k），bg1–3 / 17–22 是 v3 五 plate 档；写卡工作流进行中 |
-| **2b 场景图 + 3D 层** | 场景图 `bg*/{目录}.png` + plate 图；`bg*/_blender/{bg}.blend`；物件 `2_世界观人设/props/p{N}_{名}/`（编号 `props/registry.toml`） | 🔸 **ep01 的 9 个场景齐了**：41 张场景图（9 锚点 + 32 plate，全 16:9，挂场景主要物件的 prop 正面图作参考）、9 份 blend（场景图挂同名机位相机背景 + prompt 文本块 + 单物体 GLB，占位 0）；**GLB 只装单个物体**；各区资产库已并进 props（462 → 449 件，p15–p463），场景只引用；其余 795 个 bg 还没出图 |
-| **2c 装备** | `2_世界观人设/equipment/{C}_{分类}/{C}{S}_{槽位}/e{C}{S}{NN}_{品质}_{名}/`（键即路径：`e5103` ＝ `5_近战武器/51_主手/` 第 03 件） | 🔸 **第四类资产**（rule 4m，follow-up 021–023）：兵器 / 盾 / 甲胄一律是装备卡，按槽位分目录、按 1.12 品质六档分档（做工逐档递进）；**370 件**（灰 66 · 白 70 · 绿 75 · 蓝 80 · 紫 72 · 橙 7），按魔兽分类放在 `equipment/{1_布甲,2_皮甲,3_锁甲,4_板甲,5_近战武器,6_法系与远程}/{C}{S}_{槽位}/`（follow-up 024；每类每档 ≥10，板甲灰档 1.12 全库只有 8 件）：图鉴 + 亚伦 / 杜克 1–60 级路线（两人各 16–17 个阶段，同检查点撞衫 ≤1 件）+ 光铸 / 勇气 T0 + 1.12 全部可得橙装 + D18 骰点件；**灰白绿不发光，蓝紫橙必须带本档颜色的特效光**（follow-up 027）；装备表 `equipment/loadouts/{角色}.md`（空槽反向声明由它自动进 shot）；三视图：蓝档以上的武器走 ElevenLabs、其余即梦（follow-up 027 / 029）；总表 `equipment/equipment_index.md` |
-| **3 分集大纲** | `3_大纲/arc_outline.md` | ⏸ v3 暂停使用：旧 ep01–03 已并入新 ep01，ep02+ 按第一集反馈重排 |
-| **4 文学剧本** | `4_剧本/episodes/epNN/` | 🔸 **ep01 *Buy Me Time*（替我拖住）**：25 镜 / 657s，英文台词 + 中文意思，逐窗念白闸门与「新地方先给景」闸门全过；两轮审查已落地 blocker / major；跨镜伤与状态登记在 `states.toml`（follow-up 034） |
-| **5/6 分镜与 prompt** | `5_6_分镜与prompt/episodes/epNN/` | 🔸 **ep01 已出**：24 个 `shotNN.md`（Seedance 五层 prompt + 英文配音块）+ `shotlist.md`（含切口审计）+ `all_shot_prompts.md`；生成器 `tools/gen_shots_szzl_ep01.py`（引擎 `tools/szzl_shot_engine.py`），build 时跑平面图物理闸门与上下文逻辑闸门（`tools/beat_logic.py`）。previz：12 镜要做，全部过静帧审阅与自检；**shot02 / shot21 人体由 Cascadeur 出**（`shots/shotNN/cascadeur/choreo.toml` → FBX，盾 / 锤 / 斧 / 狼 / 光在 previz 钩子里挂），其余用色块人偶；超 15 s 自动切成两段上传；阶段 5 五道审查未跑 |
+| 故事创作 | episodes/ep01/story.json | 故事方向、正文 |
+| 影视改编 | episodes/ep01/filming.json | 时长、场景、动作、摄影、对白 |
+| Prompt 编译 | episodes/ep01/prompts.json | 固定规则编译结果 |
 
-### 几何与台词的两道生成时闸门（**不合格就生成不出产物**）
+左侧导航：0_research、1_资产库、2_故事、3_影视改编、4_prompt编译。
+三创作stage是可展开目录；当前各含EP1，点击子项才进入内容。
+资产库保存世界规则及选定资产的长期事实；EP1先分共享配置·Persistent、当前EP1、runs·Transient。共享输入/规则在run外；当前EP1是指向所选run的soft link；run1/run2各分输入与规则、产出（候选故事/变化）与过程（创作日志）。state_changes.md仅记录已确定变化，前集确定后人工核对并承接，不读取未来集。
+上游确定后交接；上游改变，下游保留并标记待更新。
+第一步先确定一个小故事；人物、地点、时长、对白语言重新选择，不沿用旧救援剧情。
+Research：0_research/。资产库：2_世界观人设/。已有资产卡只供参考，不是当前故事历史。
 
-| 跑什么 | 管什么 |
-|---|---|
-| `blender -b --factory-startup --python tools/build_scene.py -- --all "<scenes 目录>"` | 场景几何：未登记的 `kind` / 块扎进山脊 / 块压块 / 块坐在河道上 / 机位埋在体块内部 |
-| `python tools/script_tools.py check 4_剧本` | 台词：中文 ≤5 字/秒、英文 ≤3 词/秒，**逐时间窗核**（行尾【a–bs】）· 每镜 3–30s 且避开 4–6s 碎镜 · 单集区间读 `4_剧本/script.toml`（本剧 540–660s）· 新地方第一次出现须有 `场景展示`（新区 ≥12s / 新地点 ≥6s）· 禁古语与伪古英语 |
-| `python tools/gen_shots_szzl_ep01.py` | 分镜与 prompt：切口比值（K31）· 共用串不点名光源（K32）· 镜内自洽（K33）· 版本红线 · 5000 字 · 零 hex · 裸 `=>@` · IP 红 / 黄级专名 · 台词与锁定串从源头读 · **说话的人不许背对镜头（rule 32）** · **场景图没审过不许挂（rule 33）** · **六道产物闸门（rule 41）：有人在画就得做事 / 镜内状态对时 / 拿法引用装备卡 [carry] / 看的东西登记 [[gaze]] / previz 群体与兵器件不许缺 / 圣光外观经 look() 挂 w25 实机事实** · 写盘后回读 |
-| `python tools/gen_equipment.py build ai_videos/shengji_zhilu` | 装备：一槽一件 · 双手武器不配盾 · 需求等级不超前 · 锁定串 ≤30 字 · prompt 无物品原名 / 黄级专名 / hex · 光色＝品质色、蓝以上必发光 · 即梦 1600 字 / ElevenLabs 3000 字 · 写盘后回读 |
-| `python tools/check_stage2.py ai_videos/shengji_zhilu` | 人设契约：零 hex · 锁定串 ≤30 · 人物灵魂 12 维 · voice_id ↔ casting（须 `en-`）· **零玩家概念（G1）** · **自负向** |
-| `python tools/check_world_scenes_szzl.py [区目录或 bg 目录]` | 全图场景：登记簿落点 · 占位填完 · 锚点 prompt 1500–2000 字 · 版本红线 · **正文与一句话锁定零黄级专名（C3）** · 平面图最新 · 原版区图 ref（W1–W10） |
-| `python tools/scene_review.py todo <场景目录>` | 场景图审图（rule 33）：出图后 Claude 看图过 S1–S6（承重连续 / 通得到 / 不悬空 / 尺度 / 无文字 / 对得上卡），`set` 写进图的 md；结论绑 sha256，图重出即作废。ep01 九个场景 40 张已审（2026-09-27），bg177 主厅与 bg3-4 支巷壁龛重出后通过 |
+UI只读，所有创作修改通过Claude Code/Codex。通用流程见[独立创作run](../../.agents/skills/ai-videos-pipeline/modules/story-runs.md)。EP/shared/为独立persistent配置，明确profile的input/rules分文件管理，当前方向仍属暂定假设；每次run冻结输入、单独保存候选与过程，不继承旧候选。
+本轮候选《一枚铜币》已载入EP1故事草稿，尚未确定。run：story-run-20261003-214907-dd638b81。人物、交接棚、交易惯例均为本轮虚构候选；独立审稿提醒魔兽辨识度偏弱，取舍及完整证据见创作记录。
 
-**第一季的 3D 范围**（2026-09-21 用户定调）：只建**北郡山谷**与**闪金镇**；
-暴风城复用 `shikong_lvxing/sk2` 的整城 blend；哨兵岭 / 西部荒野第一季不建。
+第二次同规则候选《少掉的两枚铜币》已独立保存：story-run-20261003-144640-85f316d4。当前选用Run1；两run均可通过promote CLI选作草稿，原候选保留。共享baseline-v1为两次完全相同输入/规则，workflow-v2为后续流程版本，本实验未用。
 
-### 先读哪几份
-
-1. **`1_立项/concept.md`** —— **70 条创作裁定是下游所有阶段的宪法**，与它冲突的产物以它为准。
-2. **`0_research/dossier.md`** —— 15 节设定考据的总纲（按游戏原典做了等价映射）。
-3. **`0_research/map/world_overview.md`** —— 一页看全艾泽拉斯；细节进 `world_tree.md`（1908 节点，简中名以 Classic Era 客户端 AreaTable 为准）与 `zones/*.md`（50 份单区页）。
-4. **`2_世界观人设/{world.md, style_guide.md}`** —— 双层规则与全片渲染/负向契约。
-5. **`2_世界观人设/relationships.md`** —— **人物网**。rule 12.11-C：写改任何剧情之前必读。
-
----
-
-## 这部剧的四条特殊规则
-
-### 1. 主角知道自己在玩游戏，但镜头永远不离开艾泽拉斯
-
-**自知玩家 · 现实零画面**（concept B1）。他有现代人的语感、会吐槽机制，
-但**没有攻略、没有前世记忆、没有金手指**。观众需要的知识由队友「知无不言」说出来——
-**而且他会说错**，这是本剧的剧情发动机。
-
-现实世界全剧**最多出现 1–2 次**，且只给一只手 / 一块屏幕的反光 / 一段环境声（concept B7）。
-
-### 2. 玩家与 NPC 长得一模一样，靠三件事区分
-
-**玩家三件套**（concept B4）：① 无理由连跳 ② 绕圈跑 ③ 突然完全静止（挂机）
-（+ 可选第四件：战斗一结束立刻蹲下翻尸体）。再叠一件公会战袍区分散人与有组织的。
-
-**不用头顶名牌**——那要求生成模型在人物头顶稳定渲染一行汉字，是已知的高失败率需求；
-而三件套零文字、零 UI、零额外资产，且老玩家的识别度比名牌更高——**那是他们自己做过的事**。
-
-### 3. 游戏 UI 一个像素都不进生成块
-
-**三层归属制**（concept B3）：
-- **L1 入世层**＝画面本身（灵魂形态 / 墓地天使 / 狮鹫 / 品质辉光）→ 进 prompt；
-- **L2 后期叠层**＝主角的视野（升级 / 接任务 / 掉落三时刻，单次 ≤1.5s，**只在 `视点: 主角` 的镜**）→ 后期贴；
-- **L3 声音层**＝主角的耳朵（密语贴耳 / 公会低语场 / 世界频道嗡嗡底噪）。
-
-### 4. 地是真的，人是编的
-
-地图 / 怪 / 等级 / 任务 / 技能与获得等级 / 已知 NPC 的结局——**一个字都不动**。
-主角与队友的性格来历关系、路上遇到的无名 NPC、任务之间的日常——**随便编**。
-
-理由：魔兽的地图与怪是观众的**验证锚点**。看到霍格就知道这剧是懂的，
-看到一个编出来的「西部荒野第二个村子」就立刻出戏。**而人是自由的**——玩家角色本来就不在原典里。
-
----
-
-## 机检闸门（改完产物记得跑）
-
-```bash
-python tools/facts_registry.py   ai_videos/shengji_zhilu   # 事实注册表：枚举、quote、重复 id
-python tools/build_world_tree.py --src ai_videos/shengji_zhilu/0_research/map   # 地理树：id 重复/孤儿/成环
-python tools/build_blacklist.py  ai_videos/shengji_zhilu   # 误传黑名单 → 负向词库
-python tools/check_stage2.py     ai_videos/shengji_zhilu   # 人物卡/场景档契约
-python tools/wow_version_gate.py ai_videos/shengji_zhilu   # 经典旧世版本红线
-```
-
-**全部是闸门，不是报告**——不合格直接非零退出。
-`world_tree.md` / `world_overview.md` / `zones/*.md` / `blacklist.md` / `negatives.txt` **都是生成物，手改无效**。
-
----
-
-## 无人值守期间的判断
-
-本项目的阶段 0–3 在 **AUTONOMOUS 模式**下完成（用户 2026-09-19 授权）。
-**全部创作选择以 `*(judgment call — …)*` 内联记在产物里**，每一条都可被推翻。
-
-**最值得优先复核的六条**见 `specs/ai_video/shengji_zhilu/pending_user.md`，
-其中三条是**商业与形式决策，Claude 不该替你定**：IP 路线（片内用原名 / 片外品牌位不用）、
-变现时点（前 10–20 集非商业）、剧名。
-
-**需要人在电脑前做的七件事**（截 Classic 客户端图、导出色板 CSV、IP 专名实测…）同在那份清单里，
-标 🔴 的会在出图前变成 blocker。
+[两次run输入与流程清单](../../specs/ai_video/shengji_zhilu/findings/run-input-inventory-20261004.md)列出五份实际取用文件、完整setting、作者/审稿输入边界及历史信息缺口。UI各run的输入软链接打开当时版本，审稿实际输入包与作者初稿也可独立查阅；独立审计文件须与历史SHA256一致，不用变化后的内容冒充当时版本。

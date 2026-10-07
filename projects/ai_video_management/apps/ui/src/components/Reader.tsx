@@ -10,8 +10,6 @@ import { ImageRefView } from "./ImageRefView";
 import { CastingView } from "./CastingView";
 import { ActorView } from "./ActorView";
 import { VoiceView } from "./VoiceView";
-import { BgmView } from "./BgmView";
-import { BgmEpisodePanel } from "./BgmEpisodePanel";
 import { PerfScorePanel } from "./PerfScorePanel";
 import { ShotRegenButton } from "./ShotRegenButton";
 import { PerformanceSelector } from "./PerformanceSelector";
@@ -75,6 +73,15 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
   }, [location.pathname]);
 
   const dramaAssets = useMemo(() => extractDramaAssets(tree, path), [tree, path]);
+  const isThreeModuleDocument = useMemo(() => {
+    const nodes = tree ? [tree] : [];
+    while (nodes.length) {
+      const node = nodes.pop()!;
+      if (node.workflow === "three-module-v1" && path?.startsWith(`${node.path}/`)) return true;
+      nodes.push(...node.children ?? []);
+    }
+    return false;
+  }, [tree, path]);
 
   const [file, setFile] = useState<FileResult | null>(null);
   const [error, setError] = useState<Error | null>(null);
@@ -464,7 +471,7 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
   // so it's reachable from anywhere "inside the episode".
   // episode-level md: `…/episodes/ep{NN}/{file}.md`, where `episodes/` is at
   // the drama root (legacy) OR under a stage folder (`4_剧本/episodes/`).
-  const isEpisodeFile = isMarkdown && /^ai_videos\/[^_][^/]+\/(?:[^/]+\/)?episodes\/ep\d+\/[^/]+\.md$/.test(path);
+  const isEpisodeFile = isMarkdown && !isThreeModuleDocument && /^ai_videos\/[^_][^/]+\/(?:[^/]+\/)?episodes\/ep\d+\/[^/]+\.md$/.test(path);
   // The stitched episode reel itself (ep{NN}.mp4 / ep{NN}_zh.mp4 …) — the seam scorecard
   // is shown here too so it sits right with the video it describes.
   const isEpisodeReel = /\/episodes\/ep\d+\/ep\d+(?:_[a-z]+)*\.mp4$/.test(path);
@@ -475,10 +482,6 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
   const isCasting = isMarkdown && /^ai_videos\/[^_][^/]*\/(?:[^/]+\/)*casting\.md$/.test(path);
   const isActor = isMarkdown && /^ai_videos\/_actors\/actor_[^/]+\/actor_[^/]+\.md$/.test(path);
   const isVoice = isMarkdown && /^ai_videos\/_voices\/voice_[^/]+\/voice_[^/]+\.md$/.test(path);
-  const isBgm = isMarkdown && /^ai_videos\/_bgm\/[^/]+\/bgm_[^/]+\/bgm_[^/]+\.md$/.test(path);
-  // Episode BGM cue timeline: `…/episodes/ep{NN}/bgm/bgm.md` (the extra `bgm/`
-  // segment keeps it distinct from the episode-level `isEpisodeFile` files).
-  const isEpisodeBgm = isMarkdown && /^ai_videos\/[^_][^/]+\/(?:[^/]+\/)*episodes\/ep\d+\/bgm\/bgm\.md$/.test(path);
   const isShotMd = isMarkdown && SHOT_MD_RE.test(path);
 
   const filename = path.split("/").pop() ?? path;
@@ -601,7 +604,7 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
             This prevents accidental "整個page edit" when the goal is to edit a
             single prompt block.  Other markdown files (specs, README, etc.)
             still get the whole-file editor. */}
-        {!isImage && !isVideo && !isAudio && !path.startsWith("ai_videos/") ? (
+          {!isImage && !isVideo && !isAudio && !path.startsWith("ai_videos/") ? (
           <button type="button" className="reader-edit-toggle"
             onClick={() => setEditing((e) => !e)}
             aria-label={editing ? "Stop editing" : "Edit file"} aria-pressed={editing}>
@@ -767,10 +770,6 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
             <ActorView primaryFile={file} primaryPath={path} knownPaths={knownPaths} tree={tree} onSaved={onSaved} />
           ) : isVoice ? (
             <VoiceView primaryFile={file} primaryPath={path} knownPaths={knownPaths} tree={tree} onSaved={onSaved} />
-          ) : isBgm ? (
-            <BgmView primaryFile={file} primaryPath={path} knownPaths={knownPaths} onSaved={onSaved} />
-          ) : isEpisodeBgm ? (
-            <BgmEpisodePanel path={path} onSaved={onSaved} />
           ) : isImageRef ? (
             <>
               <ImageRefView primaryFile={file} primaryPath={path} knownPaths={knownPaths} onSaved={onSaved} />
@@ -806,7 +805,7 @@ export function Reader({ tree, knownPaths, onSaved }: ReaderProps): JSX.Element 
                 content={file.content}
                 currentPath={path}
                 knownPaths={knownPaths}
-                editEnabled={path.startsWith("ai_videos/")}
+                editEnabled={path.startsWith("ai_videos/") && !isThreeModuleDocument && !path.toLowerCase().endsWith("/request_log.md")}
                 mtimeHttp={file.mtime_http}
                 onSaved={async () => { await load(); onSaved(); }}
                 characterOptions={dramaAssets.characters}

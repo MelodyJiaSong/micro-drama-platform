@@ -25,7 +25,7 @@ CONFLICT_PREFIX: str = "series_key_conflict"
 LayoutDir = Callable[[Path], Path]
 _ASSET_LAYOUTS: tuple[LayoutDir, ...] = (
     drama_layout.characters_dir,
-    drama_layout.scenes_dir,
+    drama_layout.background_dir,
     drama_layout.props_dir,
 )
 
@@ -92,7 +92,7 @@ def _owned_folders(root: Path) -> list[Path]:
     folders = [child for layout in _ASSET_LAYOUTS for child in child_dirs(layout(root))]
     subjects = [
         sub
-        for scene in child_dirs(drama_layout.scenes_dir(root))
+        for scene in child_dirs(drama_layout.background_dir(root))
         for sub in child_dirs(scene)
         if asset_key.folder_key(sub.name) is not None
     ]
@@ -162,7 +162,7 @@ def scene_subject_dirs(drama_dir: Path) -> list[Path]:
     (a subject's children are views / plates / `assets/` links, not subjects)."""
     subjects: list[Path] = []
     for root in asset_roots(drama_dir):
-        stack = [drama_layout.scenes_dir(root)]
+        stack = [drama_layout.background_dir(root)]
         while stack:
             parent = stack.pop()
             for child in child_dirs(parent):

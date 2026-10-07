@@ -1,5 +1,9 @@
 # Interview — ai_video_management
 
+## Follow-up 199 — 工作流覆盖与跨 session 接续
+
+用户要求核对所有影响 AI Video 的设置、指南和规则，并让后续 Claude Code / Codex 会话同样理解变更。自主判断：全局源集中索引；局部剧输入继续在既有导航；历史冻结输入和当前声明分开；秘密/隐藏上下文不宣称穷举。目录覆盖检查新增可读性、编号、引用缺项，维护要求写进共用入口。
+
 Run: ai_video_management-20260505-002710
 Mode: AUTONOMOUS (user explicit: "please continue to next stage" — read as continuation in same autonomous flow as wukong_juexing run)
 Shape: A (parent-direct, single-pass — no fan-out workers; categories tight enough)

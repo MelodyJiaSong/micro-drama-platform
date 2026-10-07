@@ -141,3 +141,9 @@ Auto-updated:
 - apps/ui/src/styles.css — .bgm-ep-cat-select 间距
 
 Verify: UI tsc 通过。后端 assign 本就不校验类型匹配(仅校验轨道存在+有音频)，无需改动。
+# Follow-up 008 — 2026-10-05 10:42:32
+
+Source: user_input/follow_ups/202610.md - section 008
+Summary: 用户要求移除legacy BGM，现有库、固定分类、cue契约及UI/API实现已删除，不约束新三模块配乐设计。
+
+历史规格与审计保留且标明已停用；本地产物与旧索引引用删除。新的音乐/cue结构尚未实施。验证及删除清单见 `.audit/adhoc_agents/2026-10-05/retire-legacy-bgm/`。

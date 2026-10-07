@@ -23,9 +23,9 @@ track is needed: pass --only post. A track with no lines is not written.
 MUST be run with the IndexTTS-2 venv python (it imports the `indextts` package):
   index-tts/.venv/Scripts/python.exe tools/indextts_dub.py --repo index-tts --shot .../shot07/shot07.md [--only post]
 
-Voice consistency: one voice_id → one reference sample, the same one the character's Seedance entity is bound to:
-casting.md maps the voice_id to its card → `2_世界观人设/characters/{cN}_*/views/views.mp3` (the establishing video's
-voice line). Only a voice without that sample (e.g. a 无卡 off-screen voice) falls back to `<voices-dir>/<voice_id>/`;
+Voice consistency: one voice_id → one reference sample, uploaded with the character's image references:
+casting.md maps the voice_id to its card → `2_世界观人设/characters/{角色}/views/{角色}_audio.mp3`
+(legacy dramas may use `views.mp3`). Only a voice without that sample (e.g. a 无卡 off-screen voice) falls back to `<voices-dir>/<voice_id>/`;
 --voices-dir defaults to `<剧根>/2_世界观人设/voices`.
 """
 from __future__ import annotations
@@ -42,6 +42,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent / "post"))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import post_common as pc  # noqa: E402
 import mux_av  # noqa: E402      # 响度只用 mux_av.measure_loudness 量（finish_ep 整集归一同一个量法）
 
@@ -121,20 +122,22 @@ def parse_shot(md_path: Path) -> tuple[float, list[DubLine]]:
     lines = []
     cursor = 0.0
     for block in re.findall(FENCE + r"text\n(.*?)\n" + FENCE, sec[:j] if j > 0 else sec, re.DOTALL):
-        say, win = _field(block, "台词"), pc.WINDOW_RE.search(_field(block, "时间窗"))
+        fields = pc._fields(block)
+        say, win = fields.get("台词", ""), pc.WINDOW_RE.search(fields.get("时间窗", ""))
         if not say:
             continue
-        tgt = pc.NUM_RE.search(_field(block, "时长目标"))
+        tgt = pc.NUM_RE.search(fields.get("时长目标", ""))
         if win:
             t0, t1 = float(win.group(1)), float(win.group(2))
         else:
             t0, t1 = cursor, min(secs, cursor + (float(tgt.group(0)) if tgt else secs))
             cursor = t1
         vm = _VOICE_ID.search((re.search(r"^音色.*$", block, re.MULTILINE) or re.match("", "")).group(0))
-        if not vm:
+        voice_id = fields.get("voice_id", "") or (vm.group(1) if vm else "")
+        if not voice_id:
             raise ValueError(f"{md_path.name}: 「{say[:20]}」的音色行没有 voice_id")
-        lines.append(DubLine(len(lines) + 1, _field(block, "角色"), vm.group(1), _field(block, "类型") or pc.LIP_KINDS[0], say,
-                             _field(block, "情绪"), t0, t1))
+        lines.append(DubLine(len(lines) + 1, fields.get("角色", ""), voice_id, fields.get("类型") or pc.LIP_KINDS[0], say,
+                             fields.get("情绪", ""), t0, t1))
     return secs, lines
 
 
@@ -146,14 +149,15 @@ def drama_root(md_path: Path) -> Path:
 
 
 def find_ref(voices_dir: Path, voice_id: str, setting: Path) -> Path:
-    """声样只认一处：casting.md 把 voice_id 映到人物卡 → 卡上 views/views.mp3（建立视频的统一声样句，即梦 entity 绑的同一段）；
+    """声样只认一处：casting.md 把 voice_id 映到人物卡 → views/{角色}_audio.mp3（旧剧兼容 views.mp3）；
     卡上没有、或是无卡角色，才退回 voices_dir/{voice_id}/。一个 voice_id 映到多张卡即报错。setting＝剧根/2_世界观人设。"""
     rows = [who for who, vid in _CAST_ROW.findall((setting / "casting.md").read_text(encoding="utf-8")) if vid == voice_id]
     cards = sorted({c for who in rows for c in _CARD_NO.findall(who)})
     dirs = [d for c in cards for d in sorted((setting / "characters").glob(f"{c}_*")) if d.is_dir()]
     if len(cards) > 1 or len(dirs) > 1:
         raise ValueError(f"casting.md 里 {voice_id} 映到多张人物卡：{[d.name for d in dirs] or cards}")
-    sample = dirs[0] / "views" / "views.mp3" if dirs else None
+    from tools.character_references import audio_sample
+    sample = audio_sample(dirs[0]) if dirs else None
     if sample is not None and sample.is_file():
         return sample
     why = (f"{sample} 不在" if sample else f"characters/ 下没有 {cards[0]}_* 卡目录" if cards
@@ -165,7 +169,7 @@ def find_ref(voices_dir: Path, voice_id: str, setting: Path) -> Path:
             pc.warn(f"{voice_id}：{why}，退回 {hits[0]}")
             return hits[0]
     raise FileNotFoundError(f"{voice_id} 没有声样：{why}；{d} 也没有"
-                            "（有卡的角色用建立视频抽的 views.mp3；无卡的放一段 5–10 s 干声 ref.wav，与其 Seedance entity 绑的同一段）")
+                            "（有卡的角色用 views/{角色}_audio.mp3；无卡的放一段 5–10 s 干声 ref.wav，保持全剧音色一致）")
 
 
 # ─────────────────────────── 一句：切首尾、归一 ───────────────────────────

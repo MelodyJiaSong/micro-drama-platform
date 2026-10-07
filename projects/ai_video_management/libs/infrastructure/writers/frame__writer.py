@@ -1,7 +1,7 @@
 """Per-video frame extraction for scene reference videos.
 
 Extracts 8 reference frames from a 15s walk-through scene mp4 (per
-`.claude/agent_refs/project/ai_video.md` rule #12.10 v3): the 5 canonical
+`.agents/references/project/ai_video.md` rule #12.10 v3): the 5 canonical
 dwell anchors (hero / reverse / vert / mid / detail) plus 3 strategic
 transition frames (side / threequarter / mediumclose) filling the
 orthogonal-angle and focal-length gaps the 5 dwells alone leave open.
@@ -34,6 +34,8 @@ import shutil
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
+from libs.common import drama_layout
+from libs.common.production_key import folder_shot_key
 
 import imageio_ffmpeg
 
@@ -198,6 +200,14 @@ class FrameExtractor:
         `shot_folder`'s. Matches by numeric value, so zero-padding differences
         (shot09 → shot10) resolve correctly. None if `shot_folder` is not a
         `shotNN` dir or no such next sibling exists."""
+        key = folder_shot_key(shot_folder)
+        if key is not None:
+            folders = drama_layout.episode_shot_dirs(shot_folder.parents[3])
+            if shot_folder not in folders:
+                return None
+            index = folders.index(shot_folder) + 1
+            next_shot = folders[index] if index < len(folders) else None
+            return next_shot if next_shot is not None and next_shot.parent == shot_folder.parent else None
         m = re.match(r"^shot(\d+)$", shot_folder.name, re.IGNORECASE)
         if m is None:
             return None
@@ -218,7 +228,7 @@ class FrameExtractor:
         """Nearest `shotNN` ancestor (output lands at the shot ROOT, never under
         `renders/`). Falls back to the source's own folder for non-shot videos."""
         for anc in (src.parent, *src.parent.parents):
-            if _SHOT_DIR_RE.match(anc.name):
+            if _SHOT_DIR_RE.match(anc.name) or folder_shot_key(anc) is not None:
                 return anc
         if src.parent.name == RENDERS_DIR_NAME:
             return src.parent.parent

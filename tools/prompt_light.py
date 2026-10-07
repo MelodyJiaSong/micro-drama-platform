@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """光源与热态措辞的一致性检查 —— 全仓唯一一份实现（格式契约 K32 的可执行版）。
 
-契约出处：`.claude/agent_refs/project/ai_video.md` rule 16.8 / 16.9 ·
+契约出处：`.agents/references/project/ai_video.md` rule 16.8 / 16.9 ·
 `CLAUDE.md` § 光源与热态措辞 self-check · `ai_videos__格式契约` K32。
 
 起因：hy2 shot04 是白天刨土的镜，坑底却冒火星。两个独立成因——

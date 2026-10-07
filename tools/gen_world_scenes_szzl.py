@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""《圣光刚好够用》全图 scene 骨架生成器 —— 世界树 → `scenes/{大陆}/{区}/bg{N}_{主体}/`。
+"""《圣光刚好够用》全图 scene 骨架生成器 —— 世界树 → `background/{大陆}/{区}/bg{N}_{主体}/`。
 
 用法（仓库根目录）：
     python tools/gen_world_scenes_szzl.py            # 建/刷新骨架（幂等）
@@ -10,21 +10,21 @@
     0_research/map/world_tree.json          地理树（由 build_world_tree.py 从片区 YAML 生成）
     0_research/map/zone_extents.toml        每区世界地图尺寸（码），来源与置信度各一列
     0_research/map/refs/                    原版区图（fetch_wow_maps.py 抓的，图只进人眼）
-    2_世界观人设/scenes/registry.toml       bg 编号登记簿（本脚本追加、永不改号）
+    2_世界观人设/background/registry.toml       bg 编号登记簿（本脚本追加、永不改号）
 
 产物：
-    scenes/{大陆}/{大陆}.md                          大陆卡（索引）
-    scenes/{大陆}/ref/*.link.json                    指向大陆图
-    scenes/{大陆}/{区}/{区}.md                       区卡（索引 + bg 清单 + 未立 bg 的地标）—— **每次重生成**
-    scenes/{大陆}/{区}/ref/*.link.json               指向该区原版区图（rule 4b-B：不拷贝、不软链）
-    scenes/{大陆}/{区}/bg{N}_{区名}全境/             区级主体：拥有区级 floor plan
+    background/{大陆}/{大陆}.md                          大陆卡（索引）
+    background/{大陆}/ref/*.link.json                    指向大陆图
+    background/{大陆}/{区}/{区}.md                       区卡（索引 + bg 清单 + 未立 bg 的地标）—— **每次重生成**
+    background/{大陆}/{区}/ref/*.link.json               指向该区原版区图（rule 4b-B：不拷贝、不软链）
+    background/{大陆}/{区}/bg{N}_{区名}全境/             区级主体：拥有区级 floor plan
         planning/blocks.toml                         **生成**（块＝世界树里有坐标的 bg；地形由 terrain.toml 合并）
         planning/terrain.toml                        作者写：ridge / water / road（+ 可选的 block 覆盖）
-    scenes/{大陆}/{区}/bg{N}_{主体}/                 每个聚居点 / 野外子区域 / 城区一个
+    background/{大陆}/{区}/bg{N}_{主体}/                 每个聚居点 / 野外子区域 / 城区一个
         {dir}.md                                     只在不存在时写骨架（作者把〔作者填写〕处补完）
         planning/blocks.toml                         只在不存在时写骨架（作者补 block / ridge / water / road）
         ref/{区图}.link.json + ref/{dir}_map_crop.png 原版区图指针 + 本点位裁切图（有坐标才有）
-    scenes/scenes_index.md                           全图索引（派生）
+    background/background_index.md                           全图索引（派生）
 
 选 bg 的判据（用户 2026-09-22 拍板：区 = scene，聚居点 + 野外子区域 = bg）：
     · settlement：全收；`inn` 只在直接挂区上时收（城里的旅店是室内，归城区）
@@ -53,9 +53,9 @@ DRAMA = os.path.join(REPO, "ai_videos", "shengji_zhilu")
 TREE = os.path.join(DRAMA, "0_research", "map", "world_tree.json")
 EXTENTS = os.path.join(DRAMA, "0_research", "map", "zone_extents.toml")
 REFS = os.path.join(DRAMA, "0_research", "map", "refs")
-SCENES = os.path.join(DRAMA, "2_世界观人设", "scenes")
+SCENES = os.path.join(DRAMA, "2_世界观人设", "background")
 REGISTRY = os.path.join(SCENES, "registry.toml")
-WORLD_ANCHOR = "scenes/eastern_kingdoms/elwynn_forest/bg1_北郡山谷/bg1_北郡山谷.png"
+WORLD_ANCHOR = "background/eastern_kingdoms/elwynn_forest/bg1_北郡山谷/bg1_北郡山谷.png"
 
 YD = 0.9144
 CONTINENTS = ("eastern_kingdoms", "kalimdor")
@@ -407,7 +407,7 @@ def bg_md_skeleton(w: World, b: dict, node: dict | None, z: dict, cont: str, map
     return f"""# {b['name']}
 
 > **档级：锚点级**（stage2 playbook §3b ④ / rule 4f：必做只有锚点图；反向 / 侧向 / 内景 plate 用到才建）。
-> **bg 代号：`{key}`** · 目录 `scenes/{cont}/{z['id']}/{d}/` · 所属 {CONT_ZH[cont]} / {z['name_zh']}（{z['name_en']}）
+> **bg 代号：`{key}`** · 目录 `background/{cont}/{z['id']}/{d}/` · 所属 {CONT_ZH[cont]} / {z['name_zh']}（{z['name_en']}）
 > **版本红线**：Vanilla 1.12 · Year 25 ADP。4.0.3a 之后才有的东西一样都不许出现（`tools/wow_version_gate.py`）。
 > **参考地图只进人眼，不进模型**（divergence #8）：
 {chr(10).join('> - ' + r for r in ref_lines)}
@@ -498,7 +498,7 @@ def zone_md(w: World, z: dict, cont: str, bgs: list[dict], map_file: str | None,
     return f"""# {z['name_zh']}（{z['name_en']}）
 
 > **本文件由 `tools/gen_world_scenes_szzl.py` 生成，不要手改**——区一级的索引卡。区的画面与空间结构写在 `{bgs[0]['dir']}/`（区级主体，拥有区级 floor plan）。
-> 层级：`scenes/{cont}/{z['id']}/`（{CONT_ZH[cont]} → {z['name_zh']}），与游戏内地图「大陆 → 区 → 子区」一致（follow-up 006）。
+> 层级：`background/{cont}/{z['id']}/`（{CONT_ZH[cont]} → {z['name_zh']}），与游戏内地图「大陆 → 区 → 子区」一致（follow-up 006）。
 
 | 项 | 值 |
 |---|---|
@@ -670,7 +670,7 @@ def main() -> int:
                 if f.lower().endswith((".jpg", ".png")):
                     stats["link"] += link_json(os.path.join(cdir, "ref", f + ".link.json"), os.path.join(cref, f), "大陆图 · 只进人眼不进模型", dry)
 
-    stats["index"] += write(os.path.join(SCENES, "scenes_index.md"), "\n".join(index_lines) + "\n", dry)
+    stats["index"] += write(os.path.join(SCENES, "background_index.md"), "\n".join(index_lines) + "\n", dry)
     if not dry:
         meta["next"] = nxt
         save_registry(meta, rows)

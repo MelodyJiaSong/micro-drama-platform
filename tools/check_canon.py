@@ -13,7 +13,7 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-CANON = REPO / ".claude" / "agent_refs" / "project" / "ai_video.md"
+CANON = REPO / ".agents" / "references" / "project" / "ai_video.md"
 LIMIT_BYTES = 60_000
 
 

@@ -35,6 +35,7 @@ import time
 from dataclasses import dataclass, field
 from io import BytesIO
 from libs.common import asset_key, drama_layout, equipment_key, prop_key, scene_key, series_shared
+from libs.common.production_key import SHOT_KEY_HINT_RE, first_shot_key, folder_shot_key
 from pathlib import Path
 
 from PIL import Image
@@ -74,13 +75,6 @@ PERF_LIBRARY_DIR_NAME = "_performances"
 # lands in the filename and routes the file.
 _PERF_TAG = re.compile(r"演(\d{4})(始)?")
 _PERF_FOLDER_RE = re.compile(r"^perf_(\d{4})$")
-# BGM library import: each track's prompt opens with its `bgm_NNNN` id as the
-# first line (the routing KEY), so a downloaded music file named after the
-# prompt head carries that tag. Route the file to `_bgm/{cat}/bgm_NNNN/`.
-BGM_LIBRARY_DIR_NAME = "_bgm"
-_BGM_TAG = re.compile(r"bgm_(\d{4,})")
-_BGM_FOLDER_RE = re.compile(r"^bgm_(\d{4,})$")
-_BGM_AUDIO_EXTS = frozenset({".mp3", ".wav", ".m4a", ".flac", ".ogg", ".aac"})
 DEFAULT_TIME_WINDOW_SECONDS = 7 * 24 * 60 * 60
 DOWNLOADS_ENV_VAR = "AI_VIDEO_MGMT_DOWNLOADS_DIR"
 _BASENAME_INVALID = re.compile(r"[\x00-\x1f/\\:*?\"<>|]")
@@ -94,7 +88,7 @@ _ASCII_ALNUM = re.compile(r"[a-z0-9]")
 # The 描述 segment is NOT used: descriptive words (`厅门`, `东侧`, …) also appear
 # as camera-walk references inside OTHER orientations' filenames and would
 # cross-match; the 方位 words are mutually exclusive.
-_PLATE_PREFIX = re.compile(r"^bg\d+_")
+_PLATE_PREFIX = re.compile(r"^(?:s\d+_)?bg\d+_")
 _PLATE_NON_DEST = frozenset({NOT_MATCHED_DIR_NAME, RENDERS_DIR_NAME, "frames", "archive"})
 PROPS_DIR_NAME = "props"
 # An OBJECT prop (ai_video.md rule 4d) — a prop whose identity needs several
@@ -258,8 +252,16 @@ class DownloadsImporter:
                 continue
             keyed_name: str | None = None
             chosen = self._classify(src.name, candidates)
-            grammar = self._leftmost_grammar(src.name, chosen)
-            keyed = self._keyed_route(src.name, grammar, drama_dir)
+            production_key = first_shot_key(src.stem)
+            if SHOT_KEY_HINT_RE.search(src.stem):
+                hits = [c for c in candidates if c.kind == "shot" and production_key is not None and production_key.value in c.tokens]
+                if len(hits) != 1:
+                    result.unmatched.append({"from": self._display_src(src), "kind": "unmatched",
+                                             "reason": "unknown_or_incomplete_shot_key" if not hits else "ambiguous_shot_key"})
+                    continue
+                chosen = hits[0]
+            grammar = None if production_key is not None else self._leftmost_grammar(src.name, chosen)
+            keyed = None if production_key is not None else self._keyed_route(src.name, grammar, drama_dir)
             if keyed is not None:
                 dst_folder, kind, keyed_name = keyed.folder, keyed.kind, keyed.name
             elif grammar == _KEY_EQUIPMENT:
@@ -351,6 +353,10 @@ class DownloadsImporter:
                         or _view_key(src.stem, dst_folder.name)
                         or dst_folder.name)
                 dst_name = f"{_key}{ext}"
+            safe_destination = self._resolver.resolve(self._rel(dst_folder))
+            if safe_destination is None:
+                result.errors.append({"path": self._display_src(src), "message": "invalid_destination"})
+                continue
             try:
                 dst_folder.mkdir(parents=True, exist_ok=True)
             except OSError as exc:
@@ -500,96 +506,8 @@ class DownloadsImporter:
             result.moved.append({"from": self._display_src(src), "to": self._rel(dst), "kind": kind})
         return result
 
-    def import_bgms(self, rel_path: str) -> ImportResult:
-        """One-click GLOBAL import for the BGM library (`ai_videos/_bgm`).
 
-        Counterpart to prompt-only BGM generation: each track's prompt opens
-        with its `bgm_NNNN` id as the first line, which ElevenLabs carries into
-        the downloaded filename. This routes each recent audio download back to
-        its `_bgm/{category}/bgm_NNNN/` folder by that tag, naming it
-        `bgm_NNNN.{ext}` (one audio file per track — prior audio is cleared).
-        Unmatched files are left in Downloads untouched (not imported), only
-        reported. No folder-rename pass: bgm folders are id-named and stable."""
-        bgm_root = (self._exposed.root / "ai_videos" / BGM_LIBRARY_DIR_NAME).resolve()
-        if not self._downloads_dir.is_dir():
-            raise DownloadsDirMissingError(str(self._downloads_dir))
-        folders = self._collect_bgm_folders(bgm_root)
-        cutoff = time.time() - self._window
-        result = ImportResult()
-        for src in self._iter_downloads(cutoff):
-            if src.suffix.lower() not in _BGM_AUDIO_EXTS:
-                continue
-            if not self._is_safe_basename(src.name):
-                result.errors.append({"path": self._display_src(src), "message": "invalid_basename"})
-                continue
-            tag = _BGM_TAG.search(src.name)
-            num = tag.group(1) if tag is not None else None
-            matched = num is not None and num in folders
-            if not matched:
-                # Unmatched → NOT imported: left in Downloads, only reported.
-                result.unmatched.append({"from": self._display_src(src), "kind": "unmatched"})
-                continue
-            bgm_dir = folders[num]
-            self._clear_audio_files(bgm_dir)
-            dst_folder, dst = bgm_dir, bgm_dir / f"bgm_{num}{src.suffix.lower()}"
-            kind = "bgm_audio"
-            try:
-                dst_folder.mkdir(parents=True, exist_ok=True)
-            except OSError as exc:
-                result.errors.append({"path": self._display_src(src), "message": f"mkdir_failed: {exc}"})
-                continue
-            if dst.exists():
-                try:
-                    dst.unlink()
-                except OSError as exc:
-                    result.errors.append({"path": self._display_src(src), "message": f"overwrite_failed: {exc}"})
-                    continue
-            try:
-                shutil.move(str(src), str(dst))
-            except OSError as exc:
-                result.errors.append({"path": self._display_src(src), "message": f"move_failed: {exc}"})
-                continue
-            result.moved.append({"from": self._display_src(src), "to": self._rel(dst), "kind": kind})
-        return result
 
-    @staticmethod
-    def _collect_bgm_folders(bgm_root: Path) -> dict[str, Path]:
-        """Map each track's numeric id (as string) to its
-        `_bgm/{category}/bgm_NNNN/` folder, across all categories."""
-        folders: dict[str, Path] = {}
-        try:
-            cats = sorted(bgm_root.iterdir(), key=lambda p: p.name)
-        except OSError:
-            return folders
-        for cat in cats:
-            if not cat.is_dir() or cat.is_symlink() or cat.name.startswith("_"):
-                continue
-            try:
-                tracks = sorted(cat.iterdir(), key=lambda p: p.name)
-            except OSError:
-                continue
-            for t in tracks:
-                if not t.is_dir() or t.is_symlink():
-                    continue
-                m = _BGM_FOLDER_RE.match(t.name)
-                if m:
-                    folders[m.group(1)] = t
-        return folders
-
-    @staticmethod
-    def _clear_audio_files(folder: Path) -> None:
-        """Delete top-level audio files in a track folder (one canonical audio
-        per track — overwrite on re-import)."""
-        try:
-            entries = list(folder.iterdir())
-        except OSError:
-            return
-        for child in entries:
-            try:
-                if child.is_file() and not child.is_symlink() and child.suffix.lower() in _BGM_AUDIO_EXTS:
-                    child.unlink()
-            except OSError:
-                pass
 
     @staticmethod
     def _collect_actor_folders(actors_root: Path) -> dict[int, Path]:
@@ -655,7 +573,7 @@ class DownloadsImporter:
         # (`_keyed_route`), so an item's name words never pull other downloads in.
         for kind, layout_dir in (
             ("character", drama_layout.characters_dir),
-            ("scene", drama_layout.scenes_dir),
+            ("scene", drama_layout.background_dir),
             ("prop", drama_layout.props_dir),
         ):
             for child in series_shared.asset_dirs(drama_dir, layout_dir):
@@ -667,6 +585,10 @@ class DownloadsImporter:
                     continue
                 # Shot folders live under episodes/{ep}/shots/ (renamed from
                 # the legacy prompts/ per ai_video rule 2 v3). Accept either.
+                for shot in drama_layout.episode_shot_dirs(ep):
+                    key = folder_shot_key(shot)
+                    if key is not None:
+                        out.append(_Candidate(shot / RENDERS_DIR_NAME, "shot", (key.value,)))
                 shots_dir = ep / "shots"
                 if not shots_dir.is_dir():
                     shots_dir = ep / "prompts"
@@ -731,6 +653,12 @@ class DownloadsImporter:
     @staticmethod
     def _classify(filename: str, candidates: list[_Candidate]) -> _Candidate | None:
         name = filename.lower()
+        key = first_shot_key(name)
+        if key is not None:
+            hits = [c for c in candidates if c.kind == "shot" and key.value in c.tokens]
+            return hits[0] if len(hits) == 1 else None
+        if SHOT_KEY_HINT_RE.search(name):
+            return None
         # The compact shot tag `{NN}集{NN}镜` is the AUTHORITATIVE routing key for
         # a shot render: Kling/jimeng name the download from the shot block's
         # first line `{NN}集{NN}镜{视|始|末}` (ai_video rule 12.4 / 2026-05-30), so
@@ -912,7 +840,7 @@ class DownloadsImporter:
         if _SCENE_ROOT_MARKER.search(filename):
             return None
         name = filename.lower()
-        best: tuple[int, str, Path] | None = None
+        hits: list[tuple[int, Path]] = []
         try:
             children = sorted(scene_folder.iterdir(), key=lambda p: p.name)
         except OSError:
@@ -925,10 +853,12 @@ class DownloadsImporter:
             token = cls._plate_orientation_token(child.name)
             if token is None or token not in name:
                 continue
-            key = (len(token), child.name)
-            if best is None or key > best[:2]:
-                best = (len(token), child.name, child)
-        return best[2] if best is not None else None
+            hits.append((len(token), child))
+        if not hits:
+            return None
+        longest = max(size for size, _ in hits)
+        winners = [path for size, path in hits if size == longest]
+        return winners[0] if len(winners) == 1 else None
 
     @staticmethod
     def _prop_view_token(folder_name: str) -> str | None:
@@ -1015,7 +945,7 @@ class DownloadsImporter:
         name = filename.lower()
         all_hits: list[Path] = []
         scene_scoped_hits: list[Path] = []
-        for scene in series_shared.asset_dirs(drama_dir, drama_layout.scenes_dir):
+        for scene in series_shared.asset_dirs(drama_dir, drama_layout.background_dir):
             scene_present = any(tok in name for tok in self._tokens(scene.name))
             try:
                 children = sorted(scene.iterdir(), key=lambda p: p.name)

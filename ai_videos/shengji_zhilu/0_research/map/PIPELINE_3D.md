@@ -12,13 +12,13 @@
 ① 参考地图（游戏原图）        refs/{大陆}/{分区}/{区}/WorldMap-*.jpg        🔸
         │  人眼量坐标、读地貌
         ▼
-② floor plan（俯视布局图）    scenes/{bg}/planning/{bg}_floorplan.png      ✅ bg1
+② floor plan（俯视布局图）    background/{bg}/planning/{bg}_floorplan.png      ✅ bg1
         │  定「有哪些东西、各在哪、多大」
         ▼
-③ scene / props 卡            2_世界观人设/{scenes,props}/                 🔸 已有 9 scene + 5 UI prop
+③ scene / props 卡            2_世界观人设/{background,props}/                 🔸 已有 9 scene + 5 UI prop
         │  每个可复用物件一张卡（锁定串 + 锚点图 prompt）
         ▼
-④ 3D 模型                     scenes/{bg}/_blender/{bg}.blend             🔸 bg1
+④ 3D 模型                     background/{bg}/_blender/{bg}.blend             🔸 bg1
                               props/{obj}/whitemodel/{obj}.blend
 ```
 
@@ -48,7 +48,7 @@
 
 **输入**：① 区域地图原图（量位置）② 世界树的 `coords`（已有 348 个真坐标）③ 场景卡的锁定描述符。
 
-**产物**（每个 bg 一套，落 `scenes/{大陆}/{区}/{bg}/planning/`——2026-09-22 起 scenes 按世界层级嵌，`大陆/区` 是索引层，bg 编号见 `scenes/registry.toml`）：
+**产物**（每个 bg 一套，落 `background/{大陆}/{区}/{bg}/planning/`——2026-09-22 起 scenes 按世界层级嵌，`大陆/区` 是索引层，bg 编号见 `background/registry.toml`）：
 
 | 文件 | 内容 | 谁消费 |
 |---|---|---|
@@ -108,7 +108,7 @@
 
 | 层 | 产物 | 出什么 |
 |---|---|---|
-| **场景层** | `scenes/{bg}/_blender/{bg}.blend` | **只出 `.blend` + 校验 PNG**（平面图 `plan.png` + 各锚点机位的灰模透视），**不渲 mp4** |
+| **场景层** | `background/{bg}/_blender/{bg}.blend` | **只出 `.blend` + 校验 PNG**（平面图 `plan.png` + 各锚点机位的灰模透视），**不渲 mp4** |
 | **shot 层** | `shots/shotNN/previz/` | **只有 shot previz 出 mp4** |
 
 **环境的铁律**（rule 4g）：

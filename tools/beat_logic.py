@@ -29,7 +29,7 @@ OUTCOMES = {
     "摔倒": (re.compile(r"摔倒|摔了一跤|绊倒|绊了一跤|栽倒|跌倒|跌坐|脸朝下(?:拍|趴)|往前栽|整个人往前扑"),
              re.compile(r"撞|推|砸空|抡空|太重|太满|够不着|一拽|一脚(?:踢|蹬|踹)|被.{0,8}(?:打|踢|撞|扑|咬住|拽|拖|砸|劈|绊|推|顶|掀|甩)"
                         r"|(?:泥|苔|冰|油|湿|碎石|滚木).{0,6}(?:滑|踩空)|踩(?:在|上|中).{0,6}(?:泥|苔|冰|油|湿|碎石|滚木)"), False),
-    "喘": (re.compile(r"喘"), re.compile(r"跑|冲|打|扑|砸|抡|挡|爬|搬|挖|赶|逃|追|咬|劈|顶"), True),
+    "喘": (re.compile(r"喘"), re.compile(r"跑|冲|打|扑|砸|抡|挡|爬|搬|挖|赶|逃|追|咬|劈|顶|扶行|肩扶|负重(?:行|走)"), True),
     "逃": (re.compile(r"逃|夹着尾巴|掉头跑|跑开|溜走"),
            re.compile(r"挨|被.{0,6}(?:打|砸|劈|踢|撞|顶)|嗷|砸在|劈在|一顶|踢|吓|光|火|劈"), False),
     "愣住": (re.compile(r"愣住|一愣|吓一跳|吓得|猛地抬头|眼睛一瞪"),
@@ -176,6 +176,15 @@ def check_shot(key: str, action: str, text_all: str, ov: dict | None, prev_last_
                 break
     for m in INJURY.finditer(action):
         cl = CLAUSE.split(action[: m.start()])[-1] + CLAUSE.split(action[m.start():])[0]   # 伤字所在的那一小句
+        # 「察看擦伤」「擦伤闭合」描述已有伤或处理结果，不是这一拍产生新伤。
+        # 只消除明确的观察/状态语法；留下/造成等新伤原因仍须登记，咬/砍等动词照查。
+        before = CLAUSE.split(action[:m.start()])[-1]
+        after = CLAUSE.split(action[m.end():])[0]
+        if (m.group() == "擦伤"
+                and (re.search(r"察看|查看|检查|看见|观察", before)
+                     or re.match(r"(?:处|位置)?(?:仍|已经|已)?(?:清楚|闭合|愈合|还在|存在)", after))
+                and not re.search(r"造成|留下|产生|新增|导致", before)):
+            continue
         for h in _who(cl, humans):
             nm = _base(h.get("label", h["key"]))
             if not any(s["who"] == nm and s["from"] == key for s in states):

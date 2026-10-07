@@ -1,5 +1,13 @@
 # Validation strategy — ai_video_management
 
+## Follow-up 199 — 覆盖验证
+
+`tests/test_global_workflow.py` 验证静态函数/CLI默认值不执行且脱敏、目录解析错误显式报告、待编号与未登记引用、局部事实排除、系列成员索引纳入和共用目录引用闭合。保留冻结快照指纹、安全路径与配置保护测试。前端单测/build及 prod/dev global_workflow Playwright 检查导航、覆盖统计、历史六个关联及目录失败。共用入口执行 skill adapter / canon 检查；审计记录验证与未覆盖外部影响。
+
+Follow-up197：验证有/无对白镜均保留环境/动作声并显式禁止配乐，无对白镜不要求额外人声；完整key仍为第一行，旧compiler版本显示待更新，重编译不改故事/分镜/媒体。运行三模块编译及字幕回归、共用指南引用/入口检查；不提交视频生成，不以prompt检查代替实际音轨验收。
+
+Follow-up196：验证应用启动不创建legacy库，旧BGM/cue/mux API不存在，导航与三模块入口不展示旧音乐功能；检查下载导入/人物/背景/shot相关回归、前端测试与构建。旧BGM专项测试随功能删除，不将历史BGM验收当作当前要求；验证不提交音乐生成。
+
 Run: ai_video_management-20260505-002710
 Stage: 5 (validation strategy)
 Inputs consumed: `final_specs/spec.md` + 6 parallel level-specialist outputs.
@@ -7,6 +15,10 @@ Inputs consumed: `final_specs/spec.md` + 6 parallel level-specialist outputs.
 > **Follow-up 039 amendment (2026-05-13):** path references to `backend/`, `frontend/`, `backend/libs/` in this strategy + sibling validation modules (`acceptance_criteria.md`, `bdd_scenarios.md`, `backend_tests.md`, `e2e.md`, `security.md`, `accessibility_and_manual.md`) are remapped to `apps/api/`, `apps/ui/`, `libs/{infrastructure,domain,application,common}/`. Validation acceptance is otherwise unchanged. New blocker: cross-layer imports violating dependency arrows in `.claude/agent_refs/project/development.md` §1.
 
 ## Levels chosen
+
+### 全局影视改编知识（follow-up 191）
+
+范围为共用参考正文及只读全局UI。验证前端构建/现有测试、生产与开发入口及刷新深链接、项目树加载或失败时全局导航、窄屏表格滚动、共用指南引用、skill入口一致性及规则体量。没有后端协议/写入变更，不触发制作流程或增加专项QC；证据存 `.audit/adhoc_agents/2026-10-04/filming-knowledge/`。
 
 | Level | File | Why |
 |---|---|---|
@@ -127,6 +139,18 @@ Per `validation/general.md` principle 8 + `validation/ai_video.md` move #7:
 - Stage 6 (project code) does NOT support promotion in v1 per spec FR-32.
 - If a future regen runs after the user pins items via the new ai_video_management webapp itself (or via the existing spec_driven webapp targeting `ai_video_management`'s artifacts), the strategy must be re-derived with a `promotion_preservation` level added.
 
+## Follow-up 181 — 请求审计的局部验证
+
+使用本地模拟替代四个外部服务，不提交付费任务。验证请求在发送前落盘、完整正文、脱敏、归属、并发追加、失败阻断与请求/结果关联；适配器验证实际参数与调用方 target 传递。后端验证分页、大文件、越界路径与禁止覆盖。前端验证范围选择、完整 JSON、刷新/分页及错误提示，并运行生产构建。共用规范变更运行入口同步与 canon 检查。
+
+## Follow-up 193 — 全局工作流导航
+
+按前端局部验证：确认一级工作流、第二层三个模块及第三层影视知识的缩进和展开关系；生产/开发模式检查点击、键盘操作、精确高亮、深链接刷新、折叠全部及文件树失败时的全局访问。运行现有前端测试与生产构建；不调用生成服务、不重跑无关后端或制作验收。
+
+## Follow-up 194 — 全局来源与配置可见性
+
+局部验证目录自动发现、受控source_id读取、配置脱敏、非法/超限/链接文件拒绝与源版本。核对魔兽世界EP1两个run共6个全局关联，验证3份唯一共用源已登记，run.json/input.json逐字节不变；未登记源与索引失败必须显式展示。前端运行现有测试和构建；生产/开发浏览器检查嵌套导航、query参数精确高亮、刷新、历史到当前源跳转与目录失败时模块可访问。专项浏览器测试隔离文件树，另做真实文件树与全局树共存的运行检查。共用规范运行canon和入口同步校验；不调用收费生成。
+
 ## Output paths recap
 
 - `validation/acceptance_criteria.md`
@@ -138,3 +162,11 @@ Per `validation/general.md` principle 8 + `validation/ai_video.md` move #7:
 - `validation/strategy.md` (this file)
 
 Stage 6 reads `strategy.md` first to learn level applicability per work unit, then dispatches to the per-level files for criteria detail.
+
+## 全局设置分类与稳定编号（follow-up 198）
+
+验证两类→模块/设置组→源的层级、源唯一高亮、刷新自动展开、影视改编模块页及镜头知识入口；run来源显示编号且历史冻结字节保持原样。验证新发现项不挤占既有编号、标题更改不变号、重复号拒绝；保留脱敏与读取安全检查。执行前端构建/测试、global-workflow相关后端测试及生产/开发两种模式e2e。
+
+## 故事内容与执行分类（follow-up 200）
+
+局部运行前端测试及构建、test_global_workflow.py、生产/开发global_workflow浏览器检查。验证12个真实源章节、同源主题切换与唯一高亮、深链接/刷新、原文回跳、目录失败降级与窄屏布局；核对既有编号、R01–R14和剧集JSON指纹。共用入口执行sync_agent_skills.py --check及check_canon.py；不触发创作或收费调用。

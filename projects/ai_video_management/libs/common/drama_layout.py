@@ -7,10 +7,10 @@ Two structures coexist under `ai_videos/{drama}/`:
 * **staged pipeline** (`全流程编排`) — assets live under numbered stage
   folders: `2_世界观人设/{casting.md, characters/, scenes/}`, script
   episodes under `4_剧本/episodes/`, and the shot/render episodes (the
-  `episodes/{ep}/shots/shot{NN}/` tree the downloads-import, bgm-cue scan
+  `episodes/{ep}/shots/shot{NN}/` tree the downloads-import, render scan
   and episode-compose all operate on) under `5_6_分镜与prompt/episodes/`.
 
-Every consumer (casting assign, downloads import, sub-type lookup, bgm-cue
+Every consumer (casting assign, downloads import, sub-type lookup, render
 scan, …) must work for both. These helpers take the drama root dir and return
 the *actual* location — preferring whichever exists, falling back to the flat
 root so first-time `create` still lands somewhere sane.
@@ -18,7 +18,9 @@ root so first-time `create` still lands somewhere sane.
 from __future__ import annotations
 
 import re
+import json
 from pathlib import Path
+from libs.common.production_key import BACKGROUND_DIR_NAME, SCENES_DIR_NAME, SCENE_ID_RE, SHOT_ID_RE, first_shot_key
 
 EP_DIR_RE = re.compile(r"^ep\d+$", re.IGNORECASE)
 SHOTS_DIR_NAME: str = "shots"
@@ -67,10 +69,55 @@ def characters_dir(drama_dir: Path) -> Path:
     )
 
 
-def scenes_dir(drama_dir: Path) -> Path:
+def background_dir(drama_dir: Path) -> Path:
+    """Environment assets; the legacy scenes path is accepted for other dramas."""
     return _first_existing_dir(
+        drama_dir / BACKGROUND_DIR_NAME, drama_dir / WORLD_STAGE / BACKGROUND_DIR_NAME,
         drama_dir / "scenes", drama_dir / WORLD_STAGE / "scenes"
     )
+
+
+scenes_dir = background_dir
+
+
+def episode_shot_dirs(episode: Path) -> list[Path]:
+    """Current ordered scene shots, or legacy episode/flat shot folders."""
+    compiled = episode / "prompts.json"
+    if compiled.is_file() and not compiled.is_symlink():
+        data = json.loads(compiled.read_text(encoding="utf-8"))
+        scenes = data.get("content", {}).get("scenes")
+        if isinstance(scenes, list):
+            folders = []
+            seen = set()
+            for scene in scenes:
+                for shot in scene["shots"]:
+                    key = first_shot_key(shot["id"])
+                    if (key is None or key.value != shot["id"] or key.episode != int(episode.name[2:])
+                            or scene["id"] != f"s{key.scene}" or key.value in seen):
+                        raise ValueError("编译镜头key重复或与所属集、场不一致")
+                    seen.add(key.value)
+                    path = key.folder(episode)
+                    if path.is_dir() and not any(p.is_symlink() for p in (path, *path.parents)):
+                        folders.append(path)
+            return folders
+    scenes_root = episode / SCENES_DIR_NAME
+    if scenes_root.is_dir() and not scenes_root.is_symlink():
+        folders = []
+        for scene in sorted(scenes_root.iterdir(), key=lambda p: int(SCENE_ID_RE.fullmatch(p.name)[1]) if SCENE_ID_RE.fullmatch(p.name) else 0):
+            if not scene.is_dir() or scene.is_symlink() or not SCENE_ID_RE.fullmatch(scene.name):
+                continue
+            shots = scene / SHOTS_DIR_NAME
+            if shots.is_dir() and not shots.is_symlink():
+                folders.extend(sorted((p for p in shots.iterdir() if p.is_dir() and not p.is_symlink() and SHOT_ID_RE.fullmatch(p.name)),
+                                      key=lambda p: int(SHOT_ID_RE.fullmatch(p.name)[1])))
+        return folders
+    shots = episode / SHOTS_DIR_NAME
+    if not shots.is_dir():
+        shots = episode / "prompts"
+    if not shots.is_dir() or shots.is_symlink():
+        return []
+    return sorted((p for p in shots.iterdir() if p.is_dir() and not p.is_symlink() and re.fullmatch(r"shot\d+", p.name, re.I)),
+                  key=lambda p: int(re.search(r"\d+", p.name)[0]))
 
 
 def props_dir(drama_dir: Path) -> Path:
@@ -92,7 +139,7 @@ def equipment_dir(drama_dir: Path) -> Path:
 
 def episodes_dir(drama_dir: Path) -> Path:
     """The episodes tree the render-side consumers walk (downloads import,
-    episode compose, bgm-cue scan). The staged pipeline puts the shot/render
+    episode compose, render scan). The staged pipeline puts the shot/render
     episodes — `episodes/{ep}/shots/shot{NN}/` — under `5_6_分镜与prompt/`, so
     that stage is preferred over the script-only `4_剧本/episodes/` (which has
     no `shots/` and previously caused shot renders to misroute). Legacy flat

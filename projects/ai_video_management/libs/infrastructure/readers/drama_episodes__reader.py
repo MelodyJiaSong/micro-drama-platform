@@ -15,6 +15,7 @@ from libs.common import drama_ref
 import re
 from dataclasses import dataclass
 from pathlib import Path
+from libs.common.production_key import shot_identity
 
 from libs.common import drama_layout
 from libs.common.exposed_tree import ExposedTree
@@ -65,8 +66,8 @@ class DramaEpisodesReader:
         episodes: list[EpisodeInfo] = []
         for ep_dir in drama_layout.shot_tree_roots(drama_root):
             slug = drama_layout.shot_tree_slug(ep_dir, drama_root)
-            shots = self._shot_dirs(ep_dir / drama_layout.SHOTS_DIR_NAME)
-            locked = sum(1 for s in shots if (s / f"{s.name}{_MP4_EXT}").is_file())
+            shots = drama_layout.episode_shot_dirs(ep_dir)
+            locked = sum(1 for s in shots if (s / f"{shot_identity(s)}{_MP4_EXT}").is_file())
             master = ep_dir / f"{slug}{_MP4_EXT}"
             episodes.append(
                 EpisodeInfo(

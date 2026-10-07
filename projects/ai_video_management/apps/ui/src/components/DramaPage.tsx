@@ -15,6 +15,7 @@ import { importFromDownloads } from "../api";
 import { ApiError, type TreeNode } from "../types";
 import { announceToast } from "../lib/announce";
 import { DramaDashboard } from "./DramaDashboard";
+import { EpisodeWorkflowPage } from "./EpisodeWorkflowPage";
 
 const EP_DIR_RE = /^ep\d+$/i;
 const SUB_MASTER_RE = /^ep\d+_(zh|en|zhen)\.mp4$/i;
@@ -96,6 +97,8 @@ export function DramaPage({ tree, onChange }: DramaPageProps): JSX.Element {
     }
   }, [dramaPath, importBusy, onChange]);
 
+  if (!tree) return <div className="drama-page" role="status">加载剧集…</div>;
+
   if (!dramaPath || !dramaNode) {
     return (
       <div className="drama-page">
@@ -108,6 +111,11 @@ export function DramaPage({ tree, onChange }: DramaPageProps): JSX.Element {
   }
 
   const totalMasters = episodes.reduce((n, e) => n + e.langs.length, 0);
+
+  if (dramaNode.workflow === "three-module-v1") {
+    if (!searchParams.get("module")) return <div className="drama-page"><h1>{dramaNode.display_name || dramaNode.name}</h1><p>从左侧展开 stage，选择要查看或编辑的内容。</p></div>;
+    return <EpisodeWorkflowPage key={dramaPath} dramaPath={dramaPath} title={dramaNode.display_name || dramaNode.name} />;
+  }
 
   return (
     <div className="drama-page">

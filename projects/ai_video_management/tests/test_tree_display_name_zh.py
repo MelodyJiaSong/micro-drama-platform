@@ -7,6 +7,7 @@ so the sidebar shows Chinese.
 """
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 from libs.infrastructure.readers.tree__reader import TreeReader
@@ -22,6 +23,36 @@ class _FakeExposed:
 
 def _reader(root: Path) -> TreeReader:
     return TreeReader(_FakeExposed(root))
+
+
+def test_workflow_stages_expand_into_episode_outputs(tmp_path: Path) -> None:
+    from libs.common.episode_workflow import MODULES, MODULE_NAV_LABELS, STATE_CHANGES_FILE, WORLD_FACTS_FILE, WORKFLOW_ID
+
+    project = tmp_path / "ai_videos/demo"
+    for episode in ("ep01", "ep02"):
+        (project / "episodes" / episode).mkdir(parents=True)
+    for directory in ("0_research", "2_世界观人设"):
+        (project / directory).mkdir()
+        (project / directory / "reference.md").write_text("保留", encoding="utf-8")
+    (project / "workflow.json").write_text(json.dumps({"workflow": WORKFLOW_ID}), encoding="utf-8")
+    (project / "2_世界观人设" / WORLD_FACTS_FILE).write_text("# 世界规则", encoding="utf-8")
+    (project / "episodes/ep01" / STATE_CHANGES_FILE).write_text("# EP1状态变化", encoding="utf-8")
+    node = _reader(tmp_path)._walk_project(project)
+    assert [child["display_name"] for child in node["children"]] == ["0_research", "1_资产库", *MODULE_NAV_LABELS.values()]
+    rules = next(child for child in node["children"][1]["children"] if child["name"] == WORLD_FACTS_FILE)
+    assert rules["display_name"] == "世界规则"
+    for stage, module in zip(node["children"][2:], MODULES):
+        assert stage["type"] == "directory"
+        assert [child["display_name"] for child in stage["children"]] == ["EP1", "EP2"]
+        if module != "story":
+            assert all(child["workflow_module"] == module for child in stage["children"])
+            assert stage["children"][1]["path"] == f"ai_videos/demo/episodes/ep02/{module}.json"
+        if module == "story":
+            current = stage["children"][0]["children"][0]
+            assert current["display_name"] == "当前 EP1 · 未选用" and current["type"] == "directory"
+            assert "lifetime" not in current
+            assert current["children"] == []
+            assert len(stage["children"][1]["children"]) == 1
 
 
 def test_drama_zh_title_from_concept(tmp_path: Path) -> None:

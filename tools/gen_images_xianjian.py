@@ -39,6 +39,8 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 
 REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO))
+from tools.service_request import RequestLog
 SERIES = REPO / "ai_videos" / "xianjian_yi" / "_series"
 CARD_ROOTS = ("scenes", "characters", "props")
 DREAMINA = Path.home() / "bin" / "dreamina.exe"
@@ -138,10 +140,10 @@ def validate(jobs: list[Job], enforced: set[str]) -> list[str]:
     return problems
 
 
-def task_ids() -> list[str]:
+def task_ids(target: Path = SERIES) -> list[str]:
     """Newest-first submit_ids from `list_task`, used to recover a task whose submit call
     returned no parsable JSON."""
-    res = subprocess.run([str(DREAMINA), "list_task"], capture_output=True, text=True,
+    res = RequestLog(target).cli([str(DREAMINA), "list_task"], capture_output=True, text=True,
                          encoding="utf-8", errors="replace")
     try:
         rows = json.loads(res.stdout[res.stdout.index("["):])
@@ -151,7 +153,7 @@ def task_ids() -> list[str]:
 
 
 def credit() -> int:
-    out = subprocess.run([str(DREAMINA), "user_credit"], capture_output=True, text=True,
+    out = RequestLog(SERIES).cli([str(DREAMINA), "user_credit"], capture_output=True, text=True,
                          encoding="utf-8", check=True).stdout
     return int(json.loads(out)["total_credit"])
 
@@ -183,8 +185,8 @@ def submit(job: Job, requery: int = 6) -> tuple[str | None, int]:
         cmd += ["text2image"]
     cmd += [f"--prompt={job.prompt}", f"--ratio={job.ratio}",
             f"--resolution_type={job.res}", f"--model_version={job.model}", "--poll=240"]
-    before_ids = set(task_ids())
-    res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    before_ids = set(task_ids(job.dest))
+    res = RequestLog(job.dest).cli(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
     payload = _payload(res.stdout)
     submit_id = str(payload.get("submit_id")) if payload else None
 
@@ -200,7 +202,7 @@ def submit(job: Job, requery: int = 6) -> tuple[str | None, int]:
         # 但即梦是提交即扣费——任务其实已经建起来了。拿提交前后的 list_task 差集把它找回来，
         # 这是唯一不重复付费的办法。
         print(f"  · 提交未返回 JSON（{res.stdout.strip()[:80]}），用 list_task 差集找回", flush=True)
-        new_ids = [i for i in task_ids() if i not in before_ids]
+        new_ids = [i for i in task_ids(job.dest) if i not in before_ids]
         if not new_ids:
             print("  ! list_task 里没有新任务，判定为未提交（未扣费）", flush=True)
             return None, 0
@@ -209,7 +211,7 @@ def submit(job: Job, requery: int = 6) -> tuple[str | None, int]:
 
     print(f"  · 轮询未取回结果，改用 submit_id 重查（积分已扣，不重新提交）：{submit_id}", flush=True)
     for attempt in range(1, requery + 1):
-        q = subprocess.run([str(DREAMINA), "query_result", f"--submit_id={submit_id}"],
+        q = RequestLog(job.dest).cli([str(DREAMINA), "query_result", f"--submit_id={submit_id}"],
                            capture_output=True, text=True, encoding="utf-8", errors="replace")
         got = _payload(q.stdout)
         if got and got.get("gen_status") == "success":
@@ -228,8 +230,7 @@ def submit(job: Job, requery: int = 6) -> tuple[str | None, int]:
 
 def download(url: str, dest: Path) -> int:
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, context=ssl.create_default_context(), timeout=180) as r:
-        data = r.read()
+    data, _, _ = RequestLog(dest).http("dreamina", req, timeout=180, context=ssl.create_default_context())
     if data[:8] != b"\x89PNG\r\n\x1a\n" and data[:3] != b"\xff\xd8\xff":
         raise RuntimeError(f"下载内容不是图片：{dest.name}")
     dest.parent.mkdir(parents=True, exist_ok=True)

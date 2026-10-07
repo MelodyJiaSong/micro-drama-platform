@@ -27,7 +27,7 @@ def client() -> TestClient:
 
 
 @pytest.mark.parametrize(
-    "route", ["/research", "/workflow", "/actors", "/drama", "/bgm", "/deleted"]
+    "route", ["/research", "/workflow", "/actors", "/drama", "/deleted"]
 )
 def test_spa_routes_serve_the_app_shell(client: TestClient, route: str) -> None:
     r = client.get(route, headers=HEADERS)

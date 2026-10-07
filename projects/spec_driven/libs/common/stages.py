@@ -57,7 +57,7 @@ CANONICAL_STAGES: tuple[Stage, ...] = (
         id="interview",
         label="2 — Interview",
         folder="interview",
-        invocation="Re-run interview stage: ask multi-choice questions via AskUserQuestion (interactive) or use best judgment (autonomous), produce interview/qa.md.",
+        invocation="Re-run interview stage: ask unresolved choices via the active runtime's user-input capability (interactive) or annotate best judgment (autonomous), produce interview/qa.md.",
         modules=(
             Module(
                 id="qa",

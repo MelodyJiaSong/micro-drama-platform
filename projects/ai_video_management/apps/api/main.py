@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 from pathlib import Path
 
 import uvicorn
@@ -16,7 +17,7 @@ from libs.common.repo_root import RepoRoot
 from libs.common.origin import BoundOrigin
 
 HOST: str = "127.0.0.1"
-PORT: int = 8766
+PORT: int = int(os.environ.get("BACKEND_PORT", "8766"))
 
 
 def _build_container(serve_static: bool) -> Container:

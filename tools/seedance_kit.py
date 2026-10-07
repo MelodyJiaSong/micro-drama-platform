@@ -11,9 +11,9 @@
   **硬链接到原始文件**——与原文件是同一份数据，原文件原地改写时资料包当场就是新的，也不多占盘；
 - 原文件被整个换掉（先删后写、改名覆盖）时硬链接会脱钩：`open` 每次先对齐，Stop hook 在每个 Claude 回合结束时
   `sync --all`，判据是「还是不是同一个文件」（O(1)），脱钩就重链；
-- Seedance 主体（资产包 entity）不进资料包——网页上从「主体」里 @，名字 ＝ `{entity_prefix}_{卡目录名}`；
+- 新剧/显式迁移剧按需上传人物三视图合图与画内发声者MP3；历史单图/entity仅供未迁移旧镜兼容；
 - `prompt.txt` 取 shot md 的「## Seedance prompt」块（精简稿，rule 12.4-P；旧镜没有就取「## 视频 prompt」），只把 `参考:` 行的
-  `=>@` 按上传顺序填成 `@视频1 / @图片1`，主体填 `@{entity 名}`——正本 shot md 仍是裸 `=>@`（rule 12.4-C）；
+  `=>@` 按上传顺序填成 `@视频1 / @图片1 / @音频1`，旧主体兼容 `@{entity 名}`——正本 shot md 仍是裸 `=>@`（rule 12.4-C）；
   这里能代填编号，是因为上传顺序由资料包的文件编号定死了。
 - `open` 是出片前最后一道闸门（rule 44）：本集要有跟得上当前分镜结构、且被整集观感审过的 animatic（`tools/animatic.py`）；
   `seedance.toml` 的 `legacy_eps` 里的集不查。
@@ -31,17 +31,20 @@ import sys
 import tomllib
 from dataclasses import dataclass
 from pathlib import Path
+from character_references import CharacterReferences, CHARACTER_PATTERN, REFERENCE_MODE, UPLOAD_MODE
+from previz.seedance_ref import MODEL_ALIASES, MODEL_LIMITS, MODEL_SOURCE
 
 REPO = Path(__file__).resolve().parent.parent
 AI = REPO / "ai_videos"
 KIT_SUB = "资料包"                            # 每镜目录下的资料包
 META = ("prompt.txt", "使用说明.txt", "kit.json")
 CONFIG = "seedance.toml"
-VERSION = 4                                   # 资料包的拼法变了就加 1，旧包一律判过期
+VERSION = 5                                   # 资料包的拼法变了就加 1，旧包一律判过期
 KIND = {".mp4": "视频", ".mov": "视频", ".webm": "视频", ".png": "图片", ".jpg": "图片", ".jpeg": "图片", ".webp": "图片",
         ".mp3": "音频", ".wav": "音频", ".m4a": "音频"}
 UPLOAD = re.compile(r"^\s*-\s+(?P<label>.+?)\s+→\s+(?:\[`[^`]+`\]\((?P<rel>[^)]+)\)|(?P<entity>在 Seedance 里 @.*))\s*$")
 REF_ITEM = re.compile(r"`([^`]+?)=>@`")
+REFERENCE_PREFIXES = ("参考:", "References:", "Refs:")
 CHROME = Path(os.environ.get("ProgramFiles", r"C:\Program Files")) / "Google/Chrome/Application/chrome.exe"
 
 
@@ -145,14 +148,19 @@ def parse(md: Path, cfg: dict) -> tuple[list[Ref], str, dict]:
     for line in text.split("\n"):
         u = UPLOAD.match(line)
         if u:
-            ups[key(u.group("label"))] = u
-    ref_line = next((l for l in prompt.split("\n") if l.startswith("参考:")), "")
+            label = key(u.group("label"))
+            if label in ups:
+                raise SystemExit(f"{md.name}：Reference uploads的{label}重复")
+            ups[label] = u
+    ref_line = next((l for l in prompt.split("\n") if l.startswith(REFERENCE_PREFIXES)), "")
     refs, count = [], {}
     for item in REF_ITEM.findall(ref_line):
         u = ups.get(key(item))
         if u is None:
             raise SystemExit(f"{md.name}：参考行的「{item}」在 Reference uploads 里找不到对应文件")
         if u.group("entity"):
+            if cfg.get(REFERENCE_MODE) == UPLOAD_MODE:
+                raise SystemExit(f"{md.name}：按需上传模式禁止预建entity，请列出人物图片参考和发声者MP3")
             refs.append(Ref(key(item), None, "主体", 0, f"{cfg['entity_prefix']}_{key(item)}"))   # 大小写照卡目录名（实测 wow_c1_Aaron）
             continue
         src = (md.parent / u.group("rel")).resolve()
@@ -163,7 +171,85 @@ def parse(md: Path, cfg: dict) -> tuple[list[Ref], str, dict]:
         refs.append(Ref(key(item), src, kind, count[kind]))
     if not refs:
         raise SystemExit(f"{md.name}：参考行是空的")
+    if cfg.get(REFERENCE_MODE) == UPLOAD_MODE:
+        if len({ref.label for ref in refs}) != len(refs):
+            raise SystemExit(f"{md.name}：参考行存在重复handle")
+        if front.get("generation_mode") == "first_last_frame":
+            if front.get("continuous_take_gate") != "true":
+                raise SystemExit(f"{md.name}：当前首尾帧入口需完整连续镜输入契约，不能省略指纹闸门")
+            validate_endpoint_characters(md, text, prompt, refs)
+        else:
+            validate_character_uploads(md, text, prompt, refs, cfg)
+    if front.get("continuous_take_gate") == "true":
+        from long_take_gate import check_inputs
+        errors = check_inputs(md, prompt, [r.src for r in refs if r.src is not None])
+        if errors:
+            raise SystemExit("连续长镜输入闸门：" + "；".join(errors))
     return refs, prompt, front
+
+
+def validate_endpoint_characters(md: Path, text: str, prompt: str, refs: list[Ref]) -> None:
+    from long_take_gate import check_endpoints
+    contract_path = md.parent / "planning/continuous_take.json"
+    if not contract_path.is_file():
+        raise SystemExit(f"{md.name}：首尾帧模式缺独立输入/身份契约")
+    contract = json.loads(contract_path.read_text(encoding="utf-8"))
+    errors = check_endpoints(contract, [ref.src for ref in refs if ref.src is not None])
+    cards = set(re.findall(CHARACTER_PATTERN, prompt))
+    if set(contract.get("endpoint_control", {}).get("characters", [])) != cards:
+        errors.append("首尾帧画内人物与已审端点身份集合不一致")
+    if contract.get("generation_mode") != "first_last_frame" or contract.get("input_review", {}).get("status") != "passed":
+        errors.append("首尾帧模式或独立输入尚未通过")
+    if any(ref.kind != "图片" for ref in refs):
+        errors.append("首尾帧接口不支持额外人物视图/视频/音频上传")
+    if re.search(r"^(?:类型:\s*正常台词|Kind:\s*in-frame)\s*$", text, re.M):
+        errors.append("当前首尾帧入口未验证声音参考绑定，不支持画内对白豁免")
+    if errors:
+        raise SystemExit(f"{md.name}：" + "；".join(errors))
+
+
+def validate_character_uploads(md: Path, text: str, prompt: str, refs: list[Ref], cfg: dict) -> None:
+    cards = set(re.findall(CHARACTER_PATTERN, prompt))
+    native_blocks: list[tuple[str, str]] = []
+    voice_section = text.split("## 台词配音 prompt", 1)[-1] if "## 台词配音 prompt" in text else ""
+    for block in re.findall(r"```text\n(.*?)\n```", voice_section, re.S):
+        if re.search(r"^(?:类型:\s*正常台词|Kind:\s*in-frame)\s*$", block, re.M):
+            speaker = re.search(r"^(?:角色|Speaker):\s*(.+)$", block, re.M)
+            if speaker is None:
+                raise SystemExit(f"{md.name}：画内配音块缺说话人")
+            native_blocks.append((speaker.group(1).strip(), block))
+    by_label = {ref.label: ref for ref in refs}
+    drama = drama_of(md)
+    attributed_blocks: set[tuple[str, str]] = set()
+    for card in sorted(cards):
+        try:
+            combined = cfg.get('character_reference_layout') == 'triptych'
+            first = by_label.get(f"{card}三视图" if combined else f"{card}视图1")
+            source = CharacterReferences(drama, card, first.src.parent if first and first.src else None)
+            vid = source.voice_id(required=False)
+            speakers = {speaker for speaker, block in native_blocks if vid and re.search(r"(?<![\w-])" + re.escape(vid) + r"(?![\w-])", block)}
+            voiced = cfg.get("audio_mode", "native") == "native" and bool(speakers)
+            if voiced:
+                attributed_blocks.update((speaker, block) for speaker, block in native_blocks
+                                         if re.search(r"(?<![\w-])" + re.escape(vid) + r"(?![\w-])", block))
+            expected = source.files(voiced, combined=combined)
+        except ValueError as exc:
+            raise SystemExit(f"{md.name}：{exc}") from exc
+        for label, path, _kind in expected:
+            if label not in by_label or by_label[label].src != path.resolve():
+                raise SystemExit(f"{md.name}：{label}缺失或绑定了其他角色文件，应为{path}")
+        if combined and any(f'{card}视图{i}' in by_label for i in (1, 2, 3)):
+            raise SystemExit(f'{md.name}：合图模式不能同时上传{card}的三张单图')
+        usage = next((line for line in prompt.splitlines() if line.startswith(("参考用法:", "【参考素材】"))), "")
+        for speaker in speakers if voiced else ():
+            if not re.search(re.escape(f"{card}声音") + r"\s*[＝=]\s*" + re.escape(speaker) + r"(?=、|；|。|$)", usage):
+                raise SystemExit(f"{md.name}：{card}声音与{speaker}的音色绑定缺失或错误")
+        if not voiced and f"{card}声音" in by_label:
+            raise SystemExit(f"{md.name}：{card}没有画内台词，不应上传其人声样本")
+    if cfg.get("audio_mode", "native") == "native":
+        missing = {speaker for speaker, block in native_blocks if (speaker, block) not in attributed_blocks}
+        if missing:
+            raise SystemExit(f"{md.name}：画内配音voice_id未对应入画人物卡：{sorted(missing)}")
 
 
 def kit_prompt(prompt: str, refs: list[Ref]) -> str:
@@ -173,7 +259,7 @@ def kit_prompt(prompt: str, refs: list[Ref]) -> str:
         r = by[key(m.group(1))]
         tag = f"@{r.entity}" if r.kind == "主体" else f"@{r.kind}{r.n}"
         return f"`{m.group(1)}=>{tag}`"
-    return "\n".join(REF_ITEM.sub(fill, l) if l.startswith("参考:") else l for l in prompt.split("\n"))
+    return "\n".join(REF_ITEM.sub(fill, l) if l.startswith(REFERENCE_PREFIXES) else l for l in prompt.split("\n"))
 
 
 def dest_name(i: int, r: Ref) -> str:
@@ -194,12 +280,22 @@ def stale(md: Path) -> list[str]:
         why.append(f"资料包拼法版本 {k.get('version')} → {VERSION}")
     if k.get("shot_md_sha") != sha(md):
         why.append(f"{md.name} 改过")
+    cfg = config_or_empty(drama_of(md))
+    try:
+        refs, _, front = parse(md, cfg)
+    except SystemExit as exc:
+        why.append(str(exc))
+    else:
+        if k.get("dreamina_cli_compatibility") != cli_compatibility(refs, front, cfg):
+            why.append("目标CLI模型或能力限制已变")
     for f in k.get("files", []):
         src = REPO / f["src"]
         if not src.is_file():
             why.append(f"源文件没了：{f['src']}")
         elif not same(kd / f["dest"], src):
             why.append(f"与原始文件对不上：{f['dest']}")
+        elif f.get("sha256") != sha(src):
+            why.append(f"参考内容哈希已变：{f['src']}")
     extra = [p.name for p in kd.iterdir() if p.name not in META and p.name not in {f["dest"] for f in k.get("files", [])}]
     if extra:
         why.append(f"多出来的文件：{'、'.join(extra[:3])}")
@@ -238,6 +334,7 @@ def build(md: Path) -> Path:
         d = dest_name(i, r)
         place(r.src, kd / d)
         files.append({"src": r.src.relative_to(REPO).as_posix(), "dest": d, "kind": r.kind, "n": r.n,
+                      "label": r.label, "sha256": sha(r.src),
                       "linked": os.path.samefile(kd / d, r.src)})
     keep = {f["dest"] for f in files} | set(META)
     for p in kd.iterdir():
@@ -252,17 +349,48 @@ def build(md: Path) -> Path:
              f"{cfg.get('resolution', '720P')} · {dur}s", "",
              "1. 把下面编号的文件按编号顺序拖进参考区（一次全选拖进去也行，拖完核对网页上视频 / 图片的编号与文件名里的一致）："]
     lines += [f"   {f['dest']}" for f in files]
-    lines += ["2. 点进输入框，Ctrl+V 粘贴（prompt 已在剪贴板；参考行里的 @视频1 / @图片1 已按上面的编号填好）。"]
+    lines += ["2. 粘贴prompt.txt（open时已复制到剪贴板；@视频、@图片、@音频编号按上面的上传顺序填写）。"]
     if ents:
         lines += ["3. 参考行里这几处要从「主体」@（网页只认菜单里点出来的主体）：" + "、".join(f"@{r.entity}（{r.label}）" for r in ents)]
     lines += [f"{4 if ents else 3}. 核对无误后自己点「生成」。"]
+    compatibility = cli_compatibility(refs, front, cfg)
+    lines += ["", "Dreamina CLI兼容性（文件资料包完整不等于当前CLI可提交）："]
+    lines += ["  " + item for item in compatibility["blockers"]] or ["  已配置限制下无数量/时长冲突；仍需模型能力核实与既有出片审批。"]
+    lines += ["CLI请求须经tools/service_call.py或tools/service_request.py先记录完整prompt、参考顺序与SHA256；禁止绕过请求日志。"]
     if dur and float(re.search(r"\d+(?:\.\d+)?", dur).group()) > float(cfg.get("max_seconds", 30)):
         lines.insert(3, f"⚠ 本镜 {dur}s 超过网页单条上限 {cfg.get('max_seconds', 30)}s，要拆镜。")
     (kd / "使用说明.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
     (kd / "kit.json").write_text(json.dumps({"version": VERSION, "shot_md": md.relative_to(REPO).as_posix(), "shot_md_sha": sha(md),
-                                             "files": files, "entities": [r.entity for r in ents]}, ensure_ascii=False, indent=1),
+                                             REFERENCE_MODE: cfg.get(REFERENCE_MODE, "legacy_entity"),
+                                             "files": files, "entities": [r.entity for r in ents],
+                                             "dreamina_cli_compatibility": compatibility}, ensure_ascii=False, indent=1),
                                  encoding="utf-8")
     return kd
+
+
+def cli_compatibility(refs: list[Ref], front: dict, cfg: dict) -> dict:
+    declared = cfg.get("dreamina_cli", {})
+    model = declared.get("model_version", "")
+    family = MODEL_ALIASES.get(model, model)
+    limits = dict(MODEL_LIMITS.get(family, {}))
+    limits.update({name: declared[name] for name in ("max_images", "max_videos", "max_audios", "max_seconds") if name in declared})
+    counts = {kind: sum(ref.kind == kind for ref in refs) for kind in ("图片", "视频", "音频")}
+    blockers = []
+    if model and family not in MODEL_LIMITS:
+        blockers.append(f"未登记目标CLI模型{model}的能力，不套用其他模型上限")
+    if not limits:
+        blockers.append("未登记当前CLI/模型能力，不自动承诺可提交")
+    for kind, name in (("图片", "max_images"), ("视频", "max_videos"), ("音频", "max_audios")):
+        if name in limits and counts[kind] > limits[name]:
+            blockers.append(f"{kind}{counts[kind]}个超过目标CLI模型{model or '未指定'}已登记上限{limits[name]}；不得静默删除人物参考")
+    duration = float(front.get("duration_s", 0))
+    if "max_seconds" in limits and duration > limits["max_seconds"]:
+        blockers.append(f"镜长{duration:g}s超过目标CLI模型{model or '未指定'}已登记上限{limits['max_seconds']}s；需验证目标模型或另拟拆镜")
+    if any(ref.kind == "主体" for ref in refs):
+        blockers.append("预建entity不是本地上传文件，当前按需上传CLI流程不能使用")
+    source = MODEL_SOURCE if family == "seedance2.5" else "CLI帮助或项目显式限制"
+    return {"ready": not blockers, "scope": "configured_counts_and_shot_duration_only", "model_version": model,
+            "source": source, "counts": counts, "limits": limits, "blockers": blockers}
 
 
 # ─────────────────────────── 打开 ───────────────────────────
@@ -299,6 +427,7 @@ def open_kit(md: Path) -> None:
 
 def mark_broken(md: Path, why: str) -> None:
     kd = kit_dir(md)
+    kd.mkdir(parents=True, exist_ok=True)
     for p in kd.iterdir():
         if p.is_file() and p.name != "kit.json":
             p.unlink()
@@ -357,6 +486,7 @@ def main() -> int:
         return 0
     mds = all_kits() if a.all else [resolve(a.target)]
     bad = [(md, w) for md in mds if (w := stale(md))]
+    failed = []
     for md, w in bad:
         if a.step == "sync":
             try:
@@ -364,12 +494,18 @@ def main() -> int:
                 print(f"资料包已对齐：{md.parent.relative_to(AI).as_posix()}（{'；'.join(w[:3])}）")
             except SystemExit as e:              # 源文件缺了：清掉旧素材、标成不可用，下次 sync 再试——不留半套旧包给人拿去出片
                 mark_broken(md, str(e))
+                failed.append(md)
                 print(f"⚠ 资料包暂不可用：{md.parent.relative_to(AI).as_posix()}——{e}")
         else:
             print(f"⚠ {md.relative_to(REPO).as_posix()}：{'；'.join(w[:4])}")
+    if a.step == "sync":
+        remaining = [(md, w) for md in mds if (w := stale(md))]
+        if not a.quiet:
+            print(f"{len(mds)} 个资料包，修复前 {len(bad)} 个未对齐，修复后 {len(remaining)} 个仍未对齐，{len(failed)} 个构建失败")
+        return 1 if failed or remaining else 0
     if not a.quiet:
-        print(f"{len(mds)} 个资料包，{len(bad)} 个与原始文件对不上" + ("，已对齐" if a.step == "sync" and bad else ""))
-    return 0 if a.step == "sync" or not bad else 1
+        print(f"{len(mds)} 个资料包，{len(bad)} 个与原始文件对不上")
+    return 1 if bad else 0
 
 
 if __name__ == "__main__":

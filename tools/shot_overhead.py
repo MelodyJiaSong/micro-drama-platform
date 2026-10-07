@@ -549,8 +549,20 @@ def solid_parts(b: dict) -> list[dict]:
 
 
 def _in_opening(b: dict, x: float, y: float) -> bool:
-    """块自带的通道：gate_wall 的门洞（build_scene 按 gate_w 在块中心开洞）。"""
-    return b.get("kind") == "gate_wall" and abs(x - float(b["xy"][0])) <= float(b.get("gate_w", 5.0)) / 2.0
+    """已建构件的中心门洞；low_wall 与 build_scene.k_low_wall 的走向一致。"""
+    if b.get("kind") == "gate_wall":
+        return abs(x - float(b["xy"][0])) <= float(b.get("gate_w", 5.0)) / 2.0
+    if b.get("kind") != "low_wall" or float(b.get("gate_w", 0)) <= 0:
+        return False
+    sx, sy = (float(v) for v in b["size"])
+    rotation = float(b.get("rot", 0) or 0)
+    # build_scene._along 把未写 rot 的南北长墙转90度；显式旋转则保持。
+    if sy > sx and not rotation:
+        rotation = 90.0
+    r = math.radians(rotation)
+    dx, dy = x - float(b["xy"][0]), y - float(b["xy"][1])
+    along = dx * math.cos(r) + dy * math.sin(r)
+    return abs(along) <= float(b["gate_w"]) / 2.0
 
 
 # 画面相对的朝向（follow-up 036：shot04 两人说话全程背对镜头——平面图与 prompt 只写罗盘方向，模型不知道画面里哪边是东）
@@ -1543,6 +1555,9 @@ def _ref_view(cfg: dict) -> tuple[float, float, float, float]:
     pts += [(float(p[1]), float(p[2])) for a in cfg.get("actor", []) for p in a["path"]]
     pts += [tuple(o["xy"]) for o in cfg.get("object", [])]
     pts += [(float(q[1]), float(q[2])) for pr in cfg.get("prop", []) for q in pr["path"]]
+    if cfg["meta"].get("view"):
+        x0, y0, x1, y1 = cfg["meta"]["view"]
+        pts += [(x0, y0), (x1, y1)]
     x0, x1 = min(p[0] for p in pts), max(p[0] for p in pts)
     y0, y1 = min(p[1] for p in pts), max(p[1] for p in pts)
     m = max(3.0, 0.18 * max(x1 - x0, y1 - y0))

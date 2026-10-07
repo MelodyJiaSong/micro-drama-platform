@@ -80,12 +80,49 @@ def rendered(d: Path) -> bool:
     return why is None
 
 
+@dataclass(frozen=True)
+class CardSegment:
+    a: float
+    b: float
+    head: str
+
+
+def card_timeline(full: str, secs: float) -> list[tuple[CardSegment, list[str]]]:
+    """读取镜头轴的真实小数切点；旧分镜格式沿用原解析。"""
+    f = prompt_compact.fields(full)
+    if f.get("分镜") or not f.get("镜头"):
+        return [(CardSegment(s.a, s.b, s.head), acts)
+                for s, acts in prompt_compact.timeline(full, secs)]
+    span = re.compile(r"(\d+(?:\.\d+)?)–(\d+(?:\.\d+)?)s\s*(.*)")
+    segs = []
+    for chunk in f["镜头"].split("；"):
+        match = span.fullmatch(chunk.strip())
+        if not match:
+            raise ValueError(f"无法读取 animatic 镜头轴: {chunk}")
+        segs.append(CardSegment(float(match[1]), float(match[2]), match[3]))
+    if (not segs or abs(segs[0].a) > 1e-6 or abs(segs[-1].b - secs) > 1e-6
+            or any(s.b <= s.a for s in segs)
+            or any(abs(a.b - b.a) > 1e-6 for a, b in zip(segs, segs[1:]))):
+        raise ValueError("animatic 镜头轴必须连续覆盖完整镜长")
+    acts = [[] for _ in segs]
+    for chunk in re.split(r"\s*/\s*|；", f.get("动作", "")):
+        match = span.fullmatch(chunk.strip())
+        if match:
+            a, b = float(match[1]), float(match[2])
+            for i, seg in enumerate(segs):
+                if a < seg.b and b > seg.a:
+                    acts[i].append(match[3])
+        elif chunk.strip():
+            acts[0].append(chunk.strip())
+    return list(zip(segs, acts))
+
+
 def structure(epd: Path) -> dict:
     out = {}
     for d in pc.shot_dirs(epd):
         md = pc.shot_md(d)
         secs = duration(md)
-        segs = [(s.a, s.b, s.head) for s, _ in prompt_compact.timeline(design_block(md), secs)]
+        segs = [(s.a, s.b, s.head) for s, _ in card_timeline(design_block(md), secs)]
         lines = [(ln.speaker, ln.text, ln.t0, ln.t1) for ln in pc.dialogue(md)]
         out[d.name] = {"dur": secs, "segs": segs, "lines": lines}
     return out
@@ -96,9 +133,14 @@ def fingerprint(epd: Path) -> str:
 
 
 def _first_scene_image(md: Path) -> Path | None:
-    for line in md.read_text(encoding="utf-8").split("\n"):
+    text = md.read_text(encoding="utf-8")
+    # 新生成器将用途写在参考行，而上传行只保留资产键。
+    scene_labels = {seedance_kit.key(item) for item in seedance_kit.REF_ITEM.findall(text)
+                    if "场景" in item or re.search(r"\(scene\)", item, re.I)}
+    for line in text.split("\n"):
         u = seedance_kit.UPLOAD.match(line)
-        if u and u.group("rel") and "场景" in u.group("label"):
+        if (u and u.group("rel") and
+                ("场景" in u.group("label") or seedance_kit.key(u.group("label")) in scene_labels)):
             p = (md.parent / u.group("rel")).resolve()
             if p.suffix.lower() in IMAGE and p.is_file():
                 return p
@@ -123,7 +165,7 @@ def frames(d: Path) -> list[Frame]:
     scene = _first_scene_image(md)
     plan = d / "planning" / f"{d.name}_overhead_ref.png"
     out = []
-    for i, (s, acts) in enumerate(prompt_compact.timeline(design_block(md), secs), 1):
+    for i, (s, acts) in enumerate(card_timeline(design_block(md), secs), 1):
         summary = "；".join(acts)[:160]
         key = d / "keyframe" / f"k{i}.png"
         seg = (i, s.a, s.b)
@@ -194,7 +236,7 @@ def shot_clip(d: Path, w: int, h: int, work: Path) -> Path:
         return out
     frs = frames(d)
     srcs = [f.src for f in frs if f.src is not None]
-    sig = pc.signature([md] + srcs, w=w, h=h, how=[f.how for f in frs])
+    sig = pc.signature([md] + srcs, w=w, h=h, how=[f.how for f in frs], card_version=2, segments=[(f.a, f.b, f.head, f.summary) for f in frs])
     if pc.fresh(out, sig):
         return out
     cards = [_card(f, d.name, i, w, h, work) for i, f in enumerate(frs, 1)]

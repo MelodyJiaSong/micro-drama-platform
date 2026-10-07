@@ -48,6 +48,7 @@ from tools import image_engine as ie  # noqa: E402
 from tools import image_fetch as el  # noqa: E402
 from tools import check_world_scenes_szzl as gate  # noqa: E402
 from tools import props_lib  # noqa: E402
+from tools.service_request import RequestLog
 
 VIEWS = ("1_正面", "2_侧面", "3_背面")
 VIEW_NAMES = tuple(v.split("_", 1)[1] for v in VIEWS)   # asset.toml `views` 的取值
@@ -277,8 +278,8 @@ DM_RETRIES = 3
 DM_RETRYABLE = re.compile(r"do request|connection|timeout|deadline|EOF|reset|没回 JSON|upload", re.I)
 
 
-def _dm_tasks() -> list[dict]:
-    r = dm.subprocess.run([str(dm.DREAMINA), "list_task"], capture_output=True, text=True,
+def _dm_tasks(target: Path) -> list[dict]:
+    r = dm.RequestLog(target).cli([str(dm.DREAMINA), "list_task"], capture_output=True, text=True,
                           encoding="utf-8", errors="replace", timeout=120)
     try:
         return json.loads(r.stdout)
@@ -286,7 +287,7 @@ def _dm_tasks() -> list[dict]:
         return []
 
 
-def _dm_submit(prompt: str, refs: list[Path], ratio: str = "1:1", wait_s: int = 240) -> tuple[str | None, int]:
+def _dm_submit(prompt: str, refs: list[Path], ratio: str = "1:1", wait_s: int = 240, *, target: Path) -> tuple[str | None, int]:
     """即梦提交 + 取回，**可多进程并发**。
 
     `gen_images_xianjian.submit` 在 CLI 没回 JSON 时用「提交前后 list_task 差集」找回任务——
@@ -297,34 +298,34 @@ def _dm_submit(prompt: str, refs: list[Path], ratio: str = "1:1", wait_s: int = 
     # 只提交、不让 CLI 自己轮询：它轮询时网络超时就整条报错、不吐 submit_id（实测 2026-09-25，三个任务其实都已成功扣费），
     # 下面的 query_result 循环对单次超时是容忍的
     cmd += [f"--prompt={prompt}", f"--ratio={ratio}", "--resolution_type=2k", "--model_version=5.0", "--poll=0"]
-    res = dm.subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=420)
+    res = dm.RequestLog(target).cli(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=420)
     payload = dm._payload(res.stdout)
     if payload and payload.get("gen_status") == "success" and dm._url_of(payload):
         return dm._url_of(payload), int(payload.get("credit_count") or 0)
     if payload and payload.get("gen_status") == "fail":
-        raise RuntimeError(f"即梦生成失败：{str(payload.get('fail_reason'))[:200]}")
+        raise RuntimeError(f"即梦生成失败（积分是否退还需核对）：{str(payload.get('fail_reason'))[:200]}")
     sid = str(payload.get("submit_id")) if payload and payload.get("submit_id") else None
     if not sid:
-        mine = [t for t in _dm_tasks() if (t.get("prompt") or "").strip() == prompt.strip()]
+        mine = [t for t in _dm_tasks(target) if (t.get("prompt") or "").strip() == prompt.strip()]
         if not mine:
             # list_task 对长 prompt（实测场景图 ~1500 字）不回 prompt 字段，找不到 ≠ 没提交：可能已扣费，别急着重交，
             # 先用 `dreamina list_task` 看最近几条无 prompt 的任务、按尺寸认领（实测 bg1 世界锚点就是这样找回的）
             raise RuntimeError(f"即梦没回 JSON、list_task 里也按 prompt 找不到（可能已提交扣费）：{res.stdout.strip()[:120]}")
         sid = str(mine[0]["submit_id"])
     for _ in range(max(1, wait_s // 20)):      # 默认再等 4 分钟；超时抛出 → 外层跳过 / 退 ElevenLabs（积分已扣，别急着放弃）
-        q = dm.subprocess.run([str(dm.DREAMINA), "query_result", f"--submit_id={sid}"], capture_output=True,
+        q = dm.RequestLog(target).cli([str(dm.DREAMINA), "query_result", f"--submit_id={sid}"], capture_output=True,
                               text=True, encoding="utf-8", errors="replace", timeout=120)
         got = dm._payload(q.stdout)
         if got and got.get("gen_status") == "success" and dm._url_of(got):
             return dm._url_of(got), int(got.get("credit_count") or 0)
         if got and got.get("gen_status") == "fail":
-            raise RuntimeError(f"即梦生成失败：{str(got.get('fail_reason'))[:200]}")
+            raise RuntimeError(f"即梦生成失败（积分是否退还需核对）：{str(got.get('fail_reason'))[:200]}")
         time.sleep(20)
     raise RuntimeError(f"即梦 {sid} 等了 {wait_s // 60} 分钟仍未出图（积分已扣；稍后 dreamina query_result --submit_id={sid} 可取回）")
 
 
 def _dreamina(a: Asset, i: int, prompt: str, refs: list[Path]) -> bool:
-    url, cost = _dm_submit(prompt, refs, wait_s=900)   # 排队慢时 4 分钟不够（实测 2026-09-25 晚），积分已扣，多等
+    url, cost = _dm_submit(prompt, refs, wait_s=900, target=a.view(i))
     dm.download(url, a.view(i))
     a.log(**{f"dreamina_{VIEWS[i]}": cost})
     return True
@@ -333,7 +334,7 @@ def _dreamina(a: Asset, i: int, prompt: str, refs: list[Path]) -> bool:
 def _elevenlabs(a: Asset, i: int, prompt: str, refs: list[Path]) -> bool:
     key = el.api_key()
     gid = el.create(key, prompt, model=el.DEFAULT_MODEL, quality="medium", aspect="1:1",
-                    resolution="2K", refs=[el.inline(p) for p in refs] or None)
+                    resolution="2K", refs=[el.inline(p) for p in refs] or None, target=a.view(i))
     el.wait_download(key, gid, a.view(i))
     a.log(**{f"elevenlabs_{VIEWS[i]}": gid})
     return True
@@ -394,11 +395,11 @@ def do_images(a: Asset, engine: str, force: bool) -> None:
 
 
 # ── mesh：三视图 → Rodin GLB ───────────────────────────────────────────
-def balance(key: str) -> float | None:
+def balance(key: str, *, target: Path) -> float | None:
     try:
         req = urllib.request.Request(f"{rodin.API}/check_balance", headers={"Authorization": f"Bearer {key}"})
-        with urllib.request.urlopen(req, timeout=30) as r:
-            return float(json.loads(r.read())["balance"])
+        data, _, _ = RequestLog(target).http("hyper3d", req, timeout=30)
+        return float(json.loads(data)["balance"])
     except Exception:   # noqa: BLE001 —— 余额只做记账，查不到不影响出模
         return None
 
@@ -414,14 +415,14 @@ def do_mesh(a: Asset, tier: str, force: bool) -> None:
         print(f"  ! {a.key} 三视图不齐，不出模")
         return
     key = rodin.api_key()
-    b0 = balance(key)
+    b0 = balance(key, target=a.glb)
     if b0 is not None and b0 < MIN_BALANCE:
         raise RuntimeError(f"Rodin 余额 {b0} < 保底 {MIN_BALANCE}（留给第一季重出模），本件不出模——充值后重跑 mesh 即补")
     t0 = time.time()
-    job = rodin.create_job(key, a.spec["prompt_en"], views, list(a.spec["size_m"]), tier, "Raw")
-    rodin.wait(key, job["jobs"]["subscription_key"], 600)   # 10 分钟不出就跳过（超时 raise，外层记账后继续）
+    job = rodin.create_job(key, a.spec["prompt_en"], views, list(a.spec["size_m"]), tier, "Raw", target=a.glb)
+    rodin.wait(key, job["jobs"]["subscription_key"], 600, target=a.glb)   # 10 分钟不出就跳过（超时 raise，外层记账后继续）
     rodin.download(key, job["uuid"], a.glb)
-    b1 = balance(key)
+    b1 = balance(key, target=a.glb)
     a.log(rodin_uuid=job["uuid"], rodin_tier=tier, rodin_cost=(b0 - b1) if b0 is not None and b1 is not None else None,
           rodin_balance_after=b1)
     print(f"  ✓ {a.glb.name}  {a.glb.stat().st_size // 1024} KB  {time.time() - t0:.0f}s  credits {b0}→{b1}")

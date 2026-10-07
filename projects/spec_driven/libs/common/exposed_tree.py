@@ -14,6 +14,12 @@ ALLOWED_EXTENSIONS: frozenset[str] = frozenset(
     {".md", ".json", ".yaml", ".yml", ".jsonl", ".txt", ".png", ".jpg"}
 )
 MAX_FILE_BYTES: int = 1_048_576
+CONTEXT_ROOT_FILES: tuple[str, ...] = ("AGENTS.md", "CONVENTIONS.md", "CLAUDE.md")
+CONTEXT_DIRS: dict[str, frozenset[str]] = {
+    ".agents": frozenset({"skills", "references"}),
+    ".claude": frozenset({"skills"}),
+}
+CONTEXT_FILES: frozenset[str] = frozenset({".agents/skill-aliases.json"})
 
 _EXCLUDED_DIRS: frozenset[str] = frozenset(
     {"node_modules", ".git", ".audit", "__pycache__", ".pytest_cache", "dist", "build", ".vite"}
@@ -28,27 +34,17 @@ class ExposedTree:
     def root(self) -> Path:
         return self._root
 
-    def claude_root_files(self) -> list[Path]:
-        cm = self._root / "CLAUDE.md"
-        return [cm] if cm.is_file() else []
+    def context_root_files(self) -> list[Path]:
+        return [self._root / name for name in CONTEXT_ROOT_FILES if (self._root / name).is_file()]
 
-    def claude_skill_files(self) -> list[Path]:
-        skills_dir = self._root / ".claude" / "skills"
-        out: list[Path] = []
+    def shared_skill_files(self) -> list[Path]:
+        skills_dir = self._root / ".agents" / "skills"
         if not skills_dir.is_dir():
-            return out
-        for p in skills_dir.rglob("SKILL.md"):
-            if p.is_file():
-                out.append(p)
-        playbooks_dir = self._root / ".claude" / "skills" / "agent_team" / "playbooks"
-        if playbooks_dir.is_dir():
-            for p in sorted(playbooks_dir.glob("*.md")):
-                if p.is_file():
-                    out.append(p)
-        return out
+            return []
+        return sorted(p for p in skills_dir.rglob("*.md") if p.is_file())
 
-    def claude_agent_refs(self) -> list[Path]:
-        refs_dir = self._root / ".claude" / "agent_refs"
+    def shared_references(self) -> list[Path]:
+        refs_dir = self._root / ".agents" / "references"
         if not refs_dir.is_dir():
             return []
         return sorted(p for p in refs_dir.rglob("*.md") if p.is_file())
@@ -76,12 +72,12 @@ class ExposedTree:
         if not parts:
             return False
         first = parts[0]
-        if first == "CLAUDE.md":
+        if first in CONTEXT_ROOT_FILES:
             return True
-        if first == ".claude":
-            if len(parts) >= 2 and parts[1] in {"skills", "agent_refs"}:
-                return True
-            return False
+        if first in CONTEXT_DIRS:
+            return relative.as_posix() in CONTEXT_FILES or (
+                len(parts) >= 2 and parts[1] in CONTEXT_DIRS[first]
+            )
         if first == "specs":
             return True
         if first == "projects":

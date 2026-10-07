@@ -36,6 +36,8 @@ from datetime import datetime
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO))
+from tools.service_request import RequestLog
 sys.path.insert(0, str(REPO / "tools" / "post"))
 import post_common as pc  # noqa: E402  它再把 tools/ 加进 sys.path
 import loudness  # noqa: E402
@@ -321,10 +323,8 @@ def compose(key: str, sk: Sketch, raw: Path) -> str | None:
                                  method="POST", headers={"xi-api-key": key, "Content-Type": "application/json"})
     t0 = time.time()
     try:
-        with urllib.request.urlopen(req, timeout=900) as r:
-            data = r.read()
-            hdrs = {k.lower(): v for k, v in r.headers.items() if k.lower() != "set-cookie"}
-            status = r.status
+        data, hdrs, status = RequestLog(raw).http("elevenlabs", req, timeout=900)
+        hdrs = {k.lower(): v for k, v in hdrs.items() if k.lower() != "set-cookie"}
     except urllib.error.HTTPError as e:
         return f"HTTP {e.code}：{e.read()[:1200].decode('utf-8', 'replace')}"
     except (urllib.error.URLError, TimeoutError) as e:

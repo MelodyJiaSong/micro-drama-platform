@@ -46,6 +46,7 @@ import tempfile
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
+from libs.common.production_key import shot_identity
 from types import ModuleType
 
 import imageio_ffmpeg
@@ -247,10 +248,7 @@ class EpisodeConcatBuilder:
         if lang not in VALID_EPISODE_LANGS:
             raise InvalidEpisodePathError(f"unknown episode lang: {lang!r}")
         episode_dir, episode_slug = self._validate_episode(rel)
-        shots_dir = episode_dir / "shots"
-        if not shots_dir.is_dir():
-            raise NoShotsError("episode has no shots/ folder")
-        shot_dirs = self._shot_dirs(shots_dir)
+        shot_dirs = drama_layout.episode_shot_dirs(episode_dir)
         if not shot_dirs:
             raise NoShotsError("shots/ folder contains no shot{NN} subfolders")
 
@@ -260,9 +258,9 @@ class EpisodeConcatBuilder:
         for shot_dir in shot_dirs:
             clip = self._select_clip(shot_dir)
             if clip is None:
-                skipped.append(ShotSkip(shot_dir.name, "no_render_mp4"))
+                skipped.append(ShotSkip(shot_identity(shot_dir), "no_render_mp4"))
                 continue
-            used.append(ShotClip(shot_dir.name, self._rel(clip)))
+            used.append(ShotClip(shot_identity(shot_dir), self._rel(clip)))
             used_dirs.append(shot_dir)
 
         if not used:
@@ -477,12 +475,12 @@ class EpisodeConcatBuilder:
         if lang not in VALID_EPISODE_LANGS:
             raise InvalidEpisodePathError(f"unknown episode lang: {lang!r}")
         episode_dir, _ = self._validate_episode(rel)
-        shot_dirs = self._shot_dirs(episode_dir / "shots")
+        shot_dirs = drama_layout.episode_shot_dirs(episode_dir)
         used: list[tuple[str, Path, Path]] = []
         for sd in shot_dirs:
             clip = self._select_clip(sd)
             if clip is not None:
-                used.append((sd.name, clip, sd))
+                used.append((shot_identity(sd), clip, sd))
         if len(used) < 2:
             raise NoShotVideosError("need at least 2 shot clips to plan seams")
         ffmpeg = self._ffmpeg_exe()
@@ -731,7 +729,7 @@ class EpisodeConcatBuilder:
         `shot{NN}.mp4` in the shot-folder root (written by `select-takes`) if
         present, else the newest raw take under `renders/`. Never a burned
         subtitle master — concat is subtitle-free (follow-up 147)."""
-        locked = shot_dir / f"{shot_dir.name}{_MP4_EXT}"
+        locked = shot_dir / f"{shot_identity(shot_dir)}{_MP4_EXT}"
         if locked.is_file() and not locked.is_symlink():
             return locked
         return newest_render(shot_dir)

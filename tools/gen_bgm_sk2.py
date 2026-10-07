@@ -40,6 +40,8 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 
 REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO))
+from tools.service_request import RequestLog
 OUT = REPO / "ai_videos" / "shikong_lvxing" / "sk2" / "7_bgm"
 API = "https://api.elevenlabs.io/v1/music"
 
@@ -129,8 +131,7 @@ def compose(key: str, prompt: str, ms: int, dst: Path) -> str:
         API + "?output_format=mp3_44100_128", data=body, method="POST",
         headers={"xi-api-key": key, "Content-Type": "application/json"})
     try:
-        with urllib.request.urlopen(req, timeout=900) as r:
-            data = r.read()
+        data, _, _ = RequestLog(dst).http("elevenlabs", req, timeout=900)
     except urllib.error.HTTPError as e:
         return f"HTTP {e.code}：{e.read()[:220].decode('utf-8', 'replace')}"
     if len(data) < 10_000:

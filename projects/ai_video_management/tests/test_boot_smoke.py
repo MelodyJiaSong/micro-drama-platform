@@ -19,6 +19,18 @@ def test_boot_creates_app_without_error() -> None:
     assert app.title == "ai_video_management"
 
 
+def test_legacy_music_endpoints_removed_without_recreating_library(tmp_path) -> None:
+    (tmp_path / "ai_videos").mkdir()
+    app = make_app(RepoRoot(path=tmp_path), BoundOrigin(host="127.0.0.1", port=8766), serve_static=False)
+    headers = {"Origin": "http://127.0.0.1:8766", "Host": "127.0.0.1:8766"}
+    with TestClient(app) as client:
+        assert client.get("/api/bgms").status_code == 404
+        assert client.get("/api/episode-bgm").status_code == 404
+        for endpoint in ("/api/bgms/generate", "/api/episode-bgm/burn", "/api/mux/bgm"):
+            assert client.post(endpoint, headers=headers).status_code == 404
+    assert not (tmp_path / "ai_videos/_bgm").exists()
+
+
 def test_get_tree_returns_expected_sections() -> None:
     """Post follow-up 113: AI Videos + Downloaded Novels + My Novel live, in
     order. (Follow-up 003: AI Videos + Research. Follow-up 096: Research

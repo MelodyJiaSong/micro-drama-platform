@@ -26,6 +26,7 @@ from typing import Any
 
 from libs.common import drama_layout
 from libs.common.exposed_tree import ExposedTree
+from libs.common.production_key import shot_identity
 from libs.common.render_select import newest_render
 from libs.common.safe_resolve import SafeResolver
 from libs.domain.errors.subtitle__error import (
@@ -114,21 +115,21 @@ class SubtitleBatchBurner:
 
     def scaffold_episode(self, rel: str) -> EpisodeScaffoldResult:
         episode_dir = self._episode_dir(rel)
-        shot_dirs = self._shot_dirs(episode_dir / _SHOTS_DIR_NAME)
+        shot_dirs = drama_layout.episode_shot_dirs(episode_dir)
         if not shot_dirs:
             raise NoBatchShotsError("episode has no shot folders")
         outcomes: list[BatchShotOutcome] = []
         for shot_dir in shot_dirs:
             if not self._burner.spoken_lines(shot_dir):
-                outcomes.append(self._skip("", shot_dir.name, "no_dialogue"))
+                outcomes.append(self._skip("", shot_identity(shot_dir), "no_dialogue"))
                 continue
             try:
                 r = self._burner.scaffold_folder(shot_dir)
             except Exception as exc:  # defensive: scaffold is filesystem I/O
-                outcomes.append(self._fail("", shot_dir.name, _kind(exc)))
+                outcomes.append(self._fail("", shot_identity(shot_dir), _kind(exc)))
                 continue
             outcomes.append(
-                BatchShotOutcome("", shot_dir.name, True, r.md_rel, r.cue_count, None)
+                BatchShotOutcome("", shot_identity(shot_dir), True, r.md_rel, r.cue_count, None)
             )
         return EpisodeScaffoldResult(self._rel(episode_dir), tuple(outcomes))
 
@@ -136,7 +137,7 @@ class SubtitleBatchBurner:
         if lang not in VALID_LANGS:
             raise InvalidSubtitleLangError(lang)
         episode_dir = self._episode_dir(rel)
-        shot_dirs = self._shot_dirs(episode_dir / _SHOTS_DIR_NAME)
+        shot_dirs = drama_layout.episode_shot_dirs(episode_dir)
         if not shot_dirs:
             raise NoBatchShotsError("episode has no shot folders")
         outcomes = [
@@ -155,7 +156,7 @@ class SubtitleBatchBurner:
         outcomes: list[BatchShotOutcome] = []
         for episode_dir in episode_dirs:
             slug = drama_layout.shot_tree_slug(episode_dir, drama_root)
-            for shot_dir in self._shot_dirs(episode_dir / _SHOTS_DIR_NAME):
+            for shot_dir in drama_layout.episode_shot_dirs(episode_dir):
                 outcomes.append(self._burn_one(slug, shot_dir, lang))
         if not outcomes:
             raise NoBatchShotsError("drama has no shot folders")
@@ -164,16 +165,16 @@ class SubtitleBatchBurner:
     def _burn_one(self, ep_slug: str, shot_dir: Path, lang: str) -> BatchShotOutcome:
         render = newest_render(shot_dir)
         if render is None:
-            return self._skip(ep_slug, shot_dir.name, "no_render_mp4")
+            return self._skip(ep_slug, shot_identity(shot_dir), "no_render_mp4")
         try:
             r = self._burner.burn(self._rel(render), lang)
         except SubtitleFileMissingError:
-            return self._skip(ep_slug, shot_dir.name, "no_subtitles_md")
+            return self._skip(ep_slug, shot_identity(shot_dir), "no_subtitles_md")
         except EmptySubtitlesError:
-            return self._skip(ep_slug, shot_dir.name, "empty_subtitles")
+            return self._skip(ep_slug, shot_identity(shot_dir), "empty_subtitles")
         except Exception as exc:
-            return self._fail(ep_slug, shot_dir.name, _kind(exc))
-        return BatchShotOutcome(ep_slug, shot_dir.name, True, r.out_rel, r.cue_count, None)
+            return self._fail(ep_slug, shot_identity(shot_dir), _kind(exc))
+        return BatchShotOutcome(ep_slug, shot_identity(shot_dir), True, r.out_rel, r.cue_count, None)
 
     @staticmethod
     def _skip(ep: str, shot: str, reason: str) -> BatchShotOutcome:

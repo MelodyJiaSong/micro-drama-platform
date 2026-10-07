@@ -12,8 +12,10 @@ class RepoRoot:
     def find(cls, start: Path | None = None) -> "RepoRoot":
         cur = (start or Path.cwd()).resolve()
         for candidate in [cur, *cur.parents]:
-            if (candidate / "CLAUDE.md").is_file() and (candidate / ".claude").is_dir():
+            if ((candidate / "AGENTS.md").is_file() and (candidate / ".agents").is_dir()) or (
+                (candidate / "CLAUDE.md").is_file() and (candidate / ".claude").is_dir()
+            ):
                 return cls(path=candidate)
         raise RuntimeError(
-            f"repo root (CLAUDE.md + .claude/) not found walking up from {cur}"
+            f"repo root (AGENTS.md + .agents/ or legacy CLAUDE.md + .claude/) not found walking up from {cur}"
         )

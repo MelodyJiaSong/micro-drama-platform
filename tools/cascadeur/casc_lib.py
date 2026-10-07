@@ -27,7 +27,7 @@
 #   * AutoPosing / AutoPhysics 等菜单工具没有直接的 API 函数，但官方给了 action id 表（2026-09-06 查 help/category/301）：
 #     app.get_action_manager().call_action("AutoPosingTool.AutoPosing" | "AutoPosingTool.Update" | "AutoPhysicsTool.Snap to Auto Physics"
 #     | "View.MotionGeneration_Run" | "View.Animation unbaking" | "View.Retargeting_Copy" | "Timeline.Bezier.Bezier on current frame" …)。
-#     需要先有正确的选区/时间轴区间（与 GUI 一致）；本仓库尚未实测；官方说明 call_action 以后会逐步换成正式 API。全表见 .claude/skills/ai_videos__cascadeur动作/SKILL.md。
+#     需要先有正确的选区/时间轴区间（与 GUI 一致）；本仓库尚未实测；官方说明 call_action 以后会逐步换成正式 API。全表见 .agents/skills/ai-videos-cascadeur/SKILL.md。
 import csc, json, math, os, time
 import numpy as np
 

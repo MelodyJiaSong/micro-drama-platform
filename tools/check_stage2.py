@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """阶段 2 世界观人设的契约闸门（`ai_videos__格式契约` K7/K8/K9/K25 + rule 12.11 的可执行版）。
 
-契约出处：`.claude/skills/ai_videos__全流程编排/playbooks/ai_videos__stage2_世界观人设.md` §5 ·
-`.claude/agent_refs/project/ai_video.md` rule 1b / 12.1 / 12.9 / 12.11。
+契约出处：`.agents/skills/ai-videos-pipeline/playbooks/ai_videos__stage2_世界观人设.md` §5 ·
+`.agents/references/project/ai_video.md` rule 1b / 12.1 / 12.9 / 12.11。
 
 检查项
 ------
@@ -391,6 +391,8 @@ def main() -> int:
     issues.extend(check_casting(args.drama, cards))
 
     sdir = os.path.join(args.drama, "2_世界观人设", "scenes")
+    if os.path.isdir(os.path.join(args.drama, "2_世界观人设", "background")):
+        sdir = os.path.join(args.drama, "2_世界观人设", "background")
     scenes = 0
     if os.path.isdir(sdir):
         tokens: dict[str, str] = {}

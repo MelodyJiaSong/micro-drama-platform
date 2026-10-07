@@ -1,5 +1,8 @@
 export type TreeNodeType =
   | "section"
+  | "workflow"
+  | "story_runs"
+  | "story_input"
   /** A series folder (`ai_videos/{s}/series.json`) — its children are dramas. */
   | "series"
   | "directory"
@@ -24,12 +27,25 @@ export interface TreeNode {
   name: string;
   path: string;
   children?: TreeNode[];
+  /** Client-side navigation destination; filesystem nodes omit this. */
+  navigation_href?: string;
   /** Only populated on `ai_videos/{name}/` directory nodes. */
   project_meta?: ProjectMeta | null;
   /** True on a drama root. A drama is `ai_videos/{drama}` when flat and
    *  `ai_videos/{series}/{drama}` inside a series, so path depth is NOT a
    *  reliable test — always use this flag. */
   is_drama?: boolean;
+  workflow?: "three-module-v1";
+  drama_path?: string;
+  workflow_module?: "story" | "filming" | "prompts";
+  workflow_episode?: string;
+  episode_path?: string;
+  story_run_id?: string;
+  story_run_view?: "output" | "state" | "input" | "process" | "item";
+  story_run_item_id?: string;
+  story_input_view?: "input" | "rules";
+  lifetime?: "persistent" | "transient" | "workspace";
+  whole_file_editable?: boolean;
   /** True when this leaf is a cross-episode shortcut (`*.link.json`). `path`
    *  already points at the real asset, so preview/download need no special
    *  case — only the label does. */

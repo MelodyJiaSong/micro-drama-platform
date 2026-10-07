@@ -1,4 +1,4 @@
-"""AI 短剧 previz 的共用人形 proxy（`agent_refs/project/ai_video.md` rule 12.16 §3）。
+"""AI 短剧 previz 的共用人形 proxy（`.agents/references/project/ai_video.md` rule 12.16 §3）。
 
 **为什么是共用模块而不是各镜一份。** shot12 与 shot13 的 previz 原本各自持有一份
 一模一样的人形代码。shot12 的人形按用户反馈细化了三轮（手建到三节指骨、四肢改收分

@@ -12,7 +12,7 @@
 链接只指向**已经存在**的文件（还没出图 / 出模的就不建那一条），重跑即补；块改了资产或删了，旧链接目录一并清掉。
 
 用法（仓库根目录）：
-    python tools/link_bg_assets.py [scenes 根 | 区目录 | bg 目录]      # 默认 shengji_zhilu 全部 scenes
+    python tools/link_bg_assets.py [background 根 | 区目录 | bg 目录]      # 默认 shengji_zhilu 全部 background
 """
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 from tools import props_lib  # noqa: E402
-DEFAULT = REPO / "ai_videos" / "shengji_zhilu" / "2_世界观人设" / "scenes"
+DEFAULT = REPO / "ai_videos" / "shengji_zhilu" / "2_世界观人设" / "background"
 LINKS_DIR = "assets"
 BAD = re.compile(r'[\\/:*?"<>|_\s]+')
 

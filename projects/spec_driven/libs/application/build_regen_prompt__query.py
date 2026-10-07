@@ -14,18 +14,20 @@ HARD_LIMIT_BYTES: int = 1_048_576
 _AUTONOMOUS_IMPERATIVE: str = """\
 This run is **AUTONOMOUS**. The following imperative is in force for the duration of this turn:
 
-- Do NOT call `AskUserQuestion`. Not for clarification, not for "should I do A or B," not for confirmation. The user is not at the keyboard.
+- Do NOT ask the user or call any user-input tool. Not for clarification, not for "should I do A or B," not for confirmation. The user is not at the keyboard.
 - For anything ambiguous, use best judgment AND record the choice inline in the produced artifact (e.g., `*(judgment call — chose X because Y)*`) so the user has a self-explaining trail.
 - Produce every requested artifact in the same turn before stopping. Do not pause for confirmation between stages. Iteration bounds (3 revision rounds per unit, 30-minute wall clock) still apply — when a bound trips, halt cleanly with a `pipeline.halted` event and a summary of what was done and why you stopped.
-- Every other rule still applies (state surfaces, agent-spawning contract, follow-up procedure for new instructions arriving mid-run). Autonomous mode lifts only the question-asking restriction.
+- Every other rule still applies (state surfaces, agent-spawning contract, follow-up procedure for new instructions arriving mid-run). Autonomous mode removes intermediate questioning; it does not supply required human approvals.
 """
 
 _READ_ZERO_CONTRACT: str = """\
 A regeneration deletes prior outputs first and rewrites from scratch — the regenerated stage's prior outputs MUST be treated as deleted before the new generation runs. Surgical preservation of prior text is **forbidden** during regen — it makes the output a function of (input ∧ all previous runs) and defeats the workflow.
 
+Read `AGENTS.md` and the tool mapping in `CONVENTIONS.md` before execution. This six-stage read-zero contract applies to development tasks only. AI-video requests use `ai_videos__全流程编排` and its stage playbook, preserve media-bearing shot trees, and do not execute the software deletion table.
+
 The regenerated stage reads ONLY:
 1. The current stage's *input* artifacts (canonical outputs of prior stages).
-2. `CLAUDE.md` and shared `.claude/` context (skill, playbooks, refs).
+2. `AGENTS.md` + `CONVENTIONS.md` and shared `.agents/` context (skill, playbooks, refs).
 3. The user-input layer (`raw_prompt.md` + every `user_input/follow_ups/*.md`).
 4. The current stage's `<stage>/promoted.md` sidecar, if present.
 
@@ -34,11 +36,11 @@ Per-stage delete-then-regenerate contract:
 | Stage | Delete first | Preserve | Inputs |
 |---|---|---|---|
 | 1 — Intake | (none — `revised_prompt.md` rewritten in place from raw + follow-ups) | n/a | `user_input/raw_prompt.md`, `user_input/follow_ups/*.md` |
-| 2 — Interview | `interview/qa.md` | `interview/promoted.md` | `user_input/revised_prompt.md`, `interview/promoted.md`, `CLAUDE.md`, `.claude/skills/agent_team/{SKILL.md, playbooks/interview.md}`, `.claude/agent_refs/{interview,project}/*.md` |
-| 3 — Research | `findings/*` except `promoted.md` | `findings/promoted.md` | `revised_prompt.md`, `interview/qa.md`, `findings/promoted.md`, `CLAUDE.md`, `.claude/skills/agent_team/{SKILL.md, playbooks/research.md}`, `.claude/agent_refs/{research,project}/*.md` |
+| 2 — Interview | `interview/qa.md` | `interview/promoted.md` | `user_input/revised_prompt.md`, `interview/promoted.md`, `AGENTS.md` + `CONVENTIONS.md`, `.agents/skills/agent-team/{SKILL.md, playbooks/interview.md}`, `.agents/references/{interview,project}/*.md` |
+| 3 — Research | `findings/*` except `promoted.md` | `findings/promoted.md` | `revised_prompt.md`, `interview/qa.md`, `findings/promoted.md`, `AGENTS.md` + `CONVENTIONS.md`, `.agents/skills/agent-team/{SKILL.md, playbooks/research.md}`, `.agents/references/{research,project}/*.md` |
 | 4 — Spec | `final_specs/spec.md` | `final_specs/promoted.md` | `revised_prompt.md`, `interview/qa.md`, `findings/dossier.md` (+ angles if useful), `final_specs/promoted.md` |
-| 5 — Validation | every file under `validation/` except `promoted.md` | `validation/promoted.md` | `final_specs/spec.md`, `validation/promoted.md`, `CLAUDE.md`, `.claude/skills/agent_team/{SKILL.md, playbooks/validation.md}`, `.claude/agent_refs/{validation,project}/*.md` |
-| 6 — Execution | the entire `projects/{name}/` or `ai_videos/{name}/` folder | (no v1 promoted.md in stage 6) | `final_specs/spec.md`, every file under `validation/`, `CLAUDE.md`, `.claude/agent_refs/project/*.md` |
+| 5 — Validation | every file under `validation/` except `promoted.md` | `validation/promoted.md` | `final_specs/spec.md`, `validation/promoted.md`, `AGENTS.md` + `CONVENTIONS.md`, `.agents/skills/agent-team/{SKILL.md, playbooks/validation.md}`, `.agents/references/{validation,project}/*.md` |
+| 6 — Execution | the explicitly selected development outputs under `projects/{name}/` (respect user edits) | (no v1 promoted.md in stage 6) | `final_specs/spec.md`, every file under `validation/`, `AGENTS.md` + `CONVENTIONS.md`, `.agents/references/project/*.md` |
 
 Operational notes:
 

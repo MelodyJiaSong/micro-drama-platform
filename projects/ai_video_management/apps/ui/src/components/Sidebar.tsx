@@ -1,8 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { deleteActor, importFromDownloads } from "../api";
 import { ApiError, type TreeNode, type TreeNodeType } from "../types";
 import { ResearchNav } from "./ResearchNav";
+import { storyRunDocument, storyRunUrl } from "../lib/storyRunRoutes";
+import { workflowNavigation } from "../lib/workflowData";
+import { matchesNavigation } from "../lib/globalWorkflow";
+import { useGlobalWorkflow } from "./GlobalWorkflowContext";
 
 const ACTOR_ID_RE = /^actor_\d{4,}$/;
 
@@ -13,10 +17,29 @@ const FILE_LEAF_TYPES: ReadonlySet<TreeNodeType> = new Set<TreeNodeType>([
 ]);
 /** Plus the folder-collapsing leaves, which carry children but never expand. */
 const LEAF_TYPES: ReadonlySet<TreeNodeType> = new Set<TreeNodeType>([
-  ...FILE_LEAF_TYPES, "actor", "voice",
+  ...FILE_LEAF_TYPES, "actor", "voice", "workflow", "story_runs", "story_input",
 ]);
 const isFileLeaf = (type: TreeNodeType): boolean => FILE_LEAF_TYPES.has(type);
 const isLeafType = (type: TreeNodeType): boolean => LEAF_TYPES.has(type);
+const workflowUrl = (node: TreeNode): string => `/drama?drama=${encodeURIComponent(node.drama_path!)}&module=${node.workflow_module}&episode=${node.workflow_episode}`;
+const storyRunsUrl = (node: TreeNode): string => {
+  return storyRunUrl(node.story_run_view || "output", node.episode_path!, node.story_run_id, undefined, node.story_run_item_id);
+};
+const storyInputUrl = (node: TreeNode): string => {
+  const params = new URLSearchParams({ episode_path: node.episode_path! });
+  if (node.story_input_view) params.set("view", node.story_input_view);
+  return `/story-input?${params}`;
+};
+const matchesStoryRoute = (node: TreeNode, pathname: string, params: URLSearchParams): boolean => {
+  if (params.get("episode_path") !== node.episode_path) return false;
+  if (node.type === "story_input") return pathname === "/story-input" && (!node.story_input_view || (params.get("view") || "input") === node.story_input_view);
+  if (node.type !== "story_runs") return false;
+  if (node.is_link && !node.story_run_item_id) return false;
+  const view = storyRunDocument(pathname);
+  if (!view) return false;
+  return (!node.story_run_id || params.get("run_id") === node.story_run_id) && (!node.story_run_view || view === node.story_run_view)
+    && (!node.story_run_item_id || params.get("item_id") === node.story_run_item_id);
+};
 
 export interface SidebarProps {
   tree: TreeNode | null;
@@ -30,6 +53,10 @@ interface FlatNode { node: TreeNode; depth: number; parentPath: string | null; }
 
 export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }: SidebarProps): JSX.Element {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { catalog, error: globalError } = useGlobalWorkflow();
+  const workflowTree = useMemo(() => workflowNavigation(catalog), [catalog]);
+  const selection = new URLSearchParams(location.search);
   const treeRef = useRef<HTMLDivElement>(null);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [focusedPath, setFocusedPath] = useState<string | null>(null);
@@ -95,16 +122,31 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
   );
 
   useEffect(() => {
-    if (!tree) return;
     const accum: Record<string, boolean> = {};
     const walk = (node: TreeNode): void => {
       if (isLeafType(node.type)) return;
       if (node.path) accum[node.path] = false;
       for (const c of node.children ?? []) walk(c);
     };
-    walk(tree);
+    walk(workflowTree);
+    if (tree) walk(tree);
     setExpanded((prev) => ({ ...accum, ...prev }));
-  }, [tree]);
+  }, [tree, workflowTree]);
+
+  useEffect(() => {
+    const opened: Record<string, boolean> = {};
+    const walk = (node: TreeNode, ancestors: string[]): boolean => {
+      if (matchesNavigation(node.navigation_href, location.pathname, location.search)) {
+        for (const path of ancestors) opened[path] = true;
+        if (node.children?.length) opened[node.path] = true;
+        return true;
+      }
+      return (node.children ?? []).some(child => walk(child, [...ancestors, node.path]));
+    };
+    walk(workflowTree, []);
+    if (tree) walk(tree, []);
+    setExpanded(prev => ({ ...prev, ...opened }));
+  }, [location.pathname, location.search, workflowTree, tree]);
 
   useEffect(() => {
     if (!currentPath) return;
@@ -117,6 +159,21 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
     }
     setExpanded((prev) => ({ ...prev, ...accum }));
   }, [currentPath]);
+
+  useEffect(() => {
+    if (!tree || (!storyRunDocument(location.pathname) && location.pathname !== "/story-input")) return;
+    const params = new URLSearchParams(location.search);
+    const walk = (node: TreeNode, ancestors: string[]): string[] | null => {
+      if (matchesStoryRoute(node, location.pathname, params)) return ancestors;
+      for (const child of node.children ?? []) {
+        const found = walk(child, [...ancestors, node.path]);
+        if (found) return found;
+      }
+      return null;
+    };
+    const ancestors = walk(tree, []);
+    if (ancestors) setExpanded(prev => ({ ...prev, ...Object.fromEntries(ancestors.filter(Boolean).map(path => [path, true])) }));
+  }, [tree, location.pathname, location.search]);
 
   useEffect(() => {
     const handler = (event: KeyboardEvent): void => {
@@ -137,38 +194,39 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
   }, []);
 
   const flat = useMemo<FlatNode[]>(() => {
-    if (!tree) return [];
     const out: FlatNode[] = [];
     const walk = (node: TreeNode, depth: number, parentPath: string | null): void => {
       out.push({ node, depth, parentPath });
-      const isOpen = depth === 0 ? true : expanded[node.path] === true;
+      const isOpen = (depth === 0 && !node.navigation_href) || expanded[node.path] === true;
       if (isOpen && node.children && node.children.length) {
         for (const child of node.children) walk(child, depth + 1, node.path);
       }
     };
-    if (tree.type === "section" && (tree.path === "" || !tree.path)) {
+    walk(workflowTree, 0, null);
+    if (tree?.type === "section" && (tree.path === "" || !tree.path)) {
       for (const top of tree.children ?? []) walk(top, 0, null);
-    } else {
+    } else if (tree) {
       walk(tree, 0, null);
     }
     return out;
-  }, [tree, expanded]);
+  }, [tree, expanded, workflowTree]);
 
   const toggle = useCallback((path: string) => {
     setExpanded((prev) => ({ ...prev, [path]: !prev[path] }));
   }, []);
 
   const onCollapseAll = useCallback(() => {
-    if (!tree) return;
     const accum: Record<string, boolean> = {};
     const walk = (node: TreeNode): void => {
       if (isLeafType(node.type)) return;
       if (node.path) accum[node.path] = false;
       for (const c of node.children ?? []) walk(c);
     };
-    walk(tree);
+    walk(workflowTree);
+    if (tree) walk(tree);
     setExpanded(accum);
-  }, [tree]);
+    setFocusedPath(null);
+  }, [tree, workflowTree]);
 
   const onItemKeyDown = (event: React.KeyboardEvent<HTMLDivElement>, item: FlatNode): void => {
     const items = flat;
@@ -192,46 +250,22 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
       else if (item.parentPath) focusByPath(treeRef.current, item.parentPath, setFocusedPath);
     } else if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      if (isFileLeaf(item.node.type)) onSelect(item.node.path);
+      if (item.node.navigation_href) {
+        navigate(item.node.navigation_href);
+        if (!isLeaf) toggle(item.node.path);
+      }
+      else if (item.node.type === "workflow") navigate(workflowUrl(item.node));
+      else if (item.node.type === "story_runs") navigate(storyRunsUrl(item.node));
+      else if (item.node.type === "story_input") navigate(storyInputUrl(item.node));
+      else if (isFileLeaf(item.node.type)) onSelect(item.node.path);
       else toggle(item.node.path);
     }
   };
 
-  if (loadError) {
-    return (
-      <nav className="sidebar" aria-label="File tree">
-        <div role="alert" className="sidebar-error">Failed to load tree: {loadError}</div>
-      </nav>
-    );
-  }
-  if (!tree) {
-    return (
-      <nav className="sidebar" aria-label="File tree">
-        <div className="sidebar-loading">Loading…</div>
-      </nav>
-    );
-  }
-
-  return (
-    <nav className="sidebar" aria-label="File tree">
+  const globalNavigation = (
       <div className="sidebar-toolbar">
-        <button
-          type="button"
-          className="sidebar-nav-link"
-          aria-label="打开工具"
-          title="工具 · 给视频加 BGM"
-          onClick={() => navigate("/tools")}
-        >
-          🧰 工具
-        </button>
-        <button
-          type="button"
-          className="sidebar-nav-link"
-          aria-label="查看 AI 短剧端到端工作流"
-          title="AI 短剧端到端工作流 · 六阶段 / QC 关卡 / skill 调用"
-          onClick={() => navigate("/workflow")}
-        >
-          🗺 工作流
+        <button type="button" className="sidebar-nav-link" aria-label="查看外部服务请求日志" onClick={() => navigate("/request-logs")}>
+          📋 请求日志
         </button>
         <button
           type="button"
@@ -252,6 +286,12 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
           ⊟
         </button>
       </div>
+  );
+
+  return (
+    <nav className="sidebar" aria-label="File tree">
+      {globalNavigation}
+      {globalError ? <p role="status" className="sidebar-toast sidebar-toast-err">全局目录加载失败，可在工作流页刷新。</p> : null}
       {renameToast ? (
         <div
           role="status"
@@ -273,8 +313,10 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
         {flat.map((item) => {
           const isLeaf = isLeafType(item.node.type);
           const hasChildren = (item.node.children ?? []).length > 0;
-          const isOpen = expanded[item.node.path] === true || item.depth === 0;
-          const isActive = currentPath === item.node.path;
+          const isOpen = expanded[item.node.path] === true || (item.depth === 0 && !item.node.navigation_href);
+          const isActive = matchesNavigation(item.node.navigation_href, location.pathname, location.search) || (Boolean(currentPath) && currentPath === item.node.path) || matchesStoryRoute(item.node, location.pathname, selection) || (item.node.type === "workflow" && location.pathname === "/drama"
+            && selection.get("drama") === item.node.drama_path && (selection.get("module") || "story") === item.node.workflow_module
+            && (selection.get("episode") || "ep01") === item.node.workflow_episode && !selection.get("scene") && !selection.get("shot"));
           const isFocused = focusedPath === item.node.path;
           const subType = item.node.project_meta?.sub_type;
           const dramaPathParts = item.node.path ? item.node.path.split("/") : [];
@@ -283,7 +325,6 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
           // backend flags it so the sidebar never has to guess from depth.
           const isDrama = item.node.is_drama === true;
           const isActorsRoot = isAiVideoChild && dramaPathParts[1] === "_actors";
-          const isBgmRoot = isAiVideoChild && dramaPathParts[1] === "_bgm";
           const isPerformancesRoot = isAiVideoChild && dramaPathParts[1] === "_performances";
           const isDeletedRoot = isAiVideoChild && dramaPathParts[1] === "_deleted";
           const isResearchRoot = isAiVideoChild && dramaPathParts[1] === "_research";
@@ -314,14 +355,21 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
               onKeyDown={(e) => onItemKeyDown(e, item)}
               onClick={(e) => {
                 e.stopPropagation();
+                if (item.node.navigation_href) {
+                  navigate(item.node.navigation_href);
+                  if (hasChildren) toggle(item.node.path);
+                  return;
+                }
+                if (item.node.type === "workflow") { navigate(workflowUrl(item.node)); return; }
+                if (item.node.type === "story_runs") { navigate(storyRunsUrl(item.node)); return; }
+                if (item.node.type === "story_input") { navigate(storyInputUrl(item.node)); return; }
                 if (isLeaf) { onSelect(item.node.path); return; }
                 // A drama node does double duty: open its main page on the right
                 // AND toggle the dropdown (per follow-up — "不仅是 dropdown"). The
-                // shared library folders (_actors / _bgm) likewise open their
+                // shared library folders (_actors) likewise open their
                 // own library main page on click.
                 if (isDrama) navigate(`/drama?drama=${encodeURIComponent(item.node.path)}`);
                 else if (isActorsRoot) navigate("/actors");
-                else if (isBgmRoot) navigate("/bgm");
                 else if (isResearchRoot) navigate("/research");
                 if (hasChildren) toggle(item.node.path);
               }}
@@ -331,7 +379,7 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
                   onClick={(e) => { e.stopPropagation(); toggle(item.node.path); }}>
                   {isOpen ? "▾" : "▸"}
                 </button>
-              ) : null}
+              ) : item.node.navigation_href ? <span className="tree-disclosure" aria-hidden="true" /> : null}
               {item.node.is_link ? (
                 <span aria-hidden="true" className="tree-icon" title={item.node.link_note ?? "跨片复用的快捷链接"}>🔗</span>
               ) : null}
@@ -342,9 +390,9 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
               {item.node.type === "model" ? <span aria-hidden="true" className="tree-icon" title="3D 白模 — 点开可在浏览器里转着看">🧊</span> : null}
               {item.node.type === "actor" ? <span aria-hidden="true" className="tree-icon">🎭</span> : null}
               {isActorsRoot ? <span aria-hidden="true" className="tree-icon">🎭</span> : null}
-              {isBgmRoot ? <span aria-hidden="true" className="tree-icon">🎵</span> : null}
               {isPerformancesRoot ? <span aria-hidden="true" className="tree-icon">🎬</span> : null}
               <span className="tree-label">{item.node.display_name || item.node.name}</span>
+              {item.node.lifetime === "persistent" && ["0_research", "1_资产库"].includes(item.node.display_name || item.node.name) ? <small className="tree-lifetime-badge">Persistent</small> : null}
               {subType ? (
                 <span className={`subtype-badge subtype-${subType}`}
                   aria-label={`项目类型: ${subType === "novel" ? "剧" : "短"}`}>
@@ -402,6 +450,8 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
           );
         })}
       </div>
+      {loadError ? <div role="alert" className="sidebar-error">Failed to load tree: {loadError}</div>
+        : !tree ? <div className="sidebar-loading">Loading…</div> : null}
     </nav>
   );
 }

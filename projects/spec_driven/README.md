@@ -1,10 +1,10 @@
 # spec_driven
 
-`spec_driven` is an interactive viewer/editor SPA for the artifacts produced by the spec-driven workflow (`specs/{task_type}/{task_name}/`) plus the cross-cutting context the workflow reads (`CLAUDE.md`, `.claude/skills/**/*.md`, `.claude/agent_refs/**/*.md`). Browse the recursive sidebar, edit whole files or per-Q/A blocks, pin atomic items so they survive regeneration, and emit copy-paste regen prompts (INTERACTIVE or AUTONOMOUS) that drive any subset of the six pipeline stages back through Claude Code.
+`spec_driven` is an interactive viewer/editor SPA for the artifacts produced by the spec-driven workflow (`specs/{task_type}/{task_name}/`) plus the cross-cutting context the workflow reads (`AGENTS.md`, `CONVENTIONS.md`, `CLAUDE.md`, canonical `.agents/skills/**/*.md` and `.agents/references/**/*.md`, generated `.claude/skills/*/SKILL.md` adapters). Browse the recursive sidebar, edit whole files or per-Q/A blocks, pin atomic items so they survive regeneration, and emit copy-paste regen prompts (INTERACTIVE or AUTONOMOUS) that drive any subset of the six pipeline stages back through Claude Code or Codex. AI dramas use their dedicated workflow; software read-zero deletion does not apply to media-bearing drama trees.
 
 ## Layout (follow-up 014 — 2026-05-13)
 
-This solution follows the `apps/+libs/` layout from `.claude/agent_refs/project/development.md` §1–6:
+This solution follows the `apps/+libs/` layout from `.agents/references/project/development.md` §1–6:
 
 ```
 spec_driven/
@@ -89,7 +89,7 @@ Open `http://127.0.0.1:5173/`. The Vite proxy forwards `/api/*` to the backend; 
 - **Backend.** FastAPI on `127.0.0.1:8765` (IPv4 loopback). Strongly typed Python in `backend/libs/` (`@dataclass(frozen=True)` containers, `str | None` syntax). Single-process mode also serves `apps/api/static/`.
 - **Frontend.** React + Vite (TypeScript). Recursive sidebar walks `node.children` uniformly; render-mode dispatch chooses `MarkdownView` / `QaView` / `JsonlView` / `CodeView` / `ImagePlaceholder`; every parse-on-render component is wrapped in a real React Error Boundary class.
 - **Mutation surface.** `PUT /api/file`, `POST /api/regen-prompt`, `POST /api/promote`, `DELETE /api/promote`, `DELETE /api/project`, plus the Prompt Lab CRUD (`POST` / `DELETE /api/prompt-lab/file`). The generic `DELETE /api/file` stays **405** — file deletion is exposed only for the `prompt_lab/` root.
-- **Regen prompts.** Assembled server-side (`backend/libs/regen_prompt.py`); inline `revised_prompt.md` + every `user_input/follow_ups/*.md` + per-stage pinned items + the read-zero contract verbatim from `CLAUDE.md`. Copy-paste into Claude Code CLI.
+- **Regen prompts.** Assembled server-side (`libs/application/build_regen_prompt__query.py`); inline `revised_prompt.md` + every `user_input/follow_ups/*.md` + per-stage pinned items + the read-zero contract aligned with `CONVENTIONS.md`. Copy-paste into Claude Code or Codex; the prompt uses shared entry paths and runtime capabilities.
 - **Prompt Lab (follow-ups 016–020).** A top-level section at `/prompt-lab` (reachable from the landing page) surfaces the repo-root `prompt_lab/` library as a left-nav (categories → tasks) + main detail. Each task is its own workspace folder `prompt_lab/{category}/{task}/prompt.md`. `GET /api/prompt-lab` returns the parsed overview (title + `Stack/Est/Output` + `Source`/prior-art link + `Expected result` link + prompt + `run_state`); the detail renders the file inline with the copy-paste prompt block **highlighted**, a **Copy** button, and **click-to-edit** (inline editor, no navigation). CRUD: `POST` / `DELETE /api/prompt-lab/file` + `GET/PUT /api/file` on the `prompt_lab/` sandbox root. **Autonomous execution:** ▶ Execute (`POST /api/prompt-lab/execute`) spawns a headless `claude --print --permission-mode bypassPermissions` session in the task's `workspace/` under a `# EXECUTION MODE: AUTONOMOUS` header — it self-answers every question, logs decisions to `decisions.jsonl`, and `GET /api/prompt-lab/run` feeds the UI portal (status + decisions + live output + generated files); `POST /api/prompt-lab/stop` cancels.
 
 ## Security model
@@ -103,4 +103,4 @@ Open `http://127.0.0.1:5173/`. The Vite proxy forwards `/api/*` to the backend; 
 
 ## Light-theme app chrome
 
-App chrome (body, sidebars, toolbars, panels, buttons, form controls) is light-only per `.claude/agent_refs/project/development.md` — `:root { color-scheme: light; }`, no `@media (prefers-color-scheme: dark)` overrides. Dark `<pre>` palettes inside `.regen-prompt-block`, `.markdown-view pre`, and `.code-view pre` are intentional carve-outs (validated WCAG AA).
+App chrome (body, sidebars, toolbars, panels, buttons, form controls) is light-only per `.agents/references/project/development.md` — `:root { color-scheme: light; }`, no `@media (prefers-color-scheme: dark)` overrides. Dark `<pre>` palettes inside `.regen-prompt-block`, `.markdown-view pre`, and `.code-view pre` are intentional carve-outs (validated WCAG AA).

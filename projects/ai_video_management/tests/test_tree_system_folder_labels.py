@@ -15,12 +15,10 @@ def _ai_videos_children(root: Path) -> dict[str, dict]:
     return {c["name"]: c for c in section["children"]}
 
 
-def test_actors_and_bgm_have_chinese_library_labels(tmp_path: Path) -> None:
+def test_actors_have_chinese_library_labels(tmp_path: Path) -> None:
     (tmp_path / "ai_videos" / "_actors" / "actor_0001").mkdir(parents=True)
-    (tmp_path / "ai_videos" / "_bgm" / "warm").mkdir(parents=True)
     by_name = _ai_videos_children(tmp_path)
     assert by_name["_actors"]["display_name"] == "演员库"
-    assert by_name["_bgm"]["display_name"] == "背景音乐库"
 
 
 def test_drama_folder_label_is_untouched(tmp_path: Path) -> None:

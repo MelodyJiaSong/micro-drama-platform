@@ -1,6 +1,6 @@
 """Inject / refresh the `角色造型` block in every character prompt.
 
-Per agent_refs/project/ai_video.md rule 12.5-A v3 (2026-05-25): EVERY
+Per .agents/references/project/ai_video.md rule 12.5-A v3 (2026-05-25): EVERY
 character `c{N}_{中文名}/c{N}_{中文名}.md` must carry a `角色造型` block in
 its first turntable prompt code block, with the `- 发型 ...` row bearing an
 explicit inline annotation forbidding the model from copying the actor

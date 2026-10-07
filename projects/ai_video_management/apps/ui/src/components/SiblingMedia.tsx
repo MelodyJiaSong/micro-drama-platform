@@ -63,7 +63,7 @@ export function isCharacterVideoPath(path: string): boolean {
  * (the take sits in the shot folder or its `renders/` subfolder). Gates the
  * 📝 生成台词 / 💬 烧录台词 buttons so they only appear on shot videos, where a
  * sibling `subtitles.md` dialogue-timeline makes sense. */
-const SHOT_VIDEO_PATH_RE = /\/shots\/shot\d+\//i;
+const SHOT_VIDEO_PATH_RE = /\/shots\/(?:shot\d+|st[1-9]\d*)\//i;
 
 export function isShotVideoPath(path: string): boolean {
   return SHOT_VIDEO_PATH_RE.test(path);
@@ -75,7 +75,7 @@ export function isShotVideoPath(path: string): boolean {
 const SCENE_VIDEO_PATH_RE = /\/scenes\//i;
 
 export function isSceneVideoPath(path: string): boolean {
-  return SCENE_VIDEO_PATH_RE.test(path);
+  return /\/background\//i.test(path) || (!/\/episodes\//i.test(path) && SCENE_VIDEO_PATH_RE.test(path));
 }
 
 export interface SiblingMediaProps {

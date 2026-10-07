@@ -10,8 +10,8 @@
     空着的槽    ← `equipment_lib.empty_clause`（不写，模型一定自动补一身甲）
     人          ← 人物卡的角色识别标签 + `views/{人物}_front|side|back.png`（第一次建立视频抽的锚点帧；旧名 views{N}.png 见 gen_char_images.anchor_frame）
 
-落盘：`characters/{人物}/{view.key}_{view.name}/` ＝ 同名 md（三个 ```text 块，首行路由键 `{key}-1_正面 / -2_侧面 / -3_背面`）
-+ `{key}-1_正面.png` 等三张图 + `gen_log.json`。
+落盘：`characters/{人物}/{view.key}_{view.name}/` ＝ 同名 md（三个 ```text 块，首行路由键 `{key}_front / _side / _back`）
++ `{key}_front.png`、`{key}_side.png`、`{key}_back.png` + `gen_log.json`。
 星形派生：正面挂锚点正面 + 本套最多 3 件装备的正面图；侧 / 背只挂本套正面（穿着以它为准）+ 锚点的侧 / 背（只借身形轮廓）。
 引擎按 rule 4l：挂了锚点的派生图先走即梦；`--engine X` 显式指定时只用 X。
 手部装备（露指 / 半指手套等）换装图锁不住（即梦三次都画成全指）：只锁身上其它部分，手由出片时另挂的装备正面图锁
@@ -119,7 +119,7 @@ def equip_front(drama: str, k: str) -> Path:
 
 
 def own(drama: str, o: Outfit, n: str, view: str) -> Path:
-    return chars_dir(drama) / o.char / o.folder / f"{o.key}-{n}_{view}.png"
+    return chars_dir(drama) / o.char / o.folder / f"{o.key}_{ANCHOR[view]}.png"
 
 
 def label(drama: str, o: Outfit) -> str:
@@ -177,7 +177,7 @@ def prompts(drama: str, o: Outfit, with_worn: bool = True) -> dict[str, tuple[st
         if view == "背面" and any(equipment_lib.row(_root(drama), k).slot == "副手" for k in o.stage.wear):
             # 只给拿着盾的阶段加：没盾的人写了「盾」字，模型会凭空画一面盾
             txt = txt.replace("左手一侧在画面左边", "左手一侧在画面左边；左臂上的盾从背后看只露出盾的背面（背带与握把），看不见盾面", 1)
-        out[view] = (txt, [f"`{o.key}-1_正面(本套正面·穿着以此为准)=>@`", f"`{anchor(drama, o, view).stem}(锚点{view}·身形轮廓)=>@`"],
+        out[view] = (txt, [f"`{own(drama, o, '1', '正面').stem}(本套正面·穿着以此为准)=>@`", f"`{anchor(drama, o, view).stem}(锚点{view}·身形轮廓)=>@`"],
                      [own(drama, o, "1", "正面"), anchor(drama, o, view)])
     for v, (txt, _, _) in out.items():
         if len(txt) > dm.PROMPT_MAX and with_worn:
@@ -196,8 +196,8 @@ def card(drama: str, o: Outfit) -> str:
              "> 长相与声音仍以第一次建立视频（`../views/`）为准；本目录三张图只换衣服（rule 4m ⑥）。", ""]
     for n, view in VIEWS:
         txt, handles, _ = ps[view]
-        lines += [f"## {view}", "", "```text", f"{o.key}-{n}_{view}", "参考: " + "、".join(handles), txt, "```", ""]
-    lines += ["## 出图后", "", f"存 `{o.key}-1_正面.png` / `{o.key}-2_侧面.png` / `{o.key}-3_背面.png`（与本 md 同目录）。先出正面，侧 / 背挂它。", ""]
+        lines += [f"## {view}", "", "```text", own(drama, o, n, view).stem, "参考: " + "、".join(handles), txt, "```", ""]
+    lines += ["## 出图后", "", "存 " + " / ".join(f"`{own(drama, o, n, view).name}`" for n, view in VIEWS) + "（与本 md 同目录）。先出正面，侧 / 背挂它。", ""]
     return "\n".join(lines)
 
 
@@ -229,7 +229,7 @@ def _mirror(p: Path) -> Path:
 def _dreamina(text: str, refs: list[Path], out: Path) -> int:
     for attempt in range(bgi.UPLOAD_RETRIES + 1):
         try:
-            url, cost = gba._dm_submit(text, [bgi._upload_copy(r) for r in refs], RATIO, wait_s=900)
+            url, cost = gba._dm_submit(text, [bgi._upload_copy(r) for r in refs], RATIO, wait_s=900, target=out)
             part = out.with_name(out.stem + ".part.png")
             for i in range(4):        # 图已出、已扣费：下载断了只重下，不重交（实测 WinError 10054 连接被远端重置）
                 try:
@@ -252,7 +252,7 @@ def _dreamina(text: str, refs: list[Path], out: Path) -> int:
 def _eleven(text: str, refs: list[Path], out: Path) -> str:
     key = el.api_key()
     gid = el.create(key, text, model=el.DEFAULT_MODEL, quality="medium", aspect=RATIO, resolution="2K",
-                    refs=[el.inline(bgi._upload_copy(p)) for p in refs])
+                    refs=[el.inline(bgi._upload_copy(p)) for p in refs], target=out)
     part = out.with_name(out.stem + ".part.png")
     el.wait_download(key, gid, part)
     part.replace(out)
@@ -297,6 +297,9 @@ def images(drama: str, os_: list[Outfit], engine: str, force: bool) -> list[str]
                     print(f"    ! {out.name} {errs[-1]}", flush=True)
             else:
                 failed.append(out.name)
+        if all(own(drama, o, n, view).is_file() for n, view in VIEWS):
+            from tools.character_sheet import compose
+            compose(d, o.key)
     return failed
 
 

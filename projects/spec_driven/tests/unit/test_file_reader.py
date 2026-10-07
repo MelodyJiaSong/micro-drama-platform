@@ -23,6 +23,17 @@ def test_get_claude_md_happy_path(client):
     assert "mtime" in body
 
 
+@pytest.mark.parametrize("rel", [
+    "AGENTS.md", "CONVENTIONS.md", ".agents/skill-aliases.json",
+    ".agents/skills/ai-videos-pipeline/SKILL.md",
+])
+def test_reads_shared_agent_context_over_http(client, rel):
+    response = client.get("/api/file", params={"path": rel})
+    assert response.status_code == 200
+    body = response.json()
+    assert body["path"] == rel and body["bytes"] > 0
+
+
 def test_get_includes_nosniff_header(client):
     r = client.get("/api/file?path=CLAUDE.md")
     assert r.status_code == 200
@@ -150,12 +161,15 @@ def test_404_does_not_leak_realpath(client):
     assert "/etc/passwd" not in body_text
 
 
-def test_reads_under_dotclaude_subtrees(client):
-    """FR-2 — recursive `.claude/**/*.md` discovery."""
-    rel = ".claude/skills/agent_team/SKILL.md"
+@pytest.mark.parametrize("rel", [
+    ".agents/skills/agent-team/SKILL.md",
+    ".agents/references/project/ai_video.md",
+    ".agents/skills/ai-videos-pipeline/playbooks/ai_videos__stage2_世界观人设.md",
+    ".claude/skills/ai_videos__全流程编排/SKILL.md",
+])
+def test_reads_shared_sources_and_claude_adapters(client, rel):
     r = client.get(f"/api/file?path={rel}")
-    # If the SKILL.md is on disk, we expect 200; if absent, 404 — but never 415.
-    assert r.status_code in (200, 404)
+    assert r.status_code == 200
 
 
 def test_get_image_file_reads_ok(client, scratch_dir: Path):

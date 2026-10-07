@@ -302,6 +302,11 @@ def _fields(block: str) -> dict[str, str]:
             m = FIELD_RE.match(part)
             if m and m.group(1) not in out:
                 out[m.group(1)] = m.group(2).strip()
+    aliases = {"Speaker": "角色", "Text": "台词", "Emotion": "情绪", "Rate": "语速",
+               "Kind": "类型", "Window": "时间窗", "Target": "时长目标", "Voice ID": "voice_id"}
+    out = {aliases.get(key, key): value for key, value in out.items()}
+    if "类型" in out:
+        out["类型"] = {"in-frame": "正常台词", "voiceover": "画外", "inner monologue": "内心独白"}.get(out["类型"], out["类型"])
     return out
 
 
@@ -309,6 +314,7 @@ def dialogue(md: Path) -> list[Line]:
     """「## 台词配音 prompt」下每个 ```text 块 → 一句台词（没有时间窗或台词的块跳过并警告）。"""
     sec = re.search(r"^## 台词配音 prompt[^\n]*\n(.*?)(?=^## |\Z)", md.read_text(encoding="utf-8"), re.S | re.M)
     out: list[Line] = []
+    glosses = re.findall(r"^中文释义：[ \t]*(.*)$", sec.group(1), re.M) if sec else []
     for i, block in enumerate(re.findall(r"^```text\n(.*?)^```", sec.group(1), re.S | re.M) if sec else [], 1):
         f = _fields(block)
         win = WINDOW_RE.search(f.get("时间窗", ""))
@@ -316,7 +322,7 @@ def dialogue(md: Path) -> list[Line]:
             warn(f"{md.name} 台词配音 {i}：缺 时间窗 或 台词，不出字幕")
             continue
         tgt = NUM_RE.search(f.get("时长目标", ""))
-        out.append(Line(f.get("角色", ""), f.get("类型", ""), f["台词"], f.get("中文意思", ""),
+        out.append(Line(f.get("角色", ""), f.get("类型", ""), f["台词"], f.get("中文意思", glosses[i - 1] if i <= len(glosses) else ""),
                         float(win.group(1)), float(win.group(2)), float(tgt.group(0)) if tgt else None))
     return out
 

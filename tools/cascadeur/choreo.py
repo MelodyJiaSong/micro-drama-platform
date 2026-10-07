@@ -288,8 +288,8 @@ print(export_fbx(r"{fbx}"))
 '''
 
 
-def _run(code: str) -> None:
-    r = subprocess.run([sys.executable, str(REPO / "tools" / "cascadeur" / "casc_run.py"), "-c", code],
+def _run(code: str, target: Path) -> None:
+    r = subprocess.run([sys.executable, str(REPO / "tools" / "cascadeur" / "casc_run.py"), "-c", code, "--target", str(target)],
                        capture_output=True, text=True, encoding="utf-8", timeout=300)
     print(r.stdout.strip()[-600:])
     if r.returncode:
@@ -321,14 +321,14 @@ def main() -> int:
             continue
         stem = "%s_body%d" % (shot_dir.name, i + 1)
         for a in range(0, len(rows), args.batch):
-            _run(RUNNER.format(repo=REPO, keys=keys_ascii, label=label, fresh=a == 0, a=a, b=a + args.batch))
+            _run(RUNNER.format(repo=REPO, keys=keys_ascii, label=label, fresh=a == 0, a=a, b=a + args.batch), shot_dir)
         fbx = tmp / (stem + ".fbx")
-        _run(FINISH.format(repo=REPO, keys=keys_ascii, label=label, fbx=fbx, slow=SLOW_S, jump=JUMP_MPS))
+        _run(FINISH.format(repo=REPO, keys=keys_ascii, label=label, fbx=fbx, slow=SLOW_S, jump=JUMP_MPS), shot_dir)
         dst = shot_dir / "cascadeur" / (stem + ".fbx")
         shutil.copyfile(fbx, dst)
         print("→ %s（%s）" % (dst.relative_to(REPO), label))
         # RUNNER 每个角色 fresh 新建一个场景：不关就越堆越多（2026-09-30 实测 21 个场景、12 GB，脚本开始 idle 超时）
-        _run(CLOSE_OTHERS)
+        _run(CLOSE_OTHERS, shot_dir)
     return 0
 
 

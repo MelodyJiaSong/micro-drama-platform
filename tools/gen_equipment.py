@@ -498,7 +498,7 @@ def do_sheet(a, force: bool) -> None:
     if len(prompt) > dm.PROMPT_MAX:
         raise RuntimeError(f"{a.key} 设定图 prompt {len(prompt)} 字 > 即梦 {dm.PROMPT_MAX}")
     t0 = time.time()
-    url, cost = ba._dm_submit(prompt, [], ratio="21:9", wait_s=900)
+    url, cost = ba._dm_submit(prompt, [], ratio="21:9", wait_s=900, target=a.dir / f"{a.key}-0_三视图.png")
     sheet = a.dir / f"{a.key}-0_三视图.png"
     dm.download(url, sheet)
     split_sheet(sheet, views)

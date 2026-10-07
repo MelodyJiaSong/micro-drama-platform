@@ -1,24 +1,15 @@
+> 当前资产卡只保留外观、声音资产与原典参考。人物行为、关系和能力按当前 writers_room 与剧本启用；历史剧情不作为本轮事实。建立视频内的声样仅用于音色参考，不作剧情或声口台词。
+
 # 里瑞亚·杜拉克 · 闪金镇战士训练师 · 铁匠铺后院
 
 > **键**：`c20`　｜　**voice_id**：`en-f-szzl-lyria-01`
 > 事实回指 `../../../0_research/parts/w03_艾尔文森林.md`，`verified_by: ai_draft` 的条目一条未用。
 > 版本锚点：经典旧世 Vanilla 1.12 · Year 25 ADP。零 hex（rule 1b）。
 > 脸由本卡末段立绘承载，**不写文字五官之外的脸部细节**（style_guide §7）。
-> **本卡由 `tools/gen_npc_cards_szzl_ep02.py` 生成**——改内容 ＝ 改生成器重跑（rule 4i ①）。
 
 > **译名裁定。** 1.12 官方中文 **里瑞亚·杜拉克**（NFU npc=913）；`w03` 的「莉亚·杜·拉克」是自译，待改（r2 §8 #7）。本集没有人叫她的名字。
-> **原典数据（片中不出口）**：12 级 / 500 血（classicdb npc=913）；闪金镇铁匠铺后面（41.1, 65.8），就在维尔海姆（`c19`）旁边。两句问候——对非战士 *"I can tell just by the way you're standing that you're no warrior. Why don't you go do something safe, like read a book."*（S06 只用前半句节选，后半句留给以后）；对战士 *"Stormwind is the pillar of the human race, maintained through strength of will and the edge of a sturdy blade."*（**本季不给杜克听**：暴风城是他落选的地方，留作后用）。10 级战士任务 A Warrior's Training（quest 1638）的发布人：*"Speak with Harry Burlguard--he's usually in the Pig and Whistle tavern, in the Old Town of Stormwind… He can show you a few moves that'll keep you breathing longer."*（S49 化用）。
-> **外观照 1.12 模型 1300**：红棕发往后束、银灰板式胸甲与圆护肩（护肩包淡钢蓝边）、暗酒红袖、棕皮腰带铜扣、银灰腿甲膝下一圈黄铜宽箍。模型预览不显示兵器——S20 她要劈一剑，本卡给一柄连鞘单手直剑 *(judgment call)*。
-
----
-
-## 角色定位
-
-**杜克的第二个教头，也是本集的笑点。** 原典那句的前半「看你站的样子就知道——你不是打仗的料」用在 S06 拄锤的亚伦身上（后半句「去干点安全的事，比如读本书」留给以后）。
-
-对杜克是另一回事：她看得出他站得像战士，教他跺地一击（S22）——他第一样能让一圈敌人都慢下来的本事，**但拉不住人**，她自己清楚。所以 S49 她把他送去暴风城老城区找哈里（原典 quest 1638）——**那座城正是没念到他名字的地方**。
-
-她也是修士的示范对象：S20 冷不防一剑劈亚伦（他第一层光壳的起因）、S26 被罩在给出去的光里 "I hate this one."、S27 一句 "Wrong one."。她最恨被罩着——这是她那道膝伤的回声（见人物灵魂）。
+> **原典数据（片中不出口）**：12 级 / 500 血（classicdb npc=913）；闪金镇铁匠铺后面（41.1, 65.8），就在维尔海姆（`c19`）旁边。两句问候——对非战士 *"I can tell just by the way you're standing that you're no warrior. Why don't you go do something safe, like read a book."*；对战士 *"Stormwind is the pillar of the human race, maintained through strength of will and the edge of a sturdy blade."*。10 级战士任务 A Warrior's Training（quest 1638）的发布人：*"Speak with Harry Burlguard--he's usually in the Pig and Whistle tavern, in the Old Town of Stormwind… He can show you a few moves that'll keep you breathing longer."*。
+> **外观照 1.12 模型 1300**：红棕发往后束、银灰板式胸甲与圆护肩（护肩包淡钢蓝边）、暗酒红袖、棕皮腰带铜扣、银灰腿甲膝下一圈黄铜宽箍。模型预览不显示兵器——本卡保留一柄连鞘单手直剑造型 *(judgment call)*。
 
 ---
 
@@ -37,52 +28,9 @@
 
 ---
 
-## 性格 / 动机
+## 当前人物入口
 
-见下节「人物灵魂」。本节不重复（rule 4i ①：一份东西只有一个出处）。
-
----
-
-## 人物灵魂（ongoing·随集深化 · rule 12.11）
-
-- **年龄 / 当下处境**：三十四岁。闪金镇铁匠铺后院的战士教头，教了六年，来学的多是附近农家的孩子；和维尔海姆并排站，中间隔七步。ep02 来了一个站得像战士、嘴比本事大的杜克。
-- **前史**：⚠ 设定未载，属软心（A3）：暴风城老城区长大，十六岁进军队当步兵。带她的老兵叫哈里——就是她后来把人派去找的那位哈里·伯加德 *(judgment call — 原典只写她派战士去找他、称他「老兵、好老师」；师徒关系是本卡杜撰)*。她教人的两条——先看站姿、先保命——都是跟他学的。
-- **根因**：她要这些孩子**多喘几口气**（原典 "keep you breathing longer"）。她教的不是赢，是别被抬下去。
-- **目标**：把每个来后院的孩子练到站得住、挨得起、不被抬下去；真是那块料的，送去找比她会教的人。
-- **needs（她真正需要的）**：承认「被护着的时候站着不动」也是一份活，不是没用。（S37 杜克在光壳里放低剑、只管站着挡——正是她还没想通的那件事。）
-- **desire（她以为自己要的）**：让不是那块料的人早点回家读书（S06）。她以为自己是在替他们省一条命。
-- **核心矛盾**：她一张嘴就叫别人去做安全的事，自己却最恨被放在安全的地方；她毒舌赶人走，是因为她见过被抬下去的人。
-- **恐惧**：再一次被放进安全的地方，听着别人在外面挨打。
-- **最大创伤 + 致伤事件**：二十四岁那年守一座桥，左膝挨了一记钉头锤，被同队的人硬拖下去、抬上车。那一夜她躺在车上听桥上打了一整夜，一步也动不了——被放在最安全的地方，看不见，也帮不上。桥守住了，人都回来了；**她的膝盖没全好**，下了前线。从那以后她最恨的就是「被护着」——S26 "I hate this one." 不是玩笑。
-- **此刻怎么 make decision**：先看站姿再开口；学生第一下没成，她不解释，换一个法子逼他再来一次（S22 撒一把鸡食，"Again."）；毒舌在前、帮忙在后；自己教不了的，不硬教，把人送给教得了的（S49）。
-- **性格特点**：干脆、毒舌、爱笑、**笑得出声**（S21 杜克僵在半步里，她第一个笑）；不记仇；一句话能说完的绝不说两句；和维尔海姆多年搭档，互相拆台。
-- **成长轨迹**：ep02：S06 一眼判亚伦「不是战士」→ S20 冷不防一剑劈他 → S22 教杜克跺地、截断他的外号（本集第一次）→ S26 被罩在给出去的光里，"I hate this one." → S27 "Wrong one." → S49 把杜克送去暴风城找哈里——她教不了「让敌人非打他不可」那一手，就把他送给教得了的人。⚠ 待深化：她要是听说杜克在南瓜田里罩着光、没出手、只是站着挡，会怎么说（提议：一句 "...Good."）。
-
----
-
-## 说话风格模板（声口锚）
-
-- **能一个词说完就一个词**："Stomp." "Again." "Wrong one."
-- 毒舌先出口，笑随后到——笑出声，而不是把笑藏在话里。
-- 损人用具体画面：on chickens（原典的 read a book 同一路，留给以后）。
-- 提醒爱用句尾的 **", mind."**："Fire still gets in, mind."
-- 不讲大道理。原典对战士那句 "Stormwind is the pillar…" 是她唯一的正经话，本季不说给杜克听。
-- 对学生不叫名字，对亚伦也不叫 "boy"。
-
-### 台词样例（ep02 定稿台词（逐字）＋ 标「备选」的剧本未用句，供后续集校准声口）
-
-- `[对白]` Lyria: "I can tell by the way you're standing — you're no warrior."　*(S06·**原典原句节选**·对拄锤站着的亚伦·先从脚扫到肩)*
-- `[对白]` Lyria: "Stomp."　*(S22·截断杜克的外号·一个词)*
-- `[对白]` Lyria: "Again."　*(S22·撒完鸡食·对杜克)*
-- `[对白]` Lyria: "On chickens."　*(S22·杜克 "...It worked!" 之后补刀·翻个白眼)*
-- `[对白]` Lyria: "I hate this one."　*(S26·壳里，对修士·不是玩笑)*
-- `[对白]` Lyria: "Fire still gets in, mind."　*(S26·对亚伦·给 S37 埋规则·句尾 mind)*
-- `[对白]` Lyria: "Wrong one."　*(S27·亚伦的光壳又罩了自己·两个词)*
-- `[对白]` Lyria: "Stormwind. Old Town. Ask for Harry — he'll keep you breathing."　*(S49·原典 quest 1638 化用·对杜克，冲北边扬扬下巴·酒馆名与「教你几手」留给 ep03（时长节奏审 M11 减词）)*
-- `[对白]` Lyria: "I can tell just by the way you're standing that you're no warrior. Why don't you go do something safe, like read a book."　*(备选·原典整句（S06 只用了前半句）·后半句留给以后)*
-- `[对白]` Lyria: "Stormwind is the pillar of the human race, maintained through strength of will and the edge of a sturdy blade."　*(备选·原典对战士的问候·**本季不用**（碰杜克落选的伤）)*
-
----
+本卡为保留资产。人格、私人前史、关系、称呼与出场职责待当前故事启用，由当前 writers_room 明确；原典身份与参考资料不构成已经发生的本剧情节。旧台词与旧成长路径均不继承。声音资产保留如下。
 
 ## 配音参考（voice_id 锁定 · 喂台词配音层）
 
@@ -110,16 +58,10 @@
 
 ---
 
-## 出现镜头
-
-ep02 S06（「你不是打仗的料」）· S20（冷不防一剑）· S21（笑出声）· S22（教杜克跺地 · 截断外号）· S26（被罩示范 · "I hate this one."）· S27（"Wrong one."）· S49（派去老城区找哈里）
-
----
-
 ## turntable 说明（4 s 建立视频 reference · rule 12.5 / 22.2）
 
-> 由 `tools/gen_turntables_szzl.py` 从本卡立绘 prompt 与 `casting.md` 生成，**勿手改**——改立绘 prompt 或 casting 后重跑。
-> 立绘定**脸**，turntable 定**体型 + 服装 + 随身物 + 站姿 + 声音**；两者一起建 Seedance 角色资产包 entity。
+> 建立视频为保留的音色与外观资产；本轮维护不触发旧资产生成器。
+> 立绘定**脸**，turntable 定**体型 + 服装 + 随身物 + 站姿 + 声音**；建立素材派生三张人物视图及声样MP3，shot按需上传真实文件，不预建entity。
 > 画幅 **9:16**｜时长 **4 s**｜5-phase locked-framing single-take｜抽帧 front 0.5 s / side 2.0 s / back 3.5 s。
 
 - **路由键 / prompt 首行**：`c20_Lyria_DuLac_turntable`　**落盘**：`characters/c20_Lyria_DuLac/c20_Lyria_DuLac_turntable.mp4`
@@ -178,5 +120,5 @@ c20_Lyria_DuLac
 负面词：人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，夸张金光，人物自发光，瞳孔发光，现代服饰，现代建筑，现代器物，塑料感材质，游戏引擎渲染感，游戏截图质感，UI 界面，血条，头顶名牌，伤害数字，低模棱角，贴图拉伸，卡通渲染，三维动画感，华丽镀金铠甲，羽饰头盔，飘扬的披风，英雄站姿，武器离鞘，东亚面孔，亚洲人，东亚五官，单眼皮，内眦赘皮，扁平鼻梁，八字胡，东亚服饰，布鞋，牛仔裤，牛仔布，五袋裤，裤袢，门襟明线，拉链，系带作战靴，金属鞋眼，橡胶厚底，运动鞋，现代呢大衣，切尔西靴，修身西裤，现代工装裤
 ```
 
-**验收**（不过就重跑，不要拿不合格的图往下走）：全身入画且占画高八成 · 正面平视 · 中性灰底无环境 ·
+**验收**（资产验收不合格时另行修订，不要拿不合格的图往下走）：全身入画且占画高八成 · 正面平视 · 中性灰底无环境 ·
 脸部无变形 · 服饰材质与「锁定描述符」逐条对得上 · **画面内零文字** · **脚下无光环**。

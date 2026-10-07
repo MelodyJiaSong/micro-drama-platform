@@ -2,7 +2,7 @@
 """场景俯视布局图（floor plan）—— 把「一张画」变成「一组有坐标、有尺寸的东西」。
 
 用法（仓库根目录）：
-    python tools/build_floorplan.py ai_videos/shengji_zhilu/2_世界观人设/scenes/eastern_kingdoms/elwynn_forest/bg1_北郡山谷
+    python tools/build_floorplan.py ai_videos/shengji_zhilu/2_世界观人设/background/eastern_kingdoms/elwynn_forest/bg1_北郡山谷
     python tools/build_floorplan.py <scene 目录> --check     # 只机检，不写盘
 
 输入：`{scene}/planning/blocks.toml` —— **本场景的几何唯一出处**。

@@ -47,8 +47,9 @@ def test_autonomous_imperative_present_only_when_autonomous(client, good_headers
     off = _post(client, good_headers, autonomous=False).json()["prompt"]
     # one of these phrasings MUST appear in autonomous mode
     on_lower = on.lower()
-    assert "askuserquestion" in on_lower or "ask_user_question" in on_lower
-    assert "askuserquestion" not in off.lower() or "do not call askuserquestion" not in off.lower()
+    assert "do not ask the user or call any user-input tool" in on_lower
+    assert "do not ask the user or call any user-input tool" not in off.lower()
+    assert "`AGENTS.md`" in off and "`CONVENTIONS.md`" in off
 
 
 # ---------------------------------------------------------------------------
@@ -90,7 +91,7 @@ def test_follow_ups_in_numerical_order(client, good_headers, repo_root):
     )
     if not fu_dir.is_dir():
         pytest.skip("follow_ups dir not present")
-    files = sorted(fu_dir.glob("*.md"), key=lambda p: int(p.name.split("-", 1)[0]))
+    files = sorted(fu_dir.glob("*.md"), key=lambda p: int(p.stem.split("-", 1)[0]))
     if len(files) < 1:
         pytest.skip("no follow_ups present")
     r = _post(client, good_headers, autonomous=False)

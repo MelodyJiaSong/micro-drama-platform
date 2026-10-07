@@ -36,7 +36,7 @@ def make(card: skills_lib.Card, force: bool) -> None:
             if not r.is_file():
                 raise SystemExit(f"{card.key}：「{k['name']}」的参考图 {r.name} 还没有——先出它")
         out.parent.mkdir(parents=True, exist_ok=True)
-        url, cost = gba._dm_submit(k["prompt"].strip(), refs, RATIO)
+        url, cost = gba._dm_submit(k["prompt"].strip(), refs, RATIO, target=out)
         part = out.with_name(out.stem + ".part" + out.suffix)
         dm.download(url, part)
         part.replace(out)
