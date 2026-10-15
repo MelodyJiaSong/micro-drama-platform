@@ -8,7 +8,7 @@ test("scene navigation opens the exact shot and survives reload", async ({ page 
     shots: [{ id: "st1", duration: 6, action: "递出袋子", camera: "固定中景", dialogue: "给你。" }] }));
   const href = (module: string, scene = "", shot = "") => `/drama?drama=${encodeURIComponent(drama)}&episode=ep01&module=${module}${scene ? `&scene=${scene}` : ""}${shot ? `&shot=${shot}` : ""}`;
   const stages: TreeNode[] = ["filming", "prompts"].map(module => ({ type: "directory", name: module,
-    display_name: module === "filming" ? "3_影视改编" : "4_prompt编译", path: `${drama}/stages/${module}`,
+    display_name: module === "filming" ? "3_影视改编" : "4_Prompt编译与出片", path: `${drama}/stages/${module}`,
     children: [{ type: "directory", name: "ep01", display_name: "EP1", path: `${episode}/${module}.json`, navigation_href: href(module),
       children: scenes.map(scene => ({ type: "directory", name: scene.id, display_name: `${scene.id} · 交接棚`,
         path: `${episode}/${module}.json/scenes/${scene.id}`, navigation_href: href(module, scene.id),

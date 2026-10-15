@@ -11,12 +11,10 @@ _SHORT_NAME = re.compile(r"~\d")
 _EXCLUDED_TOP_LEVEL: frozenset[str] = frozenset(
     {"node_modules", ".git", ".audit", "__pycache__", ".pytest_cache", "dist", "build", ".vite"}
 )
-# Allowed top-level directories: `ai_videos/`, `downloaded_novels/`, and `my_novel/`.
-# Anything else is outside the sandbox.
-# Per follow-up 096: research/ retired in favor of novels/.
-# Per follow-up 113: novels/ split into downloaded_novels/ (scraped baseline corpus)
-# and my_novel/ (original manuscripts authored for AI-short-drama production).
-_ALLOWED_TOP_LEVEL: frozenset[str] = frozenset({"ai_videos", "downloaded_novels", "my_novel"})
+# Allowed top-level directory: `ai_videos/` only. Anything else is outside the
+# sandbox. (`downloaded_novels/` / `my_novel/`, admitted since follow-ups 096 / 113,
+# left again with the novel browsing in follow-up 233.)
+_ALLOWED_TOP_LEVEL: frozenset[str] = frozenset({"ai_videos"})
 
 
 class SandboxViolation(Exception):

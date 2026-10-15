@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test("workflow shows three modules and independent support", async ({ page }) => {
   await page.goto("/workflow");
   await expect(page.getByRole("heading", { name: "全局工作流", exact: true })).toBeVisible();
-  await expect(page.locator(".workflow-overview section")).toHaveCount(3);
+  await expect(page.locator(".workflow-overview section")).toHaveCount(6);
   await expect(page.getByText("独立支持：Research · 人物、场景与物件资产")).toBeVisible();
   await expect(page.getByText("六阶段", { exact: false })).toHaveCount(0);
   await expect(page.getByRole("button", { name: "打开工具", exact: true })).toHaveCount(0);
@@ -25,12 +25,12 @@ test("global workflow is an expandable navigation tree with nested knowledge", a
   }
   const filming = page.locator('.tree-item[data-path="/workflow/filming"]');
   await filming.getByRole("button", { name: "Expand", exact: true }).click();
-  const knowledge = page.locator('.tree-item[data-path="/workflow/filming/shot-sizes"]');
+  const knowledge = page.locator('.tree-item[data-path="/workflow/source/repo%3A.agents%2Fskills%2Fai-videos-pipeline%2Fmodules%2Ffilming-shots.md"]');
   await expect(knowledge).toHaveAttribute("aria-level", "3");
   await knowledge.click();
-  await expect(page).toHaveURL(/\/workflow\/filming\/shot-sizes$/);
+  await expect(page).toHaveURL(/filming-shots\.md$/);
   await expect(knowledge).toHaveAttribute("aria-selected", "true");
-  await expect(page.locator(".filming-knowledge article")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "1.2.5_镜头（shot）", level: 1 })).toBeVisible();
   await testInfo.attach("workflow-navigation", { body: await page.screenshot(), contentType: "image/png" });
   await page.reload();
   await expect(knowledge).toBeVisible();
@@ -44,7 +44,7 @@ test("global workflow is an expandable navigation tree with nested knowledge", a
   await story.press("Enter");
   await expect(page).toHaveURL(/\/workflow\/story$/);
   await expect(story).toHaveAttribute("aria-selected", "true");
-  await expect(page.getByRole("heading", { name: "故事创作", level: 1 })).toBeVisible();
+  await expect(page.getByLabel("故事创作", { exact: true })).toBeEmpty();
   await page.locator('.tree-item[data-path="/workflow/prompts"]').click();
   await expect(page.getByRole("heading", { name: "Prompt 编译", level: 1 })).toBeVisible();
   await page.getByRole("button", { name: "折叠全部", exact: true }).click();
@@ -64,11 +64,11 @@ test("EP1 exposes read-only modules and independent support", async ({ page }, t
   await expect(page.getByLabel("故事正文")).toBeVisible();
   await expect(page.locator(".episode-workflow textarea, .episode-workflow input")).toHaveCount(0);
   await page.locator('.tree-item[data-path="ai_videos/shengji_zhilu"]').click();
-  for (const label of ["0_research", "1_资产库", "2_故事", "3_影视改编", "4_prompt编译"]) {
+  for (const label of ["0_research", "1_资产库", "2_故事", "3_影视改编", "4_Prompt编译与出片", "5_剪辑", "6_声音与音乐", "7_成片交付"]) {
     await expect(page.getByText(label, { exact: true })).toBeVisible();
   }
   await expect(page.getByText("EP1 创作", { exact: true })).toHaveCount(0);
-  for (const [module, heading] of [["filming", "影视改编"], ["prompts", "Prompt 编译"]]) {
+  for (const [module, heading] of [["filming", "影视改编"], ["prompts", "Prompt 编译与出片"]]) {
     const stage = page.locator(`.tree-item[data-path="ai_videos/shengji_zhilu/stages/${module}"]`);
     const url = page.url();
     await expect(stage).toHaveAttribute("aria-expanded", "false");
@@ -96,12 +96,10 @@ test("EP1 exposes read-only modules and independent support", async ({ page }, t
   await page.getByText("世界规则", { exact: true }).click();
   await expect(page.getByRole("heading", { name: "世界规则", exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: "Edit file", exact: true })).toHaveCount(0);
-  for (const path of ["ai_videos/shengji_zhilu/stages/story", "ai_videos/shengji_zhilu/stages/story/ep01"]) {
-    const folder = page.locator(`.tree-item[data-path="${path}"]`);
-    if (await folder.getAttribute("aria-expanded") === "false") await folder.click();
-  }
-  await page.locator('.tree-item[data-path="ai_videos/shengji_zhilu/episodes/ep01/current"]').click();
-  await expect(page.locator(".story-run-story")).toContainText("米洛");
+  const stage = page.locator('.tree-item[data-path="ai_videos/shengji_zhilu/stages/story"]');
+  if (await stage.getAttribute("aria-expanded") === "false") await stage.click();
+  await page.locator('.tree-item[data-path="ai_videos/shengji_zhilu/episodes/ep01/story.json"]').click();
+  await expect(page.getByLabel("故事正文")).toContainText("尚未生成");
   expect(errors).toEqual([]);
   await testInfo.attach("ep01-workspace", { body: await page.screenshot({ fullPage: true }), contentType: "image/png" });
 });

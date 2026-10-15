@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""场地平面图（floor plan）的 **schema + 解析 + 校验**——`ai_video.md` rule 4k 的可执行版。
+"""场地平面图（floor plan）的 **schema + 解析 + 校验**——平面图规则（`.agents/skills/ai-videos-pipeline/resources/assets.md`「背景」）的可执行版。
 
 **本模块不 import bpy**，所以平面图生成器、Blender 场景引擎、以及任何 shot 层工具
 都能 import 同一份判据（`一个名字只有一处定义`）。

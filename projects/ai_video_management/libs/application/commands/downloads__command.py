@@ -12,9 +12,5 @@ class DownloadsCommand:
         self._importer = importer
 
     def import_drama(self, rel_drama_path: str) -> ImportFromDownloadsResultCdto:
-        path = DramaPath(rel=rel_drama_path)
-        if path.drama_name == "_performances":
-            return DownloadsMapper.to_cdto(self._importer.import_performances(rel_drama_path))
-        if path.drama_name == "_actors":
-            return DownloadsMapper.to_cdto(self._importer.import_actors(rel_drama_path))
+        DramaPath(rel=rel_drama_path)
         return DownloadsMapper.to_cdto(self._importer.import_drama(rel_drama_path))

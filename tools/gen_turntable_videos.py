@@ -5,7 +5,7 @@ prompt 在卡里（`## turntable 说明` 的 ```text 块，首行 `{卡目录}_t
 本文件只负责出片；画幅与时长读该块的「比例：画幅 X:Y，时长 N 秒」（或「画幅: X:Y ｜ 时长: Ns」）行，落盘名 ＝ 首行。
 走 `dreamina multimodal2video` 而不是 image2video：非人生物要挂**声音参考**（卡里 `## 叫声设计` + `ref/audio/*.mp3`），只有全能参考收音频。
 
-`参考:` 行按上传顺序把 `=>@` 填成 `@图片1 / @音频1…`（同 `seedance_kit.py`；正本卡里仍是裸 `=>@`，rule 12.4-C）。
+`参考:` 行按上传顺序把 `=>@` 填成 `@图片1 / @音频1…`（正本卡里仍是裸 `=>@`，只在提交时填号）。
 立绘缺失时依次退：views 锚点正面帧（`gen_char_images.anchor_frame`）→ 从文件夹里最新的原始建立视频 0.5 s 处截一帧。
 新片落盘后，同一文件夹里旧的原始建立视频挪进 `ai_videos/_deleted/`（与 webapp 软删同一处），webapp 始终只看到一条。
 
@@ -121,7 +121,7 @@ def job(d: Path) -> tuple[str, Path, list[Path], str, str, int]:
     text = (d / f"{d.name}.md").read_text(encoding="utf-8")
     m = re.search(r"```text\n(%s_turntable\n.*?)```" % re.escape(d.name), text, re.S)
     if not m:
-        raise SystemExit(f"{d.name}：卡里没有 `{d.name}_turntable` 的 text 块（按 stage2 模板写进卡里）")
+        raise SystemExit(f"{d.name}：卡里没有 `{d.name}_turntable` 的 text 块（按人物卡模板写进卡里）")
     stem, body = m.group(1).rstrip("\n").split("\n", 1)
     spec = SPEC.search(body)
     if not spec:

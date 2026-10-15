@@ -1,6 +1,6 @@
 /** Which folder under a drama's `characters/` is a character card: `c{N}_…`
  * (named cast) or `m{N}_…` (monsters and crowd NPCs — they get a turntable too,
- * ai_video.md rule 22.2). Single definition for the UI; the backend twin is
+ * see the asset rules in .agents/skills/ai-videos-pipeline/resources/assets.md). Single definition for the UI; the backend twin is
  * `libs/common/character_dir.py`. */
 const PREFIX = "[cm]\\d+";
 

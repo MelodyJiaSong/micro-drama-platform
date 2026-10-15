@@ -33,20 +33,16 @@ _EXCLUDED_DIRS: frozenset[str] = frozenset(
 )
 
 
-_ALLOWED_TOP_LEVEL: frozenset[str] = frozenset({"ai_videos", "downloaded_novels", "my_novel"})
+_ALLOWED_TOP_LEVEL: frozenset[str] = frozenset({"ai_videos"})
 
 
 class ExposedTree:
-    """The webapp's read/write tree exposes three roots: ai_videos/**, downloaded_novels/**, my_novel/**.
+    """The webapp's read/write tree exposes one root: ai_videos/**.
 
-    `novels/` replaced `research/` in follow-up 096: the user consolidated the
-    free-form reference dump into a downloaded-novels surface.
-    Follow-up 113 split `novels/` into `downloaded_novels/` (the scraped baseline
-    corpus — sudugu/ttkan downloads, organized by category/slug) and `my_novel/`
-    (original manuscripts authored for AI-short-drama production, derived from but
-    distinct in copyright from the downloaded baseline).
-    Same security controls (extension allowlist, _EXCLUDED_DIRS filter, traversal
-    hardening); only the admitted-first-segment set is updated.
+    Follow-ups 096 / 113 had added `downloaded_novels/` and `my_novel/` beside it;
+    follow-up 233 took both out again with the novel browsing (their data stays
+    on disk, outside the sandbox). Same security controls throughout (extension
+    allowlist, _EXCLUDED_DIRS filter, traversal hardening).
     """
 
     def __init__(self, repo_root: Path) -> None:
@@ -63,18 +59,6 @@ class ExposedTree:
         replaced here by its member dramas; see `libs.common.drama_ref`.
         """
         return drama_ref.drama_dirs(self._root)
-
-    def downloaded_novel_dirs(self) -> list[Path]:
-        root = self._root / "downloaded_novels"
-        if not root.is_dir():
-            return []
-        return sorted(p for p in root.iterdir() if p.is_dir())
-
-    def my_novel_dirs(self) -> list[Path]:
-        root = self._root / "my_novel"
-        if not root.is_dir():
-            return []
-        return sorted(p for p in root.iterdir() if p.is_dir())
 
     def is_inside(self, rel: str) -> bool:
         if not rel or rel.startswith("/") or "\\" in rel or "\x00" in rel:

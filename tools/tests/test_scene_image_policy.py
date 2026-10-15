@@ -44,19 +44,33 @@ def test_allowed_assets_videos_and_old_job_queries_stay_audited(tmp_path, monkey
     assert '"event": "result"' in log.path.read_text(encoding='utf-8')
 
 
-def test_scene_generation_failure_never_falls_back_or_resubmits(tmp_path, monkeypatch):
-    job = SimpleNamespace(dir=tmp_path, plate=True)
+def test_scene_generation_tries_codex_then_elevenlabs_never_dreamina(tmp_path, monkeypatch):
+    job = SimpleNamespace(dir=tmp_path, plate=True, name='bg2')
     calls = []
     monkeypatch.setattr(bg, 'Job', lambda _: job)
-    monkeypatch.setattr(bg, 'plan_for', lambda *args: (engines.ELEVENLABS, 'court', []))
-    def fail(*args):
-        calls.append('elevenlabs')
-        raise TimeoutError('outcome unknown')
-    monkeypatch.setattr(bg, '_elevenlabs', fail)
+    monkeypatch.setattr(bg, 'plan_for', lambda *args: (engines.CODEX, 'court', []))
+    def fail(name):
+        def run(*args):
+            calls.append(name)
+            raise TimeoutError('outcome unknown')
+        return run
+    monkeypatch.setattr(bg, '_codex', fail('codex'))
+    monkeypatch.setattr(bg, '_elevenlabs', fail('elevenlabs'))
     monkeypatch.setattr(bg, '_dreamina', lambda *args: calls.append('dreamina'))
     with pytest.raises(TimeoutError):
         bg.generate(job, None, engines.AUTO)
-    assert calls == ['elevenlabs']
+    assert calls == ['codex', 'elevenlabs']   # 每家一次，不重提，不退即梦
+
+
+def test_scene_generation_stops_at_first_success(tmp_path, monkeypatch):
+    job = SimpleNamespace(dir=tmp_path, plate=True, name='bg2')
+    calls = []
+    monkeypatch.setattr(bg, 'Job', lambda _: job)
+    monkeypatch.setattr(bg, 'plan_for', lambda *args: (engines.CODEX, 'court', []))
+    monkeypatch.setattr(bg, '_codex', lambda *args: calls.append('codex'))
+    monkeypatch.setattr(bg, '_elevenlabs', lambda *args: calls.append('elevenlabs'))
+    bg.generate(job, None, engines.AUTO)
+    assert calls == ['codex']
 
 
 def test_explicit_dreamina_rejected_before_scene_planning(tmp_path, monkeypatch):
@@ -67,10 +81,20 @@ def test_explicit_dreamina_rejected_before_scene_planning(tmp_path, monkeypatch)
         bg.generate(job, None, engines.DREAMINA)
 
 
-def test_scene_default_and_other_asset_defaults():
-    assert engines.scene_choice() == engines.ELEVENLABS
-    assert engines.first_choice(False) == engines.DREAMINA
-    assert engines.first_choice(True) == engines.ELEVENLABS
+def test_engine_order_codex_first_dreamina_last():
+    # follow-up 238：auto ＝ Codex → ElevenLabs → 即梦；scene/bg 不用即梦
+    assert engines.scene_choice() == [engines.CODEX, engines.ELEVENLABS]
+    assert engines.order() == [engines.CODEX, engines.ELEVENLABS, engines.DREAMINA]
+    assert engines.order(target='ai_videos/demo/2_世界观人设/characters/c1/c1.png')[-1] == engines.DREAMINA
+    assert engines.order(target='ai_videos/demo/background/bg2/bg2.png') == [engines.CODEX, engines.ELEVENLABS]
+    assert engines.order(dreamina_ok=False) == [engines.CODEX, engines.ELEVENLABS]
+    # 显式 `--engine X` ＝ 只用 X
+    for e in (engines.CODEX, engines.ELEVENLABS, engines.DREAMINA):
+        assert engines.order(e, target='ai_videos/demo/props/p1/p1-1_正面.png') == [e]
+    with pytest.raises(ValueError, match='禁止 Dreamina'):
+        engines.order(engines.DREAMINA, target='ai_videos/demo/background/bg2/bg2.png')
+    with pytest.raises(ValueError):
+        engines.order('kling')
 
 
 def test_direct_logged_image_api_cannot_bypass_cli_guard(tmp_path):

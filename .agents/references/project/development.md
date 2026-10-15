@@ -41,7 +41,7 @@ projects/{name}/
 
 **Per-role sub-bucketing within each layer.** Files of the same role live in a folder named for the role (plural). Each role gets its own folder; empty folders for canonical roles are allowed (they document the convention). `common/` is the lone exception.
 
-**One file per aggregate per role.** `{aggregate}__{role}.py` holds all operations of that role for that aggregate. Example: `application/commands/actor__command.py` contains a single `ActorCommand` class with methods `generate(...)`, `generate_diverse(...)`, `delete(...)`. The operation name lives on the method, not on the class or filename. The legacy patterns (per-operation FILE, per-operation CLASS in same file, `execute()` method name) are retired.
+**One file per aggregate per role.** `{aggregate}__{role}.py` holds all operations of that role for that aggregate. Example: `application/commands/episode_workflow__command.py` contains a single `EpisodeWorkflowCommand` class whose `change(...)` method carries the operation (`save`, `approve`, `compile`) as an argument. The operation name lives on the method, not on the class or filename. The legacy patterns (per-operation FILE, per-operation CLASS in same file, `execute()` method name) are retired.
 
 **DTOs are exempt from one-class-per-file** because they're pure data with no behavior — `{aggregate}__dto.py` may hold many Qdtos and Cdtos; the class-name `Qdto`/`Cdto` suffix already disambiguates.
 
@@ -76,7 +76,7 @@ The rule's purpose: when you grep for "where does class X live" you find one pla
 - An `{aggregate}__writer.py` that grows past ~500 lines (e.g., one with multiple distinct operations like generate + delete + migrate + reap) is a candidate for splitting along the operation boundary IF the operations don't share much private state; otherwise the size is justified by the aggregate's complexity.
 - A `{aggregate}__dto.py` past ~200 lines means too many DTOs share a file — split by query-side vs command-side (`{aggregate}__qdto.py` + `{aggregate}__cdto.py`) ONLY if the split materially helps readability; otherwise accept the size (DTOs are flat data, low cognitive cost).
 
-The < 100 line target is a **guideline**, not a hard cap. Aggregates with genuinely complex business logic (e.g., the actor pool's variance pools + prompt assembly client wrapper) may legitimately exceed it. The rule's purpose: when a file feels uncomfortable to navigate, the split direction is already implied by the layer's role taxonomy. A `*.py` file passing 1000 lines without a clear sub-concern boundary IS a stage-5 reviewer flag (`warning`, not `blocker`).
+The < 100 line target is a **guideline**, not a hard cap. Aggregates with genuinely complex business logic (e.g., the episode workflow compiler's reference ordering and prompt assembly) may legitimately exceed it. The rule's purpose: when a file feels uncomfortable to navigate, the split direction is already implied by the layer's role taxonomy. A `*.py` file passing 1000 lines without a clear sub-concern boundary IS a stage-5 reviewer flag (`warning`, not `blocker`).
 
 ### 2. `libs/domain/` follows Domain-Driven Design
 

@@ -16,7 +16,7 @@
     background/{大陆}/{大陆}.md                          大陆卡（索引）
     background/{大陆}/ref/*.link.json                    指向大陆图
     background/{大陆}/{区}/{区}.md                       区卡（索引 + bg 清单 + 未立 bg 的地标）—— **每次重生成**
-    background/{大陆}/{区}/ref/*.link.json               指向该区原版区图（rule 4b-B：不拷贝、不软链）
+    background/{大陆}/{区}/ref/*.link.json               指向该区原版区图（不拷贝、不软链）
     background/{大陆}/{区}/bg{N}_{区名}全境/             区级主体：拥有区级 floor plan
         planning/blocks.toml                         **生成**（块＝世界树里有坐标的 bg；地形由 terrain.toml 合并）
         planning/terrain.toml                        作者写：ridge / water / road（+ 可选的 block 覆盖）
@@ -363,7 +363,7 @@ def bg_blocks_skeleton(b: dict, node: dict | None, z: dict) -> str:
     key = b["dir"].split("_", 1)[0]
     look = (node or {}).get("look_zh", "")
     return "\n".join([
-        f"# {b['name']} · 场地平面图的几何唯一出处（rule 4k）。改布局 ＝ 改本文件重跑",
+        f"# {b['name']} · 场地平面图的几何唯一出处。改布局 ＝ 改本文件重跑",
         f"#   python tools/build_floorplan.py \"<本目录>\"",
         "# 作者填：[[block]]（有 id / name / xy / size / h_m / src）、[[ridge]] / [[water]] / [[road]]；零个 block 合法（自然场景）。",
         "# src 只许 原典方位 / 坐标表 / 地图量取 / 推定；推定的画虚线。坐标原点在场地左上角，x 向东、y 向南，单位 m。",
@@ -406,13 +406,13 @@ def bg_md_skeleton(w: World, b: dict, node: dict | None, z: dict, cont: str, map
         ]
     return f"""# {b['name']}
 
-> **档级：锚点级**（stage2 playbook §3b ④ / rule 4f：必做只有锚点图；反向 / 侧向 / 内景 plate 用到才建）。
+> **档级：锚点级**（必做只有锚点图；反向 / 侧向 / 内景 plate 用到才建，见 `.agents/skills/ai-videos-pipeline/resources/assets.md`「背景」）。
 > **bg 代号：`{key}`** · 目录 `background/{cont}/{z['id']}/{d}/` · 所属 {CONT_ZH[cont]} / {z['name_zh']}（{z['name_en']}）
 > **版本红线**：Vanilla 1.12 · Year 25 ADP。4.0.3a 之后才有的东西一样都不许出现（`tools/wow_version_gate.py`）。
 > **参考地图只进人眼，不进模型**（divergence #8）：
 {chr(10).join('> - ' + r for r in ref_lines)}
-> **场地平面图（rule 4k）**：`planning/blocks.toml` → `python tools/build_floorplan.py <本目录>` → `planning/{key}_floorplan.png`。
-> **世界锚点**：本档锚点图挂 `{WORLD_ANCHOR}` 继承全剧影像质感（rule 4e ②）；配色 / 地貌 / 光线由本档 prompt 自己写死。
+> **场地平面图**：`planning/blocks.toml` → `python tools/build_floorplan.py <本目录>` → `planning/{key}_floorplan.png`。
+> **世界锚点**：本档锚点图挂 `{WORLD_ANCHOR}` 继承全剧影像质感；配色 / 地貌 / 光线由本档 prompt 自己写死。
 
 ## 场景定位
 
@@ -440,7 +440,7 @@ def bg_md_skeleton(w: World, b: dict, node: dict | None, z: dict, cont: str, map
 |---|---|---|
 | 默认态 | 本档常态 | 锁定描述符 #5 即此态 |
 | 天气 / 时辰变体 | 本档按镜条件分句 | shot 的 `光线:` 里写；不另立 bg |
-| 结构变体（完好→废墟 / 日→夜烛火态） | 若要拍必须另立 bg（rule 4e ③） | 本季无 |
+| 结构变体（完好→废墟 / 日→夜烛火态） | 若要拍必须另立 bg | 本季无 |
 
 ## 出现镜头
 

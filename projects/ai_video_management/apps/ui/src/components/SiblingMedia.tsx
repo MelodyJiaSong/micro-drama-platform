@@ -13,21 +13,13 @@
  * Unarchive Selected (N)). Batch ops loop the existing per-file endpoints
  * serially with continue-on-error aggregation; per-tile single-file buttons
  * retained for quick single archives.
+ *
+ * A character turntable video also gets the 🖼 three-view extraction. The old
+ * pipeline's per-tile tools (frame / plate / last-frame extraction, subtitle
+ * scaffold + burn, intro-card burn) went with follow-up 233.
  */
 import { useEffect, useMemo, useState } from "react";
-import {
-  archiveMedia,
-  burnIntroCards,
-  burnSubtitles,
-  extractCharacterViews,
-  extractFrames,
-  extractLastFrame,
-  extractScenePlates,
-  mediaUrl,
-  scaffoldSubtitles,
-  unarchiveMedia,
-} from "../api";
-import type { SubtitleLang } from "../api";
+import { archiveMedia, extractCharacterViews, mediaUrl, unarchiveMedia } from "../api";
 import { announceToast as announce } from "../lib/announce";
 import { ApiError } from "../types";
 import { ZoomableImage } from "./ZoomableImage";
@@ -57,25 +49,6 @@ const CHARACTER_VIDEO_PATH_RE = new RegExp(
 
 export function isCharacterVideoPath(path: string): boolean {
   return CHARACTER_VIDEO_PATH_RE.test(path);
-}
-
-/** Matches a shot render video: `…/shots/shot{NN}/…/{file}.{video_ext}`
- * (the take sits in the shot folder or its `renders/` subfolder). Gates the
- * 📝 生成台词 / 💬 烧录台词 buttons so they only appear on shot videos, where a
- * sibling `subtitles.md` dialogue-timeline makes sense. */
-const SHOT_VIDEO_PATH_RE = /\/shots\/(?:shot\d+|st[1-9]\d*)\//i;
-
-export function isShotVideoPath(path: string): boolean {
-  return SHOT_VIDEO_PATH_RE.test(path);
-}
-
-/** Matches a scene walk-through video: `…/scenes/{scene}/…`. Gates the
- * 🧭 截取方向背景图 button (extract per-direction bg plates) so it only appears
- * on scene videos, where sibling `bg{N}_{方位}_` direction folders exist. */
-const SCENE_VIDEO_PATH_RE = /\/scenes\//i;
-
-export function isSceneVideoPath(path: string): boolean {
-  return /\/background\//i.test(path) || (!/\/episodes\//i.test(path) && SCENE_VIDEO_PATH_RE.test(path));
 }
 
 export interface SiblingMediaProps {
@@ -173,64 +146,32 @@ interface MediaTileProps {
   path: string;
   archived: boolean;
   busy: boolean;
-  extracting: boolean;
   extractingViews: boolean;
-  extractingPlates: boolean;
-  extractingLastFrame: boolean;
-  burning: boolean;
-  scaffolding: boolean;
-  cardBurning: boolean;
   selected: boolean;
   selectionBusy: boolean;
   onToggleSelect: (path: string) => void;
   onArchive: (path: string) => void;
   onUnarchive: (path: string) => void;
-  onExtractFrames: (path: string) => void;
-  onExtractLastFrame: (path: string) => void;
-  onExtractScenePlates: (path: string) => void;
   onExtractCharacterViews: (path: string) => void;
-  onBurnSubtitles: (path: string, lang: SubtitleLang) => void;
-  onScaffoldSubtitles: (path: string) => void;
-  onBurnIntroCards: (path: string) => void;
 }
-
-const SUBTITLE_LANG_BUTTONS: { lang: SubtitleLang; label: string; title: string }[] = [
-  { lang: "zh", label: "💬中文", title: "烧中文字幕 → shot{NN}_zh.mp4 (原视频保留)" },
-  { lang: "en", label: "💬EN", title: "Burn English subtitles → shot{NN}_en.mp4 (original kept)" },
-  { lang: "both", label: "💬中英", title: "烧中英双语字幕(中上英下) → shot{NN}_zhen.mp4 (原视频保留)" },
-];
 
 function MediaTile({
   path,
   archived,
   busy,
-  extracting,
   extractingViews,
-  extractingPlates,
-  extractingLastFrame,
-  burning,
-  scaffolding,
-  cardBurning,
   selected,
   selectionBusy,
   onToggleSelect,
   onArchive,
   onUnarchive,
-  onExtractFrames,
-  onExtractLastFrame,
-  onExtractScenePlates,
   onExtractCharacterViews,
-  onBurnSubtitles,
-  onScaffoldSubtitles,
-  onBurnIntroCards,
 }: MediaTileProps): JSX.Element {
   const ext = extOf(path);
   const isVideo = VIDEO_EXTS.has(ext);
   const isAudio = AUDIO_EXTS.has(ext);
   const isModel = MODEL_EXTS.has(ext);
   const isCharacterVideo = isVideo && isCharacterVideoPath(path);
-  const isShotVideo = isVideo && isShotVideoPath(path);
-  const isSceneVideo = isVideo && isSceneVideoPath(path);
   const filename = basename(path);
   const url = mediaUrl(path);
   const handleClick = (): void => {
@@ -282,83 +223,6 @@ function MediaTile({
         {filename}
       </figcaption>
       <div className="sibling-media-actions">
-        {isVideo && !archived ? (
-          <button
-            type="button"
-            className="sibling-media-extract-btn"
-            onClick={() => onExtractFrames(path)}
-            disabled={busy || extracting}
-            aria-label={`Extract 5 reference frames from ${filename}`}
-            title="Extract 5 canonical reference frames (hero / reverse / vert / mid / detail) into ./frames/ — overwrites previous extraction from this scene folder"
-          >
-            {extracting ? "⏳ Extracting…" : "🎞 Extract Frames"}
-          </button>
-        ) : null}
-        {isSceneVideo && !archived ? (
-          <button
-            type="button"
-            className="sibling-media-extract-btn"
-            onClick={() => onExtractScenePlates(path)}
-            disabled={busy || extractingPlates}
-            aria-label={`截取各方向场景背景图 from ${filename}`}
-            title="按方位时间点(北1.5s/东4.5s/南7.5s/西10.5s/中13.5s)截帧，生成到各 bg{N}_{方位}_ 文件夹作 shot 背景板——视频朝向须与这些时间点一致"
-          >
-            {extractingPlates ? "⏳ 截取中…" : "🧭 截取方向背景图"}
-          </button>
-        ) : null}
-        {isShotVideo && !archived ? (
-          <button
-            type="button"
-            className="sibling-media-extract-btn"
-            onClick={() => onExtractLastFrame(path)}
-            disabled={busy || extractingLastFrame}
-            aria-label={`Extract last frame from ${filename}`}
-            title="截取本镜成片的最后一帧 → shot{NN}_lastframe.png (放 shot 根目录)，并自动复制到下一镜 shot{NN+1}_firstframe.png 作本镜首帧 (跨镜首帧承接)；二次点击覆盖。"
-          >
-            {extractingLastFrame ? "⏳ 截取中…" : "⏮ 生成末帧"}
-          </button>
-        ) : null}
-        {isShotVideo && !archived ? (
-          <button
-            type="button"
-            className="sibling-media-scaffold-btn"
-            onClick={() => onScaffoldSubtitles(path)}
-            disabled={busy || scaffolding}
-            aria-label={`Scaffold subtitles.md for ${filename}`}
-            title="在本 shot 文件夹生成 subtitles.md 台词时间轴 (从 shot.md 的台词+时长均分初值)，编辑后再点「烧录台词」"
-          >
-            {scaffolding ? "⏳ 生成中…" : "📝 生成台词"}
-          </button>
-        ) : null}
-        {isShotVideo && !archived ? (
-          <span className="sibling-media-burn-group" role="group" aria-label="烧录字幕语言">
-            {SUBTITLE_LANG_BUTTONS.map(({ lang, label, title }) => (
-              <button
-                key={lang}
-                type="button"
-                className="sibling-media-burn-btn"
-                onClick={() => onBurnSubtitles(path, lang)}
-                disabled={busy || burning}
-                aria-label={`Burn ${lang} subtitles into ${filename}`}
-                title={title}
-              >
-                {burning ? "⏳" : label}
-              </button>
-            ))}
-          </span>
-        ) : null}
-        {isShotVideo && !archived ? (
-          <button
-            type="button"
-            className="sibling-media-burn-btn"
-            onClick={() => onBurnIntroCards(path)}
-            disabled={busy || cardBurning}
-            aria-label={`Burn character intro card into ${filename}`}
-            title="按本集 intro_cards.md 把重要角色的整张人物卡图(Kling 做的 PNG·放本剧 2_世界观人设/intro_cards/)淡入淡出叠到镜头顶角 → 生成 shot{NN}.mp4 放在 shot 根目录 (renders/ 原视频保留、不覆盖；二次烧录覆盖该输出)。本镜无人物卡/卡图缺失则提示。"
-          >
-            {cardBurning ? "⏳" : "🪧 人物卡"}
-          </button>
-        ) : null}
         {isCharacterVideo && !archived ? (
           <button
             type="button"
@@ -450,13 +314,7 @@ export function SiblingMedia({ currentPath, knownPaths, onChange }: SiblingMedia
   const archived = useMemo(() => findArchivedMedia(currentPath, knownPaths), [currentPath, knownPaths]);
   const [busyPath, setBusyPath] = useState<string | null>(null);
   const [busy, setBusy] = useState<boolean>(false);
-  const [extractingPath, setExtractingPath] = useState<string | null>(null);
   const [extractingViewsPath, setExtractingViewsPath] = useState<string | null>(null);
-  const [extractingPlatesPath, setExtractingPlatesPath] = useState<string | null>(null);
-  const [extractingLastFramePath, setExtractingLastFramePath] = useState<string | null>(null);
-  const [burningPath, setBurningPath] = useState<string | null>(null);
-  const [cardBurningPath, setCardBurningPath] = useState<string | null>(null);
-  const [scaffoldingPath, setScaffoldingPath] = useState<string | null>(null);
   const [selectedActive, setSelectedActive] = useState<Set<string>>(() => new Set());
   const [selectedRenders, setSelectedRenders] = useState<Set<string>>(() => new Set());
   const [selectedModels, setSelectedModels] = useState<Set<string>>(() => new Set());
@@ -505,63 +363,6 @@ export function SiblingMedia({ currentPath, knownPaths, onChange }: SiblingMedia
     }
   };
 
-  const handleExtractFrames = async (path: string): Promise<void> => {
-    setExtractingPath(path);
-    try {
-      const result = await extractFrames(path);
-      const okCount = result.frames.length;
-      const failCount = result.failures.length;
-      const noun = okCount === 1 ? "frame" : "frames";
-      const summary =
-        failCount === 0
-          ? `Extracted ${okCount} ${noun} from ${basename(path)} → frames/`
-          : `Extracted ${okCount} ${noun} from ${basename(path)} (${failCount} failed)`;
-      announce(summary);
-      onChange?.();
-    } catch (err) {
-      announce(`Extract frames failed: ${errorKind(err)}`);
-    } finally {
-      setExtractingPath(null);
-    }
-  };
-
-  const handleExtractLastFrame = async (path: string): Promise<void> => {
-    setExtractingLastFramePath(path);
-    try {
-      const result = await extractLastFrame(path);
-      announce(
-        result.first_frame
-          ? `已截取末帧 → ${basename(result.out)}，并复制到下一镜首帧 ${basename(result.first_frame)}`
-          : `已截取末帧 → ${basename(result.out)}（无下一镜，未复制首帧）`,
-      );
-      onChange?.();
-    } catch (err) {
-      announce(`截取末帧失败: ${errorKind(err)}`);
-    } finally {
-      setExtractingLastFramePath(null);
-    }
-  };
-
-  const handleExtractScenePlates = async (path: string): Promise<void> => {
-    setExtractingPlatesPath(path);
-    try {
-      const result = await extractScenePlates(path);
-      const okCount = result.plates.length;
-      const dirs = result.plates.map((p) => p.direction).join("/");
-      const failCount = result.failures.length;
-      const summary =
-        failCount === 0
-          ? `已截取 ${okCount} 张方向背景图（${dirs}）→ 各 bg 文件夹`
-          : `已截取 ${okCount} 张（${dirs}），${failCount} 张失败`;
-      announce(summary);
-      onChange?.();
-    } catch (err) {
-      announce(`截取方向背景图失败: ${errorKind(err)}`);
-    } finally {
-      setExtractingPlatesPath(null);
-    }
-  };
-
   const handleExtractCharacterViews = async (path: string): Promise<void> => {
     setExtractingViewsPath(path);
     try {
@@ -581,66 +382,6 @@ export function SiblingMedia({ currentPath, knownPaths, onChange }: SiblingMedia
       announce(`Extract views failed: ${errorKind(err)}`);
     } finally {
       setExtractingViewsPath(null);
-    }
-  };
-
-  const handleScaffoldSubtitles = async (path: string): Promise<void> => {
-    setScaffoldingPath(path);
-    try {
-      const result = await scaffoldSubtitles(path);
-      announce(`已生成 ${basename(result.path)} (${result.cues} 句初值，请编辑时间轴)`);
-      onChange?.();
-    } catch (err) {
-      const kind = errorKind(err);
-      const hint =
-        kind === "subtitles_already_exist"
-          ? "subtitles.md 已存在，请直接编辑它"
-          : kind;
-      announce(`生成台词失败: ${hint}`);
-    } finally {
-      setScaffoldingPath(null);
-    }
-  };
-
-  const handleBurnSubtitles = async (path: string, lang: SubtitleLang): Promise<void> => {
-    setBurningPath(path);
-    try {
-      const result = await burnSubtitles(path, lang);
-      announce(`已生成 ${basename(result.out)} (${result.cues} 句字幕)`);
-      onChange?.();
-    } catch (err) {
-      const kind = errorKind(err);
-      const hint =
-        kind === "subtitle_file_missing"
-          ? "未找到 subtitles.md — 请先点「📝 生成台词」或手写后再烧录"
-          : kind === "empty_subtitles"
-            ? "subtitles.md 该语言无可烧字幕（检查中文/英文是否填写）"
-            : kind;
-      announce(`烧录字幕失败: ${hint}`);
-    } finally {
-      setBurningPath(null);
-    }
-  };
-
-  const handleBurnIntroCards = async (path: string): Promise<void> => {
-    setCardBurningPath(path);
-    try {
-      const result = await burnIntroCards(path);
-      announce(`已生成 ${basename(result.out)} (人物卡 ${result.cards} 张：${result.names.join("、")})`);
-      onChange?.();
-    } catch (err) {
-      const kind = errorKind(err);
-      const hint =
-        kind === "no_card_for_shot"
-          ? "本镜无人物卡（intro_cards.md 没有该 shot 行）"
-          : kind === "intro_cards_file_missing"
-            ? "未找到本集 intro_cards.md（先在该集建卡）"
-            : kind === "intro_card_image_missing"
-              ? "卡图缺失 — 请先把卡 PNG 放进本剧 2_世界观人设/intro_cards/（中文同名）"
-              : kind;
-      announce(`烧人物卡失败: ${hint}`);
-    } finally {
-      setCardBurningPath(null);
     }
   };
 
@@ -758,25 +499,13 @@ export function SiblingMedia({ currentPath, knownPaths, onChange }: SiblingMedia
                 path={p}
                 archived={false}
                 busy={busy || busyPath === p}
-                extracting={extractingPath === p}
                 extractingViews={extractingViewsPath === p}
-                extractingPlates={extractingPlatesPath === p}
-                extractingLastFrame={extractingLastFramePath === p}
-                burning={burningPath === p}
-                scaffolding={scaffoldingPath === p}
-                cardBurning={cardBurningPath === p}
                 selected={selectedRenders.has(p)}
                 selectionBusy={busy}
                 onToggleSelect={toggleRendersSel}
                 onArchive={handleArchive}
                 onUnarchive={handleUnarchive}
-                onExtractFrames={handleExtractFrames}
-                onExtractLastFrame={handleExtractLastFrame}
-                onExtractScenePlates={handleExtractScenePlates}
                 onExtractCharacterViews={handleExtractCharacterViews}
-                onBurnSubtitles={handleBurnSubtitles}
-                onScaffoldSubtitles={handleScaffoldSubtitles}
-                onBurnIntroCards={handleBurnIntroCards}
               />
             ))}
           </div>
@@ -801,25 +530,13 @@ export function SiblingMedia({ currentPath, knownPaths, onChange }: SiblingMedia
                 path={p}
                 archived={false}
                 busy={busy || busyPath === p}
-                extracting={extractingPath === p}
                 extractingViews={extractingViewsPath === p}
-                extractingPlates={extractingPlatesPath === p}
-                extractingLastFrame={extractingLastFramePath === p}
-                burning={burningPath === p}
-                scaffolding={scaffoldingPath === p}
-                cardBurning={cardBurningPath === p}
                 selected={selectedModels.has(p)}
                 selectionBusy={busy}
                 onToggleSelect={toggleModelsSel}
                 onArchive={handleArchive}
                 onUnarchive={handleUnarchive}
-                onExtractFrames={handleExtractFrames}
-                onExtractLastFrame={handleExtractLastFrame}
-                onExtractScenePlates={handleExtractScenePlates}
                 onExtractCharacterViews={handleExtractCharacterViews}
-                onBurnSubtitles={handleBurnSubtitles}
-                onScaffoldSubtitles={handleScaffoldSubtitles}
-                onBurnIntroCards={handleBurnIntroCards}
               />
             ))}
           </div>
@@ -844,25 +561,13 @@ export function SiblingMedia({ currentPath, knownPaths, onChange }: SiblingMedia
                 path={p}
                 archived={false}
                 busy={busy || busyPath === p}
-                extracting={extractingPath === p}
                 extractingViews={extractingViewsPath === p}
-                extractingPlates={extractingPlatesPath === p}
-                extractingLastFrame={extractingLastFramePath === p}
-                burning={burningPath === p}
-                scaffolding={scaffoldingPath === p}
-                cardBurning={cardBurningPath === p}
                 selected={selectedActive.has(p)}
                 selectionBusy={busy}
                 onToggleSelect={toggleActive}
                 onArchive={handleArchive}
                 onUnarchive={handleUnarchive}
-                onExtractFrames={handleExtractFrames}
-                onExtractLastFrame={handleExtractLastFrame}
-                onExtractScenePlates={handleExtractScenePlates}
                 onExtractCharacterViews={handleExtractCharacterViews}
-                onBurnSubtitles={handleBurnSubtitles}
-                onScaffoldSubtitles={handleScaffoldSubtitles}
-                onBurnIntroCards={handleBurnIntroCards}
               />
             ))}
           </div>
@@ -887,25 +592,13 @@ export function SiblingMedia({ currentPath, knownPaths, onChange }: SiblingMedia
                 path={p}
                 archived
                 busy={busy || busyPath === p}
-                extracting={extractingPath === p}
                 extractingViews={extractingViewsPath === p}
-                extractingPlates={extractingPlatesPath === p}
-                extractingLastFrame={extractingLastFramePath === p}
-                burning={burningPath === p}
-                scaffolding={scaffoldingPath === p}
-                cardBurning={cardBurningPath === p}
                 selected={selectedArchived.has(p)}
                 selectionBusy={busy}
                 onToggleSelect={toggleArchivedSel}
                 onArchive={handleArchive}
                 onUnarchive={handleUnarchive}
-                onExtractFrames={handleExtractFrames}
-                onExtractLastFrame={handleExtractLastFrame}
-                onExtractScenePlates={handleExtractScenePlates}
                 onExtractCharacterViews={handleExtractCharacterViews}
-                onBurnSubtitles={handleBurnSubtitles}
-                onScaffoldSubtitles={handleScaffoldSubtitles}
-                onBurnIntroCards={handleBurnIntroCards}
               />
             ))}
           </div>

@@ -5,7 +5,7 @@
 ------------------------------
 `mcp__blender__generate_hyper3d_model_via_text` 要一个开着的 Blender GUI + addon，
 而且开关 `blendermcp_use_hyper3d` 是 **per-scene** 的（换 .blend 就得重开，这是误判
-「没装好」的头号来源，`ai_video.md` rule 4h §G）。那条路适合人坐在电脑前试一个东西，
+「没装好」的头号来源）。那条路适合人坐在电脑前试一个东西，
 **不适合进 pipeline**：pipeline 要能在 CI 里、在批处理里、对着一张资产清单跑。
 本文件直接打 Rodin 的 HTTP API，请求体逐字照 `addon.py` 的 `create_rodin_job_main_site`
 （那是已验证能跑通的形状），所以两条路生成的东西是同一个东西。

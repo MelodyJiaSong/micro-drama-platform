@@ -1,35 +1,29 @@
-/** DramaPage — the drama-level main page (production console).
+/** DramaPage — the drama-level main page.
  *
  * Opened by clicking a drama node in the left nav (→ `/drama?drama={path}`),
- * which now does double duty: it still toggles the nav dropdown AND surfaces
- * this main page on the right. It is the single home for every drama-wide
- * function + display that does not belong to one file:
- *  - 🎬 剧集制作台 (DramaDashboard): 📦 导出 production + 💬 全剧烧字幕.
- *  - 资源管理: 📥 导入 + 重命名, 🎭 角色画廊 (relocated off the left nav).
- *  - 📺 分集总览: every episode with the burned-subtitle masters it carries
- *    (zh / en / 中英) — i.e. exactly what 📦 导出 will copy into production/.
- * New drama-level features land here, not in the left nav. */
+ * which also toggles the nav dropdown. It is the home of the drama-wide
+ * actions that do not belong to one file:
+ *  - 📥 导入: move recent Downloads into the drama — a shot render by its full
+ *    `ep{N}_s{N}_st{N}` key into `renders/<条>/`, an asset view by its
+ *    `bg` / `p` / `e` / `c` key — then the folder-name rename pass.
+ *  - 🎭 角色画廊: every character's turntable + one-click three-view extraction.
+ * A six-module drama (`workflow.json: three-module-v1`) with a module selected
+ * shows its episode workflow below the actions; the actions stay reachable
+ * there because downloaded takes only reach the shot pages through 导入.
+ * A drama marked obsolete (`OBSOLETE.md` on it or its series) shows the
+ * 「已过时」badge. (The old production console — takes, concat, subtitles,
+ * production export, per-episode masters — went with follow-up 233.) */
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { importFromDownloads } from "../api";
 import { ApiError, type TreeNode } from "../types";
 import { announceToast } from "../lib/announce";
-import { DramaDashboard } from "./DramaDashboard";
 import { EpisodeWorkflowPage } from "./EpisodeWorkflowPage";
-
-const EP_DIR_RE = /^ep\d+$/i;
-const SUB_MASTER_RE = /^ep\d+_(zh|en|zhen)\.mp4$/i;
-const LANG_LABEL: Record<string, string> = { zh: "中文", en: "英文", zhen: "中英" };
+import { ObsoleteBadge } from "./ObsoleteBadge";
 
 export interface DramaPageProps {
   tree: TreeNode | null;
   onChange: () => void;
-}
-
-interface EpisodeRow {
-  name: string;       // ep01
-  path: string;
-  langs: string[];    // subset of zh | en | zhen present as burned masters
 }
 
 function findNodeByPath(tree: TreeNode | null, path: string): TreeNode | null {
@@ -43,43 +37,20 @@ function findNodeByPath(tree: TreeNode | null, path: string): TreeNode | null {
   return null;
 }
 
-/** Collect every `episodes/ep{NN}` folder under the drama (legacy root layout
- *  AND the staged `…/5_6_…/episodes/` layout), with the burned-subtitle
- *  language masters each carries. Mirrors ProductionExporter's tree-walk. */
-function collectEpisodes(dramaNode: TreeNode | null): EpisodeRow[] {
-  if (!dramaNode) return [];
-  const rows: EpisodeRow[] = [];
-  const walk = (node: TreeNode): void => {
-    if (node.type === "directory" && node.name === "episodes") {
-      for (const ep of node.children ?? []) {
-        if (ep.type !== "directory" || !EP_DIR_RE.test(ep.name)) continue;
-        const langs: string[] = [];
-        for (const child of ep.children ?? []) {
-          const m = SUB_MASTER_RE.exec(child.name);
-          if (m) langs.push(m[1].toLowerCase());
-        }
-        rows.push({ name: ep.name, path: ep.path, langs });
-      }
-    }
-    for (const c of node.children ?? []) walk(c);
-  };
-  walk(dramaNode);
-  rows.sort((a, b) => a.name.localeCompare(b.name));
-  return rows;
-}
-
 export function DramaPage({ tree, onChange }: DramaPageProps): JSX.Element {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const dramaPath = searchParams.get("drama") ?? "";
   const [importBusy, setImportBusy] = useState<boolean>(false);
+  // Bumped after an import so the episode workflow reloads and lists the new takes.
+  const [imports, setImports] = useState<number>(0);
 
   const dramaNode = useMemo(() => findNodeByPath(tree, dramaPath), [tree, dramaPath]);
-  const episodes = useMemo(() => collectEpisodes(dramaNode), [dramaNode]);
-  const readmePath = `${dramaPath}/README.md`;
+  const obsolete = dramaNode?.obsolete === true;
 
   const onImportClick = useCallback(async () => {
     if (importBusy) return;
+    if (obsolete && !window.confirm("本剧已过时（见 OBSOLETE.md）。仍要把 Downloads 里匹配的文件导入到这部旧剧吗？")) return;
     setImportBusy(true);
     try {
       const result = await importFromDownloads(dramaPath);
@@ -88,6 +59,7 @@ export function DramaPage({ tree, onChange }: DramaPageProps): JSX.Element {
         `已导入 ${result.moved.length} / 未导入 ${result.unmatched.length} ` +
           `/ 已重命名 ${result.rename.renamed.length} / 失败 ${errorCount}`,
       );
+      setImports((n) => n + 1);
       onChange();
     } catch (err) {
       const kind = err instanceof ApiError ? (err.detail?.kind ?? `HTTP ${err.status}`) : String(err);
@@ -95,7 +67,7 @@ export function DramaPage({ tree, onChange }: DramaPageProps): JSX.Element {
     } finally {
       setImportBusy(false);
     }
-  }, [dramaPath, importBusy, onChange]);
+  }, [dramaPath, importBusy, obsolete, onChange]);
 
   if (!tree) return <div className="drama-page" role="status">加载剧集…</div>;
 
@@ -110,82 +82,77 @@ export function DramaPage({ tree, onChange }: DramaPageProps): JSX.Element {
     );
   }
 
-  const totalMasters = episodes.reduce((n, e) => n + e.langs.length, 0);
+  const title = dramaNode.display_name || dramaNode.name;
+  const actions = (
+    <div className="drama-page-actions" role="group" aria-label="资源管理">
+      <button
+        type="button"
+        className="drama-page-action-btn"
+        onClick={onImportClick}
+        disabled={importBusy}
+        title="从 Downloads 导入近 7 天的图片 / 视频：镜头条按完整 key（ep1_s1_st1）归位到该镜头的 renders/<条>/，资产图按 bg / p / e / c 键归位；随后按文件夹名整理资产图文件名。匹配不上的文件留在 Downloads。"
+      >
+        {importBusy ? "⏳ 导入中…" : "📥 导入"}
+      </button>
+      <button
+        type="button"
+        className="drama-page-action-btn"
+        onClick={() => navigate(`/characters?drama=${encodeURIComponent(dramaPath)}`)}
+        title="角色画廊：所有角色的建立视频 + 一键重提三视图 / 音频 / 前 2 秒"
+      >
+        🎭 角色画廊
+      </button>
+      {obsolete && dramaNode.obsolete_note ? (
+        <button
+          type="button"
+          className="drama-page-link-btn"
+          onClick={() => navigate(`/file/${encodeURIComponent(dramaNode.obsolete_note!)}`)}
+          title="打开 OBSOLETE.md：为什么过时、之后怎么处理"
+        >
+          📄 过时说明
+        </button>
+      ) : null}
+    </div>
+  );
 
-  if (dramaNode.workflow === "three-module-v1") {
-    if (!searchParams.get("module")) return <div className="drama-page"><h1>{dramaNode.display_name || dramaNode.name}</h1><p>从左侧展开 stage，选择要查看或编辑的内容。</p></div>;
-    return <EpisodeWorkflowPage key={dramaPath} dramaPath={dramaPath} title={dramaNode.display_name || dramaNode.name} />;
+  if (dramaNode.workflow === "three-module-v1" && searchParams.get("module")) {
+    return (
+      <div className="drama-page-workflow">
+        <div className="drama-page-toolbar">
+          {obsolete ? <ObsoleteBadge note={dramaNode.obsolete_note} /> : null}
+          {actions}
+        </div>
+        <EpisodeWorkflowPage key={`${dramaPath}#${imports}`} dramaPath={dramaPath} title={title} />
+      </div>
+    );
   }
 
   return (
     <div className="drama-page">
       <div className="drama-page-header">
-        <h1>{dramaNode.display_name || dramaNode.name}</h1>
+        <h1>{title}</h1>
+        {obsolete ? <ObsoleteBadge note={dramaNode.obsolete_note} /> : null}
         <button
           type="button"
           className="drama-page-link-btn"
-          onClick={() => navigate(`/file/${encodeURIComponent(readmePath)}`)}
+          onClick={() => navigate(`/file/${encodeURIComponent(`${dramaPath}/README.md`)}`)}
           title="打开本剧 README.md"
         >
           📖 打开 README
         </button>
       </div>
-
-      <DramaDashboard path={dramaPath} onSaved={onChange} />
-
+      {obsolete ? (
+        <p className="drama-page-obsolete-note" role="note">
+          本剧由已删除的旧流程制作或只服务旧流程，内容原样保留、只作参考；等用新流程重做时再更新。
+        </p>
+      ) : null}
       <section className="drama-page-section" aria-label="资源管理">
         <h2 className="drama-page-section-title">资源管理</h2>
-        <div className="drama-dashboard-group" role="group">
-          <button
-            type="button"
-            className="drama-dashboard-btn"
-            onClick={onImportClick}
-            disabled={importBusy}
-            title="从 Downloads 按文件名分类导入近 7 天的图片/视频，并按 parent folder 重命名"
-          >
-            {importBusy ? "⏳ 导入并重命名中…" : "📥 导入 + 重命名"}
-          </button>
-          <button
-            type="button"
-            className="drama-dashboard-btn"
-            onClick={() => navigate(`/characters?drama=${encodeURIComponent(dramaPath)}`)}
-            title="角色画廊：所有角色缩略图 + 一键重生全部三视图/前2s"
-          >
-            🎭 角色画廊
-          </button>
-        </div>
+        {actions}
       </section>
-
-      <section className="drama-page-section" aria-label="分集总览">
-        <h2 className="drama-page-section-title">
-          📺 分集总览
-          <span className="drama-page-section-note">
-            {episodes.length} 集 · {totalMasters} 个带字幕成片（📦 导出会拷到 production/）
-          </span>
-        </h2>
-        {episodes.length === 0 ? (
-          <div className="drama-page-empty">未找到 episodes/ep* 文件夹。</div>
-        ) : (
-          <ul className="drama-episode-list">
-            {episodes.map((ep) => (
-              <li key={ep.path} className="drama-episode-row">
-                <span className="drama-episode-name">{ep.name}</span>
-                {ep.langs.length === 0 ? (
-                  <span className="drama-episode-badge drama-episode-badge-none">无字幕成片</span>
-                ) : (
-                  ["zh", "en", "zhen"]
-                    .filter((l) => ep.langs.includes(l))
-                    .map((l) => (
-                      <span key={l} className="drama-episode-badge">
-                        {LANG_LABEL[l]}
-                      </span>
-                    ))
-                )}
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+      {dramaNode.workflow === "three-module-v1" ? (
+        <p className="drama-page-hint">从左侧展开 stage，选择要查看的集与模块。</p>
+      ) : null}
     </div>
   );
 }

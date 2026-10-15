@@ -18,7 +18,6 @@ from libs.domain.errors.media__error import (
 AI_VIDEOS_ROOT_NAME: str = "ai_videos"
 DELETED_DIR_NAME: str = "_deleted"
 ARCHIVE_DIR_NAME: str = "archive"
-ACTORS_DIR_NAME: str = "_actors"
 
 MEDIA_EXTENSIONS_SET: frozenset[str] = frozenset(
     {".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp",
@@ -51,18 +50,6 @@ class MediaPath:
     def is_under_deleted(self) -> bool:
         parts = self.rel.split("/")
         return len(parts) >= 2 and parts[0] == AI_VIDEOS_ROOT_NAME and parts[1] == DELETED_DIR_NAME
-
-    @property
-    def is_under_actors(self) -> bool:
-        parts = self.rel.split("/")
-        return len(parts) >= 2 and parts[0] == AI_VIDEOS_ROOT_NAME and parts[1] == ACTORS_DIR_NAME
-
-    @property
-    def actor_id_if_under_actors(self) -> str | None:
-        parts = self.rel.split("/")
-        if not self.is_under_actors or len(parts) < 3:
-            return None
-        return parts[2]
 
 
 class ArchiveState(Enum):

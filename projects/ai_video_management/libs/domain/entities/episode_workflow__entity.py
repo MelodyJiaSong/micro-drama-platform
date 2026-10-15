@@ -4,9 +4,16 @@ from dataclasses import dataclass
 from typing import Any
 import re
 
-from libs.common.episode_workflow import COMPILER_VERSION, MODULES, SILENT_SHOT_RULE, VIDEO_SOUND_RULE, fingerprint
+from libs.common.episode_workflow import (ANIMAL_COUNT_RULE, ANTI_TWIN_RULE, BASE_NEGATIVES, CAST_KEY_RE, CAST_USAGE, COMPILER_VERSION,
+                                          LIP_SYNC_RULE, MODULES, NATURAL_MOTION_RULE, ONE_TAKE_RULE, OVERHEAD_USAGE,
+                                          PREVIZ_USAGE, PROMPT_MAX_CHARS, PROP_KEY_RE, PROP_USAGE, SCENE_USAGE, SILENT_SHOT_RULE, VIDEO_SOUND_RULE,
+                                          VOICE_USAGE, fingerprint, scene_revision)
 from libs.common.production_key import SCENE_ID_RE, SHOT_ID_RE, first_shot_key, shot_key
 from libs.domain.errors.episode_workflow__error import EpisodeWorkflowError
+from libs.domain.value_objects.shot_materials__valueobject import PromptSettings, ShotMaterials
+
+SHOT_FIELDS = {"id", "duration", "action", "camera", "dialogue", "cast", "blocking", "beats", "lighting"}
+OPTIONAL_SHOT_FIELDS = {"props"}    # v8 (follow-up 231): story props in frame, by prop key
 
 
 @dataclass
@@ -23,13 +30,17 @@ class EpisodeWorkflowEntity:
         keys: set[str] = set()
         scenes: set[str] = set()
         for scene in content["scenes"]:
-            if not isinstance(scene, dict) or set(scene) != {"id", "shots"} or not isinstance(scene["id"], str) or not SCENE_ID_RE.fullmatch(scene["id"]) or scene["id"] in scenes:
+            if not isinstance(scene, dict) or set(scene) - {"source"} != {"id", "shots"} or not isinstance(scene.get("source", ""), str)                     or not isinstance(scene["id"], str) or not SCENE_ID_RE.fullmatch(scene["id"]) or scene["id"] in scenes:
                 raise EpisodeWorkflowError("无效或重复的编译场次编号")
             scenes.add(scene["id"])
             if not isinstance(scene["shots"], list) or not scene["shots"]:
                 raise EpisodeWorkflowError("编译场次须包含镜头")
             for shot in scene["shots"]:
-                if not isinstance(shot, dict) or set(shot) != {"id", "text"} or not all(isinstance(v, str) for v in shot.values()):
+                # v5 adds the ordered reference list the prompt's @图片N / @视频N / @音频N tags point at; v4 files have none.
+                if not isinstance(shot, dict) or set(shot) - {"refs"} != {"id", "text"} \
+                        or not isinstance(shot["id"], str) or not isinstance(shot["text"], str) \
+                        or not all(isinstance(r, dict) and set(r) in ({"key", "kind", "role", "path"}, {"tag", "kind", "role", "path"})
+                                   and all(isinstance(v, str) for v in r.values()) for r in shot.get("refs", [])):
                     raise EpisodeWorkflowError("无效的编译镜头")
                 key = first_shot_key(shot["id"])
                 if key is None or key.value != shot["id"] or shot["id"] in keys or key.value != shot_key(self.episode_id, scene["id"], f"st{key.shot}").value:
@@ -85,29 +96,106 @@ class EpisodeWorkflowEntity:
             raise EpisodeWorkflowError("请先保存完整内容，并更新到当前上游版本")
         self.documents[module]["approved_revision"] = self.revision(module)
 
-    def compile(self) -> None:
+    def compile(self, materials: dict[str, ShotMaterials] | None = None, settings: PromptSettings | None = None,
+                scene_id: str | None = None) -> None:
+        """Whole episode, or one scene (follow-up 259): a scene compiles once its own shots have every reference, and
+        replaces only its own entry; other scenes keep their prompts. Each compiled scene records `source` (what it was
+        compiled from), so tools tell a stale scene from a current one; the module stays stale until every scene is."""
         if self.status("filming") != "approved":
             raise EpisodeWorkflowError("请先确定影视改编版本", 409)
         scenes = self.documents["filming"]["content"]["scenes"]
         self.validate_content("filming", {"scenes": scenes})
-        compiled = []
-        for scene in scenes:
+        current = self.documents["prompts"]["content"]
+        if scene_id is not None:
+            if scene_id not in {scene["id"] for scene in scenes}:
+                raise EpisodeWorkflowError(f"分镜里没有场次 {scene_id}", 409)
+            if current.get("scenes") and current.get("compiler_version") != COMPILER_VERSION:
+                raise EpisodeWorkflowError("已有的 Prompt 是旧版编译器的结果，请整集编译", 409)
+        targets = [scene for scene in scenes if scene_id in (None, scene["id"])]
+        materials = materials or {}
+        settings = settings or PromptSettings()
+        missing = []
+        for scene in targets:
+            for shot in scene["shots"]:
+                key = shot_key(self.episode_id, scene["id"], shot["id"]).value
+                found = materials.get(key)
+                problems = ["缺参考资料"] if found is None else list(found.errors)
+                missing += [f"{key}：{p}" for p in problems]
+        if missing:
+            raise EpisodeWorkflowError("参考资料不全，不能编译：" + "；".join(missing[:8]) + ("……" if len(missing) > 8 else ""), 409)
+        filming_source = self.documents["filming"]["source_revision"]
+        compiled = {}
+        for scene in targets:
             shots = []
             for shot in scene["shots"]:
                 key = shot_key(self.episode_id, scene["id"], shot["id"]).value
-                sound = VIDEO_SOUND_RULE + ("" if shot["dialogue"].strip() else SILENT_SHOT_RULE)
-                prompt = "\n".join((key, sound, f"时长：{shot['duration']}秒。",
-                                    f"地点：{scene['location']}；时间：{scene['time']}。",
-                                    f"环境资产：{scene['background'] or '未绑定'}。",
-                                    f"画面与表演：{shot['action']}", f"摄影：{shot['camera']}",
-                                    f"对白：{shot['dialogue'] or '无'}", "连续镜头，不要切镜。不要字幕或水印。", sound))
-                shots.append({"id": key, "text": prompt})
-            compiled.append({"id": scene["id"], "shots": shots})
+                prompt, refs = self._prompt(key, scene, shot, materials[key], settings)
+                if len(prompt) > PROMPT_MAX_CHARS:
+                    raise EpisodeWorkflowError(f"{key} 的 prompt 有 {len(prompt)} 字，超过 {PROMPT_MAX_CHARS}：拆镜或精简分镜", 409)
+                shots.append({"id": key, "text": prompt, "refs": refs})
+            compiled[scene["id"]] = {"id": scene["id"], "source": scene_revision(scene, filming_source), "shots": shots}
         previous_approval = self.documents["prompts"]["approved_revision"]
-        self.documents["prompts"] = {"content": {"compiler_version": COMPILER_VERSION, "scenes": compiled},
-                                     "source_revision": self.revision("filming"), "approved_revision": None}
+        if scene_id is None:
+            self.documents["prompts"] = {"content": {"compiler_version": COMPILER_VERSION, "scenes": list(compiled.values())},
+                                         "source_revision": self.revision("filming"), "approved_revision": None}
+        else:
+            kept = {scene["id"]: scene for scene in current.get("scenes", [])}
+            kept.update(compiled)
+            order = [scene["id"] for scene in scenes if scene["id"] in kept]
+            ordered = [kept[i] for i in order] + [scene for i, scene in kept.items() if i not in order]
+            self.documents["prompts"] = {"content": {"compiler_version": COMPILER_VERSION, "scenes": ordered},
+                                         "source_revision": self.documents["prompts"]["source_revision"], "approved_revision": None}
         if previous_approval == self.revision("prompts"):
             self.documents["prompts"]["approved_revision"] = previous_approval
+
+    @staticmethod
+    def _prompt(key: str, scene: dict[str, Any], shot: dict[str, Any], found: ShotMaterials,
+                settings: PromptSettings) -> tuple[str, list[dict[str, str]]]:
+        """One labelled field per line (follow-up 226). The 参考 line lists every referenced file as `key_id=>@`
+        (motion reference, every person's three-view sheet, every prop's anchor image, the background, every person's
+        voice; follow-up 228/229/231);
+        the body names references by key id. `@` is a placeholder the shot's 资料包 fills with the upload number."""
+        refs: list[dict[str, str]] = []
+
+        def add(ref_key: str, kind: str, role: str, path: str) -> str:
+            refs.append({"key": ref_key, "kind": kind, "role": role, "path": path})
+            return ref_key
+
+        video = found.motion_kind == "video"
+        motion = add(f"{key}_previz" if video else f"{key}_overhead", found.motion_kind,
+                     "走位预演（绿幕小人偶）" if video else "俯视站位图", found.motion)
+        people = [(m, add(m.image_key, "image", m.name + "三视图", m.image)) for m in found.cast]
+        props = [(p, add(p.image_key, "image", "道具 " + p.name, p.image)) for p in found.props]
+        place = add(found.scene_key, "image", "场景 " + scene["location"], found.scene_image) if found.scene_image else ""
+        voices = {m.key: add(m.voice_key, "audio", m.name + "的声音", m.voice) for m in found.cast if m.voice}
+        marker = "人偶" if video else "圆点"
+        usage = (PREVIZ_USAGE if video else OVERHEAD_USAGE).format(tag=motion)
+        usage += CAST_USAGE.format(keys="、".join(f"`{tag}`" for _, tag in people)) if people else ""
+        usage += PROP_USAGE.format(keys="、".join(f"`{tag}`" for _, tag in props)) if props else ""
+        usage += SCENE_USAGE.format(scene=place, motion=motion) if place else ""
+        usage += VOICE_USAGE.format(keys="、".join(f"`{tag}`" for tag in voices.values())) if voices else ""
+        lines = [line.strip() for line in shot["dialogue"].splitlines() if line.strip()]
+        sound = "声音：" + VIDEO_SOUND_RULE + ("" if lines else SILENT_SHOT_RULE)
+        people_lines = [f"  {m.name}（三视图`{tag}`" + (f"；声音`{voices[m.key]}`" if m.key in voices else "")
+                        + f"；`{motion}`里的{m.color}色{marker}）：{m.look}" for m, tag in people]
+        prompt = [key, sound, f"时长：{shot['duration']}秒", f"比例：{settings.ratio}",
+                  "参考：" + "、".join(f"`{r['key']}=>@`" for r in refs),
+                  f"参考用法：{usage}"]
+        prompt += ["人物：", *people_lines] if people_lines else ["人物：画面里没有人物"]
+        prompt += ["道具：", *(f"  {p.name}（道具图`{tag}`）：{p.look}" for p, tag in props)] if props else []
+        prompt += [f"本场：{scene['purpose']}",
+                   f"场景：{scene['location']} · {scene['time']}" + (f"（`{place}`）" if place else "")
+                   + (f"：{found.scene_text}" if found.scene_text else ""),
+                   f"画面：{shot['action']}"]
+        prompt += [f"走位：{shot['blocking']}"] if shot["blocking"].strip() else []
+        prompt += [f"动作：{shot['beats']}", f"镜头：{shot['camera']}", f"光线：{shot['lighting']}"]
+        prompt += ["台词：", *(f"  {line}" for line in lines), f"口型：{LIP_SYNC_RULE}"] if lines else ["台词：无"]
+        prompt += [f"风格：{settings.style}"] if settings.style else []
+        prompt += ["负面词：" + "，".join(x for x in (BASE_NEGATIVES, settings.negatives) if x)]
+        animals = "、".join(f"`{tag}`" for m, tag in people if m.key.startswith("m"))
+        animal_rule = ANIMAL_COUNT_RULE.format(keys=animals) if animals else ""
+        prompt += [f"要求：{ONE_TAKE_RULE}{ANTI_TWIN_RULE}{animal_rule}{NATURAL_MOTION_RULE if people else ''}", sound]
+        return "\n".join(prompt), refs
 
     @staticmethod
     def validate_content(module: str, content: dict[str, Any]) -> None:
@@ -133,13 +221,22 @@ class EpisodeWorkflowEntity:
                 raise EpisodeWorkflowError("每场至少包含一个镜头")
             shot_ids: set[str] = set()
             for shot in scene["shots"]:
-                if not isinstance(shot, dict) or set(shot) != {"id", "duration", "action", "camera", "dialogue"}:
-                    raise EpisodeWorkflowError("每镜仅包含编号、时长、动作、摄影和对白")
+                if not isinstance(shot, dict) or not SHOT_FIELDS <= set(shot) <= SHOT_FIELDS | OPTIONAL_SHOT_FIELDS:
+                    raise EpisodeWorkflowError("每镜仅包含编号、时长、动作、摄影、对白、出场人物、走位、动作分拍和光线")
                 if not isinstance(shot["id"], str) or not SHOT_ID_RE.fullmatch(shot["id"]) or shot["id"] in shot_ids:
                     raise EpisodeWorkflowError("镜头编号须在本场唯一，例如st1；重排不改号")
                 shot_ids.add(shot["id"])
                 if type(shot["duration"]) is not int or shot["duration"] < 1:
                     raise EpisodeWorkflowError("镜头时长须为正整数秒")
-                for field in ("action", "camera", "dialogue"):
-                    if not isinstance(shot[field], str) or (field != "dialogue" and not shot[field].strip()):
-                        raise EpisodeWorkflowError("请填写动作和摄影；无对白可留空")
+                for field in ("action", "camera", "dialogue", "blocking", "beats", "lighting"):
+                    if not isinstance(shot[field], str) or (field in ("action", "camera", "beats", "lighting") and not shot[field].strip()):
+                        raise EpisodeWorkflowError("请填写动作、摄影、动作分拍和光线；无对白可留空")
+                cast = shot["cast"]
+                if not isinstance(cast, list) or not all(isinstance(k, str) and re.fullmatch(CAST_KEY_RE, k) for k in cast) \
+                        or len(set(cast)) != len(cast):
+                    raise EpisodeWorkflowError('出场人物写资产键列表，例如["c1-1", "c14"]，不重复')
+                props = shot.get("props", [])
+                if not isinstance(props, list) or not all(isinstance(k, str) and re.fullmatch(PROP_KEY_RE, k) for k in props)                         or len(set(props)) != len(props):
+                    raise EpisodeWorkflowError('道具写资产键列表，例如["p475"]，不重复')
+                if cast and not shot["blocking"].strip():
+                    raise EpisodeWorkflowError("有出场人物的镜头要写走位")

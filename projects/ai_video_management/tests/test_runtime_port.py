@@ -14,13 +14,19 @@ from apps.api import main, asgi
 assert main.PORT == asgi.PORT == 18766
 for app in (main.create_app(main._build_container(False), serve_static=False), asgi.app):
     with TestClient(app) as client:
-        # A nonexistent endpoint isolates Origin validation from filesystem work.
-        good = client.post('/api/not-an-endpoint', headers={
-            'Origin': 'http://127.0.0.1:18766', 'Host': '127.0.0.1:18766'})
-        assert good.status_code == 404, good.text
-        bad = client.post('/api/not-an-endpoint', headers={
-            'Origin': 'http://127.0.0.1:8766', 'Host': '127.0.0.1:18766'})
-        assert bad.status_code == 403, bad.text
+        # Every write is origin-checked (follow-up 239); probe a PUT and a POST that
+        # was unchecked before. These apps serve the REAL repo root, so each probe
+        # carries an empty body: once the gate admits it, request validation fails
+        # (422) before any handler or filesystem work runs.
+        for method, url in (('PUT', '/api/file'), ('POST', '/api/archive-media')):
+            good = client.request(method, url, json={}, headers={
+                'Origin': 'http://127.0.0.1:18766', 'Host': '127.0.0.1:18766'})
+            assert good.status_code == 422, (method, url, good.text)
+            bad_origin = client.request(method, url, json={}, headers={
+                'Origin': 'http://127.0.0.1:8766', 'Host': '127.0.0.1:18766'})
+            assert bad_origin.status_code == 403, (method, url, bad_origin.text)
+            bad_host = client.request(method, url, json={}, headers={'Host': '127.0.0.1:8766'})
+            assert bad_host.status_code == 403, (method, url, bad_host.text)
 """
     result = subprocess.run(
         [sys.executable, "-c", script],

@@ -52,8 +52,8 @@ def test_resolves_dotclaude_skill(resolver):
 @pytest.mark.parametrize("rel", [
     "AGENTS.md", "CONVENTIONS.md", ".agents/skill-aliases.json",
     ".agents/skills/ai-videos-pipeline/SKILL.md",
-    ".agents/references/project/ai_video.md",
-    ".agents/skills/ai-videos-pipeline/playbooks/ai_videos__stage2_世界观人设.md",
+    ".agents/references/project/ai_video_workflow.md",
+    ".agents/skills/ai-videos-pipeline/modules/filming.md",
     ".claude/skills/ai_videos__全流程编排/SKILL.md",
 ])
 def test_resolves_shared_agent_context(resolver, rel):

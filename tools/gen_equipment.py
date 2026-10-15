@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""装备卡 / 装备表 / 索引生成器（`ai_video.md` rule 4m；通用引擎，任何剧的 `equipment/` 都走它）。
+"""装备卡 / 装备表 / 索引生成器（规则见 `.agents/skills/ai-videos-pipeline/resources/assets.md`「装备」；通用引擎，任何剧的 `equipment/` 都走它）。
 
 用法（仓库根目录；参数是剧里任意路径，解析到该剧的 equipment/）：
     python tools/gen_equipment.py build  <路径>        # 闸门 → 按 registry 建 / 搬目录 → 写卡、装备表 md、索引 → 回读
@@ -17,14 +17,15 @@
 prompt 纪律：**世界内专名（物品原名）不进 prompt**，prompt 只用 item.toml 的 `noun`（「一把双手锤」）——
 物品名多是 IP 专名（concept C3 黄级）；正面图纯文字自由生成、零参考图，侧 / 背只挂正面图（rule 4e ①）；
 出图 prompt 不写「相机 / 摄影机 / 镜头架」（W13）；装备本体不自发光，除非原典模型自带特效（item.toml `effect`）。
-出图沿用 props 的做法：正 / 侧 / 背三张、侧背挂正面图；引擎**逐件**由 `Config.engine_for` 定（rule 4l / 4m，follow-up 027）——
-武器两类（近战武器 / 法系与远程）蓝档及以上走 ElevenLabs（prompt 上限 EL_PROMPT_MAX），其余一律即梦（1600 字硬限）；
-各走各的、失败不退另一家，重跑同一条命令续。`--engine X` 显式点名时整批照它。
+出图沿用 props 的做法：正 / 侧 / 背三张、侧背挂正面图；引擎按 `tools/image_engine.py`（follow-up 238）：
+auto ＝ Codex 内置出图 → ElevenLabs → 即梦（1600 字硬限，最低选项），前一家明确失败才换下一家；
+`Config.engine_for` 的旧分组（follow-up 027）只用于 `--only-engine` 分批与卡的字数检查。`--engine X` 显式点名时整批只用 X。
 """
 from __future__ import annotations
 
 import argparse
 import importlib
+import json
 import time
 import io
 import re
@@ -34,7 +35,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from tools import equipment_lib as el  # noqa: E402
-from tools import gen_images_xianjian as dm  # noqa: E402  PROMPT_MAX 的唯一出处（即梦服务端硬限）
+from tools import dreamina_image as dm  # noqa: E402  PROMPT_MAX 的唯一出处（即梦服务端硬限）
 from tools import image_engine as ie  # noqa: E402  出图引擎枚举的唯一出处（rule 4l）
 
 FENCE = "`" * 3
@@ -85,10 +86,18 @@ class Drama:
         self.root = el.equipment_root(anywhere)
         self.cfg = el.config(self.root)
         m = self.cfg.meta
-        sg = (self.root / m["style_guide"]).resolve()
-        text = sg.read_text(encoding="utf-8")
-        self.style = _fence_after(text, m["style_heading"], sg)
-        self.neg_base = _fence_after(text, m["negative_heading"], sg)
+        sg = (self.root / m["style_guide"]).resolve() if m.get("style_guide") else None
+        if sg is not None and sg.is_file():
+            text = sg.read_text(encoding="utf-8")
+            self.style = _fence_after(text, m["style_heading"], sg)
+            self.neg_base = _fence_after(text, m["negative_heading"], sg)
+        else:     # 六模块剧（follow-up 229）：全剧画风与负面词唯一维护在剧的 workflow.json `prompt`
+            wf = next((d / "workflow.json" for d in self.root.parents if (d / "workflow.json").is_file()), None)
+            prompt = json.loads(wf.read_text(encoding="utf-8")).get("prompt", {}) if wf else {}
+            if not prompt.get("style") or not prompt.get("negatives"):
+                raise SystemExit(f"{sg} 不在，剧的 workflow.json 也没有 prompt.style / prompt.negatives：渲染串无出处")
+            self.style = prompt["style"]
+            self.neg_base = "画面文字，字幕，水印，logo，" + prompt["negatives"]   # 视频编译器自带这几项，图片 prompt 要自己写
         self.gate = importlib.import_module(m["gate"]) if m.get("gate") else None
         self.rows = el.registry(self.root)
         self.loadouts = [el.loadout(self.root, p.stem) for p in el.loadout_paths(self.root)]
@@ -189,7 +198,7 @@ def card(d: Drama, r: el.Row, sp: dict) -> str:
 | 来源 | {_clean(sp.get('source', '—'))} |{(chr(10) + '| 原典描述与传说 | ' + _clean(sp['lore']) + ' |') if sp.get('lore') else ''}
 | 谁穿 / 哪一段 | {'；'.join(who)} |
 | 事实 | {facts} |
-| 出图引擎 | {'ElevenLabs' if d.cfg.engine_for(r) == 'elevenlabs' else '即梦 CLI'}（equipment.toml [meta]，follow-up 027） |
+| 出图引擎 | Codex 内置出图 → ElevenLabs → 即梦 CLI（auto，follow-up 238） |
 | 外观依据 | {sp.get('basis', '—')}（{sp.get('confidence', '—')}） |{chr(10) + '| ⚠ 图的已知偏差 | ' + _clean(sp['known_issue']) + '（出图 3 次后仍在，待人工挑图或手修） |' if sp.get('known_issue') else ''}
 
 ## 锁定描述符
@@ -288,7 +297,7 @@ def loadout_md(d: Drama, lo: el.Loadout) -> str:
 
 
 def index_md(d: Drama) -> str:
-    out = ["# 装备索引", "", "> **由 `tools/gen_equipment.py` 生成，不要手改。** 编号出处 `registry.toml`，规则见 `ai_video.md` rule 4m。", ""]
+    out = ["# 装备索引", "", "> **由 `tools/gen_equipment.py` 生成，不要手改。** 编号出处 `registry.toml`，规则见 `.agents/skills/ai-videos-pipeline/resources/assets.md`「装备」。", ""]
     tiers = [t.name for t in d.cfg.tiers]
     groups = [(c.name, c.classes) for c in d.cfg.categories] or [("", "")]
     need = int(d.cfg.meta.get("min_per_tier", 0))
@@ -528,8 +537,8 @@ def images(paths: list[str], engine: str, force: bool, only: set[str], shard: tu
             dirp = el.find(root, r.key)
             if dirp is None or (only and r.key not in only):
                 continue
-            eng = engine or cfg.engine_for(r)
-            if only_engine and eng != only_engine:
+            eng = engine or ie.AUTO   # follow-up 238：auto ＝ Codex → ElevenLabs → 即梦；engine_for 只剩 --only-engine 分批用
+            if only_engine and cfg.engine_for(r) != only_engine:
                 continue
             if Path(p).resolve() in (root, dirp, dirp.parent):
                 it = Item(dirp, r.key)
@@ -564,15 +573,15 @@ def main() -> int:
     ap.add_argument("step", choices=("build", "check", "images", "lint"))
     ap.add_argument("paths", nargs="+")
     ap.add_argument("--engine", default="", choices=("",) + ie.CHOICES,
-                    help="默认逐件定（follow-up 027 / 029：武器蓝档及以上 ElevenLabs、其余即梦）；显式点名则整批照它")
+                    help="默认 auto ＝ Codex → ElevenLabs → 即梦（follow-up 238）；显式点名则整批只用它")
     ap.add_argument("--only-engine", default="", choices=("", ie.DREAMINA, ie.ELEVENLABS),
-                    help="只出逐件判定为这一家的条目（两家分开并发时用）")
+                    help="只出 equipment.toml [meta] 旧分组判定为这一家的条目（分批并发时用；引擎本身仍按 --engine）")
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--only", default="", help="只出这些键，逗号分隔")
     ap.add_argument("--shard", default="0/1", help="k/n：只做第 k 份（共 n 份），多进程并发时各拿不相交的一份")
     ap.add_argument("--passes", type=int, default=5, help="失败件最多补跑几轮")
     ap.add_argument("--sheet", action="store_true",
-                    help="即梦件改走三视图设定图：一张横幅并排正 / 侧 / 背，裁成三张、三张一起换（029：护甲有效，扁长武器无效）")
+                    help="显式 --engine dreamina 时改走三视图设定图：一张横幅并排正 / 侧 / 背，裁成三张、三张一起换（029：护甲有效，扁长武器无效）")
     ap.add_argument("--item", default="", help="lint：暂存区 item.toml 路径")
     ap.add_argument("--name", default="")
     ap.add_argument("--slot", default="")

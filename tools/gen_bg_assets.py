@@ -18,7 +18,7 @@
     python tools/gen_bg_assets.py check  <目录…>        # 卡 / toml 契约，不花钱
     python tools/gen_bg_assets.py plan   <目录…>        # 每面的送审稿字数、参考图、负面词末行，不花钱
     python tools/gen_bg_assets.py refs   <目录…>        # 抓真实照片
-    python tools/gen_bg_assets.py images <目录…> [--engine auto|dreamina|elevenlabs]
+    python tools/gen_bg_assets.py images <目录…> [--engine auto|codex|elevenlabs|dreamina]
     python tools/gen_bg_assets.py mesh   <目录…> [--tier Sketch|Regular]
     python tools/gen_bg_assets.py all    <目录…>
     python tools/gen_bg_assets.py all    <目录…> --shard 0/4   # 四个进程各跑一份（即梦按 prompt 找回任务，并发安全）
@@ -42,8 +42,9 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
-from tools import gen_images_xianjian as dm  # noqa: E402  即梦 CLI 提交 / 取回（提交即扣费，失败只重查不重交）
+from tools import dreamina_image as dm  # noqa: E402  即梦 CLI 路径 / 回执解析 / 下载（提交即扣费，失败只重查不重交）
 from tools import hyper3d_fetch as rodin  # noqa: E402
+from tools import codex_image as ci  # noqa: E402
 from tools import image_engine as ie  # noqa: E402
 from tools import image_fetch as el  # noqa: E402
 from tools import check_world_scenes_szzl as gate  # noqa: E402
@@ -290,7 +291,7 @@ def _dm_tasks(target: Path) -> list[dict]:
 def _dm_submit(prompt: str, refs: list[Path], ratio: str = "1:1", wait_s: int = 240, *, target: Path) -> tuple[str | None, int]:
     """即梦提交 + 取回，**可多进程并发**。
 
-    `gen_images_xianjian.submit` 在 CLI 没回 JSON 时用「提交前后 list_task 差集」找回任务——
+    旧的仙剑出图器（已删）在 CLI 没回 JSON 时用「提交前后 list_task 差集」找回任务——
     两个进程同时提交时差集里有别人的任务，会把 A 的图存成 B 的。这里改按 **prompt 全文**匹配
     （每件资产每个视角的 prompt 都不同），于是并发安全。即梦提交即扣费：找回只重查、绝不重交。
     """
@@ -324,10 +325,44 @@ def _dm_submit(prompt: str, refs: list[Path], ratio: str = "1:1", wait_s: int = 
     raise RuntimeError(f"即梦 {sid} 等了 {wait_s // 60} 分钟仍未出图（积分已扣；稍后 dreamina query_result --submit_id={sid} 可取回）")
 
 
+class DownloadLost(RuntimeError):
+    """即梦已出图并扣费，但图下载不回来——再提交只会重复扣费（2026-10-11：VPN 下 byteimg 国内 CDN 握手全超时，
+    旧逻辑把下载失败当网络错误重提了 4 次）。"""
+
+
+DL_RETRIES = 3
+
+
 def _dreamina(a: Asset, i: int, prompt: str, refs: list[Path]) -> bool:
     url, cost = _dm_submit(prompt, refs, wait_s=900, target=a.view(i))
-    dm.download(url, a.view(i))
+    for attempt in range(DL_RETRIES):
+        try:
+            dm.download(url, a.view(i))
+            break
+        except Exception as e:     # noqa: BLE001
+            if attempt == DL_RETRIES - 1:
+                raise DownloadLost(f"已出图并扣费（{cost} 积分），下载 {DL_RETRIES} 次都失败：{str(e)[:120]}") from e
+            time.sleep(20 * (attempt + 1))
     a.log(**{f"dreamina_{VIEWS[i]}": cost})
+    return True
+
+
+def _dreamina_retrying(a: Asset, i: int, prompt: str, refs: list[Path]) -> bool:
+    """网络超时先退避重试（实测 2026-09-25 即梦接口 2–5s 才回头）；下载丢失与非网络错误不重试。"""
+    for attempt in range(DM_RETRIES + 1):
+        try:
+            return _dreamina(a, i, prompt, refs)
+        except Exception as e:     # noqa: BLE001
+            print(f"  ! {a.key}-{VIEWS[i]} 即梦失败（第 {attempt + 1} 次）：{str(e)[:160]}")
+            if isinstance(e, DownloadLost) or not DM_RETRYABLE.search(str(e)) or attempt == DM_RETRIES:
+                raise
+            time.sleep(45 * (attempt + 1))
+    return False
+
+
+def _codex(a: Asset, i: int, prompt: str, refs: list[Path]) -> bool:
+    tag = ci.render(prompt, refs, a.view(i), "1:1")
+    a.log(**{f"codex_{VIEWS[i]}": tag})
     return True
 
 
@@ -371,26 +406,22 @@ def do_images(a: Asset, engine: str, force: bool) -> None:
             print(f"  ! {a.key} 没有正面图，侧 / 背无从参考")
             return
         t0 = time.time()
-        ok = False
-        if engine in (ie.DREAMINA, ie.AUTO):
-            prompt, refs = request(a, i, ie.DREAMINA)
-            # 网络超时先退避重试（实测 2026-09-25 即梦接口 2–5s 才回头），别一失败就花贵的 ElevenLabs
-            for attempt in range(DM_RETRIES + 1):
-                try:
-                    ok = _dreamina(a, i, prompt, refs)
-                    break
-                except Exception as e:     # noqa: BLE001
-                    print(f"  ! {a.key}-{VIEWS[i]} 即梦失败（第 {attempt + 1} 次）：{str(e)[:160]}")
-                    if not DM_RETRYABLE.search(str(e)) or attempt == DM_RETRIES:
-                        break
-                    time.sleep(45 * (attempt + 1))
-        if not ok and engine == ie.DREAMINA:
-            # 显式 --engine dreamina ＝ 只用即梦（rule 4l）：失败就报出来、不退 ElevenLabs，重跑同一条命令即续
-            raise RuntimeError(f"{a.key}-{VIEWS[i]} 即梦失败，未退 ElevenLabs")
+        full, _ = request(a, i, ie.ELEVENLABS)
+        ok, errs = False, []
+        for eng in ie.order(engine, target=out, prompt=full):   # auto ＝ Codex → ElevenLabs → 即梦（follow-up 238）
+            prompt, refs = request(a, i, eng)
+            try:
+                ok = _dreamina_retrying(a, i, prompt, refs) if eng == ie.DREAMINA else                     (_codex if eng == ie.CODEX else _elevenlabs)(a, i, prompt, refs)
+            except Exception as e:     # noqa: BLE001 —— 明确失败才换下一家
+                if isinstance(e, DownloadLost):
+                    raise              # 已出图扣费，只重下不重提、也不换家花钱
+                errs.append(f"{eng}：{str(e)[:160]}")
+                print(f"  ! {a.key}-{VIEWS[i]} {errs[-1]}")
+            if ok:
+                break
         if not ok:
-            print(f"  · {a.key}-{VIEWS[i]} 改走 ElevenLabs")
-            prompt, refs = request(a, i, ie.ELEVENLABS)
-            ok = _elevenlabs(a, i, prompt, refs)
+            # 显式 --engine X ＝ 只用 X；auto 各家都失败——报出来，重跑同一条命令即续
+            raise RuntimeError(f"{a.key}-{VIEWS[i]} 出图失败：{' | '.join(errs)}")
         print(f"  ✓ {out.name}  {time.time() - t0:.0f}s")
 
 
@@ -433,7 +464,7 @@ def main() -> int:
     ap.add_argument("step", choices=("check", "plan", "refs", "images", "mesh", "all"))
     ap.add_argument("paths", nargs="+")
     ap.add_argument("--engine", default=ie.AUTO, choices=ie.CHOICES,
-                    help="auto ＝ 即梦、失败退 ElevenLabs；显式指定 ＝ 只用那一家（rule 4l）")
+                    help="auto ＝ Codex → ElevenLabs → 即梦（follow-up 238）；显式指定 ＝ 只用那一家")
     ap.add_argument("--tier", default="Sketch", choices=("Sketch", "Regular"))
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--shard", default="0/1", help="k/n：只做第 k 份（共 n 份），多进程并发时各拿不相交的一份")
@@ -458,7 +489,7 @@ def main() -> int:
         return 1 if bad else 0
     if args.step == "plan":
         for a in assets:
-            do_plan(a, ie.ELEVENLABS if args.engine == ie.ELEVENLABS else ie.DREAMINA)
+            do_plan(a, ie.DREAMINA if args.engine == ie.DREAMINA else ie.ELEVENLABS)
         return 0
     # 一件资产卡住（即梦不回、Rodin 超时、网络断）就记下来跳过，接着做下一件——
     # 用户 2026-09-24：「哪一步太久没反应就跳过，继续做剩下的」。产物按文件落盘，下次重跑只补缺的。

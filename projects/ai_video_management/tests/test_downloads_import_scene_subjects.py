@@ -1,10 +1,10 @@
-"""Scene SUBJECT folders (`bg{N}_{主体名}`) vs single-image PLATE folders.
+"""Scene SUBJECT folders (`bg{N}_{主体名}`): several named views, one .md.
 
 A subject folder holds several named views of one place plus one .md with all
-their prompts. A plate folder (`bg{N}_{方位}_{描述}`) still holds exactly one
-canonical image. Confusing the two is destructive: the plate path clears the
-whole folder before every move, so importing the second view deletes the first
-— which is exactly what happened in the field.
+their prompts. Importing a view must never clear the folder's other views —
+the old single-image plate route (`bg{N}_{方位}_{描述}`, removed in follow-up
+233) used to clear the whole folder, so importing the second view deleted the
+first, which is exactly what happened in the field.
 
 Routing key = `bg{N}-{M}` — subject N, view M — pure ASCII and digits at position
 0 of the download name, so it survives the out-of-image tool naming the download
@@ -59,8 +59,6 @@ def test_subject_is_decided_by_content_not_shape(tmp_path: Path) -> None:
     assert DownloadsImporter._is_subject_folder(subject) is True
     assert DownloadsImporter._is_subject_folder(legacy_plate) is False
     assert DownloadsImporter._is_subject_folder(described_plate) is False
-    # the plate keeps routing on its 方位 token, untouched
-    assert DownloadsImporter._plate_orientation_token("bg5_高位俯瞰") == "高位俯瞰"
 
 
 def test_several_views_survive_each_other(tmp_path: Path) -> None:

@@ -10,19 +10,21 @@
     {bg}_floorplan.png   俯视图：地面 + 水系 + 道路 + 建筑组方块 + 朝向 + 比例尺
     {bg}_blocks.md       同一批数字的表（名字 / 位置 / 尺寸 / 朝向 / 来源 / 是否建 prop）
 
-## 它和 `shot_plan.py`（原 `shot_floorplan.py`）的分工
+## 它和每镜镜头平面图 `shot_overhead.py` 的分工
 
-| | `shot_plan.py`（rule 4j） | 本工具 |
+（旧的航线 / 走位图工具 `shot_plan.py`、`shot_floorplan.py` 已随旧流程删除。）
+
+| | `shot_overhead.py`（每镜 overhead） | 本工具 |
 |---|---|---|
-| 回答 | **镜头怎么走**（航线、航点、离地物多远） | **这个地方有什么**（有哪些东西、各在哪、多大） |
-| 输入 | `previz_config.toml` 的 `[[机位]]` | `blocks.toml` |
-| 下游 | previz 的机位关键帧 | **props 卡 与 .blend 建模** |
+| 回答 | **镜头怎么走**（机位、人物走位、本镜才出现的物件） | **这个地方有什么**（有哪些东西、各在哪、多大） |
+| 输入 | `{shot 目录}/planning/overhead.toml` | `blocks.toml` |
+| 下游 | previz 与 Seedance 的运动 / 几何参考 | **props 卡 与 .blend 建模** |
 
 两者共用同一套世界坐标，**但产物不同，不要互相替代**。
 
 ## 三条硬约束
 
-1. **几何只有一个出处**（rule 4i ①）：位置与尺寸只写在 `blocks.toml`；图与表都是派生。
+1. **几何只有一个出处**：位置与尺寸只写在 `blocks.toml`；图与表都是派生。
    改布局 ＝ 改 toml 重跑，**不手改 PNG、不手改 md**。
 2. **每个 block 必须写 `src`（来源）**——`原典方位` / `坐标表` / `地图量取` / `推定`。
    **`推定` 的块在图上画成虚线**，让看图的人一眼分清「有据」与「我编的」。
@@ -264,7 +266,7 @@ def render(cfg: dict, scene: str) -> str:
 
     # 索引栏里带上 **稳定 id**：圆牌号是按面积降序生成的，**把一块加宽 2 m 就会让一半的号重排**，
     # 于是所有引用它的航线 / 闸门 / 批注静默指到别的建筑上，而且不报错。
-    # 所以「圆牌号」只用来看图，「id」才是可以被引用的键（rule 4k）。
+    # 所以「圆牌号」只用来看图，「id」才是可以被引用的键。
     index_panel(d, pad + plan_w + GAP, top, PANEL_W, [
         (no, b["name"],
          f"{b.get('id', '??')}  {b['size'][0]:g}×{b['size'][1]:g} m  h{float(b.get('h_m', 0) or 0):g}"
@@ -319,7 +321,7 @@ def write_table(cfg: dict, scene: str) -> str:
         f"{b.get('rot', 0):g}° | {b['src']} | {'✅' if b.get('make_prop') else ''} | {b.get('note', '')} |"
         for b in cfg.get("block", []))
     absent = meta.get("absent") or []
-    absent_md = ("\n## 这里**没有**什么（喂负面词，rule 4k）\n\n"
+    absent_md = ("\n## 这里**没有**什么（喂负面词）\n\n"
                  + "\n".join(f"- ❌ {a}" for a in absent) + "\n"
                  ) if absent else ""
     total = sum(a for _, _, a in numbered(cfg))
@@ -334,7 +336,7 @@ def write_table(cfg: dict, scene: str) -> str:
 > 尺度来源 **{meta.get('scale_src', '?')}** ｜ 收据 `blocks.toml@{planschema.sha(scene)}`
 >
 > **`id` 是可引用的键**（航线、闸门、批注一律引 id）；`#` 只是图上的看图圆牌，
-> **按面积降序生成，改一块尺寸就会重排**，所以任何地方都不要引 `#`（rule 4k）。
+> **按面积降序生成，改一块尺寸就会重排**，所以任何地方都不要引 `#`。
 
 | id | # | bg | 名字 | 中心 (x, y) m | 尺寸 m | 高 m | 面积 m² | 旋转 | 来源 | 建 prop | 备注 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
@@ -350,8 +352,8 @@ def write_table(cfg: dict, scene: str) -> str:
 
 ## 下游
 
-- 标 `建 prop` 的块 → `props/p{{N}}_{{名}}/` 出 object 卡（rule 4d 图先行五步）。
-- 全表 → `_blender/blender_build.md` 的建模依据（rule 4e ⑥：`.blend` 是图的下游）。
+- 标 `建 prop` 的块 → `props/p{{N}}_{{名}}/` 出 object 卡（见 `.agents/skills/ai-videos-pipeline/resources/assets.md`「道具与装备」）。
+- 全表 → `_blender/blender_build.md` 的建模依据（`.blend` 是图的下游）。
 """)
     return out
 

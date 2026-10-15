@@ -32,10 +32,10 @@ _SKIP_TOP_LEVEL: frozenset[str] = frozenset({"_deleted"})
 # 按 `specs/ai_video/sk2/divergence.md` #108 它们「只作形制依据、不入画、不上传生成模型」——
 # 把它们推进对象存储等于再分发，同样不行。所以 `ref/` 整体不进 R2：
 # 形制结论已经转写成 `refs.md` 里的中文锁定串（带 source_url），图随时可按 URL 复现。
-# `refs_game98/` 与 `refs_longplay/` 是从公开视频抽的逐场景参考帧，
-# 由 tools/fetch_xianjian_refs.py 随时重抽——派生缓存，同样不进 R2。
-# `资料包/` 是 Seedance 网页出片资料包（tools/seedance_kit.py）：每镜一份参考素材的**副本**，
-# 由 shot md 与各资产随时重建——同步进 R2 只会每集多存几百 MB 重复字节（ai_video.md rule 12.4-K）。
+# `refs_game98/` 与 `refs_longplay/` 是旧剧（仙剑）从公开视频抽的逐场景参考帧
+# （抽帧工具已随旧流程删除，follow-up 233）——派生缓存，同样不进 R2。
+# `资料包/` 是 Seedance 网页出片资料包（新流程由 tools/shot_pack.py 生成；旧剧的由已删的旧资料包工具生成）：
+# 每镜一份参考素材的**副本**，随时可由镜头与各资产重建——同步进 R2 只会每集多存几百 MB 重复字节。
 _SKIP_DIRS: frozenset[str] = frozenset({"ref", "refs_game98", "refs_longplay", "资料包"})
 _CACHE_NAME: str = ".assets_cache.json"
 _CHUNK: int = 1 << 20

@@ -1,9 +1,10 @@
-"""Chinese display_name for staged-pipeline drama + scene folders (tree__reader).
+"""Chinese display_name for drama + scene folders (tree__reader).
 
-Drama folders are pinyin/English on disk; their Chinese title now lives in
-`1_立项/concept.md` (no top-level README). Scene folders are pinyin with the
-Chinese name in `{name}.md`'s H1 `（中文）`. Both must surface as `display_name`
-so the sidebar shows Chinese.
+Drama folders are pinyin/English on disk; their Chinese title lives in the
+drama's `README.md` H1 (the old `1_立项/concept.md` fallback went with the 0–7
+stage pipeline in follow-up 233). Scene folders are pinyin with the Chinese
+name in `{name}.md`'s H1 `（中文）`. Both must surface as `display_name` so the
+sidebar shows Chinese.
 """
 from __future__ import annotations
 
@@ -44,22 +45,22 @@ def test_workflow_stages_expand_into_episode_outputs(tmp_path: Path) -> None:
     for stage, module in zip(node["children"][2:], MODULES):
         assert stage["type"] == "directory"
         assert [child["display_name"] for child in stage["children"]] == ["EP1", "EP2"]
-        if module != "story":
-            assert all(child["workflow_module"] == module for child in stage["children"])
-            assert stage["children"][1]["path"] == f"ai_videos/demo/episodes/ep02/{module}.json"
-        if module == "story":
-            current = stage["children"][0]["children"][0]
-            assert current["display_name"] == "当前 EP1 · 未选用" and current["type"] == "directory"
-            assert "lifetime" not in current
-            assert current["children"] == []
-            assert len(stage["children"][1]["children"]) == 1
+        assert all(child["workflow_module"] == module for child in stage["children"])
+        assert stage["children"][1]["path"] == f"ai_videos/demo/episodes/ep02/{module}.json"
+    # Placeholder stages list every episode but point at no document yet.
+    placeholders = node["children"][2 + len(MODULES):]
+    assert [stage["name"] for stage in placeholders] == ["edit", "sound", "delivery"]
+    for stage in placeholders:
+        assert [(child["display_name"], child["workflow_module"], child["type"]) for child in stage["children"]] == [
+            ("EP1", stage["name"], "workflow"), ("EP2", stage["name"], "workflow")]
+        assert not stage["children"][0]["path"].endswith(".json")
 
 
-def test_drama_zh_title_from_concept(tmp_path: Path) -> None:
+def test_concept_md_no_longer_titles_a_drama(tmp_path: Path) -> None:
     proj = tmp_path / "ai_videos" / "wushen_juexing"
     (proj / "1_立项").mkdir(parents=True)
     (proj / "1_立项" / "concept.md").write_text("# 立项策划单 · 武神觉醒\n", encoding="utf-8")
-    assert _reader(tmp_path)._project_zh_title(proj) == "武神觉醒"
+    assert _reader(tmp_path)._project_zh_title(proj) is None
 
 
 def test_drama_zh_title_readme_still_wins(tmp_path: Path) -> None:
@@ -80,10 +81,8 @@ def test_drama_zh_title_drops_paren_qualifier(tmp_path: Path) -> None:
 
 def test_drama_zh_title_paren_qualifier_after_middle_dot(tmp_path: Path) -> None:
     proj = tmp_path / "ai_videos" / "rexue_gaoxiao"
-    (proj / "1_立项").mkdir(parents=True)
-    (proj / "1_立项" / "concept.md").write_text(
-        "# 立项策划单 · 热血高校（预告片）\n", encoding="utf-8"
-    )
+    proj.mkdir(parents=True)
+    (proj / "README.md").write_text("# 立项策划单 · 热血高校（预告片）\n", encoding="utf-8")
     assert _reader(tmp_path)._project_zh_title(proj) == "热血高校"
 
 
@@ -122,20 +121,26 @@ def test_scene_main_md_leaf_has_zh_display(tmp_path: Path) -> None:
     assert node["path"].endswith("jishi_changjie.md")   # path stays pinyin
 
 
-def test_scene_plate_md_leaf_no_display(tmp_path: Path) -> None:
-    # a plate .md never takes its H1 (a prompt title) as label — only the
-    # routing-key label every keyed scenes-tree node gets (follow-up 173)
-    plate = tmp_path / "ai_videos" / "d" / "2_世界观人设" / "scenes" / "jishi_changjie" / "bg1_顺街_全景"
-    plate.mkdir(parents=True)
-    f = plate / "bg1_顺街_全景.md"
-    f.write_text("# bg1_顺街_全景 · 集市长街 顺街全景\n", encoding="utf-8")
-    assert _reader(tmp_path)._leaf_for(f)["display_name"] == "bg1 顺街_全景.md"
+def test_decision_records_appear_under_episode_and_scene(tmp_path: Path) -> None:
+    from libs.common.episode_workflow import WORKFLOW_ID
 
+    project = tmp_path / "ai_videos/demo"
+    episode = project / "episodes/ep01"
+    (episode / "decisions").mkdir(parents=True)
+    (episode / "scenes/s1").mkdir(parents=True)
+    (project / "workflow.json").write_text(json.dumps({"workflow": WORKFLOW_ID}), encoding="utf-8")
+    shot = {"id": "st1", "duration": 5, "action": "走进来", "camera": "远景", "dialogue": ""}
+    (episode / "filming.json").write_text(json.dumps({"content": {"scenes": [{"id": "s1", "background": "", "location": "隘口", "time": "清晨", "purpose": "进谷", "shots": [shot]}]},
+                                                       "source_revision": None, "approved_revision": None}), encoding="utf-8")
+    (episode / "decisions/filming.md").write_text("# EP1 影视改编决策", encoding="utf-8")
+    (episode / "decisions/story.md").write_text("# EP1 故事决策", encoding="utf-8")
+    (episode / "scenes/s1/decisions.md").write_text("# s1 决策", encoding="utf-8")
+    node = _reader(tmp_path)._walk_project(project)
+    stages = {child["name"]: child for child in node["children"]}
+    filming_ep = stages["filming"]["children"][0]
+    assert filming_ep["children"][0] == {"type": "file", "name": "filming.md", "display_name": "决策记录（本集）", "path": "ai_videos/demo/episodes/ep01/decisions/filming.md"}
+    scene = filming_ep["children"][1]
+    assert scene["children"][0]["display_name"] == "决策记录" and scene["children"][0]["path"].endswith("scenes/s1/decisions.md")
+    story_ep = stages["story"]["children"][0]
+    assert story_ep["type"] == "directory" and story_ep["children"][0]["path"].endswith("decisions/story.md")
 
-def test_shot_md_leaf_no_display(tmp_path: Path) -> None:
-    # ordinary md leaves (not scene main sidecar) unchanged
-    d = tmp_path / "ai_videos" / "d" / "5_6_分镜与prompt" / "episodes" / "ep02" / "shots" / "shot01"
-    d.mkdir(parents=True)
-    f = d / "shot01.md"
-    f.write_text("# ep02 / shot01 · 离家上路\n", encoding="utf-8")
-    assert "display_name" not in _reader(tmp_path)._leaf_for(f)

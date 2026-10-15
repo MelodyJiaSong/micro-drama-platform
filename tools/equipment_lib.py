@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""装备库 `equipment/` 的唯一定位、编号与装备表（`ai_video.md` rule 4m；2026-09-25 shengji_zhilu follow-up 021）。
+"""装备库 `equipment/` 的唯一定位、编号与装备表（规则见 `.agents/skills/ai-videos-pipeline/resources/assets.md`「装备」；2026-09-25 shengji_zhilu follow-up 021）。
 
 装备是与 characters / scenes / props 并列的资产类型——**人物卡只管人**（身体 + 便服底层），手里的兵器、身上的甲、
 手上的护腕一律是装备卡，谁在哪一段穿什么由装备表决定：
@@ -271,7 +271,7 @@ def _fmt(v) -> str:
 
 
 def write_registry(root: Path, rows: list[Row]) -> None:
-    head = ("# 本剧装备编号唯一出处（tools/equipment_lib.py；ai_video.md rule 4m）。新装备用 equipment_lib.allocate() 领号，不许手填。\n"
+    head = ("# 本剧装备编号唯一出处（tools/equipment_lib.py；规则见 .agents/skills/ai-videos-pipeline/resources/assets.md「装备」）。新装备用 equipment_lib.allocate() 领号，不许手填。\n"
             "# 键是层级码 e{分类}{槽位}{序号}（follow-up 028）：e5103 ＝ 5_近战武器/51_主手/ 第 03 件；was ＝ 改码前的旧键。\n"
             "# 目录名由本表派生：改名 / 改档只改这里，再跑 tools/gen_equipment.py 搬目录；换槽位 / 换分类要换号（renumber）。\n")
     body = []

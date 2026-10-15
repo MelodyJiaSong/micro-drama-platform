@@ -1,8 +1,6 @@
 export type TreeNodeType =
   | "section"
   | "workflow"
-  | "story_runs"
-  | "story_input"
   /** A series folder (`ai_videos/{s}/series.json`) — its children are dramas. */
   | "series"
   | "directory"
@@ -12,15 +10,7 @@ export type TreeNodeType =
   | "audio"
   | "pdf"
   /** A 3D white model (`.glb` / `.gltf`) — previewed in <model-viewer>. */
-  | "model"
-  | "actor"
-  | "voice";
-
-export interface ProjectMeta {
-  sub_type: "novel" | "short" | null;
-  shot_count: number | null;
-  episode_count: number | null;
-}
+  | "model";
 
 export interface TreeNode {
   type: TreeNodeType;
@@ -29,23 +19,22 @@ export interface TreeNode {
   children?: TreeNode[];
   /** Client-side navigation destination; filesystem nodes omit this. */
   navigation_href?: string;
-  /** Only populated on `ai_videos/{name}/` directory nodes. */
-  project_meta?: ProjectMeta | null;
   /** True on a drama root. A drama is `ai_videos/{drama}` when flat and
    *  `ai_videos/{series}/{drama}` inside a series, so path depth is NOT a
    *  reliable test — always use this flag. */
   is_drama?: boolean;
   workflow?: "three-module-v1";
+  /** True when this folder — or, for a drama, its series folder — holds an
+   *  `OBSOLETE.md`: made with or only serving the removed old pipeline, kept for
+   *  reference (follow-up 233). Rendered as the「已过时」badge. */
+  obsolete?: boolean;
+  /** Path of the `OBSOLETE.md` that marks this node (only on `obsolete` nodes). */
+  obsolete_note?: string;
   drama_path?: string;
-  workflow_module?: "story" | "filming" | "prompts";
+  workflow_module?: "story" | "filming" | "prompts" | "edit" | "sound" | "delivery";
   workflow_episode?: string;
   episode_path?: string;
-  story_run_id?: string;
-  story_run_view?: "output" | "state" | "input" | "process" | "item";
-  story_run_item_id?: string;
-  story_input_view?: "input" | "rules";
   lifetime?: "persistent" | "transient" | "workspace";
-  whole_file_editable?: boolean;
   /** True when this leaf is a cross-episode shortcut (`*.link.json`). `path`
    *  already points at the real asset, so preview/download need no special
    *  case — only the label does. */
@@ -54,11 +43,7 @@ export interface TreeNode {
   link_at?: string;
   /** Why the shortcut exists, shown as the link leaf's tooltip. */
   link_note?: string;
-  /** Only populated on `type === "actor"` leaves: relative path of the first face image inside the collapsed actor folder. */
-  face_path?: string | null;
-  /** Only populated on `type === "voice"` leaves (follow-up 115): relative path of the first audio sample inside the collapsed voice folder, or null when no sample has been uploaded yet. */
-  audio_path?: string | null;
-  /** Chinese (or otherwise human-friendly) label rendered in place of `name` when present. Used by `downloaded_novels/{category}/{slug}/` to show 仙侠 / 凡人修仙传 instead of the pinyin slug, and by `my_novel/{name}/` to show the README's H1 Chinese title. */
+  /** Chinese (or otherwise human-friendly) label rendered in place of `name` when present: a drama's README H1 title, a library folder's label, a keyed asset's `{key} {rest}`. */
   display_name?: string;
 }
 
@@ -69,27 +54,6 @@ export interface FileResult {
   bytes: number;
   mtime: number;
   mtime_http: string;
-}
-
-export interface WriteResult {
-  path: string;
-  bytes: number;
-  mtime: number;
-  mtime_http: string;
-}
-
-/** Previz render job snapshot — the shape of PrevizStatusQdto. Start (POST
- * /api/previz/render) and poll (GET /api/previz/status) return the same shape,
- * so the panel holds one piece of state and overwrites it with either. */
-export interface PrevizStatus {
-  blend: string;
-  state: string;
-  rendered_frames: number;
-  total_frames: number;
-  percent: number;
-  message: string;
-  mp4: string | null;
-  elapsed_seconds: number;
 }
 
 export interface ApiErrorDetail {

@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 """人物资产一条龙（任一部剧）：立绘 → 4 秒建立视频 → 三视图；已有的跳过，可中断可续跑。
 
-    python tools/char_assets.py status 魔兽世界
-    python tools/char_assets.py run    魔兽世界 [--only c1,m3] [--steps portrait,video,views] [--dry-run]
-    python tools/char_assets.py sheet  魔兽世界 [--only …] [--what portrait|views]   # 拼审图用的联系表，打印 png 路径
+    python tools/char_assets.py status shengji_zhilu
+    python tools/char_assets.py run    shengji_zhilu [--only c1,m3] [--steps portrait,video,views] [--dry-run]
+    python tools/char_assets.py sheet  shengji_zhilu [--only …] [--what portrait|views]   # 拼审图用的联系表，打印 png 路径
 
-剧名 ＝ `ai_videos/` 下的目录名、相对路径（`shikong_lvxing/sk2`），或该剧 `seedance.toml` 的 alias（`seedance_kit.find_drama`）。
+剧 ＝ `ai_videos/` 下的目录名或相对路径（`shengji_zhilu`、`shikong_lvxing/sk2`；可带 `ai_videos/` 前缀）。
 每一步只做缺的：
-  portrait  卡里有立绘块、还没有 `{卡目录}.png`        → `tools/gen_char_images.py run`（引擎按 rule 4l，画幅读卡）
+  portrait  卡里有立绘块、还没有 `{卡目录}.png`        → `tools/gen_char_images.py run`（引擎按 `tools/image_engine.py`，画幅读卡）
   video     有 `{卡目录}_turntable` 块、有立绘、还没有原始建立视频 → `tools/gen_turntable_videos.py`（Seedance 2.5 · 720p · 画幅读卡）
-  views     有建立视频、`views/` 里还没有正面帧       → 网页端 `python -m apps.cli.extract_views`（与 🎞 一键提取同一个命令）
+  views     有建立视频、`views/` 里还没有正面帧       → 网页端 `python -m apps.cli.extract_views`（与 🖼 提取三视图同一个命令）
 整轮持有本剧的 `.char_assets.lock`：同一部剧两个会话同时跑会互相覆盖（szzl 2026-09-30），第二个直接拒绝。
 """
 from __future__ import annotations
@@ -29,7 +29,6 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 from tools import gen_char_images as gci  # noqa: E402
 from tools import gen_turntable_videos as gtv  # noqa: E402
-from tools import seedance_kit as kit  # noqa: E402
 from tools.character_sheet import compose  # noqa: E402
 
 AI = REPO / "ai_videos"
@@ -41,10 +40,11 @@ TILE = (240, 427)
 
 
 def drama_rel(name: str) -> str:
-    """剧名 / 别名 / 相对路径 → 相对 ai_videos/ 的剧目录（characters 所在那一层）。"""
-    top = AI / name if (AI / name).is_dir() else kit.find_drama(name.split("/")[0])
-    if "/" in name and not (AI / name).is_dir():
-        top = top / name.split("/", 1)[1]
+    """剧目录名 / 相对路径（相对 `ai_videos/`）→ 相对 ai_videos/ 的剧目录（characters 所在那一层）。"""
+    name = name.replace("\\", "/").strip("/").removeprefix("ai_videos/")
+    top = AI / name
+    if not name or not top.is_dir():
+        raise SystemExit(f"ai_videos/ 下没有「{name}」：用剧目录名或相对路径，如 shengji_zhilu、shikong_lvxing/sk2")
     hits = sorted(c.parent.parent for c in [top / "2_世界观人设" / "characters", *top.glob("*/2_世界观人设/characters")]
                   if c.is_dir())
     if len(hits) != 1:
@@ -96,7 +96,7 @@ def status(rs: list[Row]) -> None:
     print(f"\n  共 {len(rs)} 张卡 · 缺立绘 {len(need_p)} · 缺建立视频 {len(need_v)}（约 {len(need_v) * CREDIT_PER_VIDEO} 分）"
           f" · 缺三视图 {len(need_w)}")
     for label, bad in (("没有立绘块", [r for r in rs if not r.portrait_block]),
-                       ("没有 turntable 块（按 stage2 模板补进卡里才能出视频）", [r for r in rs if not r.turntable_block])):
+                       ("没有 turntable 块（按人物卡模板补进卡里才能出视频）", [r for r in rs if not r.turntable_block])):
         if bad:
             print(f"  ⚠ {label}：{', '.join(r.dir.name for r in bad)}")
 
@@ -195,7 +195,7 @@ def sheet(rel: str, only: list[str], what: str) -> None:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("step", choices=("status", "run", "sheet"))
-    ap.add_argument("drama", help="目录名、相对路径或 seedance.toml alias，如 魔兽世界 / shengji_zhilu / shikong_lvxing/sk2")
+    ap.add_argument("drama", help="ai_videos/ 下的剧目录名或相对路径，如 shengji_zhilu / shikong_lvxing/sk2")
     ap.add_argument("--only", default="", help="逗号分隔的卡号，如 c1,m3")
     ap.add_argument("--steps", default="portrait,video,views")
     ap.add_argument("--model", default="seedance2.5", choices=gtv.MODELS)

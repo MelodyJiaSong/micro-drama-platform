@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""《圣光刚好够用》人物卡的 4 秒建立视频（turntable）prompt（ai_video.md rule 12.5 / 22.2）。
+"""《圣光刚好够用》人物卡的 4 秒建立视频（turntable）prompt（人物资产链，见 `.agents/skills/ai-videos-pipeline/resources/assets.md`「人物」）。
 
 每张人物卡都要有**一张立绘 prompt + 一条 4 秒建立视频 prompt**：立绘定脸，turntable 定体型、服装、随身物、站姿与声音，
 两者一起建 Seedance 角色资产包 entity（shot 的 `参考:` 直接 @ 它，rule 23 2026-09-25 修订）。

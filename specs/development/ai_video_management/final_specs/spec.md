@@ -110,7 +110,7 @@ The user is the sole actor — a creator running the pipeline manually. Webapp i
 - **FR-20** Sort order: alphabetical, dirs first (port from spec_driven `tree_walker.py:105`). **Follow-up 040 amendment**: in the `AI Videos` section (`_ai_videos_section`), the immediate child directory named `_deleted` is hoisted to the end of the children array (after every drama folder and after `_actors/`); all other entries — including `_actors/` — retain alphabetical order. The reorder applies only to the top-level `ai_videos/_deleted/` slot; nested `_deleted/` subtrees (if any) remain alphabetical via `_walk_filtered`.
 - **FR-21** Refresh semantics: manual button + auto-bump on `PUT /api/file` success (per spec_driven `App.tsx:13-31`). NO file-system watcher.
 
-### Sub_type detection
+### Sub_type detection （已删除，follow-up 233）
 
 - **FR-22** `sub_type_lookup.py` parses `specs/ai_video/{name}/interview/qa.md` for the canonical settled-facts pipe-table row using regex (multiline):
   ```
@@ -235,7 +235,7 @@ The user is the sole actor — a creator running the pipeline manually. Webapp i
   - Fallback: `markdown`
 - **FR-49** Every parse-on-render component is wrapped in `<ParseFallback>` (real React Error Boundary class, port from spec_driven).
 
-### ShotPairView
+### ShotPairView （已删除，follow-up 233）
 
 - **FR-50** Renders `shotNN_kling.md` + `shotNN_seedance.md` side-by-side using `react-resizable-panels` v4 with `autoSaveId="shot-pair-split"`.
 - **FR-51** `shotPairing.ts` regex: `^(.+/prompts/)shot(\d+)_(kling|seedance)\.md$`. Given the clicked file path, the partner is constructed by swapping `kling` ↔ `seedance`.
@@ -243,14 +243,14 @@ The user is the sole actor — a creator running the pipeline manually. Webapp i
 - **FR-53** Each pane includes a "复制 Kling prompt" / "复制 Seedance prompt" button using `navigator.clipboard.writeText(content)`. Single app-root `aria-live="polite"` region announces "已复制" on success.
 - **FR-54** Markdown content in each pane is rendered through the same `MarkdownView` component used elsewhere — same sanitization, same locked-block pill, same CJK rendering.
 
-### ShotlistTableView
+### ShotlistTableView （已删除，follow-up 233）
 
 - **FR-55** Renders the shotlist `.md` file using `react-markdown` + `remark-gfm` + `rehype-sanitize`.
 - **FR-56** Overrides `components.td` to detect shot-id text (regex `^shot\d+$`) in column 1; replaces text content with a `<button onClick={() => navigate(...)}>` that programmatically navigates to that shot's ShotPairView (`?file=...prompts/shot{NN}_kling.md&view=shot-pair`).
 - **FR-57** Other table cells render plain (no special handling). Non-table content in shotlist.md (headings, paragraphs) renders as standard markdown.
 - **FR-58** Shotlist column 1 must contain the shot id (per `wukong_juexing/shotlist.md` precedent + `agent_refs/project/ai_video.md` rule 4 implicit convention). Stage-6 validators in the ai_video pipeline can later enforce this; this webapp assumes it.
 
-### ImageRefView
+### ImageRefView （已删除，follow-up 233）
 
 - **FR-59** Triggered when path matches `/ref_images/.+_seedream\.md$` OR path ends `.png|.jpg`.
 - **FR-60** Layout: `react-resizable-panels` v4 with `autoSaveId="image-ref-split"`. Left pane: prompt markdown (when triggered by `_seedream.md`) or empty (when triggered by image directly). Right pane: image preview (when companion image exists) or fallback message.
@@ -259,7 +259,7 @@ The user is the sole actor — a creator running the pipeline manually. Webapp i
 - **FR-63** Companion image discovery: same folder, same stem (e.g., `main_seedream.md` ↔ `main_seedream.png`). Case-sensitive on the stem; `.png` preferred over `.jpg` if both exist.
 - **FR-64** Image extensions are read-only via `/api/file`. The Editor button is hidden when current view is `image-ref` and target is an image file.
 
-### Actor pool + casting (follow-up 014)
+### Actor pool + casting (follow-up 014) （已删除，follow-up 233）
 
 - **FR-9f** `POST /api/actors/generate` — batch-generate AI actor faces via the **Kling text-to-image** provider (follow-up 025 collapsed the multi-provider chain from follow-ups 021 + 024 down to Kling-only; see § Open carve-outs #7 in `validation/security.md` for rationale). Body `{count: 1..50, ethnicity, gender, age_range, look, style, notes?, resolution?, seeds?}` (follow-up 027 raised the cap from 20 to 50; follow-up 029 added `resolution`; follow-up 032 added optional `seeds: list[int] | None` so the preview-then-confirm flow in FR-9j can guarantee byte-equal prompts — when `seeds` is provided its length must equal `count` and all entries must be int, else `InvalidAttribute`); each of the 5 enum fields must match the closed schema (see FR-86). Backend's per-image flow: (1) **race-safe ID allocation** via `mkdir(exist_ok=False)` (follow-up 027) — at the top of `generate_batch`, `_reap_incomplete_folders()` runs ONCE to drop stale jpg-less folders left by killed batches; thereafter `_allocate_actor_id()` walks forward through ids starting from `_next_actor_id_num()` calling `mkdir(exist_ok=False)` until one succeeds. The filesystem-level atomicity guarantees no collisions even when 9 concurrent `count=1` requests run in parallel from the frontend worker pool (each FastAPI sync endpoint call runs in its own threadpool worker). (2) **Rich per-image variance injection** (follow-up 029 expanded from follow-up 027's 5-pool prototype; follow-up 031 added an 18th photorealism / camera-stock pool) — `_variance_for(seed, gender)` now draws fragments from **18 English variance pools** (gender-specific look archetype + gender-specific face features + jawline + cheekbones + brow + nose + lips + eyes + hair length / style / color + skin tone / texture + expression + mood + lighting + photography style), seeded by the actor's seed for reproducibility. Pick counts (1–3 per pool, ~30–40 fragments total) are tuned to produce **≥ 1000 characters** of comma-separated descriptors per image, with a length-guard loop that appends more photography descriptors if the assembled string falls short. Follow-up 031 also rewrote `_build_prompt`'s base segments to remove the AI/CG-correlated tokens `"photorealistic"`, `"sharp focus"`, `"8k"` (those tokens nudge Kling toward smooth waxwork faces) and append a permanent anti-wax suffix: `"natural skin texture with visible pores and subtle imperfections, slight natural facial asymmetry, RAW unedited photograph aesthetic, no plastic skin, no waxy smoothness, no symmetrical perfection, no CG render look"`. The result is inserted between the enum-derived look and style segments of `_build_prompt`, so a batch of N actors gets N visually distinct prompts despite sharing the same base attrs. (3) **Resolution selector** (follow-up 029) — `resolution ∈ {"normal", "2k", "4k"}` (default `"normal"`). `"normal"` saves Kling's native JPEG output as-is (~1024×1024 for kling-v1 1:1). `"2k"` and `"4k"` decode the bytes via Pillow (`Image.open` + `convert("RGB")`), resample to the target square with `Image.LANCZOS`, and re-encode JPEG at quality 95. Upscaling does not add true detail — it is interpolation; recorded in the sidecar so the user knows. The aspect ratio remains 1:1 (square headshot). (4) The varianced prompt + chosen resolution are both what the Kling request body and the `actor_NNNN.md` sidecar's attribute table record, so users can reproduce a given image from seed + prompt + resolution. Per-image failure modes recorded in `errors[]`: `alloc_failed`, `http_failed`, `empty_response`, `resize_failed`, `write_failed` (follow-up 029 added `resize_failed`). **Credentials**: `KLING_ACCESS_KEY` + `KLING_SECRET_KEY` env vars are **required**. They are loaded at startup by `libs.env_loader.load_env_file()` from `projects/ai_video_management/backend/.env` (gitignored at repo root). Missing keys raise `RuntimeError` at `create_app()` time so the process refuses to start; existing shell / CI env wins over the file (`os.environ.setdefault`). **Kling flow**: JWT HS256 auth, stdlib `hmac`+`hashlib`+`base64`+`json` (no PyJWT dep); claims `{iss: access_key, exp: now+1800, nbf: now-5}`; POST `https://api.klingai.com/v1/images/generations` with `{model_name: "kling-v1", prompt, aspect_ratio: <enum from (w,h)>, n: 1}` → `{code: 0, data: {task_id}}` (code != 0 raises) → poll `GET /v1/images/generations?pageSize=500` every 2s (max 120s) until matched task has `task_status: "succeed"` (or `"failed"` → raise) → `task_result.images[0].url` → SSRF-vet → download (follow_redirects=True, 30s timeout, 5 MiB cap). Each response is written to `ai_videos/_actors/actor_NNNN/{ethnicity}__{gender}__{age_range}.jpg` (follow-up 033 renamed the jpg from the legacy `actor_NNNN.jpg`); sidecar `actor_NNNN.md` (sidecar name unchanged — folder name remains the stable actor id referenced by `casting.md`) records the attribute table + assembled prompt + seed + resolution. `ActorPool.__init__` runs `migrate_filenames()` once at startup — idempotent best-effort sweep that renames any legacy `actor_NNNN.jpg` to the new descriptive filename by reading the sidecar's attrs; OS errors are counted but never block startup. Per-image failure is recorded in `errors[]` without failing the batch. Response: `{generated:[{id,image_path,attrs,seed}], errors:[{requested_id,message}]}`. Status codes: `200` (request shape valid, even on partial failures), `400 invalid_attribute`, `405 method_not_allowed`, `500 actors_dir_unwritable`. **Source-side hardening for outbound HTTP**: base URL hardcoded; prompt JSON-bodied server-side from closed enum schema; per-fetch 30s timeout; per-fetch 5 MiB response cap; JWT secret-key never logged / never in URLs / never in responses; Kling-returned CDN URL hostname rejected if loopback / RFC1918 / link-local / multicast / reserved before download.
 - **FR-9g** `POST /api/casting/assign` — upsert one role↔actor row in `ai_videos/{drama}/casting.md`. Body `{path: "ai_videos/{drama}", role: str, actor_id: "actor_NNNN", notes?: str}`. `path` must resolve to an immediate child directory of `ai_videos/` (drama shape per FR-9b); `actor_id` must resolve to an existing `ai_videos/_actors/actor_NNNN/` folder; `role` is free-text (typically a `c{N}_*` folder name from `characters/`) and is upsert key. The endpoint reads `casting.md` (creating it with header + empty table if absent), parses rows, removes any prior row with the same `role`, appends the new row, and rewrites the whole file (atomic temp+replace). **Per follow-up 043:** after the casting.md write, the backend ALSO writes `ai_videos/{drama}/characters/{role}/_cast.md` containing a Chinese metadata table (短剧 / 角色 / Actor ID / 备注), an inline `![face]` reference to the actor's first jpg/png/webp via `actor_pool.actor_face_filename(actor_id)` (relative path `../../../_actors/{actor_id}/{face_filename}`), and a `[查看演员档案]` link back to the actor sidecar md. Atomic temp+replace; OSError swallowed (casting.md row is the truth source). The `_cast.md` write is silently skipped when `characters/{role}/` is not a directory (the role is free-text and may not map to a folder). Response: `{path: "ai_videos/{drama}/casting.md", entries: [{role, actor_id, notes}]}`. Status: `200`, `400 invalid_drama_path` / `invalid_actor_id` / `invalid_role`, `404 not_found`, `405 method_not_allowed`. No If-Unmodified-Since (single-row upsert, race acceptable; conflicting concurrent edit via Editor still tracked by mtime).
@@ -299,7 +299,7 @@ The user is the sole actor — a creator running the pipeline manually. Webapp i
 - **FR-93** (follow-up 036) **Actor folder collapsed to a single leaf node** in the sidebar tree. Backend `TreeWalker._walk_filtered` detects immediate child directories of `ai_videos/_actors/` whose name matches `^actor_\d{4,}$` and emits a single non-recursive leaf node `{type: "actor", name: <actor_id>, path: "ai_videos/_actors/<actor_id>/<actor_id>.md", face_path: <first jpg/png/webp under the folder> | null, children: []}` instead of descending into the folder. `face_path` is filled by a lexicographic scan of the folder's files matching `_IMAGE_EXTENSIONS`; legacy `actor_NNNN.jpg` and the follow-up 033 `{ethnicity}__{gender}__{age_range}.jpg` filename both qualify, and `null` is recorded when no face image exists yet (mid-generation crash). Frontend `TreeNodeType` adds `"actor"` and `TreeNode` gains an optional `face_path?: string | null`. `linkResolver.collectFilePaths` includes both `node.path` (the md) and `node.face_path` (when present) in the returned `knownPaths` list so existing `ActorView.findFaceImage` resolution keeps working. `Sidebar.tsx` treats `type === "actor"` as a leaf (no disclosure triangle, click → `onSelect(node.path)` → Reader → `ActorView`); the existing follow-up 026 `🗑` delete button continues to render via the same `actorId` detection, now keyed on `type === "actor"`. The `_deleted/_actors/` subtree is exempt — its actor folders keep the regular recursive directory shape. `ActorView` (FR-92) gains a sibling `🗑 删除` button in its header that mirrors the sidebar delete: `window.confirm` → `POST /api/actors/delete` (FR-9i) → on success, `navigate("/")` + `onSaved()` so the sidebar reloads without the deleted actor row. Failure renders an inline red alert with `detail?.kind` or the error message. No new API surface; ActorView and Sidebar both reuse FR-9i.
 - **FR-91** (follow-up 028 + 030) `ActorGrid` — paginated grid view of the actor pool at React route `/actors` (independent of the `/file/*` Reader route). On mount, fetches the full pool via `GET /api/actors` (FR-10b) and renders one tile per actor in a responsive CSS grid (`grid-template-columns: repeat(auto-fill, minmax(180px, 1fr))`). Default ordering is by `id` ascending (matches the endpoint's response order). Each tile is a `<button>` containing the actor thumbnail (`<img src="/api/media?path={image_path}&mtime={mtime}" loading="lazy">`), the `actor_NNNN` id, and a chip row with the four most-identifying attributes (`ethnicity / gender / age_range / look`); `style` and `notes` are intentionally kept off the tile to maximize visual density for comparison and live on the detail view. Tile click navigates to `/file/{image_path}` so the existing Reader image view becomes the detail surface (zero new detail UX). **Filter chips** (follow-up 033): three filter dropdowns in the grid header (民族 / 性别 / 年龄段) with a "全部" default; client-side filtering on the in-memory actors list; changing a filter resets page to 0; header count displays `filtered / total`. **Pagination** at 50 tiles per page (follow-up 032 bumped from 12); controls render only when `actors.length > 50` (per follow-up 032) and consist of first / prev / `第 N / M 页` indicator / next / last buttons; `aria-live="polite"` on the indicator. **Empty / loading / error** states each render a distinct surface: empty → friendly text plus a pointer to the sidebar 🎭 button; loading → `加载中…`; error → red banner + retry button (`reloadKey` state-bump re-runs the fetch). State is in-memory only — page index is NOT persisted in the URL or localStorage in v1; navigating away and back returns to page 1. **Select mode + bulk operations (follow-up 030)**: a "✅ 选择" header button toggles a `selectMode` state. While in select mode, tile click toggles membership in a cross-page `selectedIds: Set<string>` instead of navigating; tiles render a checkmark overlay and a blue selected-border; a sticky footer bar shows the selected count plus "全选 / 全清 / 🗑 批量删除 (N) / 🎬 分配角色 (N) / ✕ 退出选择" buttons. **Bulk delete** confirms once via `window.confirm("Delete N actors? ...")` and then loops `POST /api/actors/delete` (FR-9i) for each selected id — failures are reported per-actor without aborting the batch (mirrors the follow-up 011 batch-archive pattern). **Assign character** opens a modal with two dropdowns: drama (populated from the parent App's `tree` prop — immediate non-`_` children of `ai_videos/`) and character (the selected drama's `characters/c*/` subfolder names, regex `^c\d+(_.*)?$`); confirming loops `POST /api/casting/assign` (FR-9g) once per selected actor with `role = character_folder_name`. Since a per-drama `casting.md` already supports many-to-many via the actor_id field, one actor can be cast in multiple dramas without any new data store. Selection state is cross-page (selecting on page 1, navigating to page 2, and confirming keeps both pages' selections).
 
-### Voice pool + casting (follow-up 115)
+### Voice pool + casting (follow-up 115) （已删除，follow-up 233）
 
 Mirror of the actor pool (FR-9f – FR-91 / FR-95) for the auditory identity leg of the character-bible triad. **Crucial distinction from actor pool**: no outbound HTTP. All voice generation is local Chinese-prompt composition; the user takes the generated prompt to an external AI voice model (ElevenLabs / MiniMax / CosyVoice / OpenAI TTS / etc.) to render audio and drops the resulting `.mp3` / `.wav` back into the voice folder for in-grid preview. None of the Kling / provider / 429-retry / rate-limit machinery applies.
 
@@ -328,7 +328,7 @@ Mirror of the actor pool (FR-9f – FR-91 / FR-95) for the auditory identity leg
 - **No external HTTP / no provider machinery.** Explicitly NOT applicable to the voice pool (follow-ups 018 / 021 / 024 / 025 / 027 / 073 / 112 are all actor-side): no `KLING_*` env vars, no JWT, no SSRF vetting, no Kling 429 retry, no `_validate_outbound_url`, no per-fetch timeout / response-cap. The voice-side surface that DOES need security parity is the multipart upload in FR-9v5: extension allowlist + 10 MiB body cap + EXPOSED_TREE sandbox + Origin/Host gate + symlink-reject on the target path.
 - **DDD + CQRS layering.** All files under `projects/ai_video_management/libs/` follow development.md §1 (one file per aggregate per role, one class per command/query file, one method per operation). New files: `apps/api/routes/voice__route.py` (own `APIRouter()` per follow-up 065); `libs/application/commands/voice__command.py` (`VoiceCommand` with `.generate`, `.generate_diverse`, `.delete`, `.upload_audio`); `libs/application/queries/voice__query.py` (`VoiceQuery` with `.list`, `.preview_prompts`, `.assignments`); `libs/application/dtos/voice__dto.py` (voice Qdtos + Cdtos); `libs/domain/value_objects/voice_archetype.py` (enum mirrored to infra per follow-up 067); `libs/domain/repositories/voice__repository.py` (Protocol); `libs/infrastructure/writers/voice__writer.py`; `libs/infrastructure/writers/voice__chinese_prompt.py`; `libs/infrastructure/daos/voice__dao.py`; `libs/infrastructure/errors/voice__error.py` (SRP per follow-up 068). Casting reuses the existing `casting.py` machinery; the voice column in `casting.md` is the only schema delta.
 
-### Locked-block pill
+### Locked-block pill （已删除，follow-up 233）
 
 - **FR-65** `MarkdownView` pre-processes the markdown source with regex (multiline + dotall):
   ```
@@ -352,7 +352,7 @@ Mirror of the actor pool (FR-9f – FR-91 / FR-95) for the auditory identity leg
 - **FR-74** "Generate" button calls `POST /api/regen-prompt`; response prompt is rendered in a copy-ready dark `<pre>` block (carve-out from light theme per `agent_refs/project/development.md` rule 1 — fixed dark palette, NOT `prefers-color-scheme`-driven).
 - **FR-75** Copy button on the prompt block uses `navigator.clipboard.writeText`; same `aria-live` pattern as ShotPairView.
 
-### Editor
+### Editor （已删除，follow-up 233）
 
 - **FR-76** Same UX as spec_driven `Editor.tsx`: textarea + save button. PUT with `If-Unmodified-Since`. 409 → toast: "file changed externally — Reload?".
 - **FR-77** Hidden when current view is `image-ref` and target is an image file (FR-64).
@@ -377,7 +377,7 @@ Mirror of the actor pool (FR-9f – FR-91 / FR-95) for the auditory identity leg
 - **FR-84** Frontend Vitest unit tests for `shotPairing`, `shotlistParser`, `linkResolver`.
 - **FR-85** Playwright e2e suite at `frontend/e2e/`: at minimum (a) browse-to-shot-pair flow, (b) shotlist-table-row-click navigation, (c) image-ref view with both image-present and image-absent cases, (d) regen-prompt scope toggle for short and novel, (e) Origin/Host gate rejection at 8765.
 
-### Per-dimension AI prompt refinement (follow-up 117)
+### Per-dimension AI prompt refinement (follow-up 117) （已删除，follow-up 233）
 
 - **FR-96** Shot **视频 prompt** is authored as a basic skeleton at stage-6 generation per `agent_refs/project/ai_video.md` rule #12.4 (2026-05-31 amendment): every rule-#12.4 field present; 场景 / 镜头 / 动作(≥1 beat) / 台词 / 比例 / 时长 substantive; descriptive dimensions (运镜, multi-beat 动作, 光线/色调, 节奏, 渲染样式) emitted as a one-line stub to be refined in-app. This is a content/generation contract, not webapp code.
 - **FR-97** `POST /api/prompt/suggest` — body `{dimension, current_value?, shot_context?, prompt_body?, drama?, scene?, count?}`; resolves to a read-only `PromptQuery.suggest_refinements` that calls the Anthropic Messages API (official `anthropic` SDK, system block marked `cache_control: ephemeral`) and returns `{dimension, suggestions: [{value, rationale}]}`. Model from `ANTHROPIC_SUGGEST_MODEL` env (default `claude-sonnet-4-6`); key from `ANTHROPIC_API_KEY` in `apps/api/.env` (same env file + loader as the Kling keys, FR-9f).
@@ -385,7 +385,7 @@ Mirror of the actor pool (FR-9f – FR-91 / FR-95) for the auditory identity leg
 - **FR-99** In `PromptStructuredEditor` (only when `blockKind === "video"` and shot context is supplied), each refinable dimension field (镜头/运镜/动作/台词·字幕/光线·色调/节奏/渲染样式) shows a `✨ 推荐` button opening a panel that fetches suggestions, lists them as selectable cards (value + rationale), and on confirm merges the chosen value into the field — **smart merge: empty field → fill, non-empty → append on a new line** — then persists via the existing per-block Save (PUT `/api/file` + If-Unmodified-Since).
 - **FR-100** Graceful degradation: with no `ANTHROPIC_API_KEY`, the ✨ panel surfaces "未配置 ANTHROPIC_API_KEY" and all other editing/saving is unaffected. 起始帧/结束帧, actor, scene, character structured editing never show ✨.
 
-### Episode concat — stitch shot renders into one episode mp4 (follow-up 118)
+### Episode concat — stitch shot renders into one episode mp4 (follow-up 118) （已删除，follow-up 233）
 
 - **FR-101** When viewing any markdown file directly inside an episode folder (path matches `^ai_videos/[^_][^/]+/episodes/ep\d+/[^/]+\.md$` — i.e. `episode.md` / `shotlist.md` / `script.md` / `dialogue.md` / `publish.md`, but NOT the per-shot `shots/shotNN/shotNN.md`), the Reader toolbar shows a `🎬 合成本集视频` button. It calls `POST /api/concat-episode` with the current file path. The button is anchored on episode-level files (not a folder page) because the webapp has no folder view; the backend derives the episode dir from the path's `episodes/ep{NN}` ancestor regardless of which episode-level file triggered it.
 - **FR-102** `POST /api/concat-episode` — body `{path}` (any path under the episode folder). Resolves to `EpisodeCommand.concat` → `EpisodeConcatBuilder` (new write-side `episode` aggregate). The builder derives the episode dir from the path's `episodes/ep{NN}` ancestor, walks `shots/shot{NN}/` in lexicographic order, and per shot selects the **newest** (`st_mtime`) `.mp4` directly resolvable under that shot's `renders/` subfolder. `archive/` segments are excluded; a `shot{NN}_chars.mp4` sitting in the shot folder root (not `renders/`) is never considered. Shots with no `renders/` mp4 are skipped (reported, non-fatal).
@@ -406,19 +406,19 @@ Mirror of the actor pool (FR-9f – FR-91 / FR-95) for the auditory identity leg
 
 ## 全局影视改编知识（follow-up 191）
 
-全局工作流的影视改编模块与侧栏提供 `/workflow/filming` 只读入口，不绑定具体剧或EP。内容唯一源为 `.agents/references/project/ai_video_shot_sizes.md`，前端构建直接读取该Markdown，不开放通用参考库文件读写API。正文去掉时间轴，包含功能分类、景别、定义/边界、包含/省略信息、使用/避免原则、定性比较与camera选镜方法；区分字幕来源与整理建议。影视改编共用指南引用同源正文；不新增filming.json字段、不修改故事、不新增硬性QC。正文更新后生产UI需重新构建。
+全局工作流的影视改编模块与侧栏提供 `/workflow/filming` 只读入口，不绑定具体剧或EP。镜头知识（follow-up 213）是目录登记的源页面：`modules/filming-shots.md`（镜头总纲）、`modules/filming-scenes.md`（场）及子页功能镜头、景别、取景、角度与高度、焦点与景深，经通用全局源页面渲染；原 `/workflow/filming/shot-sizes` 重定向到总纲，旧的单篇 `ai_video_shot_sizes.md` 已并入并删除。正文按定义、用途、不是什么、应该/不应该与片例整理；影视改编共用指南引用总纲；不新增filming.json字段、不修改故事、不新增硬性QC。
 
 ### 全局工作流导航树（follow-up 193）
 
 #### 跨剧设置目录（follow-up194）
 
-工作流下的三模块可继续展开共用模块指南；其他下一层分类为全局创作规则、代理与执行设置、服务与模型设置、制作与验收规则、调研与共享资产。共用目录在 `.agents/references/project/workflow_catalog.json`，登记源路径、分类及受控自动发现范围，正文沿用唯一源。新共用skill/参考文件自动出现；仓库级与用户级配置、缺失文件和历史参考显式标注。管理应用开发规则标明用途，不隐式附加到故事生产。
+工作流下的三模块可继续展开共用模块指南；其他下一层分类为制作、服务与资源及代理与执行设置（原全局创作规则拆入各组，服务与模型设置、调研与共享资产并入制作组；follow-up 201/202）。共用目录在 `.agents/references/project/workflow_catalog.json`，登记源路径、分类及受控自动发现范围，正文沿用唯一源。新共用skill/参考文件自动出现；仓库级与用户级配置、缺失文件和历史参考显式标注。管理应用开发规则标明用途，不隐式附加到故事生产。
 
 专用只读接口提供目录、源内容及run输入覆盖核对；只接受登记的source_id，拒绝路径穿越、链接与超限文件，不暴露通用任意文件读取。配置JSON/TOML脱敏，Python工具只解析源码常量，不执行。当前配置声明与运行时实际模型/权限分开。
 
 历史输入保留冻结正文与SHA，跨剧来源增加当前全局源跳转；核对页列出每个已留存关联、登记状态与无法核验的索引，不把当前规则替换进旧run。魔兽世界EP1两run各三份共用规则纳入目录；未留存的历史代理上下文继续标未知。剧内世界规则、素材、profile、故事草稿及选用关系保留原归属。
 
-“工作流”从工具栏按钮改为普通一级左nav项；展开后，故事创作、影视改编、Prompt编译为第二层项。影视改编可继续展开已有“镜头类型与景别”第三层项；后续内容按子项组织。全局项共用普通树的行样式、缩进、展开/折叠、键盘导航与精确路由高亮，直接打开子项URL自动展开祖先；“折叠全部”包括工作流。故事和Prompt模块各显示对应说明，影视知识页保持只读、原URL可用；全局导航不依赖文件树API成功加载，各剧模块导航保持原有结构。
+“工作流”从工具栏按钮改为普通一级左nav项；展开后，故事创作、影视改编、Prompt编译为第二层项。影视改编按拍摄单位展开“镜头（shot）”与“场（scene）”；后续内容按子项组织。全局项共用普通树的行样式、缩进、展开/折叠、键盘导航与精确路由高亮，直接打开子项URL自动展开祖先；“折叠全部”包括工作流。故事和Prompt模块各显示对应说明，影视知识页保持只读、原URL可用；全局导航不依赖文件树API成功加载，各剧模块导航保持原有结构。
 
 ## Non-functional requirements
 
@@ -469,32 +469,31 @@ Deferred to potential v2 follow-up:
 - A "compare two shots side-by-side across projects" power-user view.
 - User-toggleable theme picker.
 
-
 ## 三模块 POC（follow-up 182–183）
 
-每run完整输入与产出（follow-up190）：run下设输入与规则/产出/过程。输入按故事设定、背景事实、流程规则、实际任务指令、运行与模型设置展开；每项逻辑soft link打开独立页面，关联冻结字段及源文件路径、取用范围、当时指纹与当前源状态。实际任务中的约束、用户追加要求、对照设计与审稿实际输入包也分别留存；模型或采样条件缺失明确显示。后续配置整理文件不算生成输入。产出关联正文、候选变化、虚构设定、完整候选和作者初稿；过程关联原始回复、审稿、事件与逐项决策。独立审计文件只有与历史登记SHA256一致才展示内容，变化/丢失/无法核验明确标缺口；规则内部引用只跳到同run已留存版本。只读投影不得修改历史run或冻结输入，深链接按EP/run/item精确定位。
+故事 run 机制（共享 profile、run 索引与选用记录、run 页面与 API、`tools/story_run.py`）已于 follow-up 206 整体移除；故事模块从零重写，EP 导航中故事与其他两个模块同样每集直达 story.json。已确定状态仍可记在 EP/state_changes.md。
 
 标识three-module-v1的剧以故事创作、影视改编、Prompt编译替换旧阶段。Research与资产独立；其他剧不批量迁移。
 魔兽世界左侧固定0_research、1_资产库、2_故事、3_影视改编、4_prompt编译，无“EP1 创作”独立入口。2/3/4均为可展开stage目录，点击只展开/收起；当前各含EP1子项，选择子项后主工作区只读展示该集对应产物。集来自实际episodes目录，module/episode参数绑定所选内容；右侧不重复展示模块切换卡片。
 每模块独立JSON；保存/确定仅写当前模块，输入绑定已确定上游版本，冲突返回409。上游变化保留下游内容并显示待更新/等待上游。
-故事仅方向及正文。分镜 content.scenes 按场组织，每场为 id（sN）、background（bgN 或空）、location、time、purpose、shots；镜头为 id（stN）、duration、action、camera、dialogue。编译固定模板，相同输入及编译器版本产生相同字节，不调用模型。
+故事仅方向及正文。分镜 content.scenes 按场组织，每场为 id（sN）、background（bgN 或空）、location、time、purpose、shots；镜头为 id（stN）、duration、cast（出场人物资产键）、action、blocking、beats、camera、lighting、dialogue，可选 props（道具资产键）。编译固定模板，相同输入、相同参考文件及编译器版本产生相同字节，不调用模型；v5 起每镜编译前读取参考，按上传顺序写在 prompt 最前并存入 prompts.json 的 refs，参考缺失拒绝编译（follow-up 227）；v6 起「参考：」一行，含运动参考（overhead 图或复杂镜 previz 视频）、每个出场人物的三视图与声样、背景图，人物外观与场景描写取自资产卡的 Shot prompt 段，上限 5000 字（follow-up 228）。v7 起「参考：」行写成 `key_id=>@` 占位，正文按 key_id 指认参考；每镜资料包复制全部参考并填上传编号，管理 UI 每镜显示资料包状态与文件（follow-up 229）。v8 起镜头可带可选 props（道具资产键，如 p475）：每件道具的锚点图排在人物三视图之后进参考行，另起「道具：」行写道具卡的 Shot prompt 外观段，道具卡或锚点图缺失拒绝编译（follow-up 231）。v9 起「要求」行的防分身只约束人物，镜内有动物（m 键）时另写「按「画面」写的数量出现」，负面词写「同一人物出现两次」，同一张卡的几只动物不被压成一只（follow-up 245）。编译可只编一场：只查、只替换这一场，其它场保留；每个编译场记 source（这一场分镜与所依据故事版本的指纹），资料包按场判过期，整集 Prompt 状态在全部场跟上前仍为过期（follow-up 259）。
 
 Follow-up195：环境资产从场次概念中分离，魔兽世界资产目录改为 background，其他剧兼容旧 scenes。集→场→镜头层级在影视改编、Prompt 编译导航中展开；查询参数 scene/shot 精确定位。编译结果 content.scenes[].shots[].id 与 prompt 首行使用完整 ep1_s1_st1 key，派生 prompt.txt 位于 episodes/ep01/scenes/s1/shots/st1/。sN/stN 是稳定身份，同场镜头不能重号；调序以数组顺序播放，不能重新编号。下载导入仅按存在且唯一的完整 key 路由到该镜头 renders；未知、不完整或冲突 key 留在下载目录并报原因，其他参考资产 key 不抢占镜头归属。定版、拼接、字幕和计数识别新层级；首尾帧自动传递只在同场。保留旧剧的 shotNN 路径兼容、历史 run 与原媒体内容；不自动编写场次、不确定故事、不提交付费生成。
-修改、保存、版本确定与编译通过Claude Code/Codex；UI不提供编辑或写入操作。故事run支持真实协作留痕，资产引用与视频生成按需增加。
-
-长期事实与每集状态：资产库世界规则/选定资产卡为共享资料；故事stage的EP含共享配置、所选run链接与runs；已确定变化仍记录在EP/state_changes.md，不作为当前run链接的子文档。支持文档独立只读；人工按集序核对已确定变化，草稿不成为后续集事实。
-
-独立故事run：EP/shared/独立保存明确版本的input.json与rules.json，index.json登记profile；story_runs.json仅索引独立run。六问Who/What/Why/When/Where/How；每次begin新ID，完整冻结组装输入及哈希，不隐式读旧候选或最新规则。只读历史API验证EP、索引、路径及输入指纹，坏记录显式报错。
-UI分别标input/output/process用途、shared/run/canonical范围；persistent共享来源跨run复用，transient候选与过程按run保留。实际agent身份、完整任务/回复、逐项建议/决定/理由/证据及时间线可展开查看；切换run清除旧详情并取消请求。作者、独立审稿与主编属于故事scope，实施人员单独标识；未知时间/模型如实为空。规则唯一来源为共用story-runs.md。
-共享输入使用友好只读页：六问、方向、假设、选用背景与规则分块，完整内容可展开，路径/哈希作为证据，不以JSON代码页作默认展示。profile切换仅查看明确版本。
-左nav：2_故事→EP1先分共享配置·Persistent（创作输入/规则）、当前EP1→runN（单一soft link，指向所选run，无子文档）、runs·Transient。runs下run1/run2分输入与规则、产出（候选故事/候选变化）及过程（创作日志）。编号按该EP索引追加顺序，导航关联实际独立audit folder及文档。目录仅展开，叶文档绑定run_id/view并分别选中，不能全部跳到同一默认run；Persistent指存储与跨run复用，不代表假设已成为世界事实。
-双run只读对比显示各自文件夹、候选、六问与状态变化、审稿证据和输入是否一致；不把逐字相似率当作质量或声称两次同规则创作证明规则因果。选用通过promote CLI，将任意可选候选载入EP草稿；story_selection.json保存当前绑定和历史。原run不改，不审批、不写永久事实/已接受状态；工作区正文改变后绑定须显示失配。UI只复制选用命令与展示当前选择。
-每个run叶文档有独立路由与页面：候选故事、候选状态变化、输入快照、创作过程；右侧标题与主体只呈现该文档，无聚合页tab或重复运行历史栏。对比为独立页面，切页重置局部状态及滚动。
+修改、保存、版本确定与编译通过Claude Code/Codex；UI不提供编辑或写入操作。
 
 ## 全局设置分类与稳定编号（follow-up 198）
 
-工作流仅两类设置根：1_AI Video与2_Claude Code与Codex。AI Video前三个子项为1.1_故事创作、1.2_影视改编、1.3_Prompt编译；其他共用制作/服务/资产规则继续归AI Video，代理配置归另一类。具体源三级编号保存在workflow_catalog.json的source_numbers，以scope:path为身份，不以列表位置计算，不重命名正文文件。标题/排序变化保留编号；删除后保留预留号，不复用。自动发现未登记编号的项标待编号；重复/非法号拒绝读取。run展示当前目录对应编号及名称、来源路径、冻结与当前指纹，不回写历史run或冒充当时已记录编号。三模块与历史source_id深链接继续可用，UI只读。
+工作流仅两类设置根：1_AI Video与2_系统与代码（follow-up 216：代码、工具脚本、软件运行与代理设置归后者，分代理与执行设置、管理应用、制作工具三组）。AI Video前三个子项为1.1_故事创作、1.2_影视改编、1.3_Prompt编译；其他共用制作/服务/资产规则继续归AI Video，代理配置归另一类。具体源三级编号保存在workflow_catalog.json的source_numbers，以scope:path为身份，不以列表位置计算，不重命名正文文件。标题变化保留编号；组号与源号连续并按编号显示，增删迁移后由 `tools/workflow_catalog.py --fix` 整理（follow-up 203）。自动发现未登记编号的项标待编号并被检查拦截；重复/非法号拒绝读取。run展示当前目录对应编号及名称、来源路径、冻结与当前指纹，不回写历史run或冒充当时已记录编号。三模块与历史source_id深链接继续可用，UI只读。
 
 ## 故事内容与执行导航（follow-up 200）
 
-1.1故事创作下仅两类：A_故事内容（人物动机、目标冲突、行动因果、世界边界、情绪变化、结构推进）与B_执行与验证（输入冻结、创建运行、分工审稿、保存溯源、验证比较、选用交接）。类别有目录页，主题只展示唯一源的对应章节，并可打开完整原文与来源版本。目录在workflow_catalog.json声明；原source_id、R01–R14与源编号保持稳定，不改历史run或profile。源码新增section深链接须精确选中一项、自动展开祖先并支持刷新；缺失章节明确提示，不回退显示其他主题。
+1.1故事创作只含三份源：1.1.1总览、1.1.2故事内容（人物动机、目标冲突、行动因果、世界边界、情绪变化、结构推进）、1.1.3执行与验证（输入冻结、创建运行、分工审稿、保存溯源、验证比较、选用交接）；三项平铺在同一层，点开即整篇，不拆主题页、无「查看完整原文」二次跳转（follow-up 205）。不改历史run或profile；旧主题深链接回到模块页。
+
+## 删除旧流程功能（follow-up 233，2026-10-11）
+
+用户要求删除旧流程、从零开始（clean start）。本应用随之删除只服务旧 0–7 阶段流程的功能，上文标「已删除，follow-up 233」的章节不再适用：
+
+- 删除：评测中心（连同 `projects/ai_video_eval`，其需求记录移到 `specs/development/ai_video_eval/`）、编剧室与人物访谈、按块编辑 prompt 与 AI 改写建议、旧 shot 视图（Kling/Seedance 双栏、shotlist、Seedream 立绘、锁定块徽标）、人物视频截断与角色合辑、走查视频抽帧与方位背景板、末帧承接、人物卡烧录、导出 production、承接接缝补帧与评分、Previz 渲染接口、小说下载与小说目录浏览（沙箱只剩 `ai_videos/`）、项目类型徽章、演技库与镜头联动及演技库维护、声音库、公共演员库与选角、旧「出片三步」（定版、拼接成片、字幕）与剧集制作台、整文件编辑器、Downloads 里旧 shotNN 与旧方位背景板路由。
+- 保留：集工作流（story / filming / prompts、编译器、资料包、生成记录）、全局工作流目录 / 总览 / 术语表、请求日志、通用浏览（树、文件读、媒体与归档、回收站）、Downloads 导入（renders/<条> 与 bg/p/e/c 资产键）、人物三视图提取与角色画廊、选题调研。剧页的「📥 导入」与「🎭 角色画廊」对六模块剧保留。
+- 新增：剧根或系列根目录有 `OBSOLETE.md` 时，树节点带 `obsolete` 标记，侧栏、首页与剧页显示「已过时」徽标；向已过时的剧导入前提示确认。
+- 依赖清单（pyproject / requirements / uv.lock / package.json）中已无代码使用的依赖留待单独清理。

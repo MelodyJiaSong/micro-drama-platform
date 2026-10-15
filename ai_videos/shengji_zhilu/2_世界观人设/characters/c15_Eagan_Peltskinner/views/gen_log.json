@@ -1,0 +1,38 @@
+{
+ "note": "2026-10-11 s2-regen（剧 follow-up 044，ep01 s2 第一遍出片审片后的资产修复）：views/ 三张改由出图生成，取代 2026-09-29 建立视频 c15_Eagan_Peltskinner.mp4 的 0.5 / 2.0 / 3.5 s 抽帧。出图链同 tools/gen_outfit_views.py（正面挂旧正面帧，侧 / 背挂新正面），引擎按 tools/image_engine.py auto；prompt 见人物卡「三视图 prompt」节；请求见 characters/request_log.md。旧四张备份在 .audit/adhoc_agents/2026-10-11/s2-regen/asset_backup/c15/。声样 c15_Eagan_Peltskinner_audio.mp3 与 views.mp4 未动。",
+ "c15_Eagan_Peltskinner_front": {
+  "engine": "codex",
+  "round": 1,
+  "chars": 1011,
+  "refs": ["c15_Eagan_Peltskinner_front.png（旧正面帧，sha256 c6e43308d726aa4cc05e221494f9d3827bede1c80fed8a7b3be8eabb053bb18c）"],
+  "tag": "codex_thread=01a12bab-9774-7f21-a510-8fea0a46a79e",
+  "request_id": "5e7b0d6f22b84293a5eeb9854d4424c3",
+  "size": [941, 1672],
+  "sha256": "07b695a795d9bdaf172f1b6c9de8c987656a244b15520741afb62a50926c67c0"
+ },
+ "c15_Eagan_Peltskinner_side": {
+  "engine": "codex",
+  "round": 1,
+  "chars": 728,
+  "refs": ["c15_Eagan_Peltskinner_front.png（本次新正面，sha256 07b695a795d9bdaf172f1b6c9de8c987656a244b15520741afb62a50926c67c0）"],
+  "tag": "codex_thread=01a12bb0-5167-7362-810c-96e8e74d6633",
+  "request_id": "4fce11d85b094a4b8511dcc515195536",
+  "size": [941, 1672],
+  "sha256": "ab5d22d0fd859cecabba9991835b8681ca1c2d87d90d65d7da196c2ca8e06e26"
+ },
+ "c15_Eagan_Peltskinner_back": {
+  "engine": "codex",
+  "round": 1,
+  "chars": 746,
+  "refs": ["c15_Eagan_Peltskinner_front.png（本次新正面，sha256 07b695a795d9bdaf172f1b6c9de8c987656a244b15520741afb62a50926c67c0）"],
+  "tag": "codex_thread=01a12bb0-5ae7-7891-9c38-c7d3ebad4c54",
+  "request_id": "1ca14b40f37947c888f7921bae3f0c88",
+  "size": [941, 1672],
+  "sha256": "4015941a478327241ffe43282ff50a96bded860ff25c5e15326fd20ae8d47fd4"
+ },
+ "c15_Eagan_Peltskinner_views": {
+  "tool": "tools/character_sheet.py compose（左正、中侧、右背，原像素拼接）",
+  "size": [2823, 1672],
+  "sha256": "1f8e7aed1558e1a888c36ac6412a06b49a89e64e361512f062dc9b39bab332de"
+ }
+}

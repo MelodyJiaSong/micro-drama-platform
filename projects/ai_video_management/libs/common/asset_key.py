@@ -1,6 +1,6 @@
 """The `{prefix}{N}-{M}` routing key of a reference-image asset.
 
-`ai_video.md` rule 4b-A / CLAUDE.md § 参考图资产的命名与路由 give every
+The asset rules (`.agents/skills/ai-videos-pipeline/resources/assets.md`) give every
 pasteable image prompt a **routing key** as its first characters —
 `bg1-2`, `p3-1`, `c2-1` — precisely because the out-of-image tool names the
 download after the prompt's opening text and mangles everything around it:

@@ -41,7 +41,7 @@ from dataclasses import dataclass
 sys.stdout.reconfigure(encoding="utf-8")
 REPO = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 sys.path.insert(0, REPO)
-from tools import check_stage2, wow_version_gate  # noqa: E402
+from tools import wow_version_gate  # noqa: E402
 from tools.previz import planschema  # noqa: E402
 from tools.gen_world_scenes_szzl import TREE  # noqa: E402
 from tools import props_lib  # noqa: E402
@@ -52,8 +52,12 @@ REGISTRY = os.path.join(SCENES, "registry.toml")
 FILL = "〔作者填写〕"
 HEX = re.compile(r"#[0-9A-Fa-f]{6}\b")
 BG_DIR = re.compile(r"^bg(\d+)_[^_]+$")
-LOCK_ROW = re.compile(r"^\|[^|]*\|[^|]*一句话锁定[^|]*\|(.+?)\|\s*$", re.M)
-IP_RED = ("魔兽", "暴雪", "Warcraft", "warcraft", "Blizzard", "blizzard", "WoW", "wow.gg")
+# 锁定串按**标签**找、不按行号（K8；原 check_stage2._lock_string，旧阶段 2 闸门删除时迁到这里）：
+# 具名角色卡是 8 字段表（#8 角色识别标签），场景卡与非人形图鉴是精简表（一句话锁定）。gen_outfit_views 也用这把尺。
+LOCK_ROW = re.compile(r"^\|[^|]*\|[^|]*(?:角色识别标签|一句话锁定)[^|]*\|(.+?)\|\s*$", re.M)
+_BACKTICK = re.compile(r"`([^`]+)`")
+_PAREN = re.compile(r"[（(][^）)]*[）)]")
+IP_RED = ("魔兽","暴雪", "Warcraft", "warcraft", "Blizzard", "blizzard", "WoW", "wow.gg")
 SECTIONS = ("## 场景定位", "## 锁定描述符", "## 关键变化态", "## 出现镜头", "步骤一")
 SHA_RE = re.compile(r"blocks\.toml@([0-9a-f]{8})")
 PROMPT_MIN, PROMPT_MAX = 1500, 2000
@@ -69,6 +73,19 @@ YELLOW_EXTRA = ("艾泽拉斯", "卡利姆多", "洛丹伦", "卡兹莫丹", "�
 # 世界树里字面就是描述的地名（「十字路口」「芦苇海滩」）——正文里用它是在描写，不是在点名
 YELLOW_GENERIC = frozenset({"十字路口", "芦苇海滩"})
 _YELLOW: tuple[str, ...] | None = None
+
+
+def lock_string(text: str) -> str | None:
+    """卡里的锁定串（角色识别标签 / 一句话锁定）；没有这一行返回 None。
+    格子里有反引号取第一段反引号内容，否则去掉括号注释。"""
+    m = LOCK_ROW.search(text)
+    if not m:
+        return None
+    cell = m.group(1).strip()
+    bt = _BACKTICK.findall(cell)
+    raw = bt[0] if bt else _PAREN.sub("", cell)
+    # `**` 是 markdown 强调记号、不是内容。不剥掉会把 30 字的串算成 34 字。
+    return raw.replace("**", "").strip()
 
 
 def yellow_words() -> tuple[str, ...]:
@@ -129,11 +146,11 @@ def check_bg(d: str, reg: dict[str, dict], siblings: dict[str, str]) -> list[Iss
         out.append(Issue(rel(md), "blocker", "W2", "还有 %d 处「%s」占位没填" % (text.count(FILL), FILL)))
     for h in sorted(set(HEX.findall(text))):
         out.append(Issue(rel(md), "blocker", "W2", "出现 hex 色值 %s" % h))
-    # 没写「档级」的老卡按 v3 五 plate 档处理（check_stage2 管它们的 plate），这里不判
+    # 没写「档级」的老卡按 v3 五 plate 档处理（它们的 plate 原由已删的旧阶段 2 闸门管），这里不判
     for s in SECTIONS:
         if s not in text:
             out.append(Issue(rel(md), "blocker", "W2", "缺「%s」节" % s))
-    lock = check_stage2._lock_string(text)     # 与 check_stage2 同一把尺（K8）
+    lock = lock_string(text)     # K8：与 gen_outfit_views 读角色识别标签同一把尺
     if lock is None:
         out.append(Issue(rel(md), "blocker", "W3", "锁定描述符缺「一句话锁定」行"))
     elif not lock or FILL in lock:

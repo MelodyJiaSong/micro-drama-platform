@@ -6,8 +6,8 @@
 
 用法：python tools/gen_props_szzl.py
 
-契约出处：`ai_video.md` rule 4b-A（路由键必须在可粘贴块首行）· rule 4d（object 走「图先行」五步）·
-rule 4g §B（**四问决定用什么建**）· rule 4i ①（多份同构 prompt 走生成器，不手写 N 份）。
+契约：路由键必须在可粘贴块首行；object 走「图先行」；**四问决定用什么建**；多份同构 prompt 走生成器，不手写 N 份。
+资产目录、编号与出图服务见 `.agents/skills/ai-videos-pipeline/resources/assets.md`。
 
 ## rule 4g §B 四问（按顺序问，决定每个物件怎么建）
 
@@ -26,6 +26,7 @@ rule 4g §B（**四问决定用什么建**）· rule 4i ①（多份同构 promp
 from __future__ import annotations
 
 import io
+import json
 import os
 import sys
 from dataclasses import dataclass, field
@@ -49,8 +50,19 @@ def _fence_after(heading: str) -> str:
     return "".join(text[a:text.index("\n" + FENCE, a)].split("\n"))
 
 
-STYLE = _fence_after("### 全片共用摄影串")
-NEG_BASE = _fence_after("## 5. 负向锁定")
+def _style_and_negatives() -> tuple[str, str]:
+    """style_guide 在就读它；六模块剧（follow-up 229）删了 style_guide，全剧画风与负面词唯一维护在 workflow.json `prompt`，
+    与 gen_equipment 同一回退。视频编译器自带的「画面文字，字幕，水印，logo」图片 prompt 要自己写。"""
+    if os.path.isfile(STYLE_GUIDE):
+        return _fence_after("### 全片共用摄影串"), _fence_after("## 5. 负向锁定")
+    wf = os.path.join(os.path.dirname(os.path.dirname(ROOT)), "workflow.json")
+    prompt = json.load(io.open(wf, encoding="utf-8")).get("prompt", {}) if os.path.isfile(wf) else {}
+    if not prompt.get("style") or not prompt.get("negatives"):
+        raise SystemExit("%s 不在，%s 也没有 prompt.style / prompt.negatives：渲染串无出处" % (STYLE_GUIDE, wf))
+    return prompt["style"], "画面文字，字幕，水印，logo，" + prompt["negatives"]
+
+
+STYLE, NEG_BASE = _style_and_negatives()
 NEG_OBJ = "人物，手，环境背景，地面，投影，多个物件同框，比例参照物，标尺"
 
 

@@ -180,7 +180,7 @@ def write_refs_md(d: str, z: dict, got: list[tuple[str, str, str, dict]], zid: s
 1. **人眼核点位**：对着它看我们生成的点位图（`../../../images/zones/{zid}.png`）标得对不对。
 2. **写锁定串**：把地貌 / 道路 / 水系 / 建筑群的**形制**写成中文，落进场景卡的锁定描述符。
 3. **补坐标**：在图上量百分比坐标，回填 `map/g*.yaml` 的 `coords`，生成图就会越来越密。
-4. **出 floor plan**：本图是 `ai_video.md` rule 4j 航线俯视图的底图依据之一。
+4. **出 floor plan**：本图是航线俯视图的底图依据之一。
 
 抓取：`python tools/fetch_wow_maps.py --zone {zid}`
 """)

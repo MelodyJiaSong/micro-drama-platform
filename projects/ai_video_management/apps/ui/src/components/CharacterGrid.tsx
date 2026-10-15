@@ -91,7 +91,7 @@ export function CharacterGrid({ tree, onChange }: CharacterGridProps): JSX.Eleme
   const [videos, setVideos] = useState<Record<string, string | null>>({});
   const [regenFolder, setRegenFolder] = useState<string | null>(null);
 
-  // Initial drama comes from the `?drama=` query (set by the sidebar 角色画廊
+  // Initial drama comes from the `?drama=` query (set by the drama page's 角色画廊
   // button) when the user hasn't picked one from the dropdown yet.
   const queryDrama = searchParams.get("drama") ?? "";
   const drama = useMemo<DramaChoice | null>(() => {
@@ -198,7 +198,7 @@ export function CharacterGrid({ tree, onChange }: CharacterGridProps): JSX.Eleme
           >
             {dramas.map((d) => (
               <option key={d.path} value={d.path}>
-                {d.name}
+                {d.obsolete ? `${d.name}（已过时）` : d.name}
               </option>
             ))}
           </select>

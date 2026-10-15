@@ -1,45 +1,42 @@
+"""Origin/Host gate for every write, plus security headers on every response.
+
+The rule itself (which methods are checked, the CSP value, the bound origin's
+allow lists) lives in `libs.common.origin`; this module only applies it.
+"""
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass
 
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 from starlette.types import ASGIApp
 
+from libs.common.origin import CSP_HEADER, BoundOrigin, is_guarded
+
 logger = logging.getLogger("ai_video_management.api_security")
-
-GUARDED_ROUTES: frozenset[tuple[str, str]] = frozenset({("PUT", "/api/file"), ("POST", "/api/episode-workflow")})
-
-
-@dataclass(frozen=True)
-class BoundOrigin:
-    host: str
-    port: int
-
-    def origin_allow_list(self) -> frozenset[str]:
-        if self.host in {"127.0.0.1", "localhost"}:
-            return frozenset(
-                {
-                    f"http://127.0.0.1:{self.port}",
-                    f"http://localhost:{self.port}",
-                }
-            )
-        return frozenset({f"http://{self.host}:{self.port}"})
-
-    def host_allow_list(self) -> frozenset[str]:
-        if self.host in {"127.0.0.1", "localhost"}:
-            return frozenset(
-                {
-                    f"127.0.0.1:{self.port}",
-                    f"localhost:{self.port}",
-                }
-            )
-        return frozenset({f"{self.host}:{self.port}"})
 
 
 class OriginHostMiddleware(BaseHTTPMiddleware):
+    """Refuse a write unless it demonstrably comes from this app (follow-up 239).
+
+    Applies to every method except GET/HEAD/OPTIONS (`is_guarded`):
+
+    * `Host` must name the bound loopback address. A DNS-rebinding page reaches
+      127.0.0.1 under its own hostname and sends that hostname here.
+    * `Origin` must be present and be the app's own origin (validation/security.md
+      SEC-ORIGIN-HOST-01/02). Browsers attach it to every non-GET/HEAD request,
+      cross-site ones included; a sandboxed frame or a file:// page sends `null`,
+      refused like any other foreign value. A local script that writes through
+      the API sets the app's own Origin explicitly; a request without one is
+      refused rather than guessed to be local.
+
+    The Vite dev server's origin is deliberately not on the list: its proxy
+    rewrites the Origin of the dev page's own requests to the backend's
+    (`apps/ui/devProxyOrigin.ts`), so both runtime modes arrive in the same
+    shape, and anything else it relays keeps its foreign Origin.
+    """
+
     def __init__(self, app: ASGIApp, bound: BoundOrigin) -> None:
         super().__init__(app)
         self._origin_allow: frozenset[str] = bound.origin_allow_list()
@@ -47,37 +44,29 @@ class OriginHostMiddleware(BaseHTTPMiddleware):
 
     async def dispatch(self, request: Request, call_next):  # type: ignore[no-untyped-def]
         method = request.method.upper()
-        path = request.url.path
-        if (method, path) in GUARDED_ROUTES or (path.startswith("/api/writers-room/") and method in {"PUT", "POST", "DELETE", "PATCH"}):
+        if is_guarded(method):
             origin = request.headers.get("origin")
             host = request.headers.get("host")
-            if origin not in self._origin_allow or host not in self._host_allow:
-                logger.warning(
-                    "origin_host_403",
-                    extra={
-                        "kind": "origin_host_403",
-                        "method": method,
-                        "path": path,
-                        "origin": origin,
-                        "host": host,
-                    },
-                )
-                return JSONResponse(
-                    status_code=403,
-                    content={"detail": {"kind": "origin_blocked"}},
-                )
+            if host not in self._host_allow:
+                return self._blocked("host", method, request, origin, host)
+            if origin is None or origin not in self._origin_allow:
+                return self._blocked("origin", method, request, origin, host)
         return await call_next(request)
 
-
-CSP_HEADER: str = (
-    "default-src 'self'; "
-    "img-src 'self'; "
-    "style-src 'self' 'unsafe-inline'; "
-    "script-src 'self' 'wasm-unsafe-eval'; "
-    "connect-src 'self'; "
-    "object-src 'none'; "
-    "base-uri 'self'"
-)
+    @staticmethod
+    def _blocked(reason: str, method: str, request: Request, origin: str | None, host: str | None) -> JSONResponse:
+        logger.warning(
+            "origin_host_403",
+            extra={
+                "kind": "origin_host_403",
+                "reason": reason,
+                "method": method,
+                "path": request.scope.get("path", ""),
+                "origin": origin,
+                "host": host,
+            },
+        )
+        return JSONResponse(status_code=403, content={"detail": {"kind": "origin_blocked"}})
 
 
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):

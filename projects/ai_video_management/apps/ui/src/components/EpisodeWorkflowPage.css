@@ -42,3 +42,34 @@
 .workflow-support { padding: 16px 0; border-top: 1px solid #e0e5df; }
 .workflow-start { display: inline-block; margin-top: 20px; color: #345f46; }
 @media (max-width: 720px) { .episode-workflow { padding: 20px 16px; } .workflow-content { padding: 18px; } .workflow-actions { flex-wrap: wrap; } .workflow-overview { grid-template-columns: 1fr; } }
+
+.workflow-placeholder { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 12px 0; }
+.workflow-placeholder dt { color: #64748b; }
+.workflow-placeholder dd { margin: 0; }
+
+/* Prompt module: one page per shot (follow-up 226). */
+.workflow-shot-nav { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 12px; font-size: 14px; }
+.workflow-shot-page .markdown-view pre { margin: 8px 0 0; }
+.workflow-shot-list { margin: 0 0 24px; padding-left: 0; list-style: none; }
+.workflow-shot-list li { display: grid; grid-template-columns: 9em 1fr; gap: 12px; padding: 8px 0; border-bottom: 1px solid #e0e5df; }
+.workflow-shot-list li span { color: #5d655d; overflow-wrap: anywhere; }
+@media (max-width: 640px) { .workflow-shot-list li { grid-template-columns: 1fr; gap: 2px; } }
+/* 资料包 (follow-up 229) */
+.workflow-pack { margin-top: 20px; }
+.workflow-pack-status { font-size: 0.8em; padding: 2px 8px; border-radius: 10px; margin-left: 8px; font-weight: normal; }
+.workflow-pack-status.ok { background: #e3f1e6; color: #1f6b33; }
+.workflow-pack-status.stale, .workflow-pack-status.missing { background: #faf5e9; color: #7d5c26; }
+.workflow-pack-status.invalid { background: #fbe4e1; color: #9b2c1f; }
+.workflow-pack-path { font-size: 0.85em; color: #5b665e; overflow-wrap: anywhere; }
+.workflow-pack-files { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.workflow-pack-files li { display: grid; grid-template-columns: 220px 1fr; gap: 12px; align-items: start; padding: 8px 0; border-bottom: 1px solid #e0e5df; }
+.workflow-pack-media img, .workflow-pack-media video { width: 220px; max-height: 140px; object-fit: contain; background: #f2f4f1; border-radius: 4px; }
+.workflow-pack-media audio { width: 220px; }
+@media (max-width: 640px) { .workflow-pack-files li { grid-template-columns: 1fr; } }
+/* 生成记录 renders (follow-up 230) */
+.workflow-renders { margin-top: 20px; }
+.workflow-take { border: 1px solid #e0e5df; border-radius: 6px; padding: 12px; margin-bottom: 14px; }
+.workflow-take header { margin-bottom: 8px; }
+.workflow-take-status { font-size: 0.8em; padding: 2px 8px; border-radius: 10px; background: #eef2f7; color: #2d4a6b; margin-left: 6px; }
+.workflow-take-video { width: 100%; max-width: 860px; background: #000; border-radius: 4px; }
+.workflow-take-review { margin-top: 8px; }

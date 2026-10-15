@@ -11,11 +11,9 @@ from fastapi.testclient import TestClient
 from libs.application.queries.global_workflow__query import GlobalWorkflowQuery
 from libs.common.config_redaction import redact_config
 from libs.common.global_workflow import CATALOG_PATH, GLOBAL_MAX_BYTES, GlobalWorkflowError
-from libs.common.global_workflow import global_source_id
 from libs.common.origin import BoundOrigin
 from libs.common.repo_root import RepoRoot
 from libs.infrastructure.readers.global_workflow__reader import GlobalWorkflowReader
-from libs.infrastructure.readers.story_runs__reader import StoryRunsReader
 from tests.conftest import make_app, repo_root
 
 
@@ -35,12 +33,7 @@ def test_credentials_are_hidden_in_nested_configs_and_urls() -> None:
     assert "KEY" in result and "X-Custom" in result
 
 
-def test_cross_drama_paths_are_classified_and_private_files_are_never_registered(tmp_path: Path) -> None:
-    episode = "ai_videos/demo/episodes/ep01"
-    assert global_source_id("shared/new-rule.md", episode=episode) == "repo:shared/new-rule.md"
-    assert global_source_id("ai_videos/demo/world.md", episode=episode) is None
-    assert global_source_id("specs/ai_video/demo/rules.md", episode=episode) is None
-    assert global_source_id(".audit/run/input.json", episode=episode) is None
+def test_private_files_are_never_registered(tmp_path: Path) -> None:
     setup_catalog(tmp_path, [{"path": path, "group": "agents"} for path in [".codex/auth.json", ".claude/.credentials.json", ".claude/memory/private.md", ".env"]])
     reader = GlobalWorkflowReader(tmp_path)
     assert all(entry.status == "unavailable" for entry in reader.catalog()[1])
@@ -52,7 +45,7 @@ def test_registered_configs_only_and_fail_closed_for_malformed_or_oversized_file
     (user / ".codex/config.toml").write_text('model="model-a"\napi_key="NEVER_SEND"', encoding="utf-8")
     setup_catalog(tmp_path, [{"path": ".codex/config.toml", "group": "agents", "scope": "user"}])
     reader = GlobalWorkflowReader(tmp_path, user)
-    query = GlobalWorkflowQuery(reader, StoryRunsReader(tmp_path))
+    query = GlobalWorkflowQuery(reader)
     source = query.source("user:.codex/config.toml")
     assert source["redacted"] and "NEVER_SEND" not in source["content"] and "model-a" in source["content"]
     for identity in ["user:.codex/auth.json", "repo:../AGENTS.md", "repo:C:/auth.json", "user:.claude/memory/private.md"]:
@@ -106,50 +99,6 @@ def test_windows_junctions_are_refused_without_symlink_privilege(tmp_path: Path)
         assert reader.source("repo:.codex/settings.json")["status"] == "unavailable"
     finally:
         os.rmdir(link)  # Remove only this test's junction, never its target tree.
-
-
-def test_real_wow_two_runs_have_all_six_global_bindings_and_keep_frozen_bytes(tmp_path: Path) -> None:
-    actual = repo_root()
-    shutil.copytree(actual / ".agents", tmp_path / ".agents")
-    ep = "ai_videos/shengji_zhilu/episodes/ep01"
-    (tmp_path / ep).mkdir(parents=True)
-    shutil.copyfile(actual / ep / "story_runs.json", tmp_path / ep / "story_runs.json")
-    shutil.copyfile(actual / "ai_videos/shengji_zhilu/workflow.json", tmp_path / "ai_videos/shengji_zhilu/workflow.json")
-    hashes = {}
-    for entry in json.loads((tmp_path / ep / "story_runs.json").read_text(encoding="utf-8"))["runs"]:
-        for name in ("run.json", "input.json"):
-            relative = Path(entry["audit_path"]).parent / name
-            target = tmp_path / relative
-            target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(actual / relative, target)
-            hashes[relative] = hashlib.sha256(target.read_bytes()).hexdigest()
-    runs = StoryRunsReader(tmp_path)
-    query = GlobalWorkflowQuery(GlobalWorkflowReader(tmp_path, tmp_path / "empty-user"), runs)
-    coverage = query.coverage()
-    assert len(coverage["links"]) == 6 and not coverage["gaps"]
-    assert all(link["status"] == "available" for link in coverage["links"])
-    assert len({link["source_id"] for link in coverage["links"]}) == 3
-    for run in runs.read(ep).runs:
-        items = runs.describe(run)["items"]
-        assert len([item for item in items if item.get("global_source_id")]) == 3
-        assert all(item["source_status"]["status"] == "changed" for item in items if item.get("global_source_id"))
-    assert all(hashlib.sha256((tmp_path / path).read_bytes()).hexdigest() == digest for path, digest in hashes.items())
-
-
-def test_unknown_history_sources_are_reported_as_gaps(tmp_path: Path) -> None:
-    # Use an actual validated frozen run, then deliberately omit its sources from the current catalog.
-    actual = repo_root()
-    ep = "ai_videos/shengji_zhilu/episodes/ep01"
-    (tmp_path / ep).mkdir(parents=True)
-    shutil.copyfile(actual / ep / "story_runs.json", tmp_path / ep / "story_runs.json")
-    shutil.copyfile(actual / "ai_videos/shengji_zhilu/workflow.json", tmp_path / "ai_videos/shengji_zhilu/workflow.json")
-    for entry in json.loads((tmp_path / ep / "story_runs.json").read_text(encoding="utf-8"))["runs"]:
-        target = tmp_path / entry["audit_path"]
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(actual / entry["audit_path"], target)
-    setup_catalog(tmp_path, [])
-    data = GlobalWorkflowQuery(GlobalWorkflowReader(tmp_path), StoryRunsReader(tmp_path)).coverage()
-    assert len(data["links"]) == 6 and all(link["status"] == "unregistered" for link in data["links"])
 
 
 def test_routes_registered_and_unknown_sources_are_404(tmp_path: Path) -> None:
@@ -223,22 +172,48 @@ def test_inventory_reports_unreadable_unnumbered_and_unregistered_references(tmp
     assert "unavailable" in {issue["kind"] for issue in GlobalWorkflowReader(tmp_path).inventory()["issues"]}
 
 
-def test_series_episode_indexes_are_included_and_library_indexes_are_excluded(tmp_path: Path) -> None:
-    series = tmp_path / "ai_videos/series"
-    series.mkdir(parents=True)
-    (series / "series.json").write_text("{}", encoding="utf-8")
-    for relative in ["ai_videos/flat/episodes/ep01", "ai_videos/series/member/episodes/ep02", "ai_videos/series/_series/episodes/ep03", "ai_videos/_deleted/episodes/ep04"]:
-        path = tmp_path / relative / "story_runs.json"
-        path.parent.mkdir(parents=True)
-        path.write_text("{}", encoding="utf-8")
-    assert GlobalWorkflowReader(tmp_path).episodes() == ["ai_videos/flat/episodes/ep01", "ai_videos/series/member/episodes/ep02"]
-
-
 def test_repository_workflow_sources_are_numbered_and_reference_closure_is_registered(tmp_path: Path) -> None:
     reader = GlobalWorkflowReader(repo_root(), tmp_path / "no-user-config")
     groups, sources = reader.catalog()
     group_numbers = {group["id"]: group["number"] for group in groups}
     assert all(source.number.startswith(group_numbers[source.group] + ".") for source in sources)
+    for category in {group["category"] for group in groups}:
+        numbers = [group["number"] for group in groups if group["category"] == category and not group.get("overview")]
+        assert numbers == [f"{numbers[0].split('.')[0]}.{index}" for index in range(1, len(numbers) + 1)]
+    for group in groups:
+        numbers = [source.number for source in sources if source.group == group["id"] and source.scope == "repo"]
+        assert numbers == sorted(numbers, key=lambda number: tuple(map(int, number.split("."))))
+    numbered = json.loads((repo_root() / ".agents/references/project/workflow_catalog.json").read_text(encoding="utf-8"))["source_numbers"]
+    for group in groups:
+        indexes = sorted(int(number.rsplit(".", 1)[1]) for number in numbered.values() if number.rsplit(".", 1)[0] == group["number"])
+        assert indexes == list(range(1, len(indexes) + 1)), group["id"]
     inventory = reader.inventory()
     assert not inventory["references"]
     assert not [issue for issue in inventory["issues"] if issue["kind"] != "missing"]
+
+
+def test_formats_and_adaptations_pass_through_the_catalog(tmp_path: Path) -> None:
+    setup_catalog(tmp_path, [
+        {"path": "acts.md", "group": "agents"},
+        {"path": "film.md", "group": "agents", "formats": ["film"], "adapts": [{"source": "acts.md", "section": "节点位置"}]},
+    ])
+    path = tmp_path / CATALOG_PATH
+    data = json.loads(path.read_text(encoding="utf-8"))
+    data["formats"] = [{"id": "film", "title": "电影"}]
+    path.write_text(json.dumps(data), encoding="utf-8")
+    read = GlobalWorkflowQuery(GlobalWorkflowReader(tmp_path)).read()
+    assert read.formats == [{"id": "film", "title": "电影"}]
+    sources = {source["path"]: source for source in read.sources}
+    assert sources["acts.md"]["formats"] == () and sources["acts.md"]["adapts"] == ()
+    assert sources["film.md"]["formats"] == ("film",)
+    assert sources["film.md"]["adapts"] == ({"source_id": "repo:acts.md", "section": "节点位置"},)
+
+
+def test_repository_story_sources_split_shared_principles_from_formats(tmp_path: Path) -> None:
+    _, sources = GlobalWorkflowReader(repo_root(), tmp_path / "no-user-config").catalog()
+    story = [source for source in sources if source.group == "story"]
+    assert story and all(source.status == "available" for source in story)
+    formats = {source.title: source.formats for source in story if source.formats}
+    assert formats == {"电影": ("film",), "连续剧": ("series",)}
+    shared = {source.id for source in story if not source.formats}
+    assert all(entry["source_id"] in shared for source in story for entry in source.adapts)

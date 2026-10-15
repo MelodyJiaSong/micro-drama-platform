@@ -3,7 +3,7 @@
 用法（仓库根目录）：
     blender -b --factory-startup --python tools/previz/build_previz.py -- <config.toml> [--no-render]
 
-设计边界（ai_video.md rule 12.16 + 2026-08-22 分工裁定）：
+设计边界（2026-08-22 分工裁定；新流程见 `.agents/skills/ai-videos-pipeline/modules/prompts-previz.md`）：
     3D 只承担「机位几何 / 构图占比 / 站位朝向 / 尺度 / 遮挡 / 轨迹 / 时刻表」；
     长相、材质、光色、表演质感、次级运动、特效形态一律不碰，交 Seedance。
     因此本引擎只有色块 proxy 与灰模摆件，没有材质、没有灯光美术、没有粒子。
@@ -112,7 +112,7 @@ POSES = {
     "站高": {},
     "跌坐": {"hipL": (-85, 0, 12), "kneeL": (15, 0, 0),              # 屁股着地、两腿朝前伸（旧版膝弯 70°，脚着地、屁股悬空）
              "hipR": (-85, 0, -12), "kneeR": (15, 0, 0), "pelvis": (-12, 0, 0)},
-    "躺": {"pelvis": (-88, 0, 0)},
+    "躺": {},                        # 整个人放平只靠 ROOT_TILT；旧版再转骨盆 -88° 会与根倾叠加成腿朝天（follow-up 227 静帧）
     "踏剑": {"hipL": (-18, 0, 0), "kneeL": (25, 0, 0),
              "hipR": (-8, 0, 0), "kneeR": (12, 0, 0),
              "shoulderL": (0, 0, -35), "shoulderR": (0, 0, 35)},
@@ -227,7 +227,7 @@ TOTAL = float(G["total_sec"]) if "total_sec" in G else die("[全局] 缺 total_s
 RES = G.get("分辨率", [960, 540])
 OUT_DIR = CFG_PATH.parent
 for _msg in seedance_ref.check(FPS, (int(RES[0]), int(RES[1]))):
-    die(_msg + "（previz 要上传给 Seedance 当参考，下限不过就是废片，ai_video.md rule 24）")
+    die(_msg + "（previz 要上传给 Seedance 当参考，下限不过就是废片，见 tools/previz/seedance_ref.py）")
 REPO = Path(__file__).resolve().parents[2]
 # 本镜局部坐标 → 场景坐标的平移。场景主档是米制的，但每个镜发生在场景的不同角落
 # （s1 二层地板 z≈4.53、临街正门 y≈0…），配置里只写「本镜局部」坐标，靠这行落位。
@@ -247,7 +247,7 @@ if scene_name:
     # rule: 场景主档按 [全局].项目 解析；缺省 xianjian_yi_mv（向后兼容既有 shot 配置）
     _proj = G.get("项目", "xianjian_yi_mv")
     # 场景 .blend 住在 `scenes/{name}/_blender/`——它是 blender 侧产物，
-    # 与出图用的主体目录分开放（ai_video.md rule 4e）。旧布局（放在场景根）作兜底。
+    # 与出图用的主体目录分开放。旧布局（放在场景根）作兜底。
     # 场景 可以是 scenes/ 下的嵌套路径（rule 4e 2026-09-22：大陆/区/bg{N}_主体）；
     # 主档名取叶子目录名，或 bg 主体的 `bg{N}.blend`（build_scene.py 的产物名）
     _scene_dir = REPO / "ai_videos" / _proj / "2_世界观人设" / "scenes" / scene_name
@@ -801,7 +801,8 @@ for a in CFG.get("角色", []):
             key_rot(joints["hipR"], fr, (WALK_HIP * _s, 0, 0))
             key_rot(joints["kneeL"], fr, (WALK_KNEE * max(0.0, _s), 0, 0))
             key_rot(joints["kneeR"], fr, (WALK_KNEE * max(0.0, -_s), 0, 0))
-    if GROUND:   # 关键帧之间的直线插值会穿进坡里或悬空：逐帧把脚按回地面；弯腿姿态再按最低点压下去
+    # 绿幕小人偶没有地形，平地也要逐帧压下去（follow-up 227：跌坐 / 蹲的人偶原先悬在站立的胯高）
+    if GROUND or G.get("绿幕"):   # 关键帧之间的直线插值会穿进坡里或悬空：逐帧把脚按回地面；弯腿姿态再按最低点压下去
         track = []
         for fr in range(1, f(TOTAL) + 1):
             scene.frame_set(fr)

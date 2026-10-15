@@ -7,8 +7,8 @@
  * and re-announces (the empty-string interlude is what makes SRs re-read).
  *
  * Before follow-up 060 the live region was screen-reader-only (offscreen),
- * so empty-output paths (e.g. "concat shot characters" with zero usable
- * character video.mp4 files) looked silent to sighted users.
+ * so empty-output paths (e.g. an import that moved nothing) looked silent to
+ * sighted users.
  */
 const REGION_ID = "aria-live-toast";
 const VISIBLE_CLASS = "is-visible";

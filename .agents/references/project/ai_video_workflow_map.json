@@ -1,0 +1,361 @@
+{
+  "schema_version": 1,
+  "summary": "六个模块分两段：创作段把故事一步步变成可生成的镜头，后期段把生成的条剪成成片。每个模块只在上游确定后开始；上游改变，下游保留内容并标记待更新。资产、调研与术语等支持层独立于主线，按需供给。全剧 Vision（剧 README，用户定）贯穿所有模块：创作前读、取舍对照、审查第一问是否满足。",
+  "statuses": [
+    {
+      "id": "active",
+      "zh": "已有",
+      "color": "#15803d"
+    },
+    {
+      "id": "basic",
+      "zh": "基础版",
+      "color": "#2563eb"
+    },
+    {
+      "id": "placeholder",
+      "zh": "待设计",
+      "color": "#94a3b8"
+    }
+  ],
+  "phases": [
+    {
+      "id": "create",
+      "zh": "创作段",
+      "en": "Creation",
+      "color": "#ede9fe",
+      "x": -30,
+      "y": -50,
+      "w": 900,
+      "h": 300
+    },
+    {
+      "id": "post",
+      "zh": "后期段",
+      "en": "Post-production",
+      "color": "#ffedd5",
+      "x": -30,
+      "y": 340,
+      "w": 900,
+      "h": 310
+    }
+  ],
+  "modules": [
+    {
+      "id": "story",
+      "zh": "故事创作",
+      "en": "Story",
+      "phase": "create",
+      "status": "active",
+      "x": 0,
+      "y": 0,
+      "purpose": "先写好故事，再考虑怎么拍。",
+      "steps": [
+        "全剧 Vision：一句话观众体验（用户定）",
+        "定片种（电影 / 连续剧）",
+        "全剧方向与伏笔账本",
+        "本集体验与体验地图（边拍边加）",
+        "本集六个问题",
+        "写本集故事稿"
+      ],
+      "input": "剧级观众体验；故事方向；Research；资产库；伏笔账本",
+      "output": "小说式故事稿",
+      "files": [
+        "episodes/epNN/story.json",
+        "2_世界观人设/series.md",
+        "episodes/epNN/state_changes.md",
+        "episodes/epNN/decisions/story.md"
+      ],
+      "gate": "用户确定版本；对照全剧 Vision",
+      "nav": "/workflow/story"
+    },
+    {
+      "id": "filming",
+      "zh": "影视改编",
+      "en": "Filming",
+      "phase": "create",
+      "status": "active",
+      "x": 320,
+      "y": 0,
+      "purpose": "设计观众能看见和听见的内容。",
+      "steps": [
+        "场：目的、环境、覆盖",
+        "覆盖规划（待设计）",
+        "镜头：出场人物、走位、动作分拍、景别、取景、角度、焦点、运镜、光线；注意力指向同一处"
+      ],
+      "input": "已确定的故事；环境与人物资产",
+      "output": "可拍的分镜（场 → 镜头）",
+      "files": [
+        "episodes/epNN/filming.json",
+        "episodes/epNN/decisions/filming.md",
+        "episodes/epNN/scenes/sN/decisions.md"
+      ],
+      "gate": "用户确定版本；对照全剧 Vision",
+      "nav": "/workflow/filming"
+    },
+    {
+      "id": "prompts",
+      "zh": "Prompt 编译与出片",
+      "en": "Prompts & generation",
+      "phase": "create",
+      "status": "basic",
+      "x": 640,
+      "y": 0,
+      "purpose": "每镜带参考（overhead，复杂镜 previz；人物、场景、声样）按固定规则编译分镜，再生成各镜头的条。",
+      "steps": [
+        "每镜 overhead（复杂镜加 previz）",
+        "确定性编译：参考在前、写明用法",
+        "资料包；出片先记日志再请求",
+        "条落进 renders/"
+      ],
+      "input": "已确定的分镜；人物、场景资产与场地平面图",
+      "output": "每镜 prompt；每镜一条或多条视频",
+      "files": [
+        "scenes/sN/shots/stN/planning/overhead.toml",
+        "scenes/sN/shots/stN/previz/",
+        "episodes/epNN/prompts.json",
+        "scenes/sN/shots/stN/prompt.txt",
+        "scenes/sN/shots/stN/renders/",
+        "episodes/epNN/request_log.md"
+      ],
+      "gate": "人工点生成（将来可切自动）；对照全剧 Vision",
+      "nav": "/workflow/prompts"
+    },
+    {
+      "id": "edit",
+      "zh": "剪辑",
+      "en": "Editing",
+      "phase": "post",
+      "status": "placeholder",
+      "x": 640,
+      "y": 390,
+      "purpose": "选条、粗剪、精剪到锁片。",
+      "steps": [
+        "选条",
+        "粗剪",
+        "精剪",
+        "锁片"
+      ],
+      "input": "各镜头的条",
+      "output": "锁片版本",
+      "files": [
+        "待定（剪辑模块从零设计）"
+      ],
+      "gate": "锁片（用户批准）；对照全剧 Vision",
+      "nav": "/workflow/edit"
+    },
+    {
+      "id": "sound",
+      "zh": "声音与音乐",
+      "en": "Sound & music",
+      "phase": "post",
+      "status": "placeholder",
+      "x": 320,
+      "y": 390,
+      "purpose": "对白、环境声与音效、音乐与混音。",
+      "steps": [
+        "对白整理",
+        "环境声与音效",
+        "音乐",
+        "混音与响度"
+      ],
+      "input": "锁片版本；剧级音乐资产（待建）",
+      "output": "混音与分轨",
+      "files": [
+        "episodes/epNN/cue/（占位）"
+      ],
+      "gate": "用户确认终混；对照全剧 Vision",
+      "nav": "/workflow/sound"
+    },
+    {
+      "id": "delivery",
+      "zh": "成片交付",
+      "en": "Delivery",
+      "phase": "post",
+      "status": "placeholder",
+      "x": 0,
+      "y": 390,
+      "purpose": "调色、字幕、AI 标识、质检与母版。",
+      "steps": [
+        "调色统一",
+        "字幕",
+        "AI 标识与免责卡",
+        "质检",
+        "母版"
+      ],
+      "input": "锁片版本与终混",
+      "output": "平台母版",
+      "files": [],
+      "gate": "质检全过；对照全剧 Vision",
+      "nav": "/workflow/delivery"
+    }
+  ],
+  "supports": [
+    {
+      "id": "research",
+      "zh": "Research",
+      "en": "Research",
+      "x": 0,
+      "y": 272,
+      "purpose": "原典考据与题材调研；采用后才成为故事事实。",
+      "files": [
+        "ai_videos/{剧}/0_research/"
+      ],
+      "nav": ""
+    },
+    {
+      "id": "assets",
+      "zh": "资产库",
+      "en": "Assets",
+      "x": 370,
+      "y": 272,
+      "purpose": "人物、环境、道具、世界规则的长期事实与参考图，跨集复用。",
+      "files": [
+        "ai_videos/{剧}/2_世界观人设/"
+      ],
+      "nav": ""
+    },
+    {
+      "id": "series",
+      "zh": "全剧方向与伏笔账本",
+      "en": "Series bible",
+      "x": 185,
+      "y": 272,
+      "purpose": "连续剧的长期方向、主线与每个角色的伏笔；每集定稿后回写。",
+      "files": [
+        "2_世界观人设/series.md"
+      ],
+      "nav": ""
+    },
+    {
+      "id": "services",
+      "zh": "外部服务",
+      "en": "Paid services",
+      "x": 555,
+      "y": 272,
+      "purpose": "收费生成服务：先写请求日志再调用；只用条款允许商业用途的工具。",
+      "files": [
+        ".agents/references/project/paid_services.md"
+      ],
+      "nav": "/request-logs"
+    },
+    {
+      "id": "glossary",
+      "zh": "术语表",
+      "en": "Glossary",
+      "x": 200,
+      "y": 690,
+      "purpose": "剧、季、集、幕、段落、场、镜头、条、cue 等术语的定义与关系。",
+      "files": [
+        ".agents/references/project/ai_video_glossary.json"
+      ],
+      "nav": "/workflow/glossary"
+    }
+  ],
+  "edge_types": [
+    {
+      "id": "handoff",
+      "zh": "交接（上游确定后）",
+      "color": "#334155",
+      "dash": ""
+    },
+    {
+      "id": "feedback",
+      "zh": "回路（开单、修改请求）",
+      "color": "#dc2626",
+      "dash": "6 4"
+    },
+    {
+      "id": "supply",
+      "zh": "支持供给",
+      "color": "#64748b",
+      "dash": "2 4"
+    }
+  ],
+  "edges": [
+    {
+      "from": "story",
+      "to": "filming",
+      "type": "handoff",
+      "zh": "已确定的故事"
+    },
+    {
+      "from": "filming",
+      "to": "prompts",
+      "type": "handoff",
+      "zh": "已确定的分镜"
+    },
+    {
+      "from": "prompts",
+      "to": "edit",
+      "type": "handoff",
+      "zh": "条"
+    },
+    {
+      "from": "edit",
+      "to": "sound",
+      "type": "handoff",
+      "zh": "锁片版本"
+    },
+    {
+      "from": "sound",
+      "to": "delivery",
+      "type": "handoff",
+      "zh": "终混"
+    },
+    {
+      "from": "filming",
+      "to": "story",
+      "type": "feedback",
+      "zh": "修改请求"
+    },
+    {
+      "from": "edit",
+      "to": "filming",
+      "type": "feedback",
+      "zh": "缺镜头开单"
+    },
+    {
+      "from": "edit",
+      "to": "prompts",
+      "type": "feedback",
+      "zh": "重新出片"
+    },
+    {
+      "from": "research",
+      "to": "story",
+      "type": "supply",
+      "zh": "采用的事实"
+    },
+    {
+      "from": "series",
+      "to": "story",
+      "type": "supply",
+      "zh": "方向与伏笔"
+    },
+    {
+      "from": "assets",
+      "to": "filming",
+      "type": "supply",
+      "zh": "识别标签、环境"
+    },
+    {
+      "from": "assets",
+      "to": "prompts",
+      "type": "supply",
+      "zh": "参考图"
+    },
+    {
+      "from": "services",
+      "to": "prompts",
+      "type": "supply",
+      "zh": "生成调用"
+    },
+    {
+      "from": "services",
+      "to": "sound",
+      "type": "supply",
+      "zh": "音乐与声音工具"
+    }
+  ]
+}

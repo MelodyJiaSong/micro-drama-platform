@@ -9,3 +9,4 @@ class GlobalWorkflowQdto:
     groups: list[dict[str, str]]
     sources: list[dict[str, Any]]
     categories: list[dict[str, str]] = field(default_factory=list)
+    formats: list[dict[str, str]] = field(default_factory=list)

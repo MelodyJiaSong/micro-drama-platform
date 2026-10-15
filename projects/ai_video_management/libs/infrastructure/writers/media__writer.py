@@ -20,7 +20,7 @@ from pathlib import Path
 
 from libs.common.exposed_tree import MEDIA_EXTENSIONS, ExposedTree
 from libs.common.safe_resolve import SafeResolver
-from libs.domain.errors.casting__error import DramaNotFoundError, InvalidDramaPathError
+from libs.domain.errors.drama__error import DramaNotFoundError, InvalidDramaPathError
 from libs.domain.errors.media__error import (
     AlreadyArchivedError,
     AlreadyDeletedError,
@@ -38,17 +38,17 @@ ARCHIVE_DIR_NAME = "archive"
 DELETED_DIR_NAME = "_deleted"
 AI_VIDEOS_ROOT_NAME = "ai_videos"
 # The episode subtree is never a rename target. Shot media there lives in the
-# name-excluded `renders/` subfolder (original names preserved); the only other
-# media under `episodes/` are the episode-root final cuts (`ep{NN}_{lang}.mp4`,
-# written by the subtitle-burn / concat feature) whose deliberate language-tagged
-# names must be preserved — the folder-name rename would otherwise collapse them
-# to `ep{NN}{i}.mp4` (follow-up 128). Only `characters/`, `scenes/`, and scene
-# `bg*` plate folders are canonicalized by the rename pass.
+# name-excluded `renders/` subfolder (one folder per generation, original names
+# preserved), and older dramas' episode folders still hold language-tagged final
+# cuts (`ep{NN}_{lang}.mp4`) whose names the folder-name rename would otherwise
+# collapse to `ep{NN}{i}.mp4` (follow-up 128). Only asset folders (`characters/`,
+# `background/` / `scenes/`, `props/`) are canonicalized by the rename pass.
 EPISODES_DIR_NAME = "episodes"
-# Reserved canonical filenames the folder-name rename must NOT touch: a character
-# folder's `intro_card.{ext}` (ai_video.md rule 11d) has a fixed name unrelated to
-# the folder name — without this guard it gets collapsed to `{folder}{N}.png` and
-# the intro-card burn can no longer find it (follow-up wushen_juexing intro-card).
+# Reserved canonical filenames the folder-name rename must NOT touch: older
+# dramas' character folders may hold an `intro_card.{ext}` nameplate (from the
+# intro-card feature removed in follow-up 233); its fixed name is unrelated to
+# the folder name, so the rename pass leaves it alone rather than collapse it to
+# `{folder}{N}.png`.
 _RESERVED_STEMS = frozenset({"intro_card"})
 
 
@@ -308,14 +308,9 @@ class MediaRenamer:
             raise InvalidDramaPathError("path is empty")
         normalized = rel.rstrip("/")
         parts = normalized.split("/")
-        # A drama root (`ai_videos/{drama}` or `ai_videos/{series}/{drama}`) — or one
-        # of the shared system libraries, which DownloadsImporter targets the same
-        # way it targets a drama (`_performances`, `_actors`).
-        is_drama_root = drama_ref.drama_depth(self._resolver.root, parts) == len(parts)
-        is_system_library = (
-            len(parts) == 2 and parts[0] == "ai_videos" and parts[1].startswith("_")
-        )
-        if not (is_drama_root or is_system_library):
+        # Only a drama root (`ai_videos/{drama}` or `ai_videos/{series}/{drama}`).
+        # The `_performances` / `_actors` library imports went with follow-up 233.
+        if drama_ref.drama_depth(self._resolver.root, parts) != len(parts):
             raise InvalidDramaPathError(
                 "path must be 'ai_videos/{drama}' or 'ai_videos/{series}/{drama}'"
             )

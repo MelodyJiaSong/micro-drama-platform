@@ -104,29 +104,17 @@ const FILE_LEAF_TYPES: ReadonlySet<string> = new Set([
   "file", "image", "video", "audio", "pdf", "model",
 ]);
 
-interface ActorLeafShape {
+interface TreeLeafShape {
   path: string;
   type: string;
-  face_path?: string | null;
-  body_path?: string | null;
-  audio_path?: string | null;
   children?: unknown[];
 }
 
-export function collectFilePaths(node: ActorLeafShape): string[] {
+export function collectFilePaths(node: TreeLeafShape): string[] {
   const out: string[] = [];
-  const walk = (n: ActorLeafShape): void => {
+  const walk = (n: TreeLeafShape): void => {
     if (FILE_LEAF_TYPES.has(n.type)) out.push(n.path);
-    if (n.type === "actor") {
-      out.push(n.path);
-      if (n.face_path) out.push(n.face_path);
-      if (n.body_path) out.push(n.body_path);
-    }
-    if (n.type === "voice") {
-      out.push(n.path);
-      if (n.audio_path) out.push(n.audio_path);
-    }
-    const kids = (n.children ?? []) as ActorLeafShape[];
+    const kids = (n.children ?? []) as TreeLeafShape[];
     for (const k of kids) walk(k);
   };
   walk(node);

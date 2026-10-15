@@ -1,0 +1,84 @@
+.glossary-page { max-width: none; }
+.glossary-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
+.glossary-header h1 span { font-size: 0.55em; color: var(--text-muted); font-weight: 500; margin-left: 6px; }
+.glossary-header p { max-width: 900px; color: #334155; line-height: 1.7; }
+.glossary-header > a { flex-shrink: 0; font-size: 13px; }
+
+.glossary-tabs { display: flex; gap: 4px; border-bottom: 1px solid #e2e8f0; margin: 16px 0; }
+.glossary-tabs button { padding: 8px 16px; border: 0; border-bottom: 2px solid transparent; background: transparent; cursor: pointer; font: inherit; color: #475569; }
+.glossary-tabs button[aria-selected="true"] { color: #0f172a; border-bottom-color: #0f172a; font-weight: 600; }
+
+.glossary-body { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; }
+@media (max-width: 1100px) { .glossary-body { grid-template-columns: minmax(0, 1fr); } }
+.glossary-main { min-width: 0; }
+
+.glossary-graph { height: 720px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fbfcfe; }
+.glossary-node {
+  width: 150px; height: 58px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; align-items: center;
+  border: 2px solid; border-left-width: 6px; border-radius: 8px; background: white; cursor: pointer;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08); transition: opacity 0.15s, box-shadow 0.15s;
+}
+.glossary-node strong { font-size: 18px; color: #0f172a; }
+.glossary-node span { font-size: 13px; color: #64748b; }
+.glossary-node.is-selected { box-shadow: 0 0 0 3px color-mix(in srgb, var(--term-color) 35%, transparent), 0 4px 12px rgba(15, 23, 42, 0.15); }
+.glossary-node.is-dimmed { opacity: 0.3; }
+.glossary-node .react-flow__handle { opacity: 0; width: 6px; height: 6px; min-width: 0; min-height: 0; border: 0; }
+
+.glossary-legend { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; margin-bottom: 10px; font-size: 12px; color: #334155; }
+.glossary-legend > div { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; }
+.glossary-legend-item { display: inline-flex; align-items: center; gap: 5px; }
+.glossary-legend-item i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.glossary-legend button { display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px; border: 1px solid #cbd5e1; border-radius: 999px; background: white; cursor: pointer; font: inherit; }
+.glossary-legend button[aria-pressed="false"] { opacity: 0.45; text-decoration: line-through; }
+
+.glossary-hint { font-size: 12px; color: #64748b; margin-top: 8px; }
+
+.glossary-detail { position: sticky; top: 12px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; background: white; font-size: 13px; line-height: 1.7; }
+.glossary-detail h2 { font-size: 20px; margin: 4px 0 8px; }
+.glossary-detail h2 span { font-size: 14px; font-weight: 500; color: #64748b; margin-left: 4px; }
+.glossary-detail h3 { font-size: 14px; margin: 14px 0 6px; }
+.glossary-detail dl { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; margin: 10px 0; }
+.glossary-detail dt { color: #64748b; }
+.glossary-detail dd { margin: 0; overflow-wrap: anywhere; }
+.glossary-en { color: #475569; }
+.glossary-chip { display: inline-block; margin: 0; padding: 0 8px; border: 1px solid; border-radius: 999px; font-size: 11px; }
+.glossary-relations { list-style: none; padding: 0; margin: 0; }
+.glossary-relations li { display: grid; grid-template-columns: 44px auto 1fr; gap: 6px; align-items: baseline; padding: 4px 0; border-bottom: 1px dashed #e2e8f0; }
+.glossary-relations button, .glossary-table th button { border: 0; background: none; padding: 0; color: var(--accent); cursor: pointer; font: inherit; white-space: nowrap; }
+.glossary-card { font-size: 11px; font-weight: 700; border: 1px solid; border-radius: 4px; text-align: center; }
+.glossary-clear { margin-top: 12px; padding: 4px 10px; border: 1px solid #cbd5e1; border-radius: 5px; background: white; cursor: pointer; font: inherit; font-size: 12px; }
+
+.glossary-timeline { margin: 0 0 28px; }
+.glossary-timeline figcaption { display: flex; flex-direction: column; gap: 2px; margin-bottom: 6px; font-size: 13px; }
+.glossary-timeline figcaption span { color: #64748b; font-size: 12px; }
+.glossary-timeline svg { width: 100%; height: auto; font-size: 12px; border: 1px solid #e2e8f0; border-radius: 8px; background: white; }
+.glossary-tick { stroke: #eef2f7; }
+.glossary-tick-label { fill: #94a3b8; font-size: 10px; }
+.glossary-row-label { cursor: pointer; }
+.glossary-row-label text { fill: #0f172a; font-size: 12px; }
+.glossary-row-label:focus { outline: none; }
+.glossary-row-label:focus text { text-decoration: underline; }
+.glossary-row-en { fill: #94a3b8; font-size: 10px; }
+.glossary-span-label { fill: #1e293b; font-size: 11px; pointer-events: none; }
+.glossary-row-note { fill: #94a3b8; font-size: 10px; }
+.glossary-marker line { stroke: #be185d; stroke-width: 1.5; stroke-dasharray: 4 3; }
+.glossary-marker circle { fill: #be185d; }
+.glossary-marker text { fill: #be185d; font-size: 11px; font-weight: 600; }
+
+.glossary-search { width: 100%; max-width: 360px; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font: inherit; margin-bottom: 10px; }
+.glossary-table-wrap { overflow-x: auto; }
+.glossary-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.glossary-table th, .glossary-table td { border-bottom: 1px solid #e2e8f0; padding: 8px 10px; text-align: left; vertical-align: top; line-height: 1.6; }
+.glossary-table thead th { color: #475569; font-weight: 600; background: #f8fafc; white-space: nowrap; }
+.glossary-table tbody tr { cursor: pointer; }
+.glossary-table tbody tr:hover { background: #f8fafc; }
+.glossary-table tr.is-selected { background: #eef4ff; }
+.glossary-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+.glossary-alt { color: #64748b; font-size: 12px; margin: 0 0 6px; display: block; font-weight: 400; }
+.glossary-notes, .glossary-sources { padding-left: 18px; margin: 0; }
+.glossary-notes li { margin: 4px 0; color: #334155; }
+.glossary-sources li { margin: 2px 0; font-size: 12px; overflow-wrap: anywhere; }
+.glossary-row-active { fill: #fef9c3; }
+.glossary-views { border-bottom: 0; gap: 6px; margin-top: 0; }
+.glossary-views button { border: 1px solid #cbd5e1; border-radius: 999px; padding: 4px 14px; }
+.glossary-views button[aria-selected="true"] { background: #0f172a; color: white; border-color: #0f172a; }

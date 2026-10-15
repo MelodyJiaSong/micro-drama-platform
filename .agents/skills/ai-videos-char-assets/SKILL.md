@@ -1,9 +1,9 @@
 ---
 name: ai-videos-char-assets
-description: 短剧人物资产补齐：立绘、4 秒建立视频、三视图与声样；给剧名或 alias，跳过已有资产，每步看图验收。
+description: 短剧人物资产补齐：立绘、4 秒建立视频、三视图与声样；给剧目录名，跳过已有资产，每步看图验收。
 metadata:
   claude:
-    argument-hint: '<剧名> 例: 魔兽世界 | shengji_zhilu | shikong_lvxing/sk2'
+    argument-hint: '<剧目录名> 例: shengji_zhilu'
 ---
 
 > Claude / Codex 共用正文。执行前按根目录 `AGENTS.md` 路由，工具、提问、委派、参数与收尾遵 `CONVENTIONS.md` § Tool scoping and team coordination。路径相对仓库根；同目录资源相对本源文件。
@@ -15,22 +15,22 @@ metadata:
 
 名字用纯 ASCII：中文名的 skill 在 `/` 补全里不出现（2026-09-30 用户实测 `/ai_videos` 补不出 `ai_videos__人物资产`）。
 
-参数 ＝ 剧名（`实际用户消息中的参数`）：`ai_videos/` 下的目录名、带季的相对路径（`shikong_lvxing/sk2`），或该剧 `seedance.toml` 的 `alias`。
+参数 ＝ 剧（`实际用户消息中的参数`）：`ai_videos/` 下的目录名，或带季的相对路径。
 底层是 `tools/char_assets.py`（status / run / sheet），它调 `gen_char_images.py`（立绘）、`gen_turntable_videos.py`（建立视频）、网页端 `apps.cli.extract_views`（三视图）。**已有的一律跳过**，中断后重跑同一条命令即续。
 
 ## 按需上传的资产交接
 
 **全剧命名规则**：所有剧（含旧剧续跑、系列共享资产）、所有character今后的新建/补齐/重生成/抽帧/导入三视图和声样，必须使用下述front/side/back/audio文件名。`{角色}`取角色目录名；历史文件只兼容读取，不作为新输出命名依据。生成器及导入器不得把新文件改回数字名或中文方向后缀。
 
-所有新剧及显式迁移剧不依赖预建entity。每个已入画人物交付当前造型三张PNG与实际声样MP3，文件统一为 `views/{角色}_front.png`、`{角色}_side.png`、`{角色}_back.png`、`{角色}_audio.mp3`；换装子目录用 `{造型键}_front/side/back.png`，复用本角色声样。旧剧数字名仅兼容回读；魔兽世界全部characters按用户要求迁移，旧数字与实际方向的映射须看图核对（该剧旧views1/2/3对应背/正/侧）。迁移保留媒体字节并更新引用/资料包，不因文件数或新文件名宣称方向质量通过。声样按卡内voice_id绑定，只有本镜需要的画内发声者上传；不从旧建立视频的示例句推导当前剧情。具体shot契约见stage6与ai_video.md rule 4 / 12.4-H2；请求留痕沿用paid_services.md。
+每个已入画人物交付当前造型三张PNG与实际声样MP3，文件统一为 `views/{角色}_front.png`、`{角色}_side.png`、`{角色}_back.png`、`{角色}_audio.mp3`；换装子目录用 `{造型键}_front/side/back.png`，复用本角色声样。不因文件数或新文件名宣称方向质量通过；不从建立视频的示例句推导当前剧情。编译时每个出场人物上传三视图合图与声样，见 [参考](../ai-videos-pipeline/modules/prompts-references.md) 与 [资产](../ai-videos-pipeline/resources/assets.md)；请求留痕沿用 paid_services.md。
 
-**三视图合图交接（2026-10-03，follow-up 102）**：所有剧、所有character今后的资产流程在三张源图齐备后，用 `python tools/character_sheet.py ai_videos/{剧}` 确定性拼接；左front、中side、右back，原像素保留，尺寸不同时等宽格内居中补边，不裁切/拉伸/重画。基础输出 `views/{角色目录名}_views.png`，换装输出 `{造型键}_views.png`；三张源图及 `_audio.mp3` 保留。合图内写源图SHA，源图改变须重建合图；每人只上传合图，native画内发声者另传声样，不同时上传三张单图。声明 `character_reference_layout = "triptych"`；缺合图/源指纹过期即阻碍。此规则适用于今后的所有剧和角色，历史单图镜只在指定范围迁移。合图三格代表同一角色三个角度；原图朝向质量问题仍须单独验收。
+**三视图合图交接（2026-10-03，follow-up 102）**：所有剧、所有character今后的资产流程在三张源图齐备后，用 `python tools/character_sheet.py ai_videos/{剧}` 确定性拼接；左front、中side、右back，原像素保留，尺寸不同时等宽格内居中补边，不裁切/拉伸/重画。基础输出 `views/{角色目录名}_views.png`，换装输出 `{造型键}_views.png`；三张源图及 `_audio.mp3` 保留。合图内写源图SHA，源图改变须重建合图；每人只上传合图与声样，不同时上传三张单图；缺合图或源指纹过期即阻碍编译。合图三格代表同一角色三个角度；原图朝向质量问题仍须单独验收。
 
 ## 流程
 
 | 步 | 命令 | 做什么 |
 |---|---|---|
-| 0 | `python tools/char_assets.py status <剧名>` | 报规模：缺立绘 / 缺视频（×80 分）/ 缺三视图；⚠ 列出缺立绘块、缺 turntable 块的卡 |
+| 0 | `python tools/char_assets.py status <剧目录名>` | 报规模：缺立绘 / 缺视频（×80 分）/ 缺三视图；⚠ 列出缺立绘块、缺 turntable 块的卡 |
 | 1 | `… run <剧名> --steps portrait` | 出缺的立绘 |
 | 1b | `… sheet <剧名> --what portrait --only <本轮新出的>` → Read | 按各卡「验收」行看图 |
 | 2 | `… run <剧名> --steps video,views`（`run_in_background`） | 逐条出建立视频、落盘即抽三视图 |
@@ -38,8 +38,8 @@ metadata:
 | 2b | `… sheet <剧名> --what views --only <本轮>` → Read | 逐行对立绘验收 |
 | 3 | 报告 + 记 `specs/ai_video/{剧}/changelog.md` | |
 
-- **剧名对不上**：查 `ai_videos/*/README.md` 的中文剧名，在该剧 `seedance.toml` 的 `alias` 里补一条再跑。多季的剧给相对路径。
-- **缺块的卡**：写卡是 stage2 的活——按 stage2 playbook 模板把块补进卡里（turntable 块：```text 首行 `{卡目录}_turntable`、`参考: \`{卡目录}(立绘·脸的唯一标准)=>@\``、末尾「比例：画幅 X:Y，时长 4 秒。」+ `负面词:`），读透人物卡再写，不编人设。本 skill 只跳过并在报告里点名。
+- **剧名对不上**：用 `ai_videos/` 下的目录名；多季的剧给相对路径。
+- **缺块的卡**：按人物卡模板把块补进卡里（turntable 块：```text 首行 `{卡目录}_turntable`、`参考: \`{卡目录}(立绘·脸的唯一标准)=>@\``、末尾「比例：画幅 X:Y，时长 4 秒。」+ `负面词:`），读透人物卡再写，不编人设。本 skill 只跳过并在报告里点名。
 - **立绘没过不进第 2 步**：视频照立绘出，坏脸会被锁进资产。不过的删 png、改卡里立绘 prompt 重出。
 - **第一条提交时看 `priority` / `排第`**：priority 7、排第 0 ＝ 会员通道。排得很深就停下告诉用户——慢到不如网页手点就没有意义。
 - **2b 验收**：同一张脸；装束与随身物一致、没多东西；正→侧→背转到位；无字幕文字；有 `## 叫声设计` 的卡平均响度 ≥ −50 dB（工具已判）。不过的报给用户，不擅自重出（80 分一条）。

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""航线曲线数学 —— `build_bianjing.py`（Blender 内）与 `gen_route_sk1.py`（普通 Python）共用。
+"""航线 / 关键帧曲线数学 —— 现由 `tools/previz/build_previz.py` 使用（单调插值）。
+原先与 sk1 航线工具 `build_bianjing.py`（Blender 内）、`gen_route_sk1.py`（普通 Python）共用，两者已随旧流程删除。
 
 为什么单独成模块：与 `city_layout.py` 同一个理由（CLAUDE.md §General coding rules
 「一个名字只有一处定义」）。单调插值与侧向加速度这两件事，**航线生成端**要用它判断

@@ -163,8 +163,8 @@ def test_404_does_not_leak_realpath(client):
 
 @pytest.mark.parametrize("rel", [
     ".agents/skills/agent-team/SKILL.md",
-    ".agents/references/project/ai_video.md",
-    ".agents/skills/ai-videos-pipeline/playbooks/ai_videos__stage2_世界观人设.md",
+    ".agents/references/project/ai_video_workflow.md",
+    ".agents/skills/ai-videos-pipeline/modules/filming.md",
     ".claude/skills/ai_videos__全流程编排/SKILL.md",
 ])
 def test_reads_shared_sources_and_claude_adapters(client, rel):

@@ -1,57 +1,38 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { deleteActor, importFromDownloads } from "../api";
-import { ApiError, type TreeNode, type TreeNodeType } from "../types";
+import type { TreeNode, TreeNodeType } from "../types";
 import { ResearchNav } from "./ResearchNav";
-import { storyRunDocument, storyRunUrl } from "../lib/storyRunRoutes";
 import { workflowNavigation } from "../lib/workflowData";
 import { matchesNavigation } from "../lib/globalWorkflow";
 import { useGlobalWorkflow } from "./GlobalWorkflowContext";
-
-const ACTOR_ID_RE = /^actor_\d{4,}$/;
+import { ObsoleteBadge } from "./ObsoleteBadge";
 
 /** Node types that open a file in the reader when clicked. One source — adding
  * a leaf type (e.g. `model` for .glb) must not mean editing five predicates. */
 const FILE_LEAF_TYPES: ReadonlySet<TreeNodeType> = new Set<TreeNodeType>([
   "file", "image", "video", "audio", "pdf", "model",
 ]);
-/** Plus the folder-collapsing leaves, which carry children but never expand. */
+/** Plus the episode-workflow leaves, which open a module page and never expand. */
 const LEAF_TYPES: ReadonlySet<TreeNodeType> = new Set<TreeNodeType>([
-  ...FILE_LEAF_TYPES, "actor", "voice", "workflow", "story_runs", "story_input",
+  ...FILE_LEAF_TYPES, "workflow",
 ]);
 const isFileLeaf = (type: TreeNodeType): boolean => FILE_LEAF_TYPES.has(type);
 const isLeafType = (type: TreeNodeType): boolean => LEAF_TYPES.has(type);
 const workflowUrl = (node: TreeNode): string => `/drama?drama=${encodeURIComponent(node.drama_path!)}&module=${node.workflow_module}&episode=${node.workflow_episode}`;
-const storyRunsUrl = (node: TreeNode): string => {
-  return storyRunUrl(node.story_run_view || "output", node.episode_path!, node.story_run_id, undefined, node.story_run_item_id);
-};
-const storyInputUrl = (node: TreeNode): string => {
-  const params = new URLSearchParams({ episode_path: node.episode_path! });
-  if (node.story_input_view) params.set("view", node.story_input_view);
-  return `/story-input?${params}`;
-};
-const matchesStoryRoute = (node: TreeNode, pathname: string, params: URLSearchParams): boolean => {
-  if (params.get("episode_path") !== node.episode_path) return false;
-  if (node.type === "story_input") return pathname === "/story-input" && (!node.story_input_view || (params.get("view") || "input") === node.story_input_view);
-  if (node.type !== "story_runs") return false;
-  if (node.is_link && !node.story_run_item_id) return false;
-  const view = storyRunDocument(pathname);
-  if (!view) return false;
-  return (!node.story_run_id || params.get("run_id") === node.story_run_id) && (!node.story_run_view || view === node.story_run_view)
-    && (!node.story_run_item_id || params.get("item_id") === node.story_run_item_id);
-};
 
 export interface SidebarProps {
   tree: TreeNode | null;
   currentPath: string;
   onSelect: (path: string) => void;
   loadError?: string | null;
-  onTreeReload?: () => void;
+  /** Collapsed to a thin rail; tree state stays mounted so expansion survives. */
+  collapsed?: boolean;
+  onToggleCollapsed?: () => void;
 }
 
 interface FlatNode { node: TreeNode; depth: number; parentPath: string | null; }
 
-export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }: SidebarProps): JSX.Element {
+export function Sidebar({ tree, currentPath, onSelect, loadError, collapsed = false, onToggleCollapsed }: SidebarProps): JSX.Element {
   const navigate = useNavigate();
   const location = useLocation();
   const { catalog, error: globalError } = useGlobalWorkflow();
@@ -60,66 +41,6 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
   const treeRef = useRef<HTMLDivElement>(null);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [focusedPath, setFocusedPath] = useState<string | null>(null);
-  const [renamingPath, setRenamingPath] = useState<string | null>(null);
-  const [renameToast, setRenameToast] = useState<{ kind: "ok" | "err"; text: string } | null>(null);
-  const [deletingActorId, setDeletingActorId] = useState<string | null>(null);
-
-  const onRenameClick = useCallback(
-    async (e: React.MouseEvent, dramaPath: string) => {
-      e.stopPropagation();
-      if (renamingPath) return;
-      setRenamingPath(dramaPath);
-      setRenameToast(null);
-      try {
-        const result = await importFromDownloads(dramaPath);
-        const errorCount = result.errors.length + result.rename.errors.length;
-        const summary =
-          `已导入 ${result.moved.length} / 未导入 ${result.unmatched.length} ` +
-          `/ 已重命名 ${result.rename.renamed.length} / 失败 ${errorCount}`;
-        setRenameToast({ kind: errorCount > 0 ? "err" : "ok", text: summary });
-        if (onTreeReload) onTreeReload();
-      } catch (err) {
-        const msg = err instanceof ApiError
-          ? `导入失败: ${err.detail?.kind ?? err.status}`
-          : `导入失败: ${err instanceof Error ? err.message : String(err)}`;
-        setRenameToast({ kind: "err", text: msg });
-      } finally {
-        setRenamingPath(null);
-      }
-    },
-    [onTreeReload, renamingPath],
-  );
-
-  const onActorDeleteClick = useCallback(
-    async (e: React.MouseEvent, actorId: string) => {
-      e.stopPropagation();
-      if (deletingActorId) return;
-      const ok = window.confirm(
-        `Delete ${actorId}? Moves folder to _deleted/_actors/ and unassigns from all casting.md.`,
-      );
-      if (!ok) return;
-      setDeletingActorId(actorId);
-      setRenameToast(null);
-      try {
-        const result = await deleteActor(actorId);
-        const refs = result.unassigned.length;
-        const summary =
-          refs > 0
-            ? `已删除 ${actorId}（解除 ${refs} 个 casting 引用）`
-            : `已删除 ${actorId}`;
-        setRenameToast({ kind: "ok", text: summary });
-        if (onTreeReload) onTreeReload();
-      } catch (err) {
-        const msg = err instanceof ApiError
-          ? `删除失败: ${err.detail?.kind ?? err.status}`
-          : `删除失败: ${err instanceof Error ? err.message : String(err)}`;
-        setRenameToast({ kind: "err", text: msg });
-      } finally {
-        setDeletingActorId(null);
-      }
-    },
-    [deletingActorId, onTreeReload],
-  );
 
   useEffect(() => {
     const accum: Record<string, boolean> = {};
@@ -161,24 +82,10 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
   }, [currentPath]);
 
   useEffect(() => {
-    if (!tree || (!storyRunDocument(location.pathname) && location.pathname !== "/story-input")) return;
-    const params = new URLSearchParams(location.search);
-    const walk = (node: TreeNode, ancestors: string[]): string[] | null => {
-      if (matchesStoryRoute(node, location.pathname, params)) return ancestors;
-      for (const child of node.children ?? []) {
-        const found = walk(child, [...ancestors, node.path]);
-        if (found) return found;
-      }
-      return null;
-    };
-    const ancestors = walk(tree, []);
-    if (ancestors) setExpanded(prev => ({ ...prev, ...Object.fromEntries(ancestors.filter(Boolean).map(path => [path, true])) }));
-  }, [tree, location.pathname, location.search]);
-
-  useEffect(() => {
     const handler = (event: KeyboardEvent): void => {
       if ((event.ctrlKey || event.metaKey) && event.shiftKey && (event.key === "E" || event.key === "e")) {
         event.preventDefault();
+        if (collapsed) { onToggleCollapsed?.(); return; }
         const root = treeRef.current;
         if (!root) return;
         const first = root.querySelector<HTMLElement>('[role="treeitem"]');
@@ -191,7 +98,7 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, []);
+  }, [collapsed, onToggleCollapsed]);
 
   const flat = useMemo<FlatNode[]>(() => {
     const out: FlatNode[] = [];
@@ -255,8 +162,6 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
         if (!isLeaf) toggle(item.node.path);
       }
       else if (item.node.type === "workflow") navigate(workflowUrl(item.node));
-      else if (item.node.type === "story_runs") navigate(storyRunsUrl(item.node));
-      else if (item.node.type === "story_input") navigate(storyInputUrl(item.node));
       else if (isFileLeaf(item.node.type)) onSelect(item.node.path);
       else toggle(item.node.path);
     }
@@ -285,59 +190,58 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
         >
           ⊟
         </button>
+        {onToggleCollapsed ? (
+          <button
+            type="button"
+            className="sidebar-collapse-all"
+            aria-label="收起导航"
+            aria-expanded={true}
+            title="收起导航 · Collapse sidebar"
+            onClick={onToggleCollapsed}
+          >
+            «
+          </button>
+        ) : null}
       </div>
   );
+
+  if (collapsed) {
+    return (
+      <nav className="sidebar sidebar-collapsed" aria-label="File tree">
+        <button
+          type="button"
+          className="sidebar-collapse-all"
+          aria-label="展开导航"
+          aria-expanded={false}
+          title="展开导航 · Expand sidebar (Ctrl+Shift+E)"
+          onClick={onToggleCollapsed}
+        >
+          »
+        </button>
+      </nav>
+    );
+  }
 
   return (
     <nav className="sidebar" aria-label="File tree">
       {globalNavigation}
       {globalError ? <p role="status" className="sidebar-toast sidebar-toast-err">全局目录加载失败，可在工作流页刷新。</p> : null}
-      {renameToast ? (
-        <div
-          role="status"
-          aria-live="polite"
-          className={`sidebar-toast sidebar-toast-${renameToast.kind}`}
-        >
-          {renameToast.text}
-          <button
-            type="button"
-            className="sidebar-toast-dismiss"
-            aria-label="关闭"
-            onClick={() => setRenameToast(null)}
-          >
-            ×
-          </button>
-        </div>
-      ) : null}
       <div ref={treeRef} role="tree" aria-label="File tree" className="tree">
         {flat.map((item) => {
           const isLeaf = isLeafType(item.node.type);
           const hasChildren = (item.node.children ?? []).length > 0;
           const isOpen = expanded[item.node.path] === true || (item.depth === 0 && !item.node.navigation_href);
-          const isActive = matchesNavigation(item.node.navigation_href, location.pathname, location.search) || (Boolean(currentPath) && currentPath === item.node.path) || matchesStoryRoute(item.node, location.pathname, selection) || (item.node.type === "workflow" && location.pathname === "/drama"
+          const isActive = matchesNavigation(item.node.navigation_href, location.pathname, location.search) || (Boolean(currentPath) && currentPath === item.node.path) || (item.node.type === "workflow" && location.pathname === "/drama"
             && selection.get("drama") === item.node.drama_path && (selection.get("module") || "story") === item.node.workflow_module
             && (selection.get("episode") || "ep01") === item.node.workflow_episode && !selection.get("scene") && !selection.get("shot"));
           const isFocused = focusedPath === item.node.path;
-          const subType = item.node.project_meta?.sub_type;
           const dramaPathParts = item.node.path ? item.node.path.split("/") : [];
           const isAiVideoChild = item.node.type === "directory" && dramaPathParts.length === 2 && dramaPathParts[0] === "ai_videos";
           // A drama root is 2 segments when flat and 3 inside a series — the
           // backend flags it so the sidebar never has to guess from depth.
           const isDrama = item.node.is_drama === true;
-          const isActorsRoot = isAiVideoChild && dramaPathParts[1] === "_actors";
-          const isPerformancesRoot = isAiVideoChild && dramaPathParts[1] === "_performances";
           const isDeletedRoot = isAiVideoChild && dramaPathParts[1] === "_deleted";
           const isResearchRoot = isAiVideoChild && dramaPathParts[1] === "_research";
-          const isActorEntry =
-            item.node.type === "actor" &&
-            dramaPathParts.length >= 3 &&
-            dramaPathParts[0] === "ai_videos" &&
-            dramaPathParts[1] === "_actors" &&
-            ACTOR_ID_RE.test(dramaPathParts[2]) &&
-            !dramaPathParts.includes("_deleted");
-          const actorId = isActorEntry ? dramaPathParts[2] : null;
-          const isDeletingThis = actorId !== null && deletingActorId === actorId;
-          const isRenamingThis = renamingPath === item.node.path;
           const treeItem = (
             <div
               // Link leaves carry their TARGET as `path`, and several blocks can
@@ -361,15 +265,11 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
                   return;
                 }
                 if (item.node.type === "workflow") { navigate(workflowUrl(item.node)); return; }
-                if (item.node.type === "story_runs") { navigate(storyRunsUrl(item.node)); return; }
-                if (item.node.type === "story_input") { navigate(storyInputUrl(item.node)); return; }
                 if (isLeaf) { onSelect(item.node.path); return; }
                 // A drama node does double duty: open its main page on the right
                 // AND toggle the dropdown (per follow-up — "不仅是 dropdown"). The
-                // shared library folders (_actors) likewise open their
-                // own library main page on click.
+                // research library folder likewise opens its own main page.
                 if (isDrama) navigate(`/drama?drama=${encodeURIComponent(item.node.path)}`);
-                else if (isActorsRoot) navigate("/actors");
                 else if (isResearchRoot) navigate("/research");
                 if (hasChildren) toggle(item.node.path);
               }}
@@ -388,32 +288,12 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
               {item.node.type === "audio" ? <span aria-hidden="true" className="tree-icon">🎵</span> : null}
               {item.node.type === "pdf" ? <span aria-hidden="true" className="tree-icon">📄</span> : null}
               {item.node.type === "model" ? <span aria-hidden="true" className="tree-icon" title="3D 白模 — 点开可在浏览器里转着看">🧊</span> : null}
-              {item.node.type === "actor" ? <span aria-hidden="true" className="tree-icon">🎭</span> : null}
-              {isActorsRoot ? <span aria-hidden="true" className="tree-icon">🎭</span> : null}
-              {isPerformancesRoot ? <span aria-hidden="true" className="tree-icon">🎬</span> : null}
               <span className="tree-label">{item.node.display_name || item.node.name}</span>
               {item.node.lifetime === "persistent" && ["0_research", "1_资产库"].includes(item.node.display_name || item.node.name) ? <small className="tree-lifetime-badge">Persistent</small> : null}
-              {subType ? (
-                <span className={`subtype-badge subtype-${subType}`}
-                  aria-label={`项目类型: ${subType === "novel" ? "剧" : "短"}`}>
-                  {subType === "novel" ? "剧" : "短"}
-                </span>
-              ) : null}
-              {/* Drama-level actions (导入+重命名 / 角色画廊 / 导出 production / 全剧字幕)
-                  moved off the left nav into the drama main page (DramaPage),
-                  opened by clicking the drama node. Keeps the nav uncluttered. */}
-              {isPerformancesRoot ? (
-                <button
-                  type="button"
-                  className="drama-rename-btn"
-                  aria-label="从 Downloads 导入近 7 天的演技库检验视频，按 演{编号}{克|即|始} tag 归位到对应 perf 文件夹"
-                  disabled={renamingPath !== null}
-                  title="从 Downloads 按 演{编号}{克|即|始} tag 导入近 7 天的检验视频/起始帧，归位到 perf 文件夹并重命名为规范名"
-                  onClick={(e) => onRenameClick(e, item.node.path)}
-                >
-                  {isRenamingThis ? "导入中…" : "📥 导入检验视频"}
-                </button>
-              ) : null}
+              {item.node.obsolete ? <ObsoleteBadge note={item.node.obsolete_note} /> : null}
+              {/* Drama-level actions (📥 导入 / 🎭 角色画廊) live on the drama main
+                  page (DramaPage), opened by clicking the drama node. Keeps the
+                  nav uncluttered. */}
               {isDeletedRoot ? (
                 <button
                   type="button"
@@ -423,18 +303,6 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, onTreeReload }
                   onClick={(e) => { e.stopPropagation(); navigate("/deleted"); }}
                 >
                   🧹 永久清理
-                </button>
-              ) : null}
-              {isActorEntry && actorId ? (
-                <button
-                  type="button"
-                  className="actor-delete-btn"
-                  aria-label={`软删除 ${actorId}`}
-                  title="软删除 actor — 移到 _deleted/_actors/，并从所有 casting.md 取消分配"
-                  disabled={deletingActorId !== null}
-                  onClick={(e) => onActorDeleteClick(e, actorId)}
-                >
-                  {isDeletingThis ? "删除中…" : "🗑"}
                 </button>
               ) : null}
             </div>

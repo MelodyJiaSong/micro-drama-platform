@@ -1,0 +1,1586 @@
+{
+  "schema_version": 1,
+  "summary": {
+    "zh": "这些单位不是一棵树。叙事树（剧/季或电影 → 幕 → 段落 → 场 → 拍点）与交付树（剧 → 季 → 集 → 场 → 覆盖 → 镜头 → 条）共享「场」；两棵树之间多对多（集 × 幕、集 × 段落）。时间轴上还叠着 cue、字幕、拍点这些区间，与镜头多对多；环境与人物资产被多处共享引用。",
+    "en": "These units do not form a single tree. A narrative tree (series/season or film → act → sequence → scene → beat) and a delivery tree (series → season → episode → scene → coverage → shot → take) share the scene; the two trees relate many-to-many (episode × act, episode × sequence). Interval layers on the timeline — cues, subtitles, beats — overlap shots many-to-many, and background and character assets are shared references."
+  },
+  "categories": [
+    {
+      "id": "narrative",
+      "zh": "叙事结构",
+      "en": "Narrative structure",
+      "color": "#7c3aed"
+    },
+    {
+      "id": "delivery",
+      "zh": "交付结构",
+      "en": "Delivery structure",
+      "color": "#2563eb"
+    },
+    {
+      "id": "shared",
+      "zh": "两棵树共有",
+      "en": "Shared by both trees",
+      "color": "#0f766e"
+    },
+    {
+      "id": "overlay",
+      "zh": "时间叠加层",
+      "en": "Timeline overlay",
+      "color": "#c2410c"
+    },
+    {
+      "id": "asset",
+      "zh": "资产",
+      "en": "Assets",
+      "color": "#4d7c0f"
+    },
+    {
+      "id": "artifact",
+      "zh": "产物与标识",
+      "en": "Artifacts & identifiers",
+      "color": "#475569"
+    },
+    {
+      "id": "shottype",
+      "zh": "镜头类型",
+      "en": "Shot types",
+      "color": "#0e7490"
+    }
+  ],
+  "relation_types": [
+    {
+      "id": "contains",
+      "zh": "包含（树）",
+      "en": "Contains (tree)",
+      "color": "#64748b",
+      "dash": ""
+    },
+    {
+      "id": "crosses",
+      "zh": "跨越（两棵树之间，多对多）",
+      "en": "Crosses (between trees, N:M)",
+      "color": "#d97706",
+      "dash": "8 5"
+    },
+    {
+      "id": "overlays",
+      "zh": "叠加（时间区间，多对多）",
+      "en": "Overlays (time intervals, N:M)",
+      "color": "#c2410c",
+      "dash": "2 5"
+    },
+    {
+      "id": "marks",
+      "zh": "标记位置",
+      "en": "Marks a position",
+      "color": "#be185d",
+      "dash": "4 3"
+    },
+    {
+      "id": "references",
+      "zh": "引用共享资产",
+      "en": "References a shared asset",
+      "color": "#4d7c0f",
+      "dash": "1 4"
+    },
+    {
+      "id": "produces",
+      "zh": "编译 / 标识",
+      "en": "Compiles / identifies",
+      "color": "#2563eb",
+      "dash": "6 3"
+    },
+    {
+      "id": "kind",
+      "zh": "是一种",
+      "en": "Is a kind of",
+      "color": "#94a3b8",
+      "dash": "2 2"
+    }
+  ],
+  "terms": [
+    {
+      "id": "series",
+      "zh": "剧",
+      "en": "Series",
+      "zh_alt": "连续剧、电视剧",
+      "category": "delivery",
+      "module": "故事创作",
+      "def_zh": "以统一剧名连续播出、由若干集组成的剧集作品，可跨多季；整部剧定长期方向和最终问题。",
+      "def_en": "A show produced under one title as a run of episodes, possibly across several seasons; it sets the long-term direction and final question.",
+      "where": "ai_videos/{剧}/；全剧方向与伏笔在 2_世界观人设/series.md",
+      "notes": [
+        "英美用法相反：北美 series 指整部剧、season 指一季；英国、爱尔兰的 series 指的是一季。读英文资料先确认是哪种用法。"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Television_season"
+      ],
+      "in_graph": true,
+      "x": 400,
+      "y": 0
+    },
+    {
+      "id": "film",
+      "zh": "电影",
+      "en": "Feature film",
+      "zh_alt": "长片、剧情长片",
+      "category": "narrative",
+      "module": "故事创作",
+      "def_zh": "长到足以作为放映主片的剧情片，一次讲完；三幕放在整部片上。片种之一，与连续剧并列。",
+      "def_en": "A narrative film long enough to be the main attraction of a screening, told in one piece; its three acts span the whole film. A format parallel to the series.",
+      "where": "片种页 1.1.2.1；workflow.json format=film",
+      "notes": [
+        "时长门槛各家不同：美国电影学院、AFI、BFI 为 40 分钟以上；演员工会与法国 CNC 的标准更长。"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Feature_film",
+        "https://zh.wikipedia.org/wiki/劇情長片"
+      ],
+      "in_graph": true,
+      "x": 80,
+      "y": 110
+    },
+    {
+      "id": "season",
+      "zh": "季",
+      "en": "Season",
+      "zh_alt": "",
+      "category": "delivery",
+      "module": "故事创作",
+      "def_zh": "按一个播出周期打包的一组集；在本剧里，一季走完一次完整的三幕。",
+      "def_en": "A batch of episodes produced for one broadcast cycle; in this show, one season completes a full three-act arc.",
+      "where": "series.md 的季方向",
+      "notes": [
+        "英剧的 series finale 常指季终，不是全剧完结。"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Television_season"
+      ],
+      "in_graph": true,
+      "x": 620,
+      "y": 110
+    },
+    {
+      "id": "act",
+      "zh": "幕",
+      "en": "Act",
+      "zh_alt": "",
+      "category": "narrative",
+      "module": "故事创作",
+      "def_zh": "三幕结构的一大段：平常世界（建置）、特殊世界（对抗）、即兴决战（结局），大致占 1/4、1/2、1/4。电影里按整部片算，连续剧里按季算，所以一幕常跨好几集。",
+      "def_en": "One major movement of the three-act structure — setup, confrontation, resolution, roughly 1/4, 1/2 and 1/4 of the story. McKee frames an act as a series of sequences ending in a climactic reversal. A film's acts span the film; a series' acts span a season.",
+      "where": "1.1.1.3 三幕",
+      "notes": [
+        "三幕比例由 Syd Field 系统提出；幕的边界本身在理论界有争议。"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Three-act_structure",
+        "https://zh.wikipedia.org/wiki/三幕剧"
+      ],
+      "in_graph": true,
+      "x": 220,
+      "y": 230
+    },
+    {
+      "id": "episode",
+      "zh": "集",
+      "en": "Episode",
+      "zh_alt": "",
+      "category": "delivery",
+      "module": "故事创作",
+      "def_zh": "剧集中单独播出的一个单元，是一次观看的单位，也是本仓库文件的交付单位；开场钩住，结尾留钩子。",
+      "def_en": "A single installment of a serialized work, related to the series as a chapter to a book; the unit watched in one sitting and the delivery unit of our files.",
+      "where": "episodes/epNN/（story.json、filming.json、prompts.json）",
+      "notes": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Episode"
+      ],
+      "in_graph": true,
+      "x": 620,
+      "y": 230
+    },
+    {
+      "id": "plotpoint",
+      "zh": "转折点",
+      "en": "Plot point",
+      "zh_alt": "情节点",
+      "category": "narrative",
+      "module": "故事创作",
+      "def_zh": "勾住剧情、把它转往另一个方向的事件。常用的有激励事件、大转折一（情节点一）、中点、大转折二（情节点二）、高潮；连续剧按季安排。",
+      "def_en": "An event that hooks into the action and spins the story in another direction (Syd Field). The common set: inciting incident, plot point one, midpoint, plot point two, climax; in a series they are scheduled per season.",
+      "where": "1.1.1 故事结构、1.1.2.2 连续剧",
+      "notes": [
+        "Field 的情节点一在第 20–30 分钟、二在第 80–90 分钟（按 120 分钟片）；各家页码和分钟数只是参考值。",
+        "转折也可以是一场安静的决定戏，不一定是动作事件。"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Plot_point",
+        "https://sydfield.com/guest-blog/utilizing-syd-fields-screenwriting-paradigm-to-understand-script-timeline-structureby-natalia-lazarus/"
+      ],
+      "in_graph": true,
+      "x": 0,
+      "y": 360
+    },
+    {
+      "id": "sequence",
+      "zh": "段落",
+      "en": "Sequence",
+      "zh_alt": "序列（McKee《故事》中译本）",
+      "category": "narrative",
+      "module": "故事创作",
+      "def_zh": "由一场或几场组成、有自己起承转合的叙事单元，推向一个小高潮或转折。本剧按「英雄目标段落」用：主角追一个具体可见的短期目标，直到新消息改变目标。",
+      "def_en": "A self-contained narrative unit of one or more scenes that builds to a minor climax or turn. We use Eric Edson's hero goal sequence: the hero pursues one concrete short-term goal until news changes it.",
+      "where": "1.1.2.1 电影「推进单位」；EP1 的冷开场、报到、狗头人……",
+      "notes": [
+        "段落是否必须时空统一，各家说法不一：维基强调通常有地点或时间统一，Final Draft 的例子则跨多个地点。",
+        "长场里也可能出现段落边界（EP1 葡萄园：第三、四段同一场）。",
+        "不要和「段落镜头」（一个长镜头拍完一整段）混淆。"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Sequence_(filmmaking)",
+        "https://www.finaldraft.com/blog/what-is-the-difference-between-a-scene-and-a-sequence",
+        "https://filmcourage.com/2017/07/27/new-paradigm-screenplay-structure-csun-professor-eric-edson/"
+      ],
+      "in_graph": true,
+      "x": 300,
+      "y": 360
+    },
+    {
+      "id": "hook",
+      "zh": "钩子",
+      "en": "Hook / cliffhanger",
+      "zh_alt": "悬念结尾、留扣",
+      "category": "narrative",
+      "module": "故事创作",
+      "def_zh": "让观众留下来的悬念：开场钩住；集尾把主角留在未解决的危险、两难或揭露里，促使追看下一集（悬念结尾）。",
+      "def_en": "Suspense that keeps the audience: an opening hook, and a cliffhanger that ends an installment on an unresolved danger, dilemma or revelation to pull viewers into the next.",
+      "where": "1.1.2.2 连续剧",
+      "notes": [
+        "cliffhanger 专指结尾的悬念；hook 更宽，开场三秒的钩子也算。"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Cliffhanger"
+      ],
+      "in_graph": true,
+      "x": 860,
+      "y": 230
+    },
+    {
+      "id": "scene",
+      "zh": "场",
+      "en": "Scene",
+      "zh_alt": "场景（易与布景、地点混淆，结构单位用「场」）",
+      "category": "shared",
+      "module": "影视改编",
+      "def_zh": "同一地点、时间连续的一段戏。叙事树和交付树在这里相交：一场属于一集，也属于一个段落。McKee 的标准更严：一场要让人物至少一项价值发生可感知的转变。",
+      "def_en": "Continuous action in one place and time. Here the narrative and delivery trees meet: a scene belongs to one episode and to a sequence. McKee adds that a scene must turn at least one value in a character's life.",
+      "where": "filming.json content.scenes[]，编号 s1、s2",
+      "notes": [
+        "同一地点、不同时间算几场；平行动作通常拆成几场。",
+        "场看被拍的动作是否连续，段落看叙事目标是否连续。",
+        "好场的四要素：冲突、人物发展、情节功能、调度，见 1.2.3.1 好场的构成。"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Scene_(filmmaking)"
+      ],
+      "in_graph": true,
+      "x": 440,
+      "y": 480
+    },
+    {
+      "id": "background",
+      "zh": "环境资产",
+      "en": "Background asset",
+      "zh_alt": "",
+      "category": "asset",
+      "module": "资产库",
+      "def_zh": "可复用的环境，如北郡修道院。多场可以用同一个；当场的时间、天气写在场里。",
+      "def_en": "A reusable environment such as Northshire Abbey. Many scenes may reuse one; each scene records its own time and weather.",
+      "where": "2_世界观人设/background/，编号 bg1、bg2-2",
+      "notes": [],
+      "sources": [],
+      "in_graph": true,
+      "x": 640,
+      "y": 480
+    },
+    {
+      "id": "beat",
+      "zh": "拍点",
+      "en": "Beat",
+      "zh_alt": "节拍",
+      "category": "narrative",
+      "module": "影视改编",
+      "def_zh": "戏里最小的一次变化：一次动作与反应的交换，或一条新信息。几个拍点组成一场；一个镜头可含几个拍点，一个拍点也可跨几个镜头。",
+      "def_en": "The smallest unit of structure: an exchange of action and reaction, or a piece of news (McKee). Beats build a scene; a shot may hold several beats and a beat may run across shots.",
+      "where": "分镜按拍点选镜（1.2.5 镜头）",
+      "notes": [
+        "beat 至少四种含义：本表指剧作拍点（McKee）；剧本括号里的 (beat) 指短暂停顿；表演上的 beat 是表演单元；Save the Cat「节拍表」的节拍是全片层级的结构节点。",
+        "同样的动作与反应重复多次仍算一个拍点，行为明显改变才算新拍点。"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Beat_(filmmaking)",
+        "https://en.wikipedia.org/wiki/Unit_of_action",
+        "https://kindlepreneur.com/save-the-cat-beat-sheet"
+      ],
+      "in_graph": true,
+      "x": 180,
+      "y": 600
+    },
+    {
+      "id": "coverage",
+      "zh": "覆盖",
+      "en": "Coverage",
+      "zh_alt": "镜头覆盖",
+      "category": "delivery",
+      "module": "影视改编",
+      "def_zh": "为一场戏拍下的全部镜头，剪辑用它们拼出这场。从一个镜头到几十个镜头都可以；问的是「剪辑能用多少种方式把这场拼出来」。",
+      "def_en": "The full set of shots captured for a scene, which the editor assembles into the finished scene. It can be one shot or dozens; the guiding question is how many ways the editor can construct the scene.",
+      "where": "1.2.4 覆盖",
+      "notes": [
+        "主镜头只是覆盖的一部分，不能代替覆盖。",
+        "常见拍法先远后近：主镜头 → 每人中景 → 每人特写（标准覆盖）。",
+        "多拍不等于剪得更好：覆盖不能代替决定。"
+      ],
+      "sources": [
+        "https://studiobinder.com/blog/film-coverage"
+      ],
+      "in_graph": true,
+      "x": 440,
+      "y": 600
+    },
+    {
+      "id": "shot",
+      "zh": "镜头",
+      "en": "Shot",
+      "zh_alt": "",
+      "category": "delivery",
+      "module": "影视改编",
+      "def_zh": "一段不间断的连续画面：拍摄时从开机到停机，剪辑时是两个剪切点之间的一段。本剧里它也是视频生成的单位；要切镜就拆成多个镜头。",
+      "def_en": "One uninterrupted run of footage — from camera start to stop when shooting, between two cuts when editing. In our pipeline it is also the unit of video generation; a cut means a new shot.",
+      "where": "filming.json scenes[].shots[]，编号 st1；scenes/sN/shots/stN/",
+      "notes": [
+        "镜头是要拍的内容，条是这一镜拍的某一遍，机位是为拍它做的物理布置。",
+        "「长焦镜」「远景」里的「镜头」指镜片或景别，与时长无关。"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Shot_(filmmaking)"
+      ],
+      "in_graph": true,
+      "x": 620,
+      "y": 740
+    },
+    {
+      "id": "take",
+      "zh": "条",
+      "en": "Take / render",
+      "zh_alt": "次、生成版本",
+      "category": "delivery",
+      "module": "Prompt 编译与出片",
+      "def_zh": "同一镜头的某一遍：实拍时是从开机到喊「卡」的一次录制；本剧里是一次生成结果。一个镜头可以有多条，选一条进剪辑。",
+      "def_en": "One recorded attempt of a shot, from roll to cut; in our pipeline, one generated result. A shot may have several takes, and one is chosen for the edit.",
+      "where": "scenes/sN/shots/stN/renders/",
+      "notes": [
+        "中文片场写法「X 场 X 镜 X 次（条）」，未找到权威辞典核实。"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Take"
+      ],
+      "in_graph": true,
+      "x": 860,
+      "y": 880
+    },
+    {
+      "id": "cue",
+      "zh": "配乐提示",
+      "en": "Cue",
+      "zh_alt": "cue、音乐段",
+      "category": "overlay",
+      "module": "声音与音乐",
+      "def_zh": "一段独立的配乐或音效，有明确的起点、终点和作用，精确到帧。按成片时间走，不按镜头走，常跨镜跨场。",
+      "def_en": "A discrete piece of score or sound with defined start, end and purpose, timed to the frame. It follows the edited timeline, not shots, and often runs across shots and scenes.",
+      "where": "episodes/epNN/cue/（集级，格式待定）",
+      "notes": [
+        "决定 cue 放在哪里的过程叫 spotting（音乐落点），一般在定剪之后由导演和作曲一起完成，产出 cue 表。"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Spotting_(filmmaking)",
+        "https://sounddesign.irpr.agency/glossary/cue/"
+      ],
+      "in_graph": true,
+      "x": 860,
+      "y": 360
+    },
+    {
+      "id": "subtitle",
+      "zh": "字幕",
+      "en": "Subtitle",
+      "zh_alt": "",
+      "category": "overlay",
+      "module": "成片交付",
+      "def_zh": "后期加在画面上、转写或翻译对白的文字，按台词实测时间显示；一句可以跨过切点。",
+      "def_en": "On-screen text that transcribes or translates dialogue, timed to the spoken line; a line may run across a cut.",
+      "where": "后期剪辑层生成，不进视频 prompt",
+      "notes": [
+        "英文里 subtitle 通常只管对白；caption 还描述音乐、音效，面向听障观众。中文统称字幕，需要时写明「对白字幕」或「听障字幕」。"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Subtitles",
+        "https://zh.wikipedia.org/wiki/字幕"
+      ],
+      "in_graph": true,
+      "x": 860,
+      "y": 560
+    },
+    {
+      "id": "character",
+      "zh": "人物资产",
+      "en": "Character asset",
+      "zh_alt": "",
+      "category": "asset",
+      "module": "资产库",
+      "def_zh": "人物的立绘、三视图、识别标签与声样，跨集复用。",
+      "def_en": "A character's portrait, turnaround, identity tag and voice sample, reused across episodes.",
+      "where": "2_世界观人设/characters/c1_Aaron/",
+      "notes": [],
+      "sources": [],
+      "in_graph": true,
+      "x": 860,
+      "y": 740
+    },
+    {
+      "id": "shotkey",
+      "zh": "镜头 key",
+      "en": "Shot key",
+      "zh_alt": "",
+      "category": "artifact",
+      "module": "Prompt 编译与出片",
+      "def_zh": "镜头的完整身份，如 ep1_s2_st3：prompt 首行、下载文件归位都靠它。",
+      "def_en": "A shot's full identity, such as ep1_s2_st3; it is the prompt's first line and routes downloaded files.",
+      "where": "1.3.1.2 固定规则",
+      "notes": [],
+      "sources": [],
+      "in_graph": true,
+      "x": 380,
+      "y": 880
+    },
+    {
+      "id": "prompt",
+      "zh": "Prompt",
+      "en": "Prompt",
+      "zh_alt": "",
+      "category": "artifact",
+      "module": "Prompt 编译与出片",
+      "def_zh": "由一个镜头的分镜确定性编译出的生成指令，一镜一条。",
+      "def_en": "The generation instruction deterministically compiled from one shot's filming entry; one per shot.",
+      "where": "prompts.json；scenes/sN/shots/stN/prompt.txt",
+      "notes": [],
+      "sources": [],
+      "in_graph": true,
+      "x": 620,
+      "y": 880
+    },
+    {
+      "id": "setup",
+      "zh": "机位",
+      "en": "Camera setup",
+      "zh_alt": "机位设置",
+      "category": "delivery",
+      "module": "影视改编",
+      "def_zh": "拍一个镜头所需的物理布置：摄影机位置与运动、灯光、演员站位。重新架机或改灯算新机位。本剧没有实体机位，对应分镜 camera 里的机位描述。",
+      "def_en": "The physical arrangement needed to film a shot: camera position and movement, lighting, actor marks. Moving the camera or relighting makes a new setup. In AI generation it maps to the camera description in the filming entry.",
+      "where": "filming.json shots[].camera",
+      "notes": [
+        "只改演员走位通常算新的一条，不算新机位；两台机器同时拍是两个镜头、一个机位。"
+      ],
+      "sources": [
+        "https://anonymousproductionassistant.com/2015/09/02/shots-versus-setups/"
+      ],
+      "in_graph": false,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "storyboard",
+      "zh": "分镜",
+      "en": "Storyboard / shot list",
+      "zh_alt": "分镜头脚本、镜头表",
+      "category": "artifact",
+      "module": "影视改编",
+      "def_zh": "把影片画面按镜头事先规划下来：分镜画出拍什么、为什么，镜头表列出每镜的角度、运动、景别与灯光。本剧的 filming.json 同时承担两者。",
+      "def_en": "Pre-visualization of the film shot by shot: a storyboard illustrates what and why, a shot list specifies each shot's angle, movement, size and lighting. Our filming.json plays both roles.",
+      "where": "episodes/epNN/filming.json",
+      "notes": [
+        "「分镜头脚本」在国内常指表格式文字分镜，更接近镜头表。"
+      ],
+      "sources": [
+        "https://www.studiobinder.com/blog/shot-list-vs-storyboard/",
+        "https://zh.wikipedia.org/wiki/分镜"
+      ],
+      "in_graph": false,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "master",
+      "zh": "主镜头",
+      "en": "Master shot",
+      "zh_alt": "总镜头",
+      "category": "shottype",
+      "module": "影视改编",
+      "def_zh": "从能看到所有人的角度，连续拍完整场戏的镜头，通常是远景、最先拍；其他覆盖都以它为剪辑基础。",
+      "def_en": "A shot of an entire scene from start to finish, from an angle that keeps all actors in view; usually wide and filmed first, it anchors the rest of the coverage.",
+      "where": "1.2.5.1 功能镜头",
+      "notes": [
+        "主镜头可以兼作建立镜头，建立镜头却不一定是主镜头。"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Master_shot"
+      ],
+      "in_graph": false,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "establishing",
+      "zh": "建立镜头",
+      "en": "Establishing shot",
+      "zh_alt": "定场镜头",
+      "category": "shottype",
+      "module": "影视改编",
+      "def_zh": "为接下来的场、段落或整部片交代环境，主要是地点，有时也交代时间；多为远景或航拍，让观众辨清方位。",
+      "def_en": "A shot that sets up the context — mainly place, sometimes time — for the scene, sequence or film that follows; usually wide or aerial, it orients rather than engages emotionally.",
+      "where": "1.2.5.1 功能镜头",
+      "notes": [
+        "长时间近景之后可再给一个「重新建立镜头」。"
+      ],
+      "sources": [
+        "https://www.studiobinder.com/blog/what-is-an-establishing-shot-definition/"
+      ],
+      "in_graph": false,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "insert",
+      "zh": "插入镜头",
+      "en": "Insert shot",
+      "zh_alt": "",
+      "category": "shottype",
+      "module": "影视改编",
+      "def_zh": "对本场之内某个物件、细节或动作的特写，常从人物视线出发。",
+      "def_en": "A close shot of an object, detail or action within the scene, often from a character's point of view.",
+      "where": "1.2.5.1 功能镜头",
+      "notes": [],
+      "sources": [
+        "https://www.studiobinder.com/blog/insert-shot/"
+      ],
+      "in_graph": false,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "cutaway",
+      "zh": "切出镜头",
+      "en": "Cutaway",
+      "zh_alt": "",
+      "category": "shottype",
+      "module": "影视改编",
+      "def_zh": "短暂离开主体动作的镜头，可以去别的地点、时间甚至想象，通常再切回来。",
+      "def_en": "A shot that briefly leaves the main action — to another place, time or even an imagined image — and usually cuts back.",
+      "where": "1.2.5 镜头",
+      "notes": [
+        "有资料把插入镜头算作切出的一种。",
+        "中文的「空镜」（无人、以景物为主的镜头）不等于 cutaway。"
+      ],
+      "sources": [
+        "https://studiobinder.com/blog/cutaway-shot"
+      ],
+      "in_graph": false,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "longtake",
+      "zh": "长镜头",
+      "en": "Long take / oner",
+      "zh_alt": "一镜到底",
+      "category": "shottype",
+      "module": "影视改编",
+      "def_zh": "时长明显超出正常剪辑节奏的单个镜头；拍完一整段的叫段落镜头，整部片看起来不切的叫一镜到底。",
+      "def_en": "A single shot that runs well beyond normal editing rhythm; one covering a whole sequence is a plan-séquence, and a film made to look uncut is a one-shot film.",
+      "where": "1.2.5.6 运镜、1.2.4 覆盖",
+      "notes": [
+        "「长」没有绝对标准；长镜头说单个镜头，一镜到底说整段看起来不切。",
+        "AI 单镜生成时长有限，长镜头要按拍点拆开。"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Long_take",
+        "https://zh.wikipedia.org/wiki/长镜头"
+      ],
+      "in_graph": false,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "punchin",
+      "zh": "推近",
+      "en": "Punch-in",
+      "zh_alt": "数码推近、裁切推近",
+      "category": "shottype",
+      "module": "剪辑",
+      "def_zh": "剪辑时把已有画面放大裁切，做出更近的景别，用来强调、调节奏或模拟多机位。",
+      "def_en": "In editing, enlarging and cropping existing footage to make a tighter framing — for emphasis, rhythm, or to simulate multiple cameras.",
+      "where": "后期剪辑",
+      "notes": [
+        "和另外实拍的切入近景（cut-in）不同；音频里的 punch-in 是补录，意思完全不同。",
+        "中文译名未找到权威辞典核实。"
+      ],
+      "sources": [
+        "https://howtofilmschool.com/dictionary/punch-in/"
+      ],
+      "in_graph": false,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "inciting",
+      "zh": "激励事件",
+      "en": "Inciting incident",
+      "zh_alt": "催化剂（Save the Cat）",
+      "category": "narrative",
+      "module": "故事创作",
+      "def_zh": "彻底打破主角生活平衡、逼他必须回应的事件，出现在前四分之一；开启「这个故事」。",
+      "def_en": "The event that radically upsets the balance of the protagonist's life and forces a response, within the first quarter; it starts this story.",
+      "where": "1.1.2.1 电影",
+      "notes": [
+        "别和大转折一（情节点一）混淆。"
+      ],
+      "sources": [
+        "https://www.thestorydepartment.com/inciting-incident-definitions/"
+      ],
+      "in_graph": false,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "midpoint",
+      "zh": "中点",
+      "en": "Midpoint",
+      "zh_alt": "",
+      "category": "narrative",
+      "module": "故事创作",
+      "def_zh": "第二幕正中的转折，把第二幕一分为二：不可回头、倒计时、揭秘，风险升级。",
+      "def_en": "The turn at the center of act two that splits it in half: a point of no return, a ticking clock or a revelation that raises the stakes.",
+      "where": "1.1.1.3 三幕",
+      "notes": [
+        "Syd Field 最初的范式里没有中点，后来才补上。"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Plot_point"
+      ],
+      "in_graph": false,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "climax",
+      "zh": "高潮",
+      "en": "Climax",
+      "zh_alt": "",
+      "category": "narrative",
+      "module": "故事创作",
+      "def_zh": "第三幕里张力到顶、回答核心戏剧问题的那场或那段：主角与对手正面决胜。",
+      "def_en": "The scene or sequence in act three where tension peaks and the central dramatic question is answered: hero meets opponent head-on.",
+      "where": "1.1.1.3 三幕",
+      "notes": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Three-act_structure"
+      ],
+      "in_graph": false,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "spotting",
+      "zh": "音乐落点",
+      "en": "Spotting",
+      "zh_alt": "音乐落点会议",
+      "category": "overlay",
+      "module": "声音与音乐",
+      "def_zh": "决定配乐和音效放在哪里、从哪开始到哪结束的过程，通常在定剪之后，产出 cue 表。",
+      "def_en": "The process of deciding where score and sound effects go and where each starts and stops, usually after picture lock, producing a cue sheet.",
+      "where": "episodes/epNN/cue/",
+      "notes": [
+        "中文译名未找到权威辞典核实。"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Spotting_(filmmaking)"
+      ],
+      "in_graph": false,
+      "x": 0,
+      "y": 0
+    }
+  ],
+  "relations": [
+    {
+      "from": "series",
+      "to": "season",
+      "type": "contains",
+      "card": "1:N",
+      "zh": "一部剧分多季"
+    },
+    {
+      "from": "season",
+      "to": "episode",
+      "type": "contains",
+      "card": "1:N",
+      "zh": "一季有多集"
+    },
+    {
+      "from": "season",
+      "to": "act",
+      "type": "contains",
+      "card": "1:3",
+      "zh": "连续剧：一季走完三幕"
+    },
+    {
+      "from": "film",
+      "to": "act",
+      "type": "contains",
+      "card": "1:3",
+      "zh": "电影：整部片走完三幕"
+    },
+    {
+      "from": "act",
+      "to": "sequence",
+      "type": "contains",
+      "card": "1:N",
+      "zh": "一幕由多个段落推进"
+    },
+    {
+      "from": "sequence",
+      "to": "scene",
+      "type": "contains",
+      "card": "1:N",
+      "zh": "一段通常含几场；长场偶尔被段落边界切开"
+    },
+    {
+      "from": "episode",
+      "to": "scene",
+      "type": "contains",
+      "card": "1:N",
+      "zh": "一场只属于一集"
+    },
+    {
+      "from": "scene",
+      "to": "coverage",
+      "type": "contains",
+      "card": "1:1",
+      "zh": "一场的全部镜头就是它的覆盖"
+    },
+    {
+      "from": "coverage",
+      "to": "shot",
+      "type": "contains",
+      "card": "1:N",
+      "zh": "覆盖可以是一个镜头，也可以是几十个"
+    },
+    {
+      "from": "scene",
+      "to": "beat",
+      "type": "contains",
+      "card": "1:N",
+      "zh": "一场由多个拍点推进"
+    },
+    {
+      "from": "shot",
+      "to": "take",
+      "type": "contains",
+      "card": "1:N",
+      "zh": "一镜可以拍或生成多条，选一条"
+    },
+    {
+      "from": "setup",
+      "to": "shot",
+      "type": "contains",
+      "card": "1:N",
+      "zh": "一个机位可拍一个或多个镜头"
+    },
+    {
+      "from": "episode",
+      "to": "cue",
+      "type": "contains",
+      "card": "1:N",
+      "zh": "cue 按集记在成片时间轴上"
+    },
+    {
+      "from": "episode",
+      "to": "subtitle",
+      "type": "contains",
+      "card": "1:N",
+      "zh": "字幕按集对齐"
+    },
+    {
+      "from": "episode",
+      "to": "act",
+      "type": "crosses",
+      "card": "N:M",
+      "zh": "一幕跨多集；一集可能跨过幕的边界"
+    },
+    {
+      "from": "episode",
+      "to": "sequence",
+      "type": "crosses",
+      "card": "N:M",
+      "zh": "一集几段；一段可能跨集"
+    },
+    {
+      "from": "beat",
+      "to": "shot",
+      "type": "overlays",
+      "card": "N:M",
+      "zh": "一镜可含几个拍点；一个拍点可跨镜"
+    },
+    {
+      "from": "cue",
+      "to": "shot",
+      "type": "overlays",
+      "card": "N:M",
+      "zh": "一个 cue 跨多镜多场；交叉淡入时一镜在两个 cue 下"
+    },
+    {
+      "from": "subtitle",
+      "to": "shot",
+      "type": "overlays",
+      "card": "N:M",
+      "zh": "一句字幕可跨过切点"
+    },
+    {
+      "from": "spotting",
+      "to": "cue",
+      "type": "produces",
+      "card": "1:N",
+      "zh": "音乐落点决定每个 cue 的起止"
+    },
+    {
+      "from": "plotpoint",
+      "to": "act",
+      "type": "marks",
+      "card": "N:1",
+      "zh": "转折点落在幕的边界或中段"
+    },
+    {
+      "from": "plotpoint",
+      "to": "scene",
+      "type": "marks",
+      "card": "N:1",
+      "zh": "转折点发生在某一场"
+    },
+    {
+      "from": "hook",
+      "to": "episode",
+      "type": "marks",
+      "card": "N:1",
+      "zh": "每集有开场钩子与集尾钩子"
+    },
+    {
+      "from": "scene",
+      "to": "background",
+      "type": "references",
+      "card": "N:1",
+      "zh": "多场复用同一环境；一场至多绑一个"
+    },
+    {
+      "from": "shot",
+      "to": "character",
+      "type": "references",
+      "card": "N:M",
+      "zh": "一镜有多个人物；一个人物出现在许多镜"
+    },
+    {
+      "from": "shotkey",
+      "to": "shot",
+      "type": "produces",
+      "card": "1:1",
+      "zh": "key 唯一标识一个镜头"
+    },
+    {
+      "from": "shot",
+      "to": "prompt",
+      "type": "produces",
+      "card": "1:1",
+      "zh": "每镜编译出一条 prompt"
+    },
+    {
+      "from": "storyboard",
+      "to": "shot",
+      "type": "produces",
+      "card": "1:N",
+      "zh": "分镜逐镜写出镜头"
+    },
+    {
+      "from": "master",
+      "to": "shot",
+      "type": "kind",
+      "card": "",
+      "zh": "主镜头是一种镜头"
+    },
+    {
+      "from": "establishing",
+      "to": "shot",
+      "type": "kind",
+      "card": "",
+      "zh": "建立镜头是一种镜头"
+    },
+    {
+      "from": "insert",
+      "to": "shot",
+      "type": "kind",
+      "card": "",
+      "zh": "插入镜头是一种镜头"
+    },
+    {
+      "from": "cutaway",
+      "to": "shot",
+      "type": "kind",
+      "card": "",
+      "zh": "切出镜头是一种镜头"
+    },
+    {
+      "from": "longtake",
+      "to": "shot",
+      "type": "kind",
+      "card": "",
+      "zh": "长镜头是一种镜头"
+    },
+    {
+      "from": "punchin",
+      "to": "shot",
+      "type": "kind",
+      "card": "",
+      "zh": "推近在剪辑里从已有镜头做出"
+    },
+    {
+      "from": "master",
+      "to": "coverage",
+      "type": "kind",
+      "card": "",
+      "zh": "主镜头是覆盖的一部分"
+    },
+    {
+      "from": "inciting",
+      "to": "plotpoint",
+      "type": "kind",
+      "card": "",
+      "zh": "激励事件是一种转折点"
+    },
+    {
+      "from": "midpoint",
+      "to": "plotpoint",
+      "type": "kind",
+      "card": "",
+      "zh": "中点是一种转折点"
+    },
+    {
+      "from": "climax",
+      "to": "plotpoint",
+      "type": "kind",
+      "card": "",
+      "zh": "高潮是一种转折点"
+    }
+  ],
+  "timelines": [
+    {
+      "id": "season",
+      "zh": "一季（示意）",
+      "en": "One season (schematic)",
+      "unit": "集",
+      "length": 10,
+      "note": "示意：十集一季。幕的边界落在集中间；段落也会跨过集的边界。",
+      "ticks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "rows": [
+        {
+          "term": "episode",
+          "spans": [
+            [
+              0,
+              1,
+              "EP1"
+            ],
+            [
+              1,
+              2,
+              "EP2"
+            ],
+            [
+              2,
+              3,
+              "EP3"
+            ],
+            [
+              3,
+              4,
+              "EP4"
+            ],
+            [
+              4,
+              5,
+              "EP5"
+            ],
+            [
+              5,
+              6,
+              "EP6"
+            ],
+            [
+              6,
+              7,
+              "EP7"
+            ],
+            [
+              7,
+              8,
+              "EP8"
+            ],
+            [
+              8,
+              9,
+              "EP9"
+            ],
+            [
+              9,
+              10,
+              "EP10"
+            ]
+          ]
+        },
+        {
+          "term": "act",
+          "spans": [
+            [
+              0,
+              2.45,
+              "第一幕 · 平常世界"
+            ],
+            [
+              2.45,
+              8.6,
+              "第二幕 · 特殊世界"
+            ],
+            [
+              8.6,
+              10,
+              "第三幕 · 决战"
+            ]
+          ]
+        },
+        {
+          "term": "sequence",
+          "spans": [
+            [
+              0,
+              0.5,
+              ""
+            ],
+            [
+              0.5,
+              1.15,
+              ""
+            ],
+            [
+              1.15,
+              1.7,
+              ""
+            ],
+            [
+              1.7,
+              2.45,
+              ""
+            ],
+            [
+              2.45,
+              3.2,
+              ""
+            ],
+            [
+              3.2,
+              3.9,
+              ""
+            ],
+            [
+              3.9,
+              4.6,
+              ""
+            ],
+            [
+              4.6,
+              5.5,
+              ""
+            ],
+            [
+              5.5,
+              6.3,
+              ""
+            ],
+            [
+              6.3,
+              7.1,
+              ""
+            ],
+            [
+              7.1,
+              7.9,
+              ""
+            ],
+            [
+              7.9,
+              8.6,
+              ""
+            ],
+            [
+              8.6,
+              9.3,
+              ""
+            ],
+            [
+              9.3,
+              10,
+              ""
+            ]
+          ]
+        }
+      ],
+      "markers": [
+        {
+          "term": "inciting",
+          "at": 0.97,
+          "zh": "激励事件"
+        },
+        {
+          "term": "plotpoint",
+          "at": 2.45,
+          "zh": "大转折一"
+        },
+        {
+          "term": "plotpoint",
+          "at": 5.5,
+          "zh": "中点"
+        },
+        {
+          "term": "plotpoint",
+          "at": 8.6,
+          "zh": "大转折二"
+        },
+        {
+          "term": "plotpoint",
+          "at": 9.85,
+          "zh": "决战"
+        }
+      ]
+    },
+    {
+      "id": "ep1",
+      "zh": "魔兽世界 EP1 全集（段落取自已确定故事）",
+      "en": "WoW EP1",
+      "unit": "秒",
+      "length": 720,
+      "note": "第三、四段同在葡萄园一场里：段落边界落在场中间。冷开场之后的场是按故事估的示意，cue 为示意；冷开场的镜头与拍点见下一条放大时间轴。",
+      "ticks": [
+        0,
+        60,
+        120,
+        180,
+        240,
+        300,
+        360,
+        420,
+        480,
+        540,
+        600,
+        660,
+        720
+      ],
+      "rows": [
+        {
+          "term": "sequence",
+          "spans": [
+            [
+              0,
+              76,
+              "冷开场"
+            ],
+            [
+              76,
+              250,
+              "报到"
+            ],
+            [
+              250,
+              400,
+              "狗头人"
+            ],
+            [
+              400,
+              555,
+              "葡萄园"
+            ],
+            [
+              555,
+              690,
+              "刚好够用"
+            ],
+            [
+              690,
+              720,
+              "尾声"
+            ]
+          ]
+        },
+        {
+          "term": "scene",
+          "spans": [
+            [
+              0,
+              11,
+              "s1 隘口"
+            ],
+            [
+              11,
+              76,
+              "s2 大路"
+            ],
+            [
+              76,
+              110,
+              "门外"
+            ],
+            [
+              110,
+              250,
+              "武器厅"
+            ],
+            [
+              250,
+              345,
+              "北林"
+            ],
+            [
+              345,
+              400,
+              "院子"
+            ],
+            [
+              400,
+              690,
+              "葡萄园"
+            ],
+            [
+              690,
+              708,
+              "修道院"
+            ],
+            [
+              708,
+              720,
+              "门口"
+            ]
+          ]
+        },
+        {
+          "term": "cue",
+          "spans": [
+            [
+              0,
+              31,
+              "晨雨"
+            ],
+            [
+              28,
+              48,
+              "狼"
+            ],
+            [
+              76,
+              250,
+              "修道院"
+            ],
+            [
+              400,
+              690,
+              "葡萄园"
+            ]
+          ],
+          "example": true
+        },
+        {
+          "term": "hook",
+          "spans": [
+            [
+              0,
+              8,
+              "开场"
+            ],
+            [
+              708,
+              720,
+              "集尾：Hale"
+            ]
+          ]
+        }
+      ],
+      "markers": [
+        {
+          "term": "inciting",
+          "at": 714,
+          "zh": "激励事件"
+        }
+      ]
+    },
+    {
+      "id": "ep1-cold",
+      "zh": "放大：EP1 冷开场 76 秒（场、镜头取自分镜草稿；拍点按动作划分；cue 为示意）",
+      "en": "Zoom: EP1 cold open",
+      "unit": "秒",
+      "length": 76,
+      "note": "一个拍点可以跨好几个镜头（捆绳·被认出手艺跨 s2 的 st1–st3），一个镜头也可以只是拍点的一部分；两个 cue 在 28–31 秒交叉淡入，st4 同时在两个 cue 下。",
+      "ticks": [
+        0,
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        76
+      ],
+      "rows": [
+        {
+          "term": "sequence",
+          "spans": [
+            [
+              0,
+              76,
+              "冷开场"
+            ]
+          ]
+        },
+        {
+          "term": "scene",
+          "spans": [
+            [
+              0,
+              11,
+              "s1 南墙隘口"
+            ],
+            [
+              11,
+              76,
+              "s2 山谷大路"
+            ]
+          ]
+        },
+        {
+          "term": "shot",
+          "spans": [
+            [
+              0,
+              6,
+              "st1"
+            ],
+            [
+              6,
+              11,
+              "st2"
+            ],
+            [
+              11,
+              16,
+              "st1"
+            ],
+            [
+              16,
+              22,
+              "st2"
+            ],
+            [
+              22,
+              27,
+              "st3"
+            ],
+            [
+              27,
+              31,
+              "st4"
+            ],
+            [
+              31,
+              35,
+              "st5"
+            ],
+            [
+              35,
+              40,
+              "st6"
+            ],
+            [
+              40,
+              44,
+              "st7"
+            ],
+            [
+              44,
+              48,
+              "st8"
+            ],
+            [
+              48,
+              54,
+              "st9"
+            ],
+            [
+              54,
+              60,
+              "st10"
+            ],
+            [
+              60,
+              64,
+              "st11"
+            ],
+            [
+              64,
+              70,
+              "st12"
+            ],
+            [
+              70,
+              76,
+              "st13"
+            ]
+          ]
+        },
+        {
+          "term": "beat",
+          "spans": [
+            [
+              0,
+              11,
+              "进谷"
+            ],
+            [
+              11,
+              27,
+              "捆绳·被认出手艺"
+            ],
+            [
+              27,
+              31,
+              "货栈"
+            ],
+            [
+              31,
+              40,
+              "狼来·摔倒"
+            ],
+            [
+              40,
+              48,
+              "箭·伊根"
+            ],
+            [
+              48,
+              54,
+              "狼排"
+            ],
+            [
+              54,
+              64,
+              "拉起·问伤"
+            ],
+            [
+              64,
+              70,
+              "字条"
+            ],
+            [
+              70,
+              76,
+              "推车"
+            ]
+          ]
+        },
+        {
+          "term": "subtitle",
+          "spans": [
+            [
+              23,
+              26,
+              "You've done…"
+            ],
+            [
+              27.5,
+              30.5,
+              "Every day…"
+            ],
+            [
+              49,
+              53,
+              "I hate…"
+            ],
+            [
+              55,
+              59.5,
+              "Are you hurt?…"
+            ],
+            [
+              66,
+              69,
+              "Come home…"
+            ]
+          ]
+        },
+        {
+          "term": "cue",
+          "spans": [
+            [
+              0,
+              31,
+              "晨雨"
+            ],
+            [
+              28,
+              48,
+              "狼"
+            ]
+          ],
+          "example": true
+        },
+        {
+          "term": "hook",
+          "spans": [
+            [
+              0,
+              8,
+              "开场钩子"
+            ]
+          ]
+        }
+      ],
+      "markers": []
+    }
+  ]
+}

@@ -21,11 +21,11 @@ The "severity" column below records the severity of a *failing* check at runtime
 
 ## SEC-ORIGIN-HOST — Origin / Host gate (FR-11, FR-3)
 
-Target endpoints: `PUT /api/file`, `POST /api/regen-prompt`, `POST /api/promote`, `DELETE /api/promote` (every state-changing endpoint per FR-9). GET endpoints are NOT gated by Origin (port the spec_driven posture verbatim).
+Target endpoints: **every request whose method is not GET / HEAD / OPTIONS** (follow-up 239, `libs.common.origin.is_guarded`). The four endpoints in the table — `PUT /api/file`, `POST /api/regen-prompt`, `POST /api/promote`, `DELETE /api/promote` — are the original FR-9 set; since follow-up 239 every other write route (archive, delete / hard-delete, empty the recycle bin, Downloads import, view extraction, research marks, episode workflow, …) and any unknown write path is gated the same way. GET / HEAD / OPTIONS are NOT gated by Origin (port the spec_driven posture verbatim). The "not in `GUARDED_ROUTES`" gaps recorded in the carve-outs below (#7, #7-bis, #9, SEC-VOICE-AUDIO-UPLOAD) are closed by follow-up 239.
 
 Bound port: **8766**. Loopback aliases admitted: `localhost` ↔ `127.0.0.1` at port 8766. **Port 8765 (spec_driven) is foreign** even when bound on the same host — the two webapps coexist (NFR-3) but DO NOT share an Origin allow-list.
 
-Per development.md move #11, BOTH the pre-Vite-rewrite shape AND the post-rewrite shape are unit-tested. The Vite proxy at `127.0.0.1:5174` rewrites `Origin: http://127.0.0.1:5174` → `Origin: http://127.0.0.1:8766` per FR-6 (parallels spec_driven follow-up 006); a request with the un-rewritten Origin landing on the backend must 403, otherwise dropping the proxy hook re-introduces the cross-port admit.
+Per development.md move #11, BOTH the pre-Vite-rewrite shape AND the post-rewrite shape are unit-tested. The Vite proxy at `127.0.0.1:5174` rewrites `Origin: http://127.0.0.1:5174` → `Origin: http://127.0.0.1:8766` per FR-6 (parallels spec_driven follow-up 006); a request with the un-rewritten Origin landing on the backend must 403, otherwise dropping the proxy hook re-introduces the cross-port admit. Since follow-up 239 the proxy rewrites **only the dev page's own Origin** (`http://127.0.0.1:<dev port>` / `http://localhost:<dev port>`); any other Origin (another site the browser has open, `null` from a sandboxed frame) is forwarded unchanged and the backend refuses it. The earlier unconditional rewrite made the dev server an open relay: any page could POST to `127.0.0.1:5174/api/…` and arrive looking same-origin (`apps/ui/devProxyOrigin.ts`, unit-tested in `apps/ui/test/dev-proxy-origin.test.ts`).
 
 | Id | Endpoint(s) | Attack scenario | Pass condition | Severity |
 |---|---|---|---|---|
@@ -47,6 +47,8 @@ Per development.md move #11, BOTH the pre-Vite-rewrite shape AND the post-rewrit
 **Pass-condition note for -09 / -10 / -11 / -12:** these are positive-path tests; failure here is what move #11 calls "the dev-server profile broke after the gate was tightened." They MUST stay green to prove the gate is correctly scoped.
 
 **Coverage proof obligation:** `test_api.py` (or a dedicated `test_api_security.py`) MUST contain one named test per row above. A reviewer can grep the file for `SEC-ORIGIN-HOST-` markers (in test docstrings or names) and find all 14.
+
+**Follow-up 239 coverage:** `tests/test_api_write_origin_guard.py` enumerates every registered write route and fails when one has no case; each route is exercised with a foreign Origin (403, nothing on disk changes) and the app's own Origin (normal 200, effect on disk). Foreign shapes covered: no Origin (-01), `null`, the Vite Origin without the proxy rewrite (-07), the wrong port, a look-alike prefix (`http://127.0.0.1:8766.evil.example`), and a DNS-rebinding Host with and without Origin. A request without an Origin stays refused (-01); the strictness was briefly relaxed during 239 and restored the same day.
 
 ---
 

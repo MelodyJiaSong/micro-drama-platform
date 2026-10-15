@@ -12,7 +12,6 @@ from libs.common.config_redaction import redact_config, redact_text
 from libs.common.global_workflow import CATALOG_PATH, GLOBAL_MAX_BYTES, source_identity
 from libs.common.global_source_projection import project_defaults
 from libs.common.global_source_references import source_references
-from libs.common.drama_ref import drama_dirs
 from libs.infrastructure.daos.global_workflow__dao import GlobalSourceDao
 
 
@@ -46,7 +45,7 @@ class GlobalWorkflowReader:
     def catalog(self) -> tuple[list[dict[str, str]], list[GlobalSourceDao]]:
         data = json.loads(self._bytes(CATALOG_PATH).decode("utf-8-sig"))
         numbers = data.get("source_numbers", {})
-        if not isinstance(numbers, dict) or any(not isinstance(number, str) or not re.fullmatch(r"[1-9]\d*(?:\.[1-9]\d*){2}", number) for number in numbers.values()):
+        if not isinstance(numbers, dict) or any(not isinstance(number, str) or not re.fullmatch(r"[1-9]\d*\.(?:0|[1-9]\d*)(?:\.[1-9]\d*)+", number) for number in numbers.values()):
             raise ValueError("invalid global source numbers")
         if len(set(numbers.values())) != len(numbers):
             raise ValueError("duplicate global source numbers")
@@ -72,12 +71,18 @@ class GlobalWorkflowReader:
             except (OSError, ValueError):
                 status = "unavailable"
             title = source.get("title") or (path.split("/")[-2] if path.endswith("/SKILL.md") else path.split("/")[-1])
-            historical = source.get("historical", False) or path.endswith(("ai_video_history.md", "ai_video_harness.md"))
-            entries.append(GlobalSourceDao(identity, path, title, source["group"], scope, source.get("view", "document"), status, historical, numbers.get(identity, "")))
+            historical = source.get("historical", False)
+            formats = tuple(str(value) for value in source.get("formats", []))
+            adapts = tuple({"source_id": f"{scope}:{entry['source']}", "section": str(entry.get("section", ""))} for entry in source.get("adapts", []))
+            entries.append(GlobalSourceDao(identity, path, title, source["group"], scope, source.get("view", "document"), status, historical, numbers.get(identity, ""), f"{scope}:{source['parent']}" if source.get("parent") else "", formats, adapts))
+        entries.sort(key=lambda entry: (not entry.number, tuple(int(part) for part in entry.number.split(".")) if entry.number else (), entry.path))
         return data["groups"], entries
 
     def categories(self) -> list[dict[str, str]]:
         return json.loads(self._bytes(CATALOG_PATH).decode("utf-8-sig")).get("categories", [])
+
+    def formats(self) -> list[dict[str, str]]:
+        return json.loads(self._bytes(CATALOG_PATH).decode("utf-8-sig")).get("formats", [])
 
     def source(self, identity: str) -> dict[str, Any]:
         _, entries = self.catalog()
@@ -109,18 +114,6 @@ class GlobalWorkflowReader:
                     "sha256": hashlib.sha256(data).hexdigest()}
         except (OSError, UnicodeError, ValueError, SyntaxError):
             return {**asdict(source), "status": "unavailable", "content": "无法安全解析此源文件，未展示原始配置。", "format": "text", "sha256": None}
-
-    def episodes(self) -> list[str]:
-        paths = [path for drama in drama_dirs(self.root) for path in drama.glob("episodes/*/story_runs.json")]
-        result = []
-        for path in paths:
-            relative = path.relative_to(self.root).as_posix()
-            try:
-                self._path(relative)
-                result.append(path.parent.relative_to(self.root).as_posix())
-            except (OSError, ValueError):
-                continue
-        return sorted(result)
 
     def inventory(self) -> dict[str, Any]:
         groups, entries = self.catalog()

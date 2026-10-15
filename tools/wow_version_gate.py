@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """经典旧世版本红线闸门 —— 把「版本错置」这一整类错误挡在 build 之前。
 
-契约出处：`ai_videos/shengji_zhilu/1_立项/concept.md` A1 / F6 ·
-`0_research/blacklist.md` A 类 · `CLAUDE.md`「能量化的反馈必须落成可机检的闸门」。
+契约出处：原 `ai_videos/shengji_zhilu/1_立项/concept.md` A1 / F6（EP1 重启时删除，见 git 历史）·
+`0_research/blacklist.md` A 类 · `CONVENTIONS.md`「能量化的写成闸门」。
 
 ## 为什么需要它
 

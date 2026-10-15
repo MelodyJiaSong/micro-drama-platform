@@ -3,7 +3,7 @@
 > **版本锚点**：经典旧世 Vanilla / Classic Era（**1.12 口径**）· 黑暗之门后第 25 年（Year 25 ADP）。与 `shikong_lvxing/sk2` 同锚点。
 > **形态**：阶段 0 由「史料调研」平移为**「设定考据」**（同 sk2 #101）——方法论一字不改（一手优先、每条带 `source_url` + 逐字 `quote`、三级标签、黑名单、`verified_by` 三态），**只换来源类型**。
 > **事实注册表在 `parts/w01–w20_*.md` 的 ```yaml 围栏里（一份出处，本文不复制 YAML）**；本文各节 ＝ 综合 + 表格 + `fact_id` 指针。
-> **机检**：`python tools/facts_registry.py ai_videos/shengji_zhilu`
+> **机检**：原为 `python tools/facts_registry.py ai_videos/shengji_zhilu`；该工具已随旧流程删除（2026-10-11，follow-up 233），事实注册表改为人工维护。
 > **严格度**（沿用 sk1/sk2 口径）：画面可截图指认的东西（地貌 / 建筑 / 装束 / 器物 / 怪物形制 / 界面）只允许 ✅ / ⚠️；**❌ 只进第 13 节黑名单**，绝不进画面。
 > **三级标签的虚构世界口径**：`✅` 作品原典明载（T0/T1 有可指认的出处）· `⚠️` 原典没写、按该世界自身逻辑推测 · `❌` 玩家误传**或版本错置**。
 > **tier**：T0 游戏本体与官方数据库 · T1 带作品内引用的百科条目与带 id 的数据库条目 · T2 有出处的考据长文 · T3 无引用的百科与论坛 · T4 玩家推测与生成模型默认（**只作反例**）。
@@ -228,7 +228,7 @@ Vanilla 暴风城全城**只有一家旅店**（sk2 `stormwind.myth.018`）。�
 
 ## 13. 常见误传（＝全剧负向词库）
 
-**329 行**，见 `blacklist.md`（由 `tools/build_blacklist.py` 从各路 part 生成，手改无效）；
+**329 行**，见 `blacklist.md`（原由 `tools/build_blacklist.py` 从各路 part 生成；生成器已于 2026-10-11 删除，今后直接改 `blacklist.md`）；
 去重后 **827 条负向词**在 `negatives.txt`，直接进 shot prompt 的 `负面词:` 与 `style_guide.md § 负向锁定`。
 
 A 类**版本错置**是最致命的一类（错了整条 shot 报废），样例：

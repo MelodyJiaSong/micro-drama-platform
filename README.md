@@ -1,8 +1,8 @@
 # AI 短剧制作平台
 
-个人 AI 短剧制作仓库：多部短剧、共用资产库、制作与审查 skills，以及 FastAPI + React 管理应用。Claude 与 Codex 共用规范和流程正文。
+个人 AI 短剧制作仓库：多部短剧、共用资产库、制作 skills，以及 FastAPI + React 管理应用。Claude 与 Codex 共用规范和流程正文。
 
-短剧创作走三个模块：故事创作 → 影视改编 → Prompt 编译。Research 与人物、场景等资产独立支持；先在魔兽世界 EP1 开始小型 POC。下面的软件六阶段流程仅用于 spec-driven 开发任务。
+短剧创作走六个模块：故事创作 → 影视改编 → Prompt 编译与出片 → 剪辑 → 声音与音乐 → 成片交付（后三个待设计）。Research 与人物、场景等资产独立支持；先在魔兽世界 EP1 开始小型 POC。旧流程已于 2026-10-11 删除，旧剧目录只作数据保留（根目录有 `OBSOLETE.md`）。下面的软件六阶段流程仅用于 spec-driven 开发任务。
 
 ```
 ┌─── Six-stage spec-driven pipeline ─────────────────────────────────────┐
@@ -43,17 +43,15 @@
 
 ## 共用 skill 命令
 
-25 个 skills 共用同一组名称，调用符号按客户端使用 `/` 或 `$`。例如把下表命令后接 `shengji_zhilu` 和本次任务要求：
+4 个 skills 共用同一组名称，调用符号按客户端使用 `/` 或 `$`。例如把下表命令后接 `shengji_zhilu` 和本次任务要求：
 
 | 功能 | Claude Code | Codex |
 |---|---|---|
 | 新建 / 继续短剧 | `/ai-videos-pipeline` | `$ai-videos-pipeline` |
-| 全面审查 / 改动后复核 | `/ai-videos-review-suite` | `$ai-videos-review-suite` |
-| 台词审查 | `/ai-videos-dialogue` | `$ai-videos-dialogue` |
 | 补人物资产 | `/ai-videos-char-assets` | `$ai-videos-char-assets` |
-| 后期剪辑 | `/ai-videos-cut` | `$ai-videos-cut` |
+| ChatGPT 订阅出图，无需 API key | `/codex-imagegen` | `$codex-imagegen` |
 
-也可以两端都写「用 ai-videos-review-suite 审查 shengji_zhilu 第 1 集」。原 Claude `/ai_videos__…` 命令保留。完整名称见 [.agents/skill-aliases.json](.agents/skill-aliases.json)。Claude 的 [skills 文档](https://code.claude.com/docs/en/skills) 与 Codex 的 [本地 skills 文档](https://learn.chatgpt.com/docs/build-skills) 分别说明调用方式。
+另一个是软件流程的 `agent-team`（见上节）。也可以两端都写「用 ai-videos-pipeline 继续 shengji_zhilu 第 1 集的影视改编」。原 Claude `/ai_videos__…` 命令保留。完整名称见 [.agents/skill-aliases.json](.agents/skill-aliases.json)。Claude 的 [skills 文档](https://code.claude.com/docs/en/skills) 与 Codex 的 [本地 skills 文档](https://learn.chatgpt.com/docs/build-skills) 分别说明调用方式。
 
 ## Quick start
 
@@ -63,15 +61,20 @@ From the repository root, use the project virtual environment (no activation or
 `make` required):
 
 ```powershell
-.\start.ps1 -NoReload
+.\start.ps1
 ```
 
-Open `http://127.0.0.1:8766/`. The launcher checks the project `.venv` first,
+Each run first stops the previous backend / frontend (processes it started
+plus whatever listens on 8766 / 5174), then starts both in the background with
+logs in `projects/ai_video_management/logs/`. Open `http://127.0.0.1:5174/`
+(Vite dev server) or `http://127.0.0.1:8766/` (built bundle). Options:
+`-NoReload` (no uvicorn auto-reload), `-BackendOnly`, `-Stop` (stop only).
+The launcher checks the project `.venv` first,
 then the root `.venv`, and skips environments whose Python executable no longer
 works. If neither works, create a project environment with an installed Python
 and install `projects/ai_video_management/requirements.txt` into it.
-If port 8766 is already occupied, run `./start.ps1 -NoReload -Port 8767` and
-open `http://127.0.0.1:8767/` instead.
+If port 8766 is held by another program, run `./start.ps1 -Port 8767`; the
+frontend proxy follows the same port.
 Build the UI first if `apps/api/static/index.html` is missing:
 
 ```powershell
@@ -150,9 +153,8 @@ Worker subagents are traced to `.audit/adhoc_agents/{date}/{task_id}/spawns/{wor
 ```powershell
 python tools/sync_agent_skills.py
 python tools/sync_agent_skills.py --check
-python tools/check_canon.py
 ```
 
-两端 ASCII 名称查 `.agents/skill-aliases.json`；25 份正文直接维护在 `.agents/skills/`。同步脚本只生成 Claude 的同名及旧名入口，均引用同一源文件，从不复制正文或回写源文件。修改流程正文即时共享；改名称、描述、`metadata.claude.argument-hint` 或新增 skill 后同步入口。Claude 入口传递 `$ARGUMENTS`，共用正文从实际消息读取参数。改 shot 或引用资产后，对受影响镜显式 `seedance_kit.py sync <路径>` 和 `check <路径>`；不能依赖 Claude Stop hook 在 Codex 中自动运行。新入口未被当前会话发现时可直接按路径读源 skill，或重新开启会话。
+两端 ASCII 名称查 `.agents/skill-aliases.json`；3 份正文直接维护在 `.agents/skills/`。同步脚本只生成 Claude 的同名及旧名入口，均引用同一源文件，从不复制正文或回写源文件。修改流程正文即时共享；改名称、描述、`metadata.claude.argument-hint` 或新增 skill 后同步入口。Claude 入口传递 `$ARGUMENTS`，共用正文从实际消息读取参数。改分镜、overhead 或参考资产后，显式运行 `python tools/shot_pack.py sync <集目录>`（只报告用 `check`）；工作流目录或共用源增删迁移后运行 `python tools/workflow_catalog.py --fix` 再 `--check`；不能依赖 Claude Stop hook 在 Codex 中自动运行。新入口未被当前会话发现时可直接按路径读源 skill，或重新开启会话。
 
 发现约定依据：[OpenAI AGENTS.md 文档](https://learn.chatgpt.com/docs/agent-configuration/agents-md)、[本地 skills 文档](https://learn.chatgpt.com/docs/build-skills)。本次共用适配保留现有应用运行后端；Prompt Lab 的自动执行器仍使用其配置的 Claude CLI。

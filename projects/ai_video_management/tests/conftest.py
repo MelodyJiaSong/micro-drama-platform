@@ -1,15 +1,11 @@
 """Shared test fixtures."""
 from __future__ import annotations
 
-import os
 import sys
 from pathlib import Path
 
 _SOLUTION_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_SOLUTION_ROOT))
-
-os.environ.setdefault("KLING_ACCESS_KEY", "test-ak-placeholder")
-os.environ.setdefault("KLING_SECRET_KEY", "test-sk-placeholder")
 
 
 def repo_root() -> Path:

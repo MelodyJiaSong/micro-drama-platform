@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from libs.domain.errors.casting__error import InvalidDramaPathError
+from libs.domain.errors.drama__error import InvalidDramaPathError
 
 
 @dataclass(frozen=True)

@@ -425,7 +425,7 @@ def main() -> None:
         # 2026-09-17 sk1：Rodin 对高长径比物体系统性地"压方"（漕船 4:1 出成 1.25:1、
         # 表木 12:1 同理），三视图再对也纠不回来。对 previz 白模而言逐轴贴合是对的
         # ——它只承载体量与轮廓。所以这条报 warning 而不判死：它是给人看的读数，
-        # 真正判"长得像不像"的是 rule 4h §G 的那一眼渲图（build_objects 自动出 peek）。
+        # 真正判"长得像不像"的是人看的那一眼渲图（原由已删的 build_objects 自动出 peek）。
         drift = max(ratios) / max(min(ratios), 1e-9)
         checks.append(Check(
             "来源比例漂移",

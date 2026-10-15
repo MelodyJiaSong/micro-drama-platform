@@ -1,26 +1,31 @@
 # -*- coding: utf-8 -*-
-"""换装三面图：装备表每个带 `view` 的阶段 → 人物卡目录下一个子目录，出正 / 侧 / 背三张图（ai_video.md rule 4m ⑥ 2026-09-26 修订）。
+"""换装三面图：装备表每个带 `view` 的阶段 → 人物卡目录下一个子目录，出正 / 侧 / 背三张图（规则见 `.agents/skills/ai-videos-pipeline/resources/assets.md`「装备」）。
 
 为什么是三面图而不是重出建立视频：人物的长相与声音在第一次的 turntable 里已经锁住（`views/` 下的锚点三面帧），
 换装只换衣服——出三张图比重出一条 4 秒视频便宜，参考锚点图也更稳（follow-up 031，用户定调）。
 
 数据全部现读，不另写一份（rule 4i ①）：
-    穿什么      ← `equipment/loadouts/{人物}.toml` 该阶段的 `wear`，以及 `view = {key, name, refs, look, carry}`
+    穿什么      ← `equipment/loadouts/{人物}.toml` 该阶段的 `wear`，以及 `view = {key, name, refs, look, carry, pose}`
     装备长相    ← 各件 `item.toml` 的 `lock` / `worn`；正面图 `{key}-1_正面.png` 当形制参考
+    参考图      ← `view.refs` 收装备键 e… 与道具键 p…（道具取锚点图 `{目录名}.png`，没有时取 `p{N}-1_正面.png`）
     空着的槽    ← `equipment_lib.empty_clause`（不写，模型一定自动补一身甲）
     人          ← 人物卡的角色识别标签 + `views/{人物}_front|side|back.png`（第一次建立视频抽的锚点帧；旧名 views{N}.png 见 gen_char_images.anchor_frame）
 
+状态变体（resources/assets.md「人物」：同一身衣服里需要长期区分的状态，如背着长包、一身泥；follow-up 031）：
+装备表另起一段 `episodes = []` 的 `[[stage]]`——按集取装备（`equipment_lib.wearing`）永远落不到它，分镜 cast 直接写它的 view.key。
+
 落盘：`characters/{人物}/{view.key}_{view.name}/` ＝ 同名 md（三个 ```text 块，首行路由键 `{key}_front / _side / _back`）
 + `{key}_front.png`、`{key}_side.png`、`{key}_back.png` + `gen_log.json`。
-星形派生：正面挂锚点正面 + 本套最多 3 件装备的正面图；侧 / 背只挂本套正面（穿着以它为准）+ 锚点的侧 / 背（只借身形轮廓）。
-引擎按 rule 4l：挂了锚点的派生图先走即梦；`--engine X` 显式指定时只用 X。
+星形派生：正面挂锚点正面 + 本套最多 3 件装备 / 道具的正面图；侧 / 背只挂本套正面（穿着以它为准）+ 锚点的侧 / 背（只借身形轮廓）。
+背面只给即梦喂本套正面的左右镜像（它照搬参考图的左右）；Codex / ElevenLabs 自己会转身，喂原图。
+引擎按 `tools/image_engine.py`（follow-up 238：auto ＝ Codex → ElevenLabs → 即梦）；`--engine X` 显式指定时只用 X。
 手部装备（露指 / 半指手套等）换装图锁不住（即梦三次都画成全指）：只锁身上其它部分，手由出片时另挂的装备正面图锁
 （`specs/ai_video/shengji_zhilu/lessons.md` L16）。
 
 用法（仓库根目录）：
     python tools/gen_outfit_views.py plan   --drama shengji_zhilu [--only c1-3,c2-1]
     python tools/gen_outfit_views.py build  --drama shengji_zhilu            # 写子目录与卡
-    python tools/gen_outfit_views.py images --drama shengji_zhilu [--engine auto|dreamina|elevenlabs] [--force] [--shard k/n]
+    python tools/gen_outfit_views.py images --drama shengji_zhilu [--engine auto|codex|elevenlabs|dreamina] [--force] [--shard k/n]
 已出的图跳过，可中断可续跑；参考图还没出的那张跳过并报出来。
 """
 from __future__ import annotations
@@ -37,14 +42,16 @@ sys.stdout.reconfigure(encoding="utf-8")
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "tools"))
-import check_stage2  # noqa: E402
 import equipment_lib  # noqa: E402
+from tools import check_world_scenes_szzl as cws  # noqa: E402  锁定串（角色识别标签）读法
+from tools import dreamina_image as dm  # noqa: E402
 from tools import gen_bg_assets as gba  # noqa: E402  即梦并发安全提交
 from tools import gen_bg_images as bgi  # noqa: E402  上传副本、可重试判据
 from tools import gen_char_images as gci  # noqa: E402  锚点帧在哪（新名 / 旧名 views{N}）
-from tools import gen_images_xianjian as dm  # noqa: E402
+from tools import codex_image as ci  # noqa: E402
 from tools import image_engine as ie  # noqa: E402
 from tools import image_fetch as el  # noqa: E402
+from tools import props_lib  # noqa: E402
 
 VIEWS = (("1", "正面"), ("2", "侧面"), ("3", "背面"))
 ANCHOR = {"正面": "front", "侧面": "side", "背面": "back"}
@@ -118,13 +125,24 @@ def equip_front(drama: str, k: str) -> Path:
     return equipment_lib.find(_root(drama), k) / f"{k}-1_正面.png"
 
 
+def ref_image(drama: str, k: str) -> tuple[str, str, Path]:
+    """view.refs 的一个键 → (类别, 名字, 参考图)：装备键取装备正面图；道具键取道具锚点图，没有时回退正面图。"""
+    if not props_lib.KEY.match(k):
+        return "装备", equipment_lib.row(_root(drama), k).name_zh, equip_front(drama, k)
+    d = props_lib.find(chars_dir(drama), k)
+    if d is None:
+        raise SystemExit(f"view.refs 里的道具 {k} 没有目录（props/{k}_*）")
+    pic = d / f"{d.name}.png"
+    return "道具", props_lib.DIR.match(d.name).group(2), pic if pic.is_file() else d / f"{k}-1_正面.png"
+
+
 def own(drama: str, o: Outfit, n: str, view: str) -> Path:
     return chars_dir(drama) / o.char / o.folder / f"{o.key}_{ANCHOR[view]}.png"
 
 
 def label(drama: str, o: Outfit) -> str:
     card = (chars_dir(drama) / o.char / f"{o.char}.md").read_text(encoding="utf-8")
-    lab = check_stage2._lock_string(card)
+    lab = cws.lock_string(card)
     if not lab:
         raise SystemExit(f"{o.char} 卡里没有角色识别标签")
     return lab
@@ -151,32 +169,44 @@ def prompts(drama: str, o: Outfit, with_worn: bool = True) -> dict[str, tuple[st
     """视图名 → (送审稿, 参考行句柄, 参考图路径)。首行路由键不进送审稿（它只给落盘与导入器用）。"""
     lab, eq, emp = label(drama, o), gear(drama, o, with_worn), empty(drama, o)
     look = ("本套状态：" + o.look + "。") if o.look else ""
-    eq_refs = [(k, equip_front(drama, k)) for k in o.refs]
+    worn = (f"本套装备：{eq}。" if eq else "") + look       # 身上手上都没装备（状态变体）时不留空的「本套装备：。」
+    eq_refs = [ref_image(drama, k) for k in o.refs]
+    kinds = "与".join(dict.fromkeys(kind for kind, _, _ in eq_refs)) or "装备"
+    # 手里空着就不提「右手拿着的东西」：两手空空的状态变体，这半句会诱出一件手持物
+    held = "（连同右手拿着的东西）" if any(equipment_lib.row(_root(drama), k).slot == "主手" for k in o.stage.wear) else ""
     out: dict[str, tuple[str, list[str], list[Path]]] = {}
     pose = o.pose or POSE
+    # refs 留空（身上什么都不带的状态变体，如 c1-11 / c1-12）：不写「其余参考图依次是，…照搬装备外观」，那半句会诱出一件装备
+    usage = (f"参考图一只锁这个人的长相、体型与便服；其余参考图依次是{'、'.join(name for _, name, _ in eq_refs)}，"
+             f"只锁这几件{kinds}的形制、材质与配色，照搬{kinds}外观，不照搬参考图的构图与背景" if eq_refs
+             else "只有参考图一，只锁这个人的长相、体型与便服，不照搬参考图的构图与背景")
     front = (f"全身正面立绘，单人，正对镜头平视，站姿自然、双脚与肩同宽，{pose}；正面对镜头时他右手一侧在画面左边、左手一侧在画面右边；"
              f"头顶到脚底完整入画、居中；{BG}。\n"
              f"人物：与参考图一是同一个人——{lab}；脸、发型、体型、年龄感一律照参考图一，不美化、不重新设计。\n"
-             f"衣着：底层衣物没被装备盖住的地方一律照参考图一。本套装备：{eq}。{look}\n"
+             f"衣着：底层衣物没被装备盖住的地方一律照参考图一。{worn}\n"
              f"空着的地方：{emp or '无'}。\n"
-             f"参考用法：参考图一只锁这个人的长相、体型与便服；其余参考图依次是{'、'.join(equipment_lib.row(_root(drama), k).name_zh for k, _ in eq_refs)}，"
-             f"只锁这几件装备的形制、材质与配色，照搬装备外观，不照搬参考图的构图与背景。\n"
+             f"参考用法：{usage}。\n"
              f"风格：{STYLE}。\n负面词：{NEG}")
     out["正面"] = (front, [f"`{anchor(drama, o, '正面').stem}(锚点正面·长相、体型与便服)=>@`"] +
-                   [f"`{k}-1_正面(装备·形制)=>@`" for k, _ in eq_refs],
-                   [anchor(drama, o, "正面")] + [p for _, p in eq_refs])
+                   [f"`{p.stem}({kind}·形制)=>@`" for kind, _, p in eq_refs],
+                   [anchor(drama, o, "正面")] + [p for _, _, p in eq_refs])
     for n, view, turn in (("2", "侧面", "水平转到正左侧 90°，人物左侧身对镜头：画面里只看得见他身体的左半边，左肩与左臂正对镜头，"
                                         "脸是侧脸轮廓、只露一只眼，右半边身体被挡住"),
-                          ("3", "背面", "水平转到正背面 180°，人物背对镜头、看不见脸，只看得见后脑勺与后背；左右与正面对调——他右手一侧（连同右手拿着的东西）在画面右边、"
+                          ("3", "背面", f"水平转到正背面 180°，人物背对镜头、看不见脸，只看得见后脑勺与后背；左右与正面对调——他右手一侧{held}在画面右边、"
                                         "左手一侧在画面左边")):   # 不写这句，背面图常把右手的锤画到左手（c1-1 首批实测）
         txt = (f"全身{view}立绘：与参考图一是同一个人、同一身穿着、同一个姿势（{pose}），只把机位绕人物{turn}；头顶到脚底完整入画、居中；{BG}。\n"
-               f"衣着与装备一律照参考图一：{lab}；本套装备：{eq}。{look}\n"
+               f"衣着与装备一律照参考图一：{lab}；{worn}\n"
                f"空着的地方同参考图一：{emp or '无'}。\n"
                f"参考用法：参考图一定这一身穿着与装备，形制、配色、位置一律不变；参考图二只锁这个人{view}的身形轮廓与站姿，不借它的衣着。\n"
                f"风格：{STYLE}。\n负面词：{NEG}")
         if view == "背面" and any(equipment_lib.row(_root(drama), k).slot == "副手" for k in o.stage.wear):
             # 只给拿着盾的阶段加：没盾的人写了「盾」字，模型会凭空画一面盾
             txt = txt.replace("左手一侧在画面左边", "左手一侧在画面左边；左臂上的盾从背后看只露出盾的背面（背带与握把），看不见盾面", 1)
+        if view == "背面" and o.look:
+            # 正面图看不到后背：只写「配色一律不变」，模型照正面的白衬衣推出后背，文字写的后背整片泥画不出来
+            # （shengji_zhilu c1-10 原图与 2026-10-11 夜首轮重出，后背都只有几块泥）
+            txt = txt.replace("形制、配色、位置一律不变；", "形制、配色、位置一律不变；参考图一是正面、看不到后背，"
+                              "后背的样子（泥、破口、背着的东西）以「本套状态」为准，不照正面的颜色推；", 1)
         out[view] = (txt, [f"`{own(drama, o, '1', '正面').stem}(本套正面·穿着以此为准)=>@`", f"`{anchor(drama, o, view).stem}(锚点{view}·身形轮廓)=>@`"],
                      [own(drama, o, "1", "正面"), anchor(drama, o, view)])
     for v, (txt, _, _) in out.items():
@@ -187,13 +217,17 @@ def prompts(drama: str, o: Outfit, with_worn: bool = True) -> dict[str, tuple[st
 
 def card(drama: str, o: Outfit) -> str:
     ps = prompts(drama, o)
-    rng = f"{o.stage.shots[0]}–{o.stage.shots[1]}" if o.stage.shots else "整集"
-    lines = [f"# {o.key} · {o.name}（{o.char} 换装三面图）", "",
+    if o.stage.episodes:
+        kind, when, swap = "换装", "、".join(o.stage.episodes) + " " + (
+            f"{o.stage.shots[0]}–{o.stage.shots[1]}" if o.stage.shots else "整集"), "只换衣服"
+    else:
+        kind, when, swap = "状态变体", f"状态变体，不按集取装备（分镜 cast 直接写 {o.key}）", "衣服不换、只换状态"
+    lines = [f"# {o.key} · {o.name}（{o.char} {kind}三面图）", "",
              f"> **由 `tools/gen_outfit_views.py` 从装备表生成，不要手改。** 改穿着 ＝ 改 `equipment/loadouts/{o.char}.toml` 的 "
              f"`{o.stage.id}` 阶段（`wear` / `view`）后重跑。",
-             f"> 阶段 `{o.stage.id}` · {'、'.join(o.stage.episodes) or '—'} {rng} · {o.stage.where}",
+             f"> 阶段 `{o.stage.id}` · {when} · {o.stage.where}",
              f"> 身上：{'、'.join(o.stage.wear) or '只有便服'}" + (f"；随身：{'、'.join(k for k, _ in o.carry)}" if o.carry else ""),
-             "> 长相与声音仍以第一次建立视频（`../views/`）为准；本目录三张图只换衣服（rule 4m ⑥）。", ""]
+             f"> 长相与声音仍以第一次建立视频（`../views/`）为准；本目录三张图{swap}（rule 4m ⑥）。", ""]
     for n, view in VIEWS:
         txt, handles, _ = ps[view]
         lines += [f"## {view}", "", "```text", own(drama, o, n, view).stem, "参考: " + "、".join(handles), txt, "```", ""]
@@ -272,27 +306,27 @@ def images(drama: str, os_: list[Outfit], engine: str, force: bool) -> list[str]
                 continue
             text, _, refs = ps[view]
             missing = [r for r in refs if not r.is_file()]
-            if view == "背面" and not missing:
-                # 模型照搬参考图里东西在画面哪一边——背面要的恰好是左右对调，所以喂本套正面的镜像
-                # （c2-1 首批实测：文字写明「左右对调」仍把盾画在画面右边、剑在左边）
-                refs = [_mirror(refs[0])] + refs[1:]
-                text = text.replace("与参考图一是同一个人、同一身穿着", "参考图一是本套正面左右翻转后的镜像，按它的左右位置画背面；与它是同一个人、同一身穿着", 1)
             if missing:
                 print(f"  ⏭ {out.name}：参考图还没有 {', '.join(m.name for m in missing)}", flush=True)
                 failed.append(out.name)
                 continue
-            first = ie.first_choice(False, engine)
-            order = [first] if engine != ie.AUTO else [first, ie.other(first)]
-            if len(text) > dm.PROMPT_MAX:
-                order = [e for e in order if e == ie.ELEVENLABS] or [ie.ELEVENLABS]
+            # 即梦照搬参考图里东西在画面哪一边——背面要的恰好是左右对调，所以只给即梦喂本套正面的镜像
+            # （c2-1 首批实测：文字写明「左右对调」仍把盾画在画面右边、剑在左边）。Codex / ElevenLabs 是 GPT 图像，
+            # 自己会转身：喂镜像它再转一次，背面左右又反了（状态变体 c1-9 / c1-10 首批 Codex 实测，出图时编号写作 c1-2 / c1-3，follow-up 031）
+            flip = view == "背面"
+            dm_text = text.replace("与参考图一是同一个人、同一身穿着", "参考图一是本套正面左右翻转后的镜像，按它的左右位置画背面；与它是同一个人、同一身穿着", 1) if flip else text
+            order = ie.order(engine, target=out, dreamina_ok=len(dm_text) <= dm.PROMPT_MAX)
             t0, errs = time.time(), []
             for eng in order:
+                t, rs = (dm_text, [_mirror(refs[0])] + refs[1:] if flip else refs) if eng == ie.DREAMINA else (text, refs)
                 try:
-                    tag = (f"credits={_dreamina(text, refs, out)}" if eng == ie.DREAMINA else f"gid={_eleven(text, refs, out)}")
-                    _log(d, **{f"{o.key}-{n}": {"engine": eng, "chars": len(text), "refs": [r.name for r in refs], "tag": tag}})
-                    print(f"  ✓ {out.name} {eng} {len(text)} 字 {time.time() - t0:.0f}s {tag}", flush=True)
+                    tag = (f"credits={_dreamina(t, rs, out)}" if eng == ie.DREAMINA
+                           else ci.render(t, [bgi._upload_copy(r) for r in rs], out, RATIO) if eng == ie.CODEX
+                           else f"gid={_eleven(t, rs, out)}")
+                    _log(d, **{f"{o.key}-{n}": {"engine": eng, "chars": len(t), "refs": [r.name for r in rs], "tag": tag}})
+                    print(f"  ✓ {out.name} {eng} {len(t)} 字 {time.time() - t0:.0f}s {tag}", flush=True)
                     break
-                except (SystemExit, Exception) as e:  # noqa: BLE001 —— 首选失败退另一家（auto 时）；都失败记下、继续
+                except (SystemExit, Exception) as e:  # noqa: BLE001 —— auto 时按顺序换下一家；都失败记下、继续
                     errs.append(f"{eng}：{str(e)[:200]}")
                     print(f"    ! {out.name} {errs[-1]}", flush=True)
             else:

@@ -148,14 +148,14 @@ def test_scene_key_beats_a_name_word_that_comes_after_it(tmp_path: Path) -> None
 
 def test_shot_render_quoting_a_scene_key_stays_in_the_shot(tmp_path: Path) -> None:
     root, zone, downloads = _drama(tmp_path)
-    shot = root / "ai_videos" / "d" / "5_6_分镜与prompt" / "episodes" / "ep01" / "shots" / "shot03"
-    _touch(shot / "shot03.md", b"shot")
-    _touch(downloads / "01集03镜视 参考 bg4_闪金镇 全局.mp4", b"render")
+    shot = root / "ai_videos" / "d" / "episodes" / "ep01" / "scenes" / "s1" / "shots" / "st3"
+    _touch(shot / "prompt.txt", b"shot")
+    _touch(downloads / "ep1_s1_st3 参考 bg4_闪金镇 全局.mp4", b"render")
 
     result = _run(root, downloads)
 
     assert [m["kind"] for m in result.moved] == ["shot"]
-    assert (shot / "renders" / "01集03镜视 参考 bg4_闪金镇 全局.mp4").is_file()
+    assert (shot / "renders" / "ep1_s1_st3 参考 bg4_闪金镇 全局" / "ep1_s1_st3 参考 bg4_闪金镇 全局.mp4").is_file()
 
 
 def test_glb_never_lands_in_a_scene(tmp_path: Path) -> None:

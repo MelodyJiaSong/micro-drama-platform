@@ -1,6 +1,6 @@
 """CLI entry: extract a character turntable's 3 views + audio + 2 s trim into `views/`.
 
-Same command as the 🎞 一键提取 button (`CharacterVideoCommand.extract_views`),
+Same command as the 🖼 提取三视图 button (`CharacterVideoCommand.extract_views`),
 so the timestamps and file names stay defined once
 (`libs/domain/value_objects/character_video__valueobject.py`). Used by the repo
 tool `tools/char_assets.py` to batch a whole drama.

@@ -21,6 +21,7 @@ class ChangeBody(BaseModel):
     expected: str
     source: str | None = None
     content: dict[str, Any] | None = None
+    scene: str | None = None  # compile one scene only (follow-up 259)
 
 
 @router.get("/api/episode-workflow")
@@ -34,4 +35,4 @@ def read_workflow(episode_path: str = Query(...),
 @inject
 def change_workflow(body: ChangeBody,
                     command: EpisodeWorkflowCommand = Depends(Provide[Container.episode_workflow_command])) -> EpisodeWorkflowCdto:
-    return command.change(body.episode_path, body.module, body.operation, body.expected, body.source, body.content)
+    return command.change(body.episode_path, body.module, body.operation, body.expected, body.source, body.content, body.scene)

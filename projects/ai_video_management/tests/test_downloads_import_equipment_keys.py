@@ -303,14 +303,14 @@ def test_items_are_found_by_name_at_any_depth(tmp_path: Path) -> None:
 
 def test_shot_render_quoting_an_equipment_key_stays_in_the_shot(tmp_path: Path, slot: Slot) -> None:
     root, _equipment, downloads = _drama(tmp_path, slot)
-    shot = root / "ai_videos" / "d" / "5_6_分镜与prompt" / "episodes" / "ep01" / "shots" / "shot03"
-    _touch(shot / "shot03.md", b"shot")
-    _drop(downloads, "01集03镜视 参考 e12-1_正面.mp4", b"render")
+    shot = root / "ai_videos" / "d" / "episodes" / "ep01" / "scenes" / "s1" / "shots" / "st3"
+    _touch(shot / "prompt.txt", b"shot")
+    _drop(downloads, "ep1_s1_st3 参考 e12-1_正面.mp4", b"render")
 
     result = _run(root, downloads)
 
     assert [m["kind"] for m in result.moved] == ["shot"]
-    assert (shot / "renders" / "01集03镜视 参考 e12-1_正面.mp4").is_file()
+    assert (shot / "renders" / "ep1_s1_st3 参考 e12-1_正面" / "ep1_s1_st3 参考 e12-1_正面.mp4").is_file()
 
 
 def test_flat_legacy_layout_routes_too(tmp_path: Path, slot: Slot) -> None:

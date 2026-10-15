@@ -1,5 +1,210 @@
 # Changelog — ai_video_management
 
+## Follow-up 226 — 2026-10-09 17:46:44
+
+Source: user_input/follow_ups/202610.md - section 226
+Summary: 编译器 v4 易读版式；Prompt 每镜一页、字段高亮。
+
+Auto-updated:
+- 后端 — episode_workflow 常量与编译器 v4；字幕读回兼容 v3/v4；导航树 Prompt 场次显示地点；测试（多句台词读回、场次标签）。
+- UI — EpisodeWorkflowPage 每镜一页与场次镜头列表；renderer 字段高亮正则扩充并导出、镜头编号行样式；测试 2 条。
+- 共用 pipeline — prompts-structure.md、prompts-rules.md、ai_video_workflow.md 与 v4 对齐。
+
+验证：后端 test_episode_workflow 20 通过；全量 462 通过、21 失败均为既有问题（wukong_juexing 已删、seam 插值、拼接、预演、端口），不涉及本次改动的模块。UI vitest 15 文件 101 通过（含新增 2 条），tsc 与 vite build 通过。
+
+## Follow-up 225 — 2026-10-09 15:10:38
+
+Source: user_input/follow_ups/202610.md - section 225
+Summary: 决策记录制度：规范页、流程要求、剧内导航显示。
+
+Auto-updated:
+- 共用 pipeline — modules/decisions.md（新）；SKILL.md、filming.md 要求产出；ai_video_workflow_map.json 文件清单。
+- workflow_catalog.json — 1.0.3 决策记录，总览说明。
+- 后端 — tree reader 在每集（decisions/{module}.md）与每场（scenes/sN/decisions.md）下挂记录；新增导航测试。
+- UI — 总览导航加入决策记录；测试更新。
+
+Validation: workflow_catalog --check、check_canon、sync_agent_skills、后端 53 项（1 项 symlink 跳过，含决策记录导航测试）、tsc、前端全量 99 项、生产构建通过。浏览器实测：魔兽世界 3_影视改编 › EP1 下显示「决策记录（本集）」与 10 场，点开正常渲染。
+
+## Follow-up 224 — 2026-10-09 14:31:21
+
+Source: user_input/follow_ups/202610.md - section 224
+Summary: 影视改编编号按拍摄单位从大到小：片种（幕 / 集）→ 场 → 覆盖 → 镜头。
+
+Auto-updated:
+- workflow_catalog.json — 源顺序与编号、覆盖升为一级、标题与组说明。
+- 共用 pipeline — filming.md、filming-scenes.md、filming-coverage.md、filming-formats/film/series 标题与链接。
+- 术语表位置、ai_video_workflow.md、README、e2e 期望。
+
+Validation: workflow_catalog --check（241 源）、check_canon、sync_agent_skills、后端全局工作流 34 项（1 项 symlink 跳过）、前端全量 99 项、生产构建通过；API 返回的影视改编源按 1.2.1–1.2.5.6 排序、覆盖无父页。
+
+## Follow-up 223 — 2026-10-09 14:27:46
+
+Source: user_input/follow_ups/202610.md - section 223
+Summary: 场页拆为总纲 + 好场的构成 + 覆盖。
+
+Auto-updated:
+- 共用 pipeline — filming-scene-anatomy.md（新）、filming-coverage.md（由场页拆出）、filming-scenes.md（总纲）、story-structure.md（「场」行）。
+- workflow_catalog.json — 1.2.3.1、1.2.3.2；片种 adapts 改指覆盖页。
+- 术语表 — 覆盖、长镜头位置，场的注释。
+
+Validation: workflow_catalog --check（241 源）、check_canon、sync_agent_skills、后端全局工作流 34 项（1 项 symlink 跳过）、前端全量 99 项、生产构建通过。浏览器实测：场总纲显示电影、连续剧的片种适配链接，导航含 1.2.3.1 好场的构成、1.2.3.2 覆盖、1.2.4 片种。同期第二、三份粘贴为覆盖讲义重复件，仅补《惊爆点》一例。
+
+## Follow-up 222 — 2026-10-09 14:25:56
+
+Source: user_input/follow_ups/202610.md - section 222
+Summary: 影视改编分共用（镜头、场）与片种（电影、连续剧）。
+
+Auto-updated:
+- 共用 pipeline — filming-formats.md、filming-film.md、filming-series.md；filming.md、SKILL.md 指向片种页。
+- workflow_catalog.json — 1.2.4 片种与两个子页（formats、adapts），影视改编组说明。
+- 审计 `.audit/adhoc_agents/2026-10-09/filming-formats/README.md` — 出处。
+
+Validation: workflow_catalog --check（239 源，含 adapts 小节存在性）、check_canon、sync_agent_skills、后端全局工作流 34 项（1 项 symlink 跳过）、前端全量 99 项、生产构建通过。
+
+## Follow-up 221 — 2026-10-09 14:23:03
+
+Source: user_input/follow_ups/202610.md - section 221
+Summary: 商用清理落地：Eleven Music 入口与草稿删除，可灵直连出图停用，OpenAI 与 IndexTTS 有条件可用。
+
+Auto-updated:
+- paid_services.md — Dreamina / 即梦保留（用户决定）；Eleven Music、可灵状态；新增 OpenAI 图像与 IndexTTS 行；音乐接口说明改为已删除。
+- tools — 删除 gen_music_szzl.py、gen_bgm_sk2.py；workflow_catalog.json 撤下并 --fix。
+- 剧资产 — 删除魔兽世界 music/drafts（回执与 mp3 哈希存审计）。
+- 管理应用 — actor__route 两个出图接口 403；ActorPoolGenerator 可灵选项停用、提示改 Dreamina；ActorGrid 按钮说明；新增 tests/test_actor_kling_blocked.py。
+
+Validation: check_canon、workflow_catalog --check（236 源，补登记 indextts_dub.py）、后端 actor/global/workflow/boot 60 项（1 项 symlink 跳过，含新增 Kling 拦截测试）、tsc、前端全量 99 项、生产构建通过。
+
+## Follow-up 220 — 2026-10-09 13:57:32
+
+Source: user_input/follow_ups/202610.md - section 220
+Summary: 商业用途闸门：条款不允许或不明确的工具不用；逐工具结论入 paid_services.md。
+
+Auto-updated:
+- paid_services.md — 「商业用途（全局必经）」表与规则。
+- CONVENTIONS.md — 外部服务调用第 1 步核对商业用途。
+- 审计 `.audit/adhoc_agents/2026-10-09/commercial-use-terms/README.md` — 条款原文要点与出处。
+
+Validation: check_canon、sync_agent_skills --check。Dreamina / 即梦待用户决定，未改动其调用入口。
+
+## Follow-up 219 — 2026-10-09 13:51:52
+
+Source: user_input/follow_ups/202610.md - section 219
+Summary: 1.0 总览（工作流全景 + 术语表），层级高于模块。
+
+Auto-updated:
+- `.agents/references/project/ai_video_workflow_map.json` — 新唯一源；SKILL、CONVENTIONS、ai_video_workflow.md 指向。
+- tools/workflow_catalog.py — overview 组编号为类别号 .0；工具测试新增。
+- 全局工作流 reader — 编号校验允许第二段为 0；后端仓库测试排除总览组的连续性检查。
+- workflow_catalog.json — glossary 组改为 overview（1.0），登记工作流全景源。
+- UI — WorkflowMapPage、OverviewTabs、lib/workflowMap.ts、路由与导航（总览为分组行，两页带源编号）；术语表页换总览抬头；测试 test/workflow-map.test.tsx 与导航测试更新。
+- README — 总览一节。
+
+Validation: workflow_catalog --check（11 组 / 236 源）、工具测试 5 项、sync_agent_skills、check_canon、后端 83 项（1 项 symlink 跳过；wukong_juexing 既有失败与本次无关）、tsc、前端全量 99 项、生产构建通过。浏览器实测：导航 1.0 总览分组无重复 key、两页切换、全景图蛇形布局与点选详情、模块一览表。
+
+## Follow-up 218 — 2026-10-09 13:34:15
+
+Source: user_input/follow_ups/202610.md - section 218
+Summary: 三模块扩为六模块，后期三个为占位；出片并入 Prompt 模块。
+
+Auto-updated:
+- 共用 pipeline — edit.md、sound.md、delivery.md、prompts-generate.md；prompts.md、filming.md、SKILL.md（description 变更，已重跑 sync）。
+- workflow_catalog.json — 新组 1.4–1.6，Prompt 组改名，登记出片页与被引用的 stems.py、grade_match.py；--fix 重排。
+- 后端 — PLACEHOLDER_STAGES、STAGE_LABELS、导航标签；tree reader 加占位 stage；测试覆盖。
+- UI — StageId、模块卡片待设计标记、剧内占位页；测试改为局部 mock 并新增占位页用例；e2e 标签更新。
+- AGENTS、CONVENTIONS、ai_video_workflow.md、README（项目、剧）、术语表所属模块。
+
+Validation: sync_agent_skills 重跑并 --check、workflow_catalog --check（11 组 / 235 源）、check_canon、后端 global/workflow/boot/tree 83 项通过（1 项 symlink 跳过；test_tree_walker_consumer_walk 依赖已在 05d24b4a 删除的 wukong_juexing，既有失败，与本次无关）、tsc、前端全量 96 项、生产构建通过。
+
+## Follow-up 217 — 2026-10-09 12:33:15
+
+Source: user_input/follow_ups/202610.md - section 217
+Summary: 术语表（中英定义、关系、时间轴）与 React Flow 可视化；场页加覆盖。
+
+Auto-updated:
+- `.agents/references/project/ai_video_glossary.json` — 新唯一源；SKILL、ai_video_workflow.md 指向它。
+- 共用 pipeline — filming-scenes.md 加「覆盖」（覆盖谱系、对话场对照、本剧用法）。
+- workflow_catalog.json — 新组 1.5 术语表及源数据。
+- UI — GlossaryPage / GlossaryGraph / GlossaryTimeline、lib/glossary.ts、路由与导航；依赖 @xyflow/react 12.11.6（精确版本）。
+- 测试 — test/glossary.test.tsx（数据完整性、结构结论、三视图交互）。
+- README — 术语表一节。
+
+Validation: workflow_catalog --check（8 组 / 229 源）、sync_agent_skills、check_canon、后端 global/workflow/boot 42 项（1 项 symlink 跳过）、tsc、前端全量 95 项（含 glossary 7 项）、生产构建通过。浏览器实测：关系图选中高亮与基数标注、关系类型筛选、三条时间轴、详情栏来源链接；术语源数据页内容未被脱敏误伤。
+
+## Follow-up 216 — 2026-10-09 12:12:00
+
+Source: user_input/follow_ups/202610.md - section 216
+Summary: 第二类改名「系统与代码」并分三组，代码与配置迁出 AI Video；影视改编分镜头与场。
+
+Auto-updated:
+- workflow_catalog.json — 类别与组、135 份源迁移、新增 filming-scenes.md、镜头总纲改名；--fix 重排编号。
+- 共用 pipeline — filming-scenes.md；filming-shots.md 标题改「镜头」；filming.md、prompts.md 链接。
+- AGENTS.md、CONVENTIONS.md、ai_video_workflow.md、README、final_specs — 分类名称与说明。
+- UI — 备用导航与模块页链接文字；vitest 与 e2e 期望值。
+
+Validation: workflow_catalog --check（7 组 / 228 源）、sync_agent_skills、check_canon、后端 global/workflow/boot 42 项（1 项 symlink 跳过）、tsc、前端全量 88 项、生产构建通过。
+
+## Follow-up 215 — 2026-10-09 12:04:44
+
+Source: user_input/follow_ups/202610.md - section 215
+Summary: 镜头设计新增运镜（跟拍）子页，总纲加运镜维度。
+
+Auto-updated:
+- 共用 pipeline — 新增 filming-movement.md；filming-shots.md 加运镜维度、选镜顺序与 camera 写法。
+- workflow_catalog.json — 1.2.2.6 运镜。
+- ai_video_workflow.md — 子页清单。
+
+Validation: workflow_catalog --check、后端全局工作流测试、sync_agent_skills、check_canon。
+
+## Follow-up 214 — 2026-10-08 20:52:32
+
+Source: user_input/follow_ups/202610.md - section 214
+Summary: Prompt 编译基础版文档：总纲 + Prompt 结构 + 固定规则，与编译器 v3 一致。
+
+Auto-updated:
+- 共用 pipeline — prompts.md 改写为总纲；新增 prompts-structure.md、prompts-rules.md。
+- workflow_catalog.json — 1.3.1 改名「Prompt 编译」，子页 1.3.1.1–2。
+- ai_video_workflow.md — 记录基础版范围。
+
+Validation: workflow_catalog --check、后端全局工作流测试、sync_agent_skills、check_canon；示例 prompt 由编译器在内存中对 EP1 冷开场编译得到，未写入 prompts.json。
+
+## Follow-up 213 — 2026-10-08 20:37:26
+
+Source: user_input/follow_ups/202610.md - section 213
+Summary: 影视改编镜头知识拆为镜头设计总纲与五个子页；旧知识页改为重定向。
+
+Auto-updated:
+- 共用 pipeline — 新增 filming-shots / functions / sizes / framing / angles / focus；filming.md 指向镜头设计；删除 ai_video_shot_sizes.md（内容已并入）。
+- workflow_catalog.json — 1.2.2 镜头设计及 1.2.2.1–5，生产键顺延为 1.2.3。
+- UI — FilmingKnowledgePage 改为重定向；备用导航节点改名并指向新源；模块页链接改名；删除专属样式；e2e 用例改为新导航。
+- README、final_specs、ai_video_workflow.md — 同步。
+
+Validation: workflow_catalog --check（224 源）、后端 global/workflow/boot 42 项（1 项 symlink 跳过）、前端全量 88 项、tsc 与生产构建、sync_agent_skills、check_canon 通过。浏览器实测：旧网址重定向到 1.2.2 镜头设计，导航嵌套五个子页，景别页表格正常。e2e 用例已改但本地无 Playwright 配置，未运行。
+
+## Follow-up 212 — 2026-10-08 19:30:21
+
+Source: user_input/follow_ups/202610.md - section 212
+Summary: 去掉片种切换器、片种说明行和导航片种标签/变灰；片种适配链接保留并列出全部片种。
+
+Auto-updated:
+- UI — GlobalWorkflowContext 不再保存片种选择；导航、Sidebar、样式回到 follow-up 211 前；源页面只保留「片种适配」。
+- ai_video_workflow.md、项目 README — 同步说明。
+
+Validation: tsc、前端全量 88 项通过。
+
+## Follow-up 211 — 2026-10-08 19:12:52
+
+Source: user_input/follow_ups/202610.md - section 211
+Summary: 故事创作分共用原则与片种（电影、连续剧），UI 加片种标签、切换与适配反向链接。
+
+Auto-updated:
+- 共用 pipeline 故事模块文档 — story-formats 改为电影/连续剧对比入口；电影、连续剧页加小节标题；三幕页不再写连续剧专属规则；SKILL 按 workflow.json `format` 读片种页。
+- workflow_catalog.json 与 tools/workflow_catalog.py — `formats` 声明、source `formats`/`adapts`；连续剧迁到 1.1.2.2，新登记 1.1.2 片种、1.1.2.1 电影；--check 校验片种与小节引用。
+- 全局工作流 reader/DTO/query — 透传 formats 与 adapts。
+- UI — 导航片种标签与变灰、源页面片种切换、片种说明、片种适配反向链接、标题锚点。
+- ai_video_workflow.md、项目 README — 记录分层与元数据约定。
+
+Validation: workflow_catalog --check（5 组 / 218 源）、tools 目录测试 4 项、后端 global/workflow/boot 42 项（1 项 symlink 跳过）、前端全量 88 项、生产构建、sync_agent_skills --check、check_canon 通过。浏览器实测：切换片种后不适用页变灰、标签显示、片种适配按片种过滤、链接跳到连续剧「三幕放在哪一层」。未改任何剧的 workflow.json。
+
 ## Follow-up 197 — 2026-10-05 10:53:08
 
 Source: user_input/follow_ups/202610.md - section 197
@@ -5377,3 +5582,479 @@ Auto-updated: workflow_catalog.json、story_guidelines.md、story-runs.md、stor
 No conflicts found in: interview/qa.md、findings/dossier.md及相关angle；既有收费授权、读取安全边界、规则ID和源编号；剧集故事、选用记录、profile与历史run冻结输入。
 
 Validation: 前端14文件104项通过；后端13通过/1项Windows符号链接权限跳过；生产/开发各4项浏览器检查通过，涵盖12主题、唯一高亮、深链接/刷新、原文回跳及390px无页面溢出。构建、25 skills/50适配入口、canon、引用/编号/规则ID/剧集JSON指纹及本次空白检查通过。一次生产请求与构建并发时返回404，构建完成后专项复验通过；测试脚本的导入、扫描和导航问题已修正后复验。大bundle及React Router未来选项提示仍在。Evidence: `.audit/adhoc_agents/2026-10-06/story-content-execution/`。
+
+
+## Follow-up 201 — 2026-10-07 17:52:40
+
+Source: user_input/follow_ups/202610.md - section 201
+Summary: 解散 1.4_全局创作规则，8 个源迁入 1.1/1.3/1.6/2.1 并按目标组追加编号；故事导航按源所属分区挂载。
+
+Auto-updated: workflow_catalog.json（组、源、编号、discover、组描述）；final_specs/spec.md（分类列表）；ai_video_workflow.md（入口说明与组解散编号规则）；apps/ui/src/lib/storyWorkflow.ts 及 test/global-workflow.test.ts；项目 README。
+
+No conflicts found in: 其他组号与源编号（未重排）；story_navigation 主题；历史 run 冻结输入；读取安全边界。
+
+Validation: 后端 test_global_workflow／test_story_runs／test_episode_workflow 64 通过、2 跳过；前端 14 文件 105 项通过，tsc 通过；12 个主题章节提取及 e2e 内容断言用脚本核对通过。Playwright 需本地 8766／5174 服务，本次未运行。
+
+
+## Follow-up 202 — 2026-10-07 18:01:14
+
+Source: user_input/follow_ups/202610.md - section 202
+Summary: 1.5 与 1.7 并入 1.6「制作、服务与资源」，24 个编号按目标组追加；固定入口随组迁移。
+
+Auto-updated: workflow_catalog.json（组、源、编号、discover、1.6 标题与描述）；apps/ui/src/lib/workflowData.ts 与 test/global-workflow.test.ts；ai_video_workflow.md；项目 README；final_specs/spec.md。
+
+No conflicts found in: 1.1–1.3、2.1 编号；story_navigation；收费服务审计与读取安全边界；历史 run 冻结输入。
+
+Validation: 后端目录／story run／三模块／请求日志 67 通过、2 跳过；前端 14 文件 105 项通过，tsc 通过。Playwright 需本地服务，本次未运行。
+
+
+## Follow-up 203 — 2026-10-07 18:28:53
+
+Source: user_input/follow_ups/202610.md - section 203
+Summary: 工作流编号改为连续且按编号显示；新增整理/检查工具与回归测试。
+
+Auto-updated: workflow_catalog.json（组 1.6→1.4、169 源改号、登记 tools/workflow_catalog.py）；libs/infrastructure/readers/global_workflow__reader.py（按编号排序）；apps/ui/src/lib/workflowData.ts、storyWorkflow.ts、test/global-workflow.test.ts、e2e/global_workflow.spec.ts（编排入口新标题）；tests/test_global_workflow.py；tools/workflow_catalog.py 与 tools/tests/test_workflow_catalog.py；.claude/settings.json Stop hook；AGENTS.md、CONVENTIONS.md、ai_video_workflow.md、pipeline SKILL.md；README、final_specs/spec.md、validation/acceptance_criteria.md、validation/strategy.md。
+
+No conflicts found in: 源身份与深链接（source_id 不变）；历史 run（不存编号，展示为当前目录）；story_navigation 主题 ID；读取安全边界。
+
+Validation: tools 126 通过；后端目录／story run／三模块／请求日志 67 通过、2 跳过；前端 14 文件 106 项通过，tsc 与生产构建通过；`workflow_catalog.py --check` 5 组 / 216 源连续；skills／canon 检查通过。Playwright 需本地服务，本次未运行。
+
+
+## Follow-up 204 — 2026-10-07 19:17:00
+
+Source: user_input/follow_ups/202610.md - section 204
+Summary: 故事导航与页面标题统一为目录编号（1.1.2.1 等）；分区即源文件。
+
+Auto-updated: workflow_catalog.json（story 源、标题、编号、story_navigation、story_runs.py 移入 production）；apps/ui/src/lib/storyWorkflow.ts、components/{GlobalWorkflowPage,WorkflowPage,StoryWorkflowOverview}.tsx；test/global-workflow.test.ts；e2e/global_workflow.spec.ts；README；final_specs/spec.md；validation/{acceptance_criteria,strategy}.md。
+
+No conflicts found in: source_id 深链接（故事内容路径变更，历史 run 未引用旧路径）；其他组编号；读取安全边界。
+
+Validation: tools 126、后端 67 通过／2 跳过、前端 106 通过，tsc 与构建通过；workflow_catalog --check 连续；12 主题章节、R01–R15／T01–T05 顺序脚本核对通过。Playwright 需本地服务，本次未运行。
+
+
+## Follow-up 205 — 2026-10-07 19:31:04
+
+Source: user_input/follow_ups/202610.md - section 205
+Summary: 故事模块去掉主题层，三份文档平铺、单页整篇显示。
+
+Auto-updated: workflow_catalog.json（删除 story_navigation）；apps/ui/src/lib/{workflowData,globalWorkflow}.ts；components/{GlobalWorkflowPage,WorkflowPage}.tsx 与 GlobalWorkflowPage.css；删除 lib/storyWorkflow.ts、components/StoryWorkflowOverview.tsx；test/global-workflow.test.ts；e2e/global_workflow.spec.ts；ai_video_workflow.md；README；final_specs/spec.md；validation/acceptance_criteria.md。
+
+No conflicts found in: 源编号与 source_id；历史 run；读取安全边界。
+
+Validation: tools 126、后端 67 通过／2 跳过、前端 102 通过，tsc 与构建通过；目录编号连续。Playwright 需本地服务，本次未运行。
+
+
+## Follow-up 206 — 2026-10-07 22:43:06
+
+Source: user_input/follow_ups/202610.md - section 206
+Summary: 故事 run 机制整体移除；覆盖核对去掉历史 run 关联；故事导航改为每集直达 story.json。
+
+Auto-updated: apps/api（container、routes、app_factory）；libs（global_workflow query/reader、tree__reader；删除 story_* 模块 18 个）；apps/story_run/；apps/ui（App、Sidebar、EpisodeWorkflowPage、GlobalWorkflowPage、types、globalWorkflow；删除 12 个 story run 组件与 2 个 lib）；tests 与 e2e；README；final_specs/spec.md；validation/acceptance_criteria.md。
+
+No conflicts found in: 影视改编／Prompt 编译、writers room（旧系统，保留）、请求日志、全局目录其余组。
+
+Validation: tools 126、spec_driven 276、后端 457 通过（21 项既有失败不变）、前端 87 通过，tsc 与构建通过；目录 5 组 / 211 源编号连续。Playwright 需本地服务，本次未运行。
+
+
+## Follow-up 207 — 2026-10-08 09:33:54
+
+Source: user_input/follow_ups/202610.md - section 207
+Summary: 工作流故事创作页改为空白。
+
+Auto-updated: apps/ui/src/components/WorkflowPage.tsx；e2e/episode_workflow.spec.ts；workflow_catalog.json（story 组描述）。
+
+Validation: 前端 87 通过，tsc 与构建通过；目录编号连续。
+
+
+## Follow-up 208 — 2026-10-08 09:43:25
+
+Source: user_input/follow_ups/202610.md - section 208
+Summary: 去掉源页面与总览上的历史 run 提示。
+
+Auto-updated: apps/ui/src/components/GlobalWorkflowPage.tsx。
+
+Validation: 前端 87 通过，tsc 与构建通过。
+
+
+## Follow-up 209 — 2026-10-08 09:44:19
+
+Source: user_input/follow_ups/202610.md - section 209
+Summary: 源页面去掉只读说明与来源版本信息框。
+
+Auto-updated: apps/ui/src/components/GlobalWorkflowPage.tsx、GlobalWorkflowPage.css。
+
+Validation: 前端 87 通过，tsc 与构建通过。
+
+
+## Follow-up 210 — 2026-10-08 09:51:03
+
+Source: user_input/follow_ups/202610.md - section 210
+Summary: 工作流目录支持子页嵌套。
+
+Auto-updated: libs/infrastructure/daos/global_workflow__dao.py、readers/global_workflow__reader.py；apps/ui/src/lib/{globalWorkflow,workflowData}.ts；test/global-workflow.test.ts；tools/workflow_catalog.py 与 tools/tests/test_workflow_catalog.py。
+
+Validation: tools 127、后端目录/导航 21 通过／1 跳过、前端 87 通过，tsc 与构建通过；目录 5 组 / 214 源编号连续。
+
+
+## Follow-up 227 — 2026-10-10 18:24:02
+
+Source: user_input/follow_ups/202610.md - section 227
+Summary: Prompt 带参考（编译器 v5）：分镜每镜加 cast / blocking / beats / lighting；编译前读取每镜参考（overhead 图或复杂镜 previz 视频、人物正面图、场景图、说话人声样），按上传顺序写进 prompt 与 refs；参考缺失或超 2000 字拒绝编译；UI 显示新字段与参考清单。
+
+Auto-updated: libs/common/episode_workflow.py；libs/domain/entities/episode_workflow__entity.py；libs/domain/value_objects/shot_materials__valueobject.py（新）；libs/infrastructure/readers/shot_materials__reader.py（新）；libs/application/commands/episode_workflow__command.py；apps/api/container.py；apps/ui/src/lib/episodeWorkflow.ts、components/EpisodeWorkflowPage.tsx；tests/test_episode_workflow.py。
+
+Validation: 工作流相关后端 41 通过／1 跳过；全量后端 471 通过、21 失败均在未改动的测试文件（seam 插帧、wukong 剧缺失、路由安全与端口）；前端 101 通过，tsc 通过。
+
+
+## Follow-up 228 — 2026-10-10 19:26:16
+
+Source: user_input/follow_ups/202610.md - section 228
+Summary: 编译器 v6：「参考：」一行；每个出场人物的三视图与声样必传；背景必绑定；人物外观与场景描写取自资产卡的 Shot prompt 段；加本场目的、口型、负面词；上限 5000 字。
+
+Auto-updated: libs/common/episode_workflow.py；libs/domain/entities/episode_workflow__entity.py；libs/domain/value_objects/shot_materials__valueobject.py；libs/infrastructure/readers/shot_materials__reader.py；tests/test_episode_workflow.py。
+
+Validation: 工作流相关后端 43 通过／1 跳过；ep01 82 镜编译 1128–2742 字；资料包 82 个 check 全部 ok，源文件变更与 overhead 变更的更新 / 失效实测通过。
+
+
+## Follow-up 229 — 2026-10-10 21:23:01
+
+Source: user_input/follow_ups/202610.md - section 229
+Summary: 编译器 v7（参考行 `key_id=>@` 占位、正文按 key_id 指认）；管理 UI 每镜显示资料包状态与文件。
+
+Auto-updated: libs/common/episode_workflow.py；libs/domain/entities/episode_workflow__entity.py；libs/domain/value_objects/shot_materials__valueobject.py；libs/infrastructure/readers/shot_materials__reader.py、shot_pack__reader.py（新）；libs/application/queries/episode_workflow__query.py；libs/application/dtos/episode_workflow__dto.py；apps/ui/src/lib/episodeWorkflow.ts、components/EpisodeWorkflowPage.tsx、EpisodeWorkflowPage.css；tests/test_episode_workflow.py；apps/ui/test/episode-scenes.test.tsx。
+
+Validation: 工作流相关后端 43 通过／1 跳过；前端 101 通过、tsc 通过；API 返回 82 个资料包 ok；UI 资料包面板在运行中的应用里核对。
+
+
+## Follow-up 230 — 2026-10-10 23:08:40
+
+Source: user_input/follow_ups/202610.md - section 230
+Summary: 生成记录：六模块剧的下载导入按条建 renders 子目录；管理 UI 每镜显示生成记录（视频、参数、审核）。
+
+Auto-updated: libs/infrastructure/writers/downloads__writer.py；libs/infrastructure/readers/shot_renders__reader.py（新）；libs/application/queries/episode_workflow__query.py；libs/application/dtos/episode_workflow__dto.py；apps/ui/src/lib/episodeWorkflow.ts、components/EpisodeWorkflowPage.tsx、EpisodeWorkflowPage.css；tests/test_episode_workflow.py、tests/test_downloads_import_shots.py。
+
+Validation: 导入 / 选条 / 工作流相关后端 164 通过（previz_render 1 个旧失败不变）；前端 101 通过、tsc 通过；运行中的后端未自动重载，需重启后 UI 才显示生成记录。
+
+
+## Follow-up 231 — 2026-10-11 00:05:00
+
+Source: user_input/follow_ups/202610.md - section 231
+Summary: 编译器 v8：镜头可选 props，道具锚点图进参考行并带「道具：」描述行；管理 UI 分镜页显示道具。
+
+Auto-updated: libs/common/episode_workflow.py；libs/domain/entities/episode_workflow__entity.py；libs/domain/value_objects/shot_materials__valueobject.py；libs/infrastructure/readers/shot_materials__reader.py；apps/ui/src/lib/episodeWorkflow.ts、components/EpisodeWorkflowPage.tsx；tests/test_episode_workflow.py。
+
+Validation: 工作流与导入相关后端 51 通过；前端 episode-scenes 7 通过、tsc 通过。
+Tools (repo, same follow-up): tools/shot_pack.py（参考图宽高比补边、编译器版本单一来源）；tools/shot_take.py（提交快照、下载 / 上传重试）；tools/gen_bg_assets.py（下载失败不重提）；tools/gen_props_szzl.py（workflow.json 回退）；tools/gen_props_szzl_ep01b.py（新）。
+
+## Follow-up 233 — 2026-10-11 15:01:18
+Source: user_input/follow_ups/202610.md - section 233
+Summary: 删除旧流程（clean start）：旧 skills、旧参考文档、约 165 个旧工具、管理应用 21 个旧功能与 ai_video_eval；旧剧与旧数据库标 OBSOLETE.md，应用显示「已过时」。
+
+Auto-updated:
+- `final_specs/spec.md` — 已删功能的章节标「已删除，follow-up 233」，末尾新增「删除旧流程功能」一节。
+- `projects/ai_video_management/` — 路由、容器、错误处理、树读取、Downloads 导入、Reader / Sidebar / DramaPage / SiblingMedia / Home、api.ts、types.ts、styles.css、README；新增 ObsoleteBadge 与测试 test_tree_obsolete.py、test_sandbox_ai_videos_only.py、drama-page-obsolete.test.tsx。
+- 仓库级：AGENTS.md、CONVENTIONS.md、README.md、.gitignore、.claude/settings.json、.mcp.json、.agents/skill-aliases.json、.agents/references/project/ 下 ai_video_workflow.md、ai_video_workflow_map.json、paid_services.md、general.md、development.md、workflow_catalog.json，ai-videos-pipeline 的 SKILL.md / modules / resources/assets.md，ai-videos-char-assets，tools/**，projects/spec_driven（regen 提示与测试夹具）。
+- `user_input/revised_prompt.md` — 233 摘要补写。
+
+Validation: 管理应用后端 283 通过 / 1 跳过（删前 22 失败）；前端 vitest 60 通过、tsc 通过、vite build 通过；tools 79 通过；spec_driven 276 通过 / 2 跳过；workflow_catalog --check 11 组 / 139 源编号连续；sync_agent_skills --check 3 / 6；shot_pack check ok 82。运行中的后端需重启才会去掉已删接口。
+
+## Follow-up 234 — 2026-10-11 15:01:18
+Source: user_input/follow_ups/202610.md - section 234
+Summary: 测试体系原则：不追求 100%，同一镜重试到上限即搁置并与用户共同讨论，2/8 定律。
+
+Auto-updated:
+- `.agents/skills/ai-videos-pipeline/SKILL.md` — 「不追求 100%」原则一行。
+- `.agents/skills/ai-videos-pipeline/modules/prompts-generate.md` — 提交规则增「重试与搁置」。
+
+## Follow-up 235 — 2026-10-11 15:01:18
+Source: user_input/follow_ups/202610.md - section 235
+Summary: 2/8 决定做什么、不降低做到什么程度：纳入范围的要高质量、接近 100% 确定，每次改进用测试固定。
+
+Auto-updated:
+- `.agents/skills/ai-videos-pipeline/SKILL.md` — 原则行补一句。
+
+## Follow-up 232 — 2026-10-11 15:59:46
+Source: user_input/follow_ups/202610.md - section 232
+Summary: ep01 s2 五个成片问题的根因与审查缺口分析；工作流测试体系提案（待用户批准）。
+
+Auto-updated:
+- `findings/ep01_s2_issue_rca.md` — 新增：逐问题根因（经对抗复核修正）、共同根因、审查缺口、全集同类扫描、修复方向；盲测数字按干净复测更正。
+- `findings/test_system_proposal.md` — 新增：测试体系提案（分层、2/8 分档、testlab/ 目录与格式、运行入口、5 个缺陷逐个走一遍、检查器自测、改进闭环、搁置机制、分阶段落地、待确认事项）。
+- `user_input/revised_prompt.md` — 232 摘要补写。
+- 剧侧（specs/ai_video/shengji_zhilu follow-up 030）：ep01 decisions/story.md、decisions/filming.md、scenes/s2/decisions.md 记录看片反馈与修改请求。
+
+No conflicts found in: final_specs/spec.md（提案未批准，暂不改规格）。
+
+## Follow-up 239 — 2026-10-11 16:33:24
+Source: user_input/follow_ups/202610.md - section 239
+Summary: 删除旧的独立软件项目（drama_reverse_engine、jimeng_web_bridge）、index-tts 与 .venv-post、三个用户级旧 skill（约 26.4 GB）；管理应用的 Origin/Host 防护扩到所有写请求，开发代理只改写开发页自己的 Origin；删除无人使用的依赖。
+
+Auto-updated:
+- `projects/ai_video_management/` — libs/common/origin.py（SAFE_METHODS / is_guarded，规则与 CSP 唯一来源）；libs/infrastructure/middleware/origin_host__middleware.py；apps/ui/devProxyOrigin.ts（新）、vite.config.ts；删 apps/ui/vite.config.js；tests/test_api_write_origin_guard.py（新）、test_episode_workflow.py、test_runtime_port.py、test_api_security_three_shapes.py；apps/ui/test/dev-proxy-origin.test.ts（新）；pyproject.toml、requirements.txt、uv.lock、apps/ui/package.json、package-lock.json；README。
+- `validation/security.md` — SEC-ORIGIN-HOST 目标改为「除 GET/HEAD/OPTIONS 外全部写请求」；写明开发代理只改写开发页自己的 Origin；补 239 覆盖说明；不带 Origin 的写请求仍 403（-01）。
+- 仓库级：start.ps1、.gitignore、.agents/references/project/workflow_catalog.json（11 组 / 138 源）、specs/development/jimeng_web_bridge/README.md（删除说明）。
+- `user_input/revised_prompt.md` — 239 摘要补写。
+
+Validation: 管理应用后端 325 通过 / 1 跳过；前端 vitest 68 通过、tsc 通过、vite build 通过；变异检查（把防护改成恒放行后 23 条外站 / 无 Origin 用例失败，19 条合法与读请求用例照常通过）；浏览器实测跨站 8 次写请求（直连与经开发代理各半）全部 403；重启后的 8766 实测：无 Origin / 外站 Origin 写请求 403，自家 Origin 与经 5174 代理的开发页 Origin 放行（空 body 422）；tools 86 通过；workflow_catalog --check 11 组 / 138 源；sync_agent_skills --check 4 / 8。Playwright e2e 未跑：本机缺项目所需的浏览器版本，需要先 `npx playwright install`。
+
+## Follow-up 240 — 2026-10-11 16:53:17
+Source: user_input/follow_ups/202610.md - section 240
+Summary: 摄影课「Directing the Eye」整理为影视改编 1.2.5.7「注意力引导」，镜头总纲、声音与音乐、资产各加一行指针，不新增分镜字段。
+
+Auto-updated:
+- `.agents/skills/ai-videos-pipeline/modules/filming-attention.md` — 新页：手段表（构图、调度、焦点、运镜、美术、光、声音）、写进分镜、应该与不应该。
+- `.agents/skills/ai-videos-pipeline/modules/filming-shots.md` — 维度表加「注意力」行；选镜顺序补一句。
+- `.agents/skills/ai-videos-pipeline/modules/sound.md`、`resources/assets.md` — 各加一行指针。
+- `.agents/references/project/ai_video_workflow.md` — 1.2.5 子页数改为七个。
+- `.agents/references/project/workflow_catalog.json` — 登记新源 1.2.5.7（11 组 / 139 源）。
+- `.audit/adhoc_agents/2026-10-11/directing-attention/source.md` — 课程出处与时间码。
+
+Validation: workflow_catalog --fix / --check 11 组 / 139 源，编号连续；test_global_workflow.py 12 通过 / 1 跳过；运行中的 8766 返回新源编号 1.2.5.7，覆盖核对无引用问题（4 条可选用户配置未配置，与本次无关）。
+
+No conflicts found in: final_specs/spec.md（只改共用指南，不改应用规格）。
+
+## Follow-up 241 — 2026-10-11 17:16:43
+Source: user_input/follow_ups/202610.md - section 241
+Summary: 编剧访谈整理为故事创作 1.1.1.5「观众」（一切相连、戏剧顺序、观众是主角），故事结构、好场的构成、精剪各加一行指针。
+
+Auto-updated:
+- `.agents/skills/ai-videos-pipeline/modules/story-audience.md` — 新页：三条原则表、《群鸟》阁楼片例、落到下游。
+- `.agents/skills/ai-videos-pipeline/modules/story-structure.md` — 要素表加「观众」行。
+- `.agents/skills/ai-videos-pipeline/modules/filming-scene-anatomy.md`、`edit-fine.md` — 各加一句指针（兑现前留停顿）。
+- `.agents/references/project/ai_video_workflow.md` — 1.1.1 共用原则列表加「观众」。
+- `.agents/references/project/workflow_catalog.json` — 登记新源 1.1.1.5（11 组 / 140 源）。
+- `.audit/adhoc_agents/2026-10-11/screenwriting-audience/source.md` — 访谈要点与时间码。
+
+Validation: workflow_catalog --fix / --check 11 组 / 140 源，编号连续；test_global_workflow.py 通过；运行中的 8766 返回新源编号 1.1.1.5，覆盖核对无引用问题。
+
+No conflicts found in: final_specs/spec.md（只改共用指南，不改应用规格）。
+
+## Follow-up 242 — 2026-10-11 17:21:12
+Source: user_input/follow_ups/202610.md - section 242
+Summary: 「观众是主角」升为六模块第一原则；观众页加「观众轨」做法，决策记录集级与场级都要写观众。
+
+Auto-updated:
+- `.agents/skills/ai-videos-pipeline/SKILL.md` — 模块表前加「第一原则：观众是主角」。
+- `.agents/skills/ai-videos-pipeline/modules/story-structure.md` — 开头加一句总则。
+- `.agents/skills/ai-videos-pipeline/modules/story-audience.md` — 开头引言、「观众轨」小节，原则表把观众是主角挪到第一行。
+- `.agents/skills/ai-videos-pipeline/modules/decisions.md` — 集级故事记录重点加观众轨；场级记录加「观众」小节。
+
+Validation: workflow_catalog --check 11 组 / 140 源；test_global_workflow.py 12 通过 / 1 跳过；sync_agent_skills --check 4 / 8。
+
+No conflicts found in: final_specs/spec.md（只改共用指南）。
+
+## Follow-up 243 — 2026-10-11 17:31:11
+Source: user_input/follow_ups/202610.md - section 243
+Summary: 观众页加「先定体验，再找事件」（体验地图 → 求量 → 选事件 → 排顺序）；故事结构「构思」与集级决策记录同步。
+
+Auto-updated:
+- `.agents/skills/ai-videos-pipeline/modules/story-audience.md` — 新小节、两个片例；落到下游与出处更新。
+- `.agents/skills/ai-videos-pipeline/modules/story-structure.md` — 「构思」行改为先定观众体验，大纲放最后。
+- `.agents/skills/ai-videos-pipeline/modules/decisions.md` — 集级故事记录加体验地图与选事件理由。
+- `.audit/adhoc_agents/2026-10-11/plot-casting/source.md` — 访谈要点与时间码。
+
+Validation: workflow_catalog --check 11 组 / 140 源；test_global_workflow.py 12 通过 / 1 跳过；sync_agent_skills --check 4 / 8；覆盖核对无引用问题。
+
+No conflicts found in: final_specs/spec.md（只改共用指南）。
+
+## Follow-up 244 — 2026-10-11 17:49:17
+Source: user_input/follow_ups/202610.md - section 244
+Summary: 剧级一句话观众体验（README「观众体验」，用户定）成为故事创作必备输入；集级体验写在集级故事决策记录开头，边拍边加；全景图同步。
+
+Auto-updated:
+- `.agents/skills/ai-videos-pipeline/modules/story-audience.md` — 「先定体验，再找事件」前加剧级与集级体验规则；体验地图从剧级往下。
+- `.agents/skills/ai-videos-pipeline/SKILL.md` — 故事创作先读剧 README 的「观众体验」，缺了先问。
+- `.agents/skills/ai-videos-pipeline/modules/decisions.md` — 集级故事记录开头写本集体验及对剧级体验的服务。
+- `.agents/references/project/ai_video_workflow_map.json` — 故事创作步骤与输入、影视改编镜头步骤更新。
+
+Validation: workflow_catalog --check 11 组 / 140 源；管理应用 workflow 相关测试 51 通过 / 1 跳过；sync_agent_skills --check 4 / 8；覆盖核对无引用问题。
+
+No conflicts found in: final_specs/spec.md（只改共用指南与全景数据）。剧侧（shengji_zhilu）README 未改，等用户定剧级体验。
+
+## Follow-up 245 — 2026-10-11 18:10:02
+Source: user_input/follow_ups/202610.md - section 245
+Summary: 编译器 v9：防分身只约束人物；镜内有动物（m 键）时按「画面」写的数量出现，负面词改「同一人物出现两次」。
+
+Auto-updated:
+- `projects/ai_video_management/libs/common/episode_workflow.py` — COMPILER_VERSION 9；ANTI_TWIN_RULE 改「人物」；新增 ANIMAL_COUNT_RULE；BASE_NEGATIVES 改「同一人物出现两次」。
+- `projects/ai_video_management/libs/domain/entities/episode_workflow__entity.py` — 「要求」行按镜内 m 键动物追加 ANIMAL_COUNT_RULE。
+- `projects/ai_video_management/tests/test_episode_workflow.py` — 新增 test_animals_may_appear_several_times_people_only_once；原「要求」行断言改为「人物」。
+- `final_specs/spec.md` — 编译一节补 v9。
+- `.agents/skills/ai-videos-pipeline/modules/prompts-rules.md`、`prompts-structure.md` — 防分身固定句与样例同步。
+- `user_input/revised_prompt.md` — 245 追加。
+
+Validation: test_episode_workflow.py 36 通过（新增 1 条先红后绿）；后端全量 326 通过 / 1 跳过。
+
+## Follow-up 251 — 2026-10-11 19:56:58
+Source: user_input/follow_ups/202610.md - section 251（原写作 245，与并行会话撞号后改号）
+Summary: 剧级一句话体验保持抽象，不点名人物、不写情节。
+
+Auto-updated:
+- `.agents/skills/ai-videos-pipeline/modules/story-audience.md` — 剧级体验规则补一句。
+
+No conflicts found in: final_specs/spec.md。
+
+## Follow-up 246 — 2026-10-11 19:58:32
+Source: user_input/follow_ups/202610.md - section 246
+Summary: 全剧 Vision（剧 README「Vision（观众体验）」）贯穿所有模块：创作前读、取舍对照、审查第一问是否满足。
+
+Auto-updated:
+- `.agents/skills/ai-videos-pipeline/SKILL.md` — 新增「全剧 Vision」段；故事创作读 README 的 Vision。
+- `modules/decisions.md` — 新增「对照 Vision」：决策记录开头一行 Vision，审查第一问。
+- `modules/story-audience.md`、`filming.md`、`prompts-generate.md`（review.md 加 Vision 项）、`edit.md`、`edit-lock.md`、`sound.md`、`delivery.md` — 各自对照 Vision。
+- `.agents/references/project/ai_video_workflow_map.json` — summary 加 Vision；每个模块关卡加「对照全剧 Vision」。
+
+Validation: workflow_catalog --check 11 组 / 140 源；管理应用 workflow 测试 52 通过 / 1 跳过；sync_agent_skills --check 4 / 8；覆盖核对无引用问题。
+
+No conflicts found in: final_specs/spec.md。剧侧见 shengji_zhilu follow-up 033。
+
+## Follow-up 247 — 2026-10-11 19:59:41
+Source: user_input/follow_ups/202610.md - section 247
+Summary: 观众原则与 Vision 的审查、测试与评分设计，写进测试体系提案 §15（待批准，未实施）。
+
+Auto-updated:
+- `findings/test_system_proposal.md` — 新增 §15：三层分工、评分卡 S1–S5、成对样本回归、落地顺序与 3 个待决定事项。
+
+No conflicts found in: final_specs/spec.md（提案未批准，暂不改规格）；§1 原则不变。
+
+## Follow-up 248 — 2026-10-11 20:00:04
+Source: user_input/follow_ups/202610.md - section 248
+Summary: 核对 240–247 的改动都在共用源（.agents/、剧目录、specs/），未写进 .claude 私有位置；AGENTS.md 短剧制作路由加 Vision 指针。
+
+Auto-updated:
+- `AGENTS.md` — 短剧制作一行加「Vision（观众体验）是全剧宗旨；第一原则观众是主角」。
+
+Validation: sync_agent_skills --check 4 / 8；workflow_catalog --check 11 组 / 140 源。
+
+No conflicts found in: CLAUDE.md（导入 AGENTS.md，不另写）。
+
+## Follow-up 247 补记 — 2026-10-11 20:06:03
+Source: user_input/follow_ups/202610.md - section 247（用户追问「既然都确定版本了为什么还要拦」）
+Summary: 措辞澄清：确定性检查放在代理交稿给用户确定之前，拦代理不拦用户。
+
+Auto-updated:
+- `findings/test_system_proposal.md` — §15.1 表格与 §15.5 ① 改写。
+
+## Follow-up 249 — 2026-10-11 20:09:23
+Source: user_input/follow_ups/202610.md - section 249
+Summary: 实施交稿前自检（tools/audience_check.py）与评分卡 S1–S4；S5 延后。
+
+Auto-updated:
+- `tools/audience_check.py`（新）— 查 README 的 Vision、集级本集体验 / Vision / 体验地图（孤儿事件）/ 观众轨、场级 Vision 与「观众」小节、2026-10-12 起出片 review 的 Vision 项。
+- `tools/tests/test_audience_check.py`（新）— 7 条；变异检查（检查器恒返回空）6 条失败。
+- `.agents/skills/ai-videos-pipeline/modules/decisions.md` — 新增「交稿前自检」「评分卡（确定时由用户打）」。
+- `.agents/skills/ai-videos-pipeline/SKILL.md`、`modules/edit-lock.md` — 指针；S5 待加。
+- `.agents/references/project/workflow_catalog.json` — 登记 tools/audience_check.py（2.3.42；11 组 / 141 源）。
+- `findings/test_system_proposal.md` — §15.6 决定与实施状态。
+
+Validation: tools 测试 81 通过；新测试 7 通过；workflow_catalog --check 11 组 / 141 源；管理应用 workflow 测试 52 通过 / 1 跳过；sync_agent_skills --check 4 / 8；覆盖核对无引用问题。实跑 shengji_zhilu ep01：25 项缺失（记录早于新规则，交稿前再补）。
+
+No conflicts found in: final_specs/spec.md（提案未整体批准）。
+
+## Follow-up 250 — 2026-10-11 20:22:05
+Source: user_input/follow_ups/202610.md - section 250
+Summary: 核心（这部剧唯一关于什么）并入全剧 Vision，贯穿创作、审查与自检。
+
+Auto-updated:
+- `.agents/skills/ai-videos-pipeline/modules/story-audience.md` — 新增「核心：这部剧到底关于什么」（是什么、不是 log line、不是题材清单、应该 / 不应该、片例）；出处更新。
+- `.agents/skills/ai-videos-pipeline/SKILL.md`、`AGENTS.md` — Vision 包括核心。
+- `modules/decisions.md` — 自检格式加核心行；评分卡 S1 改为 Vision 与核心契合。
+- `tools/audience_check.py`、`tools/tests/test_audience_check.py` — README 缺「核心：」即报；新增 1 条测试（共 8 条）。
+- `.audit/adhoc_agents/2026-10-11/whats-it-about/source.md`（新）；`plot-casting/source.md` 讲者推定为 Corey Mandell。
+
+Validation: tools 测试全过；workflow_catalog --check 11 组 / 141 源；管理应用 workflow 测试通过；sync_agent_skills --check 4 / 8；覆盖核对无引用问题。
+
+No conflicts found in: final_specs/spec.md。剧侧见 shengji_zhilu follow-up 034。
+
+## Follow-up 252 — 2026-10-11 20:25:44
+Source: user_input/follow_ups/202610.md - section 252
+Summary: 删除等高风险本地操作不用先问（用户定）；照常核对目标、不可再生的先备份，不含他人未提交改动、对外发布与视频生成。
+
+Auto-updated:
+- `CONVENTIONS.md` — 新增「高风险本地操作不用先问」；AUTONOMOUS 一节与「脚本引号按实际 shell 处理」一条同步。
+
+## Follow-up 253 — 2026-10-11 20:25:44
+Source: user_input/follow_ups/202610.md - section 253
+Summary: 出片审核模板加空的「Vision：」项（落实 249）。
+
+Auto-updated:
+- `tools/shot_take.py` — REVIEW_TEMPLATE 加「Vision：」；文档串同步。
+- `tools/tests/test_shot_take_review_template.py` — 新增。
+
+Validation: tools 测试 83 通过（新增 1 条先红后绿）。
+
+## Follow-up 254 — 2026-10-11 20:26:31
+Source: user_input/follow_ups/202610.md - section 254
+Summary: 修 audience_check 空项跨行误判。
+
+Auto-updated:
+- `tools/audience_check.py` — `_line_value` 的 \s* 改为 [ \t]*。
+- `tools/tests/test_audience_check.py` — 回归测试 1 条（共 9 条）。
+
+Validation: tools 测试 84 通过。
+
+No conflicts found in: final_specs/spec.md。
+
+## Follow-up 255 — 2026-10-11 20:30:38
+Source: user_input/follow_ups/202610.md - section 255
+Summary: 六个问题并入故事创作；影视改编「观众怎样看见」与不写转场；决策记录与全景图同步。
+
+Auto-updated:
+- `.agents/skills/ai-videos-pipeline/modules/story-questions.md`（新，1.1.1.6）。
+- `modules/story-structure.md`（要素表加「六个问题」）、`story-characters.md`（每个角色都以为自己是主角）、`filming.md`（观众怎样看见；不写转场）、`decisions.md`（集级故事记录写六个问题的答案）。
+- `.agents/references/project/workflow_catalog.json`（11 组 / 143 源）、`ai_video_workflow_map.json`（故事步骤加「本集六个问题」）、`ai_video_workflow.md`。
+- `.audit/adhoc_agents/2026-10-11/six-questions/source.md`（新）。
+
+Validation: workflow_catalog --check 11 组 / 143 源；管理应用 workflow 测试 52 通过 / 1 跳过；sync_agent_skills --check 4 / 8；覆盖核对无引用问题。
+
+No conflicts found in: final_specs/spec.md。交稿前自检未加六个问题（只作思考工具，见回复）。
+
+## Follow-up 256 — 2026-10-11 20:40:37
+Source: user_input/follow_ups/202610.md - section 256
+Summary: 地点字幕进成片交付；抵达 / 建立镜头设计时在集级分镜记录准备文字。
+
+Auto-updated:
+- `.agents/skills/ai-videos-pipeline/modules/delivery.md` — 「地点字幕」一行，通用写法；剧专属的语言与样式留在各剧目录。
+- `.agents/skills/ai-videos-pipeline/modules/filming-functions.md` — 建立镜头一行加地点字幕登记。
+
+## Follow-up 257 — 2026-10-11 20:44:36
+Source: user_input/follow_ups/202610.md - section 257
+Summary: Glenn Gers 长访谈精华并入「六个问题与写场」，影视改编与决策记录同步。
+
+Auto-updated:
+- `modules/story-questions.md` — 改名「六个问题与写场」；新增八节（场、大纲、台词是行动、选择与代价、两种写、结构理论是工具、喜欢人物、意见要翻译成场）。
+- `modules/filming-scenes.md` — purpose 开头一句写主动句核心动作。
+- `modules/filming-scene-anatomy.md` — 每个在场的人有目的、主角有行动、台词是行动。
+- `modules/story-structure.md` — 部件是工具。
+- `modules/story-sympathy.md` — 底层是知道他想要什么。
+- `modules/story-audience.md` — 拿掉核心要换新核心、主角行动不分给两人。
+- `modules/decisions.md` — 意见翻译成场；两全要求给二选一与代价。
+- `workflow_catalog.json` 标题、`ai_video_workflow.md`；`.audit/adhoc_agents/2026-10-11/glenn-gers-long/source.md`（新）。
+
+Validation: workflow_catalog --check 11 组 / 143 源；管理应用 workflow 测试 52 通过 / 1 跳过；sync_agent_skills --check 4 / 8；覆盖核对无引用问题。
+
+No conflicts found in: final_specs/spec.md。
+
+## Follow-up 258 — 2026-10-11 23:08:39
+Source: user_input/follow_ups/202610.md - section 258
+Summary: 出片工具下载后整片解码核验（截断的不落盘、重下）；上传端失败且未扣费可重提（B-003）。
+
+Auto-updated:
+- `tools/shot_take.py` — media_problem；wait_and_record 下载核验与重下。
+- `tools/dreamina_receipt.py` — 上传端失败判定放宽到「upload resource」且未扣费。
+- `tools/tests/test_shot_take_media_check.py`（新）、`tools/tests/test_dreamina_receipt.py`（加三条）。
+
+Validation: tools 测试 89 通过（新增 5 条，先红后绿）。
+
+## Follow-up 259 — 2026-10-15 12:13:41
+Source: user_input/follow_ups/202610.md - section 259
+Summary: 单场编译：一场参考齐了就能编译这一场；每场记编译来源，资料包按场判断过期。
+
+Auto-updated:
+- `libs/domain/entities/episode_workflow__entity.py` — compile 加 scene_id；编译场记 source；prompts 场允许 source 字段。
+- `libs/common/episode_workflow.py` — scene_revision。
+- `libs/application/commands/episode_workflow__command.py`、`apps/api/routes/episode_workflow__route.py` — 透传 scene。
+- `tools/shot_pack.py` — 按场判过期；cmd 拒绝要重编译的镜。
+- `tests/test_episode_workflow.py`（加三条）、`tools/tests/test_shot_pack_scene_source.py`（新）。
+
+Validation: 管理应用测试 329 通过 / 1 跳过；tools 测试 95 通过（新增 6 条，先红后绿）。

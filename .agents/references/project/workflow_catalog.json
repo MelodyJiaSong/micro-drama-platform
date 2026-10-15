@@ -2,59 +2,81 @@
   "schema_version": 2,
   "groups": [
     {
+      "id": "overview",
+      "title": "总览",
+      "description": "高于单个模块的全局视图：工作流全景、术语表与决策记录规范。",
+      "number": "1.0",
+      "category": "ai-video",
+      "overview": true
+    },
+    {
       "id": "story",
       "title": "故事创作",
-      "description": "故事模块指南与独立创作 run 的规则。",
+      "description": "",
       "number": "1.1",
       "category": "ai-video"
     },
     {
       "id": "filming",
       "title": "影视改编",
-      "description": "影视改编模块指南与镜头知识。",
+      "description": "影视改编模块指南，按拍摄单位从大到小：片种（电影的幕、连续剧的集）→ 场 → 覆盖 → 镜头。",
       "number": "1.2",
       "category": "ai-video"
     },
     {
       "id": "prompts",
-      "title": "Prompt 编译",
-      "description": "固定转换与 Prompt 契约。",
+      "title": "Prompt 编译与出片",
+      "description": "Prompt 编译（结构、固定规则、Seedance 写法）、每镜参考（overhead、复杂镜 previz、人物与场景图、声样），以及出片（资料包、提交、记日志、落盘）。",
       "number": "1.3",
       "category": "ai-video"
     },
     {
-      "id": "creation",
-      "title": "全局创作规则",
-      "description": "跨剧的创作原则；各剧具体世界观、人物、故事方向仍归各剧。",
+      "id": "edit",
+      "title": "剪辑",
+      "description": "剪辑模块（设计稿）：选条、粗剪、精剪、锁片，AI 素材的修补与遮掩，以及 AI 剪辑工具现状。",
       "number": "1.4",
       "category": "ai-video"
     },
     {
-      "id": "services",
-      "title": "服务与模型设置",
-      "description": "收费服务审计、模型及工具默认值；查看配置不会调用服务。",
+      "id": "sound",
+      "title": "声音与音乐",
+      "description": "对白、环境声与音效、音乐、混音（待设计）。",
       "number": "1.5",
       "category": "ai-video"
     },
     {
-      "id": "production",
-      "title": "制作与验收规则",
-      "description": "按任务适用的制作参考与专项技能；集中展示不意味着给三模块自动添加旧阶段或全部审查。",
+      "id": "delivery",
+      "title": "成片交付",
+      "description": "调色、字幕、AI 标识、质检与母版（待设计）。",
       "number": "1.6",
       "category": "ai-video"
     },
     {
-      "id": "resources",
-      "title": "调研与共享资产",
-      "description": "跨剧的调研与资产工作方式。资产实体仍在共享资产库。",
+      "id": "production",
+      "title": "制作、服务与资源",
+      "description": "按任务适用的制作规范（如人物资产补齐）、收费服务规则、调研与共享资产规则；资产实体仍在共享资产库。",
       "number": "1.7",
       "category": "ai-video"
     },
     {
       "id": "agents",
       "title": "代理与执行设置",
-      "description": "Claude 与 Codex 的共用入口、配置声明和执行约定。运行环境可覆盖这些声明，不能据此认定某次 run 的有效权限或模型。",
+      "description": "Claude 与 Codex 的共用入口、AI Video 编排入口与工作流目录、配置声明和执行约定。运行环境可覆盖这些声明，不能据此认定某次 run 的有效权限或模型。",
       "number": "2.1",
+      "category": "agents"
+    },
+    {
+      "id": "app",
+      "title": "管理应用",
+      "description": "管理应用里实现三模块、编译、资产与服务调用的代码和静态默认值；只读展示源码声明，不执行。",
+      "number": "2.2",
+      "category": "agents"
+    },
+    {
+      "id": "tools",
+      "title": "制作工具",
+      "description": "tools/ 下的制作脚本与配置：生成、预演、资料包与出片、资产同步等；按任务调用，登记不表示自动运行。",
+      "number": "2.3",
       "category": "agents"
     }
   ],
@@ -145,19 +167,104 @@
       "scope": "user"
     },
     {
-      "path": ".agents/skills/ai-videos-pipeline/SKILL.md",
-      "title": "三模块共用编排",
-      "group": "creation"
-    },
-    {
-      "path": ".agents/skills/ai-videos-pipeline/modules/story.md",
-      "title": "故事模块指南",
+      "path": ".agents/skills/ai-videos-pipeline/modules/story-structure.md",
+      "title": "故事结构",
       "group": "story"
     },
     {
-      "path": ".agents/skills/ai-videos-pipeline/modules/story-runs.md",
-      "title": "独立创作 run 与输入规则",
+      "path": ".agents/skills/ai-videos-pipeline/modules/story-sympathy.md",
+      "title": "同情来源",
+      "group": "story",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/story-structure.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/story-characters.md",
+      "title": "角色类别",
+      "group": "story",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/story-structure.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/story-acts.md",
+      "title": "三幕",
+      "group": "story",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/story-structure.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/story-foreshadowing.md",
+      "title": "伏笔",
+      "group": "story",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/story-structure.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/story-audience.md",
+      "title": "观众",
+      "group": "story",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/story-structure.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/story-questions.md",
+      "title": "六个问题与写场",
+      "group": "story",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/story-structure.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/story-formats.md",
+      "title": "片种",
       "group": "story"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/story-film.md",
+      "title": "电影",
+      "group": "story",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/story-formats.md",
+      "formats": [
+        "film"
+      ],
+      "adapts": [
+        {
+          "source": ".agents/skills/ai-videos-pipeline/modules/story-acts.md",
+          "section": "节点位置"
+        },
+        {
+          "source": ".agents/skills/ai-videos-pipeline/modules/story-structure.md",
+          "section": "推进单位"
+        },
+        {
+          "source": ".agents/skills/ai-videos-pipeline/modules/story-foreshadowing.md",
+          "section": "伏笔"
+        }
+      ]
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/story-series.md",
+      "title": "连续剧",
+      "group": "story",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/story-formats.md",
+      "formats": [
+        "series"
+      ],
+      "adapts": [
+        {
+          "source": ".agents/skills/ai-videos-pipeline/modules/story-acts.md",
+          "section": "三幕放在哪一层"
+        },
+        {
+          "source": ".agents/skills/ai-videos-pipeline/modules/story-structure.md",
+          "section": "与电影的不同"
+        },
+        {
+          "source": ".agents/skills/ai-videos-pipeline/modules/story-characters.md",
+          "section": "与电影的不同"
+        },
+        {
+          "source": ".agents/skills/ai-videos-pipeline/modules/story-sympathy.md",
+          "section": "注意"
+        },
+        {
+          "source": ".agents/skills/ai-videos-pipeline/modules/story-foreshadowing.md",
+          "section": "伏笔"
+        }
+      ]
     },
     {
       "path": ".agents/skills/ai-videos-pipeline/modules/filming.md",
@@ -165,116 +272,169 @@
       "group": "filming"
     },
     {
-      "path": ".agents/skills/ai-videos-pipeline/modules/prompts.md",
-      "title": "Prompt 编译模块指南",
-      "group": "prompts"
-    },
-    {
-      "path": ".agents/skills/ai-videos-pipeline/resources/research.md",
-      "title": "调研支持规则",
-      "group": "resources"
-    },
-    {
-      "path": ".agents/skills/ai-videos-pipeline/resources/assets.md",
-      "title": "共享资产支持规则",
-      "group": "resources"
-    },
-    {
-      "path": "ai_videos/_research/README.md",
-      "title": "跨剧调研库使用规则",
-      "group": "resources"
-    },
-    {
-      "path": ".agents/references/project/story_guidelines.md",
-      "title": "全局故事创作原则",
-      "group": "creation"
-    },
-    {
-      "path": ".agents/references/project/paid_services.md",
-      "title": "收费服务调用与请求审计",
-      "group": "services"
-    },
-    {
-      "path": ".agents/references/project/ai_video_shot_sizes.md",
-      "title": "镜头类型与景别源文档",
+      "path": ".agents/skills/ai-videos-pipeline/modules/filming-formats.md",
+      "title": "片种（幕 / 集）",
       "group": "filming"
     },
     {
-      "path": "tools/image_engine.py",
-      "title": "图片引擎与模型默认值",
-      "group": "services",
-      "view": "constants"
+      "path": ".agents/skills/ai-videos-pipeline/modules/filming-film.md",
+      "title": "电影（幕）",
+      "group": "filming",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/filming-formats.md",
+      "formats": [
+        "film"
+      ],
+      "adapts": [
+        {
+          "source": ".agents/skills/ai-videos-pipeline/modules/filming-shots.md",
+          "section": "视觉弧线"
+        },
+        {
+          "source": ".agents/skills/ai-videos-pipeline/modules/filming-coverage.md",
+          "section": "奇观段落"
+        },
+        {
+          "source": ".agents/skills/ai-videos-pipeline/modules/filming-scenes.md",
+          "section": "世界的建立"
+        }
+      ]
     },
     {
-      "path": "tools/equipment_lib.py",
-      "title": "装备生成默认值",
-      "group": "services",
-      "view": "constants"
+      "path": ".agents/skills/ai-videos-pipeline/modules/filming-series.md",
+      "title": "连续剧（集）",
+      "group": "filming",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/filming-formats.md",
+      "formats": [
+        "series"
+      ],
+      "adapts": [
+        {
+          "source": ".agents/skills/ai-videos-pipeline/modules/filming-shots.md",
+          "section": "风格由第一集定"
+        },
+        {
+          "source": ".agents/skills/ai-videos-pipeline/modules/filming-scenes.md",
+          "section": "常驻场景与复用"
+        },
+        {
+          "source": ".agents/skills/ai-videos-pipeline/modules/filming-scenes.md",
+          "section": "跨集连续性"
+        },
+        {
+          "source": ".agents/skills/ai-videos-pipeline/modules/filming-coverage.md",
+          "section": "节奏与覆盖"
+        }
+      ]
     },
     {
-      "path": "tools/previz_config.py",
-      "title": "动作预演全局配置",
-      "group": "production",
-      "view": "constants"
+      "path": ".agents/skills/ai-videos-pipeline/modules/filming-scenes.md",
+      "title": "场（scene）",
+      "group": "filming"
     },
     {
-      "path": "tools/previz/seedance_ref.py",
-      "title": "视频参考配置",
-      "group": "services",
-      "view": "constants"
+      "path": ".agents/skills/ai-videos-pipeline/modules/filming-scene-anatomy.md",
+      "title": "好场的构成",
+      "group": "filming",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/filming-scenes.md"
     },
     {
-      "path": "tools/seedance_kit.py",
-      "title": "Seedance 资料包默认值",
-      "group": "services",
-      "view": "constants"
+      "path": ".agents/skills/ai-videos-pipeline/modules/filming-coverage.md",
+      "title": "覆盖（coverage）",
+      "group": "filming"
     },
     {
-      "path": "tools/service_request.py",
-      "title": "请求审计默认值",
-      "group": "services",
-      "view": "constants"
+      "path": ".agents/skills/ai-videos-pipeline/modules/filming-shots.md",
+      "title": "镜头（shot）",
+      "group": "filming"
     },
     {
-      "path": "tools/cascadeur/poses.toml",
-      "title": "Cascadeur 共用姿态",
-      "group": "production"
+      "path": ".agents/skills/ai-videos-pipeline/modules/filming-functions.md",
+      "title": "功能镜头",
+      "group": "filming",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/filming-shots.md"
     },
     {
-      "path": "projects/ai_video_management/libs/infrastructure/clients/anthropic__client.py",
-      "title": "管理应用 AI 建议模型默认值",
-      "group": "services",
-      "view": "constants"
+      "path": ".agents/skills/ai-videos-pipeline/modules/filming-sizes.md",
+      "title": "景别",
+      "group": "filming",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/filming-shots.md"
     },
     {
-      "path": "projects/ai_video_management/libs/common/video_canvas.py",
-      "title": "视频画布默认值",
-      "group": "production",
-      "view": "constants"
+      "path": ".agents/skills/ai-videos-pipeline/modules/filming-framing.md",
+      "title": "取景",
+      "group": "filming",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/filming-shots.md"
     },
     {
-      "path": "projects/ai_video_management/libs/common/series_shared.py",
-      "title": "跨剧与跨集共享规则",
-      "group": "resources",
-      "view": "constants"
+      "path": ".agents/skills/ai-videos-pipeline/modules/filming-angles.md",
+      "title": "角度与高度",
+      "group": "filming",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/filming-shots.md"
     },
     {
-      "path": "projects/ai_video_management/libs/common/episode_workflow.py",
-      "title": "三模块系统契约",
-      "group": "creation",
-      "view": "constants"
+      "path": ".agents/skills/ai-videos-pipeline/modules/filming-focus.md",
+      "title": "焦点与景深",
+      "group": "filming",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/filming-shots.md"
     },
     {
-      "path": "projects/ai_video_management/libs/common/story_runs.py",
-      "title": "独立创作 run 系统契约",
-      "group": "creation",
-      "view": "constants"
+      "path": ".agents/skills/ai-videos-pipeline/modules/filming-movement.md",
+      "title": "运镜",
+      "group": "filming",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/filming-shots.md"
     },
     {
-      "path": "projects/ai_video_management/libs/common/writers_room.py",
-      "title": "创作室系统默认值",
-      "group": "creation",
-      "view": "constants"
+      "path": ".agents/skills/ai-videos-pipeline/modules/filming-attention.md",
+      "title": "注意力引导",
+      "group": "filming",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/filming-shots.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/prompts.md",
+      "title": "Prompt 编译与出片",
+      "group": "prompts"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/prompts-structure.md",
+      "title": "Prompt 结构",
+      "group": "prompts",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/prompts.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/prompts-rules.md",
+      "title": "固定规则",
+      "group": "prompts",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/prompts.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/prompts-seedance.md",
+      "title": "Seedance 写法",
+      "group": "prompts",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/prompts.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/prompts-references.md",
+      "title": "参考",
+      "group": "prompts",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/prompts.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/prompts-overhead.md",
+      "title": "Overhead",
+      "group": "prompts",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/prompts.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/prompts-previz.md",
+      "title": "Previz",
+      "group": "prompts",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/prompts.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/prompts-generate.md",
+      "title": "出片",
+      "group": "prompts",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/prompts.md"
     },
     {
       "path": ".agents/references/project/workflow_catalog.json",
@@ -282,158 +442,23 @@
       "group": "agents"
     },
     {
-      "path": ".agents/references/project/ai_video_workflow.md",
-      "group": "creation",
-      "view": "document"
-    },
-    {
       "path": "projects/ai_video_management/libs/domain/entities/episode_workflow__entity.py",
-      "group": "prompts",
-      "view": "code"
-    },
-    {
-      "path": "projects/ai_video_management/libs/application/mappers/prompt__mapper.py",
-      "group": "prompts",
+      "group": "app",
       "view": "code"
     },
     {
       "path": "projects/ai_video_management/libs/common/production_key.py",
-      "group": "filming",
+      "group": "app",
       "view": "code"
-    },
-    {
-      "path": "projects/ai_video_management/libs/common/env_loader.py",
-      "group": "services",
-      "view": "code"
-    },
-    {
-      "path": "projects/ai_video_management/libs/infrastructure/writers/actor__writer.py",
-      "group": "services",
-      "view": "constants"
-    },
-    {
-      "path": "projects/ai_video_management/libs/infrastructure/writers/episode__writer.py",
-      "group": "production",
-      "view": "constants"
-    },
-    {
-      "path": "projects/ai_video_management/libs/infrastructure/writers/previz__writer.py",
-      "group": "production",
-      "view": "constants"
     },
     {
       "path": "projects/ai_video_management/libs/infrastructure/writers/downloads__writer.py",
-      "group": "production",
+      "group": "app",
       "view": "constants"
-    },
-    {
-      "path": "projects/ai_video_management/libs/domain/value_objects/subtitle__valueobject.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "projects/ai_video_management/libs/domain/value_objects/actor__valueobject.py",
-      "group": "resources",
-      "view": "constants"
-    },
-    {
-      "path": "projects/ai_video_management/libs/domain/value_objects/voice__valueobject.py",
-      "group": "resources",
-      "view": "constants"
-    },
-    {
-      "path": "projects/ai_video_management/libs/infrastructure/writers/actor__chinese_prompt.py",
-      "group": "resources",
-      "view": "code"
-    },
-    {
-      "path": "projects/ai_video_management/libs/infrastructure/writers/voice__chinese_prompt.py",
-      "group": "resources",
-      "view": "code"
-    },
-    {
-      "path": "tools/cascadeur/choreo.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/cascadeur/casc_lib.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/cascadeur/casc_run.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": ".agents/references/project/ai_video.md",
-      "group": "production",
-      "view": "document"
-    },
-    {
-      "path": "tools/cascadeur/casc_fk.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/extract_perf_frames.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/perf_rate.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/audience.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/viewing_packet.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": ".agents/references/project/ai_video_jingbie.md",
-      "group": "production",
-      "view": "document"
-    },
-    {
-      "path": "tools/long_take_gate.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/cast_repair.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/render_review.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/post/nature_ambience.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/cast_readback.py",
-      "group": "production",
-      "view": "code"
     },
     {
       "path": "tools/previz/review.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/check_canon.py",
-      "group": "production",
+      "group": "tools",
       "view": "code"
     },
     {
@@ -443,123 +468,48 @@
     },
     {
       "path": "tools/shot_overhead.py",
-      "group": "production",
+      "group": "tools",
       "view": "code"
     },
     {
-      "path": "tools/image_fetch.py",
-      "group": "services",
+      "path": "tools/audience_check.py",
+      "group": "tools",
       "view": "code"
-    },
-    {
-      "path": "tools/service_call.py",
-      "group": "services",
-      "view": "code"
-    },
-    {
-      "path": "tools/assets/r2.py",
-      "group": "services",
-      "view": "code"
-    },
-    {
-      "path": "tools/dreamina_receipt.py",
-      "group": "services",
-      "view": "code"
-    },
-    {
-      "path": "tools/hyper3d_fetch.py",
-      "group": "services",
-      "view": "code"
-    },
-    {
-      "path": ".agents/skills/ai-videos-cascadeur/SKILL.md",
-      "group": "production",
-      "view": "document"
     },
     {
       "path": "tools/gen_turntable_videos.py",
-      "group": "production",
+      "group": "tools",
       "view": "code"
     },
     {
       "path": "tools/character_sheet.py",
-      "group": "production",
+      "group": "tools",
       "view": "code"
     },
     {
       "path": "tools/char_assets.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/script_tools.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/dialogue_review.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/ep_metrics.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/seam_tune.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/seam_metrics.py",
-      "group": "production",
+      "group": "tools",
       "view": "code"
     },
     {
       "path": ".agents/skills/agent-team/playbooks/interview.md",
-      "group": "production",
+      "group": "agents",
       "view": "document"
     },
     {
       "path": ".agents/skills/agent-team/playbooks/research.md",
-      "group": "production",
+      "group": "agents",
       "view": "document"
     },
     {
       "path": ".agents/skills/agent-team/playbooks/validation.md",
-      "group": "production",
+      "group": "agents",
       "view": "document"
-    },
-    {
-      "path": ".agents/references/project/ai_video_shouweizhen.md",
-      "group": "production",
-      "view": "document"
-    },
-    {
-      "path": "tools/add_perf_import_tags.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/set_perf_durations.py",
-      "group": "production",
-      "view": "code"
     },
     {
       "path": ".agents/references/validation/general.md",
-      "group": "production",
+      "group": "agents",
       "view": "document"
-    },
-    {
-      "path": "tools/post/finish_ep.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/animatic.py",
-      "group": "production",
-      "view": "code"
     },
     {
       "path": ".agents/skills/agent-team/SKILL.md",
@@ -567,426 +517,358 @@
       "view": "document"
     },
     {
-      "path": "tools/shot_logic.py",
-      "group": "production",
+      "path": ".agents/skills/ai-videos-pipeline/SKILL.md",
+      "title": "AI Video 三模块编排入口",
+      "group": "agents"
+    },
+    {
+      "path": ".agents/references/project/ai_video_workflow.md",
+      "title": "AI Video 工作流目录与覆盖边界",
+      "group": "agents",
+      "view": "document"
+    },
+    {
+      "path": "tools/workflow_catalog.py",
+      "title": "工作流目录编号整理",
+      "group": "agents",
       "view": "code"
     },
     {
       "path": "tools/gen_bg_images.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/scene_review.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/prompt_light.py",
-      "group": "prompts",
+      "group": "tools",
       "view": "code"
     },
     {
       "path": "tools/assets_sync.py",
-      "group": "production",
+      "group": "tools",
       "view": "code"
     },
     {
-      "path": ".agents/references/validation/ai_video.md",
-      "group": "production",
-      "view": "document"
-    },
-    {
-      "path": "tools/build_all_shot_prompts.py",
-      "group": "prompts",
-      "view": "code"
-    },
-    {
-      "path": "tools/prompt_compact.py",
-      "group": "prompts",
-      "view": "code"
-    },
-    {
-      "path": "tools/gen_shots_hy2.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/story_run.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/post/align.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/post/edl.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/post/qc.py",
-      "group": "production",
-      "view": "code"
+      "path": "projects/ai_video_management/libs/common/episode_workflow.py",
+      "title": "三模块系统契约",
+      "group": "app",
+      "view": "constants"
     },
     {
       "path": "tools/yt_research.py",
-      "group": "production",
+      "group": "tools",
       "view": "code"
     },
     {
       "path": "tools/yt_series_build.py",
-      "group": "production",
+      "group": "tools",
       "view": "code"
-    },
-    {
-      "path": "tools/goal_ledger.py",
-      "group": "production",
-      "view": "code"
-    },
-    {
-      "path": "tools/previz_human.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/beat_logic.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
     },
     {
       "path": "tools/blender_exe.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/gen_object_cards.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/previz_sk2.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "tools",
+      "view": "code"
     },
     {
       "path": "projects/ai_video_management/libs/infrastructure/writers/character_video__writer.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "app",
+      "view": "code"
     },
     {
       "path": "tools/gen_equipment.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/ref_aspect.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/gen_route_sk1.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/glb_preview.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/build_bianjing.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/render_scene_view.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/gen_shots_hy1.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/strip_redundant_fields.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/gen_bgm_sk2.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/gen_turntable_videos_sk2.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/strip_redundant_shot_title.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/ref_fetch.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "tools",
+      "view": "code"
     },
     {
       "path": "tools/previz/planschema.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/gen_turntables_sk2.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/gen_scene_prompts_sk2.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/gen_shots_sk1.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "tools",
+      "view": "code"
     },
     {
       "path": "tools/whitemodel_normalize.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/simplify_voice_direction.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "tools",
+      "view": "code"
     },
     {
       "path": "tools/assets/scanner.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/build_objects.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "tools",
+      "view": "code"
     },
     {
       "path": "tools/build_floorplan.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/render_object_turntable.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "tools",
+      "view": "code"
     },
     {
       "path": "tools/check_world_scenes_szzl.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/add_shot_reference_lines.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/view_check.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/previz/city_layout.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "tools",
+      "view": "code"
     },
     {
       "path": "tools/apply_asset_plan.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "tools",
+      "view": "code"
     },
     {
       "path": "tools/props_lib.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/render_scene_plan.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "tools",
+      "view": "code"
     },
     {
       "path": "tools/gen_outfit_views.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "tools",
+      "view": "code"
     },
     {
       "path": "projects/ai_video_management/libs/common/drama_ref.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "app",
+      "view": "code"
     },
     {
       "path": "tools/gen_char_images.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/gen_scene_prompts_sk1.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/previz_rig.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "tools",
+      "view": "code"
     },
     {
       "path": "projects/ai_video_management/libs/common/asset_link.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "app",
+      "view": "code"
     },
     {
       "path": "tools/gen_bg_assets.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "tools",
+      "view": "code"
     },
     {
       "path": "tools/previz/build_previz.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "tools",
+      "view": "code"
     },
     {
       "path": "tools/gen_world_scenes_szzl.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/add_shot_start_end_blocks.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/strip_negative_prompts.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/gen_shots_sk2.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/previz_frame_fix.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/plate_match.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/mux_av.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/gen_scene_prompts.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/shot_plan.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "tools",
+      "view": "code"
     },
     {
       "path": "tools/build_scene.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "tools",
+      "view": "code"
     },
     {
       "path": "tools/gen_turntables_szzl.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
-    },
-    {
-      "path": "tools/previz_sk1.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "tools",
+      "view": "code"
     },
     {
       "path": "tools/previz/planstyle.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "group": "tools",
+      "view": "code"
     },
     {
-      "path": "tools/build_bg_sets_sk1.py",
-      "group": "production",
-      "view": "code",
-      "historical": true
+      "path": ".agents/references/project/paid_services.md",
+      "title": "收费服务调用与请求审计",
+      "group": "production"
+    },
+    {
+      "path": "tools/image_engine.py",
+      "title": "图片引擎与模型默认值",
+      "group": "tools",
+      "view": "constants"
+    },
+    {
+      "path": "tools/equipment_lib.py",
+      "title": "装备生成默认值",
+      "group": "tools",
+      "view": "constants"
+    },
+    {
+      "path": "tools/previz/seedance_ref.py",
+      "title": "视频参考配置",
+      "group": "tools",
+      "view": "constants"
+    },
+    {
+      "path": "tools/service_request.py",
+      "title": "请求审计默认值",
+      "group": "tools",
+      "view": "constants"
+    },
+    {
+      "path": "projects/ai_video_management/libs/common/env_loader.py",
+      "group": "app",
+      "view": "code"
+    },
+    {
+      "path": "tools/image_fetch.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/service_call.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/assets/r2.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/dreamina_receipt.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/hyper3d_fetch.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/resources/research.md",
+      "title": "调研支持规则",
+      "group": "production"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/resources/assets.md",
+      "title": "共享资产支持规则",
+      "group": "production"
+    },
+    {
+      "path": "ai_videos/_research/README.md",
+      "title": "跨剧调研库使用规则",
+      "group": "production"
+    },
+    {
+      "path": "projects/ai_video_management/libs/common/series_shared.py",
+      "title": "跨剧与跨集共享规则",
+      "group": "app",
+      "view": "constants"
+    },
+    {
+      "path": ".agents/references/interview/general.md",
+      "group": "agents"
+    },
+    {
+      "path": ".agents/references/research/general.md",
+      "group": "agents"
+    },
+    {
+      "path": ".agents/references/project/ai_video_glossary.json",
+      "title": "术语表（源数据）",
+      "group": "overview"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/edit.md",
+      "title": "剪辑模块指南",
+      "group": "edit"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/edit-selects.md",
+      "title": "选条",
+      "group": "edit",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/edit.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/edit-assembly.md",
+      "title": "粗剪",
+      "group": "edit",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/edit.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/edit-fine.md",
+      "title": "精剪",
+      "group": "edit",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/edit.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/edit-lock.md",
+      "title": "锁片",
+      "group": "edit",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/edit.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/edit-ai-footage.md",
+      "title": "AI 素材的修补与遮掩",
+      "group": "edit",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/edit.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/edit-tools.md",
+      "title": "AI 剪辑工具现状",
+      "group": "edit",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/edit.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/edit-transitions.md",
+      "title": "转场",
+      "group": "edit",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/edit.md"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/sound.md",
+      "title": "声音与音乐模块（待设计）",
+      "group": "sound"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/delivery.md",
+      "title": "成片交付模块（待设计）",
+      "group": "delivery"
+    },
+    {
+      "path": ".agents/references/project/ai_video_workflow_map.json",
+      "title": "工作流全景（源数据）",
+      "group": "overview"
+    },
+    {
+      "path": ".agents/skills/ai-videos-pipeline/modules/decisions.md",
+      "title": "决策记录",
+      "group": "overview"
+    },
+    {
+      "path": "tools/episode_shots.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/overhead_previz.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/shot_pack.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "projects/ai_video_management/libs/infrastructure/readers/shot_materials__reader.py",
+      "group": "app",
+      "view": "code"
+    },
+    {
+      "path": "projects/ai_video_management/libs/infrastructure/readers/shot_pack__reader.py",
+      "group": "app",
+      "view": "code"
+    },
+    {
+      "path": "tools/shot_take.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "projects/ai_video_management/libs/infrastructure/readers/shot_renders__reader.py",
+      "group": "app",
+      "view": "code"
+    },
+    {
+      "path": "tools/dreamina_image.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/codex_image.py",
+      "title": "Codex 内置出图（经 codex exec）",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": ".agents/skills/codex-imagegen/SKILL.md",
+      "title": "Codex 内置出图",
+      "group": "production"
     }
   ],
   "discover": [
@@ -1000,19 +882,15 @@
     },
     {
       "glob": ".agents/references/interview/*.md",
-      "group": "creation"
+      "group": "agents"
     },
     {
       "glob": ".agents/references/research/*.md",
-      "group": "resources"
+      "group": "agents"
     },
     {
       "glob": ".agents/references/validation/*.md",
-      "group": "production"
-    },
-    {
-      "glob": "ai_videos/_performances/*.md",
-      "group": "production"
+      "group": "agents"
     },
     {
       "glob": ".claude/hooks/*.py",
@@ -1084,74 +962,75 @@
     {
       "id": "agents",
       "number": "2",
-      "title": "Claude Code与Codex",
-      "description": "共用执行约定、代理指令与仓库/用户配置。"
+      "title": "系统与代码",
+      "description": "代码、工具脚本、软件运行与 Claude / Codex 代理设置；创作知识不在这里。"
+    }
+  ],
+  "formats": [
+    {
+      "id": "film",
+      "title": "电影",
+      "description": "整部片走完三幕，单主角为主。"
+    },
+    {
+      "id": "series",
+      "title": "连续剧",
+      "description": "一季走完三幕，一集是其中几段；多条线并行。"
     }
   ],
   "source_numbers": {
-    "repo:.agents/skills/ai-videos-pipeline/modules/story.md": "1.1.1",
-    "repo:.agents/skills/ai-videos-pipeline/modules/story-runs.md": "1.1.2",
+    "repo:.agents/references/project/ai_video_workflow_map.json": "1.0.1",
+    "repo:.agents/references/project/ai_video_glossary.json": "1.0.2",
+    "repo:.agents/skills/ai-videos-pipeline/modules/decisions.md": "1.0.3",
+    "repo:.agents/skills/ai-videos-pipeline/modules/story-structure.md": "1.1.1",
+    "repo:.agents/skills/ai-videos-pipeline/modules/story-characters.md": "1.1.1.1",
+    "repo:.agents/skills/ai-videos-pipeline/modules/story-sympathy.md": "1.1.1.2",
+    "repo:.agents/skills/ai-videos-pipeline/modules/story-acts.md": "1.1.1.3",
+    "repo:.agents/skills/ai-videos-pipeline/modules/story-foreshadowing.md": "1.1.1.4",
+    "repo:.agents/skills/ai-videos-pipeline/modules/story-audience.md": "1.1.1.5",
+    "repo:.agents/skills/ai-videos-pipeline/modules/story-questions.md": "1.1.1.6",
+    "repo:.agents/skills/ai-videos-pipeline/modules/story-formats.md": "1.1.2",
+    "repo:.agents/skills/ai-videos-pipeline/modules/story-film.md": "1.1.2.1",
+    "repo:.agents/skills/ai-videos-pipeline/modules/story-series.md": "1.1.2.2",
     "repo:.agents/skills/ai-videos-pipeline/modules/filming.md": "1.2.1",
-    "repo:.agents/references/project/ai_video_shot_sizes.md": "1.2.2",
+    "repo:.agents/skills/ai-videos-pipeline/modules/filming-formats.md": "1.2.2",
+    "repo:.agents/skills/ai-videos-pipeline/modules/filming-film.md": "1.2.2.1",
+    "repo:.agents/skills/ai-videos-pipeline/modules/filming-series.md": "1.2.2.2",
+    "repo:.agents/skills/ai-videos-pipeline/modules/filming-scenes.md": "1.2.3",
+    "repo:.agents/skills/ai-videos-pipeline/modules/filming-scene-anatomy.md": "1.2.3.1",
+    "repo:.agents/skills/ai-videos-pipeline/modules/filming-coverage.md": "1.2.4",
+    "repo:.agents/skills/ai-videos-pipeline/modules/filming-shots.md": "1.2.5",
+    "repo:.agents/skills/ai-videos-pipeline/modules/filming-functions.md": "1.2.5.1",
+    "repo:.agents/skills/ai-videos-pipeline/modules/filming-sizes.md": "1.2.5.2",
+    "repo:.agents/skills/ai-videos-pipeline/modules/filming-framing.md": "1.2.5.3",
+    "repo:.agents/skills/ai-videos-pipeline/modules/filming-angles.md": "1.2.5.4",
+    "repo:.agents/skills/ai-videos-pipeline/modules/filming-focus.md": "1.2.5.5",
+    "repo:.agents/skills/ai-videos-pipeline/modules/filming-movement.md": "1.2.5.6",
+    "repo:.agents/skills/ai-videos-pipeline/modules/filming-attention.md": "1.2.5.7",
     "repo:.agents/skills/ai-videos-pipeline/modules/prompts.md": "1.3.1",
-    "repo:.agents/skills/ai-videos-pipeline/SKILL.md": "1.4.1",
-    "repo:.agents/references/project/story_guidelines.md": "1.4.2",
-    "repo:projects/ai_video_management/libs/common/episode_workflow.py": "1.4.3",
-    "repo:projects/ai_video_management/libs/common/story_runs.py": "1.4.4",
-    "repo:projects/ai_video_management/libs/common/writers_room.py": "1.4.5",
-    "repo:.agents/references/interview/ai_video.md": "1.4.6",
-    "repo:.agents/references/interview/general.md": "1.4.7",
-    "repo:.agents/references/project/paid_services.md": "1.5.1",
-    "repo:tools/image_engine.py": "1.5.2",
-    "repo:tools/equipment_lib.py": "1.5.3",
-    "repo:tools/previz/seedance_ref.py": "1.5.4",
-    "repo:tools/seedance_kit.py": "1.5.5",
-    "repo:tools/service_request.py": "1.5.6",
-    "repo:projects/ai_video_management/libs/infrastructure/clients/anthropic__client.py": "1.5.7",
-    "repo:tools/previz_config.py": "1.6.1",
-    "repo:tools/cascadeur/poses.toml": "1.6.2",
-    "repo:projects/ai_video_management/libs/common/video_canvas.py": "1.6.3",
-    "repo:.agents/skills/ai-videos-acting/SKILL.md": "1.6.4",
-    "repo:.agents/skills/ai-videos-blocking/SKILL.md": "1.6.5",
-    "repo:.agents/skills/ai-videos-camera/SKILL.md": "1.6.6",
-    "repo:.agents/skills/ai-videos-cascadeur/SKILL.md": "1.6.7",
-    "repo:.agents/skills/ai-videos-causality/SKILL.md": "1.6.8",
-    "repo:.agents/skills/ai-videos-char-assets/SKILL.md": "1.6.9",
-    "repo:.agents/skills/ai-videos-cold-viewer/SKILL.md": "1.6.10",
-    "repo:.agents/skills/ai-videos-combat/SKILL.md": "1.6.11",
-    "repo:.agents/skills/ai-videos-continuity/SKILL.md": "1.6.12",
-    "repo:.agents/skills/ai-videos-contract/SKILL.md": "1.6.13",
-    "repo:.agents/skills/ai-videos-cut/SKILL.md": "1.6.14",
-    "repo:.agents/skills/ai-videos-dialogue/SKILL.md": "1.6.15",
-    "repo:.agents/skills/ai-videos-dialogue-readthrough/SKILL.md": "1.6.16",
-    "repo:.agents/skills/ai-videos-episode-review/SKILL.md": "1.6.17",
-    "repo:.agents/skills/ai-videos-lighting/SKILL.md": "1.6.18",
-    "repo:.agents/skills/ai-videos-pacing/SKILL.md": "1.6.19",
-    "repo:.agents/skills/ai-videos-render-review/SKILL.md": "1.6.20",
-    "repo:.agents/skills/ai-videos-review-suite/SKILL.md": "1.6.21",
-    "repo:.agents/skills/ai-videos-seam-tune/SKILL.md": "1.6.22",
-    "repo:.agents/skills/ai-videos-series-review/SKILL.md": "1.6.23",
-    "repo:.agents/skills/ai-videos-spectacle/SKILL.md": "1.6.24",
-    "repo:.agents/skills/ai-videos-vernacular/SKILL.md": "1.6.25",
-    "repo:.agents/skills/ai-videos-vfx/SKILL.md": "1.6.26",
-    "repo:.agents/references/project/ai_video.md": "1.6.27",
-    "repo:.agents/references/project/ai_video_harness.md": "1.6.28",
-    "repo:.agents/references/project/ai_video_history.md": "1.6.29",
-    "repo:.agents/references/project/ai_video_jingbie.md": "1.6.30",
-    "repo:.agents/references/project/ai_video_shouweizhen.md": "1.6.31",
-    "repo:.agents/references/project/ai_video_yunjing.md": "1.6.32",
-    "repo:.agents/references/validation/ai_video.md": "1.6.33",
-    "repo:.agents/references/validation/general.md": "1.6.34",
-    "repo:ai_videos/_performances/_calibration.md": "1.6.35",
-    "repo:ai_videos/_performances/_reference_usage.md": "1.6.36",
-    "repo:ai_videos/_performances/_testrig.md": "1.6.37",
-    "repo:ai_videos/_performances/README.md": "1.6.38",
-    "repo:.agents/skills/ai-videos-pipeline/resources/research.md": "1.7.1",
-    "repo:.agents/skills/ai-videos-pipeline/resources/assets.md": "1.7.2",
-    "repo:ai_videos/_research/README.md": "1.7.3",
-    "repo:projects/ai_video_management/libs/common/series_shared.py": "1.7.4",
-    "repo:.agents/references/research/ai_video.md": "1.7.5",
-    "repo:.agents/references/research/general.md": "1.7.6",
+    "repo:.agents/skills/ai-videos-pipeline/modules/prompts-structure.md": "1.3.1.1",
+    "repo:.agents/skills/ai-videos-pipeline/modules/prompts-rules.md": "1.3.1.2",
+    "repo:.agents/skills/ai-videos-pipeline/modules/prompts-seedance.md": "1.3.1.3",
+    "repo:.agents/skills/ai-videos-pipeline/modules/prompts-references.md": "1.3.1.4",
+    "repo:.agents/skills/ai-videos-pipeline/modules/prompts-overhead.md": "1.3.1.5",
+    "repo:.agents/skills/ai-videos-pipeline/modules/prompts-previz.md": "1.3.1.6",
+    "repo:.agents/skills/ai-videos-pipeline/modules/prompts-generate.md": "1.3.1.7",
+    "repo:.agents/skills/ai-videos-pipeline/modules/edit.md": "1.4.1",
+    "repo:.agents/skills/ai-videos-pipeline/modules/edit-selects.md": "1.4.1.1",
+    "repo:.agents/skills/ai-videos-pipeline/modules/edit-assembly.md": "1.4.1.2",
+    "repo:.agents/skills/ai-videos-pipeline/modules/edit-fine.md": "1.4.1.3",
+    "repo:.agents/skills/ai-videos-pipeline/modules/edit-lock.md": "1.4.1.4",
+    "repo:.agents/skills/ai-videos-pipeline/modules/edit-ai-footage.md": "1.4.1.5",
+    "repo:.agents/skills/ai-videos-pipeline/modules/edit-tools.md": "1.4.1.6",
+    "repo:.agents/skills/ai-videos-pipeline/modules/edit-transitions.md": "1.4.1.7",
+    "repo:.agents/skills/ai-videos-pipeline/modules/sound.md": "1.5.1",
+    "repo:.agents/skills/ai-videos-pipeline/modules/delivery.md": "1.6.1",
+    "repo:.agents/skills/ai-videos-char-assets/SKILL.md": "1.7.1",
+    "repo:.agents/references/project/paid_services.md": "1.7.2",
+    "repo:.agents/skills/ai-videos-pipeline/resources/research.md": "1.7.3",
+    "repo:.agents/skills/ai-videos-pipeline/resources/assets.md": "1.7.4",
+    "repo:ai_videos/_research/README.md": "1.7.5",
+    "repo:.agents/skills/codex-imagegen/SKILL.md": "1.7.6",
     "repo:AGENTS.md": "2.1.1",
     "repo:CONVENTIONS.md": "2.1.2",
     "repo:CLAUDE.md": "2.1.3",
@@ -1175,200 +1054,73 @@
     "user:.codex/skills/.system/review-agent/SKILL.md": "2.1.21",
     "user:.codex/skills/.system/skill-creator/SKILL.md": "2.1.22",
     "user:.codex/skills/.system/skill-installer/SKILL.md": "2.1.23",
-    "user:.claude/skills/ai-short-drama/SKILL.md": "2.1.24",
-    "user:.claude/skills/ai_video__one_piece_research/SKILL.md": "2.1.25",
-    "user:.claude/skills/ai_video__prompt_generator/SKILL.md": "2.1.26",
-    "user:.claude/skills/skill-creator/SKILL.md": "2.1.27",
-    "repo:.agents/references/project/ai_video_workflow.md": "1.4.8",
-    "repo:projects/ai_video_management/libs/domain/entities/episode_workflow__entity.py": "1.3.2",
-    "repo:projects/ai_video_management/libs/application/mappers/prompt__mapper.py": "1.3.3",
-    "repo:projects/ai_video_management/libs/common/production_key.py": "1.2.3",
-    "repo:projects/ai_video_management/libs/common/env_loader.py": "1.5.8",
-    "repo:projects/ai_video_management/libs/infrastructure/writers/actor__writer.py": "1.5.9",
-    "repo:projects/ai_video_management/libs/infrastructure/writers/episode__writer.py": "1.6.39",
-    "repo:projects/ai_video_management/libs/infrastructure/writers/previz__writer.py": "1.6.40",
-    "repo:projects/ai_video_management/libs/infrastructure/writers/downloads__writer.py": "1.6.41",
-    "repo:projects/ai_video_management/libs/domain/value_objects/subtitle__valueobject.py": "1.6.42",
-    "repo:projects/ai_video_management/libs/domain/value_objects/actor__valueobject.py": "1.7.7",
-    "repo:projects/ai_video_management/libs/domain/value_objects/voice__valueobject.py": "1.7.8",
-    "repo:projects/ai_video_management/libs/infrastructure/writers/actor__chinese_prompt.py": "1.7.9",
-    "repo:projects/ai_video_management/libs/infrastructure/writers/voice__chinese_prompt.py": "1.7.10",
-    "repo:tools/cascadeur/choreo.py": "1.6.43",
-    "repo:tools/cascadeur/casc_lib.py": "1.6.44",
-    "repo:tools/cascadeur/casc_run.py": "1.6.45",
-    "repo:tools/cascadeur/casc_fk.py": "1.6.46",
-    "repo:tools/extract_perf_frames.py": "1.6.47",
-    "repo:tools/perf_rate.py": "1.6.48",
-    "repo:tools/audience.py": "1.6.49",
-    "repo:tools/viewing_packet.py": "1.6.50",
-    "repo:tools/long_take_gate.py": "1.6.51",
-    "repo:tools/cast_repair.py": "1.6.52",
-    "repo:tools/render_review.py": "1.6.53",
-    "repo:tools/post/nature_ambience.py": "1.6.54",
-    "repo:tools/cast_readback.py": "1.6.55",
-    "repo:tools/previz/review.py": "1.6.56",
-    "repo:tools/check_canon.py": "1.6.57",
-    "repo:tools/sync_agent_skills.py": "2.1.28",
-    "repo:tools/shot_overhead.py": "1.6.58",
-    "repo:tools/image_fetch.py": "1.5.10",
-    "repo:tools/service_call.py": "1.5.11",
-    "repo:tools/assets/r2.py": "1.5.12",
-    "repo:tools/dreamina_receipt.py": "1.5.13",
-    "repo:tools/hyper3d_fetch.py": "1.5.14",
-    "repo:tools/gen_turntable_videos.py": "1.6.59",
-    "repo:tools/character_sheet.py": "1.6.60",
-    "repo:tools/char_assets.py": "1.6.61",
-    "repo:tools/script_tools.py": "1.6.62",
-    "repo:tools/dialogue_review.py": "1.6.63",
-    "repo:tools/ep_metrics.py": "1.6.64",
-    "repo:tools/seam_tune.py": "1.6.65",
-    "repo:tools/seam_metrics.py": "1.6.66",
-    "repo:.agents/skills/agent-team/playbooks/interview.md": "1.6.67",
-    "repo:.agents/skills/agent-team/playbooks/research.md": "1.6.68",
-    "repo:.agents/skills/agent-team/playbooks/validation.md": "1.6.69",
-    "repo:tools/add_perf_import_tags.py": "1.6.70",
-    "repo:tools/set_perf_durations.py": "1.6.71",
-    "repo:tools/post/finish_ep.py": "1.6.72",
-    "repo:tools/animatic.py": "1.6.73",
-    "repo:.agents/skills/agent-team/SKILL.md": "2.1.29",
-    "repo:tools/shot_logic.py": "1.6.74",
-    "repo:tools/gen_bg_images.py": "1.6.75",
-    "repo:tools/scene_review.py": "1.6.76",
-    "repo:tools/prompt_light.py": "1.3.4",
-    "repo:tools/assets_sync.py": "1.6.77",
-    "repo:tools/build_all_shot_prompts.py": "1.3.5",
-    "repo:tools/prompt_compact.py": "1.3.6",
-    "repo:tools/gen_shots_hy2.py": "1.6.78",
-    "repo:tools/story_run.py": "1.6.79",
-    "repo:tools/post/align.py": "1.6.80",
-    "repo:tools/post/edl.py": "1.6.81",
-    "repo:tools/post/qc.py": "1.6.82",
-    "repo:tools/yt_research.py": "1.6.83",
-    "repo:tools/yt_series_build.py": "1.6.84",
-    "repo:tools/goal_ledger.py": "1.6.85",
-    "repo:tools/previz_human.py": "1.6.86",
-    "repo:tools/beat_logic.py": "1.6.87",
-    "repo:tools/blender_exe.py": "1.6.88",
-    "repo:tools/gen_object_cards.py": "1.6.89",
-    "repo:tools/previz_sk2.py": "1.6.90",
-    "repo:projects/ai_video_management/libs/infrastructure/writers/character_video__writer.py": "1.6.91",
-    "repo:tools/gen_equipment.py": "1.6.92",
-    "repo:tools/ref_aspect.py": "1.6.93",
-    "repo:tools/gen_route_sk1.py": "1.6.94",
-    "repo:tools/glb_preview.py": "1.6.95",
-    "repo:tools/build_bianjing.py": "1.6.96",
-    "repo:tools/render_scene_view.py": "1.6.97",
-    "repo:tools/gen_shots_hy1.py": "1.6.98",
-    "repo:tools/strip_redundant_fields.py": "1.6.99",
-    "repo:tools/gen_bgm_sk2.py": "1.6.100",
-    "repo:tools/gen_turntable_videos_sk2.py": "1.6.101",
-    "repo:tools/strip_redundant_shot_title.py": "1.6.102",
-    "repo:tools/ref_fetch.py": "1.6.103",
-    "repo:tools/previz/planschema.py": "1.6.104",
-    "repo:tools/gen_turntables_sk2.py": "1.6.105",
-    "repo:tools/gen_scene_prompts_sk2.py": "1.6.106",
-    "repo:tools/gen_shots_sk1.py": "1.6.107",
-    "repo:tools/whitemodel_normalize.py": "1.6.108",
-    "repo:tools/simplify_voice_direction.py": "1.6.109",
-    "repo:tools/assets/scanner.py": "1.6.110",
-    "repo:tools/build_objects.py": "1.6.111",
-    "repo:tools/build_floorplan.py": "1.6.112",
-    "repo:tools/render_object_turntable.py": "1.6.113",
-    "repo:tools/check_world_scenes_szzl.py": "1.6.114",
-    "repo:tools/add_shot_reference_lines.py": "1.6.115",
-    "repo:tools/view_check.py": "1.6.116",
-    "repo:tools/previz/city_layout.py": "1.6.117",
-    "repo:tools/apply_asset_plan.py": "1.6.118",
-    "repo:tools/props_lib.py": "1.6.119",
-    "repo:tools/render_scene_plan.py": "1.6.120",
-    "repo:tools/gen_outfit_views.py": "1.6.121",
-    "repo:projects/ai_video_management/libs/common/drama_ref.py": "1.6.122",
-    "repo:tools/gen_char_images.py": "1.6.123",
-    "repo:tools/gen_scene_prompts_sk1.py": "1.6.124",
-    "repo:tools/previz_rig.py": "1.6.125",
-    "repo:projects/ai_video_management/libs/common/asset_link.py": "1.6.126",
-    "repo:tools/gen_bg_assets.py": "1.6.127",
-    "repo:tools/previz/build_previz.py": "1.6.128",
-    "repo:tools/gen_world_scenes_szzl.py": "1.6.129",
-    "repo:tools/add_shot_start_end_blocks.py": "1.6.130",
-    "repo:tools/strip_negative_prompts.py": "1.6.131",
-    "repo:tools/gen_shots_sk2.py": "1.6.132",
-    "repo:tools/previz_frame_fix.py": "1.6.133",
-    "repo:tools/plate_match.py": "1.6.134",
-    "repo:tools/mux_av.py": "1.6.135",
-    "repo:tools/gen_scene_prompts.py": "1.6.136",
-    "repo:tools/shot_plan.py": "1.6.137",
-    "repo:tools/build_scene.py": "1.6.138",
-    "repo:tools/gen_turntables_szzl.py": "1.6.139",
-    "repo:tools/previz_sk1.py": "1.6.140",
-    "repo:tools/previz/planstyle.py": "1.6.141",
-    "repo:tools/build_bg_sets_sk1.py": "1.6.142",
-    "user:.codex/rules/default.rules": "2.1.30"
-  },
-  "story_navigation": [
-    {
-      "id": "content",
-      "title": "A_故事内容 · Content",
-      "description": "人物、目标、冲突与因果：故事该怎么写。",
-      "source_id": "repo:.agents/references/project/story_guidelines.md",
-      "topics": [
-        {
-          "id": "characters",
-          "title": "人物与动机"
-        },
-        {
-          "id": "conflict",
-          "title": "目标与冲突"
-        },
-        {
-          "id": "causality",
-          "title": "行动与因果"
-        },
-        {
-          "id": "world",
-          "title": "世界与边界"
-        },
-        {
-          "id": "emotion",
-          "title": "情绪与变化"
-        },
-        {
-          "id": "structure",
-          "title": "结构与推进"
-        }
-      ]
-    },
-    {
-      "id": "execution",
-      "title": "B_执行与验证 · Execution & Mechanics",
-      "description": "输入、运行、记录与检查：创作流程怎么执行。",
-      "source_id": "repo:.agents/skills/ai-videos-pipeline/modules/story-runs.md",
-      "topics": [
-        {
-          "id": "inputs",
-          "title": "准备与冻结输入"
-        },
-        {
-          "id": "run",
-          "title": "创建与运行"
-        },
-        {
-          "id": "review",
-          "title": "分工与审稿"
-        },
-        {
-          "id": "records",
-          "title": "保存与溯源"
-        },
-        {
-          "id": "validation",
-          "title": "验证与比较"
-        },
-        {
-          "id": "handoff",
-          "title": "选用与交接"
-        }
-      ]
-    }
-  ]
+    "user:.claude/skills/skill-creator/SKILL.md": "2.1.24",
+    "repo:tools/sync_agent_skills.py": "2.1.25",
+    "repo:.agents/skills/agent-team/SKILL.md": "2.1.26",
+    "user:.codex/rules/default.rules": "2.1.27",
+    "repo:.agents/skills/ai-videos-pipeline/SKILL.md": "2.1.28",
+    "repo:.agents/references/project/ai_video_workflow.md": "2.1.29",
+    "repo:tools/workflow_catalog.py": "2.1.30",
+    "repo:.agents/references/validation/general.md": "2.1.31",
+    "repo:.agents/skills/agent-team/playbooks/interview.md": "2.1.32",
+    "repo:.agents/skills/agent-team/playbooks/research.md": "2.1.33",
+    "repo:.agents/skills/agent-team/playbooks/validation.md": "2.1.34",
+    "repo:.agents/references/interview/general.md": "2.1.35",
+    "repo:.agents/references/research/general.md": "2.1.36",
+    "user:.codex/skills/kids-coloring-art/SKILL.md": "2.1.37",
+    "repo:projects/ai_video_management/libs/common/production_key.py": "2.2.1",
+    "repo:projects/ai_video_management/libs/domain/entities/episode_workflow__entity.py": "2.2.2",
+    "repo:projects/ai_video_management/libs/common/episode_workflow.py": "2.2.3",
+    "repo:projects/ai_video_management/libs/infrastructure/writers/downloads__writer.py": "2.2.4",
+    "repo:projects/ai_video_management/libs/infrastructure/writers/character_video__writer.py": "2.2.5",
+    "repo:projects/ai_video_management/libs/common/drama_ref.py": "2.2.6",
+    "repo:projects/ai_video_management/libs/common/asset_link.py": "2.2.7",
+    "repo:projects/ai_video_management/libs/common/env_loader.py": "2.2.8",
+    "repo:projects/ai_video_management/libs/common/series_shared.py": "2.2.9",
+    "repo:projects/ai_video_management/libs/infrastructure/readers/shot_materials__reader.py": "2.2.10",
+    "repo:projects/ai_video_management/libs/infrastructure/readers/shot_pack__reader.py": "2.2.11",
+    "repo:projects/ai_video_management/libs/infrastructure/readers/shot_renders__reader.py": "2.2.12",
+    "repo:tools/previz/review.py": "2.3.1",
+    "repo:tools/shot_overhead.py": "2.3.2",
+    "repo:tools/gen_turntable_videos.py": "2.3.3",
+    "repo:tools/character_sheet.py": "2.3.4",
+    "repo:tools/char_assets.py": "2.3.5",
+    "repo:tools/gen_bg_images.py": "2.3.6",
+    "repo:tools/assets_sync.py": "2.3.7",
+    "repo:tools/yt_research.py": "2.3.8",
+    "repo:tools/yt_series_build.py": "2.3.9",
+    "repo:tools/blender_exe.py": "2.3.10",
+    "repo:tools/gen_equipment.py": "2.3.11",
+    "repo:tools/previz/planschema.py": "2.3.12",
+    "repo:tools/whitemodel_normalize.py": "2.3.13",
+    "repo:tools/assets/scanner.py": "2.3.14",
+    "repo:tools/build_floorplan.py": "2.3.15",
+    "repo:tools/check_world_scenes_szzl.py": "2.3.16",
+    "repo:tools/apply_asset_plan.py": "2.3.17",
+    "repo:tools/props_lib.py": "2.3.18",
+    "repo:tools/gen_outfit_views.py": "2.3.19",
+    "repo:tools/gen_char_images.py": "2.3.20",
+    "repo:tools/gen_bg_assets.py": "2.3.21",
+    "repo:tools/previz/build_previz.py": "2.3.22",
+    "repo:tools/gen_world_scenes_szzl.py": "2.3.23",
+    "repo:tools/build_scene.py": "2.3.24",
+    "repo:tools/gen_turntables_szzl.py": "2.3.25",
+    "repo:tools/previz/planstyle.py": "2.3.26",
+    "repo:tools/image_engine.py": "2.3.27",
+    "repo:tools/equipment_lib.py": "2.3.28",
+    "repo:tools/previz/seedance_ref.py": "2.3.29",
+    "repo:tools/service_request.py": "2.3.30",
+    "repo:tools/image_fetch.py": "2.3.31",
+    "repo:tools/service_call.py": "2.3.32",
+    "repo:tools/assets/r2.py": "2.3.33",
+    "repo:tools/dreamina_receipt.py": "2.3.34",
+    "repo:tools/hyper3d_fetch.py": "2.3.35",
+    "repo:tools/episode_shots.py": "2.3.36",
+    "repo:tools/overhead_previz.py": "2.3.37",
+    "repo:tools/shot_pack.py": "2.3.38",
+    "repo:tools/shot_take.py": "2.3.39",
+    "repo:tools/dreamina_image.py": "2.3.40",
+    "repo:tools/codex_image.py": "2.3.41",
+    "repo:tools/audience_check.py": "2.3.42"
+  }
 }

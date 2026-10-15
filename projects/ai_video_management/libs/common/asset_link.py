@@ -2,8 +2,8 @@
 
 A series reuses assets across episodes: `hy2` shoots with the same character
 entity, the same knife and the same kit as `hy1`. Copying the bytes would
-violate the repo's single-source rule (`ai_video.md` rule 4i ①: 一份东西只有一个
-出处，副本必漂), and an OS symlink is invisible to the webapp on purpose — every
+violate the repo's single-source rule (一份东西只有一个出处，副本必漂；see
+`.agents/skills/ai-videos-pipeline/resources/assets.md`), and an OS symlink is invisible to the webapp on purpose — every
 reader skips symlinks as a traversal guard.
 
 So a reuse is recorded as a tiny tracked JSON sidecar next to where the asset

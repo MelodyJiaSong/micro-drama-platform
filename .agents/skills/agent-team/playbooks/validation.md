@@ -96,7 +96,7 @@ Return absolute path to `strategy.md` plus a one-paragraph summary.
 Additional inputs:
 - `work_unit_id` — caller-provided.
 - `work_unit_output_paths` — files this unit produced.
-- `work_unit_kind` — short tag (e.g., `backend_api`, `frontend_component`, `db_schema`, `ai_video_scene`, `boot_smoke`) — informs which levels to run.
+- `work_unit_kind` — short tag (e.g., `backend_api`, `frontend_component`, `db_schema`, `boot_smoke`) — informs which levels to run.
 
 ### 1. Decide which levels apply to this unit
 

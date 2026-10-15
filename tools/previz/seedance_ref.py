@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Seedance 参考视频的硬下限 / 上限，以及把超长 previz 切成可上传的几段——唯一出处（不 import bpy，引擎与生成器共用）。
 
-实测 / 文档（ai_video.md rule 24）：宽×高 ≥ 409600 像素；每条参考视频 2–15 s、24–60 fps；Seedance 2.5 一次最多 10 条。
+实测 / 文档：宽×高 ≥ 409600 像素；每条参考视频 2–15 s、24–60 fps；Seedance 2.5 一次最多 10 条。
 本仓库镜长可到 30 s，所以 previz 超过 15 s 的一律切段：段界优先落在镜内硬切上，落不上就均分。
 
     python tools/previz/seedance_ref.py <previz_config.toml>     # 把已渲好的 shotNN_previz.mp4 切成 _p1/_p2…（不重渲）

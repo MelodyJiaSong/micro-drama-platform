@@ -5,6 +5,8 @@ export interface DramaChoice {
   path: string;
   name: string;
   characters: string[];
+  /** The drama (or its series) is marked obsolete with an `OBSOLETE.md`. */
+  obsolete: boolean;
 }
 
 /** Every drama root in the tree — flat ones and series members alike. Walks by
@@ -25,20 +27,6 @@ export function collectDramaNodes(tree: TreeNode | null): TreeNode[] {
   return out;
 }
 
-/** The drama root path that owns `filePath` (`ai_videos/hy1` or
- *  `ai_videos/huangye_shenghuo/hy2`), or null when it belongs to none. */
-export function dramaRootOf(tree: TreeNode | null, filePath: string | null): string | null {
-  if (!filePath) return null;
-  let best: string | null = null;
-  for (const drama of collectDramaNodes(tree)) {
-    const root = drama.path;
-    if (filePath === root || filePath.startsWith(root + "/")) {
-      if (best === null || root.length > best.length) best = root;
-    }
-  }
-  return best;
-}
-
 export function extractDramas(tree: TreeNode | null): DramaChoice[] {
   if (!tree) return [];
   const out: DramaChoice[] = [];
@@ -53,62 +41,9 @@ export function extractDramas(tree: TreeNode | null): DramaChoice[] {
         }
       }
     }
-    out.push({ path: drama.path, name: drama.name, characters });
+    out.push({ path: drama.path, name: drama.name, characters, obsolete: drama.obsolete === true });
   }
   return out;
-}
-
-export interface DramaAssets {
-  /** Character display names (folder name with the `cN_` prefix stripped). */
-  characters: string[];
-  /** Scene display names (folder name with the `sN_` prefix stripped). */
-  scenes: string[];
-}
-
-const _CHAR_DIR_RE = CHARACTER_DIR_RE;
-const _SCENE_DIR_RE = /^(?:s\d+|bg\d+(?:-\d+)?)(?:_(.*))?$/;
-
-function _stripPrefix(folder: string, re: RegExp): string {
-  const m = re.exec(folder);
-  return m && m[1] ? m[1] : folder;
-}
-
-function _findDramaNode(tree: TreeNode | null, filePath: string): TreeNode | null {
-  const dramaPath = dramaRootOf(tree, filePath);
-  if (dramaPath === null) return null;
-  return collectDramaNodes(tree).find((d) => d.path === dramaPath) ?? null;
-}
-
-/** List the characters + scenes (display names) of the drama that `filePath`
- *  belongs to. Returns empty arrays when the drama or its asset folders are
- *  absent. Display names are written verbatim into prompt `人物:` / `场景:`
- *  lines, so the `cN_` / `sN_` folder prefix is stripped. */
-export function extractDramaAssets(tree: TreeNode | null, filePath: string | null): DramaAssets {
-  if (!tree || !filePath) return { characters: [], scenes: [] };
-  const drama = _findDramaNode(tree, filePath);
-  if (!drama) return { characters: [], scenes: [] };
-  const characters: string[] = [];
-  const scenes: string[] = [];
-  const chDir = findAssetDir(drama, "characters");
-  if (chDir) {
-    for (const c of chDir.children ?? []) {
-      if (c.type === "directory" && _CHAR_DIR_RE.test(c.name)) {
-        characters.push(_stripPrefix(c.name, _CHAR_DIR_RE));
-      }
-    }
-  }
-  const scDir = findAssetDir(drama, "background") || findAssetDir(drama, "scenes");
-  if (scDir) {
-    const walk = (node: TreeNode): void => {
-      for (const s of node.children ?? []) {
-        if (s.type !== "directory") continue;
-        if (_SCENE_DIR_RE.test(s.name)) scenes.push(_stripPrefix(s.name, _SCENE_DIR_RE));
-        walk(s);
-      }
-    };
-    walk(scDir);
-  }
-  return { characters, scenes };
 }
 
 export function findChild(node: TreeNode, name: string): TreeNode | null {
@@ -118,9 +53,8 @@ export function findChild(node: TreeNode, name: string): TreeNode | null {
   return null;
 }
 
-/** Find a drama asset folder (`characters` / `scenes`) that may sit at the
- *  drama root (legacy) or under the staged-pipeline stage folder
- *  `2_世界观人设/`. */
+/** Find a drama asset folder (`characters` / `background`) that may sit at the
+ *  drama root (older dramas) or under `2_世界观人设/`. */
 export function findAssetDir(drama: TreeNode, name: string): TreeNode | null {
   const direct = findChild(drama, name);
   if (direct) return direct;

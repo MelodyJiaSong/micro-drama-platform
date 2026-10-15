@@ -20,7 +20,7 @@ class ServiceCall:
         if command and command[0] == "--":
             command = command[1:]
         if len(command) < 2 or Path(command[0]).name.lower() not in {"dreamina", "dreamina.exe"}:
-            parser.error("命令应为 dreamina <子命令>；Cascadeur 使用 casc_run.py --target")
+            parser.error("命令应为 dreamina <子命令>")
         if command[0] in {"dreamina", "dreamina.exe"} and not shutil.which(command[0]):
             command[0] = str(Path.home() / "bin" / "dreamina.exe")
         result = RequestLog(args.target).cli(command, capture_output=True, text=True, encoding="utf-8", errors="replace")
@@ -30,4 +30,7 @@ class ServiceCall:
 
 
 if __name__ == "__main__":
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
     raise SystemExit(ServiceCall().run())

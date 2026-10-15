@@ -12,11 +12,11 @@ All workflow / `agent_team` state lives in one of these surfaces. No hidden cach
 4. **`.audit/adhoc_agents/{YYYY-MM-DD}/{task_id}/`** — runtime spawn logs (`spawns/{worker_id}/{prompt.md, output.md}`), `events.jsonl`, per-round answer JSONs.
 5. **Shared skills + playbooks + refs** under `.agents/skills/` and `.agents/references/` — the only maintained workflow sources for both agents; see § Stage playbooks and reference docs. `.claude/` must not contain independent business instructions or reference copies.
 
-**全局制作入口（follow-up194/198）**：管理 UI 的工作流统一导航跨剧创作规则、代理配置声明、服务默认值与制作参考，目录源为 `.agents/references/project/workflow_catalog.json`，登记路径、分类、稳定引用编号及自动发现范围，正文仍在上述唯一维护位置。分为 `1_AI Video` 与 `2_Claude Code与Codex`；AI Video 下三个模块分别是 `1.1_故事创作`、`1.2_影视改编`、`1.3_Prompt编译`。具体源用三级编号，编号随来源身份固定，标题/排序变化不改号、删除不复用；自动发现但未登记编号的源标待编号，禁止按显示顺序重编号。新增跨剧源须进入目录或已登记发现范围；run 里的跨剧来源应可从历史快照跳转至当前全局源，未登记来源明确列出。历史run的编号映射标为当前目录，保留冻结内容与指纹，不补造历史编号或代理设置；用户配置只读脱敏，不读取 memory、凭据文件或执行配置代码。集中展示不改变模块适用范围、授权及收费请求审计。
+**全局制作入口（follow-up194/198）**：管理 UI 的工作流统一导航跨剧创作规则、代理配置声明、服务默认值与制作参考，目录源为 `.agents/references/project/workflow_catalog.json`，登记路径、分类、连续引用编号及自动发现范围，正文仍在上述唯一维护位置。分为 `1_AI Video`（创作知识与制作规范；最上面 `1.0_总览` 为工作流全景与术语表）与 `2_系统与代码`（代码、工具脚本、软件运行与代理设置，follow-up 216）；AI Video 下六个模块依次是 `1.1_故事创作`、`1.2_影视改编`、`1.3_Prompt编译与出片`、`1.4_剪辑`、`1.5_声音与音乐`、`1.6_成片交付`（follow-up 218）。具体源用三级编号：组号在类别内连续，源号在组内从 1 连续，界面按编号排序；源身份是 `scope:path`，改标题不改号；增删或迁移源后运行 `python tools/workflow_catalog.py --fix`，`--check`（Claude Stop hook）与 `test_global_workflow.py` 拦截缺号、乱序和待编号（follow-up 203）。新增跨剧源须进入目录或已登记发现范围，不补造历史编号或代理设置；用户配置只读脱敏，不读取 memory、凭据文件或执行配置代码。集中展示不改变模块适用范围、授权及收费请求审计。
 
 Rules:
 
-- **工作流覆盖与跨会话维护（follow-up199）**：Claude Code / Codex 按 [.agents/references/project/ai_video_workflow.md](.agents/references/project/ai_video_workflow.md) 维护同一目录与源。新增影响制作的共用指南、模板、静态默认值、环境覆盖入口或编译实现时登记稳定编号并检查「工作流覆盖核对」；此页核对可读取源、编号、文档引用与真实 run 来源，不证明所有源实际加载。局部剧/季/集输入继续在剧导航与 run 快照中；隐藏系统上下文、外部插件内部状态及秘密环境值不宣称穷举覆盖。已结束会话的变更从共用文件、项目规格与审计接续，不写私有 memory。
+- **工作流覆盖与跨会话维护（follow-up199）**：Claude Code / Codex 按 [.agents/references/project/ai_video_workflow.md](.agents/references/project/ai_video_workflow.md) 维护同一目录与源。新增影响制作的共用指南、模板、静态默认值、环境覆盖入口或编译实现时登记稳定编号并检查「工作流覆盖核对」；此页核对可读取源、编号与文档引用，不证明所有源实际加载。局部剧/季/集输入继续在剧导航中；隐藏系统上下文、外部插件内部状态及秘密环境值不宣称穷举覆盖。已结束会话的变更从共用文件、项目规格与审计接续，不写私有 memory。
 
 - **Pipeline status is derived from persisted artifacts and checks, not from memory.** Existing expected files are candidates for completion: read them, verify required sections and QC, and ensure review fingerprints match current inputs. Missing, stale, partial or blocked artifacts mean the stage is not done. Resume logic reads the tree and applicable checks.
 - **New mechanisms must land in one of the surfaces above.** No sidecars, session-scoped stores, or side-channel caches.
@@ -25,11 +25,11 @@ Rules:
 
 ## 外部服务请求审计（全局必经）
 
-适用于本仓库全部剧/季/集、系列与公共资产、软件任务及独立调用；Claude、Codex、主代理与子任务使用同一契约。全流程、阶段续跑、补资产、局部修复、独立 skill 或手工命令均不能跳过。新剧和旧剧从本条生效后的每次调用都执行，不要求迁移旧剧结构，也不补造历史日志；产物规则的遗留豁免不适用于调用审计。
+适用于本仓库全部剧/季/集、系列与公共资产、软件任务及独立调用；Claude、Codex、主代理与子任务使用同一契约。全流程、阶段续跑、补资产、局部修复、独立 skill 或手工命令均不能跳过。本条生效后的每次调用都执行，不补造历史日志。
 
-每次调用 Dreamina CLI、ElevenLabs、Hyper3D、Cascadeur，以及后续接入的收费服务前：
+每次调用 Dreamina CLI、ElevenLabs、Hyper3D，以及后续接入的收费服务前：
 
-1. 先读 `.agents/references/project/paid_services.md`，核对实际接口、授权、完整请求与剧/集/资产归属。
+1. 先读 `.agents/references/project/paid_services.md`，核对实际接口、授权、完整请求与剧/集/资产归属；并核对「商业用途」表：影片为商业发行，条款不允许或不明确的工具、功能与套餐档不用（不明确的由用户决定）。
 2. 经 `tools/service_request.py` 的 `RequestLog` 先追加 request 事件并落盘，再调用；无归属或日志写入失败时停止。生成提交、查询、下载、每次重试及失败都记录；结果/错误用同一 request_id 关联。
 3. 保留完整文本参数与参考文件元信息，凭据脱敏；日志按每集及人物/场景/道具/装备等资产集合归档，UI「请求日志」审查。详细字段和分组只在 `paid_services.md` 维护。
    能力限制按 `paid_services.md` 的目标model_version及共用模型表核对，区分官方规格与实际调用证据；不把旧CLI帮助统一套给新模型（2026-10-03 Seedance2.5实测修正）。
@@ -41,7 +41,7 @@ Rules:
 
 Claude、Codex 与子任务为所有剧生成或重生成 scene/bg 图片（世界锚点、场景锚点、各方向 plate、时间/天气变体及 shot 专用背景）时，只能使用 **GPT 最新图像模型或 ElevenLabs**；**禁止 Dreamina/Seedream，包括 auto 模式失败后的回退**。新剧全程执行，旧剧今后的调用同样执行；不据此批量重生旧资产。人物、道具、装备和 Seedance 视频不在本条图片范围内。
 
-指定“GPT 最新模型”时，调用前核对官方文档及实际入口支持的型号，记录实际 model_id；型号不公开的内置工具不能声称已验证最新具体型号。模型不可用时报告，不能静默降级或改用 Dreamina。服务与型号、完整 prompt、参考文件哈希、生成 ID、费用/未知费用继续按上节先记请求；出图后逐张看图并绑定新 SHA 审图，替换资产后同步、检查受影响资料包。执行入口：`tools/gen_bg_images.py` / `tools/image_engine.py`；审图：`tools/scene_review.py`；详见 `.agents/references/project/paid_services.md`。
+指定“GPT 最新模型”时，调用前核对官方文档及实际入口支持的型号，记录实际 model_id；型号不公开的内置工具不能声称已验证最新具体型号。模型不可用时报告，不能静默降级或改用 Dreamina。服务与型号、完整 prompt、参考文件哈希、生成 ID、费用/未知费用继续按上节先记请求；出图后逐张看图并绑定新 SHA 审图，替换资产后同步、检查受影响资料包。执行入口：`tools/gen_bg_images.py` / `tools/image_engine.py`；详见 `.agents/references/project/paid_services.md`。
 
 ## Auto-memory is disabled
 
@@ -92,11 +92,11 @@ micro-drama-platform/
 Required when starting a production / development pipeline. Choose from the known target; ask if unclear. Common convention maintenance is not a new production task and needs no fabricated task_type / project.
 
 - `development` — software outputs land in `projects/{name}/`. Walks the **six-stage `agent_team`** workflow below.
-- `ai_video` — AI 短剧产物落在 `ai_videos/{name}/`；不走 agent_team。新流程用 `ai-videos-pipeline` 的故事创作 → 影视改编 → Prompt 编译，Research与资产独立支持；媒体制作按需执行原有人工关卡。见下文「AI 短剧创作」。
+- `ai_video` — AI 短剧产物落在 `ai_videos/{name}/`；不走 agent_team。新流程用 `ai-videos-pipeline` 的六模块（故事创作 → 影视改编 → Prompt 编译与出片 → 剪辑 → 声音与音乐 → 成片交付，后三个待设计），Research与资产独立支持；媒体制作按需执行原有人工关卡。见下文「AI 短剧创作」。
 
 ## The six-stage workflow (task_type=development)
 
-The skill `agent_team` is the single entry point for **`development`** tasks and walks all six stages. Users invoke it as Claude `/agent-team`, Codex `$agent-team`, or by asking for a spec-driven software task; legacy Claude `/agent_team` remains available. **For `task_type=ai_video`, use `ai-videos-pipeline` (source `ai_videos__全流程编排`) instead (§ AI 短剧 pipeline).**
+The skill `agent_team` is the single entry point for **`development`** tasks and walks all six stages. Users invoke it as Claude `/agent-team`, Codex `$agent-team`, or by asking for a spec-driven software task; legacy Claude `/agent_team` remains available. **For `task_type=ai_video`, use `ai-videos-pipeline` (source `ai_videos__全流程编排`) instead (§ AI 短剧创作).**
 
 | # | Stage | Output | Coordination |
 |---|---|---|---|
@@ -111,25 +111,17 @@ The procedural detail for each coordinated stage lives in `.agents/skills/agent-
 
 ## AI 短剧创作
 
-three-module-v1的影视改编按episode→scene→shot组织。scene表示剧情场次，环境资产称background；《魔兽世界》资产目录迁为background，其他旧剧保留scenes兼容读取。分镜及prompt契约唯一正文在共用pipeline modules/filming.md与prompts.md；稳定key采用ep1_s1_st1，编号不随重排改变。旧run冻结输入与历史日志不回写，媒体迁移保持字节及bg编号并同步实际路径引用和R2索引。
+three-module-v1的影视改编按episode→scene→shot组织。scene表示剧情场次，环境资产称background（《魔兽世界》资产目录已迁为background）。分镜及prompt契约唯一正文在共用pipeline modules/filming.md与prompts.md；稳定key采用ep1_s1_st1，编号不随重排改变。历史日志不回写，媒体迁移保持字节及bg编号并同步实际路径引用和R2索引。
 
-新流程为三个模块：故事创作 → 影视改编 → Prompt 编译；Research 与资产独立支持。
-所有剧今后新写/本次修改剧情按[通用故事指南](.agents/references/project/story_guidelines.md)组织与核对；原作版本、改编边界及已确定状态显式输入，不套固定长片序列数。新规则选用版本留存，不重写历史profile/run或自动回溯旧剧情。
-`workflow.json` 声明 `three-module-v1`，本剧输入输出在 `episodes/epNN/{story,filming,prompts}.json`。
-唯一编排源是 `.agents/skills/ai-videos-pipeline/SKILL.md` 及其 `modules/`。新流程不加载旧0–7阶段、自动审查套件或角色访谈系统。
-一次只改一个模块；下游提出上游修改请求，不擅自重写。上游确定版本后交接，上游改变则下游保留并标记待更新。
-创作结果保存并绑定输入版本；prompt编译是固定转换。POC先做一个小场景，逐次比较、接受或回退。
-长期事实在资产库的世界规则或选定资产卡维护；截至某集的位置、伤势、持有物、知识、关系、目标等变化记录在该集state_changes.md。按集序承接已确定的变化，不读取未来集，不把草稿当既成事实；POC先用人工核对。
-所有运行时的故事生成/重跑按`.agents/skills/ai-videos-pipeline/modules/story-runs.md`执行独立run：冻结输入/规则及来源哈希；原始协作和候选在.audit，每集仅存索引；逐项记录真实参与者、意见、采纳/否决/延后理由、决策者及对应修改。未确定候选不自动污染长期事实/集状态；上一run不默认成为下一run输入。
-每run以输入与规则/产出/过程目录显式展示实际影响本run的文件、设定、任务指令和运行条件，逻辑软链接定位冻结版本并核对源文件变化；未记录条件明确标缺项，不能用后续整理文件补造历史输入。详细契约只在上述story-runs.md维护。来源：2026-10-04用户要求完整run输入/产出及依赖可见。
-三模块创作UI只读，修改通过Claude Code/Codex。共享输入/规则为persistent；每run输入快照、候选产出和过程记录独立保留，并分别标明用途与范围。transient表示不自动跨run继承，不表示删除历史。
-共享输入/规则使用EP/shared/的显式版本，独立于run；同规则对照必须核对冻结输入与规则，而非默认用最新流程。任意run可soft promote成当前EP草稿，候选保留；选用绑定及历史在EP维护，不等于确定故事或世界事实。
-现有其他剧保持原产物；新结构先在魔兽世界落地。服务审计、人工生成/剪辑和R2媒体契约继续有效。
+新流程为六个模块：故事创作 → 影视改编 → Prompt 编译与出片 → 剪辑 → 声音与音乐 → 成片交付（后三个待设计、暂无集文档）；Research 与资产独立支持。`workflow.json` 声明 `three-module-v1`，本剧输入输出在 `episodes/epNN/{story,filming,prompts}.json`。
+唯一编排源是 `.agents/skills/ai-videos-pipeline/SKILL.md` 及其 `modules/`、`resources/`。
+一次只改一个模块；下游提出上游修改请求，不擅自重写。上游确定版本后交接，上游改变则下游保留并标记待更新。创作结果绑定输入版本；prompt编译是固定转换。
+旧流程（0–7 阶段、规则库、审查 skills 与工具、评测系统）已于 2026-10-11 删除（ai_video_management follow-up 233）；旧剧目录只作数据保留并在根目录放 `OBSOLETE.md`，不再续跑旧流程。新结构先在魔兽世界落地。服务审计、人工生成/剪辑和R2媒体契约继续有效。
 
 ## Skill + playbook naming
 
 - Canonical skills live in `.agents/skills/<name>/SKILL.md`, with matching lowercase ASCII hyphenated names (`agent-team`, `ai-videos-*`). `.agents/references/` holds shared references. `.claude/skills/` contains generated adapters only, never another copy of the workflow.
-- 原 `agent_team` / `ai_videos__{中文名}` 是兼容名称，映射在 `.agents/skill-aliases.json`；旧中文称呼可继续出现在正文引用和 stage playbook 文件名里（`ai_videos__stageN_*`），不代表另一份源文件。
+- 原 `agent_team` / `ai_videos__{中文名}` 是兼容名称，映射在 `.agents/skill-aliases.json`；旧中文称呼可继续出现在正文引用里，不代表另一份源文件。
   - Claude 用 `/name`，Codex 用 `$name` 或自然语言；原 Claude 命令保留并指向同一 `.agents/` 源正文，相对路径以源目录为准。源正文从实际消息读取参数；Claude 参数提示保存在源 frontmatter 的 `metadata.claude.argument-hint`，同步脚本将其转换为 Claude 入口的 `argument-hint`，并在该入口展开 `$ARGUMENTS`。不把未展开占位符放进共用工作流。
 - Stage playbooks live under `.agents/skills/agent-team/playbooks/`. They are NOT subagent definitions — they are runbooks the parent reads inline.
 - `.claude/agents/` is reserved for future permanent subagents (currently empty; every spec-driven stage is parent-direct).
@@ -150,7 +142,7 @@ Two folders sit alongside the workflow, with intentionally separate lifecycles:
 2. `.agents/references/{stage}/general.md`.
 3. `.agents/references/{stage}/<task_type>.md`, if present.
 4. `.agents/references/project/general.md`.
-5. `.agents/references/project/<task_type>.md`, if present (`ai_video`: the canon `ai_video.md` only — `ai_video_history.md` / `ai_video_harness.md` are history, grep on demand).
+5. `.agents/references/project/<task_type>.md`, if present.
 
 The parent records each file it actually read as `{path, sha256}` (SHA-256 of the file's bytes at read time) in a single `pre_reading_consulted` array on the run's first `events.jsonl` event for that stage (or on each `validation.started` event in stage 6). The hash turns the event into a reproducibility receipt — two runs can diff "did the playbook or a ref drift between us?" without git archaeology. A missing or empty array is a **critical failure** — institutional memory wasn't loaded.
 
@@ -179,14 +171,9 @@ The spec_driven webapp's `EXPOSED_TREE` recursive globs (`.agents/skills/agent-t
 ## AI video rules (under `ai_videos/`)
 
 - **外部服务调用必留痕**：遵本文件 § 外部服务请求审计（全局必经）及 `.agents/references/project/paid_services.md`；所有剧与独立调用均适用。
-
-规则全在 **`.agents/references/project/ai_video.md`（资产与媒体工具参考，≤ 60 KB；三模块POC按需读，不加载旧制作阶段）**：每条一行 + 机检指针。
-来历、事故、已废止条款在 `ai_video_history.md`（2026-09-28 拆分前全文）与 `ai_video_harness.md`，按 rule 号 grep、不通读。本节只留会话层面的硬约束：
-
-- **新规则怎么进**：单剧教训先写 `specs/ai_video/{name}/lessons.md`；第二部剧复现或用户明说全局，才在 `ai_video.md` 加一行（≤ 2 行 + 机检指针），来历写进 `ai_video_history.md` 文末「沿革」。能量化的写成闸门。`tools/check_canon.py`（Stop hook）查体量。
-- **产物规则变更不回溯旧剧**：新规则只管新产物与这次改到的镜；旧镜 / 旧集走显式遗留清单（只减不增，如 `seedance.toml` 的 `legacy_eps`）。本条不豁免 § 外部服务请求审计（全局必经）。
-- **出片**：第一镜出片前整集 animatic 必须过审（rule 44，`seedance_kit open` 闸门）；「生成」永远人点；上传的是 `## Seedance prompt` 精简稿（rule 12.4-P，≤ 2000 字）；**改了 shot prompt，回复里必须告诉用户改了哪几镜、资料包是否全部一致**（rule 12.4-K）。
-- **音频**：每剧 `seedance.toml` 声明 `audio_mode`（native / tts_first，rule 12.4-H2）；Seedance prompt明确保留本镜指定对白、自然环境声和动作声，禁止背景音乐/配乐，无对白镜明确没有人说话，出片后试听核对。三模块由Prompt编译固定写入；配乐在后期独立设计，不恢复legacy BGM。既有后期工具的字幕与响度规则见 `tools/post/finish_ep.py`（rule 42）。
+- **出图与出片的授权（2026-10-10 用户定，follow-up 229）**：**图片**（场景 / 背景变体、人物、物件）成本低，代理在修一致性问题时（例如背景图的时辰、光线与场次不符）可以直接重出或新出，不用先问；照常先写请求日志，引擎按 `tools/image_engine.py`（2026-10-11 起 follow-up 238：Codex 内置出图 → ElevenLabs → Dreamina CLI，即梦是最低选项，前面都不行才用；scene/bg 不用即梦）。**视频**生成仍要用户决定，「生成」永远人点。
+- **镜头时长（2026-10-10 用户定，follow-up 229）**：overhead、静帧或子代理发现镜头时长不够（走不完、景别到不了、动作塞不下），代理直接改分镜时长并同步分拍、overhead，写进场级决策记录；不用先问。
+- **声音**：Seedance prompt明确保留本镜指定对白、自然环境声和动作声，禁止背景音乐/配乐，无对白镜明确没有人说话，出片后试听核对；由Prompt编译固定写入（见 `.agents/skills/ai-videos-pipeline/modules/prompts-rules.md`），配乐在后期独立设计。
 - **媒体走 R2 不走 git**：`ai_videos/assets.json` 是索引，`tools/assets_sync.py`；先传字节再提交索引。
 - 单剧偏离写 `specs/ai_video/{name}/` 的 divergence。
 
@@ -227,6 +214,7 @@ Before doing any work, triage how the current prompt relates to the spec-driven 
    - Workflow contracts, state surfaces, cross-cutting conventions → `CONVENTIONS.md`.
    - Stage-procedure changes → `.agents/skills/agent-team/SKILL.md` or `.agents/skills/agent-team/playbooks/{interview,research,validation}.md`.
    - Accumulated institutional memory (stage-scoped or output-scoped) → `.agents/references/{interview,research,validation,project}/{general.md,<task_type>.md}` per § Stage playbooks and reference docs.
+   - AI 短剧跨剧流程规则 → `.agents/skills/ai-videos-pipeline/`（`SKILL.md`、`modules/`、`resources/`），并登记 `workflow_catalog.json`；不再写 `.agents/references/project/ai_video.md` 或 stage refs 下的 `ai_video.md`。
    - Harness config (hooks, permissions, env) → `.claude/settings.json` / `settings.local.json`.
 2. **Project-scoped instruction** — the prompt adds intent to one existing spec-driven project. Run § Follow-up prompt handling below.
 3. **Neither** — casual chat, general question, or task with no spec-driven impact (e.g., "hello", a one-off shell question). No persistence. Answer normally.
@@ -280,9 +268,11 @@ The `spec_driven` webapp emits **copy-paste regeneration prompts** the user past
   - Do NOT ask the user or call any user-input tool. Not for clarification, not for "A or B," not for confirmation. The user is not at the keyboard.
   - For ambiguity, use best judgment AND record it inline in the produced artifact (e.g., `*(judgment call — chose X because Y)*`) so the user has a self-explaining trail.
   - Produce every requested artifact in the same turn before stopping; do not pause for confirmation between stages. Iteration bounds (§ below) still apply — when a bound trips, halt cleanly with a `pipeline.halted` event + summary.
-  - Every other rule still applies (state surfaces, agent-spawning contract, follow-up procedure for new instructions arriving mid-run). Autonomous removes intermediate questioning; it does not supply approvals required for generation, publishing or destructive source changes.
+  - Every other rule still applies (state surfaces, agent-spawning contract, follow-up procedure for new instructions arriving mid-run). Autonomous removes intermediate questioning; it does not supply approvals required for generation or publishing. Destructive local operations (deleting, cleaning up, overwriting) are pre-approved by the user — see 「高风险本地操作不用先问」 below.
 - **`# EXECUTION MODE: INTERACTIVE`** — default. Use the active runtime's user-input capability when intent is genuinely ambiguous and not inferable from existing artifacts (see § Tool scoping and team coordination).
 - **No header** = INTERACTIVE.
+
+**高风险本地操作不用先问（2026-10-11 用户定）。** 删除文件或目录、清理旧产物与旧环境、覆盖或改名等高风险本地操作，代理按最佳判断直接做，不用先问；Claude、Codex 与子任务、INTERACTIVE 与 AUTONOMOUS 都适用。做之前照常核对目标（绝对路径、范围、没有链接指到范围外），不可再生的内容先备份到 `.audit/`，事后在报告里列出删了什么、备份在哪。这条授权不包括：别人（用户或其他会话）未提交的改动——仍按「保留用户和其他会话的改动」，不用会清掉它们的 git 命令（clean / stash / checkout / reset）；对外发布、发送消息、改账号与权限；收费调用的审计（照常先写请求日志）与「生成视频永远人点」（除非用户另有授权，如 shengji_zhilu follow-up 031）。
 
 **What the webapp generates.** `POST /api/regen-prompt` (FR-14c) inlines the project's current `revised_prompt.md` (or `raw_prompt.md` if no revised yet) plus every `user_input/follow_ups/*.md`. A pasted regen prompt is therefore self-contained.
 
@@ -292,7 +282,7 @@ The `spec_driven` webapp emits **copy-paste regeneration prompts** the user past
 
 A regeneration deletes the regenerated stage's prior outputs and rewrites from scratch. Surgical preservation of prior text is **forbidden** during regen — it makes the output a function of (input ∧ all previous runs) and defeats the workflow.
 
-This read-zero contract applies to the development spec pipeline. AI-video regeneration uses its stage playbook and ai_video.md rules 10 / 16.4: rewrite selected Markdown / derived outputs, preserve media, cards, ledgers and unrelated episodes; never delete a media-bearing shots tree as a software stage-6 output.
+本 read-zero 契约只适用于 development 软件流程。AI 短剧按 `ai-videos-pipeline` 逐模块修改、上游确定后交接，不作为 regen 输出删除任何媒体（`renders/`、参考资产及其源文件）。
 
 The regenerated stage reads ONLY:
 1. The current stage's *input* artifacts (canonical outputs of prior stages).
@@ -318,8 +308,7 @@ Operational notes:
 - **Selective module regen.** If the prompt selects only some stage modules (e.g., only `validation/security.md` + `performance.md`), delete only those files. Default copy-paste prompts select all.
 - **`changelog.md` and `.audit/` are NEVER regen outputs.** They are the audit log; they get appended to with a record of what was deleted/regenerated.
 - **Project README and Makefile** may be stage-6 outputs; regenerate them only when selected in the requested development scope, preserving unrelated user edits.
-- **AI-video episode scope**: `scope=episode N` / `episodes M..N` regenerates the selected stage's Markdown and permitted derived outputs for those episodes only, using the drama's actual legacy or numbered directory layout. Preserve media, cards, ledgers, other stages and other episodes; never delete an entire media-bearing episode / shots tree. `scope=project` expands the selected stage to the project, with the same preservation rules (ai_video.md rules 10 / 16.4).
-- **The `agent_team` skill, playbooks, and agent_refs** are NOT regen outputs — they are harness context. Never deleted by a project-scoped regen.
+- **The `agent_team` skill, playbooks, and `.agents/references/`** are NOT regen outputs — they are harness context. Never deleted by a project-scoped regen.
 
 Audit-event contract for any regen: emit `regen.delete.planned` (one line per file before delete), `regen.delete.completed` (with count), `regen.write.completed` (path + size after write) into `events.jsonl`. The webapp's `build_regen_prompt__query.py` includes this contract in every assembled prompt's `### Constraints` section.
 
@@ -334,15 +323,11 @@ Each spec-pipeline stage (interview, findings, final_specs, validation) supports
 5. **`<stage>/promoted.md` is itself viewable / editable** through the webapp via the same path-sandbox. It is NOT a regen target.
 6. **Stage 6 (project code) has no v1 promotion** — different granularity story, deferred.
 
-## 人物参考按需上传（2026-10-03 用户全局裁定）
-
-Claude/Codex共用：所有新剧在 `seedance.toml` 写 `character_reference_mode = "uploads"` 与 `character_reference_layout = "triptych"`，每镜上传入画角色当前造型的一张三视图合图；native模式仅画内发声者另上传对应MP3，画外/OS沿用后期配音。不依赖预建Seedance entity；合图的三个人像是同一人的三个角度，不生成三个人，不复述声样内容。shot保留裸 `=>@`；Reference uploads逐项绑定真实文件，资料包按实际顺序填图片/音频编号与哈希。缺图/声音绑定不清即阻碍，不能静默退回entity。
-
-已有剧只在用户指定范围迁移；本次仅《魔兽世界》全部现行prompt，不动其他剧或归档。请求仍走 `.agents/references/project/paid_services.md` 的唯一日志入口；先确认当前CLI/模型容量，超限不能静默删参考或假称可自动提交。详细产物规则见 `ai_video.md` rule 4 / 12.4-H2。
+## 人物参考资产（三视图与声样）
 
 **人物资产文件名（2026-10-03，全剧通用）**：所有剧、季、集及系列共享资产的所有 character（主配角、NPC、龙套、怪物）今后新建、补齐、重生成、抽帧或导入三视图/声样，统一 `characters/{角色}/views/{角色}_front.png`、`{角色}_side.png`、`{角色}_back.png`、`{角色}_audio.mp3`；`{角色}`＝角色目录名。换装图保留各造型子目录，用 `{造型键}_front/side/back.png`，声音复用角色自己的 `_audio.mp3`。front/side/back 分别是正/侧/背，生成与导入不得再写 views1/2/3、views.mp3 或中文方向后缀；不按旧数字顺序猜方向。迁移先看图、保留字节与哈希、更新真实路径及按镜资料包，不能靠改名宣布原图质量过审。Claude/Codex执行同一规则；其他旧剧已有文件兼容读取，不批量改名，这不豁免其今后的新产物。
 
-**三视图合图交接（2026-10-03，follow-up 102）**：所有剧、所有character今后的资产流程在三张源图齐备后，用 `python tools/character_sheet.py ai_videos/{剧}` 确定性拼接；左front、中side、右back，原像素保留，尺寸不同时等宽格内居中补边，不裁切/拉伸/重画。基础输出 `views/{角色目录名}_views.png`，换装输出 `{造型键}_views.png`；三张源图及 `_audio.mp3` 保留。合图内写源图SHA，源图改变须重建合图；每人只上传合图，native画内发声者另传声样，不同时上传三张单图。声明 `character_reference_layout = "triptych"`；缺合图/源指纹过期即阻碍。此规则适用于今后的所有剧和角色，历史单图镜只在指定范围迁移。合图三格代表同一角色三个角度；原图朝向质量问题仍须单独验收。
+**三视图合图交接（2026-10-03，follow-up 102）**：所有剧、所有character今后的资产流程在三张源图齐备后，用 `python tools/character_sheet.py ai_videos/{剧}` 确定性拼接；左front、中side、右back，原像素保留，尺寸不同时等宽格内居中补边，不裁切/拉伸/重画。基础输出 `views/{角色目录名}_views.png`，换装输出 `{造型键}_views.png`；三张源图及 `_audio.mp3` 保留。合图内写源图SHA，源图改变须重建合图；每个出场人物上传合图与声样，不同时上传三张单图；缺合图/源指纹过期即阻碍。此规则适用于今后的所有剧和角色。合图三格代表同一角色三个角度；原图朝向质量问题仍须单独验收。
 
 ## Tool scoping and team coordination
 
@@ -385,15 +370,15 @@ Both the canonical artifact and the audit `output.md` MUST begin with a YAML fro
 
 **能力缺失**：明确记录缺少什么、受影响范围及可继续部分。研究工具缺失不凭训练记忆冒充已查证，不编引用；必要 QC / 独立审稿缺失标 blocker / 未审，不能宣称通过。工具调用名不同不是能力缺失。
 
-**hooks 与收尾**：`.claude/settings.json` 的 UserPromptSubmit / Stop 只约束 Claude 自动执行，不假定其他运行时自动加载该配置；`.mcp.json` 也不是 Codex 工具已连接的证明。两端都遵守 prompt triage。改 shot / 引用资产后对受影响镜逐个执行 `seedance_kit.py sync <路径>` + `check <路径>`，核对输出与退出码；`sync` 回读资料包后仍未对齐或构建失败时返回 1。改现行规范后执行 `check_canon.py`；Codex 显式做，Claude hook 补兜底。全仓 `sync --all --quiet` 只在确需全仓对齐时用；不因一次局部改动悄悄改其他剧的派生包。
+**hooks 与收尾**：`.claude/settings.json` 的 UserPromptSubmit / Stop 只约束 Claude 自动执行，不假定其他运行时自动加载该配置；`.mcp.json` 也不是 Codex 工具已连接的证明。两端都遵守 prompt triage。改分镜、overhead 或参考资产后，对本次范围显式运行 `python tools/shot_pack.py sync <集目录> [镜头key]`（只报告用 `check`），核对输出：`sync` 把需要重编译的资料包置为失效后仍返回 0，`check` 有缺包、不一致或失效时返回 1。工作流目录或共用源增删迁移后运行 `python tools/workflow_catalog.py --fix` 再 `--check`；改 skill 名称或描述后运行 `python tools/sync_agent_skills.py` 再 `--check`。Codex 显式执行；Claude Stop hook 每回合跑 `shot_pack.py sync --all --quiet` 与 `workflow_catalog.py --check --quiet` 兜底。
 
-**优先级**：本节解释现有 skill 的工具术语；现行规范优先于历史文档。`ai_video_history.md` / `ai_video_harness.md` 是沿革证据，不从中恢复已废止的工具硬绑定。
+**优先级**：本节解释现有 skill 的工具术语；现行规范优先于历史记录，不从 git 历史或旧审计恢复已删除的流程与工具。
 
 ## 用户报问题：查同类与流程原因，按授权修复
 
 用户指出某个产物有问题（一个 shot、一张图、一段代码）时，在本次范围内查同类和流程原因：
 1. 上升一层：流程里哪一环本该拦住它、为什么没拦住、同类还会在哪里出现——按本次任务范围机检同类，给出规模；全剧扫描只在该剧确实受影响时执行。
-2. 说明发现与流程改进（能量化的落成闸门，见 AI 短剧 pipeline 机制 ③）。明显错误直接修；已有修复 / 改流程授权不重复请示。扩大创作方向或制作范围时才确认必要选择。
+2. 说明发现与流程改进（能量化的落成闸门）。明显错误直接修；已有修复 / 改流程授权不重复请示。扩大创作方向或制作范围时才确认必要选择。
 3. 按依赖顺序改闸门 / 生成器 / skill / refs 与受影响产物，复验并记来源；一次 review 不自动重生旧剧。
 
 来源：2026-10-02 用户要求共用规范 review，并明确「过程中看到明显错误的地方顺手改」。
@@ -420,14 +405,13 @@ AUTONOMOUS 模式下不能问：按 best judgment 改，proposal 与理由记进
 
 `task_id = "{task_name}-{YYYYMMDD-HHmmss}"`, built once at run start. Use for `.audit/adhoc_agents/{date}/{task_id}/`.
 
-For `task_type=ai_video`, `task_name` is pinyin or English even when the project's natural identifier is a Chinese title (per `.agents/references/project/ai_video.md` rule 1). The Chinese title is captured in `ai_videos/{name}/README.md`, not in the path.
+For `task_type=ai_video`, `task_name` is pinyin or English even when the project's natural identifier is a Chinese title. The Chinese title is captured in `ai_videos/{name}/README.md`, not in the path.
 
 ## General coding rules
 
 - **能用 100 字说清的不写 200 字。** 文档、卡片、库条目、chat 回复一律写完再删一遍：
   删重复、删铺垫、删「值得注意的是」这类空转。**表格优于排比句，一行示例优于一段解释。**
-  例外只有两处：有明确下限的产物（锚点 prompt ≥1500 字）、以及 prompt 里为锁死模型行为
-  而必要的冗余——那里的密度靠去重得到，不靠少写。
+  例外只有一处：prompt 里为锁死模型行为而必要的冗余——那里的密度靠去重得到，不靠少写。
 - Default to writing no comments. Only when the *why* is non-obvious.
 - Don't add features, abstractions, or backwards-compat shims the task didn't ask for.
 - Don't add error handling for cases that cannot happen. Validate at system boundaries (user input, external APIs); trust internal calls.
@@ -454,10 +438,4 @@ For `task_type=ai_video`, `task_name` is pinyin or English even when the project
   同一台机器上常常有别的 session 在跑自己的任务，按名字杀会连别人的一起杀掉，
   而且**杀 shell 不杀它已经 spawn 出去的子进程**，留下多个进程写同一个文件。
   要停只停自己那一个 PID；判断「该不该再起一个」也按命令行匹配自己的那一条。
-- **AI 视频生成时自检（不必提醒，收尾前必过；规则见 `ai_video.md`）**：
-  ① 上传的 `## Seedance prompt` **≤2000 字**（rule 12.4-P，生成器 raise）；② 台词朗读一遍是**真人口语**，零公文腔 / 文言 / 翻译腔（白话大师 B1–B7）；
-  ③ 逐镜问「这镜真有这个光源吗」「这个词是痕迹还是正在发生」（K32，`tools/prompt_light.py`）；
-  ④ 镜内切镜写 `镜内状态:`，探入与位移拆先后（K33，`tools/shot_logic.py`）；
-  ⑤ 改了剧情 / 台词：查相邻镜与集边界的连贯，跑 `ai_videos__审查总编排`；定稿某集或改开场结尾时通读全剧的开场、结尾与签名台词；
-  剧情或走位不合理要改后续情节与走位，**删掉一句台词不算修好**。
-- **脚本引号按实际 shell 处理**：含反斜杠或多行的补丁优先用补丁工具或临时脚本；PowerShell 不套 Bash heredoc，不把字符串插值当安全转义。递归删除前核对绝对路径在授权范围内，只处理可再生产物。
+- **脚本引号按实际 shell 处理**：含反斜杠或多行的补丁优先用补丁工具或临时脚本；PowerShell 不套 Bash heredoc，不把字符串插值当安全转义。递归删除前核对绝对路径与范围，不可再生的内容先备份到 `.audit/`（删除本身已获用户预先授权，见「高风险本地操作不用先问」）。

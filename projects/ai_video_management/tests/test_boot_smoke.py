@@ -5,7 +5,6 @@ from __future__ import annotations
 
 from fastapi.testclient import TestClient
 
-from apps.api.app_factory import create_app
 from libs.common.origin import BoundOrigin
 from libs.common.repo_root import RepoRoot
 from tests.conftest import make_app, repo_root
@@ -31,11 +30,30 @@ def test_legacy_music_endpoints_removed_without_recreating_library(tmp_path) -> 
     assert not (tmp_path / "ai_videos/_bgm").exists()
 
 
+def test_old_pipeline_endpoints_removed_without_recreating_libraries(tmp_path) -> None:
+    """Follow-up 233: the old 0–7 stage pipeline's endpoints are gone, and app
+    start no longer creates the actor / voice library folders."""
+    (tmp_path / "ai_videos").mkdir()
+    app = make_app(RepoRoot(path=tmp_path), BoundOrigin(host="127.0.0.1", port=8766), serve_static=False)
+    headers = {"Origin": "http://127.0.0.1:8766", "Host": "127.0.0.1:8766"}
+    with TestClient(app) as client:
+        for endpoint in ("/api/actors", "/api/casting", "/api/voices", "/api/novels", "/api/eval/runs",
+                         "/api/writers-room", "/api/previz/status"):
+            assert client.get(endpoint).status_code == 404, endpoint
+        for endpoint in ("/api/extract-frames", "/api/extract-last-frame", "/api/extract-scene-plates",
+                         "/api/burn-subtitles", "/api/burn-intro-cards", "/api/concat-episode",
+                         "/api/select-episode-takes", "/api/list-drama-episodes", "/api/export-production",
+                         "/api/truncate-character-video", "/api/concat-shot-characters", "/api/prompt/suggest",
+                         "/api/perf-score", "/api/regen-shot-prompt", "/api/previz/render",
+                         "/api/episode-seam-scores", "/api/casting/assign-voice"):
+            assert client.post(endpoint, headers=headers).status_code == 404, endpoint
+    assert not (tmp_path / "ai_videos/_actors").exists()
+    assert not (tmp_path / "ai_videos/_voices").exists()
+
+
 def test_get_tree_returns_expected_sections() -> None:
-    """Post follow-up 113: AI Videos + Downloaded Novels + My Novel live, in
-    order. (Follow-up 003: AI Videos + Research. Follow-up 096: Research
-    retired in favor of Novels. Follow-up 113: Novels split into
-    Downloaded Novels + My Novel.)
+    """Only the AI Videos section is left (follow-up 233 removed the
+    Downloaded Novels / My Novel sections; follow-up 113 had added them).
     """
     rr = RepoRoot(path=repo_root())
     bound = BoundOrigin(host="127.0.0.1", port=8766)
@@ -45,7 +63,7 @@ def test_get_tree_returns_expected_sections() -> None:
     payload = r.json()
     assert payload["type"] == "section"
     sections = payload["children"]
-    assert [s["name"] for s in sections] == ["AI Videos", "Downloaded Novels", "My Novel"], sections
+    assert [s["name"] for s in sections] == ["AI Videos"], sections
 
 
 def test_stages_endpoint_dropped() -> None:
@@ -128,17 +146,17 @@ def test_all_post_endpoints_registered() -> None:
             for m in methods:
                 registered.add((m, path))
     expected = {
+        ("PUT", "/api/file"),
         ("POST", "/api/rename-media"),
         ("POST", "/api/archive-media"),
         ("POST", "/api/unarchive-media"),
+        ("POST", "/api/delete-media"),
+        ("POST", "/api/hard-delete-media"),
+        ("POST", "/api/purge-deleted"),
         ("POST", "/api/import-from-downloads"),
-        ("POST", "/api/actors/generate"),
-        ("GET", "/api/actors"),
-        ("POST", "/api/casting/assign"),
-        ("DELETE", "/api/casting/assign"),
-        ("GET", "/api/casting"),
-        ("POST", "/api/list-drama-episodes"),
-        ("POST", "/api/select-drama-takes"),
+        ("POST", "/api/extract-character-views"),
+        ("POST", "/api/extract-all-character-views"),
+        ("POST", "/api/episode-workflow"),
     }
     missing = expected - registered
     assert not missing, f"endpoints missing from app.routes: {sorted(missing)}"

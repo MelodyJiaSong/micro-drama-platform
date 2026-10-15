@@ -12,8 +12,8 @@ bg 卡 `{dir}/{dir}.md` 里首行 ＝ 目录名的 ```text 块 → `{dir}/{dir}.
 · 送审稿 ＝ 卡 prompt 去掉 `参考:` 与画幅 / 参数行——参考图与画幅作参数传入，不该占字数。
 · **场景引用物件**（follow-up 013）：所属 bg 的 blocks.toml 里占地最大的前 3 件 prop 的正面图跟着世界基调图一起上传，
   送审稿末尾加一行「物件参考」说明它们是谁、只借长相——场景图里的物件与它的 GLB 才长得一样。场景图片保留完整合适物件参考，不通过缩字数退即梦。
-· 引擎按 `tools/image_engine.py`（rule 4l）：所有世界 / bg / plate / 变体图片只用最新 GPT 或 ElevenLabs，禁止即梦与失败回退；
-  当前 ElevenLabs 明确指定 gpt-image-2.5-sunburst，失败报告并保存任务记录，不自动重交。
+· 引擎按 `tools/image_engine.py`（follow-up 238）：所有世界 / bg / plate / 变体图片 auto ＝ Codex 内置出图 → ElevenLabs，
+  禁止即梦与回退到即梦；ElevenLabs 明确指定 gpt-image-2.5-sunburst，失败报告并保存任务记录，同一家不自动重交。
 · 骨架卡（正文不足 800 字）不出图。
 · 状态变体卡（正文有 `只改:` 行，rule 4f）照参考图的构图：参考说明换成 KEEP_IN，不加 KEEP_OUT。
 · plan 打两个数（历史字数范围仍显示，服务一律 ElevenLabs）：「正文」＝ `check_world_scenes_szzl.prompt_len`（W4 同一把尺，rule 4f 的 1500–1600 说的是它）；
@@ -22,7 +22,7 @@ bg 卡 `{dir}/{dir}.md` 里首行 ＝ 目录名的 ```text 块 → `{dir}/{dir}.
 
 用法（仓库根目录；范围可以是 bg 目录、区目录或 scenes 根）：
     python tools/gen_bg_images.py plan <范围…>        # 每个 bg 的正文 / 送审字数、引擎、参考图，不花钱
-    python tools/gen_bg_images.py run  <范围…> [--shard k/n] [--force] [--engine auto|elevenlabs]
+    python tools/gen_bg_images.py run  <范围…> [--shard k/n] [--force] [--engine auto|codex|elevenlabs]
 已出图的跳过（`--force` 重出）；禁止 dreamina，即使显式传入也在提交前拒绝。
 """
 from __future__ import annotations
@@ -42,8 +42,9 @@ sys.stdout.reconfigure(encoding="utf-8")
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 from tools import gen_bg_assets as gba  # noqa: E402  即梦并发安全提交
-from tools import gen_images_xianjian as dm  # noqa: E402
+from tools import dreamina_image as dm  # noqa: E402
 from tools import image_fetch as el  # noqa: E402
+from tools import codex_image as ci  # noqa: E402
 from tools import image_engine as ie  # noqa: E402
 from tools import props_lib  # noqa: E402
 from tools import check_world_scenes_szzl as cws  # noqa: E402  正文字数与 W4 同一把尺
@@ -256,7 +257,7 @@ def prop_line(props: list[tuple[str, str, Path]]) -> str:
 
 def plan_for(j: Job, world: World, engine: str) -> tuple[str, str, list[Path]]:
     """所有 scene/bg 保留完整正文、负向及合适物件参考；禁即梦与静默删参考。"""
-    engine = ie.scene_choice(engine)
+    engine = ie.scene_choice(engine)[0]
     base = world.refs(j)
     # 世界锚点守 rule 4e ② 零参考、纯文字：实测挂物件图的 bg1 两次都卡死在即梦「生成中」（>12 / >50 分钟），
     # 同一时段别的带参考图任务照常出图；它的物件一致性交给挂它的 bg 锚点与 plate
@@ -268,7 +269,7 @@ def plan_for(j: Job, world: World, engine: str) -> tuple[str, str, list[Path]]:
     # 挂了参考图就一定加这一句：实测 plate 与 bg 锚点会照搬参考图的整幅构图（QC 2026-09-25，bg1-1…4 / bg18 / bg20 各镜）
     body += ("\n" + (KEEP_IN if VARIANT.search(body) else KEEP_OUT)) if base else ""
     extra = ("\n" + prop_line(props)) if props else ""
-    return "elevenlabs", body + extra + (("\n" + j.neg) if j.neg else ""), base + [p for _, _, p in props]
+    return engine, body + extra + (("\n" + j.neg) if j.neg else ""), base + [p for _, _, p in props]
 
 
 def log(j: Job, **kw: object) -> None:
@@ -332,9 +333,16 @@ def _elevenlabs(j: Job, text: str, refs: list[Path], t0: float) -> None:
     print(f"  ✓ {j.name} ElevenLabs {len(text)} 字 {j.ratio} {time.time() - t0:.0f}s", flush=True)
 
 
+def _codex(j: Job, text: str, refs: list[Path], t0: float) -> None:
+    tag = ci.render(text, [_upload_copy(p) for p in refs], j.out, j.ratio)
+    log(j, engine="codex", ratio=j.ratio, chars=len(text), ref=[r.name for r in refs], tag=tag)
+    print(f"  ✓ {j.name} Codex {len(text)} 字 {j.ratio} {time.time() - t0:.0f}s", flush=True)
+
+
 def generate(j: Job, world: World, engine: str) -> None:
     j = Job(j.dir)      # 出图前重读卡：长批次里卡常被同时修（实测 bg19-5 进程启动后才压字数）
-    eng, text, refs = plan_for(j, world, ie.scene_choice(engine))
+    order = ie.scene_choice(engine)
+    eng, text, refs = plan_for(j, world, order[0])
     waited = 0
     while refs and not refs[0].is_file():      # 别的进程还在出上一层；等，不重交
         if waited >= REF_WAIT_S:
@@ -342,14 +350,22 @@ def generate(j: Job, world: World, engine: str) -> None:
         time.sleep(15)
         waited += 15
     t0 = time.time()
-    _elevenlabs(j, text, refs, t0)  # 失败原样报出，禁止退即梦或自动再次付费提交
+    errs = []
+    for eng in order:   # Codex → ElevenLabs；禁止退即梦。同一家不自动再次付费提交
+        try:
+            (_codex if eng == ie.CODEX else _elevenlabs)(j, text, refs, t0)
+            return
+        except (Exception, SystemExit) as e:   # noqa: BLE001 —— 明确失败才换下一家；最后一家的错原样抛出
+            errs.append(e)
+            print(f"  ! {j.name} {eng} 失败：{str(e)[:200]}", flush=True)
+    raise errs[-1]
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("step", choices=("plan", "run"))
     ap.add_argument("paths", nargs="+")
-    ap.add_argument("--engine", default=ie.AUTO, choices=ie.CHOICES, help="scene/bg/plate 一律 ElevenLabs；dreamina 禁用")
+    ap.add_argument("--engine", default=ie.AUTO, choices=ie.CHOICES, help="scene/bg/plate：auto ＝ Codex → ElevenLabs；dreamina 禁用")
     ap.add_argument("--shard", default="0/1")
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--no-props", action="store_true",
@@ -370,7 +386,7 @@ def main() -> int:
     if args.step == "plan":
         c = collections.Counter()
         for j in todo:
-            eng, text, refs = plan_for(j, world, ie.scene_choice(args.engine))
+            eng, text, refs = plan_for(j, world, ie.scene_choice(args.engine)[0])
             c[eng] += 1
             print(f"  {j.name:<24} {eng:<10} 正文 {cws.prompt_len(j.body):>5} · 送审 {len(text):>5} 字 {j.ratio:<5} "
                   f"参考={refs[0].parent.name if refs else '无（世界锚点）'}"

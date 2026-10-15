@@ -50,7 +50,7 @@ def drama_dirs(root: Path) -> list[Path]:
     """Every drama root under `ai_videos/`, flat ones and series members alike.
 
     Series members are emitted in place of their series folder, so callers that
-    iterate dramas (casting scans, …) see leaf dramas only.
+    iterate dramas see leaf dramas only.
     """
     ai_videos = root / AI_VIDEOS_DIR_NAME
     if not ai_videos.is_dir():
@@ -99,7 +99,7 @@ def asset_root_depth(root: Path, parts: Sequence[str]) -> int | None:
 
     `drama_depth` cannot answer this: it returns None for `_series` precisely
     because `_series` is not a drama, and that is correct for everything keyed
-    to an episode (episodes, takes, subtitles). Anything validating an
+    to an episode. Anything validating an
     ASSET path has to accept both owners, so it asks this instead. Returns 2 or
     3 for a drama root, 3 for a series' shared dir, None otherwise.
     """

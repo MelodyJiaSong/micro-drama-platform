@@ -20,63 +20,22 @@ from starlette.types import Scope
 
 from apps.api.container import Container
 from apps.api.routes import router
-from libs.common.story_runs import StoryRunsError
 from libs.common.global_workflow import GlobalWorkflowError
-from libs.domain.errors.writers_room__error import WritersRoomError
 from libs.domain.errors.episode_workflow__error import EpisodeWorkflowError
-from libs.domain.errors.actor__error import (
-    ActorAlreadyAssignedError,
-    ActorAlreadyDeletedError,
-    ActorDeleteFailedError,
-    ActorDeleteTargetExistsError,
-    ActorGenerationDirMissingError,
-    ActorNotFoundError,
-    AssignmentsScanFailedError,
-    InvalidActorAttributeError,
-    InvalidActorIdError,
-)
-from libs.domain.errors.casting__error import (
+from libs.domain.errors.drama__error import (
     DramaNotFoundError,
     InvalidDramaPathError,
-    InvalidRoleError,
-)
-from libs.domain.errors.previz__error import (
-    BlenderMissingError,
-    InvalidPrevizPathError,
-    PrevizBlendNotFoundError,
-    PrevizRenderBusyError,
-    PrevizRenderFailedError,
 )
 from libs.domain.errors.character_video__error import (
     AudioExtractFailedError,
     CharacterVideoNotFoundError,
-    ConcatFailedError,
     FfmpegMissingForCharacterVideoError,
     InvalidCharacterVideoPathError,
     InvalidCharactersDirError,
-    InvalidShotMdPathError,
-    NoCharacterTableError,
     NotCharacterVideoError,
-    NotShotMdError,
-    ShotMdNotFoundError,
-    TruncateFailedError,
     ViewExtractFailedError,
 )
 from libs.domain.errors.downloads__error import DownloadsDirMissingError
-from libs.domain.errors.episode__error import (
-    EpisodeConcatFailedError,
-    EpisodeFfmpegMissingError,
-    EpisodeNotFoundError,
-    InvalidEpisodePathError,
-    NoShotsError,
-    NoShotVideosError,
-    NotEpisodePathError,
-)
-from libs.domain.errors.prompt__error import (
-    InvalidSuggestionRequestError,
-    SuggestionGenerationFailedError,
-    SuggestionProviderUnavailableError,
-)
 from libs.domain.errors.file__error import (
     FileNotInSandboxError,
     FileTooLargeError,
@@ -84,29 +43,6 @@ from libs.domain.errors.file__error import (
     MissingIfUnmodifiedSinceError,
     StaleWriteError,
     UnsupportedFileExtensionError,
-)
-from libs.domain.errors.frame__error import (
-    FfmpegMissingError,
-    FrameExtractFailedError,
-    InvalidVideoPathError,
-    NotVideoError,
-    VideoNotFoundError,
-)
-from libs.domain.errors.subtitle__error import (
-    BurnFailedError,
-    EmptySubtitlesError,
-    EpisodeNotConcatenatedError,
-    InvalidBatchScopeError,
-    InvalidSubtitleLangError,
-    NoBatchShotsError,
-    NoEpisodeVideoError,
-    SubtitleFileMissingError,
-)
-from libs.domain.errors.intro_card__error import (
-    IntroCardBurnFailedError,
-    IntroCardImageMissingError,
-    IntroCardsFileMissingError,
-    NoCardForShotError,
 )
 from libs.domain.errors.media__error import (
     AlreadyArchivedError,
@@ -119,22 +55,6 @@ from libs.domain.errors.media__error import (
     NotMediaError,
     NotUnderAiVideosError,
     NotUnderDeletedError,
-)
-from libs.domain.errors.voice__error import (
-    InvalidVoiceAttributeError,
-    InvalidVoiceIdError,
-    VoiceAlreadyAssignedError,
-    VoiceAlreadyDeletedError,
-    VoiceAudioExtensionNotAllowedError,
-    VoiceAudioExtractFailedError,
-    VoiceAudioTooLargeError,
-    VoiceAudioUploadFailedError,
-    VoiceDeleteFailedError,
-    VoiceDeleteTargetExistsError,
-    VoiceFfmpegMissingError,
-    VoiceGenerationDirMissingError,
-    VoiceMp4MissingError,
-    VoiceNotFoundError,
 )
 from libs.infrastructure.middleware.origin_host__middleware import (
     OriginHostMiddleware,
@@ -150,46 +70,17 @@ def _err(status: int, kind: str, **extras: Any) -> JSONResponse:
 
 # (ErrorClass, status_code, kind, include_message)
 _PLAIN: tuple[tuple[type[Exception], int, str, bool], ...] = (
-    # actor
-    (InvalidActorAttributeError, 400, "invalid_attribute", True),
-    (InvalidActorIdError, 400, "invalid_actor_id", True),
-    (ActorNotFoundError, 404, "actor_not_found", False),
-    (ActorAlreadyDeletedError, 400, "already_deleted", False),
-    (ActorDeleteFailedError, 500, "move_failed", True),
-    (ActorGenerationDirMissingError, 500, "actors_dir_unwritable", True),
-    (AssignmentsScanFailedError, 500, "assignments_scan_failed", True),
-    # casting
+    # drama path (Downloads import / media rename)
     (InvalidDramaPathError, 400, "invalid_drama_path", False),
     (DramaNotFoundError, 404, "not_found", False),
-    (InvalidRoleError, 400, "invalid_role", True),
     # character_video
     (InvalidCharacterVideoPathError, 400, "invalid_path", False),
     (InvalidCharactersDirError, 400, "invalid_characters_dir", False),
-    (InvalidShotMdPathError, 400, "invalid_path", False),
     (NotCharacterVideoError, 400, "not_a_character_video", False),
-    (NotShotMdError, 400, "not_a_shot_md", False),
-    (NoCharacterTableError, 400, "no_character_table", False),
     (CharacterVideoNotFoundError, 404, "not_found", False),
-    (ShotMdNotFoundError, 404, "not_found", False),
     (FfmpegMissingForCharacterVideoError, 500, "ffmpeg_missing", True),
-    (TruncateFailedError, 500, "truncate_failed", True),
-    (ConcatFailedError, 500, "concat_failed", True),
     (ViewExtractFailedError, 500, "view_extract_failed", True),
     (AudioExtractFailedError, 500, "audio_extract_failed", True),
-    # previz (Blender .blend → mp4)
-    (InvalidPrevizPathError, 400, "invalid_path", False),
-    (PrevizBlendNotFoundError, 404, "not_found", False),
-    (PrevizRenderBusyError, 409, "render_busy", False),
-    (BlenderMissingError, 500, "blender_missing", True),
-    (PrevizRenderFailedError, 500, "render_failed", True),
-    # episode
-    (InvalidEpisodePathError, 400, "invalid_path", False),
-    (NotEpisodePathError, 400, "not_an_episode", False),
-    (EpisodeNotFoundError, 404, "not_found", False),
-    (NoShotsError, 400, "no_shots", False),
-    (NoShotVideosError, 400, "no_shot_videos", False),
-    (EpisodeFfmpegMissingError, 500, "ffmpeg_missing", True),
-    (EpisodeConcatFailedError, 500, "concat_failed", True),
     # downloads
     # (DownloadsDirMissingError handled specially — payload key is `path`, not `message`.)
     # file
@@ -198,26 +89,6 @@ _PLAIN: tuple[tuple[type[Exception], int, str, bool], ...] = (
     (FileNotInSandboxError, 404, "not_found", False),
     (MissingIfUnmodifiedSinceError, 400, "missing_if_unmodified_since", False),
     (InvalidBodyEncodingError, 400, "invalid_body_encoding", False),
-    # frame
-    (InvalidVideoPathError, 400, "invalid_path", False),
-    (NotVideoError, 400, "not_a_video", False),
-    (VideoNotFoundError, 404, "not_found", False),
-    (FfmpegMissingError, 500, "ffmpeg_missing", True),
-    (FrameExtractFailedError, 500, "extract_failed", True),
-    # subtitle
-    (SubtitleFileMissingError, 404, "subtitle_file_missing", True),
-    (EmptySubtitlesError, 400, "empty_subtitles", True),
-    (BurnFailedError, 500, "burn_failed", True),
-    (InvalidSubtitleLangError, 400, "invalid_subtitle_lang", True),
-    (InvalidBatchScopeError, 400, "invalid_batch_scope", True),
-    (NoBatchShotsError, 404, "no_batch_shots", True),
-    (EpisodeNotConcatenatedError, 409, "episode_not_concatenated", True),
-    (NoEpisodeVideoError, 409, "no_episode_video", True),
-    # intro card (11d)
-    (IntroCardsFileMissingError, 404, "intro_cards_file_missing", True),
-    (NoCardForShotError, 404, "no_card_for_shot", True),
-    (IntroCardImageMissingError, 404, "intro_card_image_missing", True),
-    (IntroCardBurnFailedError, 500, "intro_card_burn_failed", True),
     # media
     (InvalidMediaPathError, 400, "invalid_path", False),
     (NotMediaError, 400, "extension_not_allowed", False),
@@ -228,23 +99,6 @@ _PLAIN: tuple[tuple[type[Exception], int, str, bool], ...] = (
     (NotUnderDeletedError, 400, "not_in_deleted", False),
     (MediaNotFoundError, 404, "not_found", False),
     (MediaMoveFailedError, 500, "move_failed", True),
-    # voice (follow-up 115)
-    (InvalidVoiceAttributeError, 400, "invalid_attribute", True),
-    (InvalidVoiceIdError, 400, "invalid_voice_id", True),
-    (VoiceNotFoundError, 404, "voice_not_found", False),
-    (VoiceAlreadyDeletedError, 400, "already_deleted", False),
-    (VoiceDeleteFailedError, 500, "move_failed", True),
-    (VoiceGenerationDirMissingError, 500, "voices_dir_unwritable", True),
-    (VoiceAudioExtensionNotAllowedError, 400, "extension_not_allowed", True),
-    (VoiceAudioTooLargeError, 413, "body_too_large", True),
-    (VoiceAudioUploadFailedError, 500, "write_failed", True),
-    (VoiceMp4MissingError, 400, "mp4_missing", True),
-    (VoiceFfmpegMissingError, 500, "ffmpeg_missing", True),
-    (VoiceAudioExtractFailedError, 500, "audio_extract_failed", True),
-    # prompt suggestions (follow-up 117)
-    (InvalidSuggestionRequestError, 400, "invalid_suggestion_request", True),
-    (SuggestionProviderUnavailableError, 503, "suggestion_unavailable", True),
-    (SuggestionGenerationFailedError, 502, "suggestion_failed", True),
 )
 
 
@@ -263,17 +117,10 @@ def _register_exception_handlers(app: FastAPI) -> None:
     def _global_workflow_error(_req: Request, exc: GlobalWorkflowError) -> Response:
         return _err(exc.status_code, "global_workflow", message=str(exc))
 
-    @app.exception_handler(StoryRunsError)
-    def _story_runs_error(_req: Request, exc: StoryRunsError) -> Response:
-        return _err(exc.status_code, "story_runs", message=str(exc))
 
     @app.exception_handler(EpisodeWorkflowError)
     def _workflow_error(_req: Request, exc: EpisodeWorkflowError) -> Response:
         return _err(exc.status_code, "episode_workflow", message=str(exc))
-
-    @app.exception_handler(WritersRoomError)
-    def _writers_room_error(_req: Request, exc: WritersRoomError) -> Response:
-        return _err(exc.status_code, exc.kind, message=str(exc))
 
     for exc_cls, status, kind, include_message in _PLAIN:
         app.add_exception_handler(exc_cls, _make_plain_handler(status, kind, include_message))
@@ -281,24 +128,6 @@ def _register_exception_handlers(app: FastAPI) -> None:
     @app.exception_handler(StaleWriteError)
     def _stale_write(_req: Request, exc: StaleWriteError) -> Response:  # type: ignore[unused-function]
         return _err(409, "stale_write", current_mtime=exc.current_mtime)
-
-    @app.exception_handler(ActorAlreadyAssignedError)
-    def _actor_assigned(_req: Request, exc: ActorAlreadyAssignedError) -> Response:  # type: ignore[unused-function]
-        return _err(409, "actor_is_assigned", actor_id=exc.actor_id, assignments=exc.assignments)
-
-    @app.exception_handler(ActorDeleteTargetExistsError)
-    def _actor_target_exists(_req: Request, exc: ActorDeleteTargetExistsError) -> Response:  # type: ignore[unused-function]
-        return _err(409, "target_exists", target=str(exc))
-
-    @app.exception_handler(VoiceAlreadyAssignedError)
-    def _voice_assigned(_req: Request, exc: VoiceAlreadyAssignedError) -> Response:  # type: ignore[unused-function]
-        return _err(409, "voice_is_assigned", voice_id=exc.voice_id, assignments=exc.assignments)
-
-    @app.exception_handler(VoiceDeleteTargetExistsError)
-    def _voice_target_exists(_req: Request, exc: VoiceDeleteTargetExistsError) -> Response:  # type: ignore[unused-function]
-        return _err(409, "target_exists", target=str(exc))
-
-
 
     @app.exception_handler(MediaTargetExistsError)
     def _media_target_exists(_req: Request, exc: MediaTargetExistsError) -> Response:  # type: ignore[unused-function]
@@ -348,13 +177,6 @@ class SpaStaticFiles(StaticFiles):
 
 def create_app(container: Container, serve_static: bool = True) -> FastAPI:
     app = FastAPI(title="ai_video_management", openapi_url=None, docs_url=None, redoc_url=None)
-
-    # Eager-create the actor pool folder (follow-up 015). If this fails the
-    # actor feature is unusable — let the traceback surface at startup
-    # rather than silently continuing into a confusing empty-list later.
-    container.actor_pool().actors_dir().mkdir(parents=True, exist_ok=True)
-    # Same posture for the voice pool folder (follow-up 115).
-    container.voice_pool().voices_dir().mkdir(parents=True, exist_ok=True)
 
     app.add_middleware(SecurityHeadersMiddleware)
     app.add_middleware(OriginHostMiddleware, bound=container.bound_origin())

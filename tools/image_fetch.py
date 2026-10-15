@@ -17,7 +17,7 @@
     GET  /v1/voices、/v1/user    → 401 缺 voices_read / user_read
 所以「创建图像」这一项当前 key 就能用；缺的是那几个**读**权限。
 
-出图次序（用户 2026-09-17 定，`gen_object_cards.py` 的卡按它排）
+出图次序（用户 2026-09-17 定；当时按它排卡的 `gen_object_cards.py` 已删，物件三视图现由 `gen_bg_assets.py` 出）
     `-1 正面`  纯文字生成 → **它就是那张参考**
     `-2 侧面`  把 `-1` 挂进 `images`（按 generation_id 引用，不必重传字节），**只换机位**
     `-3 背面`  同上

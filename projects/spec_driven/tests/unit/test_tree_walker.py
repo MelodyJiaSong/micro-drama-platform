@@ -121,9 +121,9 @@ def test_every_non_leaf_children_is_list(tree):
 def test_shared_context_includes_references_and_playbooks(tree):
     """FR-2 — `.agents/references/**/*.md` recursive discovery."""
     leaves = [n["path"] for n in _walk(tree) if n.get("type") == "file"]
-    assert ".agents/references/project/ai_video.md" in leaves
+    assert ".agents/references/project/ai_video_workflow.md" in leaves
     assert ".agents/skills/agent-team/playbooks/interview.md" in leaves
-    assert ".agents/skills/ai-videos-pipeline/BLUEPRINT.md" in leaves
+    assert ".agents/skills/ai-videos-pipeline/modules/filming.md" in leaves
     assert ".claude/skills/ai_videos__全流程编排/SKILL.md" in leaves
     assert not any(p.startswith(".claude/agent_refs/") for p in leaves)
     assert not any(p.startswith((".agents/private/", ".claude/hooks/")) for p in leaves)

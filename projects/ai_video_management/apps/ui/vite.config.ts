@@ -2,6 +2,7 @@
 import { defineConfig, type ProxyOptions } from "vite";
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
+import { forwardedOrigin } from "./devProxyOrigin";
 
 export default defineConfig({
   plugins: [react()],
@@ -15,8 +16,11 @@ export default defineConfig({
         target,
         changeOrigin: true,
         configure: (proxy) => {
-          proxy.on("proxyReq", (proxyReq) => {
-            proxyReq.setHeader("origin", target);
+          // Only the dev page's own requests take the backend's Origin (see devProxyOrigin.ts);
+          // a foreign page's Origin is forwarded as-is and the backend refuses its writes.
+          proxy.on("proxyReq", (proxyReq, req) => {
+            const origin = forwardedOrigin(req.headers.origin, req.socket.localPort, target);
+            if (origin !== undefined) proxyReq.setHeader("origin", origin);
           });
         },
       };

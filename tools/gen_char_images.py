@@ -8,8 +8,8 @@
 画幅读块里 `比例:` 行的比值（限 `gen_bg_images.RATIOS`；不带比值的「比例：真人正常比例…」是身形描述，不算），
 读不到用 KINDS 的缺省；命令行 `--aspect` 显式给了才覆盖（2026-09-30：m7 / m9 写 16:9，工具写死 9:16 出成竖幅）。
 
-引擎按 `tools/image_engine.py`（rule 4l）：人物立绘是第一张锚点 → 先走 ElevenLabs；剧情物件按简单单物件
-→ 先走即梦（复杂物件加 `--engine elevenlabs`）。首选失败再退另一家；超即梦 1600 字的只能走 ElevenLabs。
+引擎按 `tools/image_engine.py`（follow-up 238）：auto ＝ Codex 内置出图 → ElevenLabs → 即梦，前一家失败才换下一家；
+即梦最后，超即梦 1600 字的跳过即梦。显式 `--engine X` 只用 X。
 
 用法（仓库根目录）：
     python tools/gen_char_images.py plan --drama shengji_zhilu
@@ -30,7 +30,8 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 from tools import gen_bg_assets as gba  # noqa: E402  即梦并发安全提交
 from tools import gen_bg_images as bgi  # noqa: E402  即梦可重试错误的判据
-from tools import gen_images_xianjian as dm  # noqa: E402
+from tools import dreamina_image as dm  # noqa: E402
+from tools import codex_image as ci  # noqa: E402
 from tools import image_engine as ie  # noqa: E402
 from tools import image_fetch as el  # noqa: E402
 
@@ -106,6 +107,8 @@ def neg_section(text: str) -> str:
 
 def run_one(j: Job, engine: str, args: argparse.Namespace) -> str:
     part = j.out.with_name(j.out.stem + ".part.png")
+    if engine == ie.CODEX:
+        return ci.render(j.prompt, [], j.out, j.aspect)
     if engine == ie.DREAMINA:
         # 网络超时先退避重试，别一失败就退贵的 ElevenLabs（实测 2026-09-25 即梦接口 2–5s 才回头，CLI 频繁超时）
         for attempt in range(bgi.UPLOAD_RETRIES + 1):
@@ -140,11 +143,11 @@ def main() -> int:
     ap.add_argument("--aspect", default=None, choices=bgi.RATIOS,
                     help="显式覆盖；缺省读立绘块的「比例:」行，读不到按 --kind：人物 9:16、物件 1:1")
     ap.add_argument("--engine", default=ie.AUTO, choices=ie.CHOICES,
-                    help="auto ＝ 按 rule 4l：人物立绘 ElevenLabs、剧情物件即梦")
+                    help="auto ＝ Codex → ElevenLabs → 即梦（follow-up 238）；显式指定只用那一家")
     ap.add_argument("--shard", default="0/1")
     ap.add_argument("--force", action="store_true")
     args = ap.parse_args()
-    head, aspect, anchor = KINDS[args.kind]
+    head, aspect, _ = KINDS[args.kind]
     root = REPO / "ai_videos" / args.drama / "2_世界观人设" / args.kind
     only = [s for s in args.only.split(",") if s]
     dirs = sorted(d for d in root.iterdir()
@@ -166,20 +169,17 @@ def main() -> int:
     if bare:
         raise SystemExit(f"立绘 prompt 第一句没写人种 / 地域（rule 22.1，不写就会塌成东亚脸）：{', '.join(bare)}"
                          "——开篇写「一名西欧白人…」并补一行面部骨相，再出图")
-    first = ie.first_choice(anchor, args.engine)
     failed = []
     for j in todo:
         t0 = time.time()
-        order = [first, ie.other(first)] if args.engine == ie.AUTO else [first]
-        if len(j.prompt) > dm.PROMPT_MAX:
-            order = [ie.ELEVENLABS]
+        order = ie.order(args.engine, target=j.out, dreamina_ok=len(j.prompt) <= dm.PROMPT_MAX)
         errs = []
         for eng in order:
             try:
                 tag = run_one(j, eng, args)
                 print(f"  ✓ {j.name} {eng} {len(j.prompt)} 字 {time.time() - t0:.0f}s {tag}", flush=True)
                 break
-            except (SystemExit, Exception) as e:  # noqa: BLE001 —— 首选失败退另一家；都失败记下、继续
+            except (SystemExit, Exception) as e:  # noqa: BLE001 —— 按顺序换下一家；都失败记下、继续
                 errs.append(f"{eng}：{str(e)[:200]}")
                 print(f"  ! {j.name} {errs[-1]}", flush=True)
         else:

@@ -165,8 +165,8 @@ Stage 6 reads `strategy.md` first to learn level applicability per work unit, th
 
 ## 全局设置分类与稳定编号（follow-up 198）
 
-验证两类→模块/设置组→源的层级、源唯一高亮、刷新自动展开、影视改编模块页及镜头知识入口；run来源显示编号且历史冻结字节保持原样。验证新发现项不挤占既有编号、标题更改不变号、重复号拒绝；保留脱敏与读取安全检查。执行前端构建/测试、global-workflow相关后端测试及生产/开发两种模式e2e。
+验证两类→模块/设置组→源的层级、源唯一高亮、刷新自动展开、影视改编模块页及镜头知识入口；run来源显示编号且历史冻结字节保持原样。验证新发现项追加到组末、标题更改不变号、重复号拒绝，组号与源号连续且按编号显示、导航无未编号条目（follow-up 203）；保留脱敏与读取安全检查。执行前端构建/测试、global-workflow相关后端测试及生产/开发两种模式e2e。
 
 ## 故事内容与执行分类（follow-up 200）
 
-局部运行前端测试及构建、test_global_workflow.py、生产/开发global_workflow浏览器检查。验证12个真实源章节、同源主题切换与唯一高亮、深链接/刷新、原文回跳、目录失败降级与窄屏布局；核对既有编号、R01–R14和剧集JSON指纹。共用入口执行sync_agent_skills.py --check及check_canon.py；不触发创作或收费调用。
+局部运行前端测试及构建、test_global_workflow.py、生产/开发global_workflow浏览器检查。验证12个真实源章节、同源主题切换与唯一高亮、深链接/刷新、原文回跳、目录失败降级与窄屏布局；核对目录编号连续、规则R编号与文档顺序一致和剧集JSON指纹。共用入口执行sync_agent_skills.py --check及check_canon.py；不触发创作或收费调用。

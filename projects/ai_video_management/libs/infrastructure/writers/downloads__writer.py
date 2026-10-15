@@ -1,25 +1,26 @@
 """Scan the user OS Downloads folder and import recent media into a drama tree.
 
-Per follow-up 009: enriches the drama-row rename button into a one-click
-"import + rename" flow. Filename substring-matches against the drama's
-`characters/`, `scenes/`, and `episodes/*/shots/shot*/` folders to choose
-a destination. Shot-matched media lands in the shot's `renders/` subfolder
-(`shots/shot{NN}/renders/`) with its ORIGINAL filename preserved — so the
-start-frame / end-frame / video outputs of one shot coexist without colliding
-and stay distinguishable; character/scene media still lands directly in the
-asset folder. Scene-matched media is refined one level deeper when the
-filename carries a background-plate 方位 token: a scene's `bg{N}_{方位}_{描述}/`
-orientation sub-folders are matched on their 方位 segment (the out-of-image
-tool names the download from the prompt's `主体:` line, which opens with that
-方位 word), so each orientation PNG lands in its own plate folder while the
-walk-through `.mp4` (no 方位 token) stays at scene root. A scene-plate folder
-holds exactly one canonical image, so re-importing OVERWRITES it: existing
-media in the plate folder (including stale `{plate}1/{plate}2` numbered
-leftovers) is cleared before the new download is moved in. Unmatched files
-are NOT imported at all — they are left untouched in Downloads and only
-reported back as `unmatched` entries (no `not_matched/` dumping ground). (Shot folders were renamed `prompts/` → `shots/` per ai_video rule
-2 v3; the legacy `prompts/` name is still accepted for unmigrated trees.) Only Downloads' immediate children are scanned, restricted to media
-extensions with mtime within the last 7 days; symlinks are skipped.
+One-click "import + rename" for a drama (`POST /api/import-from-downloads`):
+
+* A shot render named with its full key `ep{N}_s{N}_st{N}` (the compiled
+  prompt's first line, which the generator carries into the download name)
+  lands in `episodes/epNN/scenes/sN/shots/stN/renders/<take>/`, one folder per
+  generation (follow-up 230). An incomplete or unknown shot key is reported
+  unmatched, never guessed.
+* An asset download carrying a routing key — background `bg{N}-{M}`, prop
+  `p{N}-{M}` / `p{N}.glb`, equipment `e{N}-{M}` — is routed by that key into
+  the asset's folder and named from the key alone; a character view `c{N}-{M}`
+  reaches its card folder through the folder's id token and is named the same
+  way. A series member also owns its series' `_series/` assets.
+* Otherwise the filename is substring-matched against the drama's character /
+  background / prop folder names.
+
+Unmatched files are NOT imported — they stay untouched in Downloads and are
+only reported back as `unmatched`. Only Downloads' immediate children are
+scanned, restricted to media extensions with mtime within the last 7 days;
+symlinks are skipped. The old 0–7 stage routes (`shots/shotNN` tags, scene
+`bg{N}_{方位}` plates, intro cards, the actor pool and the performance
+library) were removed in follow-up 233.
 
 This module is the first place the backend reads from a path OUTSIDE
 EXPOSED_TREE. Source-side hardening: basename validation, symlink refusal,
@@ -33,25 +34,13 @@ import re
 import shutil
 import time
 from dataclasses import dataclass, field
-from io import BytesIO
 from libs.common import asset_key, drama_layout, equipment_key, prop_key, scene_key, series_shared
 from libs.common.production_key import SHOT_KEY_HINT_RE, first_shot_key, folder_shot_key
 from pathlib import Path
 
-from PIL import Image
-
 from libs.common.exposed_tree import MEDIA_EXTENSIONS, ExposedTree
 from libs.common.safe_resolve import SafeResolver
-from libs.domain.errors.casting__error import DramaNotFoundError, InvalidDramaPathError
 from libs.domain.errors.downloads__error import DownloadsDirMissingError
-from libs.infrastructure.writers.actor__writer import (
-    ACTORS_DIR_NAME,
-    ActorPool,
-    _ACTOR_DIR_RE,
-    _ACTOR_IMPORT_TAG,
-    _attrs_to_body_filename,
-    _attrs_to_filename,
-)
 from libs.infrastructure.daos.equipment_route__dao import KIND_EQUIPMENT_VIEW, EquipmentRouteDao
 from libs.infrastructure.daos.prop_route__dao import KIND_PROP_MESH, KIND_PROP_VIEW, PropRouteDao
 from libs.infrastructure.daos.scene_route__dao import KIND_SUBJECT, KIND_VIEW, SceneRouteDao
@@ -63,39 +52,19 @@ from libs.infrastructure.writers.media__writer import MediaRenamer, RenameResult
 
 NOT_MATCHED_DIR_NAME = "not_matched"
 RENDERS_DIR_NAME = "renders"
-PERF_LIBRARY_DIR_NAME = "_performances"
-# Performance-library import tag, written as the first line of every render
-# prompt block (per `_performances/_testrig.md`). The library uses ONE generic,
-# model-agnostic prompt per entry (the user renders it on any model with their
-# own uploaded actor), so the tag carries no model marker:
-#   `演{NNNN}`   = the generic test video → `perf_{NNNN}/renders/` (original
-#                  name kept, so multiple models' renders coexist).
-#   `演{NNNN}始`  = the start-frame still → `perf_{NNNN}__startframe.{ext}`.
-# Kling names a download from the prompt's first ~9 chars, so this 5–6-char tag
-# lands in the filename and routes the file.
-_PERF_TAG = re.compile(r"演(\d{4})(始)?")
-_PERF_FOLDER_RE = re.compile(r"^perf_(\d{4})$")
 DEFAULT_TIME_WINDOW_SECONDS = 7 * 24 * 60 * 60
 DOWNLOADS_ENV_VAR = "AI_VIDEO_MGMT_DOWNLOADS_DIR"
 _BASENAME_INVALID = re.compile(r"[\x00-\x1f/\\:*?\"<>|]")
 # Edge guard for id-token matching — see `_token_hit`.
 _ASCII_ALNUM = re.compile(r"[a-z0-9]")
-# Scene background plates live in orientation sub-folders named
-# `bg{N}_{方位}_{描述}` (per ai_video scene-plate convention). The 方位
-# segment — the FIRST `_`-part after the `bg{N}_` prefix — is the routing key:
-# out-of-image tools (jimeng/即梦) name the download from the prompt's `主体:`
-# line, which opens with that 方位 word, so it reliably lands in the filename.
-# The 描述 segment is NOT used: descriptive words (`厅门`, `东侧`, …) also appear
-# as camera-walk references inside OTHER orientations' filenames and would
-# cross-match; the 方位 words are mutually exclusive.
-_PLATE_PREFIX = re.compile(r"^(?:s\d+_)?bg\d+_")
-_PLATE_NON_DEST = frozenset({NOT_MATCHED_DIR_NAME, RENDERS_DIR_NAME, "frames", "archive"})
+# Sub-folders of an asset that are never a view destination.
+_NON_VIEW_DIRS = frozenset({NOT_MATCHED_DIR_NAME, RENDERS_DIR_NAME, "frames", "archive"})
 PROPS_DIR_NAME = "props"
-# An OBJECT prop (ai_video.md rule 4d) — a prop whose identity needs several
+# An OBJECT prop — a prop whose identity needs several
 # camera angles, not one image — keeps each angle in its own view sub-folder
-# `v{N}_{视角}` under the prop folder, exactly like a scene's `bg{N}_{方位}_…`
-# plates. The 视角 segment (everything after the `v{N}_` prefix) is the routing
-# key and MUST be globally unique across the drama's prop views, because an
+# `v{N}_{视角}` under the prop folder. The 视角 segment (everything after the
+# `v{N}_` prefix) is the routing key and MUST be globally unique across the
+# drama's prop views, because an
 # out-of-image tool truncates the download filename to the prompt's first ~9
 # chars: a pinyin prop handle (`f80_ferrari_全景` → `f80_ferra`) loses the angle
 # entirely and all four views collide on one file. A leading Chinese view token
@@ -104,10 +73,7 @@ PROPS_DIR_NAME = "props"
 # norm for an anchor image).
 _PROP_VIEW_PREFIX = re.compile(r"^v\d+_")
 # A SUBJECT folder — `bg{N}_{主体名}`, exactly two segments — holds several named
-# views of one subject and one .md carrying all their prompts. A PLATE folder —
-# `bg{N}_{方位}_{描述}`, three or more — still holds exactly one canonical image.
-# The two must not be confused: treating a subject folder as a plate wipes the
-# whole folder on every import, so importing the second view deletes the first.
+# views of one subject and one .md carrying all their prompts.
 #
 # Routing key = `bg{N}-{M}` — subject N, view M — pure ASCII, digits and a hyphen,
 # ANYWHERE in the download name. Anchoring it to position 0 is wrong: generators
@@ -129,10 +95,9 @@ _PROP_VIEW_PREFIX = re.compile(r"^v\d+_")
 # key is the prompt's FIRST line, so it always precedes anything quoted from the
 # `参考:` line below it. `re.search` returns the leftmost match.
 # A subject folder needs BOTH signals — neither alone is enough:
-#   * shape `bg{N}_{主体名}` with exactly two segments (a plate usually has a
-#     third 描述 segment: `bg1_朝北_主位`), AND
+#   * shape `bg{N}_{主体名}` with exactly two segments, AND
 #   * content: it carries its own `{folder}.md` holding every view's prompt
-#     (a legacy two-segment plate like `bg5_高位俯瞰` has no such md).
+#     (an old two-segment plate folder like `bg5_高位俯瞰` has no such md).
 _SUBJECT_FOLDER = re.compile(r"^bg(\d+)_[^_]+$")
 _SUBJECT_KEY = re.compile(r"bg(\d+)-(\d+)")
 # Script-generated asset folders under a prop: written by the render/previz
@@ -150,16 +115,6 @@ _SUBJECT_KEY = re.compile(r"bg(\d+)-(\d+)")
 GENERATED_DIR_NAMES = frozenset(
     {"whitemodel", "previz", "_clay", "_blender", "planning", "ref", "mesh", _VIEWS_SUBDIR}
 )
-# A character-matched download that is an intro-card nameplate (its prompt opens
-# with `{角色} · 出场名牌卡 …`, ai_video.md rule 11d) routes to the character
-# folder's canonical `intro_card.{ext}` rather than landing under its raw name.
-_INTRO_CARD_MARKER = re.compile(r"名牌|出场卡|intro[ _]?card")
-# A scene-ROOT asset (whole-scene 立绘 / 全局建场底图 / walk-through), as opposed
-# to a directional `bg{N}_{方位}_` plate. Its filename carries one of these
-# markers; it must stay at the scene root and NOT be routed into a plate
-# sub-folder even when a 方位 token (e.g. `庙内`) appears as a substring of the
-# scene description (`小神庙内部` → spurious `庙内` plate match).
-_SCENE_ROOT_MARKER = re.compile(r"场景立绘|全局|建场|底图|巡游|环视|walk")
 _IMAGE_EXTS_LC = frozenset({".png", ".webp", ".jpg", ".jpeg"})
 # The grammars a download's routing key can belong to (`_leftmost_grammar`).
 _KEY_SCENE: str = "scene"
@@ -190,7 +145,7 @@ def _view_key(stem: str, folder_name: str) -> str | None:
 @dataclass(frozen=True)
 class _Candidate:
     folder: Path
-    kind: str  # "character" | "scene" | "shot"
+    kind: str  # "character" | "scene" | "prop" | "shot"
     tokens: tuple[str, ...]  # already lowercased
 
 
@@ -276,40 +231,26 @@ class DownloadsImporter:
                     result.unmatched.append({"from": self._display_src(src), "kind": "unmatched"})
                 continue
             elif chosen is None:
-                # Fallback: a scene background-plate download often carries only
-                # the 方位 token (`bg1_朝北_…`) with NO pinyin scene-name token —
-                # the out-of-image tool (kling/jimeng) truncates the filename to
-                # the prompt's first ~10 chars, where the early 方位 survives but
-                # the scene handle does not. Route by 方位 to the unique matching
-                # plate folder across the drama's scenes.
-                plate = self._match_plate_any_scene(src.name, drama_dir)
-                if plate is not None:
-                    dst_folder, kind = plate, "scene_plate"
-                else:
-                    # Same shape one level over: an object prop's view download
-                    # carries only its 视角 token (`车外全景`), never the pinyin
-                    # prop handle, so it matches no prop by name.
-                    view = self._match_view_any_prop(src.name, drama_dir)
-                    if view is None:
-                        # A `bg{N}` subject owned by both the episode and `_series/`
-                        # makes the any-scene fallback refuse — report why.
-                        subject = _SUBJECT_KEY.search(src.stem)
-                        conflict = conflicts.for_key(f"bg{subject.group(1)}") if subject else None
-                        if conflict is not None:
-                            result.errors.append({"path": self._display_src(src), "message": conflict.message(self._rel)})
-                            continue
-                        # Truly unmatched → NOT imported: leave the file in Downloads
-                        # untouched, only report it back (no not_matched/ folder).
-                        result.unmatched.append({"from": self._display_src(src), "kind": "unmatched"})
+                # An object prop's view download carries only its 视角 token
+                # (`车外全景`), never the pinyin prop handle, so it matches no
+                # prop by name.
+                view = self._match_view_any_prop(src.name, drama_dir)
+                if view is None:
+                    # A `bg{N}` subject owned by both the episode and `_series/`
+                    # makes the keyed route refuse — report why.
+                    subject = _SUBJECT_KEY.search(src.stem)
+                    conflict = conflicts.for_key(f"bg{subject.group(1)}") if subject else None
+                    if conflict is not None:
+                        result.errors.append({"path": self._display_src(src), "message": conflict.message(self._rel)})
                         continue
-                    dst_folder, kind = view, "prop_view"
+                    # Truly unmatched → NOT imported: leave the file in Downloads
+                    # untouched, only report it back (no not_matched/ folder).
+                    result.unmatched.append({"from": self._display_src(src), "kind": "unmatched"})
+                    continue
+                dst_folder, kind = view, "prop_view"
             else:
                 dst_folder, kind = chosen.folder, chosen.kind
-                if chosen.kind == "scene":
-                    plate = self._match_scene_plate(src.name, chosen.folder)
-                    if plate is not None:
-                        dst_folder, kind = plate, "scene_plate"
-                elif chosen.kind == "prop":
+                if chosen.kind == "prop":
                     view = self._match_prop_view(src.name, chosen.folder)
                     if view is not None:
                         dst_folder, kind = view, (
@@ -324,18 +265,15 @@ class DownloadsImporter:
             if conflict is not None:
                 result.errors.append({"path": self._display_src(src), "message": conflict.message(self._rel)})
                 continue
-            # Canonical-named destinations (one image per folder): an intro-card
-            # nameplate matched to a character → `{char}/intro_card.{ext}`; a prop
-            # download → `props/{道具}/{道具}.{ext}`. Everything else keeps its
-            # original download name (shot renders,立绘, scene plates).
+            # Canonical-named destinations: a keyed download is named from its key;
+            # a name-matched asset download from its view key (or the folder name).
+            # Shot renders keep their original download name.
             ext = src.suffix.lower()
             dst_name = src.name
             if keyed_name is not None:
                 # Named from the routing key alone — immune to whatever prefix or
                 # suffix the generator wrapped around it.
                 dst_name = keyed_name
-            elif kind == "character" and _INTRO_CARD_MARKER.search(src.name.lower()):
-                kind, dst_name = "intro_card", f"intro_card{ext}"
             elif kind in ("prop", "scene", "character"):
                 # A subject folder holds several named views of one subject
                 # (`广场/广场正向.png`, `玉佩/玉佩_完整.png`). The download is named
@@ -353,6 +291,16 @@ class DownloadsImporter:
                         or _view_key(src.stem, dst_folder.name)
                         or dst_folder.name)
                 dst_name = f"{_key}{ext}"
+            if kind == "shot" and production_key is not None:
+                # Six-module shots (ep1_s1_st1 keys): one generation = one folder under renders/ (follow-up 230), so the
+                # take and later its review sit together.
+                # The resolver only admits a new path whose parent exists, so renders/ is created (safely) first.
+                safe_renders = self._resolver.resolve(self._rel(dst_folder))
+                if safe_renders is None:
+                    result.errors.append({"path": self._display_src(src), "message": "invalid_destination"})
+                    continue
+                safe_renders.mkdir(parents=True, exist_ok=True)
+                dst_folder = dst_folder / Path(dst_name).stem
             safe_destination = self._resolver.resolve(self._rel(dst_folder))
             if safe_destination is None:
                 result.errors.append({"path": self._display_src(src), "message": "invalid_destination"})
@@ -362,18 +310,14 @@ class DownloadsImporter:
             except OSError as exc:
                 result.errors.append({"path": self._display_src(src), "message": f"mkdir_failed: {exc}"})
                 continue
-            # Overwrite semantics: a scene-plate folder holds exactly ONE
-            # canonical image ({plate_id}.ext) → clear stale media first. An
-            # intro card replaces only `intro_card.*` (NOT the立绘 etc. in the
-            # same character folder).
-            if kind in ("scene_plate", "prop_view"):
+            # Overwrite semantics: an object prop's `v{N}_{视角}` view folder holds
+            # exactly ONE canonical image → clear stale media first.
+            if kind == "prop_view":
                 self._clear_folder_media(dst_folder)
             elif kind in ("prop", "scene", "character", KIND_SUBJECT, KIND_VIEW, KIND_PROP_VIEW,
                           KIND_EQUIPMENT_VIEW):
                 # Overwrite only THIS view, never the folder's other views.
                 self._clear_named_media(dst_folder, Path(dst_name).stem)
-            elif kind == "intro_card":
-                self._clear_named_media(dst_folder, "intro_card")
             dst = dst_folder / dst_name
             if dst.exists():
                 try:
@@ -396,175 +340,6 @@ class DownloadsImporter:
         result.rename = rename_result.to_payload()
         return result
 
-    def import_performances(self, rel_path: str) -> ImportResult:
-        """One-click import for the performance library (`ai_videos/_performances`).
-
-        Unlike `import_drama` (which routes by drama character/scene/shot folder
-        names), this routes by the `演{NNNN}{克|即|始}` import tag carried in the
-        download filename (Kling/Seedance name the file from the prompt's first
-        chars, where the tag lives). The file lands in `{emotion}/perf_{NNNN}/`
-        renamed to its canonical name (`perf_{NNNN}__kling.mp4` /
-        `__seedance.mp4` / `__startframe.png`). Unmatched files are left in
-        Downloads untouched (not imported), only reported. No folder-name
-        rename pass — perf folders are ID-named and stable.
-        """
-        perf_root = self._renamer.validate_drama(rel_path)
-        if not self._downloads_dir.is_dir():
-            raise DownloadsDirMissingError(str(self._downloads_dir))
-        perf_folders = self._collect_perf_folders(perf_root)
-        cutoff = time.time() - self._window
-        result = ImportResult()
-        for src in self._iter_downloads(cutoff):
-            if not self._is_safe_basename(src.name):
-                result.errors.append({"path": self._display_src(src), "message": "invalid_basename"})
-                continue
-            tag = _PERF_TAG.search(src.name)
-            matched = tag is not None and tag.group(1) in perf_folders
-            if not matched:
-                # Unmatched → NOT imported: left in Downloads, only reported.
-                result.unmatched.append({"from": self._display_src(src), "kind": "unmatched"})
-                continue
-            num, is_startframe = tag.group(1), tag.group(2) == "始"
-            perf_dir = perf_folders[num]
-            if is_startframe:
-                # single canonical reference frame
-                dst_folder = perf_dir
-                dst = perf_dir / f"perf_{num}__startframe{src.suffix.lower()}"
-                kind = "performance_startframe"
-            else:
-                # generic test video → renders/ keeping the original name so
-                # multiple models' renders for the same entry coexist.
-                dst_folder = perf_dir / RENDERS_DIR_NAME
-                dst = dst_folder / src.name
-                kind = "performance_video"
-            try:
-                dst_folder.mkdir(parents=True, exist_ok=True)
-            except OSError as exc:
-                result.errors.append({"path": self._display_src(src), "message": f"mkdir_failed: {exc}"})
-                continue
-            if dst.exists():
-                # Re-render of the same (perf, role): overwrite the canonical file.
-                try:
-                    dst.unlink()
-                except OSError as exc:
-                    result.errors.append({"path": self._display_src(src), "message": f"overwrite_failed: {exc}"})
-                    continue
-            try:
-                shutil.move(str(src), str(dst))
-            except OSError as exc:
-                result.errors.append({"path": self._display_src(src), "message": f"move_failed: {exc}"})
-                continue
-            result.moved.append({"from": self._display_src(src), "to": self._rel(dst), "kind": kind})
-        return result
-
-    def import_actors(self, rel_path: str) -> ImportResult:
-        """One-click import for the actor pool (`ai_videos/_actors`), follow-up 124.
-
-        Counterpart to prompt-only generation: each prompt-only actor's face /
-        body prompt was prefixed with an `id{NNNN}{f|b}` tag, which Kling /
-        Seedance carry into the downloaded filename (named from the prompt's
-        first chars). This routes each download back to its `actor_{NNNN}/`
-        folder by that tag, re-encodes it to the actor's canonical
-        `{ethnicity}__{gender}__{age_range}.jpg` (face) or `...__body.jpg`
-        (body) — the names `_find_actor_jpg` / `list_actors` look for — so an
-        externally-rendered actor surfaces in the pool exactly like a
-        Kling-generated one. Unmatched files are left in Downloads untouched
-        (not imported), only reported. No folder-name rename pass: actor
-        folders are ID-named and stable.
-        """
-        actors_root = (self._exposed.root / "ai_videos" / ACTORS_DIR_NAME).resolve()
-        if not self._downloads_dir.is_dir():
-            raise DownloadsDirMissingError(str(self._downloads_dir))
-        actor_folders = self._collect_actor_folders(actors_root)
-        cutoff = time.time() - self._window
-        result = ImportResult()
-        for src in self._iter_downloads(cutoff):
-            if not self._is_safe_basename(src.name):
-                result.errors.append({"path": self._display_src(src), "message": "invalid_basename"})
-                continue
-            tag = _ACTOR_IMPORT_TAG.search(src.name)
-            num = int(tag.group(1)) if tag is not None else None
-            matched = num is not None and num in actor_folders
-            if not matched:
-                # Unmatched → NOT imported: left in Downloads, only reported.
-                result.unmatched.append({"from": self._display_src(src), "kind": "unmatched"})
-                continue
-            is_body = tag.group(2).lower() == "b"
-            actor_dir = actor_folders[num]
-            attrs = ActorPool._parse_sidecar(actor_dir / f"{actor_dir.name}.md")
-            if attrs is None:
-                result.errors.append({"path": self._display_src(src), "message": "sidecar_unreadable"})
-                continue
-            fname = _attrs_to_body_filename(attrs) if is_body else _attrs_to_filename(attrs)
-            dst = actor_dir / fname
-            kind = "actor_body" if is_body else "actor_face"
-            try:
-                self._reencode_to_jpeg(src, dst)
-            except (OSError, ValueError) as exc:
-                result.errors.append({"path": self._display_src(src), "message": f"convert_failed: {exc}"})
-                continue
-            result.moved.append({"from": self._display_src(src), "to": self._rel(dst), "kind": kind})
-        return result
-
-
-
-
-    @staticmethod
-    def _collect_actor_folders(actors_root: Path) -> dict[int, Path]:
-        """Map each actor's numeric id to its `actor_{NNNN}/` folder."""
-        folders: dict[int, Path] = {}
-        try:
-            entries = sorted(actors_root.iterdir(), key=lambda p: p.name)
-        except OSError:
-            return folders
-        for entry in entries:
-            if not entry.is_dir() or entry.is_symlink():
-                continue
-            m = _ACTOR_DIR_RE.match(entry.name)
-            if m:
-                folders[int(m.group(1))] = entry
-        return folders
-
-    @staticmethod
-    def _reencode_to_jpeg(src: Path, dst: Path) -> None:
-        """Transcode a downloaded image to JPEG at `dst` (overwriting any
-        existing canonical jpg), then delete the source. Actor lookup keys off
-        a `.jpg` canonical name, so a downloaded png/webp must be re-encoded,
-        not merely moved — and re-encoding a same-name jpg is harmless."""
-        with Image.open(src) as im:
-            buf = BytesIO()
-            im.convert("RGB").save(buf, format="JPEG", quality=92)
-        dst.write_bytes(buf.getvalue())
-        try:
-            src.unlink()
-        except OSError:
-            pass
-
-    @staticmethod
-    def _collect_perf_folders(perf_root: Path) -> dict[str, Path]:
-        """Map each 4-digit perf number to its `{emotion}/perf_{NNNN}/` folder."""
-        folders: dict[str, Path] = {}
-        try:
-            emotion_dirs = sorted(perf_root.iterdir(), key=lambda p: p.name)
-        except OSError:
-            return folders
-        for emotion_dir in emotion_dirs:
-            if not emotion_dir.is_dir() or emotion_dir.is_symlink():
-                continue
-            if emotion_dir.name.startswith("_"):
-                continue
-            try:
-                perf_dirs = sorted(emotion_dir.iterdir(), key=lambda p: p.name)
-            except OSError:
-                continue
-            for perf_dir in perf_dirs:
-                if not perf_dir.is_dir() or perf_dir.is_symlink():
-                    continue
-                m = _PERF_FOLDER_RE.match(perf_dir.name)
-                if m:
-                    folders[m.group(1)] = perf_dir
-        return folders
-
     def _collect_candidates(self, drama_dir: Path) -> list[_Candidate]:
         out: list[_Candidate] = []
         # Props (`2_世界观人设/props/{道具名}/`) are a sibling of characters/scenes.
@@ -583,58 +358,13 @@ class DownloadsImporter:
             for ep in sorted(episodes_dir.iterdir()):
                 if not ep.is_dir() or ep.is_symlink():
                     continue
-                # Shot folders live under episodes/{ep}/shots/ (renamed from
-                # the legacy prompts/ per ai_video rule 2 v3). Accept either.
+                # Six-module shot folders `scenes/sN/shots/stN/`, keyed by their
+                # full `ep{N}_s{N}_st{N}` key.
                 for shot in drama_layout.episode_shot_dirs(ep):
                     key = folder_shot_key(shot)
                     if key is not None:
                         out.append(_Candidate(shot / RENDERS_DIR_NAME, "shot", (key.value,)))
-                shots_dir = ep / "shots"
-                if not shots_dir.is_dir():
-                    shots_dir = ep / "prompts"
-                if not shots_dir.is_dir():
-                    continue
-                self._append_shot_candidates(out, shots_dir, ep.name)
-        # Single-piece (`sub_type=short` / MV) dramas keep shots FLAT at
-        # `5_6_分镜与prompt/shots/shot{NN}/` with no episodes layer. Without this
-        # branch they contribute ZERO shot candidates and every shot render falls
-        # through to whatever character/scene token the 参考 line left in the
-        # filename (xianjian_yi_mv, 2026-08-02 and again 2026-09-06).
-        flat_shots_dir = drama_layout.shots_dir(drama_dir)
-        if flat_shots_dir.is_dir():
-            self._append_shot_candidates(out, flat_shots_dir, "")
         return out
-
-    def _append_shot_candidates(
-        self, out: list[_Candidate], shots_dir: Path, ep_name: str
-    ) -> None:
-        """Append one `kind="shot"` candidate per shot folder. `ep_name` is the
-        owning episode, or "" for a flat single-piece drama."""
-        for shot in sorted(shots_dir.iterdir()):
-            if not shot.is_dir() or shot.is_symlink():
-                continue
-            tokens = self._tokens(shot.name)
-            extra: list[str] = []
-            if ep_name:
-                extra.append(f"{ep_name}_{shot.name}".lower())
-                extra.append(ep_name.lower())
-                # Compact Chinese tag `{NN}集{NN}镜` — matches the filename
-                # Kling derives from the shot block's first line
-                # `{NN}集{NN}镜{视|始|末}` (ai_video rule 12.4). The ASCII
-                # `epNN_shotNN` first line truncated to Kling's 9-char window
-                # as `ep01_shot` (shot number lost → every episode render
-                # collided); the Chinese tag fits ep+shot inside 9 chars.
-                ep_digits = re.sub(r"\D", "", ep_name)
-                shot_digits = re.sub(r"\D", "", shot.name)
-                if ep_digits and shot_digits:
-                    extra.append(f"{ep_digits}集{shot_digits}镜")
-            tokens = tuple(dict.fromkeys((*tokens, *extra)))
-            # Shot media goes into the shot's renders/ subfolder so the
-            # start/end/video outputs coexist with original names and
-            # don't clutter or collide with shot{NN}.md.
-            out.append(
-                _Candidate(folder=shot / RENDERS_DIR_NAME, kind="shot", tokens=tokens)
-            )
 
     @staticmethod
     def _tokens(folder_name: str) -> tuple[str, ...]:
@@ -659,37 +389,6 @@ class DownloadsImporter:
             return hits[0] if len(hits) == 1 else None
         if SHOT_KEY_HINT_RE.search(name):
             return None
-        # The compact shot tag `{NN}集{NN}镜` is the AUTHORITATIVE routing key for
-        # a shot render: Kling/jimeng name the download from the shot block's
-        # first line `{NN}集{NN}镜{视|始|末}` (ai_video rule 12.4 / 2026-05-30), so
-        # its presence unambiguously identifies the owning shot. It MUST win
-        # outright over length-based scoring — a shot's `参考:` line now embeds
-        # the scene-plate handle it references (e.g. `s4_回忆庭院·bg1_…`), so the
-        # scene name appears in the render filename and, being a longer token,
-        # would otherwise out-score the shot tag and misroute the render into the
-        # scene folder (follow-up wushen_juexing/026).
-        tag_m = re.search(r"(\d+)集(\d+)镜", filename)
-        if tag_m is not None:
-            tag = f"{tag_m.group(1)}集{tag_m.group(2)}镜"
-            for cand in candidates:
-                if cand.kind == "shot" and tag in cand.tokens:
-                    return cand
-        # A single-piece drama has no episode, so no `{NN}集{NN}镜` tag: the shot
-        # folder name itself (`shot12`) is the prompt block's first line and the
-        # authoritative key. It too must win OUTRIGHT over length-based scoring —
-        # the render filename also carries the 参考 line's handles (`c8_落拓剑客`,
-        # 8 chars) which out-score `shot12` (6) and pull the render into
-        # `characters/`. Only an UNAMBIGUOUS hit routes: in a multi-episode drama
-        # the same `shot03` exists under several episodes, and those must keep
-        # falling through to the episode-scoped scoring below.
-        shot_m = re.search(r"shot\d+", name)
-        if shot_m is not None:
-            hits = [
-                c for c in candidates
-                if c.kind == "shot" and c.folder.parent.name.lower() == shot_m.group(0)
-            ]
-            if len(hits) == 1:
-                return hits[0]
         kind_priority = {"shot": 4, "prop": 3, "scene": 2, "character": 1}
         best: tuple[int, int, str, _Candidate] | None = None  # (score, kind_rank, folder_name_lex, candidate)
         for cand in candidates:
@@ -762,8 +461,8 @@ class DownloadsImporter:
     @staticmethod
     def _clear_folder_media(folder: Path) -> None:
         """Delete top-level media files in a folder (overwrite support for
-        single-image scene-plate folders). Subfolders, non-media, and symlinks
-        are left untouched."""
+        single-image `v{N}_{视角}` view folders). Subfolders, non-media, and
+        symlinks are left untouched."""
         try:
             entries = list(folder.iterdir())
         except OSError:
@@ -777,8 +476,8 @@ class DownloadsImporter:
 
     @staticmethod
     def _clear_named_media(folder: Path, stem: str) -> None:
-        """Delete `{stem}.{img ext}` files in a folder (intro-card re-import:
-        replace only `intro_card.*`, never the character's other images)."""
+        """Delete `{stem}.{img ext}` files in a folder (re-import of one view:
+        replace only that view, never the folder's other images)."""
         try:
             entries = list(folder.iterdir())
         except OSError:
@@ -790,17 +489,6 @@ class DownloadsImporter:
                     child.unlink()
             except OSError:
                 pass
-
-    @staticmethod
-    def _plate_orientation_token(folder_name: str) -> str | None:
-        """The 方位 routing token of a `bg{N}_{方位}_{描述}` plate folder:
-        the first `_`-segment after the `bg{N}_` prefix. Returns None for
-        folders that don't follow the plate convention."""
-        m = _PLATE_PREFIX.match(folder_name)
-        if m is None:
-            return None
-        token = folder_name[m.end():].split("_", 1)[0].strip().lower()
-        return token or None
 
     @staticmethod
     def _subject_number(name: str) -> int | None:
@@ -830,43 +518,12 @@ class DownloadsImporter:
             return None
         return self._scene_router.subject(key.subject, drama_dir)
 
-    @classmethod
-    def _match_scene_plate(cls, filename: str, scene_folder: Path) -> Path | None:
-        """When a file matched a scene, route it deeper into the orientation
-        plate sub-folder whose 方位 token appears in the filename. Files with
-        no 方位 token (e.g. the scene walk-through `.mp4`) — or whole-scene assets
-        (场景立绘 / 全局建场底图), whose description can spuriously contain a 方位
-        substring — stay at the scene root."""
-        if _SCENE_ROOT_MARKER.search(filename):
-            return None
-        name = filename.lower()
-        hits: list[tuple[int, Path]] = []
-        try:
-            children = sorted(scene_folder.iterdir(), key=lambda p: p.name)
-        except OSError:
-            return None
-        for child in children:
-            if not child.is_dir() or child.is_symlink() or child.name in _PLATE_NON_DEST:
-                continue
-            if cls._is_subject_folder(child):
-                continue
-            token = cls._plate_orientation_token(child.name)
-            if token is None or token not in name:
-                continue
-            hits.append((len(token), child))
-        if not hits:
-            return None
-        longest = max(size for size, _ in hits)
-        winners = [path for size, path in hits if size == longest]
-        return winners[0] if len(winners) == 1 else None
-
     @staticmethod
     def _prop_view_token(folder_name: str) -> str | None:
         """The 视角 routing token of an object prop's `v{N}_{视角}` view folder:
-        everything after the `v{N}_` prefix. Unlike a scene plate — whose 描述
-        tail is dropped because 描述 words cross-match other orientations — the
-        WHOLE tail is the token here: an object's view names (`车外全景`,
-        `车外正面`) are mutually exclusive by construction and carry no tail."""
+        everything after the `v{N}_` prefix. The WHOLE tail is the token: an
+        object's view names (`车外全景`, `车外正面`) are mutually exclusive by
+        construction and carry no tail."""
         m = _PROP_VIEW_PREFIX.match(folder_name)
         if m is None:
             return None
@@ -885,7 +542,7 @@ class DownloadsImporter:
         except OSError:
             return None
         for child in children:
-            if not child.is_dir() or child.is_symlink() or child.name in _PLATE_NON_DEST:
+            if not child.is_dir() or child.is_symlink() or child.name in _NON_VIEW_DIRS:
                 continue
             token = cls._prop_view_token(child.name)
             if token is None or token not in name:
@@ -916,7 +573,7 @@ class DownloadsImporter:
             except OSError:
                 continue
             for child in children:
-                if not child.is_dir() or child.is_symlink() or child.name in _PLATE_NON_DEST:
+                if not child.is_dir() or child.is_symlink() or child.name in _NON_VIEW_DIRS:
                     continue
                 token = self._prop_view_token(child.name)
                 if token is None or token not in name:
@@ -925,44 +582,6 @@ class DownloadsImporter:
                 if prop_present:
                     prop_scoped_hits.append(child)
         pool = prop_scoped_hits or all_hits
-        unique = {p.resolve() for p in pool}
-        return pool[0] if len(unique) == 1 else None
-
-    def _match_plate_any_scene(self, filename: str, drama_dir: Path) -> Path | None:
-        """Route a scene background-plate download by its 方位 token alone, when
-        `_classify` found no scene-name match.
-
-        Out-of-image tools truncate the download filename to the prompt's first
-        ~10 chars; for a plate prompt whose first line is the plate_id
-        (`bg{N}_{方位}_…`) the EARLY 方位 token survives but the pinyin scene
-        handle does not — so the file never matches a scene by name. This scans
-        every plate folder under `scenes/*/bg{N}_{方位}_…/` and routes the file
-        to the one whose 方位 token appears in the filename. Disambiguation when
-        more than one scene owns the same 方位: keep only plates whose SCENE name
-        token also appears in the filename; route iff that leaves exactly one
-        plate folder (else None → not_matched, never a silent misroute).
-        """
-        name = filename.lower()
-        all_hits: list[Path] = []
-        scene_scoped_hits: list[Path] = []
-        for scene in series_shared.asset_dirs(drama_dir, drama_layout.background_dir):
-            scene_present = any(tok in name for tok in self._tokens(scene.name))
-            try:
-                children = sorted(scene.iterdir(), key=lambda p: p.name)
-            except OSError:
-                continue
-            for child in children:
-                if not child.is_dir() or child.is_symlink() or child.name in _PLATE_NON_DEST:
-                    continue
-                if self._is_subject_folder(child):
-                    continue
-                token = self._plate_orientation_token(child.name)
-                if token is None or token not in name:
-                    continue
-                all_hits.append(child)
-                if scene_present:
-                    scene_scoped_hits.append(child)
-        pool = scene_scoped_hits or all_hits
         unique = {p.resolve() for p in pool}
         return pool[0] if len(unique) == 1 else None
 

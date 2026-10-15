@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""一个 shot 的**镜头平面图（overhead）** —— 分层出片的第二层（ai_video.md rule 4j，2026-09-25 修订）。
+"""一个 shot 的**镜头平面图（overhead）** —— 分层出片的第二层（见 `.agents/skills/ai-videos-pipeline/modules/prompts-overhead.md`）。
 
     ① 场景层  scene blend + 场地平面图 floor plan（`tools/build_floorplan.py`）—— 静态的地方
     ② 本工具  每镜一张 overhead：镜头怎么走、每个人怎么走、建筑与物件在哪——**不管动作细节与形状**
@@ -42,6 +42,8 @@ from __future__ import annotations
 
 import functools
 import argparse
+import hashlib
+import json
 import math
 import os
 import re
@@ -54,6 +56,7 @@ from PIL import Image, ImageDraw
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 from tools import build_floorplan  # noqa: E402
+from tools import episode_shots as es  # noqa: E402
 from tools.previz import planschema  # noqa: E402
 from tools.previz.planstyle import (  # noqa: E402
     ACCENT, INK, MUTED, PAPER, PANEL_BG, SOFT, font, halo, badge, north_arrow, scale_bar, title_block, footer,
@@ -69,6 +72,8 @@ KEYS = {
     "actor": {"key", "label", "count", "path", "note", "shield", "shield_t", "enter", "gone", "idle", "moved", "alert_t"},   # alert_t：人物第一次察觉这个敌人（听见 / 看见）的时刻，szzl 引擎反应时间闸门读   # moved：与上一镜之间在画外挪了位（写理由，8f 站位 4）
     "object": {"label", "xy", "size", "rot", "key", "note", "h"},       # h：离地高（m），只给 previz 用；缺省 1 m
     "beat": {"t0", "t1", "text"},
+    # 姿态（六模块剧，previz 用）：who 写 actor 的 key 或 label，pose 写 build_previz 的姿态名（站 / 坐 / 伸手 …，可用 + 叠加），从 t 起生效
+    "pose": {"t", "who", "pose"},
     # 护人格挡（follow-up 032）：who 在 [t0, t1] 里必须站在 protects 与 threat 之间、面朝 threat（盾面朝 threat）。
     # who / protects / threat 写 actor 的 key 或 label（同卡多只的怪用 label 区分）。
     "guard": {"t0", "t1", "who", "protects", "threat", "shield", "note"},
@@ -167,6 +172,12 @@ def _drama_root(shot_dir: Path) -> Path:
     raise Bad("%s 往上找不到剧目录（没有 2_世界观人设/）" % shot_dir)
 
 
+def _scenes_root(drama: Path) -> Path:
+    """场景资产根：旧剧 `2_世界观人设/scenes`，六模块剧迁到了 `2_世界观人设/background`。"""
+    old = drama / "2_世界观人设" / "scenes"
+    return old if old.is_dir() else drama / "2_世界观人设" / "background"
+
+
 @functools.lru_cache(maxsize=None)     # 场景树一次运行里不变（os.walk 全树很慢）
 def _bg_dir(scenes: Path, bg: str) -> Path:
     for dirpath, dirs, _ in os.walk(scenes):
@@ -177,6 +188,14 @@ def _bg_dir(scenes: Path, bg: str) -> Path:
 
 
 def _shot_md(shot_dir: Path) -> tuple[str, float, str, set[str]]:
+    if es.is_episode_shot(shot_dir):        # 六模块剧：时长与出场人物从 filming.json 读，人物键换成人物卡目录名
+        try:
+            info = es.episode_shot(shot_dir)
+            drama = es.drama_root(shot_dir)
+            chars = {es.card_dir(drama, k).name for k in info["shot"].get("cast", [])}
+        except es.ShotError as e:
+            raise Bad(str(e))
+        return info["key"], float(info["shot"]["duration"]), "", chars
     f = shot_dir / (shot_dir.name + ".md")
     if not f.is_file():
         raise Bad("没有 %s —— overhead 的时长与入画人物都从它读" % f.name)
@@ -351,9 +370,13 @@ def previz_decision(cfg: dict, secs: float) -> tuple[bool, str]:
     return want, why or ("；".join(trig) if trig else "简单镜，overhead 图足够")
 
 
-def actor_colors(cfg: dict) -> dict[str, tuple]:
+def actor_colors(cfg: dict, shot_dir: Path | None = None) -> dict[str, tuple]:
     """人物色按卡号固定（c1 永远同一色），跨镜一致——同一个人换一镜换一个颜色，读图的人与模型都会认错。
-    同镜撞色的按卡号从小到大顺延到下一个空色。"""
+    同镜撞色的按卡号从小到大顺延到下一个空色。六模块剧读 workflow.json 的 figure_colors（与 previz 人偶同色）。"""
+    if shot_dir is not None and es.is_episode_shot(shot_dir):
+        keys = [a["key"].split("_", 1)[0] for a in cfg.get("actor", [])]
+        named = es.figure_colors(es.drama_root(shot_dir), keys)
+        return {a["key"]: es.FIGURE_RGB[named[a["key"].split("_", 1)[0]]] for a in cfg.get("actor", [])}
     def num(k: str) -> tuple[int, int]:
         m = re.match(r"([a-z])(\d+)", k)
         return ((0 if m.group(1) == "c" else 1), int(m.group(2))) if m else (2, 0)
@@ -1346,7 +1369,7 @@ def render(shot_dir: Path) -> tuple[Path | None, list[str], list[str]]:
     cfg = load(shot_dir)
     drama = _drama_root(shot_dir)
     bg = cfg["meta"]["scene"]
-    bg_dir = _bg_dir(drama / "2_世界观人设" / "scenes", bg)
+    bg_dir = _bg_dir(_scenes_root(drama), bg)
     owner, _ptr = planschema.resolve(str(bg_dir))
     site = planschema.load(owner)
     title, secs, jb, chars = _shot_md(shot_dir)
@@ -1400,7 +1423,7 @@ def render(shot_dir: Path) -> tuple[Path | None, list[str], list[str]]:
         halo(d, (x0_, y0_ - 16), "◇%s（%g–%gs）" % (pr["label"], float(pr["path"][0][0]), float(pr.get("gone", pr["path"][-1][0]))),
              f_s, OBJ_COL)
     # 人物走位
-    colors = actor_colors(cfg)
+    colors = actor_colors(cfg, shot_dir)
     for i, a in enumerate(cfg.get("actor", [])):
         col = colors[a["key"]]
         pts = [P(float(p[1]), float(p[2])) for p in a["path"]]
@@ -1538,6 +1561,11 @@ def render(shot_dir: Path) -> tuple[Path | None, list[str], list[str]]:
     out = shot_dir / "planning" / ("%s_overhead.png" % shot_dir.name)
     img.save(out)
     render_ref(shot_dir, cfg, planschema.with_derived(site), secs)
+    if es.is_episode_shot(shot_dir):        # 六模块剧：要不要 previz 落盘，编译器按它挑运动参考（previz 视频 / overhead 图）
+        decision = {"previz": need_pv, "why": pv_why,
+                    "overhead_sha256": hashlib.sha256((shot_dir / "planning" / "overhead.toml").read_bytes()).hexdigest()}
+        (shot_dir / "planning" / "previz.json").write_text(json.dumps(decision, ensure_ascii=False, indent=2) + "\n",
+                                                           encoding="utf-8", newline="\n")
     return out, bad, warn
 
 
@@ -1661,7 +1689,7 @@ def render_ref(shot_dir: Path, cfg: dict, site: dict, secs: float) -> Path:
                        font(28, bold=True), ACCENT, 40))
 
     # 人
-    colors = actor_colors(cfg)
+    colors = actor_colors(cfg, shot_dir)
     for i, a in enumerate(cfg.get("actor", [])):
         col = colors[a["key"]]
         raw = a["path"]
@@ -1779,7 +1807,10 @@ def _wrap(d: ImageDraw.ImageDraw, txt: str, f, width: int) -> list[str]:
 
 
 def run_all(ep_dir: Path, check_only: bool) -> int:
-    shots = sorted(p for p in (ep_dir / "shots").iterdir() if p.is_dir())
+    if (ep_dir / "filming.json").is_file():       # 六模块剧：按 filming.json 的播放顺序，每镜都必须有 overhead
+        shots = es.episode_shot_dirs(ep_dir)
+    else:
+        shots = sorted(p for p in (ep_dir / "shots").iterdir() if p.is_dir())
     rows, nbad = [], 0
     for sd in shots:
         pv = "—"
@@ -1787,7 +1818,7 @@ def run_all(ep_dir: Path, check_only: bool) -> int:
             cfg = load(sd)
             if check_only:
                 drama = _drama_root(sd)
-                owner, _ = planschema.resolve(str(_bg_dir(drama / "2_世界观人设" / "scenes", cfg["meta"]["scene"])))
+                owner, _ = planschema.resolve(str(_bg_dir(_scenes_root(drama), cfg["meta"]["scene"])))
                 title, secs, jb, chars = _shot_md(sd)
                 bad, warn = gate(cfg, planschema.with_derived(planschema.load(owner)), secs, chars, jb)
                 out = None
@@ -1803,7 +1834,7 @@ def run_all(ep_dir: Path, check_only: bool) -> int:
             print("  ✗ %s: %s" % (sd.name, b))
         for w_ in warn:
             print("  ⚠ %s: %s" % (sd.name, w_))
-        rows.append((sd.name, out, bad, warn, pv))
+        rows.append((sd.relative_to(ep_dir).as_posix(), out, bad, warn, pv))
     if not check_only:
         md = ["# %s 镜头平面图（overhead）索引" % ep_dir.name, "",
               "> 生成物：`python tools/shot_overhead.py --all %s`。改走位 ＝ 改各镜 `planning/overhead.toml` 重跑。"
@@ -1814,10 +1845,10 @@ def run_all(ep_dir: Path, check_only: bool) -> int:
               "| 镜 | 状态 | 审阅图 | Seedance 图 | previz |", "|---|---|---|---|---|"]
         for name, out, bad, warn, pv in rows:
             st = "❌ %d" % len(bad) if bad else ("⚠ %d" % len(warn) if warn else "✅")
-            ref = ref_path(ep_dir / "shots" / name)
+            ref = ref_path(ep_dir / name)
             md.append("| %s | %s | %s | %s | %s |" % (
-                name, st, "[%s](shots/%s/planning/%s)" % (out.name, name, out.name) if out else "—",
-                "[%s](shots/%s/planning/%s)" % (ref.name, name, ref.name) if out else "—", pv))
+                name, st, "[%s](%s/planning/%s)" % (out.name, name, out.name) if out else "—",
+                "[%s](%s/planning/%s)" % (ref.name, name, ref.name) if out else "—", pv))
         (ep_dir / "overheads.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("%d 镜 · blocker %d · warning %d · previz 要 %d" % (
         len(rows), nbad, sum(len(r[3]) for r in rows), sum(1 for r in rows if r[4].startswith("**要"))))

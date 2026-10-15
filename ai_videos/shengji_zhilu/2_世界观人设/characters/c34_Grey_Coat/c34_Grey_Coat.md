@@ -40,7 +40,7 @@
 | 口音 | 未定（开口时按 casting.md 口音口径定） |
 
 **铁律**（rule 12.4-H）：全剧 / 跨集只用这一个 `voice_id`，不同镜只改**情绪 / 语速**，**不换音色**。
-与 `../../casting.md` 双向一致（机检：`python tools/check_stage2.py`）。
+与 `../../casting.md` 双向一致（原机检工具 check_stage2 已随旧流程删除，2026-10-11）。
 
 ---
 

@@ -1,4 +1,4 @@
-"""Object-prop view routing (ai_video.md rule 4d, follow-up duikang_shangzeng/006).
+"""Object-prop view routing (follow-up duikang_shangzeng/006).
 
 An OBJECT prop — one whose identity needs several camera angles rather than a
 single image — keeps each angle in its own `v{N}_{视角}` sub-folder under the

@@ -171,11 +171,11 @@ def test_prop_key_beats_a_later_name_word_and_loses_to_an_earlier_scene_key(tmp_
 
 def test_shot_render_quoting_a_prop_key_stays_in_the_shot(tmp_path: Path) -> None:
     root, _props, downloads = _drama(tmp_path)
-    shot = root / "ai_videos" / "d" / "5_6_分镜与prompt" / "episodes" / "ep01" / "shots" / "shot03"
-    _touch(shot / "shot03.md", b"shot")
-    _touch(downloads / "01集03镜视 参考 p15-1_正面.mp4", b"render")
+    shot = root / "ai_videos" / "d" / "episodes" / "ep01" / "scenes" / "s1" / "shots" / "st3"
+    _touch(shot / "prompt.txt", b"shot")
+    _touch(downloads / "ep1_s1_st3 参考 p15-1_正面.mp4", b"render")
 
     result = _run(root, downloads)
 
     assert [m["kind"] for m in result.moved] == ["shot"]
-    assert (shot / "renders" / "01集03镜视 参考 p15-1_正面.mp4").is_file()
+    assert (shot / "renders" / "ep1_s1_st3 参考 p15-1_正面" / "ep1_s1_st3 参考 p15-1_正面.mp4").is_file()

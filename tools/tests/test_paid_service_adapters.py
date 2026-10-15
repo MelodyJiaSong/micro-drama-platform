@@ -8,8 +8,6 @@ import re
 import sys
 from pathlib import Path
 
-import pytest
-
 ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -67,20 +65,6 @@ def test_hyper3d_multipart_and_poll_are_logged_without_network(tmp_path, monkeyp
     monkeypatch.setattr(adapter, "_post_json_once", lambda *args: {"jobs": [{"status": "Done"}]})
     adapter.wait("secret", "job-key", 600, target=output)
     assert events(log)[2]["request"]["body"]["subscription_key"] == "job-key"
-
-
-def test_cascadeur_requires_owner_and_logs_full_code_before_call(tmp_path, monkeypatch):
-    adapter = load("tools.cascadeur.casc_run", monkeypatch)
-    monkeypatch.delenv("REQUEST_LOG_TARGET", raising=False)
-    code = "print('动作时间轴')\n" * 200
-    output = tmp_path / "ai_videos/demo/episodes/ep02/shots/shot01/action.fbx"
-    log = adapter.RequestLog(output).path
-    def call(script, timeout):
-        assert events(log)[0]["request"]["body"]["code"] == script == code
-        return {"ok": True}
-    monkeypatch.setattr(adapter, "_run_once", call)
-    with pytest.raises(ValueError): adapter.run(code)
-    assert adapter.run(code, target=output)["ok"]
 
 
 def test_generator_submission_callers_provide_log_scope():

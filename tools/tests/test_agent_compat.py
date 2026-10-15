@@ -19,7 +19,7 @@ def run_tool(root: Path, name: str, *args: str) -> subprocess.CompletedProcess[s
 
 
 def copy_tool(root: Path, name: str) -> None:
-    (root / "tools").mkdir(exist_ok=True)
+    (root / "tools" / name).parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(REPO / "tools" / name, root / "tools" / name)
 
 
@@ -153,46 +153,3 @@ def test_unmapped_claude_body_is_reported_and_preserved(skill_repo: Path) -> Non
     assert entry.read_text(encoding="utf-8") == "a separate handwritten workflow"
     assert not (entry.parent.parent / "ai-videos-test").exists()
 
-
-@pytest.fixture
-def shot_repo(tmp_path: Path) -> tuple[Path, Path, Path]:
-    copy_tool(tmp_path, "seedance_kit.py")
-    drama = tmp_path / "ai_videos" / "test_drama"
-    shot = drama / "5_6_分镜与prompt" / "episodes" / "ep01" / "shots" / "shot01" / "shot01.md"
-    shot.parent.mkdir(parents=True)
-    (drama / "seedance.toml").write_text('entity_prefix = "test"\n', encoding="utf-8")
-    shot.write_text(
-        "## Reference uploads\n- 图 → [`ref.png`](ref.png)\n\n"
-        "## Seedance prompt\n```text\n参考: `图(立绘)=>@`\n画面: 测试\n比例: 16:9\n```\n",
-        encoding="utf-8",
-    )
-    ref = shot.parent / "ref.png"
-    ref.write_bytes(b"isolated reference asset")
-    return tmp_path, shot, ref
-
-
-def test_seedance_sync_reports_failure_and_recovers(shot_repo: tuple[Path, Path, Path]) -> None:
-    root, shot, ref = shot_repo
-    ref.unlink()
-    failed = run_tool(root, "seedance_kit.py", "sync", str(shot))
-    assert failed.returncode == 1
-    assert "修复后 1 个仍未对齐，1 个构建失败" in failed.stdout
-    kit = shot.parent / "资料包"
-    assert json.loads((kit / "kit.json").read_text(encoding="utf-8"))["version"] == -1
-    ref.write_bytes(b"restored asset")
-    fixed = run_tool(root, "seedance_kit.py", "sync", str(shot))
-    assert fixed.returncode == 0
-    assert "修复后 0 个仍未对齐，0 个构建失败" in fixed.stdout
-    assert run_tool(root, "seedance_kit.py", "check", str(shot)).returncode == 0
-    assert "=>@图片1" in (kit / "prompt.txt").read_text(encoding="utf-8")
-
-
-def test_seedance_quiet_sync_cannot_hide_missing_reference(shot_repo: tuple[Path, Path, Path]) -> None:
-    root, shot, ref = shot_repo
-    assert run_tool(root, "seedance_kit.py", "sync", str(shot)).returncode == 0
-    ref.unlink()
-    failed = run_tool(root, "seedance_kit.py", "sync", "--all", "--quiet")
-    assert failed.returncode == 1 and "资料包暂不可用" in failed.stdout
-    kit = shot.parent / "资料包"
-    assert not list(kit.glob("*.png"))
-    assert run_tool(root, "seedance_kit.py", "check", str(shot)).returncode == 1

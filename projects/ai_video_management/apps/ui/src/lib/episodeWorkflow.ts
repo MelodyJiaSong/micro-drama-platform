@@ -1,12 +1,24 @@
 import { ApiError } from "../types";
 
 export type ModuleId = "story" | "filming" | "prompts";
+/** Stages after Prompt 编译与出片 are placeholders until designed: no episode documents yet. */
+export type PlaceholderStageId = "edit" | "sound" | "delivery";
+export type StageId = ModuleId | PlaceholderStageId;
+export const PLACEHOLDER_STAGES: PlaceholderStageId[] = ["edit", "sound", "delivery"];
+export const isPlaceholderStage = (id: string | null): id is PlaceholderStageId => PLACEHOLDER_STAGES.includes(id as PlaceholderStageId);
 export interface Shot {
   id: string;
   duration: number;
   action: string;
   camera: string;
   dialogue: string;
+  /** Asset keys of the people in frame (`c1-1`, `c14`), plus blocking, timed beats and light (follow-up 227). */
+  cast: string[];
+  blocking: string;
+  beats: string;
+  lighting: string;
+  /** Story props in frame by prop key (`p475`); each prop's anchor image joins the 参考 line (follow-up 231). */
+  props?: string[];
 }
 export interface FilmingScene {
   id: string;
@@ -16,9 +28,25 @@ export interface FilmingScene {
   purpose: string;
   shots: Shot[];
 }
+/** One referenced file, in upload order. v7 names it by key id (`key=>@` on the 参考 line); v5/v6 used tag. */
+export interface PromptRef {
+  key?: string;
+  tag?: string;
+  kind: "image" | "video" | "audio";
+  role: string;
+  path: string;
+}
+/** A shot's 资料包: copies of every referenced file, kept in sync with the sources (follow-up 229). */
+export interface ShotPack {
+  status: "ok" | "stale" | "invalid" | "missing";
+  path: string;
+  prompt: string;
+  reason: string;
+  files: { tag: string; key: string; kind: "image" | "video" | "audio"; role: string; path: string; src: string }[];
+}
 export interface PromptScene {
   id: string;
-  shots: { id: string; text: string }[];
+  shots: { id: string; text: string; refs?: PromptRef[] }[];
 }
 export interface ModuleContent {
   brief?: string;
@@ -40,6 +68,19 @@ export interface EpisodeWorkflow {
   episode_path: string;
   modules: WorkflowModule[];
   shot_keys: Record<string, Record<string, string>>;
+  packs?: Record<string, ShotPack>;
+  renders?: Record<string, ShotTake[]>;
+}
+/** One generation of a shot: its folder under renders/ with the video, record and review (follow-up 230). */
+export interface ShotTake {
+  id: string;
+  path: string;
+  videos: string[];
+  review: string;
+  review_path: string;
+  review_status: string;
+  generation: { submit_id?: string; model?: string; duration_s?: number; ratio?: string; resolution?: string; credits?: number; downloaded_at?: string };
+  prompt_path: string;
 }
 
 async function read<T>(response: Response): Promise<T> {

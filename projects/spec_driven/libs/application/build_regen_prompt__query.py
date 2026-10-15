@@ -23,7 +23,7 @@ This run is **AUTONOMOUS**. The following imperative is in force for the duratio
 _READ_ZERO_CONTRACT: str = """\
 A regeneration deletes prior outputs first and rewrites from scratch — the regenerated stage's prior outputs MUST be treated as deleted before the new generation runs. Surgical preservation of prior text is **forbidden** during regen — it makes the output a function of (input ∧ all previous runs) and defeats the workflow.
 
-Read `AGENTS.md` and the tool mapping in `CONVENTIONS.md` before execution. This six-stage read-zero contract applies to development tasks only. AI-video requests use `ai_videos__全流程编排` and its stage playbook, preserve media-bearing shot trees, and do not execute the software deletion table.
+Read `AGENTS.md` and the tool mapping in `CONVENTIONS.md` before execution. This six-stage read-zero contract applies to development tasks only. AI-video requests use the six-module `ai-videos-pipeline` skill (revise one module at a time, hand off once upstream is settled), never delete media (`renders/`, reference assets and their sources) as regen output, and do not execute the software deletion table.
 
 The regenerated stage reads ONLY:
 1. The current stage's *input* artifacts (canonical outputs of prior stages).

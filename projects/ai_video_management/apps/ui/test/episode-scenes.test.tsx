@@ -1,16 +1,15 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, expect, it, vi } from "vitest";
 import { EpisodeWorkflowPage } from "../src/components/EpisodeWorkflowPage";
 import { loadWorkflow, type EpisodeWorkflow, type FilmingScene } from "../src/lib/episodeWorkflow";
 import { matchesNavigation } from "../src/lib/globalWorkflow";
-import { isSceneVideoPath, isShotVideoPath } from "../src/components/SiblingMedia";
 
-vi.mock("../src/lib/episodeWorkflow", () => ({ loadWorkflow: vi.fn() }));
+vi.mock("../src/lib/episodeWorkflow", async importOriginal => ({ ...await importOriginal<typeof import("../src/lib/episodeWorkflow")>(), loadWorkflow: vi.fn() }));
 afterEach(() => { cleanup(); vi.clearAllMocks(); });
 
 const scenes: FilmingScene[] = ["s1", "s10"].map(id => ({ id, background: "bg2", location: "交接棚", time: "白天", purpose: "争取差事",
-  shots: [{ id: "st1", duration: 6, action: "递出袋子", camera: "固定中景", dialogue: "给你。" }] }));
+  shots: [{ id: "st1", duration: 6, action: "递出袋子", camera: "固定中景", dialogue: "给你。", cast: [], blocking: "", beats: "0–6秒 递出袋子", lighting: "白天散射光" }] }));
 const fixture: EpisodeWorkflow = {
   episode_path: "ai_videos/demo/episodes/ep01", shot_keys: { s1: { st1: "ep1_s1_st1" }, s10: { st1: "ep1_s10_st1" } },
   modules: [
@@ -47,10 +46,29 @@ it("matches scene and shot navigation exactly", () => {
   expect(matchesNavigation(`/drama${search.replace("scene=s10", "scene=s1")}`, "/drama", search)).toBe(false);
 });
 
-it("distinguishes background videos from scene-shot renders", () => {
-  expect(isSceneVideoPath("ai_videos/demo/2_assets/background/bg2/video.mp4")).toBe(true);
-  expect(isSceneVideoPath("ai_videos/demo/2_assets/scenes/bg2/video.mp4")).toBe(true);
-  const path = "ai_videos/demo/episodes/ep01/scenes/s1/shots/st1/renders/take.mp4";
-  expect(isShotVideoPath(path)).toBe(true);
-  expect(isSceneVideoPath(path)).toBe(false);
+it("shows a placeholder for stages that are not designed yet, without loading module content", async () => {
+  vi.mocked(loadWorkflow).mockResolvedValue(fixture);
+  render(<MemoryRouter initialEntries={["/drama?episode=ep01&module=edit"]}><EpisodeWorkflowPage dramaPath="ai_videos/demo" title="示例" /></MemoryRouter>);
+  expect(screen.getByRole("heading", { name: "剪辑" })).toBeInTheDocument();
+  expect(screen.getByText("待设计")).toBeInTheDocument();
+  expect(screen.queryByText("递出袋子")).not.toBeInTheDocument();
+});
+
+it("gives each compiled shot its own page with highlighted field labels and neighbour links", async () => {
+  page("module=prompts&scene=s1&shot=ep1_s1_st1");
+  expect(await screen.findByRole("heading", { name: "ep1_s1_st1" })).toBeInTheDocument();
+  const block = screen.getByLabelText("视频 prompt");
+  expect(block.textContent).toBe("ep1_s1_st1\n时长：6秒。");
+  expect(block.querySelector(".shot-key-line")?.textContent).toBe("ep1_s1_st1");
+  expect(block.querySelector(".field-label")?.textContent).toBe("时长");
+  expect(screen.getByRole("link", { name: "ep1_s10_st1 →" })).toHaveAttribute("href", expect.stringContaining("shot=ep1_s10_st1"));
+  expect(screen.queryByRole("heading", { name: "ep1_s10_st1" })).toBeNull();
+});
+
+it("lists a scene's shots as links instead of printing every prompt", async () => {
+  page("module=prompts&scene=s10");
+  const link = await screen.findByRole("link", { name: "ep1_s10_st1" });
+  expect(link).toHaveAttribute("href", expect.stringContaining("shot=ep1_s10_st1"));
+  expect(screen.queryByLabelText("视频 prompt")).toBeNull();
+  expect(within(screen.getByRole("region", { name: "场次 s10" })).getByRole("heading", { name: "s10 · 交接棚 · 白天" })).toBeInTheDocument();
 });
