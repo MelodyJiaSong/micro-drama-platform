@@ -15,6 +15,7 @@ class CastMember:
     speaks: bool = False
     image_key: str = ""      # key id on the 参考 line: costume-stage folder (c1-1_…) or character card (c14_…)
     voice_key: str = ""      # key id of the voice sample: {card}_audio
+    count: int = 1           # how many people / animals this one card stands for in the shot (from the overhead; follow-up 274)
 
 
 @dataclass(frozen=True)
@@ -42,6 +43,7 @@ class ShotMaterials:
     scene_text: str = ""       # the background card's prompt-ready description
     scene_key: str = ""        # key id of the background: its folder name (bg2-6_武厅_兵器架)
     props: tuple[PropItem, ...] = ()
+    first_frame: str = ""     # opening still `planning/{stN}_first_frame.png`, when the shot has one (follow-up 276)
 
 
 @dataclass(frozen=True)

@@ -12,7 +12,7 @@ bg 卡 `{dir}/{dir}.md` 里首行 ＝ 目录名的 ```text 块 → `{dir}/{dir}.
 · 送审稿 ＝ 卡 prompt 去掉 `参考:` 与画幅 / 参数行——参考图与画幅作参数传入，不该占字数。
 · **场景引用物件**（follow-up 013）：所属 bg 的 blocks.toml 里占地最大的前 3 件 prop 的正面图跟着世界基调图一起上传，
   送审稿末尾加一行「物件参考」说明它们是谁、只借长相——场景图里的物件与它的 GLB 才长得一样。场景图片保留完整合适物件参考，不通过缩字数退即梦。
-· 引擎按 `tools/image_engine.py`（follow-up 238）：所有世界 / bg / plate / 变体图片 auto ＝ Codex 内置出图 → ElevenLabs，
+· 引擎按 `tools/image_engine.py`（follow-up 275）：所有世界 / bg / plate / 变体图片 auto ＝ ElevenLabs → Codex 内置出图（额度不够才换），
   禁止即梦与回退到即梦；ElevenLabs 明确指定 gpt-image-2.5-sunburst，失败报告并保存任务记录，同一家不自动重交。
 · 骨架卡（正文不足 800 字）不出图。
 · 状态变体卡（正文有 `只改:` 行，rule 4f）照参考图的构图：参考说明换成 KEEP_IN，不加 KEEP_OUT。
@@ -23,6 +23,7 @@ bg 卡 `{dir}/{dir}.md` 里首行 ＝ 目录名的 ```text 块 → `{dir}/{dir}.
 用法（仓库根目录；范围可以是 bg 目录、区目录或 scenes 根）：
     python tools/gen_bg_images.py plan <范围…>        # 每个 bg 的正文 / 送审字数、引擎、参考图，不花钱
     python tools/gen_bg_images.py run  <范围…> [--shard k/n] [--force] [--engine auto|codex|elevenlabs]
+                                       [--quality high] [--resolution 2K]   # 后两项只作用于 ElevenLabs
 已出图的跳过（`--force` 重出）；禁止 dreamina，即使显式传入也在提交前拒绝。
 """
 from __future__ import annotations
@@ -56,6 +57,8 @@ REF_WAIT_S = 900
 PROP_REFS = 3        # 场景图最多挂几件物件正面图（世界基调 / 所属 bg 锚点图之外）
 UPLOAD_EDGE = 1600    # 参考图上传副本的长边像素（见 _upload_copy）
 NO_PROPS = False      # --no-props
+EL_QUALITY = "high"   # --quality：ElevenLabs gpt-image 质量档
+EL_RESOLUTION = "2K"  # --resolution：ElevenLabs 输出分辨率档
 VIEW_MAX_M = 120.0    # 超过这个距离的物件在画里太小，不值得挂参考图
 ENCLOSING = ("hall", "hall_shell", "abbey_hall", "wing", "entrance_wing", "chamber", "barracks", "stable")
 CAMERA_WORDS = re.compile(r"相机|摄影机|摄像机|镜头架")   # 会被画成一台实物相机（实测 bg19 / bg19-4 画出了三脚架相机）
@@ -324,12 +327,12 @@ def _dreamina(j: Job, text: str, refs: list[Path], t0: float) -> bool:
 
 def _elevenlabs(j: Job, text: str, refs: list[Path], t0: float) -> None:
     key = el.api_key()
-    gid = el.create(key, text, model=ie.SCENE_MODEL, quality="high", aspect=j.ratio,
-                    resolution="2K", refs=[el.inline(_upload_copy(p)) for p in refs] or None, target=j.out)
+    gid = el.create(key, text, model=ie.SCENE_MODEL, quality=EL_QUALITY, aspect=j.ratio,
+                    resolution=EL_RESOLUTION, refs=[el.inline(_upload_copy(p)) for p in refs] or None, target=j.out)
     part = j.out.with_name(j.out.stem + ".part" + j.out.suffix)
     el.wait_download(key, gid, part)
     part.replace(j.out)
-    log(j, engine="elevenlabs", model=ie.SCENE_MODEL, quality="high", ratio=j.ratio, chars=len(text), ref=[r.name for r in refs], gid=gid)
+    log(j, engine="elevenlabs", model=ie.SCENE_MODEL, quality=EL_QUALITY, resolution=EL_RESOLUTION, ratio=j.ratio, chars=len(text), ref=[r.name for r in refs], gid=gid)
     print(f"  ✓ {j.name} ElevenLabs {len(text)} 字 {j.ratio} {time.time() - t0:.0f}s", flush=True)
 
 
@@ -351,13 +354,15 @@ def generate(j: Job, world: World, engine: str) -> None:
         waited += 15
     t0 = time.time()
     errs = []
-    for eng in order:   # Codex → ElevenLabs；禁止退即梦。同一家不自动再次付费提交
+    for eng in order:   # ElevenLabs → Codex（只在额度不够时换）；禁止退即梦。同一家不自动再次付费提交
         try:
             (_codex if eng == ie.CODEX else _elevenlabs)(j, text, refs, t0)
             return
-        except (Exception, SystemExit) as e:   # noqa: BLE001 —— 明确失败才换下一家；最后一家的错原样抛出
+        except (Exception, SystemExit) as e:   # noqa: BLE001 —— 额度不够才换下一家；其余错原样抛出
             errs.append(e)
             print(f"  ! {j.name} {eng} 失败：{str(e)[:200]}", flush=True)
+            if not ie.fallback_ok(eng, e):
+                break
     raise errs[-1]
 
 
@@ -365,15 +370,20 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("step", choices=("plan", "run"))
     ap.add_argument("paths", nargs="+")
-    ap.add_argument("--engine", default=ie.AUTO, choices=ie.CHOICES, help="scene/bg/plate：auto ＝ Codex → ElevenLabs；dreamina 禁用")
+    ap.add_argument("--engine", default=ie.AUTO, choices=ie.CHOICES, help="auto ＝ ElevenLabs → Codex（额度不够才换）；图片不用即梦（follow-up 270 / 275）")
     ap.add_argument("--shard", default="0/1")
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--no-props", action="store_true",
                     help="不挂物件参考图（实测个别 prop 组合让即梦卡死在「生成中」时用；只挂世界 / 所属 bg 锚点图）")
+    ap.add_argument("--quality", default="high", choices=("low", "medium", "high", "xhigh", "max"),
+                    help="ElevenLabs gpt-image 质量档（默认 high）")
+    ap.add_argument("--resolution", default="2K", choices=("1K", "2K", "4K"),
+                    help="ElevenLabs 输出分辨率档（默认 2K）")
     args = ap.parse_args()
     ie.scene_choice(args.engine)  # 即使文件已存在或范围为空，禁用选项仍明确报错
-    global NO_PROPS
+    global NO_PROPS, EL_QUALITY, EL_RESOLUTION
     NO_PROPS = args.no_props
+    EL_QUALITY, EL_RESOLUTION = args.quality, args.resolution
     k, n = (int(x) for x in args.shard.split("/"))
     if not 0 <= k < n:
         raise SystemExit(f"--shard {k}/{n}：k 从 0 数到 n-1")

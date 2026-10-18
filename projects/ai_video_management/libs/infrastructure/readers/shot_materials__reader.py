@@ -8,15 +8,19 @@ Same lookup rules as `tools/episode_shots.py` (the production tools that draw ov
 - appearance: the card's `## Shot prompt 外观` text block; scene description: the background card's `## Shot prompt 场景` block.
 - figure colour: workflow.json `figure_colors` (card number → colour name), shared with overhead dots and previz figures.
 - scene image: `background/**/bgN_*/bgN_*.png`.
+  A shot may name its own view with `background` (follow-up 261); its image and 场景 block replace the scene's for that shot.
 - props (follow-up 231): shot `props: ["p475"]` → `props/p475_*/p475_*.png` (the anchor image; the front view
   `p475-1_正面.png` when a prop has only views), name from the card's H1, description from its `## Shot prompt 外观` block.
 - motion: `planning/previz.json` (written by tools/shot_overhead.py) decides; complex shots use `previz/{stN}_previz.mp4`,
   the rest use `planning/{stN}_overhead_ref.png`. Every shot must have an overhead.
+- first frame (follow-up 276): `planning/{stN}_first_frame.png` when present — an approved opening still.
 """
 from __future__ import annotations
 
+import dataclasses
 import json
 import re
+import tomllib
 from pathlib import Path
 from typing import Any
 
@@ -52,11 +56,19 @@ class ShotMaterialsReader:
             scene_key = Path(scene_image).parent.name if scene_image else ""
             for shot in scene["shots"]:
                 key = shot_key(episode.name, scene["id"], shot["id"]).value
-                errors = list(scene_errors)
+                view = (scene_image, scene_text, scene_errors, scene_key)
+                if shot.get("background"):
+                    image, text, view_errors = self._scene_image(drama, shot["background"])
+                    view = (image, text, view_errors, Path(image).parent.name if image else "")
+                shot_image, shot_text, shot_errors, shot_scene_key = view
+                errors = list(shot_errors)
                 motion_kind, motion = self._motion(episode / "scenes" / scene["id"] / "shots" / shot["id"], errors)
-                cast = self._cast(drama, config, shot, errors)
+                cast = self._counted(self._cast(drama, config, shot, errors),
+                                     episode / "scenes" / scene["id"] / "shots" / shot["id"])
                 props = self._props(drama, shot.get("props", []), errors)
-                materials[key] = ShotMaterials(motion_kind, motion, cast, scene_image, tuple(errors), scene_text, scene_key, props)
+                first = episode / "scenes" / scene["id"] / "shots" / shot["id"] / "planning" / f"{shot['id']}_first_frame.png"
+                materials[key] = ShotMaterials(motion_kind, motion, cast, shot_image, tuple(errors), shot_text, shot_scene_key, props,
+                                               self._rel(first) if first.is_file() else "")
         return settings, materials
 
     def _settings(self, drama: Path) -> dict[str, Any]:
@@ -153,6 +165,20 @@ class ShotMaterialsReader:
             out.append(CastMember(key, name, self._rel(image), color, self._rel(voice), look, speaks,
                                   folder.name, voice.stem))
         return tuple(out)
+
+    @staticmethod
+    def _counted(cast: tuple[CastMember, ...], shot_dir: Path) -> tuple[CastMember, ...]:
+        """How many people each card stands for, counted from the overhead's [[actor]]s (card number before the first
+        `_`, times `count`): two gate guards drawn from one card become 「北郡门卫 ×2」 in the prompt (follow-up 274)."""
+        plan = shot_dir / "planning" / "overhead.toml"
+        if not plan.is_file():
+            return cast
+        counts: dict[str, int] = {}
+        for actor in tomllib.loads(plan.read_text(encoding="utf-8")).get("actor", []):
+            number = str(actor.get("key", "")).split("_", 1)[0]
+            counts[number] = counts.get(number, 0) + int(actor.get("count", 1))
+        return tuple(dataclasses.replace(m, count=counts[m.key.split("-", 1)[0]]) if counts.get(m.key.split("-", 1)[0], 1) > 1
+                     else m for m in cast)
 
     def _props(self, drama: Path, keys: list[str], errors: list[str]) -> tuple[PropItem, ...]:
         root = drama / SETTINGS_DIR / "props"

@@ -24,7 +24,19 @@ export async function fetchTree(): Promise<TreeNode> {
   // `no-store`: after a delete/rename the left-nav tree must reflect the
   // current filesystem. Without it the browser can serve a cached /api/tree
   // and a deleted file keeps showing in the sidebar.
-  const response = await fetch("/api/tree", {
+  // `lazy=1` (follow-up 280): navigation plus the first folder levels; deeper
+  // folders are `lazy` stubs filled by `fetchSubtree` when opened.
+  const response = await fetch("/api/tree?lazy=1", {
+    method: "GET",
+    headers: { Accept: "application/json" },
+    cache: "no-store",
+  });
+  return readJson<TreeNode>(response);
+}
+
+/** One lazy folder's contents, `depth` folder levels deep (0 = everything). */
+export async function fetchSubtree(path: string, depth = 1): Promise<TreeNode> {
+  const response = await fetch(`/api/tree/subtree?path=${encodeURIComponent(path)}&depth=${depth}`, {
     method: "GET",
     headers: { Accept: "application/json" },
     cache: "no-store",

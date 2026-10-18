@@ -93,7 +93,7 @@ confidence 定为 medium，原因有二：真实即梦 DOM／响应体要到 sta
 3. **上传**：没有常驻 `<input type=file>`，只有「+ 参考内容」卡片（hover 提示「上传参考内容」），点击时才动态创建 file input。
    - 上传后出现缩略图与进度，完成信号可配置（缩略图出现／进度条消失／上传 XHR 返回），以便 §17 探针结论回灌。
    - 上传完成后，素材以**文件 stem** 出现在 @ 候选列表。
-4. **@ 选择器**：标题「可能@的内容」，首行「+ 创建主体」，下面是带缩略图的主体行（`hy3_主角`、`hy1_主角`、`f80_f80`、`xj_酒剑仙`、`xj_阿奴`……），每行带「…」菜单；已上传素材也在列表里。
+4. **@ 选择器**：标题「可能@的内容」，首行「+ 创建主体」，下面是带缩略图的主体行（`hy3_主角`、`hy1_主角`、`demo_样例`、`xj_酒剑仙`、`xj_阿奴`……），每行带「…」菜单；已上传素材也在列表里。
    - 选中后插入 mention 节点，节点带 name 属性。
 5. **预计积分**：现价 + 划线原价（fixture 价 20／26 积分每秒，22 s → `440`／`572`），随参数变化而重算。
 6. **负向框**：由开关决定有无（`negative_box=on|off`，对应 §10 Q4 未决）。
@@ -314,7 +314,7 @@ confidence 定为 medium，原因有二：真实即梦 DOM／响应体要到 sta
 
 **Setup**
 - §1.3 子集。
-- fake 站点 `seed`：已登录；主体 = `hy3_主角, hy1_主角, f80_f80, xj_酒剑仙, xj_阿奴`；余额 11000；`negative_box=off`。
+- fake 站点 `seed`：已登录；主体 = `hy3_主角, hy1_主角, demo_样例, xj_酒剑仙, xj_阿奴`；余额 11000；`negative_box=off`。
 - hy3 **预置**一份手写 `jimeng_config.toml`：含注释行 `# 手写注释：保留我`，只有 `[drama] abbrev = "hy3"` 和 `[video] resolution = "720p"`。
 - 测试浏览器全程收集 console error 与 `pageerror`。
 
@@ -716,7 +716,7 @@ confidence 定为 medium，原因有二：真实即梦 DOM／响应体要到 sta
 
 **SYS-80 同步与三态对账**
 - **Setup**：
-  - fake 主体列表：`hy3_主角, hy1_主角, f80_f80, xj_酒剑仙`；
+  - fake 主体列表：`hy3_主角, hy1_主角, demo_样例, xj_酒剑仙`；
   - hy3 config 带 override（→ `hy3_主角`）；
   - hy2 无 config，按提议默认值计算；
   - hy1 无 config。
@@ -725,7 +725,7 @@ confidence 定为 medium，原因有二：真实即梦 DOM／响应体要到 sta
   - 同步读取的是 `dreamina_subject/get` 的响应；快照带名称、缩略图 URL、修改时间、同步时间。
   - `hy3_主角` → `mapped`（hy3）。
   - `hy1_造家的人` → `missing_on_platform`。期望名来自 hy1 卡，以及 hy2 通过 `.link.json` 的跨集来源（FR-3，沿用来源集缩写 `hy1_`，**不是** `hy2_造家的人`）。
-  - `f80_f80`、`xj_酒剑仙` → `unmapped_on_platform`（临时子集里没有对应剧）。
+  - `demo_样例`、`xj_酒剑仙` → `unmapped_on_platform`（临时子集里没有对应剧）。
   - `hy1_主角` 若没有剧映射到它，也是 `unmapped_on_platform`。
   - ledger 无任何写操作（FR-50）。
 

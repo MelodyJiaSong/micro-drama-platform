@@ -8,8 +8,8 @@
 画幅读块里 `比例:` 行的比值（限 `gen_bg_images.RATIOS`；不带比值的「比例：真人正常比例…」是身形描述，不算），
 读不到用 KINDS 的缺省；命令行 `--aspect` 显式给了才覆盖（2026-09-30：m7 / m9 写 16:9，工具写死 9:16 出成竖幅）。
 
-引擎按 `tools/image_engine.py`（follow-up 238）：auto ＝ Codex 内置出图 → ElevenLabs → 即梦，前一家失败才换下一家；
-即梦最后，超即梦 1600 字的跳过即梦。显式 `--engine X` 只用 X。
+引擎按 `tools/image_engine.py`（follow-up 270）：auto ＝ Codex 内置出图 → ElevenLabs，前一家明确失败才换下一家；
+图片不用即梦（即梦只用于视频）。显式 `--engine X` 只用 X。
 
 用法（仓库根目录）：
     python tools/gen_char_images.py plan --drama shengji_zhilu
@@ -143,7 +143,7 @@ def main() -> int:
     ap.add_argument("--aspect", default=None, choices=bgi.RATIOS,
                     help="显式覆盖；缺省读立绘块的「比例:」行，读不到按 --kind：人物 9:16、物件 1:1")
     ap.add_argument("--engine", default=ie.AUTO, choices=ie.CHOICES,
-                    help="auto ＝ Codex → ElevenLabs → 即梦（follow-up 238）；显式指定只用那一家")
+                    help="auto ＝ ElevenLabs → Codex（额度不够才换，follow-up 275；图片不用即梦）；显式指定只用那一家")
     ap.add_argument("--shard", default="0/1")
     ap.add_argument("--force", action="store_true")
     args = ap.parse_args()
@@ -173,16 +173,19 @@ def main() -> int:
     for j in todo:
         t0 = time.time()
         order = ie.order(args.engine, target=j.out, dreamina_ok=len(j.prompt) <= dm.PROMPT_MAX)
-        errs = []
+        errs, ok = [], False
         for eng in order:
             try:
                 tag = run_one(j, eng, args)
                 print(f"  ✓ {j.name} {eng} {len(j.prompt)} 字 {time.time() - t0:.0f}s {tag}", flush=True)
+                ok = True
                 break
-            except (SystemExit, Exception) as e:  # noqa: BLE001 —— 按顺序换下一家；都失败记下、继续
+            except (SystemExit, Exception) as e:  # noqa: BLE001 —— 额度不够才换下一家；都失败记下、继续
                 errs.append(f"{eng}：{str(e)[:200]}")
                 print(f"  ! {j.name} {errs[-1]}", flush=True)
-        else:
+                if not ie.fallback_ok(eng, e):
+                    break
+        if not ok:
             print(f"  ✗ {j.name}：{' | '.join(errs)}", flush=True)
             failed.append(j.name)
     if failed:

@@ -144,7 +144,7 @@ __all__ = [
 
 
 _SUBJECT_DIR_RE = re.compile(r"^bg\d+_[^_]+$")
-_NOT_SCENE_DIRS: frozenset[str] = frozenset({"_deleted", "renders", "previz", "frames", "planning", "_blender", "ref", "__pycache__"})
+_NOT_SCENE_DIRS: frozenset[str] = frozenset({"_deleted", "renders", "drafts", "previz", "frames", "planning", "_blender", "ref", "__pycache__"})
 
 
 def _is_scene_subject(folder: Path) -> bool:

@@ -17,6 +17,9 @@ from fastapi import APIRouter
 from apps.api.routes.global_workflow__route import router as _global_workflow_router
 from apps.api.routes.request_log__route import router as _request_log_router
 from apps.api.routes.episode_workflow__route import router as _episode_workflow_router
+from apps.api.routes.review_reel__route import router as _review_reel_router
+from apps.api.routes.scene_cut__route import router as _scene_cut_router
+from apps.api.routes.shot_take__route import router as _shot_take_router
 
 from apps.api.routes.character__route import router as _character_router
 from apps.api.routes.character_video__route import router as _character_video_router
@@ -30,6 +33,9 @@ from apps.api.routes.tree__route import router as _tree_router
 router = APIRouter()
 router.include_router(_global_workflow_router)
 router.include_router(_episode_workflow_router)
+router.include_router(_review_reel_router)
+router.include_router(_scene_cut_router)
+router.include_router(_shot_take_router)
 router.include_router(_request_log_router)
 router.include_router(_tree_router)
 router.include_router(_file_router)

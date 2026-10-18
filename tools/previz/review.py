@@ -4,7 +4,7 @@
     python tools/previz/review.py <shot 目录>/previz/previz_config.toml            # 缺省时刻：机位切点、段中、每 3 秒
     python tools/previz/review.py <config> --times 5.5,9,13.9,14.3                  # 指定秒数
 
-产物：`previz/frames/stills/shotNN_{秒}.png` 与拼图 `previz/frames/shotNN_stills.png`（`previz/frames/` 不进 R2，随时重出）。
+产物：`previz/frames/stills/shotNN_{秒}.png` 与拼图 `previz/frames/shotNN_stills.png`（`previz/frames/` 是派生产物，随时重出）。
 静帧通过、看过，再跑 `blender -b --factory-startup --python tools/previz/build_previz.py -- <config>` 渲整条 MP4。
 整条要 4–7 分钟，这里几十秒（follow-up 032 复盘：shot01 三轮返工都是渲完整条才看到问题）。
 """

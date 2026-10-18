@@ -15,7 +15,7 @@ MODULE_NAV_LABELS = {"story": "2_故事", "filming": "3_影视改编", "prompts"
                      "edit": "5_剪辑", "sound": "6_声音与音乐", "delivery": "7_成片交付"}
 WORLD_FACTS_FILE = "world_rules.md"
 STATE_CHANGES_FILE = "state_changes.md"
-COMPILER_VERSION = 9
+COMPILER_VERSION = 12
 VIDEO_SOUND_RULE = "仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。"
 SILENT_SHOT_RULE = "本镜没有人说话。"
 ONE_TAKE_RULE = "连续镜头，不要切镜。不要字幕或水印。"
@@ -28,8 +28,18 @@ ONE_TAKE_RULE = "连续镜头，不要切镜。不要字幕或水印。"
 # three-view sheets, with a 道具 line carrying the prop card's description, so a cart or a bundle keeps one shape across shots.
 # v9 (follow-up 245): the twin rule binds people only; animals (m* cast, e.g. three wolves from one card) appear as many
 # times as the 画面 line says, and the negative line names people, not every character.
+# v10 (follow-up 274): a card that stands for several people in the shot (two gate guards from one card) says so on its
+# 人物 line, counted from the overhead's actors; the count rule names group cards (m*) and any card with a count, not
+# "animals" — EP1 s1 st1 came out with one guard where the shot wrote two.
+# v11 (follow-up 276): a shot with a group card no longer lists 多出来的人 among its negatives — that word, the twin rule
+# and one shared sheet together made EP1 s1 st1 drop the second guard again; the count rule now says none may be missing.
+# A shot may carry an opening still (`planning/{stN}_first_frame.png`); it goes first on the 参考 line as the first frame.
 ANTI_TWIN_RULE = "画面中每个人物只出现一次，不要分身或双胞胎。"
-ANIMAL_COUNT_RULE = "动物（{keys}）按「画面」写的数量出现，同一张三视图可以是几只同类。"
+GROUP_COUNT_RULE = ("群演与动物（{keys}）按「人物」「画面」写的数量出现，写了几个就画几个，一个都不能少；"
+                    "同一张三视图可以是几个同类，不算分身。")
+GROUP_DROPPED_NEGATIVE = "多出来的人，"
+FIRST_FRAME_USAGE = ("`{tag}`是本镜的第一帧画面：视频就从这张图开始，开场时的人数、每个人的站位与离墙离门的距离、大小、朝向、"
+                     "手里拿的东西、机位与取景都和它一致，然后按「动作」演下去。")
 NATURAL_MOTION_RULE = "人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。"
 OVERHEAD_USAGE = ("`{tag}`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），"
                   "红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；"

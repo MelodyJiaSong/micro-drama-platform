@@ -71,5 +71,70 @@
 .workflow-take { border: 1px solid #e0e5df; border-radius: 6px; padding: 12px; margin-bottom: 14px; }
 .workflow-take header { margin-bottom: 8px; }
 .workflow-take-status { font-size: 0.8em; padding: 2px 8px; border-radius: 10px; background: #eef2f7; color: #2d4a6b; margin-left: 6px; }
+.workflow-take-stage { font-size: 0.8em; padding: 2px 8px; border-radius: 10px; margin-left: 6px; background: #fdf3e1; color: #7a5212; }
+.workflow-take-stage.final { background: #e6f4ea; color: #1f6b35; }
+.workflow-take-verdict { display: flex; gap: 8px; margin: 6px 0 10px; }
 .workflow-take-video { width: 100%; max-width: 860px; background: #000; border-radius: 4px; }
 .workflow-take-review { margin-top: 8px; }
+
+/* 整集审片串联（follow-up 260） */
+.workflow-header-actions { display: flex; align-items: center; gap: 10px; }
+.workflow-header-link { padding: 9px 15px; border: 1px solid #345f46; border-radius: 7px; background: #345f46; color: white; text-decoration: none; }
+.workflow-header-link[aria-pressed="true"] { background: white; color: #344b3d; border-color: #d7dfd9; }
+.review-reel-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 16px; }
+.episode-workflow .review-reel-toolbar label { flex-direction: row; align-items: center; gap: 8px; margin: 0; }
+.review-reel-toolbar select { padding: 8px 10px; border: 1px solid #d7dfd9; border-radius: 6px; font: inherit; background: #fff; color: #25362e; }
+.episode-workflow .review-reel-toolbar .primary { background: #345f46; color: white; border-color: #345f46; }
+.review-reel-state { font-size: 13px; color: #68746d; }
+.review-reel-state.failed, .review-reel-state.interrupted { color: #a13131; }
+.review-reel-body { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 16px; align-items: start; }
+.review-reel-video { width: 100%; aspect-ratio: 16 / 9; background: #111; border-radius: 6px; }
+.review-reel-chapters { list-style: none; margin: 0; padding: 0; max-height: 70vh; overflow-y: auto; border: 1px solid #e0e5df; border-radius: 6px; }
+.review-reel-chapters li { display: flex; align-items: flex-start; gap: 6px; padding-right: 8px; border-bottom: 1px solid #eef1ee; }
+.review-reel-chapters li.current { background: #e3f1e6; }
+.review-reel-chapters li > a { font-size: 12px; padding-top: 10px; white-space: nowrap; }
+.episode-workflow .review-reel-chapters button { flex: 1; display: grid; grid-template-columns: 3.2em 1fr; column-gap: 8px; text-align: left; border: 0; border-radius: 0; background: transparent; padding: 8px; }
+.review-reel-chapters button strong { font-weight: 600; overflow-wrap: anywhere; }
+.review-reel-time { color: #68746d; font-variant-numeric: tabular-nums; grid-row: span 3; }
+.review-reel-meta { font-size: 12px; color: #5d655d; }
+.review-reel-note { font-size: 12px; color: #7d5c26; }
+.review-reel-skipped { margin-top: 16px; font-size: 14px; color: #5d655d; }
+.review-reel-skipped h3 { font-size: 14px; margin: 0 0 6px; }
+@media (max-width: 860px) { .review-reel-body { grid-template-columns: 1fr; } }
+
+/* 场次页「镜头 / 草稿」tab 与草稿网格（follow-up 267） */
+.workflow-scene-tabs { display: flex; gap: 4px; border-bottom: 1px solid #e0e5df; margin: 8px 0 12px; }
+.workflow-scene-tabs a { padding: 6px 14px; border: 1px solid transparent; border-bottom: none; border-radius: 6px 6px 0 0; text-decoration: none; color: #2d4a6b; }
+.workflow-scene-tabs a[aria-selected="true"] { border-color: #e0e5df; background: #fff; font-weight: 600; margin-bottom: -1px; }
+.scene-drafts-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.scene-draft { border: 1px solid #e0e5df; border-radius: 6px; overflow: hidden; background: #fff; }
+.scene-draft-thumb { display: block; width: 100%; aspect-ratio: 16 / 9; padding: 0; border: 0; background: #000; cursor: zoom-in; }
+.scene-draft-thumb video { width: 100%; height: 100%; object-fit: contain; display: block; }
+.scene-draft-thumb.missing { display: flex; align-items: center; justify-content: center; background: #f3f5f2; color: #8a948a; cursor: default; }
+.scene-draft-caption { padding: 6px 8px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; font-size: 0.85em; }
+.scene-draft-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.72); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 16px; }
+.scene-draft-dialog { background: #fff; border-radius: 8px; padding: 12px; width: min(1100px, 100%); max-height: 100%; overflow: auto; outline: none; }
+.scene-draft-dialog header { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+.scene-draft-close { margin-left: auto; font-size: 1.3em; line-height: 1; background: none; border: 0; cursor: pointer; }
+.scene-draft-player { width: 100%; max-height: 70vh; background: #000; border-radius: 4px; }
+.scene-draft-dialog footer { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; }
+.scene-draft-dialog footer button:last-child { margin-left: auto; }
+/* 剪辑模块（follow-up 269） */
+.edit-scene-list li { margin: 4px 0; }
+.edit-scene-list span { color: #5b6670; }
+.edit-player-toggle { display: flex; gap: 6px; margin: 8px 0; flex-wrap: wrap; }
+.edit-player-toggle button, .edit-player-toggle a { padding: 3px 10px; border: 1px solid #c9d2cf; border-radius: 4px; background: #fff; color: #2d4a6b; text-decoration: none; font: inherit; cursor: pointer; }
+.edit-player-toggle [aria-pressed="true"], .edit-player-toggle [aria-current="true"] { background: #2d4a6b; color: #fff; border-color: #2d4a6b; }
+.edit-timeline { border-collapse: collapse; width: 100%; max-width: 1100px; margin: 12px 0; font-size: 0.9em; }
+.edit-timeline th, .edit-timeline td { border-bottom: 1px solid #e0e5df; padding: 4px 8px; text-align: left; vertical-align: top; }
+.edit-timeline td:first-child button { border: none; background: none; color: #2d4a6b; text-decoration: underline; cursor: pointer; font: inherit; padding: 0; }
+.edit-timeline ul { margin: 2px 0 0; padding-left: 18px; color: #5b6670; }
+.edit-placeholder { background: #f6f2e6; }
+.edit-audio { color: #8a5a00; font-size: 0.9em; }
+.workflow-blocking { margin: 12px 0 20px; }
+.workflow-blocking img { width: 100%; max-width: 1100px; border: 1px solid #e0e5df; border-radius: 4px; background: #f8f7f2; cursor: zoom-in; }
+.workflow-blocking figcaption { margin-top: 6px; font-size: 13px; color: #6b7280; }
+/* 集级剪辑（follow-up 278）：转场行与转场样片索引 */
+.edit-timeline tr.edit-transition td { background: #f4f1e8; }
+.edit-gallery-index { columns: 2; max-width: 900px; font-size: 0.9em; }
+.edit-gallery-index button { border: none; background: none; color: #2d4a6b; text-decoration: underline; cursor: pointer; font: inherit; padding: 0; }

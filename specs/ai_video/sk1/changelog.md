@@ -54,7 +54,7 @@ Auto-updated:
 - ai_videos/shikong_lvxing/sk1/1_立项/concept.md、3_大纲/outline.md — 「御沟荷花」→「荷叶初生」（清明不开花，bg4 卡为准）；S35 遗址措辞按照片更正；总时长更正为 862 s（含可选 S35）/ 842 s
 - ai_videos/shikong_lvxing/sk1/5_6_分镜与prompt/publish.md — **新建**四站发布页（PUB_sk1）：中「时空旅行·第1站｜汴京清明一日」/ 英 *One Day in Kaifeng, 1120*；封面＝S04 桥中回望；片尾评论问题「给你一贯铜钱，在 1120 年的汴京待一天，你第一文钱花在哪？」；YouTube 手动上传中文音轨
 - tools/build_bianjing.py + scenes/bianjing/_blender/{bianjing.blend, plan*.png, check_*.png}（B_city）— **新建**确定性建城器：全城体块层（待 W11 布局数据）+ Place A/B/C 细节层；方块号 → 资产 pN，白模到位自动替换；96 物件、两次构建几何哈希一致；§6 验收 11/12 通过（#10 待锚点图）
-- tools/render_scene_plan.py — 相机远裁剪面随场景尺度设置（1072 m 宽的汴京平面图原先渲成空白；duikang / xianjian 小尺度场景输出不变）
+- tools/render_scene_plan.py — 相机远裁剪面随场景尺度设置（1072 m 宽的汴京平面图原先渲成空白；xianjian 小尺度场景输出不变）
 
 Pending：W7–W11 补充调研合并与 fact 回填；新地点场景卡 bg0 / bg10–bg13；生成器与剧本重写（G_sk1）；Blender 第二阶段（全城体块 + 航拍路径 + 每镜白模动画）；系列提案重写（P_series）；全维度审查；提交
 

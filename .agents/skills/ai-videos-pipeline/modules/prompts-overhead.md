@@ -1,6 +1,6 @@
 # Overhead
 
-俯视站位图（overhead / camera plot）：从正上方看一个镜头——机位在哪、朝哪、焦距多少，每个人站在哪、面朝哪、几秒走到哪，屋子和陈设在哪。**每一镜都必须有**，并且是生成时的默认运动参考；复杂镜再用它做 [Previz](prompts-previz.md)。
+俯视站位图（overhead / camera plot）：从正上方看一个镜头——机位在哪、朝哪、焦距多少，每个人站在哪、面朝哪、几秒走到哪，屋子和陈设在哪。**每一镜都必须有**，并且是生成时的运动参考；默认不做 [Previz](prompts-previz.md)，单独要的镜才用它渲人偶视频。
 
 ## 是什么，用来做什么
 
@@ -52,9 +52,18 @@ pose = "抬头"
 t0 = 0
 t1 = 3
 text = "萨缪尔读完信、对折"
+
+[[carry]]                       # 带着的东西：t0–t1（缺省整镜）在手里（on = "手"）或背在身后（"背"）
+who = "亚伦"
+what = "锤"                     # 锤 / 斧 / 剑 / 镐 / 棒 / 叉 / 盾，与 [[hit]] 的 with 同一套
+key = "p480"                    # 道具卡号（可选）
+on = "背"
+t1 = 2                          # 2 s 起从背上抽出来——再写一条 on = "手"、t0 = 2
 ```
 
-打斗、施法、护人等另有 `[[hit]]`、`[[guard]]`、`shield`、`[[cast]]` 等键与机检，见 `tools/shot_overhead.py` 的 `KEYS`。键名拼错直接报错。
+打斗、施法、护人等另有 `[[hit]]`、`[[guard]]`、`shield`、`[[cast]]` 等键与机检，见 `tools/shot_overhead.py` 的 `KEYS`。键名拼错直接报错。每一下怎样编排见[动作戏](filming-action.md)。
+
+`[[carry]]` 让 previz 人偶带上这件东西（[Previz](prompts-previz.md)）：手里的握法跟着那一刻 `[[pose]]` 里写的持物姿态（双手低握、前砸、扛肩R、靠腿、单手握R、前劈R、举手R），没写就用 `grip` 或该件的缺省；全长 `len` 缺省按件（锤 1.2 m）。手里的盾仍写 `[[actor]] shield`。机检：同一件同一时刻只在一处（不同时在两人身上、也不同时是地上的 `[[prop]]`——捡起 / 放下写进 prop 的 `gone` 与 carry 的 `t0` / `t1`）；用兵器出手的 `[[hit]]`（含落空）那一刻手里要有这件。
 
 ## 从分镜到 overhead
 
@@ -86,6 +95,8 @@ python tools/overhead_previz.py <镜头目录> --force --stills   # 取景静帧
 ```
 
 每镜出两张图和一个判定：`stN_overhead.png` 给人审（坐标、时间轴、侧栏）；`stN_overhead_ref.png` 给 Seedance（16:9、裁到本镜范围、只有图形与人名，没有标题、坐标、图例——图例由 prompt 的「参考用法」交代）；`previz.json` 记要不要 previz 与理由。
+
+**场的走位图**（follow-up 271）：`python tools/scene_blocking.py <场目录>`（或 `--all <集目录>`）把本场每镜的 overhead 叠成一张俯视简图 `scenes/sN/planning/sN_blocking.png`：底图是场地简笔画，人＝彩色圆（群演卡＝三角）、物件＝方块，镜内移动＝虚线箭头标镜号；画单镜或 `--all` 时自动重画，管理 UI 影视改编的场页面显示它。给人看一场的站位与相互位置，不给模型。
 
 overhead 看不出取景，所以**每镜都出一张静帧拼图核对**：主体景别对不对、前景人物在不在、有没有人被挡住或出画。试点 s4 第 2 镜画好 overhead 后，静帧两次发现取景错（机位太远成了全身；前景肩膀出画），改 overhead 后才对。
 

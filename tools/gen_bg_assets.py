@@ -18,7 +18,7 @@
     python tools/gen_bg_assets.py check  <目录…>        # 卡 / toml 契约，不花钱
     python tools/gen_bg_assets.py plan   <目录…>        # 每面的送审稿字数、参考图、负面词末行，不花钱
     python tools/gen_bg_assets.py refs   <目录…>        # 抓真实照片
-    python tools/gen_bg_assets.py images <目录…> [--engine auto|codex|elevenlabs|dreamina]
+    python tools/gen_bg_assets.py images <目录…> [--engine auto|codex|elevenlabs]
     python tools/gen_bg_assets.py mesh   <目录…> [--tier Sketch|Regular]
     python tools/gen_bg_assets.py all    <目录…>
     python tools/gen_bg_assets.py all    <目录…> --shard 0/4   # 四个进程各跑一份（即梦按 prompt 找回任务，并发安全）
@@ -408,7 +408,7 @@ def do_images(a: Asset, engine: str, force: bool) -> None:
         t0 = time.time()
         full, _ = request(a, i, ie.ELEVENLABS)
         ok, errs = False, []
-        for eng in ie.order(engine, target=out, prompt=full):   # auto ＝ Codex → ElevenLabs → 即梦（follow-up 238）
+        for eng in ie.order(engine, target=out, prompt=full):   # auto ＝ ElevenLabs → Codex（follow-up 275，额度不够才换；图片不用即梦）
             prompt, refs = request(a, i, eng)
             try:
                 ok = _dreamina_retrying(a, i, prompt, refs) if eng == ie.DREAMINA else                     (_codex if eng == ie.CODEX else _elevenlabs)(a, i, prompt, refs)
@@ -417,6 +417,8 @@ def do_images(a: Asset, engine: str, force: bool) -> None:
                     raise              # 已出图扣费，只重下不重提、也不换家花钱
                 errs.append(f"{eng}：{str(e)[:160]}")
                 print(f"  ! {a.key}-{VIEWS[i]} {errs[-1]}")
+                if not ie.fallback_ok(eng, e):
+                    break
             if ok:
                 break
         if not ok:
@@ -464,7 +466,7 @@ def main() -> int:
     ap.add_argument("step", choices=("check", "plan", "refs", "images", "mesh", "all"))
     ap.add_argument("paths", nargs="+")
     ap.add_argument("--engine", default=ie.AUTO, choices=ie.CHOICES,
-                    help="auto ＝ Codex → ElevenLabs → 即梦（follow-up 238）；显式指定 ＝ 只用那一家")
+                    help="auto ＝ ElevenLabs → Codex（额度不够才换，follow-up 275；图片不用即梦）；显式指定 ＝ 只用那一家")
     ap.add_argument("--tier", default="Sketch", choices=("Sketch", "Regular"))
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--shard", default="0/1", help="k/n：只做第 k 份（共 n 份），多进程并发时各拿不相交的一份")

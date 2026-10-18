@@ -1,16 +1,16 @@
 # Prompt 编译与出片
 
-输入：已确定的分镜（episodes/epNN/filming.json）。输出：每镜的 overhead（复杂镜另有 previz 视频）、episodes/epNN/prompts.json（每镜一条视频 prompt 与按上传顺序的参考清单）；出片后各镜头的条落在 renders/，交给剪辑选条。
+输入：已确定的分镜（episodes/epNN/filming.json）。输出：每镜的 overhead（单独要 previz 的镜另有 previz 视频，默认不做）、episodes/epNN/prompts.json（每镜一条视频 prompt 与按上传顺序的参考清单）；出片后各镜头的条落在 renders/，交给剪辑选条。
 
-不能只用文字 prompt 生成视频：每一镜都带参考上传——运动参考（overhead 图，复杂镜换成 previz 视频）、每个出场人物的三视图与声样、背景图——prompt 第一段「参考：」一行列出全部参考并写明每个管什么（follow-up 227、228）。
+不能只用文字 prompt 生成视频：每一镜都带参考上传——运动参考（overhead 图；默认不做 previz，单独要的镜才换成 previz 视频）、每个出场人物的三视图与声样、背景图——prompt 第一段「参考：」一行列出全部参考并写明每个管什么（follow-up 227、228）。
 
 ## 步骤
 
 | 步 | 做什么 | 产物 | 工具 |
 |---|---|---|---|
 | 1 | 每镜写 overhead：机位、人物站位与走位、朝向、物件、时刻 | `shots/stN/planning/overhead.toml` | 手写（代理或人），见 [Overhead](prompts-overhead.md) |
-| 2 | 画 overhead、判要不要 previz | `stN_overhead.png`（给人审）、`stN_overhead_ref.png`（给模型）、`previz.json` | `python tools/shot_overhead.py --all <集目录>` |
-| 3 | 每镜出静帧核对取景（几十秒）；复杂镜渲 previz 视频 | `previz/frames/stN_stills.png`；`previz/stN_previz.mp4` | `python tools/overhead_previz.py <镜头目录> --force --stills`；`--render`，见 [Previz](prompts-previz.md) |
+| 2 | 画 overhead、写 previz 判定（默认免） | `stN_overhead.png`（给人审）、`stN_overhead_ref.png`（给模型）、`previz.json` | `python tools/shot_overhead.py --all <集目录>` |
+| 3 | 每镜出静帧核对取景（几十秒）；单独要 previz 的镜才渲视频 | `previz/frames/stN_stills.png`；`previz/stN_previz.mp4` | `python tools/overhead_previz.py <镜头目录> --force --stills`；`--render`，见 [Previz](prompts-previz.md) |
 | 4 | 编译：分镜字段 + 参考 + 固定规则 → prompt | `prompts.json`、各镜 `prompt.txt` | 管理 UI「编译」；参考缺一镜就拒绝编译。也可只编一场（API `scene`），只查这一场的参考，其它场原样保留、仍标过期（follow-up 259） |
 | 5 | 每镜资料包：把 prompt 参考的全部文件复制一份，源文件变了自动更新、prompt 要重编译时失效；用户决定后提交 | `shots/stN/资料包/` | `python tools/shot_pack.py sync <集目录>`（Stop hook 每回合跑），见[出片](prompts-generate.md) |
 
@@ -37,6 +37,7 @@
 | `camera` | 按[镜头](filming-shots.md)写功能、景别与裁切、取景、机位与焦点；一镜只写一种运镜 | 只写「近景」；推、拉、摇、移叠在一起 |
 | `lighting` | 光从哪来、什么性格、有没有火光等禁项 | 只写「好看的光」 |
 | `dialogue` | 本镜实际说出口的话，标明谁说；无对白留空 | 把旁白、心理活动或画面说明写进对白 |
+| `allow_negatives`（可选） | 这一镜要放开的剧级负面词，例：施法镜要看得见光时写 `["夸张金光"]`；词要和剧 `workflow.json` 负面词里的写法一字不差 | 为了一镜改整部剧的负面词；放开「人物自发光」「瞳孔发光」这类会让画面变怪的词 |
 
 时长要够念台词、做完动作；一镜塞不下就拆镜。
 

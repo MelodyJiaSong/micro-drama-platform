@@ -186,8 +186,7 @@ def test_gpt_image_engines_get_the_unmirrored_front_for_the_back_view(world: Pat
     assert MIRRORED not in text
 
 
-def test_dreamina_still_gets_the_mirrored_front_for_the_back_view(world: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    # 即梦照搬参考图里东西在画面哪一边：背面仍喂正面的镜像（c2-1 首批即梦实测）
-    text, (front, sent, _) = _back_view_call(world, monkeypatch, "dreamina")
-    assert sent == front.with_name("c1-2_front_mirror.png")
-    assert MIRRORED in text
+def test_dreamina_is_refused_for_outfit_views(world: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    # follow-up 270：图片不用即梦；点名即梦直接报错，不出图
+    with pytest.raises(ValueError, match="禁止 Dreamina"):
+        _back_view_call(world, monkeypatch, "dreamina")

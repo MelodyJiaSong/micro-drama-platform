@@ -48,6 +48,7 @@ DRAMA = "ai_videos/demo"
 README = f"{DRAMA}/README.md"
 NEW_README = "# changed\n"
 EPISODE = f"{DRAMA}/episodes/ep01"
+DRAFT = f"{EPISODE}/scenes/s1/shots/st1/drafts/20261016-200000_aaaa1111"
 HERO = f"{DRAMA}/characters/c1_hero"
 EXTRA = f"{DRAMA}/characters/c2_extra"
 LAMP = f"{DRAMA}/props/v1_lamp"
@@ -91,6 +92,8 @@ def sandbox(tmp_path: Path, turntable: bytes, monkeypatch: pytest.MonkeyPatch) -
         f"{HERO}/c1_hero.mp4": turntable,
         f"{HERO}/archive/c1_hero_old.png": b"old take",
         f"{EXTRA}/c2_extra.md": "# extra\n",
+        f"{DRAFT}/generation.json": json.dumps({"stage": "draft", "resolution": "480p"}),
+        f"{DRAFT}/review.md": "# 审核\n\n状态：待审核\n",
         f"{LAMP}/raw_download.png": b"lamp",
         f"{BIN}/gone.png": b"binned",
         "ai_videos/_research/ds.json": json.dumps(DATASET, ensure_ascii=False),
@@ -102,7 +105,7 @@ def sandbox(tmp_path: Path, turntable: bytes, monkeypatch: pytest.MonkeyPatch) -
             path.write_bytes(content)
         else:
             path.write_text(content, encoding="utf-8")
-    (repo / EPISODE).mkdir(parents=True)
+    (repo / EPISODE).mkdir(parents=True, exist_ok=True)
     downloads.mkdir()
     (downloads / "c1-2.png").write_bytes(b"new view")  # character view key → the hero's folder
     monkeypatch.setenv(DOWNLOADS_ENV_VAR, str(downloads))
@@ -168,6 +171,17 @@ def _file_written(sb: Sandbox, _client: TestClient, _body: dict[str, Any]) -> No
 
 def _story_saved(sb: Sandbox, _client: TestClient, _body: dict[str, Any]) -> None:
     assert (sb.repo / EPISODE / "story.json").is_file()
+
+
+def _reel_started(sb: Sandbox, _client: TestClient, body: dict[str, Any]) -> None:
+    # 审片串联（follow-up 260）：开始时同步写下进度文件，拼接本身在后台线程
+    assert body["name"] == "ep01_all"
+    assert (sb.repo / EPISODE / "review_reel/ep01_all.status.json").is_file()
+
+
+def _draft_judged(sb: Sandbox, _client: TestClient, _body: dict[str, Any]) -> None:
+    # 草稿条的用户审核（follow-up 265）
+    assert "状态：通过（用户 " in (sb.repo / DRAFT / "review.md").read_text(encoding="utf-8")
 
 
 def _renamed(sb: Sandbox, _client: TestClient, _body: dict[str, Any]) -> None:
@@ -237,6 +251,8 @@ CASES: list[Case] = [
     Case("PUT", "/api/file", "/api/file", lambda _c: {"path": README, "content": NEW_README}, _file_written,
          headers=_readme_unmodified_since),
     Case("POST", "/api/episode-workflow", "/api/episode-workflow", _story_save, _story_saved),
+    Case("POST", "/api/review-reel", "/api/review-reel", lambda _c: {"episode_path": EPISODE, "scene": None}, _reel_started),
+    Case("POST", "/api/shot-take/verdict", "/api/shot-take/verdict", lambda _c: {"take_path": DRAFT, "verdict": "通过"}, _draft_judged),
     Case("POST", "/api/rename-media", "/api/rename-media", lambda _c: {"path": DRAMA}, _renamed),
     Case("POST", "/api/archive-media", "/api/archive-media", lambda _c: {"path": f"{HERO}/c1_hero.png"}, _archived),
     Case("POST", "/api/unarchive-media", "/api/unarchive-media",

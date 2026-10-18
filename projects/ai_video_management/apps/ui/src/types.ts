@@ -45,6 +45,9 @@ export interface TreeNode {
   link_note?: string;
   /** Chinese (or otherwise human-friendly) label rendered in place of `name` when present: a drama's README H1 title, a library folder's label, a keyed asset's `{key} {rest}`. */
   display_name?: string;
+  /** A folder whose contents are not loaded yet (follow-up 280): `children` is
+   *  empty until the sidebar opens it and `/api/tree/subtree` fills it. */
+  lazy?: boolean;
 }
 
 export interface FileResult {

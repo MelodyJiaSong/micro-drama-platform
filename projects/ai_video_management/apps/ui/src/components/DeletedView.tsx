@@ -4,11 +4,12 @@
  * route → grid of media tiles → multi-select + typed-DELETE modal → loop
  * `POST /api/hard-delete-media`. Soft-deleted via follow-up 023 lands here.
  */
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { hardDeleteMedia, mediaUrl, purgeDeleted } from "../api";
 import { announceToast } from "../lib/announce";
 import { ApiError, type TreeNode } from "../types";
+import { useTreeLoader } from "./TreeLoaderContext";
 
 const PAGE_SIZE = 50;
 const PREVIEW_LIMIT = 10;
@@ -36,6 +37,10 @@ export function DeletedView({ tree, onChange }: DeletedViewProps): JSX.Element {
   const [busy, setBusy] = useState<boolean>(false);
   const [purgeAllOpen, setPurgeAllOpen] = useState<boolean>(false);
   const [purgeAllConfirm, setPurgeAllConfirm] = useState<string>("");
+
+  // Lazy tree (follow-up 280): the recycle bin lists every deleted file, so load it in full.
+  const { ensureLoaded } = useTreeLoader();
+  useEffect(() => { ensureLoaded("ai_videos/_deleted", 0); }, [ensureLoaded]);
 
   const entries = useMemo<DeletedEntry[]>(() => collectDeletedMedia(tree), [tree]);
   const totalCount = useMemo<number>(() => countDeletedFiles(tree), [tree]);

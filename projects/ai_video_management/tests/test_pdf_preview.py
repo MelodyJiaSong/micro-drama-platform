@@ -28,7 +28,7 @@ def test_pdf_is_media_but_never_text() -> None:
 
 
 def test_pdf_leaf_type_in_tree(tmp_path: Path) -> None:
-    drama = tmp_path / "ai_videos" / "duikang_shangzeng"
+    drama = tmp_path / "ai_videos" / "demo_drama"
     drama.mkdir(parents=True)
     (drama / "分镜.pdf").write_bytes(b"%PDF-1.7\n")
     node = TreeReader(ExposedTree(tmp_path))._leaf_for(drama / "分镜.pdf")
@@ -36,26 +36,26 @@ def test_pdf_leaf_type_in_tree(tmp_path: Path) -> None:
 
 
 def test_pdf_served_inline_as_application_pdf(tmp_path: Path) -> None:
-    drama = tmp_path / "ai_videos" / "duikang_shangzeng"
+    drama = tmp_path / "ai_videos" / "demo_drama"
     drama.mkdir(parents=True)
     (drama / "分镜.pdf").write_bytes(b"%PDF-1.7\n")
-    qdto = _query(tmp_path).serve("ai_videos/duikang_shangzeng/分镜.pdf")
+    qdto = _query(tmp_path).serve("ai_videos/demo_drama/分镜.pdf")
     assert qdto.media_type == "application/pdf"
     assert qdto.disposition == "inline"
 
 
 def test_video_still_served_as_attachment(tmp_path: Path) -> None:
-    drama = tmp_path / "ai_videos" / "duikang_shangzeng"
+    drama = tmp_path / "ai_videos" / "demo_drama"
     drama.mkdir(parents=True)
     (drama / "a.mp4").write_bytes(b"\x00")
-    qdto = _query(tmp_path).serve("ai_videos/duikang_shangzeng/a.mp4")
+    qdto = _query(tmp_path).serve("ai_videos/demo_drama/a.mp4")
     assert qdto.disposition == "attachment"
 
 
 def test_chinese_filename_survives_in_rfc5987_form() -> None:
-    headers = file_security_headers("对抗熵增_分镜.pdf", "inline")
+    headers = file_security_headers("示例剧_分镜.pdf", "inline")
     disposition = headers["Content-Disposition"]
     assert disposition.startswith("inline; ")
     # ASCII fallback is lossy; filename* carries the real name
     assert 'filename="_.pdf"' in disposition
-    assert "filename*=UTF-8''%E5%AF%B9%E6%8A%97" in disposition
+    assert "filename*=UTF-8''%E7%A4%BA%E4%BE%8B" in disposition

@@ -18,7 +18,7 @@ prompt 纪律：**世界内专名（物品原名）不进 prompt**，prompt 只�
 物品名多是 IP 专名（concept C3 黄级）；正面图纯文字自由生成、零参考图，侧 / 背只挂正面图（rule 4e ①）；
 出图 prompt 不写「相机 / 摄影机 / 镜头架」（W13）；装备本体不自发光，除非原典模型自带特效（item.toml `effect`）。
 出图沿用 props 的做法：正 / 侧 / 背三张、侧背挂正面图；引擎按 `tools/image_engine.py`（follow-up 238）：
-auto ＝ Codex 内置出图 → ElevenLabs → 即梦（1600 字硬限，最低选项），前一家明确失败才换下一家；
+auto ＝ Codex 内置出图 → ElevenLabs，前一家明确失败才换下一家；图片不用即梦（follow-up 270，即梦只用于视频）；
 `Config.engine_for` 的旧分组（follow-up 027）只用于 `--only-engine` 分批与卡的字数检查。`--engine X` 显式点名时整批只用 X。
 """
 from __future__ import annotations
@@ -198,7 +198,7 @@ def card(d: Drama, r: el.Row, sp: dict) -> str:
 | 来源 | {_clean(sp.get('source', '—'))} |{(chr(10) + '| 原典描述与传说 | ' + _clean(sp['lore']) + ' |') if sp.get('lore') else ''}
 | 谁穿 / 哪一段 | {'；'.join(who)} |
 | 事实 | {facts} |
-| 出图引擎 | Codex 内置出图 → ElevenLabs → 即梦 CLI（auto，follow-up 238） |
+| 出图引擎 | Codex 内置出图 → ElevenLabs（auto，follow-up 270；图片不用即梦） |
 | 外观依据 | {sp.get('basis', '—')}（{sp.get('confidence', '—')}） |{chr(10) + '| ⚠ 图的已知偏差 | ' + _clean(sp['known_issue']) + '（出图 3 次后仍在，待人工挑图或手修） |' if sp.get('known_issue') else ''}
 
 ## 锁定描述符
@@ -537,7 +537,7 @@ def images(paths: list[str], engine: str, force: bool, only: set[str], shard: tu
             dirp = el.find(root, r.key)
             if dirp is None or (only and r.key not in only):
                 continue
-            eng = engine or ie.AUTO   # follow-up 238：auto ＝ Codex → ElevenLabs → 即梦；engine_for 只剩 --only-engine 分批用
+            eng = engine or ie.AUTO   # follow-up 275：auto ＝ ElevenLabs → Codex（额度不够才换）；engine_for 只剩 --only-engine 分批用
             if only_engine and cfg.engine_for(r) != only_engine:
                 continue
             if Path(p).resolve() in (root, dirp, dirp.parent):
@@ -573,7 +573,7 @@ def main() -> int:
     ap.add_argument("step", choices=("build", "check", "images", "lint"))
     ap.add_argument("paths", nargs="+")
     ap.add_argument("--engine", default="", choices=("",) + ie.CHOICES,
-                    help="默认 auto ＝ Codex → ElevenLabs → 即梦（follow-up 238）；显式点名则整批只用它")
+                    help="默认 auto ＝ ElevenLabs → Codex（额度不够才换，follow-up 275；图片不用即梦）；显式点名则整批只用它")
     ap.add_argument("--only-engine", default="", choices=("", ie.DREAMINA, ie.ELEVENLABS),
                     help="只出 equipment.toml [meta] 旧分组判定为这一家的条目（分批并发时用；引擎本身仍按 --engine）")
     ap.add_argument("--force", action="store_true")
@@ -581,7 +581,7 @@ def main() -> int:
     ap.add_argument("--shard", default="0/1", help="k/n：只做第 k 份（共 n 份），多进程并发时各拿不相交的一份")
     ap.add_argument("--passes", type=int, default=5, help="失败件最多补跑几轮")
     ap.add_argument("--sheet", action="store_true",
-                    help="显式 --engine dreamina 时改走三视图设定图：一张横幅并排正 / 侧 / 背，裁成三张、三张一起换（029：护甲有效，扁长武器无效）")
+                    help="（已停用：只对即梦生效，follow-up 270 起图片不用即梦）显式 --engine dreamina 时改走三视图设定图：一张横幅并排正 / 侧 / 背，裁成三张、三张一起换（029：护甲有效，扁长武器无效）")
     ap.add_argument("--item", default="", help="lint：暂存区 item.toml 路径")
     ap.add_argument("--name", default="")
     ap.add_argument("--slot", default="")

@@ -66,7 +66,7 @@ PROPS_DIR_NAME = "props"
 # `v{N}_` prefix) is the routing key and MUST be globally unique across the
 # drama's prop views, because an
 # out-of-image tool truncates the download filename to the prompt's first ~9
-# chars: a pinyin prop handle (`f80_ferrari_全景` → `f80_ferra`) loses the angle
+# chars: a pinyin prop handle (`sports_car_全景` → `sports_ca`) loses the angle
 # entirely and all four views collide on one file. A leading Chinese view token
 # (`车外全景`) survives any truncation, so the routing key is the 视角 itself.
 # One canonical image per view folder → re-import OVERWRITES (re-rolls are the
@@ -103,7 +103,7 @@ _SUBJECT_KEY = re.compile(r"bg(\d+)-(\d+)")
 # Script-generated asset folders under a prop: written by the render/previz
 # tools with contract-bound filenames, never by a download. They are excluded
 # from the folder-name rename pass, which would otherwise collapse
-# `whitemodel/angles/f80_ferrari_front.png` … to `angles1.png` … and break every
+# `whitemodel/angles/sports_car_front.png` … to `angles1.png` … and break every
 # downstream reference to the `{name}_{tag}.png` naming contract.
 # A scenes tree has the same kind of tool-owned folders (follow-up 173), and the
 # pass was collapsing them in the field (`_blender/_blender1.png`, `ref/ref1.jpg`):

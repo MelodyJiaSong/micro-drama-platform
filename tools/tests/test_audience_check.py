@@ -22,6 +22,24 @@ Vision：服务「每到一处都震撼」。
 | 段 | 知道 | 在等 | 处理 |
 |---|---|---|---|
 | 开场 | 他要进城 | 城有多大 | 兑现 |
+
+## 目标影响
+
+| 事件 | 影响 | 为什么 |
+|---|---|---|
+| 抵达城门 | + | 离目标近一步 |
+
+## 台词逐句
+
+| 场 | 说话人 → 对谁 | 台词 | 为什么 | 新信息 |
+|---|---|---|---|---|
+| 城门 | 卫兵 → 陌生人 | 做什么的 | 职责 | 城门有人盘查 |
+
+## 站位与视线
+
+| 场 | 谁 | 在哪、朝哪、为什么站这 | 看得见 / 听得见什么 |
+|---|---|---|---|
+| 城门 | 卫兵 | 门外、脸朝来路：要盘查进城的人 | 老远看见他走上来 |
 """
 SCENE = "# s1\n\nVision：抵达的宏伟。\n\n## 观众\n\n进场时观众在等城门。\n\n## 场的设定\n"
 
@@ -96,3 +114,45 @@ def test_empty_item_does_not_borrow_the_next_line():
     assert audience_check._line_value("状态：待审核\nVision：\n\n## 对的\n", "Vision") == ""
     assert audience_check._line_value("Vision：\n核心：x\n", "Vision") == ""
     assert audience_check._line_value("Vision：\n核心：x\n", "核心") == "x"
+
+
+def _filming(d: Path, durations: list[int], limits=(300, 600)) -> None:
+    import json
+    (d / "workflow.json").write_text(json.dumps({"episode_seconds": list(limits)}), encoding="utf-8")
+    shots = [{"id": f"st{i}", "duration": s} for i, s in enumerate(durations, 1)]
+    doc = {"content": {"scenes": [{"id": "s1", "shots": shots}]}, "source_revision": None, "approved_revision": None}
+    (d / "episodes" / "ep01" / "filming.json").write_text(json.dumps(doc), encoding="utf-8")
+
+
+def test_episode_length_hard_rule(tmp_path):
+    d = _drama(tmp_path)
+    _filming(d, [200, 150])
+    assert audience_check.run(d, module="filming") == []
+    _filming(d, [200, 150, 300])
+    assert any("650 秒" in i for i in audience_check.run(d, module="filming"))
+    _filming(d, [100])
+    assert any("100 秒" in i for i in audience_check.run(d, module="filming"))
+
+
+def test_goal_effect_table_is_required(tmp_path):
+    story = STORY.split("## 目标影响")[0]
+    issues = audience_check.run(_drama(tmp_path, story=story), module="story")
+    assert any("目标影响" in i for i in issues)
+
+
+def test_line_table_needs_new_information_for_every_line(tmp_path):
+    story = STORY.replace("| 城门 | 卫兵 → 陌生人 | 做什么的 | 职责 | 城门有人盘查 |", "| 城门 | 卫兵 → 陌生人 | 做什么的 | 职责 |  |")
+    issues = audience_check.run(_drama(tmp_path, story=story), module="story")
+    assert any("新信息" in i for i in issues)
+
+
+def test_story_needs_the_blocking_and_sightline_table(tmp_path):
+    story = STORY.split("## 站位与视线")[0]
+    issues = audience_check.run(_drama(tmp_path, story=story), "ep01", "story")
+    assert any("站位与视线" in i for i in issues)
+
+
+def test_blocking_row_without_a_sightline_is_flagged(tmp_path):
+    story = STORY.replace("| 老远看见他走上来 |", "|  |")
+    issues = audience_check.run(_drama(tmp_path, story=story), "ep01", "story")
+    assert any("站位与视线」第「城门」行缺 看得见" in i for i in issues)

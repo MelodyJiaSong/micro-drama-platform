@@ -1,4 +1,4 @@
-"""Object-prop view routing (follow-up duikang_shangzeng/006).
+"""Object-prop view routing.
 
 An OBJECT prop — one whose identity needs several camera angles rather than a
 single image — keeps each angle in its own `v{N}_{视角}` sub-folder under the
@@ -6,7 +6,7 @@ prop folder, mirroring a scene's `bg{N}_{方位}_{描述}` plates.
 
 The routing key is the 视角 token itself, NOT the prop handle: an out-of-image
 tool truncates the download filename to the prompt's first ~9 chars, so a
-pinyin-led key (`f80_ferrari_全景` → `f80_ferra`) loses the angle and every view
+pinyin-led key (`sports_car_全景` → `sports_ca`) loses the angle and every view
 collides on one file. A leading Chinese view token survives any truncation.
 """
 from __future__ import annotations
@@ -34,10 +34,10 @@ def _touch(path: Path, payload: bytes = b"x") -> None:
 
 def _drama(tmp_path: Path) -> tuple[Path, Path, Path]:
     root = tmp_path / "repo"
-    prop = root / "ai_videos" / "d" / "2_世界观人设" / "props" / "f80_ferrari"
+    prop = root / "ai_videos" / "d" / "2_世界观人设" / "props" / "sports_car"
     for view in VIEWS:
         (prop / view).mkdir(parents=True)
-    _touch(prop / "f80_ferrari.md")
+    _touch(prop / "sports_car.md")
     downloads = tmp_path / "Downloads"
     downloads.mkdir()
     return root, prop, downloads
@@ -89,19 +89,19 @@ def test_reroll_overwrites_only_its_own_view(tmp_path: Path) -> None:
 
 def test_prop_root_asset_without_view_token_stays_at_root(tmp_path: Path) -> None:
     root, prop, downloads = _drama(tmp_path)
-    _touch(downloads / "f80_ferrari 道具参考图.png")
+    _touch(downloads / "sports_car 道具参考图.png")
 
     result = _importer(root, downloads).import_drama("ai_videos/d")
 
     assert [e["kind"] for e in result.moved] == ["prop"], result.moved
-    assert (prop / "f80_ferrari.png").is_file()
+    assert (prop / "sports_car.png").is_file()
 
 
 def test_same_view_token_on_two_props_is_not_misrouted(tmp_path: Path) -> None:
     """`车外全景` on one prop and `车内全景` on another are distinct, but an
     ambiguous token shared by two props must go unmatched, never guessed."""
     root, prop, downloads = _drama(tmp_path)
-    other = prop.parent / "f80_cockpit"
+    other = prop.parent / "car_cockpit"
     (other / "v1_车外全景").mkdir(parents=True)  # deliberately duplicated token
     _touch(downloads / "车外全景.png")
 
@@ -114,7 +114,7 @@ def test_same_view_token_on_two_props_is_not_misrouted(tmp_path: Path) -> None:
 
 def test_second_object_views_coexist(tmp_path: Path) -> None:
     root, prop, downloads = _drama(tmp_path)
-    cockpit = prop.parent / "f80_cockpit"
+    cockpit = prop.parent / "car_cockpit"
     (cockpit / "v1_车内全景").mkdir(parents=True)
     _touch(downloads / "车内全景.png")
     _touch(downloads / "车外全景.png")
@@ -131,11 +131,11 @@ def test_generated_folders_keep_contract_filenames(tmp_path: Path) -> None:
     root, prop, downloads = _drama(tmp_path)
     angles = prop / "whitemodel" / "angles"
     for tag in ("front", "side", "rear"):
-        _touch(angles / f"f80_ferrari_{tag}.png")
+        _touch(angles / f"sports_car_{tag}.png")
     _touch(downloads / "车外全景.png")
 
     _importer(root, downloads).import_drama("ai_videos/d")
 
     for tag in ("front", "side", "rear"):
-        assert (angles / f"f80_ferrari_{tag}.png").is_file(), tag
+        assert (angles / f"sports_car_{tag}.png").is_file(), tag
     assert not (angles / "angles1.png").exists()

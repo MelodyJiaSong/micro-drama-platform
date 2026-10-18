@@ -26,7 +26,7 @@
     {
       "id": "prompts",
       "title": "Prompt 编译与出片",
-      "description": "Prompt 编译（结构、固定规则、Seedance 写法）、每镜参考（overhead、复杂镜 previz、人物与场景图、声样），以及出片（资料包、提交、记日志、落盘）。",
+      "description": "Prompt 编译（结构、固定规则、Seedance 写法）、每镜参考（overhead、默认不做 previz、人物与场景图、声样），以及出片（资料包、提交、记日志、落盘）。",
       "number": "1.3",
       "category": "ai-video"
     },
@@ -338,6 +338,12 @@
       "parent": ".agents/skills/ai-videos-pipeline/modules/filming-scenes.md"
     },
     {
+      "path": ".agents/skills/ai-videos-pipeline/modules/filming-action.md",
+      "title": "动作戏",
+      "group": "filming",
+      "parent": ".agents/skills/ai-videos-pipeline/modules/filming-scenes.md"
+    },
+    {
       "path": ".agents/skills/ai-videos-pipeline/modules/filming-coverage.md",
       "title": "覆盖（coverage）",
       "group": "filming"
@@ -539,11 +545,6 @@
       "view": "code"
     },
     {
-      "path": "tools/assets_sync.py",
-      "group": "tools",
-      "view": "code"
-    },
-    {
       "path": "projects/ai_video_management/libs/common/episode_workflow.py",
       "title": "三模块系统契约",
       "group": "app",
@@ -581,11 +582,6 @@
     },
     {
       "path": "tools/whitemodel_normalize.py",
-      "group": "tools",
-      "view": "code"
-    },
-    {
-      "path": "tools/assets/scanner.py",
       "group": "tools",
       "view": "code"
     },
@@ -700,11 +696,6 @@
     },
     {
       "path": "tools/service_call.py",
-      "group": "tools",
-      "view": "code"
-    },
-    {
-      "path": "tools/assets/r2.py",
       "group": "tools",
       "view": "code"
     },
@@ -846,6 +837,21 @@
     },
     {
       "path": "tools/shot_take.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/scene_cut.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/episode_cut.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/scene_blocking.py",
       "group": "tools",
       "view": "code"
     },
@@ -998,6 +1004,7 @@
     "repo:.agents/skills/ai-videos-pipeline/modules/filming-series.md": "1.2.2.2",
     "repo:.agents/skills/ai-videos-pipeline/modules/filming-scenes.md": "1.2.3",
     "repo:.agents/skills/ai-videos-pipeline/modules/filming-scene-anatomy.md": "1.2.3.1",
+    "repo:.agents/skills/ai-videos-pipeline/modules/filming-action.md": "1.2.3.2",
     "repo:.agents/skills/ai-videos-pipeline/modules/filming-coverage.md": "1.2.4",
     "repo:.agents/skills/ai-videos-pipeline/modules/filming-shots.md": "1.2.5",
     "repo:.agents/skills/ai-videos-pipeline/modules/filming-functions.md": "1.2.5.1",
@@ -1031,6 +1038,7 @@
     "repo:.agents/skills/ai-videos-pipeline/resources/assets.md": "1.7.4",
     "repo:ai_videos/_research/README.md": "1.7.5",
     "repo:.agents/skills/codex-imagegen/SKILL.md": "1.7.6",
+    "repo:.agents/skills/ai-videos-character-sim/SKILL.md": "1.7.7",
     "repo:AGENTS.md": "2.1.1",
     "repo:CONVENTIONS.md": "2.1.2",
     "repo:CLAUDE.md": "2.1.3",
@@ -1086,41 +1094,41 @@
     "repo:tools/character_sheet.py": "2.3.4",
     "repo:tools/char_assets.py": "2.3.5",
     "repo:tools/gen_bg_images.py": "2.3.6",
-    "repo:tools/assets_sync.py": "2.3.7",
-    "repo:tools/yt_research.py": "2.3.8",
-    "repo:tools/yt_series_build.py": "2.3.9",
-    "repo:tools/blender_exe.py": "2.3.10",
-    "repo:tools/gen_equipment.py": "2.3.11",
-    "repo:tools/previz/planschema.py": "2.3.12",
-    "repo:tools/whitemodel_normalize.py": "2.3.13",
-    "repo:tools/assets/scanner.py": "2.3.14",
-    "repo:tools/build_floorplan.py": "2.3.15",
-    "repo:tools/check_world_scenes_szzl.py": "2.3.16",
-    "repo:tools/apply_asset_plan.py": "2.3.17",
-    "repo:tools/props_lib.py": "2.3.18",
-    "repo:tools/gen_outfit_views.py": "2.3.19",
-    "repo:tools/gen_char_images.py": "2.3.20",
-    "repo:tools/gen_bg_assets.py": "2.3.21",
-    "repo:tools/previz/build_previz.py": "2.3.22",
-    "repo:tools/gen_world_scenes_szzl.py": "2.3.23",
-    "repo:tools/build_scene.py": "2.3.24",
-    "repo:tools/gen_turntables_szzl.py": "2.3.25",
-    "repo:tools/previz/planstyle.py": "2.3.26",
-    "repo:tools/image_engine.py": "2.3.27",
-    "repo:tools/equipment_lib.py": "2.3.28",
-    "repo:tools/previz/seedance_ref.py": "2.3.29",
-    "repo:tools/service_request.py": "2.3.30",
-    "repo:tools/image_fetch.py": "2.3.31",
-    "repo:tools/service_call.py": "2.3.32",
-    "repo:tools/assets/r2.py": "2.3.33",
-    "repo:tools/dreamina_receipt.py": "2.3.34",
-    "repo:tools/hyper3d_fetch.py": "2.3.35",
-    "repo:tools/episode_shots.py": "2.3.36",
-    "repo:tools/overhead_previz.py": "2.3.37",
-    "repo:tools/shot_pack.py": "2.3.38",
-    "repo:tools/shot_take.py": "2.3.39",
-    "repo:tools/dreamina_image.py": "2.3.40",
-    "repo:tools/codex_image.py": "2.3.41",
-    "repo:tools/audience_check.py": "2.3.42"
+    "repo:tools/yt_research.py": "2.3.7",
+    "repo:tools/yt_series_build.py": "2.3.8",
+    "repo:tools/blender_exe.py": "2.3.9",
+    "repo:tools/gen_equipment.py": "2.3.10",
+    "repo:tools/previz/planschema.py": "2.3.11",
+    "repo:tools/whitemodel_normalize.py": "2.3.12",
+    "repo:tools/build_floorplan.py": "2.3.13",
+    "repo:tools/check_world_scenes_szzl.py": "2.3.14",
+    "repo:tools/apply_asset_plan.py": "2.3.15",
+    "repo:tools/props_lib.py": "2.3.16",
+    "repo:tools/gen_outfit_views.py": "2.3.17",
+    "repo:tools/gen_char_images.py": "2.3.18",
+    "repo:tools/gen_bg_assets.py": "2.3.19",
+    "repo:tools/previz/build_previz.py": "2.3.20",
+    "repo:tools/gen_world_scenes_szzl.py": "2.3.21",
+    "repo:tools/build_scene.py": "2.3.22",
+    "repo:tools/gen_turntables_szzl.py": "2.3.23",
+    "repo:tools/previz/planstyle.py": "2.3.24",
+    "repo:tools/image_engine.py": "2.3.25",
+    "repo:tools/equipment_lib.py": "2.3.26",
+    "repo:tools/previz/seedance_ref.py": "2.3.27",
+    "repo:tools/service_request.py": "2.3.28",
+    "repo:tools/image_fetch.py": "2.3.29",
+    "repo:tools/service_call.py": "2.3.30",
+    "repo:tools/dreamina_receipt.py": "2.3.31",
+    "repo:tools/hyper3d_fetch.py": "2.3.32",
+    "repo:tools/episode_shots.py": "2.3.33",
+    "repo:tools/overhead_previz.py": "2.3.34",
+    "repo:tools/shot_pack.py": "2.3.35",
+    "repo:tools/shot_take.py": "2.3.36",
+    "repo:tools/dreamina_image.py": "2.3.37",
+    "repo:tools/codex_image.py": "2.3.38",
+    "repo:tools/audience_check.py": "2.3.39",
+    "repo:tools/scene_cut.py": "2.3.40",
+    "repo:tools/scene_blocking.py": "2.3.41",
+    "repo:tools/episode_cut.py": "2.3.42"
   }
 }

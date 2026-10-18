@@ -1,6 +1,7 @@
 # 水晶湖
 
-> **审图**：通过 · 2026-09-30 · a2b55ff9e58a · S1–S6 过；锚点是白天，剧本 S24 要傍晚金光，shot 里按午后调成傍晚
+> **审图**：通过 · 2026-10-16 · b5740fe04dd9 · 第 1 轮（剧 follow-up 056 Codex 重出、替换即梦旧图）。西北岸栈桥根部朝东南：近处湿泥岸与蚌壳，旧栈桥伸入水、桥上两只鱼篓，近岸睡莲白花，湖心小岛、远处第二座小岛，右侧芦苇与压塌一角的芦苇窝棚，左侧清溪入湖；午后阳光、湖面碎金；无人、无文字水印。远山比卡写的「淡青灰山脊」更高更显，可接受。静图不代替运镜与成片验收。
+> **生成**：`tools/gen_bg_images.py run --force --engine codex`，Codex 内置出图（ChatGPT 订阅额度；图像型号、质量与费用不暴露，记未知），1672×941；参考图 `bg1_北郡山谷`，不挂物件图；请求见 `background/request_log.md`（第 1 轮 0f0be8404a364aab97e8deb603d7ae8b）；即梦旧图备份在 `ai_videos/_deleted/shengji_zhilu/background_即梦旧图_20261016/`。
 > **档级：锚点级**（stage2 playbook §3b ④ / rule 4f：必做只有锚点图；反向 / 侧向 / 内景 plate 用到才建）。
 > **bg 代号：`bg8`** · 目录 `background/eastern_kingdoms/elwynn_forest/bg8_水晶湖/` · 所属 东部王国 / 艾尔文森林（Elwynn Forest）
 > **版本红线**：Vanilla 1.12 · Year 25 ADP。4.0.3a 之后才有的东西一样都不许出现（`tools/wow_version_gate.py`）。

@@ -1,6 +1,7 @@
 # 狮王之傲旅店
 
-> **审图**：通过 · 2026-09-30 · ea1e6d1a0c89 · 按 1.12 重写的新卡第 1 次出图。S1–S6 过：两层白灰泥木构、蓝瓦小山墙门廊、门敞开、红砖烟囱、石墩信箱挑两面蓝底金边小旗；屋顶偏深带青苔
+> **审图**：通过 · 2026-10-16 · 7d4b63779e39 · 第 1 轮（剧 follow-up 056 Codex 重出、替换即梦旧图）。前院朝东看旅店正立面：两层白灰泥外露深褐木构、蓝瓦，门廊双门敞开、门里暗；门廊左石墩信箱挑两面蓝底三角旗，右墙根三只酒桶，前景拴马横木与土径、野花；北墙沿画左斜退，屋后橡树；午后暖光、门廊投影；无人、无文字水印。烟囱冒一缕烟（卡未写），可接受。静图不代替运镜与成片验收。
+> **生成**：`tools/gen_bg_images.py run --force --engine codex`，Codex 内置出图（ChatGPT 订阅额度；图像型号、质量与费用不暴露，记未知），1672×941；参考图 `bg1_北郡山谷`，不挂物件图；请求见 `background/request_log.md`（第 1 轮 b4809ae6bc264ad4a5abc009e4dc7c4a）；即梦旧图备份在 `ai_videos/_deleted/shengji_zhilu/background_即梦旧图_20261016/`。
 > **卡已对齐**：2026-09-30 按 r5 调研（`spawns/r5-goldshire-geo` §1.4）与 ep02 定稿剧本重写（`spawns/bg4-bg5-realign`）；上面那张图是旧卡出的，需按本卡重出。
 > **档级：锚点级**（stage2 playbook §3b ④ / rule 4f：必做只有锚点图；反向 / 侧向 / 内景 plate 用到才建）。
 > **bg 代号：`bg5`** · 目录 `background/eastern_kingdoms/elwynn_forest/bg5_狮王之傲旅店/` · 所属 东部王国 / 艾尔文森林（Elwynn Forest）

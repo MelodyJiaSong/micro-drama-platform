@@ -71,19 +71,19 @@ reader 测试的边界用例全部取自这张表，**不另写手工 fixture �
 | F7 | label 形如 `(…声音)` | **0 处** | 默认规则 `*声音` 在真实数据中零命中 |
 | F8 | 默认规则覆盖不到的 label | `道具参考图`（xianjian 5、xingji 3）、`道家手印参考图`、`大地裂痕参考图` | 预检错误：label 未命中任何 rule |
 | F9 | 带段落后缀的 label，含嵌套全角括号 | `场景参考图·第四段：根盘与坑全景（N1 机位）` 等约 35 处（hy1–hy3） | 名与 label 按 ASCII 括号切分，全角括号属于 label 内容 |
-| F10 | `本镜首帧(上一镜末帧)` | xingji 17、rexue 3、duikang 2；上一镜 `_lastframe.png` 目前只存在于 wushen（而 wushen 不用这个 label） | xingji shot02 解析结果必为「找不到文件」 |
+| F10 | `本镜首帧(上一镜末帧)` | xingji 17、rexue 3、standalone_demo 2；上一镜 `_lastframe.png` 目前只存在于 wushen（而 wushen 不用这个 label） | xingji shot02 解析结果必为「找不到文件」 |
 | F11 | `stem_in_shot` 的目标文件不在镜目录顶层 | xianjian `shot02_previz` 在 `shots/shot02/previz/shot02_previz.mp4` | 需要递归查找，见 A-11 |
-| F12 | 参考项名与文件 stem 对不上 | duikang 写 `previz_shot01(previz灰模视频)`，实际文件是 `shot01_previz.mp4` | 默认规则 miss → 错误信息里提示 override 键 |
+| F12 | 参考项名与文件 stem 对不上 | standalone_demo 写 `previz_shot01(previz灰模视频)`，实际文件是 `shot01_previz.mp4` | 默认规则 miss → 错误信息里提示 override 键 |
 | F13 | `时长:` 的写法 | `N秒`（多数）；`Ns`（xianjian shot14–16）；反引号小数 `` `1.5s` ``（rexue 21 个）；`比例: 9:16 ｜ 时长: 9秒` 两字段同一行（wushen ep03 shot05 / shot07） | 全部要能解析 |
-| F14 | `比例:` 的写法 | `16:9`、`9:16`、`` `9:16` ``（rexue）、`16:9（项目 divergence·style_guide 画幅节）`（尾注）、`2.35:1`（duikang 21 个） | `2.35:1` 在预检报「模型不支持的比例」 |
+| F14 | `比例:` 的写法 | `16:9`、`9:16`、`` `9:16` ``（rexue）、`16:9（项目 divergence·style_guide 画幅节）`（尾注）、`2.35:1`（standalone_demo 21 个） | `2.35:1` 在预检报「模型不支持的比例」 |
 | F15 | prompt 标题 | `## 视频 prompt`；`## 视频 prompt — 复制下方代码块到视频生成模型`（rexue 21 个） | 标题按前缀匹配 |
 | F16 | 反向提示词标题有 4 种形态，其中一种与 fence 之间隔着空行；另有 128 个文件没有负向 fence（`负面词:` 写在 prompt 内：wushen 102、rexue 21、xianjian 5） | 见 §3.1 | 无负向 fence → `negative_prompt=None`；prompt 内的 `负面词:` 逐字保留 |
-| F17 | prompt 正文里出现不属于 `=>@` 的裸 `@` | wushen 60（`参考分配: @图1…`）、xianjian 19（`@图片1`）、duikang 15（`@f80_ferrari`） | 影响 FR-31 填写与校验，见 A-14 |
+| F17 | prompt 正文里出现不属于 `=>@` 的裸 `@` | wushen 60（`参考分配: @图1…`）、xianjian 19（`@图片1`）、standalone_demo 15（`@sports_car`） | 影响 FR-31 填写与校验，见 A-14 |
 | F18 | 行尾与编码 | CRLF 0 个、BOM 0 个；但 `core.autocrlf=true` 且仓库没有 `.gitattributes` | 新 clone 可能引入 CRLF，见 A-07 |
 | F19 | 资产卡 ```text fence 的首行 | 291 个卡 md：路由键形态 `x{N}-{M}_` 158 个；旧形态 `x{N}_` 95 个；其他（负面词清单、中文场景名）224 个 | 只取路由键形态 |
 | F20 | hy3 `c1_砌炉的老人.md` | `c1-1_…立绘`（图）+ `c1-2_…turntable`（4 s 视频块，块内带 `参考:` 行）+ 2 个裸 fence | 见 A-15 |
 | F21 | `.link.json` | hy2 `c1_造家的人` 同时有 `.png.link.json` 和 `.mp4.link.json`（stem 相同、种类不同），target 在 hy1 | 图片 resolver 只认 png 那条 |
-| F22 | 同一剧内的重复图片 stem | wushen 21 个（`shot10_lastframe` 跨集 ×3）、xianjian 4 个（`views1` ×10）；hy1–hy4、duikang、rexue、xingji 为 0 | 多重匹配错误可以用真实树测试 |
+| F22 | 同一剧内的重复图片 stem | wushen 21 个（`shot10_lastframe` 跨集 ×3）、xianjian 4 个（`views1` ×10）；hy1–hy4、standalone_demo、rexue、xingji 为 0 | 多重匹配错误可以用真实树测试 |
 | F23 | `series.json` | 只有 `huangye_shenghuo` 有；`ai_videos/notes/`（只含 note.txt）是非 `_` 目录且无标记 | 按参考语义会被当成平铺剧，见 A-23 |
 | F24 | `dreamina` 可执行文件 | 实际为 `~/bin/dreamina.exe`（原生 exe，31 MB）；spec 默认值写的是 `~/bin/dreamina` | 见 A-22 |
 
@@ -188,7 +188,7 @@ key 由参数注入，固定测试 key，时钟用 ManualClock。
 | UT-D-PRE-02 | ② 种类 / 数量 | seedance2.5：图片 30 张 ok、31 张 error；视频 10 ok / 11 error；音频 10 ok / 11 error。`first_frame` 与主体是否计入图片上限待定（A-13） |
 | UT-D-PRE-03 | ③ 时长 | seedance2.5：3 error、4 ok、30 ok、31 error；seedance2.0：15 ok、16 error；真实值 `1.5s`（rexue）→ error |
 | UT-D-PRE-04 | ③ 分辨率 | seedance2.5 + `1080p` → error；seedance2.0_vip + `1080p` → ok；seedream5.0 + `1k` → error；seedream3.x + `1k` → ok |
-| UT-D-PRE-05 | ③ 比例 | `16:9`、`9:16` → ok；`2.35:1`（duikang 真实值）→ error |
+| UT-D-PRE-05 | ③ 比例 | `16:9`、`9:16` → ok；`2.35:1`（standalone_demo 真实值）→ error |
 | UT-D-PRE-06 | ④ backend 能力 | `routing.video=cli` 时：带主体 → error；模型为 2.5 → error；时长 16 s → error；seedance2.0 + 15 s + 无主体 → ok。断言 error 结果里的 `params` **与输入完全相同**（不降级） |
 | UT-D-PRE-07 | ⑤ prompt 字数 | 5000 ok、5001 error；计数单位待定（A-17），测试用例同时包含 CJK 字符与 emoji（代理对） |
 | UT-D-PRE-08 | ⑥ 主体 | 名称 20 字 ok、21 字 error；不在快照里 → error，hint 指向主体对账页；快照 23h59m → ok、24h01m → warning；从未同步 → error（A-27） |
@@ -326,9 +326,9 @@ golden 由 stage-6 实施者**逐字段对照 md 人工核对**后提交，不�
 | S11 | `wushen_juexing/…/episodes/ep06/shots/shot01/shot01.md` | `=>@1..N`；`c11_围观武者甲声音=>@3` |
 | S12 | `wushen_juexing/…/episodes/ep03/shots/shot05/shot05.md` | `比例: 9:16 ｜ 时长: 9秒` 同一行；`> ⚠ 合规改写` 引用块 |
 | S13 | `rexue_gaoxiao/…/shots/shot01/shot01.md` | 标题 `## 视频 prompt — 复制…`；`学校泳池_bg2_水面_俯拍=>@1`；`` `9:16` ``；`` `1.5s` `` |
-| S14 | `duikang_shangzeng/…/shots/shot01/shot01.md` | `场景主体` / `物件主体` / `previz灰模视频`（名 `previz_shot01` ≠ 文件 `shot01_previz.mp4`）；`2.35:1`；`@f80_ferrari` |
-| S15 | `duikang_shangzeng/…/shots/shot09/shot09.md` | `(人物主体)` 出现在独立剧（abbrev 为空） |
-| S16 | `duikang_shangzeng/…/shots/shot20/shot20.md` | `本镜首帧(上一镜末帧)` |
+| S14 | `standalone_demo/…/shots/shot01/shot01.md` | `场景主体` / `物件主体` / `previz灰模视频`（名 `previz_shot01` ≠ 文件 `shot01_previz.mp4`）；`2.35:1`；`@sports_car` |
+| S15 | `standalone_demo/…/shots/shot09/shot09.md` | `(人物主体)` 出现在独立剧（abbrev 为空） |
+| S16 | `standalone_demo/…/shots/shot20/shot20.md` | `本镜首帧(上一镜末帧)` |
 | S17 | `xingji_yingjiu/…/shots/shot02/shot02.md` | `本镜首帧(上一镜末帧)` + `单位参考图` / `角色参考图`；反向标题 `> **反向提示词**：`；shot01 没有 lastframe |
 | S18 | `xingji_yingjiu/…/shots/shot10/shot10.md` | `道具参考图` |
 

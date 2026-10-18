@@ -39,5 +39,5 @@
 - 普通任务可由主代理完成。playbook 要求的可并行工作在工具可用且当前环境允许时委派；限额不足时分批。要求 fresh context 的观众 / 审稿 QC 必须用独立上下文，缺少该能力就记录未审，不由作者自审冒充通过。
 - 改分镜、overhead 或参考资产后，对本次范围运行 `python tools/shot_pack.py sync <集目录> [镜头key]`（只报告用 `check`）；工作流目录或共用源增删迁移后运行 `python tools/workflow_catalog.py --fix` 再 `--check`；改 skill 名称或描述后运行 `python tools/sync_agent_skills.py` 再 `--check`。Claude Stop hook 是额外保障；其他环境显式执行。核对 sync / check 的输出，报告失败、未检查范围和未对齐或已失效的资料包，不能只凭退出码宣称全部一致。
 - 软件改动执行项目规定且与改动相关的检查；规范改动执行入口、引用、frontmatter 检查。无法执行的验证明确报告。
-- 保留「生成永远人点」、锁片前质检与独立审稿、人工剪辑批准、媒体 R2 索引流程。实际工具未连接时说明缺失能力并完成其余可做部分。
+- 保留「生成永远人点」、锁片前质检与独立审稿、人工剪辑批准。实际工具未连接时说明缺失能力并完成其余可做部分。
 - 不把本项目知识写进 Claude 或 Codex 私有 memory。项目意图落 `specs/`，通用规则落上述共用文件，运行审计落 `.audit/`。

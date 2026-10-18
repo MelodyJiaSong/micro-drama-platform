@@ -4,7 +4,7 @@
     python tools/shot_pack.py sync <集目录> [镜头key]     # 建 / 更新本集（或一镜）的资料包
     python tools/shot_pack.py sync --all [--quiet]        # 全仓六模块剧（Claude Stop hook 每回合跑）
     python tools/shot_pack.py check <集目录> | --all       # 只报告，不改
-    python tools/shot_pack.py cmd <集目录> <镜头key>       # 打印这一镜的提交命令（会扣积分，只在用户决定生成后执行）
+    python tools/shot_pack.py cmd <集目录> <镜头key>       # 打印这一镜的草稿提交命令（会扣积分，只在用户决定生成后执行）
 
 资料包 ＝ `{镜头目录}/资料包/`（派生缓存，gitignored）：
     `01_图片1_ep1_s4_st2_overhead.png`、`02_图片2_c14_Brother_Sammuel.png` … `prompt.txt` 与 `manifest.json`。
@@ -113,9 +113,30 @@ def shot_problems(ep_dir: Path, shot: dict) -> list[str]:
         ov = sd / "planning" / "overhead.toml"
         if ov.is_file() and d.get("overhead_sha256") and sha256(ov) != d["overhead_sha256"]:
             out.append("overhead.toml 在画图之后改过：重跑 tools/shot_overhead.py 后重新编译")
+        elif motion and motion["kind"] == "video":
+            out += previz_problems(sd)
     if not shot.get("refs"):
         out.append("这条 prompt 没有参考清单：重新编译")
     return out
+
+
+def previz_problems(sd: Path) -> list[str]:
+    """走位预演视频是不是按当前 overhead 渲染的：配置要等于 overhead 现在生成的，渲染戳要等于配置现在的输入
+    （EP1 s4 曾经 overhead 改了、previz 没重渲，资料包照旧送出旧走位，follow-up 279）。"""
+    from tools import overhead_previz
+    from tools.previz.planschema import PREVIZ_STAMP, render_inputs
+    cfg = sd / "previz" / "previz_config.toml"
+    stamp = sd / "previz" / (sd.name + PREVIZ_STAMP)
+    redo = "重跑 python tools/overhead_previz.py %s --render 后再 sync" % sd.relative_to(REPO).as_posix()
+    try:
+        current = overhead_previz.config(sd)
+    except Exception as exc:          # overhead 本身读不出：交给 overhead 那一项去报
+        return ["按 overhead 生成 previz 配置失败（%s）：%s" % (exc, redo)]
+    if not cfg.is_file() or cfg.read_text(encoding="utf-8") != current:
+        return ["previz_config.toml 不是按当前 overhead 生成的：" + redo]
+    if not stamp.is_file() or json.loads(stamp.read_text(encoding="utf-8")) != render_inputs(cfg):
+        return ["走位预演视频不是按当前 previz 配置渲染的：" + redo]
+    return []
 
 
 def upload_tags(refs: list[dict]) -> list[str]:
@@ -309,10 +330,13 @@ def command(ep_dir: Path, key: str) -> int:
     man = json.loads((pack / MANIFEST).read_text(encoding="utf-8"))
     # 绝对路径（Windows 下 CLI 认不出相对路径：follow-up 229 实测 0/4 上传），传「上传/」里的副本
     args = [x for r in man["refs"] for x in (FLAG[r["kind"]], '"%s"' % (pack / r["upload"]).resolve())]
-    print("提交（会扣积分，只在用户决定生成后执行）：\n  python tools/service_call.py --target %s -- dreamina multimodal2video %s "
+    # 两步出片（follow-up 265）：这里只打印草稿的命令；正式条要带上用户通过的草稿，由 shot_take 组装
+    print("草稿提交（会扣积分，只在用户决定生成后执行）：\n  python tools/service_call.py --target %s -- dreamina multimodal2video %s "
           "--prompt=\"$(Get-Content -Raw %s)\" --duration=%d --ratio=%s --video_resolution=%s --model_version=%s --poll=0"
           % (ep_dir.relative_to(REPO).as_posix(), " ".join(args), (pack / "prompt.txt").relative_to(REPO).as_posix(),
-             duration, prompt.get("ratio", "16:9"), prompt.get("resolution", "720p"), prompt.get("model", "seedance2.5")))
+             duration, prompt.get("ratio", "16:9"), prompt.get("draft_resolution", "480p"), prompt.get("model", "seedance2.5")))
+    print("草稿经用户在管理界面点「通过」后，正式条用：python tools/shot_take.py submit %s %s --stage final"
+          % (ep_dir.relative_to(REPO).as_posix(), key))
     return 0
 
 

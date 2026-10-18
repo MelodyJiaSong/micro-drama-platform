@@ -19,6 +19,8 @@ export interface Shot {
   lighting: string;
   /** Story props in frame by prop key (`p475`); each prop's anchor image joins the 参考 line (follow-up 231). */
   props?: string[];
+  /** Background view for this shot only (`bg1-13`), when it faces away from the scene's background (follow-up 261). */
+  background?: string;
 }
 export interface FilmingScene {
   id: string;
@@ -79,7 +81,9 @@ export interface ShotTake {
   review: string;
   review_path: string;
   review_status: string;
-  generation: { submit_id?: string; model?: string; duration_s?: number; ratio?: string; resolution?: string; credits?: number; downloaded_at?: string };
+  /** stage: draft＝低价草稿（用户审过才能出正式条），final＝正式条，from_take＝它出自哪条草稿（follow-up 265） */
+  generation: { submit_id?: string; model?: string; stage?: "draft" | "final"; duration_s?: number; ratio?: string; resolution?: string;
+    credits?: number; downloaded_at?: string; from_take?: string };
   prompt_path: string;
 }
 
@@ -91,6 +95,13 @@ async function read<T>(response: Response): Promise<T> {
 
 export async function loadWorkflow(path: string): Promise<EpisodeWorkflow> {
   return read(await fetch(`/api/episode-workflow?episode_path=${encodeURIComponent(path)}`, { cache: "no-store" }));
+}
+
+/** 用户对草稿条的结论（follow-up 265）：「通过」后才能用它出正式条。 */
+export async function judgeTake(takePath: string, verdict: "通过" | "不通过"): Promise<{ review_status: string }> {
+  return read(await fetch("/api/shot-take/verdict", {
+    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ take_path: takePath, verdict }),
+  }));
 }
 
 export async function changeWorkflow(path: string, module: WorkflowModule, operation: "save" | "approve" | "compile", content?: ModuleContent): Promise<void> {

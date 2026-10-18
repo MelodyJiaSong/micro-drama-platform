@@ -1,6 +1,7 @@
 # 法戈第矿洞
 
-> **审图**：通过 · 2026-09-30 · beb54fe0d9c6 · 第 2 次出图（prompt 改暗砖红筒瓦、天然灰岩露头）。S1–S6 过
+> **审图**：通过 · 2026-10-16 · 0b114925c9d0 · 第 1 轮（剧 follow-up 056 Codex 重出、替换即梦旧图）。冲沟底朝北偏东：两侧黄土坎垂草根，沟尽头木板矿屋半嵌岩壁、半圆筒砖红瓦、门洞全黑，锈轨木枕伸出，侧翻矿车与矿渣堆，前景断镐柄与绳；屋脊后灰岩露头与橡树；午后日光；无人、无文字水印。门洞旁几截白蜡烛头看不出是否熄灭，远看不显眼。静图不代替运镜与成片验收。
+> **生成**：`tools/gen_bg_images.py run --force --engine codex`，Codex 内置出图（ChatGPT 订阅额度；图像型号、质量与费用不暴露，记未知），1672×941；参考图 `bg1_北郡山谷`，不挂物件图；请求见 `background/request_log.md`（第 1 轮 4be8cdce96ca4836a39c6e0eb55b3d7a）；即梦旧图备份在 `ai_videos/_deleted/shengji_zhilu/background_即梦旧图_20261016/`。
 > **档级：锚点级**（stage2 playbook §3b ④ / rule 4f：必做只有锚点图；反向 / 侧向 / 内景 plate 用到才建）。
 > **bg 代号：`bg7`** · 目录 `background/eastern_kingdoms/elwynn_forest/bg7_法戈第矿洞/` · 所属 东部王国 / 艾尔文森林（Elwynn Forest）
 > **版本红线**：Vanilla 1.12 · Year 25 ADP。4.0.3a 之后才有的东西一样都不许出现（`tools/wow_version_gate.py`）。

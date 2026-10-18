@@ -16,7 +16,7 @@ description: 短剧六模块：故事创作、影视改编、Prompt 编译与出
 |---|---|---|---|
 | 故事创作 | 用户的故事方向 | 小说式故事稿 | [故事结构](modules/story-structure.md) + 本剧[片种](modules/story-formats.md)页 |
 | 影视改编 | 已确定的故事 | 可拍的分镜 | [filming](modules/filming.md) + 本剧[片种](modules/filming-formats.md)页 |
-| Prompt 编译与出片 | 已确定的分镜；资产与场地平面图 | 每镜 overhead（复杂镜 previz）；带参考的 prompt；生成的条 | [prompts](modules/prompts.md) |
+| Prompt 编译与出片 | 已确定的分镜；资产与场地平面图 | 每镜 overhead（默认不做 previz）；带参考的 prompt；生成的条 | [prompts](modules/prompts.md) |
 | 剪辑（待设计） | 各镜头的条 | 锁片版本 | [edit](modules/edit.md) |
 | 声音与音乐（待设计） | 锁片版本 | 混音与分轨 | [sound](modules/sound.md) |
 | 成片交付（待设计） | 锁片版本与终混 | 平台母版 | [delivery](modules/delivery.md) |

@@ -39,11 +39,11 @@
 
 | 资产 | auto 顺序 | 说明 |
 |---|---|---|
-| 人物与怪物（立绘、派生视图、换装三视图）、道具、简单物件、装备三视图 | Codex 内置出图 → ElevenLabs → 即梦 | 2026-10-11 用户定（follow-up 238）：Codex（`tools/codex_image.py`，ChatGPT 订阅额度）画质最高作默认；即梦是最低选项，前面都失败才用 |
-| 背景（世界与场景锚点、视图、变体） | Codex → ElevenLabs | 不用即梦 / Seedream，失败也不退到即梦 |
+| 所有图片：人物与怪物（立绘、派生视图、换装三视图）、道具、简单物件、装备三视图、背景（世界与场景锚点、视图、变体）、镜头图 | ElevenLabs → Codex 内置出图 | 2026-10-17 用户定：出图只有这两个选择（follow-up 270）；ElevenLabs（`gpt-image-2.5-sunburst`）作默认，**额度 / 套餐不够**才换 Codex（`tools/codex_image.py`，ChatGPT 订阅额度）（follow-up 275） |
+| 即梦（Dreamina / Seedream） | **不出图** | 即梦只用于视频（Seedance）；图片不用即梦，失败也不退到即梦 |
 
-前一家明确失败（拦截、超时、未登录、额度不足）才换下一家；显式 `--engine X` 只用 X；结果未知的不重提，即梦已出图扣费但下载失败只重下。路由实现在 `tools/image_engine.py`，图片可由代理直接重出，视频生成由用户决定。所有调用先写请求日志（见 [外部服务](../../../references/project/paid_services.md)）。
+ElevenLabs 只在额度 / 套餐不够时换 Codex（`image_engine.fallback_ok`），别的失败（拦截、参数错、超时）照实报出、不换家；显式 `--engine X` 只用 X；结果未知的不重提；两家都失败就报出来，不找第三家。路由实现在 `tools/image_engine.py`，图片可由代理直接重出，视频生成由用户决定。所有调用先写请求日志（见 [外部服务](../../../references/project/paid_services.md)）。
 
 ## 媒体
 
-媒体不进 git，走 R2：`ai_videos/assets.json` 是索引，先上传字节，再提交索引（`tools/assets_sync.py`，`install-hooks` 安装 git hooks）。
+媒体不进 git（`.gitignore` 排除），只存本机；不做 R2 同步。

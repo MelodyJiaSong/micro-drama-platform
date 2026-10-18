@@ -11,5 +11,9 @@ class TreeQuery:
     def __init__(self, reader: TreeReader) -> None:
         self._reader = reader
 
-    def build(self) -> TreeQdto:
-        return TreeQdto(root=self._reader.build())
+    def build(self, lazy: bool = False) -> TreeQdto:
+        return TreeQdto(root=self._reader.build(lazy=lazy))
+
+    def subtree(self, path: str, depth: int | None = 1) -> TreeQdto:
+        """One lazy folder's contents (follow-up 280)."""
+        return TreeQdto(root=self._reader.subtree(path, depth))

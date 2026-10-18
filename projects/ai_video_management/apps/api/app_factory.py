@@ -22,6 +22,9 @@ from apps.api.container import Container
 from apps.api.routes import router
 from libs.common.global_workflow import GlobalWorkflowError
 from libs.domain.errors.episode_workflow__error import EpisodeWorkflowError
+from libs.domain.errors.review_reel__error import ReviewReelError
+from libs.domain.errors.scene_cut__error import SceneCutError
+from libs.domain.errors.shot_take__error import ShotTakeError
 from libs.domain.errors.drama__error import (
     DramaNotFoundError,
     InvalidDramaPathError,
@@ -121,6 +124,18 @@ def _register_exception_handlers(app: FastAPI) -> None:
     @app.exception_handler(EpisodeWorkflowError)
     def _workflow_error(_req: Request, exc: EpisodeWorkflowError) -> Response:
         return _err(exc.status_code, "episode_workflow", message=str(exc))
+
+    @app.exception_handler(ReviewReelError)
+    def _review_reel_error(_req: Request, exc: ReviewReelError) -> Response:
+        return _err(exc.status_code, "review_reel", message=str(exc))
+
+    @app.exception_handler(SceneCutError)
+    def _scene_cut_error(_req: Request, exc: SceneCutError) -> Response:
+        return _err(exc.status_code, "scene_cut", message=str(exc))
+
+    @app.exception_handler(ShotTakeError)
+    def _shot_take_error(_req: Request, exc: ShotTakeError) -> Response:
+        return _err(exc.status_code, "shot_take", message=str(exc))
 
     for exc_cls, status, kind, include_message in _PLAIN:
         app.add_exception_handler(exc_cls, _make_plain_handler(status, kind, include_message))

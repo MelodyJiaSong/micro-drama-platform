@@ -135,6 +135,77 @@ def pick_new(before: set[Path], after: set[Path], thread_id: str | None) -> list
     return [p for p in new if thread_id and p.parent.name == thread_id]
 
 
+SETTLE_GRACE_S = 15   # 图已落盘后再等多久就结束 Codex 进程
+
+
+def image_saved(stdout: str) -> bool:
+    """本次会话的 image_gen 已完成且图已落盘（看会话记录的 savedPath）。"""
+    thread_id = parse_events(stdout)["thread_id"]
+    return any(i.get("status") == "completed" and i.get("savedPath") and Path(i["savedPath"]).is_file()
+               and Path(i["savedPath"]).stat().st_size > 0 for i in rollout_images(thread_id))
+
+
+def run_codex(argv: list[str], *, input: str, cwd: str, timeout: int,
+              settled=None, poll_s: float = 10) -> subprocess.CompletedProcess:
+    """`subprocess.run` that kills the whole process tree on timeout (follow-up 263).
+
+    On Windows `codex` is a `.CMD` shell over node; killing only the shell left node / codex holding the
+    pipes, so `run` waited until Codex gave up on its own (24–40 min).
+    `settled(stdout_so_far)` 为真（图已落盘）后再等 SETTLE_GRACE_S 就结束进程树：网络不稳时 Codex 出完图还会断线重连到超时
+    （shengji follow-up 062 实测出图 8 分钟、空等到 15 分钟），结果里 `early_exit=True`。"""
+    import threading
+    import time
+    group = ({"creationflags": subprocess.CREATE_NEW_PROCESS_GROUP} if os.name == "nt"
+             else {"start_new_session": True})
+    out: list[str] = []
+    err: list[str] = []
+    with subprocess.Popen(argv, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=cwd,
+                          text=True, encoding="utf-8", errors="replace", **group) as proc:
+        pumps = [threading.Thread(target=lambda s=s, b=b: b.extend(iter(s.readline, "")), daemon=True)
+                 for s, b in ((proc.stdout, out), (proc.stderr, err))]
+        for t in pumps:
+            t.start()
+        try:
+            proc.stdin.write(input)
+            proc.stdin.close()
+        except OSError:
+            pass
+        deadline = time.monotonic() + timeout
+        seen_at = None
+        early = False
+        while proc.poll() is None:
+            now = time.monotonic()
+            if now > deadline:
+                kill_tree(proc.pid)
+                for t in pumps:
+                    t.join(30)
+                raise subprocess.TimeoutExpired(argv, timeout, output="".join(out), stderr="".join(err))
+            if settled and seen_at is None and settled("".join(out)):
+                seen_at = now
+            if seen_at is not None and now - seen_at >= SETTLE_GRACE_S:
+                kill_tree(proc.pid)
+                early = True
+                break
+            time.sleep(poll_s if seen_at is None else 1)
+        proc.wait()
+        for t in pumps:
+            t.join(30)
+    done = subprocess.CompletedProcess(argv, proc.returncode, "".join(out), "".join(err))
+    done.early_exit = early
+    return done
+
+
+def kill_tree(pid: int) -> None:
+    if os.name == "nt":
+        subprocess.run(["taskkill", "/PID", str(pid), "/T", "/F"], capture_output=True)
+        return
+    import signal
+    try:
+        os.killpg(pid, signal.SIGKILL)
+    except OSError:
+        pass
+
+
 def generate(out: Path, prompt: str, refs: list[Path], *, transparent: bool = False, model: str | None = None,
              timeout: int = DEFAULT_TIMEOUT, overwrite: bool = False) -> dict[str, Any]:
     out = out.resolve()
@@ -164,8 +235,7 @@ def generate(out: Path, prompt: str, refs: list[Path], *, transparent: bool = Fa
         before = snapshot(root)
         with tempfile.TemporaryDirectory(prefix="codex_image_") as work:  # 空目录：不加载仓库 AGENTS.md
             try:
-                done = subprocess.run(argv, input=text, cwd=work, capture_output=True, text=True,
-                                      encoding="utf-8", errors="replace", timeout=timeout)
+                done = run_codex(argv, input=text, cwd=work, timeout=timeout, settled=image_saved)
                 stdout, stderr, code, timed_out = done.stdout, done.stderr, done.returncode, False
             except subprocess.TimeoutExpired as e:
                 stdout = e.stdout.decode("utf-8", "replace") if isinstance(e.stdout, bytes) else (e.stdout or "")
@@ -175,7 +245,8 @@ def generate(out: Path, prompt: str, refs: list[Path], *, transparent: bool = Fa
         info["images"] += rollout_images(info["thread_id"])
         saved_paths = [Path(i["savedPath"]) for i in info["images"] if i.get("savedPath") and Path(i["savedPath"]).is_file()]
         found = saved_paths or pick_new(before, snapshot(root), info["thread_id"])
-        summary = {"returncode": code, "timed_out": timed_out, "stderr_tail": stderr[-2000:], **info,
+        summary = {"returncode": code, "timed_out": timed_out, "early_exit": getattr(done, "early_exit", False) if not timed_out else False,
+                   "stderr_tail": stderr[-2000:], **info,
                    "generated": [RequestLog.file(p) for p in found]}
         if not found:
             raise RuntimeError("没有拿到新图（结果未知，不自动重提；先查 generated_images 与 Codex 会话）："

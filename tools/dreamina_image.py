@@ -4,7 +4,7 @@
 出图器（gen_bg_assets / gen_bg_images / gen_char_images / gen_equipment / gen_outfit_views）都以
 `from tools import dreamina_image as dm` 模块级引用它；提交与取回由各出图器自己实现
 （`gen_bg_assets._dm_submit` 按 prompt 全文找回任务，并发安全）。每次调用都经 `tools/service_request.RequestLog`
-先记日志再调用；引擎分工的唯一出处是 `tools/image_engine.py`（scene/bg 图禁止即梦）。
+先记日志再调用；引擎分工的唯一出处是 `tools/image_engine.py`（follow-up 270 起图片一律不用即梦，本模块只剩查询 / 取回已提交的旧任务）。
 
 来历：原为仙剑旧剧的批量出图 CLI `tools/gen_images_xianjian.py`。follow-up 233 删除旧流程时去掉了仙剑专用的
 清单、校验、提交与命令行部分，只留出图器共用的这几项，并改为现名。

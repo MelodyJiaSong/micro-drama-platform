@@ -34,7 +34,7 @@ def _touch(path: Path, payload: bytes = b"x") -> None:
 
 def _drama(tmp_path: Path) -> tuple[Path, Path, Path]:
     root = tmp_path / "repo"
-    scene = root / "ai_videos" / "d" / "2_世界观人设" / "scenes" / "entropy_city"
+    scene = root / "ai_videos" / "d" / "2_世界观人设" / "scenes" / "demo_city"
     for sub in ("bg1_广场", "bg2_主街", "bg6_广场复原"):
         (scene / sub).mkdir(parents=True)
         _touch(scene / sub / (sub + ".md"), b"prompts")   # the md IS the subject marker

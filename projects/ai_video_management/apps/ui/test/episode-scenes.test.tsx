@@ -48,8 +48,9 @@ it("matches scene and shot navigation exactly", () => {
 
 it("shows a placeholder for stages that are not designed yet, without loading module content", async () => {
   vi.mocked(loadWorkflow).mockResolvedValue(fixture);
-  render(<MemoryRouter initialEntries={["/drama?episode=ep01&module=edit"]}><EpisodeWorkflowPage dramaPath="ai_videos/demo" title="示例" /></MemoryRouter>);
-  expect(screen.getByRole("heading", { name: "剪辑" })).toBeInTheDocument();
+  // 剪辑已有页面（follow-up 269，见 edit-stage.test.tsx）；声音与音乐仍是占位
+  render(<MemoryRouter initialEntries={["/drama?episode=ep01&module=sound"]}><EpisodeWorkflowPage dramaPath="ai_videos/demo" title="示例" /></MemoryRouter>);
+  expect(screen.getByRole("heading", { name: "声音与音乐" })).toBeInTheDocument();
   expect(screen.getByText("待设计")).toBeInTheDocument();
   expect(screen.queryByText("递出袋子")).not.toBeInTheDocument();
 });
@@ -71,4 +72,18 @@ it("lists a scene's shots as links instead of printing every prompt", async () =
   expect(link).toHaveAttribute("href", expect.stringContaining("shot=ep1_s10_st1"));
   expect(screen.queryByLabelText("视频 prompt")).toBeNull();
   expect(within(screen.getByRole("region", { name: "场次 s10" })).getByRole("heading", { name: "s10 · 交接棚 · 白天" })).toBeInTheDocument();
+});
+
+it("shows the scene's blocking diagram on a filming scene page, and says so when it has not been drawn", async () => {
+  page("module=filming&scene=s10");
+  const img = await screen.findByAltText("s10 走位图");
+  expect(img.getAttribute("src")).toContain(encodeURIComponent("ai_videos/demo/episodes/ep01/scenes/s10/planning/s10_blocking.png"));
+  img.dispatchEvent(new Event("error"));
+  expect(await screen.findByText(/走位图尚未生成/)).toBeInTheDocument();
+});
+
+it("does not repeat the blocking diagram on a single shot page", async () => {
+  page("module=filming&scene=s10&shot=ep1_s10_st1");
+  await screen.findByRole("heading", { name: "ep1_s10_st1 · 6秒" });
+  expect(screen.queryByAltText("s10 走位图")).toBeNull();
 });

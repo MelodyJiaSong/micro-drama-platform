@@ -29,7 +29,7 @@ from bpy_extras.object_utils import world_to_camera_view
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from curves import mono_hermite  # noqa: E402  与航线生成端同一份插值
 import seedance_ref  # noqa: E402  Seedance 参考视频的上下限（像素 / 帧率 / 单条时长）唯一出处
-from planschema import BODY_HITS, HIT_OBJ, PREVIZ_STAMP, STILLS_STAMP, render_inputs  # noqa: E402
+from planschema import BACK_GRIPS, BODY_HITS, HAND_GRIPS, HIT_OBJ, PREVIZ_STAMP, SHIELD_GRIPS, SLUNG, STILLS_STAMP, render_inputs  # noqa: E402
 
 # ---------------------------------------------------------------- 配置 schema
 
@@ -135,8 +135,9 @@ POSES = {
     "外磕R": {"shoulderR": (-60, 0, 40), "elbowR": (-45, 0, 0)},
     "侧踹R": {"hipR": (-75, -25, 0), "kneeR": (10, 0, 0)},
     "垂盾L": {"shoulderL": (-10, 0, -10), "elbowL": (-15, 0, 0)},
+    "斜背": {},     # 262：长家伙斜背在身后（锤头在右肩后上方、柄落向左腰），手不碰
 }
-CARRY_POSES = {"扛肩R", "双手低握", "靠腿", "臂盾L", "背盾", "垂盾L", "单手握R", "外磕R", "前砸", "前劈R"}
+CARRY_POSES = set(HAND_GRIPS) | set(SHIELD_GRIPS) | set(BACK_GRIPS.values()) | {SLUNG}   # 名字只在 planschema 定义
 LEAN_TOL = 20.0          # 自检：Cascadeur 烘出来的躯干前倾与编排相差超过这个角度（°）即 blocker
 HIT_TOL = 0.35           # 自检：命中那一刻物件离目标身体超过这个距离（m）即 blocker
 
@@ -557,7 +558,9 @@ def make_carry(name: str, j: dict, h: float, c: dict, root=None, idx: int = 0) -
     """长柄锤的三种拿法（与同名手臂姿态配套）。名字按「{人}_锤柄 / {人}_锤头」起（同一镜多段时第二段起加序号）：
     可见性表把它归给主人，命中检查按这个名字找锤头。有「起 / 止」时只在那一段出现（follow-up 043）。
     扛肩R：右手握在右肩前一掌处，锤柄往后上斜搭过右肩、锤头在肩后；
-    双手低握：两手一前一后握在腰前，锤柄斜过身前、锤头在左下；靠腿：锤头朝下立在右脚边，柄斜靠右腿，手不碰。"""
+    双手低握：两手一前一后握在腰前，锤柄斜过身前、锤头在左下；靠腿：锤头朝下立在右脚边，柄斜靠右腿，手不碰；
+    斜背（262）：背在身后，头在右肩后上方、高出肩头，柄斜贴后背落向左腰后下方，头的长边贴着后背。
+    剑：短柄＋长刃（刃叫「{人}_剑」）；全长不到 0.8 m 的锤 / 斧（石匠锤之类）头小一号。"""
     sfx = "" if idx == 0 else str(idx + 1)
     pose = c["姿"]
     item = str(c.get("件", "锤"))
@@ -568,6 +571,9 @@ def make_carry(name: str, j: dict, h: float, c: dict, root=None, idx: int = 0) -
     if pose in ("单手握R", "外磕R"):        # 单手家伙（镐 / 短斧）：右手握在胯前，柄朝前上斜 30°（外磕＝同一握法把柄往外一横）
         par, grip, back = j["pelvis"], Vector((-0.13 * h, -0.14 * h, 0.02 * h)), 0.1
         d, rot = Vector((0.0, -0.5, 0.866)), (math.radians(30), 0.0, 0.0)
+    elif pose == "举手R":           # 262：右手举过头顶（劈下来之前），柄朝上、往后仰 15°
+        par, grip, back = j["pelvis"], Vector((-0.105 * h, -0.06 * h, 0.58 * h)), 0.1
+        d, rot = Vector((0.0, math.sin(math.radians(15)), math.cos(math.radians(15)))), (math.radians(-15), 0.0, 0.0)
     elif pose in ("前砸", "前劈R"):   # 出手：握在胸前，柄朝前下斜 20°，头在身前一米上下
         par, grip, back = j["pelvis"], Vector((0.0 if pose == "前砸" else -0.08 * h, -0.25 * h, 0.25 * h)), 0.1
         d, rot = Vector((0.0, -0.94, -0.34)), (math.radians(110), 0.0, 0.0)
@@ -577,12 +583,27 @@ def make_carry(name: str, j: dict, h: float, c: dict, root=None, idx: int = 0) -
     elif pose == "双手低握":
         par, grip, back = j["pelvis"], Vector((0.0, -0.239 * h, 0.13 * h)), 0.35
         d, rot = Vector((0.894, 0.0, -0.447)), (0.0, math.radians(116.6), 0.0)
+    elif pose == SLUNG:     # 头心在右肩后上方（右＝-X、后＝+Y），柄与竖直成 25° 斜向左下；grip 取柄尾
+        par, back = j["pelvis"], 0.0
+        d, rot = Vector((-math.sin(math.radians(25)), 0.0, math.cos(math.radians(25)))), (0.0, math.radians(-25), 0.0)
+        grip = Vector((-0.13 * h, 0.09 * h, 0.36 * h)) - d * (L - 0.05)
     else:   # 靠腿：挂在人的根上（不跟骨盆前倾）
         par, grip, back = root, Vector((-0.13 * h, -0.05 * h, 0.05)), 0.0
         d, rot = Vector((0.07, 0.05, 0.996)).normalized(), (math.radians(-3), math.radians(4), 0.0)
+    if item.startswith("剑"):     # 柄 0.18 m 握在手里，刃接在柄前
+        hilt = cyl(f"{name}_{item}柄{sfx}", 0.02, 0.18, (0, 0, 0), _mat_for("褐"))
+        blade = box(f"{name}_{HIT_OBJ['剑']}{sfx}", (0.05, 0.012, L - 0.18), (0, 0, 0), _mat_for("深灰"))
+        for ob in (hilt, blade):
+            ob.rotation_euler = Euler(rot)
+        attach(hilt, par, tuple(grip + d * (0.09 - back)))
+        attach(blade, par, tuple(grip + d * (0.18 - back + (L - 0.18) / 2)))
+        _segment((hilt, blade), c)
+        return
     shaft = cyl(f"{name}_{item}柄{sfx}", 0.018, L, (0, 0, 0), _mat_for("褐"))
     shaft.rotation_euler = Euler(rot)
-    head = box(f"{name}_{HIT_OBJ.get(item[:1], item + '头')}{sfx}", (0.10, 0.16, 0.10), (0, 0, 0), _mat_for("深灰"))
+    hd = (0.10, 0.16, 0.10) if L >= 0.8 else (0.06, 0.11, 0.06)
+    head = box(f"{name}_{HIT_OBJ.get(item[:1], item + '头')}{sfx}", (hd[1], hd[0], hd[2]) if pose == SLUNG else hd,
+               (0, 0, 0), _mat_for("深灰"))
     head.rotation_euler = Euler(rot)
     if pose == "靠腿":            # 锤头在下、柄朝上
         attach(head, par, tuple(grip))

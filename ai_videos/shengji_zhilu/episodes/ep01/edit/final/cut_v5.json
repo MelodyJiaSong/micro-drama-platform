@@ -1,0 +1,94 @@
+{
+ "episode": "ep01",
+ "stage": "final",
+ "phase": "粗剪",
+ "version": 5,
+ "base_version": 4,
+ "status": "草稿",
+ "made_at": "2026-10-18",
+ "note": "接 s1、s2、s3（其余场还没剪）；s1、s2 同 v2（已过独立审稿、待用户批准锁片），s3 是另一会话的粗剪 v3（089：改朝向重出；st3 再重出修锤的肩）。场之间的转场从 `tools/episode_cut.py menu` 里选。",
+ "spec": {
+  "width": 1280,
+  "height": 720,
+  "fps": 24,
+  "audio_rate": 48000
+ },
+ "head": {
+  "type": "cut",
+  "reason": "竖屏短剧开头不淡入：第一帧就是墙、门、守卫，抢在观众划走前。"
+ },
+ "scenes": [
+  {
+   "scene": "s1",
+   "cut_version": 3,
+   "sha256": "325132bdba0db3f02127c8255dfb9d771c9d95afe2224fc2926eeab39a334f1b"
+  },
+  {
+   "scene": "s2",
+   "cut_version": 3,
+   "sha256": "d83dd69fa0d40a9798ccbeacc10d7a7e1937eb6d5110231c4a64f31305fa9337"
+  },
+  {
+   "scene": "s3",
+   "cut_version": 3,
+   "sha256": "0fd62791c8a8425dae1962ea5a4efc1b1b552dfd7d825128e8d3d8f4cc37565a"
+  }
+ ],
+ "transitions": [
+  {
+   "from": "s1",
+   "to": "s2",
+   "type": "cut",
+   "audio": {
+    "j": 0.75
+   },
+   "reason": "同一时刻、同一个人，没有时间跳跃，用切；山谷的环境声提前 0.75 秒进来（J），亚伦抬眼时观众先听到更开阔的空间，再看到他看见的山谷。"
+  },
+  {
+   "from": "s2",
+   "to": "s3",
+   "type": "cut",
+   "reason": "同一个早上、同一条大路接着往北走：s2 结尾亚伦背对镜头往北走开，s3 开头侧面跟拍他赶路，动作与方向都连着，用切。"
+  }
+ ],
+ "tail": {
+  "type": "cut",
+  "reason": "s2 之后接 s3，不收尾。"
+ },
+ "changes_from_base": [
+  "s3 换成粗剪 v3：st3 换成锤压在维里左臂下、留在亚伦右肩的新条 122756_d24aad3c"
+ ],
+ "output": {
+  "path": "ep01_final_v5.mp4",
+  "sha256": "0ab5786a9802a8d8152286a35df05dc40c7c43d021b8930ee0cd39b56d36e055",
+  "duration_s": 65.125,
+  "expected_s": 65.125,
+  "duration_ok": true,
+  "frames": 1563,
+  "size": "1280x720",
+  "fps": "24/1",
+  "black_segments": [],
+  "cuts_expected": [
+   7.25,
+   21.5,
+   28.0,
+   36.5,
+   37.625,
+   43.625,
+   50.125
+  ],
+  "cuts_found": [
+   7.25,
+   21.5,
+   28.0,
+   36.5,
+   37.625,
+   43.625
+  ],
+  "cuts_unexpected": [],
+  "cuts_missed": [
+   50.125
+  ],
+  "rendered_at": "2026-10-18T12:31:34"
+ }
+}

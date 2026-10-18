@@ -238,6 +238,8 @@ projects/spec_driven/backend/static/
 # Heavy binaries — user-rendered turntable mp4 / scene reference png / shot video output etc.
 # Prompt .md files (alongside in same folder) ARE tracked.
 ai_videos/**/*.mp4
+# 整集审片串联（ai_video_management follow-up 260）：串联、中间件、清单与进度都是本机按需重算的派生物
+ai_videos/**/review_reel/
 ai_videos/**/*.mov
 ai_videos/**/*.webm
 ai_videos/**/*.mkv
@@ -254,9 +256,7 @@ ai_videos/**/*.bmp
 ai_videos/**/*.m4v
 ai_videos/**/*.pdf
 
-# Remaining audio + the rest of the media set, kept in step with
-# tools/assets/scanner.py MEDIA_EXTENSIONS — anything assets_sync uploads to R2
-# must be ignored here, or the same bytes end up in both stores.
+# Remaining audio + the rest of the media set — media stays local, never in git.
 ai_videos/**/*.wav
 ai_videos/**/shot*_tts_*.json
 ai_videos/**/*.m4a
@@ -267,11 +267,6 @@ ai_videos/**/*.flac
 # Audio — all mp3 are heavy binaries, never tracked (global).
 *.mp3
 *.MP3
-
-# assets_sync sha256 cache — a derived (size, mtime_ns) -> sha256 lookup that
-# saves re-hashing 6+ GB on every run. Per-machine (mtime is not portable),
-# rebuildable by deleting it. The MANIFEST (ai_videos/assets.json) IS tracked.
-.assets_cache.json
 
 # Recycle bin — soft-deleted content awaiting hard purge. Nothing under it is
 # ever tracked (the webapp's "清空回收站" purge wipes it from disk anyway).

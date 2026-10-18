@@ -68,7 +68,7 @@ def test_unwritable_log_prevents_paid_call(tmp_path, monkeypatch):
     calls = []
     monkeypatch.setattr(log, "append", lambda _: (_ for _ in ()).throw(OSError("disk full")))
     with pytest.raises(OSError):
-        log.invoke("dreamina", "text2image", {}, lambda: calls.append(1))
+        log.invoke("dreamina", "multimodal2video", {}, lambda: calls.append(1))
     assert not calls
     with pytest.raises(ValueError):
         RequestLog(tmp_path / "no_owner.png")

@@ -41,6 +41,6 @@ describe("workflow map page", () => {
     const detail = screen.getByLabelText("节点详情");
     expect(within(detail).getByRole("heading", { level: 2 })).toHaveTextContent("剪辑");
     expect(within(detail).getByText("待设计")).toBeInTheDocument();
-    expect(within(detail).getByText("锁片（用户批准）")).toBeInTheDocument();
+    expect(within(detail).getByText("锁片（用户批准）；对照全剧 Vision")).toBeInTheDocument();
   });
 });

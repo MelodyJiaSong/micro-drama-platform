@@ -1655,7 +1655,7 @@ def build(scene_dir, render=True):
     blend = os.path.join(S.out, S.bg + ".blend")
     bpy.context.preferences.filepaths.save_version = 0     # 不留 .blend1 备份：blend 随时可从 toml 重建
     bpy.ops.wm.save_as_mainfile(filepath=blend)
-    bpy.ops.file.make_paths_relative()      # 图按相对路径引用：blend 走 R2 换机器也找得到
+    bpy.ops.file.make_paths_relative()      # 图按相对路径引用：整个目录拷到别的机器也找得到
     bpy.ops.wm.save_mainfile()
     stale = os.path.join(S.out, S.bg + ".glb")
     if os.path.isfile(stale):               # 场景级 GLB 已废止（GLB 只装单个物体）；旧产物顺手清掉

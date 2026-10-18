@@ -20,6 +20,7 @@ import { extractDramas, findAssetDir, type DramaChoice } from "../lib/dramas";
 import { CHARACTER_DIR_RE } from "../lib/characterDir";
 import { announceToast } from "../lib/announce";
 import { ApiError, type TreeNode } from "../types";
+import { useTreeLoader } from "./TreeLoaderContext";
 
 const IMAGE_EXTS = [".png", ".jpg", ".jpeg", ".webp"];
 const CHAR_DIR_RE = CHARACTER_DIR_RE;
@@ -108,6 +109,15 @@ export function CharacterGrid({ tree, onChange }: CharacterGridProps): JSX.Eleme
   }, [tree, drama]);
 
   const tiles = useMemo<CharacterTile[]>(() => tilesForDrama(tree, drama), [tree, drama]);
+
+  // Lazy tree (follow-up 280): each character folder arrives as a stub; load
+  // them so the tiles can find their portraits.
+  const { ensureChildrenLoaded } = useTreeLoader();
+  useEffect(() => {
+    if (!tree || !drama) return;
+    const dramaNode = findNodeByPath(tree, drama.path);
+    ensureChildrenLoaded(dramaNode ? findAssetDir(dramaNode, "characters") : null);
+  }, [tree, drama, ensureChildrenLoaded]);
 
   // Fetch each character's newest turntable mp4 (the tree has no mtime, so the
   // backend picks the latest). Failure degrades silently to portrait-only.

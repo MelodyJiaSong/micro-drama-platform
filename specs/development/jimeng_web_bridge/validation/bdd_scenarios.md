@@ -35,8 +35,8 @@ Run: jimeng_web_bridge-20260913-093603 · 契约来源：`final_specs/spec.md`�
 | 形态 | 条数 | 默认规则下的结果 |
 |---|---|---|
 | image 项（`场景参考图*`/`*锚点`/`角色参考图`/`单位参考图`/`场景主体`/`物件主体`） | 382 | 204 唯一命中；178 找不到（原因见「覆盖观察」） |
-| entity 项 | 57 | 55 命中角色卡；2 条是 duikang `driver`（卡目录无 `c{N}_` 前缀） |
-| video 项（previz） | 30 | 1 命中；29 找不到（duikang 盘上是 `shot01_previz.mp4`，与 name `previz_shot01` 不一致） |
+| entity 项 | 57 | 55 命中角色卡；2 条是 standalone_demo `driver`（卡目录无 `c{N}_` 前缀） |
+| video 项（previz） | 30 | 1 命中；29 找不到（standalone_demo 盘上是 `shot01_previz.mp4`，与 name `previz_shot01` 不一致） |
 | first_frame 项 | 19 | 19 找不到（`shot{NN-1}_lastframe.png` 要等上一镜出片后才会有） |
 | 旧写法 已填槽位 `=>@N` | 107 | 预检错误 |
 | 旧写法 无括号 | 163 | 预检错误 |
@@ -66,7 +66,7 @@ Background:
 |---|---|---|---|
 | P01 | real HY/hy3 shot02 | `` `bg11-1(场景参考图)=>@`，`砌炉的老人(Seedance 人物 entity)=>@`，`p2-1(随身装备锚点)=>@`，`p3-1(抹泥板锚点)=>@` `` | (bg11-1, 场景参考图), (砌炉的老人, Seedance 人物 entity), (p2-1, 随身装备锚点), (p3-1, 抹泥板锚点) |
 | P02 | real HY/hy2 shot10 | `` `bg11-1(场景参考图·第四段：坑口全景（根盘背面冒烟）)=>@` `` | (bg11-1, `场景参考图·第四段：坑口全景（根盘背面冒烟）`)——label 内的全角括号保持完整 |
-| P03 | real duikang_shangzeng shot01 | `` `entropy_city_bg1_广场(场景主体)=>@, f80_ferrari(物件主体)=>@, previz_shot01(previz灰模视频)=>@` ``（一个反引号内含多项，ASCII 逗号分隔） | 3 项，顺序同原文（AMB-01） |
+| P03 | standalone_demo shot01 | `` `demo_city_bg1_广场(场景主体)=>@, sports_car(物件主体)=>@, previz_shot01(previz灰模视频)=>@` ``（一个反引号内含多项，ASCII 逗号分隔） | 3 项，顺序同原文（AMB-01） |
 | P04 | real xingji_yingjiu shot03 | `` `本镜首帧(上一镜末帧)=>@, c4_幽灵特工(单位参考图)=>@, bg1_菌毯岩脊(场景参考图)=>@` `` | 3 项（AMB-01） |
 
 ### Scenario Outline 1.2: 单项 → ReferenceItem 或可操作的预检错误
@@ -87,11 +87,11 @@ Background:
 | R06 | HY/hy1 shot09 | `c2_犀鸟(犀鸟锚点)` | `characters/c2_犀鸟/c2_犀鸟.png` | *锚点 → image | **按 image 处理**，不因为它是角色卡就当主体 | — |
 | R07 | HY/hy2 shot12 | `造家的人(Seedance 人物 entity)` | `hy2/…/c1_造家的人/` 只含指向 hy1 的 `.link.json` | entity | `entity_name = hy1_造家的人`（跨集沿用来源集缩写，FR-3；另见 AMB-09） | — |
 | R08 | xianjian_yi_mv shot12 | `shot12_previz(3D预演视频)` | `shots/shot12/shot12_previz.mp4`（real） | 3D预演视频 → video / stem_in_shot | `kind=video`，在本镜目录内命中 | — |
-| R09 | duikang_shangzeng shot01 | `previz_shot01(previz灰模视频)` | 盘上是 `shot01_previz.mp4`（real，name ≠ stem） | previz灰模视频 → video / stem_in_shot | `REF_NOT_FOUND` | `references.overrides."previz_shot01"` |
+| R09 | standalone_demo shot01 | `previz_shot01(previz灰模视频)` | 盘上是 `shot01_previz.mp4`（real，name ≠ stem） | previz灰模视频 → video / stem_in_shot | `REF_NOT_FOUND` | `references.overrides."previz_shot01"` |
 | R10 | xingji_yingjiu shot03 | `本镜首帧(上一镜末帧)` | fixture 放入 `shots/shot02/shot02_lastframe.png` | 上一镜末帧 → first_frame / prev_shot_lastframe | `kind=first_frame, name=本镜首帧`，路径为上一镜末帧 | — |
 | R11 | xingji_yingjiu shot03 | 同上 | 上一镜末帧不存在（real 现状） | 同上 | `REF_NOT_FOUND`（AMB-07：同批承接链） | `references.overrides."本镜首帧"` |
 | R12 | 任一剧 shot01 | `本镜首帧(上一镜末帧)` | 不存在 shot00 | 同上 | AMB-07 | — |
-| R13 | duikang_shangzeng shot09 | `driver(人物主体)` | 卡目录 `characters/driver/`，无 `c{N}_` 前缀（real） | 人物主体 → entity | AMB-05；即便能解析，abbrev 为空仍报 `drama.abbrev` 错误（见 E07） | `drama.abbrev` |
+| R13 | standalone_demo shot09 | `driver(人物主体)` | 卡目录 `characters/driver/`，无 `c{N}_` 前缀（real） | 人物主体 → entity | AMB-05；即便能解析，abbrev 为空仍报 `drama.abbrev` 错误（见 E07） | `drama.abbrev` |
 | R14 | rexue_gaoxiao shot02 | `学校泳池_bg3_水下_幽蓝=>@2` | — | 不进入规则匹配 | `REF_LEGACY_FILLED_SLOT`（AMB-04） | `references.overrides."学校泳池_bg3_水下_幽蓝"` |
 | R15 | rexue_gaoxiao shot01 | `学校泳池_bg2_水面_俯拍=>@1` | — | 不进入规则匹配 | 预检错误；既无括号又已填槽位，报哪个错误码未定（AMB-04） | 同上形态 |
 | R16 | wushen_juexing shot12 | `c4_裴昭=>@` | — | 不进入规则匹配 | `REF_LEGACY_NO_LABEL`（AMB-04） | `references.overrides."c4_裴昭"` |
@@ -161,7 +161,7 @@ Background:
 | E05 | HY/hy2 | 同 E04 | hy1 config 有 `overrides."c1_造家的人" = "hy1_主角"` | AMB-09 | — | — |
 | E06 | HY/hy3 | 已有 `jimeng_config.toml` | 再次 propose | 不覆盖文件，返回逐键 diff 建议 | — | — |
 | E07 | wushen_juexing（无 `series.json`） | `c4_裴昭` | abbrev 为空 | 无法生成 | `needs_confirmation: true`，原因「独立剧缺缩写」 | error，`config_key = drama.abbrev` |
-| E08 | duikang_shangzeng | `driver`（无 `c{N}_` 前缀） | abbrev=`dk` | AMB-05 | — | — |
+| E08 | standalone_demo | `driver`（无 `c{N}_` 前缀） | abbrev=`dk` | AMB-05 | — | — |
 | E09 | fixture 系列集 hy3 | `c3_在草崖下砌了一辈子炉子的沉默老人` | 默认 | `hy3_在草崖下砌了一辈子炉子的沉默老人`（正好 20 字） | 无 | ok（字数计法见 AMB-11） |
 | E10 | fixture 系列集 hy3 | `c3_在草崖下砌了一辈子炉子的沉默的老人` | 默认 | 21 字 | `needs_confirmation`（名称超长） | error，`config_key = entities.overrides."c3_…"` |
 | E11 | HY/hy3 | 任一被引用角色 | 快照 25 h 前同步，含期望名 | — | — | warning（快照过期），不阻断确认 |
@@ -610,12 +610,12 @@ Background:
 以下各项的结果已由 spec 确定，但建议 stage-5 汇总时告知用户。
 
 1. **默认 image 规则在真实数据上命中率低。** 仓库 382 条非旧写法的 image 项里，本机磁盘上 178 条按 FR-8 默认规则找不到文件。原因分三类：
-   - **name 是主体目录，不是文件 stem**：xingji_yingjiu 共 111 条（`bg1_菌毯岩脊`、`c4_幽灵特工`），另有 duikang 的 `f80_ferrari`（目录里是 `f80_ferrari1..4.png`）、xianjian 的 `s1_bg6_…`；
+   - **name 是主体目录，不是文件 stem**：xingji_yingjiu 共 111 条（`bg1_菌毯岩脊`、`c4_幽灵特工`），另有 standalone_demo 的 `sports_car`（目录里是 `sports_car1..4.png`）、xianjian 的 `s1_bg6_…`；
    - **旧式 `{key}_{视图名}` 文件名**：hy2 的 `p3-1_树皮门板锚点.png`、`c2-1_香蕉蛞蝓锚点.png`；
-   - **剧根内完全没有该文件**：xianjian 的 20 条 `角色参考图`、duikang 的 `entropy_city_*`。
+   - **剧根内完全没有该文件**：xianjian 的 20 条 `角色参考图`、standalone_demo 的 `demo_city_*`。
 
    spec 说默认规则「依据全仓 271 条统计」，但照现行规则，这些剧只能靠逐项 override 才能出片。
-2. **`references.overrides` 只能按 name 精确映射。** duikang 的 29 条 previz（`previz_shotNN` → 盘上 `shotNN_previz.mp4`）需要写 29 条 override，没有「模式 → 路径模板」式的 resolver 可用。
+2. **`references.overrides` 只能按 name 精确映射。** standalone_demo 的 29 条 previz（`previz_shotNN` → 盘上 `shotNN_previz.mp4`）需要写 29 条 override，没有「模式 → 路径模板」式的 resolver 可用。
 3. **`上一镜末帧` 的 19 条样本在本机都不存在。** 承接镜在上一镜出片并抽帧之前一律预检报错，见 AMB-07。
 
 ---
@@ -626,11 +626,11 @@ Background:
 
 | ID | FR | 未决问题 | 证据 | 建议默认 / 严重度提示 |
 |---|---|---|---|---|
-| AMB-01 | FR-8 | FR-8 写的是「每个 `` `{name}({label})=>@` ``」（每项一对反引号）。一对反引号内含多项、用 ASCII 逗号分隔的写法算不算合法？ | duikang、xianjian、xingji 大量采用这种写法（P03/P04） | 两种写法都接受，否则这三部剧全部报错；`blocker` 级决策 |
+| AMB-01 | FR-8 | FR-8 写的是「每个 `` `{name}({label})=>@` ``」（每项一对反引号）。一对反引号内含多项、用 ASCII 逗号分隔的写法算不算合法？ | standalone_demo、xianjian、xingji 大量采用这种写法（P03/P04） | 两种写法都接受，否则这三部剧全部报错；`blocker` 级决策 |
 | AMB-02 | FR-8 | 「以『反向提示词』为标题」是否包含 `> **反向提示词**（…）：` 这种引用块加粗标签？ | 295 个 shot（含验收用例 hy3 shot02）用引用块，只有 12 个用 `##` 标题 | 接受两种形态；否则验收 #1 的 negative 会被静默丢弃 |
 | AMB-03 | FR-8、FR-11.3 | `时长` / `比例` 的变体怎么解析：反引号包裹、尾随全角注释、`比例: 9:16 ｜ 时长: 9秒` 同一行；`2.35:1` 是否合法？`model_limits` 没有比例列，「ratio 属于该模型支持的范围」拿什么来判断？ | F04、F06、F07、F08，均为真实数据 | 在 `model_limits` 中补 `ratios`；解析时剥掉反引号和尾随注释；无法识别 → 预检错误并指向 config 键 |
 | AMB-04 | FR-8 vs §2 | FR-8 说旧写法「一律」预检错误；§2 又说「旧写法通过每剧 config 的 override 解决」。在 override 已存在时，`c4_裴昭=>@` / `=>@1` 能否解析？两种旧写法同时出现时报哪个错误码？ | 旧写法共 270 条（rexue、wushen） | 以 override 为准：有 override 就放行、无 override 就报错；这决定旧剧能否使用本服务，`blocker` 级决策 |
-| AMB-05 | FR-2、FR-8 | 没有 `c{N}_` 前缀的卡目录（`characters/driver/`）算不算角色卡？`character_name` 取整个目录名吗？ | duikang shot09、shot11 | 算角色卡，`character_name` 取整个目录名，并在 propose 中标 `needs_confirmation` |
+| AMB-05 | FR-2、FR-8 | 没有 `c{N}_` 前缀的卡目录（`characters/driver/`）算不算角色卡？`character_name` 取整个目录名吗？ | standalone_demo shot09、shot11 | 算角色卡，`character_name` 取整个目录名，并在 propose 中标 `needs_confirmation` |
 | AMB-06 | FR-8、FR-11.2 | resolver 里的「图片 / 视频 / 音频」按哪些扩展名判定（png/jpg/webp？mp4/mov？）？label 为 image 类但盘上只有同 stem 视频时（hy1 `bg9-1.mp4` 是视频版场景参考），是报 not found，还是按实际媒体类型改判 kind？ | R19 | 在 config 里加 `references.extensions.{image,video,audio}`；kind 以 label 规则为准，不改判，并在 hint 中提示「盘上有同 stem 的视频文件」 |
 | AMB-07 | FR-8、FR-11.1、FR-13 | shot01 的 `上一镜末帧`（不存在 shot00）怎么处理？同一 batch 里的承接链（shot03 依赖 shot02 本批才出的末帧）是直接报错，还是延迟到上一镜 done 后再解析？末帧由谁抽取？ | 19 条 first_frame 样本在本机都不存在 | v1 静态报错，提示先完成上一镜并抽帧；同批承接链显式列为已知限制 |
 | AMB-08 | FR-8、FR-10 | 带 `.link.json` 的文件，stem 取 link 文件名（`p2_随身装备.png.link.json` → `p2_随身装备`）还是 target 文件名？两者不同时以谁为准？ | hy2 的 link 目前两者恰好相同 | 以 link 文件名为准（它才是本集的「位置」），sha256 取 target 字节 |

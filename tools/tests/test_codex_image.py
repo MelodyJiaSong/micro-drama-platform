@@ -47,7 +47,7 @@ def test_logs_before_call_and_copies_thread_image(env, monkeypatch):
     ref = env / "ref.png"
     ref.write_bytes(b"ref")
     log = codex_image.RequestLog(out).path
-    monkeypatch.setattr(subprocess, "run", fake_run("t-1", codex_image.generated_root(), log))
+    monkeypatch.setattr(codex_image, "run_codex", fake_run("t-1", codex_image.generated_root(), log))
     result = codex_image.generate(out, "一只橘猫", [ref])
     assert out.read_bytes() == b"png-bytes"
     rows = events(log)
@@ -64,7 +64,7 @@ def test_no_image_logs_error_and_does_not_retry(env, monkeypatch):
     log = codex_image.RequestLog(out).path
     calls = []
     run = fake_run("t-2", codex_image.generated_root(), log, write=False)
-    monkeypatch.setattr(subprocess, "run", lambda *a, **k: calls.append(1) or run(*a, **k))
+    monkeypatch.setattr(codex_image, "run_codex", lambda *a, **k: calls.append(1) or run(*a, **k))
     with pytest.raises(RuntimeError):
         codex_image.generate(out, "一只橘猫", [])
     assert len(calls) == 1 and not out.exists()
@@ -95,7 +95,7 @@ def test_does_not_collect_images_from_other_sessions(env, monkeypatch, thread_id
         done.stdout = "\n".join(lines)
         return done
 
-    monkeypatch.setattr(subprocess, "run", other_run)
+    monkeypatch.setattr(codex_image, "run_codex", other_run)
     with pytest.raises(RuntimeError):
         codex_image.generate(out, "一只橘猫", [])
     assert not out.exists()
@@ -117,10 +117,40 @@ def test_uses_rollout_saved_path_and_records_revised_prompt(env, monkeypatch):
         stdout = "\n".join(json.dumps(x) for x in [{"type": "thread.started", "thread_id": "t-3"},
                                                     {"type": "error", "message": "transient"}])
         return subprocess.CompletedProcess(argv, 0, stdout, "")
-    monkeypatch.setattr(subprocess, "run", run)
+    monkeypatch.setattr(codex_image, "run_codex", run)
     codex_image.generate(out, "一只橘猫", [])
     assert out.read_bytes() == b"from-rollout"
     response = events(log)[1]["response"]
     assert response["images"][0]["revisedPrompt"] == "改写后的"
     assert response["errors"] == [{"message": "transient"}]
     assert "QUFB" not in log.read_text(encoding="utf-8")
+
+
+def test_timeout_kills_the_whole_process_tree(tmp_path):
+    """Windows: killing only the codex.CMD shell left node/codex holding the pipes for 24–40 min (follow-up 263)."""
+    import time
+    marker = tmp_path / "grandchild.pid"
+    child = ("import subprocess, sys, time; "
+             "p = subprocess.Popen([sys.executable, '-c', 'import time; time.sleep(120)']); "
+             f"open({str(marker)!r}, 'w').write(str(p.pid)); time.sleep(120)")
+    start = time.monotonic()
+    with pytest.raises(subprocess.TimeoutExpired):
+        codex_image.run_codex([sys.executable, "-c", child], input="", cwd=str(tmp_path), timeout=3)
+    assert time.monotonic() - start < 30
+    pid = int(marker.read_text())
+    deadline = time.monotonic() + 10
+    while time.monotonic() < deadline and _alive(pid):
+        time.sleep(0.2)
+    assert not _alive(pid)
+
+
+def _alive(pid: int) -> bool:
+    if sys.platform == "win32":
+        out = subprocess.run(["tasklist", "/FI", f"PID eq {pid}", "/NH"], capture_output=True, text=True).stdout
+        return str(pid) in out
+    import os
+    try:
+        os.kill(pid, 0)
+    except OSError:
+        return False
+    return True

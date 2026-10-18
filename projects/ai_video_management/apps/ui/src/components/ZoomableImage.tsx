@@ -11,6 +11,7 @@ export interface ZoomableImageProps {
   alt: string;
   className?: string;
   loading?: "lazy" | "eager";
+  onError?: () => void;
 }
 
 const MIN_SCALE = 0.1;
@@ -23,7 +24,7 @@ interface View {
   y: number;
 }
 
-export function ZoomableImage({ src, alt, className, loading }: ZoomableImageProps): JSX.Element {
+export function ZoomableImage({ src, alt, className, loading, onError }: ZoomableImageProps): JSX.Element {
   const [open, setOpen] = useState<boolean>(false);
   return (
     <>
@@ -32,6 +33,7 @@ export function ZoomableImage({ src, alt, className, loading }: ZoomableImagePro
         alt={alt}
         className={["zoomable-img", className].filter(Boolean).join(" ")}
         loading={loading}
+        onError={onError}
         onClick={(e) => {
           e.stopPropagation();
           setOpen(true);

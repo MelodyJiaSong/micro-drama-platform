@@ -16,13 +16,13 @@
 
 | 顺序 | 参考 | 从哪来 | 缺了怎样 |
 |---|---|---|---|
-| 1 | 运动参考：previz 视频（复杂镜）或 overhead 图（其余） | `shots/stN/previz/stN_previz.mp4`；`shots/stN/planning/stN_overhead_ref.png`；由 `planning/previz.json` 决定 | 拒绝编译 |
+| 1 | 运动参考：overhead 图（默认）；单独要 previz 的镜换成 previz 视频 | `shots/stN/previz/stN_previz.mp4`；`shots/stN/planning/stN_overhead_ref.png`；由 `planning/previz.json` 决定 | 拒绝编译 |
 | 2 | 每个出场人物的三视图（同一个人的正、侧、背） | `cast` 的资产键：`c1-1` → `characters/c1_*/c1-1_*/c1-1_views.png`；`c14` → `characters/c14_*/views/c14_*_views.png` | 拒绝编译 |
 | 3 | 每件道具的锚点图（镜头写了 `props` 才有） | `props` 的资产键：`p475` → `props/p475_*/p475_*.png`，只出正面的用 `p475-1_正面.png` | 拒绝编译 |
-| 4 | 背景图 | 场的 `background`：`background/**/bgN_*/bgN_*.png`；场次必须绑定环境资产 | 拒绝编译 |
+| 4 | 背景图 | 场的 `background`：`background/**/bgN_*/bgN_*.png`；场次必须绑定环境资产。镜头写了 `background` 时用镜头的（本镜朝另一方向的视角图，follow-up 261）：模型会照场景图的视向取景，反方向的镜要有自己的视角图 | 拒绝编译 |
 | 5 | 每个出场人物的声样（不论本镜说不说话） | 人物卡 `views/{卡}_audio.mp3` | 拒绝编译 |
 
-**道具什么时候要挂**（follow-up 231）：跨好几镜反复出现、形制要前后一致的剧情物件（推车、背上的布包、信、武器）。只有文字描述时 Seedance 每镜自由发挥——ep01 s2 第一轮同一辆推车出成带篷货车、敞开木架车，绳结还跑到路边木栅上。特写 / 插入镜里看不到的就不挂，免得模型硬塞进画面。道具卡用剧自己的物件卡生成器写（shengji 的 ep01 补卡生成器即是一例），锚点图按[资产](../resources/assets.md)「出图服务」的引擎顺序出（Codex 优先，即梦最后）。
+**道具什么时候要挂**（follow-up 231）：跨好几镜反复出现、形制要前后一致的剧情物件（推车、背上的布包、信、武器）。只有文字描述时 Seedance 每镜自由发挥——ep01 s2 第一轮同一辆推车出成带篷货车、敞开木架车，绳结还跑到路边木栅上。特写 / 插入镜里看不到的就不挂，免得模型硬塞进画面。道具卡用剧自己的物件卡生成器写（shengji 的 ep01 补卡生成器即是一例），锚点图按[资产](../resources/assets.md)「出图服务」的引擎出（ElevenLabs → Codex，额度不够才换；不用即梦）。
 
 ## 文字也从资产来
 

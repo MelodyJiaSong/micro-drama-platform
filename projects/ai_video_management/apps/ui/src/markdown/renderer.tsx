@@ -6,6 +6,7 @@ import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 import { useNavigate } from "react-router-dom";
 import { resolveLink } from "../lib/linkResolver";
+import { knownPredicate } from "../lib/lazyTree";
 import { BrokenLink } from "../components/BrokenLink";
 
 /** Read-only markdown view: internal links resolve against the tree, fenced
@@ -17,6 +18,8 @@ export interface RendererProps {
   content: string;
   currentPath: string;
   knownPaths: string[];
+  /** Folders the lazy tree has not loaded (follow-up 280): links into them count as known. */
+  unloadedDirs?: string[];
 }
 
 /** Field labels in a prompt body that get highlighted as key headers (the
@@ -120,10 +123,9 @@ function CopyableCode({ children }: CopyableCodeProps): JSX.Element {
   );
 }
 
-export function Renderer({ content, currentPath, knownPaths }: RendererProps): JSX.Element {
+export function Renderer({ content, currentPath, knownPaths, unloadedDirs }: RendererProps): JSX.Element {
   const navigate = useNavigate();
-  const known = useMemo(() => new Set(knownPaths), [knownPaths]);
-  const isKnown = (p: string): boolean => known.has(p);
+  const isKnown = useMemo(() => knownPredicate(knownPaths, unloadedDirs ?? []), [knownPaths, unloadedDirs]);
   return (
     <div className="markdown-view" lang="zh-Hans">
       <ReactMarkdown

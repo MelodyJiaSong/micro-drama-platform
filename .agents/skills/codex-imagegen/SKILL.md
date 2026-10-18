@@ -14,7 +14,7 @@ metadata:
 
 ## 什么时候用
 
-- 默认出图方式（follow-up 238）：人物、背景、道具、装备、概念图都先用它；资产出图器（`gen_char_images` / `gen_bg_images` / `gen_bg_assets` / `gen_outfit_views` / `gen_equipment`）的 `--engine auto` 已按 Codex → ElevenLabs → 即梦 自动调用本脚本，批量出资产走出图器即可；零散单张直接调本脚本。即梦是最低选项，前面都不行才用。
+- 出图顺序（follow-up 275，取代 270 的 Codex 优先）：默认 ElevenLabs，ElevenLabs 额度 / 套餐不够时才用本脚本；资产出图器（`gen_char_images` / `gen_bg_images` / `gen_bg_assets` / `gen_outfit_views` / `gen_equipment`）的 `--engine auto` 已按 ElevenLabs → Codex 自动调用本脚本，批量出资产走出图器即可；零散单张直接调本脚本。出图只有 Codex 与 ElevenLabs 两个选择，即梦只用于视频。
 - 视频不走这里；视频生成仍由用户决定。
 
 ## 步骤

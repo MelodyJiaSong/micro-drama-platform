@@ -36,7 +36,7 @@ wiki 上同一个区有七八个版本。本剧锚定 **Vanilla 1.12**，而 **4
 锁定串才进 prompt。**一张都不上传给生成模型**——① 暴雪美术资产不可再分发；
 ② 实测「喂图出图」会把游戏引擎的光照、材质、边缘锐度 1:1 带进画面，正是半写实路线要防的那件事。
 
-媒体在 `ai_videos/` 下本来就被 gitignore；要同步走 `tools/assets_sync.py`。
+媒体在 `ai_videos/` 下本来就被 gitignore，只存本机。
 """
 from __future__ import annotations
 

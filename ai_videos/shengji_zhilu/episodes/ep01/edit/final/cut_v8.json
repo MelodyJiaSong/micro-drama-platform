@@ -1,0 +1,111 @@
+{
+ "episode": "ep01",
+ "stage": "final",
+ "phase": "粗剪",
+ "version": 8,
+ "base_version": 7,
+ "status": "草稿",
+ "made_at": "2026-10-18",
+ "note": "接 s1–s4（s5、s6 还没剪）；s1、s2 同 v2（已过独立审稿、待用户批准锁片），s3 是另一会话的粗剪 v4（follow-up 095：st3 亚伦背对镜头从画右跑进来，接 st2 的背影），s4 粗剪 v2（st2 换维里靠在亚伦身上的新条，follow-up 094）。场之间的转场从 `tools/episode_cut.py menu` 里选。",
+ "spec": {
+  "width": 1280,
+  "height": 720,
+  "fps": 24,
+  "audio_rate": 48000
+ },
+ "head": {
+  "type": "cut",
+  "reason": "竖屏短剧开头不淡入：第一帧就是墙、门、守卫，抢在观众划走前。"
+ },
+ "scenes": [
+  {
+   "scene": "s1",
+   "cut_version": 3,
+   "sha256": "325132bdba0db3f02127c8255dfb9d771c9d95afe2224fc2926eeab39a334f1b"
+  },
+  {
+   "scene": "s2",
+   "cut_version": 3,
+   "sha256": "d83dd69fa0d40a9798ccbeacc10d7a7e1937eb6d5110231c4a64f31305fa9337"
+  },
+  {
+   "scene": "s3",
+   "cut_version": 4,
+   "sha256": "91c58038f9eae0977627f0792e2afc01db6eead7036594678d06cff678d0798a"
+  },
+  {
+   "scene": "s4",
+   "cut_version": 2,
+   "sha256": "c67b4696741be416e9f5c1e2bbc1b70be0ebd5befb2afc24289378c2bb72dcd5"
+  }
+ ],
+ "transitions": [
+  {
+   "from": "s1",
+   "to": "s2",
+   "type": "cut",
+   "audio": {
+    "j": 0.75
+   },
+   "reason": "同一时刻、同一个人，没有时间跳跃，用切；山谷的环境声提前 0.75 秒进来（J），亚伦抬眼时观众先听到更开阔的空间，再看到他看见的山谷。"
+  },
+  {
+   "from": "s2",
+   "to": "s3",
+   "type": "cut",
+   "reason": "同一个早上、同一条大路接着往北走：s2 结尾亚伦背对镜头往北走开，s3 开头侧面跟拍他赶路，动作与方向都连着，用切。"
+  },
+  {
+   "from": "s3",
+   "to": "s4",
+   "type": "cut",
+   "reason": "同一段赶路接着走：s3 结尾两人架着往北擦过镜头，s4 开头「路一拐，修道院整个立在眼前」，直接切把修道院一下子推到观众眼前，比叠化更有「一抬头就到了」的抵达感；时间只隔一小段路，不用表示时间流逝的转场。"
+  }
+ ],
+ "tail": {
+  "type": "cut",
+  "reason": "s2 之后接 s3，不收尾。"
+ },
+ "changes_from_base": [
+  "s3 换成粗剪 v4：st3 换 153414_76e8e8d3（亚伦从画右前景背对镜头跑进来接 st2，锤仍在右肩）"
+ ],
+ "output": {
+  "path": "ep01_final_v8.mp4",
+  "sha256": "00a391189de42a435dbb359f7291d4d4aac8b9ad21372f07dfa8441ab96286aa",
+  "duration_s": 87.25,
+  "expected_s": 87.25,
+  "duration_ok": true,
+  "frames": 2094,
+  "size": "1280x720",
+  "fps": "24/1",
+  "black_segments": [],
+  "cuts_expected": [
+   7.25,
+   21.5,
+   28.0,
+   36.5,
+   37.625,
+   43.625,
+   50.125,
+   65.125,
+   72.875,
+   82.875
+  ],
+  "cuts_found": [
+   7.25,
+   21.5,
+   28.0,
+   36.5,
+   37.625,
+   43.625,
+   65.125,
+   72.875,
+   82.875
+  ],
+  "cuts_unexpected": [],
+  "cuts_missed": [
+   50.125
+  ],
+  "rendered_at": "2026-10-18T15:39:31"
+ }
+}

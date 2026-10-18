@@ -1,10 +1,10 @@
 # Previz
 
-绿幕前纯色小人偶的走位预演视频。它比 overhead 精确：逐秒给出每个人的站位、朝向、走位和姿势，以及机位的移动与取景。复杂镜用它代替 overhead 图当运动参考。
+绿幕前纯色小人偶的走位预演视频。它比 overhead 精确：逐秒给出每个人的站位、朝向、走位和姿势，以及机位的移动与取景。**默认所有镜头都不做 previz**（2026-10-18 用户定，ai_video_management follow-up 281），overhead 图就是运动参考；只有单独处理、确实需要的镜才做。
 
 ## 哪些镜要
 
-由 `tools/shot_overhead.py` 从 overhead.toml 量化判定，任一成立就要（写进 `planning/previz.json`）：
+默认不要。为什么：绿幕人偶的僵硬会被模型照搬，previz 视频当参考反而更差（EP1 s5 st2：亚伦动作像机器人、一下就把伤者放倒，伤口也画错了位置）。单独要的镜在 overhead.toml 写 `[meta] previz = true` 和 `previz_why`（缺理由报错），`tools/shot_overhead.py` 据此写 `planning/previz.json`。下表判据只作**提示**：命中时「免」的理由里会写「复杂镜提示」，出片时多看一眼，不自动开启：
 
 | 判据 | 阈值 |
 |---|---|
@@ -14,7 +14,7 @@
 | 肢体接触 | ≥ 2 对人贴近（< 0.8 m 且有人在动） |
 | 攻防 | 人与怪攻防接触 ≥ 1 对；有护人格挡 |
 
-`[meta] previz = true / false` 可以推翻判定，但与判据相反时必须写 `previz_why`。简单镜不渲视频，只出静帧核对取景。
+不做 previz 的镜不渲视频，仍可出静帧核对取景（静帧只给人看，不上传）。
 
 ## 怎么做
 
@@ -24,12 +24,13 @@ python tools/overhead_previz.py <镜头目录> --render    # 渲整条 MP4（几
 python tools/overhead_previz.py --all <集目录> --render # 本集所有要 previz 的镜
 ```
 
-配置 `previz/previz_config.toml` 由工具从 overhead.toml 生成，不手改；改走位改 overhead 重跑。引擎是共享的 `tools/previz/build_previz.py`（Blender）。
+配置 `previz/previz_config.toml` 由工具从 overhead.toml 生成，不手改；改走位改 overhead 重跑。引擎是共享的 `tools/previz/build_previz.py`（Blender）。用兵器、不落空的 `[[hit]]` 会抄成 previz 的命中检查：那一刻兵器离目标（或目标身上的盾）超过 0.35 m 就是 blocker，不出片——改出手时刻、站位或 `[[pose]]` 的出手姿态（前砸、前劈R）。
 
 | 画面里有 | 规则 |
 |---|---|
 | 绿幕地面与背景 | 不建场景：空间关系已在 overhead 里定，场景长相交给场景图 |
 | 纯色关节小人偶 | 颜色按剧 `figure_colors`，与 overhead 圆点同色；人偶有四肢，姿势来自 `[[pose]]`，走动时自动换行走姿态 |
+| 手持物 | overhead 的 `[[carry]]` 与 `[[actor]] shield`：褐柄深灰头的锤 / 剑等、褐色圆盾，按实长；在手里随握法姿态换位，背着就斜背（锤头在右肩后上方、柄落向左腰） |
 | 灰色方块 | overhead 的 `[[object]]`，按 `h` 定高 |
 | 机位 | overhead 的 `[[camera]]` 路点、焦距与离地高 |
 

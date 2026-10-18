@@ -11,8 +11,11 @@ from libs.common import asset_link, drama_ref, equipment_key, prop_key, scene_ke
 from libs.common.drama_layout import EQUIPMENT_DIR_NAME, is_equipment_tool_dir
 from libs.common.episode_workflow import MODULE_NAV_LABELS, MODULES, PLACEHOLDER_STAGES, WORLD_FACTS_FILE, WORKFLOW_ID, WORKFLOW_MARKER
 from libs.common.production_key import BACKGROUND_DIR_NAME, SCENES_DIR_NAME, first_shot_key, shot_key
+from libs.common.scene_cut import CUT_FILE_PATTERN, CUT_STAGES, EDIT_DIR, EPISODE_CUT
 from urllib.parse import urlencode
 from libs.common.exposed_tree import ExposedTree, TREE_VISIBLE_EXTENSIONS
+from libs.domain.errors.file__error import FileNotInSandboxError
+from libs.domain.errors.media__error import NotUnderAiVideosError
 from libs.infrastructure.readers.scene_registry__reader import SceneRegistryReader
 
 _IMAGE_EXTENSIONS: frozenset[str] = frozenset({".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"})
@@ -63,6 +66,13 @@ _SCENE_DIR_LABELS_ZH: dict[str, str] = {
 # A zone's layout input (`scenes/{大陆}/{区}/_plan/plan.toml` + apply report) is
 # tool state, not an asset library — never shown (follow-up 174).
 _HIDDEN_DIR_NAMES: frozenset[str] = frozenset({"_plan"})
+# Lazy tree (follow-up 280): how many real folder levels the first load expands
+# below each navigation node. Deeper folders arrive as `lazy` stubs (no
+# children) and are fetched with `subtree()` when opened. A drama walks two
+# levels so `2_世界观人设/{characters,background,…}` are listed; a shot folder one
+# level so `planning/` `renders/` `资料包/` are listed.
+LAZY_DRAMA_DEPTH: int = 2
+LAZY_SHOT_DEPTH: int = 1
 
 
 def _obsolete_note(children: list[dict[str, Any]]) -> str | None:
@@ -90,15 +100,44 @@ class TreeReader:
         self._root_prefix = str(self._root).rstrip(os.sep) + os.sep
         self._scene_registry = scene_registry or SceneRegistryReader()
 
-    def build(self) -> dict[str, Any]:
+    def build(self, lazy: bool = False) -> dict[str, Any]:
+        """The whole tree, or with `lazy` only the navigation skeleton plus the
+        first real folder levels (follow-up 280: the full walk is ~47k nodes /
+        8.8 MB / 10 s and grew with every generated take)."""
         return {
             "type": "section",
             "name": "root",
             "path": "",
-            "children": [self._ai_videos_section()],
+            "children": [self._ai_videos_section(lazy)],
         }
 
-    def _ai_videos_section(self) -> dict[str, Any]:
+    def subtree(self, rel_path: str, depth: int | None = 1) -> dict[str, Any]:
+        """One real folder under `ai_videos/` for a lazy stub: its children,
+        `depth` folder levels deep (None = everything below). Only `children`
+        is meant to replace the stub's; the stub keeps its own labels."""
+        rel = rel_path.strip().strip("/")
+        parts = rel.split("/") if rel else []
+        if not parts or parts[0] != "ai_videos" or any(part in {"", ".", ".."} for part in parts):
+            raise NotUnderAiVideosError(rel_path)
+        target = self._root.joinpath(*parts)
+        if not target.is_dir() or target.is_symlink() or any(part in self._exposed.excluded_dirs() for part in parts):
+            raise FileNotInSandboxError(rel_path)
+        children = self._walk_filtered(target, self._is_allowed_leaf, depth=None if depth is None else depth - 1)
+        if target.name == "2_世界观人设":
+            self._label_world_assets(children)
+        node: dict[str, Any] = {"type": "directory", "name": target.name, "path": self._rel(target), "children": children}
+        _mark_obsolete(node, _obsolete_note(children))
+        return node
+
+    @staticmethod
+    def _label_world_assets(children: list[dict[str, Any]]) -> None:
+        for asset in children:
+            if asset["name"] == WORLD_FACTS_FILE:
+                asset["display_name"] = "世界规则"
+            elif asset["name"] == BACKGROUND_DIR_NAME:
+                asset["display_name"] = "background · 环境资产"
+
+    def _ai_videos_section(self, lazy: bool = False) -> dict[str, Any]:
         ai_videos_root = self._root / "ai_videos"
         children: list[dict[str, Any]] = []
         deleted_child: dict[str, Any] | None = None
@@ -107,11 +146,11 @@ class TreeReader:
                 if project_dir.name in self._exposed.excluded_dirs():
                     continue
                 if drama_ref.is_series_dir(project_dir):
-                    series_node = self._walk_series(project_dir)
+                    series_node = self._walk_series(project_dir, lazy)
                     if series_node is not None:
                         children.append(series_node)
                     continue
-                project_node = self._walk_project(project_dir)
+                project_node = self._walk_project(project_dir, lazy=lazy)
                 if project_node is None:
                     continue
                 if project_dir.name == "_deleted":
@@ -127,8 +166,8 @@ class TreeReader:
             "children": children,
         }
 
-    def _walk_project(self, project_dir: Path, series_note: str | None = None) -> dict[str, Any] | None:
-        sub = self._walk_filtered(project_dir, self._is_allowed_leaf)
+    def _walk_project(self, project_dir: Path, series_note: str | None = None, lazy: bool = False) -> dict[str, Any] | None:
+        sub = self._walk_filtered(project_dir, self._is_allowed_leaf, depth=LAZY_DRAMA_DEPTH if lazy else None)
         node: dict[str, Any] = {
             "type": "directory",
             "name": project_dir.name,
@@ -152,11 +191,7 @@ class TreeReader:
                     child["display_name"] = "0_research" if child["name"] == "0_research" else "1_资产库"
                     child["lifetime"] = "persistent"
                     if child["name"] == "2_世界观人设":
-                        for asset in child.get("children", []):
-                            if asset["name"] == WORLD_FACTS_FILE:
-                                asset["display_name"] = "世界规则"
-                            elif asset["name"] == BACKGROUND_DIR_NAME:
-                                asset["display_name"] = "background · 环境资产"
+                        self._label_world_assets(child.get("children", []))
                 episodes_root = project_dir / "episodes"
                 episodes = sorted((p for p in episodes_root.iterdir() if p.is_dir() and not p.is_symlink()
                                    and re.fullmatch(r"ep\d+", p.name)), key=lambda p: _natural(p.name)) if episodes_root.is_dir() else []
@@ -175,7 +210,7 @@ class TreeReader:
                             if scenes:
                                 output["type"] = "directory"
                                 output["navigation_href"] = self._workflow_url(node["path"], episode.name, module)
-                                output["children"] = self._workflow_scenes(node["path"], episode.name, module, scenes)
+                                output["children"] = self._workflow_scenes(node["path"], episode.name, module, scenes, lazy)
                         # Episode-level decision record (follow-up 225): why these scenes / sequences, which guideline.
                         decision = episode / "decisions" / f"{module}.md"
                         if decision.is_file() and not decision.is_symlink():
@@ -190,13 +225,20 @@ class TreeReader:
                         "children": outputs,
                     })
                 for stage in PLACEHOLDER_STAGES:
+                    stage_outputs = []
+                    for episode in episodes:
+                        output = {"type": "workflow", "name": episode.name, "display_name": f"EP{int(episode.name[2:])}",
+                                  "path": f"{node['path']}/episodes/{episode.name}/{stage}",
+                                  "drama_path": node["path"], "workflow_module": stage, "workflow_episode": episode.name}
+                        cut_scenes = self._edit_scenes(node["path"], episode) if stage == "edit" else []
+                        if cut_scenes:   # 剪辑（follow-up 269）：列出已有剪辑的场次，每场分草稿剪辑 / 正片剪辑
+                            output.update(type="directory", navigation_href=self._workflow_url(node["path"], episode.name, stage),
+                                          children=cut_scenes)
+                        stage_outputs.append(output)
                     node["children"].append({
                         "type": "directory", "name": stage, "display_name": MODULE_NAV_LABELS[stage],
                         "path": f"{node['path']}/stages/{stage}",
-                        "children": [{"type": "workflow", "name": episode.name, "display_name": f"EP{int(episode.name[2:])}",
-                                      "path": f"{node['path']}/episodes/{episode.name}/{stage}",
-                                      "drama_path": node["path"], "workflow_module": stage, "workflow_episode": episode.name}
-                                     for episode in episodes],
+                        "children": stage_outputs,
                     })
         zh_title = _SYSTEM_FOLDER_LABELS_ZH.get(project_dir.name) or self._project_zh_title(project_dir)
         if zh_title:
@@ -204,15 +246,60 @@ class TreeReader:
         return node
 
     @staticmethod
-    def _workflow_url(drama: str, episode: str, module: str, scene: str = "", shot: str = "") -> str:
+    def _workflow_url(drama: str, episode: str, module: str, scene: str = "", shot: str = "", cut: str = "") -> str:
         params = {"drama": drama, "episode": episode, "module": module}
         if scene:
             params["scene"] = scene
         if shot:
             params["shot"] = shot
+        if cut:
+            params["cut"] = cut
         return "/drama?" + urlencode(params)
 
-    def _workflow_scenes(self, drama: str, episode: str, module: str, scenes: list[dict]) -> list[dict]:
+    def _edit_scenes(self, drama: str, episode: Path) -> list[dict]:
+        """剪辑导航（follow-up 269）：有剪辑决定的场次，按分镜顺序；每场下面是草稿剪辑 / 正片剪辑（最新版本号）。"""
+        located: dict[str, str] = {}
+        filming = episode / "filming.json"
+        if filming.is_file() and not filming.is_symlink():
+            try:
+                located = {str(item["id"]): str(item.get("location", "")) for item in json.loads(filming.read_text(encoding="utf-8"))["content"]["scenes"]}
+            except (ValueError, KeyError, TypeError, AttributeError):
+                located = {}
+        order = list(located)
+        scenes_root = episode / "scenes"
+        found = [p.name for p in scenes_root.iterdir() if p.is_dir() and not p.is_symlink()] if scenes_root.is_dir() else []
+        nodes = []
+        whole = []   # 集级剪辑（follow-up 278）：`{集}/edit/{阶段}/cut_v{N}.json` 把各场接起来，导航里排在各场前面
+        for stage in CUT_STAGES:
+            folder = episode / EDIT_DIR / stage
+            versions = [int(m.group(1)) for f in folder.iterdir() if (m := re.fullmatch(CUT_FILE_PATTERN, f.name)) and f.is_file()]                 if folder.is_dir() and not folder.is_symlink() else []
+            if versions:
+                whole.append({"type": "directory", "name": stage,
+                              "display_name": f"{'草稿剪辑' if stage == 'draft' else '正片剪辑'} · v{max(versions)}",
+                              "path": f"{drama}/episodes/{episode.name}/edit/episode/{stage}",
+                              "navigation_href": self._workflow_url(drama, episode.name, "edit", EPISODE_CUT, cut=stage), "children": []})
+        if whole:
+            nodes.append({"type": "directory", "name": EPISODE_CUT, "display_name": "整集（场与场接起来、转场）",
+                          "path": f"{drama}/episodes/{episode.name}/edit/episode",
+                          "navigation_href": self._workflow_url(drama, episode.name, "edit", EPISODE_CUT), "children": whole})
+        for sid in sorted(found, key=lambda s: (order.index(s) if s in order else len(order), _natural(s))):
+            stages = []
+            for stage in CUT_STAGES:
+                folder = scenes_root / sid / EDIT_DIR / stage
+                versions = [int(m.group(1)) for f in folder.iterdir() if (m := re.fullmatch(CUT_FILE_PATTERN, f.name)) and f.is_file()] \
+                    if folder.is_dir() and not folder.is_symlink() else []
+                if versions:
+                    stages.append({"type": "directory", "name": stage,
+                                   "display_name": f"{'草稿剪辑' if stage == 'draft' else '正片剪辑'} · v{max(versions)}",
+                                   "path": f"{drama}/episodes/{episode.name}/edit/scenes/{sid}/{stage}",
+                                   "navigation_href": self._workflow_url(drama, episode.name, "edit", sid, cut=stage), "children": []})
+            if stages:
+                nodes.append({"type": "directory", "name": sid, "display_name": f"{sid} · {located.get(sid) or '场次'}",
+                              "path": f"{drama}/episodes/{episode.name}/edit/scenes/{sid}",
+                              "navigation_href": self._workflow_url(drama, episode.name, "edit", sid), "children": stages})
+        return nodes
+
+    def _workflow_scenes(self, drama: str, episode: str, module: str, scenes: list[dict], lazy: bool = False) -> list[dict]:
         nodes = []
         base = f"{drama}/episodes/{episode}"
         # Compiled scenes carry no location; name them after the filming scene they came from (follow-up 226).
@@ -234,7 +321,8 @@ class TreeReader:
                 children.append({"type": "directory", "name": f"st{key.shot}", "display_name": key.value,
                                  "path": f"{path}/shots/st{key.shot}",
                                  "navigation_href": self._workflow_url(drama, episode, module, scene["id"], key.value),
-                                 "children": self._walk_filtered(folder, self._is_allowed_leaf) if folder.is_dir() and not folder.is_symlink() else []})
+                                 "children": self._walk_filtered(folder, self._is_allowed_leaf, depth=LAZY_SHOT_DEPTH if lazy else None)
+                                 if folder.is_dir() and not folder.is_symlink() else []})
             # Scene-level decision record (follow-up 225): purpose, coverage, why each shot, cited guidelines.
             decision = self._root / base / "scenes" / scene["id"] / "decisions.md"
             if module == "filming" and decision.is_file() and not decision.is_symlink():
@@ -244,7 +332,7 @@ class TreeReader:
                           "navigation_href": self._workflow_url(drama, episode, module, scene["id"]), "children": children})
         return nodes
 
-    def _walk_series(self, series_dir: Path) -> dict[str, Any] | None:
+    def _walk_series(self, series_dir: Path, lazy: bool = False) -> dict[str, Any] | None:
         """A series folder (`series.json`) renders as one collapsible node whose
         children are its member dramas, plus any `_`-prefixed shared folder
         (`_series/` — the series bible and cross-episode locked assets)."""
@@ -255,7 +343,7 @@ class TreeReader:
         for entry in sorted(p for p in series_dir.iterdir() if p.is_dir()):
             if entry.name in self._exposed.excluded_dirs():
                 continue
-            node = self._walk_project(entry, series_note=note)
+            node = self._walk_project(entry, series_note=note, lazy=lazy)
             if node is None:
                 continue
             if entry.name.startswith("_"):
@@ -387,10 +475,14 @@ class TreeReader:
         return scene_key.prefixed(zone, h1) if zone else h1
 
     def _walk_filtered(
-        self, directory: Path, leaf_predicate: Any, dirs: bool = True
+        self, directory: Path, leaf_predicate: Any, dirs: bool = True, depth: int | None = None
     ) -> list[dict[str, Any]]:
         """`dirs=False` emits only the directory's own files — used for a series
-        folder, whose sub-directories are walked as drama nodes instead."""
+        folder, whose sub-directories are walked as drama nodes instead.
+
+        `depth` (follow-up 280) is how many sub-folder levels to expand; a folder
+        past it becomes a `lazy` stub — listed only when something visible lies
+        inside, labelled as usual, with no children. None walks everything."""
         children: list[dict[str, Any]] = []
         excluded = self._exposed.excluded_dirs()
         # `os.scandir` rather than `Path.iterdir`: on Windows the directory
@@ -414,8 +506,19 @@ class TreeReader:
                 continue
             if is_dir and (not dirs or name in _HIDDEN_DIR_NAMES):
                 continue
-            if is_dir:
-                sub = self._walk_filtered(entry, leaf_predicate)
+            if is_dir and depth is not None and depth <= 0:
+                if self._has_visible(entry, leaf_predicate):
+                    stub: dict[str, Any] = {"type": "directory", "name": name, "path": self._rel(entry),
+                                            "children": [], "lazy": True}
+                    zh_label = self._sidecar_zh_label(entry)
+                    if zh_label:
+                        stub["display_name"] = zh_label
+                    marker = entry / OBSOLETE_MARKER_NAME
+                    if marker.is_file() and not marker.is_symlink():
+                        _mark_obsolete(stub, self._rel(marker))
+                    children.append(stub)
+            elif is_dir:
+                sub = self._walk_filtered(entry, leaf_predicate, depth=None if depth is None else depth - 1)
                 if sub:
                     dir_node: dict[str, Any] = {
                         "type": "directory",
@@ -438,6 +541,28 @@ class TreeReader:
                 if leaf_predicate(entry):
                     children.append(self._leaf_for(entry))
         return children
+
+    def _has_visible(self, directory: Path, leaf_predicate: Any) -> bool:
+        """Whether a full walk would list this folder: something visible lies
+        somewhere inside (same skips as `_walk_filtered`). Stops at the first hit."""
+        excluded = self._exposed.excluded_dirs()
+        try:
+            with os.scandir(directory) as it:
+                entries = list(it)
+        except OSError:
+            return False
+        later: list[Path] = []
+        for e in entries:
+            if e.is_symlink() or e.name in excluded:
+                continue
+            if e.is_dir(follow_symlinks=False):
+                if e.name not in _HIDDEN_DIR_NAMES:
+                    later.append(Path(e.path))
+            elif e.is_file(follow_symlinks=False):
+                entry = Path(e.path)
+                if (asset_link.is_link_file(entry) and self._link_leaf(entry) is not None) or leaf_predicate(entry):
+                    return True
+        return any(self._has_visible(sub, leaf_predicate) for sub in later)
 
     def _link_leaf(self, link_file: Path) -> dict[str, Any] | None:
         """A `*.link.json` renders as the asset it points at — the node carries the

@@ -25,6 +25,7 @@ import {
 } from "../api";
 import { ApiError, type FileResult } from "../types";
 import { ZoomableImage } from "./ZoomableImage";
+import { useFileChanges } from "../lib/fileEvents";
 
 const IMAGE_EXTS = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"]);
 const VIDEO_EXTS = new Set([".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v"]);
@@ -39,10 +40,12 @@ const DOWNLOAD_EXTS = new Set([".blend"]);
 
 export interface ReaderProps {
   knownPaths: string[];
+  /** Folders not loaded yet (follow-up 280): links into them are not flagged broken. */
+  unloadedDirs?: string[];
   onSaved: () => void;
 }
 
-export function Reader({ knownPaths, onSaved }: ReaderProps): JSX.Element {
+export function Reader({ knownPaths, unloadedDirs, onSaved }: ReaderProps): JSX.Element {
   const location = useLocation();
   const navigate = useNavigate();
   const path = useMemo<string | null>(() => {
@@ -90,6 +93,8 @@ export function Reader({ knownPaths, onSaved }: ReaderProps): JSX.Element {
     setFile(null); setError(null);
     void load();
   }, [load]);
+  // Live updates (follow-up 280): the open text file changed on disk → show the new content.
+  useFileChanges(path && !isMediaOnly ? path : null, () => { void load(); });
 
   const onArchiveToggle = useCallback(async () => {
     if (!path) return;
@@ -275,7 +280,7 @@ export function Reader({ knownPaths, onSaved }: ReaderProps): JSX.Element {
           </ParseFallback>
         ) : isMarkdown ? (
           <ParseFallback rawText={file.content} componentName="MarkdownView">
-            <Renderer content={file.content} currentPath={path} knownPaths={knownPaths} />
+            <Renderer content={file.content} currentPath={path} knownPaths={knownPaths} unloadedDirs={unloadedDirs} />
             <SiblingMedia currentPath={path} knownPaths={knownPaths} onChange={onSaved} />
           </ParseFallback>
         ) : (

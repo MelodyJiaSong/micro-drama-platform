@@ -1,0 +1,73 @@
+{
+ "episode": "ep01",
+ "stage": "final",
+ "phase": "精剪",
+ "version": 1,
+ "base_version": null,
+ "status": "草稿",
+ "made_at": "2026-10-18",
+ "note": "目前只接 s1、s2（其余场还没剪）；场之间的转场从 `tools/episode_cut.py menu` 里选，样片见 转场样片_s1_s2.mp4。",
+ "spec": {
+  "width": 1280,
+  "height": 720,
+  "fps": 24,
+  "audio_rate": 48000
+ },
+ "head": {
+  "type": "cut",
+  "reason": "竖屏短剧开头不淡入：第一帧就是墙、门、守卫，抢在观众划走前。"
+ },
+ "scenes": [
+  {
+   "scene": "s1",
+   "cut_version": 2,
+   "sha256": "95ea5002d4561631fd0961efdd5f9bee7f01a240a763b67e219e4fd484e4b420"
+  },
+  {
+   "scene": "s2",
+   "cut_version": 2,
+   "sha256": "ae2158bc70b74c1194150f3060cfa20d602f8a686fae7188ecb56094dc6eabe4"
+  }
+ ],
+ "transitions": [
+  {
+   "from": "s1",
+   "to": "s2",
+   "type": "cut",
+   "audio": {
+    "j": 0.75
+   },
+   "reason": "同一时刻、同一个人，没有时间跳跃，用切；山谷的环境声提前 0.75 秒进来（J），亚伦抬眼时观众先听到更开阔的空间，再看到他看见的山谷。"
+  }
+ ],
+ "tail": {
+  "type": "cut",
+  "reason": "s2 之后接 s3，不收尾。"
+ },
+ "output": {
+  "path": "ep01_final_v1.mp4",
+  "sha256": "7c48bb4d2e315f20b88adab516c3cf7d0581bf880aaae08c8cf12ff5c4b4f5bf",
+  "duration_s": 44.375,
+  "expected_s": 44.375,
+  "duration_ok": true,
+  "frames": 1065,
+  "size": "1280x720",
+  "fps": "24/1",
+  "black_segments": [],
+  "cuts_expected": [
+   7.25,
+   21.5,
+   28.0,
+   38.5
+  ],
+  "cuts_found": [
+   7.25,
+   21.5,
+   28.0,
+   38.5
+  ],
+  "cuts_unexpected": [],
+  "cuts_missed": [],
+  "rendered_at": "2026-10-18T09:50:59"
+ }
+}

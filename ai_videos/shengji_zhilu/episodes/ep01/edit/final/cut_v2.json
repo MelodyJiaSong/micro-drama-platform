@@ -1,0 +1,90 @@
+{
+ "episode": "ep01",
+ "stage": "final",
+ "phase": "锁片",
+ "version": 2,
+ "base_version": 1,
+ "status": "草稿（待用户批准锁片）",
+ "made_at": "2026-10-18",
+ "note": "目前只接 s1、s2（其余场还没剪）；场之间的转场从 `tools/episode_cut.py menu` 里选，样片见 转场样片_s1_s2.mp4。",
+ "spec": {
+  "width": 1280,
+  "height": 720,
+  "fps": 24,
+  "audio_rate": 48000
+ },
+ "head": {
+  "type": "cut",
+  "reason": "竖屏短剧开头不淡入：第一帧就是墙、门、守卫，抢在观众划走前。"
+ },
+ "scenes": [
+  {
+   "scene": "s1",
+   "cut_version": 3,
+   "sha256": "325132bdba0db3f02127c8255dfb9d771c9d95afe2224fc2926eeab39a334f1b"
+  },
+  {
+   "scene": "s2",
+   "cut_version": 3,
+   "sha256": "d83dd69fa0d40a9798ccbeacc10d7a7e1937eb6d5110231c4a64f31305fa9337"
+  }
+ ],
+ "transitions": [
+  {
+   "from": "s1",
+   "to": "s2",
+   "type": "cut",
+   "audio": {
+    "j": 0.75
+   },
+   "reason": "同一时刻、同一个人，没有时间跳跃，用切；山谷的环境声提前 0.75 秒进来（J），亚伦抬眼时观众先听到更开阔的空间，再看到他看见的山谷。"
+  }
+ ],
+ "tail": {
+  "type": "cut",
+  "reason": "s2 之后接 s3，不收尾。"
+ },
+ "changes_from_base": [
+  "s1 v3（st4 提亮）、s2 v3（航拍 3.0–11.5，st2 换走开段）：按独立审稿（v1 结论「改了再锁」）改"
+ ],
+ "review_of_base": "v1（sha 7c48bb4d…）独立审稿：改了再锁——锤在左肩、34–44 秒拖、21.5 秒亮度骤降、揭晓偏慢；声音问题交声音模块。",
+ "output": {
+  "path": "ep01_final_v2.mp4",
+  "sha256": "0e7e80a8a7e70f2d2c05c4a8668a9612618e72c607a56647c3bc5983b92dd188",
+  "duration_s": 37.625,
+  "expected_s": 37.625,
+  "duration_ok": true,
+  "frames": 903,
+  "size": "1280x720",
+  "fps": "24/1",
+  "black_segments": [],
+  "cuts_expected": [
+   7.25,
+   21.5,
+   28.0,
+   36.5
+  ],
+  "cuts_found": [
+   7.25,
+   21.5,
+   28.0,
+   36.5
+  ],
+  "cuts_unexpected": [],
+  "cuts_missed": [],
+  "rendered_at": "2026-10-18T10:05:44"
+ },
+ "independent_review": {
+  "sha256": "0e7e80a8a7e70f2d2c05c4a8668a9612618e72c607a56647c3bc5983b92dd188",
+  "reviewed_at": "2026-10-18",
+  "by": "独立上下文审稿代理（未参与剪辑）",
+  "verdict": "可锁片",
+  "open_items": [
+   "调色：st4 提亮后黑位发灰（最暗 1% 由 22 升到 37），调色时压回 15–20、收 28.0 秒前天空高光，不动切点",
+   "声音与音乐：疑似钟声或配乐残留（28.0–29.5、30.4–31.9、32.8–33.3、36.5–37.6 秒，J 剪辑带进来的部分也有）；35.0–35.5 秒低频突发；s1 对白段缺雨声；21.5 秒环境声 +10 dB 跳变；36.5 秒底噪降 5 dB",
+   "接上 s3 后再看 36.5 秒起 1.1 秒的走开尾镜",
+   "未核：每条进片的条都有绑定 sha 的「通过」审片结论（各条 review.md 现为待用户确认）",
+   "可接受不改：7.25 秒信与手接戏不连；28 秒航拍他又站回门洞；修道院始终没被点出来（补镜要重出，用户定）"
+  ]
+ }
+}

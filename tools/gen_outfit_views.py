@@ -18,14 +18,14 @@
 + `{key}_front.png`、`{key}_side.png`、`{key}_back.png` + `gen_log.json`。
 星形派生：正面挂锚点正面 + 本套最多 3 件装备 / 道具的正面图；侧 / 背只挂本套正面（穿着以它为准）+ 锚点的侧 / 背（只借身形轮廓）。
 背面只给即梦喂本套正面的左右镜像（它照搬参考图的左右）；Codex / ElevenLabs 自己会转身，喂原图。
-引擎按 `tools/image_engine.py`（follow-up 238：auto ＝ Codex → ElevenLabs → 即梦）；`--engine X` 显式指定时只用 X。
+引擎按 `tools/image_engine.py`（follow-up 275：auto ＝ ElevenLabs → Codex（额度不够才换），图片不用即梦）；`--engine X` 显式指定时只用 X。
 手部装备（露指 / 半指手套等）换装图锁不住（即梦三次都画成全指）：只锁身上其它部分，手由出片时另挂的装备正面图锁
 （`specs/ai_video/shengji_zhilu/lessons.md` L16）。
 
 用法（仓库根目录）：
     python tools/gen_outfit_views.py plan   --drama shengji_zhilu [--only c1-3,c2-1]
     python tools/gen_outfit_views.py build  --drama shengji_zhilu            # 写子目录与卡
-    python tools/gen_outfit_views.py images --drama shengji_zhilu [--engine auto|codex|elevenlabs|dreamina] [--force] [--shard k/n]
+    python tools/gen_outfit_views.py images --drama shengji_zhilu [--engine auto|codex|elevenlabs] [--force] [--shard k/n]
 已出的图跳过，可中断可续跑；参考图还没出的那张跳过并报出来。
 """
 from __future__ import annotations
@@ -316,7 +316,7 @@ def images(drama: str, os_: list[Outfit], engine: str, force: bool) -> list[str]
             flip = view == "背面"
             dm_text = text.replace("与参考图一是同一个人、同一身穿着", "参考图一是本套正面左右翻转后的镜像，按它的左右位置画背面；与它是同一个人、同一身穿着", 1) if flip else text
             order = ie.order(engine, target=out, dreamina_ok=len(dm_text) <= dm.PROMPT_MAX)
-            t0, errs = time.time(), []
+            t0, errs, ok = time.time(), [], False
             for eng in order:
                 t, rs = (dm_text, [_mirror(refs[0])] + refs[1:] if flip else refs) if eng == ie.DREAMINA else (text, refs)
                 try:
@@ -325,11 +325,14 @@ def images(drama: str, os_: list[Outfit], engine: str, force: bool) -> list[str]
                            else f"gid={_eleven(t, rs, out)}")
                     _log(d, **{f"{o.key}-{n}": {"engine": eng, "chars": len(t), "refs": [r.name for r in rs], "tag": tag}})
                     print(f"  ✓ {out.name} {eng} {len(t)} 字 {time.time() - t0:.0f}s {tag}", flush=True)
+                    ok = True
                     break
-                except (SystemExit, Exception) as e:  # noqa: BLE001 —— auto 时按顺序换下一家；都失败记下、继续
+                except (SystemExit, Exception) as e:  # noqa: BLE001 —— auto 时额度不够才换下一家；都失败记下、继续
                     errs.append(f"{eng}：{str(e)[:200]}")
                     print(f"    ! {out.name} {errs[-1]}", flush=True)
-            else:
+                    if not ie.fallback_ok(eng, e):
+                        break
+            if not ok:
                 failed.append(out.name)
         if all(own(drama, o, n, view).is_file() for n, view in VIEWS):
             from tools.character_sheet import compose

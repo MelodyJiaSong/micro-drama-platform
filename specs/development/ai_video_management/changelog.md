@@ -1,5 +1,122 @@
 # Changelog — ai_video_management
 
+## Follow-up 275 — 2026-10-17 22:55:00
+
+Source: user_input/follow_ups/202610.md - section 275
+Summary: 出图 auto 改为 ElevenLabs → Codex，ElevenLabs 额度不够才换 Codex；背景出图器加 --quality / --resolution。
+
+Auto-updated:
+- `tools/image_engine.py`（`AUTO_ORDER`、`fallback_ok`）；`tools/gen_bg_images.py`、`gen_bg_assets.py`、`gen_char_images.py`、`gen_outfit_views.py`、`gen_equipment.py`
+- `CONVENTIONS.md`、`.agents/skills/ai-videos-pipeline/resources/assets.md`、`modules/prompts-references.md`、`.agents/references/project/{paid_services,ai_video_workflow}.md`、`.agents/skills/codex-imagegen/SKILL.md`
+- 测试：`tools/tests/test_scene_image_policy.py`
+
+Validation: tools 测试 131 passed。
+
+## Follow-up 269 — 2026-10-17 11:45:58
+
+Source: user_input/follow_ups/202610.md - section 269
+Summary: 剪辑模块（5_剪辑）做成只读页面：每场草稿剪辑 / 正片剪辑分开，按版本看成片（干净版 / 标注版）与时间线；导航展开到场次。
+
+Auto-updated:
+- 后端（新）：`libs/common/scene_cut.py`、`libs/domain/errors/scene_cut__error.py`、`libs/infrastructure/readers/scene_cut__reader.py`、`libs/application/dtos/scene_cut__dto.py`、`libs/application/queries/scene_cut__query.py`、`apps/api/routes/scene_cut__route.py`；接线 `apps/api/{container.py,app_factory.py,routes/__init__.py}`；导航 `libs/infrastructure/readers/tree__reader.py`
+- 前端：`apps/ui/src/lib/sceneCuts.ts`、`apps/ui/src/components/EditStagePanel.tsx`（新）、`EpisodeWorkflowPage.tsx`、`EpisodeWorkflowPage.css`
+- 测试：`tests/test_scene_cut.py`、`apps/ui/test/edit-stage.test.tsx`（新）；`apps/ui/test/episode-scenes.test.tsx`
+- `final_specs/spec.md` — 新增「剪辑模块：草稿剪辑与正片剪辑」一节；`README.md`
+- 仓库：`tools/scene_cut.py` 改按 `edit/draft|final/` 分阶段；`.agents/skills/ai-videos-pipeline/modules/edit.md` 加「草稿剪辑与正片剪辑」「试行实现」
+
+Validation: 后端 361 passed / 1 skipped；UI 80 条里 79 过，1 条失败是 workflow-map 旧有失败（未变）；tsc 通过；运行中的后端已热加载新接口。浏览器扩展未连接，没有截图核对页面。
+
+## Follow-up 268 — 2026-10-17 09:40:00
+
+Source: user_input/follow_ups/202610.md - section 268
+Summary: 整合 fight-prompt-director 与 video-combat-skill 的方法，新增影视改编「动作戏」页（1.2.3.2）并接入分镜、决策记录、overhead 与 Seedance 写法。
+
+Auto-updated:
+- `.agents/skills/ai-videos-pipeline/modules/filming-action.md`（新）
+- `.agents/skills/ai-videos-pipeline/modules/{filming,filming-scenes,filming-scene-anatomy,decisions,prompts-seedance,prompts-overhead}.md`
+- `.agents/references/project/workflow_catalog.json`、`.agents/references/project/ai_video_workflow.md`
+- 出处：`.audit/adhoc_agents/2026-10-17/fight-skills/sources.md`
+
+No conflicts found in: `final_specs/spec.md`（管理应用规格不涉及指南正文）
+
+## Follow-up 267 — 2026-10-16 21:52:03
+
+Source: user_input/follow_ups/202610.md - section 267
+Summary: 场次页加「草稿」tab：全场镜头最新草稿的缩略视频网格，点开放大预览，可直接审草稿、在镜头间切换。
+
+Auto-updated:
+- `apps/ui/src/components/SceneDraftsPanel.tsx`（新）、`apps/ui/src/components/EpisodeWorkflowPage.tsx`、`apps/ui/src/components/EpisodeWorkflowPage.css`
+- `apps/ui/test/scene-drafts.test.tsx`（新）
+- `final_specs/spec.md` — 「两步出片」一节补场次草稿 tab
+
+Validation: UI 75 passed（workflow-map 旧有 1 条失败未变）；tsc 通过；界面重新构建。
+
+## Follow-up 266 — 2026-10-16 21:14:30
+
+Source: user_input/follow_ups/202610.md - section 266
+Summary: 草稿条单独放每镜 `drafts/`；按用户指令提交 EP1 s1、s2 的 480p 草稿时实测 Dreamina CLI 的 Seedance 2.5 不收 480p（只收 720p / 1080p，未扣费），已停下等用户决定。
+
+Auto-updated:
+- `tools/shot_take.py`、`tools/tests/test_shot_take_stages.py`、`tools/wow_version_gate.py`
+- 管理应用：`libs/infrastructure/readers/shot_renders__reader.py`、`libs/infrastructure/writers/shot_take__writer.py`、`libs/common/series_shared.py`；测试 `tests/test_shot_take_verdict.py`、`tests/test_api_write_origin_guard.py`
+- `.agents/skills/ai-videos-pipeline/modules/prompts-generate.md`、`.agents/references/project/paid_services.md`
+
+Validation: tools 115 passed；后端相关 107 passed；界面重新构建。
+
+## Follow-up 265 — 2026-10-16 20:44:10
+
+Source: user_input/follow_ups/202610.md - section 265
+Summary: 出片分两步：先出 480p 草稿（便宜、快），用户在管理界面点「通过」后，用通过的草稿作参考视频出 720p 正式条。
+
+Auto-updated:
+- `tools/shot_take.py`、`tools/shot_pack.py`、`tools/tests/test_shot_take_stages.py`（新）、`tools/tests/test_shot_take_media_check.py`
+- `ai_videos/shengji_zhilu/workflow.json`（`prompt.draft_resolution`）
+- 管理应用：`libs/domain/errors/shot_take__error.py`、`libs/infrastructure/writers/shot_take__writer.py`、`libs/application/commands/shot_take__command.py`、`apps/api/routes/shot_take__route.py`、`apps/api/{container,app_factory}.py`、`apps/api/routes/__init__.py`、`libs/infrastructure/readers/shot_renders__reader.py`、`apps/ui/src/{components/EpisodeWorkflowPage.tsx,components/EpisodeWorkflowPage.css,lib/episodeWorkflow.ts}`、README；测试 `tests/test_shot_take_verdict.py`（新）、`tests/test_api_write_origin_guard.py`、`apps/ui/test/take-verdict.test.tsx`（新）
+- `.agents/skills/ai-videos-pipeline/modules/prompts-generate.md`、`.agents/references/project/paid_services.md`
+- `final_specs/spec.md` — 新增「两步出片」一节
+
+Validation: tools 115 passed；后端 355 passed / 1 skipped；UI 新测试通过（workflow-map 旧有失败未变）；workflow_catalog、sync_agent_skills 检查通过。
+
+No conflicts found in: interview、findings、validation。
+
+## Follow-up 264 — 2026-10-16 20:27:05
+
+Source: user_input/follow_ups/202610.md - section 264
+Summary: 从流程中彻底删除 R2 媒体同步：删同步工具、索引与 hooks 模板，规范、skills、服务审计说明不再要求媒体走 R2；媒体仍不进 git、只存本机。
+
+Auto-updated:
+- 删除 `tools/assets_sync.py`、`tools/assets/`、`ai_videos/assets.json`；`requirements.txt` 去掉 boto3 依赖行
+- `AGENTS.md`、`CONVENTIONS.md`、`.agents/skills/ai-videos-pipeline/resources/assets.md`、`.agents/references/project/paid_services.md`、`.agents/references/project/workflow_catalog.json`
+- `.gitignore`、`tools/previz/review.py`、`tools/fetch_wow_maps.py`、`tools/build_scene.py`、`projects/ai_video_management/README.md`
+
+Validation: tools 106 passed；后端 344 passed / 1 skipped；workflow_catalog 11 组 / 141 源；sync_agent_skills --check 通过。
+
+No conflicts found in: final_specs/spec.md、interview、validation（均无 R2 内容）；历史 changelog 与各剧记录不回写。
+
+## Follow-up 263 — 2026-10-16 09:40:00
+
+Source: user_input/follow_ups/202610.md - section 263
+Summary: Codex 出图超时在 Windows 上杀整棵进程树，不再挂到 Codex 自己放弃。
+
+Auto-updated:
+- tools/codex_image.py — 新 run_codex（Popen + 新进程组 / 会话，超时 taskkill /T /F 或 killpg 后抛 TimeoutExpired），generate 经它调用；其余行为不变。
+- 测试 — tools/tests/test_codex_image.py 原用例改替换 run_codex；新增真进程用例（孙进程握管道，超时 3 秒后 30 秒内返回且孙进程已退出），先红后绿。
+
+验证：tools/tests/test_codex_image.py 7 passed。
+
+## Follow-up 261 — 2026-10-15 23:55:00
+
+Source: user_input/follow_ups/202610.md - section 261
+Summary: 镜头可选 background：朝另一方向的镜用自己的场景视角图与描写，不再被场级场景图拉回原视向。
+
+Auto-updated:
+- 后端 — episode_workflow 实体：OPTIONAL_SHOT_FIELDS 加 background 并校验 bg 编号；shot_materials 读参考：镜头有 background 时取该环境资产的图与 Shot prompt 场景段。
+- UI — episodeWorkflow.ts 镜头类型加 background；EpisodeWorkflowPage 镜头详情显示「本镜场景」。
+- 测试 — test_episode_workflow 新增 6 条（先红后绿）：镜头视角替换场景图与「场景」行、非法值、缺资产拒绝编译。
+- spec — 分镜字段与编译段落。
+
+验证：后端 344 passed / 1 skipped；UI tsc -b 通过。
+
 ## Follow-up 226 — 2026-10-09 17:46:44
 
 Source: user_input/follow_ups/202610.md - section 226
@@ -4646,7 +4763,6 @@ Summary: 左导航中文标题把 H1 的括号限定语误当标题（热血高�
 Auto-updated:
 - projects/ai_video_management/libs/infrastructure/readers/tree__reader.py — `_h1_zh` 新增 `_CJK_RE` 判定：括号前含中文 → 丢弃括号保留前段并继续中点分隔；否则沿用 `pinyin（中文）` 取括号内容。
 - user_input/revised_prompt.md — 补录 follow-up 153 / 154 / 155 条目（此前 153、154 未回写，恢复 raw + 全部 follow-ups 的不变式）。
-- ai_videos/duikang_shangzeng/README.md — 新建项目 对抗熵增 补中文 H1 README，使左导航显示中文名而非 pinyin 目录名。
 
 No conflicts found in: interview/qa.md, findings/, final_specs/spec.md, validation/*（导航标题抽取规则为阶段 6 实现细节，上游文档未固化该规则）
 
@@ -4683,7 +4799,7 @@ Auto-updated:
 - projects/ai_video_management/apps/ui/src/types.ts — 补 `PrevizStatus` 接口（对齐 `PrevizStatusQdto` 八个字段）。
 - projects/ai_video_management/apps/ui/src/api.ts — 补 `renderPreviz` / `cancelPreviz` / `fetchPrevizStatus` 三个函数（POST render 202、POST cancel、GET status 带 no-store）。
 
-验证: `npx tsc -b` 退出 0（此前 4 个 TS2305）；`npm run build` 产出 `apps/api/static/index.html` + assets；`GET /` 返回 200 且为新 bundle；8766 上 `/api/tree` 的 AI Videos 段含 `rexue_gaoxiao=热血高校`、`duikang_shangzeng=对抗熵增`。
+验证: `npx tsc -b` 退出 0（此前 4 个 TS2305）；`npm run build` 产出 `apps/api/static/index.html` + assets；`GET /` 返回 200 且为新 bundle；8766 上 `/api/tree` 的 AI Videos 段含 `rexue_gaoxiao=热血高校`。
 
 No conflicts found in: interview/qa.md, findings/, final_specs/spec.md, validation/*
 
@@ -4701,7 +4817,7 @@ Auto-updated:
 - projects/ai_video_management/apps/ui/src/{types.ts,components/Sidebar.tsx,components/Reader.tsx,lib/linkResolver.ts,styles.css} — `pdf` 叶子类型 + 📄 图标 + `<iframe>` 预览 + `.pdf-view` 高度。
 - projects/ai_video_management/tests/test_pdf_preview.py — 新增 5 个用例（media 非 text 白名单、叶子类型、inline、video 仍 attachment、RFC 5987 中文名）。
 
-验证: 对抗熵增 两个 PDF 在 `/api/tree` 为 `type=pdf`；`/api/media` 返回 200 `application/pdf` `inline; filename="_.pdf"; filename*=UTF-8''…` 且首字节为 `%PDF-`；video 仍为 attachment；`tsc -b` 0 + `npm run build` 通过；全量 backend 套件 31 failed（与基线持平，零新增）。
+验证: 两个样例 PDF 在 `/api/tree` 为 `type=pdf`；`/api/media` 返回 200 `application/pdf` `inline; filename="_.pdf"; filename*=UTF-8''…` 且首字节为 `%PDF-`；video 仍为 attachment；`tsc -b` 0 + `npm run build` 通过；全量 backend 套件 31 failed（与基线持平，零新增）。
 
 
 ## Follow-up 159 — 2026-08-30
@@ -4730,7 +4846,6 @@ tree_walker/previz 20 条均为既有失败），本次改动**零回归**。
 
 
 ## Follow-up 160 — 2026-08-30
-Source: ai_video follow-up duikang_shangzeng/019
 Summary: 导入端支持「一个主体目录内多视图共存」：按视图键命名、重导只覆盖同名；重命名扫描对多视图目录放行。
 
 Auto-updated:
@@ -4751,7 +4866,6 @@ Auto-updated:
 
 
 ## Follow-up 161 — 2026-08-30
-Source: ai_video follow-up duikang_shangzeng/023
 Summary: 修复主体目录被当单图 plate 清空的导入缺陷；新增 `bg{N}.{M}` 路由键与 scene_subject 落位。
 
 Auto-updated:
@@ -4767,7 +4881,6 @@ Auto-updated:
 
 
 ## Follow-up 162 — 2026-08-30
-Source: ai_video follow-up duikang_shangzeng/024
 Summary: 修复 scene_subject 路由键锚定开头导致的落名错误；落盘改为只用键命名。
 
 Auto-updated:
@@ -4782,7 +4895,6 @@ Auto-updated:
 
 
 ## Follow-up 163 — 2026-08-30
-Source: ai_video follow-up duikang_shangzeng/025
 Summary: 把「文件名带两个路由键时最左匹配胜出」写成契约并用真实双键文件名加回归测试。
 
 Auto-updated:
@@ -4796,7 +4908,6 @@ Auto-updated:
 
 
 ## Follow-up 164 — 2026-08-30
-Source: ai_video follow-up duikang_shangzeng/027
 Summary: 排障——后端从 spec_coding clone 启动、加载旧 writers，导致所有导入修复"看起来没生效"。
 
 根因: 机器上有 micro-drama-platform 与 spec_coding 两个同结构 clone。
@@ -4811,7 +4922,6 @@ Summary: 排障——后端从 spec_coding clone 启动、加载旧 writers，�
 
 
 ## Follow-up 165 — 2026-08-30
-Source: ai_video follow-up duikang_shangzeng/028
 Summary: 路由键 `bg{N}.{M}` 改为 `bg{N}-{M}`；连字符避开点被当扩展名分隔符的歧义。
 
 Auto-updated:
@@ -4846,12 +4956,11 @@ Auto-updated:
 - 既有 media/tree 测试 24 passed / 1 failed —— 失败项 `test_ai_videos_section_has_project_meta_for_wukong`
   找的是 `wukong_juexing`，而 `ai_videos/` 下只有 `wushen_juexing`，**为既有失败、与本改动无关**
 - `npm run build`（含 `tsc -b`）通过
-- 端到端实测真实文件 `props/f80_ferrari/f80_raw.glb`（33.9 MB）：
+- 端到端实测真实文件 `props/sports_car/sports_car_raw.glb`（33.9 MB）：
   树可见 ✓ / MediaPath 接受 ✓ / media_type=model/gltf-binary ✓ / disposition=inline ✓
 
 
 ## Follow-up 166 — 2026-09-01
-Source: ai_video follow-up duikang_shangzeng/030
 Summary: 新增 GET /api/health，报告进程实际加载的 writers 路径与新符号，终结"改了代码没生效"的进程考古。
 
 Auto-updated:
@@ -5164,7 +5273,7 @@ Verified:
   用 `HEAD` 版 `tree__reader.py` 对照跑过，改前改后同一份
 - 前端 `tsc -b` 零错；`siblingModels.test.ts` 5/5 绿
 - 端到端（真浏览器，127.0.0.1:8766）：sk1 `p19_独轮串车.md` 出「🧊 3D 白模」节、独轮车白模可拖转；
-  `whitemodel/raw.glb` 单页全幅可转；`f80_ferrari.md` 同 folder 4 个 `.glb` 各成 tile；
+  `whitemodel/raw.glb` 单页全幅可转；`sports_car.md` 同 folder 4 个 `.glb` 各成 tile；
   侧栏 `raw.glb` 显示 🧊 且可点；`/api/media` 返回 `model/gltf-binary` 2.9MB
 
 Known gap (未改，待用户定夺):
@@ -6058,3 +6167,169 @@ Auto-updated:
 - `tests/test_episode_workflow.py`（加三条）、`tools/tests/test_shot_pack_scene_source.py`（新）。
 
 Validation: 管理应用测试 329 通过 / 1 跳过；tools 测试 95 通过（新增 6 条，先红后绿）。
+
+## Follow-up 260 — 2026-10-15 20:06:12
+Source: user_input/follow_ups/202610.md - section 260
+Summary: 整集审片串联：每镜最新一条按分镜顺序拼成一条视频，带章节，在集页面一起看。
+
+Auto-updated:
+- `libs/common/review_reel.py`、`libs/domain/value_objects/review_reel__valueobject.py`、`libs/domain/errors/review_reel__error.py` — 规格常量、计划与章节、错误。
+- `libs/infrastructure/readers/review_reel__reader.py`、`libs/infrastructure/writers/review_reel__writer.py` — 按分镜列每镜生成条；ffmpeg 逐条统一规格（按画面长度截断）、缓存中间件、concat、清单与进度落盘。
+- `libs/application/{queries,commands,dtos}/review_reel__*.py` — 状态（指纹判过期、中断识别、审核状态刷新）与后台拼接。
+- `apps/api/routes/review_reel__route.py`、`container.py`、`routes/__init__.py`、`app_factory.py` — GET / POST `/api/review-reel`，错误映射。
+- `apps/ui/src/components/ReviewReelPanel.tsx`、`src/lib/reviewReel.ts`、`EpisodeWorkflowPage.tsx/.css` — 集页面「审片串联」入口、播放器与章节。
+- `.gitignore` — `ai_videos/**/review_reel/`。
+- `final_specs/spec.md` — 新增「整集审片串联」一节；UI 只读说明注明例外。
+- 测试：`tests/test_review_reel.py`（新，7 条）、`tests/test_api_write_origin_guard.py`（加 POST /api/review-reel 一例）、`apps/ui/test/review-reel.test.tsx`（新，5 条）。
+
+No conflicts found in: interview、findings、validation（未涉及）。
+
+## Follow-up 262 — 2026-10-16 08:24:50
+Source: user_input/follow_ups/202610.md - section 262
+Summary: previz 人偶带上手持物：overhead `[[carry]]`（手 / 背）＋机检，previz 在手里随 `[[pose]]` 握法换位、背着斜背，兵器命中抄进 previz 自检（shengji_zhilu follow-up 056「previz 人偶带锤」）。
+
+Auto-updated:
+- `tools/previz/planschema.py` — CARRY_KINDS（件 → 缺省长、缺省握法）、HAND_GRIPS（加举手R）、SHIELD_GRIPS（加背盾＝边跑边甩到身后）、BACK_GRIPS、SLUNG；PREVIZ_ENGINE 052 → 262。
+- `tools/previz/build_previz.py` — 持物姿态表改由 planschema 派生；新姿态「斜背」（头在右肩后上方、柄与竖直成 25° 落向左腰后下方）与「举手R」握法；剑＝短柄＋长刃；全长不到 0.8 m 的锤 / 斧头小一号。
+- `tools/shot_overhead.py` — KEYS 加 `carry`；carry_errors 进构建闸门（人 / 件 / 位置 / 时段 / 握法合法，同一件不重叠，同 key 不同时在两人身上或地上的 `[[prop]]`，兵器 `[[hit]]` 那一刻手里有这件，手里的盾只走 shield）；审阅图侧栏「带着：」。
+- `tools/overhead_previz.py` — carry_segments（`[[carry]]` 与 shield → `[[角色.持物]]`）、hit_checks（兵器、不落空的 `[[hit]]` → `[[命中]]`）。
+- `tools/tests/test_carry_previz.py`（新，10 条，先红后绿）。
+- `.agents/skills/ai-videos-pipeline/modules/prompts-overhead.md`、`prompts-previz.md` — `[[carry]]` 写法与 previz 手持物、命中 blocker。
+- `final_specs/spec.md` — 新增「Overhead 与 previz 的手持物」一节。
+
+Validation: tools 测试 106 通过（含新增 10 条）；EP1 `shot_overhead --all` 198 镜 blocker 0（warning 4，s17 st22 两名暴徒近身停留，非本次引入）；144 镜补 `[[carry]]`，previz 判「要」的 27 镜里 23 镜带持物、全部重渲（11 下命中自检全过），131 镜取景静帧重出 130 过、s9 st8 插入特写「基准主体在画框外」为既有问题（之前也没有静帧戳）；`shot_pack sync` / `check` ok 198；workflow_catalog --check 11 组 / 144 源；sync_agent_skills --check 通过。
+
+No conflicts found in: interview、findings、validation（未涉及）；管理应用代码未动。
+
+## Follow-up 270 — 2026-10-17 13:50:00
+
+Source: user_input/follow_ups/202610.md - section 270
+Summary: 图片只用 Codex 内置出图 → ElevenLabs，即梦只用于视频；取代 238 的「即梦作图片最低选项」。
+
+Auto-updated:
+- `tools/image_engine.py` — CHOICES / AUTO_ORDER 去掉即梦，点名即梦报错，新增 `reject_dreamina_image()`。
+- `tools/service_request.py` — 即梦图片操作不论归属一律拒绝。
+- `tools/gen_char_images.py`、`gen_outfit_views.py`、`gen_equipment.py`、`gen_bg_assets.py`、`gen_bg_images.py`、`dreamina_image.py` — 引擎说明与帮助文字。
+- `tools/tests/test_scene_image_policy.py`、`test_outfit_view_refs.py`、`test_service_request.py`。
+- `CONVENTIONS.md`、`.agents/skills/ai-videos-pipeline/resources/assets.md`、`.agents/references/project/paid_services.md`、`ai_video_workflow.md`、`modules/prompts-references.md`、`.agents/skills/codex-imagegen/SKILL.md`。
+
+Validation: tools 测试 121 通过；workflow_catalog --check 11 组 / 143 源；sync_agent_skills --check 通过。
+
+No conflicts found in: final_specs、interview、findings、validation（未涉及）；管理应用代码未动。
+
+## Follow-up 271 — 2026-10-17 20:40:00
+Source: user_input/follow_ups/202610.md - section 271
+Summary: 影视改编场页面加「场的走位图」：俯视简笔画底图，人与物用颜色与形状表示，镜内移动画编号虚线箭头。
+
+Auto-updated:
+- `tools/scene_blocking.py`（新）、`tools/shot_overhead.py`（抽出 `sketch_site`；画完重画所在场走位图）
+- `apps/ui/src/components/EpisodeWorkflowPage.tsx`、`EpisodeWorkflowPage.css`、`ZoomableImage.tsx`
+- `tools/tests/test_scene_blocking.py`、`apps/ui/test/episode-scenes.test.tsx`
+- `.agents/skills/ai-videos-pipeline/modules/prompts-overhead.md`、`.agents/references/project/workflow_catalog.json`
+
+Validation: tools 测试全过；UI 新测试通过（`workflow-map.test.tsx` 1 条预先存在的失败与本次无关）；tsc 通过；workflow_catalog --check 11 组 / 144 源。
+
+No conflicts found in: final_specs、interview、findings、validation。
+
+## Follow-up 272 — 2026-10-17 23:40:00
+Source: user_input/follow_ups/202610.md - section 272
+Summary: `shot_take.py submit --stage final --no-draft <理由>`：用户明确要求时不经草稿直接出正式条。
+
+Auto-updated:
+- `tools/shot_take.py`、`tools/tests/test_shot_take_stages.py`、`.agents/skills/ai-videos-pipeline/modules/prompts-generate.md`
+
+Validation: tools 测试 129 通过。
+
+## Follow-up 273 — 2026-10-17 23:55:00
+Source: user_input/follow_ups/202610.md - section 273
+Summary: 场次页加「正片」标签：每镜一格显示最新正式条，可放大、可审「通过 / 不通过」。
+
+Auto-updated:
+- `apps/ui/src/components/SceneDraftsPanel.tsx`、`EpisodeWorkflowPage.tsx`
+- `libs/application/commands/shot_take__command.py`
+- `tests/test_shot_take_verdict.py`、`apps/ui/test/scene-drafts.test.tsx`
+
+Validation: 后端 10 通过；UI 82 通过（1 条预先存在的 workflow-map 失败与本次无关）；tsc 通过。
+
+## Follow-up 274 — 2026-10-18 00:30:00
+Source: user_input/follow_ups/202610.md - section 274
+Summary: 编译器 v10：同一张卡在 overhead 里站了几个人，prompt「人物」行就写几个人；例外句改为「群演与动物」。
+
+Auto-updated:
+- `libs/domain/value_objects/shot_materials__valueobject.py`、`libs/infrastructure/readers/shot_materials__reader.py`、`libs/domain/entities/episode_workflow__entity.py`、`libs/common/episode_workflow.py`
+- `tests/test_episode_workflow.py`、`.agents/skills/ai-videos-pipeline/modules/prompts-rules.md`
+
+Validation: 管理应用测试 363 通过；shengji EP1 重编译、资料包 32 个一致。
+
+## Follow-up 276 — 2026-10-18 03:10:00
+Source: user_input/follow_ups/202610.md - section 276
+Summary: 编译器 v11：群演 / 同卡多人的镜负面词不再写「多出来的人」，例外句要求「一个都不能少」；镜头目录有 `planning/{stN}_first_frame.png` 时作为首帧排在参考第一位。
+
+Auto-updated:
+- `libs/common/episode_workflow.py`、`libs/domain/value_objects/shot_materials__valueobject.py`、`libs/infrastructure/readers/shot_materials__reader.py`、`libs/domain/entities/episode_workflow__entity.py`
+- `tests/test_episode_workflow.py`、`.agents/skills/ai-videos-pipeline/modules/prompts-rules.md`、`prompts-generate.md`
+
+Validation: 管理应用后端 364 通过、1 跳过；shengji EP1 v11 整集重编译、资料包 32 个一致。
+
+## Follow-up 277 — 2026-10-18 09:00:00
+Source: user_input/follow_ups/202610.md - section 277
+Summary: 新增集级剪辑工具 `tools/episode_cut.py`：转场菜单（17 种 + J/L + 片头片尾淡入淡出）、按决定接场并回读对账、在两场交界出转场样片供挑选。
+
+Auto-updated:
+- `tools/episode_cut.py`、`tools/tests/test_episode_cut.py`、`tools/scene_cut.py`（文档指向）
+- `.agents/skills/ai-videos-pipeline/modules/edit.md`、`edit-transitions.md`、`.agents/references/project/workflow_catalog.json`
+
+Validation: tools 测试 test_episode_cut 4 通过；shengji EP1 s1+s2 join 回读时长对、切点 4/4 对上、无意外切点；gallery 出片 106 秒；workflow_catalog --check 通过。
+
+## Follow-up 278 — 2026-10-18 10:20:00
+Source: user_input/follow_ups/202610.md - section 278
+Summary: 剪辑页加「整集」：播放各场接起来的成片（按版本），列各场位置与转场（可点跳转）、绑定 sha 的独立审稿结论，以及可按索引跳转的转场样片；转场菜单挪到 `libs/common/scene_cut.py` 供工具与界面共用。
+
+Auto-updated:
+- `libs/common/scene_cut.py`、`libs/infrastructure/readers/scene_cut__reader.py`、`tree__reader.py`、`libs/application/dtos/scene_cut__dto.py`、`libs/application/queries/scene_cut__query.py`、`tests/test_scene_cut.py`
+- `apps/ui/src/components/EditStagePanel.tsx`、`EpisodeWorkflowPage.css`、`apps/ui/src/lib/sceneCuts.ts`、`apps/ui/test/edit-stage.test.tsx`、`README.md`、`tools/episode_cut.py`
+
+Validation: 后端 367 通过、1 跳过；edit-stage 5 通过；tsc -b 通过；本机 UI 实际打开整集页核对。
+
+## Follow-up 279 — 2026-10-18 10:55:00
+Source: user_input/follow_ups/202610.md - section 279
+Summary: `shot_pack` 检查走位预演是否按当前 overhead 渲染（配置与渲染戳都要对上），过期就判资料包失效。
+
+Auto-updated:
+- `tools/shot_pack.py`、`tools/tests/test_shot_pack_previz_fresh.py`
+
+Validation: 新测试 3 通过；shengji EP1 全集检查 32 个一致（重渲 s4 previz 后）。
+
+## Follow-up 280 — 2026-10-18 11:20:00
+Source: user_input/follow_ups/202610.md - section 280
+Summary: 侧栏文件树按需加载（`/api/tree?lazy=1` + `/api/tree/subtree`，首次加载 10 秒 / 8.8 MB → 约 1.7 秒 / 1 MB）；`/api/events` 把 `ai_videos/` 的文件变化推给页面，侧栏、剧页、剪辑、阅读器只重取变化的部分，不用再手动刷新。
+
+Auto-updated:
+- `libs/infrastructure/readers/tree__reader.py`、`libs/application/queries/tree__query.py`、`apps/api/routes/tree__route.py`、`libs/infrastructure/watchers/file_change__watcher.py`（新）、`apps/api/container.py`、`requirements.txt`、`pyproject.toml`、`tests/test_tree_lazy.py`（新）、`tests/test_file_events.py`（新）
+- `apps/ui/src/{App.tsx,api.ts,types.ts}`、`apps/ui/src/lib/{lazyTree.ts,fileEvents.ts}`（新）、`apps/ui/src/components/{TreeLoaderContext.tsx（新）,Sidebar.tsx,Reader.tsx,EpisodeWorkflowPage.tsx,CharacterGrid.tsx,DeletedView.tsx}`、`apps/ui/src/markdown/renderer.tsx`、`apps/ui/test/lazy-tree.test.tsx`（新）、`README.md`、`final_specs/spec.md`（FR-107、FR-108、NFR-2）
+
+Validation: 后端 377 通过、1 跳过；前端 91/92（失败项 workflow-map 改动前即失败）；tsc 通过；本机经开发代理实测懒加载与 SSE 推送。
+补记（280）：浏览器实测——打开 shengji EP1 剪辑页正常、视频在；侧栏展开 1_资产库 › characters › c1_Aaron 按需取到内容；在 c1_Aaron 写入一个临时文件约 3 秒内出现在侧栏、删掉后消失，无需刷新。另一会话持续往 dota 新建角色文件夹时侧栏会反复整树重取，已改为同一时间只跑一次、期间的变化合并成随后一次；watcher 忽略的目录与 ExposedTree 的排除目录一致。
+补记（280）：`test/workflow-map.test.tsx` 第 44 行仍断言旧门槛文案「锁片（用户批准）」，follow-up 246 已改为「锁片（用户批准）；对照全剧 Vision」（`ai_video_workflow_map.json`），断言按现文案更新；前端 92/92 通过。
+
+
+## Follow-up 281 — 2026-10-18 14:40:00
+Source: user_input/follow_ups/202610.md - section 281
+Summary: 默认所有镜头都不做 previz：`tools/shot_overhead.py` 的 `previz_decision` 只在 `[meta] previz = true` 且有理由时要 previz，复杂镜判据只作提示；规范同步；出片审核清单补三项（突发动静的反应、伤口位置跨镜一致、动作僵硬）。
+
+Auto-updated:
+- `tools/shot_overhead.py`、`tools/tests/test_shot_overhead_previz_default.py`（新）
+- `.agents/skills/ai-videos-pipeline/{SKILL.md,modules/prompts-previz.md,modules/prompts-overhead.md,modules/prompts-references.md,modules/prompts.md,modules/prompts-generate.md}`、`.agents/references/project/{ai_video_workflow.md,ai_video_workflow_map.json,workflow_catalog.json}`、`ai_videos/shengji_zhilu/README.md`、`final_specs/spec.md`
+
+Validation: previz 相关测试 19 项通过（`tools/tests/test_shot_overhead_previz_default.py`、`test_carry_previz.py`、`test_shot_overhead_gate_opening.py`、`test_shot_pack_previz_fresh.py`）；`python tools/workflow_catalog.py --check`、`python tools/sync_agent_skills.py --check` 通过。已有镜头未重跑。
+
+
+## Follow-up 282 — 2026-10-18 15:45:00
+Source: user_input/follow_ups/202610.md - section 282
+Summary: 分镜镜头可选 `allow_negatives`：只在这一镜去掉列出的剧级负面词（施法镜放开「夸张金光」），词不在剧负面词里拒绝编译；编译器 v12。
+
+Auto-updated:
+- `libs/domain/entities/episode_workflow__entity.py`、`libs/common/episode_workflow.py`、`tests/test_episode_workflow.py`
+- `.agents/skills/ai-videos-pipeline/modules/{prompts-rules.md,prompts.md,filming.md}`、`final_specs/spec.md`
+
+Validation: `tests/test_episode_workflow.py` 52 通过；后端全量 380 通过、1 跳过、2 失败——均与本次无关：`test_global_workflow` 报 `paid_services.md` 引用的 `tools/voice_design.py`（另一会话新加、未入目录）未登记，`test_tree_walker_consumer_walk` 报 dota 资产里一张 `.gif` 被当成图片。shengji EP1 按 v12 整集重编，资料包 ok 44。

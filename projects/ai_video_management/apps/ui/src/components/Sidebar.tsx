@@ -28,11 +28,13 @@ export interface SidebarProps {
   /** Collapsed to a thin rail; tree state stays mounted so expansion survives. */
   collapsed?: boolean;
   onToggleCollapsed?: () => void;
+  /** Load a `lazy` folder's contents once it is opened (follow-up 280). */
+  onExpandLazy?: (path: string) => void;
 }
 
 interface FlatNode { node: TreeNode; depth: number; parentPath: string | null; }
 
-export function Sidebar({ tree, currentPath, onSelect, loadError, collapsed = false, onToggleCollapsed }: SidebarProps): JSX.Element {
+export function Sidebar({ tree, currentPath, onSelect, loadError, collapsed = false, onToggleCollapsed, onExpandLazy }: SidebarProps): JSX.Element {
   const navigate = useNavigate();
   const location = useLocation();
   const { catalog, error: globalError } = useGlobalWorkflow();
@@ -80,6 +82,17 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, collapsed = fa
     }
     setExpanded((prev) => ({ ...prev, ...accum }));
   }, [currentPath]);
+
+  // An opened folder that is still a lazy stub — opened by a click, a keyboard
+  // toggle or the auto-expansion to the current page — gets its contents loaded.
+  useEffect(() => {
+    if (!tree || !onExpandLazy) return;
+    const walk = (node: TreeNode): void => {
+      if (node.lazy && expanded[node.path]) onExpandLazy(node.path);
+      for (const child of node.children ?? []) walk(child);
+    };
+    walk(tree);
+  }, [tree, expanded, onExpandLazy]);
 
   useEffect(() => {
     const handler = (event: KeyboardEvent): void => {
@@ -138,7 +151,7 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, collapsed = fa
   const onItemKeyDown = (event: React.KeyboardEvent<HTMLDivElement>, item: FlatNode): void => {
     const items = flat;
     const index = items.findIndex((i) => i.node.path === item.node.path);
-    const isLeaf = isFileLeaf(item.node.type) || (item.node.children ?? []).length === 0;
+    const isLeaf = isFileLeaf(item.node.type) || ((item.node.children ?? []).length === 0 && !item.node.lazy);
     const isOpen = expanded[item.node.path] === true;
     if (event.key === "ArrowDown") {
       event.preventDefault();
@@ -229,7 +242,7 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, collapsed = fa
       <div ref={treeRef} role="tree" aria-label="File tree" className="tree">
         {flat.map((item) => {
           const isLeaf = isLeafType(item.node.type);
-          const hasChildren = (item.node.children ?? []).length > 0;
+          const hasChildren = (item.node.children ?? []).length > 0 || item.node.lazy === true;
           const isOpen = expanded[item.node.path] === true || (item.depth === 0 && !item.node.navigation_href);
           const isActive = matchesNavigation(item.node.navigation_href, location.pathname, location.search) || (Boolean(currentPath) && currentPath === item.node.path) || (item.node.type === "workflow" && location.pathname === "/drama"
             && selection.get("drama") === item.node.drama_path && (selection.get("module") || "story") === item.node.workflow_module

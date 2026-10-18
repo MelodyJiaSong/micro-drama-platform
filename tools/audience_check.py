@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from pathlib import Path
@@ -86,11 +87,31 @@ def check_story(ep: Path) -> list[str]:
     out = [f"{path}: 缺「{k}：」行" for k in ("本集体验", "Vision") if not _line_value(text, k)]
     out += _table_issues(path, text, "## 体验地图", ("段", "体验", "事件"))
     out += _table_issues(path, text, "## 观众轨", ("段", "知道", "在等", "处理"))
+    out += _table_issues(path, text, "## 目标影响", ("事件", "影响"))
+    out += _table_issues(path, text, "## 台词逐句", ("对谁", "台词", "为什么", "新信息"))
+    out += _table_issues(path, text, "## 站位与视线", ("场", "谁", "在哪", "看得见"))
     return out
 
 
+def check_episode_length(ep: Path) -> list[str]:
+    """剧 workflow.json 的 episode_seconds（[下限, 上限] 秒）是硬规则：分镜总时长不得越界。"""
+    wf, filming = ep.parent.parent / "workflow.json", ep / "filming.json"
+    if not wf.is_file() or not filming.is_file():
+        return []
+    limits = json.loads(wf.read_text(encoding="utf-8")).get("episode_seconds")
+    if limits is None:
+        return []
+    if not (isinstance(limits, list) and len(limits) == 2 and 0 < limits[0] <= limits[1]):
+        raise ValueError(f"{wf}: episode_seconds 应是 [下限, 上限] 秒，现在是 {limits!r}")
+    scenes = json.loads(filming.read_text(encoding="utf-8"))["content"]["scenes"]
+    total = sum(shot.get("duration", 0) for scene in scenes for shot in scene["shots"])
+    if limits[0] <= total <= limits[1]:
+        return []
+    return [f"{filming}: 分镜总时长 {total} 秒，超出本剧每集 {limits[0]}–{limits[1]} 秒的硬规则"]
+
+
 def check_filming(ep: Path) -> list[str]:
-    out = []
+    out = check_episode_length(ep)
     path = ep / "decisions" / "filming.md"
     if not path.is_file():
         out.append(f"{path}: 缺集级影视改编决策记录")

@@ -326,9 +326,59 @@ def test_animals_may_appear_several_times_people_only_once(workflow):
         negatives = next(line for line in lines if line.startswith("负面词："))
         assert "画面中每个人物只出现一次，不要分身或双胞胎。" in rule and "同一人物出现两次" in negatives
         assert "角色只出现一次" not in rule and "同一角色出现两次" not in negatives
-    assert "动物（`m2_Wolf`）按「画面」写的数量出现，同一张三视图可以是几只同类。" in next(
+    assert "群演与动物（`m2_Wolf`）按「人物」「画面」写的数量出现，写了几个就画几个，一个都不能少；同一张三视图可以是几个同类，不算分身。" in next(
         line for line in wolves if line.startswith("要求："))
-    assert "动物" not in next(line for line in person if line.startswith("要求："))
+    assert "群演与动物" not in next(line for line in person if line.startswith("要求："))
+    # follow-up 276: 「多出来的人」 fought the count and dropped the second guard; group shots leave it out
+    assert "多出来的人" not in next(line for line in wolves if line.startswith("负面词："))
+    assert "多出来的人" in next(line for line in person if line.startswith("负面词："))
+
+
+def test_one_card_standing_for_several_people_says_how_many(workflow):
+    """Two gate guards from one card (follow-up 274): the count comes from the overhead's actors and reaches the 人物 line."""
+    root, query, command = workflow
+    add_character(root)
+    add_animal(root)
+    approved_filming(query, command)
+    filming = copy.deepcopy(FILMING)
+    filming["scenes"][0]["shots"][0].update(cast=["c1-1", "m2"], dialogue="", action="两只狼守在门两侧，阿明走过。",
+                                            blocking="狼一左一右，阿明从中间走过。")
+    change(query, command, "filming", "save", filming)
+    change(query, command, "filming", "approve")
+    prepare_overheads(root)
+    plan = root / EPISODE / "scenes/s1/shots/st1/planning/overhead.toml"
+    plan.write_text('[[actor]]\nkey = "c1_Hero"\n[[actor]]\nkey = "m2_Wolf"\nlabel = "左"\n[[actor]]\nkey = "m2_Wolf"\nlabel = "右"\n',
+                    encoding="utf-8")
+    command.keep_overheads = True
+    change(query, command, "prompts", "compile")
+    lines = module(query, "prompts")["content"]["scenes"][0]["shots"][0]["text"].splitlines()
+    wolf = next(line for line in lines if line.startswith("  野狼"))
+    assert wolf.startswith("  野狼 ×2（三视图`m2_Wolf`；同一张三视图画 2 个人，各在自己的位置")
+    assert next(line for line in lines if line.startswith("  阿明")).startswith("  阿明（三视图")
+
+
+def test_an_opening_still_goes_first_as_the_first_frame(workflow):
+    """A shot with `planning/{stN}_first_frame.png` (follow-up 276) sends it first and says the video starts from it."""
+    root, query, command = workflow
+    add_character(root)
+    approved_filming(query, command)
+    filming = copy.deepcopy(FILMING)
+    filming["scenes"][0]["shots"][0].update(cast=["c1"], blocking="阿明站在门槛内。", dialogue="")
+    change(query, command, "filming", "save", filming)
+    change(query, command, "filming", "approve")
+    prepare_overheads(root)
+    still = root / EPISODE / "scenes/s1/shots/st1/planning/st1_first_frame.png"
+    still.write_bytes(b"still")
+    command.keep_overheads = True
+    change(query, command, "prompts", "compile")
+    shot = module(query, "prompts")["content"]["scenes"][0]["shots"][0]
+    assert shot["refs"][0] == {"key": "ep1_s1_st1_first_frame", "kind": "image", "role": "首帧画面",
+                               "path": f"{EPISODE}/scenes/s1/shots/st1/planning/st1_first_frame.png"}
+    usage = next(line for line in shot["text"].splitlines() if line.startswith("参考用法："))
+    assert usage.startswith("参考用法：`ep1_s1_st1_first_frame`是本镜的第一帧画面：视频就从这张图开始")
+    still.unlink()
+    change(query, command, "prompts", "compile")
+    assert "首帧画面" not in [r["role"] for r in module(query, "prompts")["content"]["scenes"][0]["shots"][0]["refs"]]
 
 
 def test_every_person_needs_a_three_view_sheet_a_voice_and_an_appearance(workflow):
@@ -573,3 +623,77 @@ def test_scene_compile_refuses_unknown_scene_old_compiler_and_unapproved_filming
     change(query, command, "filming", "save", filming)
     with pytest.raises(EpisodeWorkflowError, match="上游版本尚未确定"):
         change(query, command, "prompts", "compile", scene="s1")
+
+
+def test_a_shot_can_name_its_own_background_view(workflow):
+    """follow-up 261: a scene has one background, but a shot that faces another way names its own view (`background`);
+    its image and 场景 text replace the scene's for that shot only."""
+    root, query, command = workflow
+    add_background(root, "bg1-2", "门前南望")
+    approved_filming(query, command)
+    filming = copy.deepcopy(FILMING)
+    second = copy.deepcopy(filming["scenes"][0]["shots"][0])
+    second.update(id="st2", background="bg1-2")
+    filming["scenes"][0]["shots"].append(second)
+    change(query, command, "filming", "save", filming)
+    change(query, command, "filming", "approve")
+    change(query, command, "prompts", "compile")
+    first, other = module(query, "prompts")["content"]["scenes"][0]["shots"]
+    assert [r["key"] for r in first["refs"] if r["role"].startswith("场景")] == ["bg1_门前"]
+    assert [r["key"] for r in other["refs"] if r["role"].startswith("场景")] == ["bg1-2_门前南望"]
+    assert "（`bg1-2_门前南望`）" in next(line for line in other["text"].splitlines() if line.startswith("场景："))
+
+
+@pytest.mark.parametrize("value", ["", "门前", ["bg1"], "bg0"])
+def test_shot_background_is_a_bg_key(workflow, value):
+    _, query, command = workflow
+    approved_filming(query, command)
+    filming = copy.deepcopy(FILMING)
+    filming["scenes"][0]["shots"][0]["background"] = value
+    with pytest.raises(EpisodeWorkflowError, match="环境引用"):
+        change(query, command, "filming", "save", filming)
+
+
+def test_missing_shot_background_blocks_compiling(workflow):
+    _, query, command = workflow
+    approved_filming(query, command)
+    filming = copy.deepcopy(FILMING)
+    filming["scenes"][0]["shots"][0]["background"] = "bg9"
+    change(query, command, "filming", "save", filming)
+    change(query, command, "filming", "approve")
+    with pytest.raises(EpisodeWorkflowError, match="bg9"):
+        change(query, command, "prompts", "compile")
+
+
+def test_a_shot_can_lift_named_drama_negatives(workflow):
+    """follow-up 282: a spell shot lifts 夸张金光 from the drama negatives; other shots keep it, and a typo is refused."""
+    root, query, command = workflow
+    (root / "ai_videos/demo/workflow.json").write_text(json.dumps({"workflow": WORKFLOW_ID, "prompt": {"negatives": "人物自发光，夸张金光，卡通渲染"}}),
+                                                       encoding="utf-8")
+    approved_filming(query, command)
+    filming = copy.deepcopy(FILMING)
+    plain = copy.deepcopy(filming["scenes"][0]["shots"][0])
+    glow = {**copy.deepcopy(plain), "id": "st2", "allow_negatives": ["夸张金光"]}
+    filming["scenes"][0]["shots"] = [plain, glow]
+    change(query, command, "filming", "save", filming)
+    change(query, command, "filming", "approve")
+    change(query, command, "prompts", "compile")
+    shots = module(query, "prompts")["content"]["scenes"][0]["shots"]
+    negatives = [next(line for line in s["text"].splitlines() if line.startswith("负面词：")) for s in shots]
+    assert negatives[0].endswith("人物自发光，夸张金光，卡通渲染")
+    assert negatives[1].endswith("人物自发光，卡通渲染") and "夸张金光" not in negatives[1]
+    filming["scenes"][0]["shots"][1]["allow_negatives"] = ["夸张光"]
+    change(query, command, "filming", "save", filming)
+    change(query, command, "filming", "approve")
+    with pytest.raises(EpisodeWorkflowError, match="不在剧负面词里"):
+        change(query, command, "prompts", "compile")
+
+
+@pytest.mark.parametrize("value", [[], ["夸张金光", "夸张金光"], ["人物自发光，夸张金光"], "夸张金光"])
+def test_lifted_negatives_are_validated(workflow, value):
+    _, query, command = workflow
+    approved_filming(query, command)
+    filming = copy.deepcopy(FILMING)
+    filming["scenes"][0]["shots"][0]["allow_negatives"] = value
+    with pytest.raises(EpisodeWorkflowError, match="放开的负面词"):
+        change(query, command, "filming", "save", filming)

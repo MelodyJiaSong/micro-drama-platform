@@ -6,7 +6,8 @@
     python tools/overhead_previz.py <镜头目录> --render        # 写配置 + 渲整条 MP4（几分钟）
     python tools/overhead_previz.py --all <集目录> [--stills|--render]   # 本集所有「要 previz」的镜
 
-previz 只有绿幕、纯色小人偶（颜色＝剧 workflow.json 的 figure_colors，与 overhead 圆点同色）和灰色方块物件：
+previz 只有绿幕、纯色小人偶（颜色＝剧 workflow.json 的 figure_colors，与 overhead 圆点同色）、人偶带着的东西
+（overhead [[carry]] 与 [[actor]] shield：锤、盾、剑……在手里跟着 [[pose]] 的握法，背着就斜背在身后）和灰色方块物件：
 它只回答「机位怎么走、谁站在哪、朝哪、几秒走到哪、几秒做什么姿势」；长相、服装、场景、光线、表情、特效都交给 Seedance。
 位置与时刻只写在 overhead.toml（位置唯一出处）：改走位＝改 overhead 重跑本工具，previz_config.toml 不手改。
 坐标：overhead 是场地平面图坐标（米，x 向东、y 向南）；previz 世界坐标原点在场地中心、y 向北。
@@ -92,6 +93,10 @@ def config(shot_dir: Path) -> str:
     for a0 in actors:
         for a in _crowd(a0):
             L += _actor(a, a0, colors[a0["key"].split("_", 1)[0]], _height(a0, heights), poses, xy)
+            for c in carry_segments(ov, a, a0, secs):
+                L += ['[["角色"."持物"]]'] + ["\"%s\" = %s" % (k, _toml(v)) for k, v in c.items()]
+    for h in hit_checks(ov):
+        L += ["", '[["命中"]]'] + ["\"%s\" = %s" % (k, _toml(v)) if k != "t" else "t = %s" % _toml(v) for k, v in h.items()]
     for o in ov.get("object", []):
         ox, oy = xy(*o["xy"])
         w, d = o.get("size", [0.6, 0.6])
@@ -181,6 +186,86 @@ def _actor(a: dict, base: dict, col: str, h: float, poses: list[dict], xy) -> li
     for t in sorted(keys):
         L += ['[["角色"."关键帧"]]'] + ["\"%s\" = %s" % (k, _toml(v)) for k, v in keys[t].items()]
     return L
+
+
+def _grip_at(mine: list[tuple[float, str]], t: float, grips: tuple, default: str) -> str:
+    """t 这一刻生效的 [[pose]]（最后一条 ≤ t）里写的持物姿态；没写就用缺省握法。"""
+    pose = next((p for pt, p in reversed(mine) if pt <= t + 1e-6), "")
+    return next((g for g in pose.split("+") if g.strip() in grips), default).strip()
+
+
+def _windows(t0: float, t1: float, cuts: list[float], grip_at) -> list[tuple[float, float, str]]:
+    """[t0, t1] 按姿态时刻切段，相邻同握法的段并起来。"""
+    marks = [t0] + sorted(t for t in set(cuts) if t0 + 1e-6 < t < t1 - 1e-6) + [t1]
+    out: list[tuple[float, float, str]] = []
+    for a, b in zip(marks, marks[1:]):
+        g = grip_at(a)
+        if out and out[-1][2] == g:
+            out[-1] = (out[-1][0], b, g)
+        else:
+            out.append((a, b, g))
+    return out
+
+
+def carry_segments(ov: dict, a: dict, base: dict, secs: float) -> list[dict]:
+    """一个人偶的 [[角色.持物]]（follow-up 262）：[[carry]] 与 [[actor]] shield 换成引擎的件、姿（握法）、长、起 / 止。
+    在手里：握法跟着这一刻 [[pose]] 里写的持物姿态（双手低握 → 前砸 → …），没写取 grip / 该件的缺省；
+    背着：盾「背盾」（件也叫背盾，命中检查按「{人}_背盾」找），其余「斜背」。整镜都在时不写起 / 止。"""
+    who = {base["key"], base.get("label"), a.get("label")}
+    mine = sorted((float(p["t"]), p["pose"]) for p in ov.get("pose", []) if p["who"] in who)
+    cuts = [t for t, _ in mine]
+    wins: list[tuple[float, float, str, str, dict]] = []      # (起, 止, 件, 姿, 源)
+    if base.get("shield"):
+        if base["shield"] != "左":
+            raise so.Bad("%s 的 shield = %s：previz 只有左手盾" % (base.get("label", base["key"]), base["shield"]))
+        t0, t1 = (float(x) for x in base.get("shield_t", [0.0, secs]))
+        wins += [(a0, a1, "盾", g, {}) for a0, a1, g in
+                 _windows(t0, t1, cuts, lambda t: _grip_at(mine, t, planschema.SHIELD_GRIPS, planschema.CARRY_KINDS["盾"][1]))]
+    for c in ov.get("carry", []):
+        if c["who"] not in who:
+            continue
+        what, t0, t1 = c["what"], float(c.get("t0", 0.0)), float(c.get("t1", secs))
+        if c["on"] == "背":
+            back = planschema.BACK_GRIPS.get(what, planschema.SLUNG)
+            wins.append((t0, t1, back if what == "盾" else what, back, c))
+            continue
+        grips = planschema.SHIELD_GRIPS if what == "盾" else planschema.HAND_GRIPS
+        dflt = c.get("grip") or planschema.CARRY_KINDS[what][1]
+        wins += [(a0, a1, what, g, c) for a0, a1, g in _windows(t0, t1, cuts, lambda t: _grip_at(mine, t, grips, dflt))]
+    out = []
+    for a0, a1, item, grip, c in sorted(wins, key=lambda w: w[0]):
+        kind = "盾" if "盾" in item else item
+        seg = {"件": item, "姿": grip, "长": float(c.get("len", planschema.CARRY_KINDS[kind][0]))}
+        if c.get("shape"):
+            seg["形"] = c["shape"]
+        if a0 > 1e-6:
+            seg["起"] = a0
+        if a1 < secs - 1e-6:
+            seg["止"] = a1
+        out.append(seg)
+    return out
+
+
+def _label(ov: dict, ref: str) -> str:
+    a = so._actor(ov, ref)
+    return a.get("label", a["key"]) if a else ref
+
+
+def hit_checks(ov: dict) -> list[dict]:
+    """overhead [[hit]] 里用兵器、不落空的那几下 → previz [[命中]]：渲染时查兵器件真的贴到目标（或目标身上的盾）。
+    身体出手（咬、撞、拳）与扔出去的（投、光）不抄：平面图已按距离查过，previz 的色块身体量不出更多。"""
+    out = []
+    for h in ov.get("hit", []):
+        if h.get("miss") or h.get("with") not in planschema.HIT_OBJ:
+            continue
+        who = _label(ov, h["who"])
+        d = {"t": h["t"], "谁": who, "物件": h.get("obj") or "%s_%s" % (who, planschema.HIT_OBJ[h["with"]]),
+             "目标": _label(ov, h["target"])}
+        part = planschema.hit_part_obj(h.get("part", ""))
+        if part:
+            d["部位"] = part
+        out.append(d)
+    return out
 
 
 def needs_previz(shot_dir: Path) -> bool:

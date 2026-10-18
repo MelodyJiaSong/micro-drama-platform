@@ -7,27 +7,28 @@
     ④ Seedance：色彩、表情、特效、质感
 每一层只解决它最擅长、最便宜的那件事；越往下改一次越贵，所以错误要在越上面的层拦住。
 
-**previz MP4 只给复杂镜（2026-09-25 用户定调）**：每镜都必须有 overhead；简单镜不渲 previz，
-直接把 Seedance 版 overhead（`{shot}_overhead_ref.png`）当运动与几何参考上传。要不要 previz 由本工具
-按 `previz_triggers()` 的四条量化判据判（机位长距离移动 / 镜内多段硬切 / 多人同时走动 / 多对肢体接触），
-`[meta] previz = true|false` 可推翻，但与判据相反时必须写 `previz_why`。
+**默认所有镜头都不做 previz（2026-10-18 用户定，ai_video_management follow-up 281）**：每镜都必须有 overhead，
+Seedance 版 overhead（`{shot}_overhead_ref.png`）就是运动与几何参考。绿幕人偶的僵硬会被模型照搬（EP1 s5 st2：
+亚伦动作像机器人、一下就把伤者放倒），所以只有单独处理、在 `[meta]` 写 `previz = true` 和 `previz_why` 的镜才渲 previz MP4。
+`previz_triggers()` 的判据（机位长距离移动 / 镜内多段硬切 / 多人同时走动 / 多对肢体接触 / 攻防）只作提示，写进理由，不再自动开启。
 
 输入（唯一出处）：`{shot 目录}/planning/overhead.toml`
     [meta]      scene = "bg19"（挂在哪张场地平面图的坐标系上）· view = [x0, y0, x1, y1]（可选，米）· note ·
                 walkable = ["b08"]（本镜机位允许站进的地块 id，只给类型泛用的地块用）·
-                previz = true|false（可选，推翻自动判定）· previz_why（推翻时必填）
+                previz = true（可选，单独要 previz 时写）· previz_why（写 previz = true 时必填）
     [[camera]]  t · xy · h（离地米）· look（瞄准点）· lens（mm）· tag（机位标签，可选）·
                 subject（这一刻景别量谁，人物卡键；缺省＝第一个 actor）· cut（true＝硬切到这里，不是运镜走过来）· note
     [[actor]]   key（人物卡目录名）· label · count（群体数，默认 1）· path = [[t, x, y], …]
                 （路点可写 [t, x, y, fx, fy]：fx/fy ＝ 此刻面朝的点）· note
     [[object]]  label · xy · size · rot · key（物件卡目录名，可选）· note —— 场地图里没有、本镜才出现的东西
     [[beat]]    t0 · t1 · text —— 时间轴提要（与剧本【a–bs】对齐）
+    [[carry]]   who · what · on（手 / 背）· t0 · t1 · key · len · grip · shape —— 谁什么时候带着什么，previz 人偶据此带上（262）
 坐标一律用场地平面图的坐标系（米；x 向东、y 向南，与 floor plan 同一张网格）。
 
 产物：`{shot 目录}/planning/{shot}_overhead.png`（给人审：带坐标、时间轴、提示）＋
       `{shot 目录}/planning/{shot}_overhead_ref.png`（给 Seedance：16:9、裁到本镜范围、无标题无侧栏无坐标，
       只有地块、人、机位、箭头与秒数——读图的是视频模型，多一行字就多一分被画进画面的风险）；
-      `--all` 另写 `{ep 目录}/overheads.md` 索引（含每镜 previz 要 / 免及理由）。
+      `--all` 另写 `{ep 目录}/overheads.md` 索引（含每镜 previz 要 / 免及理由）；六模块剧另重画所在场的走位图（`tools/scene_blocking.py`）。
 
 构建闸门（blocker 不写图）：键名白名单 · 场景能解析 · 时刻落在镜长内且不倒退 ·
 **入画人物与 shot md 的 `角色:` 行双向一致**（prompt 说谁在画面里，这张图就得给谁站位）。
@@ -100,7 +101,13 @@ KEYS = {
     # 被拖 / 抢 / 捡 / 扔 / 拽走的东西写这里，path 路点 [t, x, y]；gone＝这一刻起不在场（拖进洞、被捡走拿在手上）；
     # 同一场景接连两镜同 key 的 prop 首尾位置要接得上，画外被人挪过写 moved = 理由。
     "prop": {"key", "label", "path", "size", "h", "gone", "moved", "note"},
+    # 带着的东西（follow-up 262：previz 人偶不带锤，锤的挥打、命中只在这张图上机检）：who 在 [t0, t1]（缺省整镜）把 what
+    # （锤 / 斧 / 剑 / 镐 / 棒 / 叉 / 盾，与 [[hit]].with 同一套）拿在手里（on = "手"）或背在身后（on = "背"）。
+    # key：道具卡号（p480），同一件不同时在两个人身上、也不同时是地上的 [[prop]]；len：全长 m（缺省按件，planschema.CARRY_KINDS）；
+    # grip：在手里、这一刻 [[pose]] 没写持物姿态时的握法（缺省按件）；shape：盾的外形（圆 / 竖长）。手里的盾写 [[actor]] shield，不写这里。
+    "carry": {"who", "what", "on", "t0", "t1", "key", "len", "grip", "shape", "note"},
 }
+CARRY_ON = ("手", "背")
 GAZE_FACE_DEG = 45.0     # 看某样东西时，面朝与「人→目标」的夹角上限
 GAZE_CAM_DEG = 60.0      # 面朝与「人→机位」夹角小于它：他看的东西多半在镜头身后——`动作:` 里写了看 / 盯 / 数就得登记 [[gaze]]
 # 各种打法的够得着（米，人 / 怪中心之间）；光是扔出去的
@@ -268,6 +275,7 @@ def gate(cfg: dict, site: dict, secs: float, chars: set[str], jb: str) -> tuple[
     bad.extend(strike_errors(cfg))
     bad.extend(cast_order_errors(cfg))
     bad.extend(prop_errors(cfg, secs))
+    bad.extend(carry_errors(cfg, secs))
     bad.extend(ghost_errors(cfg, secs))
     phys = physics_errors(cfg)
     (bad if cfg.get("guard") or cfg.get("react") else warn).extend(phys)
@@ -356,18 +364,18 @@ def previz_triggers(cfg: dict, secs: float) -> list[str]:
 
 
 def previz_decision(cfg: dict, secs: float) -> tuple[bool, str]:
-    """(要不要 previz, 理由)。`[meta] previz` 推翻自动判定时必须写 `previz_why`，否则 raise。"""
+    """(要不要 previz, 理由)。默认不要（follow-up 281）；只有 `[meta] previz = true` 且写了 `previz_why` 才要。
+    判据只作提示：命中时写进「免」的理由，提醒这镜复杂、出片时多看一眼。"""
     trig = previz_triggers(cfg, secs)
-    auto = bool(trig)
     meta = cfg.get("meta", {})
-    if "previz" not in meta:
-        return auto, "；".join(trig) if trig else "简单镜，overhead 图足够"
-    want = bool(meta["previz"])
-    why = meta.get("previz_why", "")
-    if want != auto and not why:
-        raise Bad("[meta] previz = %s 与自动判定（%s）相反，须写 previz_why" % (
-            str(want).lower(), "；".join(trig) or "简单镜"))
-    return want, why or ("；".join(trig) if trig else "简单镜，overhead 图足够")
+    if meta.get("previz"):
+        why = meta.get("previz_why", "")
+        if not why:
+            raise Bad("[meta] previz = true 须写 previz_why（默认不做 previz，单独要时说明为什么）")
+        return True, why
+    if trig:
+        return False, "默认不做 previz（复杂镜提示：%s）" % "；".join(trig)
+    return False, "默认不做 previz，overhead 图足够"
 
 
 def actor_colors(cfg: dict, shot_dir: Path | None = None) -> dict[str, tuple]:
@@ -1125,6 +1133,70 @@ def prop_errors(cfg: dict, secs: float) -> list[str]:
     return out
 
 
+def _card(key: str) -> str:
+    return key.split("_", 1)[0]
+
+
+def carry_windows(cfg: dict, secs: float) -> list[tuple[dict, str, str, float, float, str | None]]:
+    """[[carry]] → (actor, what, on, t0, t1, key)；认不出 who 的跳过（carry_errors 报）。"""
+    out = []
+    for c in cfg.get("carry", []):
+        a = _actor(cfg, c.get("who", ""))
+        if a is not None:
+            out.append((a, c.get("what"), c.get("on"), float(c.get("t0", 0.0)), float(c.get("t1", secs)), c.get("key")))
+    return out
+
+
+def carry_errors(cfg: dict, secs: float) -> list[str]:
+    """follow-up 262：[[carry]] 写得合法；同一件东西同一时刻只在一处；用兵器出手（含故意落空）的那一刻手里有这件。"""
+    out: list[str] = []
+    for c in cfg.get("carry", []):
+        tag = "[[carry]] %s 的%s" % (c.get("who"), c.get("what"))
+        a, what, on = _actor(cfg, c.get("who", "")), c.get("what"), c.get("on")
+        t0, t1 = float(c.get("t0", 0.0)), float(c.get("t1", secs))
+        if a is None:
+            out.append("%s：who 要是本镜唯一一个 actor 的 key 或 label" % tag)
+        if what not in planschema.CARRY_KINDS:
+            out.append("%s：what 只认 %s" % (tag, " / ".join(planschema.CARRY_KINDS)))
+        if on not in CARRY_ON:
+            out.append("%s：on 只认 %s" % (tag, " / ".join(CARRY_ON)))
+        if not 0 <= t0 < t1 <= secs + 1e-6:
+            out.append("%s：时段 %g–%gs 要落在 0–%gs 且 t0 < t1" % (tag, t0, t1, secs))
+        grips = planschema.SHIELD_GRIPS if what == "盾" else planschema.HAND_GRIPS
+        if c.get("grip") and (on != "手" or c["grip"] not in grips):
+            out.append("%s：grip「%s」不对——只给在手里的件写，可用 %s" % (tag, c["grip"], " / ".join(grips)))
+        if what == "盾" and on == "手" and a is not None and a.get("shield"):
+            out.append("%s：手里的盾已由 [[actor]] shield 给出，不再写 [[carry]]" % tag)
+    held = carry_windows(cfg, secs)
+    for i, x in enumerate(held):
+        for y in held[i + 1:]:
+            if max(x[3], y[3]) >= min(x[4], y[4]) - 1e-6:
+                continue
+            if x[0] is y[0] and x[1] == y[1]:
+                out.append("[[carry]] %s 的%s %g–%gs 与 %g–%gs 重叠：同一件同一时刻只在一处" % (
+                    x[0].get("label", x[0]["key"]), x[1], x[3], x[4], y[3], y[4]))
+            elif x[5] and y[5] and _card(x[5]) == _card(y[5]):
+                out.append("[[carry]] %s 同一时刻在 %s 与 %s 身上" % (_card(x[5]), x[0].get("label", x[0]["key"]),
+                                                                  y[0].get("label", y[0]["key"])))
+    for p in cfg.get("prop", []):
+        if not p.get("key") or not p.get("path"):
+            continue
+        p0, p1 = float(p["path"][0][0]), float(p["gone"]) if p.get("gone") is not None else secs
+        for x in held:
+            if x[5] and _card(x[5]) == _card(p["key"]) and max(p0, x[3]) < min(p1, x[4]) - 1e-6:
+                out.append("%s %g–%gs 在 %s 身上，又是地上的 [[prop]]「%s」（%g–%gs）——同一件只在一处，捡起 / 放下写进 prop 的 gone 与 carry 的 t0 / t1"
+                           % (_card(x[5]), x[3], x[4], x[0].get("label", x[0]["key"]), p.get("label", p["key"]), p0, p1))
+    for h in cfg.get("hit", []):
+        what, a = h.get("with"), _actor(cfg, h["who"])
+        if what not in planschema.CARRY_KINDS or what == "盾" or a is None:     # 盾看 shield（shield_errors）
+            continue
+        t = float(h["t"])
+        if not any(x[0] is a and x[1] == what and x[2] == "手" and x[3] - 1e-6 <= t <= x[4] + 1e-6 for x in held):
+            out.append("[[hit]] %gs %s 用%s出手，但那一刻手里没有%s——写 [[carry]] who = \"%s\"、what = \"%s\"、on = \"手\""
+                       % (t, h["who"], what, what, h["who"], what))
+    return out
+
+
 def _shield_side(a: dict, t: float) -> str | None:
     side = a.get("shield")
     if not side:
@@ -1506,6 +1578,11 @@ def render(shot_dir: Path) -> tuple[Path | None, list[str], list[str]]:
         line("● %s（%s）%s" % (a.get("label", a["key"]), a["key"],
                                " ×%d" % int(a.get("count", 1)) if int(a.get("count", 1)) > 1 else ""), f_m, col, 28)
         line("    " + " → ".join("%gs%s" % (float(p[0]), _xy(p[1:3])) for p in a["path"]), f_s, SOFT)
+        held = ["%s在%s %g–%gs" % (w, {"背": "背上", "手": "手里"}.get(on, on), t0, t1) for b, w, on, t0, t1, _k in carry_windows(cfg, secs) if b is a]
+        if a.get("shield"):
+            held.append("盾在手里 %s" % ("%g–%gs" % tuple(a["shield_t"]) if a.get("shield_t") else "整镜"))
+        if held:
+            line("    带着：" + "；".join(held), f_s, col)
         if a.get("note"):
             line("    " + a["note"], f_s, SOFT)
     if cfg.get("guard"):
@@ -1619,30 +1696,7 @@ def render_ref(shot_dir: Path, cfg: dict, site: dict, secs: float) -> Path:
     def occupy(p, r: float) -> None:
         taken.append((p[0] - r, p[1] - r, p[0] + r, p[1] + r))
 
-    for r in site.get("ridge", []):
-        d.polygon([P(*q) for q in r["poly"]], fill=ROCK_REF)
-    for w_ in site.get("water", []):
-        d.line([P(*q) for q in w_["path"]], fill=WATER_REF, width=int(w_.get("width_m", 6) * PX), joint="curve")
-    for r in site.get("road", []):
-        d.line([P(*q) for q in r["path"]], fill=ROAD_REF, width=int(r.get("width_m", 4) * PX), joint="curve")
-    blocks = site.get("block", [])
-    for b in blocks:
-        h_m = float(b.get("h_m", 0) or 0)
-        # 高块里面的东西（屋内木桌）俯视看不见，画出来只会和屋名叠在一起
-        if any(o is not b and float(o.get("h_m", 0) or 0) > h_m and _inside(o, *b["xy"]) for o in blocks):
-            continue
-        cs = [P(*q) for q in planschema.corners(b)]
-        if max(q[0] for q in cs) < 0 or min(q[0] for q in cs) > W or max(q[1] for q in cs) < 0 or min(q[1] for q in cs) > H:
-            continue
-        g = 222 - int(min(h_m, 15.0) / 15.0 * 90)
-        if h_m <= 0:
-            d.polygon(cs, fill=(g, g, g - 6, 90), outline=(150, 150, 140))
-        else:
-            d.polygon(cs, fill=(g, g, g - 6), outline=INK, width=3)
-        # 块名放在块的可见部分中间
-        xs = sorted(min(max(q[0], 0), W) for q in cs)
-        ys = sorted(min(max(q[1], 0), H) for q in cs)
-        labels.append((((xs[0] + xs[-1]) / 2, (ys[0] + ys[-1]) / 2), _short(b["name"]), font(26), (70, 70, 64), 0))
+    labels += sketch_site(d, site, P, PX, (0, 0, W, H))
 
     for o in cfg.get("object", []):
         bb = {"xy": o["xy"], "size": o.get("size", [0.6, 0.6]), "rot": o.get("rot", 0)}
@@ -1736,6 +1790,39 @@ def render_ref(shot_dir: Path, cfg: dict, site: dict, secs: float) -> Path:
     out = ref_path(shot_dir)
     img.save(out)
     return out
+
+
+def sketch_site(d: ImageDraw.ImageDraw, site: dict, P, PX: float, box: tuple[float, float, float, float],
+                name_size: int = 26) -> list[tuple]:
+    """场地简笔画（坡、河、路、地块，地块灰度＝高低），画在像素框 box 里；返回地块名标签，由调用方统一避让摆放。
+    Seedance 版 overhead 与场的走位图（tools/scene_blocking.py）共用。"""
+    X0, Y0, X1, Y1 = box
+    labels: list[tuple] = []
+    for r in site.get("ridge", []):
+        d.polygon([P(*q) for q in r["poly"]], fill=ROCK_REF)
+    for w_ in site.get("water", []):
+        d.line([P(*q) for q in w_["path"]], fill=WATER_REF, width=int(w_.get("width_m", 6) * PX), joint="curve")
+    for r in site.get("road", []):
+        d.line([P(*q) for q in r["path"]], fill=ROAD_REF, width=int(r.get("width_m", 4) * PX), joint="curve")
+    blocks = site.get("block", [])
+    for b in blocks:
+        h_m = float(b.get("h_m", 0) or 0)
+        # 高块里面的东西（屋内木桌）俯视看不见，画出来只会和屋名叠在一起
+        if any(o is not b and float(o.get("h_m", 0) or 0) > h_m and _inside(o, *b["xy"]) for o in blocks):
+            continue
+        cs = [P(*q) for q in planschema.corners(b)]
+        if max(q[0] for q in cs) < X0 or min(q[0] for q in cs) > X1 or max(q[1] for q in cs) < Y0 or min(q[1] for q in cs) > Y1:
+            continue
+        g = 222 - int(min(h_m, 15.0) / 15.0 * 90)
+        if h_m <= 0:
+            d.polygon(cs, fill=(g, g, g - 6, 90), outline=(150, 150, 140))
+        else:
+            d.polygon(cs, fill=(g, g, g - 6), outline=INK, width=3)
+        # 块名放在块的可见部分中间
+        xs = sorted(min(max(q[0], X0), X1) for q in cs)
+        ys = sorted(min(max(q[1], Y0), Y1) for q in cs)
+        labels.append((((xs[0] + xs[-1]) / 2, (ys[0] + ys[-1]) / 2), _short(b["name"]), font(name_size), (70, 70, 64), 0))
+    return labels
 
 
 def _place(d: ImageDraw.ImageDraw, taken: list, anchor, txt: str, f, col, gap: float, W: int, H: int) -> None:
@@ -1840,8 +1927,8 @@ def run_all(ep_dir: Path, check_only: bool) -> int:
               "> 生成物：`python tools/shot_overhead.py --all %s`。改走位 ＝ 改各镜 `planning/overhead.toml` 重跑。"
               % ep_dir.relative_to(REPO).as_posix(),
               "> 这一层只定「镜头与人各自在哪、往哪走、几秒到」；动作细节与形状在 shot blend 层。**这里点头之后才做 shot blend。**",
-              "> 每镜两张：`_overhead.png` 给人审，`_overhead_ref.png` 给 Seedance。**previz 免** 的镜不做 shot blend，"
-              "`_ref` 图直接当运动与几何参考上传；**要** 的镜照旧渲 previz MP4（判据见 `tools/shot_overhead.py` `previz_triggers`）。", "",
+              "> 每镜两张：`_overhead.png` 给人审，`_overhead_ref.png` 给 Seedance。默认所有镜头 **previz 免**，"
+              "`_ref` 图直接当运动与几何参考上传；只有 `[meta] previz = true` 单独要的镜才渲 previz MP4（复杂镜判据只作提示，见 `previz_triggers`）。", "",
               "| 镜 | 状态 | 审阅图 | Seedance 图 | previz |", "|---|---|---|---|---|"]
         for name, out, bad, warn, pv in rows:
             st = "❌ %d" % len(bad) if bad else ("⚠ %d" % len(warn) if warn else "✅")
@@ -1850,6 +1937,9 @@ def run_all(ep_dir: Path, check_only: bool) -> int:
                 name, st, "[%s](%s/planning/%s)" % (out.name, name, out.name) if out else "—",
                 "[%s](%s/planning/%s)" % (ref.name, name, ref.name) if out else "—", pv))
         (ep_dir / "overheads.md").write_text("\n".join(md) + "\n", encoding="utf-8")
+        if (ep_dir / "filming.json").is_file():     # 六模块剧：每场的走位图跟着重画（follow-up 271）
+            from tools import scene_blocking
+            scene_blocking.render_episode(ep_dir)
     print("%d 镜 · blocker %d · warning %d · previz 要 %d" % (
         len(rows), nbad, sum(len(r[3]) for r in rows), sum(1 for r in rows if r[4].startswith("**要"))))
     return 1 if nbad else 0
@@ -1877,6 +1967,11 @@ def main() -> int:
     if out:
         print("  → " + str(out.relative_to(REPO)))
         print("  → " + str(ref_path(target).relative_to(REPO)))
+        if es.is_episode_shot(target):          # 所在场的走位图跟着重画（follow-up 271）
+            from tools import scene_blocking
+            blocking = scene_blocking.render_scene(target.parent.parent)
+            if blocking:
+                print("  → " + str(blocking.relative_to(REPO)))
     return 1 if bad else 0
 
 

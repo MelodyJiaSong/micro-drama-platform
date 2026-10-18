@@ -80,7 +80,7 @@ SCOPED: dict[str, str] = {
 _NEGATION = re.compile(r"(没有|不许|不出现|绝不|不会|无任何|禁止|不存在|不得|非法)")
 _CLAUSE = re.compile(r"[；;。，,\n]")
 _NEG_LINE = re.compile(r"^(负面词|负向|负向词)\s*[:：]")
-SKIP_DIRS: tuple[str, ...] = ("_deleted", "previz", "renders")
+SKIP_DIRS: tuple[str, ...] = ("_deleted", "previz", "renders", "drafts")
 
 
 @dataclass(frozen=True)

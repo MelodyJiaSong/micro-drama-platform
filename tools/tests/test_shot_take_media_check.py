@@ -46,7 +46,7 @@ def test_a_truncated_download_is_fetched_again_before_the_take_is_made(tmp_path:
         shutil.copyfile(next(served), Path(download_dir) / "video_1.mp4")
         return {"gen_status": "success"}
 
-    def fake_make_take(ep_dir, key, sid, video, credits, model, sent):
+    def fake_make_take(ep_dir, key, sid, video, credits, model, sent, meta=None):
         made.append(tmp_path / "kept.mp4")
         shutil.copyfile(video, made[-1])
         return shot_take.REPO / "take"

@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import Any
 import re
 
-from libs.common.episode_workflow import (ANIMAL_COUNT_RULE, ANTI_TWIN_RULE, BASE_NEGATIVES, CAST_KEY_RE, CAST_USAGE, COMPILER_VERSION,
+from libs.common.episode_workflow import (GROUP_COUNT_RULE, GROUP_DROPPED_NEGATIVE, FIRST_FRAME_USAGE, ANTI_TWIN_RULE, BASE_NEGATIVES, CAST_KEY_RE, CAST_USAGE, COMPILER_VERSION,
                                           LIP_SYNC_RULE, MODULES, NATURAL_MOTION_RULE, ONE_TAKE_RULE, OVERHEAD_USAGE,
                                           PREVIZ_USAGE, PROMPT_MAX_CHARS, PROP_KEY_RE, PROP_USAGE, SCENE_USAGE, SILENT_SHOT_RULE, VIDEO_SOUND_RULE,
                                           VOICE_USAGE, fingerprint, scene_revision)
@@ -13,7 +13,9 @@ from libs.domain.errors.episode_workflow__error import EpisodeWorkflowError
 from libs.domain.value_objects.shot_materials__valueobject import PromptSettings, ShotMaterials
 
 SHOT_FIELDS = {"id", "duration", "action", "camera", "dialogue", "cast", "blocking", "beats", "lighting"}
-OPTIONAL_SHOT_FIELDS = {"props"}    # v8 (follow-up 231): story props in frame, by prop key
+OPTIONAL_SHOT_FIELDS = {"props", "background", "allow_negatives"}    # v8 (follow-up 231): story props in frame, by prop key;
+# follow-up 261: a shot facing another way names its own background view (bg key), replacing the scene's for that shot;
+# v12 (follow-up 282): allow_negatives lists drama-level negatives this one shot lifts (a spell shot that must glow)
 
 
 @dataclass
@@ -162,6 +164,7 @@ class EpisodeWorkflowEntity:
             return ref_key
 
         video = found.motion_kind == "video"
+        first = add(f"{key}_first_frame", "image", "首帧画面", found.first_frame) if found.first_frame else ""
         motion = add(f"{key}_previz" if video else f"{key}_overhead", found.motion_kind,
                      "走位预演（绿幕小人偶）" if video else "俯视站位图", found.motion)
         people = [(m, add(m.image_key, "image", m.name + "三视图", m.image)) for m in found.cast]
@@ -169,14 +172,17 @@ class EpisodeWorkflowEntity:
         place = add(found.scene_key, "image", "场景 " + scene["location"], found.scene_image) if found.scene_image else ""
         voices = {m.key: add(m.voice_key, "audio", m.name + "的声音", m.voice) for m in found.cast if m.voice}
         marker = "人偶" if video else "圆点"
-        usage = (PREVIZ_USAGE if video else OVERHEAD_USAGE).format(tag=motion)
+        usage = FIRST_FRAME_USAGE.format(tag=first) if first else ""
+        usage += (PREVIZ_USAGE if video else OVERHEAD_USAGE).format(tag=motion)
         usage += CAST_USAGE.format(keys="、".join(f"`{tag}`" for _, tag in people)) if people else ""
         usage += PROP_USAGE.format(keys="、".join(f"`{tag}`" for _, tag in props)) if props else ""
         usage += SCENE_USAGE.format(scene=place, motion=motion) if place else ""
         usage += VOICE_USAGE.format(keys="、".join(f"`{tag}`" for tag in voices.values())) if voices else ""
         lines = [line.strip() for line in shot["dialogue"].splitlines() if line.strip()]
         sound = "声音：" + VIDEO_SOUND_RULE + ("" if lines else SILENT_SHOT_RULE)
-        people_lines = [f"  {m.name}（三视图`{tag}`" + (f"；声音`{voices[m.key]}`" if m.key in voices else "")
+        people_lines = [f"  {m.name}" + (f" ×{m.count}" if m.count > 1 else "") + f"（三视图`{tag}`"
+                        + (f"；同一张三视图画 {m.count} 个人，各在自己的位置" if m.count > 1 else "")
+                        + (f"；声音`{voices[m.key]}`" if m.key in voices else "")
                         + f"；`{motion}`里的{m.color}色{marker}）：{m.look}" for m, tag in people]
         prompt = [key, sound, f"时长：{shot['duration']}秒", f"比例：{settings.ratio}",
                   "参考：" + "、".join(f"`{r['key']}=>@`" for r in refs),
@@ -191,10 +197,18 @@ class EpisodeWorkflowEntity:
         prompt += [f"动作：{shot['beats']}", f"镜头：{shot['camera']}", f"光线：{shot['lighting']}"]
         prompt += ["台词：", *(f"  {line}" for line in lines), f"口型：{LIP_SYNC_RULE}"] if lines else ["台词：无"]
         prompt += [f"风格：{settings.style}"] if settings.style else []
-        prompt += ["负面词：" + "，".join(x for x in (BASE_NEGATIVES, settings.negatives) if x)]
-        animals = "、".join(f"`{tag}`" for m, tag in people if m.key.startswith("m"))
-        animal_rule = ANIMAL_COUNT_RULE.format(keys=animals) if animals else ""
-        prompt += [f"要求：{ONE_TAKE_RULE}{ANTI_TWIN_RULE}{animal_rule}{NATURAL_MOTION_RULE if people else ''}", sound]
+        groups = "、".join(f"`{tag}`" for m, tag in people if m.key.startswith("m") or m.count > 1)
+        base = BASE_NEGATIVES.replace(GROUP_DROPPED_NEGATIVE, "") if groups else BASE_NEGATIVES
+        drama = settings.negatives
+        if shot.get("allow_negatives"):
+            terms = [x.strip() for x in re.split("[，,]", drama) if x.strip()]
+            unknown = [x for x in shot["allow_negatives"] if x not in terms]
+            if unknown:
+                raise EpisodeWorkflowError(f"{key} 要放开的负面词不在剧负面词里：{'、'.join(unknown)}", 409)
+            drama = "，".join(x for x in terms if x not in shot["allow_negatives"])
+        prompt += ["负面词：" + "，".join(x for x in (base, drama) if x)]
+        group_rule = GROUP_COUNT_RULE.format(keys=groups) if groups else ""
+        prompt += [f"要求：{ONE_TAKE_RULE}{ANTI_TWIN_RULE}{group_rule}{NATURAL_MOTION_RULE if people else ''}", sound]
         return "\n".join(prompt), refs
 
     @staticmethod
@@ -238,5 +252,11 @@ class EpisodeWorkflowEntity:
                 props = shot.get("props", [])
                 if not isinstance(props, list) or not all(isinstance(k, str) and re.fullmatch(PROP_KEY_RE, k) for k in props)                         or len(set(props)) != len(props):
                     raise EpisodeWorkflowError('道具写资产键列表，例如["p475"]，不重复')
+                if "background" in shot and not (isinstance(shot["background"], str)
+                                                 and re.fullmatch(r"bg[1-9]\d*(?:-[1-9]\d*)?", shot["background"])):
+                    raise EpisodeWorkflowError("镜头的环境引用使用bg编号，例如bg2或bg2-2；不另选视角就不写")
+                allow = shot.get("allow_negatives", [])
+                if not isinstance(allow, list) or not allow and "allow_negatives" in shot                         or not all(isinstance(x, str) and x.strip() and not re.search("[，,]", x) for x in allow) or len(set(allow)) != len(allow):
+                    raise EpisodeWorkflowError('本镜放开的负面词写剧负面词里的词语列表，例如["夸张金光"]，不重复；不放开就不写')
                 if cast and not shot["blocking"].strip():
                     raise EpisodeWorkflowError("有出场人物的镜头要写走位")

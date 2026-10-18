@@ -11278,10 +11278,10 @@ blender_missing 500 / render_failed 500）。
 >   - apps/ui/src/api.ts
 > severity: high
 
-用户「UI 上还是看不到热血高校 / 对抗熵增」的真因**不是代码**：8766 端口上跑的后端
+用户「UI 上还是看不到热血高校」的真因**不是代码**：8766 端口上跑的后端
 是从 **另一个仓库副本** `C:\workspace\spec_coding` 起的（旧 clone，remote 是
-`finalde/spec_coding`），那份 `ai_videos/` 里根本没有 `rexue_gaoxiao` /
-`duikang_shangzeng`——它服务的 8 个条目与 spec_coding 磁盘内容逐字相同。前面修的
+`finalde/spec_coding`），那份 `ai_videos/` 里根本没有 `rexue_gaoxiao`
+——它服务的 8 个条目与 spec_coding 磁盘内容逐字相同。前面修的
 标题抽取是真 bug、但不是本次「看不到」的原因。
 
 排障要点：UI 显示与磁盘对不上时，**先确认服务进程的 repo root**（看进程
@@ -11328,7 +11328,7 @@ CommandLine / cwd，比对 `/api/tree` 与磁盘 `ls`），再去查代码。同
   `frame-src` 回落到 `default-src 'self'` 所以 iframe 可用）；iframe 需要真实高度，
   百分比会塌成 0。
 - `Content-Disposition` 补 RFC 5987 `filename*=UTF-8''…`：原来的 ASCII 过滤会把
-  `对抗熵增_分镜.pdf` 削成 `_.pdf`，中文文件名在浏览器 PDF 阅读器标题/另存时全丢。
+  `示例剧_分镜.pdf` 削成 `_.pdf`，中文文件名在浏览器 PDF 阅读器标题/另存时全丢。
 
 排障教训（Windows）：**杀掉 uvicorn reload 父进程不会杀掉它 spawn 出来的 worker**。
 孤儿 worker 继续持有继承来的 8766 监听套接字并用旧代码应答，表现为「代码改了、
@@ -11365,7 +11365,7 @@ worker 的命令行是 `python -c "from multiprocessing…"`（不含 `apps.api`
      一个 view 目录只留一张权威图——重跑锚点图是常态。
 2. **`GENERATED_DIR_NAMES = {"whitemodel", "previz"}` 排除出重命名扫描**。
    `MediaRenamer.rename_drama` 递归把任意目录里的媒体改名成 `{目录名}{N}.ext`，
-   会把 `whitemodel/angles/f80_ferrari_front.png` 改成 `angles1.png`，
+   会把 `whitemodel/angles/sports_car_front.png` 改成 `angles1.png`，
    破坏 `render_object_turntable.py` 的 `{name}_{tag}.png` 命名契约与全部下游引用。
 3. **`drama_layout.props_dir()`** —— props 目录此前由
    `characters_dir(...).parent / "props"` 推导，只有当 `characters/` 恰好也存在于
@@ -11768,7 +11768,7 @@ prompt 首行 : p3-2_黏土壁炉锚点
 
 1. 白模落在 `whitemodel/` 子目录，而 `SiblingMedia` 只看**同 folder** + `renders/` + `archive/`，
    所以主体卡片（`p19_独轮串车.md`）上一个字都不提它；
-2. `SiblingMedia` 的 `MEDIA_EXTS` 不含 `.glb`，即使网格就躺在同 folder（`f80_ferrari/base.glb`）也不显示；
+2. `SiblingMedia` 的 `MEDIA_EXTS` 不含 `.glb`，即使网格就躺在同 folder（`sports_car/base.glb`）也不显示；
 3. 树叶子类型是兜底的 `file`，侧栏没有图标区分，扫一眼看不出哪个是网格。
 
 ### 落地
@@ -11792,7 +11792,7 @@ prompt 首行 : p3-2_黏土壁炉锚点
   （引用已不存在的 `wukong_juexing` 等），改前改后同一份。
 - 前端：`apps/ui/test/siblingModels.test.ts` 新增 5 例（含 `collectFilePaths` 保留 `model` 的回归钉）。
 - 端到端（真浏览器）：sk1 `p19_独轮串车.md` 卡片出 🧊 一节、独轮车白模可拖动旋转；
-  `whitemodel/raw.glb` 单页全幅可转；`f80_ferrari.md` 同 folder 4 个 `.glb` 各自成 tile；
+  `whitemodel/raw.glb` 单页全幅可转；`sports_car.md` 同 folder 4 个 `.glb` 各自成 tile；
   侧栏 `raw.glb` 显示 🧊 且可点。
 
 ### 一行摘要
@@ -13139,3 +13139,230 @@ shengji_zhilu ep01 按新故事重做后要先给 s2 出片：s2 的参考只差
 - 模块状态不变：单场编译不改整集 `source_revision`，其它场没跟上之前 Prompt 模块仍是「过期」。
 - `tools/shot_pack.py`：有 `source` 的场按这一场判断分镜是否改过，没有的老场仍按整集；`cmd` 遇到要重编译的镜拒绝打印提交命令。
 - 测试先红后绿：`tests/test_episode_workflow.py` 加三条（缺参考的场不挡单场编译；只替换这一场；未知场、旧编译器、未确定分镜拒绝）；`tools/tests/test_shot_pack_scene_source.py`（新，三条）。
+
+---
+
+## 260 — 2026-10-15 20:06:12 — 整集审片串联：每镜最新一条拼成一条，带章节一起看
+
+> target_artifacts:
+>   - projects/ai_video_management/libs/infrastructure/readers/review_reel__reader.py
+>   - projects/ai_video_management/libs/infrastructure/writers/review_reel__writer.py
+>   - projects/ai_video_management/libs/application/commands/review_reel__command.py
+>   - projects/ai_video_management/apps/api/routes/review_reel__route.py
+>   - projects/ai_video_management/apps/ui/src/components/ReviewReelPanel.tsx
+> severity: medium
+
+### 指令
+
+用户原话：「帮我做一个功能，再UI一点，把当前ep下每个shot的最新的MP4拼到一起，我可以一起review」。
+
+在管理 UI 的集页面加「审片串联」：按分镜的场序、镜序取每镜 `renders/` 下最新一条生成的视频，拼成一条审片用的串联视频，带章节（场、镜头 key、起止秒、该条审核状态）；可只拼一场。没有生成的镜头跳过并列出。
+
+### 摘要
+
+- 后端：对一集（可选一场）按 filming.json 顺序取每镜最新一条 take（与生成记录同一排序）；ffmpeg 逐条重编码成统一规格（1280×720、30fps、AAC 48k 立体声，缺音轨补静音，画面等比缩放加黑边，按源画面长度截断），再拼接；章节起止按各段实际时长累加；最新一条读不出（如正在写入）就退用上一条并注明。产物在集目录 `review_reel/`（整个目录不进 git），附清单 JSON：每镜 key、场、take 目录、起止秒、审核状态。所选 take 的路径、大小、修改时间不变就直接复用上次结果；逐条中间件按 take 缓存，换了一条只重编码那一条。
+- 拼接放后台线程：POST 开始（已有同输入的结果就直接返回），GET 查进度与结果；服务重启时中断的任务标为「已中断」。视频经现有 `/api/media`（沙箱路径、支持 Range）播放。
+- UI：集页面顶部「审片串联」按钮，选全集或某一场，点生成，完成后内嵌播放器；章节列表随播放高亮当前镜头，点击跳到该镜起点；列出跳过的镜头与所选 take 的审核状态；结果过期（有新生成）时提示重新生成。
+
+---
+
+## 261 — 2026-10-15 23:55:00 — 镜头可指定自己的场景图视角
+
+### 指令
+
+（代理在 shengji_zhilu follow-up 055 重写 EP1 时按用户「尽可能多完成、自行做最佳判断」的授权提出。）一场只绑一张场景图（如 bg1-12「大路北望」），出片审片发现：凡是朝反方向拍的镜，Seedance 都照场景图把构图拉回原视向（s2 第二遍出片 st21、st23、st25、st8 四镜同一原因）。给镜头加可选字段 `background`（bg 编号，只在本镜朝另一个方向、需要另一张视角图时写），编译时这一镜的场景图与「场景」段描写换成它的；不写就沿用场的 background。
+
+### 摘要
+
+- 分镜校验：镜头可选 `background`，必须是 bg 编号（bg2、bg2-2）；空串、非 bg 键报错。
+- 编译读参考：有 `background` 的镜取这张环境资产的图与「Shot prompt 场景」段，缺卡、缺图、缺段与场级一样拒绝编译；没写的镜不变，已有 prompt 字节不变，编译器版本不升。
+- UI 镜头详情显示「本镜场景」。
+
+---
+
+## 262 — 2026-10-16 08:24:50 — previz 人偶带上手持物（锤、盾、剑）
+
+> target_artifacts:
+>   - tools/shot_overhead.py
+>   - tools/overhead_previz.py
+>   - tools/previz/build_previz.py
+>   - tools/previz/planschema.py
+>   - .agents/skills/ai-videos-pipeline/modules/prompts-overhead.md
+>   - .agents/skills/ai-videos-pipeline/modules/prompts-previz.md
+> severity: medium
+
+### 指令
+
+（shengji_zhilu follow-up 056「没覆盖的应该覆盖」中的「previz 人偶带锤」一项。）六模块剧的 previz 人偶不带手持物：亚伦那把一米二的双手锤在 previz 里看不到，锤的挥打、格挡、命中只在 overhead 的 `[[hit]]` 等机检，视频预演里核对不了。补上：overhead 能写清每个人什么时候带着什么（在手里 / 背在身后），previz 人偶据此带上这件东西——在手里时跟着手的握法动，背在身后时斜背（锤头在右肩后上方、柄落向左腰）；做成通用的手持物（锤、盾、剑、斧、镐、棒、叉），至少锤做对。
+
+### 摘要
+
+- overhead.toml 新段 `[[carry]]`：who · what（锤 / 斧 / 剑 / 镐 / 棒 / 叉 / 盾，与 `[[hit]].with` 同一套）· on（手 / 背）· t0 / t1（缺省整镜）· key（道具卡号，可选）· len · grip · shape · note。持盾仍写 `[[actor]] shield`，previz 由它出盾。
+- 机检（blocker）：carry 的人、件、位置、时段合法；同一人同一件时段不重叠；同 key 的东西不同时在两个人身上，也不同时是地上的 `[[prop]]`；用兵器出手的 `[[hit]]`（含故意落空）那一刻出手的人手里要有这件（盾看 shield）。
+- previz：`overhead_previz.py` 把 carry 写成 `[[角色.持物]]`——在手里的握法跟着这一刻 `[[pose]]` 里的持物姿态走（双手低握、前砸、扛肩R、靠腿、单手握R……），没写取该件的默认握法；背在身后用引擎新姿态「斜背」（盾用「背盾」）。用兵器的 `[[hit]]`（不落空）抄成 `[[命中]]`，渲染时查锤头真的贴到目标。持物件的默认长度与握法表放 `tools/previz/planschema.py` 一处。
+
+---
+
+
+## 263 — 2026-10-16 09:40:00 — Codex 出图超时在 Windows 上杀不掉子进程
+
+> target_artifacts:
+>   - tools/codex_image.py
+>   - tools/tests/test_codex_image.py
+> severity: medium
+
+### 指令
+
+（shengji_zhilu follow-up 056 重出背景时发现。）`tools/codex_image.py` 的 900 秒超时在 Windows 上不生效：`subprocess.run` 超时只杀 `codex.CMD` 外壳，node / codex 子进程还握着管道，脚本一直挂到 Codex 自己放弃（实测 24–40 分钟），代理只能按 PID 手动杀。改成超时时杀整棵进程树（Windows `taskkill /T /F`，其他系统进程组），超时后照旧按「结果未知、不自动重提」处理。
+
+## 264 — 2026-10-16 20:27:05 — 从流程中彻底删除 R2 媒体同步
+
+> target_artifacts:
+>   - tools/assets_sync.py
+>   - tools/assets/
+>   - ai_videos/assets.json
+>   - requirements.txt
+>   - .gitignore
+>   - AGENTS.md
+>   - CONVENTIONS.md
+>   - .agents/skills/ai-videos-pipeline/resources/assets.md
+>   - .agents/references/project/paid_services.md
+>   - .agents/references/project/workflow_catalog.json
+>   - projects/ai_video_management/README.md
+> severity: medium
+
+### 指令
+
+用户：「R2 这部分已经不需要了，把这部分彻底从流程删除掉」。媒体不再同步到 Cloudflare R2：删除同步工具、索引与 git hooks 模板，规范与 skills 里不再要求「媒体走 R2、先传字节再提交索引」。媒体仍然不进 git（`.gitignore` 规则保留），只存本机。
+
+## 265 — 2026-10-16 20:44:10 — 出片分两步：先 480p 草稿，用户审过再用它出 720p
+
+### 指令
+
+用户：「帮我加一个 step，因为生成 480p 的 cost 比较低，时间比较快，所以我们可以先生成一版 480p，等我审核过之后，再用它生成 720p」。出片改成两步：第一步按资料包出 480p 草稿；用户审过草稿、标记通过后，第二步出 720p 正式条，并把通过的 480p 草稿作为参考视频一起提交（「用它生成」），让 720p 沿用草稿的镜头、走位、表演与节奏。
+
+## 266 — 2026-10-16 21:14:30 — 草稿条单独放在每镜的 drafts/ 目录
+
+### 指令
+
+用户：「帮我把 ep1 scene1、scene2 的所有 shot 都生成一遍 480p 草稿，草稿应该存在他自己的一个特殊 folder 里，在每个 shot 下面的」。草稿条不再和正式条混在 `renders/` 里，改放每镜自己的 `drafts/{条}/`；正式条仍在 `renders/{条}/`。
+
+## 267 — 2026-10-16 21:52:03 — 场次页加「草稿」tab：全场镜头草稿缩略图，点开放大预览
+
+### 指令
+
+用户：「帮我加一个 feature，在每个 scene 的 page，比如 ep1_s1，给我一个草稿 tab，点击后帮我展示所有 shot 的 MP4 的缩略版，点击我可以选择性放大 preview」。
+
+---
+
+## 268 — 2026-10-17 09:40:00 — 整合两份开源动作 skill，新增影视改编「动作戏」页
+
+> target_artifacts:
+>   - .agents/skills/ai-videos-pipeline/modules/filming-action.md（新）
+>   - .agents/skills/ai-videos-pipeline/modules/{filming,filming-scenes,filming-scene-anatomy,decisions,prompts-seedance,prompts-overhead}.md
+>   - .agents/references/project/{workflow_catalog.json,ai_video_workflow.md}
+> severity: low
+
+### 指令
+
+用户调研网上专门设计 AI 剧打斗戏的 skill 后：「帮我把前两个 skill consolidate 一下，然后加入流程」。前两个＝irenerachel/fight-prompt-director 与 twj515895394/video-combat-skill。
+
+### 执行边界（代理判断）
+
+- 不另装第三方 skill：整合成共用 pipeline 的一页指南（唯一源），放影视改编「场」下（1.2.3.2），因为编排是创作，属于影视改编；编译仍只做确定性转换。
+- fight-prompt-director 是 MIT，video-combat-skill 未声明许可：都用自己的话重写方法，不转抄原文；出处、提交号与取舍写在 `.audit/adhoc_agents/2026-10-17/fight-skills/sources.md`。
+- 原 skill 一条 15 秒 prompt 出三套强度；本流程按镜拆分，三套强度只作用户要比较时的候选。沿用已有 overhead 机检键，不新增工具或字段。
+- 只做打斗类；感情戏没有可整合的 skill，不在本次范围。
+
+### 摘要
+
+- 新页 `filming-action.md`（动作戏）：先定这场打什么（完成条件、赌注、打法档案、空间、资源、主动权）→ 选结构（双人、一对多、人兽、Boss、突围、环境、远程）→ 每一拍因果链与接触分级 → 多人调度 → 人对兽 → 拆镜与镜头职责 → 写进分镜与 overhead → 出片后单变量诊断。
+- 接入：`filming.md` 设计步骤、`filming-scenes.md` 子页表、`filming-scene-anatomy.md`「冲突 · 身体」、`decisions.md` 场级记录加「动作设计」小节、`prompts-seedance.md`「动作与表演」加打斗行、`prompts-overhead.md` 机检键旁加链接；`workflow_catalog.json` 登记（1.2.3.2）、`ai_video_workflow.md` 记一句。
+
+---
+
+## 269 — 2026-10-17 11:45:58 — 剪辑模块（5_剪辑）做成页面，草稿剪辑与正片剪辑分开
+
+### 指令
+
+用户：「cut 好的 MP4 在哪，我要在 UI 上 preview」「从 UI 上怎么 navigate 到这里？」「对，逐渐把模块 5 构建出来，但是要区分草稿的剪辑和正片的剪辑，现在这个是草稿」。
+
+## 270 — 2026-10-17 13:50:00 — 图片只用 ElevenLabs 或 Codex 内置出图，即梦只用于视频
+
+### 指令
+
+用户：「顺便帮我加入流程，出任意图片之后只有两个选择，eleven labs 或者 codex imagegen，dreamina 只用来生成视频」。
+
+## 271 — 2026-10-17 20:40:00 — 分镜场页面加「场的走位图」（俯视简图，人与物的位置、编号虚线轨迹）
+
+### 指令
+
+用户：在影视改编的场页面（如 `/drama?drama=ai_videos/shengji_zhilu&episode=ep01&module=filming&scene=s1`）除了文字，还要看到一张俯视图：大概背景的简笔画，用颜色和形状（红色圆形、方块、蓝色三角等）表示重要的人或物，看得出站位与相互位置；用箭头和虚线画出他们在这一场的运动轨迹，多条虚线标 1、2、3。加到所有场。
+
+## 272 — 2026-10-17 23:40:00 — 出片工具：用户明确要求时可不经草稿直接出正式条
+
+### 指令
+
+用户要求 shengji_zhilu EP1 s1 直接出 720p 正式条，并在两步出片的提问里选了「直接出 720p 正式条」。
+
+## 273 — 2026-10-17 23:55:00 — 场次页加「正片」审片标签：每镜一格，永远显示最新的正式条
+
+### 指令
+
+用户：UI 上除了草稿 review 标签页，也要一个正片 review 页面，永远显示每个 shot 最新的 MP4，每个 shot 一格。
+
+## 274 — 2026-10-18 00:30:00 — 编译器 v10：同一张卡在镜内站了几个人就写几个人
+
+### 指令
+
+用户要求代理自查。查到 shengji EP1 s1 st1 只出了一名门卫，而分镜写两名：编译后的 prompt「人物」行只描述一个「北郡门卫」，要求行的「每个人物只出现一次、不要分身」与负面词「同一人物出现两次、多出来的人」把第二名压掉；唯一的例外句把门卫叫「动物」。
+
+## 275 — 2026-10-17 22:55:00 — 出图默认 ElevenLabs，额度不够才换 Codex
+
+### 指令
+
+用户：「请加上默认使用eleven labs生成图片，没有quota 再用codex 生成。」（同一对话里先要求 shengji EP1 s2 背景图用 ElevenLabs 重出、高清真实。）
+
+## 276 — 2026-10-18 03:10:00 — 编译器 v11：同卡多人不再写「多出来的人」；镜头可带首帧图
+
+### 指令
+
+用户：「怎么又变回一个守卫了？而且离墙很远，为什么之前说的问题反复出现？」随后：「没事不用担心费用，按你说的来，重新生成」（方案：改编译器去掉与人数冲突的负面词；s1 st1 先出首帧图钉住站位再出视频）。
+
+## 277 — 2026-10-18 09:00:00 — 剪辑：集级接场与转场工具箱
+
+### 指令
+
+用户：「你能帮我锁片，然后加入转场么，我要看看效果」；「转场应该有很多选择，帮我做好tool box，我们到时候可以选择，帮我做好s1 和s2的转场」。
+
+## 278 — 2026-10-18 10:20:00 — 剪辑页加「整集」
+
+### 指令
+
+用户：「请给我ui的url，我可以直接点击，我需要再ui上能browse」。
+
+## 279 — 2026-10-18 10:55:00 — 资料包检查：走位预演视频必须按当前 overhead 渲染
+
+### 指令
+
+用户：「你可以review下scene4，没什么问题的话，你开始出scene4 的720p正片」。
+
+## 280 — 2026-10-18 11:20:00 — 侧栏文件树按需加载；文件变化自动推到页面
+
+### 指令
+
+用户：「每次你做完我都要重新刷新url才能看到新的update，但是load时间越来越长了，有没有解决方案」；「先做1，3」。
+
+
+## 281 — 2026-10-18 14:40:00 — 默认所有镜头都不做 previz
+
+### 指令
+
+用户：「是不是你用了previz？ 感觉效果更差了，请拿掉previz，我们default所有镜头都不加previz了，需要加的我们单独处理。」
+
+
+## 282 — 2026-10-18 15:45:00 — 镜头可单独放开剧级负面词（编译器 v12）
+
+### 指令
+
+用户确认 shengji EP1 s5 重写方案（「好的」），其中写明：「夸张金光」只对圣光那几镜放开，「人物自发光、瞳孔发光」照旧禁止。

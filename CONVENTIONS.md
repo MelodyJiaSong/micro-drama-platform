@@ -37,9 +37,9 @@ Rules:
 
 委派涉及外部服务调用时，主代理须在任务说明中传递本契约、目标归属及共用文档路径；执行者自行完成调用前记录，不能由主代理事后补造。运行时无法观察 CLI 内部 HTTP 或无法拦截外部已安装工具的边界，按服务文档明确报告。
 
-## 场景 / 背景图片的生成服务
+## 图片的生成服务
 
-Claude、Codex 与子任务为所有剧生成或重生成 scene/bg 图片（世界锚点、场景锚点、各方向 plate、时间/天气变体及 shot 专用背景）时，只能使用 **GPT 最新图像模型或 ElevenLabs**；**禁止 Dreamina/Seedream，包括 auto 模式失败后的回退**。新剧全程执行，旧剧今后的调用同样执行；不据此批量重生旧资产。人物、道具、装备和 Seedance 视频不在本条图片范围内。
+Claude、Codex 与子任务为所有剧生成或重生成**任何图片**（人物与换装、怪物、道具与物件、装备、scene/bg 的世界锚点、场景锚点、各方向 plate、时间/天气变体、shot 专用背景与镜头图）时，只有两个选择：**Codex 内置出图（`tools/codex_image.py`）或 ElevenLabs（GPT 最新图像模型）**，auto 顺序 ElevenLabs → Codex（ElevenLabs 额度 / 套餐不够才换 Codex，2026-10-17 用户定，follow-up 275）；**禁止 Dreamina/Seedream 出图，包括 auto 模式失败后的回退**。**Dreamina 只用于视频（Seedance）**。2026-10-17 用户定（ai_video_management follow-up 270，取代 238 的「即梦作图片最低选项」；scene/bg 自 2026-10-03 起已如此）。新剧全程执行，旧剧今后的调用同样执行；旧即梦图是否重出逐剧决定。
 
 指定“GPT 最新模型”时，调用前核对官方文档及实际入口支持的型号，记录实际 model_id；型号不公开的内置工具不能声称已验证最新具体型号。模型不可用时报告，不能静默降级或改用 Dreamina。服务与型号、完整 prompt、参考文件哈希、生成 ID、费用/未知费用继续按上节先记请求；出图后逐张看图并绑定新 SHA 审图，替换资产后同步、检查受影响资料包。执行入口：`tools/gen_bg_images.py` / `tools/image_engine.py`；详见 `.agents/references/project/paid_services.md`。
 
@@ -111,12 +111,12 @@ The procedural detail for each coordinated stage lives in `.agents/skills/agent-
 
 ## AI 短剧创作
 
-three-module-v1的影视改编按episode→scene→shot组织。scene表示剧情场次，环境资产称background（《魔兽世界》资产目录已迁为background）。分镜及prompt契约唯一正文在共用pipeline modules/filming.md与prompts.md；稳定key采用ep1_s1_st1，编号不随重排改变。历史日志不回写，媒体迁移保持字节及bg编号并同步实际路径引用和R2索引。
+three-module-v1的影视改编按episode→scene→shot组织。scene表示剧情场次，环境资产称background（《魔兽世界》资产目录已迁为background）。分镜及prompt契约唯一正文在共用pipeline modules/filming.md与prompts.md；稳定key采用ep1_s1_st1，编号不随重排改变。历史日志不回写，媒体迁移保持字节及bg编号并同步实际路径引用。
 
 新流程为六个模块：故事创作 → 影视改编 → Prompt 编译与出片 → 剪辑 → 声音与音乐 → 成片交付（后三个待设计、暂无集文档）；Research 与资产独立支持。`workflow.json` 声明 `three-module-v1`，本剧输入输出在 `episodes/epNN/{story,filming,prompts}.json`。
 唯一编排源是 `.agents/skills/ai-videos-pipeline/SKILL.md` 及其 `modules/`、`resources/`。
 一次只改一个模块；下游提出上游修改请求，不擅自重写。上游确定版本后交接，上游改变则下游保留并标记待更新。创作结果绑定输入版本；prompt编译是固定转换。
-旧流程（0–7 阶段、规则库、审查 skills 与工具、评测系统）已于 2026-10-11 删除（ai_video_management follow-up 233）；旧剧目录只作数据保留并在根目录放 `OBSOLETE.md`，不再续跑旧流程。新结构先在魔兽世界落地。服务审计、人工生成/剪辑和R2媒体契约继续有效。
+旧流程（0–7 阶段、规则库、审查 skills 与工具、评测系统）已于 2026-10-11 删除（ai_video_management follow-up 233）；旧剧目录只作数据保留并在根目录放 `OBSOLETE.md`，不再续跑旧流程。新结构先在魔兽世界落地。服务审计、人工生成/剪辑继续有效。
 
 ## Skill + playbook naming
 
@@ -171,10 +171,10 @@ The spec_driven webapp's `EXPOSED_TREE` recursive globs (`.agents/skills/agent-t
 ## AI video rules (under `ai_videos/`)
 
 - **外部服务调用必留痕**：遵本文件 § 外部服务请求审计（全局必经）及 `.agents/references/project/paid_services.md`；所有剧与独立调用均适用。
-- **出图与出片的授权（2026-10-10 用户定，follow-up 229）**：**图片**（场景 / 背景变体、人物、物件）成本低，代理在修一致性问题时（例如背景图的时辰、光线与场次不符）可以直接重出或新出，不用先问；照常先写请求日志，引擎按 `tools/image_engine.py`（2026-10-11 起 follow-up 238：Codex 内置出图 → ElevenLabs → Dreamina CLI，即梦是最低选项，前面都不行才用；scene/bg 不用即梦）。**视频**生成仍要用户决定，「生成」永远人点。
+- **出图与出片的授权（2026-10-10 用户定，follow-up 229）**：**图片**（场景 / 背景变体、人物、物件）成本低，代理在修一致性问题时（例如背景图的时辰、光线与场次不符）可以直接重出或新出，不用先问；照常先写请求日志，引擎按 `tools/image_engine.py`（2026-10-17 起：ElevenLabs → Codex 内置出图，额度不够才换，follow-up 275；图片不用即梦，即梦只用于视频，follow-up 270）。**视频**生成仍要用户决定，「生成」永远人点。
 - **镜头时长（2026-10-10 用户定，follow-up 229）**：overhead、静帧或子代理发现镜头时长不够（走不完、景别到不了、动作塞不下），代理直接改分镜时长并同步分拍、overhead，写进场级决策记录；不用先问。
 - **声音**：Seedance prompt明确保留本镜指定对白、自然环境声和动作声，禁止背景音乐/配乐，无对白镜明确没有人说话，出片后试听核对；由Prompt编译固定写入（见 `.agents/skills/ai-videos-pipeline/modules/prompts-rules.md`），配乐在后期独立设计。
-- **媒体走 R2 不走 git**：`ai_videos/assets.json` 是索引，`tools/assets_sync.py`；先传字节再提交索引。
+- **媒体不进 git**：`ai_videos/` 下的图片、视频、音频由 `.gitignore` 排除，只存本机；不再同步到 R2（2026-10-16 起，ai_video_management follow-up 264）。
 - 单剧偏离写 `specs/ai_video/{name}/` 的 divergence。
 
 ## Event stream

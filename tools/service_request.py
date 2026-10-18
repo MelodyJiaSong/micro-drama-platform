@@ -133,8 +133,8 @@ class RequestLog:
     def invoke(self, provider: str, operation: str, request: dict[str, Any], call: Callable[[], T]) -> T:
         op = operation.lower()
         if provider.lower() == "dreamina" and (op in {"text2image", "image2image", "imagegen", "generate_image"} or op.startswith("post ") and "image" in op):
-            from tools.image_engine import reject_dreamina_scene
-            reject_dreamina_scene(self.target, str(request.get("prompt", "")))
+            from tools.image_engine import reject_dreamina_image   # 即梦只用于视频（follow-up 270）
+            reject_dreamina_image(self.target, str(request.get("prompt", "")))
         common = {"request_id": uuid.uuid4().hex, "provider": provider, "operation": operation,
                   "target": str(self.target), "pid": os.getpid()}
         clock = lambda: datetime.now(timezone.utc).isoformat(timespec="milliseconds")
@@ -185,12 +185,8 @@ class RequestLog:
 
     def cli(self, command: list[str], **kwargs: Any) -> subprocess.CompletedProcess:
         if len(command) > 1 and command[1] in {"text2image", "image2image"}:
-            from tools.image_engine import reject_dreamina_scene
-            prompt = next((a.split("=", 1)[1] for a in command if a.startswith("--prompt=")), "")
-            if not prompt and "--prompt" in command:
-                i = command.index("--prompt")
-                prompt = command[i + 1] if i + 1 < len(command) else ""
-            reject_dreamina_scene(self.target, prompt)
+            from tools.image_engine import reject_dreamina_image   # 即梦只用于视频（follow-up 270）
+            reject_dreamina_image(self.target)
         files = []
         for i, arg in enumerate(command):
             flag, _, value = arg.partition("=")

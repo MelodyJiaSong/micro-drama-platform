@@ -27,6 +27,8 @@ from libs.application.commands.episode_workflow__command import EpisodeWorkflowC
 from libs.application.commands.file__command import FileCommand
 from libs.application.commands.media__command import MediaCommand
 from libs.application.commands.research__command import ResearchCommand
+from libs.application.commands.review_reel__command import ReviewReelCommand
+from libs.application.commands.shot_take__command import ShotTakeCommand
 from libs.application.queries.character__query import CharacterQuery
 from libs.application.queries.episode_workflow__query import EpisodeWorkflowQuery
 from libs.application.queries.file__query import FileQuery
@@ -34,6 +36,8 @@ from libs.application.queries.global_workflow__query import GlobalWorkflowQuery
 from libs.application.queries.media__query import MediaQuery
 from libs.application.queries.request_log__query import RequestLogQuery
 from libs.application.queries.research__query import ResearchQuery
+from libs.application.queries.review_reel__query import ReviewReelQuery
+from libs.application.queries.scene_cut__query import SceneCutQuery
 from libs.application.queries.tree__query import TreeQuery
 from libs.common.exposed_tree import ExposedTree
 from libs.common.origin import BoundOrigin
@@ -46,6 +50,8 @@ from libs.infrastructure.readers.global_workflow__reader import GlobalWorkflowRe
 from libs.infrastructure.readers.prop_route__reader import PropKeyRouter
 from libs.infrastructure.readers.request_log__reader import RequestLogReader
 from libs.infrastructure.readers.research__reader import ResearchReader
+from libs.infrastructure.readers.review_reel__reader import ReviewReelReader
+from libs.infrastructure.readers.scene_cut__reader import SceneCutReader
 from libs.infrastructure.readers.scene_registry__reader import SceneRegistryReader
 from libs.infrastructure.readers.scene_route__reader import SceneKeyRouter
 from libs.infrastructure.readers.shot_materials__reader import ShotMaterialsReader
@@ -56,6 +62,9 @@ from libs.infrastructure.writers.episode_workflow__writer import EpisodeWorkflow
 from libs.infrastructure.writers.file__writer import FileWriter
 from libs.infrastructure.writers.media__writer import MediaArchiver, MediaRenamer
 from libs.infrastructure.writers.research__writer import ResearchWriter
+from libs.infrastructure.writers.review_reel__writer import ReviewReelWriter
+from libs.infrastructure.writers.shot_take__writer import ShotTakeWriter
+from libs.infrastructure.watchers.file_change__watcher import FileChangeWatcher
 
 
 class Container(containers.DeclarativeContainer):
@@ -71,6 +80,16 @@ class Container(containers.DeclarativeContainer):
     episode_workflow_query = providers.Factory(EpisodeWorkflowQuery, reader=episode_workflow_reader)
     episode_workflow_command = providers.Factory(EpisodeWorkflowCommand, reader=episode_workflow_reader, writer=episode_workflow_writer,
                                                  materials=shot_materials_reader)
+    # 整集审片串联（follow-up 260）：writer 是单例，记着正在拼的任务
+    review_reel_reader = providers.Singleton(ReviewReelReader, repo_root=repo_root_path)
+    review_reel_writer = providers.Singleton(ReviewReelWriter, repo_root=repo_root_path)
+    review_reel_query = providers.Factory(ReviewReelQuery, reader=review_reel_reader)
+    review_reel_command = providers.Factory(ReviewReelCommand, reader=review_reel_reader, writer=review_reel_writer)
+    scene_cut_reader = providers.Singleton(SceneCutReader, repo_root=repo_root_path)
+    scene_cut_query = providers.Factory(SceneCutQuery, reader=scene_cut_reader)
+    # 草稿条的用户审核（follow-up 265）
+    shot_take_writer = providers.Singleton(ShotTakeWriter, repo_root=repo_root_path)
+    shot_take_command = providers.Factory(ShotTakeCommand, writer=shot_take_writer)
     global_workflow_reader = providers.Singleton(GlobalWorkflowReader, repo_root=repo_root_path)
     global_workflow_query = providers.Factory(GlobalWorkflowQuery, reader=global_workflow_reader)
 
@@ -93,6 +112,10 @@ class Container(containers.DeclarativeContainer):
     )
     tree_reader: providers.Singleton[TreeReader] = providers.Singleton(
         TreeReader, exposed=exposed_tree, scene_registry=scene_registry_reader
+    )
+    # Live updates (follow-up 280): one ai_videos/ watcher per process, fanned out to /api/events.
+    file_change_watcher: providers.Singleton[FileChangeWatcher] = providers.Singleton(
+        FileChangeWatcher, exposed=exposed_tree
     )
     media_renamer: providers.Singleton[MediaRenamer] = providers.Singleton(
         MediaRenamer, exposed=exposed_tree, resolver=safe_resolver
