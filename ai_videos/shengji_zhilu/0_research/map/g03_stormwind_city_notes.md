@@ -11,7 +11,7 @@
 
 | 文件 | 用到了什么 |
 |---|---|
-| `ai_videos/shikong_lvxing/sk2/0_research/parts/w1_city_layout.md`（1432 行，全文读完） | 八区关系、GM 世界坐标 14 锚点、10 条相邻关系的双向对账、版本错置清单 14 条、未查 8 条 |
+| 〔旧 sk2 考据，已删除〕（1432 行，全文读完） | 八区关系、GM 世界坐标 14 锚点、10 条相邻关系的双向对账、版本错置清单 14 条、未查 8 条 |
 | `.../parts/w2_architecture.md`（landmark.001–036 段） | 全部 `look_zh` 的画面素材（雕像尺度、藤蔓塔、钴蓝内厅、蓝灰石板屋顶、月亮井形制、水中石堡形制） |
 | `.../parts/w7_deeprun_tram.md`（claim 清单全读） | 矿道地铁的形制、时刻、两端站、地下湖、Vanilla/非 Vanilla 分界 |
 | `.../dossier.md`、`.../look_from_images.md`、`.../parts/w6_daily_blacklist.md`（grep 核对） | 「全城唯一旅店」的反证、阿隆索斯·法奥裁定、店名作为子区域名的清单 |

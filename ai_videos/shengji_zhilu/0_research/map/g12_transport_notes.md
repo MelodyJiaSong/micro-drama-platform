@@ -94,7 +94,7 @@ confidence: medium
 
 ### 1.4 复用的仓库既有资产
 
-`ai_videos/shikong_lvxing/sk2/0_research/parts/w7_deeprun_tram.md`（矿道地铁 6 万字专项，含 40+ 条带 quote 的事实）
+〔旧 sk2 考据，已删除〕（矿道地铁 6 万字专项，含 40+ 条带 quote 的事实）
 与 `parts/w1_city_layout.md`（暴风城布局，含 GM 世界坐标 14 锚点）。
 **矿道地铁一节我没有重新调研，直接引用 sk2 的结论**，包括它那条最重要的纠错：
 官方简中译名是「**矿道地铁**」，不是「深铁矿道」；后者在中文魔兽语料里查不到任何官方出处。
@@ -359,7 +359,7 @@ confidence: medium
    加基森、永望镇、瑟银哨塔、塞纳里奥要塞同理。
 
 4. **矿道地铁直接引用 sk2 的既有调研，不要重查**：
-   `ai_videos/shikong_lvxing/sk2/0_research/parts/w7_deeprun_tram.md`（含站台形制、矿车、水下段、站内 NPC、可拍性分析）。
+   〔旧 sk2 考据，已删除〕（含站台形制、矿车、水下段、站内 NPC、可拍性分析）。
    **口播与字幕统一用「矿道地铁」**，不要写「深铁矿道」。
 
 5. **`直连` 字段慎用**（见 §3），**`coords` 大面积为空**（wowhead 403，见 §1.3）——

@@ -55,10 +55,8 @@ sys.stdout.reconfigure(encoding="utf-8")
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 from tools.service_request import RequestLog
-# 资产根按剧切换（原先写死在 sk1；sk3 开站后必须能指到别的剧）。
-# `--drama shikong_lvxing/sk3` 覆盖它；不传则沿用 sk1，旧命令行为不变。
-DRAMA_DEFAULT = "shikong_lvxing/sk1"
-A = REPO / "ai_videos" / "shikong_lvxing" / "sk1" / "2_世界观人设"
+# 资产根按剧切换：必须用 `--drama` 指定（相对 ai_videos/），main() 里赋值。
+A: Path
 API = "https://api.elevenlabs.io/v1"
 CTX = ssl.create_default_context()
 TMP = Path(os.environ.get("TEMP") or "/tmp")
@@ -284,8 +282,8 @@ def main() -> None:
     ap.add_argument("--aspect", default="1:1", help="物件三视图画幅")
     ap.add_argument("--scene-resolution", default="2K", choices=("1K", "2K", "4K"))
     ap.add_argument("--scene-aspect", default="16:9")
-    ap.add_argument("--drama", default=DRAMA_DEFAULT,
-                    help="资产根，相对 ai_videos/，如 shikong_lvxing/sk3")
+    ap.add_argument("--drama", required=True,
+                    help="资产根，相对 ai_videos/，如 shengji_zhilu")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--force", action="store_true", help="已存在也重出")
     args = ap.parse_args()

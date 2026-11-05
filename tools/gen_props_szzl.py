@@ -11,7 +11,7 @@
 
 ## rule 4g §B 四问（按顺序问，决定每个物件怎么建）
 
-1. 有现成资产吗 → 有就**买 / 复用**（本项目：先查 sk2 的 27 张道具卡）
+1. 有现成资产吗 → 有就**买 / 复用**
 2. 直线 / 模块 / 精确尺寸 → **脚本建**（`build` 字段 = `script`）
 3. 有机曲面 + 有界 + 只有图 → **image-to-3D**（`build` = `i23d`）
 4. **环境 → 永不用 image-to-3D**（生成式给不出直角、统一地平面与重复开间节奏）
@@ -512,8 +512,6 @@ def main() -> int:
         print(f"  {p.key:22} {p.build:7} 锁定串 {len(p.lock):>2} 字")
     print(f"\n写出 {len(PROPS)} 张物件卡 → {ROOT}/")
     print("  按建法分：" + " · ".join(f"{k} {v}" for k, v in sorted(by_build.items())))
-    print("  提醒：sk2 已有 27 张道具卡（炉石 / 钱袋 / 木桶 / 石井 / 苹果树 / 石凳 / 街灯…），")
-    print("        建新卡前先查 `0_research/sk2_reuse.md`，能复用的不要重复出图。")
     return 0
 
 

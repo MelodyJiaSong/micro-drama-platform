@@ -5,7 +5,7 @@
     python tools/char_assets.py run    shengji_zhilu [--only c1,m3] [--steps portrait,video,views] [--dry-run]
     python tools/char_assets.py sheet  shengji_zhilu [--only …] [--what portrait|views]   # 拼审图用的联系表，打印 png 路径
 
-剧 ＝ `ai_videos/` 下的目录名或相对路径（`shengji_zhilu`、`shikong_lvxing/sk2`；可带 `ai_videos/` 前缀）。
+剧 ＝ `ai_videos/` 下的目录名或相对路径（`shengji_zhilu`、`xianjian_yi/xj1`；可带 `ai_videos/` 前缀）。
 每一步只做缺的：
   portrait  卡里有立绘块、还没有 `{卡目录}.png`        → `tools/gen_char_images.py run`（引擎按 `tools/image_engine.py`，画幅读卡）
   video     有 `{卡目录}_turntable` 块、有立绘、还没有原始建立视频 → `tools/gen_turntable_videos.py`（Seedance 2.5 · 720p · 画幅读卡）
@@ -44,12 +44,12 @@ def drama_rel(name: str) -> str:
     name = name.replace("\\", "/").strip("/").removeprefix("ai_videos/")
     top = AI / name
     if not name or not top.is_dir():
-        raise SystemExit(f"ai_videos/ 下没有「{name}」：用剧目录名或相对路径，如 shengji_zhilu、shikong_lvxing/sk2")
+        raise SystemExit(f"ai_videos/ 下没有「{name}」：用剧目录名或相对路径，如 shengji_zhilu、xianjian_yi/xj1")
     hits = sorted(c.parent.parent for c in [top / "2_世界观人设" / "characters", *top.glob("*/2_世界观人设/characters")]
                   if c.is_dir())
     if len(hits) != 1:
         raise SystemExit(f"{top.relative_to(AI)} 下找到 {len(hits)} 个 2_世界观人设/characters："
-                         f"{[h.relative_to(AI).as_posix() for h in hits]}——用相对路径指定一季，如 shikong_lvxing/sk2")
+                         f"{[h.relative_to(AI).as_posix() for h in hits]}——用相对路径指定一季，如 xianjian_yi/xj1")
     return hits[0].relative_to(AI).as_posix()
 
 
@@ -195,7 +195,7 @@ def sheet(rel: str, only: list[str], what: str) -> None:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("step", choices=("status", "run", "sheet"))
-    ap.add_argument("drama", help="ai_videos/ 下的剧目录名或相对路径，如 shengji_zhilu / shikong_lvxing/sk2")
+    ap.add_argument("drama", help="ai_videos/ 下的剧目录名或相对路径，如 shengji_zhilu / xianjian_yi/xj1")
     ap.add_argument("--only", default="", help="逗号分隔的卡号，如 c1,m3")
     ap.add_argument("--steps", default="portrait,video,views")
     ap.add_argument("--model", default="seedance2.5", choices=gtv.MODELS)

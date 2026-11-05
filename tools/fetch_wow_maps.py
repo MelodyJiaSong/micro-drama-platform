@@ -30,7 +30,7 @@ wiki 上同一个区有七八个版本。本剧锚定 **Vanilla 1.12**，而 **4
 **硬排除**：`-tbc` / `-cata` / `-wotlk` / `-mop` / `-legion` / `-bfa` / `-alpha` / `-beta` /
 `-old*` / `PetBattle` / 结尾数字的重复版。每张图的实际版本写进 `refs.md`，**拿不到 c60 的会在结尾单独列出来警告**。
 
-## 用途边界（`divergence #8` / sk2 `#108`，不可商量）
+## 用途边界（`divergence #8`，不可商量）
 
 **图只进人眼，不进模型。** 唯一用途是人（含 Claude 读图）逐张看过、把地貌与布局写成**中文锁定串**，
 锁定串才进 prompt。**一张都不上传给生成模型**——① 暴雪美术资产不可再分发；
@@ -165,7 +165,7 @@ def write_refs_md(d: str, z: dict, got: list[tuple[str, str, str, dict]], zid: s
     io.open(os.path.join(d, "refs.md"), "w", encoding="utf-8", newline="\n").write(
         f"""# 参考图 · {z['name_zh']}（{z['name_en']}）
 
-> **用途边界（`divergence #8` / sk2 `#108`，不可商量）：图只进人眼，不进模型。**
+> **用途边界（`divergence #8`，不可商量）：图只进人眼，不进模型。**
 > 唯一用途是人逐张看过、把地貌与布局写成**中文锁定串**，锁定串才进 prompt。
 > **一张都不上传给生成模型**——① 暴雪美术资产不可再分发；
 > ② 实测「喂图出图」会把游戏引擎的光照与材质 1:1 带进画面，正是半写实路线要防的那件事。

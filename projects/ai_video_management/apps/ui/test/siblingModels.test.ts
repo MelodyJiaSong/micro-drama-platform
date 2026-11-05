@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import { findSubfolderModels } from "../src/components/SiblingMedia";
 import { collectFilePaths } from "../src/lib/linkResolver";
 
-const PROP = "ai_videos/shikong_lvxing/sk1/2_世界观人设/props/p19_独轮串车";
-const MD = `${PROP}/p19_独轮串车.md`;
+const PROP = "ai_videos/my_series/ep1/2_世界观人设/props/p19_cart";
+const MD = `${PROP}/p19_cart.md`;
 
 describe("findSubfolderModels", () => {
   it("pulls a whitemodel/ mesh up onto the prop card", () => {

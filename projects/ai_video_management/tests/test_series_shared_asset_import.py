@@ -1,8 +1,8 @@
 """A series member's Downloads import also routes into the series' `_series/` assets.
 
-Regression guard for sk1 (2026-09-14): the shared character card
-`ai_videos/shikong_lvxing/_series/characters/c1_林问/` (prompt head
-`c1-1_林问立绘`) could never receive its download. `_series` is not a drama, so
+Regression guard (2026-09-14): a series' shared character card
+`ai_videos/<series>/_series/characters/c1_<name>/` (prompt head
+`c1-1_<name>立绘`) could never receive its download. `_series` is not a drama, so
 `DownloadsImporter._collect_candidates` only saw the episode's own
 `2_世界观人设/{characters,scenes,props}` — and an episode-local `c1_林问/`
 duplicate silently took the file instead.

@@ -39,7 +39,7 @@
 | `curl` 直连 `warcraft.wiki.gg/api.php` | 被 wiki.gg 的反爬拦成 `Blocked` 页 | 只能走 WebFetch，无法批量 API 取页 |
 
 **sk2 既有资产已复用**：暴风城城市布局不重新调研，树里 `stormwind_gate` 的 `note_zh`
-直接指向 `ai_videos/shikong_lvxing/sk2/0_research/parts/w1_city_layout.md`，
+直接指向 〔旧 sk2 考据，已删除〕，
 本树在城门处**停住不往城里挂节点**，避免与 sk2 的 8 区成果重复出处。
 
 ### 1.3 中文译名是怎么拿到的（灰机全灭之后的替代路径）

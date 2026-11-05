@@ -58,7 +58,7 @@ CRY = "## 叫声设计"
 def chars_dir(drama: str) -> Path:
     d = REPO / "ai_videos" / drama / "2_世界观人设" / "characters"
     if not d.is_dir():
-        raise SystemExit(f"没有 {d.relative_to(REPO)}（--drama 相对 ai_videos/，如 shengji_zhilu、shikong_lvxing/sk2）")
+        raise SystemExit(f"没有 {d.relative_to(REPO)}（--drama 相对 ai_videos/，如 shengji_zhilu、xianjian_yi/xj1）")
     return d
 
 

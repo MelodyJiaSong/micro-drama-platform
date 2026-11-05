@@ -329,7 +329,7 @@
    奥格瑞玛 1637 / 雷霆崖 1638；按 `ParentAreaID` 递归即得全部子区域。
 
 7. **暴风城已有资产未被本片区用到**（本片区不含暴风城），
-   但下游做联盟侧对照时可直接引用 `ai_videos/shikong_lvxing/sk2/0_research/parts/w1_city_layout.md`。
+   但下游做联盟侧对照时可直接引用 〔旧 sk2 考据，已删除〕。
 
 ---
 
