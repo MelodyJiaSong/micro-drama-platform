@@ -1,0 +1,1277 @@
+{
+ "id": "tiers",
+ "name": "位阶：灵魂的大功业",
+ "intro": "西幻的「境界」不照搬仙侠，取自欧洲自己的灵性炼金术：炼金术士相信，把铅炼成金就是把灵魂炼到完美（Magnum Opus，大功业）；古代密特拉秘仪有一架「七门梯」，七道门依次由铅、锡、铜、铁、合金、银、金铸成。本库据此用七种金属表示**灵魂成色**——铅、锡、铜、铁、汞、银、金（第五门的合金换成炼金术的汞；顺序、行星配对与每阶之恶都是本库重组，历史上没有单一原典）。\n\n**成色不是储量**。它不是靠打坐积累的修为，而是灵魂被「炼」到了什么纯度——像金匠用试金石验金一样可以被验出来。怎么被炼，各条路线完全不同：骑士靠功业与受封，神职靠授职与神恩，法师靠学位、杰作与入门秘仪，女巫靠入会与契约，契约师靠条款，血脉者靠觉醒（见 systems.md「各路线怎么升阶」）。\n\n**寿命不随位阶增长**。欧洲传统里长寿只来自外物与外力：生命之酒、贤者之石、契约、种族、神恩。唯一例外是金阶——炼金术里金不锈蚀，金阶者不再衰老。\n\n一个角色的实力由三条独立的轴决定：灵魂成色（本组）、天赋（先天，见「天赋与成长」）、头衔（组织授予，本组「路线头衔」，只写典型成色，不设硬门槛）。四相与「每阶之恶」是可选模块：不用时，突破就是一次「灵魂的黑夜」，内容由采用剧决定。",
+ "subgroups": [
+  {
+   "id": "metals",
+   "name": "七金属位阶与神话阶",
+   "intro": "人口比例为本库默认，用来定世界的稀有度；具体剧可调。屏幕上的「灵魂光泽」是全库统一的位阶视觉：力量爆发时，角色的瞳孔和周身光晕带出对应金属的质感。",
+   "entries": [
+    {
+     "id": "TR00",
+     "name": "原质",
+     "name_en": "Unwrought (Prima Materia)",
+     "aliases": [
+      "凡人",
+      "mundane",
+      "未炼者"
+     ],
+     "tier": "0",
+     "summary": "未觉醒的普通人。灵魂是混沌的原料，炼金术称为「原质」——人人都是，人人都有可能被炼成。",
+     "xianxia": {
+      "concept": "凡人",
+      "note": "差异：炼金观念里凡人不是「没有资格」，而是「尚未被炼」，强调潜能而非门槛。"
+     },
+     "details": {
+      "人口比例": "约九成人终生停留于此；武艺与手艺另计熟练度，不需要觉醒",
+      "能做什么": "使用不需要灵魂驱动的魔法物品（药剂、一次性卷轴、护身符）"
+     },
+     "visual": "无灵魂光泽。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "炼金术",
+       "note": "prima materia 原质"
+      }
+     ],
+     "relations": [
+      {
+       "target": "EV01",
+       "role": "下一步事件"
+      }
+     ],
+     "adoption": "default",
+     "image": {
+      "purpose": "magic",
+      "brief": "The hooded figure stands quietly in a dim grey space with no glow and no magic at all, only ordinary soft light on their worn wool cloak; at their feet a lump of dark raw clay rests on the stone floor, unformed. Calm, ordinary, full of unlit potential."
+     },
+     "basis": "tradition"
+    },
+    {
+     "id": "TR01",
+     "name": "铅阶",
+     "name_en": "Lead",
+     "aliases": [
+      "觉醒者",
+      "the Awakened",
+      "Saturn-souled"
+     ],
+     "tier": "1",
+     "summary": "灵魂苏醒：第一次感到力量的存在，能点燃微光、感应魔法与灵体，但储量极小，用一次就累。",
+     "xianxia": {
+      "concept": "炼气（参照）",
+      "note": "同为入门。差异：铅对应土星与忧郁，觉醒常伴随沉重与痛苦（大病、丧亲、濒死），而非打坐感气。"
+     },
+     "cost": "力量不稳定，情绪剧烈时会失控外泄。",
+     "details": {
+      "能做什么": "小戏法、感知魔法、短暂的英雄之光、基础祈祷",
+      "炼金/行星": "铅 · 土星",
+      "默认弧线·本阶之恶（可选模块）": "虚妄 Falsehood——离开铅阶要停止自欺：承认自己真正想要什么、害怕什么。",
+      "人口（每百万人，默认）": "约 6 万"
+     },
+     "visual": "暗沉的铅灰微光，像蒙尘的金属。",
+     "screen": {
+      "灵魂光泽": "铅灰 #6E7275，光晕暗淡、断续"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "炼金术七金属",
+       "note": "铅—土星，最贱的金属"
+      },
+      {
+       "work": "《赫尔墨斯文集·Poimandres》§25–26",
+       "note": "灵魂上升穿越七重天，每层交还一种恶习（本库按行星对应到金属）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TR02",
+       "role": "下一阶"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "magic",
+      "brief": "The hooded figure stands with fists clenched at their sides in a dim dark space; around them there is only a weak, dull, desaturated lead-grey glow in a few broken patches clinging close to the body, like tarnished pewter catching faint light, low brightness overall, a few heavy grey motes slowly sinking toward the floor. No gold, no bright colors, no swirls or ribbons of light. Subdued, heavy, just-awakened."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "TR02",
+     "name": "锡阶",
+     "name_en": "Tin",
+     "aliases": [
+      "Jupiter-souled",
+      "立基者"
+     ],
+     "tier": "2",
+     "summary": "力量第一次「立住」：能稳定地储存和引导，能与一件施法器或一个誓言建立联系。大多数正式学徒、新骑士停在这里。",
+     "xianxia": {
+      "concept": "筑基（参照）",
+      "note": "同为打基础。差异：西方的「基础」不在丹田，而在第一次缔结——绑定施法器、立誓、与使魔或土地建立联系。"
+     },
+     "cost": "缔结的对象一旦损毁，力量随之跌落。",
+     "details": {
+      "能做什么": "完整的基础法术、圣光小治疗、持续一场战斗的勇武",
+      "炼金/行星": "锡 · 木星",
+      "默认弧线·本阶之恶（可选模块）": "贪婪 Avarice——离开锡阶要放下对财富与占有的执念。",
+      "人口（每百万人，默认）": "约 2.5 万"
+     },
+     "visual": "苍白的锡银光，比铅亮，但仍偏冷偏灰。",
+     "screen": {
+      "灵魂光泽": "锡白 #B9BEC2，光晕稳定但单薄"
+     },
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "炼金术七金属",
+       "note": "锡—木星"
+      },
+      {
+       "work": "《赫尔墨斯文集·Poimandres》§25–26",
+       "note": "灵魂上升穿越七重天，每层交还一种恶习（本库按行星对应到金属）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TR03",
+       "role": "下一阶"
+      }
+     ],
+     "image": {
+      "version": 3,
+      "purpose": "aura",
+      "brief": "The figure holds a simple wooden staff. The glow is a thin, steady, cool pale tin-silver sheen no wider than a finger, hugging the body outline, and one faint thread of the same light runs from the hand into the staff. Restrained and stable."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "TR03",
+     "name": "铜阶",
+     "name_en": "Copper",
+     "aliases": [
+      "Venus-souled",
+      "导魂者"
+     ],
+     "tier": "3",
+     "summary": "灵魂变得「导电」：能把力量传给他人与物品——缔结使魔、把灵魂的一部分注入武器（让它认主）、以魅力和声音影响人心。",
+     "xianxia": {
+      "concept": "筑基后期至结丹前（参照）",
+      "note": "差异：铜对应金星与爱，这一阶的核心是「连结」——第一次把灵魂与器物、动物或他人联系起来（使魔、认主武器），而非凝结内核。"
+     },
+     "cost": "连结是双向的：认主的武器被毁、使魔死去，主人同受重伤。",
+     "details": {
+      "能做什么": "灵魂绑定器物与使魔、治疗重伤、鼓舞一队士兵",
+      "炼金/行星": "铜 · 金星",
+      "默认弧线·本阶之恶（可选模块）": "欲念 Lust——离开铜阶要让连结不再是占有：放手所爱。",
+      "人口（每百万人，默认）": "约 6000"
+     },
+     "visual": "温暖的玫瑰铜光，带铜绿色的边缘流光，光会沿接触物传导。",
+     "screen": {
+      "灵魂光泽": "玫瑰铜 #C7744A + 铜绿 #4FA38B 边缘"
+     },
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "炼金术七金属",
+       "note": "铜—金星"
+      },
+      {
+       "work": "《赫尔墨斯文集·Poimandres》§25–26",
+       "note": "灵魂上升穿越七重天，每层交还一种恶习（本库按行星对应到金属）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TR04",
+       "role": "下一阶"
+      },
+      {
+       "target": "GR06",
+       "role": "本阶解锁"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The hooded figure rests one hand on the hilt of a planted sword; a warm rose-copper glow surrounds them with verdigris-green shimmer along its edges, and the glow visibly flows down the arm into the sword like current through a wire, the sword's engravings lighting up in the same copper tone. Warm, connected, bonding."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "TR04",
+     "name": "铁阶",
+     "name_en": "Iron",
+     "aliases": [
+      "Mars-souled",
+      "铁魂"
+     ],
+     "tier": "4",
+     "summary": "灵魂淬火变硬：力量全面强化肉体与意志，能承受真正的战争与连续施法。王国的元帅、骑士团长、学院讲席大师多在这一阶。",
+     "xianxia": {
+      "concept": "结丹（参照）",
+      "note": "差异：铁对应火星与战争，标志是「淬火」——在一场真正的血战中把灵魂锻硬，西方叙事里这是职业强者的门槛。"
+     },
+     "cost": "铁会生锈：长期不战、不修，位阶光泽会暗淡（实力缓慢流失）。",
+     "details": {
+      "能做什么": "一人敌一队骑兵；高阶法术；圣光可驱散成群亡灵",
+      "炼金/行星": "铁 · 火星",
+      "默认弧线·本阶之恶（可选模块）": "鲁莽 Wrath & Rashness——离开铁阶要驯服愤怒与不顾后果的勇猛。",
+      "人口（每百万人，默认）": "约 1000"
+     },
+     "visual": "暗铁灰带火星红的光，像刚出炉的铁。",
+     "screen": {
+      "灵魂光泽": "铁灰 #4A4F55 带余烬红 #B5442A 闪点"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "炼金术七金属",
+       "note": "铁—火星"
+      },
+      {
+       "work": "《赫尔墨斯文集·Poimandres》§25–26",
+       "note": "灵魂上升穿越七重天，每层交还一种恶习（本库按行星对应到金属）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TR05",
+       "role": "下一阶"
+      }
+     ],
+     "image": {
+      "version": 3,
+      "purpose": "aura",
+      "brief": "The figure stands in a firm fighting stance. The glow is a dense dark iron-grey sheen hugging the body like the surface of heated metal, with glowing orange-hot edges along the outline of the shoulders and arms and a few small sparks dropping to the floor like from a forge. Hard, martial, tempered."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "TR05",
+     "name": "汞阶",
+     "name_en": "Quicksilver",
+     "aliases": [
+      "Mercury-souled",
+      "水银",
+      "灵行者"
+     ],
+     "tier": "5",
+     "summary": "灵魂变成流动的水银：能短暂离开身体（灵魂出窍）、穿行梦境、看见并对话灵体、在形体间变化。王国的大法师、传奇骑士在这一阶。",
+     "xianxia": {
+      "concept": "元婴（参照）",
+      "note": "同为「灵魂可离体」的分水岭。差异：西方原型是赫尔墨斯（墨丘利）——往返于生死与诸界的信使，强调穿行与沟通，而非孕育第二个自我。"
+     },
+     "cost": "离体太久肉身会被占据；流动的灵魂难以「定形」，性格变得多变难测。",
+     "details": {
+      "能做什么": "灵魂出窍侦察、进入他人梦境、审问亡魂、主持大型仪式",
+      "炼金/行星": "汞 · 水星",
+      "默认弧线·本阶之恶（可选模块）": "诡诈 Guile——离开汞阶要放弃算计与操纵，说出真话。",
+      "人口（每百万人，默认）": "约 150"
+     },
+     "visual": "液态镜面般的光，像水银在皮肤表面流动，反射周围。",
+     "screen": {
+      "灵魂光泽": "液银 #C9D3DA，表面有流动的镜面波纹",
+      "特效": "出窍时一个半透明的水银色身影从身体中站起"
+     },
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "炼金术七金属",
+       "note": "汞—水星（Mercury / Hermes）"
+      },
+      {
+       "work": "赫尔墨斯传统",
+       "note": "穿行诸界的信使"
+      },
+      {
+       "work": "《赫尔墨斯文集·Poimandres》§25–26",
+       "note": "灵魂上升穿越七重天，每层交还一种恶习（本库按行星对应到金属）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TR06",
+       "role": "下一阶"
+      },
+      {
+       "target": "DK04",
+       "role": "相关魔法"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The hooded figure kneels motionless on the floor while a translucent standing duplicate of the same figure, made of flowing liquid-mirror quicksilver light, rises out of their body and steps away; the duplicate's surface ripples and reflects like liquid metal, a thin silver thread still connecting the two at the chest. Uncanny, fluid, otherworldly."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "TR06",
+     "name": "银阶",
+     "name_en": "Silver",
+     "aliases": [
+      "Moon-souled",
+      "月魂"
+     ],
+     "tier": "6",
+     "summary": "灵魂如月，能映照他人：活着的传奇。力量可覆盖一座城或一片战场；死后灵魂可在世间停留，以亡魂或预言者身份回来。",
+     "xianxia": {
+      "concept": "化神（参照）",
+      "note": "同为能影响一方天地。差异：月亮主梦、潮汐与反射——银阶的影响以「潮汐」形式出现（周期起落），并能以梦和预兆影响大众。"
+     },
+     "cost": "力量随月相起落；被大众的信仰与恐惧所塑造（名声会改变他）。",
+     "details": {
+      "能做什么": "城市级结界、左右一场战役、在众人梦中显现；死后灵魂可在世间滞留",
+      "炼金/行星": "银 · 月亮",
+      "默认弧线·本阶之恶（可选模块）": "执着 Attachment——离开银阶要接受盛衰与死亡，不再抓住肉身与旧日。",
+      "人口（每百万人，默认）": "约 15"
+     },
+     "visual": "冷白月光般的银辉，柔和但覆盖范围极大，周围像有潮汐起伏。",
+     "screen": {
+      "灵魂光泽": "月银 #E6EEF5，光晕巨大，边缘如潮水起落"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "炼金术七金属",
+       "note": "银—月亮"
+      },
+      {
+       "work": "《赫尔墨斯文集·Poimandres》§25–26",
+       "note": "灵魂上升穿越七重天，每层交还一种恶习（本库按行星对应到金属）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TR07",
+       "role": "下一阶"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The hooded figure stands with arms slightly open while an enormous soft moon-white silver radiance spreads out from them in slow wave-like rings across the whole dark floor like a rising tide of light, a huge faint full-moon disc glowing behind them, everything washed in cold silver. Vast, serene, legendary."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "TR07",
+     "name": "金阶",
+     "name_en": "Gold",
+     "aliases": [
+      "Sun-souled",
+      "日魂",
+      "完成者"
+     ],
+     "tier": "7",
+     "summary": "凡人所能达到的完美：炼金术的终点。衰老几乎停止，灵魂发出太阳般的光，所在之处自成法则。百年未必出一位。",
+     "xianxia": {
+      "concept": "炼虚至大乘（参照）",
+      "note": "同为凡间巅峰。差异：金阶是「完成」而非「积累」——炼金术里金不会再锈蚀，所以金阶的标志是不朽的稳定，而非更大的破坏力。"
+     },
+     "cost": "太阳会灼伤靠近的人：金阶者难以与凡人相处，光芒招来所有神话存在的注意。",
+     "details": {
+      "能做什么": "在自身周围建立「领域」（法则暂改）、一人定国运",
+      "寿命": "金不锈：不再衰老（唯一随位阶而来的长生）",
+      "炼金/行星": "金 · 太阳",
+      "默认弧线·本阶之恶（可选模块）": "傲慢 Pride——离开金阶要放下支配一切的傲慢——金阶者最后的敌人是自己的光。",
+      "人口（每百万人，默认）": "整片大陆同时 0–2 人"
+     },
+     "visual": "太阳般的纯金光，不刺眼却无法直视，周围的物体投下金色长影。",
+     "screen": {
+      "灵魂光泽": "日金 #FFD45E，核心近白"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "炼金术",
+       "note": "金—太阳，不朽的完美金属，大功业的目标"
+      },
+      {
+       "work": "《赫尔墨斯文集·Poimandres》§25–26",
+       "note": "灵魂上升穿越七重天，每层交还一种恶习（本库按行星对应到金属）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TR08",
+       "role": "下一阶"
+      },
+      {
+       "target": "EV04",
+       "role": "通往神话阶"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The hooded figure stands perfectly calm with a sun-like pure gold radiance emanating from their whole body, the core of the light near white, long golden shadows cast by small stones on the floor around them, the dark space around them turned to golden dawn, the light steady and immovable rather than explosive. Majestic, perfect, solar."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "TR08",
+     "name": "贤者之石",
+     "name_en": "The Red Stone (Rubedo)",
+     "aliases": [
+      "半神",
+      "demigod",
+      "the Stone",
+      "Philosopher's Stone",
+      "红化者"
+     ],
+     "tier": "M1",
+     "summary": "神话阶：灵魂本身变成「贤者之石」——能把别人点化。可以赐予追随者力量、复活新死者、点石成金。只有通过「封神之试」的人能到达。",
+     "xianxia": {
+      "concept": "渡劫飞升 / 真仙（参照）",
+      "note": "差异：贤者之石的本质是「能转化他人」，所以半神必然拥有追随者或子民；神话阶的人不离开凡间，而是成为凡间的一部分（圣地、信仰、王朝的源头）。"
+     },
+     "cost": "石可碎：心核被击碎即死；追随者的信仰与背叛直接影响其力量。",
+     "details": {
+      "人口比例": "神话传说中的人物",
+      "能做什么": "点化他人、复活、建立圣地",
+      "寿命": "不朽（可被杀）"
+     },
+     "visual": "胸口一颗发光的深红宝石般的核心，全身光芒带红宝石色。",
+     "screen": {
+      "灵魂光泽": "红宝石 #C21E3A + 金"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "炼金术",
+       "note": "rubedo 红化与贤者之石"
+      },
+      {
+       "work": "希腊神话",
+       "note": "赫拉克勒斯封神——英雄成为半神"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TR09",
+       "role": "下一阶"
+      },
+      {
+       "target": "IT21",
+       "role": "同源物品"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The hooded figure floats slightly above the floor, a deep ruby-red crystalline light core blazing in the center of their chest visible through the cloth, ruby and gold radiance flowing outward from it, and the stone floor beneath them slowly turning to gold in a spreading circle. Mythic, transformative, awe-inspiring."
+     },
+     "adoption": "optional",
+     "module": "神话阶",
+     "basis": "tradition"
+    },
+    {
+     "id": "TR09",
+     "name": "以太",
+     "name_en": "Aether (Quintessence)",
+     "aliases": [
+      "神",
+      "god",
+      "第五元素",
+      "quintessence"
+     ],
+     "tier": "M2",
+     "summary": "灵魂溶入第五元素：不再需要身体，成为神或类神存在，被信仰、可以成为别人的力量源（圣光之源、契约的赞助者）。",
+     "xianxia": {
+      "concept": "金仙及以上 / 神（参照）",
+      "note": "差异：以太存在依赖与凡间的关系（信仰、契约），被遗忘会衰弱——西方神话中失去信徒的神会消亡。"
+     },
+     "cost": "被遗忘即衰亡；无法直接干涉凡间，只能通过选民与契约行事。",
+     "details": {
+      "能做什么": "成为力量源、回应祈祷、签订契约",
+      "寿命": "取决于被记住"
+     },
+     "visual": "无实体的星光与彩虹色以太，形象随观看者而变。",
+     "screen": {
+      "灵魂光泽": "以太虹彩 + 星白"
+     },
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "古典哲学",
+       "note": "aether / quintessence 第五元素"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS02",
+       "role": "可成为的力量源"
+      },
+      {
+       "target": "DK01",
+       "role": "可成为的契约方"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "Where the caster would stand there is only a towering shifting humanoid form made of starlight and iridescent rainbow-hued aether mist, its outline vague and changing, countless tiny star points inside it, a small kneeling hooded mortal silhouette in the foreground looking up at it. Divine, vast, ineffable."
+     },
+     "adoption": "optional",
+     "module": "神话阶",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "phases",
+   "name": "四相与突破",
+   "intro": "每阶内部分四相，用炼金术的四色阶段命名。突破必须经过「黑化」——这是西方体系最核心的戏剧结构：变强之前先要崩溃。",
+   "entries": [
+    {
+     "id": "PH01",
+     "name": "四相",
+     "name_en": "The Four Phases (Nigredo · Albedo · Citrinitas · Rubedo)",
+     "aliases": [
+      "黑化",
+      "白化",
+      "黄化",
+      "红化",
+      "blackening",
+      "whitening",
+      "yellowing",
+      "reddening"
+     ],
+     "summary": "每一金属阶内的四个阶段：黑化（崩解，力量混乱）→ 白化（净化，掌控）→ 黄化（觉醒，新能力浮现）→ 红化（定形，可以冲击下一阶）。",
+     "xianxia": {
+      "concept": "初期 / 中期 / 后期 / 圆满（参照）",
+      "note": "差异：第一相是「崩解」而不是「刚入门」——刚升阶的人反而最不稳定。本模块可关闭。"
+     },
+     "details": {
+      "黑化 Nigredo": "旧我死去，力量混乱、易失控，情绪低落",
+      "白化 Albedo": "净化与掌控，力量稳定",
+      "黄化 Citrinitas": "曙光，本阶的新能力出现",
+      "红化 Rubedo": "圆满定形，可以尝试突破"
+     },
+     "visual": "灵魂光泽内依次呈现黑、白、黄、红的色调层。",
+     "screen": {
+      "屏幕": "台词用动名词：*She's Iron — still blackening.* / *He's true Iron now.*（fresh-forged = 刚入阶，true = 圆满）。不要用 in the black / in the red（英语是盈利/亏损）。不上特效颜色。"
+     },
+     "familiarity": "低",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "炼金术",
+       "note": "nigredo / albedo / citrinitas / rubedo"
+      },
+      {
+       "work": "荣格心理学",
+       "note": "把四色阶段解读为人格转化"
+      }
+     ],
+     "relations": [
+      {
+       "target": "EV02",
+       "role": "突破事件"
+      }
+     ],
+     "adoption": "optional",
+     "module": "四相",
+     "image": {
+      "purpose": "item_set",
+      "brief": "Four identical round-bottomed alchemical glass vessels sealed with wax standing in a row on a dark workbench, each holding a different glowing matter from left to right: a churning black tar-like mass, a pure white luminous substance, a bright yellow-gold radiant substance, and a deep crimson-red crystalline substance; a small brass athanor furnace glowing behind them."
+     },
+     "basis": "tradition"
+    },
+    {
+     "id": "EV01",
+     "name": "觉醒",
+     "name_en": "Awakening (the Kindling)",
+     "aliases": [
+      "点燃",
+      "first spark"
+     ],
+     "summary": "从原质到铅阶：灵魂第一次被点燃。通常由极端经历触发——大病、濒死、丧亲、初次杀戮、第一次真心的祈祷。",
+     "xianxia": {
+      "concept": "感气入门 / 灵根检测（参照）",
+      "note": "差异：不是测出来的，而是「被生活点燃」的；常在剧情最低谷发生。"
+     },
+     "trigger": "生死、哀恸、强烈的信念或愤怒。",
+     "visual": "胸口一闪，眼中第一次出现微光。",
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "欧美短剧与成长流",
+       "note": "awakening 是最受欢迎的转折点"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TR01",
+       "role": "通往"
+      },
+      {
+       "target": "IT22",
+       "role": "检测工具"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "A hooded figure collapsed on their knees on wet stone in the dark, head bowed; a single bright spark of light has just ignited in the center of their chest, sending one ring of light rippling outward across the puddles on the floor, rain droplets lit up around them. Pivotal, intimate, hopeful."
+     },
+     "adoption": "default",
+     "basis": "genre"
+    },
+    {
+     "id": "EV02",
+     "name": "灵魂的黑夜",
+     "name_en": "The Dark Night (Transmutation)",
+     "aliases": [
+      "转化",
+      "突破",
+      "breakthrough",
+      "dark night of the soul"
+     ],
+     "summary": "每一次升阶的必经危机：旧的自我必须死去。默认弧线是战胜本阶对应的一种恶（可选模块）；不用该模块时，黑夜的内容由采用剧决定。通过则金属转化，失败则灵魂留下「炉渣」。",
+     "xianxia": {
+      "concept": "突破瓶颈 / 心魔劫（参照）",
+      "note": "差异：不是外来的天雷，而是内在的「死亡与重生」，源自基督教神秘主义的「灵魂的黑夜」与炼金术的黑化。外部可表现为高烧昏迷、幻象、几天几夜的独处。"
+     },
+     "cost": "失败见「炉渣」；成功也会失去某样东西（一段执念、一种恐惧，有时是一段感情）。",
+     "trigger": "到达红化相后，主动进入或被危机推入。",
+     "requirement": "导师或圣所的庇护能提高成功率。",
+     "visual": "角色被黑暗包裹，光泽熄灭，随后从内部燃起新金属的光。",
+     "screen": {
+      "特效": "整个画面去色变暗，只剩角色一点光，随后新颜色从胸口爆开"
+     },
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "圣十字若望",
+       "note": "Dark Night of the Soul"
+      },
+      {
+       "work": "炼金术",
+       "note": "nigredo：腐化即重生的前提"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PH01",
+       "role": "结构"
+      },
+      {
+       "target": "FL01",
+       "role": "失败结果"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "scene",
+      "brief": "Only one person in the image: a figure curled on the floor inside a sphere of absolute swirling black darkness that swallows all light, while from the very center of their chest a new bright metallic light is bursting outward, cracking the black sphere open with lines of light like an egg breaking. No other figures. Death and rebirth, cathartic."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "EV03",
+     "name": "神判",
+     "name_en": "The Ordeal",
+     "aliases": [
+      "试炼",
+      "trial by ordeal",
+      "考核"
+     ],
+     "summary": "中世纪用来判定有罪无罪的神判：烧红的铁、沸水、冷水、决斗。被告的伤口三日后验，愈合即无罪。本库用于审判（猎巫、异端、悬案），不用于晋升。",
+     "xianxia": {
+      "concept": "无直接对应",
+      "note": "仙侠的「宗门大比」对应的是晋升仪式 EV05；神判是司法程序。"
+     },
+     "cost": "被告受伤乃至死亡；结果可被主审者操纵。",
+     "trigger": "审判官或领主下令。",
+     "visual": "公众围观的仪式场：火盆、深水池、决斗场。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "中世纪法律",
+       "note": "trial by ordeal、trial by combat；伤口三日后验"
+      }
+     ],
+     "relations": [
+      {
+       "target": "OR04",
+       "role": "主持者"
+      },
+      {
+       "target": "CL09",
+       "role": "主持者"
+      }
+     ],
+     "image": {
+      "purpose": "environment",
+      "brief": "A medieval stone courtyard at dusk packed with distant tiny spectators on wooden stands around its edges; at the center a long trench of burning coals glowing orange, a tall iron brazier at each end, banners without symbols hanging from the walls, smoke rising into an amber sky, the empty coal path waiting for the trial. Solemn, tense, public."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "EV05",
+     "name": "晋升仪式",
+     "name_en": "Rites of Investiture",
+     "aliases": [
+      "dubbing",
+      "vigil of arms",
+      "disputation",
+      "ordination",
+      "授衔"
+     ],
+     "summary": "组织授予头衔的仪式，按路线不同：骑士守夜受封（vigil of arms + 授剑礼）、比武大会；行会提交杰作；大学公开答辩（disputatio）；教会按手授职；女巫会入会礼。证明的不是灵魂成色，而是技艺、品格与誓言。",
+     "xianxia": {
+      "concept": "宗门大比 / 入门考核（参照）"
+     },
+     "cost": "失败者失去资格与名誉；仪式中的誓言终身有效。",
+     "trigger": "申请头衔时，或领主、院长、主教召集。",
+     "visual": "教堂守夜的烛光、授剑礼的肩头轻触、答辩厅的长桌、比武场。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "中世纪骑士、行会、大学与教会制度",
+       "note": "dubbing、masterpiece、disputatio、ordination"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TL01",
+       "role": "授衔"
+      },
+      {
+       "target": "TL02",
+       "role": "授衔"
+      },
+      {
+       "target": "TL03",
+       "role": "授衔"
+      },
+      {
+       "target": "TL05",
+       "role": "授衔"
+      }
+     ],
+     "adoption": "default",
+     "image": {
+      "version": 2,
+      "purpose": "environment",
+      "brief": "A small stone chapel at night during a knight's vigil of arms: on a plain altar stone the pieces of a suit of plate armor are laid out separately and neatly stacked (breastplate, helm set upright beside it, gauntlets, greaves) with a sheathed sword laid across them, rows of tall candles, cold moonlight through a narrow window, a single tiny kneeling figure in a white tunic before the altar seen from behind; carved above the altar is a sun disc with exactly seven short triangular rays, evenly spaced around a solid disc (count them: seven, not eight) with straight rays."
+     },
+     "basis": "tradition"
+    },
+    {
+     "id": "EV04",
+     "name": "封神之试",
+     "name_en": "Apotheosis",
+     "aliases": [
+      "神化",
+      "飞升",
+      "ascension"
+     ],
+     "summary": "从金阶到贤者之石：凡人成为半神的终极试炼。通常是一桩传说级的功业（屠灭灾厄、拯救一国）加上灵魂的最后一次黑夜。",
+     "xianxia": {
+      "concept": "渡劫飞升（参照）",
+      "note": "差异：西方的封神来自功业（赫拉克勒斯的十二功业）与众人的传颂，不是天劫；半神仍留在世间，作为圣地或王朝之源。"
+     },
+     "cost": "失败即死，且常被历史抹去；成功后不再属于凡人社会。",
+     "visual": "火焰中升起的身影，或被光柱接引。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "希腊神话",
+       "note": "赫拉克勒斯在火葬堆上封神"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TR08",
+       "role": "通往"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "environment",
+      "brief": "A tall funeral pyre burning on a hilltop at night under a starry sky; within the towering flames a radiant human silhouette rises upward unharmed, its body turning to ruby and gold light, a column of light opening in the clouds above, tiny distant onlookers kneeling at the foot of the hill. No one stands near the pyre."
+     },
+     "adoption": "optional",
+     "module": "神话阶",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "failures",
+   "name": "失败与堕落",
+   "intro": "对应仙侠的根基受损、走火入魔、心魔。西方的失败分得更细：是灵魂本身裂了，是被外物腐蚀了，还是被别的存在占据了。",
+   "entries": [
+    {
+     "id": "FL01",
+     "name": "炉渣",
+     "name_en": "Slag (Cracked Soul)",
+     "aliases": [
+      "裂魂",
+      "根基受损",
+      "burnout"
+     ],
+     "summary": "突破失败或透支后，灵魂留下杂质与裂痕：位阶跌落或永久卡住，施法时伴随剧痛。",
+     "xianxia": {
+      "concept": "根基受损 / 修为跌落（参照）"
+     },
+     "cost": "可修复但极难：需要传说级的药剂或圣物，或再经历一次黑夜。",
+     "counter": "生命之酒、圣物、导师以自身灵魂渡化。",
+     "visual": "灵魂光泽里有黑色裂纹与灰斑，光断断续续。",
+     "familiarity": "低",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "冶金/炼金",
+       "note": "slag 熔渣——炼金失败的残余"
+      }
+     ],
+     "relations": [
+      {
+       "target": "IT04",
+       "role": "修复物"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "A hooded figure clutches their chest in pain, their faint metallic aura broken and flickering, with jagged black cracks and grey ash-like flakes visible within the light itself, flecks of dark slag falling from the glow like cinders, the light stuttering on and off. Painful, broken, tragic."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "FL02",
+     "name": "腐化",
+     "name_en": "Corruption",
+     "aliases": [
+      "堕落",
+      "黑化",
+      "tainted"
+     ],
+     "summary": "力量来源本身带毒：深渊之力、死亡之力或贪婪的魔法物品逐渐改变使用者的身体和人格，直至变成怪物。",
+     "xianxia": {
+      "concept": "入魔（参照）",
+      "note": "差异：西方的腐化是「可见的、渐进的、身体性的」——长角、皮肤发灰、影子变形，观众可以逐集看到。"
+     },
+     "cost": "每使用一次都更深一步；达到临界即永久转化（恶魔、亡灵、怪物）。",
+     "counter": "圣光净化、舍弃力量来源、他人的牺牲。",
+     "visual": "黑色脉络从手部向上蔓延，瞳孔颜色改变。",
+     "screen": {
+      "特效": "腐化程度用黑色血管长度做连续性指标，每集推进"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "托尔金",
+       "note": "戒指腐蚀持有者"
+      },
+      {
+       "work": "战锤奇幻",
+       "note": "混沌变异"
+      },
+      {
+       "work": "欧洲民间与猎巫记录",
+       "note": "与魔鬼交易者身上出现魔鬼印记"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS06",
+       "role": "常见来源"
+      },
+      {
+       "target": "PS05",
+       "role": "常见来源"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "magic",
+      "brief": "Close view of a hooded figure holding up one bare hand with five clearly separated fingers and a thumb, palm facing the viewer, forearm visible: thick black vein-like lines spread from the fingertips up the forearm, the skin around them turning ash-grey, the fingernails darkened, faint red smoke seeping from the veins, while their other hand, also with five fingers, grips the wrist as if trying to stop it. Anatomically correct hands. Creeping, horrifying, personal."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "FL03",
+     "name": "附身",
+     "name_en": "Possession",
+     "aliases": [
+      "夺舍",
+      "被附身",
+      "abomination"
+     ],
+     "summary": "另一个存在（恶魔、亡魂、妖精）占据了身体。弱者全面失控，强者与之争夺主导权，形成双重人格。",
+     "xianxia": {
+      "concept": "夺舍 / 心魔附体（参照）",
+      "note": "差异：西方附身者是「另一个有名字的存在」，可以被谈判、被骗、被驱逐，戏剧冲突更具体。"
+     },
+     "cost": "被附身期间的行为由宿主背负；长期附身会让两个灵魂融合。",
+     "counter": "驱魔、说出附身者真名、宿主的意志觉醒。",
+     "visual": "眼睛变色（全黑或发光），声音出现第二重音轨，动作不自然。",
+     "screen": {
+      "声音": "人声叠加低沉第二音轨"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲民间与教会传统",
+       "note": "恶魔附身与驱魔"
+      },
+      {
+       "work": "龙腾世纪",
+       "note": "被附身的法师（机制参考）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "HL04",
+       "role": "解法"
+      },
+      {
+       "target": "RC16",
+       "role": "常见附身者"
+      }
+     ],
+     "image": {
+      "version": 3,
+      "purpose": "scene",
+      "brief": "A single possessed person stands rigid in a dim stone room with head tilted unnaturally to one side, hood pushed back so the face is visible, both eyes completely black with a tiny red pinpoint in each; a translucent shadowy horned figure overlaps the exact same space as the person's body like a double exposure, posed a fraction out of sync; thin dark smoke curls from the shoulders. No vortex, no other effects. Disturbing, dual."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "FL04",
+     "name": "失恩",
+     "name_en": "Fall from Grace",
+     "aliases": [
+      "背誓",
+      "oathbreaker",
+      "破誓"
+     ],
+     "summary": "违背誓言或信仰的人失去圣光或勇武：光会突然熄灭，有时反过来灼伤自己。背誓骑士在西方叙事里是固定的悲剧形象。",
+     "xianxia": {
+      "concept": "道心破碎（参照）",
+      "note": "差异：西方的失恩是道德与契约性的——违背的是一句具体的誓言，因此可以通过赎罪任务（quest）重新获得。"
+     },
+     "cost": "力量熄灭；被组织除名；有时转向黑暗（成为死亡骑士、背誓者）。",
+     "counter": "赎罪之旅、重新立誓、被更高者宽恕。",
+     "visual": "圣光像熄灭的蜡烛冒出一缕黑烟，盔甲上的圣徽变黑。",
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D",
+       "note": "Oathbreaker 誓约破除者"
+      },
+      {
+       "work": "骑士文学",
+       "note": "背誓与赎罪"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL08",
+       "role": "常见对象"
+      },
+      {
+       "target": "GR03",
+       "role": "相关成长"
+      }
+     ],
+     "image": {
+      "version": 3,
+      "purpose": "scene",
+      "brief": "Only one person in the image: an armored knight kneels alone on a stone floor with head bowed; the last of a golden holy glow around them is going out like a snuffed candle, only a faint dim trace left, a thin curl of black smoke rising from a plain round gold boss on their breastplate which is turning dark and tarnished, their sword lying on the floor beside them. No banners, no sun symbols, no other figures. Sorrowful, quiet, tragic."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "titles",
+   "name": "路线头衔",
+   "intro": "头衔由组织授予，需要「最低位阶 + 考核/誓言」。同一个铁阶的人，在学院是讲师，在骑士团是骑士，在教会是神父。头衔用的都是欧洲真实制度里的词（行会、骑士制、教会圣职、德鲁伊阶层），观众无需学习。",
+   "entries": [
+    {
+     "id": "TL01",
+     "name": "奥术头衔",
+     "name_en": "Arcane Ranks",
+     "aliases": [
+      "法师等级",
+      "apprentice",
+      "archmage"
+     ],
+     "summary": "学徒 Apprentice → 熟手 Journeyman → 法师 Magus → 大师 Master → 大法师 Archmage。沿用中世纪行会的「学徒—熟手—大师」制度，出师要提交一件「杰作」（masterwork spell），升大师要公开答辩。",
+     "xianxia": {
+      "concept": "外门 / 内门 / 真传 / 长老 / 宗主（参照）"
+     },
+     "details": {
+      "Apprentice": "随师学习，不得独立施法谋生；典型铅—锡",
+      "Journeyman": "可游历接委托，默认需在多处学院求学；典型锡—铜",
+      "Magus": "提交杰作出师，可开业、收学徒；典型铜—铁",
+      "Master": "答辩通过，可主持讲席；典型铁",
+      "Archmage": "由议会推选，一国个位数；典型汞以上",
+      "说明": "成色是典型值不是门槛：学院政治里有铜阶大师，也有拒绝头衔的汞阶隐士"
+     },
+     "visual": "法袍滚边与胸针随头衔变化：学徒无饰，大法师佩金链。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "中世纪行会",
+       "note": "apprentice → journeyman → master，以 masterpiece 出师"
+      },
+      {
+       "work": "上古卷轴 / 战锤",
+       "note": "法术与法师分阶（机制参考）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL10",
+       "role": "适用职业"
+      },
+      {
+       "target": "OR01",
+       "role": "授予组织"
+      }
+     ],
+     "image": {
+      "purpose": "insignia_set",
+      "brief": "Five original wizard rank insignia brooches in a row, left to right: a plain grey pewter pin, a simple tin disc with an engraved circle, a polished iron brooch set with a small blue glass stone, a copper and silver brooch with an engraved star and sapphire, and finally an elaborate gold brooch with a large violet gem hanging from a short gold chain."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "TL02",
+     "name": "骑士头衔",
+     "name_en": "Chivalric Ranks",
+     "aliases": [
+      "骑士等级",
+      "squire",
+      "peer of the realm"
+     ],
+     "summary": "侍童 Page → 侍从 Squire → 骑士 Knight → 旗骑士 Knight-Banneret → 王国重臣 Peer → 王之斗士 Champion。受封骑士需「授剑礼」（dubbing）；重臣是王国最高的十二骑士席位。",
+     "xianxia": {
+      "concept": "剑宗弟子 → 护法 → 剑主（参照）",
+      "note": "十二重臣取自查理曼十二圣骑士（Twelve Peers）——paladin 一词的本源。本库把 Paladin 留给信仰战士职业（观众最熟悉的用法），头衔用 Peer。"
+     },
+     "details": {
+      "Page": "七岁起入城堡服侍",
+      "Squire": "十四岁起为骑士持械",
+      "Knight": "守夜受封与授剑礼；武艺熟练度为主，可未觉醒",
+      "Knight-Banneret": "可率领自己的旗帜与部众；典型铜—铁",
+      "Peer": "王国最高的十二骑士席位，由王授予；典型铁—汞",
+      "Champion": "代国王出战的决斗代表；典型汞以上",
+      "说明": "骑士身份靠武艺、誓言与受封，不要求觉醒；成色只是强者的典型分布"
+     },
+     "visual": "马刺与腰带：侍从银马刺，骑士金马刺；旗骑士的方旗。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "中世纪骑士制度",
+       "note": "page → squire → knight，dubbing"
+      },
+      {
+       "work": "《罗兰之歌》",
+       "note": "查理曼的十二圣骑士"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL02",
+       "role": "适用职业"
+      },
+      {
+       "target": "OR03",
+       "role": "授予组织"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "insignia_set",
+      "brief": "Six original knightly rank items laid in a row, left to right: a plain leather page's belt buckle, a pair of simple silver spurs, a pair of plain gilded gold spurs with a simple engraved oak-leaf pattern, a small square crimson cloth pennon on a short lance tip with a simple white griffin, a gold chain collar of twelve linked plain oval plates each engraved with a small oak leaf, and finally a jeweled steel gauntlet with gold trim. No fleur-de-lis, no lions, no national emblems."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "TL03",
+     "name": "教会圣职",
+     "name_en": "Holy Orders",
+     "aliases": [
+      "神职等级",
+      "bishop",
+      "saint"
+     ],
+     "summary": "侍祭 Acolyte → 执事 Deacon → 神父/女祭司 Priest → 主教 Bishop → 大主教 Archbishop；「圣徒 Saint」不是职位，是死后或生前因神迹被追认。",
+     "xianxia": {
+      "concept": "道观 / 佛门的僧阶（参照）",
+      "note": "差异：圣职与位阶脱钩——主教可能只有锡阶（政治任命），乡村神父却可能是银阶。这个错位是天然的剧情矛盾。"
+     },
+     "details": {
+      "Acolyte": "入教会服侍",
+      "Deacon": "受第一次授职",
+      "Priest": "主持圣礼，可施圣愈",
+      "Bishop": "管辖一个教区",
+      "Archbishop": "管辖一国教会",
+      "Saint": "神迹得到认定后由教会追认（默认需两件以上）",
+      "说明": "圣职与成色脱钩：主教可能只有锡阶（政治任命），乡村神父可能是银阶"
+     },
+     "visual": "圣带与权杖：主教持曲柄权杖、戴冠。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲教会制度",
+       "note": "圣职阶层与封圣"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL07",
+       "role": "适用职业"
+      },
+      {
+       "target": "OR02",
+       "role": "授予组织"
+      }
+     ],
+     "image": {
+      "version": 3,
+      "purpose": "insignia_set",
+      "brief": "Five original fictional clergy rank items in a row on dark velvet, left to right: a plain wooden pendant carved as a flat engraved sun disc: a solid round disc with exactly seven short triangular rays touching its rim, evenly spaced, and a thin closed inner ring (seven rays, never eight; straight edges, not wavy, not bars), a simple white cloth stole with plain gold edging, a silver pendant of the same seven-rayed sun disc, a gilded staff head shaped as a simple shepherd's hook, and a tall gold-embroidered white ceremonial cap with the same seven-rayed sun disc on its front. Never a cross."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "TL04",
+     "name": "德鲁伊阶层",
+     "name_en": "Druidic Grades",
+     "aliases": [
+      "bard",
+      "ovate",
+      "archdruid"
+     ],
+     "summary": "吟游者 Bard → 卜者 Ovate → 德鲁伊 Druid → 大德鲁伊 Archdruid。源自古代凯尔特的三级学者阶层：诗与记忆、占卜与医药、仪式与裁决。",
+     "xianxia": {
+      "concept": "隐世宗门的传承层级（参照）"
+     },
+     "details": {
+      "Bard": "背诵传承诗歌与族谱，蓝袍",
+      "Ovate": "占卜、草药、预言，绿袍",
+      "Druid": "主持仪式、裁决纷争，白袍",
+      "Archdruid": "一片土地的守护者"
+     },
+     "visual": "袍色区分：蓝、绿、白；大德鲁伊持橡木杖与金镰。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "古典文献（斯特拉波等）",
+       "note": "bards / vates / druids 三类"
+      },
+      {
+       "work": "18 世纪德鲁伊复兴（Iolo Morganwg）",
+       "note": "蓝 / 绿 / 白袍色出自近代复兴，不是古凯尔特"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL12",
+       "role": "适用职业"
+      },
+      {
+       "target": "OR05",
+       "role": "授予组织"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "insignia_set",
+      "brief": "Four original druidic grade items in a row on moss-green cloth, left to right: a small carved wooden flute on a blue cord, a bundle of dried herbs tied with a green cord beside a plain polished bone disc, an oak-leaf brooch of plain silver on a white cord, and finally a small gleaming golden crescent sickle laid across an oak sprig with mistletoe. No harps, no knotwork, no spirals."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "TL05",
+     "name": "女巫阶层",
+     "name_en": "Coven Degrees",
+     "aliases": [
+      "witch ranks",
+      "high witch",
+      "crone"
+     ],
+     "summary": "学徒 Novice → 女巫 Witch → 高阶女巫 High Witch（主持一个女巫会）→ 长老 Crone/Elder。以师承和女巫会（coven）为单位，不受教会与学院承认。",
+     "xianxia": {
+      "concept": "散修师门 / 旁门（参照）",
+      "note": "差异：女巫在多数西幻世界是「非法」或灰色的，权力来自地下网络与血脉，这正是欧美短剧爱用的身份反差。"
+     },
+     "details": {
+      "Novice": "随师学草药与月相",
+      "Witch": "完成入会仪式，获得女巫印记",
+      "High Witch": "主持一个女巫会（默认十三人）",
+      "Crone": "掌握失传诅咒与真名，多为百岁以上"
+     },
+     "visual": "银戒、月相项链；高阶者有家族传承的黑曜石镜。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲女巫传说与现代女巫文化",
+       "note": "coven、少女—母亲—老妪三相意象"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL20",
+       "role": "适用职业"
+      },
+      {
+       "target": "OR06",
+       "role": "授予组织"
+      }
+     ],
+     "adoption": "default",
+     "image": {
+      "purpose": "insignia_set",
+      "brief": "Four original coven degree tokens in a row on dark plum velvet, left to right: a plain thin silver ring, a silver pendant of a single small crescent moon, a black obsidian scrying mirror the size of a palm in a simple wooden frame, and a gnarled blackthorn walking-staff head bound with silver wire and a sprig of dried herbs. No triple moons, no stars, no pentagrams."
+     },
+     "basis": "tradition"
+    }
+   ]
+  }
+ ]
+}

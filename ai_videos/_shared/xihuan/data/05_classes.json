@@ -1,0 +1,1260 @@
+{
+ "id": "classes",
+ "name": "职业",
+ "intro": "职业 = 力量源 + 训练方式 + 社会身份。西幻职业不是门派：同一个学院出法师，同一个骑士团可以有不同种族。超凡强度用灵魂成色衡量，武艺手艺另计熟练度；各职业怎么升阶各不相同（见 systems.md 第 3 节），头衔由各自的组织授予。人物图为原型演示形体，不是剧中角色。",
+ "subgroups": [
+  {
+   "id": "martial",
+   "name": "武人",
+   "intro": "力量源主要是勇武（英雄之光），靠锤炼与誓言。",
+   "entries": [
+    {
+     "id": "CL01",
+     "name": "战士",
+     "name_en": "Warrior (Man-at-Arms)",
+     "aliases": [
+      "fighter",
+      "雇佣兵",
+      "mercenary",
+      "sellsword"
+     ],
+     "summary": "职业军人与雇佣兵：精通各种兵器与盔甲，靠经验与体魄取胜，是数量最多的武力阶层。",
+     "xianxia": {
+      "concept": "武修 / 散修武者（参照）",
+      "note": "西方战士没有内功体系，强在装备、战术和身经百战。"
+     },
+     "cost": "依赖装备与体力，衰老后迅速下滑。",
+     "counter": "魔法远程、毒、恐惧。",
+     "visual": "实战磨损的锁子甲与板甲拼件、皮革、斗篷，兵器各异。",
+     "details": {
+      "力量源": "勇武",
+      "定位": "前排、护卫、军队骨干",
+      "成长": "实战 → 名声 → 被骑士收为侍从或成为佣兵团长"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D / 各类 RPG",
+       "note": "Fighter"
+      },
+      {
+       "work": "中世纪雇佣兵团",
+       "note": "free companies"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS09",
+       "role": "力量源"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "A battle-hardened adult mercenary man-at-arms in practical mismatched armor: a dented steel breastplate over chainmail, leather bracers, a weathered wool cloak, a longsword at the hip and a scarred round wooden shield on the back, short-cropped hair, a healed scar across the jaw, confident relaxed stance."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CL02",
+     "name": "骑士",
+     "name_en": "Knight",
+     "aliases": [
+      "sir",
+      "dame",
+      "骑士团员"
+     ],
+     "summary": "受封的武人贵族：以誓言、荣誉和骑乘冲锋为核心，效忠领主或骑士团。",
+     "xianxia": {
+      "concept": "剑宗弟子 / 世家护法（参照）",
+      "note": "骑士的力量与「誓言」绑定，背誓会失去英雄之光（见失恩）。"
+     },
+     "cost": "誓言约束行为；荣誉受损即失去身份。",
+     "counter": "长枪阵、泥沼地形、利用其荣誉感设局。",
+     "visual": "整套板甲、纹章罩袍、骑枪与长剑、战马。",
+     "details": {
+      "力量源": "勇武（部分兼圣光）",
+      "头衔": "见骑士头衔 TL02",
+      "成长": "侍童 → 侍从 → 授剑礼 → 立功受封土地"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "中世纪骑士制度 / 亚瑟王传说",
+       "note": "骑士精神与圆桌"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TL02",
+       "role": "头衔"
+      },
+      {
+       "target": "OR03",
+       "role": "所属组织"
+      },
+      {
+       "target": "GR03",
+       "role": "成长方式"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "A noble adult knight in a full suit of polished steel plate armor, helmet held under one arm revealing a determined face, a heraldic surcoat in deep blue with an original simple tower-and-oak-leaf emblem, a longsword sheathed at the hip, a kite shield resting against the leg, a long riding cloak."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CL03",
+     "name": "狂战士",
+     "name_en": "Berserker",
+     "aliases": [
+      "barbarian",
+      "野蛮人",
+      "战狂"
+     ],
+     "summary": "以狂怒入战的部落战士：战狂中不知疼痛、力大无穷，但敌我不分。",
+     "xianxia": {
+      "concept": "炼体 / 狂化秘术（参照）",
+      "note": "源自北欧狂战士，战狂是「被附体般」的状态，事后极度虚弱。"
+     },
+     "cost": "战狂后虚脱、可能误伤同伴，难以停下。",
+     "counter": "冷静的计谋、长期消耗、远程。",
+     "visual": "兽皮、裸露的伤疤与战纹、巨斧，战狂时眼睛充血。",
+     "details": {
+      "力量源": "勇武（狂怒形态）",
+      "成长": "部落成人礼 → 首次战狂 → 兽灵认可"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "北欧传说",
+       "note": "berserkir / úlfheðnar"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS09",
+       "role": "力量源"
+      },
+      {
+       "target": "RC06",
+       "role": "常见种族"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "A massive adult tribal berserker with a bear pelt worn over the shoulders with the bear's head as a hood, bare scarred arms painted with blue-black war stripes, braided beard, a huge two-handed bearded axe, fur boots and leather wraps, wild bloodshot eyes and a fierce snarl."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CL04",
+     "name": "游侠",
+     "name_en": "Ranger",
+     "aliases": [
+      "猎人",
+      "斥候",
+      "hunter",
+      "warden"
+     ],
+     "summary": "边境与荒野的守护者：追踪、弓术、野外生存，常与一只动物伙伴同行。",
+     "xianxia": {
+      "concept": "猎户出身的散修 / 御兽者（参照）"
+     },
+     "cost": "远离城市与补给；伙伴兽死去会重创精神。",
+     "counter": "近身、城市、封闭空间。",
+     "visual": "绿褐色兜帽斗篷、长弓、箭袋、皮甲，身边有狼或鹰。",
+     "details": {
+      "力量源": "勇武 + 少量自然",
+      "成长": "边境巡守 → 与兽伙伴缔结 → 成为一片土地的守望者"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D / 托尔金",
+       "note": "ranger 原型"
+      },
+      {
+       "work": "中世纪林务官与边境巡守",
+       "note": "forester、warden of the marches"
+      }
+     ],
+     "relations": [
+      {
+       "target": "GR06",
+       "role": "成长方式"
+      },
+      {
+       "target": "BS12",
+       "role": "常见伙伴"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "A lean adult wilderness ranger in a hooded cloak of mottled green and brown wool, layered leather armor, a tall yew longbow in hand and a quiver of grey-fletched arrows, a hunting knife and a coil of rope at the belt, mud-stained boots, a large grey wolf companion sitting at their side."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CL05",
+     "name": "盗贼",
+     "name_en": "Rogue (Thief)",
+     "aliases": [
+      "thief",
+      "spy",
+      "间谍",
+      "飞贼"
+     ],
+     "summary": "开锁、潜行、扒窃、情报：靠技巧与胆量吃饭的城市暗面职业。",
+     "xianxia": {
+      "concept": "神偷 / 情报组织成员（参照）"
+     },
+     "cost": "被抓即重刑；信任难建立。",
+     "counter": "陷阱、守卫犬、真言魔法。",
+     "visual": "深色紧身衣物、多口袋皮带、开锁工具、短匕。",
+     "details": {
+      "力量源": "技艺（低阶可有少量幻术）",
+      "所属": "盗贼公会 OR08"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D",
+       "note": "Rogue"
+      },
+      {
+       "work": "近代城市盗贼文化",
+       "note": "thieves' cant 黑话"
+      }
+     ],
+     "relations": [
+      {
+       "target": "OR08",
+       "role": "所属组织"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "A nimble adult city thief in close-fitting dark charcoal clothes and a short hooded capelet, a leather belt with many small pouches and a roll of lockpicks, two slim daggers, soft-soled boots, a half-mask pulled down around the neck, a sly confident smile, a stolen gold ring in one hand."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CL06",
+     "name": "刺客",
+     "name_en": "Assassin",
+     "aliases": [
+      "杀手",
+      "hired blade",
+      "nightblade"
+     ],
+     "summary": "以杀人为业的精英：毒药、伪装、一击必杀，多隶属秘密兄弟会。",
+     "xianxia": {
+      "concept": "杀手组织 / 暗殿（参照）"
+     },
+     "cost": "兄弟会的规矩比命重；退出几乎不可能。",
+     "counter": "护身符、试毒者、提前得知契约。",
+     "visual": "黑灰色贴身装束、面罩、藏刃、毒瓶。",
+     "details": {
+      "力量源": "技艺 + 少量暗影",
+      "所属": "刺客兄弟会 OR09"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "历史与文学",
+       "note": "雇佣刺客与秘密兄弟会"
+      }
+     ],
+     "relations": [
+      {
+       "target": "OR09",
+       "role": "所属组织"
+      },
+      {
+       "target": "IT07",
+       "role": "常用道具"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "An adult assassin in fitted layered black and ash-grey clothing with a deep hood and a cloth mask covering the lower face, cold sharp eyes visible, a slim curved blade held low and reversed, hidden throwing knives on a chest strap, a small vial of green poison at the belt."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "holy",
+   "name": "信仰者",
+   "intro": "力量源是圣光。头衔由教会授予，但圣光只认信念。",
+   "entries": [
+    {
+     "id": "CL07",
+     "name": "牧师",
+     "name_en": "Priest (Cleric)",
+     "aliases": [
+      "cleric",
+      "女祭司",
+      "priestess",
+      "healer"
+     ],
+     "summary": "教会的神职者：治愈、祝福、驱邪、主持圣礼，也是战场上的随军医者。",
+     "xianxia": {
+      "concept": "佛门 / 道观中的医修与祝由（参照）"
+     },
+     "cost": "信念动摇即失效；受教会纪律约束。",
+     "counter": "亵渎之地、毒与诅咒、信仰危机。",
+     "visual": "白色与金色法衣、圣徽、香炉或权杖。",
+     "details": {
+      "力量源": "圣光",
+      "头衔": "教会圣职 TL03"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D / 魔兽世界",
+       "note": "cleric / priest"
+      },
+      {
+       "work": "中世纪教区神职",
+       "note": "修道院医护与按手礼"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS02",
+       "role": "力量源"
+      },
+      {
+       "target": "HL01",
+       "role": "专长"
+      },
+      {
+       "target": "TL03",
+       "role": "头衔"
+      },
+      {
+       "target": "OR02",
+       "role": "所属组织"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "character",
+      "brief": "A serene adult priestess in layered white linen vestments with gold-embroidered borders and a plain long white scarf, a gold pendant shaped as a flat engraved sun disc: a solid round disc with exactly seven short triangular rays touching its rim, evenly spaced, and a thin closed inner ring (seven rays, never eight; straight edges, not wavy, not bars) on a chain at her chest, holding a slender silver staff topped with the same seven-rayed sun disc, a small leather satchel of bandages and herbs, gentle but resolute expression."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CL08",
+     "name": "圣武士",
+     "name_en": "Paladin",
+     "aliases": [
+      "holy knight",
+      "圣骑士",
+      "lightsworn"
+     ],
+     "summary": "立下神圣誓言的战士：剑与圣光兼修，能治愈、能惩戒邪物，誓言就是力量的来源。",
+     "xianxia": {
+      "concept": "正道剑修 / 护法金刚（参照）",
+      "note": "力量完全依赖誓言是否被遵守；背誓即失恩（FL04）。"
+     },
+     "cost": "誓言约束极严；失恩是职业生涯的终点或转折。",
+     "counter": "让其誓言自相矛盾的两难局面。",
+     "visual": "白银板甲、金色圣徽、披风，武器在战斗中燃起金光。",
+     "details": {
+      "力量源": "圣光 + 勇武",
+      "誓言": "守护、正义、复仇等誓言类型由采用剧选择",
+      "成长": "立誓 → 守誓试炼 → 圣迹认可"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D",
+       "note": "Paladin 誓言体系"
+      },
+      {
+       "work": "魔兽世界",
+       "note": "圣光战士"
+      },
+      {
+       "work": "《罗兰之歌》与骑士修会",
+       "note": "十二重臣与守誓骑士"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS02",
+       "role": "力量源"
+      },
+      {
+       "target": "HL02",
+       "role": "专长"
+      },
+      {
+       "target": "FL04",
+       "role": "风险"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "An imposing adult holy warrior in polished silver-white plate armor with gold trim, a white tabard with an original golden emblem of a seven-rayed sun disc (a plain circle with seven equal short wedge-shaped rays and a thin inner ring), a long white cloak, a heavy longsword planted point-down before them with both hands on the pommel, a faint warm golden glow around the shoulders, steadfast expression."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CL09",
+     "name": "审判官",
+     "name_en": "Inquisitor (Witch Hunter)",
+     "aliases": [
+      "witch hunter",
+      "猎巫人",
+      "exorcist",
+      "驱魔人"
+     ],
+     "summary": "教会的执法者：追捕异端、女巫、恶魔崇拜者，也负责驱魔。立场常在正义与狂热之间。",
+     "xianxia": {
+      "concept": "正道执法堂 / 斩妖除魔者（参照）"
+     },
+     "cost": "常被权力与狂热腐蚀；仇家遍地。",
+     "counter": "证据、民意、被冤者的真相。",
+     "visual": "黑色宽檐帽或兜帽、长大衣、银十字弩/手弩、圣水瓶、锁链。",
+     "details": {
+      "力量源": "圣光（驱邪向）+ 技艺",
+      "所属": "异端裁判所 OR04"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲猎巫史",
+       "note": "witch hunter"
+      }
+     ],
+     "relations": [
+      {
+       "target": "HL04",
+       "role": "专长"
+      },
+      {
+       "target": "OR04",
+       "role": "所属组织"
+      },
+      {
+       "target": "CL20",
+       "role": "宿敌"
+      }
+     ],
+     "image": {
+      "version": 3,
+      "purpose": "character",
+      "brief": "A grim adult witch hunter in a long black leather greatcoat over a dark vest, a wide-brimmed black hat, a plain round silver medallion with no engraving hanging on the chest, a compact crossbow in one hand, bandoliers holding small glass vials of holy water, a coiled iron chain hanging from the belt, a stern unforgiving gaze."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "arcane",
+   "name": "奥术与学问",
+   "intro": "力量源是奥术或工艺，靠学习与研究。",
+   "entries": [
+    {
+     "id": "CL10",
+     "name": "法师",
+     "name_en": "Wizard (Mage)",
+     "aliases": [
+      "mage",
+      "magus",
+      "巫师",
+      "sorcerer（误用）"
+     ],
+     "summary": "学院出身的学者型施法者：读书、研究、主修一个学派，靠知识累积力量。",
+     "xianxia": {
+      "concept": "法修 / 宗门弟子（参照）",
+      "note": "西方法师的核心资产是「法术书」与知识，被夺书比被夺修为更致命。"
+     },
+     "cost": "身体脆弱；施法需准备与咒文；知识被垄断在学院手里。",
+     "counter": "近身、打断咒文、夺走法术书。",
+     "visual": "长袍、法杖或魔杖、厚重法术书、墨渍手指。",
+     "details": {
+      "力量源": "奥术",
+      "头衔": "奥术头衔 TL01",
+      "成长": "学徒 → 杰作 → 大师"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D",
+       "note": "Wizard"
+      },
+      {
+       "work": "文艺复兴学者法师",
+       "note": "约翰·迪伊等学者型术士"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS01",
+       "role": "力量源"
+      },
+      {
+       "target": "TL01",
+       "role": "头衔"
+      },
+      {
+       "target": "OR01",
+       "role": "所属组织"
+      },
+      {
+       "target": "IT16",
+       "role": "核心道具"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "A scholarly adult wizard in layered deep violet and charcoal wool robes with silver-embroidered cuffs, a heavy leather-bound spellbook chained to the belt, holding a tall carved staff topped with a violet crystal, ink-stained fingers, reading spectacles pushed up on the head, a satchel of scrolls, thoughtful expression."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CL11",
+     "name": "战斗法师",
+     "name_en": "Battlemage (Spellsword)",
+     "aliases": [
+      "spellsword",
+      "魔剑士",
+      "eldritch knight"
+     ],
+     "summary": "剑与法术同修：在近战中瞬发短咒，或把法术附在剑上。",
+     "xianxia": {
+      "concept": "法剑双修（参照）"
+     },
+     "cost": "两头都难登顶；同时维持武艺与学问。",
+     "counter": "纯法师远程、纯战士压制。",
+     "visual": "轻甲加法袍、单手剑上有符文、空手泛着法光。",
+     "details": {
+      "力量源": "奥术 + 勇武"
+     },
+     "familiarity": "中",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "上古卷轴 / D&D",
+       "note": "spellsword、eldritch knight"
+      }
+     ],
+     "relations": [
+      {
+       "target": "AU01",
+       "role": "专长"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "An agile adult battlemage in a fitted half-plate cuirass worn over a long split violet robe, an arming sword with faint glowing blue engraved lines along the blade in one hand, the other hand crackling with a small sphere of blue arcane light, a short spellbook in a holster on the thigh, poised mid-ready stance."
+     },
+     "adoption": "default",
+     "basis": "genre"
+    },
+    {
+     "id": "CL17",
+     "name": "召唤师",
+     "name_en": "Summoner (Conjurer)",
+     "aliases": [
+      "conjurer",
+      "demonologist",
+      "召唤术士"
+     ],
+     "summary": "以法阵和契约召唤外界生物为自己作战或服务；强弱取决于召唤物和控制力。",
+     "xianxia": {
+      "concept": "御兽 / 驱使鬼神（参照）"
+     },
+     "cost": "失控的召唤物会反噬；契约生物会讨价还价。",
+     "counter": "斩断召唤链接、破坏法阵、攻击本体。",
+     "visual": "随身粉笔与盐、法阵卷轴、钥匙串（象征打开门）。",
+     "details": {
+      "力量源": "奥术（咒法系）"
+     },
+     "familiarity": "中",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "所罗门之钥等魔法书传统",
+       "note": "以法阵召唤与约束灵体"
+      }
+     ],
+     "relations": [
+      {
+       "target": "SC02",
+       "role": "学派"
+      },
+      {
+       "target": "CF03",
+       "role": "相关工艺"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "character",
+      "brief": "An adult summoner in long dark indigo robes with deep sleeves, a ring of many old iron keys at the belt, a stick of white chalk and a pouch of salt, a rolled parchment of geometric circle diagrams under one arm, kneeling beside a freshly drawn chalk circle on a floor made of two concentric rings, a seven-sided heptagon and radiating straight lines (no stars, no triangles), a faint indigo glow rising from the circle."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CL18",
+     "name": "炼金术士",
+     "name_en": "Alchemist",
+     "aliases": [
+      "药剂师",
+      "apothecary"
+     ],
+     "summary": "以蒸馏、调和、嬗变制作药剂、毒药、炸药与奇物；不靠天赋，靠配方和实验。",
+     "xianxia": {
+      "concept": "丹师 / 炼丹（参照）",
+      "note": "西方炼金术与中国外丹是真实的历史平行，都追求长生与点金。差异：西方炼金士更像实验室学者，炼成品多是液体药剂。"
+     },
+     "cost": "实验事故、中毒、教会对「渎神」的怀疑。",
+     "counter": "配方被盗、关键原料断供。",
+     "visual": "皮围裙、护目镜、蒸馏器、玻璃瓶与腰包。",
+     "details": {
+      "力量源": "工艺（不需觉醒也能做低阶）",
+      "工艺": "炼金 CF01"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲炼金术",
+       "note": "帕拉塞尔苏斯与医药炼金"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CF01",
+       "role": "工艺"
+      },
+      {
+       "target": "IT21",
+       "role": "终极目标"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "An eccentric adult alchemist in a stained leather apron over rolled-up shirtsleeves, brass goggles pushed up on the forehead, a bandolier of small colored glass vials across the chest, holding up a round flask of glowing green liquid to inspect it, faint chemical burns on the fingers, curious intense expression."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CL19",
+     "name": "符文匠",
+     "name_en": "Runesmith",
+     "aliases": [
+      "附魔师",
+      "enchanter",
+      "rune-carver"
+     ],
+     "summary": "把力量刻进金属与石头：锻造符文武器、守护石、护身符。几乎不直接施法。",
+     "xianxia": {
+      "concept": "炼器师 / 符师 / 阵法师（参照）"
+     },
+     "cost": "极慢；一件作品可能要数年；行规森严。",
+     "counter": "磨损符文、熔毁作品。",
+     "visual": "铁匠皮围裙、刻刀与锤、发光的刻痕。",
+     "details": {
+      "力量源": "符文与工艺",
+      "常见种族": "矮人"
+     },
+     "familiarity": "中",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "北欧传统 / 战锤奇幻",
+       "note": "符文与只刻符不施法的匠人"
+      },
+      {
+       "work": "北欧传统",
+       "note": "符文与矮人锻造"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS08",
+       "role": "力量源"
+      },
+      {
+       "target": "RC03",
+       "role": "常见种族"
+      },
+      {
+       "target": "CF02",
+       "role": "工艺"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "A broad-shouldered adult runesmith in a heavy scorched leather smith's apron over a wool tunic, thick forearms, braided hair tied back, holding a fine steel engraving chisel in one hand and a small hammer in the other, a half-finished axe head with glowing molten-gold carved angular marks resting on a portable anvil beside them."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CL21",
+     "name": "先知",
+     "name_en": "Seer (Oracle)",
+     "aliases": [
+      "oracle",
+      "预言者",
+      "prophet"
+     ],
+     "summary": "看见未来与远方的人：为王室与神庙服务，或在乡野流浪；预言总是模糊而准确。",
+     "xianxia": {
+      "concept": "卜算子 / 天机阁（参照）"
+     },
+     "cost": "看到的未来无法完全改变；常失明或疯癫；被权力者囚禁利用。",
+     "counter": "遮蔽天机之物、命运之外的人。",
+     "visual": "蒙眼布或乳白色眼睛、骨与水晶、烟与香。",
+     "details": {
+      "力量源": "奥术（预言系）或神圣（神谕）"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "希腊神谕",
+       "note": "德尔斐女祭司"
+      }
+     ],
+     "relations": [
+      {
+       "target": "SC03",
+       "role": "学派"
+      },
+      {
+       "target": "GF04",
+       "role": "常见天赋"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "An adult seer with a strip of pale linen tied over the eyes as a blindfold, long loose hair woven with tiny bone beads, layered pale grey robes, holding a smooth clear crystal sphere cupped in both hands, a thin trail of incense smoke curling around them, calm otherworldly expression."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CL22",
+     "name": "吟游诗人",
+     "name_en": "Bard",
+     "aliases": [
+      "minstrel",
+      "skald",
+      "说书人"
+     ],
+     "summary": "以歌、诗与故事施展魔力：鼓舞、魅惑、记忆与情报。传颂谁，谁就能成为传奇。",
+     "xianxia": {
+      "concept": "乐修（参照）",
+      "note": "西方吟游诗人还承担「传颂功业」的作用——英雄的名声靠他们传播，名声本身有力量（见功业 GR07）。"
+     },
+     "cost": "得罪权贵；歌谣会被篡改。",
+     "counter": "噪音、沉默魔法、毁掉其名声。",
+     "visual": "鲁特琴或竖琴、鲜艳斗篷、羽毛帽。",
+     "details": {
+      "力量源": "奥术（惑控系）+ 名声"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "凯尔特吟游者 / 北欧 skald",
+       "note": "诗人的社会地位与诅咒之歌"
+      }
+     ],
+     "relations": [
+      {
+       "target": "SC04",
+       "role": "学派"
+      },
+      {
+       "target": "TL04",
+       "role": "起源阶层"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "A charismatic adult bard in a dashing slashed doublet of burgundy and gold, a short travel cape thrown over one shoulder, a feathered cap, playing a pear-shaped wooden lute with inlaid soundhole, a dagger at the belt and a small drum hanging at the hip, mid-song with a roguish grin."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "primal",
+   "name": "自然与元素",
+   "intro": "力量源是自然或元素，靠被接纳与沟通。",
+   "entries": [
+    {
+     "id": "CL12",
+     "name": "德鲁伊",
+     "name_en": "Druid",
+     "aliases": [
+      "druidess",
+      "圣林守护者"
+     ],
+     "summary": "古老的自然祭司：守护圣林与土地，能变形、驭兽、控制植物与天气，主持季节仪式。",
+     "xianxia": {
+      "concept": "隐世宗门 / 木系修士 / 妖修亲近者（参照）"
+     },
+     "cost": "与土地绑定，离开太远会衰弱；变形太久会野化。",
+     "counter": "焚林、冷铁、城市化。",
+     "visual": "白色或绿色长袍、橡木杖、槲寄生、金镰、兽骨饰物。",
+     "details": {
+      "力量源": "自然",
+      "头衔": "德鲁伊阶层 TL04"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "凯尔特德鲁伊",
+       "note": "橡树、槲寄生与金镰"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS03",
+       "role": "力量源"
+      },
+      {
+       "target": "PR01",
+       "role": "专长"
+      },
+      {
+       "target": "TL04",
+       "role": "头衔"
+      },
+      {
+       "target": "OR05",
+       "role": "所属组织"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "A weathered adult druid in a long undyed white wool robe with a moss-green mantle, a crown of oak leaves and mistletoe, a gnarled oak staff wrapped with ivy, a small golden crescent sickle hanging from a rope belt, necklaces of carved bone and acorns, bare feet on the ground, wise calm expression."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CL13",
+     "name": "元素术士",
+     "name_en": "Elementalist",
+     "aliases": [
+      "elementalist",
+      "natural philosopher",
+      "元素使"
+     ],
+     "summary": "与元素精灵谈判的自然哲人：按帕拉塞尔苏斯的说法，火有火蜥蜴、水有水妖、风有风精、土有地灵；元素术士以供奉、契约和真名驱使它们。也兼修赛兹的通灵。",
+     "xianxia": {
+      "concept": "五行术士（参照）"
+     },
+     "cost": "元素精灵会要价；契约失效时元素反噬。",
+     "counter": "驱灵、真名被夺、元素真空。",
+     "visual": "学者式长外套上沾着灰烬与水渍，腰间挂四只装元素样本的小瓶（火、水、土、风），手持铜质测风器。",
+     "details": {
+      "力量源": "元素 + 祖灵"
+     },
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "帕拉塞尔苏斯",
+       "note": "四元素精灵"
+      },
+      {
+       "work": "北欧传统",
+       "note": "赛兹（见 PR02）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS04",
+       "role": "力量源"
+      },
+      {
+       "target": "PR02",
+       "role": "专长"
+      },
+      {
+       "target": "RC06",
+       "role": "常见种族"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "An adult natural philosopher elementalist in a long weathered scholar's coat of dark green wool over a leather waistcoat, singed cuffs and water-stained hem, four small stoppered glass vials on the belt holding a tiny live flame, swirling water, a pinch of glowing soil and a captured wisp of moving air, holding a brass instrument like an astrolabe, a small salamander made of flame curled on the shoulder, curious and composed expression."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CL14",
+     "name": "术士",
+     "name_en": "Sorcerer",
+     "aliases": [
+      "sorceress",
+      "天生法师",
+      "bloodmage（误用）"
+     ],
+     "summary": "血里带着力量的天生施法者：不读书，靠本能与情绪施法，强大但难以控制。",
+     "xianxia": {
+      "concept": "天生神体 / 血脉觉醒者（参照）",
+      "note": "与法师对立：法师靠学，术士靠生。常被学院视为危险分子。"
+     },
+     "cost": "情绪失控即暴走；被猎杀血脉者追捕。",
+     "counter": "冷静、封印纹身、天敌材料。",
+     "visual": "无需法杖，皮肤下血管或纹路发光，瞳孔异色。",
+     "details": {
+      "力量源": "血脉",
+      "天赋": "龙血、天裔、魔裔、妖精血等"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D",
+       "note": "Sorcerer 血脉"
+      },
+      {
+       "work": "猎魔人",
+       "note": "天生「源」体质（机制参考）"
+      },
+      {
+       "work": "欧洲传说",
+       "note": "梅林的梦魔出身——天生异能"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS07",
+       "role": "力量源"
+      },
+      {
+       "target": "GR04",
+       "role": "成长方式"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "A striking adult sorceress in a fitted crimson and black gown with a high collar and a travel cloak, no staff or book, faint glowing ember-red lines visible under the skin of her arms and neck like veins of fire, one eye amber and one eye dark, a small flame flickering in her open palm, intense and slightly dangerous expression."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CL23",
+     "name": "猎魔人",
+     "name_en": "Monster Hunter",
+     "aliases": [
+      "hexhunter",
+      "怪物猎人",
+      "slayer"
+     ],
+     "summary": "以猎杀怪物为业的人：熟知民间克制之法（银、冷铁、盐、圣水、花楸），按委托清除吸血鬼、狼人、亡灵与妖精作祟。不靠变异，靠知识、装备与胆量；许多人是半吸血鬼或胎膜之子。",
+     "xianxia": {
+      "concept": "斩妖人（参照）",
+      "note": "成长靠「异变试炼」：每升一阶都要喝下更毒的药剂，存活率低。"
+     },
+     "cost": "危险职业，寿命常短；被雇主怀疑与怪物有染。",
+     "counter": "未知怪物、人类阴谋。",
+     "visual": "镀银军刀与手弩、皮甲、装满克制材料的腰包。",
+     "details": {
+      "力量源": "勇武 + 民俗知识；半吸血鬼者有血脉之力",
+      "成长": "功业 GR07、血脉觉醒 GR04"
+     },
+     "familiarity": "中",
+     "ip": "inspired",
+     "references": [
+      {
+       "work": "巴尔干民间",
+       "note": "dhampir 半吸血鬼猎人、kresnik"
+      },
+      {
+       "work": "欧洲民俗",
+       "note": "银、冷铁、盐、花楸克制超自然"
+      }
+     ],
+     "relations": [
+      {
+       "target": "MT02",
+       "role": "核心材料"
+      },
+      {
+       "target": "MT03",
+       "role": "核心材料"
+      },
+      {
+       "target": "OR15",
+       "role": "所属组织"
+      },
+      {
+       "target": "RS09",
+       "role": "常见出身"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "A rugged adult monster hunter in worn oiled brown leather armor with a hooded short cape, a heavy sabre with a bright silver-plated edge at the hip, a compact crossbow slung across the back, a belt with pouches of salt, iron nails and dried rowan sprigs, a small flask and a string of garlic, weathered face with old claw scars, practical and grim."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "dark",
+   "name": "黑暗与禁忌",
+   "intro": "力量源是暗影、深渊或契约。不一定是反派，但一定被社会排斥。",
+   "entries": [
+    {
+     "id": "CL15",
+     "name": "死灵法师",
+     "name_en": "Necromancer",
+     "aliases": [
+      "亡灵法师",
+      "gravecaller"
+     ],
+     "summary": "操纵死亡的施法者：唤起尸骨、与亡魂对话、吸取生命，终极目标常是成为巫妖。",
+     "xianxia": {
+      "concept": "鬼修 / 尸修 / 驭尸人（参照）"
+     },
+     "cost": "肉体逐渐亡灵化；处处被追杀。",
+     "counter": "圣光、圣水、毁掉护命匣。",
+     "visual": "黑灰长袍、骨饰、苍白皮肤、身旁鬼火与骷髅仆从。",
+     "details": {
+      "力量源": "暗影与死亡",
+      "终点": "巫妖（亡灵 RC14）"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D / 暗黑破坏神",
+       "note": "necromancer"
+      },
+      {
+       "work": "古希腊招魂术与中世纪 nigromancy",
+       "note": "问死者之术"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS05",
+       "role": "力量源"
+      },
+      {
+       "target": "SC07",
+       "role": "学派"
+      },
+      {
+       "target": "RC14",
+       "role": "终点"
+      },
+      {
+       "target": "IT20",
+       "role": "核心道具"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "character",
+      "brief": "A gaunt adult necromancer with ashen pale skin and dark-ringed eyes, in tattered layered black and bone-grey robes, a mantle decorated with small bird skulls and loose bones, a single raven skull hanging on a cord at the chest, holding a staff topped with a human skull wrapped in black wire, cold teal will-o-wisp lights hovering near the shoulders. No crosses, ankhs or religious pendants."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CL16",
+     "name": "契约师",
+     "name_en": "Warlock (Pactbound)",
+     "aliases": [
+      "warlock",
+      "恶魔契约者",
+      "pactbound"
+     ],
+     "summary": "与强大存在立约换取力量的人：力量随叫随到，但赞助者随时可以收回或要价。",
+     "xianxia": {
+      "concept": "魔修 / 与魔头立约者（参照）",
+      "note": "关键不是功法而是「合同」：剧情可以围绕条款与漏洞展开。"
+     },
+     "cost": "契约条款（见契约魔法 DK01）。",
+     "counter": "契约漏洞、赞助者的敌人、更高的仲裁者。",
+     "visual": "身上的契约印记、一只不像动物的使魔、带有赞助者风格的服饰。",
+     "details": {
+      "力量源": "深渊 / 妖精 / 亡灵 等赞助者",
+      "赞助者类型": "恶魔、妖精王、亡灵君主、古神"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D",
+       "note": "Warlock patron"
+      },
+      {
+       "work": "浮士德",
+       "note": "契约原型"
+      }
+     ],
+     "relations": [
+      {
+       "target": "DK01",
+       "role": "核心魔法"
+      },
+      {
+       "target": "IT08",
+       "role": "核心道具"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "A brooding adult warlock in a fitted black high-collared coat with ember-red lining, one forearm wrapped in bandages through which glowing orange contract-mark lines show, a burned edge of parchment tucked in the belt, a small black horned lizard-like familiar perched on the shoulder, faint red embers drifting around the hand."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CL20",
+     "name": "女巫",
+     "name_en": "Witch",
+     "aliases": [
+      "hedge witch",
+      "巫婆",
+      "warlock（男巫，旧称）"
+     ],
+     "summary": "民间的魔法传承者：草药、诅咒、占卜、月相与使魔。被教会追猎，在乡野被需要。",
+     "xianxia": {
+      "concept": "蛊师 / 旁门散修（参照）",
+      "note": "欧美短剧与流行文化中最高频的魔法身份之一；常与血脉、家族诅咒、女巫会结合。"
+     },
+     "cost": "被猎巫；诅咒反噬。",
+     "counter": "审判官、冷铁、盐、被揭穿身份。",
+     "visual": "深色层叠衣物、草药与小瓶、黑猫或乌鸦、银饰。",
+     "details": {
+      "力量源": "巫术（自然 + 暗影混合）",
+      "头衔": "女巫阶层 TL05"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲女巫传说",
+       "note": "hedge witch、cunning woman"
+      }
+     ],
+     "relations": [
+      {
+       "target": "DK03",
+       "role": "核心魔法"
+      },
+      {
+       "target": "TL05",
+       "role": "头衔"
+      },
+      {
+       "target": "OR06",
+       "role": "所属组织"
+      },
+      {
+       "target": "BS15",
+       "role": "使魔"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "An enigmatic adult witch in layered dark plum and black skirts with a fitted laced bodice and a shawl, long dark hair with a few silver strands, many silver rings and a crescent moon pendant, a woven basket of herbs and small corked bottles on one arm, a black cat curled around her ankles, a knowing half-smile."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CL24",
+     "name": "死亡骑士",
+     "name_en": "Death Knight (Revenant Knight)",
+     "aliases": [
+      "revenant knight",
+      "背誓骑士",
+      "dread knight"
+     ],
+     "summary": "死后被唤回的骑士：保留武艺与意志，力量来自死亡与未竟的执念。",
+     "xianxia": {
+      "concept": "尸将 / 鬼将（参照）",
+      "note": "常由失恩的圣武士或战死的骑士转化，执念完成即可安息。"
+     },
+     "cost": "永远寒冷、没有心跳；被执念驱使。",
+     "counter": "圣光、完成或化解其执念。",
+     "visual": "锈黑残破的旧板甲、沾着墓土与枯叶，头盔阴影中两点暗红余烬般的眼光，缺口的旧剑。",
+     "details": {
+      "力量源": "暗影与死亡 + 勇武残余",
+      "来源": "背誓或含冤而死的骑士"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D / 魔兽世界",
+       "note": "death knight 已成通用类型词"
+      },
+      {
+       "work": "欧洲民间",
+       "note": "归来者 revenant"
+      },
+      {
+       "work": "IP 注意",
+       "note": "避免「符文大剑 + 冰蓝发光眼 + 冰霜板甲」整套组合（魔兽死亡骑士强识别）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "FL04",
+       "role": "常见来源"
+      },
+      {
+       "target": "RC14",
+       "role": "所属种族"
+      }
+     ],
+     "image": {
+      "purpose": "character",
+      "brief": "A towering adult revenant knight risen from the grave in old rust-blackened battered plate armor with grave soil, roots and dead leaves clinging to it, a torn moth-eaten heraldic surcoat whose emblem has faded, the face hidden in the shadow of an open dented helm except for two dim ember-red pinpoints of light, gripping a notched ancient longsword, an air of grim sorrow rather than villainy."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  }
+ ]
+}

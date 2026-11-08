@@ -1,0 +1,781 @@
+{
+ "id": "orders",
+ "name": "组织与势力",
+ "intro": "西幻组织不按「门派」组织，而按欧洲真实制度：学院（大学）、教会、骑士团、行会、贵族家族、王庭，加上地下的女巫会、盗贼行会与刺客兄弟会。同一个人可以同时属于几个组织（一个贵族家的女儿、学院的学生、秘密女巫会的成员）——这种多重身份是西幻社会的基本形态。徽记图为组织原型，采用剧须换成剧内自己的纹章。",
+ "subgroups": [
+  {
+   "id": "institutions",
+   "name": "公开机构",
+   "intro": "",
+   "entries": [
+    {
+     "id": "OR01",
+     "name": "法师学院",
+     "name_en": "Arcane Academy",
+     "aliases": [
+      "mage college",
+      "magic university",
+      "法师塔"
+     ],
+     "summary": "按中世纪大学组织的奥术学府：分学派设讲席，学徒入学、熟手游学、大师授课；掌握禁书库与高阶知识，与王室和教会三方角力。",
+     "xianxia": {
+      "concept": "宗门（参照）",
+      "note": "差异：学院是「学术机构」不是家族式宗门，学生毕业就走，忠诚靠利益与学位维系。"
+     },
+     "details": {
+      "内部结构": "院长 Chancellor → 各学派讲席大师 → 讲师 → 熟手 → 学徒",
+      "义务": "向王室提供法师、受教会监督禁术",
+      "资源": "学费、王室津贴、委托收入、禁书库",
+      "内部派系": "按学派分；守旧派与革新派"
+     },
+     "visual": "高塔与回廊、钟楼、按学派区分的袍色。",
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "中世纪大学",
+       "note": "学位与讲席制度"
+      },
+      {
+       "work": "战锤奇幻（只借机制）",
+       "note": "按学派分院、师徒连坐"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TL01",
+       "role": "授予头衔"
+      },
+      {
+       "target": "GR02",
+       "role": "成长方式"
+      }
+     ],
+     "image": {
+      "purpose": "emblem",
+      "brief": "Banner of an original arcane academy: deep violet cloth with a silver embroidered emblem of an open book beneath a stylized eight-pointed star made of compass-like lines, framed by a ring of small geometric shapes, silver fringe along the bottom edge."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "OR02",
+     "name": "圣光教会",
+     "name_en": "Church of the Light",
+     "aliases": [
+      "the Church",
+      "the Faith"
+     ],
+     "summary": "信仰「光」的教会：授圣职、行圣礼、管辖医院与孤儿院，也审判异端、追认圣徒。拥有土地、军队（光誓骑士）与道德解释权。",
+     "xianxia": {
+      "concept": "正道魁首 / 佛门（参照）",
+      "note": "结构参照中世纪拉丁教会（主教制、什一税、圣徒追认），不复用真实教义、圣人名、圣事名与符号；标志是本库原创的七芒太阳盘（见 visual_guide）。"
+     },
+     "details": {
+      "内部结构": "大主教 → 主教 → 神父 → 执事 → 侍祭；另设光誓骑士团与异端裁判所",
+      "义务": "治病、赈济、驱邪",
+      "资源": "什一税、土地、朝圣、圣物",
+      "内部派系": "慈悲派（重治愈）与审判派（重惩戒）"
+     },
+     "visual": "白石大教堂、彩窗、金色太阳盘。",
+     "familiarity": "高",
+     "ip": "inspired",
+     "references": [
+      {
+       "work": "中世纪教会制度（只借结构）",
+       "note": "圣职、什一税、封圣"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TL03",
+       "role": "授予头衔"
+      },
+      {
+       "target": "OR04",
+       "role": "下属机构"
+      },
+      {
+       "target": "PS02",
+       "role": "力量源"
+      }
+     ],
+     "image": {
+      "purpose": "emblem",
+      "brief": "Banner of an original sun faith church: white cloth with a large gold-embroidered emblem of a seven-rayed sun disc (a plain circle with seven equal short wedge-shaped rays and a thin inner ring) at its center, a thin gold border of interlaced lines, gold tassels; no crosses, no religious symbols from real faiths."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "OR03",
+     "name": "骑士团",
+     "name_en": "Knightly Order",
+     "aliases": [
+      "order of knights",
+      "templars（避免）"
+     ],
+     "summary": "以共同誓言结成的骑士组织：守护王国、圣地或一项使命（守边、护送朝圣者、猎杀怪物）。有自己的城堡、领地、规章与骑士团长。",
+     "xianxia": {
+      "concept": "剑宗 / 护法堂（参照）"
+     },
+     "details": {
+      "内部结构": "大团长 Grand Master → 指挥官 → 骑士 → 侍从 → 仆从兵",
+      "义务": "誓言规定的使命，战时听王召集",
+      "资源": "领地、捐赠、战利品",
+      "类型": "王室骑士团、宗教骑士团、边境骑士团"
+     },
+     "visual": "统一的罩袍与纹章、城堡要塞。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "中世纪骑士团",
+       "note": "圣殿、医院、条顿骑士团（只借结构）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TL02",
+       "role": "授予头衔"
+      },
+      {
+       "target": "CL02",
+       "role": "成员"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "emblem",
+      "brief": "Banner of an original knightly order: deep crimson cloth with a large white embroidered emblem of an upright longsword with a plain round pommel piercing a crown of oak leaves, flanked by two rearing griffins, plain gold-thread border, swallow-tailed bottom edge. All ornaments are oak leaves and acorns only."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "OR04",
+     "name": "异端裁判所",
+     "name_en": "The Inquisition (Order of the Hunt)",
+     "aliases": [
+      "inquisition",
+      "witch hunters",
+      "猎巫会"
+     ],
+     "summary": "教会的执法机构：调查并审判异端、女巫、恶魔崇拜者与非法施法者。权力极大，常越过王室与学院行事。",
+     "xianxia": {
+      "concept": "正道执法堂（参照）"
+     },
+     "details": {
+      "内部结构": "大审判官 → 审判官 → 猎巫人 → 线人网",
+      "资源": "没收的财产、教会授权",
+      "手段": "审讯、神判、火刑"
+     },
+     "visual": "黑衣、银饰、火盆与锁链。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "近代早期猎巫史",
+       "note": "宗教裁判与猎巫"
+      }
+     ],
+     "relations": [
+      {
+       "target": "OR02",
+       "role": "上级"
+      },
+      {
+       "target": "CL09",
+       "role": "成员"
+      },
+      {
+       "target": "OR06",
+       "role": "追猎对象"
+      }
+     ],
+     "image": {
+      "purpose": "emblem",
+      "brief": "Banner of an original witch-hunting order: black cloth with a silver embroidered emblem of a seven-rayed sun disc (a plain circle with seven equal short wedge-shaped rays and a thin inner ring) above a clenched iron gauntlet holding a short length of chain, a border of small silver flames, frayed bottom edge."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "OR05",
+     "name": "德鲁伊环",
+     "name_en": "Druid Circle",
+     "aliases": [
+      "circle",
+      "grove"
+     ],
+     "summary": "守护古林与圣地的德鲁伊团体：在巨石圈与圣林中聚会，主持季节节庆，裁决乡野纠纷。与教会关系紧张。",
+     "xianxia": {
+      "concept": "隐世宗门（参照）"
+     },
+     "details": {
+      "内部结构": "大德鲁伊 → 德鲁伊 → 卜者 → 吟游者",
+      "义务": "守护一片土地及其生灵",
+      "资源": "圣林、地脉、乡民供奉",
+      "聚会": "四大节与夏至冬至"
+     },
+     "visual": "巨石圈、橡树、白袍。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "凯尔特德鲁伊",
+       "note": "圣林与阶层"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TL04",
+       "role": "授予头衔"
+      },
+      {
+       "target": "CL12",
+       "role": "成员"
+      },
+      {
+       "target": "PL10",
+       "role": "据点"
+      }
+     ],
+     "image": {
+      "purpose": "emblem",
+      "brief": "Banner of an original druid circle: undyed off-white wool cloth with a green and gold embroidered emblem of a great oak tree whose roots form a closed ring, a small golden crescent sickle above its crown, a border of embroidered mistletoe sprigs."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "OR07",
+     "name": "冒险者公会",
+     "name_en": "Adventurers' Guild",
+     "aliases": [
+      "guild",
+      "bounty guild",
+      "佣兵公会"
+     ],
+     "summary": "发布与承接委托的行会：讨伐怪物、护送、探索遗迹。会员按星级评定，公会抽成并担保。",
+     "xianxia": {
+      "concept": "散修联盟 / 悬赏堂（参照）",
+      "note": "来自日系异世界与 RPG，不是欧洲原生制度；作为可选模块。为避免与灵魂成色混淆，等级用星。"
+     },
+     "details": {
+      "等级": "无星（见习）→ 一星 → 二星 → 三星 → 四星 → 五星（传奇）",
+      "义务": "按委托履约",
+      "资源": "委托抽成、会员费"
+     },
+     "visual": "城市中的木构会馆、委托告示板、星形铜牌。",
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "日系异世界与 RPG",
+       "note": "冒险者公会已成通用类型（避免照搬任一作品的金属等级）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "BS00",
+       "role": "委托对象"
+      }
+     ],
+     "image": {
+      "purpose": "emblem",
+      "brief": "Banner of an original adventurers' guild: forest-green cloth with a bronze-and-gold embroidered emblem of a crossed sword and walking staff over an open compass rose, five small embroidered stars arched above, leather-reinforced corners."
+     },
+     "adoption": "optional",
+     "module": "冒险者与讨伐等级",
+     "basis": "genre"
+    },
+    {
+     "id": "OR15",
+     "name": "猎魔人行会",
+     "name_en": "Monster Hunters' Lodge",
+     "aliases": [
+      "hunters' lodge",
+      "slayers"
+     ],
+     "summary": "猎魔人的城镇会馆：保存一代代猎手记下的怪物志（bestiary），发放委托、认证会员、照顾遗孀。入会要立「狩猎之誓」：只猎作祟之物，不为钱杀人。",
+     "xianxia": {
+      "concept": "斩妖司（参照）"
+     },
+     "details": {
+      "内部结构": "会首 → 猎手 → 学徒",
+      "资源": "委托金、怪物志、城镇特许状"
+     },
+     "visual": "山中石堡、兽首纹章、训练场。",
+     "familiarity": "中",
+     "ip": "inspired",
+     "references": [
+      {
+       "work": "中世纪行会",
+       "note": "会馆、特许状、互助"
+      },
+      {
+       "work": "中世纪动物寓言集",
+       "note": "bestiary"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL23",
+       "role": "成员"
+      },
+      {
+       "target": "GR09",
+       "role": "成长方式"
+      }
+     ],
+     "image": {
+      "purpose": "emblem",
+      "brief": "Banner of an original monster-hunters' lodge: weathered charcoal-grey cloth with a silver embroidered emblem of an open bound book (a bestiary) with a crossbow bolt laid across it, a sprig of rowan berries above, a ring of small thorn branches around it, tattered bottom edge."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "power",
+   "name": "王权与家族",
+   "intro": "",
+   "entries": [
+    {
+     "id": "OR10",
+     "name": "贵族家族",
+     "name_en": "Noble House",
+     "aliases": [
+      "house",
+      "dynasty",
+      "家族"
+     ],
+     "summary": "以血缘与封地为核心的家族：有纹章、家训、封臣与世仇。魔法血脉常在家族中传承，联姻就是结盟。",
+     "xianxia": {
+      "concept": "世家（参照）"
+     },
+     "details": {
+      "爵位": "公爵 → 侯爵 → 伯爵 → 子爵 → 男爵 → 骑士",
+      "内部": "家主、继承人、旁支、封臣家族",
+      "资源": "封地、税收、私兵、血脉",
+      "纹章": "每家原创纹章与家训"
+     },
+     "visual": "城堡、纹章、家族画像。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲封建制度",
+       "note": "爵位与纹章学"
+      }
+     ],
+     "relations": [
+      {
+       "target": "OR11",
+       "role": "效忠对象"
+      }
+     ],
+     "adoption": "default",
+     "image": {
+      "purpose": "emblem",
+      "brief": "Banner of an original example noble house: deep blue cloth with a silver embroidered heraldic emblem of a rearing silver horse above three small wavy lines of water, within a plain shield shape, a plain gold border, a small plain silver coronet above the shield."
+     },
+     "basis": "tradition"
+    },
+    {
+     "id": "OR11",
+     "name": "王庭",
+     "name_en": "The Crown & Court",
+     "aliases": [
+      "royal court",
+      "王室"
+     ],
+     "summary": "国王与他的宫廷：御前会议、宫廷法师、王之斗士、十二重臣骑士。王冠的合法性来自血统、教会加冕与古老圣物。",
+     "xianxia": {
+      "concept": "王朝 / 朝廷（参照）"
+     },
+     "details": {
+      "结构": "国王 → 御前会议（首相、宫廷法师、大主教、元帅）→ 十二重臣",
+      "合法性": "血统 + 加冕 + 圣物"
+     },
+     "visual": "王座厅、王冠与权杖。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "中世纪王权",
+       "note": "加冕与御前会议"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TL02",
+       "role": "授予头衔"
+      },
+      {
+       "target": "OR10",
+       "role": "封臣"
+      }
+     ],
+     "adoption": "default",
+     "image": {
+      "purpose": "environment",
+      "brief": "A grand royal throne hall: an empty high-backed throne on a dais beneath tall windows of abstract colored glass, plain colored banners hanging along the columns, a long council table to one side with high-backed chairs, a few tiny courtiers near the doors for scale."
+     },
+     "basis": "tradition"
+    },
+    {
+     "id": "OR17",
+     "name": "商人与手工行会",
+     "name_en": "Merchant & Craft Guilds",
+     "aliases": [
+      "guild",
+      "livery company"
+     ],
+     "summary": "中世纪城市的真正权力：每个行业一个行会（金匠、药剂师、铁匠、羊毛商），定价格、管学徒、发执照、选市长。魔法材料与药剂的买卖也归它们管。",
+     "xianxia": {
+      "concept": "坊市商会（参照）"
+     },
+     "details": {
+      "内部结构": "会首 → 大师 → 熟手 → 学徒",
+      "资源": "垄断特许、城市议会席位"
+     },
+     "visual": "行会大厅、行业标志的招牌、会服。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "中世纪城市行会",
+       "note": "guild、livery company"
+      }
+     ],
+     "relations": [
+      {
+       "target": "GR01",
+       "role": "成长方式"
+      },
+      {
+       "target": "OR11",
+       "role": "博弈对象"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "emblem",
+      "brief": "Banner of an original merchants' and craftsmen's guild: rich green cloth with a gold embroidered emblem of a balance scale above a crossed hammer and a simple key with a plain square bit, two plain round coins on either side, a border of interlocking rings, plain gold fringe."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "hidden",
+   "name": "隐秘组织",
+   "intro": "",
+   "entries": [
+    {
+     "id": "OR06",
+     "name": "女巫会",
+     "name_en": "Coven",
+     "aliases": [
+      "coven",
+      "sisterhood"
+     ],
+     "summary": "女巫的秘密团体，传统上十三人：共享知识、互相庇护，在月圆之夜聚会。对外隐藏，对内以血誓相系。",
+     "xianxia": {
+      "concept": "隐秘女修门派（参照）"
+     },
+     "details": {
+      "内部结构": "高阶女巫 → 女巫 → 学徒",
+      "聚会": "满月、四大节",
+      "资源": "草药、契约、家族血脉",
+      "禁忌": "背叛女巫会者受全会诅咒"
+     },
+     "visual": "林中空地、篝火、黑袍与月相饰物。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲女巫传说",
+       "note": "coven 与十三人之说"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TL05",
+       "role": "授予头衔"
+      },
+      {
+       "target": "CL20",
+       "role": "成员"
+      },
+      {
+       "target": "OR04",
+       "role": "宿敌"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "emblem",
+      "brief": "Banner of an original witches' coven: deep plum-black velvet cloth with a silver embroidered emblem of three small separate crescent moons arranged in a triangle around a five-petaled wild rose (the crescents do not touch or overlap and there is no central ring), sprigs of herbs and a single black feather stitched below, silver thread fraying at the edges."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "OR08",
+     "name": "盗贼行会",
+     "name_en": "Thieves' Guild",
+     "aliases": [
+      "thieves' guild",
+      "the Shadows"
+     ],
+     "summary": "城市地下的行会：给扒手、骗子、走私者定地盘、收份子钱、提供庇护与销赃渠道。和城市卫队之间有默契。",
+     "xianxia": {
+      "concept": "黑市 / 地下帮派（参照）"
+     },
+     "details": {
+      "内部结构": "行首 → 各区头目 → 熟手 → 学徒",
+      "资源": "抽成、走私、情报"
+     },
+     "visual": "下水道、酒馆密室、暗号与手势。",
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "西幻通用 / 近代城市黑帮史",
+       "note": "thieves' guild"
+      },
+      {
+       "work": "近代城市黑帮史",
+       "note": "伦敦等城市的盗贼团伙"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL05",
+       "role": "成员"
+      }
+     ],
+     "image": {
+      "purpose": "emblem",
+      "brief": "Banner of an original thieves' guild: dark charcoal cloth with a dull silver embroidered emblem of a closed hand holding a single key, behind it a crescent moon half hidden by a stylized cloud, a border of small linked coins, the banner deliberately worn and patched."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "OR09",
+     "name": "静手会",
+     "name_en": "The Quiet Hand",
+     "aliases": [
+      "assassins' guild",
+      "刺客组织"
+     ],
+     "summary": "接受契约杀人的秘密兄弟会：严格的规条、入会即终身、背叛者必死。只接契约，不问对错。",
+     "xianxia": {
+      "concept": "杀手组织 / 暗殿（参照）"
+     },
+     "details": {
+      "内部结构": "首领（无人见过）→ 执刃者 → 学徒",
+      "规条": "不杀契约以外的人；契约完成前不得离开城市（示例，采用剧可改）"
+     },
+     "visual": "黑灰色、匕首与沙漏符号。",
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "历史与文学",
+       "note": "雇佣刺客传说"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL06",
+       "role": "成员"
+      }
+     ],
+     "image": {
+      "purpose": "emblem",
+      "brief": "Banner of an original assassins' brotherhood: matte black cloth with a deep red embroidered emblem of a slender dagger running vertically through an hourglass, a single drop shape below the blade, a thin dark grey border, no other ornament."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "OR14",
+     "name": "恶魔教团",
+     "name_en": "Demon Cult",
+     "aliases": [
+      "cult",
+      "the Chosen of the Pit"
+     ],
+     "summary": "崇拜某个恶魔君王的秘密教团：以献祭换取力量与财富，目标通常是打开通往深渊的门。成员常是表面体面的贵族与商人。",
+     "xianxia": {
+      "concept": "魔教（参照）"
+     },
+     "details": {
+      "内部结构": "大祭司（与恶魔立约者）→ 内环 → 外环信众",
+      "资源": "恶魔的赐福、信众财富"
+     },
+     "visual": "面具、兜帽长袍、地下祭坛与召唤阵。",
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "哥特与恐怖文学",
+       "note": "秘密邪教"
+      }
+     ],
+     "relations": [
+      {
+       "target": "RC16",
+       "role": "崇拜对象"
+      },
+      {
+       "target": "DK01",
+       "role": "力量来源"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "emblem",
+      "brief": "Banner of an original demonic cult: dark blood-red cloth with a black and ember-orange embroidered emblem of a closed horned circle enclosing a pair of open clawed hands holding a burning coal, flame-like tongues around the circle, edges scorched. No eyes, no triangles."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "OR16",
+     "name": "赫尔墨斯学会",
+     "name_en": "Hermetic Society",
+     "aliases": [
+      "secret society",
+      "rosicrucian-type order"
+     ],
+     "summary": "隐秘的炼金与秘传团体：成员是学者、医生、贵族，以暗号相认，研究灵魂炼成与贤者之石。表面不存在，实际影响学院与王庭。",
+     "xianxia": {
+      "concept": "隐世宗门（参照）"
+     },
+     "details": {
+      "内部结构": "按灵魂成色与入门仪式分级，外圈不知内圈",
+      "资源": "秘传手稿、成员的财富与人脉"
+     },
+     "visual": "密室、蜡封信件、玫瑰与十字以外的原创秘符。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "17 世纪玫瑰十字宣言与秘传团体",
+       "note": "隐秘学会的原型（不用真实名称与符号）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL18",
+       "role": "成员"
+      },
+      {
+       "target": "IT21",
+       "role": "追求"
+      }
+     ],
+     "image": {
+      "version": 3,
+      "purpose": "emblem",
+      "brief": "Banner of an original secret alchemical society: deep midnight-blue cloth with a gold embroidered emblem of a closed round-bellied alembic flask containing a flat engraved sun disc: a solid round disc with exactly seven short triangular rays touching its rim, evenly spaced, and a thin closed inner ring (seven rays, never eight; straight edges, not wavy, not bars), encircled by a serpent biting its own tail, small plain dots like stars around it, plain gold fringe and plain rod finials."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "races",
+   "name": "种族社会",
+   "intro": "",
+   "entries": [
+    {
+     "id": "OR12",
+     "name": "狼群",
+     "name_en": "Werewolf Pack",
+     "aliases": [
+      "pack",
+      "clan"
+     ],
+     "summary": "狼人的基本单位：以领地为界，由 Alpha 统领，Luna 为 Alpha 的伴侣。多个狼群之上可有 Lycan 王族。",
+     "xianxia": {
+      "concept": "妖族部落（参照）"
+     },
+     "details": {
+      "内部结构": "见狼人 RC13 等级链",
+      "规则": "领地不可侵犯；无主之狼（Rogue）可被驱逐或吸纳",
+      "资源": "领地、猎场"
+     },
+     "visual": "林中木屋聚落、领地标记。",
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "欧美狼人小说与短剧",
+       "note": "pack 结构"
+      }
+     ],
+     "relations": [
+      {
+       "target": "RC13",
+       "role": "成员种族"
+      }
+     ],
+     "image": {
+      "purpose": "emblem",
+      "brief": "Banner of an original werewolf pack: dark slate-blue cloth with a silver embroidered emblem of a howling wolf's head in profile inside a full moon, three claw-mark slashes beneath it, a border of stylized pine trees."
+     },
+     "adoption": "default",
+     "basis": "genre"
+    },
+    {
+     "id": "OR13",
+     "name": "血族议会",
+     "name_en": "Vampire Court",
+     "aliases": [
+      "court of blood"
+     ],
+     "summary": "吸血鬼各血统的联合议会：订立「不在凡人面前现身」的盟约、分配狩猎领地、审判违约者。由古老者把持。",
+     "xianxia": {
+      "concept": "魔门长老会（参照）"
+     },
+     "details": {
+      "内部结构": "议长（古老者）→ 各血统长老 → 吸血鬼 → 新生者；血仆服侍",
+      "规则": "不在凡人面前现形；不得未经议会许可转化凡人"
+     },
+     "visual": "烛光宫殿、长桌、血红与黑。",
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "现代吸血鬼小说",
+       "note": "吸血鬼议会已成通用类型（避免使用具体作品的组织名）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "RC15",
+       "role": "成员种族"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "emblem",
+      "brief": "Banner of an original vampire court: black velvet cloth with a deep crimson and silver embroidered emblem of a single rose whose stem is wrapped around an upright dagger with a plain round pommel, a pair of bat wings spread behind it, a drop of red at the blade's tip, a border of thorny briar, plain silver fringe."
+     },
+     "adoption": "default",
+     "basis": "genre"
+    }
+   ]
+  }
+ ]
+}

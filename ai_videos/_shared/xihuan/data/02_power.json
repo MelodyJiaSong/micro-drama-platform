@@ -1,0 +1,1873 @@
+{
+ "id": "power",
+ "name": "力量源与魔法",
+ "intro": "西幻没有一种统一的「灵气」。本库设九种力量源（对应仙侠的灵气、仙元、妖力、魔气、鬼气、愿力、真气等），每种有自己的获取方式、代价和屏幕颜色。一个角色的「路线」= 力量源 × 职业 × 位阶。每种力量源下直接列出它的学派、领域与分支。",
+ "subgroups": [
+  {
+   "id": "arcane",
+   "name": "奥术",
+   "intro": "奥术之下按「学派」分（做什么）：八学派是西幻最通用的分类，英文观众一听 necromancy / illusion 就懂。一位法师通常主修一派、兼修数派。星辰与时空两个领域也归奥术。",
+   "entries": [
+    {
+     "id": "PS01",
+     "name": "奥术",
+     "name_en": "Arcane",
+     "aliases": [
+      "魔力",
+      "mana",
+      "秘法"
+     ],
+     "summary": "靠学习掌握的理性魔法：从地脉和空气中汲取魔力，用咒文、手势和法阵塑形。",
+     "xianxia": {
+      "concept": "灵气 / 法修",
+      "note": "都是「天地间有游离能量，凭方法引导」。差异：奥术是学术——靠公式、语言与知识积累，不讲心性与炼化入体；能承载多少魔力取决于灵魂的金属位阶（见位阶）。"
+     },
+     "cost": "精神疲劳与魔力枯竭；施展超出所学层级的咒式会反噬，轻则流鼻血昏厥，重则灼伤心智。",
+     "counter": "反魔法场、冷铁、沉默（打断咒文）、魔力真空地带。",
+     "trigger": "咒文 + 手势 + 意志三要素，缺一则法术不稳。",
+     "requirement": "有魔力亲和天赋，或经学院系统学习达到第一环。",
+     "visual": "冷紫到电蓝的光，几何法阵、悬浮符文环，粒子呈细砂状。",
+     "screen": {
+      "配色": "紫罗兰 #6B4CE6 → 电蓝 #3FA9F5",
+      "特效": "施法前掌心出现旋转的同心法阵；能量线笔直、有棱角",
+      "声音": "玻璃般的嗡鸣、低频共振"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D / Pathfinder",
+       "note": "arcane 传统：学习型施法"
+      },
+      {
+       "work": "赫尔墨斯主义与文艺复兴魔法",
+       "note": "以知识、书籍与仪式驾驭宇宙力量的学者法师原型"
+      }
+     ],
+     "relations": [
+      {
+       "target": "SC05",
+       "role": "代表学派"
+      },
+      {
+       "target": "TL01",
+       "role": "头衔"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The caster raises one open palm; above it hangs a precise rotating disc of concentric violet and electric-blue geometric rings made of fine light lines, with small floating angular glyph shapes orbiting it, sand-like glowing particles drifting upward. Cold, clean, mathematical light."
+     },
+     "adoption": "locked",
+     "basis": "tradition"
+    },
+    {
+     "id": "SC01",
+     "name": "防护系",
+     "name_en": "Abjuration",
+     "aliases": [
+      "abjurer",
+      "结界学派"
+     ],
+     "summary": "护盾、结界、驱散与封印：阻挡伤害、拆解别人的法术。",
+     "xianxia": {
+      "concept": "防御法术 / 结界 / 禁制",
+      "note": "对应护体灵光、结界阵和禁制；「驱散魔法」相当于破禁。"
+     },
+     "cost": "被动：只能挡不能攻；结界要持续供能。",
+     "counter": "持续压制、绕开结界、从内部破坏。",
+     "visual": "半透明六角蜂巢光盾，裂开时像冰面开裂。",
+     "screen": {
+      "配色": "银蓝 #9EC9F5",
+      "特效": "受击点出现涟漪和蜂巢纹"
+     },
+     "familiarity": "中",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D / SRD",
+       "note": "八学派之一"
+      },
+      {
+       "work": "《所罗门之钥》等魔法书",
+       "note": "施法者站在保护圈内、以护符与圣名挡灾"
+      }
+     ],
+     "relations": [
+      {
+       "target": "IT13",
+       "role": "相关道具"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The caster holds both palms forward; in front of them stands a large curved translucent silver-blue shield dome made of interlocking hexagonal light cells, one spot of the shield rippling and cracking like ice where an unseen impact just struck, shards of light scattering. Protective, solid, crisp."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "SC02",
+     "name": "咒法系",
+     "name_en": "Conjuration",
+     "aliases": [
+      "召唤学派",
+      "summoning",
+      "传送"
+     ],
+     "summary": "召唤生物与物品、传送：把东西从别处「拉」过来。",
+     "xianxia": {
+      "concept": "召唤术 / 传送阵 / 搬运术",
+      "note": "召唤契约兽、挪移、乾坤袋式的空间术。"
+     },
+     "cost": "被召唤物有自己的意志与报价；传送距离越远误差越大。",
+     "counter": "封锁空间、驱逐被召唤物、斩断契约链接。",
+     "visual": "地面法阵中旋转的门洞，空气撕裂边缘的星光。",
+     "screen": {
+      "配色": "深靛 #2B2D7A + 星白",
+      "特效": "空间像布一样被撕开，边缘有星点"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D / SRD",
+       "note": "八学派之一"
+      },
+      {
+       "work": "《所罗门小钥匙·Goetia》",
+       "note": "以法阵召唤并约束灵体"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL17",
+       "role": "代表职业"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "On the floor before the caster a large glowing indigo circle of abstract geometric lines spins; above it the air is torn open vertically like ripped dark cloth, the torn edges sparkling with starlight, and a large clawed creature's silhouette is beginning to step through from the darkness beyond. Mysterious, deep indigo and star-white."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "SC03",
+     "name": "预言系",
+     "name_en": "Divination",
+     "aliases": [
+      "占卜",
+      "先知",
+      "seer"
+     ],
+     "summary": "看见远方、过去与未来，识破谎言与伪装。",
+     "xianxia": {
+      "concept": "推演天机 / 神识探查 / 卜算",
+      "note": "对应推演、窥天机、神识扫视；同样有「天机反噬」式的代价。"
+     },
+     "cost": "看到的未来模糊且会改变；看太多会失明或疯狂。",
+     "counter": "遮蔽天机的护符、命运之外的人（异界人）。",
+     "visual": "水镜、水晶球、眼睛形状的光、星图。",
+     "screen": {
+      "配色": "月银 #D9E2EC + 星蓝",
+      "特效": "瞳孔变成星空；画面闪回/闪前片段"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D / SRD",
+       "note": "八学派之一"
+      },
+      {
+       "work": "希腊神谕",
+       "note": "德尔斐神谕"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL21",
+       "role": "代表职业"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The caster leans over a wide shallow stone basin of perfectly still black water; on the water surface glows a moving silvery vision of a distant castle under stars, while above the basin hangs a large faint luminous eye shape made of silver star points and thin orbit lines. Quiet, moonlit, mysterious."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "SC04",
+     "name": "惑控系",
+     "name_en": "Enchantment",
+     "aliases": [
+      "魅惑",
+      "charm",
+      "精神控制"
+     ],
+     "summary": "影响心智：魅惑、催眠、恐惧、命令。",
+     "xianxia": {
+      "concept": "魅术 / 摄魂术 / 迷魂",
+      "note": "对应魅惑与摄魂；在西方短剧里常与爱情线结合（被魅惑的爱是不是真的）。"
+     },
+     "cost": "意志强者会挣脱并记恨；被识破后信任永久破裂；多数王国视为重罪。",
+     "counter": "强意志、护心符、痛觉惊醒、真爱（叙事上）。",
+     "visual": "粉紫色丝线缠绕目标头部，目标瞳孔泛起同色光环。",
+     "screen": {
+      "配色": "玫瑰紫 #C04CC8",
+      "特效": "声音变得回响；目标眼中出现螺旋光"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D / SRD",
+       "note": "八学派之一"
+      },
+      {
+       "work": "古罗马与中世纪民间",
+       "note": "fascinatio（邪眼与魅惑）、爱情咒"
+      }
+     ],
+     "relations": [
+      {
+       "target": "IT05",
+       "role": "相关道具"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The caster's hand is extended toward a second plain silhouetted figure standing opposite; fine glowing rose-violet threads of light flow from the caster's fingers and wrap gently around the other figure's head, whose eyes glow with faint matching violet rings, soft hazy dreamlike glow. Seductive, hypnotic."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "SC05",
+     "name": "塑能系",
+     "name_en": "Evocation",
+     "aliases": [
+      "元素爆发",
+      "火球",
+      "攻击魔法"
+     ],
+     "summary": "直接释放能量：火球、闪电、冰锥——最「爽」的战斗魔法。",
+     "xianxia": {
+      "concept": "攻击法术 / 五行术法",
+      "note": "对应火球术、掌心雷之类直接输出的术法；与元素轴交叉（火系塑能 = 火球）。"
+     },
+     "cost": "魔力消耗最大；范围法术会误伤队友。",
+     "counter": "防护系结界、元素抗性、近身打断。",
+     "visual": "高亮度的能量弹与爆炸，形状简单、冲击感强。",
+     "screen": {
+      "配色": "随元素",
+      "特效": "蓄力时周围光线被吸向掌心，释放时爆闪"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D / SRD",
+       "note": "八学派之一"
+      },
+      {
+       "work": "希腊神话",
+       "note": "美狄亚等女巫与神的雷火（直接释放能量属现代类型化）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "EL01",
+       "role": "常用元素"
+      },
+      {
+       "target": "EL06",
+       "role": "常用元素"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "magic",
+      "brief": "The caster thrusts one hand forward and a single compact sphere of compressed white-orange fire about the size of a human head shoots out with a short straight trail, surrounding light visibly pulled toward the sphere, a few sparks. Simple round shape, no comet tail swirls. Explosive, focused."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "SC06",
+     "name": "幻术系",
+     "name_en": "Illusion",
+     "aliases": [
+      "幻象",
+      "隐身"
+     ],
+     "summary": "欺骗感官：幻影、隐身、伪装、虚假的声音。",
+     "xianxia": {
+      "concept": "幻术 / 障眼法 / 易容",
+      "note": "对应幻阵、障眼法、易容术。"
+     },
+     "cost": "幻象无实体，一被触碰或质疑就破；维持需专注。",
+     "counter": "真视、触碰、预言系、强烈怀疑。",
+     "visual": "空气像热浪扭曲；幻影边缘有棱镜色散。",
+     "screen": {
+      "配色": "虹彩/棱镜色散",
+      "特效": "镜头轻微重影；破除时像玻璃碎裂"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D / SRD",
+       "note": "八学派之一"
+      },
+      {
+       "work": "欧洲民间",
+       "note": "妖精的 glamour 幻魅"
+      }
+     ],
+     "relations": [],
+     "image": {
+      "purpose": "magic",
+      "brief": "The hooded caster stands while three identical copies of the caster stand beside them in a row, the copies' edges shimmering with rainbow prism dispersion, one copy partially shattering into glass-like shards of light, the air rippling with heat-haze distortion. Deceptive, shimmering, elegant."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "SC07",
+     "name": "死灵系",
+     "name_en": "Necromancy",
+     "aliases": [
+      "亡灵术",
+      "necromancer"
+     ],
+     "summary": "操纵生与死：唤起亡者、吸取生命、与亡魂对话。",
+     "xianxia": {
+      "concept": "鬼道 / 驭尸 / 炼魂",
+      "note": "见力量源「暗影与死亡」；学派层面是可学的技术。"
+     },
+     "cost": "见 PS05；多数国家判死刑。",
+     "counter": "圣光、超度、毁掉施术者的护命匣。",
+     "visual": "骨骼、黑雾、青绿鬼火，尸体眼中亮起同色光。",
+     "screen": {
+      "配色": "鬼火青 #5FE0C1 + 墨黑",
+      "特效": "生命力像绿色光丝从受害者流向施术者"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D / SRD",
+       "note": "八学派之一"
+      },
+      {
+       "work": "《奥德赛》第十一卷",
+       "note": "nekyia 招魂问死者"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS05",
+       "role": "力量源"
+      },
+      {
+       "target": "CL15",
+       "role": "代表职业"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "magic",
+      "brief": "The caster, wearing plain dark robes with no pendants or jewelry, raises a hand over a stone floor where an old skeleton in rusted armor is rising to its knees, its empty eye sockets lit with cold teal fire, thin glowing green-teal threads of life energy flowing from the skeleton's chest toward the caster's palm, black mist curling around. Grim, cold, unsettling."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "SC08",
+     "name": "变化系",
+     "name_en": "Transmutation",
+     "aliases": [
+      "变形术",
+      "炼金",
+      "transmuter"
+     ],
+     "summary": "改变物质与形体：点石成金、变形、强化、加速。",
+     "xianxia": {
+      "concept": "变化之术 / 点石成金 / 七十二变",
+      "note": "对应变化术、点化与炼体增幅；与炼金术相通。"
+     },
+     "cost": "质量守恒式的代价：变出的东西要从别处来；变形太久会回不去。",
+     "counter": "驱散、真名、相反的变化。",
+     "visual": "物质表面像液体一样流动重组，金属光泽蔓延。",
+     "screen": {
+      "配色": "铜金 #C9873A",
+      "特效": "材质从一点开始扩散改变"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D / SRD",
+       "note": "八学派之一"
+      },
+      {
+       "work": "炼金术传统",
+       "note": "嬗变与贤者之石"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL18",
+       "role": "相关职业"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The caster's fingertip touches a rough grey stone resting on a pedestal; from the point of contact a wave of liquid-looking gold spreads across the stone's surface, half the stone already turned to gleaming gold, the transformation boundary rippling like molten metal with tiny copper sparks. Alchemical, precise, wondrous."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "EL07",
+     "name": "光与星辰",
+     "name_en": "Astromancy (Light & Stars)",
+     "aliases": [
+      "星辰魔法",
+      "astromancer",
+      "光系"
+     ],
+     "summary": "借星辰与纯光：照明、致盲、星象预兆、坠星。",
+     "xianxia": {
+      "concept": "星辰之力 / 光系 / 观星",
+      "note": "对应星辰法、观星术；与圣光区分——星光是冷的、理性的，不靠信仰。"
+     },
+     "cost": "只在夜晚或星象有利时最强。",
+     "counter": "阴天、地下、遮蔽星空。",
+     "visual": "冷白星点、星座连线、银色光尘。",
+     "screen": {
+      "配色": "星白 #E8F0FF + 午夜蓝"
+     },
+     "familiarity": "中",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "占星传统",
+       "note": "星象与命运"
+      },
+      {
+       "work": "战锤奇幻",
+       "note": "天界之风（Azyr）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "SC03",
+       "role": "常配学派"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The caster stands under a dark open sky; above them a constellation pattern of bright cold white star points connected by thin silver lines descends and spins slowly, one large star being pulled down toward the caster's raised hand as a falling streak of silver light, silver dust motes. Cold, cosmic, elegant."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "EL08",
+     "name": "时间与空间",
+     "name_en": "Chronomancy",
+     "aliases": [
+      "时间魔法",
+      "chronomancer",
+      "空间魔法"
+     ],
+     "summary": "减速、加速、短暂回溯、空间折叠：最稀有、最危险。",
+     "xianxia": {
+      "concept": "时空法则（参照）",
+      "note": "欧洲传统里几乎没有可操纵时间的魔法，属于现代奇幻；本库设为可选模块：回溯最多数秒（默认），不能改变已确定的大事件。"
+     },
+     "cost": "施术者自身加速衰老；悖论会被「时间」本身纠正。",
+     "counter": "时间锚点（特殊金属）、因果已定的事件。",
+     "visual": "钟表齿轮状光环、凝固的雨滴、残影。",
+     "screen": {
+      "配色": "古铜金 + 灰白",
+      "特效": "背景人物冻结，只有施术者在动；倒放效果"
+     },
+     "familiarity": "中",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "现代奇幻游戏",
+       "note": "chronomancer 作为常见职业名"
+      }
+     ],
+     "relations": [],
+     "image": {
+      "purpose": "magic",
+      "brief": "The caster stands still in the center of a frozen moment: falling raindrops hang motionless in the air around them, a large translucent bronze ring of clockwork-like gear shapes and tick marks (no numerals) slowly rotates horizontally around their waist, faint motion-blur afterimages of the caster trailing behind. Uncanny, precise, timeless."
+     },
+     "adoption": "optional",
+     "module": "时空魔法",
+     "basis": "genre"
+    }
+   ]
+  },
+  {
+   "id": "holy",
+   "name": "神圣 / 圣光",
+   "intro": "回答「holy power 是什么」：圣光是被信念点燃的光，不是魔力。同样一份圣光，在牧师手里偏治愈守护，在圣骑士手里偏审判，在审判官手里偏驱邪。",
+   "entries": [
+    {
+     "id": "PS02",
+     "name": "神圣 / 圣光",
+     "name_en": "Holy Light (Divine)",
+     "aliases": [
+      "神术",
+      "divine power",
+      "圣力",
+      "holy power",
+      "the Light"
+     ],
+     "summary": "来自信仰、誓言与神恩的力量：施术者把坚定的信念变成光，治愈、守护、审判邪物。",
+     "xianxia": {
+      "concept": "功德金光 / 愿力 / 浩然正气 / 佛光（参照）",
+      "note": "本库默认形而上学：圣光由信念点燃；众多信者的信念汇聚成神（以太阶），神再回应信者。采用剧可改为「神赐予」或「无神，纯信念」（见神与信仰 GD）。誓言破了力量就熄灭。"
+     },
+     "cost": "信念动摇即失效；违背誓言或教义会「失恩」（Fall from Grace）；强行透支会燃烧自身生命。",
+     "counter": "亵渎之地、信念崩溃、被教会绝罚（excommunication）。",
+     "trigger": "祈祷、圣言、举起圣徽，或在危急时以信念强行引燃。",
+     "requirement": "真实的信念或誓言；神职路线需教会授圣职，圣骑士需立誓。",
+     "visual": "温暖的金白光，从内向外放射，光柱自天而降，羽毛状光粒，金色符环。",
+     "screen": {
+      "配色": "金白 #FFF4D6 → 暖金 #F2C14E",
+      "特效": "光从角色胸口和眼睛透出；光柱垂直落下；邪物接触会冒白烟",
+      "声音": "和声、钟鸣、合唱长音"
+     },
+     "familiarity": "高",
+     "ip": "inspired",
+     "references": [
+      {
+       "work": "魔兽世界",
+       "note": "圣光由信念驱动而非依赖某位神"
+      },
+      {
+       "work": "D&D",
+       "note": "divine 传统、Paladin 誓言与 Divine Smite"
+      },
+      {
+       "work": "中世纪基督教",
+       "note": "圣徒、圣物、驱魔传统"
+      }
+     ],
+     "relations": [
+      {
+       "target": "HL01",
+       "role": "分支"
+      },
+      {
+       "target": "HL02",
+       "role": "分支"
+      },
+      {
+       "target": "CL07",
+       "role": "代表职业"
+      },
+      {
+       "target": "CL08",
+       "role": "代表职业"
+      },
+      {
+       "target": "GD01",
+       "role": "神学模式"
+      }
+     ],
+     "image": {
+      "version": 3,
+      "purpose": "magic",
+      "brief": "The caster holds at chest height, hanging from a chain wrapped around the hand, a flat gold pendant shaped like a simple drawing of the sun: a solid gold disc with exactly seven separate short triangular rays pointing outward around its rim, and a thin engraved ring inside the disc. A vertical column of warm white-gold light descends from above onto them, radiant light bursting outward from their chest, slow drifting feather-like motes of gold light, a faint golden ring of light on the floor around their feet. No staff, no handle, no cross. Warm, reverent, cathedral-like light."
+     },
+     "adoption": "locked",
+     "basis": "tradition"
+    },
+    {
+     "id": "HL01",
+     "name": "圣愈",
+     "name_en": "Restoration (Healing Light)",
+     "aliases": [
+      "治疗",
+      "lay on hands",
+      "圣疗"
+     ],
+     "summary": "治愈伤口、净化毒与疾病、安抚灵魂；高阶可接断肢、救濒死。",
+     "xianxia": {
+      "concept": "疗伤术 / 回春 / 佛门度化",
+      "note": "西方高阶治疗以「按手礼」（laying on of hands）为标志动作。"
+     },
+     "cost": "治疗消耗施术者的体力；治不了「命定之死」；复活极罕见且需大代价。",
+     "counter": "诅咒、亡灵本身被圣愈伤害。",
+     "trigger": "按手、祈祷。",
+     "requirement": "神职或誓言者。",
+     "visual": "金白柔光从手掌渗入伤口，伤口边缘光丝缝合。",
+     "screen": {
+      "配色": "#FFF4D6"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "基督教传统",
+       "note": "按手治愈"
+      },
+      {
+       "work": "各类 RPG",
+       "note": "healer 定位"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS02",
+       "role": "力量源"
+      },
+      {
+       "target": "CL07",
+       "role": "代表职业"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "A hooded healer kneels beside a wounded plain-clothed person lying on the stone floor, one hand pressed on the person's bandaged shoulder; soft warm white-gold light seeps from the palm into the wound, thin threads of golden light stitching across the injury, gentle floating gold motes. Tender, warm, hopeful."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "HL02",
+     "name": "圣裁",
+     "name_en": "Smite (Judgment)",
+     "aliases": [
+      "神圣惩击",
+      "divine smite",
+      "审判"
+     ],
+     "summary": "把圣光灌进武器或从天而降，对邪物、亡灵、恶魔造成成倍伤害。",
+     "xianxia": {
+      "concept": "雷法正法 / 降魔 / 天罚",
+      "note": "像正道雷法专克邪祟；对人类的效果取决于对方的罪孽（叙事上可用来揭露伪善者）。"
+     },
+     "cost": "对无辜者无效甚至反伤；滥用会让施术者被光灼伤。",
+     "counter": "纯净无罪之人、圣光被亵渎之地。",
+     "trigger": "武器命中时 / 宣告审判之言。",
+     "requirement": "圣骑士、审判官。",
+     "visual": "武器燃起金白圣焰，命中处炸开日轮形光爆。",
+     "screen": {
+      "配色": "#F2C14E + 白爆"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D",
+       "note": "Divine Smite"
+      },
+      {
+       "work": "魔兽世界",
+       "note": "圣骑士惩戒"
+      },
+      {
+       "work": "圣徒传说",
+       "note": "以圣名与圣物击退恶魔"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS02",
+       "role": "力量源"
+      },
+      {
+       "target": "CL08",
+       "role": "代表职业"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "An armored hooded knight seen from behind brings a longsword down in an overhead strike; the blade is wreathed in white-gold holy flame, and at the impact point on the stone floor a bright radiant sun-wheel shaped burst of golden light explodes outward, shadows thrown hard. Righteous, powerful, blazing."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "HL03",
+     "name": "圣域",
+     "name_en": "Consecration (Sanctuary)",
+     "aliases": [
+      "圣地",
+      "神圣结界",
+      "sanctuary"
+     ],
+     "summary": "把一块地方变成圣地：邪物不能进入，盟友得到庇护，持续数小时到数百年。",
+     "xianxia": {
+      "concept": "护山大阵 / 佛门结界 / 镇邪之地",
+      "note": "教堂、修道院、圣井都是天然圣域，相当于福地与护宗阵。"
+     },
+     "cost": "需要仪式与圣物作锚；被亵渎（流血、亡灵入侵）就会破。",
+     "counter": "亵渎仪式、内部背叛者、毁掉圣物锚。",
+     "visual": "地面金色圆环纹样，空气中飘浮光尘，边界处邪物冒烟。",
+     "screen": {
+      "配色": "#F2C14E 低亮"
+     },
+     "familiarity": "中",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "中世纪教会",
+       "note": "教堂庇护权（right of sanctuary）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "IT18",
+       "role": "常用锚物"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "A hooded priest stands at the center of a wide circle of softly glowing golden ornamental patterns spreading across a stone floor; a faint dome of pale gold light rises over the circle with drifting light dust inside, and at the circle's edge a dark shadowy clawed hand recoils, smoking where it touches the boundary. Safe, sacred, calm against menace."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "HL04",
+     "name": "驱魔",
+     "name_en": "Exorcism",
+     "aliases": [
+      "驱邪",
+      "banishment",
+      "exorcist"
+     ],
+     "summary": "把附身的恶魔或亡魂从人、物、地方中赶出去，送回原处。",
+     "xianxia": {
+      "concept": "驱邪 / 镇魂 / 超度",
+      "note": "对应道门驱邪与佛门超度；西方驱魔往往需要知道恶魔的真名。"
+     },
+     "cost": "过程漫长且危险，恶魔会揭施术者的伤疤；失败可能被转附身。",
+     "counter": "未知真名、受害者自愿留住恶魔。",
+     "trigger": "圣言、圣水、圣徽，逼问真名。",
+     "requirement": "神职或审判官。",
+     "visual": "被附身者身上冒出黑烟，被金光一点点逼出。",
+     "screen": {
+      "配色": "金光 vs 黑烟"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "天主教驱魔传统",
+       "note": "Rite of Exorcism"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL09",
+       "role": "代表职业"
+      },
+      {
+       "target": "RC16",
+       "role": "对象种族"
+      }
+     ],
+     "image": {
+      "version": 3,
+      "purpose": "magic",
+      "brief": "A hooded figure in plain grey robes holds out a plain round gold medallion on a chain toward a kneeling figure whose back is arched; thick black smoke with a faint demonic face shape is being pulled out from the kneeling figure's mouth and chest, pushed back by beams of golden light from the medallion, candles around them blown sideways. The medallion is a smooth disc with no rays, no star and no cross. Tense, dramatic."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "primal",
+   "name": "自然 / 原初",
+   "intro": "自然之力借自土地与兽灵：变形化兽、赛兹通灵。",
+   "entries": [
+    {
+     "id": "PS03",
+     "name": "自然 / 原初",
+     "name_en": "Primal (Nature)",
+     "aliases": [
+      "自然之力",
+      "wild magic",
+      "原初之力"
+     ],
+     "summary": "与活着的世界缔约：森林、野兽、季节与大地的生命力，借给守护它们的人。",
+     "xianxia": {
+      "concept": "木灵之力 / 妖修本源 / 草木精气",
+      "note": "力量不归施术者所有，是自然「借」的；破坏自然就会被收回，同妖修离不开本相与栖地。"
+     },
+     "cost": "施术者被自然同化：长期变形会忘记人性（野化），身体长出树皮、兽毛。",
+     "counter": "焚烧、盐碱、城市与冷铁环境、自然本身拒绝。",
+     "trigger": "触碰土地、呼唤兽灵、跟随季节节律。",
+     "requirement": "被某片土地或某个兽灵接纳（启蒙仪式）。",
+     "visual": "苔绿与琥珀，藤蔓和根须快速生长，花瓣、孢子与萤火虫状光点。",
+     "screen": {
+      "配色": "苔绿 #4E8F3A → 琥珀 #E0A43A",
+      "特效": "地面裂开长出根须；施法者皮肤浮现木纹",
+      "声音": "风过树林、木头生长的吱嘎声、远处兽吼"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D / PF2",
+       "note": "primal 传统：德鲁伊、游侠"
+      },
+      {
+       "work": "凯尔特传统",
+       "note": "德鲁伊与圣林"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL12",
+       "role": "代表职业"
+      },
+      {
+       "target": "PR01",
+       "role": "分支"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The caster kneels and presses one hand to the stone floor; from cracks around the hand thick green roots and vines surge outward and upward in a spiral, sprouting leaves and small amber flowers, drifting pollen and firefly-like amber motes, faint bark-like wood grain glowing on the caster's forearm. Living, organic, earthy light."
+     },
+     "adoption": "locked",
+     "basis": "tradition"
+    },
+    {
+     "id": "PR01",
+     "name": "变形术",
+     "name_en": "Shapeshifting",
+     "aliases": [
+      "化兽",
+      "wild shape",
+      "skinchanger"
+     ],
+     "summary": "化身为兽：德鲁伊靠自然之力主动变形，狼人等则是血脉/诅咒被动变形。",
+     "xianxia": {
+      "concept": "化形（反向）/ 妖修本相",
+      "note": "仙侠是妖化人形，西方多是人化兽形——方向相反，剧作上可做对照。"
+     },
+     "cost": "兽性侵蚀人性；变太久回不来。",
+     "counter": "银、强迫变回人形的药草、月相。",
+     "visual": "骨骼扭曲、毛发蔓延，变形中的身体处于半人半兽。",
+     "screen": {
+      "配色": "琥珀眼光"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "北欧传说",
+       "note": "berserker、skin-walker 原型"
+      },
+      {
+       "work": "D&D",
+       "note": "Druid Wild Shape"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS03",
+       "role": "力量源"
+      },
+      {
+       "target": "RC13",
+       "role": "相关种族"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "A hooded figure mid-transformation crouches on a stone floor: one arm still human, the other already a huge furred wolf-like foreleg with claws, fur spreading across the back of the neck, glowing amber eyes visible under the hood, faint green primal light swirling around. Raw, painful, wild."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "PR02",
+     "name": "赛兹与先灵",
+     "name_en": "Seiðr (Spirit-calling)",
+     "aliases": [
+      "seiðr",
+      "völva",
+      "land-wights",
+      "先灵"
+     ],
+     "summary": "北欧女先知的通灵术：坐上高座、手持饰铜头镶石的长杖，由一位女子独唱守护之歌（varðlokkur）、众女围成圈，歌声引来诸灵，女先知再向它们问询未来、请求庇佑。以祖墓、立石与圣井为锚点。",
+     "xianxia": {
+      "concept": "巫祝 / 请神（参照）",
+      "note": "对应上古巫祝和请神上身；萨满是「中间人」，不拥有力量。"
+     },
+     "cost": "施术后虚脱；被社会视为可疑（北欧传统中男性行赛兹被视为不名誉）；土地之灵会提要求。",
+     "counter": "驱散灵体、毁坏圣井与祖墓。",
+     "visual": "高座、饰铜头镶石的长杖、深蓝斗篷与白猫皮手套、围圈的女子与歌声，周围浮现半透明的祖先与土地之灵。",
+     "screen": {
+      "配色": "灰蓝灵光 + 烛火"
+     },
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "《红发埃里克萨迦》第 4 章",
+       "note": "格陵兰女先知 Þorbjörg：高座、饰铜头镶石之杖、猫皮手套，古德丽德独唱 varðlokkur、众女围圈"
+      },
+      {
+       "work": "北欧传统",
+       "note": "landvættir 土地之灵"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL13",
+       "role": "代表职业"
+      },
+      {
+       "target": "PL10",
+       "role": "锚点"
+      }
+     ],
+     "image": {
+      "version": 3,
+      "purpose": "magic",
+      "brief": "A hooded seeress sits on a tall carved wooden high seat placed on a stone floor, holding a long staff with an ornate brass-capped head set with small stones, wearing a dark blue cloak and white catskin gloves; in front of her a ring of women in plain wool dresses stands in a circle while one of them sings; around them in the dim space translucent pale grey-blue figures of ancestors in old Norse-style clothing and the faint shape of a stag-like land spirit emerge from mist, drawn by the song, a few candles flickering. Quiet, eerie, ancestral."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "elemental",
+   "name": "元素",
+   "intro": "四古典元素加冰、雷两个现代奇幻通行的衍生。英文后缀 -mancy 是公有构词法：pyromancer 玩火、cryomancer 玩冰。",
+   "entries": [
+    {
+     "id": "PS04",
+     "name": "元素",
+     "name_en": "Elemental",
+     "aliases": [
+      "四元素",
+      "elements"
+     ],
+     "summary": "火、水、土、风四大元素（及衍生的冰、雷）有自己的灵性；元素使不是计算元素，而是与元素之灵谈判。",
+     "xianxia": {
+      "concept": "五行 / 灵根属性",
+      "note": "西方经典是四元素（火水土风）+ 第五元素以太，而非五行；本库加冰、雷两个衍生，凑出与仙侠「五行+风雷冰」相近的覆盖。元素亲和度 ≈ 灵根属性。"
+     },
+     "cost": "元素有脾气：火元素易失控、土元素迟缓；被元素反吞会「元素化」（身体变成火焰或石头）。",
+     "counter": "相克元素（水克火、风散土）；元素真空；封印元素之灵。",
+     "trigger": "呼唤元素之名、借现场的元素（有火才能控火最强）。",
+     "requirement": "天生元素亲和，或与元素之灵立约。",
+     "visual": "每种元素各自的物质感：真火、真水、真石，不是抽象光。",
+     "screen": {
+      "配色": "火 #E8542A / 水 #2E86C1 / 土 #8B6B3D / 风 #BFD9E8 / 冰 #A8E6F0 / 雷 #F5E663",
+      "特效": "元素呈物理形态并带少量灵性（火中有眼、风里有人形轮廓）",
+      "声音": "各元素真实声音放大"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "古希腊四元素说 / 帕拉塞尔苏斯",
+       "note": "火蜥蜴、水妖、风精、地精四元素精灵"
+      },
+      {
+       "work": "魔兽世界 萨满",
+       "note": "与元素谈判而非命令"
+      },
+      {
+       "work": "时光之轮",
+       "note": "五力（土风火水灵）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "EL01",
+       "role": "分支"
+      },
+      {
+       "target": "EL02",
+       "role": "分支"
+      },
+      {
+       "target": "EL03",
+       "role": "分支"
+      },
+      {
+       "target": "EL04",
+       "role": "分支"
+      },
+      {
+       "target": "CL13",
+       "role": "代表职业"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The caster stands at the center while four distinct elemental streams orbit around them in one ring: a ribbon of real fire, a ribbon of clear flowing water, a band of floating rock fragments, and a swirl of visible pale wind with dust, each element physical and tangible, the four streams clearly separated in color. Balanced, primal, dynamic."
+     },
+     "adoption": "locked",
+     "basis": "tradition"
+    },
+    {
+     "id": "EL01",
+     "name": "火系",
+     "name_en": "Pyromancy",
+     "aliases": [
+      "火焰魔法",
+      "pyromancer"
+     ],
+     "summary": "控火、爆燃、热浪：最常见的战斗元素。",
+     "xianxia": {
+      "concept": "火灵根 / 火系术法 / 丹火",
+      "note": "同火灵根；西方没有「丹火」概念，炼金用普通炉火+火元素。"
+     },
+     "cost": "易失控、伤己；情绪越激动火越大。",
+     "counter": "水、冰、真空、窒息。",
+     "visual": "真实火焰，核心发白。",
+     "screen": {
+      "配色": "#E8542A"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "四元素说",
+       "note": "火 / 火蜥蜴 salamander"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS04",
+       "role": "力量源"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The caster sweeps one arm in a wide arc and a roaring crescent wall of real orange-white fire follows the motion, intense heat haze, embers swirling, the fire's core white-hot, a small salamander-like shape faintly visible inside the flames. Fierce, hot, dramatic."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "EL02",
+     "name": "水系",
+     "name_en": "Hydromancy",
+     "aliases": [
+      "水魔法",
+      "hydromancer"
+     ],
+     "summary": "控水、治疗、潮汐与水下呼吸。",
+     "xianxia": {
+      "concept": "水灵根 / 水系术法",
+      "note": "同水灵根，兼有治疗。"
+     },
+     "cost": "离水源远就弱。",
+     "counter": "土、冰冻、蒸发。",
+     "visual": "悬浮的透明水流，折射光线。",
+     "screen": {
+      "配色": "#2E86C1"
+     },
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "四元素说",
+       "note": "水 / 水妖 undine"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS04",
+       "role": "力量源"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The caster stands with arms spread as several long ribbons of clear real water rise from a pool at their feet and coil through the air around them, refracting light into caustic patterns on the walls, droplets frozen mid-air, a faint feminine shape formed in one water stream. Fluid, graceful, cool."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "EL03",
+     "name": "土系",
+     "name_en": "Geomancy",
+     "aliases": [
+      "大地魔法",
+      "geomancer",
+      "石术"
+     ],
+     "summary": "控土石金属、造墙、地震、感知地脉。",
+     "xianxia": {
+      "concept": "土灵根 / 金灵根（部分） / 地脉",
+      "note": "西方土元素包含金属与矿物，覆盖仙侠的土与部分金。"
+     },
+     "cost": "迟缓、笨重；离开地面就弱。",
+     "counter": "风、飞行、悬空作战。",
+     "visual": "岩石碎块悬浮、地面裂开，矿脉发光。",
+     "screen": {
+      "配色": "#8B6B3D + 矿脉金"
+     },
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "四元素说",
+       "note": "土 / 地精 gnome"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS04",
+       "role": "力量源"
+      },
+      {
+       "target": "RC03",
+       "role": "亲和种族"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The caster stomps one foot and the stone floor in front of them cracks and heaves upward into a jagged wall of rock pillars, floating chunks of stone rising in the air, thin veins of glowing gold ore visible inside the broken rock, dust clouds. Heavy, grounded, immovable."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "EL04",
+     "name": "风系",
+     "name_en": "Aeromancy",
+     "aliases": [
+      "风魔法",
+      "aeromancer"
+     ],
+     "summary": "控风、飞行、加速、真空与声音。",
+     "xianxia": {
+      "concept": "风灵根（变异灵根）/ 御风",
+      "note": "仙侠风为变异灵根，西方风是古典四元素之一，地位更基础。"
+     },
+     "cost": "力量轻，难以造成重击；控制精度要求高。",
+     "counter": "土、封闭空间、重甲。",
+     "visual": "可见的气流螺旋带着尘与叶。",
+     "screen": {
+      "配色": "#BFD9E8"
+     },
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "四元素说",
+       "note": "风 / 风精 sylph"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS04",
+       "role": "力量源"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The caster hovers a few inches above the floor, cloak whipping upward, surrounded by a visible spiraling vortex of pale wind made readable by streams of dust, leaves and small debris, faint translucent humanlike shapes within the wind currents. Light, swift, airy."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "EL05",
+     "name": "冰系",
+     "name_en": "Cryomancy",
+     "aliases": [
+      "冰霜魔法",
+      "cryomancer",
+      "frost"
+     ],
+     "summary": "冻结、冰甲、冰锥、寒冬：水与风的衍生。",
+     "xianxia": {
+      "concept": "冰灵根（变异灵根）",
+      "note": "同冰灵根；北方民族与冬季题材标配。"
+     },
+     "cost": "施术者体温下降，久用会冻伤自己的心（情感淡漠）。",
+     "counter": "火、热、持续运动。",
+     "visual": "白蓝冰晶迅速生长，霜纹蔓延，雪雾。",
+     "screen": {
+      "配色": "#A8E6F0"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "北欧传统",
+       "note": "冰巨人与冬"
+      },
+      {
+       "work": "D&D / 魔兽世界",
+       "note": "frost 作为独立伤害类型"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS04",
+       "role": "力量源"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The caster's hand touches the floor and sharp white-blue ice crystals erupt outward in a fan of spikes, frost patterns racing across the stone in fern-like shapes, swirling snow mist, the caster's cloak edge frozen stiff with rime. Cold, crystalline, sharp."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "EL06",
+     "name": "雷系",
+     "name_en": "Storm (Electromancy)",
+     "aliases": [
+      "闪电魔法",
+      "雷电",
+      "lightning",
+      "stormcaller"
+     ],
+     "summary": "闪电、雷鸣、风暴：速度最快、破坏力最集中。",
+     "xianxia": {
+      "concept": "雷灵根 / 雷法",
+      "note": "同雷灵根与雷法；西方雷电多与天空神（宙斯、托尔）相连，带「天罚」意味，可与圣光结合成审判之雷。"
+     },
+     "cost": "难以瞄准，金属护甲会导电伤己。",
+     "counter": "接地、绝缘材料、雨中散射。",
+     "visual": "分叉的白紫闪电，空气电离的蓝光。",
+     "screen": {
+      "配色": "#F5E663 + 电紫"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "希腊/北欧神话",
+       "note": "宙斯、托尔的雷霆"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS04",
+       "role": "力量源"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The caster raises a staff skyward and a thick branching bolt of white-violet lightning connects the staff tip to darkness above, smaller arcs crawling over the caster's arms and across the floor, ionized blue glow in the air, the caster's cloak and the dust lifting from static. Violent, bright, electric."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "death",
+   "name": "暗影与死亡",
+   "intro": "死灵学派（SC07）在奥术下；这里是灵魂术与民间巫术。",
+   "entries": [
+    {
+     "id": "PS05",
+     "name": "暗影与死亡",
+     "name_en": "Shadow & Death",
+     "aliases": [
+      "死灵之力",
+      "necrotic",
+      "阴影"
+     ],
+     "summary": "来自死者、灵魂与黑暗的能量：操纵亡魂、吸取生命、在影子里行走。不等于邪恶，但几乎总被禁止。",
+     "xianxia": {
+      "concept": "阴气 / 鬼修 / 尸修",
+      "note": "对应阴气与鬼道：借死者之力、炼魂、驱尸。差异：西方死灵术常是「学派」（可学），仙侠鬼修多是「族类」（死后成鬼）。本库两者都有：死灵法师（职业）与亡灵（种族）。"
+     },
+     "cost": "生命力与体温流失；长期使用皮肤苍白、心跳变慢，最后变成亡灵本身。",
+     "counter": "圣光、阳光、圣水、盐圈、超度亡魂。",
+     "trigger": "献祭、触碰尸骨、念出死者的名字。",
+     "requirement": "接触过死亡（濒死体验、亲手送走亲人等）后觉醒，或学院禁区学习。",
+     "visual": "黑雾与苍白冷光（蓝绿色鬼火），骨质、灰烬、半透明魂影。",
+     "screen": {
+      "配色": "墨黑 #14161A → 鬼火青 #5FE0C1",
+      "特效": "影子不跟随光源移动；吐息结霜；亡魂半透明",
+      "声音": "低语、风声倒放、骨头摩擦"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D",
+       "note": "Necromancy 学派"
+      },
+      {
+       "work": "魔兽世界",
+       "note": "生命/死亡对立轴"
+      },
+      {
+       "work": "民间传说",
+       "note": "亡魂、招魂术"
+      }
+     ],
+     "relations": [
+      {
+       "target": "SC07",
+       "role": "代表学派"
+      },
+      {
+       "target": "CL15",
+       "role": "代表职业"
+      },
+      {
+       "target": "RC14",
+       "role": "相关种族"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "magic",
+      "brief": "The caster extends one hand palm-down toward the floor; thick black mist pools across the floor and from it rise three translucent pale ghostly figures in long burial shrouds glowing faint cold teal, the caster's breath visible as frost, cold blue-green will-o-wisp flames floating; a candle burns behind the caster yet the caster's shadow stretches backward toward the candle, the wrong way. Cold, eerie."
+     },
+     "adoption": "locked",
+     "basis": "tradition"
+    },
+    {
+     "id": "DK04",
+     "name": "灵魂术",
+     "name_en": "Soul Magic",
+     "aliases": [
+      "夺魂",
+      "soulbinding",
+      "魂器"
+     ],
+     "summary": "抽取、封存、分裂、转移灵魂：做护命匣、灵魂宝石、附身他人。",
+     "xianxia": {
+      "concept": "元神之术 / 夺舍 / 分魂",
+      "note": "直接对应夺舍与分魂寄托；巫妖护命匣 ≈ 本命魂器。"
+     },
+     "cost": "分裂灵魂让人失去人性；被封的灵魂会怨恨。",
+     "counter": "毁掉魂器、圣光超度、让灵魂认出自己的名字。",
+     "visual": "从胸口抽出的发光灵魂（人形光雾），被吸入宝石。",
+     "screen": {
+      "配色": "灵魂白蓝 #CFE8FF"
+     },
+     "familiarity": "中",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "民间传说",
+       "note": "把心脏/灵魂藏在别处的不死巫师（Koschei）"
+      },
+      {
+       "work": "D&D",
+       "note": "lich phylactery"
+      }
+     ],
+     "relations": [
+      {
+       "target": "IT20",
+       "role": "载体"
+      },
+      {
+       "target": "RC14",
+       "role": "相关种族"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "magic",
+      "brief": "A hooded figure holds up a dark faceted gemstone; from the chest of a second limp clothed figure, a glowing pale blue-white featureless wisp of soul light shaped like a vague hooded silhouette is drawn out in a stretched stream and sucked into the gem, which glows from within. Chilling, forbidden."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "DK03",
+     "name": "巫术与诅咒",
+     "name_en": "Hexcraft (Witchcraft & Curses)",
+     "aliases": [
+      "诅咒",
+      "hex",
+      "巫术",
+      "curse"
+     ],
+     "summary": "民间魔法：草药、人偶、月相与诅咒。慢、隐蔽、难解。",
+     "xianxia": {
+      "concept": "蛊术 / 厌胜 / 降头",
+      "note": "像蛊与厌胜之术：人偶、头发、生辰。西方女巫题材是欧美观众最熟悉的魔法之一。"
+     },
+     "cost": "诅咒会反弹给施术者（三倍回报说）；需要目标的私人物品。",
+     "counter": "解咒仪式、找到并毁掉媒介（人偶、咒袋）、施术者死亡或原谅。",
+     "trigger": "月相、念诵、焚烧/扎刺媒介。",
+     "requirement": "女巫血统或师承（coven）。",
+     "visual": "草药、蜡烛、乌鸦羽、人偶，紫黑烟雾。",
+     "screen": {
+      "配色": "暗紫 #4A2545 + 烛光"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲女巫传说",
+       "note": "cunning folk、咒袋、诅咒"
+      },
+      {
+       "work": "欧美短剧",
+       "note": "女巫题材常见"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL20",
+       "role": "代表职业"
+      },
+      {
+       "target": "IT09",
+       "role": "媒介"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "magic",
+      "brief": "A hooded figure's hands hover over a rough wooden table where a small cloth doll bound with red thread and a lock of hair lies among candles, dried herbs and black feathers; dark purple smoke curls up from the doll forming a faint twisting skull-like wisp, candle flames bending toward it. Folk magic, secretive, candlelit."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "infernal",
+   "name": "深渊",
+   "intro": "深渊之力的核心是契约。",
+   "entries": [
+    {
+     "id": "PS06",
+     "name": "深渊 / 地狱之力",
+     "name_en": "Infernal (Abyssal)",
+     "aliases": [
+      "恶魔之力",
+      "地狱火",
+      "hellfire",
+      "fiendish power"
+     ],
+     "summary": "恶魔的力量：通过契约、献祭或附身获得，强大而快速，但每一分力量都有利息。",
+     "xianxia": {
+      "concept": "魔气 / 魔修 / 魔功",
+      "note": "最接近魔道：速成、吞噬、以代价换力量，并伴随心魔（恶魔低语）。差异：西方的核心机制是「契约」（白纸黑字、有漏洞可钻），仙侠魔功更多是功法。"
+     },
+     "cost": "灵魂抵押；契约条款逐步兑现（失去记忆、爱人、人性）；身体长出角、鳞、恶魔印记。",
+     "counter": "圣光与圣物、真名（知道恶魔真名可驱使它）、契约漏洞、驱魔仪式。",
+     "trigger": "念出契约、以血签名、召唤印记发光。",
+     "requirement": "与恶魔立约，或血脉中有恶魔成分（魔裔）。",
+     "visual": "暗红与熔岩橙的地狱火，焦黑裂纹，硫磺烟，火焰中带黑色。",
+     "screen": {
+      "配色": "焦黑 #1A0F0D → 熔岩橙 #FF5A1F → 血红 #8E0E00",
+      "特效": "皮肤下透出熔岩裂纹；火焰燃烧时向下流",
+      "声音": "低沉多重人声、火焰咆哮、锁链"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "浮士德传说",
+       "note": "与魔鬼签约换力量"
+      },
+      {
+       "work": "D&D",
+       "note": "Warlock 契约、九层地狱的魔鬼契约"
+      },
+      {
+       "work": "暗黑破坏神",
+       "note": "地狱与恶魔层级"
+      }
+     ],
+     "relations": [
+      {
+       "target": "DK01",
+       "role": "分支"
+      },
+      {
+       "target": "CL16",
+       "role": "代表职业"
+      },
+      {
+       "target": "RC16",
+       "role": "相关种族"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The caster's raised arm shows glowing molten-orange cracks under the skin like cooling lava; from the hand pours dark red and orange hellfire laced with black flame that drips and flows downward instead of rising, sulfur smoke, a burning sigil-circle scorched into the floor (abstract shapes only). Heavy, menacing, hot."
+     },
+     "adoption": "locked",
+     "basis": "tradition"
+    },
+    {
+     "id": "DK01",
+     "name": "契约魔法",
+     "name_en": "Pact Magic",
+     "aliases": [
+      "恶魔契约",
+      "warlock pact",
+      "灵魂契约"
+     ],
+     "summary": "向强大存在（恶魔、妖精王、古神、亡灵君主）借力，以条款换力量。",
+     "xianxia": {
+      "concept": "魔道契约 / 血契 / 以寿换力",
+      "note": "西方独有的「法律化」魔法：契约有条款、期限、漏洞。剧作价值极高。"
+     },
+     "cost": "按条款兑现：灵魂、寿命、长子、记忆、服务年限。",
+     "counter": "契约漏洞、对方真名、更高位存在的仲裁。",
+     "trigger": "签名（多用血）、念出赞助者之名。",
+     "requirement": "被赞助者选中或主动献祭。",
+     "visual": "空中燃烧的契约羊皮纸，手腕上缠绕的黑色印记。",
+     "screen": {
+      "配色": "熔岩橙 + 墨黑",
+      "特效": "契约兑现时印记灼烧"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "浮士德",
+       "note": "与梅菲斯特的契约"
+      },
+      {
+       "work": "D&D Warlock",
+       "note": "patron 赞助者"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS06",
+       "role": "力量源"
+      },
+      {
+       "target": "IT08",
+       "role": "载体"
+      },
+      {
+       "target": "CL16",
+       "role": "代表职业"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "A hooded figure presses a bleeding fingertip onto a large old parchment contract floating in mid-air before them; the parchment's lines of abstract script-like marks (not readable letters) burn with orange ember light, and black ink-like tendrils crawl from the parchment around the figure's wrist forming a dark mark, a pair of large glowing eyes barely visible in the darkness behind the parchment. Ominous, binding."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "blood",
+   "name": "血脉",
+   "intro": "天生之力，以及以血为媒介的禁术。",
+   "entries": [
+    {
+     "id": "PS07",
+     "name": "血脉",
+     "name_en": "Bloodline",
+     "aliases": [
+      "血统",
+      "天生之力",
+      "innate power",
+      "sorcery"
+     ],
+     "summary": "与生俱来的力量：祖先中有龙、天使、恶魔或妖精，力量在血里，靠觉醒而非学习。",
+     "xianxia": {
+      "concept": "血脉 / 神体 / 先天灵根",
+      "note": "几乎一一对应：血脉浓度、返祖、觉醒。西方血脉更常带「诅咒」一面（狼人、吸血鬼）。"
+     },
+     "cost": "血脉压制理智（龙血暴躁、妖精血任性）；觉醒伴随剧痛与外形变化；血脉会被猎杀者追踪。",
+     "counter": "稀释、封印纹身、对应血脉的天敌材料（屠龙矛、银、冷铁）。",
+     "trigger": "情绪极端、生死危机、满月等外部周期、接触祖先遗物。",
+     "requirement": "出身，无法后天获得（除非被咬、被灌血）。",
+     "visual": "力量从血管透光：龙血金红、天使血金白、恶魔血暗红、妖精血银绿；瞳孔变化。",
+     "screen": {
+      "配色": "按血脉而定（见种族条目）",
+      "特效": "颈部和手臂血管发光、瞳孔变成竖瞳或发光",
+      "声音": "心跳声放大"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D Sorcerer",
+       "note": "血脉术士"
+      },
+      {
+       "work": "欧美短剧",
+       "note": "狼人/吸血鬼觉醒"
+      },
+      {
+       "work": "欧洲王室传说",
+       "note": "神圣王血与触摸治病（King's touch）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "GR04",
+       "role": "觉醒方式"
+      },
+      {
+       "target": "CL14",
+       "role": "代表职业"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "magic",
+      "brief": "Close three-quarter back view of the hooded caster against a very dark plain background, sleeves pulled up: the veins of the bare forearms and the side of the neck glow molten red-gold from within as if lit by inner fire, a patch of small dragon-like scales shimmering on the back of one hand, a faint heat haze around the body and a few small embers rising. No dragon, no creatures, no large flames or fire swirls; the glow stays inside the body. Intense, inherited, primal."
+     },
+     "adoption": "locked",
+     "basis": "tradition"
+    },
+    {
+     "id": "DK02",
+     "name": "血魔法",
+     "name_en": "Blood Magic (Hemomancy)",
+     "aliases": [
+      "血术",
+      "hemomancer"
+     ],
+     "summary": "以血为燃料与媒介：用自己或他人的血施法、操控他人体内的血。",
+     "xianxia": {
+      "concept": "血道魔功 / 血遁 / 燃血秘术",
+      "note": "对应燃血秘术和血道；用别人的血即入魔道。"
+     },
+     "cost": "失血；用他人之血成瘾；被视为最高级禁术。",
+     "counter": "止血、圣水、远离血源。",
+     "visual": "悬空的血滴与血线，暗红光。",
+     "screen": {
+      "配色": "#8E0E00"
+     },
+     "familiarity": "中",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "龙腾世纪",
+       "note": "血魔法为禁术"
+      },
+      {
+       "work": "欧洲民间",
+       "note": "以血立誓、以血施咒"
+      }
+     ],
+     "relations": [
+      {
+       "target": "RC15",
+       "role": "相关种族"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "The caster holds out an open palm with a thin cut across it; from it a stream of dark red blood rises upward against gravity and splits into several floating blood droplets and sharp thin crimson blades orbiting the hand, glowing faintly deep red. Dark, intimate, dangerous."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "rune",
+   "name": "符文与工艺",
+   "intro": "力量刻进物质；制作工艺见「道具与资源」的 CF 条目。",
+   "entries": [
+    {
+     "id": "PS08",
+     "name": "符文与工艺",
+     "name_en": "Runecraft",
+     "aliases": [
+      "符文之力",
+      "enchantment",
+      "runes",
+      "铭文"
+     ],
+     "summary": "把力量刻进物质：符文、铭文和附魔让物品自己发挥作用，不需要施法者在场。",
+     "xianxia": {
+      "concept": "符箓 / 炼器 / 阵法",
+      "note": "对应制符与炼器：力量「存」进载体。西方以北欧符文、矮人锻造、炼金为代表；刻错一笔会爆炸，同符箓失败。"
+     },
+     "cost": "极耗时间与材料；只能预先准备，临场难改；符文被磨损或打断即失效。",
+     "counter": "刮去、熔化、反符文、让载体断裂。",
+     "trigger": "刻成即生效，或以一个词/一滴血/一次触碰激活。",
+     "requirement": "工匠传承（多在矮人与匠人行会内），需要特定材料。",
+     "visual": "刻痕里流动的熔金或冰蓝光线，锻打火花，石与金属上的棱角形刻纹。",
+     "screen": {
+      "配色": "熔金 #F7A531 / 冰蓝 #7FD3F7（与圣光同画面时用冰蓝）",
+      "特效": "刻痕依次点亮像电路通电；锤击时符文浮起",
+      "声音": "锤击声、金属鸣响"
+     },
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "北欧传统",
+       "note": "Elder Futhark 符文与 galdr 咒歌"
+      },
+      {
+       "work": "战锤奇幻",
+       "note": "矮人符文铁匠只刻符不施法"
+      },
+      {
+       "work": "D&D",
+       "note": "附魔与魔法物品制作"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL19",
+       "role": "代表职业"
+      },
+      {
+       "target": "IT10",
+       "role": "代表物品"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "magic",
+      "brief": "The hooded figure stands at a heavy anvil, hammer raised; on the glowing hot blade lying on the anvil, a line of carved marks made of interlocking curves, spirals and dots (no arrows, no straight-line runes, nothing like letters) lights up one after another in molten gold, sparks bursting from the strike, a few small curling golden shapes floating up from the metal. Warm forge light, craftsmanship."
+     },
+     "adoption": "locked",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "valor",
+   "name": "勇武",
+   "intro": "战士与骑士的超凡之力，以及灌注武器的燃剑。",
+   "entries": [
+    {
+     "id": "PS09",
+     "name": "勇武 / 英雄之光",
+     "name_en": "Valor (Hero's Light)",
+     "aliases": [
+      "勇武",
+      "valor",
+      "hero's light",
+      "mettle",
+      "战狂"
+     ],
+     "summary": "战士与骑士的力量：在誓死一战的勇气中被点燃的生命之火。平时是锤炼到极致的体魄与技艺，危急关头身上会燃起可见的「英雄之光」。",
+     "xianxia": {
+      "concept": "武道 / 炼体（参照）",
+      "note": "不是真气或斗气：没有经脉运行和内力积蓄。欧洲传统里，英雄之力来自勇气、荣誉与狂怒——凯尔特英雄战斗时头顶升起「英雄之光」、北欧狂战士进入战狂。力量随勇气起落，怯懦即熄灭。"
+     },
+     "cost": "点燃靠真实的勇气与危机，无法随意开关；战狂后虚脱、敌我不分；荣誉受损（临阵脱逃、背誓）会让光再也燃不起来。",
+     "counter": "恐惧魔法、长期消耗、让他失去要守护之物（叙事上）。",
+     "trigger": "誓言、战吼、为守护他人挺身而出的瞬间。",
+     "requirement": "多年锤炼的体魄与武艺；高阶需立下并守住誓言。",
+     "visual": "从额头升起的白热光柱，像一根燃烧的磨刀石；周身热浪，武器边缘烧亮。",
+     "screen": {
+      "配色": "白炽 #FFF1E0 → 赤铜红 #C8553D（越勇越红；与圣光的金白区分）",
+      "特效": "光从额头笔直升起（《夺牛记》原文意象），身周热浪推开尘土；战狂时眼中只剩光",
+      "声音": "心跳、战吼回响、火焰呼啸"
+     },
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "凯尔特《夺牛记》",
+       "note": "库丘林战斗时的英雄之光（hero's light）与战狂变形"
+      },
+      {
+       "work": "北欧传说",
+       "note": "狂战士 berserker"
+      },
+      {
+       "work": "骑士文学",
+       "note": "勇武 prowess 与荣誉作为骑士核心美德"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL01",
+       "role": "代表职业"
+      },
+      {
+       "target": "CL02",
+       "role": "代表职业"
+      },
+      {
+       "target": "TL02",
+       "role": "头衔"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "A hooded warrior seen from behind at three-quarter angle stands braced with a plain round shield and a steel sword; a tall straight shaft of white-hot to red-gold light rises from their forehead above the hood like a burning pillar, heat waves shimmering around their whole body, the sword's edge glowing bright, dust and small stones pushed outward across the floor by an invisible force. Heroic, defiant, fierce."
+     },
+     "adoption": "locked",
+     "basis": "tradition"
+    },
+    {
+     "id": "AU01",
+     "name": "燃剑",
+     "name_en": "Kindled Blade",
+     "aliases": [
+      "火焰之剑",
+      "flaming sword",
+      "圣剑之光"
+     ],
+     "summary": "勇武或圣光灌注武器：剑刃燃起光焰，可斩断魔法造物与灵体。高阶者能让光焰脱刃飞出一击。",
+     "xianxia": {
+      "concept": "剑气（参照）",
+      "note": "外观相近，来源不同：西方原型是守卫伊甸园的火焰之剑与传说圣剑的光芒，力量来自勇气或神恩，而非剑意修炼。"
+     },
+     "cost": "维持极耗体力；光焰只在持剑者心志坚定时稳定。",
+     "counter": "防护结界、远程拉扯、动摇其信念。",
+     "visual": "剑刃燃起金白火焰般的光，挥动留下光弧。",
+     "screen": {
+      "配色": "随力量源：勇武赤金 / 圣光金白"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "《创世记》",
+       "note": "把守伊甸园的火焰之剑"
+      },
+      {
+       "work": "亚瑟王传说",
+       "note": "圣剑之光"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS09",
+       "role": "力量源"
+      },
+      {
+       "target": "PS02",
+       "role": "力量源"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "A hooded knight seen from behind mid-swing with a plain longsword whose blade is engulfed in bright gold-white flame-like light; a crescent wave of that burning light leaves the blade and flies forward across the dark space, scorching a glowing groove into the stone floor beneath its path, the knight's cloak blown back. Sharp, decisive, legendary."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  }
+ ]
+}

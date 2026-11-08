@@ -1,0 +1,966 @@
+{
+ "id": "creatures",
+ "name": "生物",
+ "intro": "西幻生物多来自希腊罗马神话、中世纪动物寓言集（bestiary）与北欧凯尔特民间——全部公有领域。分三类：可缔结的伙伴与坐骑、需要讨伐的怪物、象征性的神话之兽。威胁按「讨伐等级」评定。",
+ "subgroups": [
+  {
+   "id": "grade",
+   "name": "讨伐等级",
+   "intro": "",
+   "entries": [
+    {
+     "id": "BS00",
+     "name": "讨伐等级",
+     "name_en": "Threat Classes",
+     "aliases": [
+      "bounty class",
+      "threat rating",
+      "妖兽等级"
+     ],
+     "summary": "五级：害兽 Pest → 野兽 Beast → 怪物 Monster → 恐怖 Terror → 灾厄 Calamity。用于公会委托与王国警报，与灵魂金属位阶对照使用。",
+     "xianxia": {
+      "concept": "妖兽品阶（参照）"
+     },
+     "details": {
+      "Pest 害兽": "凡人民兵可处理（巨鼠、鬼火）",
+      "Beast 野兽": "需锡阶战士小队（巨狼、狮鹫幼崽）",
+      "Monster 怪物": "需铜至铁阶（蛇怪、蝎尾狮）",
+      "Terror 恐怖": "需汞阶以上或军队（九头蛇、成年龙）",
+      "Calamity 灾厄": "威胁王国，需银阶以上（古龙、海妖王）"
+     },
+     "visual": "公会告示上的骷髅数量或印章颜色。",
+     "familiarity": "中",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D",
+       "note": "挑战等级（机制参考）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "OR07",
+       "role": "发布者"
+      },
+      {
+       "target": "MT12",
+       "role": "产出"
+      }
+     ],
+     "adoption": "optional",
+     "module": "冒险者与讨伐等级",
+     "image": {
+      "purpose": "insignia_set",
+      "brief": "Five original monster-bounty wax seals pressed onto five small blank parchment slips in a row, increasing in size and menace from left to right: a small plain brown seal with a single claw mark, a green seal with two claw marks, a blue seal with three claw marks, a purple seal with four claw marks, and a large black-and-red seal with five claw marks around a cracked dragon eye."
+     },
+     "basis": "genre"
+    }
+   ]
+  },
+  {
+   "id": "companions",
+   "name": "伙伴与坐骑",
+   "intro": "可经灵魂缔结（GR06）成为伙伴。",
+   "entries": [
+    {
+     "id": "BS03",
+     "name": "狮鹫",
+     "name_en": "Griffin",
+     "aliases": [
+      "gryphon"
+     ],
+     "summary": "鹰首狮身有翼的猛兽：守护黄金，骄傲、忠诚，一生只认一位骑手。骑士团的空中坐骑。",
+     "xianxia": {
+      "concept": "灵禽坐骑（参照）"
+     },
+     "details": {
+      "体型": "大如战马",
+      "讨伐等级": "野兽至怪物",
+      "缔结": "需从蛋孵化或赢得其尊重"
+     },
+     "visual": "金褐羽毛、鹰喙、狮身狮尾。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "希腊与中世纪寓言集",
+       "note": "griffin 守护黄金"
+      }
+     ],
+     "relations": [
+      {
+       "target": "OR03",
+       "role": "常见骑手"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "creature",
+      "brief": "A griffin standing in a three-quarter side view: the head, wings and front talons of a great golden eagle merged with the muscular body, hind legs and tufted tail of a tawny lion, wings half spread, a leather riding saddle on its back; it is the size of a large warhorse: the normal-size adult human silhouette beside it reaches its shoulder."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "BS04",
+     "name": "飞马",
+     "name_en": "Pegasus (Winged Horse)",
+     "aliases": [
+      "pegasus",
+      "winged horse"
+     ],
+     "summary": "白色有翼骏马：迅捷、纯洁、难以驯服。只接纳心地正直的骑手。",
+     "xianxia": {
+      "concept": "天马（参照）"
+     },
+     "details": {
+      "讨伐等级": "野兽",
+      "缔结": "需在其饮水时以金辔头套住（希腊传说）"
+     },
+     "visual": "白马与天鹅般的大翅。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "希腊神话",
+       "note": "佩加索斯与金辔头"
+      }
+     ],
+     "relations": [
+      {
+       "target": "GR06",
+       "role": "缔结"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "creature",
+      "brief": "A white winged horse in a three-quarter side view, the size of an ordinary riding horse, powerful and elegant, with enormous swan-like white feathered wings spread wide, a flowing silver-white mane, a simple gold bridle, one front hoof lifted; the normal-size adult human silhouette beside it is about as tall as the horse's back."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "BS05",
+     "name": "独角兽",
+     "name_en": "Unicorn",
+     "aliases": [
+      "unicorn"
+     ],
+     "summary": "额生螺旋长角的白色神兽：角能解一切毒，只向纯洁之人低头。猎杀独角兽被视为最大的罪孽之一。",
+     "xianxia": {
+      "concept": "瑞兽 / 麒麟（参照）"
+     },
+     "details": {
+      "讨伐等级": "禁止讨伐",
+      "角": "见独角兽角 MT08"
+     },
+     "visual": "比马纤细、山羊般的胡须与偶蹄，珍珠白长角。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "中世纪寓言集与挂毯",
+       "note": "独角兽与处女"
+      }
+     ],
+     "relations": [
+      {
+       "target": "MT08",
+       "role": "产出"
+      }
+     ],
+     "image": {
+      "purpose": "creature",
+      "brief": "A unicorn standing in a three-quarter side view in the medieval bestiary style: a slender pure white horse-like body with cloven hooves, a small goat-like beard, a long silky mane, and a single long spiraled pearl-white horn on its forehead glowing faintly, calm noble posture; a small plain human silhouette stands beside it for scale."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "BS12",
+     "name": "恐狼",
+     "name_en": "Great Wolf",
+     "aliases": [
+      "great wolf",
+      "dire wolf（史前物种）"
+     ],
+     "summary": "体型如小马的巨狼：游侠与北方部族的伙伴，也是荒野中的猎手。与狼人不同，它们只是狼。",
+     "xianxia": {
+      "concept": "妖狼 / 灵兽（参照）"
+     },
+     "details": {
+      "讨伐等级": "野兽",
+      "缔结": "幼狼认主"
+     },
+     "visual": "灰黑厚毛、琥珀色眼。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "史前恐狼与北欧传说",
+       "note": "芬里尔意象"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL04",
+       "role": "常见主人"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "creature",
+      "brief": "A great wolf the size of a small pony standing in a three-quarter side view, thick shaggy grey and black fur, amber eyes, a scarred muzzle, powerful shoulders, a simple leather collar with a bronze ring; a plain human silhouette stands right beside it for scale, and the wolf's shoulder reaches only the human's chest."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "BS15",
+     "name": "使魔",
+     "name_en": "Familiars",
+     "aliases": [
+      "familiar",
+      "familiar spirit"
+     ],
+     "summary": "女巫与法师的灵魂伙伴：黑猫、乌鸦、猫头鹰、蟾蜍、白鼬。能说话或传递感知，为主人侦察、看守、警告。",
+     "xianxia": {
+      "concept": "灵宠（参照）"
+     },
+     "details": {
+      "常见": "黑猫（女巫）、乌鸦（死灵/先知）、猫头鹰（法师）、蟾蜍（炼金）",
+      "缔结": "灵魂缔结 GR06"
+     },
+     "visual": "眼睛偶尔闪出与主人力量同色的光。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "近代早期英格兰猎巫记录",
+       "note": "familiar spirit"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL20",
+       "role": "主人"
+      },
+      {
+       "target": "GR06",
+       "role": "缔结"
+      }
+     ],
+     "image": {
+      "purpose": "item_set",
+      "brief": "Four familiar animals sitting in a row on a dark wooden beam, each with faintly glowing eyes of a different color: a sleek black cat with amber eyes, a large raven with pale teal eyes, a tawny owl with violet eyes, and a warty brown toad with green eyes; realistic animals, alert and intelligent."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "BS11",
+     "name": "魔像",
+     "name_en": "Golem",
+     "aliases": [
+      "golem",
+      "construct"
+     ],
+     "summary": "以泥土、石头或金属造出、以真名或符文驱动的仆从：力大无穷、绝对服从，抹去额上的字即停止。",
+     "xianxia": {
+      "concept": "傀儡 / 机关兽（参照）"
+     },
+     "details": {
+      "材质": "黏土、石、铁、青铜",
+      "驱动": "刻在额上或口中的符文/真名",
+      "讨伐等级": "怪物"
+     },
+     "visual": "粗笨的人形，额头一枚发光刻印。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "中欧民间传说",
+       "note": "以文字驱动的泥人（本库只用符文意象，不用宗教文字）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS08",
+       "role": "力量源"
+      },
+      {
+       "target": "CL19",
+       "role": "制造者"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "creature",
+      "brief": "A stone golem standing in a three-quarter side view, built of rough-hewn grey granite blocks joined with bands of dark bronze, a heavy blocky head with a single carved abstract sigil glowing molten gold in its forehead, cracks glowing faintly; a plain human silhouette stands right next to it for scale, and the golem is exactly about twice the human's height (about three meters tall)."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "monsters",
+   "name": "怪物",
+   "intro": "",
+   "entries": [
+    {
+     "id": "BS01",
+     "name": "龙",
+     "name_en": "Dragon",
+     "aliases": [
+      "wyrm",
+      "drake"
+     ],
+     "summary": "见种族「龙」。作为生物形态：四足双翼、喷吐元素之息，是最高讨伐等级的存在。",
+     "xianxia": {
+      "concept": "龙（参照）",
+      "note": "西方龙四足双翼、喷火、守宝；中国龙无翼、司雨、祥瑞。"
+     },
+     "details": {
+      "讨伐等级": "恐怖至灾厄"
+     },
+     "visual": "四足双翼、长颈长尾、熔金竖瞳、鳞甲。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "北欧与中世纪传说",
+       "note": "法夫纳、贝奥武夫之龙、圣乔治屠龙"
+      }
+     ],
+     "relations": [
+      {
+       "target": "RC10",
+       "role": "种族条目"
+      }
+     ],
+     "image": {
+      "purpose": "creature",
+      "brief": "A great western dragon in a three-quarter side view, four powerful legs and a separate pair of vast leathery bat-like wings half spread, a long neck and long tail, armored overlapping scales of dark bronze and deep red, a horned head with molten gold slit-pupil eyes, faint smoke curling from its nostrils, perched on rocky ground; a small plain human silhouette stands at its feet for scale."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "BS02",
+     "name": "双足飞龙",
+     "name_en": "Wyvern",
+     "aliases": [
+      "wyvern"
+     ],
+     "summary": "两足有翼、尾带毒刺的龙类：比真龙小、无智慧、不喷火，但凶猛群居。常被驯为战兽。",
+     "xianxia": {
+      "concept": "蛟 / 低阶龙兽（参照）"
+     },
+     "details": {
+      "讨伐等级": "怪物"
+     },
+     "visual": "翼即前肢、两足、尾端毒刺。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "英国纹章学",
+       "note": "wyvern 作为两足龙"
+      }
+     ],
+     "relations": [
+      {
+       "target": "BS01",
+       "role": "近亲"
+      }
+     ],
+     "image": {
+      "purpose": "creature",
+      "brief": "A wyvern in a three-quarter side view: a lean dragon-like beast standing on only two powerful hind legs with its wings forming its front limbs, mottled green-grey scales, a narrow toothy head, a long whip-like tail ending in a curved venomous stinger; a small plain human silhouette stands at its feet for scale."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "BS06",
+     "name": "凤凰",
+     "name_en": "Phoenix",
+     "aliases": [
+      "phoenix",
+      "firebird"
+     ],
+     "summary": "浴火重生之鸟：寿终时自焚，从灰烬中重生。眼泪能治愈，羽毛永燃不熄。",
+     "xianxia": {
+      "concept": "凤凰 / 火鸟（参照）",
+      "note": "西方凤凰核心是死而复生，单只、永生循环。"
+     },
+     "details": {
+      "讨伐等级": "禁止讨伐",
+      "产出": "凤凰羽 MT07"
+     },
+     "visual": "赤金火焰般的长尾鸟。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "希腊与埃及传说",
+       "note": "phoenix"
+      }
+     ],
+     "relations": [
+      {
+       "target": "MT07",
+       "role": "产出"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "creature",
+      "brief": "A phoenix perched on a charred branch in a three-quarter side view, an eagle-sized bird about one meter long with brilliant crimson, orange and gold plumage whose long tail feathers trail into real flickering flames, glowing ember-like eyes, a few sparks drifting upward; a plain human silhouette stands right beside the branch for scale, clearly much taller than the bird (the bird is about the size of the human's torso)."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "BS07",
+     "name": "蛇怪",
+     "name_en": "Basilisk",
+     "aliases": [
+      "basilisk",
+      "cockatrice（近亲）"
+     ],
+     "summary": "「蛇中之王」：目光与气息致命，所经之处草木枯死。镜子与鼬鼠是它的克星。",
+     "xianxia": {
+      "concept": "毒蛟 / 妖蛇（参照）"
+     },
+     "details": {
+      "讨伐等级": "怪物至恐怖",
+      "克制": "镜子反射其目光、鼬鼠、公鸡啼声"
+     },
+     "visual": "头顶冠状鳞片的巨蛇，眼睛发出致命的黄光。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "老普林尼《博物志》与中世纪寓言集",
+       "note": "basilisk"
+      }
+     ],
+     "relations": [
+      {
+       "target": "IT24",
+       "role": "克制物（镜）"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "creature",
+      "brief": "A basilisk in a three-quarter side view: a serpent about six meters long raised in a coiled striking pose, olive and black scales, a small crown-like crest of pale bony spines on its head, sickly glowing yellow eyes, the grass beneath its coils withered and grey; its raised head is at the same height as the head of the normal-size adult human silhouette standing nearby."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "BS08",
+     "name": "九头蛇",
+     "name_en": "Hydra",
+     "aliases": [
+      "hydra"
+     ],
+     "summary": "多头的沼泽巨蛇：砍下一个头会长出两个，必须以火灼烧断颈。毒血可淬兵器。",
+     "xianxia": {
+      "concept": "九头妖蛇（参照）"
+     },
+     "details": {
+      "讨伐等级": "恐怖",
+      "克制": "火灼断颈"
+     },
+     "visual": "粗壮的蛇身上分出多条长颈与蛇头。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "希腊神话",
+       "note": "赫拉克勒斯斩九头蛇"
+      }
+     ],
+     "relations": [
+      {
+       "target": "EV04",
+       "role": "功业原型"
+      }
+     ],
+     "image": {
+      "purpose": "creature",
+      "brief": "A hydra rising from a dark swamp in a three-quarter side view, a massive scaly serpentine body with seven long writhing necks each ending in a fanged serpent head, dark green and black scales, one neck stump cauterized and smoking; a small plain human silhouette stands at the water's edge for scale."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "BS09",
+     "name": "蝎尾狮",
+     "name_en": "Manticore",
+     "aliases": [
+      "manticore"
+     ],
+     "summary": "人脸狮身、尾如蝎子能射出毒刺的食人兽。",
+     "xianxia": {
+      "concept": "凶兽（参照）"
+     },
+     "details": {
+      "讨伐等级": "怪物"
+     },
+     "visual": "红狮身、三排牙的人形脸、蝎尾。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "克特西亚斯与中世纪寓言集",
+       "note": "manticore"
+      }
+     ],
+     "relations": [],
+     "image": {
+      "purpose": "creature",
+      "brief": "A manticore in a three-quarter side view: the muscular body of a red-maned lion, an unsettling human-like face with a wide mouth showing rows of sharp teeth, and a long segmented scorpion tail arched over its back tipped with a cluster of spines; a small plain human silhouette stands nearby for scale."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "BS10",
+     "name": "海妖克拉肯",
+     "name_en": "Kraken",
+     "aliases": [
+      "kraken",
+      "sea monster"
+     ],
+     "summary": "北海深处的巨型章鱼/乌贼：能拖沉整艘船，浮上时被误认为岛屿。",
+     "xianxia": {
+      "concept": "海中巨妖（参照）"
+     },
+     "details": {
+      "讨伐等级": "灾厄"
+     },
+     "visual": "从海中升起的巨大触手缠住帆船。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "挪威航海传说",
+       "note": "kraken"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PL06",
+       "role": "栖地相关"
+      }
+     ],
+     "image": {
+      "purpose": "environment",
+      "brief": "A stormy grey northern sea at dusk, a three-masted wooden sailing ship tilting sharply as several colossal dark red suckered tentacles rise from the waves and wrap around its hull and masts, a vast shadowy shape beneath the water, spray and lightning in the distance, tiny sailors visible on deck for scale."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "BS13",
+     "name": "石像鬼",
+     "name_en": "Gargoyle",
+     "aliases": [
+      "gargoyle",
+      "grotesque"
+     ],
+     "summary": "教堂屋檐上的石雕怪兽，夜里会活过来守护（或袭击）。白天变回石头，几乎不可破坏。",
+     "xianxia": {
+      "concept": "镇宅石兽（参照）"
+     },
+     "details": {
+      "讨伐等级": "怪物",
+      "弱点": "白天无法行动"
+     },
+     "visual": "蝠翼、利爪、风化石质的蹲坐怪兽。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "哥特建筑",
+       "note": "滴水兽 gargoyle"
+      }
+     ],
+     "relations": [
+      {
+       "target": "HL03",
+       "role": "守护对象"
+      }
+     ],
+     "image": {
+      "purpose": "creature",
+      "brief": "A gargoyle crouched on a gothic stone ledge in a three-quarter side view, a winged demonic creature carved of weathered grey stone with lichen stains, bat-like wings folded, clawed hands gripping the ledge, horned head with a snarling open mouth, its eyes glowing faintly as if just awakening, small cracks of stone flaking off as it moves; a small plain human silhouette below for scale."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "BS14",
+     "name": "地狱犬",
+     "name_en": "Hellhound",
+     "aliases": [
+      "hellhound",
+      "black dog"
+     ],
+     "summary": "燃着地狱火的黑色巨犬：恶魔的猎犬，追踪灵魂契约到期者。英格兰民间的「黑犬」预示死亡。",
+     "xianxia": {
+      "concept": "魔犬 / 冥犬（参照）"
+     },
+     "details": {
+      "讨伐等级": "怪物",
+      "规则": "追踪契约到期者，无法被常规手段甩掉"
+     },
+     "visual": "煤黑巨犬，眼与口中燃火。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "英格兰民间",
+       "note": "black dog 黑犬"
+      },
+      {
+       "work": "希腊神话",
+       "note": "冥府看门犬"
+      }
+     ],
+     "relations": [
+      {
+       "target": "RC16",
+       "role": "主人"
+      },
+      {
+       "target": "DK01",
+       "role": "相关"
+      },
+      {
+       "target": "MT11",
+       "role": "弱点"
+      }
+     ],
+     "image": {
+      "purpose": "creature",
+      "brief": "A hellhound in a three-quarter side view: a huge coal-black mastiff-like hound with a lean ridged spine, glowing molten-orange eyes, embers and flames flickering from its mouth and along cracks in its skin, smoke rising from its fur, scorch marks on the ground at its paws; a small plain human silhouette stands nearby for scale."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "BS16",
+     "name": "报丧女妖",
+     "name_en": "Banshee",
+     "aliases": [
+      "banshee",
+      "bean sídhe"
+     ],
+     "summary": "爱尔兰传说中的女妖：她的哭嚎预示家中有人将死。本库定为亡灵/妖精之间的存在，哭声能震碎玻璃与理智。",
+     "xianxia": {
+      "concept": "女鬼 / 哭丧鬼（参照）"
+     },
+     "details": {
+      "讨伐等级": "怪物",
+      "规则": "只为特定家族哭嚎"
+     },
+     "visual": "苍白长发、灰白衣、半透明，张口哭嚎。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "爱尔兰民间",
+       "note": "bean sídhe"
+      }
+     ],
+     "relations": [
+      {
+       "target": "RC14",
+       "role": "相关种族"
+      }
+     ],
+     "image": {
+      "purpose": "creature",
+      "brief": "A banshee spirit hovering slightly above the ground in a three-quarter view, a gaunt translucent woman in a long tattered grey-white dress, very long pale silver hair streaming as if underwater, hollow dark eyes, mouth open wide in a keening wail, faint ripples of sound distorting the air around her; a small plain human silhouette stands nearby for scale."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "BS17",
+     "name": "鬼火",
+     "name_en": "Will-o'-the-Wisp",
+     "aliases": [
+      "wisp",
+      "ignis fatuus",
+      "jack-o'-lantern"
+     ],
+     "summary": "沼泽与荒野夜里的飘浮光点：引诱旅人偏离道路、陷入泥沼。有人说是迷路的亡魂，有人说是妖精的恶作剧。",
+     "xianxia": {
+      "concept": "鬼火 / 磷火（参照）"
+     },
+     "details": {
+      "讨伐等级": "害兽",
+      "规则": "跟随即迷路；有时也引向宝藏"
+     },
+     "visual": "幽蓝或淡绿的飘浮光球。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲民间",
+       "note": "ignis fatuus"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PL05",
+       "role": "相关"
+      }
+     ],
+     "image": {
+      "purpose": "environment",
+      "brief": "A misty moonlit marsh at night with dark reeds, still black water and twisted dead trees, several small floating orbs of pale blue-green light drifting above the water in a winding line leading away into the fog, their reflections shimmering below; no people."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "BS18",
+     "name": "狂猎",
+     "name_en": "The Wild Hunt",
+     "aliases": [
+      "wild hunt",
+      "Odin's hunt"
+     ],
+     "summary": "风暴之夜从天空疾驰而过的幽灵骑猎队：猎犬、骑手、号角。看见它的人会被掳走一同奔驰，或预示灾祸。领头者在不同地区是神、妖精王或亡灵君主。",
+     "xianxia": {
+      "concept": "阴兵过境（参照）"
+     },
+     "details": {
+      "讨伐等级": "灾厄（不可讨伐，只能躲避）",
+      "规则": "冬夜与风暴中出现；闭门、伏地、不回应号角"
+     },
+     "visual": "暴风云中奔驰的半透明骑手与猎犬。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "日耳曼与凯尔特民间",
+       "note": "Wild Hunt"
+      }
+     ],
+     "relations": [
+      {
+       "target": "RC09",
+       "role": "相关种族"
+      },
+      {
+       "target": "RC14",
+       "role": "相关种族"
+      }
+     ],
+     "image": {
+      "purpose": "environment",
+      "brief": "A dark wintry moorland at night under a raging storm sky; across the clouds gallops a spectral procession of translucent pale riders on ghostly horses with antlered helms, horns raised, a pack of glowing-eyed hounds running ahead of them, lightning flickering, a tiny lone cottage with a lit window on the moor below for scale."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "BS19",
+     "name": "水马",
+     "name_en": "Kelpie",
+     "aliases": [
+      "kelpie",
+      "each-uisge"
+     ],
+     "summary": "苏格兰河湖中的变形水妖：化作温顺漂亮的马引人骑上，皮毛一沾手就脱不开，随即冲进深水把人淹死。也能化作美貌青年。",
+     "xianxia": {
+      "concept": "水鬼 / 河妖（参照）"
+     },
+     "details": {
+      "讨伐等级": "怪物",
+      "克制": "套上它的辔头即可驯服；冷铁"
+     },
+     "visual": "湿漉漉的黑马，鬃毛里缠着水草。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "苏格兰民间",
+       "note": "kelpie、each-uisge"
+      }
+     ],
+     "relations": [
+      {
+       "target": "MT03",
+       "role": "克制"
+      }
+     ],
+     "image": {
+      "purpose": "creature",
+      "brief": "A kelpie standing at the edge of a dark loch in a three-quarter side view: a sleek jet-black horse with a dripping wet coat, a long mane tangled with green waterweed and reeds, eyes slightly too bright, hooves partly turned to webbed shapes, droplets falling; a small plain human silhouette stands nearby for scale."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "BS20",
+     "name": "无头骑士",
+     "name_en": "Dullahan (Headless Horseman)",
+     "aliases": [
+      "dullahan",
+      "headless horseman"
+     ],
+     "summary": "爱尔兰传说中腋下夹着自己头颅的骑手：在夜里停在谁家门前、喊出谁的名字，谁就会死。",
+     "xianxia": {
+      "concept": "勾魂使者（参照）"
+     },
+     "details": {
+      "讨伐等级": "恐怖",
+      "克制": "黄金（民间说法）",
+      "规则": "不能被锁门阻挡"
+     },
+     "visual": "黑马、黑斗篷、腋下发光的头颅。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "爱尔兰民间",
+       "note": "dullahan"
+      },
+      {
+       "work": "《睡谷传说》（1820）",
+       "note": "无头骑士"
+      }
+     ],
+     "relations": [
+      {
+       "target": "RC14",
+       "role": "相关种族"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "creature",
+      "brief": "A headless horseman on a black horse in a three-quarter side view on a misty road at night, a dark high-collared tattered cloak streaming and hiding the neck completely, the rider holding its own pale head under one arm with eyes glowing faintly, the horse's eyes burning dimly; no blood, no wounds visible. A normal-size adult human silhouette stands at the roadside reaching the horse's shoulder."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "BS21",
+     "name": "塞壬",
+     "name_en": "Sirens",
+     "aliases": [
+      "siren"
+     ],
+     "summary": "希腊神话中人首鸟身的海岛歌者：歌声让水手忘却一切、驶向礁石。本库按古典形象做鸟身，与人鱼区分。",
+     "xianxia": {
+      "concept": "妖鸟（参照）"
+     },
+     "details": {
+      "讨伐等级": "怪物",
+      "克制": "蜡封耳、把自己绑在桅杆上"
+     },
+     "visual": "鸟身、人首、羽翼，栖于礁石。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "adoption": "default",
+     "references": [
+      {
+       "work": "《奥德赛》",
+       "note": "塞壬之歌"
+      }
+     ],
+     "relations": [
+      {
+       "target": "SC04",
+       "role": "相关魔法"
+      }
+     ],
+     "image": {
+      "version": 3,
+      "purpose": "creature",
+      "brief": "A siren of classical myth perched on the gunwale of a small wooden rowing boat at sea, in a three-quarter side view: the body, wings and taloned feet of a large dark sea bird with a calm beautiful human woman's small head and long hair, mouth open in song, faint ripples of sound over the water; a wooden oar lies across the boat beside her and the whole siren is shorter than the oar's blade and handle together, the size of a large eagle; a plain dark adult human silhouette sits in the boat and is clearly much bigger than the siren."
+     },
+     "basis": "tradition"
+    },
+    {
+     "id": "BS22",
+     "name": "牛头人",
+     "name_en": "Minotaur",
+     "aliases": [
+      "minotaur",
+      "bull-man"
+     ],
+     "summary": "人身牛首的迷宫之兽：力大无穷、以人为食，被困在迷宫中心。",
+     "xianxia": {
+      "concept": "牛魔（参照）"
+     },
+     "details": {
+      "讨伐等级": "恐怖",
+      "规则": "通常与迷宫一起出现"
+     },
+     "visual": "健壮人身、公牛头与角。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "adoption": "default",
+     "references": [
+      {
+       "work": "希腊神话",
+       "note": "克里特迷宫的弥诺陶洛斯"
+      }
+     ],
+     "relations": [],
+     "image": {
+      "version": 2,
+      "purpose": "creature",
+      "brief": "A minotaur standing in a narrow stone labyrinth corridor of rough ancient blocks, in a three-quarter side view: a hugely muscular human body with human legs and bare human feet, the head of a black bull with long curved horns, a bronze ring through its nose, a rough leather kilt, gripping a heavy double-bladed axe; no tail, no hooves; about 2.5 meters tall: the plain dark adult human silhouette beside it reaches its chest."
+     },
+     "basis": "tradition"
+    },
+    {
+     "id": "BS23",
+     "name": "食人魔",
+     "name_en": "Ogre",
+     "aliases": [
+      "ogre"
+     ],
+     "summary": "欧洲童话里的大块头食人怪：贪吃、粗暴、愚笨，住在城堡或林中，被聪明的凡人骗倒。",
+     "xianxia": {
+      "concept": "食人妖（参照）"
+     },
+     "details": {
+      "讨伐等级": "怪物",
+      "规则": "贪吃与贪财是它的弱点"
+     },
+     "visual": "肥壮巨大的人形、粗糙皮肤、破旧贵族衣物。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "adoption": "default",
+     "references": [
+      {
+       "work": "佩罗童话",
+       "note": "《穿靴子的猫》《小拇指》中的食人魔"
+      }
+     ],
+     "relations": [],
+     "image": {
+      "purpose": "creature",
+      "brief": "An ogre of European fairy tales standing in a three-quarter side view: a huge fat brutish humanoid with coarse ruddy skin, small greedy eyes, a heavy jaw, wearing a stained oversized nobleman's coat and breeches, a napkin tucked at its collar, holding a gnawed mutton bone; it is about three meters tall: the normal-size adult human silhouette beside it reaches its belly."
+     },
+     "basis": "tradition"
+    }
+   ]
+  }
+ ]
+}

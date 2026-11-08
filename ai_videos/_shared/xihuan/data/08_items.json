@@ -1,0 +1,1906 @@
+{
+ "id": "items",
+ "name": "道具与资源",
+ "intro": "西幻道具按「怎么起作用」分：喝下去的（药剂）、写或刻出来的（卷轴、符文、护符）、握在手里引导力量的（施法器）、自带灵魂与意志的（圣物与神器）、做这些东西的原料（灵材）。欧洲民俗里有大量现成的「真实相信过」的材料：银克狼人、冷铁克妖精、独角兽角解毒、曼德拉草会尖叫。",
+ "subgroups": [
+  {
+   "id": "grade",
+   "name": "品阶与制作",
+   "intro": "",
+   "entries": [
+    {
+     "id": "IR01",
+     "name": "器物等第",
+     "name_en": "Provenance Grades",
+     "aliases": [
+      "rarity",
+      "item grades",
+      "稀有度"
+     ],
+     "summary": "按来历分级而非掉落品质：凡品 Common（工坊量产）→ 名匠之作 Masterwork → 附魔器 Enchanted → 有名之器 Named（有名字和历史）→ 圣物 Hallowed（圣人或英雄遗留）→ 神造之器 God-wrought（世上唯一）。",
+     "xianxia": {
+      "concept": "凡器 / 法器 / 灵器 / 宝器 / 仙器 / 神器（参照）",
+      "note": "差异：西方器物的价值在来历与名字，不在品质色。"
+     },
+     "details": {
+      "Common 凡品": "凡人可用",
+      "Masterwork 名匠之作": "名匠作品，可有小附魔",
+      "Enchanted 附魔器": "需锡阶以上驱动",
+      "Named 有名之器": "有名字、有传说，需认主（铜阶起）",
+      "Hallowed 圣物": "圣人或英雄遗留，有意志",
+      "God-wrought 神造之器": "无法再造，会挑选主人",
+      "道具组参考色": "白 / 绿 / 蓝 / 紫 / 橙 / 红金——仅供道具与特效组内部区分，不上屏、不进字幕"
+     },
+     "visual": "六件同类器物按来历递进：从朴素凡品到神造之器，越往后越有名、越有灵性。",
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "中世纪圣物与名剑传统",
+       "note": "按来历与名字区分器物"
+      },
+      {
+       "work": "D&D",
+       "note": "common → artifact 与认主（机制参考）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TR01",
+       "role": "驱动位阶参照"
+      }
+     ],
+     "adoption": "default",
+     "image": {
+      "purpose": "item_set",
+      "brief": "Six blades laid in a row on dark velvet from plainest to most legendary, left to right: a plain iron working knife, a finely forged masterwork dagger, a dagger with faintly glowing engraved lines, a named longsword with an ornate guard and a worn leather-wrapped grip, a hallowed sword resting in a gilded open reliquary case, and finally a blade that seems forged from starlight itself."
+     },
+     "basis": "tradition"
+    },
+    {
+     "id": "CF01",
+     "name": "炼金",
+     "name_en": "Alchemy",
+     "aliases": [
+      "alchemy",
+      "调药"
+     ],
+     "summary": "蒸馏、煅烧、溶解、凝结：把原料炼成药剂、毒药、酸、炸药和奇物。高阶炼金追求生命之酒与贤者之石。",
+     "xianxia": {
+      "concept": "炼丹（参照）",
+      "note": "真实的历史平行：中西炼金都追求长生与点金。西方产物多为液体，炉称 athanor。"
+     },
+     "cost": "原料昂贵、事故频发、药毒累积。",
+     "details": {
+      "工具": "蒸馏器 alembic、炼金炉 athanor、坩埚、天平",
+      "产物": "药剂 IT01–IT07、贤者之石 IT21"
+     },
+     "visual": "铜与玻璃的蒸馏器、彩色液体、炉火。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲炼金术",
+       "note": "athanor、alembic 与大功业"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL18",
+       "role": "职业"
+      }
+     ],
+     "image": {
+      "purpose": "environment",
+      "brief": "Interior of a cluttered candlelit alchemist's workshop: a large brick athanor furnace glowing orange at the back, a copper and glass alembic distillation apparatus bubbling on a heavy oak table, shelves of colored glass bottles, dried herbs hanging from beams, an open notebook of diagrams, smoke curling through shafts of light from a small window; no people."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CF02",
+     "name": "附魔与符文锻造",
+     "name_en": "Enchanting & Runeforging",
+     "aliases": [
+      "enchanting",
+      "runeforging",
+      "炼器"
+     ],
+     "summary": "把力量永久封进器物：在锻造中刻入符文、以宝石与灵魂石储能、以名字唤醒器灵。",
+     "xianxia": {
+      "concept": "炼器（参照）"
+     },
+     "cost": "一件精品需数月到数年；失败可能毁掉珍贵材料。",
+     "details": {
+      "储能": "宝石、以太晶、灵魂石",
+      "认主": "史诗以上需与主人灵魂缔结"
+     },
+     "visual": "锻炉、发光刻痕、宝石镶嵌。",
+     "familiarity": "中",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "北欧传说",
+       "note": "矮人锻造神器"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL19",
+       "role": "职业"
+      },
+      {
+       "target": "PS08",
+       "role": "力量源"
+      }
+     ],
+     "adoption": "default",
+     "image": {
+      "purpose": "environment",
+      "brief": "Interior of a dwarven rune forge carved into a mountain: a great anvil beneath a hanging chain, a roaring furnace, racks of half-finished weapons with glowing carved marks, bins of gemstones and crystals, molten gold light, no people."
+     },
+     "basis": "tradition"
+    },
+    {
+     "id": "CF03",
+     "name": "法阵与结界术",
+     "name_en": "Circles & Wards",
+     "aliases": [
+      "magic circle",
+      "warding",
+      "法阵"
+     ],
+     "summary": "以粉笔、盐、银线或刻石画出几何法阵：召唤与约束、防护与封印、传送与仪式。法阵画错一笔即失效或反噬。",
+     "xianxia": {
+      "concept": "阵法（参照）"
+     },
+     "cost": "需时间与材料准备；线条被破坏即失效。",
+     "details": {
+      "材料": "盐、粉笔、银粉、蜡烛、鲜血（禁忌）",
+      "类型": "召唤阵、防护阵、封印阵、传送阵、仪式阵"
+     },
+     "visual": "地面发光的同心圆与几何图形。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "《所罗门之钥》等魔法书",
+       "note": "召唤者站在保护圈内"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL17",
+       "role": "职业"
+      },
+      {
+       "target": "SC01",
+       "role": "学派"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "item",
+      "brief": "Top-down view of a large magic circle drawn on old flagstones: two concentric rings of white chalk and poured salt, inside them a seven-sided heptagon and a lattice of interlocking arcs (abstract geometry only, no stars, no letters), seven tall lit candles evenly spaced around the outer ring, a thin line of silver dust completing the outermost ring, faint violet light rising from the lines. Precise, ritual, atmospheric."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "CF04",
+     "name": "抄写术",
+     "name_en": "Scribing",
+     "aliases": [
+      "scroll-making",
+      "scribe"
+     ],
+     "summary": "把法术写进羊皮纸或刻进石板，做成一次性的卷轴与符文石，让不会施法的人也能用。",
+     "xianxia": {
+      "concept": "制符（参照）"
+     },
+     "cost": "需要特制墨水（宝石粉、龙血）；写错即失效。",
+     "details": {
+      "产物": "法术卷轴 IT11、符文石 IT10"
+     },
+     "visual": "羽毛笔、发光墨水、羊皮纸。",
+     "familiarity": "中",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "中世纪抄写室",
+       "note": "修道院抄写传统"
+      }
+     ],
+     "relations": [
+      {
+       "target": "IT11",
+       "role": "产物"
+      }
+     ],
+     "adoption": "default",
+     "image": {
+      "purpose": "environment",
+      "brief": "A quiet scriptorium with tall windows: rows of slanted writing desks, pots of ink that glow faintly violet and gold, unrolled parchments covered in glowing geometric diagrams of rings and arcs (no letters), small stones being engraved, dust in shafts of light, no people."
+     },
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "potions",
+   "name": "药剂",
+   "intro": "药剂是西幻最常用的消耗品。本库规定「药毒」规则：同时喝的药剂越多，毒性越高，超过体质即中毒。",
+   "entries": [
+    {
+     "id": "IT01",
+     "name": "治疗药剂",
+     "name_en": "Healing Potion",
+     "aliases": [
+      "health potion",
+      "红药"
+     ],
+     "summary": "加速伤口愈合、止血、恢复体力。低阶治皮肉伤，高阶可接骨。",
+     "xianxia": {
+      "concept": "疗伤丹（参照）"
+     },
+     "cost": "计入药毒；不能治诅咒与灵魂伤。",
+     "counter": "诅咒、死灵伤害。",
+     "trigger": "饮用或涂抹。",
+     "requirement": "凡人可用。",
+     "visual": "圆底小瓶中的深红液体，微微发光。",
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "几乎所有西幻游戏",
+       "note": "红色治疗药水"
+      },
+      {
+       "work": "中世纪草药医学",
+       "note": "apothecary 药剂"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CF01",
+       "role": "制作"
+      },
+      {
+       "target": "IT07",
+       "role": "药毒规则"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "A single round-bottomed glass flask with a long neck and a wax-sealed cork, filled with a deep ruby-red liquid that glows softly from within, a twist of linen cord and a small paper-less wax seal stamp around the neck, tiny bubbles rising inside."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT02",
+     "name": "魔力药剂",
+     "name_en": "Mana Draught",
+     "aliases": [
+      "mana potion",
+      "蓝药"
+     ],
+     "summary": "快速补充魔力，缓解枯竭头痛；过量会造成「魔力醉」——幻觉与失控。",
+     "xianxia": {
+      "concept": "回灵丹（参照）"
+     },
+     "cost": "计入药毒；有成瘾性。",
+     "visual": "细长瓶中旋转的深蓝液体，内有星点。",
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "西幻游戏",
+       "note": "蓝色魔力药水"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS01",
+       "role": "相关力量源"
+      },
+      {
+       "target": "IT07",
+       "role": "药毒规则"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "A single tall slender glass vial with a faceted crystal stopper, filled with deep sapphire-blue liquid that slowly swirls on its own, tiny silver star-like specks drifting inside it, a thin silver wire wrapped around the neck."
+     },
+     "adoption": "default",
+     "basis": "genre"
+    },
+    {
+     "id": "IT03",
+     "name": "万灵药",
+     "name_en": "Panacea",
+     "aliases": [
+      "antidote",
+      "解毒剂",
+      "theriac"
+     ],
+     "summary": "解除毒、病与部分诅咒的药剂。中世纪真实存在过的「底野迦」（theriac）配方据说含六十多种原料。",
+     "xianxia": {
+      "concept": "解毒丹 / 清心丹（参照）"
+     },
+     "cost": "原料稀缺（独角兽角最佳）；价格极高。",
+     "visual": "金褐色浓稠药膏或琥珀色药液，装在陶罐里。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "中世纪药学",
+       "note": "theriac 底野迦"
+      },
+      {
+       "work": "希腊神话",
+       "note": "Panacea 万灵之神"
+      }
+     ],
+     "relations": [
+      {
+       "target": "MT08",
+       "role": "原料"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "item",
+      "brief": "A small round ceramic apothecary jar with a plain mottled green-brown glaze and a tied linen cover, beside it a tiny open matching plain jar showing thick glistening amber-gold paste with a small horn spoon resting in it, a sprig of dried herbs laid next to them. No emblems or motifs on the jars."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT04",
+     "name": "生命之酒",
+     "name_en": "Elixir of Life",
+     "aliases": [
+      "elixir vitae",
+      "aqua vitae",
+      "长生药"
+     ],
+     "summary": "炼金术的至高药剂之一：修复灵魂裂痕、延长寿命。一滴可救濒死之人，一瓶可换一座城。",
+     "xianxia": {
+      "concept": "延寿丹 / 九转还魂丹（参照）"
+     },
+     "cost": "需贤者之石或龙心等传说原料；饮用者会被觊觎。",
+     "visual": "水晶小瓶中流动的金色液体，自身发光。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲炼金术",
+       "note": "elixir of life"
+      }
+     ],
+     "relations": [
+      {
+       "target": "FL01",
+       "role": "可修复"
+      },
+      {
+       "target": "IT21",
+       "role": "原料"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "A small exquisite teardrop-shaped crystal vial with a gold filigree cage and a tiny gold stopper, containing a luminous liquid gold that glows brightly from within and casts warm golden light onto the surface below."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT05",
+     "name": "爱情魔药",
+     "name_en": "Love Philter",
+     "aliases": [
+      "love potion",
+      "philtre"
+     ],
+     "summary": "让饮用者对第一眼看到的人产生强烈迷恋。效果真实，但不是爱：药效一过，仇恨往往比爱更深。",
+     "xianxia": {
+      "concept": "情蛊 / 合欢散（参照）"
+     },
+     "cost": "被识破即重罪；解药存在。",
+     "visual": "粉紫色液体，瓶身为心形或玫瑰形。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "特里斯坦与伊索尔德",
+       "note": "误饮爱情魔药"
+      }
+     ],
+     "relations": [
+      {
+       "target": "SC04",
+       "role": "学派"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "A small pink-tinted glass bottle shaped like a rose bud with a gold stopper, filled with a shimmering rose-violet liquid with faint swirling pearlescent currents inside, a tiny red silk ribbon tied around the neck."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT06",
+     "name": "勇气药剂",
+     "name_en": "Draught of Valor",
+     "aliases": [
+      "berserker's brew",
+      "战酒"
+     ],
+     "summary": "狂战士与士兵战前饮用：驱散恐惧、暂时提升力量与耐痛，药效过后极度虚弱。",
+     "xianxia": {
+      "concept": "燃血丹 / 狂暴丹（参照）"
+     },
+     "cost": "计入药毒；事后虚脱；敌我难分。",
+     "visual": "牛角杯或兽角瓶中的暗红烈酒，泛着热气。",
+     "familiarity": "中",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "北欧传统",
+       "note": "战前的蜜酒与狂战士"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS09",
+       "role": "力量源"
+      },
+      {
+       "target": "CL03",
+       "role": "使用者"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "A single carved drinking horn with a silver rim and leather strap standing in a small iron holder, filled to the brim with a dark red steaming liquid, faint embers glowing at its surface, carved knotwork patterns on the horn."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT07",
+     "name": "毒药与药毒",
+     "name_en": "Poisons & Potion Toxicity",
+     "aliases": [
+      "poison",
+      "toxicity",
+      "丹毒"
+     ],
+     "summary": "两件事：一是刺客与女巫的毒药（夺命、致幻、假死）；二是本库的「药毒」规则——每个人能承受的药剂毒性有上限，体质越强上限越高，超过即中毒。",
+     "xianxia": {
+      "concept": "毒丹 / 丹毒（参照）"
+     },
+     "details": {
+      "药毒上限": "凡人约两瓶；铁阶约五瓶；猎魔人经异变后更高",
+      "假死药": "让人看似死去一到三日"
+     },
+     "cost": "中毒症状：发热、黑色血管、幻觉。",
+     "visual": "绿或黑色液体、骷髅形小瓶、毒戒指。",
+     "familiarity": "高",
+     "ip": "inspired",
+     "references": [
+      {
+       "work": "猎魔人（只借机制）",
+       "note": "药剂毒性条"
+      },
+      {
+       "work": "《罗密欧与朱丽叶》",
+       "note": "假死药"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL06",
+       "role": "使用者"
+      },
+      {
+       "target": "GR09",
+       "role": "相关"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "item_set",
+      "brief": "Four small poison vessels in a row: a tiny dark green glass vial with a skull-shaped stopper, a hollow silver poison ring with its gem lid open showing white powder, a black glass bottle with a plain round dripping wax seal with no design, and a small folded coarse cloth packet of crushed dried purple flowers tied with thread."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "written",
+   "name": "卷轴、符文与护符",
+   "intro": "力量写进或刻进载体，可以由不会施法的人触发。",
+   "entries": [
+    {
+     "id": "IT08",
+     "name": "契约书",
+     "name_en": "Infernal Contract",
+     "aliases": [
+      "pact",
+      "soul contract",
+      "魔契"
+     ],
+     "summary": "与恶魔或妖精交易的书面契约：以血签名即生效，条款对双方都有绝对约束力。烧毁、篡改都无效，只能找漏洞或由更高者仲裁。",
+     "xianxia": {
+      "concept": "血契 / 魔契（参照）"
+     },
+     "cost": "条款字面执行。",
+     "visual": "焦边的羊皮纸，墨迹如活物般微动，签名处是干涸的血。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "浮士德",
+       "note": "以血签约"
+      }
+     ],
+     "relations": [
+      {
+       "target": "DK01",
+       "role": "机制"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "item",
+      "brief": "A long old parchment scroll partly unrolled, its edges scorched and curling, covered with dense lines of abstract curling marks like swirling smoke (clearly not handwriting and not letters), the marks faintly glowing ember-orange, a dried dark-red thumbprint at the bottom, a black wax seal with an abstract pair of horns; no ornaments on the top edge."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT09",
+     "name": "咒偶与巫瓶",
+     "name_en": "Hex Doll & Witch Bottle",
+     "aliases": [
+      "poppet",
+      "witch bottle",
+      "咒袋"
+     ],
+     "summary": "女巫的媒介：咒偶（poppet）缝入目标的头发以施咒；巫瓶（witch bottle）埋在门槛下反弹诅咒。",
+     "xianxia": {
+      "concept": "厌胜人偶 / 镇物（参照）"
+     },
+     "cost": "需要目标的私人物品；媒介被找到即失效或反噬。",
+     "visual": "粗布人偶缠红线；装钉子、头发与尿液的陶瓶。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "英格兰民俗与考古",
+       "note": "witch bottle 实物出土"
+      }
+     ],
+     "relations": [
+      {
+       "target": "DK03",
+       "role": "魔法"
+      }
+     ],
+     "image": {
+      "purpose": "item_set",
+      "brief": "Two folk magic objects side by side: a small rough linen poppet doll stuffed with herbs, its body wrapped tightly in red thread with a lock of dark hair sewn into the chest and two pins stuck in it; and a squat stoneware bellarmine-style jug (no face) sealed with wax, a few bent iron nails and rosemary sprigs visible at its lip."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT10",
+     "name": "符文石",
+     "name_en": "Runestone",
+     "aliases": [
+      "rune stone",
+      "rune"
+     ],
+     "summary": "刻有单个符文的石片或骨片：握碎或念出其名即释放效果（护盾、火光、加速）；整套符文也用于占卜。",
+     "xianxia": {
+      "concept": "符箓（参照）"
+     },
+     "cost": "一次性或有限次；刻错会反噬。",
+     "visual": "扁平的河石或骨片，刻痕发出熔金或冰蓝光。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "北欧传统",
+       "note": "Elder Futhark 与占卜（具体符号避免使用已被仇恨团体挪用者）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS08",
+       "role": "力量源"
+      },
+      {
+       "target": "CF04",
+       "role": "制作"
+      }
+     ],
+     "image": {
+      "version": 3,
+      "purpose": "item_set",
+      "brief": "Five flat smooth river stones and bone tiles of slightly different sizes laid in a row on dark cloth, each carved with one small simple pictogram: a leaf, a flame, a wave, a crescent moon and a feather (pictures, not letters or symbols), the carved grooves glowing softly, alternating molten gold and ice blue."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT11",
+     "name": "法术卷轴",
+     "name_en": "Spell Scroll",
+     "aliases": [
+      "scroll"
+     ],
+     "summary": "写着完整法术的羊皮纸卷：展开并念出即可施放一次，施放后字迹燃尽。可用于施放超出自身位阶的法术，但有失败风险。",
+     "xianxia": {
+      "concept": "符箓 / 一次性法宝（参照）"
+     },
+     "cost": "一次性；越阶使用可能失败爆炸。",
+     "visual": "带丝带和蜡封的羊皮卷，展开时字迹发光，用后化为灰烬。",
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D",
+       "note": "spell scroll"
+      },
+      {
+       "work": "中世纪魔法书与护身卷",
+       "note": "写有咒文的卷轴与护符"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CF04",
+       "role": "制作"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "item",
+      "brief": "A rolled parchment spell scroll on wooden rods, partly unrolled, tied with a frayed violet silk ribbon and a broken blue wax seal, the visible section covered in glowing violet diagrams made of concentric rings and interlocking arcs with small abstract marks (no triangles, no readable letters), the far edge of the parchment beginning to curl into glowing ash."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT12",
+     "name": "护身符",
+     "name_en": "Amulet & Talisman",
+     "aliases": [
+      "amulet",
+      "talisman",
+      "charm"
+     ],
+     "summary": "护身符（amulet）被动地挡灾驱邪；法符（talisman）主动带来好运或力量。最常见的形式是刻纹的银坠、宝石与小袋。",
+     "xianxia": {
+      "concept": "护身符 / 平安符（参照）"
+     },
+     "cost": "挡下一次大灾后常会碎裂。",
+     "visual": "银质吊坠、刻纹宝石、皮质小袋。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲民俗与古代护符",
+       "note": "amulet 与 talisman 的区分"
+      }
+     ],
+     "relations": [
+      {
+       "target": "SC01",
+       "role": "学派"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "item_set",
+      "brief": "Three protective charms in a row: an engraved round silver amulet pendant with an abstract ring-and-dot motif on a chain, a smooth flat river stone with a natural hole through it (a hag stone) hung on a leather cord, and a small drawstring leather charm pouch with a sprig of rowan berries tucked into its tie."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT13",
+     "name": "护界石",
+     "name_en": "Ward Stone",
+     "aliases": [
+      "ward",
+      "boundary stone",
+      "守护石"
+     ],
+     "summary": "埋在城墙、村口、门槛下的刻纹石：连成一圈即形成结界，挡住特定的东西（亡灵、妖精、恶魔）。",
+     "xianxia": {
+      "concept": "阵基 / 镇宅石（参照）"
+     },
+     "cost": "需定期补充力量；一块被毁整圈失效。",
+     "visual": "半埋地下的刻纹立石，夜里微微发光。",
+     "familiarity": "中",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "欧洲立石与界石传统",
+       "note": "standing stones、boundary stones"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CF03",
+       "role": "工艺"
+      },
+      {
+       "target": "SC01",
+       "role": "学派"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "A single waist-high weathered grey standing stone half sunk into the ground, its face carved with a band of abstract spiral and knot patterns (no letters) that glow faintly silver-blue, lichen on its sides, a scatter of salt crystals around its base."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "foci",
+   "name": "施法器",
+   "intro": "施法器不是力量来源，而是让力量「更准、更稳、更远」的工具。法师失去施法器仍能施法，但会弱很多。",
+   "entries": [
+    {
+     "id": "IT14",
+     "name": "魔杖",
+     "name_en": "Wand",
+     "aliases": [
+      "wand"
+     ],
+     "summary": "短小精准的施法器：适合快速、精细的法术。按欧洲树木民俗选木：花楸驱巫、榛木占卜与寻水、紫杉通死者、橡木坚定、白蜡连天地。法师常自己在特定节令砍下枝条制作。",
+     "xianxia": {
+      "concept": "法器（参照）"
+     },
+     "details": {
+      "木料": "花楸（驱巫护身）、榛木（占卜、寻水、智慧）、紫杉（墓地与重生）、橡木（坚定、雷）、白蜡（连接诸界）",
+      "制作": "在特定节令、以特定刀具亲手采枝"
+     },
+     "visual": "一尺左右的手工木杖，握柄有雕刻。",
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "欧洲树木民俗",
+       "note": "花楸驱巫、榛木占卜杖（dowsing）、紫杉与墓地"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL10",
+       "role": "使用者"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "item_set",
+      "brief": "Four distinct hand-carved wooden wands laid side by side in a row, each about thirty centimeters long: a pale oak wand with a simple bark-left grip, a dark reddish yew wand with a natural knotted handle, a slender silvery rowan wand with a tiny bound red berry charm, and a forked hazel wand with the bark left on and a plain unmarked copper ring."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT15",
+     "name": "法杖",
+     "name_en": "Staff",
+     "aliases": [
+      "staff",
+      "quarterstaff"
+     ],
+     "summary": "长而沉稳的施法器：储能更多、适合大范围法术，也能当武器与拐杖。顶端常镶水晶或宝石作为聚焦。",
+     "xianxia": {
+      "concept": "法杖 / 宝器（参照）"
+     },
+     "visual": "一人高的木或金属杖，顶端镶石或缠绕枝条。",
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "西幻通用",
+       "note": "wizard's staff"
+      },
+      {
+       "work": "《红发埃里克萨迦》第 4 章",
+       "note": "女先知饰铜头镶石之杖"
+      },
+      {
+       "work": "维京时代墓葬",
+       "note": "疑似女先知墓中出土的金属杖（只见摘要）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL10",
+       "role": "使用者"
+      },
+      {
+       "target": "CL12",
+       "role": "使用者"
+      }
+     ],
+     "image": {
+      "purpose": "item_set",
+      "brief": "Three tall magical staves standing upright side by side: a gnarled living oak staff with green leaves still sprouting near the top, a straight dark ash staff bound with silver bands and capped by a cage holding a glowing violet crystal, and a pale bone-white staff topped with an iron circlet holding a small cold-blue flame."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT16",
+     "name": "魔法书",
+     "name_en": "Grimoire",
+     "aliases": [
+      "spellbook",
+      "grimoire",
+      "秘籍"
+     ],
+     "summary": "法师的全部家当：记录法术、仪式、真名与研究笔记。古老的魔法书本身会认主、上锁、甚至有自己的意志。",
+     "xianxia": {
+      "concept": "功法秘籍（参照）",
+      "note": "失去魔法书 ≈ 失去功法传承；夺书是西幻最常见的冲突之一。"
+     },
+     "cost": "被夺即重创；禁书会腐化读者。",
+     "visual": "厚重皮面书、金属包角与锁扣，书页手写并有插图。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "《所罗门之钥》等中世纪魔法书",
+       "note": "grimoire 传统"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL10",
+       "role": "使用者"
+      },
+      {
+       "target": "GR02",
+       "role": "相关成长"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "A thick ancient grimoire with a cracked dark leather cover, tarnished brass corner guards, a heavy brass clasp with a small lock, an inset abstract silver sigil on the cover (no letters), a few loose parchment notes and a feather bookmark sticking out of the yellowed page edges, faint violet light leaking from between the pages."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT17",
+     "name": "圣徽与圣物匣",
+     "name_en": "Holy Symbol & Reliquary",
+     "aliases": [
+      "holy symbol",
+      "reliquary",
+      "圣器"
+     ],
+     "summary": "神职者的施法器：七芒太阳盘引导圣光；随身圣物匣内藏圣徒遗物，增强驱邪。",
+     "xianxia": {
+      "concept": "法器 · 佛珠 / 法铃（参照）"
+     },
+     "visual": "金或银的太阳盘吊坠；小巧的金属匣，侧面有水晶小窗。",
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "欧洲教会",
+       "note": "reliquary 圣物匣"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL07",
+       "role": "使用者"
+      },
+      {
+       "target": "IT18",
+       "role": "内藏"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "item_set",
+      "brief": "Two sacred objects of an original fictional sun faith side by side: a polished gold pendant shaped as a flat engraved sun disc: a solid round disc with exactly seven short triangular rays touching its rim, evenly spaced, and a thin closed inner ring (seven rays, never eight; straight edges, not wavy, not bars) on a heavy chain, and a small gilded reliquary box with four small corner turrets and a rock-crystal window on its side through which a small wrapped bundle is visible; the only ornament on the box is one small seven-rayed sun disc on its lid. No crosses, no other rayed suns."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "relics",
+   "name": "圣物与神器",
+   "intro": "传说级以上：有名字、有历史、常有意志。每部剧最多几件，是剧情的引擎。",
+   "entries": [
+    {
+     "id": "IT18",
+     "name": "圣髑",
+     "name_en": "Holy Relic",
+     "aliases": [
+      "relic",
+      "saint's bone",
+      "舍利"
+     ],
+     "summary": "圣徒的遗骨、遗物或衣物：保存其生前圣光，能治愈、驱邪、成为圣域的锚点。",
+     "xianxia": {
+      "concept": "舍利子（参照）"
+     },
+     "cost": "被亵渎会失效；各方争夺。",
+     "visual": "包在丝绸中的骨片或布片，置于水晶匣中，发出柔光。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "中世纪圣物崇拜",
+       "note": "relics 与朝圣"
+      }
+     ],
+     "relations": [
+      {
+       "target": "HL03",
+       "role": "可作圣域锚"
+      },
+      {
+       "target": "RC15",
+       "role": "克制"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "A small rock-crystal cylinder reliquary mounted on a gilded silver base with a domed lid topped by a tiny seven-rayed sun disc, inside it a small fragment of ancient bone resting on faded crimson silk, the crystal glowing with a soft warm golden light from within."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT19",
+     "name": "认主之剑",
+     "name_en": "The Chosen Sword",
+     "aliases": [
+      "sword in the stone",
+      "named blade",
+      "圣剑"
+     ],
+     "summary": "插在石中或沉在湖底的名剑：只有它选中的人能拔出。剑有记忆与意志，会把前主的技艺传给新主。",
+     "xianxia": {
+      "concept": "本命法宝 / 神兵认主（参照）"
+     },
+     "cost": "剑的意志与前主的执念会影响新主。",
+     "visual": "半没入古石中的长剑，剑身有古老纹饰，被选中者握住时亮起。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "亚瑟王传说",
+       "note": "石中剑与湖中剑"
+      }
+     ],
+     "relations": [
+      {
+       "target": "GR08",
+       "role": "成长方式"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "An ancient longsword driven halfway into a moss-covered grey boulder, its plain cruciform steel hilt wrapped in worn leather, a band of abstract knotwork engraved along the visible blade glowing faintly gold, a shaft of pale light falling on it."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT20",
+     "name": "护命匣",
+     "name_en": "Phylactery (Soul Vessel)",
+     "aliases": [
+      "phylactery",
+      "spirit jar",
+      "魂器"
+     ],
+     "summary": "巫妖或黑暗法师把灵魂封存的容器：只要它完好，主人的身体被毁也能重生。找到并毁掉它是杀死巫妖的唯一方法。",
+     "xianxia": {
+      "concept": "本命魂灯 / 元神寄托之物（参照）"
+     },
+     "cost": "灵魂被分割，人性流失。",
+     "visual": "小巧的金属匣、宝石或骨盒，内有灵魂光在跳动。",
+     "familiarity": "中",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "斯拉夫民间",
+       "note": "把死亡藏在针、蛋、鸭、兔里的不死科谢伊"
+      },
+      {
+       "work": "D&D",
+       "note": "lich phylactery（SRD 5.2 改称 spirit jar）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "RC14",
+       "role": "巫妖核心"
+      },
+      {
+       "target": "DK04",
+       "role": "魔法"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "A small sinister box of blackened silver and yellowed bone, its lid set with a single dark faceted gem, through narrow slits in its sides a pale blue-white soul light pulses like a heartbeat, faint frost forming on the surface beneath it."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT21",
+     "name": "贤者之石",
+     "name_en": "Philosopher's Stone",
+     "aliases": [
+      "lapis philosophorum",
+      "红石"
+     ],
+     "summary": "炼金术的终极成果：能点铅成金、炼成生命之酒。在本库中，它也是灵魂炼成神话阶的物质形态——半神死后可能留下一块。",
+     "xianxia": {
+      "concept": "金丹（外丹）（参照）",
+      "note": "中西平行：外丹的金丹与西方的贤者之石，都是「炼成后可点化万物、使人长生」的终极丹/石。"
+     },
+     "cost": "炼成需要传说级原料，传说常需人命。",
+     "visual": "鸽蛋大小的深红半透明宝石，内部似有流动的光。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲炼金术",
+       "note": "philosopher's stone 与 rubedo"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TR08",
+       "role": "同源位阶"
+      },
+      {
+       "target": "IT04",
+       "role": "用途"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "A single egg-sized deep red translucent stone resting on a small dark iron stand, its interior holding slow swirling currents of ruby and gold light, a tiny lump of lead beside it on the stand turning to gleaming gold where the stone's light touches it."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT22",
+     "name": "试金石",
+     "name_en": "Touchstone (Soul Assay)",
+     "aliases": [
+      "touchstone",
+      "assay",
+      "测灵石"
+     ],
+     "summary": "测量灵魂成色与天赋的黑色石板：滴一滴血在上面划过，痕迹的金属光泽显示成色、亮度显示天赋。源自真实的金匠验金法。多数人的天赋是自己显露的，验石只用于确认，常见于学院招生、教会封圣调查与审判。",
+     "xianxia": {
+      "concept": "测灵石（参照）",
+      "note": "差异：不是入门标配；欧洲叙事里天赋多是自己显露，或被器物选中。"
+     },
+     "visual": "掌心大小的黑色玄武岩板，血痕划过后显出金属光泽的线条。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "古代至中世纪金匠",
+       "note": "touchstone 试金石验金"
+      }
+     ],
+     "relations": [
+      {
+       "target": "GF01",
+       "role": "检测对象"
+      },
+      {
+       "target": "EV01",
+       "role": "相关事件"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "item",
+      "brief": "A palm-sized flat rectangular slab of smooth polished black basalt touchstone on a small wooden stand, across which seven short parallel streaks are drawn, each streak showing a different metallic sheen from left to right: dull grey lead, pale tin, rosy copper, dark iron, liquid mirror quicksilver, bright silver and glowing gold; a single drop of blood beside the last streak."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT23",
+     "name": "无底行囊",
+     "name_en": "Bottomless Bag",
+     "aliases": [
+      "bag of holding",
+      "储物袋"
+     ],
+     "summary": "内部空间远大于外表的口袋或箱子：能装下一屋子的东西，重量不变。被刺破会把里面的东西甩进虚空。",
+     "xianxia": {
+      "concept": "储物袋 / 乾坤袋（参照）"
+     },
+     "cost": "破损即内容物丢失；不能装活物（会窒息）。",
+     "visual": "普通的旧皮包，打开时里面是深不见底的星空般黑暗。",
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "民间故事与 D&D",
+       "note": "装下一切的袋子（D&D 的 bag of holding）"
+      },
+      {
+       "work": "欧洲民间故事",
+       "note": "装下一切的袋子"
+      }
+     ],
+     "relations": [
+      {
+       "target": "SC02",
+       "role": "学派"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "A worn brown leather satchel with brass buckles sitting upright with its flap thrown open, revealing that its opening contains an impossibly deep starry indigo darkness, a few small objects visibly floating and receding far down inside like falling into space."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT24",
+     "name": "真视之镜",
+     "name_en": "Mirror of True Sight",
+     "aliases": [
+      "magic mirror",
+      "scrying mirror",
+      "照妖镜"
+     ],
+     "summary": "能照出真相的魔镜：揭穿伪装与附身、远望他处、回答问题。古镜有自己的性格，只说真话但不一定说全。",
+     "xianxia": {
+      "concept": "照妖镜（参照）"
+     },
+     "cost": "镜中看到的真相无法忘记；有些魔镜会困住照镜人的影子。",
+     "visual": "黑曜石或银镜，镜框雕刻繁复，镜面如水波动。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "格林童话《白雪公主》",
+       "note": "会说真话的魔镜"
+      },
+      {
+       "work": "约翰·迪伊的黑曜石镜",
+       "note": "真实存在的占卜镜（大英博物馆藏）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "SC03",
+       "role": "学派"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "item",
+      "brief": "An oval hand mirror with a heavy ornate frame of tarnished silver carved with twisting vines, its surface of polished black obsidian rippling like disturbed water, faintly reflecting the empty dark room around it plus a ghostly pale human face that is not present in the room."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT25",
+     "name": "圣杯",
+     "name_en": "The Grail",
+     "aliases": [
+      "grail",
+      "holy grail",
+      "丰饶之杯"
+     ],
+     "summary": "传说中的至圣之杯：饮之可治愈一切、赐予长生，或给予配得之人想要的一切。只向纯洁者显现。",
+     "xianxia": {
+      "concept": "不死仙药 / 至宝（参照）"
+     },
+     "cost": "寻找者多死于途中；不配者见之即毁。",
+     "visual": "朴素或华丽的杯，盛满光。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "亚瑟王传说",
+       "note": "圣杯追寻"
+      },
+      {
+       "work": "凯尔特传说",
+       "note": "丰饶之釜"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS02",
+       "role": "相关力量源"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "A simple ancient chalice of hammered gold on a plain stem, standing alone on a bare stone ledge, brimming with liquid light that spills a soft white-gold glow upward and outward, a faint ring of light hovering above its rim."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT26",
+     "name": "诅咒指环",
+     "name_en": "The Cursed Ring",
+     "aliases": [
+      "ring of ruin",
+      "andvaranaut-type ring"
+     ],
+     "summary": "能不断生出黄金的指环，同时给每一个持有者带来厄运与死亡——贪念使人夺它，夺到就开始倒霉。北欧传说中矮人被夺走时下了诅咒的生金指环是其原型。",
+     "xianxia": {
+      "concept": "怀璧其罪的凶器（参照）",
+      "note": "「器物吞噬主人」是欧洲古老母题（如北欧的诅咒指环），本库作为一种道具类型，外观与名字须原创。"
+     },
+     "cost": "持有者及其亲族接连遭遇厄运；丢弃会被别人捡起，诅咒随之转移。",
+     "visual": "扭成蛇形的红金指环，夜里身边总有金屑。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "《伏尔松萨迦》",
+       "note": "安德瓦拉诺特：生金与诅咒"
+      }
+     ],
+     "relations": [
+      {
+       "target": "FL02",
+       "role": "风险"
+      }
+     ],
+     "image": {
+      "version": 3,
+      "purpose": "item",
+      "brief": "Close view of a resting human hand on black stone, wearing on its ring finger a single thin finger ring of twisted red-gold shaped as a plain small serpent (simple snake head, no crest, no horns) coiling twice with its tail in its mouth, a few tiny flakes of raw gold scattered on the stone beside the hand, a faint chill mist curling around. The hand has five normal fingers."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT27",
+     "name": "七里靴",
+     "name_en": "Seven-League Boots",
+     "aliases": [
+      "seven-league boots"
+     ],
+     "summary": "穿上后一步跨越七里格（约二十余公里）的靴子：童话里的神速道具，适合作为信使或逃亡者的标志物。",
+     "xianxia": {
+      "concept": "神行符 / 缩地成寸（参照）"
+     },
+     "cost": "停不下来；不认路的人会一步迈过目的地。",
+     "visual": "旧皮长靴，鞋跟有风纹，走动时脚下留下风痕。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲童话",
+       "note": "佩罗《小拇指》等"
+      }
+     ],
+     "relations": [
+      {
+       "target": "EL04",
+       "role": "相关元素"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "A pair of worn tall brown leather riding boots standing side by side, buckled at the ankle, with small engraved silver wind-swirl plates on the heels, faint streaks of pale wind visibly curling around them and lifting dust from the floor."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT28",
+     "name": "隐身斗篷",
+     "name_en": "Cloak of Invisibility",
+     "aliases": [
+      "tarnkappe",
+      "invisibility cloak"
+     ],
+     "summary": "披上即隐身的斗篷或帽子：北欧与日耳曼传说中的「隐身帽」（Tarnkappe）。",
+     "xianxia": {
+      "concept": "隐身符 / 敛息法宝（参照）"
+     },
+     "cost": "只遮视觉，不遮气味与声音；对真视无效。",
+     "visual": "灰色旧斗篷，边缘像热浪般模糊。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "《尼伯龙根之歌》",
+       "note": "齐格弗里德的隐身斗篷（Tarnkappe）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "SC06",
+       "role": "学派"
+      }
+     ],
+     "image": {
+      "version": 3,
+      "purpose": "item",
+      "brief": "A long plain old grey wool hooded cloak, worn and patched, draped on a headless dressmaker's form; its lower half fades into transparency so the form and background are visible through the fabric, the boundary shimmering like heat haze; no jewels, no silver thread."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT29",
+     "name": "王权器物",
+     "name_en": "Regalia",
+     "aliases": [
+      "crown",
+      "sceptre",
+      "orb"
+     ],
+     "summary": "王冠、权杖与宝球：王权合法性的实物。古老的王权器物会「认」血统，冒名者佩戴时会出异象。",
+     "xianxia": {
+      "concept": "传国玉玺（参照）"
+     },
+     "cost": "失窃即王位动摇。",
+     "visual": "金冠、权杖、带小十字以外标志的宝球（本库用七芒太阳）。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲加冕传统",
+       "note": "crown jewels"
+      }
+     ],
+     "relations": [
+      {
+       "target": "OR11",
+       "role": "所属"
+      }
+     ],
+     "image": {
+      "version": 3,
+      "purpose": "item_set",
+      "brief": "A set of three royal regalia on dark red velvet: a heavy gold crown set with rubies and pearls and decorated only with plain round gold bosses, a long plain gold sceptre topped with a large cabochon ruby, and a smooth gold orb with one band of gems topped with a small ruby finial. No suns, no leaves, no fleur-de-lis, no crosses."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "IT30",
+     "name": "女巫器具",
+     "name_en": "Witch's Tools",
+     "aliases": [
+      "broom",
+      "cauldron",
+      "athame"
+     ],
+     "summary": "扫帚（飞行）、铁锅（熬药与占卜）、黑柄小刀（画圈与收割草药）、黑曜石镜。女巫的身份标志，也是猎巫人搜查的证物。",
+     "xianxia": {
+      "concept": "女修法器（参照）"
+     },
+     "visual": "旧扫帚、黑铁锅、黑柄刀、草药束。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲女巫传说",
+       "note": "飞行扫帚与坩埚"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL20",
+       "role": "使用者"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "item_set",
+      "brief": "A row of witch's tools on dark wooden floorboards: an old twig broom bound with willow, a small plain black iron cauldron on three legs with faint green steam, a bone-handled folding knife, a round black obsidian mirror in a plain wooden frame, and a bundle of dried herbs tied with red thread. No moons, stars or symbols on any object."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "materials",
+   "name": "灵材",
+   "intro": "原料与能源。前几项是欧洲民俗里「真实相信过」的克制之物，全剧通用。",
+   "entries": [
+    {
+     "id": "MT01",
+     "name": "以太晶",
+     "name_en": "Aether Crystal",
+     "aliases": [
+      "mana crystal",
+      "aether crystal"
+     ],
+     "summary": "地脉交汇处生长的结晶：储存魔力，可为法阵与器物供能、为施法者补充魔力。稀有、被王国与教会垄断，是战略资源而不是货币——西幻的财富仍是金币、土地与圣物。",
+     "xianxia": {
+      "concept": "灵石（参照）",
+      "note": "差异：不当货币、不能批量开采；每一块大晶都有来历与主人。"
+     },
+     "cost": "开采引发地脉枯竭与纷争；用尽即成灰白碎石。",
+     "visual": "透明带淡紫与蓝的六棱晶簇，内部有缓慢流动的光。",
+     "familiarity": "中",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "古典哲学",
+       "note": "以太作为第五元素（名称来源）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PL10",
+       "role": "产地"
+      },
+      {
+       "target": "PS01",
+       "role": "能源"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "A cluster of tall clear hexagonal crystals growing from a chunk of dark rock, the crystals tinted pale violet and blue with slow currents of light drifting inside them, beside the cluster a small pile of cut and polished crystal shards like coins."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "MT02",
+     "name": "银",
+     "name_en": "Silver",
+     "aliases": [
+      "silver"
+     ],
+     "summary": "纯洁之金属：灼伤狼人、吸血鬼、亡灵与部分恶魔，银器可试毒。猎魔人与审判官的标配。",
+     "xianxia": {
+      "concept": "辟邪之物（参照）"
+     },
+     "visual": "银剑、银弹、银粉、银链。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲民俗",
+       "note": "银克狼人与邪物"
+      }
+     ],
+     "relations": [
+      {
+       "target": "RC13",
+       "role": "克制"
+      },
+      {
+       "target": "RC15",
+       "role": "克制"
+      }
+     ],
+     "image": {
+      "purpose": "item_set",
+      "brief": "A row of silver anti-monster equipment on dark cloth: a short silver dagger with a bright blade, a handful of cast silver musket balls, a small glass vial of fine silver powder, and a coiled length of fine silver chain."
+     },
+     "adoption": "locked",
+     "basis": "tradition"
+    },
+    {
+     "id": "MT03",
+     "name": "冷铁",
+     "name_en": "Cold Iron",
+     "aliases": [
+      "cold iron",
+      "锻铁"
+     ],
+     "summary": "未经魔法熔炼的生铁或锻铁：灼伤妖精，打断魔法，马蹄铁挂门上可挡妖精。",
+     "xianxia": {
+      "concept": "破法之物（参照）"
+     },
+     "visual": "粗糙黑铁、马蹄铁、铁钉。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "英国与爱尔兰民俗",
+       "note": "cold iron 驱妖精"
+      }
+     ],
+     "relations": [
+      {
+       "target": "RC09",
+       "role": "克制"
+      },
+      {
+       "target": "GF08",
+       "role": "同源天赋"
+      }
+     ],
+     "image": {
+      "purpose": "item_set",
+      "brief": "A row of rough unpolished black wrought-iron objects on dark wood: an old horseshoe, a few hand-forged square nails, a heavy iron key, and a crude iron knife with a dark hammered blade, faint wisps of pale smoke curling away from them as if repelling something."
+     },
+     "adoption": "locked",
+     "basis": "tradition"
+    },
+    {
+     "id": "MT04",
+     "name": "山铜",
+     "name_en": "Orichalcum",
+     "aliases": [
+      "orichalcum",
+      "亚特兰蒂斯之金"
+     ],
+     "summary": "柏拉图记载的亚特兰蒂斯神秘金属，红金色、几乎与金同贵。本库定为最适合附魔的金属，能长期承载灵魂缔结。",
+     "xianxia": {
+      "concept": "炼器神金（参照）"
+     },
+     "visual": "带火光的红金色金属，在光下有珠光。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "柏拉图《克里提亚斯》",
+       "note": "亚特兰蒂斯的 orichalcum"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CF02",
+       "role": "用途"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "item",
+      "brief": "A small stack of three cast metal ingots with crisp molded edges and a fiery red-gold metallic color with a pearly sheen, one ingot polished to a mirror finish showing reflections, resting on dark stone; clearly smooth cast metal."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "MT05",
+     "name": "精金",
+     "name_en": "Adamant",
+     "aliases": [
+      "adamant",
+      "adamantine",
+      "不破之金"
+     ],
+     "summary": "希腊语「不可征服」之意，传说中最坚硬的物质。本库定为极难锻造的灰黑金属，打成的甲胄几乎无法刺穿。",
+     "xianxia": {
+      "concept": "玄铁 / 金刚（参照）"
+     },
+     "visual": "暗灰带蓝的金属，几乎不反光。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "希腊神话",
+       "note": "adamas：克洛诺斯的镰刀"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CF02",
+       "role": "用途"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "A single rough dark grey metal ingot with a faint blue sheen, almost non-reflective, its surface showing a crystalline grain, a chipped ordinary steel chisel lying beside it as if it failed to scratch it."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "MT06",
+     "name": "龙之遗材",
+     "name_en": "Dragon Materials",
+     "aliases": [
+      "dragonscale",
+      "dragon's blood",
+      "draconite"
+     ],
+     "summary": "龙鳞（甲胄）、龙血（沐浴可刀枪不入，饮用可通鸟语）、龙骨（法杖）、龙脑石（普林尼记载：须趁龙睡着时斩首、从龙脑中取出，否则石即失效）。",
+     "xianxia": {
+      "concept": "龙族遗蜕 / 妖兽材料（参照）"
+     },
+     "cost": "取材需屠龙；龙族会追讨。",
+     "visual": "巨大的熔金色鳞片、一瓶暗红发光的血、一颗深色宝石。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "《尼伯龙根之歌》",
+       "note": "龙血沐浴"
+      },
+      {
+       "work": "老普林尼《博物志》卷 37",
+       "note": "draconitis / dracontias 龙脑石"
+      }
+     ],
+     "relations": [
+      {
+       "target": "RC10",
+       "role": "来源"
+      },
+      {
+       "target": "GR10",
+       "role": "相关成长"
+      }
+     ],
+     "image": {
+      "purpose": "item_set",
+      "brief": "A row of dragon materials on dark stone: a single huge shield-sized overlapping scale with a molten bronze-gold sheen, a stoppered glass vial of dark glowing red blood, a curved ivory-white claw, and a lustrous deep-red faceted gem set in a rough lump of bone."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "MT07",
+     "name": "凤凰羽",
+     "name_en": "Phoenix Feather",
+     "aliases": [
+      "phoenix feather"
+     ],
+     "summary": "浴火重生之鸟的羽毛：永不熄灭的余温，可做杖芯、治愈灼伤、点燃永燃之火。",
+     "xianxia": {
+      "concept": "凤羽（参照）",
+      "note": "西方凤凰（希腊-埃及传说）核心是「死后从灰烬中重生」，与中国凤凰的祥瑞意象不同。"
+     },
+     "visual": "赤金长羽，羽尖有火星不断闪烁。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "希腊与埃及传说",
+       "note": "phoenix 浴火重生"
+      }
+     ],
+     "relations": [
+      {
+       "target": "BS06",
+       "role": "来源"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "A single long feather of brilliant crimson and gold lying on dark cloth, its vane shimmering like embers, the tip continuously sparking with tiny flickering flames that do not burn the cloth beneath."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "MT08",
+     "name": "独角兽角",
+     "name_en": "Unicorn Horn (Alicorn)",
+     "aliases": [
+      "alicorn",
+      "unicorn horn"
+     ],
+     "summary": "中世纪欧洲贵族真金白银收藏的「独角兽角」（实为独角鲸牙），相信能解一切毒。本库定为最强的解毒与净化材料，取自自愿赠予者才有效。",
+     "xianxia": {
+      "concept": "解毒灵材（参照）"
+     },
+     "cost": "强取者被诅咒；独角兽极少。",
+     "visual": "螺旋纹的珍珠白长角，微微发光。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "中世纪药学与收藏",
+       "note": "alicorn 解毒传说"
+      }
+     ],
+     "relations": [
+      {
+       "target": "BS05",
+       "role": "来源"
+      },
+      {
+       "target": "IT03",
+       "role": "用途"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "A single long spiraled pearl-white horn about an arm's length, lying on dark velvet, its surface softly luminous with a faint opalescent sheen, a small silver goblet beside it."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "MT09",
+     "name": "曼德拉草",
+     "name_en": "Mandrake",
+     "aliases": [
+      "mandragora",
+      "mandrake root"
+     ],
+     "summary": "根部形似人形的魔药草：拔出时的尖叫能致人死亡。是麻醉、催眠、爱情魔药与生命之酒的原料。",
+     "xianxia": {
+      "concept": "人形参 / 灵草（参照）"
+     },
+     "cost": "采摘需特殊方法（传说用狗来拔）。",
+     "visual": "带泥的人形根，叶片宽大。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "中世纪草药书",
+       "note": "mandrake 尖叫传说"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CF01",
+       "role": "用途"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "A freshly uprooted mandrake plant lying on dark soil-stained wood: broad dark green leaves and a pale knobbly root shaped unsettlingly like a small human figure with arm-like and leg-like forks, clumps of earth still clinging to it."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "MT10",
+     "name": "狼毒草",
+     "name_en": "Wolfsbane",
+     "aliases": [
+      "aconite",
+      "monkshood",
+      "附子"
+     ],
+     "summary": "开深紫色兜帽形花的剧毒植物：对狼人是毒药，少量可抑制变形。猎狼人常备。",
+     "xianxia": {
+      "concept": "克妖灵草（参照）"
+     },
+     "cost": "对人同样剧毒。",
+     "visual": "深紫色兜帽状花穗。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲民俗与植物学",
+       "note": "aconite 与狼"
+      }
+     ],
+     "relations": [
+      {
+       "target": "RC13",
+       "role": "克制"
+      }
+     ],
+     "image": {
+      "purpose": "item",
+      "brief": "A cut stem of wolfsbane laid on dark wood: a tall spike of deep violet hood-shaped flowers and dark green deeply-lobed leaves, beside it a small mortar and pestle containing crushed purple petals and a corked vial of violet tincture."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "MT11",
+     "name": "圣水与盐",
+     "name_en": "Holy Water & Salt",
+     "aliases": [
+      "holy water",
+      "blessed salt"
+     ],
+     "summary": "被祝福的水与盐：灼伤亡灵与恶魔，撒成线可阻挡邪物越过。最便宜、最普及的驱邪材料。",
+     "xianxia": {
+      "concept": "符水 / 镇邪之物（参照）"
+     },
+     "visual": "玻璃或锡瓶中的清水、粗盐袋。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲教会与民俗",
+       "note": "holy water、盐线"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL09",
+       "role": "使用者"
+      },
+      {
+       "target": "RC14",
+       "role": "克制"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "item_set",
+      "brief": "A row of protective consumables: a small pewter flask stamped with a flat engraved sun disc: a solid round disc with exactly seven short triangular rays touching its rim, evenly spaced, and a thin closed inner ring (seven rays, never eight; straight edges, not wavy, not bars), a clear glass vial of water with a faint golden shimmer, a coarse linen pouch spilling white rock salt, and a straight unbroken line of salt poured across dark floorboards."
+     },
+     "adoption": "locked",
+     "basis": "tradition"
+    },
+    {
+     "id": "MT12",
+     "name": "兽石",
+     "name_en": "Bezoar & Beast-stones",
+     "aliases": [
+      "bezoar",
+      "toadstone",
+      "draconite"
+     ],
+     "summary": "生物体内凝结的奇石：真实的胃石（bezoar，多取自野山羊）是 16–17 世纪王侯珍奇柜里的解毒珍藏，传说蟾蜍头中有蟾石。本库定为：少数传说生物体内偶然形成的稀有之物，各物各效（解毒、预警、通灵），不能量产，也不是力量储存核心。",
+     "xianxia": {
+      "concept": "妖丹（参照，差异很大）",
+      "note": "差异：不是每只怪都有、不能吞服涨修为；更像珍稀药材与护符。"
+     },
+     "cost": "真伪难辨，市面多赝品。",
+     "visual": "表面粗糙、内部有生物本色光芒的石块。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "维也纳艺术史博物馆、伦敦博物馆藏品",
+       "note": "镶嵌的胃石与蟾石"
+      },
+      {
+       "work": "莎士比亚《皆大欢喜》",
+       "note": "蟾蜍头中的宝石"
+      }
+     ],
+     "relations": [
+      {
+       "target": "IT03",
+       "role": "用途"
+      },
+      {
+       "target": "MT06",
+       "role": "同类"
+      }
+     ],
+     "image": {
+      "purpose": "item_set",
+      "brief": "Four rough oval stones of different sizes in a row on dark cloth, each with a cracked mineral crust through which a different inner glow shows: dull amber, venom green, frost blue and a large one glowing deep crimson like a heartbeat."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  }
+ ]
+}
