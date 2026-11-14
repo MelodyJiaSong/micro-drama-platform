@@ -1,0 +1,499 @@
+{
+  "at": "2026-10-31T10:51:39.339932+08:00",
+  "status": "in_progress_not_deliverable",
+  "scope": "59 类建筑与常驻 NPC；英雄、绑定和动画后续；不用 Hyper3D；用户已允许 DINOv3。",
+  "followup": 297,
+  "acceptance": "59/59 类已有完整候选，1/59 类通过；以 current_status.json 实时扫描为准。",
+  "runtime": {
+    "service": "ComfyUI 8188，TRELLIS.2 本地 GPU 建模",
+    "batch": "59/59 类候选生成完成，队列为空；本任务 Comfy 服务与模型 worker 已停止释放内存，仍须单体修复与整图验收。",
+    "collectors": [],
+    "quality_diagnosis": "单视图参数对照均未通过；已验证并修正导出法线多转 90° 的错误。",
+    "merchant_baseline": "m300:r01 原始单视图候选保留的整体细节优于若干局部重建版本。禁止把 r13 的人脸重建自动认定为改进。",
+    "legacy_repairs": "旧候选九项修正与重新检查已结束；均未通过精细外观检查，具体以 legacy_normal_repairs.json 为准。",
+    "timeout_repair": "仅本任务 launcher 将 TRELLIS2 节点等待上限改为 3600 秒；bg21:r01 的 600 秒超时记录保留，r02 已成功生成。",
+    "manual_revision_files": {
+      "m1:r25": {
+        "authoring_saved": true,
+        "author_preview_saved": true,
+        "inspection_complete": true,
+        "review": "fail"
+      },
+      "bg23:r37": {
+        "authoring_saved": true,
+        "author_preview_saved": false,
+        "inspection_complete": false,
+        "review": "pending"
+      },
+      "m21:r11": {
+        "authoring_saved": true,
+        "author_preview_saved": true,
+        "inspection_complete": false,
+        "review": "pending"
+      },
+      "m26:r11": {
+        "authoring_saved": true,
+        "author_preview_saved": true,
+        "inspection_complete": false,
+        "review": "pending"
+      },
+      "m303:r09": {
+        "authoring_saved": false,
+        "author_preview_saved": false,
+        "inspection_complete": false,
+        "review": "pending"
+      }
+    },
+    "generation_inspection_overlap": {
+      "enabled": true,
+      "evidence": [
+        {
+          "asset": "m301",
+          "prompt_id": "89bdfa6c-3357-4ac0-805a-a32a316757c9",
+          "status": "generated_pending_review",
+          "in_queue": false,
+          "inspection_saved": false,
+          "inspection_log_exists": true
+        },
+        {
+          "asset": "m302",
+          "prompt_id": "e3a9ce15-2d8d-433b-b3f4-b8020cf29da5",
+          "status": "queued",
+          "in_queue": true,
+          "inspection_saved": false,
+          "inspection_log_exists": false
+        }
+      ],
+      "scope": "One next GPU request overlaps current CPU inspection. Existing receipts are reused; current m301 prompt ID remained unchanged through restart."
+    },
+    "task_comfy_server": "stopped_after_empty_queue_and_all_candidates_saved",
+    "latest_water_audit": "environment_v031_water_footprint_audit.json",
+    "rock_diagnosis": "原低机位薄片来自缩小的直立岩壁，最低点入土 6–8 cm；v027 起替换为低矮碎石，作者确认外观改善。",
+    "rejected_environment_trial": "v028 缺失源湿点 161 个，禁止合入；v029 恢复源湿点约束，v030 继承其几何并已核对实际水面覆盖。",
+    "asset_coverage": "v020 装配报告确认 52 类实际实例化；剩余 7 类为不同原始野怪组合的替代项。m309 依据资产卡属于 bg12 右侧木平台，已实测局部落点并查看整体、正面、脚部三视图。",
+    "camp_diagnostic": "K8 RAO 一大两小，导航抽样 0 失败；原斜视图被树木挡住，补俯视后确认无互相重叠、大小与灰色变体可区分。模型和完整足部碰撞仍未验收。",
+    "organic_pbr_diagnosis": "m303/m26 贴图金属通道中位数分别约 0.263/0.149；仅做两个资产的非金属材质对照，未批量改写其他模型。",
+    "metric_terrain_trial": "v032 已保存并查看全景，源 885 湿点缺失 0、额外 41、3 个水下粗格没有水面。v033 已软化岸线并修正三条沿用旧水位的湿岸着色分支，全景和河岸近景均已查看；崖壁过平、石块串列和边界仍未合格。新版本尚未并入整图。",
+    "map_resume": "原 88 GiB 门槛持续等待；确认自有等待进程无渲染锁后停止，改以 84 GiB 起始门槛及 1024 纹理上限渲染已保存文件。源几何和贴图不改写；需检查输出和内存。",
+    "cliff_relief_trial": "v034 细分岩面数组已准备，原地形及导航几何不变；位移最大 .54364 m，源点距保护通路至少 1.6 m，不代表新表面的实际净距。等待 v021 预览结束后运行。",
+    "latest_author_evidence": ".audit\\adhoc_agents\\2026-10-27\\dota-local-3d-287\\manual_work_r26.json",
+    "pending_trials": {
+      "map_pipeline_pid": 36936
+    },
+    "local_texture_trial": {
+      "status": "not_submitted_auto_approval_rejected_launch",
+      "installed_stablegen": "C:/Users/light/AppData/Roaming/Blender Foundation/Blender/5.2/extensions/user_default/stablegen",
+      "available_models": [
+        "flux-2-klein-base-4b-fp8.safetensors",
+        "qwen_3_4b.safetensors",
+        "flux2-vae.safetensors"
+      ],
+      "local_server_pid": 25220,
+      "server_state": "stopped_after_verified_empty_queue",
+      "first_attempt": "Connection refused before object_info; server startup incomplete; no prompt submission and no request receipt. Logs preserved.",
+      "retry": "Execution command to relaunch trial was rejected by automatic approval review: blocked by policy. No more specific reason returned. No bypass or alternate submission.",
+      "script": "trial_gateway_local_texture.py",
+      "official_settings_source": "https://github.com/black-forest-labs/flux2/blob/main/README.md"
+    },
+    "map_memory": {
+      "at_diagnosis": "2026-10-29T10:46:00+08:00",
+      "physical_available_gib": 85.55,
+      "system_commit_gib": 287.03,
+      "system_commit_limit_gib": 338.46,
+      "other_process": {
+        "name": "openweb",
+        "pid": 13652,
+        "private_commit_gib": 258.66,
+        "working_set_gib": 19.31,
+        "owned_by_this_task": false,
+        "action": "No termination. User confirmation pending via async question."
+      },
+      "failure": "v022 Map_Overview Cycles allocation failed with about 38GB allocated; original failed render log preserved.",
+      "guard_fix": "map_render_slot now requires both physical and available commit headroom; current commit ~50 GiB correctly holds 84 GiB render.",
+      "official_source": "https://learn.microsoft.com/windows/win32/api/sysinfoapi/ns-sysinfoapi-memorystatusex"
+    },
+    "map_lod": {
+      "version": "overview_v004",
+      "method": "先按 1e-6 局部单位焊接精确重合顶点，保护所有开口/非流形顶点为零权重，再对内部减面；清除旧自定义法线。",
+      "trial": "m304 从 2979121 面到 1134063 面，双向表面抽样 90% 偏差 0.61 mm；实际前后图已看，碎裂消失，可作地图远景预览；不是精细模型验收。",
+      "trial_check": {
+        "path": "ai_videos\\dota_yingxiong\\2_世界观人设\\background\\map_3d\\lod_libraries\\overview_v004\\m304\\comparison_author_check.json",
+        "sha256": "7fc7d3c0b7058d34f394da019923cc3906bc7bf31885b19b4ef87c5a96390de4"
+      },
+      "fallback": "bg12 布幔产生三角色块，已记录拒绝。新地图 remap 遇到拒绝的家族自动保留原始高模库。",
+      "batch_snapshot": {
+        "started": "2026-10-30T08:24:21.755663+08:00",
+        "status": "building_map_preview_libraries_not_quality_acceptance",
+        "source_map": "assembly_working_v022.blend",
+        "workers": 2,
+        "assets": {
+          "bg2": {
+            "status": "geometry_unchanged",
+            "faces_before": 27376,
+            "faces_after": 27376
+          },
+          "bg3": {
+            "status": "geometry_unchanged",
+            "faces_before": 224485,
+            "faces_after": 224485
+          },
+          "bg12": {
+            "status": "candidate_pending_visual_check",
+            "faces_before": 978825,
+            "faces_after": 251513
+          },
+          "bg15": {
+            "status": "geometry_unchanged",
+            "faces_before": 116582,
+            "faces_after": 116582
+          },
+          "bg16": {
+            "status": "candidate_pending_visual_check",
+            "faces_before": 987872,
+            "faces_after": 248921
+          },
+          "bg17": {
+            "status": "candidate_pending_visual_check",
+            "faces_before": 983644,
+            "faces_after": 249623
+          },
+          "bg18": {
+            "status": "candidate_pending_visual_check",
+            "faces_before": 942530,
+            "faces_after": 249427
+          },
+          "bg19": {
+            "status": "candidate_pending_visual_check",
+            "faces_before": 979961,
+            "faces_after": 249931
+          },
+          "bg20": {
+            "status": "candidate_pending_visual_check",
+            "faces_before": 970390,
+            "faces_after": 249480
+          },
+          "bg21": {
+            "status": "candidate_pending_visual_check",
+            "faces_before": 984993,
+            "faces_after": 249761
+          },
+          "bg22": {
+            "status": "candidate_pending_visual_check",
+            "faces_before": 933774,
+            "faces_after": 249666
+          },
+          "bg23": {
+            "status": "candidate_pending_visual_check",
+            "faces_before": 616019,
+            "faces_after": 321795
+          },
+          "bg25": {
+            "status": "candidate_pending_visual_check",
+            "faces_before": 974244,
+            "faces_after": 249972
+          },
+          "bg26": {
+            "status": "failed",
+            "returncode": 1
+          },
+          "bg27": {
+            "status": "candidate_pending_visual_check",
+            "faces_before": 981305,
+            "faces_after": 249841
+          },
+          "bg28": {
+            "status": "candidate_pending_visual_check",
+            "faces_before": 941821,
+            "faces_after": 249893
+          },
+          "bg29": {
+            "status": "candidate_pending_visual_check",
+            "faces_before": 968049,
+            "faces_after": 249931
+          },
+          "bg30": {
+            "status": "candidate_pending_visual_check",
+            "faces_before": 957199,
+            "faces_after": 249875
+          },
+          "bg31": {
+            "status": "waiting_memory",
+            "required_physical_and_commit_gib": 24
+          },
+          "bg32": {
+            "status": "waiting_memory",
+            "required_physical_and_commit_gib": 24
+          }
+        },
+        "updated": "2026-10-30T08:38:23.936956+08:00"
+      },
+      "source_map": "Pinned v022 source libraries; does not silently adopt later r47/r49 author trials."
+    },
+    "map_lod_latest": {
+      "comparisons": {
+        "bg12": "rejected_banner_texture_distortion",
+        "bg16": "usable_for_map_preview",
+        "bg17": "usable_for_map_preview",
+        "bg18": "usable_for_map_preview",
+        "bg19": "usable_for_map_preview",
+        "bg20": "usable_for_map_preview",
+        "bg21": "usable_for_map_preview",
+        "bg22": "rejected_visual_regression",
+        "bg23": "usable_for_map_preview",
+        "bg25": "usable_for_map_preview",
+        "bg27": "usable_for_map_preview",
+        "bg28": "usable_for_map_preview",
+        "bg29": "usable_for_map_preview",
+        "bg30": "usable_for_map_preview",
+        "bg31": "rejected_visual_regression",
+        "bg32": "usable_for_map_preview",
+        "bg33": "usable_for_map_preview",
+        "bg36": "usable_for_map_preview",
+        "bg37": "usable_for_map_preview",
+        "m1": "rejected_visual_regression",
+        "m2": "usable_for_map_preview",
+        "m3": "rejected_visual_regression",
+        "m304": "usable_for_map_preview",
+        "m4": "rejected_visual_regression"
+      },
+      "repair": "bg26 failed because modifier_apply rejected shared mesh data. Builder now copies for modifier application then restores shared instance references. Syntax checked; Blender runtime validation pending resource availability. Old waiting batch 30356 stopped and resumed as 9896; completed libraries preserved.",
+      "memory": "Last measured physical free 92.51 GiB / commit free 23.52 GiB. 24 GiB batch threshold unmet. openweb not stopped; explicit permission question still unanswered."
+    },
+    "bounded_continuation": {
+      "at": "2026-10-31T10:51:39.339932+08:00",
+      "followup": 297,
+      "status": "partial_not_deliverable",
+      "accepted_fine_families": 1,
+      "total_families": 59,
+      "lod_decisions": {
+        "bg12": "rejected_banner_texture_distortion",
+        "bg15": "geometry_unchanged",
+        "bg16": "usable_for_map_preview",
+        "bg17": "usable_for_map_preview",
+        "bg18": "usable_for_map_preview",
+        "bg19": "usable_for_map_preview",
+        "bg2": "geometry_unchanged",
+        "bg20": "usable_for_map_preview",
+        "bg21": "usable_for_map_preview",
+        "bg22": "rejected_visual_regression",
+        "bg23": "usable_for_map_preview",
+        "bg25": "usable_for_map_preview",
+        "bg26": "rejected_visual_regression",
+        "bg27": "usable_for_map_preview",
+        "bg28": "usable_for_map_preview",
+        "bg29": "usable_for_map_preview",
+        "bg3": "geometry_unchanged",
+        "bg30": "usable_for_map_preview",
+        "bg31": "rejected_visual_regression",
+        "bg32": "usable_for_map_preview",
+        "bg33": "usable_for_map_preview",
+        "bg36": "usable_for_map_preview",
+        "bg37": "usable_for_map_preview",
+        "m1": "rejected_visual_regression",
+        "m10": "usable_for_map_preview",
+        "m11": "usable_for_map_preview",
+        "m12": "usable_for_map_preview",
+        "m13": "usable_for_map_preview",
+        "m14": "usable_for_map_preview",
+        "m15": "usable_for_map_preview",
+        "m16": "rejected_visual_regression",
+        "m17": "usable_for_map_preview",
+        "m18": "rejected_visual_regression",
+        "m19": "rejected_visual_regression",
+        "m2": "usable_for_map_preview",
+        "m20": "rejected_visual_regression",
+        "m21": "usable_for_map_preview",
+        "m22": "usable_for_map_preview",
+        "m23": "usable_for_map_preview",
+        "m24": "usable_for_map_preview",
+        "m25": "usable_for_map_preview",
+        "m26": "rejected_visual_regression",
+        "m3": "rejected_visual_regression",
+        "m300": "rejected_visual_regression",
+        "m301": "rejected_visual_regression",
+        "m302": "usable_for_map_preview",
+        "m303": "rejected_visual_regression",
+        "m304": "usable_for_map_preview",
+        "m305": "usable_for_map_preview",
+        "m306": "geometry_unchanged",
+        "m307": "rejected_visual_regression",
+        "m308": "rejected_visual_regression",
+        "m309": "rejected_visual_regression",
+        "m4": "rejected_visual_regression",
+        "m5": "usable_for_map_preview",
+        "m6": "usable_for_map_preview",
+        "m7": "rejected_visual_regression",
+        "m8": "rejected_visual_regression",
+        "m9": "usable_for_map_preview"
+      },
+      "lod_counts": {
+        "rejected_banner_texture_distortion": 1,
+        "geometry_unchanged": 4,
+        "usable_for_map_preview": 35,
+        "rejected_visual_regression": 19
+      },
+      "all_library_faces_before": 91988205,
+      "all_library_faces_after_latest_visual_fallbacks": 52942852,
+      "map_state_snapshot": {
+        "status": "running_render_map_check.py",
+        "map": "assembly_working_v022_lod_v004.blend",
+        "lod_version": "overview_v004",
+        "quality": "DRAFT_PREVIEW_NOT_ACCEPTED",
+        "at": "2026-10-31T10:50:37.350351+08:00",
+        "child_pid": 17356,
+        "unique_faces": 72203588,
+        "base_buffer_estimate_gib": 6.642
+      },
+      "pipeline_pid": 36936,
+      "map_saved": true,
+      "map_report_sha256": "056f6336f45b6885f772e73a3f81c853defe28038880140c428f082a8aef6d86",
+      "unloaded_alternative_families": [
+        "m23",
+        "m26",
+        "m9",
+        "m10",
+        "m25",
+        "m12",
+        "m11"
+      ],
+      "policy": "Per asset/step 20 minute maximum; resource wait 2 minutes; only own process terminated. Skip failed camera and continue. Unreviewed or rejected LOD uses original. Whole-map save/profile are dependencies; failures preserve partial output.",
+      "validation": {
+        "AST": [
+          "build_map_lod_batch.py",
+          "finish_map_lod_preview.py",
+          "save_map_with_lod_libraries.py"
+        ],
+        "runtime": "Shared-mesh bg26 generation succeeded, but LOD visual result rejected. New map save succeeded after allowing only audited unused camp alternatives to be absent. Reopen/render pipeline remains in progress."
+      },
+      "limitations": [
+        "Visual comparison is a single studio perspective, not independent fine asset QC.",
+        "Latest per-asset decisions may postdate the saved map selection; its report pins actual chosen libraries.",
+        "Full map visual acceptance still pending."
+      ]
+    }
+  },
+  "assets": {
+    "bg23": {
+      "authoring": "r49 石框 UV 已补，作者图已看；完整独立审稿仍 fail 4：根网不可见、水晶像规则镜片、土壤硬边、植被稀疏。",
+      "candidate": "r49 未验收，仍需返工。",
+      "changes": "重建粗轴、宽扁弯臂、C 弧、开放问号顶钩；扫描树皮贴地根网；实际布尔凹刻石带。",
+      "remaining": "自然根形、树皮与土壤接地、钩端投影与托座连接；其他细化项保留。"
+    },
+    "m306": {
+      "authoring": "r22 关闭降噪、提高至 96 采样与 64 透明反弹；全视角检查完成。",
+      "candidate": "r22 独立审查 pass，阻断项 0；r22 平移实例检查 pass",
+      "verification": "r16 原点与地图坐标实例检查通过，RMSE 0.00330，平均亮度变化 0.047%；独立外观检查待完成。",
+      "changes": "光尾下垂 11 cm，逐渐收细的独立光尘，弱体积光；更大的体积容器避免截断；17 W 地面柔光。",
+      "remaining": "非阻断改进包括光丝弯曲、尘粒尺寸与光斑柔化；成片镜头须提高采样或可控降噪。v007 实际地图日光近景已由作者检查，位置、可见性和悬浮接地正常；整图独立检查仍待完成。"
+    },
+    "m300": {
+      "authoring": "r16：从 r08 精修版修正已验证的法线错误",
+      "candidate": "r16 fail",
+      "remaining": "披风错色、闭眼、胡须形状、手部熔化；法线修正不能替代几何修复。"
+    },
+    "bg15": {
+      "authoring": "r08 preview only",
+      "candidate": "r05 fail",
+      "remaining": "水体深度与透明感不足，瀑布过于规整，后部岩石接缝仍需处理。"
+    },
+    "bg3": {
+      "authoring": "r04 preview only",
+      "candidate": "r02 fail",
+      "remaining": "冰晶过于规则透明，盔甲过于简化，积雪重复。"
+    },
+    "bg2": {
+      "authoring": "r06 preview only",
+      "candidate": "r03 fail",
+      "remaining": "树根表皮、枝干形体和树冠真实感不足。"
+    },
+    "m4": {
+      "authoring": "r17 按当前网格修正牙齿颜色、扩宽下颌；r18 填补 20 个局部肩部边界环。",
+      "candidate": "r15 fail",
+      "remaining": "r16 平涂试验拒绝；r18 最大肩部薄片仍存在，尚未转为完整候选；布料融化和毛发轮廓仍需修复。"
+    },
+    "bg12": {
+      "candidate": "r08 fail：有真实草纤维、独立招牌与石板，但草顶像假发、布幔错色、竹结构熔化。",
+      "comparison": "r02/r03/r04 单/多视图参数对照均 fail。",
+      "authoring": "r09 作者预览拒绝：重建分层草顶试验过于规整，删除旧布面造成缺口；禁止作为新地图候选。"
+    },
+    "bg17": {
+      "candidate": "r02 fail",
+      "review": "法线修正后仍有叶片与树干熔化。"
+    },
+    "bg18": {
+      "candidate": "r02 fail"
+    },
+    "bg19": {
+      "candidate": "r02 fail",
+      "normal_repair": "已完成，几何仍需重建"
+    },
+    "bg20": {
+      "candidate": "r01 complete",
+      "normal_repair": "新检查已自动处理"
+    },
+    "bg21": {
+      "candidate": "r02 complete",
+      "prior_failure": "r01 failed at node 21 after 600 seconds",
+      "retry": "r02 succeeded using task-only 3600 second timeout"
+    },
+    "bg22": {
+      "candidate": "r01 complete"
+    },
+    "bg25": {
+      "candidate": "r01 fail",
+      "remaining": "泉水背部呈切平薄壳，需闭合岩石与水体重建。"
+    },
+    "bg26": {
+      "candidate": "r12 fail，8 个阻断项",
+      "authoring": "r08 修正 closure 警告；r09–r12 贯通骨肋、骨爪和横向板缝的补建均未达到外观标准。",
+      "remaining": "晶体照明和内部结构不足、铜绿楼梯缺失、骨肋塑料感、塔顶熔化、凸出钢丝状板缝、针状骨爪和截平弯牙。",
+      "component_source": "environment_sources/blender_human_base_meshes/skull_provenance.json，官方 LFS SHA256 已核对。"
+    },
+    "m1": {
+      "candidate": "r25 独立 fail 8，较 r24 fail 5 回退；工作图已按哈希固定 r24。",
+      "authoring": "r25 作者已查看正面与冠部；整体归一化使体躯变细，冠形和叶面高光仍不合格。",
+      "remaining": "体躯深度、粗壮比例、枝系连接与自然树冠、灰褐树皮和地衣苔藓分布。",
+      "diagnosis": "r11/r16 原始 GLB 相同；1024 重建减少开口但非流形未清零。r22 已有曲线逐点半径渐变，检查导出已补充半径范围；这不证明外观合格。"
+    },
+    "m5": {
+      "candidate": "r03 fail；接地已修复，材质与几何仍不合格",
+      "authoring": "r05 眼光移入眼部、皮肤遮罩软化、金色限定腰饰；脸部已查看，胡须仍像笔刷，眼光覆盖闭合眼皮，未转完整候选。",
+      "remaining": "眼部几何、自然胡须、金边准确覆盖、骨链与斗篷、手部。"
+    },
+    "m7": {
+      "candidate": "r01 fail",
+      "authoring": "r02 作者预览拒绝：紫岩改善，但晶刺过规整且有悬浮碎片，脸光像贴上去的波浪线。"
+    },
+    "m8": {
+      "candidate": "r01 fail",
+      "authoring": "r02 作者检查接地修复有效；仍未完整检查，毛发、配色、蜡烛与五官未修。"
+    },
+    "m16": {
+      "candidate": "r05 fail，8 个阻断项；r01 fail 3 项",
+      "authoring": "r02 材质硬边、r03 切开面颊、r04 牙变成楔形均作者拒绝。r05 保留原拓扑局部转向缩短长牙，暖化皮肤和磨损三角纹；独立审稿未通过。",
+      "remaining": "其他獠牙仍褐色、侧牙朝向、角上皮肤斑点、熔化兽皮、右脸封闭、旧纹样残迹、白毛状伤疤、蜡感皮肤。"
+    },
+    "m21": {
+      "candidate": "r03 独立检查 fail，12 个阻断项",
+      "authoring": "r10 从 r03 修正额头皮革遮罩，白毛头部恢复。r11 烘焙原材质颜色并以 4 mm 体素封闭表面：开口边与非流形边均为 0，作者已查看全身与脸部；嘴部被磨钝、披篷发蜡，尚未转完整候选。",
+      "remaining": "头部比例、嘴与牙、颈部薄片、披篷材质和木杆、体态；拓扑封闭不代表外观通过。"
+    },
+    "m26": {
+      "candidate": "r13 完整独立 fail 7；r14/r15 尚未独立审稿。",
+      "authoring": "r14/r15 眼部改进已看，r15 侧面竖瞳可读；背刺凹坑、碎丝和近景贴图仍需返工。",
+      "remaining": "眼睑融合、口腔形状、凹坑与角质分色；新几何不得以零边界边代替视觉验收。"
+    },
+    "m303": {
+      "candidate": "r07 独立 fail 4；r10 局部补孔仍是作者试验。",
+      "authoring": "r13 正侧两图确认照片侧投污染，拒绝。StableGen 本地贴图模型齐全，但测试重启命令被自动审批拦截，未提交生成请求。",
+      "remaining": "局部孔洞、头发帽状轮廓、皮肤眼眶真实度、服装配色。"
+    },
+    "m309": {
+      "candidate": "地图仍使用 r01；后续没有新独立通过。",
+      "authoring": "r05/r06 补后脑大洞但接缝和头发帘状仍不自然，作者未接受。",
+      "remaining": "后脑表面重建、附着白色扫描残片、皮肤/眼睛/衣领颜色、完整检查。"
+    }
+  },
+  "map": "v022 总装保存但全景内存分配失败；恢复等待也已超时。最新完整可看预览为 v021。openweb 未获关闭授权，继续模型工作。",
+  "qc_notes": "已更正小光团检查相机俯角；检查数据重新统计当前模型，记录曲线、灯光与体积节点；材质名称不能作为 unlit 的证据。"
+}

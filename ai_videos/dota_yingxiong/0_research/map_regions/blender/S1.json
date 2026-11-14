@@ -1,0 +1,118 @@
+{
+  "extends": "common.json",
+  "region": "S1",
+  "overhead_bounds": [
+    -8000,
+    -7700,
+    -4550,
+    -5400
+  ],
+  "terrain_bounds": [
+    -8192,
+    -8192,
+    -3600,
+    -4400
+  ],
+  "terrain_step": 16,
+  "out_dir": "../../../2_世界观人设/background/近卫_sentinel/bg13_近卫泉水与商店/_blender",
+  "blend_name": "bg13_region_layout.blend",
+  "sources": {
+    "terrain": "../../base_layout_refs/terrain_samples.json",
+    "trees": "../navigation/tree_positions.json",
+    "units": "../../base_layout_refs/base_layout_manifest.json",
+    "doodads": "../navigation/war3map.doo"
+  },
+  "notes": [
+    "水平 20 游戏单位/米（follow-up 221 定尺度 B），建筑体块按资产卡尺寸；每个悬崖层取 4 米（原版 128 单位），为电影化压低的高差，不是游戏实测。",
+    "泉水台地 L11 比基地 L10 高一层；台地北缘、东缘为陡坎，唯一出口是东缘北端的坡道（原版顶点坡道标志），向东下到世界之树所在的基地。",
+    "建筑、商人、出生圈位置来自原版脚本坐标；体块尺寸为初始美术预算。商店入口朝北面向前庭、商人朝南面向前庭，是本剧搭景设计，原版初始化朝向 270 不当作门向。",
+    "栅栏按原版 VOfl/VOfs 放置物的连线画在台地北缘、东缘顶部；书架讲台 D001、篝火 NOfp 用原版坐标。灌木、花与视线阻挡器未建。",
+    "统一太阳：傍晚低日从西南偏西照来（方位角约 248°，仰角 28°），影子朝东北偏东；所有机位共用。"
+  ],
+  "cameras": [
+    {
+      "id": "top",
+      "type": "ortho",
+      "res": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "wide",
+      "type": "persp",
+      "pos": [
+        -7750,
+        -7750,
+        90
+      ],
+      "look": [
+        -6600,
+        -6700,
+        0
+      ],
+      "lens_mm": 20,
+      "res": [
+        1600,
+        900
+      ]
+    },
+    {
+      "id": "front",
+      "type": "persp",
+      "pos": [
+        -6960,
+        -6800,
+        5
+      ],
+      "look": [
+        -6960,
+        -7230,
+        3
+      ],
+      "lens_mm": 20,
+      "res": [
+        1600,
+        900
+      ]
+    },
+    {
+      "id": "side",
+      "type": "persp",
+      "pos": [
+        -6050,
+        -6760,
+        14
+      ],
+      "look": [
+        -7100,
+        -6760,
+        3
+      ],
+      "lens_mm": 20,
+      "res": [
+        1600,
+        900
+      ]
+    },
+    {
+      "id": "ramp",
+      "type": "persp",
+      "pos": [
+        -5950,
+        -6560,
+        1.8
+      ],
+      "look": [
+        -6500,
+        -6560,
+        3.0
+      ],
+      "lens_mm": 28,
+      "res": [
+        1600,
+        900
+      ]
+    }
+  ]
+}

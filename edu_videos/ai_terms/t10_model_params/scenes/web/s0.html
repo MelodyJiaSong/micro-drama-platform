@@ -1,0 +1,44 @@
+<style>
+  .hook { position: absolute; left: var(--mx); top: 250px; }
+  .hook .display { font-size: 180px; line-height: 1; }
+  .hook .h1 { margin-top: 18px; }
+  .q { position: absolute; left: var(--mx); top: 700px; }
+  .recap { position: absolute; left: var(--mx); top: 280px; display: flex; align-items: center; gap: 56px; }
+  .recap .card { padding: 40px 52px; }
+  .recap .h2 { margin-top: 12px; white-space: nowrap; }
+  .recap .arr { font-size: var(--fs-h1); color: var(--faint); font-weight: 600; }
+  .box { position: absolute; left: 1200px; top: 240px; width: 600px; height: 420px; }
+  html[lang=en] .box { left: 1450px; width: 350px; }
+  html[lang=en] .box .eyebrow { font-size: 40px; white-space: nowrap; letter-spacing: 0; }
+  html[lang=en] .recap { gap: 36px; }
+  .box .eyebrow { position: absolute; left: 40px; top: 30px; font-size: var(--fs-h2); font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--ink2); }
+  .box .qm { position: absolute; left: 0; right: 0; top: 110px; text-align: center; font-size: 260px; font-weight: 700; color: var(--hair); line-height: 1; }
+</style>
+
+<div class="hook" id="hook"><div class="eyebrow" data-zh="新闻里常见" data-en="In the news"></div>
+  <div class="display grad" style="margin-top:20px" data-zh="上千亿" data-en="100B+"></div>
+  <div class="h1" data-zh="个参数" data-en="parameters"></div></div>
+<div class="q h1" id="q" data-zh='参数 = <span class="accent">？</span>' data-en='Parameter = <span class="accent">?</span>'></div>
+
+<div class="recap" id="recap">
+  <div class="card" id="r1"><div class="eyebrow" data-zh="上一期" data-en="Last time"></div>
+    <div class="h2" data-zh="从例子里学规律" data-en="Learning from examples"></div></div>
+  <div class="arr" id="r2">→</div>
+  <div id="r3"><div class="eyebrow" data-zh="学出来的" data-en="Result"></div>
+    <div class="h1 accent" style="margin-top:8px" data-zh="模型" data-en="A model"></div></div>
+</div>
+<div class="card box" id="box"><div class="eyebrow" data-zh="模型里面" data-en="Inside a model"></div><div class="qm">?</div></div>
+
+<script>
+gsap.set(["#hook", "#q", "#recap", "#r1", "#r2", "#r3", "#box"], { opacity: 0 });
+// l01 新闻里：上千亿个参数
+EDU.in("#hook", EDU.t("l01", .35), { d: .9 });
+// l02 参数是什么？
+EDU.in("#q", EDU.t("l02", .1));
+// l03 上一期：从例子里学规律 → 模型
+EDU.out(["#hook", "#q"], EDU.t("l03")); EDU.in("#recap", EDU.t("l03", .02), { y: 0, d: .01 });
+EDU.in("#r1", EDU.t("l03", .1)); EDU.in("#r2", EDU.t("l03", .55)); EDU.in("#r3", EDU.t("l03", .65));
+// l04 打开模型看看
+EDU.dim(["#r1", "#r2"], EDU.t("l04", .05), .3); EDU.in("#box", EDU.t("l04", .3), { y: 16, d: .8 });
+EDU.out(["#recap", "#box"], EDU.S.duration - .5);
+</script>

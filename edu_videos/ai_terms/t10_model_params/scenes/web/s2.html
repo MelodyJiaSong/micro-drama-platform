@@ -1,0 +1,85 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  .mach { position: absolute; left: 560px; top: 230px; width: 800px; height: 450px; }
+  .mach .eyebrow { position: absolute; left: 40px; top: 30px; }
+  .mach .slot { position: absolute; top: 195px; width: 18px; height: 60px; border-radius: 9px; background: var(--hair); }
+  .chip { position: absolute; top: 375px; width: 330px; padding: 28px 36px; }
+  .chip .h2 { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .chip .h2.on { color: var(--ink); }
+  #vout.on { color: var(--accent-text); }
+  #cin { left: 120px; } #cout { left: 1470px; }
+  .arr { position: absolute; top: 425px; }
+  .low { position: absolute; left: var(--mx); right: var(--mx); top: 740px; text-align: center; }
+  .low .t { position: absolute; left: 0; right: 0; top: 0; }
+  .low .h2 + .h2 { margin-top: 10px; }
+  .pair { display: flex; justify-content: center; gap: 40px; }
+  .pair .card { padding: 22px 40px; display: flex; align-items: baseline; gap: 34px; }
+  .pair .card .h2 { white-space: nowrap; }
+</style>
+
+<div class="eb eyebrow" data-zh="01 · 模型长什么样" data-en="01 · What a model looks like"></div>
+
+<div class="card chip" id="cin"><div class="h2 sub" id="vin" data-zh="输入" data-en="Input"></div></div>
+<svg class="arr" id="a1" width="110" height="40" style="left:450px"><line x1="4" y1="20" x2="86" y2="20" stroke="var(--faint)" stroke-width="6" stroke-linecap="round"/>
+  <path d="M106 20 L82 6 L82 34 Z" fill="var(--faint)"/></svg>
+<div class="card mach" id="mach"><div class="eyebrow" data-zh="模型" data-en="Model"></div>
+  <div class="slot" style="left:-9px"></div><div class="slot" style="right:-9px"></div>
+  <div id="kg"></div><div id="kt"></div></div>
+<svg class="arr" id="a2" width="110" height="40" style="left:1360px"><line x1="4" y1="20" x2="86" y2="20" stroke="var(--faint)" stroke-width="6" stroke-linecap="round"/>
+  <path d="M106 20 L82 6 L82 34 Z" fill="var(--faint)"/></svg>
+<div class="card chip" id="cout"><div class="h2 sub" id="vout" data-zh="答案" data-en="Answer"></div></div>
+
+<div class="low">
+  <div class="t h1" id="l7" data-zh='参数 = <span class="accent">旋钮</span>' data-en='Parameters = <span class="accent">knobs</span>'></div>
+  <div class="t" id="l10"><div class="h2" data-zh="车费 = 起步价 + 每公里 × 公里数" data-en="Fare = base + per km × distance"></div>
+    <div class="h2 accent" id="l11" style="position:absolute;left:0;right:0;top:0;margin:0" data-zh="10 + 2 × 5 = 20" data-en="10 + 2 × 5 = 20"></div></div>
+  <div class="t pair" id="l12">
+    <div class="card" id="p1"><span class="h2" data-zh="怎么算" data-en="Math"></span><span class="h2 sub" data-zh="人定" data-en="set by people"></span></div>
+    <div class="card" id="p2"><span class="h2" data-zh="拧到几" data-en="Settings"></span><span class="h2 accent" data-zh="从例子里学" data-en="learned from examples"></span></div></div>
+  <div class="t h1" id="l13" data-zh='学 = 把旋钮<span class="accent">拧对</span>' data-en='Learning = <span class="accent">getting the knobs right</span>'></div>
+</div>
+
+<script>
+const T = EDU.tl;
+// 一般的机器：三个旋钮（l06 拧一拧，答案跟着变）
+const G = [0, 1, 2].map(i => knob("#kg", { size: 170, min: 0, max: 10, value: [3, 6, 2][i], left: 95 + i * 225, top: 135,
+  fmt: v => v.toFixed(0), showLabel: false }));
+const gAns = (a, b, c) => (a + b * 3 - c).toFixed(0);
+// 打车费机器：两个旋钮
+const K1 = knob("#kt", { size: 210, min: 0, max: 20, value: 0, left: 150, top: 90, label: EDU.tr("起步价", "Base fare"),
+  fmt: v => EDU.tr(v.toFixed(0), "$" + v.toFixed(0)) });
+const K2 = knob("#kt", { size: 210, min: 0, max: 5, value: 0, left: 440, top: 90, label: EDU.tr("每公里", "Per km"),
+  fmt: v => EDU.tr(v.toFixed(0), "$" + v.toFixed(0)) });
+const VIN = document.getElementById("vin"), VOUT = document.getElementById("vout");
+
+gsap.set(["#cin", "#cout", "#a1", "#a2", "#mach", "#kg", "#kt", "#l7", "#l10", "#l11", "#l12", "#p1", "#p2", "#l13"], { opacity: 0 });
+EDU.in(".eb", 0);
+// l05 一台机器：一头进、一头出
+EDU.in("#mach", EDU.t("l05", .1), { y: 16, d: .8 });
+EDU.in(["#cin", "#a1"], EDU.t("l05", .4)); EDU.in(["#a2", "#cout"], EDU.t("l05", .65));
+// l06 一排旋钮；拧到不同位置，答案不同
+EDU.in("#kg", EDU.t("l06", .05), { y: 0 });
+setText(VIN, EDU.t("l06", .2), "3"); setText(VOUT, EDU.t("l06", .2), gAns(3, 6, 2));
+T.set("#vin", { color: css("--ink") }, EDU.t("l06", .2)); T.set("#vout", { color: css("--accent-text") }, EDU.t("l06", .2));
+const sg = { a: 3, b: 6, c: 2 };
+T.fromTo(sg, { a: 3, b: 6, c: 2 }, { a: 8, b: 2, c: 5, duration: 1.6, ease: "power2.inOut", immediateRender: false,
+  onUpdate: () => { G[0].set(sg.a); G[1].set(sg.b); G[2].set(sg.c); VOUT.textContent = gAns(Math.round(sg.a), Math.round(sg.b), Math.round(sg.c)); } }, EDU.t("l06", .55));
+// l07 旋钮 = 参数
+EDU.in("#l7", EDU.t("l07", .05));
+// l08 猜打车费：输入公里数、答案车费
+EDU.out("#kg", EDU.t("l08")); EDU.out("#l7", EDU.t("l08", .5)); setText(VIN, EDU.t("l08", .3), EDU.tr("几公里", "Distance"));
+setText(VOUT, EDU.t("l08", .6), EDU.tr("车费", "Fare"));
+// l09 两个旋钮：起步价、每公里
+EDU.in("#kt", EDU.t("l09", .25), { y: 0 });
+// l10 怎么算
+EDU.in("#l10", EDU.t("l10", .05)); gsap.set("#l11", { opacity: 0 });
+// l11 10 + 2 × 5 = 20
+K1.turn(EDU.t("l11", .05), 0, 10, 1.0); K2.turn(EDU.t("l11", .2), 0, 2, 1.0);
+setText(VIN, EDU.t("l11", .5), EDU.tr("5 公里", "5 km")); EDU.out("#l10 > .h2:first-child", EDU.t("l11", .6)); EDU.in("#l11", EDU.t("l11", .65));
+setText(VOUT, EDU.t("l11", .8), EDU.tr("20 元", "$20"));
+// l12 怎么算：人定；拧到几：从例子里学
+EDU.out("#l10", EDU.t("l12")); EDU.in("#l12", EDU.t("l12", .02), { y: 0, d: .01 });
+EDU.in("#p1", EDU.t("l12", .05)); EDU.in("#p2", EDU.t("l12", .45));
+// l13 学 = 把旋钮拧对
+EDU.out("#l12", EDU.t("l13")); EDU.in("#l13", EDU.t("l13", .1));
+</script>

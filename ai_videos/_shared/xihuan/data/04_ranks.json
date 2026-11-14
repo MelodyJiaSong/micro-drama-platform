@@ -1,0 +1,652 @@
+{
+ "id": "ranks",
+ "name": "头衔、关口与失败",
+ "intro": "西幻没有一条人人共用的境界线：《指环王》《权力的游戏》里没人按修为排座次。强弱靠三样东西讲——组织授予的**职业头衔**（侍从 → 骑士、学徒 → 大法师，本组 TL）；各族自己的**等级链**（狼群 Alpha / Beta、吸血鬼长老、妖精宫廷爵位、恶魔爵位、天使九级、龙的年岁，见种族）；跨族比较用**威胁度**（野兽 / 怪物 / 恐怖 / 灾厄，之上神话，见生物 BS00 与 systems.md 的换算表）。\n\n本组收头衔，以及改变一个人处境的关口：觉醒、晋升仪式、神判、封神之试（可选），和四种失败。头衔只写典型强弱，不设硬门槛——政治任命的主教、未觉醒却武艺通神的老骑士，这种错位是西幻社会的常态。**寿命不随强弱增长**：长寿只来自生命之酒、贤者之石、契约、种族与神恩。",
+ "subgroups": [
+  {
+   "id": "titles",
+   "name": "路线头衔",
+   "intro": "头衔由组织授予，靠考核、誓言与受封，不靠测出来的强度。同一个强者，在学院是大师，在骑士团是旗骑士，在教会是神父。头衔用的都是欧洲真实制度里的词（行会、骑士制、教会圣职、德鲁伊阶层），观众无需学习。",
+   "entries": [
+    {
+     "id": "TL01",
+     "name": "奥术头衔",
+     "name_en": "Arcane Ranks",
+     "aliases": [
+      "法师等级",
+      "apprentice",
+      "archmage"
+     ],
+     "summary": "学徒 Apprentice → 熟手 Journeyman → 法师 Magus → 大师 Master → 大法师 Archmage。沿用中世纪行会的「学徒—熟手—大师」制度，出师要提交一件「杰作」（masterwork spell），升大师要公开答辩。",
+     "xianxia": {
+      "concept": "外门 / 内门 / 真传 / 长老 / 宗主（参照）"
+     },
+     "details": {
+      "Apprentice": "随师学习，不得独立施法谋生；典型威胁度：野兽",
+      "Journeyman": "可游历接委托，默认需在多处学院求学；典型威胁度：野兽—怪物",
+      "Magus": "提交杰作出师，可开业、收学徒；典型威胁度：怪物",
+      "Master": "答辩通过，可主持讲席；典型威胁度：怪物",
+      "Archmage": "由议会推选，一国个位数；典型威胁度：恐怖以上",
+      "说明": "头衔对应的强弱是典型值不是门槛：学院政治里有徒有其名的大师，也有拒绝头衔、强到恐怖级的隐士"
+     },
+     "visual": "法袍滚边与胸针随头衔变化：学徒无饰，大法师佩金链。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "中世纪行会",
+       "note": "apprentice → journeyman → master，以 masterpiece 出师"
+      },
+      {
+       "work": "上古卷轴 / 战锤",
+       "note": "法术与法师分阶（机制参考）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL10",
+       "role": "适用职业"
+      },
+      {
+       "target": "OR01",
+       "role": "授予组织"
+      }
+     ],
+     "image": {
+      "purpose": "insignia_set",
+      "brief": "Five original wizard rank insignia brooches in a row, left to right: a plain grey pewter pin, a simple tin disc with an engraved circle, a polished iron brooch set with a small blue glass stone, a copper and silver brooch with an engraved star and sapphire, and finally an elaborate gold brooch with a large violet gem hanging from a short gold chain."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "TL02",
+     "name": "骑士头衔",
+     "name_en": "Chivalric Ranks",
+     "aliases": [
+      "骑士等级",
+      "squire",
+      "peer of the realm"
+     ],
+     "summary": "侍童 Page → 侍从 Squire → 骑士 Knight → 旗骑士 Knight-Banneret → 王国重臣 Peer → 王之斗士 Champion。受封骑士需「授剑礼」（dubbing）；重臣是王国最高的十二骑士席位。",
+     "xianxia": {
+      "concept": "剑宗弟子 → 护法 → 剑主（参照）",
+      "note": "十二重臣取自查理曼十二圣骑士（Twelve Peers）——paladin 一词的本源。本库把 Paladin 留给信仰战士职业（观众最熟悉的用法），头衔用 Peer。"
+     },
+     "details": {
+      "Page": "七岁起入城堡服侍",
+      "Squire": "十四岁起为骑士持械",
+      "Knight": "守夜受封与授剑礼；武艺熟练度为主，可未觉醒",
+      "Knight-Banneret": "可率领自己的旗帜与部众；典型威胁度：怪物",
+      "Peer": "王国最高的十二骑士席位，由王授予；典型威胁度：怪物—恐怖",
+      "Champion": "代国王出战的决斗代表；典型威胁度：恐怖以上",
+      "说明": "骑士身份靠武艺、誓言与受封，不要求觉醒；威胁度只是强者的典型分布"
+     },
+     "visual": "马刺与腰带：侍从银马刺，骑士金马刺；旗骑士的方旗。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "中世纪骑士制度",
+       "note": "page → squire → knight，dubbing"
+      },
+      {
+       "work": "《罗兰之歌》",
+       "note": "查理曼的十二圣骑士"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL02",
+       "role": "适用职业"
+      },
+      {
+       "target": "OR03",
+       "role": "授予组织"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "insignia_set",
+      "brief": "Six original knightly rank items laid in a row, left to right: a plain leather page's belt buckle, a pair of simple silver spurs, a pair of plain gilded gold spurs with a simple engraved oak-leaf pattern, a small square crimson cloth pennon on a short lance tip with a simple white griffin, a gold chain collar of twelve linked plain oval plates each engraved with a small oak leaf, and finally a jeweled steel gauntlet with gold trim. No fleur-de-lis, no lions, no national emblems."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "TL03",
+     "name": "教会圣职",
+     "name_en": "Holy Orders",
+     "aliases": [
+      "神职等级",
+      "bishop",
+      "saint"
+     ],
+     "summary": "侍祭 Acolyte → 执事 Deacon → 神父/女祭司 Priest → 主教 Bishop → 大主教 Archbishop；「圣徒 Saint」不是职位，是死后或生前因神迹被追认。",
+     "xianxia": {
+      "concept": "道观 / 佛门的僧阶（参照）",
+      "note": "差异：圣职与神恩强弱脱钩——主教可能连圣愈都施不出（政治任命），乡村神父却可能驱逐过灾厄级的恶魔。这个错位是天然的剧情矛盾。"
+     },
+     "details": {
+      "Acolyte": "入教会服侍",
+      "Deacon": "受第一次授职",
+      "Priest": "主持圣礼，可施圣愈",
+      "Bishop": "管辖一个教区",
+      "Archbishop": "管辖一国教会",
+      "Saint": "神迹得到认定后由教会追认（默认需两件以上）",
+      "说明": "圣职与神恩强弱脱钩：主教可能连圣愈都施不出（政治任命），乡村神父却可能驱逐过灾厄级的恶魔"
+     },
+     "visual": "圣带与权杖：主教持曲柄权杖、戴冠。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲教会制度",
+       "note": "圣职阶层与封圣"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL07",
+       "role": "适用职业"
+      },
+      {
+       "target": "OR02",
+       "role": "授予组织"
+      }
+     ],
+     "image": {
+      "version": 3,
+      "purpose": "insignia_set",
+      "brief": "Five original fictional clergy rank items in a row on dark velvet, left to right: a plain wooden pendant carved as a flat engraved sun disc: a solid round disc with exactly seven short triangular rays touching its rim, evenly spaced, and a thin closed inner ring (seven rays, never eight; straight edges, not wavy, not bars), a simple white cloth stole with plain gold edging, a silver pendant of the same seven-rayed sun disc, a gilded staff head shaped as a simple shepherd's hook, and a tall gold-embroidered white ceremonial cap with the same seven-rayed sun disc on its front. Never a cross."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "TL04",
+     "name": "德鲁伊阶层",
+     "name_en": "Druidic Grades",
+     "aliases": [
+      "bard",
+      "ovate",
+      "archdruid"
+     ],
+     "summary": "吟游者 Bard → 卜者 Ovate → 德鲁伊 Druid → 大德鲁伊 Archdruid。源自古代凯尔特的三级学者阶层：诗与记忆、占卜与医药、仪式与裁决。",
+     "xianxia": {
+      "concept": "隐世宗门的传承层级（参照）"
+     },
+     "details": {
+      "Bard": "背诵传承诗歌与族谱，蓝袍",
+      "Ovate": "占卜、草药、预言，绿袍",
+      "Druid": "主持仪式、裁决纷争，白袍",
+      "Archdruid": "一片土地的守护者"
+     },
+     "visual": "袍色区分：蓝、绿、白；大德鲁伊持橡木杖与金镰。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "古典文献（斯特拉波等）",
+       "note": "bards / vates / druids 三类"
+      },
+      {
+       "work": "18 世纪德鲁伊复兴（Iolo Morganwg）",
+       "note": "蓝 / 绿 / 白袍色出自近代复兴，不是古凯尔特"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL12",
+       "role": "适用职业"
+      },
+      {
+       "target": "OR05",
+       "role": "授予组织"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "insignia_set",
+      "brief": "Four original druidic grade items in a row on moss-green cloth, left to right: a small carved wooden flute on a blue cord, a bundle of dried herbs tied with a green cord beside a plain polished bone disc, an oak-leaf brooch of plain silver on a white cord, and finally a small gleaming golden crescent sickle laid across an oak sprig with mistletoe. No harps, no knotwork, no spirals."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "TL05",
+     "name": "女巫阶层",
+     "name_en": "Coven Degrees",
+     "aliases": [
+      "witch ranks",
+      "high witch",
+      "crone"
+     ],
+     "summary": "学徒 Novice → 女巫 Witch → 高阶女巫 High Witch（主持一个女巫会）→ 长老 Crone/Elder。以师承和女巫会（coven）为单位，不受教会与学院承认。",
+     "xianxia": {
+      "concept": "散修师门 / 旁门（参照）",
+      "note": "差异：女巫在多数西幻世界是「非法」或灰色的，权力来自地下网络与血脉，这正是欧美短剧爱用的身份反差。"
+     },
+     "details": {
+      "Novice": "随师学草药与月相",
+      "Witch": "完成入会仪式，获得女巫印记",
+      "High Witch": "主持一个女巫会（默认十三人）",
+      "Crone": "掌握失传诅咒与真名，多为百岁以上"
+     },
+     "visual": "银戒、月相项链；高阶者有家族传承的黑曜石镜。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲女巫传说与现代女巫文化",
+       "note": "coven、少女—母亲—老妪三相意象"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL20",
+       "role": "适用职业"
+      },
+      {
+       "target": "OR06",
+       "role": "授予组织"
+      }
+     ],
+     "adoption": "default",
+     "image": {
+      "purpose": "insignia_set",
+      "brief": "Four original coven degree tokens in a row on dark plum velvet, left to right: a plain thin silver ring, a silver pendant of a single small crescent moon, a black obsidian scrying mirror the size of a palm in a simple wooden frame, and a gnarled blackthorn walking-staff head bound with silver wire and a sprig of dried herbs. No triple moons, no stars, no pentagrams."
+     },
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "rites",
+   "name": "关口事件",
+   "intro": "改变一个人处境的事件。西方叙事里变强之前常先要崩溃：觉醒多发生在剧情最低谷，封神要先死一次。",
+   "entries": [
+    {
+     "id": "EV01",
+     "name": "觉醒",
+     "name_en": "Awakening (the Kindling)",
+     "aliases": [
+      "点燃",
+      "first spark"
+     ],
+     "summary": "凡人第一次燃起超凡之力：灵魂被点燃。通常由极端经历触发——大病、濒死、丧亲、初次杀戮、第一次真心的祈祷。约一成人类一生中会觉醒；不觉醒也能凭武艺与手艺成名。",
+     "xianxia": {
+      "concept": "感气入门 / 灵根检测（参照）",
+      "note": "差异：不是测出来的，而是「被生活点燃」的；常在剧情最低谷发生。觉醒只是开始，之后怎么变强看职业与成长途径，没有一条统一的境界线。"
+     },
+     "trigger": "生死、哀恸、强烈的信念或愤怒。",
+     "visual": "胸口一闪，眼中第一次出现微光。",
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "欧美短剧与成长流",
+       "note": "awakening 是最受欢迎的转折点"
+      }
+     ],
+     "relations": [
+      {
+       "target": "GF01",
+       "role": "天赋决定难易"
+      },
+      {
+       "target": "GR04",
+       "role": "血脉者的觉醒"
+      },
+      {
+       "target": "PS09",
+       "role": "觉醒后才有英雄之光"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "A hooded figure collapsed on their knees on wet stone in the dark, head bowed; a single bright spark of light has just ignited in the center of their chest, sending one ring of light rippling outward across the puddles on the floor, rain droplets lit up around them. Pivotal, intimate, hopeful."
+     },
+     "adoption": "default",
+     "basis": "genre"
+    },
+    {
+     "id": "EV05",
+     "name": "晋升仪式",
+     "name_en": "Rites of Investiture",
+     "aliases": [
+      "dubbing",
+      "vigil of arms",
+      "disputation",
+      "ordination",
+      "授衔"
+     ],
+     "summary": "组织授予头衔的仪式，按路线不同：骑士守夜受封（vigil of arms + 授剑礼）、比武大会；行会提交杰作；大学公开答辩（disputatio）；教会按手授职；女巫会入会礼。证明的是技艺、品格与誓言，不是天赋。",
+     "xianxia": {
+      "concept": "宗门大比 / 入门考核（参照）"
+     },
+     "cost": "失败者失去资格与名誉；仪式中的誓言终身有效。",
+     "trigger": "申请头衔时，或领主、院长、主教召集。",
+     "visual": "教堂守夜的烛光、授剑礼的肩头轻触、答辩厅的长桌、比武场。",
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "中世纪骑士、行会、大学与教会制度",
+       "note": "dubbing、masterpiece、disputatio、ordination"
+      }
+     ],
+     "relations": [
+      {
+       "target": "TL01",
+       "role": "授衔"
+      },
+      {
+       "target": "TL02",
+       "role": "授衔"
+      },
+      {
+       "target": "TL03",
+       "role": "授衔"
+      },
+      {
+       "target": "TL05",
+       "role": "授衔"
+      }
+     ],
+     "adoption": "default",
+     "image": {
+      "version": 2,
+      "purpose": "environment",
+      "brief": "A small stone chapel at night during a knight's vigil of arms: on a plain altar stone the pieces of a suit of plate armor are laid out separately and neatly stacked (breastplate, helm set upright beside it, gauntlets, greaves) with a sheathed sword laid across them, rows of tall candles, cold moonlight through a narrow window, a single tiny kneeling figure in a white tunic before the altar seen from behind; carved above the altar is a sun disc with exactly seven short triangular rays, evenly spaced around a solid disc (count them: seven, not eight) with straight rays."
+     },
+     "basis": "tradition"
+    },
+    {
+     "id": "EV03",
+     "name": "神判",
+     "name_en": "The Ordeal",
+     "aliases": [
+      "试炼",
+      "trial by ordeal",
+      "考核"
+     ],
+     "summary": "中世纪用来判定有罪无罪的神判：烧红的铁、沸水、冷水、决斗。被告的伤口三日后验，愈合即无罪。本库用于审判（猎巫、异端、悬案），不用于晋升。",
+     "xianxia": {
+      "concept": "无直接对应",
+      "note": "仙侠的「宗门大比」对应的是晋升仪式 EV05；神判是司法程序。"
+     },
+     "cost": "被告受伤乃至死亡；结果可被主审者操纵。",
+     "trigger": "审判官或领主下令。",
+     "visual": "公众围观的仪式场：火盆、深水池、决斗场。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "中世纪法律",
+       "note": "trial by ordeal、trial by combat；伤口三日后验"
+      }
+     ],
+     "relations": [
+      {
+       "target": "OR04",
+       "role": "主持者"
+      },
+      {
+       "target": "CL09",
+       "role": "主持者"
+      }
+     ],
+     "image": {
+      "purpose": "environment",
+      "brief": "A medieval stone courtyard at dusk packed with distant tiny spectators on wooden stands around its edges; at the center a long trench of burning coals glowing orange, a tall iron brazier at each end, banners without symbols hanging from the walls, smoke rising into an amber sky, the empty coal path waiting for the trial. Solemn, tense, public."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "EV04",
+     "name": "封神之试",
+     "name_en": "Apotheosis",
+     "aliases": [
+      "神化",
+      "飞升",
+      "ascension"
+     ],
+     "summary": "凡人成为半神的终极试炼：一桩传说级的功业（屠灭灾厄级的怪物、拯救一国）加上一次死亡与重生（火葬堆、冥界归来）。通过者的威胁度进入神话级。",
+     "xianxia": {
+      "concept": "渡劫飞升（参照）",
+      "note": "差异：西方的封神来自功业（赫拉克勒斯的十二功业）与众人的传颂，不是天劫，也不是一条境界线的终点；半神仍留在世间，作为圣地或王朝之源。"
+     },
+     "cost": "失败即死，且常被历史抹去；成功后不再属于凡人社会。",
+     "visual": "火焰中升起的身影，或被光柱接引。",
+     "familiarity": "中",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "希腊神话",
+       "note": "赫拉克勒斯在火葬堆上封神"
+      }
+     ],
+     "relations": [
+      {
+       "target": "GR07",
+       "role": "前提"
+      },
+      {
+       "target": "BS00",
+       "role": "通过后：神话级"
+      },
+      {
+       "target": "IT21",
+       "role": "传说中的遗留"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "environment",
+      "brief": "A tall funeral pyre burning on a hilltop at night under a starry sky; within the towering flames a radiant human silhouette rises upward unharmed, its body turning to ruby and gold light, a column of light opening in the clouds above, tiny distant onlookers kneeling at the foot of the hill. No one stands near the pyre."
+     },
+     "adoption": "optional",
+     "module": "封神",
+     "basis": "tradition"
+    }
+   ]
+  },
+  {
+   "id": "failures",
+   "name": "失败与堕落",
+   "intro": "对应仙侠的根基受损、走火入魔、心魔。西方的失败分得更细：是灵魂本身裂了，是被外物腐蚀了，还是被别的存在占据了。",
+   "entries": [
+    {
+     "id": "FL01",
+     "name": "炉渣",
+     "name_en": "Slag (Cracked Soul)",
+     "aliases": [
+      "裂魂",
+      "根基受损",
+      "burnout"
+     ],
+     "summary": "透支力量或强行越过自身极限（施放超出能力的法术、仪式或契约失败、承受不住的血脉觉醒）后，灵魂留下杂质与裂痕：力量减弱或永久卡住，施法时伴随剧痛。",
+     "xianxia": {
+      "concept": "根基受损（参照）"
+     },
+     "cost": "可修复但极难：需要传说级的药剂或圣物，或一次濒死的重生。",
+     "counter": "生命之酒、圣物、导师以自身灵魂渡化。",
+     "visual": "身周的力量光里有黑色裂纹与灰斑，光断断续续。",
+     "familiarity": "低",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "冶金/炼金",
+       "note": "slag 熔渣——炼金失败的残余"
+      }
+     ],
+     "relations": [
+      {
+       "target": "IT04",
+       "role": "修复物"
+      }
+     ],
+     "image": {
+      "purpose": "magic",
+      "brief": "A hooded figure clutches their chest in pain, their faint metallic aura broken and flickering, with jagged black cracks and grey ash-like flakes visible within the light itself, flecks of dark slag falling from the glow like cinders, the light stuttering on and off. Painful, broken, tragic."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "FL02",
+     "name": "腐化",
+     "name_en": "Corruption",
+     "aliases": [
+      "堕落",
+      "黑化",
+      "tainted"
+     ],
+     "summary": "力量来源本身带毒：深渊之力、死亡之力或贪婪的魔法物品逐渐改变使用者的身体和人格，直至变成怪物。",
+     "xianxia": {
+      "concept": "入魔（参照）",
+      "note": "差异：西方的腐化是「可见的、渐进的、身体性的」——长角、皮肤发灰、影子变形，观众可以逐集看到。"
+     },
+     "cost": "每使用一次都更深一步；达到临界即永久转化（恶魔、亡灵、怪物）。",
+     "counter": "圣光净化、舍弃力量来源、他人的牺牲。",
+     "visual": "黑色脉络从手部向上蔓延，瞳孔颜色改变。",
+     "screen": {
+      "特效": "腐化程度用黑色血管长度做连续性指标，每集推进"
+     },
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "托尔金",
+       "note": "戒指腐蚀持有者"
+      },
+      {
+       "work": "战锤奇幻",
+       "note": "混沌变异"
+      },
+      {
+       "work": "欧洲民间与猎巫记录",
+       "note": "与魔鬼交易者身上出现魔鬼印记"
+      }
+     ],
+     "relations": [
+      {
+       "target": "PS06",
+       "role": "常见来源"
+      },
+      {
+       "target": "PS05",
+       "role": "常见来源"
+      }
+     ],
+     "image": {
+      "version": 2,
+      "purpose": "magic",
+      "brief": "Close view of a hooded figure holding up one bare hand with five clearly separated fingers and a thumb, palm facing the viewer, forearm visible: thick black vein-like lines spread from the fingertips up the forearm, the skin around them turning ash-grey, the fingernails darkened, faint red smoke seeping from the veins, while their other hand, also with five fingers, grips the wrist as if trying to stop it. Anatomically correct hands. Creeping, horrifying, personal."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "FL03",
+     "name": "附身",
+     "name_en": "Possession",
+     "aliases": [
+      "夺舍",
+      "被附身",
+      "abomination"
+     ],
+     "summary": "另一个存在（恶魔、亡魂、妖精）占据了身体。弱者全面失控，强者与之争夺主导权，形成双重人格。",
+     "xianxia": {
+      "concept": "夺舍 / 心魔附体（参照）",
+      "note": "差异：西方附身者是「另一个有名字的存在」，可以被谈判、被骗、被驱逐，戏剧冲突更具体。"
+     },
+     "cost": "被附身期间的行为由宿主背负；长期附身会让两个灵魂融合。",
+     "counter": "驱魔、说出附身者真名、宿主的意志觉醒。",
+     "visual": "眼睛变色（全黑或发光），声音出现第二重音轨，动作不自然。",
+     "screen": {
+      "声音": "人声叠加低沉第二音轨"
+     },
+     "familiarity": "高",
+     "ip": "public_domain",
+     "references": [
+      {
+       "work": "欧洲民间与教会传统",
+       "note": "恶魔附身与驱魔"
+      },
+      {
+       "work": "龙腾世纪",
+       "note": "被附身的法师（机制参考）"
+      }
+     ],
+     "relations": [
+      {
+       "target": "HL04",
+       "role": "解法"
+      },
+      {
+       "target": "RC16",
+       "role": "常见附身者"
+      }
+     ],
+     "image": {
+      "version": 3,
+      "purpose": "scene",
+      "brief": "A single possessed person stands rigid in a dim stone room with head tilted unnaturally to one side, hood pushed back so the face is visible, both eyes completely black with a tiny red pinpoint in each; a translucent shadowy horned figure overlaps the exact same space as the person's body like a double exposure, posed a fraction out of sync; thin dark smoke curls from the shoulders. No vortex, no other effects. Disturbing, dual."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    },
+    {
+     "id": "FL04",
+     "name": "失恩",
+     "name_en": "Fall from Grace",
+     "aliases": [
+      "背誓",
+      "oathbreaker",
+      "破誓"
+     ],
+     "summary": "违背誓言或信仰的人失去圣光或勇武：光会突然熄灭，有时反过来灼伤自己。背誓骑士在西方叙事里是固定的悲剧形象。",
+     "xianxia": {
+      "concept": "道心破碎（参照）",
+      "note": "差异：西方的失恩是道德与契约性的——违背的是一句具体的誓言，因此可以通过赎罪任务（quest）重新获得。"
+     },
+     "cost": "力量熄灭；被组织除名；有时转向黑暗（成为死亡骑士、背誓者）。",
+     "counter": "赎罪之旅、重新立誓、被更高者宽恕。",
+     "visual": "圣光像熄灭的蜡烛冒出一缕黑烟，盔甲上的圣徽变黑。",
+     "familiarity": "高",
+     "ip": "generic",
+     "references": [
+      {
+       "work": "D&D",
+       "note": "Oathbreaker 誓约破除者"
+      },
+      {
+       "work": "骑士文学",
+       "note": "背誓与赎罪"
+      }
+     ],
+     "relations": [
+      {
+       "target": "CL08",
+       "role": "常见对象"
+      },
+      {
+       "target": "GR03",
+       "role": "相关成长"
+      }
+     ],
+     "image": {
+      "version": 3,
+      "purpose": "scene",
+      "brief": "Only one person in the image: an armored knight kneels alone on a stone floor with head bowed; the last of a golden holy glow around them is going out like a snuffed candle, only a faint dim trace left, a thin curl of black smoke rising from a plain round gold boss on their breastplate which is turning dark and tarnished, their sword lying on the floor beside them. No banners, no sun symbols, no other figures. Sorrowful, quiet, tragic."
+     },
+     "adoption": "default",
+     "basis": "tradition"
+    }
+   ]
+  }
+ ]
+}

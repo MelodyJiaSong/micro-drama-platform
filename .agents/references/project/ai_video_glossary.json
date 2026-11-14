@@ -356,8 +356,8 @@
       "zh_alt": "",
       "category": "delivery",
       "module": "影视改编",
-      "def_zh": "一段不间断的连续画面：拍摄时从开机到停机，剪辑时是两个剪切点之间的一段。本剧里它也是视频生成的单位；要切镜就拆成多个镜头。",
-      "def_en": "One uninterrupted run of footage — from camera start to stop when shooting, between two cuts when editing. In our pipeline it is also the unit of video generation; a cut means a new shot.",
+      "def_zh": "一段不间断的连续画面：拍摄时从开机到停机，剪辑时是两个剪切点之间的一段。本剧里默认一镜一次生成；连续几镜可以合成一个镜组一起生成（follow-up 331）。",
+      "def_en": "One uninterrupted run of footage — from camera start to stop when shooting, between two cuts when editing. In our pipeline a shot is generated on its own by default; consecutive shots may be generated together as a shot group (follow-up 331).",
       "where": "filming.json scenes[].shots[]，编号 st1；scenes/sN/shots/stN/",
       "notes": [
         "镜头是要拍的内容，条是这一镜拍的某一遍，机位是为拍它做的物理布置。",
@@ -371,15 +371,35 @@
       "y": 740
     },
     {
+      "id": "shot_group",
+      "zh": "镜组",
+      "en": "Shot group",
+      "zh_alt": "",
+      "category": "delivery",
+      "module": "影视改编",
+      "def_zh": "同一场内连续的一个或多个镜头，一次提交给视频模型生成，是视频生成的单位；一次生成的结果叫一条，剪辑时按镜头切点切开使用。没写镜组的镜头各自是单镜组。多镜组带一张镜组板：每个镜头一格；单镜组的镜组板每个拍点一格。",
+      "def_en": "One or more consecutive shots of a scene generated in a single call — the unit of video generation. One result is a take; the edit cuts it at the shot boundaries. Shots not listed in a group are single-shot groups. A multi-shot group carries a board with one panel per shot.",
+      "where": "filming.json scenes[].groups[]（{id: g2, shots: [st4…]}）；scenes/sN/groups/gN/（board.png、资料包、drafts、renders）；预览页 /group-preview",
+      "notes": [
+        "不跨场；总长不超过模型一次生成上限（Seedance 2.5 为 30 秒）；默认一镜一组。",
+        "「镜组」是本项目用语，不是通行影视术语；没有用「段落」（sequence，场之上的叙事单元）、「条」（take）与「分镜」（storyboard，指 filming.json）以免混淆。",
+        "dota_yingxiong 剧级先试（follow-up 331），工具支持对其他剧可选、默认不变。"
+      ],
+      "sources": [],
+      "in_graph": true,
+      "x": 740,
+      "y": 810
+    },
+    {
       "id": "take",
       "zh": "条",
       "en": "Take / render",
       "zh_alt": "次、生成版本",
       "category": "delivery",
       "module": "Prompt 编译与出片",
-      "def_zh": "同一镜头的某一遍：实拍时是从开机到喊「卡」的一次录制；本剧里是一次生成结果。一个镜头可以有多条，选一条进剪辑。",
+      "def_zh": "同一镜头（或镜组）的某一遍：实拍时是从开机到喊「卡」的一次录制；本剧里是一次生成结果。一个镜头可以有多条，选一条进剪辑。",
       "def_en": "One recorded attempt of a shot, from roll to cut; in our pipeline, one generated result. A shot may have several takes, and one is chosen for the edit.",
-      "where": "scenes/sN/shots/stN/renders/",
+      "where": "scenes/sN/shots/stN/{drafts,renders}/；镜组在 scenes/sN/groups/gN/{drafts,renders}/",
       "notes": [
         "中文片场写法「X 场 X 镜 X 次（条）」，未找到权威辞典核实。"
       ],
@@ -988,6 +1008,20 @@
       "type": "kind",
       "card": "",
       "zh": "高潮是一种转折点"
+    },
+    {
+      "from": "shot_group",
+      "to": "shot",
+      "type": "contains",
+      "card": "1:N",
+      "zh": "一个镜组含本场连续的一个或多个镜头"
+    },
+    {
+      "from": "shot_group",
+      "to": "take",
+      "type": "contains",
+      "card": "1:N",
+      "zh": "一个镜组可生成多条，按镜头切点切开进剪辑"
     }
   ],
   "timelines": [

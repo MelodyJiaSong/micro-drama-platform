@@ -1,7 +1,7 @@
 """Character read-side: list each character folder's newest turntable mp4.
 
 Read-side (per CLAUDE.md queries may skip the domain layer): walks
-`ai_videos/{drama}/.../characters/cN_*` and reports the newest original
+`ai_videos/{drama}/.../characters/[{group}/]cN_*` and reports the newest original
 turntable mp4 in each — mtime-max, excluding the truncated `video.mp4` reel
 and the `views/` outputs, the same rule `CharacterViewExtractor` uses to pick
 its extraction source. Powers the gallery tile preview (`GET /api/character-videos`).
@@ -18,7 +18,7 @@ from libs.common.exposed_tree import ExposedTree
 from libs.common.safe_resolve import SafeResolver
 from libs.domain.errors.character_video__error import InvalidCharactersDirError
 
-from libs.common.character_dir import CHARACTER_DIR_RE as _CHARACTER_DIR_RE
+from libs.common.asset_group import character_dirs
 _VIDEO_EXTENSIONS: frozenset[str] = frozenset(
     {".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v"}
 )
@@ -44,11 +44,8 @@ class CharacterReader:
     ) -> tuple[CharacterVideoListing, ...]:
         chars_dir = self._validate_characters_dir(characters_rel)
         listings: list[CharacterVideoListing] = []
-        for sub in sorted(chars_dir.iterdir(), key=lambda p: p.name):
-            if not sub.is_dir() or sub.is_symlink():
-                continue
-            if not _CHARACTER_DIR_RE.match(sub.name):
-                continue
+        # A card may sit one group folder down (`characters/近卫_sentinel/c65_Axe/`).
+        for sub in sorted(character_dirs(chars_dir), key=lambda p: p.name):
             latest = self._latest_video_in(sub)
             listings.append(
                 CharacterVideoListing(

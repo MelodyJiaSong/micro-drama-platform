@@ -1,0 +1,3 @@
+﻿const fs=require('fs');
+const items=[['c1','https://images.unsplash.com/photo-1597148543182-830ef7bbb904'],['c3','https://images.unsplash.com/photo-1706182560512-a607687c2c85'],['c6','https://images.unsplash.com/photo-1569878698933-667997e71b11'],['c7','https://pd.w.org/2023/08/37564d26106df82f2.14839110.jpeg']];
+(async()=>{for(const [file,url] of items){const r=await fetch(url,{headers:{'User-Agent':'Mozilla/5.0'}});if(!r.ok)throw Error(r.status);fs.writeFileSync(`19_petronas_tower_1/cand/${file}.jpg`,Buffer.from(await r.arrayBuffer()));console.log(file,r.headers.get('content-type'));}})().catch(console.error);

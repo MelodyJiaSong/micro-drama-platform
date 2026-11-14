@@ -4,9 +4,14 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import sys
 from pathlib import Path
 
 from PIL import Image, PngImagePlugin
+
+if str(Path(__file__).resolve().parents[1]) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from projects.ai_video_management.libs.common.asset_group import character_dirs  # noqa: E402
 
 ROLES = ('front', 'side', 'back')
 
@@ -46,9 +51,7 @@ def build(drama: Path) -> list[dict]:
     if len(roots) != 1:
         raise ValueError('人物资产根目录缺失或不唯一')
     rows = []
-    for character in sorted(roots[0].iterdir()):
-        if not character.is_dir():
-            continue
+    for character in character_dirs(roots[0]):
         if (character / 'views').is_dir():
             rows.append(compose(character / 'views', character.name))
         for folder in sorted(character.iterdir()):

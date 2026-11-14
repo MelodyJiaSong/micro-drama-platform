@@ -1,0 +1,51 @@
+<style>
+  .head { position: absolute; left: var(--mx); top: var(--mt); }
+  #kid { left: 40px; top: 150px; width: 1060px; }
+  .manual { position: absolute; left: 1120px; top: 300px; width: 680px; }
+  .manual .box { padding: 34px 40px; }
+  .manual .h2 { margin-top: 12px; }
+  #mtext { font-size: 42px; white-space: nowrap; }
+  html[lang="en"] #mtext { white-space: normal; }
+  .manual .no { margin-top: 22px; }
+  .map { position: absolute; left: 1120px; top: 250px; width: 680px; }
+  .map .row { padding: 26px 0; border-top: 1px solid var(--hair); }
+  .map .row .caption { margin-bottom: 6px; }
+  .nolike { position: absolute; left: 1120px; top: 300px; width: 680px; }
+  .nolike .h1 { margin-top: 14px; }
+</style>
+
+<div class="head"><div class="eyebrow" data-zh="01 · 打个比方" data-en="01 · An analogy"></div></div>
+<img class="ill" id="kid" src="img/clay_child_v1_cut.png">
+<div class="manual" id="manual"><div class="box">
+  <div class="caption" data-zh="不给说明书" data-en="No manual"></div>
+  <div class="h2" id="mtext" data-zh="「3 = 两个半圆叠起来」" data-en="“3 = two half-circles, stacked”"></div></div>
+  <div class="h2 accent no" id="point" data-zh="只指着说：这是三" data-en="Just point: “That’s a three”"></div>
+  <div class="body ink2" id="gen" data-zh="没见过的写法也认得出" data-en="Even new handwriting"></div></div>
+<div class="map" id="map">
+  <div class="row" id="mp1"><div class="caption" data-zh="小孩学会的认法" data-en="What the kid learns"></div>
+    <div class="h2" data-zh='= <span class="accent">模型</span>' data-en='= <span class="accent">the model</span>'></div></div>
+  <div class="row" id="mp2"><div class="caption" data-zh="数字 +「这是三」" data-en="A digit + its name"></div>
+    <div class="h2" data-zh='= <span class="accent">带答案的例子</span>' data-en='= <span class="accent">an example with its answer</span>'></div></div>
+</div>
+<div class="nolike" id="nolike"><div class="eyebrow" data-zh="一点不像" data-en="One difference"></div>
+  <div class="h1" data-zh='模型要的例子<br><span class="accent">多得多</span>' data-en='A model needs<br><span class="accent">far more examples</span>'></div></div>
+
+<script>
+const T = EDU.tl;
+gsap.set(["#kid", "#manual", "#point", "#gen", "#map", "#mp1", "#mp2", "#nolike"], { opacity: 0 });
+// l13 小孩 + 不给说明书
+EDU.in("#kid", EDU.t("l13", 0.02), { d: 0.9 });
+EDU.in("#manual", EDU.t("l13", 0.4));
+// l14 指着说；看多了会认
+EDU.dim("#mtext", EDU.t("l14"), 0.3);
+EDU.in("#point", EDU.t("l14", 0.1));
+EDU.in("#gen", EDU.t("l14", 0.6));
+// l15 逐点对应
+EDU.out("#manual", EDU.t("l15"));
+EDU.in("#map", EDU.t("l15", 0.02), { d: 0.01 });
+EDU.in("#mp1", EDU.t("l15", 0.05)); EDU.in("#mp2", EDU.t("l15", 0.5));
+// l16 一点不像
+EDU.out("#map", EDU.t("l16"));
+EDU.in("#nolike", EDU.t("l16", 0.05));
+EDU.out(["#kid", "#nolike"], EDU.S.duration - 0.5);
+</script>

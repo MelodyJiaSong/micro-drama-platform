@@ -33,9 +33,17 @@ class RequestLog:
 
     @staticmethod
     def resolve(target: Path) -> Path:
+        standalone = Path(__file__).resolve().parents[1] / ".audit" / "service_requests"
+        if target.is_relative_to(standalone) and target != standalone:
+            return standalone / target.relative_to(standalone).parts[0] / REQUEST_LOG_NAME
         parts = target.parts
+        if "edu_videos" in parts:
+            start = parts.index("edu_videos") + 1
+            if start >= len(parts) - 1:
+                raise ValueError("不能把请求记在 edu_videos 根目录；指定 系列/知识点 下的目标路径")
+            return Path(*parts[:start + (2 if len(parts) - start > 2 else 1)]) / REQUEST_LOG_NAME
         if "ai_videos" not in parts:
-            raise ValueError("请求缺少剧/集/资产归属；指定 ai_videos 下的目标路径")
+            raise ValueError("请求缺少剧/集/资产或系列/知识点归属；指定 ai_videos 或 edu_videos 下的目标路径")
         start = parts.index("ai_videos") + 1
         if start >= len(parts):
             raise ValueError("不能把请求记在 ai_videos 根目录")
@@ -86,7 +94,7 @@ class RequestLog:
                 safe = [(k, "[REDACTED]" if re.search(r"token|signature|credential|secret|key|sig$", k, re.I) else v) for k, v in parse_qsl(u.query)]
                 netloc = "[REDACTED]@" + u.netloc.rsplit("@", 1)[1] if "@" in u.netloc else u.netloc
                 return urlunsplit((u.scheme, netloc, u.path, urlencode(safe), u.fragment))
-            return re.sub(r"https?://[^\s\"'<>\\)]+", redact_url, value)
+            return re.sub(r"(?:https?|wss?)://[^\s\"'<>\\)]+", redact_url, value)
         if value is None or isinstance(value, (int, float, bool)):
             return value
         return str(value)

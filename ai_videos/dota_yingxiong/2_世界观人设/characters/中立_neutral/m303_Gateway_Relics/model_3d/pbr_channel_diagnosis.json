@@ -1,0 +1,154 @@
+{
+  "asset": "m303",
+  "revision": "r01",
+  "materials": [
+    {
+      "name": "Material_0",
+      "sockets": {
+        "Roughness": {
+          "source": "Separate Color",
+          "socket": "Green"
+        },
+        "Metallic": {
+          "source": "Separate Color",
+          "socket": "Blue"
+        },
+        "Specular IOR Level": 0.5
+      },
+      "nodes": [
+        {
+          "name": "Principled BSDF",
+          "type": "BSDF_PRINCIPLED",
+          "image": null,
+          "input_links": [
+            [
+              "Image Texture",
+              "Color",
+              "Base Color"
+            ],
+            [
+              "Separate Color",
+              "Blue",
+              "Metallic"
+            ],
+            [
+              "Separate Color",
+              "Green",
+              "Roughness"
+            ]
+          ]
+        },
+        {
+          "name": "Material Output",
+          "type": "OUTPUT_MATERIAL",
+          "image": null,
+          "input_links": [
+            [
+              "Principled BSDF",
+              "BSDF",
+              "Surface"
+            ]
+          ]
+        },
+        {
+          "name": "Image Texture",
+          "type": "TEX_IMAGE",
+          "image": "Image_0",
+          "input_links": []
+        },
+        {
+          "name": "Separate Color",
+          "type": "SEPARATE_COLOR",
+          "image": null,
+          "input_links": [
+            [
+              "Image Texture.001",
+              "Color",
+              "Color"
+            ]
+          ]
+        },
+        {
+          "name": "Image Texture.001",
+          "type": "TEX_IMAGE",
+          "image": "Image_1",
+          "input_links": []
+        }
+      ]
+    }
+  ],
+  "images": [
+    {
+      "name": "Image_0",
+      "colorspace": "sRGB",
+      "quantiles_0_10_50_90_100": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.988235354423523
+        ],
+        [
+          0.1098039299249649,
+          0.07450980693101883,
+          0.05098039656877518,
+          0.9960784912109375
+        ],
+        [
+          0.27450981736183167,
+          0.22745099663734436,
+          0.20000001788139343,
+          1.0
+        ],
+        [
+          0.5411764979362488,
+          0.4901961088180542,
+          0.4705882668495178,
+          1.0
+        ],
+        [
+          0.8823530077934265,
+          0.7333333492279053,
+          0.7254902124404907,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "Image_1",
+      "colorspace": "Non-Color",
+      "quantiles_0_10_50_90_100": [
+        [
+          0.0,
+          0.21176472306251526,
+          0.05490196496248245,
+          1.0
+        ],
+        [
+          0.0,
+          0.6509804129600525,
+          0.2196078598499298,
+          1.0
+        ],
+        [
+          0.0,
+          0.8980392813682556,
+          0.26274511218070984,
+          1.0
+        ],
+        [
+          0.0,
+          0.9529412388801575,
+          0.27450981736183167,
+          1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.30588236451148987,
+          1.0
+        ]
+      ]
+    }
+  ]
+}

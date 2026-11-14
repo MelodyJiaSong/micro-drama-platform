@@ -6,16 +6,18 @@ from libs.common.production_key import shot_key
 from libs.domain.entities.episode_workflow__entity import EpisodeWorkflowEntity
 from libs.domain.errors.episode_workflow__error import EpisodeWorkflowError
 from libs.infrastructure.readers.episode_workflow__reader import EpisodeWorkflowReader
+from libs.infrastructure.readers.shot_first_frame__reader import ShotFirstFrameReader
 from libs.infrastructure.readers.shot_pack__reader import ShotPackReader
 from libs.infrastructure.readers.shot_renders__reader import ShotRendersReader
 
 
 class EpisodeWorkflowQuery:
     def __init__(self, reader: EpisodeWorkflowReader, packs: ShotPackReader | None = None,
-                 renders: ShotRendersReader | None = None) -> None:
+                 renders: ShotRendersReader | None = None, first_frames: ShotFirstFrameReader | None = None) -> None:
         self.reader = reader
         self.packs = packs or ShotPackReader(reader.root)
         self.renders = renders or ShotRendersReader(reader.root)
+        self.first_frames = first_frames or ShotFirstFrameReader(reader.root)
 
     def read(self, episode_path: str) -> EpisodeWorkflowQdto:
         try:
@@ -38,4 +40,5 @@ class EpisodeWorkflowQuery:
                 for scene in dao.documents["filming"]["content"]["scenes"]}
         packs = self.packs.read(dao.episode_path, dao.documents["prompts"]["content"])
         renders = self.renders.read(dao.episode_path, dao.documents["prompts"]["content"])
-        return EpisodeWorkflowQdto(dao.episode_path, modules, keys, packs, renders)
+        frames = self.first_frames.read(dao.episode_path, dao.documents["filming"]["content"])
+        return EpisodeWorkflowQdto(dao.episode_path, modules, keys, packs, renders, frames)

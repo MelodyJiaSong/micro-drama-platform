@@ -1,0 +1,5914 @@
+{
+ "run": "lines_r2",
+ "round": 2,
+ "generated_at": "2026-11-09T00:32:14",
+ "items": [
+  {
+   "item": "voice_zh",
+   "name": "中文口播（母语听感，盲审）",
+   "final": {
+    "V1": 1,
+    "V2": 2,
+    "V3": 2,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2,
+    "R": 1
+   },
+   "scores": {
+    "a": {
+     "V1": 2,
+     "V2": 2,
+     "V3": 2,
+     "V4": 2,
+     "V5": 2,
+     "V6": 2,
+     "R": 2
+    },
+    "b": {
+     "V1": 1,
+     "V2": 2,
+     "V3": 1,
+     "V4": 2,
+     "V5": 2,
+     "V6": 3,
+     "R": 1
+    },
+    "judge": {
+     "V1": 1,
+     "V3": 2,
+     "R": 1,
+     "V5": 2,
+     "V6": 2
+    }
+   }
+  },
+  {
+   "item": "voice_en",
+   "name": "English narration (native ear, blind)",
+   "final": {
+    "V1": 2,
+    "V2": 2,
+    "V3": 1,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2,
+    "R": 1
+   },
+   "scores": {
+    "a": {
+     "V1": 2,
+     "V2": 2,
+     "V3": 2,
+     "V4": 2,
+     "V5": 2,
+     "V6": 2,
+     "R": 2
+    },
+    "b": {
+     "V1": 2,
+     "V2": 3,
+     "V3": 1,
+     "V4": 2,
+     "V5": 2,
+     "V6": 3,
+     "R": 1
+    },
+    "judge": {
+     "V3": 1,
+     "R": 1,
+     "V2": 2,
+     "V1": 2
+    }
+   }
+  },
+  {
+   "item": "screen_zh",
+   "name": "中文屏幕文字（PPT 式画面）",
+   "final": {
+    "P1": 1,
+    "P2": 1,
+    "P3": 2,
+    "P4": 1,
+    "P5": 2,
+    "P6": 3,
+    "R": 1
+   },
+   "scores": {
+    "a": {
+     "P1": 1,
+     "P2": 2,
+     "P3": 2,
+     "P4": 2,
+     "P5": 2,
+     "P6": 3,
+     "R": 2
+    },
+    "b": {
+     "P1": 1,
+     "P2": 1,
+     "P3": 2,
+     "P4": 1,
+     "P5": 2,
+     "P6": 3,
+     "R": 1
+    },
+    "judge": {
+     "P2": 1,
+     "P4": 1,
+     "R": 1,
+     "P5": 2,
+     "P3": 2
+    }
+   }
+  },
+  {
+   "item": "screen_en",
+   "name": "English on-screen text (slides)",
+   "final": {
+    "P1": 1,
+    "P2": 1,
+    "P3": 2,
+    "P4": 1,
+    "P5": 2,
+    "P6": 2,
+    "R": 1
+   },
+   "scores": {
+    "a": {
+     "P1": 2,
+     "P2": 2,
+     "P3": 2,
+     "P4": 2,
+     "P5": 2,
+     "P6": 2,
+     "R": 2
+    },
+    "b": {
+     "P1": 1,
+     "P2": 1,
+     "P3": 2,
+     "P4": 1,
+     "P5": 2,
+     "P6": 3,
+     "R": 1
+    },
+    "judge": {
+     "P1": 1,
+     "P2": 1,
+     "P4": 1,
+     "P5": 2,
+     "P6": 2,
+     "R": 1
+    }
+   }
+  }
+ ],
+ "issues": [
+  {
+   "id": "I1",
+   "key": "dd9ac147fbf8",
+   "item": "screen_en",
+   "where": "outro / card_s10",
+   "dim": "P1, P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "outro / card_s10"
+   ],
+   "evidence": [
+    "\"Overfitting is memorizing even the typos, / and then treating them as rules.\" (12 words, one block)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Memorizing typos, / treating them as rules\" (6 words, keeps the two-tone line break)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Overfitting is memorizing even the typos, / and then treating them as rules.\" (12 words, one block)",
+   "problem": "Breaks both the 6-word title limit and the 9-word block limit; repeats l57–l58 verbatim, which is the exact pattern the user rejected (full narration sentences on screen). Last round's I5/I7 was marked 已改 but only the line break changed. If the author keeps it as a deliberate closing quote, that reasoning does not hold against a hard limit; the narration already says it.",
+   "suggest": "\"Memorizing typos, / treating them as rules\" (6 words, keeps the two-tone line break)",
+   "judge_note": "b · outro (word total)：The \"approximately 25 words\" includes the eyebrow and the footer credits, which are exempt. The breach is the 12-word block itself, and that stands.",
+   "status": "implemented",
+   "solution": "outro：片尾卡改成页眉「过拟合，就像」＋两行短语「连印错的都背了下来， / 还当成了规律」（英文 Overfitting is · memorizing even the typos, / and treating them as rules），不带句号；卡上只放本语言（系列名也去掉另一种语言）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/package.json"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I2",
+   "key": "5e170c8b98b8",
+   "item": "screen_en",
+   "where": "agenda",
+   "dim": "P1, P3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P3",
+   "shots": [
+    "agenda"
+   ],
+   "evidence": [
+    "“In this episode” plus six numbered chapter rows"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Keep the exact chapter names; show **two successive agenda screens**, each with `In this episode` and three chapter rows. Each becomes four blocks and 15 words.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“In this episode” plus six numbered chapter rows",
+   "problem": "The screenshot contains a title omitted from the extraction: **seven main blocks and 26 words**, including chapter numbers. The rows are now outlines, but still breach both screen limits.",
+   "suggest": "Keep the exact chapter names; show **two successive agenda screens**, each with `In this episode` and three chapter rows. Each becomes four blocks and 15 words.",
+   "judge_note": "b · agenda：Under counting ruling 1 the card is one heading plus one parallel 6-item list: 2 blocks and 19 words (01–06 are index markers). Splitting it into two agenda screens adds a cut and repeats the heading with no reading benefit. Making the row grammar parallel is optional polish, not a fix.；a · agenda：The 存疑 is resolved: not a breach (counting ruling 1).",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决（第 2 轮两位一致）：目录是导航清单，标题 1 块＋清单 1 块，不超限；章名与章节卡同名同号，不拆两屏",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I3",
+   "key": "a9574facd7a3",
+   "item": "screen_en",
+   "where": "outro",
+   "dim": "P1, P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "outro"
+   ],
+   "evidence": [
+    "“Overfitting is memorizing even the typos, and then treating them as rules.”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "`Overfitting` / `Typos treated as rules` / `Next: reinforcement learning`. Remove `In one sentence`.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“Overfitting is memorizing even the typos, and then treating them as rules.”",
+   "problem": "One continuous **12-word headline**, exceeding both the six-word title and nine-word ordinary-block caps. It repeats l57–l58. Including the eyebrow, next-item label and English footer gives approximately **25 words**.",
+   "suggest": "`Overfitting` / `Typos treated as rules` / `Next: reinforcement learning`. Remove `In one sentence`.",
+   "judge_note": "b · outro (word total)：The \"approximately 25 words\" includes the eyebrow and the footer credits, which are exempt. The breach is the 12-word block itself, and that stands.",
+   "status": "implemented",
+   "solution": "outro：片尾卡改成页眉「过拟合，就像」＋两行短语「连印错的都背了下来， / 还当成了规律」（英文 Overfitting is · memorizing even the typos, / and treating them as rules），不带句号；卡上只放本语言（系列名也去掉另一种语言）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/package.json"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I4",
+   "key": "4932da6004d5",
+   "item": "screen_en",
+   "where": "agenda",
+   "dim": "P1",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "agenda"
+   ],
+   "evidence": [
+    "\"In this episode\" + 6 rows (7 blocks, 19 words plus 6 numerals)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep as is; optional parallel set: \"What overfitting is / An analogy / Two error curves / Learning as compression / Real-world failures / Spot it, prevent it\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"In this episode\" + 6 rows (7 blocks, 19 words plus 6 numerals)",
+   "problem": "Strictly more than 4 blocks. It is a single numbered list of chapter titles and reads as one block; I do not count it as a breach, but the judge should confirm the brief treats a list as one block. Rows mix clause / noun / imperative (\"What overfitting is\", \"Another lens\", \"Spot it, prevent it\").",
+   "suggest": "Keep as is; optional parallel set: \"What overfitting is / An analogy / Two error curves / Learning as compression / Real-world failures / Spot it, prevent it\"",
+   "judge_note": "b · agenda：Under counting ruling 1 the card is one heading plus one parallel 6-item list: 2 blocks and 19 words (01–06 are index markers). Splitting it into two agenda screens adds a cut and repeats the heading with no reading benefit. Making the row grammar parallel is optional polish, not a fix.；a · agenda：The 存疑 is resolved: not a breach (counting ruling 1).",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同上：目录清单按裁决算 1 块",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I5",
+   "key": "27ffc1355a15",
+   "item": "screen_en",
+   "where": "end card footer",
+   "dim": "P4",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "end card footer"
+   ],
+   "evidence": [
+    "\"AI Glossary · AI 高频词\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Confirm; if English-only, drop \"AI 高频词\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"AI Glossary · AI 高频词\"",
+   "problem": "Chinese brand line on the English cut; I6 asked whether that is intended. It is small and probably series branding.",
+   "suggest": "Confirm; if English-only, drop \"AI 高频词\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "outro：片尾卡改成页眉「过拟合，就像」＋两行短语「连印错的都背了下来， / 还当成了规律」（英文 Overfitting is · memorizing even the typos, / and treating them as rules），不带句号；卡上只放本语言（系列名也去掉另一种语言）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/package.json"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I6",
+   "key": "291464de0447",
+   "item": "screen_en",
+   "where": "l09–l10",
+   "dim": "P3, P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3, P4",
+   "shots": [
+    "l09–l10"
+   ],
+   "evidence": [
+    "eyebrow \"IN ONE SENTENCE\""
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "l09–l10: \"DEFINITION\" (or no eyebrow); outro: \"THE TAKEAWAY\"",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "eyebrow \"IN ONE SENTENCE\"",
+   "problem": "The round-1 fix turned the definition into fragments but kept the label, so it now announces a sentence that is not there. If the end card is rewritten as fragments, its \"IN ONE SENTENCE\" has the same problem.",
+   "suggest": "l09–l10: \"DEFINITION\" (or no eyebrow); outro: \"THE TAKEAWAY\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s2：l09–l10 眉题改「定义」；「学进了碰巧的细节 / 做新题反而变差」不再以「连」起句；英文 Overfitting 的 g 下沿加留白",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s2.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I7",
+   "key": "f3d85e043f38",
+   "item": "screen_en",
+   "where": "l10",
+   "dim": "P5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l10"
+   ],
+   "evidence": [
+    "display \"Overfitting\" (132 px)"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "Give the display block more line height or bottom padding; text unchanged",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "display \"Overfitting\" (132 px)",
+   "problem": "Confirms a's 存疑. In s2_l10.png the \"g\" descender is cut off at the bottom of the display box. This is the key term on the definition screen (l09 uses the same layout).",
+   "suggest": "Give the display block more line height or bottom padding; text unchanged",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s2：l09–l10 眉题改「定义」；「学进了碰巧的细节 / 做新题反而变差」不再以「连」起句；英文 Overfitting 的 g 下沿加留白",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s2.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I8",
+   "key": "051797a33f4d",
+   "item": "screen_en",
+   "where": "l10",
+   "dim": "P5",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l10"
+   ],
+   "evidence": [
+    "\"Overfitting\" display word"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Add line-height / bottom padding to the display block",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Overfitting\" display word",
+   "problem": "The \"g\" appears cut at the bottom edge in the PNG.",
+   "suggest": "Add line-height / bottom padding to the display block",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s2：l09–l10 眉题改「定义」；「学进了碰巧的细节 / 做新题反而变差」不再以「连」起句；英文 Overfitting 的 g 下沿加留白",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s2.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I9",
+   "key": "1693e050fe75",
+   "item": "screen_en",
+   "where": "l17–l18",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l17–l18"
+   ],
+   "evidence": [
+    "“PRACTICE ERROR · MEAN SQUARED MISS”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Shorten the metric heading to `Practice error`. Totals fall to **20 and 22 words**, with the useful comparison preserved.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“PRACTICE ERROR · MEAN SQUARED MISS”",
+   "problem": "With the chapter eyebrow and comparison rows, l17 has **23 words** and l18 **25**. Being an eyebrow exempts the metric heading from block counting, not the screen-word budget.",
+   "suggest": "Shorten the metric heading to `Practice error`. Totals fall to **20 and 22 words**, with the useful comparison preserved.",
+   "judge_note": "b · l17–l18：Not a breach: 19 / 21 words once the chapter eyebrow is excluded (the column header is counted). \"Practice error\" is an acceptable fix for the orphaned \"MISS\", but only at 建议 level.",
+   "status": "implemented",
+   "solution": "s3：列头只写「练习误差」，去掉口播没讲的「偏离²」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s3.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I10",
+   "key": "943208d874de",
+   "item": "screen_en",
+   "where": "l18",
+   "dim": "P5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l18"
+   ],
+   "evidence": [
+    "\"PRACTICE ERROR · MEAN SQUARED MISS\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"PRACTICE ERROR (MEAN SQUARED)\" or shorten to \"PRACTICE ERROR\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"PRACTICE ERROR · MEAN SQUARED MISS\"",
+   "problem": "Wraps with \"MISS\" alone on line two.",
+   "suggest": "\"PRACTICE ERROR (MEAN SQUARED)\" or shorten to \"PRACTICE ERROR\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s3：列头只写「练习误差」，去掉口播没讲的「偏离²」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s3.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I11",
+   "key": "e904fcf20de4",
+   "item": "screen_en",
+   "where": "l19, l21–l22",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l19, l21–l22"
+   ],
+   "evidence": [
+    "“Exam points”; “③'s exam error: 25× ②'s”; “Noise won't repeat”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "l19: remove `Exam points`. l21–l22: `③'s error: 25× ②'s`; at l22 also remove `Noise won't repeat`. The column heading already supplies “Exam.”",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“Exam points”; “③'s exam error: 25× ②'s”; “Noise won't repeat”",
+   "problem": "l19 has **five blocks**. l21 has **23 words**. l22 has **five blocks and 26 words**.",
+   "suggest": "l19: remove `Exam points`. l21–l22: `③'s error: 25× ②'s`; at l22 also remove `Noise won't repeat`. The column heading already supplies “Exam.”",
+   "judge_note": "a · l19 / l22：The 记录 \"5 blocks\" does not apply. The table is one block, so l19 has 3 blocks and l22 has 4.；b · l19, l21–l22：Not breaches: the table is one block, giving 18 / 19 / 22 words and 3–4 blocks. The rewrite \"③'s error: 25× ②'s\" keeps the possessive on the circled digit and drops \"exam\", which is the point of the title. Use a's \"Exam error: ③ is 25× ②\".",
+   "status": "implemented",
+   "solution": "s4：去掉「考题」与「噪声不会重演」两处图上注释；l21 标题「③ 的考试误差：② 的 25 倍」（英文 Exam error: ③ ≈ 25× ②），l22 换成「它背下了噪声，噪声不会重演」并给 ③ 行加「过拟合」标签与 ①「欠拟合」对称；两列拉开；英文 l23 标题「Underfit: fails both, easy to spot」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s4.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I12",
+   "key": "e56aed168f11",
+   "item": "screen_en",
+   "where": "l19 / l22",
+   "dim": "P1",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l19 / l22"
+   ],
+   "evidence": [
+    "title + caption + 3 table rows"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "No change",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "title + caption + 3 table rows",
+   "problem": "Counts as 5 blocks when rows are counted one by one; reads as one comparison table.",
+   "suggest": "No change",
+   "judge_note": "a · l19 / l22：The 记录 \"5 blocks\" does not apply. The table is one block, so l19 has 3 blocks and l22 has 4.；b · l19, l21–l22：Not breaches: the table is one block, giving 18 / 19 / 22 words and 3–4 blocks. The rewrite \"③'s error: 25× ②'s\" keeps the possessive on the circled digit and drops \"exam\", which is the point of the title. Use a's \"Exam error: ③ is 25× ②\".",
+   "status": "implemented",
+   "solution": "s4：去掉「考题」与「噪声不会重演」两处图上注释；l21 标题「③ 的考试误差：② 的 25 倍」（英文 Exam error: ③ ≈ 25× ②），l22 换成「它背下了噪声，噪声不会重演」并给 ③ 行加「过拟合」标签与 ①「欠拟合」对称；两列拉开；英文 l23 标题「Underfit: fails both, easy to spot」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s4.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I13",
+   "key": "c2e8abd6f7c9",
+   "item": "screen_en",
+   "where": "l19",
+   "dim": "P5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l19"
+   ],
+   "evidence": [
+    "\"Exam points\" chart label"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Move to an empty area below the curve",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Exam points\" chart label",
+   "problem": "Sits on a data dot and the curve.",
+   "suggest": "Move to an empty area below the curve",
+   "judge_note": "a · l19 / l22：The 记录 \"5 blocks\" does not apply. The table is one block, so l19 has 3 blocks and l22 has 4.；b · l19, l21–l22：Not breaches: the table is one block, giving 18 / 19 / 22 words and 3–4 blocks. The rewrite \"③'s error: 25× ②'s\" keeps the possessive on the circled digit and drops \"exam\", which is the point of the title. Use a's \"Exam error: ③ is 25× ②\".",
+   "status": "implemented",
+   "solution": "s4：去掉「考题」与「噪声不会重演」两处图上注释；l21 标题「③ 的考试误差：② 的 25 倍」（英文 Exam error: ③ ≈ 25× ②），l22 换成「它背下了噪声，噪声不会重演」并给 ③ 行加「过拟合」标签与 ①「欠拟合」对称；两列拉开；英文 l23 标题「Underfit: fails both, easy to spot」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s4.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I14",
+   "key": "925e739dbb28",
+   "item": "screen_en",
+   "where": "l21",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l21"
+   ],
+   "evidence": [
+    "\"③'s exam error: 25× ②'s\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Exam error: ③ is 25× ②\" (5), or \"Model ③: 25× the exam error\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"③'s exam error: 25× ②'s\"",
+   "problem": "Possessive on circled digits reads like code; a native viewer has to decode it.",
+   "suggest": "\"Exam error: ③ is 25× ②\" (5), or \"Model ③: 25× the exam error\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s4：去掉「考题」与「噪声不会重演」两处图上注释；l21 标题「③ 的考试误差：② 的 25 倍」（英文 Exam error: ③ ≈ 25× ②），l22 换成「它背下了噪声，噪声不会重演」并给 ③ 行加「过拟合」标签与 ①「欠拟合」对称；两列拉开；英文 l23 标题「Underfit: fails both, easy to spot」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s4.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I15",
+   "key": "87f29da60c5b",
+   "item": "screen_en",
+   "where": "l21–l22",
+   "dim": "P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l21–l22"
+   ],
+   "evidence": [
+    "\"0.53 0.54\" / \"0.05 0.07\" / \"0.00 1.80\""
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "Text unchanged; widen the column gap to at least 48 px and right-align each figure under its header",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "\"0.53 0.54\" / \"0.05 0.07\" / \"0.00 1.80\"",
+   "problem": "The practice and exam figures are about 10 px apart at large size, so each row reads as one long number string; the PRACTICE / EXAM headers do not separate them.",
+   "suggest": "Text unchanged; widen the column gap to at least 48 px and right-align each figure under its header",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s4：去掉「考题」与「噪声不会重演」两处图上注释；l21 标题「③ 的考试误差：② 的 25 倍」（英文 Exam error: ③ ≈ 25× ②），l22 换成「它背下了噪声，噪声不会重演」并给 ③ 行加「过拟合」标签与 ①「欠拟合」对称；两列拉开；英文 l23 标题「Underfit: fails both, easy to spot」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s4.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I16",
+   "key": "8d667fe2839a",
+   "item": "screen_en",
+   "where": "l23",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "\"Underfit: bad on both, easy to spot\" (7 words, h1)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Underfit: fails both, easy to spot\" (6); or \"Underfit: bad everywhere\" / \"Overfit: aces practice, hard to catch\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Underfit: bad on both, easy to spot\" (7 words, h1)",
+   "problem": "Over the 6-word title limit; \"both\" has no antecedent on screen; both lines are h1 at the same size, so nothing reads first.",
+   "suggest": "\"Underfit: fails both, easy to spot\" (6); or \"Underfit: bad everywhere\" / \"Overfit: aces practice, hard to catch\"",
+   "judge_note": "b · l23 rewrite：\"Underfit: poor practice and exam / Overfit: strong practice, weak exam\" drops easy-to-spot / hard-to-catch, which is the contrast the narration is drawing (\"sneakier\"). Use a's \"Underfit: fails both, easy to spot\" (6).",
+   "status": "implemented",
+   "solution": "s4：去掉「考题」与「噪声不会重演」两处图上注释；l21 标题「③ 的考试误差：② 的 25 倍」（英文 Exam error: ③ ≈ 25× ②），l22 换成「它背下了噪声，噪声不会重演」并给 ③ 行加「过拟合」标签与 ①「欠拟合」对称；两列拉开；英文 l23 标题「Underfit: fails both, easy to spot」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s4.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I17",
+   "key": "2c7a8ceee231",
+   "item": "screen_en",
+   "where": "l23",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "“Underfit: bad on both, easy to spot”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "`Underfit: poor practice and exam` / `Overfit: strong practice, weak exam`",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“Underfit: bad on both, easy to spot”",
+   "problem": "**Seven-word title**, above six. Both comparison lines also retain spoken explanatory tails.",
+   "suggest": "`Underfit: poor practice and exam` / `Overfit: strong practice, weak exam`",
+   "judge_note": "b · l23 rewrite：\"Underfit: poor practice and exam / Overfit: strong practice, weak exam\" drops easy-to-spot / hard-to-catch, which is the contrast the narration is drawing (\"sneakier\"). Use a's \"Underfit: fails both, easy to spot\" (6).",
+   "status": "implemented",
+   "solution": "s4：去掉「考题」与「噪声不会重演」两处图上注释；l21 标题「③ 的考试误差：② 的 25 倍」（英文 Exam error: ③ ≈ 25× ②），l22 换成「它背下了噪声，噪声不会重演」并给 ③ 行加「过拟合」标签与 ①「欠拟合」对称；两列拉开；英文 l23 标题「Underfit: fails both, easy to spot」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s4.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I18",
+   "key": "0d6644979e09",
+   "item": "screen_en",
+   "where": "l27",
+   "dim": "P1, P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "“The student knows he's memorizing” / “The model doesn't”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "`Student: deliberate memorization` / `Model: no awareness`",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“The student knows he's memorizing” / “The model doesn't”",
+   "problem": "Both are complete narration sentences. Shortening the old paragraph has not established a division between spoken explanation and screen structure.",
+   "suggest": "`Student: deliberate memorization` / `Model: no awareness`",
+   "judge_note": "b · l27：必改 is too high. The two-line contrast is within the limits and does carry structure, and \"Student: deliberate memorization / Model: no awareness\" is stiffer than the original. Downgrade to 建议; if it is changed, use \"Student: knows he's memorizing / Model: no idea\".",
+   "status": "implemented",
+   "solution": "s5：比方的局限写成两个标签（学生：知道在背 / 模型：不知道）；「相近的另一种毛病」；猫的两句标点统一「“猫！” / “不是猫！”」；英文 Maybe his rule；结论词「过拟合 / 捷径学习」放大成 h2",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I19",
+   "key": "0458002152b3",
+   "item": "screen_en",
+   "where": "l27",
+   "dim": "P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "\"The student knows he's memorizing / The model doesn't\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"The student knows he's memorizing / The model doesn't\"",
+   "problem": "Verbatim with the narration but it is a clean two-line contrast and within limits.",
+   "suggest": "Keep",
+   "judge_note": "b · l27：必改 is too high. The two-line contrast is within the limits and does carry structure, and \"Student: deliberate memorization / Model: no awareness\" is stiffer than the original. Downgrade to 建议; if it is changed, use \"Student: knows he's memorizing / Model: no idea\".",
+   "status": "implemented",
+   "solution": "s5：比方的局限写成两个标签（学生：知道在背 / 模型：不知道）；「相近的另一种毛病」；猫的两句标点统一「“猫！” / “不是猫！”」；英文 Maybe his rule；结论词「过拟合 / 捷径学习」放大成 h2",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I20",
+   "key": "081de9e8db8e",
+   "item": "screen_en",
+   "where": "l28",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l28"
+   ],
+   "evidence": [
+    "eyebrow \"A RELATED, BUT DIFFERENT, PROBLEM\""
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "\"A RELATED PROBLEM\"",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "eyebrow \"A RELATED, BUT DIFFERENT, PROBLEM\"",
+   "problem": "The commas around \"but different\" read heavily in a label. The narration only says \"a related problem\".",
+   "suggest": "\"A RELATED PROBLEM\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s5：比方的局限写成两个标签（学生：知道在背 / 模型：不知道）；「相近的另一种毛病」；猫的两句标点统一「“猫！” / “不是猫！”」；英文 Maybe his rule；结论词「过拟合 / 捷径学习」放大成 h2",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I21",
+   "key": "8e9519c75c78",
+   "item": "screen_en",
+   "where": "l29",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l29"
+   ],
+   "evidence": [
+    "\"Cat!\" / \"Not a cat.\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Cat!\" / \"Not a cat!\" or drop both marks",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Cat!\" / \"Not a cat.\"",
+   "problem": "Inconsistent terminal punctuation.",
+   "suggest": "\"Cat!\" / \"Not a cat!\" or drop both marks",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s5：比方的局限写成两个标签（学生：知道在背 / 模型：不知道）；「相近的另一种毛病」；猫的两句标点统一「“猫！” / “不是猫！”」；英文 Maybe his rule；结论词「过拟合 / 捷径学习」放大成 h2",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I22",
+   "key": "4a9ae3e9caed",
+   "item": "screen_en",
+   "where": "l29",
+   "dim": "P2, P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2, P4",
+   "shots": [
+    "l29"
+   ],
+   "evidence": [
+    "“His likely rule: sofa = cat”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "`Possible rule: sofa = cat`",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“His likely rule: sofa = cat”",
+   "problem": "“Likely” is stronger than the narration’s “may learn.” The screen should preserve possibility.",
+   "suggest": "`Possible rule: sofa = cat`",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s5：比方的局限写成两个标签（学生：知道在背 / 模型：不知道）；「相近的另一种毛病」；猫的两句标点统一「“猫！” / “不是猫！”」；英文 Maybe his rule；结论词「过拟合 / 捷径学习」放大成 h2",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I23",
+   "key": "b7e01d715dba",
+   "item": "screen_en",
+   "where": "l29",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l29"
+   ],
+   "evidence": [
+    "“Cat!” / “Not a cat.”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "`“Cat”` / `“Not a cat”`",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“Cat!” / “Not a cat.”",
+   "problem": "The punctuation mixes an exclamation with a trailing period in two parallel response labels.",
+   "suggest": "`“Cat”` / `“Not a cat”`",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s5：比方的局限写成两个标签（学生：知道在背 / 模型：不知道）；「相近的另一种毛病」；猫的两句标点统一「“猫！” / “不是猫！”」；英文 Maybe his rule；结论词「过拟合 / 捷径学习」放大成 h2",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I24",
+   "key": "5e9c36008ee0",
+   "item": "screen_en",
+   "where": "l31–l35",
+   "dim": "P1, P3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P3",
+   "shots": [
+    "l31–l35"
+   ],
+   "evidence": [
+    "“Complexity vs. error”; “300”; “random point sets”; curve, region and axis labels"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "l31: `300 random point sets` + `Model complexity`. l32–l33: `Complexity vs. error` / `Practice error` / `Exam error` / `Model complexity`. l34: `Overfitting warning` / `Practice: low error` / `Exam: high error` / `Model complexity`. l35: `Too simple: both errors high` plus the two curve labels and axis label. Remove superseded panel text and region labels.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“Complexity vs. error”; “300”; “random point sets”; curve, region and axis labels",
+   "problem": "Chart labels are not ticks. Counting them gives **5/6/8/7/10 blocks** across l31–l35. Word totals are **17/19/23/27/36**; l33–l35 exceed 22. The extraction’s blanket chart exclusion hides these breaches.",
+   "suggest": "l31: `300 random point sets` + `Model complexity`. l32–l33: `Complexity vs. error` / `Practice error` / `Exam error` / `Model complexity`. l34: `Overfitting warning` / `Practice: low error` / `Exam: high error` / `Model complexity`. l35: `Too simple: both errors high` plus the two curve labels and axis label. Remove superseded panel text and region labels.",
+   "judge_note": "b · l31–l35 (block and word counts)：b counted eyebrows and treated each chart label as its own block. Under counting ruling 2, l31–l34 are 13 / 15 / 19 / 20 words with at most 4 blocks. Only l35 breaches; see 补充问题 for the correct count and rewrite. b's l34 rewrite \"Practice: low error / Exam: high error\" is accepted.",
+   "status": "implemented",
+   "solution": "s6：标题按当句换成结论（模型越复杂，误差怎么变？→ 过拟合信号：练习低，考试高 → 太简单：两种误差都高），撤掉右侧说明栏；300 只留「组随机的点」，去掉中位数；轴标题缩成「模型复杂度」，去掉多项式次数；「刚刚好」改为口播的「最准」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I25",
+   "key": "0bb43ab5794b",
+   "item": "screen_en",
+   "where": "l31–l35",
+   "dim": "P2, P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2, P4",
+   "shots": [
+    "l31–l35"
+   ],
+   "evidence": [
+    "“median shown”; “Model complexity (polynomial degree)”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Remove `median shown`; shorten the axis to `Model complexity`.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“median shown”; “Model complexity (polynomial degree)”",
+   "problem": "Both introduce unexplained technical vocabulary beyond the narration. Neither is necessary to read the intended contrast.",
+   "suggest": "Remove `median shown`; shorten the axis to `Model complexity`.",
+   "judge_note": "b · l31–l35 (block and word counts)：b counted eyebrows and treated each chart label as its own block. Under counting ruling 2, l31–l34 are 13 / 15 / 19 / 20 words with at most 4 blocks. Only l35 breaches; see 补充问题 for the correct count and rewrite. b's l34 rewrite \"Practice: low error / Exam: high error\" is accepted.",
+   "status": "implemented",
+   "solution": "s6：标题按当句换成结论（模型越复杂，误差怎么变？→ 过拟合信号：练习低，考试高 → 太简单：两种误差都高），撤掉右侧说明栏；300 只留「组随机的点」，去掉中位数；轴标题缩成「模型复杂度」，去掉多项式次数；「刚刚好」改为口播的「最准」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I26",
+   "key": "567c8c261008",
+   "item": "screen_en",
+   "where": "l31–l35",
+   "dim": "P1, P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "l31–l35"
+   ],
+   "evidence": [
+    "\"Model complexity (polynomial degree)\""
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "\"Model complexity\"",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "\"Model complexity (polynomial degree)\"",
+   "problem": "Shortening the axis title to 2 words gives every chart screen 2 words of headroom and removes jargon the narration never uses.",
+   "suggest": "\"Model complexity\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s6：标题按当句换成结论（模型越复杂，误差怎么变？→ 过拟合信号：练习低，考试高 → 太简单：两种误差都高），撤掉右侧说明栏；300 只留「组随机的点」，去掉中位数；轴标题缩成「模型复杂度」，去掉多项式次数；「刚刚好」改为口播的「最准」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I27",
+   "key": "6fe142e70f44",
+   "item": "screen_en",
+   "where": "l31",
+   "dim": "P2, P5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2, P5",
+   "shots": [
+    "l31"
+   ],
+   "evidence": [
+    "\"median shown\"; \"random point / sets\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"median\" kept only if narrated; widen the h2 so \"random point sets\" stays on one line",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"median shown\"; \"random point / sets\"",
+   "problem": "\"median\" is not in the narration and is unexplained; h2 wraps \"sets\" alone.",
+   "suggest": "\"median\" kept only if narrated; widen the h2 so \"random point sets\" stays on one line",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s6：标题按当句换成结论（模型越复杂，误差怎么变？→ 过拟合信号：练习低，考试高 → 太简单：两种误差都高），撤掉右侧说明栏；300 只留「组随机的点」，去掉中位数；轴标题缩成「模型复杂度」，去掉多项式次数；「刚刚好」改为口播的「最准」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I28",
+   "key": "d03cdeeb35bb",
+   "item": "screen_en",
+   "where": "l34",
+   "dim": "P3, P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3, P5",
+   "shots": [
+    "l34"
+   ],
+   "evidence": [
+    "“Practice error / low / Exam error high”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "`Practice: low error` / `Exam: high error`, each on one line",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“Practice error / low / Exam error high”",
+   "problem": "The screenshot still isolates **“low”** on its own line. The two halves of the contrast receive unequal shapes and are harder to scan.",
+   "suggest": "`Practice: low error` / `Exam: high error`, each on one line",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s6：标题按当句换成结论（模型越复杂，误差怎么变？→ 过拟合信号：练习低，考试高 → 太简单：两种误差都高），撤掉右侧说明栏；300 只留「组随机的点」，去掉中位数；轴标题缩成「模型复杂度」，去掉多项式次数；「刚刚好」改为口播的「最准」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I29",
+   "key": "59709e90d677",
+   "item": "screen_en",
+   "where": "l35",
+   "dim": "P1, P5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P5",
+   "shots": [
+    "l35"
+   ],
+   "evidence": [
+    "\"Complexity vs. error\" + \"Is simpler always better?\" + \"No: too simple, both errors high\" + \"Aim for the middle\" + Underfit / Just right / Overfit / Exam error / Practice error + \"Model complexity (polynomial degree)\""
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "h2 \"Simpler always better? No\" (4); body \"Too simple: both errors high\" (5, one line); delete \"Aim for the middle\"; axis title \"Model complexity\". Total 22 words, 4 blocks.",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "\"Complexity vs. error\" + \"Is simpler always better?\" + \"No: too simple, both errors high\" + \"Aim for the middle\" + Underfit / Just right / Overfit / Exam error / Practice error + \"Model complexity (polynomial degree)\"",
+   "problem": "Under counting ruling 2 this is 29 words and 5 blocks (title, h2, two body lines, chart). The green \"Just right\" zone already says \"aim for the middle\". a missed this screen; b's l31–l35 counts were wrong for l31–l34.",
+   "suggest": "h2 \"Simpler always better? No\" (4); body \"Too simple: both errors high\" (5, one line); delete \"Aim for the middle\"; axis title \"Model complexity\". Total 22 words, 4 blocks.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s6：标题按当句换成结论（模型越复杂，误差怎么变？→ 过拟合信号：练习低，考试高 → 太简单：两种误差都高），撤掉右侧说明栏；300 只留「组随机的点」，去掉中位数；轴标题缩成「模型复杂度」，去掉多项式次数；「刚刚好」改为口播的「最准」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I30",
+   "key": "2a22ad7f094e",
+   "item": "screen_en",
+   "where": "l35",
+   "dim": "P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l35"
+   ],
+   "evidence": [
+    "\"No: too simple, both errors / high\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Narrow the font or write \"No: too simple, errors high\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"No: too simple, both errors / high\"",
+   "problem": "\"high\" wraps alone on its own line.",
+   "suggest": "Narrow the font or write \"No: too simple, errors high\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s6：标题按当句换成结论（模型越复杂，误差怎么变？→ 过拟合信号：练习低，考试高 → 太简单：两种误差都高），撤掉右侧说明栏；300 只留「组随机的点」，去掉中位数；轴标题缩成「模型复杂度」，去掉多项式次数；「刚刚好」改为口播的「最准」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I31",
+   "key": "ac939962d435",
+   "item": "screen_en",
+   "where": "l35 / l31–l35",
+   "dim": "P5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l35 / l31–l35"
+   ],
+   "evidence": [
+    "\"Exam error\" label over its curve; axis title \"Model complexity (polynomial degree)\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Move the label above the curve; add bottom padding to the chart box",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Exam error\" label over its curve; axis title \"Model complexity (polynomial degree)\"",
+   "problem": "Label crosses the line it names; axis title descenders appear clipped at the chart bottom edge.",
+   "suggest": "Move the label above the curve; add bottom padding to the chart box",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "见各场景改动",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I32",
+   "key": "be881b2fe0e5",
+   "item": "screen_en",
+   "where": "l40",
+   "dim": "P3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l40"
+   ],
+   "evidence": [
+    "Eyebrow \"GOOD COMPRESSION\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"04 · GOOD COMPRESSION\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Eyebrow \"GOOD COMPRESSION\"",
+   "problem": "Loses the \"04 ·\" chapter tag that l36–l39 carry.",
+   "suggest": "\"04 · GOOD COMPRESSION\"",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "l40 是本章结论屏，眉题「好的压缩」已标明所在，不再加章号",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I33",
+   "key": "c1922f312f69",
+   "item": "screen_en",
+   "where": "l41",
+   "dim": "P1, P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "l41"
+   ],
+   "evidence": [
+    "“It has caused real trouble”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "`Real-world failures`",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“It has caused real trouble”",
+   "problem": "A complete, generic sentence that closely repeats the narration and supplies no useful outline structure.",
+   "suggest": "`Real-world failures`",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s8：页眉「05 · 现实里的祸」常驻在页签前；l41 改为「三个真实案例」；l42 加「用搜索记录估流感」；「5000万 远多于 1152」去掉箭头与多余空格；l47 中文「看胸片，就认得出医院」（口播没说「指纹」），英文 A hospital fingerprint，「> 99.9%」；英文 l48 Maybe spotting hospitals, not disease；l49 眉题「标记成了线索」/ The ink clue；l50 眉题只写「捷径学习」，正文「熟悉的环境里，也许考得不错」与口播一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s8.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I34",
+   "key": "a286582db612",
+   "item": "screen_en",
+   "where": "l41",
+   "dim": "P2, P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2, P4",
+   "shots": [
+    "l41"
+   ],
+   "evidence": [
+    "\"It has caused real trouble\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Real-world trouble\" (2); or \"Overfitting has real costs\" (4)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"It has caused real trouble\"",
+   "problem": "\"It\" has no antecedent on screen (narration says \"Problems like this\"); still a restated narration sentence.",
+   "suggest": "\"Real-world trouble\" (2); or \"Overfitting has real costs\" (4)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s8：页眉「05 · 现实里的祸」常驻在页签前；l41 改为「三个真实案例」；l42 加「用搜索记录估流感」；「5000万 远多于 1152」去掉箭头与多余空格；l47 中文「看胸片，就认得出医院」（口播没说「指纹」），英文 A hospital fingerprint，「> 99.9%」；英文 l48 Maybe spotting hospitals, not disease；l49 眉题「标记成了线索」/ The ink clue；l50 眉题只写「捷径学习」，正文「熟悉的环境里，也许考得不错」与口播一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s8.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I35",
+   "key": "7627464285e5",
+   "item": "screen_en",
+   "where": "l43",
+   "dim": "P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l43"
+   ],
+   "evidence": [
+    "\"1,152 data points\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"1,152 data points\"",
+   "problem": "Narration says \"about 1,100\"; the screen is exact. Acceptable (precise on screen, rounded aloud).",
+   "suggest": "Keep",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "1152 是论文原数，口播说约一千一百，屏上保留精确值",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I36",
+   "key": "810f0b91a0d4",
+   "item": "screen_en",
+   "where": "l44",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l44"
+   ],
+   "evidence": [
+    "“The researchers: overfitting”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "`Overfitting`",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“The researchers: overfitting”",
+   "problem": "Awkward attribution shorthand: it briefly reads as though the researchers themselves are overfitting. The source already provides attribution.",
+   "suggest": "`Overfitting`",
+   "judge_note": "b · l44 rewrite：\"Overfitting\" on its own loses the fact that this was the researchers' diagnosis. Use \"Their diagnosis: overfitting\".",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "研究者原话由引语承担，下一行只标出处判断；裁决人驳回了 b 的改写",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I37",
+   "key": "47ba5f638b15",
+   "item": "screen_en",
+   "where": "l45",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l45"
+   ],
+   "evidence": [
+    "“2011-2013”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "`2011–2013`",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“2011-2013”",
+   "problem": "The date range still uses a hyphen rather than the requested en dash.",
+   "suggest": "`2011–2013`",
+   "judge_note": "b · l45：The \"2011-2013\" hyphen claim is false. The material and scenes/web/s8.html line 37 both use an en dash, \"2011–2013\".",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决：2011–2013 用的是连接号，不成立",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I38",
+   "key": "6c912ec01a7a",
+   "item": "screen_en",
+   "where": "l47–l49",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l47–l49"
+   ],
+   "evidence": [
+    "Hospital and mole statistics with navigation, eyebrow and source"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "l47: replace the sentence with `Hospital fingerprint`—total **22**. l48: replace the interpretation with `Possible hospital shortcut` and shorten the eyebrow to `Pneumonia labels by hospital`—total **24**; also shorten the source to `Zech et al., 2018`—total **22**. l49: eyebrow `Inked harmless moles`; caption `Flagged as cancer`—total **21**, retaining the full source.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Hospital and mole statistics with navigation, eyebrow and source",
+   "problem": "Visible totals are **26 / 27 / 27 words**, respectively. These exceed 22 even though the central claims are much shorter than before.",
+   "suggest": "l47: replace the sentence with `Hospital fingerprint`—total **22**. l48: replace the interpretation with `Possible hospital shortcut` and shorten the eyebrow to `Pneumonia labels by hospital`—total **24**; also shorten the source to `Zech et al., 2018`—total **22**. l49: eyebrow `Inked harmless moles`; caption `Flagged as cancer`—total **21**, retaining the full source.",
+   "judge_note": "b · l47–l49 (word totals)：The 26 / 27 / 27 totals include the case tabs, eyebrow and source, which are exempt. The content is 7 / 8 / 8 words. The l47 \"Hospital fingerprint\" rewrite stands on P2 grounds alone. Shortening the l48 citation is unnecessary.",
+   "status": "implemented",
+   "solution": "s8：页眉「05 · 现实里的祸」常驻在页签前；l41 改为「三个真实案例」；l42 加「用搜索记录估流感」；「5000万 远多于 1152」去掉箭头与多余空格；l47 中文「看胸片，就认得出医院」（口播没说「指纹」），英文 A hospital fingerprint，「> 99.9%」；英文 l48 Maybe spotting hospitals, not disease；l49 眉题「标记成了线索」/ The ink clue；l50 眉题只写「捷径学习」，正文「熟悉的环境里，也许考得不错」与口播一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s8.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I39",
+   "key": "30e2c40455a3",
+   "item": "screen_en",
+   "where": "l47",
+   "dim": "P1, P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "l47"
+   ],
+   "evidence": [
+    "“The X-rays carry a hospital fingerprint”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "`Hospital fingerprint`",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“The X-rays carry a hospital fingerprint”",
+   "problem": "Within the ordinary-block cap, but still a complete explanatory sentence repeating the spoken claim. The important term can stand alone.",
+   "suggest": "`Hospital fingerprint`",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s8：页眉「05 · 现实里的祸」常驻在页签前；l41 改为「三个真实案例」；l42 加「用搜索记录估流感」；「5000万 远多于 1152」去掉箭头与多余空格；l47 中文「看胸片，就认得出医院」（口播没说「指纹」），英文 A hospital fingerprint，「> 99.9%」；英文 l48 Maybe spotting hospitals, not disease；l49 眉题「标记成了线索」/ The ink clue；l50 眉题只写「捷径学习」，正文「熟悉的环境里，也许考得不错」与口播一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s8.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I40",
+   "key": "77f1d4465362",
+   "item": "screen_en",
+   "where": "l47",
+   "dim": "P1, P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "l47"
+   ],
+   "evidence": [
+    "\"The X-rays carry a hospital fingerprint\" (6 words, h2)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"A hospital fingerprint\" (3)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"The X-rays carry a hospital fingerprint\" (6 words, h2)",
+   "problem": "A full subject-verb sentence, same wording as the l47 narration (only tense changed); the eyebrow already says \"A SEPARATE MODEL: WHICH HOSPITAL?\".",
+   "suggest": "\"A hospital fingerprint\" (3)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s8：页眉「05 · 现实里的祸」常驻在页签前；l41 改为「三个真实案例」；l42 加「用搜索记录估流感」；「5000万 远多于 1152」去掉箭头与多余空格；l47 中文「看胸片，就认得出医院」（口播没说「指纹」），英文 A hospital fingerprint，「> 99.9%」；英文 l48 Maybe spotting hospitals, not disease；l49 眉题「标记成了线索」/ The ink clue；l50 眉题只写「捷径学习」，正文「熟悉的环境里，也许考得不错」与口播一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s8.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I41",
+   "key": "8ac2164056dc",
+   "item": "screen_en",
+   "where": "l47",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l47"
+   ],
+   "evidence": [
+    "\"99.9%+\" with a grey detached \"+\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"> 99.9%\" (the narration says \"over 99.9 percent\")",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"99.9%+\" with a grey detached \"+\"",
+   "problem": "Non-standard notation; the \"+\" reads like a footnote mark (still open from previous I59).",
+   "suggest": "\"> 99.9%\" (the narration says \"over 99.9 percent\")",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s8：页眉「05 · 现实里的祸」常驻在页签前；l41 改为「三个真实案例」；l42 加「用搜索记录估流感」；「5000万 远多于 1152」去掉箭头与多余空格；l47 中文「看胸片，就认得出医院」（口播没说「指纹」），英文 A hospital fingerprint，「> 99.9%」；英文 l48 Maybe spotting hospitals, not disease；l49 眉题「标记成了线索」/ The ink clue；l50 眉题只写「捷径学习」，正文「熟悉的环境里，也许考得不错」与口播一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s8.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I42",
+   "key": "33ecf8aa9231",
+   "item": "screen_en",
+   "where": "l47",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l47"
+   ],
+   "evidence": [
+    "“99.9%+”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "`>99.9%`",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“99.9%+”",
+   "problem": "The oversized grey plus remains detached-looking. It can suggest an approximate threshold rather than the narration’s explicit “over 99.9 percent.”",
+   "suggest": "`>99.9%`",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s8：页眉「05 · 现实里的祸」常驻在页签前；l41 改为「三个真实案例」；l42 加「用搜索记录估流感」；「5000万 远多于 1152」去掉箭头与多余空格；l47 中文「看胸片，就认得出医院」（口播没说「指纹」），英文 A hospital fingerprint，「> 99.9%」；英文 l48 Maybe spotting hospitals, not disease；l49 眉题「标记成了线索」/ The ink clue；l50 眉题只写「捷径学习」，正文「熟悉的环境里，也许考得不错」与口播一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s8.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I43",
+   "key": "c4f1deaa35e1",
+   "item": "screen_en",
+   "where": "l48",
+   "dim": "P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l48"
+   ],
+   "evidence": [
+    "“Partly recognizing hospitals, not disease”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "`Possible hospital shortcut`",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“Partly recognizing hospitals, not disease”",
+   "problem": "This asserts the inferred explanation. Narration explicitly says success **“likely”** came partly from recognizing the hospital. “Partly” limits quantity, not certainty.",
+   "suggest": "`Possible hospital shortcut`",
+   "judge_note": "b · l48 rewrite：\"Possible hospital shortcut\" is vague, and it uses \"shortcut\" before l50 introduces that term. a's \"Likely recognizing hospitals, not disease\" restores the hedge and keeps the claim.",
+   "status": "implemented",
+   "solution": "s8：页眉「05 · 现实里的祸」常驻在页签前；l41 改为「三个真实案例」；l42 加「用搜索记录估流感」；「5000万 远多于 1152」去掉箭头与多余空格；l47 中文「看胸片，就认得出医院」（口播没说「指纹」），英文 A hospital fingerprint，「> 99.9%」；英文 l48 Maybe spotting hospitals, not disease；l49 眉题「标记成了线索」/ The ink clue；l50 眉题只写「捷径学习」，正文「熟悉的环境里，也许考得不错」与口播一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s8.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I44",
+   "key": "376f0630956b",
+   "item": "screen_en",
+   "where": "l48",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l48"
+   ],
+   "evidence": [
+    "\"Partly recognizing hospitals, not disease\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Likely recognizing hospitals, not disease\" (5)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Partly recognizing hospitals, not disease\"",
+   "problem": "States as fact what the narration hedges (\"likely came from\").",
+   "suggest": "\"Likely recognizing hospitals, not disease\" (5)",
+   "judge_note": "b · l48 rewrite：\"Possible hospital shortcut\" is vague, and it uses \"shortcut\" before l50 introduces that term. a's \"Likely recognizing hospitals, not disease\" restores the hedge and keeps the claim.",
+   "status": "implemented",
+   "solution": "s8：页眉「05 · 现实里的祸」常驻在页签前；l41 改为「三个真实案例」；l42 加「用搜索记录估流感」；「5000万 远多于 1152」去掉箭头与多余空格；l47 中文「看胸片，就认得出医院」（口播没说「指纹」），英文 A hospital fingerprint，「> 99.9%」；英文 l48 Maybe spotting hospitals, not disease；l49 眉题「标记成了线索」/ The ink clue；l50 眉题只写「捷径学习」，正文「熟悉的环境里，也许考得不错」与口播一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s8.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I45",
+   "key": "2290a1d26b2b",
+   "item": "screen_en",
+   "where": "l49",
+   "dim": "P1, P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "l49"
+   ],
+   "evidence": [
+    "eyebrow \"DOCTORS OFTEN INK SUSPICIOUS MOLES\""
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "\"THE INK CLUE\"",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "eyebrow \"DOCTORS OFTEN INK SUSPICIOUS MOLES\"",
+   "problem": "This is a narration sentence (\"Doctors often mark suspicious moles with ink\") styled as an eyebrow. The eyebrow exemption covers labels, not statements.",
+   "suggest": "\"THE INK CLUE\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s8：页眉「05 · 现实里的祸」常驻在页签前；l41 改为「三个真实案例」；l42 加「用搜索记录估流感」；「5000万 远多于 1152」去掉箭头与多余空格；l47 中文「看胸片，就认得出医院」（口播没说「指纹」），英文 A hospital fingerprint，「> 99.9%」；英文 l48 Maybe spotting hospitals, not disease；l49 眉题「标记成了线索」/ The ink clue；l50 眉题只写「捷径学习」，正文「熟悉的环境里，也许考得不错」与口播一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s8.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I46",
+   "key": "bec709c76194",
+   "item": "screen_en",
+   "where": "l50",
+   "dim": "P1, P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "l50"
+   ],
+   "evidence": [
+    "“Can fail somewhere new” / “The clue only holds in the data at hand”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Eyebrow: `Shortcut learning`; title: `Familiar setting: possible success`; body: `New setting: possible failure`. With the case tabs retained, this is **18 words**.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“Can fail somewhere new” / “The clue only holds in the data at hand”",
+   "problem": "**26 words** including navigation and eyebrow. The nine-word body is a complete explanatory sentence. “Only … the data at hand” also suggests a training-data-only clue, whereas narration allows success in familiar new settings.",
+   "suggest": "Eyebrow: `Shortcut learning`; title: `Familiar setting: possible success`; body: `New setting: possible failure`. With the case tabs retained, this is **18 words**.",
+   "judge_note": "b · l50：The 26-word count is rejected (the content is 13 words). The P2 problem stands, but \"Familiar setting: possible success / New setting: possible failure\" is clumsy and drops the term. Use eyebrow \"X-RAY AND MOLE\", h1 \"Shortcut learning\", body \"Fine in familiar settings, fails somewhere new\" (7).",
+   "status": "implemented",
+   "solution": "s8：页眉「05 · 现实里的祸」常驻在页签前；l41 改为「三个真实案例」；l42 加「用搜索记录估流感」；「5000万 远多于 1152」去掉箭头与多余空格；l47 中文「看胸片，就认得出医院」（口播没说「指纹」），英文 A hospital fingerprint，「> 99.9%」；英文 l48 Maybe spotting hospitals, not disease；l49 眉题「标记成了线索」/ The ink clue；l50 眉题只写「捷径学习」，正文「熟悉的环境里，也许考得不错」与口播一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s8.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I47",
+   "key": "ad0c9a19607d",
+   "item": "screen_en",
+   "where": "l52–l55",
+   "dim": "P1, P3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P3",
+   "shots": [
+    "l52–l55"
+   ],
+   "evidence": [
+    "“Three common ways”; safeguard headings; “Train / Valid. / Test”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "l52: remove the generic title and duplicate caption; use `Training: fit` / `Validation: choose` / `Test: final check`. l53: replace the card text with `Demo shortcut` / `Test-based model selection` / `Avoid in real projects`. l54–l55: remove the generic title and inactive bar labels; retain the safeguard headings and diagrams.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“Three common ways”; safeguard headings; “Train / Valid. / Test”",
+   "problem": "The three bar labels are category labels, not ticks. Counting them gives **6/6/6/7 main blocks**. Totals including eyebrows are **23/24/23/27 words**, respectively. Even grouping the bar as one block leaves l55 at five blocks.",
+   "suggest": "l52: remove the generic title and duplicate caption; use `Training: fit` / `Validation: choose` / `Test: final check`. l53: replace the card text with `Demo shortcut` / `Test-based model selection` / `Avoid in real projects`. l54–l55: remove the generic title and inactive bar labels; retain the safeguard headings and diagrams.",
+   "judge_note": "b · l52–l55：The 6–7 blocks and 23–27 words come from counting eyebrows and each bar label. The real totals are 16 / 17 / 14 / 17 words: the three cards are one list block and the bar is one chart block. The l52 rewrite drops \"mock exam\", the narration's own analogy. The l53 rewrite adds a block and the jargon \"test-based model selection\". Both are worse. The \"Valid.\" to \"Validation\" point stands.",
+   "status": "implemented",
+   "solution": "s9：三张卡各只留一行（① 验证集：模拟考 / ② 更多、更多样的数据 / ③ 正则化：惩罚太复杂）；英文柱条 Valid. 改 Mock；l53 英文 Our experiment: picked by exam score",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s9.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I48",
+   "key": "e1c93e352274",
+   "item": "screen_en",
+   "where": "l52–l55",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l52–l55"
+   ],
+   "evidence": [
+    "“Train / Valid. / Test”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "`Training / Validation / Test`",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“Train / Valid. / Test”",
+   "problem": "“Valid.” reads naturally as the adjective “valid,” not as a clear beginner-facing abbreviation for “validation.” These are also inconsistent forms.",
+   "suggest": "`Training / Validation / Test`",
+   "judge_note": "b · l52–l55：The 6–7 blocks and 23–27 words come from counting eyebrows and each bar label. The real totals are 16 / 17 / 14 / 17 words: the three cards are one list block and the bar is one chart block. The l52 rewrite drops \"mock exam\", the narration's own analogy. The l53 rewrite adds a block and the jargon \"test-based model selection\". Both are worse. The \"Valid.\" to \"Validation\" point stands.",
+   "status": "implemented",
+   "solution": "s9：三张卡各只留一行（① 验证集：模拟考 / ② 更多、更多样的数据 / ③ 正则化：惩罚太复杂）；英文柱条 Valid. 改 Mock；l53 英文 Our experiment: picked by exam score",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s9.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I49",
+   "key": "20f26eeee39e",
+   "item": "screen_en",
+   "where": "l53",
+   "dim": "P1, P2, P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2, P4",
+   "shots": [
+    "l53"
+   ],
+   "evidence": [
+    "“Our demo picked by exam score. Don't.”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "`Demo shortcut: test-based model selection`",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“Our demo picked by exam score. Don't.”",
+   "problem": "Two sentences, including an abrupt one-word command. “Demo picked” also drops the object and makes the presentation sound clipped rather than concise.",
+   "suggest": "`Demo shortcut: test-based model selection`",
+   "judge_note": "a · l53 rewrite：\"Our demo used exam score – don't\" brings back a spaced dash and is still two clauses. Use \"Demo only: model picked by exam score\" (7).",
+   "status": "implemented",
+   "solution": "s9：三张卡各只留一行（① 验证集：模拟考 / ② 更多、更多样的数据 / ③ 正则化：惩罚太复杂）；英文柱条 Valid. 改 Mock；l53 英文 Our experiment: picked by exam score",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s9.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I50",
+   "key": "72ad683c68e2",
+   "item": "screen_en",
+   "where": "l53",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l53"
+   ],
+   "evidence": [
+    "\"Our demo picked by exam score. Don't.\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Our demo used exam score – don't\" (6); or \"Demo cheated: picked by exam score\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Our demo picked by exam score. Don't.\"",
+   "problem": "Two sentences with terminal periods; siblings have none; \"Don't.\" alone is stranded.",
+   "suggest": "\"Our demo used exam score – don't\" (6); or \"Demo cheated: picked by exam score\"",
+   "judge_note": "a · l53 rewrite：\"Our demo used exam score – don't\" brings back a spaced dash and is still two clauses. Use \"Demo only: model picked by exam score\" (7).",
+   "status": "implemented",
+   "solution": "s9：三张卡各只留一行（① 验证集：模拟考 / ② 更多、更多样的数据 / ③ 正则化：惩罚太复杂）；英文柱条 Valid. 改 Mock；l53 英文 Our experiment: picked by exam score",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s9.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I51",
+   "key": "cb33fe77fe2f",
+   "item": "screen_en",
+   "where": "l54–l55",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l54–l55"
+   ],
+   "evidence": [
+    "“Keep a mock exam” / “More data, more variety” / “Penalize complex curves”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "`Keep a mock exam` / `Collect more varied data` / `Penalize complex curves`",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“Keep a mock exam” / “More data, more variety” / “Penalize complex curves”",
+   "problem": "The middle item is a noun phrase between two imperatives.",
+   "suggest": "`Keep a mock exam` / `Collect more varied data` / `Penalize complex curves`",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s9：三张卡各只留一行（① 验证集：模拟考 / ② 更多、更多样的数据 / ③ 正则化：惩罚太复杂）；英文柱条 Valid. 改 Mock；l53 英文 Our experiment: picked by exam score",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s9.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I52",
+   "key": "a2cdc0abac82",
+   "item": "screen_en",
+   "where": "l55",
+   "dim": "P3, P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3, P4",
+   "shots": [
+    "l55"
+   ],
+   "evidence": [
+    "\"② MORE DATA\" + \"More data, more variety\"; headings \"Keep a mock exam / More data, more variety / Penalize complex curves\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Heading 2: \"Collect more varied data\" (4); eyebrow \"② DATA\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"② MORE DATA\" + \"More data, more variety\"; headings \"Keep a mock exam / More data, more variety / Penalize complex curves\"",
+   "problem": "Eyebrow repeats the heading; headings mix imperative and noun phrase (previous I71 not fully fixed).",
+   "suggest": "Heading 2: \"Collect more varied data\" (4); eyebrow \"② DATA\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s9：三张卡各只留一行（① 验证集：模拟考 / ② 更多、更多样的数据 / ③ 正则化：惩罚太复杂）；英文柱条 Valid. 改 Mock；l53 英文 Our experiment: picked by exam score",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s9.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I53",
+   "key": "7fff23b15e5c",
+   "item": "screen_en",
+   "where": "l55 / l52",
+   "dim": "P4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l55 / l52"
+   ],
+   "evidence": [
+    "\"Valid.\" in the Train / Valid. / Test bar"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Val.\" or \"Validation\" if the bar can widen",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Valid.\" in the Train / Valid. / Test bar",
+   "problem": "The dot-abbreviation reads as the adjective \"valid\".",
+   "suggest": "\"Val.\" or \"Validation\" if the bar can widen",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s9：三张卡各只留一行（① 验证集：模拟考 / ② 更多、更多样的数据 / ③ 正则化：惩罚太复杂）；英文柱条 Valid. 改 Mock；l53 英文 Our experiment: picked by exam score",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s9.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I54",
+   "key": "cd7c04588ff2",
+   "item": "screen_zh",
+   "where": "agenda",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "agenda"
+   ],
+   "evidence": [
+    "「本期内容」及01—06六项目录"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "拆成两屏，每屏三项，章名原样保留。第一页：**01 过拟合是什么／02 打个比方／03 两条误差线**；第二页：**04 换个角度／05 现实里的祸／06 怎么发现，怎么防**。「本期内容」改作页眉小标签。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "「本期内容」及01—06六项目录",
+   "problem": "标题加六行，共7块；按材料计法约41字。六章一致性修好了，但硬上限仍未满足。",
+   "suggest": "拆成两屏，每屏三项，章名原样保留。第一页：**01 过拟合是什么／02 打个比方／03 两条误差线**；第二页：**04 换个角度／05 现实里的祸／06 怎么发现，怎么防**。「本期内容」改作页眉小标签。",
+   "judge_note": "b · agenda：按本裁定，目录清单算 1 块、序号不计字，共 35 字、2 块，不超限。拆成两屏会打断「全片一共六章」的总览，也违背上一轮裁决「目录写 6 行、与章节卡一致」的要求，改了反而更差。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同上：目录清单按裁决算 1 块，35 字",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I55",
+   "key": "361b4f8a2d40",
+   "item": "screen_zh",
+   "where": "outro",
+   "dim": "P1、P2、P3、P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P2、P3、P4",
+   "shots": [
+    "outro"
+   ],
+   "evidence": [
+    "「过拟合，就像连印错的都背了下来，还把它们当成了规律。」"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "主标题：**过拟合**；记忆短语：**连印错的也背，还当规律**；预告：**下一期：强化学习**。删除原整句及句号。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "「过拟合，就像连印错的都背了下来，还把它们当成了规律。」",
+   "problem": "主文23字；折成两行没有消除单块超限，首行本身也有15个汉字。仍逐字复印l57—l58，句号也在。",
+   "suggest": "主标题：**过拟合**；记忆短语：**连印错的也背，还当规律**；预告：**下一期：强化学习**。删除原整句及句号。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "outro：片尾卡改成页眉「过拟合，就像」＋两行短语「连印错的都背了下来， / 还当成了规律」（英文 Overfitting is · memorizing even the typos, / and treating them as rules），不带句号；卡上只放本语言（系列名也去掉另一种语言）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/package.json"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I56",
+   "key": "94960ef76384",
+   "item": "screen_zh",
+   "where": "agenda",
+   "dim": "P1",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "agenda"
+   ],
+   "evidence": [
+    "本期内容 + 01–06 六行（共 41 字，7 块）"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "保持现状；若严格执行，章节名可收为「是什么 / 比方 / 误差线 / 换角度 / 现实 / 防」（各 ≤4 字，但与章节卡不一致，不推荐）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "本期内容 + 01–06 六行（共 41 字，7 块）",
+   "problem": "硬上限里块数 ≤4、总字数 ≤36，目录严格计数超了；但目录是一份列表，13.6s 停留，截图一眼看完，应属于该例外。请裁决人确认目录算不算一块",
+   "suggest": "保持现状；若严格执行，章节名可收为「是什么 / 比方 / 误差线 / 换角度 / 现实 / 防」（各 ≤4 字，但与章节卡不一致，不推荐）",
+   "judge_note": "b · agenda：按本裁定，目录清单算 1 块、序号不计字，共 35 字、2 块，不超限。拆成两屏会打断「全片一共六章」的总览，也违背上一轮裁决「目录写 6 行、与章节卡一致」的要求，改了反而更差。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同上：目录清单按裁决算 1 块",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I57",
+   "key": "6c3e1e870033",
+   "item": "screen_zh",
+   "where": "intro、outro页脚",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "intro、outro页脚"
+   ],
+   "evidence": [
+    "「AI 高频词 · AI Glossary」"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "左下统一为**AI 高频词**；右下字体署名保留。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "「AI 高频词 · AI Glossary」",
+   "problem": "中文画面仍有重复英文栏目名；作者保留MiSans署名的理由只涉及另一处字体出处。",
+   "suggest": "左下统一为**AI 高频词**；右下字体署名保留。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "outro：片尾卡改成页眉「过拟合，就像」＋两行短语「连印错的都背了下来， / 还当成了规律」（英文 Overfitting is · memorizing even the typos, / and treating them as rules），不带句号；卡上只放本语言（系列名也去掉另一种语言）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/package.json"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I58",
+   "key": "176c2f6c4f5f",
+   "item": "screen_zh",
+   "where": "agenda、c_lens、s7 页眉",
+   "dim": "P2 P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2 P3",
+   "shots": [
+    "agenda、c_lens、s7 页眉"
+   ],
+   "evidence": [
+    "04 · 换个角度"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "目录、章节卡、页眉三处同时改为「学习 ≈ 压缩」（或「学习与压缩」），保持同名",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "04 · 换个角度",
+   "problem": "六个章名里只有它看不出内容，观众看目录猜不到这一章讲什么；这一章的核心是 l36「学习 ≈ 压缩」，场景名也是「学习就是压缩」",
+   "suggest": "目录、章节卡、页眉三处同时改为「学习 ≈ 压缩」（或「学习与压缩」），保持同名",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s7：同屏统一写「10 个点」；本章章名改为「学习 ≈ 压缩」（目录、章节卡、页眉一致）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s7.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I59",
+   "key": "7ef185758ccd",
+   "item": "screen_zh",
+   "where": "card_s10 页脚",
+   "dim": "P4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "card_s10 页脚"
+   ],
+   "evidence": [
+    "AI 高频词 · AI Glossary；AI 配音 · 字体 MiSans"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "保留；如要统一，可只留「AI 高频词」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "AI 高频词 · AI Glossary；AI 配音 · 字体 MiSans",
+   "problem": "半中半英；MiSans 署名理由成立（I85），Glossary 是系列英文名，可保留",
+   "suggest": "保留；如要统一，可只留「AI 高频词」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "outro：片尾卡改成页眉「过拟合，就像」＋两行短语「连印错的都背了下来， / 还当成了规律」（英文 Overfitting is · memorizing even the typos, / and treating them as rules），不带句号；卡上只放本语言（系列名也去掉另一种语言）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/package.json"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I60",
+   "key": "9749a369eb5a",
+   "item": "screen_zh",
+   "where": "l09 / l10",
+   "dim": "P1 P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1 P2",
+   "shots": [
+    "l09 / l10"
+   ],
+   "evidence": [
+    "连碰巧的细节也学了进去 / 做新题反而变差 / ≈ 背下答案，没学会规律"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「学进了碰巧的细节」/「新题反而变差」/「≈ 死记练习题」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "连碰巧的细节也学了进去 / 做新题反而变差 / ≈ 背下答案，没学会规律",
+   "problem": "三行都是口播分句的原样截取，「连……也学了进去」以「连」开头，脱离口播读不出主语；不超限，但仍偏句子",
+   "suggest": "「学进了碰巧的细节」/「新题反而变差」/「≈ 死记练习题」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s2：l09–l10 眉题改「定义」；「学进了碰巧的细节 / 做新题反而变差」不再以「连」起句；英文 Overfitting 的 g 下沿加留白",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s2.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I61",
+   "key": "b30aee96e4e5",
+   "item": "screen_zh",
+   "where": "l09、l10",
+   "dim": "P1、P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P2",
+   "shots": [
+    "l09、l10"
+   ],
+   "evidence": [
+    "「连碰巧的细节也学了进去」「做新题反而变差」「≈ 背下答案，没学会规律」"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "l09：**过拟合／碰巧的细节也记住／新题表现变差**。l10用**背答案 ≠ 懂规律**替换前两条说明，不继续累加。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "「连碰巧的细节也学了进去」「做新题反而变差」「≈ 背下答案，没学会规律」",
+   "problem": "已满足当前字数上限，但「连……也……了进去」仍是口播句法；l10再加一层同义解释。",
+   "suggest": "l09：**过拟合／碰巧的细节也记住／新题表现变差**。l10用**背答案 ≠ 懂规律**替换前两条说明，不继续累加。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s2：l09–l10 眉题改「定义」；「学进了碰巧的细节 / 做新题反而变差」不再以「连」起句；英文 Overfitting 的 g 下沿加留白",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s2.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I62",
+   "key": "43c78ed236b8",
+   "item": "screen_zh",
+   "where": "l11、l19",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l11、l19"
+   ],
+   "evidence": [
+    "l11 屏上只有「模型在学什么」；l19 图内标签「考题」"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "l11 图内加「训练数据 = 练习题」；l19 标题改「测试数据 = 考试」，删「考题」（l19 由 5 块降为 4 块）",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "l11 屏上只有「模型在学什么」；l19 图内标签「考题」",
+   "problem": "口播在 l11、l19 分别引入「训练数据」「测试数据」两个术语，屏上都没有；l19 反而印了口播没说过的「考题」。同章 l12 的「噪声」却有标签，做法不统一",
+   "suggest": "l11 图内加「训练数据 = 练习题」；l19 标题改「测试数据 = 考试」，删「考题」（l19 由 5 块降为 4 块）",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "训练数据、测试数据由口播命名，图上用实心点 / 空心圈区分，不再加文字块（屏幕块数要留给结论）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I63",
+   "key": "e75b91fedde2",
+   "item": "screen_zh",
+   "where": "l15–l17",
+   "dim": "P2 P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2 P4",
+   "shots": [
+    "l15–l17"
+   ],
+   "evidence": [
+    "练习误差 · 偏离² 的平均；③ 弯曲线"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "眼眉「练习误差」；③「复杂曲线」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "练习误差 · 偏离² 的平均；③ 弯曲线",
+   "problem": "「偏离²」是新术语，口播只说「扣分，平均一下」；「弯曲线」口播从未叫过，也不是通顺的中文名，且与后文 l55「太复杂的曲线」不统一",
+   "suggest": "眼眉「练习误差」；③「复杂曲线」",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "「弯曲线」是片中对第三种模型的固定叫法（表格、图例一致），口播用「第三种」指同一条",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I64",
+   "key": "5b590243e95b",
+   "item": "screen_zh",
+   "where": "l15—l18、l31—l35",
+   "dim": "P2、P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2、P4",
+   "shots": [
+    "l15—l18、l31—l35"
+   ],
+   "evidence": [
+    "「偏离² 的平均」「曲线取中位数」「模型复杂度（多项式次数）」"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "分别改为**练习误差**、**300组随机点**、**模型复杂度**；删除「曲线取中位数」。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "「偏离² 的平均」「曲线取中位数」「模型复杂度（多项式次数）」",
+   "problem": "口播没有解释平方、中位数或多项式次数，屏幕却要求观众自行理解新术语。此前平均／中位数混写虽已修好，解释负担仍在。",
+   "suggest": "分别改为**练习误差**、**300组随机点**、**模型复杂度**；删除「曲线取中位数」。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s3：列头只写「练习误差」，去掉口播没讲的「偏离²」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s3.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I65",
+   "key": "efcfa8c52d74",
+   "item": "screen_zh",
+   "where": "l15",
+   "dim": "P5 P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P5 P2",
+   "shots": [
+    "l15"
+   ],
+   "evidence": [
+    "列头「练习误差 · 偏离² 的平均」与 ① 行在 l15（4.1s）同时出现"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "列头改为「练习误差」，提前到 l14 出现（口播此时正在定义误差，7.9s 里屏上只有 12 字）；l15 只新增 ① 行",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "列头「练习误差 · 偏离² 的平均」与 ① 行在 l15（4.1s）同时出现",
+   "problem": "4.1s 内屏上新出 15 字，加字幕 20 字约 8.5 字/秒，超过约 6 字/秒；「偏离²」要观众自己解码平方，口播只说「扣分、平均」。两人只提了术语，没提这屏读不完",
+   "suggest": "列头改为「练习误差」，提前到 l14 出现（口播此时正在定义误差，7.9s 里屏上只有 12 字）；l15 只新增 ① 行",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s3：列头只写「练习误差」，去掉口播没讲的「偏离²」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s3.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I66",
+   "key": "316ff0946d0f",
+   "item": "screen_zh",
+   "where": "l17、l18",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l17、l18"
+   ],
+   "evidence": [
+    "「练习误差 · 偏离² 的平均」＋标题＋三行模型结果"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "l17标题改为**练习误差**，删除右栏独立列头，保留三行结果。l18只留**新题，谁最准？**和曲线，收走右栏表格。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "「练习误差 · 偏离² 的平均」＋标题＋三行模型结果",
+   "problem": "列头不是页眉。每行结果合并计块后，两屏仍各5块；总量分别约34、33字。",
+   "suggest": "l17标题改为**练习误差**，删除右栏独立列头，保留三行结果。l18只留**新题，谁最准？**和曲线，收走右栏表格。",
+   "judge_note": "b · l17、l18：b 把列头单独算一块，得出 5 块。按本裁定，列头与表格合为一块，两屏都是 4 块、34 / 33 字，不超限。「偏离²」的术语问题另由 P2 条目和补充问题 l15 处理。",
+   "status": "implemented",
+   "solution": "s3：列头只写「练习误差」，去掉口播没讲的「偏离²」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s3.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I67",
+   "key": "51c7572eb89c",
+   "item": "screen_zh",
+   "where": "l19—l22",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l19—l22"
+   ],
+   "evidence": [
+    "「练习／考试」＋标题＋三行结果；另有「考题」「噪声不会重演」"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "l19—l21大标题统一为**练习／考试误差**，删除独立列头及「考题」文字，保留三行结果；l21把**②的25倍**并入第三行考试值后的括注。l22表格退场，只留**噪声不会重演**，由图中高亮对应噪声。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "「练习／考试」＋标题＋三行结果；另有「考题」「噪声不会重演」",
+   "problem": "列头必须计入。l19、l22至少6块，l20、l21至少5块，不能直接采用材料中排除全部小标签后的块数。",
+   "suggest": "l19—l21大标题统一为**练习／考试误差**，删除独立列头及「考题」文字，保留三行结果；l21把**②的25倍**并入第三行考试值后的括注。l22表格退场，只留**噪声不会重演**，由图中高亮对应噪声。",
+   "judge_note": "b · l19—l22：l20、l21 按本裁定是 4 块，不超限；l19、l22 的 5 块成立。改写里「把 ② 的 25 倍并入第三行括注」把全段最重要的结论降成了表格小注，更差，不采纳；l19、l22 按补充问题处理。",
+   "status": "implemented",
+   "solution": "s4：去掉「考题」与「噪声不会重演」两处图上注释；l21 标题「③ 的考试误差：② 的 25 倍」（英文 Exam error: ③ ≈ 25× ②），l22 换成「它背下了噪声，噪声不会重演」并给 ③ 行加「过拟合」标签与 ①「欠拟合」对称；两列拉开；英文 l23 标题「Underfit: fails both, easy to spot」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s4.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I68",
+   "key": "1e3dae44bacf",
+   "item": "screen_zh",
+   "where": "l21",
+   "dim": "P2",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l21"
+   ],
+   "evidence": [
+    "③ 的考试误差：② 的 25 倍"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「约 25 倍」，或保持「20 多倍」与口播一致",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "③ 的考试误差：② 的 25 倍",
+   "problem": "屏上 1.80 / 0.07 ≈ 25.7，观众心算对不上「25」；口播说「二十多倍」，没有冲突，只是精度不一致",
+   "suggest": "「约 25 倍」，或保持「20 多倍」与口播一致",
+   "judge_note": "a · l21：存疑不成立。data.json 里 ratio 为 24.89（1.7997 ÷ 0.0723），标题「25 倍」是四舍五入后的正确值。屏上 1.80 ÷ 0.07 心算得 25.7，只是两位小数取整造成的，与口播「二十多倍」不冲突，不必改。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决：data.json 的比值是 24.89，屏上 25 倍与口播「二十多倍」一致，不成立",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I69",
+   "key": "fb15893f84d9",
+   "item": "screen_zh",
+   "where": "l22",
+   "dim": "P3 P1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3 P1",
+   "shots": [
+    "l22"
+   ],
+   "evidence": [
+    "① 行有「欠拟合」标签，③ 行没有；图内另加「噪声不会重演」"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "③ 行加「过拟合」标签（样式同 ① 的「欠拟合」）；删图内「噪声不会重演」（口播在讲）；标题和三行数字不动。改后 4 块，约 30 字",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "① 行有「欠拟合」标签，③ 行没有；图内另加「噪声不会重演」",
+   "problem": "口播 l22「这就是过拟合」是实验里给过拟合命名的那一刻，屏上 ③ 却没有和 ① 对称的「过拟合」标签；另外按本裁定口径本屏 5 块（标题、三行、图内注释），超 4 块",
+   "suggest": "③ 行加「过拟合」标签（样式同 ① 的「欠拟合」）；删图内「噪声不会重演」（口播在讲）；标题和三行数字不动。改后 4 块，约 30 字",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s4：去掉「考题」与「噪声不会重演」两处图上注释；l21 标题「③ 的考试误差：② 的 25 倍」（英文 Exam error: ③ ≈ 25× ②），l22 换成「它背下了噪声，噪声不会重演」并给 ③ 行加「过拟合」标签与 ①「欠拟合」对称；两列拉开；英文 l23 标题「Underfit: fails both, easy to spot」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s4.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I70",
+   "key": "edb706159af0",
+   "item": "screen_zh",
+   "where": "l27",
+   "dim": "P2 P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2 P4",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "眼眉「类比的局限」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「比方的局限」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "眼眉「类比的局限」",
+   "problem": "全片叫「打个比方」，口播是「这个比方也有局限」，屏上改用书面语「类比」，叫法前后不一",
+   "suggest": "「比方的局限」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s5：比方的局限写成两个标签（学生：知道在背 / 模型：不知道）；「相近的另一种毛病」；猫的两句标点统一「“猫！” / “不是猫！”」；英文 Maybe his rule；结论词「过拟合 / 捷径学习」放大成 h2",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I71",
+   "key": "0975598dacbe",
+   "item": "screen_zh",
+   "where": "l29",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l29"
+   ],
+   "evidence": [
+    "“是猫！” / “不是猫。”"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "“是猫” / “不是猫”（去标点）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "“是猫！” / “不是猫。”",
+   "problem": "两个并列标签语气不一（！与。），句号落在引号内，是 I108 提过但仍在的老问题",
+   "suggest": "“是猫” / “不是猫”（去标点）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s5：比方的局限写成两个标签（学生：知道在背 / 模型：不知道）；「相近的另一种毛病」；猫的两句标点统一「“猫！” / “不是猫！”」；英文 Maybe his rule；结论词「过拟合 / 捷径学习」放大成 h2",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I72",
+   "key": "92fd6dd17b44",
+   "item": "screen_zh",
+   "where": "l29",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l29"
+   ],
+   "evidence": [
+    "「“是猫！”」「“不是猫。”」"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "两个结果统一为**是猫**／**不是猫**，去掉引号和句末标点。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "「“是猫！”」「“不是猫。”」",
+   "problem": "上一轮已指出，当前仍有句末句号，两个结果的语气体例也不一致。",
+   "suggest": "两个结果统一为**是猫**／**不是猫**，去掉引号和句末标点。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s5：比方的局限写成两个标签（学生：知道在背 / 模型：不知道）；「相近的另一种毛病」；猫的两句标点统一「“猫！” / “不是猫！”」；英文 Maybe his rule；结论词「过拟合 / 捷径学习」放大成 h2",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I73",
+   "key": "7751658e9885",
+   "item": "screen_zh",
+   "where": "l30",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "学生／死背答案／过拟合；小朋友／只见过沙发上的猫／捷径学习（过拟合、捷径学习为 28px 灰色注释）"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "两栏改为：眼眉「学生」「小朋友」，h1「过拟合」「捷径学习」，下一行「死背答案」「只见过沙发上的猫」",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "学生／死背答案／过拟合；小朋友／只见过沙发上的猫／捷径学习（过拟合、捷径学习为 28px 灰色注释）",
+   "problem": "这一屏的结论是两个术语，口播说「小朋友这种毛病，叫捷径学习，后面还会说到」，l50 也要回头提「捷径学习」；现在两个术语是全屏最小、最淡的字，层级倒置",
+   "suggest": "两栏改为：眼眉「学生」「小朋友」，h1「过拟合」「捷径学习」，下一行「死背答案」「只见过沙发上的猫」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s5：比方的局限写成两个标签（学生：知道在背 / 模型：不知道）；「相近的另一种毛病」；猫的两句标点统一「“猫！” / “不是猫！”」；英文 Maybe his rule；结论词「过拟合 / 捷径学习」放大成 h2",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I74",
+   "key": "aa3429d4ceb8",
+   "item": "screen_zh",
+   "where": "l31 / l32",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l31 / l32"
+   ],
+   "evidence": [
+    "曲线取中位数；轴标题「模型复杂度（多项式次数）」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「看通常的走势」；轴标题「模型复杂度」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "曲线取中位数；轴标题「模型复杂度（多项式次数）」",
+   "problem": "「中位数」「多项式次数」口播都没讲，且是屏上唯一的统计术语；l31 口播只说「通常怎么变」",
+   "suggest": "「看通常的走势」；轴标题「模型复杂度」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s6：标题按当句换成结论（模型越复杂，误差怎么变？→ 过拟合信号：练习低，考试高 → 太简单：两种误差都高），撤掉右侧说明栏；300 只留「组随机的点」，去掉中位数；轴标题缩成「模型复杂度」，去掉多项式次数；「刚刚好」改为口播的「最准」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I75",
+   "key": "6042d1f569cc",
+   "item": "screen_zh",
+   "where": "l32—l35",
+   "dim": "P1、P5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P5",
+   "shots": [
+    "l32—l35"
+   ],
+   "evidence": [
+    "「模型复杂度（多项式次数）」「练习误差」「考试误差」「刚刚好」「欠拟合」「过拟合」及右栏说明"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "l32、l33：标题**复杂度与误差**；轴标题**模型复杂度**；保留曲线名，删除右侧300说明和区域文字，区域用色带表示。l34：标题换为**过拟合：练习低，考试高**，删除旧标题、右栏和区域文字。l35：标题换为**欠拟合：练习高，考试高**，删除右栏及区域文字。各屏保留轴标题和两条曲线名，最多4块。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "「模型复杂度（多项式次数）」「练习误差」「考试误差」「刚刚好」「欠拟合」「过拟合」及右栏说明",
+   "problem": "这些不是刻度，不能全部豁免。l32即使合并「300＋组随机的点」，仍至少5块；l33为43字，l34为50字，l35为66字。",
+   "suggest": "l32、l33：标题**复杂度与误差**；轴标题**模型复杂度**；保留曲线名，删除右侧300说明和区域文字，区域用色带表示。l34：标题换为**过拟合：练习低，考试高**，删除旧标题、右栏和区域文字。l35：标题换为**欠拟合：练习高，考试高**，删除右栏及区域文字。各屏保留轴标题和两条曲线名，最多4块。",
+   "judge_note": "b · l32—l35：超量判断成立，但「删除区域文字，区域用色带表示」不成立。区域名是这张图的结论，口播 l35「就是左边的欠拟合」正指着这个词；只留色带，观众不知道绿色那段叫什么。按补充问题改：保留区域名，换标题，撤右栏。",
+   "status": "implemented",
+   "solution": "s6：标题按当句换成结论（模型越复杂，误差怎么变？→ 过拟合信号：练习低，考试高 → 太简单：两种误差都高），撤掉右侧说明栏；300 只留「组随机的点」，去掉中位数；轴标题缩成「模型复杂度」，去掉多项式次数；「刚刚好」改为口播的「最准」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I76",
+   "key": "92dc3fc49701",
+   "item": "screen_zh",
+   "where": "l33—l35",
+   "dim": "P1 P3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1 P3",
+   "shots": [
+    "l33—l35"
+   ],
+   "evidence": [
+    "图内「欠拟合／刚刚好／过拟合」「考试误差／练习误差」「模型复杂度（多项式次数）」＋右栏眼眉、h2、body"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "学 s4「③ 的考试误差：② 的 25 倍」的做法，让标题换成当句结论，撤掉右栏：轴标题统一为「模型复杂度」；l33 删「曲线取中位数」；l34 标题改「过拟合信号：练习低，考试高」，撤右栏；l35 标题改「太简单：两种误差都高」，撤右栏；区域名、曲线名保留。改后约 l33 32 字、l34 30 字、l35 31 字，都不超过 4 块",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "图内「欠拟合／刚刚好／过拟合」「考试误差／练习误差」「模型复杂度（多项式次数）」＋右栏眼眉、h2、body",
+   "problem": "按本裁定口径，l33 43 字、l34 50 字、l35 66 字且 5 块。两人的改写都不达标：a 改完的 l35 仍约 50 字；b 删掉区域名，可口播 l35 说「就是左边的欠拟合」正是指着这个词",
+   "suggest": "学 s4「③ 的考试误差：② 的 25 倍」的做法，让标题换成当句结论，撤掉右栏：轴标题统一为「模型复杂度」；l33 删「曲线取中位数」；l34 标题改「过拟合信号：练习低，考试高」，撤右栏；l35 标题改「太简单：两种误差都高」，撤右栏；区域名、曲线名保留。改后约 l33 32 字、l34 30 字、l35 31 字，都不超过 4 块",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s6：标题按当句换成结论（模型越复杂，误差怎么变？→ 过拟合信号：练习低，考试高 → 太简单：两种误差都高），撤掉右侧说明栏；300 只留「组随机的点」，去掉中位数；轴标题缩成「模型复杂度」，去掉多项式次数；「刚刚好」改为口播的「最准」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I77",
+   "key": "819fbf825913",
+   "item": "screen_zh",
+   "where": "l33 / l34",
+   "dim": "P1 P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1 P5",
+   "shots": [
+    "l33 / l34"
+   ],
+   "evidence": [
+    "图内「刚刚好」「过拟合」、曲线名「考试误差/练习误差」、轴标题 + 「练习误差低 / 考试误差高」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "l34 去掉区域名「刚刚好」，轴标题缩成「模型复杂度」；曲线名与 h2 颜色对应即可，h2 保留「练习误差低 / 考试误差高」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "图内「刚刚好」「过拟合」、曲线名「考试误差/练习误差」、轴标题 + 「练习误差低 / 考试误差高」",
+   "problem": "材料口径 22/20 字，非刻度图内标注计入后约 43/44 字，超 36，且 5.2–5.6s 内要读；曲线名和轴标题是前一屏已读过的，可只保留变化的部分",
+   "suggest": "l34 去掉区域名「刚刚好」，轴标题缩成「模型复杂度」；曲线名与 h2 颜色对应即可，h2 保留「练习误差低 / 考试误差高」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s6：标题按当句换成结论（模型越复杂，误差怎么变？→ 过拟合信号：练习低，考试高 → 太简单：两种误差都高），撤掉右侧说明栏；300 只留「组随机的点」，去掉中位数；轴标题缩成「模型复杂度」，去掉多项式次数；「刚刚好」改为口播的「最准」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I78",
+   "key": "588989002d0a",
+   "item": "screen_zh",
+   "where": "l33 / l34 / l35",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l33 / l34 / l35"
+   ],
+   "evidence": [
+    "图内区域名「刚刚好」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「最准」或「两项都低」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "图内区域名「刚刚好」",
+   "problem": "口播说「中等复杂的模型，预测新数据最准」「两种误差都低的那一段」，没有「刚刚好」，屏上是新说法",
+   "suggest": "「最准」或「两项都低」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s6：标题按当句换成结论（模型越复杂，误差怎么变？→ 过拟合信号：练习低，考试高 → 太简单：两种误差都高），撤掉右侧说明栏；300 只留「组随机的点」，去掉中位数；轴标题缩成「模型复杂度」，去掉多项式次数；「刚刚好」改为口播的「最准」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I79",
+   "key": "5dd3386cb258",
+   "item": "screen_zh",
+   "where": "l35",
+   "dim": "P1 P3 P4 P5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1 P3 P4 P5",
+   "shots": [
+    "l35"
+   ],
+   "evidence": [
+    "越简单越好？ / 不：太简单，两种误差都高 / 要找中间刚刚好的那段；图内「欠拟合/刚刚好/过拟合」「考试误差/练习误差」「模型复杂度（多项式次数）」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "h2「越简单越好？」；body 只留一行「太简单：两种误差都高」；删「要找中间刚刚好的那段」（口播在说）；轴标题缩成「模型复杂度」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "越简单越好？ / 不：太简单，两种误差都高 / 要找中间刚刚好的那段；图内「欠拟合/刚刚好/过拟合」「考试误差/练习误差」「模型复杂度（多项式次数）」",
+   "problem": "材料口径 35 字，但图内区域名 9、曲线名 8、轴标题 10 都不是刻度，非刻度合计约 62 字，超 36；眼眉、h1、h2、body、图内标注超三级；「不：」生硬；两句 body 又复述口播「要找的，是两种误差都低的那一段」",
+   "suggest": "h2「越简单越好？」；body 只留一行「太简单：两种误差都高」；删「要找中间刚刚好的那段」（口播在说）；轴标题缩成「模型复杂度」",
+   "judge_note": "b · l32—l35：超量判断成立，但「删除区域文字，区域用色带表示」不成立。区域名是这张图的结论，口播 l35「就是左边的欠拟合」正指着这个词；只留色带，观众不知道绿色那段叫什么。按补充问题改：保留区域名，换标题，撤右栏。；a · l35：问题判断成立，但改写后仍有标题 10、眼眉 4、h2 5、body 9、图内标注约 22 字，约 50 字，仍超 36，不达标。按补充问题 l33—l35 处理。",
+   "status": "implemented",
+   "solution": "s6：标题按当句换成结论（模型越复杂，误差怎么变？→ 过拟合信号：练习低，考试高 → 太简单：两种误差都高），撤掉右侧说明栏；300 只留「组随机的点」，去掉中位数；轴标题缩成「模型复杂度」，去掉多项式次数；「刚刚好」改为口播的「最准」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I80",
+   "key": "15a1546eb7cc",
+   "item": "screen_zh",
+   "where": "l37–l39",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l37–l39"
+   ],
+   "evidence": [
+    "记住十个点，要几个数字？ / 原样记：10 个数字"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「记住 10 个点，要几个数字？」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "记住十个点，要几个数字？ / 原样记：10 个数字",
+   "problem": "同屏「十个点」用汉字、「10 个数字」用阿拉伯数字",
+   "suggest": "「记住 10 个点，要几个数字？」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s7：同屏统一写「10 个点」；本章章名改为「学习 ≈ 压缩」（目录、章节卡、页眉一致）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s7.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I81",
+   "key": "974e6b3f00df",
+   "item": "screen_zh",
+   "where": "l40、l42—l50",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l40、l42—l50"
+   ],
+   "evidence": [
+    "l40 只有眼眉「好的压缩」；l42—l50 只有案例页签"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "l42—l50 在页签上方保留「05 · 现实里的祸」；l40 保留「04 · 换个角度」页眉（眼眉「好的压缩」不动）",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "l40 只有眼眉「好的压缩」；l42—l50 只有案例页签",
+   "problem": "其余正文屏左上角都有「0N · 章名」页眉，这 10 屏没有；上一轮 I78 要求 s8 加「05」页眉，作者只在 l41 加了，两人都判为已解决",
+   "suggest": "l42—l50 在页签上方保留「05 · 现实里的祸」；l40 保留「04 · 换个角度」页眉（眼眉「好的压缩」不动）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s7：同屏统一写「10 个点」；本章章名改为「学习 ≈ 压缩」（目录、章节卡、页眉一致）；s8：页眉「05 · 现实里的祸」常驻在页签前；l41 改为「三个真实案例」；l42 加「用搜索记录估流感」；「5000万 远多于 1152」去掉箭头与多余空格；l47 中文「看胸片，就认得出医院」（口播没说「指纹」），英文 A hospital fingerprint，「> 99.9%」；英文 l48 Maybe spotting hospitals, not disease；l49 眉题「标记成了线索」/ The ink clue；l50 眉题只写「捷径学习」，正文「熟悉的环境里，也许考得不错」与口播一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s7.html",
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s8.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I82",
+   "key": "65b8f4bf9007",
+   "item": "screen_zh",
+   "where": "l42",
+   "dim": "P5 P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P5 P2",
+   "shots": [
+    "l42"
+   ],
+   "evidence": [
+    "整屏只有三个页签（谷歌流感趋势 / 胸片肺炎模型 / 皮肤癌识别）"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "加一块 display「搜索记录 → 流感就诊」（9 字）或「用搜索词估流感」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "整屏只有三个页签（谷歌流感趋势 / 胸片肺炎模型 / 皮肤癌识别）",
+   "problem": "6.4s 口播讲谷歌流感趋势是什么，屏上没有任何可读内容；上一轮 I124 建议的「亮首个页签并加一个关键词」只做了前半（页签改名），后半未做",
+   "suggest": "加一块 display「搜索记录 → 流感就诊」（9 字）或「用搜索词估流感」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s8：页眉「05 · 现实里的祸」常驻在页签前；l41 改为「三个真实案例」；l42 加「用搜索记录估流感」；「5000万 远多于 1152」去掉箭头与多余空格；l47 中文「看胸片，就认得出医院」（口播没说「指纹」），英文 A hospital fingerprint，「> 99.9%」；英文 l48 Maybe spotting hospitals, not disease；l49 眉题「标记成了线索」/ The ink clue；l50 眉题只写「捷径学习」，正文「熟悉的环境里，也许考得不错」与口播一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s8.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I83",
+   "key": "59a1f7b8b55c",
+   "item": "screen_zh",
+   "where": "l43",
+   "dim": "P4 P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4 P5",
+   "shots": [
+    "l43"
+   ],
+   "evidence": [
+    "5000 万 个搜索词 ≫ 1152 个数据点"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "「≫」改成文字「远多于」，或者改成两行并列「候选词：5000万」「数据点：1152」",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "5000 万 个搜索词 ≫ 1152 个数据点",
+   "problem": "「≫」是数学记号，普通观众 5.9s 内未必读得出「远多于」；口播要到 l44 才说「远比数据点多」",
+   "suggest": "「≫」改成文字「远多于」，或者改成两行并列「候选词：5000万」「数据点：1152」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s8：页眉「05 · 现实里的祸」常驻在页签前；l41 改为「三个真实案例」；l42 加「用搜索记录估流感」；「5000万 远多于 1152」去掉箭头与多余空格；l47 中文「看胸片，就认得出医院」（口播没说「指纹」），英文 A hospital fingerprint，「> 99.9%」；英文 l48 Maybe spotting hospitals, not disease；l49 眉题「标记成了线索」/ The ink clue；l50 眉题只写「捷径学习」，正文「熟悉的环境里，也许考得不错」与口播一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s8.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I84",
+   "key": "afcd1ff447b3",
+   "item": "screen_zh",
+   "where": "l43",
+   "dim": "P4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l43"
+   ],
+   "evidence": [
+    "5000 万 个搜索词"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「5000万个搜索词」；统一「手头数据」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "5000 万 个搜索词",
+   "problem": "数字与单位「万」之间、「万」与「个」之间多空格，读起来断开；l01「手里的数据」与 l50「手头数据」同概念两种叫法",
+   "suggest": "「5000万个搜索词」；统一「手头数据」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s8：页眉「05 · 现实里的祸」常驻在页签前；l41 改为「三个真实案例」；l42 加「用搜索记录估流感」；「5000万 远多于 1152」去掉箭头与多余空格；l47 中文「看胸片，就认得出医院」（口播没说「指纹」），英文 A hospital fingerprint，「> 99.9%」；英文 l48 Maybe spotting hospitals, not disease；l49 眉题「标记成了线索」/ The ink clue；l50 眉题只写「捷径学习」，正文「熟悉的环境里，也许考得不错」与口播一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s8.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I85",
+   "key": "1a1a7a059bd1",
+   "item": "screen_zh",
+   "where": "l44",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l44"
+   ],
+   "evidence": [
+    "“一部分在测流感， / 一部分在测冬天”（引号内 14 字）"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "与口播对齐：“既在测流感，也在测冬天”（11 字），或同步改口播",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "“一部分在测流感， / 一部分在测冬天”（引号内 14 字）",
+   "problem": "引号内是引语，口播却说「它既在测流感，也在测冬天」，用词不同；观众会疑心是两段话",
+   "suggest": "与口播对齐：“既在测流感，也在测冬天”（11 字），或同步改口播",
+   "judge_note": "a · l44：引语引的是 Lazer 等原文「part flu detector, part winter detector」（屏上有出处行），「一部分在测流感，一部分在测冬天」比口播的「既……也……」更贴原文，不应把引语改成口播的转述；若要两边一致，应改口播。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "引号里是 Lazer 等原文 part flu detector, part winter detector 的译文，口播是转述；裁决人驳回",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I86",
+   "key": "fc17945f7a41",
+   "item": "screen_zh",
+   "where": "l45",
+   "dim": "P2、P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2、P4",
+   "shots": [
+    "l45"
+   ],
+   "evidence": [
+    "「100 / 108」＋「周，流感估高了」"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "大数字保留**100 / 108**；下行改为**估高周数／总周数**。日期和版本标签保留。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "「100 / 108」＋「周，流感估高了」",
+   "problem": "删除「都」已消除矛盾，但下行仍是需要跨越大数字拼读的残句。",
+   "suggest": "大数字保留**100 / 108**；下行改为**估高周数／总周数**。日期和版本标签保留。",
+   "judge_note": "b · l45：「估高周数／总周数」是表头式说法，比现在的「100 / 108 周，流感估高了」更难读，改了更差。本屏 15 字、3 块，不超限，保持现状即可；若嫌「周，」开头生硬，可改成「周估高了」。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：现写法「100 / 108 周，流感估高了」比表头式更好读",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I87",
+   "key": "0f1f300dd797",
+   "item": "screen_zh",
+   "where": "l47",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l47"
+   ],
+   "evidence": [
+    "胸片里有医院的“指纹”"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「认医院，几乎不出错」（9 字）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "胸片里有医院的“指纹”",
+   "problem": "「指纹」是屏上自加的比喻，口播只说「专门看胸片认医院」，l48 也没接",
+   "suggest": "「认医院，几乎不出错」（9 字）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s8：页眉「05 · 现实里的祸」常驻在页签前；l41 改为「三个真实案例」；l42 加「用搜索记录估流感」；「5000万 远多于 1152」去掉箭头与多余空格；l47 中文「看胸片，就认得出医院」（口播没说「指纹」），英文 A hospital fingerprint，「> 99.9%」；英文 l48 Maybe spotting hospitals, not disease；l49 眉题「标记成了线索」/ The ink clue；l50 眉题只写「捷径学习」，正文「熟悉的环境里，也许考得不错」与口播一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s8.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I88",
+   "key": "41c6d363c8fe",
+   "item": "screen_zh",
+   "where": "l50",
+   "dim": "P1 P2 P3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1 P2 P3",
+   "shots": [
+    "l50"
+   ],
+   "evidence": [
+    "眼眉「胸片和痣：捷径学习，过拟合的近亲」（14 字）/ 换个环境，就可能失灵 / 学到的线索，只在手头数据里成立（14 字）"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "眼眉「胸片 · 痣：捷径学习」（9 字）；h1 保留；body「熟悉的环境里考得不错」（10 字）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "眼眉「胸片和痣：捷径学习，过拟合的近亲」（14 字）/ 换个环境，就可能失灵 / 学到的线索，只在手头数据里成立（14 字）",
+   "problem": "眼眉按「页眉小标签」豁免，实际是复述口播的整句；计入后 14+9+14=37 字，超 36；body 的「手头数据」口播说的是「熟悉的环境」，说法不一",
+   "suggest": "眼眉「胸片 · 痣：捷径学习」（9 字）；h1 保留；body「熟悉的环境里考得不错」（10 字）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s8：页眉「05 · 现实里的祸」常驻在页签前；l41 改为「三个真实案例」；l42 加「用搜索记录估流感」；「5000万 远多于 1152」去掉箭头与多余空格；l47 中文「看胸片，就认得出医院」（口播没说「指纹」），英文 A hospital fingerprint，「> 99.9%」；英文 l48 Maybe spotting hospitals, not disease；l49 眉题「标记成了线索」/ The ink clue；l50 眉题只写「捷径学习」，正文「熟悉的环境里，也许考得不错」与口播一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s8.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I89",
+   "key": "011ab403235d",
+   "item": "screen_zh",
+   "where": "l50",
+   "dim": "P1、P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P2",
+   "shots": [
+    "l50"
+   ],
+   "evidence": [
+    "「胸片和痣：捷径学习，过拟合的近亲」；「学到的线索，只在手头数据里成立」"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "三块：**捷径学习：过拟合的近亲**／**熟悉环境：可能有效**／**换个环境：可能失灵**。删除原小标签和两行正文，胸片与痣由上方页签指示。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "「胸片和痣：捷径学习，过拟合的近亲」；「学到的线索，只在手头数据里成立」",
+   "problem": "内容小标签位于正文区，14字应计入，总量为37字。「只在手头数据里成立」还把口播的条件性风险说成绝对限制。",
+   "suggest": "三块：**捷径学习：过拟合的近亲**／**熟悉环境：可能有效**／**换个环境：可能失灵**。删除原小标签和两行正文，胸片与痣由上方页签指示。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s8：页眉「05 · 现实里的祸」常驻在页签前；l41 改为「三个真实案例」；l42 加「用搜索记录估流感」；「5000万 远多于 1152」去掉箭头与多余空格；l47 中文「看胸片，就认得出医院」（口播没说「指纹」），英文 A hospital fingerprint，「> 99.9%」；英文 l48 Maybe spotting hospitals, not disease；l49 眉题「标记成了线索」/ The ink clue；l50 眉题只写「捷径学习」，正文「熟悉的环境里，也许考得不错」与口播一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s8.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I90",
+   "key": "2a443ac5de2f",
+   "item": "screen_zh",
+   "where": "l53",
+   "dim": "P1 P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1 P2",
+   "shots": [
+    "l53"
+   ],
+   "evidence": [
+    "演示里按考试成绩挑了，实际别这样（15 字）"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "两行对照：「演示：按考试成绩挑」/「实际：用验证集挑」（各 ≤10 字）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "演示里按考试成绩挑了，实际别这样（15 字）",
+   "problem": "与口播「刚才为了演示，我们直接按考试成绩挑了模型；实际做项目，可不能这样」几乎一一对应，是整句压缩而非纲要；「别这样」口气随意",
+   "suggest": "两行对照：「演示：按考试成绩挑」/「实际：用验证集挑」（各 ≤10 字）",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "已改为「实验里按考试成绩挑了，实际别这样」与口播叫法一致；保留一句提醒（只此一处）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I91",
+   "key": "a3e544d96877",
+   "item": "screen_zh",
+   "where": "l53",
+   "dim": "P1、P2、P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P2、P4",
+   "shots": [
+    "l53"
+   ],
+   "evidence": [
+    "「演示里按考试成绩挑了，实际别这样」"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "本屏改成两行对照：**演示：考试挑模型**／**实际：验证集挑模型**，收走旧卡内说明与图示文字。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "「演示里按考试成绩挑了，实际别这样」",
+   "problem": "15字虽未超限，仍是完整解释句；「挑了」省去宾语，「别这样」又要回指前半句。",
+   "suggest": "本屏改成两行对照：**演示：考试挑模型**／**实际：验证集挑模型**，收走旧卡内说明与图示文字。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同上",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I92",
+   "key": "c4aac73a0b56",
+   "item": "screen_zh",
+   "where": "l55",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l55"
+   ],
+   "evidence": [
+    "「三个常用办法」；三张卡内名称、短语；「训练／验证／测试」"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "保留总标题，三卡各只留一块：**验证集：模拟考**／**更多、更多样的数据**／**正则化：惩罚复杂模型**。删除重复小标签；到l55时收走第一卡的「训练／验证／测试」文字。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "「三个常用办法」；三张卡内名称、短语；「训练／验证／测试」",
+   "problem": "卡内「验证集／更多数据／正则化」不是页眉，图示名称也不是刻度。计入后44字；即使把每张卡头合并、图示标签合并，仍有5组。",
+   "suggest": "保留总标题，三卡各只留一块：**验证集：模拟考**／**更多、更多样的数据**／**正则化：惩罚复杂模型**。删除重复小标签；到l55时收走第一卡的「训练／验证／测试」文字。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s9：三张卡各只留一行（① 验证集：模拟考 / ② 更多、更多样的数据 / ③ 正则化：惩罚太复杂）；英文柱条 Valid. 改 Mock；l53 英文 Our experiment: picked by exam score",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/scenes/web/s9.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I93",
+   "key": "d7e6032bf3b2",
+   "item": "screen_zh",
+   "where": "outro（口播 l57–l58）",
+   "dim": "P1 P2 P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1 P2 P4",
+   "shots": [
+    "outro（口播 l57–l58）"
+   ],
+   "evidence": [
+    "过拟合，就像连印错的都背了下来， / 还把它们当成了规律。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "三块：「过拟合」（标题）/「连印错的也背下来」/「还当成了规律」（后两块各 ≤8 字，无句号）；「一句话记住」眼眉保留",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "过拟合，就像连印错的都背了下来， / 还把它们当成了规律。",
+   "problem": "23 字一整句，超标题 12 字和单块 16 字；与口播 l57–l58 逐字重复，正是用户 2026-11-08 抓过的「整句印在屏上」同类；句末句号。上一轮 I75/I80 只调了折行，未减字。",
+   "suggest": "三块：「过拟合」（标题）/「连印错的也背下来」/「还当成了规律」（后两块各 ≤8 字，无句号）；「一句话记住」眼眉保留",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "outro：片尾卡改成页眉「过拟合，就像」＋两行短语「连印错的都背了下来， / 还当成了规律」（英文 Overfitting is · memorizing even the typos, / and treating them as rules），不带句号；卡上只放本语言（系列名也去掉另一种语言）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/package.json"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I94",
+   "key": "ee692e24b92c",
+   "item": "voice_en",
+   "where": "l09",
+   "dim": "V3, V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3, V5",
+   "shots": [
+    "l09"
+   ],
+   "evidence": [
+    "Overfitting is when a model fits its practice data so closely that it learns the flukes as well, and then does worse on new data."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "A model can fit its practice data too closely, learning even the flukes. Then it does worse on new data. That's overfitting.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Overfitting is when a model fits its practice data so closely that it learns the flukes as well, and then does worse on new data.",
+   "problem": "**A bit off.** The nested definition asks the listener to retain the mechanism while waiting for the consequence. Short sentences preserve both.",
+   "suggest": "A model can fit its practice data too closely, learning even the flukes. Then it does worse on new data. That's overfitting.",
+   "judge_note": "b l09: \"Overfitting is when…, and then…\" is the most natural spoken form for a definition, and at 7.7 s it fits in one breath. Splitting it into three sentences that end \"That's overfitting\" adds another use of the \"That's X\" ending already used in l15, l22 and l35.",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：when…, and then… 是定义最自然的口语说法",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I95",
+   "key": "7e12be80cbe4",
+   "item": "voice_en",
+   "where": "l10",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4",
+   "shots": [
+    "l10"
+   ],
+   "evidence": [
+    "Let's watch it happen in a small experiment."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Let's watch it happen.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Let's watch it happen in a small experiment.",
+   "problem": "Repeats l03's promise.",
+   "suggest": "Let's watch it happen.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l10 改为「It's like memorizing the practice problems without learning the pattern. Let's see how that happens.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I96",
+   "key": "8594f4b47a2a",
+   "item": "voice_en",
+   "where": "l14",
+   "dim": "V1, V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l14"
+   ],
+   "evidence": [
+    "Model one is too simple: just a straight line. We score it by how far the points miss the line, squared and averaged."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Model one is too simple: just a straight line. To score it, we square each point's distance from it, then average.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Model one is too simple: just a straight line. We score it by how far the points miss the line, squared and averaged.",
+   "problem": "**Clearly off.** “Squared and averaged” arrives as a compressed mathematical afterthought. Say what gets squared, then give the next operation.",
+   "suggest": "Model one is too simple: just a straight line. To score it, we square each point's distance from it, then average.",
+   "judge_note": "a l14 rewrite (\"how far the points sit from the line, on average\"): it repeats a suggestion the author already declined last round, for a valid reason. The on-screen error values are squared-and-averaged, so \"on average\" would misstate them. Use b's direction, with a clear referent: \"To score it, we square how far each point misses the line, then average.\" (14 words, same as the original)",
+   "status": "implemented",
+   "solution": "l14 改为「Model one is too simple: just a straight line. To score it, we square how far each point misses the line, then average.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I97",
+   "key": "9952bab3ff7a",
+   "item": "voice_en",
+   "where": "l14",
+   "dim": "V3, V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3, V1",
+   "shots": [
+    "l14"
+   ],
+   "evidence": [
+    "We score it by how far the points miss the line, squared and averaged."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "We score it by how far the points sit from the line, on average.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "We score it by how far the points miss the line, squared and averaged.",
+   "problem": "\"squared and averaged\" is unexplained math jargon, and the line carries two ideas.",
+   "suggest": "We score it by how far the points sit from the line, on average.",
+   "judge_note": "a l14 rewrite (\"how far the points sit from the line, on average\"): it repeats a suggestion the author already declined last round, for a valid reason. The on-screen error values are squared-and-averaged, so \"on average\" would misstate them. Use b's direction, with a clear referent: \"To score it, we square how far each point misses the line, then average.\" (14 words, same as the original)",
+   "status": "implemented",
+   "solution": "l14 改为「Model one is too simple: just a straight line. To score it, we square how far each point misses the line, then average.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I98",
+   "key": "34f2043fa83f",
+   "item": "voice_en",
+   "where": "l23",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "Underfitting is easy to spot: it does badly on practice and exam alike. Overfitting is sneakier: it can ace the practice and still fail the exam."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Underfitting does badly on practice and exam questions. Overfitting is sneakier: it can ace the practice questions and still fail the exam.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Underfitting is easy to spot: it does badly on practice and exam alike. Overfitting is sneakier: it can ace the practice and still fail the exam.",
+   "problem": "**A bit off.** “On practice” and especially “ace the practice” sound as though “questions” has been accidentally omitted.",
+   "suggest": "Underfitting does badly on practice and exam questions. Overfitting is sneakier: it can ace the practice questions and still fail the exam.",
+   "judge_note": "b l23 (issue and rewrite): \"ace the practice\" is ordinary colloquial English, and it is parallel to \"practice and exam alike\". The rewrite also drops \"is easy to spot\", which breaks the \"easy to spot / sneakier\" contrast the line is built on.",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：ace the practice 是日常口语，且与 easy to spot / sneakier 对仗",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I99",
+   "key": "1695e1e1f639",
+   "item": "voice_en",
+   "where": "l26",
+   "dim": "V5, V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V5, V3",
+   "shots": [
+    "l26"
+   ],
+   "evidence": [
+    "Back in our experiment, the workbook is the training data, the typos are the noise, and the exam is the test data. The student who memorized everything is the curve through every point."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "In our experiment, the workbook is the training data, the typos are the noise, and the exam is the test data. The memorizing student is that wiggly curve.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Back in our experiment, the workbook is the training data, the typos are the noise, and the exam is the test data. The student who memorized everything is the curve through every point.",
+   "problem": "11 s and four mappings; hard to hold by ear alone.",
+   "suggest": "In our experiment, the workbook is the training data, the typos are the noise, and the exam is the test data. The memorizing student is that wiggly curve.",
+   "judge_note": "b l26 rewrite (delete the student→curve sentence): that sentence is the only explicit link from the analogy back to model three, so deleting it makes the analogy worse. a's shorter \"The memorizing student is that wiggly curve\" is the better 建议.",
+   "status": "implemented",
+   "solution": "l26 改为「In our experiment, the workbook is the training data, the typos are the noise, and the exam is the test data. The memorizing student is the wiggly curve.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I100",
+   "key": "32dcb7f8ed6c",
+   "item": "voice_en",
+   "where": "l26",
+   "dim": "V4, V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4, V5",
+   "shots": [
+    "l26"
+   ],
+   "evidence": [
+    "Back in our experiment, the workbook is the training data, the typos are the noise, and the exam is the test data. The student who memorized everything is the curve through every point."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "In our experiment, the workbook is the training data, the typos are the noise, and the exam is the test data.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Back in our experiment, the workbook is the training data, the typos are the noise, and the exam is the test data. The student who memorized everything is the curve through every point.",
+   "problem": "**A bit off.** Four consecutive mappings sound like an answer key being read aloud. The final mapping repeats the memorization explanation already established in l10 and l17–l22.",
+   "suggest": "In our experiment, the workbook is the training data, the typos are the noise, and the exam is the test data.",
+   "judge_note": "b l26 rewrite (delete the student→curve sentence): that sentence is the only explicit link from the analogy back to model three, so deleting it makes the analogy worse. a's shorter \"The memorizing student is that wiggly curve\" is the better 建议.",
+   "status": "implemented",
+   "solution": "l26 改为「In our experiment, the workbook is the training data, the typos are the noise, and the exam is the test data. The memorizing student is the wiggly curve.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I101",
+   "key": "e98d0835ceff",
+   "item": "voice_en",
+   "where": "l26 / l31",
+   "dim": "V2, V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2, V4",
+   "shots": [
+    "l26 / l31"
+   ],
+   "evidence": [
+    "Back in our experiment, … / Back to the experiment."
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "l26: In our experiment, the workbook is the training data, … (l31 unchanged)",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "Back in our experiment, … / Back to the experiment.",
+   "problem": "Two \"back to the experiment\" openers five lines apart. Only l31 is a real return; l26 is a mapping, not a return.",
+   "suggest": "l26: In our experiment, the workbook is the training data, … (l31 unchanged)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l26 改为「In our experiment, the workbook is the training data, the typos are the noise, and the exam is the test data. The memorizing student is the wiggly curve.」；l31 改为「Back to the experiment. We repeat it with 300 random sets of points, try models from simple to complex on each, and track both errors.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I102",
+   "key": "48df043b433b",
+   "item": "voice_en",
+   "where": "l30",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "Both took the examples in front of them as the rule."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Both treated the examples they'd seen as the rule.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Both took the examples in front of them as the rule.",
+   "problem": "Written-style phrasing.",
+   "suggest": "Both treated the examples they'd seen as the rule.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l30 改为「Both learned the wrong lesson from their examples. The student memorized every detail; the child latched onto the sofa. The child's mistake is called shortcut learning. We'll come back to it.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I103",
+   "key": "ef696754b3d2",
+   "item": "voice_en",
+   "where": "l30",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "Both took the examples in front of them as the rule. The student memorized every detail; the child latched onto the sofa. The child's mistake is called shortcut learning. We'll come back to it."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Both learned the wrong lesson from their examples. The student memorized every detail; the child latched onto the sofa. The child's mistake is called shortcut learning. We'll come back to it.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Both took the examples in front of them as the rule. The student memorized every detail; the child latched onto the sofa. The child's mistake is called shortcut learning. We'll come back to it.",
+   "problem": "**A bit off.** “Took the examples…as the rule” is stiff and abstract. The following concrete contrast is much better.",
+   "suggest": "Both learned the wrong lesson from their examples. The student memorized every detail; the child latched onto the sofa. The child's mistake is called shortcut learning. We'll come back to it.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l30 改为「Both learned the wrong lesson from their examples. The student memorized every detail; the child latched onto the sofa. The child's mistake is called shortcut learning. We'll come back to it.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I104",
+   "key": "e07f94503a47",
+   "item": "voice_en",
+   "where": "l31",
+   "dim": "V3, V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3, V5",
+   "shots": [
+    "l31"
+   ],
+   "evidence": [
+    "Back to the experiment. We repeat it with three hundred random sets of points, try models from simple to complex on each, and track both errors."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Back to the experiment. We use three hundred random sets of points. On each, we try increasingly complex models and compare practice error with exam error.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Back to the experiment. We repeat it with three hundred random sets of points, try models from simple to complex on each, and track both errors.",
+   "problem": "**A bit off.** Several procedural steps accumulate before “both errors,” whose names the listener must retrieve from earlier.",
+   "suggest": "Back to the experiment. We use three hundred random sets of points. On each, we try increasingly complex models and compare practice error with exam error.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：l31 一句交代实验做法，拆句会变长；保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I105",
+   "key": "4e0de74d1b3c",
+   "item": "voice_en",
+   "where": "l35",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l35"
+   ],
+   "evidence": [
+    "Does that mean simpler is always better? No. Too simple, and both errors are high. That's underfitting, on the left. You want the middle, where both are low."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Does that mean simpler is always better? No. Too simple, and both errors are high. That's underfitting. We want enough complexity to learn the pattern without memorizing the noise.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Does that mean simpler is always better? No. Too simple, and both errors are high. That's underfitting, on the left. You want the middle, where both are low.",
+   "problem": "**A bit off for audio alone.** “On the left” adds no audible information. “The middle” should identify model complexity rather than chart position.",
+   "suggest": "Does that mean simpler is always better? No. Too simple, and both errors are high. That's underfitting. We want enough complexity to learn the pattern without memorizing the noise.",
+   "judge_note": "b l35 (V3 evidence and rewrite): a chart is on screen at l35, and the material says that is when \"on the left\" is allowed. \"The middle\" can also be recovered by ear from l33. The rewrite drops \"where both are low\", which is the payoff. At most 记录.",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：l35 时图上有「欠拟合」区域，on the left 指得到",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I106",
+   "key": "c4b5fba1dbf0",
+   "item": "voice_en",
+   "where": "l37",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l37"
+   ],
+   "evidence": [
+    "you have to store ten numbers, one height for each."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "you have to store ten numbers, one for each point.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "you have to store ten numbers, one height for each.",
+   "problem": "\"Height\" has no spoken anchor.",
+   "suggest": "you have to store ten numbers, one for each point.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l37 改为「To remember these ten points exactly, you have to store ten numbers: how high each point sits.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I107",
+   "key": "5ef4d3cf7feb",
+   "item": "voice_en",
+   "where": "l41",
+   "dim": "V4, V2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4, V2",
+   "shots": [
+    "l41"
+   ],
+   "evidence": [
+    "Problems like this have caused real trouble."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Overfitting has caused real trouble.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Problems like this have caused real trouble.",
+   "problem": "\"Like this\" points at nothing; it is filler before l42.",
+   "suggest": "Overfitting has caused real trouble.",
+   "judge_note": "a l41 rewrite (\"Overfitting has caused real trouble.\"): it narrows the claim and so makes it wrong. Two of the three cases that follow (X-ray, moles) are shortcut learning, which l50 calls \"a close cousin of overfitting\". The vaguer \"Problems like this\" is deliberate, and after the \"Real-world failures\" card it does point at something.",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：Problems like this 故意泛指（后两个案例是捷径学习，不全是过拟合）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I108",
+   "key": "c89a5e103d28",
+   "item": "voice_en",
+   "where": "l43",
+   "dim": "V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4",
+   "shots": [
+    "l43"
+   ],
+   "evidence": [
+    "Researchers pointed out that its first version sifted through fifty million search terms to fit about eleven hundred data points."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Its first version sifted through fifty million search terms to fit about eleven hundred data points.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Researchers pointed out that its first version sifted through fifty million search terms to fit about eleven hundred data points.",
+   "problem": "**A bit off.** The attribution delays an already demanding comparison, and l44 attributes the interpretation again. Removing this first attribution loses no listening information.",
+   "suggest": "Its first version sifted through fifty million search terms to fit about eleven hundred data points.",
+   "judge_note": "b l43 rewrite (drop \"Researchers pointed out that\"): it breaks l44 \"The researchers called it overfitting\". Without l43's attribution, \"the researchers\" has no antecedent. The attribution also matches the on-screen source (Lazer et al.).",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：去掉 Researchers pointed out 会让 l44 的 the researchers 没有先行词",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I109",
+   "key": "bf342087e659",
+   "item": "voice_en",
+   "where": "l45",
+   "dim": "V3, V1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3, V1",
+   "shots": [
+    "l45"
+   ],
+   "evidence": [
+    "From twenty eleven to twenty thirteen, it overestimated flu in a hundred of a hundred and eight weeks."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "From twenty eleven to twenty thirteen, it overshot in 100 of 108 weeks.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "From twenty eleven to twenty thirteen, it overestimated flu in a hundred of a hundred and eight weeks.",
+   "problem": "\"a hundred of a hundred and eight\" is a number tangle; the ear loses the ratio.",
+   "suggest": "From twenty eleven to twenty thirteen, it overshot in 100 of 108 weeks.",
+   "judge_note": "a l45 rewrite (\"it overshot in 100 of 108 weeks\"): writing it in digits does not fix the spoken form. The script's spoken form {100|a hundred} of {108|a hundred and eight} would be read the same way. \"Overshot\" also drops what was being estimated. Use \"a hundred out of a hundred and eight\" (see 补充问题).",
+   "status": "implemented",
+   "solution": "l45 改为「Later versions still struggled. From 2011 to 2013, they overestimated flu in 100 out of 108 weeks.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I110",
+   "key": "01765c3aa0fd",
+   "item": "voice_en",
+   "where": "l45",
+   "dim": "V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l45"
+   ],
+   "evidence": [
+    "Later versions still struggled. From twenty eleven to twenty thirteen, it overestimated flu in a hundred of a hundred and eight weeks."
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "Later versions still struggled. From twenty eleven to twenty thirteen, they overestimated flu in a hundred out of a hundred and eight weeks. (one word longer than the original; \"out\" is the fix)",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "Later versions still struggled. From twenty eleven to twenty thirteen, it overestimated flu in a hundred of a hundred and eight weeks.",
+   "problem": "Consolidated fix. \"A hundred of a hundred and eight\" is the regression from I182 (must fix). Both reviewers also missed that plural \"Later versions\" is followed by singular \"it\".",
+   "suggest": "Later versions still struggled. From twenty eleven to twenty thirteen, they overestimated flu in a hundred out of a hundred and eight weeks. (one word longer than the original; \"out\" is the fix)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l45 改为「Later versions still struggled. From 2011 to 2013, they overestimated flu in 100 out of 108 weeks.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I111",
+   "key": "ffabee984eec",
+   "item": "voice_en",
+   "where": "l45",
+   "dim": "V1, V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V5",
+   "shots": [
+    "l45"
+   ],
+   "evidence": [
+    "Later versions still struggled. From twenty eleven to twenty thirteen, it overestimated flu in a hundred of a hundred and eight weeks."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Later versions struggled. From twenty eleven to twenty thirteen, it overestimated flu in a hundred out of a hundred and eight weeks.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Later versions still struggled. From twenty eleven to twenty thirteen, it overestimated flu in a hundred of a hundred and eight weeks.",
+   "problem": "**A bit off.** “A hundred of a hundred and eight” is an uncomfortable spoken sequence. “Out of” makes the relationship immediate.",
+   "suggest": "Later versions struggled. From twenty eleven to twenty thirteen, it overestimated flu in a hundred out of a hundred and eight weeks.",
+   "judge_note": "a l45 rewrite (\"it overshot in 100 of 108 weeks\"): writing it in digits does not fix the spoken form. The script's spoken form {100|a hundred} of {108|a hundred and eight} would be read the same way. \"Overshot\" also drops what was being estimated. Use \"a hundred out of a hundred and eight\" (see 补充问题).",
+   "status": "implemented",
+   "solution": "l45 改为「Later versions still struggled. From 2011 to 2013, they overestimated flu in 100 out of 108 weeks.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I112",
+   "key": "c600c511e23c",
+   "item": "voice_en",
+   "where": "l48",
+   "dim": "V1, V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l48"
+   ],
+   "evidence": [
+    "And the share of scans labeled pneumonia varied widely between hospitals. So part of the pneumonia model's success likely came from recognizing the hospital, not the disease."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Some hospitals had far more scans labeled pneumonia than others. So the model may have relied partly on recognizing hospitals rather than spotting disease.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "And the share of scans labeled pneumonia varied widely between hospitals. So part of the pneumonia model's success likely came from recognizing the hospital, not the disease.",
+   "problem": "**A bit off.** The opening is report language. A direct comparison between hospitals is easier to absorb after l47's precise statistic.",
+   "suggest": "Some hospitals had far more scans labeled pneumonia than others. So the model may have relied partly on recognizing hospitals rather than spotting disease.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l48 改为「Hospitals also differed widely in how many scans were labeled pneumonia, so knowing the hospital was a clue to the label. Part of the model's success likely came from recognizing the hospital, not the disease.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I113",
+   "key": "a8c32a01840e",
+   "item": "voice_en",
+   "where": "l49",
+   "dim": "V5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V5",
+   "shots": [
+    "l49"
+   ],
+   "evidence": [
+    "Doctors often mark suspicious moles with ink, and the model likely learned the ink as a clue."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "(keep)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Doctors often mark suspicious moles with ink, and the model likely learned the ink as a clue.",
+   "problem": "Long, but sayable. Keep, with a breath after \"ink\".",
+   "suggest": "(keep)",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级，可念；保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I114",
+   "key": "c0245c283100",
+   "item": "voice_en",
+   "where": "l50",
+   "dim": "V4, V5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4, V5",
+   "shots": [
+    "l50"
+   ],
+   "evidence": [
+    "The X-ray and mole models took shortcuts, like the child with the cats. That's shortcut learning, a close cousin of overfitting. They can do well in familiar settings, and still fail somewhere new."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "The X-ray and mole models took shortcuts, like the child with the cats. They shine in familiar settings and fail somewhere new.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "The X-ray and mole models took shortcuts, like the child with the cats. That's shortcut learning, a close cousin of overfitting. They can do well in familiar settings, and still fail somewhere new.",
+   "problem": "11.8 s; three ideas in one line.",
+   "suggest": "The X-ray and mole models took shortcuts, like the child with the cats. They shine in familiar settings and fail somewhere new.",
+   "judge_note": "a l50 rewrite: it deletes \"That's shortcut learning, a close cousin of overfitting\", which is the payoff promised in l30 \"We'll come back to it\". Removing it leaves that promise unkept.",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回改写：删掉会让 l30 的「后面还会碰到」落空；保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I115",
+   "key": "795ef49c90c9",
+   "item": "voice_en",
+   "where": "l53",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l53"
+   ],
+   "evidence": [
+    "A confession: for the demo, we picked the model by its exam score. In a real project, you shouldn't."
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "A confession: in our experiment, we picked the model by its exam score. In a real project, you shouldn't.",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "A confession: for the demo, we picked the model by its exam score. In a real project, you shouldn't.",
+   "problem": "The whole episode calls it \"the experiment\" (l03, l10, l26, l31). \"The demo\" is a new name for the same thing, which is the same kind of problem as I164 (test data vs new data). Both reviewers praised this line and missed it.",
+   "suggest": "A confession: in our experiment, we picked the model by its exam score. In a real project, you shouldn't.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l53 改为「A confession: in our experiment, we picked the model by its exam score. In a real project, you shouldn't.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I116",
+   "key": "a29192a430a5",
+   "item": "voice_zh",
+   "where": "l09",
+   "dim": "V1、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l09"
+   ],
+   "evidence": [
+    "过拟合，就是模型把练习题贴得太紧，连碰巧的细节也学了进去，一做新题反而变差。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "过拟合，就是模型把练习题记得太死，连碰巧的细节也记住了，一做新题反而变差。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "过拟合，就是模型把练习题贴得太紧，连碰巧的细节也学了进去，一做新题反而变差。",
+   "problem": "**很怪。**「把练习题贴得太紧」听成把纸贴在什么东西上，不能自然表达模型过分记住练习数据。定义刚开始就让人卡住。",
+   "suggest": "过拟合，就是模型把练习题记得太死，连碰巧的细节也记住了，一做新题反而变差。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l09 改为「过拟合，就是模型把练习题学得太死，连碰巧的细节也学了进去，一做新题反而变差。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I117",
+   "key": "beaa6b43e3b5",
+   "item": "voice_zh",
+   "where": "l09",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l09"
+   ],
+   "evidence": [
+    "过拟合，就是模型把练习题贴得太紧，连碰巧的细节也学了进去，一做新题反而变差。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "过拟合，就是模型把练习题学得太死，连碰巧的细节也学了进去，一做新题反而变差。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "过拟合，就是模型把练习题贴得太紧，连碰巧的细节也学了进去，一做新题反而变差。",
+   "problem": "「把练习题贴得太紧」是翻译腔的 fit 直译，口语不这么说；练习题此时还没交代是什么。",
+   "suggest": "过拟合，就是模型把练习题学得太死，连碰巧的细节也学了进去，一做新题反而变差。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l09 改为「过拟合，就是模型把练习题学得太死，连碰巧的细节也学了进去，一做新题反而变差。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I118",
+   "key": "0ad530250d4d",
+   "item": "voice_zh",
+   "where": "l10",
+   "dim": "V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l10"
+   ],
+   "evidence": [
+    "就像把练习题背下来了，却没学会规律。我们用一个小实验来看看。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "就像把练习题背下来，没学会规律。来看实验。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "就像把练习题背下来了，却没学会规律。我们用一个小实验来看看。",
+   "problem": "与 l09 定义、l24 比方重复，「小实验」又和 l03 重复。",
+   "suggest": "就像把练习题背下来，没学会规律。来看实验。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l10 改为「就像把练习题背下来了，却没学会规律。来看看它是怎么发生的。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I119",
+   "key": "8233b0c350e7",
+   "item": "voice_zh",
+   "where": "l11",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l11"
+   ],
+   "evidence": [
+    "这十个点，是我们收集到的数据，叫训练数据，相当于练习题。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "把收集的数据画成十个点，当作练习题，叫训练数据。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "这十个点，是我们收集到的数据，叫训练数据，相当于练习题。",
+   "problem": "句子表达自然，但只听时「这十个点」突然出现。先说把数据画成点，观众才能在脑中进入这个实验。",
+   "suggest": "把收集的数据画成十个点，当作练习题，叫训练数据。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "画面上就是这十个点（逐个淡入），指代成立",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I120",
+   "key": "bcd20d4ae31d",
+   "item": "voice_zh",
+   "where": "l14",
+   "dim": "V2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V2",
+   "shots": [
+    "l14"
+   ],
+   "evidence": [
+    "第一种模型太简单，只会画直线。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "同一组点，我们试三种模型。第一种太简单，只会画直线。（可略压后半句，或把铺垫放进 l13）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "第一种模型太简单，只会画直线。",
+   "problem": "观众这时还不知道要比三种模型，「第一种」没有铺垫。",
+   "suggest": "同一组点，我们试三种模型。第一种太简单，只会画直线。（可略压后半句，或把铺垫放进 l13）",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "画面标题「同一组练习题，三种模型」已铺垫「第一种」",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I121",
+   "key": "f7504731ffc4",
+   "item": "voice_zh",
+   "where": "l22",
+   "dim": "V3",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l22"
+   ],
+   "evidence": [
+    "到了新题不会重演"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "保留，或统一说「新数据」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "到了新题不会重演",
+   "problem": "新点、新题、新数据混用，观众可能怀疑是不同东西；有比方的语境下也算自然。",
+   "suggest": "保留，或统一说「新数据」",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "存疑级：新点 / 新题 / 新数据在比方语境下自然，裁决未判问题",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I122",
+   "key": "ac41f2d30e2f",
+   "item": "voice_zh",
+   "where": "l26",
+   "dim": "V1/V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1/V5",
+   "shots": [
+    "l26"
+   ],
+   "evidence": [
+    "放回实验里看：练习册是训练数据，印错的答案是噪声，考试是测试数据。死记硬背的学生，就是那条穿过每个点的曲线。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "放回实验里：练习册是训练数据，印错的答案是噪声。死记硬背的学生，就是那条穿过每个点的曲线。（「考试是测试数据」l19 已讲过，可删）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "放回实验里看：练习册是训练数据，印错的答案是噪声，考试是测试数据。死记硬背的学生，就是那条穿过每个点的曲线。",
+   "problem": "11 秒连说四项配对，像念对照表，一遍难全记住。",
+   "suggest": "放回实验里：练习册是训练数据，印错的答案是噪声。死记硬背的学生，就是那条穿过每个点的曲线。（「考试是测试数据」l19 已讲过，可删）",
+   "judge_note": "b l26 改写：「它死背训练数据」让曲线「有意去背」，紧接着 l27 却说「学生知道自己在背，模型不知道」，前后矛盾。要采用的话，把「它死背训练数据，连噪声都记住了」换成「它记下训练数据，连噪声都没落下」（48＝48 字）。；a l26 改写：删了「考试是测试数据」。上一轮裁决已经驳回过同样的删法（I204：l25 刚铺垫了考试，删掉就接不上），本轮不该再提。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回两位的改写（会改变比方的映射）；四项对照保留，屏上同步逐行出现",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I123",
+   "key": "48eccc624b0e",
+   "item": "voice_zh",
+   "where": "l26",
+   "dim": "V1、V2、V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V2、V5",
+   "shots": [
+    "l26"
+   ],
+   "evidence": [
+    "放回实验里看：练习册是训练数据，印错的答案是噪声，考试是测试数据。死记硬背的学生，就是那条穿过每个点的曲线。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "刚才那条穿过每个点的曲线，就像这个学生。它死背训练数据，连噪声都记住了。换成测试数据，就像换了考卷，立刻露馅。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "放回实验里看：练习册是训练数据，印错的答案是噪声，考试是测试数据。死记硬背的学生，就是那条穿过每个点的曲线。",
+   "problem": "**有点怪。**「放回实验里看」生硬，随后三项连续配对，仍有念对照表的感觉。可以顺着学生的故事回到曲线。",
+   "suggest": "刚才那条穿过每个点的曲线，就像这个学生。它死背训练数据，连噪声都记住了。换成测试数据，就像换了考卷，立刻露馅。",
+   "judge_note": "b l26 改写：「它死背训练数据」让曲线「有意去背」，紧接着 l27 却说「学生知道自己在背，模型不知道」，前后矛盾。要采用的话，把「它死背训练数据，连噪声都记住了」换成「它记下训练数据，连噪声都没落下」（48＝48 字）。；a l26 改写：删了「考试是测试数据」。上一轮裁决已经驳回过同样的删法（I204：l25 刚铺垫了考试，删掉就接不上），本轮不该再提。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同上",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I124",
+   "key": "d9ac6de80ecb",
+   "item": "voice_zh",
+   "where": "l27",
+   "dim": "V1",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "这个比方也有局限"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "这个比方有不像的地方",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "这个比方也有局限",
+   "problem": "「局限」书面。",
+   "suggest": "这个比方有不像的地方",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：「局限」可懂；屏上已改为「比方的局限」",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I125",
+   "key": "c08f62b4f2fe",
+   "item": "voice_zh",
+   "where": "l31",
+   "dim": "V3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l31"
+   ],
+   "evidence": [
+    "看两种误差通常怎么变。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "看练习误差和考试误差通常怎么变。（略长，可接受则保留）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "看两种误差通常怎么变。",
+   "problem": "「两种误差」要回头想是哪两种，一句里还塞了「三百组」「从简单到复杂」。",
+   "suggest": "看练习误差和考试误差通常怎么变。（略长，可接受则保留）",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I126",
+   "key": "0c40c214884a",
+   "item": "voice_zh",
+   "where": "l31",
+   "dim": "V3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l31"
+   ],
+   "evidence": [
+    "我们换三百组随机的点"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "回到实验。我们换三百组点，每组都试一遍从简单到复杂的模型，看两种误差通常怎么变。（36≤39 字）",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "我们换三百组随机的点",
+   "problem": "「随机的点」听着像毫无规律的乱点，和 l12「大致沿着某个规律分布」相抵：观众可能会想，随机的点哪来的规律可学。",
+   "suggest": "回到实验。我们换三百组点，每组都试一遍从简单到复杂的模型，看两种误差通常怎么变。（36≤39 字）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l31 改为「回到实验。我们再抽三百组点，每组都试一遍从简单到复杂的模型，看两种误差通常怎么变。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I127",
+   "key": "5b254bf96e0f",
+   "item": "voice_zh",
+   "where": "l35",
+   "dim": "V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l35"
+   ],
+   "evidence": [
+    "那模型越简单越好吗？也不是。太简单，两种误差都高，就是左边的欠拟合。要找的，是两种误差都低的那一段。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "那模型越简单越好吗？也不是。太简单，练习和考试都考不好，这就叫欠拟合。要找的，是两种误差都低的模型。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "那模型越简单越好吗？也不是。太简单，两种误差都高，就是左边的欠拟合。要找的，是两种误差都低的那一段。",
+   "problem": "句子本身自然，但「左边」「那一段」只听无法定位。结论应该落在选择什么模型，而非图上哪个区域。",
+   "suggest": "那模型越简单越好吗？也不是。太简单，练习和考试都考不好，这就叫欠拟合。要找的，是两种误差都低的模型。",
+   "judge_note": "b l35「必改」：降为建议。s6.html 在 l35 开始时淡入「欠拟合」区域（`EDU.in(zU, EDU.t(\"l35\", .45))`），材料开头说明画面就是用来判断「左边」能不能指到的；而且「太简单，两种误差都高」已经用嘴说出了所指。b 的改写（43＝43 字）可以作为建议采用。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人降为建议并驳回：l35 时图上「欠拟合」区域淡入，「左边」指得到",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I128",
+   "key": "0024df2d0cf5",
+   "item": "voice_zh",
+   "where": "l36",
+   "dim": "V2/V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V2/V3",
+   "shots": [
+    "l36"
+   ],
+   "evidence": [
+    "换个角度想：学习，可以看成一种压缩。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "换个角度想：学习，其实像在压缩信息。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "换个角度想：学习，可以看成一种压缩。",
+   "problem": "从误差曲线直接跳到「压缩」，术语没有解释就抛出，靠后面三句才补。",
+   "suggest": "换个角度想：学习，其实像在压缩信息。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "l37–l39 立刻用十个点 / 四个数字讲清压缩，开场一句先抛视角是有意为之",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I129",
+   "key": "9d8a22f91c90",
+   "item": "voice_zh",
+   "where": "l38",
+   "dim": "V1/V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1/V3",
+   "shots": [
+    "l38"
+   ],
+   "evidence": [
+    "第二种曲线，只用四个数字，就能大致画出这些点，新点也估得准。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "第二种曲线，只要四个数字就能定下形状，贴住这些点，新点也估得准。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "第二种曲线，只用四个数字，就能大致画出这些点，新点也估得准。",
+   "problem": "「画出这些点」不通：画的是曲线，不是点。四个数字是什么也没交代，听众无法想象曲线怎么由四个数字定下来。",
+   "suggest": "第二种曲线，只要四个数字就能定下形状，贴住这些点，新点也估得准。",
+   "judge_note": "a l38 改写：28 字，比原句 26 字长；「贴住这些点」用的正是 a 自己在 l09 批评过的「贴」字直译。另外，在 l37「原样记住十个点要十个数字」的压缩语境里，原句「用四个数字大致画出这些点」是能听懂的，本条只算建议；要改就用 b 的版本（25 字）。",
+   "status": "implemented",
+   "solution": "l38 改为「第二种曲线，只用四个数字就能定下来，大致贴着这些点，新点也估得准。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I130",
+   "key": "ea6cb2417261",
+   "item": "voice_zh",
+   "where": "l38",
+   "dim": "V1、V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l38"
+   ],
+   "evidence": [
+    "第二种曲线，只用四个数字，就能大致画出这些点，新点也估得准。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "那条平缓曲线，用四个数字定下形状，就能抓住走势、预测新点。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "第二种曲线，只用四个数字，就能大致画出这些点，新点也估得准。",
+   "problem": "**有点怪。**「四个数字」与曲线形状的关系未说出；曲线「画出这些点」也不顺。经历认猫的比方后，直接叫回「那条平缓曲线」更容易接上。",
+   "suggest": "那条平缓曲线，用四个数字定下形状，就能抓住走势、预测新点。",
+   "judge_note": "a l38 改写：28 字，比原句 26 字长；「贴住这些点」用的正是 a 自己在 l09 批评过的「贴」字直译。另外，在 l37「原样记住十个点要十个数字」的压缩语境里，原句「用四个数字大致画出这些点」是能听懂的，本条只算建议；要改就用 b 的版本（25 字）。",
+   "status": "implemented",
+   "solution": "l38 改为「第二种曲线，只用四个数字就能定下来，大致贴着这些点，新点也估得准。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I131",
+   "key": "46ce2567d09d",
+   "item": "voice_zh",
+   "where": "l42",
+   "dim": "V1/V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1/V3",
+   "shots": [
+    "l42"
+   ],
+   "evidence": [
+    "谷歌流感趋势，曾用人们的搜索记录，估算去看病的人里，有多少是流感样症状。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "谷歌有个流感趋势，曾用大家的搜索记录，估算有多少人得了流感。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "谷歌流感趋势，曾用人们的搜索记录，估算去看病的人里，有多少是流感样症状。",
+   "problem": "「流感样症状」是报告用语，「去看病的人里有多少是」绕；产品名直接开头也突兀。",
+   "suggest": "谷歌有个流感趋势，曾用大家的搜索记录，估算有多少人得了流感。",
+   "judge_note": "a l42 改写：「谷歌有个流感趋势」会听成「谷歌出现了一种流感趋势」，产品名被拆散了；「估算有多少人得了流感」把「看病的人里流感样病例占多少」改成了得病人数，事实变了。改用 b 的改写（31 字）。",
+   "status": "implemented",
+   "solution": "l42 改为「谷歌流感趋势，曾用人们的搜索记录，估算看病的人里，有多大比例是类似流感的症状。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I132",
+   "key": "25432518aa2c",
+   "item": "voice_zh",
+   "where": "l42",
+   "dim": "V1、V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l42"
+   ],
+   "evidence": [
+    "谷歌流感趋势，曾用人们的搜索记录，估算去看病的人里，有多少是流感样症状。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "谷歌流感趋势，曾用搜索记录，估算看病的人里，有多少人有类似流感的症状。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "谷歌流感趋势，曾用人们的搜索记录，估算去看病的人里，有多少是流感样症状。",
+   "problem": "**有点怪。**前半说「人里有多少」，后半却接「是症状」，人与症状混接；「流感样症状」也偏报告口吻。",
+   "suggest": "谷歌流感趋势，曾用搜索记录，估算看病的人里，有多少人有类似流感的症状。",
+   "judge_note": "a l42 改写：「谷歌有个流感趋势」会听成「谷歌出现了一种流感趋势」，产品名被拆散了；「估算有多少人得了流感」把「看病的人里流感样病例占多少」改成了得病人数，事实变了。改用 b 的改写（31 字）。",
+   "status": "implemented",
+   "solution": "l42 改为「谷歌流感趋势，曾用人们的搜索记录，估算看病的人里，有多大比例是类似流感的症状。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I133",
+   "key": "31e0dc3052f8",
+   "item": "voice_zh",
+   "where": "l43",
+   "dim": "V1、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l43"
+   ],
+   "evidence": [
+    "它最初从五千万个搜索词里，挑出跟一千多个历史数据点最贴合的那些。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "它从五千万个搜索词里，挑出搜索量变化最像那一千多条流感记录的词。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "它最初从五千万个搜索词里，挑出跟一千多个历史数据点最贴合的那些。",
+   "problem": "**有点怪。**搜索词如何与数据点「贴合」没有讲出来；「历史数据」也没明确指向流感。两个大数字之后，听众仍不知道它在比较什么。",
+   "suggest": "它从五千万个搜索词里，挑出搜索量变化最像那一千多条流感记录的词。",
+   "judge_note": "b l43「必改」及其改写：级别降为建议。改写里的「那一千多条流感记录」又带回了上一轮 I215 删掉的、没有所指的「那」；删掉「最初」后，和 l45「后来的版本」的前后对照也没了；把「数据点」换成「流感记录」，l44「可挑的词远比数据点多」就接不上了。建议改成「它最初从五千万个搜索词里，挑出走势最像一千多个流感数据点的那些。」（30＝30 字）。；a l43 改写：32 字，比原句 30 字长；「一千多个流感数据」量词搭配也别扭。改用上面 b l43 条给的版本。",
+   "status": "implemented",
+   "solution": "l43 改为「它最初从五千万个搜索词里，挑出走势最像一千多个流感数据点的那些。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I134",
+   "key": "ed4c490882ca",
+   "item": "voice_zh",
+   "where": "l43",
+   "dim": "V1/V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1/V3",
+   "shots": [
+    "l43"
+   ],
+   "evidence": [
+    "它最初从五千万个搜索词里，挑出跟一千多个历史数据点最贴合的那些。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "它最初从五千万个搜索词里，挑出走势跟往年一千多个流感数据最像的那些。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "它最初从五千万个搜索词里，挑出跟一千多个历史数据点最贴合的那些。",
+   "problem": "「历史数据点」只靠耳朵不知道是什么数据；「贴合」是建模圈用语，搜索词怎么「贴合」数据听不出来。",
+   "suggest": "它最初从五千万个搜索词里，挑出走势跟往年一千多个流感数据最像的那些。",
+   "judge_note": "b l43「必改」及其改写：级别降为建议。改写里的「那一千多条流感记录」又带回了上一轮 I215 删掉的、没有所指的「那」；删掉「最初」后，和 l45「后来的版本」的前后对照也没了；把「数据点」换成「流感记录」，l44「可挑的词远比数据点多」就接不上了。建议改成「它最初从五千万个搜索词里，挑出走势最像一千多个流感数据点的那些。」（30＝30 字）。；a l43 改写：32 字，比原句 30 字长；「一千多个流感数据」量词搭配也别扭。改用上面 b l43 条给的版本。",
+   "status": "implemented",
+   "solution": "l43 改为「它最初从五千万个搜索词里，挑出走势最像一千多个流感数据点的那些。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I135",
+   "key": "882c92988cc6",
+   "item": "voice_zh",
+   "where": "l44",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l44"
+   ],
+   "evidence": [
+    "可挑的词远比数据点多，总有一些，只是碰巧在冬天搜得多。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "可挑的词远比数据点多，难免挑中碰巧冬天搜得多的。（22≤24 字）",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "可挑的词远比数据点多，总有一些，只是碰巧在冬天搜得多。",
+   "problem": "只说有些词碰巧冬天搜得多，没说这些词**被挑了进去**；「总有一些」又省掉了名词，一句断三处。观众得自己补上「它们被选中了」，才接得上后面的「这是过拟合」。两人都只提了断句，没提缺的这一步。",
+   "suggest": "可挑的词远比数据点多，难免挑中碰巧冬天搜得多的。（22≤24 字）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l44 改为「可挑的词远比数据点多，难免挑中碰巧冬天搜得多的。研究者说，这是过拟合：它既在测流感，也在测冬天。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I136",
+   "key": "a5186ba0d0aa",
+   "item": "voice_zh",
+   "where": "l45",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l45"
+   ],
+   "evidence": [
+    "后来的版本还是不准：二零一一到二零一三年，一百零八周里，有一百周估高了。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "后来的版本还是不准：一百零八周里，有一百周估高了。（年份留在字幕/画面）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "后来的版本还是不准：二零一一到二零一三年，一百零八周里，有一百周估高了。",
+   "problem": "年份加两个周数，一句里四个数字，耳朵抓不住重点；画面有数字可对照，故不算必改。",
+   "suggest": "后来的版本还是不准：一百零八周里，有一百周估高了。（年份留在字幕/画面）",
+   "judge_note": "a l45 改写删年份：材料里 l45 画面只有「100」「/ 108」，没有年份，「年份留在字幕 / 画面」的前提不成立，删了就丢了时间范围。如果要改，用 b 的改写（32＝32 字）。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回删年份的改写；画面同步出 100 / 108",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I137",
+   "key": "747c290a28c5",
+   "item": "voice_zh",
+   "where": "l45",
+   "dim": "V3、V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3、V5",
+   "shots": [
+    "l45"
+   ],
+   "evidence": [
+    "后来的版本还是不准：二零一一到二零一三年，一百零八周里，有一百周估高了。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "后来仍不准。二零一一到二零一三年，统计了一百零八周，其中一百周都估高了。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "后来的版本还是不准：二零一一到二零一三年，一百零八周里，有一百周估高了。",
+   "problem": "表达自然，但年份、总周数、估高次数连续到来，容易只记住「很多数字」。把统计范围和结果分清，强调「其中一百周」。",
+   "suggest": "后来仍不准。二零一一到二零一三年，统计了一百零八周，其中一百周都估高了。",
+   "judge_note": "a l45 改写删年份：材料里 l45 画面只有「100」「/ 108」，没有年份，「年份留在字幕 / 画面」的前提不成立，删了就丢了时间范围。如果要改，用 b 的改写（32＝32 字）。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同上",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I138",
+   "key": "798ba16f96d5",
+   "item": "voice_zh",
+   "where": "l48",
+   "dim": "V5、V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V5、V3",
+   "shots": [
+    "l48"
+   ],
+   "evidence": [
+    "而各家医院的片子里，标成肺炎的比例差得很远。所以肺炎模型的好成绩，很可能有一部分靠的是认医院，而不是认病。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "而各家医院的片子里，标成肺炎的比例差得很远。认出医院就能猜个大概，所以好成绩可能一部分靠认医院，不是认病。（48＝48 字）",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "而各家医院的片子里，标成肺炎的比例差得很远。所以肺炎模型的好成绩，很可能有一部分靠的是认医院，而不是认病。",
+   "problem": "10 秒，夹在 l47–l50 一串长句中间，两人都没列。从「比例差得很远」到「靠认医院」中间少了一步：认出是哪家医院，就能大致猜出肺炎多不多。只靠耳朵要自己推。",
+   "suggest": "而各家医院的片子里，标成肺炎的比例差得很远。认出医院就能猜个大概，所以好成绩可能一部分靠认医院，不是认病。（48＝48 字）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l48 改为「而各家医院的片子里，标成肺炎的比例差得很远，认出医院，就能猜个大概。所以肺炎模型的好成绩，很可能部分靠认医院，而不是认病。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t01_overfitting/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I139",
+   "key": "df29bfe49029",
+   "item": "voice_zh",
+   "where": "l49",
+   "dim": "V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V5",
+   "shots": [
+    "l49"
+   ],
+   "evidence": [
+    "还有个识别皮肤癌的系统。医生常在可疑的痣上画标记，它很可能把标记当成了线索：画了标记的良性痣，一半多被它判成了癌。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "还有个识别皮肤癌的系统。医生常在可疑的痣上画标记，它很可能把标记当成了线索：画了标记的良性痣，一半多被判成癌。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "还有个识别皮肤癌的系统。医生常在可疑的痣上画标记，它很可能把标记当成了线索：画了标记的良性痣，一半多被它判成了癌。",
+   "problem": "11.1 秒，医生画标记、系统误判、结果数字三层压在一起，后半句冒号后偏长。",
+   "suggest": "还有个识别皮肤癌的系统。医生常在可疑的痣上画标记，它很可能把标记当成了线索：画了标记的良性痣，一半多被判成癌。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：拆开会更长；配音一口气可念完（回听通过）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I140",
+   "key": "3b759f379564",
+   "item": "voice_zh",
+   "where": "l49",
+   "dim": "V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V5",
+   "shots": [
+    "l49"
+   ],
+   "evidence": [
+    "还有个识别皮肤癌的系统。医生常在可疑的痣上画标记，它很可能把标记当成了线索：画了标记的良性痣，一半多被它判成了癌。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "还有个识别皮肤癌的系统。医生常给可疑的痣画标记，系统可能就认准了这些标记。结果，有标记的良性痣，一半多被判成了癌。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "还有个识别皮肤癌的系统。医生常在可疑的痣上画标记，它很可能把标记当成了线索：画了标记的良性痣，一半多被它判成了癌。",
+   "problem": "表达基本自然，但后半连续塞入医生的动作、系统学到的线索和误判结果。「画标记」反复出现，结果也没有独立落点。",
+   "suggest": "还有个识别皮肤癌的系统。医生常给可疑的痣画标记，系统可能就认准了这些标记。结果，有标记的良性痣，一半多被判成了癌。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同上",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I141",
+   "key": "6e95f03b36ea",
+   "item": "voice_zh",
+   "where": "l53",
+   "dim": "V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l53"
+   ],
+   "evidence": [
+    "坦白一句：刚才为了演示，我们直接按考试成绩挑了模型；实际做项目，可不能这样。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "刚才为了演示，我们直接按考试成绩挑了模型。真做项目时，得用模拟考来挑。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "坦白一句：刚才为了演示，我们直接按考试成绩挑了模型；实际做项目，可不能这样。",
+   "problem": "「坦白一句」删掉不影响理解，还添了一层郑重提示。结尾可以直接提醒实际该用什么来挑模型。",
+   "suggest": "刚才为了演示，我们直接按考试成绩挑了模型。真做项目时，得用模拟考来挑。",
+   "judge_note": "b l53 删「坦白一句」：这是自然的口语交代，提醒观众下面要承认演示里简化了什么；删掉后用「刚才为了演示」开头反而突兀。a 也把它列为「别改掉的」。原句保留；如果想补上做法，可以写「……；真做项目，得用模拟考挑。」（33＝33 字）。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：「坦白一句」是自然的口语交代，提醒这是演示的简化",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I142",
+   "key": "70ebc4653247",
+   "item": "voice_zh",
+   "where": "l55",
+   "dim": "V1",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l55"
+   ],
+   "evidence": [
+    "对过于复杂的曲线加惩罚"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "对太复杂的曲线加惩罚",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "对过于复杂的曲线加惩罚",
+   "problem": "「过于」偏书面。",
+   "suggest": "对太复杂的曲线加惩罚",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T00:36:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  }
+ ]
+}

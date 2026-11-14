@@ -1,0 +1,20 @@
+# #27 El Misti（GVP 354010: Misti, El）
+
+- 位置：Arequipa, Peru；GVP 国家字段 Peru；坐标 -16.2991, -71.4056；GVP 海拔 5793 m
+- 类型：Stratovolcano；最近喷发：1985（Eruption Observed）
+- 来源：GVP WFS（2026-11-03 取数）；Wikipedia「Misti」导言（2026-11-03）
+- GVP 主图说明（只作辨认参考，不用其图）：El Misti, Perú's best known volcano, is a symmetrical stratovolcano that towers above the city of Arequipa.  It is seen here from the west at the margin of Arequipa's airport.  The modern symmetrical cone has a small, 1.5-km-wide summit caldera containing nested craters.  It caps an older Pleistocene volcano that collapsed, producing debris avalanches to the west and SW.  El Misti's most recent activity has been dominantly pyroclastic.  Historical eruptions date back to the 15th century.
+
+## 辨认要点 / 标志性视角 / 易混对象 / 最佳拍摄点（代理整理，写进 image_hint）
+
+El Misti volcano (5,822 m), Arequipa, Peru: perfect snow-tipped cone towering over Arequipa city, classic view from the Yanahuara viewpoint or the Plaza de Armas / Chili river. NOT Chachani (wide massif to its left), NOT Pichu Pichu
+
+## GVP 地质概述
+
+El Misti is a symmetrical andesitic stratovolcano with nested summit craters immediately NE of the city of Arequipa, Peru. Eruptions from the active cone began about 13,700 and 11,300 years ago, within a 1.5 x 2 km caldera that underwent collapse about 50,000 years ago. A large scoria cone has grown with the 830-m-wide outer summit crater. At least 20 tephra-fall deposits and numerous pyroclastic-flow deposits have been documented during the past 50,000 years, including a pyroclastic flow that traveled 12 km S about 2,000 years ago. The most recent activity has been dominantly pyroclastic, and strong winds have formed a parabolic dune field of volcanic ash extending up to 20 km downwind. An eruption in the 15th century affected nearby Inca inhabitants. Some reported eruptions may represent increased fumarolic activity.
+
+## Wikipedia 导言
+
+Misti is a volcano in the southern Peruvian Andes, rising above Arequipa, Peru's second-largest city. It has a steep conical profile and two nested summit craters. The inner crater contains an active lava plug or dome, pierced by vents that emit volcanic gases. The summit reaches 5,822 metres (19,101 ft) above sea level, on the rim of the outer crater. Snow covers the summit but does not persist, and there are no glaciers. The upper slopes are largely barren, while lower elevations support scrub and other bushy vegetation.
+The volcano grew in four stages. Each stage built the mountain with lava flows and domes, then ended with a summit collapse that formed a bowl-shaped depression. Misti forms a local volcanic group with Chachani to the northwest and Pichu Pichu to the southeast, built on debris from older volcanoes. Over the past 50,000 years, numerous intense explosive eruptions have covered the surrounding terrain with tephra (rocks fragmented by volcanic eruptions). The last two significant eruptions were 2,000 years ago and in 1440–1470 AD; since then, periods of increased gas release have sometimes been mistaken for eruptions.
+Misti is considered one of the most dangerous volcanoes in the world, as it lies only 12 kilometres (7.5 mi) from Arequipa. The city's population exceeds one million people and its northeastern suburbs have expanded onto the slopes of the volcano. Narrow valleys on its western and southern flanks pose particular threats, as mudflows and fast-moving flows of hot volcanic debris could be channelled into the urban area and into important infrastructure, like hydropower plants. Even moderate eruptions can deposit volcanic ash and tephra over most of the city. Until 2005, there was little awareness or monitoring of the volcano. Since then, the Peruvian Geological, Mining and Metallurgical Institute (INGEMMET) has established a volcano observatory in Arequipa, runs public-awareness campaigns, and has published hazard maps. The Inca viewed the volcano as a threat and during the 1440–1470 eruption offered human sacrifices (capacocha) on Misti and neighbouring mountains to placate the volcano; the mummies on Misti form the largest known Inca human sacrifice.

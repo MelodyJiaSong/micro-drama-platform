@@ -1,0 +1,71 @@
+<style>
+  .head { position: absolute; left: var(--mx); top: var(--mt); }
+  .head .h1 { margin-top: 16px; white-space: nowrap; }
+  .head .t + .t { position: absolute; top: 0; margin-top: 44px; }
+  #chart { position: absolute; left: 96px; top: 230px; }
+  .runs { position: absolute; left: 1300px; top: 250px; width: 500px; }
+  .runs .display { font-size: 120px; line-height: 1; }
+  .runs .h2 { margin-top: 6px; } .runs .caption { margin-top: 6px; }
+  .sig { position: absolute; left: 1300px; top: 520px; width: 500px; }
+  .sig .h2 { margin-top: 12px; }
+  .myth { position: absolute; left: 1300px; top: 250px; width: 520px; }
+  .myth .h2 { margin-top: 12px; }
+  .myth .body { margin-top: 18px; } .myth .m2 { margin-top: 8px; }
+</style>
+
+<div class="head"><div class="eyebrow" data-zh="03 · 两条误差线" data-en="03 · Two error curves"></div>
+  <div class="h1 t" id="t1" data-zh="模型越复杂，误差怎么变？" data-en="Complexity vs. error"></div>
+  <div class="h1 t" id="t2" data-zh='过拟合信号：练习<span class="c-train">低</span>，考试<span class="accent">高</span>' data-en='Low practice error, <span class="accent">high exam error</span>'></div>
+  <div class="h1 t" id="t3" data-zh='太简单：两种误差<span class="c-bad">都高</span>' data-en='Too simple: both errors <span class="c-bad">high</span>'></div></div>
+<svg id="chart" width="1150" height="640"></svg>
+<div class="runs" id="runs"><div class="display"><span id="nr">0</span></div>
+  <div class="h2 sub" data-zh="组随机的点" data-en="random point sets"></div></div>
+
+<script>
+const T = EDU.tl, W = 1150, H = 640;
+const tr = D.curves.train, te = D.curves.test, best = D.curves.best_degree;
+const yMax = Math.max(...te) * 1.08;
+const x = d3.scaleLinear([1, 9], [70, W - 60]), y = d3.scaleLinear([0, yMax], [H - 80, 20]);
+const svg = d3.select("#chart");
+const base = svg.append("line").attr("class", "axis-base").attr("x1", 50).attr("x2", W - 40).attr("y1", y(0)).attr("y2", y(0)).node();
+const ticks = svg.append("g").node();
+for (let d = 1; d <= 9; d++) d3.select(ticks).append("text").attr("x", x(d)).attr("y", y(0) + 40).attr("text-anchor", "middle")
+  .attr("class", "label").attr("fill", css("--sub")).text(d);
+const axisLab = svg.append("text").attr("x", x(5)).attr("y", y(0) + 76).attr("text-anchor", "middle").attr("class", "label")
+  .attr("fill", css("--sub")).text(EDU.tr("模型复杂度", "Model complexity")).node();
+// 区域：欠拟合 / 刚刚好 / 过拟合（按数据自动划分）
+const under = [1, 2].filter(d => tr[d - 1] > 0.3), over = d3.range(best + 1, 10).filter(d => te[d - 1] > 1.6 * Math.min(...te));
+const zone = (a, b, color, label) => {
+  const g = svg.append("g").node();
+  d3.select(g).append("rect").attr("x", x(a - .45)).attr("width", x(b + .45) - x(a - .45)).attr("y", y(yMax)).attr("height", y(0) - y(yMax))
+    .attr("fill", css(color)).attr("opacity", .07);
+  d3.select(g).append("text").attr("x", (x(a - .45) + x(b + .45)) / 2).attr("y", y(yMax) + 34).attr("text-anchor", "middle")
+    .attr("class", "label").attr("fill", css(color)).text(label);
+  return g;
+};
+const zU = zone(Math.min(...under), Math.max(...under), "--d-neutral", EDU.tr("欠拟合", "Underfit"));
+const mid = d3.range(Math.max(...under) + 1, Math.min(...over));
+const zM = zone(Math.min(...mid), Math.max(...mid), "--d-good", EDU.tr("最准", "Best"));
+const zO = zone(Math.min(...over), Math.max(...over), "--d-bad", EDU.tr("过拟合", "Overfit"));
+const ln = vals => d3.line().x((v, i) => x(i + 1)).y(v => y(v)).curve(d3.curveMonotoneX)(vals);
+const pTr = svg.append("path").attr("d", ln(tr)).attr("fill", "none").attr("stroke", css("--d-train")).attr("stroke-width", 6).attr("stroke-linecap", "round").node();
+const pTe = svg.append("path").attr("d", ln(te)).attr("fill", "none").attr("stroke", css("--d-test")).attr("stroke-width", 6).attr("stroke-linecap", "round").node();
+const lab = (txt, d, v, color, dy) => svg.append("text").attr("x", x(d) + 16).attr("y", y(v) + dy).attr("class", "label").attr("font-weight", 600)
+  .attr("fill", css(color)).text(txt).node();
+const lTr = lab(EDU.tr("练习误差", "Practice error"), 7.2, tr[6], "--d-train", -16), lTe = lab(EDU.tr("考试误差", "Exam error"), 6.1, te[5], "--d-test", -26);
+
+gsap.set([base, ticks, axisLab, zU, zM, zO, pTr, pTe, lTr, lTe, "#runs", "#t2", "#t3"], { opacity: 0 });
+EDU.in(".head .eyebrow, #t1", 0, { stagger: .08 });
+// l31 三百组
+EDU.in("#runs", EDU.t("l31")); EDU.count("#nr", EDU.t("l31", .1), D.curves.runs, 1.4, v => Math.round(v));
+T.to([base, ticks, axisLab], { opacity: 1, duration: .6 }, EDU.t("l31", .4));
+// l32 练习误差一路往下
+T.set(pTr, { opacity: 1 }, EDU.t("l32")); EDU.draw(pTr, EDU.t("l32"), 1.6); EDU.in(lTr, EDU.t("l32", .6));
+// l33 考试误差先降后升；中间最准
+T.set(pTe, { opacity: 1 }, EDU.t("l33")); EDU.draw(pTe, EDU.t("l33"), 1.8); EDU.in(lTe, EDU.t("l33", .45));
+EDU.in(zM, EDU.t("l33", .7)); EDU.out("#runs", EDU.t("l33"));
+// l34 信号
+EDU.in(zO, EDU.t("l34", .1)); EDU.out("#t1", EDU.t("l34")); EDU.out(axisLab, EDU.t("l34")); EDU.in("#t2", EDU.t("l34", .05));
+// l35 误解：越简单越好？
+EDU.out("#t2", EDU.t("l35")); EDU.in("#t3", EDU.t("l35", .05)); EDU.in(zU, EDU.t("l35", .45));
+</script>

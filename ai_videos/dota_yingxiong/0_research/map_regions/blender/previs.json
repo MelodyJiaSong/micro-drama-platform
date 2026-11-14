@@ -1,0 +1,265 @@
+{
+  "extends": "common.json",
+  "region": "previs-244",
+  "overhead_bounds": [
+    -8192,
+    -8192,
+    8192,
+    8192
+  ],
+  "terrain_bounds": [
+    -8192,
+    -8192,
+    8192,
+    8192
+  ],
+  "terrain_step": 32,
+  "out_dir": "../previs",
+  "blend_name": "previs_244.blend",
+  "water_level_layer": 8.3,
+  "sources": {
+    "terrain": "../../base_layout_refs/terrain_samples.json",
+    "trees": "../navigation/tree_positions.json",
+    "units": "../../base_layout_refs/base_layout_manifest.json",
+    "doodads": "../navigation/war3map.doo",
+    "features": "../map_features.json",
+    "region_cameras": "region_cameras.json",
+    "s1_cameras": "S1.json"
+  },
+  "render": {
+    "engine": "BLENDER_EEVEE",
+    "sky": [
+      0.5,
+      0.62,
+      0.8
+    ],
+    "sun_energy": 6.0,
+    "sun_elev_az": [
+      28,
+      292.5
+    ],
+    "sky_strength": 0.35
+  },
+  "shots": [
+    "S1_wide",
+    "S2_side",
+    "D1_wide",
+    "D1_front",
+    "D1_side",
+    "D2_wide",
+    "D2_front",
+    "T1_front",
+    "T1_side",
+    "J2_wide",
+    "K2_wide",
+    "R1_wide",
+    "R2_wide",
+    "R4_wide",
+    "M1_wide",
+    "M2_wide",
+    "J7_wide",
+    "J8_wide",
+    "J8_side",
+    "K4_wide",
+    "K5_wide",
+    "K6_wide",
+    "K7_wide",
+    "K8_wide"
+  ],
+  "side_of": {
+    "S1": "sentinel",
+    "S2": "sentinel",
+    "D1": "scourge",
+    "D2": "scourge",
+    "T1": "scourge",
+    "J2": "sentinel",
+    "K2": "scourge",
+    "R1": "river",
+    "R2": "river",
+    "R4": "river",
+    "M1": "sentinel",
+    "M2": "river",
+    "J7": "sentinel",
+    "J8": "sentinel",
+    "K4": "scourge",
+    "K5": "scourge",
+    "K6": "scourge",
+    "K7": "scourge",
+    "K8": "scourge"
+  },
+  "camp_creatures": {
+    "J7": [
+      [
+        "ogre",
+        3.0,
+        0.9,
+        2,
+        [
+          0.45,
+          0.32,
+          0.25
+        ]
+      ],
+      [
+        "ogre_magi",
+        3.2,
+        0.95,
+        1,
+        [
+          0.5,
+          0.3,
+          0.28
+        ]
+      ]
+    ],
+    "J8": [
+      [
+        "kobold_taskmaster",
+        1.5,
+        0.45,
+        1,
+        [
+          0.55,
+          0.42,
+          0.28
+        ]
+      ],
+      [
+        "kobold",
+        1.0,
+        0.32,
+        3,
+        [
+          0.58,
+          0.48,
+          0.3
+        ]
+      ],
+      [
+        "kobold_tunneler",
+        1.2,
+        0.38,
+        1,
+        [
+          0.62,
+          0.42,
+          0.4
+        ]
+      ]
+    ],
+    "K4": [
+      [
+        "harpy_scout",
+        2.0,
+        0.45,
+        2,
+        [
+          0.45,
+          0.36,
+          0.4
+        ]
+      ],
+      [
+        "harpy_storm",
+        2.2,
+        0.5,
+        1,
+        [
+          0.35,
+          0.38,
+          0.5
+        ]
+      ]
+    ],
+    "K5": [
+      [
+        "mud_golem",
+        2.6,
+        0.9,
+        2,
+        [
+          0.42,
+          0.3,
+          0.18
+        ]
+      ]
+    ],
+    "K6": [
+      [
+        "satyr",
+        2.0,
+        0.45,
+        4,
+        [
+          0.4,
+          0.28,
+          0.22
+        ]
+      ]
+    ],
+    "K7": [
+      [
+        "furbolg_champion",
+        2.8,
+        0.8,
+        1,
+        [
+          0.86,
+          0.86,
+          0.82
+        ]
+      ],
+      [
+        "ursa_warrior",
+        2.6,
+        0.75,
+        1,
+        [
+          0.8,
+          0.8,
+          0.76
+        ]
+      ]
+    ],
+    "K8": [
+      [
+        "rock_golem",
+        3.3,
+        1.0,
+        2,
+        [
+          0.45,
+          0.45,
+          0.42
+        ]
+      ],
+      [
+        "emerald_golem",
+        3.6,
+        1.1,
+        1,
+        [
+          0.25,
+          0.45,
+          0.3
+        ]
+      ]
+    ]
+  },
+  "cameras": [],
+  "notes": [
+    "follow-up 244 预演渲染：原版数据布局＋程序材质、水面、分阵营树形与实体代理；只作 Codex 重出的图1，不是成片。",
+    "营地放野怪体块（208 建议默认组合、卡片体量），不画外框与标桩；无文字。",
+    "水面按原版 w3e 水位（约 806 游戏单位，比河床高约 38）放在 8.3 层高，只铺满地图范围；地面与树形按原版枯萎地标志（0x20）区分天灾黑土/针叶枯树与近卫草地/阔叶树，标志在顶点间插值加噪声成自然边界。",
+    "挡住机位到注视点视线的树会被藏起（其余林子照原版）；营地远景（empty_shots）不放野怪，野怪在近景里出。"
+  ],
+  "empty_shots": [
+    "J7_wide",
+    "J8_wide",
+    "K4_wide",
+    "K5_wide",
+    "K6_wide",
+    "K7_wide",
+    "K8_wide"
+  ]
+}

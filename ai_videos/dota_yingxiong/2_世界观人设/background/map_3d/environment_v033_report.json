@@ -1,0 +1,85 @@
+{
+  "source": "environment_v032.blend",
+  "status": "prepared_author_trial_not_accepted",
+  "format_reference": "https://github.com/stijnherfst/HiveWE/wiki/war3map.w3e-Terrain",
+  "game_units_per_m": 20,
+  "old_cliff_step_m": 4,
+  "new_cliff_step_m": 6.4,
+  "mean_water_level_m": -10.88,
+  "source_water_levels_m": {
+    "-10.892500000000002": 2,
+    "-10.88": 882,
+    "-4.480000000000001": 1
+  },
+  "water_height_method": "Nearest source submerged vertex; disconnected raised pools retain their original level instead of sharing the river plane",
+  "original_submerged_vertices": 885,
+  "source_wet_missing_after_correction": 0,
+  "adjacent_walk_grade_excess_m": 2.1998738590767175e-05,
+  "maximum_height_change_m": 3.2706405630099127,
+  "added_connected_water_cells": 34,
+  "water_extension_rule": "Only connected underwater cells within 12.8m of source enabled cells; source cells retained",
+  "xy_navigation_flags_unchanged": true,
+  "remaining": [
+    "Apply local water-relative shader",
+    "Reground scenery",
+    "Visual shoreline inspection",
+    "Independent QC"
+  ],
+  "shoreline_method": "2.4m low-pass relief with 0.6\u20132.4m contour warp within 18m of shore; source wet points and adjacent walk grades constrained",
+  "walk_height_delta_m": 0.9236109191481354,
+  "file": "environment_v033.blend",
+  "regrounded_objects": 98212,
+  "regrounded_clouds": [
+    "Living_ground_grass"
+  ],
+  "water_vertices": 77157,
+  "water_faces": 75082,
+  "local_water_shader_changes": [
+    {
+      "node": "Map Range.001",
+      "old_absolute_range_m": [
+        -5.700000286102295,
+        -2.6000001430511475
+      ],
+      "new_local_relative_range_m": [
+        1.0999996662139893,
+        4.199999809265137
+      ]
+    },
+    {
+      "node": "Map Range.003",
+      "old_absolute_range_m": [
+        -6.920000076293945,
+        -6.25
+      ],
+      "new_local_relative_range_m": [
+        -0.12000007927417755,
+        0.550000011920929
+      ]
+    },
+    {
+      "node": "Map Range.008",
+      "old_absolute_range_m": [
+        -6.849999904632568,
+        -6.099999904632568
+      ],
+      "new_local_relative_range_m": [
+        -0.0499999038875103,
+        0.7000001072883606
+      ]
+    }
+  ],
+  "source_special_high_water_vertex": {
+    "grid_xy": [
+      117,
+      17
+    ],
+    "world_xy": [
+      6784,
+      -6016
+    ],
+    "water_m": -4.48,
+    "source_ground_m": -12.8,
+    "context": "Single flagged depressed tilepoint surrounded by dry ground at zero; neighbouring stored water levels also -4.48. Retained only in bounded local water geometry."
+  }
+}

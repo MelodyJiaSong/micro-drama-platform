@@ -1,0 +1,414 @@
+{
+ "voice": {
+  "reference": "edu_videos/_shared/voice/host_m_voxcpm.wav",
+  "reference_text": "大家好，欢迎来到 AI 高频词。每一期，我们只讲清楚一个词：它解决什么问题，怎么理解它，以及它在现实里意味着什么。"
+ },
+ "items": [
+  {
+   "id": "l01",
+   "text": "Your photo app can spot your cat. Yet nobody had to write down, rule by rule, what a cat looks like.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l02",
+   "text": "So how does it know? In short: you show it lots of examples, and it works out the pattern itself. That's today's AI.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l03",
+   "text": "Four things today.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l04",
+   "text": "The problem AI is built to solve.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l05",
+   "text": "A child learning their numbers, and a real experiment.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l06",
+   "text": "Seeing AI as a prediction machine.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l07",
+   "text": "What it changes, what can go wrong, and three things to remember.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l08",
+   "text": "You don't need any background.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l09",
+   "text": "Start with a traditional computer program. People write the rules, one by one, and the computer follows them.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l10",
+   "text": "For payroll, or booking a flight, the rules are crystal clear, and that works fine.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l11",
+   "text": "But some tasks are hard to capture in rules. Like recognizing a handwritten three.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l12",
+   "text": "Every one of these is a three, written by hand. Some are fat, some are thin, some slant. You recognize them at a glance.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l13",
+   "text": "But try explaining how. Two bumps, one above the other? An eight has those too. Open on the left at the bottom? So is a five.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l14",
+   "text": "Rules like these can easily miss some threes, or mistake other digits for threes.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l15",
+   "text": "Most of today's AI takes a different approach. Don't write rules. Give examples.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l16",
+   "text": "Show the computer hundreds, even thousands, of handwritten digits, each one with the answer: this is a three, this is a seven.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l17",
+   "text": "It finds the pattern in the examples on its own. That approach is called machine learning.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l18",
+   "text": "The way of telling digits apart that it ends up with is called a model. Hand the model a new image, and it gives you its answer.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l19",
+   "text": "Many people think a programmer typed in everything an AI can do. In fact, most of it was learned from examples. Those examples are called data.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l20",
+   "text": "It's like teaching a child their numbers. You don't hand them a manual that says: a 3 is two half circles, stacked.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l21",
+   "text": "You just point and keep saying, \"This is a three.\" Eventually they get it, even when the three is written in a way they've never seen.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l22",
+   "text": "The way of telling numbers apart that the child picks up is the model. Each digit you point at, plus your \"this is a three,\" is an example with its answer.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l23",
+   "text": "Two things don't match, though. First, a model leans on lots of examples: as you'll see, ours does far better with a hundred than with ten. And a child comes to understand that three means three things. The model has only learned to look at an image and pick an answer.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l24",
+   "text": "Or think about cooking. Sometimes you just follow a recipe, step by step. That's a traditional program. Other times, a seasoned cook goes by feel, built over a thousand dishes of tasting, getting feedback, and adjusting whatever's off.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l25",
+   "text": "Each dish is like the model making a guess. Tasting it and hearing what people think is checking against the right answer. Adjusting when it's off: that's learning. And the feel they end up with is something even the cook can't fully write down.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l26",
+   "text": "Let's actually try it. Here's a public collection of handwritten digits: seventeen hundred ninety-seven images, each just an eight-by-eight grid.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l27",
+   "text": "First, we lock away three hundred of them as the exam; the rest are the examples it learns from. Learning from examples is called training, and during training the model never sees the exam. Why split it this way? Only questions it has never seen can tell us whether it really learned, or just remembered.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l28",
+   "text": "Take a guess: with just ten examples, how much of the exam would it get right?",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l29",
+   "text": "Pick ten at random, and usually a few digits don't show up at all. Try it twenty times, and the typical score is about thirty-seven percent. That beats random guessing at ten percent, but it's still a long way off.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l30",
+   "text": "With a hundred examples: eighty-eight percent.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l31",
+   "text": "With all of the nearly fifteen hundred training examples: ninety-seven percent.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l32",
+   "text": "At no point did anyone tell it what a three looks like, only which images were threes. In this experiment, more examples meant higher scores. Your photo app finds your cat the same way.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l33",
+   "text": "Still, out of three hundred exam questions, it missed ten. Like this messy two, which it read as a one. A few of them would make a person hesitate too.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l34",
+   "text": "Here's another way to see it. Today's AI is like a prediction machine. Not predicting the future: predicting the answer for whatever you show it.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l35",
+   "text": "Our model doesn't just guess. It also reports how sure it is. For this image: \"96% sure it's a three.\"",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l36",
+   "text": "Other AI works the same way. An image model guesses whether a photo has a cat in it. A speech model guesses which words were said.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l37",
+   "text": "Give a language model half a sentence, and it guesses the next word. Keep going, word after word, and you get a whole reply.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l38",
+   "text": "Large language models, the technology behind chatbots, write their replies this way. They're extremely good at guessing, and they pick up a lot of knowledge from data. But a smooth reply isn't a guarantee of a true one.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l39",
+   "text": "These terms nest, circle within circle. The outermost circle is AI, artificial intelligence: getting computers to do things that seem to take intelligence. A chess program built from rules people wrote counts as AI. An ordinary payroll program doesn't.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l40",
+   "text": "Machine learning sits inside AI. Inside that is deep learning. It uses models called neural networks, built from many layers of simple calculations. Don't let the names fool you: these networks are only loosely like neurons in a brain, and \"deep\" just means many layers, not deep understanding.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l41",
+   "text": "Large language models are built with deep learning. In this episode, \"today's AI\" means the machine learning circle.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l42",
+   "text": "This ability to learn from data is already changing the real world.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l43",
+   "text": "Finding a protein's shape often took years of lab work. AlphaFold learned from known structures to predict shapes directly.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l44",
+   "text": "Its two lead developers went on to share half of the twenty twenty-four Nobel Prize in Chemistry for it.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l45",
+   "text": "About two months after launch, ChatGPT had an estimated hundred million monthly active users.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l46",
+   "text": "But AI can also learn the wrong lessons. According to Reuters, Amazon once tried using AI to screen résumés. That AI learned from ten years of résumés sent to the company, mostly from men.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l47",
+   "text": "In effect, it taught itself that male candidates were preferable. It marked down résumés with the word \"women's,\" as in \"women's chess club captain.\" The tool was later scrapped.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l48",
+   "text": "Bias in the data can be learned right along with everything else.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l49",
+   "text": "So when you use AI, here are three things to keep in mind.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l50",
+   "text": "One: unfamiliar inputs can fool it. We showed this digit-only model an A. It had to pick from zero to nine. Its answer? \"ninety-two percent sure it's a four.\"",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l51",
+   "text": "That confidence only compares the ten digits against each other. A child would say, \"That's not a number.\" The model can't.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l52",
+   "text": "Two: it gives predictions, not truth. Remember that messy two? It was eighty-one percent sure it was a one, and it was wrong.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l53",
+   "text": "Three: its strengths and flaws come from the data it learned from, and also from how it was designed and trained. To judge whether an AI is trustworthy, first ask what data it learned from.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l54",
+   "text": "Next time an AI answers you with total confidence, ask yourself: has it ever learned this kind of question?",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l55",
+   "text": "Remember this:",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l56",
+   "text": "Today's AI isn't mainly built from rules people write.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l57",
+   "text": "It teaches itself patterns from examples.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l58",
+   "text": "Next time: overfitting. Why can a model ace its practice questions, and still fail new ones?",
+   "seeds": [
+    1
+   ]
+  }
+ ]
+}

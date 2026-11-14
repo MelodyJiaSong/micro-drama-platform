@@ -1,0 +1,12 @@
+# k122 反击风暴 · 实机片段与截帧
+
+> 暴雪娱乐版权素材，只给人看、写 prompt 用，不上传生成服务、不进成片。
+
+| 文件 | 来源 URL / 时间点 | sha256 前 12 位 | 看到了什么 |
+|---|---|---|---|
+| `clip_ia_Pat_-_High_Warlord_Warri_26.6.mp4` | https://archive.org/details/Pat_-_High_Warlord_Warrior_retaliation_-_PvE_Warrior_2005-11-23_4.79 26.6–31.2 秒；录像《Pat - High Warlord Warrior retaliation - PvE [Warrior][2005-11-23][4.79]》，原版时期，斯坦索姆血色区大厅，540×360，全分辨率未裁；施法者是画面中央的牛头人战士 Pat（双手大剑），前景金肩甲的是队友牛头人萨满 Legionnaire Ruben | c87f58d3c39d | 录像标题就是「Retaliation」，这段是主角开反击风暴：23.6–27.2 秒顶部提示框一直是「Retaliation · Instant · 30 min cooldown · Requires Battle Stance」→ 27.3 秒镜头切到 Pat 背后近景，27.6–28.1 秒 Pat 脚下冒出一丛黄橙色竖条火光（像几根火柱从地面窜起，可能是 retaliation 的脚下光，也可能是武器附魔触发，认不准）→ 28.2 秒起周围卫兵每打 Pat 一下，Pat 就自动回砍，头顶接连冒出黄色伤害数字 465 / 627 / 503 / 794 / 1591 / 577 和白字 1365，约 2 秒内十几下；Pat 本人挥大剑的动作频率明显变高。（目标头顶的橙色交叉双剑标记在本录像和 Murth 录像里都常挂在当前目标头上，疑为界面 / 插件标记，不当技能特效） 声音是配乐（In Flames），非游戏原声 |
+| `snap_ia_Pat_-_High_Warlord_Warri_27.2.jpg` | https://archive.org/details/Pat_-_High_Warlord_Warrior_retaliation_-_PvE_Warrior_2005-11-23_4.79 27.2 秒（全画面） | 66b8397856b9 | 施放前：顶部提示框 Retaliation 说明文字，Pat 背对镜头被卫兵围住，大剑斜举 |
+| `snap_ia_Pat_-_High_Warlord_Warri_27.7.jpg` | https://archive.org/details/Pat_-_High_Warlord_Warrior_retaliation_-_PvE_Warrior_2005-11-23_4.79 27.7 秒（全画面） | 61f73977f39b | 施放后：Pat 脚下一丛黄橙色竖条火光，大剑刚挥下；目标头顶交叉双剑标记（非技能特效） |
+| `snap_ia_Pat_-_High_Warlord_Warri_30.jpg` | https://archive.org/details/Pat_-_High_Warlord_Warrior_retaliation_-_PvE_Warrior_2005-11-23_4.79 30.0 秒（全画面） | c090a30eb8e0 | 持续效果：Pat 周身接连冒出反击伤害数字（黄色 465 / 1591 / 794 / 503 / 577，白色 1365），卫兵被反击砍得连连后仰 |
+| `clip_ia_Pat_-_High_Warlord_Warri_36.mp4` | https://archive.org/details/Pat_-_High_Warlord_Warrior_retaliation_-_PvE_Warrior_2005-11-23_4.79 36.0–42.0 秒；录像《Pat - High Warlord Warrior retaliation - PvE [Warrior][2005-11-23][4.79]》，原版时期，斯坦索姆血色区大厅，540×360，全分辨率未裁；施法者是画面中央的牛头人战士 Pat（双手大剑），前景金肩甲的是队友牛头人萨满 Legionnaire Ruben | a8cdfffdc1f4 | 反击风暴持续中（同一次，约开后 9–15 秒）：36.4–38.0 秒 Pat 脚下铺开一大圈紫粉色发亮的圆盘、周围飘紫白色小星点（来源认不准，可能是队友萨满或饰品效果，不当本技能特效）→ 38.4 秒起紫光散去，脚下转为一团橙红色火光贴地燃烧，一直持续到约 46 秒；期间反击伤害数字 1385 / 1414 / 1440 / 1615 / 1306 / 1324 / 1471 连续堆叠。（目标头顶的橙色交叉双剑标记在本录像和 Murth 录像里都常挂在当前目标头上，疑为界面 / 插件标记，不当技能特效） 声音是配乐（In Flames），非游戏原声 |
+| `snap_ia_Pat_-_High_Warlord_Warri_38.6.jpg` | https://archive.org/details/Pat_-_High_Warlord_Warrior_retaliation_-_PvE_Warrior_2005-11-23_4.79 38.6 秒（全画面） | 1e4eab7d4036 | 持续：Pat 脚下橙红色贴地火光，周围堆满反击伤害数字，边缘还残留紫色星点 |

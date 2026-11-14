@@ -1,0 +1,205 @@
+{
+ "note": "学习目标与理解测验（写讲稿前定，审查与测验都对照它）。题目以迁移题为主，干扰项来自真实误解；前测、看片、后测、讲回来。AI 学生只用来筛题，最终以真人盲测为准。句号按 v1.1 讲稿挂上（2026-11-09）。",
+ "objectives": [
+  {
+   "id": "O1",
+   "zh": "能用自己的话说出模型是什么：一台带旋钮的机器，喂进去输入、吐出答案；参数就是旋钮",
+   "en": "Say in their own words what a model is: a machine with knobs that turns an input into an answer; parameters are the knobs",
+   "lines": [
+    "l05",
+    "l06",
+    "l07",
+    "l40"
+   ]
+  },
+  {
+   "id": "O2",
+   "zh": "知道「学」/「训练」就是把旋钮拧到合适的位置，拧不对就猜不准（太低、拧过头都不行）",
+   "en": "Know that learning / training means setting the knobs to the right positions; wrong settings give bad guesses (too low, or overshooting)",
+   "lines": [
+    "l13",
+    "l18",
+    "l20",
+    "l21",
+    "l22",
+    "l23",
+    "l30",
+    "l41"
+   ]
+  },
+  {
+   "id": "O3",
+   "zh": "分得清哪些是人定的（机器怎么算）、哪些是从数据里学的（旋钮读数）",
+   "en": "Tell apart what people decide (how the machine computes) from what is learned from data (the knob settings)",
+   "lines": [
+    "l12",
+    "l37"
+   ]
+  },
+  {
+   "id": "O4",
+   "zh": "知道模型学到的东西全在参数读数里：同一台机器换一组读数就是另一个模型；模型文件主要就是这些读数",
+   "en": "Know that everything a model learned lives in its parameter values: same machine plus different values is a different model; a model file is mostly these values",
+   "lines": [
+    "l26",
+    "l27",
+    "l28",
+    "l29",
+    "l38"
+   ]
+  },
+  {
+   "id": "O5",
+   "zh": "能解释新闻里的「千亿参数」：机器上有上千亿个旋钮（GPT-3 有 1750 亿个），是训练拧出来的",
+   "en": "Explain 'hundreds of billions of parameters' in the news: that many knobs (GPT-3 has 175 billion), all set by training",
+   "lines": [
+    "l01",
+    "l33",
+    "l34",
+    "l35",
+    "l36",
+    "l39"
+   ]
+  }
+ ],
+ "quiz": [
+  {
+   "id": "Q1",
+   "objective": "O1",
+   "type": "迁移",
+   "zh": "一个预测房价的模型：输入面积，输出房价，算法是「房价 = 底价 + 每平米单价 × 面积」。这个模型有几个参数？分别是什么？",
+   "en": "A house-price model takes the floor area and outputs a price, computed as 'price = base price + price per m² × area'. How many parameters does it have, and what are they?",
+   "choices": {
+    "zh": [
+     "A 一个：面积",
+     "B 两个：底价和每平米单价",
+     "C 三个：面积、底价、房价",
+     "D 没有参数，它只是个公式"
+    ],
+    "en": [
+     "A One: the area",
+     "B Two: the base price and the price per m²",
+     "C Three: area, base price and price",
+     "D None, it's just a formula"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "把输入当成参数",
+    "C": "把输入、输出也当成参数",
+    "D": "以为公式里没有可调的东西"
+   }
+  },
+  {
+   "id": "Q2",
+   "objective": "O2",
+   "type": "误解探针",
+   "zh": "训练一个模型，是不是把旋钮都拧到最大？",
+   "en": "Does training a model mean turning all the knobs up as far as they go?",
+   "choices": {
+    "zh": [
+     "A 是，拧得越大越准",
+     "B 不是，要拧到让猜的跟实际最贴近的位置，拧过头也会猜错",
+     "C 不是，训练是往机器里加新的旋钮",
+     "D 训练就是人一个个填进读数"
+    ],
+    "en": [
+     "A Yes, bigger settings are more accurate",
+     "B No, they go wherever the guesses match reality best; overshooting is wrong too",
+     "C No, training adds new knobs to the machine",
+     "D Training means people type in each value"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "以为参数越大越好",
+    "C": "把训练理解成改结构",
+    "D": "以为参数是人定的"
+   }
+  },
+  {
+   "id": "Q3",
+   "objective": "O3",
+   "type": "解释为什么",
+   "zh": "打车费模型里，「车费 = 起步价 + 每公里 × 公里数」这个算法，和「起步价 10.2」这个数，哪个是人定的、哪个是学出来的？",
+   "en": "In the taxi model, which is decided by people and which is learned: the rule 'fare = base + per-km × distance', or the number 'base = 10.2'?",
+   "answer_key": {
+    "zh": "算法（机器怎么算）是人定的；10.2 这个读数是从十二趟记录里学出来的",
+    "en": "The rule (how the machine computes) is chosen by people; the value 10.2 is learned from the twelve rides"
+   }
+  },
+  {
+   "id": "Q4",
+   "objective": "O4",
+   "type": "迁移",
+   "zh": "两家打车公司用的是同一个打车费模型的「机器」，但一家起步价旋钮在 10、每公里在 2.5，另一家在 14、3。它们算同一个模型吗？",
+   "en": "Two taxi companies use the same fare 'machine', but one has the knobs at 10 and 2.5 and the other at 14 and 3. Are they the same model?",
+   "choices": {
+    "zh": [
+     "A 是，机器一样就是同一个模型",
+     "B 不是，读数不同就是两个不同的模型，会给出不同的车费",
+     "C 是，读数不重要",
+     "D 无法判断"
+    ],
+    "en": [
+     "A Yes, same machine means same model",
+     "B No, different values make different models with different fares",
+     "C Yes, the values don't matter",
+     "D Can't tell"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "以为模型只是结构",
+    "C": "忽视参数的作用"
+   }
+  },
+  {
+   "id": "Q5",
+   "objective": "O5",
+   "type": "迁移",
+   "zh": "新闻说某个模型有「七百亿参数」。这句话最准确的意思是？",
+   "en": "A headline says a model has '70 billion parameters'. What does that most accurately mean?",
+   "choices": {
+    "zh": [
+     "A 它学过七百亿篇文章",
+     "B 它有七百亿个可调的数（旋钮），是训练时调出来的",
+     "C 它能回答七百亿个问题",
+     "D 有七百亿个人参与了训练"
+    ],
+    "en": [
+     "A It read 70 billion articles",
+     "B It has 70 billion adjustable numbers (knobs), set during training",
+     "C It can answer 70 billion questions",
+     "D 70 billion people helped train it"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "把参数量当成数据量",
+    "C": "把参数当成能力条目"
+   }
+  }
+ ],
+ "pass_rule": "每个学习目标至少有一道题，真人后测正确率比前测提升、且 ≥ 2/3 的人答对；讲回来能说出「模型是带旋钮的机器、参数是旋钮」与「学就是把旋钮拧到合适的位置」，不出现误解。AI 学生结果只用于改题与找讲稿漏洞，不作过关依据。",
+ "explain_back": {
+  "prompt": {
+   "zh": "请用一分钟跟朋友解释：模型是什么，参数是什么，「千亿参数」是什么意思。",
+   "en": "In one minute, explain to a friend what a model is, what a parameter is, and what 'hundreds of billions of parameters' means."
+  },
+  "propositions": [
+   "模型是一台带旋钮的机器：输入进去、答案出来",
+   "参数就是旋钮，拧到不同位置答案不同",
+   "学 / 训练就是把旋钮拧到合适的位置",
+   "（加分）机器怎么算是人定的，读数是从数据里学的",
+   "（加分）千亿参数 = 上千亿个旋钮，模型文件主要存这些读数"
+  ],
+  "misconceptions": [
+   "参数就是输入的数据",
+   "参数量就是训练数据量",
+   "参数是人一个个设定的",
+   "训练是往模型里加规则",
+   "参数越大越好"
+  ]
+ }
+}

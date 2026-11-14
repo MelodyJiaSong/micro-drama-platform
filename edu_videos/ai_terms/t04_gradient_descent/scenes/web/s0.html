@@ -1,0 +1,60 @@
+<style>
+  #map { position: absolute; left: 70px; top: 150px; }
+  .tag { position: absolute; left: 1010px; top: 140px; }
+  .side { position: absolute; left: 1220px; width: 620px; }
+  .side .t { position: absolute; top: 0; left: 0; width: 620px; }
+  .s1 { top: 230px; }
+  .s1 .h1 { margin-top: 10px; white-space: nowrap; }
+  html[lang=zh] .s1 .h1 { font-size: 64px; }
+  .s2 { top: 520px; }
+  .s2 .h2 + .h2 { margin-top: 18px; }
+  html[lang=en] .s2 .h2 { font-size: 46px; }
+  .name { position: absolute; left: 1220px; top: 600px; }
+  .name .h1 { margin-top: 10px; }
+  html[lang=en] .name .h1 { font-size: 64px; }
+</style>
+
+<svg id="map"></svg>
+<div class="tag eyebrow" id="tag" data-zh="示意" data-en="Illustration"></div>
+
+<div class="side s1">
+  <div class="t" id="ta"><div class="eyebrow" data-zh="上一期" data-en="Last time"></div>
+    <div class="h1" data-zh='分越低<span class="c-good">越好</span>' data-en='Lower = <span class="c-good">better</span>'></div></div>
+  <div class="t" id="tb"><div class="eyebrow" data-zh="地形图" data-en="The landscape"></div>
+    <div class="h1" data-zh='最低点：<span class="c-good">最好的拧法</span>' data-en='Lowest = <span class="c-good">best</span>'></div></div>
+</div>
+<div class="side s2">
+  <div class="t" id="tc">
+    <div class="h2" id="c1" data-zh='2 个旋钮：<span class="c-good">画得出</span>' data-en='2 knobs: <span class="c-good">easy to map</span>'></div>
+    <div class="h2" id="c2" data-zh='上千亿个旋钮：<span class="c-bad">画不出</span>' data-en='Billions of knobs: <span class="c-bad">no map</span>'></div></div>
+  <div class="t" id="td"><div class="h1" data-zh="怎么走到最低点？" data-en="Which way down?"></div></div>
+</div>
+<div class="name" id="n"><div class="eyebrow" data-zh="答案" data-en="The answer"></div>
+  <div class="h1 grad" data-zh="梯度下降" data-en="Gradient descent"></div></div>
+
+<script>
+const M = makeLand("#map", { W: 1080, H: 780 });
+const bestLab = M.bestLab;
+const me = M.dot(D.start, "--ink", 15);
+const F = fog(M, D.start, 900, .97);
+gsap.set([M.svg.node(), "#tag", bestLab, M.bestDot, me, F.g, "#ta", "#tb", "#tc", "#c1", "#c2", "#td", "#n"], { opacity: 0 });
+// l01 上一期：分越低越好；地形图先出来
+EDU.in(M.svg.node(), EDU.t("l01", .05), { y: 0, d: 1 }); gsap.set([M.bestDot, me, F.g], { opacity: 0 });
+EDU.in("#ta", EDU.t("l01", .3)); EDU.in("#tag", EDU.t("l01", .6));
+// l02 地形图，最低点 = 最好的拧法
+EDU.out("#ta", EDU.t("l02", .35)); EDU.in("#tb", EDU.t("l02", .4)); EDU.in([M.bestDot, bestLab], EDU.t("l02", .6));
+// l03 两个旋钮：能画出整张图
+EDU.in("#tc", EDU.t("l03"), { y: 0, d: .01 }); EDU.in("#c1", EDU.t("l03", .1));
+// l04 几千亿个旋钮：画不出来 → 图盖住
+EDU.in("#c2", EDU.t("l04", .3));
+EDU.in(F.g, EDU.t("l04", .45), { d: .01 });
+EDU.out([bestLab, M.bestDot], EDU.t("l04", .45));
+EDU.tl.fromTo(F.hole, { attr: { r: 900 } }, { attr: { r: 75 }, duration: 1.6, ease: "power3.inOut", immediateRender: false }, EDU.t("l04", .45));
+// l05 蒙着眼站在山上：只看得见脚下
+EDU.in(me, EDU.t("l05", .1));
+// l06 怎么走到最低点？
+EDU.out(["#tb", "#tc"], EDU.t("l06")); EDU.in("#td", EDU.t("l06", .05));
+// l07 答案：梯度下降
+EDU.out("#td", EDU.t("l07")); EDU.in("#n", EDU.t("l07", .1));
+EDU.out(["#n", M.svg.node(), "#tag", bestLab], EDU.S.duration - .5);
+</script>

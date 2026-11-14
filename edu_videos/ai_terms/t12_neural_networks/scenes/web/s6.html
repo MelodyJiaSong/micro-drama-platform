@@ -1,0 +1,131 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  .open { position: absolute; left: var(--mx); top: 300px; }
+  .open .display { font-size: 190px; line-height: 1; margin-top: 16px; }
+  .open .h2 { margin-top: 30px; }
+  .src { position: absolute; left: var(--mx); top: 870px; }
+  .stats { position: absolute; left: var(--mx); top: 280px; display: grid; grid-template-columns: 760px 760px; row-gap: 60px; }
+  .stats .n { font-size: 120px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+  .stats .k { font-size: var(--fs-h2); font-weight: 600; color: var(--sub); margin-left: 18px; }
+  .head { position: absolute; left: var(--mx); top: 220px; }
+  .head .h2 { margin-top: 14px; }
+  #bars { position: absolute; left: var(--mx); top: 460px; }
+  #filt { position: absolute; left: var(--mx); top: 240px; }
+  .ftag { position: absolute; left: var(--mx); top: 196px; }
+  .side { position: absolute; left: 1120px; width: 700px; }
+  .fl { top: 320px; }
+  .fl .h2 { margin-top: 16px; }
+  html[lang=en] .fl .h1 { font-size: 60px; white-space: nowrap; }
+  #stack { position: absolute; left: var(--mx); top: 300px; }
+  .stl { position: absolute; left: var(--mx); top: 620px; }
+  .stl .t { position: absolute; top: 0; left: 0; white-space: nowrap; }
+  .quote { position: absolute; left: var(--mx); top: 330px; }
+  .quote .display { font-size: 104px; line-height: 1.1; }
+</style>
+
+<div class="eb eyebrow" data-zh='04 · 2012 年的 <span style="text-transform:none">AlexNet</span>' data-en='04 · <span style="text-transform:none">AlexNet</span>, 2012'></div>
+<div class="open" id="open"><div class="eyebrow" data-zh="2012 · 多伦多大学" data-en="2012 · University of Toronto"></div>
+  <div class="display">AlexNet</div>
+  <div class="body sub" id="names" style="margin-top:30px">Krizhevsky · Sutskever · Hinton</div></div>
+<div class="src" id="src" data-zh="Krizhevsky 等 · NIPS 2012" data-en="Krizhevsky et al. · NIPS 2012"></div>
+
+<div class="stats" id="stats">
+  <div data-zh='<span class="n accent">8</span><span class="k">层</span>' data-en='<span class="n accent">8</span><span class="k">layers</span>'></div>
+  <div data-zh='<span class="n accent">6000 万</span><span class="k">个旋钮</span>' data-en='<span class="n accent">60M</span><span class="k">knobs</span>'></div>
+  <div data-zh='<span class="n">120 万</span><span class="k">张照片</span>' data-en='<span class="n">1.2M</span><span class="k">photos</span>'></div>
+  <div data-zh='<span class="n">1000</span><span class="k">类</span>' data-en='<span class="n">1,000</span><span class="k">categories</span>'></div>
+</div>
+
+<div class="head" id="head"><div class="h1" data-zh="ImageNet 比赛 · 2012" data-en="ImageNet contest, 2012"></div>
+  <div class="h2 ink2" data-zh="猜 5 个，全错才算错" data-en="5 guesses · all wrong = miss"></div></div>
+<svg id="bars"></svg>
+
+<canvas id="filt" width="840" height="560"></canvas>
+<div class="ftag eyebrow" id="ftag" data-zh="示意" data-en="Illustration"></div>
+<div class="side fl" id="fl"><div class="eyebrow" data-zh="没教它看什么" data-en="Not told what to look for"></div>
+  <div class="h1" data-zh="第一层：条纹、色块" data-en="Layer 1: stripes, colors"></div></div>
+
+<svg id="stack"></svg>
+<div class="stl">
+  <div class="h2 t" id="sa" data-zh="层层往上拼" data-en="Built up layer by layer"></div>
+  <div class="caption t" id="sb2" style="top:80px" data-zh="只看第一个答案猜对的比例" data-en="First-guess accuracy (top-1)"></div>
+  <div class="h2 t" id="sb" data-zh='拿掉中间层 → <span class="c-bad">约降 2 个百分点</span>' data-en='Remove a middle layer → <span class="c-bad">~2 points worse</span>'></div>
+</div>
+
+<div class="quote" id="quote"><div class="eyebrow" data-zh="论文原话" data-en="From the paper"></div>
+  <div class="display" style="margin-top:20px" data-zh="“深度真的很重要”" data-en="“…the depth really<br>is important…”"></div>
+  <div class="src" id="qsrc" style="position:static;margin-top:30px" data-zh="Krizhevsky 等 2012 · 第 7 节" data-en="Krizhevsky et al. 2012 · §7"></div></div>
+
+<script>
+const ink = css("--ink"), acc = css("--accent"), hair = css("--hair");
+/* l43 错误率条：15.3% vs 26.2%（原文摘要） */
+const bs = d3.select("#bars").attr("width", 1680).attr("height", 300);
+const bx = d3.scaleLinear([0, 30], [330, 1400]);
+const rows = [[EDU.tr("AlexNet", "AlexNet"), 15.3, "--accent"], [EDU.tr("第二名", "Runner-up"), 26.2, "--d-neutral"]];
+const barEls = rows.map(([lab, v, col], i) => {
+  const g = bs.append("g").attr("transform", `translate(0,${30 + i * 130})`);
+  g.append("text").attr("x", 0).attr("y", 62).attr("font-size", 54).attr("font-weight", 600).attr("fill", ink).text(lab);
+  const r = g.append("rect").attr("x", bx(0)).attr("y", 0).attr("height", 90).attr("rx", 14).attr("width", bx(v) - bx(0)).attr("fill", css(col)).node();
+  g.append("text").attr("x", bx(v) + 24).attr("y", 64).attr("font-size", 60).attr("font-weight", 700).attr("fill", ink).text(v.toFixed(1) + "%");
+  return [g.node(), r];
+});
+const barCap = bs.append("text").attr("x", bx(0)).attr("y", 292).attr("font-size", 28).attr("fill", css("--sub")).text(EDU.tr("错误率（猜 5 个）", "Top-5 error rate")).node();
+
+/* l44 第一层学到的：各种方向的条纹和色块（示意图，非论文原图） */
+const cv = document.getElementById("filt"), cx = cv.getContext("2d");
+const cols = 8, rws = 5, sz = 92, gap = 14;
+for (let j = 0; j < rws; j++) for (let i = 0; i < cols; i++) {
+  const k = j * cols + i, x0 = i * (sz + gap), y0 = j * (sz + gap);
+  const img = cx.createImageData(sz, sz), blob = k % 5 === 3;
+  const th = (k * 37 % 180) * Math.PI / 180, fr = 0.12 + (k % 3) * 0.06;
+  const hue = [[230, 120, 40], [40, 120, 220], [60, 170, 90], [200, 60, 120]][k % 4];
+  for (let y = 0; y < sz; y++) for (let x = 0; x < sz; x++) {
+    const u = x - sz / 2, v = y - sz / 2, r2 = (u * u + v * v) / (sz * sz * .09);
+    let a;
+    if (blob) a = Math.exp(-r2);
+    else a = Math.cos((u * Math.cos(th) + v * Math.sin(th)) * fr * 2) * Math.exp(-r2 * .5);
+    const p = (y * sz + x) * 4;
+    if (blob) { img.data[p] = 128 + (hue[0] - 128) * a; img.data[p + 1] = 128 + (hue[1] - 128) * a; img.data[p + 2] = 128 + (hue[2] - 128) * a; }
+    else { const g = 128 + 110 * a; img.data[p] = g; img.data[p + 1] = g; img.data[p + 2] = g; }
+    img.data[p + 3] = 255;
+  }
+  cx.putImageData(img, x0, y0);
+}
+
+/* l45–l46 八层叠在一起；拿掉中间一层 */
+const ss = d3.select("#stack").attr("width", 1680).attr("height", 260);
+const boxes = d3.range(8).map(i => {
+  const g = ss.append("g").attr("transform", `translate(${i * 205},40)`);
+  g.append("rect").attr("width", 150).attr("height", 180).attr("rx", 22).attr("fill", css("--surface")).attr("stroke", acc).attr("stroke-width", 5);
+  g.append("text").attr("x", 75).attr("y", 112).attr("text-anchor", "middle").attr("font-size", 54).attr("font-weight", 700).attr("fill", css("--accent-text")).text(i + 1);
+  if (i < 7) g.append("path").attr("d", "M160 90 L192 90 M182 78 L194 90 L182 102").attr("fill", "none").attr("stroke", css("--faint")).attr("stroke-width", 5).attr("stroke-linecap", "round");
+  return g.node();
+});
+const cross = ss.append("path").attr("transform", `translate(${3 * 205},40)`).attr("d", "M10 10 L140 170 M140 10 L10 170").attr("stroke", css("--d-bad"))
+  .attr("stroke-width", 12).attr("stroke-linecap", "round").node();
+
+gsap.set(["#open", "#names", "#src", "#stats", "#stats > div", "#head", "#bars", ...barEls.map(b => b[0]), barCap, "#filt", "#ftag", "#fl", "#stack", ...boxes, cross, "#sa", "#sb", "#sb2", "#quote", "#qsrc"], { opacity: 0 });
+EDU.in(".eb", 0);
+// l39 2012，多伦多大学，很深的网络
+EDU.in("#open", EDU.t("l39", .2));
+// l40 三个人；后来叫 AlexNet
+EDU.in("#names", EDU.t("l40", .05)); EDU.in("#src", EDU.t("l40", .3));
+// l41 8 层、6000 万个旋钮、120 万张、1000 类
+EDU.out("#open", EDU.t("l41", 0)); EDU.in("#stats", EDU.t("l41", .02), { y: 0, d: .01 }); EDU.in("#stats > div", EDU.t("l41", .05), { stagger: .2 });
+// l42 ImageNet：猜五个，全错才算错
+EDU.out("#stats", EDU.t("l42", 0)); EDU.in("#head", EDU.t("l42", .05));
+// l43 15.3% vs 26.2%
+EDU.in("#bars", EDU.t("l43", 0), { y: 0, d: .01 });
+EDU.in(barEls[0][0], EDU.t("l43", .15)); EDU.tl.from(barEls[0][1], { attr: { width: 0 }, duration: .8, ease: "power2.out", immediateRender: false }, EDU.t("l43", .15));
+EDU.in(barEls[1][0], EDU.t("l43", .55)); EDU.tl.from(barEls[1][1], { attr: { width: 0 }, duration: .8, ease: "power2.out", immediateRender: false }, EDU.t("l43", .55));
+EDU.in(barCap, EDU.t("l43", .3));
+// l44 第一层自己学会了条纹、色块
+EDU.out(["#head", "#bars"], EDU.t("l44", 0)); EDU.in("#filt", EDU.t("l44", .1), { y: 0 }); EDU.in("#ftag", EDU.t("l44", .2)); EDU.in("#fl", EDU.t("l44", .4));
+// l45 后面的层一层层往上组合
+EDU.out(["#filt", "#ftag", "#fl"], EDU.t("l45", 0)); EDU.in("#stack", EDU.t("l45", .02), { y: 0, d: .01 });
+EDU.in(boxes, EDU.t("l45", .05), { stagger: .08 }); EDU.in("#sa", EDU.t("l45", .5));
+// l46 拿掉中间一层 → 约 −2 个百分点
+EDU.dim(boxes[3], EDU.t("l46", .1), .3); EDU.in(cross, EDU.t("l46", .15)); EDU.out("#sa", EDU.t("l46", .05)); EDU.in("#sb", EDU.t("l46", .4)); EDU.in("#sb2", EDU.t("l46", .55));
+// l47 原话：深度真的很重要
+EDU.out(["#stack", "#sb", "#sb2", "#src"], EDU.t("l47", 0)); EDU.in("#quote", EDU.t("l47", .05)); EDU.in("#qsrc", EDU.t("l47", .5));
+</script>

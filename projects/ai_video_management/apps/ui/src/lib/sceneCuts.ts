@@ -56,9 +56,17 @@ export interface EpisodeJoin {
 }
 export interface GalleryEntry { start: number; label: string }
 export interface Gallery { from_scene: string; to_scene: string; video: string; entries: GalleryEntry[] }
+/** 后期试做（follow-up 290，tools/episode_post.py）：声音、字幕、地名字卡叠在集级剪辑成片上。 */
+export const POST_CUT = "post";
+export interface PostLayer { kind: string; scene: string; source: string; db: number }
+export interface PostTrial {
+  version: number; status: string; path: string; source_cut: string; video: string; srt: string; duration: number; rendered_at: string;
+  loudness_lufs: number | null; true_peak_db: number | null; subtitle_lang: string; subtitles: number; titles: string[];
+  layers: PostLayer[]; notes: string[]; error: string;
+}
 export interface EpisodeCuts {
   episode_path: string; scenes: SceneCuts[];
-  joined: Record<CutStage, EpisodeJoin[]>; galleries: Record<CutStage, Gallery[]>;
+  joined: Record<CutStage, EpisodeJoin[]>; galleries: Record<CutStage, Gallery[]>; posts?: PostTrial[];
 }
 
 export async function loadSceneCuts(episodePath: string): Promise<EpisodeCuts> {

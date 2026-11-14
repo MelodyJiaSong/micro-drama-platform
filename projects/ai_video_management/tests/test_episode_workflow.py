@@ -291,10 +291,86 @@ def test_prompt_lists_references_in_upload_order_with_their_use(workflow):
     assert "`ep1_s1_st1_overhead`是本镜的俯视站位示意图，不是画面" in usage and "同一个人的正面、侧面、背面" in usage
     assert "声音参考（`c1_Hero_audio`）只取该人物的音色" in usage
     assert "  阿明（三视图`c1-1_便服`；声音`c1_Hero_audio`；`ep1_s1_st1_overhead`里的蓝色圆点）：瘦高青年，灰布衣。" in lines
-    assert "本场：分出面包" in lines and any(line.startswith("口型：") for line in lines)
+    # v13: no 「本场」 line (the scene purpose would leak other shots' beats); 「场景」 keeps location · time
+    assert not any(line.startswith("本场：") for line in lines) and "分出面包" not in shot["text"]
+    assert any(line.startswith("场景：门前 · 白天（`bg1_门前`）") for line in lines) and any(line.startswith("口型：") for line in lines)
     assert next(line for line in lines if line.startswith("负面词：")).startswith("负面词：分身，双胞胎")
     assert "走位：阿明站在门槛内，面朝门外。" in lines and "动作：0–3秒 掰开面包；3–6秒 递出一半" in lines
     assert "不要分身或双胞胎" in next(line for line in lines if line.startswith("要求："))
+
+
+def add_friend(root: Path) -> None:
+    """A second person with a voice sample."""
+    card = root / "ai_videos/demo/2_世界观人设/characters/c2_Friend"
+    (card / "views").mkdir(parents=True)
+    (card / "c2_Friend.md").write_text("# Friend · 小李 · 朋友\n\n## Shot prompt 外观\n\n```text\n矮个子，蓝外套。\n```\n", encoding="utf-8")
+    (card / "views/c2_Friend_views.png").write_bytes(b"views")
+    (card / "views/c2_Friend_audio.mp3").write_bytes(b"voice")
+
+
+def voice_filming(first_dialogue: str = "阿明（低声）：给你。") -> dict:
+    """st1 阿明 speaks beside 小李; st2 and st3 are silent; st1+st2 form 镜组 g1. The purpose names st2's beat."""
+    filming = copy.deepcopy(FILMING)
+    base = dict(filming["scenes"][0]["shots"][0], cast=["c1-1", "c2"], blocking="阿明站在门槛内，小李在他左边。")
+    filming["scenes"][0]["purpose"] = "阿明把面包分给小李；随后两人沉默地看着门外的雨"
+    filming["scenes"][0]["shots"] = [
+        dict(base, id="st1", dialogue=first_dialogue),
+        dict(base, id="st2", dialogue="", action="两人沉默对望。"),
+        dict(base, id="st3", dialogue="", action="阿明独自看雨。", cast=["c1-1"], blocking="阿明站在门槛内。"),
+    ]
+    filming["scenes"][0]["groups"] = [{"id": "g1", "shots": ["st1", "st2"]}]
+    return filming
+
+
+def compile_voices(root, query, command, filming) -> dict[str, dict]:
+    add_character(root)
+    add_friend(root)
+    approved_filming(query, command)
+    change(query, command, "filming", "save", filming)
+    change(query, command, "filming", "approve")
+    board = root / EPISODE / "scenes/s1/groups/g1/board.png"
+    board.parent.mkdir(parents=True)
+    board.write_bytes(b"board")
+    change(query, command, "prompts", "compile")
+    scene = module(query, "prompts")["content"]["scenes"][0]
+    return {item["id"]: item for item in [*scene["shots"], *scene["groups"]]}
+
+
+def audio(item: dict) -> list[str]:
+    return [r["key"] for r in item["refs"] if r["kind"] == "audio"]
+
+
+def test_voices_go_only_to_people_who_speak_and_silent_shots_carry_none(workflow):
+    """v13: a silent shot sends no voice and no 声音参考 text; a shot with dialogue sends only its speakers' voices
+    (「阿明（低声）」 still matches 阿明); a 镜组 sends the voices of whoever speaks in any member shot."""
+    root, query, command = workflow
+    items = compile_voices(root, query, command, voice_filming())
+    speaking = items["ep1_s1_st1"]
+    assert audio(speaking) == ["c1_Hero_audio"]
+    assert "声音参考（`c1_Hero_audio`）" in speaking["text"] and "c2_Friend_audio" not in speaking["text"]
+    lines = speaking["text"].splitlines()
+    assert "  阿明（三视图`c1-1_便服`；声音`c1_Hero_audio`；`ep1_s1_st1_overhead`里的蓝色圆点）：瘦高青年，灰布衣。" in lines
+    assert "  小李（三视图`c2_Friend`；`ep1_s1_st1_overhead`里的黄色圆点）：矮个子，蓝外套。" in lines
+    for key in ("ep1_s1_st2", "ep1_s1_st3"):
+        silent = items[key]
+        assert audio(silent) == [] and "的声音" not in [r["role"] for r in silent["refs"]]
+        assert "声音参考" not in silent["text"] and "_audio" not in silent["text"] and "本镜没有人说话" in silent["text"]
+    assert audio(items["ep1_s1_g1"]) == ["c1_Hero_audio"] and "c2_Friend_audio" not in items["ep1_s1_g1"]["text"]
+
+
+def test_a_silent_group_carries_no_voice(workflow):
+    root, query, command = workflow
+    group = compile_voices(root, query, command, voice_filming(first_dialogue=""))["ep1_s1_g1"]
+    assert audio(group) == [] and "声音参考" not in group["text"] and "本镜组没有人说话" in group["text"]
+
+
+def test_scene_purpose_never_reaches_a_shot_or_group_prompt(workflow):
+    """v13: the 「本场」 line (the whole scene's purpose) is gone, so st1's prompt cannot pick up st2's silent beat."""
+    root, query, command = workflow
+    for item in compile_voices(root, query, command, voice_filming()).values():
+        lines = item["text"].splitlines()
+        assert not any(line.startswith("本场：") for line in lines) and "沉默地看着门外的雨" not in item["text"]
+        assert any(line.startswith("场景：门前 · 白天（`bg1_门前`）：石砌门廊") for line in lines)
 
 
 def add_animal(root: Path) -> None:
@@ -391,11 +467,10 @@ def test_every_person_needs_a_three_view_sheet_a_voice_and_an_appearance(workflo
     change(query, command, "filming", "approve")
     change(query, command, "prompts", "compile")
     shot = module(query, "prompts")["content"]["scenes"][0]["shots"][0]
-    assert [r["role"] for r in shot["refs"]] == ["俯视站位图", "阿明三视图", "场景 门前", "阿明的声音"]   # 不说话也带声样
+    assert [r["role"] for r in shot["refs"]] == ["俯视站位图", "阿明三视图", "场景 门前"]   # v13：不说话不带声样
     card = root / "ai_videos/demo/2_世界观人设/characters/c1_Hero"
     (card / "views/c1_Hero_audio.mp3").unlink()
-    with pytest.raises(EpisodeWorkflowError, match="声样"):
-        change(query, command, "prompts", "compile")
+    change(query, command, "prompts", "compile")    # 没有声样不再报错，只是不挂声音参考（chuanyue_yiri follow-up 036：不开口的当地人不做声样）
     (card / "views/c1_Hero_audio.mp3").write_bytes(b"voice")
     (card / "views/c1_Hero_views.png").unlink()
     with pytest.raises(EpisodeWorkflowError, match="三视图"):
@@ -416,7 +491,7 @@ def test_props_join_the_reference_line_with_their_description(workflow):
     folder = add_prop(root)
     approved_filming(query, command)
     filming = copy.deepcopy(FILMING)
-    filming["scenes"][0]["shots"][0].update(cast=["c1-1"], blocking="阿明站在车尾。", props=["p5"])
+    filming["scenes"][0]["shots"][0].update(cast=["c1-1"], blocking="阿明站在车尾。", props=["p5"], dialogue="阿明：给你。")
     change(query, command, "filming", "save", filming)
     change(query, command, "filming", "approve")
     change(query, command, "prompts", "compile")
@@ -696,4 +771,166 @@ def test_lifted_negatives_are_validated(workflow, value):
     filming = copy.deepcopy(FILMING)
     filming["scenes"][0]["shots"][0]["allow_negatives"] = value
     with pytest.raises(EpisodeWorkflowError, match="放开的负面词"):
+        change(query, command, "filming", "save", filming)
+
+
+@pytest.mark.parametrize("cast_key", ["c1", "c1-1"])
+def test_fixed_weapon_is_implicit_in_cast_and_missing_image_blocks_compile(workflow, cast_key):
+    root, query, command = workflow
+    add_character(root)
+    prop = add_prop(root)
+    card = root / "ai_videos/demo/2_世界观人设/characters/c1_Hero/c1_Hero.md"
+    with card.open("a", encoding="utf-8") as f:
+        f.write("\n武器参考: p5\n")
+    approved_filming(query, command)
+    filming = copy.deepcopy(FILMING)
+    filming["scenes"][0]["shots"][0].update(cast=[cast_key], blocking="站定", props=["p5"])
+    change(query, command, "filming", "save", filming)
+    change(query, command, "filming", "approve")
+    change(query, command, "prompts", "compile")
+    shot = module(query, "prompts")["content"]["scenes"][0]["shots"][0]
+    assert sum(r["key"].startswith("p5_") for r in shot["refs"]) == 1
+    filming["scenes"][0]["shots"][0].pop("props")
+    change(query, command, "filming", "save", filming)
+    change(query, command, "filming", "approve")
+    change(query, command, "prompts", "compile")
+    shot = module(query, "prompts")["content"]["scenes"][0]["shots"][0]
+    assert any(r["key"].startswith("p5_") for r in shot["refs"])
+    (prop / "p5_葡萄手推车.png").unlink()
+    with pytest.raises(EpisodeWorkflowError, match="锚点图"):
+        change(query, command, "prompts", "compile")
+
+
+def grouped_filming() -> dict:
+    """Three shots; st2 and st3 form 镜组 g1 (follow-up 331)."""
+    filming = copy.deepcopy(FILMING)
+    base = filming["scenes"][0]["shots"][0]
+    filming["scenes"][0]["shots"] = [dict(base, id=f"st{i}", duration=8, action=f"第{i}镜的动作。", dialogue="" if i > 1 else "给你。")
+                                     for i in (1, 2, 3)]
+    filming["scenes"][0]["groups"] = [{"id": "g1", "shots": ["st2", "st3"]}]
+    return filming
+
+
+def test_a_shot_group_compiles_one_extra_prompt_with_its_board_first(workflow):
+    """镜组 (follow-up 331): the members keep their own prompts; the group adds one prompt that sends the board first,
+    then each member's overhead, and cuts between the shots in order."""
+    root, query, command = workflow
+    approved_filming(query, command)
+    change(query, command, "filming", "save", grouped_filming())
+    change(query, command, "filming", "approve")
+    prepare_overheads(root)
+    command.keep_overheads = True
+    with pytest.raises(EpisodeWorkflowError, match="镜组板未出"):
+        change(query, command, "prompts", "compile")
+    board = root / EPISODE / "scenes/s1/groups/g1/board.png"
+    board.parent.mkdir(parents=True)
+    board.write_bytes(b"board")
+    change(query, command, "prompts", "compile")
+    scene = module(query, "prompts")["content"]["scenes"][0]
+    assert [s["id"] for s in scene["shots"]] == ["ep1_s1_st1", "ep1_s1_st2", "ep1_s1_st3"]
+    assert "连续镜头，不要切镜" in scene["shots"][1]["text"]
+    [group] = scene["groups"]
+    assert group["id"] == "ep1_s1_g1" and group["shots"] == ["ep1_s1_st2", "ep1_s1_st3"]
+    assert [r["key"] for r in group["refs"]] == ["ep1_s1_g1_board", "ep1_s1_st2_overhead", "ep1_s1_st3_overhead", "bg1_门前"]
+    text = group["text"].splitlines()
+    assert text[0] == "ep1_s1_g1" and "时长：16秒" in text
+    assert any(line.startswith("镜头 1（第 0–8 秒") for line in text) and any(line.startswith("镜头 2（第 8–16 秒") for line in text)
+    assert "按「镜头 1」到「镜头 2」的顺序" in group["text"] and "不要切镜" not in group["text"]
+    assert "镜组板" in next(line for line in text if line.startswith("参考用法："))
+    from libs.common.exposed_tree import ExposedTree
+    from libs.infrastructure.readers.tree__reader import TreeReader
+
+    def find(node, path):
+        if node.get("path") == path:
+            return node
+        return next((hit for c in node.get("children", []) if (hit := find(c, path))), None)
+    tree = TreeReader(ExposedTree(root)).build()
+    for module_name in ("filming", "prompts"):
+        scene_node = find(tree, f"{EPISODE}/{module_name}.json/scenes/s1")
+        assert [c["display_name"] for c in scene_node["children"]] == ["单镜 st1 · 8 秒", "镜组 ep1_s1_g1 · st2–st3 · 16 秒"]
+        single, node = scene_node["children"]
+        assert [c["path"] for c in single["children"]] == [f"{EPISODE}/{module_name}.json/scenes/s1/shots/st1"]
+        assert node["navigation_href"] == "/group-preview?path=" + f"{EPISODE}/scenes/s1/groups/g1".replace("/", "%2F")
+        assert [c["name"] for c in node["children"]][:2] == ["st2", "st3"]
+
+
+@pytest.mark.parametrize("groups,message", [
+    ([{"id": "g1", "shots": ["st2"]}], "两个以上"),
+    ([{"id": "g1", "shots": ["st1", "st3"]}], "连续"),
+    ([{"id": "g1", "shots": ["st1", "st2"]}, {"id": "g2", "shots": ["st2", "st3"]}], "别的镜组"),
+    ([{"id": "x1", "shots": ["st1", "st2"]}], "镜组编号"),
+    ([], "列表"),
+])
+def test_shot_groups_are_validated(workflow, groups, message):
+    _, query, command = workflow
+    approved_filming(query, command)
+    filming = grouped_filming()
+    filming["scenes"][0]["groups"] = groups
+    with pytest.raises(EpisodeWorkflowError, match=message):
+        change(query, command, "filming", "save", filming)
+
+
+def test_a_shot_group_stays_within_one_generation(workflow):
+    _, query, command = workflow
+    approved_filming(query, command)
+    filming = grouped_filming()
+    for shot in filming["scenes"][0]["shots"]:
+        shot["duration"] = 15
+    filming["scenes"][0]["groups"] = [{"id": "g1", "shots": ["st1", "st2", "st3"]}]
+    with pytest.raises(EpisodeWorkflowError, match="超过一次生成上限 30 秒"):
+        change(query, command, "filming", "save", filming)
+
+
+def test_extras_drop_the_extra_people_negative_and_state_the_count():
+    """chuanyue_yiri follow-up 036：路人没有三视图时，镜头写 extras，负面词不再写「多出来的人」，并写明路人数。"""
+    from libs.domain.entities.episode_workflow__entity import EpisodeWorkflowEntity
+    from libs.domain.errors.episode_workflow__error import EpisodeWorkflowError
+    from libs.domain.value_objects.shot_materials__valueobject import PromptSettings
+    import pytest as _pytest
+    settings = PromptSettings(ratio="16:9", style="", negatives="")
+    assert "多出来的人" in EpisodeWorkflowEntity._negatives("k", [], settings, False)
+    assert "多出来的人" not in EpisodeWorkflowEntity._negatives("k", [], settings, True)
+    scene = {"id": "s1", "location": "街", "time": "晨", "purpose": "p", "background": "", "shots": [
+        {"id": "st1", "duration": 5, "action": "a", "camera": "c", "dialogue": "", "cast": [], "blocking": "", "beats": "b", "lighting": "l", "extras": 0}]}
+    with _pytest.raises(EpisodeWorkflowError):
+        EpisodeWorkflowEntity.validate_content("filming", {"scenes": [scene]})
+
+
+def test_first_frames_report_only_the_current_planning_image_with_its_mtime(workflow):
+    """故事板审阅（follow-up 336）：每镜只认 planning/<镜>_first_frame.png；_r1 等旧版不算，没出的给空路径。"""
+    root, query, command = workflow
+    approved_filming(query, command)
+    planning = root / EPISODE / "scenes/s1/shots/st1/planning"
+    (planning / "_r1").mkdir(parents=True)
+    (planning / "_r1/st1_first_frame.png").write_bytes(b"old")
+    assert query.read(EPISODE).first_frames == {"ep1_s1_st1": {"path": "", "mtime": 0, "prompt": ""}}
+    (planning / "st1_first_frame.png").write_bytes(b"new")
+    (planning / "st1_first_frame_prompt.txt").write_text("首帧", encoding="utf-8")
+    frame = query.read(EPISODE).first_frames["ep1_s1_st1"]
+    assert frame["path"] == f"{EPISODE}/scenes/s1/shots/st1/planning/st1_first_frame.png"
+    assert frame["prompt"] == f"{EPISODE}/scenes/s1/shots/st1/planning/st1_first_frame_prompt.txt"
+    assert frame["mtime"] == (planning / "st1_first_frame.png").stat().st_mtime_ns // 1_000_000
+
+
+def test_people_line_counts_uncarded_locals_instead_of_saying_nobody():
+    """chuanyue_yiri follow-up 036（I40）：没有人物卡但写了 extras 的镜头，人物行写明路人数，不写「画面里没有人物」。"""
+    import inspect
+    from libs.domain.entities import episode_workflow__entity as m
+    src = inspect.getsource(m.EpisodeWorkflowEntity._prompt)
+    assert "另有 {extras_n} 个没有三视图的当地人" in src and "if people_lines or extras_line" in src
+
+
+def test_shot_point_is_review_only(workflow):
+    """chuanyue_yiri follow-up 058: a shot's `point` (what the viewer must get) is kept for review, never compiled into the prompt."""
+    _, query, command = workflow
+    approved_filming(query, command)
+    filming = copy.deepcopy(FILMING)
+    filming["scenes"][0]["shots"][0]["point"] = "罗马的街就是排水沟：垫脚石让人脚不沾水过街"
+    change(query, command, "filming", "save", filming)
+    change(query, command, "filming", "approve")
+    change(query, command, "prompts", "compile")
+    text = module(query, "prompts")["content"]["scenes"][0]["shots"][0]["text"]
+    assert "排水沟" not in text
+    filming["scenes"][0]["shots"][0]["point"] = "  "
+    with pytest.raises(EpisodeWorkflowError, match="看点"):
         change(query, command, "filming", "save", filming)

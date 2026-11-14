@@ -1,0 +1,159 @@
+<style>
+  /* 屏 A：坏的不是飞机、不是雷达 */
+  #fx2 { left: 410px; top: 280px; width: 1100px; height: 619px; }
+  .what { position: absolute; left: 0; right: 0; top: 150px; display: flex; justify-content: center; align-items: baseline; gap: 72px; }
+  .what .arr { font-size: var(--fs-h1); color: var(--faint); }
+
+  /* 屏 B：地图 + 右栏 */
+  #map { position: absolute; left: var(--mx); top: 250px; }
+  .mapTag { position: absolute; left: var(--mx); top: 214px; }
+  .facts { position: absolute; left: 1230px; top: 300px; width: 570px; }
+  .facts .f { display: flex; align-items: baseline; gap: 22px; padding: 22px 0; border-top: 1px solid var(--hair); }
+  .facts .f:first-child { border-top: 0; }
+  .facts .h1 { white-space: nowrap; }
+  .facts .body { color: var(--ink2); }
+
+  /* 屏 C：FAA 声明 */
+  .stmt { position: absolute; left: 220px; right: 220px; top: 250px; padding: 52px 64px 44px; }
+  .stmt .h2 { margin-top: 18px; }
+  .stmt .orig { margin-top: 22px; }
+  .stmt .u { background-image: linear-gradient(var(--accent), var(--accent)); background-repeat: no-repeat; background-position: 0 92%; background-size: 0% 5px; }
+  .stmt .foot { margin-top: 28px; }
+
+  /* 屏 D：三种说法并排 */
+  .says { position: absolute; left: var(--mx); right: var(--mx); top: 200px; display: flex; gap: 40px; align-items: stretch; }
+  .says .card { flex: 1; padding: 38px 42px; display: flex; flex-direction: column; justify-content: flex-end; }
+  .says .slot { margin-bottom: 22px; }
+  html[lang=en] .says #sd { flex: 1.1; } html[lang=en] .says #sm { flex: .8; } html[lang=en] .says #sc { flex: 1.3; }
+  .says .h2 { margin-top: 12px; }
+  .says .det { margin-top: 22px; }
+  .says .det .body { color: var(--ink2); padding: 6px 0; }
+  .says .tagrow { margin-top: 24px; }
+
+  /* 屏 E：根因未公布 */
+  .root { position: absolute; left: 0; right: 0; top: 340px; text-align: center; }
+  .root .h1 { margin-top: 18px; }
+  .root .body { margin-top: 26px; }
+</style>
+
+<div class="eb eyebrow" data-zh="01 · 到底坏了什么" data-en="01 · What actually broke"></div>
+
+<!-- 屏 A（sd2 模拟画面：管制大厅雷达屏卡住；按审核只用 0–4 秒） -->
+<div class="footage" id="fx2"><video id="v2" src="img/footage/sd2_control_room.mp4" data-start="{{t:l11:0}}" data-duration="{{d:l11:0>l12:0.1|4}}"
+  data-media-start="0" data-track-index="1" muted playsinline></video></div>
+<div class="what" id="what">
+  <span class="h1 faint x" id="w1" data-zh="飞机" data-en="Planes"></span>
+  <span class="h1 faint x" id="w2" data-zh="雷达" data-en="Radar"></span>
+  <span class="arr" id="w3">→</span>
+  <span class="h1 accent" id="w4" data-zh="一张电信网" data-en="A telecom network"></span>
+</div>
+
+<!-- 屏 B -->
+<svg id="map"></svg>
+<div class="facts" id="facts">
+  <div class="f" id="f1"><span class="h1">4,400+</span><span class="body" data-zh="个空管设施" data-en="facilities"></span></div>
+  <div class="f" id="f2"><span class="h1">22</span><span class="body" data-zh="个航路管制中心" data-en="en route centers"></span></div>
+  <div class="f" id="f3"><span class="body" data-zh="管制员语音 · 雷达数据" data-en="Controller voices · radar data"></span></div>
+  <div class="f" id="f4"><span class="h1">FTI</span><span class="body" data-zh="承包商 L3Harris 运营" data-en="run by L3Harris"></span></div>
+</div>
+
+<!-- 屏 C -->
+<div class="stmt card" id="stmt">
+  <div class="eyebrow" data-zh="FAA 官方声明 · 2026-11-13" data-en="FAA statement · Nov 13, 2026"></div>
+  <div class="h2" data-zh="多个航路管制中心：通信问题" data-en="Communication issues at multiple centers"></div>
+  <div class="h2 ink2" style="margin-top:10px" data-zh='技术人员：<span class="u" id="u1">调查中</span>' data-en='Technicians: <span class="u" id="u1">investigating</span>'></div>
+  <div class="foot" id="stmtTag"></div>
+</div>
+
+<!-- 屏 D -->
+<div class="says" id="says">
+  <div class="card" id="sd">
+    <figure class="slot" data-src="img/source/commons/Secretary_of_Transportation_Sean_Duffy_Official_Portrait.jpg" style="--h:190px; --pos:50% 22%"></figure>
+    <div class="eyebrow" data-zh="交通部长 达菲" data-en="Secretary Duffy"></div>
+    <div class="h2" data-zh="「老得不可思议」" data-en="“Incredibly old”"></div>
+    <div class="det" id="sdDet">
+      <div class="body" id="d1" data-zh="旧设备过载" data-en="Old routers overloaded"></div>
+      <div class="body" id="d2" data-zh="新设备：没坏" data-en="New gear: none failed"></div>
+      <div class="body" id="d3" data-zh="要 500 亿美元" data-en="Asks Congress: $50B"></div>
+    </div>
+  </div>
+  <div class="card" id="sm">
+    <figure class="slot" data-src="img/mullin.jpg"></figure>
+    <div class="eyebrow" data-zh="国土安全部长 穆林" data-en="Secretary Mullin"></div>
+    <div class="h2" data-zh="新设备压垮旧系统" data-en="New tech<br>→ overload"></div>
+  </div>
+  <div class="card" id="sc">
+    <figure class="slot" data-src="img/cbs_report.jpg"></figure>
+    <div class="eyebrow" data-zh="CBS · 匿名信源" data-en="CBS · unnamed sources"></div>
+    <div class="h2" data-zh="更新→重启→崩溃" data-en="Update → reboot<br>→ crash"></div>
+    <div class="tagrow" id="scTag"></div>
+  </div>
+</div>
+
+<!-- 屏 E -->
+<div class="root" id="rc">
+  <div class="eyebrow" data-zh="截至 2026-11-14" data-en="As of Nov 14, 2026"></div>
+  <div class="h1" data-zh="原因：未公布" data-en="Cause: not public yet"></div>
+  <div class="body sub" id="r2" data-zh="→ 回看历史故障" data-en="→ Past outages"></div>
+</div>
+
+<script>
+const T = EDU.tl;
+document.getElementById("stmtTag").innerHTML = EDU.lang === "en" ? pill("dispute", "", "Wording differs") : "";   // 中文撤掉无解释的「有争议」（lines_r3 I33/I34）                    // C10 有争议：只留角标，不印口播没讲的细节
+document.getElementById("scTag").innerHTML = pill("unver", "未证实", "Unconfirmed");
+const M = usMap("#map", 1060);
+gsap.set(["#w1", "#w2", "#w3", "#w4", "#map", "#f1", "#f2", "#f3", "#f4", "#stmt", "#sd", "#sc", "#sm", "#d1", "#d2", "#d3", "#scTag", "#rc", "#r2"], { opacity: 0 });
+gsap.set([...M.fac, ...M.nodes, ...M.edges, ...M.links, ...M.insets, ...M.planes], { opacity: 0 });
+EDU.in(".eb", 0);
+
+// l11 不是飞机、不是雷达，是一张电信网
+EDU.in("#w1", EDU.t("l11", .02)); EDU.in("#w2", EDU.t("l11", .25));
+EDU.in("#w3", EDU.t("l11", .5), { y: 0 }); EDU.in("#w4", EDU.t("l11", .6));
+
+// l12 4,400 多个设施，包括 22 个航路管制中心，连成一张网（口播先说设施、再说中心）
+EDU.out("#what", footEnd("v2") - .45);
+EDU.in("#map", footEnd("v2") - .2, { y: 0, d: .6 });
+EDU.in(M.fac, EDU.t("l12", .08), { stagger: .002, d: .4 });
+EDU.in("#f1", EDU.t("l12", .1));
+EDU.in([...M.nodes, ...M.insets], EDU.t("l12", .5), { stagger: .03 });
+M.edges.forEach((e, i) => { T.set(e, { opacity: 1 }, EDU.t("l12", .62)); EDU.draw(e, EDU.t("l12", .62) + i * .02, .5); });
+M.links.forEach(e => EDU.in(e, EDU.t("l12", .8)));
+EDU.in("#f2", EDU.t("l12", .55));
+srcNote("设施数：The Register · 中心数：FAA · 位置为示意", "Facilities: The Register · Centers: FAA · Positions approximate", EDU.t("l12", .2), EDU.end("l14") + .1);
+// l13 语音和雷达数据都走这张网
+EDU.in("#f3", EDU.t("l13", .05));
+pulses(M, EDU.t("l13", .05), 14, 1.3);
+// l14 FTI，L3Harris 运营（前两条数字退后，屏上只留在讲的两条）
+EDU.out(["#f1", "#f2"], EDU.t("l14", 0), { y: 0 });   // 旧数字完全撤下（lines_r2 I42）
+EDU.in("#f4", EDU.t("l14", .1));
+
+// l15 FAA 声明原文
+EDU.out(["#map", "#facts"], EDU.t("l15", 0));
+EDU.in("#stmt", EDU.t("l15", .05));
+T.to("#u1", { backgroundSize: "100% 5px", duration: .9, ease: "power3.inOut" }, EDU.t("l15", .7));
+srcNote("FAA 声明原文（存档）", "FAA statement, archived · Duffy said “all” centers", EDU.t("l15", .2), EDU.end("l15") + .1);
+
+// l16–l19 达菲
+EDU.out("#stmt", EDU.t("l16", 0));
+EDU.in("#says", EDU.t("l16", 0), { y: 0, d: .01 });
+EDU.in("#sd", EDU.t("l16", .05));
+EDU.in("#d1", EDU.t("l17", .05));
+EDU.in("#d2", EDU.t("l18", .05));
+EDU.in("#d3", EDU.t("l19", .05));
+srcNote("达菲白宫记者会（经 NBC、ABC 直播）· 图：美国交通部", "Duffy at the White House (via NBC, ABC live) · Photo: US DOT", EDU.t("l16", .2), EDU.end("l19") + .1);
+// l20–l21 CBS：匿名信源，未证实
+EDU.out("#sdDet", EDU.t("l20", 0)); T.set("#sdDet", { display: "none" }, EDU.t("l20", .45));   // 收起细节，三张卡等高
+EDU.in("#sc", EDU.t("l20", .05));
+EDU.in("#scTag", EDU.t("l21", .05), { y: 0 });
+srcNote("CBS News，2026-11-13", "CBS News, Nov 13, 2026", EDU.t("l20", .2), EDU.end("l21") + .1);
+// l22 穆林两头都沾：放在中间一栏
+EDU.in("#sm", EDU.t("l22", .05));
+srcNote("穆林（经 Globe and Mail 直播）", "Mullin (via Globe and Mail live)", EDU.t("l22", .2), EDU.end("l22") + .1);
+
+// l23 根因未公布（截至 11-14）
+EDU.out("#says", EDU.t("l23", 0));
+EDU.in("#rc", EDU.t("l23", .1));
+// l24 这次先不猜 → 回看历史故障
+EDU.in("#r2", EDU.t("l24", .1));
+EDU.out("#rc", EDU.S.duration - .5);
+</script>

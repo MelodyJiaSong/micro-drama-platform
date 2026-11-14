@@ -1,0 +1,12 @@
+"""Use distributed mineral emission instead of visible lamp reflections."""
+from pathlib import Path
+import bpy,json
+ROOT=Path(__file__).resolve().parents[3];folder=next(next(ROOT.glob('2_*')).glob('background/*/bg26_*/model_3d'));out=folder/'r07';out.mkdir(exist_ok=True)
+if (out/'authoring.blend').exists():raise FileExistsError(out)
+bpy.ops.wm.open_mainfile(filepath=str(folder/'r06/authoring.blend'));coll=bpy.data.collections['ASSET_bg26']
+for o in list(coll.objects):
+ if o.name.startswith('Fluorite_internal_') and o.type=='LIGHT':bpy.data.objects.remove(o,do_unlink=True)
+nt=bpy.data.materials['Tower_faceted_fluorite_shell'].node_tree;output=next(n for n in nt.nodes if n.type=='OUTPUT_MATERIAL');absorb=next(n for n in nt.nodes if n.type=='VOLUME_ABSORPTION');vol=nt.nodes.new('ShaderNodeVolumePrincipled');vol.inputs['Density'].default_value=0;vol.inputs['Emission Color'].default_value=(.025,.50,.10,1)
+tc=nt.nodes.new('ShaderNodeTexCoord');sep=nt.nodes.new('ShaderNodeSeparateXYZ');nt.links.new(tc.outputs['Generated'],sep.inputs[0]);fade=nt.nodes.new('ShaderNodeMapRange');fade.inputs['To Min'].default_value=.5;fade.inputs['To Max'].default_value=.025;nt.links.new(sep.outputs['Z'],fade.inputs[0]);noise=nt.nodes.new('ShaderNodeTexNoise');noise.inputs['Scale'].default_value=5;noise.inputs['Detail'].default_value=4;nt.links.new(tc.outputs['Generated'],noise.inputs[0]);mul=nt.nodes.new('ShaderNodeMath');mul.operation='MULTIPLY';nt.links.new(fade.outputs[0],mul.inputs[0]);nt.links.new(noise.outputs[0],mul.inputs[1]);nt.links.new(mul.outputs[0],vol.inputs['Emission Strength']);add=nt.nodes.new('ShaderNodeAddShader');nt.links.new(absorb.outputs[0],add.inputs[0]);nt.links.new(vol.outputs[0],add.inputs[1]);nt.links.new(add.outputs[0],output.inputs['Volume'])
+scene=bpy.context.scene;scene.cycles.samples=48;scene.render.filepath=str(out/'tower_preview.png');bpy.ops.wm.save_as_mainfile(filepath=str(out/'authoring.blend'))
+(out/'authoring.json').write_text(json.dumps({'revision':'r07','source':'r06','status':'author_preview_pending','changes':['Distributed low-strength green mineral emission replaces visible internal lamp images','Closed transmissive faceted crystal, absorption, real internal fracture planes','32 jawless scan-derived skulls, octagonal metal band, rivets and moss retained'],'remaining':['Full multi-view inspection and independent review pending']},indent=2),encoding='utf-8');bpy.ops.render.render(write_still=True)

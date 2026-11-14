@@ -1,0 +1,999 @@
+{
+ "version": 5,
+ "kind": "edu_lines",
+ "scoring": {
+  "scale": {
+   "0": "没查或查不了（写 `原因：`）",
+   "1": "有问题（问题表里必须有对应条目）",
+   "2": "基本没问题，有小瑕疵（写证据）",
+   "3": "没问题（写证据）"
+  },
+  "evidence_rule": "证据要指到句号 lNN / 屏号、原文或数字，至少 8 个字；没证据的高分按 0 处理。",
+  "disagreement": "分歧：两位同一维度差 ≥2，或一人 ≤1、另一人 ≥2，交裁决人；两人都 ≥2 的维度，裁决人每项抽 2 维复核（专抓两个模型共同的盲点）。"
+ },
+ "adjudicator": {
+  "runner": "claude",
+  "model": "claude-opus-5-5"
+ },
+ "id": "lines_r1",
+ "chain": "t13_backprop/lines",
+ "loop": 1,
+ "max_loops": 3,
+ "parent": "",
+ "title": "t13_backprop · 台词审（口播＋屏幕文字）第 1 轮",
+ "target": "edu_videos/ai_terms/t13_backprop",
+ "episode": "t13_backprop",
+ "stage": "lines",
+ "stage_name": "台词审（口播＋屏幕文字 × 中英）",
+ "scenes": [],
+ "created_at": "2026-11-09T20:50:56",
+ "author": "Claude Code",
+ "known": "",
+ "changes": "",
+ "items": [
+  {
+   "id": "voice_zh",
+   "law": "lines",
+   "law_name": "中文口播（母语听感，盲审）",
+   "color": "#c0502e",
+   "scope": [],
+   "checks": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_zh.md",
+   "prompt": "items/voice_zh__a.md",
+   "what": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "problem": "上一版「本期内容」念成「这一期，讲四件事：它是个什么问题；为什么只背练习册不行……」，像在念目录，正常人不会这么说话（用户 2026-11-08 指出）；原先的审稿没抓到。",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "像真人在讲",
+     "question": "逐句：自然 / 有点怪 / 很怪。书面腔、讲解腔、翻译腔、念稿感、报菜名式罗列都算怪"
+    },
+    {
+     "id": "V2",
+     "name": "衔接与过渡",
+     "question": "开场、本期内容、章节转换、举例前后：像一个人顺着思路往下讲，而不是「下面讲第一点」式的模板或目录朗读；上下句接得上"
+    },
+    {
+     "id": "V3",
+     "name": "一遍听懂",
+     "question": "只靠耳朵：一句只带一个新意思；指代清楚（说「这个」时观众知道指什么）；术语先解释再用；数字、同音字不会听错"
+    },
+    {
+     "id": "V4",
+     "name": "精炼",
+     "question": "没有废话、重复、正确的空话；删掉不影响理解的句子要指出来"
+    },
+    {
+     "id": "V5",
+     "name": "口吻与节奏",
+     "question": "从头到尾是同一个亲切、清楚、不端着的讲解者；长短句交替，每句适合一口气念完"
+    },
+    {
+     "id": "V6",
+     "name": "改写",
+     "question": "每句「有点怪 / 很怪」都给出可以直接替换、不更长的中文改写；列出最别扭的 5 句并排序"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_zh__a.md",
+     "prompt": "items/voice_zh__a.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "多数句子像真人说话，如 l03「一个一个去试？根本试不完。」、l39「写一行 loss 点 backward」；但 l04「实际用的办法，倒着走一趟就全算出来了」、l14「那拧第一个一格」、l15「每往前一个齿轮」、l29「正着整整算了八遍，不拧算一遍」读起来别扭。"
+      },
+      "V2": {
+       "score": 2,
+       "evidence": "l05→l06→l07 顺着思路走，「上期说过……这期咱们先看看……」自然，没有念目录；l41→l44「不过旋钮多了也有麻烦……下一期，咱们聊聊过拟合」接得顺。瑕疵：l04 作为开场收束句偏书面；l17 从齿轮跳到神经网络一句塞了两层意思。"
+      },
+      "V3": {
+       "score": 1,
+       "evidence": "l25「A 那边乘二……B 那边乘一」，A、B 口播里从未交代，只听不看不知道指谁；l29 一句话里「挨个试」「不拧算一遍」「每个旋钮各一遍」三个计数口径叠在一起，耳朵跟不上；l13「第二个转一格，第三个就转三格」序数和格数混在一起易听混。"
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "整体精炼。可删或合并：l23「送进来的数越大，分到的越多。」与 l22 重复大半；l16「谁都不用重算」与「算过的接着用」同义；l38 的「演示了用它训练多层网络」对理解主线无增益。"
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "全程是「咱们」口吻的亲切讲解者，节奏好；但 l17（8.7s）、l27（9.1s）、l35（10.7s，一串英文人名）偏长，一口气念不完；l20、l22 连串数字密度高。"
+      },
+      "V6": {
+       "score": 2,
+       "evidence": "下面问题表对每个「有点怪/很怪」都给了不更长的改写；最别扭 5 句排序见整体观察。"
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/voice_zh__b.md",
+     "prompt": "items/voice_zh__b.md",
+     "scores": {
+      "V1": {
+       "score": 1,
+       "evidence": "l14“那拧第一个一格”、l18“输入的是一趟车的距离”、l27“七个都该往小拧”，都有明显的措辞别扭；l38“这篇论文演示了用它训练多层网络”偏书面。"
+      },
+      "V2": {
+       "score": 1,
+       "evidence": "l06“先看看挨个试为什么不行，再拿个小网络”衔接自然，已经避开目录朗读；但 l05“神经网络就是一层层小单元”和片尾 l41“一层层分责任”仍像压缩后的讲解提纲，按串场、片尾从严标准须改。"
+      },
+      "V3": {
+       "score": 1,
+       "evidence": "l25“A 那边乘二，收到十二”中的 A、B 从未在口播中介绍；l20“再加一个”缺少宾语；l33“差不多三遍的工夫”与此前“一遍＋一趟”的听觉印象缺少衔接。"
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "l11“几十亿遍，这还只是一步”简短且有作用；l35连续列出三个英文姓氏，对理解办法没有帮助，可以缩短；l36“先正着一趟，再从最上一层倒着传回来”重复此前已经讲过的计算顺序，可删。"
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "l13“第一个转一格，第二个就转两格”节奏清楚；l21“多猜了六块。这六块……”承接顺畅。但 l35三个英文姓名、l39“PyTorch……loss 点 backward”连续增加听觉负担，口吻突然转向技术说明。"
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "下表覆盖所有判为“有点怪／很怪”的句子，均给出不长于原句的替换稿，并列出最别扭的五句。例如 l25改为“一个单元乘二，得十二；另一个乘一，得六”，去掉了盲听时无从辨认的字母。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "像真人在讲",
+     "a": 2,
+     "a_ev": "多数句子像真人说话，如 l03「一个一个去试？根本试不完。」、l39「写一行 loss 点 backward」；但 l04「实际用的办法，倒着走一趟就全算出来了」、l14「那拧第一个一格」、l15「每往前一个齿轮」、l29「正着整整算了八遍，不拧算一遍」读起来别扭。",
+     "b": 1,
+     "b_ev": "l14“那拧第一个一格”、l18“输入的是一趟车的距离”、l27“七个都该往小拧”，都有明显的措辞别扭；l38“这篇论文演示了用它训练多层网络”偏书面。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "l14「那拧第一个一格」（拧/转混用、两个「一」相撞）、l15「从指针往回，每往前一个齿轮」（往回、往前同句打架）、l29「正着整整算了八遍，不拧算一遍，每个旋钮各一遍」（先给总数再倒补口径，像改稿残留）都到「观众会出戏」的必改级。a 自己把 l14、l15 列为 V1 必改、l29 判「很怪」，却给 2 分，与问题表矛盾；有必改项即 1 分，b 的结论站得住（其 l27「往小拧」一条不成立，见驳回）。"
+    },
+    "V2": {
+     "name": "衔接与过渡",
+     "a": 2,
+     "a_ev": "l05→l06→l07 顺着思路走，「上期说过……这期咱们先看看……」自然，没有念目录；l41→l44「不过旋钮多了也有麻烦……下一期，咱们聊聊过拟合」接得顺。瑕疵：l04 作为开场收束句偏书面；l17 从齿轮跳到神经网络一句塞了两层意思。",
+     "b": 1,
+     "b_ev": "l06“先看看挨个试为什么不行，再拿个小网络”衔接自然，已经避开目录朗读；但 l05“神经网络就是一层层小单元”和片尾 l41“一层层分责任”仍像压缩后的讲解提纲，按串场、片尾从严标准须改。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "开场收束句 l04「实际用的办法，倒着走一趟就全算出来了，它叫反向传播」以书面名词短语「实际用的办法」开头、结尾「它叫……」像译文，判「有点怪」，开场按从严条目必改；a 已列「必改（开场从严）」却给 2 分。b 所举 l05「神经网络就是一层层小单元」、l41「一层层分责任」是自然的回顾句与收束句（l41 呼应 l22「各自的责任」），不成立；举例前后 l17「带动最后的答案……顺着齿轮」的衔接是次要瑕疵。"
+    },
+    "V3": {
+     "name": "一遍听懂",
+     "a": 1,
+     "a_ev": "l25「A 那边乘二……B 那边乘一」，A、B 口播里从未交代，只听不看不知道指谁；l29 一句话里「挨个试」「不拧算一遍」「每个旋钮各一遍」三个计数口径叠在一起，耳朵跟不上；l13「第二个转一格，第三个就转三格」序数和格数混在一起易听混。",
+     "b": 1,
+     "b_ev": "l25“A 那边乘二，收到十二”中的 A、B 从未在口播中介绍；l20“再加一个”缺少宾语；l33“差不多三遍的工夫”与此前“一遍＋一趟”的听觉印象缺少衔接。",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "V4": {
+     "name": "精炼",
+     "a": 2,
+     "a_ev": "整体精炼。可删或合并：l23「送进来的数越大，分到的越多。」与 l22 重复大半；l16「谁都不用重算」与「算过的接着用」同义；l38 的「演示了用它训练多层网络」对理解主线无增益。",
+     "b": 2,
+     "b_ev": "l11“几十亿遍，这还只是一步”简短且有作用；l35连续列出三个英文姓氏，对理解办法没有帮助，可以缩短；l36“先正着一趟，再从最上一层倒着传回来”重复此前已经讲过的计算顺序，可删。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "两人列的 l23 与 l22 重复、l16「谁都不用重算」同义、l36 复述计算顺序都成立且都是小冗余；两人共同漏掉 l09 几乎原样复述 l02、l33 紧接 l30 再说一遍「正着一遍、倒着一趟」、l11 与 l32 重复「这还／才只是一步」，仍属可删可并的小瑕疵，不到 1 分。"
+    },
+    "V5": {
+     "name": "口吻与节奏",
+     "a": 2,
+     "a_ev": "全程是「咱们」口吻的亲切讲解者，节奏好；但 l17（8.7s）、l27（9.1s）、l35（10.7s，一串英文人名）偏长，一口气念不完；l20、l22 连串数字密度高。",
+     "b": 2,
+     "b_ev": "l13“第一个转一格，第二个就转两格”节奏清楚；l21“多猜了六块。这六块……”承接顺畅。但 l35三个英文姓名、l39“PyTorch……loss 点 backward”连续增加听觉负担，口吻突然转向技术说明。",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V6": {
+     "name": "改写",
+     "a": 2,
+     "a_ev": "下面问题表对每个「有点怪/很怪」都给了不更长的改写；最别扭 5 句排序见整体观察。",
+     "b": 3,
+     "b_ev": "下表覆盖所有判为“有点怪／很怪”的句子，均给出不长于原句的替换稿，并列出最别扭的五句。例如 l25改为“一个单元乘二，得十二；另一个乘一，得六”，去掉了盲听时无从辨认的字母。",
+     "verdict": "抽查",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": "两份改写都有不能直接替换的条目。a：唯一从严必改的 l04 改写「实际的办法是……这个办法叫反向传播」比原句长 3 字且「办法」重复；l17 改写「错误也能顺着倒着传回去」不成句；l25「上面那个／下面那个」依赖画面，盲听仍无从定位。b：l29（两份报告里最别扭的句子之一）判「自然」未给改写；l09、l22、l39、l40 的改写改了含义或丢掉画面同步的「坡度」「loss.backward()」「责任」。可用改写见下表 V6 行。"
+    }
+   },
+   "disputes": [
+    "V1",
+    "V2"
+   ],
+   "audits": [
+    "V6",
+    "V4"
+   ],
+   "final_scores": {
+    "V1": 1,
+    "V2": 1,
+    "V3": 1,
+    "V4": 2,
+    "V5": 2,
+    "V6": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "V1",
+     "V2",
+     "V6",
+     "V4"
+    ],
+    "prompt": "items/voice_zh__judge.md",
+    "report": "reports/voice_zh__judge.md",
+    "ruling": {
+     "V1": {
+      "score": 1,
+      "evidence": "l14「那拧第一个一格」（拧/转混用、两个「一」相撞）、l15「从指针往回，每往前一个齿轮」（往回、往前同句打架）、l29「正着整整算了八遍，不拧算一遍，每个旋钮各一遍」（先给总数再倒补口径，像改稿残留）都到「观众会出戏」的必改级。a 自己把 l14、l15 列为 V1 必改、l29 判「很怪」，却给 2 分，与问题表矛盾；有必改项即 1 分，b 的结论站得住（其 l27「往小拧」一条不成立，见驳回）。"
+     },
+     "V2": {
+      "score": 1,
+      "evidence": "开场收束句 l04「实际用的办法，倒着走一趟就全算出来了，它叫反向传播」以书面名词短语「实际用的办法」开头、结尾「它叫……」像译文，判「有点怪」，开场按从严条目必改；a 已列「必改（开场从严）」却给 2 分。b 所举 l05「神经网络就是一层层小单元」、l41「一层层分责任」是自然的回顾句与收束句（l41 呼应 l22「各自的责任」），不成立；举例前后 l17「带动最后的答案……顺着齿轮」的衔接是次要瑕疵。"
+     },
+     "V6": {
+      "score": 1,
+      "evidence": "两份改写都有不能直接替换的条目。a：唯一从严必改的 l04 改写「实际的办法是……这个办法叫反向传播」比原句长 3 字且「办法」重复；l17 改写「错误也能顺着倒着传回去」不成句；l25「上面那个／下面那个」依赖画面，盲听仍无从定位。b：l29（两份报告里最别扭的句子之一）判「自然」未给改写；l09、l22、l39、l40 的改写改了含义或丢掉画面同步的「坡度」「loss.backward()」「责任」。可用改写见下表 V6 行。"
+     },
+     "V4": {
+      "score": 2,
+      "evidence": "两人列的 l23 与 l22 重复、l16「谁都不用重算」同义、l36 复述计算顺序都成立且都是小冗余；两人共同漏掉 l09 几乎原样复述 l02、l33 紧接 l30 再说一遍「正着一遍、倒着一趟」、l11 与 l32 重复「这还／才只是一步」，仍属可删可并的小瑕疵，不到 1 分。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 45,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_zh__a",
+    "codex/voice_zh__b"
+   ]
+  },
+  {
+   "id": "voice_en",
+   "law": "lines",
+   "law_name": "English narration (native ear, blind)",
+   "color": "#2e6fc0",
+   "scope": [],
+   "checks": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_en.md",
+   "prompt": "items/voice_en__a.md",
+   "what": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "problem": "The previous agenda read 'In this episode: What the problem is. Why memorizing answers fails. A different way to think about learning…' — a table of contents read aloud. No one talks like that (caught by the user, 2026-11-08); earlier reviews missed it.",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "Sounds like a person talking",
+     "question": "Each line: natural / a bit off / clearly off. Written-style, lecture tone, translated-from-Chinese phrasing, telegraphic lists all count as off"
+    },
+    {
+     "id": "V2",
+     "name": "Flow and transitions",
+     "question": "Cold open, the 'what's coming' part, chapter changes, before/after examples: does it sound like one person following a thought, not 'Point one…' templates or a TOC read aloud? Do adjacent lines connect?"
+    },
+    {
+     "id": "V3",
+     "name": "Clear on one hearing",
+     "question": "Ear only: one new idea per line; clear reference ('this' points to something); terms explained before used; numbers and words not misheard"
+    },
+    {
+     "id": "V4",
+     "name": "Tight",
+     "question": "No filler, repetition, or empty truisms; point out lines that could go without losing anything"
+    },
+    {
+     "id": "V5",
+     "name": "Voice and rhythm",
+     "question": "One warm, clear, unpretentious narrator throughout; varied sentence length; each line sayable in one breath"
+    },
+    {
+     "id": "V6",
+     "name": "Rewrites",
+     "question": "For every 'a bit off' / 'clearly off' line, a drop-in rewrite no longer than the original; rank the 5 most awkward lines"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_en__a.md",
+     "prompt": "items/voice_en__a.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "l01-l34 mostly sound like one person (\"The obvious way? Nudge one knob, rerun everything\"), but the 1986 chapter (l36 \"each connection's slope is worked out in two passes\", l38, l40) slides into encyclopedia prose; l15 \"one ratio per gear\" and l16 \"Nothing is recalculated\" are written-style."
+      },
+      "V2": {
+       "score": 2,
+       "evidence": "Cold open l01-l04 into l05 \"Last time we saw...\" flows well, and the outro callback l42 \"which way to turn, and how far\" echoes l02. Weak spots: l06 re-announces what l03 already said; l17 \"So the error can flow back.\" jumps; the 1986 chapter has no bridge from the taxi demo (l34 into l35)."
+      },
+      "V3": {
+       "score": 1,
+       "evidence": "Term pile-up by ear: \"error\" (l07), \"loss\" (l08), \"gradient\" then \"The slope\" (l09), then \"blame\" (l22) and \"slope\" again (l36, l39) with no link saying they are the same thing. l22 \"thirty-six, twenty-four, six\" gives no way to know which inputs (6, 4, 1) were multiplied. l33 \"Roughly three runs' worth\" contradicts the \"one forward, one back\" just said."
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "l06 repeats the cold open; l23 \"Bigger number in, bigger blame.\" is fine but l34 \"Without it, billion-knob models couldn't be trained.\" only restates l31-l33; l38 \"Similar methods had been proposed earlier\" adds history nobody asked for. Little real filler otherwise."
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "Warm, plain narrator in l01-l34, with good short punches (\"Six notches.\", \"For one step.\"). Voice turns lecture-like at l35-l40, and l17 (9.2s, three sentences) and l27 (8.5s) are long for one breath."
+      },
+      "V6": {
+       "score": 2,
+       "evidence": "Rewrites given for every flagged line (see table); ranking of the 5 most awkward lines is in 整体观察. Rewrites are mine and untested by a second ear."
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/voice_en__b.md",
+     "prompt": "items/voice_en__b.md",
+     "scores": {
+      "V1": {
+       "score": 1,
+       "evidence": "l20 “weights each by a knob” sounds like technical shorthand; l15 “multiplying in one ratio” is an awkward spoken construction."
+      },
+      "V2": {
+       "score": 1,
+       "evidence": "l04 “gets them all” leaves the opening promise unclear. l29 changes from “Now check” to “That took” without an audible calculation. However, l06 is a connected spoken preview, not a table of contents."
+      },
+      "V3": {
+       "score": 1,
+       "evidence": "l22 introduces “blame” while delivering three unexplained results; l26 “splits its share” suggests division; l33 announces approximately three runs immediately after describing two passes."
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "Most lines advance the explanation. l36 repeats the forward/backward description already given in l30 and l33, with little additional payoff."
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "l10 “The obvious way? Nudge one knob” and l32 “For one step” have effective conversational rhythm. l25 “Times two gives A twelve” compresses arithmetic into a harder-to-parse phrase."
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "All 24 lines marked off below have replacement wording in the issue table, no longer than their originals by spoken-word count. The five most awkward lines are ranked below."
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "Sounds like a person talking",
+     "a": 2,
+     "a_ev": "l01-l34 mostly sound like one person (\"The obvious way? Nudge one knob, rerun everything\"), but the 1986 chapter (l36 \"each connection's slope is worked out in two passes\", l38, l40) slides into encyclopedia prose; l15 \"one ratio per gear\" and l16 \"Nothing is recalculated\" are written-style.",
+     "b": 1,
+     "b_ev": "l20 “weights each by a knob” sounds like technical shorthand; l15 “multiplying in one ratio” is an awkward spoken construction.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "多句明显不像口语：l36 用被动句 \"each connection's slope is worked out in two passes\"，l20 把 \"weights each by a knob\" 当动词用，l09 句尾悬着 \"The slope.\"，l22 突然冒出 \"blame\" 又连报三个数。a 自己把 l36 列为 V1 必改，却给了 2 分，前后矛盾。b 的 1 分站得住。另外 l34 用被动句 \"couldn't be trained\" 收章（见补充）。"
+    },
+    "V2": {
+     "name": "Flow and transitions",
+     "a": 2,
+     "a_ev": "Cold open l01-l04 into l05 \"Last time we saw...\" flows well, and the outro callback l42 \"which way to turn, and how far\" echoes l02. Weak spots: l06 re-announces what l03 already said; l17 \"So the error can flow back.\" jumps; the 1986 chapter has no bridge from the taxi demo (l34 into l35).",
+     "b": 1,
+     "b_ev": "l04 “gets them all” leaves the opening promise unclear. l29 changes from “Now check” to “That took” without an audible calculation. However, l06 is a connected spoken preview, not a table of contents.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "Strict 衔接处有好几处\"有点别扭\"，按规则都是必改，不能给 2 分。具体：l04 \"gets them all\" 没说清拿到的是什么（b 指出）；l17 句尾 \"So the error can flow back\" 和前一句接不上，正好在出章处（a 指出）；1986 章卡不出声，l34 之后 l35 直接报年份，耳朵听不出换了话题（a 指出）；l12 \"the other end\" 指不到任何东西，两人都漏了。l06 是连贯的口头预告，不是念目录，这一点 b 判得对，a 说它重复 l03 不算毛病。"
+    },
+    "V3": {
+     "name": "Clear on one hearing",
+     "a": 1,
+     "a_ev": "Term pile-up by ear: \"error\" (l07), \"loss\" (l08), \"gradient\" then \"The slope\" (l09), then \"blame\" (l22) and \"slope\" again (l36, l39) with no link saying they are the same thing. l22 \"thirty-six, twenty-four, six\" gives no way to know which inputs (6, 4, 1) were multiplied. l33 \"Roughly three runs' worth\" contradicts the \"one forward, one back\" just said.",
+     "b": 1,
+     "b_ev": "l22 introduces “blame” while delivering three unexplained results; l26 “splits its share” suggests division; l33 announces approximately three runs immediately after describing two passes.",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "V4": {
+     "name": "Tight",
+     "a": 2,
+     "a_ev": "l06 repeats the cold open; l23 \"Bigger number in, bigger blame.\" is fine but l34 \"Without it, billion-knob models couldn't be trained.\" only restates l31-l33; l38 \"Similar methods had been proposed earlier\" adds history nobody asked for. Little real filler otherwise.",
+     "b": 2,
+     "b_ev": "Most lines advance the explanation. l36 repeats the forward/backward description already given in l30 and l33, with little additional payoff.",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V5": {
+     "name": "Voice and rhythm",
+     "a": 2,
+     "a_ev": "Warm, plain narrator in l01-l34, with good short punches (\"Six notches.\", \"For one step.\"). Voice turns lecture-like at l35-l40, and l17 (9.2s, three sentences) and l27 (8.5s) are long for one breath.",
+     "b": 2,
+     "b_ev": "l10 “The obvious way? Nudge one knob” and l32 “For one step” have effective conversational rhythm. l25 “Times two gives A twelve” compresses arithmetic into a harder-to-parse phrase.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "大部分是同一个温和、平实的讲述声音，l10 \"The obvious way?\"、l14 \"Six notches.\"、l32 \"For one step.\" 这些短句节奏好。但有两处两人都漏了：l35-l38 连着四句都是讲义式起句（\"In nineteen eighty-six,\" \"In the paper,\" \"They also found\" \"Similar methods had been\"），整段没有一句短句；演示段 you / we / 祈使混用，l28 \"Turn each…\"、l29 \"Now check it\" 让观众去做旁白自己在做的事。所以维持 2 分，不升。"
+    },
+    "V6": {
+     "name": "Rewrites",
+     "a": 2,
+     "a_ev": "Rewrites given for every flagged line (see table); ranking of the 5 most awkward lines is in 整体观察. Rewrites are mine and untested by a second ear.",
+     "b": 3,
+     "b_ev": "All 24 lines marked off below have replacement wording in the issue table, no longer than their originals by spoken-word count. The five most awkward lines are ranked below.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "b 说 24 条全有改写，核对属实；a 在逐句复述里判了 off 的 l37、l35 在问题表里没有直接改写。但两边都有改写比原句更差：a 的 l06 退回成标题式 \"Today: why…\"，a 的 l13 出现 \"two by two\" 听觉陷阱，b 的 l20 用分号、是书面腔，b 的 l22/l23 删掉 \"blame\"，让 l41 的收尾失去铺垫（见驳回）。达不到 3 分。"
+    }
+   },
+   "disputes": [
+    "V1",
+    "V2"
+   ],
+   "audits": [
+    "V5",
+    "V6"
+   ],
+   "final_scores": {
+    "V1": 1,
+    "V2": 1,
+    "V3": 1,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "V1",
+     "V2",
+     "V5",
+     "V6"
+    ],
+    "prompt": "items/voice_en__judge.md",
+    "report": "reports/voice_en__judge.md",
+    "ruling": {
+     "V1": {
+      "score": 1,
+      "evidence": "多句明显不像口语：l36 用被动句 \"each connection's slope is worked out in two passes\"，l20 把 \"weights each by a knob\" 当动词用，l09 句尾悬着 \"The slope.\"，l22 突然冒出 \"blame\" 又连报三个数。a 自己把 l36 列为 V1 必改，却给了 2 分，前后矛盾。b 的 1 分站得住。另外 l34 用被动句 \"couldn't be trained\" 收章（见补充）。"
+     },
+     "V2": {
+      "score": 1,
+      "evidence": "Strict 衔接处有好几处\"有点别扭\"，按规则都是必改，不能给 2 分。具体：l04 \"gets them all\" 没说清拿到的是什么（b 指出）；l17 句尾 \"So the error can flow back\" 和前一句接不上，正好在出章处（a 指出）；1986 章卡不出声，l34 之后 l35 直接报年份，耳朵听不出换了话题（a 指出）；l12 \"the other end\" 指不到任何东西，两人都漏了。l06 是连贯的口头预告，不是念目录，这一点 b 判得对，a 说它重复 l03 不算毛病。"
+     },
+     "V5": {
+      "score": 2,
+      "evidence": "大部分是同一个温和、平实的讲述声音，l10 \"The obvious way?\"、l14 \"Six notches.\"、l32 \"For one step.\" 这些短句节奏好。但有两处两人都漏了：l35-l38 连着四句都是讲义式起句（\"In nineteen eighty-six,\" \"In the paper,\" \"They also found\" \"Similar methods had been\"），整段没有一句短句；演示段 you / we / 祈使混用，l28 \"Turn each…\"、l29 \"Now check it\" 让观众去做旁白自己在做的事。所以维持 2 分，不升。"
+     },
+     "V6": {
+      "score": 2,
+      "evidence": "b 说 24 条全有改写，核对属实；a 在逐句复述里判了 off 的 l37、l35 在问题表里没有直接改写。但两边都有改写比原句更差：a 的 l06 退回成标题式 \"Today: why…\"，a 的 l13 出现 \"two by two\" 听觉陷阱，b 的 l20 用分号、是书面腔，b 的 l22/l23 删掉 \"blame\"，让 l41 的收尾失去铺垫（见驳回）。达不到 3 分。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 49,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_en__a",
+    "codex/voice_en__b"
+   ]
+  },
+  {
+   "id": "screen_zh",
+   "law": "lines",
+   "law_name": "中文屏幕文字（PPT 式画面）",
+   "color": "#b8860b",
+   "scope": [],
+   "checks": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "how": "硬上限（超了必须报）：标题 ≤12 字；其余每块 ≤16 字；同屏文字块 ≤4 块（不含页眉小标签、出处与图表刻度）；一屏总字数 ≤36 字。屏幕下方还有口播字幕，观众要同时看。计数口径（第 2 轮裁决定，2026-11-09）：页眉小标签、案例页签、出处、片尾署名不计；同构的列表 / 表格 / 卡片行（每项 ≤8 字、最多 6 项、样子一样）合算 1 块，编号不计字；图里的文字（区域名、曲线名、轴标题、柱条标签、图上注释）要计字数，整张图合算 1 块，只有坐标刻度数字豁免；表格的列头算在表里。",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_zh.md",
+   "prompt": "items/screen_zh__a.md",
+   "what": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "problem": "上一版屏幕文字很多是整句（如「另训一个模型，在两家医院的片子上认医院的准确率——胸片里藏着医院的“指纹”」），等于把口播又印了一遍；用户要求画面只列纲要、相对简练（2026-11-08）。",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "只列纲要",
+     "question": "每屏只放关键词、短语、关键数字、标签；不是口播整句的复述。按硬上限逐屏数字数，超了就报"
+    },
+    {
+     "id": "P2",
+     "name": "与口播分工",
+     "question": "屏幕给结构、数字、对比，口播负责解释；不和口播逐字重复，也不出现口播没说过的新说法；术语、叫法与口播一致"
+    },
+    {
+     "id": "P3",
+     "name": "层级与体例",
+     "question": "一眼先看到什么、第二眼看什么；标题—要点—注释不超过三级；编号、标签、章节名、目录项前后一致（例：目录写的和章节卡写的是不是同一个说法）"
+    },
+    {
+     "id": "P4",
+     "name": "中文措辞与排版",
+     "question": "短语化、不带句末句号；标点、引号、空格规范；不半中半英；**标题、章名读出来要顺**：名词堆砌、生造的名词短语（如「现实里的祸」）算必改"
+    },
+    {
+     "id": "P5",
+     "name": "看得完",
+     "question": "按截图和停留时间：文字量在停留时间内读得完（约 6 字/秒，还要分神看字幕和图）"
+    },
+    {
+     "id": "P6",
+     "name": "改写",
+     "question": "每处超限或不顺的屏幕文字，都给出更短、可直接替换的写法"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_zh__a.md",
+     "prompt": "items/screen_zh__a.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "l34 合计 47 字、l33 42 字、l40 43 字（caption「PyTorch 官方教程：从输出倒着走，收集每个参数的梯度」20 字 > 16）、l38 38 字，均超一屏 36 字；l26 材料计 39 字（图内数字按 1 字计，存疑）。其余屏（s0、s2、s3、l35–l37）基本是关键词和公式，合格。"
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "多数屏分工好（l22「责任 = 错误 × 送进来的数」只给公式，口播解释）；但 l40 的 caption「官方教程」口播没说过、还复述口播；agenda 第 04 项「从 1986 到今天」l06 口播没提；l17「神经网络也是一串齿轮」口播是「也像」。"
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "层级清楚（页眉小标签 + h1 + 图）；但叫法不一：agenda「一个个试」、l10 / l11「挨个试」、l29–l34「挨个试拧」、l01 / l31「几十亿个 / 十亿个旋钮」；l09「梯度」屏上没写「坡度」，l39 / l40 却用「坡度」。agenda 第 01 项 9 字，超列表项 ≤8 字。"
+      },
+      "P4": {
+       "score": 1,
+       "evidence": "outro「错误往回传， 一趟算出每个旋钮」（逗号后多空格，「算出旋钮」读着不通）；l31 等「挨个试拧」生造；章节卡「倒着往回算」倒着 / 往回同义重复；l31「1,000,000,001遍」与 l32「一遍 1 秒」数字与量词空格体例不一。片尾属从严条目，判必改。"
+      },
+      "P5": {
+       "score": 1,
+       "evidence": "l34 47 字且 3 行表加大标题，停留仅 4.1s（约 24 字上限）；l33 42 字 / 4.8s；l40 43 字 / 6.7s；l38 38 字 / 6.1s。l26 图 + 公式 25 块 / 4.6s 也偏密。"
+      },
+      "P6": {
+       "score": 2,
+       "evidence": "问题表每处超限、不顺都给了替换写法；l26 的减负方案只能给倾向性建议，需看图再定。"
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/screen_zh__b.md",
+     "prompt": "items/screen_zh__b.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "l22、l23 的网络图各有19字；l26 图内29字、全屏39字，超过单块16字及全屏36字上限。"
+      },
+      "P2": {
+       "score": 1,
+       "evidence": "l28 已显示新旋钮值“×0.7、＋0.94”，却仍保留旧输出“6、4”和旧回传算式；outro“一趟算出每个旋钮”也未表达出口播所说的拧动方向与多少。"
+      },
+      "P3": {
+       "score": 1,
+       "evidence": "目录与章节卡的四个名称一致；但 l28 新旧数值混放，l32—l34 又把“一遍1秒的话”这一估算条件排成与两种算法同级的行。"
+      },
+      "P4": {
+       "score": 1,
+       "evidence": "outro“错误往回传，一趟算出每个旋钮”搭配不成立；l24“传回去＝错误×路过的旋钮”用动作直接等于数值，省略过头。"
+      },
+      "P5": {
+       "score": 1,
+       "evidence": "l25 在3.7秒内同时保留网络数值和两条回传算式；l30 共44字，还要求观众逐项比较两组七个数，字幕之外的阅读负担明显。"
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "问题表已为 l22—l28 的超限图文、l30 对比卡、l34、l40 和 outro 提供可直接替换的文字及删留方案。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "只列纲要",
+     "a": 1,
+     "a_ev": "l34 合计 47 字、l33 42 字、l40 43 字（caption「PyTorch 官方教程：从输出倒着走，收集每个参数的梯度」20 字 > 16）、l38 38 字，均超一屏 36 字；l26 材料计 39 字（图内数字按 1 字计，存疑）。其余屏（s0、s2、s3、l35–l37）基本是关键词和公式，合格。",
+     "b": 1,
+     "b_ev": "l22、l23 的网络图各有19字；l26 图内29字、全屏39字，超过单块16字及全屏36字上限。",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "P2": {
+     "name": "与口播分工",
+     "a": 2,
+     "a_ev": "多数屏分工好（l22「责任 = 错误 × 送进来的数」只给公式，口播解释）；但 l40 的 caption「官方教程」口播没说过、还复述口播；agenda 第 04 项「从 1986 到今天」l06 口播没提；l17「神经网络也是一串齿轮」口播是「也像」。",
+     "b": 1,
+     "b_ev": "l28 已显示新旋钮值“×0.7、＋0.94”，却仍保留旧输出“6、4”和旧回传算式；outro“一趟算出每个旋钮”也未表达出口播所说的拧动方向与多少。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 成立。l40 caption「从输出倒着走，收集每个参数的梯度」几乎逐字复述 l40 口播，还把口播的「旋钮 / 坡度」换成「参数 / 梯度」；l17「也是一串齿轮」把口播的类比「也像」改成了等同；l26 屏上公式「传回去 = 错误 × 路过的旋钮」不是这一拍口播在做的事（见补充问题）；outro 属从严条目，两位都判必改。这些都是与口播不一致或重复，不是小瑕疵。a 的证据其实也指向 1 分，只有「agenda 04 项口播没提」一条站不住（见驳回）。"
+    },
+    "P3": {
+     "name": "层级与体例",
+     "a": 2,
+     "a_ev": "层级清楚（页眉小标签 + h1 + 图）；但叫法不一：agenda「一个个试」、l10 / l11「挨个试」、l29–l34「挨个试拧」、l01 / l31「几十亿个 / 十亿个旋钮」；l09「梯度」屏上没写「坡度」，l39 / l40 却用「坡度」。agenda 第 01 项 9 字，超列表项 ≤8 字。",
+     "b": 1,
+     "b_ev": "目录与章节卡的四个名称一致；但 l28 新旧数值混放，l32—l34 又把“一遍1秒的话”这一估算条件排成与两种算法同级的行。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 成立。截图 l28 证实：七个旋钮已换成新值（×0.7、+0.94、×1.82……），输出也变成 23.88，但中间结果「6」「4」和红色算式「6 × 2 = 12」「6 × 1 = 6」仍是旧数，而且是全亮显示（s4.html 在 l28 只把责任数 pill 调暗了，没动 #hA/#hB 和 labA/labB）。按屏上数字算 6×1.82+4×0.88+12.97≈27.4，不等于 23.88，属于必改。l32–l34 把「一遍 1 秒的话」这个估算前提排成和两种算法同级的一行，也成立。另外 a 指出的叫法不一（一个个试 / 挨个试 / 挨个试拧）、l40 里上一屏的 h2 压在新 h1 上方，都是体例问题，合起来不是 2 分能放过的。"
+    },
+    "P4": {
+     "name": "中文措辞与排版",
+     "a": 1,
+     "a_ev": "outro「错误往回传， 一趟算出每个旋钮」（逗号后多空格，「算出旋钮」读着不通）；l31 等「挨个试拧」生造；章节卡「倒着往回算」倒着 / 往回同义重复；l31「1,000,000,001遍」与 l32「一遍 1 秒」数字与量词空格体例不一。片尾属从严条目，判必改。",
+     "b": 1,
+     "b_ev": "outro“错误往回传，一趟算出每个旋钮”搭配不成立；l24“传回去＝错误×路过的旋钮”用动作直接等于数值，省略过头。",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "P5": {
+     "name": "看得完",
+     "a": 1,
+     "a_ev": "l34 47 字且 3 行表加大标题，停留仅 4.1s（约 24 字上限）；l33 42 字 / 4.8s；l40 43 字 / 6.7s；l38 38 字 / 6.1s。l26 图 + 公式 25 块 / 4.6s 也偏密。",
+     "b": 1,
+     "b_ev": "l25 在3.7秒内同时保留网络数值和两条回传算式；l30 共44字，还要求观众逐项比较两组七个数，字幕之外的阅读负担明显。",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "P6": {
+     "name": "改写",
+     "a": 2,
+     "a_ev": "问题表每处超限、不顺都给了替换写法；l26 的减负方案只能给倾向性建议，需看图再定。",
+     "b": 3,
+     "b_ev": "问题表已为 l22—l28 的超限图文、l30 对比卡、l34、l40 和 outro 提供可直接替换的文字及删留方案。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "两份报告合起来，大部分超限屏和不顺的屏都有可以直接替换的写法（l22–l28、l33/l34、l38、l40、agenda、outro），只是有共同盲点：l26 公式用错规则，两人的改写都没纠正；l34 的改写都保留了「年对遍」的跨单位比较；outro 都没按眉题「反向传播，就是」连起来读。b 还有几条改写比原文更差（outro「逐个算坡度」、l24、l10、l30，见驳回）。所以给 2 分，不给 3 分。"
+    }
+   },
+   "disputes": [
+    "P2",
+    "P3"
+   ],
+   "audits": [
+    "P6"
+   ],
+   "final_scores": {
+    "P1": 1,
+    "P2": 1,
+    "P3": 1,
+    "P4": 1,
+    "P5": 1,
+    "P6": 2
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "P2",
+     "P3",
+     "P6"
+    ],
+    "prompt": "items/screen_zh__judge.md",
+    "report": "reports/screen_zh__judge.md",
+    "ruling": {
+     "P2": {
+      "score": 1,
+      "evidence": "b 成立。l40 caption「从输出倒着走，收集每个参数的梯度」几乎逐字复述 l40 口播，还把口播的「旋钮 / 坡度」换成「参数 / 梯度」；l17「也是一串齿轮」把口播的类比「也像」改成了等同；l26 屏上公式「传回去 = 错误 × 路过的旋钮」不是这一拍口播在做的事（见补充问题）；outro 属从严条目，两位都判必改。这些都是与口播不一致或重复，不是小瑕疵。a 的证据其实也指向 1 分，只有「agenda 04 项口播没提」一条站不住（见驳回）。"
+     },
+     "P3": {
+      "score": 1,
+      "evidence": "b 成立。截图 l28 证实：七个旋钮已换成新值（×0.7、+0.94、×1.82……），输出也变成 23.88，但中间结果「6」「4」和红色算式「6 × 2 = 12」「6 × 1 = 6」仍是旧数，而且是全亮显示（s4.html 在 l28 只把责任数 pill 调暗了，没动 #hA/#hB 和 labA/labB）。按屏上数字算 6×1.82+4×0.88+12.97≈27.4，不等于 23.88，属于必改。l32–l34 把「一遍 1 秒的话」这个估算前提排成和两种算法同级的一行，也成立。另外 a 指出的叫法不一（一个个试 / 挨个试 / 挨个试拧）、l40 里上一屏的 h2 压在新 h1 上方，都是体例问题，合起来不是 2 分能放过的。"
+     },
+     "P6": {
+      "score": 2,
+      "evidence": "两份报告合起来，大部分超限屏和不顺的屏都有可以直接替换的写法（l22–l28、l33/l34、l38、l40、agenda、outro），只是有共同盲点：l26 公式用错规则，两人的改写都没纠正；l34 的改写都保留了「年对遍」的跨单位比较；outro 都没按眉题「反向传播，就是」连起来读。b 还有几条改写比原文更差（outro「逐个算坡度」、l24、l10、l30，见驳回）。所以给 2 分，不给 3 分。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 32,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_zh__a",
+    "codex/screen_zh__b"
+   ]
+  },
+  {
+   "id": "screen_en",
+   "law": "lines",
+   "law_name": "English on-screen text (slides)",
+   "color": "#6b4fc0",
+   "scope": [],
+   "checks": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "how": "Hard limits (report every breach): title ≤6 words; any other block ≤9 words; ≤4 text blocks per screen (not counting the small eyebrow label, source line or chart ticks); ≤22 words per screen. Narration subtitles also sit at the bottom of the frame. Counting rules (round-2 ruling, 2026-11-09): eyebrow labels, case tabs, source lines and end-card credits are exempt; a list, table or card row of look-alike items (each ≤6 words, at most 6 items) counts as one block, and numbering doesn't count as words; in-chart text (zone names, curve names, axis titles, bar labels, callouts) counts toward words and the whole chart counts as one block — only axis tick numbers are exempt; a table's column headers count with the table.",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_en.md",
+   "prompt": "items/screen_en__a.md",
+   "what": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "problem": "The previous version put full sentences on screen (e.g. 'A separate model identified the hospital for scans from two hospitals — a hospital fingerprint'), repeating the narration. The user wants outline-only, concise slides (2026-11-08).",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "Outline, not prose",
+     "question": "Only keywords, short phrases, key numbers, labels; no full narration sentences. Count words per screen against the hard limits"
+    },
+    {
+     "id": "P2",
+     "name": "Divided from narration",
+     "question": "Screen carries structure, numbers, contrasts; narration explains. No verbatim repetition, no new claims the narration doesn't make; terms match the narration"
+    },
+    {
+     "id": "P3",
+     "name": "Hierarchy and consistency",
+     "question": "What reads first, second; ≤3 levels (title, point, note); numbering, labels, chapter names and agenda items consistent with each other"
+    },
+    {
+     "id": "P4",
+     "name": "Native phrasing and style",
+     "question": "Sentence case headline style; no Chinglish; consistent punctuation (no trailing periods on fragments), en dashes, quotes; parallel grammar in lists; **chapter titles and headings must read naturally aloud** — awkward noun stacks are must-fix"
+    },
+    {
+     "id": "P5",
+     "name": "Readable in time",
+     "question": "From the screenshot and how long it stays: readable in time (~3 words/s while also reading subtitles and the chart)"
+    },
+    {
+     "id": "P6",
+     "name": "Rewrites",
+     "question": "For every breach or awkward phrase, a shorter drop-in rewrite"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_en__a.md",
+     "prompt": "items/screen_en__a.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "Hard limits are broken on the network and bar screens. l25 28, l26 32, l27 33, l28 31, l30 27 words (limit 22). l33 about 23 and l34 about 25 words after deduplication. l36 and l38 have 5 text blocks (limit 4). The outro title is 9 words (limit 6). The agenda has 23 words (limit 22)."
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "Most slides carry structure and numbers, not narration, e.g. l14 \"2 × 3 = 6\", l31 \"1,000,000,001 runs\". But l09 \"Gradient: which way to turn\" and l10 \"Rerun, see if the error moved\" restate the narration. The outro \"Pass the blame back, every knob in one trip\" repeats l41–l42. l40 uses \"Autograd\" while the narration says \"automatic differentiation\", and \"=\" claims more than \"underneath, it's…\"."
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "Eyebrow, chapter title and agenda items match exactly (\"01 · Too many knobs to try\"), and the formulas are parallel (\"Blame = error × input\" / \"Passed back = error × knob\"). But on l29/l30 the column heads \"Nudge one by one\" and \"Backpropagation\" sit at eyebrow size (22px), and on l40 the h1 \"Autograd = Backpropagation\" (76px) sits below an h2 (54px)."
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "Sentence case, no trailing periods, en dash in \"533–536\". Weak spots: l04 eyebrow \"One trip backward, all of them\" (dangling), l03 \"One by one? Never ends\" (clipped), \"Tried 9\" (unexplained), l17 \"Error ← flows back\" (arrow plus verb), outro \"Pass the blame back, every knob in one trip\" (run-on)."
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "Most screens build incrementally, so new text per line is small (l33 adds one row in 3.8s, l34 changes only the title in 3.1s). l33 is readable in the screenshot. But l26 adds four numbers in 5.4s over a 25-block diagram, and l40 holds four items including a 9-word caption in 5.0s."
+      },
+      "P6": {
+       "score": 2,
+       "evidence": "Every flagged word-wise breach has a drop-in rewrite below. The l25–l28 diagram screens cannot be fixed by wording alone: node and arrow numbers push them over 22 words, so a decision is needed on whether node values count (see issue 1)."
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/screen_en__b.md",
+     "prompt": "items/screen_en__b.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "The network chart exceeds nine words throughout l18–l28; l25–l28 contain 28, 32, 33 and 31 screen words. l30 contains 27 words."
+      },
+      "P2": {
+       "score": 1,
+       "evidence": "At l28, “6 × 2 = 12” remains beside updated knobs including “×1.82”; the screen mixes old calculations with the new prediction."
+      },
+      "P3": {
+       "score": 1,
+       "evidence": "The agenda’s four chapter names match the chapter cards and eyebrows. However, l29–l30 introduce seven-item number rows that exceed the six-item grouping allowance."
+      },
+      "P4": {
+       "score": 1,
+       "evidence": "“Backward: one step each” at l15–l16 leaves “each” unresolved; “Passed back = error × knob” at l24–l26 is an awkward heading."
+      },
+      "P5": {
+       "score": 1,
+       "evidence": "l25 presents 28 words in 3.8 seconds, approximately 7.4 words/s; l26 adds four more words while viewers must follow the network and bottom subtitles."
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "The issue table supplies replacement text for every flagged passage, including staged chart labels, a shorter comparison, and a five-word outro summary."
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "Outline, not prose",
+     "a": 1,
+     "a_ev": "Hard limits are broken on the network and bar screens. l25 28, l26 32, l27 33, l28 31, l30 27 words (limit 22). l33 about 23 and l34 about 25 words after deduplication. l36 and l38 have 5 text blocks (limit 4). The outro title is 9 words (limit 6). The agenda has 23 words (limit 22).",
+     "b": 1,
+     "b_ev": "The network chart exceeds nine words throughout l18–l28; l25–l28 contain 28, 32, 33 and 31 screen words. l30 contains 27 words.",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "P2": {
+     "name": "Divided from narration",
+     "a": 2,
+     "a_ev": "Most slides carry structure and numbers, not narration, e.g. l14 \"2 × 3 = 6\", l31 \"1,000,000,001 runs\". But l09 \"Gradient: which way to turn\" and l10 \"Rerun, see if the error moved\" restate the narration. The outro \"Pass the blame back, every knob in one trip\" repeats l41–l42. l40 uses \"Autograd\" while the narration says \"automatic differentiation\", and \"=\" claims more than \"underneath, it's…\".",
+     "b": 1,
+     "b_ev": "At l28, “6 × 2 = 12” remains beside updated knobs including “×1.82”; the screen mixes old calculations with the new prediction.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 的 l28 证据成立。截图里 \"6 × 2 = 12\"、\"6 × 1 = 6\" 仍是满色红字，紧挨更新后的 \"×1.82\"、\"×0.88\"。节点圈仍是旧值 6 和 4，但按新旋钮算 A=0.7×5+0.94=4.44、B=0.25×5+1.97=3.22，屏上数字算不出 23.88，新旧状态混在一屏。a 自己的问题表也把 outro \"Pass the blame back, every knob in one trip\" 列为 P2 必改（严格项，几乎逐字重复 l41–l42），给 2 分与自己的表矛盾。另见补充 l27 \"All positive\" 是口播没出现的说法。"
+    },
+    "P3": {
+     "name": "Hierarchy and consistency",
+     "a": 2,
+     "a_ev": "Eyebrow, chapter title and agenda items match exactly (\"01 · Too many knobs to try\"), and the formulas are parallel (\"Blame = error × input\" / \"Passed back = error × knob\"). But on l29/l30 the column heads \"Nudge one by one\" and \"Backpropagation\" sit at eyebrow size (22px), and on l40 the h1 \"Autograd = Backpropagation\" (76px) sits below an h2 (54px).",
+     "b": 1,
+     "b_ev": "The agenda’s four chapter names match the chapter cards and eyebrows. However, l29–l30 introduce seven-item number rows that exceed the six-item grouping allowance.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "b 的证据（l29–l30 七项数字行超过六项分组上限）属于 P1 计数，不是层级或一致性问题。agenda、章节卡与 eyebrow 的四个章节名逐字一致（\"01 · Too many knobs to try\" 等），截图中 l30 两张卡的小号大写标签作卡片 kicker 读得清，\"8\"/\"1\" 主次分明。l40 后出现的 76px \"Autograd = Backpropagation\" 压在 54px 行下面，属小瑕疵。补充的 l10 \"3 runs\" 计数口径不一致为建议级，维持 2。"
+    },
+    "P4": {
+     "name": "Native phrasing and style",
+     "a": 2,
+     "a_ev": "Sentence case, no trailing periods, en dash in \"533–536\". Weak spots: l04 eyebrow \"One trip backward, all of them\" (dangling), l03 \"One by one? Never ends\" (clipped), \"Tried 9\" (unexplained), l17 \"Error ← flows back\" (arrow plus verb), outro \"Pass the blame back, every knob in one trip\" (run-on).",
+     "b": 1,
+     "b_ev": "“Backward: one step each” at l15–l16 leaves “each” unresolved; “Passed back = error × knob” at l24–l26 is an awkward heading.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "严格项里有确实读着别扭的句子。outro \"Pass the blame back, every knob in one trip\" 是两个分句硬拼，念出来不顺；冷开场 l04 eyebrow \"One trip backward, all of them\" 里的 \"all of them\" 无所指（截图里它是整屏唯一的说明文字）。l15–l16 \"Backward: one step each\" 的 \"each\" 没有指代。a 把前两条列为 P4 必改却给 2 分，自相矛盾；按 b 判 1。"
+    },
+    "P5": {
+     "name": "Readable in time",
+     "a": 2,
+     "a_ev": "Most screens build incrementally, so new text per line is small (l33 adds one row in 3.8s, l34 changes only the title in 3.1s). l33 is readable in the screenshot. But l26 adds four numbers in 5.4s over a 25-block diagram, and l40 holds four items including a 9-word caption in 5.0s.",
+     "b": 1,
+     "b_ev": "l25 presents 28 words in 3.8 seconds, approximately 7.4 words/s; l26 adds four more words while viewers must follow the network and bottom subtitles.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "b 按全屏累计算 l25 \"28 words in 3.8s ≈ 7.4 words/s\" 不成立。l25 实际只新增 \"6 × 2 = 12\"、\"6 × 1 = 6\" 两式，且与口播 \"Times 2 gives A 12. Times 1 gives B 6\" 同步；l26 只加 4 个数字，用时 5.4s。真正偏紧的是 l40：5.0s 内新增约 11 个词，同时要读字幕。l30 在 5.4s 内加一张卡加一行勾，也偏紧。属小瑕疵，取 a 的 2。"
+    },
+    "P6": {
+     "name": "Rewrites",
+     "a": 2,
+     "a_ev": "Every flagged word-wise breach has a drop-in rewrite below. The l25–l28 diagram screens cannot be fixed by wording alone: node and arrow numbers push them over 22 words, so a decision is needed on whether node values count (see issue 1).",
+     "b": 3,
+     "b_ev": "The issue table supplies replacement text for every flagged passage, including staged chart labels, a shorter comparison, and a five-word outro summary.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "两人对标出的问题都给了改写，但有几处改写站不住，b 给 3 偏高。b 的 l18–l21 改写删掉旋钮值，而 l25 口播 \"Times 2/Times 1\" 要用这些值；l29–l30 删掉两行数字，口播 \"Same seven numbers, exactly\" 就没有可对照的证据；l24 的 \"Error × knob\" 丢掉等式左边，也破坏了与 \"Blame = error × input\" 的平行。a 对 l25–l28 只说要等裁定、没给能用的改写；l40 改成 \"Autograd runs backpropagation\"，仍与口播 \"automatic differentiation\" 对不上。两人都漏了 l27、l10、l30 三处（见补充）。"
+    }
+   },
+   "disputes": [
+    "P2",
+    "P3",
+    "P4",
+    "P5"
+   ],
+   "audits": [
+    "P6"
+   ],
+   "final_scores": {
+    "P1": 1,
+    "P2": 1,
+    "P3": 2,
+    "P4": 1,
+    "P5": 2,
+    "P6": 2
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "P2",
+     "P3",
+     "P4",
+     "P5",
+     "P6"
+    ],
+    "prompt": "items/screen_en__judge.md",
+    "report": "reports/screen_en__judge.md",
+    "ruling": {
+     "P2": {
+      "score": 1,
+      "evidence": "b 的 l28 证据成立。截图里 \"6 × 2 = 12\"、\"6 × 1 = 6\" 仍是满色红字，紧挨更新后的 \"×1.82\"、\"×0.88\"。节点圈仍是旧值 6 和 4，但按新旋钮算 A=0.7×5+0.94=4.44、B=0.25×5+1.97=3.22，屏上数字算不出 23.88，新旧状态混在一屏。a 自己的问题表也把 outro \"Pass the blame back, every knob in one trip\" 列为 P2 必改（严格项，几乎逐字重复 l41–l42），给 2 分与自己的表矛盾。另见补充 l27 \"All positive\" 是口播没出现的说法。"
+     },
+     "P3": {
+      "score": 2,
+      "evidence": "b 的证据（l29–l30 七项数字行超过六项分组上限）属于 P1 计数，不是层级或一致性问题。agenda、章节卡与 eyebrow 的四个章节名逐字一致（\"01 · Too many knobs to try\" 等），截图中 l30 两张卡的小号大写标签作卡片 kicker 读得清，\"8\"/\"1\" 主次分明。l40 后出现的 76px \"Autograd = Backpropagation\" 压在 54px 行下面，属小瑕疵。补充的 l10 \"3 runs\" 计数口径不一致为建议级，维持 2。"
+     },
+     "P4": {
+      "score": 1,
+      "evidence": "严格项里有确实读着别扭的句子。outro \"Pass the blame back, every knob in one trip\" 是两个分句硬拼，念出来不顺；冷开场 l04 eyebrow \"One trip backward, all of them\" 里的 \"all of them\" 无所指（截图里它是整屏唯一的说明文字）。l15–l16 \"Backward: one step each\" 的 \"each\" 没有指代。a 把前两条列为 P4 必改却给 2 分，自相矛盾；按 b 判 1。"
+     },
+     "P5": {
+      "score": 2,
+      "evidence": "b 按全屏累计算 l25 \"28 words in 3.8s ≈ 7.4 words/s\" 不成立。l25 实际只新增 \"6 × 2 = 12\"、\"6 × 1 = 6\" 两式，且与口播 \"Times 2 gives A 12. Times 1 gives B 6\" 同步；l26 只加 4 个数字，用时 5.4s。真正偏紧的是 l40：5.0s 内新增约 11 个词，同时要读字幕。l30 在 5.4s 内加一张卡加一行勾，也偏紧。属小瑕疵，取 a 的 2。"
+     },
+     "P6": {
+      "score": 2,
+      "evidence": "两人对标出的问题都给了改写，但有几处改写站不住，b 给 3 偏高。b 的 l18–l21 改写删掉旋钮值，而 l25 口播 \"Times 2/Times 1\" 要用这些值；l29–l30 删掉两行数字，口播 \"Same seven numbers, exactly\" 就没有可对照的证据；l24 的 \"Error × knob\" 丢掉等式左边，也破坏了与 \"Blame = error × input\" 的平行。a 对 l25–l28 只说要等裁定、没给能用的改写；l40 改成 \"Autograd runs backpropagation\"，仍与口播 \"automatic differentiation\" 对不上。两人都漏了 l27、l10、l30 三处（见补充）。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 38,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_en__a",
+    "codex/screen_en__b"
+   ]
+  }
+ ],
+ "state": "已收轮",
+ "concluded_at": "2026-11-09T21:10:58",
+ "result": "结果.md",
+ "verdict": {
+  "result": "不通过",
+  "text": "不通过：4 项未过；已按问题清单修改，开下一轮复核"
+ },
+ "log": []
+}

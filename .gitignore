@@ -336,3 +336,31 @@ ai_videos/**/资料包/
 
 # Oversized mocap checkpoints (exceed GitHub 100MB limit)
 ai_videos/_research/service_tests/**/*.pt
+
+# tools/followup.py 跨会话写锁（瞬时文件）
+.followup.lock
+
+# rank_scroll: large CJK fallback font, downloaded per README
+projects/rank_scroll/assets/fonts/NotoSansSC-Variable.ttf
+
+# 排行榜正式版目录：render 的硬链接 + 生成的预览页（_tools/release.py 重建）
+ai_videos/paihangbang/release/
+
+# 教学视频媒体只存本机（edu_videos/README.md）
+edu_videos/**/*.mp4
+edu_videos/**/*.mov
+edu_videos/**/*.webm
+edu_videos/**/*.gif
+edu_videos/**/*.png
+edu_videos/**/*.jpg
+edu_videos/**/*.jpeg
+edu_videos/**/*.webp
+edu_videos/**/*.wav
+!edu_videos/_shared/voice/*.wav
+edu_videos/**/*.mp3
+edu_videos/**/*.m4a
+edu_videos/**/*.flac
+edu_videos/**/*.blend
+edu_videos/**/*.blend[0-9]
+edu_videos/**/media/
+edu_videos/**/renders/

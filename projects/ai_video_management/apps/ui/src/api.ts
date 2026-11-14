@@ -55,6 +55,17 @@ export async function fetchFile(path: string): Promise<FileResult> {
   return readJson<FileResult>(response);
 }
 
+/** A registered repo source outside `ai_videos/` (e.g. `.agents/references/project/review_roster.json`):
+ *  `/api/file` only serves the media root, so repo sources go through the workflow source endpoint. */
+export async function fetchRepoSource(path: string): Promise<{ path: string; content: string }> {
+  const response = await fetch(`/api/global-workflow/source?${new URLSearchParams({ source_id: `repo:${path}` })}`, {
+    method: "GET",
+    headers: { Accept: "application/json" },
+    cache: "no-store",
+  });
+  return readJson<{ path: string; content: string }>(response);
+}
+
 /** The rename pass that follows a Downloads import (see `importFromDownloads`). */
 export interface RenameMediaResult {
   renamed: { from: string; to: string }[];
@@ -233,4 +244,39 @@ export async function extractAllCharacterViews(
     body: JSON.stringify({ path }),
   });
   return readJson<ExtractAllCharacterViewsResult>(response);
+}
+
+/** 流程与自检：仓库级总览（只含仓库级检查 + 各剧体检汇总）。只读。 */
+export async function fetchProcessQc(): Promise<import("./lib/processQc").ProcessQcRepo> {
+  const response = await fetch("/api/process-qc", { headers: { Accept: "application/json" } });
+  return readJson(response);
+}
+
+/** 流程与自检：单部剧（本剧检查与继承自仓库级的检查分开返回）。只读。 */
+export async function fetchProcessQcDrama(drama: string): Promise<import("./lib/processQc").ProcessQcDrama> {
+  const response = await fetch(`/api/process-qc/drama?drama=${encodeURIComponent(drama)}`, { headers: { Accept: "application/json" } });
+  return readJson(response);
+}
+
+/** 审查单索引（follow-up 333）：左侧导航「审查单」一类，所有剧 `reviews/` 下每张审查单的摘要。 */
+export interface ReviewRunSummary {
+  dir: string; drama: string; drama_name: string; id: string; title: string; episode: string; chain: string; loop: number;
+  stage_name: string; state: string; created_at: string; done: number; failed: number; total: number; totals: Record<string, number>;
+  /** 阶段（pregen＝出片前）、覆盖的场与最多轮数（follow-up 336：剧页故事板按场显示审查状态）。 */
+  stage?: string; scenes?: string[]; max_loops?: number;
+  /** 这一轮有没有修复页数据（corrections.json，review_run.py corrections 写）。 */
+  corrections?: boolean;
+}
+
+/** 一张审查单的 checklist.json（已解析）。不走 /api/file：v5 双审单常超过它的 1 MiB 上限。 */
+export async function fetchReviewChecklist<T = unknown>(dir: string): Promise<T> {
+  const response = await fetch(`/api/review-runs/checklist?${new URLSearchParams({ path: dir })}`, {
+    method: "GET", headers: { Accept: "application/json" }, cache: "no-store",
+  });
+  return readJson<T>(response);
+}
+
+export async function fetchReviewRuns(): Promise<{ runs: ReviewRunSummary[] }> {
+  const response = await fetch("/api/review-runs", { method: "GET", headers: { Accept: "application/json" }, cache: "no-store" });
+  return readJson<{ runs: ReviewRunSummary[] }>(response);
 }

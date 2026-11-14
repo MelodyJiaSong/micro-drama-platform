@@ -1,0 +1,2877 @@
+{
+  "schema_version": 2,
+  "version": "1.1.0",
+  "status": "shared_design_defaults",
+  "title": "仙侠公共世界规则",
+  "provenance": "全部具体机制与数值是本库设计；文献仅支撑背景与差异，不是历史事实或跨行业标准。",
+  "principles": [
+    "世界规则由剧显式选择；共享资产不自动成为剧级事实。",
+    "一个现象只有一个资产ID；别名不新计资产。",
+    "境界、品阶、品质、稀有度、熟练度、完整度分别记录。",
+    "天赋改变适配和效率，不无条件提高境界。",
+    "能力必须有触发、成本、边界与失败状态。",
+    "效果的空间范围、持续时间、承载人数由剧配置，不跨剧默默继承。",
+    "物品本体与特效状态分开；碎裂/燃尽/失光都要有动作原因。",
+    "文化出处、作品惯例、本库设计分别记，来源不为原创机制背书。",
+    "公共库可定义生灵种型和组织原型，不预设具体人物、事件、剧情、声音或视频。"
+  ],
+  "realm_profiles": {
+    "base": {
+      "name": "基础八阶修仙",
+      "chain": [
+        "R00",
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R08"
+      ],
+      "note": "R00 是凡人基线，不计修仙一阶。名称参考S07，能力和门槛本库设计。"
+    },
+    "immortal_extension": {
+      "name": "可选仙域扩展",
+      "enabled_by_default": false,
+      "chain": [
+        "R09",
+        "R10",
+        "R11",
+        "R12",
+        "R13"
+      ],
+      "note": "整段为可选设计，不声称统一仙界正统顺序。"
+    }
+  },
+  "realms": [
+    {
+      "id": "R00",
+      "name": "凡人",
+      "new_capability": "日常行动与器械使用",
+      "limit": "无自主灵力循环；可借有独立能源的器具",
+      "visual": "无灵光；装备磨损服从材料",
+      "sublevels": "无",
+      "promotion_gate": "完成感气与可重复引导",
+      "profile": "base",
+      "provenance": "本库默认能力设计；名称/传统背景来源不等于此规则",
+      "background_sources": [
+        "S07"
+      ]
+    },
+    {
+      "id": "R01",
+      "name": "炼气",
+      "new_capability": "感应与引导小量灵气",
+      "limit": "持续施术会枯竭；不能凭空制造物质",
+      "visual": "细流沿既定路径汇聚，离体很快散开",
+      "sublevels": "一至九层为本库默认",
+      "promotion_gate": "稳定循环并完成经脉承载测试",
+      "profile": "base",
+      "provenance": "本库默认能力设计；名称/传统背景来源不等于此规则",
+      "background_sources": [
+        "S07"
+      ]
+    },
+    {
+      "id": "R02",
+      "name": "筑基",
+      "new_capability": "稳定灵力循环；短距御器",
+      "limit": "续航取决于储量；离开有效控制距离即失控",
+      "visual": "气流闭合成环，不再时时逸散",
+      "sublevels": "初期/中期/后期/圆满",
+      "promotion_gate": "完成压缩核心且能安全停机",
+      "profile": "base",
+      "provenance": "本库默认能力设计；名称/传统背景来源不等于此规则",
+      "background_sources": [
+        "S07"
+      ]
+    },
+    {
+      "id": "R03",
+      "name": "结丹",
+      "new_capability": "凝聚稳定能量核心；本命器持续协同",
+      "limit": "核心受损影响输出；远程多控分散注意力",
+      "visual": "点状核心可见内部层理；不是丹药掉出身体",
+      "sublevels": "初期/中期/后期/圆满",
+      "promotion_gate": "神识在独立容器中维持连续性",
+      "profile": "base",
+      "provenance": "本库默认能力设计；名称/传统背景来源不等于此规则",
+      "background_sources": [
+        "S07"
+      ]
+    },
+    {
+      "id": "R04",
+      "name": "元婴",
+      "new_capability": "独立神识载体；多点感知",
+      "limit": "脱离原身有时限；无备份式无限复活",
+      "visual": "抽象光核加脉络，图书馆不生成人形元婴",
+      "sublevels": "初期/中期/后期/圆满",
+      "promotion_gate": "感知与环境响应形成可控反馈",
+      "profile": "base",
+      "provenance": "本库默认能力设计；名称/传统背景来源不等于此规则",
+      "background_sources": [
+        "S07"
+      ]
+    },
+    {
+      "id": "R05",
+      "name": "化神",
+      "new_capability": "在限定范围内调动环境灵气",
+      "limit": "贫灵地削弱；不自动读心或全知",
+      "visual": "环境微粒围绕一个明确中心响应",
+      "sublevels": "初期/中期/后期/圆满",
+      "promotion_gate": "能建立并关闭稳定虚实界面",
+      "profile": "base",
+      "provenance": "本库默认能力设计；名称/传统背景来源不等于此规则",
+      "background_sources": [
+        "S07"
+      ]
+    },
+    {
+      "id": "R06",
+      "name": "炼虚",
+      "new_capability": "感知虚实间隙；短程空间操作",
+      "limit": "必须有已知锚点；不能无视封界和距离成本",
+      "visual": "小区域折射及轮廓偏移，无满屏裂缝",
+      "sublevels": "初期/中期/后期/圆满",
+      "promotion_gate": "身/识/器三者耦合并承受反冲",
+      "profile": "base",
+      "provenance": "本库默认能力设计；名称/传统背景来源不等于此规则",
+      "background_sources": [
+        "S07"
+      ]
+    },
+    {
+      "id": "R07",
+      "name": "合体",
+      "new_capability": "身体、神识与法则载体协同",
+      "limit": "任一回路断裂均会拖累整体；多体系相冲",
+      "visual": "多个旧有视觉线索同步，而非新配色",
+      "sublevels": "初期/中期/后期/圆满",
+      "promotion_gate": "局部法则可长时间自洽运行",
+      "profile": "base",
+      "provenance": "本库默认能力设计；名称/传统背景来源不等于此规则",
+      "background_sources": [
+        "S07"
+      ]
+    },
+    {
+      "id": "R08",
+      "name": "大乘",
+      "new_capability": "稳定法域；准备跨界承载",
+      "limit": "仍受本界资源与法则边界限制",
+      "visual": "范围边界可见，内部现象遵一套规则",
+      "sublevels": "初期/中期/后期/圆满",
+      "promotion_gate": "通过渡劫事件并取得跨界锚点",
+      "profile": "base",
+      "provenance": "本库默认能力设计；名称/传统背景来源不等于此规则",
+      "background_sources": [
+        "S07"
+      ]
+    },
+    {
+      "id": "R09",
+      "name": "真仙",
+      "new_capability": "在仙域维持仙元循环",
+      "limit": "离开兼容环境需转换能源",
+      "visual": "少量稳定自发光；保留实物材质",
+      "sublevels": "初期/中期/后期/圆满",
+      "promotion_gate": "确立可重复的法则操作",
+      "profile": "immortal_extension",
+      "provenance": "本库可选仙域命名和排序；不以金丹文献证明这些阶名及顺序",
+      "background_sources": []
+    },
+    {
+      "id": "R10",
+      "name": "玄仙",
+      "new_capability": "精确组织多种法则关系",
+      "limit": "操作复杂度增加会降低反应速度",
+      "visual": "两种可辨几何互相作用",
+      "sublevels": "初期/中期/后期/圆满",
+      "promotion_gate": "将一类法则稳定烙入载体",
+      "profile": "immortal_extension",
+      "provenance": "本库可选仙域命名和排序；不以金丹文献证明这些阶名及顺序",
+      "background_sources": []
+    },
+    {
+      "id": "R11",
+      "name": "金仙",
+      "new_capability": "一类法则结构长期稳定",
+      "limit": "稳定不等于不可被高代价破坏",
+      "visual": "结构持续存在，不靠更大的光晕",
+      "sublevels": "初期/中期/后期/圆满",
+      "promotion_gate": "完成内在法域的闭环",
+      "profile": "immortal_extension",
+      "provenance": "本库可选仙域命名和排序；不以金丹文献证明这些阶名及顺序",
+      "background_sources": []
+    },
+    {
+      "id": "R12",
+      "name": "太乙",
+      "new_capability": "内在法域对外投射",
+      "limit": "法域有边界与维持源，不覆盖无限空间",
+      "visual": "清楚的域内/域外差异",
+      "sublevels": "初期/中期/后期/圆满",
+      "promotion_gate": "使投射规则跨锚点一致",
+      "profile": "immortal_extension",
+      "provenance": "本库可选仙域命名和排序；不以金丹文献证明这些阶名及顺序",
+      "background_sources": []
+    },
+    {
+      "id": "R13",
+      "name": "大罗",
+      "new_capability": "跨多个锚点维持规则一致",
+      "limit": "不默认无因果、无代价或能重写全部历史",
+      "visual": "多地点相同结构相继响应",
+      "sublevels": "不再细分",
+      "promotion_gate": "此版本无更高境界；需要时另立配置",
+      "profile": "immortal_extension",
+      "provenance": "本库可选仙域命名和排序；不以金丹文献证明这些阶名及顺序",
+      "background_sources": []
+    }
+  ],
+  "events": [
+    {
+      "id": "EV01",
+      "name": "渡劫",
+      "type": "test",
+      "trigger": "突破关键承载边界",
+      "failure": "受损/回退/中止，严重结果由剧设置",
+      "not": "固定境界；所有突破都一定打雷"
+    },
+    {
+      "id": "EV02",
+      "name": "飞升",
+      "type": "transition",
+      "trigger": "通过跨界承载与锚点校验",
+      "failure": "停留、断连或抵达失败",
+      "not": "等同无敌或无限寿命"
+    }
+  ],
+  "independent_progress": {
+    "body": [
+      "练皮",
+      "炼筋",
+      "淬骨",
+      "易髓",
+      "内外贯通",
+      "法体协同"
+    ],
+    "mastery": [
+      "入门",
+      "熟练",
+      "精通",
+      "化用"
+    ],
+    "note": "二者均不自动等于修为；炼体进度是本库可选路线，未采用某作品战力数值。"
+  },
+  "item_grades": [
+    {
+      "id": "G0",
+      "name": "凡",
+      "scope": "普通物性或无主动灵性作用",
+      "visual": "器具的示例视觉；材料/丹药不强制有人工回路。材料本色、无主动光效",
+      "operator_requirement": "由条目 activation.requirement 单独定义"
+    },
+    {
+      "id": "G1",
+      "name": "法",
+      "scope": "基础灵性作用或基础承载",
+      "visual": "器具的示例视觉；材料/丹药不强制有人工回路。一个可辨节点或刻路",
+      "operator_requirement": "由条目 activation.requirement 单独定义"
+    },
+    {
+      "id": "G2",
+      "name": "灵",
+      "scope": "可调反馈、稳定灵性介质或复合作用",
+      "visual": "器具的示例视觉；材料/丹药不强制有人工回路。嵌材与回路可追踪",
+      "operator_requirement": "由条目 activation.requirement 单独定义"
+    },
+    {
+      "id": "G3",
+      "name": "宝",
+      "scope": "多个回路/过程协同",
+      "visual": "器具的示例视觉；材料/丹药不强制有人工回路。结构互锁；本命接点可辨",
+      "operator_requirement": "由条目 activation.requirement 单独定义"
+    },
+    {
+      "id": "G4",
+      "name": "道",
+      "scope": "局部空间/领域规则接口",
+      "visual": "器具的示例视觉；材料/丹药不强制有人工回路。结构简洁但具有明确空间异常",
+      "operator_requirement": "由条目 activation.requirement 单独定义"
+    },
+    {
+      "id": "G5",
+      "name": "仙",
+      "scope": "仙域能源或跨界规则接口",
+      "visual": "器具的示例视觉；材料/丹药不强制有人工回路。稳态异象与高耐久材质共存",
+      "operator_requirement": "由条目 activation.requirement 单独定义"
+    }
+  ],
+  "quality": [
+    "下品",
+    "中品",
+    "上品",
+    "极品"
+  ],
+  "rarity": [
+    "常见",
+    "稀缺",
+    "罕见",
+    "孤品"
+  ],
+  "condition": [
+    "完好",
+    "磨损",
+    "裂损",
+    "失效"
+  ],
+  "grade_alias_policy": "九品/天地玄黄等另立完整配置及排序，不与G序自动折算；名称相同也不代表能力相同。",
+  "elements": {
+    "kind": "本库五行相性规则",
+    "members": [
+      "木",
+      "火",
+      "土",
+      "金",
+      "水"
+    ],
+    "generates": [
+      [
+        "木",
+        "火"
+      ],
+      [
+        "火",
+        "土"
+      ],
+      [
+        "土",
+        "金"
+      ],
+      [
+        "金",
+        "水"
+      ],
+      [
+        "水",
+        "木"
+      ]
+    ],
+    "checks": [
+      [
+        "木",
+        "土"
+      ],
+      [
+        "土",
+        "水"
+      ],
+      [
+        "水",
+        "火"
+      ],
+      [
+        "火",
+        "金"
+      ],
+      [
+        "金",
+        "木"
+      ]
+    ],
+    "note": "用于能量转换与环境相性，不是无条件石头剪刀布；规模、媒介和控制均能改变结果。风、雷、冰是扩展属性，阴阳是另一轴，空间/时间不是第六第七行。",
+    "palette": {
+      "木": "青绿/分枝",
+      "火": "朱赤/向上跃动",
+      "土": "赭黄/层叠",
+      "金": "银白/直棱",
+      "水": "深蓝/回流",
+      "风": "浅青/涡旋",
+      "雷": "白紫/分支折线",
+      "冰": "蓝白/晶面",
+      "阴": "低饱和墨灰/内收",
+      "阳": "暖白/外放"
+    }
+  },
+  "energy": {
+    "sources": [
+      "环境灵气",
+      "蓄灵矿物",
+      "丹药暂存",
+      "仙元转换（扩展开关）"
+    ],
+    "stores": [
+      "身体循环",
+      "丹核",
+      "器物节点",
+      "阵法储能"
+    ],
+    "losses": [
+      "释放损耗",
+      "转化损耗",
+      "维持消耗",
+      "受损泄漏"
+    ],
+    "rules": [
+      "回气不等于修复；修复不等于升级。",
+      "聚灵阵搬运与集中现有灵气，不凭空无限产出。",
+      "储物不能存放活体，除非该条目显式启用活体维持模块。",
+      "时间加速、复制、复活默认关闭；开启需独立资源账。",
+      "破损状态会影响控制、储量或稳定性，不能只换外观。"
+    ]
+  },
+  "crafting": {
+    "talismans": [
+      "制备载体",
+      "书写功能图式",
+      "封存能量",
+      "以相配触发激活",
+      "耗尽或失效"
+    ],
+    "pills": [
+      "收取虚构灵材",
+      "筛选相性",
+      "以炉具处理",
+      "封装批次",
+      "记录药性衰减"
+    ],
+    "artifacts": [
+      "选材",
+      "塑形",
+      "布置回路",
+      "炼化绑定",
+      "负载验证"
+    ],
+    "formations": [
+      "勘定场地",
+      "布置节点",
+      "闭合回路",
+      "接入能源",
+      "测试中断和出口"
+    ],
+    "note": "均为幻想世界制作逻辑，不是现实工艺或医疗步骤；未给现实配方。"
+  },
+  "economy": {
+    "units": [
+      "凡钱（交易）",
+      "标准蓄灵单位（能源计量）",
+      "贡献点（机构账目）"
+    ],
+    "rules": [
+      "三种单位不天然可互换。",
+      "兑换率由剧和地点配置，未填就不宣称具体价格。",
+      "灵石品质影响容量/损耗，不等于固定财富倍数。",
+      "法宝售价至少区分材料、工艺、储能、稀缺和损坏折价。",
+      "复制资源、无限储物与无限运输会改变供给；默认禁用。"
+    ]
+  },
+  "visual_states": [
+    "休眠",
+    "激活",
+    "过载",
+    "受损",
+    "耗尽"
+  ],
+  "visual_style": {
+    "default": "电影实物感东方幻想，空场与独立物件",
+    "materials": [
+      "灰石",
+      "温润玉",
+      "旧铜",
+      "木竹",
+      "纸绢",
+      "陶瓷",
+      "少量金银包边"
+    ],
+    "glow": "激活才出现，保留表面纹理，不以满屏光替代形制",
+    "writing": "基图无可读字；需要的准确汉字后期排版",
+    "views": "本轮单张概念锚点；其他视角按剧实际需求补，禁止把不同角度的物件改名冒充一致"
+  },
+  "adoption_contract": {
+    "required": [
+      "library_version",
+      "system_version",
+      "system_profile",
+      "asset_id",
+      "asset_version",
+      "anchor_path",
+      "anchor_sha256",
+      "overrides",
+      "project_local_id"
+    ],
+    "override_examples": [
+      "境界显示名",
+      "相性开关",
+      "有效距离",
+      "持续时间",
+      "价格",
+      "规模",
+      "磨损状态",
+      "门派纹章"
+    ],
+    "immutable_without_new_variant": [
+      "物件主轮廓",
+      "识别纹路",
+      "关键结构数目",
+      "图像与SHA绑定"
+    ],
+    "promotion_to_shot": "剧内采用后为背景补planning/blocks.toml和实际方向；编译镜头资料包时按该剧流程sync/check。",
+    "null_rules": "纯文字资产可同时填 anchor_path=null 与 anchor_sha256=null；采用图片时两者必须非空且哈希对应 reviewed 或 reviewed_with_notes 的当前图。模板未采用时允许空哈希。所有未填数值均表示待配置，不是0或无限。",
+    "image_states": [
+      "planned",
+      "generated_unreviewed",
+      "reviewed",
+      "reviewed_with_notes",
+      "revision_required",
+      "failed_or_unknown"
+    ],
+    "quantities": "按适用性填写范围(m)、持续(s)、恢复(s)、载重(kg)、容积(m³)、人数、价格及币种；不适用明确写 n/a，不把 null 当完成。"
+  },
+  "grade_semantics": {
+    "applies_to": [
+      "TAL",
+      "PIL",
+      "ART",
+      "IMM",
+      "MAT",
+      "ARR",
+      "UTL"
+    ],
+    "does_not_apply_to": [
+      "PHY",
+      "FX",
+      "BG",
+      "LAND",
+      "XMT",
+      "XSK",
+      "XEL",
+      "XSE",
+      "XSC",
+      "XSP",
+      "XBE",
+      "XDV",
+      "XOR",
+      "XCL",
+      "XIN",
+      "XFA",
+      "YID",
+      "YEN",
+      "YRT",
+      "YBD",
+      "YSP",
+      "YMT",
+      "YSK",
+      "YEL",
+      "YSE",
+      "YSC",
+      "YPI",
+      "YTA",
+      "YAR",
+      "YARX",
+      "YMA",
+      "YBE",
+      "YDV",
+      "YOR",
+      "YCL",
+      "YIN",
+      "YFA",
+      "YPL",
+      "YEC",
+      "YRI",
+      "YCF",
+      "MID",
+      "MEN",
+      "MRT",
+      "MBD",
+      "MSP",
+      "MMT",
+      "MSK",
+      "MEL",
+      "MSE",
+      "MSC",
+      "MPI",
+      "MTA",
+      "MAR",
+      "MAX",
+      "MMA",
+      "MBE",
+      "MDV",
+      "MOR",
+      "MCL",
+      "MIN",
+      "MFA",
+      "MPL",
+      "MEC",
+      "MRI",
+      "MCF"
+    ],
+    "meaning": "G 是本库作用/承载层级，不能单独推导使用者最低境界。材料表示可加工承载层级，不意味着已刻灵路；丹药表示作用复杂度，不是服用者境界；阵法表示整体系统承载层级。",
+    "operator_rule": "使用条件看每项 activation.requirement；可预充、被动、外置供能或需操作者驱动。G 档仅给结构例子，没有跨类别统一境界门槛。",
+    "trait_rule": "天赋用领域、适配、代价描述，不使用物品品阶；特效从源机制继承条件，不另算力量。"
+  },
+  "production_chains": [
+    {
+      "id": "CHAIN01",
+      "name": "纸本护身符",
+      "materials": [
+        "MAT014",
+        "MAT012"
+      ],
+      "tools": [
+        "ART031",
+        "UTL003"
+      ],
+      "site": "BG016",
+      "output": "TAL001",
+      "byproducts": "失去灵性的纸边与废墨，按普通惰性废料分开",
+      "checks": "检查笔路连续→封存→低负荷试触发，批次不保证全部成功",
+      "coverage": "示范链，非完整制造清单；所有投入产量在剧级另填"
+    },
+    {
+      "id": "CHAIN02",
+      "name": "回气丹批次",
+      "materials": [
+        "MAT003",
+        "MAT028"
+      ],
+      "tools": [
+        "ART009",
+        "ART032",
+        "UTL010"
+      ],
+      "site": "BG004",
+      "output": "PIL001",
+      "byproducts": "失活药渣与冷凝液；不得自动当同效新丹材",
+      "checks": "相性筛选→幻想处理→封装批次→衰减记录；无真实剂量",
+      "coverage": "示范链，非完整制造清单；所有投入产量在剧级另填"
+    },
+    {
+      "id": "CHAIN03",
+      "name": "凝基丹批次",
+      "materials": [
+        "MAT010",
+        "MAT011"
+      ],
+      "tools": [
+        "ART009",
+        "ART032"
+      ],
+      "site": "BG004",
+      "output": "PIL003",
+      "byproducts": "不稳定凝块，记录失败原因后隔离",
+      "checks": "测灵流稳定性；使用资格按PIL003，不保证筑基",
+      "coverage": "示范链，非完整制造清单；所有投入产量在剧级另填"
+    },
+    {
+      "id": "CHAIN04",
+      "name": "青岚飞剑",
+      "materials": [
+        "MAT002",
+        "MAT008",
+        "MAT009"
+      ],
+      "tools": [
+        "UTL009",
+        "UTL011"
+      ],
+      "site": "BG005",
+      "output": "ART001",
+      "byproducts": "金属边料与失活嵌材；回收率由剧配置",
+      "checks": "塑形→导流→装配→低负荷控制及急停检查",
+      "coverage": "示范链，非完整制造清单；所有投入产量在剧级另填"
+    },
+    {
+      "id": "CHAIN05",
+      "name": "定界桩",
+      "materials": [
+        "MAT025",
+        "MAT031",
+        "MAT008"
+      ],
+      "tools": [
+        "UTL009"
+      ],
+      "site": "BG005",
+      "output": "ART029",
+      "byproducts": "剩余界砂必须独立封存",
+      "checks": "定向校准→短时锚定→失联关闭；不能凭桩开无目的地门",
+      "coverage": "示范链，非完整制造清单；所有投入产量在剧级另填"
+    },
+    {
+      "id": "CHAIN06",
+      "name": "五节点聚灵阵",
+      "materials": [
+        "MAT001"
+      ],
+      "tools": [
+        "ART010",
+        "ART020"
+      ],
+      "site": "BG026",
+      "output": "ARR001",
+      "byproducts": "充放损耗与废弃连接件；没有无限灵气副产物",
+      "checks": "布点→测环境输入→闭合→逐节点断路检查",
+      "coverage": "示范链，非完整制造清单；所有投入产量在剧级另填"
+    }
+  ],
+  "foundation": {
+    "version": "1.0.0",
+    "status": "defined",
+    "provenance": "本次扩展为本库原创设计；不是古籍考据、任何作品正史或所有仙侠共识。旧研究不为新增机制背书。",
+    "identity_rules": [
+      "仙家是修行文明/传承体系，妖族和魔族是族源体系，三者不是同一分类轴。条目所属体系只表示设计来源，不限制谁可采用。",
+      "生灵身份分别记录族源、本相、灵智状态、修行道路、组织籍属；化成人形不改变族源，拜入仙门不自动变成人族。",
+      "妖族源自本世界禽兽、草木或山川精类的自我意识觉醒；本相与生境是能力基础，血脉决定适配而非道德或必胜。",
+      "魔族是渊域原生生命谱系，以渊核和魔息循环维生；并非妖族的高阶、黑化或统称，也不是修魔之人的自动种族。",
+      "魔修是道路，入魔是失衡状态，心魔是心识考验；三者均不自动赋予魔族族籍。净化污染也不等于消灭魔族生理。",
+      "灵兽是有灵性、具特殊生态能力的兽类；达到独立灵智者可归妖族主体，仍可保留灵兽种型标签，不再按无主财物处理。",
+      "神兽是具有先天规则器官或守域职责的种型标签；幼体并不无敌，神兽与灵兽不是固定境界链，也不自动隶属仙家。",
+      "灵体（体质）与灵性生命（器灵、山灵等）分开；神魂不是丹药，妖丹/魔核是活体核心，和可服食丹丸分开。",
+      "跨族学习须满足身体接口、能源转换和训练条件；混血/转化记录前后身份与代价，不用换肤或改阵营代替机制。",
+      "任何族群内部都允许守约、改革、掠夺、孤立等派系；善恶、政治立场、门派与种族不绑定。"
+    ],
+    "profiles": [
+      {
+        "id": "xian",
+        "name": "仙家",
+        "basis": "师承、道统与可重复修行；以灵气转灵力，兼容有适配接口的其他族源。",
+        "energy": "环境灵气→经脉周天→丹田储量；输出、储量、恢复独立。",
+        "talent": "灵根管相性，灵体管承载，根骨/瞳术管局部特征；单灵根不默认全面优越。",
+        "progression": "沿用 realm_profiles.base；仙域扩展仍默认关闭。功法熟练度与地位不折算境界。",
+        "society": "宗门传承、世家继嗣、散修盟约、行会生产、仙朝行政并存；门派内部再分派系。",
+        "visual": "可追溯的人工刻线、修补痕迹、闭合灵路；门派纹样随结构，不用统一白衣代替身份。",
+        "failure": "经脉过载、术式中断、丹毒累积、资源断供；代价不能随剧情临时豁免。"
+      },
+      {
+        "id": "yao",
+        "name": "妖族",
+        "basis": "本世界生灵/精类觉醒；保留本相、族谱与生境依赖。",
+        "energy": "生境灵机→本相器官→妖力；妖丹是部分路线的凝聚核心，并非所有妖都有。",
+        "talent": "血脉、妖脉、感官、蜕变窗口；本命神通源于器官和生态。",
+        "progression": "独立八个能力里程碑；化形是可选技能，不等于成年、智慧或统一第三阶。",
+        "society": "巢群、族庭、洞府、山泽盟、迁徙联盟与妖廷并存；按栖地/承继/互惠建立治理。",
+        "visual": "角、羽、根、鳞的生长规律与蜕变留痕；服饰与住所适配本相，不统一动物头人身。",
+        "failure": "离境衰退、蜕期脆弱、族群资源争夺、感官过载；不把本能写成无法选择的邪恶。"
+      },
+      {
+        "id": "mo",
+        "name": "魔族",
+        "basis": "渊域原生生命；渊核提供结构与循环，契约只是社会技术之一。",
+        "energy": "渊域魔息→渊核滤稳→可用魔元；凡界需要携带有限储能或转换站。",
+        "talent": "核型、渊脉、魔躯与感界阈值；魔纹是路由/授权结构，不是邪恶认证。",
+        "progression": "独立八个能力里程碑；契约数量、杀戮或情绪不能直接兑换等级。",
+        "society": "渊庭、封域家系、誓团、炉城工会、游域商团与自治栖站；有民生、法律与公开撤约制度。",
+        "visual": "层叠壳面、压差缝和核座环，冷凝与热损耗可见；不靠黑红色或角翼抄妖族。",
+        "failure": "核裂、魔息缺供、跨界压差、契约接口反噬；不用吸食他族作为全族唯一生存方式。"
+      }
+    ],
+    "dimensions": [
+      {
+        "id": "identity",
+        "name": "族源、身份与生命形态",
+        "systems": {
+          "xian": {
+            "branches": [
+              "人族修士",
+              "异族入门",
+              "散修",
+              "仙民"
+            ],
+            "asset_ids": [
+              "UTL001"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "走兽",
+              "飞禽",
+              "鳞介",
+              "虫属",
+              "草木",
+              "山川精类"
+            ],
+            "asset_ids": [
+              "YID001"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "渊生",
+              "铸生",
+              "界隙生；族源与魔修分离"
+            ],
+            "asset_ids": [
+              "MID001",
+              "MID002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "energy",
+        "name": "能源与循环",
+        "systems": {
+          "xian": {
+            "branches": [
+              "灵气",
+              "灵力",
+              "真元",
+              "仙元"
+            ],
+            "asset_ids": [
+              "MAT001",
+              "ARR001",
+              "IMM012"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "日月精华",
+              "生境灵机",
+              "妖力",
+              "本相蓄能"
+            ],
+            "asset_ids": [
+              "YEN001"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "魔息",
+              "魔元",
+              "核压",
+              "跨界稳流"
+            ],
+            "asset_ids": [
+              "MEN001"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "progression",
+        "name": "境界、突破与劫数",
+        "systems": {
+          "xian": {
+            "branches": [
+              "八阶",
+              "渡劫事件",
+              "可选飞升"
+            ],
+            "asset_ids": [
+              "BG019",
+              "BG020"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "启识",
+              "引息",
+              "养脉",
+              "凝藏",
+              "通神",
+              "展域",
+              "归脉",
+              "越界"
+            ],
+            "asset_ids": [
+              "YMT001",
+              "YMT002",
+              "YMT003",
+              "YMT004"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "觉核",
+              "引息",
+              "稳环",
+              "凝炉",
+              "分识",
+              "立域",
+              "合渊",
+              "越界"
+            ],
+            "asset_ids": [
+              "MMT001",
+              "MMT002",
+              "MMT003",
+              "MMT004"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "roots",
+        "name": "灵根、妖脉与魔脉",
+        "systems": {
+          "xian": {
+            "branches": [
+              "五行单相",
+              "双相",
+              "多相",
+              "风雷冰",
+              "混元"
+            ],
+            "asset_ids": [
+              "PHY003",
+              "PHY005",
+              "PHY006",
+              "PHY007",
+              "PHY008",
+              "PHY009",
+              "PHY010",
+              "PHY011",
+              "PHY012",
+              "PHY013",
+              "PHY014"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "血脉亲和",
+              "月息脉",
+              "地根脉",
+              "蜕变适配"
+            ],
+            "asset_ids": [
+              "YRT001",
+              "YRT002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "渊脉",
+              "壳脉",
+              "空隙脉",
+              "多核兼容"
+            ],
+            "asset_ids": [
+              "MRT001",
+              "MRT002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "bodies",
+        "name": "灵体、妖体与魔躯",
+        "systems": {
+          "xian": {
+            "branches": [
+              "元素灵体",
+              "无漏体",
+              "骨相",
+              "瞳术"
+            ],
+            "asset_ids": [
+              "PHY001",
+              "PHY002",
+              "PHY004",
+              "PHY015",
+              "PHY016",
+              "PHY017",
+              "PHY018",
+              "PHY019",
+              "PHY020",
+              "PHY021",
+              "PHY022",
+              "PHY023",
+              "PHY024"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "鳞甲",
+              "羽翼",
+              "根身",
+              "蜕壳",
+              "本相感官"
+            ],
+            "asset_ids": [
+              "YBD001",
+              "YBD002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "环核躯",
+              "层壳躯",
+              "裂隙躯",
+              "可替换外壳"
+            ],
+            "asset_ids": [
+              "MBD001",
+              "MBD002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "spirits",
+        "name": "灵性生命与神魂",
+        "systems": {
+          "xian": {
+            "branches": [
+              "器灵",
+              "山灵",
+              "泉灵",
+              "离体神识"
+            ],
+            "asset_ids": [
+              "XSP001",
+              "XSP002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "祖影",
+              "林识",
+              "群梦；与活体妖魂区分"
+            ],
+            "asset_ids": [
+              "YSP001",
+              "YSP002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "核识",
+              "誓灵",
+              "渊域残响；副本不等于本人"
+            ],
+            "asset_ids": [
+              "MSP001",
+              "MSP002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "methods",
+        "name": "功法与心法",
+        "systems": {
+          "xian": {
+            "branches": [
+              "养气",
+              "体修",
+              "神识",
+              "生产",
+              "协作"
+            ],
+            "asset_ids": [
+              "XMT001",
+              "XMT002",
+              "XMT003",
+              "XMT004",
+              "XMT005",
+              "XMT006"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "吐纳",
+              "炼血",
+              "化形",
+              "蜕变",
+              "共生"
+            ],
+            "asset_ids": [
+              "YMT001",
+              "YMT002",
+              "YMT003",
+              "YMT004"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "稳核",
+              "铸躯",
+              "分识",
+              "魔息转换",
+              "界压适应"
+            ],
+            "asset_ids": [
+              "MMT001",
+              "MMT002",
+              "MMT003",
+              "MMT004"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "martial",
+        "name": "武技、剑法与兵器术",
+        "systems": {
+          "xian": {
+            "branches": [
+              "剑",
+              "刀",
+              "枪戟",
+              "弓弩",
+              "拳掌",
+              "御器"
+            ],
+            "asset_ids": [
+              "XSK001",
+              "XSK002",
+              "XSK003",
+              "XSK004",
+              "XSK005",
+              "XSK006",
+              "XSK007",
+              "XSK008"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "爪",
+              "牙",
+              "尾",
+              "翼",
+              "角",
+              "骨器",
+              "化形兵刃"
+            ],
+            "asset_ids": [
+              "YSK001",
+              "YSK002",
+              "YSK003"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "核锋",
+              "重壳近战",
+              "链刃",
+              "投射器",
+              "盾阵"
+            ],
+            "asset_ids": [
+              "MSK001",
+              "MSK002",
+              "MSK003"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "elements",
+        "name": "元素术法",
+        "systems": {
+          "xian": {
+            "branches": [
+              "金木水火土",
+              "风雷冰",
+              "阴阳",
+              "星空"
+            ],
+            "asset_ids": [
+              "XEL001",
+              "XEL002",
+              "XEL003",
+              "XEL004",
+              "XEL005",
+              "XEL006",
+              "XEL007",
+              "XEL008",
+              "XEL009",
+              "XEL010",
+              "XEL011",
+              "XEL012",
+              "XEL013",
+              "XEL014",
+              "XEL015"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "潮",
+              "焰",
+              "林",
+              "岩",
+              "岚",
+              "雷",
+              "霜及本相复合"
+            ],
+            "asset_ids": [
+              "YEL001",
+              "YEL002",
+              "YEL003",
+              "YEL004"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "渊潮",
+              "炉焰",
+              "磁砂",
+              "空隙",
+              "寒壳",
+              "鸣震"
+            ],
+            "asset_ids": [
+              "MEL001",
+              "MEL002",
+              "MEL003",
+              "MEL004",
+              "MEL005",
+              "MEL006"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "secrets",
+        "name": "秘术、禁术与代价",
+        "systems": {
+          "xian": {
+            "branches": [
+              "燃脉",
+              "借感",
+              "留影脱身",
+              "禁传术"
+            ],
+            "asset_ids": [
+              "XSE001",
+              "XSE002",
+              "XSE003",
+              "XSE004"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "返祖",
+              "断尾留形",
+              "借梦",
+              "季节超限"
+            ],
+            "asset_ids": [
+              "YSE001",
+              "YSE002",
+              "YSE003"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "分核",
+              "断誓",
+              "越隙",
+              "强制升压"
+            ],
+            "asset_ids": [
+              "MSE001",
+              "MSE002",
+              "MSE003"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "scriptures",
+        "name": "秘籍与传承载体",
+        "systems": {
+          "xian": {
+            "branches": [
+              "玉简",
+              "剑谱",
+              "丹经",
+              "符册",
+              "口传"
+            ],
+            "asset_ids": [
+              "XSC001",
+              "XSC002",
+              "XSC003",
+              "XSC004"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "蜕谱",
+              "祖纹石",
+              "巢歌",
+              "根纹记忆"
+            ],
+            "asset_ids": [
+              "YSC001",
+              "YSC002",
+              "YSC003"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "核录",
+              "誓卷",
+              "炉铭",
+              "界痕拓本"
+            ],
+            "asset_ids": [
+              "MSC001",
+              "MSC002",
+              "MSC003"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "pills",
+        "name": "丹药、药剂与养化",
+        "systems": {
+          "xian": {
+            "branches": [
+              "回气",
+              "疗伤",
+              "解毒",
+              "突破辅助",
+              "神识",
+              "延缓衰退"
+            ],
+            "asset_ids": [
+              "PIL001",
+              "PIL002",
+              "PIL003",
+              "PIL004",
+              "PIL005",
+              "PIL006",
+              "PIL007",
+              "PIL008",
+              "PIL009",
+              "PIL010",
+              "PIL011",
+              "PIL012",
+              "PIL013",
+              "PIL014",
+              "PIL015",
+              "PIL016",
+              "PIL017",
+              "PIL018",
+              "PIL019",
+              "PIL020",
+              "PIL021",
+              "PIL022",
+              "PIL023",
+              "PIL024"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "养血",
+              "护蜕",
+              "稳形",
+              "净瘴",
+              "返巢补给"
+            ],
+            "asset_ids": [
+              "YPI001",
+              "YPI002",
+              "YPI003",
+              "YPI004"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "稳核",
+              "补息",
+              "裂纹封合",
+              "压差缓冲",
+              "净蚀"
+            ],
+            "asset_ids": [
+              "MPI001",
+              "MPI002",
+              "MPI003",
+              "MPI004"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "talismans",
+        "name": "符箓、咒式与印记",
+        "systems": {
+          "xian": {
+            "branches": [
+              "纸符",
+              "绢符",
+              "金属符",
+              "口咒",
+              "手印",
+              "资格箓"
+            ],
+            "asset_ids": [
+              "TAL001",
+              "TAL002",
+              "TAL003",
+              "TAL004",
+              "TAL005",
+              "TAL006",
+              "TAL007",
+              "TAL008",
+              "TAL009",
+              "TAL010",
+              "TAL011",
+              "TAL012",
+              "TAL013",
+              "TAL014",
+              "TAL015",
+              "TAL016",
+              "TAL017",
+              "TAL018",
+              "TAL019",
+              "TAL020",
+              "TAL021",
+              "TAL022",
+              "TAL023",
+              "TAL024"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "蜕纹符",
+              "羽咒",
+              "巢标",
+              "祖印",
+              "根结"
+            ],
+            "asset_ids": [
+              "YTA001",
+              "YTA002",
+              "YTA003"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "核纹符",
+              "誓印",
+              "界标",
+              "壳铭",
+              "撤约印"
+            ],
+            "asset_ids": [
+              "MTA001",
+              "MTA002",
+              "MTA003"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "artifacts",
+        "name": "法宝、本命器与权器",
+        "systems": {
+          "xian": {
+            "branches": [
+              "兵器",
+              "防具",
+              "储物",
+              "飞行",
+              "感知",
+              "生产",
+              "仙器"
+            ],
+            "asset_ids": [
+              "ART001",
+              "ART002",
+              "ART003",
+              "ART004",
+              "ART005",
+              "ART006",
+              "ART007",
+              "ART008",
+              "ART009",
+              "ART010",
+              "ART011",
+              "ART012",
+              "ART013",
+              "ART014",
+              "ART015",
+              "ART016",
+              "ART017",
+              "ART018",
+              "ART019",
+              "ART020",
+              "ART021",
+              "ART022",
+              "ART023",
+              "ART024",
+              "ART025",
+              "ART026",
+              "ART027",
+              "ART028",
+              "ART029",
+              "ART030",
+              "ART031",
+              "ART032",
+              "IMM001",
+              "IMM002",
+              "IMM003",
+              "IMM004",
+              "IMM005",
+              "IMM006",
+              "IMM007",
+              "IMM008",
+              "IMM009",
+              "IMM010",
+              "IMM011",
+              "IMM012"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "骨甲器",
+              "蜕壳器",
+              "共生器",
+              "族器",
+              "巢器"
+            ],
+            "asset_ids": [
+              "YAR001",
+              "YAR002",
+              "YAR003"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "核器",
+              "魔兵",
+              "壳盾",
+              "封域权器",
+              "压差工具"
+            ],
+            "asset_ids": [
+              "MAR001",
+              "MAR002",
+              "MAR003"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "arrays",
+        "name": "阵法、结界与领域",
+        "systems": {
+          "xian": {
+            "branches": [
+              "节点阵",
+              "符阵",
+              "剑阵",
+              "护山",
+              "传送",
+              "禁制"
+            ],
+            "asset_ids": [
+              "ARR001",
+              "ARR002",
+              "ARR003",
+              "ARR004",
+              "ARR005",
+              "ARR006",
+              "ARR007",
+              "ARR008",
+              "ARR009",
+              "ARR010",
+              "ARR011",
+              "ARR012",
+              "ARR013",
+              "ARR014",
+              "ARR015",
+              "ARR016",
+              "ARR017",
+              "ARR018",
+              "ARR019",
+              "ARR020"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "巢阵",
+              "根网",
+              "迁徙界",
+              "水域共鸣"
+            ],
+            "asset_ids": [
+              "YARX001",
+              "YARX002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "炉阵",
+              "誓网",
+              "核环",
+              "界压阵",
+              "封域"
+            ],
+            "asset_ids": [
+              "MAX001",
+              "MAX002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "materials",
+        "name": "灵材、灵植与资源",
+        "systems": {
+          "xian": {
+            "branches": [
+              "矿",
+              "木",
+              "草",
+              "纤维",
+              "灵液",
+              "能源矿"
+            ],
+            "asset_ids": [
+              "MAT001",
+              "MAT002",
+              "MAT003",
+              "MAT004",
+              "MAT005",
+              "MAT006",
+              "MAT007",
+              "MAT008",
+              "MAT009",
+              "MAT010",
+              "MAT011",
+              "MAT012",
+              "MAT013",
+              "MAT014",
+              "MAT015",
+              "MAT016",
+              "MAT017",
+              "MAT018",
+              "MAT019",
+              "MAT020",
+              "MAT021",
+              "MAT022",
+              "MAT023",
+              "MAT024",
+              "MAT025",
+              "MAT026",
+              "MAT027",
+              "MAT028",
+              "MAT029",
+              "MAT030",
+              "MAT031",
+              "MAT032"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "脱落羽鳞",
+              "蜕壳",
+              "共生菌",
+              "季候露"
+            ],
+            "asset_ids": [
+              "YMA001",
+              "YMA002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "空核砂",
+              "冷凝晶",
+              "退役壳材",
+              "渊盐"
+            ],
+            "asset_ids": [
+              "MMA001",
+              "MMA002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "beasts",
+        "name": "灵兽、伴生兽与役兽",
+        "systems": {
+          "xian": {
+            "branches": [
+              "飞行",
+              "寻迹",
+              "负载",
+              "护园",
+              "水行",
+              "掘地",
+              "群居"
+            ],
+            "asset_ids": [
+              "XBE001",
+              "XBE002",
+              "XBE003",
+              "XBE004",
+              "XBE005",
+              "XBE006"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "未启智兽群",
+              "伴生种",
+              "迁徙兽",
+              "共栖伙伴"
+            ],
+            "asset_ids": [
+              "YBE001",
+              "YBE002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "渊域原生兽",
+              "滤息兽",
+              "壳背载兽",
+              "寻界兽"
+            ],
+            "asset_ids": [
+              "MBE001",
+              "MBE002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "divine_beasts",
+        "name": "神兽、祖兽与镇域种",
+        "systems": {
+          "xian": {
+            "branches": [
+              "守泉",
+              "镇岳",
+              "引霆",
+              "承曜"
+            ],
+            "asset_ids": [
+              "XDV001",
+              "XDV002",
+              "XDV003",
+              "XDV004"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "护根祖兽",
+              "守潮祖兽",
+              "迁徙引路种"
+            ],
+            "asset_ids": [
+              "YDV001",
+              "YDV002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "镇渊兽",
+              "承压兽",
+              "护界兽；非神兽魔化版"
+            ],
+            "asset_ids": [
+              "MDV001",
+              "MDV002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "sects",
+        "name": "门派与传承共同体",
+        "systems": {
+          "xian": {
+            "branches": [
+              "剑宗",
+              "丹谷",
+              "符门",
+              "器宗",
+              "阵院",
+              "体院",
+              "音阁",
+              "御灵门"
+            ],
+            "asset_ids": [
+              "XOR001",
+              "XOR002",
+              "XOR003",
+              "XOR004",
+              "XOR005",
+              "XOR006",
+              "XOR007",
+              "XOR008"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "化形学宫",
+              "爪术传承",
+              "巢歌师承",
+              "共生道场"
+            ],
+            "asset_ids": [
+              "YOR001",
+              "YOR002",
+              "YOR003"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "稳核学派",
+              "炉铭宗",
+              "誓术院",
+              "界行传承"
+            ],
+            "asset_ids": [
+              "MOR001",
+              "MOR002",
+              "MOR003",
+              "MOR004"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "lineages",
+        "name": "世家、族群与家系",
+        "systems": {
+          "xian": {
+            "branches": [
+              "灵田世家",
+              "铸器世家",
+              "守渡家族"
+            ],
+            "asset_ids": [
+              "XCL001",
+              "XCL002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "狐庭",
+              "羽庭",
+              "鳞庭",
+              "木庭",
+              "虫巢",
+              "岩裔"
+            ],
+            "asset_ids": [
+              "YCL001",
+              "YCL002",
+              "YCL003",
+              "YCL004"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "环核家系",
+              "炉壳家系",
+              "游隙家系"
+            ],
+            "asset_ids": [
+              "MCL001",
+              "MCL002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "institutions",
+        "name": "组织、政体与公共制度",
+        "systems": {
+          "xian": {
+            "branches": [
+              "仙盟",
+              "仙朝",
+              "散修会",
+              "商会",
+              "丹会",
+              "执律院"
+            ],
+            "asset_ids": [
+              "XIN001",
+              "XIN002",
+              "XIN003",
+              "XIN004"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "山泽盟",
+              "妖廷",
+              "迁徙议会",
+              "共栖市集"
+            ],
+            "asset_ids": [
+              "YIN001",
+              "YIN002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "渊庭",
+              "炉城工会",
+              "巡界署",
+              "互市商团"
+            ],
+            "asset_ids": [
+              "MIN001",
+              "MIN002",
+              "MIN003",
+              "MIN004"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "factions",
+        "name": "派系与政治立场",
+        "systems": {
+          "xian": {
+            "branches": [
+              "守传",
+              "开授",
+              "戒战",
+              "拓境",
+              "商贸派"
+            ],
+            "asset_ids": [
+              "XFA001",
+              "XFA002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "守栖",
+              "迁徙",
+              "化形开放",
+              "本相保育派"
+            ],
+            "asset_ids": [
+              "YFA001",
+              "YFA002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "守约",
+              "改约",
+              "封渊",
+              "通界",
+              "征拓派"
+            ],
+            "asset_ids": [
+              "MFA001",
+              "MFA002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "places",
+        "name": "山门、聚落与地理",
+        "systems": {
+          "xian": {
+            "branches": [
+              "山门",
+              "洞府",
+              "坊市",
+              "仙宫",
+              "秘境",
+              "灵脉"
+            ],
+            "asset_ids": [
+              "BG001",
+              "BG002",
+              "BG003",
+              "BG004",
+              "BG005",
+              "BG006",
+              "BG007",
+              "BG008",
+              "BG009",
+              "BG010",
+              "BG011",
+              "BG012",
+              "BG013",
+              "BG014",
+              "BG015",
+              "BG016",
+              "BG017",
+              "BG018",
+              "BG019",
+              "BG020",
+              "BG021",
+              "BG022",
+              "BG023",
+              "BG024",
+              "BG025",
+              "BG026",
+              "BG027",
+              "BG028",
+              "BG029",
+              "BG030",
+              "BG031",
+              "BG032",
+              "LAND001",
+              "LAND002",
+              "LAND003",
+              "LAND004",
+              "LAND005",
+              "LAND006",
+              "LAND007",
+              "LAND008",
+              "LAND009",
+              "LAND010",
+              "LAND011",
+              "LAND012",
+              "LAND013",
+              "LAND014",
+              "LAND015",
+              "LAND016"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "巢城",
+              "水庭",
+              "根城",
+              "冬眠地",
+              "迁徙廊道"
+            ],
+            "asset_ids": [
+              "YPL001",
+              "YPL002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "渊井",
+              "炉城",
+              "稳压栖站",
+              "界隙港",
+              "壳原"
+            ],
+            "asset_ids": [
+              "MPL001",
+              "MPL002"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "economy",
+        "name": "生产、贸易与交通",
+        "systems": {
+          "xian": {
+            "branches": [
+              "丹符器阵产业",
+              "灵石计量",
+              "飞舟驿路"
+            ],
+            "asset_ids": [
+              "UTL002",
+              "UTL005",
+              "UTL006",
+              "UTL016",
+              "BG010",
+              "BG015",
+              "BG021"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "季候采集",
+              "蜕材交易",
+              "栖地权",
+              "迁徙互保"
+            ],
+            "asset_ids": [
+              "YEC001"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "魔息配给",
+              "壳材回收",
+              "契约工时",
+              "稳压渡站"
+            ],
+            "asset_ids": [
+              "MEC001"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "rituals",
+        "name": "礼制、契约与日常",
+        "systems": {
+          "xian": {
+            "branches": [
+              "拜师",
+              "开炉",
+              "传法",
+              "退出",
+              "论道",
+              "丧仪"
+            ],
+            "asset_ids": [
+              "UTL001",
+              "UTL004",
+              "UTL016",
+              "BG030"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "启识礼",
+              "护蜕礼",
+              "归巢",
+              "结伴",
+              "祖影告别"
+            ],
+            "asset_ids": [
+              "YRI001"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "定核礼",
+              "立誓",
+              "撤约",
+              "换壳",
+              "核录封存"
+            ],
+            "asset_ids": [
+              "MRI001"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      },
+      {
+        "id": "conflicts",
+        "name": "失衡、灾害与对抗",
+        "systems": {
+          "xian": {
+            "branches": [
+              "走火",
+              "丹毒",
+              "灵脉衰竭",
+              "阵崩"
+            ],
+            "asset_ids": [
+              "FX002",
+              "FX013",
+              "FX016",
+              "PIL020"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "yao": {
+            "branches": [
+              "失巢",
+              "蜕劫",
+              "血脉排异",
+              "栖地污染"
+            ],
+            "asset_ids": [
+              "YCF001"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          },
+          "mo": {
+            "branches": [
+              "核裂",
+              "息荒",
+              "界压崩溃",
+              "契约滥权"
+            ],
+            "asset_ids": [
+              "MCF001"
+            ],
+            "coverage": "defined_with_seed_assets",
+            "scope": "已列子类是扩充方向；asset_ids只是现有代表条目，不宣称每个子类已有独立资产或图片。"
+          }
+        }
+      }
+    ],
+    "technique_axes": {
+      "kind": [
+        "心法",
+        "功法",
+        "术法",
+        "武技",
+        "秘术",
+        "本命神通"
+      ],
+      "path": [
+        "剑修",
+        "刀修",
+        "枪戟",
+        "弓弩",
+        "拳掌",
+        "体修",
+        "气修",
+        "神识",
+        "音律",
+        "符修",
+        "阵修",
+        "丹修",
+        "器修",
+        "御灵",
+        "遁法",
+        "血脉",
+        "化形",
+        "根须",
+        "魔核",
+        "契约",
+        "界术"
+      ],
+      "element": [
+        "金",
+        "木",
+        "水",
+        "火",
+        "土",
+        "风",
+        "雷",
+        "冰",
+        "阴",
+        "阳",
+        "星",
+        "空",
+        "无相"
+      ],
+      "purpose": [
+        "修炼",
+        "攻击",
+        "防御",
+        "控制",
+        "移动",
+        "感知",
+        "隐匿",
+        "恢复",
+        "生产",
+        "协作",
+        "契约",
+        "封印"
+      ],
+      "delivery": [
+        "内运",
+        "兵器",
+        "手势",
+        "声音",
+        "符载",
+        "阵载",
+        "本相器官",
+        "核纹",
+        "界标"
+      ],
+      "rule": "kind为单值，其余为多值。剑法是路线，水/火是元素，防御是用途；一项可同时为剑修+水+防御。秘籍是传承载体，不作为功法类型；灵根不是自动学会术法。",
+      "mastery": [
+        "知诀",
+        "入门",
+        "熟练",
+        "精通",
+        "自创变式"
+      ],
+      "mastery_rule": "依次能解释条件、低负荷重现、受扰稳定、调整参数、提出可验证变式；不能以会背口诀代替会用。"
+    },
+    "organization_contract": {
+      "kinds": {
+        "sect": "门派：共同传承与成员资格",
+        "lineage": "世家/族庭：继嗣、共同生境或族籍",
+        "institution": "组织：行政、商贸、行会、盟会或公共服务",
+        "faction": "派系：某组织内的政策/利益立场，可跨组织结盟但不另算族源"
+      },
+      "required": [
+        "kind",
+        "mandate",
+        "membership",
+        "authority",
+        "succession",
+        "resources",
+        "obligation",
+        "exit",
+        "internal_conflict"
+      ],
+      "rule": "组织先定义谁能加入、谁能决策、资源从何来、如何退出；派系必须引用宿主组织。宗门建筑BG002不等于宗门制度。"
+    },
+    "cross_system_rules": [
+      {
+        "topic": "能源互通",
+        "rule": "灵力、妖力、魔元有共同可比较的输出/持续指标，却不自动互换。转换设备先测适配、记录损耗与余热；断供有明确终态。"
+      },
+      {
+        "topic": "战力与进阶",
+        "rule": "三套进阶不按阶数硬对齐。交手逐项比较爆发、持续、感知、机动、作用规则与环境；同名王/尊不等于战力。"
+      },
+      {
+        "topic": "丹药兼容",
+        "rule": "每项写适用族源/核型与载体。仙家丹药、妖族养化丸、魔族稳核剂可有相同用途，不因此共用配方或剂量。"
+      },
+      {
+        "topic": "符咒与契约",
+        "rule": "纸符、皮蜕纹、核纹印是不同载体；咒式是执行过程。跨族契约先确认双方理解、授权范围、代价、解除和违约救济。"
+      },
+      {
+        "topic": "法宝与本命器",
+        "rule": "普通法宝可经适配借用；本命器、妖相器、魔核器各有绑定接口，破损反馈须事前确定。"
+      },
+      {
+        "topic": "灵智与资源",
+        "rule": "可对话自决者作为主体；自然脱落材料、可再生分泌物与活体核心分开登记，不将妖/魔自动列入材料库。"
+      },
+      {
+        "topic": "边境与贸易",
+        "rule": "互市允许兑换测定后的能源、工具和许可；族庭/宗门/渊庭各管辖哪些人和地域须约定，不自动共同货币。"
+      },
+      {
+        "topic": "继承与死亡",
+        "rule": "传法、继位、核心残留、记忆副本和生命延续分别判断；留下玉简/祖影/核录不等于原主体复活。"
+      }
+    ],
+    "adoption_fields": [
+      "origin_lineage",
+      "civilization_profile",
+      "cultivation_path",
+      "sapience",
+      "body_form",
+      "organization_ids",
+      "technique_facets",
+      "compatible_energy",
+      "transition_costs"
+    ],
+    "adoption_rule": "对生灵、组织、功法按适用性填写；不适用写n/a，未知待填。具体剧固定系统/资产版本与关系引用；不由公共库预设当前敌友或剧情历史。",
+    "progression_tracks": {
+      "xian": {
+        "existing_profile": "base",
+        "rule": "沿用systems.realm_profiles.base与realms，避免另立重复境界源。"
+      },
+      "yao": {
+        "rule": "八个里程碑不规定年龄；凝藏可为妖丹、根心或分布式储藏。化形另练，神兽亦须满足能力边界。",
+        "steps": [
+          [
+            "启识",
+            "形成持续自我与自主选择",
+            "能反复辨认自身与他者；不以会说人话为唯一标准",
+            "意识不稳，不代表已经能施术"
+          ],
+          [
+            "引息",
+            "从本相适宜环境吸纳灵机",
+            "可主动开始和停止吐纳",
+            "离开适宜环境补给受限"
+          ],
+          [
+            "养脉",
+            "建立不伤本相的妖力循环",
+            "运动中循环仍稳定",
+            "换形或受伤会扰乱循环"
+          ],
+          [
+            "凝藏",
+            "形成稳定核心或分布储藏",
+            "可卸载过量妖力",
+            "核心/根网受损使储量下降"
+          ],
+          [
+            "通神",
+            "本相感知与神识协同",
+            "能区分自感、借感与幻象",
+            "多通道仍有带宽上限"
+          ],
+          [
+            "展域",
+            "将本相规则扩至有限栖域",
+            "可标出边界并有退域机制",
+            "域内供给有限，离境降效"
+          ],
+          [
+            "归脉",
+            "统合血脉优势与后天道路",
+            "蜕变后仍能稳定自我和循环",
+            "不能无成本随意换族"
+          ],
+          [
+            "越界",
+            "在异界环境维持独立循环",
+            "建立返程锚与兼容补给",
+            "越界不免疫陌生环境"
+          ]
+        ]
+      },
+      "mo": {
+        "rule": "渊核是族源器官，不是人人相同的球形宝石；阶段由稳定性与能力验证，不按杀戮计数。",
+        "steps": [
+          [
+            "觉核",
+            "渊核产生持续自我调节",
+            "能区分自身核压与外界魔息",
+            "核座脆弱，外壳未必完整"
+          ],
+          [
+            "引息",
+            "建立可控魔息输入",
+            "能断开输入而维持自身",
+            "断供只能用现有储量"
+          ],
+          [
+            "稳环",
+            "形成闭合的滤稳循环",
+            "换壳/移动时不失压",
+            "滤层有寿命与杂质负担"
+          ],
+          [
+            "凝炉",
+            "压缩魔元并可控输出",
+            "超载能主动泄压",
+            "高压不等于无限能量"
+          ],
+          [
+            "分识",
+            "协调多个工具或感知节点",
+            "能切断节点而不丧失主体",
+            "节点不是无限独立生命"
+          ],
+          [
+            "立域",
+            "建立有限魔息稳压域",
+            "域边界和外溢可测",
+            "域外受当地环境制约"
+          ],
+          [
+            "合渊",
+            "内部循环适应多种渊流",
+            "输入变化时保持核纹稳定",
+            "多源互换仍有损耗"
+          ],
+          [
+            "越界",
+            "在非渊域维生与施术",
+            "携带稳定器并验证返程",
+            "不能无限召取母域魔息"
+          ]
+        ]
+      }
+    },
+    "counts": {
+      "dimensions": 26,
+      "profiles": 3,
+      "new_assets": 187,
+      "existing_assets_retained": 256
+    },
+    "operational_contracts": [
+      {
+        "id": "sealed_transport",
+        "name": "封印的输运边界",
+        "asset_ids": [
+          "ARR002",
+          "MAT001",
+          "ART028",
+          "IMM008",
+          "TAL004"
+        ],
+        "required_fields": [
+          "seal_mode",
+          "supply_interface",
+          "carried_energy_policy"
+        ],
+        "rules": [
+          "ARR002默认只截断指定类型的游离能流；完整物件或生命体内封存的能量可随载体通过，不提供搜查、拘束或伤害能力。载体在边界上向外释放时，释放部分受阻，不能借封存匣把运行中的导流管伪装成封存物。",
+          "阵的维持能量从六弧节点预先登记的内侧接口注入，该接口只给阵供能，不向内部使用者提供旁路输出；过载即停止封印。外侧供能必须先经不跨封闭面的实体引线布置到节点，未布线则用内置库存。",
+          "连携能载体也拦的封印必须另立变式，明确检测、拘束、生命安全与供能路径，不能从本原型推得。"
+        ],
+        "cases": [
+          "裸灵流被拦；同量灵力封在蓄灵石可随推车穿过；再加封辰匣不改变此结果；从阵外直接隔空穿面给内部供能被拦。",
+          "节点库存耗尽后阵关闭，封印不吞噬已封存能量，也不自动摧毁过界物。"
+        ]
+      },
+      {
+        "id": "exertion_recovery",
+        "name": "急行后的恢复判据",
+        "asset_ids": [
+          "XSE001",
+          "XEL010",
+          "PIL009",
+          "PIL001"
+        ],
+        "required_fields": [
+          "temperature_threshold",
+          "integrity_test",
+          "fatigue_limit",
+          "refractory_s"
+        ],
+        "rules": [
+          "燃脉急行术同时产生失温、灵路微损与疲劳；恢复须体温/灵温达标、低负荷完整性测试通过、疲劳低于阈值，并经过采用时预定的不应期。缺一项不能再次急行。",
+          "XEL010与PIL009可付出资源加快回温，PIL001可补可用灵力；均不直接修复微损、清空疲劳或缩短不应期。休养与适配治疗可修损，治疗也须复测。",
+          "换治疗者、换药瓶或更换装备不刷新使用者累计状态；具体阈值和秒数采用前选定。"
+        ],
+        "cases": [
+          "已回温但不应期未到：禁再用。时间到但仍失温或有微损：禁再用。四项均达标：可用，下一次重新累计代价。"
+        ]
+      },
+      {
+        "id": "atomic_short_transfer",
+        "name": "短隙传物的原子交付",
+        "asset_ids": [
+          "XEL012",
+          "ART029",
+          "ARR015"
+        ],
+        "required_fields": [
+          "mass_limit",
+          "range_limit",
+          "commit_signal",
+          "recovery_s"
+        ],
+        "rules": [
+          "物件先完整留在源端锚的暂存区；连通期出现的目标端轮廓只是不可取用的定位影。只有双锚同时确认整件可接收时，才发生一次原子交付：源端物件消失且目标端完整出现。",
+          "确认前任一锚失联或通道被封：取消交付，物件仍在源端；确认后断联：物件留在目标端。没有半件滞留、自动回滚或复制。暂存区若受实体破坏，按普通物件受损处理，不由传送保护。",
+          "每次交付有一次性确认标记；重连不自动重发，须重新放入实体物件并另起操作。"
+        ],
+        "cases": [
+          "进入前断联：源端1件。定位影出现时断联：源端1件、目标0件。确认后断联：源端0件、目标1件。重连两端数量不变。"
+        ]
+      },
+      {
+        "id": "covenant_revocation",
+        "name": "撤约、证据与执行接口",
+        "asset_ids": [
+          "MSE002",
+          "MMT003",
+          "MTA002",
+          "MSP002",
+          "MAX002"
+        ],
+        "required_fields": [
+          "authorized_scope",
+          "revocation_record",
+          "retained_evidence"
+        ],
+        "rules": [
+          "有效撤约停止被授权范围内的执行接口；保留记忆与合法证据是成功后的不变约束，不是撤约失败原因。",
+          "不能定位本端授权接口、请求超出本人可撤范围或校验不通过时，拒绝动作并保留原状态。撤约不撤销已发生的事实和可依法追索的义务。",
+          "恢复供能不恢复被撤权限；重新启用须主体与相关双方再次同意。"
+        ],
+        "cases": [
+          "本端合法撤约成功，旧记录仍可读取；重新送能仍无监督权限；请求删除对方证据被拒而不阻断本端合法撤约。"
+        ]
+      },
+      {
+        "id": "scarcity_allocation",
+        "name": "供息短缺与调度",
+        "asset_ids": [
+          "MIN001",
+          "MIN002",
+          "MAX001",
+          "MEC001",
+          "MPL001",
+          "MFA001",
+          "MFA002"
+        ],
+        "required_fields": [
+          "available_supply",
+          "reserve_stock",
+          "resident_minimum",
+          "newcomer_minimum",
+          "repair_load",
+          "allocation_order",
+          "dispatcher",
+          "review_deadline_s",
+          "disconnection_outcome"
+        ],
+        "rules": [
+          "组合采用必须先固定调度与复核分工：炉站负责可测供给与阀控，受辖域授权的配额议席决定分配，独立复核席审计记录；互济会只能分发其实际库存，不能命令炉站。没有辖域授权时，不凭组织名称获得调度权。",
+          "示范制度把非成员与新核型按实际维生需求登记；配额筹证明领取记录，不是是否有生命资格的凭证。库存不足也必须记入未获满足者和后果，不能将其从账上删去。",
+          "可选示范先保恢复生产的检修负荷，再将剩余按登记最低需求同比例分配；这不是普世最优或必然救活的规则。不能低供休眠的核型会受损，安全休眠需预先有该核型设定及可用设施。",
+          "各剧可选择不同的分配制度，但须在短缺剧情前固定优先序、临时权限、复核时限、损害承担及断供终态。"
+        ],
+        "cases": [
+          "测试供给60、库存0、居民最低70、新来者最低5、检修10：检修10，余50按70:5分配，居民140/3，新来者10/3，合计60；居民缺70/3、新来者缺5/3，合计缺25。不能宣称全部维生达标。",
+          "该示范无休眠设施：记录相应失衡/受损风险、按核型终态执行，调度人发出缺额警报并请求外援；外援实际到账前不能记入供给。"
+        ]
+      },
+      {
+        "id": "root_network_exit",
+        "name": "根网的三个独立接口",
+        "asset_ids": [
+          "YSP002",
+          "YRT002",
+          "YMT004",
+          "YARX001",
+          "YCL004",
+          "YID001"
+        ],
+        "required_fields": [
+          "sensory_permissions",
+          "transport_routes",
+          "physical_roots",
+          "bypass_capacity",
+          "notice_window_s",
+          "liability"
+        ],
+        "rules": [
+          "根网分感知授权、水/妖力输送、物理根体三个层次。感知必须经同意门控；撤回者可立即关掉自身信息采集与转发授权，邻株不再取得其新感知。已经合法获得的记忆不自动消失。",
+          "感知退出不等于断水或断根。维生运输可以按另一份有效协议暂时保持；输送仍有容量、损耗和污染风险，不能因输送继续就恢复感知权限。",
+          "物理断根需实际操作，会伤及身体并改变水路；平常按约定通知与旁路交接，紧急污染可立即隔离。任何欠约责任可追索但不授予强制感知权；没有旁路就诚实登记邻株缺水和伤害，不凭空长出替代根。"
+        ],
+        "cases": [
+          "三株串联、中央拒绝被观察：立即关闭中央感知门控；原有供水协议尚有效则只保水路。旁路未准备时不能宣称邻株已安全脱网。",
+          "中央遭污染可马上关输送接口，通知左右株并按库存缓冲；若库存耗尽则发生缺水后果，事后按实际权限与过错结算。"
+        ]
+      },
+      {
+        "id": "carrier_personhood",
+        "name": "依附生命与载体产权",
+        "asset_ids": [
+          "XSP001",
+          "ART027",
+          "XOR008",
+          "MSP002",
+          "MOR003"
+        ],
+        "required_fields": [
+          "carrier_owner",
+          "subject_consent",
+          "service_state",
+          "maintenance_load",
+          "migration_mode",
+          "care_custodian",
+          "care_budget",
+          "shortage_terminal"
+        ],
+        "rules": [
+          "载体物权、主体资格、服务授权和维生供给分别登记。拥有匣体不等于拥有器灵；拒绝服务立即关闭服务接口，不自动关闭维生。",
+          "本示范匣灵只在原匣保持连续性，不默认可迁移或由副本替代；守约灵可在原契片的独立静息接口留存，撤监督不破坏该接口。迁移须另有经过验证的机制及本人同意。",
+          "借匣到期可停止借用与收回保管，但觉醒后按保管协议保留主体驻留，争议未决不得为催债破坏载体或故意断维生。示范由当前保管人先承担预定有限应急库存，后由属地受托照护或自愿接管人接续；没有接管与资金时须写明库存耗尽后的终态，不保证永续供养。",
+          "匣灵维生中断先进入不可服务、不可新增记忆的静息；超过预先设定的保留时限会造成不可逆记忆/结构损伤，彻底散失不以重新供能复活。守约灵同样须配置有限保留时限。"
+        ],
+        "cases": [
+          "借匣器灵拒绝监视：监视停止，匣体到期归出借人保管，有限应急维生仍执行，财产与照护费用另案结算。若无后续资源，倒计时结束出现明确损害，不删除主体身份来抹账。",
+          "双方撤销守约职能：执行断开、证据保留、本人留在契片静息接口；指定保管人支付有限维生，重新授权前不再监督。"
+        ]
+      },
+      {
+        "id": "shared_water_jurisdiction",
+        "name": "跨辖水系争议",
+        "asset_ids": [
+          "XCL001",
+          "XSP002",
+          "XDV003",
+          "YCL003",
+          "YIN001",
+          "XIN003",
+          "XIN004"
+        ],
+        "required_fields": [
+          "controller",
+          "affected_subjects",
+          "jurisdiction",
+          "evidence",
+          "emergency_power",
+          "no_common_jurisdiction_route",
+          "harm_threshold"
+        ],
+        "rules": [
+          "组合采用必须选择已有共同水约、临时共授权、或没有共同程序，列清水源控制者及泉灵等受影响主体。宗门、族庭与仙盟都没有天然全河执法权。",
+          "示范共同水约由仙朝许可机关、灌田代表、下游族庭与泉灵自主代表预先签署；独立双测记录确认约定危险阈值后，授权闸守可临时限抽至已约定保底流量，限权有明确时限并送跨方复核。泉灵可拒绝担任常驻传感器。",
+          "无共同管辖时，任何一方只能在自身合法控制范围采取措施、求临时协议或撤离救助；不能把单方盟会裁定当普遍有效。若等不到共授权而发生损害，按所选政治事实保留后果，不临时补出万能法庭。"
+        ],
+        "cases": [
+          "仙朝许可抽水但未签共同水约：清律仙盟不能直接命令停水；受影响方可申请许可机关按自身已授权规则暂停本辖抽水，或争取临时共授权。若许可机关无该权限/拒绝，承认救济缺失与损害。",
+          "已签示范水约并满足双测危险阈值：闸守依共同授权临时限抽，记录损失和证据，时限内复核；不限于盟会成员，限于签约水段与授权事项。"
+        ]
+      },
+      {
+        "id": "organization_exit",
+        "name": "退会、分裂与共有资源",
+        "asset_ids": [
+          "XOR001",
+          "XFA001",
+          "XFA002",
+          "YCL002",
+          "YFA001",
+          "YFA002",
+          "MCL001"
+        ],
+        "required_fields": [
+          "exit_notice",
+          "debts",
+          "indivisible_assets",
+          "dependent_care",
+          "teaching_license",
+          "representation",
+          "settlement_deadline_s"
+        ],
+        "rules": [
+          "退出派系即时停止其政治代表授权；退出宿主组织按预定通知终止新任务，既有债务可追索但不能无限延迟退出、强制人身服务或扣押主体记忆。危险岗位按预定最短安全交接执行，紧急自救不以债务为由禁止。",
+          "分家须分别清算个人物、可分共有库存、不可分设施的使用权及照护义务；不得仅凭历年投入任意拆走巢位、炉站或工坊，也不得将幼体与依附者当财产分割。",
+          "记忆不可强制删除；记得功法不自动拥有复制馆藏、传播受限新术或代表原宗授课的权利。基础公开课可依既有开放许可继续讲授，受限传承争议按事前许可处理，不能临时以保密抹除记忆。"
+        ],
+        "cases": [
+          "逐季派离开族庭：可带个人物和自愿迁移的被照护者，依法依约完成照护安排；公共补给按既有分配条款结算，不能单方拿走份额；未结欠款另记，不强迫留巢。留守方不再被其代表。",
+          "开授派成员退宗：保留自身记忆；可继续教授事前已公开许可的基础课，不可自称代表原宗或复制未授权馆藏。借器和既有渡务债务另行结算，不成为终身留宗条件。"
+        ]
+      }
+    ],
+    "operational_contract_rule": "采用涉及任一列出资产的组合或单项时，必须选择相应契约并填写适用字段；不适用须给理由，空值不是放行。示范制度是可覆盖的创作方案；覆盖必须在冲突发生前登记版本，不能临场免除代价。"
+  }
+}

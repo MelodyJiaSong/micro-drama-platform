@@ -3,6 +3,28 @@ import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-
 import { Sidebar } from "./components/Sidebar";
 import { Reader } from "./components/Reader";
 import { Home } from "./components/Home";
+import { AssetOverviewPage } from "./components/AssetOverviewPage";
+import { BaseLayoutPage } from "./components/BaseLayoutPage";
+import { MapRegionsPage } from "./components/MapRegionsPage";
+import { MAP_REGIONS_ROUTE } from "./lib/mapRegions";
+import { ShopItemsPage } from "./components/ShopItemsPage";
+import { SHOP_ITEMS_ROUTE } from "./lib/shopItems";
+import { BASE_LAYOUT_ROUTE } from "./lib/baseLayout";
+import { HeroPreviewPage } from "./components/HeroPreviewPage";
+import { RankPreviewPage } from "./components/RankPreviewPage";
+import { GroupPreviewPage } from "./components/GroupPreviewPage";
+import { CharacterReviewPage } from "./components/CharacterReviewPage";
+import { CHARACTER_REVIEW_ROUTE } from "./lib/characterReview";
+import { EpisodePreviewPage } from "./components/EpisodePreviewPage";
+import { StoryboardPreviewPage, STORYBOARD_PREVIEW_ROUTE } from "./components/StoryboardPreviewPage";
+import { SceneBoardPage } from "./components/SceneBoardPage";
+import { HERO_PREVIEW_ROUTE } from "./lib/heroPreview";
+import { RANK_PREVIEW_ROUTE } from "./lib/rankPreview";
+import { DEV_PREVIEW_ROUTE } from "./lib/devPreview";
+import { DevPreviewPage } from "./components/DevPreviewPage";
+import { GROUP_PREVIEW_ROUTE } from "./lib/groupPreview";
+import { EPISODE_PREVIEW_ROUTE } from "./lib/episodePreview";
+import { SCENE_PREVIEW_ROUTE } from "./lib/sceneBoard";
 import { CharacterGrid } from "./components/CharacterGrid";
 import { DramaPage } from "./components/DramaPage";
 import { DeletedView } from "./components/DeletedView";
@@ -22,6 +44,18 @@ import { applyLoaded, lazyAncestors, lazyDirs, staleAfter, type LoadedDir } from
 import { subscribeFileChanges } from "./lib/fileEvents";
 import { TreeLoaderContext, type TreeLoader } from "./components/TreeLoaderContext";
 import type { TreeNode } from "./types";
+import { ProcessQcDramaPage, ProcessQcRepoPage } from "./components/ProcessQcPage";
+import { PROCESS_QC_DRAMA_ROUTE, PROCESS_QC_REPO_PATH } from "./lib/processQc";
+import { REVIEW_STRATEGY_PATH } from "./lib/reviewStrategy";
+import { REVIEW_ITEM_ROUTE, REVIEW_RUN_ROUTE } from "./lib/reviewRun";
+import { ReviewItemPage, ReviewRunPage } from "./components/ReviewRunPage";
+import { ReviewLawPage } from "./components/ReviewLawPage";
+import { REVIEW_LAW_ROUTE } from "./lib/reviewLaw";
+import { REVIEW_ISSUES_ROUTE } from "./lib/reviewV5";
+import { ReviewIssuesPage } from "./components/ReviewIssuesPage";
+import { ReviewCorrectionsPage } from "./components/ReviewCorrectionsPage";
+import { REVIEW_CORRECTIONS_ROUTE } from "./lib/reviewCorrections";
+import { ReviewStrategyPage } from "./components/ReviewStrategyPage";
 import { TypedLocalStorage } from "./localStorage";
 
 const sidebarCollapsedStore = new TypedLocalStorage<boolean>("aivm.sidebarCollapsed", false);
@@ -131,7 +165,7 @@ export default function App(): JSX.Element {
   }), [loadDir]);
 
   const knownPaths = useMemo(() => (tree ? collectFilePaths(tree) : []), [tree]);
-  const unloadedDirs = useMemo(() => lazyDirs(tree), [tree]);
+  const unloadedDirs = useMemo(() => tree ? lazyDirs(tree) : ["ai_videos"], [tree]);
 
   const currentPath = useMemo<string>(() => {
     if (!location.pathname.startsWith("/file/")) return "";
@@ -209,6 +243,18 @@ export default function App(): JSX.Element {
             path="/file/*"
             element={<Reader knownPaths={knownPaths} unloadedDirs={unloadedDirs} onSaved={() => setRefreshKey((k) => k + 1)} />}
           />
+          <Route path="/assets" element={<AssetOverviewPage />} />
+          <Route path={BASE_LAYOUT_ROUTE} element={<BaseLayoutPage />} />
+          <Route path={MAP_REGIONS_ROUTE} element={<MapRegionsPage />} />
+          <Route path={SHOP_ITEMS_ROUTE} element={<ShopItemsPage />} />
+          <Route path={HERO_PREVIEW_ROUTE} element={<HeroPreviewPage />} />
+          <Route path={RANK_PREVIEW_ROUTE} element={<RankPreviewPage />} />
+          <Route path={DEV_PREVIEW_ROUTE} element={<DevPreviewPage />} />
+          <Route path={GROUP_PREVIEW_ROUTE} element={<GroupPreviewPage />} />
+          <Route path={CHARACTER_REVIEW_ROUTE} element={<CharacterReviewPage />} />
+          <Route path={EPISODE_PREVIEW_ROUTE} element={<EpisodePreviewPage />} />
+          <Route path={STORYBOARD_PREVIEW_ROUTE} element={<StoryboardPreviewPage />} />
+          <Route path={SCENE_PREVIEW_ROUTE} element={<SceneBoardPage />} />
           <Route
             path="/characters"
             element={<CharacterGrid tree={tree} onChange={() => setRefreshKey((k) => k + 1)} />}
@@ -226,6 +272,14 @@ export default function App(): JSX.Element {
           <Route path={FILMING_KNOWLEDGE_PATH} element={<FilmingKnowledgePage />} />
           <Route path={GLOSSARY_PATH} element={<GlossaryPage />} />
           <Route path={OVERVIEW_PATH} element={<WorkflowMapPage />} />
+          <Route path={PROCESS_QC_REPO_PATH} element={<ProcessQcRepoPage />} />
+          <Route path={REVIEW_STRATEGY_PATH} element={<ReviewStrategyPage />} />
+          <Route path={REVIEW_RUN_ROUTE} element={<ReviewRunPage />} />
+          <Route path={REVIEW_ITEM_ROUTE} element={<ReviewItemPage />} />
+          <Route path={REVIEW_LAW_ROUTE} element={<ReviewLawPage />} />
+          <Route path={REVIEW_ISSUES_ROUTE} element={<ReviewIssuesPage />} />
+          <Route path={REVIEW_CORRECTIONS_ROUTE} element={<ReviewCorrectionsPage />} />
+          <Route path={PROCESS_QC_DRAMA_ROUTE} element={<ProcessQcDramaPage />} />
           <Route path="/research" element={<ResearchPage />} />
           <Route
             path="/deleted"

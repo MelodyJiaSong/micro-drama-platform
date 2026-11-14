@@ -1,0 +1,164 @@
+{
+ "note": "事实台账：讲稿与画面上每个事实、数字、专业概念一条，写明出处与原文原话。实验算出的写 source: \"experiment\"，并指到 scenes/data.py 里的断言；比方里的虚构情节写 source: \"analogy\"。核对记录见 research.md。",
+ "claims": [
+  {
+   "id": "C01",
+   "lines": [
+    "l03"
+   ],
+   "claim": "上一期（t00 什么是 AI）的结论：今天的 AI 主要从例子里学出规律，学出来的那套认法叫模型",
+   "source": "edu_videos/ai_terms/t00_what_is_ai/script.md l11、l51",
+   "quote": "它学出来的那套认法叫模型，来一张新图，模型就给出答案。"
+  },
+  {
+   "id": "C02",
+   "lines": [
+    "l09",
+    "l10",
+    "l11"
+   ],
+   "claim": "打车费模型：车费 = 起步价 + 每公里 × 公里数；起步价 10、每公里 2、5 公里 → 20 元",
+   "screen": [
+    "10 + 2 × 5 = 20"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：demo 的断言"
+  },
+  {
+   "id": "C03",
+   "lines": [
+    "l14",
+    "l15"
+   ],
+   "claim": "十二趟打车记录是示意数据（第 1 季共用，_shared/s1_data.py 生成），不是真实账单",
+   "screen": [
+    "示意"
+   ],
+   "source": "experiment",
+   "check": "edu_videos/ai_terms/_shared/s1_data.py；scenes/data.py：KM.size == 12"
+  },
+  {
+   "id": "C04",
+   "lines": [
+    "l18",
+    "l19",
+    "l20",
+    "l21",
+    "l22",
+    "l23"
+   ],
+   "claim": "起步价 0、每公里 1：十二趟全猜少；起步价 10：全体抬高，近的差得少、远的差得多；每公里 3.5：远的几趟猜多了；拧到起步价 10.2、每公里 2.54（最小二乘）：竖线都很短（最长 3.2 元）",
+   "screen": [
+    "0",
+    "1",
+    "10",
+    "3.5",
+    "10.2",
+    "2.54"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：steps 与 gaps 的断言"
+  },
+  {
+   "id": "C05",
+   "lines": [
+    "l24",
+    "l25"
+   ],
+   "claim": "拧好后问八公里：10.2 + 2.54 × 8 ≈ 30.5 元；八公里不在十二趟记录里",
+   "screen": [
+    "8",
+    "30.5"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：ask 的断言"
+  },
+  {
+   "id": "C06",
+   "lines": [
+    "l33",
+    "l34"
+   ],
+   "claim": "GPT-3（OpenAI，Brown 等 2020，《Language Models are Few-Shot Learners》）有 1750 亿个参数",
+   "screen": [
+    "GPT-3",
+    "175,000,000,000",
+    "Brown 等 · 2020",
+    "Brown et al. · 2020"
+   ],
+   "source": "Brown et al., Language Models are Few-Shot Learners, arXiv:2005.14165（2020-05-28），NeurIPS 2020",
+   "quote": "Specifically, we train GPT-3, an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model, and test its performance in the few-shot setting."
+  },
+  {
+   "id": "C07",
+   "lines": [
+    "l35"
+   ],
+   "claim": "1750 亿秒 ≈ 5545 年（一秒念一个读数）",
+   "screen": [
+    "≈ 5545 年",
+    "≈ 5,545 years"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：years 的断言（175e9 / (365.25 × 24 × 3600)）"
+  },
+  {
+   "id": "C08",
+   "lines": [
+    "l36"
+   ],
+   "claim": "GPT-3 的参数是训练出来的（自回归语言模型，用大量文字训练），不是人逐个设定",
+   "source": "Brown et al. 2020 摘要",
+   "quote": "we train GPT-3, an autoregressive language model with 175 billion parameters"
+  },
+  {
+   "id": "C09",
+   "lines": [
+    "l38"
+   ],
+   "claim": "保存训练好的模型，存的主要是学到的参数（权重与偏置）；说「主要」，不说「只有」",
+   "source": "PyTorch 官方教程 Saving and Loading Models（pytorch/tutorials beginner_source/saving_loading_models.py）",
+   "quote": "In PyTorch, the learnable parameters (i.e. weights and biases) of an torch.nn.Module model are contained in the model’s parameters (accessed with model.parameters()). A state_dict is simply a Python dictionary object that maps each layer to its parameter tensor."
+  },
+  {
+   "id": "C10",
+   "lines": [
+    "l05",
+    "l06",
+    "l07",
+    "l40"
+   ],
+   "claim": "模型 = 带旋钮的机器、参数 = 旋钮（第 1 季统一比喻，s1_bible）",
+   "source": "analogy"
+  },
+  {
+   "id": "C11",
+   "lines": [
+    "l29"
+   ],
+   "claim": "把两个读数抄给别人就有了同一个模型（机器的算法相同时）",
+   "source": "analogy"
+  },
+  {
+   "id": "C12",
+   "lines": [
+    "l01",
+    "l02",
+    "l39"
+   ],
+   "claim": "新闻里常说大模型有「上千亿参数」：以 GPT-3 的 1750 亿为例",
+   "source": "Brown et al. 2020（同 C06）",
+   "quote": "an autoregressive language model with 175 billion parameters"
+  },
+  {
+   "id": "C13",
+   "lines": [
+    "l13",
+    "l30",
+    "l31"
+   ],
+   "claim": "英文 l13、l30 的引号是对说法本身的指称（\"learning\"、\"training a model\"），不是引用出处；「训练 = 拧旋钮」是第 1 季统一说法（s1_bible）",
+   "source": "analogy"
+  }
+ ]
+}

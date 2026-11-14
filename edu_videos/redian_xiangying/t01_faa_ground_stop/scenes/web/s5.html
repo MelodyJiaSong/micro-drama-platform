@@ -1,0 +1,98 @@
+<style>
+  .pair { position: absolute; left: var(--mx); right: var(--mx); top: 210px; display: flex; gap: 40px; align-items: flex-start; }
+  .pair .card { padding: 40px 48px; }
+  #con { width: 800px; }
+  #pro { width: 840px; }
+  .tag { display: inline-flex; align-items: center; gap: 12px; padding: 8px 22px; border-radius: 999px; font-size: var(--fs-caption); font-weight: 700; letter-spacing: .04em; }
+  .tag.con { background: var(--ink); color: #fff; }
+  .tag.pro { background: var(--accent-soft); color: var(--accent-text); }
+  .pair .h2 { margin-top: 24px; }
+  .pair .li { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--hair); }
+  .pair .li .who { color: var(--sub); font-size: var(--fs-caption); margin-left: 10px; }
+  .money { position: absolute; left: var(--mx); top: 200px; }
+  .gao { position: absolute; left: var(--mx); top: 380px; width: 820px; padding: 40px 48px; }
+  .gao .body { margin-top: 14px; }
+  .gao .h1 { margin-top: 26px; }
+  .gao .c-bad { margin-top: 6px; }
+  #sheets { position: absolute; left: 980px; top: 250px; }
+</style>
+
+<div class="eb eyebrow" data-zh="05 · 反方怎么说" data-en="05 · The strongest pushback"></div>
+
+<div class="pair">
+  <div class="card" id="con">
+    <span class="tag con" data-zh="反方观点" data-en="The other side"></span>
+    <div class="h2" id="c1" data-zh="「这是给拖延找借口？」" data-en="“An excuse to stall?”"></div>
+    <div class="li body" id="c2" data-zh='坏的是旧设备<span class="who">（达菲）</span>' data-en='Old gear broke<span class="who">(Duffy)</span>'></div>
+    <div class="li body" id="c3" data-zh="钱少、换慢 → 花钱换掉" data-en="More money, faster swap"></div>
+    <div class="li body" id="c4" data-zh="强调风险 → 更不敢动" data-en="Risk talk → inaction"></div>
+  </div>
+  <div class="card" id="pro">
+    <span class="tag pro" data-zh="我们的回应" data-en="Our response"></span>
+    <div class="li body" id="p1" style="border-top:0" data-zh='<span class="c-good">✓</span> 必须换，要快' data-en='<span class="c-good">✓</span> Replace it, fast'></div>
+    <div class="h2" id="p2" data-zh='换代：<span class="accent">最危险阶段</span>' data-en='Switchover: <span class="accent">highest risk</span>'></div>
+    <div class="li body" id="p3" data-zh="拖越久 → 风险期越长" data-en="Delay → longer risky overlap"></div>
+  </div>
+</div>
+
+<div class="money h1" id="money" data-zh="钱 ≠ 安全" data-en="Money ≠ safety"></div>
+<div class="gao card" id="gao">
+  <div class="eyebrow" data-zh="政府问责署 · 2026 年 9 月" data-en="GAO · Sept 2026"></div>
+  <div class="body" id="g1" data-zh="总成本：没有可靠估算" data-en="No reliable lifetime cost estimate"></div>
+  <div class="h1"><span id="g2">—</span><span class="h2" data-zh=" 份进度表" data-en=""></span></div>
+  <div class="body c-bad" id="g3" data-zh="没合成总表" data-en="unaligned schedules"></div>
+</div>
+<svg id="sheets" width="820" height="620"></svg>
+
+<script>
+const T = EDU.tl, C = css;
+// 散落的进度表（示意 72 张，不是真实数量）
+const sv = document.getElementById("sheets");
+const sh = D.sheets.map(p => {
+  const g = svgEl(sv, "g", { transform: `translate(${40 + p.x * 700},${30 + p.y * 520}) rotate(${p.r})` });
+  svgEl(g, "rect", { x: -36, y: -26, width: 72, height: 52, rx: 6, fill: C("--surface"), stroke: C("--hair"), "stroke-width": 2 });
+  svgEl(g, "path", { d: "M-26,-12 h40 M-26,0 h52 M-26,12 h30", stroke: C("--faint"), "stroke-width": 3, "stroke-linecap": "round" });
+  return g;
+});
+const illT = svgEl(sv, "text", { x: 810, y: 612, "text-anchor": "end", "font-size": 22, "font-weight": 500, fill: C("--sub") });
+illT.textContent = L("示意", "Illustration");
+
+gsap.set(["#con", "#pro", "#c1", "#c2", "#c3", "#c4", "#p1", "#p2", "#p3", "#money", "#gao", "#g1", "#g2", "#g3"], { opacity: 0 });
+gsap.set([...sh, illT], { opacity: 0 });
+EDU.in(".eb", 0);
+
+// l66 反方：给拖延找借口？
+EDU.in("#con", EDU.t("l66", 0));
+EDU.in("#c1", EDU.t("l66", .25));
+// l67 部长说新设备没坏、坏的是旧的
+EDU.in("#c2", EDU.t("l67", .1));
+srcNote("达菲，2026-11-13", "Duffy, Nov 13, 2026", EDU.t("l67", .2), EDU.end("l67") + .1);
+// l68 钱给少了、换得太慢
+EDU.in("#c3", EDU.t("l68", .1));
+// l69 说升级有风险，只会更不敢动
+EDU.in("#c4", EDU.t("l69", .1));
+
+// l70 我们同意：必须换，要快
+EDU.out(["#c2", "#c3", "#c4"], EDU.t("l70", 0), { y: 0 }); T.set(["#c2", "#c3", "#c4"], { display: "none" }, EDU.t("l70", .4));
+EDU.dim("#con", EDU.t("l70", 0), .55);
+EDU.in("#pro", EDU.t("l70", 0));
+EDU.in("#p1", EDU.t("l70", .2));
+// l71 把「换」当成最危险的阶段来设计
+EDU.in("#p2", EDU.t("l71", .1));
+// l72 拖得越久，危险窗口越长
+EDU.in("#p3", EDU.t("l72", .1));
+
+// l73 光给钱不等于安全
+EDU.out([".pair"], EDU.t("l73", 0));
+EDU.in("#money", EDU.t("l73", .1));
+// l74 GAO：没有可靠的全生命周期成本估算
+EDU.in("#gao", EDU.t("l74", 0));
+EDU.in("#g1", EDU.t("l74", .15));
+srcNote("GAO-26-107992（2026-09）", "GAO-26-107992 (Sept 2026)", EDU.t("l74", .2), EDU.S.duration - .5);
+// l75 11,389 份进度表，互不整合
+EDU.in(["#g2", "#g3"], EDU.t("l75", 0));
+countUp("#g2", EDU.t("l75", .05), N.schedules, 1.2);
+EDU.in(sh, EDU.t("l75", .05), { stagger: .02, d: .4 });
+EDU.in(illT, EDU.t("l75", .3));
+EDU.out(["#money", "#gao", "#sheets"], EDU.S.duration - .5);
+</script>

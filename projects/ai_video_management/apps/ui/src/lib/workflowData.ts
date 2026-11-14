@@ -2,6 +2,8 @@ import type { StageId } from "./episodeWorkflow";
 import type { TreeNode } from "../types";
 import { globalGroupUrl, globalSourceUrl, numberedTitle, sourceTitle, type GlobalCatalog, type GlobalCategory, type GlobalGroup, type GlobalSource } from "./globalWorkflow";
 import registry from "../../../../../../.agents/references/project/workflow_catalog.json";
+import { PROCESS_QC_REPO_PATH } from "./processQc";
+import { REVIEW_STRATEGY_PATH } from "./reviewStrategy";
 
 export const WORKFLOW_PATH = "/workflow";
 export const workflowModulePath = (id: StageId): string => `${WORKFLOW_PATH}/${id}`;
@@ -49,6 +51,10 @@ const OVERVIEW_PAGES: TreeNode[] = [
   { type: "file", name: sourceTitle({ title: "术语表", number: overviewNumber("ai_video_glossary.json") }), path: GLOSSARY_PATH, navigation_href: GLOSSARY_PATH },
   { type: "file", name: sourceTitle({ title: "决策记录", number: (registry.source_numbers as Record<string, string>)[DECISIONS_SOURCE] }),
     path: globalSourceUrl(DECISIONS_SOURCE), navigation_href: globalSourceUrl(DECISIONS_SOURCE) },
+  // 仓库级自检登记与各剧体检；单部剧的剧级页面从剧页「🔍 流程与自检」进入，两层不混在一页。
+  { type: "file", name: sourceTitle({ title: "自检与进化（仓库级）", number: overviewNumber("qc_checks.toml") }), path: PROCESS_QC_REPO_PATH, navigation_href: PROCESS_QC_REPO_PATH },
+  // 审查机制图（chuanyue_yiri follow-up 032/034）：六道关、按法则分工的审稿人、结论分类；审稿人排班以 review_roster.json 为准，每次审查生成审查单（/review-run）。
+  { type: "file", name: sourceTitle({ title: "审查机制与审查单", number: overviewNumber("review_roster.json") }), path: REVIEW_STRATEGY_PATH, navigation_href: REVIEW_STRATEGY_PATH },
 ];
 
 function buildNavigation(catalog: GlobalCatalog | null): TreeNode {

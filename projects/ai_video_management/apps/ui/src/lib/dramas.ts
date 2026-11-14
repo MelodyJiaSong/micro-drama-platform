@@ -35,13 +35,38 @@ export function extractDramas(tree: TreeNode | null): DramaChoice[] {
     const characters: string[] = [];
     const chDir = findAssetDir(drama, "characters");
     if (chDir) {
-      for (const c of chDir.children ?? []) {
-        if (c.type === "directory" && CHARACTER_DIR_RE.test(c.name)) {
-          characters.push(c.name);
-        }
-      }
+      for (const c of characterFolders(chDir)) characters.push(c.node.name);
     }
     out.push({ path: drama.path, name: drama.name, characters, obsolete: drama.obsolete === true });
+  }
+  return out;
+}
+
+export interface CharacterFolder {
+  node: TreeNode;
+  /** The unkeyed group folder it sits in (`近卫_sentinel`), or null when flat. */
+  group: string | null;
+}
+
+/** Group folders under `characters/`: unkeyed directories (`近卫_sentinel`)
+ *  that split a drama's cards by side (follow-up 284). */
+export function characterGroups(chDir: TreeNode): TreeNode[] {
+  return (chDir.children ?? []).filter((c) => c.type === "directory" && !CHARACTER_DIR_RE.test(c.name));
+}
+
+/** Every card folder under `characters/`: direct children, or one group folder
+ *  down. Backend twin: `libs/common/asset_group.py` `character_dirs`. */
+export function characterFolders(chDir: TreeNode): CharacterFolder[] {
+  const out: CharacterFolder[] = [];
+  for (const c of chDir.children ?? []) {
+    if (c.type !== "directory") continue;
+    if (CHARACTER_DIR_RE.test(c.name)) {
+      out.push({ node: c, group: null });
+      continue;
+    }
+    for (const g of c.children ?? []) {
+      if (g.type === "directory" && CHARACTER_DIR_RE.test(g.name)) out.push({ node: g, group: c.name });
+    }
   }
   return out;
 }

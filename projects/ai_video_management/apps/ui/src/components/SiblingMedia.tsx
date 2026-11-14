@@ -23,7 +23,7 @@ import { archiveMedia, extractCharacterViews, mediaUrl, unarchiveMedia } from ".
 import { announceToast as announce } from "../lib/announce";
 import { ApiError } from "../types";
 import { ZoomableImage } from "./ZoomableImage";
-import { CHARACTER_DIR_SEGMENT } from "../lib/characterDir";
+import { CHARACTER_DIR_SEGMENT, CHARACTER_GROUP_SEGMENT } from "../lib/characterDir";
 
 const VIDEO_EXTS = new Set([".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v"]);
 const IMAGE_EXTS = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"]);
@@ -40,10 +40,11 @@ const RENDERS_DIR_NAME = "renders";
  * Mirrors the backend `_is_under_character_folder` in character_video__writer.py:
  * `characters/cN` may sit directly under the drama (legacy flat layout) OR under
  * one or more stage folders (staged pipeline, e.g. `2_世界观人设/characters/cN`),
- * so an optional intermediate-segment group precedes `characters/`.
+ * so an optional intermediate-segment group precedes `characters/`; the card
+ * itself may sit one unkeyed group folder down (`characters/近卫_sentinel/c65_Axe/`).
  */
 const CHARACTER_VIDEO_PATH_RE = new RegExp(
-  `^ai_videos/[^/_][^/]*/(?:[^/]+/)*characters/${CHARACTER_DIR_SEGMENT}/[^/]+\\.(?:mp4|mov|webm|mkv|avi|m4v)$`,
+  `^ai_videos/[^/_][^/]*/(?:[^/]+/)*characters/${CHARACTER_GROUP_SEGMENT}${CHARACTER_DIR_SEGMENT}/[^/]+\\.(?:mp4|mov|webm|mkv|avi|m4v)$`,
   "i",
 );
 

@@ -30,11 +30,18 @@ from libs.application.commands.research__command import ResearchCommand
 from libs.application.commands.review_reel__command import ReviewReelCommand
 from libs.application.commands.shot_take__command import ShotTakeCommand
 from libs.application.queries.character__query import CharacterQuery
+from libs.application.queries.character_reel__query import CharacterReelQuery
+from libs.application.queries.asset_overview__query import AssetOverviewQuery
+from libs.application.queries.demo_status__query import DemoStatusQuery
+from libs.application.queries.shop_items__query import ShopItemsQuery
+from libs.application.queries.rank_preview__query import RankPreviewQuery
 from libs.application.queries.episode_workflow__query import EpisodeWorkflowQuery
 from libs.application.queries.file__query import FileQuery
 from libs.application.queries.global_workflow__query import GlobalWorkflowQuery
+from libs.application.queries.process_qc__query import ProcessQcQuery
 from libs.application.queries.media__query import MediaQuery
 from libs.application.queries.request_log__query import RequestLogQuery
+from libs.application.queries.review_run__query import ReviewRunQuery
 from libs.application.queries.research__query import ResearchQuery
 from libs.application.queries.review_reel__query import ReviewReelQuery
 from libs.application.queries.scene_cut__query import SceneCutQuery
@@ -43,12 +50,19 @@ from libs.common.exposed_tree import ExposedTree
 from libs.common.origin import BoundOrigin
 from libs.common.safe_resolve import SafeResolver
 from libs.infrastructure.readers.character__reader import CharacterReader
+from libs.infrastructure.readers.character_reel__reader import CharacterReelReader
+from libs.infrastructure.readers.asset_overview__reader import AssetOverviewReader
+from libs.infrastructure.readers.demo_status__reader import DemoStatusReader
+from libs.infrastructure.readers.shop_items__reader import ShopItemsReader
+from libs.infrastructure.readers.rank_preview__reader import RankPreviewReader
 from libs.infrastructure.readers.episode_workflow__reader import EpisodeWorkflowReader
 from libs.infrastructure.readers.equipment_route__reader import EquipmentKeyRouter
 from libs.infrastructure.readers.file__reader import FileReader
 from libs.infrastructure.readers.global_workflow__reader import GlobalWorkflowReader
+from libs.infrastructure.readers.process_qc__reader import ProcessQcReader
 from libs.infrastructure.readers.prop_route__reader import PropKeyRouter
 from libs.infrastructure.readers.request_log__reader import RequestLogReader
+from libs.infrastructure.readers.review_run__reader import ReviewRunReader
 from libs.infrastructure.readers.research__reader import ResearchReader
 from libs.infrastructure.readers.review_reel__reader import ReviewReelReader
 from libs.infrastructure.readers.scene_cut__reader import SceneCutReader
@@ -87,11 +101,28 @@ class Container(containers.DeclarativeContainer):
     review_reel_command = providers.Factory(ReviewReelCommand, reader=review_reel_reader, writer=review_reel_writer)
     scene_cut_reader = providers.Singleton(SceneCutReader, repo_root=repo_root_path)
     scene_cut_query = providers.Factory(SceneCutQuery, reader=scene_cut_reader)
+    # 人物卡的样片与正片（follow-up 286）
+    character_reel_reader = providers.Singleton(CharacterReelReader, repo_root=repo_root_path)
+    character_reel_query = providers.Factory(CharacterReelQuery, reader=character_reel_reader)
+    # 资产总览（follow-up 293）
+    asset_overview_reader = providers.Singleton(AssetOverviewReader, repo_root=repo_root_path)
+    asset_overview_query = providers.Factory(AssetOverviewQuery, reader=asset_overview_reader)
+    # 英雄 demo 定版标记（follow-up 315）
+    demo_status_reader = providers.Singleton(DemoStatusReader, repo_root=repo_root_path)
+    demo_status_query = providers.Factory(DemoStatusQuery, reader=demo_status_reader)
+    # 商店货单（follow-up 316）
+    shop_items_reader = providers.Singleton(ShopItemsReader, repo_root=repo_root_path)
+    shop_items_query = providers.Factory(ShopItemsQuery, reader=shop_items_reader)
+    # 排行榜预览（follow-up 320）
+    rank_preview_reader = providers.Singleton(RankPreviewReader, repo_root=repo_root_path)
+    rank_preview_query = providers.Factory(RankPreviewQuery, reader=rank_preview_reader)
     # 草稿条的用户审核（follow-up 265）
     shot_take_writer = providers.Singleton(ShotTakeWriter, repo_root=repo_root_path)
     shot_take_command = providers.Factory(ShotTakeCommand, writer=shot_take_writer)
     global_workflow_reader = providers.Singleton(GlobalWorkflowReader, repo_root=repo_root_path)
     global_workflow_query = providers.Factory(GlobalWorkflowQuery, reader=global_workflow_reader)
+    process_qc_reader = providers.Singleton(ProcessQcReader, repo_root=repo_root_path)
+    process_qc_query = providers.Factory(ProcessQcQuery, reader=process_qc_reader)
 
     # --- Infrastructure singletons -----------------------------------------
     exposed_tree: providers.Singleton[ExposedTree] = providers.Singleton(
@@ -148,6 +179,7 @@ class Container(containers.DeclarativeContainer):
         CharacterReader, exposed=exposed_tree, resolver=safe_resolver
     )
     request_log_reader = providers.Singleton(RequestLogReader, exposed_tree=exposed_tree)
+    review_run_reader = providers.Singleton(ReviewRunReader, exposed_tree=exposed_tree)
 
     # --- Application-layer factories: one per aggregate Q/C -----------------
     media_command: providers.Factory[MediaCommand] = providers.Factory(
@@ -166,6 +198,7 @@ class Container(containers.DeclarativeContainer):
         TreeQuery, reader=tree_reader
     )
     request_log_query = providers.Factory(RequestLogQuery, reader=request_log_reader)
+    review_run_query = providers.Factory(ReviewRunQuery, reader=review_run_reader)
     research_query: providers.Factory[ResearchQuery] = providers.Factory(
         ResearchQuery, reader=research_reader, writer=research_writer
     )

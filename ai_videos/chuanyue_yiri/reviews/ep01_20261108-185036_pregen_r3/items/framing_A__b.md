@@ -1,0 +1,60 @@
+你是独立审稿人 **framing_A__b**（b 位 · codex · gpt-6.1-sol），只管「镜头规格」这一类。阶段：出片前（故事＋分镜＋prompt＋首帧/故事板）。
+先完整读审稿说明：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\reviews\ep01_20261108-185036_pregen_r3\BRIEF.md`，严格按它的规则和报告格式做。
+同一项还有另一位审稿人（a 位，另一个模型）独立审；**不要读它的报告**，也不要读 reconcile/ 下的文件。
+
+## 这一类是什么
+镜头规格：景别、机位、取景、人在画面里多大、节拍的秒数、画内人数，都和分镜、俯视站位图、首帧三者一致。
+
+想解决的问题：模型会照着首帧和故事板出：首帧画错一格、站位图和首帧对不上，整条视频就跟着错，或中途重新构图。
+
+为什么由这类模型审：看图 + 几何计算：按站位图算人在画面里多大、在哪，和首帧实测比
+
+## 范围
+s2、s3、s4、s8
+
+## 材料
+- 总索引 `materials/index.md`；每镜 `materials/shots/<场>_<镜>/spec.md`（及拼图）；全集台词 `materials/lines.md`。
+- 集目录、bible、故事稿、人物卡、场景卡路径见 BRIEF.md「材料」。
+- 上一轮问题清单 `previous.md`、这轮改动 `changes.md`：评分表里 R 一行逐条复核。
+
+## 要查什么
+节拍逐拍对时间（早了晚了多少）；景别、机位方向、运镜、自拍还是他拍、一镜到底；画内人数；镜组条里模型自己切镜的位置与设计分界；剪辑区间有没有切掉必要拍点；节拍是否过满、景别与动作是否冲突；镜组板与俯视图是否一致（模型会照板子出）。
+
+## 怎么查
+把 spec.md 的节拍换算到成片用的区间，对照 sheet4.jpg 的时间码。
+
+## 审法（按步骤做）
+1. 从 overhead.toml 取机位、焦距、人物坐标，算出人物应有的画高和画面位置
+2. 在首帧上实测人物画高和位置，算偏差
+3. 核对机位朝向与首帧视角
+4. 按节拍和走位速度算时间够不够
+
+## 评分维度（报告「## 评分表」里每维一行：`- <编号> <0–3> 证据：…`）
+- **F1** 景别与人物大小：按站位图距离与焦距算出的人物画高，和首帧实测相差不超过约 25%
+- **F2** 机位与朝向：站位图的机位方向、首帧的视角、文字的「镜头」三者一致
+- **F3** 画面位置：人和关键道具在画面里的左右上下位置，三处一致
+- **F4** 节拍秒数：动作节拍的秒数排得下（走多远、几秒到），没有挤压
+- **F5** 画内人数：写了几个人就几个人（含 extras），首帧一致
+- **F6** 轴线：同一场前后镜头的左右关系不跳轴
+- **F7** 一镜到底：单镜内不需要切镜；镜头运动写清且做得到
+- **R** 复核上一轮：previous.md 里本类别的每个问题（I 编号），逐条写是否已改好；在「## 评分表」写一行 `- R <分> 证据：…`
+
+评分（0–3 分）：
+- **0**：没查或查不了（必须说明原因）
+- **1**：有问题（问题表里要有对应条目）
+- **2**：基本没问题，有小瑕疵
+- **3**：没问题
+- 证据规则：打 2 或 3 分必须写证据：指到镜头、秒数、图上位置、文件行或计算数字；没有证据的高分按「没查」处理，打不了勾。（证据至少 8 个字）
+- 分歧：两位审稿人同一维度分数相差 ≥2，或一人 ≤1、另一人 ≥2，就是分歧，交裁决人。
+- 抽查：两人都打 ≥2 的维度，裁决人每个审稿项随机抽 2 维复核证据，专抓两个模型共同的盲点。
+- 打 1 分：问题表里必须有对应条目；打 0 分：写 `原因：` 说明为什么查不了。
+
+报告写到：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\reviews\ep01_20261108-185036_pregen_r3\reports\framing_A__b.md`
+
+## 最后一步（Codex 审稿位）
+Codex 沙箱只能看到工作区，python 不在里面，**你不用、也不要运行 tick**。只要：
+1. 把报告写到 `C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\reviews\ep01_20261108-185036_pregen_r3\reports\framing_A__b.md`；
+2. 在你最后的输出里单独打印一行：`REPORT WRITTEN: C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\reviews\ep01_20261108-185036_pregen_r3\reports\framing_A__b.md`。
+调用你的人会凭 `codex exec` 的运行日志代为登记（日志里必须有这一行，且晚于派单时间），不会替你写或改报告。
+（只有在沙箱外、能直接运行 python 时才可以自己打勾：`python tools/review_run.py tick "C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\reviews\ep01_20261108-185036_pregen_r3" framing_A --slot b --report "C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\reviews\ep01_20261108-185036_pregen_r3\reports\framing_A__b.md" --by "gpt-6.1-sol/framing_A__b"`；找不到 `python` 用 `C:/Users/light/AppData/Local/Programs/Python/Python311/python.exe`。）
+- 你在 Codex 里跑（`codex exec` 跑这份任务书）。

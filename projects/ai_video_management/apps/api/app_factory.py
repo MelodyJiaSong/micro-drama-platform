@@ -21,6 +21,7 @@ from starlette.types import Scope
 from apps.api.container import Container
 from apps.api.routes import router
 from libs.common.global_workflow import GlobalWorkflowError
+from libs.infrastructure.errors.process_qc__error import ProcessQcError
 from libs.domain.errors.episode_workflow__error import EpisodeWorkflowError
 from libs.domain.errors.review_reel__error import ReviewReelError
 from libs.domain.errors.scene_cut__error import SceneCutError
@@ -35,6 +36,7 @@ from libs.domain.errors.character_video__error import (
     FfmpegMissingForCharacterVideoError,
     InvalidCharacterVideoPathError,
     InvalidCharactersDirError,
+    NotCharacterCardDirError,
     NotCharacterVideoError,
     ViewExtractFailedError,
 )
@@ -80,6 +82,7 @@ _PLAIN: tuple[tuple[type[Exception], int, str, bool], ...] = (
     (InvalidCharacterVideoPathError, 400, "invalid_path", False),
     (InvalidCharactersDirError, 400, "invalid_characters_dir", False),
     (NotCharacterVideoError, 400, "not_a_character_video", False),
+    (NotCharacterCardDirError, 400, "not_a_character_dir", True),
     (CharacterVideoNotFoundError, 404, "not_found", False),
     (FfmpegMissingForCharacterVideoError, 500, "ffmpeg_missing", True),
     (ViewExtractFailedError, 500, "view_extract_failed", True),
@@ -119,6 +122,10 @@ def _register_exception_handlers(app: FastAPI) -> None:
     @app.exception_handler(GlobalWorkflowError)
     def _global_workflow_error(_req: Request, exc: GlobalWorkflowError) -> Response:
         return _err(exc.status_code, "global_workflow", message=str(exc))
+
+    @app.exception_handler(ProcessQcError)
+    def _process_qc_error(_req: Request, exc: ProcessQcError) -> Response:
+        return _err(exc.status_code, "process_qc", message=str(exc))
 
 
     @app.exception_handler(EpisodeWorkflowError)

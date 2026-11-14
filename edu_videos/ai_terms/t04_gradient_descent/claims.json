@@ -1,0 +1,209 @@
+{
+ "note": "事实台账：讲稿与画面上每个事实、数字、专业概念一条，写明出处与原文原话。实验算出的写 source: \"experiment\"，并指到 scenes/data.py 里的断言；比方里的虚构情节写 source: \"analogy\"。核对记录见 research.md。",
+ "claims": [
+  {
+   "id": "C01",
+   "lines": [
+    "l01",
+    "l02",
+    "l16",
+    "l17",
+    "l27"
+   ],
+   "claim": "上一期（t11）的打分与地形图：误差平方再平均（均方误差），两个旋钮所有拧法的分数画成地形图，颜色越深分越高；最低点起步价 10.2、每公里 2.54、分数 1.97（示意数据）",
+   "screen": [
+    "最低点",
+    "1.97",
+    "示意"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：网格最低点与 _shared/s1_data.py 的最小二乘一致；round(best_loss, 2) == 1.97"
+  },
+  {
+   "id": "C02",
+   "lines": [
+    "l04",
+    "l47"
+   ],
+   "claim": "真正的大模型有几千亿个旋钮（参数）；GPT-3 有 1750 亿个参数",
+   "screen": [
+    "几千亿个",
+    "1750 亿个旋钮"
+   ],
+   "source": "Brown et al., Language Models are Few-Shot Learners (GPT-3), arXiv:2005.14165, 2020, Table 2.1",
+   "quote": "GPT-3 175B or \"GPT-3\" | 175.0B | 96 | 12288 | 96 | 128 | 3.2M | 0.6 × 10−4"
+  },
+  {
+   "id": "C03",
+   "lines": [
+    "l18",
+    "l19",
+    "l20",
+    "l21",
+    "l22"
+   ],
+   "claim": "起点 = t11 第一组拧法（起步价 5、每公里 2），78 分；两个旋钮各往上拧 0.1：起步价让分数降 1.7，每公里降 11.2；两个都该往上拧，每公里的坡陡得多，第一步主要拧每公里",
+   "screen": [
+    "起步价 +0.1 −1.7",
+    "每公里 +0.1 −11.2",
+    "78"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：round(loss(START)) == 78；nudge 断言；g0 的两个分量同号且每公里分量大于 5 倍"
+  },
+  {
+   "id": "C04",
+   "lines": [
+    "l23",
+    "l24",
+    "l25",
+    "l26",
+    "l27",
+    "l28"
+   ],
+   "claim": "学习率 0.005：头三步分数 78 → 25 → 12 → 9（掉进谷里）；之后起步价一路往高、每公里往回，沿着又长又平的谷底走；步子越来越短；第 1075 步降到 2.0，走完 1200 步分数 1.985，旋钮约 9.9 / 2.57",
+   "screen": [
+    "三步掉进山谷",
+    "2.0",
+    "1200",
+    "9.9",
+    "2.57"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：Lg 单调降、Lg[4] < 10、1000 ≤ k2 ≤ 1100、round(Lg[-1], 1) == 2.0、step1 > 20 × step_late、起步价单调升"
+  },
+  {
+   "id": "C05",
+   "lines": [
+    "l30",
+    "l31",
+    "l32",
+    "l33"
+   ],
+   "claim": "学习率 0.0005（小十倍），同样 1200 步：分数 5.49，起步价才到 6.4，离最低点还远",
+   "screen": [
+    "0.0005",
+    "5.5",
+    "还在半路"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：Ls 单调降、Ls[-1] > 2.5 × best、Ps[-1][0] < best_base − 3、LR_GOOD / LR_SMALL == 10"
+  },
+  {
+   "id": "C06",
+   "lines": [
+    "l34",
+    "l35",
+    "l36"
+   ],
+   "claim": "学习率 0.021（原来 0.005 的 4.2 倍，口播「四倍多」/ about four times）：第一步分数就升到 96，之后 118、145、180、224，每一步跳到山谷对面、一次比一次离谷底远，第 5 步跳出地图",
+   "screen": [
+    "0.021",
+    "96",
+    "118",
+    "145",
+    "224",
+    "飞出地图"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：Lb 单调升、side 交替、离谷底距离递增、out_k == 5、LR_BIG / LR_GOOD < 5"
+  },
+  {
+   "id": "C07",
+   "lines": [
+    "l38"
+   ],
+   "claim": "学习率常常是最要紧的一个超参数（设定）",
+   "screen": [
+    "学习率：常常最要紧"
+   ],
+   "source": "Bengio, Practical Recommendations for Gradient-Based Training of Deep Architectures, arXiv:1206.5533 (2012), §3.1.1",
+   "quote": "This is often the single most important hyper-parameter and one should always make sure that it has been tuned"
+  },
+  {
+   "id": "C08",
+   "lines": [
+    "l41",
+    "l42",
+    "l43"
+   ],
+   "claim": "随机梯度下降：每一步只用随机抽的一小批数据（子样本）算坡度；画面上每步随机抽 3 趟（示意），路歪扭，最后也在谷底附近",
+   "screen": [
+    "随机梯度下降",
+    "每步随机抽 3 趟",
+    "示意"
+   ],
+   "source": "Kingma & Ba, Adam: A Method for Stochastic Optimization, arXiv:1412.6980 (ICLR 2015), §1；画面：scenes/data.py 的 sgd 断言",
+   "quote": "optimization can be made more efficient by taking gradient steps w.r.t. individual subfunctions, i.e. stochastic gradient descent (SGD) or ascent"
+  },
+  {
+   "id": "C09",
+   "lines": [
+    "l44"
+   ],
+   "claim": "GPT-3 每一步（满批）看 320 万个词元，总共训练 3000 亿个词元，约十万分之一",
+   "screen": [
+    "≈ 十万分之一"
+   ],
+   "source": "Brown et al. 2020, Table 2.1（批大小 3.2M 词元；caption: All models were trained for a total of 300 billion tokens）",
+   "quote": "All models were trained for a total of 300 billion tokens.",
+   "check": "scenes/data.py：0.9e-5 < 3.2e6 / 300e9 < 1.2e-5"
+  },
+  {
+   "id": "C10",
+   "lines": [
+    "l45"
+   ],
+   "claim": "Adam（Kingma 与 Ba，arXiv 2014 年 12 月，ICLR 2015）按每个参数过去的梯度，给不同参数各自算自适应的步长（学习率）",
+   "screen": [
+    "Adam",
+    "Kingma 和 Ba · 2014",
+    "每个旋钮单独定步子"
+   ],
+   "source": "Kingma & Ba, Adam: A Method for Stochastic Optimization, arXiv:1412.6980, §1",
+   "quote": "The method computes individual adaptive learning rates for different parameters from estimates of first and second moments of the gradients"
+  },
+  {
+   "id": "C11",
+   "lines": [
+    "l46"
+   ],
+   "claim": "GPT-3 用 Adam 训练；Meta 的 LLaMA 用 AdamW（Adam 的改版；口播说 Llama）",
+   "screen": [
+    "GPT-3 Adam",
+    "Llama Adam 改版"
+   ],
+   "source": "Brown et al. 2020, Appendix B；Touvron et al., LLaMA: Open and Efficient Foundation Language Models, arXiv:2302.13971 (2023), §2.3",
+   "quote": "To train all versions of GPT-3, we use Adam with β1 = 0.9, β2 = 0.95, and ϵ = 10^-8 ／ Our models are trained using the AdamW optimizer"
+  },
+  {
+   "id": "C12",
+   "lines": [
+    "l08",
+    "l09",
+    "l10",
+    "l11"
+   ],
+   "claim": "蒙着眼下山的比方",
+   "source": "analogy"
+  },
+  {
+   "id": "C13",
+   "lines": [
+    "l12",
+    "l13",
+    "l14",
+    "l15",
+    "l26",
+    "l49"
+   ],
+   "claim": "梯度：把每个旋钮往哪边拧、分数降得最快合起来，就是梯度指给你的方向（严格说梯度指分数升得最快的方向，梯度下降逆着它走；口播说「指给你的方向」不说「梯度就是下降方向」）；每一步每个旋钮拧「学习率 × 坡度」：步子大小由学习率来管，也跟着坡变（l15、l26、l49）；学习率训练前由人设定",
+   "screen": [
+    "分降得最快的方向",
+    "每一步拧多大"
+   ],
+   "source": "s1_bible 统一说法（概念定义，不是外部数字）；每步 = 学习率 × 坡度 见 scenes/data.py 的 descend()",
+   "quote": "梯度：每个旋钮往哪边拧、分降得最快（s1_bible）"
+  }
+ ]
+}

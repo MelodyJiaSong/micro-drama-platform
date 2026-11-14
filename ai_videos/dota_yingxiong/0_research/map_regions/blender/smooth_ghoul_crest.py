@@ -1,0 +1,29 @@
+"""Preserve anatomy and replace hard polygon material edges with smooth masks."""
+from pathlib import Path
+import bpy,json,numpy as np,sys,math,random
+from mathutils import Vector
+sys.path.insert(0,str(Path(__file__).resolve().parent));from inspect_model import look_at
+ROOT=Path(__file__).resolve().parents[3];folder=next(next(ROOT.glob('2_*')).glob('characters/*/m4_Ghoul/model_3d'));out=folder/'r13';out.mkdir(exist_ok=True)
+bpy.ops.wm.open_mainfile(filepath=str(folder/'r09/inspection/m4_r09.blend'));coll=bpy.data.collections['ASSET_m4'];body=next(o for o in coll.objects if o.type=='MESH' and len(o.data.polygons)>100000);me=body.data;v=np.empty(len(me.vertices)*3,np.float32);me.vertices.foreach_get('co',v);v=v.reshape(-1,3);loops=np.empty(len(me.loops),np.int32);me.loops.foreach_get('vertex_index',loops);labels=np.empty(len(me.polygons),np.int32);me.polygons.foreach_get('material_index',labels);tri=loops.reshape(-1,3);mask=np.zeros(len(v),np.float32);mask[np.unique(tri[labels==1])]=1
+edges=np.empty(len(me.edges)*2,np.int32);me.edges.foreach_get('vertices',edges);edges=edges.reshape(-1,2);counts=np.bincount(edges.ravel(),minlength=len(v)).astype(np.float32)
+for i in range(12):
+    sums=np.bincount(edges[:,0],weights=mask[edges[:,1]],minlength=len(v))+np.bincount(edges[:,1],weights=mask[edges[:,0]],minlength=len(v));mask=.35*mask+.65*sums/np.maximum(counts,1)
+weight=np.clip((mask-.45)/.35,0,1)*.55
+for i in range(45):
+    avg=np.column_stack([(np.bincount(edges[:,0],weights=v[edges[:,1],axis],minlength=len(v))+np.bincount(edges[:,1],weights=v[edges[:,0],axis],minlength=len(v)))/np.maximum(counts,1) for axis in range(3)]);v=v*(1-weight[:,None])+avg*weight[:,None]
+me.vertices.foreach_set('co',v.astype(np.float32).ravel());me.update()
+attr=me.attributes.new(name='Soft_hair_boundary',type='FLOAT',domain='POINT');attr.data.foreach_set('value',mask);mat=me.materials[0];nt=mat.node_tree;bs=nt.nodes.get('Principled BSDF');attrib=nt.nodes.new('ShaderNodeAttribute');attrib.attribute_name='Soft_hair_boundary';r=nt.nodes.new('ShaderNodeValToRGB');r.color_ramp.elements[0].position=.12;r.color_ramp.elements[1].position=.70;nt.links.new(attrib.outputs['Fac'],r.inputs[0]);hairshader=nt.nodes.new('ShaderNodeBsdfPrincipled');hairshader.inputs['Base Color'].default_value=(.0015,.001,.0006,1);hairshader.inputs['Roughness'].default_value=.96;hairshader.inputs['Specular IOR Level'].default_value=.04;mix=nt.nodes.new('ShaderNodeMixShader');nt.links.new(r.outputs[0],mix.inputs[0]);nt.links.new(bs.outputs[0],mix.inputs[1]);nt.links.new(hairshader.outputs[0],mix.inputs[2]);nt.links.new(mix.outputs[0],nt.nodes.get('Material Output').inputs['Surface']);labels[labels==1]=0
+data=np.load(folder/'r04/material_probe.npz');co=data['co'];rgb=data['colors']
+enamel=me.materials[2];nt=enamel.node_tree;eb=nt.nodes.get('Principled BSDF');src=next(n for n in nt.nodes if n.type=='TEX_IMAGE' and n.image.colorspace_settings.name=='sRGB');hue=nt.nodes.new('ShaderNodeHueSaturation');hue.inputs['Saturation'].default_value=.18;hue.inputs['Value'].default_value=.65;nt.links.new(src.outputs['Color'],hue.inputs['Color']);nt.links.new(hue.outputs[0],eb.inputs['Base Color']);eb.inputs['Roughness'].default_value=.5
+cloth=(abs(co[:,0])<.17)&(co[:,2]>.28)&(co[:,2]<.67)&(co[:,1]<.045)&(rgb[:,0]<rgb[:,1]*1.20)&(rgb[:,2]>rgb[:,0]*.64);labels[cloth.reshape(-1,3).sum(1)>=2]=3;me.polygons.foreach_set('material_index',labels)
+old=bpy.data.objects['Black_bristle_hair'];old.hide_render=True;hairmat=old.data.materials[0];hb=hairmat.node_tree.nodes.get('Principled BSDF');hb.inputs['Roughness'].default_value=.94;hb.inputs['Specular IOR Level'].default_value=.06
+norm=np.empty(len(me.vertices)*3,np.float32);me.vertices.foreach_get('normal',norm);norm=norm.reshape(-1,3);candidates=np.flatnonzero(mask>.65);rng=random.Random(412);cu=bpy.data.curves.new('Dense_coarse_hair','CURVE');cu.dimensions='3D';cu.bevel_depth=.00024;cu.bevel_resolution=1;cu.materials.append(hairmat)
+for i in range(48000):
+    idx=int(candidates[rng.randrange(len(candidates))]);root=Vector(v[idx]);normal=Vector(norm[idx]);direction=(normal*.35+Vector((rng.uniform(-.1,.1),.6,.65))).normalized();length=rng.uniform(.028,.075);phase=rng.random()*math.tau;s=cu.splines.new('POLY');s.points.add(8)
+    for j,p in enumerate(s.points):t=j/8;co0=root+normal*.0008+direction*length*t+Vector((.002*math.sin(t*9+phase)*t,0,-.025*t*t));p.co=(*co0,1);p.radius=max(.02,1-t)
+o=bpy.data.objects.new('Anatomical_surface_groom',cu);coll.objects.link(o)
+for prefix in ['Recessed_eyeball','Amber_iris','Dark_pupil']:
+    for o in [o for o in coll.objects if o.name.startswith(prefix)]:
+        side=-1 if o.location.x<0 else 1;offset=0 if prefix=='Recessed_eyeball' else -.008 if prefix=='Amber_iris' else -.010;o.location=(side*.056,-.459+offset,.975)
+scene=bpy.context.scene;scene.cycles.samples=16;scene.render.resolution_x=720;scene.render.resolution_y=720;camera=scene.camera;camera.data.ortho_scale=.57;camera.location=(0,-2,1.20);look_at(camera,(0,-.38,1.04));bpy.ops.file.pack_all();bpy.ops.wm.save_as_mainfile(filepath=str(out/'authoring.blend'));scene.render.filepath=str(out/'face_preview.png');bpy.ops.render.render(write_still=True)
+(out/'authoring.json').write_text(json.dumps({'revision':'r13','status':'author_preview_pending','source':'r09 anatomy preserved; smoothed fused crest and separate matte fibre shader','groom_strands':48000},indent=2));print('PREVIEW',scene.render.filepath,flush=True)

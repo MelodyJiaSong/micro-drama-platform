@@ -1,0 +1,124 @@
+{
+  "renderer": "rank_scroll 0.2.0",
+  "output": "C:\\workspace\\micro-drama-platform\\ai_videos\\paihangbang\\episodes\\ep06_best_selling_manga\\render\\ep06_best_selling_manga_master.mp4",
+  "output_sha256": "d55f4e103204467c7f2e4604b19b7077f980b449c225283ea9ca471ad0a493c9",
+  "duration_s": 217.467,
+  "fps": 60,
+  "size": [
+    1920,
+    1080
+  ],
+  "draft": false,
+  "range_s": [
+    0.0,
+    217.46666666666667
+  ],
+  "theme": "manga",
+  "render_seconds": 373.5,
+  "timeline": [
+    [
+      "intro",
+      0.0,
+      5.0
+    ],
+    [
+      "scroll",
+      5.0,
+      182.46666666666667
+    ],
+    [
+      "champion",
+      182.46666666666667,
+      188.46666666666667
+    ],
+    [
+      "tally",
+      188.46666666666667,
+      195.46666666666667
+    ],
+    [
+      "sources",
+      195.46666666666667,
+      199.46666666666667
+    ],
+    [
+      "end",
+      199.46666666666667,
+      217.46666666666667
+    ]
+  ],
+  "inputs": {
+    "data.json": "35762ff67c9018ab73afbc58ef719ccf76cfd53d6ea14e8ab64937f97d65dc2e",
+    "assets.json": "8e77100a960cadadbb9dfcbe54ac3f0332c11ce53bb4fc0ba35fadc576e84818",
+    "music": [
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\paihangbang\\episodes\\ep06_best_selling_manga\\assets\\music\\ep06_music_bed_v3.wav",
+        "sha256": "97f70e55d06983e80288761c6bb765077ad8e760616b75048e9d160c82d424df",
+        "in_s": 0.0,
+        "out_s": 217.467
+      }
+    ],
+    "music_bed": {
+      "fit": "none",
+      "crossfade_s": 4.0,
+      "loudnorm_pass1": {
+        "input_i": "-16.28",
+        "input_tp": "-5.05",
+        "input_lra": "2.80",
+        "input_thresh": "-26.30",
+        "output_i": "-15.38",
+        "output_tp": "-4.38",
+        "output_lra": "1.70",
+        "output_thresh": "-25.39",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.62"
+      }
+    }
+  },
+  "ffmpeg": [
+    "C:\\Users\\light\\AppData\\Local\\Microsoft\\WinGet\\Packages\\yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-N-125365-g9a01c1cb6a-win64-gpl\\bin\\ffmpeg.EXE",
+    "-y",
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-f",
+    "rawvideo",
+    "-pix_fmt",
+    "bgra",
+    "-s",
+    "1920x1080",
+    "-r",
+    "60",
+    "-i",
+    "-",
+    "-i",
+    "C:\\workspace\\micro-drama-platform\\ai_videos\\paihangbang\\episodes\\ep06_best_selling_manga\\render\\ep06_best_selling_manga_master.music.wav",
+    "-map",
+    "0:v",
+    "-map",
+    "1:a",
+    "-c:v",
+    "libx264",
+    "-preset",
+    "medium",
+    "-crf",
+    "16",
+    "-profile:v",
+    "high",
+    "-pix_fmt",
+    "yuv420p",
+    "-c:a",
+    "aac",
+    "-b:a",
+    "256k",
+    "-ar",
+    "48000",
+    "-t",
+    "217.467",
+    "-movflags",
+    "+faststart",
+    "C:\\workspace\\micro-drama-platform\\ai_videos\\paihangbang\\episodes\\ep06_best_selling_manga\\render\\ep06_best_selling_manga_master.mp4"
+  ],
+  "python": "3.11.9",
+  "skia": "144.1"
+}

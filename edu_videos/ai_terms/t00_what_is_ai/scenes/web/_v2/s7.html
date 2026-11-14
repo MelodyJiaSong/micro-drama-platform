@@ -1,0 +1,63 @@
+<style>
+  .head { position: absolute; left: var(--mx); top: var(--mt); }
+  #rings { position: absolute; left: 120px; top: 150px; }
+  .def { position: absolute; left: 1020px; top: 230px; width: 800px; }
+  .def .h2 { margin-top: 10px; }
+  html[lang="en"] .def .h2, html[lang="en"] .term .h2, html[lang="en"] .yes, html[lang="en"] .no { font-size: 42px; }
+  .yes, .no { position: absolute; left: 1020px; width: 800px; display: flex; align-items: baseline; gap: 18px; }
+  .yes { top: 450px; } .no { top: 560px; }
+  html[lang="en"] .yes { top: 430px; } html[lang="en"] .no { top: 560px; }
+  .term { position: absolute; left: 1020px; width: 800px; }
+  .diff { position: absolute; left: 1020px; top: 680px; width: 800px; }
+  #t2 { top: 600px; } #t3 { top: 540px; } #t4 { top: 600px; }
+  .scope { position: absolute; left: 1020px; top: 800px; width: 800px; }
+</style>
+
+<div class="head"><div class="eyebrow" data-zh="一圈套一圈" data-en="Circles within circles"></div></div>
+<svg id="rings"></svg>
+<div class="def" id="def"><div class="caption" data-zh="最外圈：AI（人工智能）" data-en="Outermost: AI (artificial intelligence)"></div>
+  <div class="h2" data-zh="让电脑做那些<br>看起来需要「聪明」的事" data-en="Getting computers to do things<br>that seem to take intelligence"></div></div>
+<div class="yes h2" id="yes"><span class="c-good">✓</span><span data-zh='人写规则的下棋程序 <span class="caption">也算 AI</span>' data-en='A rule-based chess program: <span class="c-good">counts</span>'></span></div>
+<div class="diff caption" id="diff" data-zh="区别在于：做的事看起来需不需要「聪明」" data-en="The difference: whether the task seems to need intelligence"></div>
+<div class="no h2 sub" id="no"><span class="faint">✗</span><span data-zh='算工资的普通程序 <span class="caption">不算</span>' data-en='An ordinary payroll program: <span class="faint">doesn&#39;t</span>'></span></div>
+<div class="term" id="t2"><div class="h2" data-zh='<span class="accent">机器学习</span>：从例子里学' data-en='<span class="accent">Machine learning</span>: learning from examples'></div></div>
+<div class="term" id="t3"><div class="h2" data-zh='<span class="accent">深度学习</span>：用神经网络<br>（很多层简单计算叠起来）' data-en='<span class="accent">Deep learning</span>: neural networks<br>(many layers of simple calculations)'></div>
+  <div class="caption" data-zh="deep learning · neural network" data-en=""></div>
+  <div class="body sub" id="t3b" style="margin-top:14px" data-zh="名字别当真：和大脑神经只有一点点像；「深」只是层数多" data-en="Don&#39;t trust the names: only loosely like brain neurons; “deep” just means many layers"></div></div>
+<div class="term" id="t4"><div class="h2" data-zh='<span class="accent">大语言模型</span>：用深度学习做出来' data-en='<span class="accent">Large language models</span>: built with deep learning'></div>
+  <div class="caption" data-zh="large language model, LLM" data-en=""></div></div>
+<div class="scope body ink2" id="scope" data-zh='这一期说的「今天的 AI」，就是<span class="accent">机器学习</span>这一圈' data-en='In this episode, “today&#39;s AI” means the <span class="accent">machine learning</span> circle'></div>
+
+<script>
+const T = EDU.tl;
+// 同心圆：每一环等宽；规则示例放进 AI 环带（AI 圈内、机器学习圈外）
+const svg = d3.select("#rings").attr("width", 860).attr("height", 780), cx = 430, cy = 400;
+const R = [360, 270, 180, 90], col = ["--ink", "--accent", "--accent", "--accent-text"];   // 只用墨 + 琥珀深浅，不借用数据色（紫 = 验证、绿 = 正确）
+const names = [["AI", "AI"], ["机器学习", "Machine learning"], ["深度学习", "Deep learning"], ["大语言模型", "LLMs"]];
+const rings = R.map((r, i) => {
+  const g = svg.append("g");
+  g.append("circle").attr("cx", cx).attr("cy", cy).attr("r", r).attr("fill", css(col[i])).attr("fill-opacity", [0.03, 0.06, 0.1, 0.16][i])
+    .attr("stroke", css(col[i])).attr("stroke-width", 3);
+  g.append("text").attr("x", cx).attr("y", i === 3 ? cy + 10 : cy - r + 56).attr("text-anchor", "middle").attr("font-size", i === 3 ? 28 : (EDU.lang === "en" ? 28 : 34))
+    .attr("font-weight", 700).attr("fill", css(col[i])).text(L(...names[i]));
+  return g.node();
+});
+const rule = svg.append("g");
+rule.append("text").attr("x", cx).attr("y", cy + 322).attr("text-anchor", "middle").attr("font-size", EDU.lang === "en" ? 22 : 26).attr("font-weight", 600)
+  .attr("fill", css("--ink2")).text(L("下棋程序（人写规则）", "Chess program (rules)"));
+const ruleN = rule.node();
+gsap.set(["#diff", "#def", "#yes", "#no", "#t2", "#t3", "#t3b", "#t4", "#scope", ruleN, ...rings], { opacity: 0 });
+// l39 AI 的定义与边界
+EDU.in(rings[0], EDU.t("l39", 0.05));
+EDU.in("#def", EDU.t("l39", 0.15));
+EDU.in(["#yes", ruleN], EDU.t("l39", 0.55));
+EDU.in("#no", EDU.t("l39", 0.8)); EDU.in("#diff", EDU.t("l39", 0.9));
+// l40 机器学习 → 深度学习（神经网络）
+EDU.out(["#yes", "#no", "#diff"], EDU.t("l40"));
+EDU.in([rings[1], "#t2"], EDU.t("l40", 0.05));
+EDU.out("#t2", EDU.t("l40", 0.3)); EDU.in([rings[2], "#t3"], EDU.t("l40", 0.32)); EDU.in("#t3b", EDU.t("l40", 0.68));
+// l41 大语言模型；本期范围
+EDU.out("#t3", EDU.t("l41")); EDU.in([rings[3], "#t4"], EDU.t("l41", 0.05));
+EDU.focus(rings[1], EDU.t("l41", 0.55)); EDU.tl.to(rings[1].querySelector("circle"), { attr: { "stroke-width": 8 }, duration: 0.5 }, EDU.t("l41", 0.55)); EDU.in("#scope", EDU.t("l41", 0.55));
+EDU.out(["#rings", "#def", "#t4", "#scope"], EDU.S.duration - 0.5);
+</script>

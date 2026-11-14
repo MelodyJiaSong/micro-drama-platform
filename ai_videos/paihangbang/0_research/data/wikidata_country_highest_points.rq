@@ -1,0 +1,5 @@
+SELECT ?c ?cLabel ?iso ?p ?pLabel (MAX(?e) AS ?elev) WHERE {
+  ?c wdt:P31 wd:Q3624078; wdt:P297 ?iso; wdt:P610 ?p .
+  ?p p:P2044/psn:P2044/wikibase:quantityAmount ?e .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+} GROUP BY ?c ?cLabel ?iso ?p ?pLabel ORDER BY DESC(?elev)

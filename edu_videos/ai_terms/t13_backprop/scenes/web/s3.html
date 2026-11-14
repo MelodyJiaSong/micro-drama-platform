@@ -1,0 +1,80 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  #gears { position: absolute; left: var(--mx); top: 170px; overflow: visible; }
+  .ttl { position: absolute; left: 1100px; top: 250px; }
+  .ttl .t { position: absolute; left: 0; top: 0; white-space: nowrap; }
+  html[lang=en] .ttl .t { font-size: 54px; }
+  .eq { position: absolute; left: 1100px; top: 430px; font-size: 130px; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .note { position: absolute; left: 1100px; top: 450px; width: 700px; }
+  .note .h2 + .h2 { margin-top: 18px; }
+</style>
+
+<div class="eb eyebrow" data-zh="02 · 倒着算" data-en="02 · Working backward"></div>
+<svg id="gears" width="960" height="740"></svg>
+<div class="ttl">
+  <div class="h1 t" id="ta" data-zh="一串齿轮" data-en="A chain of gears"></div>
+  <div class="h1 t" id="tb" data-zh="指针转几格？" data-en="How far does it go?"></div>
+  <div class="h1 t" id="tc" data-zh='<span class="c-bad">倒着算</span>，每处乘一次' data-en='<span class="c-bad">Backward</span>, gear by gear'></div>
+  <div class="h1 t" id="td" data-zh="神经网络也像一串齿轮" data-en="Networks work like gears"></div>
+</div>
+<div class="eq" id="eq" data-zh='2 × 3 = <span class="accent">6</span>' data-en='2 × 3 = <span class="accent">6</span>'></div>
+<div class="note" id="n1"><div class="h2 ink2" data-zh="算过的，接着用" data-en="Reuse results"></div></div>
+<div class="note" id="n2"><div class="h2 ink2" data-zh="旋钮 → 一层层 → 答案" data-en="Knob → layers → answer"></div>
+  <div class="h2 c-bad" data-zh="错误 ← 传回去" data-en="Error flows back"></div></div>
+
+<script>
+const T = EDU.tl, svg = d3.select("#gears");
+const Y = 480, G = [{ x: 250, r: 220, n: 60 }, { x: 580, r: 110, n: 30 }, { x: 726.7, r: 36.7, n: 10 }];
+const fills = ["--surface2", "--accent-soft", "--surface2"];
+const gs = G.map((g, i) => {
+  const o = svg.append("g").attr("transform", `translate(${g.x},${Y})`);
+  const b = o.append("g");
+  b.append("path").attr("d", gearPath(g.r, g.n, 14)).attr("fill", css(fills[i])).attr("stroke", css("--ink2")).attr("stroke-width", 3).attr("stroke-linejoin", "round");
+  b.append("circle").attr("r", Math.max(8, g.r * .14)).attr("fill", css("--ink2"));
+  if (i < 2) b.append("line").attr("x1", 0).attr("y1", 0).attr("x2", 0).attr("y2", -g.r * .7).attr("stroke", css("--ink2")).attr("stroke-width", 6).attr("stroke-linecap", "round");
+  return { o: o.node(), b: b.node() };
+});
+/* 指针：装在第三个齿轮上，后面一段刻度弧 */
+const P0 = [G[2].x, Y], LEN = 200;
+const scale = svg.append("path").attr("d", `M${P0[0] - LEN},${Y} A${LEN},${LEN} 0 0 1 ${P0[0] + LEN},${Y}`).attr("fill", "none")
+  .attr("stroke", css("--hair")).attr("stroke-width", 6).attr("stroke-dasharray", "2 22").attr("stroke-linecap", "round").node();
+const needle = svg.append("line").attr("x1", P0[0]).attr("y1", Y).attr("x2", P0[0]).attr("y2", Y - LEN).attr("stroke", css("--d-bad"))
+  .attr("stroke-width", 8).attr("stroke-linecap", "round").node();
+gsap.set(needle, { rotation: -60, svgOrigin: `${P0[0]} ${Y}` });
+const capt = svg.append("text").attr("x", P0[0]).attr("y", Y - LEN - 26).attr("text-anchor", "middle").attr("font-size", 30).attr("font-weight", 600)
+  .attr("fill", css("--d-bad")).text(EDU.tr("指针", "Pointer")).node();
+/* 倍数标签 */
+const rl = (t, x, y) => svg.append("text").attr("x", x).attr("y", y).attr("text-anchor", "middle").attr("font-size", 52).attr("font-weight", 700)
+  .attr("fill", css("--accent-text")).text(t).node();
+const r2 = rl("×2", G[1].x, Y + G[1].r + 80), r3 = rl("×3", G[2].x + 10, Y + G[1].r + 80);
+/* 倒着算：从指针往回，一路乘起来（每个齿轮下方写「拧它一格，指针动几格」） */
+const bk = [[G[2].x, "1"], [G[1].x, "3"], [G[0].x, "6"]].map(([x, t]) => svg.append("text").attr("x", x).attr("y", 175).attr("text-anchor", "middle")
+  .attr("font-size", 64).attr("font-weight", 700).attr("fill", css("--d-bad")).text(t).node());
+const back = svg.append("path").attr("d", `M${G[2].x + 40},${120} C${G[1].x},${40} ${G[0].x + 160},${40} ${G[0].x + 50},${110}`)
+  .attr("fill", "none").attr("stroke", css("--d-bad")).attr("stroke-width", 6).attr("stroke-dasharray", "4 12").attr("stroke-linecap", "round").node();
+const tip = svg.append("path").attr("d", "M0,0 L-24,-12 L-24,12 Z").attr("fill", css("--d-bad"))
+  .attr("transform", `translate(${G[0].x + 50},${112}) rotate(125)`).node();
+
+gsap.set(["#gears", "#ta", "#tb", "#tc", "#td", "#eq", "#n1", "#n2", r2, r3, ...bk, back, tip], { opacity: 0 });
+EDU.in(".eb", 0);
+const spin = (at, a1, d) => {   // 第一个转 a1 度：第二个反转 2 倍，第三个（连指针）正转 6 倍
+  T.to(gs[0].b, { rotation: `+=${a1}`, svgOrigin: "0 0", duration: d, ease: "power2.inOut" }, at);
+  T.to(gs[1].b, { rotation: `-=${2 * a1}`, svgOrigin: "0 0", duration: d, ease: "power2.inOut" }, at);
+  T.to(gs[2].b, { rotation: `+=${6 * a1}`, svgOrigin: "0 0", duration: d, ease: "power2.inOut" }, at);
+  T.to(needle, { rotation: `+=${6 * a1}`, svgOrigin: `${P0[0]} ${Y}`, duration: d, ease: "power2.inOut" }, at);
+};
+// l12 一串齿轮，最后一个带着指针
+EDU.in("#gears", EDU.t("l12", .3), { y: 0, d: 1 }); EDU.in("#ta", EDU.t("l12", .35));
+// l13 ×2、×3
+EDU.in(r2, EDU.t("l13", .1)); EDU.in(r3, EDU.t("l13", .55)); spin(EDU.t("l13", .1), 5, 1.6);
+// l14 拧第一个一格，指针转几格？2 × 3 = 6
+EDU.out("#ta", EDU.t("l14")); EDU.in("#tb", EDU.t("l14", .03)); spin(EDU.t("l14", .15), 5, 1.4); EDU.in("#eq", EDU.t("l14", .55));
+// l15 倒着算：从指针往回，每往前一个齿轮再乘一个倍数
+EDU.out(["#tb", "#eq"], EDU.t("l15")); EDU.in("#tc", EDU.t("l15", .03));
+T.set([back, tip], { opacity: 1 }, EDU.t("l15", .15)); EDU.draw(back, EDU.t("l15", .15), 1.6);
+bk.forEach((e, i) => EDU.in(e, EDU.t("l15", .2 + i * .25)));
+// l16 每个齿轮只管自己那一处，算过的接着用
+EDU.in("#n1", EDU.t("l16", .1));
+// l17 神经网络也像一串齿轮；错误顺着它倒着传回去
+EDU.out(["#tc", "#n1"], EDU.t("l17")); EDU.in("#td", EDU.t("l17", .03)); EDU.in("#n2", EDU.t("l17", .2));
+</script>

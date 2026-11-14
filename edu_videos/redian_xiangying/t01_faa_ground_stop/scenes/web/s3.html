@@ -1,0 +1,205 @@
+<style>
+  /* 屏 A：24 小时不能停 */
+  .nonstop { position: absolute; left: var(--mx); right: var(--mx); top: 250px; display: flex; gap: 72px; align-items: center; }
+  .nonstop .slot { width: 820px; flex: none; }
+  .nonstop .body { margin-top: 18px; }
+  /* 屏 B/C：边飞边换 */
+  .ttl { position: absolute; left: var(--mx); top: 160px; }
+  #fx3 { left: 400px; top: 270px; width: 1120px; height: 630px; }
+  #lanes { position: absolute; left: var(--mx); top: 330px; }
+  /* 屏 D：循环 */
+  #cyc { position: absolute; left: 400px; top: 200px; }
+  /* 屏 E：GAO 138 格 */
+  .gh { position: absolute; left: var(--mx); top: 170px; }
+  #grid { position: absolute; left: var(--mx); top: 300px; }
+  .legend { position: absolute; left: var(--mx); top: 735px; display: flex; gap: 64px; }
+  .legend .it { display: flex; align-items: center; gap: 16px; }
+  .legend i { width: 30px; height: 30px; border-radius: 6px; display: inline-block; }
+  .legend b { font-weight: 700; }
+  /* 屏 F：Bedford 引语卡 */
+  .bq { position: absolute; left: var(--mx); right: var(--mx); top: 220px; padding: 56px 64px; display: flex; gap: 56px; align-items: center; }
+  .bq .slot { width: 360px; flex: none; }
+  .bq .h2 { margin-top: 18px; }
+  .bq .orig { margin-top: 22px; }
+  /* 屏 G：承包商时间线 */
+  .th { position: absolute; left: var(--mx); top: 170px; }
+  #gantt { position: absolute; left: var(--mx); top: 330px; }
+</style>
+
+<div class="eb eyebrow" data-zh="03 · 为什么「动它」最危险" data-en="03 · Why upgrades are risky"></div>
+
+<!-- 屏 A -->
+<div class="nonstop" id="nonstop">
+  <figure class="slot" data-src="img/source/commons/New_York_Air_Route_Traffic_Control_Center.png" style="--h:470px">
+    <figcaption data-zh="纽约航路管制中心 · 图：FAA / Wikimedia Commons" data-en="New York Center · Photo: FAA / Wikimedia Commons"></figcaption></figure>
+  <div><div class="h1" id="ns1" data-zh="一天 24 小时不能停" data-en="Always on"></div>
+    <div class="body sub" id="ns2" data-zh="没法关机重装" data-en="No shutdown window"></div></div>
+</div>
+
+<!-- 屏 B（sd3 模拟画面：线从旧机架拔下、插进新光纤机架，两边的灯一直亮） -->
+<div class="ttl h1" id="ttl" data-zh="边飞边换" data-en="Upgrade mid-flight"></div>
+<div class="footage" id="fx3"><video id="v3" src="img/footage/sd3_cable_swap.mp4" data-start="{{t:l42:0}}" data-duration="{{d:l42:0>l43:1|6}}"
+  data-media-start="0" data-track-index="1" muted playsinline></video></div>
+<svg id="lanes" width="1680" height="420"></svg>
+
+<!-- 屏 D -->
+<svg id="cyc" width="1140" height="660"></svg>
+
+<!-- 屏 E -->
+<div class="gh h1" id="gh" data-zh="138 个空管系统" data-en="138 air traffic systems"></div>
+<svg id="grid"></svg>
+<div class="legend" id="legend">
+  <div class="it" id="lg1"><i style="background:var(--d-bad)"></i><span class="h2" data-zh="撑不下去 <b>51</b>" data-en="Unsustainable <b>51</b>"></span></div>
+  <div class="it" id="lg2"><i style="background:var(--grad-from)"></i><span class="h2" data-zh="可能撑不住 <b>54</b>" data-en="Potentially unsustainable <b>54</b>"></span></div>
+</div>
+
+<!-- 屏 F -->
+<div class="bq card" id="bq">
+  <figure class="slot" data-src="img/bedford.jpg" style="--h:440px"></figure>
+  <div>
+    <div class="eyebrow" data-zh="FAA 局长 Bedford · 2026 年 9 月" data-en="FAA Administrator Bedford · Sept 2026"></div>
+    <div class="h2" id="bq1" data-zh="铜线 → 光纤" data-en="Copper → fiber"></div>
+    <div class="h2" id="bq2" data-zh='数据架构：还是 <span class="accent">50 年前</span>那套' data-en='Data architecture: <span class="accent">50 years</span> old'></div>
+  </div>
+</div>
+
+<!-- 屏 G -->
+<div class="th h1" id="th" data-zh="过渡期越拉越长" data-en="An ever-longer overlap"></div>
+<svg id="gantt" width="1680" height="440"></svg>
+
+<script>
+const T = EDU.tl, C = css;
+const txt = (g, x, y, s, size = 30, fill = C("--ink"), anchor = "start", w = 600) => { const e = svgEl(g, "text", { x, y, "text-anchor": anchor, "font-size": size, "font-weight": w, fill }); e.textContent = s; return e; };
+
+// ---- 屏 C：新旧两套并排，新的一段段接入，中间是并存期 ----
+const ln = document.getElementById("lanes");
+const defs = svgEl(ln, "defs"), gr = svgEl(defs, "linearGradient", { id: "oldfade", x1: 0, x2: 1, y1: 0, y2: 0 });
+svgEl(gr, "stop", { offset: "0", "stop-color": C("--ink2") }); svgEl(gr, "stop", { offset: ".72", "stop-color": C("--ink2") });
+svgEl(gr, "stop", { offset: "1", "stop-color": C("--ink2"), "stop-opacity": 0 });
+const lOld = txt(ln, 0, 128, L("旧系统", "Old system"), 34, C("--sub"), "start", 500);
+const lNew = txt(ln, 0, 298, L("新系统", "New system"), 34, C("--sub"), "start", 500);
+const barOld = svgEl(ln, "rect", { x: 230, y: 80, width: 1450, height: 70, rx: 14, fill: "url(#oldfade)" });
+const segs = d3.range(8).map(i => svgEl(ln, "rect", { x: 640 + i * 130, y: 250, width: 118, height: 70, rx: 14, fill: C("--accent") }));
+const band = svgEl(ln, "rect", { x: 625, y: 56, width: 690, height: 290, rx: 20, fill: C("--d-bad"), "fill-opacity": .06,
+  stroke: C("--d-bad"), "stroke-width": 3, "stroke-dasharray": "10 10" });
+const bandL = txt(ln, 970, 400, L("并存期：最脆弱", "The overlap: most fragile"), 38, C("--d-bad"), "middle", 700);
+
+// ---- 屏 D：越老 → 懂的人少 → 风险越大 → 越不敢动 → 越老（4 个节点，台词审 r1 I36/I95）----
+const cy = document.getElementById("cyc"), cx0 = 560, cy0 = 330, RX = 380, RY = 240;
+const ang = [-90, 0, 90, 180].map(a => a * Math.PI / 180);
+const at = t => [cx0 + RX * Math.cos(t), cy0 + RY * Math.sin(t)];
+const P = ang.map(at);
+const arcs = ang.map((a, i) => {
+  const a0 = a + .36, a1 = (i === 3 ? ang[0] + 2 * Math.PI : ang[i + 1]) - .36;
+  const pts = d3.range(0, 1.0001, 1 / 24).map(k => at(a0 + (a1 - a0) * k));
+  const path = svgEl(cy, "path", { d: "M" + pts.map(q => q.map(v => v.toFixed(1)).join(",")).join("L"), fill: "none", stroke: C("--ink2"), "stroke-width": 5, "stroke-linecap": "round" });
+  const [hx, hy] = pts[pts.length - 1];
+  let dx = -RX * Math.sin(a1), dy = RY * Math.cos(a1); const n = Math.hypot(dx, dy); dx /= n; dy /= n;   // 顺时针切线
+  const head = svgEl(cy, "path", { d: `M${hx + dx * 14},${hy + dy * 14} L${hx - dx * 10 + dy * 12},${hy - dy * 10 - dx * 12} L${hx - dx * 10 - dy * 12},${hy - dy * 10 + dx * 12} Z`, fill: C("--ink2") });
+  return { path, head };
+});
+const nodeTxt = [L("越老", "Older"), L("懂的人少", "Fewer experts"), L("风险大", "Riskier"), L("不敢动", "Untouched")];   // 中文整图 ≤16 字（lines_r2 I48）
+const nodes = P.map(([x, y], i) => {
+  const g = svgEl(cy, "g");
+  const w = EDU.lang === "en" ? [200, 380, 230, 290][i] : [180, 260, 260, 260][i];
+  svgEl(g, "rect", { x: x - w / 2, y: y - 44, width: w, height: 88, rx: 44, fill: C("--surface"), stroke: C("--hair"), "stroke-width": 3 });
+  txt(g, x, y + 17, nodeTxt[i], 44, C("--ink"), "middle", 700);
+  return g;
+});
+const mid = svgEl(cy, "text", { x: cx0, y: cy0 + (EDU.lang === "en" ? -2 : 18), "text-anchor": "middle", "font-size": EDU.lang === "en" ? 40 : 50, "font-weight": 700, fill: C("--accent-text") });
+(EDU.lang === "en" ? ["Interest on", "tech debt"] : ["技术债"]).forEach((t, i) => { const s = svgEl(mid, "tspan", { x: cx0, dy: i ? 48 : 0 }); s.textContent = t; });
+
+// ---- 屏 E：GAO 138 个系统（按列排：先红后黄再灰）----
+const G = document.getElementById("grid"), S = 56, GAP = 12, ROWS = 6, COLS = Math.ceil(D.gao.length / ROWS);
+G.setAttribute("width", COLS * (S + GAP)); G.setAttribute("height", ROWS * (S + GAP));
+const cells = D.gao.map((k, i) => ({ k, el: svgEl(G, "rect", { x: Math.floor(i / ROWS) * (S + GAP), y: (i % ROWS) * (S + GAP), width: S, height: S, rx: 8, fill: C("--surface2"), stroke: C("--hair"), "stroke-width": 2 }) }));
+
+// ---- 屏 G：下一代网换了两次承包商，旧网 FTI 一直撑着 ----
+const gt = document.getElementById("gantt"), x0 = 330, x1 = 1640, yr = y => x0 + (y - 2023) / 4 * (x1 - x0);   // 2023–2027
+const axis = svgEl(gt, "line", { x1: x0, x2: x1, y1: 380, y2: 380, class: "axis-base" });
+const ticks = [2023, 2024, 2025, 2026, 2027].map(y => txt(gt, yr(y), 424, String(y), 24, C("--sub"), "middle", 500));
+const rowA = txt(gt, 0, 118, L("新网", "New network"), 34, C("--ink"), "start", 600);
+const rowB = txt(gt, 0, 278, L("旧网 FTI", "Old FTI"), 34, C("--ink"), "start", 600);
+const aug = 2026 + 7.35 / 12;                                       // 2026-08-11
+const nn = svgEl(gt, "rect", { x: yr(2023), y: 70, width: x1 - yr(2023), height: 70, rx: 14, fill: C("--d-neutral"), "fill-opacity": .4 });   // l52 先画出新网（实色半透明），和旧网重叠（lines_r3 I21）
+const vz = svgEl(gt, "rect", { x: yr(2023), y: 70, width: yr(aug) - yr(2023), height: 70, rx: 14, fill: C("--d-neutral") });
+const vzL = txt(gt, yr(2023) + 24, 117, "Verizon", 30, "#fff", "start", 700);
+const attG = svgEl(svgEl(gt, "defs"), "linearGradient", { id: "attg", x1: 0, x2: 1 });     // 还在进行：右端淡出，不画终点
+svgEl(attG, "stop", { offset: 0, "stop-color": C("--accent") }); svgEl(attG, "stop", { offset: .6, "stop-color": C("--accent") });
+svgEl(attG, "stop", { offset: 1, "stop-color": C("--accent"), "stop-opacity": 0 });
+const att = svgEl(gt, "rect", { x: yr(aug) + 8, y: 70, width: x1 + 40 - yr(aug) - 8, height: 70, rx: 14, fill: "url(#attg)" });
+const attL = txt(gt, yr(aug) + 32, 117, "AT&T", 30, "#fff", "start", 700);
+const ftiGrad = svgEl(svgEl(gt, "defs"), "linearGradient", { id: "fti", x1: 0, x2: 1 });
+svgEl(ftiGrad, "stop", { offset: 0, "stop-color": C("--ink"), "stop-opacity": .15 }); svgEl(ftiGrad, "stop", { offset: .2, "stop-color": C("--ink") });
+svgEl(ftiGrad, "stop", { offset: 1, "stop-color": C("--ink") });
+const fti = svgEl(gt, "rect", { x: 300, y: 230, width: x1 - 300, height: 70, rx: 14, fill: "url(#fti)" });
+const ftiRun = svgEl(gt, "line", { x1: 320, x2: x1 - 20, y1: 265, y2: 265, stroke: C("--accent"), "stroke-width": 6, "stroke-dasharray": "18 30", "stroke-linecap": "round" });
+const ftiL = txt(gt, x1, 340, L("一直撑着", "Still running"), 38, C("--ink"), "end", 700);
+
+gsap.set(["#ns1", "#ns2", "#nonstop .slot", "#ttl", "#gh", "#legend", "#lg1", "#lg2", "#bq", "#bq1", "#bq2", "#th"], { opacity: 0 });
+gsap.set([lOld, lNew, barOld, ...segs, band, bandL, ...arcs.flatMap(a => [a.path, a.head]), ...nodes, mid, ...cells.map(c => c.el),
+  axis, ...ticks, rowA, rowB, nn, vz, vzL, att, attL, fti, ftiRun, ftiL], { opacity: 0 });
+EDU.in(".eb", 0);
+
+// l41 24 小时不能停（纽约中心照片）
+EDU.in("#nonstop .slot", EDU.t("l41", .02));
+EDU.in("#ns1", EDU.t("l41", .2));
+EDU.in("#ns2", EDU.t("l41", .6));
+// l42–l43 边飞边换（模拟画面：旧机架 → 新光纤机架）
+EDU.out("#nonstop", EDU.t("l42", 0));
+EDU.in("#ttl", EDU.t("l42", .02));
+// l44 新旧并存期最脆弱（画面放完接示意图）
+const dAt = Math.min(footEnd("v3") - .3, EDU.t("l44", 0));
+EDU.in([lOld, lNew, barOld], dAt);
+EDU.in(segs, dAt + .3, { stagger: .08, d: .4 });
+T.set(band, { opacity: 1 }, EDU.t("l44", .3)); EDU.draw(band, EDU.t("l44", .3), 1);
+EDU.in(bandL, EDU.t("l44", .5));
+
+// l45 越老 → 懂的人少 → 风险越大
+EDU.out(["#ttl", "#lanes"], EDU.t("l45", 0));
+EDU.in(nodes[0], EDU.t("l45", .02));
+T.set(arcs[0].path, { opacity: 1 }, EDU.t("l45", .2)); EDU.draw(arcs[0].path, EDU.t("l45", .2), .6); EDU.in(arcs[0].head, EDU.t("l45", .2) + .5);
+EDU.in(nodes[1], EDU.t("l45", .35));
+T.set(arcs[1].path, { opacity: 1 }, EDU.t("l45", .55)); EDU.draw(arcs[1].path, EDU.t("l45", .55), .6); EDU.in(arcs[1].head, EDU.t("l45", .55) + .5);
+EDU.in(nodes[2], EDU.t("l45", .7));
+// l46 风险越大 → 越不敢动 → 越老
+T.set(arcs[2].path, { opacity: 1 }, EDU.t("l46", .02)); EDU.draw(arcs[2].path, EDU.t("l46", .02), .6); EDU.in(arcs[2].head, EDU.t("l46", .02) + .5);
+EDU.in(nodes[3], EDU.t("l46", .25));
+T.set(arcs[3].path, { opacity: 1 }, EDU.t("l46", .55)); EDU.draw(arcs[3].path, EDU.t("l46", .55), .6); EDU.in(arcs[3].head, EDU.t("l46", .55) + .5);
+// l47 技术债的利息
+EDU.in(mid, EDU.t("l47", .1));
+
+// l48 GAO：138 个系统
+EDU.out("#cyc", EDU.t("l48", 0));
+EDU.in("#gh", EDU.t("l48", .05));
+EDU.in(cells.map(c => c.el), EDU.t("l48", .15), { stagger: .008, d: .3 });
+srcNote("GAO-24-107001（2024-09，引 FAA 自评）", "GAO-24-107001 (Sept 2024, citing FAA’s own review)", EDU.t("l48", .2), EDU.end("l49") + .2);
+// l49 51 个不可持续，54 个可能不可持续
+const reds = cells.filter(c => c.k === "red").map(c => c.el), yel = cells.filter(c => c.k === "yellow").map(c => c.el);
+T.to(reds, { attr: { fill: C("--d-bad"), stroke: C("--d-bad") }, duration: .3, stagger: .01 }, EDU.t("l49", .02));
+EDU.in("#legend", EDU.t("l49", .02), { y: 0, d: .01 }); EDU.in("#lg1", EDU.t("l49", .1));
+T.to(yel, { attr: { fill: C("--grad-from"), stroke: C("--grad-from") }, duration: .3, stagger: .01 }, EDU.t("l49", .45));
+EDU.in("#lg2", EDU.t("l49", .55));
+
+// l50–l51 Bedford：铜线换光纤，架构还是 50 年前
+EDU.out(["#gh", "#grid", "#legend"], EDU.t("l50", 0));
+EDU.in("#bq", EDU.t("l50", .1));
+EDU.in("#bq1", EDU.t("l51", .02));
+EDU.in("#bq2", EDU.t("l51", .4));
+srcNote("Bedford（经 Airways 转引 CNN）", "Bedford (via Airways, citing CNN)", EDU.t("l50", .3), EDU.end("l51") + .2);
+
+// l52 过渡期越拉越长
+EDU.out("#bq", EDU.t("l52", 0));
+EDU.in("#th", EDU.t("l52", .05));
+EDU.in([axis, ...ticks, rowA, rowB, nn], EDU.t("l52", .1));
+// l53 下一代网：2023 Verizon → 2026-08 AT&T
+EDU.in([vz, vzL], EDU.t("l53", .1));
+EDU.in([att, attL], EDU.t("l53", .6));
+srcNote("Aviation Week 2026-08 · Washington Technology 2023-03", "Aviation Week, Aug 2026 · Washington Technology, Mar 2023", EDU.t("l53", .1), EDU.S.duration - .5);
+// l54 旧网 FTI 一直撑着
+EDU.in([fti, ftiRun], EDU.t("l52", .3));
+T.fromTo(ftiRun, { attr: { "stroke-dashoffset": 0 } }, { attr: { "stroke-dashoffset": -480 }, duration: 6, ease: "none" }, EDU.t("l54", 0));
+EDU.in(ftiL, EDU.t("l54", .15));
+ourTake(["l44", "l45", "l46", "l47"]);
+EDU.out(["#th", "#gantt"], EDU.S.duration - .5);
+</script>

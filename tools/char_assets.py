@@ -30,6 +30,7 @@ sys.path.insert(0, str(REPO))
 from tools import gen_char_images as gci  # noqa: E402
 from tools import gen_turntable_videos as gtv  # noqa: E402
 from tools.character_sheet import compose  # noqa: E402
+from projects.ai_video_management.libs.common.asset_group import character_dirs  # noqa: E402
 
 AI = REPO / "ai_videos"
 WEBAPP = REPO / "projects" / "ai_video_management"
@@ -75,9 +76,9 @@ class Row:
 def rows(chars: Path, only: list[str]) -> list[Row]:
     head = gci.KINDS["characters"][0]
     out = []
-    for d in sorted(chars.iterdir(), key=lambda p: (p.name[0], int("".join(filter(str.isdigit, p.name.split("_")[0])) or 0))):
+    for d in sorted(character_dirs(chars), key=lambda p: (p.name[0], int("".join(filter(str.isdigit, p.name.split("_")[0])) or 0))):
         md = d / f"{d.name}.md"
-        if not (d.is_dir() and md.is_file()) or (only and d.name.split("_")[0] not in only):
+        if not md.is_file() or (only and d.name.split("_")[0] not in only):
             continue
         out.append(Row(d, head.search(md.read_text(encoding="utf-8")) is not None, (d / f"{d.name}.png").is_file(),
                        gtv.has_block(d), bool(gtv.originals(d)), gci.anchor_frame(d, "front").is_file()))

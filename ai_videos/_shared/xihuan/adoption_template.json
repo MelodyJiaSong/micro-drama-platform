@@ -1,52 +1,50 @@
 {
- "_说明": "复制到剧目录（如 ai_videos/{剧}/xihuan_adoption.json）后填写。library_version 固定本库版本；entries 写采用的条目 ID；modules 写可选模块开关；overrides 写剧内改名改数值（不改本库）。可从 presets 里挑一个题材包作起点。build.py 会校验本文件里的 ID 都存在。",
+ "_说明": "复制到剧目录（如 ai_videos/{剧}/xihuan_adoption.json）后填写。library_version 固定本库版本；entries 写采用的条目 ID；强弱只用职业头衔、本族等级链与威胁度 BS00（默认，不设统一境界）；modules 写可选模块开关；overrides 写剧内改名改数值（不改本库）。可从 presets 里挑一个题材包作起点。build.py 会校验本文件里的 ID 都存在。",
  "library": "ai_videos/_shared/xihuan",
- "library_version": "1.1.0",
+ "library_version": "1.2.0",
  "entries": [],
  "modules": {
-  "四相": false,
-  "每阶之恶": false,
-  "神话阶": false,
+  "封神": false,
   "时空魔法": false,
-  "冒险者与讨伐等级": false,
+  "冒险者公会": false,
   "炼金蜕变": false,
   "多神": false,
   "转生": false
  },
  "theology": "信念成神（默认）| 神主动赐予 | 无神纯信念",
  "overrides": [
-  {"id": "示例 TR04", "field": "人口（每百万人，默认）", "value": "约 500", "reason": "本剧世界魔法更稀有"}
+  {"id": "示例 IT07", "field": "药毒上限", "value": "凡人约一瓶", "reason": "本剧药剂更烈"}
  ],
  "presets": {
   "狼人吸血鬼恋爱": {
    "适合": "女性向现代或中世纪都市奇幻；看重社会等级与命定羁绊，不需要复杂魔法体系",
-   "entries": ["RC01", "RC13", "RC15", "RS09", "RC18", "OR12", "OR13", "PS07", "PS05", "PR01", "DK02", "GR04", "GR06", "GF05", "MT02", "MT10", "MT11", "IT18", "CL20", "CL23", "CL09", "OR04", "OR06", "TL05", "FL02", "PL04"],
-   "modules": {"四相": false, "每阶之恶": false, "神话阶": false, "冒险者与讨伐等级": false}
+   "entries": ["RC01", "RC13", "RC15", "RS09", "RC18", "OR12", "OR13", "PS07", "PS05", "PR01", "DK02", "GR04", "GR06", "GF05", "MT02", "MT10", "MT11", "IT18", "CL20", "CL23", "CL09", "OR04", "OR06", "TL05", "FL02", "PL04", "BS00"],
+   "modules": {"封神": false, "冒险者公会": false}
   },
   "骑士与教会": {
    "适合": "中世纪王国、荣誉与誓言、信仰与审判",
-   "entries": ["RC01", "CL01", "CL02", "CL07", "CL08", "CL09", "CL24", "TL02", "TL03", "OR02", "OR03", "OR04", "OR10", "OR11", "GD01", "PS02", "PS09", "HL01", "HL02", "HL03", "HL04", "AU01", "GR03", "GR07", "GR11", "GF06", "EV03", "EV05", "FL04", "IT17", "IT18", "IT19", "IT25", "IT29", "TR00", "TR01", "TR02", "TR03", "TR04", "TR05", "TR06"],
-   "modules": {"四相": false, "每阶之恶": true, "神话阶": false}
+   "entries": ["RC01", "CL01", "CL02", "CL07", "CL08", "CL09", "CL24", "TL02", "TL03", "OR02", "OR03", "OR04", "OR10", "OR11", "GD01", "PS02", "PS09", "HL01", "HL02", "HL03", "HL04", "AU01", "GR03", "GR07", "GR11", "GF06", "EV01", "EV03", "EV05", "FL04", "IT17", "IT18", "IT19", "IT25", "IT29", "BS00"],
+   "modules": {"封神": false}
   },
   "学院法师": {
    "适合": "魔法学院、学徒成长、学派之争、禁书",
-   "entries": ["RC01", "RS01", "CL10", "CL11", "CL17", "CL18", "CL21", "TL01", "OR01", "OR16", "PS01", "SC01", "SC02", "SC03", "SC04", "SC05", "SC06", "SC07", "SC08", "EL01", "EL02", "EL03", "EL04", "EL05", "EL06", "EL07", "IT11", "IT14", "IT15", "IT16", "IT22", "CF01", "CF03", "CF04", "GR01", "GR02", "GF01", "GF02", "EV01", "EV02", "EV05", "FL01", "TR00", "TR01", "TR02", "TR03", "TR04", "TR05", "TR06", "TR07"],
-   "modules": {"四相": true, "每阶之恶": true, "时空魔法": false}
+   "entries": ["RC01", "RS01", "CL10", "CL11", "CL17", "CL18", "CL21", "TL01", "OR01", "OR16", "PS01", "SC01", "SC02", "SC03", "SC04", "SC05", "SC06", "SC07", "SC08", "EL01", "EL02", "EL03", "EL04", "EL05", "EL06", "EL07", "IT11", "IT14", "IT15", "IT16", "CF01", "CF03", "CF04", "GR01", "GR02", "GF01", "GF02", "EV01", "EV05", "FL01", "BS00"],
+   "modules": {"时空魔法": false}
   },
   "妖精宫廷": {
    "适合": "被带入彼岸的凡人、与妖精的交易与婚约",
-   "entries": ["RC01", "RC09", "RS04", "RS05", "GF07", "GF04", "PL05", "GD05", "DK01", "GR12", "MT03", "IT27", "IT28", "BS17", "BS18", "BS19", "CL22", "CL20", "SC04", "SC06"],
-   "modules": {"转生": false, "神话阶": false}
+   "entries": ["RC01", "RC09", "RS04", "RS05", "GF07", "GF04", "PL05", "GD05", "DK01", "GR12", "MT03", "IT27", "IT28", "BS17", "BS18", "BS19", "CL22", "CL20", "SC04", "SC06", "BS00"],
+   "modules": {"转生": false, "封神": false}
   },
   "深渊契约": {
    "适合": "恶魔交易、堕落与救赎、驱魔",
-   "entries": ["RC01", "RC16", "RS07", "RS08", "RC18", "RC17", "CL16", "CL09", "CL07", "DK01", "DK04", "IT08", "OR14", "OR02", "GD05", "GD01", "PS06", "PS02", "PL03", "FL02", "FL03", "HL04", "BS14", "IT18", "MT11"],
-   "modules": {"每阶之恶": true}
+   "entries": ["RC01", "RC16", "RS07", "RS08", "RC18", "RC17", "CL16", "CL09", "CL07", "DK01", "DK04", "IT08", "OR14", "OR02", "GD05", "GD01", "PS06", "PS02", "PL03", "FL02", "FL03", "HL04", "BS14", "IT18", "MT11", "BS00"],
+   "modules": {"多神": false}
   },
   "史诗战争与龙": {
    "适合": "多种族王国战争、屠龙、远征",
-   "entries": ["RC01", "RC02", "RS01", "RS02", "RC03", "RC06", "RC04", "RC10", "BS01", "BS02", "BS03", "CL01", "CL02", "CL03", "CL04", "CL10", "CL19", "OR03", "OR10", "OR11", "PS09", "PS08", "MT04", "MT05", "MT06", "IT19", "IT29", "GR07", "GR10", "TR00", "TR01", "TR02", "TR03", "TR04", "TR05", "TR06", "TR07", "TR08", "EV04"],
-   "modules": {"神话阶": true, "冒险者与讨伐等级": false}
+   "entries": ["RC01", "RC02", "RS01", "RS02", "RC03", "RC06", "RC04", "RC10", "BS01", "BS02", "BS03", "CL01", "CL02", "CL03", "CL04", "CL10", "CL19", "OR03", "OR10", "OR11", "PS09", "PS08", "MT04", "MT05", "MT06", "IT19", "IT29", "GR07", "GR10", "EV04", "BS00"],
+   "modules": {"封神": true, "冒险者公会": false}
   }
  }
 }

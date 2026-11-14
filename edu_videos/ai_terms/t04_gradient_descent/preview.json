@@ -1,0 +1,539 @@
+{
+ "title": "t04 梯度下降 Gradient descent",
+ "tagline": "梯度下降，就是蒙着眼下山：每一步看脚下哪边最陡，往下迈一小步；步子迈多大，叫学习率。",
+ "lang": "zh",
+ "languages": [
+  {
+   "lang": "zh",
+   "label": "中文",
+   "preview": "edu_videos/ai_terms/t04_gradient_descent/preview.json"
+  },
+  {
+   "lang": "en",
+   "label": "English",
+   "preview": "edu_videos/ai_terms/t04_gradient_descent/preview.en.json"
+  }
+ ],
+ "video": "edu_videos/ai_terms/t04_gradient_descent/final/t04_gradient_descent.mp4",
+ "duration": 275.8,
+ "chapters": [
+  {
+   "id": "s0",
+   "title": "冷开场",
+   "t": 0.0
+  },
+  {
+   "id": "s2",
+   "title": "蒙着眼下山",
+   "t": 33.43
+  },
+  {
+   "id": "s3",
+   "title": "做个小实验",
+   "t": 80.3
+  },
+  {
+   "id": "s4",
+   "title": "步子迈多大",
+   "t": 159.2
+  },
+  {
+   "id": "s5",
+   "title": "大模型怎么训练",
+   "t": 206.27
+  },
+  {
+   "id": "s6",
+   "title": "片尾",
+   "t": 254.7
+  }
+ ],
+ "items": [
+  {
+   "t": 0.6,
+   "end": 4.12,
+   "title": "上一期，我们给错误打了分，分越低越好",
+   "subtitle": "上一期，我们给错误打了分，分越低越好。",
+   "badge": "l01",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l01.jpg"
+  },
+  {
+   "t": 4.47,
+   "end": 10.05,
+   "title": "把两个旋钮各种拧法的得分画成地形图",
+   "subtitle": "把两个旋钮各种拧法的得分画成地形图，最低点就是最好的拧法。",
+   "badge": "l02",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l02.jpg"
+  },
+  {
+   "t": 10.4,
+   "end": 13.12,
+   "title": "只有两个旋钮，这张图很好画",
+   "subtitle": "只有两个旋钮，这张图很好画。",
+   "badge": "l03",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l03.jpg"
+  },
+  {
+   "t": 13.47,
+   "end": 18.1,
+   "title": "可真正的大模型有上千亿个旋钮",
+   "subtitle": "可真正的大模型有上千亿个旋钮，整张图根本画不出来。",
+   "badge": "l04",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l04.jpg"
+  },
+  {
+   "t": 18.45,
+   "end": 22.52,
+   "title": "模型就像蒙着眼站在山上，看不见谷底在哪",
+   "subtitle": "模型就像蒙着眼站在山上，看不见谷底在哪。",
+   "badge": "l05",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l05.jpg"
+  },
+  {
+   "t": 22.87,
+   "end": 24.71,
+   "title": "那它是怎么走到最低点的？",
+   "subtitle": "那它是怎么走到最低点的？",
+   "badge": "l06",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l06.jpg"
+  },
+  {
+   "t": 25.06,
+   "end": 28.31,
+   "title": "靠的是梯度下降，今天就聊它",
+   "subtitle": "靠的是梯度下降，今天就聊它。",
+   "badge": "l07",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l07.jpg"
+  },
+  {
+   "t": 36.63,
+   "end": 39.94,
+   "title": "想象你蒙着眼站在山坡上，要走到谷底",
+   "subtitle": "想象你蒙着眼站在山坡上，要走到谷底。",
+   "badge": "l08",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l08.jpg"
+  },
+  {
+   "t": 40.29,
+   "end": 45.2,
+   "title": "看不见路",
+   "subtitle": "看不见路，可脚底能感觉到地面往哪边斜、斜得多厉害。",
+   "badge": "l09",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l09.jpg"
+  },
+  {
+   "t": 45.55,
+   "end": 50.37,
+   "title": "办法笨但管用",
+   "subtitle": "办法笨但管用：探探哪边往下最陡，就往那边迈一小步。",
+   "badge": "l10",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l10.jpg"
+  },
+  {
+   "t": 50.72,
+   "end": 54.05,
+   "title": "站稳了再探，再迈，一步步就到了谷底",
+   "subtitle": "站稳了再探，再迈，一步步就到了谷底。",
+   "badge": "l11",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l11.jpg"
+  },
+  {
+   "t": 54.39,
+   "end": 59.5,
+   "title": "那模型怎么探坡？",
+   "subtitle": "那模型怎么探坡？每个旋钮稍微拧一点，看看分数会变多少。",
+   "badge": "l12",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l12.jpg"
+  },
+  {
+   "t": 59.85,
+   "end": 66.73,
+   "title": "每个旋钮往哪边拧，分数降得最快？",
+   "subtitle": "每个旋钮往哪边拧，分数降得最快？这个方向，梯度会告诉你，英文 gradient。",
+   "badge": "l13",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l13.jpg"
+  },
+  {
+   "t": 67.08,
+   "end": 73.48,
+   "title": "梯度下降",
+   "subtitle": "梯度下降，就是所有旋钮一起往这个方向拧一小步，拧完再探坡，再拧。",
+   "badge": "l14",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l14.jpg"
+  },
+  {
+   "t": 73.83,
+   "end": 79.38,
+   "title": "步子迈多大，由学习率来管",
+   "subtitle": "步子迈多大，由学习率来管，英文 learning rate，训练前由人定好。",
+   "badge": "l15",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l15.jpg"
+  },
+  {
+   "t": 83.5,
+   "end": 89.15,
+   "title": "拿打车那张图跑一遍",
+   "subtitle": "拿打车那张图跑一遍：横着是起步价，竖着是每公里的价钱。",
+   "badge": "l16",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l16.jpg"
+  },
+  {
+   "t": 89.5,
+   "end": 93.87,
+   "title": "颜色越深，分越高",
+   "subtitle": "颜色越深，分越高。这些打车数据是举例用的。",
+   "badge": "l17",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l17.jpg"
+  },
+  {
+   "t": 94.22,
+   "end": 101.57,
+   "title": "就从上一期第一组拧法开始",
+   "subtitle": "就从上一期第一组拧法开始：起步价五块、每公里两块，七十八分，还在高处。",
+   "badge": "l18",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l18.jpg"
+  },
+  {
+   "t": 101.92,
+   "end": 106.09,
+   "title": "先探探坡，两个旋钮各往上拧一毛钱试试",
+   "subtitle": "先探探坡，两个旋钮各往上拧一毛钱试试。",
+   "badge": "l19",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l19.jpg"
+  },
+  {
+   "t": 106.44,
+   "end": 112.56,
+   "title": "起步价加一毛，分数降一点七",
+   "subtitle": "起步价加一毛，分数降一点七。每公里加一毛，分数降十一点二。",
+   "badge": "l20",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l20.jpg"
+  },
+  {
+   "t": 112.92,
+   "end": 117.48,
+   "title": "两个都该往上拧",
+   "subtitle": "两个都该往上拧，不过每公里这个旋钮的坡陡多了。",
+   "badge": "l21",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l21.jpg"
+  },
+  {
+   "t": 117.83,
+   "end": 122.38,
+   "title": "所以第一步主要拧每公里那个旋钮",
+   "subtitle": "所以第一步主要拧每公里那个旋钮，起步价只动一点点。",
+   "badge": "l22",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l22.jpg"
+  },
+  {
+   "t": 122.73,
+   "end": 128.35,
+   "title": "头三步，分数从七十八掉到二十五、十二、九",
+   "subtitle": "头三步，分数从七十八掉到二十五、十二、九，一下就掉进了山谷。",
+   "badge": "l23",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l23.jpg"
+  },
+  {
+   "t": 128.7,
+   "end": 131.83,
+   "title": "谷底是一条长长的、很平缓的沟",
+   "subtitle": "谷底是一条长长的、很平缓的沟。",
+   "badge": "l24",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l24.jpg"
+  },
+  {
+   "t": 132.18,
+   "end": 138.51,
+   "title": "接着起步价慢慢往上拧，每公里往回拧一点",
+   "subtitle": "接着起步价慢慢往上拧，每公里往回拧一点，沿着沟底往前挪。",
+   "badge": "l25",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l25.jpg"
+  },
+  {
+   "t": 138.86,
+   "end": 143.18,
+   "title": "步子还跟着坡变",
+   "subtitle": "步子还跟着坡变：坡越缓，每一步挪得越短。",
+   "badge": "l26",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l26.jpg"
+  },
+  {
+   "t": 143.53,
+   "end": 148.82,
+   "title": "走了一千多步，分数降到两分左右",
+   "subtitle": "走了一千多步，分数降到两分左右，离最低的一点九七已经很近了。",
+   "badge": "l27",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l27.jpg"
+  },
+  {
+   "t": 149.17,
+   "end": 153.55,
+   "title": "最后，旋钮停在起步价十块左右、每公里两块五左右",
+   "subtitle": "最后，旋钮停在起步价十块左右、每公里两块五左右。",
+   "badge": "l28",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l28.jpg"
+  },
+  {
+   "t": 153.9,
+   "end": 158.29,
+   "title": "从头到尾，模型没看过整张图",
+   "subtitle": "从头到尾，模型没看过整张图，每一步只顾脚下。",
+   "badge": "l29",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l29.jpg"
+  },
+  {
+   "t": 162.4,
+   "end": 166.78,
+   "title": "刚才的学习率是零点零零五",
+   "subtitle": "刚才的学习率是零点零零五。要是选错了，会怎样？",
+   "badge": "l30",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l30.jpg"
+  },
+  {
+   "t": 167.13,
+   "end": 170.66,
+   "title": "起点一样，步数一样，三种学习率比一比",
+   "subtitle": "起点一样，步数一样，三种学习率比一比。",
+   "badge": "l31",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l31.jpg"
+  },
+  {
+   "t": 171.01,
+   "end": 175.74,
+   "title": "先缩小十倍，零点零零零五",
+   "subtitle": "先缩小十倍，零点零零零五：方向没错，就是挪得太慢。",
+   "badge": "l32",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l32.jpg"
+  },
+  {
+   "t": 176.09,
+   "end": 178.71,
+   "title": "分数还剩五点五，离谷底还远",
+   "subtitle": "分数还剩五点五，离谷底还远。",
+   "badge": "l33",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l33.jpg"
+  },
+  {
+   "t": 179.06,
+   "end": 185.72,
+   "title": "再试原来的四倍多，零点零二一",
+   "subtitle": "再试原来的四倍多，零点零二一：一步迈过头，跳到山谷对面，比起点还高。",
+   "badge": "l34",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l34.jpg"
+  },
+  {
+   "t": 186.07,
+   "end": 191.93,
+   "title": "再跳回来，分数更高",
+   "subtitle": "再跳回来，分数更高：九十六、一百一十八、一百四十五，越跳越高。",
+   "badge": "l35",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l35.jpg"
+  },
+  {
+   "t": 192.28,
+   "end": 193.95,
+   "title": "五步就跳出了地图",
+   "subtitle": "五步就跳出了地图。",
+   "badge": "l36",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l36.jpg"
+  },
+  {
+   "t": 194.3,
+   "end": 197.27,
+   "title": "学习率合适的那条，稳稳走到了谷底",
+   "subtitle": "学习率合适的那条，稳稳走到了谷底。",
+   "badge": "l37",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l37.jpg"
+  },
+  {
+   "t": 197.62,
+   "end": 201.18,
+   "title": "所以学习率常常是训练时最要紧的一个设定",
+   "subtitle": "所以学习率常常是训练时最要紧的一个设定。",
+   "badge": "l38",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l38.jpg"
+  },
+  {
+   "t": 201.53,
+   "end": 205.37,
+   "title": "太大会越跳越高，太小又白白耗时间",
+   "subtitle": "太大会越跳越高，太小又白白耗时间。",
+   "badge": "l39",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l39.jpg"
+  },
+  {
+   "t": 209.47,
+   "end": 213.97,
+   "title": "真正的大模型也是用梯度下降训练",
+   "subtitle": "真正的大模型也是用梯度下降训练，只是做了两处改进。",
+   "badge": "l40",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l40.jpg"
+  },
+  {
+   "t": 214.32,
+   "end": 218.29,
+   "title": "数据太多，每一步根本没法全看一遍再算坡",
+   "subtitle": "数据太多，每一步根本没法全看一遍再算坡。",
+   "badge": "l41",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l41.jpg"
+  },
+  {
+   "t": 218.64,
+   "end": 225.31,
+   "title": "所以每步只随机抽一小批数据",
+   "subtitle": "所以每步只随机抽一小批数据，大概估一下坡就走，这叫随机梯度下降。",
+   "badge": "l42",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l42.jpg"
+  },
+  {
+   "t": 225.66,
+   "end": 231.23,
+   "title": "坡估得粗，路就歪歪扭扭，可算得快多了",
+   "subtitle": "坡估得粗，路就歪歪扭扭，可算得快多了，最后也到了谷底附近。",
+   "badge": "l43",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l43.jpg"
+  },
+  {
+   "t": 231.58,
+   "end": 236.25,
+   "title": "比如 GPT-3",
+   "subtitle": "比如 GPT-3，每步只看大约十万分之一的训练数据。",
+   "badge": "l44",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l44.jpg"
+  },
+  {
+   "t": 236.59,
+   "end": 243.8,
+   "title": "步子也能更聪明",
+   "subtitle": "步子也能更聪明：有个办法叫 Adam，会看每个旋钮前几步的坡，给它单独定步子。",
+   "badge": "l45",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l45.jpg"
+  },
+  {
+   "t": 244.15,
+   "end": 248.48,
+   "title": "GPT-3 训练就用 Adam",
+   "subtitle": "GPT-3 训练就用 Adam，Llama 用的是 Adam 的改版。",
+   "badge": "l46",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l46.jpg"
+  },
+  {
+   "t": 248.83,
+   "end": 253.79,
+   "title": "GPT-3 那一千七百五十亿个旋钮",
+   "subtitle": "GPT-3 那一千七百五十亿个旋钮，就是这样一小步一小步拧出来的。",
+   "badge": "l47",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l47.jpg"
+  },
+  {
+   "t": 255.3,
+   "end": 262.3,
+   "title": "梯度下降，就是蒙着眼下山",
+   "subtitle": "梯度下降，就是蒙着眼下山：每一步探探哪边往下最陡，就往那边迈一小步。",
+   "badge": "l48",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l48.jpg"
+  },
+  {
+   "t": 262.65,
+   "end": 264.92,
+   "title": "步子迈多大，由学习率来管",
+   "subtitle": "步子迈多大，由学习率来管。",
+   "badge": "l49",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l49.jpg"
+  },
+  {
+   "t": 265.27,
+   "end": 268.57,
+   "title": "可光靠两个旋钮，能学会的东西很有限",
+   "subtitle": "可光靠两个旋钮，能学会的东西很有限。",
+   "badge": "l50",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l50.jpg"
+  },
+  {
+   "t": 268.92,
+   "end": 272.95,
+   "title": "下一期，我们把很多带旋钮的小单元一层层叠起来",
+   "subtitle": "下一期，我们把很多带旋钮的小单元一层层叠起来。",
+   "badge": "l51",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l51.jpg"
+  },
+  {
+   "t": 273.3,
+   "end": 274.9,
+   "title": "这就是神经网络",
+   "subtitle": "这就是神经网络。",
+   "badge": "l52",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/thumbs/l52.jpg"
+  }
+ ],
+ "links": [
+  {
+   "label": "讲稿",
+   "path": "edu_videos/ai_terms/t04_gradient_descent/script.md"
+  },
+  {
+   "label": "时间轴",
+   "path": "edu_videos/ai_terms/t04_gradient_descent/timeline.json"
+  },
+  {
+   "label": "调研",
+   "path": "edu_videos/ai_terms/t04_gradient_descent/research.md"
+  },
+  {
+   "label": "字幕",
+   "path": "edu_videos/ai_terms/t04_gradient_descent/final/t04_gradient_descent.srt"
+  }
+ ]
+}

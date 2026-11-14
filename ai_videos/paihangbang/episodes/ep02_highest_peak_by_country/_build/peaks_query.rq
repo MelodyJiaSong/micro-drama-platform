@@ -1,0 +1,10 @@
+# Metadata for the candidate peaks (top ~58 country high points). Run 2026-11-03.
+SELECT ?p ?pLabel ?rangeLabel ?img ?firstAscent ?typeLabel ?elev ?elevRank WHERE {
+  VALUES ?p { wd:Q513 wd:Q43512 wd:Q82019 wd:Q219986 wd:Q41413 wd:Q271700 wd:Q332762 wd:Q211529 wd:Q39739 wd:Q233836 wd:Q200935 wd:Q272593 wd:Q14081 wd:Q130018 wd:Q120306 wd:Q1394606 wd:Q7296 wd:Q870063 wd:Q578862 wd:Q338790 wd:Q43105 wd:Q238147 wd:Q40758 wd:Q172070 wd:Q217457 wd:Q72303 wd:Q221666 wd:Q213704 wd:Q1045888 wd:Q583 wd:Q519822 wd:Q3403 wd:Q275435 wd:Q277441 wd:Q737859 wd:Q725591 wd:Q1091113 wd:Q818467 wd:Q503433 wd:Q190562 wd:Q60967 wd:Q203568 wd:Q500275 wd:Q252362 wd:Q3388 wd:Q39231 wd:Q5059 wd:Q38954 wd:Q1261935 wd:Q1068860 wd:Q733132 wd:Q594726 wd:Q1883683 wd:Q257441 }
+  OPTIONAL { ?p wdt:P4552 ?range . }
+  OPTIONAL { ?p wdt:P18 ?img . }
+  OPTIONAL { ?p wdt:P1619 ?firstAscent . }
+  OPTIONAL { ?p wdt:P31 ?type . }
+  OPTIONAL { ?p p:P2044 ?st . ?st psn:P2044/wikibase:quantityAmount ?elev ; wikibase:rank ?elevRank . }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}

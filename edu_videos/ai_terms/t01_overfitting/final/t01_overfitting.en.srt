@@ -1,0 +1,495 @@
+1
+00:00:00,600 --> 00:00:01,910
+A model's near-perfect
+
+2
+00:00:01,910 --> 00:00:03,518
+on the data it learned from
+
+3
+00:00:03,518 --> 00:00:04,887
+then fails on new data.
+
+4
+00:00:05,237 --> 00:00:07,373
+Usually that's not a bug in the code.
+
+5
+00:00:07,373 --> 00:00:09,335
+It's a problem called overfitting.
+
+6
+00:00:17,667 --> 00:00:19,455
+Overfitting is when a model learns
+
+7
+00:00:19,455 --> 00:00:21,084
+its practice data too literally
+
+8
+00:00:21,084 --> 00:00:21,820
+flukes and all
+
+9
+00:00:21,820 --> 00:00:23,345
+so it does worse on new data.
+
+10
+00:00:23,695 --> 00:00:25,632
+Picture a student who memorizes
+
+11
+00:00:25,632 --> 00:00:28,631
+every answer in the workbook, misprints included
+
+12
+00:00:28,631 --> 00:00:30,256
+and scores 100 every time.
+
+13
+00:00:30,606 --> 00:00:31,581
+But on the exam
+
+14
+00:00:31,581 --> 00:00:33,791
+the questions change just a little
+
+15
+00:00:33,791 --> 00:00:34,701
+and he's lost.
+
+16
+00:00:35,051 --> 00:00:37,014
+The workbook is the model's data
+
+17
+00:00:37,014 --> 00:00:39,530
+and the misprints are what we call noise.
+
+18
+00:00:39,880 --> 00:00:41,790
+When a model memorizes the noise
+
+19
+00:00:41,790 --> 00:00:44,714
+as if it were a real pattern, that's overfitting.
+
+20
+00:00:48,833 --> 00:00:50,030
+Let's see it happen.
+
+21
+00:00:50,030 --> 00:00:52,244
+These 10 points are our training data
+
+22
+00:00:52,244 --> 00:00:53,621
+our practice questions.
+
+23
+00:00:53,971 --> 00:00:55,732
+They roughly follow a pattern
+
+24
+00:00:55,732 --> 00:00:57,310
+but each one is nudged off
+
+25
+00:00:57,310 --> 00:00:58,889
+by a bit of random wobble.
+
+26
+00:00:58,889 --> 00:01:00,407
+That wobble is the noise.
+
+27
+00:01:00,757 --> 00:01:02,368
+The model's job is to find
+
+28
+00:01:02,368 --> 00:01:04,598
+that pattern and predict new points.
+
+29
+00:01:04,948 --> 00:01:06,918
+The first model is too simple.
+
+30
+00:01:06,918 --> 00:01:09,085
+It can only draw a straight line.
+
+31
+00:01:09,435 --> 00:01:11,874
+The farther a point is from the line
+
+32
+00:01:11,874 --> 00:01:13,432
+the bigger the mistake.
+
+33
+00:01:13,432 --> 00:01:15,668
+The average mistake is the error.
+
+34
+00:01:16,018 --> 00:01:17,379
+The line can't even get
+
+35
+00:01:17,379 --> 00:01:19,095
+the practice questions right.
+
+36
+00:01:19,095 --> 00:01:20,692
+That's called underfitting.
+
+37
+00:01:21,042 --> 00:01:23,267
+The second model is a gentle curve.
+
+38
+00:01:23,267 --> 00:01:24,602
+It misses some points
+
+39
+00:01:24,602 --> 00:01:26,700
+but it catches the overall trend.
+
+40
+00:01:27,050 --> 00:01:28,830
+The third is really complicated
+
+41
+00:01:28,830 --> 00:01:29,979
+twisting and turning
+
+42
+00:01:29,979 --> 00:01:31,472
+through every single point
+
+43
+00:01:31,472 --> 00:01:33,195
+so its practice error is zero.
+
+44
+00:01:33,545 --> 00:01:34,985
+So which one do you think
+
+45
+00:01:34,985 --> 00:01:36,714
+will do best on new questions?
+
+46
+00:01:39,733 --> 00:01:41,088
+Now we test them on 6
+
+47
+00:01:41,088 --> 00:01:42,766
+points they've never seen.
+
+48
+00:01:42,766 --> 00:01:44,767
+That's the test data, our exam.
+
+49
+00:01:45,117 --> 00:01:46,505
+The second model stays
+
+50
+00:01:46,505 --> 00:01:47,767
+close to all of them
+
+51
+00:01:47,767 --> 00:01:48,777
+so it does best.
+
+52
+00:01:49,127 --> 00:01:51,336
+The third zigzags between the practice
+
+53
+00:01:51,336 --> 00:01:53,835
+points and misses some new points by a lot.
+
+54
+00:01:54,185 --> 00:01:56,153
+Its exam error is more than twenty
+
+55
+00:01:56,153 --> 00:01:57,600
+times the second model's.
+
+56
+00:01:57,950 --> 00:02:00,155
+That's because it memorized the noise
+
+57
+00:02:00,155 --> 00:02:01,287
+and noise is random
+
+58
+00:02:01,287 --> 00:02:03,551
+so it doesn't repeat on new questions.
+
+59
+00:02:03,551 --> 00:02:04,683
+That's overfitting.
+
+60
+00:02:05,033 --> 00:02:06,932
+Underfitting is easy to spot:
+
+61
+00:02:06,932 --> 00:02:08,568
+it does badly on practice
+
+62
+00:02:08,568 --> 00:02:09,812
+and exam questions.
+
+63
+00:02:10,162 --> 00:02:11,658
+Overfitting is sneakier
+
+64
+00:02:11,658 --> 00:02:12,958
+because its practice
+
+65
+00:02:12,958 --> 00:02:14,454
+score can look amazing.
+
+66
+00:02:14,454 --> 00:02:16,665
+Here, its practice error was zero.
+
+67
+00:02:20,767 --> 00:02:22,554
+Here's another way to see it:
+
+68
+00:02:22,554 --> 00:02:24,587
+think of learning as compression.
+
+69
+00:02:24,937 --> 00:02:27,315
+To remember these 10 points exactly
+
+70
+00:02:27,315 --> 00:02:29,354
+you'd need to store 10 numbers
+
+71
+00:02:29,354 --> 00:02:30,781
+one height per point.
+
+72
+00:02:31,131 --> 00:02:33,320
+The second curve takes just 4 numbers
+
+73
+00:02:33,320 --> 00:02:35,036
+yet stays close to the points
+
+74
+00:02:35,036 --> 00:02:37,817
+and predicts new ones well. That's compression.
+
+75
+00:02:38,167 --> 00:02:39,665
+The third curve needs 10
+
+76
+00:02:39,665 --> 00:02:41,662
+numbers to go through 10 points.
+
+77
+00:02:42,012 --> 00:02:43,609
+Ten numbers for ten points
+
+78
+00:02:43,609 --> 00:02:45,083
+is no compression at all
+
+79
+00:02:45,083 --> 00:02:46,741
+so the noise got saved too.
+
+80
+00:02:47,091 --> 00:02:48,925
+Good compression keeps the pattern
+
+81
+00:02:48,925 --> 00:02:50,274
+and throws out the noise.
+
+82
+00:02:50,274 --> 00:02:52,486
+Squeeze too hard, like that straight line
+
+83
+00:02:52,486 --> 00:02:54,050
+and you lose the pattern too.
+
+84
+00:02:58,167 --> 00:02:59,588
+Take Google Flu Trends.
+
+85
+00:02:59,588 --> 00:03:01,688
+Google once used people's searches
+
+86
+00:03:01,688 --> 00:03:03,665
+to estimate what share of doctor
+
+87
+00:03:03,665 --> 00:03:05,766
+visits involved flu-like symptoms.
+
+88
+00:03:06,116 --> 00:03:08,962
+At first, it sifted 50 million search terms
+
+89
+00:03:08,962 --> 00:03:11,410
+to match about 1,100 flu data points.
+
+90
+00:03:11,760 --> 00:03:13,717
+With far more terms than data points
+
+91
+00:03:13,717 --> 00:03:15,239
+it was bound to pick up some
+
+92
+00:03:15,239 --> 00:03:17,304
+that just happened to spike in winter.
+
+93
+00:03:17,654 --> 00:03:20,213
+Researchers said this was overfitting.
+
+94
+00:03:20,213 --> 00:03:21,830
+It was part flu detector
+
+95
+00:03:21,830 --> 00:03:23,244
+part winter detector.
+
+96
+00:03:23,594 --> 00:03:25,627
+Later versions missed too.
+
+97
+00:03:25,627 --> 00:03:27,426
+In 100 out of 108 weeks
+
+98
+00:03:27,426 --> 00:03:29,146
+they guessed too high.
+
+99
+00:03:33,267 --> 00:03:35,785
+How do you spot overfitting and stop it?
+
+100
+00:03:35,785 --> 00:03:37,485
+Here are three common ways.
+
+101
+00:03:37,835 --> 00:03:40,942
+First, set aside some data as a mock exam
+
+102
+00:03:40,942 --> 00:03:42,761
+called a validation set.
+
+103
+00:03:43,111 --> 00:03:44,533
+Use it to pick your model
+
+104
+00:03:44,533 --> 00:03:46,127
+and catch overfitting early.
+
+105
+00:03:46,127 --> 00:03:48,175
+Save the real exam for the very end.
+
+106
+00:03:48,525 --> 00:03:49,325
+To be honest
+
+107
+00:03:49,325 --> 00:03:51,126
+in our experiment we picked
+
+108
+00:03:51,126 --> 00:03:52,993
+the model by its exam score.
+
+109
+00:03:52,993 --> 00:03:55,193
+On a real project, you shouldn't.
+
+110
+00:03:55,543 --> 00:03:57,352
+Second, collect more data
+
+111
+00:03:57,352 --> 00:03:58,799
+and more varied data
+
+112
+00:03:58,799 --> 00:04:01,258
+so noise and coincidences are less
+
+113
+00:04:01,258 --> 00:04:03,284
+likely to pass for patterns.
+
+114
+00:04:03,634 --> 00:04:05,554
+Third, give the model a rule:
+
+115
+00:04:05,554 --> 00:04:08,136
+overly complicated curves get penalized
+
+116
+00:04:08,136 --> 00:04:09,990
+so it won't chase the noise.
+
+117
+00:04:09,990 --> 00:04:11,910
+That's called regularization.
+
+118
+00:04:13,433 --> 00:04:15,764
+Overfitting is memorizing the misprints
+
+119
+00:04:15,764 --> 00:04:17,976
+and mistaking them for real patterns.
+
+120
+00:04:18,326 --> 00:04:19,681
+So whenever you feel like
+
+121
+00:04:19,681 --> 00:04:21,037
+you totally get something
+
+122
+00:04:21,037 --> 00:04:22,826
+try a question you've never seen.
+
+123
+00:04:23,176 --> 00:04:24,404
+And in the next episode
+
+124
+00:04:24,404 --> 00:04:26,433
+we'll get into reinforcement learning.

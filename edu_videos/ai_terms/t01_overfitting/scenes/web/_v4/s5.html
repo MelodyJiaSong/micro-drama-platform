@@ -1,0 +1,82 @@
+<style>
+  .ill { position: absolute; object-fit: contain;
+         -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 52%, #000 62%, transparent 100%);
+                 mask-image: radial-gradient(ellipse 72% 70% at 50% 52%, #000 62%, transparent 100%); }
+  .big-ill { left: 40px; top: 150px; width: 1060px; height: 596px; }
+  .right { position: absolute; left: 1140px; top: 300px; width: 660px; }
+  .right .display { margin-top: 10px; }
+  .eyebrow-top { position: absolute; left: var(--mx); top: var(--mt); }
+  .map { position: absolute; left: var(--mx); top: 220px; width: 1680px; }
+  .map .row { display: grid; grid-template-columns: 520px 80px 1fr; align-items: baseline; padding: 22px 0; border-top: 1px solid var(--hair); }
+  .map .arrow { color: var(--faint); font-size: var(--fs-h2); }
+  .limit { position: absolute; left: var(--mx); top: 330px; width: 1680px; }
+  .limit .h1 { margin-top: 20px; }
+  .rule-line { position: absolute; left: var(--mx); top: 150px; white-space: nowrap; }
+  .tri { position: absolute; top: 330px; width: 520px; height: 292px; }
+  .tri.a { left: 100px; } .tri.b { left: 700px; } .tri.c { left: 1300px; }
+  .say { position: absolute; top: 650px; width: 520px; text-align: center; }
+  .say.a { left: 100px; } .say.b { left: 700px; } .say.c { left: 1300px; }
+  .cmp { position: absolute; left: var(--mx); right: var(--mx); top: 300px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+  .cmp .h1 { margin-top: 12px; } .cmp .h2 { margin-top: 18px; }
+</style>
+
+<div class="eyebrow-top eyebrow" data-zh="02 · 打个比方" data-en="02 · An analogy"></div>
+
+<img class="ill big-ill" id="stu" src="img/clay_student.png">
+<img class="ill big-ill" id="exam" src="img/clay_exam.png">
+<div class="right" id="r-a"><div class="eyebrow" data-zh="练习册" data-en="The workbook"></div>
+  <div class="display c-good">100</div><div class="body ink2" data-zh="连印错的也照背" data-en="Even the typos, memorized"></div></div>
+<div class="right" id="r-b"><div class="eyebrow" data-zh="考试" data-en="The exam"></div>
+  <div class="h1 c-bad" data-zh="题一变，<br>就不会了" data-en="A small change,<br>and he's lost"></div></div>
+
+<div class="map" id="map">
+  <div class="row" data-zh='<span class="h2">练习册</span><span class="arrow">→</span><span class="h2 c-train">训练数据</span>' data-en='<span class="h2">The workbook</span><span class="arrow">→</span><span class="h2 c-train">Training data</span>'></div>
+  <div class="row" data-zh='<span class="h2">印错的答案</span><span class="arrow">→</span><span class="h2 c-bad">噪声</span>' data-en='<span class="h2">The typos</span><span class="arrow">→</span><span class="h2 c-bad">Noise</span>'></div>
+  <div class="row" data-zh='<span class="h2">考试</span><span class="arrow">→</span><span class="h2 accent">测试数据</span>' data-en='<span class="h2">The exam</span><span class="arrow">→</span><span class="h2 accent">Test data</span>'></div>
+  <div class="row" data-zh='<span class="h2">死记硬背</span><span class="arrow">→</span><span class="h2 c-bad">穿过每个点的曲线</span>' data-en='<span class="h2">Memorizing</span><span class="arrow">→</span><span class="h2 c-bad">A curve through every point</span>'></div>
+</div>
+<div class="limit" id="limit"><div class="eyebrow" data-zh="比方的局限" data-en="Where the analogy breaks"></div>
+  <div class="h1" data-zh="学生：知道在背" data-en="Student: knows it"></div>
+  <div class="h1 sub" data-zh="模型：不知道" data-en="Model: doesn&#39;t"></div></div>
+
+<img class="ill big-ill" id="cats" src="img/clay_cats.png">
+<div class="right" id="r-c"><div class="eyebrow" data-zh="相近的另一种毛病" data-en="A related problem"></div>
+  <div class="h1" data-zh='猫，<span class="accent">都在沙发上</span>' data-en='Every cat: <span class="accent">on a sofa</span>'></div></div>
+<div class="rule-line h1" id="rule" data-zh='他可能学到：<span class="grad">沙发 = 猫</span>' data-en='His guess: <span class="grad">sofa = cat</span>'></div>
+<img class="ill tri a" id="t-cats" src="img/clay_cats.png">
+<img class="ill tri b" id="t-dog" src="img/clay_dog.png">
+<img class="ill tri c" id="t-grass" src="img/clay_grass.png">
+<div class="say a caption" id="s-a" data-zh="见过的：全对" data-en="Photos he&#39;s seen: correct"></div>
+<div class="say b h2 c-bad" id="s-b" data-zh="猫！" data-en="“Cat!”"></div>
+<div class="say c h2 c-bad" id="s-c" data-zh="不是猫！" data-en="“Not a cat!”"></div>
+
+<div class="cmp" id="cmp">
+  <div id="cmp-a"><div class="eyebrow" data-zh="学生" data-en="The student"></div><div class="h1 c-bad" data-zh="过拟合" data-en="Overfitting"></div>
+    <div class="h2 ink2" data-zh="死背答案" data-en="Memorized every detail"></div></div>
+  <div id="cmp-b"><div class="eyebrow" data-zh="小朋友" data-en="The child"></div><div class="h1 accent" data-zh="捷径学习" data-en="Shortcut learning"></div>
+    <div class="h2 ink2" data-zh="只见过沙发上的猫" data-en="Latched onto the sofa"></div></div>
+</div>
+
+<script>
+const all = ["#stu", "#exam", "#r-a", "#r-b", "#map .row", "#limit", "#cats", "#r-c", "#rule", "#t-cats", "#t-dog", "#t-grass", "#s-a", "#s-b", "#s-c", "#cmp-a", "#cmp-b"];
+gsap.set(all, { opacity: 0 });
+EDU.in(".eyebrow-top", 0);
+// l24 学生、满分
+EDU.in("#stu", EDU.t("l24"), { y: 12, d: .9 }); EDU.in("#r-a", EDU.t("l24", .55));
+// l25 考试
+EDU.out(["#stu", "#r-a"], EDU.t("l25")); EDU.in("#exam", EDU.t("l25", .02), { y: 12, d: .9 }); EDU.in("#r-b", EDU.t("l25", .3));
+// l26 显式对应
+EDU.out(["#exam", "#r-b"], EDU.t("l26")); EDU.in("#map .row", EDU.t("l26", .05), { stagger: EDU.S.cues.l26 ? (EDU.end("l26") - EDU.t("l26")) / 4.6 : .6 });
+// l27 类比的局限：对照表退场，单独一屏
+EDU.out("#map .row", EDU.t("l27")); EDU.in("#limit", EDU.t("l27", .05));
+// l28 相近但不同：沙发上的猫
+EDU.out("#limit", EDU.t("l28")); EDU.in("#cats", EDU.t("l28", .1), { y: 12, d: .9 }); EDU.in("#r-c", EDU.t("l28", .45));
+// l29 规则与两个反例
+EDU.out(["#cats", "#r-c"], EDU.t("l29")); EDU.in("#rule", EDU.t("l29", .02));
+EDU.in(["#t-cats", "#s-a"], EDU.t("l29", .12), { stagger: .1 });
+EDU.in(["#t-dog", "#s-b"], EDU.t("l29", .45), { stagger: .12 });
+EDU.in(["#t-grass", "#s-c"], EDU.t("l29", .75), { stagger: .12 });
+// l30 对比：记得太多 vs 见得太少
+EDU.out(["#rule", "#t-cats", "#t-dog", "#t-grass", "#s-a", "#s-b", "#s-c"], EDU.t("l30"));
+EDU.in("#cmp-a", EDU.t("l30", .25)); EDU.in("#cmp-b", EDU.t("l30", .5));
+</script>

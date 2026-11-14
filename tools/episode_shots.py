@@ -12,9 +12,13 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
+if str(REPO) not in sys.path:
+    sys.path.insert(0, str(REPO))
+from projects.ai_video_management.libs.common.asset_group import character_dirs  # noqa: E402
 WORKFLOW = "workflow.json"
 SETTINGS = "2_世界观人设"
 KEY_RE = re.compile(r"^([cm])(\d+)(?:-(\d+))?$")          # c1、c1-1、m7
@@ -86,8 +90,10 @@ def card_dir(drama: Path, asset_key: str) -> Path:
     m = KEY_RE.match(asset_key)
     if not m:
         raise ShotError("出场人物键 %s 不是 c1 / c1-1 / m7 这样的资产键" % asset_key)
-    root = drama / SETTINGS / "characters"           # 人物 c* 与怪物 m* 的卡都在 characters/
-    card = _child(root, "%s%s" % (m.group(1), m.group(2)))
+    root = drama / SETTINGS / "characters"           # 人物 c* 与怪物 m* 的卡都在 characters/（可再分一层分组）
+    prefix = "%s%s_" % (m.group(1), m.group(2))
+    hits = [d for d in character_dirs(root) if d.name.startswith(prefix)]
+    card = hits[0] if len(hits) == 1 else None
     if card is None:
         raise ShotError("找不到人物卡 %s%s_*（在 %s）" % (m.group(1), m.group(2), root.relative_to(drama)))
     return card
@@ -148,7 +154,9 @@ def figure_colors(drama: Path, keys: list[str]) -> dict[str, str]:
             if table[n] not in FIGURE_RGB:
                 raise ShotError("workflow.json figure_colors 的 %s＝%s 不在可用颜色 %s" % (n, table[n], "、".join(FIGURE_RGB)))
             out[n] = table[n]
-    for k in keys:
+    # 没登记的按卡号从小到大取色，不按出现顺序：编译器按出场名单、俯视图按走位文件的顺序传进来，
+    # 按出现顺序会让同一镜 prompt 说 Riley 是蓝点、图上她却是黄点（chuanyue_yiri follow-up 067，EP1 s6 审查 I38）
+    for k in sorted(keys, key=lambda k: (int(re.sub(r"\D", "", card_number(k)) or 0), card_number(k))):
         n = card_number(k)
         if n not in out:
             out[n] = next((c for c in FALLBACK if c not in out.values()), "灰")

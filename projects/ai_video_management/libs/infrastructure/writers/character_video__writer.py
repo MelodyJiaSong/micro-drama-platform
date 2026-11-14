@@ -17,7 +17,7 @@ from pathlib import Path
 import imageio_ffmpeg
 
 from libs.common import drama_ref
-from libs.common.character_dir import CHARACTER_DIR_RE as _CHARACTER_DIR_RE
+from libs.common.asset_group import character_dirs, is_character_name
 from libs.common.exposed_tree import ExposedTree
 from libs.common.safe_resolve import SafeResolver
 from libs.domain.value_objects.character_video__valueobject import (
@@ -76,9 +76,13 @@ def is_under_character_folder(root: Path, rel: str) -> bool:
     # (staged pipeline `2_世界观人设/characters/`) — so exactly `depth` or
     # `depth + 1`. Anywhere deeper is some other folder that happens to be
     # named `characters`, and must not pass.
+    # The card folder is `characters/`'s child, or one unkeyed group folder
+    # down (`characters/近卫_sentinel/c65_Axe/`, follow-up 284).
     for ci in (depth, depth + 1):
         if ci < len(parts) and parts[ci] == "characters":
-            return ci + 1 < len(parts) and bool(_CHARACTER_DIR_RE.match(parts[ci + 1]))
+            if ci + 1 < len(parts) and is_character_name(parts[ci + 1]):
+                return True
+            return ci + 2 < len(parts) - 1 and is_character_name(parts[ci + 2])
     return False
 
 
@@ -429,11 +433,7 @@ class CharacterViewExtractor:
         """
         chars_dir = self._validate_characters_dir(characters_rel)
         items: list[BatchViewItem] = []
-        for sub in sorted(chars_dir.iterdir(), key=lambda p: p.name):
-            if not sub.is_dir() or sub.is_symlink():
-                continue
-            if not _CHARACTER_DIR_RE.match(sub.name):
-                continue
+        for sub in sorted(character_dirs(chars_dir), key=lambda p: p.name):
             src = self._latest_video_in(sub)
             if src is None:
                 items.append(BatchViewItem(sub.name, "skipped", None, "no turntable video"))

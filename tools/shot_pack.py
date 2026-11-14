@@ -6,6 +6,10 @@
     python tools/shot_pack.py check <集目录> | --all       # 只报告，不改
     python tools/shot_pack.py cmd <集目录> <镜头key>       # 打印这一镜的草稿提交命令（会扣积分，只在用户决定生成后执行）
 
+镜组（follow-up 331）：一场里连续几镜一次生成，编译结果在 prompts.json 场下的 `groups`，key 形如 `ep1_s1_g2`，
+目录是 `scenes/s1/groups/g2/`（镜组板 `board.png`、资料包、drafts / renders 都在这里）。资料包与提交命令对镜组和镜头一样；
+镜组里任何一镜的资料包有问题，镜组的资料包也判失效。sync 顺带用 `tools/scene_board.py` 更新场故事板（follow-up 336）。
+
 资料包 ＝ `{镜头目录}/资料包/`（派生缓存，gitignored）：
     `01_图片1_ep1_s4_st2_overhead.png`、`02_图片2_c14_Brother_Sammuel.png` … `prompt.txt` 与 `manifest.json`。
     正本 prompt 的「参考：」行是 `key_id=>@` 占位（follow-up 229）；资料包的 prompt.txt 按上传顺序把 @ 填成
@@ -32,6 +36,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 from tools import episode_shots as es  # noqa: E402
+from tools import props_lib  # noqa: E402
 from tools.previz.seedance_ref import MODEL_ALIASES, MODEL_LIMITS  # noqa: E402
 
 PACK = "资料包"
@@ -66,7 +71,9 @@ def fingerprint(value) -> str:
 
 
 def shot_dir(ep_dir: Path, scene: str, key: str) -> Path:
-    return ep_dir / "scenes" / scene / "shots" / key.rsplit("_", 1)[-1]
+    """镜头 `ep1_s1_st4` → scenes/s1/shots/st4；镜组 `ep1_s1_g2` → scenes/s1/groups/g2（follow-up 331）。"""
+    last = key.rsplit("_", 1)[-1]
+    return ep_dir / "scenes" / scene / ("groups" if re.fullmatch(r"g\d+", last) else "shots") / last
 
 
 def scene_revision(scene: dict, filming_source) -> str:
@@ -95,6 +102,7 @@ def episode_problems(ep_dir: Path) -> tuple[list[dict], str]:
         else:
             fresh = episode_fresh
         shots += [dict(shot, scene=scene["id"], **({} if fresh else {"stale": STALE_FILMING})) for shot in scene["shots"]]
+        shots += [dict(group, scene=scene["id"], **({} if fresh else {"stale": STALE_FILMING})) for group in scene.get("groups", [])]
     return shots, ""
 
 
@@ -104,6 +112,16 @@ def shot_problems(ep_dir: Path, shot: dict) -> list[str]:
     for ref in shot.get("refs", []):
         if not (REPO / ref["path"]).is_file():
             out.append("%s（%s）的源文件不在了：%s" % (ref.get("key", ref.get("tag")), ref["role"], ref["path"]))
+    paths = {(REPO / ref["path"]).resolve() for ref in shot.get("refs", [])}
+    owners = {p for path in paths for p in path.parents if re.fullmatch(r"[cm]\d+_.+", p.name)
+              and (p / f"{p.name}.md").is_file()}
+    for owner in owners:
+        try:
+            for image in props_lib.character_props(owner):
+                if image.resolve() not in paths:
+                    out.append(f"{owner.name} 的固定武器 {image.stem} 没进参考清单：重新编译")
+        except (FileNotFoundError, ValueError) as exc:
+            out.append(str(exc))
     decision = sd / "planning" / "previz.json"
     if decision.is_file():
         d = json.loads(decision.read_text(encoding="utf-8"))
@@ -280,15 +298,23 @@ def episodes() -> list[Path]:
     return out
 
 
+def scene_board_scenes(ep_dir: Path) -> list[str]:
+    from tools import scene_board
+    return [sc["id"] for sc in scene_board.scenes(ep_dir) if sc.get("groups") and scene_board.stale(ep_dir, sc)]
+
+
 def run(ep_dir: Path, key: str | None, fix: bool, quiet: bool) -> int:
     shots, ep_reason = episode_problems(ep_dir)
     model = es.settings(es.drama_root(ep_dir)).get("prompt", {}).get("model", "seedance2.5")
     counts = {"ok": 0, "updated": 0, "invalid": 0, "stale": 0, "missing": 0}
+    by_id = {s["id"]: s for s in shots}
     for shot in shots:
         if key and shot["id"] != key:
             continue
         pack = shot_dir(ep_dir, shot["scene"], shot["id"]) / PACK
         reasons = [r for r in (ep_reason, shot.get("stale")) if r] + shot_problems(ep_dir, shot) + model_problems(shot, model)
+        for member in shot.get("shots", []):         # 镜组：成员镜头的 overhead / previz 问题同样作废镜组的资料包
+            reasons += ["%s：%s" % (member, r) for r in shot_problems(ep_dir, by_id[member]) if member in by_id]
         if reasons:
             counts["invalid"] += 1
             changed = invalidate(pack, reasons) if fix else False
@@ -307,6 +333,13 @@ def run(ep_dir: Path, key: str | None, fix: bool, quiet: bool) -> int:
         else:
             counts[st] += 1
             print("  ⚠ %s 资料包%s" % (shot["id"], "缺" if st == "missing" else "与源文件不一致"))
+    if fix and key is None:       # 场故事板跟着镜组板走（follow-up 336）：每次同步顺带重画来源变了的场
+        from tools import scene_board
+        for sid in scene_board.sync(ep_dir, quiet=True):
+            print("  → %s 场故事板已更新" % sid)
+    elif not fix:
+        for scene in scene_board_scenes(ep_dir):
+            print("  ⚠ %s 场故事板过期：跑 python tools/scene_board.py <集目录>" % scene)
     if not quiet or counts["updated"] or (not fix and (counts["stale"] or counts["missing"])):
         print("%s：%s" % (ep_dir.relative_to(REPO).as_posix(), " · ".join("%s %d" % (k, v) for k, v in counts.items() if v)))
     return 1 if (not fix and (counts["stale"] or counts["missing"] or counts["invalid"])) else 0

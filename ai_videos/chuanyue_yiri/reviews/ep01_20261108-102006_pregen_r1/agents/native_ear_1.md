@@ -1,0 +1,1 @@
+You are an independent reviewer. Read the task file ai_videos/chuanyue_yiri/reviews/ep01_20261108-102006_pregen_r1/items/native_ear.md and do exactly what it says (it points you to BRIEF.md and materials/lines.md). Write the report where it says, then run the tick command it gives you from the repo root, with --by "codex/native_ear". Do not modify any other file.

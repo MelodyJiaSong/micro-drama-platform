@@ -1,0 +1,264 @@
+{
+ "note": "事实台账：讲稿与画面上每个事实、数字、专业概念一条，写明出处与原文原话。实验算出的写 source: \"experiment\"，并指到 scenes/data.py 里的断言。核对记录见 research.md。",
+ "claims": [
+  {
+   "id": "C01",
+   "lines": [
+    "l07",
+    "l08",
+    "l09"
+   ],
+   "claim": "示意数据：同样五公里、一天 48 趟；白天约 23 元（= 第 1 季共用两旋钮模型 × 5 公里）；早晚高峰与深夜贵",
+   "screen": [
+    "示意",
+    "同样 5 公里",
+    "48 趟",
+    "白天 ≈ 23 元",
+    "早高峰",
+    "晚高峰",
+    "半夜"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：rides() 与白天均价、高峰、深夜的断言"
+  },
+  {
+   "id": "C02",
+   "lines": [
+    "l11",
+    "l12"
+   ],
+   "claim": "两个旋钮的直线最好也几乎是平的（斜率 −0.07），损失（均方误差）11.5；高峰少算、白天多算各 3 元以上",
+   "screen": [
+    "11.5"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：最小二乘 line_loss、网格搜索、分时段误差断言"
+  },
+  {
+   "id": "C03",
+   "lines": [
+    "l15",
+    "l16",
+    "l17"
+   ],
+   "claim": "一个小单元：两个旋钮算直线 w·x+b，小于零当零（ReLU），画出来是拐一下的折线；折点位置与陡度由 w、b 决定",
+   "screen": [
+    "小于零 → 当成零",
+    "一条折线"
+   ],
+   "source": "AlexNet 论文 §3.1（ReLU）；scenes/data.py demo",
+   "quote": "the non-saturating nonlinearity f(x) = max(0, x). Following Nair and Hinton [20], we refer to neurons with this nonlinearity as Rectified Linear Units (ReLUs)."
+  },
+  {
+   "id": "C04",
+   "lines": [
+    "l18",
+    "l19"
+   ],
+   "claim": "三条折线（6、8、10 点各拐一次）加起来是 8 点一个鼓包（示意）",
+   "screen": [
+    "鼓包、台阶……"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：demo bump 断言"
+  },
+  {
+   "id": "C05",
+   "lines": [
+    "l20",
+    "l21",
+    "l22"
+   ],
+   "claim": "网络：第一层 12 个单元（各 2 个旋钮），第二层 1 个单元（12 + 1 个旋钮），共 37 个旋钮",
+   "screen": [
+    "第一层 · 12 个",
+    "第二层 · 1 个",
+    "37",
+    "个旋钮",
+    "每条折线配个旋钮",
+    "加起来，再调高低 → 车费"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：n_knobs == 37"
+  },
+  {
+   "id": "C06",
+   "lines": [
+    "l23",
+    "l24"
+   ],
+   "claim": "神经网络就是一层层带旋钮的小单元；名字来自神经元，不是在模仿人脑",
+   "screen": [
+    "神经网络",
+    "名字来自神经元 · 别当真"
+   ],
+   "source": "第 1 季统一说法 edu_videos/ai_terms/_shared/s1_bible.md「统一说法」表",
+   "quote": "neural network | 神经网络：一层层的小单元 | neural network: layers of small units | … | 不说「模仿人脑」，最多一句「名字来自神经元，但别当真」"
+  },
+  {
+   "id": "C07",
+   "lines": [
+    "l25",
+    "l26",
+    "l27",
+    "l28"
+   ],
+   "claim": "用梯度下降（带动量）拧 1 万步，损失 20.5 → 0.26；直线最好 11.5；高峰、深夜平均误差 < 1 元",
+   "screen": [
+    "37 个旋钮",
+    "0.26",
+    "直线最好：11.5"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：net_loss < 0.3、快照单调下降、分时段误差断言"
+  },
+  {
+   "id": "C08",
+   "lines": [
+    "l29"
+   ],
+   "claim": "网络画出的曲线 = 12 条折线之和 + 常数，曲线的每个拐点来自某个单元的折点",
+   "screen": [
+    "单元拐弯 → 拐点"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：np.allclose(parts.sum + b2, p)"
+  },
+  {
+   "id": "C09",
+   "lines": [
+    "l33",
+    "l34",
+    "l35"
+   ],
+   "claim": "构造例子：每层两个单元 max(0,2x) − max(0,4x−2) 把斜线对折一次；叠 1–5 层段数 2、4、8、16、32；同样十个单元并排最多 11 段",
+   "screen": [
+    "2 / 4 / 8 / 16 / 32 段",
+    "并排 10 个：最多 11 段",
+    "叠成 5 层：可达 32 段",
+    "特意搭的例子"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：pieces 断言"
+  },
+  {
+   "id": "C10",
+   "lines": [
+    "l36",
+    "l37"
+   ],
+   "claim": "深的网络能把前面算好的部分反复利用，复杂度随深度指数增长",
+   "screen": [
+    "反复用前层的折线"
+   ],
+   "source": "Montúfar, Pascanu, Cho, Bengio 2014, arXiv:1402.1869（摘要）；Telgarsky 2016, arXiv:1602.04485",
+   "quote": "The compositional structure of these functions enables them to re-use pieces of computation exponentially often in terms of the network's depth."
+  },
+  {
+   "id": "C11",
+   "lines": [
+    "l39",
+    "l40"
+   ],
+   "claim": "2012 年，多伦多大学的 Krizhevsky、Sutskever、Hinton 训练了很深的卷积神经网络，后来称 AlexNet",
+   "screen": [
+    "2012 · 多伦多大学",
+    "AlexNet",
+    "Krizhevsky · Sutskever · Hinton",
+    "Krizhevsky 等 · NIPS 2012"
+   ],
+   "source": "Krizhevsky, Sutskever, Hinton. ImageNet Classification with Deep Convolutional Neural Networks. NIPS 2012",
+   "quote": "We trained a large, deep convolutional neural network to classify the 1.2 million high-resolution images in the ImageNet LSVRC-2010 contest into the 1000 different classes."
+  },
+  {
+   "id": "C12",
+   "lines": [
+    "l41"
+   ],
+   "claim": "八层（5 卷积 + 3 全连接），6000 万参数，120 万张训练图，1000 类",
+   "screen": [
+    "8 层",
+    "6000 万 个旋钮",
+    "120 万 张照片",
+    "1000 类"
+   ],
+   "source": "Krizhevsky et al. 2012 摘要",
+   "quote": "The neural network, which has 60 million parameters and 650,000 neurons, consists of five convolutional layers, some of which are followed by max-pooling layers, and three fully-connected layers with a final 1000-way softmax."
+  },
+  {
+   "id": "C13",
+   "lines": [
+    "l42",
+    "l43"
+   ],
+   "claim": "ILSVRC-2012：top-5（猜五个全错才算错）测试错误率，参赛变体 15.3%，第二名 26.2%",
+   "screen": [
+    "ImageNet 比赛 · 2012",
+    "猜 5 个，全错才算错",
+    "15.3%",
+    "26.2%",
+    "错误率（猜 5 个）"
+   ],
+   "source": "Krizhevsky et al. 2012 摘要",
+   "quote": "We also entered a variant of this model in the ILSVRC-2012 competition and achieved a winning top-5 test error rate of 15.3%, compared to 26.2% achieved by the second-best entry."
+  },
+  {
+   "id": "C14",
+   "lines": [
+    "l44"
+   ],
+   "claim": "第一层自己学到各种方向的条纹和色块（画面为示意图，非论文原图）",
+   "screen": [
+    "第一层：条纹、色块",
+    "没教它看什么",
+    "示意"
+   ],
+   "source": "Krizhevsky et al. 2012 §6.1",
+   "quote": "The network has learned a variety of frequency- and orientation-selective kernels, as well as various colored blobs."
+  },
+  {
+   "id": "C15",
+   "lines": [
+    "l46",
+    "l47"
+   ],
+   "claim": "拿掉中间任何一层，top-1 成绩（只看第一个答案猜对的比例）低约 2 个百分点；原话：深度真的很重要",
+   "screen": [
+    "拿掉中间层 → 约降 2 个百分点",
+    "只看第一个答案猜对的比例",
+    "“深度真的很重要”",
+    "Krizhevsky 等 2012 · 第 7 节"
+   ],
+   "source": "Krizhevsky et al. 2012 §7 Discussion",
+   "quote": "For example, removing any of the middle layers results in a loss of about 2% for the top-1 performance of the network. So the depth really is important for achieving our results."
+  },
+  {
+   "id": "C16",
+   "lines": [
+    "l50"
+   ],
+   "claim": "AlexNet 有约六千万个旋钮（参数）",
+   "screen": [],
+   "source": "Krizhevsky et al. 2012 摘要",
+   "quote": "60 million parameters"
+  },
+  {
+   "id": "C17",
+   "lines": [
+    "l31",
+    "l32",
+    "l36",
+    "l37",
+    "l38"
+   ],
+   "claim": "深度学习就是层叠得多（深）的神经网络：多层逐层在前一层的结果上计算；前面实验里 12 个单元并排、每个只有一个折点",
+   "screen": [
+    "深度学习",
+    "深 = 层数多",
+    "并排：各拐一次"
+   ],
+   "source": "LeCun, Bengio, Hinton. Deep learning. Nature 521, 436–444 (2015) 摘要；本期 scenes/data.py（12 个单元各一个折点）",
+   "quote": "Deep learning allows computational models that are composed of multiple processing layers to learn representations of data with multiple levels of abstraction."
+  }
+ ]
+}

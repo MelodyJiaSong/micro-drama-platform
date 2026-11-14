@@ -1,0 +1,11 @@
+# k342 光明之泉 · 实机施法片段与截帧
+
+> 暴雪娱乐版权素材，只给人看、写 prompt 用，不上传生成服务、不进成片。片段与截帧取自 archive.org 公开的 WarcraftMovies 老录像（ffmpeg 按时间点截取）。待主代理合并进 refs.md。
+
+| 文件 | 来源 URL / 时间点 | sha256 前 12 位 | 看到了什么 |
+|---|---|---|---|
+| `clip_ia_Loran_-_Addicted_Vs._Loa_288.5.mp4` | https://archive.org/details/Loran_-_Addicted_Vs._Loatheb_Priest_2006-08-14_5.00 时间点 4:48.5–4:54.0（《Loran - Addicted Vs. Loatheb [Priest][2006-08-14][5.00]》，2006-08-14，原版时期画面；配乐，非游戏原声） | d8047c21b77e | 施法者为录像者本人角色 Calligenia（玩家头像框名、团队警报“[Calligenia]: 1. HEAL RAUS”与片头署名一致），暗夜精灵女牧师，蓝发、暗红色长袍；纳克萨玛斯洛欧塞布战，640×480 原画质，界面插件极多（团队框、仇恨/治疗统计、聊天框占下半屏）。放光明之泉：4:48 鼠标悬停技能栏弹出“Lightwell / 1.5 sec cast / 10 min cooldown / Creates a holy Lightwell near the priest...”说明，4:48.8 起施法条“Lightwell”1.5 秒（1.3→0.8→0.2），4:50.5 变绿完成。读条中牧师脚下亮起一圈暖金色光（holy_precast_uber_base），4:50.0–4:50.75 最明显；完成后她向人堆移动，原地 4:51.5 起长出光明之泉：地面一点白金色亮斑，向上冒出一根半透明的锥形光柱（底宽顶尖，约一人半高，白黄色、边缘柔和），之后一直立在原地发光。人物与泉都小，泉在暗紫地面上很显眼。声音：整片配乐（片尾字幕列 Klaus Badelt / Stone Sour / X(TV) 曲目），未逐段听辨是否混有游戏原声；未见加速或慢放。 |
+| `clip_ia_Loran_-_Addicted_Vs._Loa_324.5.mp4` | https://archive.org/details/Loran_-_Addicted_Vs._Loatheb_Priest_2006-08-14_5.00 时间点 5:24.5–5:29.0（《Loran - Addicted Vs. Loatheb [Priest][2006-08-14][5.00]》，2006-08-14，原版时期画面；配乐，非游戏原声） | 9007c85b13ea | 施法者为录像者本人角色 Calligenia（玩家头像框名、团队警报“[Calligenia]: 1. HEAL RAUS”与片头署名一致），暗夜精灵女牧师，蓝发、暗红色长袍；纳克萨玛斯洛欧塞布战，640×480 原画质，界面插件极多（团队框、仇恨/治疗统计、聊天框占下半屏）。光明之泉被点用后的效果：画面左侧那根白金色锥形光柱仍立在地上，5:25.5 起牧师头顶浮字“[Lightwell Renew]”，5:27 起每隔约 1 秒跳绿色“+320 (Lightwell Renew)”，聊天框“[You] Gain Lightwell Renew”“Lightwell Renew [You] +320”。此段展示泉体常驻外观与其恢复效果的浮字；接受者身上的持续光效被人堆遮住看不清。同期她在读神圣之火（施法条“Holy Fire”）。声音：整片配乐（片尾字幕列 Klaus Badelt / Stone Sour / X(TV) 曲目），未逐段听辨是否混有游戏原声；未见加速或慢放。 |
+| `snap_ia_Loran_-_Addicted_Vs._Loa_290.jpg` | https://archive.org/details/Loran_-_Addicted_Vs._Loatheb_Priest_2006-08-14_5.00 4:50.0 帧（片段 288.5 内） | 73e378983f91 | 读条中：施法条“Lightwell 0.2”，牧师站位（画面中下）脚下一小团暖金色光；旁边黄色尖刺球为孢子。 |
+| `snap_ia_Loran_-_Addicted_Vs._Loa_291.75.jpg` | https://archive.org/details/Loran_-_Addicted_Vs._Loatheb_Priest_2006-08-14_5.00 4:51.75 帧（片段 288.5 内） | f0532aa859a4 | 泉刚出现：牧师原站位地面亮起白金色光点，光柱正在升起（较淡）。 |
+| `snap_ia_Loran_-_Addicted_Vs._Loa_293.jpg` | https://archive.org/details/Loran_-_Addicted_Vs._Loatheb_Priest_2006-08-14_5.00 4:53.0 帧（片段 288.5 内） | 1b8d4cb28de7 | 成形：画面左下地面一根白黄色半透明锥形光柱，底部亮斑最亮、向上渐隐。 |

@@ -1,0 +1,140 @@
+{
+  "followup": 293,
+  "at": "2026-10-30T00:54:09.124566+00:00",
+  "status": "in_progress",
+  "scope_manifest": "asset_manifest.json",
+  "accepted_detailed_assets": 1,
+  "active_stage": "All 59 candidates generated; individual repairs and map inspection continue",
+  "server": {
+    "pid": null,
+    "argv": [
+      "C:\\workspace\\ComfyUI\\.venv\\Scripts\\python.exe",
+      "-s",
+      "C:\\workspace\\micro-drama-platform\\.audit\\adhoc_agents\\2026-10-27\\dota-local-3d-287\\start_comfy.py",
+      "--listen",
+      "127.0.0.1",
+      "--port",
+      "8188",
+      "--disable-auto-launch",
+      "--offline",
+      "--disable-all-custom-nodes",
+      "--whitelist-custom-nodes",
+      "ComfyUI-TRELLIS2",
+      "ComfyUI-GeometryPack",
+      "--preview-method",
+      "none",
+      "--reserve-vram",
+      "1.0",
+      "--use-pytorch-cross-attention"
+    ],
+    "purpose": "authorized local 3D generation",
+    "offline": true,
+    "previous_pid": 30792,
+    "diagnostic": "runtime-only segmented PyTorch SDPA; Sage Triton access violation workaround",
+    "runtime_patch": "Z-up views; 16x latent coordinate normalization; multi-view texture inference",
+    "status": "task_server_stopped_after_completed_batch"
+  },
+  "artifacts": [
+    {
+      "path": "2_世界观人设\\background\\map_3d\\foundation_Map_Overview.png",
+      "bytes": 1740752,
+      "sha256": "d681baae51d126e3781a3d6860e0d2a50d18f1521eb0638e6f23d8faf9f0572f"
+    },
+    {
+      "path": "2_世界观人设\\background\\map_3d\\foundation_Mid_River.png",
+      "bytes": 1714831,
+      "sha256": "daa489e9281fb7b8586056a6393776b2add0572d554d83d7574038018da6c23a"
+    },
+    {
+      "path": "2_世界观人设\\background\\map_3d\\foundation_v001.blend",
+      "bytes": 20348828,
+      "sha256": "6f46b8eeac821af0f17935d0c9e70a2af8eceecd042a9139e48c097e92751f41"
+    },
+    {
+      "path": "2_世界观人设\\background\\map_3d\\foundation_v002.blend",
+      "bytes": 20730766,
+      "sha256": "9d987c834c65143a43947d54ef266d236a11a02ba6f5706647c0c3afde07231a"
+    },
+    {
+      "path": "2_世界观人设\\background\\map_3d\\foundation_v002_Map_Overview.png",
+      "bytes": 1725379,
+      "sha256": "780e3cc6cea6058345b0b56146d5780dc8c4df497704c0f961e327523a43a09b"
+    },
+    {
+      "path": "2_世界观人设\\background\\map_3d\\foundation_v002_Mid_River.png",
+      "bytes": 1773420,
+      "sha256": "5f66d1e814b36821a4c977de299012232af3d8a2b3d37247ec032bbb2b1c5fe6"
+    },
+    {
+      "path": "2_世界观人设\\background\\近卫_sentinel\\bg23_奎尔瑟兰的密室\\model_3d\\r03\\bg23_r03_pbr_20261027_215154.glb",
+      "bytes": 31292480,
+      "sha256": "c57cc0fedba8bd8ea0450c0adfdc10f0dac68fc4a24eed654c51c9161178d008"
+    },
+    {
+      "path": "2_世界观人设\\background\\近卫_sentinel\\bg23_奎尔瑟兰的密室\\model_3d\\r03\\bg23_r03_raw_20261027_214403.glb",
+      "bytes": 849729648,
+      "sha256": "db10a83456c5fdcd4435ef299c264031278054ef48343a221d28ca072af9ff99"
+    },
+    {
+      "path": "2_世界观人设\\background\\近卫_sentinel\\bg23_奎尔瑟兰的密室\\model_3d\\r03\\inspection\\bg23_r03.blend",
+      "bytes": 30146625,
+      "sha256": "f0f206939ed1853c42c13653cceb272d1005be9c58d05500a6ed7dd2e4327763"
+    }
+  ],
+  "remaining": [
+    "PBR export and mesh inspection",
+    "remaining buildings and NPCs",
+    "visual environment object classification and modeling",
+    "camp and lane placement",
+    "natural cliffs and ground vegetation",
+    "independent review and final map assembly"
+  ],
+  "runtime_limit_override": {
+    "followup": 289,
+    "user_instruction": "Continue until complete; ignore previous per-unit time limit",
+    "scope": "this 3D map task"
+  },
+  "updated_at": 1793136736.7350547,
+  "current_environment": "environment_v036.blend",
+  "batch": {
+    "pid": null,
+    "state": "batch_full_models_v1.json"
+  },
+  "latest_environment": "environment_v041.blend",
+  "scheduler": {
+    "status": "candidates_generated_pending_review",
+    "name": "full_models_v1",
+    "pid": null
+  },
+  "review_watcher_pid": 17968,
+  "latest_assembly": "assembly_working_v022.blend",
+  "scheduler_pid": 29188,
+  "active_jobs": {
+    "scheduler": null,
+    "review_watcher": null,
+    "comfy_launcher": null
+  },
+  "candidate_asset_families": 59,
+  "current_status": "current_status.json",
+  "inspection_index": "inspection_index.html",
+  "active_processes": [
+    {
+      "pid": 30356,
+      "script": "build_map_lod_batch.py",
+      "program": "python.exe"
+    },
+    {
+      "pid": 23988,
+      "script": "finish_map_lod_preview.py",
+      "program": "python.exe"
+    },
+    {
+      "pid": 34668,
+      "script": "review_ready_revisions.py",
+      "program": "python.exe"
+    }
+  ],
+  "active_map_environment": "environment_v036.blend",
+  "latest_environment_acceptance": "candidate_only; existence does not imply visual or independent acceptance",
+  "latest_assembly_environment": null
+}

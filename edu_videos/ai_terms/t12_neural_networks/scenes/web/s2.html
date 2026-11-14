@@ -1,0 +1,75 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  #day { position: absolute; left: var(--mx); top: 200px; }
+  .tag { position: absolute; left: 1000px; top: 214px; }
+  .side { position: absolute; left: 1330px; width: 480px; }
+  .side .t { position: absolute; top: 0; left: 0; white-space: nowrap; }
+  .facts { top: 260px; }
+  .facts .h2 { white-space: nowrap; }
+  .facts .h2 + .h2 { margin-top: 18px; }
+  .knobs { position: absolute; left: 1330px; top: 250px; width: 470px; height: 330px; }
+  .loss { top: 640px; }
+  .loss .v { font-size: 110px; font-weight: 700; line-height: 1; margin-top: 8px; font-variant-numeric: tabular-nums; }
+  .end { top: 330px; }
+  html[lang=en] .end .h1 { font-size: 64px; }
+</style>
+
+<div class="eb eyebrow" data-zh="01 · 直线拐不了弯" data-en="01 · Beyond straight lines"></div>
+<svg id="day"></svg>
+<div class="tag eyebrow" id="tag" data-zh="示意" data-en="Illustration"></div>
+<div class="side facts" id="facts">
+  <div class="h2" id="f1" data-zh="同样 5 公里" data-en="Same 5 km"></div>
+  <div class="h2" id="f3" data-zh="48 趟" data-en="48 rides"></div>
+  <div class="h2 ink2" id="f2" data-zh='白天 ≈ <span class="accent">23 元</span>' data-en='Daytime ≈ <span class="accent">$23</span>'></div>
+</div>
+<div class="knobs" id="knobs"></div>
+<div class="side loss" id="loss"><div class="eyebrow" data-zh="损失（最低）" data-en="Lowest loss"></div><div class="v c-bad" id="lv">—</div></div>
+<div class="side end" id="end"><div class="h1" data-zh='直线拐不了<span class="c-bad">弯</span>' data-en='Straight lines <span class="c-bad">only</span>'></div></div>
+
+<script>
+const C = dayChart("#day", { W: 1100, H: 620 });
+const dayBand = C.g.insert("rect", ":first-child").attr("x", C.x(10)).attr("width", C.x(16) - C.x(10)).attr("y", 40).attr("height", C.y(14) - 40)
+  .attr("fill", css("--accent-soft")).node();
+const labs = [
+  C.note(EDU.tr("早高峰", "Morning rush"), 8.2, 33.5, -60, -62, "caption c-bad"),
+  C.note(EDU.tr("晚高峰", "Evening rush"), 18.3, 37, -64, -62, "caption c-bad"),
+  C.note(EDU.tr("半夜", "Late night"), 1.4, 30.5, -30, -62, "caption c-bad"),
+];
+/* 两个旋钮：高低（直线在 12 点的高度）、斜度（每小时变多少）；拧的时候直线跟着动 */
+const yAt = (b, k) => [C.y(b - 12 * k), C.y(b + 12 * k)];
+const st = { mid: 33, k: 0.55 };
+const best = { mid: D.line.b + 12 * D.line.k, k: D.line.k };
+const kH = knob("#knobs", { size: 190, min: 15, max: 40, value: st.mid, left: 0, top: 0, label: EDU.tr("高低", "Height"), fmt: v => v.toFixed(1) });
+const kS = knob("#knobs", { size: 190, min: -1, max: 1, value: st.k, left: 260, top: 0, label: EDU.tr("斜度", "Slope"), fmt: v => v.toFixed(2) });
+function setLine(mid, k) {
+  const [a, b] = yAt(mid, k);
+  C.line.setAttribute("x1", C.x(0)); C.line.setAttribute("x2", C.x(24));
+  C.line.setAttribute("y1", a); C.line.setAttribute("y2", b);
+  D.rides.forEach((r, i) => C.gaps[i].setAttribute("y2", C.y(mid + k * (r.h - 12))));
+}
+setLine(st.mid, st.k);
+const o = { mid: st.mid, k: st.k };
+const sweep = (at, mid, k, d) => EDU.tl.to(o, { mid, k, duration: d, ease: "power2.inOut", onUpdate: () => { setLine(o.mid, o.k); kH.set(o.mid); kS.set(o.k); } }, at);
+
+gsap.set([C.svg.node(), ...C.dots, C.line, ...C.gaps, dayBand, ...labs, "#tag", "#f1", "#f2", "#f3", "#knobs", "#loss", "#end"], { opacity: 0 });
+EDU.in(".eb", 0);
+// l07 示意数据：同样 5 公里，48 趟
+EDU.in(C.svg.node(), EDU.t("l07", 0), { y: 0, d: .5 });
+EDU.in(C.dots, EDU.t("l07", .2), { stagger: .02 }); EDU.in("#tag", EDU.t("l07", .1)); EDU.in("#f1", EDU.t("l07", .4)); EDU.in("#f3", EDU.t("l07", .6));
+// l08 白天 ≈ 23
+EDU.in(dayBand, EDU.t("l08", .05)); EDU.in("#f2", EDU.t("l08", .4));
+// l09 高峰、半夜
+EDU.in(labs, EDU.t("l09", .05), { stagger: .3 });
+// l10 还是两个旋钮，喂进去的换成几点
+EDU.out(["#facts"], EDU.t("l10", 0)); EDU.dim(dayBand, EDU.t("l10", 0), 0);
+EDU.in("#knobs", EDU.t("l10", .1)); EDU.in(C.line, EDU.t("l10", .35));
+// l11 怎么拧，最好也就是一条几乎平的线
+sweep(EDU.t("l11", 0), 22, -0.4, .9);
+sweep(EDU.t("l11", .3), 30, 0.25, .8);
+sweep(EDU.t("l11", .6), best.mid, best.k, .9);
+// l12 高峰便宜、白天贵；损失 11.5
+EDU.in(C.gaps, EDU.t("l12", 0), { stagger: .008 });
+EDU.in("#loss", EDU.t("l12", .55)); EDU.count("#lv", EDU.t("l12", .6), D.line.loss, .9, v => v.toFixed(1));
+// l13 直线学不会弯
+EDU.out(["#knobs", "#loss"], EDU.t("l13", 0)); EDU.in("#end", EDU.t("l13", .3));
+</script>

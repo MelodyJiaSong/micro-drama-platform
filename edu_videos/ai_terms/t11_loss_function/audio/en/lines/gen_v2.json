@@ -1,0 +1,358 @@
+{
+ "voice": {
+  "reference": "edu_videos/_shared/voice/host_m_voxcpm.wav",
+  "reference_text": "大家好，欢迎来到 AI 高频词。每一期，我们只讲清楚一个词：它解决什么问题，怎么理解它，以及它在现实里意味着什么。"
+ },
+ "items": [
+  {
+   "id": "l01",
+   "text": "Last time, we said a model is a machine with knobs, and learning means turning those knobs to the right spot.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l02",
+   "text": "But what does \"right\" even mean? How does the machine know this turn beat the last one?",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l03",
+   "text": "The trick is to give its mistakes a score.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l04",
+   "text": "That score is called the loss, and the rule for working it out is the loss function. That's today's topic.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l05",
+   "text": "Every time the model guesses, it lands a bit too high or too low. That gap is the error.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l06",
+   "text": "Roll all those errors up into one number, and that's the loss: a score for how wrong it is.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l07",
+   "text": "It's the opposite of a test score: lower is better, and zero means not wrong at all.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l08",
+   "text": "Kind of like golf, where fewer strokes is better.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l09",
+   "text": "Now the machine can check itself. If a turn lowers the score, keep it. If not, turn it back.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l10",
+   "text": "So training is just turning the knobs again and again to push that score down.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l11",
+   "text": "Remember those twelve made-up taxi rides? Distance along the bottom, fare up the side.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l12",
+   "text": "The model's still that straight line, with two knobs: starting fare and price per kilometer.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l13",
+   "text": "First try: a five-dollar starting fare and two dollars a kilometer. The whole line sits too low.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l14",
+   "text": "Take the five-kilometer ride: it cost twenty-three dollars, the model guessed fifteen, so it's off by eight. That's the error.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l15",
+   "text": "Now square it: eight times eight is sixty-four. That's the red square.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l16",
+   "text": "Do that for all twelve rides, take the average, and this setting scores seventy-eight.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l17",
+   "text": "Second try: four dollars to start and three fifty a kilometer. Too steep, so short rides come out low and long ones high.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l18",
+   "text": "If we skip the squaring and just average the errors, the lows and the highs cancel out.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l19",
+   "text": "The average is only minus thirty-three cents, so it looks like it's barely wrong at all.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l20",
+   "text": "So we square. Everything turns positive, and nothing cancels.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l21",
+   "text": "And big misses cost way more: off by two costs four, but off by eight costs sixty-four.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l22",
+   "text": "Square, then average, and this setting scores thirteen point four.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l23",
+   "text": "This is called mean squared error, and it's one of the most common loss functions.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l24",
+   "text": "Third try: ten dollars to start, two fifty a kilometer. The squares are tiny, and it scores two point one nine.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l25",
+   "text": "The third has the lowest score, so it's the best of the three.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l26",
+   "text": "But that's only three tries. Score every setting of both knobs, and you get a landscape of scores.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l27",
+   "text": "Starting fare along the bottom, price per kilometer up the side, and the darker the color, the higher the score.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l28",
+   "text": "Our three tries: the first way up high, the second halfway down, the third nearly at the bottom of the valley.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l29",
+   "text": "The best is ten dollars twenty to start and two fifty-four a kilometer. It scores one point nine seven.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l30",
+   "text": "It's the best setting, and the whole job of training is finding that lowest point.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l31",
+   "text": "Here's something easy to miss: even the lowest point isn't zero.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l32",
+   "text": "Real fares bounce around with traffic and detours, so no straight line could nail every ride.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l33",
+   "text": "Training isn't chasing zero. It's getting as low as it can.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l34",
+   "text": "Here's the thing: the model has no idea what a taxi is. All it sees is the score.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l35",
+   "text": "The way you score it shapes how it learns. Because we squared the errors, it's terrified of big mistakes.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l36",
+   "text": "It would rather be a little off on every ride than way off on just one.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l37",
+   "text": "So when you pick a loss function, you're really telling the model what \"good\" means.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l38",
+   "text": "Big language models like ChatGPT get a score in training too, just not for taxi fares.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l39",
+   "text": "Their job is to guess the next word, like what comes after \"Twinkle, twinkle, little.\"",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l40",
+   "text": "The score checks how sure the model was about the real next word. The less sure, the bigger the penalty.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l41",
+   "text": "If it was ninety percent sure of the right word, the penalty's tiny. Only ten percent sure, and it's way bigger.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l42",
+   "text": "This kind of scoring is called cross-entropy. The name is all you need for now.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l43",
+   "text": "In twenty twenty-three, Meta tracked that score while training a model called Llama 2.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l44",
+   "text": "It read two trillion tokens of text. Tokens are roughly words or bits of words.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l45",
+   "text": "And even then, the score was still falling, nowhere near flat.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l46",
+   "text": "A big model has tens of billions of knobs, we have two, but the job's the same: find the lowest point.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l47",
+   "text": "So, a loss function is how you score the model's mistakes, and lower is better.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l48",
+   "text": "And training is just pushing that score down.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l49",
+   "text": "But with tons of knobs, that landscape's way too big to see all at once. So which way do you turn to go downhill?",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l50",
+   "text": "That's where gradient descent comes in. It's up next time.",
+   "seeds": [
+    1
+   ]
+  }
+ ]
+}

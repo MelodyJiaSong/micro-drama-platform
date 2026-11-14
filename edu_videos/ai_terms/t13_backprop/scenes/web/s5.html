@@ -1,0 +1,60 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  .paper { position: absolute; left: var(--mx); top: 230px; width: 1100px; padding: 52px 60px; }
+  .paper .h1 { margin-top: 14px; }
+  .paper .h2 { margin-top: 18px; }
+  .paper .h2.ink2 { font-size: var(--fs-body); }
+  .paper .src { margin-top: 26px; }
+  .yr { position: absolute; left: 1330px; top: 250px; }
+  .yr .display { font-size: 190px; line-height: 1; }
+  .pass { position: absolute; left: var(--mx); top: 720px; display: flex; gap: 60px; align-items: baseline; }
+  .pass .h2 { white-space: nowrap; }
+  .feat { position: absolute; left: var(--mx); top: 720px; }
+  .early { position: absolute; left: var(--mx); top: 820px; }
+  .code { position: absolute; left: var(--mx); top: 300px; padding: 46px 64px; background: var(--ink); color: #FBFBFD; border-radius: var(--radius);
+          font-family: "Consolas", "Menlo", monospace; font-size: 96px; font-weight: 700; white-space: nowrap; }
+  .code .k { color: #F2A007; }
+  .codecap { position: absolute; left: var(--mx); top: 520px; }
+  .auto { position: absolute; left: var(--mx); top: 650px; display: flex; gap: 40px; align-items: baseline; }
+  html[lang=en] .auto { flex-direction: column; gap: 6px; top: 630px; }
+  .auto .h1 { white-space: nowrap; }
+</style>
+
+<div class="eb eyebrow" data-zh="04 · 从 1986 到今天" data-en="04 · From 1986 to today"></div>
+<div class="paper card" id="paper">
+  <div class="eyebrow" data-zh="《自然》杂志" data-en="Nature"></div>
+  <div class="h2">Learning representations<br>by back-propagating errors</div>
+  <div class="src">Rumelhart · Hinton · Williams · Vol. 323, pp. 533–536</div>
+</div>
+<div class="yr" id="yr"><div class="display grad">1986</div></div>
+<div class="pass" id="pass">
+  <div class="h2 accent" id="p1" data-zh="正着一趟 →" data-en="Forward pass →"></div>
+  <div class="h2 c-bad" id="p2" data-zh="← 倒着一趟" data-en="← Backward pass"></div>
+</div>
+<div class="feat h2" id="feat" data-zh='中间单元：<span class="c-good">自己学规律</span>' data-en='Middle units: <span class="c-good">find patterns</span>'></div>
+<div class="early caption" id="early" data-zh="更早已有类似算法" data-en="Similar ideas: earlier"></div>
+
+<div class="code" id="code"><span class="k">loss</span>.backward()</div>
+<div class="codecap h2" id="cc" data-zh="PyTorch：一行算好所有坡度" data-en="One line: every slope"></div>
+<div class="auto" id="auto">
+  <div class="h1" data-zh="自动求导" data-en="Automatic differentiation"></div>
+  <div class="h2 ink2" data-zh='底下就是<span class="accent">反向传播</span>' data-en='Underneath: <span class="accent">backpropagation</span>'></div>
+</div>
+<div class="early src" id="src2" data-zh="出处：PyTorch 官方教程" data-en="Source: PyTorch tutorial"></div>
+
+<script>
+gsap.set(["#paper", "#yr", "#pass", "#p1", "#p2", "#feat", "#early", "#code", "#cc", "#auto", "#src2"], { opacity: 0 });
+EDU.in(".eb", 0);
+// l35 1986，《自然》，三位作者
+EDU.in("#yr", EDU.t("l35", .02)); EDU.in("#paper", EDU.t("l35", .3));
+// l36 两趟：正着一趟，再倒着传回来
+EDU.in("#pass", EDU.t("l36", .1), { y: 0, d: .01 }); EDU.in("#p1", EDU.t("l36", .45)); EDU.in("#p2", EDU.t("l36", .7));
+// l37 中间的单元自己学出有用的特征
+EDU.out("#pass", EDU.t("l37")); EDU.in("#feat", EDU.t("l37", .3)); EDU.out("#feat", EDU.t("l38"));
+// l38 更早也有人提出过
+EDU.in("#early", EDU.t("l38", .1));
+// l39 PyTorch：loss.backward()
+EDU.out(["#paper", "#yr", "#early"], EDU.t("l39")); EDU.in("#code", EDU.t("l39", .3)); EDU.in("#cc", EDU.t("l39", .6));
+// l40 自动求导 = 反向传播
+EDU.out("#cc", EDU.t("l40")); EDU.in("#auto", EDU.t("l40", .05)); EDU.in("#src2", EDU.t("l40", .5));
+</script>

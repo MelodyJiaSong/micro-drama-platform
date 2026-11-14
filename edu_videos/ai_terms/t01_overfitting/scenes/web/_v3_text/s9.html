@@ -1,0 +1,63 @@
+<style>
+  .head { position: absolute; left: var(--mx); top: var(--mt); }
+  .head .h1 { margin-top: 16px; white-space: nowrap; }
+  .cards { position: absolute; left: var(--mx); right: var(--mx); top: 260px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+  .card { padding: 40px 40px 36px; height: 560px; }
+  .card .h2 { margin-top: 12px; font-size: 46px; white-space: nowrap; }
+  .card .caption { margin-top: 16px; }
+  .bar { display: flex; height: 44px; margin-top: 70px; border-radius: 10px; overflow: hidden; }
+  .bar div { display: flex; align-items: center; justify-content: center; color: #fff; font-size: var(--fs-micro); font-weight: 600; }
+  .mini { margin-top: 36px; }
+  .confess { position: absolute; left: var(--mx); top: 850px; }
+</style>
+
+<div class="head"><div class="eyebrow" data-zh="05 · 对策" data-en="05 · How to prevent it"></div>
+  <div class="h1" data-zh="三个常用的办法" data-en="Three common ways"></div></div>
+<div class="cards">
+  <div class="card" id="k1"><div class="eyebrow" data-zh="① 验证集" data-en="① Validation set"></div>
+    <div class="h2" data-zh='再留一份<span class="c-valid">模拟考</span>' data-en='Keep a <span class="c-valid">mock exam</span>'></div>
+    <div class="bar"><div style="flex:6;background:var(--d-train)" data-zh="训练" data-en="Train"></div><div style="flex:2;background:var(--d-valid)" data-zh="验证" data-en="Valid."></div><div style="flex:2;background:var(--d-test)" data-zh="测试" data-en="Test"></div></div>
+    <div class="caption" data-zh="用验证集挑模型、及早发现过拟合；测试集留到最后，只用一次" data-en="Choose models and catch overfitting on the validation set; save the test set for one final check"></div></div>
+  <div class="card" id="k2"><div class="eyebrow" data-zh="② 更多数据" data-en="② More data"></div>
+    <div class="h2" data-zh="更多、更多样的数据" data-en="More, and more varied, data"></div>
+    <svg class="mini" id="m2"></svg>
+    <div class="caption" id="k2c" data-zh="同样的复杂模型：10 个点时乱拐，40 个点时贴近规律" data-en="Same complex model: wild with 10 points, close to the pattern with 40"></div></div>
+  <div class="card" id="k3"><div class="eyebrow" data-zh="③ 正则化" data-en="③ Regularization"></div>
+    <div class="h2" data-zh="给复杂度立规矩" data-en="Put limits on complexity"></div>
+    <svg class="mini" id="m3"></svg>
+    <div class="caption" id="k3c" data-zh="同样 10 个点：对过于复杂的曲线加惩罚，它就不再追着噪声跑" data-en="Same 10 points: penalize overly complex curves, and it stops chasing the noise"></div></div>
+</div>
+<div class="confess caption" id="confess" data-zh='坦白一句：刚才演示时，我们直接按<span class="accent">考试成绩</span>挑了模型——实际做项目可不能这样。'
+     data-en='A confession: in the demo we picked the model by its <span class="accent">exam score</span> — in a real project, you shouldn’t.'></div>
+
+<script>
+const T = EDU.tl;
+const mini = (sel) => {
+  const W = 450, H = 250, svg = d3.select(sel).attr("width", W).attr("height", H);
+  const x = d3.scaleLinear([-3, 3], [10, W - 10]), y = d3.scaleLinear([-3.2, 3.2], [H, 0]);
+  svg.append("line").attr("class", "axis-base").attr("x1", 10).attr("x2", W - 10).attr("y1", y(0)).attr("y2", y(0));
+  const line = d3.line().x((d, i) => x(D.xs[i])).y(d => y(d)).curve(d3.curveCatmullRom);
+  return {
+    curve: (v, c, w = 4) => svg.append("path").attr("d", line(v)).attr("fill", "none").attr("stroke", css(c)).attr("stroke-width", w).attr("stroke-linecap", "round").node(),
+    dots: (pts, r = 5) => svg.append("g").selectAll("circle").data(pts).join("circle").attr("cx", d => x(d[0])).attr("cy", d => y(d[1])).attr("r", r).attr("fill", css("--d-train")).nodes(),
+  };
+};
+const A = mini("#m2"), B = mini("#m3");
+const a10 = A.dots(D.train, 6), a40 = A.dots(D.more.points, 4.5), aw = A.curve(D.fits["9"], "--d-bad"), am = A.curve(D.more.fit, "--d-good");
+B.dots(D.train, 6); const bw = B.curve(D.fits["9"], "--d-bad"), br = B.curve(D.ridge, "--d-good");
+
+gsap.set(["#k1", "#k2", "#k3", "#confess", ...a40, am, br], { opacity: 0 });
+EDU.in(".head .eyebrow, .head .h1", EDU.t("l51"), { stagger: .08 });
+// l52 验证集
+EDU.in("#k1", EDU.t("l52"));
+// l53 坦白
+EDU.in("#confess", EDU.t("l53"));
+// l54 更多数据：10 点乱拐 → 40 点贴近规律
+EDU.out("#confess", EDU.t("l54")); EDU.dim("#k1", EDU.t("l54"), .45); EDU.in("#k2", EDU.t("l54"));
+T.to(a10, { opacity: 0, duration: .5 }, EDU.t("l54", .45)); EDU.in(a40, EDU.t("l54", .45), { stagger: .01 });
+T.to(aw, { opacity: 0, duration: .6 }, EDU.t("l54", .55)); T.set(am, { opacity: 1 }, EDU.t("l54", .55)); EDU.draw(am, EDU.t("l54", .55), 1.2);
+// l55 正则化：弯曲线 → 平缓
+EDU.dim("#k2", EDU.t("l55"), .45); EDU.in("#k3", EDU.t("l55"));
+T.to(bw, { opacity: .15, duration: .6 }, EDU.t("l55", .45)); T.set(br, { opacity: 1 }, EDU.t("l55", .45)); EDU.draw(br, EDU.t("l55", .45), 1.2);
+T.to(["#k1", "#k2"], { opacity: 1, duration: .5 }, EDU.S.duration - 1.2);
+</script>

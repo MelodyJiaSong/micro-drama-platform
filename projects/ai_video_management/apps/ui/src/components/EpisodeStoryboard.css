@@ -1,0 +1,45 @@
+/* 故事板审阅（follow-up 336）：剧页「影视改编」按场、按镜看现行首帧。沿用剧页的绿灰色调。 */
+.episode-workflow.storyboard-wide { max-width: 1480px; }
+.storyboard { display: flex; flex-direction: column; gap: 28px; }
+.storyboard-head h3 { margin: 0 0 6px; font-size: 18px; }
+.storyboard-head p { margin: 0 0 10px; font-size: 13px; }
+.storyboard-muted { color: #68746d; font-size: 13px; font-weight: 400; }
+.storyboard-jump { display: flex; flex-wrap: wrap; gap: 6px; }
+.storyboard-jump a { padding: 3px 10px; border: 1px solid #d7dfd9; border-radius: 999px; color: #344b3d; text-decoration: none; font-size: 13px; }
+.storyboard-jump a:hover { background: #eef4ef; }
+.storyboard-jump small { margin-left: 6px; color: #68746d; }
+.storyboard-scene { border-top: 3px solid #345f46; padding-top: 14px; scroll-margin-top: 16px; }
+.storyboard-scene-head { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; align-items: start; margin-bottom: 14px; }
+.storyboard-scene-head h4 { margin: 0; font-size: 17px; line-height: 1.5; }
+.storyboard-scene-id { display: inline-block; margin-right: 10px; padding: 0 8px; border-radius: 5px; background: #345f46; color: white; font-size: 15px; }
+.storyboard-scene-meta { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0; font-size: 13px; color: #53655a; }
+.storyboard-purpose { grid-column: 1 / -1; margin: 0; font-size: 13px; color: #68746d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.storyboard-chip { justify-self: end; white-space: nowrap; padding: 3px 10px; border-radius: 999px; font-size: 12px; text-decoration: none; border: 1px solid #d7dfd9; color: #68746d; background: #f6f7f6; }
+.storyboard-chip.open { color: #8a5a12; background: #fdf3df; border-color: #ecd3a2; }
+.storyboard-chip.done { color: #276847; background: #e8f3ec; border-color: #b9dcc6; }
+.storyboard-chip.void { color: #a13131; background: #fbeaea; border-color: #ecc1c1; }
+.storyboard-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+.storyboard-card { display: flex; flex-direction: column; border: 1px solid #e0e5df; border-radius: 8px; overflow: hidden; background: white; min-width: 0; }
+.storyboard-frame { aspect-ratio: 16 / 9; background: #1b2620; }
+.storyboard-frame img { display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; }
+.storyboard-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; box-sizing: border-box;
+  border: 2px dashed #9fb2a6; background: repeating-linear-gradient(135deg, #eef2ef 0 12px, #e5ebe7 12px 24px); color: #53655a; font-size: 16px; font-weight: 600; }
+.storyboard-card-body { display: flex; flex-direction: column; gap: 8px; padding: 10px 12px 12px; font-size: 13px; line-height: 1.6; }
+.storyboard-card-title { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0; }
+.storyboard-card-title a { color: #1f4f35; text-decoration: none; }
+.storyboard-card-title strong { font-size: 15px; }
+.storyboard-duration { color: #075985; font-weight: 600; }
+.storyboard-cast { padding: 0 6px; border-radius: 4px; background: #eef2ef; color: #344b3d; font-size: 12px; }
+.storyboard-dialogue { list-style: none; margin: 0; padding: 8px 10px; background: #fbf8f1; border-left: 3px solid #d9b871; border-radius: 4px; display: flex; flex-direction: column; gap: 6px; }
+.storyboard-speaker { display: block; font-weight: 600; color: #6b4a12; font-size: 12px; }
+.storyboard-speaker small { font-weight: 400; color: #8b7a5c; }
+.storyboard-dialogue q { color: #2b2418; font-size: 14px; }
+.storyboard-action { margin: 0; color: #25362e; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.storyboard-full { margin: 0; }
+.storyboard-full dt { color: #68746d; font-size: 12px; font-weight: 600; }
+.storyboard-full dd { margin: 0 0 8px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.episode-workflow button.storyboard-toggle { align-self: flex-start; padding: 2px 10px; font-size: 12px; border-radius: 5px; }
+.storyboard-links { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 0; padding-top: 6px; border-top: 1px solid #edf0ed; font-size: 12px; }
+.storyboard-links a { color: #345f46; }
+.storyboard-blocking { margin: 0 0 14px; font-size: 13px; color: #53655a; }
+.storyboard-blocking summary { cursor: pointer; }

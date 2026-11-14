@@ -1,0 +1,372 @@
+{
+ "voice": {
+  "reference": "edu_videos/_shared/voice/host_m_voxcpm.wav",
+  "reference_text": "大家好，欢迎来到 AI 高频词。每一期，我们只讲清楚一个词：它解决什么问题，怎么理解它，以及它在现实里意味着什么。"
+ },
+ "items": [
+  {
+   "id": "l01",
+   "text": "Last time, we scored the model's mistakes: the lower the score, the better.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l02",
+   "text": "We scored every setting of the two knobs and drew the scores as a landscape. The lowest point is the best setting.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l03",
+   "text": "With two knobs, that's easy.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l04",
+   "text": "But a big model can have hundreds of billions of knobs, way too many to map.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l05",
+   "text": "So the model's like someone blindfolded on a mountain, with no idea where the valley is.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l06",
+   "text": "How does it find the bottom?",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l07",
+   "text": "It uses something called gradient descent. Let's see how it works.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l08",
+   "text": "So picture yourself up there, trying to reach the valley.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l09",
+   "text": "You can't see, but your feet feel which way the ground tilts, and how steeply.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l10",
+   "text": "So you feel for the steepest way down, and take one small step.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l11",
+   "text": "Feel again, step again, and you get there.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l12",
+   "text": "For the model, the slope underfoot is how much the score changes when you nudge each knob a little.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l13",
+   "text": "Put those slopes together, and that's the gradient. It shows every knob the fastest way down.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l14",
+   "text": "Gradient descent turns all the knobs one small step that way, then checks the slope again.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l15",
+   "text": "The learning rate sets the step size, and you pick it before training starts.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l16",
+   "text": "Let's try it on the taxi map: base fare across, per-kilometer rate up.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l17",
+   "text": "Darker means a higher score. The fares are made up.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l18",
+   "text": "We start at a five dollar base fare and two dollars a kilometer: a score of seventy-eight, way up high.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l19",
+   "text": "First, feel the slope: nudge each knob up ten cents.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l20",
+   "text": "Raise the base fare, and the score drops one point seven. Raise the per-kilometer rate, and it drops eleven point two.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l21",
+   "text": "So turn both up, but the per-kilometer slope is much steeper.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l22",
+   "text": "Our first step turns that knob the most.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l23",
+   "text": "In three steps, the score falls from seventy-eight to twenty-five, twelve, nine, and we're in the valley.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l24",
+   "text": "The floor is a long, gentle trench.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l25",
+   "text": "The base fare creeps up, the per-kilometer rate eases back, and we inch along.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l26",
+   "text": "Gentler slopes mean smaller steps, so we slow down.",
+   "seeds": [
+    3
+   ]
+  },
+  {
+   "id": "l27",
+   "text": "After a thousand-odd steps, the score is about two. The true minimum is one point nine seven.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l28",
+   "text": "The knobs end up near a ten-dollar base fare and two fifty a kilometer.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l29",
+   "text": "It never saw the whole map. It only felt the ground underfoot.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l30",
+   "text": "That run used a learning rate of zero point zero zero five. What if we'd picked wrong?",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l31",
+   "text": "Here are three paths from the same start, same number of steps.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l32",
+   "text": "Make it ten times smaller, and it heads the right way but crawls.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l33",
+   "text": "It ends at a score of five point five, still far from the bottom.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l34",
+   "text": "Make it about four times the original, and it overshoots across the valley, ending higher than where it started.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l35",
+   "text": "Then it climbs higher and higher, past a hundred.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l36",
+   "text": "Five steps in, it's off the map.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l37",
+   "text": "Our original rate walks steadily to the bottom.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l38",
+   "text": "That's why the learning rate is often the single most important setting in training.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l39",
+   "text": "Too big, and it bounces right off the map. Too small, and you waste time.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l40",
+   "text": "Big models use gradient descent too, with two upgrades.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l41",
+   "text": "First, there's too much data to read it all every step.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l42",
+   "text": "So each step grabs a small random batch, roughly estimates the slope, and goes. That's stochastic gradient descent.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l43",
+   "text": "The path wobbles, but it saves loads of computing and still ends up near the bottom.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l44",
+   "text": "GPT-3, for example, saw only about one part in a hundred thousand of its training data per step.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l45",
+   "text": "Second, the steps get smarter. A method called Adam gives each knob its own step size, based on its past slopes.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l46",
+   "text": "GPT three was trained with Adam, and Meta's Llama uses a tweaked version.",
+   "seeds": [
+    3
+   ]
+  },
+  {
+   "id": "l47",
+   "text": "That's how GPT-3's one hundred seventy-five billion knobs got turned, one small step at a time.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l48",
+   "text": "Gradient descent is walking downhill blindfolded: feel for the steepest way down, and take a small step.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l49",
+   "text": "And the learning rate sets the size of each step.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l50",
+   "text": "But a model with just two knobs can only learn so much.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l51",
+   "text": "Next time, we'll stack lots of little units in layers, each with its own knobs, and see what happens.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l52",
+   "text": "That's called a neural network.",
+   "seeds": [
+    1
+   ]
+  }
+ ]
+}

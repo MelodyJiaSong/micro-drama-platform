@@ -4,7 +4,8 @@ from __future__ import annotations
 from typing import Any
 
 from libs.application.dtos.scene_cut__dto import (CutEventQdto, CutVersionQdto, EpisodeCutsQdto, EpisodeJoinQdto, GalleryEntryQdto,
-                                                  GalleryQdto, JoinSegmentQdto, JoinTransitionQdto, SceneCutsQdto)
+                                                  GalleryQdto, JoinSegmentQdto, JoinTransitionQdto, PostLayerQdto, PostTrialQdto,
+                                                  SceneCutsQdto)
 from libs.common.scene_cut import CUT_STAGES, EDGES, TRANSITIONS
 from libs.domain.errors.scene_cut__error import SceneCutError
 from libs.infrastructure.readers.scene_cut__reader import SceneCutReader
@@ -131,6 +132,29 @@ class SceneCutQuery:
                 continue
         return GalleryQdto(a, b, video, entries)
 
+    def post(self, raw: dict[str, Any]) -> PostTrialQdto:
+        """后期试做决定 → 成片、字幕、每场的环境声与配乐层（follow-up 290）。"""
+        number = raw["version"] if isinstance(raw.get("version"), int) and not isinstance(raw.get("version"), bool) else raw["_file_version"]
+        if raw.get("_error"):
+            return PostTrialQdto(number, "", raw["_path"], error=raw["_error"])
+        output, sound = _dict(raw.get("output")), _dict(raw.get("sound"))
+        layers = []
+        for scene, rec in _dict(sound.get("beds")).items():
+            for source, db in _dict(rec).items():
+                if _num(db) is not None:
+                    layers.append(PostLayerQdto("环境声", str(scene), str(source).rsplit("/", 1)[-1], float(db)))
+        for item in sound.get("music", []) if isinstance(sound.get("music"), list) else []:
+            if isinstance(item, dict) and _num(item.get("db")) is not None:
+                layers.append(PostLayerQdto("配乐", str(item.get("scene", "")), str(item.get("path", "")).rsplit("/", 1)[-1], float(item["db"])))
+        titles = [str(t.get("en") or t.get("zh") or "") for t in raw.get("titles", []) if isinstance(t, dict)]             if isinstance(raw.get("titles"), list) else []
+        subs = output.get("subtitles") if isinstance(output.get("subtitles"), list) else raw.get("subtitles")
+        return PostTrialQdto(
+            number, str(raw.get("status", "")), raw["_path"], str(raw.get("source_cut", "")),
+            self.media(raw["_dir"], {"v": {"path": output.get("path")}}, "v"), self.media(raw["_dir"], {"s": {"path": output.get("srt")}}, "s"),
+            _num(output.get("duration_s")) or 0.0, str(output.get("rendered_at", "")), _num(output.get("loudness_lufs")),
+            _num(output.get("true_peak_db")), str(raw.get("subtitle_lang", "")), len(subs) if isinstance(subs, list) else 0,
+            titles, layers, _texts(sound.get("notes")))
+
     def read(self, episode_path: str) -> EpisodeCutsQdto:
         try:
             path, scenes = self.reader.scenes(episode_path)
@@ -151,4 +175,5 @@ class SceneCutQuery:
             by_scene = {s.scene: {v.version: v for v in getattr(s, stage)} for s in out}
             joined[stage] = sorted((self.joined(stage, raw, by_scene) for raw in found[stage]), key=lambda v: -v.version)
             galleries[stage] = [self.gallery(*item) for item in self.reader.galleries(path, stage)]
-        return EpisodeCutsQdto(path, out, joined, galleries)
+        posts = sorted((self.post(raw) for raw in self.reader.posts(path)), key=lambda v: -v.version)
+        return EpisodeCutsQdto(path, out, joined, galleries, posts)

@@ -66,41 +66,29 @@ def _failing(calls, name, err):
     return run
 
 
-def test_scene_generation_unknown_elevenlabs_failure_does_not_switch(tmp_path, monkeypatch):
+def test_auto_never_calls_elevenlabs_and_fails_without_fallback(tmp_path, monkeypatch):
+    """2026-11-08 用户：出图一律 Codex，没有用户允许不用 ElevenLabs（chuanyue_yiri follow-up 036）。"""
     job = SimpleNamespace(dir=tmp_path, plate=True, name='bg2')
     calls = []
     monkeypatch.setattr(bg, 'Job', lambda _: job)
-    monkeypatch.setattr(bg, 'plan_for', lambda *args: (engines.ELEVENLABS, 'court', []))
-    monkeypatch.setattr(bg, '_elevenlabs', _failing(calls, 'elevenlabs', TimeoutError('outcome unknown')))
+    monkeypatch.setattr(bg, 'plan_for', lambda *args: (engines.CODEX, 'court', []))
+    monkeypatch.setattr(bg, '_elevenlabs', _failing(calls, 'elevenlabs', TimeoutError('should not be called')))
     monkeypatch.setattr(bg, '_codex', _failing(calls, 'codex', TimeoutError('outcome unknown')))
     monkeypatch.setattr(bg, '_dreamina', lambda *args: calls.append('dreamina'))
     with pytest.raises(TimeoutError):
         bg.generate(job, None, engines.AUTO)
-    assert calls == ['elevenlabs']   # 不是额度问题：不换家、不重提、不退即梦
-
-
-def test_scene_generation_out_of_quota_switches_to_codex_once(tmp_path, monkeypatch):
-    job = SimpleNamespace(dir=tmp_path, plate=True, name='bg2')
-    calls = []
-    monkeypatch.setattr(bg, 'Job', lambda _: job)
-    monkeypatch.setattr(bg, 'plan_for', lambda *args: (engines.ELEVENLABS, 'court', []))
-    monkeypatch.setattr(bg, '_elevenlabs', _failing(calls, 'elevenlabs', SystemExit('HTTP 401 quota_exceeded')))
-    monkeypatch.setattr(bg, '_codex', _failing(calls, 'codex', TimeoutError('outcome unknown')))
-    monkeypatch.setattr(bg, '_dreamina', lambda *args: calls.append('dreamina'))
-    with pytest.raises(TimeoutError):
-        bg.generate(job, None, engines.AUTO)
-    assert calls == ['elevenlabs', 'codex']   # 每家一次，不重提，不退即梦
+    assert calls == ['codex']   # 只用 Codex；失败就报出，不换 ElevenLabs、不退即梦
 
 
 def test_scene_generation_stops_at_first_success(tmp_path, monkeypatch):
     job = SimpleNamespace(dir=tmp_path, plate=True, name='bg2')
     calls = []
     monkeypatch.setattr(bg, 'Job', lambda _: job)
-    monkeypatch.setattr(bg, 'plan_for', lambda *args: (engines.ELEVENLABS, 'court', []))
+    monkeypatch.setattr(bg, 'plan_for', lambda *args: (engines.CODEX, 'court', []))
     monkeypatch.setattr(bg, '_codex', lambda *args: calls.append('codex'))
     monkeypatch.setattr(bg, '_elevenlabs', lambda *args: calls.append('elevenlabs'))
     bg.generate(job, None, engines.AUTO)
-    assert calls == ['elevenlabs']
+    assert calls == ['codex']
 
 
 def test_explicit_dreamina_rejected_before_scene_planning(tmp_path, monkeypatch):
@@ -111,14 +99,14 @@ def test_explicit_dreamina_rejected_before_scene_planning(tmp_path, monkeypatch)
         bg.generate(job, None, engines.DREAMINA)
 
 
-def test_engine_order_elevenlabs_then_codex_never_dreamina():
-    # follow-up 275：所有图片 auto ＝ ElevenLabs → Codex（270 起没有即梦）
+def test_engine_order_codex_only_never_dreamina():
+    # 2026-11-08 用户：auto ＝ 只用 Codex；ElevenLabs 只在用户允许、显式点名时用（此前 follow-up 275 是 ElevenLabs → Codex）
     assert engines.CHOICES == (engines.AUTO, engines.CODEX, engines.ELEVENLABS)
-    assert engines.scene_choice() == [engines.ELEVENLABS, engines.CODEX]
+    assert engines.scene_choice() == [engines.CODEX]
     for target in ('ai_videos/demo/2_世界观人设/characters/c1/c1.png', 'ai_videos/demo/background/bg2/bg2.png',
                    'ai_videos/demo/props/p1/p1-1_正面.png', None):
-        assert engines.order(target=target) == [engines.ELEVENLABS, engines.CODEX]
-        assert engines.order(target=target, dreamina_ok=False) == [engines.ELEVENLABS, engines.CODEX]
+        assert engines.order(target=target) == [engines.CODEX]
+        assert engines.order(target=target, dreamina_ok=False) == [engines.CODEX]
     # 显式 `--engine X` ＝ 只用 X；点名即梦一律报错
     for e in (engines.CODEX, engines.ELEVENLABS):
         assert engines.order(e, target='ai_videos/demo/props/p1/p1-1_正面.png') == [e]
@@ -136,11 +124,22 @@ def test_direct_logged_image_api_cannot_bypass_cli_guard(tmp_path, target):
         log.invoke('dreamina', 'POST /image/generate', {'prompt': 'abbey'}, lambda: pytest.fail('forbidden API call'))
 
 
-def test_elevenlabs_falls_back_to_codex_only_when_out_of_quota():
-    # follow-up 275：ElevenLabs 额度 / 套餐不够才换 Codex，别的失败照实报出
+def test_elevenlabs_any_failure_falls_back_to_codex():
+    # dota_yingxiong follow-up 066：ElevenLabs 有任何 blocker 都直接换 Codex，不问用户（取代 275 的只看额度）
     for err in ('ElevenLabs POST /flows/image HTTP 401：{"detail":{"status":"quota_exceeded"}}',
-                '402 套餐不够（/flows/image 需要 Pro 及以上）', 'insufficient credits'):
-        assert engines.fallback_ok(engines.ELEVENLABS, SystemExit(err))
-    for err in ('ElevenLabs POST /flows/image HTTP 422：invalid aspect_ratio', '401 key 权限不够', 'timed out'):
-        assert not engines.fallback_ok(engines.ELEVENLABS, RuntimeError(err))
+                '402 套餐不够（/flows/image 需要 Pro 及以上）', 'insufficient credits',
+                'ElevenLabs POST /flows/image HTTP 422：invalid aspect_ratio', 'moderated', 'curl: (56)', 'timed out'):
+        assert engines.fallback_ok(engines.ELEVENLABS, RuntimeError(err))
     assert engines.fallback_ok(engines.CODEX, RuntimeError('anything'))
+
+
+def test_routing_key_line_not_sent(tmp_path):
+    # dota_yingxiong follow-up 053：首行目录名常带原名（如「bg33_恶魔遗物」），只给人看，不发给模型
+    d = tmp_path / 'background' / 'zone' / 'bg33_恶魔遗物'
+    d.mkdir(parents=True)
+    (d / 'bg33_恶魔遗物.md').write_text(
+        '# 卡\n\n```text\nbg33_恶魔遗物\n参考: `bg1_x/bg1_x.png(世界基调)=>@`\n[主体]\n灰白退台石塔\n比例: 16:9\n```\n',
+        encoding='utf-8')
+    sent = bg.Job(d).send(with_neg=False)
+    assert '恶魔遗物' not in sent and '参考:' not in sent
+    assert sent.startswith('[主体]')

@@ -1,0 +1,3106 @@
+{
+ "generated_at": "2026-11-08T15:28:42",
+ "run": "ep01_20261108-102006_pregen_r1",
+ "dir": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-102006_pregen_r1",
+ "title": "ep01 · 出片前（故事＋分镜＋prompt＋首帧/故事板） · 第 1 轮",
+ "loop": 1,
+ "parent": "",
+ "child": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+ "child_state": "已完成",
+ "issues_source": "推导（问题表）＋下一轮 changes.md",
+ "changes_md": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2/changes.md",
+ "has_snapshot": false,
+ "summary": {
+  "issues": 70,
+  "corrections": 59,
+  "by_level": {
+   "critical": 10,
+   "major": 12,
+   "verify": 8,
+   "minor": 29
+  },
+  "by_status": {
+   "open": 0,
+   "planned": 0,
+   "implemented": 59,
+   "wontfix": 0
+  },
+  "by_verification": {
+   "已复核通过": 32,
+   "复核仍有问题": 27,
+   "待复核": 0
+  },
+  "shots": 5,
+  "frames_changed": 5,
+  "specs_changed": 5,
+  "shots_touched": 5
+ },
+ "corrections": [
+  {
+   "id": "I1",
+   "level": "critical",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "道具守恒·硬币枚数和摆放",
+   "shots": [
+    "s1_st2"
+   ],
+   "keys": [
+    "s1_st2"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "道具守恒·硬币枚数和摆放：prompt 第 13 行：拳里攥着 9 枚，「说 is this 时手心朝上摊开，9 枚钱平铺在手心、互不重叠」。攥过的硬币摊开时必然叠成一堆，要平铺只能靠模型让硬币自己移动。第 6 行写道具图「画面里它就是这一件」，而 `p2_钱币.png` 只有 3 枚（各种一枚），模型可能只画 3 枚",
+   "fix": "便宜：把文字改成「摊开时钱微微叠在一起，她用拇指拨两下摊平」，或接受「大致铺开、少量叠压」；道具参考用法改成「图里是三种币各一枚，本镜共 9 枚：7 小钱＋1 小铜币＋1 大黄铜币」；也可以补一张 9 枚摊在手心的道具图",
+   "solution": "改成「刚摊开时微微叠在一起，接着她用左手拇指把钱拨开两下，9 枚都露出来」（13–16 摊开，16–18 拨开），并写「本镜一共 9 枚……道具图里三种币各画了一枚，只取形制和颜色，不是本镜的枚数」。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "physics · st2 · 拳头摊开就「平铺、互不重叠」做不到；道具图只有 3 枚 → 改成「刚摊开时微微叠在一起，接着她用左手拇指把钱拨开两下，9 枚都露出来」（13–16 摊开，16–18 拨开），并写「本镜一共 9 枚……道具图里三种币各画了一枚，只取形制和颜色，不是本镜的枚数」。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "physics R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I2",
+   "level": "critical",
+   "law": "character",
+   "category": "人物逻辑",
+   "item": "character",
+   "dimension": "C1 视线 / 配角抢拍",
+   "shots": [
+    "s1_st4"
+   ],
+   "keys": [
+    "s1_st4"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "C1 视线 / 配角抢拍：首帧里中间那个中年渔夫（带胡茬、深褐 tunica）拉绳时抬头朝画右咧嘴笑，视线朝 Riley 那边；spec 写「中年渔夫：始终低头干活」，「只在 5–6 秒年轻渔夫瞥她一眼」。视频从这一帧起步，模型多半会让他继续笑着看她，抢掉年轻渔夫 5–6 秒那一拍，而且两个人都在看就不再是「好奇瞥一眼",
+   "fix": "便宜：重出首帧，两人都低头看绳和船头、咬牙发力、不笑；首帧 prompt 加「两人都不看 Riley，也不看镜头」。",
+   "solution": "首帧 prompt 写「两人都低着头看手里的绳子和船头，表情吃力，不看画右的 Riley，也不看镜头」，负面词加「渔夫抬头、渔夫笑着看人」；文字写中年渔夫「一眼也没看她」。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "character · st4 · 中年渔夫 0 秒抬头笑看 Riley → 首帧 prompt 写「两人都低着头看手里的绳子和船头，表情吃力，不看画右的 Riley，也不看镜头」，负面词加「渔夫抬头、渔夫笑着看人」；文字写中年渔夫「一眼也没看她」。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "character 问题表仍有：可剪 · C1 视线 / 配角身份分不清 · prompt「画面」只写「一个年轻、一个中年，脸都刮得干净或只有短胡茬」，没有能看出来的区别。toml 里年轻的在画右 ",
+     "character 只剩记录级：C1 表情 · 画左那个渔夫低头拉绳时在咧嘴笑（`st4_faces.jpg` 左），prompt 写的是「表情吃力」；视频起步可能读成",
+     "character R ✗（这一类有上一轮的问题没改好）",
+     "character 同镜头仍有：可剪 · C4 路人反应雷同 / 抢了后场的戏 · st3 工人「目光从她的脸一路落到裤子和靴子上」，和 story.md 场二喷泉女人「目光从她的脸一路往下扫，落在她的卡",
+     "character 同镜头仍有：可剪 · C2 反应拍缺失 / 站桩 · 节拍 0–8.5 秒里 Riley 只写了「在画右侧身看着」，满筐银鱼抬出船舷、鱼在筐口跳（4–7.5 秒），她一点反应"
+    ],
+    "rows": [
+     "| s1_st4 | 0–9.5 | C1 视线 / 配角身份分不清 | 可剪 | ③ prompt 或首帧 | prompt「画面」只写「一个年轻、一个中年，脸都刮得干净或只有短胡茬」，没有能看出来的区别。toml 里年轻的在画右 (37.1,53)，可首帧里看起来更年轻的是**画左**那个（卷发、米色 tunica），画右那个是短发、褐色 tunica、眼角有纹（`st4_faces.jpg`）。模型不知道该让谁 7.5 秒瞥她、谁一直低头；抬筐时「年轻的在画右」又会让两人换位或位置乱跳 | 便宜：按首帧的外观改写身份，例如「画左那个卷发、穿米色 tunica 的年轻渔夫」「画右那个短发、穿深褐 tunica 的中年渔夫」，全文改用外观称呼；抬筐分边按首帧来（年轻的在画左），同步改 toml 和首帧 prompt |",
+     "| s1_st4 | 首帧 0 秒 | C1 表情 | 记录 | ③ 首帧 | 画左那个渔夫低头拉绳时在咧嘴笑（`st4_faces.jpg` 左），prompt 写的是「表情吃力」；视频起步可能读成「在笑她」，提前泄掉 7.5 秒那一瞥 | 便宜：可接受；重出首帧时让两人都咬牙使劲 |"
+    ]
+   }
+  },
+  {
+   "id": "I3",
+   "level": "critical",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "连续性·场景布置",
+   "shots": [
+    "s1_st3（接 st4）"
+   ],
+   "keys": [
+    "s1_st3",
+    "s1_st4"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "连续性·场景布置：st3 首帧右半边：门洞口右侧城墙临海面搭着两层木杆脚手架，挡住了小拱门；上一镜 st4 首帧（以及 st1、st2、bg1）里同一位置是干净的墙和敞开的小拱门，唯一的脚手架在墙后的神庙上。观众刚看着城门，下一镜城门边凭空多出一架脚手架",
+   "fix": "便宜：二选一。(a) 把工人改到墙内神庙平台的脚手架上（Riley 在门洞口抬头往上看），st3 首帧重出；(b) 在 bg1 和 st1/st2/st4 首帧里补上门右侧这架脚手架，并在俯视图里标出",
+   "solution": "删掉门洞旁的脚手架；工人改成站在地上、在大门洞口里面右侧墙根把一筐湿灰浆扛上肩（理由：神庙脚手架在墙里、墙头 8 m，跟拍机位离墙 5–10 m 时仰角 35°–50°，在画框外，工人的反应拍不进画；地面工人离她约 1 m，反应看得清）。门洞里两壁「旧裂缝刚用新灰浆补过」接住「still fixing the damage」。首帧 prompt 写「城墙这一面干干净净」，负面词加「脚手架、梯子」。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "continuity · st3 · 城门边凭空多出一架脚手架 → 删掉门洞旁的脚手架；工人改成站在地上、在大门洞口里面右侧墙根把一筐湿灰浆扛上肩（理由：神庙脚手架在墙里、墙头 8 m，跟拍机位离墙 5–10 m 时仰角 35°–50°，在画框外，工人的反应拍不进画；地面工人离她约 1 m，反应看得清）。门洞里两壁「旧裂缝刚用新灰浆补过」接住「still fixing the damage」。首帧 prompt 写「城墙这一面干干净净」，负面词加「脚手架、梯子」。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "continuity 只剩记录级：连续性·场景布置（沙滩上的两条小木船） · st1 首帧和 bg1 底图里，画右沙滩上斜放着两条小木船和一卷绳。按 st1 首帧估算，两条船在镜头右边约 +15° ",
+     "continuity 只剩记录级：连续性·站位和场景布置（工人位置、小拱的结构） · 文字、首帧 prompt 和 toml (32.0,18.6) 都写工人在「大门洞口里面右侧墙根下」，Riley 从他左",
+     "continuity R ✓"
+    ],
+    "rows": [
+     "| s1_st4 | 0–16 s（背景） | 连续性·场景布置（沙滩上的两条小木船） | 记录（几何是存疑估算） | ② 分镜 / ③ 首帧 / 规则源 | st1 首帧和 bg1 底图里，画右沙滩上斜放着两条小木船和一卷绳。按 st1 首帧估算，两条船在镜头右边约 +15° 和 +23°、7–7.5 m 远，约在平面图 (38.5–39.5, 49)。st4 镜头在 (38.5,59.5)，看向 (36.8,39.6)，两条船应出现在画面 x≈750–870/1280，也就是渔夫和 Riley 之间约 10.5 m 远的中景。st4 首帧这一块只有路脚、石头和沙，没有船。st4 的参考里又给了带这两条船的 bg1 底图，模型可能在出片中途把船补出来。bg1 平面图和各镜 toml 都没有标这两条船，没法机检 | 便宜：在 bg1 平面图或 st1、st4 的 toml 里加上两条船的 object；st4 首帧 prompt 补一句「中景、渔夫身后偏右的沙滩上斜放着两条小木船」再重出；或者在 st1 文字里把船挪到 st4 视野以外 |",
+     "| s1_st3 | 0–5 s | 连续性·站位和场景布置（工人位置、小拱的结构） | 记录 | ③ 首帧 / 规则源 bg1-2 | 文字、首帧 prompt 和 toml (32.0,18.6) 都写工人在「大门洞口里面右侧墙根下」，Riley 从他左边约 1 m 处走过。首帧里工人站在右边小门洞口，x≈1000–1150/1280，约偏右 15–20°，在大门洞外面，离她的路线约 2.5–3 m。模型会照首帧，把工人留在小门洞口。另外场景参考 bg1-2 底图里，小拱是大通道里面右壁上的一个侧洞，和 st1、st3 首帧不一样：首帧里小门洞是城墙正面上和大门洞并排的另一个拱。第 6 秒以后进入通道，模型可能在右壁上开出一个侧洞 | 便宜：文字和 toml 照首帧改成「大门洞右边的小门洞口，离她走的路线约 2.5 m」；bg1-2 的用法里注明「小门洞是城墙正面并排的另一个拱，通道里面没有侧洞」，或者把 bg1-2 底图重出 |"
+    ]
+   }
+  },
+  {
+   "id": "I4",
+   "level": "critical",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "连续性·道具",
+   "shots": [
+    "s1_st3"
+   ],
+   "keys": [
+    "s1_st3"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "连续性·道具：st3 prompt「画面」要「一只装着灰浆的木桶往上拉」，首帧也画了木桶；同一份 prompt 的负面词里有「木桶」。模型可能把桶变没、变成藤筐，或让绳子空着往上拉。各镜「场景」行写的「几桶灰浆」也和负面词冲突",
+   "fix": "便宜：st3 的负面词删「木桶」（若要防的是酒桶，改写成「箍铁的大酒桶」）；其他镜的场景行和负面词二选一统一",
+   "solution": "同 physics。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "continuity · st3 · 木桶 → 同 physics。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "continuity R ✓"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I5",
+   "level": "critical",
+   "law": "era",
+   "category": "时代与世界观",
+   "item": "era",
+   "dimension": "时代·系列禁区 / 现代物件",
+   "shots": [
+    "s1 镜组 g1/g2（st1+st2、st3+st5）、`board/scene_board.png`"
+   ],
+   "keys": [
+    "s1_st1",
+    "s1_st2",
+    "s1_st3",
+    "s1_st5"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "时代·系列禁区 / 现代物件：`groups/g1/资料包/01_图片1_ep1_s1_g1_board.png`（文件日期 11-08 09:46，图本身是 11-07 10:50 的 board.png）第 1 格：神庙脚手架右边有一股白烟升上天空，违反 bible §9。`groups/g2/资料包/06_图片6",
+   "fix": "便宜：索引写的是「镜组：无」，那就把 g1/g2 资料包和旧 scene_board 标成作废或删掉，免得被上传；如果还要用镜组，拿现行首帧和现行 bg2 重出镜组板，再重编资料包",
+   "solution": "首帧 prompt 正面写「楼上只开几个没有窗扇的小方窗洞」，负面词加「烟囱、带木框的规整窗户、托斯卡纳式农舍」；bg1 卡和底图归主会话。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "era · st1/st2/st4 · 托斯卡纳式房子、烟囱、带框窗 → 首帧 prompt 正面写「楼上只开几个没有窗扇的小方窗洞」，负面词加「烟囱、带木框的规整窗户、托斯卡纳式农舍」；bg1 卡和底图归主会话。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "era R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I6",
+   "level": "critical",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing",
+   "dimension": "镜头规格·板与俯视图一致 / 机位方向",
+   "shots": [
+    "s1_st4"
+   ],
+   "keys": [
+    "s1_st4"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "镜头规格·板与俯视图一致 / 机位方向：`st4/planning/overhead.toml`：camera xy=(43.8,50.9) look=(37.2,53.3)，朝西偏南约 20°，看的是海边；城门在 (≈30,≈18)，偏离镜头轴约 86°，完全在画外。首帧 `st4_first_frame.png` ",
+   "fix": "便宜：按首帧倒推，重写 overhead.toml：镜头放在 Riley 右前方、偏海那一侧，朝西北看，让渔夫在画左中景、城在背景；Riley 面朝西南侧身，镜头在她右前方约 1.5 米。然后运行 `shot_pack.py sync`。如果想保留「看海」的方案，就按俯视图重出首帧，并把文字里背景是城的描写删掉。",
+   "solution": "按首帧构图重写 overhead：镜头 (38.5,59.5) 朝城斜拍，城门在画面偏左约 7°，渔夫和船在画左约 6 m（约占画高一半），Riley 在画右前景 2.2 m（腰以上），船尾伸出画左；首帧 prompt 按同一套写。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "framing · st4 · 俯视图朝海、首帧朝城，相反 → 按首帧构图重写 overhead：镜头 (38.5,59.5) 朝城斜拍，城门在画面偏左约 7°，渔夫和船在画左约 6 m（约占画高一半），Riley 在画右前景 2.2 m（腰以上），船尾伸出画左；首帧 prompt 按同一套写。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "framing 只剩记录级：镜头规格·板与俯视图一致（道具落点） · 文字两处写鱼筐「放到两人脚边靠镜头一侧的沙上」。toml 里鱼筐终点是 (35.9,53.3)，两个渔夫在 y=53.7",
+     "framing R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": [
+     "| s1_st4 | 4–16 | 镜头规格·板与俯视图一致（道具落点） | 记录 | ③ prompt 或首帧（俯视图） | 文字两处写鱼筐「放到两人脚边靠镜头一侧的沙上」。toml 里鱼筐终点是 (35.9,53.3)，两个渔夫在 y=53.75，镜头在 y=59.5，所以鱼筐落在渔夫背后、靠船那一侧。从镜头看，鱼筐（−20°～−25°）和年轻渔夫的身体（−19°～−23°）大半重叠。这张 ref 图会发给模型，10–14.5 秒说 See those tiny fish? 时，筐可能被腿挡住 | 便宜：toml 把鱼筐终点改到约 (35.9,54.4)，放在两人靠镜头一侧，然后 `shot_pack.py sync` |"
+    ]
+   }
+  },
+  {
+   "id": "I7",
+   "level": "critical",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing",
+   "dimension": "镜头规格·节拍时间 / 板与俯视图一致",
+   "shots": [
+    "s1_st5"
+   ],
+   "keys": [
+    "s1_st5"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "镜头规格·节拍时间 / 板与俯视图一致：首帧里 Riley 在门洞口，身高约 117/941 px，占画高约 12%；按 35 mm 推算，离镜头约 21 米，门洞约 20–35 米。俯视图写的是：0 秒在 (10.4,4.2)，离镜头 10.5 米，应占画高约 25%；4.5 秒停在 5.5 米处，约占一半，这和文字",
+   "fix": "便宜：按俯视图重出首帧，门洞约 11–13 米远、在画面正中略偏右，Riley 在门洞口约占画高 1/4。另一个办法是把 0–4.5 秒改成 0–7 秒并把镜长加到约 13 秒，但这要改分镜。",
+   "solution": "统一成：Riley 0 秒在大门洞口，离镜头约 11.9 m（约占画高 1/4），5.5 秒停在约 5.7 m（约占画高一半）；toml、文字、首帧 prompt 三处同一组数字。停步从 4.5 秒挪到 5.5 秒，步速约 1.3 m/s。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "framing · st5 · 首帧约 21 m，俯视图 10.5 m → 统一成：Riley 0 秒在大门洞口，离镜头约 11.9 m（约占画高 1/4），5.5 秒停在约 5.7 m（约占画高一半）；toml、文字、首帧 prompt 三处同一组数字。停步从 4.5 秒挪到 5.5 秒，步速约 1.3 m/s。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "framing 只剩记录级：镜头规格·节拍时间（路人入画） · changes.md 写驴「第 3 秒左右从画右入画」。按 toml 算：机位 (8.4,14.5)，轴线朝右偏约 11",
+     "framing R ✗（这一类有上一轮的问题没改好）",
+     "framing 同镜头仍有：重出 · 镜头规格·板与俯视图一致 / 节拍时间 / 机位 · 新首帧里 Riley 还在大门洞里，头顶 y≈443、脚 y≈550，高约 107 px，只占画高 11%（`work/"
+    ],
+    "rows": [
+     "| s1_st5 | 3–6 | 镜头规格·节拍时间（路人入画） | 记录 | ② 分镜文字 | changes.md 写驴「第 3 秒左右从画右入画」。按 toml 算：机位 (8.4,14.5)，轴线朝右偏约 11°，35 mm 水平半视角 27.2°；驴走 x=11.6、1.1 m/s，赶驴人在驴头左侧，约 x=11.1。赶驴人约第 4.1 秒入画，驴身约 4.7 秒入画，比文字晚约 1 秒。3–5.5 秒「她看见、放慢、停下」被压到约 1.5 秒（按 toml 首帧才成立） | 便宜：文字改成「第 4 秒左右从画右入画」；或者 toml 把驴的起点挪到 y≈14 左右、速度略降，让它第 6 秒仍在 y≈9 |"
+    ]
+   }
+  },
+  {
+   "id": "I8",
+   "level": "critical",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "Prompt 文本·正文和负面词矛盾",
+   "shots": [
+    "s1_st3"
+   ],
+   "keys": [
+    "s1_st3"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "Prompt 文本·正文和负面词矛盾：prompt.txt「画面」行写「用一根麻绳把一只装着灰浆的木桶往上拉」，「动作」行写「拉绳吊灰浆桶」；同文件「负面词」行有「木桶」（来自 `workflow.json` 的 prompt.negatives）；首帧 `st3_first_frame.png` 右侧吊着的就是一只木",
+   "fix": "便宜：st3 加 `allow_negatives: [\"木桶\"]`，或把正文改成「藤编筐 / 陶罐装灰浆」后重出首帧；场景卡 bg1 的「几桶灰浆」也要按同一口径改",
+   "solution": "同 physics。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "prompt_text · st3 · 正文木桶 vs 负面词 → 同 physics。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "prompt_text R ✗（这一类有上一轮的问题没改好）",
+     "prompt_text 同镜头仍有：重出 · Prompt 文本·图文不一致（人物位置） · 首帧里的工人（x≈1280–1500）蹲在右边的**小门洞**里，和大门洞之间隔着一根门墩。prompt.txt 第 1"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I9",
+   "level": "critical",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "Prompt 文本·有路人还写「多出来的人」",
+   "shots": [
+    "s1_st3 / st4 / st5"
+   ],
+   "keys": [
+    "s1_st3",
+    "s1_st4",
+    "s1_st5"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "Prompt 文本·有路人还写「多出来的人」：prompts-rules.md:12 规定「镜内有群演或同卡多人时**不写「多出来的人」**」（follow-up 276：EP1 s1 st1 少了一名门卫）。st3 写「画面里一共三个人和一头骡子」，st4 有两名渔夫，st5 有牵驴人，三镜负面词都有「多出来的人」。",
+   "fix": "便宜：编译器把「有路人」也算进去（分镜加 `extras` 字段或人数字段），这三镜去掉「多出来的人」并加上数量规则；改完重编资料包",
+   "solution": "三镜加 `extras`（2/2/1）和总人数句；编译器规则归主会话。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "prompt_text · st3/st4/st5 · 有路人还写「多出来的人」→ 三镜加 `extras`（2/2/1）和总人数句；编译器规则归主会话。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "prompt_text R ✗（这一类有上一轮的问题没改好）",
+     "prompt_text 同镜头仍有：重出 · Prompt 文本·图文不一致 / 节拍做不到 · 首帧里 Riley 头在 y≈443、脚在 y≈550，高约 107/941 px，约占画高 11%（`work/pro",
+     "prompt_text 同镜头仍有：重出 · Prompt 文本·图文不一致（人物位置） · 首帧里的工人（x≈1280–1500）蹲在右边的**小门洞**里，和大门洞之间隔着一根门墩。prompt.txt 第 1",
+     "prompt_text 同镜头仍有：可剪 · Prompt 文本·场景行和画面行矛盾 · 第 10 行场景行写「街的尽头是……城墙和**一个**拱形门洞」，bg2-2 底图也只有一个拱，没有神庙素墙；第 11 "
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I10",
+   "level": "critical",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "Prompt 文本·节拍做不到（首帧和文字距离对不上）",
+   "shots": [
+    "s1_st5"
+   ],
+   "keys": [
+    "s1_st5"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "Prompt 文本·节拍做不到（首帧和文字距离对不上）：首帧里门洞口的 Riley 约 90 px 高（画高 720），停住时要「约占画面高度一半」（约 360 px），比例 1:4，所以起点约 22 m、要走约 16 m；overhead.toml 写门洞在 y≈1.5–3、镜头在 y=14.5，只有约 11.5 m",
+   "fix": "便宜：按 overhead 的距离重出首帧（门洞离镜头约 11 m，人约占画高 1/4–1/5）；或者把停步改到约第 8 s，后面的节拍顺延",
+   "solution": "同 framing。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "prompt_text · st5 · 首帧距离与 overhead 不符 → 同 framing。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "prompt_text R ✗（这一类有上一轮的问题没改好）",
+     "prompt_text 同镜头仍有：重出 · Prompt 文本·图文不一致 / 节拍做不到 · 首帧里 Riley 头在 y≈443、脚在 y≈550，高约 107/941 px，约占画高 11%（`work/pro",
+     "prompt_text 同镜头仍有：可剪 · Prompt 文本·场景行和画面行矛盾 · 第 10 行场景行写「街的尽头是……城墙和**一个**拱形门洞」，bg2-2 底图也只有一个拱，没有神庙素墙；第 11 "
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I12",
+   "level": "major",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "道具守恒·被负面词删掉的道具",
+   "shots": [
+    "s1_st3"
+   ],
+   "keys": [
+    "s1_st3"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "道具守恒·被负面词删掉的道具：prompt 第 11 行要求工人「把一只装着灰浆的木桶往上拉」，首帧里也有这只桶（work/physics/st3_scaffold.png）；第 20 行负面词却有「木桶」。模型可能让桶在镜中消失、变形，或只剩一根空绳",
+   "fix": "便宜：st3 负面词去掉「木桶」，改成更具体的「酒桶、箍铁大木酒桶」（若原意是防止出现时代不对的大木酒桶）；共用负面词模板里同样检查「木桶」和场景卡「几桶灰浆」是否冲突",
+   "solution": "改成「装着湿灰浆的藤筐（筐里垫粗麻布）」，全场文字不出现「木桶」。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "physics · st3 · 正文要木桶、负面词禁木桶 → 改成「装着湿灰浆的藤筐（筐里垫粗麻布）」，全场文字不出现「木桶」。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "physics R ✗（这一类有上一轮的问题没改好）",
+     "physics 同镜头仍有：可剪 · 道具与站位·工人在哪个门洞 · 首帧里工人弯腰站在画右的**小门洞**口里，抓着灰浆筐（st3_first_frame.png 右侧，x≈1280–15"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I13",
+   "level": "major",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "道具交接·动作时长和抓握点",
+   "shots": [
+    "s1_st4"
+   ],
+   "keys": [
+    "s1_st4"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "道具交接·动作时长和抓握点：首帧（work/physics/st4_boat.png）里藤筐在船身中部，离船头和两个渔夫约 1–1.5 米，是圆口筐，看不到把手；两人都站在船头同一侧的浅水里，手里拉着绳。2 秒内要松绳、走回去、各站一边、抬起满筐越过船舷、放到沙上，很容易出现瞬移、筐被吸到手上，或绳子还缠在手里",
+   "fix": "便宜：把 3–5 秒放宽到 3–6.5 秒，压缩后面的停顿；写明「松开绳子丢在沙上（绳头仍系在船头）」「两人抓住筐沿两侧的藤编提耳」；或者重出首帧，把筐放在靠船头的位置并画出提耳",
+   "solution": "2.5–4 秒「松手把绳子丢在沙上（绳头仍系在船头）、转身跨回船边」，4–7.5 秒「各用双手抓住筐沿的提耳」抬出，筐沿写明两只藤编提耳；放到两人脚边靠镜头一侧的沙上，与 toml 鱼筐路线一致。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "physics · st4 · 2 秒做不完、绳子去向没写、首帧筐无把手 → 2.5–4 秒「松手把绳子丢在沙上（绳头仍系在船头）、转身跨回船边」，4–7.5 秒「各用双手抓住筐沿的提耳」抬出，筐沿写明两只藤编提耳；放到两人脚边靠镜头一侧的沙上，与 toml 鱼筐路线一致。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "physics R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I14",
+   "level": "major",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "运动物理·上台阶",
+   "shots": [
+    "s1_st5"
+   ],
+   "keys": [
+    "s1_st5"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "运动物理·上台阶：首帧（work/physics/st5_gate.png）里她站在门洞口的路面上，两侧人行道明显高出路面，有路沿；分镜只写「走上画左的人行道」。overhead 显示她 0–4.5 秒斜穿过路面边线",
+   "fix": "便宜：动作里加一句「第 2 秒左右抬脚迈上左边高出路面的路沿，身体随之一抬」；或让她出门洞后先沿路面走，最后一步再迈上人行道",
+   "solution": "「第 3 秒抬脚迈上高出路面的路沿，身体随之一抬」，beats、toml 都有。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "physics · st5 · 迈上人行道没写 → 「第 3 秒抬脚迈上高出路面的路沿，身体随之一抬」，beats、toml 都有。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "physics R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I15",
+   "level": "major",
+   "law": "character",
+   "category": "人物逻辑",
+   "item": "character",
+   "dimension": "C2 反应拍 / C1 视线",
+   "shots": [
+    "s1_st5"
+   ],
+   "keys": [
+    "s1_st5"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "C2 反应拍 / C1 视线：俯视里驴车从 (11.4,15) 沿街中线往门洞走，第 3–7 秒是迎着 Riley 来的，咔哒声越来越近、离她横向只有约 3 米；分镜却让她 4.5–5.5 抬头看街、5.5–7 背过去看画左铺子，7–8 秒赶车人扭头瞥她裤子时她正背对着他，8–9.5 才转过来看已经走远的驴车。真人会先",
+   "fix": "便宜：调换顺序，4.5–7 她停住，看着驴车迎面走来，侧身让一下；7–8 赶车人经过时上下打量她，她低头看了一眼自己的裤子，冲他尴尬一笑；8–9.5 再转向画左看铺子；9.5–11 转回镜头笑。",
+   "solution": "重排：3–5.5 她看见迎面来的驴、放慢、停下让路；5.5–7 赶驴人打量她的裤子；7–8 她低头看自己的裤子，再抬头冲他尴尬一笑、耸肩；8 秒后才转向画左看铺子，11–13 转回镜头无声地笑。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "character · st5 · Riley 不看迎面的驴、错过赶车人那一眼 → 重排：3–5.5 她看见迎面来的驴、放慢、停下让路；5.5–7 赶驴人打量她的裤子；7–8 她低头看自己的裤子，再抬头冲他尴尬一笑、耸肩；8 秒后才转向画左看铺子，11–13 转回镜头无声地笑。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "character 只剩记录级：C2 反应雷同 · 按播放顺序 st4 → st3 连着两次「Riley 冲他笑一下、轻轻点头」；st3 → st5 连着两个路人「摇摇头」",
+     "character R ✗（这一类有上一轮的问题没改好）",
+     "character 同镜头仍有：可剪 · C4 路人反应雷同 / 抢了后场的戏 · st3 工人「目光从她的脸一路落到裤子和靴子上」，和 story.md 场二喷泉女人「目光从她的脸一路往下扫，落在她的卡"
+    ],
+    "rows": [
+     "| s1_st4→s1_st3、s1_st3→s1_st5 | st4 8.5–9.5；st3 4–5；st3 4–5 / st5 8–9.5 | C2 反应雷同 | 记录 | ② 分镜文字 | 按播放顺序 st4 → st3 连着两次「Riley 冲他笑一下、轻轻点头」；st3 → st5 连着两个路人「摇摇头」 | 便宜：st3 她换一种回应（如俏皮地挑眉、两指在额边一挥）；st5 赶驴人换一种反应（咂嘴、对驴嘀咕一句〔不出声〕、憋笑） |"
+    ]
+   }
+  },
+  {
+   "id": "I16",
+   "level": "major",
+   "law": "character",
+   "category": "人物逻辑",
+   "item": "character",
+   "dimension": "C5 对镜头说话的方式",
+   "shots": [
+    "s1_st1"
+   ],
+   "keys": [
+    "s1_st1"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "C5 对镜头说话的方式：spec「镜头在她身后约七米半」「只占画面高度约三分之一」「固定机位」，台词要求「压低声音、半笑半喘」「眼睛睁得很大」。对着 7.5 米外的人说悄悄话不合情理，而且全集第一句、最重要的钩子是在看不清脸的距离说的（首帧里她的脸只有几十像素）。",
+   "fix": "便宜：2.5–4 秒她转身后朝镜头走两三步，或机位放到约 3–4 米、全身占画高约一半，保留建立镜头，同时让表情看得见；或者把语气改成正常音量的惊叹。",
+   "solution": "选「她朝镜头走三步」：3.5–5.5 秒走到 4.3 m（约占画高一半多）再开口；overhead 同步。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "character · st1 · 7.5 m 外说悄悄话、脸看不清 → 选「她朝镜头走三步」：3.5–5.5 秒走到 4.3 m（约占画高一半多）再开口；overhead 同步。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "character R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I17",
+   "level": "major",
+   "law": "character",
+   "category": "人物逻辑",
+   "item": "character",
+   "dimension": "C3 方向前后一致",
+   "shots": [
+    "s1_st4"
+   ],
+   "keys": [
+    "s1_st4"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "C3 方向前后一致：`overhead.toml`：Riley 在 (42.6,50.9) 面朝 (36.8,55.5)，机位在 (43.8,50.9) 看向 (37.2,53.3)，两者方向只差约 18°，机位等于在她右后方，第 0 秒应该只看到她的后脑和右肩。首帧却是她 3/4 正脸朝画左；第 6–7 秒按俯视图「",
+   "fix": "便宜：把俯视机位挪到她的前右方（如 (43.6,53.2) 看向 (37,54)），让第 6 秒朝镜头只是转 60–90° 的侧脸，和首帧一致；重出俯视图后跑 `shot_pack.py sync`。",
+   "solution": "重写 overhead：镜头在她左前方 2.2 m，0 秒看到她的左侧脸；说台词时转头和肩约 120°（她看的渔夫比她更深，转角天然大于 90°，写成「转过头和肩把脸凑近镜头」）。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "character · st4 · 俯视图机位在她背后、转 140° → 重写 overhead：镜头在她左前方 2.2 m，0 秒看到她的左侧脸；说台词时转头和肩约 120°（她看的渔夫比她更深，转角天然大于 90°，写成「转过头和肩把脸凑近镜头」）。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "character R ✗（这一类有上一轮的问题没改好）",
+     "character 同镜头仍有：可剪 · C1 视线 / 配角身份分不清 · prompt「画面」只写「一个年轻、一个中年，脸都刮得干净或只有短胡茬」，没有能看出来的区别。toml 里年轻的在画右 ",
+     "character 同镜头仍有：可剪 · C4 路人反应雷同 / 抢了后场的戏 · st3 工人「目光从她的脸一路落到裤子和靴子上」，和 story.md 场二喷泉女人「目光从她的脸一路往下扫，落在她的卡",
+     "character 同镜头仍有：可剪 · C2 反应拍缺失 / 站桩 · 节拍 0–8.5 秒里 Riley 只写了「在画右侧身看着」，满筐银鱼抬出船舷、鱼在筐口跳（4–7.5 秒），她一点反应"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I18",
+   "level": "major",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "连续性·光向",
+   "shots": [
+    "s1_st3"
+   ],
+   "keys": [
+    "s1_st3"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "连续性·光向：st3 首帧：临海墙面、脚手架和工人被画右来的强暖光直射，影子往画左落；st1/st2/st4 首帧太阳都在城后画左，临海墙面是平光/背光，三镜光线行都写「城墙临海的一面在淡蓝色阴影里」。st3 光线行只写了门洞里和出口，没写门外 0–6 秒的墙面",
+   "fix": "便宜：st3 光线行补「门洞外这一段，临海的城墙和脚手架在淡蓝色阴影里，只有脚手架顶镶金边」，首帧按此重出",
+   "solution": "删掉门洞旁的脚手架；工人改成站在地上、在大门洞口里面右侧墙根把一筐湿灰浆扛上肩（理由：神庙脚手架在墙里、墙头 8 m，跟拍机位离墙 5–10 m 时仰角 35°–50°，在画框外，工人的反应拍不进画；地面工人离她约 1 m，反应看得清）。门洞里两壁「旧裂缝刚用新灰浆补过」接住「still fixing the damage」。首帧 prompt 写「城墙这一面干干净净」，负面词加「脚手架、梯子」。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "continuity · st3 · 城门边凭空多出一架脚手架 → 删掉门洞旁的脚手架；工人改成站在地上、在大门洞口里面右侧墙根把一筐湿灰浆扛上肩（理由：神庙脚手架在墙里、墙头 8 m，跟拍机位离墙 5–10 m 时仰角 35°–50°，在画框外，工人的反应拍不进画；地面工人离她约 1 m，反应看得清）。门洞里两壁「旧裂缝刚用新灰浆补过」接住「still fixing the damage」。首帧 prompt 写「城墙这一面干干净净」，负面词加「脚手架、梯子」。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "continuity R ✓"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I19",
+   "level": "major",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing",
+   "dimension": "镜头规格·板与俯视图一致 / 节拍时间 / 跟拍距离",
+   "shots": [
+    "s1_st3"
+   ],
+   "keys": [
+    "s1_st3"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "镜头规格·板与俯视图一致 / 节拍时间 / 跟拍距离：发给模型的 `st3_overhead_ref.png` 把「城门洞上方门楼」画成实心灰块，墙厚 2 米（墙在 y 17–19 之间）。Riley 6–13 秒的停点 (30,19.8) 在墙南面外侧 0.8 米，挑夫的橙色路线直接穿过实心墙。文字写的是「Riley",
+   "fix": "便宜：俯视图工具把门洞画成可通行的通道（墙厚按首帧约 10 米），把 Riley 停点放进拱下，挑夫路线从通道里穿过去；或者首帧重出，让 Riley 离拱口约 5 米、镜头在她身后约 2 米、她大约膝盖以上入画。",
+   "solution": "toml 加 `walkable = [\"b03\"]`，用两块 object 画出约 10 m 长的拱顶通道，Riley 第 6 秒停在拱顶下（进门约 1.5 m），镜头停在门洞口的拱下离她 2 m；0 秒她离门洞口 5.5 m，镜头在她身后 2.5 m（28 mm，膝盖以上）；首帧 prompt 同步。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "framing · st3 · 俯视图门洞是实心墙、停点在墙外；首帧起点离拱口 2 m、镜头 4–5 m → toml 加 `walkable = [\"b03\"]`，用两块 object 画出约 10 m 长的拱顶通道，Riley 第 6 秒停在拱顶下（进门约 1.5 m），镜头停在门洞口的拱下离她 2 m；0 秒她离门洞口 5.5 m，镜头在她身后 2.5 m（28 mm，膝盖以上）；首帧 prompt 同步。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "framing 问题表仍有：重出 · 镜头规格·板与俯视图一致 / 节拍时间（路人出画时机） · 首帧里工人不在「大门洞口里面右侧墙根」，在右边小门洞的洞口前：身体在 x≈1280–1510，脚在 y≈780。按 28",
+     "framing R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": [
+     "| s1_st3 | 0–5 | 镜头规格·板与俯视图一致 / 节拍时间（路人出画时机） | 重出 | ③ 首帧 | 首帧里工人不在「大门洞口里面右侧墙根」，在右边小门洞的洞口前：身体在 x≈1280–1510，脚在 y≈780。按 28 mm、机高 1.4 m 算，他离镜头约 5.9 m，在中线右侧约 2.5 m。toml 里他在 (32,18.6)，离镜头 8.4 m、中线右侧 1 m，画面上应在 x≈990 附近、大门洞里面。按首帧的位置，镜头以 1.27 m/s 前跟，约 2.2 秒他就从画右出去了。2.5–4 秒「直起腰愣住、目光落到裤子和靴子」和 4–5 秒「Riley 冲他一笑点头、他摇头笑」都会在画外发生。即使模型放慢跟拍，Riley 也是隔着约 2.5 m 走过他，不是文字写的约 1 m。这是本场「当地人注意她、她一一回应」的一拍。附带一点：首帧里门洞口离镜头约 6.7 m（门洞净宽 3.2 m 约占 630 px），toml 是 8 m，Riley 会提前约 1 秒到门洞口 | 便宜：重出首帧，把工人放进大门洞口里面的右侧墙根，画面上 x≈1000–1100、脚在 y≈690 左右，人比 Riley 小得多；首帧 prompt 加一句「工人在大门洞里面，不在小门洞」，负面词加「小门洞里的人」。另一个办法是 toml 和文字改成工人在两门洞之间的墙墩前、镜头 0–5 秒跟得慢一些，但这样会动节拍，不如重出首帧 |"
+    ]
+   }
+  },
+  {
+   "id": "I20",
+   "level": "major",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing",
+   "dimension": "镜头规格·节拍过满 / 板与俯视图一致",
+   "shots": [
+    "s1_st4"
+   ],
+   "keys": [
+    "s1_st4"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "镜头规格·节拍过满 / 板与俯视图一致：首帧里装鱼的藤筐在船尾那头，在画左最远处的浅水里；两个渔夫在船头前方 3–4 米拉绳。俯视图鱼筐在 (36.6,56.2)，靠近船头和渔夫（55.0）。按首帧，3–5 秒两人要先走回船尾、抓把手、抬出、放到沙滩上，2 秒做不完，后面 5–6 秒的瞥眼和 6–7 秒 Riley 转",
+   "fix": "便宜：重出首帧时把鱼筐放在船头附近，靠渔夫那一端；或者节拍改成 3–6 秒抬筐、6–7 秒瞥眼，Riley 转脸并入 7 秒。",
+   "solution": "鱼筐放在船头往后约 1 m 的船舱里，两人就站在它旁边；抬筐改成 4–7.5 秒（3.5 秒）。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "framing · st4 · 鱼筐在船尾、3–5 秒抬筐来不及 → 鱼筐放在船头往后约 1 m 的船舱里，两人就站在它旁边；抬筐改成 4–7.5 秒（3.5 秒）。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "framing R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I21",
+   "level": "major",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "Prompt 文本·场景行和本镜矛盾",
+   "shots": [
+    "s1_st5"
+   ],
+   "keys": [
+    "s1_st5"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "Prompt 文本·场景行和本镜矛盾：「场景」行（bg2 原文）写「街的尽头被一排房子挡住，看不到远处」「路中间横排三块椭圆的大垫脚石」「街角是…石槽喷泉，出水口雕着一个牛头」；「走位」行写「街的尽头就是城墙和她刚穿出来的拱形门洞」。首帧没有喷泉和垫脚石，首帧 prompt 还明写了「不要：…喷泉」",
+   "fix": "便宜：给 st5 一句本镜的场景说明，盖掉「街的尽头」和喷泉、垫脚石，或者在画面行写「本镜画面里没有喷泉和垫脚石」；同理也适用于 st3（见下一行）",
+   "solution": "同 continuity（需主会话给 st5 本镜场景行）。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "prompt_text · st5 · 场景行与本镜矛盾 → 同 continuity（需主会话给 st5 本镜场景行）。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "prompt_text R ✗（这一类有上一轮的问题没改好）",
+     "prompt_text 同镜头仍有：重出 · Prompt 文本·图文不一致 / 节拍做不到 · 首帧里 Riley 头在 y≈443、脚在 y≈550，高约 107/941 px，约占画高 11%（`work/pro",
+     "prompt_text 同镜头仍有：可剪 · Prompt 文本·场景行和画面行矛盾 · 第 10 行场景行写「街的尽头是……城墙和**一个**拱形门洞」，bg2-2 底图也只有一个拱，没有神庙素墙；第 11 "
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I22",
+   "level": "major",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "Prompt 文本·规则源（考据）和 prompt 矛盾",
+   "shots": [
+    "s1_st5"
+   ],
+   "keys": [
+    "s1_st5"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "Prompt 文本·规则源（考据）和 prompt 矛盾：考据 r01_城市与一天.md:37「Porta Marina…坡太陡，车上不来，从港口来的货靠骡子或挑夫」；st5 写「一个男人牵着一头拉小车的驴…沿街中间往门洞方向咔哒咔哒走去」",
+   "fix": "便宜：改成牵一头驮着藤筐的驴往门洞走，或者驴车在第 8 s 后拐进侧街，不朝门洞走",
+   "solution": "三镜加 `extras`（2/2/1）和总人数句；编译器规则归主会话。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "prompt_text · st3/st4/st5 · 有路人还写「多出来的人」→ 三镜加 `extras`（2/2/1）和总人数句；编译器规则归主会话。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "prompt_text R ✗（这一类有上一轮的问题没改好）",
+     "prompt_text 同镜头仍有：重出 · Prompt 文本·图文不一致 / 节拍做不到 · 首帧里 Riley 头在 y≈443、脚在 y≈550，高约 107/941 px，约占画高 11%（`work/pro",
+     "prompt_text 同镜头仍有：可剪 · Prompt 文本·场景行和画面行矛盾 · 第 10 行场景行写「街的尽头是……城墙和**一个**拱形门洞」，bg2-2 底图也只有一个拱，没有神庙素墙；第 11 "
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I23",
+   "level": "major",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "Prompt 文本·场景行和本镜不符",
+   "shots": [
+    "s1_st3"
+   ],
+   "keys": [
+    "s1_st3"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "Prompt 文本·场景行和本镜不符：st3 在城门洞口和门洞里，「场景」行却是 bg1 原文「从海边的黑色细沙滩往上看：一道陡坡通向高出海面的台地…」，还写脚手架在「城墙里一座神庙的平台上」；st3 的脚手架在「城门洞口右边的城墙上」。场景参考图也是从沙滩仰拍的 bg1",
+   "fix": "便宜：st3 加本镜场景说明（门洞的拱、凝灰岩墙、门洞口的脚手架），或者另立门洞场景卡",
+   "solution": "不能改卡、filming 的 `background` 只能填 bg 键，没有合适的门洞卡；本镜 action 开头把门洞写清（坡道最后一段、一大一小两个拱、约 10 m 拱顶通道、补过的裂缝、尽头的亮出口）。建议主会话加一张 bg1 的门洞视角（如 `bg1-2 海门门洞`）或给编译器加「本镜场景说明」字段，然后 st3 写 `\"background\": \"bg1-2\"`。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "prompt_text · st3 · 场景行是 bg1 沙滩仰拍 → 不能改卡、filming 的 `background` 只能填 bg 键，没有合适的门洞卡；本镜 action 开头把门洞写清（坡道最后一段、一大一小两个拱、约 10 m 拱顶通道、补过的裂缝、尽头的亮出口）。建议主会话加一张 bg1 的门洞视角（如 `bg1-2 海门门洞`）或给编译器加「本镜场景说明」字段，然后 st3 写 `\"background\": \"bg1-2\"`。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "prompt_text R ✗（这一类有上一轮的问题没改好）",
+     "prompt_text 同镜头仍有：重出 · Prompt 文本·图文不一致（人物位置） · 首帧里的工人（x≈1280–1500）蹲在右边的**小门洞**里，和大门洞之间隔着一根门墩。prompt.txt 第 1"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I25",
+   "level": "verify",
+   "law": "character",
+   "category": "人物逻辑",
+   "item": "character",
+   "dimension": "C3 方向前后一致",
+   "shots": [
+    "s1_st3→s1_st5"
+   ],
+   "keys": [
+    "s1_st3",
+    "s1_st5"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "C3 方向前后一致：st3 挑夫走出门洞城里那头后「往画右一拐」；st3 首帧门洞出口外正对一栋带台阶的楼（像 T 字口）。st5 首帧却是从门洞口笔直延伸的街，两边铺子贴着城墙排开，没有向右的路口，挑夫和骡子 4–5 秒前刚出门，不知道去了哪里。",
+   "fix": "核实：对照 bg2 平面（`overhead.toml` 的 blocks）看门洞内侧有没有横街；没有的话把 st3 改成「沿街直走、走远变小」，或在 st5 首帧远处门洞口加一条右侧岔路。",
+   "solution": "st4：8.5–9.5 她冲年轻渔夫友好地笑、点头，他不好意思地低头；st3：4–5 她冲工人咧嘴一笑、点一下头，他摇头笑。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "",
+   "solution_source": "changes.md",
+   "solution_line": "character · st4 / st3 · 当地人瞥她时她没有回应 → st4：8.5–9.5 她冲年轻渔夫友好地笑、点头，他不好意思地低头；st3：4–5 她冲工人咧嘴一笑、点一下头，他摇头笑。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "character 只剩记录级：C3 动机 / 台词没有画面触发 · 故事稿写的是「Riley 抬头看了看，回头对镜头」，台词由眼前的修补触发；分镜改成工人在地上之后，她进拱顶直接「停步、转",
+     "character 问题表仍有：存疑 · C3 方向前后一致 / 人物去向 · st3 挑夫牵骡子第 10 秒走出门洞城里那头，「顺着街越走越小」；st5 按播放顺序紧接 st3，Riley 还要走约",
+     "character 只剩记录级：C3 / C4 站位：互动的距离 · 文字和 toml 写工人在「大门洞口**里面**右侧墙根」(32.0,18.6)，Riley 从他左边约 1 m 处走过",
+     "character 只剩记录级：C3 动机 · 「她看见了，放慢脚步，第 5.5 秒停下让驴过去」：她在高出路面约 40 cm 的人行道上，驴走在街中间、隔着约 2.7",
+     "character R ✗（这一类有上一轮的问题没改好）",
+     "character 同镜头仍有：可剪 · C4 路人反应雷同 / 抢了后场的戏 · st3 工人「目光从她的脸一路落到裤子和靴子上」，和 story.md 场二喷泉女人「目光从她的脸一路往下扫，落在她的卡"
+    ],
+    "rows": [
+     "| s1_st3 | 5–7 | C3 动机 / 台词没有画面触发 | 记录 | ② 分镜文字 | 故事稿写的是「Riley 抬头看了看，回头对镜头」，台词由眼前的修补触发；分镜改成工人在地上之后，她进拱顶直接「停步、转身、眼睛一亮」，一眼都没看墙上新补的裂缝，earthquake / still fixing 这句从画面上接不上（工人扛的灰浆筐此时已经在画外） | 便宜：5–6 秒写「走进拱顶下，抬眼看了一眼墙上新抹灰浆的裂缝，停步」，或者说到 still fixing 时用拇指往身后的裂缝（或工人）一指 |",
+     "| s1_st3→s1_st5 | st3 10–14；st5 0–3 | C3 方向前后一致 / 人物去向 | 存疑 | ② 分镜文字 | st3 挑夫牵骡子第 10 秒走出门洞城里那头，「顺着街越走越小」；st5 按播放顺序紧接 st3，Riley 还要走约 8.5 m 才出门洞，挑夫按步速这时应该在离门 10 m 左右，也就是 st5 镜头（离门 13 m）跟前，可 st5 写「街上暂时没有别的人」。紧接着又从镜头身后迎面走来一个赶驴人，牵着一头驮两只藤筐的驴，赶驴人在驴头左边、右手牵绳，剪影和 st3 的挑夫加骡子几乎一样，观众可能会以为是同一个人又折了回来 | 核实：剪辑时 st3 和 st5 之间能不能跳过足够的时间。便宜：st5 把驴驮的东西换成明显不一样的（如两捆柴或两只双耳陶罐），赶驴人的外形也拉开差别（如戴毡帽、留短须）；或者在 st5 首帧街的远处画出挑夫和骡子的小背影，作为承接 |",
+     "| s1_st3 | 0–5 | C3 / C4 站位：互动的距离 | 记录 | ③ 首帧 | 文字和 toml 写工人在「大门洞口**里面**右侧墙根」(32.0,18.6)，Riley 从他左边约 1 m 处走过。首帧里工人蹲在**右边那个小门洞**里（`st3_worker.jpg`），和她走的路线隔着拱间的墩子，相距大约 3–4 m。按参考用法视频会跟首帧走：「走过他身边、冲他点头」要隔着墩子扭头才行，也可能让工人瞬移进大门洞 | 便宜：重出首帧，把工人放进大门洞口里面的右侧墙根；或者文字改成「小门洞里的工人」，点头改成隔着几步扭头示意 |",
+     "| s1_st5 | 3–5.5 | C3 动机 | 记录 | ② 分镜文字 | 「她看见了，放慢脚步，第 5.5 秒停下让驴过去」：她在高出路面约 40 cm 的人行道上，驴走在街中间、隔着约 2.7 m，没有必要让路。模型可能让她退到墙边，或者画出不合理的让路动作 | 便宜：改成「停下来，好奇地看着这头驴从身边走过」，动机是城里迎面来的第一个当地人加牲口；可以顺手写赶驴人是出城下海边（去买鱼），给他朝城门走一个理由 |"
+    ]
+   }
+  },
+  {
+   "id": "I26",
+   "level": "verify",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "连续性·站位/机位",
+   "shots": [
+    "s1_st4"
+   ],
+   "keys": [
+    "s1_st4"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "连续性·站位/机位：st4 俯视图：机位 (43.8,50.9) 视野扇形朝西南，城（北）在画外右边；首帧却正对城门＋神庙＋小拱门，和 st1 几乎同一个背景。两份参考给的机位朝向差了约 70°。核实方法：用 overhead.toml 把机位朝向改朝北偏西再出图，看渔夫是否仍在画左、Riley 在画右",
+   "fix": "便宜：按首帧改俯视图（机位朝北偏西，渔夫在西南水边 → 画左，城在背景）；或反过来重出首帧（背景换成海和海岸）",
+   "solution": "已按首帧方向重写 overhead（同 framing 第 1 条），核实过城门在画内 −7°。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "continuity · st4（存疑）· 机位朝向差 70° → 已按首帧方向重写 overhead（同 framing 第 1 条），核实过城门在画内 −7°。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "continuity R ✓"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I27",
+   "level": "verify",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "母语听感·目标与笑点回收／材料完整性",
+   "shots": [
+    "s1_st2 → 未提供的结尾"
+   ],
+   "keys": [
+    "s1_st2"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "母语听感·目标与笑点回收／材料完整性：第 11 行提出找床、尝 garum；文件第 17 行即结束，没有结尾或 dextram。不能据此判定作品本身漏回收。",
+   "fix": "**便宜**：补齐相同格式的后续台词与一句画面说明，再盲审目标回收、dextram 铺垫及全集最别扭 5 句。本次不越界读其他材料。",
+   "solution": "已落实：16–18 秒手心里 9 枚钱拨开、全部露出、对焦清楚，她看着镜头笑。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "native_ear · st2 · this 的画面落点（存疑）→ 已落实：16–18 秒手心里 9 枚钱拨开、全部露出、对焦清楚，她看着镜头笑。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "native_ear R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I28",
+   "level": "verify",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "母语听感·this 指代",
+   "shots": [
+    "s1_st2"
+   ],
+   "keys": [
+    "s1_st2"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "母语听感·this 指代：第 11 行 “And my budget… is this.”；第 10 行只明确左拳攥钱、拇指指城、收回胸前，描述在“说 A”处截断，不能确认末句是否摊掌展示钱。",
+   "fix": "**便宜**：补全该句对应的画面说明，确认 this 落在观众看得清的钱上。可用 “Here's all I've got.”（4 词，原 5 词）使口气更随意，但仍须看见钱；单换词不能消除画面指代缺口。",
+   "solution": "已落实：16–18 秒手心里 9 枚钱拨开、全部露出、对焦清楚，她看着镜头笑。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "native_ear · st2 · this 的画面落点（存疑）→ 已落实：16–18 秒手心里 9 枚钱拨开、全部露出、对焦清楚，她看着镜头笑。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "native_ear R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I29",
+   "level": "verify",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "母语听感·those tiny fish 指代",
+   "shots": [
+    "s1_st4"
+   ],
+   "keys": [
+    "s1_st4"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "母语听感·those tiny fish 指代：第 14 行指向 tiny fish；第 13 行画面说明在“把满满一筐”处截断，未完整交代筐内内容及是否可辨。",
+   "fix": "**便宜**：补全说明，核实 tiny fish 在指称时可见。这是材料缺口，不据此认定成片没有鱼；英文及 Eventually 笑点可保留。",
+   "solution": "已落实：筐里是手指长的小鳀鱼和小沙丁鱼，筐最后放在画左中景两人脚边、整个在画内，说台词时在她身后可见。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "native_ear · st4 · tiny fish 能否看见（存疑）→ 已落实：筐里是手指长的小鳀鱼和小沙丁鱼，筐最后放在画左中景两人脚边、整个在画内，说台词时在她身后可见。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "native_ear R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I30",
+   "level": "verify",
+   "law": "era",
+   "category": "时代与世界观",
+   "item": "era",
+   "dimension": "prompt 诱发·相机/手机",
+   "shots": [
+    "s1_st2（其余 4 镜也有）"
+   ],
+   "keys": [
+    "s1_st2"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "prompt 诱发·相机/手机：5 镜人物行都写「画面里看不到任何相机、手机或自拍杆」。st2 的画面行和镜头行又各重复一次，再加上「自拍」「持镜」。正向文字里出现这几个名词，可能反而把它们引出来",
+   "fix": "先看 g1 已有的 render `groups/g1/renders/20261107-110109_*/` 里 st2 段有没有冒出手机来核实；便宜：正向只写「右臂伸出画框外」，不点名器物，器物名词只留在负面词里",
+   "solution": "判定：作者任务书要求自拍镜写明「右臂伸向画外持镜（画面里看不到相机、手机或自拍杆）」，保留 action 里这一处；镜头行删掉重复的那句，只写「右臂末端的视点」；首帧 prompt 只写「画面里看不到任何拍摄器材」。人物卡里那句归主会话。出片后看 13–16 秒拳头伸向镜头时有没有冒出手机。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "era · st2（存疑）· 正文点名「相机、手机、自拍杆」可能招来器材 → 判定：作者任务书要求自拍镜写明「右臂伸向画外持镜（画面里看不到相机、手机或自拍杆）」，保留 action 里这一处；镜头行删掉重复的那句，只写「右臂末端的视点」；首帧 prompt 只写「画面里看不到任何拍摄器材」。人物卡里那句归主会话。出片后看 13–16 秒拳头伸向镜头时有没有冒出手机。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "era 问题表仍有：存疑 · prompt 诱发·相机/手机（R③ 维持） · 作者判定保留：五镜人物行都写「画面里看不到任何相机、手机或自拍杆」，st2 画面行又写「画面里看不到相机、手机或自拍杆」",
+     "era R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": [
+     "| s1 全部五镜（重点 st2） | st2 全条，尤其 13–16 秒拳头伸向镜头时 | prompt 诱发·相机/手机（R③ 维持） | 存疑 | ③ prompt | 作者判定保留：五镜人物行都写「画面里看不到任何相机、手机或自拍杆」，st2 画面行又写「画面里看不到相机、手机或自拍杆」，正向文字里共出现两次，负面词里还有一次。首帧 st2 没有器材 | 便宜：出片后核对 st2 的 13–16 秒；如果冒出器材，把人物行（卡）里那句删掉，只留负面词 |"
+    ]
+   }
+  },
+  {
+   "id": "I31",
+   "level": "verify",
+   "law": "era",
+   "category": "时代与世界观",
+   "item": "era",
+   "dimension": "系列禁区·烟与蒸汽",
+   "shots": [
+    "s1_st1–st4（挂 bg1 的镜头）"
+   ],
+   "keys": [
+    "s1_st1",
+    "s1_st4"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "系列禁区·烟与蒸汽：bg1 底图右侧山腰有一条横雾，左端一缕斜着往上走（`work/era/bg1_mountain.png` 左段）。场景行写山「被晨雾遮得很淡」。视频模型可能把它动成「山上升起白气」，正撞 bible §9「不冒烟」。st1 首帧里没有这缕雾",
+   "fix": "便宜：场景行把「被晨雾遮得很淡」改成「轮廓柔和、颜色压淡」，负面词加「山腰的雾带」；出片后专门看山腰",
+   "solution": "首帧 prompt 正面写「楼上只开几个没有窗扇的小方窗洞」，负面词加「烟囱、带木框的规整窗户、托斯卡纳式农舍」；bg1 卡和底图归主会话。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "era · st1/st2/st4 · 托斯卡纳式房子、烟囱、带框窗 → 首帧 prompt 正面写「楼上只开几个没有窗扇的小方窗洞」，负面词加「烟囱、带木框的规整窗户、托斯卡纳式农舍」；bg1 卡和底图归主会话。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "era 问题表仍有：存疑 · 系列禁区·烟与蒸汽（R④ 未改） · 三镜 prompt 的场景行仍写「远处一座……绿色缓坡山，被晨雾遮得很淡」（st1 prompt 第 11 行，st2、",
+     "era R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": [
+     "| s1_st1、st2、st4（挂 bg1 的镜头） | 全条（远景山腰） | 系列禁区·烟与蒸汽（R④ 未改） | 存疑 | 规则源 bg1 / ③ prompt | 三镜 prompt 的场景行仍写「远处一座……绿色缓坡山，被晨雾遮得很淡」（st1 prompt 第 11 行，st2、st4 同句）。bg1 seed 还写「空气里有一层很薄的海雾」，bg1 底图（文件时间 09:24，在第 1 轮之前）山腰有一条横雾带（`work/era/z_bg1_mountain.png` 的下半段）。st1 首帧右侧山腰也有一道淡淡的雾带（`z_st1_right.jpg`）。视频模型可能把它动成「山上升起白气」，正撞 bible §9 | 便宜：bg1 场景行改成「轮廓柔和、颜色压淡」，删掉「晨雾」「海雾」；负面词加「山腰的雾带、山上升起的白气」；bg1 底图去掉雾带后重出；出片后专门看山腰 |"
+    ]
+   }
+  },
+  {
+   "id": "I32",
+   "level": "verify",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "Prompt 文本·物理上做不到 / 数量难控",
+   "shots": [
+    "s1_st2"
+   ],
+   "keys": [
+    "s1_st2"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "Prompt 文本·物理上做不到 / 数量难控：「摊开时手心里正好 9 枚，平铺在手心、互不重叠」：从拳头里摊开的钱一定会叠在一起；9 枚、三种尺寸的硬币全部平铺约 46 cm²，挤在手掌上（约 8.5×10 cm）很满，模型数数也不稳。另外「付前 9 枚 → 付出 0 枚 → 付后 9 枚」是记账用语，进了视频 pr",
+   "fix": "便宜：改成「摊开后钱有一点叠压，但每一枚都露出来，大黄铜币和那枚小铜币摆在最上面」；记账那句只留在分镜里，编译时不进 prompt。怎么核实：出片后逐帧数第 16–18 s 的钱",
+   "solution": "判定：摊开改成「微微叠在一起再用拇指拨开」；记账句改成「这一镜不付钱：开始 9 枚，结束仍是 9 枚」（保留作者任务书要的守恒说明，但不再出现「付出」二字）。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "prompt_text · st2（存疑）· 9 枚平铺做不到、记账句会诱发付钱 → 判定：摊开改成「微微叠在一起再用拇指拨开」；记账句改成「这一镜不付钱：开始 9 枚，结束仍是 9 枚」（保留作者任务书要的守恒说明，但不再出现「付出」二字）。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "prompt_text R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I33",
+   "level": "minor",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "服装与动作·下摆塞着却被风吹",
+   "shots": [
+    "s1_st1"
+   ],
+   "keys": [
+    "s1_st1"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "服装与动作·下摆塞着却被风吹：prompt 第 8 行写「下摆塞进腰里」，第 13 行写「海风吹动发梢和衬衫下摆」；首帧里衬衫是塞着的（work/physics/st1_riley.png）",
+   "fix": "便宜：改成「海风吹动发梢、衬衫的短袖和后背的布料」",
+   "solution": "「衬衫下摆一直塞在裤腰里，海风只吹动她的发梢和短袖的袖口」；首帧负面词加「从裤腰里飘出来的衬衫下摆」。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "physics · st1 · 下摆塞着却被风吹 → 「衬衫下摆一直塞在裤腰里，海风只吹动她的发梢和短袖的袖口」；首帧负面词加「从裤腰里飘出来的衬衫下摆」。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "physics R ✗（这一类有上一轮的问题没改好）",
+     "physics 同镜头仍有：可剪 · 身体与运动·脚不动转身 180° · spec 第 11 行「第 10 秒起只把头和肩转回去望城，脚不动」；toml 第 22 行，Riley 第 11 秒的"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I34",
+   "level": "minor",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "光影·光的方向",
+   "shots": [
+    "s1_st3"
+   ],
+   "keys": [
+    "s1_st3"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "光影·光的方向：光线行写太阳在城的东边，城墙临海的一面在阴影里；可首帧右侧临海城墙上有暖色的直射阳光斑，脚手架的影子投在墙上（st3_scaffold.png 右下），门洞里的人物影子却朝镜头方向倒。同一帧里有两个光源方向",
+   "fix": "便宜：重出首帧，让门洞外的城墙面在冷调阴影里，只有门洞出口和镜头身后的天光",
+   "solution": "光线改成「太阳被城墙挡住：门洞外城墙、门洞口和工人都在淡蓝色阴影里，没有直射阳光、没有光斑」，首帧 prompt 同写并加负面词「墙上的阳光斑」。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "physics · st3 · 首帧墙面有暖色直射光斑 → 光线改成「太阳被城墙挡住：门洞外城墙、门洞口和工人都在淡蓝色阴影里，没有直射阳光、没有光斑」，首帧 prompt 同写并加负面词「墙上的阳光斑」。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "physics R ✗（这一类有上一轮的问题没改好）",
+     "physics 同镜头仍有：可剪 · 道具与站位·工人在哪个门洞 · 首帧里工人弯腰站在画右的**小门洞**口里，抓着灰浆筐（st3_first_frame.png 右侧，x≈1280–15"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I35",
+   "level": "minor",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "光影·暗门洞里的人被正面照亮",
+   "shots": [
+    "s1_st5"
+   ],
+   "keys": [
+    "s1_st5"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "光影·暗门洞里的人被正面照亮：分镜写「她在门洞里时只有轮廓和肩上一点微光」；首帧里她站在全黑的门洞前，脸和衬衫被均匀的正面光照亮（st5_gate.png）",
+   "fix": "便宜：重出首帧，把她画成门洞阴影里的暗轮廓",
+   "solution": "首帧 prompt 写「只看得出暗轮廓和肩头一点微光，脸看不清」，负面词加「门洞阴影里被正面照亮的人」；光线行写走出几步进到散射光里才看清脸。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "physics · st5 · 暗门洞里的人被正面照亮 → 首帧 prompt 写「只看得出暗轮廓和肩头一点微光，脸看不清」，负面词加「门洞阴影里被正面照亮的人」；光线行写走出几步进到散射光里才看清脸。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "physics R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I36",
+   "level": "minor",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "光影·缺少影子",
+   "shots": [
+    "s1_st1"
+   ],
+   "keys": [
+    "s1_st1"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "光影·缺少影子：太阳在画面左上方、低低地挂在城后，她是逆光，按理身前应该有一条朝镜头拖长的影子；首帧里她脚下几乎没有影子，背面也偏亮（st1_riley.png）",
+   "fix": "便宜：可接受；重出首帧时补上朝镜头方向的长影",
+   "solution": "光线行与首帧 prompt 都写「她身前的黑沙上有一道朝镜头拖长的影子」。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "physics · st1 · 逆光却没有影子 → 光线行与首帧 prompt 都写「她身前的黑沙上有一道朝镜头拖长的影子」。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "physics R ✗（这一类有上一轮的问题没改好）",
+     "physics 同镜头仍有：可剪 · 身体与运动·脚不动转身 180° · spec 第 11 行「第 10 秒起只把头和肩转回去望城，脚不动」；toml 第 22 行，Riley 第 11 秒的"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I37",
+   "level": "minor",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "道具守恒·尺寸比例",
+   "shots": [
+    "s1_st2"
+   ],
+   "keys": [
+    "s1_st2"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "道具守恒·尺寸比例：文字写大黄铜币直径约 3.5 厘米、小钱约 2.5 厘米（约 1.4 倍）；道具图里大约是 1.7 倍（大币约 660 像素，小钱约 390 像素）",
+   "fix": "便宜：按 1.4 倍重出道具图，或把文字改成「约 4 厘米」",
+   "solution": "不改：道具图 / p2 卡不在我的范围（主会话或出图时按 1.4 倍重出）。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "physics · st2 · 道具图大小币比例 1.7 倍 → 不改：道具图 / p2 卡不在我的范围（主会话或出图时按 1.4 倍重出）。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "physics R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I38",
+   "level": "minor",
+   "law": "character",
+   "category": "人物逻辑",
+   "item": "character",
+   "dimension": "C2 反应拍",
+   "shots": [
+    "s1_st4"
+   ],
+   "keys": [
+    "s1_st4"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "C2 反应拍：5–6 秒年轻渔夫抬头瞥她，这时她正「侧身看着他们」（0–6 秒），两人的视线必然对上；分镜没写她的回应，6 秒直接转向镜头，看上去像对他视而不见。另外俯视里她离渔夫约 7.6 米，前景只露到腰以上，「目光落在她的裤子上」这么远的距离读不出来。",
+   "fix": "便宜：5.5–6 秒 Riley 冲他笑一下、轻点头，他赶紧低下头；6 秒她再转向镜头，「小声」就有了理由（被人看见了）。「目光落在裤子上」改成「上下打量她一眼」。",
+   "solution": "她和年轻渔夫相距约 4.6 m，动作写成「从她的脸看到她的裤子，眉毛一挑」，反应占独立一拍（7.5–8.5）。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "character · st4 · 7.6 m 外「目光落在裤子上」读不出 → 她和年轻渔夫相距约 4.6 m，动作写成「从她的脸看到她的裤子，眉毛一挑」，反应占独立一拍（7.5–8.5）。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "character 问题表仍有：可剪 · C2 反应拍缺失 / 站桩 · 节拍 0–8.5 秒里 Riley 只写了「在画右侧身看着」，满筐银鱼抬出船舷、鱼在筐口跳（4–7.5 秒），她一点反应",
+     "character 只剩记录级：C2 反应雷同 · 按播放顺序 st4 → st3 连着两次「Riley 冲他笑一下、轻轻点头」；st3 → st5 连着两个路人「摇摇头」",
+     "character R ✗（这一类有上一轮的问题没改好）",
+     "character 同镜头仍有：可剪 · C1 视线 / 配角身份分不清 · prompt「画面」只写「一个年轻、一个中年，脸都刮得干净或只有短胡茬」，没有能看出来的区别。toml 里年轻的在画右 ",
+     "character 同镜头仍有：可剪 · C4 路人反应雷同 / 抢了后场的戏 · st3 工人「目光从她的脸一路落到裤子和靴子上」，和 story.md 场二喷泉女人「目光从她的脸一路往下扫，落在她的卡"
+    ],
+    "rows": [
+     "| s1_st4 | 4–8.5 | C2 反应拍缺失 / 站桩 | 可剪 | ② 分镜文字 | 节拍 0–8.5 秒里 Riley 只写了「在画右侧身看着」，满筐银鱼抬出船舷、鱼在筐口跳（4–7.5 秒），她一点反应都没有；她的台词 See those tiny fish? 恰恰是因为这一刻。她在前景腰以上的位置，干站 8 秒很显眼，模型也容易让她僵住 | 便宜：加一拍，例如「6–7.5 秒鱼筐越过船舷时她眼睛一亮，微微探身去看筐里跳的小鱼」，然后接年轻渔夫的那一瞥 |",
+     "| s1_st4→s1_st3、s1_st3→s1_st5 | st4 8.5–9.5；st3 4–5；st3 4–5 / st5 8–9.5 | C2 反应雷同 | 记录 | ② 分镜文字 | 按播放顺序 st4 → st3 连着两次「Riley 冲他笑一下、轻轻点头」；st3 → st5 连着两个路人「摇摇头」 | 便宜：st3 她换一种回应（如俏皮地挑眉、两指在额边一挥）；st5 赶驴人换一种反应（咂嘴、对驴嘀咕一句〔不出声〕、憋笑） |"
+    ]
+   }
+  },
+  {
+   "id": "I39",
+   "level": "minor",
+   "law": "character",
+   "category": "人物逻辑",
+   "item": "character",
+   "dimension": "C1 视线 / C2 反应拍",
+   "shots": [
+    "s1_st3"
+   ],
+   "keys": [
+    "s1_st3"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "C1 视线 / C2 反应拍：首帧右上脚手架工人两手攥绳，眼睛平视画左远处，没看手里的绳和下面的桶，有点站桩；4–5 秒 Riley 抬头看他、5–6 秒他往下瞥她，两人对视后分镜没写她的回应，她就走进了门洞。",
+   "fix": "便宜：首帧工人低头看着吊上来的桶；分镜 5–6 秒加「Riley 冲他微微点头，他愣了一下又接着拉绳」。",
+   "solution": "0 秒工人「弯着腰两手抓着筐沿，低头看着筐」。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "character · st3 · 工人平视画左发呆 → 0 秒工人「弯着腰两手抓着筐沿，低头看着筐」。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "character 只剩记录级：C1 视线 / 看镜头风险 · 工人在 Riley 正前方，镜头又在她正后方 2.5 m，工人看她的脸几乎就是看着镜头轴线，容易被画成和镜头对视（pro",
+     "character R ✗（这一类有上一轮的问题没改好）",
+     "character 同镜头仍有：可剪 · C4 路人反应雷同 / 抢了后场的戏 · st3 工人「目光从她的脸一路落到裤子和靴子上」，和 story.md 场二喷泉女人「目光从她的脸一路往下扫，落在她的卡"
+    ],
+    "rows": [
+     "| s1_st3 | 2.5–4 | C1 视线 / 看镜头风险 | 记录 | ④ 模型随机 | 工人在 Riley 正前方，镜头又在她正后方 2.5 m，工人看她的脸几乎就是看着镜头轴线，容易被画成和镜头对视（prompt 要求「不看镜头」） | 出片后查 2.5–4 秒；预防可写「她走到他身侧时他才抬眼」，让视线偏离镜头轴 |"
+    ]
+   }
+  },
+  {
+   "id": "I40",
+   "level": "minor",
+   "law": "character",
+   "category": "人物逻辑",
+   "item": "character",
+   "dimension": "C4 路人反应",
+   "shots": [
+    "s1_st4、s1_st3、s1_st5"
+   ],
+   "keys": [
+    "s1_st4",
+    "s1_st3",
+    "s1_st5"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "C4 路人反应：三个路人用同一个动作：瞥一眼（两次写明「目光落在她的裤子上」），然后接着干活；st5 的赶驴人在走路，模板「再接着干活」照套（st5 prompt「画面」行）。观众连看三次同样的反应，会觉得是程序化的；s2 喷泉女人「从脸扫到裤子和靴子、眉毛挑高」是本集重点反应，s1 先用三次就抢了它的新鲜感。",
+   "fix": "便宜：分档写，渔夫抬头一瞥就收；工人手里的绳停一下、嘴角一歪；赶驴人回头多看一眼、嘟囔一声（不出台词，只是嘴动可省）。「目光落在裤子上」留给 s2 喷泉女人。模板里「再接着干活」改成「再继续手上的事 / 继续走路」。",
+   "solution": "去掉统一模板句，分档写：中年渔夫完全不看；年轻渔夫飞快一瞥、被她笑回去后不好意思；工人愣住盯着看、摇头笑；赶驴人从头到脚打量、走过去还回头、摇头。「目光停在裤子上」只留给赶驴人这一次（s2 喷泉女人的重头戏不受影响）。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "character · st4/st3/st5 · 三个路人同一个反应、模板「再接着干活」套到赶驴人 → 去掉统一模板句，分档写：中年渔夫完全不看；年轻渔夫飞快一瞥、被她笑回去后不好意思；工人愣住盯着看、摇头笑；赶驴人从头到脚打量、走过去还回头、摇头。「目光停在裤子上」只留给赶驴人这一次（s2 喷泉女人的重头戏不受影响）。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "character 问题表仍有：可剪 · C4 路人反应雷同 / 抢了后场的戏 · st3 工人「目光从她的脸一路落到裤子和靴子上」，和 story.md 场二喷泉女人「目光从她的脸一路往下扫，落在她的卡",
+     "character R ✗（这一类有上一轮的问题没改好）",
+     "character 同镜头仍有：可剪 · C1 视线 / 配角身份分不清 · prompt「画面」只写「一个年轻、一个中年，脸都刮得干净或只有短胡茬」，没有能看出来的区别。toml 里年轻的在画右 ",
+     "character 同镜头仍有：可剪 · C2 反应拍缺失 / 站桩 · 节拍 0–8.5 秒里 Riley 只写了「在画右侧身看着」，满筐银鱼抬出船舷、鱼在筐口跳（4–7.5 秒），她一点反应"
+    ],
+    "rows": [
+     "| s1 全场（st3、st4、st5） | st3 2.5–4；st4 7.5–8.5；st5 5.5–7 | C4 路人反应雷同 / 抢了后场的戏 | 可剪 | ② 分镜文字 | st3 工人「目光从她的脸一路落到裤子和靴子上」，和 story.md 场二喷泉女人「目光从她的脸一路往下扫，落在她的卡其工装裤和短靴上」几乎逐字相同；st4 年轻渔夫「从她的脸看到她的裤子」；st5 赶驴人「目光停在她的裤子上」，她还低头看了自己的裤子。changes.md 说「目光停在裤子上只留给赶驴人这一次」，文字没有落实。s2 的「apparently a woman in pants is a lot」到时候会变成第四次重复 | 便宜：st3 工人改成被她这个人（个子、披发、陌生面孔）吓一跳，只看脸，愣住；st4 年轻渔夫只是好奇地看她的脸、挑一下眉；裤子只留给 st5 赶驴人（铺垫），s2 再给完整的从头扫到脚 |"
+    ]
+   }
+  },
+  {
+   "id": "I41",
+   "level": "minor",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "连续性·方位/光向",
+   "shots": [
+    "s1_st5（对 st3）"
+   ],
+   "keys": [
+    "s1_st5",
+    "s1_st3"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "连续性·方位/光向：st3 俯视图：门洞在南、城在北，挑夫出门往东拐；st5 俯视图：门洞在街的北端、机位在南朝北，等于这条街在城门的海那一侧，南北翻转。st5 光线行「太阳在她这一侧（俯视图标「西侧」）房子的屋顶后面」，按罗盘就是清晨太阳在西。全场俯视图都把城画在北，和故事「海在西、城在东、太阳在城后」不是一套方位",
+   "fix": "便宜：st5 俯视图翻成门洞在南（或全场统一改成城在东）；st5 光线行改写成「太阳在镜头身后偏画左」，不写东西南北，免得被罗盘带偏",
+   "solution": "st5 光线重写：「从城里朝城门拍，太阳在镜头身后偏画左、低低的，画面里看不到太阳；城墙朝城里的一面和画右那排墙上半截暖金，画左和大半街面在阴影里」；不写方位。bg1 / bg2 平面图互相翻转属于场景平面图（主会话）。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "continuity · st5 · 光线写「西侧」、平面南北翻转 → st5 光线重写：「从城里朝城门拍，太阳在镜头身后偏画左、低低的，画面里看不到太阳；城墙朝城里的一面和画右那排墙上半截暖金，画左和大半街面在阴影里」；不写方位。bg1 / bg2 平面图互相翻转属于场景平面图（主会话）。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "continuity R ✓"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I42",
+   "level": "minor",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "连续性·场景布置",
+   "shots": [
+    "s1_st5"
+   ],
+   "keys": [
+    "s1_st5"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "连续性·场景布置：st5 prompt 场景行（从 bg2 卡套来）写「街的尽头被一排房子挡住，看不到远处」、路中间三块垫脚石、街角牛头喷泉；本镜走位写「街的尽头就是城墙和门洞」，首帧没有垫脚石和喷泉，bg2 参考图的街尽头是红房子。模型可能把门洞换成房子，或者驴车经过时让垫脚石、喷泉冒出来",
+   "fix": "便宜：st5 场景行单写一版：删掉「尽头被房子挡住」，垫脚石和喷泉要么删，要么写明在镜头身后、不入画",
+   "solution": "本镜 action 正面写「街的尽头是城墙，墙上一大一小两个拱形门洞」；toml 注明喷泉、垫脚石在平面图 y≥20、在镜头身后。bg2 场景行本身要由主会话给 st5 单写一版（我不能改卡、编译器没有按镜场景文本字段）。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "continuity · st5 · 场景行写「街尽头被房子挡住」、垫脚石、喷泉 → 本镜 action 正面写「街的尽头是城墙，墙上一大一小两个拱形门洞」；toml 注明喷泉、垫脚石在平面图 y≥20、在镜头身后。bg2 场景行本身要由主会话给 st5 单写一版（我不能改卡、编译器没有按镜场景文本字段）。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "continuity 只剩记录级：连续性·场景布置（门洞数量） · prompt.txt 第 10 行的 bg2-2 场景行写「城墙和一个拱形门洞」，bg2-2 参考图也只有一个拱，没有神",
+     "continuity R ✓"
+    ],
+    "rows": [
+     "| s1_st5 | 0–13 s | 连续性·场景布置（门洞数量） | 记录 | ③ prompt（规则源：bg2-2 卡） | prompt.txt 第 10 行的 bg2-2 场景行写「城墙和一个拱形门洞」，bg2-2 参考图也只有一个拱，没有神庙平台。动作行和首帧是「一大一小两个拱形门洞」，神庙在画左，st1、st3 也都是两个拱。st5 是固定机位，首帧会压住，风险小 | 便宜：bg2-2 卡场景行改成「一大一小两个拱形门洞（从城里看大的在右）」 |"
+    ]
+   }
+  },
+  {
+   "id": "I43",
+   "level": "minor",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "连续性·地点",
+   "shots": [
+    "s1_st3 → st5"
+   ],
+   "keys": [
+    "s1_st3",
+    "s1_st5"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "连续性·地点：st3 挑夫牵骡子一出门洞就往画右拐（俯视图在 y≈14 往东）；st5 首帧和俯视图里，门洞内侧两边都是连到城墙的店铺墙，没有可以拐进去的路口。另外 st1 里神庙紧挨城门右侧（城内南边），从城里回望城门时它应在门洞左侧附近，st5 左侧却全是店铺（存疑：神庙平台可能被房子挡住）",
+   "fix": "便宜：st3 改成「走出亮处、从画右出画」（不写拐弯），或在 st5 门洞左边留一个路口",
+   "solution": "本镜 action 正面写「街的尽头是城墙，墙上一大一小两个拱形门洞」；toml 注明喷泉、垫脚石在平面图 y≥20、在镜头身后。bg2 场景行本身要由主会话给 st5 单写一版（我不能改卡、编译器没有按镜场景文本字段）。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "continuity · st5 · 场景行写「街尽头被房子挡住」、垫脚石、喷泉 → 本镜 action 正面写「街的尽头是城墙，墙上一大一小两个拱形门洞」；toml 注明喷泉、垫脚石在平面图 y≥20、在镜头身后。bg2 场景行本身要由主会话给 st5 单写一版（我不能改卡、编译器没有按镜场景文本字段）。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "continuity R ✓"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I44",
+   "level": "minor",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "连续性·场景布置",
+   "shots": [
+    "s1_st3（对 st1）"
+   ],
+   "keys": [
+    "s1_st3",
+    "s1_st1"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "连续性·场景布置：st1/bg1 进城门是一条窄的之字形石砌坡道，路上放着藤筐，城门在台地边上；st3 首帧门洞前是一段平直宽阔的石板路，看不出刚爬完陡坡",
+   "fix": "便宜：st3 首帧前景加一点坡度和之字坡道的最后一段；或接受（跟拍镜头已到坡顶）",
+   "solution": "「坡道最后一段，脚下的大石块路微微上坡」。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "continuity · st3 · 门洞前是平路，看不出刚爬完坡 → 「坡道最后一段，脚下的大石块路微微上坡」。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "continuity 只剩记录级：连续性·站位和场景布置（工人位置、小拱的结构） · 文字、首帧 prompt 和 toml (32.0,18.6) 都写工人在「大门洞口里面右侧墙根下」，Riley 从他左",
+     "continuity R ✓"
+    ],
+    "rows": [
+     "| s1_st3 | 0–5 s | 连续性·站位和场景布置（工人位置、小拱的结构） | 记录 | ③ 首帧 / 规则源 bg1-2 | 文字、首帧 prompt 和 toml (32.0,18.6) 都写工人在「大门洞口里面右侧墙根下」，Riley 从他左边约 1 m 处走过。首帧里工人站在右边小门洞口，x≈1000–1150/1280，约偏右 15–20°，在大门洞外面，离她的路线约 2.5–3 m。模型会照首帧，把工人留在小门洞口。另外场景参考 bg1-2 底图里，小拱是大通道里面右壁上的一个侧洞，和 st1、st3 首帧不一样：首帧里小门洞是城墙正面上和大门洞并排的另一个拱。第 6 秒以后进入通道，模型可能在右壁上开出一个侧洞 | 便宜：文字和 toml 照首帧改成「大门洞右边的小门洞口，离她走的路线约 2.5 m」；bg1-2 的用法里注明「小门洞是城墙正面并排的另一个拱，通道里面没有侧洞」，或者把 bg1-2 底图重出 |"
+    ]
+   }
+  },
+  {
+   "id": "I46",
+   "level": "minor",
+   "law": "dialogue",
+   "category": "台词（时长与逻辑）",
+   "item": "dialogue",
+   "dimension": "D2 说得完·时段不够",
+   "shots": [
+    "s1_st4"
+   ],
+   "keys": [
+    "s1_st4"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "D2 说得完·时段不够：7 词 / 3.5 秒 = 2.0 词/秒，按公式能过。但这句有问号和「…」两处停顿，又是小声说悄悄话的口气。旧版同一句（只少一个「…」）实测 See 4.46 → Eventually 9.34，共 **4.9 秒**（`work/dialogue/whisper_old_renders.tx",
+   "fix": "便宜：二选一。① 节拍改成 6–6.5 侧脸凑近、6.5–11 说（4.5 秒）、11–12.5 回头看鱼，镜长加到 12.5–13 秒；② 镜长不变，把「See those tiny fish?」改成「Those tiny fish?」，并在 prompt 节拍里写「Eventually 最晚在第 10.5 秒说完」",
+   "solution": "说话段改成 10–14.5 秒（4.5 秒），收尾 14.5–16 回头看鱼（1.5 秒），镜长 12→16；台词不改。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "dialogue · st4 · 3.5 秒说不完（旧版实测 4.9 秒）→ 说话段改成 10–14.5 秒（4.5 秒），收尾 14.5–16 回头看鱼（1.5 秒），镜长 12→16；台词不改。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "dialogue R ✓"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I47",
+   "level": "minor",
+   "law": "dialogue",
+   "category": "台词（时长与逻辑）",
+   "item": "dialogue",
+   "dimension": "D2 说得完·贴着下限",
+   "shots": [
+    "s1_st1"
+   ],
+   "keys": [
+    "s1_st1"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "D2 说得完·贴着下限：9 词 / 4 秒 = 2.25 词/秒。旧版「Okay… I just time-traveled. Almost two thousand years.」实测 3.60–7.80，共 **4.2 秒**，Okay 后面停了约 0.9 秒。现版多了一个 back，预计约 4.5 秒，从 4 秒",
+   "fix": "便宜：节拍改成 2.5–3.5 转身、3.5–8 说（4.5 秒）；或者镜长加到 10.5 秒，回望放在 8.5–10.5",
+   "solution": "说话段 5.5–10 秒（4.5 秒），回望 10–12 秒，镜长 10→12。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "dialogue · st1 · 说完只剩约 1.5 秒 → 说话段 5.5–10 秒（4.5 秒），回望 10–12 秒，镜长 10→12。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "dialogue R ✓"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I48",
+   "level": "minor",
+   "law": "dialogue",
+   "category": "台词（时长与逻辑）",
+   "item": "dialogue",
+   "dimension": "D3 外语·注音没进 prompt",
+   "shots": [
+    "s1_st2、s1_st4（连带 s3、s6 的「Garum?」）"
+   ],
+   "keys": [
+    "s1_st2",
+    "s1_st4"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "D3 外语·注音没进 prompt：两个 prompt 的台词行都只有「garum」，没有读音。而 s7 的「Convenit」「Hospitium…」在 prompts.json 里都带「发音 …」。garum 在英语里常见两种读法：GAR-um（拉丁原音）和 GAIR-um，全集出现 4 次，每次各自生成，读法可能",
+   "fix": "便宜：编译器给英文台词里的拉丁借词也附注音，例如台词后加「（garum 读作 GAH-rum，重音在前，a 读 father 的 a）」，s1、s3、s6 全部统一。出片后用 medium.en 转写、人工听一遍 4 处读法是否一致",
+   "solution": "两镜对白括号里加「garum 读 GAH-rum，重音在前」（格式照 s7 的「发音 …」）；s3、s5、s6 的 Garum 不在我的范围，请主会话统一。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "dialogue · st2、st4 · garum 没注音 → 两镜对白括号里加「garum 读 GAH-rum，重音在前」（格式照 s7 的「发音 …」）；s3、s5、s6 的 Garum 不在我的范围，请主会话统一。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "dialogue R ✓"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I49",
+   "level": "minor",
+   "law": "dialogue",
+   "category": "台词（时长与逻辑）",
+   "item": "dialogue",
+   "dimension": "D4 故事稿与分镜的动作顺序不一致",
+   "shots": [
+    "s1_st2"
+   ],
+   "keys": [
+    "s1_st2"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "D4 故事稿与分镜的动作顺序不一致：story.md 第 21 行把「摊开左手给镜头看」写在 Mission 那句台词（第 23 行）**前面**；分镜和 prompt 写的是说到「is this」时才摊开。按故事稿读，会以为她先亮钱、再报目标，「And my budget… is this.」就成了马后炮",
+   "fix": "便宜：story.md 把第 21 行挪到第 23 行之后，或者改成「说到 is this 时，她把攥着的左手摊开…」",
+   "solution": "不改：story.json / story.md 不归我；分镜已是「说到 is this 时摊开」，请主会话在故事稿里挪位置。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "dialogue · st2 · story.md 摊钱动作写在台词前 → 不改：story.json / story.md 不归我；分镜已是「说到 is this 时摊开」，请主会话在故事稿里挪位置。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "dialogue 只剩记录级：D4 故事稿与分镜的动作顺序不一致（第 1 轮遗留） · `story.md` 第 21 行把「她把攥着的左手摊开给镜头看」写在第 23 行「Mission one… And m",
+     "dialogue R ✓"
+    ],
+    "rows": [
+     "| s1_st2 | 13–16 秒 | D4 故事稿与分镜的动作顺序不一致（第 1 轮遗留） | 记录 | ① 故事 | `story.md` 第 21 行把「她把攥着的左手摊开给镜头看」写在第 23 行「Mission one… And my budget… is this.」**前面**；分镜和 prompt（st2 第 15 行）写的是说到 is this 时才摊开。changes.md 第 75 行写着交主会话，但还没改 | 便宜：story.md 把第 21 行挪到第 23 行之后，或者改成「说到 is this 时，她把攥着的左手摊开…」 |"
+    ]
+   }
+  },
+  {
+   "id": "I50",
+   "level": "minor",
+   "law": "era",
+   "category": "时代与世界观",
+   "item": "era",
+   "dimension": "时代·交通与地形",
+   "shots": [
+    "s1_st5"
+   ],
+   "keys": [
+    "s1_st5"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "时代·交通与地形：动作行写「一个男人牵着一头拉小车的驴…沿街中间往门洞方向咔哒咔哒走去」。r01 §1.2：海门「The road to the gate is too steep for carts」，货靠骡子或挑夫。r01 §251：车过垫脚石时物理容易出错。st3 已经照考据用了驮筐骡，st5 又让车往海门开，前",
+   "fix": "便宜：改成「牵着一头驮两只藤筐的驴」（驮畜），走路中间；场景行删掉车辙，或者写「车辙很浅」",
+   "solution": "改成「牵着一头驮着两只藤筐的驴（驮畜，不拉车）」，首帧负面词加「车辆、车轮」；场景卡的「车辙」归主会话的 st5 场景行。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "era · st5 · 驴拉小车走海门坡 → 改成「牵着一头驮着两只藤筐的驴（驮畜，不拉车）」，首帧负面词加「车辆、车轮」；场景卡的「车辙」归主会话的 st5 场景行。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "era R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I51",
+   "level": "minor",
+   "law": "era",
+   "category": "时代与世界观",
+   "item": "era",
+   "dimension": "时代·建筑",
+   "shots": [
+    "s1_st1（也影响 st2、st4 的背景和 bg1）"
+   ],
+   "keys": [
+    "s1_st1",
+    "s1_st2",
+    "s1_st4"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "时代·建筑：st1 首帧左上的房子（`work/era/st1_houses_zoom.png`）屋脊上有方烟囱（太阳旁边），立面开着带木框的规整矩形窗。右侧坡上（`st1_righthouses_zoom.png`）是白墙多窗的农舍加成排柏树，整体像现代托斯卡纳乡村。罗马民居没有烟囱",
+   "fix": "便宜：bg1 和首帧 prompt 的负面词补上「烟囱、带窗框的玻璃窗、多层规整开窗的立面、托斯卡纳农舍」，正向写「楼上只开几个没有窗扇的小方窗洞」（bg2 已经这么写）；不改也能接受，但它是世界锚点，会一路被复制下去",
+   "solution": "首帧 prompt 正面写「楼上只开几个没有窗扇的小方窗洞」，负面词加「烟囱、带木框的规整窗户、托斯卡纳式农舍」；bg1 卡和底图归主会话。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "era · st1/st2/st4 · 托斯卡纳式房子、烟囱、带框窗 → 首帧 prompt 正面写「楼上只开几个没有窗扇的小方窗洞」，负面词加「烟囱、带木框的规整窗户、托斯卡纳式农舍」；bg1 卡和底图归主会话。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "era 只剩记录级：时代可信·建筑（托斯卡纳农庄） · bg1 seed 正文写「山坡上是一行行整齐的葡萄藤和点点白墙农庄」。st1、st4 首帧和 bg1 底图都画出白墙四坡",
+     "era R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": [
+     "| s1_st1、st4 | 全条（右上远景） | 时代可信·建筑（托斯卡纳农庄） | 记录 | 规则源 bg1 seed / ③ 首帧 | bg1 seed 正文写「山坡上是一行行整齐的葡萄藤和点点白墙农庄」。st1、st4 首帧和 bg1 底图都画出白墙四坡顶、窗户成排成列的近现代意大利农舍（`z_st1_right.jpg`），城墙内右侧几栋房子也是同样的白墙规整窗。上一轮作者在首帧负面词里加了「托斯卡纳式农舍」，但首帧仍是这样 | 便宜：bg1 seed 把「白墙农庄」改成「零星低矮的抹灰农舍，窗洞很小、很少」，重出 bg1；st1、st4 首帧把远处农舍改成小窗洞的低矮房子，或压进虚化里 |"
+    ]
+   }
+  },
+  {
+   "id": "I52",
+   "level": "minor",
+   "law": "era",
+   "category": "时代与世界观",
+   "item": "era",
+   "dimension": "时代·城门形制 / 世界一致",
+   "shots": [
+    "s1_st5"
+   ],
+   "keys": [
+    "s1_st5"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "时代·城门形制 / 世界一致：st5 首帧（`work/era/st5_gate.png`）城门从里面看只有一个大拱，st1、st3 已经交代海门是一大一小两个拱洞。另外 r01 §63 和 dossier §1 写着维纳斯神庙就在海门旁边、正在施工（st1 里神庙也在门洞右侧墙内），st5 两边却都是普通铺子，看不到",
+   "fix": "便宜：首帧 prompt 写「城墙上一大一小两个拱形门洞」；神庙一侧可以写「画左远端是一段高高的神庙平台墙，搭着木脚手架」，不然观众会觉得刚才看到的神庙工地凭空消失了。神庙的确切位置要对照 r01 遗址平面再确认",
+   "solution": "写明「一大一小两个拱形门洞（大的在画面中间偏右）」；存疑项判定为加：维纳斯神庙在海门内、进城时在右手，回望城门时在左边，所以写「画左远端紧挨城墙是一段高出屋顶的神庙平台素墙，墙头露出几根脚手架木杆」（同时接住 st1 里看到的唯一那处脚手架）。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "era · st5 · 城门从里面只剩一个拱；神庙在门边却看不到 → 写明「一大一小两个拱形门洞（大的在画面中间偏右）」；存疑项判定为加：维纳斯神庙在海门内、进城时在右手，回望城门时在左边，所以写「画左远端紧挨城墙是一段高出屋顶的神庙平台素墙，墙头露出几根脚手架木杆」（同时接住 st1 里看到的唯一那处脚手架）。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "era R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I53",
+   "level": "minor",
+   "law": "era",
+   "category": "时代与世界观",
+   "item": "era",
+   "dimension": "时代·器物（钱币）",
+   "shots": [
+    "s1_st2"
+   ],
+   "keys": [
+    "s1_st2"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "时代·器物（钱币）：`p2_钱币.png` 三枚币都有坑坑洼洼的腐蚀面，as 边缘发绿，看起来像 2000 年后出土的古币。公元 75 年流通的是近几年铸的币，应该只有手摸出来的磨光，没有铜绿和锈坑。另外弗拉维王朝的 quadrans 一般不铸皇帝头像（存疑，可以查 RIC II 核实）",
+   "fix": "便宜：重出道具图，写「流通中的铜币：边缘和高点被手摸得发亮，没有铜绿、没有锈坑；浮雕浅、看不出字」；quadrans 正面改成简单图案（存疑项，核实后再定）",
+   "solution": "不改：道具图和 p2 卡不在我的范围，交主会话出图时处理。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "era · st2 · p2 钱币像出土古币、quadrans 头像（存疑）→ 不改：道具图和 p2 卡不在我的范围，交主会话出图时处理。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "era 只剩记录级：时代·器物（钱币）（R② 未改） · `p2_钱币.png`（文件时间 09:26，在第 1 轮之前）没变：as 和 quadrans 表面有锈坑、发绿的铜锈",
+     "era R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": [
+     "| s1_st2 | 13–19 秒（钱摊在手心） | 时代·器物（钱币）（R② 未改） | 记录 | ③ 道具图 p2 | `p2_钱币.png`（文件时间 09:26，在第 1 轮之前）没变：as 和 quadrans 表面有锈坑、发绿的铜锈，看起来是出土古币。75 年时流通的是新近铸的币。图里的 quadrans 还有人像（存疑：弗拉维王朝的 quadrans 多不铸皇帝头像，可查 RIC II） | 便宜：重出 p2，写「流通中的铜币，高点被手摸得发亮，没有铜绿、没有锈坑」；quadrans 正面改成简单图案（核实后再定） |"
+    ]
+   }
+  },
+  {
+   "id": "I54",
+   "level": "minor",
+   "law": "era",
+   "category": "时代与世界观",
+   "item": "era",
+   "dimension": "prompt 诱发·自相矛盾",
+   "shots": [
+    "s1_st1–st5"
+   ],
+   "keys": [
+    "s1_st1",
+    "s1_st5"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "prompt 诱发·自相矛盾：5 镜负面词都有「木桶」，st3 的画面行却要「把一只装着灰浆的木桶往上拉」。st1–st4 的场景行（bg1）有「几桶灰浆」，st3 首帧画的也是铁箍木桶（`work/era/st3_bucket.png`）。正反指令冲突，桶可能闪变、消失，或变成首帧 prompt 已经禁掉的金属桶",
+   "fix": "便宜：全局负面词把「木桶」改成「酒桶式大木桶、横躺的木酒桶」；或者 st3 改成「装灰浆的藤筐或木提桶」，并把负面词里的木桶去掉",
+   "solution": "光线两处统一（太阳在镜头身后偏画左）；场景行见 continuity。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "era · 其他 · st5 首帧 prompt 与视频 prompt 光线打架、场景行有喷泉 → 光线两处统一（太阳在镜头身后偏画左）；场景行见 continuity。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "era R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I56",
+   "level": "minor",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing",
+   "dimension": "镜头规格·入画时间 / 画内位置",
+   "shots": [
+    "s1_st5"
+   ],
+   "keys": [
+    "s1_st5"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "镜头规格·入画时间 / 画内位置：`overhead.toml`：驴车 3 秒在 (11.4,15)，镜头在 (8.4,14.5)，横向差 3 米，还在镜头平面后 0.5 米。35 mm 画右边缘约在轴右 33°，驴车（赶车人在 x≈10.9）要走到镜头前约 4 米才进画，按 1.19 米/秒算是 6.7–7.3 秒，",
+   "fix": "便宜：驴车起点改到 y≈11–12（镜头前 3 米左右），或者把 look 再往右偏几度；文字改成「第 5 秒左右从画右入画」。",
+   "solution": "统一成：Riley 0 秒在大门洞口，离镜头约 11.9 m（约占画高 1/4），5.5 秒停在约 5.7 m（约占画高一半）；toml、文字、首帧 prompt 三处同一组数字。停步从 4.5 秒挪到 5.5 秒，步速约 1.3 m/s。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "framing · st5 · 首帧约 21 m，俯视图 10.5 m → 统一成：Riley 0 秒在大门洞口，离镜头约 11.9 m（约占画高 1/4），5.5 秒停在约 5.7 m（约占画高一半）；toml、文字、首帧 prompt 三处同一组数字。停步从 4.5 秒挪到 5.5 秒，步速约 1.3 m/s。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "framing R ✗（这一类有上一轮的问题没改好）",
+     "framing 同镜头仍有：重出 · 镜头规格·板与俯视图一致 / 节拍时间 / 机位 · 新首帧里 Riley 还在大门洞里，头顶 y≈443、脚 y≈550，高约 107 px，只占画高 11%（`work/"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I57",
+   "level": "minor",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing",
+   "dimension": "镜头规格·景别 / 板与文字一致",
+   "shots": [
+    "s1_st1"
+   ],
+   "keys": [
+    "s1_st1"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "镜头规格·景别 / 板与文字一致：文字写「全身只占画面高度约三分之一」「城墙和城门……正好在她头顶上方」。俯视图 28 mm、离她 7.66 米，推算约占 27%，和文字一致。首帧里她占画高约 49%（y 440–905/941），离镜头约 4 米；城门在她左上方，约偏左 12°（x≈530 对比她的 x≈835），她",
+   "fix": "便宜：二选一。按首帧把文字改成「约占画面一半」「城门在画面左上方」；或者按俯视图重出首帧，让她更小、城门在正上方。",
+   "solution": "改成开场她在 6.5 m（约 1/3），转身后朝镜头走三步到 4.3 m（约一半多）；镜头、Riley、城门三点一线，城门在她头顶正上方；首帧 prompt 按 0 秒（1/3）写。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "framing · st1 · 首帧人占画高 1/2、城门在画左 → 改成开场她在 6.5 m（约 1/3），转身后朝镜头走三步到 4.3 m（约一半多）；镜头、Riley、城门三点一线，城门在她头顶正上方；首帧 prompt 按 0 秒（1/3）写。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "framing 只剩记录级：镜头规格·景别 / 板与俯视图一致 · 新首帧里 Riley 头顶 y≈445、脚 y≈870，约占画高 45%，离镜头约 5 m（toml 和文字写 6.5 ",
+     "framing R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": [
+     "| s1_st1 | 0–5.5（影响到 10） | 镜头规格·景别 / 板与俯视图一致 | 记录 | ③ 首帧 | 新首帧里 Riley 头顶 y≈445、脚 y≈870，约占画高 45%，离镜头约 5 m（toml 和文字写 6.5 m、约 1/3）。城门在 x≈520，偏左约 14°；她头顶正上方是神庙脚手架（x≈660–1030），不是城门。第 1 轮这条没有改好。新增一点：首帧起点已在 5 m，「朝镜头走三步（约 2 m）」后约到 3 m；28 mm、机高 1.5 m 时，画面下缘落在离地约 0.4 m，脚和小腿会出画，和走位里「全身仍在画内、约占一半多」冲突。toml 的 4.3 m 本身也只把脚留在画面底部约 2%，余量很紧 | 便宜：二选一。一是把文字改成「朝镜头走两步（约一米）」「城门在画面左上方」，接受说话时约膝盖以上；二是按 toml 重出首帧，人高约 310 px，城门在她头顶正上方 |"
+    ]
+   }
+  },
+  {
+   "id": "I58",
+   "level": "minor",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing",
+   "dimension": "镜头规格·板与俯视图一致",
+   "shots": [
+    "s1_st2"
+   ],
+   "keys": [
+    "s1_st2"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "镜头规格·板与俯视图一致：文字和俯视图都写「城门在她身后正中」，俯视图里城门和 Riley 在同一条视线上。首帧里城门在画右（x≈1070，约偏右 10°），她的脸在画左偏中。8.5–13 秒「左拳竖拇指越过左肩指城」，左肩在画右，正好指向首帧里的城门，对表演反而有利。另外俯视图机高 1.65 米，比她眼高（约 1.6",
+   "fix": "便宜：文字改成「城门在她左肩后方（画右）」，俯视图机高改到约 1.75 米；不需要重出首帧。",
+   "solution": "文字改成「城门在她左肩后方（画右）」，拇指越过左肩正好指向它；overhead 机位重算，城门偏轴约 +12°，机高改 1.75 m（aim_h 1.6）。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "framing · st2 · 城门不在身后正中、机高 1.65 m → 文字改成「城门在她左肩后方（画右）」，拇指越过左肩正好指向它；overhead 机位重算，城门偏轴约 +12°，机高改 1.75 m（aim_h 1.6）。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "已复核通过",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "framing R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I60",
+   "level": "minor",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing",
+   "dimension": "镜头规格·画内人数",
+   "shots": [
+    "s1_st4 / s1_st5"
+   ],
+   "keys": [
+    "s1_st4",
+    "s1_st5"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "镜头规格·画内人数：st3 的 prompt 写了「画面里一共三个人和一头骡子」，st4、st5 没有写总人数；只靠负面词「多出来的人」，石板街和沙滩容易被补上路人。",
+   "fix": "便宜：st4 加「画面里一共三个人：Riley 和两个渔夫」，st5 加「画面里一共两个人和一头驴：Riley 和赶车人」。",
+   "solution": "st4「画面里一共三个人：Riley 和两个渔夫」，st5「一共两个人和一头驴」，st3 保留「三个人和一头骡子」；三镜加 `extras`（st3=2、st4=2、st5=1）。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "framing · st4、st5 · 没写画内总人数 → st4「画面里一共三个人：Riley 和两个渔夫」，st5「一共两个人和一头驴」，st3 保留「三个人和一头骡子」；三镜加 `extras`（st3=2、st4=2、st5=1）。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "framing R ✗（这一类有上一轮的问题没改好）",
+     "framing 同镜头仍有：重出 · 镜头规格·板与俯视图一致 / 节拍时间 / 机位 · 新首帧里 Riley 还在大门洞里，头顶 y≈443、脚 y≈550，高约 107 px，只占画高 11%（`work/"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I63",
+   "level": "minor",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "Prompt 文本·首帧和俯视图矛盾",
+   "shots": [
+    "s1_st4"
+   ],
+   "keys": [
+    "s1_st4"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "Prompt 文本·首帧和俯视图矛盾：st4 俯视图里机位在 Riley 东边、扇形朝西南，坡和城在扇形外（北）；首帧里双拱城门和神庙工地就在渔夫正后方。参考用法同时要求「机位与取景都和首帧一致」和「空间关系以 overhead 为准」",
+   "fix": "便宜：以首帧为准重画俯视图（机位朝北偏西，城入画）",
+   "solution": "同 framing 第 1 条。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "prompt_text · st4 · 首帧与俯视图矛盾 → 同 framing 第 1 条。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "prompt_text R ✗（这一类有上一轮的问题没改好）",
+     "prompt_text 同镜头仍有：可剪 · Prompt 文本·道具交接站位前后矛盾 · 第 11 行写「年轻的在画右那一边、中年的在画左那一边」。首帧里年轻渔夫（卷发、浅色 tunica）站在左边、离船更近，"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I64",
+   "level": "minor",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "Prompt 文本·图文不一致",
+   "shots": [
+    "s1_st1"
+   ],
+   "keys": [
+    "s1_st1"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "Prompt 文本·图文不一致：「镜头」行写 Riley「只占画面高度约三分之一」，首帧约 1/2（y 335–690）；「走位」行写「城墙和城门在画面上半部正中，正好在她头顶上方」「面朝城门」，首帧城门在画左约 1/3 处，她头顶上方是神庙脚手架",
+   "fix": "便宜：文字改成照首帧写（「头顶上方是神庙工地，城门在画左」），或者重出首帧",
+   "solution": "同 framing。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "prompt_text · st1 · 图文不一致 → 同 framing。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "prompt_text 问题表仍有：可剪 · Prompt 文本·图文不一致 · 首帧里城门在 x≈460–650（画左约 1/3，偏轴约 −12°），她头顶（x≈830）正上方是神庙脚手架；她身高 y",
+     "prompt_text R ✗（这一类有上一轮的问题没改好）"
+    ],
+    "rows": [
+     "| s1_st1 | 0–2.5 s（背景全镜都在） | Prompt 文本·图文不一致 | 可剪 | ③ 首帧 | 首帧里城门在 x≈460–650（画左约 1/3，偏轴约 −12°），她头顶（x≈830）正上方是神庙脚手架；她身高 y 447–870，约占画高 45%。prompt.txt 第 12、14 行写「城门在画面上半部正中、她头顶上方」「约占画面高度三分之一」；overhead_ref 里城门和 Riley 都在视野中线上。首帧 prompt 写对了，但出图没照做。走近后要「一半多」，照 45% 起步，到 4.3 m 会接近 68%，脚可能出画 | 便宜：照首帧 prompt 重出首帧；或者把视频文字改成照首帧写（城门在画左、头顶上方是神庙工地、开场约占一半弱） |"
+    ]
+   }
+  },
+  {
+   "id": "I65",
+   "level": "minor",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "Prompt 文本·图文不一致",
+   "shots": [
+    "s1_st4"
+   ],
+   "keys": [
+    "s1_st4"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "Prompt 文本·图文不一致：台词「See those tiny fish?」，正文写「银亮的小鱼」；首帧筐里的鱼约一拃长，看起来是中等大小的鱼",
+   "fix": "便宜：首帧重出时写明「手指长的小鳀鱼 / 小沙丁鱼」",
+   "solution": "三镜加 `extras`（2/2/1）和总人数句；编译器规则归主会话。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "prompt_text · st3/st4/st5 · 有路人还写「多出来的人」→ 三镜加 `extras`（2/2/1）和总人数句；编译器规则归主会话。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "prompt_text R ✗（这一类有上一轮的问题没改好）",
+     "prompt_text 同镜头仍有：可剪 · Prompt 文本·道具交接站位前后矛盾 · 第 11 行写「年轻的在画右那一边、中年的在画左那一边」。首帧里年轻渔夫（卷发、浅色 tunica）站在左边、离船更近，"
+    ],
+    "rows": []
+   }
+  },
+  {
+   "id": "I66",
+   "level": "minor",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "Prompt 文本·俯视图和首帧不符",
+   "shots": [
+    "s1_st3"
+   ],
+   "keys": [
+    "s1_st3"
+   ],
+   "scenes": [
+    "s1"
+   ],
+   "problem": "Prompt 文本·俯视图和首帧不符：st3 俯视图的城墙只有约 2 m 厚，Riley 6–13 s 停在墙南沿（还在门洞外）；文字写「在门洞里停步」，首帧的门洞是一条十几米长的拱道",
+   "fix": "便宜：overhead 的门洞按实际纵深重建（城墙块加厚）",
+   "solution": "同 framing（walkable＋通道两壁 object）。",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "changes.md",
+   "solution_line": "prompt_text · st3 · 俯视图门洞太薄 → 同 framing（walkable＋通道两壁 object）。",
+   "history": [],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "复核仍有问题",
+    "run": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+    "how": [
+     "prompt_text R ✗（这一类有上一轮的问题没改好）",
+     "prompt_text 同镜头仍有：重出 · Prompt 文本·图文不一致（人物位置） · 首帧里的工人（x≈1280–1500）蹲在右边的**小门洞**里，和大门洞之间隔着一根门墩。prompt.txt 第 1"
+    ],
+    "rows": []
+   }
+  }
+ ],
+ "shots": [
+  {
+   "key": "s1_st1",
+   "scene": "s1",
+   "shot": "st1",
+   "frame": {
+    "before": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st1/planning/_r1/st1_first_frame.png",
+     "label": "_r1",
+     "sha256": "127678add8b6c75453ad4f8a1c64d67a1c97fd5826367dbb3a4d356349ff6854",
+     "mtime": "2026-11-08T10:08:31",
+     "mtime_ms": 1794103711681,
+     "how": "审查开始（2026-11-08 10:20:06）时已在的那一版"
+    },
+    "after": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st1/planning/_r3/st1_first_frame.png",
+     "label": "_r3",
+     "sha256": "30e5d01b6651127e30e8c97bc23e3b4671a2c1d78d12f6dbe905e0725587c291",
+     "mtime": "2026-11-08T11:14:27",
+     "mtime_ms": 1794107667917,
+     "how": "下一轮（ep01_20261108-111837_pregen_r2）审的那一版"
+    },
+    "changed": true
+   },
+   "spec": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-102006_pregen_r1/materials/shots/s1_st1/spec.md",
+    "after_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2/materials/shots/s1_st1/spec.md",
+    "changed": true,
+    "fields": [
+     {
+      "field": "duration",
+      "name": "时长",
+      "before": "10",
+      "after": "12",
+      "diff": [
+       "@@ -1 +1 @@",
+       "-10",
+       "+12"
+      ]
+     },
+     {
+      "field": "action",
+      "name": "动作",
+      "before": "他拍。Riley 站在海边黑色细沙滩的中部，背对镜头，仰头看陡坡上的城：灰黄色城墙和双拱城门，墙后挤满的红瓦屋顶，城墙里一座神庙平台上的木杆脚手架。沙滩上斜放着两条小木船，海浪一下下拍岸。开场时她的长发自然垂在背后，只有发梢被海风轻轻吹动。她慢慢转过身来面对镜头，眼睛睁得很大，半笑半喘，压低声音说出那句话；说完又忍不住回过头望了一眼城。画面里只有她一个人。第 0 秒：她站在沙滩上，背对镜头、面朝城门，两手空着垂在身侧，身体不动。",
+      "after": "他拍。Riley 站在海边黑色细沙滩上，离镜头约六米半，背对镜头，仰头看陡坡上的城：灰黄色城墙和一大一小两个拱的城门，墙后挤满的红瓦屋顶，城墙里一座神庙平台上的木杆脚手架。画左是海，浪一下下拍岸；画右的沙滩上斜放着两条小木船。乌黑的长发披散在背后；衬衫下摆一直塞在裤腰里，海风只吹动她的发梢和短袖的袖口。她慢慢转过身来面对镜头，朝镜头走三步（约两米），停下，眼睛睁得很大，半笑半喘，压低声音说出那句话；说完又忍不住回过头望了一眼城，脚不动。画面里只有她一个人。第 0 秒：她站在沙滩上离镜头约六米半处，背对镜头、面朝城门，两手空着垂在身侧，身体不动。",
+      "diff": [
+       "@@ -1,8 +1,10 @@",
+       " 他拍。",
+       "-Riley 站在海边黑色细沙滩的中部，背对镜头，仰头看陡坡上的城：灰黄色城墙和双拱城门，墙后挤满的红瓦屋顶，城墙里一座神庙平台上的木杆脚手架。",
+       "-沙滩上斜放着两条小木船，海浪一下下拍岸。",
+       "-开场时她的长发自然垂在背后，只有发梢被海风轻轻吹动。",
+       "-她慢慢转过身来面对镜头，眼睛睁得很大，半笑半喘，压低声音说出那句话；",
+       "-说完又忍不住回过头望了一眼城。",
+       "+Riley 站在海边黑色细沙滩上，离镜头约六米半，背对镜头，仰头看陡坡上的城：灰黄色城墙和一大一小两个拱的城门，墙后挤满的红瓦屋顶，城墙里一座神庙平台上的木杆脚手架。",
+       "+画左是海，浪一下下拍岸；",
+       "+画右的沙滩上斜放着两条小木船。",
+       "+乌黑的长发披散在背后；",
+       "+衬衫下摆一直塞在裤腰里，海风只吹动她的发梢和短袖的袖口。",
+       "+她慢慢转过身来面对镜头，朝镜头走三步（约两米），停下，眼睛睁得很大，半笑半喘，压低声音说出那句话；",
+       "+说完又忍不住回过头望了一眼城，脚不动。",
+       " 画面里只有她一个人。",
+       "-第 0 秒：她站在沙滩上，背对镜头、面朝城门，两手空着垂在身侧，身体不动。",
+       "+第 0 秒：她站在沙滩上离镜头约六米半处，背对镜头、面朝城门，两手空着垂在身侧，身体不动。"
+      ]
+     },
+     {
+      "field": "blocking",
+      "name": "走位",
+      "before": "Riley 站在画面下方正中，先背对镜头、面朝坡上的城门；第 2.5 秒起原地慢慢转身面向镜头；第 8.5 秒起只把头和肩转回去望城，脚不动。城墙和城门在画面上半部正中，正好在她头顶上方。镜头在她身后约七米半。",
+      "after": "镜头、Riley 和城门在一条直线上：城门在画面上半部正中、她头顶上方。第 0 秒她离镜头约六米半，全身只占画面高度约三分之一；2.5–3.5 秒原地转身面向镜头；3.5–5.5 秒朝镜头走三步，停在离镜头约四米三处，全身仍在画内、约占画面高度一半多，脸和表情看得清；第 10 秒起只把头和肩转回去望城，脚不动。海在画左，两条小木船在画右。",
+      "diff": [
+       "@@ -1,5 +1,6 @@",
+       "-Riley 站在画面下方正中，先背对镜头、面朝坡上的城门；",
+       "-第 2.5 秒起原地慢慢转身面向镜头；",
+       "-第 8.5 秒起只把头和肩转回去望城，脚不动。",
+       "-城墙和城门在画面上半部正中，正好在她头顶上方。",
+       "-镜头在她身后约七米半。",
+       "+镜头、Riley 和城门在一条直线上：城门在画面上半部正中、她头顶上方。",
+       "+第 0 秒她离镜头约六米半，全身只占画面高度约三分之一；",
+       "+2.5–3.5 秒原地转身面向镜头；",
+       "+3.5–5.5 秒朝镜头走三步，停在离镜头约四米三处，全身仍在画内、约占画面高度一半多，脸和表情看得清；",
+       "+第 10 秒起只把头和肩转回去望城，脚不动。",
+       "+海在画左，两条小木船在画右。"
+      ]
+     },
+     {
+      "field": "beats",
+      "name": "节拍",
+      "before": "0–2.5秒 Riley 背对镜头站着，仰头看城，海风吹动发梢和衬衫下摆，没人说话；2.5–4秒 她原地慢慢转过身来面对镜头，眼睛睁得很大，还没开口；4–8秒 她半笑半喘、压低声音对镜头说那句话（Okay… 之后停半拍）；8–10秒 说完她又回过头望了一眼城，嘴角带着不敢相信的笑，不说话",
+      "after": "0–2.5秒 Riley 背对镜头站着，仰头看城，海风吹动发梢和袖口，没人说话；2.5–3.5秒 她原地慢慢转过身来面对镜头，眼睛睁得很大；3.5–5.5秒 她朝镜头走三步，停下，半笑半喘，还没开口；5.5–10秒 她压低声音、半笑半喘地对镜头说那句话（Okay… 之后停半拍）；10–12秒 说完她又回过头望了一眼城，嘴角带着不敢相信的笑，不说话",
+      "diff": [
+       "@@ -1,4 +1,5 @@",
+       "-0–2.5秒 Riley 背对镜头站着，仰头看城，海风吹动发梢和衬衫下摆，没人说话；",
+       "-2.5–4秒 她原地慢慢转过身来面对镜头，眼睛睁得很大，还没开口；",
+       "-4–8秒 她半笑半喘、压低声音对镜头说那句话（Okay… 之后停半拍）；",
+       "-8–10秒 说完她又回过头望了一眼城，嘴角带着不敢相信的笑，不说话",
+       "+0–2.5秒 Riley 背对镜头站着，仰头看城，海风吹动发梢和袖口，没人说话；",
+       "+2.5–3.5秒 她原地慢慢转过身来面对镜头，眼睛睁得很大；",
+       "+3.5–5.5秒 她朝镜头走三步，停下，半笑半喘，还没开口；",
+       "+5.5–10秒 她压低声音、半笑半喘地对镜头说那句话（Okay… 之后停半拍）；",
+       "+10–12秒 说完她又回过头望了一眼城，嘴角带着不敢相信的笑，不说话"
+      ]
+     },
+     {
+      "field": "camera",
+      "name": "镜头",
+      "before": "他拍，固定机位，不运镜。建立镜头，全景：Riley 全身在画面下方正中，只占画面高度约三分之一，脚下的沙滩和海浪在画面下缘；陡坡、城墙、城门和红瓦屋顶占画面上半部，屋顶上方是干净的晨空；人眼高度略仰。",
+      "after": "他拍，固定机位，不运镜。建立镜头，全景：开场她全身在画面下方正中，约占画面高度三分之一；走近后约占一半多，全身仍在画内，脚下的黑沙在画面下缘；陡坡、城墙、城门和红瓦屋顶占画面上半部，屋顶上方是干净的晨空；人眼高度略仰。",
+      "diff": [
+       "@@ -1,3 +1,4 @@",
+       " 他拍，固定机位，不运镜。",
+       "-建立镜头，全景：Riley 全身在画面下方正中，只占画面高度约三分之一，脚下的沙滩和海浪在画面下缘；",
+       "+建立镜头，全景：开场她全身在画面下方正中，约占画面高度三分之一；",
+       "+走近后约占一半多，全身仍在画内，脚下的黑沙在画面下缘；",
+       " 陡坡、城墙、城门和红瓦屋顶占画面上半部，屋顶上方是干净的晨空；"
+      ]
+     },
+     {
+      "field": "lighting",
+      "name": "光线",
+      "before": "五月清晨。太阳在城的后面（东边）刚升起，光从城那一边低低地照向大海：城墙临海的一面在淡蓝色阴影里，只有屋顶轮廓和脚手架顶上镶着金边；人物朝着城的一面被暖金色晨光照亮，朝着海的一面在柔和的阴影里，被沙滩和海面的反光托亮，头发边缘有一圈金色亮边；天空干净晴朗，海面反着清冷的晨光；只有自然光。",
+      "after": "五月清晨。镜头朝着城拍，太阳低低地挂在画面上方城的后面，被屋顶挡住大半，只在屋脊上露出一点亮光：整座城逆光，城墙朝海的一面在淡蓝色阴影里，只有屋顶轮廓和脚手架顶上镶着暖金边。Riley 也是逆光：头发和肩头一圈暖金色亮边，身前的黑沙上有一道朝镜头拖长的影子；她转过身面对镜头后，脸在柔和的阴影里，被沙滩和海面的反光托亮，表情看得清。天空干净晴朗，海面反着清冷的晨光；只有自然光。",
+      "diff": [
+       "@@ -1,4 +1,5 @@",
+       " 五月清晨。",
+       "-太阳在城的后面（东边）刚升起，光从城那一边低低地照向大海：城墙临海的一面在淡蓝色阴影里，只有屋顶轮廓和脚手架顶上镶着金边；",
+       "-人物朝着城的一面被暖金色晨光照亮，朝着海的一面在柔和的阴影里，被沙滩和海面的反光托亮，头发边缘有一圈金色亮边；",
+       "+镜头朝着城拍，太阳低低地挂在画面上方城的后面，被屋顶挡住大半，只在屋脊上露出一点亮光：整座城逆光，城墙朝海的一面在淡蓝色阴影里，只有屋顶轮廓和脚手架顶上镶着暖金边。",
+       "+Riley 也是逆光：头发和肩头一圈暖金色亮边，身前的黑沙上有一道朝镜头拖长的影子；",
+       "+她转过身面对镜头后，脸在柔和的阴影里，被沙滩和海面的反光托亮，表情看得清。",
+       " 天空干净晴朗，海面反着清冷的晨光；"
+      ]
+     }
+    ]
+   },
+   "issues": [
+    "I5",
+    "I16",
+    "I31",
+    "I33",
+    "I36",
+    "I44",
+    "I47",
+    "I51",
+    "I54",
+    "I57",
+    "I64"
+   ]
+  },
+  {
+   "key": "s1_st2",
+   "scene": "s1",
+   "shot": "st2",
+   "frame": {
+    "before": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st2/planning/_r1/st2_first_frame.png",
+     "label": "_r1",
+     "sha256": "041e57f0ba93a0cd8182b215ba2086f2c5d27ccac82f1e828ba2ffdccd2b00fb",
+     "mtime": "2026-11-08T10:08:02",
+     "mtime_ms": 1794103682819,
+     "how": "审查开始（2026-11-08 10:20:06）时已在的那一版"
+    },
+    "after": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st2/planning/_r3/st2_first_frame.png",
+     "label": "_r3",
+     "sha256": "9aa07164a7053ae48284ca8263d5b1cd84c57fc8c8356ccdcbe4c811aabbc580",
+     "mtime": "2026-11-08T11:14:44",
+     "mtime_ms": 1794107684780,
+     "how": "下一轮（ep01_20261108-111837_pregen_r2）审的那一版"
+    },
+    "changed": true
+   },
+   "spec": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-102006_pregen_r1/materials/shots/s1_st2/spec.md",
+    "after_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2/materials/shots/s1_st2/spec.md",
+    "changed": true,
+    "fields": [
+     {
+      "field": "action",
+      "name": "动作",
+      "before": "自拍：Riley 站在同一片沙滩上，面对镜头，右臂伸向画外持镜（画面里看不到相机、手机或自拍杆），只剩左手能用；身后是陡坡上的城墙、城门和红瓦屋顶，海风吹乱她的长发。她兴奋地报出地点和年份，再报今天的两个目标；说到 this whole town 时，用攥着钱的左拳竖起拇指，越过肩膀朝身后的城一指，马上收回胸前。说 And my budget… 时把攥着钱的左拳举到镜头前，说到 is this 时手心朝上摊开给镜头看。道具（p2 钱币）：进场时 9 枚钱全攥在她左手拳头里，拳头垂在腰前、不入画；付前 9 枚 → 付出 0 枚 → 付后 9 枚。摊开时手心里正好 9 枚，平铺在手心、互不重叠：7 枚红铜色小钱，1 枚明显更小、颜色更浅的小铜币，1 枚金灿灿、比小钱大一圈、更厚更亮的大黄铜币；从摊开到收拢，9 枚钱一直贴在她手心里。出场时她把 9 枚钱重新攥回左拳，手放低出画（揣回左侧裤袋）。画面里只有她一个人。第 0 秒：她面对镜头，右臂伸向画外，左手握拳垂在腰前（画外），嘴还闭着，在笑。",
+      "after": "自拍：Riley 站在同一片沙滩上（就在上一镜停下的地方），面对镜头，右臂伸向画外持镜（画面里看不到相机、手机或自拍杆），只剩左手能用；乌黑的长发披散，海风把几缕吹到脸边。身后是陡坡上的城墙、城门和红瓦屋顶，城门在她左肩后方（画右）。她兴奋地报出地点和年份，再报今天的两个目标；说到 this whole town 时，用攥着钱的左拳竖起拇指，越过左肩朝身后的城一指，马上收回胸前。说 And my budget… 时把攥着钱的左拳举到镜头前，说到 is this 时手心朝上摊开：钱刚摊开时微微叠在一起，接着她用左手拇指把钱拨开两下，9 枚都露出来给镜头看。道具（p2 钱币）：本镜一共 9 枚钱——7 枚红铜色小钱，1 枚明显更小、颜色更浅的小铜币，1 枚金灿灿、比小钱大一圈、更厚更亮的大黄铜币；道具图里三种币各画了一枚，只取形制和颜色，不是本镜的枚数。这一镜不付钱：开始 9 枚，结束仍是 9 枚，从摊开到收拢一直贴在她手心里。进场时 9 枚全攥在她左手拳头里，拳头垂在腰前、不入画；出场时她把 9 枚重新攥回左拳，手放低出画（揣回左侧裤袋）。画面里只有她一个人。第 0 秒：她面对镜头，右臂伸向画外，左手握拳垂在腰前（画外），嘴还闭着，在笑。",
+      "diff": [
+       "@@ -1,11 +1,12 @@",
+       "-自拍：Riley 站在同一片沙滩上，面对镜头，右臂伸向画外持镜（画面里看不到相机、手机或自拍杆），只剩左手能用；",
+       "-身后是陡坡上的城墙、城门和红瓦屋顶，海风吹乱她的长发。",
+       "+自拍：Riley 站在同一片沙滩上（就在上一镜停下的地方），面对镜头，右臂伸向画外持镜（画面里看不到相机、手机或自拍杆），只剩左手能用；",
+       "+乌黑的长发披散，海风把几缕吹到脸边。",
+       "+身后是陡坡上的城墙、城门和红瓦屋顶，城门在她左肩后方（画右）。",
+       " 她兴奋地报出地点和年份，再报今天的两个目标；",
+       "-说到 this whole town 时，用攥着钱的左拳竖起拇指，越过肩膀朝身后的城一指，马上收回胸前。",
+       "-说 And my budget… 时把攥着钱的左拳举到镜头前，说到 is this 时手心朝上摊开给镜头看。",
+       "-道具（p2 钱币）：进场时 9 枚钱全攥在她左手拳头里，拳头垂在腰前、不入画；",
+       "-付前 9 枚 → 付出 0 枚 → 付后 9 枚。",
+       "-摊开时手心里正好 9 枚，平铺在手心、互不重叠：7 枚红铜色小钱，1 枚明显更小、颜色更浅的小铜币，1 枚金灿灿、比小钱大一圈、更厚更亮的大黄铜币；",
+       "-从摊开到收拢，9 枚钱一直贴在她手心里。",
+       "-出场时她把 9 枚钱重新攥回左拳，手放低出画（揣回左侧裤袋）。",
+       "+说到 this whole town 时，用攥着钱的左拳竖起拇指，越过左肩朝身后的城一指，马上收回胸前。",
+       "+说 And my budget… 时把攥着钱的左拳举到镜头前，说到 is this 时手心朝上摊开：钱刚摊开时微微叠在一起，接着她用左手拇指把钱拨开两下，9 枚都露出来给镜头看。",
+       "+道具（p2 钱币）：本镜一共 9 枚钱——7 枚红铜色小钱，1 枚明显更小、颜色更浅的小铜币，1 枚金灿灿、比小钱大一圈、更厚更亮的大黄铜币；",
+       "+道具图里三种币各画了一枚，只取形制和颜色，不是本镜的枚数。",
+       "+这一镜不付钱：开始 9 枚，结束仍是 9 枚，从摊开到收拢一直贴在她手心里。",
+       "+进场时 9 枚全攥在她左手拳头里，拳头垂在腰前、不入画；",
+       "+出场时她把 9 枚重新攥回左拳，手放低出画（揣回左侧裤袋）。",
+       " 画面里只有她一个人。"
+      ]
+     },
+     {
+      "field": "blocking",
+      "name": "走位",
+      "before": "Riley 面对镜头站着，城在她身后正中；镜头在她伸直的右臂末端，离她的脸约一臂远，正对她的脸、略高于眼睛。左手的动作都在她胸前、画面下半部：拇指越肩指城时左手抬到左肩上方；摊钱时左手掌伸到镜头前约三十厘米。",
+      "after": "Riley 面对镜头站着，城门在她左肩后方（画右），城墙和屋顶横在她身后；镜头在她伸直的右臂末端，离她的脸约一臂远，正对她的脸、略高于眼睛。左手的动作都在她胸前、画面下半部偏画右：拇指越肩指城时左手抬到左肩上方，正好指向画右的城门；摊钱时左手掌伸到镜头前约三十厘米。",
+      "diff": [
+       "@@ -1,4 +1,4 @@",
+       "-Riley 面对镜头站着，城在她身后正中；",
+       "+Riley 面对镜头站着，城门在她左肩后方（画右），城墙和屋顶横在她身后；",
+       " 镜头在她伸直的右臂末端，离她的脸约一臂远，正对她的脸、略高于眼睛。",
+       "-左手的动作都在她胸前、画面下半部：拇指越肩指城时左手抬到左肩上方；",
+       "+左手的动作都在她胸前、画面下半部偏画右：拇指越肩指城时左手抬到左肩上方，正好指向画右的城门；",
+       " 摊钱时左手掌伸到镜头前约三十厘米。"
+      ]
+     },
+     {
+      "field": "beats",
+      "name": "节拍",
+      "before": "0–1.5秒 她举着右臂对镜头深吸一口气，笑出来，还没开口；1.5–5.5秒 说 Good morning from Pompeii! It's May, 75 AD.；5.5–8.5秒 说 Mission one: find a bed before dark.；8.5–13秒 说 Mission two: try garum — the sauce this whole town's famous for.，说到 garum 眼睛一亮，说到 this whole town 时左拳竖起拇指越过肩膀朝身后的城一指，马上收回胸前；13–16秒 说 And my budget… is this.：说 And my budget… 时把攥着钱的左拳举到镜头前，停半拍，说 is this 时手心朝上摊开，9 枚钱平铺在手心；16–18秒 手心摊着不动，9 枚钱清清楚楚，她看着镜头咧嘴笑，不说话；18–19秒 她把钱重新攥回左拳，手放低出画，海风吹着头发，不说话",
+      "after": "0–1.5秒 她举着右臂对镜头深吸一口气，笑出来，还没开口；1.5–5.5秒 说 Good morning from Pompeii! It's May, 75 AD.；5.5–8.5秒 说 Mission one: find a bed before dark.；8.5–13秒 说 Mission two: try garum — the sauce this whole town's famous for.，说到 garum 眼睛一亮，说到 this whole town 时左拳竖起拇指越过左肩朝身后的城一指，马上收回胸前；13–16秒 说 And my budget… is this.：说 And my budget… 时把攥着钱的左拳举到镜头前，停半拍，说 is this 时手心朝上摊开，钱微微叠在一起；16–18秒 她用左手拇指把钱拨开两下，9 枚都露出来，手心摊着不动，她看着镜头咧嘴笑，不说话；18–19秒 她把 9 枚钱重新攥回左拳，手放低出画，海风吹着头发，不说话",
+      "diff": [
+       "@@ -4,5 +4,5 @@",
+       " 5.5–8.5秒 说 Mission one: find a bed before dark.；",
+       "-8.5–13秒 说 Mission two: try garum — the sauce this whole town's famous for.，说到 garum 眼睛一亮，说到 this whole town 时左拳竖起拇指越过肩膀朝身后的城一指，马上收回胸前；",
+       "-13–16秒 说 And my budget… is this.：说 And my budget… 时把攥着钱的左拳举到镜头前，停半拍，说 is this 时手心朝上摊开，9 枚钱平铺在手心；",
+       "-16–18秒 手心摊着不动，9 枚钱清清楚楚，她看着镜头咧嘴笑，不说话；",
+       "-18–19秒 她把钱重新攥回左拳，手放低出画，海风吹着头发，不说话",
+       "+8.5–13秒 说 Mission two: try garum — the sauce this whole town's famous for.，说到 garum 眼睛一亮，说到 this whole town 时左拳竖起拇指越过左肩朝身后的城一指，马上收回胸前；",
+       "+13–16秒 说 And my budget… is this.：说 And my budget… 时把攥着钱的左拳举到镜头前，停半拍，说 is this 时手心朝上摊开，钱微微叠在一起；",
+       "+16–18秒 她用左手拇指把钱拨开两下，9 枚都露出来，手心摊着不动，她看着镜头咧嘴笑，不说话；",
+       "+18–19秒 她把 9 枚钱重新攥回左拳，手放低出画，海风吹着头发，不说话"
+      ]
+     },
+     {
+      "field": "camera",
+      "name": "镜头",
+      "before": "自拍：镜头就是她伸直的右臂末端的视点，右臂伸向画外持镜（画面里看不到相机、手机或自拍杆），画面边缘看得到她伸向画外的右肩和上臂；近景，胸以上，身后的城墙与城门虚化但轮廓清楚；手持轻微晃动；一镜到底。摊钱时左手掌在画面下半部前景，钱和她的脸同在画面里，钱对焦清楚。",
+      "after": "自拍：镜头就是她伸直的右臂末端的视点，画面左缘看得到她伸向画外的右肩和上臂；近景，胸以上，身后的城墙与城门虚化但轮廓清楚；手持轻微晃动；一镜到底。摊钱时左手掌在画面下半部前景，钱和她的脸同在画面里，钱对焦清楚。",
+      "diff": [
+       "@@ -1,2 +1,2 @@",
+       "-自拍：镜头就是她伸直的右臂末端的视点，右臂伸向画外持镜（画面里看不到相机、手机或自拍杆），画面边缘看得到她伸向画外的右肩和上臂；",
+       "+自拍：镜头就是她伸直的右臂末端的视点，画面左缘看得到她伸向画外的右肩和上臂；",
+       " 近景，胸以上，身后的城墙与城门虚化但轮廓清楚；"
+      ]
+     },
+     {
+      "field": "lighting",
+      "name": "光线",
+      "before": "五月清晨。太阳在城的后面（东边）刚升起，光从城那一边低低地照向大海：城墙临海的一面在淡蓝色阴影里，只有屋顶轮廓和脚手架顶上镶着金边；人物朝着城的一面被暖金色晨光照亮，朝着海的一面在柔和的阴影里，被沙滩和海面的反光托亮，头发边缘有一圈金色亮边；天空干净晴朗，海面反着清冷的晨光；只有自然光。",
+      "after": "五月清晨。太阳低低地挂在她身后城的后面，被屋顶挡住大半：她逆光，头发边缘一圈暖金色亮边，脸在柔和的阴影里，被沙滩和海面的反光托亮，表情看得清；身后城墙朝海的一面在淡蓝色阴影里，屋顶轮廓镶着金边；摊开的钱在反光里看得清颜色；天空干净晴朗；只有自然光。",
+      "diff": [
+       "@@ -1,5 +1,6 @@",
+       " 五月清晨。",
+       "-太阳在城的后面（东边）刚升起，光从城那一边低低地照向大海：城墙临海的一面在淡蓝色阴影里，只有屋顶轮廓和脚手架顶上镶着金边；",
+       "-人物朝着城的一面被暖金色晨光照亮，朝着海的一面在柔和的阴影里，被沙滩和海面的反光托亮，头发边缘有一圈金色亮边；",
+       "-天空干净晴朗，海面反着清冷的晨光；",
+       "+太阳低低地挂在她身后城的后面，被屋顶挡住大半：她逆光，头发边缘一圈暖金色亮边，脸在柔和的阴影里，被沙滩和海面的反光托亮，表情看得清；",
+       "+身后城墙朝海的一面在淡蓝色阴影里，屋顶轮廓镶着金边；",
+       "+摊开的钱在反光里看得清颜色；",
+       "+天空干净晴朗；",
+       " 只有自然光。"
+      ]
+     },
+     {
+      "field": "dialogue",
+      "name": "台词",
+      "before": "Riley（兴奋、笑着，美式英语）：Good morning from Pompeii! It's May, 75 AD. Mission one: find a bed before dark. Mission two: try garum — the sauce this whole town's famous for. And my budget… is this.",
+      "after": "Riley（兴奋、笑着，美式英语；garum 读 GAH-rum，重音在前）：Good morning from Pompeii! It's May, 75 AD. Mission one: find a bed before dark. Mission two: try garum — the sauce this whole town's famous for. And my budget… is this.",
+      "diff": [
+       "@@ -1,2 +1,3 @@",
+       "-Riley（兴奋、笑着，美式英语）：Good morning from Pompeii!",
+       "+Riley（兴奋、笑着，美式英语；",
+       "+garum 读 GAH-rum，重音在前）：Good morning from Pompeii!",
+       " It's May, 75 AD. Mission one: find a bed before dark. Mission two: try garum — the sauce this whole town's famous for. And my budget… is this."
+      ]
+     }
+    ]
+   },
+   "issues": [
+    "I1",
+    "I5",
+    "I27",
+    "I28",
+    "I30",
+    "I32",
+    "I37",
+    "I48",
+    "I49",
+    "I51",
+    "I53",
+    "I58"
+   ]
+  },
+  {
+   "key": "s1_st3",
+   "scene": "s1",
+   "shot": "st3",
+   "frame": {
+    "before": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st3/planning/_r1/st3_first_frame.png",
+     "label": "_r1",
+     "sha256": "bfcc75684409f9e1ba87cc8145245cc460e38f4b5d5b50e141451bc4a9d1cc6a",
+     "mtime": "2026-11-08T10:08:42",
+     "mtime_ms": 1794103722108,
+     "how": "审查开始（2026-11-08 10:20:06）时已在的那一版"
+    },
+    "after": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st3/planning/_r2/st3_first_frame.png",
+     "label": "_r2",
+     "sha256": "99006d82562669a7c10bb92a18eb5026e720b411fb4c9b471e59ee6a5b4cbbcb",
+     "mtime": "2026-11-08T11:11:29",
+     "mtime_ms": 1794107489075,
+     "how": "下一轮（ep01_20261108-111837_pregen_r2）审的那一版"
+    },
+    "changed": true
+   },
+   "spec": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-102006_pregen_r1/materials/shots/s1_st3/spec.md",
+    "after_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2/materials/shots/s1_st3/spec.md",
+    "changed": true,
+    "fields": [
+     {
+      "field": "action",
+      "name": "动作",
+      "before": "他拍，跟拍。一个挑夫牵着一头驮着两只藤筐的骡子走在前面：挑夫走在骡子头的左侧，右手攥着笼头绳，始终背对镜头往前走（普通路人，不说话、不看镜头；秃头，下巴上只有短胡茬，穿灰褐色短 tunica）。Riley 跟在骡子后面几步，走向城门洞。城门洞口右边的城墙上搭着木杆麻绳脚手架，一个工人站在脚手架二层的木板平台上，用一根麻绳把一只装着灰浆的木桶往上拉（普通路人，不说话、不看镜头，但会好奇地瞥 Riley 一眼再接着干活；卷发，脸刮得干净，始终侧对镜头）。Riley 抬头看脚手架；工人往下瞥了她一眼，手里的绳停了一下，又接着往上拉。Riley 走进门洞，门洞里阴凉，骡蹄声在拱顶下回响；她停步、转身面对镜头说悄悄话；这时挑夫牵着骡子走出门洞城里那头的亮处，往画右一拐，出了画面。说完她笑着眨眨眼，转身继续往亮处走。画面里一共三个人和一头骡子：Riley、挑夫、脚手架上的工人。Riley 两手空着，钱在她裤袋里，这一镜不拿出来。第 0 秒：Riley 在画面中间背对镜头往城门洞走，她前面几步是骡子的后半身和两只藤筐，挑夫在骡子头左边，背对镜头；门洞口右边城墙上是脚手架，工人在二层平台上拉绳。",
+      "after": "他拍，跟拍。坡道最后一段，脚下的大石块路微微上坡，正前方是城墙上一大一小两个拱形门洞，镜头跟着走向画面中间的大门洞，小门洞在它右边。大门洞是一条约十米长的拱顶通道，两壁是大块灰黄凝灰岩，墙上几道旧裂缝刚用新灰浆补过，补痕比石头颜色浅。一个挑夫牵着一头驮着两只藤筐的骡子走在前面：挑夫走在骡子头的左侧，右手攥着笼头绳，始终背对镜头往前走（普通路人，不说话、不看镜头，一次也不回头；秃头，下巴上只有短胡茬，穿灰褐色短 tunica）。Riley 跟在骡子后面几步，乌黑的长发披散在背上。大门洞口里面右侧的墙根下，一个工人（普通路人，不说话、不看镜头；卷发，脸刮得干净，穿沾着灰浆点的短 tunica）弯腰把一只装着湿灰浆的藤筐扛上右肩，筐里垫着粗麻布，灰浆是湿的灰色。他扛好筐直起腰，一抬眼看见 Riley 走过来，整个人愣住，站着不动，目光从她的脸一路落到裤子和靴子上，嘴微微张开。Riley 走过他身边时冲他咧嘴一笑、轻轻点一下头；他摇摇头、忍不住笑了一下，扛着筐站在原地看她走过去，随着镜头往前从画右出画。Riley 走进门洞，门洞里阴凉，骡蹄声在拱顶下回响；她停步、转身面对镜头说悄悄话；这时挑夫牵着骡子沿通道中间一直往前走，走出城里那头的亮处，顺着街越走越小。说完她笑着眨眨眼，转身继续往亮处走。画面里一共三个人和一头骡子：Riley、挑夫、扛灰浆筐的工人。Riley 两手空着，钱在她裤袋里，这一镜不拿出来。第 0 秒：Riley 在画面中间背对镜头往大门洞走，离门洞口约五米半；她前面三四步是骡子的后半身和两只藤筐，挑夫在骡子头左边，背对镜头；大门洞口里面右侧墙根下，工人正弯腰抓着地上那只灰浆藤筐的筐沿，眼睛看着筐。",
+      "diff": [
+       "@@ -1,16 +1,20 @@",
+       " 他拍，跟拍。",
+       "-一个挑夫牵着一头驮着两只藤筐的骡子走在前面：挑夫走在骡子头的左侧，右手攥着笼头绳，始终背对镜头往前走（普通路人，不说话、不看镜头；",
+       "+坡道最后一段，脚下的大石块路微微上坡，正前方是城墙上一大一小两个拱形门洞，镜头跟着走向画面中间的大门洞，小门洞在它右边。",
+       "+大门洞是一条约十米长的拱顶通道，两壁是大块灰黄凝灰岩，墙上几道旧裂缝刚用新灰浆补过，补痕比石头颜色浅。",
+       "+一个挑夫牵着一头驮着两只藤筐的骡子走在前面：挑夫走在骡子头的左侧，右手攥着笼头绳，始终背对镜头往前走（普通路人，不说话、不看镜头，一次也不回头；",
+       " 秃头，下巴上只有短胡茬，穿灰褐色短 tunica）。",
+       "-Riley 跟在骡子后面几步，走向城门洞。",
+       "-城门洞口右边的城墙上搭着木杆麻绳脚手架，一个工人站在脚手架二层的木板平台上，用一根麻绳把一只装着灰浆的木桶往上拉（普通路人，不说话、不看镜头，但会好奇地瞥 Riley 一眼再接着干活；",
+       "-卷发，脸刮得干净，始终侧对镜头）。",
+       "-Riley 抬头看脚手架；",
+       "-工人往下瞥了她一眼，手里的绳停了一下，又接着往上拉。",
+       "+Riley 跟在骡子后面几步，乌黑的长发披散在背上。",
+       "+大门洞口里面右侧的墙根下，一个工人（普通路人，不说话、不看镜头；",
+       "+卷发，脸刮得干净，穿沾着灰浆点的短 tunica）弯腰把一只装着湿灰浆的藤筐扛上右肩，筐里垫着粗麻布，灰浆是湿的灰色。",
+       "+他扛好筐直起腰，一抬眼看见 Riley 走过来，整个人愣住，站着不动，目光从她的脸一路落到裤子和靴子上，嘴微微张开。",
+       "+Riley 走过他身边时冲他咧嘴一笑、轻轻点一下头；",
+       "+他摇摇头、忍不住笑了一下，扛着筐站在原地看她走过去，随着镜头往前从画右出画。",
+       " Riley 走进门洞，门洞里阴凉，骡蹄声在拱顶下回响；",
+       " 她停步、转身面对镜头说悄悄话；",
+       "-这时挑夫牵着骡子走出门洞城里那头的亮处，往画右一拐，出了画面。",
+       "+这时挑夫牵着骡子沿通道中间一直往前走，走出城里那头的亮处，顺着街越走越小。",
+       " 说完她笑着眨眨眼，转身继续往亮处走。",
+       "-画面里一共三个人和一头骡子：Riley、挑夫、脚手架上的工人。",
+       "+画面里一共三个人和一头骡子：Riley、挑夫、扛灰浆筐的工人。",
+       " Riley 两手空着，钱在她裤袋里，这一镜不拿出来。",
+       "-第 0 秒：Riley 在画面中间背对镜头往城门洞走，她前面几步是骡子的后半身和两只藤筐，挑夫在骡子头左边，背对镜头；",
+       "-门洞口右边城墙上是脚手架，工人在二层平台上拉绳。",
+       "+第 0 秒：Riley 在画面中间背对镜头往大门洞走，离门洞口约五米半；",
+       "+她前面三四步是骡子的后半身和两只藤筐，挑夫在骡子头左边，背对镜头；",
+       "+大门洞口里面右侧墙根下，工人正弯腰抓着地上那只灰浆藤筐的筐沿，眼睛看着筐。"
+      ]
+     },
+     {
+      "field": "blocking",
+      "name": "走位",
+      "before": "镜头在 Riley 身后约两米，跟着她往门洞里走；挑夫和骡子在她前方三四步，沿门洞中线走；脚手架在门洞口画右的城墙上。第 6 秒 Riley 在门洞里停步，镜头同时停住；6–7 秒她原地转身面向镜头；第 12.5 秒起她转回去，背对镜头朝门洞城里那头的亮处走。挑夫和骡子第 8 秒走到门洞城里那头的出口，第 9 秒往画右拐出画面。",
+      "after": "镜头在 Riley 身后约两米半，略低于她的肩、略仰，跟着她往大门洞里走；挑夫和骡子在她前方三四步，沿门洞中线走；工人在大门洞口里面右侧的墙根下，Riley 从他左边约一米处走过。第 4.6 秒 Riley 走到门洞口；第 6 秒她在门洞拱顶下、进门约一米半处停步，镜头同时停在门洞口的拱下，离她约两米；6–7 秒她原地转身面向镜头；第 12.5 秒起她转回去，背对镜头朝门洞城里那头的亮处走。挑夫和骡子一直沿通道中间往前走，第 10 秒走出城里那头的出口，继续顺着街往前，越走越小。",
+      "diff": [
+       "@@ -1,7 +1,8 @@",
+       "-镜头在 Riley 身后约两米，跟着她往门洞里走；",
+       "+镜头在 Riley 身后约两米半，略低于她的肩、略仰，跟着她往大门洞里走；",
+       " 挑夫和骡子在她前方三四步，沿门洞中线走；",
+       "-脚手架在门洞口画右的城墙上。",
+       "-第 6 秒 Riley 在门洞里停步，镜头同时停住；",
+       "+工人在大门洞口里面右侧的墙根下，Riley 从他左边约一米处走过。",
+       "+第 4.6 秒 Riley 走到门洞口；",
+       "+第 6 秒她在门洞拱顶下、进门约一米半处停步，镜头同时停在门洞口的拱下，离她约两米；",
+       " 6–7 秒她原地转身面向镜头；",
+       " 第 12.5 秒起她转回去，背对镜头朝门洞城里那头的亮处走。",
+       "-挑夫和骡子第 8 秒走到门洞城里那头的出口，第 9 秒往画右拐出画面。",
+       "+挑夫和骡子一直沿通道中间往前走，第 10 秒走出城里那头的出口，继续顺着街往前，越走越小。"
+      ]
+     },
+     {
+      "field": "beats",
+      "name": "节拍",
+      "before": "0–4秒 Riley 背对镜头，跟着牵骡子的挑夫走向门洞，骡蹄声越来越响；4–5秒 她经过门洞口，抬头看画右城墙上拉绳吊灰浆桶的工人；5–6秒 工人往下瞥了她一眼，手里的绳停了一下，又接着往上拉；Riley 走进门洞；6–7秒 她停步，原地转身面对镜头，眼睛一亮，还没开口；7–12.5秒 她压低声音对镜头说那句话（这期间她身后的挑夫牵着骡子走出亮处，往画右拐出画面）；12.5–14秒 说完她笑着眨眨眼，转身背对镜头继续往亮处走，不说话",
+      "after": "0–2.5秒 Riley 背对镜头，跟着牵骡子的挑夫走向大门洞，骡蹄声越来越响；门洞口里面右侧，工人弯腰把灰浆藤筐扛上右肩；2.5–4秒 工人扛着筐直起腰，看见 Riley 走来，一下愣住，目光从她的脸落到裤子和靴子上，嘴微微张开；4–5秒 Riley 走过他身边，冲他咧嘴一笑、轻轻点一下头；他摇摇头笑了一下，站在原地，随着镜头往前从画右出画；5–6秒 Riley 走进门洞的拱顶下，停步；6–7秒 她原地转身面对镜头，眼睛一亮，还没开口；7–12.5秒 她压低声音对镜头说那句话（这期间她身后的挑夫牵着骡子走出城里那头的亮处，顺着街越走越小）；12.5–14秒 说完她笑着眨眨眼，转身背对镜头继续往亮处走，不说话",
+      "diff": [
+       "@@ -1,7 +1,9 @@",
+       "-0–4秒 Riley 背对镜头，跟着牵骡子的挑夫走向门洞，骡蹄声越来越响；",
+       "-4–5秒 她经过门洞口，抬头看画右城墙上拉绳吊灰浆桶的工人；",
+       "-5–6秒 工人往下瞥了她一眼，手里的绳停了一下，又接着往上拉；",
+       "-Riley 走进门洞；",
+       "-6–7秒 她停步，原地转身面对镜头，眼睛一亮，还没开口；",
+       "-7–12.5秒 她压低声音对镜头说那句话（这期间她身后的挑夫牵着骡子走出亮处，往画右拐出画面）；",
+       "+0–2.5秒 Riley 背对镜头，跟着牵骡子的挑夫走向大门洞，骡蹄声越来越响；",
+       "+门洞口里面右侧，工人弯腰把灰浆藤筐扛上右肩；",
+       "+2.5–4秒 工人扛着筐直起腰，看见 Riley 走来，一下愣住，目光从她的脸落到裤子和靴子上，嘴微微张开；",
+       "+4–5秒 Riley 走过他身边，冲他咧嘴一笑、轻轻点一下头；",
+       "+他摇摇头笑了一下，站在原地，随着镜头往前从画右出画；",
+       "+5–6秒 Riley 走进门洞的拱顶下，停步；",
+       "+6–7秒 她原地转身面对镜头，眼睛一亮，还没开口；",
+       "+7–12.5秒 她压低声音对镜头说那句话（这期间她身后的挑夫牵着骡子走出城里那头的亮处，顺着街越走越小）；",
+       " 12.5–14秒 说完她笑着眨眨眼，转身背对镜头继续往亮处走，不说话"
+      ]
+     },
+     {
+      "field": "camera",
+      "name": "镜头",
+      "before": "他拍，跟拍，中景：镜头在她身后约两米平稳向前跟，第 6 秒她停步转身时镜头也停住，她成腰以上中景；人眼高度平视；一种运镜（跟拍后停住）。",
+      "after": "他拍，跟拍：镜头在她身后约两米半、略低于她的肩、略仰，平稳向前跟，开场她膝盖以上的背影在画面中间偏下，前方看得见骡子、挑夫和整个大拱门洞；第 6 秒她停步转身时镜头也停在门洞口的拱下，离她约两米，她成大腿以上的中近景；一种运镜（跟拍后停住）。",
+      "diff": [
+       "@@ -1,3 +1,3 @@",
+       "-他拍，跟拍，中景：镜头在她身后约两米平稳向前跟，第 6 秒她停步转身时镜头也停住，她成腰以上中景；",
+       "-人眼高度平视；",
+       "+他拍，跟拍：镜头在她身后约两米半、略低于她的肩、略仰，平稳向前跟，开场她膝盖以上的背影在画面中间偏下，前方看得见骡子、挑夫和整个大拱门洞；",
+       "+第 6 秒她停步转身时镜头也停在门洞口的拱下，离她约两米，她成大腿以上的中近景；",
+       " 一种运镜（跟拍后停住）。"
+      ]
+     },
+     {
+      "field": "lighting",
+      "name": "光线",
+      "before": "清晨。门洞里阴凉昏暗；门洞城里那头的出口被晨光照得很亮，看得见一角石板街和庞贝红的墙；镜头身后海那头的入口也透进天光，照亮她转过来的脸；只有自然光。",
+      "after": "清晨。太阳在城的后面，被城墙挡住：门洞外这一段城墙朝海的一面、门洞口和墙根下的工人都在淡蓝色的阴影里，没有直射阳光，也没有斑驳的光斑；门洞里更暗、阴凉；正前方门洞城里那头的出口被晨光照得很亮，看得见一角石板街和庞贝红的墙，Riley、挑夫和骡子的轮廓被这团亮光勾出一圈亮边；她在门洞里转过身后，脸被镜头身后海那一边的天光柔和地照亮。只有自然光。",
+      "diff": [
+       "@@ -1,5 +1,6 @@",
+       " 清晨。",
+       "-门洞里阴凉昏暗；",
+       "-门洞城里那头的出口被晨光照得很亮，看得见一角石板街和庞贝红的墙；",
+       "-镜头身后海那头的入口也透进天光，照亮她转过来的脸；",
+       "+太阳在城的后面，被城墙挡住：门洞外这一段城墙朝海的一面、门洞口和墙根下的工人都在淡蓝色的阴影里，没有直射阳光，也没有斑驳的光斑；",
+       "+门洞里更暗、阴凉；",
+       "+正前方门洞城里那头的出口被晨光照得很亮，看得见一角石板街和庞贝红的墙，Riley、挑夫和骡子的轮廓被这团亮光勾出一圈亮边；",
+       "+她在门洞里转过身后，脸被镜头身后海那一边的天光柔和地照亮。",
+       " 只有自然光。"
+      ]
+     }
+    ]
+   },
+   "issues": [
+    "I3",
+    "I4",
+    "I5",
+    "I8",
+    "I9",
+    "I12",
+    "I18",
+    "I19",
+    "I23",
+    "I25",
+    "I34",
+    "I39",
+    "I40",
+    "I41",
+    "I43",
+    "I44",
+    "I66"
+   ]
+  },
+  {
+   "key": "s1_st4",
+   "scene": "s1",
+   "shot": "st4",
+   "frame": {
+    "before": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st4/planning/_r1/st4_first_frame.png",
+     "label": "_r1",
+     "sha256": "e0930a02bd58ffcd5710c4fdced4b896a5bc14342d21b4338534aae20e140e8b",
+     "mtime": "2026-11-08T10:10:30",
+     "mtime_ms": 1794103830220,
+     "how": "审查开始（2026-11-08 10:20:06）时已在的那一版"
+    },
+    "after": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st4/planning/_r2/st4_first_frame.png",
+     "label": "_r2",
+     "sha256": "0ef80ea6b80b9bc2271579ddcd29ff4320cceee8891454768f6b234f929154a1",
+     "mtime": "2026-11-08T11:15:26",
+     "mtime_ms": 1794107726763,
+     "how": "下一轮（ep01_20261108-111837_pregen_r2）审的那一版"
+    },
+    "changed": true
+   },
+   "spec": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-102006_pregen_r1/materials/shots/s1_st4/spec.md",
+    "after_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2/materials/shots/s1_st4/spec.md",
+    "changed": true,
+    "fields": [
+     {
+      "field": "duration",
+      "name": "时长",
+      "before": "12",
+      "after": "16",
+      "diff": [
+       "@@ -1 +1 @@",
+       "-12",
+       "+16"
+      ]
+     },
+     {
+      "field": "action",
+      "name": "动作",
+      "before": "他拍。沙滩靠水边，两个赤脚、穿及膝短 tunica 的渔夫（普通路人，不说话、不看镜头，但会好奇地瞥 Riley 一眼再接着干活；一个年轻、一个中年，脸都刮得干净或只有短胡茬）。起幅时一条小木船的船尾还在浅水里，浪拍着船尾；两人拉着船头的绳子往岸上拖了约一米，船底在沙上犁出一道沟；接着两人各抓藤筐一边的把手，把满满一筐银亮的小鱼从船里抬出来，放到船外的沙滩上，几条小鱼在筐口弹起来又落回去，鱼鳞反光。年轻渔夫放下筐时抬头瞥了 Riley 一眼，目光落在她的裤子上，又低头接着干活。Riley 站在画面右侧前景，侧身看着他们，然后侧过脸凑近镜头，小声说那句话；Eventually 对着镜头说完，再回头看那筐鱼，不再转回来。配角——年轻渔夫：一直忙着干活，只在第 5–6 秒抬头看她一眼，心想「这女人穿的什么」；中年渔夫：始终低头干活。Riley 两手空着，钱在她裤袋里，这一镜不拿出来。第 0 秒：两个渔夫站在船头两侧的浅水边，手里攥着船头的绳子，身子往后仰正要拖，船尾在浅水里；Riley 在画右前景，侧身朝着他们，两手空着垂在身侧。",
+      "after": "他拍。沙滩靠水边，海在画左。两个赤脚、穿及膝短 tunica 的渔夫（普通路人，不说话、不看镜头；一个年轻、一个中年，脸都刮得干净或只有短胡茬）。一条小木船船头朝画右的岸上，船尾在画左的浅水里、伸出画左边缘，浪拍着船尾；船头往后一点的船舱里放着一只藤筐，筐沿有两只藤编提耳，筐里装满手指长的银亮小鳀鱼和小沙丁鱼。两人并排站在船头靠镜头这一侧，攥着系在船头的绳子，身子往后仰，一把一把往画右拉，眼睛一直低头看着绳子和船头，船往岸上滑了约一米，船底在沙上犁出一道沟。接着两人松手，把绳子丢在沙上（绳头仍系在船头），转身跨回船边藤筐的位置，弯下腰，各用双手抓住筐沿的提耳（年轻的在画右那一边、中年的在画左那一边），一起把满满一筐小鱼从船里抬起来，越过靠镜头这一侧的船舷，稳稳放到两人脚边的沙上，几条小鱼在筐口弹起来又落回去，鱼鳞反光。年轻渔夫直起腰，朝 Riley 飞快地瞥了一眼，从她的脸看到她的裤子，眉毛一挑；Riley 冲他友好地笑一下、轻轻点头，他一下子不好意思，赶紧低头去摆弄鱼筐。中年渔夫始终低头干活，弯腰捡起一条跳到沙上的小鱼丢回筐里，一眼也没看她。Riley 站在画面右侧前景，侧身对着镜头、脸朝画左看着他们（镜头看到她的左侧脸）；回应完年轻渔夫，她转过头和肩把脸凑近镜头，小声说那句话；Eventually 对着镜头说完，再回头看那筐鱼，不再转回来。画面里一共三个人：Riley 和两个渔夫。Riley 两手空着，钱在她裤袋里，这一镜不拿出来。第 0 秒：两个渔夫并排站在船头靠镜头这一侧，双手攥着船头的绳子，身子往后仰、正要拖，两人都低头看着绳子和船头；藤筐还在船里；Riley 在画右前景，腰以上，侧身看着他们，两手空着垂在身侧，乌黑的长发披散。",
+      "diff": [
+       "@@ -1,14 +1,19 @@",
+       " 他拍。",
+       "-沙滩靠水边，两个赤脚、穿及膝短 tunica 的渔夫（普通路人，不说话、不看镜头，但会好奇地瞥 Riley 一眼再接着干活；",
+       "+沙滩靠水边，海在画左。",
+       "+两个赤脚、穿及膝短 tunica 的渔夫（普通路人，不说话、不看镜头；",
+       " 一个年轻、一个中年，脸都刮得干净或只有短胡茬）。",
+       "-起幅时一条小木船的船尾还在浅水里，浪拍着船尾；",
+       "-两人拉着船头的绳子往岸上拖了约一米，船底在沙上犁出一道沟；",
+       "-接着两人各抓藤筐一边的把手，把满满一筐银亮的小鱼从船里抬出来，放到船外的沙滩上，几条小鱼在筐口弹起来又落回去，鱼鳞反光。",
+       "-年轻渔夫放下筐时抬头瞥了 Riley 一眼，目光落在她的裤子上，又低头接着干活。",
+       "-Riley 站在画面右侧前景，侧身看着他们，然后侧过脸凑近镜头，小声说那句话；",
+       "+一条小木船船头朝画右的岸上，船尾在画左的浅水里、伸出画左边缘，浪拍着船尾；",
+       "+船头往后一点的船舱里放着一只藤筐，筐沿有两只藤编提耳，筐里装满手指长的银亮小鳀鱼和小沙丁鱼。",
+       "+两人并排站在船头靠镜头这一侧，攥着系在船头的绳子，身子往后仰，一把一把往画右拉，眼睛一直低头看着绳子和船头，船往岸上滑了约一米，船底在沙上犁出一道沟。",
+       "+接着两人松手，把绳子丢在沙上（绳头仍系在船头），转身跨回船边藤筐的位置，弯下腰，各用双手抓住筐沿的提耳（年轻的在画右那一边、中年的在画左那一边），一起把满满一筐小鱼从船里抬起来，越过靠镜头这一侧的船舷，稳稳放到两人脚边的沙上，几条小鱼在筐口弹起来又落回去，鱼鳞反光。",
+       "+年轻渔夫直起腰，朝 Riley 飞快地瞥了一眼，从她的脸看到她的裤子，眉毛一挑；",
+       "+Riley 冲他友好地笑一下、轻轻点头，他一下子不好意思，赶紧低头去摆弄鱼筐。",
+       "+中年渔夫始终低头干活，弯腰捡起一条跳到沙上的小鱼丢回筐里，一眼也没看她。",
+       "+Riley 站在画面右侧前景，侧身对着镜头、脸朝画左看着他们（镜头看到她的左侧脸）；",
+       "+回应完年轻渔夫，她转过头和肩把脸凑近镜头，小声说那句话；",
+       " Eventually 对着镜头说完，再回头看那筐鱼，不再转回来。",
+       "-配角——年轻渔夫：一直忙着干活，只在第 5–6 秒抬头看她一眼，心想「这女人穿的什么」；",
+       "-中年渔夫：始终低头干活。",
+       "+画面里一共三个人：Riley 和两个渔夫。",
+       " Riley 两手空着，钱在她裤袋里，这一镜不拿出来。",
+       "-第 0 秒：两个渔夫站在船头两侧的浅水边，手里攥着船头的绳子，身子往后仰正要拖，船尾在浅水里；",
+       "-Riley 在画右前景，侧身朝着他们，两手空着垂在身侧。",
+       "+第 0 秒：两个渔夫并排站在船头靠镜头这一侧，双手攥着船头的绳子，身子往后仰、正要拖，两人都低头看着绳子和船头；",
+       "+藤筐还在船里；",
+       "+Riley 在画右前景，腰以上，侧身看着他们，两手空着垂在身侧，乌黑的长发披散。"
+      ]
+     },
+     {
+      "field": "blocking",
+      "name": "走位",
+      "before": "渔夫、船和鱼筐在画面左侧中景、靠水边，船头朝岸上；Riley 在画面右侧前景，腰以上，先侧身面朝画左的渔夫，第 6 秒起侧过脸朝镜头，第 10.5 秒起再转回去看画左的鱼筐。镜头在沙滩上离她约一米半，人眼高度平视。",
+      "after": "镜头在沙滩上，朝城的方向斜着拍：渔夫、船和鱼筐在画面左侧中景，离镜头约六米，全身入画、约占画面高度一半，船尾伸出画左；城墙和城门在背景里、渔夫身后偏画左；Riley 在画面右侧前景，离镜头约两米，腰以上，离渔夫约四米半。第 0 秒她面朝画左的渔夫；第 9.5 秒起转过头和肩朝镜头；第 14.5 秒起再转回去看画左的鱼筐。鱼筐最后放在船头旁、两个渔夫脚边靠镜头一侧的沙上。",
+      "diff": [
+       "@@ -1,3 +1,7 @@",
+       "-渔夫、船和鱼筐在画面左侧中景、靠水边，船头朝岸上；",
+       "-Riley 在画面右侧前景，腰以上，先侧身面朝画左的渔夫，第 6 秒起侧过脸朝镜头，第 10.5 秒起再转回去看画左的鱼筐。",
+       "-镜头在沙滩上离她约一米半，人眼高度平视。",
+       "+镜头在沙滩上，朝城的方向斜着拍：渔夫、船和鱼筐在画面左侧中景，离镜头约六米，全身入画、约占画面高度一半，船尾伸出画左；",
+       "+城墙和城门在背景里、渔夫身后偏画左；",
+       "+Riley 在画面右侧前景，离镜头约两米，腰以上，离渔夫约四米半。",
+       "+第 0 秒她面朝画左的渔夫；",
+       "+第 9.5 秒起转过头和肩朝镜头；",
+       "+第 14.5 秒起再转回去看画左的鱼筐。",
+       "+鱼筐最后放在船头旁、两个渔夫脚边靠镜头一侧的沙上。"
+      ]
+     },
+     {
+      "field": "beats",
+      "name": "节拍",
+      "before": "0–3秒 两个渔夫拉着船头的绳子把小木船往岸上拖了约一米，船底在沙上犁出一道沟，浪拍着船尾，Riley 在画右侧身看着；3–5秒 两人各抓一边把手，把一筐银亮的小鱼从船里抬出来放到沙滩上，几条小鱼在筐口弹起又落回去；5–6秒 年轻渔夫放下筐，抬头瞥了 Riley 一眼，目光落在她的裤子上，又低下头去；6–7秒 Riley 侧过脸凑近镜头，还没开口；7–10.5秒 她小声对镜头说那句话（That's garum 之后停半拍，再对着镜头说 Eventually）；10.5–12秒 她回头看那筐鱼，笑，不说话",
+      "after": "0–2.5秒 两个渔夫拉着船头的绳子把小木船往岸上拖了约一米，眼睛一直看着绳子和船，船底在沙上犁出一道沟，浪拍着船尾，Riley 在画右侧身看着；2.5–4秒 两人松手把绳子丢在沙上（绳头仍系在船头），转身跨回船边，弯腰；4–7.5秒 两人各用双手抓住藤筐的提耳，一起把一筐小鱼抬起来越过船舷，稳稳放到脚边的沙上，几条小鱼在筐口弹起又落回去；7.5–8.5秒 年轻渔夫直起腰，飞快地瞥了 Riley 一眼，从她的脸看到裤子，眉毛一挑；中年渔夫仍低头，捡起一条跳到沙上的小鱼丢回筐里；8.5–9.5秒 Riley 冲年轻渔夫友好地笑一下、轻轻点头，他不好意思地赶紧低头摆弄鱼筐；9.5–10秒 Riley 转过头和肩，把脸凑近镜头，还没开口；10–14.5秒 她小声对镜头说那句话（That's garum 之后停半拍，再对着镜头说 Eventually）；14.5–16秒 她回头看那筐鱼，笑，不说话",
+      "diff": [
+       "@@ -1,6 +1,9 @@",
+       "-0–3秒 两个渔夫拉着船头的绳子把小木船往岸上拖了约一米，船底在沙上犁出一道沟，浪拍着船尾，Riley 在画右侧身看着；",
+       "-3–5秒 两人各抓一边把手，把一筐银亮的小鱼从船里抬出来放到沙滩上，几条小鱼在筐口弹起又落回去；",
+       "-5–6秒 年轻渔夫放下筐，抬头瞥了 Riley 一眼，目光落在她的裤子上，又低下头去；",
+       "-6–7秒 Riley 侧过脸凑近镜头，还没开口；",
+       "-7–10.5秒 她小声对镜头说那句话（That's garum 之后停半拍，再对着镜头说 Eventually）；",
+       "-10.5–12秒 她回头看那筐鱼，笑，不说话",
+       "+0–2.5秒 两个渔夫拉着船头的绳子把小木船往岸上拖了约一米，眼睛一直看着绳子和船，船底在沙上犁出一道沟，浪拍着船尾，Riley 在画右侧身看着；",
+       "+2.5–4秒 两人松手把绳子丢在沙上（绳头仍系在船头），转身跨回船边，弯腰；",
+       "+4–7.5秒 两人各用双手抓住藤筐的提耳，一起把一筐小鱼抬起来越过船舷，稳稳放到脚边的沙上，几条小鱼在筐口弹起又落回去；",
+       "+7.5–8.5秒 年轻渔夫直起腰，飞快地瞥了 Riley 一眼，从她的脸看到裤子，眉毛一挑；",
+       "+中年渔夫仍低头，捡起一条跳到沙上的小鱼丢回筐里；",
+       "+8.5–9.5秒 Riley 冲年轻渔夫友好地笑一下、轻轻点头，他不好意思地赶紧低头摆弄鱼筐；",
+       "+9.5–10秒 Riley 转过头和肩，把脸凑近镜头，还没开口；",
+       "+10–14.5秒 她小声对镜头说那句话（That's garum 之后停半拍，再对着镜头说 Eventually）；",
+       "+14.5–16秒 她回头看那筐鱼，笑，不说话"
+      ]
+     },
+     {
+      "field": "camera",
+      "name": "镜头",
+      "before": "他拍，固定机位，不运镜。中景：渔夫、船和鱼筐在画面左侧中景，Riley 腰以上在画面右侧前景；人眼高度平视。",
+      "after": "他拍，固定机位，不运镜。中景：镜头朝城的方向斜着拍，渔夫、船和鱼筐在画面左侧中景，Riley 腰以上在画面右侧前景；背景是坡上的城墙和城门；人眼高度平视。",
+      "diff": [
+       "@@ -1,3 +1,4 @@",
+       " 他拍，固定机位，不运镜。",
+       "-中景：渔夫、船和鱼筐在画面左侧中景，Riley 腰以上在画面右侧前景；",
+       "+中景：镜头朝城的方向斜着拍，渔夫、船和鱼筐在画面左侧中景，Riley 腰以上在画面右侧前景；",
+       "+背景是坡上的城墙和城门；",
+       " 人眼高度平视。"
+      ]
+     },
+     {
+      "field": "lighting",
+      "name": "光线",
+      "before": "五月清晨。太阳在城的后面（东边）刚升起，光从城那一边低低地照向大海：城墙临海的一面在淡蓝色阴影里，只有屋顶轮廓和脚手架顶上镶着金边；人物朝着城的一面被暖金色晨光照亮，朝着海的一面在柔和的阴影里，被沙滩和海面的反光托亮，头发边缘有一圈金色亮边；天空干净晴朗，海面反着清冷的晨光；只有自然光。",
+      "after": "五月清晨。镜头朝着城的方向拍，太阳低低地挂在背景里城的后面，被屋顶挡住，不直射镜头：渔夫和 Riley 都是侧逆光，头发和肩头镶着暖金边，朝镜头的一面在柔和的阴影里，被沙滩和海面的反光托亮；城墙朝海的一面在淡蓝色阴影里；湿沙和浪花反着光，筐里的小鱼在逆光里闪着银光；天空干净晴朗；只有自然光。",
+      "diff": [
+       "@@ -1,5 +1,6 @@",
+       " 五月清晨。",
+       "-太阳在城的后面（东边）刚升起，光从城那一边低低地照向大海：城墙临海的一面在淡蓝色阴影里，只有屋顶轮廓和脚手架顶上镶着金边；",
+       "-人物朝着城的一面被暖金色晨光照亮，朝着海的一面在柔和的阴影里，被沙滩和海面的反光托亮，头发边缘有一圈金色亮边；",
+       "-天空干净晴朗，海面反着清冷的晨光；",
+       "+镜头朝着城的方向拍，太阳低低地挂在背景里城的后面，被屋顶挡住，不直射镜头：渔夫和 Riley 都是侧逆光，头发和肩头镶着暖金边，朝镜头的一面在柔和的阴影里，被沙滩和海面的反光托亮；",
+       "+城墙朝海的一面在淡蓝色阴影里；",
+       "+湿沙和浪花反着光，筐里的小鱼在逆光里闪着银光；",
+       "+天空干净晴朗；",
+       " 只有自然光。"
+      ]
+     },
+     {
+      "field": "dialogue",
+      "name": "台词",
+      "before": "Riley（小声、像分享秘密，美式英语）：See those tiny fish? That's garum. …Eventually.",
+      "after": "Riley（小声、像分享秘密，美式英语；garum 读 GAH-rum，重音在前）：See those tiny fish? That's garum. …Eventually.",
+      "diff": [
+       "@@ -1,2 +1,3 @@",
+       "-Riley（小声、像分享秘密，美式英语）：See those tiny fish?",
+       "+Riley（小声、像分享秘密，美式英语；",
+       "+garum 读 GAH-rum，重音在前）：See those tiny fish?",
+       " That's garum. …Eventually."
+      ]
+     }
+    ]
+   },
+   "issues": [
+    "I2",
+    "I3",
+    "I6",
+    "I9",
+    "I13",
+    "I17",
+    "I20",
+    "I26",
+    "I29",
+    "I31",
+    "I38",
+    "I40",
+    "I46",
+    "I48",
+    "I51",
+    "I60",
+    "I63",
+    "I65"
+   ]
+  },
+  {
+   "key": "s1_st5",
+   "scene": "s1",
+   "shot": "st5",
+   "frame": {
+    "before": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st5/planning/_r1/st5_first_frame.png",
+     "label": "_r1",
+     "sha256": "f1fa41fc7d93da3f9cbed1c36bed0e476193bc92109c377f4ca36c476775aa11",
+     "mtime": "2026-11-08T10:19:30",
+     "mtime_ms": 1794104370395,
+     "how": "审查开始（2026-11-08 10:20:06）时已在的那一版"
+    },
+    "after": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st5/planning/_r2/st5_first_frame.png",
+     "label": "_r2",
+     "sha256": "2a04f6ca090227ab40296713730770600e9e3131f6d35629de4070b1a633da61",
+     "mtime": "2026-11-08T11:17:24",
+     "mtime_ms": 1794107844026,
+     "how": "下一轮（ep01_20261108-111837_pregen_r2）审的那一版"
+    },
+    "changed": true
+   },
+   "spec": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-102006_pregen_r1/materials/shots/s1_st5/spec.md",
+    "after_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2/materials/shots/s1_st5/spec.md",
+    "changed": true,
+    "fields": [
+     {
+      "field": "duration",
+      "name": "时长",
+      "before": "11",
+      "after": "13",
+      "diff": [
+       "@@ -1 +1 @@",
+       "-11",
+       "+13"
+      ]
+     },
+     {
+      "field": "action",
+      "name": "动作",
+      "before": "他拍。Riley 从城门洞的阴影里走出来，眼前一下亮了：一条深灰色玄武岩石板街，两边是刚卸下门板的铺子，墙面是庞贝红和赭黄。她走上画左那一侧的人行道，朝镜头走近，第 4.5 秒停住，此后双脚不动，只有上半身和头转着看：先看画左刚开门的铺子，再看画右街上走过的驴车。一个男人牵着一头拉小车的驴，从镜头身后画右走进画面，沿街中间往门洞方向咔哒咔哒走去（普通路人，不说话、不看镜头，但会好奇地瞥 Riley 一眼再接着干活；脸刮得干净，穿土色短 tunica）：他经过 Riley 身边时扭头瞥了她一眼，目光落在她的裤子上，又转回去看路。最后她转回来对着镜头，没有说话，只是笑。Riley 两手空着，钱在她裤袋里，这一镜不拿出来。第 0 秒：画面深处正中是城墙上漆黑的拱形门洞，Riley 刚从门洞里迈出一步，还在门洞口的阴影里，面朝镜头往外走，两手空着；门洞深处远远能看到另一头出口一小块亮光。",
+      "after": "他拍。从城里顺着街朝城门方向拍：画面深处正中是城墙，墙头是平的，墙上一大一小两个拱形门洞（大的在画面中间偏右，小的在偏左），门洞里漆黑，深处远远一小块亮光；画左远端紧挨城墙，是一段高出屋顶的神庙平台素墙，墙头露出几根脚手架木杆。街是深灰色玄武岩石板路，两边人行道高出路面约四十厘米，铺子刚卸下门板，木门板斜靠在墙边，墙面是庞贝红和赭黄。Riley 从大门洞的阴影里走出来，乌黑的长发披散，斜穿过路面的边缘走向画左的人行道，第 3 秒抬脚迈上高出路面的路沿，身体随之一抬，然后沿人行道朝镜头走近。一个赶驴人牵着一头驮着两只藤筐的驴（驮畜，不拉车）从镜头身后画右走进画面，沿街中间朝城门走去，驴蹄在石板上咔哒作响（普通路人，不说话、不看镜头；脸刮得干净，穿土色短 tunica，走在驴头左边，右手牵着笼头绳）。Riley 看见迎面走来的驴，放慢脚步，在人行道上停下让它过去。驴经过她身边时，赶驴人扭过头，把她从头到脚打量一遍，目光停在她的裤子上，眉毛挑得老高，走过去了还回头看。Riley 发现他在看什么，低头看了一眼自己的裤子，再抬头冲他尴尬地笑一下、微微耸耸肩。赶驴人转回头摇摇头，牵着驴继续朝城门走，越走越小。Riley 这才把上半身转向画左，看刚卸下门板的铺子；最后她转回来对着镜头，没有说话，只是笑。画面里一共两个人和一头驴：Riley 和赶驴人。Riley 两手空着，钱在她裤袋里，这一镜不拿出来。第 0 秒：Riley 刚从大门洞里迈出一步，还在门洞口的阴影里，离镜头约十二米，人很小、只看得出暗暗的轮廓，面朝镜头往外走，两手空着；街上暂时没有别的人。",
+      "diff": [
+       "@@ -1,9 +1,17 @@",
+       " 他拍。",
+       "-Riley 从城门洞的阴影里走出来，眼前一下亮了：一条深灰色玄武岩石板街，两边是刚卸下门板的铺子，墙面是庞贝红和赭黄。",
+       "-她走上画左那一侧的人行道，朝镜头走近，第 4.5 秒停住，此后双脚不动，只有上半身和头转着看：先看画左刚开门的铺子，再看画右街上走过的驴车。",
+       "-一个男人牵着一头拉小车的驴，从镜头身后画右走进画面，沿街中间往门洞方向咔哒咔哒走去（普通路人，不说话、不看镜头，但会好奇地瞥 Riley 一眼再接着干活；",
+       "-脸刮得干净，穿土色短 tunica）：他经过 Riley 身边时扭头瞥了她一眼，目光落在她的裤子上，又转回去看路。",
+       "+从城里顺着街朝城门方向拍：画面深处正中是城墙，墙头是平的，墙上一大一小两个拱形门洞（大的在画面中间偏右，小的在偏左），门洞里漆黑，深处远远一小块亮光；",
+       "+画左远端紧挨城墙，是一段高出屋顶的神庙平台素墙，墙头露出几根脚手架木杆。",
+       "+街是深灰色玄武岩石板路，两边人行道高出路面约四十厘米，铺子刚卸下门板，木门板斜靠在墙边，墙面是庞贝红和赭黄。",
+       "+Riley 从大门洞的阴影里走出来，乌黑的长发披散，斜穿过路面的边缘走向画左的人行道，第 3 秒抬脚迈上高出路面的路沿，身体随之一抬，然后沿人行道朝镜头走近。",
+       "+一个赶驴人牵着一头驮着两只藤筐的驴（驮畜，不拉车）从镜头身后画右走进画面，沿街中间朝城门走去，驴蹄在石板上咔哒作响（普通路人，不说话、不看镜头；",
+       "+脸刮得干净，穿土色短 tunica，走在驴头左边，右手牵着笼头绳）。",
+       "+Riley 看见迎面走来的驴，放慢脚步，在人行道上停下让它过去。",
+       "+驴经过她身边时，赶驴人扭过头，把她从头到脚打量一遍，目光停在她的裤子上，眉毛挑得老高，走过去了还回头看。",
+       "+Riley 发现他在看什么，低头看了一眼自己的裤子，再抬头冲他尴尬地笑一下、微微耸耸肩。",
+       "+赶驴人转回头摇摇头，牵着驴继续朝城门走，越走越小。",
+       "+Riley 这才把上半身转向画左，看刚卸下门板的铺子；",
+       " 最后她转回来对着镜头，没有说话，只是笑。",
+       "+画面里一共两个人和一头驴：Riley 和赶驴人。",
+       " Riley 两手空着，钱在她裤袋里，这一镜不拿出来。",
+       "-第 0 秒：画面深处正中是城墙上漆黑的拱形门洞，Riley 刚从门洞里迈出一步，还在门洞口的阴影里，面朝镜头往外走，两手空着；",
+       "-门洞深处远远能看到另一头出口一小块亮光。",
+       "+第 0 秒：Riley 刚从大门洞里迈出一步，还在门洞口的阴影里，离镜头约十二米，人很小、只看得出暗暗的轮廓，面朝镜头往外走，两手空着；",
+       "+街上暂时没有别的人。"
+      ]
+     },
+     {
+      "field": "blocking",
+      "name": "走位",
+      "before": "镜头在画左那一侧的人行道上，面朝门洞；街的尽头就是城墙和她刚穿出来的拱形门洞，正好挡住街的尽头。Riley 从画面深处正中的门洞走向镜头，走上画左的人行道，第 4.5 秒停在离镜头约五米半处（全身入画）。驴车第 3 秒从镜头身后画右入画，沿街中间往门洞方向走远，第 7–8 秒经过她身边。",
+      "after": "镜头在画左那一侧的人行道上、离城门约十三米，面朝城门，城门在画面正中；Riley 第 0 秒在大门洞口，离镜头约十二米，约占画面高度四分之一；第 3 秒迈上画左的人行道；第 5.5 秒停在人行道上离镜头约五米半处，全身入画、约占画面高度一半，此后双脚不动。驴和赶驴人第 3 秒左右从画右边缘进画，沿街中间朝城门走，第 6 秒前后经过她身边（相隔约两米半），第 9.5 秒已走到画面深处、离城门不远。",
+      "diff": [
+       "@@ -1,4 +1,5 @@",
+       "-镜头在画左那一侧的人行道上，面朝门洞；",
+       "-街的尽头就是城墙和她刚穿出来的拱形门洞，正好挡住街的尽头。",
+       "-Riley 从画面深处正中的门洞走向镜头，走上画左的人行道，第 4.5 秒停在离镜头约五米半处（全身入画）。",
+       "-驴车第 3 秒从镜头身后画右入画，沿街中间往门洞方向走远，第 7–8 秒经过她身边。",
+       "+镜头在画左那一侧的人行道上、离城门约十三米，面朝城门，城门在画面正中；",
+       "+Riley 第 0 秒在大门洞口，离镜头约十二米，约占画面高度四分之一；",
+       "+第 3 秒迈上画左的人行道；",
+       "+第 5.5 秒停在人行道上离镜头约五米半处，全身入画、约占画面高度一半，此后双脚不动。",
+       "+驴和赶驴人第 3 秒左右从画右边缘进画，沿街中间朝城门走，第 6 秒前后经过她身边（相隔约两米半），第 9.5 秒已走到画面深处、离城门不远。"
+      ]
+     },
+     {
+      "field": "beats",
+      "name": "节拍",
+      "before": "0–4.5秒 Riley 从门洞的阴影里走出来，走上画左的人行道，朝镜头走近，身影从只有轮廓变成被天光照亮；（第 3 秒起牵驴的男人赶着小车从画右入画，往门洞方向走）4.5–5.5秒 她停住，双脚不再动，抬头看这条街；5.5–7秒 她上半身慢慢转向画左，看刚卸下门板的铺子，没有说话；7–8秒 牵驴的男人赶着小车经过她身边，扭头瞥了她的裤子一眼，又转回去看路；8–9.5秒 她的上半身转向画右，看着驴车咔哒咔哒走向门洞；9.5–11秒 她转回来，对着镜头无声地笑",
+      "after": "0–3秒 Riley 从大门洞的阴影里走出来，斜穿路面边缘走向画左的人行道，身影从暗轮廓变成被街上的散射光照亮；第 3 秒她抬脚迈上高出路面的路沿；3–5.5秒 她沿人行道朝镜头走近；赶驴人牵着驮筐的驴从画右入画，沿街中间迎着她朝城门走，她看见了，放慢脚步，第 5.5 秒停下让驴过去；5.5–7秒 驴经过她身边，赶驴人扭头把她从头到脚打量一遍，目光停在她的裤子上，眉毛挑得老高，走过去了还回头看；7–8秒 Riley 低头看了一眼自己的裤子，再抬头冲他尴尬地笑一下、微微耸肩；8–9.5秒 赶驴人转回头摇摇头，牵着驴继续朝城门走远；Riley 上半身慢慢转向画左，看刚卸下门板的铺子；9.5–11秒 她看着铺子里的陶罐和斜靠的门板，没有说话；11–13秒 她转回来，对着镜头无声地笑",
+      "diff": [
+       "@@ -1,6 +1,10 @@",
+       "-0–4.5秒 Riley 从门洞的阴影里走出来，走上画左的人行道，朝镜头走近，身影从只有轮廓变成被天光照亮；",
+       "-（第 3 秒起牵驴的男人赶着小车从画右入画，往门洞方向走）4.5–5.5秒 她停住，双脚不再动，抬头看这条街；",
+       "-5.5–7秒 她上半身慢慢转向画左，看刚卸下门板的铺子，没有说话；",
+       "-7–8秒 牵驴的男人赶着小车经过她身边，扭头瞥了她的裤子一眼，又转回去看路；",
+       "-8–9.5秒 她的上半身转向画右，看着驴车咔哒咔哒走向门洞；",
+       "-9.5–11秒 她转回来，对着镜头无声地笑",
+       "+0–3秒 Riley 从大门洞的阴影里走出来，斜穿路面边缘走向画左的人行道，身影从暗轮廓变成被街上的散射光照亮；",
+       "+第 3 秒她抬脚迈上高出路面的路沿；",
+       "+3–5.5秒 她沿人行道朝镜头走近；",
+       "+赶驴人牵着驮筐的驴从画右入画，沿街中间迎着她朝城门走，她看见了，放慢脚步，第 5.5 秒停下让驴过去；",
+       "+5.5–7秒 驴经过她身边，赶驴人扭头把她从头到脚打量一遍，目光停在她的裤子上，眉毛挑得老高，走过去了还回头看；",
+       "+7–8秒 Riley 低头看了一眼自己的裤子，再抬头冲他尴尬地笑一下、微微耸肩；",
+       "+8–9.5秒 赶驴人转回头摇摇头，牵着驴继续朝城门走远；",
+       "+Riley 上半身慢慢转向画左，看刚卸下门板的铺子；",
+       "+9.5–11秒 她看着铺子里的陶罐和斜靠的门板，没有说话；",
+       "+11–13秒 她转回来，对着镜头无声地笑"
+      ]
+     },
+     {
+      "field": "camera",
+      "name": "镜头",
+      "before": "他拍，固定机位，不运镜。全景：开头她在画面深处的门洞口，人很小；走近后停在全身入画、约占画面高度一半的位置；机位约齐腰高，平视街道略仰。",
+      "after": "他拍，固定机位，不运镜。全景：开头她在画面深处的门洞口，人很小（约占画面高度四分之一）；走近后停在全身入画、约占画面高度一半的位置；机位约齐腰高，平视街道略仰。",
+      "diff": [
+       "@@ -1,3 +1,3 @@",
+       " 他拍，固定机位，不运镜。",
+       "-全景：开头她在画面深处的门洞口，人很小；",
+       "+全景：开头她在画面深处的门洞口，人很小（约占画面高度四分之一）；",
+       " 走近后停在全身入画、约占画面高度一半的位置；"
+      ]
+     },
+     {
+      "field": "lighting",
+      "name": "光线",
+      "before": "清晨。太阳低低地挂在她走的这一侧人行道那排房子的屋顶后面，对面那排墙的上半截被照成暖金色，她这一侧的墙面和大半个街面在柔和的阴影里，路面的流水反光。门洞里很暗：她在门洞里时只有轮廓和肩上一点微光，走出门洞那一步才被街上的天光和对面墙面反过来的暖光照亮。只有自然光。",
+      "after": "清晨。从城里朝城门拍，太阳在镜头身后偏画左、低低的，画面里看不到太阳：城墙朝城里的一面和画右那排房子墙面的上半截被照成暖金色；画左这一侧的墙面和大半个街面在柔和的阴影里，路面上一道浅浅的流水反光；门洞里面很暗：她刚出门洞时只是一个暗轮廓，走出几步、进到街上的散射光里才看清脸和衣服，对面亮墙反过来的暖光照在她身上。只有自然光。",
+      "diff": [
+       "@@ -1,4 +1,5 @@",
+       " 清晨。",
+       "-太阳低低地挂在她走的这一侧人行道那排房子的屋顶后面，对面那排墙的上半截被照成暖金色，她这一侧的墙面和大半个街面在柔和的阴影里，路面的流水反光。",
+       "-门洞里很暗：她在门洞里时只有轮廓和肩上一点微光，走出门洞那一步才被街上的天光和对面墙面反过来的暖光照亮。",
+       "+从城里朝城门拍，太阳在镜头身后偏画左、低低的，画面里看不到太阳：城墙朝城里的一面和画右那排房子墙面的上半截被照成暖金色；",
+       "+画左这一侧的墙面和大半个街面在柔和的阴影里，路面上一道浅浅的流水反光；",
+       "+门洞里面很暗：她刚出门洞时只是一个暗轮廓，走出几步、进到街上的散射光里才看清脸和衣服，对面亮墙反过来的暖光照在她身上。",
+       " 只有自然光。"
+      ]
+     }
+    ]
+   },
+   "issues": [
+    "I5",
+    "I7",
+    "I9",
+    "I10",
+    "I14",
+    "I15",
+    "I21",
+    "I22",
+    "I25",
+    "I35",
+    "I40",
+    "I41",
+    "I42",
+    "I43",
+    "I50",
+    "I52",
+    "I54",
+    "I56",
+    "I60"
+   ]
+  }
+ ]
+}

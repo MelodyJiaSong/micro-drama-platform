@@ -116,8 +116,39 @@ class GalleryQdto:
 
 
 @dataclass(frozen=True)
+class PostLayerQdto:
+    """后期里的一层声音：某场的环境声或配乐（文件名或合成噪声种类）与增益。"""
+    kind: str                         # 环境声 / 配乐
+    scene: str
+    source: str
+    db: float
+
+
+@dataclass(frozen=True)
+class PostTrialQdto:
+    """一版后期试做（follow-up 290，tools/episode_post.py）：声音、字幕、地名字卡叠在集级剪辑成片上。"""
+    version: int
+    status: str
+    path: str
+    source_cut: str = ""
+    video: str = ""
+    srt: str = ""
+    duration: float = 0.0
+    rendered_at: str = ""
+    loudness_lufs: float | None = None
+    true_peak_db: float | None = None
+    subtitle_lang: str = ""
+    subtitles: int = 0
+    titles: list[str] = field(default_factory=list)
+    layers: list[PostLayerQdto] = field(default_factory=list)
+    notes: list[str] = field(default_factory=list)
+    error: str = ""
+
+
+@dataclass(frozen=True)
 class EpisodeCutsQdto:
     episode_path: str
     scenes: list[SceneCutsQdto] = field(default_factory=list)   # 分镜顺序，每场都列（没剪的列表为空）
     joined: dict[str, list[EpisodeJoinQdto]] = field(default_factory=dict)   # 阶段 → 集级剪辑，新的版本在前
     galleries: dict[str, list[GalleryQdto]] = field(default_factory=dict)   # 阶段 → 转场样片
+    posts: list[PostTrialQdto] = field(default_factory=list)   # 后期试做，新的版本在前

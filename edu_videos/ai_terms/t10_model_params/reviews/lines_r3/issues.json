@@ -1,0 +1,2710 @@
+{
+ "run": "lines_r3",
+ "round": 3,
+ "generated_at": "2026-11-09T21:23:54",
+ "items": [
+  {
+   "item": "voice_zh",
+   "name": "中文口播（母语听感，盲审）",
+   "final": {
+    "V1": 2,
+    "V2": 2,
+    "V3": 2,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2,
+    "R": 2
+   },
+   "scores": {
+    "a": {
+     "V1": 2,
+     "V2": 2,
+     "V3": 2,
+     "V4": 2,
+     "V5": 2,
+     "V6": 2,
+     "R": 2
+    },
+    "b": {
+     "V1": 1,
+     "V2": 1,
+     "V3": 1,
+     "V4": 2,
+     "V5": 2,
+     "V6": 3,
+     "R": 1
+    },
+    "judge": {
+     "V1": 2,
+     "V2": 2,
+     "V3": 2,
+     "R": 2,
+     "V6": 2,
+     "V5": 2
+    }
+   }
+  },
+  {
+   "item": "voice_en",
+   "name": "English narration (native ear, blind)",
+   "final": {
+    "V1": 2,
+    "V2": 3,
+    "V3": 2,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2,
+    "R": 2
+   },
+   "scores": {
+    "a": {
+     "V1": 2,
+     "V2": 3,
+     "V3": 2,
+     "V4": 2,
+     "V5": 2,
+     "V6": 2,
+     "R": 3
+    },
+    "b": {
+     "V1": 2,
+     "V2": 3,
+     "V3": 1,
+     "V4": 3,
+     "V5": 1,
+     "V6": 3,
+     "R": 1
+    },
+    "judge": {
+     "V3": 2,
+     "V5": 2,
+     "R": 2,
+     "V1": 2,
+     "V2": 3
+    }
+   }
+  },
+  {
+   "item": "screen_zh",
+   "name": "中文屏幕文字（PPT 式画面）",
+   "final": {
+    "P1": 2,
+    "P2": 2,
+    "P3": 2,
+    "P4": 2,
+    "P5": 2,
+    "P6": 2,
+    "R": 1
+   },
+   "scores": {
+    "a": {
+     "P1": 2,
+     "P2": 2,
+     "P3": 2,
+     "P4": 2,
+     "P5": 2,
+     "P6": 2,
+     "R": 2
+    },
+    "b": {
+     "P1": 1,
+     "P2": 2,
+     "P3": 2,
+     "P4": 2,
+     "P5": 2,
+     "P6": 3,
+     "R": 1
+    },
+    "judge": {
+     "P1": 2,
+     "R": 1,
+     "P6": 2,
+     "P4": 2
+    }
+   }
+  },
+  {
+   "item": "screen_en",
+   "name": "English on-screen text (slides)",
+   "final": {
+    "P1": 2,
+    "P2": 2,
+    "P3": 2,
+    "P4": 1,
+    "P5": 2,
+    "P6": 2,
+    "R": 1
+   },
+   "scores": {
+    "a": {
+     "P1": 3,
+     "P2": 2,
+     "P3": 2,
+     "P4": 2,
+     "P5": 3,
+     "P6": 3,
+     "R": 2
+    },
+    "b": {
+     "P1": 1,
+     "P2": 2,
+     "P3": 2,
+     "P4": 2,
+     "P5": 2,
+     "P6": 3,
+     "R": 1
+    },
+    "judge": {
+     "P1": 2,
+     "R": 1,
+     "P6": 2,
+     "P4": 1
+    }
+   }
+  }
+ ],
+ "issues": [
+  {
+   "id": "I1",
+   "key": "b0812490c4dd",
+   "item": "screen_en",
+   "where": "outro",
+   "dim": "P3, P5",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3, P5",
+   "shots": [
+    "outro"
+   ],
+   "evidence": [
+    "\"Parameters = knobs / Learning = getting the knobs right / Loss function\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Teaser line \"Next: loss function\" (3 words); put it last and set it apart from the two equations",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Parameters = knobs / Learning = getting the knobs right / Loss function\"",
+   "problem": "No screenshot, so I can't tell whether \"Loss function\" is shown as the teaser for next time. A bare term at the end can read as a third recap line. Strict item.",
+   "suggest": "Teaser line \"Next: loss function\" (3 words); put it last and set it apart from the two equations",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "片尾卡由共用模板渲（edu_package），「下一期 / Next」标签与片名分开排；成片后抽帧核",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I2",
+   "key": "c317b4d45763",
+   "item": "screen_en",
+   "where": "c_problem, c_experiment, c_lens, c_real, outro; agenda if present",
+   "dim": "P3, P5",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3, P5",
+   "shots": [
+    "c_problem, c_experiment, c_lens, c_real, outro; agenda if present"
+   ],
+   "evidence": [
+    "No package-card screenshots supplied"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Retain the chapter wording. Outro text on separate rows: **Parameters = knobs**<br>**Learning = getting the knobs right**<br>**Loss function**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "No package-card screenshots supplied",
+   "problem": "Chapter wording is assessable, but card layout, outro line separation, subtitle clearance and actual card exposure are not. A shared template is not evidence of the final rendered result.",
+   "suggest": "Retain the chapter wording. Outro text on separate rows: **Parameters = knobs**<br>**Learning = getting the knobs right**<br>**Loss function**",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I1；章节名保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I3",
+   "key": "4f5438986a3d",
+   "item": "screen_en",
+   "where": "l03–l04 (cold open)",
+   "dim": "P2, P3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2, P3",
+   "shots": [
+    "l03–l04 (cold open)"
+   ],
+   "evidence": [
+    "Eyebrow \"What it ends up with\" over \"A model\" (plus eyebrows \"Last time\", \"Inside a model\")"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Eyebrow \"Result\" over \"A model\" (keep \"Last time\", keep \"Inside a model\")",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Eyebrow \"What it ends up with\" over \"A model\" (plus eyebrows \"Last time\", \"Inside a model\")",
+   "problem": "Strict item. A five-word clause copied from the narration is parked in an eyebrow, so it escapes the word count but still acts as content. With \"Learns from examples\" it makes s0_l04 carry about 15 words and four things to read in 5 s. Eyebrows should be short tags.",
+   "suggest": "Eyebrow \"Result\" over \"A model\" (keep \"Last time\", keep \"Inside a model\")",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "按裁决人定稿：左卡「Learning from examples」，右侧眉标「Result」（Last time 与 Inside a model 保留）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I4",
+   "key": "0e9aca0bbf98",
+   "item": "screen_en",
+   "where": "l03–l04（冷开头）",
+   "dim": "P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l03–l04（冷开头）"
+   ],
+   "evidence": [
+    "LAST TIME / Learns from examples → WHAT IT ENDS UP WITH / A model"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "左卡「Learning from examples」；右侧眉标「Result」（承接 a 的建议），整体读作「Last time: Learning from examples → Result: A model」",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "LAST TIME / Learns from examples → WHAT IT ENDS UP WITH / A model",
+   "problem": "严格项。「Learns from examples」缺主语，紧贴在眉标「Last time」下面，读起来像「Last time learns…」；箭头右边的「it」在屏上没有指代对象。整条冷开头链条在屏幕上没有主语。",
+   "suggest": "左卡「Learning from examples」；右侧眉标「Result」（承接 a 的建议），整体读作「Last time: Learning from examples → Result: A model」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I3",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I5",
+   "key": "290a9ee180f9",
+   "item": "screen_en",
+   "where": "l10",
+   "dim": "P3, P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3, P4",
+   "shots": [
+    "l10"
+   ],
+   "evidence": [
+    "Fare = base + per km × distance"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Fare = base fare + per km × distance (7 words)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Fare = base + per km × distance",
+   "problem": "Formula says \"base\" while the dial label says \"Base fare\" on the same screen.",
+   "suggest": "Fare = base fare + per km × distance (7 words)",
+   "judge_note": "l10（a，「Fare = base fare + per km × distance」）：改写比原文长，不符合 P6「更短」的要求。旁边旋钮标着「Base fare」，公式里写「base」不会有歧义，原文保留。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判不采纳（更长）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I6",
+   "key": "84782f386d3a",
+   "item": "screen_en",
+   "where": "l14",
+   "dim": "P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l14"
+   ],
+   "evidence": [
+    "Twelve taxi rides"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "12 rides",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Twelve taxi rides",
+   "problem": "Near-verbatim echo of \"twelve made-up taxi rides\"; the \"Illustration\" tag carries the made-up message.",
+   "suggest": "12 rides",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I7",
+   "key": "19a7d76ed297",
+   "item": "screen_en",
+   "where": "l17",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l17"
+   ],
+   "evidence": [
+    "Bars = how far off"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Gaps = how far off",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Bars = how far off",
+   "problem": "Narration says \"little vertical line\"; the picture has hairline ticks, not bars. l20 then says \"miss\". Three words for one idea (bars, how far off, miss).",
+   "suggest": "Gaps = how far off",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改「Gaps = how far off」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I8",
+   "key": "dd6cb38a5821",
+   "item": "screen_en",
+   "where": "l19",
+   "dim": "P1, P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "l19"
+   ],
+   "evidence": [
+    "Whole line goes up"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Whole line ↑**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Whole line goes up",
+   "problem": "Sentence-form commentary closely restates the narrated movement. A compact movement label would leave the explanation to the voice.",
+   "suggest": "**Whole line ↑**",
+   "judge_note": "l19（b，「Whole line ↑」）：只省一个词，换成箭头符号后不好照着读出来；原文 4 个词，和抬线动画同步，不必改。上一轮同一位置的「Upward shift」也已被驳回。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判不采纳",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I9",
+   "key": "78747a669a19",
+   "item": "screen_en",
+   "where": "l22",
+   "dim": "P4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l22"
+   ],
+   "evidence": [
+    "Backing off a bit"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Back off a bit (optional)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Backing off a bit",
+   "problem": "Gerund among siblings that are labels or imperatives; reads fine.",
+   "suggest": "Back off a bit (optional)",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I10",
+   "key": "840c6042ef11",
+   "item": "screen_en",
+   "where": "l23",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "Right along the dots"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Small misses**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Right along the dots",
+   "problem": "Verbatim repetition of the narration. Label the successful result using vocabulary already established by “bigger miss.”",
+   "suggest": "**Small misses**",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改「Small misses」（沿用 l20 的 miss）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I11",
+   "key": "0ccb4df7287c",
+   "item": "screen_en",
+   "where": "l25",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l25"
+   ],
+   "evidence": [
+    "Not one of the twelve"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**New distance**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Not one of the twelve",
+   "problem": "Closely repeats the spoken qualification. The useful visual distinction is that this distance is new to the example set.",
+   "suggest": "**New distance**",
+   "judge_note": "l25（b，「New distance」）：「new」相对于什么不清楚，还丢掉了与「twelve rides」的对应；不如原文，也不如 a 的「Not in our twelve」。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判不采纳",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I12",
+   "key": "de750c948cef",
+   "item": "screen_en",
+   "where": "l25",
+   "dim": "P2, P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2, P4",
+   "shots": [
+    "l25"
+   ],
+   "evidence": [
+    "8 km → $30.50"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "8 km → ≈ $30.50",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "8 km → $30.50",
+   "problem": "屏上旋钮正好显示 $10.20 和 $2.54，l11 又教过观众自己算（「10 + 2 × 5 = 20」），一算就是 10.20 + 2.54 × 8 = $30.52，与屏上的 $30.50 对不上。口播说的是「about $30.50」，claims.json 写的也是「≈ 30.5」，屏上把约等号丢了。l35 已经用过「≈ 5,545 years」，加约等号与之一致。",
+   "suggest": "8 km → ≈ $30.50",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "答案改「≈ $30.50」（10.2 + 2.54 × 8 = 30.52）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I13",
+   "key": "07f6b98f0271",
+   "item": "screen_en",
+   "where": "l25",
+   "dim": "P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l25"
+   ],
+   "evidence": [
+    "Not one of the twelve"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Not in our twelve (4 words), or keep",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Not one of the twelve",
+   "problem": "Echoes the narration, 5 words in the fourth block. Previous ruling kept it; fine at 4 blocks and 15 words.",
+   "suggest": "Not in our twelve (4 words), or keep",
+   "judge_note": "l25（b，「New distance」）：「new」相对于什么不清楚，还丢掉了与「twelve rides」的对应；不如原文，也不如 a 的「Not in our twelve」。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：保留，与口播一致",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I14",
+   "key": "4f9d87f6a71d",
+   "item": "screen_en",
+   "where": "l32",
+   "dim": "P1, P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "l32"
+   ],
+   "evidence": [
+    "Chatting takes far more knobs"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**More knobs for chat**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Chatting takes far more knobs",
+   "problem": "A complete explanatory sentence at the taxi-to-language-model transition. Its short length does not satisfy the explicit outline-only requirement. The strict linking-line rule applies.",
+   "suggest": "**More knobs for chat**",
+   "judge_note": "l32（b，必改级别）：截图里这句是章内第一屏、压在旋钮阵列上方的 5 词标题，不是照搬口播的整句；维持上一轮的建议级。改写可以采用「More knobs for chat」，但不是必改。",
+   "status": "implemented",
+   "solution": "改「More knobs for chat」（裁决人认可的写法）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I15",
+   "key": "93a065d4d2aa",
+   "item": "screen_en",
+   "where": "l32",
+   "dim": "P1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l32"
+   ],
+   "evidence": [
+    "Chatting takes far more knobs"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Chat: far more knobs (4 words)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Chatting takes far more knobs",
+   "problem": "Subject–verb–object clause, restates the narration. Within 6 words and the chapter's first screen, so not a breach.",
+   "suggest": "Chat: far more knobs (4 words)",
+   "judge_note": "l32（b，必改级别）：截图里这句是章内第一屏、压在旋钮阵列上方的 5 词标题，不是照搬口播的整句；维持上一轮的建议级。改写可以采用「More knobs for chat」，但不是必改。",
+   "status": "implemented",
+   "solution": "同 I14",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I16",
+   "key": "14717c9dbb14",
+   "item": "screen_en",
+   "where": "l39",
+   "dim": "P2, P3, P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2, P3, P4",
+   "shots": [
+    "l39"
+   ],
+   "evidence": [
+    "100B parameters = 100B knobs"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**100B+ parameters**<br>**= 100B+ knobs**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "100B parameters = 100B knobs",
+   "problem": "“100B” loses the “over” qualification used in both l01 and the accompanying narration. The left number–noun gap also looks compressed compared with the right side.",
+   "suggest": "**100B+ parameters**<br>**= 100B+ knobs**",
+   "judge_note": "l39（b，P4 间距）：s5_l39 截图中「100B parameters」与「100B knobs」两边的间距是一样的，上一轮裁决人也已判不成立。只保留「+」号缺失这一点（建议级）。",
+   "status": "implemented",
+   "solution": "改「100B+ parameters = 100B+ knobs」，与冷开场 100B+ 和口播 over 一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I17",
+   "key": "0fabaa62211e",
+   "item": "screen_en",
+   "where": "l39",
+   "dim": "P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l39"
+   ],
+   "evidence": [
+    "100B parameters = 100B knobs"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "100B+ parameters = 100B+ knobs (optional)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "100B parameters = 100B knobs",
+   "problem": "Cold open says \"100B+\" and the narration \"over a hundred billion\"; the plus is dropped here. Judge ruled earlier it is acceptable.",
+   "suggest": "100B+ parameters = 100B+ knobs (optional)",
+   "judge_note": "l39（b，P4 间距）：s5_l39 截图中「100B parameters」与「100B knobs」两边的间距是一样的，上一轮裁决人也已判不成立。只保留「+」号缺失这一点（建议级）。",
+   "status": "implemented",
+   "solution": "同 I16",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I18",
+   "key": "3b21c9c16c5a",
+   "item": "screen_zh",
+   "where": "c_problem / c_experiment / c_lens / c_real / outro",
+   "dim": "P3、P5",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3、P5",
+   "shots": [
+    "c_problem / c_experiment / c_lens / c_real / outro"
+   ],
+   "evidence": [
+    "四个章节卡与片尾卡（「模型长什么样」「拧拧旋钮试试」「学到了什么」「上千亿个旋钮」；「参数 = 旋钮」「学 = 把旋钮拧对」「损失函数」）"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "文字不改；成片后抽帧核：片尾两条等式分两行，「损失函数」最后单独出",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "四个章节卡与片尾卡（「模型长什么样」「拧拧旋钮试试」「学到了什么」「上千亿个旋钮」；「参数 = 旋钮」「学 = 把旋钮拧对」「损失函数」）",
+   "problem": "这几张卡仍没有截图，层级、停留时间、片尾两行等式与「损失函数」是否分行无法核实。文字本身通顺，片尾「损失函数」与 l44 口播一致",
+   "suggest": "文字不改；成片后抽帧核：片尾两条等式分两行，「损失函数」最后单独出",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "存疑：成片后抽帧核片尾两行与「损失函数」分开",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I19",
+   "key": "4ed0666e02e1",
+   "item": "screen_zh",
+   "where": "c_problem、c_experiment、c_lens、c_real、outro",
+   "dim": "P3、P5、R",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3、P5、R",
+   "shots": [
+    "c_problem、c_experiment、c_lens、c_real、outro"
+   ],
+   "evidence": [
+    "四个章节名；参数＝旋钮 学＝把旋钮拧对；损失函数"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "章节名保留；片尾明确分行：“参数＝旋钮”“学＝把旋钮拧对”；预告单列“损失函数”",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "四个章节名；参数＝旋钮 学＝把旋钮拧对；损失函数",
+   "problem": "截图路径仍为空，章节卡无停留时间；片尾19秒是整段长度，不能证明各项实际显示多久、是否分行及是否避开字幕。文字可评，实际排版未核实。",
+   "suggest": "章节名保留；片尾明确分行：“参数＝旋钮”“学＝把旋钮拧对”；预告单列“损失函数”",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I18",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I20",
+   "key": "158f5adf2e5e",
+   "item": "screen_zh",
+   "where": "c_experiment",
+   "dim": "P4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "c_experiment"
+   ],
+   "evidence": [
+    "拧拧旋钮试试"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "保持；如要统一可用「动手拧旋钮」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "拧拧旋钮试试",
+   "problem": "与其他三章名体例不齐（问句 / 祈使 / 名词），但读着顺、不怪，不判必改",
+   "suggest": "保持；如要统一可用「动手拧旋钮」",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级（同前两轮）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I21",
+   "key": "b6770256c07c",
+   "item": "screen_zh",
+   "where": "l04",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l04"
+   ],
+   "evidence": [
+    "从例子里学规律／学出来的／模型／模型里面"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "删除“学出来的”；保留“从例子里学规律”“模型”“模型里面”，共13字",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "从例子里学规律／学出来的／模型／模型里面",
+   "problem": "同一概念图共17字，超过单块16字。“学出来的”“模型里面”属于图内内容标签，不能按页眉小标签豁免；旧内容退灰也仍计字。",
+   "suggest": "删除“学出来的”；保留“从例子里学规律”“模型”“模型里面”，共13字",
+   "judge_note": "b · l04（P1 必改「图内合计 17 字超限」）：s0.html 里 #r1、#r3、#box 是三个独立元素，「模型里面 ?」那张卡没有箭头连到前两者，不能并成一张图来计字；按 b 自己的并图口径，也漏计了「上一期」，前后矛盾。改写「删除学出来的」会断开与口播「学出来的那套本事，就叫模型」的对应，比原文差。；a · l04（建议把「模型里面」提到 h2 54px）：「?」卡出现时口播正好说「把模型打开看看」，小标签加大问号的层级对得上；把标签放大会和左侧 h1「模型」抢视线，没有必要改。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判不成立：三个独立元素，不并算",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I22",
+   "key": "81e688921d12",
+   "item": "screen_zh",
+   "where": "l04",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l04"
+   ],
+   "evidence": [
+    "「模型里面」小标签（22px）＋260px「？」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "把「模型里面」提到 h2 档（约 54px）放在「？」上方",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "「模型里面」小标签（22px）＋260px「？」",
+   "problem": "「？」的含义全靠 22px 灰色小标签，观众第一眼只看到一个大问号，和口播「把模型打开看看」的关联靠听",
+   "suggest": "把「模型里面」提到 h2 档（约 54px）放在「？」上方",
+   "judge_note": "b · l04（P1 必改「图内合计 17 字超限」）：s0.html 里 #r1、#r3、#box 是三个独立元素，「模型里面 ?」那张卡没有箭头连到前两者，不能并成一张图来计字；按 b 自己的并图口径，也漏计了「上一期」，前后矛盾。改写「删除学出来的」会断开与口播「学出来的那套本事，就叫模型」的对应，比原文差。；a · l04（建议把「模型里面」提到 h2 54px）：「?」卡出现时口播正好说「把模型打开看看」，小标签加大问号的层级对得上；把标签放大会和左侧 h1「模型」抢视线，没有必要改。",
+   "status": "implemented",
+   "solution": "「模型里面 / Inside a model」提到 h2 档放在「？」上方（英文 40px 一行放下）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I23",
+   "key": "3bdbd798c505",
+   "item": "screen_zh",
+   "where": "l07–l08",
+   "dim": "P5、R",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P5、R",
+   "shots": [
+    "l07–l08"
+   ],
+   "evidence": [
+    "参数＝旋钮"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "保留“参数＝旋钮”，完整显示延续至l08中段",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "参数＝旋钮",
+   "problem": "处理说明称延续至l08中段，但材料只有句末截图，无法确认完整可读的实际停留时间。",
+   "suggest": "保留“参数＝旋钮”，完整显示延续至l08中段",
+   "judge_note": "b · l07–l08 / I28（存疑「未解决」）：s2.html 第 70 行可以核到「参数 = 旋钮」在 l08 50% 处才收，源码就是证据，判已解决。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判已解决（源码 l08 50% 处才收）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I24",
+   "key": "c4e467716616",
+   "item": "screen_zh",
+   "where": "l21 / l18 / l22",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l21 / l18 / l22"
+   ],
+   "evidence": [
+    "「拧过头了」「全都猜少了」「往回拧一点」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "可统一成图上记号：「偏低」「偏高」「刚好」，或维持现状",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "「拧过头了」「全都猜少了」「往回拧一点」",
+   "problem": "与口播同词，屏上只多了一次重复。上一轮已判不改（l18），这里只记同类",
+   "suggest": "可统一成图上记号：「偏低」「偏高」「刚好」，或维持现状",
+   "judge_note": "a · l18 / l21 / l22（建议改「偏低」「偏高」「刚好」）：这几个叫法口播里没有，违反 P2「不出现口播没说过的新说法」；l22 是正在调的这一步，写「刚好」抢了 l23「竖线都很短」的结论，改了反而更差。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判不采纳（偏低 / 偏高 / 刚好口播没说）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I25",
+   "key": "5723b30b7e89",
+   "item": "screen_zh",
+   "where": "l25",
+   "dim": "P2、P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2、P4",
+   "shots": [
+    "l25"
+   ],
+   "evidence": [
+    "记录里没有"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "无8公里记录",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "记录里没有",
+   "problem": "位于“8公里→30.5元”整条结果下方，没有说明记录里缺的是距离还是结果。上一轮改动只换了主语，指代问题仍在。",
+   "suggest": "无8公里记录",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "小字改「记录里没有 8 公里」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I26",
+   "key": "059812e488d5",
+   "item": "screen_zh",
+   "where": "l25",
+   "dim": "P4、P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4、P2",
+   "shots": [
+    "l25"
+   ],
+   "evidence": [
+    "8 公里 → 30.5 元"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "8 公里 → ≈ 30.5 元",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "8 公里 → 30.5 元",
+   "problem": "口播说的是「三十块五左右」，算式实为 10.2＋2.54×8＝30.52，屏上却写成确数；同片 l35 写的是「≈ 5545 年」，近似标记体例不统一",
+   "suggest": "8 公里 → ≈ 30.5 元",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "答案改「≈ 30.5 元」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I27",
+   "key": "ec5e417111d9",
+   "item": "screen_zh",
+   "where": "l25",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l25"
+   ],
+   "evidence": [
+    "记录里没有"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "记录里没有 8 公里（或「无 8 公里记录」，数字与单位之间按全片体例空格）",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "记录里没有",
+   "problem": "同 I37：上一轮要补的「8 公里」被删掉了，仍是半截话；英文版「Not one of the twelve」反倒说清楚了",
+   "suggest": "记录里没有 8 公里（或「无 8 公里记录」，数字与单位之间按全片体例空格）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I25",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I28",
+   "key": "74a0b0237ecd",
+   "item": "screen_zh",
+   "where": "l25",
+   "dim": "P1",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l25"
+   ],
+   "evidence": [
+    "图 + 旋钮 + 「8 公里 → 30.5 元」+「记录里没有」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "保持",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "图 + 旋钮 + 「8 公里 → 30.5 元」+「记录里没有」",
+   "problem": "正好 4 块、约 29 字，在上限内，不要再加字",
+   "suggest": "保持",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I29",
+   "key": "26d0dcddd13a",
+   "item": "screen_zh",
+   "where": "l32",
+   "dim": "P1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l32"
+   ],
+   "evidence": [
+    "写文章、聊天：旋钮多得多"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「更多旋钮」，副行「写文章、聊天」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "写文章、聊天：旋钮多得多",
+   "problem": "10 字未超限，但是口播结论的压缩句，带「多得多」口语。上一轮已判保留",
+   "suggest": "「更多旋钮」，副行「写文章、聊天」",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "10 字在上限内，与口播同词（同前两轮判断）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I30",
+   "key": "b58b880d5fad",
+   "item": "screen_zh",
+   "where": "l32",
+   "dim": "P1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l32"
+   ],
+   "evidence": [
+    "写文章、聊天：旋钮多得多"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "更多旋钮<br>写文章、聊天",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "写文章、聊天：旋钮多得多",
+   "problem": "合限、顺口，但仍把口播结论压成一句说明。“多得多”可改成更便于扫读的关键词；不因它是章节首屏而豁免纲要要求。",
+   "suggest": "更多旋钮<br>写文章、聊天",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I29",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I31",
+   "key": "9ef504c8a80c",
+   "item": "screen_zh",
+   "where": "l33",
+   "dim": "P4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l33"
+   ],
+   "evidence": [
+    "175,000,000,000"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "保持；可换「1,750 亿」之类，不必改",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "175,000,000,000",
+   "problem": "12 位阿拉伯数字，中文观众要数位；l34 紧接着给「1750 亿个旋钮」，镇场加换算的设计成立",
+   "suggest": "保持；可换「1,750 亿」之类，不必改",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：保持",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I32",
+   "key": "0941e0c90481",
+   "item": "voice_en",
+   "where": "l09",
+   "dim": "V1",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l09"
+   ],
+   "evidence": [
+    "At its simplest, this machine needs just two knobs: one for the base fare, and one for the price per kilometer."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "The simplest version needs just two knobs: a base fare and a price per kilometer.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "At its simplest, this machine needs just two knobs: one for the base fare, and one for the price per kilometer.",
+   "problem": "\"At its simplest\" is slightly written.",
+   "suggest": "The simplest version needs just two knobs: a base fare and a price per kilometer.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I33",
+   "key": "92926fa5fc3b",
+   "item": "voice_en",
+   "where": "l16",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l16"
+   ],
+   "evidence": [
+    "Put the model's guesses on a graph, and they form a straight line, a fare for every distance."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Put the model's guesses on a graph and you get a straight line: any distance, and it gives you a fare.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Put the model's guesses on a graph, and they form a straight line, a fare for every distance.",
+   "problem": "The tail \"a fare for every distance\" is a fragment glued on.",
+   "suggest": "Put the model's guesses on a graph and you get a straight line: any distance, and it gives you a fare.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l16 改为「Put its guesses on a graph, and the straight line gives you a fare for any distance.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I34",
+   "key": "c2440dccccd1",
+   "item": "voice_en",
+   "where": "l16",
+   "dim": "V1, V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l16"
+   ],
+   "evidence": [
+    "Put the model's guesses on a graph, and they form a straight line, a fare for every distance."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Put its guesses on a graph, and the straight line gives you a fare for any distance.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Put the model's guesses on a graph, and they form a straight line, a fare for every distance.",
+   "problem": "“A fare for every distance” is a loosely attached noun phrase. On one hearing, it takes a small extra step to connect that phrase to what the line tells us.",
+   "suggest": "Put its guesses on a graph, and the straight line gives you a fare for any distance.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l16 改为「Put its guesses on a graph, and the straight line gives you a fare for any distance.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I35",
+   "key": "37583c743ba4",
+   "item": "voice_en",
+   "where": "l17",
+   "dim": "V1, V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l17"
+   ],
+   "evidence": [
+    "The little vertical line from each dot to that line shows how far off the guess was for that ride."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "The gap between each dot and the model's line shows how far off its guess was.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "The little vertical line from each dot to that line shows how far off the guess was for that ride.",
+   "problem": "“Line … to that line” makes the listener distinguish two lines while holding a long subject in mind. The meaning is recoverable, but the construction is cumbersome aloud.",
+   "suggest": "The gap between each dot and the model's line shows how far off its guess was.",
+   "judge_note": "l17（b，建议，「The gap between each dot and the model's line…」）：改写把「little vertical line」换成「gap」，会打断 l23「all those little vertical lines are short」和片尾 l43「Remember those little vertical lines」的回扣，比原文差。原文「that line」紧接 l16 的 straight line，听一遍能对上（同上一轮 I47）。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判不采纳",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I36",
+   "key": "957f88c1a690",
+   "item": "voice_en",
+   "where": "l22 / l25",
+   "dim": "V1",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l22 / l25"
+   ],
+   "evidence": [
+    "…nudge the base fare up to ten dollars twenty. / …about thirty dollars fifty."
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "…nudge the base fare up to ten twenty. / …about thirty fifty.",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "…nudge the base fare up to ten dollars twenty. / …about thirty dollars fifty.",
+   "problem": "「ten dollars twenty」是英澳口语，美国观众一般说「ten twenty」。能听懂，不是缺陷；如果以美式配音为准，可以顺手改。",
+   "suggest": "…nudge the base fare up to ten twenty. / …about thirty fifty.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：配音是频道统一音色，听感以回听为准",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I37",
+   "key": "87a694e1ea05",
+   "item": "voice_en",
+   "where": "l29",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l29"
+   ],
+   "evidence": [
+    "Copy those two numbers onto a scrap of paper, hand it to a friend, and they've got the exact same model."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Give a friend the same machine and those two numbers, and they've got the exact same model.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Copy those two numbers onto a scrap of paper, hand it to a friend, and they've got the exact same model.",
+   "problem": "I understand the intended point, but briefly wonder how the friend gets the model from numbers alone. l28 establishes that the machine stays fixed; it does not explicitly give that machine to the friend.",
+   "suggest": "Give a friend the same machine and those two numbers, and they've got the exact same model.",
+   "judge_note": "l29（b，建议，「Give a friend the same machine and those two numbers…」）：上一轮 I50 已判不采纳。l10、l12、l28 已经交代机器固定不变，改写还丢了「scrap of paper」这个画面。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判不采纳（上一轮 I50 同）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I38",
+   "key": "4cee2ec40407",
+   "item": "voice_en",
+   "where": "l33",
+   "dim": "V3, V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3, V5",
+   "shots": [
+    "l33"
+   ],
+   "evidence": [
+    "In twenty twenty, OpenAI released G P T three, which has a hundred and seventy-five billion parameters."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "In twenty twenty, OpenAI released G P T three, which has a hundred and seventy-five billion parameters.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "In twenty twenty, OpenAI released G P T three, which has a hundred and seventy-five billion parameters.",
+   "problem": "The listener must catch a date, a letter-by-letter name and a large unfamiliar quantity in 4.2 seconds. Retaining the wording is reasonable; deferring timing verification does not close the issue. Allow a comfortable full read—roughly seven to eight seconds as a starting point—and verify the recording.",
+   "suggest": "In twenty twenty, OpenAI released G P T three, which has a hundred and seventy-five billion parameters.",
+   "judge_note": "l33 / l34（b，必改，「Allow roughly three seconds / seven to eight seconds」）：时长来自估算时间轴，不是台词或配音的缺陷，上一轮 I52–I55 已裁定降为记录，等配音后实测。本轮没有新证据，维持原裁定，不升必改。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判：时长来自估算，配音后 qa 实测复核",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I39",
+   "key": "cdbfda8121b4",
+   "item": "voice_en",
+   "where": "l33 / l34",
+   "dim": "V3, V5",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3, V5",
+   "shots": [
+    "l33 / l34"
+   ],
+   "evidence": [
+    "In twenty twenty, OpenAI released G P T three, which has a hundred and seventy-five billion parameters. / That's a hundred and seventy-five billion knobs."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "No text change. If the audio is rushed, use l34 \"That's that many knobs.\" (shorter, same beat).",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "In twenty twenty, OpenAI released G P T three, which has a hundred and seventy-five billion parameters. / That's a hundred and seventy-five billion knobs.",
+   "problem": "Wording is fine. Stated timing (4.2s and 1.5s) may rush the key number; confirm on the real audio. The earlier author note says the estimate is a counting artifact.",
+   "suggest": "No text change. If the audio is rushed, use l34 \"That's that many knobs.\" (shorter, same beat).",
+   "judge_note": "l33 / l34（b，必改，「Allow roughly three seconds / seven to eight seconds」）：时长来自估算时间轴，不是台词或配音的缺陷，上一轮 I52–I55 已裁定降为记录，等配音后实测。本轮没有新证据，维持原裁定，不升必改。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I38",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I40",
+   "key": "914d3acec3fa",
+   "item": "voice_en",
+   "where": "l33 / l34",
+   "dim": "V3, V5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3, V5",
+   "shots": [
+    "l33 / l34"
+   ],
+   "evidence": [
+    "In twenty twenty, OpenAI released G P T three, which has a hundred and seventy-five billion parameters. / That's a hundred and seventy-five billion knobs."
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "（文字不改；配音后实测复核）",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "In twenty twenty, OpenAI released G P T three, which has a hundred and seventy-five billion parameters. / That's a hundred and seventy-five billion knobs.",
+   "problem": "文字不改。英文配音出来后重跑 timeline，用 qa 实测这两句的语速（估算约 7.4 和 8 音节/秒，是计数误差）。实测仍偏快，就延长分配给 l33/l34 的时长，s5 的计数动画跟着走，不动台词。",
+   "suggest": "（文字不改；配音后实测复核）",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I38",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I41",
+   "key": "80a57dd3a70a",
+   "item": "voice_en",
+   "where": "l34",
+   "dim": "V3, V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3, V5",
+   "shots": [
+    "l34"
+   ],
+   "evidence": [
+    "That's a hundred and seventy-five billion knobs."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "That's a hundred and seventy-five billion knobs.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "That's a hundred and seventy-five billion knobs.",
+   "problem": "Natural wording, but the supplied 1.5 seconds compresses the central number into a burst. This remains a delivery blocker unless the actual recording demonstrates otherwise. Allow roughly three seconds as a starting point, then measure the comfortable spoken read.",
+   "suggest": "That's a hundred and seventy-five billion knobs.",
+   "judge_note": "l33 / l34（b，必改，「Allow roughly three seconds / seven to eight seconds」）：时长来自估算时间轴，不是台词或配音的缺陷，上一轮 I52–I55 已裁定降为记录，等配音后实测。本轮没有新证据，维持原裁定，不升必改。；l34（a，存疑改写「That's that many knobs.」）：「that's that many」念起来别扭，也丢了把「parameters」换成「knobs」时重复关键数字这一步。原句保留。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I38",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I42",
+   "key": "1780dcb7fdde",
+   "item": "voice_en",
+   "where": "l37",
+   "dim": "V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4",
+   "shots": [
+    "l37"
+   ],
+   "evidence": [
+    "But the idea is the same as with the taxi fare: people decide how the machine does its math, and the settings are learned from examples."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "But it's the same idea as the taxi fare: people pick the math, and the settings are learned.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "But the idea is the same as with the taxi fare: people decide how the machine does its math, and the settings are learned from examples.",
+   "problem": "Near-verbatim repeat of l12. The second hearing adds nothing, and it is 10s long.",
+   "suggest": "But it's the same idea as the taxi fare: people pick the math, and the settings are learned.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l37 改为「But it's the same idea as the taxi fare: people pick the math, and the settings are learned.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I43",
+   "key": "3e5a454c4e84",
+   "item": "voice_en",
+   "where": "l39",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4",
+   "shots": [
+    "l39"
+   ],
+   "evidence": [
+    "So when the news says \"over a hundred billion parameters,\" it means the machine has over a hundred billion knobs."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep as is.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "So when the news says \"over a hundred billion parameters,\" it means the machine has over a hundred billion knobs.",
+   "problem": "Bookends l01 and pays off the cold open. Slightly redundant after l34, but the payoff is worth keeping.",
+   "suggest": "Keep as is.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I44",
+   "key": "471c8c7a4c80",
+   "item": "voice_en",
+   "where": "l41",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4",
+   "shots": [
+    "l41"
+   ],
+   "evidence": [
+    "And learning just means turning the knobs to the right positions."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep as is.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "And learning just means turning the knobs to the right positions.",
+   "problem": "Repeats l13, but this is the outro recap and it sets up l42.",
+   "suggest": "Keep as is.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I45",
+   "key": "0bb1d5a5bd0d",
+   "item": "voice_en",
+   "where": "l44",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l44"
+   ],
+   "evidence": [
+    "That's next time, when we talk about loss functions."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "That's next time: how we score a guess. It's called a loss function.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "That's next time, when we talk about loss functions.",
+   "problem": "A new technical term with no gloss. As a teaser it is acceptable, but a listener with no ML background gets a blank.",
+   "suggest": "That's next time: how we score a guess. It's called a loss function.",
+   "judge_note": "l44（a，建议，「That's next time: how we score a guess. It's called a loss function.」）：改写 12 个词，原文 9 个，违反 V6「不长于原句」；而且把下一集的内容提前讲了。预告里点一个术语名是常见做法，保留原句。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判不采纳（12 词，预告点名即可）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I46",
+   "key": "4a5c8e6c2864",
+   "item": "voice_zh",
+   "where": "l03",
+   "dim": "V3、V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3、V5",
+   "shots": [
+    "l03"
+   ],
+   "evidence": [
+    "上一期咱们说过，今天的 AI 是从例子里自己学出规律的，学出来的那套本事，就叫模型。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "上一期咱们说过，AI 是从例子里自己学规律的。学出来的这套本事，就叫模型。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "上一期咱们说过，今天的 AI 是从例子里自己学出规律的，学出来的那套本事，就叫模型。",
+   "problem": "7.8 秒、一句里两个意思（AI 从例子学规律；这套本事叫模型），中间只靠逗号连。属于开场，但听着自然，所以只记建议。",
+   "suggest": "上一期咱们说过，AI 是从例子里自己学规律的。学出来的这套本事，就叫模型。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l03 改为「上一期咱们说过，今天的 AI 是从例子里自己学出规律的。学出来的这套本事，就叫模型。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I47",
+   "key": "2899a731c395",
+   "item": "voice_zh",
+   "where": "l13",
+   "dim": "V1",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l13"
+   ],
+   "evidence": [
+    "所谓「学」，就是把旋钮拧到合适的位置。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "这个「学」，就是把旋钮拧到合适的位置。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "所谓「学」，就是把旋钮拧到合适的位置。",
+   "problem": "「所谓」带一点讲课腔，不影响理解。",
+   "suggest": "这个「学」，就是把旋钮拧到合适的位置。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：「所谓」保留，口吻可接受",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I48",
+   "key": "5a81ad66a944",
+   "item": "voice_zh",
+   "where": "l14",
+   "dim": "V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l14"
+   ],
+   "evidence": [
+    "我这儿有十二趟打车的记录，都是为了举例编的，不是真实账单。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "我这儿编了十二趟打车记录，咱们拿它们来试试。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "我这儿有十二趟打车的记录，都是为了举例编的，不是真实账单。",
+   "problem": "「为了举例编的」已经说明不是真实账单，重复声明拖慢进入实验的节奏。",
+   "suggest": "我这儿编了十二趟打车记录，咱们拿它们来试试。",
+   "judge_note": "b l14（建议）：改写更差。「不是真实账单」是对示意数据的虚构声明（script.md 写明打车数据是「示意」），不能为了节奏删掉。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判改写更差：虚构声明不能删",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I49",
+   "key": "7473398bd0b2",
+   "item": "voice_zh",
+   "where": "l15",
+   "dim": "V2、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V2、V3",
+   "shots": [
+    "l15"
+   ],
+   "evidence": [
+    "每个点就是一趟：越往右，路越远，越往上，车费越高。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "把每趟画成点：越靠右，路越远；越靠上，车费越高。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "每个点就是一趟：越往右，路越远，越往上，车费越高。",
+   "problem": "前面只有打车记录，声音里没有画图动作。只听时不知道点和左右上下从哪儿来，进入实验的第一步接不上。",
+   "suggest": "把每趟画成点：越靠右，路越远；越靠上，车费越高。",
+   "judge_note": "b l15（必改）：不成立。s3.html 在 l14 时已经画出图表和十二个点，材料的画面栏也写了「图表」，所以「每个点」指得到。上一轮裁决已经这样判过（I62），这一轮没有新的证据。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判不成立（l14 时画面已有图表）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I50",
+   "key": "22b2688a28be",
+   "item": "voice_zh",
+   "where": "l16",
+   "dim": "V1、V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l16"
+   ],
+   "evidence": [
+    "模型的猜法画出来，就是一条直线：走多远，线上就对着一个车费。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "它猜的车费画出来，是一条直线：多远，对应多少钱，一看就知道。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "模型的猜法画出来，就是一条直线：走多远，线上就对着一个车费。",
+   "problem": "「猜法画出来」是抽象名词，「线上就对着一个车费」是书面表达，真人不这么说；听完得回头补一次意思，「走多远」又再次出现「走」的歧义。",
+   "suggest": "它猜的车费画出来，是一条直线：多远，对应多少钱，一看就知道。",
+   "judge_note": "a l16、b l16 的改写：都不采用。a 的用了书面词「对应」，b 的「在线上找车费」有 online 歧义。改用补充问题里的那句改写。",
+   "status": "implemented",
+   "solution": "l16 改为「它猜的车费画出来，就是一条直线：跑多远，直线多高，就猜多少钱。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I51",
+   "key": "4a4340d1b9dd",
+   "item": "voice_zh",
+   "where": "l16",
+   "dim": "V1、V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l16"
+   ],
+   "evidence": [
+    "模型的猜法画出来，就是一条直线：走多远，线上就对着一个车费。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "猜的车费画出来，是条直线；跑几公里，就在线上找车费。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "模型的猜法画出来，就是一条直线：走多远，线上就对着一个车费。",
+   "problem": "「猜法画出来」抽象，「线上就对着一个车费」也不顺；听众要自行补成把猜出的车费画出来，再按路程找车费。",
+   "suggest": "猜的车费画出来，是条直线；跑几公里，就在线上找车费。",
+   "judge_note": "a l16、b l16 的改写：都不采用。a 的用了书面词「对应」，b 的「在线上找车费」有 online 歧义。改用补充问题里的那句改写。",
+   "status": "implemented",
+   "solution": "l16 改为「它猜的车费画出来，就是一条直线：跑多远，直线多高，就猜多少钱。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I52",
+   "key": "d00fbeaa2fce",
+   "item": "voice_zh",
+   "where": "l16",
+   "dim": "V1、V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l16"
+   ],
+   "evidence": [
+    "模型的猜法画出来，就是一条直线：走多远，线上就对着一个车费。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "它猜的车费画出来，就是一条直线：跑多远，直线多高，就猜多少钱。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "模型的猜法画出来，就是一条直线：走多远，线上就对着一个车费。",
+   "problem": "两人都说这句书面，但都漏了一点：「线上」在今天的口语里首先会被听成「线上（online）」，「线上就对着一个车费」只靠耳朵听要停顿一下才反应过来；b 的改写「在线上找车费」把这个歧义放得更大。另外，这句已经连续三轮被抓到，作者保留的理由只针对一条具体改写。",
+   "suggest": "它猜的车费画出来，就是一条直线：跑多远，直线多高，就猜多少钱。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l16 改为「它猜的车费画出来，就是一条直线：跑多远，直线多高，就猜多少钱。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I53",
+   "key": "03d36ba286b5",
+   "item": "voice_zh",
+   "where": "l17",
+   "dim": "V1、V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l17"
+   ],
+   "evidence": [
+    "每个点到直线有一根竖线，那就是这一趟它猜的跟实际差了多少。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "点到直线的竖线有多长，这趟猜的车费就跟实际差多少。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "每个点到直线有一根竖线，那就是这一趟它猜的跟实际差了多少。",
+   "problem": "「那」接的是竖线，后面却直接接差多少；应把竖线的长度说出来，保留定量关系。",
+   "suggest": "点到直线的竖线有多长，这趟猜的车费就跟实际差多少。",
+   "judge_note": "b l17（建议）：改写不必要。原句配合画面「竖线 = 差多少」已经把量说清楚了，上一轮裁决（I65）也判过保留。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判不必要（上一轮 I65 同）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I54",
+   "key": "014893a4774c",
+   "item": "voice_zh",
+   "where": "l21",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l21"
+   ],
+   "evidence": [
+    "再拧每公里，直线就变陡了。拧到三块五，哎，拧过头了，远的几趟又猜多了。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "把每公里的价钱拧高，线就陡了。拧到三块五，哎，过头了，远的几趟猜多了。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "再拧每公里，直线就变陡了。拧到三块五，哎，拧过头了，远的几趟又猜多了。",
+   "problem": "「每公里」是距离单位，直接作为被拧的东西省略过头。只听时补出「价钱」更顺。",
+   "suggest": "把每公里的价钱拧高，线就陡了。拧到三块五，哎，过头了，远的几趟猜多了。",
+   "judge_note": "b l21、l22（建议）：不成立。「每公里」已经是旋钮名（l09、l11、画面标签）。改写去掉了「又猜多了」里的「又」，丢掉了和 l18「全都猜少了」的对照。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判不成立",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I55",
+   "key": "67220fbf9c12",
+   "item": "voice_zh",
+   "where": "l22",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l22"
+   ],
+   "evidence": [
+    "每公里往回拧到两块五左右，起步价再微调到十块二左右。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "每公里的价钱拧回两块五左右，起步价再调到十块二左右。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "每公里往回拧到两块五左右，起步价再微调到十块二左右。",
+   "problem": "延续上一句的省略，「每公里往回拧」仍硌耳；补出价钱即可。",
+   "suggest": "每公里的价钱拧回两块五左右，起步价再调到十块二左右。",
+   "judge_note": "b l21、l22（建议）：不成立。「每公里」已经是旋钮名（l09、l11、画面标签）。改写去掉了「又猜多了」里的「又」，丢掉了和 l18「全都猜少了」的对照。；a l22（记录）：改写不合规。「差不多就行」比原句长 1 个字，还把「约等于」改成了「随便调调」的意思。如果要去掉重复，只删前一个「左右」就行：「每公里往回拧到两块五，起步价再微调到十块二左右。」",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I54",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I56",
+   "key": "eae503238fcd",
+   "item": "voice_zh",
+   "where": "l22",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l22"
+   ],
+   "evidence": [
+    "每公里往回拧到两块五左右，起步价再微调到十块二左右。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "每公里往回拧到两块五，起步价再微调到十块二，差不多就行。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "每公里往回拧到两块五左右，起步价再微调到十块二左右。",
+   "problem": "两个「左右」重复。",
+   "suggest": "每公里往回拧到两块五，起步价再微调到十块二，差不多就行。",
+   "judge_note": "b l21、l22（建议）：不成立。「每公里」已经是旋钮名（l09、l11、画面标签）。改写去掉了「又猜多了」里的「又」，丢掉了和 l18「全都猜少了」的对照。；a l22（记录）：改写不合规。「差不多就行」比原句长 1 个字，还把「约等于」改成了「随便调调」的意思。如果要去掉重复，只删前一个「左右」就行：「每公里往回拧到两块五，起步价再微调到十块二左右。」",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：两个「左右」各管一个读数，保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I57",
+   "key": "57dbead1077b",
+   "item": "voice_zh",
+   "where": "l27",
+   "dim": "V1、V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V5",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "它从这十二趟里学到的全部东西，就在旋钮上这两个读数里。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "它从这十二趟里学到的，全在旋钮上这两个读数里了。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "它从这十二趟里学到的全部东西，就在旋钮上这两个读数里。",
+   "problem": "「学到的全部东西，就在……里」是容器式书面说法，「读数」首次出现且偏仪器用语，比前后口吻端。保留「读数」是为了承接 l35、l38，所以只改前半句结构。",
+   "suggest": "它从这十二趟里学到的，全在旋钮上这两个读数里了。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l27 改为「它从这十二趟里学到的，全在旋钮上这两个读数里了。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I58",
+   "key": "0a51e33a2034",
+   "item": "voice_zh",
+   "where": "l27",
+   "dim": "V1、V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V5",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "它从这十二趟里学到的全部东西，就在旋钮上这两个读数里。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "它从这十二趟里学到的，就是这两个旋钮的读数。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "它从这十二趟里学到的全部东西，就在旋钮上这两个读数里。",
+   "problem": "「全部东西就在……里」把简单结论包装成抽象容器关系，念到这里口吻变端了。保留「读数」即可，不必保留整套句式。",
+   "suggest": "它从这十二趟里学到的，就是这两个旋钮的读数。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l27 改为「它从这十二趟里学到的，全在旋钮上这两个读数里了。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I59",
+   "key": "3ac6a536beac",
+   "item": "voice_zh",
+   "where": "l29",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l29"
+   ],
+   "evidence": [
+    "你把这两个数抄给别人，他手里就有了一模一样的模型。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "别人有同样的机器，照这两个数拧，就有了一样的模型。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "你把这两个数抄给别人，他手里就有了一模一样的模型。",
+   "problem": "从抄两个数跳到了得到完整模型。l28 的机器没变，没有建立别人也有同样机器这个条件。",
+   "suggest": "别人有同样的机器，照这两个数拧，就有了一样的模型。",
+   "judge_note": "b l29（建议）：不成立。l28「机器还是那台机器，一点没变」已经交代了前提，和上一轮裁决（I69）一致。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判不成立（l28 已交代）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I60",
+   "key": "cd4d8b66f28e",
+   "item": "voice_zh",
+   "where": "l33",
+   "dim": "V3、V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3、V5",
+   "shots": [
+    "l33"
+   ],
+   "evidence": [
+    "二零二零年，OpenAI 发布的 G P T 三，就有一千七百五十亿个参数。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "二零二零年的 G P T 三，就有一千七百五十亿个参数。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "二零二零年，OpenAI 发布的 G P T 三，就有一千七百五十亿个参数。",
+   "problem": "6.5 秒里年份、公司名、字母型号、大数四样新东西一起来，数字最重要却排在最后；「发布的 G P T 三，就有」断得别扭。",
+   "suggest": "二零二零年的 G P T 三，就有一千七百五十亿个参数。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l33 改为「2020年，OpenAI 的 GPT-3，就有一千七百五十亿个参数。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t10_model_params/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I61",
+   "key": "3b85856400f8",
+   "item": "voice_zh",
+   "where": "l36",
+   "dim": "V1、V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l36"
+   ],
+   "evidence": [
+    "这么多旋钮，当然不是人一个一个拧的，是拿海量文字训练出来的。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "这么多旋钮，不用人挨个拧，拿大量文字训练模型，让它自己拧。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "这么多旋钮，当然不是人一个一个拧的，是拿海量文字训练出来的。",
+   "problem": "前半说谁拧旋钮，后半接成旋钮被训练出来。意思可以推知，但真人顺着讲会说训练模型，让它调旋钮。",
+   "suggest": "这么多旋钮，不用人挨个拧，拿大量文字训练模型，让它自己拧。",
+   "judge_note": "b l36（建议）：不成立。理由同上一轮裁决（I70）：口语能听懂，而且改写把「这么多」换成了「这些」，丢掉了承接 l35 的数量感。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判不成立（同 I70）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I62",
+   "key": "1f9b429c04bf",
+   "item": "voice_zh",
+   "where": "l36",
+   "dim": "V1",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l36"
+   ],
+   "evidence": [
+    "是拿海量文字训练出来的。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "是拿一大堆文字训练出来的。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "是拿海量文字训练出来的。",
+   "problem": "「海量」偏书面，口语多说「一大堆」。",
+   "suggest": "是拿一大堆文字训练出来的。",
+   "judge_note": "b l36（建议）：不成立。理由同上一轮裁决（I70）：口语能听懂，而且改写把「这么多」换成了「这些」，丢掉了承接 l35 的数量感。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：保留「海量」，与 l32 的规模感一致",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I63",
+   "key": "6c42515d8077",
+   "item": "voice_zh",
+   "where": "l37",
+   "dim": "V1、V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V2",
+   "shots": [
+    "l37"
+   ],
+   "evidence": [
+    "但道理跟打车费一模一样：机器怎么算是人定的，旋钮拧到几，是从例子里学的。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "但跟刚才猜车费一样：机器怎么算是人定的，旋钮拧到几，得从例子里学。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "但道理跟打车费一模一样：机器怎么算是人定的，旋钮拧到几，是从例子里学的。",
+   "problem": "「道理」和「打车费」比较得别扭，要说的是跟刚才猜车费一样。此句承担回接例子的过渡功能，按从严条目处理。",
+   "suggest": "但跟刚才猜车费一样：机器怎么算是人定的，旋钮拧到几，得从例子里学。",
+   "judge_note": "b l37（必改）：不成立。l37 在「上千亿个旋钮」这一章的内部，不属于章节串场，不适用从严条目；「道理跟打车费一模一样」是正常的口语省略。改写「但跟刚才猜车费一样」也不比原句好。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判不成立（章节内部，非串场）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I64",
+   "key": "66f3e8c8004e",
+   "item": "voice_zh",
+   "where": "l39",
+   "dim": "V3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l39"
+   ],
+   "evidence": [
+    "所以新闻里说「千亿参数」，意思就是：这台机器上有上千亿个旋钮。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "所以新闻里说「千亿参数」，意思就是：那台机器上有上千亿个旋钮。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "所以新闻里说「千亿参数」，意思就是：这台机器上有上千亿个旋钮。",
+   "problem": "「这台机器」前面说的是 l36–l38 的 GPT-3 和训练好的文件，这里要指的是新闻里的「某某大模型」，指代有点飘，不过意思能听懂。",
+   "suggest": "所以新闻里说「千亿参数」，意思就是：那台机器上有上千亿个旋钮。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：「这台机器」承接 l38 的模型文件，能听懂",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:26:39",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  }
+ ]
+}

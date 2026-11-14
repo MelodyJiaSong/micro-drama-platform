@@ -1,0 +1,201 @@
+{
+ "note": "学习目标与理解测验（写讲稿前定，审查与测验都对照它）。题目以迁移题为主，干扰项来自真实误解；前测、看片、后测、讲回来。AI 学生只用来筛题，最终以真人盲测为准。句号按 v1 讲稿挂上（2026-11-09）。",
+ "objectives": [
+  {
+   "id": "O1",
+   "zh": "能用自己的话说出梯度下降在做什么：看不见整张地形图，只看脚下的坡，每一步把所有旋钮往分数降得最快的方向拧一小步，一步步走到低处",
+   "en": "Say in their own words what gradient descent does: without seeing the whole landscape, feel the local slope and turn all the knobs a small step in the direction that lowers the score fastest, step after step",
+   "lines": [
+    "l05",
+    "l10",
+    "l11",
+    "l14",
+    "l29",
+    "l48"
+   ]
+  },
+  {
+   "id": "O2",
+   "zh": "知道「坡度」对一个旋钮意味着什么：稍微拧一点，分数变多少；变得越多，这个旋钮越该多拧",
+   "en": "Know what the slope means for one knob: how much the score changes when you turn it a little; the bigger the change, the more that knob gets turned",
+   "lines": [
+    "l12",
+    "l13",
+    "l19",
+    "l20",
+    "l21",
+    "l22",
+    "l26"
+   ]
+  },
+  {
+   "id": "O3",
+   "zh": "知道学习率选错的后果：太大会迈过头、来回跳、越跳越高；太小方向对但走得太慢",
+   "en": "Know what a wrong learning rate does: too big overshoots and bounces higher and higher; too small heads the right way but crawls",
+   "lines": [
+    "l15",
+    "l30",
+    "l32",
+    "l33",
+    "l34",
+    "l35",
+    "l36",
+    "l37",
+    "l38",
+    "l39",
+    "l49"
+   ]
+  },
+  {
+   "id": "O4",
+   "zh": "知道大模型怎么用它：每步只看一小批数据（随机梯度下降），Adam 这类方法给每个旋钮单独定步子；GPT-3 就是这样训练的",
+   "en": "Know how big models use it: each step looks at only a small batch of data (stochastic gradient descent), and methods like Adam set a separate step size for each knob; GPT-3 was trained this way",
+   "lines": [
+    "l41",
+    "l42",
+    "l43",
+    "l44",
+    "l45",
+    "l46",
+    "l47"
+   ]
+  }
+ ],
+ "quiz": [
+  {
+   "id": "Q1",
+   "objective": "O1",
+   "type": "迁移",
+   "zh": "夜里停电，你要在一个漆黑、地面高低不平的大停车场里找到最低处的排水口。照梯度下降的思路，你会怎么做？",
+   "en": "In a blackout you need to find the drain at the lowest point of a pitch-dark, uneven parking lot. Following the gradient descent idea, what do you do?",
+   "choices": {
+    "zh": [
+     "A 先把整个停车场每个地方的高度都量一遍，再直接走到最低点",
+     "B 用脚感觉哪边往下最斜，往那边走一小步，再感觉、再走",
+     "C 随便挑个方向一直走到底",
+     "D 站着不动，等排水口的水声"
+    ],
+    "en": [
+     "A Measure the height of every spot first, then walk straight to the lowest",
+     "B Feel which way slopes down most, take a small step that way, then feel again",
+     "C Pick any direction and keep walking",
+     "D Stand still and listen for the drain"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "以为模型能先看到整张地形图",
+    "C": "忽略「每步重新看坡」"
+   }
+  },
+  {
+   "id": "Q2",
+   "objective": "O2",
+   "type": "解释为什么",
+   "zh": "一个模型有两个旋钮。把 A 拧一点点，分数降 1；把 B 拧同样一点点，分数降 10。梯度下降的下一步会怎么拧？为什么？",
+   "en": "A model has two knobs. Turning A a tiny bit lowers the score by 1; turning B the same tiny bit lowers it by 10. How will the next gradient descent step turn them, and why?",
+   "answer_key": {
+    "zh": "两个都往让分数降的方向拧，但 B 拧得多得多（大约 10 倍）：B 的坡更陡，每个旋钮拧多少跟它的坡成正比",
+    "en": "Both turn the way that lowers the score, but B turns much more (about 10×): its slope is steeper, and each knob moves in proportion to its slope"
+   }
+  },
+  {
+   "id": "Q3",
+   "objective": "O3",
+   "type": "误解探针",
+   "zh": "训练太慢，同事说：「把学习率调大一百倍，就能快一百倍。」这话对吗？",
+   "en": "Training is slow, and a colleague says: \"Make the learning rate 100 times bigger and it'll be 100 times faster.\" Is that right?",
+   "choices": {
+    "zh": [
+     "A 对，步子大就走得快",
+     "B 不一定：太大会迈过谷底、来回跳，分数反而越来越高",
+     "C 学习率大小不影响训练",
+     "D 对，而且分数会更低"
+    ],
+    "en": [
+     "A Yes, bigger steps mean faster",
+     "B Not necessarily: too big overshoots the valley and bounces, and the score can climb",
+     "C The learning rate doesn't affect training",
+     "D Yes, and it reaches a lower score too"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "步子越大越好",
+    "C": "以为学习率无关紧要"
+   }
+  },
+  {
+   "id": "Q4",
+   "objective": "O3",
+   "type": "识图",
+   "zh": "训练时记下每一步的分数：九十六、一百一十八、一百四十五、一百八十……最可能是什么问题？",
+   "en": "You log the score at each step: 96, 118, 145, 180… What is the most likely problem?",
+   "choices": {
+    "zh": [
+     "A 学习率太小",
+     "B 学习率太大",
+     "C 已经到谷底了",
+     "D 数据太少"
+    ],
+    "en": [
+     "A Learning rate too small",
+     "B Learning rate too big",
+     "C It has already reached the bottom",
+     "D Too little data"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "把「越来越差」当成「走得慢」"
+   }
+  },
+  {
+   "id": "Q5",
+   "objective": "O4",
+   "type": "迁移",
+   "zh": "训练一个大模型，有几千亿个词的数据。为什么每一步只随机抽一小批来算坡？",
+   "en": "A big model has hundreds of billions of words of training data. Why does each step use only a small random batch to estimate the slope?",
+   "choices": {
+    "zh": [
+     "A 因为一小批算出来的坡比全部数据更准",
+     "B 因为每步都看全部数据太慢；粗一点的坡也能一步步走到谷底附近",
+     "C 因为其余的数据没用",
+     "D 因为这样就不需要学习率了"
+    ],
+    "en": [
+     "A Because a small batch gives a more accurate slope than all the data",
+     "B Because looking at all the data every step is too slow; a rougher slope still gets you near the bottom step by step",
+     "C Because the rest of the data is useless",
+     "D Because then no learning rate is needed"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "以为小批更准",
+    "D": "以为变种不需要学习率"
+   }
+  }
+ ],
+ "pass_rule": "每个学习目标至少有一道题，真人后测正确率比前测提升、且 ≥ 2/3 的人答对；讲回来能说出「只看脚下的坡、往最陡的下坡方向迈一小步、反复走」与「学习率太大来回跳、太小走得慢」，不出现误解。AI 学生结果只用于改题与找讲稿漏洞，不作过关依据。",
+ "explain_back": {
+  "prompt": {
+   "zh": "请用一分钟跟朋友解释：梯度下降是怎么让模型越来越准的，学习率又是什么。",
+   "en": "In one minute, explain to a friend how gradient descent makes a model better, and what the learning rate is."
+  },
+  "propositions": [
+   "看不见整张地形图，只看脚下的坡",
+   "每一步把所有旋钮往分数降得最快的方向拧一小步，反复走",
+   "学习率是每一步拧多大：太大来回跳，太小走得慢",
+   "（加分）坡越陡的旋钮拧得越多；越近谷底步子越小",
+   "（加分）大模型每步只看一小批数据（随机梯度下降），常用 Adam"
+  ],
+  "misconceptions": [
+   "模型先算出整张地形图，再直接跳到最低点",
+   "学习率越大训练越快、越好",
+   "梯度下降一定能找到全世界最低的点",
+   "每一步每个旋钮都拧同样多",
+   "随机梯度下降比用全部数据更准"
+  ]
+ }
+}

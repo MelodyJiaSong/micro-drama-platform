@@ -1,0 +1,16 @@
+# s1 st2（场内第 2 个镜头）
+
+- 设计时长：30 秒；出场：c1；单拍
+- 送给模型的 prompt：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s1\shots\st2\资料包\prompt.txt`；参考清单：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s1\shots\st2\资料包\manifest.json`
+- 规划图：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s1\shots\st2\planning\st2_first_frame.png`
+- 规划图：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s1\shots\st2\planning\st2_overhead.png`
+- 规划图：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s1\shots\st2\planning\st2_overhead_ref.png`
+
+## 分镜规格
+**看点**（这一镜要观众看懂或感到什么；只给审查用，不进 prompt）：今天只有两件事：找地方睡、尝鱼露；全部家当就是手心这九枚钱
+**动作**：自拍：Riley 站在海边的黑沙滩上，面对镜头；她伸直右臂持镜，镜头就在她手里，在她右前方一臂远。她的左手是画面里唯一做动作的手，右肩和上臂从画面左缘伸出去。长发披散，海风把几缕吹到脸边。身后是陡坡上的城墙、城门和红瓦屋顶：城门在她右肩后方（画面左上）；神庙脚手架在她头后偏左，城墙和红瓦屋顶从她身后一直延伸到画右。她兴奋地报出地点和年份，再说今天要办的两件事；说到 everyone here 时朝身后画右那一片城墙和红瓦屋顶偏一下头、眼睛往后一瞟，马上转回镜头。她的左手从一开始就在腰前、画框下方，手心朝上、手指微微拢着，托着刚从左裤袋掏出来、已经在手心里摊开的 9 枚钱。说 And my budget for all of that is… 时，她把这只手心朝上的左手平平稳稳地慢慢抬到镜头前，停半拍；说到 this 时四指伸直、手心摊平，稍稍朝镜头一倾：9 枚钱平铺在她的手掌上、一枚挨一枚分三排，每一枚都看得见、数得清——靠指根的两排各是 3 枚红铜小钱，靠手腕的一排是 1 枚红铜小钱、1 枚浅色小铜币和 1 枚金黄大黄铜币；摊平后手心稳住，停 2 秒让镜头看清；她再看着镜头、带点自嘲地说 Yeah. This is it.，手心仍摊平。道具（p2 钱币）：本镜一共 9 枚钱——7 枚一样大的红铜色小钱，1 枚明显更小（比红铜小钱小一圈）、颜色更浅的小铜币，1 枚金灿灿、比红铜小钱大一圈、更厚更亮的大黄铜币；钱都是红铜色和金黄色，三种钱的大小和颜色一眼分得出；p2 道具图示意三种币的形制和颜色，p6 道具图就是这只手心里 9 枚钱的样子和排法。从抬进画面到收拢，9 枚一直平贴在她手心里、一枚不少。出场时她四指一合，把 9 枚攥回左拳，手放低出画（揣回左侧裤袋）。画面里只有她一个人。第 0 秒：她面对镜头，右臂伸出去持镜，左手托着钱垂在腰前（画框下方），嘴还闭着，在笑。
+**走位**：Riley 面对镜头站着；镜头在她伸直的右臂末端、她的右前方，离她的脸约一臂远、略高于眼睛，城门在她右肩后方（画面左上，约横向两成处），神庙脚手架在她头后偏左，海在画左边缘。托着钱的左手 0–20.8 秒在腰前、画框下方；20.8–23 秒平稳抬到镜头前约三十厘米，在画面下半部偏画右；28.5–30 秒攥拳放低出画。
+**节拍**：0–1.5秒 她举着右臂对镜头深吸一口气，笑出来，还没开口；1.5–9秒 说 Good morning from Pompeii! It's May, 75 AD — which is so weird to say out loud.，说到 so weird to say 时自己笑着轻轻摇一下头；9–14.8秒 说 Okay, two things today: I need somewhere to sleep before it gets dark,，说到 two things 时眉毛一扬；14.8–20.8秒 说 and I need to try garum — it's this fish sauce everyone here is obsessed with.，说到 garum 眼睛一亮，说到 everyone here 时朝身后画右的城偏一下头、眼睛往后一瞟，马上转回镜头；20.8–24.5秒 说 And my budget for all of that is… this.：说 And my budget for all of that is… 时把托着钱、手指微拢的左手平稳地抬到镜头前，停半拍，说 this 时四指伸直、手心摊平朝镜头一倾，9 枚钱平铺成三排；24.5–26.5秒 手心稳住，让镜头看清 9 枚：靠指根两排各 3 枚红铜小钱，靠手腕一排是 1 枚红铜小钱、浅色小铜币和金黄大币；她嘴闭着，眼睛看着镜头，眉毛轻轻一挑；26.5–28.5秒 她看着镜头、带点自嘲地咧嘴笑着说 Yeah. This is it.，手心还摊平，9 枚钱一枚不少；28.5–30秒 她四指一合，把 9 枚钱攥回左拳，手放低出画，海风吹着头发，安静
+**镜头**：自拍：她伸直右臂持镜，镜头就在她手里。近景，胸以上：她的脸在画面横向正中、头顶完整，右肩和上臂从画面左缘伸出去；身后的城墙与城门虚化但轮廓清楚，城门在画面左上；手持轻微晃动；一镜到底。摊钱时左手掌在画面下半部前景，钱和她的脸同在画面里，钱对焦清楚：摊平的手掌约占画面下半部三分之一宽，9 枚钱都在画内、一枚枚看得清。
+**光线**：五月清晨。太阳低低地挂在她身后城的后面，在画面左上角附近、比城门再偏左一点的屋脊上露出一点亮光，被屋顶挡住大半：她逆光，头发边缘一圈暖金色亮边，脸在柔和的阴影里，被沙滩和海面的反光托亮，表情看得清；身后城墙朝海的一面在淡蓝色阴影里，屋顶轮廓镶着金边；摊开的钱在反光里看得清颜色；天空干净晴朗；只有自然光。
+**台词**：Riley（兴奋、笑着，美式英语；Pompeii 读 pom-PAY；75 AD 读 seventy-five A-D；garum 读 GAH-rum，重音在前；is… 和 this 之间停半拍；最后 Yeah. This is it. 带点自嘲）：Good morning from Pompeii! It's May, 75 AD — which is so weird to say out loud. Okay, two things today: I need somewhere to sleep before it gets dark, and I need to try garum — it's this fish sauce everyone here is obsessed with. And my budget for all of that is… this. Yeah. This is it.

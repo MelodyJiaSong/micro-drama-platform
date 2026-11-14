@@ -1,0 +1,13 @@
+
+SELECT ?item ?itemLabel ?h ?hUnitLabel ?hRank ?floors ?inception ?start ?opened ?country ?countryLabel ?iso2 ?city ?cityLabel ?image WHERE {
+  VALUES ?item { wd:Q12495 wd:Q7969454 wd:Q18547 wd:Q189476 wd:Q1077308 wd:Q494895 wd:Q11245 wd:Q168575 wd:Q10939987 wd:Q197833 wd:Q83101 wd:Q80852 wd:Q317034 wd:Q143235 wd:Q2631701 wd:Q4255374 wd:Q18640924 wd:Q27670200 wd:Q5410187 wd:Q83063 wd:Q83063 wd:Q617082 wd:Q382121 wd:Q2484373 wd:Q29294 wd:Q1470046 wd:Q1043438 wd:Q2631268 wd:Q18398409 wd:Q233940 wd:Q1165269 wd:Q546221 wd:Q109648853 wd:Q19458189 wd:Q80813 wd:Q136531257 wd:Q19492 wd:Q557933 wd:Q15246 wd:Q5961370 wd:Q1605680 wd:Q18347369 wd:Q97343655 wd:Q102281065 wd:Q65054387 wd:Q18111159 wd:Q216264 wd:Q245246 wd:Q130693037 wd:Q18415349 }
+  OPTIONAL { ?item p:P2048 ?hs . ?hs psv:P2048 ?hv . ?hv wikibase:quantityAmount ?h ; wikibase:quantityUnit ?hUnit . ?hs wikibase:rank ?hRank . }
+  OPTIONAL { ?item wdt:P1101 ?floors . }
+  OPTIONAL { ?item wdt:P571 ?inception . }
+  OPTIONAL { ?item wdt:P580 ?start . }
+  OPTIONAL { ?item wdt:P1619 ?opened . }
+  OPTIONAL { ?item wdt:P17 ?country . OPTIONAL { ?country wdt:P297 ?iso2 . } }
+  OPTIONAL { ?item wdt:P131 ?city . }
+  OPTIONAL { ?item wdt:P18 ?image . }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}

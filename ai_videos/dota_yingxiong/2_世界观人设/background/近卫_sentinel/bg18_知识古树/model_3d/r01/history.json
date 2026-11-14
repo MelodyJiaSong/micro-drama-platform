@@ -1,0 +1,257 @@
+{
+  "prompt": [
+    9,
+    "61fa4ccd-714e-4862-9e50-7cf8485e1e7d",
+    {
+      "1": {
+        "class_type": "LoadTrellis2Models",
+        "inputs": {
+          "resolution": "1024_cascade",
+          "precision": "bf16",
+          "attn_backend": "sdpa"
+        }
+      },
+      "10": {
+        "class_type": "LoadImage",
+        "inputs": {
+          "image": "dota287_bg18_front_657aec3bb1.png"
+        }
+      },
+      "11": {
+        "class_type": "Trellis2RemoveBackground",
+        "inputs": {
+          "image": [
+            "10",
+            0
+          ],
+          "low_vram": true
+        }
+      },
+      "12": {
+        "class_type": "LoadImage",
+        "inputs": {
+          "image": "dota287_bg18_side_df61e48bf8.png"
+        }
+      },
+      "13": {
+        "class_type": "Trellis2RemoveBackground",
+        "inputs": {
+          "image": [
+            "12",
+            0
+          ],
+          "low_vram": true
+        }
+      },
+      "14": {
+        "class_type": "LoadImage",
+        "inputs": {
+          "image": "dota287_bg18_back_c9aa80dc58.png"
+        }
+      },
+      "15": {
+        "class_type": "Trellis2RemoveBackground",
+        "inputs": {
+          "image": [
+            "14",
+            0
+          ],
+          "low_vram": true
+        }
+      },
+      "20": {
+        "class_type": "Trellis2GetConditioning",
+        "inputs": {
+          "model_config": [
+            "1",
+            0
+          ],
+          "image": [
+            "11",
+            0
+          ],
+          "mask": [
+            "11",
+            1
+          ],
+          "background_color": "black"
+        }
+      },
+      "21": {
+        "class_type": "Trellis2MultiViewImageToShape",
+        "inputs": {
+          "model_config": [
+            "1",
+            0
+          ],
+          "seed": 28723,
+          "ss_sampling_steps": 12,
+          "shape_sampling_steps": 12,
+          "max_tokens": 32768,
+          "front_image": [
+            "11",
+            0
+          ],
+          "front_mask": [
+            "11",
+            1
+          ],
+          "right_image": [
+            "13",
+            0
+          ],
+          "right_mask": [
+            "13",
+            1
+          ],
+          "back_image": [
+            "15",
+            0
+          ],
+          "back_mask": [
+            "15",
+            1
+          ],
+          "front_axis": "z",
+          "blend_temperature": 2.0,
+          "background_color": "black"
+        }
+      },
+      "22": {
+        "class_type": "Trellis2ExportTrimesh",
+        "inputs": {
+          "trimesh": [
+            "21",
+            0
+          ],
+          "filename_prefix": "dota287/bg18_r01_raw",
+          "file_format": "glb"
+        }
+      },
+      "23": {
+        "class_type": "Trellis2ShapeToTexturedMesh",
+        "inputs": {
+          "model_config": [
+            "1",
+            0
+          ],
+          "conditioning": [
+            "20",
+            0
+          ],
+          "shape_slat": [
+            "21",
+            1
+          ],
+          "subs": [
+            "21",
+            2
+          ],
+          "seed": 28723,
+          "tex_sampling_steps": 12
+        }
+      },
+      "24": {
+        "class_type": "Trellis2ProcessMesh",
+        "inputs": {
+          "trimesh": [
+            "21",
+            0
+          ],
+          "remesh": "on",
+          "target_face_count": 1000000,
+          "remesh.remesh_band": 1.0,
+          "remesh.remove_inner_faces": false,
+          "floater_threshold": 0.0,
+          "weld_vertices": true,
+          "weld_digits": 5,
+          "chart_cone_angle": 90.0,
+          "chart_refine_iterations": 0,
+          "chart_global_iterations": 1,
+          "chart_smooth_strength": 1
+        }
+      },
+      "25": {
+        "class_type": "Trellis2RasterizePBR",
+        "inputs": {
+          "trimesh": [
+            "24",
+            0
+          ],
+          "voxelgrid": [
+            "23",
+            0
+          ],
+          "texture_size": 4096,
+          "original_mesh": [
+            "21",
+            0
+          ]
+        }
+      },
+      "26": {
+        "class_type": "Trellis2ExportTrimesh",
+        "inputs": {
+          "trimesh": [
+            "25",
+            0
+          ],
+          "filename_prefix": "dota287/bg18_r01_pbr",
+          "file_format": "glb"
+        }
+      },
+      "27": {
+        "class_type": "Trellis2ExportTrimesh",
+        "inputs": {
+          "trimesh": [
+            "24",
+            0
+          ],
+          "filename_prefix": "dota287/bg18_r01_processed",
+          "file_format": "glb"
+        }
+      }
+    },
+    {
+      "client_id": "dota287_bg18_r01",
+      "create_time": 1793152730995
+    },
+    [
+      "26",
+      "22",
+      "27"
+    ]
+  ],
+  "outputs": {},
+  "status": {
+    "status_str": "success",
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "61fa4ccd-714e-4862-9e50-7cf8485e1e7d",
+          "timestamp": 1793152730998
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [
+            "1"
+          ],
+          "prompt_id": "61fa4ccd-714e-4862-9e50-7cf8485e1e7d",
+          "timestamp": 1793152731059
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "61fa4ccd-714e-4862-9e50-7cf8485e1e7d",
+          "timestamp": 1793154296145
+        }
+      ]
+    ]
+  },
+  "meta": {}
+}

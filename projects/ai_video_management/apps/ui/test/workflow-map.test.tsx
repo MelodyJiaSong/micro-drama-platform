@@ -26,7 +26,8 @@ describe("overview navigation", () => {
     const aiVideo = workflowNavigation(catalog).children?.[0];
     expect(aiVideo?.children?.[0].name).toBe("1.0_总览");
     expect(aiVideo?.children?.[0].children?.map(node => [node.name, node.navigation_href])).toEqual([["1.0.1_工作流全景", "/workflow/overview"], ["1.0.2_术语表", "/workflow/glossary"],
-      ["1.0.3_决策记录", "/workflow/source?source_id=repo%3A.agents%2Fskills%2Fai-videos-pipeline%2Fmodules%2Fdecisions.md"]]);
+      ["1.0.3_决策记录", "/workflow/source?source_id=repo%3A.agents%2Fskills%2Fai-videos-pipeline%2Fmodules%2Fdecisions.md"],
+      ["1.0.4_自检与进化（仓库级）", "/workflow/qc"], ["1.0.5_审查机制与审查单", "/workflow/qc/strategy"]]);
     expect(aiVideo?.children?.slice(1, 7).map(node => node.path)).toEqual(WORKFLOW_MODULES.map(module => `/workflow/${module.id}`));
   });
 });

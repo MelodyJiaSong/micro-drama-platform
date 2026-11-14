@@ -1,0 +1,521 @@
+{
+ "title": "t11 损失函数 Loss function",
+ "tagline": "损失函数，就是给错误打个分，分越低越好；训练，就是把这个分压下去。",
+ "lang": "zh",
+ "languages": [
+  {
+   "lang": "zh",
+   "label": "中文",
+   "preview": "edu_videos/ai_terms/t11_loss_function/preview.json"
+  },
+  {
+   "lang": "en",
+   "label": "English",
+   "preview": "edu_videos/ai_terms/t11_loss_function/preview.en.json"
+  }
+ ],
+ "video": "edu_videos/ai_terms/t11_loss_function/final/t11_loss_function.mp4",
+ "duration": 295.3,
+ "chapters": [
+  {
+   "id": "s0",
+   "title": "冷开场",
+   "t": 0.0
+  },
+  {
+   "id": "s2",
+   "title": "损失函数是什么",
+   "t": 27.03
+  },
+  {
+   "id": "s3",
+   "title": "做个小实验",
+   "t": 64.07
+  },
+  {
+   "id": "s4",
+   "title": "模型只认分数",
+   "t": 198.47
+  },
+  {
+   "id": "s5",
+   "title": "大模型怎么打分",
+   "t": 222.4
+  },
+  {
+   "id": "s6",
+   "title": "片尾",
+   "t": 276.83
+  }
+ ],
+ "items": [
+  {
+   "t": 0.6,
+   "end": 7.29,
+   "title": "上一期说过，模型就是一台带旋钮的机器",
+   "subtitle": "上一期说过，模型就是一台带旋钮的机器，学习就是把旋钮拧到对的位置。",
+   "badge": "l01",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l01.jpg"
+  },
+  {
+   "t": 7.64,
+   "end": 12.68,
+   "title": "可什么叫「对」？",
+   "subtitle": "可什么叫「对」？机器自己怎么知道，这次比上次拧得好？",
+   "badge": "l02",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l02.jpg"
+  },
+  {
+   "t": 13.03,
+   "end": 15.7,
+   "title": "办法很简单",
+   "subtitle": "办法很简单：给它的错误打个分。",
+   "badge": "l03",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l03.jpg"
+  },
+  {
+   "t": 16.05,
+   "end": 21.91,
+   "title": "这个分就叫损失，算这个分的规则",
+   "subtitle": "这个分就叫损失，算这个分的规则，叫损失函数，今天就聊它。",
+   "badge": "l04",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l04.jpg"
+  },
+  {
+   "t": 30.23,
+   "end": 35.43,
+   "title": "模型每猜一次，跟真实答案总会差一点",
+   "subtitle": "模型每猜一次，跟真实答案总会差一点，差了多少，就叫误差。",
+   "badge": "l05",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l05.jpg"
+  },
+  {
+   "t": 35.78,
+   "end": 41.75,
+   "title": "把一大堆误差汇成一个数，就是损失",
+   "subtitle": "把一大堆误差汇成一个数，就是损失，相当于给模型这次表现打的分。",
+   "badge": "l06",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l06.jpg"
+  },
+  {
+   "t": 42.1,
+   "end": 48.22,
+   "title": "不过它跟考试分数反着来",
+   "subtitle": "不过它跟考试分数反着来：分越低越好，零分最好，就是一点不差。",
+   "badge": "l07",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l07.jpg"
+  },
+  {
+   "t": 48.57,
+   "end": 51.2,
+   "title": "有点像打高尔夫，杆数越少越好",
+   "subtitle": "有点像打高尔夫，杆数越少越好。",
+   "badge": "l08",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l08.jpg"
+  },
+  {
+   "t": 51.55,
+   "end": 58.62,
+   "title": "有了这个分，机器就能自己比较",
+   "subtitle": "有了这个分，机器就能自己比较：拧一下旋钮，分低了就是拧对了，分高了就拧回来。",
+   "badge": "l09",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l09.jpg"
+  },
+  {
+   "t": 58.97,
+   "end": 63.15,
+   "title": "所以训练说白了，就是一遍遍拧旋钮",
+   "subtitle": "所以训练说白了，就是一遍遍拧旋钮，把这个分压下去。",
+   "badge": "l10",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l10.jpg"
+  },
+  {
+   "t": 67.27,
+   "end": 72.98,
+   "title": "还是上一期那十二趟打车，横着是距离",
+   "subtitle": "还是上一期那十二趟打车，横着是距离，竖着是车费，数是编的。",
+   "badge": "l11",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l11.jpg"
+  },
+  {
+   "t": 73.33,
+   "end": 78.67,
+   "title": "模型还是那条直线，两个旋钮",
+   "subtitle": "模型还是那条直线，两个旋钮：起步价和每公里的价钱。",
+   "badge": "l12",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l12.jpg"
+  },
+  {
+   "t": 79.02,
+   "end": 85.12,
+   "title": "先试第一种拧法",
+   "subtitle": "先试第一种拧法：起步价五块，每公里两块。这条线整个偏低了。",
+   "badge": "l13",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l13.jpg"
+  },
+  {
+   "t": 85.47,
+   "end": 92.31,
+   "title": "拿五公里那趟来看",
+   "subtitle": "拿五公里那趟来看：实际二十三块，模型猜十五块，差了八块，这就是误差。",
+   "badge": "l14",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l14.jpg"
+  },
+  {
+   "t": 92.66,
+   "end": 97.89,
+   "title": "把误差平方一下，八乘八，六十四",
+   "subtitle": "把误差平方一下，八乘八，六十四，就是图上这个红方块。",
+   "badge": "l15",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l15.jpg"
+  },
+  {
+   "t": 98.24,
+   "end": 103.69,
+   "title": "十二趟都这么算，再取个平均",
+   "subtitle": "十二趟都这么算，再取个平均，第一种拧法得了七十八分。",
+   "badge": "l16",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l16.jpg"
+  },
+  {
+   "t": 104.04,
+   "end": 111.14,
+   "title": "第二种：起步价四块，每公里三块五",
+   "subtitle": "第二种：起步价四块，每公里三块五。这回线太陡了，短途猜少，长途猜多。",
+   "badge": "l17",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l17.jpg"
+  },
+  {
+   "t": 111.49,
+   "end": 118.4,
+   "title": "要是不平方，直接平均误差呢？",
+   "subtitle": "要是不平方，直接平均误差呢？猜少是负的，猜多是正的，一正一负就抵消了。",
+   "badge": "l18",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l18.jpg"
+  },
+  {
+   "t": 118.75,
+   "end": 122.01,
+   "title": "平均下来才差三毛，看着几乎没错",
+   "subtitle": "平均下来才差三毛，看着几乎没错。",
+   "badge": "l19",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l19.jpg"
+  },
+  {
+   "t": 122.36,
+   "end": 127.72,
+   "title": "这就是为什么要平方",
+   "subtitle": "这就是为什么要平方：平方以后全是正数，谁也抵消不了谁。",
+   "badge": "l20",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l20.jpg"
+  },
+  {
+   "t": 128.07,
+   "end": 133.46,
+   "title": "而且差得越多，罚得越狠",
+   "subtitle": "而且差得越多，罚得越狠：差两块只罚四，差八块就要罚六十四。",
+   "badge": "l21",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l21.jpg"
+  },
+  {
+   "t": 133.81,
+   "end": 137.98,
+   "title": "先平方再平均，第二种得了十三点四分",
+   "subtitle": "先平方再平均，第二种得了十三点四分。",
+   "badge": "l22",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l22.jpg"
+  },
+  {
+   "t": 138.33,
+   "end": 143.04,
+   "title": "这种打分法叫均方误差",
+   "subtitle": "这种打分法叫均方误差，是最常见的一种损失函数。",
+   "badge": "l23",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l23.jpg"
+  },
+  {
+   "t": 143.39,
+   "end": 151.48,
+   "title": "第三种：起步价十块，每公里两块五",
+   "subtitle": "第三种：起步价十块，每公里两块五。线贴着点走，每趟差得都不多，只得二点一九分。",
+   "badge": "l24",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l24.jpg"
+  },
+  {
+   "t": 151.83,
+   "end": 155.54,
+   "title": "三个分一比，第三种最低，拧得最好",
+   "subtitle": "三个分一比，第三种最低，拧得最好。",
+   "badge": "l25",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l25.jpg"
+  },
+  {
+   "t": 155.89,
+   "end": 162.42,
+   "title": "可这才试了三种",
+   "subtitle": "可这才试了三种。把两个旋钮的所有拧法都算一遍，就能画出一张分数的地形图。",
+   "badge": "l26",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l26.jpg"
+  },
+  {
+   "t": 162.77,
+   "end": 168.14,
+   "title": "横着是起步价，竖着是每公里价钱",
+   "subtitle": "横着是起步价，竖着是每公里价钱，颜色越深分越高。",
+   "badge": "l27",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l27.jpg"
+  },
+  {
+   "t": 168.49,
+   "end": 175.12,
+   "title": "刚才那三种拧法，第一种在高处",
+   "subtitle": "刚才那三种拧法，第一种在高处，第二种在半山腰，第三种快到谷底了。",
+   "badge": "l28",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l28.jpg"
+  },
+  {
+   "t": 175.47,
+   "end": 181.01,
+   "title": "最低点是起步价十块二、每公里两块五毛四",
+   "subtitle": "最低点是起步价十块二、每公里两块五毛四，才一点九七分。",
+   "badge": "l29",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l29.jpg"
+  },
+  {
+   "t": 181.36,
+   "end": 185.82,
+   "title": "这就是最好的拧法",
+   "subtitle": "这就是最好的拧法。训练要做的，是找到这个最低点。",
+   "badge": "l30",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l30.jpg"
+  },
+  {
+   "t": 186.17,
+   "end": 189.01,
+   "title": "不过你注意，最低点也不是零分",
+   "subtitle": "不过你注意，最低点也不是零分。",
+   "badge": "l31",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l31.jpg"
+  },
+  {
+   "t": 189.36,
+   "end": 194.66,
+   "title": "堵车、绕路都会影响车费",
+   "subtitle": "堵车、绕路都会影响车费，一条直线不可能每趟都猜中。",
+   "badge": "l32",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l32.jpg"
+  },
+  {
+   "t": 195.01,
+   "end": 197.55,
+   "title": "训练不求零分，只求尽量低",
+   "subtitle": "训练不求零分，只求尽量低。",
+   "badge": "l33",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l33.jpg"
+  },
+  {
+   "t": 201.67,
+   "end": 205.73,
+   "title": "其实，模型根本不知道什么是打车",
+   "subtitle": "其实，模型根本不知道什么是打车，它只认这个分。",
+   "badge": "l34",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l34.jpg"
+  },
+  {
+   "t": 206.08,
+   "end": 211.77,
+   "title": "怎么打分，它就怎么学",
+   "subtitle": "怎么打分，它就怎么学。比如咱们用了平方，它就特别怕犯大错。",
+   "badge": "l35",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l35.jpg"
+  },
+  {
+   "t": 212.12,
+   "end": 215.92,
+   "title": "它宁可每趟都差一点",
+   "subtitle": "它宁可每趟都差一点，也不愿意有一趟差很多。",
+   "badge": "l36",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l36.jpg"
+  },
+  {
+   "t": 216.27,
+   "end": 221.47,
+   "title": "所以选什么样的损失函数",
+   "subtitle": "所以选什么样的损失函数，其实就是在告诉模型，什么才算「好」。",
+   "badge": "l37",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l37.jpg"
+  },
+  {
+   "t": 225.6,
+   "end": 231.84,
+   "title": "像 ChatGPT 这样的大语言模型",
+   "subtitle": "像 ChatGPT 这样的大语言模型，训练时也有个分，只是猜的不是车费了。",
+   "badge": "l38",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l38.jpg"
+  },
+  {
+   "t": 232.19,
+   "end": 237.12,
+   "title": "它的任务是猜下一个词",
+   "subtitle": "它的任务是猜下一个词，比如「床前明月」后面该接什么。",
+   "badge": "l39",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l39.jpg"
+  },
+  {
+   "t": 237.47,
+   "end": 243.7,
+   "title": "答案是「光」，就看它有几成把握是「光」",
+   "subtitle": "答案是「光」，就看它有几成把握是「光」：把握越小，罚得越多。",
+   "badge": "l40",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l40.jpg"
+  },
+  {
+   "t": 244.05,
+   "end": 249.13,
+   "title": "有九成把握猜对，几乎不罚，只有一成把握",
+   "subtitle": "有九成把握猜对，几乎不罚，只有一成把握，就罚得多得多。",
+   "badge": "l41",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l41.jpg"
+  },
+  {
+   "t": 249.48,
+   "end": 254.91,
+   "title": "这种打分叫交叉熵",
+   "subtitle": "这种打分叫交叉熵，英文是 cross-entropy，名字听过就行。",
+   "badge": "l42",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l42.jpg"
+  },
+  {
+   "t": 255.26,
+   "end": 260.68,
+   "title": "2023年",
+   "subtitle": "2023年，Meta 训练大模型 Llama 2 的时候，分数曲线一路往下走。",
+   "badge": "l43",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l43.jpg"
+  },
+  {
+   "t": 261.03,
+   "end": 265.67,
+   "title": "模型读完了两万亿个词元",
+   "subtitle": "模型读完了两万亿个词元，词元大致就是字或词的碎片。",
+   "badge": "l44",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l44.jpg"
+  },
+  {
+   "t": 266.02,
+   "end": 270.07,
+   "title": "读了这么多，分还在往下降，看着还没到头",
+   "subtitle": "读了这么多，分还在往下降，看着还没到头。",
+   "badge": "l45",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l45.jpg"
+  },
+  {
+   "t": 270.42,
+   "end": 275.9,
+   "title": "大模型有几百亿个旋钮，咱们只有两个",
+   "subtitle": "大模型有几百亿个旋钮，咱们只有两个，干的事都一样：找最低点。",
+   "badge": "l46",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l46.jpg"
+  },
+  {
+   "t": 277.43,
+   "end": 282.45,
+   "title": "所以一句话",
+   "subtitle": "所以一句话：损失函数，就是给错误打个分，分越低越好。",
+   "badge": "l47",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l47.jpg"
+  },
+  {
+   "t": 282.8,
+   "end": 284.9,
+   "title": "训练，就是把这个分压下去",
+   "subtitle": "训练，就是把这个分压下去。",
+   "badge": "l48",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l48.jpg"
+  },
+  {
+   "t": 285.25,
+   "end": 291.7,
+   "title": "可旋钮一多，地形图大得看不到边",
+   "subtitle": "可旋钮一多，地形图大得看不到边，该往哪边拧，才能一步步走到最低点呢？",
+   "badge": "l49",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l49.jpg"
+  },
+  {
+   "t": 292.05,
+   "end": 294.37,
+   "title": "下一期，咱们聊聊梯度下降",
+   "subtitle": "下一期，咱们聊聊梯度下降。",
+   "badge": "l50",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/thumbs/l50.jpg"
+  }
+ ],
+ "links": [
+  {
+   "label": "讲稿",
+   "path": "edu_videos/ai_terms/t11_loss_function/script.md"
+  },
+  {
+   "label": "时间轴",
+   "path": "edu_videos/ai_terms/t11_loss_function/timeline.json"
+  },
+  {
+   "label": "调研",
+   "path": "edu_videos/ai_terms/t11_loss_function/research.md"
+  },
+  {
+   "label": "字幕",
+   "path": "edu_videos/ai_terms/t11_loss_function/final/t11_loss_function.srt"
+  }
+ ]
+}

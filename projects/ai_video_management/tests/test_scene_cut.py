@@ -184,3 +184,39 @@ def test_navigation_puts_the_whole_episode_first(repo: Path) -> None:
     whole = episode["children"][0]
     assert whole["name"] == "episode" and [c["display_name"] for c in whole["children"]] == ["正片剪辑 · v3"]
     assert whole["children"][0]["navigation_href"].endswith("module=edit&scene=episode&cut=final")
+
+
+def post(root: Path, version: int, rendered: bool = True, **extra) -> Path:
+    folder = root / EPISODE / "post" / "trial"
+    folder.mkdir(parents=True, exist_ok=True)
+    data = {"episode": "ep01", "version": version, "status": "试做", "source_cut": "edit/final/cut_v1.json", "subtitle_lang": "en",
+            "sound": {"beds": {"s1": {"../audio/amb_s1_s12.wav": -2, "rain": -30}},
+                      "music": [{"path": "../audio/mus_s1_s101.wav", "scene": "s1", "db": -15}], "notes": ["本地生成"]},
+            "titles": [{"scene": "s1", "en": "ELWYNN FOREST"}], "subtitles": [{"en": "a"}, {"en": "b"}],
+            "output": {"path": f"ep01_post_v{version}.mp4", "srt": f"ep01_post_v{version}.srt", "duration_s": 87.25,
+                       "loudness_lufs": -16.0, "true_peak_db": -1.3, "subtitles": [{"start": 1, "end": 2, "text": "a"}]}}
+    data.update(extra)
+    (folder / f"post_v{version}.json").write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+    if rendered:
+        (folder / f"ep01_post_v{version}.mp4").write_bytes(b"\x00" * 64)
+    return folder
+
+
+def test_post_trials_list_layers_and_video_newest_first(repo: Path) -> None:
+    post(repo, 1, rendered=False)
+    post(repo, 2)
+    newest, oldest = SceneCutQuery(SceneCutReader(repo)).read(EPISODE).posts
+    assert (newest.version, oldest.version) == (2, 1)
+    assert newest.video.endswith("post/trial/ep01_post_v2.mp4") and not oldest.video     # 没渲染就没有成片
+    assert newest.srt == "" and newest.subtitles == 1 and newest.titles == ["ELWYNN FOREST"]
+    assert [(l.kind, l.source, l.db) for l in newest.layers] == [("环境声", "amb_s1_s12.wav", -2.0), ("环境声", "rain", -30.0),
+                                                                  ("配乐", "mus_s1_s101.wav", -15.0)]
+    assert (newest.loudness_lufs, newest.true_peak_db, newest.subtitle_lang) == (-16.0, -1.3, "en")
+
+
+def test_navigation_lists_post_trials_under_edit(repo: Path) -> None:
+    post(repo, 4)
+    node = TreeReader(_FakeExposed(repo))._walk_project(repo / "ai_videos/demo")
+    edit = next(child for child in node["children"] if child["name"] == "edit")["children"][0]
+    item = next(c for c in edit["children"] if c["name"] == "post")
+    assert item["display_name"] == "后期试做（声音、字幕、字卡） · v4" and item["navigation_href"].endswith("module=edit&scene=post")

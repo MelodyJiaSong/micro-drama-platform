@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from libs.common import drama_ref
+from libs.common.exposed_roots import EXPOSED_TOP_LEVEL
 
 TEXT_EXTENSIONS: frozenset[str] = frozenset(
     {".md", ".json", ".yaml", ".yml", ".jsonl", ".txt", ".toml"}
@@ -33,11 +34,12 @@ _EXCLUDED_DIRS: frozenset[str] = frozenset(
 )
 
 
-_ALLOWED_TOP_LEVEL: frozenset[str] = frozenset({"ai_videos"})
+# Allowed top-level directories live in one place (follow-up 339 added `edu_videos/`).
+_ALLOWED_TOP_LEVEL: frozenset[str] = EXPOSED_TOP_LEVEL
 
 
 class ExposedTree:
-    """The webapp's read/write tree exposes one root: ai_videos/**.
+    """The webapp's read/write tree exposes ai_videos/** and edu_videos/** (libs.common.exposed_roots).
 
     Follow-ups 096 / 113 had added `downloaded_novels/` and `my_novel/` beside it;
     follow-up 233 took both out again with the novel browsing (their data stays

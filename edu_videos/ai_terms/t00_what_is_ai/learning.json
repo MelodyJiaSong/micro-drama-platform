@@ -1,0 +1,264 @@
+{
+ "note": "学习目标与理解测验（讲稿 v2 起；审查与测验都对照它）。题目以迁移题为主，干扰项来自真实误解；前测、看片、后测、讲回来。AI 学生只用来筛题，最终以真人盲测为准（edu_videos/_shared/research/explainer_benchmark.md）。",
+ "objectives": [
+  {
+   "id": "O1",
+   "zh": "能用自己的话说出今天的 AI（机器学习）和传统程序的区别：不是人把规则写好，而是给带答案的例子，让它自己找出规律",
+   "en": "Explain in their own words how today's AI (machine learning) differs from a traditional program: instead of people writing the rules, it is given examples with answers and finds the pattern itself",
+   "lines": [
+    "l02",
+    "l03",
+    "l08",
+    "l09",
+    "l10",
+    "l12",
+    "l51"
+   ]
+  },
+  {
+   "id": "O2",
+   "zh": "判断一件事更适合写规则还是更适合从例子里学：规则说得清（算工资）就写规则；说不清、写不完（认手写数字）才需要学",
+   "en": "Judge whether a task suits hand-written rules or learning from examples: clear rules (payroll) can be written; rules nobody can spell out (reading handwriting) call for learning",
+   "lines": [
+    "l04",
+    "l05",
+    "l06",
+    "l07",
+    "l34"
+   ]
+  },
+  {
+   "id": "O3",
+   "zh": "知道模型的本事来自见过的例子：本期实验里例子越多，在没见过的考题上越准；要用没见过的数据来检验",
+   "en": "Know that a model's ability comes from the examples it saw: in this episode's experiment, more examples meant higher scores on unseen questions; it must be tested on data it never saw",
+   "lines": [
+    "l18",
+    "l19",
+    "l20",
+    "l22",
+    "l23",
+    "l24",
+    "l25"
+   ]
+  },
+  {
+   "id": "O4",
+   "zh": "把今天的 AI 看成一台带把握的预测机器：把握高不等于一定对；碰到没学过的东西，它照样会给出答案",
+   "en": "See today's AI as a prediction machine with a confidence level: high confidence does not mean correct, and it will still answer when shown something it never learned",
+   "lines": [
+    "l27",
+    "l28",
+    "l32",
+    "l44",
+    "l45",
+    "l46",
+    "l47",
+    "l50"
+   ]
+  },
+  {
+   "id": "O5",
+   "zh": "分得清几个词的关系：AI ⊃ 机器学习 ⊃ 深度学习 ⊃ 大语言模型；人写规则的办法也算 AI",
+   "en": "Tell the terms apart: AI ⊃ machine learning ⊃ deep learning ⊃ large language models; rule-based programs also count as AI",
+   "lines": [
+    "l33",
+    "l34",
+    "l35",
+    "l36",
+    "l37"
+   ]
+  },
+  {
+   "id": "O6",
+   "zh": "知道数据决定 AI 的本事和毛病，包括偏见；评价一个 AI 先问它从什么数据里学",
+   "en": "Know that data shapes both what an AI can do and its flaws, bias included; to judge an AI, first ask what data it learned from",
+   "lines": [
+    "l38",
+    "l39",
+    "l40",
+    "l41",
+    "l42",
+    "l48",
+    "l49"
+   ]
+  }
+ ],
+ "quiz": [
+  {
+   "id": "Q1",
+   "objective": "O2",
+   "type": "迁移",
+   "zh": "下面哪件事，最需要让电脑「从例子里学」，而不是由人把规则写好？",
+   "en": "Which task most needs a computer to learn from examples, rather than follow rules people write?",
+   "choices": {
+    "zh": [
+     "A 按税率计算个人所得税",
+     "B 判断一段录音里的人是不是在生气",
+     "C 按出发时间给航班排序",
+     "D 把摄氏度换算成华氏度"
+    ],
+    "en": [
+     "A Calculating income tax from tax brackets",
+     "B Telling whether the speaker in a recording is angry",
+     "C Sorting flights by departure time",
+     "D Converting Celsius to Fahrenheit"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "以为凡是电脑做的事都叫 AI / 都要学",
+    "C": "同上",
+    "D": "同上"
+   }
+  },
+  {
+   "id": "Q2",
+   "objective": "O1",
+   "type": "迁移",
+   "zh": "一个识别鸟类的 App 能认出几百种鸟。它最可能是怎么做出来的？",
+   "en": "A bird-ID app can recognize hundreds of species. How was it most likely built?",
+   "choices": {
+    "zh": [
+     "A 程序员为每种鸟写下羽毛、喙、体型的规则",
+     "B 给模型看大量标好鸟名的照片，让它自己找规律",
+     "C 把所有鸟的照片存起来，拍到一模一样的就报名字",
+     "D 让模型上网搜索每张照片"
+    ],
+    "en": [
+     "A Programmers wrote rules about feathers, beaks and size for each species",
+     "B A model was shown many photos labeled with species names and found the patterns itself",
+     "C It stores every bird photo and names an exact match",
+     "D The model searches the web for each photo"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "AI 背后是人写好的规则或答案",
+    "C": "AI 是把见过的东西原样存起来查表"
+   }
+  },
+  {
+   "id": "Q3",
+   "objective": "O3",
+   "type": "迁移",
+   "zh": "小王训练了一个识别手写字母的模型。要知道它在真实使用中准不准，最好的检验办法是？",
+   "en": "Someone trains a model to read handwritten letters. What is the best way to find out how well it will do in real use?",
+   "choices": {
+    "zh": [
+     "A 用训练时给它看过的字母考它",
+     "B 用一批训练时从没给它看过的字母考它",
+     "C 看它说出答案时的把握有多高",
+     "D 数一数模型有多大"
+    ],
+    "en": [
+     "A Test it on the letters it was trained on",
+     "B Test it on letters it never saw during training",
+     "C Check how confident it sounds",
+     "D Count how big the model is"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "在学过的数据上考得好就等于会了",
+    "C": "把握高就等于准"
+   }
+  },
+  {
+   "id": "Q4",
+   "objective": "O4",
+   "type": "迁移",
+   "zh": "一个只学过猫狗照片的模型，看到一张兔子照片，说「狗，把握 90%」。这说明什么？",
+   "en": "A model trained only on cats and dogs is shown a rabbit and says \"dog, 90% sure.\" What does this show?",
+   "choices": {
+    "zh": [
+     "A 兔子长得确实像狗",
+     "B 模型坏了，需要重装",
+     "C 它只能在学过的选项里挑，把握高也不代表对",
+     "D 对这张兔子图，90% 说明它有九成可能是对的"
+    ],
+    "en": [
+     "A Rabbits really do look like dogs",
+     "B The model is broken and must be reinstalled",
+     "C It can only choose among what it learned, and high confidence doesn't mean it's right",
+     "D For this rabbit photo, 90% means it is probably right"
+    ]
+   },
+   "answer": "C",
+   "misconception_choices": {
+    "D": "把握 = 正确的概率",
+    "A": "相信模型的答案一定有道理"
+   }
+  },
+  {
+   "id": "Q5",
+   "objective": "O5",
+   "type": "辨析",
+   "zh": "下面哪句话是对的？",
+   "en": "Which statement is correct?",
+   "choices": {
+    "zh": [
+     "A AI 就是指聊天机器人",
+     "B 机器学习包含 AI",
+     "C 大语言模型是深度学习的一种，深度学习属于机器学习",
+     "D 人写规则的程序不能算 AI"
+    ],
+    "en": [
+     "A AI just means chatbots",
+     "B Machine learning contains AI",
+     "C Large language models are a kind of deep learning, which is part of machine learning",
+     "D Programs built from hand-written rules can't count as AI"
+    ]
+   },
+   "answer": "C",
+   "misconception_choices": {
+    "A": "AI = 聊天机器人",
+    "D": "AI 只指机器学习"
+   }
+  },
+  {
+   "id": "Q6",
+   "objective": "O6",
+   "type": "迁移",
+   "zh": "一家医院用过去十年的病历训练 AI，而这些病人大多是城市居民。用到农村病人身上时，最该担心什么？",
+   "en": "A hospital trains an AI on ten years of patient records, mostly from city residents. What is the biggest worry when it is used on rural patients?",
+   "choices": {
+    "zh": [
+     "A 不用担心，AI 是客观的",
+     "B 它学到的规律可能不适合农村病人，甚至带着偏差",
+     "C 病历太多，模型会算不过来",
+     "D 只要把握高就没问题"
+    ],
+    "en": [
+     "A No worry, AI is objective",
+     "B What it learned may not fit rural patients and may carry a bias",
+     "C Too many records will overload it",
+     "D As long as it's confident, it's fine"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "AI 是客观中立的",
+    "D": "把握高就可靠"
+   }
+  }
+ ],
+ "explain_back": {
+  "prompt": {
+   "zh": "请用两三句话，给一个没接触过 AI 的朋友解释：今天的 AI 是怎么「学会」一件事的？",
+   "en": "In two or three sentences, explain to a friend who knows nothing about AI how today's AI \"learns\" to do something."
+  },
+  "propositions": [
+   "不是人把规则写好，而是给它很多带答案的例子",
+   "它自己从例子里找出规律，再用到没见过的新东西上",
+   "（加分）例子越多越准，但也会出错、会照学数据里的偏见",
+   "（加分）它给的是带把握的预测，不是一定对"
+  ],
+  "misconceptions": [
+   "AI 背后是程序员写好的答案库",
+   "AI 有把握就一定对",
+   "AI 就是聊天机器人",
+   "AI 是客观中立的"
+  ]
+ },
+ "pass_rule": "每个学习目标至少有一道题，真人后测正确率比前测提升、且 ≥ 2/3 的人答对；讲回来覆盖前两条要点、不出现误解。AI 学生结果只用于改题与找讲稿漏洞，不作过关依据。"
+}

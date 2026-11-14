@@ -1,0 +1,5021 @@
+{
+ "run": "lines_r1",
+ "round": 1,
+ "generated_at": "2026-11-09T21:12:17",
+ "items": [
+  {
+   "item": "voice_zh",
+   "name": "中文口播（母语听感，盲审）",
+   "final": {
+    "V1": 1,
+    "V2": 1,
+    "V3": 1,
+    "V4": 2,
+    "V5": 2,
+    "V6": 1
+   },
+   "scores": {
+    "a": {
+     "V1": 2,
+     "V2": 2,
+     "V3": 2,
+     "V4": 2,
+     "V5": 2,
+     "V6": 2
+    },
+    "b": {
+     "V1": 1,
+     "V2": 1,
+     "V3": 1,
+     "V4": 2,
+     "V5": 2,
+     "V6": 1
+    },
+    "judge": {
+     "V1": 1,
+     "V2": 1,
+     "V3": 1,
+     "V6": 1,
+     "V4": 2,
+     "V5": 2
+    }
+   }
+  },
+  {
+   "item": "voice_en",
+   "name": "English narration (native ear, blind)",
+   "final": {
+    "V1": 1,
+    "V2": 1,
+    "V3": 1,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2
+   },
+   "scores": {
+    "a": {
+     "V1": 3,
+     "V2": 3,
+     "V3": 3,
+     "V4": 3,
+     "V5": 3,
+     "V6": 3
+    },
+    "b": {
+     "V1": 1,
+     "V2": 1,
+     "V3": 1,
+     "V4": 2,
+     "V5": 2,
+     "V6": 3
+    },
+    "judge": {
+     "V1": 1,
+     "V2": 1,
+     "V3": 1,
+     "V5": 2,
+     "V6": 2
+    }
+   }
+  },
+  {
+   "item": "screen_zh",
+   "name": "中文屏幕文字（PPT 式画面）",
+   "final": {
+    "P1": 1,
+    "P2": 1,
+    "P3": 2,
+    "P4": 1,
+    "P5": 2,
+    "P6": 3
+   },
+   "scores": {
+    "a": {
+     "P1": 1,
+     "P2": 2,
+     "P3": 2,
+     "P4": 2,
+     "P5": 3,
+     "P6": 3
+    },
+    "b": {
+     "P1": 1,
+     "P2": 1,
+     "P3": 2,
+     "P4": 1,
+     "P5": 2,
+     "P6": 3
+    },
+    "judge": {
+     "P2": 1,
+     "P4": 1,
+     "P5": 2,
+     "P3": 2
+    }
+   }
+  },
+  {
+   "item": "screen_en",
+   "name": "English on-screen text (slides)",
+   "final": {
+    "P1": 1,
+    "P2": 1,
+    "P3": 2,
+    "P4": 1,
+    "P5": 2,
+    "P6": 2
+   },
+   "scores": {
+    "a": {
+     "P1": 2,
+     "P2": 1,
+     "P3": 2,
+     "P4": 1,
+     "P5": 3,
+     "P6": 3
+    },
+    "b": {
+     "P1": 1,
+     "P2": 1,
+     "P3": 1,
+     "P4": 1,
+     "P5": 2,
+     "P6": 3
+    },
+    "judge": {
+     "P1": 1,
+     "P3": 2,
+     "P5": 2,
+     "P6": 2
+    }
+   }
+  }
+ ],
+ "issues": [
+  {
+   "id": "I1",
+   "key": "638c6f69c0cf",
+   "item": "screen_en",
+   "where": "outro",
+   "dim": "P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "outro"
+   ],
+   "evidence": [
+    "\"Score the mistakes\" / \"Training pushes it down\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Loss: a score for mistakes\" / \"Training: push it down\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Score the mistakes\" / \"Training pushes it down\"",
+   "problem": "Outro is a strict item. Lines are not parallel (imperative vs declarative); \"Score the mistakes\" reads as an instruction to the viewer and drops the key takeaway \"lower is better\" from l47.",
+   "suggest": "\"Loss: a score for mistakes\" / \"Training: push it down\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "片尾卡改为 Loss: a score for mistakes / Training: push it down（采纳 a，两行同为「名词: 说明」体例，不再照搬口播）；页眉改 Remember",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I2",
+   "key": "c5543b501dfe",
+   "item": "screen_en",
+   "where": "c_lens",
+   "dim": "P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "c_lens"
+   ],
+   "evidence": [
+    "\"The score is all it sees\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"All the model sees\" (or \"What the model sees\")",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"The score is all it sees\"",
+   "problem": "Chapter title (strict). A full sentence next to \"What is a loss function?\", \"A small experiment\", \"How big models are scored\"; also repeated as the eyebrow on 7 screens.",
+   "suggest": "\"All the model sees\" (or \"What the model sees\")",
+   "judge_note": "c_lens（a）：改写「All the model sees」去掉了关键词「score」，章节卡上只剩「模型看到的全部」，宾语没了，比原文更费解。原题「The score is all it sees」6 词，未超限。若要改，用「It only sees the score」（5 词）。",
+   "status": "implemented",
+   "solution": "第 3 章章名中英都改：模型只认分数 / It only sees the score（裁决人给的写法，5 词）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I3",
+   "key": "95571bb38358",
+   "item": "screen_en",
+   "where": "outro / card_s6",
+   "dim": "P1, P2, P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2, P4",
+   "shots": [
+    "outro / card_s6"
+   ],
+   "evidence": [
+    "Score the mistakes / Training pushes it down"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Mistakes → score**<br>**Training → lower loss**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Score the mistakes / Training pushes it down",
+   "problem": "The second line is a narration-style sentence; “it” has an imprecise on-screen antecedent. The two summary lines also use different grammatical structures. Strict outro item.",
+   "suggest": "**Mistakes → score**<br>**Training → lower loss**",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I1",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I4",
+   "key": "bfe8f018b3c3",
+   "item": "screen_en",
+   "where": "outro",
+   "dim": "P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "outro"
+   ],
+   "evidence": [
+    "\"Next · Gradient descent\" shown for all 25.3 s"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Reveal \"Next · Gradient descent\" only at l50.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Next · Gradient descent\" shown for all 25.3 s",
+   "problem": "Gives away the answer before l49 poses the question \"which way do you turn?\"",
+   "suggest": "Reveal \"Next · Gradient descent\" only at l50.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "片尾「下一期」由系列共用包装模板统一排版（_shared/package/template.html），本期不改共用文件；l49 是设问，名字先出现不影响悬念",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I5",
+   "key": "6ae74b24c074",
+   "item": "screen_en",
+   "where": "l01",
+   "dim": "P1, P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "l01"
+   ],
+   "evidence": [
+    "A model is a machine with knobs"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Model = machine + knobs**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "A model is a machine with knobs",
+   "problem": "Seven words exceed the six-word title limit. This is also a complete clause copied directly from the narration. The cold open requires correction.",
+   "suggest": "**Model = machine + knobs**",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l01 标题改 Model = a machine with knobs（6 词）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I6",
+   "key": "114a0c49c295",
+   "item": "screen_en",
+   "where": "s0_l04 / l42",
+   "dim": "P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "s0_l04 / l42"
+   ],
+   "evidence": [
+    "\"A score for mistakes\" + \"损失函数\" (l04); \"交叉熵\" (l42)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Drop the Chinese lines on the English version. If kept on purpose, state so and treat it as a note, not a title.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"A score for mistakes\" + \"损失函数\" (l04); \"交叉熵\" (l42)",
+   "problem": "Chinese gloss in the English-track slide. If the English cut is for English viewers this is stray text; l04 is the cold open (strict). Also it is not counted in the word totals.",
+   "suggest": "Drop the Chinese lines on the English version. If kept on purpose, state so and treat it as a note, not a title.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "英文版去掉 l04、l42 屏上的中文小注",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I7",
+   "key": "7072919a684b",
+   "item": "screen_en",
+   "where": "l04",
+   "dim": "P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l04"
+   ],
+   "evidence": [
+    "A score for mistakes / Loss function"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Eyebrow: **The scoring rule**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "A score for mistakes / Loss function",
+   "problem": "The eyebrow reads as a definition of the term below it. Narration distinguishes the **loss**—the score—from the **loss function**—the scoring rule. This distinction should survive the cold open.",
+   "suggest": "Eyebrow: **The scoring rule**",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l04 眉标改 The rule for scoring mistakes（中文同步改「给错误打分的规则」），区分损失与损失函数",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I8",
+   "key": "3356b26d1fa4",
+   "item": "screen_en",
+   "where": "l06–l08",
+   "dim": "P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l06–l08"
+   ],
+   "evidence": [
+    "误差柱与「LOSS 17.9」卡之间的「→」（s2.html：`text(\"→\")` x=470，SVG 宽 500，76px）"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "把 #pile 的宽度加到 ≥560，或者把箭头左移到 x≈440；也可以改用带箭头头部的 SVG path。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "误差柱与「LOSS 17.9」卡之间的「→」（s2.html：`text(\"→\")` x=470，SVG 宽 500，76px）",
+   "problem": "箭头字形被 SVG 右边界裁掉，截图里只剩一段灰短横，看上去是「−」。紧挨着有正有负的误差柱，容易被读成「误差减 17.9」，抵消了 l06 h1「Errors → one score」的意思。",
+   "suggest": "把 #pile 的宽度加到 ≥560，或者把箭头左移到 x≈440；也可以改用带箭头头部的 SVG path。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "#pile 画布加宽到 560px，箭头不再被裁成「−」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I9",
+   "key": "4be91deaafe7",
+   "item": "screen_en",
+   "where": "l07/l08",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l07/l08"
+   ],
+   "evidence": [
+    "\"0 = not wrong at all\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"0 = no error\" (l08's 4-block stack is at the limit; this also lowers the word count from 13 to 11)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"0 = not wrong at all\"",
+   "problem": "Near-verbatim narration.",
+   "suggest": "\"0 = no error\" (l08's 4-block stack is at the limit; this also lowers the word count from 13 to 11)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改 0 = no error",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I10",
+   "key": "1d0185c619d9",
+   "item": "screen_en",
+   "where": "l07–l08",
+   "dim": "P1, P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P4",
+   "shots": [
+    "l07–l08"
+   ],
+   "evidence": [
+    "0 = not wrong at all"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**0 = no error**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "0 = not wrong at all",
+   "problem": "Understandable, but unnecessarily conversational for a mathematical label. It repeats the narration’s wording and occupies more space than needed.",
+   "suggest": "**0 = no error**",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I9",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I11",
+   "key": "577471fe7731",
+   "item": "screen_en",
+   "where": "l08、l45",
+   "dim": "P5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l08、l45"
+   ],
+   "evidence": [
+    "「Golf: fewer strokes / win」；「Training loss keeps / falling」"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "l08 改为「Golf: fewer strokes wins」并把卡片加宽到一行放下，或者改成「Golf: fewest strokes win」；l45 采用 b 的「Training loss ↓」，一行即可。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "「Golf: fewer strokes / win」；「Training loss keeps / falling」",
+   "problem": "两处 h2 折行后，末行只剩一个词（孤词），读起来卡一下。",
+   "suggest": "l08 改为「Golf: fewer strokes wins」并把卡片加宽到一行放下，或者改成「Golf: fewest strokes win」；l45 采用 b 的「Training loss ↓」，一行即可。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l08 高尔夫卡英文加宽、不折行，改 Golf: fewest strokes wins；l45 不在本条范围（见 I32）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I12",
+   "key": "7dada50a2a3f",
+   "item": "screen_en",
+   "where": "l14",
+   "dim": "P5, P6",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5, P6",
+   "shots": [
+    "l14"
+   ],
+   "evidence": [
+    "Off by $8"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Error $8**, positioned clear of the orange line",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Off by $8",
+   "problem": "The orange prediction line crosses the red annotation. It remains decipherable, but takes unnecessary effort while viewers also follow the subtitles and plotted example.",
+   "suggest": "**Error $8**, positioned clear of the orange line",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l15 红线旁标注改为 $8（1 词），位置在红线右侧",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I13",
+   "key": "9b129cc5f461",
+   "item": "screen_en",
+   "where": "l15",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l15"
+   ],
+   "evidence": [
+    "Fare ($); km; Actual $23; Off by $8; Guess $15; 8² = 64"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Keep **Fare ($)**, **km**, **Actual $23**, **Guess $15**, **8² = 64**; remove **Off by $8** when the equation appears. Chart total: **8 words**.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Fare ($); km; Actual $23; Off by $8; Guess $15; 8² = 64",
+   "problem": "The whole chart counts as one block: **11 words**, exceeding nine. Axis tick numbers are excluded from this count.",
+   "suggest": "Keep **Fare ($)**, **km**, **Actual $23**, **Guess $15**, **8² = 64**; remove **Off by $8** when the equation appears. Chart total: **8 words**.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "图内英文降到 9 词以内：Off by $8 → $8",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I14",
+   "key": "9c6d45720795",
+   "item": "screen_en",
+   "where": "l15",
+   "dim": "P1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l15"
+   ],
+   "evidence": [
+    "「Off by $8」"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "改成「$8」贴在红色竖线旁（1 词），图表总数降为 9 词，「8² = 64」的来源仍然看得到。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "「Off by $8」",
+   "problem": "b 建议出公式时删掉它，但这样「8」的来历就断了。",
+   "suggest": "改成「$8」贴在红色竖线旁（1 词），图表总数降为 9 词，「8² = 64」的来源仍然看得到。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I13（采纳裁决人写法）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I15",
+   "key": "c4925b8e3eeb",
+   "item": "screen_en",
+   "where": "l15",
+   "dim": "P5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l15"
+   ],
+   "evidence": [
+    "「8² = 64」"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "把「8² = 64」移到方块上方（y≈540，与「Actual $23」错开），或者往左挪 30px，让开数据点。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "「8² = 64」",
+   "problem": "4 km 处的灰色数据点压在「64」末位上，红色方块的左上角也贴着文字。",
+   "suggest": "把「8² = 64」移到方块上方（y≈540，与「Actual $23」错开），或者往左挪 30px，让开数据点。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "8² = 64 移到方块正上方，实际 23 移到点右侧，不再压数据点",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I16",
+   "key": "f15392bccc47",
+   "item": "screen_en",
+   "where": "l18–l19",
+   "dim": "P1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l18–l19"
+   ],
+   "evidence": [
+    "h1「Try 2: too steep」+ h2「✗ They cancel out」"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "从 l18 起把 h1 换成「No squaring: they cancel」，删掉 h2「✗ They cancel out」，保留 −0.33 卡。这样共 4 块：图表、旋钮、h1、分数卡。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "h1「Try 2: too steep」+ h2「✗ They cancel out」",
+   "problem": "5 块超限，需要一个不丢意思的修法（b 的方案会丢掉 too steep）。",
+   "suggest": "从 l18 起把 h1 换成「No squaring: they cancel」，删掉 h2「✗ They cancel out」，保留 −0.33 卡。这样共 4 块：图表、旋钮、h1、分数卡。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l18 起标题换成「不平方：正负抵消 / They cancel out」，删掉 h2「✗ 正负抵消了」，同屏 4 块",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I17",
+   "key": "3e4b0080433f",
+   "item": "screen_en",
+   "where": "l19",
+   "dim": "P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l19"
+   ],
+   "evidence": [
+    "\"−0.33\" (card \"Plain average error\")"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Make both match: show \"−$0.30\" or have narration say \"about −33 cents\".",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"−0.33\" (card \"Plain average error\")",
+   "problem": "Contradicts narration \"about −$0.30\".",
+   "suggest": "Make both match: show \"−$0.30\" or have narration say \"about −33 cents\".",
+   "judge_note": "l19（a，级别）：口播「about −$0.30」与屏幕「−0.33」是近似取整，「about」已经交代了，不算「与口播矛盾」。级别降为建议；补上「$」或改成「−$0.33」即可。；l19（b，改写）：「Try 2: cancellation」丢了「too steep」（这正是线一端偏低、一端偏高的原因），而且把结论变成了一个抽象名词。改用上表「No squaring: they cancel」的方案。",
+   "status": "implemented",
+   "solution": "英文口播改为 only −$0.33（minus thirty-three cents），屏幕显示 −$0.33，二者一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I18",
+   "key": "223841185611",
+   "item": "screen_en",
+   "where": "l19",
+   "dim": "P1, P3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P3",
+   "shots": [
+    "l19"
+   ],
+   "evidence": [
+    "Try 2: too steep / $4, $3.50 / chart / −0.33 / They cancel out"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Change the title to **Try 2: cancellation**; remove **They cancel out**. Keep the average value and chart.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Try 2: too steep / $4, $3.50 / chart / −0.33 / They cancel out",
+   "problem": "**Five text blocks**: title, paired knob values, chart, average value, and concluding caption. This exceeds four even with generous grouping.",
+   "suggest": "Change the title to **Try 2: cancellation**; remove **They cancel out**. Keep the average value and chart.",
+   "judge_note": "l19（a，级别）：口播「about −$0.30」与屏幕「−0.33」是近似取整，「about」已经交代了，不算「与口播矛盾」。级别降为建议；补上「$」或改成「−$0.33」即可。；l19（b，改写）：「Try 2: cancellation」丢了「too steep」（这正是线一端偏低、一端偏高的原因），而且把结论变成了一个抽象名词。改用上表「No squaring: they cancel」的方案。",
+   "status": "implemented",
+   "solution": "同 I16",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I19",
+   "key": "98e992887928",
+   "item": "screen_en",
+   "where": "l19",
+   "dim": "P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l19"
+   ],
+   "evidence": [
+    "\"Too low −\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Move the label above or beside the dot.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Too low −\"",
+   "problem": "Callout overlaps a data point in the screenshot.",
+   "suggest": "Move the label above or beside the dot.",
+   "judge_note": "l19（a，级别）：口播「about −$0.30」与屏幕「−0.33」是近似取整，「about」已经交代了，不算「与口播矛盾」。级别降为建议；补上「$」或改成「−$0.33」即可。；l19（b，改写）：「Try 2: cancellation」丢了「too steep」（这正是线一端偏低、一端偏高的原因），而且把结论变成了一个抽象名词。改用上表「No squaring: they cancel」的方案。",
+   "status": "implemented",
+   "solution": "Too low − 标注上移 64px，不再压点",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I20",
+   "key": "358bed1f9df2",
+   "item": "screen_en",
+   "where": "l25",
+   "dim": "P3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l25"
+   ],
+   "evidence": [
+    "h1 \"Try 3\" plus table row \"Try 3 2.19\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Drop the h1 \"Try 3\" or highlight the row only.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "h1 \"Try 3\" plus table row \"Try 3 2.19\"",
+   "problem": "Duplicate label.",
+   "suggest": "Drop the h1 \"Try 3\" or highlight the row only.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l25 标题改 Compare all three / 三种拧法对比，不再与表格行重复",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I21",
+   "key": "c84004b44fec",
+   "item": "screen_en",
+   "where": "l29–l30",
+   "dim": "P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l29–l30"
+   ],
+   "evidence": [
+    "绿色「Lowest point」圆点与「3 · 2.19」"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "第 3 次黑点保留白描边并放在绿点上层，或者在绿点外画一圈环；尝试标签保持 l28 的深色描边样式，不要淡化。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "绿色「Lowest point」圆点与「3 · 2.19」",
+   "problem": "最低点（10.20, 2.54）和第 3 次（10, 2.50）几乎重合，绿点完全盖住了第 3 次的黑点；同时三个尝试标签淡成低对比的灰色、压在陶土底色上。观众本该看出「第 3 次已经接近谷底」，现在只剩一个绿点。",
+   "suggest": "第 3 次黑点保留白描边并放在绿点上层，或者在绿点外画一圈环；尝试标签保持 l28 的深色描边样式，不要淡化。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "最低点改成绿色圆环，第三种的黑点放在上层看得见；l29 不再淡化三组标签",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I22",
+   "key": "2dd29b2ba946",
+   "item": "screen_en",
+   "where": "l32",
+   "dim": "P2, P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2, P4",
+   "shots": [
+    "l32"
+   ],
+   "evidence": [
+    "Traffic, detours: random"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Traffic + detours**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Traffic, detours: random",
+   "problem": "The colon makes this read like a classification of traffic and detours as “random.” The narration simply identifies them as reasons fares vary.",
+   "suggest": "**Traffic + detours**",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改 Traffic + detours",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I23",
+   "key": "08aeb1b45fbc",
+   "item": "screen_en",
+   "where": "l33",
+   "dim": "P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l33"
+   ],
+   "evidence": [
+    "Not zero, just lowest"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Lowest possible loss**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Not zero, just lowest",
+   "problem": "“Just lowest” sounds clipped rather than naturally concise when read aloud. The heading needs an idiomatic noun phrase.",
+   "suggest": "**Lowest possible loss**",
+   "judge_note": "l33（b）：「Lowest possible loss」丢掉了这句要的「不是 0」对比（承接 l31「Lowest ≠ 0」、口播「isn't chasing zero」）。原文只是略显生硬，不到必改；若要顺，改成「Not zero, just the lowest」（5 词）。",
+   "status": "implemented",
+   "solution": "改 Not zero, just the lowest（裁决人写法）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I24",
+   "key": "ed88eef304c9",
+   "item": "screen_en",
+   "where": "l34",
+   "dim": "P1, P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "l34"
+   ],
+   "evidence": [
+    "It only sees the score / Doesn't know what a taxi is"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Score only**; remove the secondary line.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "It only sees the score / Doesn't know what a taxi is",
+   "problem": "Two explanatory clauses retell the narration instead of supplying an outline. Dropping the subject from the second clause does not meaningfully compress it.",
+   "suggest": "**Score only**; remove the secondary line.",
+   "judge_note": "l34（a，备选「Knows no taxis」）：不是自然英语，母语者读来别扭，比原文差。主改写「No idea what a taxi is」可以留。；l34（b）：「Score only」太省，丢了「它不知道出租车是什么」这层对比，而这正是本章要点。改用「Sees only the score」，第二行用 a 的「No idea what a taxi is」或直接删掉。",
+   "status": "implemented",
+   "solution": "l34 标题改 Sees only the score，第二行 No idea what a taxi is（裁决人写法）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I25",
+   "key": "769ecb90d92e",
+   "item": "screen_en",
+   "where": "l34",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l34"
+   ],
+   "evidence": [
+    "\"Doesn't know what a taxi is\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"No idea what a taxi is\" or \"Knows no taxis\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Doesn't know what a taxi is\"",
+   "problem": "Clause echoing the narration; not an outline fragment.",
+   "suggest": "\"No idea what a taxi is\" or \"Knows no taxis\"",
+   "judge_note": "l34（a，备选「Knows no taxis」）：不是自然英语，母语者读来别扭，比原文差。主改写「No idea what a taxi is」可以留。；l34（b）：「Score only」太省，丢了「它不知道出租车是什么」这层对比，而这正是本章要点。改用「Sees only the score」，第二行用 a 的「No idea what a taxi is」或直接删掉。",
+   "status": "implemented",
+   "solution": "同 I24",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I26",
+   "key": "3cc97b55d0a1",
+   "item": "screen_en",
+   "where": "l35–l36",
+   "dim": "P1, P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P4",
+   "shots": [
+    "l35–l36"
+   ],
+   "evidence": [
+    "Squared: hates big misses"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Squared penalties**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Squared: hates big misses",
+   "problem": "“Squared” has no clear noun, while “hates” supplies an unexplained subject. The fragment feels assembled from narration rather than edited for a slide.",
+   "suggest": "**Squared penalties**",
+   "judge_note": "l35–l36（b）：「Squared penalties」只是标签，丢掉了「大错罚得狠」这个结论，而 l36 的图正是在证明这个结论。若嫌「hates」拟人化，改成「Squaring punishes big misses」（4 词）。",
+   "status": "implemented",
+   "solution": "改 Squaring punishes big misses（裁决人写法）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I27",
+   "key": "1bd42d916e34",
+   "item": "screen_en",
+   "where": "l36–l37",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l36–l37"
+   ],
+   "evidence": [
+    "Off by 2, four times / Penalty 16 / Off by 8, once / Penalty 64"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Replace the chart labels with **4 × 2² → 16** and **1 × 8² → 64**.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Off by 2, four times / Penalty 16 / Off by 8, once / Penalty 64",
+   "problem": "The chart contains **13 words** in one block on both screens. The first combined comparison item alone has seven words, so the ≤6-word-item exception does not resolve this.",
+   "suggest": "Replace the chart labels with **4 × 2² → 16** and **1 × 8² → 64**.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l36 图内英文改为 4 × 2² = 16 / 1 × 8² = 64（b 的写法），一块 8 个记号",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I28",
+   "key": "80cf7174b4d4",
+   "item": "screen_en",
+   "where": "l36/l35",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l36/l35"
+   ],
+   "evidence": [
+    "\"Score it, shape it\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"How you score shapes learning\" (4) or \"Score shapes learning\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Score it, shape it\"",
+   "problem": "Cute, vague, and the sound-alike phrasing carries no concrete claim.",
+   "suggest": "\"How you score shapes learning\" (4) or \"Score shapes learning\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改 How you score shapes learning",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I29",
+   "key": "7cab6b1b48dd",
+   "item": "screen_en",
+   "where": "l37",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l37"
+   ],
+   "evidence": [
+    "\"The loss function / = what “good” means\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Loss defines “good”\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"The loss function / = what “good” means\"",
+   "problem": "The \"=\" reads awkwardly aloud; this is the chapter's closing line.",
+   "suggest": "\"Loss defines “good”\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改 Loss defines “good”（中文同步改「损失函数：定义「好」」）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I30",
+   "key": "ef03a8b72b67",
+   "item": "screen_en",
+   "where": "l40",
+   "dim": "P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l40"
+   ],
+   "evidence": [
+    "\"Less sure, bigger penalty\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Change narration to \"sure\", or screen to \"Less confident, bigger penalty\" (4 words)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Less sure, bigger penalty\"",
+   "problem": "Narration uses \"confident\"; screen uses \"sure\". Keep one term (l41 \"90% sure\" fits the screen).",
+   "suggest": "Change narration to \"sure\", or screen to \"Less confident, bigger penalty\" (4 words)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "英文口播 l40、l41 改用 sure，与屏幕 90% sure / Less sure 一致",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I31",
+   "key": "48154da68e19",
+   "item": "screen_en",
+   "where": "l41",
+   "dim": "P3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l41"
+   ],
+   "evidence": [
+    "\"Twinkle, twinkle, little star\" (96px) over the h1 at the bottom"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep the quote and shrink it, or move the takeaway above the bars.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Twinkle, twinkle, little star\" (96px) over the h1 at the bottom",
+   "problem": "Quote outranks the takeaway.",
+   "suggest": "Keep the quote and shrink it, or move the takeaway above the bars.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：例句是本段画面主体，结论行在 l41 已收走（见 I58）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I32",
+   "key": "99a70577b52d",
+   "item": "screen_en",
+   "where": "l43–l45",
+   "dim": "P1, P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "l43–l45"
+   ],
+   "evidence": [
+    "Training loss keeps falling / Still falling ↓"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Training loss ↓**; remove **Still falling ↓** at l45.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Training loss keeps falling / Still falling ↓",
+   "problem": "The secondary heading is a complete explanatory clause; l45 adds another statement of the same trend inside the chart.",
+   "suggest": "**Training loss ↓**; remove **Still falling ↓** at l45.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：曲线标题说明整条线的走向，l45 的「还在降 ↓」标在曲线末端、对应口播「还在往下降」，两处分工不同",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I33",
+   "key": "0ddbac63b417",
+   "item": "screen_en",
+   "where": "l46",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l46"
+   ],
+   "evidence": [
+    "\"Tens of billions\" (beside \"2 knobs\")"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Billions of knobs\" or \"Tens of billions of knobs\" (4 words)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Tens of billions\" (beside \"2 knobs\")",
+   "problem": "Missing noun, not parallel with \"2 knobs\".",
+   "suggest": "\"Billions of knobs\" or \"Tens of billions of knobs\" (4 words)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改 Tens of billions of knobs，与 2 knobs 平行",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I34",
+   "key": "72972fadcf78",
+   "item": "screen_zh",
+   "where": "outro",
+   "dim": "P1、P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P2",
+   "shots": [
+    "outro"
+   ],
+   "evidence": [
+    "给错误打分，越低越好／训练就是把分压下去"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "第一行“损失函数：打分规则”；第二行“训练：把分压低”；下一期“梯度下降”保留",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "给错误打分，越低越好／训练就是把分压下去",
+   "problem": "两行各9字，不按18字单块超限处理；问题是继续把 l47–l48 的叙述搬上屏。片尾宜留下概念与关系。",
+   "suggest": "第一行“损失函数：打分规则”；第二行“训练：把分压低”；下一期“梯度下降”保留",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "片尾卡改为「损失函数：给错误打分 / 训练：把分压到最低」，带上本期术语、不照搬口播；页眉改「记住这两句」（两行配「两句」）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I35",
+   "key": "e528c2bacfe9",
+   "item": "screen_zh",
+   "where": "card_s6",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "card_s6"
+   ],
+   "evidence": [
+    "给错误打分，越低越好 / 训练就是把分压下去"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "损失函数：给错误打分 / 越低越好 / 训练：把分压下去（三短句，每块 ≤10 字）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "给错误打分，越低越好 / 训练就是把分压下去",
+   "problem": "把 l47/l48 口播整句印上屏，是用户抓过的「整句」问题；且没有出现本期术语「损失函数」",
+   "suggest": "损失函数：给错误打分 / 越低越好 / 训练：把分压下去（三短句，每块 ≤10 字）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I34",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I36",
+   "key": "ac3c21bebd52",
+   "item": "screen_zh",
+   "where": "章节卡",
+   "dim": "P3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "章节卡"
+   ],
+   "evidence": [
+    "损失函数是什么 / 做个小实验 / 模型只认这个分 / 大模型怎么打分"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "可保持；若要统一，章名都用短名词性短语",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "损失函数是什么 / 做个小实验 / 模型只认这个分 / 大模型怎么打分",
+   "problem": "四个章名分别是问句、祈使、判断句、问句，体例不一；章节卡上不带编号，而 eyebrow 带 01–04",
+   "suggest": "可保持；若要统一，章名都用短名词性短语",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：章名按口语起（同 t00、t09 做法），第 3 章已改「模型只认分数」",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I37",
+   "key": "a8a46ad69cac",
+   "item": "screen_zh",
+   "where": "l03",
+   "dim": "P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l03"
+   ],
+   "evidence": [
+    "13.4（单个数字）"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "加小标签「损失」，与 l06 一致",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "13.4（单个数字）",
+   "problem": "屏上只有一个无标签的大数字，口播说「给错误打个分」，数字来历到 l22 才交代",
+   "suggest": "加小标签「损失」，与 l06 一致",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：冷开场只示意「机器有了一个分」，l04 立刻点名「损失」",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I38",
+   "key": "756a6cdac304",
+   "item": "screen_zh",
+   "where": "l05",
+   "dim": "P3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l05"
+   ],
+   "evidence": [
+    "实际 / 误差 / 猜的"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "图注改「猜」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "实际 / 误差 / 猜的",
+   "problem": "图注「猜的」，到 l14 变成「猜 15」；叫法不齐",
+   "suggest": "图注改「猜」",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：l05「猜的」与 l14「猜 15」分别是图例和读数，意思一致",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I39",
+   "key": "dfe75cf09f42",
+   "item": "screen_zh",
+   "where": "l06–l10, l16, l22, l24, l29–l31",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l06–l10, l16, l22, l24, l29–l31"
+   ],
+   "evidence": [
+    "损失 / 得分（平均） / 最低点的分数"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "统一以「损失」为基：l16/l22/l24 写「平均损失」，l29–l31 写「最低损失」（l19「直接平均误差」是另一个量，不动）",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "损失 / 得分（平均） / 最低点的分数",
+   "problem": "同一类分数读数，前后用了三种标签，观众要自己判断是不是同一个东西；「得分」还和「越低越好」语感相冲",
+   "suggest": "统一以「损失」为基：l16/l22/l24 写「平均损失」，l29–l31 写「最低损失」（l19「直接平均误差」是另一个量，不动）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "分数读数统一以「损失」为名：l16/l22/l24「平均损失」，l29–l31「最低损失」；英文 Average loss / Lowest loss",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I40",
+   "key": "bc75b233b28a",
+   "item": "screen_zh",
+   "where": "l08",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l08"
+   ],
+   "evidence": [
+    "就像 / 高尔夫：杆数越少越好"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "高尔夫：杆少者胜",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "就像 / 高尔夫：杆数越少越好",
+   "problem": "与口播「有点像打高尔夫，杆数越少越好」逐字重叠，且同屏已叠四块 20 字",
+   "suggest": "高尔夫：杆少者胜",
+   "judge_note": "a 的问题表 l08 改写「高尔夫：杆少者胜」：「者胜」是文言腔，和全片口语体例不搭，改了更差。原句 9 字，在硬上限内，可以保留。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人：原句 9 字在上限内，改写「杆少者胜」更差，保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I41",
+   "key": "ca62bfab72a1",
+   "item": "screen_zh",
+   "where": "l09",
+   "dim": "P4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l09"
+   ],
+   "evidence": [
+    "✗ 分高了：拧回来"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "保持一致即可；可改「分高 → 拧回」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "✗ 分高了：拧回来",
+   "problem": "符号 ✗ 与文字混用，后面 l19 也用，体例有但不算规范",
+   "suggest": "保持一致即可；可改「分高 → 拧回」",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：✓ / ✗ 体例全片一致；l19 的 ✗ 已删",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I42",
+   "key": "effebc292445",
+   "item": "screen_zh",
+   "where": "l16, l22, l24",
+   "dim": "P4/P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4/P2",
+   "shots": [
+    "l16, l22, l24"
+   ],
+   "evidence": [
+    "得分（平均）"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "平均损失",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "得分（平均）",
+   "problem": "括号写法不顺；「得分」与刚教的「分越低越好」「损失」口径不一",
+   "suggest": "平均损失",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I39",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I43",
+   "key": "3aedce26f07e",
+   "item": "screen_zh",
+   "where": "l17, l18, l13–l16, l24, l25",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l17, l18, l13–l16, l24, l25"
+   ],
+   "evidence": [
+    "第一种拧法 / 第二种：太陡 / 第三种拧法"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "统一为「第一种：偏低」「第二种：太陡」「第三种：贴点」；l25 表格用「第一种 / 第二种 / 第三种」不变",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "第一种拧法 / 第二种：太陡 / 第三种拧法",
+   "problem": "同一系列标题体例不一，且「第二种：太陡」中「太陡」是新说法",
+   "suggest": "统一为「第一种：偏低」「第二种：太陡」「第三种：贴点」；l25 表格用「第一种 / 第二种 / 第三种」不变",
+   "judge_note": "a 的问题表 l17 等的统一写法「第三种：贴点」：「贴点」是生造词，应改为「第三种：贴近」。统一体例本身的方向成立。",
+   "status": "implemented",
+   "solution": "三种拧法标题统一为「第一种：偏低 / 第二种：太陡 / 第三种：贴近」（裁决人改「贴点」为「贴近」）；英文 Try 1: too low / Try 3: close",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I44",
+   "key": "a4ff46736940",
+   "item": "screen_zh",
+   "where": "l19",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l19"
+   ],
+   "evidence": [
+    "图（猜多了 +、猜少了 −）＋旋钮＋「第二种：太陡」＋「直接平均误差 −0.33」＋「✗ 正负抵消了」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "去掉 h1「第二种：太陡」（图上已有旋钮和线），h2 改「正负抵消 ✗」；得分卡标签「直接平均误差」改「平均误差」。结果 4 块、约 29 字",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "图（猜多了 +、猜少了 −）＋旋钮＋「第二种：太陡」＋「直接平均误差 −0.33」＋「✗ 正负抵消了」",
+   "problem": "5 块、约 37 字，超 4 块、36 字上限；还叠着 h1 和 h2 两级标题，视线没有重心",
+   "suggest": "去掉 h1「第二种：太陡」（图上已有旋钮和线），h2 改「正负抵消 ✗」；得分卡标签「直接平均误差」改「平均误差」。结果 4 块、约 29 字",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I16（中文标题「不平方：正负抵消」，读数标签「平均误差」）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I45",
+   "key": "8e30db998b22",
+   "item": "screen_zh",
+   "where": "l19",
+   "dim": "P1、P3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P3",
+   "shots": [
+    "l19"
+   ],
+   "evidence": [
+    "第二种：太陡；直接平均误差 −0.33；✗ 正负抵消了；两个旋钮；左图"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "标题换成“正负抵消”；读数标签换成“平均误差”，保留“−0.33”；删除底部“✗ 正负抵消了”。其余保留，降为4块",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "第二种：太陡；直接平均误差 −0.33；✗ 正负抵消了；两个旋钮；左图",
+   "problem": "左图1块、同构旋钮组1块、标题1块、平均误差读数1块、红字结论1块，共5块。含图共36字，字数未超，块数超限。",
+   "suggest": "标题换成“正负抵消”；读数标签换成“平均误差”，保留“−0.33”；删除底部“✗ 正负抵消了”。其余保留，降为4块",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I44",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I46",
+   "key": "9c062e0c0984",
+   "item": "screen_zh",
+   "where": "l20–l22",
+   "dim": "P2、P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2、P4",
+   "shots": [
+    "l20–l22"
+   ],
+   "evidence": [
+    "平方：全是正数"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "平方：避免正负抵消",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "平方：全是正数",
+   "problem": "“全是”把结论说满，遗漏零误差平方仍为零的情形。屏幕应留下平方的作用，避免把有例外的说法做成醒目结论。",
+   "suggest": "平方：避免正负抵消",
+   "judge_note": "b 的问题表 l20–l22「平方：全是正数」定为必改：不成立。屏幕与口播「平方以后全是正数」一致，零误差这种例外是口播内容的问题，不归屏幕文字管；只改屏幕反而会和口播不一致，改写「平方：避免正负抵消」也更长、更弱。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人：屏幕与口播「平方以后全是正数」一致，不成立",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I47",
+   "key": "ec1b58f66b72",
+   "item": "screen_zh",
+   "where": "l23",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "均方误差Mean squared error"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "均方误差（英文另起一行并改为小注 Mean squared error）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "均方误差Mean squared error",
+   "problem": "中英无分隔地粘在一起，读起来像一个词",
+   "suggest": "均方误差（英文另起一行并改为小注 Mean squared error）",
+   "judge_note": "a 的问题表 l23（均方误差Mean squared error 中英粘连）：截图 s3_l23 中中文、英文分成两行，字号、颜色都不同，粘连是材料抽字造成的假象，b 也核实了这一点。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人：截图中中英分两行，粘连是材料抽字造成的",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I48",
+   "key": "f14aa02d09bb",
+   "item": "screen_zh",
+   "where": "l25",
+   "dim": "P3、P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3、P5",
+   "shots": [
+    "l25"
+   ],
+   "evidence": [
+    "第三种拧法；第一种 78／第二种 13.4／第三种 2.19"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "标题“三种拧法对比”；三行改为“① 78”“② 13.4”“③ 2.19”，保留第三行绿色强调",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "第三种拧法；第一种 78／第二种 13.4／第三种 2.19",
+   "problem": "三行同构比较可合算1块，整屏合计4块、30字，未超限。但标题仍指向第三种，比较层级不够明确；3秒内还要兼顾字幕。",
+   "suggest": "标题“三种拧法对比”；三行改为“① 78”“② 13.4”“③ 2.19”，保留第三行绿色强调",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l25 标题改「三种拧法对比」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I49",
+   "key": "787b1f6c920e",
+   "item": "screen_zh",
+   "where": "l31–l32",
+   "dim": "P2、P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2、P4",
+   "shots": [
+    "l31–l32"
+   ],
+   "evidence": [
+    "最低点 ≠ 0"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "最低分 ≠ 0",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "最低点 ≠ 0",
+   "problem": "“点”是位置，零在此是分数；刚从地形图切回车费图，这种省略容易让观众混淆比较对象。",
+   "suggest": "最低分 ≠ 0",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改「最低分 ≠ 0」；英文 Lowest score ≠ 0",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I50",
+   "key": "6f14406ceda5",
+   "item": "screen_zh",
+   "where": "l31",
+   "dim": "P5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l31"
+   ],
+   "evidence": [
+    "最低点的分数 1.97（句长 45% 处入，l32 开头撤）"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "把 1.97 读数一直留到 l32 结束；或者让它和 h1 在 l31 开头同时出场",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "最低点的分数 1.97（句长 45% 处入，l32 开头撤）",
+   "problem": "章节卡之后整屏重建，2.8s 里要认图、读标题、读读数，读数实际只停约 1.5s",
+   "suggest": "把 1.97 读数一直留到 l32 结束；或者让它和 h1 在 l31 开头同时出场",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "1.97 读数留到 l32 结束，l33 才收走",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I51",
+   "key": "734b97622364",
+   "item": "screen_zh",
+   "where": "l34",
+   "dim": "P1、P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P2",
+   "shots": [
+    "l34"
+   ],
+   "evidence": [
+    "模型只认分数／不知道什么是打车"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "只认分数／不懂打车",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "模型只认分数／不知道什么是打车",
+   "problem": "两行形成对比，但仍较贴近口播措辞；主语和解释可以继续交给声音。",
+   "suggest": "只认分数／不懂打车",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改「只认分数 / 不懂打车」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I52",
+   "key": "c3e44b92b34e",
+   "item": "screen_zh",
+   "where": "l35, l36",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l35, l36"
+   ],
+   "evidence": [
+    "怎么打分，就怎么学"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "标题改「打分方式 = 学习方向」，l36 只留 h2「平方：特别怕大错」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "怎么打分，就怎么学",
+   "problem": "口播「分怎么打，它就往哪学」的颠倒复述；l36 同时挂 h1、h2 两级，章末也不简练",
+   "suggest": "标题改「打分方式 = 学习方向」，l36 只留 h2「平方：特别怕大错」",
+   "judge_note": "a 的问题表 l35/l36 改写「打分方式 = 学习方向」：这是名词堆砌，比原句「怎么打分，就怎么学」更难读，改了反而更差。原句保留，只需按 a 的另一条意见把 l36 的 h1 撤掉。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人：改写「打分方式 = 学习方向」更差，保留原标题",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I53",
+   "key": "43fcf81737c9",
+   "item": "screen_zh",
+   "where": "l37",
+   "dim": "P1、P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P4",
+   "shots": [
+    "l37"
+   ],
+   "evidence": [
+    "损失函数 = 什么算「好」"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "什么才算「好」",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "损失函数 = 什么算「好」",
+   "problem": "等号两侧分别是名词和问句，读出来不顺。这里承担章末总结和转场，按从严规则处理。",
+   "suggest": "什么才算「好」",
+   "judge_note": "b 的问题表 l37 改写「什么才算「好」」：删掉了「损失函数」，章末总结丢了主语和本期术语。应改为「损失函数：定义「好」」，问题本身成立。",
+   "status": "implemented",
+   "solution": "改「损失函数：定义「好」」（裁决人写法），两行排",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I54",
+   "key": "b1c10165bf12",
+   "item": "screen_zh",
+   "where": "l37",
+   "dim": "P4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l37"
+   ],
+   "evidence": [
+    "损失函数 / = 什么算「好」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "损失函数 = 定义「好」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "损失函数 / = 什么算「好」",
+   "problem": "断行在「函数」后，换行处读着断开",
+   "suggest": "损失函数 = 定义「好」",
+   "judge_note": "b 的问题表 l37 改写「什么才算「好」」：删掉了「损失函数」，章末总结丢了主语和本期术语。应改为「损失函数：定义「好」」，问题本身成立。",
+   "status": "implemented",
+   "solution": "同 I53",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I55",
+   "key": "5fa01260074c",
+   "item": "screen_zh",
+   "where": "l38",
+   "dim": "P1、P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P2",
+   "shots": [
+    "l38"
+   ],
+   "evidence": [
+    "训练时也有一个分"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "训练打分",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "训练时也有一个分",
+   "problem": "8字虽未超限，仍是完整口播句，几乎原样复述“训练时也有个分”；没有额外提供结构。",
+   "suggest": "训练打分",
+   "judge_note": "b 的问题表 l38 改写「训练打分」：这是生造的名词短语，比原句差。改写方案见补充问题 l38。",
+   "status": "implemented",
+   "solution": "副标题改「也有损失」（裁决人写法）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I56",
+   "key": "fcef7d44afd1",
+   "item": "screen_zh",
+   "where": "l38",
+   "dim": "P2/P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2/P4",
+   "shots": [
+    "l38"
+   ],
+   "evidence": [
+    "训练时也有一个分"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "也有损失（4 字，同时用上本期术语）",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "训练时也有一个分",
+   "problem": "两人都指出这里是复述口播，但 b 的改写「训练打分」是生造的名词短语，所以这里另给一个改写",
+   "suggest": "也有损失（4 字，同时用上本期术语）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I55",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I57",
+   "key": "a25f2e4ab6eb",
+   "item": "screen_zh",
+   "where": "l38",
+   "dim": "P3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l38"
+   ],
+   "evidence": [
+    "大语言模型 / 训练时也有一个分"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "h1 保留，h2 改「训练也有分」；章名与口播的叫法对齐即可",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "大语言模型 / 训练时也有一个分",
+   "problem": "章名叫「大模型」、屏幕叫「大语言模型」，术语两样；h2 整句式",
+   "suggest": "h1 保留，h2 改「训练也有分」；章名与口播的叫法对齐即可",
+   "judge_note": "b 的问题表 l38 改写「训练打分」：这是生造的名词短语，比原句差。改写方案见补充问题 l38。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：章名「大模型」是口语简称，屏幕「大语言模型」是正式名，口播 l38 两者都说到",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I58",
+   "key": "0dd8007d7543",
+   "item": "screen_zh",
+   "where": "l40, l41",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l40, l41"
+   ],
+   "evidence": [
+    "把握越小，罚得越多"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "l40 改「把握小 → 罚得多」；l41 去掉这行，只留柱和数字",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "把握越小，罚得越多",
+   "problem": "与口播同一句话，屏幕只是复述；l41 屏上已有两条柱和数字（0.11 对 2.30）自己能说明",
+   "suggest": "l40 改「把握小 → 罚得多」；l41 去掉这行，只留柱和数字",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l40 改「把握小 → 罚得多」；l41 出数字和柱条时收走这一行",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/package.json",
+    "edu_videos/ai_terms/t11_loss_function/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I59",
+   "key": "65151f73def2",
+   "item": "voice_en",
+   "where": "chapter card \"How big models are scored\"",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "chapter card \"How big models are scored\""
+   ],
+   "evidence": [
+    "How big models are scored"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "How ChatGPT gets scored",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "How big models are scored",
+   "problem": "Passive, slightly written; the other titles are plainer.",
+   "suggest": "How ChatGPT gets scored",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人：How big models are scored 是自然的章节标题，不改",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I60",
+   "key": "10bedde8b1db",
+   "item": "voice_en",
+   "where": "l02",
+   "dim": "V1, V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V2",
+   "shots": [
+    "l02"
+   ],
+   "evidence": [
+    "But what does \"right\" even mean? How does the machine know this turn beat the last one?"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "But what does \"right\" even mean? How does the machine know whether turning a knob helped?",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "But what does \"right\" even mean? How does the machine know this turn beat the last one?",
+   "problem": "“This turn beat the last one” sounds like comparing turns in a game. I briefly have to translate it back into adjusting a knob. The question should make the improvement clear immediately. Strict cold-open item.",
+   "suggest": "But what does \"right\" even mean? How does the machine know whether turning a knob helped?",
+   "judge_note": "b l02：不成立。\"this turn beat the last one\" 是很地道的口语，画面上的 \"Is this turn better?\" 也对得上；b 的改写 \"whether turning a knob helped\" 丢了\"跟上一次比\"的意思，反而变差。冷开场保持原句。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人：this turn beat the last one 是地道口语，保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I61",
+   "key": "a0d98d743591",
+   "item": "voice_en",
+   "where": "l04, l05, l06, l14, l15, l20, l30, l35, l50",
+   "dim": "V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V5",
+   "shots": [
+    "l04, l05, l06, l14, l15, l20, l30, l35, l50"
+   ],
+   "evidence": [
+    "That's today's topic / that's the error / that's the loss / That's this red square / That's why we square / That's the best setting / that's how it learns / That's gradient descent, and that's…"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "l20: So we square: once everything's squared, it's all positive, and nothing cancels. / l30: It's the best setting, and the whole job of training is finding that lowest point.",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "That's today's topic / that's the error / that's the loss / That's this red square / That's why we square / That's the best setting / that's how it learns / That's gradient descent, and that's…",
+   "problem": "\"That's…\" 收句约十次，成了口头禅，听感单调。严格项 l04 保留；l50 按 b 的条目改；非严格句挑两三处换掉即可。",
+   "suggest": "l20: So we square: once everything's squared, it's all positive, and nothing cancels. / l30: It's the best setting, and the whole job of training is finding that lowest point.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l20 改为「So we square: once everything's squared, it's all positive, and nothing cancels.」；l30 改为「It's the best setting, and the whole job of training is finding that lowest point.」；l50 改为「That's where gradient descent comes in, and that's next time.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I62",
+   "key": "6e92707a7f11",
+   "item": "voice_en",
+   "where": "l05",
+   "dim": "V1, V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l05"
+   ],
+   "evidence": [
+    "Every time the model guesses, it's a bit off from the real answer. How far off, that's the error."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "A guess can be above or below the real answer. The difference is the error.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Every time the model guesses, it's a bit off from the real answer. How far off, that's the error.",
+   "problem": "“Every time” tells me guesses necessarily miss. More importantly for the next example, “how far off” establishes only a distance, leaving the later negative error unexplained. A guess can be above or below the answer.",
+   "suggest": "A guess can be above or below the real answer. The difference is the error.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l05 改为「Every time the model guesses, it lands a bit too high or too low. That gap is the error.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I63",
+   "key": "bc923272309a",
+   "item": "voice_en",
+   "where": "l10",
+   "dim": "V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4",
+   "shots": [
+    "l10"
+   ],
+   "evidence": [
+    "So training, put simply, is turning the knobs over and over to push that score down."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "So training is just turning the knobs again and again to push that score down.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "So training, put simply, is turning the knobs over and over to push that score down.",
+   "problem": "\"put simply\" is filler.",
+   "suggest": "So training is just turning the knobs again and again to push that score down.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l10 改为「So training is just turning the knobs again and again to push that score down.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I64",
+   "key": "3972d1a8b81b",
+   "item": "voice_en",
+   "where": "l11",
+   "dim": "V1, V2, V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V2, V3",
+   "shots": [
+    "l11"
+   ],
+   "evidence": [
+    "Back to those twelve taxi rides from last time: distance along the bottom, fare up the side. The data's made up."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Let's use those twelve made-up taxi rides again. We have each ride's distance and fare.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Back to those twelve taxi rides from last time: distance along the bottom, fare up the side. The data's made up.",
+   "problem": "The chapter opens with a fragment followed by two axis-label fragments. Listening alone, I get positions on an unseen chart before a clear reminder of what information we have. Strict chapter-transition item.",
+   "suggest": "Let's use those twelve made-up taxi rides again. We have each ride's distance and fare.",
+   "judge_note": "b l11：问题成立（严格项，必改），但改写删掉了坐标轴的说明，而 l12–l13 要靠它来看图。改为 \"Remember those twelve made-up taxi rides? Distance along the bottom, fare up the side.\"（14 词，不超过原句 21 词）。；a l11、a l38：级别判错。这两句是章节开场的严格项，既然判了 \"a bit off\"，就应该是必改，不是建议。",
+   "status": "implemented",
+   "solution": "l11 改为「Remember those twelve made-up taxi rides? Distance along the bottom, fare up the side.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I65",
+   "key": "f22412c49269",
+   "item": "voice_en",
+   "where": "l11",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l11"
+   ],
+   "evidence": [
+    "Back to those twelve taxi rides from last time: distance along the bottom, fare up the side. The data's made up."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Back to those twelve taxi rides: distance along the bottom, fare up the side. I invented the numbers.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Back to those twelve taxi rides from last time: distance along the bottom, fare up the side. The data's made up.",
+   "problem": "\"The data's made up\" is curt and could be misheard as \"the data is made up of\".",
+   "suggest": "Back to those twelve taxi rides: distance along the bottom, fare up the side. I invented the numbers.",
+   "judge_note": "b l11：问题成立（严格项，必改），但改写删掉了坐标轴的说明，而 l12–l13 要靠它来看图。改为 \"Remember those twelve made-up taxi rides? Distance along the bottom, fare up the side.\"（14 词，不超过原句 21 词）。；a l11、a l38：级别判错。这两句是章节开场的严格项，既然判了 \"a bit off\"，就应该是必改，不是建议。",
+   "status": "implemented",
+   "solution": "l11 改为「Remember those twelve made-up taxi rides? Distance along the bottom, fare up the side.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I66",
+   "key": "44403ef928f1",
+   "item": "voice_en",
+   "where": "l15",
+   "dim": "V1, V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l15"
+   ],
+   "evidence": [
+    "Now square it: eight times eight is sixty-four. That's this red square."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Now square that error: eight times eight gives a penalty of sixty-four.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Now square it: eight times eight is sixty-four. That's this red square.",
+   "problem": "“That’s this” is an awkward demonstrative handoff. The color reference gives an ear-only listener nothing further; connect sixty-four to its role in the score instead.",
+   "suggest": "Now square that error: eight times eight gives a penalty of sixty-four.",
+   "judge_note": "b l15：改写更差。它删掉了 \"That's this red square\"，而 l24 \"the squares are tiny\" 正是靠这句建立起\"红色方块＝平方误差\"的画面（s3.html 里 8²=64 用 --d-bad 色标出）。保持原句。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人：That's this red square 是画面锚点，l24 the squares are tiny 靠它，保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I67",
+   "key": "61e6bd350a79",
+   "item": "voice_en",
+   "where": "l17",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l17"
+   ],
+   "evidence": [
+    "Second try: four dollars to start and three fifty a kilometer. Too steep: too low on short rides, too high on long ones."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Second try: four dollars to start and three fifty a kilometer. That's too steep: too low on short rides, too high on long ones.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Second try: four dollars to start and three fifty a kilometer. Too steep: too low on short rides, too high on long ones.",
+   "problem": "Two colons in a row; the second half reads like notes.",
+   "suggest": "Second try: four dollars to start and three fifty a kilometer. That's too steep: too low on short rides, too high on long ones.",
+   "judge_note": "a l17 改写：24 词，超过原句 23 词，违反长度上限。可改为 \"Second try: four dollars to start and three fifty a kilometer. Too steep, so short rides come out low and long ones high.\"（23 词）。",
+   "status": "implemented",
+   "solution": "l17 改为「Second try: $4 to start and $3.50 a kilometer. Too steep, so short rides come out low and long ones high.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I68",
+   "key": "ad4d1e326f3d",
+   "item": "voice_en",
+   "where": "l18",
+   "dim": "V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l18"
+   ],
+   "evidence": [
+    "If we skipped the squaring and just averaged the errors, the too-lows and too-highs would cancel out."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Average errors as negatives for low guesses and positives for high guesses, and they can cancel out.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "If we skipped the squaring and just averaged the errors, the too-lows and too-highs would cancel out.",
+   "problem": "I have heard error described as “how far off,” with an example of eight. Nothing has told me errors can be negative. “Cancel out” and the following “minus thirty cents” therefore introduce a missing step. “Too-lows and too-highs” also makes me decode improvised nouns while following the arithmetic.",
+   "suggest": "Average errors as negatives for low guesses and positives for high guesses, and they can cancel out.",
+   "judge_note": "b l18：问题部分成立（正负号在前面没铺垫），但级别从必改降为建议。改写更差：书面腔，还删掉了 \"If we skipped the squaring\" 这个前提，而 l20 \"That's why we square\" 正是回答它的。应该在定义处改，l05 改为 \"Every time the model guesses, it lands a bit too high or too low. That gap is the error.\"（19 词，不超过原句 19 词）。",
+   "status": "implemented",
+   "solution": "l05 改为「Every time the model guesses, it lands a bit too high or too low. That gap is the error.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I69",
+   "key": "6df092585a9b",
+   "item": "voice_en",
+   "where": "l22, l24, l29",
+   "dim": "V3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l22, l24, l29"
+   ],
+   "evidence": [
+    "thirteen point four / two point one nine / one point nine seven"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Optional: l25 \"so it's the best of the three\" is the anchor; keep.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "thirteen point four / two point one nine / one point nine seven",
+   "problem": "Several similar scores close together; fine because each is on screen, but audio-only listeners may blur them.",
+   "suggest": "Optional: l25 \"so it's the best of the three\" is the anchor; keep.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：三个分数都在屏上，l25 起有对比表",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I70",
+   "key": "5361436984f4",
+   "item": "voice_en",
+   "where": "l26",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l26"
+   ],
+   "evidence": [
+    "But that's only three tries. Score every possible setting of the two knobs, and you get a landscape map of scores."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "But we've tried only three settings. Score every possible pair of knob settings, and you get a landscape of scores.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "But that's only three tries. Score every possible setting of the two knobs, and you get a landscape map of scores.",
+   "problem": "“Landscape map of scores” piles three nouns together and sounds composed on the page. “Landscape of scores” gives the listener the same metaphor more cleanly.",
+   "suggest": "But we've tried only three settings. Score every possible pair of knob settings, and you get a landscape of scores.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l26 改为「But that's just three tries. Score every setting of both knobs, and you get a landscape of scores.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I71",
+   "key": "2a0afddb9466",
+   "item": "voice_en",
+   "where": "l27",
+   "dim": "V1, V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "Starting fare along the bottom, price per kilometer up the side, and the darker the color, the higher the score."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "The axes show starting fare and price per kilometer. Darker areas mean higher scores.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Starting fare along the bottom, price per kilometer up the side, and the darker the color, the higher the score.",
+   "problem": "Two label fragments turn into a third relationship halfway through the sentence. This sounds like reading chart annotations. State what the axes represent, then explain the color.",
+   "suggest": "The axes show starting fare and price per kilometer. Darker areas mean higher scores.",
+   "judge_note": "b l27：不成立。\"X along the bottom, Y up the side\" 是讲解视频的常见口语说法；b 的改写 \"The axes show…\" 更像讲课腔。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人：X along the bottom, Y up the side 是讲解常用说法，保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I72",
+   "key": "28bb69d52bbe",
+   "item": "voice_en",
+   "where": "l28",
+   "dim": "V1, V3, V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3, V5",
+   "shots": [
+    "l28"
+   ],
+   "evidence": [
+    "Our three tries: the first way up high, the second halfway down, the third nearly at the bottom of the valley."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Our first try is high on the slope. The second is lower, and the third is near the valley floor.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Our three tries: the first way up high, the second halfway down, the third nearly at the bottom of the valley.",
+   "problem": "This is a caption-like positional roll call. Missing verbs make the listener supply the relationships while holding three locations in mind. Complete clauses would sound more like someone describing what happened.",
+   "suggest": "Our first try is high on the slope. The second is lower, and the third is near the valley floor.",
+   "judge_note": "b l28：判 \"clearly off\" 不成立。对着画面用省略式并列描述三个位置，口语里很自然，最多算记录。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人：对着画面的省略式并列，口语自然，最多算记录",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I73",
+   "key": "de58dba38bc3",
+   "item": "voice_en",
+   "where": "l29",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l29"
+   ],
+   "evidence": [
+    "The lowest point is a starting fare of about ten twenty and two fifty-four a kilometer, scoring one point nine seven."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "The lowest point is a starting fare of about ten dollars twenty, and two fifty-four a kilometer. Score: one point nine seven.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "The lowest point is a starting fare of about ten twenty and two fifty-four a kilometer, scoring one point nine seven.",
+   "problem": "\"ten twenty\" by ear could be 10.20, 1020 or a time; long run-on with three numbers.",
+   "suggest": "The lowest point is a starting fare of about ten dollars twenty, and two fifty-four a kilometer. Score: one point nine seven.",
+   "judge_note": "a l29 改写：超长 1 词，\"Score: one point nine seven.\" 是电报式碎片。改用 b 的版本 \"Ten dollars twenty to start, then two fifty-four a kilometer, gives the lowest score: one point nine seven.\"",
+   "status": "implemented",
+   "solution": "l29 改为「$10.20 to start, then $2.54 a kilometer, gives the lowest score: 1.97.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I74",
+   "key": "30f29a7b3738",
+   "item": "voice_en",
+   "where": "l29",
+   "dim": "V3, V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3, V5",
+   "shots": [
+    "l29"
+   ],
+   "evidence": [
+    "The lowest point is a starting fare of about ten twenty and two fifty-four a kilometer, scoring one point nine seven."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Ten dollars twenty to start, then two fifty-four a kilometer, gives the lowest score: one point nine seven.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "The lowest point is a starting fare of about ten twenty and two fifty-four a kilometer, scoring one point nine seven.",
+   "problem": "Three numerical values arrive in one sentence. “The lowest point is a starting fare … and …” also blurs the distinction between the setting and its score. Label the opening amount as money and make the score the sentence’s destination.",
+   "suggest": "Ten dollars twenty to start, then two fifty-four a kilometer, gives the lowest score: one point nine seven.",
+   "judge_note": "a l29 改写：超长 1 词，\"Score: one point nine seven.\" 是电报式碎片。改用 b 的版本 \"Ten dollars twenty to start, then two fifty-four a kilometer, gives the lowest score: one point nine seven.\"",
+   "status": "implemented",
+   "solution": "l29 改为「$10.20 to start, then $2.54 a kilometer, gives the lowest score: 1.97.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I75",
+   "key": "6c322f8bc1d4",
+   "item": "voice_en",
+   "where": "l33",
+   "dim": "V1, V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l33"
+   ],
+   "evidence": [
+    "So training isn't chasing zero. It's chasing as low as it can get."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Training aims for the lowest possible score, even if that isn't zero.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "So training isn't chasing zero. It's chasing as low as it can get.",
+   "problem": "“Chasing as low as it can get” sounds unfinished: chasing what? I can reconstruct “the lowest score,” but the spoken sentence should supply it.",
+   "suggest": "Training aims for the lowest possible score, even if that isn't zero.",
+   "judge_note": "b l33：问题成立，但改写 \"aims for the lowest possible score\" 更书面。改为 \"So training isn't chasing zero. It's just getting as low as it can.\"（13 词）。",
+   "status": "implemented",
+   "solution": "l33 改为「So training isn't chasing zero. It's just getting as low as it can.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I76",
+   "key": "cfe0d9313c8b",
+   "item": "voice_en",
+   "where": "l37 to l38",
+   "dim": "V2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2",
+   "shots": [
+    "l37 to l38"
+   ],
+   "evidence": [
+    "(silent chapter card between)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "No change needed.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "(silent chapter card between)",
+   "problem": "Jump from taxi fares to language models relies on the card alone; l38 does the linking well enough (\"get a score in training too\").",
+   "suggest": "No change needed.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：l38 已改为 just not for taxi fares，直接接上前一章",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I77",
+   "key": "0fa588fec7c1",
+   "item": "voice_en",
+   "where": "l38",
+   "dim": "V1, V2, V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V2, V3",
+   "shots": [
+    "l38"
+   ],
+   "evidence": [
+    "Big language models like ChatGPT get a score in training too. It's just scoring something different."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Language models like ChatGPT get training scores too, but for predicting words instead of fares.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Big language models like ChatGPT get a score in training too. It's just scoring something different.",
+   "problem": "What does “it” mean—the model, training, or the score? The sentence switches from receiving a score to doing the scoring. This chapter transition should name the difference directly. Strict transition item.",
+   "suggest": "Language models like ChatGPT get training scores too, but for predicting words instead of fares.",
+   "judge_note": "a l11、a l38：级别判错。这两句是章节开场的严格项，既然判了 \"a bit off\"，就应该是必改，不是建议。",
+   "status": "implemented",
+   "solution": "l38 改为「Big language models like ChatGPT get a score in training too, just not for taxi fares.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I78",
+   "key": "4dfff20e1561",
+   "item": "voice_en",
+   "where": "l38",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l38"
+   ],
+   "evidence": [
+    "Big language models like ChatGPT get a score in training too. It's just scoring something different."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Big language models like ChatGPT get scored in training too, just on something different.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Big language models like ChatGPT get a score in training too. It's just scoring something different.",
+   "problem": "\"scoring something different\" is vague and a little repetitive of \"score\".",
+   "suggest": "Big language models like ChatGPT get scored in training too, just on something different.",
+   "judge_note": "a l11、a l38：级别判错。这两句是章节开场的严格项，既然判了 \"a bit off\"，就应该是必改，不是建议。",
+   "status": "implemented",
+   "solution": "l38 改为「Big language models like ChatGPT get a score in training too, just not for taxi fares.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I79",
+   "key": "632ab59cf90e",
+   "item": "voice_en",
+   "where": "l40",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l40"
+   ],
+   "evidence": [
+    "The score looks at how confident the model was in the word that actually comes next. The less confident, the bigger the penalty."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "The score checks how sure the model was about the real next word. The less sure, the bigger the penalty.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "The score looks at how confident the model was in the word that actually comes next. The less confident, the bigger the penalty.",
+   "problem": "\"confident in the word that actually comes next\" is slightly written.",
+   "suggest": "The score checks how sure the model was about the real next word. The less sure, the bigger the penalty.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l40 改为「The score checks how sure the model was about the real next word. The less sure, the bigger the penalty.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I80",
+   "key": "3892be7b0cbe",
+   "item": "voice_en",
+   "where": "l41",
+   "dim": "V1, V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l41"
+   ],
+   "evidence": [
+    "Give the right word ninety percent, and the penalty is tiny. Give it only ten percent, and it's way bigger."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "If the model gives the right word a ninety percent chance, the penalty's tiny. At ten percent, it's much bigger.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Give the right word ninety percent, and the penalty is tiny. Give it only ten percent, and it's way bigger.",
+   "problem": "“Give the right word ninety percent” leaves out what the percentage measures. A listener without this background should hear “chance,” rather than having to infer it from “confident.”",
+   "suggest": "If the model gives the right word a ninety percent chance, the penalty's tiny. At ten percent, it's much bigger.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l41 改为「If it was 90% sure of the right word, the penalty's tiny. Only 10% sure, and it's way bigger.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I81",
+   "key": "25b94156681e",
+   "item": "voice_en",
+   "where": "l43",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l43"
+   ],
+   "evidence": [
+    "In twenty twenty-three, Meta trained a language model called Llama 2, and plotted this score as a curve. It kept going down."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "In 2023, Meta trained a model called Llama 2 and tracked that score as it trained. It kept going down.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "In twenty twenty-three, Meta trained a language model called Llama 2, and plotted this score as a curve. It kept going down.",
+   "problem": "\"this score\" is far from l41-l42 with cross-entropy between; \"curve\" with no setup.",
+   "suggest": "In 2023, Meta trained a model called Llama 2 and tracked that score as it trained. It kept going down.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l43 改为「In 2023, Meta trained a model called Llama 2 and tracked that score as it trained. It kept going down.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I82",
+   "key": "845576e8a45a",
+   "item": "voice_en",
+   "where": "l47",
+   "dim": "V2, V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2, V3",
+   "shots": [
+    "l47"
+   ],
+   "evidence": [
+    "So, a loss function is a score for how wrong the model is, and lower is better."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "So, a loss function works out how wrong the model is. A lower score is better.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "So, a loss function is a score for how wrong the model is, and lower is better.",
+   "problem": "The outro contradicts the distinction I heard in l04: the **loss** is the score; the **loss function** is the rule for calculating it. The recap leaves me remembering the wrong distinction. Strict outro item.",
+   "suggest": "So, a loss function works out how wrong the model is. A lower score is better.",
+   "judge_note": "b l47：问题成立（必改）。可用的改写更贴近中文原意并呼应 l03：\"So, a loss function is how you score the model's mistakes, and lower is better.\"（15 词，不超过原句 17 词）。",
+   "status": "implemented",
+   "solution": "l47 改为「So, a loss function is how you score the model's mistakes, and lower is better.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I83",
+   "key": "d2d87f4beb91",
+   "item": "voice_en",
+   "where": "l49",
+   "dim": "V1, V2, V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V2, V3",
+   "shots": [
+    "l49"
+   ],
+   "evidence": [
+    "But with tons of knobs, that map gets so huge you can't see the edges. So which way do you turn to get down?"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "But with tons of knobs, that map gets way too big to ever see whole. So which way do you turn to go downhill?",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "But with tons of knobs, that map gets so huge you can't see the edges. So which way do you turn to get down?",
+   "problem": "片尾严格项。\"can't see the edges\" 是「地形图大得看不到边」的直译，英语母语者听来比喻不对：问题不在看不到边缘，而在于没法把整张图看全、直接找到最低点。\"turn to get down\" 也有点别扭。两位审稿人都判了 natural。",
+   "suggest": "But with tons of knobs, that map gets way too big to ever see whole. So which way do you turn to go downhill?",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l49 改为「But with tons of knobs, that map gets way too big to ever see whole. So which way do you turn to go downhill?」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I84",
+   "key": "1edb50fbcca7",
+   "item": "voice_en",
+   "where": "l50",
+   "dim": "V2, V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2, V3",
+   "shots": [
+    "l50"
+   ],
+   "evidence": [
+    "That's gradient descent, and that's where we're headed next time."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Next time, we'll see how gradient descent guides those turns.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "That's gradient descent, and that's where we're headed next time.",
+   "problem": "After “which way do you turn?”, “That’s gradient descent” names something without quite answering or explaining its role. The double “that’s” also weakens the landing. Strict outro item.",
+   "suggest": "Next time, we'll see how gradient descent guides those turns.",
+   "judge_note": "b l50：问题成立（必改），但改写 \"guides those turns\" 偏书面，也没正面回答 l49 的问题。改为 \"That's where gradient descent comes in, and that's next time.\"（10 词）。",
+   "status": "implemented",
+   "solution": "l50 改为「That's where gradient descent comes in, and that's next time.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I85",
+   "key": "5cab518659f8",
+   "item": "voice_zh",
+   "where": "l04",
+   "dim": "V5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V5",
+   "shots": [
+    "l04"
+   ],
+   "evidence": [
+    "今天就聊它"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "可保留，全片统一即可",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "今天就聊它",
+   "problem": "与 l50「咱们」自称不统一",
+   "suggest": "可保留，全片统一即可",
+   "judge_note": "a l04（记录：自称不统一）：l04 里没有自称，和 l50 的「咱们」谈不上不统一。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人：l04 没有自称，谈不上不统一",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I86",
+   "key": "62008d192e0d",
+   "item": "voice_zh",
+   "where": "l06",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l06"
+   ],
+   "evidence": [
+    "把一大堆误差汇成一个数，就是损失，也就是给模型这次表现打的分。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "把一堆误差算成一个数，就是损失，也就是模型这次的分数。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "把一大堆误差汇成一个数，就是损失，也就是给模型这次表现打的分。",
+   "problem": "“把误差汇成一个数”有书面讲解腔，日常更容易说“算成一个数”。",
+   "suggest": "把一堆误差算成一个数，就是损失，也就是模型这次的分数。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：「汇成一个数」口语里常说，改写「算成一个数」意思变成计算方法，保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I87",
+   "key": "8848264ea68e",
+   "item": "voice_zh",
+   "where": "l08",
+   "dim": "V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l08"
+   ],
+   "evidence": [
+    "有点像打高尔夫，杆数越少越好。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "删去本句，直接接 l09。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "有点像打高尔夫，杆数越少越好。",
+   "problem": "上句已说清“分越低越好”，这里额外要求观众理解高尔夫计分。删掉后直接接拧旋钮，不损失信息。",
+   "suggest": "删去本句，直接接 l09。",
+   "judge_note": "b l08（删句）：高尔夫比喻帮观众记住「越低越好」这个反直觉的点，a 也把它列为做得好的地方，保留。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人：高尔夫比喻帮观众记住「越低越好」，保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I88",
+   "key": "d2e63958d120",
+   "item": "voice_zh",
+   "where": "l11",
+   "dim": "V1、V2、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V2、V3",
+   "shots": [
+    "l11"
+   ],
+   "evidence": [
+    "还是上一期那十二趟打车，横着是距离，竖着是车费，数据是示意的。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "还拿上一期那十二趟打车来算，看路程和车费。这些数都是举例用的。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "还是上一期那十二趟打车，横着是距离，竖着是车费，数据是示意的。",
+   "problem": "章节开头直接念横轴、纵轴，听众还没听到这次要拿数据做什么；“数据是示意的”也偏书面。",
+   "suggest": "还拿上一期那十二趟打车来算，看路程和车费。这些数都是举例用的。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l11 改为「还是上期那十二趟打车，横着是距离，竖着是车费，数是编的。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I89",
+   "key": "4e80124dc953",
+   "item": "voice_zh",
+   "where": "l11",
+   "dim": "V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V5",
+   "shots": [
+    "l11"
+   ],
+   "evidence": [
+    "数据是示意的。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "数据是我编的，示意一下。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "数据是示意的。",
+   "problem": "讲稿腔",
+   "suggest": "数据是我编的，示意一下。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l11 改为「还是上期那十二趟打车，横着是距离，竖着是车费，数是编的。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I90",
+   "key": "6b8ba12e4c75",
+   "item": "voice_zh",
+   "where": "l12",
+   "dim": "V1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l12"
+   ],
+   "evidence": [
+    "模型还是那条直线，两个旋钮：起步价，和每公里多少钱。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "还用直线算车费，两个旋钮分别管起步价和每公里的价钱。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "模型还是那条直线，两个旋钮：起步价，和每公里多少钱。",
+   "problem": "两个并列项一个是名词，一个是问句；听起来像临时补上第二项，没有顺嘴讲出来。",
+   "suggest": "还用直线算车费，两个旋钮分别管起步价和每公里的价钱。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l12 改为「模型还是那条直线，两个旋钮：起步价和每公里的价钱。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I91",
+   "key": "51b08ca52230",
+   "item": "voice_zh",
+   "where": "l12",
+   "dim": "V1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l12"
+   ],
+   "evidence": [
+    "模型还是那条直线，两个旋钮：起步价，和每公里多少钱。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "模型还是那条直线，两个旋钮：起步价和每公里的价钱。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "模型还是那条直线，两个旋钮：起步价，和每公里多少钱。",
+   "problem": "和用户抓过的「名词＋和＋问句」是同一类，按先例必改，a 只给建议偏轻",
+   "suggest": "模型还是那条直线，两个旋钮：起步价和每公里的价钱。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l12 改为「模型还是那条直线，两个旋钮：起步价和每公里的价钱。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I92",
+   "key": "a74a94afc10a",
+   "item": "voice_zh",
+   "where": "l12",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l12"
+   ],
+   "evidence": [
+    "两个旋钮：起步价，和每公里多少钱。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "有两个旋钮，一个管起步价，一个管每公里收多少。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "两个旋钮：起步价，和每公里多少钱。",
+   "problem": "名词加「和」再接问句，硬拼",
+   "suggest": "有两个旋钮，一个管起步价，一个管每公里收多少。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l12 改为「模型还是那条直线，两个旋钮：起步价和每公里的价钱。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I93",
+   "key": "09a9348b88e4",
+   "item": "voice_zh",
+   "where": "l13",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l13"
+   ],
+   "evidence": [
+    "先试第一种拧法：起步价五元，每公里两元。这条线整个偏低了。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "先试一种：起步价五块，每公里两块。这样算，车费普遍偏低。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "先试第一种拧法：起步价五元，每公里两元。这条线整个偏低了。",
+   "problem": "只听时，要自己把“线偏低”翻译成“猜出来的车费偏低”。直接说结果更省力。",
+   "suggest": "先试一种：起步价五块，每公里两块。这样算，车费普遍偏低。",
+   "judge_note": "b l13、l17（建议）：改成「先试一种」「再试一种」去掉了编号，l16「第一种拧法」、l22「第二种」、l25「第三种」、l28「三种拧法」都接不上，改了更差。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人：改成「先试一种」会打乱后面「第一种 / 第二种 / 第三种」的编号",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I94",
+   "key": "65969fed01bd",
+   "item": "voice_zh",
+   "where": "l13 l14 l17 l24",
+   "dim": "V5 V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V5 V1",
+   "shots": [
+    "l13 l14 l17 l24"
+   ],
+   "evidence": [
+    "起步价四元，每公里三块五"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "口播一律说「块」：起步价四块，每公里三块五（l13、l14、l24 同样处理）",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "起步价四元，每公里三块五",
+   "problem": "同一句里「元」和「块」混用，和 l21、l29 的「块」也不统一，两人都漏了",
+   "suggest": "口播一律说「块」：起步价四块，每公里三块五（l13、l14、l24 同样处理）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l13 改为「先试第一种拧法：起步价五块，每公里两块。这条线整个偏低了。」；l14 改为「拿五公里那趟来看：实际二十三块，模型猜十五块，差了八块，这就是误差。」；l17 改为「第二种：起步价四块，每公里三块五。这回线太陡了，短途猜少，长途猜多。」；l24 改为「第三种：起步价十块，每公里两块五。线贴着点走，方块都很小，只得二点一九分。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I95",
+   "key": "f4ed9bd22ca8",
+   "item": "voice_zh",
+   "where": "l15",
+   "dim": "V3、V4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3、V4",
+   "shots": [
+    "l15"
+   ],
+   "evidence": [
+    "把误差平方一下，八乘八，六十四，就是图上这个红方块。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "误差是八块，平方就是八乘八，得到六十四。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "把误差平方一下，八乘八，六十四，就是图上这个红方块。",
+   "problem": "算法能听懂，末尾“这个红方块”却没有可听见的对应物；只听时，这半句接不上。",
+   "suggest": "误差是八块，平方就是八乘八，得到六十四。",
+   "judge_note": "b l15（必改）：s3.html 在 l15 时让红方块出现（`EDU.in(CH.sqs[i5], EDU.t(\"l15\", .3))`），「这个红方块」指得到。b 的改写还删掉了这个画面锚点，而 l24 的「方块都很小」要靠它。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人：l15 时红方块正在出现，「这个红方块」指得到，且 l24「方块都很小」要靠它",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I96",
+   "key": "4800aab842f7",
+   "item": "voice_zh",
+   "where": "l17",
+   "dim": "V3、V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3、V4",
+   "shots": [
+    "l17"
+   ],
+   "evidence": [
+    "第二种：起步价四元，每公里三块五。这回线太陡了，短途猜少，长途猜多。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "再试一种：起步价四块，每公里三块五。这样算，短途偏低，长途偏高。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "第二种：起步价四元，每公里三块五。这回线太陡了，短途猜少，长途猜多。",
+   "problem": "后半句已经讲清问题，“线太陡”又引入一层画面转换；只听时这层可以省掉。",
+   "suggest": "再试一种：起步价四块，每公里三块五。这样算，短途偏低，长途偏高。",
+   "judge_note": "b l13、l17（建议）：改成「先试一种」「再试一种」去掉了编号，l16「第一种拧法」、l22「第二种」、l25「第三种」、l28「三种拧法」都接不上，改了更差。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I93",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I97",
+   "key": "22943fef85ee",
+   "item": "voice_zh",
+   "where": "l19",
+   "dim": "V1 V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1 V3",
+   "shots": [
+    "l19"
+   ],
+   "evidence": [
+    "平均下来只有负零点三元"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "一平均才零点三，还是负的，看着几乎没错。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "平均下来只有负零点三元",
+   "problem": "「只有负」别扭",
+   "suggest": "一平均才零点三，还是负的，看着几乎没错。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l19 改为「平均下来，才差零点三块，看着好像几乎没错。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I98",
+   "key": "7f0b67fa0857",
+   "item": "voice_zh",
+   "where": "l24",
+   "dim": "V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l24"
+   ],
+   "evidence": [
+    "第三种：起步价十元，每公里两块五。线贴着点走，方块都很小，只得二点一九分。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "第三种：起步价十块，每公里两块五。这回每趟都猜得挺准，只有二点一九分。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "第三种：起步价十元，每公里两块五。线贴着点走，方块都很小，只得二点一九分。",
+   "problem": "“线贴着点走”“方块都很小”都在描述画面，没有直接告诉只听的观众：这一组猜得比较准。",
+   "suggest": "第三种：起步价十块，每公里两块五。这回每趟都猜得挺准，只有二点一九分。",
+   "judge_note": "b l24（必改）：直线和方块这时都在屏上，指代成立；最多算建议，可在句尾补一句「每趟都猜得挺准」。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人：直线和方块此时都在屏上，指代成立，最多算建议",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I99",
+   "key": "69ae03276ce8",
+   "item": "voice_zh",
+   "where": "l27",
+   "dim": "V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "横着是起步价，竖着是每公里，颜色越深，分越高。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "横着看起步价，竖着看单价，颜色越深，分越高。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "横着是起步价，竖着是每公里，颜色越深，分越高。",
+   "problem": "“每公里”只是计量条件，没说每公里的什么；光听会等后面补上“多少钱”。",
+   "suggest": "横着看起步价，竖着看单价，颜色越深，分越高。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l27 改为「横着是起步价，竖着是每公里价钱，颜色越深分越高。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I100",
+   "key": "af555894996a",
+   "item": "voice_zh",
+   "where": "l27",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "横着是起步价，竖着是每公里，颜色越深，分越高。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "横着是起步价，竖着是每公里价钱，颜色越深分越高。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "横着是起步价，竖着是每公里，颜色越深，分越高。",
+   "problem": "「每公里」后面少了说的是什么量；b 改成「单价」又多出一个新词",
+   "suggest": "横着是起步价，竖着是每公里价钱，颜色越深分越高。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l27 改为「横着是起步价，竖着是每公里价钱，颜色越深分越高。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I101",
+   "key": "977500515eef",
+   "item": "voice_zh",
+   "where": "l29",
+   "dim": "V1、V3、V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3、V5",
+   "shots": [
+    "l29"
+   ],
+   "evidence": [
+    "最低的那个点，起步价大约十块二，每公里两块五四，分数一点九七。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "最低时，起步价十块二左右，每公里二点五四元，得一点九七分。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "最低的那个点，起步价大约十块二，每公里两块五四，分数一点九七。",
+   "problem": "“两块五四”不符合常见的价钱说法；紧接第三组小数，没有停下来确认数字的机会。",
+   "suggest": "最低时，起步价十块二左右，每公里二点五四元，得一点九七分。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l29 改为「最低点在起步价十块二、每公里两块五毛四，只有一点九七分。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I102",
+   "key": "382d18755c39",
+   "item": "voice_zh",
+   "where": "l29",
+   "dim": "V3 V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3 V5",
+   "shots": [
+    "l29"
+   ],
+   "evidence": [
+    "最低的那个点，起步价大约十块二，每公里两块五四，分数一点九七。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "最低点在起步价十块二、每公里两块五毛四，只有一点九七分。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "最低的那个点，起步价大约十块二，每公里两块五四，分数一点九七。",
+   "problem": "「两块五四」不是常见的报价说法，又连着三组小数",
+   "suggest": "最低点在起步价十块二、每公里两块五毛四，只有一点九七分。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l29 改为「最低点在起步价十块二、每公里两块五毛四，只有一点九七分。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I103",
+   "key": "6e51418e4973",
+   "item": "voice_zh",
+   "where": "l32",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l32"
+   ],
+   "evidence": [
+    "车费里有堵车、绕路这些随机的波动，一条直线不可能每趟都猜中。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "堵车、绕路都会影响车费，一条直线不可能每趟都猜中。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "车费里有堵车、绕路这些随机的波动，一条直线不可能每趟都猜中。",
+   "problem": "堵车、绕路是影响车费的情况，不是“波动”本身；“车费里有堵车”也不顺。",
+   "suggest": "堵车、绕路都会影响车费，一条直线不可能每趟都猜中。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l32 改为「堵车、绕路都会影响车费，一条直线不可能每趟都猜中。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I104",
+   "key": "78e2e5f6bc19",
+   "item": "voice_zh",
+   "where": "l32",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l32"
+   ],
+   "evidence": [
+    "车费里有堵车、绕路这些随机的波动"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "堵车、绕路都会影响车费，一条直线不可能每趟都猜中。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "车费里有堵车、绕路这些随机的波动",
+   "problem": "「车费里有堵车」搭配不对，a 漏掉了；采纳 b",
+   "suggest": "堵车、绕路都会影响车费，一条直线不可能每趟都猜中。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l32 改为「堵车、绕路都会影响车费，一条直线不可能每趟都猜中。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I105",
+   "key": "e41ab94346ca",
+   "item": "voice_zh",
+   "where": "l35",
+   "dim": "V1、V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l35"
+   ],
+   "evidence": [
+    "分怎么打，它就往哪学。比如我们用了平方，它就特别怕犯大错。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "怎么打分，它就怎么学。比如用了平方，它就特别怕犯大错。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "分怎么打，它就往哪学。比如我们用了平方，它就特别怕犯大错。",
+   "problem": "“分怎么打”没有对应一个明确的“哪”；“往哪学”听起来悬着。",
+   "suggest": "怎么打分，它就怎么学。比如用了平方，它就特别怕犯大错。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l35 改为「怎么打分，它就怎么学。比如我们用了平方，它就特别怕犯大错。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I106",
+   "key": "5bf13efea344",
+   "item": "voice_zh",
+   "where": "l35",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l35"
+   ],
+   "evidence": [
+    "分怎么打，它就往哪学。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "怎么打分，它就怎么学。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "分怎么打，它就往哪学。",
+   "problem": "「怎么」和「往哪」对不上；屏幕上写的是「怎么打分，就怎么学」，a 漏掉了",
+   "suggest": "怎么打分，它就怎么学。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l35 改为「怎么打分，它就怎么学。比如我们用了平方，它就特别怕犯大错。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I107",
+   "key": "5e8ddee7fd9e",
+   "item": "voice_zh",
+   "where": "l38",
+   "dim": "V1、V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V2",
+   "shots": [
+    "l38"
+   ],
+   "evidence": [
+    "像 ChatGPT 这样的大语言模型，训练时也有个分，只是打分的对象换了。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "ChatGPT 这样的大语言模型，训练时要打分，不过这回评的不是车费了。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "像 ChatGPT 这样的大语言模型，训练时也有个分，只是打分的对象换了。",
+   "problem": "作为章节转换，“打分的对象换了”像讲解提纲，没直接说刚才的车费例子要换成什么。至少先把“不是在评车费了”说清。",
+   "suggest": "ChatGPT 这样的大语言模型，训练时要打分，不过这回评的不是车费了。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l38 改为「像 ChatGPT 这样的大语言模型，训练时也有个分，只是猜的不是车费了。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I108",
+   "key": "9313136fc60e",
+   "item": "voice_zh",
+   "where": "l40",
+   "dim": "V1 V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1 V3",
+   "shots": [
+    "l40"
+   ],
+   "evidence": [
+    "打分看的是，真正的下一个词，它给了多大把握：把握越小，罚得越多。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "打分就看一点：真正的那个词，模型原来有几成把握。把握越小，罚得越多。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "打分看的是，真正的下一个词，它给了多大把握：把握越小，罚得越多。",
+   "problem": "逗号断句不顺，「它给了」主语不明，一遍难懂",
+   "suggest": "打分就看一点：真正的那个词，模型原来有几成把握。把握越小，罚得越多。",
+   "judge_note": "b l40 改写：「可能性」和 l41 以及屏幕上的「把握越小」对不上，改用补充表里的版本。",
+   "status": "implemented",
+   "solution": "l40 改为「答案其实是「光」，就看它有几成把握猜「光」：把握越小，罚得越多。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I109",
+   "key": "cd39a07767b2",
+   "item": "voice_zh",
+   "where": "l40",
+   "dim": "V1、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l40"
+   ],
+   "evidence": [
+    "打分看的是，真正的下一个词，它给了多大把握：把握越小，罚得越多。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "比如答案是“光”，就看接“光”的可能性多大：越小，罚得越多。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "打分看的是，真正的下一个词，它给了多大把握：把握越小，罚得越多。",
+   "problem": "“给一个词多大把握”不是自然搭配；前半句还要等到后半句才能重新拼出意思。直接落到“光”这个答案更容易听懂。",
+   "suggest": "比如答案是“光”，就看接“光”的可能性多大：越小，罚得越多。",
+   "judge_note": "b l40 改写：「可能性」和 l41 以及屏幕上的「把握越小」对不上，改用补充表里的版本。",
+   "status": "implemented",
+   "solution": "l40 改为「答案其实是「光」，就看它有几成把握猜「光」：把握越小，罚得越多。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I110",
+   "key": "f2b716f1d5e2",
+   "item": "voice_zh",
+   "where": "l40",
+   "dim": "V1 V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1 V3",
+   "shots": [
+    "l40"
+   ],
+   "evidence": [
+    "打分看的是，真正的下一个词，它给了多大把握：把握越小，罚得越多。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "答案其实是「光」，就看它有几成把握猜「光」：把握越小，罚得越多。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "打分看的是，真正的下一个词，它给了多大把握：把握越小，罚得越多。",
+   "problem": "两人都判必改，但两份改写都有问题（a 的「模型原来有几成把握」少了宾语；b 换成「可能性」，和屏幕对不上）。给出折中版本",
+   "suggest": "答案其实是「光」，就看它有几成把握猜「光」：把握越小，罚得越多。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l40 改为「答案其实是「光」，就看它有几成把握猜「光」：把握越小，罚得越多。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I111",
+   "key": "49fc1cb1a42b",
+   "item": "voice_zh",
+   "where": "l41",
+   "dim": "V1、V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l41"
+   ],
+   "evidence": [
+    "给正确的词九成把握，几乎不罚，只给一成，就罚得多得多。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "有九成把握猜对，几乎不罚；只有一成把握，就罚得多得多。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "给正确的词九成把握，几乎不罚，只给一成，就罚得多得多。",
+   "problem": "延续了“给词把握”的生硬搭配。人通常说“有几成把握”，不会说“给正确的词几成把握”。",
+   "suggest": "有九成把握猜对，几乎不罚；只有一成把握，就罚得多得多。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l41 改为「有九成把握猜对，几乎不罚，只有一成把握，就罚得多得多。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I112",
+   "key": "57028987b532",
+   "item": "voice_zh",
+   "where": "l41",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l41"
+   ],
+   "evidence": [
+    "给正确的词九成把握"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "有九成把握猜对，几乎不罚；只有一成把握，就罚得多得多。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "给正确的词九成把握",
+   "problem": "「给词把握」不是常用搭配，a 漏掉了；采纳 b",
+   "suggest": "有九成把握猜对，几乎不罚；只有一成把握，就罚得多得多。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l41 改为「有九成把握猜对，几乎不罚，只有一成把握，就罚得多得多。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I113",
+   "key": "c7ce99321d07",
+   "item": "voice_zh",
+   "where": "l42",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l42"
+   ],
+   "evidence": [
+    "名字知道就行。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "名字听过就行。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "名字知道就行。",
+   "problem": "倒装生硬",
+   "suggest": "名字听过就行。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l42 改为「这种打分叫交叉熵，英文是 cross-entropy，名字听过就行。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I114",
+   "key": "d8f8353338a4",
+   "item": "voice_zh",
+   "where": "l42",
+   "dim": "V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l42"
+   ],
+   "evidence": [
+    "这种打分叫交叉熵，英文是 cross-entropy，名字知道就行。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "这种打分叫交叉熵，知道这个名字就行。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "这种打分叫交叉熵，英文是 cross-entropy，名字知道就行。",
+   "problem": "中文名称之后再念英文，增加一个后文不用的信息；只听的普通观众不需要同时记两个名字。",
+   "suggest": "这种打分叫交叉熵，知道这个名字就行。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "系列约定：中文版英文术语第一次出现时中英对照（ai_terms/README.md），保留 cross-entropy",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I115",
+   "key": "2b44d82af2d6",
+   "item": "voice_zh",
+   "where": "l43",
+   "dim": "V1、V3、V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3、V5",
+   "shots": [
+    "l43"
+   ],
+   "evidence": [
+    "二零二三年，Meta 训练大模型 Llama 2 时，把这个分画成了一条曲线，一路往下压。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "二零二三年，Meta 训练 Llama 2 时，分数一直下降，画出来就是一条往下走的曲线。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "二零二三年，Meta 训练大模型 Llama 2 时，把这个分画成了一条曲线，一路往下压。",
+   "problem": "“画成曲线”之后紧接“一路往下压”，听起来像把画好的曲线压下去；训练导致分数下降与画图记录混成一个动作。",
+   "suggest": "二零二三年，Meta 训练 Llama 2 时，分数一直下降，画出来就是一条往下走的曲线。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l43 改为「2023年，Meta 训练大模型 Llama 2 时，分数一直在降，画出来是一条往下走的曲线。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I116",
+   "key": "23fd95537047",
+   "item": "voice_zh",
+   "where": "l43",
+   "dim": "V1 V3 V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1 V3 V5",
+   "shots": [
+    "l43"
+   ],
+   "evidence": [
+    "二零二三年，Meta 训练大模型 Llama 2 时，把这个分画成了一条曲线，一路往下压。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "二零二三年，Meta 训练 Llama 2 时，分数一直下降，画出来就是一条往下走的曲线。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "二零二三年，Meta 训练大模型 Llama 2 时，把这个分画成了一条曲线，一路往下压。",
+   "problem": "「画成曲线」后面紧接「一路往下压」，听着像在压曲线；8 秒太挤。a 漏掉了，采纳 b 的方向",
+   "suggest": "二零二三年，Meta 训练 Llama 2 时，分数一直下降，画出来就是一条往下走的曲线。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l43 改为「2023年，Meta 训练大模型 Llama 2 时，分数一直在降，画出来是一条往下走的曲线。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t11_loss_function/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I117",
+   "key": "3978fe38ed5d",
+   "item": "voice_zh",
+   "where": "l44",
+   "dim": "V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l44"
+   ],
+   "evidence": [
+    "模型读完了两万亿个词元，词元大致就是字或词的碎片。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "读了两万亿个小片段，像一个字、半个词，这就叫词元。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "模型读完了两万亿个词元，词元大致就是字或词的碎片。",
+   "problem": "先报陌生术语和大数字，再回头解释；“词元”只靠声音还可能听成“次元”。先说是什么，再给名称更稳。",
+   "suggest": "读了两万亿个小片段，像一个字、半个词，这就叫词元。",
+   "judge_note": "b l44（必改）：「词元」说完马上就解释，听不错，降为建议。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人：「词元」说完马上解释，降为建议；第 2 季 2-2 才细讲，这里先给名称",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I118",
+   "key": "e72cd6a08e22",
+   "item": "voice_zh",
+   "where": "l45",
+   "dim": "V1 V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1 V4",
+   "shots": [
+    "l45"
+   ],
+   "evidence": [
+    "还没有到头的意思。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "看着还没到头。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "还没有到头的意思。",
+   "problem": "「……的意思」翻译腔，且重复 l43",
+   "suggest": "看着还没到头。",
+   "judge_note": "a l45（翻译腔）：「还没有……的意思」是常见口语（比如「雨还没有停的意思」）；只有和 l43 意思重复这一点成立。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人：「还没有……的意思」是常见口语；l43 已改为「分数一直在降」，与 l45 不再同词重复",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I119",
+   "key": "be5e4bbb29cb",
+   "item": "voice_zh",
+   "where": "l47",
+   "dim": "V2、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V2、V3",
+   "shots": [
+    "l47"
+   ],
+   "evidence": [
+    "所以一句话：损失函数，就是给错误打个分，分越低越好。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "记住：损失函数管怎么打分，分越低越好。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "所以一句话：损失函数，就是给错误打个分，分越低越好。",
+   "problem": "片尾总结应当更清楚。这里听起来把损失函数解释成了“打个分”这个动作，模糊了 l04 已经区分的分数和规则。",
+   "suggest": "记住：损失函数管怎么打分，分越低越好。",
+   "judge_note": "b l47（必改）：「损失函数，就是给错误打个分」和 l03、讲稿一句话总结一致，听感自然，不会让人把分数和规则弄混；b 的「管怎么打分」反而别扭。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人：「损失函数，就是给错误打个分」与 l03、一句话总结一致，b 的改写更别扭",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T21:36:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  }
+ ]
+}

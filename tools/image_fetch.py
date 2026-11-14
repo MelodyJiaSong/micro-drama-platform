@@ -153,7 +153,19 @@ def download(url: str, dest: Path) -> Path:
     if not 200 <= code < 300 or not data:
         raise SystemExit(f"下载失败 HTTP {code}（signed URL 约 1 小时过期）")
     dest.parent.mkdir(parents=True, exist_ok=True)
-    dest.write_bytes(data)
+    # 先写 .part、能完整解码再改名：网络中断时 curl 也可能回 200 带半截图（dota follow-up 027 实测 0.7 MB 截断），
+    # 半截文件落在资产树里还会被管理应用读缩略图时锁住
+    part = dest.with_name(dest.name + ".part")
+    part.write_bytes(data)
+    if dest.suffix.lower() in {".png", ".jpg", ".jpeg", ".webp"}:
+        from PIL import Image
+        try:
+            with Image.open(part) as im:
+                im.load()
+        except Exception as e:
+            part.unlink(missing_ok=True)
+            raise SystemExit(f"下载不完整（{len(data)} 字节，{type(e).__name__}）：只重下、不重新生成")
+    part.replace(dest)
     return dest
 
 
@@ -210,7 +222,7 @@ def prompt_blocks(md: Path) -> list[tuple[str, str]]:
 
 
 def run_object(key: str, pkey: str, args) -> None:
-    hits = sorted((A / "props").glob(f"{pkey}_*/{pkey}_*.md"))
+    hits = sorted(md for pat in (f"{pkey}_*/{pkey}_*.md", f"*/{pkey}_*/{pkey}_*.md") for md in (A / "props").glob(pat))
     if len(hits) != 1:
         raise SystemExit(f"{pkey}：找到 {len(hits)} 张卡，要正好 1 张")
     card, folder = hits[0], hits[0].parent
@@ -249,8 +261,8 @@ def run_object(key: str, pkey: str, args) -> None:
 def run_scene(key: str, rk: str, args) -> None:
     stem = rk.split("-")[0]
     hits = (sorted(A.glob(f"scenes/*/{stem}_*/{stem}_*.md"))
-            or sorted(A.glob(f"props/{stem}_*/{stem}_*.md"))
-            or sorted(A.glob(f"characters/{stem}_*/{stem}_*.md")))
+            or sorted(A.glob(f"props/{stem}_*/{stem}_*.md")) or sorted(A.glob(f"props/*/{stem}_*/{stem}_*.md"))
+            or sorted(A.glob(f"characters/{stem}_*/{stem}_*.md")) or sorted(A.glob(f"characters/*/{stem}_*/{stem}_*.md")))
     if len(hits) != 1:
         raise SystemExit(f"{rk}：找到 {len(hits)} 张卡，要正好 1 张")
     card = hits[0]

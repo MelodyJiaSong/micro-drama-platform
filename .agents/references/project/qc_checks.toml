@@ -1,0 +1,85 @@
+# 自检登记表 · **仓库级** —— 对所有剧生效，影响面大。`tools/qc.py` 把它与「剧级」登记表合并使用。
+#
+# **只收背后已有仓库级规则撑着的检查**，每条必须写 `basis`（撑着它的共用规则或共用 skill）。
+# 拿不准是不是所有剧都适用的，一律放剧级：`ai_videos/{剧}/qc_checks.toml`（CONVENTIONS「仓库级与剧级」）。
+# 剧级升仓库级＝扩大影响面，必须用户明确同意，并记 follow-up / changelog。
+#
+# 怎么长（自我进化）：用户抓到问题 → `qc.py defect` → `qc.py escapes` 给出动作（新增 / 收紧 / 改闸门 / 补机检）。
+# 字段：id（环节.名字）· stage · kind（machine / review）· layer · gate · auto · when（规格声明该要求时才查）· tolerance · basis · sources
+# layer（follow-up 354）：quality＝通用质量，只看产物本身有没有观众看得出的错，与规格写法、流程版本无关；
+#   spec＝对照规格，拿产物和它自己提交时的规格比，只有大偏差判 fail（tolerance 写容差，空＝tools/qc.py SPEC_TOLERANCE）。
+#   不写 layer 按 quality。结论三种：pass / fail / 审不了（材料缺 / 看不清）。
+
+[[check]]
+id = "keyframe.locked_traits"
+stage = "keyframe"
+kind = "review"
+layer = "quality"
+gate = true
+auto = false
+desc = "首帧 / 关键帧里的人和物认得出是卡上那个：脸与体型、标志性服饰与武器、人数、大致站位；颜色深浅、饰物位置、措辞上的小出入只记录，不判 fail"
+how = "审稿人对照身份立绘与卡的锁定描述，问「认不认得出是同一个、人数对不对」；认错、缺了标志性构件、人数不对才判 fail（follow-up 354：逐字对锁定描述 53 次 fail 只有 1 次 pass）"
+basis = "共用规则：人物锁定描述在每个镜头逐字复用（image-first 一致性）"
+sources = ["dota_yingxiong#070", "dota_yingxiong#245"]
+
+[[check]]
+id = "video.onetake_cuts"
+stage = "video"
+kind = "machine"
+layer = "spec"
+gate = true
+auto = true
+when = "一镜到底"
+desc = "规格要求一镜到底时，原片里没有切镜"
+how = "motion_check 的剪切检测（「无剪切」才过）；不靠剪辑把多段拼成假一镜到底"
+basis = "共用规则：一镜到底镜头的防切镜要求"
+sources = ["dota_yingxiong#089"]
+
+[[check]]
+id = "video.subject_count"
+stage = "video"
+kind = "review"
+layer = "quality"
+gate = true
+auto = false
+desc = "人数从头到尾不变，没有凭空多出或消失的小兵、没有分身"
+how = "审稿人逐格数人；开头几个、结尾几具遗骸要对得上"
+basis = "共用 skill ai-videos-render-review（出片审片）查人数、分身"
+sources = ["dota_yingxiong#084"]
+
+[[check]]
+id = "video.no_text"
+stage = "video"
+kind = "machine"
+layer = "quality"
+gate = true
+auto = false
+desc = "画面里没有文字、字幕、水印、UI、血条"
+how = "抽帧 OCR"
+basis = "共用规则：全流程不烧字幕、画面不出文字（ai_video 11c）"
+sources = ["dota_yingxiong#257"]
+
+
+[[check]]
+id = "video.object_continuity"
+stage = "video"
+kind = "review"
+layer = "quality"
+gate = true
+auto = false
+desc = "物体不凭空出现或消失、不悬空、不穿模；画面错误剪不掉就判重出，不能「保留有备注」"
+how = "审稿人逐秒抽帧跟踪每件道具从哪来、在谁手里、到哪去；对照台词看剪掉那段会不会丢拍点"
+basis = "共用规则：prompts-generate.md 审核「结论门槛」"
+sources = ["chuanyue_yiri#020"]
+
+[[check]]
+id = "edit.scene_joins"
+stage = "edit"
+kind = "review"
+layer = "quality"
+gate = true
+auto = false
+desc = "整集接好后逐个看场间接口：上一场最后一句后有停留，下一场有进场，声音有过渡，节奏不赶"
+how = "独立审稿人看整集成片，每个场间接口前后各 5 秒单独判；记下太急的接口与原因（缺镜头 / 缺余量 / 转场太短）"
+basis = "共用规则：edit-transitions.md「本剧用法」、edit-fine.md「晚进早出」、filming.md「给剪辑留出进出与余量」"
+sources = ["chuanyue_yiri#020"]

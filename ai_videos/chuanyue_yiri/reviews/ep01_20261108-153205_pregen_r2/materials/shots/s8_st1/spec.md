@@ -1,0 +1,15 @@
+# s8 st1（场内第 1 个镜头）
+
+- 设计时长：16 秒；出场：c1；单拍
+- 送给模型的 prompt：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s8\shots\st1\资料包\prompt.txt`；参考清单：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s8\shots\st1\资料包\manifest.json`
+- 规划图：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s8\shots\st1\planning\st1_first_frame.png`
+- 规划图：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s8\shots\st1\planning\st1_overhead.png`
+- 规划图：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s8\shots\st1\planning\st1_overhead_ref.png`
+
+## 分镜规格
+**动作**：伊西斯神庙高高的白色院墙外，一条南北向的窄石板街，墙头露出神庙的红瓦屋檐和一小段柱廊顶。墙后传来金属叉铃哗啦哗啦的摇响和一群人的合唱：这是墙后真实传来的画外实声（同期声），音量低，隔着墙闷闷的，不是配乐。画面里只有 Riley 一个人，街上暂时没有别的行人。Riley 沿着白墙下的街面，从约七米外用正常步速朝镜头走来，走到离镜头约三米处停住脚，偏头把右耳朝向白墙、右手抬到耳边听，抬头看墙头；然后转向镜头压低声音说话；说完咧嘴一笑，沿着白墙继续往前走（去浴场的方向，不往回走），从镜头左侧走出画。道具：钱都在她裤子左侧的大口袋里，这一镜不拿出来；面包布包挂在她左胯，进场到出场都在。
+**走位**：白墙在画左（街的西侧），白墙朝街的一面在阴影里；画右边缘是街对面民居的墙。镜头立在街面上、离白墙约三米，顺着白墙朝 Riley 走来的方向看。Riley 沿画左白墙下、离墙一米多走来，0–4 秒走约四米（每秒一米出头），停在离镜头约三米处（中景，腰以上，画面中间偏左），停住后不再靠近、不前倾；侧耳听时脸朝画左的白墙，5.5 秒起面向镜头；说完贴着画左、从镜头左侧走出画。
+**节拍**：0–4秒 第 0 秒：Riley 在画面深处、离镜头约七米，沿画左白墙下的街面朝镜头走来，全身入画，正常步速，双手空着自然摆动，布包挂在左胯；墙后传来低低的叉铃声和合唱，隔着墙闷闷的；画面里只有她一个人；没人说话；0–4 秒她走了约四米；4–5.5秒 她在离镜头约三米处停住脚，偏头把右耳朝向画左的白墙，右手抬到耳边，抬头看墙头露出的庙檐，嘴闭着；5.5–6秒 她转回来面向镜头，眼睛发亮，还没开口；6–13.5秒 她压低声音、兴奋地对镜头说那三句（6.1–13.1 秒）；13.5–16秒 她咧嘴一笑，迈步贴着画左继续往前走，从镜头左侧走出画，没回头，不说话
+**镜头**：他拍：固定机位旁观拍摄，眼平；从全景（她在七米外）到中景（停在三米处，腰以上）；画左是高高的白墙与墙头露出的庙檐；街道尽头拐弯，被房屋挡住。
+**光线**：下午两点，太阳高高地偏在西南：白墙朝街的这一面整面在柔和的阴影里，只有墙头和庙檐一线被照亮，墙脚一窄条街面也在墙的阴影里；街面的其余部分和街对面民居的墙在明亮的阳光里；天空干净、晴朗；自然光。
+**台词**：Riley（压低声音、兴奋，美式英语）：Hear that? That's the Temple of Isis — basically Pompeii's two o'clock alarm. And at two, everybody hits the baths.

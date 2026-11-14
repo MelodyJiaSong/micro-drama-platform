@@ -1,0 +1,113 @@
+{
+  "asset_id": "bg23",
+  "followups": [
+    287,
+    288
+  ],
+  "status": "failed",
+  "started_at": 1793107279.2752879,
+  "engine": "local ComfyUI TRELLIS.2",
+  "hyper3d": false,
+  "paid_requests": 0,
+  "references": {
+    "anchor": {
+      "path": "2_世界观人设/background/近卫_sentinel/bg23_奎尔瑟兰的密室/bg23_奎尔瑟兰的密室.png",
+      "sha256": "0104030868409cee6a2cfbbaee4aa3d733d27b4b998f59705a05cddbdc976afb"
+    },
+    "views": {
+      "front": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg23_奎尔瑟兰的密室/views/bg23_奎尔瑟兰的密室_front.png",
+        "sha256": "391e65e8d896b118812f75fcc325511cdec1f8ce95d211f57da1417c7f8c3f56"
+      },
+      "side": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg23_奎尔瑟兰的密室/views/bg23_奎尔瑟兰的密室_side.png",
+        "sha256": "81273b01ea3bc5db341b84753d38bc6b65909daf0ee6b5b5866b7d95644eb772"
+      },
+      "back": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg23_奎尔瑟兰的密室/views/bg23_奎尔瑟兰的密室_back.png",
+        "sha256": "30617255803725db9a6e0aa2aa206cadfe163b92c08df4174325778adc59313b"
+      }
+    }
+  },
+  "resolution": "1024_cascade",
+  "multiview": true,
+  "workflow_sha256": "f69d552b82f1e780613a4e54648dc451a69c5b7c641550e701f8045c073dd62e",
+  "license_route": "DINOv3 本次用户授权；BiRefNet 公共模型；CuMesh + DRTK，不使用 nvdiffrast/nvdiffrec",
+  "review": "not_reviewed",
+  "receipt": {
+    "prompt_id": "b8b02f1b-3b2c-4445-aa17-6494949e8759",
+    "number": 0,
+    "node_errors": {}
+  },
+  "prompt_id": "b8b02f1b-3b2c-4445-aa17-6494949e8759",
+  "history_status": {
+    "status_str": "error",
+    "completed": false,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "b8b02f1b-3b2c-4445-aa17-6494949e8759",
+          "timestamp": 1793107279286
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [],
+          "prompt_id": "b8b02f1b-3b2c-4445-aa17-6494949e8759",
+          "timestamp": 1793107279345
+        }
+      ],
+      [
+        "execution_error",
+        {
+          "prompt_id": "b8b02f1b-3b2c-4445-aa17-6494949e8759",
+          "node_id": "1",
+          "node_type": "LoadTrellis2Models",
+          "executed": [],
+          "exception_message": "ComfyUI-TRELLIS2: Worker failed to connect (timeout). Check stderr output above.\n",
+          "exception_type": "RuntimeError",
+          "traceback": [
+            "  File \"C:\\workspace\\ComfyUI\\execution.py\", line 548, in execute\n    output_data, output_ui, has_subgraph, has_pending_tasks = await get_output_data(prompt_id, unique_id, obj, input_data_all, execution_block_cb=execution_block_cb, pre_execute_cb=pre_execute_cb, v3_data=v3_data)\n                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
+            "  File \"C:\\workspace\\ComfyUI\\execution.py\", line 353, in get_output_data\n    return_values = await _async_map_node_over_list(prompt_id, unique_id, obj, input_data_all, obj.FUNCTION, allow_interrupt=True, execution_block_cb=execution_block_cb, pre_execute_cb=pre_execute_cb, v3_data=v3_data)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
+            "  File \"C:\\workspace\\ComfyUI\\execution.py\", line 327, in _async_map_node_over_list\n    await process_inputs(input_dict, i)\n",
+            "  File \"C:\\workspace\\ComfyUI\\execution.py\", line 315, in process_inputs\n    result = f(**inputs)\n             ^^^^^^^^^^^\n",
+            "  File \"C:\\workspace\\ComfyUI\\.venv\\Lib\\site-packages\\comfy_env\\isolation\\metadata.py\", line 556, in proxy\n    result = worker.call_method(\n             ^^^^^^^^^^^^^^^^^^^\n",
+            "  File \"C:\\workspace\\ComfyUI\\.venv\\Lib\\site-packages\\comfy_env\\isolation\\workers\\subprocess.py\", line 634, in call_method\n    self._ensure_started()\n",
+            "  File \"C:\\workspace\\ComfyUI\\.venv\\Lib\\site-packages\\comfy_env\\isolation\\workers\\subprocess.py\", line 433, in _ensure_started\n    raise RuntimeError(f\"{self.name}: Worker failed to connect (timeout). Check stderr output above.\")\n"
+          ],
+          "current_inputs": {
+            "resolution": [
+              "1024_cascade"
+            ],
+            "precision": [
+              "bf16"
+            ],
+            "attn_backend": [
+              "sdpa"
+            ]
+          },
+          "current_outputs": [
+            "15",
+            "23",
+            "10",
+            "11",
+            "14",
+            "13",
+            "22",
+            "26",
+            "25",
+            "12",
+            "24",
+            "1",
+            "21",
+            "20"
+          ],
+          "timestamp": 1793107340074
+        }
+      ]
+    ]
+  },
+  "outputs": []
+}

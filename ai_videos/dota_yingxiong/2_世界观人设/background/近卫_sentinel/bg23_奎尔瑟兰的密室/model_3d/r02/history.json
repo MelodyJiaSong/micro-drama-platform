@@ -1,0 +1,325 @@
+{
+  "prompt": [
+    0,
+    "0edba455-01c9-4a9d-bf1a-b85abf3f638e",
+    {
+      "1": {
+        "class_type": "LoadTrellis2Models",
+        "inputs": {
+          "resolution": "1024_cascade",
+          "precision": "bf16",
+          "attn_backend": "sdpa"
+        }
+      },
+      "10": {
+        "class_type": "LoadImage",
+        "inputs": {
+          "image": "dota287_bg23_front_391e65e8d8.png"
+        }
+      },
+      "11": {
+        "class_type": "Trellis2RemoveBackground",
+        "inputs": {
+          "image": [
+            "10",
+            0
+          ],
+          "low_vram": true
+        }
+      },
+      "12": {
+        "class_type": "LoadImage",
+        "inputs": {
+          "image": "dota287_bg23_side_81273b01ea.png"
+        }
+      },
+      "13": {
+        "class_type": "Trellis2RemoveBackground",
+        "inputs": {
+          "image": [
+            "12",
+            0
+          ],
+          "low_vram": true
+        }
+      },
+      "14": {
+        "class_type": "LoadImage",
+        "inputs": {
+          "image": "dota287_bg23_back_3061725580.png"
+        }
+      },
+      "15": {
+        "class_type": "Trellis2RemoveBackground",
+        "inputs": {
+          "image": [
+            "14",
+            0
+          ],
+          "low_vram": true
+        }
+      },
+      "20": {
+        "class_type": "Trellis2GetConditioning",
+        "inputs": {
+          "model_config": [
+            "1",
+            0
+          ],
+          "image": [
+            "11",
+            0
+          ],
+          "mask": [
+            "11",
+            1
+          ],
+          "background_color": "black"
+        }
+      },
+      "21": {
+        "class_type": "Trellis2MultiViewImageToShape",
+        "inputs": {
+          "model_config": [
+            "1",
+            0
+          ],
+          "seed": 28723,
+          "ss_sampling_steps": 12,
+          "shape_sampling_steps": 12,
+          "max_tokens": 32768,
+          "front_image": [
+            "11",
+            0
+          ],
+          "front_mask": [
+            "11",
+            1
+          ],
+          "right_image": [
+            "13",
+            0
+          ],
+          "right_mask": [
+            "13",
+            1
+          ],
+          "back_image": [
+            "15",
+            0
+          ],
+          "back_mask": [
+            "15",
+            1
+          ],
+          "front_axis": "z",
+          "blend_temperature": 2.0,
+          "background_color": "black"
+        }
+      },
+      "22": {
+        "class_type": "Trellis2ExportTrimesh",
+        "inputs": {
+          "trimesh": [
+            "21",
+            0
+          ],
+          "filename_prefix": "dota287/bg23_r02_raw",
+          "file_format": "glb"
+        }
+      },
+      "23": {
+        "class_type": "Trellis2ShapeToTexturedMesh",
+        "inputs": {
+          "model_config": [
+            "1",
+            0
+          ],
+          "conditioning": [
+            "20",
+            0
+          ],
+          "shape_slat": [
+            "21",
+            1
+          ],
+          "subs": [
+            "21",
+            2
+          ],
+          "seed": 28723,
+          "tex_sampling_steps": 12
+        }
+      },
+      "24": {
+        "class_type": "Trellis2ProcessMesh",
+        "inputs": {
+          "trimesh": [
+            "21",
+            0
+          ],
+          "remesh": "off",
+          "target_face_count": 250000,
+          "remesh.fill_holes": false,
+          "remesh.fill_holes_perimeter": 0.03,
+          "floater_threshold": 0.0,
+          "weld_vertices": true,
+          "weld_digits": 5,
+          "chart_cone_angle": 90.0,
+          "chart_refine_iterations": 0,
+          "chart_global_iterations": 1,
+          "chart_smooth_strength": 1
+        }
+      },
+      "25": {
+        "class_type": "Trellis2RasterizePBR",
+        "inputs": {
+          "trimesh": [
+            "24",
+            0
+          ],
+          "voxelgrid": [
+            "23",
+            0
+          ],
+          "texture_size": 2048,
+          "original_mesh": [
+            "21",
+            0
+          ]
+        }
+      },
+      "26": {
+        "class_type": "Trellis2ExportTrimesh",
+        "inputs": {
+          "trimesh": [
+            "25",
+            0
+          ],
+          "filename_prefix": "dota287/bg23_r02_pbr",
+          "file_format": "glb"
+        }
+      }
+    },
+    {
+      "client_id": "dota287_bg23_r02",
+      "create_time": 1793107548816
+    },
+    [
+      "22",
+      "26"
+    ]
+  ],
+  "outputs": {},
+  "status": {
+    "status_str": "error",
+    "completed": false,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "0edba455-01c9-4a9d-bf1a-b85abf3f638e",
+          "timestamp": 1793107548818
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [],
+          "prompt_id": "0edba455-01c9-4a9d-bf1a-b85abf3f638e",
+          "timestamp": 1793107548893
+        }
+      ],
+      [
+        "execution_error",
+        {
+          "prompt_id": "0edba455-01c9-4a9d-bf1a-b85abf3f638e",
+          "node_id": "21",
+          "node_type": "Trellis2MultiViewImageToShape",
+          "executed": [
+            "12",
+            "1",
+            "10",
+            "11",
+            "13",
+            "14",
+            "15"
+          ],
+          "exception_message": "ComfyUI-TRELLIS2: Socket closed but worker process still running.\n  exit code: None\n  worker log (C:\\Users\\light\\AppData\\Local\\Temp\\comfy_worker_debug.log, last 20 lines):\n      File \"C:\\workspace\\ComfyUI\\custom_nodes\\ComfyUI-TRELLIS2\\nodes\\trellis2\\model.py\", line 1948 in forward\n      File \"C:\\Users\\light\\AppData\\Local\\Programs\\comfy-env\\.pixi\\envs\\trellis2-nodes\\Lib\\site-packages\\torch\\nn\\modules\\module.py\", line 1762 in _call_impl\n      File \"C:\\Users\\light\\AppData\\Local\\Programs\\comfy-env\\.pixi\\envs\\trellis2-nodes\\Lib\\site-packages\\torch\\nn\\modules\\module.py\", line 1751 in _wrapped_call_impl\n      File \"C:\\workspace\\ComfyUI\\custom_nodes\\ComfyUI-TRELLIS2\\nodes\\trellis2\\samplers\\flow_euler.py\", line 67 in _inference_model\n      File \"C:\\workspace\\ComfyUI\\custom_nodes\\ComfyUI-TRELLIS2\\nodes\\trellis2\\samplers\\classifier_free_guidance_mixin.py\", line 15 in _inference_model\n      File \"C:\\workspace\\ComfyUI\\custom_nodes\\ComfyUI-TRELLIS2\\nodes\\trellis2\\samplers\\guidance_interval_mixin.py\", line 11 in _inference_model\n      File \"C:\\workspace\\ComfyUI\\custom_nodes\\ComfyUI-TRELLIS2\\nodes\\trellis2\\samplers\\flow_euler.py\", line 351 in sample_once\n      File \"C:\\Users\\light\\AppData\\Local\\Programs\\comfy-env\\.pixi\\envs\\trellis2-nodes\\Lib\\site-packages\\torch\\utils\\_contextlib.py\", line 116 in decorate_context\n      File \"C:\\workspace\\ComfyUI\\custom_nodes\\ComfyUI-TRELLIS2\\nodes\\trellis2\\samplers\\flow_euler.py\", line 400 in sample\n      File \"C:\\Users\\light\\AppData\\Local\\Programs\\comfy-env\\.pixi\\envs\\trellis2-nodes\\Lib\\site-packages\\torch\\utils\\_contextlib.py\", line 116 in decorate_context\n      File \"C:\\workspace\\ComfyUI\\custom_nodes\\ComfyUI-TRELLIS2\\nodes\\trellis2\\samplers\\flow_euler.py\", line 438 in sample\n      File \"C:\\Users\\light\\AppData\\Local\\Programs\\comfy-env\\.pixi\\envs\\trellis2-nodes\\Lib\\site-packages\\torch\\utils\\_contextlib.py\", line 116 in decorate_context\n      File \"C:\\workspace\\ComfyUI\\custom_nodes\\ComfyUI-TRELLIS2\\nodes\\stages.py\", line 1103 in _sample_shape_slat_cascade_multiview\n      File \"C:\\workspace\\ComfyUI\\custom_nodes\\ComfyUI-TRELLIS2\\nodes\\stages.py\", line 1303 in run_multiview_shape_generation\n      File \"C:\\workspace\\ComfyUI\\custom_nodes\\ComfyUI-TRELLIS2\\nodes\\nodes_inference.py\", line 792 in execute\n      File \"C:\\workspace\\ComfyUI\\comfy_api\\latest\\_io.py\", line 2219 in EXECUTE_NORMALIZED\n      File \"C:\\Users\\light\\AppData\\Local\\Temp\\comfyui_pvenv_mv3z9xwl\\persistent_worker.py\", line 1763 in main\n      File \"C:\\Users\\light\\AppData\\Local\\Temp\\comfyui_pvenv_mv3z9xwl\\persistent_worker.py\", line 1808 in <module>\n    \n    21:28:49 [print] === END ===\n",
+          "exception_type": "RuntimeError",
+          "traceback": [
+            "  File \"C:\\workspace/ComfyUI\\execution.py\", line 548, in execute\n    output_data, output_ui, has_subgraph, has_pending_tasks = await get_output_data(prompt_id, unique_id, obj, input_data_all, execution_block_cb=execution_block_cb, pre_execute_cb=pre_execute_cb, v3_data=v3_data)\n                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
+            "  File \"C:\\workspace/ComfyUI\\execution.py\", line 353, in get_output_data\n    return_values = await _async_map_node_over_list(prompt_id, unique_id, obj, input_data_all, obj.FUNCTION, allow_interrupt=True, execution_block_cb=execution_block_cb, pre_execute_cb=pre_execute_cb, v3_data=v3_data)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
+            "  File \"C:\\workspace/ComfyUI\\execution.py\", line 327, in _async_map_node_over_list\n    await process_inputs(input_dict, i)\n",
+            "  File \"C:\\workspace/ComfyUI\\execution.py\", line 315, in process_inputs\n    result = f(**inputs)\n             ^^^^^^^^^^^\n",
+            "  File \"C:\\workspace\\ComfyUI\\.venv\\Lib\\site-packages\\comfy_env\\isolation\\metadata.py\", line 556, in proxy\n    result = worker.call_method(\n             ^^^^^^^^^^^^^^^^^^^\n",
+            "  File \"C:\\workspace\\ComfyUI\\.venv\\Lib\\site-packages\\comfy_env\\isolation\\workers\\subprocess.py\", line 669, in call_method\n    response = self._send_request(request, timeout)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
+            "  File \"C:\\workspace\\ComfyUI\\.venv\\Lib\\site-packages\\comfy_env\\isolation\\workers\\subprocess.py\", line 589, in _send_request\n    raise RuntimeError(\n"
+          ],
+          "current_inputs": {
+            "model_config": [
+              "{'model_name': 'microsoft/TRELLIS.2-4B', 'resolution': '1024_cascade', 'precision': 'bf16', 'dtype': 'bf16', 'attn_backend': 'sdpa'}"
+            ],
+            "seed": [
+              28723
+            ],
+            "ss_sampling_steps": [
+              12
+            ],
+            "shape_sampling_steps": [
+              12
+            ],
+            "max_tokens": [
+              32768
+            ],
+            "front_image": [
+              "tensor([[[[0.7176, 0.7216, 0.7294],\n          [0.7294, 0.7294, 0.7412],\n          [0.7294, 0.7294, 0.7412],\n          ...,\n          [0.7294, 0.7333, 0.7412],\n          [0.7255, 0.7294, 0.7373],\n          [0.7176, 0.7216, 0.7255]],\n\n         [[0.7294, 0.7255, 0.7412],\n          [0.7255, 0.7255, 0.7412],\n          [0.7294, 0.7255, 0.7412],\n          ...,\n          [0.7255, 0.7294, 0.7412],\n          [0.7255, 0.7294, 0.7412],\n          [0.7255, 0.7255, 0.7333]],\n\n         [[0.7294, 0.7333, 0.7412],\n          [0.7255, 0.7294, 0.7373],\n          [0.7294, 0.7255, 0.7373],\n          ...,\n          [0.7255, 0.7294, 0.7373],\n          [0.7294, 0.7294, 0.7373],\n          [0.7255, 0.7255, 0.7333]],\n\n         ...,\n\n         [[0.8157, 0.8078, 0.8118],\n          [0.8118, 0.8039, 0.8078],\n          [0.8118, 0.8039, 0.8078],\n          ...,\n          [0.7961, 0.7882, 0.7922],\n          [0.8000, 0.7922, 0.7961],\n          [0.7961, 0.7922, 0.7922]],\n\n         [[0.8157, 0.8078, 0.8118],\n          [0.8118, 0.8039, 0.8078],\n          [0.8118, 0.8078, 0.8118],\n          ...,\n          [0.7961, 0.7882, 0.7922],\n          [0.8000, 0.7922, 0.7961],\n          [0.8000, 0.7922, 0.7961]],\n\n         [[0.8039, 0.7922, 0.8000],\n          [0.8118, 0.8039, 0.8078],\n          [0.8157, 0.8118, 0.8157],\n          ...,\n          [0.8000, 0.7922, 0.7922],\n          [0.8000, 0.7882, 0.7922],\n          [0.7843, 0.7725, 0.7765]]]])"
+            ],
+            "front_mask": [
+              "tensor([[[0., 0., 0.,  ..., 0., 0., 0.],\n         [0., 0., 0.,  ..., 0., 0., 0.],\n         [0., 0., 0.,  ..., 0., 0., 0.],\n         ...,\n         [0., 0., 0.,  ..., 0., 0., 0.],\n         [0., 0., 0.,  ..., 0., 0., 0.],\n         [0., 0., 0.,  ..., 0., 0., 0.]]])"
+            ],
+            "right_image": [
+              "tensor([[[[0.7333, 0.7333, 0.7451],\n          [0.7451, 0.7451, 0.7608],\n          [0.7451, 0.7451, 0.7608],\n          ...,\n          [0.7412, 0.7490, 0.7608],\n          [0.7373, 0.7451, 0.7569],\n          [0.7294, 0.7373, 0.7451]],\n\n         [[0.7451, 0.7412, 0.7608],\n          [0.7451, 0.7451, 0.7608],\n          [0.7451, 0.7451, 0.7647],\n          ...,\n          [0.7373, 0.7451, 0.7608],\n          [0.7373, 0.7451, 0.7608],\n          [0.7373, 0.7412, 0.7529]],\n\n         [[0.7451, 0.7490, 0.7647],\n          [0.7412, 0.7451, 0.7608],\n          [0.7412, 0.7451, 0.7608],\n          ...,\n          [0.7373, 0.7451, 0.7569],\n          [0.7412, 0.7451, 0.7608],\n          [0.7412, 0.7412, 0.7569]],\n\n         ...,\n\n         [[0.8039, 0.8000, 0.8196],\n          [0.8000, 0.8000, 0.8157],\n          [0.8000, 0.8000, 0.8157],\n          ...,\n          [0.8039, 0.8000, 0.8118],\n          [0.8078, 0.8039, 0.8118],\n          [0.8039, 0.8039, 0.8078]],\n\n         [[0.8000, 0.8000, 0.8118],\n          [0.7961, 0.7961, 0.8118],\n          [0.7961, 0.7961, 0.8118],\n          ...,\n          [0.8078, 0.8000, 0.8157],\n          [0.8078, 0.8039, 0.8157],\n          [0.8078, 0.8039, 0.8118]],\n\n         [[0.7843, 0.7765, 0.7922],\n          [0.7922, 0.7882, 0.8039],\n          [0.7961, 0.7961, 0.8078],\n          ...,\n          [0.8118, 0.8039, 0.8157],\n          [0.8078, 0.8000, 0.8118],\n          [0.7922, 0.7843, 0.7961]]]])"
+            ],
+            "right_mask": [
+              "tensor([[[0., 0., 0.,  ..., 0., 0., 0.],\n         [0., 0., 0.,  ..., 0., 0., 0.],\n         [0., 0., 0.,  ..., 0., 0., 0.],\n         ...,\n         [0., 0., 0.,  ..., 0., 0., 0.],\n         [0., 0., 0.,  ..., 0., 0., 0.],\n         [0., 0., 0.,  ..., 0., 0., 0.]]])"
+            ],
+            "back_image": [
+              "tensor([[[[0.6941, 0.7020, 0.7098],\n          [0.7059, 0.7098, 0.7216],\n          [0.7098, 0.7098, 0.7216],\n          ...,\n          [0.7176, 0.7255, 0.7294],\n          [0.7137, 0.7216, 0.7294],\n          [0.7059, 0.7137, 0.7176]],\n\n         [[0.7059, 0.7059, 0.7216],\n          [0.7059, 0.7059, 0.7216],\n          [0.7059, 0.7098, 0.7216],\n          ...,\n          [0.7137, 0.7216, 0.7333],\n          [0.7137, 0.7216, 0.7333],\n          [0.7137, 0.7176, 0.7255]],\n\n         [[0.7098, 0.7098, 0.7216],\n          [0.7059, 0.7098, 0.7216],\n          [0.7059, 0.7059, 0.7176],\n          ...,\n          [0.7176, 0.7216, 0.7333],\n          [0.7176, 0.7216, 0.7333],\n          [0.7176, 0.7176, 0.7255]],\n\n         ...,\n\n         [[0.7725, 0.7725, 0.7843],\n          [0.7725, 0.7725, 0.7843],\n          [0.7725, 0.7725, 0.7843],\n          ...,\n          [0.7725, 0.7686, 0.7804],\n          [0.7725, 0.7725, 0.7804],\n          [0.7725, 0.7725, 0.7804]],\n\n         [[0.7725, 0.7725, 0.7804],\n          [0.7686, 0.7686, 0.7804],\n          [0.7686, 0.7686, 0.7804],\n          ...,\n          [0.7725, 0.7725, 0.7804],\n          [0.7765, 0.7725, 0.7843],\n          [0.7804, 0.7725, 0.7804]],\n\n         [[0.7608, 0.7490, 0.7686],\n          [0.7686, 0.7647, 0.7765],\n          [0.7725, 0.7686, 0.7804],\n          ...,\n          [0.7765, 0.7765, 0.7843],\n          [0.7804, 0.7725, 0.7843],\n          [0.7608, 0.7529, 0.7647]]]])"
+            ],
+            "back_mask": [
+              "tensor([[[0., 0., 0.,  ..., 0., 0., 0.],\n         [0., 0., 0.,  ..., 0., 0., 0.],\n         [0., 0., 0.,  ..., 0., 0., 0.],\n         ...,\n         [0., 0., 0.,  ..., 0., 0., 0.],\n         [0., 0., 0.,  ..., 0., 0., 0.],\n         [0., 0., 0.,  ..., 0., 0., 0.]]])"
+            ],
+            "front_axis": [
+              "z"
+            ],
+            "blend_temperature": [
+              2.0
+            ],
+            "background_color": [
+              "black"
+            ]
+          },
+          "current_outputs": [
+            "26",
+            "12",
+            "20",
+            "22",
+            "1",
+            "21",
+            "10",
+            "11",
+            "13",
+            "25",
+            "24",
+            "14",
+            "15",
+            "23"
+          ],
+          "timestamp": 1793107759506
+        }
+      ]
+    ]
+  },
+  "meta": {}
+}

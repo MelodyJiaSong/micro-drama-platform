@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { mediaUrl } from "../api";
-import { CUT_STAGES, CUT_STAGE_LABEL, EPISODE_CUT, cutClock, loadSceneCuts, type CutStage, type CutVersion, type EpisodeCuts,
-  type EpisodeJoin, type Gallery } from "../lib/sceneCuts";
+import { CUT_STAGES, CUT_STAGE_LABEL, EPISODE_CUT, POST_CUT, cutClock, loadSceneCuts, type CutStage, type CutVersion, type EpisodeCuts,
+  type EpisodeJoin, type Gallery, type PostTrial } from "../lib/sceneCuts";
 
 const STAGE_NOTE: Record<CutStage, string> = {
   draft: "用各镜 480p 草稿条剪，看结构、节奏和缺哪些镜头；只用来改上游，不进锁片。",
@@ -124,6 +124,32 @@ function GalleryView({ gallery }: { gallery: Gallery }): JSX.Element {
   </article>;
 }
 
+/** 一版后期试做（follow-up 290）：成片、响度、每场的环境声与配乐层、字幕与字卡。 */
+function PostTrialView({ post }: { post: PostTrial }): JSX.Element {
+  const scenes = [...new Set(post.layers.map(layer => layer.scene))];
+  return <article className="edit-cut" aria-label={`后期试做 v${post.version}`}>
+    <p className="workflow-pack-path">
+      v{post.version}{post.status && ` · ${post.status}`}{post.duration ? ` · ${post.duration.toFixed(1)} 秒` : ""}
+      {post.loudness_lufs != null && ` · ${post.loudness_lufs.toFixed(1)} LUFS`}{post.true_peak_db != null && ` · 真峰值 ${post.true_peak_db.toFixed(1)} dBFS`}
+      {post.rendered_at && ` · 渲染于 ${post.rendered_at}`}{post.source_cut && ` · 来源 ${post.source_cut}`}
+      {" · "}<Link to={`/file/${encodeURIComponent(post.path)}`}>后期决定</Link>
+      {post.srt && <>{" · "}<Link to={`/file/${encodeURIComponent(post.srt)}`}>字幕 .srt</Link></>}
+    </p>
+    {post.error && <p role="alert" className="workflow-error">{post.error}</p>}
+    {post.video ? <video key={post.video} src={mediaUrl(post.video)} controls preload="metadata" className="workflow-take-video" aria-label="后期成片" />
+      : !post.error && <p className="workflow-note">还没渲染：运行 <code>python tools/episode_post.py {post.path}</code>。</p>}
+    <p>字幕 {post.subtitles} 条{post.subtitle_lang === "en" ? "（只出英文）" : ""}{post.titles.length > 0 && ` · 地名字卡：${post.titles.join("、")}`}</p>
+    {post.layers.length > 0 && <table className="edit-timeline" aria-label="声音层">
+      <thead><tr><th>场</th><th>环境声</th><th>配乐</th></tr></thead>
+      <tbody>{scenes.map(scene => <tr key={scene}><td>{scene}</td>
+        {["环境声", "配乐"].map(kind => <td key={kind}>{post.layers.filter(l => l.scene === scene && l.kind === kind)
+          .map(l => `${l.source}（${l.db > 0 ? "+" : ""}${l.db} dB）`).join("、") || "—"}</td>)}
+      </tr>)}</tbody>
+    </table>}
+    {post.notes.length > 0 && <section aria-label="声音说明"><h4>说明</h4><ul>{post.notes.map(note => <li key={note}>{note}</li>)}</ul></section>}
+  </article>;
+}
+
 /** 剪辑模块（follow-up 269）：一集各场的草稿剪辑 / 正片剪辑，选场次、选版本，看成片与时间线。只读。 */
 export function EditStagePanel({ episodePath, refresh }: { episodePath: string; refresh: number }): JSX.Element {
   const [params] = useSearchParams();
@@ -149,6 +175,8 @@ export function EditStagePanel({ episodePath, refresh }: { episodePath: string; 
   const cut = versions.find(item => item.version === wanted) || versions[0];
   const joinedVersions = current?.joined?.[stage] || [];
   const join = joinedVersions.find(item => item.version === wanted) || joinedVersions[0];
+  const posts = current?.posts || [];
+  const post = posts.find(item => item.version === wanted) || posts[0];
   const count = (id: CutStage): number => current?.scenes.filter(item => item[id].length).length || 0;
   return <section className="workflow-content" aria-label="剪辑">
     <div className="workflow-content-heading"><h2>剪辑</h2><span className="workflow-status draft">试行</span><p>选条、粗剪、精剪到锁片。草稿剪辑与正片剪辑分开。</p></div>
@@ -164,6 +192,8 @@ export function EditStagePanel({ episodePath, refresh }: { episodePath: string; 
         <Link to={href({ scene: EPISODE_CUT, v: null })}>整集 · 场与场接起来、转场</Link>
         <span>{current.joined[stage][0] ? ` v${current.joined[stage][0].version} · ${current.joined[stage][0].phase} · ${current.joined[stage][0].duration.toFixed(1)} 秒`
           : ""}{current.galleries[stage].length ? ` · 转场样片 ${current.galleries[stage].length} 条` : ""}</span></li> : null}
+      {posts[0] ? <li key={POST_CUT}><Link to={href({ scene: POST_CUT, v: null })}>后期试做 · 声音、字幕、地名字卡</Link>
+        <span>{` v${posts[0].version}${posts[0].video ? ` · ${posts[0].duration.toFixed(1)} 秒` : " · 未渲染"}`}</span></li> : null}
       {current.scenes.map(item => {
         const latest = item[stage][0];
         return <li key={item.scene}><Link to={href({ scene: item.scene, v: null })}>{item.scene} · {item.label}</Link>
@@ -180,7 +210,16 @@ export function EditStagePanel({ episodePath, refresh }: { episodePath: string; 
       {join ? <EpisodeJoinView key={join.path} cut={join} sceneHref={(id, version) => href({ scene: id, v: String(version) })} /> : <p className="workflow-note">还没有整集剪辑。</p>}
       {(current.galleries?.[stage] || []).map(gallery => <GalleryView key={gallery.video} gallery={gallery} />)}
     </>}
-    {current && scene && scene !== EPISODE_CUT && !selected && <p role="alert">找不到场次 {scene}，请从导航重新选择。</p>}
+    {current && scene === POST_CUT && <>
+      <nav className="workflow-shot-nav" aria-label="场次导航"><Link to={href({ scene: null, v: null })}>← 全部场次</Link><span /><span /></nav>
+      <h3>后期试做 · 声音、字幕、地名字卡</h3>
+      <p className="workflow-note">声音与音乐模块设计前的试做，在集级剪辑成片上叠后期；不分草稿 / 正片。</p>
+      {posts.length > 1 && <div className="edit-player-toggle" role="group" aria-label="后期版本">
+        {posts.map(item => <Link key={item.version} to={href({ v: String(item.version) })} aria-current={item === post ? "true" : undefined}>v{item.version}</Link>)}
+      </div>}
+      {post ? <PostTrialView key={post.path} post={post} /> : <p className="workflow-note">还没有后期试做。</p>}
+    </>}
+    {current && scene && scene !== EPISODE_CUT && scene !== POST_CUT && !selected && <p role="alert">找不到场次 {scene}，请从导航重新选择。</p>}
     {selected && <>
       <nav className="workflow-shot-nav" aria-label="场次导航"><Link to={href({ scene: null, v: null })}>← 全部场次</Link><span /><span /></nav>
       <h3>{selected.scene} · {selected.label}</h3>

@@ -1,0 +1,98 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  .open { position: absolute; left: var(--mx); top: 330px; }
+  .open .display { line-height: 1; }
+  .open .h2 { margin-top: 26px; }
+  .src { position: absolute; left: var(--mx); top: 860px; }
+  .pair { position: absolute; left: var(--mx); top: 260px; display: flex; gap: 40px; }
+  .pair .card { width: 560px; padding: 40px 48px; }
+  .pair .h1 { margin-top: 14px; }
+  .goal { position: absolute; left: var(--mx); top: 600px; }
+  .formula { position: absolute; left: var(--mx); top: 560px; font-size: 96px; font-weight: 700; white-space: nowrap; }
+  .head { position: absolute; left: var(--mx); top: 200px; }
+  .head .t { position: absolute; top: 0; left: 0; white-space: nowrap; }
+  #chart { position: absolute; left: var(--mx); top: 330px; }
+  .tag { position: absolute; left: 1540px; top: 214px; }
+  .list { position: absolute; left: var(--mx); top: 330px; width: 1680px; }
+  .list .row { display: grid; grid-template-columns: 640px 1fr; }
+  html[lang=en] .list .row { grid-template-columns: 820px 1fr; align-items: baseline; padding: 26px 0; border-top: 1px solid var(--hair); }
+  .list .row .h2 { white-space: nowrap; }
+</style>
+
+<div class="eb eyebrow" data-zh="04 · AI 里怎么用" data-en="04 · How AI uses it"></div>
+<div class="open" id="open"><div class="eyebrow" data-zh="训练大模型" data-en="Training language models"></div>
+  <div class="display" style="margin-top:20px">Safe RLHF</div>
+  <div class="h2 sub" data-zh="人类反馈强化学习 · 安全版" data-en="Safe reinforcement learning from human feedback"></div></div>
+<div class="src" id="src" data-zh="Dai 等 · 北京大学 · ICLR 2024" data-en="Dai et al. · Peking University · ICLR 2024"></div>
+
+<div class="pair" id="pair">
+  <div class="card" id="cg"><div class="eyebrow" data-zh="打分模型 ①" data-en="Scorer ①"></div><div class="h1 c-good" data-zh="有多有用" data-en="How helpful"></div></div>
+  <div class="card" id="cb"><div class="eyebrow" data-zh="打分模型 ②" data-en="Scorer ②"></div><div class="h1 c-bad" data-zh="有多有害" data-en="How harmful"></div></div>
+</div>
+<div class="goal h1" id="goal" data-zh='<span class="c-bad">有害 ≤ 底线</span>，<span class="c-good">尽量有用</span>' data-en='<span class="c-bad">Harm ≤ the line</span> · <span class="c-good">Most helpful</span>'></div>
+<div class="formula" id="formula" data-zh='<span class="c-good">有用</span> − <span class="accent">λ</span> × <span class="c-bad">有害</span>' data-en='<span class="c-good">Help score</span> − <span class="accent">λ</span> × <span class="c-bad">Harm score</span>'></div>
+
+<div class="head">
+  <div class="h1 t" id="ha" data-zh='<span class="accent">λ</span> 训练中自动调' data-en='<span class="accent">λ</span> tunes itself'></div>
+  <div class="h1 t" id="hb" data-zh="给规矩标价" data-en="Prices on rules"></div>
+</div>
+<div class="tag eyebrow" id="tag" data-zh="示意" data-en="Illustration"></div>
+<svg id="chart"></svg>
+
+<div class="list" id="list">
+  <div class="row" id="i1" data-zh='<span class="h2">① 安全底线</span><span class="h2 ink2">有害扣分</span>' data-en='<span class="h2">① Safety line</span><span class="h2 ink2">Harm costs</span>'></div>
+  <div class="row" id="i2" data-zh='<span class="h2">② 正则化</span><span class="h2 ink2">复杂扣分</span>' data-en='<span class="h2">② Regularization</span><span class="h2 ink2">Complexity costs</span>'></div>
+  <div class="row" id="i3" data-zh='<span class="h2">③ 贴近原模型</span><span class="h2 ink2">偏离扣分</span>' data-en='<span class="h2">③ Original model</span><span class="h2 ink2">Drifting costs</span>'></div>
+</div>
+
+<script>
+const T = EDU.tl, N = 150, harm = D.toy.harm.slice(0, N), lam = D.toy.lam.slice(0, N);
+const W = 1680, PH = 200, GAP = 70;
+const svg = d3.select("#chart").attr("width", W).attr("height", PH * 2 + GAP);
+const x = d3.scaleLinear([0, N - 1], [150, W - 20]);
+const yH = d3.scaleLinear([0, 0.75], [PH, 0]), yL = d3.scaleLinear([0, 2.0], [PH * 2 + GAP, PH + GAP]);
+const g = svg.append("g");
+g.append("line").attr("class", "axis-base").attr("x1", 150).attr("x2", W - 20).attr("y1", yH(0)).attr("y2", yH(0));
+g.append("line").attr("class", "axis-base").attr("x1", 150).attr("x2", W - 20).attr("y1", yL(0)).attr("y2", yL(0));
+const lim = g.append("line").attr("x1", 150).attr("x2", W - 20).attr("y1", yH(D.toy.limit)).attr("y2", yH(D.toy.limit))
+  .attr("stroke", css("--ink")).attr("stroke-width", 3).attr("stroke-dasharray", "4 10").node();
+const lab = (t, yy, cls) => g.append("text").attr("x", 0).attr("y", yy).attr("font-size", 28).attr("font-weight", 600).attr("fill", css(cls)).text(t).node();
+const labH = lab(EDU.tr("有害", "Harm"), yH(0.35) + 10, "--d-bad"), labL = lab("λ", yL(1.0) + 10, "--accent-text");
+const labLim = g.append("text").attr("x", W - 20).attr("y", yH(D.toy.limit) - 14).attr("text-anchor", "end").attr("font-size", 24).attr("fill", css("--ink2")).text(EDU.tr("底线", "The line")).node();
+const k1 = 22, k2 = N - 1;   // k1：有害冲到最高附近；之后回落、λ 回降
+const path = (ys, yS, a, b, col) => g.append("path").attr("d", d3.line().x((d, i) => x(i + a)).y(d => yS(d))(ys.slice(a, b + 1)))
+  .attr("fill", "none").attr("stroke", css(col)).attr("stroke-width", 6).attr("stroke-linecap", "round").node();
+const pk = harm.indexOf(Math.max(...harm)), lk = lam.indexOf(Math.max(...lam));
+const h1 = path(harm, yH, 0, lk, "--d-bad"), l1 = path(lam, yL, 0, lk, "--accent");
+const h2 = path(harm, yH, lk, k2, "--d-bad"), l2 = path(lam, yL, lk, k2, "--accent");
+const note = (t, xx, yy, col) => g.append("text").attr("x", xx).attr("y", yy).attr("font-size", 34).attr("font-weight", 600).attr("fill", css(col)).text(t).node();
+const n1 = note(EDU.tr("超标 → λ 涨", "Over → λ up"), x(pk) + 50, yH(0.66) + 18, "--d-bad");
+const n2 = note(EDU.tr("守住 → λ 降", "Under → λ down"), x(lk) + 60, yL(1.85) + 6, "--d-good");
+
+gsap.set(["#open", "#src", "#pair", "#cg", "#cb", "#goal", "#formula", "#ha", "#hb", "#tag", "#chart", h1, l1, h2, l2, n1, n2, "#list", "#list .row"], { opacity: 0 });
+EDU.in(".eb", 0);
+// l31 Safe RLHF
+EDU.in("#open", EDU.t("l31", .35)); EDU.in("#src", EDU.t("l31", .5));
+// l32 两个打分模型
+EDU.out("#open", EDU.t("l32")); EDU.in("#pair", EDU.t("l32"), { y: 0, d: .01 });
+EDU.in("#cg", EDU.t("l32", .15)); EDU.in("#cb", EDU.t("l32", .55));
+// l33 目标：有害不超底线，尽量有用
+EDU.in("#goal", EDU.t("l33", .1));
+// l34 有用 − λ × 有害
+EDU.out("#goal", EDU.t("l34")); EDU.in("#formula", EDU.t("l34", .35));
+// l35 λ 自己调：有害超标 → λ 涨
+EDU.out(["#pair", "#formula", "#src"], EDU.t("l35")); EDU.in("#ha", EDU.t("l35", .03));
+EDU.in("#chart", EDU.t("l35", .05), { y: 0 }); EDU.in("#tag", EDU.t("l35", .1));
+T.set([h1, l1], { opacity: 1 }, EDU.t("l35", .3)); EDU.draw(h1, EDU.t("l35", .3), 1.6); EDU.draw(l1, EDU.t("l35", .3), 1.6);
+EDU.in(n1, EDU.t("l35", .65));
+// l36 守住了 → λ 降
+T.set([h2, l2], { opacity: 1 }, EDU.t("l36", .05)); EDU.draw(h2, EDU.t("l36", .05), 2.2); EDU.draw(l2, EDU.t("l36", .05), 2.2);
+EDU.in(n2, EDU.t("l36", .3));
+// l37 给规矩标价的系数，到处都有
+EDU.out(["#chart", "#tag", "#ha"], EDU.t("l37")); EDU.in("#hb", EDU.t("l37", .03));
+EDU.in("#list", EDU.t("l37", .05), { y: 0, d: .01 }); EDU.in("#i1", EDU.t("l37", .4));
+// l38 正则化
+EDU.in("#i2", EDU.t("l38", .1));
+// l39 别离原模型太远
+EDU.in("#i3", EDU.t("l39", .2));
+</script>

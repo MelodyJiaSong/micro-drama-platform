@@ -1,0 +1,22 @@
+retry 0 HTTP Error 429: Too Many Requests
+retry 1 HTTP Error 429: Too Many Requests
+retry 2 HTTP Error 429: Too Many Requests
+retry 0 HTTP Error 429: Too Many Requests
+retry 1 HTTP Error 429: Too Many Requests
+retry 2 HTTP Error 429: Too Many Requests
+retry 3 HTTP Error 429: Too Many Requests
+'Burj Khalifa' 11 cands, 10 acceptable; first: 'Dubai skyline 2015 (crop).jpg' CC BY-SA 3.0 ['NoFoP-UAE']
+'Menara Merdeka Maybank' 9 cands, 9 acceptable; first: 'Merdeka Tower 20241022 - full 2.jpg' CC0 ['FoP-Malaysia']
+'Shanghai Tower' 10 cands, 9 acceptable; first: '20191114 Shanghai Tower (2).jpg' CC0 ['FoP-China']
+'Makkah Royal Clock Tower' 10 cands, 8 acceptable; first: 'Abraj-al-Bait-Towers.JPG' CC BY-SA 3.0 ['FoP-Saudi Arabia']
+'Ping An Finance Center' 9 cands, 9 acceptable; first: 'Pingan International Finance Center2020.jpg' CC BY-SA 4.0 ['FoP-China']
+'Lotte World Tower' 9 cands, 7 acceptable; first: 'Lotte World morning view 8.jpg' CC BY-SA 4.0 ['NoFoP-South Korea']
+Traceback (most recent call last):
+  File "C:\workspace\micro-drama-platform\ai_videos\paihangbang\episodes\ep01_tallest_buildings\_build\04_commons_candidates.py", line 192, in <module>
+    main(*sys.argv[1:6])
+  File "C:\workspace\micro-drama-platform\ai_videos\paihangbang\episodes\ep01_tallest_buildings\_build\04_commons_candidates.py", line 116, in main
+    d = get_json(API, {"action": "query", "list": "search", "srnamespace": 6, "srlimit": 8,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace\micro-drama-platform\ai_videos\paihangbang\episodes\ep01_tallest_buildings\_build\04_commons_candidates.py", line 35, in get_json
+    raise RuntimeError("failed " + url)
+RuntimeError: failed https://commons.wikimedia.org/w/api.php?action=query&list=search&srnamespace=6&srlimit=8&srsearch=One+World+Trade+Center+New+York+City+filetype%3Abitmap&format=json&formatversion=2

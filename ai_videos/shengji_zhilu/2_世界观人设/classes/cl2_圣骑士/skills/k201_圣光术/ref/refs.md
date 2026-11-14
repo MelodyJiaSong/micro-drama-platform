@@ -1,0 +1,36 @@
+# k201 圣光术 · 原生资料
+
+> 暴雪娱乐版权素材，只给人看、写 prompt 用，不上传生成服务、不进成片。
+
+| 文件 | 来源 URL / 时间点 | sha256 前 12 位 | 看到了什么 |
+|---|---|---|---|
+| `wowhead_14567.jpg` | https://wow.zamimg.com/uploads/screenshots/normal/14567.jpg（Wowhead Classic 法术 635 页的玩家截图，2007-01-22 上传，280×508） | 9dfb513db15a | 德莱尼男（燃烧的远征种族，2007 年老模型；法术外观同原版）背景夜色：一手举到头侧、一手在腰侧，**双手各拢一团暖金光**，手边绕着淡金弧形光纹，头顶上方飘落一串金色四角星点；没有光柱、地面无光圈——读条中到释放前一瞬。看不到目标 |
+| `wowhead_37020.jpg` | https://wow.zamimg.com/uploads/screenshots/normal/37020.jpg（Wowhead Classic 法术 635 页的玩家截图，2007-08-29 上传，545×722） | e947a2606fc7 | 人类女圣骑士（紫色战袍）在灰色岩地：**右手笔直高举过头，掌中一团最亮的白金光**，左手垂在腰侧也拢一团金光，两手边绕金色弧形光纹，身周飘白金 / 淡蓝四角星点；脚下无光圈——释放瞬间（单手上举），光柱尚未落下 |
+| `wowhead_83721.jpg` | https://wow.zamimg.com/uploads/screenshots/normal/83721.jpg（Wowhead Classic 法术 635 页的玩家截图，2008-06-07 上传，513×458） | f1aac8fbf6e6 | 雪地，金红色全身板甲人物：**右手高举过头、掌心一团白金光晕**，左手在腰侧也有一团白光，身旁几颗白色星点，地面无光——释放瞬间单手上举，与 37020 同一拍 |
+| `clip_fdA8nDTUaAE_541.5.mp4` | https://www.youtube.com/watch?v=fdA8nDTUaAE&t=541s （WoW Nostalgia《Let's Play World of Warcraft (4K) - Classic Vanilla Hardcore - Human Paladin - Part 1》，2023-04，Classic Era 1.14 社区硬核；9:01.5–9:06.5，浏览器逐帧取 720p / 30 fps，无声） | 1ee2a4d570a7 | **1 级人类圣骑士对自己放 1 级圣光术，背后视角，全程最清楚的一段**。9:01.5–9:02.1 停步；9:02.1 起读条（施法条「Holy Light」）：**双手各拢一团暖金光**，一手抬到肩头与头侧之间、一手在胯边，光跟着手轻轻起伏、一胀一缩，**地面没有任何光**；9:04.7 施法条走满，9:04.8–9:04.95 **一只手笔直上举过头、掌中光团最亮**；9:05.0–9:05.2 **一道白芯金边的光柱自头顶罩下裹住全身**（高过头顶约半个身高）；9:05.2–9:05.7 光柱退成全身泛白、头肩留金色余辉；9:05.75 脚边散几颗金色四角星点；约 9:06.2 全部消失，不留光圈。之后镜头转开 |
+| `snap_fdA8nDTUaAE_542.5.jpg` | https://www.youtube.com/watch?v=fdA8nDTUaAE&t=542s （同上片段 9:02.5 帧） | cd76b840ce48 | 读条中：背影，两只手各一团暖金色柔光（上手在肩头、下手在胯边），光照亮手边草叶；脚下无光圈 |
+| `snap_fdA8nDTUaAE_544.9.jpg` | https://www.youtube.com/watch?v=fdA8nDTUaAE&t=544s （同上片段 9:04.9 帧） | f3d52a0e3da1 | 释放瞬间：施法条刚满，一只手笔直举过头，掌中一团白金光最亮，另一只手垂在身侧 |
+| `snap_fdA8nDTUaAE_545.05.jpg` | https://www.youtube.com/watch?v=fdA8nDTUaAE&t=545s （同上片段 9:05.05 帧） | 42cfddd13bec | 命中：白芯金边的竖光柱从头顶罩下，把整个人裹在里面，人物被照得发白 |
+| `clip_Bu0-SwfmtgM_15.mp4` | https://www.youtube.com/watch?v=Bu0-SwfmtgM&t=15s （Rextroy《Paladin 5 Hit Combo [3 sec kill] [Classic]》，2019-09，Classic 1.13.2；0:15.0–0:20.0） | cdfc390a4e70 | **约 30 级矮人圣骑士被荆棘谷猛虎咬着、给自己读高阶圣光术**（施法条「Holy Light」），高处俯视、人物较小：0:15.0–0:19.1 双手金光一直亮着，挨打（红字 -20、-44）时施法条往回跳、手上的光不断不闪；0:19.2 施法完成，**白金色光柱自头顶罩下**，最亮在 0:19.2–0:19.4，同时冒出绿字 +559；0:19.5–0:19.7 退成头肩一团余光后消失。脚下绿色半月是界面的选中圈，不是法术 |
+| `snap_Bu0-SwfmtgM_16.5.jpg` | https://www.youtube.com/watch?v=Bu0-SwfmtgM&t=16s （同上片段 0:16.5 帧） | 939dd9644fcb | 读条中挨打：矮人双手各一团金光，头上飘红色伤害数字，脚下绿色选中圈（界面） |
+| `snap_Bu0-SwfmtgM_19.35.jpg` | https://www.youtube.com/watch?v=Bu0-SwfmtgM&t=19s （同上片段 0:19.35 帧） | b1f7e5a51faf | 命中：白金色竖光柱罩住矮人全身，旁边绿字 +559 |
+| `clip_loj7vtev0QY_716.4.mp4` | https://www.youtube.com/watch?v=loj7vtev0QY&t=716s （Koggan《Dwarf Paladin Healing Deadmines (Hardcore WoW)》，2023，Classic Era 硬核；11:56.4–11:59.4） | 9f48155465d1 | **对他人施放（不完整）**：矮人圣骑士在死亡矿井给前方队友读圣光术，施法条文字「Holy Light」（11:57.6 可读）：11:57.5–11:58.5 矮人侧身，**双手各一团暖金光**，手边地面不亮；约 11:58.6 施法条走满。目标在画面上方远处、和怪物挤在一起，镜头同时在转，**光柱落在目标头上那一下没拍清**（11:58.7 画面右上一团橙白光，可能是法师的火球命中，不能当圣光术）。只作读条姿势参考，对他人生效画面仍缺 |
+| `snap_loj7vtev0QY_717.6.jpg` | https://www.youtube.com/watch?v=loj7vtev0QY&t=717s （同上片段 11:57.6 帧） | d11de5354a66 | 读条：矮人圣骑士侧身，双手金光，下方施法条「Holy Light」 |
+| `snap_loj7vtev0QY_718.2.jpg` | https://www.youtube.com/watch?v=loj7vtev0QY&t=718s （同上片段 11:58.2 帧） | 1352a95f0ce2 | 读条将满：双手金光仍在，目标在远处看不清 |
+| `clip_loj7vtev0QY_476.0.mp4` | https://www.youtube.com/watch?v=loj7vtev0QY&t=476s （Koggan《Dwarf Paladin Healing Deadmines (Hardcore WoW)》，2023，Classic Era 硬核；7:56.0–8:00.5，浏览器逐帧 720p / 30 fps） | d984182e77fd | **对他人施放＋被打断，本组最好的一段**。矮人圣骑士（Koggan）背对镜头，给左前方的人类战士坦克 Solidguts（23 级，鼠标提示可读）读圣光术：7:56.2 起**双手各一团暖金光**（举在两肩外侧），施法条「Holy Light」，挨了几下施法条往回跳、手光不断；7:58.6 施法条变绿走满；**7:58.9 一道窄而高的白芯金边光柱落在坦克身上**（比人高出两三倍，7:58.96–7:59.03 最亮），7:59.1 起退成一片淡金光雾，**一串金色四角星点从坦克头顶往下飘落约 0.8 秒**；**施法者自己身上没有光柱**，只有手光。紧接着 7:59.1 他又起一发圣光术（双手金光、施法条），7:59.9 一转身移动，施法条变红写「Interrupted」，**双手的光当场熄灭**，没有上举、没有光柱、没有余辉 |
+| `snap_loj7vtev0QY_477.5.jpg` | https://www.youtube.com/watch?v=loj7vtev0QY&t=477s （同上片段 7:57.5 帧） | 8d85733333ab | 读条：矮人背影，双手各一团金光，下方施法条「Holy Light」，左前方坦克在打怪 |
+| `snap_loj7vtev0QY_478.96.jpg` | https://www.youtube.com/watch?v=loj7vtev0QY&t=478s （同上片段 7:58.96 帧） | 92856b787450 | 对他人命中：左侧坦克 Solidguts 身上一道白芯金边竖光柱，施法者（画面中央背影）身上没有光柱 |
+| `snap_loj7vtev0QY_479.63.jpg` | https://www.youtube.com/watch?v=loj7vtev0QY&t=479s （同上片段 7:59.63 帧） | 716574376976 | 第二发读条：双手金光，坦克周围还飘着上一发留下的金色星点 |
+| `snap_loj7vtev0QY_480.05.jpg` | https://www.youtube.com/watch?v=loj7vtev0QY&t=480s （同上片段 8:00.05 帧） | 952b7ac99c92 | 被打断：施法条红色「Interrupted」，矮人转身，双手已经没有光 |
+| `clip_loj7vtev0QY_410.6.mp4` | https://www.youtube.com/watch?v=loj7vtev0QY&t=410s （同上视频 6:50.6–6:53.6） | 0ba9bd99d2c1 | 对他人施放（远距离）：矮人圣骑士背对镜头，**双手各一团金光、施法条「Holy Light」**，读条中被打施法条往回跳；6:53.1 施法条走满，**6:53.25–6:53.4 前方远处的坦克 Solidguts 身上落下一道细长的白金光柱**（远看像一根竖立的光棒），施法者身上只有手光 |
+| `snap_loj7vtev0QY_412.0.jpg` | https://www.youtube.com/watch?v=loj7vtev0QY&t=412s （同上片段 6:52.0 帧） | 19da6d02e6b1 | 读条中：矮人侧背影，双手金光，施法条「Holy Light」 |
+| `snap_loj7vtev0QY_413.33.jpg` | https://www.youtube.com/watch?v=loj7vtev0QY&t=413s （同上片段 6:53.33 帧） | a20647e257d0 | 远处坦克 Solidguts（名牌在光柱顶上）身上一道白金竖光柱；画面下方施法者双手仍亮 |
+| `clip_EL7h9DWSTJQ_27.5.mp4` | https://www.youtube.com/watch?v=EL7h9DWSTJQ&t=27s （Mr Blue Cat《… Death Duo Paladins OOPS!》，2021-11，Classic 1.13 硬核；0:27.5–0:30.8） | 75f7ca64f99c | **对他人施放、近景、全程最清楚的一段**：矮人圣骑士（蓝衣红发，身上罩着圣佑术光壳）给身边的队友圣骑士 Ellarie（脚下紫色选中圈＝界面）读圣光术，施法条「Holy Light」：0:27.5–0:29.2 **双手各一团暖金光**，一手在胸前、一手在胯边，挨打照读；**0:29.23 施法条走满，一只手笔直上举过头、掌中光最亮**；**0:29.36–0:29.56 一道白芯金边的竖光柱落在 Ellarie 身上**（高过她头顶约一个身高，宽约一个半肩宽），施法者自己身上**没有**光柱；0:29.6–0:30.2 光柱退去，Ellarie 身周飘落金色四角星点，约 0.8 秒消失 |
+| `snap_EL7h9DWSTJQ_28.3.jpg` | https://www.youtube.com/watch?v=EL7h9DWSTJQ&t=28s （同上片段 0:28.3 帧） | b1801b50b759 | 读条：施法者双手各一团金光（身外一圈圣佑术光壳），下方施法条「Holy Light」 |
+| `snap_EL7h9DWSTJQ_29.3.jpg` | https://www.youtube.com/watch?v=EL7h9DWSTJQ&t=29s （同上片段 0:29.3 帧） | 4582eb81a8a6 | 释放：施法者一手高举、掌心白光，光柱刚在左边队友头上出现 |
+| `snap_EL7h9DWSTJQ_29.45.jpg` | https://www.youtube.com/watch?v=EL7h9DWSTJQ&t=29s （同上片段 0:29.45 帧） | ba4e1de2409d | 对他人命中：白金竖光柱罩住队友 Ellarie，施法者身上无光柱 |
+| `snap_EL7h9DWSTJQ_29.75.jpg` | https://www.youtube.com/watch?v=EL7h9DWSTJQ&t=29s （同上片段 0:29.75 帧） | ff5ee4718f46 | 余辉：光柱退去，队友身边飘金色星点 |
+| （引用动作库，不复制）`0_research/refs/职业技能/动作/ReadySpellOmni_whcHM_0.mp4` | wowhead Classic 模型查看器 SD 老模型逐帧渲染（动作库 `0_research/refs/职业技能/动作/README.md`） | 75293f387de3 | 本技能读条段施法者的角色动画 `ReadySpellOmni`：全向读条循环（左手在脸前上下起伏、右手垂胯侧，0.667 s 一个来回）；人类男三联屏（正 / 四分之三 / 侧），纯色背景、**无特效**——只看动作，光效看上面的录像与截图 |
+| （引用动作库，不复制）`0_research/refs/职业技能/动作/SpellCastOmni_whcHM_0.mp4` | wowhead Classic 模型查看器 SD 老模型逐帧渲染（动作库 `0_research/refs/职业技能/动作/README.md`） | cda78117050d | 本技能释放段施法者的角色动画 `SpellCastOmni`：全向出手（侧身弓步、左臂笔直举过头顶约 0.75 s）；人类男三联屏（正 / 四分之三 / 侧），纯色背景、**无特效**——只看动作，光效看上面的录像与截图 |
+| `sound_precastholymagiclow.ogg` | https://wago.tools/api/casc/568915?download（客户端音效 `sound/spells/precastholymagiclow.ogg`，文件 ID 568915；2026-10-19 下载） | 9e8b758a4fd7 | 原版音效：读条时在施法者身上播放（客户端视觉链） |
+| `sound_holylight_low_head.ogg` | https://wago.tools/api/casc/569383?download（客户端音效 `sound/spells/holylight_low_head.ogg`，文件 ID 569383；2026-10-19 下载） | c0c8344d6b67 | 原版音效：命中时在施法者身上播放（客户端视觉链） |

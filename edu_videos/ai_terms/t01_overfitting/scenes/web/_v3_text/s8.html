@@ -1,0 +1,79 @@
+<style>
+  .tabs { position: absolute; left: var(--mx); right: var(--mx); top: var(--mt); display: flex; gap: 56px; }
+  .tab { font-size: var(--fs-caption); font-weight: 500; color: var(--faint); padding-bottom: 12px; border-bottom: 2px solid transparent; }
+  .tab.on { color: var(--ink); border-color: var(--accent); }
+  .open { position: absolute; left: var(--mx); top: 380px; }
+  .case { position: absolute; left: var(--mx); top: 250px; width: 1680px; }
+  .case .display { font-size: 160px; line-height: 1; }
+  .case .h2 { margin-top: 26px; max-width: 1300px; }
+  .case .note { margin-top: 18px; }
+  .flow { display: flex; align-items: baseline; gap: 44px; }
+  .flow .n { font-size: 120px; font-weight: 700; line-height: 1; letter-spacing: -.01em; }
+  .flow .u { font-size: var(--fs-h2); font-weight: 600; }
+  .flow .arr { font-size: 80px; color: var(--faint); }
+  .quote { font-size: 72px; font-weight: 700; line-height: 1.25; }
+  .src { position: absolute; left: var(--mx); top: 860px; }
+  .close { position: absolute; left: var(--mx); top: 330px; width: 1600px; }
+  .close .h1 { margin-top: 18px; } .close .body { margin-top: 24px; }
+</style>
+
+<div class="tabs">
+  <div class="tab" id="tab0" data-zh="Google 流感趋势" data-en="Google Flu Trends"></div>
+  <div class="tab" id="tab1" data-zh="胸片肺炎模型" data-en="Pneumonia X-ray model"></div>
+  <div class="tab" id="tab2" data-zh="黑色素瘤识别" data-en="Melanoma detector"></div>
+</div>
+<div class="open h1" id="open" data-zh='这类毛病在现实里，<span class="c-bad">真的闯过祸</span>' data-en='Problems like this have caused <span class="c-bad">real trouble</span>'></div>
+
+<div class="case" id="f1"><div class="eyebrow" data-zh="用搜索记录估算流感样病例的就诊比例" data-en="Estimating flu-like doctor visits from searches"></div>
+  <div class="flow" style="margin-top:30px"><div><span class="n" data-zh="5000 万" data-en="50M"></span> <span class="u sub" data-zh="个搜索词" data-en="search terms"></span></div>
+    <div class="arr">→</div><div><span class="n accent">1152</span> <span class="u sub" data-zh="个数据点" data-en="data points"></span></div></div>
+  <div class="h2 ink2" id="f1b" data-zh="可挑的词远比数据点多——总有一些，只是碰巧在冬天搜得多" data-en="Far more terms than data points — some just happened to rise every winter"></div>
+  <div class="caption note" data-zh="（最初的版本）" data-en="(the first version)"></div></div>
+<div class="case" id="f2"><div class="quote" data-zh='“一部分在测流感，<br><span class="accent">一部分在测冬天</span>”' data-en='“Part flu detector,<br><span class="accent">part winter detector</span>”'></div>
+  <div class="body ink2 note" data-zh="研究者称之为过拟合" data-en="The researchers called it overfitting"></div></div>
+<div class="case" id="f3"><div class="display c-bad"><span id="n100">100</span><span class="faint"> / 108</span></div>
+  <div class="h2" data-zh="周里，流感都估高了（2011–2013，后来的版本）" data-en="weeks of flu overestimates (2011–2013, later versions)"></div></div>
+<div class="src" id="s0" data-zh="Lazer 等 ·《Science》· 2014" data-en="Lazer et al. · Science · 2014"></div>
+
+<div class="case" id="x1"><div class="eyebrow" data-zh="看胸片诊断肺炎" data-en="Detecting pneumonia in chest X-rays"></div>
+  <div class="h1" style="margin-top:22px" data-zh='换到一家新医院，<span class="c-bad">成绩下降</span>' data-en='At a new hospital, <span class="c-bad">performance dropped</span>'></div></div>
+<div class="case" id="x2"><div class="display accent">99.9%<span class="faint" style="font-size:96px">+</span></div>
+  <div class="h2" data-zh="另训一个模型，在两家医院的片子上认医院的准确率——胸片里藏着医院的“指纹”" data-en="A separate model identified the hospital for scans from two hospitals — a hospital fingerprint"></div>
+  <div class="body note" id="x2b" data-zh='各医院数据里标成肺炎的比例：<b class="accent">34%</b> vs <b>1%</b><br><span class="c-bad">肺炎模型的好成绩，很可能有一部分靠的是认医院，而不是认病</span>'
+       data-en='Scans labeled pneumonia, by hospital: <b class="accent">34%</b> vs <b>1%</b><br><span class="c-bad">Part of the pneumonia model&#39;s success likely came from recognizing hospitals, not disease</span>'></div></div>
+<div class="src" id="s1" data-zh="Zech 等 ·《PLOS Medicine》· 2018" data-en="Zech et al. · PLOS Medicine · 2018"></div>
+
+<div class="case" id="m1"><div class="eyebrow" style="margin-bottom:22px" data-zh="可疑的痣，医生常会先画上标记" data-en="Doctors often mark suspicious moles"></div><div class="display c-bad">16% <span class="faint">→</span> 54%</div>
+  <div class="h2" data-zh="研究中，画了手术标记的良性痣，被判成癌的比例" data-en="of marked harmless moles flagged as cancer, in one study"></div></div>
+<div class="src" id="s2" data-zh="Winkler 等 ·《JAMA Dermatology》· 2019" data-en="Winkler et al. · JAMA Dermatology · 2019"></div>
+
+<div class="close" id="fin"><div class="eyebrow" data-zh="后两个：捷径学习，过拟合的近亲" data-en="The last two: shortcut learning, a cousin of overfitting"></div>
+  <div class="h1" data-zh='同类的新数据上可能考得不错，<span class="c-bad">换个环境就可能失灵</span>' data-en='They may score well on similar new data, and <span class="c-bad">still fail when the setting changes</span>'></div>
+  <div class="body ink2" data-zh="和认猫的小朋友一样：学到的是只在手头数据里成立的线索" data-en="Like the child and the cats: they learned a clue that only holds in the data at hand"></div></div>
+
+<script>
+const T = EDU.tl;
+const on = (i, at) => [0, 1, 2].forEach(k => T.set("#tab" + k, { className: "tab" + (k === i ? " on" : "") }, at));
+gsap.set([".tab", "#open", "#f1", "#f1b", "#f2", "#f3", "#s0", "#x1", "#x2", "#x2b", "#s1", "#m1", "#s2", "#fin"], { opacity: 0 });
+// l41 开场
+EDU.in("#open", EDU.t("l41"));
+// l42 流感：搜索记录
+EDU.out("#open", EDU.t("l42")); EDU.in(".tab", EDU.t("l42"), { stagger: .1 }); on(0, EDU.t("l42", .05));
+// l43 5000 万 → 1152
+EDU.in(["#f1", "#s0"], EDU.t("l43"), { stagger: .2 });
+// l44 可挑的远比数据多；原话
+EDU.in("#f1b", EDU.t("l44")); EDU.out("#f1", EDU.t("l44", .45)); EDU.in("#f2", EDU.t("l44", .5));
+// l45 100/108
+EDU.out("#f2", EDU.t("l45")); EDU.in("#f3", EDU.t("l45", .05)); EDU.count("#n100", EDU.t("l45", .35), 100, 1.2, v => Math.round(v));
+// l46 胸片：新医院成绩下降
+EDU.out(["#f3", "#s0"], EDU.t("l46")); on(1, EDU.t("l46", .02)); EDU.in(["#x1", "#s1"], EDU.t("l46", .05), { stagger: .2 });
+// l47 另训模型 99.9%
+EDU.out("#x1", EDU.t("l47")); EDU.in("#x2", EDU.t("l47", .05));
+// l48 结论
+EDU.in("#x2b", EDU.t("l48"));
+// l49 黑色素瘤
+EDU.out(["#x2", "#s1"], EDU.t("l49")); on(2, EDU.t("l49", .02)); EDU.in(["#m1", "#s2"], EDU.t("l49", .3), { stagger: .2 });
+// l50 捷径学习
+EDU.out(["#m1", "#s2"], EDU.t("l50")); T.set("#tab0", { className: "tab" }, EDU.t("l50")); T.set(["#tab1", "#tab2"], { className: "tab on" }, EDU.t("l50"));
+EDU.in("#fin", EDU.t("l50", .05));
+</script>

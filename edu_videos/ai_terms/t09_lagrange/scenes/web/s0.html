@@ -1,0 +1,29 @@
+<style>
+  .hook { position: absolute; left: var(--mx); top: 280px; }
+  .hook .line { display: flex; align-items: baseline; gap: 40px; }
+  .hook .line + .line { margin-top: 30px; }
+  .hook .k { font-size: var(--fs-h2); font-weight: 500; color: var(--sub); width: 330px; white-space: nowrap; }
+  html[lang=en] .hook .k { width: 600px; }
+  .hook .v { font-size: 110px; font-weight: 700; letter-spacing: -.01em; }
+  .name { position: absolute; left: var(--mx); top: 700px; }
+  .name .h1 { margin-top: 10px; }
+</style>
+
+<div class="hook">
+  <div class="line" id="a" data-zh='<span class="k" id="ka">尽量做好</span><span class="v c-good">尽量有用</span>' data-en='<span class="k" id="ka">“Do your best”</span><span class="v c-good">Most helpful</span>'></div>
+  <div class="line" id="b" data-zh='<span class="k" id="kb">不许越线</span><span class="v c-bad">有害 ≤ 底线</span>' data-en='<span class="k" id="kb">“Never cross this line”</span><span class="v c-bad">Harm ≤ the line</span>'></div>
+</div>
+<div class="name" id="n"><div class="eyebrow" data-zh="两百多年前的办法" data-en="A 200-year-old idea"></div>
+  <div class="h1 grad" data-zh="拉格朗日乘子" data-en="The Lagrange multiplier"></div></div>
+
+<script>
+gsap.set(["#a", "#b", "#ka", "#kb", "#n"], { opacity: 0 });
+// l01 两个要求
+EDU.in("#a", EDU.t("l01", .2));
+EDU.in("#b", EDU.t("l01", .6));
+// l02 两种不一样的要求
+EDU.in("#ka", EDU.t("l02", .05)); EDU.in("#kb", EDU.t("l02", .3));
+// l03 拉格朗日乘子
+EDU.dim(["#a", "#b"], EDU.t("l03"), .22); EDU.in("#n", EDU.t("l03", .45));
+EDU.out(["#a", "#b", "#n"], EDU.S.duration - .5);
+</script>

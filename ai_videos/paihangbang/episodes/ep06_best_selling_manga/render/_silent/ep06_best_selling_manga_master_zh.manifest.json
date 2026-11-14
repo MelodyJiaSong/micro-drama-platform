@@ -1,0 +1,102 @@
+{
+  "renderer": "rank_scroll 0.2.0",
+  "output": "C:\\workspace\\micro-drama-platform\\ai_videos\\paihangbang\\episodes\\ep06_best_selling_manga\\render\\_silent\\ep06_best_selling_manga_master_zh.mp4",
+  "output_sha256": "279c778980be74ea546b8915b619dc10699d550d5045665254b5dbe883526992",
+  "duration_s": 159.15,
+  "fps": 60,
+  "size": [
+    1920,
+    1080
+  ],
+  "draft": false,
+  "range_s": [
+    0.0,
+    159.15
+  ],
+  "theme": "manga",
+  "render_seconds": 484.6,
+  "timeline": [
+    [
+      "intro",
+      0.0,
+      5.0
+    ],
+    [
+      "scroll",
+      5.0,
+      124.15
+    ],
+    [
+      "champion",
+      124.15,
+      130.15
+    ],
+    [
+      "tally",
+      130.15,
+      137.15
+    ],
+    [
+      "sources",
+      137.15,
+      141.15
+    ],
+    [
+      "end",
+      141.15,
+      159.15
+    ]
+  ],
+  "inputs": {
+    "data.json": "35762ff67c9018ab73afbc58ef719ccf76cfd53d6ea14e8ab64937f97d65dc2e",
+    "assets.json": "8e77100a960cadadbb9dfcbe54ac3f0332c11ce53bb4fc0ba35fadc576e84818"
+  },
+  "ffmpeg": [
+    "C:\\Users\\light\\AppData\\Local\\Microsoft\\WinGet\\Packages\\yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-N-125365-g9a01c1cb6a-win64-gpl\\bin\\ffmpeg.EXE",
+    "-y",
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-f",
+    "rawvideo",
+    "-pix_fmt",
+    "bgra",
+    "-s",
+    "1920x1080",
+    "-r",
+    "60",
+    "-i",
+    "-",
+    "-f",
+    "lavfi",
+    "-i",
+    "anullsrc=r=48000:cl=stereo",
+    "-map",
+    "0:v",
+    "-map",
+    "1:a",
+    "-c:v",
+    "libx264",
+    "-preset",
+    "medium",
+    "-crf",
+    "16",
+    "-profile:v",
+    "high",
+    "-pix_fmt",
+    "yuv420p",
+    "-c:a",
+    "aac",
+    "-b:a",
+    "256k",
+    "-ar",
+    "48000",
+    "-t",
+    "159.150",
+    "-movflags",
+    "+faststart",
+    "C:\\workspace\\micro-drama-platform\\ai_videos\\paihangbang\\episodes\\ep06_best_selling_manga\\render\\_silent\\ep06_best_selling_manga_master_zh.mp4"
+  ],
+  "python": "3.11.9",
+  "skia": "144.1"
+}

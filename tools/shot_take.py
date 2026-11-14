@@ -12,6 +12,8 @@
     generation.json            submit_id、模型、时长、比例、分辨率、积分、时间、参考清单（每个文件的 key 与 sha256）
     prompt.txt                 提交时的 prompt 原文（资料包里填好上传编号的那一份）
     review.md                  审核：Vision / 对的 / 不对的 / 结论 / 怎么看的。先写待审核模板，看片后填写（Vision 一项 2026-10-12 起必填，follow-up 249）
+镜组（follow-up 331）：key 也可以是镜组 `ep1_s1_g2`，条目录在 `scenes/s1/groups/g2/drafts|renders/`，其余流程一样。
+镜组出正式条时，镜组自己没有通过的草稿、但每个成员镜头都有通过的草稿，就把这些草稿按镜头顺序接起来当参考视频（follow-up 333）。
 提交与查询都经 `tools/service_call.py` 先记请求日志；`submit` 只在用户决定生成后运行（生成视频永远人点）。
 
 两步出片（follow-up 265）：`--stage draft`（默认）按资料包原样出低价草稿，分辨率读剧 `workflow.json` 的
@@ -19,6 +21,7 @@
 「状态：通过…」）后，`--stage final` 出正式条：分辨率读 `prompt.resolution`（720p），资料包全部参考与 prompt 照旧，
 再把通过的草稿统一成 1280×720、24fps、无声、≤15 s 一段，作为最后的参考视频追加上去，「参考：」「参考用法：」两行补上它
 （镜头、走位、表演、节奏照草稿，长相服装仍以三视图为准）。不给 `--from` 就用这一镜最新一条通过的草稿。
+剧 `workflow.json` 的 `prompt.skip_draft` 写了理由（用户要求本剧不出草稿）时，不给 `--stage` 就按 `--stage final --no-draft <该理由>` 提交（follow-up 335）。
 `--stage final --no-draft <理由>`：用户明确要求这次不经草稿时，按资料包原样直接出正式条，理由记进生成记录
 （`no_draft`），没有草稿参考视频（follow-up 272）。
 提交用资料包 `upload/` 里的副本、绝对路径（follow-up 229 实测：相对路径传不上，大文件在 VPN 下超时）；
@@ -39,6 +42,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 from tools import shot_pack  # noqa: E402
+from tools import review_run  # noqa: E402
 
 REVIEW_TEMPLATE = """# 审核：{key} · {take}
 
@@ -70,6 +74,44 @@ def shot_info(ep_dir: Path, key: str) -> tuple[dict, Path]:
     if shot is None:
         raise SystemExit("prompts.json 里没有 %s" % key)
     return shot, shot_pack.shot_dir(ep_dir, shot["scene"], key)
+
+
+FILMING_MACHINE_CHECKS = ("filming.no_freeze", "filming.point_written", "filming.shot_junctions",
+                          "filming.character_motive", "filming.reaction_restraint", "filming.cross_language",
+                          "filming.no_cross_ref")
+LINT_TAGS = {"[动机]": "filming.character_motive", "[过演]": "filming.reaction_restraint", "[跨语言]": "filming.cross_language", "[跨镜]": "filming.no_cross_ref"}
+
+
+def filming_checks(ep_dir: Path, keys: list[str]) -> list[str]:
+    """出片前的分镜机检（chuanyue_yiri follow-up 059）：剧级登记表（qc_checks.toml）里登记为闸门的分镜机检，
+    提交前自动跑在要出的镜头上——没写看点、人物定格、镜间接点「重新开场」。没有登记表的剧不跑。"""
+    import re
+    drama = shot_pack.es.drama_root(ep_dir)
+    if not (drama / "qc_checks.toml").is_file():
+        return []
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import qc
+    reg = qc.registry(drama)
+    want = {c for c in FILMING_MACHINE_CHECKS if c in reg and reg[c].gate}
+    targets = {m.groups() for k in keys if (m := re.search(r"_(s\d+)_(st\d+)$", k))}
+    probs: list[str] = []
+    if want - {"filming.shot_junctions"}:
+        from filming_lint import lint
+        for line in lint(ep_dir, None):
+            sc, st = line.split(" ", 2)[:2]
+            cid = next((c for t, c in LINT_TAGS.items() if t in line),
+                       "filming.point_written" if "没写看点" in line else "filming.no_freeze")
+            if (sc, st) in targets and cid in want:
+                probs.append(cid + "：" + line)
+    if "filming.shot_junctions" in want:
+        from shot_junctions import junctions
+        head = None
+        for row in junctions(ep_dir)[0]:
+            if row.startswith("## "):
+                head = re.findall(r"(s\d+)_(st\d+)", row)
+            elif row.startswith("- ⚠") and head and set(head) & targets:
+                probs.append("filming.shot_junctions：%s → %s %s" % ("_".join(head[0]), "_".join(head[1]), row[4:]))
+    return probs
 
 
 STAGES = ("draft", "final")
@@ -137,6 +179,39 @@ def draft_reference(folder: Path) -> list[Path]:
     out.parent.mkdir(exist_ok=True)
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(src), "-an", "-r", "24",
                     "-vf", "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2,setsar=1",
+                    "-c:v", "libx264", "-crf", "18", "-pix_fmt", "yuv420p", str(out)], check=True)
+    p = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(out)],
+                       capture_output=True, text=True, check=True)
+    return split(out, float(p.stdout.strip()), [])
+
+
+def member_drafts(ep_dir: Path, group: dict, settings: dict) -> list[Path] | None:
+    """镜组没有自己通过的草稿、而每个成员镜头都有通过的草稿时，返回这些草稿条（按镜头顺序）；否则 None。"""
+    sd = shot_pack.shot_dir(ep_dir, group["scene"], group["id"])
+    try:
+        approved_draft(sd, None, settings)
+        return None
+    except SystemExit:
+        pass
+    out = []
+    for key in group["shots"]:
+        try:
+            out.append(approved_draft(shot_pack.shot_dir(ep_dir, group["scene"], key), None, settings))
+        except SystemExit:
+            return None
+    return out
+
+
+def joined_reference(sd: Path, takes: list[Path]) -> list[Path]:
+    """成员镜头的通过草稿按顺序接成一条参考视频（统一 1280×720、24fps、无声），超过 15 s 按 seedance_ref 切段。"""
+    from tools.previz.seedance_ref import split
+    out = sd / STAGE_DIR["draft"] / ".members" / "draft_ref.mp4"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    norm = "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=24"
+    inputs = [x for t in takes for x in ("-i", str(draft_video(t)))]
+    chain = "".join("[%d:v]%s[v%d];" % (i, norm, i) for i in range(len(takes)))
+    chain += "".join("[v%d]" % i for i in range(len(takes))) + "concat=n=%d:v=1:a=0[out]" % len(takes)
+    subprocess.run(["ffmpeg", "-y", "-v", "error", *inputs, "-filter_complex", chain, "-map", "[out]",
                     "-c:v", "libx264", "-crf", "18", "-pix_fmt", "yuv420p", str(out)], check=True)
     p = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(out)],
                        capture_output=True, text=True, check=True)
@@ -274,8 +349,12 @@ def submit(ep_dir: Path, key: str, stage: str = "draft", from_take: str | None =
     if stage == "final" and no_draft:
         meta["no_draft"] = no_draft
     elif stage == "final":
-        draft = approved_draft(sd, from_take, settings)
-        parts = draft_reference(draft)
+        members = member_drafts(ep_dir, shot, settings) if shot.get("shots") and not from_take else None
+        if members:     # 镜组还没有自己通过的草稿：用成员镜头各自通过的草稿按顺序接起来（follow-up 333）
+            draft, parts = sd, joined_reference(sd, members)
+        else:
+            draft = approved_draft(sd, from_take, settings)
+            parts = draft_reference(draft)
         model = settings.get("model", "seedance2.5")
         limit = shot_pack.MODEL_LIMITS.get(shot_pack.MODEL_ALIASES.get(model, model), {}).get("max_videos", 0)
         videos = sum(1 for r in man["refs"] if r["kind"] == "video")
@@ -284,12 +363,12 @@ def submit(ep_dir: Path, key: str, stage: str = "draft", from_take: str | None =
             return None
         tags = ["@视频%d" % (videos + i) for i in range(1, len(parts) + 1)]
         sent_text = final_prompt(sent_text, key, tags)
-        src = draft_video(draft).relative_to(REPO).as_posix()
+        src = (parts[0] if members else draft_video(draft)).relative_to(REPO).as_posix()
         man = {**man, "refs": [*man["refs"], *({"tag": t, "key": n, "kind": "video", "role": "用户已审过的草稿", "src": src,
                                                  "sha256": shot_pack.sha256(part) if part.is_file() else None}
                                                 for t, n, part in zip(tags, draft_names(key, len(parts)), parts))]}
         args += [x for part in parts for x in ("--video", str(part))]
-        meta["from_take"] = draft.name
+        meta["from_take"] = "+".join("%s/%s" % (f.parent.parent.name, f.name) for f in members) if members else draft.name
     cmd = [sys.executable, str(REPO / "tools" / "service_call.py"), "--target", ep_dir.relative_to(REPO).as_posix(), "--",
            "dreamina", "multimodal2video", *args, "--prompt=%s" % sent_text.rstrip("\n"),
            "--duration=%d" % duration, "--ratio=%s" % settings.get("ratio", "16:9"), "--video_resolution=%s" % resolution,
@@ -386,10 +465,15 @@ def main() -> int:
     ap.add_argument("key", nargs="?")
     ap.add_argument("rest", nargs="*", help="poll / record：submit_id；submit：更多镜头 key")
     ap.add_argument("--video", type=Path)
-    ap.add_argument("--stage", choices=STAGES, default="draft", help="draft＝低价草稿（默认）；final＝用通过的草稿出正式条")
+    ap.add_argument("--stage", choices=STAGES, help="draft＝低价草稿（默认）；final＝用通过的草稿出正式条；"
+                    "剧 workflow.json 的 prompt.skip_draft 写了理由时默认直接出正式条（follow-up 335）")
     ap.add_argument("--from", dest="from_take", help="final：用哪一条草稿（缺省＝这一镜最新一条通过的草稿）")
     ap.add_argument("--no-draft", dest="no_draft", metavar="理由",
                     help="final：用户明确要求这次不经草稿，按资料包直接出正式条；理由写进生成记录")
+    ap.add_argument("--skip-checks", dest="skip_checks", metavar="用户原话",
+                    help="剧级登记表里的分镜机检（看点、定格、镜间接点）报了问题，用户在对话里明确要求照样出片时才用；写用户原话")
+    ap.add_argument("--skip-review", dest="skip_review", metavar="用户原话",
+                    help="剧开了出片前审查闸门（workflow.json review_gate）时，用户在对话里明确要求跳过审查才用；写用户原话")
     ap.add_argument("--credits", type=int)
     ap.add_argument("--model")
     ap.add_argument("--interval", type=int, default=60)
@@ -402,9 +486,29 @@ def main() -> int:
         return 0
     if a.key is None:
         ap.error("要给镜头 key")
+    skip = shot_pack.es.settings(shot_pack.es.drama_root(ep_dir)).get("prompt", {}).get("skip_draft")
+    if a.stage is None:         # 剧级「直接出正式版」（follow-up 335）：没点名 stage 就出正式条，理由取剧设置
+        a.stage = "final" if skip else "draft"
+        if skip and not a.no_draft and a.action == "submit":
+            a.no_draft = str(skip)
     if a.no_draft and a.stage != "final":
         ap.error("--no-draft 只用于 --stage final")
     if a.action == "submit":
+        probs = filming_checks(ep_dir, [a.key, *a.rest])
+        if probs and not a.skip_checks:
+            for p in probs:
+                print("  ✗ " + p, flush=True)
+            print("  ✗ 分镜机检没过：改分镜、重编译后再出（用户明确要求照样出时加 --skip-checks \"用户原话\"）", flush=True)
+            return 1
+        if probs:
+            print("  · 分镜机检有 %d 处问题，按用户原话照样出：%s" % (len(probs), a.skip_checks), flush=True)
+        gate = shot_pack.es.settings(shot_pack.es.drama_root(ep_dir)).get("review_gate")
+        if gate == "required":          # 出片前审查闸门（chuanyue_yiri follow-up 035）：要有用户已确认的出片前审查单
+            ok, msg = review_run.can_submit(ep_dir, [a.key, *a.rest])
+            if not ok and not a.skip_review:
+                print("  ✗ " + msg, flush=True)
+                return 1
+            print(("  · " + msg) if ok else "  · 跳过出片前审查（用户原话：%s）" % a.skip_review, flush=True)
         rc = 0
         for key in [a.key, *a.rest]:
             try:
@@ -419,6 +523,11 @@ def main() -> int:
             rc |= wait_and_record(ep_dir, key, got[0], got[1], a.model, a.interval, a.max, got[2], got[3])
         return rc
     sid = a.rest[0]
+    sd = shot_info(ep_dir, a.key)[1]
+    done = [t for s in STAGES for t in (sd / STAGE_DIR[s]).glob("*_%s" % sid[:8]) if t.is_dir()]
+    if done:                               # 已收过（可能是别的会话收的）：再收一遍会多出一条重复、阶段还会记错
+        print("  · %s 已收过：%s；不重复建条" % (sid, ", ".join(t.relative_to(REPO).as_posix() for t in done)))
+        return 0
     if a.action == "record":
         settings = shot_pack.es.settings(shot_pack.es.drama_root(ep_dir)).get("prompt", {})
         meta = {"stage": a.stage, "resolution": stage_resolution(settings, a.stage)}

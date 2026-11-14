@@ -1,0 +1,66 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  #day { position: absolute; left: var(--mx); top: 200px; }
+  .tag { position: absolute; left: 1000px; top: 214px; }
+  .side { position: absolute; left: 1330px; width: 480px; }
+  .grid { position: absolute; left: 1330px; top: 250px; width: 500px; height: 320px; }
+  .gl { top: 210px; }
+  .loss { top: 600px; }
+  .loss .v { font-size: 110px; font-weight: 700; line-height: 1; margin-top: 8px; font-variant-numeric: tabular-nums; }
+  .vs { top: 770px; }
+  .q { top: 300px; }
+  .q .h2 { margin-top: 16px; }
+</style>
+
+<div class="eb eyebrow" data-zh="02 · 搭一个小网络" data-en="02 · Build a small network"></div>
+<svg id="day"></svg>
+<div class="tag eyebrow" id="tag" data-zh="示意" data-en="Illustration"></div>
+<div class="side gl eyebrow" id="gl" data-zh="37 个旋钮" data-en="37 knobs"></div>
+<div class="grid" id="grid"></div>
+<div class="side loss" id="loss"><div class="eyebrow" data-zh="损失" data-en="Loss"></div><div class="v accent" id="lv">—</div></div>
+<div class="side vs h2 ink2" id="vs" data-zh='直线最低：<span class="c-bad">11.5</span>' data-en='Straight line: <span class="c-bad">11.5</span>'></div>
+<div class="side q" id="q"><div class="h1" data-zh='旋钮一多<br>怎么算得快？' data-en='A much<br>faster way'></div>
+  <div class="h2 ink2" data-zh="下一期" data-en="Next time"></div></div>
+
+<script>
+const C = dayChart("#day", { W: 1100, H: 620 });
+const T = D.train, n = T.steps.length;
+/* 曲线：在训练快照之间插值；p 从 0 走到 n−1 */
+const cur = C.curve(T.curves["0"], "--accent", 7);
+const kn = [];
+for (let i = 0; i < 37; i++) kn.push(knob("#grid", { size: 54, min: -4, max: 4, value: T.knobs[0][i], left: (i % 8) * 62, top: Math.floor(i / 8) * 64, showReading: false }));
+const st = { p: 0 };
+function at(p) {
+  const i = Math.min(Math.floor(p), n - 2), f = p - i, a = T.curves[String(T.steps[i])], b = T.curves[String(T.steps[i + 1])];
+  cur.setAttribute("d", C.pathOf(a.map((v, j) => v + (b[j] - v) * f)));
+  for (let k = 0; k < 37; k++) kn[k].set(T.knobs[i][k] + (T.knobs[i + 1][k] - T.knobs[i][k]) * f);
+  document.getElementById("lv").textContent = (T.loss[i] + (T.loss[i + 1] - T.loss[i]) * f).toFixed(f === 0 && i === 0 ? 1 : 2);
+}
+const labs = [
+  C.note(EDU.tr("早高峰 ✓", "Morning rush ✓"), 8.2, 33.5, -60, -62, "caption c-good"),
+  C.note(EDU.tr("晚高峰 ✓", "Evening rush ✓"), 18.3, 37, -64, -62, "caption c-good"),
+  C.note(EDU.tr("半夜 ✓", "Late night ✓"), 1.4, 30.5, -30, -62, "caption c-good"),
+];
+const kinks = D.kink_pts.map(([h, f]) => C.over.append("circle").attr("cx", C.x(h)).attr("cy", C.y(f)).attr("r", 11).attr("fill", css("--surface"))
+  .attr("stroke", css("--accent-text")).attr("stroke-width", 5).node());
+const labK = C.note(EDU.tr("单元拐弯 → 拐点", "Unit bends → corner"), 10.5, 19, -40, 10, "caption accent");
+
+gsap.set([C.svg.node(), ...C.dots, C.line, ...C.gaps, cur, "#tag", "#gl", "#grid", "#loss", "#vs", "#q", ...labs, ...kinks, labK], { opacity: 0 });
+EDU.in(".eb", 0);
+EDU.in([C.svg.node(), ...C.dots], 0, { y: 0, d: .4 }); EDU.in("#tag", 0);
+// l25 37 个旋钮，一起往损失降得最快的方向拧
+EDU.in(["#gl", "#grid"], EDU.t("l25", .1)); at(0);
+EDU.tl.to(st, { p: 0.35, duration: EDU.t("l25", 1) - EDU.t("l25", .45), ease: "none", onUpdate: () => at(st.p) }, EDU.t("l25", .45));
+// l26 一开始一条乱线，拧着拧着往高峰弯
+EDU.in(cur, EDU.t("l26", 0)); EDU.in("#loss", EDU.t("l26", 0));
+EDU.tl.to(st, { p: n - 1.6, duration: EDU.t("l26", 1) - EDU.t("l26", .1), ease: "none", onUpdate: () => at(st.p) }, EDU.t("l26", .1));
+// l27 一万步：损失 0.26，直线最好 11.5
+EDU.tl.to(st, { p: n - 1, duration: .8, ease: "power2.out", onUpdate: () => at(st.p) }, EDU.t("l27", 0));
+EDU.in(C.line, EDU.t("l27", .55)); EDU.dim(C.line, EDU.t("l27", .55), .5); EDU.in("#vs", EDU.t("l27", .6));
+// l28 高峰、半夜都抓住了
+EDU.out([C.line, "#vs"], EDU.t("l28", 0)); EDU.in(labs, EDU.t("l28", .05), { stagger: .2 });
+// l29 每个拐点，都是某个单元在拐弯
+EDU.out(labs, EDU.t("l29", 0)); EDU.in(kinks, EDU.t("l29", .1), { stagger: .06 }); EDU.in(labK, EDU.t("l29", .5));
+// l30 坡度怎么算 → 下一期
+EDU.out(["#gl", "#grid", "#loss", labK], EDU.t("l30", 0)); EDU.in("#q", EDU.t("l30", .1));
+</script>

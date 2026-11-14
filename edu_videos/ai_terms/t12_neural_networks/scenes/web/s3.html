@@ -1,0 +1,138 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  .open { position: absolute; left: var(--mx); top: 250px; }
+  .open .h1 { margin-bottom: 60px; }
+  .row12 { display: flex; gap: 26px; }
+  .row12 .u { width: 92px; height: 92px; border-radius: 50%; background: var(--surface); border: 5px solid var(--accent); position: relative; box-shadow: var(--shadow); }
+  .row12 svg { position: absolute; left: 14px; top: 14px; }
+  #unit { position: absolute; left: var(--mx); top: 230px; }
+  .knobs { position: absolute; left: 1050px; top: 250px; width: 600px; height: 330px; }
+  .side { position: absolute; left: 1050px; width: 760px; }
+  .side .t { position: absolute; top: 0; left: 0; white-space: nowrap; }
+  .rl { top: 640px; }
+  .eq { position: absolute; left: var(--mx); top: 300px; display: flex; align-items: center; gap: 18px; }
+  .eq .op { font-size: var(--fs-h1); font-weight: 600; color: var(--faint); }
+  .eq svg { background: var(--surface2); border-radius: 22px; }
+  .eqcap { position: absolute; left: var(--mx); top: 640px; }
+  #net { position: absolute; left: var(--mx); top: 190px; }
+  .layer { position: absolute; top: 845px; }
+  .ttl { top: 300px; }
+  .ttl .h1 + .h2 { margin-top: 18px; }
+  .big { top: 300px; }
+  .big .display { font-size: 180px; line-height: 1; }
+  .big .h2 { margin-top: 20px; }
+  .nn { top: 300px; }
+  .nn .h2 { margin-top: 18px; }
+  .nn .caption { margin-top: 40px; }
+</style>
+
+<div class="eb eyebrow" data-zh="02 · 搭一个小网络" data-en="02 · Build a small network"></div>
+
+<div class="open" id="open"><div class="h1" data-zh="很多简单的小单元" data-en="Lots of simple units"></div>
+  <div class="row12" id="row12"></div></div>
+
+<svg id="unit"></svg>
+<div class="knobs" id="knobs"></div>
+<div class="side rl">
+  <div class="h2 t" id="r1" data-zh='小于零 → <span class="accent">当成零</span>' data-en='Below zero → <span class="accent">zero</span>'></div>
+  <div class="h2 t" id="r2" data-zh='一条<span class="accent">折线</span>' data-en='A line with <span class="accent">one bend</span>'></div>
+</div>
+
+<div class="eq" id="eq"><svg id="p1"></svg><span class="op" id="o1">+</span><svg id="p2"></svg><span class="op" id="o2">+</span><svg id="p3"></svg><span class="op" id="o3">=</span><svg id="p4"></svg></div>
+<div class="eqcap h2" id="eqcap" data-zh='拐弯加起来 → <span class="accent">鼓包、台阶……</span>' data-en='Add bends → <span class="accent">bumps, steps…</span>'></div>
+
+<svg id="net"></svg>
+<div class="layer caption" id="lay1" data-zh="第一层 · 12 个" data-en="Layer 1 · 12 units"></div>
+<div class="layer caption" id="lay2" data-zh="第二层 · 1 个" data-en="Layer 2 · 1 unit"></div>
+<div class="side ttl" id="sum"><div class="h1" data-zh="每条折线配个旋钮" data-en="One knob per line"></div>
+  <div class="h2 ink2" data-zh="加起来，再调高低 → 车费" data-en="Sum + 1 knob → fare"></div></div>
+<div class="side big" id="big"><div class="display accent">37</div><div class="h2" data-zh="个旋钮" data-en="knobs"></div></div>
+<div class="side nn" id="nn"><div class="h1 grad" data-zh="神经网络" data-en="Neural network"></div>
+  <div class="h2" data-zh="一层层小单元" data-en="Layers of small units"></div>
+  <div class="caption" id="nn2" data-zh="来自神经元 · 别当真" data-en="Loosely named after neurons"></div></div>
+
+<script>
+/* l14 一排小单元（圆里一个小折线） */
+const row = document.getElementById("row12");
+for (let i = 0; i < 12; i++) {
+  const u = document.createElement("div"); u.className = "u";
+  u.innerHTML = `<svg width="54" height="54"><path d="M4 40 L26 40 L50 12" fill="none" stroke="${css("--accent-text")}" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/></svg>`;
+  row.appendChild(u);
+}
+/* l15–l17 一个单元：直线 w·x + b，小于零当零 → 折线；两个旋钮拧着看 */
+const P = miniPlot("#unit", { W: 840, H: 560, xd: [-1, 1], yd: [-2.1, 1.6] });
+const zero = P.svg.append("text").attr("x", 16).attr("y", P.y(0) - 12).attr("font-size", 26).attr("fill", css("--sub")).text("0").node();
+const xs = d3.range(-1, 1.0001, 0.01);
+const lineP = P.svg.append("path").attr("fill", "none").attr("stroke", css("--d-neutral")).attr("stroke-width", 6).attr("stroke-dasharray", "4 12").attr("stroke-linecap", "round").node();
+const negP = P.svg.append("path").attr("fill", "none").attr("stroke", css("--d-bad")).attr("stroke-width", 8).attr("stroke-linecap", "round").node();
+const hingeP = P.svg.append("path").attr("fill", "none").attr("stroke", css("--accent")).attr("stroke-width", 9).attr("stroke-linejoin", "round").attr("stroke-linecap", "round").node();
+const kinkDot = P.svg.append("circle").attr("r", 13).attr("fill", css("--accent")).attr("stroke", css("--surface")).attr("stroke-width", 5).node();
+const st = { w: D.demo.w, b: D.demo.b };
+const L = d3.line().x(v => P.x(v[0])).y(v => P.y(v[1]));
+function drawUnit() {
+  const { w, b } = st;
+  lineP.setAttribute("d", L(xs.map(x => [x, w * x + b])));
+  negP.setAttribute("d", L(xs.filter(x => w * x + b < 0).map(x => [x, w * x + b])));
+  hingeP.setAttribute("d", L(xs.map(x => [x, Math.max(0, w * x + b)])));
+  kinkDot.setAttribute("cx", P.x(-b / w)); kinkDot.setAttribute("cy", P.y(0));
+}
+drawUnit();
+const kW = knob("#knobs", { size: 190, min: 0, max: 3, value: st.w, left: 300, top: 0, label: EDU.tr("拐完多陡", "How steep"), fmt: v => v.toFixed(1) });
+const kB = knob("#knobs", { size: 190, min: -1.5, max: 1.5, value: st.b, left: 0, top: 0, label: EDU.tr("在哪儿拐", "Where it bends"), fmt: v => v.toFixed(1) });
+const turn = (at, w, b, d) => EDU.tl.to(st, { w, b, duration: d, ease: "power2.inOut", onUpdate: () => { drawUnit(); kW.set(st.w); kB.set(st.b); } }, at);
+
+/* l18–l19 三条折线加起来 = 一个鼓包（示意，data.json 的 demo.bump） */
+const bp = D.demo.bump, win = bp.h.map((h, i) => [h, i]).filter(([h]) => h >= 4 && h <= 12).map(([, i]) => i);
+const hs = win.map(i => bp.h[i]);
+const mini = (sel, ys, col, yd) => { const M = miniPlot(sel, { W: 330, H: 260, xd: [4, 12], yd }); return M.path(hs, ys, col, 8); };
+const q1 = mini("#p1", win.map(i => bp.parts[0][i]), "--d-valid", [-25, 20]);
+const q2 = mini("#p2", win.map(i => bp.parts[1][i]), "--d-good", [-25, 20]);
+const q3 = mini("#p3", win.map(i => bp.parts[2][i]), "--d-test", [-25, 20]);
+const q4 = mini("#p4", win.map(i => bp.sum[i]), "--accent", [-1, 8]);
+
+/* l20–l22 网络图：几点 → 12 个单元 → 车费 */
+const N = netDiagram("#net", { W: 880, H: 640, n: 12, inLabel: EDU.tr("出发时刻", "Time"), outLabel: EDU.tr("车费", "Fare") });
+const netBox = document.getElementById("net").getBoundingClientRect(), stage = document.getElementById("stage").getBoundingClientRect();
+document.getElementById("lay1").style.left = (netBox.left - stage.left + N.xh - 80) + "px";
+document.getElementById("lay2").style.left = (netBox.left - stage.left + N.xo - 70) + "px";
+
+gsap.set(["#open", "#row12 .u", "#unit", lineP, negP, hingeP, kinkDot, zero, "#knobs", "#r1", "#r2", "#eq", "#p1", "#p2", "#p3", "#p4", "#o1", "#o2", "#o3", "#eqcap",
+          "#net", ...N.units, ...N.e1, ...N.e2, N.inp, N.out, "#lay1", "#lay2", "#sum", "#big", "#nn", "#nn2"], { opacity: 0 });
+EDU.in(".eb", 0);
+// l14 很多台简单的小机器
+EDU.in("#open", EDU.t("l14", .05), { y: 0, d: .01 }); gsap.set("#open .h1", { opacity: 0 });
+EDU.in("#open .h1", EDU.t("l14", .1)); EDU.in("#row12 .u", EDU.t("l14", .35), { stagger: .06 });
+// l15 两个旋钮算直线；小于零就当零
+EDU.out("#open", EDU.t("l15", 0));
+EDU.in("#unit", EDU.t("l15", .03), { y: 0 }); EDU.in([zero, lineP], EDU.t("l15", .08)); EDU.in("#knobs", EDU.t("l15", .15));
+EDU.in(negP, EDU.t("l15", .6)); EDU.in("#r1", EDU.t("l15", .65));
+// l16 折线：先平着，再拐上去
+EDU.dim([lineP, negP], EDU.t("l16", 0), .15); EDU.in(hingeP, EDU.t("l16", .05)); EDU.draw(hingeP, EDU.t("l16", .05), 1.1);
+EDU.out("#r1", EDU.t("l16", .3)); EDU.in("#r2", EDU.t("l16", .35)); EDU.in(kinkDot, EDU.t("l16", .55));
+// l17 两个旋钮：在哪儿拐、拐完多陡
+turn(EDU.t("l17", .02), D.demo.w, 0.45, .8);
+turn(EDU.t("l17", .4), 0.7, 0.2, .8);
+turn(EDU.t("l17", .78), D.demo.w, D.demo.b, .6);
+// l18 多来几个，各在不同的地方拐
+EDU.out(["#unit", "#knobs", "#r2"], EDU.t("l18", 0));
+EDU.in("#eq", EDU.t("l18", .05), { y: 0, d: .01 });
+EDU.in("#p1", EDU.t("l18", .1)); EDU.in(["#o1", "#p2"], EDU.t("l18", .35)); EDU.in(["#o2", "#p3"], EDU.t("l18", .6));
+// l19 加在一起：鼓包、台阶……
+EDU.in(["#o3", "#p4"], EDU.t("l19", .05)); EDU.draw(q4, EDU.t("l19", .1), 1); EDU.in("#eqcap", EDU.t("l19", .45));
+// l20 网络：第一层 12 个，第二层 1 个
+EDU.out(["#eq", "#eqcap"], EDU.t("l20", 0));
+EDU.in("#net", EDU.t("l20", .03), { y: 0, d: .01 }); EDU.in(N.inp, EDU.t("l20", .08));
+EDU.in(N.e1, EDU.t("l20", .15), { stagger: .02 }); EDU.in(N.units, EDU.t("l20", .2), { stagger: .03 }); EDU.in("#lay1", EDU.t("l20", .4));
+EDU.in(N.out, EDU.t("l20", .7)); EDU.in("#lay2", EDU.t("l20", .75));
+// l21 各乘一个旋钮，再加一个 → 车费
+EDU.in(N.e2, EDU.t("l21", .05), { stagger: .03 });
+EDU.tl.to(N.e2, { attr: { stroke: css("--accent") }, duration: .5 }, EDU.t("l21", .1));
+EDU.in("#sum", EDU.t("l21", .2));
+// l22 一共 37 个旋钮
+EDU.out("#sum", EDU.t("l22", 0)); EDU.in("#big", EDU.t("l22", .05));
+// l23 神经网络 = 一层层的小单元
+EDU.out("#big", EDU.t("l23", 0)); EDU.in("#nn", EDU.t("l23", .05), { y: 0, d: .01 });
+gsap.set(["#nn .h1", "#nn .h2"], { opacity: 0 }); EDU.in("#nn .h1", EDU.t("l23", .1)); EDU.in("#nn .h2", EDU.t("l24", 0));
+// l24 名字来自神经元，别当真
+EDU.in("#nn2", EDU.t("l24", .35));
+</script>

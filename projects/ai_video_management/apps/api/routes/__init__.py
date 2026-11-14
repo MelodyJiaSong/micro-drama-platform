@@ -15,12 +15,18 @@ from __future__ import annotations
 
 from fastapi import APIRouter
 from apps.api.routes.global_workflow__route import router as _global_workflow_router
+from apps.api.routes.process_qc__route import router as _process_qc_router
 from apps.api.routes.request_log__route import router as _request_log_router
+from apps.api.routes.review_run__route import router as _review_run_router
 from apps.api.routes.episode_workflow__route import router as _episode_workflow_router
 from apps.api.routes.review_reel__route import router as _review_reel_router
 from apps.api.routes.scene_cut__route import router as _scene_cut_router
 from apps.api.routes.shot_take__route import router as _shot_take_router
 
+from apps.api.routes.asset_overview__route import router as _asset_overview_router
+from apps.api.routes.demo_status__route import router as _demo_status_router
+from apps.api.routes.shop_items__route import router as _shop_items_router
+from apps.api.routes.rank_preview__route import router as _rank_preview_router
 from apps.api.routes.character__route import router as _character_router
 from apps.api.routes.character_video__route import router as _character_video_router
 from apps.api.routes.downloads__route import router as _downloads_router
@@ -32,16 +38,22 @@ from apps.api.routes.tree__route import router as _tree_router
 
 router = APIRouter()
 router.include_router(_global_workflow_router)
+router.include_router(_process_qc_router)
 router.include_router(_episode_workflow_router)
 router.include_router(_review_reel_router)
 router.include_router(_scene_cut_router)
 router.include_router(_shot_take_router)
 router.include_router(_request_log_router)
+router.include_router(_review_run_router)
 router.include_router(_tree_router)
 router.include_router(_file_router)
 router.include_router(_media_router)
 router.include_router(_downloads_router)
 router.include_router(_health_router)
+router.include_router(_asset_overview_router)
+router.include_router(_demo_status_router)
+router.include_router(_shop_items_router)
+router.include_router(_rank_preview_router)
 router.include_router(_character_router)
 router.include_router(_character_video_router)
 router.include_router(_research_router)

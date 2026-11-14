@@ -9,3 +9,8 @@ export const CHARACTER_DIR_RE = new RegExp(`^${PREFIX}(?:_(.*))?$`);
 
 /** The same folder as one segment inside a path regex. */
 export const CHARACTER_DIR_SEGMENT = `${PREFIX}(?:_[^/]+)?`;
+
+/** An optional unkeyed group folder between `characters/` and the card
+ * (`characters/近卫_sentinel/c65_Axe/`, follow-up 284), as a path-regex prefix
+ * of `CHARACTER_DIR_SEGMENT`. Backend twin: `libs/common/asset_group.py`. */
+export const CHARACTER_GROUP_SEGMENT = `(?:(?!${PREFIX}(?:_[^/]*)?/)[^/]+/)?`;

@@ -39,7 +39,9 @@ Rules:
 
 ## 图片的生成服务
 
-Claude、Codex 与子任务为所有剧生成或重生成**任何图片**（人物与换装、怪物、道具与物件、装备、scene/bg 的世界锚点、场景锚点、各方向 plate、时间/天气变体、shot 专用背景与镜头图）时，只有两个选择：**Codex 内置出图（`tools/codex_image.py`）或 ElevenLabs（GPT 最新图像模型）**，auto 顺序 ElevenLabs → Codex（ElevenLabs 额度 / 套餐不够才换 Codex，2026-10-17 用户定，follow-up 275）；**禁止 Dreamina/Seedream 出图，包括 auto 模式失败后的回退**。**Dreamina 只用于视频（Seedance）**。2026-10-17 用户定（ai_video_management follow-up 270，取代 238 的「即梦作图片最低选项」；scene/bg 自 2026-10-03 起已如此）。新剧全程执行，旧剧今后的调用同样执行；旧即梦图是否重出逐剧决定。
+**2026-11-08 用户定：以后出图全部用 Codex（`tools/codex_image.py` / 各出图器 `--engine auto` 现在只用 Codex）；没有用户明确允许不用 ElevenLabs，ElevenLabs 失败也不再是自动回退的一环。** 下面关于 ElevenLabs 的说明只在用户允许时适用。
+
+Claude、Codex 与子任务为所有剧生成或重生成**任何图片**（人物与换装、怪物、道具与物件、装备、scene/bg 的世界锚点、场景锚点、各方向 plate、时间/天气变体、shot 专用背景与镜头图）时，**一律用 Codex 内置出图（`tools/codex_image.py`；出图器 `--engine auto` 即只用 Codex）**。**ElevenLabs 出图须用户明确允许**，允许后才可点名 `--engine elevenlabs`，ElevenLabs 的 credit 留给配音（2026-11-08 用户定，ai_video_management follow-up 341；取代 follow-up 275 的 ElevenLabs 优先与 dota_yingxiong follow-up 066 的失败换家）；**禁止 Dreamina/Seedream 出图，包括 auto 模式失败后的回退**。**Dreamina 只用于视频（Seedance）**。2026-10-17 用户定（ai_video_management follow-up 270，取代 238 的「即梦作图片最低选项」；scene/bg 自 2026-10-03 起已如此）。新剧全程执行，旧剧今后的调用同样执行；旧即梦图是否重出逐剧决定。
 
 指定“GPT 最新模型”时，调用前核对官方文档及实际入口支持的型号，记录实际 model_id；型号不公开的内置工具不能声称已验证最新具体型号。模型不可用时报告，不能静默降级或改用 Dreamina。服务与型号、完整 prompt、参考文件哈希、生成 ID、费用/未知费用继续按上节先记请求；出图后逐张看图并绑定新 SHA 审图，替换资产后同步、检查受影响资料包。执行入口：`tools/gen_bg_images.py` / `tools/image_engine.py`；详见 `.agents/references/project/paid_services.md`。
 
@@ -84,6 +86,7 @@ micro-drama-platform/
 │       └── changelog.md                   # append-only follow-up log
 ├── projects/{name}/                       # task_type=development outputs
 ├── ai_videos/{name}/                      # task_type=ai_video outputs
+├── edu_videos/{series}/tNN_{slug}/        # task_type=edu_video outputs（约定见 edu_videos/README.md）
 └── .audit/adhoc_agents/{YYYY-MM-DD}/{task_id}/   # gitignored; events.jsonl + spawns/
 ```
 
@@ -93,6 +96,8 @@ Required when starting a production / development pipeline. Choose from the know
 
 - `development` — software outputs land in `projects/{name}/`. Walks the **six-stage `agent_team`** workflow below.
 - `ai_video` — AI 短剧产物落在 `ai_videos/{name}/`；不走 agent_team。新流程用 `ai-videos-pipeline` 的六模块（故事创作 → 影视改编 → Prompt 编译与出片 → 剪辑 → 声音与音乐 → 成片交付，后三个待设计），Research与资产独立支持；媒体制作按需执行原有人工关卡。见下文「AI 短剧创作」。
+
+- `edu_video` — 代码渲染的教学视频，产物落在 `edu_videos/{系列}/tNN_{知识点}/`；不走 agent_team，也不走短剧六模块。流程与工具在 `edu_videos/README.md`（试行，试点跑通后再升为共用 skill）；意图与 follow-up 记在 `specs/edu_video/edu_videos/`。外部服务审计、商用条款与媒体不进 git 同 ai_video。
 
 ## The six-stage workflow (task_type=development)
 
@@ -171,7 +176,7 @@ The spec_driven webapp's `EXPOSED_TREE` recursive globs (`.agents/skills/agent-t
 ## AI video rules (under `ai_videos/`)
 
 - **外部服务调用必留痕**：遵本文件 § 外部服务请求审计（全局必经）及 `.agents/references/project/paid_services.md`；所有剧与独立调用均适用。
-- **出图与出片的授权（2026-10-10 用户定，follow-up 229）**：**图片**（场景 / 背景变体、人物、物件）成本低，代理在修一致性问题时（例如背景图的时辰、光线与场次不符）可以直接重出或新出，不用先问；照常先写请求日志，引擎按 `tools/image_engine.py`（2026-10-17 起：ElevenLabs → Codex 内置出图，额度不够才换，follow-up 275；图片不用即梦，即梦只用于视频，follow-up 270）。**视频**生成仍要用户决定，「生成」永远人点。
+- **出图与出片的授权（2026-10-10 用户定，follow-up 229）**：**图片**（场景 / 背景变体、人物、物件）成本低，代理在修一致性问题时（例如背景图的时辰、光线与场次不符）可以直接重出或新出，不用先问；照常先写请求日志，引擎按 `tools/image_engine.py`（2026-11-08 起只用 Codex 内置出图，ElevenLabs 出图须用户允许，follow-up 341；图片不用即梦，即梦只用于视频，follow-up 270）。**视频**生成仍要用户决定，「生成」永远人点。
 - **镜头时长（2026-10-10 用户定，follow-up 229）**：overhead、静帧或子代理发现镜头时长不够（走不完、景别到不了、动作塞不下），代理直接改分镜时长并同步分拍、overhead，写进场级决策记录；不用先问。
 - **声音**：Seedance prompt明确保留本镜指定对白、自然环境声和动作声，禁止背景音乐/配乐，无对白镜明确没有人说话，出片后试听核对；由Prompt编译固定写入（见 `.agents/skills/ai-videos-pipeline/modules/prompts-rules.md`），配乐在后期独立设计。
 - **媒体不进 git**：`ai_videos/` 下的图片、视频、音频由 `.gitignore` 排除，只存本机；不再同步到 R2（2026-10-16 起，ai_video_management follow-up 264）。
@@ -233,7 +238,7 @@ The triage is itself a state-surface discipline: every rule the user gives must 
 Once a spec-driven project exists, follow-up chat may contain additional intent for it. Triage every new prompt before doing anything else.
 
 1. **Triage.** Casual chat / general question with no spec-driven impact → answer normally, no persistence. Real instruction → classify which project. **If ambiguous (project X, Y, or none), ASK the user** — do not silently pick.
-2. **Persist** by APPENDING to the current month's log at `specs/{type}/{name}/user_input/follow_ups/{YYYYMM}.md` (e.g. `202608.md`). Never create a per-follow-up file; a new file is started ONLY when the month rolls over. Append a section headed `## NNN — {YYYY-MM-DD HH:mm:ss} — {slug}` (NNN zero-padded, sequential per project, continuing across months), preceded by a `---` rule. Contents: abstracted instruction (drop chitchat) + a one-line summary. Body headings start at `###` so they nest under the section. An OPTIONAL routing-hint block may follow the header as a blockquote — YAML frontmatter cannot repeat inside a combined file (all fields optional):
+2. **Persist with `python tools/followup.py new <项目> --slug … --instruction … --summary …`** — never hand-append (2026-10-26, dota_yingxiong 7-day review: hand-appending by concurrent sessions lost 25 changelog entries on the two busiest days, collided 7 numbers, and wrote execution results into other entries). The tool locks only to allocate the next number, writes the follow-up section AND the changelog skeleton in one step into the calling session's own entry file `user_input/follow_ups/_inbox/NNN-slug.md` (owner = `--owner`, else `FOLLOWUP_OWNER` / `CLAUDE_CODE_SESSION_ID` / `CODEX_SESSION_ID` / `CODEX_THREAD_ID`), and regenerates `revised_prompt.md` including inbox entries (step 3). **No single point of blocking (2026-10-27, dota_yingxiong follow-up 280)**: sessions record separately and `python tools/followup.py merge` periodically aggregates finished entries, in number order, into the month file and `changelog.md` (`done` merges its own entry right away; the Stop hook merges on every stop). Never hand-edit `_inbox` files. **Allocate first, cite second**: run `new` before writing the number into any artifact, code comment or registry `sources` — concurrent sessions take numbers in between (2026-10-26: a pre-written 256 landed as 257, a pre-written 259 as 263). It produces the format below — the description stays as the contract the tool implements. The aggregated log is the month file at `specs/{type}/{name}/user_input/follow_ups/{YYYYMM}.md` (e.g. `202608.md`), which only `merge` appends to; per-follow-up files exist only transiently under `_inbox/` until merged, and a new month file is started ONLY when the month rolls over. Append a section headed `## NNN — {YYYY-MM-DD HH:mm:ss} — {slug}` (NNN zero-padded, sequential per project, continuing across months), preceded by a `---` rule. Contents: abstracted instruction (drop chitchat) + a one-line summary. Body headings start at `###` so they nest under the section. An OPTIONAL routing-hint block may follow the header as a blockquote — YAML frontmatter cannot repeat inside a combined file (all fields optional):
    ```
    > target_stage: 1 | 2 | 3 | 4 | 5 | 6        # which stage this instruction primarily affects
    > target_artifacts:                            # specific files the walk should examine first
@@ -245,7 +250,7 @@ Once a spec-driven project exists, follow-up chat may contain additional intent 
 3. **Regenerate `revised_prompt.md`** = `raw_prompt.md` + every `follow_ups/*.md` in filename (chronological) order, and within each monthly log every `## NNN` section in order. No confirmation needed.
 4. **Walk downstream artifacts** in order: `interview/qa.md` → `findings/dossier.md` + per-angle → `final_specs/spec.md` → `validation/strategy.md` + per-level → generated outputs under `projects/` or `ai_videos/`.
 5. **Auto-update affected sections in place.** Smallest change that resolves the conflict / fills the gap. Surgical only; no whole-file regen. Inline markers (`<!-- auto-updated by follow-up NNN -->`) are NOT added by default — ask the user if a particular update is invasive enough to warrant one.
-6. **Append `changelog.md`** at `specs/{type}/{name}/changelog.md`:
+6. **Finish the changelog entry with `python tools/followup.py done <项目> <NNN> --updated "<路径> — <改了什么>" … --verified "<怎么验的；未审写原因>" [--cost "<任务号 · 积分>"]`** — it writes into that number's own entry, not the file tail. Log enough to reconstruct the change without the chat: every touched path, version/sha of new media, render task id + cost, and the verification actually done (self-check / independent review / 未审 and why). An entry may carry `待补` while work is in progress; the Claude Stop hook (`followup.py check --all --hook`) first merges finished entries, then blocks **only on the current session's own** entries — duplicate numbers, non-canonical headings, and `待补` older than 6 hours. Other sessions' entries, pre-2026-10-27 central entries and hand-edited central logs are reported as `·` warnings and never block anyone (follow-up 280: another session's stale 267 / 269 had blocked every session's Stop hook and `skill_pack submit`). Codex has no hooks — run `python tools/followup.py check --all --owner <会话>` before finishing. Entry shape at `specs/{type}/{name}/changelog.md`:
    ```markdown
    ## Follow-up NNN — {YYYY-MM-DD HH:mm:ss}
    Source: user_input/follow_ups/{YYYYMM}.md - section NNN
@@ -341,6 +346,8 @@ Each spec-pipeline stage (interview, findings, final_specs, validation) supports
 | 委派与等待 | Agent | 可用的 spawn_agent / send_message / wait_agent；限额不足分批，普通工作可主代理直做 |
 | 看本地图片 / 浏览器 | Read、已连接的浏览器 MCP | 本地图片查看工具、已连接的浏览器 / computer-use；不把写在配置里的 MCP 当成已连接 |
 | 技能参数 / 后台任务 | $ARGUMENTS / run_in_background | 从用户消息解析参数；用实际 shell 会话 / 后台任务机制，记录自己启动的 PID |
+| 出片独立审稿（fresh context） | `python tools/qc_review.py <出片目录>`：自动另起 `codex exec` 审（换模型） | 同一脚本：自动另起 `claude -p` 审。脚本在临时空目录、只读下运行，只给拼图与规格；失败换另一个，都失败记未审（skill `ai-videos-self-check`，dota_yingxiong follow-up 263） |
+| 收尾与出片前拦截 | Stop hook（`followup.py check --all --hook`） | 没有 hook：收尾显式跑 `python tools/followup.py check --all`。必须对等的拦截写进两边都调用的工具：`skill_pack.py submit` 提交前自查**本会话**的日志（别的会话的条目只提示，follow-up 280），`qc.py gate` 管交付 |
 
 **提问契约**：由主代理向用户提问，优先支持选项的工具。按本环境的题数、选项数、异步和模式限制分批。异步调用返回不代表已回答；答案到达前可做独立工作，依赖答案的步骤等待。已有答案和授权继续有效。默认选项、超时、自主模式都不等于人工审批；必须的剪辑审批或人点生成仍保留。没有提问工具时用对话问，不能伪造用户选择。AUTONOMOUS 不提问，记录判断依据；无法满足人工审批的环节保持待人工。
 
@@ -383,7 +390,21 @@ Both the canonical artifact and the audit `output.md` MUST begin with a YAML fro
 
 来源：2026-10-02 用户要求共用规范 review，并明确「过程中看到明显错误的地方顺手改」。
 
+**仓库级与剧级（2026-10-26，用户定）**：流程、规则、检查分两层，不要混。**仓库级**对所有剧生效（`CONVENTIONS` / `AGENTS` / `.agents/` 下的共用源），影响面大；**剧级**只对一部剧生效（`ai_videos/{剧}/` 下的 README、`workflow.json`、`demo_standard.md`、`qc_checks.toml` 等）。某条规则在某部剧的实战里产生、又不能 100% 确定适用于所有剧时，**一律先放剧级**；同类问题在两部以上的剧反复出现，再向用户提议升为仓库级，用户明确同意后才升，并记 follow-up 与 changelog。仓库级的条目要写明撑着它的共用依据。
+
+**自检与自我进化（2026-10-26，dota_yingxiong follow-up 257）**：上面三步的工具化，目标是自动化与高效。
+- **查什么**：仓库级登记表 `.agents/references/project/qc_checks.toml`（只收有共用依据的检查，每条写 `basis`）＋ 剧级 `ai_videos/{剧}/qc_checks.toml`。`tools/qc.py` 按产物所在的剧合并两层，同一 id 两层重复即报错。每条带 `sources`（催生它的实战反馈）。
+- **结论落文件、绑 sha**：`python tools/qc.py record <出片目录> --check id=pass|fail|审不了|未审 --by machine|review --evidence … [--reason 材料缺|看不清]` 写 `qc.json`，产物一改结论作废；`review.md` 照写理由。审稿类项必须独立上下文审稿（`--by review`），作者自判的 pass 不收；做不了就记「未审」写原因，放行但计入统计。**有剧级登记表的剧**，交付或进成片前必过 `python tools/qc.py gate <出片目录>`；不过就把便宜的改动做在上游再重出，每镜最多重出两次，仍不过就搁置交用户（见 Iteration bounds）。
+- **审查不随流程版本变（2026-11-14，用户定，dota_yingxiong follow-up 354）**：登记表每条标 `layer`。`quality` 通用质量：只看产物本身有没有观众看得出的错，与规格写法、流程版本无关，对所有剧、所有时间的产物都生效，不按出片日期豁免。`spec` 对照规格：拿产物和它**自己提交时**的规格比，不要求精确到秒，大范围时间偏差、比例明显不对仍判不过（容差写在 `tolerance`，默认见 `qc.py` 的 `SPEC_TOLERANCE`）。结论三种：过 / 不过 / 审不了；审不了分「材料缺」（通用项挡住，补材料或修工具再审；对照规格项只记录）与「看不清」（放行、列为待人看）；不许「拿不准就判不过」，旧规则下审稿给的不通过一律重审。**放行**（`qc.py override --kind accept|false_positive`）分「检查判对了、用户接受这次的瑕疵」与「检查判错了」，只有后者提示放松检查；放行绑定产物与检查定义，检查一改即作废，不沿用；一句用户原话只管一类检查。
+- **用户每抓到一个问题就记缺陷**：`python tools/qc.py defect <剧> --category <检查id|new:短名> --caught-by user --followup NNN`；`qc.py escapes` 给出「为什么没抓到」与对应动作（新增 / 收紧 / 改成闸门 / 补机检工具），`qc.py stats` 给逃逸率（用户抓到 ÷ 全部，目标趋近 0）。新增检查默认加在剧级；改登记表随 follow-up 记 changelog；长期零命中的检查定期复审。
+- 规则只管新产物：出片目录早于 `qc.py` 的 `CUTOFF` 的豁免。
+
 AUTONOMOUS 模式下不能问：按 best judgment 改，proposal 与理由记进 changelog。
+
+## 给用户的文件路径一律写完整绝对路径（2026-11-01，用户定）
+
+回复里提到要用户打开、查看或复制的文件或目录，一律给**完整绝对路径**（Windows 盘符起，如 `C:\workspace\micro-drama-platform\ai_videos\…\x.blend`），单独成行放进代码块，方便直接点开或整行复制；不能只给文件名、相对路径或“同目录下”。表格、说明里提到的次要文件可以写简称，但用户要打开的文件必须另给完整路径。
+理由：用户要在 Blender、资源管理器等处直接打开，相对路径还得自己拼，麻烦。
 
 ## Deletions need no approval (2026-09-18)
 
@@ -397,6 +418,7 @@ AUTONOMOUS 模式下不能问：按 best judgment 改，proposal 与理由记进
 用户明确授权某范围“自主修复/重生成直到通过、不要中途询问”时，将范围、付费授权、默认轮次/时间界限覆盖及退出条件写入该任务follow-up后执行；授权不扩大到其他剧或任务。每轮保留新证据、归因、输入修正与实际费用，重复原因改变方案而非原样盲重试。必需独立QC/产物指纹、请求前日志、结果未知不重提继续有效；不能降低标准结束循环。没有这种明确授权时遵下列默认界限。
 
 - Default 3 revision rounds per work unit before halting.
+- 例外：AI 视频出片每个镜头**最多重出两次**，第二次重出仍不满意就搁置交用户（用户 2026-11-09，见 `.agents/skills/ai-videos-pipeline/modules/prompts-generate.md`「重试与搁置」）。
 - Cap interview iterations at 3 rounds total.
 - Circuit-break + emit `pipeline.halted` if the same issue repeats across two iterations OR wall-clock exceeds 30 minutes on a single unit.
 - After halt, escalate to the user. Never silently retry past the bound.

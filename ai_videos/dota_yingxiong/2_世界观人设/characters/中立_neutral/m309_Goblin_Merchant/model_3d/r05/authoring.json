@@ -1,0 +1,47 @@
+{
+  "asset_id": "m309",
+  "revision": "r05",
+  "source": "r03",
+  "status": "author_trial_pending_view",
+  "evidence": "material_region_probe.json and pbr_channel_diagnosis.json",
+  "mask_corner_counts": {
+    "Goblin_skin": 3542201,
+    "Goblin_coat": 2060853,
+    "Goblin_trim": 224959,
+    "Goblin_hair": 410641
+  },
+  "geometry_changed": true,
+  "metallic_policy": "Original metallic retained outside skin and coat masks; dry specular reduced from .5 to .2",
+  "remaining": [
+    "Mask transitions and uncovered skin patches",
+    "Remaining attached scan hair",
+    "Groom roots and eye colour",
+    "Independent review"
+  ],
+  "hair_cleanup": {
+    "weld_distance_m": 1e-06,
+    "vertices_before_weld": 2649424,
+    "vertices_after_cleanup": 1479450,
+    "removed_detached_hair_vertices": 89098,
+    "components_after_weld": 12936,
+    "new_strands": 1431
+  },
+  "palette": "World-aware scalp and back masks plus controlled linear albedo ranges; dark violet cloth, grey-black hair, local gold-yellow eye hue",
+  "rear_scalp": {
+    "healthy_samples": 6566,
+    "fit_rmse_m": 0.002188588958233595,
+    "fit_coefficients": [
+      0.0954720675945282,
+      -0.004750289488583803,
+      -0.012129773385822773,
+      -0.05840660259127617,
+      -0.010542875155806541,
+      -0.033875975757837296
+    ],
+    "patch_vertices": 17329,
+    "patch_triangles": 34142,
+    "removed_rear_fragment_faces": 48815,
+    "procedural_skin_instead_of_nearest_uv": true,
+    "limitation": "Separate fitted surface patch, not a welded topology reconstruction; inspect seams and side silhouette."
+  }
+}

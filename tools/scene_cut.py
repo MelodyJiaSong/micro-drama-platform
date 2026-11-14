@@ -14,7 +14,8 @@
     成片 `{场}_{draft|final}_v{N}.mp4` 与 `_标注` 版放在同一目录（不进 git）。
 剪辑决定：
     stage      draft / final，须与所在目录一致；phase 写剪到哪一步（初接 / 粗剪 / 精剪 / 锁片）
-    events[]   按播放顺序；镜头事件 {shot, take, sha256, in, out, reason, notes[]}，入出点单位秒、对齐到帧；
+    events[]   按播放顺序；镜头事件 {shot, take, sha256, in, out, reason, notes[]}；用镜组的条时加 group（条在 groups/gN/ 下，
+               同一条可拆成几个事件，各写它画的是哪一镜，入出点落在镜组条里的镜头切点上；chuanyue_yiri follow-up 020），入出点单位秒、对齐到帧；
                可选 audio_in / audio_out（同一条的声音区间，缺省同画面）：声音与画面保持同步，区间比画面长的部分
                压到相邻镜头的画面上——J 剪辑（声音先进）用 audio_in < in，L 剪辑（声音拖后）用 audio_out > out；
                同一镜可拆成几个事件（如把一段反应挪到别处）；word_cut_ok（理由）放行识别器时间不准造成的「切在词中间」
@@ -42,6 +43,7 @@ REPO = Path(__file__).resolve().parent.parent
 FONT = "C:/Windows/Fonts/msyh.ttc"
 STAGES = ("draft", "final")
 GRADE_KEYS = ("gamma", "brightness", "contrast", "saturation")   # 事件可选 grade：ffmpeg eq 的这几项
+TAIL_HOLD_S = 1.5    # 场尾最后一句后的停留下限（只提示，不拦渲染）
 TAKE_DIR = {"draft": "drafts", "final": "renders"}     # 草稿剪辑只用草稿条，正片剪辑只用正式条
 
 
@@ -78,6 +80,9 @@ def annotate(ep: Path, scene: str, shots: list[str]) -> None:
     root = ep / "scenes" / scene / "shots"
     dirs = sorted((d for d in root.glob("st*/drafts/2*") if d.is_dir()), key=lambda d: (int(d.parent.parent.name[2:]), d.name))
     dirs += sorted((d for d in root.glob("st*/renders/2*") if d.is_dir()), key=lambda d: (int(d.parent.parent.name[2:]), d.name))
+    groups = ep / "scenes" / scene / "groups"     # 镜组的条也标注（镜组 id 也可以写进 shots 过滤）
+    dirs += sorted((d for d in groups.glob("g*/*/2*") if d.is_dir() and d.parent.name in ("drafts", "renders")),
+                   key=lambda d: (int(d.parent.parent.name[1:]), d.name))
     for td in dirs:
         if shots and td.parent.parent.name not in shots:
             continue
@@ -117,9 +122,11 @@ def load_cut(path: Path) -> tuple[dict, Path]:
 
 
 def take_dir(scene_dir: Path, ev: dict, stage: str) -> Path:
-    d = scene_dir / "shots" / ev["shot"] / TAKE_DIR[stage] / ev["take"]
+    # 镜组的条（chuanyue_yiri follow-up 020）：事件写 group，条在 groups/gN/ 下；shot 仍写这一段画的是哪一镜
+    owner = ("groups", ev["group"]) if ev.get("group") else ("shots", ev["shot"])
+    d = scene_dir / owner[0] / owner[1] / TAKE_DIR[stage] / ev["take"]
     if not d.is_dir():
-        raise SystemExit("找不到条：%s %s（%s剪辑只用 %s/ 里的条）" % (ev["shot"], ev["take"], "草稿" if stage == "draft" else "正片", TAKE_DIR[stage]))
+        raise SystemExit("找不到条：%s %s（%s剪辑只用 %s/ 里的条）" % (owner[1], ev["take"], "草稿" if stage == "draft" else "正片", TAKE_DIR[stage]))
     return d
 
 
@@ -181,6 +188,11 @@ def check(path: Path, quiet: bool = False) -> list[str]:
     real = [x for x, ev in zip(lens, cut["events"]) if not ev.get("placeholder")]
     stats = "总长 %.1fs，%d 个事件（缺镜占位 %d），平均镜长 %.1fs，最长 %.1fs" % (
         t, len(lens), len(lens) - len(real), (sum(real) / len(real)) if real else 0, max(real) if real else 0)
+    tail_words = [w for w in (spans[-1][3] if spans else []) if 0.03 < w["te"] - w["ts"] < 2.0]   # 去掉静音上幻听出的词
+    if tail_words:     # 场尾停留：最后一句说完到出点（edit-fine.md「晚进早出」，chuanyue_yiri follow-up 020）
+        hold = spans[-1][1] - max(w["te"] for w in tail_words)
+        if hold < TAIL_HOLD_S:
+            stats += "\n提示：场尾最后一句后只停 %.2fs（沉浸 / 旅行 / 纪录类要 ≥%.1fs；剧情冲突可不管）" % (hold, TAIL_HOLD_S)
     if not quiet:
         print("\n".join(lines)); print(stats)
         print("问题：" + ("无" if not problems else "")); [print("  - " + p) for p in problems]
@@ -212,10 +224,38 @@ def card(ev: dict, size: tuple[int, int], out: Path) -> None:
     im.save(out)
 
 
-def render(path: Path) -> None:
+def gate_blocks(cut: dict, scene_dir: Path) -> list[str]:
+    """正片剪辑进成片前过自检闸门（chuanyue_yiri follow-up 059；AGENTS.md「交付或进成片前 qc.py gate」）：
+    剧目录有 qc_checks.toml 时，剪辑里用到的每条正式条都要过 `qc.py gate --stage video`，没过的列出来。草稿剪辑不查。"""
+    if cut["stage"] != "final":
+        return []
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import qc
+    drama = qc.drama_dir_of(scene_dir)
+    if not drama or not (drama / qc.DRAMA_REG).is_file():
+        return []
+    out = []
+    for ev in cut["events"]:
+        if ev.get("placeholder"):
+            continue
+        td = take_dir(scene_dir, ev, cut["stage"])
+        block, _ = qc.gate_problems(td, "video", set())
+        out += ["%s %s：%s" % (ev["shot"], ev["take"], b) for b in block]
+    return out
+
+
+def render(path: Path, skip_gate: str | None = None) -> None:
     if check(path, quiet=True):
         check(path); raise SystemExit("先修好决定文件里的问题再渲染")
     cut, scene_dir = load_cut(path)
+    blocks = gate_blocks(cut, scene_dir)
+    if blocks and not skip_gate:
+        for b in blocks:
+            print("  ✗ " + b)
+        raise SystemExit("有条没过自检闸门（先审核并 `python tools/qc.py record <条目录> --check …`，再 `qc.py gate`）；"
+                         "用户明确要求照样剪时加 --skip-gate \"用户原话\"")
+    if blocks:
+        print("  · %d 处闸门问题，按用户原话照样剪：%s" % (len(blocks), skip_gate))
     sp = cut["spec"]; W, H, fps, ar = sp["width"], sp["height"], sp["fps"], sp["audio_rate"]
     target = sp.get("loudness_target_lufs", -20.0)
     stem = "%s_v%s" % (cut["stage"], cut["version"])
@@ -238,6 +278,14 @@ def render(path: Path) -> None:
         aa, ab = ev.get("audio_in", a), ev.get("audio_out", b)
         lu = loudness(vid, aa, ab)
         g = 0.0 if lu < -45 else max(-10.0, min(10.0, target - lu))
+        # 无对白的段（标注里这一段没有词）只压不提：响度目标是给对白的，把环境声提到对白一样响，
+        # 切进来会突然变吵（chuanyue_yiri EP1 s1 st5 独立审稿：+7.7 dB，比相邻镜头的环境声高约 15 dB）
+        ann_p = take_dir(scene_dir, ev, cut["stage"]) / "annotation.json"
+        words = json.loads(ann_p.read_text(encoding="utf-8")).get("words", []) if ann_p.is_file() else None
+        # 静音段上识别器常幻听出「词」：时长为 0 或拖好几秒（EP1 s7 st5：don't 0–4.34 秒），不算对白
+        real = [w for w in (words or []) if 0.03 < w["e"] - w["s"] < 2.0]
+        if words is not None and not any(w["e"] > aa and w["s"] < ab for w in real):
+            g = min(g, 0.0)
         gains.append(round(g, 1))
         fade = 0.02
         wav = tmp / ("a%02d.wav" % i)
@@ -248,7 +296,7 @@ def render(path: Path) -> None:
         base = "scale=%d:%d:flags=lanczos,setsar=1,fps=%d" % (W, H, fps)
         if ev.get("grade"):          # 整段统一的一次调整（不逐帧重估，免得闪），对齐同场参考镜的亮度
             base += ",eq=" + ":".join("%s=%s" % (k, ev["grade"][k]) for k in GRADE_KEYS if k in ev["grade"])
-        label = "%s · %s · %.2f–%.2f" % (ev["shot"], ev["take"][-8:], a, b)
+        label = "%s · %s%s · %.2f–%.2f" % (ev["shot"], (ev["group"] + " ") if ev.get("group") else "", ev["take"][-8:], a, b)
         dt = ("drawtext=fontfile='%s':text='%s':x=10:y=10:fontsize=16:fontcolor=white:box=1:boxcolor=black@0.5:boxborderw=4"
               % (FONT.replace(":", "\\:"), label.replace(":", "\\:")))
         for kind, vf in (("clean", base), ("label", base + "," + dt)):
@@ -305,13 +353,14 @@ def main() -> None:
     a = sub.add_parser("annotate"); a.add_argument("ep"); a.add_argument("scene"); a.add_argument("shots", nargs="*")
     c = sub.add_parser("check"); c.add_argument("cut")
     r = sub.add_parser("render"); r.add_argument("cut")
+    r.add_argument("--skip-gate", metavar="用户原话", help="有条没过自检闸门时，用户在对话里明确要求照样剪才用；写用户原话")
     args = ap.parse_args()
     if args.cmd == "annotate":
         annotate(Path(args.ep), args.scene, args.shots)
     elif args.cmd == "check":
         sys.exit(1 if check(Path(args.cut)) else 0)
     else:
-        render(Path(args.cut))
+        render(Path(args.cut), args.skip_gate)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,16 @@
+# s5 st9（场内第 3 个镜头）
+
+- 设计时长：12 秒；出场：c1；单拍
+- 送给模型的 prompt：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s5\shots\st9\资料包\prompt.txt`；参考清单：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s5\shots\st9\资料包\manifest.json`
+- 规划图：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s5\shots\st9\planning\st9_first_frame.png`
+- 规划图：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s5\shots\st9\planning\st9_overhead.png`
+- 规划图：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s5\shots\st9\planning\st9_overhead_ref.png`
+
+## 分镜规格
+**看点**（这一镜要观众看懂或感到什么；只给审查用，不进 prompt）：她恍然大悟：『dextram』是右，她走反了一整天
+**动作**：熟食铺前的东西向石板街。Riley 转过身面对镜头自拍，愣着，眼睛睁大、嘴微微张开。画面里只有她一个人：店主已经回到铺子里。她身后：画左是熟食铺的门脸（挂着香肠和火腿）；画右远处是街南侧那排铺面——离得近些的那家门口挂着几串大蒜、放着藤筐，门里是暗的，门口空着；在她左肩后方、画面中间偏右的远处，那排铺面断开，露出一个往右（南）拐的横街口。她慢慢说出这几句：先问 dextram 是不是「右」，停一拍，恍然大悟；说完用左手捂住脸，从指缝里笑出声，笑自己。道具：面包布包挂在她左胯、钱在裤子左侧的大口袋里，都在画框下面。
+**走位**：Riley 站在街上，面朝西对着镜头，在画面中间偏左；镜头在她伸直的右臂末端、在她面前一臂远，朝东拍；她身后是十字街口，横街口在她左肩后方、画面中间偏右的远处。
+**节拍**：0–1.5秒 第 0 秒：Riley 刚转过身面对镜头，愣着，眼睛睁大、嘴微微张开、眉毛扬起；她左肩后方（画面中间偏右）的远处是那个横街口，挂着大蒜的铺子门口空着；这一拍不说话；1.5–9.7秒 她慢慢说出那几句，自己恍然大悟（1.6–9.5 秒）：1.6–2.0 秒 Wait.，2.6–4.0 秒 "Dextram" means right?（right 重读、问句上扬），停一拍、眼睛越睁越大，5.0–5.9 秒 …Oh my god.，6.3–9.5 秒 I've been going the wrong way all day.；9.7–12秒 她用左手捂住脸，从指缝里笑出声，笑自己，不说话
+**镜头**：自拍：近景，单人，胸以上；她伸直右臂持镜，镜头就在她手里，只剩左手能用；镜头在她伸直的右臂末端；手持；一镜到底。
+**光线**：下午约三点半，太阳在西南偏西、开始西斜，暖光正照在她脸上；她身后的石板街一半在阳光里（画左，街北侧）一半在阴影里（画右，街南侧）；天空干净；自然光。
+**台词**：Riley（愣住，然后恍然大悟、笑自己，美式英语；Dextram 读 DEK-strahm；right 重读、问句上扬，问完停一拍）：Wait. "Dextram" means right? …Oh my god. I've been going the wrong way all day.

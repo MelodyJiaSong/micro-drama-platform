@@ -1,0 +1,62 @@
+<style>
+  .head { position: absolute; left: var(--mx); top: var(--mt); }
+  .head .h1 { margin-top: 16px; white-space: nowrap; }
+  .cards { position: absolute; left: var(--mx); right: var(--mx); top: 260px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+  .card { padding: 40px 40px 36px; height: 560px; }
+  .card .h2 { margin-top: 12px; font-size: 44px; line-height: 1.2; min-height: 106px; }
+  .card .caption { margin-top: 16px; }
+  .bar { display: flex; height: 44px; margin-top: 70px; border-radius: 10px; overflow: hidden; }
+  .bar div { display: flex; align-items: center; justify-content: center; color: #fff; font-size: var(--fs-micro); font-weight: 600; }
+  .mini { margin-top: 36px; }
+  .note { position: relative; margin-top: 22px; }
+  .note .caption { position: absolute; left: 0; right: 0; top: 0; }
+</style>
+
+<div class="head"><div class="eyebrow" data-zh="06 · 怎么发现，怎么防" data-en="06 · Spot it, prevent it"></div>
+  <div class="h1" data-zh="三个常用办法" data-en="Three common ways"></div></div>
+<div class="cards">
+  <div class="card" id="k1">
+    <div class="h2" data-zh='① 验证集：<span class="c-valid">模拟考</span>' data-en='① Validation: <span class="c-valid">a mock exam</span>'></div>
+    <div class="bar"><div class="chart" style="flex:6;background:var(--d-train)" data-zh="训练" data-en="Train"></div><div class="chart" style="flex:2;background:var(--d-valid)" data-zh="验证" data-en="Mock"></div><div class="chart" style="flex:2;background:var(--d-test)" data-zh="测试" data-en="Test"></div></div>
+    <div class="note">
+      <div class="caption" id="k1c" data-zh="验证集挑模型，测试集留到最后" data-en="Choose on validation, test last"></div>
+      <div class="caption" id="confess" data-zh='演示的简化：按<span class="accent">考试成绩</span>挑' data-en='Demo only: picked by <span class="accent">exam score</span>'></div></div></div>
+  <div class="card" id="k2">
+    <div class="h2" data-zh="② 更多、更多样的数据" data-en="② More varied data"></div>
+    <svg class="mini" id="m2"></svg></div>
+  <div class="card" id="k3">
+    <div class="h2" data-zh="③ 正则化：惩罚太复杂" data-en="③ Regularization"></div>
+    <svg class="mini" id="m3"></svg></div>
+</div>
+
+<script>
+const T = EDU.tl;
+const mini = (sel) => {
+  const W = 450, H = 250, svg = d3.select(sel).attr("width", W).attr("height", H);
+  const x = d3.scaleLinear([-3, 3], [10, W - 10]), y = d3.scaleLinear([-3.2, 3.2], [H, 0]);
+  svg.append("line").attr("class", "axis-base").attr("x1", 10).attr("x2", W - 10).attr("y1", y(0)).attr("y2", y(0));
+  const line = d3.line().x((d, i) => x(D.xs[i])).y(d => y(d)).curve(d3.curveCatmullRom);
+  return {
+    curve: (v, c, w = 4) => svg.append("path").attr("d", line(v)).attr("fill", "none").attr("stroke", css(c)).attr("stroke-width", w).attr("stroke-linecap", "round").node(),
+    dots: (pts, r = 5) => svg.append("g").selectAll("circle").data(pts).join("circle").attr("cx", d => x(d[0])).attr("cy", d => y(d[1])).attr("r", r).attr("fill", css("--d-train")).nodes(),
+  };
+};
+const A = mini("#m2"), B = mini("#m3");
+const a10 = A.dots(D.train, 6), a40 = A.dots(D.more.points, 4.5), aw = A.curve(D.fits["9"], "--d-bad"), am = A.curve(D.more.fit, "--d-good");
+B.dots(D.train, 6); const bw = B.curve(D.fits["9"], "--d-bad"), br = B.curve(D.ridge, "--d-good");
+
+gsap.set(["#k1", "#k2", "#k3", "#k1c", "#confess", ...a40, am, br], { opacity: 0 });
+EDU.in(".head .eyebrow, .head .h1", EDU.t("l51"), { stagger: .08 });
+// l52 验证集
+EDU.in("#k1", EDU.t("l52")); EDU.in("#k1c", EDU.t("l52", .35));
+// l53 坦白：同一位置换成这一句，不叠加
+EDU.out("#k1c", EDU.t("l53")); EDU.in("#confess", EDU.t("l53", .05));
+// l54 更多数据：10 点乱拐 → 40 点贴近规律
+EDU.out("#confess", EDU.t("l54")); EDU.dim("#k1", EDU.t("l54"), .45); EDU.in("#k2", EDU.t("l54"));
+T.to(a10, { opacity: 0, duration: .5 }, EDU.t("l54", .45)); EDU.in(a40, EDU.t("l54", .45), { stagger: .01 });
+T.to(aw, { opacity: 0, duration: .6 }, EDU.t("l54", .55)); T.set(am, { opacity: 1 }, EDU.t("l54", .55)); EDU.draw(am, EDU.t("l54", .55), 1.2);
+// l55 正则化：弯曲线 → 平缓
+EDU.dim("#k2", EDU.t("l55"), .45); EDU.in("#k3", EDU.t("l55"));
+T.to(bw, { opacity: .15, duration: .6 }, EDU.t("l55", .45)); T.set(br, { opacity: 1 }, EDU.t("l55", .45)); EDU.draw(br, EDU.t("l55", .45), 1.2);
+T.to(["#k1", "#k2"], { opacity: 1, duration: .5 }, EDU.S.duration - 1.2);
+</script>

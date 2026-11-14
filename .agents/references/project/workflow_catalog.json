@@ -40,7 +40,7 @@
     {
       "id": "sound",
       "title": "声音与音乐",
-      "description": "对白、环境声与音效、音乐、混音（待设计）。",
+      "description": "音频生成默认 Suno API/MCP/UI；对白、环境声与音效、音乐、混音，完整后期流程待设计。",
       "number": "1.5",
       "category": "ai-video"
     },
@@ -551,6 +551,18 @@
       "view": "constants"
     },
     {
+      "path": "tools/youtube_upload.py",
+      "title": "YouTube 上传（私享）与授权",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/youtube_analytics.py",
+      "title": "YouTube 自有频道增长报告",
+      "group": "tools",
+      "view": "code"
+    },
+    {
       "path": "tools/yt_research.py",
       "group": "tools",
       "view": "code"
@@ -661,6 +673,16 @@
       "group": "production"
     },
     {
+      "path": ".agents/references/project/qc_checks.toml",
+      "title": "自检与进化（仓库级登记表）",
+      "group": "overview"
+    },
+    {
+      "path": ".agents/references/project/review_roster.json",
+      "title": "审查单与审稿人名册",
+      "group": "overview"
+    },
+    {
       "path": "tools/image_engine.py",
       "title": "图片引擎与模型默认值",
       "group": "tools",
@@ -716,7 +738,7 @@
     },
     {
       "path": ".agents/skills/ai-videos-pipeline/resources/assets.md",
-      "title": "共享资产支持规则",
+      "title": "共享资产支持规则（含技能表演、命中与专属死亡参考）",
       "group": "production"
     },
     {
@@ -792,12 +814,17 @@
     },
     {
       "path": ".agents/skills/ai-videos-pipeline/modules/sound.md",
-      "title": "声音与音乐模块（待设计）",
+      "title": "声音与音乐：Suno 默认生成",
       "group": "sound"
     },
     {
       "path": ".agents/skills/ai-videos-pipeline/modules/delivery.md",
       "title": "成片交付模块（待设计）",
+      "group": "delivery"
+    },
+    {
+      "path": ".agents/skills/youtube-channel/SKILL.md",
+      "title": "YouTube 频道：上传与增长分析",
       "group": "delivery"
     },
     {
@@ -851,6 +878,11 @@
       "view": "code"
     },
     {
+      "path": "tools/episode_post.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
       "path": "tools/scene_blocking.py",
       "group": "tools",
       "view": "code"
@@ -872,8 +904,366 @@
       "view": "code"
     },
     {
+      "path": "tools/followup.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/qc.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/qc_review.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/qc_pre.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/scale_table.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/skill_run.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/skill_pack.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/voice_design.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/local_sfx.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "projects/ai_video_management/libs/common/asset_group.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
       "path": ".agents/skills/codex-imagegen/SKILL.md",
       "title": "Codex 内置出图",
+      "group": "production"
+    },
+    {
+      "path": "ai_videos/_shared/xianxia/README.md",
+      "title": "仙侠公共资产库入口",
+      "group": "production"
+    },
+    {
+      "path": "ai_videos/_shared/xianxia/STATUS.md",
+      "title": "仙侠公共资产当前验收状态（生成）",
+      "group": "production",
+      "parent": "ai_videos/_shared/xianxia/README.md"
+    },
+    {
+      "path": "ai_videos/_shared/xianxia/systems.md",
+      "title": "仙侠世界规则速览（生成）",
+      "group": "production",
+      "parent": "ai_videos/_shared/xianxia/README.md"
+    },
+    {
+      "path": "ai_videos/_shared/xianxia/systems.json",
+      "title": "仙侠世界规则主数据",
+      "group": "production",
+      "parent": "ai_videos/_shared/xianxia/README.md"
+    },
+    {
+      "path": "ai_videos/_shared/xianxia/research/report.md",
+      "title": "仙侠资产研究",
+      "group": "production",
+      "parent": "ai_videos/_shared/xianxia/README.md"
+    },
+    {
+      "path": "ai_videos/_shared/xianxia/research/sources.json",
+      "title": "仙侠研究来源与取证状态",
+      "group": "production",
+      "parent": "ai_videos/_shared/xianxia/README.md"
+    },
+    {
+      "path": "ai_videos/_shared/xianxia/appendix.md",
+      "title": "仙侠术语与采用手册",
+      "group": "production",
+      "parent": "ai_videos/_shared/xianxia/README.md"
+    },
+    {
+      "path": "ai_videos/_shared/xianxia/visual_guide.md",
+      "title": "仙侠公共资产视觉规范",
+      "group": "production",
+      "parent": "ai_videos/_shared/xianxia/README.md"
+    },
+    {
+      "path": "ai_videos/_shared/xianxia/adoption_template.json",
+      "title": "仙侠资产跨剧采用模板",
+      "group": "production",
+      "parent": "ai_videos/_shared/xianxia/README.md"
+    },
+    {
+      "path": "ai_videos/_shared/xianxia/maintenance.py",
+      "title": "仙侠资产库校验与图册更新",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "ai_videos/_shared/xihuan/README.md",
+      "title": "西幻公共资料库入口",
+      "group": "production"
+    },
+    {
+      "path": "ai_videos/_shared/xihuan/systems.md",
+      "title": "西幻体系总纲",
+      "group": "production",
+      "parent": "ai_videos/_shared/xihuan/README.md"
+    },
+    {
+      "path": "ai_videos/_shared/xihuan/appendix.md",
+      "title": "西幻中西对照、术语与 IP 边界",
+      "group": "production",
+      "parent": "ai_videos/_shared/xihuan/README.md"
+    },
+    {
+      "path": "ai_videos/_shared/xihuan/visual_guide.md",
+      "title": "西幻视觉规范",
+      "group": "production",
+      "parent": "ai_videos/_shared/xihuan/README.md"
+    },
+    {
+      "path": "ai_videos/_shared/xihuan/research/report.md",
+      "title": "西幻研究综述",
+      "group": "production",
+      "parent": "ai_videos/_shared/xihuan/README.md"
+    },
+    {
+      "path": "ai_videos/_shared/xihuan/STATUS.md",
+      "title": "西幻图片完成与验收状态（生成）",
+      "group": "production",
+      "parent": "ai_videos/_shared/xihuan/README.md"
+    },
+    {
+      "path": "ai_videos/_shared/xihuan/build.py",
+      "title": "西幻资料库校验与生成",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "ai_videos/_shared/xihuan/gen_images.py",
+      "title": "西幻资料库批量出图",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "ai_videos/xihuan/framework/README.md",
+      "title": "西幻新剧开发框架（系列级试点）",
+      "group": "production"
+    },
+    {
+      "path": "ai_videos/xihuan/framework/check.py",
+      "title": "西幻开发稿形式检查",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/local_voice.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/local_voice_clone.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "projects/suno_browser_service/README.md",
+      "title": "Suno 浏览器服务：运行与接入",
+      "group": "tools"
+    },
+    {
+      "path": "projects/suno_browser_service/apps/api/main.py",
+      "title": "Suno 服务启动与平滑停止",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "projects/suno_browser_service/apps/api/routes/job__route.py",
+      "title": "Suno 任务接口",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "projects/suno_browser_service/apps/login/main.py",
+      "title": "Suno 专用浏览器登录",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/tests/test_service_request.py",
+      "title": "收费服务请求日志验证",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/tests/test_suno_request_audit.py",
+      "title": "Suno 独立归属与 WebSocket 脱敏验证",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": ".agents/skills/suno-music/SKILL.md",
+      "title": "Suno 音乐：Claude 与 Codex 共用调用",
+      "group": "production"
+    },
+    {
+      "path": "projects/suno_browser_service/apps/cli/main.py",
+      "title": "Suno JSON 命令行",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "projects/suno_browser_service/apps/mcp/main.py",
+      "title": "Suno stdio MCP 工具",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "projects/suno_browser_service/install-agents.ps1",
+      "title": "Suno 双代理 MCP 注册",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "projects/suno_browser_service/examples/instrumental.json",
+      "title": "Suno 器乐请求示例",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "projects/suno_browser_service/examples/song.json",
+      "title": "Suno 歌曲请求示例",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "projects/suno_browser_service/examples/sound-loop.json",
+      "title": "Suno 环境循环请求示例",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "projects/suno_browser_service/apps/api/app_factory.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "projects/suno_browser_service/apps/ui/package.json",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "projects/suno_browser_service/apps/ui/tsconfig.json",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "projects/suno_browser_service/apps/ui/vite.config.ts",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "projects/suno_browser_service/apps/ui/index.html",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "projects/suno_browser_service/setup.ps1",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "projects/suno_browser_service/start.ps1",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "projects/suno_browser_service/stop.ps1",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "edu_videos/README.md",
+      "title": "教学视频：结构、工具链、试行流程与审片清单",
+      "group": "production"
+    },
+    {
+      "path": "tools/edu_video.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/edu_manim.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/edu_voxcpm.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/edu_package.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/edu_review.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/edu_web.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "edu_videos/_shared/design/design_system.md",
+      "title": "教学视频 · 频道设计规范",
+      "group": "production"
+    },
+    {
+      "path": "edu_videos/_shared/review/line_review.json",
+      "title": "教学视频 · 台词审标准（口播＋屏幕文字 × 中英）",
+      "group": "production"
+    },
+    {
+      "path": "edu_videos/_shared/research/explainer_benchmark.md",
+      "title": "教学视频 · 讲解视频对标调研与学习科学证据",
+      "group": "production"
+    },
+    {
+      "path": "edu_videos/ai_terms/README.md",
+      "title": "教学视频 · AI 高频词系列",
+      "group": "production"
+    },
+    {
+      "path": "edu_videos/linear_algebra/README.md",
+      "title": "教学视频 · 线性代数系列",
+      "group": "production"
+    },
+    {
+      "path": "edu_videos/quant_mft/README.md",
+      "title": "教学视频 · 系统化中频交易系列",
       "group": "production"
     }
   ],
@@ -956,6 +1346,26 @@
       "glob": ".codex/rules/*.rules",
       "group": "agents",
       "scope": "user"
+    },
+    {
+      "glob": "projects/suno_browser_service/libs/**/*.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "glob": "projects/suno_browser_service/apps/ui/src/*.ts",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "glob": "projects/suno_browser_service/apps/ui/src/*.tsx",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "glob": "projects/suno_browser_service/apps/ui/src/*.css",
+      "group": "tools",
+      "view": "code"
     }
   ],
   "categories": [
@@ -988,6 +1398,8 @@
     "repo:.agents/references/project/ai_video_workflow_map.json": "1.0.1",
     "repo:.agents/references/project/ai_video_glossary.json": "1.0.2",
     "repo:.agents/skills/ai-videos-pipeline/modules/decisions.md": "1.0.3",
+    "repo:.agents/references/project/qc_checks.toml": "1.0.4",
+    "repo:.agents/references/project/review_roster.json": "1.0.5",
     "repo:.agents/skills/ai-videos-pipeline/modules/story-structure.md": "1.1.1",
     "repo:.agents/skills/ai-videos-pipeline/modules/story-characters.md": "1.1.1.1",
     "repo:.agents/skills/ai-videos-pipeline/modules/story-sympathy.md": "1.1.1.2",
@@ -1032,6 +1444,7 @@
     "repo:.agents/skills/ai-videos-pipeline/modules/edit-transitions.md": "1.4.1.7",
     "repo:.agents/skills/ai-videos-pipeline/modules/sound.md": "1.5.1",
     "repo:.agents/skills/ai-videos-pipeline/modules/delivery.md": "1.6.1",
+    "repo:.agents/skills/youtube-channel/SKILL.md": "1.6.2",
     "repo:.agents/skills/ai-videos-char-assets/SKILL.md": "1.7.1",
     "repo:.agents/references/project/paid_services.md": "1.7.2",
     "repo:.agents/skills/ai-videos-pipeline/resources/research.md": "1.7.3",
@@ -1039,6 +1452,31 @@
     "repo:ai_videos/_research/README.md": "1.7.5",
     "repo:.agents/skills/codex-imagegen/SKILL.md": "1.7.6",
     "repo:.agents/skills/ai-videos-character-sim/SKILL.md": "1.7.7",
+    "repo:ai_videos/_shared/xianxia/README.md": "1.7.8",
+    "repo:ai_videos/_shared/xianxia/adoption_template.json": "1.7.8.1",
+    "repo:ai_videos/_shared/xianxia/appendix.md": "1.7.8.2",
+    "repo:ai_videos/_shared/xianxia/research/report.md": "1.7.8.3",
+    "repo:ai_videos/_shared/xianxia/research/sources.json": "1.7.8.4",
+    "repo:ai_videos/_shared/xianxia/systems.json": "1.7.8.5",
+    "repo:ai_videos/_shared/xianxia/systems.md": "1.7.8.6",
+    "repo:ai_videos/_shared/xianxia/visual_guide.md": "1.7.8.7",
+    "repo:ai_videos/_shared/xianxia/STATUS.md": "1.7.8.8",
+    "repo:.agents/skills/suno-music/SKILL.md": "1.7.9",
+    "repo:.agents/skills/ai-videos-self-check/SKILL.md": "1.7.10",
+    "repo:edu_videos/README.md": "1.7.11",
+    "repo:edu_videos/ai_terms/README.md": "1.7.12",
+    "repo:edu_videos/linear_algebra/README.md": "1.7.13",
+    "repo:ai_videos/_shared/xihuan/README.md": "1.7.14",
+    "repo:ai_videos/_shared/xihuan/STATUS.md": "1.7.14.1",
+    "repo:ai_videos/_shared/xihuan/appendix.md": "1.7.14.2",
+    "repo:ai_videos/_shared/xihuan/research/report.md": "1.7.14.3",
+    "repo:ai_videos/_shared/xihuan/systems.md": "1.7.14.4",
+    "repo:ai_videos/_shared/xihuan/visual_guide.md": "1.7.14.5",
+    "repo:edu_videos/quant_mft/README.md": "1.7.15",
+    "repo:edu_videos/_shared/research/explainer_benchmark.md": "1.7.16",
+    "repo:ai_videos/xihuan/framework/README.md": "1.7.17",
+    "repo:edu_videos/_shared/design/design_system.md": "1.7.18",
+    "repo:edu_videos/_shared/review/line_review.json": "1.7.19",
     "repo:AGENTS.md": "2.1.1",
     "repo:CONVENTIONS.md": "2.1.2",
     "repo:CLAUDE.md": "2.1.3",
@@ -1129,6 +1567,91 @@
     "repo:tools/audience_check.py": "2.3.39",
     "repo:tools/scene_cut.py": "2.3.40",
     "repo:tools/scene_blocking.py": "2.3.41",
-    "repo:tools/episode_cut.py": "2.3.42"
+    "repo:tools/episode_cut.py": "2.3.42",
+    "repo:tools/episode_post.py": "2.3.43",
+    "repo:projects/ai_video_management/libs/common/asset_group.py": "2.3.44",
+    "repo:tools/skill_pack.py": "2.3.45",
+    "repo:tools/voice_design.py": "2.3.46",
+    "repo:tools/local_sfx.py": "2.3.47",
+    "repo:ai_videos/_shared/xianxia/maintenance.py": "2.3.48",
+    "repo:tools/local_voice.py": "2.3.49",
+    "repo:tools/local_voice_clone.py": "2.3.50",
+    "repo:projects/suno_browser_service/README.md": "2.3.51",
+    "repo:projects/suno_browser_service/apps/api/main.py": "2.3.52",
+    "repo:projects/suno_browser_service/apps/api/routes/job__route.py": "2.3.53",
+    "repo:projects/suno_browser_service/apps/login/main.py": "2.3.54",
+    "repo:projects/suno_browser_service/libs/application/commands/job__command.py": "2.3.55",
+    "repo:projects/suno_browser_service/libs/application/commands/runtime__command.py": "2.3.56",
+    "repo:projects/suno_browser_service/libs/application/commands/session__command.py": "2.3.57",
+    "repo:projects/suno_browser_service/libs/application/dtos/job__dto.py": "2.3.58",
+    "repo:projects/suno_browser_service/libs/application/mappers/job__mapper.py": "2.3.59",
+    "repo:projects/suno_browser_service/libs/application/queries/auth__query.py": "2.3.60",
+    "repo:projects/suno_browser_service/libs/application/queries/job__query.py": "2.3.61",
+    "repo:projects/suno_browser_service/libs/common/errors.py": "2.3.62",
+    "repo:projects/suno_browser_service/libs/common/settings.py": "2.3.63",
+    "repo:projects/suno_browser_service/libs/domain/entities/job__entity.py": "2.3.64",
+    "repo:projects/suno_browser_service/libs/infrastructure/clients/audit__client.py": "2.3.65",
+    "repo:projects/suno_browser_service/libs/infrastructure/clients/browser__client.py": "2.3.66",
+    "repo:projects/suno_browser_service/libs/infrastructure/clients/database__client.py": "2.3.67",
+    "repo:projects/suno_browser_service/libs/infrastructure/clients/lock__client.py": "2.3.68",
+    "repo:projects/suno_browser_service/libs/infrastructure/clients/suno__client.py": "2.3.69",
+    "repo:projects/suno_browser_service/libs/infrastructure/daos/job__dao.py": "2.3.70",
+    "repo:projects/suno_browser_service/libs/infrastructure/readers/job__reader.py": "2.3.71",
+    "repo:projects/suno_browser_service/libs/infrastructure/readers/runtime__reader.py": "2.3.72",
+    "repo:projects/suno_browser_service/libs/infrastructure/readers/token__reader.py": "2.3.73",
+    "repo:projects/suno_browser_service/libs/infrastructure/writers/audio__writer.py": "2.3.74",
+    "repo:projects/suno_browser_service/libs/infrastructure/writers/job__writer.py": "2.3.75",
+    "repo:projects/suno_browser_service/libs/infrastructure/writers/private_directory__writer.py": "2.3.76",
+    "repo:projects/suno_browser_service/libs/infrastructure/writers/runtime__writer.py": "2.3.77",
+    "repo:tools/tests/test_service_request.py": "2.3.78",
+    "repo:tools/tests/test_suno_request_audit.py": "2.3.79",
+    "repo:projects/suno_browser_service/libs/infrastructure/clients/manual_browser__client.py": "2.3.80",
+    "repo:projects/suno_browser_service/libs/application/commands/agent__command.py": "2.3.81",
+    "repo:projects/suno_browser_service/libs/application/commands/asset__command.py": "2.3.82",
+    "repo:projects/suno_browser_service/libs/application/queries/agent__query.py": "2.3.83",
+    "repo:projects/suno_browser_service/libs/application/queries/capability__query.py": "2.3.84",
+    "repo:projects/suno_browser_service/libs/common/generation.py": "2.3.85",
+    "repo:projects/suno_browser_service/libs/infrastructure/clients/asset__client.py": "2.3.86",
+    "repo:projects/suno_browser_service/libs/infrastructure/clients/form__client.py": "2.3.87",
+    "repo:projects/suno_browser_service/libs/infrastructure/clients/service__client.py": "2.3.88",
+    "repo:projects/suno_browser_service/apps/cli/main.py": "2.3.89",
+    "repo:projects/suno_browser_service/apps/mcp/main.py": "2.3.90",
+    "repo:projects/suno_browser_service/examples/instrumental.json": "2.3.91",
+    "repo:projects/suno_browser_service/examples/song.json": "2.3.92",
+    "repo:projects/suno_browser_service/examples/sound-loop.json": "2.3.93",
+    "repo:projects/suno_browser_service/install-agents.ps1": "2.3.94",
+    "repo:projects/suno_browser_service/apps/api/app_factory.py": "2.3.95",
+    "repo:projects/suno_browser_service/apps/ui/index.html": "2.3.96",
+    "repo:projects/suno_browser_service/apps/ui/package.json": "2.3.97",
+    "repo:projects/suno_browser_service/apps/ui/src/App.tsx": "2.3.98",
+    "repo:projects/suno_browser_service/apps/ui/src/Composer.tsx": "2.3.99",
+    "repo:projects/suno_browser_service/apps/ui/src/JobPanel.tsx": "2.3.100",
+    "repo:projects/suno_browser_service/apps/ui/src/Options.tsx": "2.3.101",
+    "repo:projects/suno_browser_service/apps/ui/src/api.ts": "2.3.102",
+    "repo:projects/suno_browser_service/apps/ui/src/main.tsx": "2.3.103",
+    "repo:projects/suno_browser_service/apps/ui/src/style.css": "2.3.104",
+    "repo:projects/suno_browser_service/apps/ui/src/types.ts": "2.3.105",
+    "repo:projects/suno_browser_service/apps/ui/tsconfig.json": "2.3.106",
+    "repo:projects/suno_browser_service/apps/ui/vite.config.ts": "2.3.107",
+    "repo:projects/suno_browser_service/setup.ps1": "2.3.108",
+    "repo:projects/suno_browser_service/start.ps1": "2.3.109",
+    "repo:projects/suno_browser_service/stop.ps1": "2.3.110",
+    "repo:tools/followup.py": "2.3.111",
+    "repo:tools/qc.py": "2.3.112",
+    "repo:tools/qc_review.py": "2.3.113",
+    "repo:tools/qc_pre.py": "2.3.114",
+    "repo:tools/scale_table.py": "2.3.115",
+    "repo:tools/skill_run.py": "2.3.116",
+    "repo:tools/youtube_analytics.py": "2.3.117",
+    "repo:tools/youtube_upload.py": "2.3.118",
+    "repo:tools/edu_manim.py": "2.3.119",
+    "repo:tools/edu_video.py": "2.3.120",
+    "repo:ai_videos/_shared/xihuan/build.py": "2.3.121",
+    "repo:ai_videos/_shared/xihuan/gen_images.py": "2.3.122",
+    "repo:tools/edu_voxcpm.py": "2.3.123",
+    "repo:tools/edu_package.py": "2.3.124",
+    "repo:tools/edu_review.py": "2.3.125",
+    "repo:ai_videos/xihuan/framework/check.py": "2.3.126",
+    "repo:tools/edu_web.py": "2.3.127"
   }
 }

@@ -5,8 +5,10 @@ the class of bug where backend emits a different field than the frontend reads.
 """
 from __future__ import annotations
 
+from pathlib import Path
+
 from libs.common.exposed_tree import ExposedTree
-from libs.infrastructure.readers.tree__reader import TreeReader
+from libs.infrastructure.readers.tree__reader import _IMAGE_EXTENSIONS, TreeReader
 from tests.conftest import repo_root
 
 
@@ -28,13 +30,13 @@ def test_tree_consumer_walk() -> None:
 
 
 def test_tree_sections_order() -> None:
-    """Only the AI Videos section is left. (Follow-up 233 removed the
+    """AI Videos plus 教学视频 (follow-up 357). (Follow-up 233 removed the
     Downloaded Novels / My Novel sections that follow-ups 096 / 113 had added.)"""
     exposed = ExposedTree(repo_root())
     walker = TreeReader(exposed)
     tree = walker.build()
     section_names = [child["name"] for child in tree["children"]]
-    assert section_names == ["AI Videos"], section_names
+    assert section_names == ["AI Videos", "教学视频"], section_names
 
 
 def test_no_project_meta_or_collapsed_library_leaves() -> None:
@@ -66,4 +68,5 @@ def test_image_leaves_typed_as_image() -> None:
     images: list = []
     collect_images(tree, images)
     for img in images:
-        assert img["name"].lower().endswith((".png", ".jpg")), f"non-image typed as image: {img}"
+        # 与读取器同一份扩展名表（gif 参考动图也是图片，follow-up 285）
+        assert Path(img["name"]).suffix.lower() in _IMAGE_EXTENSIONS, f"non-image typed as image: {img}"

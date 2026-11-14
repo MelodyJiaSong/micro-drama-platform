@@ -1,0 +1,102 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  .row12 { position: absolute; left: var(--mx); top: 400px; display: flex; gap: 26px; }
+  .row12 .u { width: 92px; height: 92px; border-radius: 50%; background: var(--surface); border: 5px solid var(--accent); position: relative; box-shadow: var(--shadow); }
+  .row12 svg { position: absolute; left: 14px; top: 14px; }
+  #deep { position: absolute; left: var(--mx); top: 300px; }
+  #zig { position: absolute; left: var(--mx); top: 630px; }
+  .side { position: absolute; left: 1250px; width: 600px; }
+  .side .t { position: absolute; top: 0; left: 0; white-space: nowrap; }
+  .ttl { left: var(--mx); top: 200px; width: 1680px; }
+  .cnt { top: 610px; }
+  .cnt .display { font-size: 160px; line-height: 1; font-variant-numeric: tabular-nums; }
+  .cnt .h2 { margin-top: 8px; }
+  .cmp { position: absolute; left: var(--mx); top: 260px; display: flex; gap: 60px; }
+  .cmp .col .h2 { margin-bottom: 18px; white-space: nowrap; }
+  .cmp svg { background: var(--surface2); border-radius: 22px; }
+  .why { position: absolute; left: var(--mx); top: 700px; }
+  .fin { position: absolute; left: var(--mx); top: 330px; }
+  .fin .display { font-size: 150px; }
+</style>
+
+<div class="eb eyebrow" data-zh="03 · 为什么要多叠几层" data-en="03 · Why go deep?"></div>
+<div class="row12" id="wide"></div>
+<svg id="deep"></svg>
+<svg id="zig"></svg>
+<div class="side ttl">
+  <div class="h1 t" id="ta" data-zh="并排：各拐一次" data-en="Side by side: 1 bend each"></div>
+  <div class="h1 t" id="tb" data-zh="叠起来：接着折" data-en="Stacked: folds on folds"></div>
+</div>
+<div class="side cnt" id="cnt"><div class="display accent" id="cv">2</div><div class="h2" data-zh="段" data-en="pieces"></div>
+  <div class="caption" id="cl" style="margin-top:8px" data-zh="每层 2 个单元 · 特意搭的例子" data-en="2 units per layer · hand-built example"></div></div>
+
+<div class="cmp" id="cmp">
+  <div class="col" id="cw"><div class="h2" data-zh='并排 10 个：最多 <span class="c-bad">11</span> 段' data-en='10 side by side: <span class="c-bad">≤ 11</span> pieces'></div><svg id="pw"></svg></div>
+  <div class="col" id="cd"><div class="h2" data-zh='叠成 5 层：可达 <span class="c-good">32</span> 段' data-en='10 in 5 layers: up to <span class="c-good">32</span> pieces'></div><svg id="pd"></svg></div>
+</div>
+<div class="why body ink2" id="why" data-zh="反复用前层的折线" data-en="Earlier folds, reused"></div>
+<div class="fin" id="fin"><div class="display grad" data-zh="深度学习" data-en="Deep learning"></div>
+  <div class="h2 ink2" style="margin-top:24px" data-zh='<span class="accent">深</span> = 层数多' data-en='<span class="accent">Deep</span> = many layers'></div></div>
+
+<script>
+const ink = css("--ink"), acc = css("--accent"), hair = css("--hair");
+/* l31 并排：几点 → 12 个单元 → 车费（小号） */
+const row = document.getElementById("wide");
+for (let i = 0; i < 12; i++) {
+  const u = document.createElement("div"); u.className = "u";
+  u.innerHTML = `<svg width="54" height="54"><path d="M4 40 L26 40 L50 12" fill="none" stroke="${css("--accent-text")}" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/></svg>`;
+  row.appendChild(u);
+}
+/* l32 叠起来：一个输入 → 5 层、每层 2 个 → 输出 */
+const dv = d3.select("#deep").attr("width", 1060).attr("height", 300);
+const lx = i => 90 + i * 150, ly = j => 150 + (j ? 55 : -55);
+const layers = [];
+for (let i = 0; i <= 6; i++) {
+  const g = dv.append("g");
+  if (i > 0) {
+    const prev = i === 1 ? [150] : [ly(0), ly(1)], here = i === 6 ? [150] : [ly(0), ly(1)];
+    prev.forEach(a => here.forEach(b => g.append("line").attr("x1", lx(i - 1)).attr("y1", a).attr("x2", lx(i)).attr("y2", b).attr("stroke", hair).attr("stroke-width", 3)));
+  }
+  (i === 0 || i === 6 ? [150] : [ly(0), ly(1)]).forEach(yy => {
+    if (i === 0 || i === 6) g.append("circle").attr("cx", lx(i)).attr("cy", yy).attr("r", 30).attr("fill", ink);
+    else {
+      g.append("circle").attr("cx", lx(i)).attr("cy", yy).attr("r", 26).attr("fill", css("--surface")).attr("stroke", acc).attr("stroke-width", 4);
+      g.append("path").attr("d", `M${lx(i) - 13},${yy + 6} L${lx(i)},${yy + 6} L${lx(i) + 13},${yy - 9}`).attr("fill", "none").attr("stroke", css("--accent-text")).attr("stroke-width", 3).attr("stroke-linecap", "round");
+    }
+  });
+  layers.push(g.node());
+}
+/* l33–l34 锯齿：叠 1–5 层，段数 2、4、8、16、32（data.json deep，data.py 算出并断言） */
+const Z = miniPlot("#zig", { W: 1000, H: 270, xd: [0, 1], yd: [-0.04, 1.04] });
+const zs = [1, 2, 3, 4, 5].map(L => Z.path(D.deep.x, D.deep.layers[String(L)], "--accent", 6));
+/* l35 对比：并排 10 个（11 段） vs 叠 5 层（32 段） */
+const Pw = miniPlot("#pw", { W: 520, H: 300, xd: [0, 1], yd: [-0.04, 0.66] }), Pd = miniPlot("#pd", { W: 520, H: 300, xd: [0, 1], yd: [-0.04, 1.04] });
+Pw.path(D.deep.x, D.deep.wide_curve, "--d-neutral", 6); Pd.path(D.deep.x, D.deep.layers["5"], "--accent", 6);
+const CV = document.getElementById("cv"), cobj = { L: 1 };
+
+gsap.set(["#wide", "#deep", ...layers, "#zig", ...zs, "#ta", "#tb", "#cnt", "#cmp", "#cw", "#cd", "#why", "#fin"], { opacity: 0 });
+EDU.in(".eb", 0);
+// l31 并排：每个单元只添一个拐弯
+EDU.in("#wide", EDU.t("l31", .05), { y: 0 }); EDU.in("#ta", EDU.t("l31", .3));
+// l32 换个摆法：一层叠一层，接着折
+EDU.out(["#wide", "#ta"], EDU.t("l32", 0)); EDU.in("#deep", EDU.t("l32", .03), { y: 0, d: .01 }); EDU.in("#tb", EDU.t("l32", .05));
+EDU.in(layers.slice(0, 3), EDU.t("l32", .1), { stagger: .2 });
+// l33 每层两个单元：对折一次 → 2 段
+EDU.in("#zig", EDU.t("l33", .1), { y: 0 }); EDU.in(zs[0], EDU.t("l33", .4)); EDU.draw(zs[0], EDU.t("l33", .4), .9);
+EDU.in("#cnt", EDU.t("l33", .55));
+// l34 叠一层翻一倍：4、8、16、32
+[1, 2, 3, 4].forEach((k, j) => {
+  const at = EDU.t("l34", .08 + j * .2);
+  if (k + 2 <= 6) EDU.in(layers[k + 2], at);
+  EDU.out(zs[k - 1], at, { y: 0, d: .25 }); EDU.in(zs[k], at + .1);
+  EDU.tl.fromTo(cobj, { L: k }, { L: k + 1, duration: .05, immediateRender: false, onUpdate: () => { CV.textContent = String(2 ** Math.round(cobj.L)); } }, at + .1);
+});
+EDU.in(layers[6], EDU.t("l34", .85));
+// l35 同样 10 个单元：并排 ≤ 11 段，叠 5 层 32 段
+EDU.out(["#deep", "#zig", "#tb", "#cnt"], EDU.t("l35", 0));
+EDU.in("#cmp", EDU.t("l35", .03), { y: 0, d: .01 }); EDU.in("#cw", EDU.t("l35", .08)); EDU.in("#cd", EDU.t("l35", .5));
+// l36 后面的层反复用前面折好的
+EDU.in("#why", EDU.t("l36", .1));
+// l38 深度学习的「深」
+EDU.out(["#cmp", "#why"], EDU.t("l38", 0)); EDU.in("#fin", EDU.t("l38", .1));
+</script>

@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-29T04:16:26.836119+08:00",
+  "status": "investigated_no_global_color_conversion_defect_established",
+  "local_evidence": {
+    "workflow_precision": "bf16; not Q4 quantized",
+    "base_color_export": "attrs RGB multiplied by 255 then stored as baseColorTexture; same construction as official trellis2_texturing.py",
+    "pbr_channels": "G roughness, B metallic; scalar factors 1",
+    "rasterizer_sha256": "d7bc1bbfb2af83e5e846fdfe357c7c15c9ae0a900b75f328507ca0f58d218f94"
+  },
+  "primary_sources": [
+    "https://github.com/microsoft/TRELLIS.2/blob/main/trellis2/pipelines/trellis2_texturing.py",
+    "https://github.com/microsoft/TRELLIS.2/issues/43"
+  ],
+  "source_interpretation": "The maintainer describes intrinsic material/lighting ambiguity; this is context, not proof of the cause for these local assets.",
+  "limits": [
+    "No blanket gamma or saturation correction is justified by the current evidence",
+    "Projection errors, copied backs and fused geometry require separate fixes"
+  ],
+  "mutations": "No shared installation or generated material was changed by this audit"
+}

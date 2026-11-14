@@ -27,6 +27,12 @@
             "shell": "bash",
             "command": "python \"$CLAUDE_PROJECT_DIR/tools/workflow_catalog.py\" --check --quiet",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "python \"$CLAUDE_PROJECT_DIR/tools/followup.py\" check --all --hook",
+            "timeout": 20
           }
         ]
       }

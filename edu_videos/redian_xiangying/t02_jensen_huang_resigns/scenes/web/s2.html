@@ -1,0 +1,262 @@
+<style>
+  .ask { position: absolute; left: 0; right: 0; top: 420px; text-align: center; }
+
+  /* 屏 B/C：左边闸门图（美国 → 闸门 → 中国，绕道东南亚），右栏随句换 */
+  #gd { position: absolute; left: var(--mx); top: 250px; }
+  #fx2, #fx3 { left: var(--mx); top: 250px; width: 1000px; height: 562px; }
+  .rc { position: absolute; left: 1210px; width: 590px; top: 270px; }
+  .rc .h1 { margin-top: 8px; }
+  #rc1 { top: 200px; }
+  #rc1 .slot { margin-bottom: 22px; }
+  #mag { position: absolute; left: 360px; width: 1200px; top: 170px; }
+  .rc .body { margin-top: 20px; color: var(--ink2); }
+  .rc .h2 { margin-top: 6px; }
+  #tk { padding: 40px 44px; }
+  #tk .h2 { margin-top: 18px; font-weight: 700; }
+  #tk .body { margin-top: 14px; }
+  #sgc { padding: 34px 40px; top: 230px; }
+  #sgc .slot { margin: 16px 0 4px; }
+  #sgc .rw { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-top: 1px solid var(--hair); font-size: var(--fs-caption); }
+  #sgc .rw:first-of-type { margin-top: 12px; }
+  #sgc .rw b { font-weight: 600; color: var(--ink); text-align: right; }
+  #sgc .rw span { color: var(--sub); white-space: nowrap; }
+  #sgc .tagrow { margin-top: 18px; }
+
+  /* 屏 D：三节点链 + 放大镜 */
+  .chain { position: absolute; left: var(--mx); right: var(--mx); top: 300px; display: flex; justify-content: space-between; }
+  .chain .card { width: 500px; height: 300px; padding: 38px 26px; text-align: center; }
+  .chain .h2 { margin-top: 14px; }
+  #chs { position: absolute; left: 0; top: 0; }
+  .lensT { position: absolute; left: 0; right: 0; top: 790px; text-align: center; }
+
+  /* 屏 E/F/G：同一个「国家安全」钩子 */
+  #hk { position: absolute; left: 0; top: 0; }
+  .hkT { position: absolute; left: 1010px; top: 150px; }
+  .hang { position: absolute; left: var(--mx); right: var(--mx); top: 400px; display: flex; gap: 40px; align-items: flex-start; }
+  .hang .card { flex: 1 1 0; min-width: 0; padding: 32px 36px; }
+  .hang .h2 { margin-top: 10px; white-space: nowrap; }
+  html[lang=en] .hang .h2 { white-space: normal; }
+  .hang .caption { margin-top: 8px; color: var(--ink2); }
+  .hang .slot { margin-bottom: 16px; }
+  .mq { position: absolute; left: 260px; right: 260px; top: 400px; padding: 44px 56px; }
+  .mq .h2 { margin-top: 18px; line-height: 1.4; }
+  .mq .caption { margin-top: 10px; }
+  .agree { position: absolute; left: 0; right: 0; top: 400px; text-align: center; }
+  .agree .ico { color: var(--accent); }
+  .agree .h1 { margin-top: 18px; }
+</style>
+
+<div class="eb eyebrow" data-zh="02 · 私事怎么变成国家安全" data-en="02 · How it became national security"></div>
+
+<!-- 屏 A -->
+<div class="ask h1" id="ask" data-zh="凭什么惊动这么多机构？" data-en="Why so many alarms?"></div>
+
+<!-- 屏 B/C：闸门图（sd2 机房、sd3 港口模拟画面盖在同一位置） -->
+<svg id="gd" width="1000" height="580"></svg>
+<div class="footage" id="fx2"><video id="v2" src="img/footage/sd2_datacenter.mp4" data-start="{{t:l25:0}}" data-duration="{{d:l25:0>l25:0.6|6}}"
+  data-media-start="0" data-track-index="1" muted playsinline></video></div>
+<div class="footage" id="fx3"><video id="v3" src="img/footage/sd3_port.mp4" data-start="{{t:l27:0}}" data-duration="{{d:l27:0>l28:0.3|6}}"
+  data-media-start="0" data-track-index="1" muted playsinline></video></div>
+
+<div class="rc" id="rc1">
+  <figure class="slot" id="chipImg" data-src="img/source/ai/ai_chip.png" style="--h:250px"></figure>
+  <div class="eyebrow" data-zh="英伟达卖的" data-en="What Nvidia sells"></div>
+  <div class="h1" data-zh="AI 芯片" data-en="AI chips"></div>
+  <div class="body" id="rc1b" data-zh='最先进的能否卖给中国<br><span class="accent">= 中美科技战主战场</span>' data-en='Top chips to China?<br><span class="accent">= the tech war’s front line</span>'></div>
+</div>
+<div class="rc card" id="tk">
+  <div class="eyebrow" data-zh="英伟达 10-K 年报" data-en="Nvidia 10-K annual report"></div>
+  <div class="h2"><span class="hlq" id="tkq"></span></div>
+  <div class="body" data-zh="中国数据中心市场：<br>实际上被排除在外" data-en="from China’s data center market"></div>
+</div>
+<div class="rc" id="rc3">
+  <div class="eyebrow" data-zh="美国最担心" data-en="Washington’s biggest worry"></div>
+  <div class="h1" data-zh="绕道东南亚" data-en="Via Southeast Asia"></div>
+</div>
+<div class="rc card" id="sgc">
+  <div class="h2" data-zh="那家新加坡公司" data-en="That Singapore company"></div>
+  <figure class="slot" id="sg" data-src="img/source/commons/Singapore_(SG)__Tanjong_Pagar_Terminal_--_2019_--_4728.jpg" style="--h:150px"></figure>
+  <div class="rw" id="w1"><span data-zh="新加坡警方" data-en="Singapore police"></span><b data-zh="还在查" data-en="Still investigating"></b></div>
+  <div class="rw" id="w2"><span data-zh="美国出口管制部门" data-en="US export control"></span><b data-zh="上门核查过" data-en="Inspected it"></b></div>
+  <div class="rw" id="w3"><span data-zh="公司" data-en="The company"></span><b data-zh="否认违规" data-en="Denies wrongdoing"></b></div>
+  <div class="tagrow" id="w4"></div>
+</div>
+
+<!-- 屏 D -->
+<svg id="chs" width="1920" height="1080"></svg>
+<div class="chain" id="chain">
+  <div class="card" id="n1"><span data-icon="chip" data-size="72"></span><div class="h2" data-zh="最要紧的芯片" data-en="Critical chips"></div></div>
+  <div class="card" id="n2"><span data-icon="bill" data-size="72"></span><div class="h2" data-zh="被怀疑转运<br>的客户" data-en="Customer suspected<br>of rerouting"></div></div>
+  <div class="card" id="n3"><span data-icon="person" data-size="72"></span><div class="h2" data-zh="跟 CEO<br>走得近的人" data-en="Someone close<br>to the CEO"></div></div>
+</div>
+<figure class="slot" id="mag" data-src="img/source/ai/ai_magnifier.png" style="--h:560px"></figure>
+<div class="lensT h2" id="lensT" data-zh='一件私事 → <span class="accent">国家安全的放大镜下</span>' data-en='Private matter → <span class="accent">national security lens</span>'></div>
+
+<!-- 屏 E/F/G -->
+<svg id="hk" width="1920" height="1080"></svg>
+<div class="hkT h2 accent" id="hkT" data-zh="国家安全" data-en="National security"></div>
+<div class="hang" id="hang">
+  <div class="card" id="h1"><span data-icon="board" data-size="52"></span>
+    <div class="eyebrow" data-zh="英伟达董事会 · 11-08" data-en="Nvidia’s board · Nov 8"></div>
+    <div class="h2" data-zh="启动调查" data-en="Opens a probe"></div>
+    <div class="caption" data-zh="凭「外国情报活动」报道" data-en="Over foreign-intelligence reports"></div></div>
+  <div class="card" id="h2"><figure class="slot" id="capT" data-src="img/source/commons/United_States_Capitol_west_front_edit2.jpg" style="--h:150px"></figure>
+    <div class="eyebrow" data-zh="国会三位共和党主席" data-en="Three GOP committee chairs"></div>
+    <div class="h2" data-zh="请他闭门简报" data-en="Closed-door briefing"></div>
+    <div class="caption" data-zh="理由：国家安全" data-en="On national security grounds"></div></div>
+  <div class="card" id="h3">
+    <figure class="slot av" id="mo" data-nocap data-src="img/source/commons/John_Moolenaar_portrait_(118th_Congress).jpg" style="--s:110px; --pos:50% 30%"></figure>
+    <div class="eyebrow" data-zh="众院对华委员会主席 · 11-12" data-en="House China committee chair · Nov 12"></div>
+    <div class="h2" data-zh="换上新领导层" data-en="New leadership"></div>
+    <div class="caption" data-zh="国家安全放第一" data-en="National security first"></div>
+    <div class="caption" id="h3b" data-zh="+ 催国会立法：管芯片出口" data-en="+ Pass export controls, fast"></div></div>
+</div>
+<div class="mq card" id="mq">
+  <span data-icon="podium" data-size="52"></span>
+  <div class="eyebrow" data-zh="中国外交部 · 11-12" data-en="China’s Foreign Ministry · Nov 12"></div>
+  <div class="h2" id="mqq" data-zh="" data-en='Stop fabricating a “spy narrative”<br>as a pretext for a <span class="hlq" id="mqh">tech blockade</span>'></div>
+  <div class="caption" data-zh="" data-en="Translated from Chinese"></div>
+</div>
+<div class="agree" id="agree"><span data-icon="chip" data-size="96"></span>
+  <div class="h1" data-zh='双方共识：<span class="grad">这事关芯片</span>' data-en='Both sides agree: <span class="grad">it’s about chips</span>'></div></div>
+
+<script>
+const T = EDU.tl, C = css;
+document.getElementById("tkq").textContent = "“" + Q.tenk + "”";
+document.getElementById("w4").innerHTML = pill("dispute", "调查中 · 无结论", "Under investigation · no conclusion");
+// 外交部原话（中文版照实录全文，「科技封锁」刷底色）
+if (!EN) document.getElementById("mqq").innerHTML = "「" + Q.mfa2.replace("科技封锁", '<span class="hlq" id="mqh">科技封锁</span>') + "」";
+
+// ---- 闸门图 ----
+const g = document.getElementById("gd");
+const US = [110, 190], CN = [890, 190], SEA = [520, 470], GX = 650;
+const node = ([x, y], zh, en) => {
+  const c = svgEl(g, "circle", { cx: x, cy: y, r: 82, fill: C("--surface"), stroke: C("--hair"), "stroke-width": 3 });
+  const t = svgText(g, x, y + 14, L(zh, en), 40, C("--ink"), "middle", 700);
+  return [c, t];
+};
+const nUS = node(US, "美国", "US"), nCN = node(CN, "中国", "China");
+const lane = svgEl(g, "path", { d: `M${US[0] + 90},${US[1]} L${CN[0] - 90},${CN[1]}`, stroke: C("--hair"), "stroke-width": 4, "stroke-dasharray": "2 12", "stroke-linecap": "round", fill: "none" });
+const gate = svgEl(g, "rect", { x: GX - 9, y: 90, width: 18, height: 200, rx: 9, fill: C("--ink") });
+const gateOpen = svgEl(g, "rect", { x: GX - 9, y: 90, width: 18, height: 200, rx: 9, fill: "none", stroke: C("--faint"), "stroke-width": 3, "stroke-dasharray": "8 8" });
+const chipG = svgEl(g, "g", { transform: `translate(${US[0] + 120},${US[1] - 34})` });
+chipG.innerHTML = `<svg width="68" height="68" viewBox="0 0 64 64" fill="${C("--accent-soft")}" stroke="${C("--accent")}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">${ICONS.chip}</svg>`;
+// 绕道东南亚的虚线箭头（示意）
+const det = svgEl(g, "path", { d: `M${US[0] + 70},${US[1] + 60} C${US[0] + 120},${SEA[1]} ${SEA[0] - 200},${SEA[1]} ${SEA[0] - 70},${SEA[1]} M${SEA[0] + 70},${SEA[1]} C${SEA[0] + 220},${SEA[1]} ${CN[0] - 60},${CN[1] + 200} ${CN[0] - 30},${CN[1] + 92}`,
+  fill: "none", stroke: C("--accent"), "stroke-width": 5, "stroke-linecap": "round" });
+const detHead = svgEl(g, "path", { d: `M${CN[0] - 30},${CN[1] + 86} l-16,22 l26,4 Z`, fill: C("--accent") });
+const nSEA = [svgEl(g, "circle", { cx: SEA[0], cy: SEA[1], r: 70, fill: C("--accent-soft"), stroke: C("--accent"), "stroke-width": 3 }),
+              svgText(g, SEA[0], SEA[1] + 12, L("东南亚", "SE Asia"), EN ? 30 : 34, C("--accent-text"), "middle", 700)];
+const ill = svgText(g, 990, 570, L("示意", "Illustration"), 22, C("--sub"), "end", 500);
+
+gsap.set(["#ask", "#rc1", "#chipImg", "#rc1b", "#tk", "#rc3", "#sgc", "#sg", "#w1", "#w2", "#w3", "#w4", "#chain", "#mag", "#n1", "#n2", "#n3", "#lensT",
+          "#hkT", "#hang", "#h1", "#h2", "#h3", "#h3b", "#mq", "#agree"], { opacity: 0 });
+gsap.set([...nUS, ...nCN, lane, gate, gateOpen, chipG, det, detHead, ...nSEA, ill], { opacity: 0 });
+EDU.in(".eb", 0);
+
+// l24 凭什么惊动这么多机构？
+EDU.in("#ask", EDU.t("l24", .05));
+
+// l25 英伟达卖 AI 芯片；最先进的能否卖给中国 = 主战场（sd2 机房盖在闸门图上）
+EDU.out("#ask", EDU.t("l25", 0));
+EDU.in([...nUS, ...nCN, lane], EDU.t("l25", .05));
+EDU.in(gateOpen, EDU.t("l25", .1));
+EDU.in(chipG, EDU.t("l25", .1));
+EDU.in("#rc1", EDU.t("l25", .05));
+EDU.in("#chipImg", EDU.t("l25", .1));
+EDU.in("#rc1b", EDU.t("l25", .45));
+T.to(chipG, { attr: { transform: `translate(${GX - 110},${US[1] - 34})` }, duration: 1.4, ease: "power2.inOut" }, Math.max(EDU.t("l25", .62), footEnd("v2") - .2));
+EDU.in(ill, EDU.t("l25", .3));
+// l26 10-K：「effectively foreclosed」，闸门落下
+EDU.out("#rc1", EDU.t("l26", 0));
+EDU.in("#tk", EDU.t("l26", .05));
+T.to(gateOpen, { opacity: 0, duration: .3 }, EDU.t("l26", .1));
+T.fromTo(gate, { opacity: 0, attr: { height: 0 } }, { opacity: 1, attr: { height: 200 }, duration: .7, ease: "power3.out", immediateRender: false }, EDU.t("l26", .1));
+brush("#tkq", EDU.t("l26", .4));
+srcNote("英伟达 10-K 年报（截至 2026 财年末）", "Nvidia 10-K (as of fiscal 2026 year-end)", EDU.t("l26", .2), EDU.end("l26") + .1);
+
+// l27 美国最怕：绕道东南亚（sd3 港口盖在图上；箭头在下面画好）
+EDU.out("#tk", EDU.t("l27", 0));
+EDU.in("#rc3", EDU.t("l27", .05));
+EDU.in(nSEA, EDU.t("l27", .2));
+T.set([det, detHead], { opacity: 1 }, EDU.t("l27", .3));
+EDU.draw(det, EDU.t("l27", .3), 1.4);
+T.fromTo(detHead, { opacity: 0 }, { opacity: 1, duration: .3, immediateRender: false }, EDU.t("l27", .3) + 1.3);
+// l28 那家新加坡公司：新加坡警方在查，美国出口管制部门上门核查过
+EDU.out("#rc3", EDU.t("l28", 0));
+EDU.in("#sgc", EDU.t("l28", .05));
+EDU.in("#sg", EDU.t("l28", .1));
+EDU.in("#w1", EDU.t("l28", .25));
+EDU.in("#w2", EDU.t("l28", .6));
+srcNote("新加坡内政部 · 2026-11-12", "Singapore Ministry of Home Affairs · Nov 12, 2026", EDU.t("l28", .2), EDU.end("l29") + .1);
+// l29 公司否认违规；没有结论
+EDU.in("#w3", EDU.t("l29", .05));
+EDU.in("#w4", EDU.t("l29", .45), { y: 0 });
+
+// l30 线接上了：最要紧的芯片 → 被怀疑转运的客户 → 跟 CEO 走得近的人
+EDU.out(["#gd", "#sgc"], EDU.t("l30", 0));
+EDU.in("#chain", EDU.t("l30", 0), { y: 0, d: .01 });
+const cs = document.getElementById("chs");
+const R = id => document.querySelector(id).getBoundingClientRect();
+const arrows = [["#n1", "#n2"], ["#n2", "#n3"]].map(([a, b]) => {
+  const ra = R(a), rb = R(b), y = ra.top + ra.height / 2;
+  const p = svgEl(cs, "path", { d: `M${ra.right + 14},${y} L${rb.left - 26},${y}`, stroke: C("--accent"), "stroke-width": 5, "stroke-linecap": "round", fill: "none", opacity: 0 });
+  const h = svgEl(cs, "path", { d: `M${rb.left - 12},${y} l-20,-12 l0,24 Z`, fill: C("--accent"), opacity: 0 });
+  return [p, h];
+});
+EDU.in("#n1", EDU.t("l30", .25));
+[[arrows[0], .45, "#n2"], [arrows[1], .7, "#n3"]].forEach(([[p, h], f, n]) => {
+  T.set(p, { opacity: 1 }, EDU.t("l30", f)); EDU.draw(p, EDU.t("l30", f), .5);
+  T.to(h, { opacity: 1, duration: .2 }, EDU.t("l30", f) + .45);
+  EDU.in(n, EDU.t("l30", f) + .4);
+});
+// l31 放大镜罩上去：一件私事 → 国家安全的放大镜下
+// 链条收起，换成放大镜画面（AI 生成）；没有图时链条留着、只退后
+EDU.dim(["#chain", "#chs"], EDU.t("l31", 0), document.getElementById("mag") ? 0 : .35);
+EDU.in("#mag", EDU.t("l31", .05));
+EDU.in("#lensT", EDU.t("l31", .3));
+
+// l32 各方的动作，挂的都是同一个钩子
+EDU.out(["#chain", "#chs", "#mag", "#lensT"], EDU.t("l32", 0));
+const hk = document.getElementById("hk");
+const hook = svgEl(hk, "path", { d: "M960,96 L960,210 a42,42 0 0 1 -84,0 l0,-22", fill: "none", stroke: C("--accent"), "stroke-width": 12, "stroke-linecap": "round" });
+const rail = svgEl(hk, "path", { d: "M300,300 L1620,300", stroke: C("--ink2"), "stroke-width": 5, "stroke-linecap": "round", fill: "none" });
+const tie = svgEl(hk, "path", { d: "M918,252 L918,300", stroke: C("--ink2"), "stroke-width": 5, fill: "none" });
+gsap.set([hook, rail, tie], { opacity: 0 });
+T.set(hook, { opacity: 1 }, EDU.t("l32", .1)); EDU.draw(hook, EDU.t("l32", .1), .8);
+T.set([tie, rail], { opacity: 1 }, EDU.t("l32", .35)); EDU.draw(tie, EDU.t("l32", .35), .3); EDU.draw(rail, EDU.t("l32", .45), .8);
+EDU.in("#hkT", EDU.t("l32", .3));
+EDU.in("#hang", EDU.t("l32", 0), { y: 0, d: .01 });
+const hangs = ["#h1", "#h2", "#h3"].map(id => {
+  const r = R(id), x = r.left + r.width / 2;
+  return svgEl(hk, "path", { d: `M${x},300 L${x},${r.top}`, stroke: C("--ink2"), "stroke-width": 3, "stroke-dasharray": "6 8", fill: "none", opacity: 0 });
+});
+const hangAt = (i, cue) => { EDU.in(hangs[i], EDU.t(cue, .05)); EDU.in(["#h1", "#h2", "#h3"][i], EDU.t(cue, .1)); };
+// l33 董事会：凭「外国情报活动」报道
+hangAt(0, "l33");
+srcNote("英伟达董事会声明 · 2026-11-08", "Nvidia board statement · Nov 8, 2026", EDU.t("l33", .2), EDU.end("l33") + .1);
+// l34 国会三位共和党主席：以国家安全为由请他闭门简报
+EDU.dim("#h1", EDU.t("l34", 0), .28);
+hangAt(1, "l34");
+srcNote("众院三个委员会主席的邀请", "Invitation from three House committee chairs", EDU.t("l34", .2), EDU.end("l34") + .1);
+// l35 众院对华委员会主席：国家安全第一的领导层
+EDU.dim("#h2", EDU.t("l35", 0), .28);
+hangAt(2, "l35");
+const MO = "img/source/commons/John_Moolenaar_portrait_(118th_Congress).jpg";
+srcNote(withCred("众院对华特别委员会主席声明 · 2026-11-12", MO), withCred("House China committee chair, statement · Nov 12, 2026", MO), EDU.t("l35", .2), EDU.end("l36") + .1);
+// l36 还催国会赶紧立法，管住芯片出口
+EDU.in("#h3b", EDU.t("l36", .05));
+
+// l37 中国外交部：停止编造「间谍叙事」，为科技封锁找借口
+EDU.out(["#hang", ...hangs], EDU.t("l37", 0));
+const mqs = svgEl(hk, "path", { d: "M960,300 L960,400", stroke: C("--ink2"), "stroke-width": 3, "stroke-dasharray": "6 8", fill: "none", opacity: 0 });
+EDU.in(mqs, EDU.t("l37", .05));
+EDU.in("#mq", EDU.t("l37", .05));
+brush("#mqh", EDU.t("l37", .6));
+srcNote("中国外交部例行记者会 · 2026-11-12", "China MFA press briefing · Nov 12, 2026", EDU.t("l37", .2), EDU.end("l37") + .1);
+// l38 双方共识：这事关芯片
+EDU.out(["#mq", mqs], EDU.t("l38", 0));
+EDU.in("#agree", EDU.t("l38", .1));
+ourTake(["l25", "l30", "l31", "l32", "l38"]);
+EDU.out(["#agree", "#hk", "#hkT"], EDU.S.duration - .5);
+</script>

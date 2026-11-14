@@ -1,0 +1,6229 @@
+{
+ "run": "lines_r1",
+ "round": 1,
+ "generated_at": "2026-11-09T12:53:24",
+ "items": [
+  {
+   "item": "voice_zh",
+   "name": "中文口播（母语听感，盲审）",
+   "final": {
+    "V1": 1,
+    "V2": 1,
+    "V3": 1,
+    "V4": 2,
+    "V5": 1,
+    "V6": 2
+   },
+   "scores": {
+    "a": {
+     "V1": 2,
+     "V2": 2,
+     "V3": 1,
+     "V4": 2,
+     "V5": 2,
+     "V6": 2
+    },
+    "b": {
+     "V1": 1,
+     "V2": 1,
+     "V3": 1,
+     "V4": 1,
+     "V5": 1,
+     "V6": 3
+    },
+    "judge": {
+     "V1": 1,
+     "V2": 1,
+     "V4": 2,
+     "V5": 1,
+     "V6": 2
+    }
+   }
+  },
+  {
+   "item": "voice_en",
+   "name": "English narration (native ear, blind)",
+   "final": {
+    "V1": 1,
+    "V2": 1,
+    "V3": 1,
+    "V4": 2,
+    "V5": 2,
+    "V6": 1
+   },
+   "scores": {
+    "a": {
+     "V1": 2,
+     "V2": 2,
+     "V3": 2,
+     "V4": 2,
+     "V5": 2,
+     "V6": 2
+    },
+    "b": {
+     "V1": 1,
+     "V2": 1,
+     "V3": 1,
+     "V4": 2,
+     "V5": 2,
+     "V6": 3
+    },
+    "judge": {
+     "V1": 1,
+     "V2": 1,
+     "V3": 1,
+     "V5": 2,
+     "V6": 1
+    }
+   }
+  },
+  {
+   "item": "screen_zh",
+   "name": "中文屏幕文字（PPT 式画面）",
+   "final": {
+    "P1": 1,
+    "P2": 1,
+    "P3": 1,
+    "P4": 1,
+    "P5": 2,
+    "P6": 2
+   },
+   "scores": {
+    "a": {
+     "P1": 2,
+     "P2": 2,
+     "P3": 2,
+     "P4": 1,
+     "P5": 2,
+     "P6": 3
+    },
+    "b": {
+     "P1": 1,
+     "P2": 1,
+     "P3": 2,
+     "P4": 2,
+     "P5": 1,
+     "P6": 3
+    },
+    "judge": {
+     "P1": 1,
+     "P2": 1,
+     "P4": 1,
+     "P5": 2,
+     "P3": 1,
+     "P6": 2
+    }
+   }
+  },
+  {
+   "item": "screen_en",
+   "name": "English on-screen text (slides)",
+   "final": {
+    "P1": 1,
+    "P2": 1,
+    "P3": 1,
+    "P4": 1,
+    "P5": 1,
+    "P6": 2
+   },
+   "scores": {
+    "a": {
+     "P1": 2,
+     "P2": 2,
+     "P3": 2,
+     "P4": 1,
+     "P5": 2,
+     "P6": 2
+    },
+    "b": {
+     "P1": 1,
+     "P2": 1,
+     "P3": 1,
+     "P4": 1,
+     "P5": 1,
+     "P6": 3
+    },
+    "judge": {
+     "P1": 1,
+     "P2": 1,
+     "P3": 1,
+     "P5": 1,
+     "P6": 2
+    }
+   }
+  }
+ ],
+ "issues": [
+  {
+   "id": "I1",
+   "key": "d7d380f3ae31",
+   "item": "screen_en",
+   "where": "card c_problem (strict, chapter title)",
+   "dim": "P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "card c_problem (strict, chapter title)"
+   ],
+   "evidence": [
+    "\"What a Lagrange multiplier is\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"What is a Lagrange multiplier?\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"What a Lagrange multiplier is\"",
+   "problem": "The embedded clause ends on a bare \"is\", which sounds stilted read aloud. It is also the only non-noun chapter title and repeats the l03 title card.",
+   "suggest": "\"What is a Lagrange multiplier?\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "章节卡改 What is a Lagrange multiplier?",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I2",
+   "key": "84f65830ad7a",
+   "item": "screen_en",
+   "where": "intro (`card_intro`)",
+   "dim": "P3, P5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3, P5",
+   "shots": [
+    "intro (`card_intro`)"
+   ],
+   "evidence": [
+    "Lagrange multiplier"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Lagrange multiplier** — retain the term, reduce its size, and fit the complete title within the frame",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Lagrange multiplier",
+   "problem": "The title exceeds the frame width: the opening “L” and the right end are clipped. The episode’s identifying term must be fully readable. This screenshot supplies no evidence of a later readable hold.",
+   "suggest": "**Lagrange multiplier** — retain the term, reduce its size, and fit the complete title within the frame",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "包装模板：片头片名过宽时按比例缩字号（template.html），英文片名不再被裁",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I3",
+   "key": "02e66ddbc582",
+   "item": "screen_en",
+   "where": "card s6 (outro, strict)",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "card s6 (outro, strict)"
+   ],
+   "evidence": [
+    "\"a price on a constraint, / set just right\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"a price on a constraint — set just right\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"a price on a constraint, / set just right\"",
+   "problem": "\"set just right\" is a dangling participle and the comma splits it from the lead-in. It is passable but not clean.",
+   "suggest": "\"a price on a constraint — set just right\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "片尾卡改 Price the rule / just right（≤6 词，不再照搬口播）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I4",
+   "key": "983f8715723b",
+   "item": "screen_en",
+   "where": "l01–l03",
+   "dim": "P2, P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2, P4",
+   "shots": [
+    "l01–l03"
+   ],
+   "evidence": [
+    "Be helpful / Harm ≤ the line; Do your best / Never cross"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Main pair: **Helpfulness ↑** / **Harm ≤ limit**<br>Side labels at l02: **Goal** / **Constraint**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Be helpful / Harm ≤ the line; Do your best / Never cross",
+   "problem": "The cold open mixes an instruction with a mathematical comparison to a metaphorical “line.” l02 adds wording already spoken verbatim rather than clarifying the goal/constraint structure. These are strict cold-open items.",
+   "suggest": "Main pair: **Helpfulness ↑** / **Harm ≤ limit**<br>Side labels at l02: **Goal** / **Constraint**",
+   "judge_note": "b · l01–l03（cold open 改成 “Helpfulness ↑ / Harm ≤ limit”，侧标改 “Goal / Constraint”）：改了更差。冷开场的钩子就是 “Do your best” 和 “never cross” 这两句口语要求形成的反差。改成 Goal/Constraint，会在 l04 讲到之前就先用上术语，还和 l04 的两张卡片重复。冷开场真正要改的是 a 指出的 “Do your / best” 换行，以及给两句加引号。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：改成 Goal / Constraint 会在 l04 之前抢用术语；只采纳加引号与不折行（见 I5）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I5",
+   "key": "9b4bd2721d8a",
+   "item": "screen_en",
+   "where": "l02 (cold open, strict)",
+   "dim": "P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l02 (cold open, strict)"
+   ],
+   "evidence": [
+    "\"Do your / best\" (wrapped) and \"Never cross\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Widen the label column. \"“Do your best”\" / \"“Never cross it”\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Do your / best\" (wrapped) and \"Never cross\"",
+   "problem": "The left label wraps to two lines (screenshot). \"Never cross\" has no object, and the narration quotes both phrases but the screen has no quote marks.",
+   "suggest": "Widen the label column. \"“Do your best”\" / \"“Never cross it”\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "冷开场标签加引号并加宽不折行：“Do your best” / “Never cross it”",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I6",
+   "key": "b7ce92026746",
+   "item": "screen_en",
+   "where": "l03 (cold open, strict)",
+   "dim": "P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l03 (cold open, strict)"
+   ],
+   "evidence": [
+    "eyebrow \"1788 · Lagrange\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Either have the narration say \"In 1788\" or change to \"Lagrange\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "eyebrow \"1788 · Lagrange\"",
+   "problem": "The narration says \"over two hundred years ago\", not 1788, so the date is a claim the narration does not make. It is mild and accurate, but the strict rule says anything off is must-fix.",
+   "suggest": "Either have the narration say \"In 1788\" or change to \"Lagrange\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "眉题改 A 200-year-old idea（与口播「两百多年前」一致，不再出现 1788）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I7",
+   "key": "6cd156af5c70",
+   "item": "screen_en",
+   "where": "l04",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l04"
+   ],
+   "evidence": [
+    "\"Make it the best\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"As good as possible\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Make it the best\"",
+   "problem": "Vague \"it\", slightly off idiom.",
+   "suggest": "\"As good as possible\"",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "l04 两张卡是「目标 / 约束」的对照，Don’t cross the line 与口播 without crossing a line 一致",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I8",
+   "key": "7d57ac795d39",
+   "item": "screen_en",
+   "where": "l04",
+   "dim": "P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l04"
+   ],
+   "evidence": [
+    "Don’t cross the / line"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "Don’t cross the line（缩字号或加宽卡片，保持一行），或 Stay under the line",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "Don’t cross the / line",
+   "problem": "CONSTRAINT 卡片里 “line” 单独掉到第二行，和左边一行就放下的 GOAL 卡片不对称。",
+   "suggest": "Don’t cross the line（缩字号或加宽卡片，保持一行），或 Stay under the line",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "英文卡片加宽到 680px，Don’t cross the line 一行放下",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I9",
+   "key": "3bd759788714",
+   "item": "screen_en",
+   "where": "l06",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l06"
+   ],
+   "evidence": [
+    "\"A little over, a little lost\" + \"The price λ: the Lagrange multiplier\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Over a bit, lose a bit\" + \"λ = the Lagrange multiplier\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"A little over, a little lost\" + \"The price λ: the Lagrange multiplier\"",
+   "problem": "The big λ appears twice (tag and left), the body line is tautological, and \"lost\" has no object.",
+   "suggest": "\"Over a bit, lose a bit\" + \"λ = the Lagrange multiplier\"",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "价签图里的 λ 是图标，左侧大 λ 是术语出场，两者一图一字，分工不同",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I10",
+   "key": "3ce52c7f2530",
+   "item": "screen_en",
+   "where": "l06",
+   "dim": "P2, P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2, P4",
+   "shots": [
+    "l06"
+   ],
+   "evidence": [
+    "A little over, a little lost / The price λ: the Lagrange multiplier"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Extra distance → lost points**<br>Definition: **λ: Lagrange multiplier**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "A little over, a little lost / The price λ: the Lagrange multiplier",
+   "problem": "“A little lost” briefly suggests confusion or something missing. The definition underneath is also longer than necessary beside an oversized λ.",
+   "suggest": "**Extra distance → lost points**<br>Definition: **λ: Lagrange multiplier**",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l06 改 Cross it → lose points",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I11",
+   "key": "e426d7bba99f",
+   "item": "screen_en",
+   "where": "l07",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l07"
+   ],
+   "evidence": [
+    "\"1 hour a day, max\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Max 1 hour a day\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"1 hour a day, max\"",
+   "problem": "Clipped \"max\".",
+   "suggest": "\"Max 1 hour a day\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改 1 hour a day at most",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I12",
+   "key": "52b81e053223",
+   "item": "screen_en",
+   "where": "l10",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l10"
+   ],
+   "evidence": [
+    "\"The just-right price\" (22px eyebrow)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Promote to h2 size",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"The just-right price\" (22px eyebrow)",
+   "problem": "The key phrase is at eyebrow size beside a 240px λ.",
+   "suggest": "Promote to h2 size",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "l10 屏幕落点就是大号 λ 本身，眉题只做说明",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I13",
+   "key": "e83b31cab8ac",
+   "item": "screen_en",
+   "where": "l13",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l13"
+   ],
+   "evidence": [
+    "\"Rule: stay inside\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Rule: stay in the fence\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Rule: stay inside\"",
+   "problem": "The object is missing.",
+   "suggest": "\"Rule: stay in the fence\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改 Rule: stay in the fence",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I14",
+   "key": "ba70842f9a63",
+   "item": "screen_en",
+   "where": "l14",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l14"
+   ],
+   "evidence": [
+    "\"No fence. A charge.\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"No fence, just a charge\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"No fence. A charge.\"",
+   "problem": "Periods on fragments; also \"charge\" then \"price\" in l16.",
+   "suggest": "\"No fence, just a charge\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改 No fence, just a charge",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I15",
+   "key": "f5baa181fe1d",
+   "item": "screen_en",
+   "where": "l14–l15",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l14–l15"
+   ],
+   "evidence": [
+    "No fence. A charge."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Fence → charge**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "No fence. A charge.",
+   "problem": "Both fragments carry trailing periods, unlike the surrounding fragment headlines. The punctuation creates unnecessary sentence-like stops.",
+   "suggest": "**Fence → charge**",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I14",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I16",
+   "key": "82e6e18f5733",
+   "item": "screen_en",
+   "where": "l15",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l15"
+   ],
+   "evidence": [
+    "\"Find: height − charge, max\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Maximize: height − charge\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Find: height − charge, max\"",
+   "problem": "\"max\" is clipped and used as a verb.",
+   "suggest": "\"Maximize: height − charge\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改 Maximize height − charge（一行）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I17",
+   "key": "8e502687e815",
+   "item": "screen_en",
+   "where": "l15",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l15"
+   ],
+   "evidence": [
+    "Find: height − charge, max"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Maximize height − charge**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Find: height − charge, max",
+   "problem": "“Find:” followed by a trailing “max” sounds like a production note. The intended optimization target can be stated directly.",
+   "suggest": "**Maximize height − charge**",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I16",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I18",
+   "key": "b0bb7cd20f0f",
+   "item": "screen_en",
+   "where": "l15",
+   "dim": "P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l15"
+   ],
+   "evidence": [
+    "Find: height − charge, / max"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "Maximize height − charge（一行放下）",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "Find: height − charge, / max",
+   "problem": "截图里 “max” 单独掉到第二行成了孤词，读起来更像制作备注（两人只批了措辞，没看换行）。",
+   "suggest": "Maximize height − charge（一行放下）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I16",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I19",
+   "key": "26d05fa2002d",
+   "item": "screen_en",
+   "where": "l17",
+   "dim": "P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l17"
+   ],
+   "evidence": [
+    "\"Farther out, higher price\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Move into the panel's white area, or \"Farther out → higher price\" in dark text",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Farther out, higher price\"",
+   "problem": "Red text on orange fill, past the panel edge.",
+   "suggest": "Move into the panel's white area, or \"Farther out → higher price\" in dark text",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "图内标注加底色，不再压在橙色等高带上",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I20",
+   "key": "4cec205da33d",
+   "item": "screen_en",
+   "where": "l18",
+   "dim": "P2",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l18"
+   ],
+   "evidence": [
+    "readout \"2.63\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Hold 1.5 on screen for the first half of the line",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "readout \"2.63\"",
+   "problem": "The narration says \"At 1.5… raise it again\", but the end frame shows 2.63. If 1.5 never reads on screen, the narration number has no visual anchor.",
+   "suggest": "Hold 1.5 on screen for the first half of the line",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人核过：l18 先数到 1.5，「再涨再退」继续数，句末画面 2.63 与口播不错位",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I21",
+   "key": "bc031d92680b",
+   "item": "screen_en",
+   "where": "l20",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l20"
+   ],
+   "evidence": [
+    "\"Tuning λ\" + \"λ 3\" + \"Right on the fence\" + \"Height 7.75\" + chart"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Drop the green h2. Keep \"Tuning λ\" / \"λ 3\" / \"Height 7.75\" / chart.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Tuning λ\" + \"λ 3\" + \"Right on the fence\" + \"Height 7.75\" + chart",
+   "problem": "5 text blocks (limit 4). \"Right on the fence\" is stale from l19; this line is about the height.",
+   "suggest": "Drop the green h2. Keep \"Tuning λ\" / \"λ 3\" / \"Height 7.75\" / chart.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l20 起标题与状态行淡出，只留价格、高度读数与图（4 块）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I22",
+   "key": "4d1525b13ea4",
+   "item": "screen_en",
+   "where": "l20–l21",
+   "dim": "P1, P3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P3",
+   "shots": [
+    "l20–l21"
+   ],
+   "evidence": [
+    "Tuning λ / λ 3 or λ 4 / Right on the fence or Hiding inside / Height 7.75 or 6.00"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Remove **Tuning λ** on these two screens. Retain chart, **λ = 3** / **λ = 4**, **On the fence** / **Inside the fence**, and **Height: 7.75** / **Height: 6.00**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Tuning λ / λ 3 or λ 4 / Right on the fence or Hiding inside / Height 7.75 or 6.00",
+   "problem": "Five blocks: chart, title, price display, status, height display. Chart labels count together; λ and its number count together. The separately positioned price and height displays are not a row of look-alike items. The four-block limit is still exceeded.",
+   "suggest": "Remove **Tuning λ** on these two screens. Retain chart, **λ = 3** / **λ = 4**, **On the fence** / **Inside the fence**, and **Height: 7.75** / **Height: 6.00**",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I21",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I23",
+   "key": "01920d8898aa",
+   "item": "screen_en",
+   "where": "l21",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l21"
+   ],
+   "evidence": [
+    "\"Tuning λ\" + \"λ 4\" + \"Hiding inside\" + \"Height 6.00\" + chart"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Merge into one readout row \"λ 4 · Height 6.00\" and keep \"Hiding inside\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Tuning λ\" + \"λ 4\" + \"Hiding inside\" + \"Height 6.00\" + chart",
+   "problem": "5 text blocks (limit 4). 6.00 is a number the narration never says.",
+   "suggest": "Merge into one readout row \"λ 4 · Height 6.00\" and keep \"Hiding inside\"",
+   "judge_note": "a · l21 “6.00 is a number the narration never says”：P2 本来就要求数字由屏幕承担，屏上给出口播没念的读数正是分工到位，不算问题。这一行只有 5 块超限这一条成立。",
+   "status": "implemented",
+   "solution": "同 I21",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I24",
+   "key": "bdc8da460b0d",
+   "item": "screen_en",
+   "where": "l21",
+   "dim": "P3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l21"
+   ],
+   "evidence": [
+    "绿色空心圈（上一屏 λ=3 的落点）"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "在绿圈旁加图内小字 “λ 3”，或改成淡灰色",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "绿色空心圈（上一屏 λ=3 的落点）",
+   "problem": "上一屏最优点的绿圈留在图上，没有任何标注，不熟悉的观众会把它当成第二个点。",
+   "suggest": "在绿圈旁加图内小字 “λ 3”，或改成淡灰色",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级；绿圈出现在 l20「有围栏时的最高点」，l21 的口播「白白少爬了一截」正指着它",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I25",
+   "key": "0207756720be",
+   "item": "screen_en",
+   "where": "l22",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l22"
+   ],
+   "evidence": [
+    "\"Contour meets fence\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Contour touches fence\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Contour meets fence\"",
+   "problem": "The narration says \"just touches\".",
+   "suggest": "\"Contour touches fence\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "标题改 Contour touches fence",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I26",
+   "key": "f65e4817a48b",
+   "item": "screen_en",
+   "where": "l23",
+   "dim": "P1, P2, P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2, P4",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "Uphill points / straight out of the fence"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Uphill: perpendicular to fence**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Uphill points / straight out of the fence",
+   "problem": "Splitting the wording does not turn this seven-word sentence into an outline. “Out of the fence” is also awkward spatial English: the arrow starts at the boundary and points outward.",
+   "suggest": "**Uphill: perpendicular to fence**",
+   "judge_note": "b · l23 改写 “Uphill: perpendicular to fence”：问题本身成立，但这个改写引入了口播没说过的 “perpendicular”，违反 P2 “用词与口播一致”。a 给的符号版 “Uphill ⟂ fence” 对大众观众也同样难懂。建议用 “Uphill → straight through fence”。",
+   "status": "implemented",
+   "solution": "l23 改为一行 Uphill → straight through fence（裁决人写法）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I27",
+   "key": "6b0893ab810f",
+   "item": "screen_en",
+   "where": "l23",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "\"Uphill points / straight out of the fence\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "One block: \"Uphill ⟂ fence\" or \"Uphill points straight out\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Uphill points / straight out of the fence\"",
+   "problem": "Near-verbatim copy of the narration, split over two h2 blocks. The narration says \"through the fence\".",
+   "suggest": "One block: \"Uphill ⟂ fence\" or \"Uphill points straight out\"",
+   "judge_note": "b · l23 改写 “Uphill: perpendicular to fence”：问题本身成立，但这个改写引入了口播没说过的 “perpendicular”，违反 P2 “用词与口播一致”。a 给的符号版 “Uphill ⟂ fence” 对大众观众也同样难懂。建议用 “Uphill → straight through fence”。",
+   "status": "implemented",
+   "solution": "同 I26",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I28",
+   "key": "a8c23909c04d",
+   "item": "screen_en",
+   "where": "l24",
+   "dim": "P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l24"
+   ],
+   "evidence": [
+    "\"How costly is the rule?\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"How expensive is the rule?\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"How costly is the rule?\"",
+   "problem": "The narration says \"expensive\".",
+   "suggest": "\"How expensive is the rule?\"",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：屏上「这条规矩有多贵？」与口播 expensive 同义",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I29",
+   "key": "59668366eff9",
+   "item": "screen_en",
+   "where": "l27",
+   "dim": "P2, P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2, P4",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "Loosen a bit, gain ~3×"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Extra height ≈ 3 × extra radius**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Loosen a bit, gain ~3×",
+   "problem": "“Gain ~3×” can mean three times the original height. The narration means extra height approximately three times the small radius increase. The headline drops the relationship the viewer needs.",
+   "suggest": "**Extra height ≈ 3 × extra radius**",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l27 标题改 Extra height ≈ 3 × extra radius（两行，在版心内）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I30",
+   "key": "e6d6ff6e4161",
+   "item": "screen_en",
+   "where": "l27",
+   "dim": "P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "Loosen a bit, gain ~3×"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "Extra height ≈ 3 × extra radius（同时缩到版心内）",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "Loosen a bit, gain ~3×",
+   "problem": "76px 标题右端到约 x=1830，超出左右各 120px 的版心。改写时与 b 的 P2 意见一起处理。",
+   "suggest": "Extra height ≈ 3 × extra radius（同时缩到版心内）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I29",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I31",
+   "key": "eafb2ec3a471",
+   "item": "screen_en",
+   "where": "l29",
+   "dim": "P1, P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "l29"
+   ],
+   "evidence": [
+    "The rule isn’t in the way"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**No constraint cost**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "The rule isn’t in the way",
+   "problem": "A complete explanatory sentence duplicates the spoken conclusion. The diagram and λ = 0 already carry the example; this should be a short status label.",
+   "suggest": "**No constraint cost**",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l29 改 No cost，前提「Summit inside the fence」升为 h2",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I32",
+   "key": "adacb56de678",
+   "item": "screen_en",
+   "where": "l30",
+   "dim": "P1, P2, P5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2, P5",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "λ shows what holds you back / Big λ → Holding you back / λ = 0 → Not in the way"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Title: **The rule’s cost**<br>Rows: **High λ → Costly constraint** / **λ = 0 → No cost**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "λ shows what holds you back / Big λ → Holding you back / λ = 0 → Not in the way",
+   "problem": "A full-sentence headline repeats the narration and then repeats its own “holds you back” wording in the table. Fourteen words in 4.2 seconds exceeds the approximate reading allowance even before subtitles.",
+   "suggest": "Title: **The rule’s cost**<br>Rows: **High λ → Costly constraint** / **λ = 0 → No cost**",
+   "judge_note": "a · l30 改写 “λ flags binding rules / Big λ → Binding / λ = 0 → Slack”：binding/slack 是口播没有的专业术语，备选的 “Holds you / Doesn’t” 不成英文短语。改用 b 的 “High λ → Costly constraint / λ = 0 → No cost” 更好，记得把标题一并缩短。",
+   "status": "implemented",
+   "solution": "l30 标题改 What λ tells you；表格改 High λ → Costly constraint / λ = 0 → No cost",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I33",
+   "key": "0ef417444ece",
+   "item": "screen_en",
+   "where": "l30",
+   "dim": "P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "title + \"Big λ → Holding you back\" + \"λ = 0 → Not in the way\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Title \"λ flags binding rules\". Rows \"Big λ → Binding\" / \"λ = 0 → Slack\" (or keep plain: \"Big λ → Holds you\" / \"λ = 0 → Doesn't\")",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "title + \"Big λ → Holding you back\" + \"λ = 0 → Not in the way\"",
+   "problem": "14 words in 4.2s; \"holds you back\" vs narration \"pinning down\"; rows not parallel (gerund vs negation).",
+   "suggest": "Title \"λ flags binding rules\". Rows \"Big λ → Binding\" / \"λ = 0 → Slack\" (or keep plain: \"Big λ → Holds you\" / \"λ = 0 → Doesn't\")",
+   "judge_note": "a · l30 改写 “λ flags binding rules / Big λ → Binding / λ = 0 → Slack”：binding/slack 是口播没有的专业术语，备选的 “Holds you / Doesn’t” 不成英文短语。改用 b 的 “High λ → Costly constraint / λ = 0 → No cost” 更好，记得把标题一并缩短。",
+   "status": "implemented",
+   "solution": "同 I32",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I34",
+   "key": "3476b5a481a0",
+   "item": "screen_en",
+   "where": "l31",
+   "dim": "P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l31"
+   ],
+   "evidence": [
+    "source line \"ICLR 2024\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Make the narration \"first posted in 2023\" or the source line \"Dai et al. · arXiv 2023 · ICLR 2024\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "source line \"ICLR 2024\"",
+   "problem": "The narration says \"In 2023\" (the exempt source line gives the venue year).",
+   "suggest": "Make the narration \"first posted in 2023\" or the source line \"Dai et al. · arXiv 2023 · ICLR 2024\"",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：年份在出处行（豁免）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I35",
+   "key": "f05ac875e23b",
+   "item": "screen_en",
+   "where": "l33",
+   "dim": "P4/P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4/P5",
+   "shots": [
+    "l33"
+   ],
+   "evidence": [
+    "\"Harm ≤ the line, max help\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Harm ≤ line, help maximized\" and add spacing below the cards",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Harm ≤ the line, max help\"",
+   "problem": "\"max help\" is not idiomatic. The headline touches the card bottoms (screenshot). Also \"Harm\" here but \"Harmful\" in the l34 formula.",
+   "suggest": "\"Harm ≤ line, help maximized\" and add spacing below the cards",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改 Harm ≤ the line · Most helpful",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I36",
+   "key": "9c61845c98dd",
+   "item": "screen_en",
+   "where": "l34",
+   "dim": "P2, P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2, P4",
+   "shots": [
+    "l34"
+   ],
+   "evidence": [
+    "Helpful − λ × Harmful"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Helpfulness − λ × harm**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Helpful − λ × Harmful",
+   "problem": "The narration subtracts scores; the formula subtracts adjectives. Quantitative noun labels read more naturally and match the spoken concepts.",
+   "suggest": "**Helpfulness − λ × harm**",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "公式改 Help score − λ × Harm score",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I37",
+   "key": "9f294ac86482",
+   "item": "screen_en",
+   "where": "l35–l36; repeated l37–l39",
+   "dim": "P1, P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "l35–l36; repeated l37–l39"
+   ],
+   "evidence": [
+    "λ tunes itself"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Heading: **Adaptive λ**<br>Table entry: **Adaptive λ**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "λ tunes itself",
+   "problem": "This is a complete explanatory clause, closely repeating “λ adjusts itself” in l35. Its repeated use in the summary table preserves the same sentence-style treatment.",
+   "suggest": "Heading: **Adaptive λ**<br>Table entry: **Adaptive λ**",
+   "judge_note": "b · l35–l36（“λ tunes itself” 是完整说明句，必改）：不成立。这是 3 个记号组成的标题式短语，符合屏上提纲写法；改成 “Adaptive λ” 反而换上了口播里没有的术语，口播用的是 “adjusts itself”。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：λ tunes itself 是三个词的标题短语，口播用 adjusts itself，改成 Adaptive λ 反而引入新词",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I38",
+   "key": "5087d1fadec6",
+   "item": "screen_en",
+   "where": "l35 / l36（图内批注）",
+   "dim": "P5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l35 / l36（图内批注）"
+   ],
+   "evidence": [
+    "Over → λ up"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "文字不变，批注下移约 20px，或给图区加上内边距，保证整行字形完整",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "Over → λ up",
+   "problem": "截图里红色批注顶部被 SVG 图框截掉，“O” 和 “λ” 的上沿是平的。s5.html 第 69 行把它放在 yH(0.7)+6，紧贴图区上沿。两人都没看出来。",
+   "suggest": "文字不变，批注下移约 20px，或给图区加上内边距，保证整行字形完整",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "批注下移到图区内（yH(0.66)+18），字形完整",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I39",
+   "key": "45a898ef6e0d",
+   "item": "screen_en",
+   "where": "l37 / l38 (list row 2)",
+   "dim": "P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l37 / l38 (list row 2)"
+   ],
+   "evidence": [
+    "\"② Regularization / Too complex costs\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Complexity costs\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"② Regularization / Too complex costs\"",
+   "problem": "\"Too complex costs\" parses as the noun phrase \"complex costs\"; a native viewer has to re-read it. It is also not parallel with row 1 (\"λ tunes itself\").",
+   "suggest": "\"Complexity costs\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改 ② Regularization / Complexity costs",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I40",
+   "key": "36c54c20ee35",
+   "item": "screen_en",
+   "where": "l38–l39",
+   "dim": "P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l38–l39"
+   ],
+   "evidence": [
+    "Too complex costs"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Complexity cost**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Too complex costs",
+   "problem": "This compression is unidiomatic: “too complex” does not function naturally as the subject of “costs.” A native viewer has to reconstruct “being too complex costs points.”",
+   "suggest": "**Complexity cost**",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I39",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I41",
+   "key": "ecaed1a2b4f1",
+   "item": "screen_en",
+   "where": "l39 (list row 3)",
+   "dim": "P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l39 (list row 3)"
+   ],
+   "evidence": [
+    "\"③ Stay near the original / Drifting costs\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"③ Closeness to the original model / Drifting costs\" (or shorter: \"③ Original model / Drifting costs\")",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"③ Stay near the original / Drifting costs\"",
+   "problem": "The left column is a verb phrase while rows 1–2 are nouns. \"the original\" is bare (original what?).",
+   "suggest": "\"③ Closeness to the original model / Drifting costs\" (or shorter: \"③ Original model / Drifting costs\")",
+   "judge_note": "b · l39（P1，“分组表格 14 词超过 9 词”）：按第 2 轮计数规则，形态相同的行（每项 ≤6 词、最多 6 项）合并算一块，用来解决块数问题；单项限的是每行 ≤6 词，并不要求合并后的整块 ≤9 词。l39 全屏共 17 词，没超过 22 词，不算硬上限违规。左栏不平行、“Too complex costs” 措辞别扭的问题仍然成立。",
+   "status": "implemented",
+   "solution": "改 ③ Original model / Drifting costs，三行左列都是名词",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I42",
+   "key": "6f5cbf7f7f4a",
+   "item": "screen_en",
+   "where": "l39",
+   "dim": "P1, P3, P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P3, P4",
+   "shots": [
+    "l39"
+   ],
+   "evidence": [
+    "Safety line / λ tunes itself; Regularization / Too complex costs; Stay near the original / Drifting costs"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Safety — Adaptive λ**<br>**Regularization — Complexity cost**<br>**Drift — Deviation cost**<br>Eight English words in the grouped table",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Safety line / λ tunes itself; Regularization / Too complex costs; Stay near the original / Drifting costs",
+   "problem": "With the three look-alike rows grouped as one table block, that block contains **14 words**, exceeding nine. Numbering and λ are excluded. The row labels also mix a noun phrase, a technical noun, and an instruction.",
+   "suggest": "**Safety — Adaptive λ**<br>**Regularization — Complexity cost**<br>**Drift — Deviation cost**<br>Eight English words in the grouped table",
+   "judge_note": "b · l39（P1，“分组表格 14 词超过 9 词”）：按第 2 轮计数规则，形态相同的行（每项 ≤6 词、最多 6 项）合并算一块，用来解决块数问题；单项限的是每行 ≤6 词，并不要求合并后的整块 ≤9 词。l39 全屏共 17 词，没超过 22 词，不算硬上限违规。左栏不平行、“Too complex costs” 措辞别扭的问题仍然成立。",
+   "status": "implemented",
+   "solution": "同 I41（三行同构，每项 ≤6 词）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I43",
+   "key": "dbfc40c20e89",
+   "item": "screen_en",
+   "where": "outro (`card_s6`; l40–l43)",
+   "dim": "P1, P2, P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2, P4",
+   "shots": [
+    "outro (`card_s6`; l40–l43)"
+   ],
+   "evidence": [
+    "A Lagrange multiplier is / a price on a constraint, / set just right"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Eyebrow: **Lagrange multiplier**<br>Title: **A price on a constraint**<br>Note: **Set just right**<br>Next line: **Next: Gradient descent**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "A Lagrange multiplier is / a price on a constraint, / set just right",
+   "problem": "The dominant headline is eight words, exceeding the six-word title limit. Together with the upper line, it reconstructs a narration sentence. The lowercase opening also depends on that sentence. This is a strict outro item.",
+   "suggest": "Eyebrow: **Lagrange multiplier**<br>Title: **A price on a constraint**<br>Note: **Set just right**<br>Next line: **Next: Gradient descent**",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I3",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I44",
+   "key": "243860edfad7",
+   "item": "screen_zh",
+   "where": "outro",
+   "dim": "P1、P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P2",
+   "shots": [
+    "outro"
+   ],
+   "evidence": [
+    "给约束标个价，价对了，就停在线上"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "主标题「给约束标价」；辅文「调好价，停在线上」。删去上方句首「拉格朗日乘子，就是」，保留下一期信息。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "给约束标个价，价对了，就停在线上",
+   "problem": "同一主标题跨两行，共 14 字，超过 12 字；仍是口播结论整句上屏，缺少纲要化处理。",
+   "suggest": "主标题「给约束标价」；辅文「调好价，停在线上」。删去上方句首「拉格朗日乘子，就是」，保留下一期信息。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "片尾卡改「给约束标价 / 价对了，停在线上」（12 字，不带句读，不照搬口播）；页眉用系列默认「一句话记住」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I45",
+   "key": "2e8811ea20a0",
+   "item": "screen_zh",
+   "where": "card_s6 片尾",
+   "dim": "P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "card_s6 片尾"
+   ],
+   "evidence": [
+    "拉格朗日乘子，就是（小字）／给约束标个价，（行末逗号）"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "主标题「给约束标价」；辅文「价对了，停在线上」；删去上方「拉格朗日乘子，就是」",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "拉格朗日乘子，就是（小字）／给约束标个价，（行末逗号）",
+   "problem": "小字以「就是」收尾，是半句话；主标题第一行以逗号结尾，PPT 式标题不该带句读。片尾属从严条目",
+   "suggest": "主标题「给约束标价」；辅文「价对了，停在线上」；删去上方「拉格朗日乘子，就是」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I44",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I46",
+   "key": "33aec3fa6d04",
+   "item": "screen_zh",
+   "where": "片尾（card_s6）",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "片尾（card_s6）"
+   ],
+   "evidence": [
+    "拉格朗日乘子，就是／给约束标个价，价对了，就停在线上"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "给约束标个价｜价对了，就停在线上",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "拉格朗日乘子，就是／给约束标个价，价对了，就停在线上",
+   "problem": "与口播 l40、l41 近乎逐字；屏上两行 14 字成句，收束卡可更短（从严类，但读着顺，不判必改）",
+   "suggest": "给约束标个价｜价对了，就停在线上",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I44",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I47",
+   "key": "9b0aa2370205",
+   "item": "screen_zh",
+   "where": "l03",
+   "dim": "P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l03"
+   ],
+   "evidence": [
+    "1788 · 拉格朗日"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "保留亦可",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "1788 · 拉格朗日",
+   "problem": "年份口播没说（口播「两百多年前」）；不矛盾，算小标签",
+   "suggest": "保留亦可",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "已改：眉题改为「两百多年前的办法」，不再出现年份",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/s0.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I48",
+   "key": "04e91160adbb",
+   "item": "screen_zh",
+   "where": "l06",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l06"
+   ],
+   "evidence": [
+    "越线一点，扣一点分"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "越线 → 扣分",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "越线一点，扣一点分",
+   "problem": "几乎等同口播「越线一点，就扣一点分」",
+   "suggest": "越线 → 扣分",
+   "judge_note": "a · l06 / l15「截图里冒号是半角」：源码 s2.html:51「单价 λ：拉格朗日乘子」和 s3.html:33「找：高度 − 扣分 最大」用的都是全角「：」。截图里冒号窄，是字体对全角冒号的字形，不是标点用错。这一条不成立（「高度 − 扣分 最大」不成短语那部分仍然成立）。",
+   "status": "implemented",
+   "solution": "l06 改「越线 → 扣分」，上一屏淡到 0.3，视线落在新概念上",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I49",
+   "key": "c63318414684",
+   "item": "screen_zh",
+   "where": "l06 / l15",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l06 / l15"
+   ],
+   "evidence": [
+    "单价 λ：拉格朗日乘子；找：高度 − 扣分 最大"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "单价 λ：拉格朗日乘子；找：高度 − 扣分 的最大值",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "单价 λ：拉格朗日乘子；找：高度 − 扣分 最大",
+   "problem": "截图里冒号是半角「:」，中文页应为全角；「高度 − 扣分 最大」不成短语，也是整句口语的缩写",
+   "suggest": "单价 λ：拉格朗日乘子；找：高度 − 扣分 的最大值",
+   "judge_note": "a · l06 / l15「截图里冒号是半角」：源码 s2.html:51「单价 λ：拉格朗日乘子」和 s3.html:33「找：高度 − 扣分 最大」用的都是全角「：」。截图里冒号窄，是字体对全角冒号的字形，不是标点用错。这一条不成立（「高度 − 扣分 最大」不成短语那部分仍然成立）。",
+   "status": "implemented",
+   "solution": "l15 改「高度 − 扣分，取最大」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I50",
+   "key": "d52cc6cae2b5",
+   "item": "screen_zh",
+   "where": "l06",
+   "dim": "P1、P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P3",
+   "shots": [
+    "l06"
+   ],
+   "evidence": [
+    "不立墙／改成标价／越线一点，扣一点分／单价 λ：拉格朗日乘子"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "主标题「拉格朗日乘子 λ」；辅文「扣分单价」。撤掉上一屏「不立墙／改成标价」及重复说明。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "不立墙／改成标价／越线一点，扣一点分／单价 λ：拉格朗日乘子",
+   "problem": "上一屏的说明继续保留，新说明再叠加；术语反而放在较小的底部文字里。即使按图合块后未超限，视觉重点仍应转到本句介绍的概念。",
+   "suggest": "主标题「拉格朗日乘子 λ」；辅文「扣分单价」。撤掉上一屏「不立墙／改成标价」及重复说明。",
+   "judge_note": "a · l06 / l15「截图里冒号是半角」：源码 s2.html:51「单价 λ：拉格朗日乘子」和 s3.html:33「找：高度 − 扣分 最大」用的都是全角「：」。截图里冒号窄，是字体对全角冒号的字形，不是标点用错。这一条不成立（「高度 − 扣分 最大」不成短语那部分仍然成立）。",
+   "status": "implemented",
+   "solution": "同 I48",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I51",
+   "key": "413fc96d843d",
+   "item": "screen_zh",
+   "where": "l15",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l15"
+   ],
+   "evidence": [
+    "找：高度 − 扣分 最大"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "「（高度−扣分）最大」",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "找：高度 − 扣分 最大",
+   "problem": "「找：……最大」读着拗口；没有括号，扫读时容易把「最大」只接到「扣分」上。",
+   "suggest": "「（高度−扣分）最大」",
+   "judge_note": "a · l06 / l15「截图里冒号是半角」：源码 s2.html:51「单价 λ：拉格朗日乘子」和 s3.html:33「找：高度 − 扣分 最大」用的都是全角「：」。截图里冒号窄，是字体对全角冒号的字形，不是标点用错。这一条不成立（「高度 − 扣分 最大」不成短语那部分仍然成立）。",
+   "status": "implemented",
+   "solution": "同 I49",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I52",
+   "key": "1806a35b90b6",
+   "item": "screen_zh",
+   "where": "l17",
+   "dim": "P5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l17"
+   ],
+   "evidence": [
+    "出圈多远，涨多少"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "标注放大，或改「远一寸，涨一分」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "出圈多远，涨多少",
+   "problem": "2.8s 内同屏有图、λ 0、h1、红色标注共 22 字，红色标注是这一屏唯一的新信息，却是最小的字（约 28px）",
+   "suggest": "标注放大，或改「远一寸，涨一分」",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级；l17 图内标注已加底色更醒目，字号仍按图内标签规范",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I53",
+   "key": "0f40ed8de1d0",
+   "item": "screen_zh",
+   "where": "l20、l21",
+   "dim": "P1、P3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P3",
+   "shots": [
+    "l20、l21"
+   ],
+   "evidence": [
+    "λ 从零往上调／λ 3〔4〕／停在围栏上〔躲进圈里〕／高度 7.75〔6.00〕"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "l20 标题「λ=3：刚好到围栏」；l21 标题「λ=4：退进圈内」。撤掉独立价格块及原状态说明，保留图和高度数值，各为 3 块。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "λ 从零往上调／λ 3〔4〕／停在围栏上〔躲进圈里〕／高度 7.75〔6.00〕",
+   "problem": "图内文字合算 1 块后，仍有图、标题、价格数值、状态说明、高度数值，共 5 块。价格与高度字号、样式不同，不能按同构列表合并豁免。",
+   "suggest": "l20 标题「λ=3：刚好到围栏」；l21 标题「λ=4：退进圈内」。撤掉独立价格块及原状态说明，保留图和高度数值，各为 3 块。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l20 起标题「λ 从零往上调」与状态行淡出，同屏 4 块",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I54",
+   "key": "b184e90264ce",
+   "item": "screen_zh",
+   "where": "l20",
+   "dim": "P1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l20"
+   ],
+   "evidence": [
+    "图 + h1「λ 从零往上调」+「价格 λ 3」+「停在围栏上」+「高度 7.75」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "去掉「停在围栏上」（口播已说），或把「高度 7.75」并入价格读数一块",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "图 + h1「λ 从零往上调」+「价格 λ 3」+「停在围栏上」+「高度 7.75」",
+   "problem": "数下来 5 块（价格读数与高度读数各算一块），超 4 块；三条读数并列，观众不知先看哪个",
+   "suggest": "去掉「停在围栏上」（口播已说），或把「高度 7.75」并入价格读数一块",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I53",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I55",
+   "key": "9be44ff5a29e",
+   "item": "screen_zh",
+   "where": "l23",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "往高处的方向／正对围栏往外"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "向高处 = 朝围栏外",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "往高处的方向／正对围栏往外",
+   "problem": "与口播逐字重复（口播「往高处的方向，正对着围栏往外」），等于印了一遍口播",
+   "suggest": "向高处 = 朝围栏外",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l23 改为一行「往高处 → 直直穿过围栏」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I56",
+   "key": "94a2b0685025",
+   "item": "screen_zh",
+   "where": "l24–l30 页眉",
+   "dim": "P3、P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3、P4",
+   "shots": [
+    "l24–l30 页眉"
+   ],
+   "evidence": [
+    "03 · 把 Λ 看成价格"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "页眉的 λ 不能被转成大写（给 λ 单独套一层不做大小写转换的 span，或页眉不用大写样式），屏上显示「03 · 把 λ 看成价格」",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "03 · 把 Λ 看成价格",
+   "problem": "源码 s4.html:25 写的是小写 λ，但页眉样式把它渲染成大写 Λ（截图 l26–l30 可见）。这和章节卡 card_c_lens「把 λ 看成价格」不一致，Λ 也是另一个符号。页眉章节名属从严条目。a 记作存疑，b 漏了，现在确认",
+   "suggest": "页眉的 λ 不能被转成大写（给 λ 单独套一层不做大小写转换的 span，或页眉不用大写样式），屏上显示「03 · 把 λ 看成价格」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "页眉里的 λ 套 text-transform:none，不再显示成大写 Λ",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I57",
+   "key": "b85b5fbb2f4a",
+   "item": "screen_zh",
+   "where": "l24 / l30",
+   "dim": "P4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l24 / l30"
+   ],
+   "evidence": [
+    "这条规矩有多贵？／看 λ，找真正卡你的规矩"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "可保留",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "这条规矩有多贵？／看 λ，找真正卡你的规矩",
+   "problem": "h1 带问号、h1 是整句；仍 ≤12 字，读得顺",
+   "suggest": "可保留",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：两句都 ≤12 字，读得顺",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I58",
+   "key": "920667f25263",
+   "item": "screen_zh",
+   "where": "l26–l28",
+   "dim": "P4、P5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4、P5",
+   "shots": [
+    "l26–l28"
+   ],
+   "evidence": [
+    "+0.29 ≈ 3 × 0.1"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "「0.29≈3×0.1」，字号降至约 64px，并完整放入右栏。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "+0.29 ≈ 3 × 0.1",
+   "problem": "三张截图中，公式最右端均超出画面，无法完整辨认「0.1」。这是实际可读性问题。",
+   "suggest": "「0.29≈3×0.1」，字号降至约 64px，并完整放入右栏。",
+   "judge_note": "b · l26–l28「公式右端被裁切」：截图 s4_l26、s4_l27、s4_l28 中「+0.29 ≈ 3 × 0.1」都完整显示，「0.1」右侧还留有约 220px 空白。问题不存在，相应的「降到 64px」改写也不需要。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：截图里「+0.29 ≈ 3 × 0.1」完整显示，右侧还有约 220px",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I59",
+   "key": "5c7f862d444d",
+   "item": "screen_zh",
+   "where": "l27",
+   "dim": "P2、P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2、P4",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "放宽一点，多得约 3 倍"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "「高度增量≈3×半径增量」",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "放宽一点，多得约 3 倍",
+   "problem": "「多得」没有说明多得什么、相对什么；脱离口播看，容易理解成高度变为原来的约三倍，与 7.75→8.04 的数字关系冲突。",
+   "suggest": "「高度增量≈3×半径增量」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l27 标题改「多放 0.1，多爬约 3 倍」（裁决人写法）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I60",
+   "key": "59341255420a",
+   "item": "screen_zh",
+   "where": "l27",
+   "dim": "P2、P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2、P4",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "放宽一点，多得约 3 倍"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "多放 0.1，多爬约 3 倍",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "放宽一点，多得约 3 倍",
+   "problem": "b 的改写「高度增量≈3×半径增量」意思对，但「增量」是口播没用过的术语，读着像公式",
+   "suggest": "多放 0.1，多爬约 3 倍",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I59",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I61",
+   "key": "eccfbf1dfa25",
+   "item": "screen_zh",
+   "where": "l27（页眉）",
+   "dim": "P4",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l27（页眉）"
+   ],
+   "evidence": [
+    "03 · 把 Λ 看成价格"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "核对页眉是否被转成大写，全片统一用 λ",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "03 · 把 Λ 看成价格",
+   "problem": "截图里页眉 λ 看着像大写 Λ（可能是字母间距下的渲染），而 card_c_lens 里是小写 λ",
+   "suggest": "核对页眉是否被转成大写，全片统一用 λ",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I56",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I62",
+   "key": "e3d6d722ff98",
+   "item": "screen_zh",
+   "where": "l29",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l29"
+   ],
+   "evidence": [
+    "山顶在围栏里（22px 小标签）"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "把前提升到 h2：「山顶在圈内 → λ = 0」，下方保留「规矩没挡着」",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "山顶在围栏里（22px 小标签）",
+   "problem": "这一屏的结论「λ = 0」完全依赖这个前提，而前提却是全屏最小的字，第一眼只看到「λ = 0／规矩没挡着」，不知道为什么",
+   "suggest": "把前提升到 h2：「山顶在圈内 → λ = 0」，下方保留「规矩没挡着」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "前提「山顶在围栏里」升为 h2",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I63",
+   "key": "8fb47b524a23",
+   "item": "screen_zh",
+   "where": "l31",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l31"
+   ],
+   "evidence": [
+    "安全的人类反馈强化学习"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "删掉，保留「Safe RLHF」+ 小标签「训练大模型」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "安全的人类反馈强化学习",
+   "problem": "口播只说「Safe RLHF」，这个译名是屏上新说法，11 字挨着 22px 小标签「训练大语言模型」，层级不清",
+   "suggest": "删掉，保留「Safe RLHF」+ 小标签「训练大模型」",
+   "judge_note": "a · l31 改写「删掉『安全的人类反馈强化学习』」：口播只说了英文缩写「Safe RLHF」，中文观众多数不认识 RLHF，屏上这行释义是唯一的中文解释。删掉会更难懂，保留，最多记为「记录」。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人保留：口播只说英文缩写，屏上这行是唯一的中文释义",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I64",
+   "key": "45abf1eeb868",
+   "item": "screen_zh",
+   "where": "l35 / l36",
+   "dim": "P5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l35 / l36"
+   ],
+   "evidence": [
+    "底线（24px）、超标 → λ 涨（28px）"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "字号提到 ≥32px",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "底线（24px）、超标 → λ 涨（28px）",
+   "problem": "图内文字偏小，压在底部字幕上方",
+   "suggest": "字号提到 ≥32px",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级；版式自检确认图内文字不压字幕带",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I65",
+   "key": "aeec6d560967",
+   "item": "screen_zh",
+   "where": "第 4 章名 / l37–l39",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "第 4 章名 / l37–l39"
+   ],
+   "evidence": [
+    "AI 里的一个例子"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "AI 里的用处；或 AI 里的 λ",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "AI 里的一个例子",
+   "problem": "从 l37 起讲三个用途，「一个例子」与内容不符；章名与 l37 标题「给规矩标价的系数」两层说法不衔接（从严条目，判为有点怪时必改）",
+   "suggest": "AI 里的用处；或 AI 里的 λ",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "第 4 章改名「AI 里怎么用 / How AI uses it」（讲了三个用处）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I66",
+   "key": "0aa73b7fb137",
+   "item": "screen_zh",
+   "where": "l39",
+   "dim": "P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l39"
+   ],
+   "evidence": [
+    "③ 别离原模型太远｜差远了扣分"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "③ 不偏原模型｜偏远扣分",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "③ 别离原模型太远｜差远了扣分",
+   "problem": "「别离」读成「离别」，一眼歧义；该行 12 字，超过「每项 ≤8 字」，整张列表合算不成 1 块；一屏 36 字正在上限（8.0s）",
+   "suggest": "③ 不偏原模型｜偏远扣分",
+   "judge_note": "a · l39 改写「③ 不偏原模型｜偏远扣分」：「偏远」是现成词，读出来又是新的歧义，比原文好不了多少。改用补充问题表里的「③ 贴近原模型｜偏离扣分」。",
+   "status": "implemented",
+   "solution": "列表改「① 安全底线｜λ 自己调；② 正则化｜复杂扣分；③ 贴近原模型｜偏离扣分」（裁决人写法）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I67",
+   "key": "0e8a384bcf05",
+   "item": "screen_zh",
+   "where": "l39",
+   "dim": "P4、P6",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4、P6",
+   "shots": [
+    "l39"
+   ],
+   "evidence": [
+    "③ 别离原模型太远｜差远了扣分"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "① 安全底线｜λ 自己调；② 正则化｜复杂扣分；③ 贴近原模型｜偏离扣分",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "③ 别离原模型太远｜差远了扣分",
+   "problem": "「别离」有歧义，两人都已指出；但 a 的改写「偏远扣分」又生歧义，b 没给改写。这里给可替换的写法（各行同样用「名｜规则」体例）",
+   "suggest": "① 安全底线｜λ 自己调；② 正则化｜复杂扣分；③ 贴近原模型｜偏离扣分",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I66",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I68",
+   "key": "4cf9dce3cf2a",
+   "item": "screen_zh",
+   "where": "l39 / l38",
+   "dim": "P1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l39 / l38"
+   ],
+   "evidence": [
+    "② 正则化太复杂就扣分"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "② 正则化｜复杂扣分；③ 不偏原模型｜偏远扣分",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "② 正则化太复杂就扣分",
+   "problem": "右列「太复杂就扣分」「差远了扣分」是口播句子的缩写，仍偏长；l37–l39 逐条冒出，l39 是全片字最多的一屏",
+   "suggest": "② 正则化｜复杂扣分；③ 不偏原模型｜偏远扣分",
+   "judge_note": "a · l39 改写「③ 不偏原模型｜偏远扣分」：「偏远」是现成词，读出来又是新的歧义，比原文好不了多少。改用补充问题表里的「③ 贴近原模型｜偏离扣分」。",
+   "status": "implemented",
+   "solution": "同 I66",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/package.json",
+    "edu_videos/ai_terms/t09_lagrange/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I69",
+   "key": "bdd722e47456",
+   "item": "voice_en",
+   "where": "l01",
+   "dim": "V1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l01"
+   ],
+   "evidence": [
+    "be as helpful as you can, but keep anything harmful below a line"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "we say: be as helpful as you can, but stay under a limit on harm.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "be as helpful as you can, but keep anything harmful below a line",
+   "problem": "Cold open, strict item. \"Keep anything harmful below a line\" is a mixed metaphor; harm is \"below\" what? A viewer winces on the very first sentence.",
+   "suggest": "we say: be as helpful as you can, but stay under a limit on harm.",
+   "judge_note": "a 的 l01 改写 \"stay under a limit on harm\"：删掉了 \"line\"，和 l02 的 \"this line\"、屏幕上的「Harm ≤ the line」接不上了。；b 的 l01 改写：同样删了 \"line\"，还丢了 \"ask for something like this\" 这个请求式框架，而 l02 把这两条要求称作 \"different requests\"，正是接着这个框架说的。",
+   "status": "implemented",
+   "solution": "l01 改为「When we train an AI, we often ask for something like this: be as helpful as you can, but don't let harm cross a line.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I70",
+   "key": "d5c42c375729",
+   "item": "voice_en",
+   "where": "l01",
+   "dim": "V1, V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l01"
+   ],
+   "evidence": [
+    "When we train an AI, we often ask for something like this: be as helpful as you can, but keep anything harmful below a line."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "When we train an AI, we want the most helpful answers possible, but we also set a limit on the harm they might cause.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "When we train an AI, we often ask for something like this: be as helpful as you can, but keep anything harmful below a line.",
+   "problem": "“Anything harmful” names things or content, whereas “below a line” needs a measurable amount. The opening should say what is being limited without making the listener repair the metaphor.",
+   "suggest": "When we train an AI, we want the most helpful answers possible, but we also set a limit on the harm they might cause.",
+   "judge_note": "a 的 l01 改写 \"stay under a limit on harm\"：删掉了 \"line\"，和 l02 的 \"this line\"、屏幕上的「Harm ≤ the line」接不上了。；b 的 l01 改写：同样删了 \"line\"，还丢了 \"ask for something like this\" 这个请求式框架，而 l02 把这两条要求称作 \"different requests\"，正是接着这个框架说的。",
+   "status": "implemented",
+   "solution": "l01 改为「When we train an AI, we often ask for something like this: be as helpful as you can, but don't let harm cross a line.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I71",
+   "key": "07b8e99afd60",
+   "item": "voice_en",
+   "where": "l01",
+   "dim": "V6",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V6",
+   "shots": [
+    "l01"
+   ],
+   "evidence": [
+    "be as helpful as you can, but keep anything harmful below a line"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "When we train an AI, we often ask for something like this: be as helpful as you can, but don't let harm cross a line.",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "be as helpful as you can, but keep anything harmful below a line",
+   "problem": "开场是严格项。改 l01 时必须保住 \"line\"，l02 的 \"never cross this line\" 和屏幕上的「Harm ≤ the line」都靠它；a、b 的改写都把它删了。",
+   "suggest": "When we train an AI, we often ask for something like this: be as helpful as you can, but don't let harm cross a line.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l01 改为「When we train an AI, we often ask for something like this: be as helpful as you can, but don't let harm cross a line.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I72",
+   "key": "448216909f44",
+   "item": "voice_en",
+   "where": "l04",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l04"
+   ],
+   "evidence": [
+    "is called constrained optimization"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Doing the best you can without crossing a line has a name: constrained optimization.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "is called constrained optimization",
+   "problem": "Textbook definition tone, but it sets up a term the viewer needs.",
+   "suggest": "Doing the best you can without crossing a line has a name: constrained optimization.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "l04 是全片唯一下定义的句子，带出「constrained optimization」这个词，保留定义口吻",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I73",
+   "key": "f1836b6260a0",
+   "item": "voice_en",
+   "where": "l05/l12/l14/l33/l34/l40 等",
+   "dim": "V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V5",
+   "shots": [
+    "l05/l12/l14/l33/l34/l40 等"
+   ],
+   "evidence": [
+    "Lagrange's idea: … / Our job: … / Lagrange's way: … / The goal: … / Their tool was…: … / in one line: …"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "l12 \"Our job is to find the highest spot.\"；l33 \"We want harm under the line, and as much help as we can get within it.\"；l34 \"They used a Lagrange multiplier: take the helpfulness score, and subtract lambda times the harm score.\"",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "Lagrange's idea: … / Our job: … / Lagrange's way: … / The goal: … / Their tool was…: … / in one line: …",
+   "problem": "全片 12 处「名词短语＋冒号」起句，听起来像模板。挑其中 4–5 处改成完整句即可，l05、l40 可以保留。",
+   "suggest": "l12 \"Our job is to find the highest spot.\"；l33 \"We want harm under the line, and as much help as we can get within it.\"；l34 \"They used a Lagrange multiplier: take the helpfulness score, and subtract lambda times the harm score.\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l12 改为「Our job is to find the highest spot.」；l33 改为「We want harm under the line, and as much help as we can get within it.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I74",
+   "key": "ba1351ca8585",
+   "item": "voice_en",
+   "where": "l06",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l06"
+   ],
+   "evidence": [
+    "lose a little score"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "lose a few points.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "lose a little score",
+   "problem": "\"Score\" appears out of nowhere.",
+   "suggest": "lose a few points.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l06 改为「Go a little over, and you lose a few points. That price is the Lagrange multiplier, usually written λ.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I75",
+   "key": "5ba255b7520c",
+   "item": "voice_en",
+   "where": "l08",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l08"
+   ],
+   "evidence": [
+    "every minute less earns one"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "every minute he skips earns one.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "every minute less earns one",
+   "problem": "Ambiguous; \"less\" what?",
+   "suggest": "every minute he skips earns one.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l08 改为「So the parent tries a new deal: every extra minute costs a dollar of allowance, and every minute under earns one.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I76",
+   "key": "23e39ed6c69c",
+   "item": "voice_en",
+   "where": "l08",
+   "dim": "V1, V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l08"
+   ],
+   "evidence": [
+    "So the parent tries a new deal: every extra minute costs a dollar of allowance, and every minute less earns one."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "So the parent offers a deal: lose a dollar for each minute over the hour; earn one for each minute under.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "So the parent tries a new deal: every extra minute costs a dollar of allowance, and every minute less earns one.",
+   "problem": "“Every minute less” is compressed: less than what? “Over the hour” and “under” make the two sides instantly parallel.",
+   "suggest": "So the parent offers a deal: lose a dollar for each minute over the hour; earn one for each minute under.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l08 改为「So the parent tries a new deal: every extra minute costs a dollar of allowance, and every minute under earns one.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I77",
+   "key": "722885902d1d",
+   "item": "voice_en",
+   "where": "l10",
+   "dim": "V1, V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V4",
+   "shots": [
+    "l10"
+   ],
+   "evidence": [
+    "Get it just right, and he stops around the one-hour mark on his own. That just-right price is what lambda is."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Get it just right, and he stops around the one-hour mark on his own. That price is lambda.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Get it just right, and he stops around the one-hour mark on his own. That just-right price is what lambda is.",
+   "problem": "The first sentence works. “That just-right price is what lambda is” repeats “just right” and uses an unnecessarily roundabout ending.",
+   "suggest": "Get it just right, and he stops around the one-hour mark on his own. That price is lambda.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l10 改为「Get it just right, and he stops around the one-hour mark on his own. That just-right price is λ.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I78",
+   "key": "a080a5fa5723",
+   "item": "voice_en",
+   "where": "l11",
+   "dim": "V2, V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2, V3",
+   "shots": [
+    "l11"
+   ],
+   "evidence": [
+    "Let's try a small experiment. Here's a map. The rings are contour lines, rising toward the summit in the middle."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Let's use a map. Its rings mark different heights. They're called contour lines. The summit's in the middle.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Let's try a small experiment. Here's a map. The rings are contour lines, rising toward the summit in the middle.",
+   "problem": "At the chapter entrance, “contour lines” names the rings before clearly saying what they represent. An ear-only listener needs the simple connection between rings and height.",
+   "suggest": "Let's use a map. Its rings mark different heights. They're called contour lines. The summit's in the middle.",
+   "judge_note": "b 的 l11（必改）：原句 \"The rings are contour lines, rising toward the summit in the middle\" 已经说清楚环线和高度的关系，普通观众知道地图上的等高线。这条不到必改。b 的改写还删掉了 \"experiment\"，而这是本章（屏幕章节卡 \"A small experiment\"）的框架。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：原句已说清环线与高度的关系，且要保留 experiment 这个章节框架",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I79",
+   "key": "3d5127c8c500",
+   "item": "voice_en",
+   "where": "l15",
+   "dim": "V1, V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l15"
+   ],
+   "evidence": [
+    "Then find the spot where height minus that charge is biggest. That's this dot."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Subtract the charge from the height. The dot marks whichever spot scores highest.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Then find the spot where height minus that charge is biggest. That's this dot.",
+   "problem": "“Height minus that charge is biggest” sounds like an equation being read. “That's this dot” introduces a visual marker without explaining its role to someone listening.",
+   "suggest": "Subtract the charge from the height. The dot marks whichever spot scores highest.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l15 改为「Then find where height, minus that charge, comes out highest. That's this dot.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I80",
+   "key": "ef64dae9c3ed",
+   "item": "voice_en",
+   "where": "l16",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l16"
+   ],
+   "evidence": [
+    "right out of the circle"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "way outside the fence.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "right out of the circle",
+   "problem": "\"Circle\" was never introduced; the fence is the circle.",
+   "suggest": "way outside the fence.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l16 改为「Start with a price of 0. No charge, so the dot runs straight to the summit, right out past the fence.」；l21 改为「Push the price to 4, and the dot hides back inside the fence, giving up height for nothing.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I81",
+   "key": "9f842516eff9",
+   "item": "voice_en",
+   "where": "l16/l21/l27(b 改写)",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l16/l21/l27(b 改写)"
+   ],
+   "evidence": [
+    "right out of the circle / hides inside the circle / widen the circle"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "l16 \"…way outside the fence.\"；l21 \"…the dot hides back inside the fence…\"",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "right out of the circle / hides inside the circle / widen the circle",
+   "problem": "旁白里从没说过篱笆是圆形，\"circle\" 是凭空冒出来的；b 的 l27 改写又用了 \"circle\"。",
+   "suggest": "l16 \"…way outside the fence.\"；l21 \"…the dot hides back inside the fence…\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l16 改为「Start with a price of 0. No charge, so the dot runs straight to the summit, right out past the fence.」；l21 改为「Push the price to 4, and the dot hides back inside the fence, giving up height for nothing.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I82",
+   "key": "922e61a8a941",
+   "item": "voice_en",
+   "where": "l17",
+   "dim": "V2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2",
+   "shots": [
+    "l17"
+   ],
+   "evidence": [
+    "So we raise the price, and the farther outside the dot is, the more we raise it."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "So we raise the price, more the farther out the dot is.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "So we raise the price, and the farther outside the dot is, the more we raise it.",
+   "problem": "Clumsy and ambiguous; it is not clear that \"we\" adjust the price in steps.",
+   "suggest": "So we raise the price, more the farther out the dot is.",
+   "judge_note": "a 的 l17（V2 建议）：l17 是镜头内的普通叙述句，不是过渡句，原句口语、意思清楚（b 判 natural）。a 的改写 \"So we raise the price, more the farther out the dot is.\" 语序别扭，比原句差。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判 l17 是普通叙述句、原句清楚，a 的改写更差",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I83",
+   "key": "aab800988c8e",
+   "item": "voice_en",
+   "where": "l18",
+   "dim": "V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l18"
+   ],
+   "evidence": [
+    "At one point five, the dot backs up a bit, but it's still outside."
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "At a price of one point five, the dot backs up a bit, but it's still outside. Raise it again, it backs up again.",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "At one point five, the dot backs up a bit, but it's still outside.",
+   "problem": "没说 1.5 是价格（λ）。之后 l25 的篱笆半径也是 \"one point five\"，同一个数字指两个量，只听一遍会弄混。\"Raise it again\" 也没给数值，而屏幕此时显示的是 2.63。",
+   "suggest": "At a price of one point five, the dot backs up a bit, but it's still outside. Raise it again, it backs up again.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l18 改为「At a price of 1.5, the dot backs up a bit, but it's still outside. Raise it again, it backs up again.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I84",
+   "key": "59884eb37f60",
+   "item": "voice_en",
+   "where": "l20",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4",
+   "shots": [
+    "l20"
+   ],
+   "evidence": [
+    "That's exactly the highest point you can reach with the fence up"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "That's the best you can do with the fence up: seven point seven five.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "That's exactly the highest point you can reach with the fence up",
+   "problem": "Repeats l19 and the earlier setup.",
+   "suggest": "That's the best you can do with the fence up: seven point seven five.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：l20 点出「这就是有围栏时的最高点」，是 l19 的结论，不算重复",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I85",
+   "key": "cdfb15f4ebff",
+   "item": "voice_en",
+   "where": "l22",
+   "dim": "V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l22"
+   ],
+   "evidence": [
+    "The contour line through it just touches the fence, so moving along the fence only takes you lower."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "At that point the contour line just touches the fence, so walking along the fence only takes you downhill.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "The contour line through it just touches the fence, so moving along the fence only takes you lower.",
+   "problem": "Two geometric ideas in one 9.6s line, hard to picture by ear.",
+   "suggest": "At that point the contour line just touches the fence, so walking along the fence only takes you downhill.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l22 改为「Now look at that just-right point. The contour line through it just touches the fence, so walking along the fence only takes you downhill.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I86",
+   "key": "35993451b471",
+   "item": "voice_en",
+   "where": "l23",
+   "dim": "V1, V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "That's what the Lagrange condition looks like: at the best point, uphill points straight out through the fence."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "That's the Lagrange condition: at the best spot, the steepest path uphill goes straight out through the fence.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "That's what the Lagrange condition looks like: at the best point, uphill points straight out through the fence.",
+   "problem": "“Uphill points” makes the listener briefly parse *points* as a plural noun. Using “uphill” as the thing doing the pointing is awkward at an important explanatory conclusion.",
+   "suggest": "That's the Lagrange condition: at the best spot, the steepest path uphill goes straight out through the fence.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l23 改为「That's the Lagrange condition: at the best spot, the steepest way uphill goes straight out through the fence.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I87",
+   "key": "524a79dc2ff6",
+   "item": "voice_en",
+   "where": "l23",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "at the best point, uphill points straight out through the fence"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "at the best spot, the uphill direction points straight out through the fence.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "at the best point, uphill points straight out through the fence",
+   "problem": "\"Uphill points\" is easy to mishear (the noun \"points\").",
+   "suggest": "at the best spot, the uphill direction points straight out through the fence.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l23 改为「That's the Lagrange condition: at the best spot, the steepest way uphill goes straight out through the fence.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I88",
+   "key": "cd1f5ae47cda",
+   "item": "voice_en",
+   "where": "l26",
+   "dim": "V3, V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3, V5",
+   "shots": [
+    "l26"
+   ],
+   "evidence": [
+    "The highest point rises from seven point seven five to eight point oh four. That's point two nine more, almost exactly three times point one."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "We gain about three tenths in height for that extra tenth of a unit—roughly three times as much.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "The highest point rises from seven point seven five to eight point oh four. That's point two nine more, almost exactly three times point one.",
+   "problem": "Too much mental bookkeeping on one hearing: two heights, their difference, a multiplier, and the radius change. The listener may still be subtracting when the explanation moves on.",
+   "suggest": "We gain about three tenths in height for that extra tenth of a unit—roughly three times as much.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l26 改为「The highest point rises from 7.75 to 8.04. That's 0.29 more, about three times the 0.1 we added.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I89",
+   "key": "75753a8606aa",
+   "item": "voice_en",
+   "where": "l26",
+   "dim": "V3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l26"
+   ],
+   "evidence": [
+    "seven point seven five to eight point oh four... point two nine... three times point one"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "It rises from seven point seven five to eight point oh four, about three times the point one we added.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "seven point seven five to eight point oh four... point two nine... three times point one",
+   "problem": "Four numbers in 8.8s; the on-screen text helps but the ear alone loses it.",
+   "suggest": "It rises from seven point seven five to eight point oh four, about three times the point one we added.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l26 改为「The highest point rises from 7.75 to 8.04. That's 0.29 more, about three times the 0.1 we added.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I90",
+   "key": "fa8f74d23a31",
+   "item": "voice_en",
+   "where": "l27",
+   "dim": "V1, V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "So lambda equals three means: loosen the fence a little, and you climb about three times that much higher."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Here, lambda is three: widen the circle a little, and you gain roughly three times as much in height.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "So lambda equals three means: loosen the fence a little, and you climb about three times that much higher.",
+   "problem": "“Lambda equals three means” sounds like an unmarked quotation of an equation. “Loosen the fence” is also an odd way to describe increasing its radius.",
+   "suggest": "Here, lambda is three: widen the circle a little, and you gain roughly three times as much in height.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l27 改为「So a λ of three means: loosen the fence a little, and you climb about three times that much.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I91",
+   "key": "befde1511ce1",
+   "item": "voice_en",
+   "where": "l30",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "So lambda tells you which rules are really pinning you down."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "(cut, or keep as a one-line recap)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "So lambda tells you which rules are really pinning you down.",
+   "problem": "Restates l24-l29; could be cut.",
+   "suggest": "(cut, or keep as a one-line recap)",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：l30 是第三章收口句，把影子价格落到「哪条规矩在卡你」",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I92",
+   "key": "15a691f1c83c",
+   "item": "voice_en",
+   "where": "l33",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l33"
+   ],
+   "evidence": [
+    "and within that, be as helpful as possible"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "and be as helpful as you can while you're at it.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "and within that, be as helpful as possible",
+   "problem": "\"Within that\" is written-style.",
+   "suggest": "and be as helpful as you can while you're at it.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l33 改为「We want harm under the line, and as much help as we can get within it.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I93",
+   "key": "d6325d8634df",
+   "item": "voice_en",
+   "where": "l33",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l33"
+   ],
+   "evidence": [
+    "The goal: keep harm below the line, and within that, be as helpful as possible."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "We want to be as helpful as possible while keeping harm below the limit.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "The goal: keep harm below the line, and within that, be as helpful as possible.",
+   "problem": "“The goal” alone is a believable spoken setup. The awkward part is “and within that,” which sounds like compressed written logic.",
+   "suggest": "We want to be as helpful as possible while keeping harm below the limit.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l33 改为「We want harm under the line, and as much help as we can get within it.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I94",
+   "key": "ada2c25889ee",
+   "item": "voice_en",
+   "where": "l34",
+   "dim": "V1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l34"
+   ],
+   "evidence": [
+    "Their tool was the Lagrange multiplier: helpfulness score, minus lambda times the harm score."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "They used a Lagrange multiplier: helpfulness, minus lambda times harm.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Their tool was the Lagrange multiplier: helpfulness score, minus lambda times the harm score.",
+   "problem": "A formula read aloud in noun-phrase list style.",
+   "suggest": "They used a Lagrange multiplier: helpfulness, minus lambda times harm.",
+   "judge_note": "a 的 l34 改写 \"helpfulness, minus lambda times harm\"：a 自己指出的毛病是\"念出来像公式\"，这个改写还是在念公式，没解决问题。改用补充问题表里 l34 的写法。；b 的 l34 改写 \"They subtract lambda times the harm score from the helpfulness score.\"：丢了 \"Lagrange multiplier\"，这一章最关键的点题（Safe RLHF 用的就是本集的工具）就没了。",
+   "status": "implemented",
+   "solution": "l34 改为「They used a Lagrange multiplier: take the helpfulness score, and subtract λ times the harm score.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I95",
+   "key": "df23bb5c4b00",
+   "item": "voice_en",
+   "where": "l34",
+   "dim": "V1, V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l34"
+   ],
+   "evidence": [
+    "Their tool was the Lagrange multiplier: helpfulness score, minus lambda times the harm score."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "They subtract lambda times the harm score from the helpfulness score.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Their tool was the Lagrange multiplier: helpfulness score, minus lambda times the harm score.",
+   "problem": "The colon introduces a spoken formula fragment. It also makes the whole expression sound like the definition of “the Lagrange multiplier,” although lambda was introduced as the price within it.",
+   "suggest": "They subtract lambda times the harm score from the helpfulness score.",
+   "judge_note": "a 的 l34 改写 \"helpfulness, minus lambda times harm\"：a 自己指出的毛病是\"念出来像公式\"，这个改写还是在念公式，没解决问题。改用补充问题表里 l34 的写法。；b 的 l34 改写 \"They subtract lambda times the harm score from the helpfulness score.\"：丢了 \"Lagrange multiplier\"，这一章最关键的点题（Safe RLHF 用的就是本集的工具）就没了。",
+   "status": "implemented",
+   "solution": "l34 改为「They used a Lagrange multiplier: take the helpfulness score, and subtract λ times the harm score.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I96",
+   "key": "875543da255f",
+   "item": "voice_en",
+   "where": "l36",
+   "dim": "V2, V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2, V3",
+   "shots": [
+    "l36"
+   ],
+   "evidence": [
+    "When harm stays under, lambda comes back down, and the model is free to help. Just like our mountain."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "When harm stays below the line, lambda falls, and harmful answers lose fewer points.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "When harm stays under, lambda comes back down, and the model is free to help. Just like our mountain.",
+   "problem": "“Free to help” replaces the concrete scoring mechanism with a vague benefit. “Just like our mountain” then asks the listener to reconstruct which part of the mountain example matches.",
+   "suggest": "When harm stays below the line, lambda falls, and harmful answers lose fewer points.",
+   "judge_note": "b 的 l36 改写：删掉了 \"Just like our mountain\"，这是把 AI 例子接回山地实验的回扣，a 也列为应保留。如果担心观众对不上，可以改成 \"Just like the dot on our mountain.\"，不该删。",
+   "status": "implemented",
+   "solution": "l36 改为「When harm stays under, λ comes back down, and the model is free to help more. Just like the dot on our mountain.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I97",
+   "key": "102797ecbf3d",
+   "item": "voice_en",
+   "where": "l37",
+   "dim": "V1, V2, V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V2, V3",
+   "shots": [
+    "l37"
+   ],
+   "evidence": [
+    "Coefficients that put a price on a rule are all over AI."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "You see these adjustable penalties all over AI.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Coefficients that put a price on a rule are all over AI.",
+   "problem": "The transition suddenly promotes the familiar “price” into the unexplained technical noun “coefficients.” It sounds more formal just as the narration starts moving through unfamiliar examples.",
+   "suggest": "You see these adjustable penalties all over AI.",
+   "judge_note": "b 的 l37 改写 \"adjustable penalties\"：l38 的正则化系数一般是人手设定的，不会自动调，用 \"adjustable\" 不准确。a 的 \"Prices on rules show up all over AI.\" 和屏幕上的「Prices on rules」一致，更好。",
+   "status": "implemented",
+   "solution": "l37 改为「Prices on rules show up all over AI.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I98",
+   "key": "26a499c5b696",
+   "item": "voice_en",
+   "where": "l37",
+   "dim": "V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4",
+   "shots": [
+    "l37"
+   ],
+   "evidence": [
+    "Coefficients that put a price on a rule are all over AI."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Prices on rules show up all over AI.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Coefficients that put a price on a rule are all over AI.",
+   "problem": "Abstract setup that could be dropped or simplified.",
+   "suggest": "Prices on rules show up all over AI.",
+   "judge_note": "b 的 l37 改写 \"adjustable penalties\"：l38 的正则化系数一般是人手设定的，不会自动调，用 \"adjustable\" 不准确。a 的 \"Prices on rules show up all over AI.\" 和屏幕上的「Prices on rules」一致，更好。",
+   "status": "implemented",
+   "solution": "l37 改为「Prices on rules show up all over AI.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I99",
+   "key": "82058b8981d9",
+   "item": "voice_en",
+   "where": "l38",
+   "dim": "V1, V3, V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3, V5",
+   "shots": [
+    "l38"
+   ],
+   "evidence": [
+    "Regularization, which keeps a model from memorizing, docks points for being too complex. How many is set by a coefficient like this."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "To discourage memorizing examples, models lose points for complexity. That's called regularization. A number sets the penalty.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Regularization, which keeps a model from memorizing, docks points for being too complex. How many is set by a coefficient like this.",
+   "problem": "A new technical term, an embedded definition, and a metaphor arrive together. “How many is set by a coefficient” then sounds written and requires the listener to retrieve “points.”",
+   "suggest": "To discourage memorizing examples, models lose points for complexity. That's called regularization. A number sets the penalty.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l38 改为「Take regularization, which keeps a model from memorizing. It docks points when a model gets too complex, and a price like this sets how many.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I100",
+   "key": "69a09182836b",
+   "item": "voice_en",
+   "where": "l38",
+   "dim": "V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V5",
+   "shots": [
+    "l38"
+   ],
+   "evidence": [
+    "docks points for being too complex. How many is set by a coefficient like this."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "It docks points when a model gets too complex, and a coefficient like this sets how many.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "docks points for being too complex. How many is set by a coefficient like this.",
+   "problem": "\"How many\" has no clear referent; the sentence is heavy.",
+   "suggest": "It docks points when a model gets too complex, and a coefficient like this sets how many.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l38 改为「Take regularization, which keeps a model from memorizing. It docks points when a model gets too complex, and a price like this sets how many.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I101",
+   "key": "0d13f09d6953",
+   "item": "voice_en",
+   "where": "l39",
+   "dim": "V1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l39"
+   ],
+   "evidence": [
+    "How hard that's penalized is the same kind of coefficient."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "A coefficient like this sets how big the penalty is.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "How hard that's penalized is the same kind of coefficient.",
+   "problem": "The grammar is passive and clipped, a written-style nominal.",
+   "suggest": "A coefficient like this sets how big the penalty is.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l39 改为「And chatbots often lose points for drifting too far from the model they started as. A price like this sets how much.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I102",
+   "key": "be34a50764ae",
+   "item": "voice_en",
+   "where": "l39",
+   "dim": "V1, V3, V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3, V5",
+   "shots": [
+    "l39"
+   ],
+   "evidence": [
+    "And chatbots are often kept from drifting too far from the original model. How hard that's penalized is the same kind of coefficient."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Chatbots can also lose points for drifting from their starting model. A similar number controls how many points they lose.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "And chatbots are often kept from drifting too far from the original model. How hard that's penalized is the same kind of coefficient.",
+   "problem": "“How hard” describes the strength of a penalty; it cannot naturally **be** a coefficient. The passive first sentence also leaves “the original model” insufficiently grounded for a newcomer.",
+   "suggest": "Chatbots can also lose points for drifting from their starting model. A similar number controls how many points they lose.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l39 改为「And chatbots often lose points for drifting too far from the model they started as. A price like this sets how much.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I103",
+   "key": "a34e6d705578",
+   "item": "voice_en",
+   "where": "l42",
+   "dim": "V2, V3, V4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2, V3, V4",
+   "shots": [
+    "l42"
+   ],
+   "evidence": [
+    "Next time you want it all, but there's a line you can't cross, ask yourself: what's this rule really worth?"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "When a rule limits what you can do, ask yourself: how much is that limit costing me?",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Next time you want it all, but there's a line you can't cross, ask yourself: what's this rule really worth?",
+   "problem": "“Worth” could mean the benefit of having the rule or whether it deserves obeying. The preceding explanation concerns what the limit **costs**. “Next time” also immediately repeats in l43.",
+   "suggest": "When a rule limits what you can do, ask yourself: how much is that limit costing me?",
+   "judge_note": "b 的 l42（必改，理由 \"worth\" 有歧义）：l24–l29 讲的就是 shadow price，也就是\"这条规则值多少\"，\"what's this rule really worth?\" 正是回扣这一段。结尾重复 \"Next time\" 的问题改 l43 就能解决，不必重写 l42。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：worth 正回扣 shadow price 一段；结尾撞词只改 l43（见 I104）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I104",
+   "key": "7522b5a45ff9",
+   "item": "voice_en",
+   "where": "l43",
+   "dim": "V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2",
+   "shots": [
+    "l43"
+   ],
+   "evidence": [
+    "Next time, we'll get into gradient descent."
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "Up next: gradient descent.",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "Next time, we'll get into gradient descent.",
+   "problem": "结尾是严格项。和 l42 开头的 \"Next time\" 撞词。只改 l43 就行，l42 是点题句，应保留。",
+   "suggest": "Up next: gradient descent.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l43 改为「Up next: gradient descent.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I105",
+   "key": "559f8f9c6723",
+   "item": "voice_en",
+   "where": "l43",
+   "dim": "V2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2",
+   "shots": [
+    "l43"
+   ],
+   "evidence": [
+    "Next time, we'll get into gradient descent."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Gradient descent is up next.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Next time, we'll get into gradient descent.",
+   "problem": "Echoes l42 \"Next time you want it all\".",
+   "suggest": "Gradient descent is up next.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l43 改为「Up next: gradient descent.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I106",
+   "key": "a7b4da0bde63",
+   "item": "voice_zh",
+   "where": "章节卡「把 λ 看成价格」",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "章节卡「把 λ 看成价格」"
+   ],
+   "evidence": [
+    "把 λ 看成价格"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "λ 其实是个价格",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "把 λ 看成价格",
+   "problem": "画面标题偏书面，不念出声；其余三张卡自然",
+   "suggest": "λ 其实是个价格",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判章节卡「把 λ 看成价格」自然，不改",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I107",
+   "key": "5223bc029223",
+   "item": "voice_zh",
+   "where": "l01",
+   "dim": "V1、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l01"
+   ],
+   "evidence": [
+    "训练 AI 的时候，常会提这么个要求：回答要尽量有用，但有害的内容不能超过一条底线。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "训练 AI 时，常有这么个要求：回答要尽量有用，有害内容的多少也得有个上限。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "训练 AI 的时候，常会提这么个要求：回答要尽量有用，但有害的内容不能超过一条底线。",
+   "problem": "有点怪。“有害的内容”是什么数量不能超过什么，没有说清；“超过一条底线”也不如“有个上限”顺耳。开场从严。",
+   "suggest": "训练 AI 时，常有这么个要求：回答要尽量有用，有害内容的多少也得有个上限。",
+   "judge_note": "l01（b 必改）：整句自然，开场不必整句重写。「超过一条底线」最多改一个字成「越过一条底线」。b 的改写「有害内容的多少也得有个上限」更拗口，和屏上「有害 ≤ 底线」也对不上。",
+   "status": "implemented",
+   "solution": "l01 改为「训练 AI 的时候，常会提这么个要求：回答要尽量有用，但有害的内容不能越过一条底线。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I108",
+   "key": "d2e40fdcb89c",
+   "item": "voice_zh",
+   "where": "l02",
+   "dim": "V1、V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V2",
+   "shots": [
+    "l02"
+   ],
+   "evidence": [
+    "「尽量做好」和「不许超过」，是两种不一样的要求，怎么让模型都听进去？"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "既要让回答有用，又不能让有害内容超标，怎么让模型同时做到？",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "「尽量做好」和「不许超过」，是两种不一样的要求，怎么让模型都听进去？",
+   "problem": "有点怪。先把两段话提炼成类别，再解释“是两种要求”，有念概念卡的感觉；聊天会直接说“既要……又不能……”。",
+   "suggest": "既要让回答有用，又不能让有害内容超标，怎么让模型同时做到？",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l02 改为「一边要尽量做好，一边又不许越线，怎么让模型两头都顾上？」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I109",
+   "key": "c054b0ccb318",
+   "item": "voice_zh",
+   "where": "l05",
+   "dim": "V1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l05"
+   ],
+   "evidence": [
+    "拉格朗日的思路很妙：不立墙，改成标价。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "拉格朗日的办法是：别立墙了，越线就收费。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "拉格朗日的思路很妙：不立墙，改成标价。",
+   "problem": "「思路很妙」讲解腔；「立墙」此前没铺垫，名词短语硬并列",
+   "suggest": "拉格朗日的办法是：别立墙了，越线就收费。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l05 改为「拉格朗日的思路很妙：别把这条线当成一堵墙，改成给越线标个价。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I110",
+   "key": "5c1e412f0b73",
+   "item": "voice_zh",
+   "where": "l11",
+   "dim": "V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l11"
+   ],
+   "evidence": [
+    "咱们来做个小实验。这是一张地图，一圈圈的线是等高线，越往中间越高，中间是山顶。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "来做个小实验。这是张地图，一圈圈的是等高线，越往里越高，正中间是山顶。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "咱们来做个小实验。这是一张地图，一圈圈的线是等高线，越往中间越高，中间是山顶。",
+   "problem": "「中间」重复，一句太长",
+   "suggest": "来做个小实验。这是张地图，一圈圈的是等高线，越往里越高，正中间是山顶。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l11 改为「咱们来做个小实验。这是一张地图，一圈圈的线是等高线，越往里越高，正中间是山顶。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I111",
+   "key": "d2b2a360cf60",
+   "item": "voice_zh",
+   "where": "l12",
+   "dim": "V1、V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V2",
+   "shots": [
+    "l12"
+   ],
+   "evidence": [
+    "任务是：找到最高的地方。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "咱们要找最高点。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "任务是：找到最高的地方。",
+   "problem": "有点怪。单独接在地图介绍后，像念屏幕上的任务标题；说“咱们要找……”更像讲解者带着观众做实验。",
+   "suggest": "咱们要找最高点。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l12 改为「咱们要找的，是最高的地方。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I112",
+   "key": "bd33cd113eb7",
+   "item": "voice_zh",
+   "where": "l12",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l12"
+   ],
+   "evidence": [
+    "任务是：找到最高的地方。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "要找的是最高的地方。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "任务是：找到最高的地方。",
+   "problem": "「任务是：」像题目",
+   "suggest": "要找的是最高的地方。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l12 改为「咱们要找的，是最高的地方。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I113",
+   "key": "848be16eeb85",
+   "item": "voice_zh",
+   "where": "l14",
+   "dim": "V1、V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V5",
+   "shots": [
+    "l14"
+   ],
+   "evidence": [
+    "那就用拉格朗日的办法：拆掉围栏，改成离营地中心每远一步，就扣拉姆达分。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "那就照拉格朗日的办法：拆掉围栏，每离营地中心远一步，就扣拉姆达分。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "那就用拉格朗日的办法：拆掉围栏，改成离营地中心每远一步，就扣拉姆达分。",
+   "problem": "有点怪。“改成离营地中心每远一步”语序拧，顺口说应该是“每离营地中心远一步”。这是进入实验操作的转折句。",
+   "suggest": "那就照拉格朗日的办法：拆掉围栏，每离营地中心远一步，就扣拉姆达分。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l14 改为「那就照拉格朗日的办法：拆掉围栏，每离营地中心远一步，就扣λ分。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I114",
+   "key": "b622477883f6",
+   "item": "voice_zh",
+   "where": "l15",
+   "dim": "V1、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l15"
+   ],
+   "evidence": [
+    "然后去找「高度减扣分」最大的地方，就是这个点。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "高度减掉扣分，哪里剩得最多，就选哪里。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "然后去找「高度减扣分」最大的地方，就是这个点。",
+   "problem": "很怪。耳朵听不到引号，“高度减扣分最大的地方”容易黏成一团；“这个点”又把理解落在画面指认上。",
+   "suggest": "高度减掉扣分，哪里剩得最多，就选哪里。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l15 改为「然后看高度减掉扣分，哪里剩得最多，这个点就落在哪。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I115",
+   "key": "82abd073750a",
+   "item": "voice_zh",
+   "where": "l15",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l15"
+   ],
+   "evidence": [
+    "然后去找「高度减扣分」最大的地方，就是这个点。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "然后找「高度减扣分」最大的地方，就是图上这个点。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "然后去找「高度减扣分」最大的地方，就是这个点。",
+   "problem": "「这个点」只靠听指代不明",
+   "suggest": "然后找「高度减扣分」最大的地方，就是图上这个点。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l15 改为「然后看高度减掉扣分，哪里剩得最多，这个点就落在哪。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I116",
+   "key": "6fc7b170cbb7",
+   "item": "voice_zh",
+   "where": "l15",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l15"
+   ],
+   "evidence": [
+    "然后去找「高度减扣分」最大的地方，就是这个点。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "高度减掉扣分，哪里剩得最多，这个点就落在哪。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "然后去找「高度减扣分」最大的地方，就是这个点。",
+   "problem": "l15 是全片唯一交代「点」的地方，l17—l22 连用「点」都靠它。b 的改写去掉了「这个点」，后面的指代就断了。改写要保留这个锚点",
+   "suggest": "高度减掉扣分，哪里剩得最多，这个点就落在哪。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l15 改为「然后看高度减掉扣分，哪里剩得最多，这个点就落在哪。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I117",
+   "key": "5f645f509782",
+   "item": "voice_zh",
+   "where": "l16",
+   "dim": "V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l16"
+   ],
+   "evidence": [
+    "先把价定成零，不扣分，那当然直奔山顶，一下就出圈了。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "先把价定成零，不扣分，那当然直奔山顶，直接跑出围栏了。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "先把价定成零，不扣分，那当然直奔山顶，一下就出圈了。",
+   "problem": "「出圈」听着像网络用语",
+   "suggest": "先把价定成零，不扣分，那当然直奔山顶，直接跑出围栏了。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l16 改为「先把价定成零，不扣分，那当然直奔山顶，一下就跑出了围栏。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I118",
+   "key": "2453ec1d1e35",
+   "item": "voice_zh",
+   "where": "l17",
+   "dim": "V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l17"
+   ],
+   "evidence": [
+    "那就涨价，点出圈多远，就涨多少。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "那就涨价，跑出去越远，涨得越多。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "那就涨价，点出圈多远，就涨多少。",
+   "problem": "「点」没有交代，「涨多少」不知涨什么，听不懂",
+   "suggest": "那就涨价，跑出去越远，涨得越多。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l17 改为「那就涨价，点跑出去越远，价就涨得越多。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I119",
+   "key": "6f7fc3ae97ea",
+   "item": "voice_zh",
+   "where": "l17",
+   "dim": "V1、V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l17"
+   ],
+   "evidence": [
+    "那就涨价，点出圈多远，就涨多少。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "那就涨价，超出圈越远，涨得越多。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "那就涨价，点出圈多远，就涨多少。",
+   "problem": "有点怪。“点出圈多远”不顺耳，“就涨多少”又容易让人以为距离数值直接等于涨价数值。用“越……越……”更好懂。",
+   "suggest": "那就涨价，超出圈越远，涨得越多。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l17 改为「那就涨价，点跑出去越远，价就涨得越多。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I120",
+   "key": "21070a26e370",
+   "item": "voice_zh",
+   "where": "l18",
+   "dim": "V3",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l18"
+   ],
+   "evidence": [
+    "涨到一点五，点退回来一些"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "无",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "涨到一点五，点退回来一些",
+   "problem": "口播「一点五」而画面显示 2.63，可能错位，画面另有人审",
+   "suggest": "无",
+   "judge_note": "l18（a 存疑）：s3.html 里 l18 先把 λ 从 0 数到 1.5，「再涨，再退」时继续数到后面的值，2.63 是这句结束时的画面，口播和画面没有错位。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人核过：l18 口播与画面不错位",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I121",
+   "key": "33907911da9a",
+   "item": "voice_zh",
+   "where": "l18",
+   "dim": "V1、V3、V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3、V5",
+   "shots": [
+    "l18"
+   ],
+   "evidence": [
+    "涨到一点五，点退回来一些，还在圈外。再涨，再退。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "涨到一点五，位置往回挪了，还在圈外。再涨，再退。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "涨到一点五，点退回来一些，还在圈外。再涨，再退。",
+   "problem": "有点怪。“一点五，点……”连续出现小数点和位置点，第一次听容易黏连；换成“位置”即可消除。",
+   "suggest": "涨到一点五，位置往回挪了，还在圈外。再涨，再退。",
+   "judge_note": "l18（a 存疑）：s3.html 里 l18 先把 λ 从 0 数到 1.5，「再涨，再退」时继续数到后面的值，2.63 是这句结束时的画面，口播和画面没有错位。",
+   "status": "implemented",
+   "solution": "l18 改为「价涨到一点五，它往回退了一些，还在围栏外。再涨，它再退。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I122",
+   "key": "05a5077df097",
+   "item": "voice_zh",
+   "where": "l22",
+   "dim": "V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l22"
+   ],
+   "evidence": [
+    "看这个刚好的点：经过它的那圈等高线，正好贴着围栏，沿着围栏往哪边挪，都只会更低。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "看这个点：它那圈等高线正好贴着围栏。顺着围栏往哪边挪，都更低。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "看这个刚好的点：经过它的那圈等高线，正好贴着围栏，沿着围栏往哪边挪，都只会更低。",
+   "problem": "一句三层意思，7.6 秒念不完",
+   "suggest": "看这个点：它那圈等高线正好贴着围栏。顺着围栏往哪边挪，都更低。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l22 改为「看这个刚好的点：它那圈等高线，正好贴着围栏。顺着围栏往哪边挪，都只会更低。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I123",
+   "key": "04cb95c4f445",
+   "item": "voice_zh",
+   "where": "l23",
+   "dim": "V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "这就是拉格朗日条件的样子：在最好的点上，往高处的方向，正对着围栏往外。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "这就是拉格朗日条件：最好的点上，往高处走，正好是顶着围栏往外的方向。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "这就是拉格朗日条件的样子：在最好的点上，往高处的方向，正对着围栏往外。",
+   "problem": "新术语加抽象几何描述，只靠耳朵无法想象；书面腔",
+   "suggest": "这就是拉格朗日条件：最好的点上，往高处走，正好是顶着围栏往外的方向。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l23 改为「这就是拉格朗日条件：在最好的那个点上，想再往高处走，就得直直穿过围栏。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I124",
+   "key": "0b2e28433554",
+   "item": "voice_zh",
+   "where": "l23",
+   "dim": "V1、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "这就是拉格朗日条件的样子：在最好的点上，往高处的方向，正对着围栏往外。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "这就是拉格朗日条件：到了最好的位置，想再往高处走，就得直直穿过围栏。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "这就是拉格朗日条件的样子：在最好的点上，往高处的方向，正对着围栏往外。",
+   "problem": "很怪。“条件的样子”书面又含混；后半句拼接几个方向短语，没有把“该往哪走”说成完整的话。",
+   "suggest": "这就是拉格朗日条件：到了最好的位置，想再往高处走，就得直直穿过围栏。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l23 改为「这就是拉格朗日条件：在最好的那个点上，想再往高处走，就得直直穿过围栏。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I125",
+   "key": "cc28875f7f8e",
+   "item": "voice_zh",
+   "where": "l24",
+   "dim": "V1、V2、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V2、V3",
+   "shots": [
+    "l24"
+   ],
+   "evidence": [
+    "你可能觉得拉姆达只是个调出来的旋钮。其实它还告诉你，这条规矩有多贵。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "拉姆达不光管扣多少分。它还告诉你，守这条规矩要付出多少。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "你可能觉得拉姆达只是个调出来的旋钮。其实它还告诉你，这条规矩有多贵。",
+   "problem": "有点怪。旋钮是拿来调的，不是“调出来”的；“规矩有多贵”还需要听众猜是在说付出的代价。章节过渡应直接说清。",
+   "suggest": "拉姆达不光管扣多少分。它还告诉你，守这条规矩要付出多少。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l24 改为「你可能觉得λ只是个拿来调的旋钮。其实它还告诉你，这条规矩有多贵。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I126",
+   "key": "f73a1a74e1ee",
+   "item": "voice_zh",
+   "where": "l25",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l25"
+   ],
+   "evidence": [
+    "咱们把围栏放大一点点，半径从一点五变成一点六。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "咱们把围栏稍微放大些，半径从一点五变成一点六。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "咱们把围栏放大一点点，半径从一点五变成一点六。",
+   "problem": "「一点点」后面紧跟「一点五」「一点六」，耳朵容易把「一点点」也听成数字；两人都漏了",
+   "suggest": "咱们把围栏稍微放大些，半径从一点五变成一点六。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l25 改为「咱们把围栏稍微放大些，半径从一点五变成一点六。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I127",
+   "key": "d82a46cc8f98",
+   "item": "voice_zh",
+   "where": "l26",
+   "dim": "V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V5",
+   "shots": [
+    "l26"
+   ],
+   "evidence": [
+    "最高点就从七点七五升到八点零四，多了零点二九，差不多正好是三乘零点一。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "最高点从七点七五升到八点零四，多了零点二九，约等于三乘零点一。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "最高点就从七点七五升到八点零四，多了零点二九，差不多正好是三乘零点一。",
+   "problem": "数字太密，耳朵跟不上",
+   "suggest": "最高点从七点七五升到八点零四，多了零点二九，约等于三乘零点一。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l26 改为「最高点就从七点七五升到八点零四，多了零点二九，差不多是三乘零点一。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I128",
+   "key": "426fbece0184",
+   "item": "voice_zh",
+   "where": "l26",
+   "dim": "V3、V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3、V5",
+   "shots": [
+    "l26"
+   ],
+   "evidence": [
+    "最高点就从七点七五升到八点零四，多了零点二九，差不多正好是三乘零点一。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "围栏多放宽零点一，最高处就多了零点二九，差不多是三乘零点一。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "最高点就从七点七五升到八点零四，多了零点二九，差不多正好是三乘零点一。",
+   "problem": "有点怪。连续报两个高度、一个差值和一个乘式，耳朵还在记前面的数字，后面的关系已经过去了。“差不多正好”也重复。",
+   "suggest": "围栏多放宽零点一，最高处就多了零点二九，差不多是三乘零点一。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l26 改为「最高点就从七点七五升到八点零四，多了零点二九，差不多是三乘零点一。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I129",
+   "key": "330601376f75",
+   "item": "voice_zh",
+   "where": "l27",
+   "dim": "V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "所以拉姆达等于三的意思是：围栏放宽一点点，就能多爬大约三倍那么高。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "所以拉姆达是三，就是围栏每放宽一点，高度大约多三倍。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "所以拉姆达等于三的意思是：围栏放宽一点点，就能多爬大约三倍那么高。",
+   "problem": "「三倍那么高」不知是谁的三倍",
+   "suggest": "所以拉姆达是三，就是围栏每放宽一点，高度大约多三倍。",
+   "judge_note": "l27（a 改写）：「高度大约多三倍」听起来像高度翻了三倍，意思错了，比原句更糟。采用 b 的改写「多爬的高度，大约是围栏向外放宽距离的三倍」。",
+   "status": "implemented",
+   "solution": "l27 改为「所以λ等于三，就是说：多爬的高度，大约是围栏放宽距离的三倍。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I130",
+   "key": "2e37a33ceca2",
+   "item": "voice_zh",
+   "where": "l27",
+   "dim": "V1、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "所以拉姆达等于三的意思是：围栏放宽一点点，就能多爬大约三倍那么高。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "拉姆达是三，就是说：多爬的高度，大约是围栏向外放宽距离的三倍。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "所以拉姆达等于三的意思是：围栏放宽一点点，就能多爬大约三倍那么高。",
+   "problem": "很怪。“三倍那么高”究竟是原来高度的三倍，还是放宽距离的三倍？只听这句，容易听成前者。",
+   "suggest": "拉姆达是三，就是说：多爬的高度，大约是围栏向外放宽距离的三倍。",
+   "judge_note": "l27（a 改写）：「高度大约多三倍」听起来像高度翻了三倍，意思错了，比原句更糟。采用 b 的改写「多爬的高度，大约是围栏向外放宽距离的三倍」。",
+   "status": "implemented",
+   "solution": "l27 改为「所以λ等于三，就是说：多爬的高度，大约是围栏放宽距离的三倍。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I131",
+   "key": "423bc7963975",
+   "item": "voice_zh",
+   "where": "l28",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l28"
+   ],
+   "evidence": [
+    "经济学里，管这个叫影子价格。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "这个价，经济学里叫影子价格。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "经济学里，管这个叫影子价格。",
+   "problem": "「这个」可以指零点二九，也可以指拉姆达，只靠听分不清；两人都判自然",
+   "suggest": "这个价，经济学里叫影子价格。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l28 改为「这个价，经济学里叫影子价格。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I132",
+   "key": "c99bbe457e6f",
+   "item": "voice_zh",
+   "where": "l31",
+   "dim": "V1、V2、V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V2、V5",
+   "shots": [
+    "l31"
+   ],
+   "evidence": [
+    "回到开头那个要求。二零二三年，北京大学的一个团队提出了一种训练大语言模型的方法，叫 Safe RLHF。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "回到开头。北大有个团队训练聊天 AI 时，就用了这个办法。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "回到开头那个要求。二零二三年，北京大学的一个团队提出了一种训练大语言模型的方法，叫 Safe RLHF。",
+   "problem": "有点怪。转回AI时，一口气引入年份、机构、“大语言模型”和英文缩写，听起来像读资料。普通观众只需要先知道这个办法用在哪里。",
+   "suggest": "回到开头。北大有个团队训练聊天 AI 时，就用了这个办法。",
+   "judge_note": "l31（a 改写）：只换了「北大」「大模型」，长度、信息密度基本没变，没解决它自己指出的 10 秒长句问题。改用补充问题里的写法。；l31（b 改写）：删掉了屏上卡片显示的「Safe RLHF」，画面和口播对不上，不能直接替换。",
+   "status": "implemented",
+   "solution": "l31 改为「回到开头那个要求。2023年，北大一个团队想了个训练大模型的办法，叫 Safe RLHF。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I133",
+   "key": "a4813ebb116f",
+   "item": "voice_zh",
+   "where": "l31",
+   "dim": "V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V5",
+   "shots": [
+    "l31"
+   ],
+   "evidence": [
+    "回到开头那个要求。二零二三年，北京大学的一个团队提出了一种训练大语言模型的方法，叫 Safe RLHF。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "回到开头那个要求。二零二三年，北大一个团队想了个训练大模型的办法，叫 Safe RLHF。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "回到开头那个要求。二零二三年，北京大学的一个团队提出了一种训练大语言模型的方法，叫 Safe RLHF。",
+   "problem": "章节过渡，从严。a 的改写几乎没缩短，没解决节奏问题；b 的改写删掉了屏上的「Safe RLHF」，不能直接替换。两份都不可用",
+   "suggest": "回到开头那个要求。二零二三年，北大一个团队想了个训练大模型的办法，叫 Safe RLHF。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l31 改为「回到开头那个要求。2023年，北大一个团队想了个训练大模型的办法，叫 Safe RLHF。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I134",
+   "key": "9c94b185bb39",
+   "item": "voice_zh",
+   "where": "l31",
+   "dim": "V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V5",
+   "shots": [
+    "l31"
+   ],
+   "evidence": [
+    "回到开头那个要求。二零二三年，北京大学的一个团队提出了一种训练大语言模型的方法，叫 Safe RLHF。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "回到开头那个要求。二零二三年，北大有个团队提出一种训练大模型的方法，叫 Safe RLHF。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "回到开头那个要求。二零二三年，北京大学的一个团队提出了一种训练大语言模型的方法，叫 Safe RLHF。",
+   "problem": "10 秒、两层意思，「提出了一种……的方法」书面",
+   "suggest": "回到开头那个要求。二零二三年，北大有个团队提出一种训练大模型的方法，叫 Safe RLHF。",
+   "judge_note": "l31（a 改写）：只换了「北大」「大模型」，长度、信息密度基本没变，没解决它自己指出的 10 秒长句问题。改用补充问题里的写法。；l31（b 改写）：删掉了屏上卡片显示的「Safe RLHF」，画面和口播对不上，不能直接替换。",
+   "status": "implemented",
+   "solution": "l31 改为「回到开头那个要求。2023年，北大一个团队想了个训练大模型的办法，叫 Safe RLHF。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I135",
+   "key": "a73a87d4034a",
+   "item": "voice_zh",
+   "where": "l32",
+   "dim": "V1、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l32"
+   ],
+   "evidence": [
+    "它用两个打分模型，一个打「有多有用」，一个打「有多有害」。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "它用两个模型打分：一个评有用程度，一个评有害程度。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "它用两个打分模型，一个打「有多有用」，一个打「有多有害」。",
+   "problem": "很怪。“打有多有用”不是自然搭配；“打”的宾语应是分数，听众得自己补回省略的关系。",
+   "suggest": "它用两个模型打分：一个评有用程度，一个评有害程度。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l32 改为「它用两个模型来打分：一个看回答有多有用，一个看有多有害。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I136",
+   "key": "c76a31a6340a",
+   "item": "voice_zh",
+   "where": "l33",
+   "dim": "V1、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l33"
+   ],
+   "evidence": [
+    "目标是：有害不能超过底线，在这个前提下尽量有用。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "有害程度不能超标，在这前提下，回答要尽量有用。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "目标是：有害不能超过底线，在这个前提下尽量有用。",
+   "problem": "有点怪。“有害”被直接当作可以超标的数量，省略过头；又沿用“超过底线”的别扭搭配。作为目标说明，应明确到程度和回答。",
+   "suggest": "有害程度不能超标，在这前提下，回答要尽量有用。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l33 改为「目标是：有害程度不能越过底线，在这个前提下，回答尽量有用。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I137",
+   "key": "fb094b2b160a",
+   "item": "voice_zh",
+   "where": "l34",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l34"
+   ],
+   "evidence": [
+    "他们用的办法，就是拉格朗日乘子：拿有用分，减去拉姆达乘以有害分。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "他们用的就是拉格朗日乘子：有用分，减掉拉姆达乘有害分。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "他们用的办法，就是拉格朗日乘子：拿有用分，减去拉姆达乘以有害分。",
+   "problem": "念公式",
+   "suggest": "他们用的就是拉格朗日乘子：有用分，减掉拉姆达乘有害分。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "屏上同时出公式「有用 − λ × 有害」，口播用「拿……减去……」的动词说法，耳朵跟得上（裁决人未判必改）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I138",
+   "key": "244274fe8e62",
+   "item": "voice_zh",
+   "where": "l36",
+   "dim": "V1、V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V2",
+   "shots": [
+    "l36"
+   ],
+   "evidence": [
+    "守住了，它就往下降，让模型放开去帮忙。跟刚才在山上调价一模一样。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "没超标，就往下降，让模型多帮些忙。跟刚才在山上调价一样。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "守住了，它就往下降，让模型放开去帮忙。跟刚才在山上调价一模一样。",
+   "problem": "有点怪。“放开去帮忙”不顺口；“守住了”也需要回想守住什么。这句承担与山上例子的衔接，应顺着“超标”接。",
+   "suggest": "没超标，就往下降，让模型多帮些忙。跟刚才在山上调价一样。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l36 改为「没超标，它就往下降，让模型多帮些忙。跟刚才在山上调价一模一样。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I139",
+   "key": "0dcb1bfde191",
+   "item": "voice_zh",
+   "where": "l37",
+   "dim": "V1、V2、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V2、V3",
+   "shots": [
+    "l37"
+   ],
+   "evidence": [
+    "其实这种给规矩标价的系数，AI 里到处都有。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "AI 训练里，还有很多地方会这样标价、扣分。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "其实这种给规矩标价的系数，AI 里到处都有。",
+   "problem": "有点怪。“给规矩标价的系数”突然换成抽象名词串，观众还得想“系数”和刚才的价是什么关系。若保留扩展段，入口应沿用已懂的动作。",
+   "suggest": "AI 训练里，还有很多地方会这样标价、扣分。",
+   "judge_note": "l37—l39（b 建议整段删除）：这三句不是重复也不是空话，是内容取舍；s5.html 的 ①②③ 清单就是给这三句做的，删掉画面会悬空。不该按 V4 处理，要删交内容审稿决定。",
+   "status": "implemented",
+   "solution": "l37 改为「其实像这样给规矩标价的做法，AI 里到处都有。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I140",
+   "key": "f4b32295ba16",
+   "item": "voice_zh",
+   "where": "l37—l39",
+   "dim": "V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l37—l39"
+   ],
+   "evidence": [
+    "其实这种给规矩标价的系数，AI 里到处都有。／比如正则化，用来防止模型死记硬背……／还有，训练聊天模型时……"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "整段删除，l36后直接接l40。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "其实这种给规矩标价的系数，AI 里到处都有。／比如正则化，用来防止模型死记硬背……／还有，训练聊天模型时……",
+   "problem": "三句共标注19.5秒，又开两个新例子，没有进一步讲清，反而冲淡前面已经完整的例子。删除不影响本期主线，且l36接l40顺畅。",
+   "suggest": "整段删除，l36后直接接l40。",
+   "judge_note": "l37—l39（b 建议整段删除）：这三句不是重复也不是空话，是内容取舍；s5.html 的 ①②③ 清单就是给这三句做的，删掉画面会悬空。不该按 V4 处理，要删交内容审稿决定。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：l37—l39 是内容取舍（AI 里还在哪用），不是重复；画面 ①②③ 专为这三句做",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I141",
+   "key": "bfe28ec361f1",
+   "item": "voice_zh",
+   "where": "l38",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l38"
+   ],
+   "evidence": [
+    "扣多重，就靠这样一个系数。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "扣多狠，由这个系数定。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "扣多重，就靠这样一个系数。",
+   "problem": "「靠这样一个系数」拗口",
+   "suggest": "扣多狠，由这个系数定。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l38 改为「比如正则化，用来防止模型死记硬背：模型太复杂就扣分，扣多重，就看这个价定多少。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I142",
+   "key": "0cd08bbb7ca3",
+   "item": "voice_zh",
+   "where": "l39",
+   "dim": "V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V5",
+   "shots": [
+    "l39"
+   ],
+   "evidence": [
+    "还有，训练聊天模型时，常要求它别跟原来的模型差太远，差远了扣多少，也靠这样一个系数。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "还有训练聊天模型：别跟原来的模型差太远，差远了扣多少，也是这种系数定的。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "还有，训练聊天模型时，常要求它别跟原来的模型差太远，差远了扣多少，也靠这样一个系数。",
+   "problem": "8 秒长句",
+   "suggest": "还有训练聊天模型：别跟原来的模型差太远，差远了扣多少，也是这种系数定的。",
+   "judge_note": "l37—l39（b 建议整段删除）：这三句不是重复也不是空话，是内容取舍；s5.html 的 ①②③ 清单就是给这三句做的，删掉画面会悬空。不该按 V4 处理，要删交内容审稿决定。",
+   "status": "implemented",
+   "solution": "l39 改为「还有，训练聊天模型时，常要求它别跟原来的模型差太远，差远了扣多少，也是这样一个价。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I143",
+   "key": "e145d725cc30",
+   "item": "voice_zh",
+   "where": "l40",
+   "dim": "V1、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l40"
+   ],
+   "evidence": [
+    "所以说，拉格朗日乘子，就是给约束标个价。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "拉格朗日乘子，就是违反规矩时扣分的单价。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "所以说，拉格朗日乘子，就是给约束标个价。",
+   "problem": "有点怪。前面说乘子是一个价，这里却说它是“标价”这个动作；片尾应把“它是什么”说稳。",
+   "suggest": "拉格朗日乘子，就是违反规矩时扣分的单价。",
+   "judge_note": "l40（b 必改）：「拉格朗日乘子，就是给约束标个价」是全片的一句话主旨（script.md 开头），和 l05「改成标价」首尾呼应，说起来顺口。b 的改写「违反规矩时扣分的单价」更书面，也丢了口号感。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：「给约束标个价」是全片主旨句，与 l05 首尾呼应",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I144",
+   "key": "0af184d0cc42",
+   "item": "voice_zh",
+   "where": "l41",
+   "dim": "V1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l41"
+   ],
+   "evidence": [
+    "价钱调到刚好，不用砌墙，也会刚好停在线上。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "价标得合适，不用立墙，它自己就停在围栏边上。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "价钱调到刚好，不用砌墙，也会刚好停在线上。",
+   "problem": "片尾；「砌墙」与前文「立墙」不一致，「线」指什么不明，两个「刚好」",
+   "suggest": "价标得合适，不用立墙，它自己就停在围栏边上。",
+   "judge_note": "l41（b 改写）：问题成立，但改写删掉了「不用立墙」的对照，还把主语说成「人」（实验里动的是点，AI 例子里是模型），所以不采用，见补充问题。",
+   "status": "implemented",
+   "solution": "l41 改为「价调合适了，不用立墙，谁都会自己停在线上。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I145",
+   "key": "2d6ff322f324",
+   "item": "voice_zh",
+   "where": "l41",
+   "dim": "V1、V3、V4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3、V4",
+   "shots": [
+    "l41"
+   ],
+   "evidence": [
+    "价钱调到刚好，不用砌墙，也会刚好停在线上。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "价钱调合适，就能让人自己停在界线上。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "价钱调到刚好，不用砌墙，也会刚好停在线上。",
+   "problem": "很怪。“也会停”的主语缺失，听起来甚至像价钱停在线上；两个“刚好”重复。片尾必须说完整。",
+   "suggest": "价钱调合适，就能让人自己停在界线上。",
+   "judge_note": "l41（b 改写）：问题成立，但改写删掉了「不用立墙」的对照，还把主语说成「人」（实验里动的是点，AI 例子里是模型），所以不采用，见补充问题。",
+   "status": "implemented",
+   "solution": "l41 改为「价调合适了，不用立墙，谁都会自己停在线上。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I146",
+   "key": "755b30ab8de5",
+   "item": "voice_zh",
+   "where": "l41",
+   "dim": "V1、V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V2",
+   "shots": [
+    "l41"
+   ],
+   "evidence": [
+    "价钱调到刚好，不用砌墙，也会刚好停在线上。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "价调合适了，不用立墙，谁都会自己停在线上。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "价钱调到刚好，不用砌墙，也会刚好停在线上。",
+   "problem": "片尾，从严。两份改写各修一半：a 统一成「立墙」，但主语「它」仍不明；b 补了主语，却删掉「不用立墙」这个和 l05 呼应的对照，还把主语说成「人」。要同时解决：用词统一、主语、两个「刚好」",
+   "suggest": "价调合适了，不用立墙，谁都会自己停在线上。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l41 改为「价调合适了，不用立墙，谁都会自己停在线上。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I147",
+   "key": "420bf8102b34",
+   "item": "voice_zh",
+   "where": "l42",
+   "dim": "V1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l42"
+   ],
+   "evidence": [
+    "下次你碰到「既要又要」的事，不妨问问自己：这条规矩，到底值多少？"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "下次碰到「既要又要」的事，想想：这条规矩到底值多少？",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "下次你碰到「既要又要」的事，不妨问问自己：这条规矩，到底值多少？",
+   "problem": "片尾（从严）；「不妨问问自己」是书面劝导腔",
+   "suggest": "下次碰到「既要又要」的事，想想：这条规矩到底值多少？",
+   "judge_note": "l42（b 改写）：「下次遇到限制，不妨想想：放宽一点，能多得到多少？」丢了「既要又要」这个钩子，也丢了对 l24「有多贵」的回扣，还保留了 a 指出的「不妨」，比原句平淡。采用 a 的改写「下次碰到『既要又要』的事，想想：这条规矩到底值多少？」。",
+   "status": "implemented",
+   "solution": "l42 改为「下次碰到「既要又要」的事，想想：这条规矩到底值多少？」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I148",
+   "key": "aaa64221733f",
+   "item": "voice_zh",
+   "where": "l42",
+   "dim": "V1、V2、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V2、V3",
+   "shots": [
+    "l42"
+   ],
+   "evidence": [
+    "下次你碰到「既要又要」的事，不妨问问自己：这条规矩，到底值多少？"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "下次遇到限制，不妨想想：放宽一点，能多得到多少？",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "下次你碰到「既要又要」的事，不妨问问自己：这条规矩，到底值多少？",
+   "problem": "有点怪。“既要又要”没有指出哪一项是限制；“规矩值多少”又可能听成规矩本身值不值得遵守，没有落回放宽限制能得到什么。",
+   "suggest": "下次遇到限制，不妨想想：放宽一点，能多得到多少？",
+   "judge_note": "l42（b 改写）：「下次遇到限制，不妨想想：放宽一点，能多得到多少？」丢了「既要又要」这个钩子，也丢了对 l24「有多贵」的回扣，还保留了 a 指出的「不妨」，比原句平淡。采用 a 的改写「下次碰到『既要又要』的事，想想：这条规矩到底值多少？」。",
+   "status": "implemented",
+   "solution": "l42 改为「下次碰到「既要又要」的事，想想：这条规矩到底值多少？」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t09_lagrange/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T12:56:43",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  }
+ ]
+}

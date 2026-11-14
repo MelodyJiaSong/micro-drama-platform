@@ -1,0 +1,147 @@
+{
+  "at": "2026-10-27T20:45:01.977039+00:00",
+  "status": "submitted",
+  "workflow": {
+    "10": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "dota287_bg23_front_391e65e8d8.png"
+      }
+    },
+    "11": {
+      "class_type": "Trellis2RemoveBackground",
+      "inputs": {
+        "image": [
+          "10",
+          0
+        ],
+        "low_vram": true
+      }
+    },
+    "12": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "dota287_bg23_side_81273b01ea.png"
+      }
+    },
+    "13": {
+      "class_type": "Trellis2RemoveBackground",
+      "inputs": {
+        "image": [
+          "12",
+          0
+        ],
+        "low_vram": true
+      }
+    },
+    "14": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "dota287_bg23_back_3061725580.png"
+      }
+    },
+    "15": {
+      "class_type": "Trellis2RemoveBackground",
+      "inputs": {
+        "image": [
+          "14",
+          0
+        ],
+        "low_vram": true
+      }
+    },
+    "30": {
+      "class_type": "MaskToImage",
+      "inputs": {
+        "mask": [
+          "11",
+          1
+        ]
+      }
+    },
+    "31": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": [
+          "30",
+          0
+        ],
+        "filename_prefix": "dota287/mask_bg23_0"
+      }
+    },
+    "32": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": [
+          "11",
+          0
+        ],
+        "filename_prefix": "dota287/masked_bg23_0"
+      }
+    },
+    "33": {
+      "class_type": "MaskToImage",
+      "inputs": {
+        "mask": [
+          "13",
+          1
+        ]
+      }
+    },
+    "34": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": [
+          "33",
+          0
+        ],
+        "filename_prefix": "dota287/mask_bg23_1"
+      }
+    },
+    "35": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": [
+          "13",
+          0
+        ],
+        "filename_prefix": "dota287/masked_bg23_1"
+      }
+    },
+    "36": {
+      "class_type": "MaskToImage",
+      "inputs": {
+        "mask": [
+          "15",
+          1
+        ]
+      }
+    },
+    "37": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": [
+          "36",
+          0
+        ],
+        "filename_prefix": "dota287/mask_bg23_2"
+      }
+    },
+    "38": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": [
+          "15",
+          0
+        ],
+        "filename_prefix": "dota287/masked_bg23_2"
+      }
+    }
+  },
+  "purpose": "inspect preprocessing; no 3D inference",
+  "receipt": {
+    "prompt_id": "756a439a-2f97-4a89-90d3-640658079bd5",
+    "number": 1,
+    "node_errors": {}
+  }
+}

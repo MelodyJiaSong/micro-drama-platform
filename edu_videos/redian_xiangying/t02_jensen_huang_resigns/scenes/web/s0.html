@@ -1,0 +1,189 @@
+<style>
+  /* 屏 A：日期 + 空舞台（sd1 模拟画面）；视频不在时日期挪到画面中间 */
+  .when { position: absolute; left: 0; right: 0; top: 96px; text-align: center; }
+  .when .h1 { margin-top: 6px; }
+  /* 没有 sd1 时：日期居中，下面放英伟达总部照片（图片位；照片也没有就只剩日期） */
+  html.no-v1 .when { top: 96px; bottom: 150px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+  #hq { width: 1000px; margin-top: 36px; }
+  html:not(.no-v1) #hq { display: none !important; }
+  #fx1 { left: 418px; top: 250px; width: 1084px; height: 610px; }
+
+  /* 屏 B：黄仁勋照片 + 8-K 卡 */
+  #ph, #phq { position: absolute; left: var(--mx); top: 170px; width: 380px; }
+  .k8 { position: absolute; left: 560px; right: var(--mx); top: 170px; padding: 36px 52px 26px; }
+  .k8 .hd { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 16px; border-bottom: 1px solid var(--hair); }
+  .k8 .hd span { font-size: var(--fs-micro); color: var(--sub); letter-spacing: .06em; }
+  .k8 .hd b { font-size: var(--fs-micro); font-weight: 700; letter-spacing: .12em; color: var(--ink); }
+  /* 公告原句压成纹理（证据），只有两处读得清 */
+  .k8 .txt { margin-top: 18px; font-size: var(--fs-caption); line-height: 1.6; color: transparent; text-shadow: 0 0 16px rgba(29,29,31,.5); }
+  .k8 .txt .rd { color: var(--ink2); text-shadow: none; }
+  .k8 .txt .hlq { color: var(--ink); text-shadow: none; font-weight: 700; }
+  .k8 .rows { margin-top: 20px; }
+  .k8 .r { display: grid; grid-template-columns: 150px 1fr; align-items: baseline; padding: 14px 0; border-top: 1px solid var(--hair); }
+  html[lang=en] .k8 .r { grid-template-columns: 210px 1fr; }
+  .k8 .r .k { font-size: var(--fs-caption); color: var(--sub); }
+  .k8 .blank { display: inline-block; min-width: 240px; border-bottom: 3px dashed var(--faint); color: var(--faint); }
+  html[lang=en] .zh-only { display: none; }
+
+  /* 屏 C：股价 */
+  #imT, #imL { position: absolute; left: var(--mx); top: 190px; }
+  #imT { width: 960px; } #imL { width: 760px; top: 220px; }
+  .px { position: absolute; left: 1140px; right: var(--mx); top: 190px; padding: 40px 48px; }
+  .px .tiles { display: grid; grid-template-columns: 1fr; row-gap: 20px; margin-top: 20px; }
+  .px .tile .body { color: var(--sub); }
+  .px .tile .display { margin-top: 8px; white-space: nowrap; }
+
+  /* 屏 D：致员工信 */
+  .lt { position: absolute; left: 940px; right: var(--mx); top: 190px; padding: 44px 52px 40px; }
+  .lt .top { display: flex; align-items: center; gap: 22px; }
+  .lt .h1 { margin-top: 28px; }
+  .lt .h2 { margin-top: 14px; color: var(--ink2); }
+  .lt .foot { margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--hair); display: flex; align-items: baseline; gap: 26px; }
+
+  /* 屏 E：一件私事 → 三个机构 */
+  .pv { position: absolute; left: 0; right: 0; top: 150px; text-align: center; }
+  #links { position: absolute; left: 0; top: 0; }
+  .orgs { position: absolute; left: 180px; right: 180px; top: 470px; display: flex; gap: 48px; align-items: stretch; }
+  .orgs .card { flex: 1 1 0; min-width: 0; padding: 36px 30px 32px; text-align: center; }
+  .orgs .ico { color: var(--ink); }
+  .orgs .h2 { margin-top: 14px; }
+
+  /* 屏 F：一句话论点 */
+  .th { position: absolute; left: var(--mx); right: var(--mx); top: 270px; text-align: center; }
+  .th .h1 { margin-top: 18px; }
+  .th .no { margin-top: 64px; }
+  .th .caption { margin-top: 12px; }
+</style>
+
+<!-- 屏 A：sd1 模拟画面（空舞台，聚光灯熄灭）-->
+<div class="when" id="when">
+  <div class="eyebrow" data-zh="2026 年 11 月 12 日" data-en="November 12, 2026"></div>
+  <div class="h1" data-zh="英伟达发布公告" data-en="Nvidia files a notice"></div>
+  <figure class="slot" id="hq" data-src="img/source/commons/NVIDIA_Headquarters.jpg" style="--h:460px"></figure>
+</div>
+<div class="footage" id="fx1"><video id="v1" src="img/footage/sd1_empty_stage.mp4" data-start="{{t:l01:0}}" data-duration="{{d:l01:0>l02:0.3|6}}"
+  data-media-start="0" data-track-index="1" muted playsinline></video></div>
+
+<!-- 屏 B -->
+<figure class="slot" id="phq" data-nocap data-src="img/source/commons/NVIDIA_Headquarters.jpg" style="--h:520px; --pos:78% 50%"></figure>
+<figure class="slot" id="ph" data-nocap data-src="img/source/commons/Jensen_Huang_Stanford_2026-04-30_010_(cropped).jpg" style="--h:520px; --pos:50% 20%"></figure>
+<div class="k8 card" id="k8">
+  <div class="hd"><span class="mono">FORM 8-K · ITEM 5.02</span><b>NVIDIA CORPORATION</b></div>
+  <div class="txt mono" id="k8txt"></div>
+  <div class="rows">
+    <div class="r" id="r1"><span class="k" data-zh="辞去" data-en="Out as"></span><span class="h2" data-zh="CEO · 董事 · 立即生效" data-en="CEO · director"></span></div>
+    <div class="r" id="r3"><span class="k" data-zh="执掌" data-en="Ran it for"></span><span class="h2" data-zh="33 年" data-en="33 years"></span></div>
+    <div class="r" id="r4"><span class="k" data-zh="原因" data-en="Reason"></span><span class="h2"><span class="blank" data-zh="未写" data-en="not given"></span></span></div>
+  </div>
+</div>
+
+<!-- 屏 C -->
+<figure class="slot" id="imT" data-src="img/source/ai/ai_trading.png" style="--h:540px"></figure>
+<div class="px card" id="px">
+  <div class="eyebrow" data-zh="NVDA 股价 · 11 月 12 日 · 较前一日收盘" data-en="NVDA · Nov 12 · vs. prior close"></div>
+  <div class="tiles">
+    <div class="tile" id="t1"><div class="body" data-zh="开盘" data-en="Open"></div><div class="display" id="vOpen">—</div></div>
+    <div class="tile" id="t2"><div class="body" data-zh="收盘" data-en="Close"></div><div class="display accent" id="vClose">—</div></div>
+  </div>
+</div>
+
+<!-- 屏 D -->
+<figure class="slot" id="imL" data-src="img/source/ai/ai_letter.png" style="--h:428px"></figure>
+<div class="lt card" id="lt">
+  <div class="top"><span data-icon="letter" data-size="56"></span><span class="eyebrow" data-zh="黄仁勋致全体员工信 · 11 月 8 日" data-en="Huang's letter to all staff · Nov 8"></span></div>
+  <div class="h1"><span class="hlq" id="qL"></span></div>
+  <div class="h2 zh-only" data-zh="「我对妻子不忠。」" data-en=""></div>
+  <div class="foot" id="ltFoot"><span class="h2" data-zh="对象：未写" data-en="With whom: not said"></span><span id="pvTag"></span></div>
+</div>
+
+<!-- 屏 E -->
+<div class="pv" id="pv"><div class="h1" data-zh="一件私事" data-en="A private matter"></div></div>
+<svg id="links" width="1920" height="1080"></svg>
+<div class="orgs" id="orgs">
+  <div class="card" id="o1"><span data-icon="board" data-size="84"></span><div class="h2" data-zh="英伟达董事会" data-en="Nvidia's board"></div></div>
+  <div class="card" id="o2"><span data-icon="capitol" data-size="84"></span><div class="h2" data-zh="美国国会" data-en="US Congress"></div></div>
+  <div class="card" id="o3"><span data-icon="podium" data-size="84"></span><div class="h2" data-zh="中国外交部" data-en="China's Foreign Ministry"></div></div>
+</div>
+
+<!-- 屏 F -->
+<div class="th" id="th">
+  <div class="h2 ink2" data-zh="中美科技战" data-en="The US–China tech war"></div>
+  <div class="h1" data-zh='CEO 的私事 → <span class="grad">国家安全问题</span>' data-en='Private life → <span class="grad">national security</span>'></div>
+  <div class="no body" id="no" data-zh="不是说：他因国家安全下台" data-en="Not saying: he quit over national security"></div>
+  <div class="caption" id="no2" data-zh="辞职原因：未公布" data-en="Reason for leaving: not disclosed"></div>
+</div>
+
+<script>
+const T = EDU.tl;
+// 8-K 原句：压成纹理，「accepted the resignation」与「effective immediately」读得清
+const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+document.getElementById("k8txt").innerHTML = esc(Q.eightk)
+  .replace("accepted the resignation", '<span class="rd">accepted the resignation</span>')
+  .replace("effective immediately", '<span class="hlq" id="ei">effective immediately</span>');
+document.getElementById("qL").textContent = "“" + Q.letter + "”";
+document.getElementById("pvTag").innerHTML = pill("ok", "私事", "Private");
+
+gsap.set(["#when", "#phq", "#ph", "#imT", "#imL", "#k8", "#r1", "#r3", "#r4", "#px", "#t1", "#t2", "#lt", "#ltFoot", "#pv", "#orgs", "#o1", "#o2", "#o3", "#th", "#no", "#no2"], { opacity: 0 });
+
+// l01 2026-11-12 英伟达发布公告（sd1：空舞台，灯灭）
+EDU.in("#when", EDU.t("l01", .05));
+// l02 辞去 CEO 与董事，立即生效
+const cardAt = EDU.t("l02", .25);
+EDU.out("#when", cardAt - .4, { y: 0 });
+EDU.in("#phq", cardAt);
+EDU.in("#k8", cardAt + .1, { d: .9 });
+brush("#ei", EDU.t("l02", .6));
+EDU.in("#r1", EDU.t("l02", .45));
+const HQ = "img/source/commons/NVIDIA_Headquarters.jpg", HU = "img/source/commons/Jensen_Huang_Stanford_2026-04-30_010_(cropped).jpg";
+srcNote(withCred("SEC 8-K · 2026-11-12", HQ), withCred("SEC 8-K · Nov 12, 2026", HQ), cardAt + .3, EDU.t("l03", 0));
+// l03 33 年；原因：未写
+EDU.dim("#r1", EDU.t("l03", 0), .45);
+EDU.out("#phq", EDU.t("l03", 0), { y: 0 });
+EDU.in("#ph", EDU.t("l03", 0), { y: 0 });      // 掌舵 33 年：换成本人照片
+srcNote(withCred("SEC 8-K · 英伟达新闻稿", HU), withCred("SEC 8-K · Nvidia release", HU), EDU.t("l03", .1), EDU.end("l03") + .1);
+EDU.in("#r3", EDU.t("l03", .05));
+EDU.in("#r4", EDU.t("l03", .5));
+
+// l04 股价：开盘跌十几个点，收盘 −4.34%
+EDU.out(["#ph", "#k8"], EDU.t("l04", 0));
+EDU.in("#imT", EDU.t("l04", 0));
+EDU.in("#px", EDU.t("l04", .05));
+EDU.in("#t1", EDU.t("l04", .1));
+EDU.count("#vOpen", EDU.t("l04", .15), N.open_pct, 1.0, v => "−" + Math.abs(Math.round(v)) + "%");
+EDU.in("#t2", EDU.t("l04", .5));
+EDU.count("#vClose", EDU.t("l04", .55), N.close_pct, 1.0, v => "−" + Math.abs(v).toFixed(2) + "%");
+EDU.dim("#t1", EDU.t("l04", .55), .45);
+srcNote("Yahoo Finance 日线（开盘 151.01 · 收盘 166.19 · 前收 173.73）", "Yahoo Finance daily (open 151.01 · close 166.19 · prior 173.73)", EDU.t("l04", .3), EDU.end("l04") + .1);
+
+// l05 四天前的信：「I was unfaithful to my wife.」
+EDU.out(["#px", "#imT"], EDU.t("l05", 0));
+EDU.in("#imL", EDU.t("l05", 0));
+EDU.in("#lt", EDU.t("l05", .05));
+brush("#qL", EDU.t("l05", .45), 1.1);
+srcNote("英伟达致员工信 · 2026-11-08", "Nvidia, letter to employees · Nov 8, 2026", EDU.t("l05", .2), EDU.end("l06") + .1);
+// l06 对象没说；本来是私事
+EDU.in("#ltFoot", EDU.t("l06", .05));
+
+// l07 接手的是：董事会、国会、中国外交部（依次亮起）
+EDU.out(["#lt", "#imL"], EDU.t("l07", 0));
+EDU.in("#pv", EDU.t("l07", .02));
+EDU.in("#orgs", EDU.t("l07", .02), { y: 0, d: .01 });
+const lk = document.getElementById("links");
+const ends = ["#o1", "#o2", "#o3"].map(o => { const r = document.querySelector(o).getBoundingClientRect(); return [r.left + r.width / 2, r.top]; });
+const paths = ends.map(([x, y]) => svgEl(lk, "path", { d: `M960,262 C960,370 ${x},360 ${x},${y - 12}`, fill: "none", stroke: css("--accent"), "stroke-width": 4, "stroke-linecap": "round", opacity: 0 }));
+["#o1", "#o2", "#o3"].forEach((o, i) => {
+  const at = EDU.t("l07", .2 + i * .25);
+  T.set(paths[i], { opacity: 1 }, at); EDU.draw(paths[i], at, .6);
+  EDU.in(o, at + .35);
+});
+srcNote("英伟达董事会声明 11-08 · 众院三个委员会 · 外交部例行记者会 11-09", "Nvidia board, Nov 8 · Three House committees · China MFA briefing, Nov 9", EDU.t("l07", .3), EDU.end("l07") + .1);
+
+// l08 我们的看法：中美科技战，把私事变成国家安全问题
+EDU.out(["#pv", "#orgs", "#links"], EDU.t("l08", 0));
+EDU.in("#th", EDU.t("l08", .08));
+// l09 不是说他因国家安全下台；原因未公布
+EDU.in("#no", EDU.t("l09", .05));
+EDU.in("#no2", EDU.t("l09", .5));
+ourTake(["l08", "l09"]);
+EDU.out("#th", EDU.S.duration - .5);
+</script>

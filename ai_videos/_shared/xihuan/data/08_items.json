@@ -25,8 +25,8 @@
      "details": {
       "Common 凡品": "凡人可用",
       "Masterwork 名匠之作": "名匠作品，可有小附魔",
-      "Enchanted 附魔器": "需锡阶以上驱动",
-      "Named 有名之器": "有名字、有传说，需认主（铜阶起）",
+      "Enchanted 附魔器": "需觉醒者驱动",
+      "Named 有名之器": "有名字、有传说，需认主（灵魂缔结）",
       "Hallowed 圣物": "圣人或英雄遗留，有意志",
       "God-wrought 神造之器": "无法再造，会挑选主人",
       "道具组参考色": "白 / 绿 / 蓝 / 紫 / 橙 / 红金——仅供道具与特效组内部区分，不上屏、不进字幕"
@@ -46,8 +46,8 @@
      ],
      "relations": [
       {
-       "target": "TR01",
-       "role": "驱动位阶参照"
+       "target": "GR06",
+       "role": "认主方式"
       }
      ],
      "adoption": "default",
@@ -485,7 +485,7 @@
       "concept": "毒丹 / 丹毒（参照）"
      },
      "details": {
-      "药毒上限": "凡人约两瓶；铁阶约五瓶；猎魔人经异变后更高",
+      "药毒上限": "凡人约两瓶；久经锤炼的骑士或大师级法师约五瓶；猎魔人经异变后更高",
       "假死药": "让人看似死去一到三日"
      },
      "cost": "中毒症状：发热、黑色血管、幻觉。",
@@ -647,7 +647,7 @@
      "aliases": [
       "scroll"
      ],
-     "summary": "写着完整法术的羊皮纸卷：展开并念出即可施放一次，施放后字迹燃尽。可用于施放超出自身位阶的法术，但有失败风险。",
+     "summary": "写着完整法术的羊皮纸卷：展开并念出即可施放一次，施放后字迹燃尽。可用于施放超出自身能力的法术，但有失败风险。",
      "xianxia": {
       "concept": "符箓 / 一次性法宝（参照）"
      },
@@ -1063,7 +1063,7 @@
       "lapis philosophorum",
       "红石"
      ],
-     "summary": "炼金术的终极成果：能点铅成金、炼成生命之酒。在本库中，它也是灵魂炼成神话阶的物质形态——半神死后可能留下一块。",
+     "summary": "炼金术的终极成果：能点铅成金、炼成生命之酒。传说半神死后可能留下一块（封神之试 EV04，可选）。",
      "xianxia": {
       "concept": "金丹（外丹）（参照）",
       "note": "中西平行：外丹的金丹与西方的贤者之石，都是「炼成后可点化万物、使人长生」的终极丹/石。"
@@ -1080,58 +1080,21 @@
      ],
      "relations": [
       {
-       "target": "TR08",
-       "role": "同源位阶"
-      },
-      {
        "target": "IT04",
        "role": "用途"
+      },
+      {
+       "target": "CF01",
+       "role": "炼成工艺"
+      },
+      {
+       "target": "EV04",
+       "role": "传说来源"
       }
      ],
      "image": {
       "purpose": "item",
       "brief": "A single egg-sized deep red translucent stone resting on a small dark iron stand, its interior holding slow swirling currents of ruby and gold light, a tiny lump of lead beside it on the stand turning to gleaming gold where the stone's light touches it."
-     },
-     "adoption": "default",
-     "basis": "tradition"
-    },
-    {
-     "id": "IT22",
-     "name": "试金石",
-     "name_en": "Touchstone (Soul Assay)",
-     "aliases": [
-      "touchstone",
-      "assay",
-      "测灵石"
-     ],
-     "summary": "测量灵魂成色与天赋的黑色石板：滴一滴血在上面划过，痕迹的金属光泽显示成色、亮度显示天赋。源自真实的金匠验金法。多数人的天赋是自己显露的，验石只用于确认，常见于学院招生、教会封圣调查与审判。",
-     "xianxia": {
-      "concept": "测灵石（参照）",
-      "note": "差异：不是入门标配；欧洲叙事里天赋多是自己显露，或被器物选中。"
-     },
-     "visual": "掌心大小的黑色玄武岩板，血痕划过后显出金属光泽的线条。",
-     "familiarity": "中",
-     "ip": "public_domain",
-     "references": [
-      {
-       "work": "古代至中世纪金匠",
-       "note": "touchstone 试金石验金"
-      }
-     ],
-     "relations": [
-      {
-       "target": "GF01",
-       "role": "检测对象"
-      },
-      {
-       "target": "EV01",
-       "role": "相关事件"
-      }
-     ],
-     "image": {
-      "version": 2,
-      "purpose": "item",
-      "brief": "A palm-sized flat rectangular slab of smooth polished black basalt touchstone on a small wooden stand, across which seven short parallel streaks are drawn, each streak showing a different metallic sheen from left to right: dull grey lead, pale tin, rosy copper, dark iron, liquid mirror quicksilver, bright silver and glowing gold; a single drop of blood beside the last streak."
      },
      "adoption": "default",
      "basis": "tradition"

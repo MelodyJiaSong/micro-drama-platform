@@ -1,0 +1,53 @@
+<style>
+  .def { position: absolute; left: var(--mx); right: var(--mx); top: 250px; }
+  .def .display { margin-top: 18px; padding-bottom: .14em; line-height: 1.1; }
+  .def .d1 { margin-top: 40px; } .def .d2 { margin-top: 14px; }
+  .def .meta { margin-top: 64px; padding-top: 30px; border-top: 1px solid var(--hair); }
+  .head { position: absolute; left: var(--mx); top: var(--mt); }
+  .head .h1 { margin-top: 16px; white-space: nowrap; }
+  #chart { position: absolute; left: 96px; top: 240px; }
+  .task { position: absolute; left: 1260px; top: 380px; width: 540px; }
+  .task .h2 { margin-top: 16px; }
+</style>
+
+<div class="def" id="def">
+  <div class="eyebrow" data-zh="定义" data-en="Definition"></div>
+  <div class="display grad" data-zh="过拟合" data-en="Overfitting"></div>
+  <div class="h2 ink2 d1" data-zh="学进了碰巧的细节" data-en="Learns the flukes in its practice data"></div>
+  <div class="h2 c-bad d2" data-zh="做新题反而变差" data-en="Does worse on new data"></div>
+  <div class="meta" id="meta"><div class="h2" data-zh='≈ 背下答案，<span class="accent">没学会规律</span>' data-en='≈ Memorizing answers, <span class="accent">missing the pattern</span>'></div></div>
+</div>
+
+<div class="head" id="head"><div class="eyebrow" data-zh="01 · 过拟合是什么" data-en="01 · What overfitting is"></div>
+  <div class="h1" data-zh="模型在学什么" data-en="What a model learns"></div></div>
+<svg id="chart"></svg>
+<div class="task" id="task"><div class="eyebrow" data-zh="模型的任务" data-en="The model's job"></div>
+  <div class="h2" data-zh='找出<span class="accent">规律</span><br>→ 预测新数据' data-en='Find the <span class="accent">pattern</span><br>→ predict new data'></div></div>
+
+<script>
+const C = makeChart("#chart"), T = EDU.tl;
+const truth = C.curve(D.truth, "--ink", 3, "2 10");
+const noise = C.gaps(D.train, truthAt, "--d-bad", null);
+const dots = C.dots(D.train);
+const capT = C.note(EDU.tr("背后的规律", "The hidden pattern"), [-1.55, -1.75], -70, 0, "caption ink2");
+const capN = C.note(EDU.tr("噪声：随机的偏差", "Noise: random wobble"), [1.05, 2.05], 0, -40, "caption c-bad");
+
+gsap.set(["#def .d1", "#def .d2", "#meta", "#head", "#task", C.base, truth, noise, capT, capN, ...dots], { opacity: 0 });
+// l09 定义卡
+EDU.in(["#def .eyebrow", "#def .display"], EDU.t("l09"), { stagger: .08 });
+EDU.in("#def .d1", EDU.t("l09", .4)); EDU.in("#def .d2", EDU.t("l09", .72));
+// l10 比方
+EDU.in("#meta", EDU.t("l10"));
+EDU.out("#def", EDU.end("l10") + .15);
+// l11 训练数据
+EDU.in("#head", EDU.t("l11"));
+T.to(C.base, { opacity: 1, duration: .5 }, EDU.t("l11", .05));
+EDU.in(dots, EDU.t("l11", .15), { stagger: .06 });
+// l12 规律 + 噪声
+T.set(truth, { opacity: .5 }, EDU.t("l12")); EDU.draw(truth, EDU.t("l12"), 1.4);
+EDU.in(capT, EDU.t("l12", .2));
+EDU.in(noise, EDU.t("l12", .6)); EDU.in(capN, EDU.t("l12", .64));
+// l13 任务
+EDU.out([capT, capN], EDU.t("l13")); EDU.dim(noise, EDU.t("l13"), 0); EDU.dim(truth, EDU.t("l13"), .15);
+EDU.in("#task", EDU.t("l13", .1));
+</script>

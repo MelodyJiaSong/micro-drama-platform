@@ -1,0 +1,32 @@
+<style>
+  #phone { left: 60px; top: 70px; width: 1000px; }
+  .hook { position: absolute; left: 1060px; top: 250px; width: 760px; }
+  .hook .h1 + .body { margin-top: 26px; }
+  .ans { position: absolute; left: 1060px; top: 250px; width: 760px; }
+  .ans .row { display: flex; align-items: center; gap: 22px; margin-top: 26px; flex-wrap: wrap; }
+  .ans .eq { margin-top: 40px; }
+</style>
+
+<img class="ill" id="phone" src="img/clay_phone_cat_v1_cut.png">
+<div class="hook" id="hook">
+  <div class="h1" data-zh="相册认得出<br>你家的猫" data-en="Your phone<br>spots your cat"></div>
+  <div class="body ink2" id="hook2" data-zh='没人写过 <span class="pill rulep">认猫的规则</span>' data-en='No one wrote <span class="pill rulep">cat-spotting rules</span>'></div>
+</div>
+<div class="ans" id="ans">
+  <div class="eyebrow" data-zh="简单说" data-en="In short"></div>
+  <div class="row h2"><span data-zh="大量例子" data-en="Examples"></span><span class="arrow">→</span><span class="pill learn" style="font-size:var(--fs-h2)" data-zh="自己学出规律" data-en="Patterns"></span></div>
+  <div class="h1 eq" data-zh='这就是<span class="grad">今天的 AI</span>' data-en='That’s <span class="grad">today’s AI</span>'></div>
+</div>
+
+<script>
+gsap.set(["#phone", "#hook", "#hook2", "#ans", "#ans .row", "#ans .eq"], { opacity: 0 });
+EDU.in("#phone", 0.15, { d: 0.9 });
+EDU.in("#hook", EDU.t("l01", 0.05));
+EDU.in("#hook2", EDU.t("l01", 0.45));
+// l02 先问，再给一句不含术语的定义
+EDU.out("#hook", EDU.t("l02", 0.2));
+EDU.in("#ans", EDU.t("l02", 0.3), { d: 0.01 });
+EDU.in("#ans .row", EDU.t("l02", 0.32));
+EDU.in("#ans .eq", EDU.t("l02", 0.78));
+EDU.out(["#phone", "#ans"], EDU.S.duration - 0.5);
+</script>

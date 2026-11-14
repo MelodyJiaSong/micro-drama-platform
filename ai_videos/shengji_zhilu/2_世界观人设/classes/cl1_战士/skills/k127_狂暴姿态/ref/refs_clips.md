@@ -1,0 +1,14 @@
+# k127 狂暴姿态 · 实机片段与截帧
+
+> 暴雪娱乐版权素材，只给人看、写 prompt 用，不上传生成服务、不进成片。
+
+| 文件 | 来源 URL / 时间点 | sha256 前 12 位 | 看到了什么 |
+|---|---|---|---|
+| `clip_ia_Velrin_-_Undead_warrior__74.6.mp4` | https://archive.org/details/Velrin_-_Undead_warrior_Pvp_Warrior_2006-04-21_4.78 74.6–77.6 秒；录像《Velrin - Undead warrior Pvp [Warrior][2006-04-21][4.78]》，原版时期（1.10 前后），720×480；第三人称身后俯视视角，施法者是亡灵战士 Velrin（双手武器，31 武器 / 20 狂怒天赋），浮动战斗文字会把自己获得的效果用方括号标出（如 [Battle Shout]），动作条左侧三个姿态图标里高亮的一个就是当前姿态；场景是阿拉希盆地草地 | cce87ee356c2 | 74.8–75.0 秒鼠标悬停「Berserker Stance」按钮（提示框：An aggressive stance. Critical hit chance is increased by 3%…）→ 75.2–75.4 秒 Velrin 身上竖着劈下一道黄白色闪电状光（像一根从头顶直插脚下的亮条，约 0.3 秒；可能是姿态切换光，也可能是别的触发效果，认不准）→ 75.6 秒 Velrin 头顶一团暗红色光（berzerkerstance_impact_head，红色，比防御姿态的金色盾光小）→ 75.8 秒浮字「[Berserker Stance]」，随后紧接着开了血性狂暴（+10 Rage / [Bloodrage]），头顶红光持续到约 77 秒。姿态栏第三个（斧头图标）亮起。PvP 剪辑整段配乐，非游戏原声（未逐帧核听） |
+| `snap_ia_Velrin_-_Undead_warrior__75.jpg` | https://archive.org/details/Velrin_-_Undead_warrior_Pvp_Warrior_2006-04-21_4.78 75.0 秒（裁 504×360，原分辨率） | b68f1599a056 | 施放前：动作条上方提示框 Berserker Stance；Velrin 背对镜头站在下方 |
+| `snap_ia_Velrin_-_Undead_warrior__75.6.jpg` | https://archive.org/details/Velrin_-_Undead_warrior_Pvp_Warrior_2006-04-21_4.78 75.6 秒（裁 504×360） | bff2fa171c31 | 切换后：Velrin 头顶一团暗红色光，脚下残留一道黄色竖光；提示框已换成 Bloodrage |
+| `snap_ia_Velrin_-_Undead_warrior__76.2.jpg` | https://archive.org/details/Velrin_-_Undead_warrior_Pvp_Warrior_2006-04-21_4.78 76.2 秒（裁 504×360） | 08b132343657 | 持续：浮字 [Berserker Stance] / +10 Rage / [Bloodrage]，头顶红光与身侧红色血花，姿态栏第三个高亮 |
+| `clip_ia_Velrin_-_Undead_warrior__880.6.mp4` | https://archive.org/details/Velrin_-_Undead_warrior_Pvp_Warrior_2006-04-21_4.78 880.6–883.4 秒；录像《Velrin - Undead warrior Pvp [Warrior][2006-04-21][4.78]》，原版时期，720×480；第三人称身后视角，施法者是亡灵战士 Velrin（这一段换成持盾 + 单手剑），场景是红土竞技场（古拉巴什竞技场） | 4c977961b5cf | 近景、最清楚的一次：880.8–881.6 秒鼠标悬停「Berserker Stance」（提示框：An aggressive stance. Critical hit chance is increased by 3% and all damage taken is increased by 10%）→ 881.8 秒点下，Velrin 头部被一团暗红色光晕整个包住（berzerkerstance_impact_head，像头顶一团红色火焰光球，边缘发虚，比头大一圈）→ 882.0 秒浮字「[Berserker Stance]」→ 红光一直挂在头上到 883 秒以后，同时身后飘出一串橙红色小光点；姿态栏第三个（斧头图标）亮起。人边跑边切，没有专门动作。PvP 剪辑整段配乐，非游戏原声（未逐帧核听） |
+| `snap_ia_Velrin_-_Undead_warrior__881.6.jpg` | https://archive.org/details/Velrin_-_Undead_warrior_Pvp_Warrior_2006-04-21_4.78 881.6 秒（裁 504×360，原分辨率） | 109888441480 | 施放前：提示框 Berserker Stance，Velrin 头上无光 |
+| `snap_ia_Velrin_-_Undead_warrior__881.8.jpg` | https://archive.org/details/Velrin_-_Undead_warrior_Pvp_Warrior_2006-04-21_4.78 881.8 秒（裁 504×360，原分辨率） | 85b6c06ea897 | 切换瞬间：Velrin 头部被一团暗红光晕包住 |
+| `snap_ia_Velrin_-_Undead_warrior__882.4.jpg` | https://archive.org/details/Velrin_-_Undead_warrior_Pvp_Warrior_2006-04-21_4.78 882.4 秒（裁 504×360，原分辨率） | fc8d0d15cb1a | 持续：浮字 [Berserker Stance]，头部红光晕，周围飘橙红小光点，姿态栏第三个高亮 |

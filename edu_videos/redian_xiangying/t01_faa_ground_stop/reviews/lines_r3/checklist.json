@@ -1,0 +1,1123 @@
+{
+ "version": 5,
+ "kind": "edu_lines",
+ "scoring": {
+  "scale": {
+   "0": "没查或查不了（写 `原因：`）",
+   "1": "有问题（问题表里必须有对应条目）",
+   "2": "基本没问题，有小瑕疵（写证据）",
+   "3": "没问题（写证据）"
+  },
+  "evidence_rule": "证据要指到句号 lNN / 屏号、原文或数字，至少 8 个字；没证据的高分按 0 处理。",
+  "disagreement": "分歧：两位同一维度差 ≥2，或一人 ≤1、另一人 ≥2，交裁决人；两人都 ≥2 的维度，裁决人每项抽 2 维复核（专抓两个模型共同的盲点）。"
+ },
+ "adjudicator": {
+  "runner": "claude",
+  "model": "claude-opus-5-5"
+ },
+ "id": "lines_r3",
+ "chain": "t01_faa_ground_stop/lines",
+ "loop": 3,
+ "max_loops": 3,
+ "parent": "edu_videos/redian_xiangying/t01_faa_ground_stop/reviews/lines_r2",
+ "title": "t01_faa_ground_stop · 台词审（口播＋屏幕文字）第 3 轮",
+ "target": "edu_videos/redian_xiangying/t01_faa_ground_stop",
+ "episode": "t01_faa_ground_stop",
+ "stage": "lines",
+ "stage_name": "台词审（口播＋屏幕文字 × 中英）",
+ "scenes": [],
+ "created_at": "2026-11-14T15:27:29",
+ "author": "Claude Code",
+ "known": "",
+ "changes": "# 台词审汇总：lines_r2\n\n处理状态：待处理 0 · 已改 80 · 不改 47 · 驳回 0（`python tools/edu_review.py fix` 登记；下一轮审稿人按「处理」列逐条复核）\n\n## 各项结论（最终分：裁决过的维度用裁决分，其余取两人较低分）\n\n| 项 | 最终分 | 未处理的必改 | 结论 |\n|---|---|---|---|\n| voice_zh | V1=2 V2=1 V3=1 V4=2 V5=2 V6=2 R=1 | 0 | 不通过 |\n| voice_en | V1=1 V2=1 V3=1 V4=2 V5=2 V6=2 R=1 | 0 | 不通过 |\n| screen_zh | P1=1 P2=2 P3=1 P4=1 P5=2 P6=2 R=1 | 0 | 不通过 |\n| screen_en | P1=1 P2=1 P3=1 P4=1 P5=1 P6=2 R=1 | 0 | 不通过 |\n\n## 问题（来源 a = Claude、b = Codex、judge = 裁决补充）\n\n| 编号 | 项 | 位置 | 维度 | 级别 | 来源 | 原文 | 问题 | 建议改写 | 裁决人意见 | 处理 |\n|---|---|---|---|---|---|---|---|---|---|---|\n| I1 | screen_en | c_c1–c_c6, agenda, outro package | P3, P5 | 记录 | a | chapter cards (no screenshots), agenda and outro package cards | Same limitation as last round: chapter card hierarchy and hold time could not be checked from screenshots. Chapter titles themselves read naturally aloud; I could not clear the agenda or end card. | Add screenshots/hold times for next round. |  | 不改：不改（理由：记录项：章节卡与包装卡由 tools/edu_package.py 另渲染，不在网页场景范围；出片后补截图复核） |\n| I2 | screen_en | c_c1–c_c6; agenda; outro package | P3, P5 | 记录 | b | Empty chapter screenshot paths; no agenda or separate outro-package render | Chapter wording is assessable, but rendered hierarchy, subtitle clearance and hold times cannot be cleared from this package. Separate rendering is a valid scope explanation, not verification. | Retain the supplied wording, subject to the c_c6 revision above; rendered package review remains pending. |  | 不改：不改（理由：记录项：同 I1） |\n| I3 | screen_en | l02–l03 | P1, P5 | 必改 | b | “EVENT TIME…” through “…CASE BY CASE BASIS.” | The full paragraph remains legible in both screenshots. Counting the highlighted words once, the body contains approximately **52 words**: above nine per block and 22 per screen. Its reading demand exceeds the combined 9.6-second hold. Documentary presentation does not exempt readable prose. | l02: **All departures on hold**. l03: **“Extraordinary circumstances”** / **“Reasons of safety”**. Retain the citation; crop or blur the remaining paragraph beyond legibility. |  | 已改：公告正文改为模糊纹理（透明字 + 20px 阴影），静帧读不出但仍看得出是原始公告；只有念到的一句清楚。按 r1 裁决保留原件、不换成改写文字 |\n| I4 | screen_en | l02, l03 | P1, P5 | 存疑 | a | Dimmed advisory body: \"EVENT TIME: 13/2053 – 14/0400 … CASE BY CASE BASIS.\" (45 / 49 words, 6 blocks, ~60-70 words on screen) | Cold open is strict. Hard limits (9 words per block, 22 per screen, 4 blocks) are formally broken. Last round's ruling accepted this as dimmed evidence texture, but in s0_l02.png and s0_l03.png the grey 28px text is still fully legible and competes with the subtitles at the bottom. I keep it 存疑 because of that ruling, but a native viewer will start reading it. | Keep the document frame and header, but blur or crop the body to 2 lines of texture (not legible), keep only the highlight line readable: \"ALL AIRPORTS ARE GROUND STOPPED\" (l02) / \"EXTRAORDINARY CIRCUMSTANCES · REASONS OF SAFETY\" (l03). |  | 已改：非高亮正文模糊到读不出（含尚未高亮的那一句），只留高亮句可读 |\n| I5 | screen_en | l02（及 l01、l04） | P2 | 建议 | judge | 灰显正文「EVENT TIME: 13/2053 - 14/0400」 | 正文可读，就会带出口播没说的数字：2053Z 是美东 3:53 p.m.，和刚出现的 l01「3:54 p.m. ET」差一分钟；「– 14/0400」（计划到美东 11 p.m.）又紧挨着 l04 的「3:54 → 8:15 p.m. ET」。认真看的观众会以为数字前后矛盾（3:54 是签发时刻，claims.json C01）。这是公告正文必须做到读不出的又一个理由。 | 按纹理裁定把非高亮部分模糊到读不出来；如果要保留 EVENT TIME 行，就单独把它也做成读不出 |  | 已改：EVENT TIME 行一并模糊，读不出 2053/0400 |\n| I6 | screen_en | l04 | P2 | 记录 | judge | display「4 h 21 min」+「Reopening time: Duffy」 | 不属本项，转事实核查：claims.json C03 注明各媒体记录的解除时刻有 20:19 / 约 20:30 / 20:36 之差，4 h 21 min 是我们自己按 15:54–20:15 算出来的，原注写的是「片中说四个多小时」。冷开场用精确数字是否合适，请口播和事实核查一起定。 | 若改口径：display「4+ hours」，body「3:54 → ~8:15 p.m. ET」 |  | 不改：不改（理由：口播 v1.1/v1.2 中英文都念「4 小时 21 分」，屏幕与口播一致；精确口径是否保留转口播与事实核查定） |\n| I7 | screen_en | s0_l05 (l05) | P3, P5 | 必改 | a | display \"3,500+ planes\" | Cold open is strict. The 132px text overflows the white card on the right (the \"s\" sits outside the card edge in s0_l05.png), so the hero stat looks broken. | Put the noun in the label: eyebrow \"Planes in the air\", displ",
+ "items": [
+  {
+   "id": "voice_zh",
+   "law": "lines",
+   "law_name": "中文口播（母语听感，盲审）",
+   "color": "#c0502e",
+   "scope": [],
+   "checks": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_zh.md",
+   "prompt": "items/voice_zh__a.md",
+   "what": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "problem": "上一版「本期内容」念成「这一期，讲四件事：它是个什么问题；为什么只背练习册不行……」，像在念目录，正常人不会这么说话（用户 2026-11-08 指出）；原先的审稿没抓到。",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "像真人在讲",
+     "question": "逐句：自然 / 有点怪 / 很怪。书面腔、讲解腔、翻译腔、念稿感、报菜名式罗列都算怪"
+    },
+    {
+     "id": "V2",
+     "name": "衔接与过渡",
+     "question": "开场、本期内容、章节转换、举例前后：像一个人顺着思路往下讲，而不是「下面讲第一点」式的模板或目录朗读；上下句接得上"
+    },
+    {
+     "id": "V3",
+     "name": "一遍听懂",
+     "question": "只靠耳朵：一句只带一个新意思；指代清楚（说「这个」时观众知道指什么）；术语先解释再用；数字、同音字不会听错"
+    },
+    {
+     "id": "V4",
+     "name": "精炼",
+     "question": "没有废话、重复、正确的空话；删掉不影响理解的句子要指出来"
+    },
+    {
+     "id": "V5",
+     "name": "口吻与节奏",
+     "question": "从头到尾是同一个亲切、清楚、不端着的讲解者；长短句交替，每句适合一口气念完"
+    },
+    {
+     "id": "V6",
+     "name": "改写",
+     "question": "每句「有点怪 / 很怪」都给出可以直接替换、不更长的中文改写；列出最别扭的 5 句并排序"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_zh__a.md",
+     "prompt": "items/voice_zh__a.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "大部分句子自然（如 l46「风险越大越不敢动，越不敢动就越老」、l57「切到备份才发现，备份光纤早被施工挖断了」）；怪的集中在 l02「离港航班一律原地等待，直到另行通知」公文腔，另有 l39「在同一次事故里都占了」、l80「大家总把刹车当成事故」几处有点怪。"
+      },
+      "V2": {
+       "score": 1,
+       "evidence": "从严的串场里有两句不顺：l25「美国空管最严重的那几回全国大故障，我们发现有个共同点」名词堆在前，主干到句尾才出；l62「那几次备份失灵，还提醒我们」紧跟 l61「最严重的那几次」，相邻两个「那几次」指的不是同一批。l24「我们去翻翻旧账」、l55「不过话说回来」、l76「最后换个角度」这几处衔接很好。"
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "l12 一句带「四千四百多个空管设施」「二十二个航路管制中心」「高空航线」三个新词，8 秒偏密；l22 国土安全部长穆林、l16 交通部长达菲、l50 局长贝德福德三个官员连着出场，只听的人容易混；l53 Verizon、AT and T 两个英文名连续出现。其余数字和指代基本听得清。"
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "l21「消息来自匿名人士」与 l20「知情人士」同义重复；l33「这是美国交通部监察长的调查结论」单句只补来源；「原因没公布」在 l21、l23、l65 反复出现。删掉不影响理解，但新闻上要保留，所以只算小瑕疵。"
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "整体是同一个亲切的讲解者，长短句交替得好（l81「它挡掉的风险看不见。」收得干净）；但 l12、l56（7.6 秒）、l74（7.2 秒）句子偏长、一口气念着吃力；l71「来设计」、l77「安全设计在踩刹车」偶尔冒出书面腔。"
+      },
+      "V6": {
+       "score": 2,
+       "evidence": "每个「有点怪」都给了不更长的改写（见问题表），最别扭的 5 句排序为 l02、l25、l62、l39、l80；l12 的数字密度靠拆句改写，这里只给建议、未能完全压短。"
+      },
+      "R": {
+       "score": 1,
+       "evidence": "已解决：l12 拆成总数、子集、解释三拍；l27 补出「出事的也是」；l53 拆成两拍；l58 补出主体；l66 起「反方肯定会说」点明说话人；l68「问题就出在」；l78「叫停」。未解决或改出新问题：l62 改成「那几次备份失灵」后，与 l61「最严重的那几次」相邻，「那几次」指向不同；l61「只算」仍略硬。作者不采纳、我认为理由不成立：l02（开场从严，「离港航班一律……直到另行通知」仍是公文腔，不能用「报道命令的通行说法」放过）、l25（串场从严，「那几回全国大故障」前置过长）。不采纳理由成立、我接受：l01 时间戳（配屏上 15:54，开场报时间正常）、l13（动作与名词并列，口语常见）、l51（Bedford 原话中译）、l83（「比什么时候都小心」是自然口语）。"
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/voice_zh__b.md",
+     "prompt": "items/voice_zh__b.md",
+     "scores": {
+      "V1": {
+       "score": 1,
+       "evidence": "l25「美国空管最严重的那几回全国大故障」修饰语堆叠；l39「在同一次事故里都占了」、l71「当成最危险的阶段来设计」仍不像随口讲解。"
+      },
+      "V2": {
+       "score": 1,
+       "evidence": "l61「所以这个共同点，只算最严重的那几次」承接生硬；l66「反方肯定会说」突然进入辩论口吻；片尾 l77、l80 的比喻还需要观众自行翻译。"
+      },
+      "V3": {
+       "score": 1,
+       "evidence": "l63「各自坏」与「一起坏」的区别不能一耳朵确定；l51「底下处理数据的架构」仍有未解释的术语；l78「系统一旦没把握，就先叫停」没有直接说清判断什么、叫停什么。"
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "整体没有目录朗读式空预告；但 l78「代价看得见，但安全」与 l80「刹车的代价看得见」重复，前一处可删，留到后面集中解释。"
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "l04「这一停，就是四个小时二十一分钟」、l18「新装的设备一台都没坏」简洁顺口；l12 连续带出设施总数、中心数量和职责，l27 连带年份、网名、公司及旧名，局部仍挤。"
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "下表为全部十四句「有点怪／很怪」及一张章节卡提供直接替换文字，均不长于原文。最别扭的五句依次为：①l63「备份防得了『各自坏』」；②l77「这是安全设计在踩刹车」；③l71「当成最危险的阶段来设计」；④l61「共同点，只算最严重的那几次」；⑤l78「系统一旦没把握，就先叫停」。"
+      },
+      "R": {
+       "score": 1,
+       "evidence": "l58 已补出「系统没按规定定期重启」，l62 已明确「那几次备份失灵」；但 l61 改出了新的搭配问题，l63、l71、l77 等仍未解决。逐条复核如下。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "像真人在讲",
+     "a": 2,
+     "a_ev": "大部分句子自然（如 l46「风险越大越不敢动，越不敢动就越老」、l57「切到备份才发现，备份光纤早被施工挖断了」）；怪的集中在 l02「离港航班一律原地等待，直到另行通知」公文腔，另有 l39「在同一次事故里都占了」、l80「大家总把刹车当成事故」几处有点怪。",
+     "b": 1,
+     "b_ev": "l25「美国空管最严重的那几回全国大故障」修饰语堆叠；l39「在同一次事故里都占了」、l71「当成最危险的阶段来设计」仍不像随口讲解。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "l25「美国空管最严重的那几回全国大故障，我们发现有个共同点」在章节开口，十几个字的修饰语压在主干前面，「最严重」和「大故障」还叠了一层。这一轮两位盲审各自都判有点怪。章节过渡从严，所以算必改。上一轮我驳回它，理由是改写删掉了观点标记「我们发现」；这一轮两份改写都保留了，那条理由不再成立。另有 l39「在同一次事故里都占了」、l61「只算最严重的那几次」、l71「当成最危险的阶段来设计」三句有点怪，b 的证据站得住。a 自己把 l25 列为必改，V1 却给 2 分，前后不一致。"
+    },
+    "V2": {
+     "name": "衔接与过渡",
+     "a": 1,
+     "a_ev": "从严的串场里有两句不顺：l25「美国空管最严重的那几回全国大故障，我们发现有个共同点」名词堆在前，主干到句尾才出；l62「那几次备份失灵，还提醒我们」紧跟 l61「最严重的那几次」，相邻两个「那几次」指的不是同一批。l24「我们去翻翻旧账」、l55「不过话说回来」、l76「最后换个角度」这几处衔接很好。",
+     "b": 1,
+     "b_ev": "l61「所以这个共同点，只算最严重的那几次」承接生硬；l66「反方肯定会说」突然进入辩论口吻；片尾 l77、l80 的比喻还需要观众自行翻译。",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "V3": {
+     "name": "一遍听懂",
+     "a": 2,
+     "a_ev": "l12 一句带「四千四百多个空管设施」「二十二个航路管制中心」「高空航线」三个新词，8 秒偏密；l22 国土安全部长穆林、l16 交通部长达菲、l50 局长贝德福德三个官员连着出场，只听的人容易混；l53 Verizon、AT and T 两个英文名连续出现。其余数字和指代基本听得清。",
+     "b": 1,
+     "b_ev": "l63「各自坏」与「一起坏」的区别不能一耳朵确定；l51「底下处理数据的架构」仍有未解释的术语；l78「系统一旦没把握，就先叫停」没有直接说清判断什么、叫停什么。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 的三条证据都不成立。l63 的「各自坏／一起坏」对比只靠耳朵也清楚，而且和屏幕一致。l51 是原话中译，「架构」不算门槛。l78 改成「叫停」以后，接着 l76「全国停飞」能听出停的是起飞。见驳回。但 a 问题表里的 l62 站得住：l61 刚说完「最严重的那几次」，l62 又用「那几次备份失灵」，指的却是 l56–l59 那几起反例，听的人会先把它接到「最严重的那几次」上。这句是串场，从严算必改，所以 V3 记 1 分。b 把 l62 判为「已解决」，漏了这一条。"
+    },
+    "V4": {
+     "name": "精炼",
+     "a": 2,
+     "a_ev": "l21「消息来自匿名人士」与 l20「知情人士」同义重复；l33「这是美国交通部监察长的调查结论」单句只补来源；「原因没公布」在 l21、l23、l65 反复出现。删掉不影响理解，但新闻上要保留，所以只算小瑕疵。",
+     "b": 2,
+     "b_ev": "整体没有目录朗读式空预告；但 l78「代价看得见，但安全」与 l80「刹车的代价看得见」重复，前一处可删，留到后面集中解释。",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V5": {
+     "name": "口吻与节奏",
+     "a": 2,
+     "a_ev": "整体是同一个亲切的讲解者，长短句交替得好（l81「它挡掉的风险看不见。」收得干净）；但 l12、l56（7.6 秒）、l74（7.2 秒）句子偏长、一口气念着吃力；l71「来设计」、l77「安全设计在踩刹车」偶尔冒出书面腔。",
+     "b": 2,
+     "b_ev": "l04「这一停，就是四个小时二十一分钟」、l18「新装的设备一台都没坏」简洁顺口；l12 连续带出设施总数、中心数量和职责，l27 连带年份、网名、公司及旧名，局部仍挤。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "两人都抓到 l12（8.0 秒）、l56（7.6 秒）偏长、偏挤，也都肯定了 l04、l81 的短句收尾，2 分成立。但两人有一处共同漏看。l51 是贝德福德原话，里面的「我们」指联邦航空局，而旁白在 l44、l47 一直用「我们」指本节目。l51 后只停 0.3 秒，引语在哪结束、l52 由谁在说，只靠耳朵分不清（见补充问题）。l59 的「一分钟内」偏书面，两人复述时都已改成口语说法，却都判了自然。"
+    },
+    "V6": {
+     "name": "改写",
+     "a": 2,
+     "a_ev": "每个「有点怪」都给了不更长的改写（见问题表），最别扭的 5 句排序为 l02、l25、l62、l39、l80；l12 的数字密度靠拆句改写，这里只给建议、未能完全压短。",
+     "b": 3,
+     "b_ev": "下表为全部十四句「有点怪／很怪」及一张章节卡提供直接替换文字，均不长于原文。最别扭的五句依次为：①l63「备份防得了『各自坏』」；②l77「这是安全设计在踩刹车」；③l71「当成最危险的阶段来设计」；④l61「共同点，只算最严重的那几次」；⑤l78「系统一旦没把握，就先叫停」。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "b 写「均不长于原文」，但有三处改写有问题。l78 的改写「拿不准能否安全起飞」用了书面词「能否」，还把通用原则缩成了这一次的具体动作。章节卡改写「那就不换？」把反方意思说反了，反方其实主张赶紧换。l80 的改写把刹车比喻弄断了。所以 b 给 3 分偏高。a 也有两处改写比原句长：l62 改写 14 字，原句 11 字；l61 改写多 1 字。两人还有一个共同盲点：l25 的改写都用了「几次最严重的」（见补充问题）。两人都是 2 分。"
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 1,
+     "a_ev": "已解决：l12 拆成总数、子集、解释三拍；l27 补出「出事的也是」；l53 拆成两拍；l58 补出主体；l66 起「反方肯定会说」点明说话人；l68「问题就出在」；l78「叫停」。未解决或改出新问题：l62 改成「那几次备份失灵」后，与 l61「最严重的那几次」相邻，「那几次」指向不同；l61「只算」仍略硬。作者不采纳、我认为理由不成立：l02（开场从严，「离港航班一律……直到另行通知」仍是公文腔，不能用「报道命令的通行说法」放过）、l25（串场从严，「那几回全国大故障」前置过长）。不采纳理由成立、我接受：l01 时间戳（配屏上 15:54，开场报时间正常）、l13（动作与名词并列，口语常见）、l51（Bedford 原话中译）、l83（「比什么时候都小心」是自然口语）。",
+     "b": 1,
+     "b_ev": "l58 已补出「系统没按规定定期重启」，l62 已明确「那几次备份失灵」；但 l61 改出了新的搭配问题，l63、l71、l77 等仍未解决。逐条复核如下。",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    }
+   },
+   "disputes": [
+    "V1",
+    "V3"
+   ],
+   "audits": [
+    "V6",
+    "V5"
+   ],
+   "final_scores": {
+    "V1": 1,
+    "V2": 1,
+    "V3": 1,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "V1",
+     "V3",
+     "V6",
+     "V5"
+    ],
+    "prompt": "items/voice_zh__judge.md",
+    "report": "reports/voice_zh__judge.md",
+    "ruling": {
+     "V1": {
+      "score": 1,
+      "evidence": "l25「美国空管最严重的那几回全国大故障，我们发现有个共同点」在章节开口，十几个字的修饰语压在主干前面，「最严重」和「大故障」还叠了一层。这一轮两位盲审各自都判有点怪。章节过渡从严，所以算必改。上一轮我驳回它，理由是改写删掉了观点标记「我们发现」；这一轮两份改写都保留了，那条理由不再成立。另有 l39「在同一次事故里都占了」、l61「只算最严重的那几次」、l71「当成最危险的阶段来设计」三句有点怪，b 的证据站得住。a 自己把 l25 列为必改，V1 却给 2 分，前后不一致。"
+     },
+     "V3": {
+      "score": 1,
+      "evidence": "b 的三条证据都不成立。l63 的「各自坏／一起坏」对比只靠耳朵也清楚，而且和屏幕一致。l51 是原话中译，「架构」不算门槛。l78 改成「叫停」以后，接着 l76「全国停飞」能听出停的是起飞。见驳回。但 a 问题表里的 l62 站得住：l61 刚说完「最严重的那几次」，l62 又用「那几次备份失灵」，指的却是 l56–l59 那几起反例，听的人会先把它接到「最严重的那几次」上。这句是串场，从严算必改，所以 V3 记 1 分。b 把 l62 判为「已解决」，漏了这一条。"
+     },
+     "V6": {
+      "score": 2,
+      "evidence": "b 写「均不长于原文」，但有三处改写有问题。l78 的改写「拿不准能否安全起飞」用了书面词「能否」，还把通用原则缩成了这一次的具体动作。章节卡改写「那就不换？」把反方意思说反了，反方其实主张赶紧换。l80 的改写把刹车比喻弄断了。所以 b 给 3 分偏高。a 也有两处改写比原句长：l62 改写 14 字，原句 11 字；l61 改写多 1 字。两人还有一个共同盲点：l25 的改写都用了「几次最严重的」（见补充问题）。两人都是 2 分。"
+     },
+     "V5": {
+      "score": 2,
+      "evidence": "两人都抓到 l12（8.0 秒）、l56（7.6 秒）偏长、偏挤，也都肯定了 l04、l81 的短句收尾，2 分成立。但两人有一处共同漏看。l51 是贝德福德原话，里面的「我们」指联邦航空局，而旁白在 l44、l47 一直用「我们」指本节目。l51 后只停 0.3 秒，引语在哪结束、l52 由谁在说，只靠耳朵分不清（见补充问题）。l59 的「一分钟内」偏书面，两人复述时都已改成口语说法，却都判了自然。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 33,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_zh__a",
+    "codex/voice_zh__b"
+   ]
+  },
+  {
+   "id": "voice_en",
+   "law": "lines",
+   "law_name": "English narration (native ear, blind)",
+   "color": "#2e6fc0",
+   "scope": [],
+   "checks": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_en.md",
+   "prompt": "items/voice_en__a.md",
+   "what": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "problem": "The previous agenda read 'In this episode: What the problem is. Why memorizing answers fails. A different way to think about learning…' — a table of contents read aloud. No one talks like that (caught by the user, 2026-11-08); earlier reviews missed it.",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "Sounds like a person talking",
+     "question": "Each line: natural / a bit off / clearly off. Written-style, lecture tone, translated-from-Chinese phrasing, telegraphic lists all count as off"
+    },
+    {
+     "id": "V2",
+     "name": "Flow and transitions",
+     "question": "Cold open, the 'what's coming' part, chapter changes, before/after examples: does it sound like one person following a thought, not 'Point one…' templates or a TOC read aloud? Do adjacent lines connect?"
+    },
+    {
+     "id": "V3",
+     "name": "Clear on one hearing",
+     "question": "Ear only: one new idea per line; clear reference ('this' points to something); terms explained before used; numbers and words not misheard"
+    },
+    {
+     "id": "V4",
+     "name": "Tight",
+     "question": "No filler, repetition, or empty truisms; point out lines that could go without losing anything"
+    },
+    {
+     "id": "V5",
+     "name": "Voice and rhythm",
+     "question": "One warm, clear, unpretentious narrator throughout; varied sentence length; each line sayable in one breath"
+    },
+    {
+     "id": "V6",
+     "name": "Rewrites",
+     "question": "For every 'a bit off' / 'clearly off' line, a drop-in rewrite no longer than the original; rank the 5 most awkward lines"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_en__a.md",
+     "prompt": "items/voice_en__a.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "Nearly all 83 lines pass as speech; l01-l10 cold open and l82-l83 outro are natural. Residual written-style spots: l02 \"orders every airport in the country: hold all departures...\" (colon in place of \"to\"), l39 \"Choosing between 'too old' and 'someone touched it' is the trap\" (gerund-subject essay phrasing, quotation marks are inaudible), l74 \"found no reliable estimate of the new system's lifetime cost\" (nominalized)."
+      },
+      "V2": {
+       "score": 2,
+       "evidence": "Cold open flows (l08 \"So why?\" to l09 two answers to l10 \"Our take? Both fall into the same trap.\"); l24 \"Let's look at the track record\" and l55 \"To be fair\" are good bridges. Weak joints: l40 to l41 (no spoken bridge into the upgrades chapter), l62 \"those backup failures point to something else\" is an empty teaser, l11 \"Not the planes. Not the radar. A telecom network.\" follows the \"trap\" tease without a question to answer."
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "Terms are explained before use (l12 \"en route centers, which guide planes between airports\"; l41-l43 mid-flight engine swap). Remaining load: l12 packs three facts and a definition into 6.9s, l53 (8.1s) carries two years and three company names, and \"forty-four hundred\" is used for flights canceled at l06 and again for facilities at l12, so the repeat may blur."
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "l24 \"Let's look at the track record\" and l25 \"Here's what we noticed about the worst nationwide failures\" announce the same thing twice. l73 \"And money alone doesn't buy safety.\" is a truism that l74-l75 already prove. l61 \"So we're only talking about the worst failures.\" is a housekeeping line that could go, but it does protect the logic after l60."
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "One warm, plain narrator throughout, with good rhythm in l57 \"The backup? Construction crews had already cut through it.\" and l81 \"You can't see what it prevented.\" Several lines are long for one breath: l12 (6.9s), l27 (6.9s), l53 (8.1s), l56 (8.5s). Stretches such as l28-l33 are all the same medium length."
+      },
+      "V6": {
+       "score": 2,
+       "evidence": "Rewrites below are drop-in and no longer than the original for l02, l11, l12, l25, l39, l53, l62, l74. Five most awkward lines in order: l39, l74, l62, l02, l53."
+      },
+      "R": {
+       "score": 2,
+       "evidence": "Previous voice_en items: I56/I57 chapter title \"Not always a change\" is now \"Outages without upgrades\" (resolved). I60/I61 l09 now \"Or an update knocked it out.\" (resolved). I62-I64 l10 now \"Both fall into the same trap.\" (resolved, and l39 calls it back). I68 l22, I70 l27, I73 l46, I74 l49, I75 l50/l74 \"This September\", I83 l68, I86 l71, I90 l78, I92 l79, I94 l82, I96 l83 are all resolved with no new problems. Not adopted: I65 l11 (author's reason holds for an audience that sees the card, but a pure listener still finds it abrupt, so I mark it 存疑); I66 l12 (reason holds that \"en route\" must be defined at first use, but the line is still dense, so I keep it 建议); I69 l25, I77 l52 and I89 l76 (reasons hold, still natural speech). I78 l53 \"took over the lead\" (reason is partly valid, I still find it a bit odd). One new item: the l39 rewrite now reads as written style (see issues)."
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/voice_en__b.md",
+     "prompt": "items/voice_en__b.md",
+     "scores": {
+      "V1": {
+       "score": 1,
+       "evidence": "Most lines sound conversational, but l53’s “took over the lead” remains awkward, and l82’s “isn’t just that … It’s when …” changes grammatical direction mid-thought."
+      },
+      "V2": {
+       "score": 1,
+       "evidence": "l24’s “Let’s look at the track record” connects naturally to the historical examples. However, l11 answers an unspoken “What failed?” immediately after l10’s discussion of a trap."
+      },
+      "V3": {
+       "score": 1,
+       "evidence": "l68’s “it’s underfunded and too slow” leaves unclear whether the system responds slowly or its replacement is progressing slowly. At l64, sharing a contractor does not explain why both backups would fail together."
+      },
+      "V4": {
+       "score": 3,
+       "evidence": "l40 now avoids another full statement that the cause is unknown. l21 qualifies a particular report; l23 gives the current official position; l65 reserves judgment about nationwide propagation. Those qualifications serve different purposes."
+      },
+      "V5": {
+       "score": 3,
+       "evidence": "The short sentences in l41 and l59 contrast effectively with longer explanations. l56 now provides a sentence break before “The FAA says,” and l57’s “The backup?” sounds like a person anticipating the listener’s question. This assesses written speaking rhythm, not an actual recording."
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "All five flagged lines have drop-in rewrites in the issue table, each no longer than its original. Awkwardness ranking: **1. l11; 2. l82; 3. l68; 4. l53; 5. l64.**"
+      },
+      "R": {
+       "score": 1,
+       "evidence": "**I56–I57: resolved in the supplied material**—the title is now “Outages without upgrades”; assigning implementation elsewhere was not itself a resolution, but the current wording resolves it. **I58–I59: resolved**—“The notice cited” and the other revised sentences remove the caption-reading pattern. **I60–I61: resolved**—“knocked it out” is idiomatic. **I62–I64: resolved**—“Both fall into the same trap” works as a teaser, and l39 explains the trap. **I65: unresolved**—“So why?” asks about cause; it does not supply the missing “What failed?” before l11. Preserving three beats does not require leaving that connection unspoken. **I66: non-adoption reasonable**—l12 immediately explains “en route centers,” and retaining the term supports its reuse at l15; the sentence is dense but followable. **I67: resolved**—the repeated disclaimer at l40 is gone. **I68: resolved**—the doubled “equipment and technology” is gone. **I69: non-adoption reasonable**—“Here’s what we noticed about…” is ordinary spoken English; the full sentence remains followable. **I70: resolved**—l27 now tells a complete thought rather than reading date-and-label notes. **I71–I72: resolved**—l39 explicitly identifies the false choice and completes the callback. **I73: resolved**—“So it just keeps getting older” is natural. **I74: resolved**—l49 replaces unexplained policy vocabulary with understandable language. **I75–I76: resolved**—“This September” avoids inheriting 2024 from l48. **I77: non-adoption reasonable on reconsideration**—“the overlap keeps stretching” is an understandable duration metaphor; it does not require repair. **I78: unresolved**—“took over the lead” remains awkward for a contractor’s role. The rejection’s claim that “took charge” requires an object is not valid; it can stand alone. **I79: resolved**—the sentence break helps; declining “the backup was never checked” reasonably avoids introducing a more specific claim. **I80: resolved**—the revised connection sounds natural. **I81: acceptable after revision**—l62 now specifically returns to backup failures, giving it a purpose distinct from l61; the fixed line numbering alone would not justify redundant speech. **I82: unresolved**—the three shared labels do not themselves establish a shared failure mechanism, particularly “same contractor.” **I83–I85: original list-reading problem resolved, but a new reference problem remains**—l68 now has a sentence, yet “it’s … too slow” does not identify the slow replacement process. **I86: resolved**—“so plan for that” clearly refers to switchover risk. **I87–I88: resolved**—“the project runs on” identifies the schedules as project schedules. **I89: non-adoption reasonable on reconsideration**—“One last angle” is a familiar conversational signpost, and the next sentence immediately supplies the thought. **I90–I91: resolved**—l78 names the protective action: holding departures. **I92–I93: resolved**—“during the stop” removes the ambiguous “it held.” **I94–I95: original contradiction resolved, but the revision introduces an awkward join**—“not just that it’s old” adds age back, while “It’s when you touch it” switches from a condition to a time construction; see l82 below. **I96–I97: resolved**—“extra careful” is immediately sayable."
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "Sounds like a person talking",
+     "a": 2,
+     "a_ev": "Nearly all 83 lines pass as speech; l01-l10 cold open and l82-l83 outro are natural. Residual written-style spots: l02 \"orders every airport in the country: hold all departures...\" (colon in place of \"to\"), l39 \"Choosing between 'too old' and 'someone touched it' is the trap\" (gerund-subject essay phrasing, quotation marks are inaudible), l74 \"found no reliable estimate of the new system's lifetime cost\" (nominalized).",
+     "b": 1,
+     "b_ev": "Most lines sound conversational, but l53’s “took over the lead” remains awkward, and l82’s “isn’t just that … It’s when …” changes grammatical direction mid-thought.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 的 1 分成立，但主因换成 l82。l82 是结尾，属于严格项。「the danger isn't just that it's old. It's when you touch it.」里，「isn't just」让人期待后面接「It's also…」，结果接的是「It's when…」，从 that 从句换成了 when 从句。听一遍会像先把「老」否掉又转了方向，正是严格项里「有点别扭」的情况，必改。l39「Choosing between \"too old\" and \"someone touched it\" is the trap」是动名词作主语，引号听不出来，耳朵会把它切成「someone touched it is the trap」，属于听着会卡住的句子（见补充问题，从 a 的建议升级为必改）。b 提的 l53「took over the lead」只到建议级。a 提的 l02（冒号后接直接命令）不成立。"
+    },
+    "V2": {
+     "name": "Flow and transitions",
+     "a": 2,
+     "a_ev": "Cold open flows (l08 \"So why?\" to l09 two answers to l10 \"Our take? Both fall into the same trap.\"); l24 \"Let's look at the track record\" and l55 \"To be fair\" are good bridges. Weak joints: l40 to l41 (no spoken bridge into the upgrades chapter), l62 \"those backup failures point to something else\" is an empty teaser, l11 \"Not the planes. Not the radar. A telecom network.\" follows the \"trap\" tease without a question to answer.",
+     "b": 1,
+     "b_ev": "l24’s “Let’s look at the track record” connects naturally to the historical examples. However, l11 answers an unspoken “What failed?” immediately after l10’s discussion of a trap.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 的 l11 理由不成立（见驳回）。但严格项里有两处必改：一是 l66 章节开场「isn't this just an excuse to stall?」，「this」紧跟在 l65「we'll have to wait for the investigation」后面，听众会把它听成「等调查」本身是拖延的借口（见补充问题，两人都漏了）；二是 l82 结尾的转折接不上。l24「Let's look at the track record」、l55「To be fair」、l76「One last angle」这几处衔接都站得住。l62「point to something else」只是空预告，建议级。"
+    },
+    "V3": {
+     "name": "Clear on one hearing",
+     "a": 2,
+     "a_ev": "Terms are explained before use (l12 \"en route centers, which guide planes between airports\"; l41-l43 mid-flight engine swap). Remaining load: l12 packs three facts and a definition into 6.9s, l53 (8.1s) carries two years and three company names, and \"forty-four hundred\" is used for flights canceled at l06 and again for facilities at l12, so the repeat may blur.",
+     "b": 1,
+     "b_ev": "l68’s “it’s underfunded and too slow” leaves unclear whether the system responds slowly or its replacement is progressing slowly. At l64, sharing a contractor does not explain why both backups would fail together.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 的 l68 证据成立。「They'd say it's underfunded and too slow. Pay up and replace it.」紧跟 l67「the old gear broke」，第一个 it 会被听成旧系统，「too slow」也就成了系统运行慢，实际想说的是更换进度慢；两个 it 指的也不是同一个东西。另外 l66 的「this」指代不清，l39 听一遍难以断句。b 的 l64 理由不成立（见驳回）。a 提的 l12 信息密、l06 和 l12 都出现「forty-four hundred」，只到记录级。"
+    },
+    "V4": {
+     "name": "Tight",
+     "a": 2,
+     "a_ev": "l24 \"Let's look at the track record\" and l25 \"Here's what we noticed about the worst nationwide failures\" announce the same thing twice. l73 \"And money alone doesn't buy safety.\" is a truism that l74-l75 already prove. l61 \"So we're only talking about the worst failures.\" is a housekeeping line that could go, but it does protect the logic after l60.",
+     "b": 3,
+     "b_ev": "l40 now avoids another full statement that the cause is unknown. l21 qualifies a particular report; l23 gives the current official position; l65 reserves judgment about nationwide propagation. Those qualifications serve different purposes.",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V5": {
+     "name": "Voice and rhythm",
+     "a": 2,
+     "a_ev": "One warm, plain narrator throughout, with good rhythm in l57 \"The backup? Construction crews had already cut through it.\" and l81 \"You can't see what it prevented.\" Several lines are long for one breath: l12 (6.9s), l27 (6.9s), l53 (8.1s), l56 (8.5s). Stretches such as l28-l33 are all the same medium length.",
+     "b": 3,
+     "b_ev": "The short sentences in l41 and l59 contrast effectively with longer explanations. l56 now provides a sentence break before “The FAA says,” and l57’s “The backup?” sounds like a person anticipating the listener’s question. This assesses written speaking rhythm, not an actual recording.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "抽查。全片是一个温和、朴素的叙述者，l57「The backup?」、l59 两个短句、l81「You can't see what it prevented.」节奏好。b 给 3 分偏高，两人都漏了口头禅式的重复：l50、l57、l74 三次「This September」，再加 l53「This August」，后半段时间标签听着像一个模子。l12 是 6.9 秒的单句，还嵌着定语从句，一口气说下来偏紧（a 已提）。l56 有 8.5 秒，但分成两句，可以换气。"
+    },
+    "V6": {
+     "name": "Rewrites",
+     "a": 2,
+     "a_ev": "Rewrites below are drop-in and no longer than the original for l02, l11, l12, l25, l39, l53, l62, l74. Five most awkward lines in order: l39, l74, l62, l02, l53.",
+     "b": 3,
+     "b_ev": "All five flagged lines have drop-in rewrites in the issue table, each no longer than its original. Awkwardness ranking: **1. l11; 2. l82; 3. l68; 4. l53; 5. l64.**",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "抽查。b 给 3 分偏高。a 的 l02（加 to 后 15 词，原句 14）、l11（12 词，原句 9）、l74（15 词，原句 14）三条改写都比原句长，违反「不长于原句」。b 的 l11 改写「The telecom network failed」用定冠词指一个还没介绍过的网络，改出了新的指代问题。a 的 l53 改写「became the lead」后面缺名词。其余改写可以直接替换。"
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "Previous voice_en items: I56/I57 chapter title \"Not always a change\" is now \"Outages without upgrades\" (resolved). I60/I61 l09 now \"Or an update knocked it out.\" (resolved). I62-I64 l10 now \"Both fall into the same trap.\" (resolved, and l39 calls it back). I68 l22, I70 l27, I73 l46, I74 l49, I75 l50/l74 \"This September\", I83 l68, I86 l71, I90 l78, I92 l79, I94 l82, I96 l83 are all resolved with no new problems. Not adopted: I65 l11 (author's reason holds for an audience that sees the card, but a pure listener still finds it abrupt, so I mark it 存疑); I66 l12 (reason holds that \"en route\" must be defined at first use, but the line is still dense, so I keep it 建议); I69 l25, I77 l52 and I89 l76 (reasons hold, still natural speech). I78 l53 \"took over the lead\" (reason is partly valid, I still find it a bit odd). One new item: the l39 rewrite now reads as written style (see issues).",
+     "b": 1,
+     "b_ev": "**I56–I57: resolved in the supplied material**—the title is now “Outages without upgrades”; assigning implementation elsewhere was not itself a resolution, but the current wording resolves it. **I58–I59: resolved**—“The notice cited” and the other revised sentences remove the caption-reading pattern. **I60–I61: resolved**—“knocked it out” is idiomatic. **I62–I64: resolved**—“Both fall into the same trap” works as a teaser, and l39 explains the trap. **I65: unresolved**—“So why?” asks about cause; it does not supply the missing “What failed?” before l11. Preserving three beats does not require leaving that connection unspoken. **I66: non-adoption reasonable**—l12 immediately explains “en route centers,” and retaining the term supports its reuse at l15; the sentence is dense but followable. **I67: resolved**—the repeated disclaimer at l40 is gone. **I68: resolved**—the doubled “equipment and technology” is gone. **I69: non-adoption reasonable**—“Here’s what we noticed about…” is ordinary spoken English; the full sentence remains followable. **I70: resolved**—l27 now tells a complete thought rather than reading date-and-label notes. **I71–I72: resolved**—l39 explicitly identifies the false choice and completes the callback. **I73: resolved**—“So it just keeps getting older” is natural. **I74: resolved**—l49 replaces unexplained policy vocabulary with understandable language. **I75–I76: resolved**—“This September” avoids inheriting 2024 from l48. **I77: non-adoption reasonable on reconsideration**—“the overlap keeps stretching” is an understandable duration metaphor; it does not require repair. **I78: unresolved**—“took over the lead” remains awkward for a contractor’s role. The rejection’s claim that “took charge” requires an object is not valid; it can stand alone. **I79: resolved**—the sentence break helps; declining “the backup was never checked” reasonably avoids introducing a more specific claim. **I80: resolved**—the revised connection sounds natural. **I81: acceptable after revision**—l62 now specifically returns to backup failures, giving it a purpose distinct from l61; the fixed line numbering alone would not justify redundant speech. **I82: unresolved**—the three shared labels do not themselves establish a shared failure mechanism, particularly “same contractor.” **I83–I85: original list-reading problem resolved, but a new reference problem remains**—l68 now has a sentence, yet “it’s … too slow” does not identify the slow replacement process. **I86: resolved**—“so plan for that” clearly refers to switchover risk. **I87–I88: resolved**—“the project runs on” identifies the schedules as project schedules. **I89: non-adoption reasonable on reconsideration**—“One last angle” is a familiar conversational signpost, and the next sentence immediately supplies the thought. **I90–I91: resolved**—l78 names the protective action: holding departures. **I92–I93: resolved**—“during the stop” removes the ambiguous “it held.” **I94–I95: original contradiction resolved, but the revision introduces an awkward join**—“not just that it’s old” adds age back, while “It’s when you touch it” switches from a condition to a time construction; see l82 below. **I96–I97: resolved**—“extra careful” is immediately sayable.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "上一轮的改写在三处改出了新问题。I94/I95 的 l82 最小改法留下 isn't just that / It's when 接不上；I83–I85 的 l68 在 it 上留下指代问题；I71/I72 的 l39 改成了动名词长主语，听不清。I78 作者不采纳的理由（「took charge 缺宾语」）不成立，b 的判断对，took charge 可以单独用；最小修法是 l53 改为「took over as lead」，词数不变。I65（l11）、I82（l64）不采纳的理由成立。其余各条 a、b 都判已解决，我核对一致。"
+    }
+   },
+   "disputes": [
+    "V1",
+    "V2",
+    "V3",
+    "R"
+   ],
+   "audits": [
+    "V5",
+    "V6"
+   ],
+   "final_scores": {
+    "V1": 1,
+    "V2": 1,
+    "V3": 1,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "V1",
+     "V2",
+     "V3",
+     "R",
+     "V5",
+     "V6"
+    ],
+    "prompt": "items/voice_en__judge.md",
+    "report": "reports/voice_en__judge.md",
+    "ruling": {
+     "V1": {
+      "score": 1,
+      "evidence": "b 的 1 分成立，但主因换成 l82。l82 是结尾，属于严格项。「the danger isn't just that it's old. It's when you touch it.」里，「isn't just」让人期待后面接「It's also…」，结果接的是「It's when…」，从 that 从句换成了 when 从句。听一遍会像先把「老」否掉又转了方向，正是严格项里「有点别扭」的情况，必改。l39「Choosing between \"too old\" and \"someone touched it\" is the trap」是动名词作主语，引号听不出来，耳朵会把它切成「someone touched it is the trap」，属于听着会卡住的句子（见补充问题，从 a 的建议升级为必改）。b 提的 l53「took over the lead」只到建议级。a 提的 l02（冒号后接直接命令）不成立。"
+     },
+     "V2": {
+      "score": 1,
+      "evidence": "b 的 l11 理由不成立（见驳回）。但严格项里有两处必改：一是 l66 章节开场「isn't this just an excuse to stall?」，「this」紧跟在 l65「we'll have to wait for the investigation」后面，听众会把它听成「等调查」本身是拖延的借口（见补充问题，两人都漏了）；二是 l82 结尾的转折接不上。l24「Let's look at the track record」、l55「To be fair」、l76「One last angle」这几处衔接都站得住。l62「point to something else」只是空预告，建议级。"
+     },
+     "V3": {
+      "score": 1,
+      "evidence": "b 的 l68 证据成立。「They'd say it's underfunded and too slow. Pay up and replace it.」紧跟 l67「the old gear broke」，第一个 it 会被听成旧系统，「too slow」也就成了系统运行慢，实际想说的是更换进度慢；两个 it 指的也不是同一个东西。另外 l66 的「this」指代不清，l39 听一遍难以断句。b 的 l64 理由不成立（见驳回）。a 提的 l12 信息密、l06 和 l12 都出现「forty-four hundred」，只到记录级。"
+     },
+     "R": {
+      "score": 1,
+      "evidence": "上一轮的改写在三处改出了新问题。I94/I95 的 l82 最小改法留下 isn't just that / It's when 接不上；I83–I85 的 l68 在 it 上留下指代问题；I71/I72 的 l39 改成了动名词长主语，听不清。I78 作者不采纳的理由（「took charge 缺宾语」）不成立，b 的判断对，took charge 可以单独用；最小修法是 l53 改为「took over as lead」，词数不变。I65（l11）、I82（l64）不采纳的理由成立。其余各条 a、b 都判已解决，我核对一致。"
+     },
+     "V5": {
+      "score": 2,
+      "evidence": "抽查。全片是一个温和、朴素的叙述者，l57「The backup?」、l59 两个短句、l81「You can't see what it prevented.」节奏好。b 给 3 分偏高，两人都漏了口头禅式的重复：l50、l57、l74 三次「This September」，再加 l53「This August」，后半段时间标签听着像一个模子。l12 是 6.9 秒的单句，还嵌着定语从句，一口气说下来偏紧（a 已提）。l56 有 8.5 秒，但分成两句，可以换气。"
+     },
+     "V6": {
+      "score": 2,
+      "evidence": "抽查。b 给 3 分偏高。a 的 l02（加 to 后 15 词，原句 14）、l11（12 词，原句 9）、l74（15 词，原句 14）三条改写都比原句长，违反「不长于原句」。b 的 l11 改写「The telecom network failed」用定冠词指一个还没介绍过的网络，改出了新的指代问题。a 的 l53 改写「became the lead」后面缺名词。其余改写可以直接替换。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 22,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_en__a",
+    "codex/voice_en__b"
+   ]
+  },
+  {
+   "id": "screen_zh",
+   "law": "lines",
+   "law_name": "中文屏幕文字（PPT 式画面）",
+   "color": "#b8860b",
+   "scope": [],
+   "checks": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "how": "硬上限（超了必须报）：标题 ≤12 字；其余每块 ≤16 字；同屏文字块 ≤4 块（不含页眉小标签、出处与图表刻度）；一屏总字数 ≤36 字。屏幕下方还有口播字幕，观众要同时看。计数口径（第 2 轮裁决定，2026-11-09）：页眉小标签、案例页签、出处、片尾署名不计；同构的列表 / 表格 / 卡片行（每项 ≤8 字、最多 6 项、样子一样）合算 1 块，编号不计字；图里的文字（区域名、曲线名、轴标题、柱条标签、图上注释）要计字数，整张图合算 1 块，只有坐标刻度数字豁免；表格的列头算在表里。",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_zh.md",
+   "prompt": "items/screen_zh__a.md",
+   "what": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "problem": "上一版屏幕文字很多是整句（如「另训一个模型，在两家医院的片子上认医院的准确率——胸片里藏着医院的“指纹”」），等于把口播又印了一遍；用户要求画面只列纲要、相对简练（2026-11-08）。",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "只列纲要",
+     "question": "每屏只放关键词、短语、关键数字、标签；不是口播整句的复述。按硬上限逐屏数字数，超了就报"
+    },
+    {
+     "id": "P2",
+     "name": "与口播分工",
+     "question": "屏幕给结构、数字、对比，口播负责解释；不和口播逐字重复，也不出现口播没说过的新说法；术语、叫法与口播一致"
+    },
+    {
+     "id": "P3",
+     "name": "层级与体例",
+     "question": "一眼先看到什么、第二眼看什么；标题—要点—注释不超过三级；编号、标签、章节名、目录项前后一致（例：目录写的和章节卡写的是不是同一个说法）"
+    },
+    {
+     "id": "P4",
+     "name": "中文措辞与排版",
+     "question": "短语化、不带句末句号；标点、引号、空格规范；不半中半英；**标题、章名读出来要顺**：名词堆砌、生造的名词短语（如「现实里的祸」）算必改"
+    },
+    {
+     "id": "P5",
+     "name": "看得完",
+     "question": "按截图和停留时间：文字量在停留时间内读得完（约 6 字/秒，还要分神看字幕和图）"
+    },
+    {
+     "id": "P6",
+     "name": "改写",
+     "question": "每处超限或不顺的屏幕文字，都给出更短、可直接替换的写法"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_zh__a.md",
+     "prompt": "items/screen_zh__a.md",
+     "scores": {
+      "P1": {
+       "score": 2,
+       "evidence": "逐屏数字数，只有 l33（h2「同一张 FTI 网 · 同一承包商」10 + 「共同点：都在改动中」8 + 「129 个设施」4 + 「中断 5 小时 · 延误 820 班」9 + 「DOT 监察长 CC-2010-012」7，约 38 字、5 块）和 l07 脚注「ABC、Scripps 计为第 2 回；算上 9·11 当天则是第 3 回」（18 字）擦着或略过上限；其余屏都在 16/4/36 内，l47 循环图 15 字、l39 四块 24 字合格"
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "l15 小标签「有争议」口播（「联邦航空局的官方声明很短：多个航路管制中心出现通信问题，技术人员正在调查」）没说，且挂在官方声明上指代不明；l07 脚注多出口播没说的「算上 9·11 当天则是第 3 回」；l61「范围：最严重的故障」脱了主语「共同点」。其余术语与口播一致（l49「撑不下去 51」、l47「越老 / 不敢动」）"
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "章节名与页眉一致（「02 · 最严重的几次故障」「06 · 停飞其实是刹车」）；2009/2015/2023 三个案例的 h2 口径不一（l32「同一张 FTI 网 · 同一承包商」是主体、l34「软件升级」是原因、l36「全国停飞」是后果）；l20、l56、l66 的卡片悬在画面一角、大片空白；s5 材料段名「反方最有力的说法」与章节卡「反方怎么说」不同，agenda 未提供无法核对目录项"
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "l65「为何波及全国？」书面腔，与 l08「为什么停？」、口播「怎么一个故障就波及全国」口吻不一；l83 eyebrow「一句话带走」偏网络腔；章名「为什么「动它」最危险」「不全怪「动它」」读得通，l26 起已铺垫，从严项判不怪（沿用上轮裁决）；无句末句号，引号一律「」规范"
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "l33 仅 3.3 秒却是 5 块 38 字（其中 DOT 行从 l32 的页脚小字升成 38px 正文）；l81 仅 2.0 秒，新增「挡掉的风险 / 看不见」，旧半屏已退灰，读得完；l06、l35 只有两个大数字，3.5–5 秒足够"
+      },
+      "P6": {
+       "score": 2,
+       "evidence": "本轮 7 处问题均给了可直接替换的写法（见问题表）；无必须重画的版面"
+      },
+      "R": {
+       "score": 2,
+       "evidence": "上一轮 screen_zh 的 I32–I55 逐条复核，I33（c2 章名）、I36–I38（公告模糊成纹理，l02 截图只剩高亮句 ALL AIRPORTS ARE GROUND STOPPED）、I39（l10 删「其实是」）、I40–I42（l13/l14）、I43（l23「原因：未公布」）、I44（l26 论点保留到 l39 右上）、I45（l32 只留「129 个设施」）、I47（l40「2026：可能同一个坑」）、I48（l47 中心「技术债」）、I50（l49 图例）、I53–I55 均已解决，未改出新问题；「不改」的 I32、I37、I40、I46、I51 理由成立（章名口号线、停飞通行译法、同构数字行合 1 块、GAO 小注为出处、卡片页签不计字）；I34、I35 章节卡截图仍缺，未解决（记录项）"
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/screen_zh__b.md",
+     "prompt": "items/screen_zh__b.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "l39 按豁免口径重算仍为 **5 块、32 字**，超过同屏最多 4 块；l47 循环图已缩为 15 字，符合单块上限。"
+      },
+      "P2": {
+       "score": 1,
+       "evidence": "l15 口播只交代官方声明中的“通信问题、正在调查”，屏幕却增加“有争议”，改变了这两项信息的性质。"
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "c_c2 与 s2 页眉均为“最严重的几次故障”；l72 两栏页签、主论点和补充行层级清楚。六张章节卡及其他包装画面的实际版式仍缺材料。"
+      },
+      "P4": {
+       "score": 3,
+       "evidence": "“到底坏了什么”“反方怎么说”“停飞其实是刹车”朗读自然；“动它”在前文已建立指代，c_c3、c_c4 保留该说法成立；l82“老了危险，动它更危险”收束顺畅。"
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "l81 新增“看不见／挡掉的风险”共 8 字，停留 2 秒，旧行已退灰；l82–l83 同一组 15 字持续约 11.3 秒，有阅读余量。包装卡时长仍无法核验。"
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "问题表为 l39 给出撤下旧论点后的 **4 块、24 字**方案，为 l15 给出删除多余状态判断的方案，并为 l51 提供短语替换。"
+      },
+      "R": {
+       "score": 1,
+       "evidence": "I32：不采纳理由成立，“动它”已有上下文，中文章名无需逐字对应英文；I33：已解决，改为“最严重的几次故障”；I34、I35：未解决，章节卡截图仍为空，其余包装卡仍未提供，保留未核记录；I36：已解决，l02–l03 公告非高亮正文已模糊到不可辨读；I37：不采纳理由成立，结合高亮公告和口播，“全部机场停飞”可理解为地面停飞；I38：已解决，同 I36；I39：已解决，l10 已删“其实是”；I40：不采纳理由成立，l13 出处不计，两条同构数字行合算一块，正文共 23 字；I41：原超限判断不成立，且本轮旧数字确已撤下；I42：已解决，截图 l14 不再显示两条旧数字；I43：已解决，l23 为“原因：未公布”；I44：**改出新问题**，论点确已延长保留，但留到 l39 后增加了第五块文字；I45：已解决，l31–l33 已删“受影响设施”；I46：原先将 GAO 作为出处豁免成立，但叠加 I44 新保留的论点后，本轮已不能沿用“实际四块”的结论；I47：已解决，l40 为“2026：可能同一个坑”；I48：已解决，循环图共 15 字；I49：问题已按另一替换方案解决，不采用“老化／不敢改”的理由成立；I50：已解决，l49 图例为“撑不下去 51／可能撑不住 54”；I51：不采纳理由成立，两栏胶囊页签不计，l72 实为 4 块、28 字；I52：口径疑问已明确，同 I51；I53：已解决，l79 已补“架”；I54：已解决，l81 旧行已退灰；I55：已解决，l83 沿用上一屏，没有再叠一行行动提醒。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "只列纲要",
+     "a": 2,
+     "a_ev": "逐屏数字数，只有 l33（h2「同一张 FTI 网 · 同一承包商」10 + 「共同点：都在改动中」8 + 「129 个设施」4 + 「中断 5 小时 · 延误 820 班」9 + 「DOT 监察长 CC-2010-012」7，约 38 字、5 块）和 l07 脚注「ABC、Scripps 计为第 2 回；算上 9·11 当天则是第 3 回」（18 字）擦着或略过上限；其余屏都在 16/4/36 内，l47 循环图 15 字、l39 四块 24 字合格",
+     "b": 1,
+     "b_ev": "l39 按豁免口径重算仍为 **5 块、32 字**，超过同屏最多 4 块；l47 循环图已缩为 15 字，符合单块上限。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 成立。上轮 I44 把「共同点：都在改动中」（body 38px、8 字、右上小标题）一直留到 l39，它不属于页眉小标签、案例页签或出处，必须计入。l39 按上轮 I46 的口径是 4 块 24 字，加上它就是 5 块 32 字（截图 s2_l39 右上清楚可见），超出同屏 4 块。a 认定「l39 四块 24 字合格」，漏算了这一块。另外 a 自己数出 l33 是 5 块、约 38 字：「DOT 监察长 CC-2010-012」从 l32 的 22px 出处升成 38px 正文并带勾选框，同时超了块数和总字数（36），也是硬上限，却只标「建议」、给了 2 分，前后矛盾。两屏都超硬上限，判 1"
+    },
+    "P2": {
+     "name": "与口播分工",
+     "a": 2,
+     "a_ev": "l15 小标签「有争议」口播（「联邦航空局的官方声明很短：多个航路管制中心出现通信问题，技术人员正在调查」）没说，且挂在官方声明上指代不明；l07 脚注多出口播没说的「算上 9·11 当天则是第 3 回」；l61「范围：最严重的故障」脱了主语「共同点」。其余术语与口播一致（l49「撑不下去 51」、l47「越老 / 不敢动」）",
+     "b": 1,
+     "b_ev": "l15 口播只交代官方声明中的“通信问题、正在调查”，屏幕却增加“有争议”，改变了这两项信息的性质。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "两位都把 l15 小标签「有争议」列为必改，问题本身没有分歧。截图 s1_l15 里这个虚线胶囊挂在「FAA 官方声明」卡内，紧贴「技术人员：调查中」，读起来像是官方通报本身有争议；口播没说，分歧其实从 l16（达菲）到 l20（CBS）才出现。既然有必改，P2 不能给 2 分，a 打分偏松，按 b 判 1"
+    },
+    "P3": {
+     "name": "层级与体例",
+     "a": 2,
+     "a_ev": "章节名与页眉一致（「02 · 最严重的几次故障」「06 · 停飞其实是刹车」）；2009/2015/2023 三个案例的 h2 口径不一（l32「同一张 FTI 网 · 同一承包商」是主体、l34「软件升级」是原因、l36「全国停飞」是后果）；l20、l56、l66 的卡片悬在画面一角、大片空白；s5 材料段名「反方最有力的说法」与章节卡「反方怎么说」不同，agenda 未提供无法核对目录项",
+     "b": 2,
+     "b_ev": "c_c2 与 s2 页眉均为“最严重的几次故障”；l72 两栏页签、主论点和补充行层级清楚。六张章节卡及其他包装画面的实际版式仍缺材料。",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P4": {
+     "name": "中文措辞与排版",
+     "a": 2,
+     "a_ev": "l65「为何波及全国？」书面腔，与 l08「为什么停？」、口播「怎么一个故障就波及全国」口吻不一；l83 eyebrow「一句话带走」偏网络腔；章名「为什么「动它」最危险」「不全怪「动它」」读得通，l26 起已铺垫，从严项判不怪（沿用上轮裁决）；无句末句号，引号一律「」规范",
+     "b": 3,
+     "b_ev": "“到底坏了什么”“反方怎么说”“停飞其实是刹车”朗读自然；“动它”在前文已建立指代，c_c3、c_c4 保留该说法成立；l82“老了危险，动它更危险”收束顺畅。",
+     "verdict": "抽查",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": "开场从严，两人都漏了 l09 卡片大字「更新弄崩」（截图 s0_l09，h1 76px）。它和左卡「太老了」并列，却是缺宾语、缺「了／的」的半句，读不顺，按从严规则判必改（见补充问题）。另外 a 已提出的 l83 片尾 eyebrow「一句话带走」是 takeaway 的直译腔，片尾从严，只要判有点怪就该按必改处理，不是建议。b 给 3 分没有看到这两处；a 给 2 分也偏松"
+    },
+    "P5": {
+     "name": "看得完",
+     "a": 2,
+     "a_ev": "l33 仅 3.3 秒却是 5 块 38 字（其中 DOT 行从 l32 的页脚小字升成 38px 正文）；l81 仅 2.0 秒，新增「挡掉的风险 / 看不见」，旧半屏已退灰，读得完；l06、l35 只有两个大数字，3.5–5 秒足够",
+     "b": 2,
+     "b_ev": "l81 新增“看不见／挡掉的风险”共 8 字，停留 2 秒，旧行已退灰；l82–l83 同一组 15 字持续约 11.3 秒，有阅读余量。包装卡时长仍无法核验。",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P6": {
+     "name": "改写",
+     "a": 2,
+     "a_ev": "本轮 7 处问题均给了可直接替换的写法（见问题表）；无必须重画的版面",
+     "b": 3,
+     "b_ev": "问题表为 l39 给出撤下旧论点后的 **4 块、24 字**方案，为 l15 给出删除多余状态判断的方案，并为 l51 提供短语替换。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "多数问题有可直接替换的写法（b 给 l39 撤论点后 4 块 24 字的方案、两人都给了 l15 删「有争议」的方案、a 给了 l61、l65、l75 的写法），但有缺口。一是 2009/2015/2023 三屏统一写原因的改写和 b 对 l51 的改写反而更差（见驳回）。二是没人给出小标题常驻 l27–l39 的整体做法，l33 和 l39 只是各补各的。三是 l09 漏审，没有改写。比 b 的 3 分低一档，维持 2"
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "上一轮 screen_zh 的 I32–I55 逐条复核，I33（c2 章名）、I36–I38（公告模糊成纹理，l02 截图只剩高亮句 ALL AIRPORTS ARE GROUND STOPPED）、I39（l10 删「其实是」）、I40–I42（l13/l14）、I43（l23「原因：未公布」）、I44（l26 论点保留到 l39 右上）、I45（l32 只留「129 个设施」）、I47（l40「2026：可能同一个坑」）、I48（l47 中心「技术债」）、I50（l49 图例）、I53–I55 均已解决，未改出新问题；「不改」的 I32、I37、I40、I46、I51 理由成立（章名口号线、停飞通行译法、同构数字行合 1 块、GAO 小注为出处、卡片页签不计字）；I34、I35 章节卡截图仍缺，未解决（记录项）",
+     "b": 1,
+     "b_ev": "I32：不采纳理由成立，“动它”已有上下文，中文章名无需逐字对应英文；I33：已解决，改为“最严重的几次故障”；I34、I35：未解决，章节卡截图仍为空，其余包装卡仍未提供，保留未核记录；I36：已解决，l02–l03 公告非高亮正文已模糊到不可辨读；I37：不采纳理由成立，结合高亮公告和口播，“全部机场停飞”可理解为地面停飞；I38：已解决，同 I36；I39：已解决，l10 已删“其实是”；I40：不采纳理由成立，l13 出处不计，两条同构数字行合算一块，正文共 23 字；I41：原超限判断不成立，且本轮旧数字确已撤下；I42：已解决，截图 l14 不再显示两条旧数字；I43：已解决，l23 为“原因：未公布”；I44：**改出新问题**，论点确已延长保留，但留到 l39 后增加了第五块文字；I45：已解决，l31–l33 已删“受影响设施”；I46：原先将 GAO 作为出处豁免成立，但叠加 I44 新保留的论点后，本轮已不能沿用“实际四块”的结论；I47：已解决，l40 为“2026：可能同一个坑”；I48：已解决，循环图共 15 字；I49：问题已按另一替换方案解决，不采用“老化／不敢改”的理由成立；I50：已解决，l49 图例为“撑不下去 51／可能撑不住 54”；I51：不采纳理由成立，两栏胶囊页签不计，l72 实为 4 块、28 字；I52：口径疑问已明确，同 I51；I53：已解决，l79 已补“架”；I54：已解决，l81 旧行已退灰；I55：已解决，l83 沿用上一屏，没有再叠一行行动提醒。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 成立。上轮 I44（论点延长保留）落实后改出了新问题：l39 变成 5 块，I46「实际四块」的结论在本轮不能沿用。l33 也因为这行小标题加上 DOT 行升级，变成 5 块 38 字。a 写「I44 已解决、未改出新问题」「I46 理由成立」，没有把延长保留的副作用算进去。其余条目两人复核一致（I33、I36、I39、I43、I47、I48、I50、I53–I55 已解决；I34、I35 章节卡截图仍缺）"
+    }
+   },
+   "disputes": [
+    "P1",
+    "P2",
+    "R"
+   ],
+   "audits": [
+    "P6",
+    "P4"
+   ],
+   "final_scores": {
+    "P1": 1,
+    "P2": 1,
+    "P3": 2,
+    "P4": 1,
+    "P5": 2,
+    "P6": 2,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "P1",
+     "P2",
+     "R",
+     "P6",
+     "P4"
+    ],
+    "prompt": "items/screen_zh__judge.md",
+    "report": "reports/screen_zh__judge.md",
+    "ruling": {
+     "P1": {
+      "score": 1,
+      "evidence": "b 成立。上轮 I44 把「共同点：都在改动中」（body 38px、8 字、右上小标题）一直留到 l39，它不属于页眉小标签、案例页签或出处，必须计入。l39 按上轮 I46 的口径是 4 块 24 字，加上它就是 5 块 32 字（截图 s2_l39 右上清楚可见），超出同屏 4 块。a 认定「l39 四块 24 字合格」，漏算了这一块。另外 a 自己数出 l33 是 5 块、约 38 字：「DOT 监察长 CC-2010-012」从 l32 的 22px 出处升成 38px 正文并带勾选框，同时超了块数和总字数（36），也是硬上限，却只标「建议」、给了 2 分，前后矛盾。两屏都超硬上限，判 1"
+     },
+     "P2": {
+      "score": 1,
+      "evidence": "两位都把 l15 小标签「有争议」列为必改，问题本身没有分歧。截图 s1_l15 里这个虚线胶囊挂在「FAA 官方声明」卡内，紧贴「技术人员：调查中」，读起来像是官方通报本身有争议；口播没说，分歧其实从 l16（达菲）到 l20（CBS）才出现。既然有必改，P2 不能给 2 分，a 打分偏松，按 b 判 1"
+     },
+     "R": {
+      "score": 1,
+      "evidence": "b 成立。上轮 I44（论点延长保留）落实后改出了新问题：l39 变成 5 块，I46「实际四块」的结论在本轮不能沿用。l33 也因为这行小标题加上 DOT 行升级，变成 5 块 38 字。a 写「I44 已解决、未改出新问题」「I46 理由成立」，没有把延长保留的副作用算进去。其余条目两人复核一致（I33、I36、I39、I43、I47、I48、I50、I53–I55 已解决；I34、I35 章节卡截图仍缺）"
+     },
+     "P6": {
+      "score": 2,
+      "evidence": "多数问题有可直接替换的写法（b 给 l39 撤论点后 4 块 24 字的方案、两人都给了 l15 删「有争议」的方案、a 给了 l61、l65、l75 的写法），但有缺口。一是 2009/2015/2023 三屏统一写原因的改写和 b 对 l51 的改写反而更差（见驳回）。二是没人给出小标题常驻 l27–l39 的整体做法，l33 和 l39 只是各补各的。三是 l09 漏审，没有改写。比 b 的 3 分低一档，维持 2"
+     },
+     "P4": {
+      "score": 1,
+      "evidence": "开场从严，两人都漏了 l09 卡片大字「更新弄崩」（截图 s0_l09，h1 76px）。它和左卡「太老了」并列，却是缺宾语、缺「了／的」的半句，读不顺，按从严规则判必改（见补充问题）。另外 a 已提出的 l83 片尾 eyebrow「一句话带走」是 takeaway 的直译腔，片尾从严，只要判有点怪就该按必改处理，不是建议。b 给 3 分没有看到这两处；a 给 2 分也偏松"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 19,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_zh__a",
+    "codex/screen_zh__b"
+   ]
+  },
+  {
+   "id": "screen_en",
+   "law": "lines",
+   "law_name": "English on-screen text (slides)",
+   "color": "#6b4fc0",
+   "scope": [],
+   "checks": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "how": "Hard limits (report every breach): title ≤6 words; any other block ≤9 words; ≤4 text blocks per screen (not counting the small eyebrow label, source line or chart ticks); ≤22 words per screen. Narration subtitles also sit at the bottom of the frame. Counting rules (round-2 ruling, 2026-11-09): eyebrow labels, case tabs, source lines and end-card credits are exempt; a list, table or card row of look-alike items (each ≤6 words, at most 6 items) counts as one block, and numbering doesn't count as words; in-chart text (zone names, curve names, axis titles, bar labels, callouts) counts toward words and the whole chart counts as one block — only axis tick numbers are exempt; a table's column headers count with the table.",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_en.md",
+   "prompt": "items/screen_en__a.md",
+   "what": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "problem": "The previous version put full sentences on screen (e.g. 'A separate model identified the hospital for scans from two hospitals — a hospital fingerprint'), repeating the narration. The user wants outline-only, concise slides (2026-11-08).",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "Outline, not prose",
+     "question": "Only keywords, short phrases, key numbers, labels; no full narration sentences. Count words per screen against the hard limits"
+    },
+    {
+     "id": "P2",
+     "name": "Divided from narration",
+     "question": "Screen carries structure, numbers, contrasts; narration explains. No verbatim repetition, no new claims the narration doesn't make; terms match the narration"
+    },
+    {
+     "id": "P3",
+     "name": "Hierarchy and consistency",
+     "question": "What reads first, second; ≤3 levels (title, point, note); numbering, labels, chapter names and agenda items consistent with each other"
+    },
+    {
+     "id": "P4",
+     "name": "Native phrasing and style",
+     "question": "Sentence case headline style; no Chinglish; consistent punctuation (no trailing periods on fragments), en dashes, quotes; parallel grammar in lists; **chapter titles and headings must read naturally aloud** — awkward noun stacks are must-fix"
+    },
+    {
+     "id": "P5",
+     "name": "Readable in time",
+     "question": "From the screenshot and how long it stays: readable in time (~3 words/s while also reading subtitles and the chart)"
+    },
+    {
+     "id": "P6",
+     "name": "Rewrites",
+     "question": "For every breach or awkward phrase, a shorter drop-in rewrite"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_en__a.md",
+     "prompt": "items/screen_en__a.md",
+     "scores": {
+      "P1": {
+       "score": 2,
+       "evidence": "Outline-only holds across s1-s6: l19 \"Old routers overloaded / New gear: none failed / Asks Congress: $50B\" (12 words, 2 blocks), l32 \"129 facilities / 5 hours down · 820 flights delayed\" (19 words), l83 three fragments (18 words). No screen breaks ≤22 words / ≤4 blocks under the round-2 counting rules. Small blemishes: s0_l03 readable words (header 7 + tag 3 + highlight 9 + footer 7) exceed 22 only if document chrome is counted; l39 sits exactly at 4 blocks / ~20 words."
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "Screen carries numbers and contrasts (l06 \"Canceled 4,467 / Delayed 10,079\", l49 \"Unsustainable 51 · Potentially unsustainable 54\") while narration explains. Near-verbatim echoes remain: l15 \"Communication issues at multiple centers\" vs \"multiple en route centers had communication issues\"; l74 \"No reliable lifetime cost estimate\". l09 labels the CBS claim \"An update broke it\" while l20/l22 label the same claim \"Update → reboot → crash\"."
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "Chapter eyebrows 01-06 match the c_c1-c_c6 titles exactly (\"01 · What actually broke\" ... \"06 · A ground stop is a brake\"); cause label unified (\"Cause: not public yet\" at l23/l24/l40); l24 link \"→ Past outages\" matches c_c2. Minor: the persistent \"Each time: a change in progress\" banner (l26-l39) floats top-right with no visual tie to the case it follows (s2_l32.png), and the l30 \"Fiber\" and l78 \"Hold departures\" boxes are clipped at the right edge."
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "Sentence-case headlines, no Chinglish, curly quotes consistent, arrows used consistently (\"Update → reboot → crash\", \"Delay → longer risky overlap\"). Remaining nits: l04 \"4 h 21 min\" (SI style; US viewers expect \"4 hr 21 min\"); l83 h1 \"Old is risky. Change is riskier.\" is the only headline with sentence periods, next to unpunctuated fragments; the s0_l03 highlighted fragment ends in a period."
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "Most screens read at a glance in the screenshots (l05, l06, l24, l47, l64: large type, few words). Weak spots: l52 shows a new heading + two row labels + five year ticks for 1.9 s (7 words, about 3.7 words/s); l22 breaks lines at the arrows so \"Update →\" and \"New tech →\" end a line with a dangling arrow (s1_l22.png); l13 body wraps \"Controller voices · radar / data\" with an orphan word (s1_l13.png)."
+      },
+      "P6": {
+       "score": 2,
+       "evidence": "No hard-limit breach requires a rewrite; drop-in rewrites for every remaining nit are in the issue table (l04, l09, l13, l22, l30/l78, l52, l83, l77)."
+      },
+      "R": {
+       "score": 2,
+       "evidence": "Resolved: I3/I4/I5 advisory body now blurred, only the highlight readable (s0_l02.png, s0_l03.png); I7 l05 card no longer overflows (\"PLANES IN THE AIR / 3,500+ / All landed safely\", s0_l05.png); I9 badges \"Counts differ\" / \"Wording differs\" self-explanatory (s0_l07.png, s1_l15.png); I11 \"Secretary Duffy/Mullin\" eyebrows fit one line (s1_l22.png); I12, I13/I14, I15 (l26 \"Each time: a change in progress\"), I19/I20 (l52 now draws the New network bar, s3_l52.png), I21, I22, I23, I24, I25 (l63/l64 each on one line, s4_l64.png), I27, I29-I31 (l83 now h2 \"A system you can't live without\", h1, body \"Don't freeze it — change it carefully\", s6_l83.png). Not changed but the author's reasons hold: I10 (l09 \"An update broke it\" kept as a short parallel to \"Too old\" under \"So why?\", though see the l20 mismatch below); I16/I17 (l39 is 4 blocks, about 20 words; the two ticks are structural); I26/I28 (chapter title \"A ground stop is a brake\" is 6 words and reads naturally aloud; \"Old is risky. Change is riskier.\" keeps the episode thesis). Still open: I1/I2 (chapter cards, agenda, outro package have no renders in this package). No new problem was introduced by the fixes."
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/screen_en__b.md",
+     "prompt": "items/screen_en__b.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "l09 “An update broke it,” c_c6 “A ground stop is a brake,” and l82–l83 retain complete sentences. The outro title now meets six words, but that does not resolve outline-only compliance. No confirmed numerical hard-limit breaches remain after checking screenshots and applying the exemptions."
+      },
+      "P2": {
+       "score": 1,
+       "evidence": "l39 repeats each explanation in two forms; l77–l78 repeat the spoken brake metaphor as “It’s a brake”; l82–l83 turn the closing narration into written prose rather than a complementary outline."
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "l05’s number fits its card; l57–l59’s case tabs remain on one line; l64’s comparison no longer wraps awkwardly. Chapter-card, agenda and end-card hierarchy remains unverified because their renders are absent."
+      },
+      "P4": {
+       "score": 3,
+       "evidence": "“Past outages” at l24, “Each time: a change in progress” at l26, and “Three exceptions” at l55 read naturally. Screenshots confirm an en dash in “150–200” and correct spacing in “Old gear broke (Duffy).”"
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "l06 presents four content words over 4.6 seconds; l64 adds only four words over five seconds. l52 still introduces seven words plus a new chart in 1.9 seconds, although the layout continues into l53."
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "The issue table supplies shorter replacements for the cold-open sentence, brake headings, duplicated l39 labels and closing prose, plus a concrete staging change for l52."
+      },
+      "R": {
+       "score": 1,
+       "evidence": "I1–I2 unresolved: package renders and hold times remain absent; separate rendering explains their absence but does not verify them. I3–I5 resolved: l02–l03 now blur the advisory body and EVENT TIME; only the selected excerpt is readable. I6 unchanged: l04 agrees with its narration and attributes reopening to Duffy; the author’s source-based rejection is defensible for this screen/narration review, but this package does not independently verify the time. I7 resolved: “3,500+” fits. I8–I9 resolved in presentation: “Counts differ” and “Wording differs” now have explanatory source lines; preserving the narrated historical count is reasonable. I10 unresolved: four words and a clear referent do not make “An update broke it” an outline. I11–I15 resolved: shorter secretary labels, consistent cause labels, “Past outages,” “Focus: the worst outages,” and the natural six-word l26 heading are present. I16 accepted under the grouping ruling: no separate block-count breach established at l39. I17 unresolved: both sides still duplicate their explanation; the callback rationale explains the choice but does not remove the redundancy. I18 accepted: the grey remainder need not receive an invented status label. I19 partly resolved: the chart is simpler, but seven introductory words still arrive in 1.9 seconds. I20 resolved: the new-network row is empty at l52; contractor names appear at l53. I21–I25 resolved: “Three exceptions,” “Backup line cut,” single-line tabs, “Why the backups failed,” and the widened comparison are visible. I26 unresolved: brevity and familiar keynote style do not override the requested outline-only format. I27 resolved: l79 is centred and labelled “Planes in the air.” I28–I29 partly resolved: the title is now six words and the content has three principal levels, but sentence-form closing copy remains. I30–I31 resolved for phrasing and agreement: the singular “A system” matches “it,” and the forced comma construction is gone; the replacement introduces no new grammatical problem."
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "Outline, not prose",
+     "a": 2,
+     "a_ev": "Outline-only holds across s1-s6: l19 \"Old routers overloaded / New gear: none failed / Asks Congress: $50B\" (12 words, 2 blocks), l32 \"129 facilities / 5 hours down · 820 flights delayed\" (19 words), l83 three fragments (18 words). No screen breaks ≤22 words / ≤4 blocks under the round-2 counting rules. Small blemishes: s0_l03 readable words (header 7 + tag 3 + highlight 9 + footer 7) exceed 22 only if document chrome is counted; l39 sits exactly at 4 blocks / ~20 words.",
+     "b": 1,
+     "b_ev": "l09 “An update broke it,” c_c6 “A ground stop is a brake,” and l82–l83 retain complete sentences. The outro title now meets six words, but that does not resolve outline-only compliance. No confirmed numerical hard-limit breaches remain after checking screenshots and applying the exemptions.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "Under the round-2 counting rules no screen breaks a hard limit. s2_l32 shows \"129 facilities / 5 hours down · 820 flights delayed\" as stat rows, and s2_l39 has 4 blocks once \"Our take\" and \"GAO\" are exempted. b's three \"complete sentence\" cases were already ruled on: l09 \"An update broke it\" is a 4-word attributed label set against \"Too old\" (r2 ruling on I10), and c_c6 \"A ground stop is a brake\" is a 6-word argument-style chapter title (r2 ruling on I26). At l82–l83, \"Old is risky. Change is riskier.\" is a 6-word thesis tagline. It does not replay the narration line \"the danger isn't just that it's old. It's when you touch it\", so it is not the kind of prose the user complained about. The remaining blemish is the stiff l04 unit style (see P4), so 2, not 3."
+    },
+    "P2": {
+     "name": "Divided from narration",
+     "a": 2,
+     "a_ev": "Screen carries numbers and contrasts (l06 \"Canceled 4,467 / Delayed 10,079\", l49 \"Unsustainable 51 · Potentially unsustainable 54\") while narration explains. Near-verbatim echoes remain: l15 \"Communication issues at multiple centers\" vs \"multiple en route centers had communication issues\"; l74 \"No reliable lifetime cost estimate\". l09 labels the CBS claim \"An update broke it\" while l20/l22 label the same claim \"Update → reboot → crash\".",
+     "b": 1,
+     "b_ev": "l39 repeats each explanation in two forms; l77–l78 repeat the spoken brake metaphor as “It’s a brake”; l82–l83 turn the closing narration into written prose rather than a complementary outline.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "The screen carries the numbers and contrasts: l06 \"4,467 Canceled / 10,079 Delayed\", l35 \"Delayed 492 Canceled 476\", l49 \"Unsustainable 51 · Potentially unsustainable 54\", l63 \"Separate failures: covered / Joint failures: not covered\". The two ✓ lines at l39 tie the evidence back to the two claims from l09, which makes them structure; that was the r2 ruling on I16/I17, and b's \"duplication\" point does not overturn it. Small echoes remain: l78 \"Costly, but safe\" copies the narration word for word, and l77 \"It's a brake\" repeats eyebrow 06. More importantly, at l52 the title \"An ever-longer overlap\" sits over a New network row that looks empty in the screenshot, so title and chart disagree (see 补充问题). That keeps this at 2, but it is not the systemic prose problem b describes."
+    },
+    "P3": {
+     "name": "Hierarchy and consistency",
+     "a": 2,
+     "a_ev": "Chapter eyebrows 01-06 match the c_c1-c_c6 titles exactly (\"01 · What actually broke\" ... \"06 · A ground stop is a brake\"); cause label unified (\"Cause: not public yet\" at l23/l24/l40); l24 link \"→ Past outages\" matches c_c2. Minor: the persistent \"Each time: a change in progress\" banner (l26-l39) floats top-right with no visual tie to the case it follows (s2_l32.png), and the l30 \"Fiber\" and l78 \"Hold departures\" boxes are clipped at the right edge.",
+     "b": 2,
+     "b_ev": "l05’s number fits its card; l57–l59’s case tabs remain on one line; l64’s comparison no longer wraps awkwardly. Chapter-card, agenda and end-card hierarchy remains unverified because their renders are absent.",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P4": {
+     "name": "Native phrasing and style",
+     "a": 2,
+     "a_ev": "Sentence-case headlines, no Chinglish, curly quotes consistent, arrows used consistently (\"Update → reboot → crash\", \"Delay → longer risky overlap\"). Remaining nits: l04 \"4 h 21 min\" (SI style; US viewers expect \"4 hr 21 min\"); l83 h1 \"Old is risky. Change is riskier.\" is the only headline with sentence periods, next to unpunctuated fragments; the s0_l03 highlighted fragment ends in a period.",
+     "b": 3,
+     "b_ev": "“Past outages” at l24, “Each time: a change in progress” at l26, and “Three exceptions” at l55 read naturally. Screenshots confirm an en dash in “150–200” and correct spacing in “Old gear broke (Duffy).”",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "a's 2 stands; b's 3 missed real issues on strict cold-open screens. s0_l04 sets \"4 h 21 min\" in SI style at 132px, where a US viewer expects \"4 hr 21 min\". Its source line \"Reopening time: Duffy\" reads as if Duffy were the time. s4_l59 \"Backup crashed in 1 min\" is ambiguous (\"after one minute\"?), while the narration says \"within a minute\". s1_l12's source line also capitalizes \"Facilities:\" but not \"centers:\". b is right that \"Past outages\", \"Three exceptions\" and the en dash in \"150–200\" are all clean."
+    },
+    "P5": {
+     "name": "Readable in time",
+     "a": 2,
+     "a_ev": "Most screens read at a glance in the screenshots (l05, l06, l24, l47, l64: large type, few words). Weak spots: l52 shows a new heading + two row labels + five year ticks for 1.9 s (7 words, about 3.7 words/s); l22 breaks lines at the arrows so \"Update →\" and \"New tech →\" end a line with a dangling arrow (s1_l22.png); l13 body wraps \"Controller voices · radar / data\" with an orphan word (s1_l13.png).",
+     "b": 2,
+     "b_ev": "l06 presents four content words over 4.6 seconds; l64 adds only four words over five seconds. l52 still introduces seven words plus a new chart in 1.9 seconds, although the layout continues into l53.",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P6": {
+     "name": "Rewrites",
+     "a": 2,
+     "a_ev": "No hard-limit breach requires a rewrite; drop-in rewrites for every remaining nit are in the issue table (l04, l09, l13, l22, l30/l78, l52, l83, l77).",
+     "b": 3,
+     "b_ev": "The issue table supplies shorter replacements for the cold-open sentence, brake headings, duplicated l39 labels and closing prose, plus a concrete staging change for l52.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "Not a 3. b's main rewrite for the strict outro (l82 title \"Switchover: highest risk\") copies the l71 h2 \"Switchover: highest risk\" (s5_l72) and drops the \"Old is risky\" half of the thesis. a's l83 option \"drop the final period\" leaves a period inside the line and none at the end. Neither reviewer offered a rewrite for the pale l52 bar, the l04 source line or l59 \"in 1 min\"."
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "Resolved: I3/I4/I5 advisory body now blurred, only the highlight readable (s0_l02.png, s0_l03.png); I7 l05 card no longer overflows (\"PLANES IN THE AIR / 3,500+ / All landed safely\", s0_l05.png); I9 badges \"Counts differ\" / \"Wording differs\" self-explanatory (s0_l07.png, s1_l15.png); I11 \"Secretary Duffy/Mullin\" eyebrows fit one line (s1_l22.png); I12, I13/I14, I15 (l26 \"Each time: a change in progress\"), I19/I20 (l52 now draws the New network bar, s3_l52.png), I21, I22, I23, I24, I25 (l63/l64 each on one line, s4_l64.png), I27, I29-I31 (l83 now h2 \"A system you can't live without\", h1, body \"Don't freeze it — change it carefully\", s6_l83.png). Not changed but the author's reasons hold: I10 (l09 \"An update broke it\" kept as a short parallel to \"Too old\" under \"So why?\", though see the l20 mismatch below); I16/I17 (l39 is 4 blocks, about 20 words; the two ticks are structural); I26/I28 (chapter title \"A ground stop is a brake\" is 6 words and reads naturally aloud; \"Old is risky. Change is riskier.\" keeps the episode thesis). Still open: I1/I2 (chapter cards, agenda, outro package have no renders in this package). No new problem was introduced by the fixes.",
+     "b": 1,
+     "b_ev": "I1–I2 unresolved: package renders and hold times remain absent; separate rendering explains their absence but does not verify them. I3–I5 resolved: l02–l03 now blur the advisory body and EVENT TIME; only the selected excerpt is readable. I6 unchanged: l04 agrees with its narration and attributes reopening to Duffy; the author’s source-based rejection is defensible for this screen/narration review, but this package does not independently verify the time. I7 resolved: “3,500+” fits. I8–I9 resolved in presentation: “Counts differ” and “Wording differs” now have explanatory source lines; preserving the narrated historical count is reasonable. I10 unresolved: four words and a clear referent do not make “An update broke it” an outline. I11–I15 resolved: shorter secretary labels, consistent cause labels, “Past outages,” “Focus: the worst outages,” and the natural six-word l26 heading are present. I16 accepted under the grouping ruling: no separate block-count breach established at l39. I17 unresolved: both sides still duplicate their explanation; the callback rationale explains the choice but does not remove the redundancy. I18 accepted: the grey remainder need not receive an invented status label. I19 partly resolved: the chart is simpler, but seven introductory words still arrive in 1.9 seconds. I20 resolved: the new-network row is empty at l52; contractor names appear at l53. I21–I25 resolved: “Three exceptions,” “Backup line cut,” single-line tabs, “Why the backups failed,” and the widened comparison are visible. I26 unresolved: brevity and familiar keynote style do not override the requested outline-only format. I27 resolved: l79 is centred and labelled “Planes in the air.” I28–I29 partly resolved: the title is now six words and the content has three principal levels, but sentence-form closing copy remains. I30–I31 resolved for phrasing and agreement: the singular “A system” matches “it,” and the forced comma construction is gone; the replacement introduces no new grammatical problem.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "Verified as fixed: in s0_l03 the advisory body is blurred and only \"DUE TO EXTRAORDINARY CIRCUMSTANCES…\" is readable (I3–I5). s0_l05 \"3,500+\" fits its card (I7). The s0_l07 badge \"Counts differ\" carries its explanation in the source line (I8/I9). s1_l22 \"Secretary Mullin\" fits on one line (I11). l24 reads \"→ Past outages\" (I13/I14), and s6_l83 has the singular h2 plus the new body text (I29–I31). Both reviewers misjudged I20. In s3.html the nn bar is drawn with --surface2 fill and a --hair stroke, so in s3_l52 it reads as an empty track: a wrongly calls the bar \"drawn\", and b calls the row \"empty\" yet still marks it resolved. The fix is therefore only partial. I10, I17 and I26 were rejected in the r2 ruling, so b should not count them as open. I1/I2 (no renders of the chapter, agenda or outro package) are scope notes, so this stays at 2."
+    }
+   },
+   "disputes": [
+    "P1",
+    "P2",
+    "R"
+   ],
+   "audits": [
+    "P6",
+    "P4"
+   ],
+   "final_scores": {
+    "P1": 2,
+    "P2": 2,
+    "P3": 2,
+    "P4": 2,
+    "P5": 2,
+    "P6": 2,
+    "R": 2
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "P1",
+     "P2",
+     "R",
+     "P6",
+     "P4"
+    ],
+    "prompt": "items/screen_en__judge.md",
+    "report": "reports/screen_en__judge.md",
+    "ruling": {
+     "P1": {
+      "score": 2,
+      "evidence": "Under the round-2 counting rules no screen breaks a hard limit. s2_l32 shows \"129 facilities / 5 hours down · 820 flights delayed\" as stat rows, and s2_l39 has 4 blocks once \"Our take\" and \"GAO\" are exempted. b's three \"complete sentence\" cases were already ruled on: l09 \"An update broke it\" is a 4-word attributed label set against \"Too old\" (r2 ruling on I10), and c_c6 \"A ground stop is a brake\" is a 6-word argument-style chapter title (r2 ruling on I26). At l82–l83, \"Old is risky. Change is riskier.\" is a 6-word thesis tagline. It does not replay the narration line \"the danger isn't just that it's old. It's when you touch it\", so it is not the kind of prose the user complained about. The remaining blemish is the stiff l04 unit style (see P4), so 2, not 3."
+     },
+     "P2": {
+      "score": 2,
+      "evidence": "The screen carries the numbers and contrasts: l06 \"4,467 Canceled / 10,079 Delayed\", l35 \"Delayed 492 Canceled 476\", l49 \"Unsustainable 51 · Potentially unsustainable 54\", l63 \"Separate failures: covered / Joint failures: not covered\". The two ✓ lines at l39 tie the evidence back to the two claims from l09, which makes them structure; that was the r2 ruling on I16/I17, and b's \"duplication\" point does not overturn it. Small echoes remain: l78 \"Costly, but safe\" copies the narration word for word, and l77 \"It's a brake\" repeats eyebrow 06. More importantly, at l52 the title \"An ever-longer overlap\" sits over a New network row that looks empty in the screenshot, so title and chart disagree (see 补充问题). That keeps this at 2, but it is not the systemic prose problem b describes."
+     },
+     "R": {
+      "score": 2,
+      "evidence": "Verified as fixed: in s0_l03 the advisory body is blurred and only \"DUE TO EXTRAORDINARY CIRCUMSTANCES…\" is readable (I3–I5). s0_l05 \"3,500+\" fits its card (I7). The s0_l07 badge \"Counts differ\" carries its explanation in the source line (I8/I9). s1_l22 \"Secretary Mullin\" fits on one line (I11). l24 reads \"→ Past outages\" (I13/I14), and s6_l83 has the singular h2 plus the new body text (I29–I31). Both reviewers misjudged I20. In s3.html the nn bar is drawn with --surface2 fill and a --hair stroke, so in s3_l52 it reads as an empty track: a wrongly calls the bar \"drawn\", and b calls the row \"empty\" yet still marks it resolved. The fix is therefore only partial. I10, I17 and I26 were rejected in the r2 ruling, so b should not count them as open. I1/I2 (no renders of the chapter, agenda or outro package) are scope notes, so this stays at 2."
+     },
+     "P6": {
+      "score": 2,
+      "evidence": "Not a 3. b's main rewrite for the strict outro (l82 title \"Switchover: highest risk\") copies the l71 h2 \"Switchover: highest risk\" (s5_l72) and drops the \"Old is risky\" half of the thesis. a's l83 option \"drop the final period\" leaves a period inside the line and none at the end. Neither reviewer offered a rewrite for the pale l52 bar, the l04 source line or l59 \"in 1 min\"."
+     },
+     "P4": {
+      "score": 2,
+      "evidence": "a's 2 stands; b's 3 missed real issues on strict cold-open screens. s0_l04 sets \"4 h 21 min\" in SI style at 132px, where a US viewer expects \"4 hr 21 min\". Its source line \"Reopening time: Duffy\" reads as if Duffy were the time. s4_l59 \"Backup crashed in 1 min\" is ambiguous (\"after one minute\"?), while the narration says \"within a minute\". s1_l12's source line also capitalizes \"Facilities:\" but not \"centers:\". b is right that \"Past outages\", \"Three exceptions\" and the en dash in \"150–200\" are all clean."
+     }
+    }
+   },
+   "findings": {},
+   "rows": 26,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_en__a",
+    "codex/screen_en__b"
+   ]
+  }
+ ],
+ "state": "已收轮",
+ "concluded_at": "2026-11-14T15:44:30",
+ "result": "结果.md",
+ "verdict": {
+  "result": "不通过",
+  "text": "不通过：3 项未过；已到轮数上限，余下问题已按问题清单修改，由程序检验复核成片"
+ },
+ "log": []
+}

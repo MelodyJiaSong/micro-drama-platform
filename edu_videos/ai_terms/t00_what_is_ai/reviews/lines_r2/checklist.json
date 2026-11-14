@@ -1,0 +1,1135 @@
+{
+ "version": 5,
+ "kind": "edu_lines",
+ "scoring": {
+  "scale": {
+   "0": "没查或查不了（写 `原因：`）",
+   "1": "有问题（问题表里必须有对应条目）",
+   "2": "基本没问题，有小瑕疵（写证据）",
+   "3": "没问题（写证据）"
+  },
+  "evidence_rule": "证据要指到句号 lNN / 屏号、原文或数字，至少 8 个字；没证据的高分按 0 处理。",
+  "disagreement": "分歧：两位同一维度差 ≥2，或一人 ≤1、另一人 ≥2，交裁决人；两人都 ≥2 的维度，裁决人每项抽 2 维复核（专抓两个模型共同的盲点）。"
+ },
+ "adjudicator": {
+  "runner": "claude",
+  "model": "claude-opus-5-5"
+ },
+ "id": "lines_r2",
+ "chain": "t00_what_is_ai/lines",
+ "loop": 2,
+ "max_loops": 3,
+ "parent": "edu_videos/ai_terms/t00_what_is_ai/reviews/lines_r1",
+ "title": "t00_what_is_ai · 台词审（口播＋屏幕文字）第 2 轮",
+ "target": "edu_videos/ai_terms/t00_what_is_ai",
+ "episode": "t00_what_is_ai",
+ "stage": "lines",
+ "stage_name": "台词审（口播＋屏幕文字 × 中英）",
+ "scenes": [],
+ "created_at": "2026-11-09T20:37:48",
+ "author": "Claude Code",
+ "known": "",
+ "changes": "# 台词审汇总：lines_r1\n\n处理状态：待处理 0 · 已改 158 · 不改 31 · 驳回 36（`python tools/edu_review.py fix` 登记；下一轮审稿人按「处理」列逐条复核）\n\n## 各项结论（最终分：裁决过的维度用裁决分，其余取两人较低分）\n\n| 项 | 最终分 | 未处理的必改 | 结论 |\n|---|---|---|---|\n| voice_zh | V1=1 V2=1 V3=1 V4=2 V5=2 V6=1 | 0 | 不通过 |\n| voice_en | V1=1 V2=1 V3=1 V4=2 V5=2 V6=2 | 0 | 不通过 |\n| screen_zh | P1=1 P2=1 P3=2 P4=1 P5=1 P6=2 | 0 | 不通过 |\n| screen_en | P1=1 P2=1 P3=2 P4=2 P5=1 P6=2 | 0 | 不通过 |\n\n## 问题（来源 a = Claude、b = Codex、judge = 裁决补充）\n\n| 编号 | 项 | 位置 | 维度 | 级别 | 来源 | 原文 | 问题 | 建议改写 | 裁决人意见 | 处理 |\n|---|---|---|---|---|---|---|---|---|---|---|\n| I1 | screen_en | outro (card_s10) | P1, P2 | 必改 | a | \"Today's AI mostly doesn't run on rules people write. It learns patterns from examples on its own.\" (17 words, two full sentences with periods) | Outro is a strict item. Copies narration l51 verbatim, blocks 17 words, trailing periods; headline over 6 words | Headline: \"Rules out, examples in\" (4 words); or \"Learns from examples\" with the existing \"Next · Overfitting\" line. Keep eyebrow \"In one sentence\" |  | 已改：Outro quote now phrases: “Not rules people write / Patterns learned from examples” |\n| I2 | screen_en | c_problem, c_experiment, c_lens, c_real, c_fix | P4 | 必改 | a | \"Too many rules\" / \"A small experiment\" / \"A different lens\" / \"One real example\" / \"Three things to remember\" | Chapter titles are strict items. \"Too many rules\" is the only one that reads as a verdict rather than a topic and, said aloud before \"A traditional program works differently\", it hints at a statement that has not yet been made; \"One real example\" and \"A different lens\" are natural. Mixed grammar pattern: clause (Too many rules) vs. noun phrases | Parallel set: \"Why rules fail\" / \"A small experiment\" / \"A different lens\" / \"A real case\" / \"Three things to remember\". Minimum fix: \"Why rules fall short\" |  | 已改：Chapter set now: When rules fall short / A small experiment / A different lens / One real example / Three things to remember |\n| I3 | screen_en | intro | P4 | 必改 | b | “What Is AI?” | The opening title breaks the requested sentence-case headline style. The wording itself is natural. | **What is AI?** |  | 不改（理由：Episode title keeps YouTube title case, consistent with the series package titles; on-screen copy uses sentence case） |\n| I4 | screen_en | intro card | P3 | 存疑 | a | card_intro.png not in the materials text file | No text table for the title card; cannot score wording | Check separately |  | 不改（理由：v3 has no separate intro text card beyond the title; nothing to score） |\n| I5 | screen_en | s3 / s4 / s7 眉题 | P3 | 建议 | judge | s3 无眉题；s4 \"An analogy\"；s7 \"Circles within circles\" | 其他场景眉题都是 \"0N · 章名\"，这三处不带章号，s7 看上去像一个没编号的新章，和 01–05 的章节编号体系不一致 | 统一为章内小节样式，如 \"01 · An analogy\"\"03 · Circles within circles\"；或眉题只放章名、小节名降为 caption |  | 已改：s4 eyebrow → “01 · An analogy”, s7 → “03 · Circles within circles” (zh same) |\n| I6 | screen_en | intro（片头标题卡） | P4 | 建议 | judge | \"What Is AI?\" | b 已指出，这里补定级别：片头卡不在严格项清单内，YouTube 标题习惯用 title case 也说得通，但它和全片 sentence case 不一致 | \"What is AI?\" |  | 不改（理由：Episode title keeps YouTube title case, consistent with the series package titles; on-screen copy uses sentence case） |\n| I7 | screen_en | s0_l01 | P1, P2 | 必改 | a | h1 \"Your photo app / can spot your cat\" (7) + body \"Yet nobody had to write down / what a cat looks like rule by rule\" (14) | Cold open is strict. h1 7 words (limit 6); the 14-word body is a narration sentence (block limit 9; screen 21 words, limit 22 only just OK) | h1 \"Your phone spots your cat\" (5); body \"No rules written for it\" (5), keep the \"rule by rule\" pill or drop it |  | 已改：h1 “Your phone / spots your cat”; body “No one wrote [cat-spotting rules]” |\n| I8 | screen_en | l01 | P1, P2, P5 | 必改 | b | “Your photo app can spot your cat”; “Yet nobody had to write down what a cat looks like rule by rule” | Cold open: title **7 >6**, body **14 >9**. Both are narration sentences. Its 21 words require about 7 seconds before allowing for subtitles or the image; the line lasts 5.5 seconds. | Title: ",
+ "items": [
+  {
+   "id": "voice_zh",
+   "law": "lines",
+   "law_name": "中文口播（母语听感，盲审）",
+   "color": "#c0502e",
+   "scope": [],
+   "checks": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_zh.md",
+   "prompt": "items/voice_zh__a.md",
+   "what": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "problem": "上一版「本期内容」念成「这一期，讲四件事：它是个什么问题；为什么只背练习册不行……」，像在念目录，正常人不会这么说话（用户 2026-11-08 指出）；原先的审稿没抓到。",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "像真人在讲",
+     "question": "逐句：自然 / 有点怪 / 很怪。书面腔、讲解腔、翻译腔、念稿感、报菜名式罗列都算怪"
+    },
+    {
+     "id": "V2",
+     "name": "衔接与过渡",
+     "question": "开场、本期内容、章节转换、举例前后：像一个人顺着思路往下讲，而不是「下面讲第一点」式的模板或目录朗读；上下句接得上"
+    },
+    {
+     "id": "V3",
+     "name": "一遍听懂",
+     "question": "只靠耳朵：一句只带一个新意思；指代清楚（说「这个」时观众知道指什么）；术语先解释再用；数字、同音字不会听错"
+    },
+    {
+     "id": "V4",
+     "name": "精炼",
+     "question": "没有废话、重复、正确的空话；删掉不影响理解的句子要指出来"
+    },
+    {
+     "id": "V5",
+     "name": "口吻与节奏",
+     "question": "从头到尾是同一个亲切、清楚、不端着的讲解者；长短句交替，每句适合一口气念完"
+    },
+    {
+     "id": "V6",
+     "name": "改写",
+     "question": "每句「有点怪 / 很怪」都给出可以直接替换、不更长的中文改写；列出最别扭的 5 句并排序"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_zh__a.md",
+     "prompt": "items/voice_zh__a.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "多数句子自然，如 l09「给电脑看成百上千张手写数字，每张都告诉它答案：这是三，这是七」、l46「小孩会说「这不是数字」，它不会」；仍有 l33「最外圈是 AI，人工智能，就是让电脑做看起来需要聪明的事」定义腔、l48「它的本事和毛病，跟它学的数据有关」名词加「和」、l06「把怎么认写成规则」名词化、l28「报出把握」搭配生硬，没有「很怪」的句子。"
+      },
+      "V2": {
+       "score": 1,
+       "evidence": "从严条目有两处必改。l27「刚才那个模型，其实就是在预测」，上一句 l26 还在讲「错了十道」，这句直接跳进新角度，没有「换个角度」之类的过渡（章节卡不念）；l17「咱们真做一次」没说做什么；l33「刚才这几个词，是大圈套小圈」听者不知道是哪几个词。章节串场整体偏弱。"
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "l41「简历里只要有英文 women's，也就是「女子的」，比如「女子国际象棋社社长」，就会被扣分」，动词「扣分」要等二十多个字才出现，一遍听下来要回头拼；l30 先说「语言模型」，l31 才说「大语言模型」；l23 一句连报二十回、百分之三十七、百分之十三个数。其余指代清楚，术语（模型、训练、数据）都是先讲再用。"
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "l30「它猜下一个词，一个接一个猜下去，就成了一段回答」和 l31「能跟你聊天的大语言模型，就是这么回答的」，后一句可并进前一句；「今天的 AI 主要靠例子学」这个结论在 l02、l10、l37、l51 反复出现，l51 作为片尾可接受。没有大段废话。"
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "整体是同一个亲切的「咱们」讲解者，长短句交替好（l46 只有 12 个字）。但 l28「我们这个模型」与 l17「咱们真做一次」称呼不一致；l33、l40「男性候选人」、l48 突然转书面腔。"
+      },
+      "V6": {
+       "score": 2,
+       "evidence": "下面问题表里每条「有点怪」都给了不更长的替换句，没有「很怪」的句子；最别扭的 5 句排序见「整体观察」。"
+      },
+      "R": {
+       "score": 2,
+       "evidence": "上一轮 voice_zh 条目，l01、l23、l35、l37、l45、l47、l49、l50、l51、l52 已解决，新句子听着自然；l27 已改但「改出新问题」（接住实验却丢了过渡，见问题表）；l33 部分解决（「大圈套小圈」好了，但后半句仍是定义腔）；l48 去掉了「既……也……」，仍是「本事和毛病」名词加「和」，未解决；作者不采纳的 l28「报出把握」，理由是「与画面一致」，但本项只管耳朵，这个理由不成立；l41 不改的理由「画面已分拍」同样不能替代听感，未解决；l02「这，就是今天的 AI」驳回的理由（冷开场收句，全片沿用）成立，我听着也自然；l11「那套认法」、l12 保留前半句、l17「八行八列」保留的理由成立。"
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/voice_zh__b.md",
+     "prompt": "items/voice_zh__b.md",
+     "scores": {
+      "V1": {
+       "score": 1,
+       "evidence": "l28「我们这个模型不光猜，还会报出把握」搭配生硬；l33「让电脑做看起来需要聪明的事」不像自然口语；l51「主要不是人写规则」句式没有接顺。"
+      },
+      "V2": {
+       "score": 1,
+       "evidence": "l02「这，就是今天的 AI」从解释学习过程跳到定义式宣告；l33「刚才这几个词，是大圈套小圈」没有说清哪些词、什么范围，章节转换仍显突然。"
+      },
+      "V3": {
+       "score": 1,
+       "evidence": "l35 在同一句号内连续安排「机器学习」「深度学习」「神经网络」「很多层简单的计算」，只听一遍容易只记住名字；l41 在「简历里只要有」与「就会被扣分」之间插入翻译和例子，主干隔得太远。"
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "l17「一共一千七百九十七张」精度超过本段听觉理解所需，可压成「一千七百多张」。l12 虽复述学习机制，但「很多人以为，AI 的本事是程序员一条条写进去的」明确纠正误解，有保留价值。"
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "l21「你先猜猜：只给它看十个例子，考试能答对多少」和 l46「小孩会说『这不是数字』，它不会」亲切、好念；l05「有胖有瘦有歪」、l28「报出把握」仍有局部卡口。"
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "下表为全部十句「有点怪／很怪」提供完整替换，均不长于原句；最别扭的五句依次是 l33、l51、l02、l48、l28。"
+      },
+      "R": {
+       "score": 1,
+       "evidence": "l27「刚才那个模型，其实就是在预测：看一张图，猜它是几」已解决原来的空泛串场；l28「还会报出把握」仍未改；l51 从「不靠人写规则」改成「不是人写规则」，出现新的句式问题。逐条复核见下表。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "像真人在讲",
+     "a": 2,
+     "a_ev": "多数句子自然，如 l09「给电脑看成百上千张手写数字，每张都告诉它答案：这是三，这是七」、l46「小孩会说「这不是数字」，它不会」；仍有 l33「最外圈是 AI，人工智能，就是让电脑做看起来需要聪明的事」定义腔、l48「它的本事和毛病，跟它学的数据有关」名词加「和」、l06「把怎么认写成规则」名词化、l28「报出把握」搭配生硬，没有「很怪」的句子。",
+     "b": 1,
+     "b_ev": "l28「我们这个模型不光猜，还会报出把握」搭配生硬；l33「让电脑做看起来需要聪明的事」不像自然口语；l51「主要不是人写规则」句式没有接顺。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 站得住。a 自己的问题表把 l33 列为 V1 必改，按评分规则不能给 2 分。l33「刚才这几个词……就是让电脑做看起来需要聪明的事」是小节串场，按从严条目必改；片尾 l51「今天的 AI，主要不是人写规则，是自己从例子里学出规律」，主语 AI 后面接的是「人写规则」，紧跟的「自己」耳朵一时分不清指人还是指 AI，片尾从严，必改。可改成「主要不靠人写规则，靠自己从例子里学出规律」，长度 24 字，与原句相同；b 的改写也能用。l48「本事和毛病」、l28「报出把握」、l06「把怎么认写成规则」算建议级。"
+    },
+    "V2": {
+     "name": "衔接与过渡",
+     "a": 1,
+     "a_ev": "从严条目有两处必改。l27「刚才那个模型，其实就是在预测」，上一句 l26 还在讲「错了十道」，这句直接跳进新角度，没有「换个角度」之类的过渡（章节卡不念）；l17「咱们真做一次」没说做什么；l33「刚才这几个词，是大圈套小圈」听者不知道是哪几个词。章节串场整体偏弱。",
+     "b": 1,
+     "b_ev": "l02「这，就是今天的 AI」从解释学习过程跳到定义式宣告；l33「刚才这几个词，是大圈套小圈」没有说清哪些词、什么范围，章节转换仍显突然。",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "V3": {
+     "name": "一遍听懂",
+     "a": 2,
+     "a_ev": "l41「简历里只要有英文 women's，也就是「女子的」，比如「女子国际象棋社社长」，就会被扣分」，动词「扣分」要等二十多个字才出现，一遍听下来要回头拼；l30 先说「语言模型」，l31 才说「大语言模型」；l23 一句连报二十回、百分之三十七、百分之十三个数。其余指代清楚，术语（模型、训练、数据）都是先讲再用。",
+     "b": 1,
+     "b_ev": "l35 在同一句号内连续安排「机器学习」「深度学习」「神经网络」「很多层简单的计算」，只听一遍容易只记住名字；l41 在「简历里只要有」与「就会被扣分」之间插入翻译和例子，主干隔得太远。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "两人的问题表都把 l33 标成 V3 必改，a 给 2 分与自己的表矛盾。「刚才这几个词」说出口时，深度学习还要到 l35 才第一次出现，听众对不上是哪几个词。l41「简历里只要有……就会被扣分」中间夹着英文词、翻译、例子三层，两人都抓到了。b 用来扣分的 l35 不成立：两个名字只是点到，l36 马上解释「深度只是说层数多」，听一遍能跟上。"
+    },
+    "V4": {
+     "name": "精炼",
+     "a": 2,
+     "a_ev": "l30「它猜下一个词，一个接一个猜下去，就成了一段回答」和 l31「能跟你聊天的大语言模型，就是这么回答的」，后一句可并进前一句；「今天的 AI 主要靠例子学」这个结论在 l02、l10、l37、l51 反复出现，l51 作为片尾可接受。没有大段废话。",
+     "b": 2,
+     "b_ev": "l17「一共一千七百九十七张」精度超过本段听觉理解所需，可压成「一千七百多张」。l12 虽复述学习机制，但「很多人以为，AI 的本事是程序员一条条写进去的」明确纠正误解，有保留价值。",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V5": {
+     "name": "口吻与节奏",
+     "a": 2,
+     "a_ev": "整体是同一个亲切的「咱们」讲解者，长短句交替好（l46 只有 12 个字）。但 l28「我们这个模型」与 l17「咱们真做一次」称呼不一致；l33、l40「男性候选人」、l48 突然转书面腔。",
+     "b": 2,
+     "b_ev": "l21「你先猜猜：只给它看十个例子，考试能答对多少」和 l46「小孩会说『这不是数字』，它不会」亲切、好念；l05「有胖有瘦有歪」、l28「报出把握」仍有局部卡口。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "维持 2 分。全片基本是同一个讲「咱们 / 你」的讲解者，l21「你先猜猜」、l46「它不会」短促亲切，l28「我们」与 l17「咱们」不一致是小瑕疵。两人共同漏的是 l38–l42 整段转成新闻腔：「据路透社报道」「曾想」「大多来自男性」「男性候选人」「后来被放弃了」连着出现，a 只点了 l40。见补充表 l42。"
+    },
+    "V6": {
+     "name": "改写",
+     "a": 2,
+     "a_ev": "下面问题表里每条「有点怪」都给了不更长的替换句，没有「很怪」的句子；最别扭的 5 句排序见「整体观察」。",
+     "b": 3,
+     "b_ev": "下表为全部十句「有点怪／很怪」提供完整替换，均不长于原句；最别扭的五句依次是 l33、l51、l02、l48、l28。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "两份报告都有改写比原句长，与「不更长」的要求冲突。a 的 l33 改写 39 字，原句 37 字，还保留了它自己批评的「这几个词」，又用了书面的「指」；b 的 l35 改写 43 字，原句 42 字，还丢了「模型」。b 自称「均不长于原句」，不实。b 的 l33 改写「AI 叫人工智能」不顺口，还丢了屏上锚点「最外圈」。l33 的合规改写见补充表。"
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "上一轮 voice_zh 条目，l01、l23、l35、l37、l45、l47、l49、l50、l51、l52 已解决，新句子听着自然；l27 已改但「改出新问题」（接住实验却丢了过渡，见问题表）；l33 部分解决（「大圈套小圈」好了，但后半句仍是定义腔）；l48 去掉了「既……也……」，仍是「本事和毛病」名词加「和」，未解决；作者不采纳的 l28「报出把握」，理由是「与画面一致」，但本项只管耳朵，这个理由不成立；l41 不改的理由「画面已分拍」同样不能替代听感，未解决；l02「这，就是今天的 AI」驳回的理由（冷开场收句，全片沿用）成立，我听着也自然；l11「那套认法」、l12 保留前半句、l17「八行八列」保留的理由成立。",
+     "b": 1,
+     "b_ev": "l27「刚才那个模型，其实就是在预测：看一张图，猜它是几」已解决原来的空泛串场；l28「还会报出把握」仍未改；l51 从「不靠人写规则」改成「不是人写规则」，出现新的句式问题。逐条复核见下表。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "上一轮问题仍有未解决的。I205/I206 l28「报出把握」和 I215 l41，作者给的不改理由都是「与画面一致 / 画面已分拍」，本项只听声音，这两条理由不成立。I222/I223 l51 从「不靠」改成「不是」，改出了新问题。I208/I209 l33 后半句和指代仍未修好。I196 l17 的驳回理由答的是「八行八列」，没有回应总张数太精确，b 抓得对。另一方面，a 判 l27「改出新问题」不成立：「刚才那个模型，其实就是在预测」已经接住了实验。b 判 I186 l02 未解决也不成立，上轮驳回维持。"
+    }
+   },
+   "disputes": [
+    "V1",
+    "V3",
+    "R"
+   ],
+   "audits": [
+    "V5",
+    "V6"
+   ],
+   "final_scores": {
+    "V1": 1,
+    "V2": 1,
+    "V3": 1,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "V1",
+     "V3",
+     "R",
+     "V5",
+     "V6"
+    ],
+    "prompt": "items/voice_zh__judge.md",
+    "report": "reports/voice_zh__judge.md",
+    "ruling": {
+     "V1": {
+      "score": 1,
+      "evidence": "b 站得住。a 自己的问题表把 l33 列为 V1 必改，按评分规则不能给 2 分。l33「刚才这几个词……就是让电脑做看起来需要聪明的事」是小节串场，按从严条目必改；片尾 l51「今天的 AI，主要不是人写规则，是自己从例子里学出规律」，主语 AI 后面接的是「人写规则」，紧跟的「自己」耳朵一时分不清指人还是指 AI，片尾从严，必改。可改成「主要不靠人写规则，靠自己从例子里学出规律」，长度 24 字，与原句相同；b 的改写也能用。l48「本事和毛病」、l28「报出把握」、l06「把怎么认写成规则」算建议级。"
+     },
+     "V3": {
+      "score": 1,
+      "evidence": "两人的问题表都把 l33 标成 V3 必改，a 给 2 分与自己的表矛盾。「刚才这几个词」说出口时，深度学习还要到 l35 才第一次出现，听众对不上是哪几个词。l41「简历里只要有……就会被扣分」中间夹着英文词、翻译、例子三层，两人都抓到了。b 用来扣分的 l35 不成立：两个名字只是点到，l36 马上解释「深度只是说层数多」，听一遍能跟上。"
+     },
+     "R": {
+      "score": 1,
+      "evidence": "上一轮问题仍有未解决的。I205/I206 l28「报出把握」和 I215 l41，作者给的不改理由都是「与画面一致 / 画面已分拍」，本项只听声音，这两条理由不成立。I222/I223 l51 从「不靠」改成「不是」，改出了新问题。I208/I209 l33 后半句和指代仍未修好。I196 l17 的驳回理由答的是「八行八列」，没有回应总张数太精确，b 抓得对。另一方面，a 判 l27「改出新问题」不成立：「刚才那个模型，其实就是在预测」已经接住了实验。b 判 I186 l02 未解决也不成立，上轮驳回维持。"
+     },
+     "V5": {
+      "score": 2,
+      "evidence": "维持 2 分。全片基本是同一个讲「咱们 / 你」的讲解者，l21「你先猜猜」、l46「它不会」短促亲切，l28「我们」与 l17「咱们」不一致是小瑕疵。两人共同漏的是 l38–l42 整段转成新闻腔：「据路透社报道」「曾想」「大多来自男性」「男性候选人」「后来被放弃了」连着出现，a 只点了 l40。见补充表 l42。"
+     },
+     "V6": {
+      "score": 2,
+      "evidence": "两份报告都有改写比原句长，与「不更长」的要求冲突。a 的 l33 改写 39 字，原句 37 字，还保留了它自己批评的「这几个词」，又用了书面的「指」；b 的 l35 改写 43 字，原句 42 字，还丢了「模型」。b 自称「均不长于原句」，不实。b 的 l33 改写「AI 叫人工智能」不顺口，还丢了屏上锚点「最外圈」。l33 的合规改写见补充表。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 28,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_zh__a",
+    "codex/voice_zh__b"
+   ]
+  },
+  {
+   "id": "voice_en",
+   "law": "lines",
+   "law_name": "English narration (native ear, blind)",
+   "color": "#2e6fc0",
+   "scope": [],
+   "checks": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_en.md",
+   "prompt": "items/voice_en__a.md",
+   "what": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "problem": "The previous agenda read 'In this episode: What the problem is. Why memorizing answers fails. A different way to think about learning…' — a table of contents read aloud. No one talks like that (caught by the user, 2026-11-08); earlier reviews missed it.",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "Sounds like a person talking",
+     "question": "Each line: natural / a bit off / clearly off. Written-style, lecture tone, translated-from-Chinese phrasing, telegraphic lists all count as off"
+    },
+    {
+     "id": "V2",
+     "name": "Flow and transitions",
+     "question": "Cold open, the 'what's coming' part, chapter changes, before/after examples: does it sound like one person following a thought, not 'Point one…' templates or a TOC read aloud? Do adjacent lines connect?"
+    },
+    {
+     "id": "V3",
+     "name": "Clear on one hearing",
+     "question": "Ear only: one new idea per line; clear reference ('this' points to something); terms explained before used; numbers and words not misheard"
+    },
+    {
+     "id": "V4",
+     "name": "Tight",
+     "question": "No filler, repetition, or empty truisms; point out lines that could go without losing anything"
+    },
+    {
+     "id": "V5",
+     "name": "Voice and rhythm",
+     "question": "One warm, clear, unpretentious narrator throughout; varied sentence length; each line sayable in one breath"
+    },
+    {
+     "id": "V6",
+     "name": "Rewrites",
+     "question": "For every 'a bit off' / 'clearly off' line, a drop-in rewrite no longer than the original; rank the 5 most awkward lines"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_en__a.md",
+     "prompt": "items/voice_en__a.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "Almost every line sounds spoken (\"It saw tons of examples and worked out the patterns itself\" l02; \"Remember that messy two?\" l47). Small written-style leftovers: l35 \"It runs on neural networks: many layers of simple math\", l42 \"Whatever bias is in the data, a model can learn that too\", l27 \"just seeing something and guessing the answer\", l24 \"all of the nearly fifteen hundred\"."
+      },
+      "V2": {
+       "score": 2,
+       "evidence": "Cold open (l01-l02), l08 \"So most of today's AI flips it around\", l38 \"Learning from data can go wrong, too\", l43-l49 First/Second/Third all connect like one person thinking aloud. Weak spot: l32 to l33 has no spoken bridge, so \"Think of AI... as the biggest circle\" arrives from nowhere (circles are never mentioned before). Also l30 says \"language model\" before l31 gives the full term."
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "Numbers are now heard as counts (l17 \"nearly eighteen hundred\", l23 \"twenty different random sets of ten\"). Remaining load: l35 packs three new terms (machine learning, deep learning, neural networks) with an ambiguous \"It\"; l30 \"language model\" is used before l31 introduces it; l24 \"the nearly fifteen hundred\" is not tied to the 1,800 minus 300 earlier; l37 defines \"today's AI\" = machine learning, yet l08 and l51 say \"most of today's AI\", which then reads as a hedge."
+      },
+      "V4": {
+       "score": 3,
+       "evidence": "No lines I would cut. The repeats are purposeful: l51 restates the thesis in the outro, l43 announces the three items. l12 \"which we call data\" still partly repeats l08-l10 but it names \"data\", which is needed later."
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "One warm, clear narrator. Rhythm varies well (l46 \"The model won't.\" vs l23 at 8.9s). Long breath-heavy lines: l23 (8.9s, three numbers) and l35 (7.5s, three terms). l48 \"what it gets right and wrong comes from its data, and also from how it's designed and trained\" is a long run-on."
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "Every flagged line below has a drop-in rewrite no longer than the original; the 5 most awkward are ranked in 整体观察."
+      },
+      "R": {
+       "score": 3,
+       "evidence": "Previous voice_en items checked against the current text. Resolved: I145 l05 now \"hard to write rules for\"; I149-I150 l15 (kid analogy lines l13-l16 are no longer in the narration, so nothing to hear); I152-I153 l17 \"nearly eighteen hundred\"; I155-I156 l23 \"We tried twenty different random sets of ten\"; I159 l31 and I160 l32 now natural; I162-I163 l33 \"Think of AI... as the biggest circle\" works; I166-I167 l37 \"When I say...\" works; I168-I169 l43 and l40 no stray \"So\"; I170-I177 First/Second/Third no longer collide with digits; I173 l45 \"best match out of ten digits\" clear; I178-I180 l50 \"has it seen questions like this before?\" good; I179 \"Next time\" now only in l52; I181 l51 and I182-I183 l52 now spoken with verbs. Partly resolved: I164-I165 l35 split into two sentences but \"It runs on\" still ambiguous (see issue 2). Rejected items: I147/I148 l12 (author kept it, fine; the \"coded in\" fix is acceptable), I151 l16 (cut rejected; the line is gone now, no loss), I157/I158 \"this\" in l26/l28 (author's rejection holds: the on-screen cue is listed in the material). No new problem created by the edits, apart from the minor l35 and l24 notes."
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/voice_en__b.md",
+     "prompt": "items/voice_en__b.md",
+     "scores": {
+      "V1": {
+       "score": 1,
+       "evidence": "l25 “Nobody wrote it rules” sounds awkward; l47 “it gives predictions, not truth” sounds like a slogan; l48 “comes from its data, and also from” sounds written."
+      },
+      "V2": {
+       "score": 1,
+       "evidence": "The cold open and l51–l52 now flow naturally. However, the numbered transitions at l47 and l48 still introduce their points in summary-bullet language; both fall under the strict rule."
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "l17 “nearly eighteen hundred” and l23 “twenty different random sets of ten” are clear on hearing. l35 still compresses nested categories, a new term, and an explanation into twenty words."
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "l32 has lost its redundant explanation, and l51 starts directly. l48 can lose “and also from” without losing meaning; l24’s “all of the nearly” adds processing without useful information."
+      },
+      "V5": {
+       "score": 3,
+       "evidence": "l05 “Fat, skinny, tilted,” l21 “So, take a guess,” and l46 “A kid would say” establish a consistent conversational voice. Short questions and longer explanations provide useful rhythmic variation."
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "All five lines marked “a bit off” below have complete replacement lines in the issue table, each shorter than its original. The five are ranked below."
+      },
+      "R": {
+       "score": 1,
+       "evidence": "The previous number-reading, outro, and “learned this kind of question” problems are resolved. I164–I165 remain partly unresolved at l35; I176–I177 remain partly unresolved at l48. Every previous voice_en entry is checked below."
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "Sounds like a person talking",
+     "a": 2,
+     "a_ev": "Almost every line sounds spoken (\"It saw tons of examples and worked out the patterns itself\" l02; \"Remember that messy two?\" l47). Small written-style leftovers: l35 \"It runs on neural networks: many layers of simple math\", l42 \"Whatever bias is in the data, a model can learn that too\", l27 \"just seeing something and guessing the answer\", l24 \"all of the nearly fifteen hundred\".",
+     "b": 1,
+     "b_ev": "l25 “Nobody wrote it rules” sounds awkward; l47 “it gives predictions, not truth” sounds like a slogan; l48 “comes from its data, and also from” sounds written.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "a 站得住。b 指出的 l25「Nobody wrote it rules for a three, only told it…」（write 带双宾语不顺，省略的主语顺着读成 nobody）和 l48「comes from its data, and also from」确实有点别扭，但都不在严格项里，属于建议级。l47「it gives predictions, not truth」主要是「gives truth」搭配稍硬，加上「you / the」就顺了，不算口号腔。全片没有一句明显不对，l01–l02、l46、l52 都是地道口语，所以 2 分：有小瑕疵，并非「有问题」。"
+    },
+    "V2": {
+     "name": "Flow and transitions",
+     "a": 2,
+     "a_ev": "Cold open (l01-l02), l08 \"So most of today's AI flips it around\", l38 \"Learning from data can go wrong, too\", l43-l49 First/Second/Third all connect like one person thinking aloud. Weak spot: l32 to l33 has no spoken bridge, so \"Think of AI... as the biggest circle\" arrives from nowhere (circles are never mentioned before). Also l30 says \"language model\" before l31 gives the full term.",
+     "b": 1,
+     "b_ev": "The cold open and l51–l52 now flow naturally. However, the numbered transitions at l47 and l48 still introduce their points in summary-bullet language; both fall under the strict rule.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 的证据站不住。l44/l47/l48 的 First/Second/Third 是 l43「remember three things」预告之后的分点，不是章节过渡；上一轮裁决已经认定这种分点结构是正常口语，所以不按严格项必改处理。但 a 自己找到的 l32→l33 确实是过渡缺口：s6→s7 换了话题（从预测换到一圈套一圈），中间没有章节卡，只靠屏眉「03 · Circles within circles」，耳朵只听到「…can still be wrong. Think of AI… as the biggest circle」，「the biggest circle」像是凭空冒出来的。这是转场句，听着有点别扭，按严格规则应升为必改，所以 V2 记 1（见补充问题 l33）。"
+    },
+    "V3": {
+     "name": "Clear on one hearing",
+     "a": 2,
+     "a_ev": "Numbers are now heard as counts (l17 \"nearly eighteen hundred\", l23 \"twenty different random sets of ten\"). Remaining load: l35 packs three new terms (machine learning, deep learning, neural networks) with an ambiguous \"It\"; l30 \"language model\" is used before l31 introduces it; l24 \"the nearly fifteen hundred\" is not tied to the 1,800 minus 300 earlier; l37 defines \"today's AI\" = machine learning, yet l08 and l51 say \"most of today's AI\", which then reads as a hedge.",
+     "b": 2,
+     "b_ev": "l17 “nearly eighteen hundred” and l23 “twenty different random sets of ten” are clear on hearing. l35 still compresses nested categories, a new term, and an explanation into twenty words.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "两人的 2 分成立。l17「nearly eighteen hundred」、l23「twenty different random sets of ten」听一遍就懂。l35 一句塞了三个术语，问题仍在（建议级）。两人共同漏掉的是 l45「It says it's ninety-two percent sure it's a four」：三个 it 连用，前两个指模型，第三个指字母 A，耳朵要倒回去分；另外 l17「each a tiny eight-by-eight grid」没说是什么的格子。两处都是小毛病，维持 2。"
+    },
+    "V4": {
+     "name": "Tight",
+     "a": 3,
+     "a_ev": "No lines I would cut. The repeats are purposeful: l51 restates the thesis in the outro, l43 announces the three items. l12 \"which we call data\" still partly repeats l08-l10 but it names \"data\", which is needed later.",
+     "b": 2,
+     "b_ev": "l32 has lost its redundant explanation, and l51 starts directly. l48 can lose “and also from” without losing meaning; l24’s “all of the nearly” adds processing without useful information.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "a 的 3 分不成立，「No lines I would cut」漏掉了 b 指出的 l24「all of the nearly fifteen hundred」和 l48「and also from」这两处多余的字。另外两人都没提 l25「Nobody wrote it rules for a three」：「没人写规则」这个主旨到这里已经是第四次讲了（l01、l08、l12、l25，l51 还有一次），前半句可以收紧。都是小冗余，记 2。"
+    },
+    "V5": {
+     "name": "Voice and rhythm",
+     "a": 2,
+     "a_ev": "One warm, clear narrator. Rhythm varies well (l46 \"The model won't.\" vs l23 at 8.9s). Long breath-heavy lines: l23 (8.9s, three numbers) and l35 (7.5s, three terms). l48 \"what it gets right and wrong comes from its data, and also from how it's designed and trained\" is a long run-on.",
+     "b": 3,
+     "b_ev": "l05 “Fat, skinny, tilted,” l21 “So, take a guess,” and l46 “A kid would say” establish a consistent conversational voice. Short questions and longer explanations provide useful rhythmic variation.",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V6": {
+     "name": "Rewrites",
+     "a": 3,
+     "a_ev": "Every flagged line below has a drop-in rewrite no longer than the original; the 5 most awkward are ranked in 整体观察.",
+     "b": 3,
+     "b_ev": "All five lines marked “a bit off” below have complete replacement lines in the issue table, each shorter than its original. The five are ranked below.",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": ""
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 3,
+     "a_ev": "Previous voice_en items checked against the current text. Resolved: I145 l05 now \"hard to write rules for\"; I149-I150 l15 (kid analogy lines l13-l16 are no longer in the narration, so nothing to hear); I152-I153 l17 \"nearly eighteen hundred\"; I155-I156 l23 \"We tried twenty different random sets of ten\"; I159 l31 and I160 l32 now natural; I162-I163 l33 \"Think of AI... as the biggest circle\" works; I166-I167 l37 \"When I say...\" works; I168-I169 l43 and l40 no stray \"So\"; I170-I177 First/Second/Third no longer collide with digits; I173 l45 \"best match out of ten digits\" clear; I178-I180 l50 \"has it seen questions like this before?\" good; I179 \"Next time\" now only in l52; I181 l51 and I182-I183 l52 now spoken with verbs. Partly resolved: I164-I165 l35 split into two sentences but \"It runs on\" still ambiguous (see issue 2). Rejected items: I147/I148 l12 (author kept it, fine; the \"coded in\" fix is acceptable), I151 l16 (cut rejected; the line is gone now, no loss), I157/I158 \"this\" in l26/l28 (author's rejection holds: the on-screen cue is listed in the material). No new problem created by the edits, apart from the minor l35 and l24 notes.",
+     "b": 1,
+     "b_ev": "The previous number-reading, outro, and “learned this kind of question” problems are resolved. I164–I165 remain partly unresolved at l35; I176–I177 remain partly unresolved at l48. Every previous voice_en entry is checked below.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "a 给 3，可它自己的复核里写了 I164–I165 l35「Partly resolved…still ambiguous」，自相矛盾；b 给 1 又说重了。l35 已经逐字改成上一轮裁决建议的句子，剩下的只是「It runs on」指代弱一点；l48 的 I176/I177 原问题（「strengths and flaws」抽象名词、模板感）已经消除，剩下「and also from」的轻微连接累赘，属于建议级。I145–I183 其余条目已核对，都已解决或驳回成立，所以 2 分。"
+    }
+   },
+   "disputes": [
+    "V1",
+    "V2",
+    "R"
+   ],
+   "audits": [
+    "V3",
+    "V4"
+   ],
+   "final_scores": {
+    "V1": 2,
+    "V2": 1,
+    "V3": 2,
+    "V4": 2,
+    "V5": 2,
+    "V6": 3,
+    "R": 2
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "V1",
+     "V2",
+     "R",
+     "V3",
+     "V4"
+    ],
+    "prompt": "items/voice_en__judge.md",
+    "report": "reports/voice_en__judge.md",
+    "ruling": {
+     "V1": {
+      "score": 2,
+      "evidence": "a 站得住。b 指出的 l25「Nobody wrote it rules for a three, only told it…」（write 带双宾语不顺，省略的主语顺着读成 nobody）和 l48「comes from its data, and also from」确实有点别扭，但都不在严格项里，属于建议级。l47「it gives predictions, not truth」主要是「gives truth」搭配稍硬，加上「you / the」就顺了，不算口号腔。全片没有一句明显不对，l01–l02、l46、l52 都是地道口语，所以 2 分：有小瑕疵，并非「有问题」。"
+     },
+     "V2": {
+      "score": 1,
+      "evidence": "b 的证据站不住。l44/l47/l48 的 First/Second/Third 是 l43「remember three things」预告之后的分点，不是章节过渡；上一轮裁决已经认定这种分点结构是正常口语，所以不按严格项必改处理。但 a 自己找到的 l32→l33 确实是过渡缺口：s6→s7 换了话题（从预测换到一圈套一圈），中间没有章节卡，只靠屏眉「03 · Circles within circles」，耳朵只听到「…can still be wrong. Think of AI… as the biggest circle」，「the biggest circle」像是凭空冒出来的。这是转场句，听着有点别扭，按严格规则应升为必改，所以 V2 记 1（见补充问题 l33）。"
+     },
+     "R": {
+      "score": 2,
+      "evidence": "a 给 3，可它自己的复核里写了 I164–I165 l35「Partly resolved…still ambiguous」，自相矛盾；b 给 1 又说重了。l35 已经逐字改成上一轮裁决建议的句子，剩下的只是「It runs on」指代弱一点；l48 的 I176/I177 原问题（「strengths and flaws」抽象名词、模板感）已经消除，剩下「and also from」的轻微连接累赘，属于建议级。I145–I183 其余条目已核对，都已解决或驳回成立，所以 2 分。"
+     },
+     "V3": {
+      "score": 2,
+      "evidence": "两人的 2 分成立。l17「nearly eighteen hundred」、l23「twenty different random sets of ten」听一遍就懂。l35 一句塞了三个术语，问题仍在（建议级）。两人共同漏掉的是 l45「It says it's ninety-two percent sure it's a four」：三个 it 连用，前两个指模型，第三个指字母 A，耳朵要倒回去分；另外 l17「each a tiny eight-by-eight grid」没说是什么的格子。两处都是小毛病，维持 2。"
+     },
+     "V4": {
+      "score": 2,
+      "evidence": "a 的 3 分不成立，「No lines I would cut」漏掉了 b 指出的 l24「all of the nearly fifteen hundred」和 l48「and also from」这两处多余的字。另外两人都没提 l25「Nobody wrote it rules for a three」：「没人写规则」这个主旨到这里已经是第四次讲了（l01、l08、l12、l25，l51 还有一次），前半句可以收紧。都是小冗余，记 2。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 23,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_en__a",
+    "codex/voice_en__b"
+   ]
+  },
+  {
+   "id": "screen_zh",
+   "law": "lines",
+   "law_name": "中文屏幕文字（PPT 式画面）",
+   "color": "#b8860b",
+   "scope": [],
+   "checks": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "how": "硬上限（超了必须报）：标题 ≤12 字；其余每块 ≤16 字；同屏文字块 ≤4 块（不含页眉小标签、出处与图表刻度）；一屏总字数 ≤36 字。屏幕下方还有口播字幕，观众要同时看。计数口径（第 2 轮裁决定，2026-11-09）：页眉小标签、案例页签、出处、片尾署名不计；同构的列表 / 表格 / 卡片行（每项 ≤8 字、最多 6 项、样子一样）合算 1 块，编号不计字；图里的文字（区域名、曲线名、轴标题、柱条标签、图上注释）要计字数，整张图合算 1 块，只有坐标刻度数字豁免；表格的列头算在表里。",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_zh.md",
+   "prompt": "items/screen_zh__a.md",
+   "what": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "problem": "上一版屏幕文字很多是整句（如「另训一个模型，在两家医院的片子上认医院的准确率——胸片里藏着医院的“指纹”」），等于把口播又印了一遍；用户要求画面只列纲要、相对简练（2026-11-08）。",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "只列纲要",
+     "question": "每屏只放关键词、短语、关键数字、标签；不是口播整句的复述。按硬上限逐屏数字数，超了就报"
+    },
+    {
+     "id": "P2",
+     "name": "与口播分工",
+     "question": "屏幕给结构、数字、对比，口播负责解释；不和口播逐字重复，也不出现口播没说过的新说法；术语、叫法与口播一致"
+    },
+    {
+     "id": "P3",
+     "name": "层级与体例",
+     "question": "一眼先看到什么、第二眼看什么；标题—要点—注释不超过三级；编号、标签、章节名、目录项前后一致（例：目录写的和章节卡写的是不是同一个说法）"
+    },
+    {
+     "id": "P4",
+     "name": "中文措辞与排版",
+     "question": "短语化、不带句末句号；标点、引号、空格规范；不半中半英；**标题、章名读出来要顺**：名词堆砌、生造的名词短语（如「现实里的祸」）算必改"
+    },
+    {
+     "id": "P5",
+     "name": "看得完",
+     "question": "按截图和停留时间：文字量在停留时间内读得完（约 6 字/秒，还要分神看字幕和图）"
+    },
+    {
+     "id": "P6",
+     "name": "改写",
+     "question": "每处超限或不顺的屏幕文字，都给出更短、可直接替换的写法"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_zh__a.md",
+     "prompt": "items/screen_zh__a.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "l34 同屏「最外圈：AI（人工智能）」8 + 「让电脑做 / 看起来需要聪明的事」13 + 「✓ 下棋程序 算 AI」6 + 「✗ 算工资的程序 不算」8 + 圈内「AI」「下棋程序（人写规则）」约 10，共约 45 字 > 36；l25 图内文字 12 + 「只告诉它：哪张是 3」8 + 「这次实验：例子越多，考得越好」12 + 「每点：抽 20 次取中间成绩 · 刻度每步 ×10」15，共约 47 字 > 36。其余各屏（l01、l02、l08、l12、l20、l27、l39–l42、l44–l50）都在限内，且是短语、关键词。"
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "整体分工清楚，屏幕给结构与数字。小瑕疵：l31「大语言模型就这样回答」几乎复述口播「大语言模型，就是这么回答的」；片尾「不靠人写规则」把口播「主要不是人写规则」的保留语气去掉，「学会规律」与口播「学出规律」不一致；l44「「92% 是 4」」没有「把握」二字。"
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "多数屏一眼先看大字、再看小字，层级清晰（l08「写规则 / 给例子」、l27「今天的 AI，像台预测机器」）。小瑕疵：l37「「今天的 AI」= 机器学习这一圈」38px 灰字、在右下角，是全期定义句却是全屏最弱的字；l38 唯一的字是 22px 眉题；l32 例句 72px 与 h1「猜得好 ≠ 说得对」76px 抢焦点；l47–l49 三张卡高度不一。"
+      },
+      "P4": {
+       "score": 1,
+       "evidence": "从严条目「章节标题」：c_fix 与 s9 眉题「用的时候记住三点」，「用的时候」缺宾语，单独做章名悬空，判有点怪（见问题表）。其余章名「规则写不完」「做个小实验」「换个角度看」「一个真实的例子」读出来顺，无句末句号，引号统一为「」。"
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "按 6 字/秒：l12（8.9 秒，31 字）、l20、l23（7.3 秒）、l35、l41、l49（本屏新字 9 字）都读得完；l34（4.9 秒）新增的 ✓/✗ 两行只有 14 字，旧说明是 l33 已读过的，勉强够；l25 本屏文字最密，仍偏紧。l23 的 22px 微注在手机上偏小。"
+      },
+      "P6": {
+       "score": 2,
+       "evidence": "每处超限或不顺的屏幕文字都在问题表给了可直接替换的写法；l25、l34 的改后字数已估算在限内。"
+      },
+      "R": {
+       "score": 2,
+       "evidence": "上一轮 screen_zh 共 60 条（I85–I144）。已解决：l01、l06–l07、l09–l12、l20、l22、l26–l28、l31–l33、l35–l37、l39–l42、l44–l50 与片尾引语，共 50 余条；作者「不改 / 驳回」的理由成立：I88（l02 收句与口播一致）、I90/I91（数字墙下 0–9 是答案标注，不计字）、I97、I98、I127（出处行的平衡说明按口径豁免）。未解决：I117/I118（l34 旧定义和圈内标签仍留屏，约 45 字）；I103–I104（l25 仍约 47 字）。改出新问题：I108 的「9 → 1」没有标明左边是答案、右边是模型猜的（见问题表）；I135 不改「「92% 是 4」」的理由「与口播一致」不完全成立，口播说的是「92%的把握」。"
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/screen_zh__b.md",
+     "prompt": "items/screen_zh__b.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "逐屏重算后，l06–l07 图块18字、l09–l10 答案标签20字、l12 小标题14字、l35 圈图17字仍超限；l23 全屏42字、l25 全屏47字，均超过36字。"
+      },
+      "P2": {
+       "score": 1,
+       "evidence": "outro「不靠人写规则」删掉口播 l51 的「主要」，也与 l34「人写规则的下棋程序也算 AI」冲突；l48 仍用大字强调「来自数据」，把设计、训练降为小字补充。"
+      },
+      "P3": {
+       "score": 1,
+       "evidence": "c_lens 章节卡及 l27–l32 页眉叫「03·换个角度看」，l33–l37 同一个03却改叫「一圈套一圈」；l48 三个来源的视觉地位仍不一致。"
+      },
+      "P4": {
+       "score": 1,
+       "evidence": "l33「让电脑做／看起来需要聪明的事」中「需要聪明」搭配生硬；五张章节卡「规则写不完」「做个小实验」等本身均自然。"
+      },
+      "P5": {
+       "score": 1,
+       "evidence": "l23 的42字对应7.3秒，l25 的47字对应8.2秒，纯读字已接近6字/秒，还需辨认曲线、对应数字并阅读字幕；22px 方法注释进一步增加扫读负担。"
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "问题表对每处超限或不顺均给出替换方案，例如 l12 改「从例子学规律／例子＝数据」，l33 改「让电脑做看似要动脑的事」，曲线图提供合计不超过16字的标注方案。"
+      },
+      "R": {
+       "score": 1,
+       "evidence": "逐条复核如下：I85章节卡自然，维持无需改；I86原改写被驳回的歧义理由成立，现稿已另行解决；I87已解决，正文现为9字；I88不改成立，短收句承担开场点题；I89未解决，结论已压短，但反例图仍18字；I90不采纳理由按本轮口径不成立，答案标签不是坐标刻度，20字仍须计；I91旧合规结论按本轮口径不成立；I92、I93已解决，模型定义与流程不再重复解释；I94、I95未完全解决，全屏已降至31字，但第二个小标题仍14字；I96措辞修改已落实，标题超限仍需处理；I97本轮未提供l14，无法核对现屏，驳回「反复示范」的理由成立；I98不改成立，训练一词随即得到解释；I99已解决，问句11字且自然；I100驳回生硬改写的理由成立，原长句问题已解决；I101注释自身已解决；I102图块问题未解决，十个类别标签加注释仍17字；I103未解决，曲线图及全屏仍超限；I104驳回另加屏方案的理由成立，但现有压缩仍未达标；I105已解决，「刻度每步」能对应现图；I106已解决，侧栏第一句8字；I107已解决，97%与侧栏间距已拉开；I108、I109已解决，截图为标题加四组箭头标签，共16字；I110本轮截图已无该句；I111、I112原超限已解决，仍有整句复述的小瑕疵；I113已解决，把握、96%、是3层级清楚；I114、I115已解决，小标题10字且l32撤走旧说明；I116未完全解决，旧定义已撤，但l33定义标题仍13字；I117、I118按l34截图已解决，旧定义实际已撤，全屏31字；I119已解决，小标题10字；I120未解决，l35圈图仍17字，到l36才撤例子太晚；I121不采纳理由成立，改写应保留深度学习这个主语；I122已解决；I123已解决，l36–l37圈图14字；I124不采纳理由成立，不能把模型等同于学习方法；I125、I126已解决，旧说明撤走且当前文字未裁切；I127不改成立，按本轮口径出处行豁免；I128、I129已解决，标题10字；I130不采纳理由成立，偏见内容需要引号；I131、I132已解决，引号已补并统一；I133、I134标题超限已解决；I135结合口播及柱图可接受保留，但独立看仍略省略；I136未完全解决，长注释已缩短，但l46图块仍19字；I137原注释超限已解决；I138已解决，旧卡正文撤走，编号豁免后18字；I139字数与旧正文累积问题已解决；I140未解决，仍是大字单列数据、小字补设计训练；I141按新口径已解决，l48为36字、l49为33字，均可控制在4块；I142、I143已解决，收尾问句简短清楚；I144未解决，片尾主标题两行合计14字，并改出丢失「主要」限定的新问题。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "只列纲要",
+     "a": 1,
+     "a_ev": "l34 同屏「最外圈：AI（人工智能）」8 + 「让电脑做 / 看起来需要聪明的事」13 + 「✓ 下棋程序 算 AI」6 + 「✗ 算工资的程序 不算」8 + 圈内「AI」「下棋程序（人写规则）」约 10，共约 45 字 > 36；l25 图内文字 12 + 「只告诉它：哪张是 3」8 + 「这次实验：例子越多，考得越好」12 + 「每点：抽 20 次取中间成绩 · 刻度每步 ×10」15，共约 47 字 > 36。其余各屏（l01、l02、l08、l12、l20、l27、l39–l42、l44–l50）都在限内，且是短语、关键词。",
+     "b": 1,
+     "b_ev": "逐屏重算后，l06–l07 图块18字、l09–l10 答案标签20字、l12 小标题14字、l35 圈图17字仍超限；l23 全屏42字、l25 全屏47字，均超过36字。",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "P2": {
+     "name": "与口播分工",
+     "a": 2,
+     "a_ev": "整体分工清楚，屏幕给结构与数字。小瑕疵：l31「大语言模型就这样回答」几乎复述口播「大语言模型，就是这么回答的」；片尾「不靠人写规则」把口播「主要不是人写规则」的保留语气去掉，「学会规律」与口播「学出规律」不一致；l44「「92% 是 4」」没有「把握」二字。",
+     "b": 1,
+     "b_ev": "outro「不靠人写规则」删掉口播 l51 的「主要」，也与 l34「人写规则的下棋程序也算 AI」冲突；l48 仍用大字强调「来自数据」，把设计、训练降为小字补充。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 站得住。片尾属从严条目，card_s10「不靠人写规则」去掉了口播 l51 的「主要」，口气变成绝对判断，又和 l34「人写规则的下棋程序也算 AI」相矛盾。这符合「与口播矛盾」的必改条件，a 只给「建议」偏轻。l48 大字「本事和毛病 / 来自数据」把口播并列的「数据、设计、训练」写成了单一来源，问题同类。另有两人都漏掉的 l42「也会被学走」，口播原话是「也可能」（见补充）。"
+    },
+    "P3": {
+     "name": "层级与体例",
+     "a": 2,
+     "a_ev": "多数屏一眼先看大字、再看小字，层级清晰（l08「写规则 / 给例子」、l27「今天的 AI，像台预测机器」）。小瑕疵：l37「「今天的 AI」= 机器学习这一圈」38px 灰字、在右下角，是全期定义句却是全屏最弱的字；l38 唯一的字是 22px 眉题；l32 例句 72px 与 h1「猜得好 ≠ 说得对」76px 抢焦点；l47–l49 三张卡高度不一。",
+     "b": 1,
+     "b_ev": "c_lens 章节卡及 l27–l32 页眉叫「03·换个角度看」，l33–l37 同一个03却改叫「一圈套一圈」；l48 三个来源的视觉地位仍不一致。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "本项标准点名要查「章节名前后一致」。card_c_lens 和 l27–l32 眉题都是「03 · 换个角度看」，s7_l34/l35/l37 截图的眉题却是同样样式的「03 · 一圈套一圈」，看不出是小节，读成同一章换了名字。章节标题属从严条目，b 的判断成立。a 自己列出的 l37 问题也成立：全期定义句「「今天的 AI」= 机器学习这一圈」只有 38px 灰字，放在右下角，是全屏最弱的字。两处加起来不止「小瑕疵」。"
+    },
+    "P4": {
+     "name": "中文措辞与排版",
+     "a": 1,
+     "a_ev": "从严条目「章节标题」：c_fix 与 s9 眉题「用的时候记住三点」，「用的时候」缺宾语，单独做章名悬空，判有点怪（见问题表）。其余章名「规则写不完」「做个小实验」「换个角度看」「一个真实的例子」读出来顺，无句末句号，引号统一为「」。",
+     "b": 1,
+     "b_ev": "l33「让电脑做／看起来需要聪明的事」中「需要聪明」搭配生硬；五张章节卡「规则写不完」「做个小实验」等本身均自然。",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "P5": {
+     "name": "看得完",
+     "a": 2,
+     "a_ev": "按 6 字/秒：l12（8.9 秒，31 字）、l20、l23（7.3 秒）、l35、l41、l49（本屏新字 9 字）都读得完；l34（4.9 秒）新增的 ✓/✗ 两行只有 14 字，旧说明是 l33 已读过的，勉强够；l25 本屏文字最密，仍偏紧。l23 的 22px 微注在手机上偏小。",
+     "b": 1,
+     "b_ev": "l23 的42字对应7.3秒，l25 的47字对应8.2秒，纯读字已接近6字/秒，还需辨认曲线、对应数字并阅读字幕；22px 方法注释进一步增加扫读负担。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "a 站得住。b 用全屏总字数（l23 42 字、l25 47 字）除以停留时长来算，但这些字是一屏一屏累积出来的。s5_l23 比 l22 新增的只有「37%」「瞎猜 10%」、轴标题和 micro 微注，约 25 字，配 7.3 秒；s5_l25 比 l24 新增的只有两条侧栏，20 字，配 8.2 秒。都在 6 字/秒以内。l34 新增 ✓/✗ 两行共 14 字，配 4.9 秒，也够。剩下的扣分点是 22px 微注在手机上偏小。l25 总量超 36 字属于 P1，不在这一维扣。"
+    },
+    "P6": {
+     "name": "改写",
+     "a": 2,
+     "a_ev": "每处超限或不顺的屏幕文字都在问题表给了可直接替换的写法；l25、l34 的改后字数已估算在限内。",
+     "b": 3,
+     "b_ev": "问题表对每处超限或不顺均给出替换方案，例如 l12 改「从例子学规律／例子＝数据」，l33 改「让电脑做看似要动脑的事」，曲线图提供合计不超过16字的标注方案。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "抽查后两人的改写都有缺陷，b 的 3 分不成立。b 的 l09–l10「只保留六个带答案标签的样例」破坏了 l09 口播「每张都告诉它答案」；l46「不拒答」是术语腔；l33「看似要动脑」和口播「看起来需要聪明」的叫法对不上（见驳回）。a 的片尾改写「主要不靠人写规则 / 而是从例子里学规律」共 17 字，自己又超出标题上限。两人也都没给 l42 和 l17 改写（见补充）。整体上能直接替换的写法占多数，所以给 2。"
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "上一轮 screen_zh 共 60 条（I85–I144）。已解决：l01、l06–l07、l09–l12、l20、l22、l26–l28、l31–l33、l35–l37、l39–l42、l44–l50 与片尾引语，共 50 余条；作者「不改 / 驳回」的理由成立：I88（l02 收句与口播一致）、I90/I91（数字墙下 0–9 是答案标注，不计字）、I97、I98、I127（出处行的平衡说明按口径豁免）。未解决：I117/I118（l34 旧定义和圈内标签仍留屏，约 45 字）；I103–I104（l25 仍约 47 字）。改出新问题：I108 的「9 → 1」没有标明左边是答案、右边是模型猜的（见问题表）；I135 不改「「92% 是 4」」的理由「与口播一致」不完全成立，口播说的是「92%的把握」。",
+     "b": 1,
+     "b_ev": "逐条复核如下：I85章节卡自然，维持无需改；I86原改写被驳回的歧义理由成立，现稿已另行解决；I87已解决，正文现为9字；I88不改成立，短收句承担开场点题；I89未解决，结论已压短，但反例图仍18字；I90不采纳理由按本轮口径不成立，答案标签不是坐标刻度，20字仍须计；I91旧合规结论按本轮口径不成立；I92、I93已解决，模型定义与流程不再重复解释；I94、I95未完全解决，全屏已降至31字，但第二个小标题仍14字；I96措辞修改已落实，标题超限仍需处理；I97本轮未提供l14，无法核对现屏，驳回「反复示范」的理由成立；I98不改成立，训练一词随即得到解释；I99已解决，问句11字且自然；I100驳回生硬改写的理由成立，原长句问题已解决；I101注释自身已解决；I102图块问题未解决，十个类别标签加注释仍17字；I103未解决，曲线图及全屏仍超限；I104驳回另加屏方案的理由成立，但现有压缩仍未达标；I105已解决，「刻度每步」能对应现图；I106已解决，侧栏第一句8字；I107已解决，97%与侧栏间距已拉开；I108、I109已解决，截图为标题加四组箭头标签，共16字；I110本轮截图已无该句；I111、I112原超限已解决，仍有整句复述的小瑕疵；I113已解决，把握、96%、是3层级清楚；I114、I115已解决，小标题10字且l32撤走旧说明；I116未完全解决，旧定义已撤，但l33定义标题仍13字；I117、I118按l34截图已解决，旧定义实际已撤，全屏31字；I119已解决，小标题10字；I120未解决，l35圈图仍17字，到l36才撤例子太晚；I121不采纳理由成立，改写应保留深度学习这个主语；I122已解决；I123已解决，l36–l37圈图14字；I124不采纳理由成立，不能把模型等同于学习方法；I125、I126已解决，旧说明撤走且当前文字未裁切；I127不改成立，按本轮口径出处行豁免；I128、I129已解决，标题10字；I130不采纳理由成立，偏见内容需要引号；I131、I132已解决，引号已补并统一；I133、I134标题超限已解决；I135结合口播及柱图可接受保留，但独立看仍略省略；I136未完全解决，长注释已缩短，但l46图块仍19字；I137原注释超限已解决；I138已解决，旧卡正文撤走，编号豁免后18字；I139字数与旧正文累积问题已解决；I140未解决，仍是大字单列数据、小字补设计训练；I141按新口径已解决，l48为36字、l49为33字，均可控制在4块；I142、I143已解决，收尾问句简短清楚；I144未解决，片尾主标题两行合计14字，并改出丢失「主要」限定的新问题。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "上一轮的必改还有没解决的，这一维不能给 2。s7_l34 截图里「最外圈：AI（人工智能）」「让电脑做 / 看起来需要聪明的事」仍然留屏，所以 I117/I118 未解决（a 对；b 写「旧定义实际已撤」与截图不符）。s5_l25 仍约 47 字，I103 未解决。I144 改出了片尾丢「主要」的新问题（b 对；a 把片尾引语算作已解决）。I140 也未解决。I90 的处理是「数字墙下 0–9 不计字」，这是按旧口径作出的；本轮口径规定图内标签计字、只豁免坐标刻度，所以 a 说「理由成立」不能照搬。"
+    }
+   },
+   "disputes": [
+    "P2",
+    "P3",
+    "P5",
+    "R"
+   ],
+   "audits": [
+    "P6"
+   ],
+   "final_scores": {
+    "P1": 1,
+    "P2": 1,
+    "P3": 1,
+    "P4": 1,
+    "P5": 2,
+    "P6": 2,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "P2",
+     "P3",
+     "P5",
+     "R",
+     "P6"
+    ],
+    "prompt": "items/screen_zh__judge.md",
+    "report": "reports/screen_zh__judge.md",
+    "ruling": {
+     "P2": {
+      "score": 1,
+      "evidence": "b 站得住。片尾属从严条目，card_s10「不靠人写规则」去掉了口播 l51 的「主要」，口气变成绝对判断，又和 l34「人写规则的下棋程序也算 AI」相矛盾。这符合「与口播矛盾」的必改条件，a 只给「建议」偏轻。l48 大字「本事和毛病 / 来自数据」把口播并列的「数据、设计、训练」写成了单一来源，问题同类。另有两人都漏掉的 l42「也会被学走」，口播原话是「也可能」（见补充）。"
+     },
+     "P3": {
+      "score": 1,
+      "evidence": "本项标准点名要查「章节名前后一致」。card_c_lens 和 l27–l32 眉题都是「03 · 换个角度看」，s7_l34/l35/l37 截图的眉题却是同样样式的「03 · 一圈套一圈」，看不出是小节，读成同一章换了名字。章节标题属从严条目，b 的判断成立。a 自己列出的 l37 问题也成立：全期定义句「「今天的 AI」= 机器学习这一圈」只有 38px 灰字，放在右下角，是全屏最弱的字。两处加起来不止「小瑕疵」。"
+     },
+     "P5": {
+      "score": 2,
+      "evidence": "a 站得住。b 用全屏总字数（l23 42 字、l25 47 字）除以停留时长来算，但这些字是一屏一屏累积出来的。s5_l23 比 l22 新增的只有「37%」「瞎猜 10%」、轴标题和 micro 微注，约 25 字，配 7.3 秒；s5_l25 比 l24 新增的只有两条侧栏，20 字，配 8.2 秒。都在 6 字/秒以内。l34 新增 ✓/✗ 两行共 14 字，配 4.9 秒，也够。剩下的扣分点是 22px 微注在手机上偏小。l25 总量超 36 字属于 P1，不在这一维扣。"
+     },
+     "R": {
+      "score": 1,
+      "evidence": "上一轮的必改还有没解决的，这一维不能给 2。s7_l34 截图里「最外圈：AI（人工智能）」「让电脑做 / 看起来需要聪明的事」仍然留屏，所以 I117/I118 未解决（a 对；b 写「旧定义实际已撤」与截图不符）。s5_l25 仍约 47 字，I103 未解决。I144 改出了片尾丢「主要」的新问题（b 对；a 把片尾引语算作已解决）。I140 也未解决。I90 的处理是「数字墙下 0–9 不计字」，这是按旧口径作出的；本轮口径规定图内标签计字、只豁免坐标刻度，所以 a 说「理由成立」不能照搬。"
+     },
+     "P6": {
+      "score": 2,
+      "evidence": "抽查后两人的改写都有缺陷，b 的 3 分不成立。b 的 l09–l10「只保留六个带答案标签的样例」破坏了 l09 口播「每张都告诉它答案」；l46「不拒答」是术语腔；l33「看似要动脑」和口播「看起来需要聪明」的叫法对不上（见驳回）。a 的片尾改写「主要不靠人写规则 / 而是从例子里学规律」共 17 字，自己又超出标题上限。两人也都没给 l42 和 l17 改写（见补充）。整体上能直接替换的写法占多数，所以给 2。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 34,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_zh__a",
+    "codex/screen_zh__b"
+   ]
+  },
+  {
+   "id": "screen_en",
+   "law": "lines",
+   "law_name": "English on-screen text (slides)",
+   "color": "#6b4fc0",
+   "scope": [],
+   "checks": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "how": "Hard limits (report every breach): title ≤6 words; any other block ≤9 words; ≤4 text blocks per screen (not counting the small eyebrow label, source line or chart ticks); ≤22 words per screen. Narration subtitles also sit at the bottom of the frame. Counting rules (round-2 ruling, 2026-11-09): eyebrow labels, case tabs, source lines and end-card credits are exempt; a list, table or card row of look-alike items (each ≤6 words, at most 6 items) counts as one block, and numbering doesn't count as words; in-chart text (zone names, curve names, axis titles, bar labels, callouts) counts toward words and the whole chart counts as one block — only axis tick numbers are exempt; a table's column headers count with the table.",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_en.md",
+   "prompt": "items/screen_en__a.md",
+   "what": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "problem": "The previous version put full sentences on screen (e.g. 'A separate model identified the hospital for scans from two hospitals — a hospital fingerprint'), repeating the narration. The user wants outline-only, concise slides (2026-11-08).",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "Outline, not prose",
+     "question": "Only keywords, short phrases, key numbers, labels; no full narration sentences. Count words per screen against the hard limits"
+    },
+    {
+     "id": "P2",
+     "name": "Divided from narration",
+     "question": "Screen carries structure, numbers, contrasts; narration explains. No verbatim repetition, no new claims the narration doesn't make; terms match the narration"
+    },
+    {
+     "id": "P3",
+     "name": "Hierarchy and consistency",
+     "question": "What reads first, second; ≤3 levels (title, point, note); numbering, labels, chapter names and agenda items consistent with each other"
+    },
+    {
+     "id": "P4",
+     "name": "Native phrasing and style",
+     "question": "Sentence case headline style; no Chinglish; consistent punctuation (no trailing periods on fragments), en dashes, quotes; parallel grammar in lists; **chapter titles and headings must read naturally aloud** — awkward noun stacks are must-fix"
+    },
+    {
+     "id": "P5",
+     "name": "Readable in time",
+     "question": "From the screenshot and how long it stays: readable in time (~3 words/s while also reading subtitles and the chart)"
+    },
+    {
+     "id": "P6",
+     "name": "Rewrites",
+     "question": "For every breach or awkward phrase, a shorter drop-in rewrite"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_en__a.md",
+     "prompt": "items/screen_en__a.md",
+     "scores": {
+      "P1": {
+       "score": 2,
+       "evidence": "Almost every screen is now a true outline (l01 \"Your phone / spots your cat\" 5+5 words; l07 \"Misses some 3s, / mislabels others\"; l42 \"Bias in, / bias out\"). Two hard-limit problems remain: l21 headline \"With just 10 examples, how many right?\" is 7 words (limit 6), and l25 totals 27 words if the method note \"Median of 20 draws · each gridline ×10\" counts (20 without it; limit 22). The 20-tile digit walls at l09/l10 and the 10-chip row at l22/l23 are ruling-dependent (see issue table, 存疑)."
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "Screen carries structure and numbers, narration explains (l18 \"Training examples: 1,497 / Test: 300\"; l34 \"✓ Chess program: AI / ✗ Payroll program: not AI\"). Gaps: l17 shows no count although narration says \"nearly 1,800\" (screen has only \"Each: 8 rows × 8 columns\"); l47 narration says the model \"was wrong\" but the screen shows only \"“81% sure: 1”\" with no cue that the true digit was 2; \"LLMs\" (l31, l36) is never expanded although narration says \"large language models\"."
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "Chapter cards 01–05 match the \"0N · Title\" eyebrows and progress dots, and big/small levels are clear (l20 \"Learned, or just memorized?\" under the bar). Weak spots: s3 (l08–l12) has no eyebrow at all while every other scene has one; chapter 03 changes name mid-chapter (\"03 · A different lens\" card, then \"03 · Circles within circles\"); l27 headline breaks \"Today's AI: a / prediction machine\"; l06 \"Also / an 8\" wraps while \"Also a 5\" does not; l44–l46 card headings \"It answers anyway / Predictions, not truth / Strengths and flaws come from data\" are not parallel."
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "Sentence case and no trailing periods on fragments (l12, l33, l42, l50 all fine); chapter titles \"When rules fall short\", \"A small experiment\", \"A different lens\", \"One real example\", \"Three things to remember\" all read naturally aloud. Remaining wording problems: outro eyebrow \"IN ONE SENTENCE\" sits over two fragments; l25 \"Only told: which are 3s\"; l17 \"Each: 8 rows × 8 columns\"; l23–l25 \"each gridline ×10\" (no gridlines are drawn); straight apostrophes (l02 \"That's today's AI\", l27, l28 \"sure it's a 3\", l37 \"“Today's AI”\") next to curly ones (l39 \"men’s\", l41 \"“women’s”\")."
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "New reading load per beat is low: worst cases are l26 (about 13 new words in 4.6 s, about 2.8 words/s with four pixel cards to look at) and l22 (11 blocks in 3.9 s), most others are 1.5–2 words/s (l12: 14 words in 7.2 s). Concerns: the 22 px method note at y≈895 on l23–l25 and 22 px source lines at y≈875 on l17/l38–l41 sit near where burned-in subtitles go and are small for phones (screenshots do not show subtitles, so I cannot verify the overlap)."
+      },
+      "P6": {
+       "score": 2,
+       "evidence": "Most previous rewrites were adopted and are short (l11 \"Model = what it learned\"; l20 \"Learned, or just memorized?\"; l50 \"Has it seen this before?\"). A few screens still carry longer-than-needed text (l21 headline, l25 right panel with 12 words, l48 card 3 with 12 words); drop-in rewrites for each are in the table."
+      },
+      "R": {
+       "score": 2,
+       "evidence": "Of the 46 previous screen_en items, about 38 are resolved as intended (l01, l02, l03–l04, l07, l10, l11, l20, l22, l27 length, l31–l37, l39–l42, l46–l50). Not fully resolved or newly broken: I5 (s3 still has no eyebrow, 未解决); I15/I16 (l06 \"Also an 8\" still wraps to two lines, 未解决); I35/I36 (author kept \"With just 10 examples, / how many right?\" as \"within limits\", but it is 7 words, so the 不采纳 reason does not hold); I39/I40 (the method note was shortened but now says \"each gridline ×10\" with no gridlines on screen, 改出新问题); I41/I42 (l25 panel changed but \"Only told: which are 3s\" is awkward and the screen is still 27 words with the note, 部分解决); I1/I84 (outro text now compressed to two fragments, but the eyebrow still says \"IN ONE SENTENCE\", 改出新问题); I45/I46 (l27 length fixed, but a line-break orphan \"a\" appeared, 改出新问题); I3/I6 (title case \"What Is AI?\" kept; rationale acceptable as series branding, see 存疑 row). Judge-rejected items I18/I20/I27/I33/I47/I72/I73/I86: I agree with the rejections of \"Cat recognition\", \"Unseen test = real learning\", the noun-stack rewrites and the \"collapse 0–9 to Other digits\" idea; I20 (digit walls) is still ruling-dependent (存疑 row). I3 and I4 resolved (card_intro.png is now provided)."
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/screen_en__b.md",
+     "prompt": "items/screen_en__b.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "l21 still has a seven-word title; l10 has 27 counted words; l23 has 26; l25 has 27. The cold open also retains complete narration-style sentences."
+      },
+      "P2": {
+       "score": 1,
+       "evidence": "l02 repeats “That's today's AI”; l12 retains “Programmers coded it all in”; l42 repeats “The tool was scrapped.” Shortening has improved the slides, but several still deliver the spoken explanation."
+      },
+      "P3": {
+       "score": 1,
+       "evidence": "The two ten-item rows at l09–l10 exceed the six-item grouping allowance. Conversely, the shortened reminder headings at l47–l49 now qualify for grouping, and earlier detailed card bodies disappear."
+      },
+      "P4": {
+       "score": 1,
+       "evidence": "The intro screenshot still says “What Is AI?” despite the sentence-case requirement. “How chatbot LLMs reply” is an awkward heading; all five chapter-card titles otherwise read naturally aloud."
+      },
+      "P5": {
+       "score": 1,
+       "evidence": "l25 presents 27 words in 7.8 seconds—about nine seconds of text reading alone at three words per second, before inspecting the curve or reading subtitles. The small methodological footer adds another reading destination."
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "Every issue below includes replacement English or a concrete removal/reflow instruction; the proposed l25 replacement reduces the counted screen from 27 words to 15."
+      },
+      "R": {
+       "score": 1,
+       "evidence": "**I1/I84:** Previous outro sentences and length breaches resolved; the surviving “IN ONE SENTENCE” label and missing “most” qualification create residual problems. **I2:** Resolved by “When rules fall short”; the other chapter titles remain natural. **I3/I6:** Unresolved: “What Is AI?” remains visible; YouTube packaging consistency does not override the explicit on-screen sentence-case rule. **I4:** The intro screenshot is available and contains a title, contrary to the dismissal; its omission from the text inventory remains. **I5:** Partly resolved: s7 now has “03”; s3 remains unlabelled; s4 cannot be checked. **I7/I8:** Length and reading load resolved, but l01 still contains two complete explanatory sentences. Rejecting the stiff “Cat recognition” alternative was reasonable; retaining prose was not necessary. **I9/I10/I11:** Diagram wording and wrapping resolved; “That's today's AI” remains narration repetition. **I12/I13:** Resolved: four-word title and short flow labels. **I14/I15:** Resolved: “curves” matches narration, and the replies are now labels. **I16:** Partly resolved: “Also an 8” still wraps into two lines. **I17/I18/I19:** Length and wording resolved by the five-word conclusion. **I20/I21:** Unresolved: answer tags have no exemption from the supplied six-item grouping rule; l10 still totals 27 words. **I22:** Native wording resolved, but “That's machine learning” remains a spoken declaration. **I23:** Resolved: “Patterns.” **I24/I25:** Resolved: the long definition is gone; the diagram and note total eight words. **I26/I27:** Partly resolved: shorter, but still a complete statement and an awkward “examples: data” construction; rejecting the earlier noun-heavy rewrite was reasonable. **I28/I29/I30:** Unverified: no current l13–l16 text or screenshots supplied; being within six words would not alone settle the outline objection. **I31:** Source exemption valid. **I32:** Resolved: “Training examples” and “Test” match narration. **I33/I34:** Resolved by “Learned, or just memorized?”; rejecting “Unseen test = real learning” was justified. **I35/I36:** Unresolved: the dominant seven-word question is a title, regardless of its “display” element type. **I37:** Partly resolved: shorter caption and later clearing, but the ten-chip row and l23 total still breach limits. **I38:** Resolved: three-word caption. **I39/I40:** Footer length resolved; chart-inclusive counting and footer readability remain concerns. **I41/I42:** Partly resolved: samples cleared and first explanation shortened, but l25 still totals 27 words. **I43:** Resolved: the right panel clears “97%.” **I44:** Resolved: four short error pairs; the inventory’s extra standalone digits duplicate visible pair labels. **I45/I46:** Resolved: “Guesses answers, not the future” is concise and natural; rejecting the earlier noun stack was justified. **I47/I73:** Withdrawn under this round’s explicit axis-tick-number exemption; retaining all ten choices is justified. **I48:** Resolved: “96% sure it's a 3” reads naturally across the number and caption. **I49:** Unverified: no l29 supplied; previous entry was a keep-note. **I50:** Keep: the sentence is demonstration content, not duplicated narration. **I51/I52/I53:** Length and clearing resolved; replacement heading needs a native-language adjustment. **I54/I55:** Length resolved; “smart-seeming things” remains clumsy. **I56/I57/I58/I59:** Resolved: compact comparisons and neural-network label replace accumulated explanations. **I60/I61:** Acceptable: the short LLM relationship label supports the nested diagram. **I62/I63:** Resolved: earlier explanations clear before the scope statement. **I64:** Source exemption valid. **I65/I66:** Resolved: “10 years of résumés, mostly men's” is six words; the inventory incorrectly splits accented words. **I67:** No additional objection to the explicitly qualified illustrative quotation. **I68:** Partly resolved: shorter example, but the screenshot still shows the old conclusion alongside the new emphasis. **I69/I70:** Main title resolved; “The tool was scrapped” remains prose. **I71:** Keep the brief linking beat. **I72:** Awkward wording resolved; the replacement remains a complete sentence. **I74/I75:** Resolved: “Picks from 0–9 only.” **I76/I77:** Density resolved: previous detailed body clears at l47. **I78/I79/I80:** Density and block count resolved under the grouping rule; card three still uses a complete explanatory sentence. **I81:** Resolved: screenshot says “First check.” **I82/I83:** Resolved: five-word, idiomatic closing question."
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "Outline, not prose",
+     "a": 2,
+     "a_ev": "Almost every screen is now a true outline (l01 \"Your phone / spots your cat\" 5+5 words; l07 \"Misses some 3s, / mislabels others\"; l42 \"Bias in, / bias out\"). Two hard-limit problems remain: l21 headline \"With just 10 examples, how many right?\" is 7 words (limit 6), and l25 totals 27 words if the method note \"Median of 20 draws · each gridline ×10\" counts (20 without it; limit 22). The 20-tile digit walls at l09/l10 and the 10-chip row at l22/l23 are ruling-dependent (see issue table, 存疑).",
+     "b": 1,
+     "b_ev": "l21 still has a seven-word title; l10 has 27 counted words; l23 has 26; l25 has 27. The cold open also retains complete narration-style sentences.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "有两处硬上限确实超了，两人都核实到了。l21 data-en 为 \"With just 10 examples,<br>how many right?\"，7 词，超过标题上限 6 词；l25 侧栏 5+7、图内 8、方法注 7，共 27 词，超过 22 词上限。a 已在问题表把这两处列为「必改」，评分却给 2，前后不一致。b 给的 l10「27 词」和 l23「26 词」是把数字标注算了进去，违背第 1 轮裁决 I20，不采纳；按本口径，l23 实际只有 16 词。l01 的两个 5 词短句是标题式提纲，不算 prose。"
+    },
+    "P2": {
+     "name": "Divided from narration",
+     "a": 2,
+     "a_ev": "Screen carries structure and numbers, narration explains (l18 \"Training examples: 1,497 / Test: 300\"; l34 \"✓ Chess program: AI / ✗ Payroll program: not AI\"). Gaps: l17 shows no count although narration says \"nearly 1,800\" (screen has only \"Each: 8 rows × 8 columns\"); l47 narration says the model \"was wrong\" but the screen shows only \"“81% sure: 1”\" with no cue that the true digit was 2; \"LLMs\" (l31, l36) is never expanded although narration says \"large language models\".",
+     "b": 1,
+     "b_ev": "l02 repeats “That's today's AI”; l12 retains “Programmers coded it all in”; l42 repeats “The tool was scrapped.” Shortening has improved the slides, but several still deliver the spoken explanation.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "严格项 outro 把口播 l51 的 \"Most of today's AI isn't built on rules…\" 压成了 \"Not rules people write\"，丢掉 \"most\"，屏幕说法比口播更绝对，等于在严格项上多出一个口播没有的断言（只有 b 抓到）。l02 \"That's today's AI\"、l42 \"The tool was scrapped\" 几乎逐字重复口播，l10 \"That's machine learning\" 也接近重复。a 给 2 时漏了 outro 这条。"
+    },
+    "P3": {
+     "name": "Hierarchy and consistency",
+     "a": 2,
+     "a_ev": "Chapter cards 01–05 match the \"0N · Title\" eyebrows and progress dots, and big/small levels are clear (l20 \"Learned, or just memorized?\" under the bar). Weak spots: s3 (l08–l12) has no eyebrow at all while every other scene has one; chapter 03 changes name mid-chapter (\"03 · A different lens\" card, then \"03 · Circles within circles\"); l27 headline breaks \"Today's AI: a / prediction machine\"; l06 \"Also / an 8\" wraps while \"Also a 5\" does not; l44–l46 card headings \"It answers anyway / Predictions, not truth / Strengths and flaws come from data\" are not parallel.",
+     "b": 1,
+     "b_ev": "The two ten-item rows at l09–l10 exceed the six-item grouping allowance. Conversely, the shortened reminder headings at l47–l49 now qualify for grouping, and earlier detailed card bodies disappear.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "l33–l37 的眉题是 \"03 · Circles within circles\"，而章卡和 l27–l32 的眉题都是 \"03 · A different lens\"，章内改名却没有章卡；s3（l08–l12）全段没有眉题（I5 仍未解决）；l27 章节开场大标题折行成 \"Today's AI: a / prediction machine\"，\"a\" 单独挂在行尾；l06 \"Also / an 8\" 仍折成两行。以上证据都来自 a。b 给 1 的理由是「十项一行超过分组上限」，按 I20 不成立，但材料本身确实有问题，维持 1 分。"
+    },
+    "P4": {
+     "name": "Native phrasing and style",
+     "a": 2,
+     "a_ev": "Sentence case and no trailing periods on fragments (l12, l33, l42, l50 all fine); chapter titles \"When rules fall short\", \"A small experiment\", \"A different lens\", \"One real example\", \"Three things to remember\" all read naturally aloud. Remaining wording problems: outro eyebrow \"IN ONE SENTENCE\" sits over two fragments; l25 \"Only told: which are 3s\"; l17 \"Each: 8 rows × 8 columns\"; l23–l25 \"each gridline ×10\" (no gridlines are drawn); straight apostrophes (l02 \"That's today's AI\", l27, l28 \"sure it's a 3\", l37 \"“Today's AI”\") next to curly ones (l39 \"men’s\", l41 \"“women’s”\").",
+     "b": 1,
+     "b_ev": "The intro screenshot still says “What Is AI?” despite the sentence-case requirement. “How chatbot LLMs reply” is an awkward heading; all five chapter-card titles otherwise read naturally aloud.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "直撇号和弯撇号混用，源文件 s0 用 `That&#39;s today&#39;s AI`，s6 用 `Today&#39;s AI`，s3 用 `That&#39;s machine learning`，而 s8 用 \"men’s\"/\"women’s\"，s7 l37 同一行里是弯引号配直撇号，其中 l02 属于严格项；outro 眉题 \"IN ONE SENTENCE\" 下面是两个片段；l31 \"How chatbot LLMs reply\" 是生硬的名词堆叠，读出来别扭，按 P4 属必改；l25 \"Only told: which are 3s\" 是半句。a 自己列了 3 条 P4「必改」，评分仍给 2，不成立。b 的 intro \"What Is AI?\" 一条不作扣分依据（见驳回）。"
+    },
+    "P5": {
+     "name": "Readable in time",
+     "a": 2,
+     "a_ev": "New reading load per beat is low: worst cases are l26 (about 13 new words in 4.6 s, about 2.8 words/s with four pixel cards to look at) and l22 (11 blocks in 3.9 s), most others are 1.5–2 words/s (l12: 14 words in 7.2 s). Concerns: the 22 px method note at y≈895 on l23–l25 and 22 px source lines at y≈875 on l17/l38–l41 sit near where burned-in subtitles go and are small for phones (screenshots do not show subtitles, so I cannot verify the overlap).",
+     "b": 1,
+     "b_ev": "l25 presents 27 words in 7.8 seconds—about nine seconds of text reading alone at three words per second, before inspecting the curve or reading subtitles. The small methodological footer adds another reading destination.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "按每拍新增阅读量算，a 的分析站得住。l25 时 37%、88%、97% 和图注从 l23/l24 起就在屏上，l25 新增只有侧栏 12 词，7.8 秒约 1.5 词/秒；l26 约 13 词 4.6 秒，l22 3 词加芯片 3.9 秒，都能读完。b 用「27 词 / 7.8 秒」计算，把早已读过的图表文字又算了一遍，夸大了负担。小瑕疵：l17、l23–l25、l38–l41 底部 22px 注释离字幕带近，手机上偏小，截图没有字幕，没法核实是否重叠。"
+    },
+    "P6": {
+     "name": "Rewrites",
+     "a": 2,
+     "a_ev": "Most previous rewrites were adopted and are short (l11 \"Model = what it learned\"; l20 \"Learned, or just memorized?\"; l50 \"Has it seen this before?\"). A few screens still carry longer-than-needed text (l21 headline, l25 right panel with 12 words, l48 card 3 with 12 words); drop-in rewrites for each are in the table.",
+     "b": 3,
+     "b_ev": "Every issue below includes replacement English or a concrete removal/reflow instruction; the proposed l25 replacement reduces the counted screen from 27 words to 15.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "两人都给了逐条改写，但都有改得更差的条目。b 的 \"Your cat, found\"（l01）丢了主语和钩子，\"Also 8 / Also 5\"（l06）不合英语语法，\"Missing digits: 0, 4, 7, 8\"（l22–l23）把可视化换成了文字；a 的 \"It predicts, not proves\" 不地道，\"It mirrors its data\"（l48）删掉了口播明说的 design/training，l25 \"More examples, better scores\" 丢了 \"In this experiment\" 的范围限定。b 给 3 不成立。"
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "Of the 46 previous screen_en items, about 38 are resolved as intended (l01, l02, l03–l04, l07, l10, l11, l20, l22, l27 length, l31–l37, l39–l42, l46–l50). Not fully resolved or newly broken: I5 (s3 still has no eyebrow, 未解决); I15/I16 (l06 \"Also an 8\" still wraps to two lines, 未解决); I35/I36 (author kept \"With just 10 examples, / how many right?\" as \"within limits\", but it is 7 words, so the 不采纳 reason does not hold); I39/I40 (the method note was shortened but now says \"each gridline ×10\" with no gridlines on screen, 改出新问题); I41/I42 (l25 panel changed but \"Only told: which are 3s\" is awkward and the screen is still 27 words with the note, 部分解决); I1/I84 (outro text now compressed to two fragments, but the eyebrow still says \"IN ONE SENTENCE\", 改出新问题); I45/I46 (l27 length fixed, but a line-break orphan \"a\" appeared, 改出新问题); I3/I6 (title case \"What Is AI?\" kept; rationale acceptable as series branding, see 存疑 row). Judge-rejected items I18/I20/I27/I33/I47/I72/I73/I86: I agree with the rejections of \"Cat recognition\", \"Unseen test = real learning\", the noun-stack rewrites and the \"collapse 0–9 to Other digits\" idea; I20 (digit walls) is still ruling-dependent (存疑 row). I3 and I4 resolved (card_intro.png is now provided).",
+     "b": 1,
+     "b_ev": "**I1/I84:** Previous outro sentences and length breaches resolved; the surviving “IN ONE SENTENCE” label and missing “most” qualification create residual problems. **I2:** Resolved by “When rules fall short”; the other chapter titles remain natural. **I3/I6:** Unresolved: “What Is AI?” remains visible; YouTube packaging consistency does not override the explicit on-screen sentence-case rule. **I4:** The intro screenshot is available and contains a title, contrary to the dismissal; its omission from the text inventory remains. **I5:** Partly resolved: s7 now has “03”; s3 remains unlabelled; s4 cannot be checked. **I7/I8:** Length and reading load resolved, but l01 still contains two complete explanatory sentences. Rejecting the stiff “Cat recognition” alternative was reasonable; retaining prose was not necessary. **I9/I10/I11:** Diagram wording and wrapping resolved; “That's today's AI” remains narration repetition. **I12/I13:** Resolved: four-word title and short flow labels. **I14/I15:** Resolved: “curves” matches narration, and the replies are now labels. **I16:** Partly resolved: “Also an 8” still wraps into two lines. **I17/I18/I19:** Length and wording resolved by the five-word conclusion. **I20/I21:** Unresolved: answer tags have no exemption from the supplied six-item grouping rule; l10 still totals 27 words. **I22:** Native wording resolved, but “That's machine learning” remains a spoken declaration. **I23:** Resolved: “Patterns.” **I24/I25:** Resolved: the long definition is gone; the diagram and note total eight words. **I26/I27:** Partly resolved: shorter, but still a complete statement and an awkward “examples: data” construction; rejecting the earlier noun-heavy rewrite was reasonable. **I28/I29/I30:** Unverified: no current l13–l16 text or screenshots supplied; being within six words would not alone settle the outline objection. **I31:** Source exemption valid. **I32:** Resolved: “Training examples” and “Test” match narration. **I33/I34:** Resolved by “Learned, or just memorized?”; rejecting “Unseen test = real learning” was justified. **I35/I36:** Unresolved: the dominant seven-word question is a title, regardless of its “display” element type. **I37:** Partly resolved: shorter caption and later clearing, but the ten-chip row and l23 total still breach limits. **I38:** Resolved: three-word caption. **I39/I40:** Footer length resolved; chart-inclusive counting and footer readability remain concerns. **I41/I42:** Partly resolved: samples cleared and first explanation shortened, but l25 still totals 27 words. **I43:** Resolved: the right panel clears “97%.” **I44:** Resolved: four short error pairs; the inventory’s extra standalone digits duplicate visible pair labels. **I45/I46:** Resolved: “Guesses answers, not the future” is concise and natural; rejecting the earlier noun stack was justified. **I47/I73:** Withdrawn under this round’s explicit axis-tick-number exemption; retaining all ten choices is justified. **I48:** Resolved: “96% sure it's a 3” reads naturally across the number and caption. **I49:** Unverified: no l29 supplied; previous entry was a keep-note. **I50:** Keep: the sentence is demonstration content, not duplicated narration. **I51/I52/I53:** Length and clearing resolved; replacement heading needs a native-language adjustment. **I54/I55:** Length resolved; “smart-seeming things” remains clumsy. **I56/I57/I58/I59:** Resolved: compact comparisons and neural-network label replace accumulated explanations. **I60/I61:** Acceptable: the short LLM relationship label supports the nested diagram. **I62/I63:** Resolved: earlier explanations clear before the scope statement. **I64:** Source exemption valid. **I65/I66:** Resolved: “10 years of résumés, mostly men's” is six words; the inventory incorrectly splits accented words. **I67:** No additional objection to the explicitly qualified illustrative quotation. **I68:** Partly resolved: shorter example, but the screenshot still shows the old conclusion alongside the new emphasis. **I69/I70:** Main title resolved; “The tool was scrapped” remains prose. **I71:** Keep the brief linking beat. **I72:** Awkward wording resolved; the replacement remains a complete sentence. **I74/I75:** Resolved: “Picks from 0–9 only.” **I76/I77:** Density resolved: previous detailed body clears at l47. **I78/I79/I80:** Density and block count resolved under the grouping rule; card three still uses a complete explanatory sentence. **I81:** Resolved: screenshot says “First check.” **I82/I83:** Resolved: five-word, idiomatic closing question.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "I35/I36 的 l21 仍是 7 词，作者以 within limits 为由不采纳，这个理由不成立，必改项未解决；I5 s3 仍无眉题；I16 l06 仍折行；I39/I40 改出新问题（屏上没有画格线，却写 \"each gridline ×10\"）；I1/I84 outro 改出新问题（\"IN ONE SENTENCE\" 和丢失的 \"most\"）；I45/I46 l27 改出新问题（孤立的 \"a\"）。b 复核时说 I20/I21「未解决」、I3/I6 应改，这两点不成立（见驳回）。"
+    }
+   },
+   "disputes": [
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5",
+    "R"
+   ],
+   "audits": [
+    "P6"
+   ],
+   "final_scores": {
+    "P1": 1,
+    "P2": 1,
+    "P3": 1,
+    "P4": 1,
+    "P5": 2,
+    "P6": 2,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "P1",
+     "P2",
+     "P3",
+     "P4",
+     "P5",
+     "R",
+     "P6"
+    ],
+    "prompt": "items/screen_en__judge.md",
+    "report": "reports/screen_en__judge.md",
+    "ruling": {
+     "P1": {
+      "score": 1,
+      "evidence": "有两处硬上限确实超了，两人都核实到了。l21 data-en 为 \"With just 10 examples,<br>how many right?\"，7 词，超过标题上限 6 词；l25 侧栏 5+7、图内 8、方法注 7，共 27 词，超过 22 词上限。a 已在问题表把这两处列为「必改」，评分却给 2，前后不一致。b 给的 l10「27 词」和 l23「26 词」是把数字标注算了进去，违背第 1 轮裁决 I20，不采纳；按本口径，l23 实际只有 16 词。l01 的两个 5 词短句是标题式提纲，不算 prose。"
+     },
+     "P2": {
+      "score": 1,
+      "evidence": "严格项 outro 把口播 l51 的 \"Most of today's AI isn't built on rules…\" 压成了 \"Not rules people write\"，丢掉 \"most\"，屏幕说法比口播更绝对，等于在严格项上多出一个口播没有的断言（只有 b 抓到）。l02 \"That's today's AI\"、l42 \"The tool was scrapped\" 几乎逐字重复口播，l10 \"That's machine learning\" 也接近重复。a 给 2 时漏了 outro 这条。"
+     },
+     "P3": {
+      "score": 1,
+      "evidence": "l33–l37 的眉题是 \"03 · Circles within circles\"，而章卡和 l27–l32 的眉题都是 \"03 · A different lens\"，章内改名却没有章卡；s3（l08–l12）全段没有眉题（I5 仍未解决）；l27 章节开场大标题折行成 \"Today's AI: a / prediction machine\"，\"a\" 单独挂在行尾；l06 \"Also / an 8\" 仍折成两行。以上证据都来自 a。b 给 1 的理由是「十项一行超过分组上限」，按 I20 不成立，但材料本身确实有问题，维持 1 分。"
+     },
+     "P4": {
+      "score": 1,
+      "evidence": "直撇号和弯撇号混用，源文件 s0 用 `That&#39;s today&#39;s AI`，s6 用 `Today&#39;s AI`，s3 用 `That&#39;s machine learning`，而 s8 用 \"men’s\"/\"women’s\"，s7 l37 同一行里是弯引号配直撇号，其中 l02 属于严格项；outro 眉题 \"IN ONE SENTENCE\" 下面是两个片段；l31 \"How chatbot LLMs reply\" 是生硬的名词堆叠，读出来别扭，按 P4 属必改；l25 \"Only told: which are 3s\" 是半句。a 自己列了 3 条 P4「必改」，评分仍给 2，不成立。b 的 intro \"What Is AI?\" 一条不作扣分依据（见驳回）。"
+     },
+     "P5": {
+      "score": 2,
+      "evidence": "按每拍新增阅读量算，a 的分析站得住。l25 时 37%、88%、97% 和图注从 l23/l24 起就在屏上，l25 新增只有侧栏 12 词，7.8 秒约 1.5 词/秒；l26 约 13 词 4.6 秒，l22 3 词加芯片 3.9 秒，都能读完。b 用「27 词 / 7.8 秒」计算，把早已读过的图表文字又算了一遍，夸大了负担。小瑕疵：l17、l23–l25、l38–l41 底部 22px 注释离字幕带近，手机上偏小，截图没有字幕，没法核实是否重叠。"
+     },
+     "P6": {
+      "score": 2,
+      "evidence": "两人都给了逐条改写，但都有改得更差的条目。b 的 \"Your cat, found\"（l01）丢了主语和钩子，\"Also 8 / Also 5\"（l06）不合英语语法，\"Missing digits: 0, 4, 7, 8\"（l22–l23）把可视化换成了文字；a 的 \"It predicts, not proves\" 不地道，\"It mirrors its data\"（l48）删掉了口播明说的 design/training，l25 \"More examples, better scores\" 丢了 \"In this experiment\" 的范围限定。b 给 3 不成立。"
+     },
+     "R": {
+      "score": 1,
+      "evidence": "I35/I36 的 l21 仍是 7 词，作者以 within limits 为由不采纳，这个理由不成立，必改项未解决；I5 s3 仍无眉题；I16 l06 仍折行；I39/I40 改出新问题（屏上没有画格线，却写 \"each gridline ×10\"）；I1/I84 outro 改出新问题（\"IN ONE SENTENCE\" 和丢失的 \"most\"）；I45/I46 l27 改出新问题（孤立的 \"a\"）。b 复核时说 I20/I21「未解决」、I3/I6 应改，这两点不成立（见驳回）。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 56,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_en__a",
+    "codex/screen_en__b"
+   ]
+  }
+ ],
+ "state": "已收轮",
+ "concluded_at": "2026-11-09T21:07:21",
+ "result": "结果.md",
+ "verdict": {
+  "result": "不通过",
+  "text": "不通过：4 项未过；已按问题清单修改，开下一轮复核"
+ },
+ "log": []
+}

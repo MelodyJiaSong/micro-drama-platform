@@ -1,0 +1,1797 @@
+{
+  "schema": 1,
+  "followups": [
+    287,
+    288,
+    289
+  ],
+  "title": "DotA 6.83d 精细三维地图与静态 NPC",
+  "status": "in_progress",
+  "vision": "宏大绚丽的战场上，比记忆里更真实、更立体的英雄，放出比记忆里更绚丽的技能。",
+  "scope": {
+    "include": [
+      "全部单体建筑",
+      "商人",
+      "兵线小兵",
+      "野怪与肉山",
+      "地形水面",
+      "树木岩石及地图固定物"
+    ],
+    "exclude": [
+      "英雄",
+      "召唤物",
+      "骨骼绑定",
+      "动画"
+    ],
+    "hyper3d": false,
+    "dinov3_exception": "用户明确允许，仅限本次任务；follow-up 288",
+    "noncommercial_dependencies": "禁止用于本任务；使用前核实实际执行链"
+  },
+  "coordinate_system": {
+    "east": "+X",
+    "north": "+Y",
+    "up": "+Z",
+    "units": "metres",
+    "scale_source": "0_research/map_regions/blender/common.json:units_per_m"
+  },
+  "map_sources": [
+    {
+      "path": "0_research/base_layout_refs/base_layout_manifest.json",
+      "sha256": "a22b81d2b6b0611151654e90e5dc21be80bddbeee671576bbed9c765d28ef56d"
+    },
+    {
+      "path": "0_research/base_layout_refs/terrain_samples.json",
+      "sha256": "df627d35feb6bb93fea60eabff01f3b0d33f13e71de59ae0ad70679cefd08987"
+    },
+    {
+      "path": "0_research/map_regions/map_features.json",
+      "sha256": "0f5da45a2f049e2684fbbc53dfff2c1876d01eea615dddc61b876230f434cc1b"
+    },
+    {
+      "path": "0_research/map_regions/navigation/tree_positions.json",
+      "sha256": "f89f117616c78b951e3b1d2a107a5537ab3ec1c210f78a740ffe7c54e9eba29c"
+    },
+    {
+      "path": "0_research/map_regions/navigation/war3map.doo",
+      "sha256": "d197d00644add4cb7256d372fd9d1ab691c3eacd21a99f2648f235d45e568712"
+    },
+    {
+      "path": "0_research/map_regions/blender/common.json",
+      "sha256": "0439343cce3a15b2fa881e54fb26298117423c9eeee7d27e5240bf2b813f154d"
+    }
+  ],
+  "delivery": [
+    "完整地图 .blend",
+    "每个资产独立模型及材质",
+    "全图及地面机位渲染",
+    "逐资产来源与验收清单"
+  ],
+  "quality_gate": [
+    "轮廓与三视图一致",
+    "真实厚度及背面",
+    "尺度接地与原版位置",
+    "材质无明显投影拉伸",
+    "地面机位观感",
+    "独立审阅后才能标为完成"
+  ],
+  "assets": [
+    {
+      "id": "bg2",
+      "name": "bg2_近卫基地·世界之树",
+      "kind": "building",
+      "directory": "2_世界观人设/background/近卫_sentinel/bg2_近卫基地·世界之树",
+      "card": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg2_近卫基地·世界之树/bg2_近卫基地·世界之树.md",
+        "sha256": "a5a37c39a27f3c83b2ea31fac89fb4da040c1994bca74cecf9ddd29350f74ae9"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg2_近卫基地·世界之树/bg2_近卫基地·世界之树.png",
+        "sha256": "1bf2ece7cc9318a06b7d968b11630fb4d53fdf480a066ff26768adc1e92322e7"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg2_近卫基地·世界之树/views/bg2_近卫基地·世界之树_front.png",
+          "sha256": "6156bae71a8d994b0da3531529d990d639cdeb2c79ecc5d1b6f86dec337351cc"
+        },
+        "side": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg2_近卫基地·世界之树/views/bg2_近卫基地·世界之树_side.png",
+          "sha256": "baa4db354e683582dc141bad1be9c83c9c77ec873b88c77e0f5f21b276fdca76"
+        },
+        "back": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg2_近卫基地·世界之树/views/bg2_近卫基地·世界之树_back.png",
+          "sha256": "2461e58f73e30875df1a6c8dd932d6bdd12d61065fa3d2b844de4f00ab84cf37"
+        }
+      },
+      "scale_evidence": [
+        "- ✅ 尺度：比旁边的远古守护者（四塔）**高一截**，大约两座塔高；是基地里最高的东西，但不遮天蔽日（6.78c 俯视：塔高到树冠下沿）。",
+        "- 尺度：约二十米高（约十一个人高，大约两座近卫塔高），树干直径约三米半，五六条撑地粗根向四周伸出约七米；⚠️ 米数是创作选择，按「比塔高一截」定。"
+      ],
+      "model_directory": "2_世界观人设/background/近卫_sentinel/bg2_近卫基地·世界之树/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg3",
+      "name": "bg3_天灾基地·冰封王座",
+      "kind": "building",
+      "directory": "2_世界观人设/background/天灾_scourge/bg3_天灾基地·冰封王座",
+      "card": {
+        "path": "2_世界观人设/background/天灾_scourge/bg3_天灾基地·冰封王座/bg3_天灾基地·冰封王座.md",
+        "sha256": "71f3a88469b32ec4b5d13df5843422e5a23b5c896f39443caedc0ef7dd6625cc"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/天灾_scourge/bg3_天灾基地·冰封王座/bg3_天灾基地·冰封王座.png",
+        "sha256": "a7d8519f529ae20d8dc87183df585c5eb303b240f038f6457dfebaef02c34e61"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/天灾_scourge/bg3_天灾基地·冰封王座/views/bg3_天灾基地·冰封王座_front.png",
+          "sha256": "2e1628f9d24cd34694151f32b35c37ff4bf8c397999626a95817bd71ddba10ba"
+        },
+        "side": {
+          "path": "2_世界观人设/background/天灾_scourge/bg3_天灾基地·冰封王座/views/bg3_天灾基地·冰封王座_side.png",
+          "sha256": "379d6b005507f39a04e365e33e16f0de002238d7f3c0bde7b4189b9691530563"
+        },
+        "back": {
+          "path": "2_世界观人设/background/天灾_scourge/bg3_天灾基地·冰封王座/views/bg3_天灾基地·冰封王座_back.png",
+          "sha256": "d1ce47548524a452528d125492fef548cfa0071cf3c66bf9fd9bd778eb076e45"
+        }
+      },
+      "scale_evidence": [
+        "- ✅ 底座是一座**圆形灰石台**，台边一圈粗石块、结霜；一道**直石阶**朝西南（中路 / 近卫方向）伸下，宽厚灰石阶、两侧矮石栏（6.79b、6.78c 截图）。整座遗迹约英雄身高的五六倍（6.83s 截图）。"
+      ],
+      "model_directory": "2_世界观人设/background/天灾_scourge/bg3_天灾基地·冰封王座/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg12",
+      "name": "bg12_边路地精商店",
+      "kind": "building",
+      "directory": "2_世界观人设/background/中立_neutral/bg12_边路地精商店",
+      "card": {
+        "path": "2_世界观人设/background/中立_neutral/bg12_边路地精商店/bg12_边路地精商店.md",
+        "sha256": "1ffba51f02a473f77e546910fb0bc44da7a99ce00af3da6ef7f104474e21578b"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/中立_neutral/bg12_边路地精商店/bg12_边路地精商店.png",
+        "sha256": "6a128899c10978fb7e89c6ff3869b7384a729c57e5f5f9fce598765f651ed8c7"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/中立_neutral/bg12_边路地精商店/views/bg12_边路地精商店_front.png",
+          "sha256": "afcf41fc7b3900ebd748ca5fed5e0dcb20de6e0128ada9917e87fa439659ef74"
+        },
+        "side": {
+          "path": "2_世界观人设/background/中立_neutral/bg12_边路地精商店/views/bg12_边路地精商店_side.png",
+          "sha256": "55b68f645c22b4b669d2bc263d182f53184904710c08bcd55138ec5d45cd3888"
+        },
+        "back": {
+          "path": "2_世界观人设/background/中立_neutral/bg12_边路地精商店/views/bg12_边路地精商店_back.png",
+          "sha256": "0536a1977a90bca174fe1a4abee4edc12bf5e90ccab55f8e7f209970fca7353f"
+        }
+      },
+      "scale_evidence": [
+        "- ✅ 尺度：WC3 对战图（缩放 1.0）里英雄只到茅草顶的一半高，占地约英雄身宽的四五倍；DotA 缩到 0.65，小三分之一左右，**仍比英雄高**（refs）。"
+      ],
+      "model_directory": "2_世界观人设/background/中立_neutral/bg12_边路地精商店/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg15",
+      "name": "bg15_近卫泉水",
+      "kind": "building",
+      "directory": "2_世界观人设/background/近卫_sentinel/bg15_近卫泉水",
+      "card": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg15_近卫泉水/bg15_近卫泉水.md",
+        "sha256": "f4e04bb2b20fb2055294479487783248f3358b93decee8b1ed221794eb672cff"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg15_近卫泉水/bg15_近卫泉水.png",
+        "sha256": "7049b797a7e7da7823b78d6829e9aa327d9f7a3bed66a783766231503123198c"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg15_近卫泉水/views/bg15_近卫泉水_front.png",
+          "sha256": "bde7bdf24a89d1cf9e59e3201b329cd3d6bab6d93dbef1f41ca92e00490e5ff4"
+        },
+        "side": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg15_近卫泉水/views/bg15_近卫泉水_side.png",
+          "sha256": "6132a62b1375c19cd67a788b555365911856f707a74c0f4c4b885b82a25059c5"
+        },
+        "back": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg15_近卫泉水/views/bg15_近卫泉水_back.png",
+          "sha256": "719a0f2dd86032e9af639e7b690e03643ab6dbd8bc54b6a94d80b637ebc17b80"
+        }
+      },
+      "scale_evidence": [
+        "- ✅ 尺度：比英雄大很多，大约一座兵营宽，比塔矮（sentinel_fountain/refs.md）。"
+      ],
+      "model_directory": "2_世界观人设/background/近卫_sentinel/bg15_近卫泉水/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg16",
+      "name": "bg16_近卫防御塔",
+      "kind": "building",
+      "directory": "2_世界观人设/background/近卫_sentinel/bg16_近卫防御塔",
+      "card": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg16_近卫防御塔/bg16_近卫防御塔.md",
+        "sha256": "a09b34dbff35ba8494fffbe2d1e039def71f86b07642902df930fe20c0974eca"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg16_近卫防御塔/bg16_近卫防御塔.png",
+        "sha256": "6aed5d8c7e0cec05de178f7eb1a6a13497ca267b14b2564c5dbef3f831adfbc3"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg16_近卫防御塔/views/bg16_近卫防御塔_front.png",
+          "sha256": "3d2662157829936e0dfb821e29c266a0cf0c727f5bfbfa7d784f1793faf59c93"
+        },
+        "side": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg16_近卫防御塔/views/bg16_近卫防御塔_side.png",
+          "sha256": "077d6d6711ffc9a061d8ad46bead53efbd2d4e17b807465ad007b47f378a30e3"
+        },
+        "back": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg16_近卫防御塔/views/bg16_近卫防御塔_back.png",
+          "sha256": "93efb85caa3b8241d08061e8a96a548b34ba4aaa2cdd447293ab64e813809624"
+        }
+      },
+      "scale_evidence": [
+        "- ✅ 尺度：比英雄高两三倍，和兽人瞭望塔差不多高，比世界之树矮一截（sentinel_tower/refs.md）。",
+        "- 尺度：约九米高（约五个人高）、底部约七米宽。原版只有英雄的两三倍高，这里放大一些让它读作「建筑」；⚠️ 米数是创作选择。"
+      ],
+      "model_directory": "2_世界观人设/background/近卫_sentinel/bg16_近卫防御塔/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg17",
+      "name": "bg17_战争古树",
+      "kind": "building",
+      "directory": "2_世界观人设/background/近卫_sentinel/bg17_战争古树",
+      "card": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg17_战争古树/bg17_战争古树.md",
+        "sha256": "24e8c5e78b34aa976d5535ab56a597c34a5410c5c9db92245c47caac2cc040a5"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg17_战争古树/bg17_战争古树.png",
+        "sha256": "801481817b96ca8c12488abc835af082784e9beae56113e71edf8735b0838453"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg17_战争古树/views/bg17_战争古树_front.png",
+          "sha256": "ba93e3aa949665e2c71a76bc7c44f2e06f6d4dabc7e6abd2b6cc23ea80dbc805"
+        },
+        "side": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg17_战争古树/views/bg17_战争古树_side.png",
+          "sha256": "a1713ef21943a55b897de731f22905f2e7870558f737d4b5eb515b87d28210f0"
+        },
+        "back": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg17_战争古树/views/bg17_战争古树_back.png",
+          "sha256": "06600b91d351fe3eec42591882c0826385535939d1b3064c25ff426564642da0"
+        }
+      },
+      "scale_evidence": [
+        "- ✅ 尺度：比塔矮，但占地大（sentinel_barracks_melee/refs.md）。",
+        "- 尺度：约六米高、约十一米宽（矮宽，约三个半人高）；⚠️ 米数是创作选择。"
+      ],
+      "model_directory": "2_世界观人设/background/近卫_sentinel/bg17_战争古树/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg18",
+      "name": "bg18_知识古树",
+      "kind": "building",
+      "directory": "2_世界观人设/background/近卫_sentinel/bg18_知识古树",
+      "card": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg18_知识古树/bg18_知识古树.md",
+        "sha256": "9cbd6d0292950d5119e8c93b3d0f831edb16752d75ac5b95e04fed4b47935bbb"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg18_知识古树/bg18_知识古树.png",
+        "sha256": "21527155029c7fbd0d680cacff40f73c0497f1059523f3d84990f0deb4e72ad4"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg18_知识古树/views/bg18_知识古树_front.png",
+          "sha256": "657aec3bb1042008d9b2a39c5808ed331cb71fb8897d40abfea0337e0b62e233"
+        },
+        "side": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg18_知识古树/views/bg18_知识古树_side.png",
+          "sha256": "df61e48bf812734b2b10302adb0b6705c589001e089897fc46d58d0fa08043af"
+        },
+        "back": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg18_知识古树/views/bg18_知识古树_back.png",
+          "sha256": "c9aa80dc5857462fb0adabbc7061e984c78538d40ce5b75c621416b36229c7cd"
+        }
+      },
+      "scale_evidence": [
+        "- ✅ 尺度：比战争古树高一些（sentinel_barracks_ranged/refs.md）。",
+        "- 尺度：约八米高（约四个半人高）、约九米宽；⚠️ 米数是创作选择。"
+      ],
+      "model_directory": "2_世界观人设/background/近卫_sentinel/bg18_知识古树/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg19",
+      "name": "bg19_月亮井",
+      "kind": "building",
+      "directory": "2_世界观人设/background/近卫_sentinel/bg19_月亮井",
+      "card": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg19_月亮井/bg19_月亮井.md",
+        "sha256": "3dce9e5c90fbecf1536bfdcc4d19759fa1e6cdcdb5c3232edb0cf5c5af758dce"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg19_月亮井/bg19_月亮井.png",
+        "sha256": "f3d513e4d15225886198897d78e46ebf1e9871fdcf67f7f176cd15044671c87c"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg19_月亮井/views/bg19_月亮井_front.png",
+          "sha256": "fbd4cbc82001ec4e65a646ac82aff644d64b1dd09fa7dd34a3d3cde6a564ed6e"
+        },
+        "side": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg19_月亮井/views/bg19_月亮井_side.png",
+          "sha256": "f918a257f9618fba6382c298dd9f7d00df1d0dded174096f506b3e4bd5111d92"
+        },
+        "back": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg19_月亮井/views/bg19_月亮井_back.png",
+          "sha256": "09f148e5eac6640ed3278adc4b76487748b383e1f292ee5ba74362ab7f4ec3af"
+        }
+      },
+      "scale_evidence": [
+        "- ✅ 尺度：小型建筑，大约一个英雄加两步宽，远比塔矮（sentinel_moon_well/refs.md）。"
+      ],
+      "model_directory": "2_世界观人设/background/近卫_sentinel/bg19_月亮井/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg20",
+      "name": "bg20_风之古树",
+      "kind": "building",
+      "directory": "2_世界观人设/background/近卫_sentinel/bg20_风之古树",
+      "card": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg20_风之古树/bg20_风之古树.md",
+        "sha256": "0b72ba645e53fb30c559152613ee735db9e4ab443c468029a66f89a9250d9582"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg20_风之古树/bg20_风之古树.png",
+        "sha256": "bc090544cf85faa2fd1bc6e1e64dcee89de5aff20a30086fcad6cfeab48e494f"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg20_风之古树/views/bg20_风之古树_front.png",
+          "sha256": "ccbb8b0838b4e55b9e04cf5023c394f0619efb3684831372f4a724ff047fa708"
+        },
+        "side": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg20_风之古树/views/bg20_风之古树_side.png",
+          "sha256": "76732992c0656fc33f149787d90a8ec9b5be8e37f98479a455cd736170f9c83e"
+        },
+        "back": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg20_风之古树/views/bg20_风之古树_back.png",
+          "sha256": "9076994afbdb4bf8142f6098ebea15cba8e331f5bce17b823bd8a775cf3dbae9"
+        }
+      },
+      "scale_evidence": [
+        "- 尺度：约十一米高（约六个人高）、身子约四米宽，翼片展开约十米；⚠️ 米数是创作选择。"
+      ],
+      "model_directory": "2_世界观人设/background/近卫_sentinel/bg20_风之古树/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg21",
+      "name": "bg21_猎手大厅",
+      "kind": "building",
+      "directory": "2_世界观人设/background/近卫_sentinel/bg21_猎手大厅",
+      "card": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg21_猎手大厅/bg21_猎手大厅.md",
+        "sha256": "88e70a79a51396e30eeeec5865294e17af74726d42f935437040d2640e6fd43d"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg21_猎手大厅/bg21_猎手大厅.png",
+        "sha256": "512e873b2e51b3d226f39616def4650e6aed7c922b4865db800b94995ed8d05d"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg21_猎手大厅/views/bg21_猎手大厅_front.png",
+          "sha256": "bb815ea840096a566526f1f4f336e204bda42a6294194be83b20a89b072f0453"
+        },
+        "side": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg21_猎手大厅/views/bg21_猎手大厅_side.png",
+          "sha256": "e274e417dfd3669146821fc759ed175af6c019758566dfde2b46b6638791c2e6"
+        },
+        "back": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg21_猎手大厅/views/bg21_猎手大厅_back.png",
+          "sha256": "1199eaaa74f0d6c20854ba437303e31d1681195afda58b6285f2f1d51b6a8581"
+        }
+      },
+      "scale_evidence": [
+        "- 尺度：约十一米高（到屋脊）、约十二米宽，三层错落；正门约两米半高（比一个人高一截）；⚠️ 米数是创作选择。"
+      ],
+      "model_directory": "2_世界观人设/background/近卫_sentinel/bg21_猎手大厅/model_3d",
+      "status": "pending",
+      "review": "not_reviewed"
+    },
+    {
+      "id": "bg22",
+      "name": "bg22_奇迹古树",
+      "kind": "building",
+      "directory": "2_世界观人设/background/近卫_sentinel/bg22_奇迹古树",
+      "card": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg22_奇迹古树/bg22_奇迹古树.md",
+        "sha256": "de0c1b6d9a85b0393f3b0ff4940f946b1f94c8a212d4214acbbd2f82f9b9c118"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg22_奇迹古树/bg22_奇迹古树.png",
+        "sha256": "a21870b86d2750ff82b5430f5c215dec8b005ea806a5d1da1efae7b1b5ef1804"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg22_奇迹古树/views/bg22_奇迹古树_front.png",
+          "sha256": "58d6fed99f48e5864f602ca6b09519ec5d15060f5869c614443489d140e169e1"
+        },
+        "side": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg22_奇迹古树/views/bg22_奇迹古树_side.png",
+          "sha256": "7998460e0bbffebfeaa3fb35a4d67f9c7a97421eefc8168963d9c2522ea7325b"
+        },
+        "back": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg22_奇迹古树/views/bg22_奇迹古树_back.png",
+          "sha256": "15bdab546648fd8043ea6e4e9c105f08ca324ba177a6b8e3828b529a000aa121"
+        }
+      },
+      "scale_evidence": [
+        "- ✅ 尺度：宽度和密室差不多，比密室高一点（翼板）（cache_of_quelthelan/refs.md）。",
+        "- 尺度：约六米高（到翼板顶，约三个半人高，与 `bg13` 一致）、约六米宽；木嘴宽约三米，下唇离地约两米半；⚠️ 米数是创作选择。"
+      ],
+      "model_directory": "2_世界观人设/background/近卫_sentinel/bg22_奇迹古树/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg23",
+      "name": "bg23_奎尔瑟兰的密室",
+      "kind": "building",
+      "directory": "2_世界观人设/background/近卫_sentinel/bg23_奎尔瑟兰的密室",
+      "card": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg23_奎尔瑟兰的密室/bg23_奎尔瑟兰的密室.md",
+        "sha256": "326fa764beb043b64cf933ed38d409a11d71fc287b1e6b6d945ffa7cb30210d2"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg23_奎尔瑟兰的密室/bg23_奎尔瑟兰的密室.png",
+        "sha256": "0104030868409cee6a2cfbbaee4aa3d733d27b4b998f59705a05cddbdc976afb"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg23_奎尔瑟兰的密室/views/bg23_奎尔瑟兰的密室_front.png",
+          "sha256": "391e65e8d896b118812f75fcc325511cdec1f8ce95d211f57da1417c7f8c3f56"
+        },
+        "side": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg23_奎尔瑟兰的密室/views/bg23_奎尔瑟兰的密室_side.png",
+          "sha256": "81273b01ea3bc5db341b84753d38bc6b65909daf0ee6b5b5866b7d95644eb772"
+        },
+        "back": {
+          "path": "2_世界观人设/background/近卫_sentinel/bg23_奎尔瑟兰的密室/views/bg23_奎尔瑟兰的密室_back.png",
+          "sha256": "30617255803725db9a6e0aa2aa206cadfe163b92c08df4174325778adc59313b"
+        }
+      },
+      "scale_evidence": [
+        "- ✅ 尺度：按 0.8 缩放后宽度和奇迹古树差不多，高度略矮（cache_of_quelthelan/refs.md）。",
+        "- 尺度：总高约五米（到最高的金属球）、石台对角约五米宽；石台台身约两米半高，拱门约两米高（比一个人略高）；⚠️ 米数是创作选择，总高与 bg13 一致。"
+      ],
+      "model_directory": "2_世界观人设/background/近卫_sentinel/bg23_奎尔瑟兰的密室/model_3d",
+      "status": "repair_required",
+      "review": "author_visual_failed_front_door_missing",
+      "current_revision": "r06",
+      "quality_report": "2_世界观人设\\background\\近卫_sentinel\\bg23_奎尔瑟兰的密室\\model_3d\\r03\\inspection\\quality_review.json"
+    },
+    {
+      "id": "bg25",
+      "name": "bg25_天灾泉水",
+      "kind": "building",
+      "directory": "2_世界观人设/background/天灾_scourge/bg25_天灾泉水",
+      "card": {
+        "path": "2_世界观人设/background/天灾_scourge/bg25_天灾泉水/bg25_天灾泉水.md",
+        "sha256": "0190e9945ca87082e87aa18d4a93903866613eb2760b65497ed9cd79f2f11a91"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/天灾_scourge/bg25_天灾泉水/bg25_天灾泉水.png",
+        "sha256": "ed518b3812b9dea6ae11803aaae951bd9ada517fcb926e82611f3ccf7e3fa39c"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/天灾_scourge/bg25_天灾泉水/views/bg25_天灾泉水_front.png",
+          "sha256": "065a87363242ec4ab642602de24faaecbdaf799e79b2d66604305b47f98a0bbd"
+        },
+        "side": {
+          "path": "2_世界观人设/background/天灾_scourge/bg25_天灾泉水/views/bg25_天灾泉水_side.png",
+          "sha256": "24f64c3e05cda4cb428adfdd39e6cda52843ac571cf9ff0d3c5fbd1af176fa8b"
+        },
+        "back": {
+          "path": "2_世界观人设/background/天灾_scourge/bg25_天灾泉水/views/bg25_天灾泉水_back.png",
+          "sha256": "437846fdf8e1233cbfb574a578a6d2ea5c38d53169adfc1d8790a4047441c7ab"
+        }
+      },
+      "scale_evidence": [
+        "- ⚠️ 尺度：截图估算泉水直径约英雄身高 3–4 倍、宽约英雄 4–5 倍（两张图估法不一）。"
+      ],
+      "model_directory": "2_世界观人设/background/天灾_scourge/bg25_天灾泉水/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg26",
+      "name": "bg26_天灾防御塔",
+      "kind": "building",
+      "directory": "2_世界观人设/background/天灾_scourge/bg26_天灾防御塔",
+      "card": {
+        "path": "2_世界观人设/background/天灾_scourge/bg26_天灾防御塔/bg26_天灾防御塔.md",
+        "sha256": "e014af13e9c2cc3e5a7b288bb3d16896a19f84d846bfe0a6cca050c9a2fad6ed"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/天灾_scourge/bg26_天灾防御塔/bg26_天灾防御塔.png",
+        "sha256": "b071db6ebfff8929bb301ba71e30760632df16b92cabac6bb1e1578038a3a856"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/天灾_scourge/bg26_天灾防御塔/views/bg26_天灾防御塔_front.png",
+          "sha256": "c58ce7713d6aabc1d3a4f76392fa0fec306b5fd6a031c202fe95d32842563e82"
+        },
+        "side": {
+          "path": "2_世界观人设/background/天灾_scourge/bg26_天灾防御塔/views/bg26_天灾防御塔_side.png",
+          "sha256": "5176687b4ea22640adb17502d2ac29370f0da2d3b243c36ad3b008b99b12ccb6"
+        },
+        "back": {
+          "path": "2_世界观人设/background/天灾_scourge/bg26_天灾防御塔/views/bg26_天灾防御塔_back.png",
+          "sha256": "15d819e7315eda6f3ffca21d6faabde97f42a46579df0d79d838b4dabc2f4bb9"
+        }
+      },
+      "scale_evidence": [
+        "- 尺度：八角台基外宽约十米；斜墙顶约七米高；连顶上白骨弯牙与晶体总高约十三米，约七个人高。台基宽、往上收得快，整体矮胖，不是细高尖塔。"
+      ],
+      "model_directory": "2_世界观人设/background/天灾_scourge/bg26_天灾防御塔/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg27",
+      "name": "bg27_地穴",
+      "kind": "building",
+      "directory": "2_世界观人设/background/天灾_scourge/bg27_地穴",
+      "card": {
+        "path": "2_世界观人设/background/天灾_scourge/bg27_地穴/bg27_地穴.md",
+        "sha256": "37866892d5345eee397b5c7c0d5853cd35168d56324b07b5ec952f668b1d1e7f"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/天灾_scourge/bg27_地穴/bg27_地穴.png",
+        "sha256": "e9ade79aa7d6666096acacc174e3ca6adb4a13836a5f095ce61d5ccbc734b7c9"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/天灾_scourge/bg27_地穴/views/bg27_地穴_front.png",
+          "sha256": "33379cf32291bddb0f93fdae87cf36dcb10ddb10dbb5f955a98d20b55cdd0788"
+        },
+        "side": {
+          "path": "2_世界观人设/background/天灾_scourge/bg27_地穴/views/bg27_地穴_side.png",
+          "sha256": "3f63336a58f04402ab25cfd24089152ec762b542345b9d837ae980b82a785135"
+        },
+        "back": {
+          "path": "2_世界观人设/background/天灾_scourge/bg27_地穴/views/bg27_地穴_back.png",
+          "sha256": "1604228a1f9d039f9347af325d74c8ae0c6c836d1f542640d30fdd6b72138974"
+        }
+      },
+      "scale_evidence": [
+        "- 尺度：方形台基约十四米见方、高约一米；中央穹顶墓室直径约九米，穹顶顶点约十一米，青铜尖顶到约十四米；四角主柱高约九米、粗约一米五；墓门高约三米半，一个人站在门前只到门的一半。"
+      ],
+      "model_directory": "2_世界观人设/background/天灾_scourge/bg27_地穴/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg28",
+      "name": "bg28_诅咒神庙",
+      "kind": "building",
+      "directory": "2_世界观人设/background/天灾_scourge/bg28_诅咒神庙",
+      "card": {
+        "path": "2_世界观人设/background/天灾_scourge/bg28_诅咒神庙/bg28_诅咒神庙.md",
+        "sha256": "159b2b88b4205272dcd23d2dda534df958c14c00431b17fbe01371f29adc16ba"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/天灾_scourge/bg28_诅咒神庙/bg28_诅咒神庙.png",
+        "sha256": "947dfc015bf29993036b745e224cbf29f9eb8d45e7b4cc9a17911725bb2b4aa7"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/天灾_scourge/bg28_诅咒神庙/views/bg28_诅咒神庙_front.png",
+          "sha256": "9422fd6f465411b203c2f5aa810f5f238593847c84fef2e3925ad4725d838b11"
+        },
+        "side": {
+          "path": "2_世界观人设/background/天灾_scourge/bg28_诅咒神庙/views/bg28_诅咒神庙_side.png",
+          "sha256": "b7a9983ad8d1c364bf4807ab3541c642d4943e8624905d09c43fbd5d9d202765"
+        },
+        "back": {
+          "path": "2_世界观人设/background/天灾_scourge/bg28_诅咒神庙/views/bg28_诅咒神庙_back.png",
+          "sha256": "ae17dcf014ab4ad96329470ba58861c0654612aa436519145a5181b10392aa1e"
+        }
+      },
+      "scale_evidence": [
+        "- 尺度：方形石台约十二米见方、高约一米半，正面一道宽台阶；台中央的绿晶体高约三米、宽约一米二，像一口立着的棺；后方巨兽头骨约三米半高，架在一根粗石基座上，头骨顶约十米；四根弯骨每根长约十米；四角方柱约四米高。一个人站在台阶上，只到晶体的一半多。"
+      ],
+      "model_directory": "2_世界观人设/background/天灾_scourge/bg28_诅咒神庙/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg29",
+      "name": "bg29_通灵塔",
+      "kind": "building",
+      "directory": "2_世界观人设/background/天灾_scourge/bg29_通灵塔",
+      "card": {
+        "path": "2_世界观人设/background/天灾_scourge/bg29_通灵塔/bg29_通灵塔.md",
+        "sha256": "b7588bcd4edd6b43af4599e0b56de46ad2514e833f2396ccf872ae0f40e4c6e0"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/天灾_scourge/bg29_通灵塔/bg29_通灵塔.png",
+        "sha256": "8c0cbee8d521dd912a742f081f98e5d740ddb67adf1b4ee6ca78047b5d5fe3d4"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/天灾_scourge/bg29_通灵塔/views/bg29_通灵塔_front.png",
+          "sha256": "a81ca7b22ec7cee34fb92cc8d2adbcdd62f896b430d76376b8568d50041ab530"
+        },
+        "side": {
+          "path": "2_世界观人设/background/天灾_scourge/bg29_通灵塔/views/bg29_通灵塔_side.png",
+          "sha256": "a41ddba61d30dc9792e429bb99621eee2e521756a827e247f5b15072be318365"
+        },
+        "back": {
+          "path": "2_世界观人设/background/天灾_scourge/bg29_通灵塔/views/bg29_通灵塔_back.png",
+          "sha256": "10c2b04178c9e688368cf0a07ceb872a1ecfcce33cf61231bf0a41042d0f86a3"
+        }
+      },
+      "scale_evidence": [],
+      "model_directory": "2_世界观人设/background/天灾_scourge/bg29_通灵塔/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg30",
+      "name": "bg30_埋骨地",
+      "kind": "building",
+      "directory": "2_世界观人设/background/天灾_scourge/bg30_埋骨地",
+      "card": {
+        "path": "2_世界观人设/background/天灾_scourge/bg30_埋骨地/bg30_埋骨地.md",
+        "sha256": "37e6770cb07761d05925ba7de584bd010db07a3b0feb85d8f91e95fb91267460"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/天灾_scourge/bg30_埋骨地/bg30_埋骨地.png",
+        "sha256": "32165963a7886e38335cdcdbbf8263178f030e91c768ae9b37622059a4555ed0"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/天灾_scourge/bg30_埋骨地/views/bg30_埋骨地_front.png",
+          "sha256": "7be56ded6297be04efb38953ce1108fae715101687a1bc34633eb68a234fc5d9"
+        },
+        "side": {
+          "path": "2_世界观人设/background/天灾_scourge/bg30_埋骨地/views/bg30_埋骨地_side.png",
+          "sha256": "108022484abffe81dc98b93b61b94578bc27cca813f2052aa2efcb65f4fb71fb"
+        },
+        "back": {
+          "path": "2_世界观人设/background/天灾_scourge/bg30_埋骨地/views/bg30_埋骨地_back.png",
+          "sha256": "cda76977fdaa2a06366bd09d62c6c93ff75c07f236145aa1aa1ead0cee049f3d"
+        }
+      },
+      "scale_evidence": [
+        "- 尺度：圆墙外径约十八米、墙高约一米五（齐一个人的胸口），墙头压一圈暗青铜包边；坑底比地面低约一米；坑里的龙骨架从头到尾约十六米，龙头骨约两米半长，最高的肋骨拱起约四米；三根方尖柱各高约六米。"
+      ],
+      "model_directory": "2_世界观人设/background/天灾_scourge/bg30_埋骨地/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg31",
+      "name": "bg31_牺牲深渊",
+      "kind": "building",
+      "directory": "2_世界观人设/background/天灾_scourge/bg31_牺牲深渊",
+      "card": {
+        "path": "2_世界观人设/background/天灾_scourge/bg31_牺牲深渊/bg31_牺牲深渊.md",
+        "sha256": "bd0d8279ebfc98eba78e4fb095dbb206fd4f0dedc956cfa70c9390f15b364008"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/天灾_scourge/bg31_牺牲深渊/bg31_牺牲深渊.png",
+        "sha256": "5f5450e34318d9894ff9bcad34f15672b1491ae07b54f99a3505ba4ac6f0d4d7"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/天灾_scourge/bg31_牺牲深渊/views/bg31_牺牲深渊_front.png",
+          "sha256": "1ad3ba379403ce5de33500d33965d841c86d134a09201b6b7671f53459d7d937"
+        },
+        "side": {
+          "path": "2_世界观人设/background/天灾_scourge/bg31_牺牲深渊/views/bg31_牺牲深渊_side.png",
+          "sha256": "86463a45cf5fdf1407ea30a79951431a6db91bcbcebc088a1be3692b5be7eac3"
+        },
+        "back": {
+          "path": "2_世界观人设/background/天灾_scourge/bg31_牺牲深渊/views/bg31_牺牲深渊_back.png",
+          "sha256": "9c53702f5d8f83f29a197b7a3fc9fe17d86739e8b66b63285d677c9413d91370"
+        }
+      },
+      "scale_evidence": [
+        "- 尺度：六角石池对边约十米，池壁高约一米二（齐一个人的腰上），整体矮宽；池水面比池沿低约半米。三颗白骷髅各约八十厘米高（比人头大三倍左右），坐在池沿三个相隔的角上的矮石墩上，火焰再往上窜约一米。"
+      ],
+      "model_directory": "2_世界观人设/background/天灾_scourge/bg31_牺牲深渊/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg32",
+      "name": "bg32_崩碎之穴",
+      "kind": "building",
+      "directory": "2_世界观人设/background/天灾_scourge/bg32_崩碎之穴",
+      "card": {
+        "path": "2_世界观人设/background/天灾_scourge/bg32_崩碎之穴/bg32_崩碎之穴.md",
+        "sha256": "b1636d40c239ecf5027d47e6a5187932bd14d643a44ccec590f6b347763c4d6d"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/天灾_scourge/bg32_崩碎之穴/bg32_崩碎之穴.png",
+        "sha256": "c94d7d94aa96d98ff995923610ea5dac907991551b060f972fa94e4870cd800f"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/天灾_scourge/bg32_崩碎之穴/views/bg32_崩碎之穴_front.png",
+          "sha256": "02944a2d07755100beaf201cb72ac8630136482f3409c9dc28ab8634341ed7ae"
+        },
+        "side": {
+          "path": "2_世界观人设/background/天灾_scourge/bg32_崩碎之穴/views/bg32_崩碎之穴_side.png",
+          "sha256": "e68a046b30545e505486d984c3c560dd41f78937105cb25fd8d64605828d1662"
+        },
+        "back": {
+          "path": "2_世界观人设/background/天灾_scourge/bg32_崩碎之穴/views/bg32_崩碎之穴_back.png",
+          "sha256": "9d54eecd2fb915d5a549a9c27dd5d9022cb14e4dbdcf6cd7a803327ea0e4606a"
+        }
+      },
+      "scale_evidence": [
+        "- 尺度：整栋长约十六米、宽约十米；前半截石棺坡顶屋脊约七米高；后半截筒形拱顶约十米高；四角方尖碑各高约九米；一个人站在旁边只到石棺基座的上沿。"
+      ],
+      "model_directory": "2_世界观人设/background/天灾_scourge/bg32_崩碎之穴/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg33",
+      "name": "bg33_恶魔遗物",
+      "kind": "building",
+      "directory": "2_世界观人设/background/天灾_scourge/bg33_恶魔遗物",
+      "card": {
+        "path": "2_世界观人设/background/天灾_scourge/bg33_恶魔遗物/bg33_恶魔遗物.md",
+        "sha256": "4f1ce84fbf3d164938365e5a7312e4f088e71a61affda39876403597a7b0e9ab"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/天灾_scourge/bg33_恶魔遗物/bg33_恶魔遗物.png",
+        "sha256": "ca59eee2c11a038b83ecb971a17bf74c3725d929cbb8612ae654a939708ad4a9"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/天灾_scourge/bg33_恶魔遗物/views/bg33_恶魔遗物_front.png",
+          "sha256": "bcc7df42c4f76076077817561ad672618a099705d6fe29559d07b6b430e95ffc"
+        },
+        "side": {
+          "path": "2_世界观人设/background/天灾_scourge/bg33_恶魔遗物/views/bg33_恶魔遗物_side.png",
+          "sha256": "a0ea2b1c5bb1284a3bfce5f9c2e4bb754cf1ca3026e6d6cc46b419d1ac1b0124"
+        },
+        "back": {
+          "path": "2_世界观人设/background/天灾_scourge/bg33_恶魔遗物/views/bg33_恶魔遗物_back.png",
+          "sha256": "c299ac3ac15ee732ad097b5703c7c31ea54918bca1c01e4385e6505a5e6e3880"
+        }
+      },
+      "scale_evidence": [
+        "- 尺度：下层石台约九米见方、高约一米半，正面一道五级台阶；上层石台约五米见方，顶面约五米高；三根方尖碑分别约六米、七米、十米高；倾斜铜环直径约四米，最高点约八米；黄光球直径约六十厘米。"
+      ],
+      "model_directory": "2_世界观人设/background/天灾_scourge/bg33_恶魔遗物/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg36",
+      "name": "bg36_地精实验室",
+      "kind": "building",
+      "directory": "2_世界观人设/background/中立_neutral/bg36_地精实验室",
+      "card": {
+        "path": "2_世界观人设/background/中立_neutral/bg36_地精实验室/bg36_地精实验室.md",
+        "sha256": "52646e62bf66723d4c7e566884cca2730829905bb6c3acf89b4eadc9cf406c41"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/中立_neutral/bg36_地精实验室/bg36_地精实验室.png",
+        "sha256": "551442809d8dbfa398bf30765fd7594f1231bf729ca28ef0c6dabe0f11f8d0c9"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/中立_neutral/bg36_地精实验室/views/bg36_地精实验室_front.png",
+          "sha256": "ca672f130a3a3d4833956220940b524e674873bf8653851c25b531e83979471b"
+        },
+        "side": {
+          "path": "2_世界观人设/background/中立_neutral/bg36_地精实验室/views/bg36_地精实验室_side.png",
+          "sha256": "9fb77e9c425c7056d4918cfac6f5427fb81497d4c065aea69839438d59d89aef"
+        },
+        "back": {
+          "path": "2_世界观人设/background/中立_neutral/bg36_地精实验室/views/bg36_地精实验室_back.png",
+          "sha256": "89007bc16490c21a4e594f4bc61a3c5875e8209ae222ba0e82bc400cc242d684"
+        }
+      },
+      "scale_evidence": [],
+      "model_directory": "2_世界观人设/background/中立_neutral/bg36_地精实验室/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "bg37",
+      "name": "bg37_天灾四级蛛魔塔",
+      "kind": "building",
+      "directory": "2_世界观人设/background/天灾_scourge/bg37_天灾四级蛛魔塔",
+      "card": {
+        "path": "2_世界观人设/background/天灾_scourge/bg37_天灾四级蛛魔塔/bg37_天灾四级蛛魔塔.md",
+        "sha256": "d0e735d9168c4ab684d2f31f529a728ab8bd2d4d8247511a315e487ee431542c"
+      },
+      "anchor": {
+        "path": "2_世界观人设/background/天灾_scourge/bg37_天灾四级蛛魔塔/bg37_天灾四级蛛魔塔.png",
+        "sha256": "03a41deff80e9b94e9fbff5756f04b7f86b50348672b9777b58364e73335e387"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/background/天灾_scourge/bg37_天灾四级蛛魔塔/views/bg37_天灾四级蛛魔塔_front.png",
+          "sha256": "cdaaa74a3d919a54d60a21fac3182686b815763bcbd4d8c325b8eaf3a7d6cb1a"
+        }
+      },
+      "scale_evidence": [],
+      "model_directory": "2_世界观人设/background/天灾_scourge/bg37_天灾四级蛛魔塔/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m1",
+      "name": "m1_Treant",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/近卫_sentinel/m1_Treant",
+      "card": {
+        "path": "2_世界观人设/characters/近卫_sentinel/m1_Treant/m1_Treant.md",
+        "sha256": "b29fe6b97474d579fe987ad422c32068e7c233a902ca5fff9b6ad0f5cad0d03e"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/近卫_sentinel/m1_Treant/m1_Treant.png",
+        "sha256": "fdc658c99a60b813dc2a2c604f1ac59d3625c77e27e0b8d0ec4b77f9dabdbbad"
+      },
+      "views": {},
+      "scale_evidence": [
+        "- 实拍级电影特效生物（动捕表演 + 实体树皮头部道具供近景），参照《指环王》树人的质感，但年轻、矮小：身高约 1.9 m，与成年人相当，是全剧兵线的基准尺。",
+        "一棵会走路的年轻古树，身高与成年男子相当，粗短敦实的树干就是躯干，深褐色的粗糙树皮上爬着湿绿苔藓和灰白地衣；两条由弯曲枝杈长成的长臂垂过膝盖，末端分出三根木指；下身是两段粗根当腿，脚是摊开的根须，扒着地面；头顶一蓬暗绿偏紫的阔叶树冠，树皮褶皱里两点深陷的暗色眼窝，没有嘴；动作沉、步子重，迈步时根须带起泥土；身上不穿衣物、不拿武器。",
+        "| 1 | 体型 / 年龄 / 种族 | 会走路的年轻古树生物，身高约 1.9 m（与成年人相当），敦实 |",
+        "- `m1-1_超级兵`：拆掉天灾这一路的近战兵营（地穴）后出现（d01 §3.3、§4 ✅）；同模型放大到 1.15，约普通的 1.3 倍、身高约 2.4 m。真人化加：树皮更厚更老、苔更深，肩背长出几根粗短木刺，叶冠更密更暗。",
+        "- 验收：① 4 秒内正→侧→背转满；② 机位、焦距与角色中心全程不动；③ 与立绘是同一棵树：叶冠颜色、苔藓分布、眼窝位置一致；④ 身高与成年人相当，不是参天巨树；手臂过膝、根须脚；⑤ 零文字零 UI；⑥ 叫声是木头声、不出人声，3.5 秒后静音。",
+        "主体：身高与成年男子相当，粗短敦实的树干就是躯干；树皮褶皱里两点深陷的暗色眼窝，没有嘴；头顶一蓬暗绿偏紫的阔叶树冠。",
+        "验收: ① 一眼是会走路的树，不是穿树皮的人、不是铠甲兵； ② 身高与成年人相当，敦实矮壮； ③ 枝杈长臂过膝、根须脚、暗绿偏紫叶冠都在； ④ 树皮里只有眼窝、没有人脸和嘴； ⑤ 零文字。",
+        "主体：身高与成年男子相当，粗短敦实的树干就是躯干；树皮褶皱里两点深陷的暗色眼窝，没有嘴；头顶一蓬暗绿偏紫的阔叶树冠。"
+      ],
+      "model_directory": "2_世界观人设/characters/近卫_sentinel/m1_Treant/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m2",
+      "name": "m2_Druid_of_the_Talon",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/近卫_sentinel/m2_Druid_of_the_Talon",
+      "card": {
+        "path": "2_世界观人设/characters/近卫_sentinel/m2_Druid_of_the_Talon/m2_Druid_of_the_Talon.md",
+        "sha256": "4f88c365e2ebd41b8578b7a6ab0b2a9cf875a77b6d13939bb8298700286db814"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/近卫_sentinel/m2_Druid_of_the_Talon/m2_Druid_of_the_Talon.png",
+        "sha256": "2c5dc637b38db931c41b3bb51656e755fcc5cfdde99e8f802ab900863184efe6"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/characters/近卫_sentinel/m2_Druid_of_the_Talon/views/m2_Druid_of_the_Talon_front.png",
+          "sha256": "f633044e80b20245c09353f322a23aabee8faded88d0c56d1f3c36bc252d6c9c"
+        },
+        "side": {
+          "path": "2_世界观人设/characters/近卫_sentinel/m2_Druid_of_the_Talon/views/m2_Druid_of_the_Talon_side.png",
+          "sha256": "9b575aef2d53188a8af1fbfeb5d4d4cdae116f059c9892dcec9bb6f892a0dc84"
+        },
+        "back": {
+          "path": "2_世界观人设/characters/近卫_sentinel/m2_Druid_of_the_Talon/views/m2_Druid_of_the_Talon_back.png",
+          "sha256": "52f7a31404abfd5bed8991e8b1bbe9ab7659f40367a1f274a172be69ffe5ada9"
+        }
+      },
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 精灵男子，成年，高挑约 1.95 m，瘦长 |",
+        "- `m2-1_超级兵`：拆掉天灾这一路的远程兵营（诅咒神庙）后出现（d01 §3.3、§4 ✅）；同模型放大到 1.1，约普通的 1.16 倍、身高约 2.2 m。真人化加：枝冠更高、两侧多一对长翎，斗篷拖到小腿，绿须更长，杖头弯钩里多悬一枚金色新月饰。",
+        "| 身高 | 约 1.95 m | 一致 | 不改 |"
+      ],
+      "model_directory": "2_世界观人设/characters/近卫_sentinel/m2_Druid_of_the_Talon/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m3",
+      "name": "m3_Glaive_Thrower",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/近卫_sentinel/m3_Glaive_Thrower",
+      "card": {
+        "path": "2_世界观人设/characters/近卫_sentinel/m3_Glaive_Thrower/m3_Glaive_Thrower.md",
+        "sha256": "b099fda7927dc860d633f73e6b3790cdda3e82fc42b32aeebe1a30f5a8a1f667"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/近卫_sentinel/m3_Glaive_Thrower/m3_Glaive_Thrower.png",
+        "sha256": "8761edbc0042f8e9ef0e0ccb25814ab2d5e3fdc0e5c62d97f66e089147cdfa06"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/characters/近卫_sentinel/m3_Glaive_Thrower/views/m3_Glaive_Thrower_front.png",
+          "sha256": "0f54ca3a9d16af3bd81b7441d90815d7d972a0660ad2ff95d7a5d6b5df13a7cd"
+        },
+        "side": {
+          "path": "2_世界观人设/characters/近卫_sentinel/m3_Glaive_Thrower/views/m3_Glaive_Thrower_side.png",
+          "sha256": "f995032b70fd82281fa0d09903ff2fe0ba38d7114d76abad03eadd343b97a38b"
+        },
+        "back": {
+          "path": "2_世界观人设/characters/近卫_sentinel/m3_Glaive_Thrower/views/m3_Glaive_Thrower_back.png",
+          "sha256": "71e86a744c171e062be0b998e7deb1d5c7b13a9653e7ba107d547da4f6f81314"
+        }
+      },
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 无乘员的金饰硬木攻城弩车，长约 4 m、高约 2.2 m，低而宽 |"
+      ],
+      "model_directory": "2_世界观人设/characters/近卫_sentinel/m3_Glaive_Thrower/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m4",
+      "name": "m4_Ghoul",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/天灾_scourge/m4_Ghoul",
+      "card": {
+        "path": "2_世界观人设/characters/天灾_scourge/m4_Ghoul/m4_Ghoul.md",
+        "sha256": "8f4ba25eee94c68d683a42b06c39dafceefeebb80b3bcf3b0959aa1f1e61dc4c"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/天灾_scourge/m4_Ghoul/m4_Ghoul.png",
+        "sha256": "cb7f3e8d09b215bc9b481a71a161bdb8b134a477b4aa60691e8a50263118362f"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/characters/天灾_scourge/m4_Ghoul/views/m4_Ghoul_front.png",
+          "sha256": "a61a7ccc389904cb083cad5da1d87989c887d79d31490a05a7a7b542fb70ed60"
+        },
+        "side": {
+          "path": "2_世界观人设/characters/天灾_scourge/m4_Ghoul/views/m4_Ghoul_side.png",
+          "sha256": "ace01b3a4422336080b8fa99b50e183a40306978e0454e144ec6e4c8381deec2"
+        },
+        "back": {
+          "path": "2_世界观人设/characters/天灾_scourge/m4_Ghoul/views/m4_Ghoul_back.png",
+          "sha256": "17f01522b508f67643dafde5847eb2898a2d0e79d15c11864ceb679598e84374"
+        }
+      },
+      "scale_evidence": [
+        "- 实拍级电影特效生物（瘦长演员动捕 + 全身假体与数字长爪）：站直约 1.8 m，但几乎从不站直——深度佝偻、长臂撑地，扑行时肩高约 1.3 m（battlefield.md 身高表），是全剧兵线的基准尺。",
+        "| 1 | 体型 / 年龄 / 种族 | 亡灵食尸鬼，站直约 1.8 m，深度佝偻、四肢着地，精瘦见筋 |"
+      ],
+      "model_directory": "2_世界观人设/characters/天灾_scourge/m4_Ghoul/model_3d",
+      "status": "grounding_refinement_required",
+      "review": "author_visual_pending_grounding_repair",
+      "current_revision": "r02"
+    },
+    {
+      "id": "m5",
+      "name": "m5_Necromancer",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/天灾_scourge/m5_Necromancer",
+      "card": {
+        "path": "2_世界观人设/characters/天灾_scourge/m5_Necromancer/m5_Necromancer.md",
+        "sha256": "5f02552e2b646d404fd8e1671a1ac68761400b7c598d09c8b5fd474d633a3dce"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/天灾_scourge/m5_Necromancer/m5_Necromancer.png",
+        "sha256": "370525542b21aa6605c52cc5244d78aa5bb4f6083a2f98e2c60efb08680ca1b7"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/characters/天灾_scourge/m5_Necromancer/views/m5_Necromancer_front.png",
+          "sha256": "e6fb5aa6f16ae00840a81dbb34676f0f1ab5bb9d725d2dfb373ba8cf5336aade"
+        },
+        "side": {
+          "path": "2_世界观人设/characters/天灾_scourge/m5_Necromancer/views/m5_Necromancer_side.png",
+          "sha256": "d1863fc19e4c1cde2c20435d9496fc40c259171450cdd6ce38d37f264b64a035"
+        },
+        "back": {
+          "path": "2_世界观人设/characters/天灾_scourge/m5_Necromancer/views/m5_Necromancer_back.png",
+          "sha256": "d2a49d1e6374982a47820c0ae6eb7a173a245386e00bd13fb2e9b071120a2873"
+        }
+      },
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 西欧白人老年男性，活人法师，瘦高枯槁约 1.85 m |",
+        "- `m5-1_超级兵`：拆掉近卫这一路的远程兵营（知识古树）后出现（d01 §3.3、§4 ✅）；同模型放大到 1.1，身高约 2.0 m。真人化加：骨饰更多、肩上一副小兽肋骨当护肩，羊角更大，骨杖更长、杖头弯钩更大。"
+      ],
+      "model_directory": "2_世界观人设/characters/天灾_scourge/m5_Necromancer/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m6",
+      "name": "m6_Meat_Wagon",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/天灾_scourge/m6_Meat_Wagon",
+      "card": {
+        "path": "2_世界观人设/characters/天灾_scourge/m6_Meat_Wagon/m6_Meat_Wagon.md",
+        "sha256": "43525536ac06f67906295e07de03e84201adc276323fdbb67198024b2ab6d1fd"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/天灾_scourge/m6_Meat_Wagon/m6_Meat_Wagon.png",
+        "sha256": "720d256c1e7250e9aeecbbc2a395137ef46209674e015840cf0715a95b845349"
+      },
+      "views": {
+        "front": {
+          "path": "2_世界观人设/characters/天灾_scourge/m6_Meat_Wagon/views/m6_Meat_Wagon_front.png",
+          "sha256": "c128c367c4018e76b4aad20f33e6767364ebc4970e1e15e17dd1bc7ab6e9e056"
+        },
+        "side": {
+          "path": "2_世界观人设/characters/天灾_scourge/m6_Meat_Wagon/views/m6_Meat_Wagon_side.png",
+          "sha256": "5d03622e88fa1ab223f0010f0a5bef94b00f1a9379a130ee6168df039f7d4862"
+        },
+        "back": {
+          "path": "2_世界观人设/characters/天灾_scourge/m6_Meat_Wagon/views/m6_Meat_Wagon_back.png",
+          "sha256": "4a924a01bc93a7556abe2b5cb03da8cdf0690fb89188f2e4aa977a4ab49761a3"
+        }
+      },
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 无乘员的木铁攻城投掷车，长约 4.5 m，抛臂竖起约 3.5 m |"
+      ],
+      "model_directory": "2_世界观人设/characters/天灾_scourge/m6_Meat_Wagon/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m7",
+      "name": "m7_Roshan",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m7_Roshan",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m7_Roshan/m7_Roshan.md",
+        "sha256": "7cb8573c18d84ca90422453c41e371bddda93e948bf7051955a0568e27e8e2e8"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m7_Roshan/m7_Roshan.png",
+        "sha256": "b62da4fd87d875da97c43cc0bfac16dd2bd79e82b1299827579929dff38bffa9"
+      },
+      "views": {},
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 巨型岩石生物，约 4.4 m，驼背，极宽极重 |"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m7_Roshan/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m8",
+      "name": "m8_Kobold",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m8_Kobold",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m8_Kobold/m8_Kobold.md",
+        "sha256": "5a2b67e5828b75a57df25c6b2ee29e3da39ec2b0c1434f000cd54a9ff582f33a"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m8_Kobold/m8_Kobold.png",
+        "sha256": "9a03bfc9a604543127c6ce701910ae931bdd9bebed873b4c34bf58d45b934ac8"
+      },
+      "views": {},
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 鼠脸穴居小怪，约 1.1 m（到成人胸口下），弓背 |",
+        "验收: ① 是鼠脸，不是狗脸（据 `ref/model/refs.md`）； ② 不戴帽子，蜡烛直接粘在光脑袋顶上、点着； ③ 蜡烛两边一对很大的圆耳朵； ④ 灰白脸毛、两腮下巴一大蓬白须毛、长白胡须、黄大门牙； ⑤ 身高只到成人胸口下，身上黄褐毛； ⑥ 短柄矿镐； ⑦ 零文字。"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m8_Kobold/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m9",
+      "name": "m9_Forest_Troll",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m9_Forest_Troll",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m9_Forest_Troll/m9_Forest_Troll.md",
+        "sha256": "3e2c983578669daa64b77ce14e74ba8b2a112f6afe6d4fee4a1d0c1d0ff57d42"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m9_Forest_Troll/m9_Forest_Troll.png",
+        "sha256": "d0c1b3835586d1cc41b4cc072f6f6bd0b4941e5e9f3879d3a9899330c93ca1ef"
+      },
+      "views": {},
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 绿皮巨魔，成年男性，瘦高约 2.1 m，长臂弓背 |"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m9_Forest_Troll/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m10",
+      "name": "m10_Gnoll_Assassin",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m10_Gnoll_Assassin",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m10_Gnoll_Assassin/m10_Gnoll_Assassin.md",
+        "sha256": "8d16fbcf5e8080eb321384398f029fd1f3c299db8f4c13eb119002842afe71e6"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m10_Gnoll_Assassin/m10_Gnoll_Assassin.png",
+        "sha256": "e57cc43554c404d661217d046e12d6cdeb52e06bc78501f70d3ee3761f47fa14"
+      },
+      "views": {},
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 鬣狗头人形，成年，约 1.9 m，前倾驼背，反关节犬腿 |"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m10_Gnoll_Assassin/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m11",
+      "name": "m11_Ghost",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m11_Ghost",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m11_Ghost/m11_Ghost.md",
+        "sha256": "f5f10a9442e99fb14b5827f44429be6c75ce3bf23f443cba3a3c9ee322278af5"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m11_Ghost/m11_Ghost.png",
+        "sha256": "112480ce33a9762c1261b03f9b6d9cd415d2f4eccdbcca51c5606ef6a1ba386a"
+      },
+      "views": {},
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 半透明雾态人形亡魂（女性轮廓），约 1.8 m，离地半尺飘浮，无脚 |"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m11_Ghost/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m12",
+      "name": "m12_Fel_Beast",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m12_Fel_Beast",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m12_Fel_Beast/m12_Fel_Beast.md",
+        "sha256": "7de8fac7403b2d95250f78da81c58862ef85d7ae65a08ba7c9bb101da97515ee"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m12_Fel_Beast/m12_Fel_Beast.png",
+        "sha256": "52e4e95214ea2a4f5d96d04a09225ba459c2d0a77b6a70972e4278288789b008"
+      },
+      "views": {},
+      "scale_evidence": [
+        "- 实拍级电影特效生物：四足恶魔兽，肩高约 0.9 m，体长约 1.8 m，比狼粗壮、比熊小；前身高、后身低，头压得很低。",
+        "一只低伏的四足恶魔兽，肩高到成年人腰部，比狼粗壮，前身高、后身低，头压得很低；全身是蓬乱粗硬的深紫色长毛，毛尖发暗；整张脸和吻部罩着一块骨白色的兽颅状骨甲，骨甲下一张大嘴，上下两排参差的尖牙，深陷的暗黄小眼藏在骨甲眼洞里；下巴和颈下垂一丛灰白色长须毛；头顶向后伸出两根很长的淡褐骨色弯须，像两根向后弯的细长角，长过整个身体；背脊上竖着一大丛黑色尖刺；四条短粗的腿，骨白色粗钩爪；压低头、肩胛耸起，随时要扑。",
+        "| 1 | 体型 / 年龄 / 种族 | 四足恶魔兽，肩高约 0.9 m，体长约 1.8 m，粗壮，前高后低 |",
+        "主体：肩高到成年人腰部，比狼粗壮，前身高、后身低，头压得很低；整张脸和吻部罩着一块骨白色的兽颅状骨甲，骨甲下一张大嘴，上下两排参差的尖牙，深陷的暗黄小眼；下巴和颈下垂一丛灰白色长须毛。",
+        "主体：肩高到成年人腰部，比狼粗壮，前身高、后身低，头压得很低；整张脸和吻部罩着一块骨白色的兽颅状骨甲，骨甲下一张大嘴，上下两排参差的尖牙，深陷的暗黄小眼藏在骨甲眼洞里；下巴和颈下垂一丛灰白色长须毛；肩胛耸起。"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m12_Fel_Beast/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m13",
+      "name": "m13_Harpy",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m13_Harpy",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m13_Harpy/m13_Harpy.md",
+        "sha256": "e9eeafdb4b7118269422ad73f164c78d6c8ead65269abc9f77e3593ebaeff09c"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m13_Harpy/m13_Harpy.png",
+        "sha256": "dad0f6f57a46588eb187c0c51298a6cbdcccd372eb82df781229d02701cb9e33"
+      },
+      "views": {},
+      "scale_evidence": [
+        "- 实拍级电影特效生物：女妖的上身与脸、双臂就是一对大翅膀（翼角留三根钩爪当手），下身是鸟腿与利爪；身高约 1.6 m，翼展约 3.5 m。",
+        "| 1 | 体型 / 年龄 / 种族 | 人首鸟翼的鸟妖（奇幻生物），女性面孔，身高约 1.6 m，翼展约 3.5 m |",
+        "- `m13-1_风暴`（Harpy Storm，模型 `HarpyWitch`，缩放 1.6 ✅）：约斥候的 1.15 倍、身高约 1.8 m、翼展约 4 m。据 `ref/model/refs.md`：同样苍白皮肤，**翅膀是靛蓝紫色**，脸上一道道紫色涡卷纹、紫唇、眼白发亮，头上一条带黄点的头巾；风暴之名在施法时以羽尖带起一阵旋风表现（创作，施法外观 ⚠️ 分卷未载）。",
+        "主体：女性的脸，脸和脖颈是苍白偏粉的皮肤，身高与普通女子相当；长而尖的耳朵向后斜伸，乱蓬蓬的赤褐色长发，额上一条金色细头箍、正中嵌一颗蓝宝石，眼周一抹暗绿，脸颊两三道红色颜料纹，金黄的猛禽眼，凶相毕露。",
+        "主体：女性的脸，脸和脖颈是苍白偏粉的皮肤，瘦削，身高与普通女子相当；长而尖的耳朵向后斜伸，乱蓬蓬的赤褐色长发，额上一条金色细头箍、正中嵌一颗蓝宝石，眼周一抹暗绿，脸颊两三道红色颜料纹，金黄的猛禽眼，凶相毕露、嘴角向下；半蹲着，翅膀半张，随时要扑起来。"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m13_Harpy/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m14",
+      "name": "m14_Giant_Wolf",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m14_Giant_Wolf",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m14_Giant_Wolf/m14_Giant_Wolf.md",
+        "sha256": "0acf2c726cf19543e0a5d2f357482375ece2c312a8837bd5ee0c0b562edb2875"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m14_Giant_Wolf/m14_Giant_Wolf.png",
+        "sha256": "d6eea20d2de06112e2623a256c3d24294456ae0009451d125254a02b23a4f518"
+      },
+      "views": {},
+      "scale_evidence": [
+        "- 实拍级电影特效生物：比真狼大一号、也粗壮得多的野狼，肩高约 1.1 m（到成年人腰上）、体长约 2 m；前身高、后身低，弓着背。",
+        "一只比寻常狼大一号、粗壮得多的野生巨狼，肩高到成年人腰上，前身高、后身低，弓着背；一身粗长蓬乱的暗紫灰色长毛，光下是明显的紫罗兰灰，背光处深紫近黑；肩颈一大圈炸开的长鬃毛，像披着一件厚毛斗篷，把头衬得又大又低；长吻、竖耳，暗黄的眼睛，上下两排长獠牙露在唇外，上犬齿特别长；吻端和四爪浅灰白；粗尾低垂；压低头，重心前移，像在盯猎物。",
+        "| 1 | 体型 / 年龄 / 种族 | 野生巨狼，成年，肩高约 1.1 m，体长约 2 m，粗壮，前高后低、弓背 |",
+        "主体：肩高到成年人腰上，前身高、后身低，弓着背；长吻、竖耳，暗黄的眼睛，上下两排长獠牙露在唇外，上犬齿特别长；压低头、重心前移。",
+        "主体：肩高到成年人腰上，前身高、后身低，弓着背；长吻、竖耳，暗黄的眼睛，上下两排长獠牙露在唇外，上犬齿特别长；压低头、重心前移，像在盯猎物。"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m14_Giant_Wolf/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m15",
+      "name": "m15_Mud_Golem",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m15_Mud_Golem",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m15_Mud_Golem/m15_Mud_Golem.md",
+        "sha256": "6706e52914dbb2b9abd06f989470da9024fc5ca317b5bac8f2ea3f56b7f78231"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m15_Mud_Golem/m15_Mud_Golem.png",
+        "sha256": "b1e66f65ca29f9375c25938db8892ebbfaef2d8b79b15ef2c0f6dfa63f95a89f"
+      },
+      "views": {},
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 石块傀儡，约 2.6 m，驼背，粗壮 |"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m15_Mud_Golem/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m16",
+      "name": "m16_Ogre",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m16_Ogre",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m16_Ogre/m16_Ogre.md",
+        "sha256": "e479f0f679df1646548e0840cd23d13b455e39b80e000e3a1d96cdbb60ef73c1"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m16_Ogre/m16_Ogre.png",
+        "sha256": "cd13868676ff4515b5143b30467a2d9bba5d99aed59bb93d6c4568c456d2e224"
+      },
+      "views": {},
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 双头食人魔，成年男性，约 2.9 m，大肚腩厚肩粗短腿 |"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m16_Ogre/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m17",
+      "name": "m17_Satyr",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m17_Satyr",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m17_Satyr/m17_Satyr.md",
+        "sha256": "42c83d218b08ac94028aa75f15dc2cccadbe9d71b089f406fe37e9cc155f3ecb"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m17_Satyr/m17_Satyr.png",
+        "sha256": "fc300933a362ff70be16111247bb045bfb722c6875970bad7cfaa0b702d69886"
+      },
+      "views": {},
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 半羊人，成年男性，约 1.9 m，瘦长佝偻、前倾 |"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m17_Satyr/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m18",
+      "name": "m18_Centaur",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m18_Centaur",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m18_Centaur/m18_Centaur.md",
+        "sha256": "57dc7165f18965b48ddfda7f8a5e979763fe3c0079e257ade874318080b4730d"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m18_Centaur/m18_Centaur.png",
+        "sha256": "8435f0011578056a936db0c6abb7a8793c35462ac764ddbe91ecdf81ce85658a"
+      },
+      "views": {},
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 半人马，成年男性，总高约 2.5 m，体长约 2.6 m，人身魁梧 |"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m18_Centaur/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m19",
+      "name": "m19_Dark_Troll",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m19_Dark_Troll",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m19_Dark_Troll/m19_Dark_Troll.md",
+        "sha256": "e4000483e196d54a6e0edda7665130e7d93f9cc1670fbd710c47ef059f0e5dce"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m19_Dark_Troll/m19_Dark_Troll.png",
+        "sha256": "67f2db1452385535e92e54176a85881fa13e6c1d2dac82b4d02e8961bf62e998"
+      },
+      "views": {},
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 蓝紫皮巨魔，成年男性，约 2.0 m，精瘦长臂弓背 |"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m19_Dark_Troll/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m20",
+      "name": "m20_Wildkin",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m20_Wildkin",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m20_Wildkin/m20_Wildkin.md",
+        "sha256": "ce148dcdc64b0b870b84cf26b09f20cf75061b3966a2975b093f6e0d9b6637c5"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m20_Wildkin/m20_Wildkin.png",
+        "sha256": "7ad8b100c40e5bc1a1fb79bf69241c72f91e8a0c274831c04f5fea109f7efe34"
+      },
+      "views": {},
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 弓背直立的熊形巨兽，弓身约 2.2 m，肩宽背厚，臂长过膝 |"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m20_Wildkin/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m21",
+      "name": "m21_Polar_Furbolg",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m21_Polar_Furbolg",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m21_Polar_Furbolg/m21_Polar_Furbolg.md",
+        "sha256": "e22b3d7a05982292972b0382ce17f48b6ba4bb1eaa256abedbf14ad2ad141c0c"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m21_Polar_Furbolg/m21_Polar_Furbolg.png",
+        "sha256": "68e889525598678e3c6c31a46f8199c16fd287293d73a089a09e98d711453b41"
+      },
+      "views": {},
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 深度弓背的白毛熊人，两腿站立，弓身约 2.3 m，宽肩厚背 |"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m21_Polar_Furbolg/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m22",
+      "name": "m22_Rock_Golem",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m22_Rock_Golem",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m22_Rock_Golem/m22_Rock_Golem.md",
+        "sha256": "eeca213d55b113e3c2398771c3fd8a28267b1cc736fa81b2364ceb42701591b1"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m22_Rock_Golem/m22_Rock_Golem.png",
+        "sha256": "3153fbb8a8206613181a1be6278be3640bcb7f702c2dd224ac0c74d4e6e94798"
+      },
+      "views": {},
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 岩石巨人，约 3.3 m，驼背 |"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m22_Rock_Golem/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m23",
+      "name": "m23_Dragonspawn",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m23_Dragonspawn",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m23_Dragonspawn/m23_Dragonspawn.md",
+        "sha256": "5d0545477eeb15d9e9e364236fb41083c30ceb8d0899afacfb08a12030dbe5bc"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m23_Dragonspawn/m23_Dragonspawn.png",
+        "sha256": "0d9f192b132567752730a52daacdb22b5941503e1e4f317ce71caef026098fd2"
+      },
+      "views": {},
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 半人马式龙人：四足长尾龙身（身长约 4 m）+ 立起的人形上身，头顶到地约 2.8 m；无翅 |"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m23_Dragonspawn/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m24",
+      "name": "m24_Black_Dragon",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m24_Black_Dragon",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m24_Black_Dragon/m24_Black_Dragon.md",
+        "sha256": "0b0ef30c6dd1afaf324891d2b91f5cc457fb6e39efe6dd8950786430ada123f3"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m24_Black_Dragon/m24_Black_Dragon.png",
+        "sha256": "fcc1116d1bb551dda2f4afc279007ab60aa10e7be13a573c2fd900bcde60bcb5"
+      },
+      "views": {},
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 西方巨龙，成年，身长约 9 m，翼展约 14 m，肩高约 3 m |"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m24_Black_Dragon/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m25",
+      "name": "m25_Jungle_Stalker",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m25_Jungle_Stalker",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m25_Jungle_Stalker/m25_Jungle_Stalker.md",
+        "sha256": "04b347b03f83f45278ead75f500fbc0ff016b267a4de411241d8dc40130220b1"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m25_Jungle_Stalker/m25_Jungle_Stalker.png",
+        "sha256": "ef0199bbbefd50b1fdd8f151059d7c516f6fe444d05000a8957c63854557f121"
+      },
+      "views": {},
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 两腿站立、深度弓背的巨猿式丛林巨兽，弓身肩高约 2.4 m，肩背极宽 |"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m25_Jungle_Stalker/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m26",
+      "name": "m26_Thunder_Lizard",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m26_Thunder_Lizard",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m26_Thunder_Lizard/m26_Thunder_Lizard.md",
+        "sha256": "6cc51f6199f4be507a1d14033919dd26de3c62b100d552df57cb13507ee09682"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m26_Thunder_Lizard/m26_Thunder_Lizard.png",
+        "sha256": "753b510ef374fbaa54a9882dc647c641e81bb23e546addd25051f83f6cda95e0"
+      },
+      "views": {},
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 剑龙 + 犀牛式四足巨兽，肩高约 2.0 m，身长约 5 m，敦实拱背 |"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m26_Thunder_Lizard/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m300",
+      "name": "m300_Weapons_Dealer",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m300_Weapons_Dealer",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m300_Weapons_Dealer/m300_Weapons_Dealer.md",
+        "sha256": "37d1ca98c971320cd1aa1b79259cc1499cb7d3e5375cb20689fcc63beaa8d1be"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m300_Weapons_Dealer/m300_Weapons_Dealer.png",
+        "sha256": "620eb6365b3b122713ca88d8e632e706dce1085306466c2c0acc171a0b179474"
+      },
+      "views": {},
+      "scale_evidence": [
+        "- 矮人演员（或常人演员加比例缩放）+ 真服装道具：身高约 1.35 m，只到常人胸口；宽肩厚背、粗臂短腿，敦实。年纪五十上下，脸被炉火和风吹得红润，眼睛浅蓝。",
+        "一名西方奇幻电影里的矮人兵器商人，年约五十，身高只到常人胸口，宽肩厚背、粗胳膊短腿，敦实有力；脸红润，粗眉下一双浅蓝色眼睛，鼻子宽大；头戴磨亮的银钢尖顶盔，盔顶一根短尖刺，盔沿压到眉上，两侧护颊，没有角；一大把金黄偏橙的长胡子蓬松厚实，一直垂到肚子，末端收成一个尖，不编辫子；银钢肩甲上压着暗酒红色厚呢肩披，垂到身侧；银钢鳞甲护胸，宽皮腰带正中一枚黄铜大圆扣；深褐粗呢裤塞进厚底皮靴；两只手各拎一把短柄方头战锤，锤头是一块比他的脑袋还大的方钢块，锤面正中一圈黄铜圆纹，锤头朝下垂在身侧；神情和气、精明，像个懂行的老铁匠在招呼顾客。",
+        "| 1 | 体型 / 年龄 / 种族 | 矮人男子，约五十岁，身高约 1.35 m，宽肩厚背、粗臂短腿 |",
+        "人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，现代服饰，现代器物，塑料感材质，游戏引擎渲染感，游戏截图质感，UI 界面，血条，头顶名牌，伤害数字，低模棱角，卡通渲染，三维动画感，Q版，牛角头盔，蓝色肩甲，鲜艳蓝色，鲜艳红色，鲜艳绿色，火枪，长管枪，编成辫子的胡子，红褐胡子，红铜胡子，白胡子，斧头，盾牌，铁砧，兵器架，摊位，柜台，招牌，常人身高，瘦高，巨型夸张大锤，战斗姿势，怒吼",
+        "主体：年约五十，身高只到常人胸口，宽肩厚背、粗胳膊短腿；脸红润，粗眉下一双浅蓝色眼睛，鼻子宽大；头戴磨亮的银钢尖顶盔，盔顶一根短尖刺，两侧护颊，没有角；金黄偏橙的长胡子蓬松厚实，垂到肚子，末端收成一个尖，不编辫子。",
+        "负面词: 人脸变形, 五官漂移, 畸形肢体, 多余手指, 画面文字, 字幕, 水印, logo, 现代服饰, 现代器物, 塑料感材质, 游戏引擎渲染感, 游戏截图质感, UI 界面, 血条, 头顶名牌, 伤害数字, 低模棱角, 卡通渲染, 三维动画感, Q版, 牛角头盔, 蓝色肩甲, 鲜艳蓝色, 鲜艳红色, 鲜艳绿色, 火枪, 长管枪, 编成辫子的胡子, 红褐胡子, 红铜胡子, 白胡子, 斧头, 盾牌, 铁砧, 兵器架, 摊位, 柜台, 招牌, 常人身高, 瘦高, 巨型夸张大锤, 战斗姿势, 怒吼, 机位移动, 镜头推拉, 背景变化, 人物位移, 换脸, 多余装备, 背景音乐, 旁白, 台词, 第二个人",
+        "验收（对照 `0_research/shop_refs/weapons_dealer/crop_ingame_compare.png`）： ① 矮人身高、宽肩短腿； ② 银钢尖顶盔、盔顶一根尖刺、没有牛角； ③ 金黄偏橙长胡子垂到肚子收成尖、不编辫； ④ 肩上暗酒红呢料，不是鲜艳队伍色； ⑤ 两手各一把方头大锤，锤头比脑袋大； ⑥ 没有火枪、斧、盾、铁砧、摊位； ⑦ 零文字。",
+        "主体：年约五十，身高只到常人胸口，宽肩厚背、粗胳膊短腿，敦实有力；脸被炉火和风吹得红润，粗眉下一双浅蓝色眼睛，鼻子宽大，神情和气、精明；头戴磨亮的银钢尖顶盔，盔顶一根短尖刺，盔沿压到眉上，两侧护颊，没有角；一大把金黄偏橙的长胡子蓬松厚实，一直垂到肚子，末端收成一个尖，不编辫子。",
+        "负面词: 人脸变形, 五官漂移, 畸形肢体, 多余手指, 画面文字, 字幕, 水印, logo, 现代服饰, 现代器物, 塑料感材质, 游戏引擎渲染感, 游戏截图质感, UI 界面, 血条, 头顶名牌, 伤害数字, 低模棱角, 卡通渲染, 三维动画感, Q版, 牛角头盔, 蓝色肩甲, 鲜艳蓝色, 鲜艳红色, 鲜艳绿色, 火枪, 长管枪, 编成辫子的胡子, 红褐胡子, 红铜胡子, 白胡子, 斧头, 盾牌, 铁砧, 兵器架, 摊位, 柜台, 招牌, 常人身高, 瘦高, 巨型夸张大锤, 战斗姿势, 怒吼, 第二个人, 换脸"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m300_Weapons_Dealer/model_3d",
+      "status": "repair_required",
+      "review": "independent_failed",
+      "current_revision": "r01",
+      "quality_report": "2_世界观人设\\characters\\中立_neutral\\m300_Weapons_Dealer\\model_3d\\r01\\inspection\\independent_review.json"
+    },
+    {
+      "id": "m301",
+      "name": "m301_Sena_the_Accessorizer",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m301_Sena_the_Accessorizer",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m301_Sena_the_Accessorizer/m301_Sena_the_Accessorizer.md",
+        "sha256": "e849575d40b3710c1f734c6c88c804118eda37a7c3140ecd4255d7ede32da0ee"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m301_Sena_the_Accessorizer/m301_Sena_the_Accessorizer.png",
+        "sha256": "5420b3a7645d717f69ec2c9eca08409888f1f3e18a49ebd295e0be71eab6f088"
+      },
+      "views": {},
+      "scale_evidence": [
+        "- 真演员 + 真服装：一位精灵族年轻女子，二十七八岁的样子，身高约 1.72 m（放大 1.3 后和英雄差不多高）；白皙皮肤，尖长的精灵耳从金发间露出耳尖；脸型柔和，蓝紫色眼睛，浅粉嘴唇。",
+        "一位西方奇幻电影里的精灵族年轻女子，二十七八岁的样子，身高与成年男子相仿，身形匀称；白皙皮肤，尖长的精灵耳从头发间露出耳尖，脸型柔和，一双蓝紫色眼睛，浅粉嘴唇；金色略带橙调的头发及肩，往一侧梳，发尾自然内卷，没有头饰；米白色亚麻上衣，泡泡袖蓬松到上臂、袖口收紧，得体的方领；灰色布腰封束腰；深蓝色厚羊毛长裙一直拖到地面，裙摆张开像一口钟，下摆一圈金线绣的涡卷花纹；两手空着，在身前轻轻交握；含笑、目光亲切，像个温和利落的乡村女摊主。",
+        "| 1 | 体型 / 年龄 / 种族 | 精灵族女子，二十七八岁，身高约 1.72 m，匀称 |",
+        "主体：二十七八岁的样子，身高与成年男子相仿，身形匀称；白皙皮肤，尖长的精灵耳从头发间露出耳尖，脸型柔和，一双蓝紫色眼睛，浅粉嘴唇；金色略带橙调的头发及肩，往一侧梳，发尾自然内卷，没有头饰。",
+        "主体：二十七八岁的样子，身高与成年男子相仿，身形匀称；白皙皮肤，尖长的精灵耳从头发间露出耳尖，脸型柔和，一双蓝紫色眼睛，浅粉嘴唇，含笑、目光亲切；金色略带橙调的头发及肩，往一侧梳，发尾自然内卷，没有头饰。"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m301_Sena_the_Accessorizer/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m302",
+      "name": "m302_Supportive_Vestments",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m302_Supportive_Vestments",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m302_Supportive_Vestments/m302_Supportive_Vestments.md",
+        "sha256": "b21c1487dd35f89cf04505915693847df547bb65c16745debaeffbef1fe7be11"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m302_Supportive_Vestments/m302_Supportive_Vestments.png",
+        "sha256": "480cf6f03c688f309793ed36e1c2a7bd880929f84a61d5555753e99847ae9ca7"
+      },
+      "views": {},
+      "scale_evidence": [
+        "- 真演员 + 真服装道具：一名精灵族年轻男子，二十出头的样子，身高约 1.75 m，瘦、手脚细长；白皙偏冷的皮肤，尖长的精灵耳从头发两侧斜着伸出；窄长脸，浅蓝色眼睛（经典图标里眼睛发蓝光，真人化不发光）。",
+        "一名西方奇幻电影里的精灵族年轻小工，二十出头的样子，身高与成年男子相仿，瘦，手脚细长；白皙偏冷的皮肤，尖长的精灵耳从头发两侧斜着伸出；窄长脸，浅蓝色眼睛；亮金色的蘑菇头，齐耳，厚刘海压到眉上；浅灰粗麻短上衣，下摆到臀，袖子挽到小臂，腰上一根旧皮带；腿上是磨旧的深褐皮护腿，绑带扎到膝下，灰黑色软皮短靴；右手握一把短柄小镐，镐头朝下垂在身侧，木柄磨得发亮，左手空着；站姿微微弓着，老实、勤快、有点拘谨。",
+        "| 1 | 体型 / 年龄 / 种族 | 精灵族年轻男子，二十出头，身高约 1.75 m，瘦、手脚细长 |",
+        "主体：二十出头的样子，身高与成年男子相仿，瘦，手脚细长；白皙偏冷的皮肤，尖长的精灵耳从头发两侧斜着伸出；窄长脸，浅蓝色眼睛；亮金色的蘑菇头，齐耳，厚刘海压到眉上。",
+        "主体：二十出头的样子，身高与成年男子相仿，瘦，手脚细长，站姿微微弓着；白皙偏冷的皮肤，尖长的精灵耳从头发两侧斜着伸出；窄长脸，浅蓝色眼睛，神情老实、有点拘谨；亮金色的蘑菇头，齐耳，厚刘海压到眉上。"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m302_Supportive_Vestments/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m303",
+      "name": "m303_Gateway_Relics",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m303_Gateway_Relics",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m303_Gateway_Relics/m303_Gateway_Relics.md",
+        "sha256": "901e97199d4adc9e89e75072d9071511230a7e7756d646a4c920e10504af4731"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m303_Gateway_Relics/m303_Gateway_Relics.png",
+        "sha256": "d0e8254e961275efbce4b3a3203c06276419b25bcfecc4fc9db4a67cb6fd99c8"
+      },
+      "views": {},
+      "scale_evidence": [
+        "- 真演员 + 真服装：一名西欧白人中年男子，四十出头，身高约 1.85 m，膀大腰圆、粗脖子、厚手掌；方脸、浓黑眉、黑色短发剪得很短，下巴两腮一层黑胡茬；脸晒得微红，眼神憨厚。",
+        "一名西方奇幻电影里的西欧白人中年壮汉，四十出头，身高约一米八五，膀大腰圆、粗脖子、厚手掌；方脸，浓黑眉，黑色短发剪得很短，下巴和两腮一层黑胡茬，脸晒得微红，眼神憨厚；浅灰色粗布短袖衫，胸口一段交叉系带，袖口往上挽到上臂，露出粗壮的胳膊；深色宽皮腰带；深褐粗布裤，膝头有补丁，塞进旧皮短靴；两手空着垂在身侧，手上有老茧；朴实、好说话，像个刚放下担子的搬运工。",
+        "| 1 | 体型 / 年龄 / 种族 | 西欧白人男子，四十出头，身高约 1.85 m，膀大腰圆 |",
+        "主体：四十出头，身高约一米八五，膀大腰圆、粗脖子、厚手掌；方脸，浓黑眉，黑色短发剪得很短，下巴和两腮一层黑胡茬，脸晒得微红，眼神憨厚。",
+        "主体：四十出头，身高约一米八五，膀大腰圆、粗脖子、厚手掌；方脸，浓黑眉，黑色短发剪得很短，下巴和两腮一层黑胡茬，脸晒得微红，眼神憨厚，嘴角带一点笑。"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m303_Gateway_Relics/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m304",
+      "name": "m304_Arcane_Sanctum",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m304_Arcane_Sanctum",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m304_Arcane_Sanctum/m304_Arcane_Sanctum.md",
+        "sha256": "f926262b73781b872eeff9194562ae137eaedf7c0eb7731b1654055d3e9a63e8"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m304_Arcane_Sanctum/m304_Arcane_Sanctum.png",
+        "sha256": "ce0bd429f8e9dee3f18d90f6cae9bba53b986130d63b3569422343a0cf4b47fa"
+      },
+      "views": {},
+      "scale_evidence": [
+        "- 真演员 + 真服装道具：一名西欧白人男法师，三十五到四十岁，身高约 1.8 m，偏瘦、站得笔直；脸刮得干净、轮廓分明，眉骨略高；棕红色短发往后梳；冰蓝色眼睛，瞳孔里一点很淡的冷光。",
+        "一名西方奇幻电影里的西欧白人男法师，三十五到四十岁，身高约一米八，偏瘦，站得笔直；脸刮得干净，轮廓分明，眉骨略高，冰蓝色的眼睛，瞳孔里有一点很淡的冷光；棕红色短发往后梳；一身深褐色厚呢长袍，下摆到小腿，前襟和腰间缀着一片片硬化皮甲片，肩头两块深褐皮护肩，腰间一根皮带，袍下露出深色裤脚和旧皮靴；右手拄一根比他本人略高的深色硬木长杖，杖顶的金属爪托着一颗拳头大的玻璃球，球里蓝白两色像云絮一样缓慢流转，只有微弱的光；沉静、有学问，带一点审视的神情。",
+        "| 1 | 体型 / 年龄 / 种族 | 西欧白人男子，三十五到四十岁，身高约 1.8 m，偏瘦挺直 |",
+        "主体：三十五到四十岁，身高约一米八，偏瘦，站得笔直；脸刮得干净，轮廓分明，眉骨略高，冰蓝色的眼睛，瞳孔里有一点很淡的冷光；棕红色短发往后梳。",
+        "主体：三十五到四十岁，身高约一米八，偏瘦，站得笔直；脸刮得干净，轮廓分明，眉骨略高，冰蓝色的眼睛，瞳孔里有一点很淡的冷光，神情沉静、带一点审视；棕红色短发往后梳。"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m304_Arcane_Sanctum/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m305",
+      "name": "m305_Ancient_Weaponry",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m305_Ancient_Weaponry",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m305_Ancient_Weaponry/m305_Ancient_Weaponry.md",
+        "sha256": "8267eea503cbed2bdac434df96c865ac5058630390721049c517dcd9db673912"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m305_Ancient_Weaponry/m305_Ancient_Weaponry.png",
+        "sha256": "2ae9309528ec042e2e2eb962ccd669fb38386876e30b25e210e15273e6e2fc64"
+      },
+      "views": {},
+      "scale_evidence": [
+        "- 真演员（高挑女演员）+ 真盔甲道具：一名精灵族女战士，看不出年纪，身高约 1.95 m，比身边的商人都高半头；身形修长、腿长，肩背有力。",
+        "一名西方奇幻电影里的精灵族女战士，身高约一米九五，比常人高出半头，身形修长、腿长，肩背有力；头戴紫黑色金属头盔，连着的面甲罩住额头、眼睛和鼻梁，面甲上两道细窄的眼缝，盔顶两侧向后斜伸出两根弯尖角，尖长的耳尖从头盔侧面伸出，露出的下半张脸是冷调的淡紫灰色皮肤，薄唇紧抿；一身紫黑色贴身鳞片甲，层层叠叠像深紫甲虫壳，带冷冷的油光，胸口一块淡紫色护心镜，双肩是一圈向外张开的尖刺护肩，腰下垂着几条紫黑色长甲裙片，细长的金属胫甲；右手反握一把巨大的骨白色新月弯刃，中间是缠旧皮条的握把，一端是弧度超过半圆、比手臂还长的新月主刃，另一端是一片小弯刃，两道刃尖都朝下；上身微微前倾，冷淡、警觉，像随时会扑出去。",
+        "| 1 | 体型 / 年龄 / 种族 | 精灵族女战士，看不出年纪，身高约 1.95 m，修长腿长 |",
+        "主体：身高约一米九五，比常人高出半头，身形修长、腿长，肩背有力；头戴紫黑色金属头盔，连着的面甲罩住额头、眼睛和鼻梁，面甲上两道细窄的眼缝，盔顶两侧向后斜伸出两根弯尖角，尖长的耳尖从头盔侧面伸出，露出的下半张脸是冷调的淡紫灰色皮肤，薄唇紧抿。",
+        "主体：身高约一米九五，比常人高出半头，身形修长、腿长，肩背有力，上身微微前倾、重心落在前脚掌；头戴紫黑色金属头盔，连着的面甲罩住额头、眼睛和鼻梁，面甲上两道细窄的眼缝，盔顶两侧向后斜伸出两根弯尖角，尖长的耳尖从头盔侧面伸出，露出的下半张脸是冷调的淡紫灰色皮肤，薄唇紧抿，神情冷淡、警觉。"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m305_Ancient_Weaponry/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m306",
+      "name": "m306_Enchanted_Artifacts",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m306_Enchanted_Artifacts",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m306_Enchanted_Artifacts/m306_Enchanted_Artifacts.md",
+        "sha256": "bbdf02be5c9e36625d1f8050b7dfc26c54a9ed0cf872cf52df90810ae48327fa"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m306_Enchanted_Artifacts/m306_Enchanted_Artifacts.png",
+        "sha256": "53a9db2d2daaca35ebc576b986f5e7586924eb854277ad7999d8185766f03974"
+      },
+      "views": {},
+      "scale_evidence": [
+        "| 1 | 体型 / 年龄 / 种族 | 一团活光（森林小精魂），连光晕约 25 cm 宽，悬在离地约 1 m |"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m306_Enchanted_Artifacts/model_3d",
+      "status": "pending",
+      "review": "not_reviewed"
+    },
+    {
+      "id": "m307",
+      "name": "m307_Protectorate",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m307_Protectorate",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m307_Protectorate/m307_Protectorate.md",
+        "sha256": "1a478b2724b28b5927da0c6e4cf194d0043f6fc4078958e505836bb66a3e6d36"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m307_Protectorate/m307_Protectorate.png",
+        "sha256": "fe416e6598eb99f2edcfcf4f43b541732562c760919724a87e00291d8385a445"
+      },
+      "views": {},
+      "scale_evidence": [
+        "- 真演员（高大男演员）+ 真盔甲道具：一名精灵族重甲武士，身高约 1.9 m，肩宽背厚，脸完全藏在头盔里。",
+        "一名西方奇幻电影里的精灵族重甲武士，身高约一米九，肩宽背厚，脸完全藏在头盔里；头戴鎏金钢闭合盔，正面深红漆的面甲只留一道竖窄缝，盔顶两侧各向上、向后斜伸出一根细长的鎏金尖角，比头还长；一身鎏金钢板甲，大块圆弧金色护肩、金色胸甲、金色护膝，板甲之间露出深红漆钢片和深红厚呢内衬，护手和护腿是深红漆钢镶金边；左手一面高及大腿的鸢形大盾，盾面深酒红、近乎黑，金色包边与金色卷纹，立在身前；右手一把银色单刃长剑，刃身微弯，剑尖朝下垂在身侧；站得很稳，沉默、端正，像守门的卫兵。",
+        "| 1 | 体型 / 年龄 / 种族 | 精灵族重甲武士（脸不露），身高约 1.9 m，肩宽背厚 |",
+        "主体：身高约一米九，肩宽背厚，脸完全藏在头盔里；头戴鎏金钢闭合盔，正面深红漆的面甲只留一道竖窄缝，盔顶两侧各向上、向后斜伸出一根细长的鎏金尖角，比头还长。",
+        "主体：身高约一米九，肩宽背厚，站得很稳，脸完全藏在头盔里；头戴鎏金钢闭合盔，正面深红漆的面甲只留一道竖窄缝，盔顶两侧各向上、向后斜伸出一根细长的鎏金尖角，比头还长。"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m307_Protectorate/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m308",
+      "name": "m308_Leragas_the_Vile",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m308_Leragas_the_Vile",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m308_Leragas_the_Vile/m308_Leragas_the_Vile.md",
+        "sha256": "9b929823366c9cbad637428488c0ef41a74d6d374c444ae6ed87480b114ad5bc"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m308_Leragas_the_Vile/m308_Leragas_the_Vile.png",
+        "sha256": "063b7238921964ebbb5360d1d5264dff8f32e9f8217472b8b29262155bbd9d23"
+      },
+      "views": {},
+      "scale_evidence": [
+        "- 真演员（瘦小的老年男演员）+ 真服装：一个枯瘦的西欧老人，七十上下，身高约 1.6 m，背微驼，比英雄矮一截；皮肤灰白，像久不见天日，满脸深皱，颧骨突出、眼窝深陷；一双浑浊却发亮的浅色眼睛，在兜帽阴影里像反着一点冷光（只是眼神亮，不发光束）。",
+        "一个西方奇幻电影里枯瘦的西欧老人，七十上下，身高约一米六，背微驼，比常人矮一截；皮肤灰白，像久不见天日，满脸深皱，颧骨突出、眼窝深陷，一双浑浊却发亮的浅色眼睛；头上深深罩着厚重的米黄偏浅金色呢料兜帽，帽沿一圈暗紫色的弯钩花纹刺绣，里衬深紫；一块黑色粗布面罩蒙住口鼻，只露出眼睛和眼周的皱纹；一身黑紫色厚呢长袍，上窄下宽，下摆拖地、张开像一口钟，袖口和下摆一圈暗金色镶边，前襟正中垂下一条紫底长布，上面一道道白色纹样，一直垂到地面；两臂微微张开在身侧，宽袖里露出灰白枯瘦、指节突出的手，手里什么都没拿；阴沉、精明、可疑，眼神从兜帽里打量来人。",
+        "| 1 | 体型 / 年龄 / 种族 | 西欧老年男子，七十上下，身高约 1.6 m，枯瘦、背微驼 |",
+        "主体：七十上下，身高约一米六，背微驼；皮肤灰白，像久不见天日，满脸深皱，颧骨突出、眼窝深陷，一双浑浊却发亮的浅色眼睛；头上深深罩着厚重的米黄偏浅金色呢料兜帽，帽沿一圈暗紫色的弯钩花纹刺绣，里衬深紫；一块黑色粗布面罩蒙住口鼻，只露出眼睛和眼周的皱纹。",
+        "主体：七十上下，身高约一米六，背微驼，枯瘦；皮肤灰白，像久不见天日，满脸深皱，颧骨突出、眼窝深陷，一双浑浊却发亮的浅色眼睛从兜帽阴影里打量镜头，阴沉、精明；头上深深罩着厚重的米黄偏浅金色呢料兜帽，帽沿一圈暗紫色的弯钩花纹刺绣，里衬深紫；一块黑色粗布面罩蒙住口鼻，只露出眼睛和眼周的皱纹。"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m308_Leragas_the_Vile/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    },
+    {
+      "id": "m309",
+      "name": "m309_Goblin_Merchant",
+      "kind": "npc",
+      "directory": "2_世界观人设/characters/中立_neutral/m309_Goblin_Merchant",
+      "card": {
+        "path": "2_世界观人设/characters/中立_neutral/m309_Goblin_Merchant/m309_Goblin_Merchant.md",
+        "sha256": "270203ef165a5bc436ce6286bd07361f876788d8373b9f9af7cfd5a43b2b993c"
+      },
+      "anchor": {
+        "path": "2_世界观人设/characters/中立_neutral/m309_Goblin_Merchant/m309_Goblin_Merchant.png",
+        "sha256": "c95f879e138c18d18dbff350fe628aca6ffe47e292360e3bade596ebb51d2147"
+      },
+      "views": {},
+      "scale_evidence": [
+        "- 实拍级电影特效生物（小个子演员加全脸假体与数字耳朵，或全 CG 动捕）：身高约 0.95 m，只到常人腰；瘦小、手脚细长、手指长。",
+        "一个西方奇幻电影里绿皮大耳的小个子妖精小贩，身高只到常人腰部，瘦小，手脚细长，手指长；一对比脸还宽的大尖耳向两侧斜伸，耳廓薄得透光；长而尖的鹰钩鼻，精明的小黄眼，阔嘴咧开一副生意人的笑，露出几颗参差的小尖牙；秃顶，耳后几撮稀疏的灰黑头发；苔绿偏橄榄色的皮肤，有细纹和斑点；紫色粗布短褂，镶一道褪色的金边，袖子卷到肘；腰上一根宽皮带，挂着一只鼓鼓的皮钱袋和一串铜钥匙；褐色短裤，光着一双长脚趾的绿脚；两只长手指的手在胸前搓着；精明、热络，笑里带点算计。",
+        "| 1 | 体型 / 年龄 / 种族 | 绿皮大耳的小个子妖精族（原典地精），中年，身高约 0.95 m，瘦小、手脚细长 |",
+        "主体：身高只到常人腰部，瘦小，手脚细长，手指长；一对比脸还宽的大尖耳向两侧斜伸，耳廓薄得透光；长而尖的鹰钩鼻，精明的小黄眼，阔嘴咧开一副生意人的笑，露出几颗参差的小尖牙；秃顶，耳后几撮稀疏的灰黑头发；苔绿偏橄榄色的皮肤，有细纹和斑点。",
+        "主体：实拍级电影特效生物，身高只到常人腰部，瘦小，手脚细长，手指长；一对比脸还宽的大尖耳向两侧斜伸，耳廓薄得透光；长而尖的鹰钩鼻，精明的小黄眼，阔嘴咧开一副生意人的笑，露出几颗参差的小尖牙；秃顶，耳后几撮稀疏的灰黑头发；苔绿偏橄榄色的皮肤，有细纹、斑点和老茧。"
+      ],
+      "model_directory": "2_世界观人设/characters/中立_neutral/m309_Goblin_Merchant/model_3d",
+      "status": "candidate_pending_review",
+      "review": "not_reviewed",
+      "current_revision": "r01"
+    }
+  ]
+}

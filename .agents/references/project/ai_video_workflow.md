@@ -34,14 +34,16 @@ Claude Code 与 Codex 共用此约定。会话结束后，以仓库里的当前�
 
 ## 跨 session 接续
 
+声音与音乐已接入 Suno 默认音频生成入口（2026-10-22）：环境音、音效、背景音乐、主题曲等统一经 API/MCP/UI，完整步骤与能力缺口处理见 [声音与音乐模块](../../skills/ai-videos-pipeline/modules/sound.md)；[共用 skill](../../skills/suno-music/SKILL.md) 在「制作、服务与资源」，接口/工作台代码与文档在「系统与代码 → 制作工具」。这是音频生成入口接入，不代表整个后期模块或真实 Suno 已验收。
+
 开工先读 `AGENTS.md` 路由的共用约定、此文档及目标模块源；管理应用改动再读 `projects/ai_video_management/README.md` 与 `specs/development/ai_video_management/`。follow-up 198 记录分类/编号，follow-up 199 记录覆盖与接续约定。运行证据在 `.audit/adhoc_agents/2026-10-06/workflow-coverage/`；后续检查重新生成证据，不把旧结论当作新文件的验收。
 
 ## 故事创作
 
-术语表（follow-up 217）：唯一源 `.agents/references/project/ai_video_glossary.json`——31 个术语的中英定义、别名、区分与分歧、来源，38 条带基数的关系，与示意时间轴；管理 UI `/workflow/glossary` 以关系图（React Flow）、时间轴与术语列表展示。新增或改名结构单位时同步此文件；中文译名未找到权威辞典的条目在 notes 里照实标注。
+术语表（follow-up 217）：唯一源 `.agents/references/project/ai_video_glossary.json`——32 个术语的中英定义、别名、区分与分歧、来源，40 条带基数的关系，与示意时间轴；管理 UI `/workflow/glossary` 以关系图（React Flow）、时间轴与术语列表展示。新增或改名结构单位时同步此文件；中文译名未找到权威辞典的条目在 notes 里照实标注。
 
 `1.3_Prompt编译与出片`：`1.3.1` 总纲（分镜要给什么、落盘、当前边界）加子页 Prompt 结构（一字段一行的短标签版式及来源字段）、固定规则与出片（人工审核，将来可切自动，follow-up 218）；内容与编译器 v4 实际行为一致（follow-up 226 改版式、每镜一页并高亮字段），参考图绑定以后再加（follow-up 214）。v5（follow-up 227）起不能只用文字出片：每镜必有 overhead（`planning/overhead.toml` → 审阅图 + 给模型的 `_overhead_ref.png` + `previz.json` 判定），按量化判据要 previz 的复杂镜渲绿幕小人偶视频（`tools/overhead_previz.py`，人偶颜色＝剧 `workflow.json` 的 `figure_colors`）（2026-10-18 follow-up 281 起默认所有镜头都不做 previz，单独要的镜写 `[meta] previz = true` 与理由）；编译把运动参考、人物正面图、场景图、说话人声样按上传顺序列在 prompt 最前并写明用法，参考缺一镜就拒绝编译；资料包 `tools/shot_pack.py`。新增子页 Seedance 写法、参考、Overhead、Previz；分镜每镜加 `cast`、`blocking`、`beats`、`lighting`。Seedance 指南出处见 `.audit/adhoc_agents/2026-10-10/prompt-references/`。v6（follow-up 228）：「参考：」一行列全（运动参考、每人三视图与声样、背景图），人物外观与场景描写分别来自人物卡「Shot prompt 外观」与背景卡「Shot prompt 场景」，加本场目的、口型与负面词，上限 5000 字；每镜 `资料包/` 复制全部参考并按 manifest 指纹随源文件更新、需重编译时失效（`tools/shot_pack.py sync`，Stop hook 每回合跑）。
-v7（follow-up 229）：参考行是 `` `key_id=>@` `` 占位（overhead / previz 用镜头 key，三视图用换装阶段或人物卡目录名，背景用环境资产目录名，声样用 `{卡}_audio`），正文按 key_id 指认，资料包里的 prompt.txt 填上传编号；管理 UI 每镜 prompt 页显示资料包。背景时段不符时另立状态变体目录 `bg{N}-{M}`（如 bg2-7 傍晚，见 pipeline `resources/assets.md`），图片由代理直接出（引擎 ElevenLabs → Codex（额度不够才换，follow-up 275），即梦只出视频（follow-up 270）），视频仍人点。
+v7（follow-up 229）：参考行是 `` `key_id=>@` `` 占位（overhead / previz 用镜头 key，三视图用换装阶段或人物卡目录名，背景用环境资产目录名，声样用 `{卡}_audio`），正文按 key_id 指认，资料包里的 prompt.txt 填上传编号；管理 UI 每镜 prompt 页显示资料包。背景时段不符时另立状态变体目录 `bg{N}-{M}`（如 bg2-7 傍晚，见 pipeline `resources/assets.md`），图片由代理直接出（引擎一律 Codex，ElevenLabs 出图须用户允许（follow-up 341），即梦只出视频（follow-up 270）），视频仍人点。
 
 `1.4_剪辑`：设计稿（follow-up 225）。`1.4.1` 总纲（四步、机器与人的分工、原则、边界）加子页选条、粗剪、精剪、锁片、AI 素材的修补与遮掩、AI 剪辑工具现状；内容来自调研，只把有出处的写成规则，出处见 `.audit/adhoc_agents/2026-10-09/edit-module/`。子页「转场」（follow-up 236）整理九种转场的功能与片例，并分出剪辑可做与须在影视改编/Prompt 编译预先设计的两类。旧剪辑工具已随旧流程删除，数据格式与工具从零设计，工作流全景状态仍为待设计。
 

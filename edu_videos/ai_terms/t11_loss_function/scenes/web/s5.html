@@ -1,0 +1,107 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  .open { position: absolute; left: var(--mx); top: 300px; }
+  .open .h2 { margin-top: 18px; }
+  .guess { position: absolute; left: var(--mx); top: 250px; display: flex; align-items: baseline; gap: 26px; white-space: nowrap; }
+  html[lang=en] .guess { font-size: 96px; }
+  .guess .blank { display: inline-block; min-width: 150px; border-bottom: 8px solid var(--ink); text-align: center; }
+  .rows { position: absolute; left: var(--mx); top: 470px; width: 1680px; }
+  .rows .row { display: grid; grid-template-columns: 300px 560px 1fr; align-items: center; padding: 16px 0; }
+  html[lang=en] .rows .row { grid-template-columns: 300px 560px 1fr; }
+  .rows .bar { height: 40px; border-radius: 12px; background: var(--surface2); position: relative; overflow: hidden; }
+  .rows .bar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); border-radius: 12px; }
+  .rows .h2 { white-space: nowrap; }
+  .lesson { position: absolute; left: var(--mx); top: 790px; }
+  .ce { position: absolute; left: var(--mx); top: 330px; }
+  .ce .h2 { margin-top: 16px; }
+  #curve { position: absolute; left: 80px; top: 230px; }
+  .ctag { position: absolute; left: 1080px; top: 236px; }
+  .cttl { position: absolute; left: 1150px; top: 330px; width: 680px; }
+  .cttl .h2 { margin-top: 18px; }
+  .csrc { position: absolute; left: 1150px; top: 800px; }
+  .scale { position: absolute; left: var(--mx); top: 280px; }
+  .scale .row { display: flex; align-items: center; gap: 40px; height: 230px; }
+  .scale .lab { width: 430px; white-space: nowrap; }
+  html[lang=en] .scale .lab { width: 720px; }
+  .scale .dn { color: var(--d-good); white-space: nowrap; }
+</style>
+
+<div class="eb eyebrow" data-zh="04 · 大模型怎么打分" data-en="04 · How big models are scored"></div>
+<div class="open" id="open"><div class="h1" data-zh="大语言模型" data-en="Language models"></div>
+  <div class="h2 ink2" data-zh="也有损失" data-en="Scored too, just not on fares"></div></div>
+
+<div class="guess display" id="guess" data-zh='床前明月<span class="blank" id="bl"><span class="accent" id="ans">光</span></span>' data-en='Twinkle, twinkle, little <span class="blank" id="bl"><span class="accent" id="ans">star</span></span>'></div>
+<div class="rows" id="rows">
+  <div class="row" id="r1"><span class="h2" data-zh="把握 90%" data-en="90% sure"></span><div class="bar"><i id="b1"></i></div><span class="h2" data-zh='&emsp;罚 <b class="c-good">0.11</b>' data-en='&emsp;Penalty <b class="c-good">0.11</b>'></span></div>
+  <div class="row" id="r2"><span class="h2" data-zh="把握 10%" data-en="10% sure"></span><div class="bar"><i id="b2"></i></div><span class="h2" data-zh='&emsp;罚 <b class="c-bad">2.30</b>' data-en='&emsp;Penalty <b class="c-bad">2.30</b>'></span></div>
+</div>
+<div class="lesson h1" id="rule" data-zh='把握小 → <span class="c-bad">罚得多</span>' data-en='Less sure → <span class="c-bad">bigger penalty</span>'></div>
+<div class="ce" id="ce"><div class="display grad" data-zh="交叉熵" data-en="Cross-entropy"></div>
+  <div class="h2 sub" data-zh="Cross-entropy" data-en=""></div></div>
+
+<svg id="curve"></svg>
+<div class="ctag eyebrow" id="ctag" data-zh="示意" data-en="Illustration"></div>
+<div class="cttl" id="cttl"><div class="h1">Llama 2</div><div class="h2 ink2" data-zh="训练损失一路往下" data-en="Loss keeps falling"></div></div>
+<div class="csrc src" id="csrc" data-zh="Touvron 等 · Meta · 2023 · 图 5" data-en="Touvron et al. · Meta · 2023 · Fig. 5"></div>
+
+<div class="scale" id="scale">
+  <div class="row" id="sc1"><span class="h2 lab" data-zh="2 个旋钮" data-en="2 knobs"></span><svg id="few" width="500" height="200"></svg><span class="h1 dn" data-zh="分 ↓" data-en="Score ↓"></span></div>
+  <div class="row" id="sc2"><span class="h2 lab" data-zh="几百亿个旋钮" data-en="Tens of billions of knobs"></span><svg id="many" width="500" height="200"></svg><span class="h1 dn" data-zh="分 ↓" data-en="Score ↓"></span></div>
+</div>
+
+<script>
+const T = EDU.tl, CE = D.ce;
+document.getElementById("b1").style.width = (CE.p_hi * 100) + "%";
+document.getElementById("b2").style.width = (CE.p_lo * 100) + "%";
+// Llama 2 训练损失：示意形状（data.py 的 curve），不是论文数据
+const W = 1000, H = 600, cv = D.curve, N = cv.length;
+const svg = d3.select("#curve").attr("width", W).attr("height", H);
+const x = d3.scaleLinear([0, N - 1], [100, W - 40]), y = d3.scaleLinear([1.6, 3.4], [H - 90, 20]);
+svg.append("line").attr("class", "axis-base").attr("x1", 100).attr("x2", W - 40).attr("y1", H - 90).attr("y2", H - 90);
+svg.append("line").attr("class", "axis-base").attr("x1", 100).attr("x2", 100).attr("y1", H - 90).attr("y2", 20);
+const ax = (t, xx, yy, anchor, rot) => svg.append("text").attr("x", xx).attr("y", yy).attr("text-anchor", anchor).attr("font-size", 28).attr("fill", css("--ink2"))
+  .attr("transform", rot ? `rotate(-90,${xx},${yy})` : null).text(t).node();
+const xl = ax(EDU.tr("读过的词元 →", "Tokens read →"), W - 40, H - 44, "end"), yl = ax(EDU.tr("损失 →", "Loss →"), 60, 20, "end", true);
+const line = svg.append("path").attr("d", d3.line().x((d, i) => x(i)).y(d => y(d))(cv)).attr("fill", "none").attr("stroke", css("--accent"))
+  .attr("stroke-width", 7).attr("stroke-linecap", "round").node();
+const end = svg.append("circle").attr("cx", x(N - 1)).attr("cy", y(cv[N - 1])).attr("r", 14).attr("fill", css("--accent")).attr("stroke", css("--surface")).attr("stroke-width", 5).node();
+const tEnd = svg.append("text").attr("x", x(N - 1)).attr("y", H - 104).attr("text-anchor", "end").attr("font-size", 32).attr("font-weight", 600).attr("fill", css("--ink"))
+  .text(EDU.tr("2 万亿", "2 trillion")).node();
+const tStill = svg.append("text").attr("x", x(N - 1)).attr("y", y(cv[N - 1]) - 40).attr("text-anchor", "end").attr("font-size", 34).attr("font-weight", 700).attr("fill", css("--d-good"))
+  .text(EDU.tr("还在降 ↓", "Still falling ↓")).node();
+// 旋钮小图：2 个 vs 一大片
+const tiny = (sel, n, cols, r) => {
+  const g = d3.select(sel);
+  for (let k = 0; k < n; k++) {
+    const cx = r + 6 + (k % cols) * (2 * r + 12), cy = r + 6 + Math.floor(k / cols) * (2 * r + 12), a = (k * 47 % 270 - 135) * Math.PI / 180;
+    g.append("circle").attr("cx", cx).attr("cy", cy).attr("r", r).attr("fill", css("--surface")).attr("stroke", css("--hair")).attr("stroke-width", 2);
+    g.append("line").attr("x1", cx).attr("y1", cy).attr("x2", cx + Math.sin(a) * r * .75).attr("y2", cy - Math.cos(a) * r * .75).attr("stroke", css("--ink")).attr("stroke-width", Math.max(2, r / 6)).attr("stroke-linecap", "round");
+  }
+};
+tiny("#few", 2, 2, 60); tiny("#many", 96, 16, 9.5);
+
+gsap.set(["#open", "#guess", "#ans", "#rows", "#r1", "#r2", "#rule", "#ce", "#curve", line, end, tEnd, tStill, xl, yl, "#ctag", "#cttl", "#csrc", "#scale", "#sc1", "#sc2"], { opacity: 0 });
+EDU.in(".eb", 0);
+// l38 大语言模型，训练时也有个分
+EDU.in("#open", EDU.t("l38", .1));
+// l39 猜下一个词：床前明月 __
+EDU.out("#open", EDU.t("l39")); EDU.in("#guess", EDU.t("l39", .1)); EDU.in("#ans", EDU.t("l40", .1));   // l39 只问「后面接什么」，答案到 l40 才揭晓
+// l40 把握越小，罚得越多
+EDU.in("#rule", EDU.t("l40", .55));
+// l41 九成把握几乎不罚，一成罚得多得多
+EDU.out("#rule", EDU.t("l41")); EDU.in("#rows", EDU.t("l41"), { y: 0, d: .01 }); EDU.in("#r1", EDU.t("l41", .05)); EDU.in("#r2", EDU.t("l41", .5));
+// l42 交叉熵
+EDU.out(["#guess", "#rows"], EDU.t("l42")); EDU.in("#ce", EDU.t("l42", .15));
+// l43 Llama 2 把这个分画成曲线，一路往下
+EDU.out("#ce", EDU.t("l43")); EDU.in("#curve", EDU.t("l43", .05), { y: 0, d: .01 });
+EDU.in([xl, yl], EDU.t("l43", .1)); EDU.in("#cttl", EDU.t("l43", .3)); EDU.in(["#ctag", "#csrc"], EDU.t("l43", .35));
+T.set(line, { opacity: 1 }, EDU.t("l43", .45)); EDU.draw(line, EDU.t("l43", .45), 2.2);
+// l44 读完两万亿个词元
+EDU.in([end, tEnd], EDU.t("l44", .4));
+// l45 还在往下降
+EDU.in(tStill, EDU.t("l45", .2));
+// l46 几百亿个旋钮也好，两个也好：把分压下去
+EDU.out(["#curve", "#cttl", "#ctag", "#csrc"], EDU.t("l46")); EDU.in("#scale", EDU.t("l46"), { y: 0, d: .01 });
+EDU.in("#sc1", EDU.t("l46", .05)); EDU.in("#sc2", EDU.t("l46", .3));
+EDU.out(["#scale", ".eb"], EDU.S.duration - .5);
+</script>

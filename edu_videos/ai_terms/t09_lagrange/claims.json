@@ -1,0 +1,158 @@
+{
+ "note": "事实台账：讲稿与画面上每个事实、数字、专业概念一条，写明出处与原文原话。实验算出的写 source: \"experiment\"，并指到 scenes/data.py 里的断言；比方里的虚构情节写 source: \"analogy\"。核对记录见 research.md。",
+ "claims": [
+  {
+   "id": "C01",
+   "lines": [
+    "l03"
+   ],
+   "claim": "两百多年前，拉格朗日给出这个方法（1788《分析力学》）",
+   "screen": [
+    "1788 · 《分析力学》",
+    "1788 · Mécanique analytique"
+   ],
+   "source": "Lagrange, Mécanique analytique, Paris 1788；Wanner, Woudschoten 2015",
+   "quote": "it was not until his path-breaking tour de force Méchanique analytique (1788), that he clearly expressed the rule in its modern form"
+  },
+  {
+   "id": "C02",
+   "lines": [
+    "l15",
+    "l16",
+    "l17",
+    "l18",
+    "l19",
+    "l20",
+    "l21"
+   ],
+   "claim": "f = 10 − |p − (2.4, 1.8)|²，围栏半径 1.5：λ=0 到山顶；按越界距离涨价 0 → 1.5 → 2.25 → 2.63 → … → 3；λ=3 正好停在围栏上，高度 7.75；λ=4 在圈内",
+   "screen": [
+    "λ = 0",
+    "λ = 1.5",
+    "λ = 3",
+    "7.75",
+    "λ = 4"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：probe 与 steps 的断言"
+  },
+  {
+   "id": "C03",
+   "lines": [
+    "l22",
+    "l23"
+   ],
+   "claim": "最优点上，坡度方向与围栏外法线同向（等高线与围栏相切），坡度大小等于 λ = 3",
+   "screen": [
+    "相切"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：cos > 0.9999、|∇f| ≈ λ"
+  },
+  {
+   "id": "C04",
+   "lines": [
+    "l24",
+    "l25",
+    "l26",
+    "l27"
+   ],
+   "claim": "半径 1.5 → 1.6，最高点 7.75 → 8.04，多 0.29 ≈ 3 × 0.1",
+   "screen": [
+    "7.75 → 8.04",
+    "+0.29 ≈ 3 × 0.1"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：top2、gain 的断言"
+  },
+  {
+   "id": "C05",
+   "lines": [
+    "l28"
+   ],
+   "claim": "拉格朗日乘子在经济学里解释为影子价格（约束放宽一单位，最优值的增量）",
+   "screen": [
+    "影子价格",
+    "Shadow price"
+   ],
+   "source": "Boyd & Vandenberghe, Convex Optimization (2004) §5.6 Perturbation and sensitivity analysis",
+   "quote": "the optimal Lagrange multipliers ... give the local sensitivity of the optimal value with respect to constraint perturbations"
+  },
+  {
+   "id": "C06",
+   "lines": [
+    "l29"
+   ],
+   "claim": "山顶在围栏内时，调价收在 λ = 0（约束不起作用）",
+   "screen": [
+    "λ = 0"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：peak_in 的断言"
+  },
+  {
+   "id": "C07",
+   "lines": [
+    "l31",
+    "l32",
+    "l33",
+    "l34",
+    "l35",
+    "l36"
+   ],
+   "claim": "Safe RLHF（Dai 等，北京大学 PKU-Alignment，arXiv 2023-10，ICLR 2024）：有用与有害分开打分（奖励模型 / 代价模型），在代价约束下最大化奖励，用拉格朗日方法在微调中动态调整两者平衡；超标时 λ 升、守住时 λ 降",
+   "screen": [
+    "Safe RLHF",
+    "Dai 等 · ICLR 2024",
+    "有用 − λ × 有害"
+   ],
+   "source": "Dai et al., Safe RLHF: Safe Reinforcement Learning from Human Feedback, arXiv:2310.12773；ICLR 2024 spotlight",
+   "quote": "Leveraging the Lagrangian method to solve this constrained problem, Safe RLHF dynamically adjusts the balance between the two objectives during fine-tuning."
+  },
+  {
+   "id": "C08",
+   "lines": [
+    "l38"
+   ],
+   "claim": "正则化的扣分系数，与范数约束的拉格朗日函数里的乘子是同一思路",
+   "screen": [
+    "正则化",
+    "Regularization"
+   ],
+   "source": "Goodfellow, Bengio, Courville, Deep Learning (2016) §7.2.2 Norm Penalties as Constrained Optimization",
+   "quote": "We can think of a parameter norm penalty as imposing a constraint on the weights."
+  },
+  {
+   "id": "C09",
+   "lines": [
+    "l39"
+   ],
+   "claim": "训练聊天模型时加 KL 惩罚，别离原模型（SFT 模型）太远，系数 β",
+   "screen": [
+    "别离原模型太远",
+    "Stay close to the original"
+   ],
+   "source": "Ouyang et al., Training language models to follow instructions with human feedback (InstructGPT), 2022",
+   "quote": "we add a per-token KL penalty from the SFT model at each token to mitigate over-optimization of the reward model"
+  },
+  {
+   "id": "C10",
+   "lines": [
+    "l07",
+    "l08",
+    "l09",
+    "l10"
+   ],
+   "claim": "家长与孩子玩游戏的比方（一小时、一块钱）",
+   "source": "analogy"
+  },
+  {
+   "id": "C11",
+   "lines": [
+    "l02"
+   ],
+   "claim": "英文 l02 的引号是两句口头要求（“Do your best” / “never cross this line”），不是引用出处",
+   "source": "analogy"
+  }
+ ]
+}

@@ -1,0 +1,121 @@
+/* v5 双审、rubric 评分、问题清单（用户 2026-11-08） */
+.rv-score { display: inline-block; min-width: 1.6em; text-align: center; font-weight: 700; font-size: 12px; padding: 0 5px; border-radius: 4px;
+  font-variant-numeric: tabular-nums; cursor: default; }
+.rv-s0 { background: #7f1d1d; color: #fff; }
+.rv-s1 { background: #fee2e2; color: #991b1b; }
+.rv-s2 { background: #fef3c7; color: #92400e; }
+.rv-s3 { background: #dcfce7; color: #166534; }
+.rv-sna { background: #f3f4f6; color: #9ca3af; }
+.rv-verdict { font-style: normal; font-size: 11px; font-weight: 600; padding: 0 5px; border-radius: 4px; margin-left: 3px; white-space: nowrap; }
+.rv-verdict-dispute { background: #ffedd5; color: #9a3412; border: 1px solid #fdba74; }
+.rv-verdict-audit { background: #e0f2fe; color: #075985; border: 1px solid #7dd3fc; }
+.rv-crit { font-style: normal; font-size: 10.5px; color: #991b1b; border: 1px solid #fca5a5; border-radius: 3px; padding: 0 3px; margin-left: 4px; }
+.rv-legend { font-size: 12px; color: #4b5563; display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; }
+.rv-dimname { font-weight: 600; }
+
+/* 大类页评分表 */
+.rv-rubric { font-size: 13px; }
+.rv-rubric thead th { white-space: nowrap; }
+.rv-rubric .rv-grp { text-align: center; border-left: 2px solid #e5e7eb; }
+.rv-grp-id { font-family: ui-monospace, Consolas, monospace; font-size: 11.5px; }
+.rv-col { text-align: center; white-space: nowrap; width: 1%; }
+.rv-col-final { border-right: 2px solid #e5e7eb; }
+.rv-q { min-width: 14em; max-width: 26em; color: #374151; line-height: 1.5; }
+.rv-rubric tbody th { white-space: normal; min-width: 7em; }
+.rv-rubric tr.rv-low > th:first-child { box-shadow: inset 3px 0 0 #dc2626; }
+.rv-rubric tr.rv-disputed > th:first-child { box-shadow: inset 3px 0 0 #ea580c; }
+.rv-detail > td { background: #f9fafb; }
+.rv-ev-block { margin: 2px 0 8px; font-size: 12.5px; line-height: 1.55; }
+.rv-ev-block p { margin: 2px 0; }
+.rv-ev-item { font-family: ui-monospace, Consolas, monospace; font-size: 11.5px; }
+.rv-ev-who { font-weight: 600; color: #374151; margin-right: 4px; }
+.rv-ev { min-width: 12em; font-size: 12.5px; line-height: 1.5; }
+
+/* 审查单页的双审标签 */
+.rv-chip5 { min-width: 13em; }
+.rv-istate { font-style: normal; font-size: 11px; font-weight: 600; margin-left: 4px; padding: 0 5px; border-radius: 4px; background: #f3f4f6; color: #6b7280; }
+.rv-istate-done { background: #dcfce7; color: #166534; }
+.rv-istate-failed { background: #fee2e2; color: #991b1b; }
+.rv-istate-adjudicating { background: #ffedd5; color: #9a3412; }
+.rr-agent-adjudicating { border-color: #fdba74; background: #fff7ed; }
+.rv-slotline { font-size: 11.5px; color: #4b5563; }
+.rv-slotline b { display: inline-block; width: 1.1em; color: #0e6b66; }
+.rv-slot-done { color: #166534; }
+.rv-slot-failed { color: #991b1b; }
+.rv-attest { font-style: normal; font-size: 10.5px; color: #075985; }
+.rv-judging { font-size: 12px; font-weight: 600; color: #9a3412; margin-left: 6px; }
+
+/* 详情页两位审稿人并排 */
+.rv-slots { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 10px; }
+.rv-slot { border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 12px; background: #fff; min-width: 0; }
+.rv-slot-card-done { border-color: #bbf7d0; }
+.rv-slot-card-failed { border-color: #fecaca; background: #fffafa; }
+.rv-slot h3 { font-size: 14px; margin: 0 0 4px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.rv-slot-key { font-size: 12px; font-weight: 700; color: #fff; background: #0e6b66; border-radius: 4px; padding: 0 6px; }
+.rv-slot .rr-facts { font-size: 12.5px; }
+.rv-slot .rr-facts code { font-size: 11.5px; word-break: break-all; }
+.rv-slot-scores { font-size: 12.5px; margin: 6px 0 0; }
+.rv-slot-scores th, .rv-slot-scores td { padding: 4px 6px; }
+.rv-reconcile { font-size: 12.5px; }
+
+/* 问题清单：摘要卡、循环条、表 */
+.rv-summary { border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px 14px 8px; margin: 10px 0; background: #fff; }
+.review-run .rv-summary h2 { margin: 4px 0 6px; }
+.rv-summary-step { font-size: 12px; font-weight: 600; color: #0e6b66; background: #ecfdf5; border-radius: 10px; padding: 0 8px; }
+.rv-summary-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; margin: 3px 0; }
+.rv-summary-k { width: 3em; color: #6b7280; font-size: 12px; }
+.rv-chip { text-decoration: none; color: #1f2937; font-variant-numeric: tabular-nums; padding: 1px 6px 1px 1px; border-radius: 6px; border: 1px solid transparent; }
+.rv-chip:hover { border-color: #d1d5db; }
+.rv-summary-note { font-size: 13px; margin: 6px 0 0; }
+.rv-level, .rv-status, .rv-cost { display: inline-block; font-size: 11.5px; font-weight: 600; padding: 0 7px; border-radius: 8px; white-space: nowrap; }
+.rv-level-critical { background: #dc2626; color: #fff; }
+.rv-level-major { background: #f97316; color: #fff; }
+.rv-level-minor { background: #e5e7eb; color: #374151; }
+.rv-level-verify { background: #2563eb; color: #fff; }
+.rv-status-open { background: #fee2e2; color: #991b1b; }
+.rv-status-planned { background: #fef3c7; color: #92400e; }
+.rv-status-implemented { background: #dcfce7; color: #166534; }
+.rv-status-wontfix { background: #f3f4f6; color: #4b5563; }
+.rv-cost-cheap { background: #ecfdf5; color: #047857; }
+.rv-cost-paid { background: #fdf2f8; color: #9d174d; }
+.rv-loopbox { margin: 8px 0 10px; }
+.rv-loop { list-style: none; display: flex; flex-wrap: wrap; gap: 0; padding: 0; margin: 0; font-size: 13px; }
+.rv-loop li { position: relative; padding: 4px 14px 4px 18px; background: #f3f4f6; color: #6b7280; margin-right: 2px;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%, 10px 50%); }
+.rv-loop li:first-child { padding-left: 12px; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%); }
+.rv-loop li:last-child::after { content: " ↺"; }
+.rv-loop .rv-loop-done { background: #dcfce7; color: #166534; }
+.rv-loop .rv-loop-now { background: #0e6b66; color: #fff; font-weight: 600; }
+.rv-loop-note { font-size: 13px; margin: 6px 0 0; }
+.rv-loop-blocked { color: #7c2d12; }
+.rv-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 8px 0; font-size: 13px; }
+.rv-select { display: inline-flex; align-items: center; gap: 4px; color: #4b5563; }
+.rv-select select { font-size: 13px; padding: 2px 4px; border: 1px solid #d1d5db; border-radius: 4px; background: #fff; max-width: 14em; }
+.rv-clear { font-size: 12.5px; border: 1px solid #d1d5db; background: #fff; border-radius: 4px; padding: 1px 8px; cursor: pointer; }
+.review-run.review-issues { max-width: 1440px; }
+.rv-issues { font-size: 13px; }
+.rv-issues td { line-height: 1.5; }
+.rv-issues thead th { white-space: nowrap; }
+.rv-id { font-family: ui-monospace, Consolas, monospace; font-size: 12px; }
+.rv-cat { min-width: 8em; max-width: 13em; }
+.rv-cat > * { display: block; }
+.rv-dim { color: #374151; font-size: 12.5px; }
+.rv-shots { min-width: 5em; max-width: 10em; font-weight: 600; word-break: break-word; }
+.rv-problem { min-width: 16em; max-width: 30em; }
+.rv-fix, .rv-solution { min-width: 11em; max-width: 20em; }
+.rv-reason { display: block; font-size: 12px; color: #4b5563; margin-top: 2px; }
+.rv-scores { display: inline-flex; gap: 3px; align-items: center; margin-left: 6px; font-size: 12px; }
+.rv-issues tr[data-level="critical"] > th:first-child { box-shadow: inset 3px 0 0 #dc2626; }
+.rv-issues tr[data-level="major"] > th:first-child { box-shadow: inset 3px 0 0 #f97316; }
+.rv-issues tr[data-level="verify"] > th:first-child { box-shadow: inset 3px 0 0 #2563eb; }
+.rv-issues tr[data-status="implemented"] td, .rv-issues tr[data-status="wontfix"] td { color: #6b7280; }
+.rv-issues code, .rv-detail code { font-size: 12px; background: #f3f4f6; padding: 0 4px; border-radius: 3px; }
+.rv-detail-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 14px; font-size: 12.5px; }
+.rv-detail-grid h4 { margin: 2px 0 4px; font-size: 12.5px; color: #4b5563; }
+.rv-evidence, .rv-history { margin: 0; padding-left: 18px; line-height: 1.55; }
+.rv-evidence li, .rv-history li { margin: 2px 0; }
+.rv-rows summary { cursor: pointer; color: #0e6b66; font-size: 12px; }
+.rv-rows pre { white-space: pre-wrap; word-break: break-word; font-size: 11.5px; background: #fff; border: 1px solid #e5e7eb; border-radius: 4px; padding: 6px; max-height: 240px; overflow: auto; }
+@media (max-width: 760px) { .rv-detail-grid { grid-template-columns: 1fr; } }
+.rl-method { margin: 2px 0 4px; padding-left: 20px; }
+.rv-issues td:last-child .rl-more { white-space: nowrap; }

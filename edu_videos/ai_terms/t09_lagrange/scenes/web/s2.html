@@ -1,0 +1,88 @@
+<style>
+  .eyebrow-top { position: absolute; left: var(--mx); top: var(--mt); }
+  .def { position: absolute; left: var(--mx); right: var(--mx); top: 230px; }
+  .def .h1 { margin-top: 16px; }
+  .pair { display: flex; gap: 40px; margin-top: 56px; }
+  .pair .card { width: 560px; padding: 40px 48px; }
+  html[lang=en] .pair .card { width: 680px; }
+  .pair .h2 { margin-top: 14px; }
+  .swap { position: absolute; left: var(--mx); top: 230px; display: flex; align-items: center; gap: 70px; }
+  .swap .col { display: flex; flex-direction: column; align-items: center; gap: 22px; }
+  .swap .arr { font-size: var(--fs-h1); color: var(--faint); font-weight: 600; }
+  .lam { position: absolute; left: var(--mx); top: 330px; display: flex; align-items: center; gap: 40px; }
+  .lam .sym { font-size: 150px; font-weight: 700; line-height: 1; }
+  .ill { position: absolute; object-fit: contain;
+         -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 52%, #000 62%, transparent 100%);
+                 mask-image: radial-gradient(ellipse 72% 70% at 50% 52%, #000 62%, transparent 100%); }
+  .big-ill { left: 10px; top: 170px; width: 1060px; height: 596px; }
+  .right { position: absolute; left: 1120px; top: 280px; width: 700px; }
+  .right .h1, .right .display { margin-top: 12px; }
+  .rows .row { display: grid; grid-template-columns: 1fr auto; align-items: baseline; padding: 22px 0; border-top: 1px solid var(--hair); }
+  .rows .row .h2 { white-space: nowrap; }
+  .rows .row b { font-size: var(--fs-h2); font-weight: 700; white-space: nowrap; }
+</style>
+
+<div class="eyebrow-top eyebrow" data-zh="01 · 拉格朗日乘子是什么" data-en="01 · What is a Lagrange multiplier?"></div>
+
+<div class="def" id="def">
+  <div class="h1" id="dh" data-zh="带约束的最优化" data-en="Constrained optimization"></div>
+  <div class="pair">
+    <div class="card" id="cg"><div class="eyebrow" data-zh="目标" data-en="Goal"></div><div class="h2 c-good" data-zh="做到最好" data-en="Make it the best"></div></div>
+    <div class="card" id="cc"><div class="eyebrow" data-zh="约束" data-en="Constraint"></div><div class="h2 c-bad" data-zh="不许越线" data-en="Don’t cross the line"></div></div>
+  </div>
+</div>
+
+<div class="swap" id="swap">
+  <div class="col" id="wall"><svg width="220" height="220" viewBox="0 0 220 220">
+      <g fill="var(--surface2)" stroke="var(--ink)" stroke-width="6">
+        <rect x="30" y="40" width="70" height="40" rx="6"/><rect x="110" y="40" width="70" height="40" rx="6"/>
+        <rect x="10" y="90" width="70" height="40" rx="6"/><rect x="90" y="90" width="70" height="40" rx="6"/><rect x="170" y="90" width="40" height="40" rx="6"/>
+        <rect x="30" y="140" width="70" height="40" rx="6"/><rect x="110" y="140" width="70" height="40" rx="6"/></g>
+      <path id="xmark" d="M30 30 L190 190 M190 30 L30 190" stroke="var(--d-bad)" stroke-width="12" stroke-linecap="round"/></svg>
+    <div class="h2 sub" data-zh="不立墙" data-en="No wall"></div></div>
+  <div class="arr" id="arr">→</div>
+  <div class="col" id="tag"><svg width="260" height="220" viewBox="0 0 260 220">
+      <path d="M20 60 L170 60 L240 110 L170 160 L20 160 Z" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="7" stroke-linejoin="round"/>
+      <circle cx="185" cy="110" r="11" fill="var(--surface)" stroke="var(--accent)" stroke-width="6"/>
+      <text x="92" y="134" text-anchor="middle" font-size="76" font-weight="700" fill="var(--accent-text)">λ</text></svg>
+    <div class="h2 accent" data-zh="改成标价" data-en="A price instead"></div></div>
+</div>
+<div class="lam" id="lam"><span class="sym accent">λ</span>
+  <div><div class="h2" data-zh="单价 λ：拉格朗日乘子" data-en="λ: the Lagrange multiplier"></div>
+    <div class="body ink2" style="margin-top:10px" data-zh="越线 → 扣分" data-en="Cross it → lose points"></div></div></div>
+
+<img class="ill big-ill" id="kid" src="img/clay_kid.png">
+<div class="right" id="k1"><div class="eyebrow" data-zh="规定" data-en="The rule"></div>
+  <div class="h1" data-zh="每天最多 1 小时" data-en="Max 1 hour a day"></div></div>
+<div class="right rows" id="k2">
+  <div class="row" data-zh='<span class="h2">多玩 1 分钟</span><b class="c-bad">−1 块</b>' data-en='<span class="h2">1 minute over</span><b class="c-bad">−$1</b>'></div>
+  <div class="row" data-zh='<span class="h2">少玩 1 分钟</span><b class="c-good">+1 块</b>' data-en='<span class="h2">1 minute under</span><b class="c-good">+$1</b>'></div></div>
+<div class="right rows" id="k3">
+  <div class="row" data-zh='<span class="h2">价太低</span><b class="c-bad">照样超</b>' data-en='<span class="h2">Too low</span><b class="c-bad">Goes over</b>'></div>
+  <div class="row" data-zh='<span class="h2">价太高</span><b class="c-neutral">不玩了</b>' data-en='<span class="h2">Too high</span><b class="c-neutral">Quits</b>'></div>
+  <div class="row" id="k3c" data-zh='<span class="h2">价刚好</span><b class="c-good">≈ 1 小时</b>' data-en='<span class="h2">Just right</span><b class="c-good">≈ 1 hour</b>'></div></div>
+<div class="right" id="k4"><div class="eyebrow" data-zh="刚好的价" data-en="The just-right price"></div>
+  <div class="display grad" style="font-size:240px;line-height:1">λ</div></div>
+
+<script>
+gsap.set(["#dh", "#cg", "#cc", "#swap", "#arr", "#tag", "#xmark", "#lam", "#kid", "#k1", "#k2", "#k2 .row", "#k3", "#k3 .row", "#k4"], { opacity: 0 });
+EDU.in(".eyebrow-top", 0);
+// l04 目标＋约束 → 带约束的最优化
+EDU.in("#cc", EDU.t("l04", .05)); EDU.in("#cg", EDU.t("l04", .3)); EDU.in("#dh", EDU.t("l04", .65));
+// l05 不立墙，改成标价
+EDU.out("#def", EDU.t("l05")); EDU.in("#swap", EDU.t("l05", .02)); EDU.in("#xmark", EDU.t("l05", .3));
+EDU.in("#arr", EDU.t("l05", .5)); EDU.in("#tag", EDU.t("l05", .6));
+// l06 越线一点扣一点分；单价 λ
+EDU.out("#swap", EDU.t("l06", .05)); EDU.in("#lam", EDU.t("l06", .1));
+// l07 孩子与规定
+EDU.out(["#swap", "#lam"], EDU.t("l07")); EDU.in("#kid", EDU.t("l07", .03), { y: 12, d: .9 }); EDU.in("#k1", EDU.t("l07", .35));
+// l08 多玩扣钱、少玩奖钱
+EDU.out("#k1", EDU.t("l08")); EDU.in("#k2", EDU.t("l08", .02), { y: 0, d: .01 });
+EDU.in("#k2 .row:nth-child(1)", EDU.t("l08", .1)); EDU.in("#k2 .row:nth-child(2)", EDU.t("l08", .6));
+// l09 价太低 / 太高
+EDU.out("#k2", EDU.t("l09")); EDU.in("#k3", EDU.t("l09", .02), { y: 0, d: .01 });
+EDU.in("#k3 .row:nth-child(1)", EDU.t("l09", .05)); EDU.in("#k3 .row:nth-child(2)", EDU.t("l09", .5));
+// l10 价刚好 → 停在一小时；这个价就是 λ
+EDU.in("#k3c", EDU.t("l10", .05));
+EDU.out("#k3", EDU.t("l10", .6)); EDU.in("#k4", EDU.t("l10", .65));
+</script>

@@ -1,0 +1,52 @@
+<style>
+  .tabs { position: absolute; left: var(--mx); right: var(--mx); top: var(--mt); display: flex; gap: 56px; }
+  .tabs .tab.eyebrow { letter-spacing: .02em; text-transform: none; }
+  .tabs .chap { align-self: center; margin-right: 8px; }
+  .tab { font-size: var(--fs-caption); font-weight: 500; color: var(--faint); padding-bottom: 12px; border-bottom: 2px solid transparent; }
+  .tab.on { color: var(--ink); border-color: var(--accent); }
+  .open { position: absolute; left: var(--mx); top: 360px; }
+  .open .h1 { margin-top: 18px; }
+  .case { position: absolute; left: var(--mx); top: 250px; width: 1680px; }
+  .case .display { font-size: 160px; line-height: 1; }
+  .case .h2 { margin-top: 26px; max-width: 1500px; }
+  .case .eyebrow + .display, .case .eyebrow + .flow, .case .eyebrow + .h1 { margin-top: 22px; }
+  .case .note { margin-top: 18px; }
+  .flow { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .flow > div { white-space: nowrap; }
+  .flow .n { font-size: 120px; font-weight: 700; line-height: 1; letter-spacing: -.01em; }
+  .flow .u { font-size: var(--fs-h2); font-weight: 600; margin-left: .35em; }
+  .flow .arr { font-size: var(--fs-h2); font-weight: 600; color: var(--sub); }
+  .quote { font-size: 72px; font-weight: 700; line-height: 1.25; }
+  .src { position: absolute; left: var(--mx); top: 860px; }
+  .close { position: absolute; left: var(--mx); top: 330px; width: 1600px; }
+  .close .h2 { margin-top: 22px; }
+</style>
+
+<div class="open" id="open"><div class="eyebrow" data-zh="04 · 一个真实的例子" data-en="04 · A real example"></div>
+  <div class="h1" data-zh="谷歌流感趋势" data-en="Google Flu Trends"></div>
+  <div class="h2 sub" style="margin-top:18px" data-zh="用搜索估流感就诊比例" data-en="Estimating flu from searches"></div></div>
+
+<div class="case" id="f1"><div class="eyebrow" data-zh="最初的版本" data-en="The first version"></div>
+  <div class="flow"><div data-zh='<span class="n">5000万</span><span class="u sub">个搜索词</span>' data-en='<span class="n">50M</span><span class="u sub">search terms</span>'></div>
+    <div class="arr" data-zh="远多于" data-en="far more than"></div><div data-zh='<span class="n accent">1152</span><span class="u sub">个数据点</span>' data-en='<span class="n accent">1,152</span><span class="u sub">data points</span>'></div></div></div>
+<div class="case" id="f1b"><div class="h1" data-zh='碰巧在<span class="accent">冬天</span>搜得多的词' data-en='Some terms just <span class="accent">peak in winter</span>'></div></div>
+<div class="case" id="f2"><div class="quote" data-zh='“一部分在测流感，<br><span class="accent">一部分在测冬天</span>”' data-en='“Part flu detector,<br><span class="accent">part winter detector</span>”'></div>
+  <div class="body ink2 note" data-zh="研究者：这是过拟合" data-en="Verdict: overfitting"></div></div>
+<div class="case" id="f3"><div class="eyebrow" data-zh="后来的版本 · 2011–2013" data-en="Later versions · 2011–2013"></div>
+  <div class="display c-bad" data-zh='<span id="n100">100</span><span class="faint"> / 108 周</span>' data-en='<span id="n100">100</span><span class="faint"> / 108</span>'></div>
+  <div class="h2" data-zh="流感估计偏高" data-en="weeks overestimated"></div></div>
+<div class="src" id="s0" data-zh="Lazer 等 ·《Science》· 2014" data-en="Lazer et al. · Science · 2014"></div>
+
+<script>
+gsap.set(["#open", "#f1", "#f1b", "#f2", "#f3", "#s0"], { opacity: 0 });
+// l30 谷歌流感趋势
+EDU.in("#open", EDU.t("l30"));
+// l31 5000万 远多于 1152
+EDU.out("#open", EDU.t("l31")); EDU.in(["#f1", "#s0"], EDU.t("l31", .03), { stagger: .2 });
+// l32 难免挑中碰巧冬天搜得多的词
+EDU.out("#f1", EDU.t("l32")); EDU.in("#f1b", EDU.t("l32", .03));
+// l33 研究者：过拟合；原话
+EDU.out("#f1b", EDU.t("l33")); EDU.in("#f2", EDU.t("l33", .03));
+// l34 100 / 108
+EDU.out("#f2", EDU.t("l34")); EDU.in("#f3", EDU.t("l34", .05)); EDU.count("#n100", EDU.t("l34", .4), 100, 1.2, v => Math.round(v));
+</script>

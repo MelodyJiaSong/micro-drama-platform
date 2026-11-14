@@ -1,0 +1,39 @@
+<style>
+  .head { position: absolute; left: var(--mx); top: var(--mt); }
+  .open { position: absolute; left: var(--mx); top: 400px; width: 1680px; }
+  .case { position: absolute; left: var(--mx); top: 300px; width: 1680px; }
+  .case .display { line-height: 1.05; }
+  .case .h2 { margin-top: 26px; max-width: 1500px; }
+  .srcl { position: absolute; left: var(--mx); top: 860px; }
+  .close { position: absolute; left: var(--mx); top: 360px; width: 1600px; }
+</style>
+
+<div class="head"><div class="eyebrow" data-zh="04 · 一个真实的例子" data-en="04 · One real example"></div></div>
+<div class="open h1" id="open" data-zh='当数据<span class="c-bad">带偏</span>了它' data-en='When data <span class="c-bad">misleads</span>'></div>
+
+<div class="case" id="z1"><div class="h2 ink2" data-zh="亚马逊筛简历的 AI" data-en="Amazon’s résumé screener"></div>
+  <div class="h1" id="z1b" style="margin-top:18px" data-zh='10 年简历，<span class="c-bad">大多来自男性</span>' data-en='10 years of résumés, <span class="sub">mostly men’s</span>'></div></div>
+<div class="case" id="z2"><div class="h2 ink2" data-zh="等于学会了「男性更好」" data-en="In effect: “men are better”"></div>
+  <div class="display c-bad" id="z2b" style="margin-top:22px;font-size:110px" data-zh="「women's」→ 扣分" data-en="“women’s” → marked down"></div>
+  <div class="h2 sub" id="z2c" data-zh="例：女子国际象棋社社长" data-en="“women’s chess club captain”"></div></div>
+<div class="srcl src" id="s2" data-zh="路透社 2018（亚马逊称该工具从未被用于评估候选人）" data-en="Reuters 2018 (Amazon said the tool was never used to evaluate candidates)"></div>
+
+<div class="close" id="fin"><div class="h2 sub" data-zh="后来搁置" data-en="Later scrapped"></div>
+  <div class="h1" id="finb" style="margin-top:22px" data-zh='数据里的偏见，<br><span class="c-bad">也可能被学走</span>' data-en='Biased data<br><span class="c-bad">can be learned too</span>'></div></div>
+
+<script>
+gsap.set(["#open", "#z1", "#z1b", "#z2", "#z2b", "#z2c", "#s2", "#fin", "#finb"], { opacity: 0 });
+// l38 也可能学歪；据路透社报道，亚马逊筛简历
+EDU.in("#open", EDU.t("l38", 0.02));
+EDU.out("#open", EDU.t("l38", 0.45)); EDU.in(["#z1", "#s2"], EDU.t("l38", 0.5));
+// l39 学的数据：十年简历，大多来自男性
+EDU.in("#z1b", EDU.t("l39", 0.05));
+// l40 它等于学会了什么
+EDU.out("#z1", EDU.t("l40")); EDU.in("#z2", EDU.t("l40", 0.05));
+// l41 women's → 扣分
+EDU.in("#z2b", EDU.t("l41", 0.15)); EDU.in("#z2c", EDU.t("l41", 0.5));
+// l42 工具被放弃；数据里的偏见
+EDU.out(["#z2", "#s2"], EDU.t("l42")); EDU.in("#fin", EDU.t("l42", 0.02));
+EDU.in("#finb", EDU.t("l42", 0.4));
+EDU.out("#fin", EDU.S.duration - 0.5);
+</script>

@@ -1,0 +1,16 @@
+# s5 st14（场内第 9 个镜头）
+
+- 设计时长：21 秒；出场：c1, c4；单拍
+- 送给模型的 prompt：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s5\shots\st14\资料包\prompt.txt`；参考清单：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s5\shots\st14\资料包\manifest.json`
+- 规划图：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s5\shots\st14\planning\st14_first_frame.png`
+- 规划图：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s5\shots\st14\planning\st14_overhead.png`
+- 规划图：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s5\shots\st14\planning\st14_overhead_ref.png`
+
+## 分镜规格
+**看点**（这一镜要观众看懂或感到什么；只给审查用，不进 prompt）：老板娘往酒里兑冷水：罗马人都这么喝，纯酒是蛮族喝法
+**动作**：柜台前。画面里只有两个人：Asellina 和 Riley。台面上的东西：Asellina 右手边（画左一侧）是一只嵌在台面里、盖着圆木盖的酒罐口，旁边立着一只带一个把手的圆肚陶水罐（约二十厘米高）和一只细高的小陶罐（装鱼露：约三十厘米高，细颈窄口，浅赭陶色，瓶身光溜溜、不带把，口上塞着一小团布）；她左手边是一只收钱的小陶碗，碗旁的台面上叠放着一块灰白粗麻抹布；她面前、台面前排中间是一只敞口陶罐，后排靠灶还有一只敞口陶罐，青铜长柄勺此刻横搁在后排那只的罐口上；两人中间的台面上是一只给 Riley 的赭色粗陶杯（不透光的粗陶）；砖灶和敞口青铜锅在柜台里、短边拐角那头（画面中间偏右的后面）。Asellina 右手掀开那只酒罐的圆木盖，放在台面上罐口旁边；侧身朝画右探出半步，右手从后排那只陶罐的罐口上拿起青铜长柄勺，退回原位，从酒罐里舀出深红的酒，倒进两人中间那只粗陶杯，到半杯；把勺子横搁到她面前前排中间那只陶罐的罐口上，再用右手把圆木盖盖回酒罐；再用右手拿起那只带把手的陶水罐，往杯里慢慢点了一小股冷水，把水罐放回原处（先酒后水，一次只拿一样）。她拿起水罐时，Riley 用右手指着杯子，转脸对镜头说话：先说她在往酒里兑水，再说这里人人都兑水喝；Asellina 放回水罐后拿起小陶碗旁那块抹布，低头擦台面，只抬眼瞥了她一下，不笑，接着擦，不看镜头。Riley 说完右手端起陶杯闻了闻，挑挑眉，放回两人中间的台面上。道具：陶杯进场空着、出场盛着兑水的酒，都在两人中间的台面上；酒罐出场时盖着圆木盖；长柄勺进场横搁在后排那只陶罐的罐口上，出场横搁在前排中间那只陶罐的罐口上；抹布进场叠在小陶碗旁，出场在 Asellina 手边的台面上；面包布包挂在 Riley 左胯。
+**走位**：镜头在街上、柜台长边的西头外侧，斜对柜台朝东，离两人两米半到三米：Asellina 在画左（柜台里），Riley 在画右（柜台外），Riley 四分之三侧脸对镜头；陶杯、酒罐、水罐在两人之间的台面上、画面中下部。站位：Asellina 在柜台里、紧挨着柜台站（拿勺时朝画右探出半步再退回），Riley 在柜台外、紧挨着柜台站，两人隔着台面面对面，相距一米多，各自伸手都够得到台面中间。说台词时 Riley 转脸直视镜头。配角一行：Asellina——倒酒时专心看杯子；Riley 对着空气说话时，她低头擦台面，只抬眼瞥一下，心想「这外地人又在自言自语」，接着干活。
+**节拍**：0–1秒 第 0 秒：画左，Asellina 在柜台后，右手按在酒罐的圆木盖上，左手搭在小陶碗边；画右，Riley 站在柜台外看着她，两手空着垂在身侧，布包挂在左胯；两人中间的台面上一只空的粗陶杯；小陶碗旁叠着一块灰白抹布；后排靠灶那只敞口陶罐的罐口上横搁着青铜长柄勺；这一拍不说话；1–2秒 Asellina 右手掀开圆木盖，放在罐口旁边的台面上；2–4秒 她侧身朝画右探出半步，右手从后排那只陶罐的罐口上拿起长柄勺，退回原位，从酒罐里舀出一勺深红的酒；4–5.5秒 她把酒倒进那只陶杯，到半杯；5.5–7秒 她把勺子横搁到面前前排中间那只陶罐的罐口上，再用右手把圆木盖盖回酒罐；7–8秒 Asellina 右手拿起带把手的陶水罐；Riley 看着，抬起右手指着杯子，转脸直视镜头，不说话；8–10.8秒 Asellina 往杯里慢慢点了一小股冷水，把水罐放回原处；Riley 指着杯子对镜头说 Oh, she's putting water in it.（8.1–10.7 秒）；10.8–18.8秒 她接着对镜头说（10.9–18.6 秒）：10.9–14.5 秒 Yeah — apparently everyone here waters their wine down.，15.0–18.6 秒 Drinking it straight is, like, a barbarian thing.（说到 barbarian 时眉毛一挑）；Asellina 拿起小陶碗旁的抹布低头擦台面，只抬眼瞥她一下，不笑，接着擦，不看镜头；18.8–21秒 Riley 右手端起陶杯闻了闻，挑挑眉，把杯子放回两人中间的台面上；这一拍不说话
+**镜头**：他拍：固定机位旁观拍摄，眼平；中景双人，斜对柜台：Asellina 在画左、Riley 在画右，两人腰以上；酒罐、长柄勺、水罐和陶杯在画面中下部清楚可见。
+**光线**：下午约三点半，太阳在西南偏西、开始西斜：朝南的熟食铺门脸被斜阳照亮，柜台的彩色大理石碎片和陶罐口发亮，店里后墙一半在阴影里；一两只敞着的陶罐口上贴着一点淡淡的热气，贴在罐口；自然光。
+**台词**：Riley（指着杯子，美式英语）：Oh, she's putting water in it. Yeah — apparently everyone here waters their wine down. Drinking it straight is, like, a barbarian thing.

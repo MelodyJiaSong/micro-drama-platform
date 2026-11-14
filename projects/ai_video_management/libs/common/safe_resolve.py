@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
+from libs.common.exposed_roots import EXPOSED_TOP_LEVEL
 
 _WIN_RESERVED = re.compile(
     r"^(con|prn|aux|nul|com[1-9]|lpt[1-9])(\..*)?$",
@@ -11,10 +12,8 @@ _SHORT_NAME = re.compile(r"~\d")
 _EXCLUDED_TOP_LEVEL: frozenset[str] = frozenset(
     {"node_modules", ".git", ".audit", "__pycache__", ".pytest_cache", "dist", "build", ".vite"}
 )
-# Allowed top-level directory: `ai_videos/` only. Anything else is outside the
-# sandbox. (`downloaded_novels/` / `my_novel/`, admitted since follow-ups 096 / 113,
-# left again with the novel browsing in follow-up 233.)
-_ALLOWED_TOP_LEVEL: frozenset[str] = frozenset({"ai_videos"})
+# Allowed top-level directories live in one place (follow-up 339 added `edu_videos/`).
+_ALLOWED_TOP_LEVEL: frozenset[str] = EXPOSED_TOP_LEVEL
 
 
 class SandboxViolation(Exception):

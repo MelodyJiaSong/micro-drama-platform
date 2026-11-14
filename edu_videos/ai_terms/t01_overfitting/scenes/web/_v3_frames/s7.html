@@ -1,0 +1,56 @@
+<style>
+  .tabs { position: absolute; left: var(--mx); right: var(--mx); top: var(--mt); display: flex; gap: 56px; }
+  .tab { font-size: var(--fs-caption); font-weight: 500; color: var(--faint); padding-bottom: 12px; border-bottom: 2px solid transparent; }
+  .tab.on { color: var(--ink); border-color: var(--accent); }
+  .case { position: absolute; left: var(--mx); top: 250px; width: 1680px; }
+  .case .display { font-size: 168px; line-height: 1; }
+  .case .h2 { margin-top: 28px; max-width: 1200px; }
+  .case .note { margin-top: 18px; }
+  .src { position: absolute; left: var(--mx); top: 860px; }
+  .quote { font-size: 72px; font-weight: 700; line-height: 1.25; max-width: 1500px; }
+  .close { position: absolute; left: var(--mx); top: 380px; }
+  .close .h1 { margin-top: 20px; }
+</style>
+
+<div class="tabs">
+  <div class="tab" id="tab0" data-zh="Google 流感趋势" data-en="Google Flu Trends"></div>
+  <div class="tab" id="tab1" data-zh="胸片肺炎模型" data-en="Pneumonia X-ray model"></div>
+  <div class="tab" id="tab2" data-zh="黑色素瘤识别" data-en="Melanoma detector"></div>
+</div>
+
+<div class="case" id="c0a"><div class="quote" data-zh='“一部分在测流感，<br><span class="accent">一部分在测冬天</span>”' data-en='“Part flu detector,<br><span class="accent">part winter detector</span>”'></div>
+  <div class="body ink2 note" data-zh="五千万个搜索词，去贴合 1152 个数据点——研究者称之为过拟合" data-en="50 million search terms fit to 1,152 data points. The researchers called it overfitting."></div></div>
+<div class="case" id="c0b"><div class="display c-bad"><span id="n100">100</span><span class="faint"> / 108</span></div>
+  <div class="h2" data-zh="周里，流感都估高了（2011–2013）" data-en="weeks of flu overestimates (2011–2013)"></div></div>
+<div class="src" id="s0" data-zh="Lazer 等 ·《Science》· 2014" data-en="Lazer et al. · Science · 2014"></div>
+
+<div class="case" id="c1"><div class="display accent">99.9%</div>
+  <div class="h2" data-zh="另训一个模型，就能认出胸片来自哪家医院" data-en="A separate model could tell which hospital an X-ray came from"></div>
+  <div class="body c-bad note" id="c1b" data-zh="肺炎模型换到新医院 → 成绩下降" data-en="The pneumonia model, at a new hospital → worse"></div></div>
+<div class="src" id="s1" data-zh="Zech 等 ·《PLOS Medicine》· 2018" data-en="Zech et al. · PLOS Medicine · 2018"></div>
+
+<div class="case" id="c2"><div class="display c-bad">16% <span class="faint">→</span> 54%</div>
+  <div class="h2" data-zh="良性痣被误判为癌的比例（皮肤上有标记笔迹时）" data-en="of harmless moles flagged as cancer when ink marks were present"></div></div>
+<div class="src" id="s2" data-zh="Winkler 等 ·《JAMA Dermatology》· 2019" data-en="Winkler et al. · JAMA Dermatology · 2019"></div>
+
+<div class="close" id="fin"><div class="eyebrow" data-zh="后两个：捷径学习，过拟合的近亲" data-en="The last two: shortcut learning, a cousin of overfitting"></div>
+  <div class="h1" data-zh='学到的是<span class="c-bad">巧合</span>，不是规律' data-en='They learned <span class="c-bad">coincidence</span>, not the pattern'></div></div>
+
+<script>
+const T = EDU.tl;
+gsap.set(["#c0a", "#c0b", "#s0", "#c1", "#c1b", "#s1", "#c2", "#s2", "#fin"], { opacity: 0 });
+EDU.in(".tab", EDU.t("l34"), { stagger: .12 });
+const on = (i, at) => { T.call(() => {}, [], at); [0, 1, 2].forEach(k => T.set("#tab" + k, { className: "tab" + (k === i ? " on" : "") }, at)); };
+// l35 流感：原话
+on(0, EDU.t("l35")); EDU.in(["#c0a", "#s0"], EDU.t("l35", .05), { stagger: .2 });
+// l36 100/108
+EDU.out("#c0a", EDU.t("l36")); EDU.in("#c0b", EDU.t("l36", .05)); EDU.count("#n100", EDU.t("l36", .35), 100, 1.2, v => Math.round(v));
+// l37 胸片
+EDU.out(["#c0b", "#s0"], EDU.t("l37")); on(1, EDU.t("l37", .02));
+EDU.in(["#c1", "#s1"], EDU.t("l37", .05), { stagger: .2 }); gsap.set("#c1b", { opacity: 0 }); EDU.in("#c1b", EDU.t("l37", .72));
+// l38 黑色素瘤
+EDU.out(["#c1", "#s1"], EDU.t("l38")); on(2, EDU.t("l38", .02)); EDU.in(["#c2", "#s2"], EDU.t("l38", .05), { stagger: .2 });
+// l39 收束
+EDU.out(["#c2", "#s2"], EDU.t("l39")); T.set(["#tab0"], { className: "tab" }, EDU.t("l39"));
+T.set(["#tab1", "#tab2"], { className: "tab on" }, EDU.t("l39")); EDU.in("#fin", EDU.t("l39", .05));
+</script>

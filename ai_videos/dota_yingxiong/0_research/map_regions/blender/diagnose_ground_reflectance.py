@@ -1,0 +1,10 @@
+"""Material-only diagnostic: distinguish soil reflectance from scene illumination."""
+from pathlib import Path
+import bpy,json
+ROOT=Path(__file__).resolve().parents[3];OUT=next(ROOT.glob('2_*'))/'background/map_3d';dest=OUT/'ground_reflectance_v030';dest.mkdir(exist_ok=True)
+bpy.ops.wm.open_mainfile(filepath=str(OUT/'environment_v030.blend'));scene=bpy.context.scene;scene.camera=bpy.data.objects['Scourge_Base'];scene.render.resolution_x=800;scene.render.resolution_y=600;scene.cycles.device='CPU';scene.cycles.samples=16;scene.cycles.use_denoising=True;scene.cycles.debug_use_compact_bvh=True;scene.render.use_simplify=True;scene.cycles.texture_limit_render='2048';scene.render.threads_mode='FIXED';scene.render.threads=8
+mat=bpy.data.materials['Continuous_ground'];nt=mat.node_tree;bs=next(n for n in nt.nodes if n.type=='BSDF_PRINCIPLED');output=next(n for n in nt.nodes if n.type=='OUTPUT_MATERIAL');old=bs.inputs['Specular IOR Level'].default_value
+report={'source':'environment_v030.blend','diagnostic_only':True,'original_specular_ior_level':old,'world_nodes':[{'name':n.name,'type':n.type} for n in scene.world.node_tree.nodes],'lights':[{'name':o.name,'type':o.data.type,'energy':o.data.energy} for o in scene.objects if o.type=='LIGHT'],'volume_objects':[o.name for o in scene.objects if o.type=='MESH' and any(s.material and s.material.use_nodes and any(n.type in ['VOLUME_SCATTER','PRINCIPLED_VOLUME'] for n in s.material.node_tree.nodes) for s in o.material_slots)]}
+bs.inputs['Specular IOR Level'].default_value=0;scene.render.filepath=str(dest/'no_specular.png');bpy.ops.render.render(write_still=True)
+emission=nt.nodes.new('ShaderNodeEmission');nt.links.new(bs.inputs['Base Color'].links[0].from_socket,emission.inputs['Color']);emission.inputs['Strength'].default_value=1;nt.links.new(emission.outputs[0],output.inputs['Surface']);scene.render.filepath=str(dest/'albedo_emission_control.png');bpy.ops.render.render(write_still=True)
+(dest/'diagnostic.json').write_text(json.dumps(report,indent=2),encoding='utf-8');print(json.dumps(report),flush=True)

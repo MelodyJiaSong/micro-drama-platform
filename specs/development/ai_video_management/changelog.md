@@ -6333,3 +6333,924 @@ Auto-updated:
 - `.agents/skills/ai-videos-pipeline/modules/{prompts-rules.md,prompts.md,filming.md}`、`final_specs/spec.md`
 
 Validation: `tests/test_episode_workflow.py` 52 通过；后端全量 380 通过、1 跳过、2 失败——均与本次无关：`test_global_workflow` 报 `paid_services.md` 引用的 `tools/voice_design.py`（另一会话新加、未入目录）未登记，`test_tree_walker_consumer_walk` 报 dota 资产里一张 `.gif` 被当成图片。shengji EP1 按 v12 整集重编，资料包 ok 44。
+
+## Follow-up 283 — 2026-10-18 17:00:00
+Source: user_input/follow_ups/202610.md - section 283
+Summary: 新增后期试做工具 `tools/episode_post.py`：在集级剪辑成片上做声音（保台词、压原声、合成环境声床、响度）、中英双语字幕（逐词对齐，烧入 + .srt）与地名字卡。
+
+Auto-updated:
+- `tools/episode_post.py`、`tools/tests/test_episode_post.py`、`.agents/references/project/workflow_catalog.json`
+
+Validation: 工具测试 146 通过；shengji EP1 post_v1 回读时长对、-15.9 LUFS、真峰值 -1.4 dBFS；workflow_catalog --check 通过。
+
+## Follow-up 284 — 2026-10-18 20:10:00
+Source: user_input/follow_ups/202610.md - section 284
+Summary: `characters/` / `props/` 的卡目录可再分一层不带键的分组目录（dota 按阵营）；列卡只走 `libs/common/asset_group.py`，管理应用与 `tools/` 共用，平铺剧不变。
+
+Auto-updated:
+- `libs/common/asset_group.py`（新）、`libs/common/series_shared.py`（`layout_children`）、`libs/common/prop_key.py`（`is_folder_name`）
+- `libs/infrastructure/readers/{character__reader,shot_materials__reader}.py`、`libs/infrastructure/writers/character_video__writer.py`
+- `apps/ui/src/lib/{dramas,characterDir}.ts`、`apps/ui/src/components/{CharacterGrid,SiblingMedia}.tsx`、`apps/ui/src/styles.css`
+- `tools/{gen_char_images,gen_turntable_videos,char_assets,episode_shots,skill_pack,gen_outfit_views,character_sheet,image_fetch,props_lib,gen_bg_assets}.py`
+- 测试：`tests/test_asset_groups.py`（15）、`apps/ui/test/character-groups.test.ts`（3）、`tools/tests/test_asset_groups.py`（10）
+- `README.md`、`final_specs/spec.md`（FR-109）、`.agents/skills/ai-videos-pipeline/resources/assets.md`
+
+No conflicts found in: interview/qa.md, findings/, validation/
+
+Validation: 后端 395 通过、1 跳过、2 失败（均为改动前已有：`test_global_workflow` 报 `paid_services.md` 引用的 `tools/skill_pack.py`、`tools/voice_design.py` 未登记；`test_tree_walker_consumer_walk` 报 dota 资产里一张 `.gif`）；前端 Vitest 95 通过、`tsc --noEmit` 通过；工具测试 156 通过；`workflow_catalog.py --check`、`sync_agent_skills.py --check` 通过。
+
+## 2026-10-18 — follow-up 285
+
+- `tests/test_tree_walker_consumer_walk.py::test_image_leaves_typed_as_image` 改用读取器的 `_IMAGE_EXTENSIONS`（gif / webp / jpeg / bmp 本来就是图片）；dota_yingxiong 的模型参考动图不再误报。
+- `.agents/references/project/workflow_catalog.json` 登记 `tools/skill_pack.py`、`tools/voice_design.py`、`projects/ai_video_management/libs/common/asset_group.py`（`workflow_catalog.py --fix` 编号）。
+
+No conflicts found in: interview/qa.md, findings/, final_specs/spec.md, validation/
+
+Validation: 后端 397 通过、1 跳过、0 失败；`workflow_catalog.py --check` 通过。
+
+## Follow-up 286 — 2026-10-18 21:00:00
+Source: user_input/follow_ups/202610.md - section 286
+Summary: 人物卡正文页顶部新增「样片与正片」review 区（正片 / 样片 / 剪辑拼接），后端 `GET /api/character-reel`；只对有技能视频的人物显示。
+
+Auto-updated:
+- `libs/infrastructure/readers/character_reel__reader.py`、`libs/infrastructure/daos/character_reel__dao.py`、`libs/application/{queries/character_reel__query.py,dtos/character_reel__dto.py}`（新）
+- `libs/infrastructure/readers/shot_renders__reader.py`（公开 `takes()`，镜头与技能共用）、`libs/domain/errors/character_video__error.py`（`NotCharacterCardDirError`）、`apps/api/{app_factory.py,container.py,routes/character__route.py}`
+- `apps/ui/src/{lib/characterReel.ts,components/CharacterReelPanel.tsx}`（新）、`apps/ui/src/components/Reader.tsx`、`apps/ui/src/styles.css`
+- 测试：`tests/test_character_reel.py`（9）、`apps/ui/test/character-reel.test.tsx`（5）
+- `README.md`、`final_specs/spec.md`（FR-110）
+
+No conflicts found in: interview/qa.md, findings/, validation/
+
+Validation: 后端 406 通过、1 跳过；前端 Vitest 100 通过、`tsc -b` 通过、`npm run build` 通过。真实数据（dota_yingxiong c65_Axe）：正片 5、样片 18、剪辑拼接草稿 5 / 正片 1。
+
+## 2026-10-18 — follow-up 287
+
+- `apps/ui/src/components/CharacterReelPanel.tsx`：剪辑拼接用本地 `REEL_CUT_ORDER = ["final", "draft"]`，正片剪辑在前；共享 `CUT_STAGES`（剪辑模块页）不变。`apps/ui/test/character-reel.test.tsx` 加顺序断言。
+
+No conflicts found in: interview/qa.md, findings/, validation/；`final_specs/spec.md` FR-110 的「草稿剪辑 / 正片剪辑分开」仍成立。
+
+Validation: Vitest `character-reel.test.tsx` 5 通过；`tsc -b` 通过。
+
+
+## Follow-up 288 — 2026-10-18 23:59:45
+Source: user_input/follow_ups/202610.md - section 288
+Summary: 人物「样片与正片」的剪辑拼接也读人物目录 `demo/edit/{draft,final}/`（排在前面），各集剪辑按原规则；dota_yingxiong 斧王 demo 搬出 `episodes/ep01/`。
+
+Auto-updated:
+- `libs/infrastructure/readers/character_reel__reader.py`：`_cuts` 先读 `{人物目录}/demo/` 的集级剪辑（带 `_episode: "demo"`、`_own`），再读 `episodes/ep*/`；`DEMO` 常量
+- `libs/application/{queries/character_reel__query.py,dtos/character_reel__dto.py}`、`libs/infrastructure/daos/character_reel__dao.py`：`ReelCutQdto.own`；排序 人物目录 → 各集，组内新版本在前
+- `apps/ui/src/{lib/characterReel.ts,components/CharacterReelPanel.tsx}`：`ReelCut.own`，人物目录剪辑标「人物 demo · v{N}」
+- 测试：`tests/test_character_reel.py`（+2：demo 剪辑在前、没有 episodes 的剧）、`apps/ui/test/character-reel.test.tsx`（+1）
+- `README.md`、`final_specs/spec.md`（FR-110）
+
+No conflicts found in: interview/qa.md, findings/, validation/；剪辑模块页 / 剧页在剧没有 `episodes/` 时 `/api/episode-workflow`、`/api/scene-cuts`、`/api/review-reel` 均 200 空状态，无需改。
+
+Validation: 后端 408 通过、1 跳过；前端 Vitest 101 通过、`tsc -b` 通过。真实数据（dota_yingxiong c65_Axe，运行中后端）：剪辑拼接草稿 v5–v1、正片 v6/v3/v2/v1，全部来自人物目录 `demo/`、成片都在。
+
+## Follow-up 289 — 2026-10-19 13:30:00
+Source: user_input/follow_ups/202610.md - section 289
+Summary: 新增本地音频生成工具 `tools/local_audio.py`（Stable Audio 3 Medium / Small-SFX，只读本地权重）；`tools/episode_post.py` 支持文件环境声床与带台词压低的配乐轨。
+
+Auto-updated:
+- `tools/local_audio.py`、`tools/episode_post.py`、`tools/tests/test_episode_post.py`
+- `.agents/references/project/workflow_catalog.json`、`.agents/references/project/paid_services.md`、`.agents/skills/ai-videos-pipeline/modules/sound.md`
+
+No conflicts found in: final_specs/spec.md（管理应用不读后期音频，不需改）、interview/qa.md、validation/
+
+Validation: 工具测试 159 通过；workflow_catalog --check 11 组 / 150 源编号连续；shengji EP1 生成 26 条、post_v3 出片回读通过。
+
+## Follow-up 290 — 2026-10-19 20:30:00
+Source: user_input/follow_ups/202610.md - section 290
+Summary: 剪辑页加「后期试做」：列出 `{集}/post/trial/post_v{N}.json` 各版的成片、响度、每场声音层；`tools/episode_post.py` 对白增益与压缩可调。
+
+Auto-updated:
+- `libs/common/scene_cut.py`、`libs/infrastructure/readers/{scene_cut,tree}__reader.py`、`libs/application/{dtos,queries}/scene_cut__*.py`、`tests/test_scene_cut.py`
+- `apps/ui/src/lib/sceneCuts.ts`、`apps/ui/src/components/EditStagePanel.tsx`、`apps/ui/test/edit-stage.test.tsx`
+- `tools/episode_post.py`、`final_specs/spec.md`
+
+No conflicts found in: interview/qa.md、validation/
+
+Validation: 后端 410 通过、1 跳过；前端 Vitest 102 通过、`tsc -b` 通过；工具测试 159 通过；运行中后端 `/api/scene-cuts`（shengji EP1）返回 posts 3 版（v4 之前）。
+
+## Follow-up 291 — 2026-10-19 21:00:00
+
+Source: user_input/follow_ups/202610.md - section 291
+Summary: 删除 Stable Audio 3（权重、环境、代码检出、`tools/local_audio.py`）；本地模型只用完全开源的。
+
+Auto-updated:
+- `.agents/references/project/paid_services.md`（商业用途规则 + Stable Audio 3 不用）、`.agents/skills/ai-videos-pipeline/modules/sound.md`、`.agents/references/project/workflow_catalog.json`
+- 删除 `tools/local_audio.py`
+
+Validation: `workflow_catalog.py --check` 通过（11 组 / 149 源，编号连续）；仓库内无其他代码引用 `local_audio`。
+
+## Follow-up 292 — 2026-10-20 10:00:00
+
+Source: user_input/follow_ups/202610.md - section 292
+Summary: 本地音效工具 `tools/local_sfx.py`（MOSS-SoundEffect-v2.0，Apache-2.0）。
+
+Auto-updated:
+- 新增 `tools/local_sfx.py`
+- `.agents/references/project/paid_services.md`、`.agents/skills/ai-videos-pipeline/modules/sound.md`、`.agents/references/project/workflow_catalog.json`
+
+Validation: 权重与安装包 sha256 全部对上清单；`workflow_catalog.py --check` 通过（11 组 / 150 源）；食尸鬼 12 条 5 秒试做全部出完（无静音、无削波）。
+
+## Follow-up 293 — 2026-10-21 22:30:00
+
+Source: user_input/follow_ups/202610.md - section 293
+Summary: 资产总览页：人物、背景、道具每个资产一格（按分组、键号排），点开预览图片、视频、卡的键与状态、人物技能。
+
+Auto-updated:
+- 新增 `libs/infrastructure/{daos,readers}/asset_overview__*.py`、`libs/application/{dtos,queries}/asset_overview__*.py`、`apps/api/routes/asset_overview__route.py`、`tests/test_asset_overview.py`；`apps/api/container.py`、`apps/api/routes/__init__.py`
+- 新增 `apps/ui/src/lib/assetOverview.ts`、`apps/ui/src/components/AssetOverviewPage.{tsx,css}`、`apps/ui/test/asset-overview.test.tsx`；`apps/ui/src/App.tsx`、`apps/ui/src/components/DramaPage.tsx`
+- `final_specs/spec.md`（FR-111）、项目 README
+
+No conflicts found in: interview/qa.md、validation/
+
+Validation: 后端 419 通过、1 跳过（另 1 个 `test_global_workflow` 失败来自工作区里他处未提交的 `paid_services.md` 引用 `tools/local_voice*.py` 未登记，与本次无关）；前端 Vitest 105 通过、`tsc -b` 通过；运行中的应用打开 dota_yingxiong：人物 173 / 背景 14 / 道具 29，预览、技能正片播放、← / → 切换、按节跳转实测正常。
+
+## Follow-up 294 — 2026-10-22 09:00:00
+
+Source: user_input/follow_ups/202610.md - section 294
+Summary: 侧栏「1_资产库」点名字进资产总览，点箭头照常展开。
+
+Auto-updated:
+- `libs/infrastructure/readers/tree__reader.py`、`tests/test_tree_display_name_zh.py`
+- `final_specs/spec.md`（FR-111）、项目 README
+
+No conflicts found in: interview/qa.md、validation/
+
+Validation: 树相关测试 23 通过；运行中后端 `/api/tree?lazy=1` 的 dota_yingxiong 与 shengji_zhilu「1_资产库」都带链接；浏览器里点「1_资产库」打开总览、展开并高亮。
+
+
+## Follow-up 295 — 2026-10-22 21:26:00
+
+Source: user_input/follow_ups/202610.md - section 295
+Summary: 仙侠作为左侧系列条目，承载公用资产与后续剧目。
+
+Changed: 系列标记、tree reader 的可选共享库链接、资产总览的公共库视图、筛选和预览。没有移动资产或改写其他剧；未保留独立顶栏入口。
+
+Validation: 后端树/沙箱测试12通过；前端公共库与原资产总览测试6通过；TypeScript/Vite构建通过。运行中API返回“仙侠”系列及链接。当前会话没有可用浏览器连接，未宣称实屏验收。既有interview/validation无冲突需覆盖。
+
+## Follow-up 296 — 2026-10-22 22:57:09
+Source: user_input/follow_ups/202610.md - section 296
+Summary: 公用资产左侧导航显示中文大类、小类、具体资产；类别与资产直接定位总览和预览，图片展示包括建筑场景正侧背三视图。
+
+Auto-updated:
+- 公用资产导航与图片展示、共享库分类和图像任务。
+
+最终验证（2026-10-23）：前端相关测试14通过、后端相关测试13通过，TypeScript/Vite构建通过（既有大包提示）；本机Chrome实际验证中文导航逐级点击、直接链接展开与高亮、资产预览及三视图加载，无页面错误。共享库/语义指纹/版本采用/图册脚本检查通过；419次请求均有结果或错误事件，无在途或重复目标。图片采用状态：主图253/256通过，三面板30/48通过，其余保留明确修订状态。
+
+
+## Follow-up 297 — 2026-10-23
+Source: user_input/follow_ups/202610.md - section 297
+Summary: Dota 两基地素材与坐标总览接入现有 AI Video 管理站点；撤下临时 8765 服务与独立 HTML。
+
+Auto-updated:
+- apps/ui/src/components/BaseLayoutPage.tsx、BaseLayoutPage.css、lib/baseLayout.ts；App 路由与 DramaPage 入口。
+- libs/infrastructure/readers/tree__reader.py：workflow.json 配置的剧内基地布局导航，路径限本剧范围。
+- Dota workflow.json / base_layout_manifest.json、README 与资产索引指向管理站点。
+- final_specs/spec.md、user_input/revised_prompt.md。
+
+Validation: 新增布局交互 3 项、已有资产总览 3 项、剧页/侧栏 7 项通过；后端布局导航与剧树 20 项通过；工作流目录测试 12 项通过、1 项跳过。生产构建通过（现有大包体积警告）；workflow_catalog --fix 无变更、--check 11 组 / 223 源通过。运行中 8766 页面与基地导航、94 个资料文件返回 200。CUA 无可用浏览器，未作真实浏览器截图验收；有组件交互测试与运行接口核对。审计见 .audit/adhoc_agents/2026-10-23/dota-base-layout/native_verification.json。图片生成状态单列 Dota follow-up 099，不把 UI 成功冒称图片完成。
+
+Follow-up 297 补充验证：搭景方案现包含原版地形高程调查图、概念候选、43行摆放JSON、Blender下载和四张体块检查图；原图逐项可下载。前端布局4项＋资产总览3项＋剧页/侧栏7项均通过，后端布局导航/懒树/中文树25项通过。最新生产构建通过。实际本机Chrome无头检查已完成（桌面1440与手机390宽度，图片加载、阵营切换、搭景展开、搜索预览、无页面错误/横向溢出）；替代此前CUA不可用的验证缺口，截图及结果见同审计目录 native_*.png / browser_verification.json。
+
+
+## Follow-up 298 — 2026-10-24 — 修复图片链接冷启动误报
+Source: user_input/follow_ups/202610.md - section 298
+
+资产卡已加载、导航目录仍在请求时，空的路径清单把现存图片链接渲染为无法点击的断链。App 在首次目录返回前将 ai_videos 标为未加载；目录返回后仍判断真实缺失，文件沙箱检查保持。新增 e2e/reader_links.spec.ts 延迟目录响应，实际点击中文图片链接并确认解码，再确认缺失链接仍报断链；旧生产包失败、新包通过。
+
+验证：相关 Vitest 12项通过，Chrome端到端回归1项通过，生产构建通过。实际管理页两阵营57张图片解码成功、18项下载与原文件SHA256相同；关联卡片100个内部链接逐个点击成功（含三视图、平面图、地形、概念图、摆放JSON、Blender下载）。审计 .audit/adhoc_agents/2026-10-24/base-links/。上次116文件HTTP200不能证明Markdown链接可点击，本次补齐该缺口；不泛称全站/外部网站都已验证。
+
+
+## 299 — 2026-10-24 — 地图分区与多机位资产
+
+- 原管理站新增「地图资产」：8个大区、16个区域、64个机位；新增采用51张，复用13张远景。区域→bg主体→建筑/商人引用→机位层级保留既有编号与物理目录；新增bg40、bg41。
+- 两方泉水区各3座固定建筑（含泉水）、8商人站位、5出生点；多余商店与出生圈经定点修正。全部86处基地实例通过编号引用原版布局唯一源，不另维护坐标副本。
+- 主体/角度/数量代理初审绑定当前SHA；独立审稿未审。生成图为电影候选，分区边界、米制尺度与部分侧前机位属推定，不能当原版精确几何。
+- 浏览器实际切换并解码64张、逐张点击下载64次且SHA一致；标记地图与两方坐标图下载一致。217个资料链接HTTP/内容检查通过；新增泉水卡图片点击7次通过；移动端无横向溢出、无JS错误。
+- 前端相关9测试、导航20测试、生产构建通过。该剧无episodes，未改任何已用镜头的引用，shot_pack同步无适用目标。
+- 审计：`.audit/adhoc_agents/2026-10-24/dota-map-regions/`；请求仍在剧background/request_log.md，未绕过审计入口。
+
+- 2026-10-24 follow-up 300：地图页顶部加入完整原版地图红线分区与原图对照、代号图例、放大/下载；保留8大区16拍摄区层级。
+
+- 2026-10-24 follow-up 301：泉水区生成俯视/原版截图以相同bg编号并排标注；展示当前布局差异，支持放大和资产卡跳转。
+
+- 2026-10-24 follow-up 302：泉水俯视补齐7人形NPC＋1光团，生成6候选选择2张；32对象标注、原版坐标重绘与目标叠加已验。精确布局仍未通过，其他旧机位待布局更新。
+
+
+## 2026-10-24 · follow-up 303 · 泉水通道与机位连续性
+
+- 共生成14张版本候选，采用8张接入原management站点：两方俯视v1、远景v1、正面v2；近卫侧面选v1侧前方（5圈正确），天灾侧面v3标布局待核准（6圈，应5）。新图不覆盖历史文件。
+- 两张俯视主代理检查：每方3建筑、7人形商人＋1光团、5圈，S1东/东北通路和D1西南大道贯通；高台/外围景观加强。所有派生视角的第一参考是各自新俯视，实际路径/SHA入清单。
+- **未完成项**：天灾侧面出生圈多1个；近卫侧前方转角较浅；天灾正面远天光略暖。三轮侧面修订后按codex-imagegen规定停止，不把候选写成通过；独立审稿未审，未声称三维投影精确一致。
+- UI保留原图并排与分类标注，32个新图标点重新定位；记录机位参考母图并显示过期提示。原版坐标图保留研究用途，当前美术图未作透视配准。
+- 验证：12项相关前端测试、生产构建通过；实际浏览器两方8张机位解码/下载SHA一致、6个参考母图下载SHA一致，32对象分类与2组原图对照解码通过；手机无横向溢出，无JS错误。构建只有既有大chunk提醒。
+- 本剧无episodes（已检查），shot_pack无适用同步目标。请求经审计入口，14个输出均在background/request_log.md中可追溯。本轮没有修改共用工作流/skill源，无目录同步目标。
+
+
+## 2026-10-24 · follow-up 304 · 泉水直通大本营
+
+已按完整原版地图、全基地脚本坐标及地形高程重做：S1泉水向东北直接连接世界之树内庭，D1泉水向西南直接连接冰封王座广场。两张俯视母图同时呈现泉水角落、整段连接和古迹；六张其他机位都记录并使用相应母图作为第一参考。共生成14个版本候选，选用8张，旧山崖/长桥版本留档并标为历史。
+
+原management站增加泉水→大本营说明、可展开的全基地坐标图、S2/D2邻区导航；保留原版截图并排，重新定位32个对象标注。S2/D2早期全景未重生成，标为旧布局待更新，避免冒充本轮对齐结果。
+
+已核验：15项相关前端测试与生产构建通过；实际Chrome打开两方8张机位、逐张下载SHA一致，6个母图引用下载SHA一致；2张全基地坐标图解码及邻区导航成功；32对象筛选、原图对照、移动端无横向溢出，无JS错误。逐图主代理检查，所有选用图的出生圈为5个；天灾远景末圈间距偏宽，前/侧机位仍属斜俯，局部距离与附属装饰未达严格三维配准。独立审稿未审。
+
+14个生成输出均通过审计入口写入background/request_log.md。本剧无episodes，shot_pack无适用同步目标；未改共用工作流或skill，无目录/入口同步目标。审计：`.audit/adhoc_agents/2026-10-24/dota-fountain-base-connection/`。
+
+最终复核更正：D1俯视v2实际4圈，早先计数错误；最终采用v3补齐5圈。天灾三个派生机位实际参考仍是v2，保留真实路径/SHA；已逐图对照v3复核连接关系，复核记录同时绑定当前母图与机位SHA，任一更新即失效。近卫三个派生机位仍直接参考当前v1。出生圈标签边距及天灾北排商人标签已调整。最终截图、下载与机位复核显示均再次通过。
+
+
+## 2026-10-24 · follow-up 305 · 泉水五英雄活动空间
+
+已扩大S1/D1泉水本地前庭，商人站位外移、中心留空、商店与泉水前沿留出通行空间；保持建筑/商人顺序和阵营内方位，出口仍直通世界之树/冰封王座。11张版本候选中采用8张：S1俯视/远景/侧前v1、正面v2；D1俯视v2、远景/正面v1、侧前v2。六个派生机位均以本轮最终俯视为第一参考，路径和SHA可追溯。
+
+原management页面加入“五英雄活动空间”开关，H1–H5占位与选定连续净空叠加于当前俯视，原图对照保留；标注绑定当前母图SHA，换图后旧标注隐藏。32对象重新标点。五个活动占位均在空地内，互不重叠，并留有通过余量。30×24m前庭、18×14m净空、8m出口为提示词中的设计目标，未当作实测尺寸。
+
+验收：逐图查看8张当前图，5出生圈、7人形商人＋光团和3建筑均保留；近卫正面商人误位已修正，天灾侧前图额外远城已去除。17项相关前端测试、生产构建通过；Chrome实际8张切换/解码/下载SHA核对，6母图引用、2组五英雄叠加/关闭、32对象筛选、全基地图与邻区导航、移动端无横向溢出均通过，无JS错误。构建仍有既有大chunk提醒。
+
+限制：几何为电影化概念；正面/侧面仍有明显俯角，侧前转角较浅，未做精确3D碰撞或动态行走模拟，独立审稿未审。S2/D2旧全基地机位继续标为旧布局待更新。本剧无episodes，shot_pack无适用同步目标；未改共用工作流或skill源。11个生成输出全部通过审计入口，审计`.audit/adhoc_agents/2026-10-24/dota-fountain-capacity/`。
+
+
+## Follow-up 306 — 2026-10-24 — 天灾NPC多轮冷看
+
+Source: user_input/follow_ups/202610.md section 306
+
+天灾D1四图更新为NPC动线v2：7人形商人＋1光团沿西北边缘，中央五英雄前庭和西南王座通路开放。共8张候选，选4张；三个派生角度真实引用最终俯视母图。三名独立审查者分别检查站姿、连续性与通行，发现并修复多出生圈、多光团、侧面楼梯朝向；主代理另修外围悬崖/海洋/桥。两组最终复审均无blocker，结论绑定四图SHA。保留正面第五圈间距偏大、局部箱桶差异、固定商店站姿和入口未细化等限制。
+
+原management站Chrome核验通过：两区域8张图片切换/解码/下载SHA、6个真实母图引用、32对象分类、原图并排、两组五英雄叠加、全基地图及邻区跳转；移动端无横向溢出，无JS错误。已实际查看D1对照及五英雄叠加截图。S1及其余15区manifest内容保持不变；本轮未改UI代码。8张生成均在background/request_log.md可追溯。本剧无episodes，shot_pack无适用目标；未改共用工作流/skill。
+
+Auto-updated: D1区域manifest、8商人标点、母图容量指纹、四机位卡与父卡、planning/npc_flow_review.json、本剧README。既有spec/validation中的地图分区功能无冲突，未触发完整阶段重跑。审计：`.audit/adhoc_agents/2026-10-24/dota-scourge-npc-review/`。
+
+
+## Follow-up 307 — 2026-10-24 — 默认俯视与全区原图
+
+已将区域默认机位与区域切换重置为俯视；大区标题可直达首个区域。全部16区新增原图tab，远景/俯视/正面/侧面默认并排显示本区原图，支持关闭并排、单看原图、来源与下载、完整6.83d地图定位。9区用游戏截图（7张独立来源；M1/M2/R2共用中路坡道参考），7区用2009年6.60之后旧版地貌局部；旧版、非同机位、一塔全景未覆盖等限制均显式标明，不能冒充16区6.83d高清实机齐全。原版源全部本地保存，来源与SHA记在map_regions/original_references.json。
+
+Auto-updated: MapRegionsPage、RegionOriginalPanel、mapRegions解析、页面CSS和测试；map_regions.json及来源清单；README、项目spec/验收。独立interview/findings无本次冲突，未重跑完整阶段。验证详情见 `.audit/adhoc_agents/2026-10-24/dota-region-originals/verification.json`。
+
+
+验证：19项相关前端测试、TypeScript与生产构建通过（仅既有大chunk提醒）；Chrome逐区验证16区默认俯视、64机位解码、16原图链接及SHA、来源文档、原图tab、并排切换、完整地图定位、浏览器后退与大区标题选择；无JS错误，390px移动端无横向溢出。实际查看上路/中路对照与移动端截图。现有生成图、标注与五英雄空间数据未变。本剧无episodes，shot_pack无适用目标；未改共用工作流/skill。
+
+
+## 2026-10-25 · follow-up 308 · 原版通行研究
+
+完成6.83d静态地图研究、16区左右标注/约束与现有站点导航检查；24项测试、构建和16区浏览器验证通过。20张地形出图均未获路线母图批准，返工对照可看，电影配准/实机碰撞仍未完成。见本条follow-up及navigation/research.md。
+
+
+## 2026-10-25 · follow-up 309 · 最新布局直接参考修订
+
+按当前项目最新6.83d静态导航研究，生成16区自绘布局参考，直接输入S1/D1/T1/R2重出v3四张（审计入口留痕）。四张及其四份参考均已独立冷看并绑定SHA；累计24张导航候选审查，路线母图批准仍为0。S1宽坡道仍被桥式通道及树台挤占；D1把南端bg30埋骨地画成王座式建筑；两基地7人形NPC＋1精灵均未验明；T1/R2仅可供有限美术参考。五出生圈各可数到5个，但五英雄净空未验证。
+
+原management站已展示v3候选、原版标注对照、实际输入布局图和独立拒绝原因；新增“蓝色仅为低地，不等于水域”说明。其他12区候选、地图几何与64个正式角度没有被替换；其余12区布局图已准备，尚未直接参考重出。现有多角度图未按新布局完成空间配准。
+
+本轮实际prompt错误（低层误等同水、D1裁切外Ancient未清楚限定）已在research.md如实记录，不事后改写已提交prompt。关键四区累计三轮仍不合格，按codex-imagegen skill停止同类重抽；遵用户不提问授权，自主保留待返工状态，后续应优先统一地形、建筑和NPC的三维坐标再出机位。没有将审查失败的图晋升正式路线母图。
+
+验证：24项相关前端测试、TypeScript和生产构建通过（仅既有bundle尺寸提醒）。浏览器实际核验结果见本次audit/browser_verification.json。本剧无episodes，shot_pack无适用目标；未改共用工作流/skills，无对应目录同步。审计目录：.audit/adhoc_agents/2026-10-25/dota-latest-layout-revision/。整体状态为已复审、未全部修妥，水位/实机碰撞与镜头配准仍未完成。
+
+补充显示修复：实际截图发现候选图超出左右对照列，已限制图片列宽，手机端保持完整缩放；重新构建并用图片/figure实际边界验证，见本次audit/visual_bounds_verification.json。
+
+## Follow-up 310 — 2026-10-26 12:23:21
+Source: user_input/follow_ups/202610.md - section 310
+Summary: 新增只读的流程与自检：仓库级页 /workflow/qc（工作流 › 1.0.4）与剧级页 /qc?drama=…（剧页按钮进入）；管理＝复制指令给代理执行。
+
+Auto-updated:
+- libs/infrastructure/{errors,daos,readers}/process_qc__*.py、libs/common/process_qc.py — 只读读取器（路径守卫、拒软链、限读 8 MB、剧根经 drama_ref 校验）与逃逸四分法
+- libs/application/{dtos,queries}/process_qc__*.py、apps/api/routes/process_qc__route.py — GET /api/process-qc 与 /api/process-qc/drama；容器、路由汇总、错误处理接线
+- apps/ui/src/{components/ProcessQcPage.tsx,ProcessQcParts.tsx,ProcessQcPage.css,lib/processQc.ts,api.ts} — 仓库级页 /workflow/qc 与剧级页 /qc；两层分色；复制指令按层级分开
+- apps/ui/src/{App.tsx,lib/workflowData.ts,components/DramaPage.tsx} — 路由、工作流 › 1.0.4 导航、剧页「🔍 流程与自检」按钮
+- tests/test_process_qc.py、apps/ui/test/process-qc.test.tsx、test/workflow-map.test.tsx — 新增与更新测试
+- README.md — 功能说明与接口表
+
+验证: 后端 pytest 448 passed / 1 skipped（含新增 3 条）；前端 vitest 24 文件 140 条全过（一次全量运行出现过 jsdom 未初始化的 59 条失败，三次重跑均全过，判为环境偶发）；tsc 与 vite build 通过；临时实例 8779 实测两页并截图核对（真实数据：仓库级 4 条、dota 剧级 12 条、逃逸 10 条），验后已停
+
+No conflicts found in: 未改用户在 8766 运行的实例；既有工作流页只读约定保持不变（本功能无写接口）
+
+
+## Follow-up 311 — 2026-10-27 19:15:33
+Source: user_input/follow_ups/202610.md - section 311
+Summary: 共享资产预览按实际panels显示方位，支持南北东顺序及西侧视，不改变图片。
+
+Auto-updated:
+- projects/ai_video_management/apps/ui/src/components/SharedAssetPreview.tsx
+- projects/ai_video_management/README.md
+- specs/development/ai_video_management/final_specs/spec.md
+
+验证: npm test -- test/shared-assets.test.tsx：5项通过；真实仙侠LAND014/YPL001面板元数据由独立空间审稿人复核，前者保留几何缺陷，后者限粗布局通过。
+费用: 无外部服务调用；沿用现有图片。
+
+No conflicts found in: 局部读取已有views.panels，不改变媒体文件、接口或其他会话的改动。
+
+
+## Follow-up 312 — 2026-11-01 11:43:06
+Source: user_input/follow_ups/202611.md - section 312
+Summary: 管理 UI 新增英雄预览页 /hero-preview?path=<英雄目录>：一页汇总人物立绘、亮相视频、三视图，四个技能的最新出片、峰值图、开场图与历史出片，以及 demo 成片；以后交片只给这一个链接。
+
+Auto-updated:
+- apps/ui/src/lib/heroPreview.ts（新）— 英雄目录整理成人物 / 技能（最新出片＋历史）/ demo；跳过 ref、source、icon、资料包、_ 与 . 开头目录
+- apps/ui/src/components/HeroPreviewPage.tsx、HeroPreviewPage.css（新）— /hero-preview?path=<英雄目录> 页面，文件变动自动刷新
+- apps/ui/src/App.tsx — 注册路由
+- apps/ui/test/hero-preview.test.tsx（新）
+- ai_videos/dota_yingxiong/README.md — 剧级约定：交片只给英雄预览页链接
+
+验证: tsc -b 无错；vitest 全部 25 文件 142 项通过；浏览器打开沙王 c75 预览页，人物、四技能（最新出片、审稿记录、峰值图、开场图、历史出片）与 Demo 均正常显示
+费用: 0
+
+No conflicts found in: 共用 skills 与 CONVENTIONS 未改；约定只放剧级
+
+
+## Follow-up 313 — 2026-11-01 11:54:53
+Source: user_input/follow_ups/202611.md - section 313
+Summary: 英雄预览页改版：Demo、人物亮相、四技能最新视频大图在前（技能两列 16:9），立绘、三视图、声样、拼图、峰值图、开场图、历史出片全部默认收起。
+
+Auto-updated:
+- apps/ui/src/components/HeroPreviewPage.tsx、HeroPreviewPage.css — 顺序 Demo → 人物亮相 → 技能；只有视频展开，图片与辅助资料全部收进折叠区
+- apps/ui/test/hero-preview.test.tsx — 断言主视频 3 条在折叠区外、所有图片在折叠区内
+
+验证: tsc -b 无错；hero-preview 测试 2 项通过；浏览器看沙王页：Demo 与亮相宽幅、四技能两列 16:9、辅助资料均折叠
+费用: 0
+
+No conflicts found in: 只改本页面
+
+
+## Follow-up 314 — 2026-11-01 13:43:43
+Source: user_input/follow_ups/202611.md - section 314
+Summary: 英雄预览页 Demo 节的第一个视频必须是最新成片：按 edit/final → edit/draft → 其他排序，同目录内按版本号 vN 从大到小；修掉按路径倒序时 demo/review_* 审阅包视频排在 edit/final 成片前的问题（Tiny 目录复现）。
+
+Auto-updated:
+- apps/ui/src/lib/heroPreview.ts — 新增 demoCuts：Demo 按 edit/final → edit/draft → 其他排序、同目录 _vN 从大到小
+- apps/ui/test/hero-preview.test.tsx — 新测试：review 包与 draft 不会排到最新 final 成片前
+
+验证: vitest 全量 25 文件 143 条通过；tsc --noEmit 无报错；页面 Demo 节本就在最前，修正后第一条为 Tiny ep01_final_v4.mp4
+
+No conflicts found in: 只改排序，预览页版式与其他会话改动（follow-up 312）不动
+
+
+## Follow-up 315 — 2026-11-01 15:48:51
+Source: user_input/follow_ups/202611.md - section 315
+Summary: 新增 GET /api/demo-status，并在侧栏、角色画廊、资产总览、英雄预览、人物卡剪辑拼接处给 demo 已定版的英雄打「Demo 定版」标记，发布文案过期/缺失同时提示
+
+Auto-updated:
+- apps/api/routes/demo_status__route.py, libs/{application,infrastructure}/…/demo_status__*.py, container.py, routes/__init__.py, apps/ui/src/lib/demoStatus.ts, components/DemoFinalBadge.tsx, Sidebar/CharacterGrid/AssetOverviewPage/HeroPreviewPage/CharacterReelPanel, styles.css, README.md, tests/test_demo_status.py, test/hero-preview.test.tsx
+
+验证: pytest tests/test_demo_status.py + boot_smoke + asset_overview 20 passed；vitest 25 files / 144 tests passed；tsc -b 无报错；实机 5174 看到资产总览定版过滤（7 位）、侧栏 c60/c65 定版标记、斧王英雄预览标题与 Demo 区标记
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 319 — 2026-11-03 23:23:23
+Source: user_input/follow_ups/202611.md - section 319
+Summary: 管理 UI 新增排行榜单集预览页 /rank-preview，供 review 一条链接看完整集
+
+Auto-updated:
+- （无代码改动）— 与 follow-up 317（会话 ce8ad49c，已写 apps/ui/src/lib/rankPreview.ts）、318（会话 3e5f21b8）同一路由 /rank-preview 撞车，本条并入 317 不另实现，避免三方覆盖 rankPreview.ts / RankPreviewPage.tsx / App.tsx。ep05 额外需求留给 317 实现方核对：data.json insights 按 after_rank 插洞察卡、倒数顺序（#N→#1）、qc.md 摘要（ep05 暂无 qc.md）、assets/music 音频、折叠 render/preview 截图、多版本成片按 Last-Modified 新的在前（tree 无 mtime；/api/media 带 Range GET 返回 last-modified，HEAD 404）、剧导航入口
+
+验证: 未实现故无测试；核对了 _inbox 317/318/319 与 git status（rankPreview.ts 未跟踪、RankPreviewPage.tsx 尚不存在）、ep05 目录结构与 /api/tree/subtree、/api/file、/api/media 响应
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 318 — 2026-11-03 23:23:07
+Source: user_input/follow_ups/202611.md - section 318
+Summary: 新增排行榜单期预览页 /rank-preview（API + UI + 测试 + README）
+
+Auto-updated:
+- 无产物改动 — 与 Follow-up 317 重复，/rank-preview 页面由 317 交付
+
+验证: 未改代码：开工时发现 317（会话 ce8ad49c）已在写 RankPreviewPage.tsx / rankPreview.ts / App.tsx 路由，为不覆盖其改动按协调者决定关闭本条。ep03 特有的 logo / 创始人头像 / image_alt / 洞察卡 / 候选图若 317 未覆盖，之后另开 follow-up 增补。
+
+No conflicts found in: 与 317 重复，本条无代码改动
+
+
+## Follow-up 320 — 2026-11-03 23:32:22
+Source: user_input/follow_ups/202611.md - section 320
+Summary: 排行榜预览页补系列总览与只读 API /api/rank-preview（推荐审看 tab、审片结论、卡片明细表、洞察/发布稿/交接）
+
+Auto-updated:
+- projects/ai_video_management/libs/infrastructure/readers/rank_preview__reader.py — 新增：读 paihangbang 系列/期（data/assets/render manifest/mp4 moov 时长/qc 最新结论/publish/_build/handoff），推荐审看排序，路径只收系列根或 episodes/<期>
+- projects/ai_video_management/libs/application/{dtos/rank_preview__dto.py,queries/rank_preview__query.py}、apps/api/routes/rank_preview__route.py — 新增 GET /api/rank-preview
+- projects/ai_video_management/apps/api/container.py、apps/api/routes/__init__.py — 增量注册 provider 与 router（各 +2/3 行）
+- projects/ai_video_management/apps/ui/src/lib/rankReview.ts、components/RankReviewSections.{tsx,css} — 新增：系列总览、成片 tab（推荐审看）、概况、审片结论、交接、卡片明细表、洞察、发布稿
+- projects/ai_video_management/apps/ui/src/components/RankPreviewPage.tsx — 在 follow-up 317 页面上增量：导出包装组件按 path 分系列/单期；成片区换成 tab；插入概况/交接/审片结论/明细表/洞察/发布稿；data.json 缺失时仍显示审片区；_build/handoff.md 变化也刷新
+- projects/ai_video_management/tests/test_rank_preview.py、apps/ui/test/rank-review.test.tsx — 新增测试
+- projects/ai_video_management/README.md、ai_videos/paihangbang/README.md — 入口说明 / 末尾新增「审片链接」节
+
+验证: pytest test_rank_preview（14）+ boot_smoke/origin_guard/shop_items/demo_status/spa_deeplink/sandbox 共 93 passed；vitest rank-review/rank-preview/hero-preview 11 passed；tsc --noEmit 无错；curl /api/media Range→206 video/mp4；headless Chromium 打开系列页（16 张卡）与 ep02（推荐审看=风险图版·配乐，视频 play 到 2.7s/372s 无错误，明细表 50 行无坏图）。作者自查，未做独立审稿
+
+No conflicts found in: 与 317（同页前端）共用 RankPreviewPage.tsx，只做增量编辑未回滚其内容
+
+
+## Follow-up 321 — 2026-11-04 00:49:31
+Source: user_input/follow_ups/202611.md - section 321
+Summary: 排行榜预览页补列表期模式与 ep03 明细字段（logo / 创始人 / 图片风险 / 备注）
+
+Auto-updated:
+- projects/ai_video_management/libs/application/dtos/rank_preview__dto.py — RankItemQdto 加 corner/logo/logo_bg/person/image_alt_credit/secondary_display/notes，新增 RankPersonQdto；卡片概况加 mode/first/last/list_order
+- projects/ai_video_management/libs/infrastructure/readers/rank_preview__reader.py — 读 mode=list：champion 置空、给首个/末个，corner 全为 EST. YYYY 时 list_order=成立年份；logo/person 头像走同一账本与期目录路径校验，logo_bg 只收 hex
+- projects/ai_video_management/apps/ui/src/lib/rankReview.ts、components/RankReviewSections.{tsx,css} — 列表期概况/系列卡改「列表期 · 不排名」，明细表名次列改「序」；按字段出角标、Logo（底色）、创始人头像+姓名身份（头像风险红圈）、主图 image_risk 原文（news-agency 红底）、image_alt_credit（AI 黄）、secondary_display、可展开 notes；洞察写「序 N 之后」
+- projects/ai_video_management/tests/test_rank_preview.py、apps/ui/test/rank-review.test.tsx — 新增 list 期 / rank 期用例
+- projects/ai_video_management/README.md — 排行榜预览段补一句
+
+验证: pytest test_rank_preview 18 passed（含 tmp 最小 list 期与 rank 期）；pytest test_rank_preview+boot_smoke+origin_guard+spa_deeplink 27 passed；vitest rank-review/rank-preview/hero-preview 13 passed；tsc --noEmit 无错；curl 5174 /api/rank-preview ep03 → mode=list、champion 空、30 条、logo 29 / person 30；/api/media logo 与头像 200；headless Chrome 截图明细表 logo/头像/风险/AI 标正常。作者自查，未做独立审稿
+
+No conflicts found in: 未改 follow-up 317 的 RankPreviewPage.tsx / rankPreview.ts；README 与 320 同段增量追加
+
+
+## Follow-up 317 — 2026-11-03 23:22:49
+Source: user_input/follow_ups/202611.md - section 317
+Summary: 管理应用新增排行榜预览页 /rank-preview：一页看成片、配乐、每张卡的主图与许可、审片记录
+
+Auto-updated:
+- apps/ui/src/lib/rankPreview.ts（新）; components/RankPreviewPage.tsx/.css; App.tsx 路由; test/rank-preview.test.ts
+
+验证: vitest rank-preview 3 passed，tsc 无错；浏览器打开 /rank-preview?path=…ep02…：50 卡 50 图、许可筛选（可商用 21 / CC 需署名 2 / 待签字 24 / AI 3）、三段配乐截取点、成片 tab 均正常，无报错
+
+No conflicts found in: RankReviewSections（follow-up 320，另一会话）共用，只引用未改
+
+
+## Follow-up 322 — 2026-11-05 22:50:32
+Source: user_input/follow_ups/202611.md - section 322
+Summary: 删除《时空旅行》系列 shikong_lvxing（sk1–sk3）全部文件与生成物、_deleted 备份、specs/ai_video/{shikong_lvxing,sk1,sk2,sk3}、.audit 下的子代理记录；shengji_zhilu 对 sk2 的路径引用标为已删除，并删除 sk2_reuse.md；工具示例与测试夹具去掉该系列路径，image_fetch --drama 改为必填
+
+Auto-updated:
+- 删除 ai_videos/shikong_lvxing、ai_videos/_deleted/shikong_lvxing、specs/ai_video/{shikong_lvxing,sk1,sk2,sk3}、ai_videos/shengji_zhilu/0_research/sk2_reuse.md
+- ai_videos/shengji_zhilu 下 22 个文件的 sk2 路径引用改为已删除标记；dossier.md 加 sk2 出处作废说明
+- tools/{image_fetch,char_assets,gen_turntable_videos,build_scene,fetch_wow_maps,gen_props_szzl,whitemodel_normalize}.py、tools/previz/curves.py
+- projects/ai_video_management/tests/test_series_shared_asset_import.py、apps/ui/test/siblingModels.test.ts
+
+验证: 仓库内已无 shikong_lvxing / 时空旅行 残留（specs 的 follow-up/changelog 历史记录除外）；pytest test_series_shared_asset_import 11 passed；vitest siblingModels 5 passed；image_fetch --help 正常
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 323 — 2026-11-06 21:00:34
+Source: user_input/follow_ups/202611.md - section 323
+Summary: 新增 youtube-channel skill 与 tools/youtube_analytics.py，授权加 Analytics 只读权限
+
+Auto-updated:
+- tools/youtube_analytics.py — 新增：report（本期对上期、热门视频+留存、内容类型、流量来源、地区、设备、订阅与否、YPP 近似进度、按天）与 retention <video_id>；输出 ai_videos/_research/youtube_channel/<频道id>/<结束日>_<天数>d/report.{md,json}
+- tools/youtube_upload.py — SCOPES 加 yt-analytics.readonly；旧 token 缺权限时报错要求重新 auth
+- .agents/skills/youtube-channel/SKILL.md — 新增共用 skill：授权、上传（私享、公开人点）、增长分析解读、同类对比、边界
+- .agents/skill-aliases.json、.claude/skills/youtube-channel|youtube_channel — 新增别名并由 sync_agent_skills.py 生成入口
+- .agents/references/project/workflow_catalog.json — 登记 skill（1.6.2）与两个工具（2.3.117/118）
+- ai_videos/_research/youtube_channel/UC3lEo1-XAaBQbX7oNeh_VoQ/2026-11-03_28d/ — 首份真实报告
+
+验证: 用户重新授权（E - World，含 analytics 权限）后真实跑 report 28 天与 retention：所有查询无错误、24 条视频取到；据实测修正 creatorContentType 为小写（shorts）与 SUBSCRIBER/RELATED_VIDEO 中文名；ruff F/E9、py_compile 通过；sync_agent_skills --check、workflow_catalog --check 通过；test_global_workflow 1 项失败为他会话既有的未登记引用（local_3d/scene_board/motion_check/xianxia deep_review），与本次无关
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 324 — 2026-11-06 23:20:55
+Source: user_input/follow_ups/202611.md - section 324
+Summary: 官方 2.5 指南示例一律镜头起句、方向全用画面/镜头参照；Seedance 1.0 报告给出机理（decoder-only 编码器、caption 从观众视角写）；扫描 102 镜走位约 10 镜只有东南西北、1 镜与俯视图矛盾。方向规则进分镜规范，镜头在前写入 Seedance 写法页；编译器改序待 A/B。
+
+Auto-updated:
+- .agents/skills/ai-videos-pipeline/modules/{prompts-seedance,prompts,filming}.md；.audit/adhoc_agents/2026-11-06/seedance-prompt-order/
+
+验证: 火山方舟 Seedance 2.5 提示词指南原文核对（示例镜头起句、方向全为画面参照）；Seedance 1.0 报告 §2.2/§3.2；dir_scan.py 扫 102 镜走位并人工核对举例；workflow_catalog --check、sync_agent_skills --check 通过。未做付费 A/B，编译器未改。
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 325 — 2026-11-07 00:03:51
+Source: user_input/follow_ups/202611.md - section 325
+Summary: chuanyue_yiri EP1 s1 st3 跟拍做 2×2×2 共 8 条 480p 草稿（768 积分），盲审＋作者核对：镜头在前无增益、编译器不改；方向以镜头为参照弱支持（左侧放对 4/4 对 2/4），分镜规则保留。
+
+Auto-updated:
+- ai_videos/_research/service_tests/seedance_order_ab_20261106/；.agents/skills/ai-videos-pipeline/modules/prompts-seedance.md；.audit/adhoc_agents/2026-11-06/seedance-prompt-order/README.md
+
+验证: 8 条全部下载；两位独立盲审（Opus、Sonnet）＋作者逐条核对 1.0/3.5/6.0 秒原图与拼图；faster-whisper 台词 8/8 正确
+费用: Dreamina 8×96=768 积分（回执 credit_count）；1 次上传超时未提交不扣费
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 326 — 2026-11-07 09:02:08
+Source: user_input/follow_ups/202611.md - section 326
+Summary: 新增只读单集预览页 /episode-preview，剧页可直达
+
+Auto-updated:
+- 新增 apps/ui/src/lib/episodePreview.ts、components/EpisodePreviewPage.tsx/.css、test/episode-preview.test.tsx；App.tsx 注册 /episode-preview；EpisodeWorkflowPage 抬头加「单集预览」；README 记页面与 preview.json 格式。顺带修 tools/episode_cut.py join：切（concat）与叠化（xfade）混用时时间基不一致（fps 后再 settb=AVTB，concat 后 settb），加回归测试 tools/tests/test_episode_cut.py::test_assemble_mixes_cut_and_dissolve
+
+验证: tsc 通过；vitest episode-preview 5/5，全量 169/170（唯一失败 map-regions 属其他会话未跟踪的进行中文件，与本改动无关）；test_episode_cut 5/5（修复前新测试失败）；运行中实例 headless Chrome 实测：整集播放、时间线跳转、当前镜台词与拉丁语释义、逐镜连播、懒加载（首屏 1 条视频）、390px 无横向滚动
+
+No conflicts found in: 只读新页面与独立路由；episode_cut 只改滤镜时间基，不改决定格式
+
+
+## Follow-up 327 — 2026-11-07 11:36:30
+Source: user_input/follow_ups/202611.md - section 327
+Summary: scene_cut 支持镜组事件与场尾停留提示；场故事板单镜用首帧图；scene_blocking 空镜不崩；单集预览页按镜组条与偏移播放
+
+Auto-updated:
+- tools/scene_cut.py：事件可写 group（条在 groups/gN/，同一条可按镜头拆成几个事件）、镜组条也标注；场尾停留提示（<1.5 秒，只提示）；无对白段响度只压不提；静音上幻听出的词（时长 0 或 >2 秒）不算对白；tools/scene_board.py：单镜用 planning/stN_first_frame.png 当一格；tools/scene_blocking.py：空镜（无人物）算上机位，不再 min() 空序列崩溃；单集预览页 episodePreview.ts / EpisodePreviewPage.tsx 支持镜组条与偏移；README、edit.md、prompts-generate.md 同步；新增 tools/tests/test_scene_cut_groups.py 与 test_scene_board.py 单镜首帧用例、episode-preview 镜组偏移用例
+
+验证: tools/tests 221 passed；UI tsc 通过、vitest 31 文件 171 passed；chuanyue_yiri EP01 v2 八场全部用镜组条剪辑、渲染回读时长与帧数对；无头 Chrome 打开单集预览：6:37 整集、8 场、42 镜全部找到条、无报错；s7 st5 幻听词不再触发响度提升与场尾提示
+
+No conflicts found in: 只扩展：不写 group 的旧决定照旧；场尾停留只提示不拦渲染
+
+
+## Follow-up 328 — 2026-11-07 20:37:59
+Source: user_input/follow_ups/202611.md - section 328
+Summary: 单集预览页增加成片模式（无 filming.json、preview.json 给成片与章节），支持 epNN_后缀目录
+
+Auto-updated:
+- apps/ui/src/lib/episodePreview.ts（集目录名可带后缀、episodeNumber、成片模式类型与 filmIndexAt）；apps/ui/src/components/EpisodeFilmPreview.tsx（新）；EpisodePreviewPage.tsx（无 filming.json 且 preview.json 有 video 时转成片模式）；EpisodePreviewPage.css；test/episode-preview.test.tsx；README.md；ai_videos/zhenshi_chidu/_tools/make_preview.py（新）与 ep01 preview.json
+
+验证: vitest 全量 31 文件 172 测试通过；tsc --noEmit 通过；浏览器打开 /episode-preview?path=ai_videos/zhenshi_chidu/episodes/ep01_largest_land_animals：成片 248.2s 可播放与跳转，33 张段落卡、5 章、2 张封面候选、3 组说明加载正常（截图工具超时，以 DOM 检查代替）
+费用: 无收费调用
+
+No conflicts found in: spec 无单集预览页成片模式的既有约定；三模块剧行为不变（有 filming.json 时走原逻辑）
+
+
+## Follow-up 329 — 2026-11-07 20:44:13
+Source: user_input/follow_ups/202611.md - section 329
+Summary: 新增 /character-review?path=<人物目录>：读人物目录 review.json，分区展示建立视频、三视图、表情等，每项带编号，便于用户按编号指认修复
+
+Auto-updated:
+- apps/ui/src/lib/characterReview.ts、components/CharacterReviewPage.tsx/.css、App.tsx 路由 /character-review、test/character-review.test.ts、README；tools/character_review.py 生成 review.json；前端已 build
+
+验证: vitest character-review 3 passed；tsc -b 通过；npm run build 通过；8766 上 Edge 截图渲染 18 项、编号与媒体正常；API file/media 200
+费用: 无外部服务
+
+No conflicts found in: 新增路由与文件，不改既有页面；build 覆盖 apps/api/static
+
+
+## Follow-up 330 — 2026-11-07 21:39:51
+Source: user_input/follow_ups/202611.md - section 330
+Summary: 管理站新增「1.0.4.1 审查机制（草案）」/workflow/qc/strategy：主流程、依赖、审稿人泳道、判定树、漏网案例五张交互 SVG 图，顶部实时显示试点剧闸门状态
+
+Auto-updated:
+- apps/ui/src/lib/reviewStrategy.ts（新）; apps/ui/src/components/ReviewStrategyPage.tsx/.css（新）; apps/ui/src/components/ReviewStrategyDiagrams.tsx（新）; App.tsx 路由; lib/workflowData.ts 导航 1.0.4.1; ProcessQcPage.tsx 两处入口链接; test/review-strategy.test.tsx（新 4 条）; test/workflow-map.test.tsx 导航期望; README
+
+验证: tsc 通过；vitest 178/179（map-regions 一条在全量并发下超时，单独跑 17/17 通过，与本次无关）；在运行中的站点 http://127.0.0.1:5174/workflow/qc/strategy 实际查看五张图，修了漏网回路穿过方框、案例图标签重叠两处，顶部实时显示 chuanyue_yiri 闸门未启用、逃逸率 100%
+费用: 0
+
+No conflicts found in: 只新增页面与导航项；自检页只加链接，不改其数据与逻辑
+
+
+## Follow-up 331 — 2026-11-07 22:50:29
+Source: user_input/follow_ups/202611.md - section 331
+Summary: 管理站新增 /review-run 审查单页（集下列表＋单张清单，进度、逐人勾、严重度、报告与任务书链接），单集工作流页头、单集预览、审查机制页加入口；导航 1.0.5 审查机制与审查单
+
+Auto-updated:
+- apps/ui/src/lib/reviewRun.ts、components/ReviewRunPage.tsx/.css（新）; App.tsx 路由; EpisodeWorkflowPage / EpisodePreviewPage / ReviewStrategyPage 入口; workflowData.ts 导航改 1.0.5; ProcessQcPage 链接文字; test/review-run.test.tsx（新 3 条）; workflow-map 测试期望; README
+
+验证: tsc 通过；vitest 182/182；运行中站点实看 /review-run 单张（13/13 已完成、补登备注、严重度）与集列表页均正常
+费用: 0
+
+No conflicts found in: 只新增页面与入口链接
+
+
+## Follow-up 332 — 2026-11-07 23:17:32
+Source: user_input/follow_ups/202611.md - section 332
+Summary: 审查单页支持剧级列表（按集→循环链分组）、第几轮与上下轮链接、改了什么、必查项 ✓/✗、待用户确认 / 已确认出片状态与结果链接；剧页加「☑ 审查单」按钮
+
+Auto-updated:
+- apps/ui/src/lib/reviewRun.ts、components/ReviewRunPage.tsx/.css; DramaPage.tsx「☑ 审查单」; test/review-run.test.tsx（4 条）; README
+
+验证: tsc 通过；vitest 183/183；运行中站点实看剧级审查单列表与剧页按钮
+费用: 0
+
+No conflicts found in: 只改审查单页面与剧页按钮
+
+
+## Follow-up 333 — 2026-11-08 09:20:53
+Source: user_input/follow_ups/202611.md - section 333
+Summary: 左侧导航加「审查单」一类（剧 → 集分组，列每轮审查单）；审查单页只留每个大类的一行摘要（审了没、问题数、哪些审稿人）；点进去是审稿人详情页（怎么审、流程、必查项、报告全文）
+
+Auto-updated:
+- apps/ui/src/components/ReviewNav.tsx, apps/ui/src/components/Sidebar.tsx, apps/ui/src/components/ReviewRunPage.tsx(.css), apps/ui/src/lib/reviewRun.ts, apps/ui/src/api.ts, apps/ui/src/App.tsx, apps/ui/src/styles.css, apps/ui/test/review-run.test.tsx, apps/api/routes/review_run__route.py, apps/api/routes/__init__.py, apps/api/container.py, libs/infrastructure/readers/review_run__reader.py, libs/infrastructure/daos/review_run__dao.py, libs/application/{queries,dtos}/review_run__*.py, tests/test_review_run_api.py, README.md
+
+验证: tsc ok; vitest 186/186; pytest test_review_run_api + boot_smoke 11 passed; 浏览器看了左侧导航「☑ 审查单 › chuanyue_yiri › ep01 › 第 1 轮」、审查单页（8 个大类一行一个）与 physics_A 详情页（必查项、流程、报告表格渲染）
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 334 — 2026-11-08 09:32:04
+Source: user_input/follow_ups/202611.md - section 334
+Summary: 审查机制页法则表加「母语听感」（英语母语盲审、换模型），台词改名「台词（时长与逻辑）」；与名册 review_roster v3 一致
+
+Auto-updated:
+- apps/ui/src/lib/reviewStrategy.ts（LAWS 加 native_ear，dialogue 改名）；名册与 tools/review_run.py 见 chuanyue_yiri 036
+
+验证: tsc --noEmit 通过；vitest review-strategy 4/4
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 335 — 2026-11-08 10:32:18
+Source: user_input/follow_ups/202611.md - section 335
+Summary: 编译器加可选镜头字段 extras（路人数）：去掉「多出来的人」并写明路人数；不写时输出不变，不升编译器版本
+
+Auto-updated:
+- libs/domain/entities/episode_workflow__entity.py、libs/common/episode_workflow.py（EXTRAS_COUNT_RULE）、tests/test_episode_workflow.py、.agents/skills/ai-videos-pipeline/modules/prompts-rules.md
+
+验证: pytest tests/test_episode_workflow.py 62 passed
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 336 — 2026-11-08 12:05:46
+Source: user_input/follow_ups/202611.md - section 336
+Summary: 剧页故事板改为按场、按镜直接读每镜现行首帧图（planning/<st>_first_frame.png，按修改时间破缓存），缺图显示「首帧待出」，每场附出片前审查单状态；去掉剧页上读旧场故事板（镜组板切图）的入口
+
+Auto-updated:
+- 后端：新增 libs/infrastructure/readers/shot_first_frame__reader.py，/api/episode-workflow 增加 first_frames（每镜现行首帧路径、毫秒 mtime、首帧 prompt，只认 planning/<镜>_first_frame.png）；/api/review-runs 摘要增加 stage、scenes、max_loops。前端：新增 EpisodeStoryboard.tsx/.css 与 lib/episodeStoryboard.ts，剧页「影视改编」不选镜头时按场（filming.json 顺序）铺开每镜首帧卡（首帧待出占位、台词、行动摘要可展开、资料包/planning 链接、每场出片前审查状态签），抬头加「故事板」入口；撤下剧页里读旧 board/ 切图且不破缓存的 SceneBoardView，选中镜头页显示本镜首帧；SceneBoardView 以 scene_board.json 的 mtime 破缓存。README 补说明。已跑 python tools/scene_board.py ai_videos/chuanyue_yiri/episodes/ep01 --force，8 场全部从现行首帧重建（缺图格为占位）。
+
+验证: npx tsc --noEmit 通过；vitest 35 文件 192 测试全过（新增 test/episode-storyboard.test.tsx 6 条：顺序、占位、不显示 _r*/_obsolete、台词拆分、审查签、展开）；pytest tests/test_episode_workflow.py tests/test_review_run_api.py 66 过，全量 490 过 1 失败（test_global_workflow 的共用文档引用闭包，与本改动无关，原有）；浏览器打开 ep01 影视改编：s1、s3 新首帧显示，缺图卡显示首帧待出，s1 签显示出片前审查 第 3/3 轮 · 进行中，图片 URL 不含 _obsolete/_r*/board；/scene-preview s1 显示新首帧。
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 337 — 2026-11-08 12:36:11
+Source: user_input/follow_ups/202611.md - section 337
+Summary: 审查单页每位审稿人标签显示是哪个独立 agent（执行方式 · 模型，重派标第几次）；审稿人详情页顶部新增「审稿 agent」：每次派单的执行方式、模型、上下文、派单与打勾时间、用了哪些规则 / skill（可点）、发给它的完整指令原文与回复
+
+Auto-updated:
+- apps/ui/src/lib/reviewRun.ts（AgentDispatch 类型、agentKind/modelShort/agentShort、attemptsNewestFirst/tickedAttempt/shownAttempt、skillPart）；apps/ui/src/components/ReviewRunPage.tsx（审查单页 AgentChip：代号 + 执行方式·模型 + ↻ 第 N 次派单；详情页顶部「审稿 agent」AgentSection/AgentCard：执行方式、模型、独立性、派单与打勾时间、说明、规则/skill 链接、完整指令可折叠块、回复或「回复未存档」；控制字符换成可见符号）；ReviewRunPage.css；apps/ui/test/review-run.test.tsx；README.md。/api/review-runs 未改（导航只列到每轮，不需要 agent 字段）
+
+验证: npx tsc --noEmit 通过；vitest 全量 35 文件 195 例通过（新增：agent 标签与重派标记、打勾的那次的判定、skill 路径拆链接、详情页两次派单新旧顺序/执行方式/模型/skills/指令原文/回复、控制字符、无派单记录兜底）；浏览器看了 chuanyue_yiri r3 审查单页、native_ear（两次派单）与 physics 详情页、full_r1 旧单（没有派单记录）。发现并修了一处：agents/*.md 指令原文里有响铃符（路径 \a 被转义），原样放进 <pre> 会让 Chrome 渲染进程卡死，现换成 ␇ 并提示；数据本身未改。后端未改，未跑 pytest
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 338 — 2026-11-08 13:29:02
+Source: user_input/follow_ups/202611.md - section 338
+Summary: 审查单页点大类名进新的审查大类页：先讲这一类是什么、想解决什么问题（含真实例子）、几个小类（本轮各审稿人 ✓/✗ 矩阵）、检查流程、用了哪些 skill / 规则与实际跑的 agent，最后给本类结果与合并问题表
+
+Auto-updated:
+- 新增 apps/ui/src/lib/reviewLaw.ts、components/ReviewLawPage.tsx/.css、路由 /review-run/law；api.ts 加 fetchRepoSource（名册经 /api/global-workflow/source 读取）；ReviewRunPage 大类名链到大类页、详情页链回大类；README；测试 apps/ui/test/review-law.test.tsx
+
+验证: npx tsc --noEmit 通过；vitest 全量 36 个文件 202 项通过（新增 7 项）；浏览器实看 chuanyue_yiri ep01 r3 physics / native_ear（两次派单、指定 codex 未用上标红）、r1 continuity（9 行与计数一致，道具状态表不计）、旧 full_r1 physics（4 位审稿人、无小类结果与派单记录，退回名册小类与打勾署名，46 行）
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 339 — 2026-11-08 13:37:31
+Source: user_input/follow_ups/202611.md - section 339
+Summary: 单集预览页支持 edu_videos 知识点
+
+Auto-updated:
+- projects/ai_video_management/libs/common/exposed_roots.py — 新建：可访问顶层目录唯一定义（ai_videos、edu_videos）
+- projects/ai_video_management/libs/common/{safe_resolve.py,exposed_tree.py} — 改读 EXPOSED_TOP_LEVEL
+- projects/ai_video_management/apps/ui/src/lib/episodePreview.ts、components/{EpisodePreviewPage,EpisodeFilmPreview}.tsx — 解析 edu_videos/<系列>/tNN 知识点路径，页眉改为教学视频
+- projects/ai_video_management/tests/test_sandbox_ai_videos_only.py、apps/ui/test/episode-preview.test.tsx — 新增 edu_videos 可读、仓库其他目录仍 404、路径解析用例
+- projects/ai_video_management/README.md — 教学视频预览说明
+- tools/edu_video.py — 新增 preview 命令生成 preview.json；edu_videos 两个知识点已生成
+- .agents/references/project/workflow_catalog.json — 登记 edu_videos/README.md、两个系列 README、tools/edu_video.py、tools/edu_manim.py
+
+验证: pytest：sandbox 3 passed、相关 27 passed；vitest episode-preview 7 passed；本机 5174 打开 /episode-preview?path=edu_videos/ai_terms/t01_overfitting 看图确认章节、成片、逐句缩略图正常，/api/media Range 206；test_global_workflow 仍有 5 条他会话改动引入的未登记引用（local_3d、scene_board、motion_check、review_run、xianxia deep_review），本次新增引用已全部登记
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 340 — 2026-11-08 13:50:44
+Source: user_input/follow_ups/202611.md - section 340
+Summary: 出图默认引擎改为只用 Codex：image_engine.AUTO_ORDER=(codex,)，ElevenLabs 只在用户允许、显式 --engine elevenlabs 时用、不再作自动回退；CONVENTIONS、codex-imagegen、paid_services、assets.md 同步；引擎策略测试按新规则改写
+
+Auto-updated:
+- tools/image_engine.py、tools/tests/test_scene_image_policy.py、CONVENTIONS.md、.agents/skills/codex-imagegen/SKILL.md、.agents/references/project/paid_services.md、.agents/skills/ai-videos-pipeline/resources/assets.md
+
+验证: python -m pytest tools/tests 247 passed；sync_agent_skills --check、workflow_catalog --check 通过
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 341 — 2026-11-08 13:51:15
+Source: user_input/follow_ups/202611.md - section 341
+Summary: 出图一律 Codex，ElevenLabs 出图须用户允许
+
+Auto-updated:
+- CONVENTIONS.md §图片的生成服务、§AI video rules — 出图一律 Codex，ElevenLabs 出图须用户明确允许（credit 留给配音）
+- .agents/references/project/paid_services.md — 三处出图规则改为 Codex 唯一默认，旧 ElevenLabs 优先规则标为仅用户允许时适用
+- .agents/references/project/ai_video_workflow.md、.agents/skills/ai-videos-pipeline/modules/prompts-references.md — 引擎说明同步
+- tools/gen_outfit_views.py、gen_equipment.py、gen_char_images.py、gen_bg_images.py、gen_bg_assets.py、image_engine.py — 帮助文字与注释同步（AUTO_ORDER=(CODEX,) 的代码改动由 chuanyue_yiri follow-up 036 先做）
+- codex-imagegen SKILL.md、assets.md、CONVENTIONS 顶部提示由并行会话（chuanyue_yiri 036）写入，本条未重复改
+
+验证: py_compile 通过；test_scene_image_policy + test_codex_image 31 passed；image_engine.order(auto)=['codex']；sync_agent_skills --check、workflow_catalog --check 通过；顺带查询 ElevenLabs 订阅：Pro 年付，600358/600358 已用完，2026-11-17 15:01 重置（日志 .audit/service_requests/elevenlabs_account/）
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 342 — 2026-11-08 13:54:13
+Source: user_input/follow_ups/202611.md - section 342
+Summary: 编译器解析人物时声样改为可选：有就挂，没有不报错（不开口或只说一句的当地人不做声样）；已有声样的人物编译结果不变，不升版本；同时人物行补上「另有 N 个没有三视图的当地人」
+
+Auto-updated:
+- libs/infrastructure/readers/shot_materials__reader.py、libs/domain/entities/episode_workflow__entity.py、tests/test_episode_workflow.py
+
+验证: tests/test_episode_workflow.py 64 passed
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 343 — 2026-11-08 14:07:21
+Source: user_input/follow_ups/202611.md - section 343
+Summary: 管理站审查单页接 review_run.py v5：大类页「细分成几个小类」改成 rubric 评分表（每项 Claude a 分 / Codex b 分 / 最终，0–3 着色，悬停与展开看证据，标分歧、抽查与裁决），检查流程加 method、skill 节加 model_why 与两位审稿人和裁决人；审查单页每项显示两位审稿人的模型与打勾状态（含待裁决、代登记），有 issues.json 时顶部加问题清单摘要卡；新增问题清单页 /review-run/issues（级别 / 状态 / 类别 / 场筛选，严重在前，证据展开、方案、历史，循环位置「本轮 → 问题 → 方案 → 实施 → 下一轮复核」与挡着下一轮的严重 / 主要数）；审稿项详情页 v5 两位并排与对比 / 裁决节。v2 单照旧。
+
+Auto-updated:
+- apps/ui/src/lib/reviewV5.ts（新）、reviewRun.ts、reviewLaw.ts；components/ReviewV5.tsx、ReviewIssues.tsx、ReviewIssuesPage.tsx、ReviewText.tsx、ReviewV5.css（新）、ReviewRunPage.tsx、ReviewLawPage.tsx；App.tsx 路由 /review-run/issues；test/review-v5.test.tsx 与 test/fixtures/review-v5/（review_run.py 临时目录真跑出的完成单＋进行中单＋make_fixtures.py）；README
+
+验证: npx tsc --noEmit 通过；全量 vitest 37 文件 214 测试通过（新增 review-v5 12 个，原 review-run / review-law 不改仍过）；浏览器看真实 v2 单 chuanyue_yiri ep01_20261108-131724_pregen_r1 的审查单页摘要卡（207 条、挡着下一轮 67）与问题清单页（筛选、证据展开、历史），修了表格宽度、按钮折行、摘要卡标题间距；用 fetch 拦截加载 v5 fixture 看了审查单页、大类评分表、审稿项双审卡与对比节，修了一致维度裁决前最终分显示「—」
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 345 — 2026-11-08 14:57:34
+Source: user_input/follow_ups/202611.md - section 345
+Summary: SharedAssetPreview 由 dialog 改为主区域 article；打开时隐藏列表，面包屑带资产名；详情加显仙侠参照、details、采用层级与被引用。
+
+Auto-updated:
+- apps/ui/src/components/SharedAssetPreview.tsx、SharedAssetsPage.tsx、SharedAssetsPage.css — 详情由弹窗改为主页面内容，打开时隐藏列表，返回列表回到原筛选；详情加显仙侠参照、details、采用层级与被引用
+- apps/ui/src/lib/sharedAssets.ts — SharedAsset 增加可选字段 name_en/xianxia/details/adoption/module/backlinks
+- apps/ui/test/shared-assets.test.tsx — 改为断言 article、无 dialog、返回列表
+- apps/api/static — npm run build 重新打包
+
+验证: vitest 全量 37 文件 215 项通过（map-regions 一条在首次全量时超时、单独与复跑均通过）；tsc -b 通过；vite build 通过。未做浏览器实测：本机 5173 是另一应用，管理 UI 未运行，未擅自启动服务。
+费用: 无收费调用
+
+No conflicts found in: 仙侠与西幻两个公用资产库共用该组件，两边同时生效；后端 tree reader 与 test_series_shared_library 3 项通过
+
+
+## Follow-up 346 — 2026-11-08 15:31:10
+Source: user_input/follow_ups/202611.md - section 346
+Summary: 审查单每轮收轮改为「已收轮」并记结论（可出片 / 不可出片＋理由），旧「待用户确认」migrate；用户确认只留在出片时（confirm / can-submit 查最新一张已收轮单）。新增 review_run.py corrections 与管理站修复页 /review-run/corrections：每个有方案的问题、首帧前后、分镜 diff、下一轮复核结果，与审查单、问题清单、左侧导航双向链接；new 存 materials/snapshot，fix 加 --file / --before --after / --by。
+
+Auto-updated:
+- tools/review_run.py（已收轮、verdict、migrate、snapshot、fix --file/--before/--after/--by、corrections、can-submit 查最新已收轮单）；tools/tests/test_review_run.py；管理站 ReviewCorrectionsPage.tsx/.css、lib/reviewCorrections.ts、ReviewRunPage.tsx/.css、ReviewIssuesPage.tsx、ReviewNav.tsx、ReviewLawPage.tsx、lib/reviewRun.ts、App.tsx、api.ts、review_run__reader.py；README；ai-videos-pipeline SKILL 与 prompts-generate.md；chuanyue_yiri 第 3 轮审查单迁移为已收轮，五张出片前单生成 corrections.json/md
+
+验证: python -m pytest tools/tests（255 passed）；后端 tests/test_review_run_api.py + test_episode_workflow.py（67 passed）；vitest 全量 38 files / 220 tests passed；tsc --noEmit 通过；浏览器 127.0.0.1:5174 看了 131724_r1、102006_r1 修复页与 r3 审查单页
+费用: 无收费服务调用
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 344 — 2026-11-08 14:14:44
+Source: user_input/follow_ups/202611.md - section 344
+Summary: 审阅页支持 edu_videos 目录
+
+Auto-updated:
+- projects/ai_video_management/apps/ui/src/lib/characterReview.ts — 新增 isReviewPath（ai_videos / edu_videos）
+- projects/ai_video_management/apps/ui/src/components/CharacterReviewPage.tsx — 改用 isReviewPath，报错文案含 edu_videos
+- projects/ai_video_management/apps/ui/test/character-review.test.ts — 新增路径用例
+- projects/ai_video_management/README.md — 审阅页支持 edu_videos 说明
+
+验证: vitest character-review 4 passed；本机 5174 打开 /character-review?path=edu_videos/_shared/voice_lab 看图确认 5 组 14 条音频与说明正常
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 347 — 2026-11-08 16:48:54
+Source: user_input/follow_ups/202611.md - section 347
+Summary: tools/shot_overhead.py：原地（≤0.2 m）的路点合成一个点，先后每个朝向（差 ≥25°）各画一个尖角并标秒数（审阅图与 _ref 图都改，_ref 图秒数贴着各自尖角摆、路过点缩小）；[[camera]] 新增 shot_size（景别）键，逐路点核机位距离，表外词 blocker，有人却一个都没写＝warning「距离机检跳过」；补测试与 prompts-overhead / prompts-structure 文档
+
+Auto-updated:
+- tools/shot_overhead.py；tools/tests/test_shot_overhead_facings.py；.agents/skills/ai-videos-pipeline/modules/prompts-overhead.md；.agents/skills/ai-videos-pipeline/modules/prompts-structure.md；重画 chuanyue_yiri ep01 s1 st3/st4/st5 overhead 并 shot_pack sync
+
+验证: python -m pytest tools/tests -q：265 passed；shot_overhead.py 重画 s1 st3/st4/st5 并看图（st4 两个尖角 0–11s、17.5–18s / 12–16.5s；st5 五个朝向）；--all --check 63 镜 blocker 0 warning 61（全是 shot_size 跳过提示）；shot_pack check ok 63；workflow_catalog --check 编号连续
+
+No conflicts found in: 未改任何 overhead.toml / prompts.json；st3 视野大（约 33 px/m）时原地组与相邻点仍挤
+
+
+## Follow-up 348 — 2026-11-08 16:59:46
+Source: user_input/follow_ups/202611.md - section 348
+Summary: 审查单按「集 → 范围（集+阶段+场）」分组、新的在前，每个范围最新一张标「最新」、旧的变灰并写明被哪张取代；导航每张以开单时间开头；审查单页非最新时顶部横幅链到最新；新增 /api/review-runs/checklist 读超过 1 MiB 的 checklist.json（场二到场八第 2 轮原先打不开）
+
+Auto-updated:
+- projects/ai_video_management/apps/ui/src/lib/reviewRun.ts, apps/ui/src/components/ReviewNav.tsx, apps/ui/src/components/ReviewRunPage.tsx(+.css), apps/ui/src/styles.css, apps/ui/src/api.ts, libs/infrastructure/readers/review_run__reader.py, libs/application/queries/review_run__query.py, apps/api/routes/review_run__route.py, tests/test_review_run_api.py, apps/ui/test/review-{run,corrections,law,v5}.test.tsx, README.md
+
+验证: tsc 通过；vitest 全量 38 文件 222 项通过；pytest tests 494 过 1 跳过，1 项失败 test_global_workflow reference_closure 与本改动无关（工作流目录登记，他处未提交改动）；浏览器用 chuanyue_yiri 真实 7 张单核对导航、列表页、旧单横幅与最新单徽标，场二到场八第 2 轮（1.5 MB）现可打开
+
+No conflicts found in: 只读页面与只读接口；未改剧内容与 tools/review_run.py
+
+
+## Follow-up 349 — 2026-11-08 17:19:37
+Source: user_input/follow_ups/202611.md - section 349
+Summary: 单集预览成片模式支持 preview.<lang>.json 与语言切换
+
+Auto-updated:
+- apps/ui/src/lib/episodePreview.ts (previewFile, PreviewNotes.lang/languages); apps/ui/src/components/EpisodePreviewPage.tsx (?lang=); apps/ui/src/components/EpisodeFilmPreview.tsx (语言切换标签); apps/ui/src/components/EpisodePreviewPage.css; apps/ui/test/episode-preview.test.tsx
+
+验证: tsc --noEmit 通过；vitest episode-preview 7/7 通过；?lang=xx 只接受两位小写字母，其他值退回 preview.json
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 350 — 2026-11-08 17:42:59
+Source: user_input/follow_ups/202611.md - section 350
+Summary: 编译器 v12→v13，单一写法不加剧级开关：无台词的镜/镜组不挂任何声样、不写声音参考用法，有台词的镜只挂本镜说话的人的声样（按 speaks 认人）；删掉「本场：」整场目的一行（场景行保留地点·时间），避免别的镜头情节串进单镜 prompt。所有剧旧 prompts.json（v12）都标待更新、资料包失效，需各自重新编译（本次不重编）。
+
+Auto-updated:
+- libs/common/episode_workflow.py、libs/domain/entities/episode_workflow__entity.py、libs/infrastructure/readers/shot_materials__reader.py、tests/test_episode_workflow.py、tools/tests/test_shot_pack_scene_source.py、.agents/skills/ai-videos-pipeline/modules/prompts-rules.md、prompts-structure.md、prompts-references.md、prompts.md
+
+验证: app pytest tests/test_episode_workflow.py 67 passed（新增：只给说话人挂声样/无台词镜与镜组不挂、整场目的不进单镜与镜组 prompt；改 3 条旧断言）；全量 app tests 497 passed，1 failed 为既有 test_global_workflow 引用闭包（与本改动无关）；tools/tests 266 passed（新增旧版本 prompts 判资料包失效）；sync_agent_skills --check、workflow_catalog --check 通过；shot_pack check --all：三部剧 prompts 均为 v12，待重编
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 351 — 2026-11-08 19:58:15
+Source: user_input/follow_ups/202611.md - section 351
+Summary: CapCut 官方远程 MCP 存在（Codex/ChatGPT 桌面插件 v0.2.7），但不适合本流程且商用条款不满足，登记为不用。
+
+Auto-updated:
+- .audit/adhoc_agents/2026-11-08/capcut-mcp/README.md — CapCut MCP 调研证据（插件包 v0.2.7、条款、增益评估）
+- .agents/skills/ai-videos-pipeline/modules/edit-tools.md — 登记 CapCut 官方插件 / MCP：不用及原因
+- .agents/references/project/paid_services.md — 商用表加 CapCut / 剪映：不用
+
+验证: 读官方插件包 manifest、.mcp.json 与 skills 原文（未安装、未执行）；核对 CapCut 服务条款 2026-04-15 版与素材许可协议原文；workflow_catalog --check
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 352 — 2026-11-08 20:07:50
+Source: user_input/follow_ups/202611.md - section 352
+Summary: 复核：只用自备素材时条款不禁止商用，但 CapCut 剩下的只是执行剪辑决定、没有自动导出，AI 粗剪是黑盒，不比现有流程好；登记细化，不接入。
+
+Auto-updated:
+- .agents/skills/ai-videos-pipeline/modules/edit-tools.md — CapCut 行改为：Codex 可用，自备素材后剩下的不比现有流程好
+- .agents/references/project/paid_services.md — CapCut 行补：只用自备素材条款不禁止，遗留许可与默认字体风险
+- .audit/adhoc_agents/2026-11-08/capcut-mcp/README.md — 加复核节
+
+验证: 重读服务条款原文（公司内容定义、§10 许可、个人使用条款范围）与插件包 application.md、materials.md、ai-rough-cut.md、post-editing.md；未实测
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 353 — 2026-11-08 20:11:43
+Source: user_input/follow_ups/202611.md - section 353
+Summary: 新增 /dev-preview 路由与系列树「新剧开发框架」节点。
+
+Auto-updated:
+- libs/infrastructure/readers/tree__reader.py — 系列树挂「新剧开发框架」节点（试套与各剧 0_开发）
+- apps/ui/src/lib/devPreview.ts、components/DevPreviewPage.tsx/.css、App.tsx 路由 /dev-preview；apps/api/static 重新打包
+- tests/test_series_dev_framework.py、apps/ui/test/dev-preview.test.tsx
+
+验证: 后端 5 项、前端全量 39 文件 226 项通过；tsc 与 vite build 通过；浏览器 5174 实测：侧栏节点、开发稿预览与评审、框架页三个标签均正常
+费用: 无收费调用
+
+No conflicts found in: App.tsx 与 tree__reader.py 只做局部新增，其余会话的未提交改动未动
+
+
+## Follow-up 354 — 2026-11-08 20:12:54
+Source: user_input/follow_ups/202611.md - section 354
+Summary: 新增 tools/mcp_request_log.py（MCP 宿主调用的两段式请求日志）与 tools/edit_blind_test.py（素材池、合规机检、盲化、揭盲）。
+
+Auto-updated:
+- tools/mcp_request_log.py — MCP 宿主调用的两段式请求日志（request / result / error，先有请求才收结果，复用 RequestLog 脱敏与归属）
+- tools/edit_blind_test.py — 剪辑盲测：pool / set-vid / check（草稿 + 画面 + 声音合规机检）/ blind / review（Claude、Codex 各正反两次）/ reveal（承诺哈希校验）
+
+验证: py_compile；mcp_request_log 在 scratchpad 路径实测脱敏与缺请求拦截；check_draft 单元样例；check 灵敏度校准见 chuanyue_yiri follow-up 039；blind / review --dry-run / reveal 在 scratchpad 副本空跑；review 真调审稿人未跑（等两方齐）
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 355 — 2026-11-08 23:07:05
+Source: user_input/follow_ups/202611.md - section 355
+Summary: 审查单读取器加 edu_videos/<系列>/<知识点>/reviews/*/checklist.json；edu_review.py 每一步写 v5 同形 checklist.json 与 issues.json（编号、级别、处理状态、方案），站上 /review-run 与问题清单页直接显示教学视频台词审；加测试。
+
+Auto-updated:
+- libs/infrastructure/readers/review_run__reader.py；tests/test_review_run_api.py；README.md；tools/edu_review.py（write_checklist、issues.json 站上字段）
+
+验证: .venv pytest tests/test_review_run_api.py tests/test_sandbox_ai_videos_only.py 9 passed；live /api/review-runs 列出 edu_videos/ai_terms/t01_overfitting/reviews/lines_r1；Playwright 打开 /review-run 与 /review-run/issues 页面无报错，显示 227 条问题与处理
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 356 — 2026-11-09 20:05:33
+Source: user_input/follow_ups/202611.md - section 356
+Summary: 单集预览分场里点镜头缩略图改为就地播放该镜片段（到镜尾自动暂停），不再跳到顶部播放器；同时只保留一个就地播放，顶部播放器开始播放时收起就地播放
+
+Auto-updated:
+- apps/ui/src/components/EpisodePreviewPage.tsx, EpisodePreviewPage.css
+
+验证: tsc 通过；episode-preview 测试 7/7；浏览器真实点击 s4 st3 缩略图：就地播放（paused=false, t=3.66 在镜段内），页面不滚动，前一个就地播放收回缩略图
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 357 — 2026-11-09 20:12:29
+Source: user_input/follow_ups/202611.md - section 357
+Summary: 左侧导航加「教学视频」一节：系列 → 课程表.md 的季 → 期，已有目录的期点开单集预览
+
+Auto-updated:
+- libs/infrastructure/readers/tree__reader.py（_edu_videos_section 等）；tests/test_tree_edu_videos.py（新）；tests/test_boot_smoke.py、test_api_security_three_shapes.py、test_tree_walker_consumer_walk.py（节名单加「教学视频」）；README.md
+
+验证: pytest tests/ 502 passed；仅 test_global_workflow 引用闭包 1 条失败，HEAD 上同样失败、与本改动无关；/api/tree 返回 AI Videos + 教学视频，AI 高频词下 6 季
+费用: 无收费服务
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 358 — 2026-11-10 20:07:58
+Source: user_input/follow_ups/202611.md - section 358
+Summary: 分镜每镜可选字段 point：校验为非空字符串，只给审查用，不编译进 prompt（chuanyue_yiri follow-up 058）
+
+Auto-updated:
+- libs/domain/entities/episode_workflow__entity.py、tests/test_episode_workflow.py
+
+验证: test_episode_workflow 68 passed（新增 test_shot_point_is_review_only）
+
+No conflicts found in: （未单独核查）
+

@@ -1,0 +1,4295 @@
+{
+ "run": "lines_r3",
+ "round": 3,
+ "generated_at": "2026-11-09T22:00:53",
+ "items": [
+  {
+   "item": "voice_zh",
+   "name": "中文口播（母语听感，盲审）",
+   "final": {
+    "V1": 2,
+    "V2": 1,
+    "V3": 2,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2,
+    "R": 1
+   },
+   "scores": {
+    "a": {
+     "V1": 2,
+     "V2": 2,
+     "V3": 2,
+     "V4": 2,
+     "V5": 2,
+     "V6": 2,
+     "R": 2
+    },
+    "b": {
+     "V1": 1,
+     "V2": 1,
+     "V3": 1,
+     "V4": 2,
+     "V5": 1,
+     "V6": 3,
+     "R": 1
+    },
+    "judge": {
+     "V1": 2,
+     "V2": 1,
+     "V3": 2,
+     "V5": 2,
+     "R": 1,
+     "V6": 2,
+     "V4": 2
+    }
+   }
+  },
+  {
+   "item": "voice_en",
+   "name": "English narration (native ear, blind)",
+   "final": {
+    "V1": 1,
+    "V2": 2,
+    "V3": 1,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2,
+    "R": 1
+   },
+   "scores": {
+    "a": {
+     "V1": 2,
+     "V2": 2,
+     "V3": 2,
+     "V4": 2,
+     "V5": 2,
+     "V6": 2,
+     "R": 3
+    },
+    "b": {
+     "V1": 1,
+     "V2": 1,
+     "V3": 1,
+     "V4": 2,
+     "V5": 2,
+     "V6": 3,
+     "R": 1
+    },
+    "judge": {
+     "V1": 1,
+     "V2": 2,
+     "V3": 1,
+     "R": 1,
+     "V5": 2,
+     "V6": 2
+    }
+   }
+  },
+  {
+   "item": "screen_zh",
+   "name": "中文屏幕文字（PPT 式画面）",
+   "final": {
+    "P1": 2,
+    "P2": 2,
+    "P3": 2,
+    "P4": 3,
+    "P5": 2,
+    "P6": 2,
+    "R": 1
+   },
+   "scores": {
+    "a": {
+     "P1": 2,
+     "P2": 2,
+     "P3": 2,
+     "P4": 1,
+     "P5": 2,
+     "P6": 2,
+     "R": 2
+    },
+    "b": {
+     "P1": 2,
+     "P2": 2,
+     "P3": 2,
+     "P4": 3,
+     "P5": 2,
+     "P6": 3,
+     "R": 2
+    },
+    "judge": {
+     "P4": 3,
+     "R": 1,
+     "P6": 2
+    }
+   }
+  },
+  {
+   "item": "screen_en",
+   "name": "English on-screen text (slides)",
+   "final": {
+    "P1": 1,
+    "P2": 2,
+    "P3": 2,
+    "P4": 1,
+    "P5": 2,
+    "P6": 2,
+    "R": 1
+   },
+   "scores": {
+    "a": {
+     "P1": 1,
+     "P2": 2,
+     "P3": 2,
+     "P4": 2,
+     "P5": 2,
+     "P6": 2,
+     "R": 1
+    },
+    "b": {
+     "P1": 1,
+     "P2": 3,
+     "P3": 3,
+     "P4": 1,
+     "P5": 2,
+     "P6": 3,
+     "R": 1
+    },
+    "judge": {
+     "P4": 1,
+     "P6": 2,
+     "P3": 2
+    }
+   }
+  }
+ ],
+ "issues": [
+  {
+   "id": "I1",
+   "key": "65d8a1b299bd",
+   "item": "screen_en",
+   "where": "agenda",
+   "dim": "P4/P3/R",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4/P3/R",
+   "shots": [
+    "agenda"
+   ],
+   "evidence": [
+    "\"Prereqs: Neural networks (last episode)\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Last time: neural networks\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Prereqs: Neural networks (last episode)\"",
+   "problem": "Strict linking card. \"Prereqs\" is course jargon the narration (l05 \"Last time we saw…\") never uses; the earlier fix is not in the supplied text. Parenthetical makes a third level.",
+   "suggest": "\"Last time: neural networks\"",
+   "judge_note": "agenda（a：P4/P3/R 必改「Prereqs: Neural networks (last episode)」→「Last time: neural networks」；b：P2/P4 必改，改写相同）：卡面上没有「Prereqs」。这是 edu_review.py 生成材料时加的标签，实际眉题是 `_shared/package.json` 的 prereq_title「HELPFUL TO KNOW」，下面接「Neural networks (last episode)」，读来自然，也和 l05「Last time…」一致。上轮 I1/I2 实际已经解决，a 的 R 行判「未解决」不成立。若在「HELPFUL TO KNOW」下再写「Last time:」，会叠出两层引导语。",
+   "status": "implemented",
+   "solution": "卡上实印「HELPFUL TO KNOW / 建议先了解」，「Prereqs」是审查材料生成时加的前缀（裁决人核实）；另按 I3 删去提示行",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/package.json",
+    "edu_videos/ai_terms/t13_backprop/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I2",
+   "key": "116ab016379f",
+   "item": "screen_en",
+   "where": "agenda",
+   "dim": "P2/P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2/P4",
+   "shots": [
+    "agenda"
+   ],
+   "evidence": [
+    "“Prereqs: Neural networks (last episode)”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**“Last time: neural networks”**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“Prereqs: Neural networks (last episode)”",
+   "problem": "Strict linking screen. “Prereqs” is course jargon and frames a spoken recap as an entry requirement.",
+   "suggest": "**“Last time: neural networks”**",
+   "judge_note": "agenda（a：P4/P3/R 必改「Prereqs: Neural networks (last episode)」→「Last time: neural networks」；b：P2/P4 必改，改写相同）：卡面上没有「Prereqs」。这是 edu_review.py 生成材料时加的标签，实际眉题是 `_shared/package.json` 的 prereq_title「HELPFUL TO KNOW」，下面接「Neural networks (last episode)」，读来自然，也和 l05「Last time…」一致。上轮 I1/I2 实际已经解决，a 的 R 行判「未解决」不成立。若在「HELPFUL TO KNOW」下再写「Last time:」，会叠出两层引导语。",
+   "status": "implemented",
+   "solution": "同 I1",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/package.json",
+    "edu_videos/ai_terms/t13_backprop/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I3",
+   "key": "9ab4e38d226d",
+   "item": "screen_en",
+   "where": "agenda",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "agenda"
+   ],
+   "evidence": [
+    "卡面实际文字：「In this episode」（h2 72px）／01–04 四行章名／眉题「HELPFUL TO KNOW」／「Neural networks (last episode)」／提示行「Not required — covered in a sentence」"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "删去提示行：把本期 `package.json` 里 en 的 prereq_hint 置为 \"\"。定稿卡面：「In this episode」／「01 · Too many knobs to try」「02 · Working backward」「03 · A small experiment」「04 · From 1986 to today」／「HELPFUL TO KNOW」「Neural networks (last episode)」，共 21 词，4 块以内。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "卡面实际文字：「In this episode」（h2 72px）／01–04 四行章名／眉题「HELPFUL TO KNOW」／「Neural networks (last episode)」／提示行「Not required — covered in a sentence」",
+   "problem": "这是从严的串场卡。材料只列了四行章名和带前缀的 prereq，漏了卡标题和提示行，所以两人只数到 19 词。按实际卡面计数（编号、眉题豁免）：3 + 14 + 4 + 6 = 27 词，超过每屏 22 词的硬上限。提示行的信息与眉题「HELPFUL TO KNOW」重复，l05 口播又马上用一句话回顾了神经网络，删掉它不损失信息。",
+   "suggest": "删去提示行：把本期 `package.json` 里 en 的 prereq_hint 置为 \"\"。定稿卡面：「In this episode」／「01 · Too many knobs to try」「02 · Working backward」「03 · A small experiment」「04 · From 1986 to today」／「HELPFUL TO KNOW」「Neural networks (last episode)」，共 21 词，4 块以内。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "删去先修提示行（prereq_hint 置空），目录卡回到 22 词以内（裁决人定稿）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/package.json",
+    "edu_videos/ai_terms/t13_backprop/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I4",
+   "key": "64fb9a81015d",
+   "item": "screen_en",
+   "where": "agenda, c_*, outro",
+   "dim": "P5",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "agenda, c_*, outro"
+   ],
+   "evidence": [
+    "no package-card screenshots"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Verify in the final cut; if the template has no label: \"Next: overfitting\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "no package-card screenshots",
+   "problem": "Cannot check wrapping, reveal timing, subtitle clearance, or that \"Overfitting\" carries a \"Next\" label.",
+   "suggest": "Verify in the final cut; if the template has no label: \"Next: overfitting\"",
+   "judge_note": "agenda（a：P4/P3/R 必改「Prereqs: Neural networks (last episode)」→「Last time: neural networks」；b：P2/P4 必改，改写相同）：卡面上没有「Prereqs」。这是 edu_review.py 生成材料时加的标签，实际眉题是 `_shared/package.json` 的 prereq_title「HELPFUL TO KNOW」，下面接「Neural networks (last episode)」，读来自然，也和 l05「Last time…」一致。上轮 I1/I2 实际已经解决，a 的 R 行判「未解决」不成立。若在「HELPFUL TO KNOW」下再写「Last time:」，会叠出两层引导语。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "包装卡排版在成片 sheet 与抽帧里核对（见 README）；文字已按 I1–I3 处理",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I5",
+   "key": "e545eed61792",
+   "item": "screen_en",
+   "where": "agenda, c_problem, c_analogy, c_experiment, c_real, outro",
+   "dim": "P3/P5",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3/P5",
+   "shots": [
+    "agenda, c_problem, c_analogy, c_experiment, c_real, outro"
+   ],
+   "evidence": [
+    "Empty screenshot references; no chapter-card durations; extracted outro only says “Overfitting”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Keep the chapter titles and **“Blame flows back, layer by layer”**. If the rendered outro lacks its stated label, use **“Next: Overfitting”**. Supply rendered frames and chapter durations to close this check.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Empty screenshot references; no chapter-card durations; extracted outro only says “Overfitting”",
+   "problem": "Package wrapping, subtitle clearance, chapter-title reading time and the claimed existing “Next” label cannot be verified. Agenda copy is **19 words** after excluding numbering; outro copy is seven words. Their aggregate durations are sufficient.",
+   "suggest": "Keep the chapter titles and **“Blame flows back, layer by layer”**. If the rendered outro lacks its stated label, use **“Next: Overfitting”**. Supply rendered frames and chapter durations to close this check.",
+   "judge_note": "agenda（a：P4/P3/R 必改「Prereqs: Neural networks (last episode)」→「Last time: neural networks」；b：P2/P4 必改，改写相同）：卡面上没有「Prereqs」。这是 edu_review.py 生成材料时加的标签，实际眉题是 `_shared/package.json` 的 prereq_title「HELPFUL TO KNOW」，下面接「Neural networks (last episode)」，读来自然，也和 l05「Last time…」一致。上轮 I1/I2 实际已经解决，a 的 R 行判「未解决」不成立。若在「HELPFUL TO KNOW」下再写「Last time:」，会叠出两层引导语。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I4",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I6",
+   "key": "613c1923affd",
+   "item": "screen_en",
+   "where": "l03",
+   "dim": "P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l03"
+   ],
+   "evidence": [
+    "“One at a time? Never finishes”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**“One by one? Impossible”**. Keep **“9 tested”**.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“One at a time? Never finishes”",
+   "problem": "Strict cold open. The second phrase sounds grammatically unfinished. The author’s objection that “Too slow” weakens the meaning is reasonable, but the existing wording remains awkward.",
+   "suggest": "**“One by one? Impossible”**. Keep **“9 tested”**.",
+   "judge_note": "l03（b 改写「One by one? Impossible」）：「Impossible」比口播「You'd never finish」说得更重，等于屏幕新增断言；「One by one」也和本句口播「one at a time」不一致。必改维持，按裁决给的「One at a time? Takes forever」执行。；l03（a 可选改写「One at a time? Never done」）：「Never done」容易被读成「从来没人这么做过」，有歧义，不采用。",
+   "status": "implemented",
+   "solution": "改「One at a time? Takes forever」（裁决人定稿）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/package.json",
+    "edu_videos/ai_terms/t13_backprop/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I7",
+   "key": "5cab772cbcdf",
+   "item": "screen_en",
+   "where": "l03",
+   "dim": "P4",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l03"
+   ],
+   "evidence": [
+    "\"One at a time? Never finishes\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Optional: \"One at a time? Never done\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"One at a time? Never finishes\"",
+   "problem": "Strict cold open; grammatical but subjectless. Prior ruling kept it, so not escalated.",
+   "suggest": "Optional: \"One at a time? Never done\"",
+   "judge_note": "l03（b 改写「One by one? Impossible」）：「Impossible」比口播「You'd never finish」说得更重，等于屏幕新增断言；「One by one」也和本句口播「one at a time」不一致。必改维持，按裁决给的「One at a time? Takes forever」执行。；l03（a 可选改写「One at a time? Never done」）：「Never done」容易被读成「从来没人这么做过」，有歧义，不采用。",
+   "status": "implemented",
+   "solution": "同 I6",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/package.json",
+    "edu_videos/ai_terms/t13_backprop/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I8",
+   "key": "0139ca57d52b",
+   "item": "screen_en",
+   "where": "l17",
+   "dim": "P2/P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2/P4",
+   "shots": [
+    "l17"
+   ],
+   "evidence": [
+    "\"Networks work like gears\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Networks = chains of gears\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Networks work like gears\"",
+   "problem": "Reads as a full sentence while siblings are fragments and it repeats the narration.",
+   "suggest": "\"Networks = chains of gears\"",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：「Networks work like gears」是 4 词标签，第 2 轮裁决人认为不必改",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I9",
+   "key": "deb56e2f5ff2",
+   "item": "screen_en",
+   "where": "l18",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l18"
+   ],
+   "evidence": [
+    "chart 11 words (A, B, 5, km, 7 readouts)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Hide A and B until l19: 5, km, 7 readouts (9)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "chart 11 words (A, B, 5, km, 7 readouts)",
+   "problem": "Over 9.",
+   "suggest": "Hide A and B until l19: 5, km, 7 readouts (9)",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I10",
+   "key": "0abb8f482685",
+   "item": "screen_en",
+   "where": "l18",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l18"
+   ],
+   "evidence": [
+    "“5 km”; “A”; “B”; seven knob readouts"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Show **“5 km · ×1 · +1 · ×0.4 · +2 · ×2 · +13 · ×1”** — nine words. Hide A/B on this introductory beat.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“5 km”; “A”; “B”; seven knob readouts",
+   "problem": "**11 chart words**, exceeding nine.",
+   "suggest": "Show **“5 km · ×1 · +1 · ×0.4 · +2 · ×2 · +13 · ×1”** — nine words. Hide A/B on this introductory beat.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I11",
+   "key": "dae677f969e3",
+   "item": "screen_en",
+   "where": "l19",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l19"
+   ],
+   "evidence": [
+    "chart 13 words (A, 6, B, 4, 5, km, 7 readouts)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Hide ×2, +13, ×1 and \"km\": A, 6, B, 4, 5, ×1, +1, ×0.4, +2 (9)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "chart 13 words (A, 6, B, 4, 5, km, 7 readouts)",
+   "problem": "Over 9; second-layer readouts are not discussed on this beat.",
+   "suggest": "Hide ×2, +13, ×1 and \"km\": A, 6, B, 4, 5, ×1, +1, ×0.4, +2 (9)",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I12",
+   "key": "99049765184f",
+   "item": "screen_en",
+   "where": "l19",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l19"
+   ],
+   "evidence": [
+    "Input, A/B labels, seven readouts, outputs 6/4"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Show **“A: ×1 +1 → 6 / B: ×0.4 +2 → 4”** — eight words. Hide the input text and second-layer readouts.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Input, A/B labels, seven readouts, outputs 6/4",
+   "problem": "**13 chart words**, exceeding nine.",
+   "suggest": "Show **“A: ×1 +1 → 6 / B: ×0.4 +2 → 4”** — eight words. Hide the input text and second-layer readouts.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I13",
+   "key": "f8200c827686",
+   "item": "screen_en",
+   "where": "l20",
+   "dim": "P1/P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1/P2",
+   "shots": [
+    "l20"
+   ],
+   "evidence": [
+    "chart 12 words; \"29\" appears in the circle and again in \"Guess 29\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Hide A, B, 5, km and the \"Guess 29\" label (the circle carries 29): 6, 4, ×2, +13, ×1, 29, \"Guess\" (7)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "chart 12 words; \"29\" appears in the circle and again in \"Guess 29\"",
+   "problem": "Over 9 and duplicated number.",
+   "suggest": "Hide A, B, 5, km and the \"Guess 29\" label (the circle carries 29): 6, 4, ×2, +13, ×1, 29, \"Guess\" (7)",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I14",
+   "key": "322564846e72",
+   "item": "screen_en",
+   "where": "l20",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l20"
+   ],
+   "evidence": [
+    "Network labels and values beside “Guess 29”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Chart: **“A: 6 ×2 / B: 4 ×1 / +13 → 29”** — eight words. Keep the separate **“Guess 29”** panel.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Network labels and values beside “Guess 29”",
+   "problem": "The network alone contains **10 words**, even treating the separate fare panel generously.",
+   "suggest": "Chart: **“A: 6 ×2 / B: 4 ×1 / +13 → 29”** — eight words. Keep the separate **“Guess 29”** panel.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I15",
+   "key": "26815d928168",
+   "item": "screen_en",
+   "where": "l21",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l21"
+   ],
+   "evidence": [
+    "chart + panel 18 words: A, 6, B, 4, 5, km, ×2, +13, ×1, 29, 6, Guess 29, Actual 23, Too high +6"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Hide A, B, 5, km; treat Guess/Actual/Too high as a 3-row table block (6 words); chart keeps 6, 4, ×2, +13, ×1, 29, 6 (7)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "chart + panel 18 words: A, 6, B, 4, 5, km, ×2, +13, ×1, 29, 6, Guess 29, Actual 23, Too high +6",
+   "problem": "Over 9 if the chart is one block.",
+   "suggest": "Hide A, B, 5, km; treat Guess/Actual/Too high as a 3-row table block (6 words); chart keeps 6, 4, ×2, +13, ×1, 29, 6 (7)",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I16",
+   "key": "5a18df03ea34",
+   "item": "screen_en",
+   "where": "l21",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l21"
+   ],
+   "evidence": [
+    "Network values, output 29 and incoming error 6"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Chart: **“A: 6 / B: 4 → 29 / Error: 6”** — seven words. Keep the fare comparison.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Network values, output 29 and incoming error 6",
+   "problem": "**11 chart words**. The separate fare comparison does not remove this breach.",
+   "suggest": "Chart: **“A: 6 / B: 4 → 29 / Error: 6”** — seven words. Keep the fare comparison.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I17",
+   "key": "87bfb0d3f7e0",
+   "item": "screen_en",
+   "where": "l22",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l22"
+   ],
+   "evidence": [
+    "chart 11 words under the h2"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Hide 5, km, A, B: 6, 4, ×2, +13, ×1, 29, 6 (7)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "chart 11 words under the h2",
+   "problem": "Over 9.",
+   "suggest": "Hide 5, km, A, B: 6, 4, ×2, +13, ×1, 29, 6 (7)",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I18",
+   "key": "87ea15608f9b",
+   "item": "screen_en",
+   "where": "l22",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l22"
+   ],
+   "evidence": [
+    "Network beneath “Blame = error × input”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Chart: **“A: 6 / B: 4 / ×2 · +13 · ×1 / Error: 6”** — nine words. Hide other diagram text.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Network beneath “Blame = error × input”",
+   "problem": "**11 chart words**. Faded A/B and “5 km” remain readable and count.",
+   "suggest": "Chart: **“A: 6 / B: 4 / ×2 · +13 · ×1 / Error: 6”** — nine words. Hide other diagram text.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I19",
+   "key": "598eefddb4a9",
+   "item": "screen_en",
+   "where": "l23",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "chart 14 words (6, ×2, 36, 29, 5, km, +13, B, 6, 6, 4, ×1, 24, A)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Show inputs 6 · 4, blame 36 · 6 · 24, readouts ×2 · +13 · ×1 (8); hide 29, 5, km, A, B",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "chart 14 words (6, ×2, 36, 29, 5, km, +13, B, 6, 6, 4, ×1, 24, A)",
+   "problem": "Over 9.",
+   "suggest": "Show inputs 6 · 4, blame 36 · 6 · 24, readouts ×2 · +13 · ×1 (8); hide 29, 5, km, A, B",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I20",
+   "key": "fd0c54842fee",
+   "item": "screen_en",
+   "where": "l23",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "Inputs, readouts, output and blame tags"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Retain only **“6 · 4 / ×2 · +13 · ×1 / 36 · 6 · 24 / 6”** — nine words, positioned at their existing locations.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Inputs, readouts, output and blame tags",
+   "problem": "**14 chart words**, exceeding nine.",
+   "suggest": "Retain only **“6 · 4 / ×2 · +13 · ×1 / 36 · 6 · 24 / 6”** — nine words, positioned at their existing locations.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I21",
+   "key": "ea1a11c4430c",
+   "item": "screen_en",
+   "where": "l25",
+   "dim": "P1/P5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1/P5",
+   "shots": [
+    "l25"
+   ],
+   "evidence": [
+    "chart: A, B, 5 km, ×2, +13, ×1, 6, \"6 × 2 = 12\", \"6 × 1 = 6\" (14 words)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Hide km, 5, +13, ×1, ×2 readouts; keep A, B, \"6 × 2 = 12\", \"6 × 1 = 6\" (8)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "chart: A, B, 5 km, ×2, +13, ×1, 6, \"6 × 2 = 12\", \"6 × 1 = 6\" (14 words)",
+   "problem": "Chart over 9 words, and two new equations arrive in 4.6 s among old readouts (screenshot s4_l25).",
+   "suggest": "Hide km, 5, +13, ×1, ×2 readouts; keep A, B, \"6 × 2 = 12\", \"6 × 1 = 6\" (8)",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I22",
+   "key": "27fee10d716b",
+   "item": "screen_en",
+   "where": "l25",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l25"
+   ],
+   "evidence": [
+    "“6 × 2 = 12”; “6 × 1 = 6”; retained diagram labels"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Chart: **“A: 6 × 2 = 12 / B: 6 × 1 = 6”** — eight words. Hide input text and old readouts.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“6 × 2 = 12”; “6 × 1 = 6”; retained diagram labels",
+   "problem": "**14 chart words**. Removing previous outputs helped, but the accumulated labels still break the block limit.",
+   "suggest": "Chart: **“A: 6 × 2 = 12 / B: 6 × 1 = 6”** — eight words. Hide input text and old readouts.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I23",
+   "key": "7d3a55f7d28b",
+   "item": "screen_en",
+   "where": "l26",
+   "dim": "P1/P5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1/P5",
+   "shots": [
+    "l26"
+   ],
+   "evidence": [
+    "chart: A, B, 5 km, \"6 × 2 = 12\", \"6 × 1 = 6\", 60, 12, 30, 6 (14 words)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep only received 12 / 6 and blame 60, 12, 30, 6 (6 words); hide A, B, 5, km",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "chart: A, B, 5 km, \"6 × 2 = 12\", \"6 × 1 = 6\", 60, 12, 30, 6 (14 words)",
+   "problem": "Chart over 9 words in a 4.2 s beat.",
+   "suggest": "Keep only received 12 / 6 and blame 60, 12, 30, 6 (6 words); hide A, B, 5, km",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I24",
+   "key": "ed938358ad00",
+   "item": "screen_en",
+   "where": "l26",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l26"
+   ],
+   "evidence": [
+    "Two retained equations plus A/B, input and four blame values"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Chart: **“A: 60, 12 / B: 30, 6”** — six words. Hide the previous equations and input text. Keep **“Blame = error × input”**.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Two retained equations plus A/B, input and four blame values",
+   "problem": "**14 chart words**, despite the corrected heading.",
+   "suggest": "Chart: **“A: 60, 12 / B: 30, 6”** — six words. Hide the previous equations and input text. Keep **“Blame = error × input”**.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I25",
+   "key": "cf2e6ffa1312",
+   "item": "screen_en",
+   "where": "l27",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "chart 11 words (A, 36, 60, 12, 5, km, B, 6, 30, 6, 24)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Hide A, B, 5, km (7 blame numbers)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "chart 11 words (A, 36, 60, 12, 5, km, B, 6, 30, 6, 24)",
+   "problem": "Over 9.",
+   "suggest": "Hide A, B, 5, km (7 blame numbers)",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I26",
+   "key": "7166c3a332e9",
+   "item": "screen_en",
+   "where": "l27",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "Seven blame values plus “A,” “B” and “5 km”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Keep only **“60 · 12 · 30 · 6 · 36 · 24 · 6”** on the diagram — seven words. Keep the causal heading.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Seven blame values plus “A,” “B” and “5 km”",
+   "problem": "**11 chart words**. The seven values themselves fit; the retained context labels cause the breach.",
+   "suggest": "Keep only **“60 · 12 · 30 · 6 · 36 · 24 · 6”** on the diagram — seven words. Keep the causal heading.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I27",
+   "key": "dfb76e9cb2b4",
+   "item": "screen_en",
+   "where": "l28",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l28"
+   ],
+   "evidence": [
+    "chart 14 words (A, ×1.82, ×0.7, +0.94, 23.88, 5, km, +12.97, B, Actual 23, ×0.25, +1.97, ×0.88)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Hide A, B, 5, km and the 23.88 circle; keep the seven new readouts plus \"Actual 23\" (9)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "chart 14 words (A, ×1.82, ×0.7, +0.94, 23.88, 5, km, +12.97, B, Actual 23, ×0.25, +1.97, ×0.88)",
+   "problem": "Over 9; 23.88 repeats the title \"One step: 29 → 23.88\".",
+   "suggest": "Hide A, B, 5, km and the 23.88 circle; keep the seven new readouts plus \"Actual 23\" (9)",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I28",
+   "key": "ea32a298a2ed",
+   "item": "screen_en",
+   "where": "l28",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l28"
+   ],
+   "evidence": [
+    "Seven updated readouts; “A”; “B”; “5 km”; “23.88”; “Actual 23”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Chart: **“×0.7 · +0.94 · ×0.25 · +1.97 · ×1.82 · +12.97 · ×0.88 / Actual 23”** — nine words. Hide A/B, input text and the duplicate output number; keep **“One step: 29 → 23.88”**.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Seven updated readouts; “A”; “B”; “5 km”; “23.88”; “Actual 23”",
+   "problem": "**14 chart words**. The numerical result is also already present in the heading.",
+   "suggest": "Chart: **“×0.7 · +0.94 · ×0.25 · +1.97 · ×1.82 · +12.97 · ×0.88 / Actual 23”** — nine words. Hide A/B, input text and the duplicate output number; keep **“One step: 29 → 23.88”**.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "不改：图内剩下的是第一季规定的旋钮读数（s1_bible「圆盘、一根指针、下面标读数」）和当拍要讲的输入、输出；第 2 轮已按拍收起所有用不到的读数、节点值和旧算式，第 1 轮裁决人驳回过删读数（删了「七个旋钮」「乘二、乘一」就听不懂）。把旋钮读数按坐标刻度豁免与否属于计数口径，交用户定（最终汇报里列出）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I29",
+   "key": "24ed956681c0",
+   "item": "screen_en",
+   "where": "l31-l34",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l31-l34"
+   ],
+   "evidence": [
+    "l11 \"The slow way\"; l30 tab \"One by one\"; l31-l34 \"Nudge one by one\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Use \"One by one\" on l31-l34 rows (also parallel with \"Backpropagation\")",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "l11 \"The slow way\"; l30 tab \"One by one\"; l31-l34 \"Nudge one by one\"",
+   "problem": "Three names for one method; the l30 tab fix did not carry to l31+.",
+   "suggest": "Use \"One by one\" on l31-l34 rows (also parallel with \"Backpropagation\")",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l31 起表格行名也改「One by one」，与 l30 页签统一",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/package.json",
+    "edu_videos/ai_terms/t13_backprop/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I30",
+   "key": "c07ba3fed4bb",
+   "item": "screen_en",
+   "where": "l33",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l33"
+   ],
+   "evidence": [
+    "footer \"1 s per run: ≈ 31.7 years per step\" sits under the Backpropagation row (s4_l33)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Move the footer directly under the slow row, or prefix \"Slow way:\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "footer \"1 s per run: ≈ 31.7 years per step\" sits under the Backpropagation row (s4_l33)",
+   "problem": "Reads as if backprop takes 31.7 years.",
+   "suggest": "Move the footer directly under the slow row, or prefix \"Slow way:\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "页脚改为「One by one, 1 s per run: ≈ 31.7 years」，并在 l33 反向传播一行出现时收走（裁决人定稿）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/package.json",
+    "edu_videos/ai_terms/t13_backprop/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I31",
+   "key": "c6199187c506",
+   "item": "screen_en",
+   "where": "l40",
+   "dim": "P5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l40"
+   ],
+   "evidence": [
+    "\"Automatic differentiation\" + \"Underneath: backpropagation\" in 2.3 s"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep; make sure the card stays through the outro handoff",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Automatic differentiation\" + \"Underneath: backpropagation\" in 2.3 s",
+   "problem": "Two new lines for a 2.3 s line; readable only because the code card persists.",
+   "suggest": "Keep; make sure the card stays through the outro handoff",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：两行可读",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I32",
+   "key": "34881669e8c2",
+   "item": "screen_zh",
+   "where": "agenda",
+   "dim": "P4/P3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4/P3",
+   "shots": [
+    "agenda"
+   ],
+   "evidence": [
+    "先修：神经网络与深度学习（上期）"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "上期：神经网络与深度学习",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "先修：神经网络与深度学习（上期）",
+   "problem": "串场从严。「先修」是课程大纲词，口播 l05 只说「上期说过」；「先修」+「（上期）」两个引导词叠在一起；上轮判「已改」但只去了双冒号",
+   "suggest": "上期：神经网络与深度学习",
+   "judge_note": "a · agenda（P4/P3 必改「先修：神经网络与深度学习（上期）」→「上期：神经网络与深度学习」）：「先修：」是材料前缀（`edu_review.py` 第 449 行），卡上不印。卡上眉题是「建议先了解」，按 a 的写法改，会变成「建议先了解／上期：神经网络与深度学习」，反而多出一个引导词，比原文差。",
+   "status": "implemented",
+   "solution": "同 I33；「先修：」是材料生成前缀，卡上印的是「建议先了解」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/package.json",
+    "edu_videos/ai_terms/t13_backprop/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I33",
+   "key": "ca721735b590",
+   "item": "screen_zh",
+   "where": "agenda",
+   "dim": "P1/R",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1/R",
+   "shots": [
+    "agenda"
+   ],
+   "evidence": [
+    "本期内容／01 挨个试，行不通／02 倒着算／03 做个小实验／04 从 1986 到今天／（眉题 建议先了解）神经网络与深度学习（上期）／没看过也不要紧，片中会一句话带过"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "定稿：本期 `package.json` 的 `prereq_hint.zh` 改为 `\"\"`（不要删这个键，删了会回落到系列默认的「不了解也能看懂，片中会用一句话带过。」）。改后卡面是「本期内容」＋四行目录（原文不动）＋眉题「建议先了解」＋「神经网络与深度学习（上期）」，共 4＋19＋11＝34 字",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "本期内容／01 挨个试，行不通／02 倒着算／03 做个小实验／04 从 1986 到今天／（眉题 建议先了解）神经网络与深度学习（上期）／没看过也不要紧，片中会一句话带过",
+   "problem": "串场卡，按从严条目处理。按第 2 轮口径计数（编号、眉题小标签不计）：标题 4＋目录 19＋先修条目 11＋注释 15＝49 字，超过一屏 36 字的硬上限。第 2 轮裁成「32 字」，是因为材料漏了标题和注释。注释说的事口播 l05「上期说过，神经网络就是一层层小单元……」已经做了，删掉不丢信息",
+   "suggest": "定稿：本期 `package.json` 的 `prereq_hint.zh` 改为 `\"\"`（不要删这个键，删了会回落到系列默认的「不了解也能看懂，片中会用一句话带过。」）。改后卡面是「本期内容」＋四行目录（原文不动）＋眉题「建议先了解」＋「神经网络与深度学习（上期）」，共 4＋19＋11＝34 字",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "删去先修提示行（prereq_hint.zh 置空，裁决人定稿），整卡 34 字",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/package.json",
+    "edu_videos/ai_terms/t13_backprop/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I34",
+   "key": "7f9105f423e3",
+   "item": "screen_zh",
+   "where": "outro",
+   "dim": "P3",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "outro"
+   ],
+   "evidence": [
+    "过拟合"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "成片核对：「下一期：过拟合」，标签不在则补",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "过拟合",
+   "problem": "片尾从严：无截图，看不出是否有「下一期」标签；只有「过拟合」三个字，单独出现观众不知道是下期预告。作者称模板自带标签，需成片核对",
+   "suggest": "成片核对：「下一期：过拟合」，标签不在则补",
+   "judge_note": "a · outro（P4 建议「逗号后有空格」）：模板第 177 行用 `<br>` 把两行分开，卡上没有空格，没什么可改。；a · outro（P3 存疑「下一期：过拟合」）和 b · agenda…outro（存疑：若无独立标签就写「下一期：过拟合」）：模板第 179 行固定印 `下一期 · 过拟合`，标签存在。再写进 `next` 会印成「下一期 · 下一期：过拟合」，所以维持「过拟合」不变。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "模板片尾卡自带「下一期」标签，成片抽帧核对",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I35",
+   "key": "9a764660f552",
+   "item": "screen_zh",
+   "where": "agenda、c_problem、c_analogy、c_experiment、c_real",
+   "dim": "P3/P5",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3/P5",
+   "shots": [
+    "agenda、c_problem、c_analogy、c_experiment、c_real"
+   ],
+   "evidence": [
+    "无截图"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "补卡面截图后复核",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "无截图",
+   "problem": "章节卡与目录无截图，层级、断行、停留时间无法核实；章名「挨个试，行不通」「倒着算」「做个小实验」「从 1986 到今天」读出来顺",
+   "suggest": "补卡面截图后复核",
+   "judge_note": "a · agenda（P4/P3 必改「先修：神经网络与深度学习（上期）」→「上期：神经网络与深度学习」）：「先修：」是材料前缀（`edu_review.py` 第 449 行），卡上不印。卡上眉题是「建议先了解」，按 a 的写法改，会变成「建议先了解／上期：神经网络与深度学习」，反而多出一个引导词，比原文差。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I4",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I36",
+   "key": "0d4cb4bb3545",
+   "item": "screen_zh",
+   "where": "agenda、c_problem、c_analogy、c_experiment、c_real、outro",
+   "dim": "P3、P5",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3、P5",
+   "shots": [
+    "agenda、c_problem、c_analogy、c_experiment、c_real、outro"
+   ],
+   "evidence": [
+    "截图路径均为空；包装卡只给整段时长"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "若无独立标签，片尾采用“下一期：过拟合”；若已有则保留“过拟合”。排版与阅读窗口待实际截图或成片核验。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "截图路径均为空；包装卡只给整段时长",
+   "problem": "不能核验实际换行、逐项停留时间，以及片尾是否已有“下一期”标签。上一轮同项疑点仍未闭合。",
+   "suggest": "若无独立标签，片尾采用“下一期：过拟合”；若已有则保留“过拟合”。排版与阅读窗口待实际截图或成片核验。",
+   "judge_note": "a · agenda（P4/P3 必改「先修：神经网络与深度学习（上期）」→「上期：神经网络与深度学习」）：「先修：」是材料前缀（`edu_review.py` 第 449 行），卡上不印。卡上眉题是「建议先了解」，按 a 的写法改，会变成「建议先了解／上期：神经网络与深度学习」，反而多出一个引导词，比原文差。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I4",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I37",
+   "key": "c7823650f8a7",
+   "item": "screen_zh",
+   "where": "outro",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "outro"
+   ],
+   "evidence": [
+    "错误往回传， 一层层分责任"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "错误往回传，一层层分责任（确认无空格）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "错误往回传， 一层层分责任",
+   "problem": "逗号后有空格（上轮 I44 未处理）；半句话照抄 l41",
+   "suggest": "错误往回传，一层层分责任（确认无空格）",
+   "judge_note": "a · outro（P4 建议「逗号后有空格」）：模板第 177 行用 `<br>` 把两行分开，卡上没有空格，没什么可改。；a · outro（P3 存疑「下一期：过拟合」）和 b · agenda…outro（存疑：若无独立标签就写「下一期：过拟合」）：模板第 179 行固定印 `下一期 · 过拟合`，标签存在。再写进 `next` 会印成「下一期 · 下一期：过拟合」，所以维持「过拟合」不变。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人：片尾两行用 <br> 断行，空格是材料拼接造成的；金句复述口播核心句可接受",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I38",
+   "key": "fe3c316b6355",
+   "item": "screen_zh",
+   "where": "agenda、outro（材料）",
+   "dim": "R",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "R",
+   "shots": [
+    "agenda、outro（材料）"
+   ],
+   "evidence": [
+    "先修：神经网络与深度学习（上期）；错误往回传， 一层层分责任"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "让材料照卡面列：标题、眉题、条目、注释、「下一期 · 名称」都列出来；金句用「／」或换行表示断行；包装卡渲染后补末帧截图",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "先修：神经网络与深度学习（上期）；错误往回传， 一层层分责任",
+   "problem": "`tools/edu_review.py` 的 `card_texts`（约第 444–457 行）出材料时，给先修条目加了卡上没有的「先修：」，漏了 `agenda_title`、`prereq_title`、`prereq_hint`，片尾两行用空格拼接，也没带「下一期」标签。连续两轮审稿人因此误报必改，并且算错了全屏字数",
+   "suggest": "让材料照卡面列：标题、眉题、条目、注释、「下一期 · 名称」都列出来；金句用「／」或换行表示断行；包装卡渲染后补末帧截图",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：审查材料生成工具的问题，不在本期改共用工具",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I39",
+   "key": "35ba2df4b432",
+   "item": "screen_zh",
+   "where": "l01–l40、包装卡",
+   "dim": "P1",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l01–l40、包装卡"
+   ],
+   "evidence": [
+    "合计（不含小标签、图表）"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "屏幕文字无须因此改写；后续统计按实际可见文字及本轮豁免范围计算。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "合计（不含小标签、图表）",
+   "problem": "材料合计仍不能直接用于本轮闸门；图内“模型”、比较卡内“挨个试／反向传播”不能因标为eyebrow就自动豁免，代码父子文本则不能重复计数。",
+   "suggest": "屏幕文字无须因此改写；后续统计按实际可见文字及本轮豁免范围计算。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I40",
+   "key": "f8f73b54f36f",
+   "item": "screen_zh",
+   "where": "l02",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l02"
+   ],
+   "evidence": [
+    "每一步：往哪拧、拧多少"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "往哪拧？拧多少？",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "每一步：往哪拧、拧多少",
+   "problem": "冷开场从严。几乎照抄口播「每个旋钮往哪拧、拧多少」，「每一步」单独在屏上也不明（什么的一步）",
+   "suggest": "往哪拧？拧多少？",
+   "judge_note": "a · l02（改写「往哪拧？拧多少？」）：去掉「每一步」以后，后面 l11「才走一步」、l32「/ 步」就接不上了。原文 9 字，不超限，保留。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：冷开场 l02 标题是「每一步要知道的两件事」，与口播同义但更短，保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I41",
+   "key": "6d46d788d4a7",
+   "item": "screen_zh",
+   "where": "l09",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l09"
+   ],
+   "evidence": [
+    "坡度合起来 = 梯度"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "全部坡度 = 梯度",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "坡度合起来 = 梯度",
+   "problem": "等号左边是带动词的半句，读着不像标签",
+   "suggest": "全部坡度 = 梯度",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：「坡度合起来 = 梯度」对应 l09 新口播，保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I42",
+   "key": "5086c9a4c18e",
+   "item": "screen_zh",
+   "where": "l10",
+   "dim": "P1/P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1/P2",
+   "shots": [
+    "l10"
+   ],
+   "evidence": [
+    "重算一遍，看错误变没变"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "拧一点 → 重算 → 看错误",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "重算一遍，看错误变没变",
+   "problem": "10 字整句操作说明，贴着口播「从头重算一遍，看错误变大还是变小」；上轮「不改」理由偏弱",
+   "suggest": "拧一点 → 重算 → 看错误",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "第 1、2 轮已判保留：未超限，贴着口播判断标准",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I43",
+   "key": "aceace86c1cb",
+   "item": "screen_zh",
+   "where": "l10",
+   "dim": "P1、P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P2",
+   "shots": [
+    "l10"
+   ],
+   "evidence": [
+    "重算一遍，看错误变没变"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "拧一点 → 重算 → 比错误",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "重算一遍，看错误变没变",
+   "problem": "仍是完整操作说明，与口播“从头重算一遍，看错误变大还是变小”分工较弱。上轮不采纳理由能说明没有硬伤，但不能消除重复。",
+   "suggest": "拧一点 → 重算 → 比错误",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I42",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I44",
+   "key": "ba26ed431234",
+   "item": "screen_zh",
+   "where": "l17",
+   "dim": "P2/P1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2/P1",
+   "shots": [
+    "l17"
+   ],
+   "evidence": [
+    "神经网络也像一串齿轮"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "神经网络 ≈ 齿轮串",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "神经网络也像一串齿轮",
+   "problem": "h1 与口播逐字相同，是整句，屏幕应给结构",
+   "suggest": "神经网络 ≈ 齿轮串",
+   "judge_note": "a · l17（改写「神经网络 ≈ 齿轮串」）：「齿轮串」是生造的名词，属于 P4 要防的名词堆砌，比原文差。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：l17 标题第 1 轮按审稿改成「也像」，保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I45",
+   "key": "3cece33600d9",
+   "item": "screen_zh",
+   "where": "l28",
+   "dim": "P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l28"
+   ],
+   "evidence": [
+    "×1.82 ×0.7 +0.94 +12.97 ×0.25 +1.97 ×0.88 23.88 实际 23"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "保留标题「拧一步：29 → 23.88」与「实际 23」，读数调淡或改取一位小数",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "×1.82 ×0.7 +0.94 +12.97 ×0.25 +1.97 ×0.88 23.88 实际 23",
+   "problem": "6.7s 内七个小数读数加两个结论数，全片最密；读数用的是旋钮新值，口播只讲「29 变成 24」",
+   "suggest": "保留标题「拧一步：29 → 23.88」与「实际 23」，读数调淡或改取一位小数",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：l28 要让观众看到七个旋钮都换了新读数，读数保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I46",
+   "key": "d4e3e8bc1e44",
+   "item": "screen_zh",
+   "where": "l30",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "正着算 8 遍 / 1 遍 + 1 趟"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "左卡「正着算 8 遍」，右卡「正着 1 遍 + 倒着 1 趟」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "正着算 8 遍 / 1 遍 + 1 趟",
+   "problem": "左右卡量词不一（遍/趟），右卡的「遍」指正着算、「趟」指倒着走，但左卡「遍」同时涵盖",
+   "suggest": "左卡「正着算 8 遍」，右卡「正着 1 遍 + 倒着 1 趟」",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：右卡「1 遍 + 1 趟」照口播「正着一遍、倒着一趟」，保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I47",
+   "key": "32983b86d1c7",
+   "item": "screen_zh",
+   "where": "l31–l34",
+   "dim": "P4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l31–l34"
+   ],
+   "evidence": [
+    "1,000,000,001遍；≈ 3遍的工夫"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "统一「1,000,000,001 遍」「≈ 3 遍的工夫」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "1,000,000,001遍；≈ 3遍的工夫",
+   "problem": "数字与量词间无空格，全片其他处（8 遍、3 个）有空格，体例不齐",
+   "suggest": "统一「1,000,000,001 遍」「≈ 3 遍的工夫」",
+   "judge_note": "a · l31–l34（P4 记录「1,000,000,001遍」无空格）：截图 s4_l33 里「遍」「遍的工夫」是单独的小字 span，和数字之间有明显间距。材料里连在一起，是 textContent 拼接造成的。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I48",
+   "key": "89d16bb283f2",
+   "item": "screen_zh",
+   "where": "l33",
+   "dim": "P1/P3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1/P3",
+   "shots": [
+    "l33"
+   ],
+   "evidence": [
+    "每遍 1 秒：挨个试 ≈ 31.7 年 / 步"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "每遍 1 秒 → ≈ 31.7 年 / 步",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "每遍 1 秒：挨个试 ≈ 31.7 年 / 步",
+   "problem": "「挨个试」与上方行名重复；「年 / 步」带空格斜杠",
+   "suggest": "每遍 1 秒 → ≈ 31.7 年 / 步",
+   "judge_note": "a · l33（改写「每遍 1 秒 → ≈ 31.7 年 / 步」）：「→ ≈」两个符号挨在一起，比原文难读，保留原文。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I49",
+   "key": "f36879a2d71e",
+   "item": "screen_zh",
+   "where": "l36–l38",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l36–l38"
+   ],
+   "evidence": [
+    "190px“1986”持续常驻"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "年份缩为角标“1986”；当拍主标题依次采用“正着一趟，倒着一趟”“中间单元：自己学规律”“更早已有类似算法”",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "190px“1986”持续常驻",
+   "problem": "年份始终最抢眼，新增的“两趟”“自己学规律”“更早已有类似算法”反而处在较弱层级。作者保留章节锚点的理由不足以解释这一持续主次关系。",
+   "suggest": "年份缩为角标“1986”；当拍主标题依次采用“正着一趟，倒着一趟”“中间单元：自己学规律”“更早已有类似算法”",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：1986 是本章锚点，保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I50",
+   "key": "f14ee8041503",
+   "item": "screen_zh",
+   "where": "l40",
+   "dim": "P1、P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P2",
+   "shots": [
+    "l40"
+   ],
+   "evidence": [
+    "自动求导／底下就是反向传播"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "主标题“自动求导”；下行“底层：反向传播”",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "自动求导／底下就是反向传播",
+   "problem": "两行基本完整重印当句口播；下行可改为方法标签，与主标题形成层级。",
+   "suggest": "主标题“自动求导”；下行“底层：反向传播”",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：l40 两行是「自动求导 → 底下是反向传播」的层级，保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I51",
+   "key": "fa841b15e783",
+   "item": "screen_zh",
+   "where": "l40",
+   "dim": "P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l40"
+   ],
+   "evidence": [
+    "底下就是反向传播"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "可保留",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "底下就是反向传播",
+   "problem": "与口播末句逐字相同，但 8 字、做成 h2 副标，可接受",
+   "suggest": "可保留",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I52",
+   "key": "53226fe21660",
+   "item": "voice_en",
+   "where": "l01",
+   "dim": "V1, V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l01"
+   ],
+   "evidence": [
+    "Today’s big AI models have billions of knobs, some hundreds of billions."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Big AI models have billions of knobs. Some have hundreds of billions.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Today’s big AI models have billions of knobs, some hundreds of billions.",
+   "problem": "**A bit off; strict cold open.** “Some hundreds” initially sounds like an approximate quantity. Explicitly making “some” refer to models removes that brief reparse.",
+   "suggest": "Big AI models have billions of knobs. Some have hundreds of billions.",
+   "judge_note": "l01（b，必改）：「billions of knobs, some hundreds of billions」承接前半句的省略说法是正常口语，上轮裁决已经这么判过，b 本轮没有拿出新证据；就算有人把「some」听成「大约」，意思也没错。维持不改。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回（连续两轮判为正常口语）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I53",
+   "key": "c4256a8223c2",
+   "item": "voice_en",
+   "where": "l05",
+   "dim": "V1, V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V2",
+   "shots": [
+    "l05"
+   ],
+   "evidence": [
+    "Last time we saw that a neural network is layers of small units, each with its own knobs."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Last time we saw that a neural network has layers of small units, each with its own knobs.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Last time we saw that a neural network is layers of small units, each with its own knobs.",
+   "problem": "**A bit off; strict linking line.** “A network is layers” sounds compressed. “Has layers” is the ordinary spoken construction.",
+   "suggest": "Last time we saw that a neural network has layers of small units, each with its own knobs.",
+   "judge_note": "l05（b，必改）：「a neural network is layers of small units」是常见讲解口语，不算 a bit off；改成「has layers」反而弱化了「网络就是层」这层意思。不改。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I54",
+   "key": "047d825fe867",
+   "item": "voice_en",
+   "where": "l09",
+   "dim": "V1, V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l09"
+   ],
+   "evidence": [
+    "For each knob, which way to turn and how far is its slope. All the slopes together are the gradient."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "A knob’s slope tells us how a nudge changes the error—up or down. Together, those slopes are the gradient.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "For each knob, which way to turn and how far is its slope. All the slopes together are the gradient.",
+   "problem": "**Clearly off.** The listener must reinterpret a question-shaped phrase as the subject of “is its slope.” Explain what the slope tells us before naming the collection.",
+   "suggest": "A knob’s slope tells us how a nudge changes the error—up or down. Together, those slopes are the gradient.",
+   "judge_note": "l09（b 改写）：「how a nudge changes the error—up or down」丢掉了「how far」（幅度），也破坏了与 l02/l42 的呼应。不采纳 b 的写法，用文末定稿。",
+   "status": "implemented",
+   "solution": "l09 改为「Each knob's slope tells you which way to turn, and how far. All the slopes together are the gradient.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I55",
+   "key": "a076d51205df",
+   "item": "voice_en",
+   "where": "l09",
+   "dim": "V1/V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1/V3",
+   "shots": [
+    "l09"
+   ],
+   "evidence": [
+    "For each knob, which way to turn and how far is its slope. All the slopes together are the gradient."
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "Each knob's slope tells you which way to turn, and how far. All the slopes together are the gradient.",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "For each knob, which way to turn and how far is its slope. All the slopes together are the gradient.",
+   "problem": "疑问式从句当主语，耳朵要回头重解析。",
+   "suggest": "Each knob's slope tells you which way to turn, and how far. All the slopes together are the gradient.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l09 改为「Each knob's slope tells you which way to turn, and how far. All the slopes together are the gradient.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I56",
+   "key": "5262b5f445aa",
+   "item": "voice_en",
+   "where": "l09",
+   "dim": "V1/V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1/V3",
+   "shots": [
+    "l09"
+   ],
+   "evidence": [
+    "For each knob, which way to turn and how far is its slope. All the slopes together are the gradient."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "For each knob, the slope says which way to turn and how far. All the slopes together are the gradient.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "For each knob, which way to turn and how far is its slope. All the slopes together are the gradient.",
+   "problem": "A clause (\"which way to turn and how far\") is the subject; the ear holds it until \"is its slope\". Two new terms back to back.",
+   "suggest": "For each knob, the slope says which way to turn and how far. All the slopes together are the gradient.",
+   "judge_note": "l09（b 改写）：「how a nudge changes the error—up or down」丢掉了「how far」（幅度），也破坏了与 l02/l42 的呼应。不采纳 b 的写法，用文末定稿。",
+   "status": "implemented",
+   "solution": "l09 改为「Each knob's slope tells you which way to turn, and how far. All the slopes together are the gradient.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I57",
+   "key": "b4e5b7a37a1d",
+   "item": "voice_en",
+   "where": "l15",
+   "dim": "V1",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l15"
+   ],
+   "evidence": [
+    "multiplying by each gear's ratio as you go"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "multiplying at each gear as you go",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "multiplying by each gear's ratio as you go",
+   "problem": "\"ratio\" is slightly written-style; l13 never used the word.",
+   "suggest": "multiplying at each gear as you go",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I58",
+   "key": "5fb1b7a83309",
+   "item": "voice_en",
+   "where": "l16",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l16"
+   ],
+   "evidence": [
+    "At each gear you multiply once and reuse what you already have. Nothing gets redone."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "At each gear, multiply its ratio by your last result. Nothing gets redone.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "At each gear you multiply once and reuse what you already have. Nothing gets redone.",
+   "problem": "**A bit off.** “What you already have” is vague at the exact point where reuse is the new idea. Name the result.",
+   "suggest": "At each gear, multiply its ratio by your last result. Nothing gets redone.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：与画面「Reuse results」同口径，保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I59",
+   "key": "035ba3445edd",
+   "item": "voice_en",
+   "where": "l19",
+   "dim": "V3/V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3/V5",
+   "shots": [
+    "l19"
+   ],
+   "evidence": [
+    "In the first layer, two units, A and B, use two knobs each to turn the five into six and four."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "The first layer has two units, A and B, two knobs each. They turn the five into six and four.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "In the first layer, two units, A and B, use two knobs each to turn the five into six and four.",
+   "problem": "Stacked appositives and \"turn\" doing double duty. Dense for one breath.",
+   "suggest": "The first layer has two units, A and B, two knobs each. They turn the five into six and four.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：保留，A、B 产出 6、4 已在画面同步",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I60",
+   "key": "87d0aa965c2f",
+   "item": "voice_en",
+   "where": "l20",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l20"
+   ],
+   "evidence": [
+    "The second layer multiplies each by a knob, adds a seventh knob, and guesses: twenty-nine yuan."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Next, multiply both numbers by their knobs. Add the results and knob seven: twenty-nine yuan.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "The second layer multiplies each by a knob, adds a seventh knob, and guesses: twenty-nine yuan.",
+   "problem": "**A bit off.** After two separate multiplications, the listener is never told that their results are added together.",
+   "suggest": "Next, multiply both numbers by their knobs. Add the results and knob seven: twenty-nine yuan.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：上轮裁决人定稿写法「adds a seventh knob」",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I61",
+   "key": "794fcaac9c06",
+   "item": "voice_en",
+   "where": "l20",
+   "dim": "V1",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l20"
+   ],
+   "evidence": [
+    "adds a seventh knob"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "adds the seventh knob",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "adds a seventh knob",
+   "problem": "\"adds a knob\" is a little odd.",
+   "suggest": "adds the seventh knob",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I60",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I62",
+   "key": "6e063a970afb",
+   "item": "voice_en",
+   "where": "l20/l28",
+   "dim": "V3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l20/l28"
+   ],
+   "evidence": [
+    "…and guesses: twenty-nine yuan."
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "（可选）…and guesses: twenty-nine.",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "…and guesses: twenty-nine yuan.",
+   "problem": "英语听众对「yuan」不熟，TTS 念法可能被听成别的词；后面 l21、l28 都没带单位，影响不大。只记录，不要求改（如果要改，得和画面同步）。",
+   "suggest": "（可选）…and guesses: twenty-nine.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I63",
+   "key": "d6c08159e3ff",
+   "item": "voice_en",
+   "where": "l22",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l22"
+   ],
+   "evidence": [
+    "Last layer first. A knob’s blame is the error times the number fed into it. That’s its slope."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Last layer first. Multiply the error by each knob’s input. That’s its slope—how much blame it gets.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Last layer first. A knob’s blame is the error times the number fed into it. That’s its slope.",
+   "problem": "**A bit off.** “A knob’s blame” sounds less conversational than assigning blame through an action. The operation can carry the sentence.",
+   "suggest": "Last layer first. Multiply the error by each knob’s input. That’s its slope—how much blame it gets.",
+   "judge_note": "l22（b，建议）：改写比原句长，原句经上轮修改后已经能听懂。不改。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人：原句经上轮修改已能听懂，不改",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I64",
+   "key": "a032635ab648",
+   "item": "voice_en",
+   "where": "l23",
+   "dim": "V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "The inputs are six, four, and for the seventh knob, one. So the blame is thirty-six, twenty-four and six. Bigger input, bigger blame."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Multiply the error by six: thirty-six. By four: twenty-four. For the seventh knob, multiply by one: six.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "The inputs are six, four, and for the seventh knob, one. So the blame is thirty-six, twenty-four and six. Bigger input, bigger blame.",
+   "problem": "**A bit off.** Two lists must be paired in memory while “six” changes roles. Say each calculation beside its result.",
+   "suggest": "Multiply the error by six: thirty-six. By four: twenty-four. For the seventh knob, multiply by one: six.",
+   "judge_note": "l23（b 改写）：删掉了「Bigger input, bigger blame.」，而这一句两位审稿人都认为有效。不采纳，用文末定稿。",
+   "status": "implemented",
+   "solution": "l23 改为「So: 6 × 6, 36. 6 × 4, 24. And the seventh knob's input is 1, so 6. Bigger input, bigger blame.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I65",
+   "key": "90a289e65428",
+   "item": "voice_en",
+   "where": "l23",
+   "dim": "V3/V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3/V5",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "The inputs are six, four, and for the seventh knob, one. So the blame is thirty-six, twenty-four and six. Bigger input, bigger blame."
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "So: six times six, thirty-six. Six times four, twenty-four. And the seventh knob's input is one, so six. Bigger input, bigger blame.",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "The inputs are six, four, and for the seventh knob, one. So the blame is thirty-six, twenty-four and six. Bigger input, bigger blame.",
+   "problem": "两串数字要在脑子里配对，「six」一句里身兼数职。",
+   "suggest": "So: six times six, thirty-six. Six times four, twenty-four. And the seventh knob's input is one, so six. Bigger input, bigger blame.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l23 改为「So: 6 × 6, 36. 6 × 4, 24. And the seventh knob's input is 1, so 6. Bigger input, bigger blame.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I66",
+   "key": "ab76b5b8253f",
+   "item": "voice_en",
+   "where": "l25",
+   "dim": "V1, V3, V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3, V5",
+   "shots": [
+    "l25"
+   ],
+   "evidence": [
+    "For A, the knob is two: twelve. For B, it’s one: six."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "For A, multiply six by two: twelve. For B, by one: six.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "For A, the knob is two: twelve. For B, it’s one: six.",
+   "problem": "**Clearly off; awkwardness rank 1.** A colon is not an audible operation. “Two: twelve” leaves the listener to recover both the multiplication and its starting number.",
+   "suggest": "For A, multiply six by two: twelve. For B, by one: six.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l25 改为「For A, the error times 2: 12. For B, times 1: 6.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I67",
+   "key": "6aa5bd8e0648",
+   "item": "voice_en",
+   "where": "l25",
+   "dim": "V1/V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1/V3",
+   "shots": [
+    "l25"
+   ],
+   "evidence": [
+    "For A, the knob is two: twelve. For B, it's one: six."
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "For A, the error times two: twelve. For B, times one: six.",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "For A, the knob is two: twelve. For B, it's one: six.",
+   "problem": "冒号念不出来，听众听不到乘法这一步。",
+   "suggest": "For A, the error times two: twelve. For B, times one: six.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l25 改为「For A, the error times 2: 12. For B, times 1: 6.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I68",
+   "key": "5584a7b89d1b",
+   "item": "voice_en",
+   "where": "l25",
+   "dim": "V1",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l25"
+   ],
+   "evidence": [
+    "For A, the knob is two: twelve."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "For A the knob is two, so twelve. For B it's one, so six.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "For A, the knob is two: twelve.",
+   "problem": "Slightly telegraphic; clear on one hearing.",
+   "suggest": "For A the knob is two, so twelve. For B it's one, so six.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l25 改为「For A, the error times 2: 12. For B, times 1: 6.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I69",
+   "key": "2a019657f545",
+   "item": "voice_en",
+   "where": "l26",
+   "dim": "V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l26"
+   ],
+   "evidence": [
+    "Each unit then does the same for its own two knobs."
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "For their own two knobs, it's error times input again.",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "Each unit then does the same for its own two knobs.",
+   "problem": "「the same」紧跟「error × knob」，会误导成再乘旋钮。",
+   "suggest": "For their own two knobs, it's error times input again.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l26 改为「For their own two knobs, it's error times input again.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I70",
+   "key": "a899b5d13483",
+   "item": "voice_en",
+   "where": "l26",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l26"
+   ],
+   "evidence": [
+    "Each unit then does the same for its own two knobs."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Each unit then works out blame for its own two knobs the same way.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Each unit then does the same for its own two knobs.",
+   "problem": "\"The same\" has two nearby referents (the l24 multiply, or the l22 blame rule).",
+   "suggest": "Each unit then works out blame for its own two knobs the same way.",
+   "judge_note": "l26（a 改写「works out blame… the same way」）：仍然留着「the same way」，指代问题没解决。不采纳，用文末定稿。",
+   "status": "implemented",
+   "solution": "l26 改为「For their own two knobs, it's error times input again.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I71",
+   "key": "ac125940e2ae",
+   "item": "voice_en",
+   "where": "l26",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l26"
+   ],
+   "evidence": [
+    "Each unit then does the same for its own two knobs."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Then use error times input for each unit’s two knobs.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Each unit then does the same for its own two knobs.",
+   "problem": "**A bit off.** “The same” most readily recalls multiplying by knob settings in l24–l25, rather than the earlier error-times-input rule.",
+   "suggest": "Then use error times input for each unit’s two knobs.",
+   "judge_note": "l26（a 改写「works out blame… the same way」）：仍然留着「the same way」，指代问题没解决。不采纳，用文末定稿。",
+   "status": "implemented",
+   "solution": "l26 改为「For their own two knobs, it's error times input again.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I72",
+   "key": "11eaedbdb95c",
+   "item": "voice_en",
+   "where": "l27",
+   "dim": "V1/V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1/V5",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "The guess was high, so all turn down, some more than others."
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "One trip back, and all seven knobs have a number. We guessed high, so they all turn down, some more than others.",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "The guess was high, so all turn down, some more than others.",
+   "problem": "「so all turn down」省掉主语，像图注缩写，两位审稿人逐句表里都自然补成「they all」却没有报出来。",
+   "suggest": "One trip back, and all seven knobs have a number. We guessed high, so they all turn down, some more than others.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l27 改为「One trip back, and all seven knobs have a number. We guessed high, so they all turn down, some more than others.」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I73",
+   "key": "b68539752c7a",
+   "item": "voice_en",
+   "where": "l29",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l29"
+   ],
+   "evidence": [
+    "We checked the slow way too: one run with nothing changed, then one per nudged knob. Eight runs."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "We checked the slow way too: run once, then nudge each knob and rerun. Eight runs.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "We checked the slow way too: one run with nothing changed, then one per nudged knob. Eight runs.",
+   "problem": "**A bit off.** “One per nudged knob” compresses an action into a written-style modifier. Say what we do.",
+   "suggest": "We checked the slow way too: run once, then nudge each knob and rerun. Eight runs.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I74",
+   "key": "6f7952dba869",
+   "item": "voice_en",
+   "where": "l33",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l33"
+   ],
+   "evidence": [
+    "The trip back costs about two runs, so roughly three in all."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "The trip back costs about two runs' worth, so roughly three runs' worth in all.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "The trip back costs about two runs, so roughly three in all.",
+   "problem": "\"three in all\" can be heard as three trips, right after \"one trip each way\".",
+   "suggest": "The trip back costs about two runs' worth, so roughly three runs' worth in all.",
+   "judge_note": "l33（a，建议）：前面刚说「about two runs」，耳朵会自然把「three」接成「三次运行」，画面上也有「≈ 3 runs' worth」；a 的改写反复用「runs' worth」，比原句长 3 词，更啰嗦。不改。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：前句刚说 about two runs，画面同步「≈ 3 runs’ worth」",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I75",
+   "key": "015e2115ac7f",
+   "item": "voice_en",
+   "where": "l36",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4",
+   "shots": [
+    "l36"
+   ],
+   "evidence": [
+    "They found each knob’s slope in two passes: forward, then back from the output."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "They used that same forward-and-backward trick to find each knob’s slope.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "They found each knob’s slope in two passes: forward, then back from the output.",
+   "problem": "Natural, but repeats l30/l33. Its historical purpose is valid; acknowledging the recap would make it tighter.",
+   "suggest": "They used that same forward-and-backward trick to find each knob’s slope.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：论文「两趟」是 claims C11 要点",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I76",
+   "key": "071034260441",
+   "item": "voice_en",
+   "where": "l39",
+   "dim": "V1, V3, V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3, V5",
+   "shots": [
+    "l39"
+   ],
+   "evidence": [
+    "Today, in PyTorch, a popular tool for building models, one line does it: loss dot backward. Every knob gets its slope."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Today, a programming tool called PyTorch does this with one command: “loss dot backward.” Every knob gets its slope.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Today, in PyTorch, a popular tool for building models, one line does it: loss dot backward. Every knob gets its slope.",
+   "problem": "**A bit off.** The sentence pauses to define its tool before reaching the action. Calling the spoken code a command also helps a beginner hear its role.",
+   "suggest": "Today, a programming tool called PyTorch does this with one command: “loss dot backward.” Every knob gets its slope.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：保留，PyTorch 需要一句身份说明",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I77",
+   "key": "54666fa1dd58",
+   "item": "voice_en",
+   "where": "l40",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l40"
+   ],
+   "evidence": [
+    "That's automatic differentiation."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "That's called automatic differentiation. Underneath, it's backpropagation.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "That's automatic differentiation.",
+   "problem": "New term for a first-time listener, no gloss, 2.3s.",
+   "suggest": "That's called automatic differentiation. Underneath, it's backpropagation.",
+   "judge_note": "l40（a，建议）：第二句「Underneath, it's backpropagation」已经把这个新术语挂到本集主题上了，加「called」只多一个词，没有实际收益。不改。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：第二句已把术语挂到反向传播上",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I78",
+   "key": "54bbc3a6168f",
+   "item": "voice_en",
+   "where": "l41/l42",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4",
+   "shots": [
+    "l41/l42"
+   ],
+   "evidence": [
+    "Backpropagation is passing the blame backward... / One trip back, and every knob knows..."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep, or merge: \"So it's passing the blame backward, and every knob learns which way to turn, and how far.\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Backpropagation is passing the blame backward... / One trip back, and every knob knows...",
+   "problem": "Two recap lines in a row, both fine alone. Not a must fix.",
+   "suggest": "Keep, or merge: \"So it's passing the blame backward, and every knob learns which way to turn, and how far.\"",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：片尾首尾呼应",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I79",
+   "key": "669de20b8095",
+   "item": "voice_zh",
+   "where": "l05",
+   "dim": "V3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l05"
+   ],
+   "evidence": [
+    "每个都带着旋钮。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "每个都带着旋钮，也就是可调的参数。（会略加长，可不改）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "每个都带着旋钮。",
+   "problem": "l01 起「旋钮」一直没交代是什么（参数）；音频观众到 l05 才大致明白。可在 l05 补半句。",
+   "suggest": "每个都带着旋钮，也就是可调的参数。（会略加长，可不改）",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：l01 起旋钮由画面转盘同步呈现，l05 交代",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I80",
+   "key": "786fa1e8125c",
+   "item": "voice_zh",
+   "where": "l06",
+   "dim": "V2/V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V2/V4",
+   "shots": [
+    "l06"
+   ],
+   "evidence": [
+    "这期咱们先看看挨个试为什么不行，再拿个小网络，看错误怎么倒着传回去，最后说说这招哪来的。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "这期咱们先看看为什么挨个试不行，再拿个小网络，看错误怎么倒着传回去。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "这期咱们先看看挨个试为什么不行，再拿个小网络，看错误怎么倒着传回去，最后说说这招哪来的。",
+   "problem": "已成人话，但 8.7s 仍是三项预告；第三项 l35 开头会自己问「这办法哪来的？」，这里可以不预告。",
+   "suggest": "这期咱们先看看为什么挨个试不行，再拿个小网络，看错误怎么倒着传回去。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：上轮裁决人定稿写法",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I81",
+   "key": "68005a859938",
+   "item": "voice_zh",
+   "where": "l08",
+   "dim": "V1/V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1/V3",
+   "shots": [
+    "l08"
+   ],
+   "evidence": [
+    "给错误打个分，差得越多分越高，叫损失。训练就是拧旋钮，让错误变小。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "给错误打个分，差得越多分越高，这个分叫损失。训练就是拧旋钮，把损失压低。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "给错误打个分，差得越多分越高，叫损失。训练就是拧旋钮，让错误变小。",
+   "problem": "两人的「跟朋友说」里都补出了主语「这个分叫损失」，却都判了「自然」。「叫损失」没有主语，耳朵会挂到「分越高」上；而且刚给了「损失」这个名字，后半句又回到「错误」，跟屏幕上的「压低损失」也对不上。",
+   "suggest": "给错误打个分，差得越多分越高，这个分叫损失。训练就是拧旋钮，把损失压低。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l08 改为「给错误打个分，差得越多分越高，这个分叫损失。训练就是拧旋钮，把损失压低。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I82",
+   "key": "7a9602212d2c",
+   "item": "voice_zh",
+   "where": "l11",
+   "dim": "V1/V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1/V3",
+   "shots": [
+    "l11"
+   ],
+   "evidence": [
+    "可有多少个旋钮，就得重算多少遍。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "可旋钮有多少个，就得重算多少遍。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "可有多少个旋钮，就得重算多少遍。",
+   "problem": "「可有多少个旋钮」开头纯听像问句（可有…？），要到后半句才明白。",
+   "suggest": "可旋钮有多少个，就得重算多少遍。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l11 改为「有多少个旋钮，就得重算多少遍。几十亿个，就是几十亿遍，这还只是一步。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I83",
+   "key": "064def99bd66",
+   "item": "voice_zh",
+   "where": "l14",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l14"
+   ],
+   "evidence": [
+    "沿路的倍数乘起来，二乘三，六格。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "把一路上的倍数乘起来，二乘三，六格。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "沿路的倍数乘起来，二乘三，六格。",
+   "problem": "「沿路的倍数」偏书面，「倍数」第一次出现也没点明是上面的「两格」「三格」。",
+   "suggest": "把一路上的倍数乘起来，二乘三，六格。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I84",
+   "key": "f141ead699f7",
+   "item": "voice_zh",
+   "where": "l16",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l16"
+   ],
+   "evidence": [
+    "每处只乘一次，算过的接着用，不用重算。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "每个齿轮只乘一次，算过的接着用，不用重算。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "每处只乘一次，算过的接着用，不用重算。",
+   "problem": "「每处」偏书面（屏上也是这么写，但口播可改）。",
+   "suggest": "每个齿轮只乘一次，算过的接着用，不用重算。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l16 改为「每处只乘一次，算过的接着用。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I85",
+   "key": "36ad5f30067b",
+   "item": "voice_zh",
+   "where": "l16",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l16"
+   ],
+   "evidence": [
+    "每处只乘一次，算过的接着用，不用重算。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "每处只乘一次，算过的接着用。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "每处只乘一次，算过的接着用，不用重算。",
+   "problem": "「算过的接着用」和「不用重算」是同一个意思；画面上有「算过的，接着用」，可以留着。",
+   "suggest": "每处只乘一次，算过的接着用。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l16 改为「每处只乘一次，算过的接着用。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I86",
+   "key": "bf964486d408",
+   "item": "voice_zh",
+   "where": "l17",
+   "dim": "V2/V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V2/V3",
+   "shots": [
+    "l17"
+   ],
+   "evidence": [
+    "所以错误也能一层层倒着传回去。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "神经网络也像一串齿轮：每个旋钮隔着好几层，才影响到最后的答案。所以错误也能顺着这些层，倒着传回去。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "所以错误也能一层层倒着传回去。",
+   "problem": "前半句讲旋钮隔着几层影响答案，「错误」突然出现，「所以」跳了一步（上轮不采纳，理由部分成立，故仍为建议）。",
+   "suggest": "神经网络也像一串齿轮：每个旋钮隔着好几层，才影响到最后的答案。所以错误也能顺着这些层，倒着传回去。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "上一轮裁决人（I136）定的写法",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I87",
+   "key": "b065a63cc851",
+   "item": "voice_zh",
+   "where": "l18",
+   "dim": "V1、V2、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V2、V3",
+   "shots": [
+    "l18"
+   ],
+   "evidence": [
+    "来看个真的小网络：两层，七个旋钮，让它按路程猜车费，比如五公里。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "来看个小网络：两层，七个旋钮。给它五公里的路程，让它猜车费。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "来看个真的小网络：两层，七个旋钮，让它按路程猜车费，比如五公里。",
+   "problem": "有点怪。句子已经讲到「猜车费」，才补「比如五公里」，听众要回头把它挂到路程上。实验开头从严处理，直接交代给它什么、让它猜什么。",
+   "suggest": "来看个小网络：两层，七个旋钮。给它五公里的路程，让它猜车费。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l18 改为「来看个真的小网络：两层，七个旋钮。给它五公里的路程，让它猜车费。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I88",
+   "key": "9622f10b1fa0",
+   "item": "voice_zh",
+   "where": "l18",
+   "dim": "V2/V1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V2/V1",
+   "shots": [
+    "l18"
+   ],
+   "evidence": [
+    "来看个真的小网络：两层，七个旋钮，让它按路程猜车费，比如五公里。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "来看个真的小网络：两层，七个旋钮。给它五公里的路程，让它猜车费。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "来看个真的小网络：两层，七个旋钮，让它按路程猜车费，比如五公里。",
+   "problem": "「做个小实验」这章的开头句，属于从严条目。「比如五公里」挂在「车费」后面，耳朵会先当成车费的例子，要回头挂到路程上。b 的方向对，但删了「真的」，丢掉了跟齿轮比方的对照。定稿和原句一样长（27 字）。",
+   "suggest": "来看个真的小网络：两层，七个旋钮。给它五公里的路程，让它猜车费。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l18 改为「来看个真的小网络：两层，七个旋钮。给它五公里的路程，让它猜车费。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I89",
+   "key": "cffbda7715d8",
+   "item": "voice_zh",
+   "where": "l19",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l19"
+   ],
+   "evidence": [
+    "第一层两个小单元，A 和 B，各用两个旋钮算一下：A 得六，B 得四。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "第一层的 A、B 各有两个旋钮，都拿五来算：A 算出六，B 算出四。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "第一层两个小单元，A 和 B，各用两个旋钮算一下：A 得六，B 得四。",
+   "problem": "有点怪。「算一下」省掉了拿什么来算；听众要自行把上一句末尾的五公里换成这里的五。把五接进来，两个结果才有来路。",
+   "suggest": "第一层的 A、B 各有两个旋钮，都拿五来算：A 算出六，B 算出四。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：保留（l18 刚说五公里）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I90",
+   "key": "9e2c295471dd",
+   "item": "voice_zh",
+   "where": "l20",
+   "dim": "V1、V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l20"
+   ],
+   "evidence": [
+    "第二层把这两个数各乘一个旋钮，再直接加上第三个，猜出车费：二十九块。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "第二层把六和四各乘一个旋钮上的数，再加第三个的数，猜出二十九块。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "第二层把这两个数各乘一个旋钮，再直接加上第三个，猜出车费：二十九块。",
+   "problem": "有点怪。「数乘旋钮」像念计算图的简写。只听声音，最好说清乘的是旋钮上的数；后面的「第三个」也顺势落到数值上。",
+   "suggest": "第二层把六和四各乘一个旋钮上的数，再加第三个的数，猜出二十九块。",
+   "judge_note": "b · l20 改写：「再加第三个的数」里「第三个的数」指的是什么还得猜，上轮 I123 已经驳回过同样的写法。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人（第 2 轮 I123）已裁「各乘一个旋钮」沿用本季说法",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I91",
+   "key": "091f54459599",
+   "item": "voice_zh",
+   "where": "l22",
+   "dim": "V3/V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3/V5",
+   "shots": [
+    "l22"
+   ],
+   "evidence": [
+    "每个旋钮分到的责任，就是它的坡度：错误乘上送进它的数。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "先看最后一层的三个旋钮。各自分多少责任，就看错误乘上送进它的数；这个数，就是它的坡度。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "每个旋钮分到的责任，就是它的坡度：错误乘上送进它的数。",
+   "problem": "一句四个新意思（责任、坡度、错误、送进它的数），「送进它的数」搭配偏硬，是全片最关键的公式句。",
+   "suggest": "先看最后一层的三个旋钮。各自分多少责任，就看错误乘上送进它的数；这个数，就是它的坡度。",
+   "judge_note": "a · l22 改写：比原句长，还把「这个数，就是它的坡度」另起一层命名，跟上轮 I125 驳回的问题一样（一句里换两次名字）。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：保留，责任＝坡度的挂钩是本期关键",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I92",
+   "key": "7e602988ec29",
+   "item": "voice_zh",
+   "where": "l22",
+   "dim": "V1、V3、V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3、V5",
+   "shots": [
+    "l22"
+   ],
+   "evidence": [
+    "先看最后一层的三个旋钮。每个旋钮分到的责任，就是它的坡度：错误乘上送进它的数。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "先算最后三个旋钮：把错误乘上各自收到的数，得到的就是坡度，也就是各自的责任。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "先看最后一层的三个旋钮。每个旋钮分到的责任，就是它的坡度：错误乘上送进它的数。",
+   "problem": "有点怪。「责任」「坡度」「怎么乘」连续定义，听众还没抓住前一个说法就换下一个。先做什么、得到什么，再给名字，更好跟。",
+   "suggest": "先算最后三个旋钮：把错误乘上各自收到的数，得到的就是坡度，也就是各自的责任。",
+   "judge_note": "a · l22 改写：比原句长，还把「这个数，就是它的坡度」另起一层命名，跟上轮 I125 驳回的问题一样（一句里换两次名字）。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I91",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I93",
+   "key": "f6bd771a2bb0",
+   "item": "voice_zh",
+   "where": "l23",
+   "dim": "V1、V3、V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3、V5",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "送进来的是六、四，直接加的那个算一，所以分到三十六、二十四、六。送进来的越大，分到的越多。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "六乘六是三十六，六乘四是二十四；直接加的那个分到六。乘上的数越大，分到的越多。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "送进来的是六、四，直接加的那个算一，所以分到三十六、二十四、六。送进来的越大，分到的越多。",
+   "problem": "很怪。先记六、四，再接受一个临时规定的「一」，随后对应三个结果，耳朵容易只留下数字串。「那个算一」也没有说清实际怎么计算。",
+   "suggest": "六乘六是三十六，六乘四是二十四；直接加的那个分到六。乘上的数越大，分到的越多。",
+   "judge_note": "b · l23（必改）及改写：降为建议，理由见 V3。b 的改写「六乘六是三十六」听不出哪个六是错误、哪个六是输入，还删了「送进来的」，跟 l22 的规则接不上；改用补充问题里 l23 的写法。",
+   "status": "implemented",
+   "solution": "l23 改为「送进来的是六、四，直接加的那个算一，乘上错误六，分到三十六、二十四、六。送进来的越大，分到的越多。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I94",
+   "key": "fb7ca60ca3ba",
+   "item": "voice_zh",
+   "where": "l23",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "送进来的是六、四，直接加的那个算一，所以分到三十六、二十四、六。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "送进来的是六和四，直接加的那个当一，所以分到三十六、二十四、六。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "送进来的是六、四，直接加的那个算一，所以分到三十六、二十四、六。",
+   "problem": "「六」同时是错误、输入、结果，纯听易混；「算一」生硬。",
+   "suggest": "送进来的是六和四，直接加的那个当一，所以分到三十六、二十四、六。",
+   "judge_note": "b · l23（必改）及改写：降为建议，理由见 V3。b 的改写「六乘六是三十六」听不出哪个六是错误、哪个六是输入，还删了「送进来的」，跟 l22 的规则接不上；改用补充问题里 l23 的写法。",
+   "status": "implemented",
+   "solution": "l23 改为「送进来的是六、四，直接加的那个算一，乘上错误六，分到三十六、二十四、六。送进来的越大，分到的越多。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I95",
+   "key": "af380a45a962",
+   "item": "voice_zh",
+   "where": "l23",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "送进来的是六、四，直接加的那个算一，所以分到三十六、二十四、六。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "送进来的是六、四，直接加的那个算一，乘上错误六，分到三十六、二十四、六。送进来的越大，分到的越多。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "送进来的是六、四，直接加的那个算一，所以分到三十六、二十四、六。",
+   "problem": "两人都抓到了这句，但给的改写都不理想。最省事的修法：把「所以」换成乘的对象，这样哪个六是错误就清楚了，只多 3 个字。",
+   "suggest": "送进来的是六、四，直接加的那个算一，乘上错误六，分到三十六、二十四、六。送进来的越大，分到的越多。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l23 改为「送进来的是六、四，直接加的那个算一，乘上错误六，分到三十六、二十四、六。送进来的越大，分到的越多。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I96",
+   "key": "5e5e54b09742",
+   "item": "voice_zh",
+   "where": "l24",
+   "dim": "V1、V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l24"
+   ],
+   "evidence": [
+    "再往前一层，错误顺着连线往回走，路过哪个旋钮，就乘上哪个。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "再往前传，错误经过哪个旋钮，就乘上它的数。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "再往前一层，错误顺着连线往回走，路过哪个旋钮，就乘上哪个。",
+   "problem": "有点怪。「乘上哪个」又把旋钮和旋钮的数混着说。后句能补救，因此不判必改；但口头补出「它的数」更稳。",
+   "suggest": "再往前传，错误经过哪个旋钮，就乘上它的数。",
+   "judge_note": "b · l24：上轮 I129 已经裁定，「乘上哪个」就是乘它的读数，l25 紧接着就给出了「乘二」「乘一」；改写还删掉了「顺着连线往回走」的画面感。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I97",
+   "key": "4929bd33a7bf",
+   "item": "voice_zh",
+   "where": "l26",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l26"
+   ],
+   "evidence": [
+    "两个小单元再用同样的办法，算出自己两个旋钮的责任。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "两个单元把收到的数乘送进来的数，算各自旋钮的责任。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "两个小单元再用同样的办法，算出自己两个旋钮的责任。",
+   "problem": "有点怪。最近两句刚说的是「错误乘路过的旋钮」，这里却要回到更早的算责任规则。「同样」需要听众自己排除最近的那个办法。",
+   "suggest": "两个单元把收到的数乘送进来的数，算各自旋钮的责任。",
+   "judge_note": "b · l26 改写：「收到的数乘送进来的数」把两个近义说法摆在一起，比原句更难分辨；上轮 I130 已经裁定「同样的办法」能指回 l22。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "建议级：裁决人驳回过同类改写",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I98",
+   "key": "5406cf892a42",
+   "item": "voice_zh",
+   "where": "l29",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l29"
+   ],
+   "evidence": [
+    "再用笨办法核对：先不拧，算一遍。七个旋钮再轮流拧，各算一遍，一共八遍。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "再用笨办法核对：先不拧，算一遍。然后七个旋钮轮流拧，各算一遍，一共八遍。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "再用笨办法核对：先不拧，算一遍。七个旋钮再轮流拧，各算一遍，一共八遍。",
+   "problem": "「再用」「再轮流」两个「再」挨着，语序有点绕。",
+   "suggest": "再用笨办法核对：先不拧，算一遍。然后七个旋钮轮流拧，各算一遍，一共八遍。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l29 改为「再用笨办法核对：先不拧，算一遍，七个旋钮轮流拧，各算一遍，一共八遍。」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t13_backprop/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I99",
+   "key": "badf5b146b2f",
+   "item": "voice_zh",
+   "where": "l36",
+   "dim": "V4/V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4/V3",
+   "shots": [
+    "l36"
+   ],
+   "evidence": [
+    "论文里说，坡度分两趟算：先正着一趟，再从输出那头倒着传回来。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "论文里说，坡度要算两趟：先正着一趟，再从答案那头倒着传回来。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "论文里说，坡度分两趟算：先正着一趟，再从输出那头倒着传回来。",
+   "problem": "与 l30 重复；「输出那头」没解释过。保留的理由（论文要点）成立，换词即可。",
+   "suggest": "论文里说，坡度要算两趟：先正着一趟，再从答案那头倒着传回来。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "论文「两趟」是 claims C11 要点，保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I100",
+   "key": "5d097b98efef",
+   "item": "voice_zh",
+   "where": "l36",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l36"
+   ],
+   "evidence": [
+    "论文里说，坡度分两趟算：先正着一趟，再从输出那头倒着传回来。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "论文里说的，就是刚才这一来一回的算法。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "论文里说，坡度分两趟算：先正着一趟，再从输出那头倒着传回来。",
+   "problem": "句子本身自然，但顺序在 l30、l33 已讲过。删掉具体步骤不影响理解；若要保留论文归属，可用短句回指。",
+   "suggest": "论文里说的，就是刚才这一来一回的算法。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I99",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I101",
+   "key": "54912e518ca1",
+   "item": "voice_zh",
+   "where": "l39",
+   "dim": "V1、V3、V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3、V5",
+   "shots": [
+    "l39"
+   ],
+   "evidence": [
+    "现在用 PyTorch 这类框架，写一行 loss 点 backward，所有旋钮的坡度就都算好了。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "用 PyTorch 这样的工具，写行代码：loss 点 backward，就能算出所有旋钮的坡度。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "现在用 PyTorch 这类框架，写一行 loss 点 backward，所有旋钮的坡度就都算好了。",
+   "problem": "很怪。普通观众先遇到工具名、再遇到「框架」，随后听一串未说明身份的英文。「写一行」不足以让不懂编程的人立刻知道这是代码。保留代码可以，先说明它是什么。",
+   "suggest": "用 PyTorch 这样的工具，写行代码：loss 点 backward，就能算出所有旋钮的坡度。",
+   "judge_note": "a · l39 改写：「在损失上写一行 backward」改了代码本身（实际代码是 loss.backward()），中文搭配也别扭；不如保留原句。；b · l39（必改）及改写：降为建议。「写一行」已经告诉观众这是代码；b 的改写删了「现在」，而这个词正承担「从 1986 到今天」的时间过渡。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人降为建议：「写一行」已说明是代码，「现在」承担时间过渡",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I102",
+   "key": "0670032d0ccf",
+   "item": "voice_zh",
+   "where": "l39",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l39"
+   ],
+   "evidence": [
+    "现在用 PyTorch 这类框架，写一行 loss 点 backward，所有旋钮的坡度就都算好了。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "现在用 PyTorch 这类框架，在损失上写一行 backward，所有旋钮的坡度就都算好了。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "现在用 PyTorch 这类框架，写一行 loss 点 backward，所有旋钮的坡度就都算好了。",
+   "problem": "盲听时「loss 点 backward」是一串外语音，连不回 l08 的「损失」；上轮「画面同步显示」对看画面的人成立，对耳朵不成立。",
+   "suggest": "现在用 PyTorch 这类框架，在损失上写一行 backward，所有旋钮的坡度就都算好了。",
+   "judge_note": "a · l39 改写：「在损失上写一行 backward」改了代码本身（实际代码是 loss.backward()），中文搭配也别扭；不如保留原句。；b · l39（必改）及改写：降为建议。「写一行」已经告诉观众这是代码；b 的改写删了「现在」，而这个词正承担「从 1986 到今天」的时间过渡。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I101",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I103",
+   "key": "72a5d015a0ca",
+   "item": "voice_zh",
+   "where": "l41",
+   "dim": "V1/V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1/V2",
+   "shots": [
+    "l41"
+   ],
+   "evidence": [
+    "反向传播，就是把错误从输出往回传，一层层分责任。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "说白了，反向传播就是让错误从答案那头往回传，一层层分责任。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "反向传播，就是把错误从输出往回传，一层层分责任。",
+   "problem": "片尾从严。「X，就是……」是课本定义腔；「输出」在口播里从未解释过（l18 已改成「猜车费」，没有「输入/输出」对举）；紧跟的 l42 又复述同一意思。上轮「核心意象」的理由保留意象即可，句式与「输出」仍要改。",
+   "suggest": "说白了，反向传播就是让错误从答案那头往回传，一层层分责任。",
+   "judge_note": "a · l41（必改）：判它必改的理由不成立。l36 已经先说过「从输出那头」，「输出」在这里不算没交代过的词；片尾用「X，就是……」做总结是科普的常见收法；「一层层分责任」上轮 I144 已经裁定保留。a 的改写「说白了……从答案那头」还比原句长，降为记录，不改。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：片尾「X，就是……」是科普常见收法，l36 已说过「输出那头」",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I104",
+   "key": "45db3961449c",
+   "item": "voice_zh",
+   "where": "l42",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l42"
+   ],
+   "evidence": [
+    "倒着走一趟，每个旋钮该往哪拧、拧多少，就全算出来了。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "保留",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "倒着走一趟，每个旋钮该往哪拧、拧多少，就全算出来了。",
+   "problem": "与 l04、l41 重复，首尾呼应可留。",
+   "suggest": "保留",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：首尾呼应",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:01:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,180 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  #net { position: absolute; left: var(--mx); top: 170px; width: 1200px; height: 740px; }
+  #net svg.wires { position: absolute; left: 0; top: 0; overflow: visible; }
+  .ucard { position: absolute; background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); }
+  .ucard .tag { position: absolute; left: 22px; top: 14px; font-size: var(--fs-caption); font-weight: 700; color: var(--sub); }
+  .bub { position: absolute; width: 96px; height: 96px; margin: -48px 0 0 -48px; border-radius: 50%; background: var(--accent-soft);
+         border: 4px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 44px; font-weight: 700;
+         font-variant-numeric: tabular-nums; color: var(--ink); }
+  .bub.big { width: 156px; height: 156px; margin: -78px 0 0 -78px; font-size: 56px; }
+  .in { position: absolute; left: 0; top: 290px; width: 170px; height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .in .n { font-size: 84px; font-weight: 700; line-height: 1; }
+  .in .u { font-size: var(--fs-caption); color: var(--sub); margin-top: 8px; }
+  .pill { font-size: 34px; font-weight: 700; color: #fff; background: var(--d-bad); border-radius: 999px; padding: 2px 18px; white-space: nowrap;
+          font-variant-numeric: tabular-nums; }
+  .edge-lab { position: absolute; font-size: 40px; font-weight: 700; color: var(--d-bad); white-space: nowrap; transform: translate(-50%, -50%);
+              background: var(--bg); padding: 0 10px; border-radius: 10px; }
+  .side { position: absolute; left: 1380px; width: 440px; }
+  .res { top: 250px; }
+  .res .row { display: flex; align-items: baseline; justify-content: space-between; padding: 18px 0; border-top: 1px solid var(--hair); }
+  .res .row .k { font-size: var(--fs-h2); font-weight: 600; color: var(--ink2); }
+  .res .row .v { font-size: 76px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .rule { position: absolute; left: 560px; top: 84px; white-space: nowrap; }
+  .hd { position: absolute; left: var(--mx); top: 200px; }
+  .hd .t { position: absolute; left: 0; top: 0; white-space: nowrap; }
+  .cmp { position: absolute; left: var(--mx); top: 340px; display: flex; gap: 48px; }
+  .cmp .card { width: 816px; padding: 40px 52px; }
+  .cmp .cnt { font-size: 110px; font-weight: 700; line-height: 1.05; margin-top: 10px; font-variant-numeric: tabular-nums; }
+  .cmp .nums { display: flex; gap: 22px; margin-top: 26px; font-size: 44px; font-weight: 700; color: var(--d-bad); font-variant-numeric: tabular-nums; }
+  .same { position: absolute; left: var(--mx); top: 790px; }
+  .big { position: absolute; left: var(--mx); top: 330px; width: 1680px; }
+  .big .row { display: grid; grid-template-columns: 520px 1fr; align-items: baseline; padding: 26px 0; border-top: 1px solid var(--hair); }
+  html[lang=en] .big .row { grid-template-columns: 600px 1fr; }
+  .big .row .v { font-size: 92px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .foot { position: absolute; left: var(--mx); top: 690px; font-size: var(--fs-body); color: var(--ink2); white-space: nowrap; }
+  .big .row .note { font-size: var(--fs-caption); color: var(--sub); margin-left: 24px; font-weight: 400; }
+</style>
+
+<div class="eb eyebrow" data-zh="03 · 做个小实验" data-en="03 · A small experiment"></div>
+
+<div id="net">
+  <svg class="wires" id="wires" width="1200" height="740"></svg>
+  <div class="in ucard" id="inp"><div class="n">5</div><div class="u" data-zh="公里" data-en="km"></div></div>
+  <div class="ucard" id="cA" style="left:330px;top:70px;width:340px;height:270px"><div class="tag">A</div></div>
+  <div class="ucard" id="cB" style="left:330px;top:420px;width:340px;height:270px"><div class="tag">B</div></div>
+  <div class="ucard" id="cO" style="left:860px;top:20px;width:230px;height:730px"></div>
+  <div class="bub" id="hA" style="left:670px;top:205px">6</div>
+  <div class="bub" id="hB" style="left:670px;top:555px">4</div>
+  <div class="bub big" id="pr" style="left:1165px;top:370px">29</div>
+</div>
+
+<div class="side res" id="res">
+  <div class="row" id="r1"><span class="k" data-zh="猜" data-en="Guess"></span><span class="v accent" id="pv">29</span></div>
+  <div class="row" id="r2"><span class="k" data-zh="实际" data-en="Actual"></span><span class="v">23</span></div>
+  <div class="row" id="r3"><span class="k c-bad" data-zh="多猜" data-en="Too high"></span><span class="v c-bad">+6</span></div>
+</div>
+<div class="rule" id="rule1"><div class="h2" data-zh='责任 = <span class="c-bad">错误</span> × 送进来的数' data-en='Blame = <span class="c-bad">error</span> × input'></div></div>
+<div class="rule" id="rule2"><div class="h2" data-zh='回传：<span class="c-bad">错误</span> × 路过的旋钮' data-en='Going back: <span class="c-bad">error</span> × knob'></div></div>
+<div class="rule" id="rule1b"><div class="h2" data-zh='责任 = <span class="c-bad">收到的</span> × 送进来的数' data-en='Blame = <span class="c-bad">error</span> × input'></div></div>
+<div class="rule" id="rule3"><div class="h2 c-bad" data-zh="猜多了 → 都往小拧" data-en="Guess too high → all turn down"></div></div>
+<div class="rule" id="rule4"><div class="h2 c-good" data-zh="拧一步：29 → 23.88" data-en="One step: 29 → 23.88"></div></div>
+
+<div class="hd">
+  <div class="h1 t" id="hb" data-zh="十亿个旋钮" data-en="A billion knobs"></div>
+  <div class="h1 t" id="hc" data-zh='没它，大模型<span class="c-bad">练不动</span>' data-en='No backpropagation, <span class="c-bad">no big models</span>'></div>
+</div>
+<div class="cmp" id="cmp">
+  <div class="card" id="cf"><div class="eyebrow" data-zh="挨个试" data-en="One by one"></div>
+    <div class="cnt"><span class="h2" data-zh="正着算 " data-en=""></span><span id="nf">0</span><span class="h2" data-zh=" 遍" data-en=" forward runs"></span></div>
+    <div class="nums" id="numf"></div></div>
+  <div class="card" id="cb"><div class="eyebrow" data-zh="反向传播" data-en="Backpropagation"></div>
+    <div class="cnt accent" data-zh='1 遍<span class="h2 ink2"> + </span>1 趟' data-en='1<span class="h2 ink2"> forward + </span>1<span class="h2 ink2"> back</span>'></div>
+    <div class="nums" id="numb"></div></div>
+</div>
+<div class="same h2 c-good" id="same" data-zh="✓ 一模一样" data-en="✓ Identical"></div>
+<div class="big" id="bigt">
+  <div class="row" id="b1"><span class="h2" data-zh="挨个试" data-en="One by one"></span><span class="v c-bad">1,000,000,001<span class="note" data-zh="遍" data-en="runs"></span></span></div>
+  <div class="row" id="b3"><span class="h2" data-zh="反向传播" data-en="Backpropagation"></span><span class="v accent">≈ 3<span class="note" data-zh="遍的工夫" data-en="runs’ worth"></span></span></div>
+</div>
+<div class="foot" id="b2" data-zh="每遍 1 秒：挨个试 ≈ 31.7 年 / 步" data-en="One by one, 1 s per run: ≈ 31.7 years"></div>
+
+<script>
+const T = EDU.tl, G = D.grad, K = D.knobs, KN = D.knobs_new;
+const net = document.getElementById("net");
+/* 旋钮：第一层 A、B 各两个（每公里 ×、起步 +），第二层三个（×A、×B、+）；cx, cy 是相对 #net 的中心 */
+const fx = v => "×" + trim2(v), fp = v => "+" + trim2(v);
+const spec = {
+  wA: [420, 175, 0, 2, fx], bA: [580, 175, 0, 2, fp], wB: [420, 525, 0, 1, fx], bB: [580, 525, 0, 4, fp],
+  vA: [975, 150, 0, 4, fx], c: [975, 370, 0, 20, fp], vB: [975, 590, 0, 2, fx],
+};
+const KB = {};
+Object.entries(spec).forEach(([n, [cx, cy, mn, mx, fmt]]) => {
+  KB[n] = knob(net, { size: 100, left: cx, top: cy, min: mn, max: mx, value: K[D.names.indexOf(n)], fmt, readingSize: 32 });
+});
+/* 小红牌：第二层放在旋钮右边，第一层放在读数下面 */
+const P = {};
+Object.entries(spec).forEach(([n, [cx, cy]]) => {
+  P[n] = pill(net, String(G[n]), cx, cy + 92);
+});
+/* 连线（琥珀 = 正着算；红 = 倒着传） */
+const svg = d3.select("#wires");
+const wire = (x1, y1, x2, y2, col = "--hair", w = 6) => svg.append("path")
+  .attr("d", `M${x1},${y1} C${(x1 + x2) / 2},${y1} ${(x1 + x2) / 2},${y2} ${x2},${y2}`)
+  .attr("fill", "none").attr("stroke", css(col)).attr("stroke-width", w).attr("stroke-linecap", "round").node();
+const segs = [[170, 380, 330, 205], [170, 380, 330, 555], [718, 205, 860, 150], [718, 555, 860, 590]];
+const W0 = segs.map(s => wire(...s));
+const Wf = segs.map(s => wire(...s, "--accent", 8));
+const Wb = segs.map(([a, b, c2, d]) => wire(c2, d, a, b, "--d-bad", 8));
+const labA = document.createElement("div"); labA.className = "edge-lab"; labA.textContent = "6 × 2 = 12"; labA.style.left = "755px"; labA.style.top = "120px";
+const labB = document.createElement("div"); labB.className = "edge-lab"; labB.textContent = "6 × 1 = 6"; labB.style.left = "755px"; labB.style.top = "660px";
+net.append(labA, labB);
+const errB = document.createElement("div"); errB.className = "pill"; errB.textContent = "6";
+Object.assign(errB.style, { position: "absolute", left: "1165px", top: "448px", transform: "translateX(-50%)" }); net.append(errB);
+const act = document.createElement("div"); act.className = "caption"; act.textContent = EDU.tr("实际 23", "Actual 23");
+Object.assign(act.style, { position: "absolute", left: "1165px", top: "458px", transform: "translateX(-50%)", whiteSpace: "nowrap", color: "var(--ink2)", fontWeight: 600 }); net.append(act);
+gsap.set(act, { opacity: 0 });
+const nums = (id, vals) => { const el = document.getElementById(id); vals.forEach((v, i) => { if (i === 4) { const d = document.createElement("span"); d.textContent = "│"; d.style.color = "var(--hair)"; el.append(d); } const s = document.createElement("span"); s.textContent = v; el.append(s); }); };   // 第一层四个 │ 第二层三个
+nums("numf", D.names.map(n => Math.round(D.fd[n])));
+nums("numb", D.names.map(n => G[n]));
+const NF = document.getElementById("nf"), PV = document.getElementById("pv"), PR = document.getElementById("pr");
+
+gsap.set([net, "#hA", "#hB", "#pr", ...Wf, ...Wb, labA, labB, errB, ...Object.values(P), "#res", "#r1", "#r2", "#r3",
+          "#rule1", "#rule1b", "#rule2", "#rule3", "#rule4", "#hb", "#hc", "#cmp", "#cf", "#cb", "#same", "#bigt", "#b1", "#b2", "#b3"], { opacity: 0 });
+EDU.in(".eb", 0);
+// l18 两层、七个旋钮；输入五公里
+EDU.in(net, EDU.t("l18", .05), { y: 0, d: 1 });
+// l19 第一层：A 得六、B 得四
+T.set(Wf.slice(0, 2), { opacity: 1 }, EDU.t("l19", .1)); Wf.slice(0, 2).forEach(p => EDU.draw(p, EDU.t("l19", .1), .9));
+EDU.in(["#hA", "#hB"], EDU.t("l19", .6));
+// l20 第二层：猜二十九
+T.set(Wf.slice(2), { opacity: 1 }, EDU.t("l20", .1)); Wf.slice(2).forEach(p => EDU.draw(p, EDU.t("l20", .1), .9));
+EDU.in("#pr", EDU.t("l20", .6)); EDU.in("#res", EDU.t("l20", .6), { y: 0, d: .01 }); EDU.in("#r1", EDU.t("l20", .7));
+// l21 实际二十三，多猜六块 → 要往回传的错误
+EDU.in("#r2", EDU.t("l21", .05)); EDU.in("#r3", EDU.t("l21", .3));
+EDU.dim(Wf, EDU.t("l21", .6), 0); EDU.in(errB, EDU.t("l21", .65));
+// l22 最后一层：错误 × 送进来的数 → 36、24、6
+EDU.out("#res", EDU.t("l22")); EDU.in("#rule1", EDU.t("l22", .05));
+EDU.dim(["#cA", "#cB", "#inp", ...W0.slice(0, 2)], EDU.t("l22", .2), .3);
+EDU.in([P.vA, P.vB, P.c], EDU.t("l23", .2), { stagger: .3 });
+// l23 送进来的越大，分到的越多（A 的 6 对 36，B 的 4 对 24）
+EDU.focus(["#hA", P.vA], EDU.t("l23", .1)); EDU.unfocus(["#hA", P.vA], EDU.t("l23", .7));
+// 图内减字：讲最后一层时收起第一层四个读数；讲第一层时收起最后一层读数与 A、B 的输出；l28 全部读数回来（新值）
+const R1 = ["wA", "bA", "wB", "bB"].map(n => KB[n].reading), R2 = ["vA", "vB", "c"].map(n => KB[n].reading);
+const back = (sel, at) => T.to(sel, { opacity: 1, y: 0, duration: .5, ease: "expo.out" }, at);   // 重新亮出（不用 fromTo，免得一开场就被藏起来）
+EDU.out(R1, EDU.t("l20", .05)); back(R1, EDU.t("l28", .05));
+EDU.out(["#hA", "#hB", "#pr", P.vA, P.vB, P.c], EDU.t("l24", .05)); back([P.vA, P.vB, P.c], EDU.t("l27", .05));
+EDU.out([...R2, errB], EDU.t("l26", .05)); back([...R2, "#pr"], EDU.t("l28", .05));
+// l24 再往前一层：顺着连线往回走，乘上路过的旋钮
+EDU.out("#rule1", EDU.t("l24")); EDU.in("#rule2", EDU.t("l24", .05));
+EDU.dim(["#cA", "#cB", "#inp", ...W0.slice(0, 2)], EDU.t("l24", .1), 1);
+T.set(Wb.slice(2), { opacity: 1 }, EDU.t("l24", .3)); Wb.slice(2).forEach(p => EDU.draw(p, EDU.t("l24", .3), 1));
+// l25 A 乘二收到十二，B 乘一收到六
+EDU.in(labA, EDU.t("l25", .05)); EDU.in(labB, EDU.t("l25", .55));
+// l26 两个单元再分给自己的两个旋钮
+EDU.out("#rule2", EDU.t("l26")); EDU.in("#rule1b", EDU.t("l26", .05));
+EDU.in([P.wA, P.bA, P.wB, P.bB], EDU.t("l26", .25), { stagger: .2 });
+// l27 七个旋钮都拿到了数；都为正 → 都往小拧
+EDU.out("#rule1b", EDU.t("l27", .45)); EDU.out([labA, labB], EDU.t("l27", .05)); EDU.in("#rule3", EDU.t("l27", .5));
+// l28 拧一小步：29 → 23.88
+EDU.out("#rule3", EDU.t("l28")); EDU.in("#rule4", EDU.t("l28", .4)); EDU.in(act, EDU.t("l28", .6));
+EDU.out([...Wb, ...Object.values(P)], EDU.t("l28", .1));
+T.to(PR, { fontSize: 40, duration: .4 }, EDU.t("l28", .2));
+D.names.forEach((n, i) => KB[n].turn(EDU.t("l28", .1), K[i], KN[i], 1.4));
+countTo(PR, EDU.t("l28", .25), 29, D.pred_new, 1.4, v => v.toFixed(v > 28.99 ? 0 : 2).replace(/\.00$/, ""));
+// l29 笨办法核对：挨个试拧，数到八遍
+EDU.out([net, "#rule4"], EDU.t("l29"));
+EDU.in("#cmp", EDU.t("l29", .05), { y: 0, d: .01 }); EDU.in("#cf", EDU.t("l29", .1));
+countTo(NF, EDU.t("l29", .3), 0, D.passes_fd, 1.6, v => Math.round(v));
+// l30 七个数一模一样；反向传播一遍正着 + 一趟倒着
+EDU.in("#cb", EDU.t("l30", .45)); EDU.in("#same", EDU.t("l30", .75));
+// l31 十亿个旋钮：十亿零一遍
+EDU.out(["#cmp", "#same"], EDU.t("l31")); EDU.in("#hb", EDU.t("l31", .03));
+EDU.in("#bigt", EDU.t("l31", .05), { y: 0, d: .01 }); EDU.in("#b1", EDU.t("l31", .4));
+// l32 一遍一秒：三十多年
+EDU.in("#b2", EDU.t("l32", .2));
+// l33 反向传播：约三遍
+EDU.in("#b3", EDU.t("l33", .2)); EDU.out("#b2", EDU.t("l33", .1));
+// l34 没有它，大模型训练不动
+EDU.out("#hb", EDU.t("l34")); EDU.in("#hc", EDU.t("l34", .05));
+</script>

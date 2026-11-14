@@ -1,0 +1,1110 @@
+{
+ "version": 5,
+ "kind": "edu_lines",
+ "scoring": {
+  "scale": {
+   "0": "没查或查不了（写 `原因：`）",
+   "1": "有问题（问题表里必须有对应条目）",
+   "2": "基本没问题，有小瑕疵（写证据）",
+   "3": "没问题（写证据）"
+  },
+  "evidence_rule": "证据要指到句号 lNN / 屏号、原文或数字，至少 8 个字；没证据的高分按 0 处理。",
+  "disagreement": "分歧：两位同一维度差 ≥2，或一人 ≤1、另一人 ≥2，交裁决人；两人都 ≥2 的维度，裁决人每项抽 2 维复核（专抓两个模型共同的盲点）。"
+ },
+ "adjudicator": {
+  "runner": "claude",
+  "model": "claude-opus-5-5"
+ },
+ "id": "lines_r3",
+ "chain": "t01_overfitting/lines",
+ "loop": 3,
+ "max_loops": 3,
+ "parent": "edu_videos/ai_terms/t01_overfitting/reviews/lines_r2",
+ "title": "t01_overfitting · 台词审（口播＋屏幕文字）第 3 轮",
+ "target": "edu_videos/ai_terms/t01_overfitting",
+ "episode": "t01_overfitting",
+ "stage": "lines",
+ "stage_name": "台词审（口播＋屏幕文字 × 中英）",
+ "scenes": [],
+ "created_at": "2026-11-09T01:20:46",
+ "author": "Claude Code",
+ "known": "",
+ "changes": "# 台词审汇总：lines_r2\n\n处理状态：待处理 0 · 已改 104 · 不改 38 · 驳回 0（`python tools/edu_review.py fix` 登记；下一轮审稿人按「处理」列逐条复核）\n\n## 各项结论（最终分：裁决过的维度用裁决分，其余取两人较低分）\n\n| 项 | 最终分 | 未处理的必改 | 结论 |\n|---|---|---|---|\n| voice_zh | V1=1 V2=2 V3=2 V4=2 V5=2 V6=2 R=1 | 0 | 不通过 |\n| voice_en | V1=2 V2=2 V3=1 V4=2 V5=2 V6=2 R=1 | 0 | 不通过 |\n| screen_zh | P1=1 P2=1 P3=2 P4=1 P5=2 P6=3 R=1 | 0 | 不通过 |\n| screen_en | P1=1 P2=1 P3=2 P4=1 P5=2 P6=2 R=1 | 0 | 不通过 |\n\n## 问题（来源 a = Claude、b = Codex、judge = 裁决补充）\n\n| 编号 | 项 | 位置 | 维度 | 级别 | 来源 | 原文 | 问题 | 建议改写 | 裁决人意见 | 处理 |\n|---|---|---|---|---|---|---|---|---|---|---|\n| I1 | screen_en | outro / card_s10 | P1, P2 | 必改 | a | \"Overfitting is memorizing even the typos, / and then treating them as rules.\" (12 words, one block) | Breaks both the 6-word title limit and the 9-word block limit; repeats l57–l58 verbatim, which is the exact pattern the user rejected (full narration sentences on screen). Last round's I5/I7 was marked 已改 but only the line break changed. If the author keeps it as a deliberate closing quote, that reasoning does not hold against a hard limit; the narration already says it. | \"Memorizing typos, / treating them as rules\" (6 words, keeps the two-tone line break) | b · outro (word total)：The \"approximately 25 words\" includes the eyebrow and the footer credits, which are exempt. The breach is the 12-word block itself, and that stands. | 已改：outro：片尾卡改成页眉「过拟合，就像」＋两行短语「连印错的都背了下来， / 还当成了规律」（英文 Overfitting is · memorizing even the typos, / and treating them as rules），不带句号；卡上只放本语言（系列名也去掉另一种语言） |\n| I2 | screen_en | agenda | P1, P3 | 必改 | b | “In this episode” plus six numbered chapter rows | The screenshot contains a title omitted from the extraction: **seven main blocks and 26 words**, including chapter numbers. The rows are now outlines, but still breach both screen limits. | Keep the exact chapter names; show **two successive agenda screens**, each with `In this episode` and three chapter rows. Each becomes four blocks and 15 words. | b · agenda：Under counting ruling 1 the card is one heading plus one parallel 6-item list: 2 blocks and 19 words (01–06 are index markers). Splitting it into two agenda screens adds a cut and repeats the heading with no reading benefit. Making the row grammar parallel is optional polish, not a fix.；a · agenda：The 存疑 is resolved: not a breach (counting ruling 1). | 不改（理由：裁决（第 2 轮两位一致）：目录是导航清单，标题 1 块＋清单 1 块，不超限；章名与章节卡同名同号，不拆两屏） |\n| I3 | screen_en | outro | P1, P2 | 必改 | b | “Overfitting is memorizing even the typos, and then treating them as rules.” | One continuous **12-word headline**, exceeding both the six-word title and nine-word ordinary-block caps. It repeats l57–l58. Including the eyebrow, next-item label and English footer gives approximately **25 words**. | `Overfitting` / `Typos treated as rules` / `Next: reinforcement learning`. Remove `In one sentence`. | b · outro (word total)：The \"approximately 25 words\" includes the eyebrow and the footer credits, which are exempt. The breach is the 12-word block itself, and that stands. | 已改：outro：片尾卡改成页眉「过拟合，就像」＋两行短语「连印错的都背了下来， / 还当成了规律」（英文 Overfitting is · memorizing even the typos, / and treating them as rules），不带句号；卡上只放本语言（系列名也去掉另一种语言） |\n| I4 | screen_en | agenda | P1 | 存疑 | a | \"In this episode\" + 6 rows (7 blocks, 19 words plus 6 numerals) | Strictly more than 4 blocks. It is a single numbered list of chapter titles and reads as one block; I do not count it as a breach, but the judge should confirm the brief treats a list as one block. Rows mix clause / noun / imperative (\"What overfitting is\", \"Another lens\", \"Spot it, prevent it\"). | Keep as is; optional parallel set: \"What overfitting is / An analogy / Two error curves / Learning as compression / Real-world failures / Spot it, prevent it\" | b · agenda：Under counting ruling 1 the card is one heading plus one parallel 6-item list: 2 blocks and 19 words (01–06 are index markers). Splitting it into two agenda screens adds a cut and repeats the heading with no reading benefit. Making ",
+ "items": [
+  {
+   "id": "voice_zh",
+   "law": "lines",
+   "law_name": "中文口播（母语听感，盲审）",
+   "color": "#c0502e",
+   "scope": [],
+   "checks": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_zh.md",
+   "prompt": "items/voice_zh__a.md",
+   "what": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "problem": "上一版「本期内容」念成「这一期，讲四件事：它是个什么问题；为什么只背练习册不行……」，像在念目录，正常人不会这么说话（用户 2026-11-08 指出）；原先的审稿没抓到。",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "像真人在讲",
+     "question": "逐句：自然 / 有点怪 / 很怪。书面腔、讲解腔、翻译腔、念稿感、报菜名式罗列都算怪"
+    },
+    {
+     "id": "V2",
+     "name": "衔接与过渡",
+     "question": "开场、本期内容、章节转换、举例前后：像一个人顺着思路往下讲，而不是「下面讲第一点」式的模板或目录朗读；上下句接得上"
+    },
+    {
+     "id": "V3",
+     "name": "一遍听懂",
+     "question": "只靠耳朵：一句只带一个新意思；指代清楚（说「这个」时观众知道指什么）；术语先解释再用；数字、同音字不会听错"
+    },
+    {
+     "id": "V4",
+     "name": "精炼",
+     "question": "没有废话、重复、正确的空话；删掉不影响理解的句子要指出来"
+    },
+    {
+     "id": "V5",
+     "name": "口吻与节奏",
+     "question": "从头到尾是同一个亲切、清楚、不端着的讲解者；长短句交替，每句适合一口气念完"
+    },
+    {
+     "id": "V6",
+     "name": "改写",
+     "question": "每句「有点怪 / 很怪」都给出可以直接替换、不更长的中文改写；列出最别扭的 5 句并排序"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_zh__a.md",
+     "prompt": "items/voice_zh__a.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "绝大多数句子像真人在讲，如 l18「先猜一下：换成新题，哪一种考得最好？」、l24「连印错的几处也照背」、l44「它既在测流感，也在测冬天」。仍有几句偏书面或报表腔：l26「练习册是训练数据，印错的答案是噪声，考试是测试数据」连说三项配对，l27「这个比方也有局限」，l23「难察觉」，l50「过拟合的近亲」。没有目录朗读式的句子。"
+      },
+      "V2": {
+       "score": 3,
+       "evidence": "l01→l02 先抛现象再点出名字；l03「这期，我们先用一个小实验……」l04「再聊聊它在现实里闯过的祸，和怎么防」是人话，不是目录朗读；l31「回到实验。」、l36「换个角度想：」、l41「这类毛病，在现实里真的闯过祸」、l50→l51「那该怎么发现和避免过拟合？」都是顺着思路往下讲。个别小接缝见问题表 l11、l14。"
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "大体一遍能懂，术语都是先讲后用（l12 噪声、l19 测试数据、l37 压缩用十个数字讲清）。小瑕疵：l11「这十个点」只听没有先行词；l14「第一种模型太简单，只会画直线。点离线越远……就是误差」一句里带「第一种、扣分、误差」三个新意思；l45 一句四个数字（二零一一到二零一三年、一百零八周、一百周）；l52 一句里塞了验证集、挑模型、发现过拟合、考试留到最后。"
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "没有明显废话；l10「就像把练习题背下来了，却没学会规律」是 l09 定义的复述（l24 还会再讲一遍比方），l58「还把它们当成了规律」复述 l30「把眼前的例子当成了规律」，但收尾回扣可接受，只算小瑕疵。"
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "语气从头到尾是同一个亲切的讲解者（l53「坦白一句」、l55「给模型立规矩」、l59「下回你觉得全懂了，换一道没见过的题试试」）。但 l48（11.3s）、l49（11.1s）、l50（11.2s）三句连续偏长，且都是多层从句，l26（11.0s）也是，一口气念下来费劲；前面 l32–l34 的短句节奏更好。"
+      },
+      "V6": {
+       "score": 2,
+       "evidence": "每句「有点怪」都已在问题表给出不更长的改写；最别扭的 5 句排序见「整体观察」。没有「很怪」的句子，所以不给 3 以外的满分理由是改写集中在建议级。"
+      },
+      "R": {
+       "score": 2,
+       "evidence": "逐条复核。已解决：l09 现为「把练习题学得太死」，自然，无新问题；l31「我们再抽三百组点」解决了「随机的点」；l38「只用四个数字就能定下来，大致贴着这些点」顺了；l43「走势最像一千多个流感数据点的那些」说清了比什么；l44「难免挑中碰巧冬天搜得多的」补上了「被挑中」这步；l48 补上了「认出医院，就能猜个大概」；l10 的新句「来看看它是怎么发生的」自然。部分解决：l42 仍是「估算看病的人里，有多大比例是类似流感的症状」，人与症状混接，听着还拗口。作者「不采纳」的理由：l35「左边」（图上欠拟合区域同步淡入，成立）、l53「坦白一句」（自然口语交代，成立）、l45 保留年份（画面只有 100 / 108，成立）、l49 不拆（可一口气念完，成立但偏紧）、l11 / l14（画面能指到，基本成立，但纯听仍有轻微断点，见下）；l26 的不采纳理由「会改变比方的映射」对作者那版成立，但我只建议在不改映射的前提下换更口语的引导，见下。未发现改出新问题。"
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/voice_zh__b.md",
+     "prompt": "items/voice_zh__b.md",
+     "scores": {
+      "V1": {
+       "score": 1,
+       "evidence": "l42「看病的人里，有多大比例是类似流感的症状」仍把人与症状混接；l26「放回实验里看：练习册是训练数据」仍像念对照表。逐句听感分类见整体观察。"
+      },
+      "V2": {
+       "score": 2,
+       "evidence": "l03—l04「先用一个小实验……再聊聊它在现实里闯过的祸」自然，已没有报目录感；l14「第一种模型太简单，只会画直线」之前缺少口头交代要比较三种模型，属于小缺口。"
+      },
+      "V3": {
+       "score": 1,
+       "evidence": "l43「挑出走势最像一千多个流感数据点的那些」没说清搜索词的什么变化在与流感比较；l11「这十个点，是我们收集到的数据」和 l35「就是左边的欠拟合」仍需要听众补出画面信息。"
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "l10「来看看它是怎么发生的」比重复介绍实验顺畅；l26 再次连续解释「练习册是训练数据……考试是测试数据」，与 l11、l19 重复，仍有压缩空间。"
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "l18「先猜一下：换成新题，哪一种考得最好」和 l40「可压过了头……连规律也丢了」口吻自然；l47—l50 连续为 8.0、11.3、11.1、11.2 秒的讲解单元，尤其 l48、l49 需要更明确的句内落点。"
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "下表为全部「有点怪」句及其他问题提供了不更长的替换。最别扭五句依次为：① l42「有多大比例是类似流感的症状」；② l43「走势最像一千多个流感数据点」；③ l26「放回实验里看：练习册是训练数据」；④ l38「大致贴着这些点，新点也估得准」；⑤ l48「肺炎模型的好成绩，很可能部分靠认医院」。"
+      },
+      "R": {
+       "score": 1,
+       "evidence": "I116、I117（l09）已解决，「学得太死」可以自然听懂；I118（l10）已解决，剩下的定义与比方重复有解释作用。I119（l11）未解决，以画面有十个点为由不改，不适用于本轮纯听标准。I120（l14）未解决，画面标题不能补上口头铺垫。I121（l22）不采纳理由成立，新点、新题、新数据在已建立的比方里能对应。I122、I123（l26）未解决；保留四项映射有道理，但驳回旧改写不等于原句听感已解决，见下表保留映射的版本。I124（l27）不采纳理由成立，「局限」常见且可懂。I125（l31）可接受保留，后面两句立即分别讲练习误差、考试误差；I126 已解决，不再把整组点说成毫无规律的随机点。I127（l35）未解决，依赖区域淡入的理由不适用于纯听，级别按建议。I128（l36）不采纳理由成立，先抛出压缩视角再举例，听觉上接得住。I129、I130（l38）部分解决，「曲线画出点」已消除，但「新点也估得准」仍是省略过头的讲解用语。I131、I132（l42）未解决，「流感样症状」已变口语，人与症状混接仍在。I133、I134（l43）部分解决，已明确是流感数据，但搜索词的「走势」仍缺搜索量这一层。I135（l44）已解决，「难免挑中」补上了选词这一步。I136、I137（l45）未解决，保留年份合理，以画面数字为由保留原节奏不适用于纯听。I138（l48）推理缺口已解决，口吻与停顿仍有小问题。I139、I140（l49）未解决；可以不增加字数就拆清动作、推测和结果，因此「拆开会更长」不成立；实际回听结论本次不作推定。I141（l53）不采纳理由成立，「坦白一句」承担提醒演示做过简化的作用。I142（l55）不采纳理由成立，「过于复杂」不至于造成书面腔或理解障碍。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "像真人在讲",
+     "a": 2,
+     "a_ev": "绝大多数句子像真人在讲，如 l18「先猜一下：换成新题，哪一种考得最好？」、l24「连印错的几处也照背」、l44「它既在测流感，也在测冬天」。仍有几句偏书面或报表腔：l26「练习册是训练数据，印错的答案是噪声，考试是测试数据」连说三项配对，l27「这个比方也有局限」，l23「难察觉」，l50「过拟合的近亲」。没有目录朗读式的句子。",
+     "b": 1,
+     "b_ev": "l42「看病的人里，有多大比例是类似流感的症状」仍把人与症状混接；l26「放回实验里看：练习册是训练数据」仍像念对照表。逐句听感分类见整体观察。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "两人都没找到「很怪」的句子（b 自己的逐句分类里「很怪」一栏是空的）。b 判 1 分靠的两句：l42「看病的人里，有多大比例是类似流感的症状」是口语里常见的话题句（类似「来看病的有三成是感冒」），意思一听就明白，只是「人」接「症状」略拧；l26「练习册是训练数据，印错的答案是噪声，考试是测试数据」这串对照是有意做的回扣，屏上逐行同步出现，听着像对照表，但不会出戏。两句都只到建议级，支撑不了 1 分。a 列的书面词（l23「难察觉」、l27「局限」、l50「近亲」）也都是记录或建议级。"
+    },
+    "V2": {
+     "name": "衔接与过渡",
+     "a": 3,
+     "a_ev": "l01→l02 先抛现象再点出名字；l03「这期，我们先用一个小实验……」l04「再聊聊它在现实里闯过的祸，和怎么防」是人话，不是目录朗读；l31「回到实验。」、l36「换个角度想：」、l41「这类毛病，在现实里真的闯过祸」、l50→l51「那该怎么发现和避免过拟合？」都是顺着思路往下讲。个别小接缝见问题表 l11、l14。",
+     "b": 2,
+     "b_ev": "l03—l04「先用一个小实验……再聊聊它在现实里闯过的祸」自然，已没有报目录感；l14「第一种模型太简单，只会画直线」之前缺少口头交代要比较三种模型，属于小缺口。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "l14「第一种模型太简单」之前，嘴上没交代要比较三种模型，两人都看到了这个小接缝（画面标题「同一组练习题，三种模型」能补上，不算出戏）。a 给 3 分，可它自己在问题表里也列了 l11、l14 的接缝，这和「没问题」对不上。其余过渡我抽查过，都顺着思路往下走：l31「回到实验」、l36「换个角度想」、l46「医学影像里也有」、l49「还有个」、l56「如果只记一句」。两人没有共同漏掉的模板式过渡。"
+    },
+    "V3": {
+     "name": "一遍听懂",
+     "a": 2,
+     "a_ev": "大体一遍能懂，术语都是先讲后用（l12 噪声、l19 测试数据、l37 压缩用十个数字讲清）。小瑕疵：l11「这十个点」只听没有先行词；l14「第一种模型太简单，只会画直线。点离线越远……就是误差」一句里带「第一种、扣分、误差」三个新意思；l45 一句四个数字（二零一一到二零一三年、一百零八周、一百周）；l52 一句里塞了验证集、挑模型、发现过拟合、考试留到最后。",
+     "b": 1,
+     "b_ev": "l43「挑出走势最像一千多个流感数据点的那些」没说清搜索词的什么变化在与流感比较；l11「这十个点，是我们收集到的数据」和 l35「就是左边的欠拟合」仍需要听众补出画面信息。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "b 判 1 分的三条都不成立。l43「挑出走势最像一千多个流感数据点的那些」：中文里「搜索词的走势」是常见说法（如搜索指数），听众能听懂是在比随时间的变化。l11「这十个点」：s2.html 在 l11 开头 0.15 处让十个点逐个淡入，指得到。l35「左边的欠拟合」：s6.html 在 l35 的 0.45 处淡入欠拟合区域，正好落在「左边」出口时；而且「太简单，两种误差都高」已经用嘴说出了所指。剩下的是信息量偏密：l14 一句里有「第一种、扣分、误差」，l45 一句四个数字，l52 冒号后带三个动作。这些都是小瑕疵，不影响一遍听懂。"
+    },
+    "V4": {
+     "name": "精炼",
+     "a": 2,
+     "a_ev": "没有明显废话；l10「就像把练习题背下来了，却没学会规律」是 l09 定义的复述（l24 还会再讲一遍比方），l58「还把它们当成了规律」复述 l30「把眼前的例子当成了规律」，但收尾回扣可接受，只算小瑕疵。",
+     "b": 2,
+     "b_ev": "l10「来看看它是怎么发生的」比重复介绍实验顺畅；l26 再次连续解释「练习册是训练数据……考试是测试数据」，与 l11、l19 重复，仍有压缩空间。",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V5": {
+     "name": "口吻与节奏",
+     "a": 2,
+     "a_ev": "语气从头到尾是同一个亲切的讲解者（l53「坦白一句」、l55「给模型立规矩」、l59「下回你觉得全懂了，换一道没见过的题试试」）。但 l48（11.3s）、l49（11.1s）、l50（11.2s）三句连续偏长，且都是多层从句，l26（11.0s）也是，一口气念下来费劲；前面 l32–l34 的短句节奏更好。",
+     "b": 2,
+     "b_ev": "l18「先猜一下：换成新题，哪一种考得最好」和 l40「可压过了头……连规律也丢了」口吻自然；l47—l50 连续为 8.0、11.3、11.1、11.2 秒的讲解单元，尤其 l48、l49 需要更明确的句内落点。",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V6": {
+     "name": "改写",
+     "a": 2,
+     "a_ev": "每句「有点怪」都已在问题表给出不更长的改写；最别扭的 5 句排序见「整体观察」。没有「很怪」的句子，所以不给 3 以外的满分理由是改写集中在建议级。",
+     "b": 3,
+     "b_ev": "下表为全部「有点怪」句及其他问题提供了不更长的替换。最别扭五句依次为：① l42「有多大比例是类似流感的症状」；② l43「走势最像一千多个流感数据点」；③ l26「放回实验里看：练习册是训练数据」；④ l38「大致贴着这些点，新点也估得准」；⑤ l48「肺炎模型的好成绩，很可能部分靠认医院」。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "两人的改写都有问题，都达不到 3 分。a 的 l48 改写比原句多 5 字（59 对 54），l11 多 1 字，违反「不更长」。b 的长度都合格，但质量有问题：l14 改写删掉了「太简单」，丢了 l15 欠拟合和 l35「太简单，两种误差都高」的伏笔；l43 改写「挑搜索量变化最像的词」里「最像」没有宾语，比原句难听懂；l42 的两版改写都不干净（b「有多大比例有」两个「有」叠用；a「有多少人有」把比例换成了人数），见补充问题。最别扭五句两人都列了，排序都说得过去。"
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "逐条复核。已解决：l09 现为「把练习题学得太死」，自然，无新问题；l31「我们再抽三百组点」解决了「随机的点」；l38「只用四个数字就能定下来，大致贴着这些点」顺了；l43「走势最像一千多个流感数据点的那些」说清了比什么；l44「难免挑中碰巧冬天搜得多的」补上了「被挑中」这步；l48 补上了「认出医院，就能猜个大概」；l10 的新句「来看看它是怎么发生的」自然。部分解决：l42 仍是「估算看病的人里，有多大比例是类似流感的症状」，人与症状混接，听着还拗口。作者「不采纳」的理由：l35「左边」（图上欠拟合区域同步淡入，成立）、l53「坦白一句」（自然口语交代，成立）、l45 保留年份（画面只有 100 / 108，成立）、l49 不拆（可一口气念完，成立但偏紧）、l11 / l14（画面能指到，基本成立，但纯听仍有轻微断点，见下）；l26 的不采纳理由「会改变比方的映射」对作者那版成立，但我只建议在不改映射的前提下换更口语的引导，见下。未发现改出新问题。",
+     "b": 1,
+     "b_ev": "I116、I117（l09）已解决，「学得太死」可以自然听懂；I118（l10）已解决，剩下的定义与比方重复有解释作用。I119（l11）未解决，以画面有十个点为由不改，不适用于本轮纯听标准。I120（l14）未解决，画面标题不能补上口头铺垫。I121（l22）不采纳理由成立，新点、新题、新数据在已建立的比方里能对应。I122、I123（l26）未解决；保留四项映射有道理，但驳回旧改写不等于原句听感已解决，见下表保留映射的版本。I124（l27）不采纳理由成立，「局限」常见且可懂。I125（l31）可接受保留，后面两句立即分别讲练习误差、考试误差；I126 已解决，不再把整组点说成毫无规律的随机点。I127（l35）未解决，依赖区域淡入的理由不适用于纯听，级别按建议。I128（l36）不采纳理由成立，先抛出压缩视角再举例，听觉上接得住。I129、I130（l38）部分解决，「曲线画出点」已消除，但「新点也估得准」仍是省略过头的讲解用语。I131、I132（l42）未解决，「流感样症状」已变口语，人与症状混接仍在。I133、I134（l43）部分解决，已明确是流感数据，但搜索词的「走势」仍缺搜索量这一层。I135（l44）已解决，「难免挑中」补上了选词这一步。I136、I137（l45）未解决，保留年份合理，以画面数字为由保留原节奏不适用于纯听。I138（l48）推理缺口已解决，口吻与停顿仍有小问题。I139、I140（l49）未解决；可以不增加字数就拆清动作、推测和结果，因此「拆开会更长」不成立；实际回听结论本次不作推定。I141（l53）不采纳理由成立，「坦白一句」承担提醒演示做过简化的作用。I142（l55）不采纳理由成立，「过于复杂」不至于造成书面腔或理解障碍。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "上一轮唯一留下的必改 I116（l09「贴得太紧」）已改成「学得太死」，问题解决，也没改出新问题。另两条必改 I127（l35）、I133（l43）上一轮裁决已降为建议：l43 已经改好，l35 的不采纳理由按材料规则成立（画面同步）。I135（l44）、I138（l48）、I126（l31）都已解决。仍未完全解决的都在建议级：I131/I132（l42）把「流感样」改口语了，但「人里……是症状」的搭配还在；I139/I140（l49）的作者理由「拆开会更长」不准确（b 的改写 49 字，原句 52 字），不过原句一口气念得完，不改也说得过去。b 说 l11、l14、l35「不适用纯听」，和材料开头允许看画面判断指代的说法相矛盾，不成立。"
+    }
+   },
+   "disputes": [
+    "V1",
+    "V3",
+    "R"
+   ],
+   "audits": [
+    "V6",
+    "V2"
+   ],
+   "final_scores": {
+    "V1": 2,
+    "V2": 2,
+    "V3": 2,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2,
+    "R": 2
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "V1",
+     "V3",
+     "R",
+     "V6",
+     "V2"
+    ],
+    "prompt": "items/voice_zh__judge.md",
+    "report": "reports/voice_zh__judge.md",
+    "ruling": {
+     "V1": {
+      "score": 2,
+      "evidence": "两人都没找到「很怪」的句子（b 自己的逐句分类里「很怪」一栏是空的）。b 判 1 分靠的两句：l42「看病的人里，有多大比例是类似流感的症状」是口语里常见的话题句（类似「来看病的有三成是感冒」），意思一听就明白，只是「人」接「症状」略拧；l26「练习册是训练数据，印错的答案是噪声，考试是测试数据」这串对照是有意做的回扣，屏上逐行同步出现，听着像对照表，但不会出戏。两句都只到建议级，支撑不了 1 分。a 列的书面词（l23「难察觉」、l27「局限」、l50「近亲」）也都是记录或建议级。"
+     },
+     "V3": {
+      "score": 2,
+      "evidence": "b 判 1 分的三条都不成立。l43「挑出走势最像一千多个流感数据点的那些」：中文里「搜索词的走势」是常见说法（如搜索指数），听众能听懂是在比随时间的变化。l11「这十个点」：s2.html 在 l11 开头 0.15 处让十个点逐个淡入，指得到。l35「左边的欠拟合」：s6.html 在 l35 的 0.45 处淡入欠拟合区域，正好落在「左边」出口时；而且「太简单，两种误差都高」已经用嘴说出了所指。剩下的是信息量偏密：l14 一句里有「第一种、扣分、误差」，l45 一句四个数字，l52 冒号后带三个动作。这些都是小瑕疵，不影响一遍听懂。"
+     },
+     "R": {
+      "score": 2,
+      "evidence": "上一轮唯一留下的必改 I116（l09「贴得太紧」）已改成「学得太死」，问题解决，也没改出新问题。另两条必改 I127（l35）、I133（l43）上一轮裁决已降为建议：l43 已经改好，l35 的不采纳理由按材料规则成立（画面同步）。I135（l44）、I138（l48）、I126（l31）都已解决。仍未完全解决的都在建议级：I131/I132（l42）把「流感样」改口语了，但「人里……是症状」的搭配还在；I139/I140（l49）的作者理由「拆开会更长」不准确（b 的改写 49 字，原句 52 字），不过原句一口气念得完，不改也说得过去。b 说 l11、l14、l35「不适用纯听」，和材料开头允许看画面判断指代的说法相矛盾，不成立。"
+     },
+     "V6": {
+      "score": 2,
+      "evidence": "两人的改写都有问题，都达不到 3 分。a 的 l48 改写比原句多 5 字（59 对 54），l11 多 1 字，违反「不更长」。b 的长度都合格，但质量有问题：l14 改写删掉了「太简单」，丢了 l15 欠拟合和 l35「太简单，两种误差都高」的伏笔；l43 改写「挑搜索量变化最像的词」里「最像」没有宾语，比原句难听懂；l42 的两版改写都不干净（b「有多大比例有」两个「有」叠用；a「有多少人有」把比例换成了人数），见补充问题。最别扭五句两人都列了，排序都说得过去。"
+     },
+     "V2": {
+      "score": 2,
+      "evidence": "l14「第一种模型太简单」之前，嘴上没交代要比较三种模型，两人都看到了这个小接缝（画面标题「同一组练习题，三种模型」能补上，不算出戏）。a 给 3 分，可它自己在问题表里也列了 l11、l14 的接缝，这和「没问题」对不上。其余过渡我抽查过，都顺着思路往下走：l31「回到实验」、l36「换个角度想」、l46「医学影像里也有」、l49「还有个」、l56「如果只记一句」。两人没有共同漏掉的模板式过渡。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 24,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_zh__a",
+    "codex/voice_zh__b"
+   ]
+  },
+  {
+   "id": "voice_en",
+   "law": "lines",
+   "law_name": "English narration (native ear, blind)",
+   "color": "#2e6fc0",
+   "scope": [],
+   "checks": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_en.md",
+   "prompt": "items/voice_en__a.md",
+   "what": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "problem": "The previous agenda read 'In this episode: What the problem is. Why memorizing answers fails. A different way to think about learning…' — a table of contents read aloud. No one talks like that (caught by the user, 2026-11-08); earlier reviews missed it.",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "Sounds like a person talking",
+     "question": "Each line: natural / a bit off / clearly off. Written-style, lecture tone, translated-from-Chinese phrasing, telegraphic lists all count as off"
+    },
+    {
+     "id": "V2",
+     "name": "Flow and transitions",
+     "question": "Cold open, the 'what's coming' part, chapter changes, before/after examples: does it sound like one person following a thought, not 'Point one…' templates or a TOC read aloud? Do adjacent lines connect?"
+    },
+    {
+     "id": "V3",
+     "name": "Clear on one hearing",
+     "question": "Ear only: one new idea per line; clear reference ('this' points to something); terms explained before used; numbers and words not misheard"
+    },
+    {
+     "id": "V4",
+     "name": "Tight",
+     "question": "No filler, repetition, or empty truisms; point out lines that could go without losing anything"
+    },
+    {
+     "id": "V5",
+     "name": "Voice and rhythm",
+     "question": "One warm, clear, unpretentious narrator throughout; varied sentence length; each line sayable in one breath"
+    },
+    {
+     "id": "V6",
+     "name": "Rewrites",
+     "question": "For every 'a bit off' / 'clearly off' line, a drop-in rewrite no longer than the original; rank the 5 most awkward lines"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_en__a.md",
+     "prompt": "items/voice_en__a.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "Most lines sound spoken (\"A confession: in our experiment, we picked the model by its exam score\"; \"it was part flu detector, part winter detector\"). Small stiffness: l48 \"knowing the hospital was a clue to the label\" and l14 \"we square how far each point misses the line, then average\" still lean on written/maths phrasing."
+      },
+      "V2": {
+       "score": 2,
+       "evidence": "The cold open (l01-l02 \"It may not be a bug. It may be a problem called overfitting.\") and the agenda (l03-l05 \"No background needed. I'll explain every term as we go.\") now sound like a person, and the \"Quick guess\" at l18 bridges well. Small flaw: l52-l55 \"One: … Two: … Three: …\" is a slightly templated list, though l51 announced it."
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "Mostly one idea per line, and terms are explained before use (\"called the training data\", \"called noise\"). Weak spots: l26 stacks four mappings in 9.3 s (\"the workbook is the training data, the typos are the noise, and the exam is the test data\"), and l48 packs two claims into 12.1 s."
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "l10 \"Let's see how that happens\" echoes l03 \"so you can watch overfitting happen\"; l27 \"The analogy has a limit\" is a lecture-style signpost. Otherwise tight; l56-l58 \"If you remember one thing…\" lands cleanly."
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "The narrator is warm and consistent (l53 \"A confession\", l18 \"Quick guess\"). The tail is heavy: l48 (12.1 s), l49 (11.6 s) and l50 (11.8 s) run three long lines in a row and are hard to say in one breath."
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "Only mild \"a bit off\" lines were found (l48, l26, l14, l49, l27); each has a drop-in rewrite no longer than the original, ranked below. No \"clearly off\" line."
+      },
+      "R": {
+       "score": 2,
+       "evidence": "Resolved: I95 (l10), I96/I97 (l14 now \"To score it, we square how far each point misses the line, then average\"), I99-I101 (l26 and l31 openers no longer duplicate), I102/I103 (l30 now concrete), I106 (l37 \"how high each point sits\"), I109-I111 (l45 now \"they … a hundred out of a hundred and eight weeks\", number tangle and it/they mismatch both fixed), I115 (l53 \"in our experiment\"). Declined with sound reasons: I94 (when…, and then… is a natural definition), I98 (\"ace the practice\" is everyday speech), I104, I105 (chart is on screen), I107, I108 (l44 needs the \"researchers\" antecedent), I113, I114 (removing it would break the l30 promise). New or residual: I112's rewrite made l48 longer (12.1 s) and \"a clue to the label\" is abstract; l26 is still dense."
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/voice_en__b.md",
+     "prompt": "items/voice_en__b.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "**A bit off:** l23, l27, l31, l48; **clearly off:** none. All other supplied lines sound natural. In particular, l03–l05 now sound like a narrator welcoming someone into an explanation, rather than reading chapter headings."
+      },
+      "V2": {
+       "score": 3,
+       "evidence": "l03 “We’ll start with a small experiment” connects naturally to l04’s real-world promise. l51–l55 give actual actions, so their numbering works in speech. l30’s “We’ll come back to it” receives a clear payoff in l50."
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "l11–l12 introduce training data and noise through concrete examples. Remaining small obstacles are l31’s unnamed “both errors,” l35’s chart-position language, and l48’s abstract “clue to the label.”"
+      },
+      "V4": {
+       "score": 3,
+       "evidence": "l10’s brief invitation now advances the explanation without repeating “a small experiment.” Keeping l50’s “a close cousin of overfitting” is justified: it completes the distinction promised in l30."
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "l18 “Quick guess: on new questions, which one does best?” provides welcome rhythmic variety. l31’s procedural chain and l48’s long opening sentence still demand more concentration than the surrounding narration."
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "Every flagged line has a complete replacement below, no longer than its original. Word counts: l23 26→26; l27 21→21; l31 26→25; l35 28→26; l48 35→29. **Five most awkward, in order:** l48, l23, l31, l35, l27."
+      },
+      "R": {
+       "score": 2,
+       "evidence": "**I94, l09:** unchanged, but acceptable on reconsideration; “Overfitting is when…” is natural, and the mechanism and consequence remain followable. The rejection is reasonable, though fitting within one breath alone would not establish clarity. **I95, l10:** resolved; the repeated experiment description is gone. **I96–I97, l14:** resolved; “we square…then average” makes the operations sequential. Rejecting a rewrite that omitted squaring was justified. **I98, l23:** unresolved, minor; “ace the practice” still sounds incomplete. Preserving “easy to spot / sneakier” is a valid objection to the previous rewrite, but does not justify retaining that phrase. **I99–I100, l26:** sufficiently resolved through shortening; the remaining mappings are understandable. Rejecting deletion of the student-to-curve link was justified. **I101, l26/l31:** resolved; only the actual return now says “Back.” **I102–I103, l30:** resolved; “learned the wrong lesson” sounds spoken. **I104, l31:** unresolved, minor; leaving it as a suggestion acknowledges its severity but does not remove the listening load. **I105, l35:** unresolved for an ear-only listener; l33 helps recover the meaning, but a visible chart cannot supply an audible reference. **I106, l37:** resolved; “how high each point sits” supplies the missing anchor. **I107, l41:** rejection justified; “Problems like this” audibly refers back to the failure being explained and accommodates the related shortcut cases. **I108, l43:** rejection justified; introducing “Researchers” supports “The researchers” in l44. **I109–I111, l45:** resolved; “out of” makes the ratio clearer, and “they” matches “versions.” **I112, l48:** partly resolved; the causal link is clearer, but its wording remains abstract and report-like. **I113, l49:** retaining it is justified; its sentences offer usable breath points. **I114, l50:** rejection justified; deleting the relationship to overfitting would remove a promised explanation. **I115, l53:** resolved; “our experiment” restores the established name."
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "Sounds like a person talking",
+     "a": 2,
+     "a_ev": "Most lines sound spoken (\"A confession: in our experiment, we picked the model by its exam score\"; \"it was part flu detector, part winter detector\"). Small stiffness: l48 \"knowing the hospital was a clue to the label\" and l14 \"we square how far each point misses the line, then average\" still lean on written/maths phrasing.",
+     "b": 2,
+     "b_ev": "**A bit off:** l23, l27, l31, l48; **clearly off:** none. All other supplied lines sound natural. In particular, l03–l05 now sound like a narrator welcoming someone into an explanation, rather than reading chapter headings.",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V2": {
+     "name": "Flow and transitions",
+     "a": 2,
+     "a_ev": "The cold open (l01-l02 \"It may not be a bug. It may be a problem called overfitting.\") and the agenda (l03-l05 \"No background needed. I'll explain every term as we go.\") now sound like a person, and the \"Quick guess\" at l18 bridges well. Small flaw: l52-l55 \"One: … Two: … Three: …\" is a slightly templated list, though l51 announced it.",
+     "b": 3,
+     "b_ev": "l03 “We’ll start with a small experiment” connects naturally to l04’s real-world promise. l51–l55 give actual actions, so their numbering works in speech. l30’s “We’ll come back to it” receives a clear payoff in l50.",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V3": {
+     "name": "Clear on one hearing",
+     "a": 2,
+     "a_ev": "Mostly one idea per line, and terms are explained before use (\"called the training data\", \"called noise\"). Weak spots: l26 stacks four mappings in 9.3 s (\"the workbook is the training data, the typos are the noise, and the exam is the test data\"), and l48 packs two claims into 12.1 s.",
+     "b": 2,
+     "b_ev": "l11–l12 introduce training data and noise through concrete examples. Remaining small obstacles are l31’s unnamed “both errors,” l35’s chart-position language, and l48’s abstract “clue to the label.”",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "Terms are explained before they're used (\"training data\" l11, \"noise\" l12, \"test data\" l19, \"shortcut learning\" l30 then reused in l50, \"validation set\" l52), and the numbers are easy to say and hear (l45 \"a hundred out of a hundred and eight weeks\", l21 \"over twenty times\"). The leftover friction is what the two reviewers already flagged between them: l26 asks the listener to hold four mappings at once, l31's \"both errors\" goes unnamed, and l48's \"a clue to the label\" uses a word the episode never introduces. I also checked for misheard numbers (\"fifty million\" in l43 is clearly stressed) and loose references (\"Both\" in l30 is cleared up by the next sentence; \"Problems like this\" in l41 points back clearly). None of it costs the listener the thread, so a 1 isn't justified."
+    },
+    "V4": {
+     "name": "Tight",
+     "a": 2,
+     "a_ev": "l10 \"Let's see how that happens\" echoes l03 \"so you can watch overfitting happen\"; l27 \"The analogy has a limit\" is a lecture-style signpost. Otherwise tight; l56-l58 \"If you remember one thing…\" lands cleanly.",
+     "b": 3,
+     "b_ev": "l10’s brief invitation now advances the explanation without repeating “a small experiment.” Keeping l50’s “a close cousin of overfitting” is justified: it completes the distinction promised in l30.",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V5": {
+     "name": "Voice and rhythm",
+     "a": 2,
+     "a_ev": "The narrator is warm and consistent (l53 \"A confession\", l18 \"Quick guess\"). The tail is heavy: l48 (12.1 s), l49 (11.6 s) and l50 (11.8 s) run three long lines in a row and are hard to say in one breath.",
+     "b": 2,
+     "b_ev": "l18 “Quick guess: on new questions, which one does best?” provides welcome rhythmic variety. l31’s procedural chain and l48’s long opening sentence still demand more concentration than the surrounding narration.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "Both reviewers' evidence holds. The narrator stays warm and plain throughout (l18 \"Quick guess\", l29 \"Show him a puppy on the sofa, and he says cat\", l53 \"A confession\"), and short lines (l41, l56-l58) give the rhythm some variety. The weak spot is a dense stretch: l44 (10.4 s), l48 (12.1 s), l49 (11.6 s) and l50 (11.8 s) come almost back to back with no short line in between. Each sentence in them can still be said in one breath, and nothing would make a native listener wince. One more small point both missed: six lines close with the same \"That's X\" payoff (l15, l22, l34, l35, l50, l55). It's a normal explainer habit, worth noting but not worth a 1."
+    },
+    "V6": {
+     "name": "Rewrites",
+     "a": 3,
+     "a_ev": "Only mild \"a bit off\" lines were found (l48, l26, l14, l49, l27); each has a drop-in rewrite no longer than the original, ranked below. No \"clearly off\" line.",
+     "b": 3,
+     "b_ev": "Every flagged line has a complete replacement below, no longer than its original. Word counts: l23 26→26; l27 21→21; l31 26→25; l35 28→26; l48 35→29. **Five most awkward, in order:** l48, l23, l31, l35, l27.",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": ""
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "Resolved: I95 (l10), I96/I97 (l14 now \"To score it, we square how far each point misses the line, then average\"), I99-I101 (l26 and l31 openers no longer duplicate), I102/I103 (l30 now concrete), I106 (l37 \"how high each point sits\"), I109-I111 (l45 now \"they … a hundred out of a hundred and eight weeks\", number tangle and it/they mismatch both fixed), I115 (l53 \"in our experiment\"). Declined with sound reasons: I94 (when…, and then… is a natural definition), I98 (\"ace the practice\" is everyday speech), I104, I105 (chart is on screen), I107, I108 (l44 needs the \"researchers\" antecedent), I113, I114 (removing it would break the l30 promise). New or residual: I112's rewrite made l48 longer (12.1 s) and \"a clue to the label\" is abstract; l26 is still dense.",
+     "b": 2,
+     "b_ev": "**I94, l09:** unchanged, but acceptable on reconsideration; “Overfitting is when…” is natural, and the mechanism and consequence remain followable. The rejection is reasonable, though fitting within one breath alone would not establish clarity. **I95, l10:** resolved; the repeated experiment description is gone. **I96–I97, l14:** resolved; “we square…then average” makes the operations sequential. Rejecting a rewrite that omitted squaring was justified. **I98, l23:** unresolved, minor; “ace the practice” still sounds incomplete. Preserving “easy to spot / sneakier” is a valid objection to the previous rewrite, but does not justify retaining that phrase. **I99–I100, l26:** sufficiently resolved through shortening; the remaining mappings are understandable. Rejecting deletion of the student-to-curve link was justified. **I101, l26/l31:** resolved; only the actual return now says “Back.” **I102–I103, l30:** resolved; “learned the wrong lesson” sounds spoken. **I104, l31:** unresolved, minor; leaving it as a suggestion acknowledges its severity but does not remove the listening load. **I105, l35:** unresolved for an ear-only listener; l33 helps recover the meaning, but a visible chart cannot supply an audible reference. **I106, l37:** resolved; “how high each point sits” supplies the missing anchor. **I107, l41:** rejection justified; “Problems like this” audibly refers back to the failure being explained and accommodates the related shortcut cases. **I108, l43:** rejection justified; introducing “Researchers” supports “The researchers” in l44. **I109–I111, l45:** resolved; “out of” makes the ratio clearer, and “they” matches “versions.” **I112, l48:** partly resolved; the causal link is clearer, but its wording remains abstract and report-like. **I113, l49:** retaining it is justified; its sentences offer usable breath points. **I114, l50:** rejection justified; deleting the relationship to overfitting would remove a promised explanation. **I115, l53:** resolved; “our experiment” restores the established name.",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    }
+   },
+   "disputes": [],
+   "audits": [
+    "V5",
+    "V3"
+   ],
+   "final_scores": {
+    "V1": 2,
+    "V2": 2,
+    "V3": 2,
+    "V4": 2,
+    "V5": 2,
+    "V6": 3,
+    "R": 2
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "V5",
+     "V3"
+    ],
+    "prompt": "items/voice_en__judge.md",
+    "report": "reports/voice_en__judge.md",
+    "ruling": {
+     "V5": {
+      "score": 2,
+      "evidence": "Both reviewers' evidence holds. The narrator stays warm and plain throughout (l18 \"Quick guess\", l29 \"Show him a puppy on the sofa, and he says cat\", l53 \"A confession\"), and short lines (l41, l56-l58) give the rhythm some variety. The weak spot is a dense stretch: l44 (10.4 s), l48 (12.1 s), l49 (11.6 s) and l50 (11.8 s) come almost back to back with no short line in between. Each sentence in them can still be said in one breath, and nothing would make a native listener wince. One more small point both missed: six lines close with the same \"That's X\" payoff (l15, l22, l34, l35, l50, l55). It's a normal explainer habit, worth noting but not worth a 1."
+     },
+     "V3": {
+      "score": 2,
+      "evidence": "Terms are explained before they're used (\"training data\" l11, \"noise\" l12, \"test data\" l19, \"shortcut learning\" l30 then reused in l50, \"validation set\" l52), and the numbers are easy to say and hear (l45 \"a hundred out of a hundred and eight weeks\", l21 \"over twenty times\"). The leftover friction is what the two reviewers already flagged between them: l26 asks the listener to hold four mappings at once, l31's \"both errors\" goes unnamed, and l48's \"a clue to the label\" uses a word the episode never introduces. I also checked for misheard numbers (\"fifty million\" in l43 is clearly stressed) and loose references (\"Both\" in l30 is cleared up by the next sentence; \"Problems like this\" in l41 points back clearly). None of it costs the listener the thread, so a 1 isn't justified."
+     }
+    }
+   },
+   "findings": {},
+   "rows": 13,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_en__a",
+    "codex/voice_en__b"
+   ]
+  },
+  {
+   "id": "screen_zh",
+   "law": "lines",
+   "law_name": "中文屏幕文字（PPT 式画面）",
+   "color": "#b8860b",
+   "scope": [],
+   "checks": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "how": "硬上限（超了必须报）：标题 ≤12 字；其余每块 ≤16 字；同屏文字块 ≤4 块（不含页眉小标签、出处与图表刻度）；一屏总字数 ≤36 字。屏幕下方还有口播字幕，观众要同时看。计数口径（第 2 轮裁决定，2026-11-09）：页眉小标签、案例页签、出处、片尾署名不计；同构的列表 / 表格 / 卡片行（每项 ≤8 字、最多 6 项、样子一样）合算 1 块，编号不计字；图里的文字（区域名、曲线名、轴标题、柱条标签、图上注释）要计字数，整张图合算 1 块，只有坐标刻度数字豁免；表格的列头算在表里。",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_zh.md",
+   "prompt": "items/screen_zh__a.md",
+   "what": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "problem": "上一版屏幕文字很多是整句（如「另训一个模型，在两家医院的片子上认医院的准确率——胸片里藏着医院的“指纹”」），等于把口播又印了一遍；用户要求画面只列纲要、相对简练（2026-11-08）。",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "只列纲要",
+     "question": "每屏只放关键词、短语、关键数字、标签；不是口播整句的复述。按硬上限逐屏数字数，超了就报"
+    },
+    {
+     "id": "P2",
+     "name": "与口播分工",
+     "question": "屏幕给结构、数字、对比，口播负责解释；不和口播逐字重复，也不出现口播没说过的新说法；术语、叫法与口播一致"
+    },
+    {
+     "id": "P3",
+     "name": "层级与体例",
+     "question": "一眼先看到什么、第二眼看什么；标题—要点—注释不超过三级；编号、标签、章节名、目录项前后一致（例：目录写的和章节卡写的是不是同一个说法）"
+    },
+    {
+     "id": "P4",
+     "name": "中文措辞与排版",
+     "question": "短语化、不带句末句号；标点、引号、空格规范；不半中半英；没有生硬的书面语"
+    },
+    {
+     "id": "P5",
+     "name": "看得完",
+     "question": "按截图和停留时间：文字量在停留时间内读得完（约 6 字/秒，还要分神看字幕和图）"
+    },
+    {
+     "id": "P6",
+     "name": "改写",
+     "question": "每处超限或不顺的屏幕文字，都给出更短、可直接替换的写法"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_zh__a.md",
+     "prompt": "items/screen_zh__a.md",
+     "scores": {
+      "P1": {
+       "score": 2,
+       "evidence": "多数屏过关——l21「③ 的考试误差：② 的 25 倍」8 字标题 + 表格 2 块；l31「模型越复杂，误差怎么变？」10 字 + 「300 组随机的点」+ 图 5 字；agenda 汉字合计 35 字（≤36，贴线）。仍有两类问题：①l34 图内文字 18 字（最准 2、过拟合 3、考试误差 4、练习误差 4、模型复杂度 5）、l35 图内 21 字（另含欠拟合 3），整张图作 1 块时单块超 16 字，见问题表 1；②l52「验证集挑模型，测试集留到最后」13 字、l53「实验里按考试成绩挑了，实际别这样」15 字、l22 标题「它背下了噪声，噪声不会重演」12 字，仍是口播的整句压缩，不是纲要。"
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "术语基本对齐——l09「学进了碰巧的细节」、l26「练习册 → 训练数据 / 印错的答案 → 噪声」、l55「正则化：惩罚太复杂」都与口播同叫法；l47 已去掉口播没说过的「指纹」。瑕疵：l22 标题几乎是口播「它连噪声也一起背了下来，可噪声是随机的，到了新题不会重演」的缩写；l53 与口播「刚才为了演示，我们直接按考试成绩挑了模型；实际做项目，可不能这样」一一对应；l47 眉题「另训一个模型：看胸片认医院」与 h2「看胸片，就认得出医院」同一意思印了两遍；「弯曲线」口播从未叫过（l17 起，l55 口播说「过于复杂的曲线」）。"
+      },
+      "P3": {
+       "score": 1,
+       "evidence": "章名前后不一致。目录第 04 项与章节卡 c_lens 都写「学习 ≈ 压缩」，但章内第一屏 l36 的页眉写「04 · 换个角度」，l37–l39 又写「04 · 学习 ≈ 压缩」，l40 干脆没有「04」页眉（截图里只有居中的「好的压缩」）。这正是「目录写的和章节卡写的是不是同一个说法」一类。另 l50 结论词「捷径学习」只是 22px 眉题，最小字，层级偏弱。"
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "整体短语化、无句末句号，l27「比方的局限」、l45「2011–2013」已规范。瑕疵：l29 截图里「“猫！ ”」「“不是猫！ ”」的 ！ 与右引号之间有明显空隙，且感叹号语气与并列的「见过的：全对」不一；l39 三行格式不一（「原样记：10 个数字」是标签在前，「② 4 个数字：压缩了」是数字在前）；l48 h2「好成绩，部分可能靠认医院」语序易读成「部分（人）可能」，口播是「很可能部分靠认医院」。"
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "停留时间与字量匹配。最紧的几屏：l34（5.2s，新出现的文字只有标题 11 字 + 「过拟合」3 字）、l43（5.9s，18 字）、l48（11.3s，21 字），都在约 6 字/秒以内，l17、l21、l22 约 3 字/秒。小瑕疵：l33–l35 的「考试误差」标签压在橙色曲线末端（x≈940, y≈625）；l55 柱条里「验证」「测试」是 22px 白字压在浅紫、浅橙底色上，对比偏弱。"
+      },
+      "P6": {
+       "score": 2,
+       "evidence": "本轮余下的超限与不顺处都能用更短写法替换，见问题表（l34/l35 去掉重复的轴标题得 13/16 字；l53 改两行对照各 ≤10 字）。扣一分是 l52、l53、l22 这三处上一轮已被指出，作者以「保留一句提醒」等理由不改，改写仍未落地。"
+      },
+      "R": {
+       "score": 2,
+       "evidence": "见下面逐条复核。已解决居多（目录与章节卡同名同号、l31–l35 标题改结论并撤右栏、l47–l50 页眉与页签、「偏离²」「中位数」「多项式次数」「刚刚好」删除、l09–l10 眉题「定义」、l29 引号统一、l30 结论词放大、l43「远多于」、l55 三卡各一行、页脚只留「AI 高频词」）。未解决 3 条：I58（l36 页眉仍是「换个角度」）、I81（l40 仍无「04」页眉）、I90/I91（l53 整句）；改出新问题 2 处：l29 引号间隙、l34/l35 图内文字量。"
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/screen_zh__b.md",
+     "prompt": "items/screen_zh__b.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "l22 的标题12字、表头4字、三行结果7＋6＋8字，共37字；l34、l35 的图中文字分别18、21字，超过单块16字；outro 两行主标题合计15字，超过标题12字。"
+      },
+      "P2": {
+       "score": 1,
+       "evidence": "l10 累加“≈ 背下答案，没学会规律”，重复前两条定义；l53“实验里按考试成绩挑了，实际别这样”仍复述当句口播；outro 主文仍沿用 l57—l58 的完整句法。"
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "agenda 与 c_lens 已统一为“学习 ≈ 压缩”，但 l36 页眉仍写“04 · 换个角度”；l40 仍缺章节页眉。l30“过拟合／捷径学习”已放大，结论能被看见。"
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "l29 已统一为中文引号与感叹号，片尾句号及重复英文栏目名已删除；l48 大字号“vs”仍可改为中文，l45“周，流感估高了”仍有跨行拼句感。"
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "agenda 35字停留13.6秒，阅读余量充足；l33—l35 已撤右栏，负担明显下降。l15 仍在4.1秒内同时新增表头与结果约10字，并配20字口播字幕及误差图，仍偏紧。"
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "问题表为 l22、l34、l35、outro 的全部硬超限提供直接替换文字，并为定义累加、实验提醒、章节页眉及措辞问题给出具体改写。"
+      },
+      "R": {
+       "score": 1,
+       "evidence": "I54、I56“不改”成立，六行目录符合本轮同构列表例外，连标题共35字；I55、I93未解决，片尾虽减到15字并删句号，仍是超长主标题和口播整句；I57、I59已解决，栏目只留“AI 高频词”，字体署名可保留；I58未完全解决，目录及章节卡已改，l36旧页眉遗漏；I60、I61未完全解决，去掉“连”起句，但 l10 同义解释仍累加；I62“不改”成立，术语已由口播命名，l26又有对应表，不必强加标签；I63未完全解决，“偏离²”已删，“固定叫法”不足以证明“弯曲线”自然；I64已解决，平方、中位数、多项式次数均已撤；I65未完全解决，删术语有效，但列头仍未提前至 l14；I66已解决，按本轮表格合算口径无块数超限；I67、I69改出新问题，图上冗余注释已删、分类标签已补，但 l22 加回表头后共37字；I68“不改”成立，所给未舍入比值24.89支持显示25倍，与口播“二十多倍”一致；I70已解决，改成“比方的局限”；I71、I72已解决，两句均无句末句号且语气一致；I73已解决，两项术语放大并着色；I74已解决，统计术语已删；I75、I76、I77、I79未完全解决，整屏总量已下降，但 l34、l35 图块仍分别18、21字；保留区域名的理由成立，可压缩轴名与曲线名；I78已解决，“刚刚好”改为“最准”；I80已解决，统一“10 个点”；I81未完全解决，s8页眉已补，l40仍遗漏；I82已解决，补入“用搜索记录估流感”；I83、I84已解决，改“远多于”并收紧数字单位空格；I85“不改”成立，有出处的译引与口播转述可以不同；I86拒绝表头式改写的理由成立，但“周，”残句仍可小修；I87已解决，中文“指纹”已撤；I88、I89的超量及绝对化问题已解决，l50仍有短句复述的小问题；I90、I91未解决，改“演示”为“实验”没有改变整句结构，“只此一处”不是保留整句的充分理由；I92已解决，图中文字计入后最多34字，同构卡片标题可合算，无须再删图示标签。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "只列纲要",
+     "a": 2,
+     "a_ev": "多数屏过关——l21「③ 的考试误差：② 的 25 倍」8 字标题 + 表格 2 块；l31「模型越复杂，误差怎么变？」10 字 + 「300 组随机的点」+ 图 5 字；agenda 汉字合计 35 字（≤36，贴线）。仍有两类问题：①l34 图内文字 18 字（最准 2、过拟合 3、考试误差 4、练习误差 4、模型复杂度 5）、l35 图内 21 字（另含欠拟合 3），整张图作 1 块时单块超 16 字，见问题表 1；②l52「验证集挑模型，测试集留到最后」13 字、l53「实验里按考试成绩挑了，实际别这样」15 字、l22 标题「它背下了噪声，噪声不会重演」12 字，仍是口播的整句压缩，不是纲要。",
+     "b": 1,
+     "b_ev": "l22 的标题12字、表头4字、三行结果7＋6＋8字，共37字；l34、l35 的图中文字分别18、21字，超过单块16字；outro 两行主标题合计15字，超过标题12字。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 成立。按 limits「表格的列头算在表里」，l22 是标题「它背下了噪声，噪声不会重演」12 字＋列头「练习 / 考试」4 字＋三行 7＋6＋8 字＝37 字，超过整屏 36 字。a 漏数了列头，这一屏是真超限，s4.html 到现在没改，仍是必改。片尾卡主文「连印错的都背了下来， / 还当成了规律」是一句话折成两行、同字号，是这张卡唯一的大标题，15 字超过标题 12 字。package.json 没改，也仍是必改。l34、l35 图块按上面的口径不算超限，而且已在源文件解决（13 / 16 字）。a 提的 l52、l22「整句压缩」，在这一轮只算建议。"
+    },
+    "P2": {
+     "name": "与口播分工",
+     "a": 2,
+     "a_ev": "术语基本对齐——l09「学进了碰巧的细节」、l26「练习册 → 训练数据 / 印错的答案 → 噪声」、l55「正则化：惩罚太复杂」都与口播同叫法；l47 已去掉口播没说过的「指纹」。瑕疵：l22 标题几乎是口播「它连噪声也一起背了下来，可噪声是随机的，到了新题不会重演」的缩写；l53 与口播「刚才为了演示，我们直接按考试成绩挑了模型；实际做项目，可不能这样」一一对应；l47 眉题「另训一个模型：看胸片认医院」与 h2「看胸片，就认得出医院」同一意思印了两遍；「弯曲线」口播从未叫过（l17 起，l55 口播说「过于复杂的曲线」）。",
+     "b": 1,
+     "b_ev": "l10 累加“≈ 背下答案，没学会规律”，重复前两条定义；l53“实验里按考试成绩挑了，实际别这样”仍复述当句口播；outro 主文仍沿用 l57—l58 的完整句法。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "a 成立。b 判 1 分的三条依据，按本轮标准都不是必改：l53 已在源文件解决（改为「演示的简化：按考试成绩挑」，11 字，不再一一对应口播）；片尾卡是「如果只记一句」的复述卡，屏上重复那一句是刻意安排，和口播不矛盾，超限的问题已经在 P1 处理；l10「≈ 背下答案，没学会规律」是定义页的收束，和口播同义，不是新说法。其余如 l47 眉题与 h2 重复、「弯曲线」，都只是建议或记录级。全片没有屏幕文字和口播矛盾的地方。"
+    },
+    "P3": {
+     "name": "层级与体例",
+     "a": 1,
+     "a_ev": "章名前后不一致。目录第 04 项与章节卡 c_lens 都写「学习 ≈ 压缩」，但章内第一屏 l36 的页眉写「04 · 换个角度」，l37–l39 又写「04 · 学习 ≈ 压缩」，l40 干脆没有「04」页眉（截图里只有居中的「好的压缩」）。这正是「目录写的和章节卡写的是不是同一个说法」一类。另 l50 结论词「捷径学习」只是 22px 眉题，最小字，层级偏弱。",
+     "b": 2,
+     "b_ev": "agenda 与 c_lens 已统一为“学习 ≈ 压缩”，但 l36 页眉仍写“04 · 换个角度”；l40 仍缺章节页眉。l30“过拟合／捷径学习”已放大，结论能被看见。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "a 指出的 l36 页眉「04 · 换个角度」和章名冲突、l40 没有「04」页眉，在被审截图里确实存在，a 的 1 分在审稿时站得住。但现在都已在源文件解决：s7.html 的 l36 只剩居中的大字「学习 ≈ 压缩」，「04 · 换个角度」页眉已去掉；l37 起是「04 · 学习 ≈ 压缩」，l40 只淡出 `#head .h1`，页眉保留。l30「过拟合 / 捷径学习」已改成 h1 主标题，l50「捷径学习」已改成 h1 标题（s5.html、s8.html），也都已在源文件解决。目录、章节卡、页眉 01–06 现在同名同号，按当前状态给 2 分。"
+    },
+    "P4": {
+     "name": "中文措辞与排版",
+     "a": 2,
+     "a_ev": "整体短语化、无句末句号，l27「比方的局限」、l45「2011–2013」已规范。瑕疵：l29 截图里「“猫！ ”」「“不是猫！ ”」的 ！ 与右引号之间有明显空隙，且感叹号语气与并列的「见过的：全对」不一；l39 三行格式不一（「原样记：10 个数字」是标签在前，「② 4 个数字：压缩了」是数字在前）；l48 h2「好成绩，部分可能靠认医院」语序易读成「部分（人）可能」，口播是「很可能部分靠认医院」。",
+     "b": 2,
+     "b_ev": "l29 已统一为中文引号与感叹号，片尾句号及重复英文栏目名已删除；l48 大字号“vs”仍可改为中文，l45“周，流感估高了”仍有跨行拼句感。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "维持。整体短语化，没有句末句号，l27「比方的局限」、l45「2011–2013」体例规范。a 说的 l29 引号空隙已在源文件解决（引号去掉）；l39 三行一个标签在前、两个数字在前，l48「部分可能」语序，b 说的「vs」和「周，」开头，都是建议级。两人共同漏掉的一处：片尾卡第一行以「，」结尾，挂在大标题行尾，见补充问题（随片尾改写一起去掉）。没有观众会看错的措辞。"
+    },
+    "P5": {
+     "name": "看得完",
+     "a": 2,
+     "a_ev": "停留时间与字量匹配。最紧的几屏：l34（5.2s，新出现的文字只有标题 11 字 + 「过拟合」3 字）、l43（5.9s，18 字）、l48（11.3s，21 字），都在约 6 字/秒以内，l17、l21、l22 约 3 字/秒。小瑕疵：l33–l35 的「考试误差」标签压在橙色曲线末端（x≈940, y≈625）；l55 柱条里「验证」「测试」是 22px 白字压在浅紫、浅橙底色上，对比偏弱。",
+     "b": 2,
+     "b_ev": "agenda 35字停留13.6秒，阅读余量充足；l33—l35 已撤右栏，负担明显下降。l15 仍在4.1秒内同时新增表头与结果约10字，并配20字口播字幕及误差图，仍偏紧。",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P6": {
+     "name": "改写",
+     "a": 2,
+     "a_ev": "本轮余下的超限与不顺处都能用更短写法替换，见问题表（l34/l35 去掉重复的轴标题得 13/16 字；l53 改两行对照各 ≤10 字）。扣一分是 l52、l53、l22 这三处上一轮已被指出，作者以「保留一句提醒」等理由不改，改写仍未落地。",
+     "b": 3,
+     "b_ev": "问题表为 l22、l34、l35、outro 的全部硬超限提供直接替换文字，并为定义累加、实验提醒、章节页眉及措辞问题给出具体改写。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "两人都给了可直接替换的写法，但都有缺陷，b 的 3 分偏高。b 的片尾改写「照背错答案／错当成规律」有歧义：「照背错答案」可读成「照着背错了答案」，「错当成规律」可读成「错误地当成规律」，观众可能看错。a 的片尾改写「背答案，当规律」去掉了「印错」，等于撤回了 script_r3 特意加进一句话的噪声，也不可取。两人给 l22 的改写可用，但 b 的「过拟合：记住噪声」和 ③ 行的「过拟合」标签重复，还丢了「新题不会重演」这个考试误差高的原因。可直接替换的写法见补充问题。"
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "见下面逐条复核。已解决居多（目录与章节卡同名同号、l31–l35 标题改结论并撤右栏、l47–l50 页眉与页签、「偏离²」「中位数」「多项式次数」「刚刚好」删除、l09–l10 眉题「定义」、l29 引号统一、l30 结论词放大、l43「远多于」、l55 三卡各一行、页脚只留「AI 高频词」）。未解决 3 条：I58（l36 页眉仍是「换个角度」）、I81（l40 仍无「04」页眉）、I90/I91（l53 整句）；改出新问题 2 处：l29 引号间隙、l34/l35 图内文字量。",
+     "b": 1,
+     "b_ev": "I54、I56“不改”成立，六行目录符合本轮同构列表例外，连标题共35字；I55、I93未解决，片尾虽减到15字并删句号，仍是超长主标题和口播整句；I57、I59已解决，栏目只留“AI 高频词”，字体署名可保留；I58未完全解决，目录及章节卡已改，l36旧页眉遗漏；I60、I61未完全解决，去掉“连”起句，但 l10 同义解释仍累加；I62“不改”成立，术语已由口播命名，l26又有对应表，不必强加标签；I63未完全解决，“偏离²”已删，“固定叫法”不足以证明“弯曲线”自然；I64已解决，平方、中位数、多项式次数均已撤；I65未完全解决，删术语有效，但列头仍未提前至 l14；I66已解决，按本轮表格合算口径无块数超限；I67、I69改出新问题，图上冗余注释已删、分类标签已补，但 l22 加回表头后共37字；I68“不改”成立，所给未舍入比值24.89支持显示25倍，与口播“二十多倍”一致；I70已解决，改成“比方的局限”；I71、I72已解决，两句均无句末句号且语气一致；I73已解决，两项术语放大并着色；I74已解决，统计术语已删；I75、I76、I77、I79未完全解决，整屏总量已下降，但 l34、l35 图块仍分别18、21字；保留区域名的理由成立，可压缩轴名与曲线名；I78已解决，“刚刚好”改为“最准”；I80已解决，统一“10 个点”；I81未完全解决，s8页眉已补，l40仍遗漏；I82已解决，补入“用搜索记录估流感”；I83、I84已解决，改“远多于”并收紧数字单位空格；I85“不改”成立，有出处的译引与口播转述可以不同；I86拒绝表头式改写的理由成立，但“周，”残句仍可小修；I87已解决，中文“指纹”已撤；I88、I89的超量及绝对化问题已解决，l50仍有短句复述的小问题；I90、I91未解决，改“演示”为“实验”没有改变整句结构，“只此一处”不是保留整句的充分理由；I92已解决，图中文字计入后最多34字，同构卡片标题可合算，无须再删图示标签。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 成立。大部分条目已解决，其中 I58、I81、I71/I72、I74–I79、I87–I89 中 l50 的层级、I90/I91 都已在源文件解决（逐条见下）。但有两处必改仍在：I55/I93 片尾卡只调了结构，主文 15 字仍超标题 12 字；I67/I69 改出了新问题，③ 行补「· 过拟合」后，l22 变成 37 字，超过整屏 36 字。a 判 2 分，是因为它把片尾按「单块 16 字」算成不超，又漏数了 l22 的列头。"
+    }
+   },
+   "disputes": [
+    "P1",
+    "P2",
+    "P3",
+    "R"
+   ],
+   "audits": [
+    "P6",
+    "P4"
+   ],
+   "final_scores": {
+    "P1": 1,
+    "P2": 2,
+    "P3": 2,
+    "P4": 2,
+    "P5": 2,
+    "P6": 2,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "P1",
+     "P2",
+     "P3",
+     "R",
+     "P6",
+     "P4"
+    ],
+    "prompt": "items/screen_zh__judge.md",
+    "report": "reports/screen_zh__judge.md",
+    "ruling": {
+     "P1": {
+      "score": 1,
+      "evidence": "b 成立。按 limits「表格的列头算在表里」，l22 是标题「它背下了噪声，噪声不会重演」12 字＋列头「练习 / 考试」4 字＋三行 7＋6＋8 字＝37 字，超过整屏 36 字。a 漏数了列头，这一屏是真超限，s4.html 到现在没改，仍是必改。片尾卡主文「连印错的都背了下来， / 还当成了规律」是一句话折成两行、同字号，是这张卡唯一的大标题，15 字超过标题 12 字。package.json 没改，也仍是必改。l34、l35 图块按上面的口径不算超限，而且已在源文件解决（13 / 16 字）。a 提的 l52、l22「整句压缩」，在这一轮只算建议。"
+     },
+     "P2": {
+      "score": 2,
+      "evidence": "a 成立。b 判 1 分的三条依据，按本轮标准都不是必改：l53 已在源文件解决（改为「演示的简化：按考试成绩挑」，11 字，不再一一对应口播）；片尾卡是「如果只记一句」的复述卡，屏上重复那一句是刻意安排，和口播不矛盾，超限的问题已经在 P1 处理；l10「≈ 背下答案，没学会规律」是定义页的收束，和口播同义，不是新说法。其余如 l47 眉题与 h2 重复、「弯曲线」，都只是建议或记录级。全片没有屏幕文字和口播矛盾的地方。"
+     },
+     "P3": {
+      "score": 2,
+      "evidence": "a 指出的 l36 页眉「04 · 换个角度」和章名冲突、l40 没有「04」页眉，在被审截图里确实存在，a 的 1 分在审稿时站得住。但现在都已在源文件解决：s7.html 的 l36 只剩居中的大字「学习 ≈ 压缩」，「04 · 换个角度」页眉已去掉；l37 起是「04 · 学习 ≈ 压缩」，l40 只淡出 `#head .h1`，页眉保留。l30「过拟合 / 捷径学习」已改成 h1 主标题，l50「捷径学习」已改成 h1 标题（s5.html、s8.html），也都已在源文件解决。目录、章节卡、页眉 01–06 现在同名同号，按当前状态给 2 分。"
+     },
+     "R": {
+      "score": 1,
+      "evidence": "b 成立。大部分条目已解决，其中 I58、I81、I71/I72、I74–I79、I87–I89 中 l50 的层级、I90/I91 都已在源文件解决（逐条见下）。但有两处必改仍在：I55/I93 片尾卡只调了结构，主文 15 字仍超标题 12 字；I67/I69 改出了新问题，③ 行补「· 过拟合」后，l22 变成 37 字，超过整屏 36 字。a 判 2 分，是因为它把片尾按「单块 16 字」算成不超，又漏数了 l22 的列头。"
+     },
+     "P6": {
+      "score": 2,
+      "evidence": "两人都给了可直接替换的写法，但都有缺陷，b 的 3 分偏高。b 的片尾改写「照背错答案／错当成规律」有歧义：「照背错答案」可读成「照着背错了答案」，「错当成规律」可读成「错误地当成规律」，观众可能看错。a 的片尾改写「背答案，当规律」去掉了「印错」，等于撤回了 script_r3 特意加进一句话的噪声，也不可取。两人给 l22 的改写可用，但 b 的「过拟合：记住噪声」和 ③ 行的「过拟合」标签重复，还丢了「新题不会重演」这个考试误差高的原因。可直接替换的写法见补充问题。"
+     },
+     "P4": {
+      "score": 2,
+      "evidence": "维持。整体短语化，没有句末句号，l27「比方的局限」、l45「2011–2013」体例规范。a 说的 l29 引号空隙已在源文件解决（引号去掉）；l39 三行一个标签在前、两个数字在前，l48「部分可能」语序，b 说的「vs」和「周，」开头，都是建议级。两人共同漏掉的一处：片尾卡第一行以「，」结尾，挂在大标题行尾，见补充问题（随片尾改写一起去掉）。没有观众会看错的措辞。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 33,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_zh__a",
+    "codex/screen_zh__b"
+   ]
+  },
+  {
+   "id": "screen_en",
+   "law": "lines",
+   "law_name": "English on-screen text (slides)",
+   "color": "#6b4fc0",
+   "scope": [],
+   "checks": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "how": "Hard limits (report every breach): title ≤6 words; any other block ≤9 words; ≤4 text blocks per screen (not counting the small eyebrow label, source line or chart ticks); ≤22 words per screen. Narration subtitles also sit at the bottom of the frame. Counting rules (round-2 ruling, 2026-11-09): eyebrow labels, case tabs, source lines and end-card credits are exempt; a list, table or card row of look-alike items (each ≤6 words, at most 6 items) counts as one block, and numbering doesn't count as words; in-chart text (zone names, curve names, axis titles, bar labels, callouts) counts toward words and the whole chart counts as one block — only axis tick numbers are exempt; a table's column headers count with the table.",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_en.md",
+   "prompt": "items/screen_en__a.md",
+   "what": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "problem": "The previous version put full sentences on screen (e.g. 'A separate model identified the hospital for scans from two hospitals — a hospital fingerprint'), repeating the narration. The user wants outline-only, concise slides (2026-11-08).",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "Outline, not prose",
+     "question": "Only keywords, short phrases, key numbers, labels; no full narration sentences. Count words per screen against the hard limits"
+    },
+    {
+     "id": "P2",
+     "name": "Divided from narration",
+     "question": "Screen carries structure, numbers, contrasts; narration explains. No verbatim repetition, no new claims the narration doesn't make; terms match the narration"
+    },
+    {
+     "id": "P3",
+     "name": "Hierarchy and consistency",
+     "question": "What reads first, second; ≤3 levels (title, point, note); numbering, labels, chapter names and agenda items consistent with each other"
+    },
+    {
+     "id": "P4",
+     "name": "Native phrasing and style",
+     "question": "Sentence case headline style; no Chinglish; consistent punctuation (no trailing periods on fragments), en dashes, quotes; parallel grammar in lists"
+    },
+    {
+     "id": "P5",
+     "name": "Readable in time",
+     "question": "From the screenshot and how long it stays: readable in time (~3 words/s while also reading subtitles and the chart)"
+    },
+    {
+     "id": "P6",
+     "name": "Rewrites",
+     "question": "For every breach or awkward phrase, a shorter drop-in rewrite"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_en__a.md",
+     "prompt": "items/screen_en__a.md",
+     "scores": {
+      "P1": {
+       "score": 2,
+       "evidence": "No screen breaks a hard limit under the counting rules. Agenda = 2 blocks, 19 words (3 + 16), each row ≤4 words. l35 = title 5 + chart text 9 = 14 words. l22 = 19 words with PRACTICE / EXAM counted. Screens are keywords and numbers (l01 \"Nearly perfect / Falls apart\", l45 \"100 / 108\"). Small deductions: the end card still prints the narration as a 9-word headline (\"memorizing even the typos, and treating them as rules\"), and l49 \"of inked harmless moles flagged as cancer\" is a sentence tail."
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "Most screens carry structure and numbers (l26 mapping table, l37–l39 \"10 numbers / 4 numbers / 10 numbers: no compression\", l43 \"50M … 1,152\"). Remaining overlaps and mismatches: card_s10 repeats l57–l58 word for word. l48 shows \"34% vs 1%\" with no label for which hospital is which. l48 \"Maybe spotting hospitals\" is weaker than the narration's \"likely\". The table term \"Wiggly curve\" (l17–l22) is a word the narration never uses; it says \"very complex\" and \"twists and turns\"."
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "Chapter eyebrows are consistent in form and match the chapter cards and the agenda (\"03 · TWO ERROR CURVES\", \"06 · SPOT IT, PREVENT IT\"). Exceptions: l36 eyebrow \"04 · ANOTHER LENS\" versus the agenda, chapter card and l37–l39 \"LEARNING ≈ COMPRESSION\". l30 inverts the hierarchy: the key terms \"Overfitting\" and \"Shortcut learning\" (h2) sit below the descriptive h1s. l50 hides \"SHORTCUT LEARNING\" in a 22px eyebrow, although the narration names it as the point. l47 and l48 put the only context for the huge number in a small eyebrow."
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "Sentence case throughout. No terminal periods on fragments. Quotes are curly and consistent in l29 (\"Cat!\" / \"Not a cat!\") and l44. The en dash is correct in \"2011–2013\" and \"PRACTICE / EXAM\". The chapter list is mostly nouns (\"An analogy\", \"Two error curves\", \"Real-world failures\"). Weak spots: l29 \"Maybe his rule: sofa = cat\" is not natural English (\"Possible rule:\" is). l55 \"More, more varied data\" stutters. l34 \"low practice, high exam\" can be read as exam scores. These are suggestions, not breaches."
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "Dwell times are fine for the amounts of text: l18 has 16 words in 3.2s but they are unchanged from l17, and l23 has 12 words in 9.6s. Legibility defects in the PNGs: l30 both h1s wrap with an orphan (\"Memorized every / detail\", \"Latched onto the / sofa\"). l22 \"Wiggly curve · / overfit\" wraps with a dangling \"·\". l52 and l55 \"Validation: a / mock exam\" leaves \"a\" alone at the line end. l33–l35 \"Exam error\" is printed over its own orange line, and \"Practice error\" crosses the red zone edge. The grey \"Underfit\" label is low contrast."
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "Every item in the issue table below has a drop-in rewrite no longer than the original (for example l34 \"Low practice error, high exam error\", 6 words, l55 \"More, varied data\", 3 words), and no hard-limit breach needs one."
+      },
+      "R": {
+       "score": 2,
+       "evidence": "Previous screen_en round-2 items I1–I53 re-checked. Resolved: I2 and I4 (agenda, ruled not a breach, 2 blocks and 19 words), I5 (footer now \"AI Glossary\" only), I6 and I10 (\"DEFINITION\"; header \"PRACTICE ERROR\"), I7 and I8 (l10 \"g\" descender is no longer clipped), I11 to I17 (l19–l23 simplified, l23 \"Underfit: fails both, easy to spot\" is 6 words), I20 to I23, I24 to I31 (chart screens now ≤20 words, axis \"Model complexity\"), I33 and I34, I38 to I42, I45 to I47, I48 to I53 (bar now \"Train / Mock / Test\"). Not fully resolved: I1 and I3 (end card shortened from 12 to 9 words but still verbatim l57–l58), I18 and I19 (l27 \"Student: knows it / Model: doesn't\" is now cryptic, see issue table), I22 (\"Maybe his rule\" is a new awkward form), I43 and I44 (l48 hedge now \"Maybe\", weaker than the narration's \"likely\"). Author \"不改\" decisions I judge sound: I32 (l40 has no chapter number; the screen is the chapter's closing line, accepted, but see the new l36 mismatch), I35 (exact 1,152 on screen versus \"about 1,100\" aloud), I36 (ruled by the judge), I37 (en dash is correct). Newly noticed: l36 eyebrow, l30 hierarchy, l34 ambiguity."
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/screen_en__b.md",
+     "prompt": "items/screen_en__b.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "The outro’s main headline is **9 words**, exceeding the 6-word title limit. l22 and l25 also retain sentence-like narration summaries. Under the stipulated counting rules, the agenda is **19 words, 2 blocks**; l35 is **14 words, 2 blocks**."
+      },
+      "P2": {
+       "score": 1,
+       "evidence": "The outro still combines “Overfitting is” with wording taken almost directly from l57–l58. Conversely, l47’s “A hospital fingerprint” now gives the screen a concise label while narration explains the finding."
+      },
+      "P3": {
+       "score": 3,
+       "evidence": "The agenda and chapter cards use matching chapter names and numbering. l52–l55 maintain a clear title → safeguard heading → supporting diagram/note hierarchy, within three levels."
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "Sentence case and fragment punctuation are generally consistent. Remaining awkward labels include l44’s “The researchers: overfitting” and l54–l55’s “More, more varied data.” l45 correctly uses **2011–2013**."
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "The agenda allows **14.0 seconds for 19 words**. l10’s “Overfitting” descender is now intact. Minor layout problems remain: l31 strands “sets,” l53 separates “exam / score,” and the chart curve still grazes “Exam error.”"
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "Every issue below includes a drop-in rewrite or precise placement correction. The outro rewrite reduces the headline from **9 words to 4** without changing the takeaway."
+      },
+      "R": {
+       "score": 1,
+       "evidence": "**I1/I3 unresolved:** the outro’s 12-word sentence became a 9-word headline beneath “Overfitting is”; the title breach and narration duplication remain. **I2/I4 resolved by ruling:** retaining the agenda is justified—one heading plus one six-item list, 19 words. **I5 resolved:** the footer now reads “AI Glossary” only. **I6 resolved:** l09–l10 use “DEFINITION.” **I7/I8 resolved:** the “Overfitting” descender is intact. **I9/I10 resolved:** “PRACTICE ERROR” removes the orphaned “MISS”; the former counting objection does not apply. **I11/I12 resolved:** the table counts as one block; the revised screens remain within limits. **I13 resolved:** “Exam points” is removed. **I14 resolved:** the title uses “Exam error: ③ ≈ 25× ②,” without possessives. **I15 partly resolved:** l21 separates the figures better, but l22’s red “0.00 1.80” remains cramped. **I16/I17 resolved:** both l23 headlines contain six words; retaining the easy/hard contrast is justified. **I18/I19 resolved:** l27 now uses paired labels rather than complete narration sentences. **I20 resolved:** “A RELATED PROBLEM” removes the heavy parenthesis. **I21/I23 resolved:** both quoted responses use exclamation marks. **I22 resolved:** “Maybe” restores possibility. **I24 resolved:** including chart text, l31–l35 contain 9/11/10/14/14 words, with at most four blocks. **I25/I26 resolved:** “median” and “polynomial degree” are removed. **I27 partly resolved:** “median” is gone, but “random point / sets” remains. **I28 resolved:** the isolated “low” is gone. **I29 resolved:** l35 now has 14 words and two blocks. **I30 resolved:** “high” no longer wraps alone. **I31 partly resolved:** the axis title is shorter, but the curve still grazes “Exam error.” **I32 accepted unchanged:** a chapter conclusion can reasonably omit its navigation number. **I33/I34 resolved:** “Three real cases” replaces the generic narration sentence. **I35 accepted unchanged:** exact “1,152” is compatible with spoken “about 1,100.” **I36 unresolved:** the author’s rejection misreads the adjudication—it rejected the bare rewrite “Overfitting,” while recommending “Their diagnosis: overfitting”; it did not endorse the original attribution. **I37 dismissed:** the current range uses an en dash; no change is needed. **I38 counting objection dismissed:** case tabs, eyebrows and sources are exempt. **I39/I40 resolved:** “A hospital fingerprint” replaces the full sentence. **I41/I42 resolved:** “> 99.9%” replaces the detached plus. **I43/I44 resolved:** “Maybe spotting hospitals, not disease” restores uncertainty. **I45 resolved:** “THE INK CLUE” replaces the sentence-like eyebrow. **I46 resolved:** familiar-setting success is now explicitly possible, matching narration. **I47 counting objection dismissed:** l52–l55 contain 15/16/14/15 words and at most four blocks. **I48/I53 resolved:** “Mock” is understandable beneath “Validation: a mock exam.” **I49/I50 resolved in wording, with a new layout blemish:** the stranded “Don’t.” is gone, but “exam score” now breaks across lines. **I51/I52 resolved in parallel structure:** the headings are now nominal labels; the second label introduces the awkward wording noted below."
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "Outline, not prose",
+     "a": 2,
+     "a_ev": "No screen breaks a hard limit under the counting rules. Agenda = 2 blocks, 19 words (3 + 16), each row ≤4 words. l35 = title 5 + chart text 9 = 14 words. l22 = 19 words with PRACTICE / EXAM counted. Screens are keywords and numbers (l01 \"Nearly perfect / Falls apart\", l45 \"100 / 108\"). Small deductions: the end card still prints the narration as a 9-word headline (\"memorizing even the typos, and treating them as rules\"), and l49 \"of inked harmless moles flagged as cancer\" is a sentence tail.",
+     "b": 1,
+     "b_ev": "The outro’s main headline is **9 words**, exceeding the 6-word title limit. l22 and l25 also retain sentence-like narration summaries. Under the stipulated counting rules, the agenda is **19 words, 2 blocks**; l35 is **14 words, 2 blocks**.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b is right about card_s10. The large two-line text \"memorizing even the typos, / and treating them as rules\" is the end card's only headline, so it is the title: 9 words against the 6-word title cap. \"Overfitting is\" (small, grey) is the first half of the same sentence and cannot stand alone as a label. Calling it an exempt eyebrow and counting the rest as an \"other block\" (≤9) splits one sentence to slip under the limit. a also says it breaches if counted as the title. `package.json` \"quote\" is unchanged, so this is still open in source. It is a real hard-limit breach, so it stays 必改. b's other P1 evidence does not hold: l22 \"Memorized noise won't repeat\" (4) and l25 \"A small change, and he's lost\" (6) are headline-length claims within limits (see 驳回). The rest is confirmed clean: agenda 2 blocks / 19 words, l34 and l35 each 12 words in current source, l29 4 blocks / 13 words."
+    },
+    "P2": {
+     "name": "Divided from narration",
+     "a": 2,
+     "a_ev": "Most screens carry structure and numbers (l26 mapping table, l37–l39 \"10 numbers / 4 numbers / 10 numbers: no compression\", l43 \"50M … 1,152\"). Remaining overlaps and mismatches: card_s10 repeats l57–l58 word for word. l48 shows \"34% vs 1%\" with no label for which hospital is which. l48 \"Maybe spotting hospitals\" is weaker than the narration's \"likely\". The table term \"Wiggly curve\" (l17–l22) is a word the narration never uses; it says \"very complex\" and \"twists and turns\".",
+     "b": 1,
+     "b_ev": "The outro still combines “Overfitting is” with wording taken almost directly from l57–l58. Conversely, l47’s “A hospital fingerprint” now gives the screen a concise label while narration explains the finding.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "Read top to bottom, the outro screen says \"Overfitting is memorizing even the typos, and treating them as rules\". That is l57 + l58 with only \"then\" removed: the full narration sentence on screen, which is the exact pattern the user rejected. Round 2 already ruled it 必改 (I1, I3). Removing the period and shrinking \"Overfitting is\" does not change that. a's other P2 points (l48 \"Maybe\" vs. the narration's \"likely\", l48 \"34% vs 1%\" with no owners, \"Wiggly curve\" when the narration says \"very complex\") are valid 建议 items, but none of them would be misread."
+    },
+    "P3": {
+     "name": "Hierarchy and consistency",
+     "a": 2,
+     "a_ev": "Chapter eyebrows are consistent in form and match the chapter cards and the agenda (\"03 · TWO ERROR CURVES\", \"06 · SPOT IT, PREVENT IT\"). Exceptions: l36 eyebrow \"04 · ANOTHER LENS\" versus the agenda, chapter card and l37–l39 \"LEARNING ≈ COMPRESSION\". l30 inverts the hierarchy: the key terms \"Overfitting\" and \"Shortcut learning\" (h2) sit below the descriptive h1s. l50 hides \"SHORTCUT LEARNING\" in a 22px eyebrow, although the narration names it as the point. l47 and l48 put the only context for the huge number in a small eyebrow.",
+     "b": 3,
+     "b_ev": "The agenda and chapter cards use matching chapter names and numbering. l52–l55 maintain a clear title → safeguard heading → supporting diagram/note hierarchy, within three levels.",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P4": {
+     "name": "Native phrasing and style",
+     "a": 2,
+     "a_ev": "Sentence case throughout. No terminal periods on fragments. Quotes are curly and consistent in l29 (\"Cat!\" / \"Not a cat!\") and l44. The en dash is correct in \"2011–2013\" and \"PRACTICE / EXAM\". The chapter list is mostly nouns (\"An analogy\", \"Two error curves\", \"Real-world failures\"). Weak spots: l29 \"Maybe his rule: sofa = cat\" is not natural English (\"Possible rule:\" is). l55 \"More, more varied data\" stutters. l34 \"low practice, high exam\" can be read as exam scores. These are suggestions, not breaches.",
+     "b": 2,
+     "b_ev": "Sentence case and fragment punctuation are generally consistent. Remaining awkward labels include l44’s “The researchers: overfitting” and l54–l55’s “More, more varied data.” l45 correctly uses **2011–2013**.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "Confirmed: sentence case, curly quotes in l29 (\"Cat!\" / \"Not a cat!\") and the l44 quote, and the en dash in \"2011–2013\". Real weak spots remain in l29 \"Maybe his rule\", l54–l55 \"More, more varied data\" and l44 \"The researchers: overfitting\". Both reviewers missed that \"vs\" is styled two ways (l31 \"Complexity vs. error\", l48 \"34% vs 1%\"), and the new l53 wording, which neither saw (see 补充问题)."
+    },
+    "P5": {
+     "name": "Readable in time",
+     "a": 2,
+     "a_ev": "Dwell times are fine for the amounts of text: l18 has 16 words in 3.2s but they are unchanged from l17, and l23 has 12 words in 9.6s. Legibility defects in the PNGs: l30 both h1s wrap with an orphan (\"Memorized every / detail\", \"Latched onto the / sofa\"). l22 \"Wiggly curve · / overfit\" wraps with a dangling \"·\". l52 and l55 \"Validation: a / mock exam\" leaves \"a\" alone at the line end. l33–l35 \"Exam error\" is printed over its own orange line, and \"Practice error\" crosses the red zone edge. The grey \"Underfit\" label is low contrast.",
+     "b": 2,
+     "b_ev": "The agenda allows **14.0 seconds for 19 words**. l10’s “Overfitting” descender is now intact. Minor layout problems remain: l31 strands “sets,” l53 separates “exam / score,” and the chart curve still grazes “Exam error.”",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P6": {
+     "name": "Rewrites",
+     "a": 3,
+     "a_ev": "Every item in the issue table below has a drop-in rewrite no longer than the original (for example l34 \"Low practice error, high exam error\", 6 words, l55 \"More, varied data\", 3 words), and no hard-limit breach needs one.",
+     "b": 3,
+     "b_ev": "Every issue below includes a drop-in rewrite or precise placement correction. The outro rewrite reduces the headline from **9 words to 4** without changing the takeaway.",
+     "verdict": "抽查",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": "Both reports give a drop-in rewrite for every row they raise. For the one must-fix, a's \"Overfitting is\" / \"Memorizing typos, / treating them as rules\" (6 words) and b's eyebrow \"Overfitting\" / \"Typos mistaken for rules\" (4 words) both fit the title cap and keep the takeaway. A few individual rewrites are rejected below (b l22 / l25, a l53), but a usable alternative exists for each item."
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "Previous screen_en round-2 items I1–I53 re-checked. Resolved: I2 and I4 (agenda, ruled not a breach, 2 blocks and 19 words), I5 (footer now \"AI Glossary\" only), I6 and I10 (\"DEFINITION\"; header \"PRACTICE ERROR\"), I7 and I8 (l10 \"g\" descender is no longer clipped), I11 to I17 (l19–l23 simplified, l23 \"Underfit: fails both, easy to spot\" is 6 words), I20 to I23, I24 to I31 (chart screens now ≤20 words, axis \"Model complexity\"), I33 and I34, I38 to I42, I45 to I47, I48 to I53 (bar now \"Train / Mock / Test\"). Not fully resolved: I1 and I3 (end card shortened from 12 to 9 words but still verbatim l57–l58), I18 and I19 (l27 \"Student: knows it / Model: doesn't\" is now cryptic, see issue table), I22 (\"Maybe his rule\" is a new awkward form), I43 and I44 (l48 hedge now \"Maybe\", weaker than the narration's \"likely\"). Author \"不改\" decisions I judge sound: I32 (l40 has no chapter number; the screen is the chapter's closing line, accepted, but see the new l36 mismatch), I35 (exact 1,152 on screen versus \"about 1,100\" aloud), I36 (ruled by the judge), I37 (en dash is correct). Newly noticed: l36 eyebrow, l30 hierarchy, l34 ambiguity.",
+     "b": 1,
+     "b_ev": "**I1/I3 unresolved:** the outro’s 12-word sentence became a 9-word headline beneath “Overfitting is”; the title breach and narration duplication remain. **I2/I4 resolved by ruling:** retaining the agenda is justified—one heading plus one six-item list, 19 words. **I5 resolved:** the footer now reads “AI Glossary” only. **I6 resolved:** l09–l10 use “DEFINITION.” **I7/I8 resolved:** the “Overfitting” descender is intact. **I9/I10 resolved:** “PRACTICE ERROR” removes the orphaned “MISS”; the former counting objection does not apply. **I11/I12 resolved:** the table counts as one block; the revised screens remain within limits. **I13 resolved:** “Exam points” is removed. **I14 resolved:** the title uses “Exam error: ③ ≈ 25× ②,” without possessives. **I15 partly resolved:** l21 separates the figures better, but l22’s red “0.00 1.80” remains cramped. **I16/I17 resolved:** both l23 headlines contain six words; retaining the easy/hard contrast is justified. **I18/I19 resolved:** l27 now uses paired labels rather than complete narration sentences. **I20 resolved:** “A RELATED PROBLEM” removes the heavy parenthesis. **I21/I23 resolved:** both quoted responses use exclamation marks. **I22 resolved:** “Maybe” restores possibility. **I24 resolved:** including chart text, l31–l35 contain 9/11/10/14/14 words, with at most four blocks. **I25/I26 resolved:** “median” and “polynomial degree” are removed. **I27 partly resolved:** “median” is gone, but “random point / sets” remains. **I28 resolved:** the isolated “low” is gone. **I29 resolved:** l35 now has 14 words and two blocks. **I30 resolved:** “high” no longer wraps alone. **I31 partly resolved:** the axis title is shorter, but the curve still grazes “Exam error.” **I32 accepted unchanged:** a chapter conclusion can reasonably omit its navigation number. **I33/I34 resolved:** “Three real cases” replaces the generic narration sentence. **I35 accepted unchanged:** exact “1,152” is compatible with spoken “about 1,100.” **I36 unresolved:** the author’s rejection misreads the adjudication—it rejected the bare rewrite “Overfitting,” while recommending “Their diagnosis: overfitting”; it did not endorse the original attribution. **I37 dismissed:** the current range uses an en dash; no change is needed. **I38 counting objection dismissed:** case tabs, eyebrows and sources are exempt. **I39/I40 resolved:** “A hospital fingerprint” replaces the full sentence. **I41/I42 resolved:** “> 99.9%” replaces the detached plus. **I43/I44 resolved:** “Maybe spotting hospitals, not disease” restores uncertainty. **I45 resolved:** “THE INK CLUE” replaces the sentence-like eyebrow. **I46 resolved:** familiar-setting success is now explicitly possible, matching narration. **I47 counting objection dismissed:** l52–l55 contain 15/16/14/15 words and at most four blocks. **I48/I53 resolved:** “Mock” is understandable beneath “Validation: a mock exam.” **I49/I50 resolved in wording, with a new layout blemish:** the stranded “Don’t.” is gone, but “exam score” now breaks across lines. **I51/I52 resolved in parallel structure:** the headings are now nominal labels; the second label introduces the awkward wording noted below.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "I1 and I3 (both 必改) are unresolved: the outro went from 12 words to 9, the headline is still over the 6-word title cap, and it still copies l57–l58 (b is right; a's \"not fully resolved\" undercounts a 必改). Resolved: I2/I4 (agenda ruled 2 blocks, 19 words), I5, I6–I10, I11–I14, I16/I17 (l23 two 6-word lines), I20, I21/I23, I24–I30, I33/I34, I38–I42, I45–I53. I15 is also resolved: s4_l22 shows \"0.00\" in black and \"1.80\" in red, with the same column gap as rows ① and ②, so b's \"partly resolved\" is wrong. I31 (the \"Exam error\" label touches its own curve, s6_l34) is still open but only at 建议 level. The new l36 eyebrow mismatch is resolved in source. On I36, b reads the history correctly: round 2 rejected the bare \"Overfitting\" but recommended \"Their diagnosis: overfitting\", so the author's 不改 reason misstates the ruling. It is only a 建议, though, so l44 \"The researchers: overfitting\" stays as a suggestion. On I18/I19, l27 \"Student: knows it / Model: doesn't\" fixes the full-sentence problem, but \"knows it\" on its own reads as \"knows the material\". The l27 narration says \"knows he's memorizing\" at the same moment, so this is 建议, not 必改. Use round 2's \"Student: knows he's memorizing / Model: no idea\". I22/I43/I44: \"Maybe\" keeps the hedge, so these are resolved. \"Likely\" (l48) and \"Possible rule\" (l29) are better wording, but only 建议."
+    }
+   },
+   "disputes": [
+    "P1",
+    "P2",
+    "R"
+   ],
+   "audits": [
+    "P6",
+    "P4"
+   ],
+   "final_scores": {
+    "P1": 1,
+    "P2": 1,
+    "P3": 2,
+    "P4": 2,
+    "P5": 2,
+    "P6": 3,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "P1",
+     "P2",
+     "R",
+     "P6",
+     "P4"
+    ],
+    "prompt": "items/screen_en__judge.md",
+    "report": "reports/screen_en__judge.md",
+    "ruling": {
+     "P1": {
+      "score": 1,
+      "evidence": "b is right about card_s10. The large two-line text \"memorizing even the typos, / and treating them as rules\" is the end card's only headline, so it is the title: 9 words against the 6-word title cap. \"Overfitting is\" (small, grey) is the first half of the same sentence and cannot stand alone as a label. Calling it an exempt eyebrow and counting the rest as an \"other block\" (≤9) splits one sentence to slip under the limit. a also says it breaches if counted as the title. `package.json` \"quote\" is unchanged, so this is still open in source. It is a real hard-limit breach, so it stays 必改. b's other P1 evidence does not hold: l22 \"Memorized noise won't repeat\" (4) and l25 \"A small change, and he's lost\" (6) are headline-length claims within limits (see 驳回). The rest is confirmed clean: agenda 2 blocks / 19 words, l34 and l35 each 12 words in current source, l29 4 blocks / 13 words."
+     },
+     "P2": {
+      "score": 1,
+      "evidence": "Read top to bottom, the outro screen says \"Overfitting is memorizing even the typos, and treating them as rules\". That is l57 + l58 with only \"then\" removed: the full narration sentence on screen, which is the exact pattern the user rejected. Round 2 already ruled it 必改 (I1, I3). Removing the period and shrinking \"Overfitting is\" does not change that. a's other P2 points (l48 \"Maybe\" vs. the narration's \"likely\", l48 \"34% vs 1%\" with no owners, \"Wiggly curve\" when the narration says \"very complex\") are valid 建议 items, but none of them would be misread."
+     },
+     "R": {
+      "score": 1,
+      "evidence": "I1 and I3 (both 必改) are unresolved: the outro went from 12 words to 9, the headline is still over the 6-word title cap, and it still copies l57–l58 (b is right; a's \"not fully resolved\" undercounts a 必改). Resolved: I2/I4 (agenda ruled 2 blocks, 19 words), I5, I6–I10, I11–I14, I16/I17 (l23 two 6-word lines), I20, I21/I23, I24–I30, I33/I34, I38–I42, I45–I53. I15 is also resolved: s4_l22 shows \"0.00\" in black and \"1.80\" in red, with the same column gap as rows ① and ②, so b's \"partly resolved\" is wrong. I31 (the \"Exam error\" label touches its own curve, s6_l34) is still open but only at 建议 level. The new l36 eyebrow mismatch is resolved in source. On I36, b reads the history correctly: round 2 rejected the bare \"Overfitting\" but recommended \"Their diagnosis: overfitting\", so the author's 不改 reason misstates the ruling. It is only a 建议, though, so l44 \"The researchers: overfitting\" stays as a suggestion. On I18/I19, l27 \"Student: knows it / Model: doesn't\" fixes the full-sentence problem, but \"knows it\" on its own reads as \"knows the material\". The l27 narration says \"knows he's memorizing\" at the same moment, so this is 建议, not 必改. Use round 2's \"Student: knows he's memorizing / Model: no idea\". I22/I43/I44: \"Maybe\" keeps the hedge, so these are resolved. \"Likely\" (l48) and \"Possible rule\" (l29) are better wording, but only 建议."
+     },
+     "P6": {
+      "score": 3,
+      "evidence": "Both reports give a drop-in rewrite for every row they raise. For the one must-fix, a's \"Overfitting is\" / \"Memorizing typos, / treating them as rules\" (6 words) and b's eyebrow \"Overfitting\" / \"Typos mistaken for rules\" (4 words) both fit the title cap and keep the takeaway. A few individual rewrites are rejected below (b l22 / l25, a l53), but a usable alternative exists for each item."
+     },
+     "P4": {
+      "score": 2,
+      "evidence": "Confirmed: sentence case, curly quotes in l29 (\"Cat!\" / \"Not a cat!\") and the l44 quote, and the en dash in \"2011–2013\". Real weak spots remain in l29 \"Maybe his rule\", l54–l55 \"More, more varied data\" and l44 \"The researchers: overfitting\". Both reviewers missed that \"vs\" is styled two ways (l31 \"Complexity vs. error\", l48 \"34% vs 1%\"), and the new l53 wording, which neither saw (see 补充问题)."
+     }
+    }
+   },
+   "findings": {},
+   "rows": 33,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_en__a",
+    "codex/screen_en__b"
+   ]
+  }
+ ],
+ "state": "已收轮",
+ "concluded_at": "2026-11-09T01:53:09",
+ "result": "结果.md",
+ "verdict": {
+  "result": "不通过",
+  "text": "不通过：2 项未过；已到轮数上限，余下问题已按问题清单修改，由程序检验复核成片"
+ },
+ "log": []
+}

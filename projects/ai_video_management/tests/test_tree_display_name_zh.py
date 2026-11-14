@@ -40,6 +40,8 @@ def test_workflow_stages_expand_into_episode_outputs(tmp_path: Path) -> None:
     (project / "episodes/ep01" / STATE_CHANGES_FILE).write_text("# EP1状态变化", encoding="utf-8")
     node = _reader(tmp_path)._walk_project(project)
     assert [child["display_name"] for child in node["children"]] == ["0_research", "1_资产库", *MODULE_NAV_LABELS.values()]
+    assert node["children"][1]["navigation_href"] == "/assets?drama=ai_videos%2Fdemo"
+    assert "navigation_href" not in node["children"][0]
     rules = next(child for child in node["children"][1]["children"] if child["name"] == WORLD_FACTS_FILE)
     assert rules["display_name"] == "世界规则"
     for stage, module in zip(node["children"][2:], MODULES):

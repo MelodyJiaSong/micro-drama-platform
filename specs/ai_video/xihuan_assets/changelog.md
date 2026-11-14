@@ -69,3 +69,15 @@ Auto-updated:
 
 No conflicts found in: 未改其他剧与仙侠库；工作流目录、管理 UI 公用资产页面源文件与其他会话未提交改动交织，未纳入本次提交
 
+
+## Follow-up 006 — 2026-11-08 22:42:37
+Source: user_input/follow_ups/202611.md - section 006
+Summary: 用户选择：去掉炼金金属灵魂成色（TR00–09）及依附它的四相、每阶之恶、试金石、金属换算等；强弱只用职业头衔 + 各族自己的等级链，跨族比较用威胁度（野兽 / 怪物 / 恐怖 / 灾厄 / 神话）。库升 1.2.0，移除条目的图归档到 _deleted，build 重建并校验。
+
+Auto-updated:
+- ai_videos/_shared/xihuan/ data/*.json（删 TR00–09、PH01、EV02、IT22；data/04_tiers.json → 04_ranks.json）、systems.md（§3 强弱怎么讲、§6 威胁度换算表等）、appendix.md、visual_guide.md、prompt_styles.json、adoption_template.json、README、build 产物；归档 ai_videos/_deleted/xihuan_metal_grades_20261108/
+
+验证: build.py 与 --check 通过（227 条、过期 0）；workflow_catalog --check 通过；vitest shared-assets + dev-preview 10 passed；后端 series 测试 5 passed；三份开发稿 check 通过；主文档仅版本记录提及旧体系。未出图；BS00 图带 bounty 味道，未重出
+
+No conflicts found in: （未单独核查）
+

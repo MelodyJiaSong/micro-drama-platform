@@ -1,0 +1,224 @@
+{
+  "asset": "m26",
+  "revision": "r06",
+  "materials": [
+    {
+      "name": "Material_0",
+      "sockets": {
+        "Roughness": {
+          "source": "Separate Color",
+          "socket": "Green"
+        },
+        "Metallic": {
+          "source": "Separate Color",
+          "socket": "Blue"
+        },
+        "Specular IOR Level": 0.5
+      },
+      "nodes": [
+        {
+          "name": "Principled BSDF",
+          "type": "BSDF_PRINCIPLED",
+          "image": null,
+          "input_links": [
+            [
+              "Mix (Legacy).001",
+              "Color",
+              "Base Color"
+            ],
+            [
+              "Separate Color",
+              "Blue",
+              "Metallic"
+            ],
+            [
+              "Separate Color",
+              "Green",
+              "Roughness"
+            ]
+          ]
+        },
+        {
+          "name": "Material Output",
+          "type": "OUTPUT_MATERIAL",
+          "image": null,
+          "input_links": [
+            [
+              "Principled BSDF",
+              "BSDF",
+              "Surface"
+            ]
+          ]
+        },
+        {
+          "name": "Image Texture",
+          "type": "TEX_IMAGE",
+          "image": "Image_0",
+          "input_links": []
+        },
+        {
+          "name": "Separate Color",
+          "type": "SEPARATE_COLOR",
+          "image": null,
+          "input_links": [
+            [
+              "Image Texture.001",
+              "Color",
+              "Color"
+            ]
+          ]
+        },
+        {
+          "name": "Image Texture.001",
+          "type": "TEX_IMAGE",
+          "image": "Image_1",
+          "input_links": []
+        },
+        {
+          "name": "Separate Color.001",
+          "type": "SEPARATE_COLOR",
+          "image": null,
+          "input_links": [
+            [
+              "Image Texture",
+              "Color",
+              "Color"
+            ]
+          ]
+        },
+        {
+          "name": "Map Range",
+          "type": "MAP_RANGE",
+          "image": null,
+          "input_links": [
+            [
+              "Separate Color.001",
+              "Green",
+              "Value"
+            ]
+          ]
+        },
+        {
+          "name": "Hue/Saturation/Value",
+          "type": "HUE_SAT",
+          "image": null,
+          "input_links": [
+            [
+              "Image Texture",
+              "Color",
+              "Color"
+            ]
+          ]
+        },
+        {
+          "name": "Mix (Legacy)",
+          "type": "MIX_RGB",
+          "image": null,
+          "input_links": [
+            [
+              "Hue/Saturation/Value",
+              "Color",
+              "Color1"
+            ]
+          ]
+        },
+        {
+          "name": "Mix (Legacy).001",
+          "type": "MIX_RGB",
+          "image": null,
+          "input_links": [
+            [
+              "Map Range",
+              "Result",
+              "Factor"
+            ],
+            [
+              "Image Texture",
+              "Color",
+              "Color1"
+            ],
+            [
+              "Mix (Legacy)",
+              "Color",
+              "Color2"
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "images": [
+    {
+      "name": "Image_0",
+      "colorspace": "sRGB",
+      "quantiles_0_10_50_90_100": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.12941177189350128,
+          0.10588236153125763,
+          0.04313725605607033,
+          0.9960784912109375
+        ],
+        [
+          0.2666666805744171,
+          0.22352942824363708,
+          0.125490203499794,
+          1.0
+        ],
+        [
+          0.529411792755127,
+          0.46666669845581055,
+          0.32156863808631897,
+          1.0
+        ],
+        [
+          0.9725490808486938,
+          0.9333333969116211,
+          0.8666667342185974,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "Image_1",
+      "colorspace": "Non-Color",
+      "quantiles_0_10_50_90_100": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.7058823704719543,
+          0.10196079313755035,
+          1.0
+        ],
+        [
+          0.0,
+          0.7764706611633301,
+          0.14901961386203766,
+          1.0
+        ],
+        [
+          0.0,
+          0.8274510502815247,
+          0.3529411852359772,
+          1.0
+        ],
+        [
+          0.0,
+          0.9215686917304993,
+          0.8000000715255737,
+          1.0
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+"""Persist actual author observations and pending trials without claiming QC passes."""
+from pathlib import Path
+import json,hashlib,datetime
+ROOT=Path(__file__).resolve().parents[3];WORLD=next(ROOT.glob('2_*'));OUT=WORLD/'background/map_3d';AUDIT=ROOT.parents[1]/'.audit/adhoc_agents/2026-10-27/dota-local-3d-287';now=datetime.datetime.now().astimezone().isoformat()
+def evidence(path):return {'path':str(path.relative_to(ROOT)),'sha256':hashlib.sha256(path.read_bytes()).hexdigest()}
+rows={}
+for pattern,names,status,notes in [
+ ('characters/*/m303_*/model_3d/r10',['face_detail.png','face_side.png','author_preview.png'],'partial_improvement_not_accepted',['五个实测区域局部补面，额头、下巴及右领口的大黑孔改善，源身体网格保留。','侧视仍有左领口孔洞；头发帽状、眼眶发蜡、衣料与皮肤配色未通过。']),
+ ('characters/*/m303_*/model_3d/r11',['face_detail.png','face_side.png','author_preview.png'],'mixed_trial_not_accepted',['发际线与暖肤色调整已查看；眼眶内收使边缘沟槽更明显，头顶部仍灰亮帽状，耳部小孔暴露。','不得将该试验等同于独立通过；r12/r13 对照从较好的 r10 继续。']),
+ ('characters/*/m303_*/model_3d/r12',['face_detail.png'],'rejected_projection_alignment',['参考图投色恢复部分真人细节，但双重眼位、灰色背景被投到头边、原头发覆盖均明显，拒绝。','r13 仅作校正对照，原照片包含光照，不能称作恢复了物理反照率。']),
+ ('background/*/bg23_*/model_3d/r39',['root_detail.png','hook_side_detail.png','perspective_preview.png'],'partial_improvement_not_accepted',['连续扁带弯臂与主支撑截面统一，符文石带浅灰青且凹刻清楚；几何球面间隙父空间 0.01242 m。','根须仍灰暗、细根碎刺多，土片硬边；未启动重复完整审稿。']),
+ ('background/*/bg23_*/model_3d/r40',['root_detail.png'],'partial_improvement_not_accepted',['细根从 208 减至 70、末端下沉，土片透明渐隐比硬边改善。','树皮色阶实测用的是字节 sRGB 样本，着色器输入为线性，r41 已针对该差异另做对照。'])]:
+ folder=next(WORLD.glob(pattern));row={'at':now,'review_type':'author_visual_check_not_independent_QC','status':status,'notes':notes,'images':[evidence(folder/n) for n in names]};(folder/'author_visual_check.json').write_text(json.dumps(row,ensure_ascii=False,indent=2),encoding='utf-8');rows[str(folder.relative_to(ROOT))]=row
+for revision,names,notes in [
+ ('v021',['Map_Overview','Sentinel_Forest_Eye'],['总装两图完成并查看；52 类实际实例化、59 类载入，97 布置和 30 线兵。1K 预览成功，但不证明近景贴图质量。硬边、平地和道路问题仍在。']),
+ ('v034',['River_Eye_Level','Map_Overview'],['150 万四边形连续细节皮层改善很小，河岸仍平滑切坡；后续边界版本从 v033 继续，不纳入此额外几何。']),
+ ('v035',['Northern_edge','Map_Overview'],['确认旧外围边缘最大高度差 9.49625 m；新 4096 边界采样差 0，地表属性差 0，3011 棵外围树重新贴地。','但外推造成长条山脊和色带，视觉拒绝直接合入。']),
+ ('v036',['Map_Overview'],['沿外围周向渐增平滑消除了 v035 明显长条拉伸；边界采样仍连续。','内侧原地图矩形崖壁仍明显；未独立通过。']),
+ ('v037',['River_Eye_Level'],['64 块局部岩壁扫描试验，开放边埋入地面；中央可通行坡岸没有强加岩壁。','平坦区域仍有共面白色闪烁/薄片观感，岩色过亮，未推广。v038 加入整体 4 cm 入土及色调对照。'])]:
+ prefix='assembly_working' if revision=='v021' else 'environment';rows[prefix+':'+revision]={'status':'author_viewed_not_accepted','notes':notes,'images':[evidence(OUT/f'{prefix}_{revision}_{name}.png') for name in names]}
+report={'at':now,'checks':rows,'accepted_families':1,'total_families':59,'running_at_record':{'environment_v038_pid':9536,'bg23_r41_pid':28848,'m303_r13_pid':21468},'source_evidence':{'blender_pixels_get':'https://raw.githubusercontent.com/blender/blender/main/source/blender/makesrna/intern/rna_image.cc','finding':'rna_Image_pixels_get copies float buffer or normalizes byte data by 255; no colour transform in byte branch. r41 decodes byte sRGB before estimating shader-linear luminance.'},'rock_scan_diagnosis':[evidence(OUT/'rock_face_scan_diagnosis/front.png'),evidence(OUT/'rock_face_scan_diagnosis/side.png')],'notes':['rock_face_02 is a 4.87 × 3.47 × 4.73 m open scanned surface, not a closed boulder; exposed borders must be buried.','bg23 r39 initial script failed on NumPy scalar times mathutils.Vector; fixed by Python float conversion, retry succeeded.']}
+(AUDIT/'manual_work_r19.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8');path=OUT/'authoring_checkpoint.json';p=json.loads(path.read_text(encoding='utf-8'));p['at']=now;p['map']='v021 总装两图和覆盖审计完成，仍未验收。v036 修正内外地图高度/材质接缝且消除 v035 外推条纹，作者已看全景，尚未合入总装。v038 局部岩壁修正版正在渲染，未扩展全图。';p['assets']['bg23'].update(authoring='r39 扁带弯臂、浅灰青深刻石带改善；r40 细根与土片渐隐已看，但字节/线性色阶混用须修正；r41 正在渲染。',candidate='r38 独立 fail 3；r39/r40/r41 尚未完整独立检查。');p['assets']['m303'].update(authoring='r10 局部补孔三图已查看，改善且保留身体。r11 眼眶沟槽与发际线仍差，不用于地图。r12 参考投色出现双眼和背景污染，拒绝；r13 校正投影进行中。',candidate='r07 独立 fail 4；所有后续为作者试验。');p['runtime']['latest_author_evidence']=str((AUDIT/'manual_work_r19.json').relative_to(ROOT.parents[1]));p['runtime']['pending_trials']=report['running_at_record'];path.write_text(json.dumps(p,ensure_ascii=False,indent=2),encoding='utf-8');print('R19_VERIFIED_PROGRESS_RECORDED')

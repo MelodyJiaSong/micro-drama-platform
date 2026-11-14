@@ -1,0 +1,3 @@
+﻿const fs=require('fs');
+const pages=['https://unsplash.com/photos/GdjZs5JZwZA','https://unsplash.com/photos/WHc2GC9oo2s','https://unsplash.com/photos/kxEvTRN0dSk','https://unsplash.com/photos/WD9oyVCqHho','https://unsplash.com/photos/jcxQayqHyvg','https://unsplash.com/photos/2cmlQiIdZZM','https://wordpress.org/photos/photo/37564d2610/'];
+(async()=>{for(let i=0;i<pages.length;i++){try{let r=await fetch(pages[i],{headers:{'User-Agent':'Mozilla/5.0'}});let h=await r.text();fs.writeFileSync(`19_petronas_tower_1/page${i}.html`,h);let m=h.match(/<meta[^>]*property="og:image"[^>]*content="([^"]+)"/);if(!m)m=h.match(/<meta[^>]*content="([^"]+)"[^>]*property="og:image"/);console.log(i,r.status,m?.[1]);}catch(e){console.log(i,e.message)}}})()

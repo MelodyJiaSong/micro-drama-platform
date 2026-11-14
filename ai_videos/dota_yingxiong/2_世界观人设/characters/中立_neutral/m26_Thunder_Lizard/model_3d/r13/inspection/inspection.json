@@ -1,0 +1,307 @@
+{
+  "asset_id": "m26",
+  "revision": "r13",
+  "source": "r11",
+  "status": "candidate_not_reviewed",
+  "landmarks": "r09 head_side_diagnosis.png and head_side_ray_probe.json",
+  "eyes": [
+    {
+      "side": -1,
+      "surface": [
+        1.9500000476837158,
+        -0.3015720844268799,
+        0.9779999852180481
+      ],
+      "centre": [
+        1.942797303199768,
+        -0.2850959002971649,
+        0.9771896600723267
+      ],
+      "normal": [
+        0.4001500606536865,
+        -0.9153432846069336,
+        0.04501688480377197
+      ],
+      "radius_m": 0.026
+    },
+    {
+      "side": 1,
+      "surface": [
+        1.9500000476837158,
+        0.31682729721069336,
+        0.9779999852180481
+      ],
+      "centre": [
+        1.942797303199768,
+        0.3003511130809784,
+        0.9771896600723267
+      ],
+      "normal": [
+        0.4001500606536865,
+        0.9153432846069336,
+        0.04501688480377197
+      ],
+      "radius_m": 0.026
+    }
+  ],
+  "oral_cavity": {
+    "centre": [
+      2.035,
+      0,
+      0.71
+    ],
+    "radii": [
+      0.16,
+      0.205,
+      0.07
+    ]
+  },
+  "remaining": [
+    "Texture seams on repaired cavities",
+    "Pitted spike silhouettes",
+    "Skin detail and source fidelity",
+    "Independent review"
+  ],
+  "skin_adjustment": "Saturation-weighted olive scale and less saturated keratin adjustment; dry specular .15",
+  "surface_relaxation": {
+    "factor": 0.3,
+    "iterations": 2,
+    "displacement_quantiles_m": [
+      6.532813131343573e-05,
+      0.0001110388053348288,
+      0.00018626364631927592,
+      0.0025128324050456285
+    ]
+  },
+  "oral_refinement": "Recessed to 0.15m half-width, flattened to 0.045m half-height; darker rough dark-red cavity",
+  "texture_recovery": {
+    "source": "Archive_r07_lizard_before_closed_surface",
+    "method": {
+      "completed_faces": 8765718,
+      "total_faces": 8765718,
+      "target_loops": 35062872,
+      "source_triangles": 2800385,
+      "elapsed_seconds": 207.74,
+      "max_nearest_face_distance_m_this_run": 0.02783234976232052,
+      "faces_over_15mm_this_run": 765,
+      "method": "One nearest source triangle per target face; barycentric corner weights clamped to the selected chart. No topology changes; texture seam/blur review required."
+    },
+    "albedo_size": [
+      4096,
+      4096
+    ],
+    "roughness": "Original material texture graph restored",
+    "micro_bump_m": 0.0008,
+    "geometry_changed": false
+  },
+  "sha256": "e0be5ada9f6054cd81719640a076ca5d223b6a89d3c3484ec9f9511c25afbdc8",
+  "views": [
+    "south.png",
+    "east.png",
+    "north.png",
+    "west.png",
+    "perspective.png"
+  ],
+  "supplemental_views": [
+    "head_detail.png",
+    "back_detail.png",
+    "far_back_detail.png"
+  ],
+  "visible_object_count": 10,
+  "visible_mesh_faces_by_material": {
+    "Repaired_lizard_original_4K_sampling": 8765718,
+    "Reptile_dark_ochre_eye": 4096,
+    "Golden_radial_reptile_iris": 1536,
+    "Reptile_vertical_pupil": 1536,
+    "Dielectric_lizard_source_colour": 768,
+    "Recessed_dark_red_oral_mucosa": 2048
+  },
+  "material_shader_evidence": {
+    "Reptile_dark_ochre_eye": {
+      "shader_nodes": [
+        "BSDF_PRINCIPLED"
+      ],
+      "principled_values": [
+        {
+          "path": "/Principled BSDF",
+          "Roughness": 0.20000000298023224,
+          "Metallic": 0.0,
+          "Transmission Weight": 0.0,
+          "IOR": 1.5,
+          "Emission Strength": 0.0,
+          "Emission Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "volume_values": [],
+      "nested_groups_included": true
+    },
+    "Golden_radial_reptile_iris": {
+      "shader_nodes": [
+        "BSDF_PRINCIPLED"
+      ],
+      "principled_values": [
+        {
+          "path": "/Principled BSDF",
+          "Roughness": 0.23000000417232513,
+          "Metallic": 0.0,
+          "Transmission Weight": 0.0,
+          "IOR": 1.5,
+          "Emission Strength": 0.0,
+          "Emission Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "volume_values": [],
+      "nested_groups_included": true
+    },
+    "Recessed_dark_red_oral_mucosa": {
+      "shader_nodes": [
+        "BSDF_PRINCIPLED"
+      ],
+      "principled_values": [
+        {
+          "path": "/Principled BSDF",
+          "Roughness": 0.7200000286102295,
+          "Metallic": 0.0,
+          "Transmission Weight": 0.0,
+          "IOR": 1.5,
+          "Emission Strength": 0.0,
+          "Emission Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "volume_values": [],
+      "nested_groups_included": true
+    },
+    "Repaired_lizard_original_4K_sampling": {
+      "shader_nodes": [
+        "BSDF_PRINCIPLED"
+      ],
+      "principled_values": [
+        {
+          "path": "/Principled BSDF",
+          "Roughness": "linked",
+          "Metallic": 0.0,
+          "Transmission Weight": 0.0,
+          "IOR": 1.4500000476837158,
+          "Emission Strength": 0.0,
+          "Emission Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "volume_values": [],
+      "nested_groups_included": true
+    },
+    "Reptile_vertical_pupil": {
+      "shader_nodes": [
+        "BSDF_PRINCIPLED"
+      ],
+      "principled_values": [
+        {
+          "path": "/Principled BSDF",
+          "Roughness": 0.11999999731779099,
+          "Metallic": 0.0,
+          "Transmission Weight": 0.0,
+          "IOR": 1.5,
+          "Emission Strength": 0.0,
+          "Emission Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "volume_values": [],
+      "nested_groups_included": true
+    },
+    "Dielectric_lizard_source_colour": {
+      "shader_nodes": [
+        "BSDF_PRINCIPLED"
+      ],
+      "principled_values": [
+        {
+          "path": "/Principled BSDF",
+          "Roughness": 0.7200000286102295,
+          "Metallic": 0.0,
+          "Transmission Weight": 0.0,
+          "IOR": 1.4500000476837158,
+          "Emission Strength": 0.0,
+          "Emission Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "volume_values": [],
+      "nested_groups_included": true
+    }
+  },
+  "optical_geometry": {
+    "lights": [],
+    "curves": [],
+    "hair_curves": []
+  },
+  "enabled_render_modifiers": {},
+  "render_settings": {
+    "samples": 48,
+    "denoising": true,
+    "transparent_bounces": 8,
+    "studio_lights": [
+      {
+        "name": "Key",
+        "watts": 10000.0,
+        "type": "AREA"
+      },
+      {
+        "name": "Fill",
+        "watts": 4375.0,
+        "type": "AREA"
+      },
+      {
+        "name": "Rim",
+        "watts": 11875.0,
+        "type": "AREA"
+      }
+    ]
+  },
+  "metrics_note": "Current revision base meshes and recursive shader nodes. Modifiers and instances are not expanded. Low base face counts do not mean texture-only construction. Names do not specify shader behavior. No topology acceptance is implied.",
+  "base_source_inspection": "C:\\workspace\\micro-drama-platform\\ai_videos\\dota_yingxiong\\2_\u4e16\u754c\u89c2\u4eba\u8bbe\\characters\\\u4e2d\u7acb_neutral\\m26_Thunder_Lizard\\model_3d\\r06\\inspection\\inspection.json",
+  "asset_bounds_m": [
+    [
+      -2.499662399291992,
+      -0.9908362627029419,
+      -0.006669657304883003
+    ],
+    [
+      2.499720573425293,
+      0.9908643960952759,
+      2.4801225662231445
+    ]
+  ],
+  "asset_dimensions_m": [
+    4.999382972717285,
+    1.9817006587982178,
+    2.4867922235280275
+  ],
+  "inspection_copy_cleanup": []
+}

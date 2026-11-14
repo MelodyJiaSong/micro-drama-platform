@@ -1,0 +1,192 @@
+{
+ "note": "学习目标与理解测验（写讲稿前定，审查与测验都对照它）。题目以迁移题为主，干扰项来自真实误解；前测、看片、后测、讲回来。AI 学生只用来筛题，最终以真人盲测为准。句号按 v1 讲稿挂上（2026-11-09），讲稿改动后同步。",
+ "objectives": [
+  {
+   "id": "O1",
+   "zh": "能用自己的话说出反向传播在做什么：把错误从输出往回传，一层层分责任，算出每个旋钮该往哪拧、拧多少",
+   "en": "Say in their own words what backpropagation does: pass the error back from the output, layer by layer, assigning each knob its share of blame — which way to turn and how much",
+   "lines": [
+    "l04",
+    "l17",
+    "l21",
+    "l24",
+    "l27",
+    "l41",
+    "l42"
+   ]
+  },
+  {
+   "id": "O2",
+   "zh": "知道为什么需要它：挨个旋钮试拧要重算「旋钮数 + 1」遍，反向传播只要正着一遍、倒着一趟（约三遍的工夫），两种办法算出的结果一样",
+   "en": "Know why it is needed: nudging knobs one at a time takes (number of knobs + 1) forward passes; backprop takes one forward and one backward pass (about three passes' worth of work) and gives the same answer",
+   "lines": [
+    "l10",
+    "l11",
+    "l29",
+    "l30",
+    "l31",
+    "l32",
+    "l33",
+    "l34"
+   ]
+  },
+  {
+   "id": "O3",
+   "zh": "有「倍数一路相乘、倒着算可以接着用」的直觉（齿轮）：一个旋钮对结果的影响，是路上各处倍数乘起来；倒着走时每一层只多乘一次",
+   "en": "Have the gear intuition: a knob's effect on the result is the product of the ratios along the way; going backward, each step only multiplies one more ratio onto what is already known",
+   "lines": [
+    "l13",
+    "l14",
+    "l15",
+    "l16"
+   ]
+  },
+  {
+   "id": "O4",
+   "zh": "能读懂一个旋钮分到的数：正负说明往哪拧，大小说明拧多少；送进来的数越大、路过的倍数越大，分到的越多",
+   "en": "Read a knob's number: the sign says which way to turn, the size says how much; bigger inputs and bigger ratios along the path mean more blame",
+   "lines": [
+    "l22",
+    "l23",
+    "l25",
+    "l26",
+    "l27"
+   ]
+  },
+  {
+   "id": "O5",
+   "zh": "知道它在 AI 里的位置：1986 年 Rumelhart、Hinton、Williams 的论文让它用于训练多层网络；今天 PyTorch 等框架的自动求导（loss.backward()）做的就是这件事",
+   "en": "Know where it sits in AI: the 1986 Rumelhart–Hinton–Williams paper showed it training multi-layer networks; today autograd in frameworks like PyTorch (loss.backward()) does exactly this",
+   "lines": [
+    "l35",
+    "l36",
+    "l38",
+    "l39",
+    "l40"
+   ]
+  }
+ ],
+ "quiz": [
+  {
+   "id": "Q1",
+   "objective": "O2",
+   "type": "迁移",
+   "zh": "一个模型有 100 万个旋钮。如果不用反向传播，而是每个旋钮拧一点点、重算一遍来找坡度，走一步要正着算多少遍？用反向传播呢？",
+   "en": "A model has 1 million knobs. If instead of backprop you nudge each knob and recompute to find the slope, how many forward passes does one step take? And with backprop?",
+   "choices": {
+    "zh": [
+     "A 都是 1 遍",
+     "B 试拧约 100 万遍；反向传播正着 1 遍、倒着 1 趟",
+     "C 试拧 2 遍；反向传播 100 万遍",
+     "D 都是 100 万遍"
+    ],
+    "en": [
+     "A One pass either way",
+     "B About 1 million passes by nudging; backprop is one forward and one backward pass",
+     "C Two passes by nudging; a million with backprop",
+     "D A million passes either way"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "D": "以为反向传播也得一个个算",
+    "C": "把两种办法弄反"
+   }
+  },
+  {
+   "id": "Q2",
+   "objective": "O2",
+   "type": "误解探针",
+   "zh": "反向传播比挨个试拧快得多，是不是因为它只算了个大概，牺牲了准确性？",
+   "en": "Backprop is far faster than nudging knobs one by one. Is that because it only gives a rough estimate?",
+   "choices": {
+    "zh": [
+     "A 是，快是因为粗略",
+     "B 不是，两种办法算出的坡度一样，快是因为倒着算时前面的结果都接着用",
+     "C 是，它只算最后一层的旋钮",
+     "D 是，它随机挑一部分旋钮"
+    ],
+    "en": [
+     "A Yes, it's fast because it's rough",
+     "B No. Both give the same slopes; it's fast because going backward reuses what's already been worked out",
+     "C Yes, it only handles the last layer's knobs",
+     "D Yes, it picks a random subset of knobs"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "以为快就是近似",
+    "C": "以为只有最后一层能算"
+   }
+  },
+  {
+   "id": "Q3",
+   "objective": "O3",
+   "type": "迁移",
+   "zh": "三个齿轮：第一个转一格，第二个转三格；第二个转一格，第三个转四格。拧第一个一格，第三个转几格？如果再往前加一个齿轮（它转一格、第一个转两格），要从头算吗？",
+   "en": "Three gears: one turn of the first makes the second turn 3; one turn of the second makes the third turn 4. One turn of the first turns the third how much? If you add another gear in front (one turn of it turns the first by 2), do you start over?",
+   "answer_key": {
+    "zh": "十二格；不用从头算，在十二上再乘二，二十四格",
+    "en": "12; no — multiply the 12 you already have by 2, giving 24"
+   }
+  },
+  {
+   "id": "Q4",
+   "objective": "O4",
+   "type": "解释为什么",
+   "zh": "反向传播算完，旋钮甲分到 +50，旋钮乙分到 −2。接下来这两个旋钮各该怎么拧？",
+   "en": "After backprop, knob A gets +50 and knob B gets −2. How should each be turned next?",
+   "answer_key": {
+    "zh": "甲往小拧、拧得多；乙往大拧、拧得少（正的往小、负的往大，数越大拧得越多）",
+    "en": "A down, by a lot; B up, by a little (positive means turn down, negative means turn up; bigger number, bigger turn)"
+   }
+  },
+  {
+   "id": "Q5",
+   "objective": "O5",
+   "type": "迁移",
+   "zh": "一位工程师用 PyTorch 训练模型，写了 loss.backward()。这一行在做什么？",
+   "en": "An engineer training a model in PyTorch writes loss.backward(). What does that line do?",
+   "choices": {
+    "zh": [
+     "A 把模型倒着运行一遍，生成答案",
+     "B 从错误出发倒着往回传，算出每个旋钮的坡度",
+     "C 把旋钮恢复到上一步",
+     "D 删掉错的训练数据"
+    ],
+    "en": [
+     "A Runs the model in reverse to produce answers",
+     "B Starts from the error and passes it backward, computing every knob's slope",
+     "C Resets the knobs to the previous step",
+     "D Deletes wrong training examples"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "把「反向」理解成倒着生成",
+    "C": "把 backward 理解成撤销"
+   }
+  }
+ ],
+ "pass_rule": "每个学习目标至少有一道题，真人后测正确率比前测提升、且 ≥ 2/3 的人答对；讲回来能说出「错误往回传、分责任」与「一趟算出全部、比挨个试快得多」，不出现误解。AI 学生结果只用于改题与找讲稿漏洞，不作过关依据。",
+ "explain_back": {
+  "prompt": {
+   "zh": "请用一分钟跟朋友解释：反向传播是什么，为什么大模型离不开它。",
+   "en": "In one minute, explain to a friend what backpropagation is and why big models can't do without it."
+  },
+  "propositions": [
+   "训练要知道每个旋钮往哪拧（坡度）",
+   "挨个试拧要重算旋钮数那么多遍，太慢",
+   "反向传播从错误出发倒着传，一层层分责任，一趟算出全部",
+   "（加分）影响一路相乘，倒着算可以接着用（齿轮）",
+   "（加分）1986 年论文；PyTorch 的 loss.backward() 就是它"
+  ],
+  "misconceptions": [
+   "反向传播是把模型倒着运行、生成答案",
+   "反向传播只是粗略估计",
+   "反向传播只调最后一层",
+   "各个旋钮分到的数加起来等于总错误",
+   "反向传播是 1986 年那篇论文第一个发明的"
+  ]
+ }
+}

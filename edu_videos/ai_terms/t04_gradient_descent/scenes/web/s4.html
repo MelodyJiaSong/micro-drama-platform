@@ -1,0 +1,93 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  .ttl { position: absolute; left: var(--mx); top: 150px; }
+  .ttl .t { position: absolute; top: 0; left: 0; white-space: nowrap; }
+  .col { position: absolute; top: 290px; width: 560px; }
+  .col svg { display: block; }
+  .col .lab { display: flex; align-items: baseline; gap: 18px; margin-bottom: 10px; white-space: nowrap; }
+  .col .lab .h2 { font-size: 46px; }
+  .col .lab .v { font-size: var(--fs-body); font-weight: 600; color: var(--sub); font-variant-numeric: tabular-nums; }
+  .col .res { margin-top: 16px; display: flex; align-items: baseline; gap: 16px; white-space: nowrap; }
+  .col .res .n { font-size: 64px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; }
+  #cs { left: 80px; } #cg { left: 680px; } #cb { left: 1280px; }
+  .frame { position: absolute; border: 6px solid var(--d-good); border-radius: 24px; }
+</style>
+
+<div class="eb eyebrow" data-zh="03 · 步子迈多大" data-en="03 · How big a step?"></div>
+<div class="ttl">
+  <div class="h1 t" id="ta" data-zh="学习率选错了会怎样？" data-en="Wrong learning rate?"></div>
+  <div class="h1 t" id="tb" data-zh="同一起点，相同步数" data-en="Same start, same step count"></div>
+  <div class="h1 t" id="tc" data-zh='选好<span class="accent">学习率</span>' data-en='<span class="accent">Key setting</span>'></div>
+</div>
+
+<div class="col" id="cs"><div class="lab"><span class="h2 sub" data-zh="太小" data-en="Too small"></span><span class="v">0.0005</span></div>
+  <svg id="ms"></svg>
+  <div class="res" id="rs"><span class="n" id="vs">78</span><span class="h2 sub" id="ws" data-zh="离谷底还远" data-en="Far off"></span></div></div>
+<div class="col" id="cg"><div class="lab"><span class="h2 c-good" data-zh="合适" data-en="Just right"></span><span class="v">0.005</span></div>
+  <svg id="mg"></svg>
+  <div class="res" id="rg"><span class="caption" data-zh="分数" data-en="Score"></span><span class="n c-good">2.0</span><span class="h2 c-good" id="wg" data-zh="到谷底" data-en="Made it"></span></div></div>
+<div class="col" id="cb"><div class="lab"><span class="h2 c-bad" data-zh="太大" data-en="Too big"></span><span class="v">0.021</span></div>
+  <svg id="mb"></svg>
+  <div class="res" id="rb"><span class="n c-bad" id="vb">78</span><span class="h2 c-bad" id="wb" data-zh="跳出地图" data-en="Off the map"></span></div></div>
+<div class="frame" id="frame"></div>
+
+<script>
+const opt = { W: 560, H: 440, m: { l: 10, r: 10, t: 10, b: 10 }, axes: false, yDom: [0, 5], bestR: 13, bestLabel: false };   // 纵向放宽到 0–5，学习率太大时的来回跳才看得见
+const MS = makeLand("#ms", opt), MG = makeLand("#mg", opt), MB = makeLand("#mb", opt), T = EDU.tl;
+const mk = (M, P, col) => ({ pl: M.trail(col, 4), dot: M.dot(D.start, col, 11), st: M.dot(D.start, "--ink", 7) });
+const s = mk(MS, D.small, "--d-neutral"), g = mk(MG, D.good, "--ink"), b = mk(MB, D.big, "--d-bad");
+const VS = document.getElementById("vs"), VB = document.getElementById("vb");
+const fmtL = v => v >= 10 ? v.toFixed(0) : v.toFixed(1);
+const fr = document.getElementById("frame"), cg = document.getElementById("cg").getBoundingClientRect(), st = document.getElementById("stage").getBoundingClientRect();
+Object.assign(fr.style, { left: (cg.left - st.left - 24) + "px", top: (cg.top - st.top - 18) + "px", width: (cg.width + 48) + "px", height: (cg.height + 36) + "px" });
+
+gsap.set(["#ta", "#tb", "#tc", "#cs", "#cb", "#rs", "#rb", "#ws", "#wb", "#wg", "#frame", s.pl, s.dot, b.pl, b.dot], { opacity: 0 });
+EDU.in(".eb", 0);
+// l30 刚才那条（合适，0.005）先放中间，整条路画好
+EDU.in("#ta", EDU.t("l30", .05));
+walk(MG, D.good, 0, D.good.k.length - 1, EDU.t("l30", .2), 1.4, { dot: g.dot, pl: g.pl, ease: "power2.out" });
+// l31 三条路：同一起点、同样多步
+EDU.out("#ta", EDU.t("l31")); EDU.in("#tb", EDU.t("l31", .03)); EDU.in(["#cs", "#cb"], EDU.t("l31", .2), { stagger: .15 });
+// l32 太小：方向对，挪得太慢
+EDU.in([s.pl, s.dot], EDU.t("l32", .4), { d: .01 });
+walk(MS, D.small, 0, D.small.k.length - 1, EDU.t("l32", .4), Math.max(1.2, EDU.end("l32") - EDU.t("l32", .4)), { dot: s.dot, pl: s.pl,
+  on: (q, l) => { VS.textContent = fmtL(l); } });
+EDU.in("#rs", EDU.t("l32", .45));
+// l33 还剩 5.5，离谷底还远
+EDU.in("#ws", EDU.t("l33", .3));
+// l34 太大：一步迈过头，跳到对面，比原来还高
+EDU.out("#tb", EDU.t("l34")); EDU.in(b.dot, EDU.t("l34", .5), { d: .01 }); EDU.in("#rb", EDU.t("l34", .5));
+// 太大的每一步：一段直线 + 落点上的步号（跳到山谷对面，一次比一次远）
+const hops = [], nums = [];
+for (let k = 0; k < D.big_out; k++) {
+  const [ax, ay] = MB.px(D.big.p[k]), [bx, by] = MB.px(D.big.p[k + 1]);
+  hops.push(MB.over.append("line").attr("x1", ax).attr("y1", ay).attr("x2", bx).attr("y2", by)
+    .attr("stroke", css("--d-bad")).attr("stroke-width", 3).attr("stroke-opacity", .7).node());
+  const outside = D.big.p[k + 1][1] > D.land.per_km[1] || D.big.p[k + 1][1] < D.land.per_km[0];
+  const g = MB.top.append("g").attr("transform", `translate(${bx + 34 + 40 * k},${Math.min(Math.max(by, 30), opt.H - 30)})`);   // 步号往右错开，不叠在一起
+  g.append("circle").attr("r", 17).attr("fill", css("--surface")).attr("stroke", css("--d-bad")).attr("stroke-width", 3);
+  g.append("text").attr("text-anchor", "middle").attr("y", 8).attr("font-size", 22).attr("font-weight", 700).attr("fill", css("--d-bad")).text(k + 1);
+  if (outside) g.append("text").attr("x", 22).attr("y", 10).attr("font-size", 30).attr("font-weight", 700).attr("fill", css("--d-bad")).text("↑");   // 这一步已经跳出地图上沿
+  nums.push(g.node());
+}
+gsap.set([...hops, ...nums], { opacity: 0 });
+const hop = (k, at, d = .5) => {
+  EDU.in(hops[k], at, { d: .01 }); EDU.draw(hops[k], at, d); EDU.in(nums[k], at + d * .8, { d: .2 });
+  T.to(b.dot, { attr: { cx: MB.x(D.big.p[k + 1][0]), cy: MB.y(D.big.p[k + 1][1]) }, duration: d, ease: "power2.inOut" }, at);
+  countTo(VB, at, D.big.loss[k], D.big.loss[k + 1], d, fmtL);
+};
+hop(0, EDU.t("l34", .55), .6);
+// l35 再跳回来更高：96、118、145
+hop(1, EDU.t("l35", .3)); hop(2, EDU.t("l35", .6));
+// l36 五步就跳出了地图
+for (let k = 3; k < D.big_out; k++) hop(k, EDU.t("l36", .05 + (k - 3) * .18), .4);
+EDU.out(b.dot, EDU.t("l36", .05 + (D.big_out - 4) * .18) + .45, { d: .2 });   // 飞出地图后点就不画了（否则压在标签上）
+EDU.in("#wb", EDU.t("l36", .5));
+// l37 合适的那条：稳稳到谷底
+EDU.in(["#frame", "#wg"], EDU.t("l37", .1));
+// l38 学习率常常最要紧
+EDU.in("#tc", EDU.t("l38", .05));
+// l39 太大越跳越高，太小白耗时间（两边结果再亮一下）
+EDU.focus("#rb", EDU.t("l39", .05)); EDU.unfocus("#rb", EDU.t("l39", .45));
+EDU.focus("#rs", EDU.t("l39", .5)); EDU.unfocus("#rs", EDU.t("l39", .9));
+</script>

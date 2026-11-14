@@ -1,0 +1,52 @@
+<style>
+  .eyebrow-top { position: absolute; left: var(--mx); top: var(--mt); }
+  .def { position: absolute; left: var(--mx); right: var(--mx); top: 250px; }
+  .def .display { margin-top: 18px; padding-bottom: .14em; line-height: 1.1; }
+  .def .d1 { margin-top: 40px; } .def .d2 { margin-top: 14px; }
+  .ill { position: absolute; object-fit: contain;
+         -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 52%, #000 62%, transparent 100%);
+                 mask-image: radial-gradient(ellipse 72% 70% at 50% 52%, #000 62%, transparent 100%); }
+  .big-ill { left: 40px; top: 150px; width: 1060px; height: 596px; }
+  .right { position: absolute; left: 1140px; top: 300px; width: 660px; }
+  .right .display { margin-top: 10px; }
+  .map { position: absolute; left: var(--mx); top: 250px; width: 1680px; }
+  .map .row { display: grid; grid-template-columns: 560px 80px 1fr; align-items: baseline; padding: 24px 0; border-top: 1px solid var(--hair); }
+  .map .arrow { color: var(--faint); font-size: var(--fs-h2); }
+</style>
+
+<div class="eyebrow-top eyebrow" data-zh="01 · 过拟合是什么" data-en="01 · What overfitting is"></div>
+<div class="def" id="def">
+  <div class="eyebrow" data-zh="定义" data-en="Definition"></div>
+  <div class="display grad" data-zh="过拟合" data-en="Overfitting"></div>
+  <div class="h2 ink2 d1" data-zh="碰巧的细节都记住了" data-en="Model learns flukes in practice data"></div>
+  <div class="h2 c-bad d2" data-zh="新数据反而答不准" data-en="Does worse on new data"></div>
+</div>
+
+<img class="ill big-ill" id="stu" src="img/clay_student.png">
+<img class="ill big-ill" id="exam" src="img/clay_exam.png">
+<div class="right" id="r-a"><div class="eyebrow" data-zh="练习册" data-en="The workbook"></div>
+  <div class="display c-good">100</div><div class="body ink2" data-zh="连印错的也照背" data-en="Even the misprints, memorized"></div></div>
+<div class="right" id="r-b"><div class="eyebrow" data-zh="考试" data-en="The exam"></div>
+  <div class="h1 c-bad" data-zh="题一变，<br>就不会了" data-en="A small change,<br>and he’s lost"></div></div>
+
+<div class="map" id="map">
+  <div class="row" data-zh='<span class="h2">练习册</span><span class="arrow">→</span><span class="h2 c-train">训练数据</span>' data-en='<span class="h2">The workbook</span><span class="arrow">→</span><span class="h2 c-train">Training data</span>'></div>
+  <div class="row" data-zh='<span class="h2">印错的地方</span><span class="arrow">→</span><span class="h2 c-bad">噪声</span>' data-en='<span class="h2">The misprints</span><span class="arrow">→</span><span class="h2 c-bad">Noise</span>'></div>
+  <div class="row" id="m3" data-zh='<span class="h2">把噪声当规律记住</span><span class="arrow">→</span><span class="h2 grad">过拟合</span>' data-en='<span class="h2">Noise as pattern</span><span class="arrow">→</span><span class="h2 grad">Overfitting</span>'></div>
+</div>
+
+<script>
+gsap.set(["#def .d1", "#def .d2", "#stu", "#exam", "#r-a", "#r-b", "#map .row"], { opacity: 0 });
+EDU.in(".eyebrow-top", 0);
+// l03 定义
+EDU.in(["#def .eyebrow", "#def .display"], EDU.t("l03"), { stagger: .08 });
+EDU.in("#def .d1", EDU.t("l03", .45)); EDU.in("#def .d2", EDU.t("l03", .75));
+// l04 背答案的学生
+EDU.out("#def", EDU.t("l04")); EDU.in("#stu", EDU.t("l04", .03), { y: 12, d: .9 }); EDU.in("#r-a", EDU.t("l04", .5));
+// l05 考试
+EDU.out(["#stu", "#r-a"], EDU.t("l05")); EDU.in("#exam", EDU.t("l05", .02), { y: 12, d: .9 }); EDU.in("#r-b", EDU.t("l05", .3));
+// l06 对回概念：练习册 → 训练数据，印错 → 噪声
+EDU.out(["#exam", "#r-b"], EDU.t("l06")); EDU.in(["#map .row:nth-child(1)", "#map .row:nth-child(2)"], EDU.t("l06", .05), { stagger: .9 });
+// l07 把噪声当规律记住 → 过拟合
+EDU.in("#m3", EDU.t("l07", .1));
+</script>

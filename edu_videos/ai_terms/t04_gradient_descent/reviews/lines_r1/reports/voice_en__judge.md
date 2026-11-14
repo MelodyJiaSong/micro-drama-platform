@@ -1,0 +1,31 @@
+# voice_en__judge, round 1 (claude-opus-5-5)
+
+Checked against `materials/voice_en.md`, `script.en.md` (the text is identical to the material) and the chapter eyebrows in `scenes/web/s2–s5.html`.
+
+## 裁决
+- V1 1 理由：b holds up. a's own retell marks l13, l17, l21 and l50 "clearly off" and puts six 必改 rows under V1/V3, which does not fit a score of 2. l13 (the core definition, with the subject held to the end and "all together" left dangling), l20 (the "raise" action is missing, and "per kilometer" is used as a knob name) and the outro teaser l51 "little knob-filled units in layers" are all real written-style or compressed-label lines.
+- V2 1 理由：b holds up, and the strict items make it a 1. The cold open l07 "and that's today's topic" turns into an episode announcement. The linking line l45 "Second, smarter steps:" reads a heading aloud (a also flagged it, only as 建议; it has to be 必改). The outro link l50 "a straight line with two knobs" comes out of nowhere. The chapter card "How big models train" right after "How big a step?" is a garden path (a is right here; b's claim that every title sounds natural does not hold). The chapter 3 opener l30 has a broken "so" link (see 补充).
+- V5 2 理由：a holds up. One warm narrator throughout, and sentence length varies well: l06 2.3s, l11 3.1s, l24 2.7s and l36 2.7s against l18 7.7s and l34 7.7s. The long lines all have comma breaks where a breath fits. b's evidence (l35 runs three numbers in 2.7s, l45 stacks label, name and year) is real, but it is a local problem already scored under V1/V2/V3. It does not break the voice, so it does not drop this dimension to 1.
+- V6 1 理由：Several lines need sentence-level rewrites (l13, l20, l45, l50, l51), and the rewrites the two reviewers offer are not all drop-in. a's l17 (13 words against 11) and l37 are longer than the originals. a's l45 keeps the "Second, smarter steps:" heading it flagged. b's l02, l07, l13 and l45 rewrites are worse (see 驳回). The rewrites cannot go in without another pass.
+- V4 2 理由：I agree with both reviewers that most lines move the explanation forward (l26 and l29 especially). Both missed two problems. In the cold open, l03 and l04 say "draw that whole map" and "no drawing the whole map" in consecutive lines, and l02 already said it, so the opening states the same point three times. l08 re-pictures the l05 blindfold image right after the title card. Both are 补充 below, and under the strict rule the l03–l04 one counts as 必改.
+
+## 补充问题
+| 位置 | 维度 | 级别 | 原文 | 问题 | 改写 |
+|---|---|---|---|---|---|
+| l30 | V2 | 必改 | That run used a learning rate of zero point zero zero five, so what if we'd picked wrong? | This opens chapter 3, so it is a strict linking line. "so" implies the question follows from the number, and it doesn't. a marked the line "a bit off" in its retell but did not add an issue row. b missed it. | That run used a learning rate of zero point zero zero five. What if we'd picked wrong? |
+| l03–l04 | V4 | 必改 | With two knobs, you can work out every setting and draw that whole map. / … so there's no drawing the whole map. | Strict cold open. "Draw (that) whole map" comes in two lines in a row, after l02 has already described the map. The turn at l04 lands a beat late. | l03: With two knobs, that's easy. / l04: But a real model has hundreds of billions of knobs, way too many to map. |
+| l08 | V4 | 记录 | Picture yourself blindfolded on a hillside, trying to reach the valley. | l05 has just set up the same picture (blindfolded on a mountain, looking for the valley), so l08 repeats it right after the title card. Keeping it as a chapter restart is acceptable, but it can be tighter. | So picture yourself up there, trying to reach the valley. |
+
+## 驳回
+- b's claim that the chapter titles sound natural: "How big models train" comes right after "How big a step?", so the ear first reads "How big" as a question about size again. a's rewrite to "Real models" stands.
+- b l02 rewrite "We made a map of those two knobs' settings…": "those two knobs" points back at nothing, because l01 never mentions knobs. It is worse than the original. The original l02 can be tidied but is not the problem.
+- b l07 rewrite "It uses gradient descent. Let's see how that works.": it drops "something called", which tells a novice that a new term is coming. Rewrite instead: "It uses something called gradient descent. Let's see how it works."
+- b l13 rewrite "The gradient combines those slopes…": it loses the actual definition, the direction each knob should turn. a's rewrite "The gradient is the direction all the knobs should turn at once to drop the score fastest." is better.
+- b l45 rewrite "Adam also adjusts…": it drops the frame for the second upgrade and never says Adam is a method, and the "also" points at nothing. Rewrite instead: "The second upgrade is smarter steps: a method called Adam gives each knob its own step size, based on its past slopes." Move "twenty fourteen" to the screen or cut it.
+- a l45 rewrite: it keeps the "Second, smarter steps:" heading that a itself flagged, so the problem stays. Use the rewrite above.
+- b l24 ("gentle trench" → "shallow"): "gentle" refers to the slope along the floor, which is what l25–l26 rely on ("the gentler the slope…"). "Shallow" changes the meaning. Issue not upheld.
+- b l28 rewrite "ten dollars upfront": it brings in a new word, while the whole video says "base fare" (l16, l18, l20, l25). Rewrite instead: "The knobs end up near a ten-dollar base fare and two fifty a kilometer."
+- b l42 ("shifting personification … manufactured"): "each step grabs a small random batch … and goes" is natural spoken English, and the rewrite changes the subject to "we" for no gain. Issue not upheld.
+- a l17 rewrite: at 13 words it is longer than the 11-word original. Rewrite instead: "Darker means a higher score. The taxi fares are made up."
+- a l37 rewrite "The one in the middle, the original, …": it is longer than the original, and "the original" is unclear. Rewrite instead: "Our original rate walks steadily to the bottom."
+- a l51 rewrite "knob-turning models in layers": stacking "models" muddles the idea it is meant to set up. Rewrite instead: "Next time, we'll stack lots of these little units in layers and see what happens." It needs the l50 fix so that "these" has something to point at.

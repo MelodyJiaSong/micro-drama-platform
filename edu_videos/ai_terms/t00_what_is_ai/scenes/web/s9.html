@@ -1,0 +1,58 @@
+<style>
+  .head { position: absolute; left: var(--mx); top: var(--mt); }
+  .head .h2 { margin-top: 12px; }
+  .cards { position: absolute; left: var(--mx); width: 1680px; top: 250px; align-items: start; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; }
+  .c { padding: 32px 36px; display: flex; flex-direction: column; gap: 18px; }
+  .c .k { font-size: var(--fs-micro); font-weight: 700; letter-spacing: .14em; color: var(--accent-text); }
+  .c .t { font-size: 46px; font-weight: 700; line-height: 1.22; }
+  html[lang="en"] .c .t { font-size: 40px; }
+  .c .row { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 22px; }
+  .c .say { font-size: 44px; font-weight: 700; white-space: nowrap; }
+  html[lang="en"] .c .say { font-size: 38px; }
+  .c .note { font-size: var(--fs-caption); color: var(--ink2); line-height: 1.4; }
+  #barsA { margin-top: 4px; }
+  .flow3 { display: flex; align-items: center; gap: 16px; font-size: var(--fs-body); font-weight: 600; }
+  .ask { position: absolute; left: var(--mx); top: 360px; width: 1600px; }
+  .ask .h1 { margin-top: 18px; }
+</style>
+
+<div class="head"><div class="eyebrow" data-zh="05 · 用 AI 时记住三点" data-en="05 · Three things to remember"></div></div>
+<div class="cards" id="cards">
+  <div class="c box" id="k1"><div class="k" data-zh="第一" data-en="ONE"></div>
+    <div class="t" data-zh="没学过的，<br>也可能硬答" data-en="May answer<br>anyway"></div>
+    <div class="body1" id="b1"><div class="row"><div id="imgA"></div><div class="say c-bad" id="sayA"></div></div>
+      <div id="barsA"></div>
+      <div class="note" id="noteA" data-zh="只在 0–9 里挑" data-en="Picks from 0–9 only"></div></div></div>
+  <div class="c box" id="k2"><div class="k" data-zh="第二" data-en="TWO"></div>
+    <div class="t" data-zh="再有把握，<br>也会错" data-en="Predictions,<br>not truth"></div>
+    <div class="body1" id="b2"><div class="row"><div id="img2"></div><div class="say c-bad" id="say2"></div></div></div></div>
+  <div class="c box" id="k3"><div class="k" data-zh="第三" data-en="THREE"></div>
+    <div class="t" data-zh="本事和毛病，<br>跟数据有关" data-en="Data shapes<br>what it can do"></div>
+    <div class="body1" id="b3"><div class="note" data-zh="也跟设计、训练有关" data-en="So do design and training"></div></div>
+    <div class="t accent" id="askd" style="font-size:var(--fs-body)" data-zh="先看：<br>拿什么数据学的？" data-en="First check:<br>what data?"></div></div>
+</div>
+<div class="ask" id="ask"><div class="eyebrow" data-zh="AI 很有把握时" data-en="When AI sounds sure"></div>
+  <div class="h1" data-zh='这种问题，<span class="accent">它学过吗？</span>' data-en='Has it <span class="accent">seen this before?</span>'></div></div>
+
+<script>
+const T = EDU.tl;
+const A = D.ood.A, W2 = D.wrong_examples.find(w => w.true === 2);
+document.querySelector("#imgA").appendChild(tileEl(A.img, 96));
+document.querySelector("#sayA").textContent = L(`「${pct(A.conf)}% 把握：是 ${A.pred}」`, `“${pct(A.conf)}% sure it’s a ${A.pred}”`);
+document.querySelector("#img2").appendChild(tileEl(W2.img, 96));
+document.querySelector("#say2").textContent = L(`「${pct(W2.conf)}% 把握：是 ${W2.pred}」`, `“${pct(W2.conf)}% sure it’s a ${W2.pred}”`);
+document.querySelector("#barsA").appendChild(probBars(A.proba, A.pred, 470, 70, "--d-bad").el);
+gsap.set(["#k1", "#k2", "#k3", "#noteA", "#barsA", "#askd", "#ask"], { opacity: 0 });
+// l43 记住三点（眉题已在）；l44 字母 A → 92% 是 4
+EDU.in("#k1", EDU.t("l44", 0.05));
+// l45 把握只是十个数字间比较；l46 小孩会说不是数字
+EDU.in("#barsA", EDU.t("l45", 0.4)); EDU.in("#noteA", EDU.t("l45", 0.6));
+// l47 潦草的 2：上一张只留标题
+EDU.out("#b1", EDU.t("l47")); EDU.dim("#k1", EDU.t("l47"), 0.45); EDU.in("#k2", EDU.t("l47", 0.05));
+// l48 数据；l49 先问
+EDU.out("#b2", EDU.t("l48")); EDU.dim("#k2", EDU.t("l48"), 0.45); EDU.in("#k3", EDU.t("l48", 0.05));
+EDU.out("#b3", EDU.t("l49")); EDU.in("#askd", EDU.t("l49", 0.1));
+// l50 带走的一个问题
+EDU.out("#cards", EDU.t("l50")); EDU.in("#ask", EDU.t("l50", 0.08));
+EDU.out("#ask", EDU.S.duration - 0.5);
+</script>

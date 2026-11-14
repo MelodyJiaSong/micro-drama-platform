@@ -1,0 +1,73 @@
+# 第 1 轮之后改了什么
+
+## 按问题清单的方案（review_run.py fix 登记）
+
+- I1 [严重·implemented] 世界物理·P2 道具来源与去向 s1_st2、s1_st1 → s1_st2、s1_st4：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s1_report.md
+- I2 [严重·implemented] 世界物理·P4 重力与支撑 s2_st5、s2_st8、s2_st4（规则源 bg2 场景卡）、s2_st1 ↔ s2_st3、s1_st2：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s1_report.md、fixes/s2_report.md
+- I3 [严重·implemented] 世界物理·P5 身体可行 s4_st1、s3_st7：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s3_report.md、fixes/s4_report.md
+- I4 [严重·implemented] 世界物理·P2 道具来源与去向 s5_st3、s5_st2→st12→st3→st14、s5_st6→st7、s5_st7、s5_st3→st14、s5_st8→st9：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s5_report.md
+- I5 [严重·implemented] 世界物理·P8 首帧 = 第 0 秒 s5_st3、s8_st2、s5_st2：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s5_report.md、fixes/s8_report.md
+- I6 [严重·implemented] 世界物理·P9 效果有来源 s5_st1、s5_st8→st9、s8_st7：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s5_report.md、fixes/s8_report.md
+- I7 [严重·implemented] 世界物理·P6 穿模与距离 s6_st6：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s6_report.md
+- I8 [严重·implemented] 世界物理·P9 效果有来源 s7_st3、s7_st7：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s7_report.md
+- I9 [严重·implemented] 人物逻辑·C9 像真人 s3_st4 → s3_st8 → s3_st6、s2_st5 → s2_st8 → s2_st4：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s2_report.md、fixes/s3_report.md
+- I10 [严重·implemented] 人物逻辑·C10 动机来自人物 s3_st4、s3_st6（整镜）/ s3_st8 6–9：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s3_report.md
+- I11 [严重·implemented] 人物逻辑·C11 反应合比例 s3_st6（整镜）/ s3_st8 6–9、s3_st4、s2_st5 → s2_st8 → s2_st4：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s2_report.md、fixes/s3_report.md
+- I12 [严重·implemented] 人物逻辑·C11 反应合比例 s8_st10、s8_st3 / s8_st8：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s8_report.md
+- I13 [严重·implemented] 人物逻辑·C10 s6_st3：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s6_report.md
+- I14 [严重·implemented] 连续性·K2 钱账 s5_st3：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s5_report.md
+- I15 [严重·implemented] 连续性·K5 站位接续 s6_st6、s3_st1 → s3_st2：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s3_report.md、fixes/s6_report.md
+- I16 [严重·implemented] 连续性·K6 环境接续 s6_st6、s2_st1 ↔ s2_st3、s5_st6 ↔ s5_st7：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s2_report.md、fixes/s5_report.md、fixes/s6_report.md
+- I17 [严重·implemented] 台词（时长与逻辑）·D1 说得完 s8_st9、s1_st1、s6_st3、s4_st1：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s1_report.md、fixes/s4_report.md、fixes/s6_report.md、fixes/s8_report.md
+- I18 [严重·implemented] 台词（时长与逻辑）·D8 跨语言说清 s3_st4：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s3_report.md
+- I19 [严重·implemented] 母语听感·N8 修辞痕迹 s7_st1、s4_st5、s3_st2、s8_st4、s4_st2、s3_st4、s6_st3、s5_st7、s4_st3、s5_st1：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s3_report.md、fixes/s4_report.md、fixes/s5_report.md、fixes/s6_report.md、fixes/s7_report.md、fixes/s8_report.md
+- I20 [严重·implemented] 时代与世界观·E5 文字 s7_st1、s7_st2：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s7_report.md
+- I21 [严重·implemented] 时代与世界观·E7 规则源 s7_st2、s1_st1、s1_st2、s1_st4、p4 刮板（s8_st5、s8_st9、s8_st6）：刻痕改为交错杂乱、看不出字形（s7 st1/st2 文字与首帧重出）；山入不入画、怎么写待用户定（bible §9 与故事点 1B/4A/41A），s1 三张首帧的山暂不动
+- I22 [严重·implemented] 镜头规格·F1 景别与人物大小 s8_st7、s5_st3 / st14 / st13 / st7、s7_st6、s7_st3、s5_st12、s6_st5、s8_st10、s8_st9 / st6 / st3：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s5_report.md、fixes/s6_report.md、fixes/s7_report.md、fixes/s8_report.md
+- I23 [严重·implemented] 镜头规格·F3 画面位置 s5_st8、s7_st6、s7_st3、s8_st10、s5_st8 / st9、s6_st6、s8_st4、s5_st2、s6_st2、s8_st9 / st6 / st3、s6_st4：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s5_report.md、fixes/s6_report.md、fixes/s7_report.md、fixes/s8_report.md
+- I24 [严重·implemented] 镜头规格·F4 节拍秒数 s7_st7、s7_st3、s5_st3、s6_st3、s6_st4、s7_st6、s8_st10、s5_st14、s6_st1：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s5_report.md、fixes/s6_report.md、fixes/s7_report.md、fixes/s8_report.md
+- I25 [严重·implemented] 镜头规格·F8 看点画得出来 s5_st8、s8_st7、s5_st3、s7_st4、s7_st5：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s5_report.md、fixes/s7_report.md、fixes/s8_report.md
+- I26 [严重·implemented] Prompt 文本·T1 自相矛盾 s1_st1、s3_st5；s8_st3/4/5/6/8/9：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s1_report.md、fixes/s3_report.md
+- I27 [严重·implemented] Prompt 文本·T4 图文一致 s5_st3：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s5_report.md
+- I28 [严重·implemented] 角色立场·Riley·V1 语言 s3_st4、s4_st1、s3_st1、s3_st7、s5_st4/st13、s6_st5、s8_st5/st9、s8_st2、s5_st2、s6_st1、s5_st11、s2_st8：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s2_report.md、fixes/s3_report.md、fixes/s4_report.md、fixes/s5_report.md、fixes/s8_report.md
+- I29 [严重·implemented] 角色立场·Riley·V2 肢体 s4_st1、s8_st2、s5_st2、s6_st1、s5_st12：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s4_report.md、fixes/s5_report.md、fixes/s8_report.md
+- I30 [严重·implemented] 角色立场·Riley·V6 动机 s3_st4、s4_st1、s8_st2→s8_st10、s6_st3、s8_st3、s8_st8、s7_st4–s7_st3、s5_st13、s7_st2、s3_st1：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s3_report.md、fixes/s4_report.md、fixes/s5_report.md、fixes/s6_report.md、fixes/s7_report.md、fixes/s8_report.md
+- I31 [严重·implemented] 角色立场·Felix·V1 语言 s3_st4、s3_st8、s3_st7：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s3_report.md
+- I32 [严重·implemented] 角色立场·Felix·V2 肢体 s3_st4→st8→st6、s3_st4：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s3_report.md
+- I33 [严重·implemented] 角色立场·Felix·V3 表情 s3_st8→st6、s3_st1：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s3_report.md
+- I34 [严重·implemented] 角色立场·Felix·V4 视线 s3_st4、s3_st1：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s3_report.md
+- I35 [严重·implemented] 角色立场·Felix·V5 回应 s3_st4、s3_st8→st6、s3_st8：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s3_report.md
+- I36 [严重·implemented] 角色立场·Felix·V6 动机 s3_st4、s3_st4→st8→st6、s3_st8、s3_st1：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s3_report.md
+- I37 [严重·implemented] 角色立场·Tertius·V5 回应 s4_st1：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s4_report.md
+- I38 [严重·implemented] 角色立场·Fortunata·V2（站位）· prompt s6_st1/st2/st5：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s6_report.md
+- I39 [严重·implemented] 角色立场·Vibia·V3 表情 s2_st5、s2_st4：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s2_report.md
+- I40 [严重·implemented] 角色立场·Vibia·V5 回应 s2_st5、s2_st8：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s2_report.md
+- I41 [严重·implemented] 角色立场·Vibia·V6 动机 s2_st5、s2_st8、s2_st4：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s2_report.md
+- I42 [严重·implemented] 角色立场·Helvia·V5 回应 s8_st6、s8_st5、s8_st9：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s8_report.md
+- I43 [主要·implemented] 世界物理·P1 手数 s2_st5：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s2_report.md
+- I44 [主要·implemented] 世界物理·P2 道具来源与去向 s3_st3 / st7 / st4、s3_st7：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s3_report.md
+- I45 [主要·implemented] 世界物理·P8 首帧 = 第 0 秒 s3_st8：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s3_report.md
+- I46 [主要·implemented] 世界物理·P7 服装与动作相容 s8_st5：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s8_report.md
+- I47 [主要·implemented] 人物逻辑·C9 像真人 s8_st9 / s8_st10 / s8_st6 / s5_st12 / s5_st7 / s6_st6、s8_st8：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s8_report.md
+- I48 [主要·implemented] 连续性·K4 光与时间 s7_st3、s7_st7、s1_st5：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s1_report.md、fixes/s7_report.md
+- I49 [主要·implemented] 连续性·K8 镜间接点 s6_st5 → s6_st6、s3_st8 → s3_st6：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s3_report.md、fixes/s6_report.md
+- I50 [主要·implemented] 母语听感·N9 / N7 s1_st2：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s1_report.md
+- I51 [主要·implemented] 镜头规格·F1 景别与人物大小 s2_st4：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s2_report.md
+- I52 [主要·implemented] 镜头规格·F2 机位与朝向 s2_st3、s1_st4：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s1_report.md、fixes/s2_report.md
+- I53 [主要·implemented] Prompt 文本·T2 否定句 s1_st4、s3_st6、s5_st3、s2_st3、s7_st4、s7_st1、s5_st8：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s1_report.md
+- I54 [主要·implemented] Prompt 文本·T5 混入别镜 s1_st1、s5_st10、s7_st1、s8_st2：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s1_report.md
+- I55 [主要·implemented] Prompt 文本·T7 长度与重点 s1_st2（4903 字）、s8_st9（4882 字）、s6_st3（4782 字）、s1_st4：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s1_report.md
+- I56 [主要·implemented] 角色立场·Riley·V5 回应 s3_st1、s3_st7、s5_st4/st13、s6_st5、s8_st5/st9、s1_st5、s2_st4、s4_st3、s8_st6→s8_st7、s5_st7→s6_st3：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s1_report.md、fixes/s3_report.md、fixes/s8_report.md
+- I57 [主要·implemented] 角色立场·Felix·V7 跨集一致 c2_Felix.md：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s1_report.md
+- I58 [主要·implemented] 角色立场·Tertius·V2 肢体 s4_st1：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s4_report.md
+- I59 [主要·implemented] 角色立场·Asellina·V5 回应 s5_st14：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s5_report.md
+- I60 [主要·implemented] 角色立场·Asellina·V6 动机 s5_st14、s5_st7、s5_st13：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s5_report.md
+- I61 [主要·wontfix] 角色立场·Fortunata·V1 语言 s6_st1、s6_st5：Fortunata 要不要开价、开多少会改钱账，交用户定（见交付说明）（理由：Fortunata 要不要开价、开多少会改钱账，交用户定（见交付说明））
+- I62 [主要·implemented] 角色立场·Fortunata·V3 表情 s6_st1：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s6_report.md
+- I63 [主要·implemented] 角色立场·Fortunata·V5 回应 s6_st2、s6_st1：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s6_report.md
+- I64 [主要·implemented] 角色立场·Fortunata·V6 动机 s6_st5、s6_st1：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s6_report.md
+- I65 [主要·implemented] 角色立场·路人与群众·V5 回应 s4_st1、s1_st4、s8_st8：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s1_report.md、fixes/s4_report.md、fixes/s8_report.md
+- I66 [主要·implemented] 角色立场·路人与群众·V6 动机 s5_st8、s8_st8：按 r1 问题清单修复（follow-up 066，Claude 修复代理按场改、主会话合并）：分镜文字、overhead、首帧（_r8_before→_r8_candidate），逐条处理见 fixes/s5_report.md、fixes/s8_report.md
+
+## 补充说明
+follow-up 066：8 场按 r1 问题清单修复（分镜文字、overhead、28 张首帧局部重画、故事稿同步）；面包房问路按故事点 15B / 15b A（s3_st6 删除）；s2 满街浑水与 bg2 场景卡；俯视图人物色改按卡号固定；负面词「升上天空的白烟」「像字母的刻痕」「金属落水管」；新机检 [跨镜]；各场处理见 ai_videos/chuanyue_yiri/reviews/ep01_20261114-111624_pregen_r1/fixes/s*_report.md

@@ -1,0 +1,782 @@
+{
+ "version": 2,
+ "id": "ep01_20261108-111837_pregen_r2",
+ "chain": "ep01_20261108-102006_pregen_r1",
+ "loop": 2,
+ "max_loops": 3,
+ "parent": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-102006_pregen_r1",
+ "title": "ep01 · 场一 · 出片前 第 2 轮 · 11-08 11:18",
+ "target": "ai_videos/chuanyue_yiri/episodes/ep01",
+ "episode": "ep01",
+ "stage": "pregen",
+ "stage_name": "出片前（故事＋分镜＋prompt＋首帧/故事板）",
+ "gate_stage": true,
+ "scenes": [
+  "s1"
+ ],
+ "created_at": "2026-11-08T11:18:37",
+ "author": "Claude Code (claude-opus-5-5)",
+ "known": "1) 维苏威：按用户 2026-11-06「只入画、全片不提」。第 1 轮 era 审稿人指出：从海门外朝东看，画右那座绿山其实是南面的 Monti Lattari，维苏威在画左身后、出画；山本身不用再报，冒烟或 prompt 写火山词仍要报。2) 场一之外的场不在本单范围。",
+ "changes": "## 作者（Claude Code）在第 1 轮之后的改动\n\n- 剧级负面词：删「木桶」「火山」「冒烟的山」（bible §9：prompt 不写火山词），加「主持人戴墨镜 / 背包 / 帽子」。\n- 编译器：新增可选镜头字段 extras（没有三视图的路人数）；有路人的镜头不再写「多出来的人」，改写「画面里另有 N 个路人」（ai_video_management follow-up 335）。s1 st3、st4、st5 已标 extras。\n- 新增两个视角卡与底图：bg1-2 海门门洞（st3）、bg2-2 海门内回望（st5），各自的场景行替代借用的整卡场景行。\n- 旧镜组资料包、镜组板和旧场景板全部移到 _obsolete，不会再被上传。\n- 场景图修订：bg2、bg5–bg8、bg10、bg11 重出，新建 bg12 浴场门外、bg13 正午十字路口（s4_st4、s8_st7 改挂）。\n- s1 五张首帧按新的统一几何全部重画（旧图在各镜 planning/_r1/）。\n\n## 分镜作者逐条处理第 1 轮问题\n\n# s1 第 2 版改动清单（出片前审查 ep01_20261108-102006_pregen_r1 之后的便宜改动）\n\n新场对象：`SCRATCH/s1_r2.json`（已用 `EpisodeWorkflowEntity.validate_content` 校验过，无 `groups`）。播放顺序不变：st1 → st2 → st4 → st3 → st5。时长 st1 10→12、st4 12→16、st5 11→13，st2 19、st3 14 不变；全场 66→74 秒。台词逐字未改，只在 st2、st4 的说明括号里加了 garum 的读音。\n仓库里直接改了：s1 五镜的 `planning/overhead.toml` 和 `planning/stN_first_frame_prompt.txt`。overhead 在 SCRATCH 沙盒里跑过 `shot_overhead.render`（`s1r2_work/run_sandbox.py`；沙盒里的 filming.json 已换成 s1_r2），五镜都没有 blocker 和 warning，看过 st1/st3/st4/st5 的图。仓库里的 `_overhead.png`、`_overhead_ref.png`、`s1_blocking.png` 和旧的 `previz.json` 还是旧的，等主会话合并后重跑工具。\n\n## 逐条（审稿人 · 镜头 · 发现 → 处理）\n\n### framing\n- framing · st4 · 俯视图朝海、首帧朝城，相反 → 按首帧构图重写 overhead：镜头 (38.5,59.5) 朝城斜拍，城门在画面偏左约 7°，渔夫和船在画左约 6 m（约占画高一半），Riley 在画右前景 2.2 m（腰以上），船尾伸出画左；首帧 prompt 按同一套写。\n- framing · st5 · 首帧约 21 m，俯视图 10.5 m → 统一成：Riley 0 秒在大门洞口，离镜头约 11.9 m（约占画高 1/4），5.5 秒停在约 5.7 m（约占画高一半）；toml、文字、首帧 prompt 三处同一组数字。停步从 4.5 秒挪到 5.5 秒，步速约 1.3 m/s。\n- framing · st3 · 俯视图门洞是实心墙、停点在墙外；首帧起点离拱口 2 m、镜头 4–5 m → toml 加 `walkable = [\"b03\"]`，用两块 object 画出约 10 m 长的拱顶通道，Riley 第 6 秒停在拱顶下（进门约 1.5 m），镜头停在门洞口的拱下离她 2 m；0 秒她离门洞口 5.5 m，镜头在她身后 2.5 m（28 mm，膝盖以上）；首帧 prompt 同步。\n- framing · st4 · 鱼筐在船尾、3–5 秒抬筐来不及 → 鱼筐放在船头往后约 1 m 的船舱里，两人就站在它旁边；抬筐改成 4–7.5 秒（3.5 秒）。\n- framing · st5 · 驴车 6.7 秒才入画 → 改成驮筐驴，起点算过：第 3 秒左右从画右入画，第 6 秒前后经过她（相隔约 2.7 m，在画内 +8°～+17°）。\n- framing · st1 · 首帧人占画高 1/2、城门在画左 → 改成开场她在 6.5 m（约 1/3），转身后朝镜头走三步到 4.3 m（约一半多）；镜头、Riley、城门三点一线，城门在她头顶正上方；首帧 prompt 按 0 秒（1/3）写。\n- framing · st2 · 城门不在身后正中、机高 1.65 m → 文字改成「城门在她左肩后方（画右）」，拇指越过左肩正好指向它；overhead 机位重算，城门偏轴约 +12°，机高改 1.75 m（aim_h 1.6）。\n- framing · 全场 · 俯视图 N 箭头与「城在东」矛盾 → s1 的文字、光线、toml 注释里不再写任何东南西北，只说「城的后面」「朝海的一面」「镜头身后」；N 箭头、`上方为北` 用法行和 bg1/bg2 平面图朝向归工具 / 场景卡（主会话）。\n- framing · st4、st5 · 没写画内总人数 → st4「画面里一共三个人：Riley 和两个渔夫」，st5「一共两个人和一头驴」，st3 保留「三个人和一头骡子」；三镜加 `extras`（st3=2、st4=2、st5=1）。\n- framing · 其他 · 木桶负面词、stale groups、负面词重复 → 文字里不再出现「木桶」；其余归主会话（workflow.json、groups 目录、编译器）。\n- framing · 其他 · st4 中年渔夫 0 秒抬头笑 → 见 character 第 1 条。\n\n### physics\n- physics · st2 · 拳头摊开就「平铺、互不重叠」做不到；道具图只有 3 枚 → 改成「刚摊开时微微叠在一起，接着她用左手拇指把钱拨开两下，9 枚都露出来」（13–16 摊开，16–18 拨开），并写「本镜一共 9 枚……道具图里三种币各画了一枚，只取形制和颜色，不是本镜的枚数」。\n- physics · st3 · 正文要木桶、负面词禁木桶 → 改成「装着湿灰浆的藤筐（筐里垫粗麻布）」，全场文字不出现「木桶」。\n- physics · st4 · 2 秒做不完、绳子去向没写、首帧筐无把手 → 2.5–4 秒「松手把绳子丢在沙上（绳头仍系在船头）、转身跨回船边」，4–7.5 秒「各用双手抓住筐沿的提耳」抬出，筐沿写明两只藤编提耳；放到两人脚边靠镜头一侧的沙上，与 toml 鱼筐路线一致。\n- physics · st1 · 下摆塞着却被风吹 → 「衬衫下摆一直塞在裤腰里，海风只吹动她的发梢和短袖的袖口」；首帧负面词加「从裤腰里飘出来的衬衫下摆」。\n- physics · st5 · 迈上人行道没写 → 「第 3 秒抬脚迈上高出路面的路沿，身体随之一抬」，beats、toml 都有。\n- physics · st3 · 首帧墙面有暖色直射光斑 → 光线改成「太阳被城墙挡住：门洞外城墙、门洞口和工人都在淡蓝色阴影里，没有直射阳光、没有光斑」，首帧 prompt 同写并加负面词「墙上的阳光斑」。\n- physics · st5 · 暗门洞里的人被正面照亮 → 首帧 prompt 写「只看得出暗轮廓和肩头一点微光，脸看不清」，负面词加「门洞阴影里被正面照亮的人」；光线行写走出几步进到散射光里才看清脸。\n- physics · st1 · 逆光却没有影子 → 光线行与首帧 prompt 都写「她身前的黑沙上有一道朝镜头拖长的影子」。\n- physics · 全场（存疑）· 「上方为北」可能带偏光向 → 判定：文字里已不写方位、光线全部相对城和镜头写，s1 不再依赖指北；用法行和平面图朝向归主会话。\n- physics · st2 · 道具图大小币比例 1.7 倍 → 不改：道具图 / p2 卡不在我的范围（主会话或出图时按 1.4 倍重出）。\n- physics · 其他 · 鱼太大、灰浆像白色干块 → 鱼写「手指长的银亮小鳀鱼和小沙丁鱼」；灰浆写「湿的灰色」，首帧负面词加「一拃长的大鱼」「干的白色石灰块」。\n\n### continuity\n- continuity · st3 · 城门边凭空多出一架脚手架 → 删掉门洞旁的脚手架；工人改成站在地上、在大门洞口里面右侧墙根把一筐湿灰浆扛上肩（理由：神庙脚手架在墙里、墙头 8 m，跟拍机位离墙 5–10 m 时仰角 35°–50°，在画框外，工人的反应拍不进画；地面工人离她约 1 m，反应看得清）。门洞里两壁「旧裂缝刚用新灰浆补过」接住「still fixing the damage」。首帧 prompt 写「城墙这一面干干净净」，负面词加「脚手架、梯子」。\n- continuity · st3 · 木桶 → 同 physics。\n- continuity · st3 · 光向 → 同 physics。\n- continuity · st5 · 光线写「西侧」、平面南北翻转 → st5 光线重写：「从城里朝城门拍，太阳在镜头身后偏画左、低低的，画面里看不到太阳；城墙朝城里的一面和画右那排墙上半截暖金，画左和大半街面在阴影里」；不写方位。bg1 / bg2 平面图互相翻转属于场景平面图（主会话）。\n- continuity · st5 · 场景行写「街尽头被房子挡住」、垫脚石、喷泉 → 本镜 action 正面写「街的尽头是城墙，墙上一大一小两个拱形门洞」；toml 注明喷泉、垫脚石在平面图 y≥20、在镜头身后。bg2 场景行本身要由主会话给 st5 单写一版（我不能改卡、编译器没有按镜场景文本字段）。\n- continuity · st3→st5 · 挑夫出门往画右拐，st5 没有路口 → 改成「沿通道中间一直往前走，走出城里那头的亮处，顺着街越走越小」，不拐弯。\n- continuity · st3 · 门洞前是平路，看不出刚爬完坡 → 「坡道最后一段，脚下的大石块路微微上坡」。\n- continuity · 全部 · 人物描述「或松松拢起」→ 每镜 action 写「乌黑的长发披散」；人物卡本身归主会话。\n- continuity · st4（存疑）· 机位朝向差 70° → 已按首帧方向重写 overhead（同 framing 第 1 条），核实过城门在画内 −7°。\n- continuity · 其他 · st4 两个渔夫站在船头同一侧 → 文字改成「两人并排站在船头靠镜头这一侧」，与首帧和 toml 一致。\n\n### character\n- character · st4 · 中年渔夫 0 秒抬头笑看 Riley → 首帧 prompt 写「两人都低着头看手里的绳子和船头，表情吃力，不看画右的 Riley，也不看镜头」，负面词加「渔夫抬头、渔夫笑着看人」；文字写中年渔夫「一眼也没看她」。\n- character · st3 · 工人平视画左发呆 → 0 秒工人「弯着腰两手抓着筐沿，低头看着筐」。\n- character · st5 · Riley 不看迎面的驴、错过赶车人那一眼 → 重排：3–5.5 她看见迎面来的驴、放慢、停下让路；5.5–7 赶驴人打量她的裤子；7–8 她低头看自己的裤子，再抬头冲他尴尬一笑、耸肩；8 秒后才转向画左看铺子，11–13 转回镜头无声地笑。\n- character · st4 / st3 · 当地人瞥她时她没有回应 → st4：8.5–9.5 她冲年轻渔夫友好地笑、点头，他不好意思地低头；st3：4–5 她冲工人咧嘴一笑、点一下头，他摇头笑。\n- character · st1 · 7.5 m 外说悄悄话、脸看不清 → 选「她朝镜头走三步」：3.5–5.5 秒走到 4.3 m（约占画高一半多）再开口；overhead 同步。\n- character · st4 · 俯视图机位在她背后、转 140° → 重写 overhead：镜头在她左前方 2.2 m，0 秒看到她的左侧脸；说台词时转头和肩约 120°（她看的渔夫比她更深，转角天然大于 90°，写成「转过头和肩把脸凑近镜头」）。\n- character · st4 · 7.6 m 外「目光落在裤子上」读不出 → 她和年轻渔夫相距约 4.6 m，动作写成「从她的脸看到她的裤子，眉毛一挑」，反应占独立一拍（7.5–8.5）。\n- character · st4/st3/st5 · 三个路人同一个反应、模板「再接着干活」套到赶驴人 → 去掉统一模板句，分档写：中年渔夫完全不看；年轻渔夫飞快一瞥、被她笑回去后不好意思；工人愣住盯着看、摇头笑；赶驴人从头到脚打量、走过去还回头、摇头。「目光停在裤子上」只留给赶驴人这一次（s2 喷泉女人的重头戏不受影响）。\n- character · st3→st5（存疑）· 挑夫往画右拐无路可去 → 判定：bg2 平面图门内没有横街，改成直走、走远（同 continuity）。\n- character · 其他 · 鱼不 tiny、st5 光向 → 已改（见 physics、continuity）。\n\n### dialogue\n- dialogue · st4 · 3.5 秒说不完（旧版实测 4.9 秒）→ 说话段改成 10–14.5 秒（4.5 秒），收尾 14.5–16 回头看鱼（1.5 秒），镜长 12→16；台词不改。\n- dialogue · st1 · 说完只剩约 1.5 秒 → 说话段 5.5–10 秒（4.5 秒），回望 10–12 秒，镜长 10→12。\n- dialogue · st2、st4 · garum 没注音 → 两镜对白括号里加「garum 读 GAH-rum，重音在前」（格式照 s7 的「发音 …」）；s3、s5、s6 的 Garum 不在我的范围，请主会话统一。\n- dialogue · st2 · story.md 摊钱动作写在台词前 → 不改：story.json / story.md 不归我；分镜已是「说到 is this 时摊开」，请主会话在故事稿里挪位置。\n- dialogue · 其他 · lines.md 截断、`_filming_content.json` 旧台词 → 审查材料工具和旧文件归主会话。\n- dialogue · 其他 · 镜头编号与播放顺序不一致 → 不改：规则「新加的镜头用最小编号，不重排旧号」。\n\n### era\n- era · groups g1/g2 和旧 scene_board 带白烟、旧 bg2 → 不在我的范围（主会话删除 stale groups 包）；s1_r2 没有 groups。\n- era · st5 · 驴拉小车走海门坡 → 改成「牵着一头驮着两只藤筐的驴（驮畜，不拉车）」，首帧负面词加「车辆、车轮」；场景卡的「车辙」归主会话的 st5 场景行。\n- era · st1/st2/st4 · 托斯卡纳式房子、烟囱、带框窗 → 首帧 prompt 正面写「楼上只开几个没有窗扇的小方窗洞」，负面词加「烟囱、带木框的规整窗户、托斯卡纳式农舍」；bg1 卡和底图归主会话。\n- era · st5 · 城门从里面只剩一个拱；神庙在门边却看不到 → 写明「一大一小两个拱形门洞（大的在画面中间偏右）」；存疑项判定为加：维纳斯神庙在海门内、进城时在右手，回望城门时在左边，所以写「画左远端紧挨城墙是一段高出屋顶的神庙平台素墙，墙头露出几根脚手架木杆」（同时接住 st1 里看到的唯一那处脚手架）。\n- era · st2 · p2 钱币像出土古币、quadrans 头像（存疑）→ 不改：道具图和 p2 卡不在我的范围，交主会话出图时处理。\n- era · 全场 · 负面词「木桶」与正文冲突 → 正文不再用木桶（灰浆藤筐）；workflow.json 已由主会话删掉。\n- era · st2（存疑）· 正文点名「相机、手机、自拍杆」可能招来器材 → 判定：作者任务书要求自拍镜写明「右臂伸向画外持镜（画面里看不到相机、手机或自拍杆）」，保留 action 里这一处；镜头行删掉重复的那句，只写「右臂末端的视点」；首帧 prompt 只写「画面里看不到任何拍摄器材」。人物卡里那句归主会话。出片后看 13–16 秒拳头伸向镜头时有没有冒出手机。\n- era · bg1（存疑）· 山腰雾带可能被动成白气 → 不改：bg1 卡和底图归主会话；s1 的文字和首帧 prompt 一字不提山和雾，负面词也去掉了「冒烟的山、火山」。\n- era · 规则源 · bg1 卡把山叫维苏威、r01 石灰坑、dossier 负面词 → 不在我的范围（卡 / 考据），交主会话。\n- era · 其他 · 首帧头发偏棕 → 五个首帧 prompt 写「乌黑发亮、近乎纯黑」，负面词加「棕色或栗色头发」。\n- era · 其他 · st5 首帧 prompt 与视频 prompt 光线打架、场景行有喷泉 → 光线两处统一（太阳在镜头身后偏画左）；场景行见 continuity。\n\n### native_ear\n- native_ear · st2 · this 的画面落点（存疑）→ 已落实：16–18 秒手心里 9 枚钱拨开、全部露出、对焦清楚，她看着镜头笑。\n- native_ear · st4 · tiny fish 能否看见（存疑）→ 已落实：筐里是手指长的小鳀鱼和小沙丁鱼，筐最后放在画左中景两人脚边、整个在画内，说台词时在她身后可见。\n- native_ear · 结尾 / dextram 回收无法核实 → 审查材料导出缺口，归主会话（下一轮把全集台词给盲审）。\n- native_ear · 可选改写 → 不采用：台词已定稿，时长问题用加长镜头解决。\n\n### prompt_text\n- prompt_text · st3 · 正文木桶 vs 负面词 → 同 physics。\n- prompt_text · st3/st4/st5 · 有路人还写「多出来的人」→ 三镜加 `extras`（2/2/1）和总人数句；编译器规则归主会话。\n- prompt_text · st5 · 首帧距离与 overhead 不符 → 同 framing。\n- prompt_text · 全部 · 负面词「火山」「冒烟的山」→ workflow.json 归主会话；我写的五个首帧 prompt 已删掉这两个词。\n- prompt_text · st5 · 场景行与本镜矛盾 → 同 continuity（需主会话给 st5 本镜场景行）。\n- prompt_text · st5 · 驴车违背考据 → 同 era。\n- prompt_text · st3 · 场景行是 bg1 沙滩仰拍 → 不能改卡、filming 的 `background` 只能填 bg 键，没有合适的门洞卡；本镜 action 开头把门洞写清（坡道最后一段、一大一小两个拱、约 10 m 拱顶通道、补过的裂缝、尽头的亮出口）。建议主会话加一张 bg1 的门洞视角（如 `bg1-2 海门门洞`）或给编译器加「本镜场景说明」字段，然后 st3 写 `\"background\": \"bg1-2\"`。\n- prompt_text · st2（存疑）· 9 枚平铺做不到、记账句会诱发付钱 → 判定：摊开改成「微微叠在一起再用拇指拨开」；记账句改成「这一镜不付钱：开始 9 枚，结束仍是 9 枚」（保留作者任务书要的守恒说明，但不再出现「付出」二字）。\n- prompt_text · 全部 · 「本场」行带进别镜的钱、渔夫、骡子 → 场 `purpose` 改写：去掉钱币枚数和骡子，只留场的目的；编译器只留场目的的做法归主会话。\n- prompt_text · 全部 · 参考用法「上方为北」与光线矛盾 → 同 framing（文字不写方位；用法行归主会话）。\n- prompt_text · st4 · 首帧与俯视图矛盾 → 同 framing 第 1 条。\n- prompt_text · st1 · 图文不一致 → 同 framing。\n- prompt_text · st4 · 鱼太大 → 同 physics。\n- prompt_text · st3 · 俯视图门洞太薄 → 同 framing（walkable＋通道两壁 object）。\n- prompt_text · 全部 · 人物卡「或松松拢起」→ 每镜写死披散；卡归主会话。\n- prompt_text · 全部 · 缺墨镜、背包、帽子 → workflow.json 归主会话；首帧 prompt 人物行与负面词都补了。\n- prompt_text · 全部 · 负面词、声音行重复 → 编译器，归主会话。\n- prompt_text · 全部 · 人物卡五官与 bible 矛盾 → 卡，归主会话。\n- prompt_text · 其他 · st1/st3/st2 光线 → 已统一（见 physics）。\n- prompt_text · 其他 · 人走小门洞、驮畜走大门洞 → 不改：本镜的骨架是「跟着牵骡子的挑夫进城」，清晨没有车，人跟着骡子走大门洞也说得通；改走小门洞会把她和骡子分开。文字里写明两个拱、她走的是大的。\n\n## 交主会话的事项\n1. 合并 `s1_r2.json` 后在仓库根跑 `python tools/shot_overhead.py --all ai_videos/chuanyue_yiri/episodes/ep01`（重画五镜 overhead、`s1_blocking.png`），再 `python tools/shot_pack.py sync ai_videos/chuanyue_yiri/episodes/ep01 …`；st1–st3 的 `planning/previz.json` 是旧的。\n2. 首帧：st1、st3、st4、st5 必须按新 prompt 重出；st2 构图（城门在画右、逆光）已对，只有发色偏棕，可重出可保留。\n3. st3 需要门洞视角的场景（卡或本镜场景行）；st5 需要本镜场景行（街尽头是城墙门洞，不写「被房子挡住」、喷泉、垫脚石、车辙）。\n4. garum 读音在 s3、s5、s6 统一；story.md 把 st2 摊钱动作挪到台词之后。\n5. p2 道具图（大小比 1.4 倍、流通币外观）。\n",
+ "roster_sha": "faecb2ee9650ee01618e397df569cdd96a271d9e4d12e4e857af22a4869e37bf",
+ "materials": {
+  "ai_videos/chuanyue_yiri/episodes/ep01/filming.json#s1": "bda9dc5bdbde97ca924ee8e465b72e68e9f6b58c03aa26fe0364447e1a6ed1cc",
+  "ai_videos/chuanyue_yiri/episodes/ep01/story.json": "d76d02f07fa9dceb7185386ac9472a867effe574bd5406dc670cca35517a10c6",
+  "ai_videos/chuanyue_yiri/episodes/ep01/prompts.json#s1": "14b70143d52d68f3133282e4d7ee077b09b4afa4cc8feebc741925565ec45041",
+  "ai_videos/chuanyue_yiri/bible.md": "b9f888fa4945c2c96ad05274985b8f7c24e58711089afbc64b90eefffbe7d58b",
+  "ai_videos/chuanyue_yiri/2_世界观人设/characters/c1_Riley/c1_Riley.md": "2156df0432d2901f5e641e8857ecb02ddb900c5f9261658109a7eabad0cc01ba",
+  "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st1/资料包/prompt.txt": "b6c35737cac515e5156a3d14d66db66c3fb75757372392ea9be51e57c3108b8a",
+  "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st2/资料包/prompt.txt": "417bac52a4eb40b1b8d0cb6ec08b08ba9878cab9624bf1b4965dfa989bfd70ce",
+  "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st3/资料包/prompt.txt": "04fe5b5c915af85179cbb8d448721dc9ea90779b417f9a6c22dbc8767f0def20",
+  "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st4/资料包/prompt.txt": "2ad6d888a39dbe377d20a19f4267dcb9e393902f4fbfd51c4baf318b6f24d07c",
+  "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st5/资料包/prompt.txt": "8e3b2dc12cd57837174999375578daec3e7019a5238f58a711d9df79c8f5c918"
+ },
+ "fp_scope": "scenes",
+ "items": [
+  {
+   "id": "physics",
+   "law": "physics",
+   "law_name": "世界物理",
+   "color": "#c0502e",
+   "scope": [
+    "s1"
+   ],
+   "checks": "重力与支撑（东西被谁、用哪只手托着？有没有悬空、黏在手上）；手的数量（自拍占一只手，其余动作只剩一只手）；道具守恒（凭空出现、消失、变形、数量变化）；道具交接后去向；穿模；身体变形（多手指、肢体扭曲、脸或身体溶解/半透明）；运动物理（滑步、瞬移）；火、烟、水、蒸汽、光影；画面突然溶解成另一画面。",
+   "how": "逐镜看 sheet4.jpg 每一格，盯手、手里的东西、脚和地面、画面边缘进出的物体；疑点用 ffmpeg 加密抽帧或放大裁切确认。对照 spec.md，也指出分镜文字本身做不到、或没交代道具来源与去向的地方。",
+   "blind": false,
+   "must": [
+    {
+     "id": "P1",
+     "text": "手数：每个自拍镜里主角只剩一只手可用，逐镜核动作是否只用一只手"
+    },
+    {
+     "id": "P2",
+     "text": "道具来源：镜内用到的每件道具第 0 秒在哪、谁拿着（首帧里看得到）"
+    },
+    {
+     "id": "P3",
+     "text": "道具交接：从哪拿→交到哪→对方怎么握住或收起；没有被带回、悬空、黏手"
+    },
+    {
+     "id": "P4",
+     "text": "支撑：每件被拿着的东西都有可见的手或台面托着"
+    },
+    {
+     "id": "P5",
+     "text": "服装与动作一致：动作不要求服装没有的部件（如短袖卷袖子）"
+    },
+    {
+     "id": "P6",
+     "text": "身体与运动：不要求做不到的身体动作；出片里无多指、变形、溶解、瞬移、滑步"
+    },
+    {
+     "id": "R",
+     "text": "复核上一轮：previous.md 里本代号的重出 / 可剪 / 存疑问题，逐条写是否已改好"
+    }
+   ],
+   "status": "done",
+   "report": "reports/physics.md",
+   "prompt": "items/physics.md",
+   "ticked_at": "2026-11-08T11:25:00",
+   "ticked_by": "claude-opus-5-5/physics",
+   "findings": {
+    "重出": 0,
+    "可剪": 2,
+    "记录": 6,
+    "存疑": 1
+   },
+   "rows": 9,
+   "clean": false,
+   "must_result": {
+    "P1": "✓",
+    "P2": "✓",
+    "P3": "✗",
+    "P4": "✓",
+    "P5": "✓",
+    "P6": "✗",
+    "R": "✗"
+   },
+   "report_sha": "4602de302d9c750d2eca7ab920c84abd638e10b35753274fbfdba86be5e4502c",
+   "agents": [
+    {
+     "n": 1,
+     "at": "2026-11-08T12:32:51",
+     "runner": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+     "model": "claude-opus-5-5",
+     "context": "全新上下文，看不到作者会话与别的审稿报告",
+     "prompt": "agents/physics_1.md",
+     "skills": [
+      "审稿人名册 .agents/references/project/review_roster.json · 法则 physics（世界物理）",
+      "审稿说明 BRIEF.md（材料、规则、报告格式）",
+      "任务书 items/physics.md（范围、要查什么、怎么查、必查项、打勾命令）"
+     ],
+     "note": "补登（2026-11-08）：派单时还没有 dispatch 命令；指令原文按当时实际发出的文本重建，审稿人的最终回复当时没存档，结果以 reports/ 里的报告为准"
+    }
+   ]
+  },
+  {
+   "id": "character",
+   "law": "character",
+   "law_name": "人物逻辑",
+   "color": "#7a4fb0",
+   "scope": [
+    "s1"
+   ],
+   "checks": "对每个有戏的人分别代入他自己：此刻知道什么、想要什么、该看向哪里、对别人的话或动作该有什么反应。查视线、反应缺失或不合情理、动作动机、站桩不演、当地人对奇装异服陌生人的反应是否可信、主持人对观众说话的时机。",
+   "how": "以 sheet1.jpg 为主，需要时看 sheet4；先读故事稿与人物卡的文字设定。也指出分镜里人物动机或反应写得不清、重出还会错的地方。",
+   "blind": false,
+   "must": [
+    {
+     "id": "C1",
+     "text": "每个有戏的配角此刻看向谁、在想什么（分镜写了没有，出片做到没有）"
+    },
+    {
+     "id": "C2",
+     "text": "反应拍：对突发、怪人、台词的反应单独成拍且合乎情理"
+    },
+    {
+     "id": "C3",
+     "text": "动机与方向：每个走、递、指、停都有理由；方向等逻辑前后一致"
+    },
+    {
+     "id": "C4",
+     "text": "路人对主角的反应可信（不全体无视，也不抢戏）"
+    },
+    {
+     "id": "C5",
+     "text": "主角对镜头说话的时机"
+    },
+    {
+     "id": "R",
+     "text": "复核上一轮：previous.md 里本代号的重出 / 可剪 / 存疑问题，逐条写是否已改好"
+    }
+   ],
+   "status": "done",
+   "report": "reports/character.md",
+   "prompt": "items/character.md",
+   "ticked_at": "2026-11-08T11:24:24",
+   "ticked_by": "claude-opus-5-5/character",
+   "findings": {
+    "重出": 0,
+    "可剪": 3,
+    "记录": 6,
+    "存疑": 1
+   },
+   "rows": 10,
+   "clean": false,
+   "must_result": {
+    "C1": "✗",
+    "C2": "✗",
+    "C3": "✗",
+    "C4": "✗",
+    "C5": "✓",
+    "R": "✗"
+   },
+   "report_sha": "2706958cbfbeb7bd6f18eb2770b29ce3dd602996197f83e6948e20ab59bfd324",
+   "agents": [
+    {
+     "n": 1,
+     "at": "2026-11-08T12:32:51",
+     "runner": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+     "model": "claude-opus-5-5",
+     "context": "全新上下文，看不到作者会话与别的审稿报告",
+     "prompt": "agents/character_1.md",
+     "skills": [
+      "审稿人名册 .agents/references/project/review_roster.json · 法则 character（人物逻辑）",
+      "审稿说明 BRIEF.md（材料、规则、报告格式）",
+      "任务书 items/character.md（范围、要查什么、怎么查、必查项、打勾命令）"
+     ],
+     "note": "补登（2026-11-08）：派单时还没有 dispatch 命令；指令原文按当时实际发出的文本重建，审稿人的最终回复当时没存档，结果以 reports/ 里的报告为准"
+    }
+   ]
+  },
+  {
+   "id": "continuity",
+   "law": "continuity",
+   "law_name": "连续性",
+   "color": "#2f74b5",
+   "scope": [
+    "s1"
+   ],
+   "checks": "先建全集道具状态表（钱币逐次核账、食物、器物、灯等），找对不上的地方；服装与头发状态；同场光向与场间时段推进；跳轴与左右对调；场景布置跨镜一致。",
+   "how": "看每场 bounds.jpg（镜头接口两帧）与 scene1.jpg（整场每秒 1 帧），加每镜 spec.md；附上道具状态表。",
+   "blind": false,
+   "must": [
+    {
+     "id": "K1",
+     "text": "全集道具状态表：钱币逐次核账、食物、器物、灯等逐镜对得上"
+    },
+    {
+     "id": "K2",
+     "text": "服装、头发状态（湿干、挽披）跨镜一致"
+    },
+    {
+     "id": "K3",
+     "text": "光向与时段：同场一致、场间推进合理"
+    },
+    {
+     "id": "K4",
+     "text": "站位左右与跳轴：俯视图、故事板、出片三者一致"
+    },
+    {
+     "id": "K5",
+     "text": "场景布置与地点前后一致"
+    },
+    {
+     "id": "R",
+     "text": "复核上一轮：previous.md 里本代号的重出 / 可剪 / 存疑问题，逐条写是否已改好"
+    }
+   ],
+   "status": "done",
+   "report": "reports/continuity.md",
+   "prompt": "items/continuity.md",
+   "ticked_at": "2026-11-08T11:28:27",
+   "ticked_by": "claude-opus-5-5/continuity",
+   "findings": {
+    "重出": 0,
+    "可剪": 0,
+    "记录": 7,
+    "存疑": 1
+   },
+   "rows": 19,
+   "clean": false,
+   "must_result": {
+    "K1": "✓",
+    "K2": "✗",
+    "K3": "✗",
+    "K4": "✗",
+    "K5": "✓",
+    "R": "✓"
+   },
+   "report_sha": "1cd1085b2c87c328bb954851a0194e70c9e7d120c3741ff56be6a0cfc6fd91ef",
+   "agents": [
+    {
+     "n": 1,
+     "at": "2026-11-08T12:32:51",
+     "runner": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+     "model": "claude-opus-5-5",
+     "context": "全新上下文，看不到作者会话与别的审稿报告",
+     "prompt": "agents/continuity_1.md",
+     "skills": [
+      "审稿人名册 .agents/references/project/review_roster.json · 法则 continuity（连续性）",
+      "审稿说明 BRIEF.md（材料、规则、报告格式）",
+      "任务书 items/continuity.md（范围、要查什么、怎么查、必查项、打勾命令）"
+     ],
+     "note": "补登（2026-11-08）：派单时还没有 dispatch 命令；指令原文按当时实际发出的文本重建，审稿人的最终回复当时没存档，结果以 reports/ 里的报告为准"
+    }
+   ]
+  },
+  {
+   "id": "dialogue",
+   "law": "dialogue",
+   "law_name": "台词（时长与逻辑）",
+   "color": "#1f8a5b",
+   "scope": [
+    "s1"
+   ],
+   "checks": "口语自然度（给改写）；节拍时间里说得完（约 2.5–2.8 词/秒）、说完后留 ≥1.5 秒；识别结果与台词不一致处判断是读错还是识别器问题；外语（如拉丁语）语法、时代口吻、发音（另用对应语言模型转写核对）；说话人是否正确；故事稿台词前后逻辑（编号、回收）。",
+   "how": "读各镜 spec.md 的台词、节拍、语音识别与区间，加故事稿；可用本机 faster-whisper 重听片段。",
+   "blind": false,
+   "must": [
+    {
+     "id": "D1",
+     "text": "每句台词口语自然（给出改写）"
+    },
+    {
+     "id": "D2",
+     "text": "说得完：≤2.8 词/秒，开口前留 ≥1 秒，说完后留 ≥1.5 秒"
+    },
+    {
+     "id": "D3",
+     "text": "外语与专名：语法、时代口吻、注音进了 prompt；出片用对应语言模型核发音"
+    },
+    {
+     "id": "D4",
+     "text": "台词逻辑：编号、回收、前后说法一致"
+    },
+    {
+     "id": "D5",
+     "text": "说话人正确、画内该张嘴的人张嘴"
+    },
+    {
+     "id": "R",
+     "text": "复核上一轮：previous.md 里本代号的重出 / 可剪 / 存疑问题，逐条写是否已改好"
+    }
+   ],
+   "status": "done",
+   "report": "reports/dialogue.md",
+   "prompt": "items/dialogue.md",
+   "ticked_at": "2026-11-08T11:27:44",
+   "ticked_by": "claude-opus-5-5/dialogue",
+   "findings": {
+    "重出": 0,
+    "可剪": 0,
+    "记录": 3,
+    "存疑": 1
+   },
+   "rows": 4,
+   "clean": false,
+   "must_result": {
+    "D1": "✓",
+    "D2": "✓",
+    "D3": "✓",
+    "D4": "✗",
+    "D5": "✓",
+    "R": "✓"
+   },
+   "report_sha": "db59f15ac6ed4821bb1f770d28c12a040f2723e31b8c1aeeda4b66db2afe2443",
+   "agents": [
+    {
+     "n": 1,
+     "at": "2026-11-08T12:32:51",
+     "runner": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+     "model": "claude-opus-5-5",
+     "context": "全新上下文，看不到作者会话与别的审稿报告",
+     "prompt": "agents/dialogue_1.md",
+     "skills": [
+      "审稿人名册 .agents/references/project/review_roster.json · 法则 dialogue（台词（时长与逻辑））",
+      "审稿说明 BRIEF.md（材料、规则、报告格式）",
+      "任务书 items/dialogue.md（范围、要查什么、怎么查、必查项、打勾命令）"
+     ],
+     "note": "补登（2026-11-08）：派单时还没有 dispatch 命令；指令原文按当时实际发出的文本重建，审稿人的最终回复当时没存档，结果以 reports/ 里的报告为准"
+    }
+   ]
+  },
+  {
+   "id": "native_ear",
+   "law": "native_ear",
+   "law_name": "母语听感",
+   "color": "#0f766e",
+   "scope": [
+    "s1"
+   ],
+   "checks": "以英语母语观众（美国、英国、加拿大、澳洲的年轻 vlog 观众）的耳朵逐句听 Riley 的英文台词：真人会不会这么说；有没有中文直译的句式、电报式罗列、视角或时态说不通（她是穿越者）、讲解腔、指代不清（说 this 却没东西可看）、观众不懂的词、没落地的笑点；每句给自然 / 有点怪 / 很怪的判断和更顺的改写（不更长）。",
+   "how": "只用 materials/lines.md；尽量换一个模型审（`codex exec`），和作者、和「台词」审稿人不是同一个模型；改写保持每秒 ≤2.8 词、前后呼应一致。",
+   "blind": true,
+   "blind_note": "**你是英语母语观众，盲审：只读 `materials/lines.md`（全集台词按播放顺序，附一句画面说明），不要读 spec.md、story、分镜、prompt 或别的审稿报告。**",
+   "prefer_model": "codex",
+   "must": [
+    {
+     "id": "N1",
+     "text": "逐句判断母语观众听着自然不自然（自然 / 有点怪 / 很怪），每句都要有结论"
+    },
+    {
+     "id": "N2",
+     "text": "指出别扭的原因：直译句式、电报式、时态或视角、讲解腔、指代不清、生僻词"
+    },
+    {
+     "id": "N3",
+     "text": "笑点和呼应（开场目标 ↔ 结尾、dextram 回收等）母语观众接得住"
+    },
+    {
+     "id": "N4",
+     "text": "每句「有点怪 / 很怪」都给出不更长的改写"
+    },
+    {
+     "id": "N5",
+     "text": "列出全集最别扭的 5 句，特别看开场和结尾"
+    },
+    {
+     "id": "R",
+     "text": "复核上一轮：previous.md 里本代号的重出 / 可剪 / 存疑问题，逐条写是否已改好"
+    }
+   ],
+   "status": "done",
+   "report": "reports/native_ear.md",
+   "prompt": "items/native_ear.md",
+   "ticked_at": "2026-11-08T11:22:17",
+   "ticked_by": "codex/native_ear",
+   "findings": {
+    "重出": 0,
+    "可剪": 0,
+    "记录": 0,
+    "存疑": 1
+   },
+   "rows": 14,
+   "clean": false,
+   "must_result": {
+    "N1": "✓",
+    "N2": "✓",
+    "N3": "✗",
+    "N4": "✓",
+    "N5": "✗",
+    "R": "✗"
+   },
+   "report_sha": "e7c362f6d1742a02ab1fd7cf9984e4455c5f007b43f96e6bf80131c14280fe2b",
+   "agents": [
+    {
+     "n": 1,
+     "at": "2026-11-08T12:32:52",
+     "runner": "Codex CLI（codex exec -s workspace-write，另起进程）",
+     "model": "gpt-6-astra（reasoning high，~/.codex/config.toml）",
+     "context": "全新的 Codex 进程，和作者（Claude）不是同一个模型；看不到作者会话与别的审稿报告",
+     "prompt": "agents/native_ear_1.md",
+     "skills": [
+      "审稿人名册 .agents/references/project/review_roster.json · 法则 native_ear（母语听感）",
+      "审稿说明 BRIEF.md（材料、规则、报告格式）",
+      "任务书 items/native_ear.md（范围、要查什么、怎么查、必查项、打勾命令）"
+     ],
+     "note": "补登（2026-11-08）：派单时还没有 dispatch 命令；指令原文按当时实际发出的文本重建，审稿人的最终回复当时没存档，结果以 reports/ 里的报告为准"
+    }
+   ]
+  },
+  {
+   "id": "era",
+   "law": "era",
+   "law_name": "时代与世界观",
+   "color": "#8a6d1f",
+   "scope": [
+    "s1"
+   ],
+   "checks": "时代可信度（建筑、街道、器物、服装发型、食物；有无现代物件）；系列禁区（以 bible 为准，规则源本身有矛盾也要报）；画面不出现相机、手机、自拍杆、文字；主角服装是否始终符合设定。",
+   "how": "以 scene1.jpg 为主，疑点看 sheet1/sheet4 或自己放大；读 bible 与考据资料；同时检查分镜与 prompt 里会诱发问题的写法。",
+   "blind": false,
+   "must": [
+    {
+     "id": "E1",
+     "text": "系列禁区：以 bible 为准，且核对场景卡、考据、参考图与 bible 是否矛盾"
+    },
+    {
+     "id": "E2",
+     "text": "时代可信：建筑、器物、灯具、窗、服装发型、首饰、食物"
+    },
+    {
+     "id": "E3",
+     "text": "画面不出现相机、手机、自拍杆、文字"
+    },
+    {
+     "id": "E4",
+     "text": "主角服装始终符合设定"
+    },
+    {
+     "id": "E5",
+     "text": "prompt、场景卡、参考图里会诱发问题的词与画面"
+    },
+    {
+     "id": "R",
+     "text": "复核上一轮：previous.md 里本代号的重出 / 可剪 / 存疑问题，逐条写是否已改好"
+    }
+   ],
+   "status": "done",
+   "report": "reports/era.md",
+   "prompt": "items/era.md",
+   "ticked_at": "2026-11-08T11:29:00",
+   "ticked_by": "claude-opus-5-5/era",
+   "findings": {
+    "重出": 0,
+    "可剪": 0,
+    "记录": 7,
+    "存疑": 4
+   },
+   "rows": 11,
+   "clean": false,
+   "must_result": {
+    "E1": "✗",
+    "E2": "✗",
+    "E3": "✗",
+    "E4": "✓",
+    "E5": "✗",
+    "R": "✗"
+   },
+   "report_sha": "236b4fd457875e505b8c6bfb1b57aa202598429857753af3a4d88dff635f6529",
+   "agents": [
+    {
+     "n": 1,
+     "at": "2026-11-08T12:32:51",
+     "runner": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+     "model": "claude-opus-5-5",
+     "context": "全新上下文，看不到作者会话与别的审稿报告",
+     "prompt": "agents/era_1.md",
+     "skills": [
+      "审稿人名册 .agents/references/project/review_roster.json · 法则 era（时代与世界观）",
+      "审稿说明 BRIEF.md（材料、规则、报告格式）",
+      "任务书 items/era.md（范围、要查什么、怎么查、必查项、打勾命令）"
+     ],
+     "note": "补登（2026-11-08）：派单时还没有 dispatch 命令；指令原文按当时实际发出的文本重建，审稿人的最终回复当时没存档，结果以 reports/ 里的报告为准"
+    }
+   ]
+  },
+  {
+   "id": "framing",
+   "law": "framing",
+   "law_name": "镜头规格",
+   "color": "#476070",
+   "scope": [
+    "s1"
+   ],
+   "checks": "节拍逐拍对时间（早了晚了多少）；景别、机位方向、运镜、自拍还是他拍、一镜到底；画内人数；镜组条里模型自己切镜的位置与设计分界；剪辑区间有没有切掉必要拍点；节拍是否过满、景别与动作是否冲突；镜组板与俯视图是否一致（模型会照板子出）。",
+   "how": "把 spec.md 的节拍换算到成片用的区间，对照 sheet4.jpg 的时间码。",
+   "blind": false,
+   "must": [
+    {
+     "id": "F1",
+     "text": "节拍时间：分镜不过满；出片每拍早晚多少"
+    },
+    {
+     "id": "F2",
+     "text": "景别、机位、运镜、自拍或他拍与动作不冲突"
+    },
+    {
+     "id": "F3",
+     "text": "画内人数与规格一致，无分身"
+    },
+    {
+     "id": "F4",
+     "text": "镜组板与俯视图一致（模型会照板子出）"
+    },
+    {
+     "id": "F5",
+     "text": "镜组切点与剪辑区间（出片阶段）"
+    },
+    {
+     "id": "R",
+     "text": "复核上一轮：previous.md 里本代号的重出 / 可剪 / 存疑问题，逐条写是否已改好"
+    }
+   ],
+   "status": "done",
+   "report": "reports/framing.md",
+   "prompt": "items/framing.md",
+   "ticked_at": "2026-11-08T11:26:30",
+   "ticked_by": "claude-opus-5-5/framing",
+   "findings": {
+    "重出": 2,
+    "可剪": 0,
+    "记录": 5,
+    "存疑": 0
+   },
+   "rows": 7,
+   "clean": false,
+   "must_result": {
+    "F1": "✗",
+    "F2": "✗",
+    "F3": "✓",
+    "F4": "✓",
+    "F5": "✓",
+    "R": "✗"
+   },
+   "report_sha": "58d001c9e14967593f06f1800bb563fd77bdc18286aaf6142f476412d258205f",
+   "agents": [
+    {
+     "n": 1,
+     "at": "2026-11-08T12:32:51",
+     "runner": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+     "model": "claude-opus-5-5",
+     "context": "全新上下文，看不到作者会话与别的审稿报告",
+     "prompt": "agents/framing_1.md",
+     "skills": [
+      "审稿人名册 .agents/references/project/review_roster.json · 法则 framing（镜头规格）",
+      "审稿说明 BRIEF.md（材料、规则、报告格式）",
+      "任务书 items/framing.md（范围、要查什么、怎么查、必查项、打勾命令）"
+     ],
+     "note": "补登（2026-11-08）：派单时还没有 dispatch 命令；指令原文按当时实际发出的文本重建，审稿人的最终回复当时没存档，结果以 reports/ 里的报告为准"
+    }
+   ]
+  },
+  {
+   "id": "prompt_text",
+   "law": "prompt_text",
+   "law_name": "Prompt 文本",
+   "color": "#5b6b2a",
+   "scope": [
+    "s1"
+   ],
+   "checks": "送给生成模型的文字与参考：过期与图文矛盾；物理上做不到的指令（手数、道具来源）；同一 prompt 内前后矛盾或歧义；节拍过满；镜组 prompt 的镜头切换与分界；系列硬规则与负面词是否写全、有无诱发禁区的词；规则源（bible、场景卡、考据）与 prompt 是否一致。最后给「重出前必须改」清单。",
+   "how": "读 filming.json、prompts.json、各资料包 prompt.txt 与 manifest.json、镜组板与首帧 prompt、人物卡、bible；只在需要验证时看成片。",
+   "blind": false,
+   "must": [
+    {
+     "id": "T1",
+     "text": "图文一致：人物卡、参考图、prompt 文字、bible 互相一致，无过期描述"
+    },
+    {
+     "id": "T2",
+     "text": "物理上做不到的指令（手数、道具来源）"
+    },
+    {
+     "id": "T3",
+     "text": "同一 prompt 内的矛盾与歧义（景别、参考用法、负面词与正文）"
+    },
+    {
+     "id": "T4",
+     "text": "负面词与系列硬规则写全（时代禁用、禁区、相机手机、首饰）"
+    },
+    {
+     "id": "T5",
+     "text": "规则源（bible、场景卡、考据）与 prompt 一致"
+    },
+    {
+     "id": "T6",
+     "text": "给出「重出前必须改」清单"
+    },
+    {
+     "id": "R",
+     "text": "复核上一轮：previous.md 里本代号的重出 / 可剪 / 存疑问题，逐条写是否已改好"
+    }
+   ],
+   "status": "done",
+   "report": "reports/prompt_text.md",
+   "prompt": "items/prompt_text.md",
+   "ticked_at": "2026-11-08T11:27:18",
+   "ticked_by": "claude-opus-5-5/prompt_text",
+   "findings": {
+    "重出": 2,
+    "可剪": 4,
+    "记录": 7,
+    "存疑": 2
+   },
+   "rows": 15,
+   "clean": false,
+   "must_result": {
+    "T1": "✗",
+    "T2": "✗",
+    "T3": "✗",
+    "T4": "✗",
+    "T5": "✗",
+    "T6": "✓",
+    "R": "✗"
+   },
+   "report_sha": "8aebd13ca59e7d68956051389b642b45130dcc54f9c4968eec1786588ebba611",
+   "agents": [
+    {
+     "n": 1,
+     "at": "2026-11-08T12:32:52",
+     "runner": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+     "model": "claude-opus-5-5",
+     "context": "全新上下文，看不到作者会话与别的审稿报告",
+     "prompt": "agents/prompt_text_1.md",
+     "skills": [
+      "审稿人名册 .agents/references/project/review_roster.json · 法则 prompt_text（Prompt 文本）",
+      "审稿说明 BRIEF.md（材料、规则、报告格式）",
+      "任务书 items/prompt_text.md（范围、要查什么、怎么查、必查项、打勾命令）"
+     ],
+     "note": "补登（2026-11-08）：派单时还没有 dispatch 命令；指令原文按当时实际发出的文本重建，审稿人的最终回复当时没存档，结果以 reports/ 里的报告为准"
+    }
+   ]
+  }
+ ],
+ "state": "已完成",
+ "log": [
+  {
+   "at": "2026-11-08T11:22:17",
+   "item": "native_ear",
+   "event": "tick",
+   "by": "codex/native_ear"
+  },
+  {
+   "at": "2026-11-08T11:24:24",
+   "item": "character",
+   "event": "tick",
+   "by": "claude-opus-5-5/character"
+  },
+  {
+   "at": "2026-11-08T11:25:00",
+   "item": "physics",
+   "event": "tick",
+   "by": "claude-opus-5-5/physics"
+  },
+  {
+   "at": "2026-11-08T11:26:30",
+   "item": "framing",
+   "event": "tick",
+   "by": "claude-opus-5-5/framing"
+  },
+  {
+   "at": "2026-11-08T11:27:18",
+   "item": "prompt_text",
+   "event": "tick",
+   "by": "claude-opus-5-5/prompt_text"
+  },
+  {
+   "at": "2026-11-08T11:27:44",
+   "item": "dialogue",
+   "event": "tick",
+   "by": "claude-opus-5-5/dialogue"
+  },
+  {
+   "at": "2026-11-08T11:28:27",
+   "item": "continuity",
+   "event": "tick",
+   "by": "claude-opus-5-5/continuity"
+  },
+  {
+   "at": "2026-11-08T11:29:00",
+   "item": "era",
+   "event": "tick",
+   "by": "claude-opus-5-5/era"
+  },
+  {
+   "at": "2026-11-08T12:32:51",
+   "item": "physics",
+   "event": "dispatch",
+   "by": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+   "note": "claude-opus-5-5 · 第 1 次派单"
+  },
+  {
+   "at": "2026-11-08T12:32:51",
+   "item": "character",
+   "event": "dispatch",
+   "by": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+   "note": "claude-opus-5-5 · 第 1 次派单"
+  },
+  {
+   "at": "2026-11-08T12:32:51",
+   "item": "continuity",
+   "event": "dispatch",
+   "by": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+   "note": "claude-opus-5-5 · 第 1 次派单"
+  },
+  {
+   "at": "2026-11-08T12:32:51",
+   "item": "dialogue",
+   "event": "dispatch",
+   "by": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+   "note": "claude-opus-5-5 · 第 1 次派单"
+  },
+  {
+   "at": "2026-11-08T12:32:51",
+   "item": "era",
+   "event": "dispatch",
+   "by": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+   "note": "claude-opus-5-5 · 第 1 次派单"
+  },
+  {
+   "at": "2026-11-08T12:32:51",
+   "item": "framing",
+   "event": "dispatch",
+   "by": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+   "note": "claude-opus-5-5 · 第 1 次派单"
+  },
+  {
+   "at": "2026-11-08T12:32:52",
+   "item": "prompt_text",
+   "event": "dispatch",
+   "by": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+   "note": "claude-opus-5-5 · 第 1 次派单"
+  },
+  {
+   "at": "2026-11-08T12:32:52",
+   "item": "native_ear",
+   "event": "dispatch",
+   "by": "Codex CLI（codex exec -s workspace-write，另起进程）",
+   "note": "gpt-6-astra（reasoning high，~/.codex/config.toml） · 第 1 次派单"
+  },
+  {
+   "at": "2026-11-08T15:09:09",
+   "event": "corrections",
+   "note": "修复页：58 条方案、首帧换了 3 镜"
+  },
+  {
+   "at": "2026-11-08T15:28:43",
+   "event": "corrections",
+   "note": "修复页：58 条方案、首帧换了 3 镜"
+  },
+  {
+   "at": "2026-11-08T16:43:31",
+   "event": "rename",
+   "by": "Claude Code",
+   "note": "改名（用户：看不出哪张最新）：ep01 · 出片前（故事＋分镜＋prompt＋首帧/故事板） · 第 2 轮 → ep01 · 场一 · 出片前 第 2 轮 · 11-08 11:18"
+  }
+ ],
+ "child": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-120012_pregen_r3",
+ "corrections": "corrections.json"
+}

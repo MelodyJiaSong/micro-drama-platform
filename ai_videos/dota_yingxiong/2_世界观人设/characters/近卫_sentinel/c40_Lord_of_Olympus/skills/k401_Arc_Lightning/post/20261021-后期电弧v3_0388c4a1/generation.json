@@ -1,0 +1,16 @@
+{
+  "kind": "post_composite",
+  "follow_up": "dota_yingxiong 045",
+  "date": "2026-10-21",
+  "base_take": "renders/20261021-220603_0388c4a1/k401_Arc_Lightning_clip.mp4",
+  "base_sha256": "33f3e2bd050e0dd138d435c2b7eabf24341adff65f177a65d72cf2122fc66aa5",
+  "output": "k401_Arc_Lightning_clip_post.mp4",
+  "output_sha256": "d2ef7a6f2375f5b2ec915bdf96f250d613dad5d42efacfeac92c658aafe6ebe7",
+  "script": "compose.py（本地 numpy + PIL 画电弧，ffmpeg 编码；不调用任何外部服务）",
+  "order": "斧→B（底片自带）→A→C→D；B 被打第二次的源帧 89–99 剪掉，空档 74–80 剪掉",
+  "frame_map_24fps": "0–63 原速；64,65,66,67,69,71,73；81–88（画 B→A）；100（剪接闪光 0.35）–107（画 A→C）；108–115（画 C→D + D 命中光）；116–118（D 余光）；119–240 原速",
+  "audio": "源 2.667–4.958 s 压到 1.417 s（atempo 1.62），其余原样",
+  "duration_s": 9.17,
+  "rerun": "compose.py 读同目录 v5_frames.npy（底片按 fps=24 解成 rgb24 的 numpy 数组），未随附",
+  "change": "用户：再慢一倍。每跳停留 8 帧（v2 为 4 帧），D 命中光 8 帧加 3 帧余光；三跳约 1.0 s"
+}

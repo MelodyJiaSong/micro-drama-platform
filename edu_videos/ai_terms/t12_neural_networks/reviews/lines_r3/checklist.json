@@ -1,0 +1,1117 @@
+{
+ "version": 5,
+ "kind": "edu_lines",
+ "scoring": {
+  "scale": {
+   "0": "没查或查不了（写 `原因：`）",
+   "1": "有问题（问题表里必须有对应条目）",
+   "2": "基本没问题，有小瑕疵（写证据）",
+   "3": "没问题（写证据）"
+  },
+  "evidence_rule": "证据要指到句号 lNN / 屏号、原文或数字，至少 8 个字；没证据的高分按 0 处理。",
+  "disagreement": "分歧：两位同一维度差 ≥2，或一人 ≤1、另一人 ≥2，交裁决人；两人都 ≥2 的维度，裁决人每项抽 2 维复核（专抓两个模型共同的盲点）。"
+ },
+ "adjudicator": {
+  "runner": "claude",
+  "model": "claude-opus-5-5"
+ },
+ "id": "lines_r3",
+ "chain": "t12_neural_networks/lines",
+ "loop": 3,
+ "max_loops": 3,
+ "parent": "edu_videos/ai_terms/t12_neural_networks/reviews/lines_r2",
+ "title": "t12_neural_networks · 台词审（口播＋屏幕文字）第 3 轮",
+ "target": "edu_videos/ai_terms/t12_neural_networks",
+ "episode": "t12_neural_networks",
+ "stage": "lines",
+ "stage_name": "台词审（口播＋屏幕文字 × 中英）",
+ "scenes": [],
+ "created_at": "2026-11-09T21:52:54",
+ "author": "Claude Code",
+ "known": "",
+ "changes": "# 台词审汇总：lines_r2\n\n处理状态：待处理 0 · 已改 60 · 不改 28 · 驳回 0（`python tools/edu_review.py fix` 登记；下一轮审稿人按「处理」列逐条复核）\n\n## 各项结论（最终分：裁决过的维度用裁决分，其余取两人较低分）\n\n| 项 | 最终分 | 未处理的必改 | 结论 |\n|---|---|---|---|\n| voice_zh | V1=1 V2=1 V3=1 V4=2 V5=1 V6=2 R=1 | 0 | 不通过 |\n| voice_en | V1=1 V2=1 V3=1 V4=2 V5=2 V6=2 R=1 | 0 | 不通过 |\n| screen_zh | P1=1 P2=2 P3=2 P4=2 P5=2 P6=3 R=1 | 0 | 不通过 |\n| screen_en | P1=2 P2=2 P3=2 P4=2 P5=2 P6=2 R=1 | 0 | 不通过 |\n\n## 问题（来源 a = Claude、b = Codex、judge = 裁决补充）\n\n| 编号 | 项 | 位置 | 维度 | 级别 | 来源 | 原文 | 问题 | 建议改写 | 裁决人意见 | 处理 |\n|---|---|---|---|---|---|---|---|---|---|---|\n| I1 | screen_en | agenda（渲染） | P3 | 必改 | judge | `renders/package/en/agenda.mp4` 末帧编号「01 / 03 / 04 / 05」 | 目录是严格项。现有渲染早于 package.json 的显式 tag 修复（21:19 早于 21:23），画面编号仍跳过 02，和章节卡、页眉的 01–04 对不上。源文件已改，但成片可用的渲染没有更新，作者 I6「已人工看过」的说法不覆盖当前版本。中文 agenda 渲染（21:23）也要一并核对。 | 重渲 en/zh agenda，确认显示「01 Beyond straight lines / 02 Build a small network / 03 Why go deep? / 04 AlexNet, 2012」后再锁定 |  | 已改：目录改成 package.json 里的显式列表（共用模板按系列 6 章位置编号，只用 4 章时跳号），已重渲中英 agenda，确认 01–04 连续、与章节卡一致 |\n| I2 | screen_en | agenda prereq_hint | P4 | 必改 | judge | 「Not required — recapped in one line.」 | 渲染已确认（a 上轮列为存疑）：严格项上的片段带句末句号，「recapped」也偏生硬。 | 「Not required — one-line recap」（不带句号） |  | 已改：prereq_hint 英文改 Not required — one-line recap（不带句号） |\n| I3 | screen_en | agenda, c_*, outro (I-9) | P3, P5 | 存疑 | a | empty screenshot fields; prereq_hint \"Not required — recapped in one line.\" | Package cards cannot be checked visually. If the hint is as quoted, it ends in a period (fragment) and \"recapped\" is stiff. Strict item. | \"Not required — one-line recap\" (no period) |  | 已改：全部包装卡已重渲（renders/package/{zh,en}/），逐张看过末帧：目录 01–04、四张章节卡、片尾两行分块与「Next · Backpropagation」 |\n| I4 | screen_en | agenda, c_problem, c_experiment, c_lens, c_real, outro | P3, P5 | 存疑 | b | Empty screenshot fields; agenda “16.9s”; outro “22.6s” | The package cards are absent from the supplied screenshot directory. Actual grouping, hidden hints, subtitle clearance and individual text-state holds remain unverified. The combined outro extraction alone does **not** establish a ten-word-block breach. | Retain the concise chapter titles. Present the outro as two distinct lines: **“Simple units, stacked in layers”** / **“Stack deep → spot complex patterns”**, followed by **“Next: Backpropagation”**; verify the rendered states and holds |  | 已改：同 I3 |\n| I5 | screen_en | c_experiment | P3, P5 | 存疑 | judge | `renders/package/en/` 与 `zh/` 都只有 chapter_problem、chapter_lens、chapter_real，没有 chapter_experiment | 第 02 章章节卡（严格项）没有渲染画面，章名、编号和停留时长都无法核实。 | 渲染 chapter_experiment，核对「02 · Build a small network」 |  | 已改：已渲 chapter_experiment（中英），核对「02 · 搭一个小网络 / Build a small network」 |\n| I6 | screen_en | outro (I-8) | P2 | 记录 | a | \"Simple units, stacked in layers\" / \"Stack deep → spot complex patterns\" | First line repeats l48 verbatim; \"spot\" vs l49 \"recognize\" is a minor term mismatch. Nothing wince-worthy. | \"Stack deep → recognize complex patterns\" | b · outro「line separation remains unverified」、b/a · I6/I11「包装卡无法核实」：outro 渲染已核实，两行分开，下面是「Next · Backpropagation」，这一点可以撤销。agenda 和章节卡的实际问题改记在补充问题。 | 已改：英文片尾第二行改 Stack deep → recognize complex patterns，与口播 l49 recognize 一致 |\n| I7 | screen_en | s6 eyebrow (I-10) | P3 | 记录 | a | \"04 · AlexNet, 2012\" vs \"02 · BUILD A SMALL NETWORK\" | Mixed case vs all-caps eyebrows, visible in s6_l41 / s6_l46 vs s3_l24. Brand-name exception already accepted. | none |  | 不改（理由：记录级：AlexNet 是专名，保留原大小写（上一轮已接受）） |\n| I8 | screen_en | l03 vs l13 (I-3) | P3, P4 | 必改 | a | l03 h2 \"Only straight lines\"; l13 h1 \"Straight lines only\" | Cold open is a strict item. The same takeaway is worded two ways in two places; a viewer notices the word-order flip. | Use one form in both: \"Straight lines only\" |  | 已改：l03 英文改 Straight lines only，与 l13 同一说法；不再断行 |\n| I9 | screen_en | l03, l44 | P5, P3 | 建议 | judge | s0_l03「Only straight / lines」；s6_l44「Layer 1: stripes, / colors」 | 截图里都把一个词单独断到下一行，短语被切开，边看字幕边读更费劲。 | 加宽文本框排成一行，或断成「Only / straight lines」「Layer",
+ "items": [
+  {
+   "id": "voice_zh",
+   "law": "lines",
+   "law_name": "中文口播（母语听感，盲审）",
+   "color": "#c0502e",
+   "scope": [],
+   "checks": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_zh.md",
+   "prompt": "items/voice_zh__a.md",
+   "what": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "problem": "上一版「本期内容」念成「这一期，讲四件事：它是个什么问题；为什么只背练习册不行……」，像在念目录，正常人不会这么说话（用户 2026-11-08 指出）；原先的审稿没抓到。",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "像真人在讲",
+     "question": "逐句：自然 / 有点怪 / 很怪。书面腔、讲解腔、翻译腔、念稿感、报菜名式罗列都算怪"
+    },
+    {
+     "id": "V2",
+     "name": "衔接与过渡",
+     "question": "开场、本期内容、章节转换、举例前后：像一个人顺着思路往下讲，而不是「下面讲第一点」式的模板或目录朗读；上下句接得上"
+    },
+    {
+     "id": "V3",
+     "name": "一遍听懂",
+     "question": "只靠耳朵：一句只带一个新意思；指代清楚（说「这个」时观众知道指什么）；术语先解释再用；数字、同音字不会听错"
+    },
+    {
+     "id": "V4",
+     "name": "精炼",
+     "question": "没有废话、重复、正确的空话；删掉不影响理解的句子要指出来"
+    },
+    {
+     "id": "V5",
+     "name": "口吻与节奏",
+     "question": "从头到尾是同一个亲切、清楚、不端着的讲解者；长短句交替，每句适合一口气念完"
+    },
+    {
+     "id": "V6",
+     "name": "改写",
+     "question": "每句「有点怪 / 很怪」都给出可以直接替换、不更长的中文改写；列出最别扭的 5 句并排序"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_zh__a.md",
+     "prompt": "items/voice_zh__a.md",
+     "scores": {
+      "V1": {
+       "score": 1,
+       "evidence": "l48「所以，神经网络就是把很多简单的小单元一层层叠起来，每个都带旋钮」，定义腔，结尾「每个都带旋钮」像补丁；l30 串场仍有不顺。片尾、串场从严，各有必改。其余 45 句左右自然，l01–l04 开场、l13、l26、l28、l44 都像真人。"
+      },
+      "V2": {
+       "score": 1,
+       "evidence": "l30「旋钮一多，每个该往哪拧、拧多少，怎么才算得快，咱们下一期再讲」，章节中段说「下一期再讲」像要收尾，且 l25 刚说「还是上一期的老办法」往哪拧，这里又说往哪拧下期讲，前后对不上；l05 回顾串场把「下山」和「拧」「损失」混在一句。开场 l01–l04 与 l06「直线拐不了弯，咱们就搭个会拐弯的小网络」顺着思路走，很好。"
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "l12「给错误打的分，也就是损失」先解释再用，好；但 l05 先说「损失降得最快」，l12 才解释，次序反了；l46「第一个答案就猜对的比例，会掉两个百分点左右」要在脑子里先转一圈，且前面讲的是「猜五个」。"
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "l36「因为后面的层，会把前面已经折好的线反复拿来用」与 l37「所以同样多的单元，叠得越深……」可合并，不影响理解；l39 与 l40「三个人训练了一个很深的神经网络。这个网络，后来大家叫它 AlexNet」可并成一句。其余没有废话。"
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "整体是同一个亲切、不端着的讲解者，用「咱们」「拧着拧着」；l12（7.6s）、l21（8.0s）、l42（7.2s）是长句，一口气偏紧；l22「数一数，一共三十七个旋钮」、l28「高峰和半夜，它都抓住了」短句节奏好。"
+      },
+      "V6": {
+       "score": 2,
+       "evidence": "每个「有点怪」的句子（l05、l30、l42、l46、l48）都给了不更长的改写，如 l30 改为「旋钮这么多，怎么快速算出每个该往哪拧，下一期再讲」；个别改写尚需配音试读。"
+      },
+      "R": {
+       "score": 1,
+       "evidence": "上一轮 I60–I63、I65–I69、I71–I75、I77、I80–I81、I86–I88 的修改大多已解决，l06「直线拐不了弯，咱们就搭个会拐弯的小网络」、l21、l49、l50 明显变好；但 I59（l05）不采纳的理由不成立（「损失」在 l12 才被当新词解释，次序矛盾）；I71–I73（l30）改出新问题：串场仍是三项并列的压缩句，并与 l25 冲突；I84–I85（l46）改后主语是长名词短语，仍偏怪；I82（l42）不采纳可接受，仅记建议。"
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/voice_zh__b.md",
+     "prompt": "items/voice_zh__b.md",
+     "scores": {
+      "V1": {
+       "score": 1,
+       "evidence": "l21“再加一个管高低的旋钮，就是车费”仍把旋钮与计算结果混着说；l24“名字来自神经元，但别当真”也需要听众补意思。"
+      },
+      "V2": {
+       "score": 1,
+       "evidence": "l06“直线拐不了弯，咱们就搭个会拐弯的小网络”已经有思路推进；但 l30“咱们下一期再讲”在中途提前收尾，随后又继续讲本期内容。"
+      },
+      "V3": {
+       "score": 1,
+       "evidence": "l05“每步都往损失降得最快的方向拧一点”先用了“损失”，到 l12 才解释；l21“加起来，再加一个……旋钮”仍没有明确相加的对象。"
+      },
+      "V4": {
+       "score": 1,
+       "evidence": "l30“每个该往哪拧、拧多少……下一期再讲”与 l50“每个往哪拧、拧多少，怎么算得过来”重复。删去中途预告，不影响理解或片尾悬念。"
+      },
+      "V5": {
+       "score": 1,
+       "evidence": "l30 共26个汉字，标注仅3.7秒，还包含多个问项和收尾；l41 在6.1秒内连续报“八层、六千万、一百二十万、一千类”，听觉负担仍大。"
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "下表为全部10句“有点怪”提供了直接替换稿，均不长于原句；例如 l21 改成“把结果加起来，再用一个旋钮调高低”，明确区分计算与调节。另列最别扭五句。"
+      },
+      "R": {
+       "score": 1,
+       "evidence": "I66—I68 对应的 l21 仍说“再加一个管高低的旋钮”；I80—I81 对应的 l41 仍保留四组数字。l23、l49、l50 等问题已经解决，逐项复核见后表。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "像真人在讲",
+     "a": 1,
+     "a_ev": "l48「所以，神经网络就是把很多简单的小单元一层层叠起来，每个都带旋钮」，定义腔，结尾「每个都带旋钮」像补丁；l30 串场仍有不顺。片尾、串场从严，各有必改。其余 45 句左右自然，l01–l04 开场、l13、l26、l28、l44 都像真人。",
+     "b": 1,
+     "b_ev": "l21“再加一个管高低的旋钮，就是车费”仍把旋钮与计算结果混着说；l24“名字来自神经元，但别当真”也需要听众补意思。",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "V2": {
+     "name": "衔接与过渡",
+     "a": 1,
+     "a_ev": "l30「旋钮一多，每个该往哪拧、拧多少，怎么才算得快，咱们下一期再讲」，章节中段说「下一期再讲」像要收尾，且 l25 刚说「还是上一期的老办法」往哪拧，这里又说往哪拧下期讲，前后对不上；l05 回顾串场把「下山」和「拧」「损失」混在一句。开场 l01–l04 与 l06「直线拐不了弯，咱们就搭个会拐弯的小网络」顺着思路走，很好。",
+     "b": 1,
+     "b_ev": "l06“直线拐不了弯，咱们就搭个会拐弯的小网络”已经有思路推进；但 l30“咱们下一期再讲”在中途提前收尾，随后又继续讲本期内容。",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "V3": {
+     "name": "一遍听懂",
+     "a": 2,
+     "a_ev": "l12「给错误打的分，也就是损失」先解释再用，好；但 l05 先说「损失降得最快」，l12 才解释，次序反了；l46「第一个答案就猜对的比例，会掉两个百分点左右」要在脑子里先转一圈，且前面讲的是「猜五个」。",
+     "b": 1,
+     "b_ev": "l05“每步都往损失降得最快的方向拧一点”先用了“损失”，到 l12 才解释；l21“加起来，再加一个……旋钮”仍没有明确相加的对象。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "l05 是本期内容段的回顾串场，「往损失降得最快的方向」先用「损失」，到 l12 才说「给错误打的分，也就是损失」，两人都判有点怪，按从严条目就是必改。上一轮以「系列术语」驳回，但盲听标准是本片先解释再用，把 l05 的「损失」换成「错误」就能解决，l12 正好在这里给它起名，l25 再用「损失」，三处也不打架。l21「加起来，再加一个管高低的旋钮」只听容易听成往机器里多装一个旋钮，加的是什么还是不清楚。a 自己写了 l05 次序反了，却给 2 分，前后矛盾。b 的 1 分成立。"
+    },
+    "V4": {
+     "name": "精炼",
+     "a": 2,
+     "a_ev": "l36「因为后面的层，会把前面已经折好的线反复拿来用」与 l37「所以同样多的单元，叠得越深……」可合并，不影响理解；l39 与 l40「三个人训练了一个很深的神经网络。这个网络，后来大家叫它 AlexNet」可并成一句。其余没有废话。",
+     "b": 1,
+     "b_ev": "l30“每个该往哪拧、拧多少……下一期再讲”与 l50“每个往哪拧、拧多少，怎么算得过来”重复。删去中途预告，不影响理解或片尾悬念。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "l30「每个该往哪拧、拧多少……下一期再讲」和 l50「每个往哪拧、拧多少，怎么算得过来」几乎是同一句话说两遍，片尾的悬念提前用掉了。b 的证据成立。中途提一句不是问题，问题在措辞重复，所以改 l30 的说法，不删这一句（定稿见补充问题）。a 提的 l36–l37、l39–l40 合并只是记录级，没碰到真正的重复。"
+    },
+    "V5": {
+     "name": "口吻与节奏",
+     "a": 2,
+     "a_ev": "整体是同一个亲切、不端着的讲解者，用「咱们」「拧着拧着」；l12（7.6s）、l21（8.0s）、l42（7.2s）是长句，一口气偏紧；l22「数一数，一共三十七个旋钮」、l28「高峰和半夜，它都抓住了」短句节奏好。",
+     "b": 1,
+     "b_ev": "l30 共26个汉字，标注仅3.7秒，还包含多个问项和收尾；l41 在6.1秒内连续报“八层、六千万、一百二十万、一千类”，听觉负担仍大。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "l30 有 26 个字，标注只有 3.7 秒，约每秒 7 字；邻句 l22 是 12 字 2.4 秒，l28 是 10 字 2.2 秒，每秒约 5 字。这是串场句，念快了会显得赶。l21（8.0 秒）一句里塞了配旋钮、调分量、相加、调高低四个动作。b 的 1 分成立。b 举的 l41 证据不成立：已经用句号拆开，屏上同时列着「8 层 / 6000 万 / 120 万 / 1000 类」（s6），见驳回。"
+    },
+    "V6": {
+     "name": "改写",
+     "a": 2,
+     "a_ev": "每个「有点怪」的句子（l05、l30、l42、l46、l48）都给了不更长的改写，如 l30 改为「旋钮这么多，怎么快速算出每个该往哪拧，下一期再讲」；个别改写尚需配音试读。",
+     "b": 3,
+     "b_ev": "下表为全部10句“有点怪”提供了直接替换稿，均不长于原句；例如 l21 改成“把结果加起来，再用一个旋钮调高低”，明确区分计算与调节。另列最别扭五句。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "抽查发现两人有共同盲点。最要紧的 l30，两个改写都不能用：a 的「怎么快速算出每个该往哪拧，下一期再讲」还是和 l25 冲突，也和 l50 重复，正是 a 自己指出的毛病；b 的「那要是把这些单元叠起来，会怎样？」和 l23「一层层连起来」打架，还抢了 l32「换个摆法」的话。a 的 l05「往错得最少的方向」不准确，梯度下降是往降得最快的方向走；b 的 l05 又造出「错误分数」第三个叫法。另外两人都没发现 l30 屏上还写着「旋钮的坡度 / 怎么算？」，口播上一轮已经去掉这个「坡度」，屏幕没跟着改。b 给 3 分偏高，a 的 2 分成立。"
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 1,
+     "a_ev": "上一轮 I60–I63、I65–I69、I71–I75、I77、I80–I81、I86–I88 的修改大多已解决，l06「直线拐不了弯，咱们就搭个会拐弯的小网络」、l21、l49、l50 明显变好；但 I59（l05）不采纳的理由不成立（「损失」在 l12 才被当新词解释，次序矛盾）；I71–I73（l30）改出新问题：串场仍是三项并列的压缩句，并与 l25 冲突；I84–I85（l46）改后主语是长名词短语，仍偏怪；I82（l42）不采纳可接受，仅记建议。",
+     "b": 1,
+     "b_ev": "I66—I68 对应的 l21 仍说“再加一个管高低的旋钮”；I80—I81 对应的 l41 仍保留四组数字。l23、l49、l50 等问题已经解决，逐项复核见后表。",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    }
+   },
+   "disputes": [
+    "V3",
+    "V4",
+    "V5"
+   ],
+   "audits": [
+    "V6"
+   ],
+   "final_scores": {
+    "V1": 1,
+    "V2": 1,
+    "V3": 1,
+    "V4": 1,
+    "V5": 1,
+    "V6": 2,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "V3",
+     "V4",
+     "V5",
+     "V6"
+    ],
+    "prompt": "items/voice_zh__judge.md",
+    "report": "reports/voice_zh__judge.md",
+    "ruling": {
+     "V3": {
+      "score": 1,
+      "evidence": "l05 是本期内容段的回顾串场，「往损失降得最快的方向」先用「损失」，到 l12 才说「给错误打的分，也就是损失」，两人都判有点怪，按从严条目就是必改。上一轮以「系列术语」驳回，但盲听标准是本片先解释再用，把 l05 的「损失」换成「错误」就能解决，l12 正好在这里给它起名，l25 再用「损失」，三处也不打架。l21「加起来，再加一个管高低的旋钮」只听容易听成往机器里多装一个旋钮，加的是什么还是不清楚。a 自己写了 l05 次序反了，却给 2 分，前后矛盾。b 的 1 分成立。"
+     },
+     "V4": {
+      "score": 1,
+      "evidence": "l30「每个该往哪拧、拧多少……下一期再讲」和 l50「每个往哪拧、拧多少，怎么算得过来」几乎是同一句话说两遍，片尾的悬念提前用掉了。b 的证据成立。中途提一句不是问题，问题在措辞重复，所以改 l30 的说法，不删这一句（定稿见补充问题）。a 提的 l36–l37、l39–l40 合并只是记录级，没碰到真正的重复。"
+     },
+     "V5": {
+      "score": 1,
+      "evidence": "l30 有 26 个字，标注只有 3.7 秒，约每秒 7 字；邻句 l22 是 12 字 2.4 秒，l28 是 10 字 2.2 秒，每秒约 5 字。这是串场句，念快了会显得赶。l21（8.0 秒）一句里塞了配旋钮、调分量、相加、调高低四个动作。b 的 1 分成立。b 举的 l41 证据不成立：已经用句号拆开，屏上同时列着「8 层 / 6000 万 / 120 万 / 1000 类」（s6），见驳回。"
+     },
+     "V6": {
+      "score": 2,
+      "evidence": "抽查发现两人有共同盲点。最要紧的 l30，两个改写都不能用：a 的「怎么快速算出每个该往哪拧，下一期再讲」还是和 l25 冲突，也和 l50 重复，正是 a 自己指出的毛病；b 的「那要是把这些单元叠起来，会怎样？」和 l23「一层层连起来」打架，还抢了 l32「换个摆法」的话。a 的 l05「往错得最少的方向」不准确，梯度下降是往降得最快的方向走；b 的 l05 又造出「错误分数」第三个叫法。另外两人都没发现 l30 屏上还写着「旋钮的坡度 / 怎么算？」，口播上一轮已经去掉这个「坡度」，屏幕没跟着改。b 给 3 分偏高，a 的 2 分成立。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 25,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_zh__a",
+    "codex/voice_zh__b"
+   ]
+  },
+  {
+   "id": "voice_en",
+   "law": "lines",
+   "law_name": "English narration (native ear, blind)",
+   "color": "#2e6fc0",
+   "scope": [],
+   "checks": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_en.md",
+   "prompt": "items/voice_en__a.md",
+   "what": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "problem": "The previous agenda read 'In this episode: What the problem is. Why memorizing answers fails. A different way to think about learning…' — a table of contents read aloud. No one talks like that (caught by the user, 2026-11-08); earlier reviews missed it.",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "Sounds like a person talking",
+     "question": "Each line: natural / a bit off / clearly off. Written-style, lecture tone, translated-from-Chinese phrasing, telegraphic lists all count as off"
+    },
+    {
+     "id": "V2",
+     "name": "Flow and transitions",
+     "question": "Cold open, the 'what's coming' part, chapter changes, before/after examples: does it sound like one person following a thought, not 'Point one…' templates or a TOC read aloud? Do adjacent lines connect?"
+    },
+    {
+     "id": "V3",
+     "name": "Clear on one hearing",
+     "question": "Ear only: one new idea per line; clear reference ('this' points to something); terms explained before used; numbers and words not misheard"
+    },
+    {
+     "id": "V4",
+     "name": "Tight",
+     "question": "No filler, repetition, or empty truisms; point out lines that could go without losing anything"
+    },
+    {
+     "id": "V5",
+     "name": "Voice and rhythm",
+     "question": "One warm, clear, unpretentious narrator throughout; varied sentence length; each line sayable in one breath"
+    },
+    {
+     "id": "V6",
+     "name": "Rewrites",
+     "question": "For every 'a bit off' / 'clearly off' line, a drop-in rewrite no longer than the original; rank the 5 most awkward lines"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_en__a.md",
+     "prompt": "items/voice_en__a.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "most lines are conversational; small stiff spots at l06 \"build a tiny network..., see why stacking more layers helps, and meet a famous one\", l21 \"scales each bent line\", l43 \"The version they entered\"."
+      },
+      "V2": {
+       "score": 2,
+       "evidence": "cold open (l01-l04) and outro (l48-l51) flow well; l06 is still a three-item agenda sentence, and l30 \"a much faster way to find each one's direction\" sits oddly after l25 says we nudge each knob toward the fastest drop."
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "mostly one idea per line; l33 \"fold a slanted line exactly in half\" is hard to picture by ear, l41 stacks \"eight layers\", \"sixty million\", \"a thousand\", \"one point two million\", and l46 \"first-guess accuracy\" is new right after the five-guess setup."
+      },
+      "V4": {
+       "score": 3,
+       "evidence": "little filler; l49 \"recognize really complicated things\" is the only near-truism and works as the takeaway; the l30 and l50-l51 teasers carry different content."
+      },
+      "V5": {
+       "score": 3,
+       "evidence": "one warm, unpretentious narrator throughout (l14 \"lots of simple little ones\", l24 \"don't take that too seriously\"); lengths vary from l16 (2.7s) to l12 (9.6s)."
+      },
+      "V6": {
+       "score": 2,
+       "evidence": "every off line has a short rewrite in the issue table; the five most awkward are l06, l30, l43, l46, l34."
+      },
+      "R": {
+       "score": 2,
+       "evidence": "I42/I43 l12 resolved (split in two sentences); I44/I45 l21 now \"scales... then one last knob shifts the total\", clearer but \"scales\" still slightly technical; I46 l25 and I47 l28 not adopted, reasons hold (noun omission and topic-first are normal speech); I48-I50 l30 long \"As for how...\" gone, mostly resolved but the l25 tension remains; I51 l34 fixed but \"in this example\" is padding; I52 l36 and I53 l37 not adopted, reasons hold; I54 l44 resolved; I55/I56 l46 resolved, term still new; I57 l49 not adopted, acceptable; I58 l50 resolved (\"we can test one by one. But sixty million?\")."
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/voice_en__b.md",
+     "prompt": "items/voice_en__b.md",
+     "scores": {
+      "V1": {
+       "score": 1,
+       "evidence": "Most lines sound conversational, but l21 “scales each bent line,” l05 “turned the knobs by walking,” and l37 “the more complex the shapes the same units can build” still require translation into everyday speech."
+      },
+      "V2": {
+       "score": 1,
+       "evidence": "l06 “Today we'll build… see why… and meet…” is a natural spoken preview, unlike the earlier fragment list. However, l30 “That's next time” sounds like a closing announcement immediately before another substantial chapter."
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "l12 now separates the fare comparison from the definition of loss; l34 explicitly says “two layers”; l50 explains “test one by one.” Minor obstacles remain in l09’s unanchored “it” and l21’s unexplained “scales.”"
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "The explanation generally advances efficiently. l30 can disappear without losing the training explanation, and its promise returns more effectively in l50–l51."
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "l14’s two short sentences, l27’s numerical comparison, and l50’s short questions provide useful variation. l37’s nested wording interrupts otherwise comfortable spoken rhythm. Recorded delivery cannot be assessed from this text."
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "Every line marked off below has a drop-in replacement no longer than its original, counting numbers as spoken. Awkwardness ranking: **1. l21; 2. l37; 3. l05; 4. l30; 5. l09.**"
+      },
+      "R": {
+       "score": 1,
+       "evidence": "**I42 — resolved:** l12 now gives the pricing comparison its own sentence. **I43 — resolved:** that same sentence break supplies a natural breath. **I44 — partly resolved:** l21 now explains what the last knob does; “scales” remains unnecessarily technical for this audience. Rejecting the earlier repeated “adjusts” wording was reasonable, but does not settle this remaining vocabulary issue. **I45 — partly resolved:** the “plus one more knob” grammar gap is gone; the vocabulary concern remains. **I46 — rejection justified:** l25’s “all thirty-seven” clearly refers to the knobs repeatedly named immediately beforehand; ordinary spoken ellipsis needs no repair. **I47 — rejection acceptable on audible context:** l26–l27 establish fitting the fare curve, so l28’s “catches them all” is understandable. A visible checkmark cannot support an ear-only judgment, but is unnecessary here. **I48 — partly resolved:** the cumbersome “As for how…” opening is gone; the premature farewell remains. **I49 — partly resolved:** “much faster” resolves the apparent contradiction with l25, but not the interrupted chapter flow. **I50 — unresolved:** l30 still repeats the closing teaser. **I51 — resolved:** l34 now names “two layers,” removing the competing interpretation. **I52 — rejection justified in context:** l32–l35 sustain the folding image, giving “what earlier ones already folded” a recoverable object. **I53 — unresolved:** the familiar “the deeper…, the more…” construction is not itself the problem; the extra nesting in “the shapes the same units can build” remains harder to hear than a direct sentence. The rejection addresses the general construction rather than that specific burden. **I54 — resolved:** “learned to spot” supplies the missing action while preserving the contrast introduced by “yet.” **I55 — resolved:** l46’s tense mismatch is fixed; “first-guess” also makes the change from five guesses understandable. **I56 — resolved:** “Removing… made…” consistently reports a past result. **I57 — retention justified:** l49 is a brief recap following concrete examples, rather than an unsupported standalone truism. **I58 — resolved:** l50 explicitly introduces testing knobs individually, making the scale problem audible."
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "Sounds like a person talking",
+     "a": 2,
+     "a_ev": "most lines are conversational; small stiff spots at l06 \"build a tiny network..., see why stacking more layers helps, and meet a famous one\", l21 \"scales each bent line\", l43 \"The version they entered\".",
+     "b": 1,
+     "b_ev": "Most lines sound conversational, but l21 “scales each bent line,” l05 “turned the knobs by walking,” and l37 “the more complex the shapes the same units can build” still require translation into everyday speech.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 站得住。l05「we turned the knobs by walking downhill blindfolded」把动作和比喻搅在一起，a 也在问题表里记了「blended metaphor」，b 判它 a bit off。l05 属于「What's coming」段的承接句，是严格项，a bit off 就是必改，终轮也不放宽，所以这一维不能给 2。l21「scales」两人都提了，但 scale 是日常词（scale a recipe），只算小瑕疵，不构成扣分主因。a 列的 l06、l43 和 b 列的 l37、l09 我核过，不成立或只是建议级（见驳回）。"
+    },
+    "V2": {
+     "name": "Flow and transitions",
+     "a": 2,
+     "a_ev": "cold open (l01-l04) and outro (l48-l51) flow well; l06 is still a three-item agenda sentence, and l30 \"a much faster way to find each one's direction\" sits oddly after l25 says we nudge each knob toward the fastest drop.",
+     "b": 1,
+     "b_ev": "l06 “Today we'll build… see why… and meet…” is a natural spoken preview, unlike the earlier fragment list. However, l30 “That's next time” sounds like a closing announcement immediately before another substantial chapter.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 的分数站得住，但理由要补。l30 是严格项（章节中段的预告句），终轮还有三处 off：①「With this many knobs」把 37 个旋钮说成「很多」，而片尾 l50 说的是「Thirty-seven knobs, we can test one by one」，单听一遍前后口径打架。这是上一轮按裁决改写时新加的半句带出来的，两人都没抓到。②「find each one's direction」，旋钮的 direction 不是口语说法，屏上写的也是「Which way / to turn?」。③光秃秃一句「That's next time」像在收尾（b 的观点）。再加上 l05 也是严格项上的必改。l06 三件事的预告是正常口语（判 a 不成立，见驳回）。"
+    },
+    "V3": {
+     "name": "Clear on one hearing",
+     "a": 2,
+     "a_ev": "mostly one idea per line; l33 \"fold a slanted line exactly in half\" is hard to picture by ear, l41 stacks \"eight layers\", \"sixty million\", \"a thousand\", \"one point two million\", and l46 \"first-guess accuracy\" is new right after the five-guess setup.",
+     "b": 2,
+     "b_ev": "l12 now separates the fare comparison from the definition of loss; l34 explicitly says “two layers”; l50 explains “test one by one.” Minor obstacles remain in l09’s unanchored “it” and l21’s unexplained “scales.”",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "抽查后维持 2 分。l33「fold a slanted line exactly in half」、l41 一句里四个大数、l46「first-guess accuracy」两人已经覆盖。两人共同漏掉的是 l35「So ten units side by side」：「ten」是这一句才冒出来的数，听众得自己推出「五层、每层两个 = 十个」，才能对上「Stacked five deep」和 l34 的翻倍。靠屏上文字能接住，所以列为记录级，不影响 2 分。"
+    },
+    "V4": {
+     "name": "Tight",
+     "a": 3,
+     "a_ev": "little filler; l49 \"recognize really complicated things\" is the only near-truism and works as the takeaway; the l30 and l50-l51 teasers carry different content.",
+     "b": 2,
+     "b_ev": "The explanation generally advances efficiently. l30 can disappear without losing the training explanation, and its promise returns more effectively in l50–l51.",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V5": {
+     "name": "Voice and rhythm",
+     "a": 3,
+     "a_ev": "one warm, unpretentious narrator throughout (l14 \"lots of simple little ones\", l24 \"don't take that too seriously\"); lengths vary from l16 (2.7s) to l12 (9.6s).",
+     "b": 2,
+     "b_ev": "l14’s two short sentences, l27’s numerical comparison, and l50’s short questions provide useful variation. l37’s nested wording interrupts otherwise comfortable spoken rhythm. Recorded delivery cannot be assessed from this text.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "抽查后把 a 的 3 分降为 2。全片确实是同一个温和的口吻（l14、l24），句子长短有变化（l22 1.9s 到 l12 9.6s）。但两人都漏了 l21→l22 连着两句以「That's」开头：「That's the fare. / That's thirty-seven knobs in total.」，第二句像在复读前一句的收尾，节奏发顿。另外 l06 是 8.8s 的单句，一口气念下来偏满。所以是有小瑕疵，不是满分。"
+    },
+    "V6": {
+     "name": "Rewrites",
+     "a": 2,
+     "a_ev": "every off line has a short rewrite in the issue table; the five most awkward are l06, l30, l43, l46, l34.",
+     "b": 3,
+     "b_ev": "Every line marked off below has a drop-in replacement no longer than its original, counting numbers as spoken. Awkwardness ranking: **1. l21; 2. l37; 3. l05; 4. l30; 5. l09.**",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "I42/I43 l12 resolved (split in two sentences); I44/I45 l21 now \"scales... then one last knob shifts the total\", clearer but \"scales\" still slightly technical; I46 l25 and I47 l28 not adopted, reasons hold (noun omission and topic-first are normal speech); I48-I50 l30 long \"As for how...\" gone, mostly resolved but the l25 tension remains; I51 l34 fixed but \"in this example\" is padding; I52 l36 and I53 l37 not adopted, reasons hold; I54 l44 resolved; I55/I56 l46 resolved, term still new; I57 l49 not adopted, acceptable; I58 l50 resolved (\"we can test one by one. But sixty million?\").",
+     "b": 1,
+     "b_ev": "**I42 — resolved:** l12 now gives the pricing comparison its own sentence. **I43 — resolved:** that same sentence break supplies a natural breath. **I44 — partly resolved:** l21 now explains what the last knob does; “scales” remains unnecessarily technical for this audience. Rejecting the earlier repeated “adjusts” wording was reasonable, but does not settle this remaining vocabulary issue. **I45 — partly resolved:** the “plus one more knob” grammar gap is gone; the vocabulary concern remains. **I46 — rejection justified:** l25’s “all thirty-seven” clearly refers to the knobs repeatedly named immediately beforehand; ordinary spoken ellipsis needs no repair. **I47 — rejection acceptable on audible context:** l26–l27 establish fitting the fare curve, so l28’s “catches them all” is understandable. A visible checkmark cannot support an ear-only judgment, but is unnecessary here. **I48 — partly resolved:** the cumbersome “As for how…” opening is gone; the premature farewell remains. **I49 — partly resolved:** “much faster” resolves the apparent contradiction with l25, but not the interrupted chapter flow. **I50 — unresolved:** l30 still repeats the closing teaser. **I51 — resolved:** l34 now names “two layers,” removing the competing interpretation. **I52 — rejection justified in context:** l32–l35 sustain the folding image, giving “what earlier ones already folded” a recoverable object. **I53 — unresolved:** the familiar “the deeper…, the more…” construction is not itself the problem; the extra nesting in “the shapes the same units can build” remains harder to hear than a direct sentence. The rejection addresses the general construction rather than that specific burden. **I54 — resolved:** “learned to spot” supplies the missing action while preserving the contrast introduced by “yet.” **I55 — resolved:** l46’s tense mismatch is fixed; “first-guess” also makes the change from five guesses understandable. **I56 — resolved:** “Removing… made…” consistently reports a past result. **I57 — retention justified:** l49 is a brief recap following concrete examples, rather than an unsupported standalone truism. **I58 — resolved:** l50 explicitly introduces testing knobs individually, making the scale problem audible.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 站得住。I48–I50（l30）作者照上一轮裁决的备选句改了，但多加了「With this many knobs,」，和 l50 的「37 个可以一个个试」冲突，属于改出新问题。I50 的重复问题也只是减轻了，没有消失。I51（l34）修好了歧义，但新加的「in this example」是 a 指出的赘词（记录级）。I42/I43、I54–I56、I58 已解决，I46/I47/I52/I53/I57 的不采纳理由成立，两人在这几条上意见一致，我核过也同意。"
+    }
+   },
+   "disputes": [
+    "V1",
+    "V2",
+    "R"
+   ],
+   "audits": [
+    "V5",
+    "V3"
+   ],
+   "final_scores": {
+    "V1": 1,
+    "V2": 1,
+    "V3": 2,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "V1",
+     "V2",
+     "R",
+     "V5",
+     "V3"
+    ],
+    "prompt": "items/voice_en__judge.md",
+    "report": "reports/voice_en__judge.md",
+    "ruling": {
+     "V1": {
+      "score": 1,
+      "evidence": "b 站得住。l05「we turned the knobs by walking downhill blindfolded」把动作和比喻搅在一起，a 也在问题表里记了「blended metaphor」，b 判它 a bit off。l05 属于「What's coming」段的承接句，是严格项，a bit off 就是必改，终轮也不放宽，所以这一维不能给 2。l21「scales」两人都提了，但 scale 是日常词（scale a recipe），只算小瑕疵，不构成扣分主因。a 列的 l06、l43 和 b 列的 l37、l09 我核过，不成立或只是建议级（见驳回）。"
+     },
+     "V2": {
+      "score": 1,
+      "evidence": "b 的分数站得住，但理由要补。l30 是严格项（章节中段的预告句），终轮还有三处 off：①「With this many knobs」把 37 个旋钮说成「很多」，而片尾 l50 说的是「Thirty-seven knobs, we can test one by one」，单听一遍前后口径打架。这是上一轮按裁决改写时新加的半句带出来的，两人都没抓到。②「find each one's direction」，旋钮的 direction 不是口语说法，屏上写的也是「Which way / to turn?」。③光秃秃一句「That's next time」像在收尾（b 的观点）。再加上 l05 也是严格项上的必改。l06 三件事的预告是正常口语（判 a 不成立，见驳回）。"
+     },
+     "R": {
+      "score": 1,
+      "evidence": "b 站得住。I48–I50（l30）作者照上一轮裁决的备选句改了，但多加了「With this many knobs,」，和 l50 的「37 个可以一个个试」冲突，属于改出新问题。I50 的重复问题也只是减轻了，没有消失。I51（l34）修好了歧义，但新加的「in this example」是 a 指出的赘词（记录级）。I42/I43、I54–I56、I58 已解决，I46/I47/I52/I53/I57 的不采纳理由成立，两人在这几条上意见一致，我核过也同意。"
+     },
+     "V5": {
+      "score": 2,
+      "evidence": "抽查后把 a 的 3 分降为 2。全片确实是同一个温和的口吻（l14、l24），句子长短有变化（l22 1.9s 到 l12 9.6s）。但两人都漏了 l21→l22 连着两句以「That's」开头：「That's the fare. / That's thirty-seven knobs in total.」，第二句像在复读前一句的收尾，节奏发顿。另外 l06 是 8.8s 的单句，一口气念下来偏满。所以是有小瑕疵，不是满分。"
+     },
+     "V3": {
+      "score": 2,
+      "evidence": "抽查后维持 2 分。l33「fold a slanted line exactly in half」、l41 一句里四个大数、l46「first-guess accuracy」两人已经覆盖。两人共同漏掉的是 l35「So ten units side by side」：「ten」是这一句才冒出来的数，听众得自己推出「五层、每层两个 = 十个」，才能对上「Stacked five deep」和 l34 的翻倍。靠屏上文字能接住，所以列为记录级，不影响 2 分。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 17,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_en__a",
+    "codex/voice_en__b"
+   ]
+  },
+  {
+   "id": "screen_zh",
+   "law": "lines",
+   "law_name": "中文屏幕文字（PPT 式画面）",
+   "color": "#b8860b",
+   "scope": [],
+   "checks": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "how": "硬上限（超了必须报）：标题 ≤12 字；其余每块 ≤16 字；同屏文字块 ≤4 块（不含页眉小标签、出处与图表刻度）；一屏总字数 ≤36 字。屏幕下方还有口播字幕，观众要同时看。计数口径（第 2 轮裁决定，2026-11-09）：页眉小标签、案例页签、出处、片尾署名不计；同构的列表 / 表格 / 卡片行（每项 ≤8 字、最多 6 项、样子一样）合算 1 块，编号不计字；图里的文字（区域名、曲线名、轴标题、柱条标签、图上注释）要计字数，整张图合算 1 块，只有坐标刻度数字豁免；表格的列头算在表里。",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_zh.md",
+   "prompt": "items/screen_zh__a.md",
+   "what": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "problem": "上一版屏幕文字很多是整句（如「另训一个模型，在两家医院的片子上认医院的准确率——胸片里藏着医院的“指纹”」），等于把口播又印了一遍；用户要求画面只列纲要、相对简练（2026-11-08）。",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "只列纲要",
+     "question": "每屏只放关键词、短语、关键数字、标签；不是口播整句的复述。按硬上限逐屏数字数，超了就报"
+    },
+    {
+     "id": "P2",
+     "name": "与口播分工",
+     "question": "屏幕给结构、数字、对比，口播负责解释；不和口播逐字重复，也不出现口播没说过的新说法；术语、叫法与口播一致"
+    },
+    {
+     "id": "P3",
+     "name": "层级与体例",
+     "question": "一眼先看到什么、第二眼看什么；标题—要点—注释不超过三级；编号、标签、章节名、目录项前后一致（例：目录写的和章节卡写的是不是同一个说法）"
+    },
+    {
+     "id": "P4",
+     "name": "中文措辞与排版",
+     "question": "短语化、不带句末句号；标点、引号、空格规范；不半中半英；**标题、章名读出来要顺**：名词堆砌、生造的名词短语（如「现实里的祸」）算必改"
+    },
+    {
+     "id": "P5",
+     "name": "看得完",
+     "question": "按截图和停留时间：文字量在停留时间内读得完（约 6 字/秒，还要分神看字幕和图）"
+    },
+    {
+     "id": "P6",
+     "name": "改写",
+     "question": "每处超限或不顺的屏幕文字，都给出更短、可直接替换的写法"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_zh__a.md",
+     "prompt": "items/screen_zh__a.md",
+     "scores": {
+      "P1": {
+       "score": 2,
+       "evidence": "按口径逐屏数字数（图内文字合算、刻度与页眉不计）全部在 36 字内，块数 ≤4。最重的是 l24（4 块：神经网络 4 + 一层层小单元 6 + 来自神经元 · 别当真 8 + 网络图 16 = 34 字）、l21（每条折线配个旋钮 8 + 加起来，再调高低 → 车费 9 + 网络图 16 = 33 字）、l12（约 30 字）；单块均 ≤16。小瑕疵：l21 第一行「每条折线配个旋钮」仍是口播原话的截取，l42「猜 5 个，全错才算错」几乎是口播整句。"
+      },
+      "P2": {
+       "score": 1,
+       "evidence": "l30 屏上仍是「旋钮的坡度 / 怎么算？」，而口播已按上一轮改成「每个该往哪拧、拧多少，怎么才算得快」（l50 同），屏幕还留着裁决人 I73 指出的撞词「坡度」，与口播说法不一致，截图 s4_l30 已核。其余屏与口播分工尚可：l27「直线最低：11.5」、l29「单元拐弯 → 拐点」都是结构加数字。"
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "页眉 01–04 与目录、章节卡一致（直线拐不了弯 / 搭一个小网络 / 为什么要多叠几层 / 2012 年的 AlexNet）。小瑕疵：l40 与 l47 出处写法不统一（「Krizhevsky 等 · NIPS 2012」对「Krizhevsky 等 2012 · 第 7 节」）；l24 的 h1「神经网络」与 l23 完全相同，一屏接一屏重复；agenda 与章节卡材料无截图，只能凭文字核对。"
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "章名「直线拐不了弯」「搭一个小网络」读着顺；无句末句号（l25–l47 的 h2 / 注释均无）。小瑕疵：l30 截图里「怎么算?」是半角问号且硬折行成「旋钮的坡度 / 怎么算?」；l41 的「8层」「1000类」不带空格，「6000 万」「120 万」带空格，体例不一；l19「鼓包、台阶……」省略号偏口头。"
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "l24 全屏 34 字、停留 5.0s，按 6 字/秒要 5.7s，且还要看图和字幕，略紧；l21 33 字 / 8.0s 可读；l46 的 h2「拿掉中间一层 → 成绩降约 2 个百分点」15 字 + 注释 7 字，7.2s 够；l36 三行共 24 字、4.6s 紧但两行是上一屏已见过的内容。其余停留时间充足。"
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "下面问题表每条都给了可直接替换的短写法，如 l30「每个旋钮 / 往哪拧？」、l24 去掉重复 h1。"
+      },
+      "R": {
+       "score": 2,
+       "evidence": "上一轮屏幕项中，I32/I33（l24 超 36 字）已解决（现 34 字，4 块）；I35（l29 图块超限）已解决（图注 6 字）；I29/I63 章名改「直线拐不了弯」已解决且前后一致；I30（旋钮标签顺序）已解决；I34「直线最低」已解决；I31（l21）解决；I37 解决；I41（人名降级）基本解决（仍是 38px 正文字号，记录）；I25（agenda 提示去句号）按作者说法已改，本轮无截图无法复核；I23/I24/I26/I27 作者不改理由成立。改出新问题：l30 屏幕未随口播改动同步（见问题表第 1 条）。I28（l01「算得挺准」）作者不改的理由可接受，仅记录。"
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/screen_zh__b.md",
+     "prompt": "items/screen_zh__b.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "已逐屏重算。l24 为 **4＋6＋8＋16＝34 字、4 块**，原超限已解决；l29 图块为 **8＋6＝14 字**。但 l46 图下小标题仍有 **15 字**，超过标题 12 字上限；agenda 侧栏存在漏抽文字，不能确认全屏合规。"
+      },
+      "P2": {
+       "score": 1,
+       "evidence": "l27「直线最低：11.5」与口播一致；l21 已补明「再调高低」。但 l30 屏幕新称「旋钮的坡度」，对应口播只说「每个该往哪拧、拧多少」，没有解释这个叫法。"
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "l13 的「直线拐不了弯」与目录、章节名一致；l40 人名已降为灰色正文，「AlexNet」保持主层级。agenda、章节卡、outro 无本轮截图，包装层级只能部分核验。"
+      },
+      "P4": {
+       "score": 1,
+       "evidence": "l31「并排：各拐一次」、l32「叠起来：接着折」结合图示均顺畅；但串场「旋钮的坡度」搭配生硬，片尾「复杂的也认得出」省略对象后仍略怪，均触发从严条目。"
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "l22 虽仅 2.4 秒，新增重点只是「37 个旋钮」；l36–l37 同屏延续共 9.4 秒，24 字可消化。l24 的 34 字包含沿用图示，不应全部视为首次阅读；包装卡缺截图及分段入场证据，未能完整核验。"
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "问题表为 l30 提供 7 字标题「每个旋钮怎么拧？」，为 l46 提供 6 字标题及不超过 16 字的解释块，片尾也提供了补全对象的直接替换文字。"
+      },
+      "R": {
+       "score": 1,
+       "evidence": "I23 **未核实**，缺 outro 截图，不能确认「下一期」小标；I24 **分块仍存疑**，不直接把合列的17字判为单块超限，但分色不能解决措辞问题；I25 **修改未实核**，新提示语仍未收进本轮材料；I26 **未解决**，「上轮接受」不能替代本轮从严判断；I27 **不采纳理由成立**，「先修」若是抽取标签就不应要求修改画面；I28 **不采纳理由基本成立**，两处是配图结论标签，无需因局部同词强删；I29 **已解决**，章名及正文标题已统一；I30 **顺序已解决**，提前显示不构成矛盾；I31 **已解决指代问题**，「再调高低」已说明操作；I32 **已解决**，l24 实算34字，作者所述33字有误；I33 **已解决**，同I32；I34 **已解决**，已改「直线最低」；I35 **已解决**，整图14字；I36 **已解决**，箭头表达保留因果；I37 **已解决**，已改「各拐一次」；I38 **不采纳理由成立**，折线图提供了「折什么」的对象；I39 **不采纳理由成立**，数字与量词属于同一读数；I40 **理由可成立、动态未核**，末帧32段本身不能证明入场时序；I41 **已解决**，人名已降级。已核实的改动未发现改出新问题。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "只列纲要",
+     "a": 2,
+     "a_ev": "按口径逐屏数字数（图内文字合算、刻度与页眉不计）全部在 36 字内，块数 ≤4。最重的是 l24（4 块：神经网络 4 + 一层层小单元 6 + 来自神经元 · 别当真 8 + 网络图 16 = 34 字）、l21（每条折线配个旋钮 8 + 加起来，再调高低 → 车费 9 + 网络图 16 = 33 字）、l12（约 30 字）；单块均 ≤16。小瑕疵：l21 第一行「每条折线配个旋钮」仍是口播原话的截取，l42「猜 5 个，全错才算错」几乎是口播整句。",
+     "b": 1,
+     "b_ev": "已逐屏重算。l24 为 **4＋6＋8＋16＝34 字、4 块**，原超限已解决；l29 图块为 **8＋6＝14 字**。但 l46 图下小标题仍有 **15 字**，超过标题 12 字上限；agenda 侧栏存在漏抽文字，不能确认全屏合规。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 成立。l46 屏上唯一的标题级文字是 h2「拿掉中间一层 → 成绩降约 2 个百分点」，数下来是 6＋4＋1＋4＝15 字，超过「标题 ≤12 字」（截图 s6_l46 里它就是全屏最大的字，下面只有一行 caption）。a 把各屏都算在 36 字内，这点没错，但漏了单个标题的上限。b 说 agenda 侧栏「至少 42 字」站不住：上一轮裁决已经定了「建议先了解」卡是模板侧栏、不计块（I27），而且整段停留 17.7 秒；我看了 agenda.mp4 末帧，目录 4 项同构，每项不超过 8 字（「为什么要多叠几层」8 字，编号不计）。"
+    },
+    "P2": {
+     "name": "与口播分工",
+     "a": 1,
+     "a_ev": "l30 屏上仍是「旋钮的坡度 / 怎么算？」，而口播已按上一轮改成「每个该往哪拧、拧多少，怎么才算得快」（l50 同），屏幕还留着裁决人 I73 指出的撞词「坡度」，与口播说法不一致，截图 s4_l30 已核。其余屏与口播分工尚可：l27「直线最低：11.5」、l29「单元拐弯 → 拐点」都是结构加数字。",
+     "b": 1,
+     "b_ev": "l27「直线最低：11.5」与口播一致；l21 已补明「再调高低」。但 l30 屏幕新称「旋钮的坡度」，对应口播只说「每个该往哪拧、拧多少」，没有解释这个叫法。",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "P3": {
+     "name": "层级与体例",
+     "a": 2,
+     "a_ev": "页眉 01–04 与目录、章节卡一致（直线拐不了弯 / 搭一个小网络 / 为什么要多叠几层 / 2012 年的 AlexNet）。小瑕疵：l40 与 l47 出处写法不统一（「Krizhevsky 等 · NIPS 2012」对「Krizhevsky 等 2012 · 第 7 节」）；l24 的 h1「神经网络」与 l23 完全相同，一屏接一屏重复；agenda 与章节卡材料无截图，只能凭文字核对。",
+     "b": 2,
+     "b_ev": "l13 的「直线拐不了弯」与目录、章节名一致；l40 人名已降为灰色正文，「AlexNet」保持主层级。agenda、章节卡、outro 无本轮截图，包装层级只能部分核验。",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P4": {
+     "name": "中文措辞与排版",
+     "a": 2,
+     "a_ev": "章名「直线拐不了弯」「搭一个小网络」读着顺；无句末句号（l25–l47 的 h2 / 注释均无）。小瑕疵：l30 截图里「怎么算?」是半角问号且硬折行成「旋钮的坡度 / 怎么算?」；l41 的「8层」「1000类」不带空格，「6000 万」「120 万」带空格，体例不一；l19「鼓包、台阶……」省略号偏口头。",
+     "b": 1,
+     "b_ev": "l31「并排：各拐一次」、l32「叠起来：接着折」结合图示均顺畅；但串场「旋钮的坡度」搭配生硬，片尾「复杂的也认得出」省略对象后仍略怪，均触发从严条目。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 成立。a 自己在问题表把 l30「旋钮的坡度 / 怎么算？」列成串场必改，评分却给 2，前后矛盾。串场和片尾都是从严条目：l30「旋钮的坡度」搭配生硬，口播里也已经不说这个词；片尾第二行「叠得深，复杂的也认得出」里，「复杂的」后面缺了中心词（outro.mp4 末帧已核，是橙色大字第二行）。两处都算「有点怪」，按从严条目判必改。"
+    },
+    "P5": {
+     "name": "看得完",
+     "a": 2,
+     "a_ev": "l24 全屏 34 字、停留 5.0s，按 6 字/秒要 5.7s，且还要看图和字幕，略紧；l21 33 字 / 8.0s 可读；l46 的 h2「拿掉中间一层 → 成绩降约 2 个百分点」15 字 + 注释 7 字，7.2s 够；l36 三行共 24 字、4.6s 紧但两行是上一屏已见过的内容。其余停留时间充足。",
+     "b": 2,
+     "b_ev": "l22 虽仅 2.4 秒，新增重点只是「37 个旋钮」；l36–l37 同屏延续共 9.4 秒，24 字可消化。l24 的 34 字包含沿用图示，不应全部视为首次阅读；包装卡缺截图及分段入场证据，未能完整核验。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "两人的 2 分成立。l24 全屏 34 字、停 5.0 秒，但网络图的 16 字从 l20 起就一直在屏上，「神经网络」l23 也出现过，真正新出现的只有 14 字。l46 改成定稿后是 12＋12＝24 字，停 7.2 秒，读得完。l30 定稿 9＋3 字，停 3.7 秒，也够。两人没有共同的漏项。"
+    },
+    "P6": {
+     "name": "改写",
+     "a": 3,
+     "a_ev": "下面问题表每条都给了可直接替换的短写法，如 l30「每个旋钮 / 往哪拧？」、l24 去掉重复 h1。",
+     "b": 3,
+     "b_ev": "问题表为 l30 提供 7 字标题「每个旋钮怎么拧？」，为 l46 提供 6 字标题及不超过 16 字的解释块，片尾也提供了补全对象的直接替换文字。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "两人都给 3 分，但他们共同的盲点在 l30 的改写。a 写「每个旋钮往哪拧？」，b 写「每个旋钮怎么拧？」，问的都是 l25 已经答过的问题：l25 口播是「三十七个旋钮怎么拧？还是上一期的老办法」，屏上还挂着「37 个旋钮」。这样写，串场标题就和前面五句打架了，而且丢掉了口播的重点「怎么算得快」。b 的 agenda 改写「可选回看」读不通。其余改写可用。"
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "上一轮屏幕项中，I32/I33（l24 超 36 字）已解决（现 34 字，4 块）；I35（l29 图块超限）已解决（图注 6 字）；I29/I63 章名改「直线拐不了弯」已解决且前后一致；I30（旋钮标签顺序）已解决；I34「直线最低」已解决；I31（l21）解决；I37 解决；I41（人名降级）基本解决（仍是 38px 正文字号，记录）；I25（agenda 提示去句号）按作者说法已改，本轮无截图无法复核；I23/I24/I26/I27 作者不改理由成立。改出新问题：l30 屏幕未随口播改动同步（见问题表第 1 条）。I28（l01「算得挺准」）作者不改的理由可接受，仅记录。",
+     "b": 1,
+     "b_ev": "I23 **未核实**，缺 outro 截图，不能确认「下一期」小标；I24 **分块仍存疑**，不直接把合列的17字判为单块超限，但分色不能解决措辞问题；I25 **修改未实核**，新提示语仍未收进本轮材料；I26 **未解决**，「上轮接受」不能替代本轮从严判断；I27 **不采纳理由成立**，「先修」若是抽取标签就不应要求修改画面；I28 **不采纳理由基本成立**，两处是配图结论标签，无需因局部同词强删；I29 **已解决**，章名及正文标题已统一；I30 **顺序已解决**，提前显示不构成矛盾；I31 **已解决指代问题**，「再调高低」已说明操作；I32 **已解决**，l24 实算34字，作者所述33字有误；I33 **已解决**，同I32；I34 **已解决**，已改「直线最低」；I35 **已解决**，整图14字；I36 **已解决**，箭头表达保留因果；I37 **已解决**，已改「各拐一次」；I38 **不采纳理由成立**，折线图提供了「折什么」的对象；I39 **不采纳理由成立**，数字与量词属于同一读数；I40 **理由可成立、动态未核**，末帧32段本身不能证明入场时序；I41 **已解决**，人名已降级。已核实的改动未发现改出新问题。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "I23、I24、I25 我已经从包装卡末帧核实：片尾印的是「下一期 · 反向传播」；金句分两行，分别是 7 字和 10 字；先修提示「没看过也能懂，片中一句话带过」不带句号。这三条已解决，b 说「未核实」现在可以关掉。但 I26（片尾「复杂的」）作者以「记录级」为由没改，这一轮按从严条目要改，所以算未解决。另外 I73 只改了口播，l30 屏幕没跟着改（s4_l30 截图里还是「旋钮的坡度」），属于改出了新问题。有一条未解决，加一条改出的新问题，所以不能给 2。"
+    }
+   },
+   "disputes": [
+    "P1",
+    "P4",
+    "R"
+   ],
+   "audits": [
+    "P6",
+    "P5"
+   ],
+   "final_scores": {
+    "P1": 1,
+    "P2": 1,
+    "P3": 2,
+    "P4": 1,
+    "P5": 2,
+    "P6": 2,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "P1",
+     "P4",
+     "R",
+     "P6",
+     "P5"
+    ],
+    "prompt": "items/screen_zh__judge.md",
+    "report": "reports/screen_zh__judge.md",
+    "ruling": {
+     "P1": {
+      "score": 1,
+      "evidence": "b 成立。l46 屏上唯一的标题级文字是 h2「拿掉中间一层 → 成绩降约 2 个百分点」，数下来是 6＋4＋1＋4＝15 字，超过「标题 ≤12 字」（截图 s6_l46 里它就是全屏最大的字，下面只有一行 caption）。a 把各屏都算在 36 字内，这点没错，但漏了单个标题的上限。b 说 agenda 侧栏「至少 42 字」站不住：上一轮裁决已经定了「建议先了解」卡是模板侧栏、不计块（I27），而且整段停留 17.7 秒；我看了 agenda.mp4 末帧，目录 4 项同构，每项不超过 8 字（「为什么要多叠几层」8 字，编号不计）。"
+     },
+     "P4": {
+      "score": 1,
+      "evidence": "b 成立。a 自己在问题表把 l30「旋钮的坡度 / 怎么算？」列成串场必改，评分却给 2，前后矛盾。串场和片尾都是从严条目：l30「旋钮的坡度」搭配生硬，口播里也已经不说这个词；片尾第二行「叠得深，复杂的也认得出」里，「复杂的」后面缺了中心词（outro.mp4 末帧已核，是橙色大字第二行）。两处都算「有点怪」，按从严条目判必改。"
+     },
+     "R": {
+      "score": 1,
+      "evidence": "I23、I24、I25 我已经从包装卡末帧核实：片尾印的是「下一期 · 反向传播」；金句分两行，分别是 7 字和 10 字；先修提示「没看过也能懂，片中一句话带过」不带句号。这三条已解决，b 说「未核实」现在可以关掉。但 I26（片尾「复杂的」）作者以「记录级」为由没改，这一轮按从严条目要改，所以算未解决。另外 I73 只改了口播，l30 屏幕没跟着改（s4_l30 截图里还是「旋钮的坡度」），属于改出了新问题。有一条未解决，加一条改出的新问题，所以不能给 2。"
+     },
+     "P6": {
+      "score": 2,
+      "evidence": "两人都给 3 分，但他们共同的盲点在 l30 的改写。a 写「每个旋钮往哪拧？」，b 写「每个旋钮怎么拧？」，问的都是 l25 已经答过的问题：l25 口播是「三十七个旋钮怎么拧？还是上一期的老办法」，屏上还挂着「37 个旋钮」。这样写，串场标题就和前面五句打架了，而且丢掉了口播的重点「怎么算得快」。b 的 agenda 改写「可选回看」读不通。其余改写可用。"
+     },
+     "P5": {
+      "score": 2,
+      "evidence": "两人的 2 分成立。l24 全屏 34 字、停 5.0 秒，但网络图的 16 字从 l20 起就一直在屏上，「神经网络」l23 也出现过，真正新出现的只有 14 字。l46 改成定稿后是 12＋12＝24 字，停 7.2 秒，读得完。l30 定稿 9＋3 字，停 3.7 秒，也够。两人没有共同的漏项。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 20,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_zh__a",
+    "codex/screen_zh__b"
+   ]
+  },
+  {
+   "id": "screen_en",
+   "law": "lines",
+   "law_name": "English on-screen text (slides)",
+   "color": "#6b4fc0",
+   "scope": [],
+   "checks": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "how": "Hard limits (report every breach): title ≤6 words; any other block ≤9 words; ≤4 text blocks per screen (not counting the small eyebrow label, source line or chart ticks); ≤22 words per screen. Narration subtitles also sit at the bottom of the frame. Counting rules (round-2 ruling, 2026-11-09): eyebrow labels, case tabs, source lines and end-card credits are exempt; a list, table or card row of look-alike items (each ≤6 words, at most 6 items) counts as one block, and numbering doesn't count as words; in-chart text (zone names, curve names, axis titles, bar labels, callouts) counts toward words and the whole chart counts as one block — only axis tick numbers are exempt; a table's column headers count with the table.",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_en.md",
+   "prompt": "items/screen_en__a.md",
+   "what": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "problem": "The previous version put full sentences on screen (e.g. 'A separate model identified the hospital for scans from two hospitals — a hospital fingerprint'), repeating the narration. The user wants outline-only, concise slides (2026-11-08).",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "Outline, not prose",
+     "question": "Only keywords, short phrases, key numbers, labels; no full narration sentences. Count words per screen against the hard limits"
+    },
+    {
+     "id": "P2",
+     "name": "Divided from narration",
+     "question": "Screen carries structure, numbers, contrasts; narration explains. No verbatim repetition, no new claims the narration doesn't make; terms match the narration"
+    },
+    {
+     "id": "P3",
+     "name": "Hierarchy and consistency",
+     "question": "What reads first, second; ≤3 levels (title, point, note); numbering, labels, chapter names and agenda items consistent with each other"
+    },
+    {
+     "id": "P4",
+     "name": "Native phrasing and style",
+     "question": "Sentence case headline style; no Chinglish; consistent punctuation (no trailing periods on fragments), en dashes, quotes; parallel grammar in lists; **chapter titles and headings must read naturally aloud** — awkward noun stacks are must-fix"
+    },
+    {
+     "id": "P5",
+     "name": "Readable in time",
+     "question": "From the screenshot and how long it stays: readable in time (~3 words/s while also reading subtitles and the chart)"
+    },
+    {
+     "id": "P6",
+     "name": "Rewrites",
+     "question": "For every breach or awkward phrase, a shorter drop-in rewrite"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_en__a.md",
+     "prompt": "items/screen_en__a.md",
+     "scores": {
+      "P1": {
+       "score": 2,
+       "evidence": "s5_l35 \"10 side by side: ≤ 11 pieces\" (6) and \"10 in 5 layers: up to 32 pieces\" (8) are the longest blocks, and l46 \"Remove a middle layer → ~2 pts worse\" (7); every screen is within 9 / 4 blocks / 22 words, but these read close to narration clauses rather than labels. No full narration sentence on screen."
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "l30 screen \"Which way to turn? · Next episode\" no longer matches the revised narration \"there's a much faster way to find each one's direction\", and contradicts l25 where the knobs are already nudged; outro line 1 \"Simple units, stacked in layers\" repeats l48 almost verbatim; l44 eyebrow \"Not told what to look for\" copies l44 narration."
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "agenda 01–04 matches chapter cards \"Beyond straight lines / Build a small network / Why go deep? / AlexNet, 2012\" and the page eyebrows; l03 and l13 now both say \"Straight lines only\". Flaws: l36 \"Earlier folds, reused\" sits at the same 54px weight as the two data headings, so the hierarchy is flat; agenda side card \"Prereqs: Gradient descent\" is not verifiable."
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "l35 mixes notations \"≤ 11 pieces\" and \"up to 32 pieces\" in the same pair; l46 still abbreviates \"~2 pts worse\"; l29 \"Unit bends → corner\" is slightly clipped. Otherwise sentence case, no trailing periods, parallel colon fragments (l31, l32), and chapter titles read naturally aloud."
+      },
+      "P5": {
+       "score": 3,
+       "evidence": "screenshots s5_l36, s6_l41, s3_l24 and s4_l30 are large, uncluttered and readable at a glance; the busiest screens (l24, l46) hold 5.4 s or more, and l22 \"37 / knobs\" is 1.9 s but only 2 words of text."
+      },
+      "P6": {
+       "score": 2,
+       "evidence": "rewrites below are short drop-ins, but the l30 case needs a screen redesign rather than a word swap, and the agenda/outro cards could only be checked from extracted text (screenshots empty)."
+      },
+      "R": {
+       "score": 2,
+       "evidence": "Resolved: I8 (l03/l13 now the same), I12 (\"Sum + 1 knob → fare\"), I15 (\"Unit bends → corner\"), I17 (\"up to 32 pieces\"), I22 (quote now \"…the depth really is important…\"), I9 (l03 single line, l44 60px). Not resolved: I19/I20, l46 still says \"pts\" although the judge asked for \"points\". Rejections hold: I11 (diagram text is counted only toward the 22-word cap, and l20–l24 are at most 20 words), I14, I18, I21 (quotation card with attribution), I7, I10, I16. New problem introduced: l30 narration was rewritten (I48/I49) but the screen text was not updated, so it now mismatches. I1/I2/I3/I5 (package cards re-rendered): cannot verify, the screenshot fields for agenda, c_* and outro are empty."
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/screen_en__b.md",
+     "prompt": "items/screen_en__b.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "l20–l24 retain a 10-word network-diagram block, exceeding nine; l47 still displays a complete narration sentence. Other inspected screens remain within 22 words after counting chart text."
+      },
+      "P2": {
+       "score": 1,
+       "evidence": "l47 repeats “the depth really is important” verbatim. Elsewhere, l27’s numerical comparison and l43’s error-rate chart give the narration useful visual structure."
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "l24 clearly separates title, definition and note; l41 groups four readable statistics. Agenda and chapter names agree in the supplied text, but their rendered cards remain unavailable."
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "“Beyond straight lines,” “Build a small network” and “Why go deep?” sound natural aloud. l29’s “Unit bends → corner” is awkward shorthand; l46 still uses “pts worse.”"
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "l38 has five words over 2.3 seconds. At l36, only “Earlier folds, reused” is new; the comparison carries over from l35. Package-card holds and final subtitle clearance remain unverified."
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "The issue table supplies shorter replacements for the diagram labels, l47 quotation, l29 callout and l46 takeaway, preserving their intended meaning."
+      },
+      "R": {
+       "score": 1,
+       "evidence": "I1—text numbering resolved to 01–04; rendered numbering unverified. I2—claimed hint correction unverified because the hint is absent from this extraction. I3—unresolved evidence gap: package screenshots remain absent. I4—unresolved for the same reason; combined outro text does not establish a block breach. I5—claimed chapter-card creation unverified. I6—“recognize” resolved in the supplied outro text. I7—rejection justified: preserve AlexNet’s capitalization. I8—resolved: l03 and l13 both use “Straight lines only.” I9—resolved: l03 and l44 now fit on one line. I10—rejection justified: a four-word summary heading is acceptable. I11—unresolved: the diagram still contains 10 words; the rejection’s screen-total argument does not satisfy the current nine-word block limit. I12—resolved: “Sum + 1 knob → fare.” I13—resolved by that same replacement; the previous spacing allegation is withdrawn. I14—retention justified for overall density: l24 has 20 words and four grouped blocks, although I11 remains. I15—changed into a new phrasing problem: “Unit bends → corner.” I16—retention justified: both headings read naturally. I17—resolved: “up to 32 pieces” is present. I18—retention acceptable as a brief supporting label; “Self-learned” is unnecessary. I19—unresolved: screenshot still says “~2 pts worse.” I20—unresolved for the same reason. I21—unresolved against this task’s explicit outline-only rule; standard quotation practice explains the rejection but does not supply an exception to that rule. I22—resolved: the quotation now has leading and trailing ellipses."
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "Outline, not prose",
+     "a": 2,
+     "a_ev": "s5_l35 \"10 side by side: ≤ 11 pieces\" (6) and \"10 in 5 layers: up to 32 pieces\" (8) are the longest blocks, and l46 \"Remove a middle layer → ~2 pts worse\" (7); every screen is within 9 / 4 blocks / 22 words, but these read close to narration clauses rather than labels. No full narration sentence on screen.",
+     "b": 1,
+     "b_ev": "l20–l24 retain a 10-word network-diagram block, exceeding nine; l47 still displays a complete narration sentence. Other inspected screens remain within 22 words after counting chart text.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "除 l20–l24 网络图与 l47 引语卡外，全片每块 ≤9 词、每屏 ≤22 词（最高 l24 约 18 词、l36 17 词）；b 的两条依据都已有前两轮裁定（见驳回），不构成新的超限。a 指出 l35「10 in 5 layers: up to 32 pieces」（8 词）偏长属实，但在上限内，2 分。"
+    },
+    "P2": {
+     "name": "Divided from narration",
+     "a": 2,
+     "a_ev": "l30 screen \"Which way to turn? · Next episode\" no longer matches the revised narration \"there's a much faster way to find each one's direction\", and contradicts l25 where the knobs are already nudged; outro line 1 \"Simple units, stacked in layers\" repeats l48 almost verbatim; l44 eyebrow \"Not told what to look for\" copies l44 narration.",
+     "b": 1,
+     "b_ev": "l47 repeats “the depth really is important” verbatim. Elsewhere, l27’s numerical comparison and l43’s error-rate chart give the narration useful visual structure.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "a 的 l30 证据成立，且 l30 是严格项（衔接句）：口播已改成「there's a much faster way to find each one's direction. That's next time」，屏上仍是「Which way / to turn?」+「Next episode」，像是在问 l25 刚演示过的「每个旋钮往哪拧」，与口播、与 l25 都对不上，必须改。b 的 l47 依据不成立（见驳回），但本维度因 l30 判 1。"
+    },
+    "P3": {
+     "name": "Hierarchy and consistency",
+     "a": 2,
+     "a_ev": "agenda 01–04 matches chapter cards \"Beyond straight lines / Build a small network / Why go deep? / AlexNet, 2012\" and the page eyebrows; l03 and l13 now both say \"Straight lines only\". Flaws: l36 \"Earlier folds, reused\" sits at the same 54px weight as the two data headings, so the hierarchy is flat; agenda side card \"Prereqs: Gradient descent\" is not verifiable.",
+     "b": 2,
+     "b_ev": "l24 clearly separates title, definition and note; l41 groups four readable statistics. Agenda and chapter names agree in the supplied text, but their rendered cards remain unavailable.",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P4": {
+     "name": "Native phrasing and style",
+     "a": 2,
+     "a_ev": "l35 mixes notations \"≤ 11 pieces\" and \"up to 32 pieces\" in the same pair; l46 still abbreviates \"~2 pts worse\"; l29 \"Unit bends → corner\" is slightly clipped. Otherwise sentence case, no trailing periods, parallel colon fragments (l31, l32), and chapter titles read naturally aloud.",
+     "b": 2,
+     "b_ev": "“Beyond straight lines,” “Build a small network” and “Why go deep?” sound natural aloud. l29’s “Unit bends → corner” is awkward shorthand; l46 still uses “pts worse.”",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "两人共同抓到 l46「pts」与 l29「Unit bends → corner」略生硬；两人共同漏掉 l24「Named after neurons · loosely」用间隔点把副词切出去，读出来像翻译腔（补充问题）。章节名「Beyond straight lines / Build a small network / Why go deep? / AlexNet, 2012」朗读自然，无尾句号，2 分。"
+    },
+    "P5": {
+     "name": "Readable in time",
+     "a": 3,
+     "a_ev": "screenshots s5_l36, s6_l41, s3_l24 and s4_l30 are large, uncluttered and readable at a glance; the busiest screens (l24, l46) hold 5.4 s or more, and l22 \"37 / knobs\" is 1.9 s but only 2 words of text.",
+     "b": 2,
+     "b_ev": "l38 has five words over 2.3 seconds. At l36, only “Earlier folds, reused” is new; the comparison carries over from l35. Package-card holds and final subtitle clearance remain unverified.",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P6": {
+     "name": "Rewrites",
+     "a": 2,
+     "a_ev": "rewrites below are short drop-ins, but the l30 case needs a screen redesign rather than a word swap, and the agenda/outro cards could only be checked from extracted text (screenshots empty).",
+     "b": 3,
+     "b_ev": "The issue table supplies shorter replacements for the diagram labels, l47 quotation, l29 callout and l46 takeaway, preserving their intended meaning.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "a 给了 l30「A faster way / Next time」这类可直接替换的写法，方向对；但 a 的 l35 改写加两个「units」会让右侧标题超出画面宽度。b 漏掉 l30，且「L1: 12 units」「Unit → corner」「The importance of depth」都丢信息或引入缩写，3 分偏高，取 2。"
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "Resolved: I8 (l03/l13 now the same), I12 (\"Sum + 1 knob → fare\"), I15 (\"Unit bends → corner\"), I17 (\"up to 32 pieces\"), I22 (quote now \"…the depth really is important…\"), I9 (l03 single line, l44 60px). Not resolved: I19/I20, l46 still says \"pts\" although the judge asked for \"points\". Rejections hold: I11 (diagram text is counted only toward the 22-word cap, and l20–l24 are at most 20 words), I14, I18, I21 (quotation card with attribution), I7, I10, I16. New problem introduced: l30 narration was rewritten (I48/I49) but the screen text was not updated, so it now mismatches. I1/I2/I3/I5 (package cards re-rendered): cannot verify, the screenshot fields for agenda, c_* and outro are empty.",
+     "b": 1,
+     "b_ev": "I1—text numbering resolved to 01–04; rendered numbering unverified. I2—claimed hint correction unverified because the hint is absent from this extraction. I3—unresolved evidence gap: package screenshots remain absent. I4—unresolved for the same reason; combined outro text does not establish a block breach. I5—claimed chapter-card creation unverified. I6—“recognize” resolved in the supplied outro text. I7—rejection justified: preserve AlexNet’s capitalization. I8—resolved: l03 and l13 both use “Straight lines only.” I9—resolved: l03 and l44 now fit on one line. I10—rejection justified: a four-word summary heading is acceptable. I11—unresolved: the diagram still contains 10 words; the rejection’s screen-total argument does not satisfy the current nine-word block limit. I12—resolved: “Sum + 1 knob → fare.” I13—resolved by that same replacement; the previous spacing allegation is withdrawn. I14—retention justified for overall density: l24 has 20 words and four grouped blocks, although I11 remains. I15—changed into a new phrasing problem: “Unit bends → corner.” I16—retention justified: both headings read naturally. I17—resolved: “up to 32 pieces” is present. I18—retention acceptable as a brief supporting label; “Self-learned” is unnecessary. I19—unresolved: screenshot still says “~2 pts worse.” I20—unresolved for the same reason. I21—unresolved against this task’s explicit outline-only rule; standard quotation practice explains the rejection but does not supply an exception to that rule. I22—resolved: the quotation now has leading and trailing ellipses.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "l46 屏上仍是「Remove a middle layer → ~2 pts worse」（s6.html:52 原样），上一轮 I19/I20 已裁「pts → points」，作者标「已改」与实际不符，未解决；l30 口播改写（v1.2）后屏幕未同步，改出新问题。其余：I1–I5 经我抽包装卡末帧核实已解决（b 判「未核实」不再成立）；I8、I9、I12、I17、I22 已解决；I7、I10、I11、I14、I16、I18、I21 的不采纳理由成立。"
+    }
+   },
+   "disputes": [
+    "P1",
+    "P2",
+    "R"
+   ],
+   "audits": [
+    "P6",
+    "P4"
+   ],
+   "final_scores": {
+    "P1": 2,
+    "P2": 1,
+    "P3": 2,
+    "P4": 2,
+    "P5": 2,
+    "P6": 2,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "P1",
+     "P2",
+     "R",
+     "P6",
+     "P4"
+    ],
+    "prompt": "items/screen_en__judge.md",
+    "report": "reports/screen_en__judge.md",
+    "ruling": {
+     "P1": {
+      "score": 2,
+      "evidence": "除 l20–l24 网络图与 l47 引语卡外，全片每块 ≤9 词、每屏 ≤22 词（最高 l24 约 18 词、l36 17 词）；b 的两条依据都已有前两轮裁定（见驳回），不构成新的超限。a 指出 l35「10 in 5 layers: up to 32 pieces」（8 词）偏长属实，但在上限内，2 分。"
+     },
+     "P2": {
+      "score": 1,
+      "evidence": "a 的 l30 证据成立，且 l30 是严格项（衔接句）：口播已改成「there's a much faster way to find each one's direction. That's next time」，屏上仍是「Which way / to turn?」+「Next episode」，像是在问 l25 刚演示过的「每个旋钮往哪拧」，与口播、与 l25 都对不上，必须改。b 的 l47 依据不成立（见驳回），但本维度因 l30 判 1。"
+     },
+     "R": {
+      "score": 1,
+      "evidence": "l46 屏上仍是「Remove a middle layer → ~2 pts worse」（s6.html:52 原样），上一轮 I19/I20 已裁「pts → points」，作者标「已改」与实际不符，未解决；l30 口播改写（v1.2）后屏幕未同步，改出新问题。其余：I1–I5 经我抽包装卡末帧核实已解决（b 判「未核实」不再成立）；I8、I9、I12、I17、I22 已解决；I7、I10、I11、I14、I16、I18、I21 的不采纳理由成立。"
+     },
+     "P6": {
+      "score": 2,
+      "evidence": "a 给了 l30「A faster way / Next time」这类可直接替换的写法，方向对；但 a 的 l35 改写加两个「units」会让右侧标题超出画面宽度。b 漏掉 l30，且「L1: 12 units」「Unit → corner」「The importance of depth」都丢信息或引入缩写，3 分偏高，取 2。"
+     },
+     "P4": {
+      "score": 2,
+      "evidence": "两人共同抓到 l46「pts」与 l29「Unit bends → corner」略生硬；两人共同漏掉 l24「Named after neurons · loosely」用间隔点把副词切出去，读出来像翻译腔（补充问题）。章节名「Beyond straight lines / Build a small network / Why go deep? / AlexNet, 2012」朗读自然，无尾句号，2 分。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 18,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_en__a",
+    "codex/screen_en__b"
+   ]
+  }
+ ],
+ "state": "已收轮",
+ "concluded_at": "2026-11-09T22:08:46",
+ "result": "结果.md",
+ "verdict": {
+  "result": "不通过",
+  "text": "不通过：4 项未过；已到轮数上限，余下问题已按问题清单修改，由程序检验复核成片"
+ },
+ "log": []
+}

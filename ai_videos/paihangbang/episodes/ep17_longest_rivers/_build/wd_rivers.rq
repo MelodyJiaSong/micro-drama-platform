@@ -1,0 +1,7 @@
+SELECT ?r ?rLabel ?len ?unitLabel ?rank ?mouthLabel ?mouthCountryLabel WHERE {
+  ?r wdt:P31/wdt:P279* wd:Q4022 .
+  ?r p:P2043 ?st . ?st psv:P2043 [ wikibase:quantityAmount ?len ; wikibase:quantityUnit ?unit ] . ?st wikibase:rank ?rank .
+  FILTER(?len > 1800)
+  OPTIONAL { ?r wdt:P403 ?mouth . }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}

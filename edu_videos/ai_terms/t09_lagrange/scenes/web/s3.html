@@ -1,0 +1,111 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  #map { position: absolute; left: var(--mx); top: 220px; }
+  .side { position: absolute; left: 1090px; width: 720px; }
+  .ttl { top: 230px; }
+  .ttl .t { position: absolute; top: 0; left: 0; white-space: nowrap; }
+  html[lang=en] .ttl .t { font-size: 60px; }
+  .meter { top: 380px; }
+  .meter .num { font-size: 150px; font-weight: 700; line-height: 1; margin-top: 8px; font-variant-numeric: tabular-nums; }
+  .meter .num .sym { color: var(--accent-text); margin-right: .25em; }
+  .stat { top: 620px; }
+  .stat .s { position: absolute; top: 0; left: 0; white-space: nowrap; }
+  .ht { top: 720px; }
+  .ht .h2 { margin-top: 8px; font-variant-numeric: tabular-nums; }
+  .rl { top: 400px; }
+  .rl .h2 + .h2 { margin-top: 26px; }
+  .cond { top: 380px; }
+  .cond .h2 { margin-top: 12px; }
+  html[lang=en] .cond .h2 { font-size: 46px; white-space: nowrap; }
+</style>
+
+<div class="eb eyebrow" data-zh="02 · 做个小实验" data-en="02 · A small experiment"></div>
+<svg id="map"></svg>
+
+<div class="side ttl">
+  <div class="h1 t" id="ta" data-zh="任务：找最高点" data-en="Goal: the highest spot"></div>
+  <div class="h1 t" id="tb" data-zh='约束：只在<span class="ink2">围栏</span>里' data-en="Rule: stay in the fence"></div>
+  <div class="h1 t" id="tc" data-zh="拆掉围栏，改成扣分" data-en="No fence, just a charge"></div>
+  <div class="h1 t" id="td" data-zh='<span class="accent">λ</span> 从零往上调' data-en='Tuning <span class="accent">λ</span>'></div>
+  <div class="h1 t" id="te" data-zh="等高线贴着围栏" data-en="Contour touches fence"></div>
+  <div class="h1 t" id="tf" data-zh="拉格朗日条件" data-en="The Lagrange condition"></div>
+</div>
+<div class="side rl" id="rule">
+  <div class="h2" data-zh='每远 1 步：<span class="accent">−λ 分</span>' data-en='Each step out: <span class="accent">−λ</span>'></div>
+  <div class="h2 ink2" id="rule2" data-zh="高度 − 扣分，取最大" data-en="Maximize height − charge"></div>
+</div>
+<div class="side meter" id="meter"><div class="eyebrow" data-zh="价格" data-en="Price"></div>
+  <div class="num"><span class="sym">λ</span><span id="lam">0</span></div></div>
+<div class="side stat">
+  <div class="h2 s c-bad" id="s1" data-zh="跑出了围栏" data-en="Out past the fence"></div>
+  <div class="h2 s c-bad" id="s2" data-zh="还在围栏外" data-en="Still outside"></div>
+  <div class="h2 s c-good" id="s3" data-zh="停在围栏上" data-en="Right on the fence"></div>
+  <div class="h2 s c-neutral" id="s4" data-zh="躲进围栏里" data-en="Hiding inside"></div>
+</div>
+<div class="side ht" id="ht"><div class="eyebrow" data-zh="高度" data-en="Height"></div>
+  <div class="h2"><span id="hv">7.75</span></div></div>
+<div class="side cond" id="cond">
+  <div class="h2" data-zh='<span class="c-good">往高处</span> → 直直穿过围栏' data-en='<span class="c-good">Uphill</span> → straight through fence'></div></div>
+
+<script>
+const M = makeMap("#map", { scale: 130 }), T = EDU.tl, S = D.steps;
+const pS = D.p_star, out = [D.peak[0] / 3, D.peak[1] / 3];
+const labPeak = M.note(EDU.tr("山顶", "Summit"), D.peak, 26, -18, "caption");
+const labCont = M.note(EDU.tr("等高线", "Contour line"), [D.peak[0] - Math.sqrt(D.H - 2) * .72, D.peak[1] - Math.sqrt(D.H - 2) * .72], -40, 6, "caption ink2");
+const labCamp = M.note(EDU.tr("营地", "Camp"), [0, 0], -36, 16, "caption");
+const labFence = M.note(EDU.tr("围栏", "Fence"), [-1.06, -1.06], -120, 6, "caption");
+const dot = M.dot(D.peak);
+const gap = M.seg(pS, D.peak, "--d-bad", 6, "3 12");
+const labGap = M.note(EDU.tr("跑得越远，涨得越多", "Farther out, higher price"), [1.45, 1.1], 24, 24, "caption c-bad");
+labGap.style.cssText += ";background:var(--bg);padding:4px 12px;border-radius:10px";
+const ghost = M.ring(0.13, "--d-good", 4, null, pS[0], pS[1]);
+const touch = M.ring(1.5, "--d-good", 6, null, D.peak[0], D.peak[1]);
+const radial = M.seg([0, 0], pS, "--ink2", 4, "2 10");
+const up = M.arrow(pS, out, 150, "--d-good");
+const L = document.getElementById("lam"), HV = document.getElementById("hv");
+
+gsap.set([M.svg.node(), M.fence, M.camp, labPeak, labCont, labCamp, labFence, dot, gap, labGap, ghost, touch, radial, up,
+          "#ta", "#tb", "#tc", "#td", "#te", "#tf", "#rule", "#rule2", "#meter", "#s1", "#s2", "#s3", "#s4", "#ht", "#cond"], { opacity: 0 });
+EDU.in(".eb", 0);
+// l11 地图、等高线、山顶
+EDU.in(M.svg.node(), EDU.t("l11", .2), { y: 0, d: 1 }); gsap.set([M.fence, M.camp], { opacity: 0 });
+EDU.in(labCont, EDU.t("l11", .45)); EDU.in(labPeak, EDU.t("l11", .8));
+// l12 任务
+EDU.in("#ta", EDU.t("l12"));
+// l13 约束：围栏；山顶在外面
+EDU.out(["#ta", labCont], EDU.t("l13")); EDU.in("#tb", EDU.t("l13", .03));
+EDU.in([M.fence, M.camp], EDU.t("l13", .1)); EDU.in([labCamp, labFence], EDU.t("l13", .2));
+// l14 拆掉围栏，每远一步扣 λ 分
+EDU.out(["#tb", labFence], EDU.t("l14")); EDU.in("#tc", EDU.t("l14", .03)); EDU.dim(M.fence, EDU.t("l14", .1), .2);
+EDU.in("#rule", EDU.t("l14", .45), { y: 0, d: .01 }); gsap.set("#rule .h2:first-child", { opacity: 0 });
+EDU.in("#rule .h2:first-child", EDU.t("l14", .5));
+// l15 找：高度 − 扣分最大 → 这个点
+EDU.in("#rule2", EDU.t("l15", .05)); EDU.in(dot, EDU.t("l15", .7));
+// l16 价格为零 → 直奔山顶、出圈
+EDU.out(["#rule", "#tc"], EDU.t("l16")); EDU.in("#td", EDU.t("l16", .03));
+EDU.in("#meter", EDU.t("l16", .1)); EDU.dim(M.fence, EDU.t("l16", .2), .55); EDU.in("#s1", EDU.t("l16", .6));
+// l17 出圈多远，涨多少
+EDU.out("#s1", EDU.t("l17")); EDU.in(gap, EDU.t("l17", .1)); EDU.in(labGap, EDU.t("l17", .25));
+// l18 一点五：退一些，还在圈外；再涨，再退
+EDU.out([gap, labGap], EDU.t("l18"));
+countTo(L, EDU.t("l18", .08), 0, S[1].lam); moveDot(M, dot, S[1].p, EDU.t("l18", .08));
+EDU.in("#s2", EDU.t("l18", .25));
+for (let k = 2; k <= 3; k++) { const at = EDU.t("l18", .55 + (k - 2) * .2); countTo(L, at, S[k - 1].lam, S[k].lam, .5); moveDot(M, dot, S[k].p, at, .5); }
+// l19 涨到三，刚好停在围栏上
+for (let k = 4; k <= 6; k++) { const at = EDU.t("l19", (k - 4) * .12); countTo(L, at, S[k - 1].lam, S[k].lam, .35); moveDot(M, dot, S[k].p, at, .35); }
+countTo(L, EDU.t("l19", .4), S[6].lam, 3, .4); moveDot(M, dot, pS, EDU.t("l19", .4), .4);
+EDU.out("#s2", EDU.t("l19", .45)); EDU.in("#s3", EDU.t("l19", .55)); EDU.dim(M.fence, EDU.t("l19", .5), 1);
+// l20 有围栏时的最高点：7.75
+EDU.out(["#td", "#s3"], EDU.t("l20", .3)); EDU.in("#ht", EDU.t("l20", .4)); EDU.in(ghost, EDU.t("l20", .5));
+// l21 价定成四 → 躲进圈里，少爬一截
+countTo(L, EDU.t("l21", .15), 3, 4, .6); moveDot(M, dot, D.probe["4"].p, EDU.t("l21", .15));
+EDU.in("#s4", EDU.t("l21", .4));
+countTo(HV, EDU.t("l21", .5), 7.75, 6, .8, v => v.toFixed(2));
+// l22 回到刚好的点：等高线贴着围栏
+EDU.out(["#s4", "#ht"], EDU.t("l22")); countTo(L, EDU.t("l22"), 4, 3, .5); moveDot(M, dot, pS, EDU.t("l22"), .5);
+EDU.in("#te", EDU.t("l22", .05)); EDU.dim([M.bands, M.lines].flat(), EDU.t("l22", .2), .35);
+EDU.in(touch, EDU.t("l22", .25)); EDU.draw(touch, EDU.t("l22", .25), 1.2);
+// l23 拉格朗日条件：往高处的方向，正对着围栏往外
+EDU.out("#meter", EDU.t("l23")); EDU.in(radial, EDU.t("l23", .25)); EDU.in(up, EDU.t("l23", .45));
+EDU.out("#te", EDU.t("l23")); EDU.in("#tf", EDU.t("l23", .03)); EDU.in("#cond", EDU.t("l23", .2));
+</script>

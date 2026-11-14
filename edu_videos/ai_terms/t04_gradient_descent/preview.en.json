@@ -1,0 +1,539 @@
+{
+ "title": "t04 Gradient descent — narration (English)",
+ "tagline": "",
+ "lang": "en",
+ "languages": [
+  {
+   "lang": "zh",
+   "label": "中文",
+   "preview": "edu_videos/ai_terms/t04_gradient_descent/preview.json"
+  },
+  {
+   "lang": "en",
+   "label": "English",
+   "preview": "edu_videos/ai_terms/t04_gradient_descent/preview.en.json"
+  }
+ ],
+ "video": "edu_videos/ai_terms/t04_gradient_descent/final/t04_gradient_descent.en.mp4",
+ "duration": 269.4,
+ "chapters": [
+  {
+   "id": "s0",
+   "title": "Cold open",
+   "t": 0.0
+  },
+  {
+   "id": "s2",
+   "title": "Downhill, blindfolded",
+   "t": 35.7
+  },
+  {
+   "id": "s3",
+   "title": "A small experiment",
+   "t": 78.6
+  },
+  {
+   "id": "s4",
+   "title": "How big a step?",
+   "t": 149.77
+  },
+  {
+   "id": "s5",
+   "title": "Training giant models",
+   "t": 196.47
+  },
+  {
+   "id": "s6",
+   "title": "Wrap-up",
+   "t": 245.97
+  }
+ ],
+ "items": [
+  {
+   "t": 0.6,
+   "end": 4.85,
+   "title": "Last time, we scored the model's mistakes:",
+   "subtitle": "Last time, we scored the model's mistakes: the lower the score, the better.",
+   "badge": "l01",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l01.jpg"
+  },
+  {
+   "t": 5.2,
+   "end": 11.41,
+   "title": "We scored every setting of the two knobs",
+   "subtitle": "We scored every setting of the two knobs and drew the scores as a landscape. The lowest point is the best setting.",
+   "badge": "l02",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l02.jpg"
+  },
+  {
+   "t": 11.76,
+   "end": 13.33,
+   "title": "With two knobs, that's easy.",
+   "subtitle": "With two knobs, that's easy.",
+   "badge": "l03",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l03.jpg"
+  },
+  {
+   "t": 13.68,
+   "end": 18.59,
+   "title": "But a big model can have",
+   "subtitle": "But a big model can have hundreds of billions of knobs, way too many to map.",
+   "badge": "l04",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l04.jpg"
+  },
+  {
+   "t": 18.94,
+   "end": 24.46,
+   "title": "So the model's like someone",
+   "subtitle": "So the model's like someone blindfolded on a mountain, with no idea where the valley is.",
+   "badge": "l05",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l05.jpg"
+  },
+  {
+   "t": 24.81,
+   "end": 26.25,
+   "title": "How does it find the bottom?",
+   "subtitle": "How does it find the bottom?",
+   "badge": "l06",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l06.jpg"
+  },
+  {
+   "t": 26.6,
+   "end": 30.58,
+   "title": "It uses something called gradient descent.",
+   "subtitle": "It uses something called gradient descent. Let's see how it works.",
+   "badge": "l07",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l07.jpg"
+  },
+  {
+   "t": 38.9,
+   "end": 42.78,
+   "title": "So picture yourself up there",
+   "subtitle": "So picture yourself up there, trying to reach the valley.",
+   "badge": "l08",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l08.jpg"
+  },
+  {
+   "t": 43.13,
+   "end": 47.22,
+   "title": "You can't see",
+   "subtitle": "You can't see, but your feet feel which way the ground tilts, and how steeply.",
+   "badge": "l09",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l09.jpg"
+  },
+  {
+   "t": 47.57,
+   "end": 51.33,
+   "title": "So you feel for the steepest way down",
+   "subtitle": "So you feel for the steepest way down, and take one small step.",
+   "badge": "l10",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l10.jpg"
+  },
+  {
+   "t": 51.68,
+   "end": 54.69,
+   "title": "Feel again, step again, and you get there.",
+   "subtitle": "Feel again, step again, and you get there.",
+   "badge": "l11",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l11.jpg"
+  },
+  {
+   "t": 55.04,
+   "end": 60.71,
+   "title": "For the model",
+   "subtitle": "For the model, the slope underfoot is how much the score changes when you nudge each knob a little.",
+   "badge": "l12",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l12.jpg"
+  },
+  {
+   "t": 61.06,
+   "end": 67.34,
+   "title": "Put those slopes together",
+   "subtitle": "Put those slopes together, and that's the gradient. It shows every knob the fastest way down.",
+   "badge": "l13",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l13.jpg"
+  },
+  {
+   "t": 67.69,
+   "end": 73.17,
+   "title": "Gradient descent turns all",
+   "subtitle": "Gradient descent turns all the knobs one small step that way, then checks the slope again.",
+   "badge": "l14",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l14.jpg"
+  },
+  {
+   "t": 73.52,
+   "end": 77.69,
+   "title": "The learning rate sets the step size",
+   "subtitle": "The learning rate sets the step size, and you pick it before training starts.",
+   "badge": "l15",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l15.jpg"
+  },
+  {
+   "t": 81.8,
+   "end": 86.54,
+   "title": "Let's try it on the taxi map:",
+   "subtitle": "Let's try it on the taxi map: base fare across, per-kilometer rate up.",
+   "badge": "l16",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l16.jpg"
+  },
+  {
+   "t": 86.89,
+   "end": 90.25,
+   "title": "Darker means a higher score.",
+   "subtitle": "Darker means a higher score. The fares are made up.",
+   "badge": "l17",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l17.jpg"
+  },
+  {
+   "t": 90.6,
+   "end": 97.02,
+   "title": "We start at a 5 dollar base",
+   "subtitle": "We start at a 5 dollar base fare and 2 dollars a kilometer: a score of 78, way up high.",
+   "badge": "l18",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l18.jpg"
+  },
+  {
+   "t": 97.37,
+   "end": 100.93,
+   "title": "First, feel the slope:",
+   "subtitle": "First, feel the slope: nudge each knob up ten cents.",
+   "badge": "l19",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l19.jpg"
+  },
+  {
+   "t": 101.28,
+   "end": 108.38,
+   "title": "Raise the base fare",
+   "subtitle": "Raise the base fare, and the score drops 1.7. Raise the per-kilometer rate, and it drops 11.2.",
+   "badge": "l20",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l20.jpg"
+  },
+  {
+   "t": 108.73,
+   "end": 112.23,
+   "title": "So turn both up",
+   "subtitle": "So turn both up, but the per-kilometer slope is much steeper.",
+   "badge": "l21",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l21.jpg"
+  },
+  {
+   "t": 112.58,
+   "end": 114.93,
+   "title": "Our first step turns that knob the most.",
+   "subtitle": "Our first step turns that knob the most.",
+   "badge": "l22",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l22.jpg"
+  },
+  {
+   "t": 115.28,
+   "end": 121.22,
+   "title": "In three steps",
+   "subtitle": "In three steps, the score falls from 78 to 25, 12, 9, and we're in the valley.",
+   "badge": "l23",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l23.jpg"
+  },
+  {
+   "t": 121.56,
+   "end": 123.64,
+   "title": "The floor is a long, gentle trench.",
+   "subtitle": "The floor is a long, gentle trench.",
+   "badge": "l24",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l24.jpg"
+  },
+  {
+   "t": 123.99,
+   "end": 129.09,
+   "title": "The base fare creeps up",
+   "subtitle": "The base fare creeps up, the per-kilometer rate eases back, and we inch along.",
+   "badge": "l25",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l25.jpg"
+  },
+  {
+   "t": 129.44,
+   "end": 132.73,
+   "title": "Gentler slopes mean smaller steps",
+   "subtitle": "Gentler slopes mean smaller steps, so we slow down.",
+   "badge": "l26",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l26.jpg"
+  },
+  {
+   "t": 133.08,
+   "end": 139.23,
+   "title": "After a thousand-odd steps",
+   "subtitle": "After a thousand-odd steps, the score's about 2. The true minimum is 1.97.",
+   "badge": "l27",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l27.jpg"
+  },
+  {
+   "t": 139.58,
+   "end": 144.24,
+   "title": "The knobs end up near a ten-dollar",
+   "subtitle": "The knobs end up near a ten-dollar base fare and two fifty a kilometer.",
+   "badge": "l28",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l28.jpg"
+  },
+  {
+   "t": 144.59,
+   "end": 148.84,
+   "title": "It never saw the whole map.",
+   "subtitle": "It never saw the whole map. It only felt the ground underfoot.",
+   "badge": "l29",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l29.jpg"
+  },
+  {
+   "t": 152.97,
+   "end": 158.45,
+   "title": "That run used a learning rate of 0.005.",
+   "subtitle": "That run used a learning rate of 0.005. What if we'd picked wrong?",
+   "badge": "l30",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l30.jpg"
+  },
+  {
+   "t": 158.8,
+   "end": 162.74,
+   "title": "Here are three paths from the same start",
+   "subtitle": "Here are three paths from the same start, same number of steps.",
+   "badge": "l31",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l31.jpg"
+  },
+  {
+   "t": 163.09,
+   "end": 167.02,
+   "title": "Make it ten times smaller",
+   "subtitle": "Make it ten times smaller, and it heads the right way but crawls.",
+   "badge": "l32",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l32.jpg"
+  },
+  {
+   "t": 167.37,
+   "end": 170.93,
+   "title": "It ends at a score of 5.5",
+   "subtitle": "It ends at a score of 5.5, still far from the bottom.",
+   "badge": "l33",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l33.jpg"
+  },
+  {
+   "t": 171.28,
+   "end": 177.12,
+   "title": "Make it about four times the original",
+   "subtitle": "Make it about four times the original, and it overshoots across the valley, ending higher than where it started.",
+   "badge": "l34",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l34.jpg"
+  },
+  {
+   "t": 177.47,
+   "end": 180.35,
+   "title": "Then it climbs higher and higher",
+   "subtitle": "Then it climbs higher and higher, past a hundred.",
+   "badge": "l35",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l35.jpg"
+  },
+  {
+   "t": 180.7,
+   "end": 182.74,
+   "title": "Five steps in, it's off the map.",
+   "subtitle": "Five steps in, it's off the map.",
+   "badge": "l36",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l36.jpg"
+  },
+  {
+   "t": 183.09,
+   "end": 186.35,
+   "title": "Our original rate walks",
+   "subtitle": "Our original rate walks steadily to the bottom.",
+   "badge": "l37",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l37.jpg"
+  },
+  {
+   "t": 186.7,
+   "end": 190.73,
+   "title": "That's why the learning rate is often",
+   "subtitle": "That's why the learning rate is often the single most important setting in training.",
+   "badge": "l38",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l38.jpg"
+  },
+  {
+   "t": 191.08,
+   "end": 195.56,
+   "title": "Too big, and it bounces right off the map.",
+   "subtitle": "Too big, and it bounces right off the map. Too small, and you waste time.",
+   "badge": "l39",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l39.jpg"
+  },
+  {
+   "t": 199.67,
+   "end": 203.51,
+   "title": "Big models use gradient descent too",
+   "subtitle": "Big models use gradient descent too, with two upgrades.",
+   "badge": "l40",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l40.jpg"
+  },
+  {
+   "t": 203.86,
+   "end": 207.6,
+   "title": "First, there's too much data",
+   "subtitle": "First, there's too much data to read it all every step.",
+   "badge": "l41",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l41.jpg"
+  },
+  {
+   "t": 207.95,
+   "end": 214.71,
+   "title": "So each step grabs a small random batch",
+   "subtitle": "So each step grabs a small random batch, roughly estimates the slope, and goes. That's stochastic gradient descent.",
+   "badge": "l42",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l42.jpg"
+  },
+  {
+   "t": 215.06,
+   "end": 219.68,
+   "title": "The path wobbles",
+   "subtitle": "The path wobbles, but it saves loads of computing and still ends up near the bottom.",
+   "badge": "l43",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l43.jpg"
+  },
+  {
+   "t": 220.03,
+   "end": 226.48,
+   "title": "GPT-3, for example",
+   "subtitle": "GPT-3, for example, saw only about 1/100,000 of its training data per step.",
+   "badge": "l44",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l44.jpg"
+  },
+  {
+   "t": 226.83,
+   "end": 233.4,
+   "title": "Second, the steps get smarter.",
+   "subtitle": "Second, the steps get smarter. A method called Adam gives each knob its own step size, based on its past slopes.",
+   "badge": "l45",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l45.jpg"
+  },
+  {
+   "t": 233.75,
+   "end": 238.18,
+   "title": "GPT-3 was trained with Adam",
+   "subtitle": "GPT-3 was trained with Adam, and Meta's Llama uses a tweaked version.",
+   "badge": "l46",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l46.jpg"
+  },
+  {
+   "t": 238.53,
+   "end": 245.05,
+   "title": "That's how GPT-3's 175",
+   "subtitle": "That's how GPT-3's 175 billion knobs got turned, one small step at a time.",
+   "badge": "l47",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l47.jpg"
+  },
+  {
+   "t": 246.57,
+   "end": 253.01,
+   "title": "Gradient descent is walking downhill blindfolded:",
+   "subtitle": "Gradient descent is walking downhill blindfolded: feel for the steepest way down, and take a small step.",
+   "badge": "l48",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l48.jpg"
+  },
+  {
+   "t": 253.36,
+   "end": 256.36,
+   "title": "And the learning rate sets",
+   "subtitle": "And the learning rate sets the size of each step.",
+   "badge": "l49",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l49.jpg"
+  },
+  {
+   "t": 256.71,
+   "end": 260.47,
+   "title": "But a model with just two",
+   "subtitle": "But a model with just two knobs can only learn so much.",
+   "badge": "l50",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l50.jpg"
+  },
+  {
+   "t": 260.82,
+   "end": 266.26,
+   "title": "Next time, we'll stack lots",
+   "subtitle": "Next time, we'll stack lots of little units in layers, each with its own knobs, and see what happens.",
+   "badge": "l51",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l51.jpg"
+  },
+  {
+   "t": 266.61,
+   "end": 268.48,
+   "title": "That's called a neural network.",
+   "subtitle": "That's called a neural network.",
+   "badge": "l52",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t04_gradient_descent/renders/en/thumbs/l52.jpg"
+  }
+ ],
+ "links": [
+  {
+   "label": "讲稿",
+   "path": "edu_videos/ai_terms/t04_gradient_descent/script.en.md"
+  },
+  {
+   "label": "时间轴",
+   "path": "edu_videos/ai_terms/t04_gradient_descent/timeline.en.json"
+  },
+  {
+   "label": "调研",
+   "path": "edu_videos/ai_terms/t04_gradient_descent/research.md"
+  },
+  {
+   "label": "字幕",
+   "path": "edu_videos/ai_terms/t04_gradient_descent/final/t04_gradient_descent.en.srt"
+  }
+ ]
+}

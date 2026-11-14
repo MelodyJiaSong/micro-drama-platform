@@ -1,0 +1,199 @@
+{
+ "note": "学习目标与理解测验（写讲稿前定，审查与测验都对照它）。题目以迁移题为主，干扰项来自真实误解；前测、看片、后测、讲回来。AI 学生只用来筛题，最终以真人盲测为准。句号按 v1.3 讲稿挂上（2026-11-09）。",
+ "objectives": [
+  {
+   "id": "O1",
+   "zh": "能用自己的话说出拉格朗日乘子在做什么：把「不许越线」换成「越线要扣分」，扣分的单价 λ 调到刚好守住约束",
+   "en": "Say in their own words what a Lagrange multiplier does: replace a hard limit with a per-unit penalty, and tune that price until the limit is just met",
+   "lines": [
+    "l05",
+    "l06",
+    "l10",
+    "l40",
+    "l41"
+   ]
+  },
+  {
+   "id": "O2",
+   "zh": "知道 λ 调得不对的后果：太低会越线，太高会太保守",
+   "en": "Know what a wrong λ does: too low breaks the limit, too high is overly cautious",
+   "lines": [
+    "l09",
+    "l16",
+    "l19",
+    "l21"
+   ]
+  },
+  {
+   "id": "O3",
+   "zh": "能说出 λ 的意义：这条规矩的价格（放宽一点能多得多少）；λ 为零说明规矩没起作用",
+   "en": "Interpret λ as the price of the rule (how much you gain if it is loosened a little); λ = 0 means the rule isn't binding",
+   "lines": [
+    "l24",
+    "l27",
+    "l28",
+    "l29",
+    "l30"
+   ]
+  },
+  {
+   "id": "O4",
+   "zh": "认得出最优点的样子：等高线贴着约束线（往高处的方向正对着约束往外）",
+   "en": "Recognize the optimum: the contour touches the constraint (uphill points straight out across it)",
+   "lines": [
+    "l22",
+    "l23"
+   ]
+  },
+  {
+   "id": "O5",
+   "zh": "知道它在 AI 里的用处：大模型安全训练里自动调的 λ（Safe RLHF），以及正则化、别离原模型太远这类扣分系数",
+   "en": "Know where it shows up in AI: an auto-tuned λ in safety training (Safe RLHF), and penalty weights such as regularization and staying close to the original model",
+   "lines": [
+    "l34",
+    "l35",
+    "l36",
+    "l37",
+    "l38",
+    "l39"
+   ]
+  }
+ ],
+ "quiz": [
+  {
+   "id": "Q1",
+   "objective": "O1",
+   "type": "迁移",
+   "zh": "外卖平台想让骑手尽量多接单，但每天骑行不能超过 8 小时。用拉格朗日乘子的思路，平台会怎么做？",
+   "en": "A delivery app wants riders to take as many orders as possible, but no more than 8 hours of riding a day. Using the Lagrange multiplier idea, what would it do?",
+   "choices": {
+    "zh": [
+     "A 到 8 小时直接锁账号",
+     "B 每超出一小时扣一笔钱，并调整扣多少，直到大家刚好跑满 8 小时左右",
+     "C 不管时长，只奖励接单数",
+     "D 规定每天必须正好接 20 单"
+    ],
+    "en": [
+     "A Lock the account at 8 hours",
+     "B Charge a fee per extra hour, and tune the fee until riders end up at about 8 hours",
+     "C Ignore hours and reward orders only",
+     "D Require exactly 20 orders a day"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "以为拉格朗日就是硬墙",
+    "C": "忽略约束"
+   }
+  },
+  {
+   "id": "Q2",
+   "objective": "O2",
+   "type": "误解探针",
+   "zh": "为了保证不越线，是不是把 λ 定得越大越好？",
+   "en": "To be sure the limit is never crossed, should λ be as large as possible?",
+   "choices": {
+    "zh": [
+     "A 是，越大越安全",
+     "B 不是，太大会太保守，白白少得；要调到刚好守住",
+     "C 是，λ 越大结果越好",
+     "D λ 大小不影响结果"
+    ],
+    "en": [
+     "A Yes, bigger is safer",
+     "B No. Too large is overly cautious and gives up gains; tune it to just meet the limit",
+     "C Yes, a bigger λ always gives a better result",
+     "D λ doesn't affect the result"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "越保守越好",
+    "D": "以为 λ 只是记号"
+   }
+  },
+  {
+   "id": "Q3",
+   "objective": "O3",
+   "type": "解释为什么",
+   "zh": "一个模型同时有两条约束，算出来一条的 λ 是 5，另一条的 λ 是 0。如果只能放宽一条，你放宽哪条？为什么？",
+   "en": "A problem has two constraints; one has λ = 5, the other λ = 0. If you could loosen only one, which would you pick, and why?",
+   "answer_key": {
+    "zh": "λ 是 5 的那条；它在真正卡着结果，放宽一点就能多得大约 5 倍；λ 为 0 的那条根本没挡着",
+    "en": "The one with λ = 5; it's actually holding the result back, so loosening it gains about 5× as much; the λ = 0 one isn't in the way at all"
+   }
+  },
+  {
+   "id": "Q4",
+   "objective": "O5",
+   "type": "迁移",
+   "zh": "Safe RLHF 训练时，发现模型的有害回答超过了底线，λ 接下来会怎么变？模型会怎么变？",
+   "en": "During Safe RLHF training the model's harmful answers go over the limit. What happens to λ next, and to the model?",
+   "choices": {
+    "zh": [
+     "A λ 变小，模型更放开",
+     "B λ 变大，模型更看重安全",
+     "C λ 不变，人工改规则",
+     "D λ 变成零"
+    ],
+    "en": [
+     "A λ shrinks; the model loosens up",
+     "B λ grows; the model weighs safety more",
+     "C λ stays; people rewrite the rules",
+     "D λ drops to zero"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "调价方向弄反",
+    "C": "以为 λ 是人手定死的"
+   }
+  },
+  {
+   "id": "Q5",
+   "objective": "O4",
+   "type": "识图",
+   "zh": "在等高线地图上，有约束时的最高点有什么特征？",
+   "en": "On a contour map, what does the best point under a constraint look like?",
+   "choices": {
+    "zh": [
+     "A 一定在山顶",
+     "B 一定在约束圈的正中间",
+     "C 经过它的等高线正好贴着约束线",
+     "D 等高线从它这里穿过约束线"
+    ],
+    "en": [
+     "A It's always the summit",
+     "B It's always the center of the allowed region",
+     "C The contour through it just touches the constraint line",
+     "D A contour crosses the constraint line there"
+    ]
+   },
+   "answer": "C",
+   "misconception_choices": {
+    "D": "穿过说明沿线还能更高"
+   }
+  }
+ ],
+ "pass_rule": "每个学习目标至少有一道题，真人后测正确率比前测提升、且 ≥ 2/3 的人答对；讲回来能说出「越线扣分、价调到刚好」与「λ 是规矩的价格」，不出现误解。AI 学生结果只用于改题与找讲稿漏洞，不作过关依据。",
+ "explain_back": {
+  "prompt": {
+   "zh": "请用一分钟跟朋友解释：拉格朗日乘子是什么，λ 大和 λ 为零各说明什么。",
+   "en": "In one minute, explain to a friend what a Lagrange multiplier is, and what a large λ and a zero λ each tell you."
+  },
+  "propositions": [
+   "把硬约束换成越线扣分",
+   "扣分的单价 λ 要调到刚好守住约束",
+   "λ 是这条规矩的价格：放宽一点能多得多少",
+   "（加分）λ 为零说明约束没起作用",
+   "（加分）AI 里 Safe RLHF 训练时自动调 λ"
+  ],
+  "misconceptions": [
+   "拉格朗日乘子就是一堵硬墙",
+   "λ 越大越安全、越好",
+   "λ 只是计算用的记号，没有意义",
+   "最优点在约束区域中间",
+   "AI 里的 λ 都是人手定死的"
+  ]
+ }
+}

@@ -1,0 +1,823 @@
+# On-screen text (screen by screen)
+
+For each narration line, the text blocks visible just before it ends: `[level size px]` text (word count). Levels: eyebrow label, display big number, h1 title, h2 subtitle, body, caption, chart text. Screenshots are 1920×1080 at that moment (narration subtitles are burned in at the bottom of the final cut, not shown here).
+
+## s0 Cold open (before the title card)
+### l01（5.0s）
+- narration：Last time, we scored the model's mistakes: the lower the score, the better.
+- [eyebrow 22px] Illustration（1 words）
+- [chart 28px] Per km ($)（2 words）
+- [eyebrow 22px] Last time（2 words）
+- [h1 76px] Lower = better（2 words）
+- [chart 24px] 4（1 words）
+- [chart 24px] 3（1 words）
+- [chart 24px] 2（1 words）
+- [chart 24px] 1（1 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：1 blocks，2 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s0_l01.png`
+### l02（8.5s）
+- narration：We gave every setting of two knobs a score and drew it as a landscape. The lowest point is the best setting.
+- [eyebrow 22px] Illustration（1 words）
+- [chart 28px] Per km ($)（2 words）
+- [eyebrow 22px] The landscape（2 words）
+- [h1 76px] Lowest = best（2 words）
+- [chart 24px] 4（1 words）
+- [chart 24px] 3（1 words）
+- [caption 28px] Lowest point（2 words）
+- [chart 24px] 2（1 words）
+- [chart 24px] 1（1 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：2 blocks，4 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s0_l02.png`
+### l03（1.9s）
+- narration：With two knobs, that's easy.
+- [eyebrow 22px] Illustration（1 words）
+- [chart 28px] Per km ($)（2 words）
+- [eyebrow 22px] The landscape（2 words）
+- [h1 76px] Lowest = best（2 words）
+- [chart 24px] 4（1 words）
+- [chart 24px] 3（1 words）
+- [caption 28px] Lowest point（2 words）
+- [h2 46px] 2 knobs: easy to map（5 words）
+- [chart 24px] 2（1 words）
+- [chart 24px] 1（1 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：3 blocks，9 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s0_l03.png`
+### l04（6.2s）
+- narration：But a big model can have hundreds of billions of knobs, way too many to map.
+- [eyebrow 22px] Illustration（1 words）
+- [chart 28px] Per km ($)（2 words）
+- [eyebrow 22px] The landscape（2 words）
+- [h1 76px] Lowest = best（2 words）
+- [chart 24px] 4（1 words）
+- [chart 24px] 3（1 words）
+- [h2 46px] 2 knobs: easy to map（5 words）
+- [chart 24px] 2（1 words）
+- [h2 46px] Billions of knobs: no map（5 words）
+- [chart 24px] 1（1 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：3 blocks，12 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s0_l04.png`
+### l05（6.2s）
+- narration：So the model's like someone blindfolded on a mountain, with no idea where the valley is.
+- screen unchanged from previous line
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s0_l05.png`
+### l06（2.3s）
+- narration：How does it find the bottom?
+- [eyebrow 22px] Illustration（1 words）
+- [chart 28px] Per km ($)（2 words）
+- [chart 24px] 4（1 words）
+- [chart 24px] 3（1 words）
+- [h1 76px] Which way down?（3 words）
+- [chart 24px] 2（1 words）
+- [chart 24px] 1（1 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：1 blocks，3 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s0_l06.png`
+### l07（4.2s）
+- narration：It uses something called gradient descent. Let's see how it works.
+- [eyebrow 22px] Illustration（1 words）
+- [chart 28px] Per km ($)（2 words）
+- [chart 24px] 4（1 words）
+- [chart 24px] 3（1 words）
+- [chart 24px] 2（1 words）
+- [eyebrow 22px] The answer（2 words）
+- [h1 64px] Gradient descent（2 words）
+- [chart 24px] 1（1 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：1 blocks，2 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s0_l07.png`
+
+## c_analogy（chapter card）
+- Downhill, blindfolded
+- screenshot：``
+
+## s2 Downhill, blindfolded
+### l08（3.8s）
+- narration：So picture yourself up there, trying to reach the valley.
+- [eyebrow 22px] 01 · Downhill, blindfolded（3 words）
+- [eyebrow 22px] Goal（1 words）
+- [h1 64px] Reach the valley（3 words）
+- total（excl. eyebrow & chart）：1 blocks，3 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s2_l08.png`
+### l09（5.8s）
+- narration：You can't see, but your feet feel which way the ground tilts, and how steeply.
+- [eyebrow 22px] 01 · Downhill, blindfolded（3 words）
+- [h1 64px] Can’t see（2 words）
+- [h2 54px] Feet feel the slope（4 words）
+- total（excl. eyebrow & chart）：2 blocks，6 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s2_l09.png`
+### l10（5.0s）
+- narration：So you feel for the steepest way down, and take one small step.
+- [eyebrow 22px] 01 · Downhill, blindfolded（3 words）
+- [h1 64px] Steepest way down（3 words）
+- [h2 54px] One small step（3 words）
+- total（excl. eyebrow & chart）：2 blocks，6 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s2_l10.png`
+### l11（3.1s）
+- narration：Feel again, step again, and you get there.
+- [eyebrow 22px] 01 · Downhill, blindfolded（3 words）
+- [h1 64px] Feel, step, repeat（3 words）
+- total（excl. eyebrow & chart）：1 blocks，3 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s2_l11.png`
+### l12（7.3s）
+- narration：For the model, the slope underfoot is how much the score changes when you nudge each knob a little.
+- [eyebrow 22px] 01 · Downhill, blindfolded（3 words）
+- [div 34px] Base fare（2 words）
+- [div 34px] Per km（2 words）
+- [eyebrow 22px] The slope underfoot（3 words）
+- [h2 54px] Nudge → score change（3 words）
+- [span 57px] $5.00（1 words）
+- [span 57px] $2.00（1 words）
+- total（excl. eyebrow & chart）：5 blocks，9 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s2_l12.png`
+### l13（6.5s）
+- narration：The gradient is the direction all the knobs should turn at once to drop the score fastest.
+- [eyebrow 22px] 01 · Downhill, blindfolded（3 words）
+- [div 34px] Base fare（2 words）
+- [div 34px] Per km（2 words）
+- [h1 64px] The gradient（2 words）
+- [div 90px] ↻（0 words）
+- [div 90px] ↻（0 words）
+- [h2 54px] Fastest way down（3 words）
+- [span 57px] $5.00（1 words）
+- [span 57px] $2.00（1 words）
+- total（excl. eyebrow & chart）：8 blocks，11 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s2_l13.png`
+### l14（6.2s）
+- narration：Gradient descent turns all the knobs one small step that way, then checks the slope again.
+- [eyebrow 22px] 01 · Downhill, blindfolded（3 words）
+- [div 34px] Base fare（2 words）
+- [div 34px] Per km（2 words）
+- [h1 64px] The gradient（2 words）
+- [div 90px] ↻（0 words）
+- [div 90px] ↻（0 words）
+- [h2 54px] Fastest way down（3 words）
+- [span 57px] $5.40（1 words）
+- [span 57px] $2.60（1 words）
+- [div 38px] Turn a little（3 words）
+- [div 38px] Check the slope（3 words）
+- [div 38px] Turn again（2 words）
+- [div 38px] →（0 words）
+- [div 38px] →（0 words）
+- [div 38px] ↺（0 words）
+- total（excl. eyebrow & chart）：14 blocks，19 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s2_l14.png`
+### l15（5.8s）
+- narration：How big each step is, that's the learning rate, set by a person before training.
+- [eyebrow 22px] 01 · Downhill, blindfolded（3 words）
+- [div 34px] Base fare（2 words）
+- [div 34px] Per km（2 words）
+- [h1 64px] Learning rate（2 words）
+- [h2 54px] Step size（2 words）
+- [h2 54px] Set before training（3 words）
+- [span 57px] $5.40（1 words）
+- [span 57px] $2.60（1 words）
+- [div 38px] Turn a little（3 words）
+- [div 38px] Check the slope（3 words）
+- [div 38px] Turn again（2 words）
+- [div 38px] →（0 words）
+- [div 38px] →（0 words）
+- [div 38px] ↺（0 words）
+- total（excl. eyebrow & chart）：13 blocks，21 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s2_l15.png`
+
+## c_experiment（chapter card）
+- A small experiment
+- screenshot：``
+
+## s3 A small experiment
+### l16（4.2s）
+- narration：Here's last episode's map: base fare across, price per kilometer up.
+- [eyebrow 22px] 02 · A small experiment（4 words）
+- [eyebrow 22px] Illustration（1 words）
+- [chart 28px] Per km ($)（2 words）
+- [chart 24px] 4（1 words）
+- [chart 24px] 3（1 words）
+- [caption 28px] Lowest point（2 words）
+- [chart 24px] 2（1 words）
+- [chart 24px] 1（1 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：1 blocks，2 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s3_l16.png`
+### l17（4.2s）
+- narration：Darker means a higher score. The taxi fares are made up.
+- [eyebrow 22px] 02 · A small experiment（4 words）
+- [eyebrow 22px] Illustration（1 words）
+- [chart 28px] Per km ($)（2 words）
+- [chart 24px] 4（1 words）
+- [chart 24px] 3（1 words）
+- [caption 28px] Lowest point（2 words）
+- [chart 24px] 2（1 words）
+- [h2 46px] Darker = higher score（3 words）
+- [chart 24px] 1（1 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：2 blocks，5 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s3_l17.png`
+### l18（7.7s）
+- narration：We start at a 5 dollar base fare and 2 dollars a kilometer: a score of 78, way up high.
+- [eyebrow 22px] 02 · A small experiment（4 words）
+- [eyebrow 22px] Illustration（1 words）
+- [div 26px] Base fare（2 words）
+- [div 26px] Per km（2 words）
+- [chart 28px] Per km ($)（2 words）
+- [chart 24px] 4（1 words）
+- [span 44px] $5.00（1 words）
+- [span 44px] $2.00（1 words）
+- [chart 24px] 3（1 words）
+- [caption 28px] Lowest point（2 words）
+- [eyebrow 22px] Score（1 words）
+- [eyebrow 22px] Steps（1 words）
+- [div 96px] 78（1 words）
+- [div 54px] 0（1 words）
+- [chart 24px] 2（1 words）
+- [caption 28px] Start（1 words）
+- [h2 46px] Darker = higher score（3 words）
+- [chart 24px] 1（1 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：9 blocks，14 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s3_l18.png`
+### l19（3.8s）
+- narration：First, feel the slope: nudge each knob up ten cents.
+- [eyebrow 22px] 02 · A small experiment（4 words）
+- [eyebrow 22px] Illustration（1 words）
+- [div 26px] Base fare（2 words）
+- [div 26px] Per km（2 words）
+- [chart 28px] Per km ($)（2 words）
+- [chart 24px] 4（1 words）
+- [span 44px] $5.00（1 words）
+- [span 44px] $2.00（1 words）
+- [chart 24px] 3（1 words）
+- [caption 28px] Lowest point（2 words）
+- [eyebrow 22px] Score（1 words）
+- [eyebrow 22px] Steps（1 words）
+- [div 96px] 78（1 words）
+- [div 54px] 0（1 words）
+- [chart 24px] 2（1 words）
+- [eyebrow 22px] Nudge +$0.10, score（3 words）
+- [chart 24px] 1（1 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：7 blocks，10 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s3_l19.png`
+### l20（8.5s）
+- narration：Nudge the base fare up and the score drops 1.7. Nudge per kilometer up, and it drops 11.2.
+- [eyebrow 22px] 02 · A small experiment（4 words）
+- [eyebrow 22px] Illustration（1 words）
+- [div 26px] Base fare（2 words）
+- [div 26px] Per km（2 words）
+- [chart 28px] Per km ($)（2 words）
+- [chart 24px] 4（1 words）
+- [span 44px] $5.00（1 words）
+- [span 44px] $2.00（1 words）
+- [chart 24px] 3（1 words）
+- [caption 28px] Lowest point（2 words）
+- [eyebrow 22px] Score（1 words）
+- [eyebrow 22px] Steps（1 words）
+- [div 96px] 78（1 words）
+- [div 54px] 0（1 words）
+- [chart 24px] 2（1 words）
+- [eyebrow 22px] Nudge +$0.10, score（3 words）
+- [chart 24px] 1（1 words）
+- [div 16px] Base fare−1.7（3 words）
+- [div 16px] Per km−11.2（3 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：9 blocks，16 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s3_l20.png`
+### l21（4.6s）
+- narration：So both go up, but the per-kilometer slope is much steeper.
+- screen unchanged from previous line
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s3_l21.png`
+### l22（3.1s）
+- narration：So the first step mostly turns that one.
+- [eyebrow 22px] 02 · A small experiment（4 words）
+- [eyebrow 22px] Illustration（1 words）
+- [div 26px] Base fare（2 words）
+- [div 26px] Per km（2 words）
+- [chart 28px] Per km ($)（2 words）
+- [chart 24px] 4（1 words）
+- [span 44px] $5.09（1 words）
+- [span 44px] $2.59（1 words）
+- [chart 24px] 3（1 words）
+- [caption 28px] Lowest point（2 words）
+- [eyebrow 22px] Score（1 words）
+- [eyebrow 22px] Steps（1 words）
+- [div 96px] 25（1 words）
+- [div 54px] 1（1 words）
+- [chart 24px] 2（1 words）
+- [h2 46px] Step one: mostly per km（5 words）
+- [chart 24px] 1（1 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：8 blocks，15 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s3_l22.png`
+### l23（6.5s）
+- narration：In three steps, the score falls from 78 to 25, 12, 9, and we're in the valley.
+- [eyebrow 22px] 02 · A small experiment（4 words）
+- [eyebrow 22px] Illustration（1 words）
+- [div 26px] Base fare（2 words）
+- [div 26px] Per km（2 words）
+- [chart 28px] Per km ($)（2 words）
+- [chart 24px] 4（1 words）
+- [span 44px] $5.16（1 words）
+- [span 44px] $3.02（1 words）
+- [chart 24px] 3（1 words）
+- [caption 28px] Lowest point（2 words）
+- [eyebrow 22px] Score（1 words）
+- [eyebrow 22px] Steps（1 words）
+- [div 96px] 9.2（1 words）
+- [div 54px] 3（1 words）
+- [chart 24px] 2（1 words）
+- [h2 46px] Valley in 3 steps（4 words）
+- [chart 24px] 1（1 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：8 blocks，14 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s3_l23.png`
+### l24（2.7s）
+- narration：The floor is a long, gentle trench.
+- [eyebrow 22px] 02 · A small experiment（4 words）
+- [eyebrow 22px] Illustration（1 words）
+- [div 26px] Base fare（2 words）
+- [div 26px] Per km（2 words）
+- [chart 28px] Per km ($)（2 words）
+- [chart 24px] 4（1 words）
+- [span 44px] $5.16（1 words）
+- [span 44px] $3.02（1 words）
+- [chart 24px] 3（1 words）
+- [caption 28px] Lowest point（2 words）
+- [eyebrow 22px] Score（1 words）
+- [eyebrow 22px] Steps（1 words）
+- [div 96px] 9.2（1 words）
+- [div 54px] 3（1 words）
+- [chart 24px] 2（1 words）
+- [h2 46px] Long, gentle trench（3 words）
+- [chart 24px] 1（1 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：8 blocks，13 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s3_l24.png`
+### l25（5.8s）
+- narration：The base fare creeps up, the per-kilometer rate eases back, and we inch along.
+- [eyebrow 22px] 02 · A small experiment（4 words）
+- [eyebrow 22px] Illustration（1 words）
+- [div 26px] Base fare（2 words）
+- [div 26px] Per km（2 words）
+- [chart 28px] Per km ($)（2 words）
+- [chart 24px] 4（1 words）
+- [span 44px] $7.25（1 words）
+- [span 44px] $2.91（1 words）
+- [chart 24px] 3（1 words）
+- [caption 28px] Lowest point（2 words）
+- [eyebrow 22px] Score（1 words）
+- [eyebrow 22px] Steps（1 words）
+- [div 96px] 4.1（1 words）
+- [div 54px] 221（1 words）
+- [chart 24px] 2（1 words）
+- [h2 46px] Long, gentle trench（3 words）
+- [chart 24px] 1（1 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：8 blocks，13 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s3_l25.png`
+### l26（3.1s）
+- narration：The gentler the slope, the shorter each step.
+- [eyebrow 22px] 02 · A small experiment（4 words）
+- [eyebrow 22px] Illustration（1 words）
+- [div 26px] Base fare（2 words）
+- [div 26px] Per km（2 words）
+- [chart 28px] Per km ($)（2 words）
+- [chart 24px] 4（1 words）
+- [span 44px] $9.24（1 words）
+- [span 44px] $2.66（1 words）
+- [chart 24px] 3（1 words）
+- [caption 28px] Lowest point（2 words）
+- [eyebrow 22px] Score（1 words）
+- [eyebrow 22px] Steps（1 words）
+- [div 96px] 2.2（1 words）
+- [div 54px] 679（1 words）
+- [chart 24px] 2（1 words）
+- [h2 46px] Gentler slope, shorter steps（4 words）
+- [chart 24px] 1（1 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：8 blocks，14 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s3_l26.png`
+### l27（6.5s）
+- narration：After a thousand-odd steps, the score's about 2. The true minimum is 1.97.
+- [eyebrow 22px] 02 · A small experiment（4 words）
+- [eyebrow 22px] Illustration（1 words）
+- [div 26px] Base fare（2 words）
+- [div 26px] Per km（2 words）
+- [chart 28px] Per km ($)（2 words）
+- [chart 24px] 4（1 words）
+- [span 44px] $9.93（1 words）
+- [span 44px] $2.57（1 words）
+- [chart 24px] 3（1 words）
+- [caption 28px] Lowest point（2 words）
+- [eyebrow 22px] Score（1 words）
+- [eyebrow 22px] Steps（1 words）
+- [div 96px] 2.0（1 words）
+- [div 54px] 1200（1 words）
+- [chart 24px] 2（1 words）
+- [h2 46px] Lowest: 1.97（2 words）
+- [chart 24px] 1（1 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：8 blocks，12 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s3_l27.png`
+### l28（5.4s）
+- narration：The knobs end up near a ten-dollar base fare and two fifty a kilometer.
+- screen unchanged from previous line
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s3_l28.png`
+### l29（4.6s）
+- narration：It never saw the whole map. It only felt the ground underfoot.
+- [eyebrow 22px] 02 · A small experiment（4 words）
+- [eyebrow 22px] Illustration（1 words）
+- [div 26px] Base fare（2 words）
+- [div 26px] Per km（2 words）
+- [chart 28px] Per km ($)（2 words）
+- [chart 24px] 4（1 words）
+- [span 44px] $9.93（1 words）
+- [span 44px] $2.57（1 words）
+- [chart 24px] 3（1 words）
+- [caption 28px] Lowest point（2 words）
+- [eyebrow 22px] Score（1 words）
+- [eyebrow 22px] Steps（1 words）
+- [div 96px] 2.0（1 words）
+- [div 54px] 1200（1 words）
+- [chart 24px] 2（1 words）
+- [h2 46px] Only the ground underfoot（4 words）
+- [chart 24px] 1（1 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：8 blocks，14 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s3_l29.png`
+
+## c_lens（chapter card）
+- How big a step?
+- screenshot：``
+
+## s4 How big a step?
+### l30（6.5s）
+- narration：That run used a learning rate of 0.005. What if we'd picked wrong?
+- [eyebrow 22px] 03 · How big a step?（5 words）
+- [h1 76px] Wrong learning rate?（3 words）
+- [h2 46px] Just right（2 words）
+- [span 38px] 0.005（1 words）
+- [n 64px] 2.0（1 words）
+- total（excl. eyebrow & chart）：4 blocks，7 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s4_l30.png`
+### l31（4.6s）
+- narration：Here are three paths from the same start, same number of steps.
+- [eyebrow 22px] 03 · How big a step?（5 words）
+- [h1 76px] Same start, same steps（4 words）
+- [h2 46px] Too small（2 words）
+- [h2 46px] Just right（2 words）
+- [h2 46px] Too big（2 words）
+- [span 38px] 0.0005（1 words）
+- [span 38px] 0.005（1 words）
+- [span 38px] 0.021（1 words）
+- [n 64px] 2.0（1 words）
+- total（excl. eyebrow & chart）：8 blocks，14 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s4_l31.png`
+### l32（7.3s）
+- narration：Make it ten times smaller, 0.0005, and it heads the right way but crawls.
+- [eyebrow 22px] 03 · How big a step?（5 words）
+- [h1 76px] Same start, same steps（4 words）
+- [h2 46px] Too small（2 words）
+- [h2 46px] Just right（2 words）
+- [h2 46px] Too big（2 words）
+- [span 38px] 0.0005（1 words）
+- [span 38px] 0.005（1 words）
+- [span 38px] 0.021（1 words）
+- [n 64px] 5.6（1 words）
+- [n 64px] 2.0（1 words）
+- [caption 28px] Score（1 words）
+- total（excl. eyebrow & chart）：10 blocks，16 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s4_l32.png`
+### l33（5.4s）
+- narration：It ends at a score of 5.5, still far from the bottom.
+- [eyebrow 22px] 03 · How big a step?（5 words）
+- [h1 76px] Same start, same steps（4 words）
+- [h2 46px] Too small（2 words）
+- [h2 46px] Just right（2 words）
+- [h2 46px] Too big（2 words）
+- [span 38px] 0.0005（1 words）
+- [span 38px] 0.005（1 words）
+- [span 38px] 0.021（1 words）
+- [n 64px] 5.5（1 words）
+- [n 64px] 2.0（1 words）
+- [h2 54px] Still far off（3 words）
+- [caption 28px] Score（1 words）
+- total（excl. eyebrow & chart）：11 blocks，19 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s4_l33.png`
+### l34（8.5s）
+- narration：Make it about four times bigger, 0.021, and it overshoots across the valley, higher than where it started.
+- [eyebrow 22px] 03 · How big a step?（5 words）
+- [h2 46px] Too small（2 words）
+- [h2 46px] Just right（2 words）
+- [h2 46px] Too big（2 words）
+- [span 38px] 0.0005（1 words）
+- [span 38px] 0.005（1 words）
+- [span 38px] 0.021（1 words）
+- [chart 22px] 1（1 words）
+- [n 64px] 5.5（1 words）
+- [n 64px] 2.0（1 words）
+- [n 64px] 96（1 words）
+- [h2 54px] Still far off（3 words）
+- [caption 28px] Score（1 words）
+- total（excl. eyebrow & chart）：11 blocks，16 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s4_l34.png`
+### l35（3.5s）
+- narration：Then it climbs higher and higher: 96, 118, 145.
+- [eyebrow 22px] 03 · How big a step?（5 words）
+- [h2 46px] Too small（2 words）
+- [h2 46px] Just right（2 words）
+- [h2 46px] Too big（2 words）
+- [span 38px] 0.0005（1 words）
+- [span 38px] 0.005（1 words）
+- [span 38px] 0.021（1 words）
+- [chart 22px] 3（1 words）
+- [chart 22px] 1（1 words）
+- [chart 22px] 2（1 words）
+- [n 64px] 5.5（1 words）
+- [n 64px] 2.0（1 words）
+- [n 64px] 145（1 words）
+- [h2 54px] Still far off（3 words）
+- [caption 28px] Score（1 words）
+- total（excl. eyebrow & chart）：11 blocks，16 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s4_l35.png`
+### l36（2.7s）
+- narration：Five steps in, it's off the map.
+- [eyebrow 22px] 03 · How big a step?（5 words）
+- [h2 46px] Too small（2 words）
+- [h2 46px] Just right（2 words）
+- [h2 46px] Too big（2 words）
+- [span 38px] 0.0005（1 words）
+- [span 38px] 0.005（1 words）
+- [span 38px] 0.021（1 words）
+- [chart 30px] ↑（0 words）
+- [chart 22px] 3（1 words）
+- [chart 22px] 5（1 words）
+- [chart 22px] 1（1 words）
+- [chart 22px] 2（1 words）
+- [chart 22px] 4（1 words）
+- [n 64px] 5.5（1 words）
+- [n 64px] 2.0（1 words）
+- [n 64px] 224（1 words）
+- [h2 54px] Still far off（3 words）
+- [h2 54px] Off the map（3 words）
+- [caption 28px] Score（1 words）
+- total（excl. eyebrow & chart）：12 blocks，19 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s4_l36.png`
+### l37（3.1s）
+- narration：Our original rate walks steadily to the bottom.
+- [eyebrow 22px] 03 · How big a step?（5 words）
+- [h2 46px] Too small（2 words）
+- [h2 46px] Just right（2 words）
+- [h2 46px] Too big（2 words）
+- [span 38px] 0.0005（1 words）
+- [span 38px] 0.005（1 words）
+- [span 38px] 0.021（1 words）
+- [chart 30px] ↑（0 words）
+- [chart 22px] 3（1 words）
+- [chart 22px] 5（1 words）
+- [chart 22px] 1（1 words）
+- [chart 22px] 2（1 words）
+- [chart 22px] 4（1 words）
+- [n 64px] 5.5（1 words）
+- [n 64px] 2.0（1 words）
+- [n 64px] 224（1 words）
+- [h2 54px] Still far off（3 words）
+- [h2 54px] Made it（2 words）
+- [h2 54px] Off the map（3 words）
+- [caption 28px] Score（1 words）
+- total（excl. eyebrow & chart）：13 blocks，21 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s4_l37.png`
+### l38（5.4s）
+- narration：That's why the learning rate is often the single most important setting in training.
+- [eyebrow 22px] 03 · How big a step?（5 words）
+- [h1 76px] The key setting（3 words）
+- [h2 46px] Too small（2 words）
+- [h2 46px] Just right（2 words）
+- [h2 46px] Too big（2 words）
+- [span 38px] 0.0005（1 words）
+- [span 38px] 0.005（1 words）
+- [span 38px] 0.021（1 words）
+- [chart 30px] ↑（0 words）
+- [chart 22px] 3（1 words）
+- [chart 22px] 5（1 words）
+- [chart 22px] 1（1 words）
+- [chart 22px] 2（1 words）
+- [chart 22px] 4（1 words）
+- [n 64px] 5.5（1 words）
+- [n 64px] 2.0（1 words）
+- [n 64px] 224（1 words）
+- [h2 54px] Still far off（3 words）
+- [h2 54px] Made it（2 words）
+- [h2 54px] Off the map（3 words）
+- [caption 28px] Score（1 words）
+- total（excl. eyebrow & chart）：14 blocks，24 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s4_l38.png`
+### l39（5.8s）
+- narration：Too big, and it bounces right off the map. Too small, and you waste time.
+- screen unchanged from previous line
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s4_l39.png`
+
+## c_real（chapter card）
+- Training giant models
+- screenshot：``
+
+## s5 How big models train
+### l40（3.5s）
+- narration：Big models use gradient descent too, with two upgrades.
+- [eyebrow 22px] 04 · Training giant models（4 words）
+- [eyebrow 22px] Upgrade ①（1 words）
+- [eyebrow 22px] Upgrade ②（1 words）
+- [h1 64px] Small batches（2 words）
+- [h1 64px] Smarter steps（2 words）
+- total（excl. eyebrow & chart）：2 blocks，4 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s5_l40.png`
+### l41（4.2s）
+- narration：First, there's too much data to read it all every step.
+- [eyebrow 22px] 04 · Training giant models（4 words）
+- [eyebrow 22px] Upgrade ①（1 words）
+- [h1 64px] Small batches（2 words）
+- total（excl. eyebrow & chart）：1 blocks，2 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s5_l41.png`
+### l42（6.9s）
+- narration：So each step grabs a small random batch, roughly estimates the slope, and goes. That's stochastic gradient descent.
+- [eyebrow 22px] 04 · Training giant models（4 words）
+- [eyebrow 22px] Illustration · 3 rides a step（5 words）
+- [chart 28px] Per km ($)（2 words）
+- [eyebrow 22px] Upgrade ①（1 words）
+- [h1 64px] Stochastic gradient descent（3 words）
+- [chart 24px] 4（1 words）
+- [chart 24px] 3（1 words）
+- [h2 54px] A small random batch（4 words）
+- [caption 28px] Small batch（2 words）
+- [chart 24px] 2（1 words）
+- [caption 28px] All data（2 words）
+- [chart 24px] 1（1 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：4 blocks，11 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s5_l42.png`
+### l43（6.2s）
+- narration：The path wobbles, but it saves loads of computing and still ends up near the bottom.
+- [eyebrow 22px] 04 · Training giant models（4 words）
+- [eyebrow 22px] Illustration · 3 rides a step（5 words）
+- [chart 28px] Per km ($)（2 words）
+- [eyebrow 22px] Upgrade ①（1 words）
+- [h1 64px] Stochastic gradient descent（3 words）
+- [chart 24px] 4（1 words）
+- [chart 24px] 3（1 words）
+- [h2 54px] A small random batch（4 words）
+- [caption 28px] Small batch（2 words）
+- [chart 24px] 2（1 words）
+- [caption 28px] All data（2 words）
+- [h2 54px] Wobbly, but gets near（4 words）
+- [chart 24px] 1（1 words）
+- [chart 24px] 0（1 words）
+- [chart 24px] 5（1 words）
+- [chart 24px] 10（1 words）
+- [chart 24px] 15（1 words）
+- [chart 24px] 20（1 words）
+- [chart 28px] Base fare ($)（2 words）
+- total（excl. eyebrow & chart）：5 blocks，15 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s5_l43.png`
+### l44（6.5s）
+- narration：GPT-3, for example, saw only about 1/100,000 of its training data per step.
+- [eyebrow 22px] 04 · Training giant models（4 words）
+- [eyebrow 22px] GPT-3 · each step（3 words）
+- [display 132px] ≈ 1/100,000（2 words）
+- [h2 54px] of the training data（4 words）
+- [div 22px] Brown et al. 2020 · GPT-3 paper, Table 2.1: 3.2M-token batches, 300B tokens（12 words）
+- total（excl. eyebrow & chart）：3 blocks，18 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s5_l44.png`
+### l45（8.5s）
+- narration：The second upgrade is smarter steps: a method called Adam gives each knob its own step size, based on its past slopes.
+- [eyebrow 22px] 04 · Training giant models（4 words）
+- [eyebrow 22px] Upgrade ② · Smarter steps（3 words）
+- [display 132px] Adam（1 words）
+- [h2 54px] A step size per knob（5 words）
+- [div 22px] Kingma & Ba, Adam: A Method for Stochastic Optimization (arXiv 2014 · ICLR 2015)（12 words）
+- total（excl. eyebrow & chart）：3 blocks，18 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s5_l45.png`
+### l46（5.0s）
+- narration：GPT-3 was trained with Adam, and Meta's Llama uses a tweaked version.
+- [eyebrow 22px] 04 · Training giant models（4 words）
+- [div 16px] GPT-3Adam（1 words）
+- [div 16px] LlamaAdam, tweaked（2 words）
+- [div 22px] Brown et al. 2020, Appendix B; Touvron et al. 2023 (AdamW)（11 words）
+- total（excl. eyebrow & chart）：3 blocks，14 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s5_l46.png`
+### l47（6.5s）
+- narration：That's how GPT-3's 175 billion knobs got turned, one small step at a time.
+- [eyebrow 22px] 04 · Training giant models（4 words）
+- [eyebrow 22px] GPT-3（1 words）
+- [display 132px] 175 billion knobs（3 words）
+- [h2 54px] One small step at a time（6 words）
+- total（excl. eyebrow & chart）：2 blocks，9 words
+- screenshot：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r2/materials/screen/en/s5_l47.png`
+
+## s6 Outro (on screen: end card)
+### outro（package card, whole segment 27.1s）
+- narration l48: Gradient descent is walking downhill blindfolded: feel for the steepest way down, and take a small step.
+- narration l49: And how big those steps are is the learning rate.
+- narration l50: But a model with just two knobs can only learn so much.
+- narration l51: Next time, we'll stack lots of little units in layers, each with its own knobs, and see what happens.
+- narration l52: That's called a neural network.
+- screen：Steepest way down Step size = learning rate（7 words）
+- screen：Neural networks（2 words）
+- screenshot：``
+

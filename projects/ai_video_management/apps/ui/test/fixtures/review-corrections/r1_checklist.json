@@ -1,0 +1,4029 @@
+{
+ "version": 5,
+ "scoring": {
+  "scale": {
+   "0": "没查或查不了（必须说明原因）",
+   "1": "有问题（问题表里要有对应条目）",
+   "2": "基本没问题，有小瑕疵",
+   "3": "没问题"
+  },
+  "evidence_rule": "打 2 或 3 分必须写证据：指到镜头、秒数、图上位置、文件行或计算数字；没有证据的高分按「没查」处理，打不了勾。",
+  "disagreement": "两位审稿人同一维度分数相差 ≥2，或一人 ≤1、另一人 ≥2，就是分歧，交裁决人。",
+  "audit": "两人都打 ≥2 的维度，裁决人每个审稿项随机抽 2 维复核证据，专抓两个模型共同的盲点。"
+ },
+ "adjudicator": {
+  "runner": "claude",
+  "model": "claude-opus-5-5"
+ },
+ "id": "ep01_20261108-152459_pregen_r1",
+ "chain": "ep01_20261108-152459_pregen_r1",
+ "loop": 1,
+ "max_loops": 3,
+ "parent": "",
+ "title": "ep01 · 出片前（故事＋分镜＋prompt＋首帧/故事板） · 第 1 轮",
+ "target": "ai_videos/demo/episodes/ep01",
+ "episode": "ep01",
+ "stage": "pregen",
+ "stage_name": "出片前（故事＋分镜＋prompt＋首帧/故事板）",
+ "gate_stage": true,
+ "scenes": [
+  "s1",
+  "s2"
+ ],
+ "created_at": "2026-11-08T15:24:59",
+ "author": "Claude Code",
+ "known": "",
+ "changes": "",
+ "roster_sha": "966f554371d6ef1f818cd96dfc949c3cc9c554c46c4b09ed4a63477abbc90ad2",
+ "materials": {},
+ "fp_scope": "scenes",
+ "items": [
+  {
+   "id": "physics",
+   "law": "physics",
+   "law_name": "世界物理",
+   "color": "#c0502e",
+   "scope": [
+    "s1",
+    "s2"
+   ],
+   "checks": "重力与支撑（东西被谁、用哪只手托着？有没有悬空、黏在手上）；手的数量（自拍占一只手，其余动作只剩一只手）；道具守恒（凭空出现、消失、变形、数量变化）；道具交接后去向；穿模；身体变形（多手指、肢体扭曲、脸或身体溶解/半透明）；运动物理（滑步、瞬移）；火、烟、水、蒸汽、光影；画面突然溶解成另一画面。",
+   "how": "逐镜看 sheet4.jpg 每一格，盯手、手里的东西、脚和地面、画面边缘进出的物体；疑点用 ffmpeg 加密抽帧或放大裁切确认。对照 spec.md，也指出分镜文字本身做不到、或没交代道具来源与去向的地方。",
+   "blind": false,
+   "must": [
+    {
+     "id": "P1",
+     "text": "手数：自拍镜只剩一只手可用；每个时刻每只手在干什么、有没有多出或少掉的手"
+    },
+    {
+     "id": "P2",
+     "text": "道具来源与去向：每件道具进场时在哪、出场时在哪；没有凭空出现或消失"
+    },
+    {
+     "id": "P3",
+     "text": "交接三段：交接写清从哪拿、交到哪、对方怎么握住或收起；钱、灯、刮板都要"
+    },
+    {
+     "id": "P4",
+     "text": "重力与支撑：没有悬空的物体；放下的东西有支撑；液体、粉末、蒸汽方向对"
+    },
+    {
+     "id": "P5",
+     "text": "身体可行：转身、迈步、上台阶、坐下是真人做得到的，时长够；没有 180° 扭头、滑步"
+    },
+    {
+     "id": "P6",
+     "text": "穿模与距离：人、动物、道具之间的距离够，走位路线不穿墙、不撞人"
+    },
+    {
+     "id": "P7",
+     "text": "服装与动作相容：衣服允许这个动作（短袖不能卷袖、塞进腰里的下摆不会自己跑出来）"
+    },
+    {
+     "id": "P8",
+     "text": "首帧 = 第 0 秒：首帧画的正是第 0 秒的状态，和节拍第一拍接得上"
+    }
+   ],
+   "status": "done",
+   "report": "reconcile/physics.md",
+   "prompt": "items/physics.md",
+   "what": "画面里的东西要遵守真实世界的物理：东西不会悬空、不会凭空出现或消失，手的数量对得上，人走路、拿东西、转身是真人做得到的。",
+   "problem": "生成模型最常犯、观众一眼就看出的硬伤：面包黏在指尖、铜钱悬空、刮板凭空出现、自拍时却两只手都在干活。",
+   "method": [
+    "逐镜按秒走一遍节拍，画一张「手与道具」表：每拍两只手各在干什么、每件道具在哪",
+    "看首帧放大到手和道具，核第 0 秒状态",
+    "按站位图量距离和路线，判断穿模和时长",
+    "每个维度打分并写证据（镜头·秒数·图上位置）"
+   ],
+   "model_why": "看图找细节与空间推理：首帧、站位图里手、道具、支撑、运动是否做得到",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "手数",
+     "question": "自拍镜只剩一只手可用；每个时刻每只手在干什么、有没有多出或少掉的手",
+     "critical": false
+    },
+    {
+     "id": "P2",
+     "name": "道具来源与去向",
+     "question": "每件道具进场时在哪、出场时在哪；没有凭空出现或消失",
+     "critical": false
+    },
+    {
+     "id": "P3",
+     "name": "交接三段",
+     "question": "交接写清从哪拿、交到哪、对方怎么握住或收起；钱、灯、刮板都要",
+     "critical": false
+    },
+    {
+     "id": "P4",
+     "name": "重力与支撑",
+     "question": "没有悬空的物体；放下的东西有支撑；液体、粉末、蒸汽方向对",
+     "critical": false
+    },
+    {
+     "id": "P5",
+     "name": "身体可行",
+     "question": "转身、迈步、上台阶、坐下是真人做得到的，时长够；没有 180° 扭头、滑步",
+     "critical": false
+    },
+    {
+     "id": "P6",
+     "name": "穿模与距离",
+     "question": "人、动物、道具之间的距离够，走位路线不穿墙、不撞人",
+     "critical": false
+    },
+    {
+     "id": "P7",
+     "name": "服装与动作相容",
+     "question": "衣服允许这个动作（短袖不能卷袖、塞进腰里的下摆不会自己跑出来）",
+     "critical": false
+    },
+    {
+     "id": "P8",
+     "name": "首帧 = 第 0 秒",
+     "question": "首帧画的正是第 0 秒的状态，和节拍第一拍接得上",
+     "critical": false
+    }
+   ],
+   "ticked_by": "claude-opus-5-5/physics__a + gpt-6-astra/physics__b",
+   "ticked_by_list": [
+    "claude-opus-5-5/physics__a",
+    "gpt-6-astra/physics__b"
+   ],
+   "findings": {
+    "重出": 1,
+    "可剪": 0,
+    "记录": 1,
+    "存疑": 0
+   },
+   "rows": 2,
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-opus-5-5",
+     "status": "done",
+     "report": "reports/physics__a.md",
+     "prompt": "items/physics__a.md",
+     "agents": [],
+     "ticked_at": "2026-11-08T15:25:00",
+     "by": "claude-opus-5-5/physics__a",
+     "scores": {
+      "P1": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 手数"
+      },
+      "P2": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 道具来源与去向"
+      },
+      "P3": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 交接三段"
+      },
+      "P4": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 重力与支撑"
+      },
+      "P5": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 身体可行"
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 穿模与距离"
+      },
+      "P7": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 服装与动作相容"
+      },
+      "P8": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 首帧 = 第 0 秒"
+      }
+     },
+     "findings": {
+      "重出": 1,
+      "可剪": 0,
+      "记录": 1,
+      "存疑": 0
+     },
+     "rows": 2,
+     "clean": false,
+     "finding_rows": [
+      {
+       "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+       "cells": [
+        "s1_st1",
+        "1",
+        "物理",
+        "重出",
+        "②",
+        "第3格",
+        "改（便宜）"
+       ],
+       "shot": "s1_st1",
+       "sec": "1",
+       "sub": "物理",
+       "sev": "重出",
+       "gate": "②",
+       "evidence": "第3格",
+       "fix": "改（便宜）"
+      },
+      {
+       "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+       "cells": [
+        "s2_st1",
+        "2",
+        "物理",
+        "记录",
+        "④",
+        "第4格",
+        "改"
+       ],
+       "shot": "s2_st1",
+       "sec": "2",
+       "sub": "物理",
+       "sev": "记录",
+       "gate": "④",
+       "evidence": "第4格",
+       "fix": "改"
+      }
+     ],
+     "report_sha": "26905db9f6294ccc4c68d84f686ba05c236cdd50676dbdfae741d3b0f1f23262"
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "gpt-6-astra",
+     "status": "done",
+     "report": "reports/physics__b.md",
+     "prompt": "items/physics__b.md",
+     "agents": [],
+     "ticked_at": "2026-11-08T15:25:00",
+     "by": "gpt-6-astra/physics__b",
+     "scores": {
+      "P1": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 手数"
+      },
+      "P2": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 道具来源与去向"
+      },
+      "P3": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 交接三段"
+      },
+      "P4": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 重力与支撑"
+      },
+      "P5": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 身体可行"
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 穿模与距离"
+      },
+      "P7": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 服装与动作相容"
+      },
+      "P8": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 首帧 = 第 0 秒"
+      }
+     },
+     "findings": {
+      "重出": 1,
+      "可剪": 0,
+      "记录": 1,
+      "存疑": 0
+     },
+     "rows": 2,
+     "clean": false,
+     "finding_rows": [
+      {
+       "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+       "cells": [
+        "s1_st1",
+        "1",
+        "物理",
+        "重出",
+        "②",
+        "第3格",
+        "改（便宜）"
+       ],
+       "shot": "s1_st1",
+       "sec": "1",
+       "sub": "物理",
+       "sev": "重出",
+       "gate": "②",
+       "evidence": "第3格",
+       "fix": "改（便宜）"
+      },
+      {
+       "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+       "cells": [
+        "s2_st1",
+        "2",
+        "物理",
+        "记录",
+        "④",
+        "第4格",
+        "改"
+       ],
+       "shot": "s2_st1",
+       "sec": "2",
+       "sub": "物理",
+       "sev": "记录",
+       "gate": "④",
+       "evidence": "第4格",
+       "fix": "改"
+      }
+     ],
+     "report_sha": "26905db9f6294ccc4c68d84f686ba05c236cdd50676dbdfae741d3b0f1f23262"
+    }
+   },
+   "ticked_at": "2026-11-08T15:25:00",
+   "scores": {
+    "P1": {
+     "name": "手数",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 手数",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 手数",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "P2": {
+     "name": "道具来源与去向",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 道具来源与去向",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 道具来源与去向",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "P3": {
+     "name": "交接三段",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 交接三段",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 交接三段",
+     "verdict": "抽查",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": "回到首帧第3格核过，证据成立"
+    },
+    "P4": {
+     "name": "重力与支撑",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 重力与支撑",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 重力与支撑",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "P5": {
+     "name": "身体可行",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 身体可行",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 身体可行",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "P6": {
+     "name": "穿模与距离",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 穿模与距离",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 穿模与距离",
+     "verdict": "抽查",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": "回到首帧第3格核过，证据成立"
+    },
+    "P7": {
+     "name": "服装与动作相容",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 服装与动作相容",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 服装与动作相容",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "P8": {
+     "name": "首帧 = 第 0 秒",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 首帧 = 第 0 秒",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 首帧 = 第 0 秒",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    }
+   },
+   "disputes": [],
+   "audits": [
+    "P3",
+    "P6"
+   ],
+   "reconciled_at": "2026-11-08T15:25:00",
+   "finding_rows": [
+    {
+     "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+     "cells": [
+      "s1_st1",
+      "1",
+      "物理",
+      "重出",
+      "②",
+      "第3格",
+      "改（便宜）"
+     ],
+     "shot": "s1_st1",
+     "sec": "1",
+     "sub": "物理",
+     "sev": "重出",
+     "gate": "②",
+     "evidence": "第3格",
+     "fix": "改（便宜）",
+     "from": [
+      "a",
+      "b"
+     ]
+    },
+    {
+     "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+     "cells": [
+      "s2_st1",
+      "2",
+      "物理",
+      "记录",
+      "④",
+      "第4格",
+      "改"
+     ],
+     "shot": "s2_st1",
+     "sec": "2",
+     "sub": "物理",
+     "sev": "记录",
+     "gate": "④",
+     "evidence": "第4格",
+     "fix": "改",
+     "from": [
+      "a",
+      "b"
+     ]
+    }
+   ],
+   "clean": false,
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "P3",
+     "P6"
+    ],
+    "prompt": "items/physics__judge.md",
+    "report": "reports/physics__judge.md",
+    "agents": [],
+    "by": "claude-opus-5-5/physics__judge",
+    "at": "2026-11-08T15:25:00",
+    "ruling": {
+     "P3": {
+      "score": 3,
+      "evidence": "回到首帧第3格核过，证据成立"
+     },
+     "P6": {
+      "score": 3,
+      "evidence": "回到首帧第3格核过，证据成立"
+     }
+    },
+    "report_sha": "41e40353dd0f406998af6998b51ea131dd09f6c4089123014c96e4b80926c23b"
+   },
+   "final_scores": {
+    "P1": 3,
+    "P2": 3,
+    "P3": 3,
+    "P4": 3,
+    "P5": 3,
+    "P6": 3,
+    "P7": 3,
+    "P8": 3
+   },
+   "must_result": {
+    "P1": "✓",
+    "P2": "✓",
+    "P3": "✓",
+    "P4": "✓",
+    "P5": "✓",
+    "P6": "✓",
+    "P7": "✓",
+    "P8": "✓"
+   },
+   "done_at": "2026-11-08T15:25:00"
+  },
+  {
+   "id": "character",
+   "law": "character",
+   "law_name": "人物逻辑",
+   "color": "#7a4fb0",
+   "scope": [
+    "s1",
+    "s2"
+   ],
+   "checks": "对每个有戏的人分别代入他自己：此刻知道什么、想要什么、该看向哪里、对别人的话或动作该有什么反应。查视线、反应缺失或不合情理、动作动机、站桩不演、当地人对奇装异服陌生人的反应是否可信、主持人对观众说话的时机。",
+   "how": "以 sheet1.jpg 为主，需要时看 sheet4；先读故事稿与人物卡的文字设定。也指出分镜里人物动机或反应写得不清、重出还会错的地方。",
+   "blind": false,
+   "must": [
+    {
+     "id": "C1",
+     "text": "知道什么：每个人此刻知道什么、不知道什么，行为不越过他的认知"
+    },
+    {
+     "id": "C2",
+     "text": "想要什么：每个人此刻的目的清楚，动作服务于目的"
+    },
+    {
+     "id": "C3",
+     "text": "视线：每个时刻每个人看向谁，合理（不无缘无故看镜头、不无视身边的怪事）"
+    },
+    {
+     "id": "C4",
+     "text": "反应拍：配角的反应单独占拍，不被吞掉；反应和身份、性格相符"
+    },
+    {
+     "id": "C5",
+     "text": "主持人性格：Riley 的反应符合人设（好奇、敢试、自嘲），对当地人有回应"
+    },
+    {
+     "id": "C6",
+     "text": "路人：路人有合理的反应且不雷同，不抢主笑点"
+    },
+    {
+     "id": "C7",
+     "text": "动机连贯：跨镜头的情绪与动机连得上，没有突然的转变"
+    }
+   ],
+   "status": "done",
+   "report": "reconcile/character.md",
+   "prompt": "items/character.md",
+   "what": "每个人物此刻知道什么、想要什么、该看向谁、该怎么反应，要合乎他的身份和处境；配角的反应拍不能被吞掉。",
+   "problem": "人物「不像真人」：当地人对穿裤子的外国女人毫无反应、面包师眼看她走错路却不看她、观众看不懂人物为什么这么做。",
+   "method": [
+    "为每个有戏的人物写一行「此刻知道 / 想要 / 看向」",
+    "找出被吞掉或雷同的反应拍",
+    "核对主持人的反应是否符合人设"
+   ],
+   "model_why": "读长文本、讲人物动机与反应逻辑",
+   "rubric": [
+    {
+     "id": "C1",
+     "name": "知道什么",
+     "question": "每个人此刻知道什么、不知道什么，行为不越过他的认知",
+     "critical": false
+    },
+    {
+     "id": "C2",
+     "name": "想要什么",
+     "question": "每个人此刻的目的清楚，动作服务于目的",
+     "critical": false
+    },
+    {
+     "id": "C3",
+     "name": "视线",
+     "question": "每个时刻每个人看向谁，合理（不无缘无故看镜头、不无视身边的怪事）",
+     "critical": false
+    },
+    {
+     "id": "C4",
+     "name": "反应拍",
+     "question": "配角的反应单独占拍，不被吞掉；反应和身份、性格相符",
+     "critical": false
+    },
+    {
+     "id": "C5",
+     "name": "主持人性格",
+     "question": "Riley 的反应符合人设（好奇、敢试、自嘲），对当地人有回应",
+     "critical": false
+    },
+    {
+     "id": "C6",
+     "name": "路人",
+     "question": "路人有合理的反应且不雷同，不抢主笑点",
+     "critical": false
+    },
+    {
+     "id": "C7",
+     "name": "动机连贯",
+     "question": "跨镜头的情绪与动机连得上，没有突然的转变",
+     "critical": false
+    }
+   ],
+   "ticked_by": "claude-opus-5-5/character__a + gpt-6-astra/character__b",
+   "ticked_by_list": [
+    "claude-opus-5-5/character__a",
+    "gpt-6-astra/character__b"
+   ],
+   "findings": {
+    "重出": 1,
+    "可剪": 0,
+    "记录": 1,
+    "存疑": 0
+   },
+   "rows": 2,
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/character__a.md",
+     "prompt": "items/character__a.md",
+     "agents": [],
+     "ticked_at": "2026-11-08T15:25:00",
+     "by": "claude-opus-5-5/character__a",
+     "scores": {
+      "C1": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 知道什么"
+      },
+      "C2": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 想要什么"
+      },
+      "C3": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 视线"
+      },
+      "C4": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 反应拍"
+      },
+      "C5": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 主持人性格"
+      },
+      "C6": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 路人"
+      },
+      "C7": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 动机连贯"
+      }
+     },
+     "findings": {
+      "重出": 1,
+      "可剪": 0,
+      "记录": 1,
+      "存疑": 0
+     },
+     "rows": 2,
+     "clean": false,
+     "finding_rows": [
+      {
+       "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+       "cells": [
+        "s1_st1",
+        "1",
+        "物理",
+        "重出",
+        "②",
+        "第3格",
+        "改（便宜）"
+       ],
+       "shot": "s1_st1",
+       "sec": "1",
+       "sub": "物理",
+       "sev": "重出",
+       "gate": "②",
+       "evidence": "第3格",
+       "fix": "改（便宜）"
+      },
+      {
+       "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+       "cells": [
+        "s2_st1",
+        "2",
+        "物理",
+        "记录",
+        "④",
+        "第4格",
+        "改"
+       ],
+       "shot": "s2_st1",
+       "sec": "2",
+       "sub": "物理",
+       "sev": "记录",
+       "gate": "④",
+       "evidence": "第4格",
+       "fix": "改"
+      }
+     ],
+     "report_sha": "cafb03fc14aae10450005d5003996793d37496a2b039807afabf2d31099441cb"
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "gpt-6.1-sol",
+     "status": "done",
+     "report": "reports/character__b.md",
+     "prompt": "items/character__b.md",
+     "agents": [],
+     "ticked_at": "2026-11-08T15:25:00",
+     "by": "gpt-6-astra/character__b",
+     "scores": {
+      "C1": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 知道什么"
+      },
+      "C2": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 想要什么"
+      },
+      "C3": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 视线"
+      },
+      "C4": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 反应拍"
+      },
+      "C5": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 主持人性格"
+      },
+      "C6": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 路人"
+      },
+      "C7": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 动机连贯"
+      }
+     },
+     "findings": {
+      "重出": 1,
+      "可剪": 0,
+      "记录": 1,
+      "存疑": 0
+     },
+     "rows": 2,
+     "clean": false,
+     "finding_rows": [
+      {
+       "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+       "cells": [
+        "s1_st1",
+        "1",
+        "物理",
+        "重出",
+        "②",
+        "第3格",
+        "改（便宜）"
+       ],
+       "shot": "s1_st1",
+       "sec": "1",
+       "sub": "物理",
+       "sev": "重出",
+       "gate": "②",
+       "evidence": "第3格",
+       "fix": "改（便宜）"
+      },
+      {
+       "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+       "cells": [
+        "s2_st1",
+        "2",
+        "物理",
+        "记录",
+        "④",
+        "第4格",
+        "改"
+       ],
+       "shot": "s2_st1",
+       "sec": "2",
+       "sub": "物理",
+       "sev": "记录",
+       "gate": "④",
+       "evidence": "第4格",
+       "fix": "改"
+      }
+     ],
+     "report_sha": "cafb03fc14aae10450005d5003996793d37496a2b039807afabf2d31099441cb"
+    }
+   },
+   "ticked_at": "2026-11-08T15:25:00",
+   "scores": {
+    "C1": {
+     "name": "知道什么",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 知道什么",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 知道什么",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "C2": {
+     "name": "想要什么",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 想要什么",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 想要什么",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "C3": {
+     "name": "视线",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 视线",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 视线",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "C4": {
+     "name": "反应拍",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 反应拍",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 反应拍",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "C5": {
+     "name": "主持人性格",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 主持人性格",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 主持人性格",
+     "verdict": "抽查",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": "回到首帧第3格核过，证据成立"
+    },
+    "C6": {
+     "name": "路人",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 路人",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 路人",
+     "verdict": "抽查",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": "回到首帧第3格核过，证据成立"
+    },
+    "C7": {
+     "name": "动机连贯",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 动机连贯",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 动机连贯",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    }
+   },
+   "disputes": [],
+   "audits": [
+    "C5",
+    "C6"
+   ],
+   "reconciled_at": "2026-11-08T15:25:00",
+   "finding_rows": [
+    {
+     "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+     "cells": [
+      "s1_st1",
+      "1",
+      "物理",
+      "重出",
+      "②",
+      "第3格",
+      "改（便宜）"
+     ],
+     "shot": "s1_st1",
+     "sec": "1",
+     "sub": "物理",
+     "sev": "重出",
+     "gate": "②",
+     "evidence": "第3格",
+     "fix": "改（便宜）",
+     "from": [
+      "a",
+      "b"
+     ]
+    },
+    {
+     "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+     "cells": [
+      "s2_st1",
+      "2",
+      "物理",
+      "记录",
+      "④",
+      "第4格",
+      "改"
+     ],
+     "shot": "s2_st1",
+     "sec": "2",
+     "sub": "物理",
+     "sev": "记录",
+     "gate": "④",
+     "evidence": "第4格",
+     "fix": "改",
+     "from": [
+      "a",
+      "b"
+     ]
+    }
+   ],
+   "clean": false,
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "C5",
+     "C6"
+    ],
+    "prompt": "items/character__judge.md",
+    "report": "reports/character__judge.md",
+    "agents": [],
+    "by": "claude-opus-5-5/character__judge",
+    "at": "2026-11-08T15:25:00",
+    "ruling": {
+     "C5": {
+      "score": 3,
+      "evidence": "回到首帧第3格核过，证据成立"
+     },
+     "C6": {
+      "score": 3,
+      "evidence": "回到首帧第3格核过，证据成立"
+     }
+    },
+    "report_sha": "043177284378462050079d53160df252cf3ea08ddfbd3d3489c12725f5c452f6"
+   },
+   "final_scores": {
+    "C1": 3,
+    "C2": 3,
+    "C3": 3,
+    "C4": 3,
+    "C5": 3,
+    "C6": 3,
+    "C7": 3
+   },
+   "must_result": {
+    "C1": "✓",
+    "C2": "✓",
+    "C3": "✓",
+    "C4": "✓",
+    "C5": "✓",
+    "C6": "✓",
+    "C7": "✓"
+   },
+   "done_at": "2026-11-08T15:25:00"
+  },
+  {
+   "id": "continuity",
+   "law": "continuity",
+   "law_name": "连续性",
+   "color": "#2f74b5",
+   "scope": [
+    "s1",
+    "s2"
+   ],
+   "checks": "先建全集道具状态表（钱币逐次核账、食物、器物、灯等），找对不上的地方；服装与头发状态；同场光向与场间时段推进；跳轴与左右对调；场景布置跨镜一致。",
+   "how": "看每场 bounds.jpg（镜头接口两帧）与 scene1.jpg（整场每秒 1 帧），加每镜 spec.md；附上道具状态表。",
+   "blind": false,
+   "must": [
+    {
+     "id": "K1",
+     "text": "道具状态表：逐镜列出每件道具进、出场状态，前后接得上"
+    },
+    {
+     "id": "K2",
+     "text": "钱账：每次付钱前后的枚数和种类，全集账平"
+    },
+    {
+     "id": "K3",
+     "text": "服装与发型：衣服、腰带、布包、头发干湿与发型，镜与镜一致"
+    },
+    {
+     "id": "K4",
+     "text": "光与时间：光向、时段、天色随时间推进合理，同场一致"
+    },
+    {
+     "id": "K5",
+     "text": "站位接续：上一镜结束的位置、朝向接下一镜开始"
+    },
+    {
+     "id": "K6",
+     "text": "环境接续：同一地点的建筑、陈设、路人、动物在各镜一致，没有凭空出现"
+    },
+    {
+     "id": "K7",
+     "text": "跨场引用：台词或画面提到前面的事（面包、方向、钱），前面确实发生过"
+    }
+   ],
+   "status": "done",
+   "report": "reconcile/continuity.md",
+   "prompt": "items/continuity.md",
+   "what": "跨镜头、跨场的一致：道具状态、钱的账、服装发型、光的方向、站位，前一镜结束的样子和下一镜开始的样子接得上。",
+   "problem": "单镜看都对、连起来就穿帮：钱越花越多、油灯换了四种样子、头发湿了又干、两人左右对调跳轴。",
+   "method": [
+    "建一张全范围的道具 / 钱 / 服装 / 光向台账（每镜一行）",
+    "相邻镜头比对结束与开始的状态",
+    "跨场核对台词里引用的前事",
+    "台账附在报告里"
+   ],
+   "model_why": "跨镜头记账（道具、钱、服装、光向、站位）+ 看图核对",
+   "rubric": [
+    {
+     "id": "K1",
+     "name": "道具状态表",
+     "question": "逐镜列出每件道具进、出场状态，前后接得上",
+     "critical": false
+    },
+    {
+     "id": "K2",
+     "name": "钱账",
+     "question": "每次付钱前后的枚数和种类，全集账平",
+     "critical": false
+    },
+    {
+     "id": "K3",
+     "name": "服装与发型",
+     "question": "衣服、腰带、布包、头发干湿与发型，镜与镜一致",
+     "critical": false
+    },
+    {
+     "id": "K4",
+     "name": "光与时间",
+     "question": "光向、时段、天色随时间推进合理，同场一致",
+     "critical": false
+    },
+    {
+     "id": "K5",
+     "name": "站位接续",
+     "question": "上一镜结束的位置、朝向接下一镜开始",
+     "critical": false
+    },
+    {
+     "id": "K6",
+     "name": "环境接续",
+     "question": "同一地点的建筑、陈设、路人、动物在各镜一致，没有凭空出现",
+     "critical": false
+    },
+    {
+     "id": "K7",
+     "name": "跨场引用",
+     "question": "台词或画面提到前面的事（面包、方向、钱），前面确实发生过",
+     "critical": false
+    }
+   ],
+   "ticked_by": "claude-opus-5-5/continuity__a + gpt-6-astra/continuity__b",
+   "ticked_by_list": [
+    "claude-opus-5-5/continuity__a",
+    "gpt-6-astra/continuity__b"
+   ],
+   "findings": {
+    "重出": 1,
+    "可剪": 0,
+    "记录": 1,
+    "存疑": 0
+   },
+   "rows": 2,
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-opus-5-5",
+     "status": "done",
+     "report": "reports/continuity__a.md",
+     "prompt": "items/continuity__a.md",
+     "agents": [],
+     "ticked_at": "2026-11-08T15:25:00",
+     "by": "claude-opus-5-5/continuity__a",
+     "scores": {
+      "K1": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 道具状态表"
+      },
+      "K2": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 钱账"
+      },
+      "K3": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 服装与发型"
+      },
+      "K4": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 光与时间"
+      },
+      "K5": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 站位接续"
+      },
+      "K6": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 环境接续"
+      },
+      "K7": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 跨场引用"
+      }
+     },
+     "findings": {
+      "重出": 1,
+      "可剪": 0,
+      "记录": 1,
+      "存疑": 0
+     },
+     "rows": 2,
+     "clean": false,
+     "finding_rows": [
+      {
+       "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+       "cells": [
+        "s1_st1",
+        "1",
+        "物理",
+        "重出",
+        "②",
+        "第3格",
+        "改（便宜）"
+       ],
+       "shot": "s1_st1",
+       "sec": "1",
+       "sub": "物理",
+       "sev": "重出",
+       "gate": "②",
+       "evidence": "第3格",
+       "fix": "改（便宜）"
+      },
+      {
+       "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+       "cells": [
+        "s2_st1",
+        "2",
+        "物理",
+        "记录",
+        "④",
+        "第4格",
+        "改"
+       ],
+       "shot": "s2_st1",
+       "sec": "2",
+       "sub": "物理",
+       "sev": "记录",
+       "gate": "④",
+       "evidence": "第4格",
+       "fix": "改"
+      }
+     ],
+     "report_sha": "7032462d2c83b07f6e6a1d1b6610463095c3d576609d527570444aab2399ccbb"
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "gpt-6.1-sol",
+     "status": "done",
+     "report": "reports/continuity__b.md",
+     "prompt": "items/continuity__b.md",
+     "agents": [],
+     "ticked_at": "2026-11-08T15:25:00",
+     "by": "gpt-6-astra/continuity__b",
+     "scores": {
+      "K1": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 道具状态表"
+      },
+      "K2": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 钱账"
+      },
+      "K3": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 服装与发型"
+      },
+      "K4": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 光与时间"
+      },
+      "K5": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 站位接续"
+      },
+      "K6": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 环境接续"
+      },
+      "K7": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 跨场引用"
+      }
+     },
+     "findings": {
+      "重出": 1,
+      "可剪": 0,
+      "记录": 1,
+      "存疑": 0
+     },
+     "rows": 2,
+     "clean": false,
+     "finding_rows": [
+      {
+       "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+       "cells": [
+        "s1_st1",
+        "1",
+        "物理",
+        "重出",
+        "②",
+        "第3格",
+        "改（便宜）"
+       ],
+       "shot": "s1_st1",
+       "sec": "1",
+       "sub": "物理",
+       "sev": "重出",
+       "gate": "②",
+       "evidence": "第3格",
+       "fix": "改（便宜）"
+      },
+      {
+       "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+       "cells": [
+        "s2_st1",
+        "2",
+        "物理",
+        "记录",
+        "④",
+        "第4格",
+        "改"
+       ],
+       "shot": "s2_st1",
+       "sec": "2",
+       "sub": "物理",
+       "sev": "记录",
+       "gate": "④",
+       "evidence": "第4格",
+       "fix": "改"
+      }
+     ],
+     "report_sha": "7032462d2c83b07f6e6a1d1b6610463095c3d576609d527570444aab2399ccbb"
+    }
+   },
+   "ticked_at": "2026-11-08T15:25:00",
+   "scores": {
+    "K1": {
+     "name": "道具状态表",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 道具状态表",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 道具状态表",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "K2": {
+     "name": "钱账",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 钱账",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 钱账",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "K3": {
+     "name": "服装与发型",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 服装与发型",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 服装与发型",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "K4": {
+     "name": "光与时间",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 光与时间",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 光与时间",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "K5": {
+     "name": "站位接续",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 站位接续",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 站位接续",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "K6": {
+     "name": "环境接续",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 环境接续",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 环境接续",
+     "verdict": "抽查",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": "回到首帧第3格核过，证据成立"
+    },
+    "K7": {
+     "name": "跨场引用",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 跨场引用",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 跨场引用",
+     "verdict": "抽查",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": "回到首帧第3格核过，证据成立"
+    }
+   },
+   "disputes": [],
+   "audits": [
+    "K6",
+    "K7"
+   ],
+   "reconciled_at": "2026-11-08T15:25:00",
+   "finding_rows": [
+    {
+     "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+     "cells": [
+      "s1_st1",
+      "1",
+      "物理",
+      "重出",
+      "②",
+      "第3格",
+      "改（便宜）"
+     ],
+     "shot": "s1_st1",
+     "sec": "1",
+     "sub": "物理",
+     "sev": "重出",
+     "gate": "②",
+     "evidence": "第3格",
+     "fix": "改（便宜）",
+     "from": [
+      "a",
+      "b"
+     ]
+    },
+    {
+     "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+     "cells": [
+      "s2_st1",
+      "2",
+      "物理",
+      "记录",
+      "④",
+      "第4格",
+      "改"
+     ],
+     "shot": "s2_st1",
+     "sec": "2",
+     "sub": "物理",
+     "sev": "记录",
+     "gate": "④",
+     "evidence": "第4格",
+     "fix": "改",
+     "from": [
+      "a",
+      "b"
+     ]
+    }
+   ],
+   "clean": false,
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "K6",
+     "K7"
+    ],
+    "prompt": "items/continuity__judge.md",
+    "report": "reports/continuity__judge.md",
+    "agents": [],
+    "by": "claude-opus-5-5/continuity__judge",
+    "at": "2026-11-08T15:25:00",
+    "ruling": {
+     "K6": {
+      "score": 3,
+      "evidence": "回到首帧第3格核过，证据成立"
+     },
+     "K7": {
+      "score": 3,
+      "evidence": "回到首帧第3格核过，证据成立"
+     }
+    },
+    "report_sha": "9b9ef95665f421b4f9c5fa22860b483954665eb8a7eccbedc1756ab81042d4be"
+   },
+   "final_scores": {
+    "K1": 3,
+    "K2": 3,
+    "K3": 3,
+    "K4": 3,
+    "K5": 3,
+    "K6": 3,
+    "K7": 3
+   },
+   "must_result": {
+    "K1": "✓",
+    "K2": "✓",
+    "K3": "✓",
+    "K4": "✓",
+    "K5": "✓",
+    "K6": "✓",
+    "K7": "✓"
+   },
+   "done_at": "2026-11-08T15:25:00"
+  },
+  {
+   "id": "dialogue",
+   "law": "dialogue",
+   "law_name": "台词（时长与逻辑）",
+   "color": "#1f8a5b",
+   "scope": [
+    "s1",
+    "s2"
+   ],
+   "checks": "口语自然度（给改写）；节拍时间里说得完（约 2.5–2.8 词/秒）、说完后留 ≥1.5 秒；识别结果与台词不一致处判断是读错还是识别器问题；外语（如拉丁语）语法、时代口吻、发音（另用对应语言模型转写核对）；说话人是否正确；故事稿台词前后逻辑（编号、回收）。",
+   "how": "读各镜 spec.md 的台词、节拍、语音识别与区间，加故事稿；可用本机 faster-whisper 重听片段。",
+   "blind": false,
+   "must": [
+    {
+     "id": "D1",
+     "text": "说得完：每句 ≤2.8 词/秒（停顿另算），开口前 ≥1 秒，说完后 ≥1.5 秒（用脚本算，给数字）"
+    },
+    {
+     "id": "D2",
+     "text": "节拍对位：台词和动作节拍对得上（说到哪句做哪个动作）"
+    },
+    {
+     "id": "D3",
+     "text": "外语与专名：拉丁语语法与出处、注音进了 prompt；专名不易读错"
+    },
+    {
+     "id": "D4",
+     "text": "台词逻辑：编号、回收、前后说法一致（目标一二、dextram、钱数）"
+    },
+    {
+     "id": "D5",
+     "text": "说话人：每句的说话人对，画内该张嘴的人张嘴，不说话的人不出声"
+    },
+    {
+     "id": "D6",
+     "text": "听得清：环境声不盖过台词；悄悄话、远处的话能听清"
+    }
+   ],
+   "status": "done",
+   "report": "reconcile/dialogue.md",
+   "prompt": "items/dialogue.md",
+   "what": "台词在给定时间里说得完、说完留出呼吸；拉丁语和专名读得对；台词前后逻辑（编号、回收、谁说的）一致。",
+   "problem": "台词太满被挤压、节奏发急；Vespasian 被读成 Vespalian；「Mission one」编号对不上开场目标。",
+   "method": [
+    "用脚本数每句词数，按节拍时段算词/秒与留白，给出数字",
+    "核外语原文出处、语法与注音",
+    "核台词前后逻辑与回收"
+   ],
+   "model_why": "算语速与留白（脚本）、核外语与专名、台词逻辑",
+   "rubric": [
+    {
+     "id": "D1",
+     "name": "说得完",
+     "question": "每句 ≤2.8 词/秒（停顿另算），开口前 ≥1 秒，说完后 ≥1.5 秒（用脚本算，给数字）",
+     "critical": false
+    },
+    {
+     "id": "D2",
+     "name": "节拍对位",
+     "question": "台词和动作节拍对得上（说到哪句做哪个动作）",
+     "critical": false
+    },
+    {
+     "id": "D3",
+     "name": "外语与专名",
+     "question": "拉丁语语法与出处、注音进了 prompt；专名不易读错",
+     "critical": false
+    },
+    {
+     "id": "D4",
+     "name": "台词逻辑",
+     "question": "编号、回收、前后说法一致（目标一二、dextram、钱数）",
+     "critical": false
+    },
+    {
+     "id": "D5",
+     "name": "说话人",
+     "question": "每句的说话人对，画内该张嘴的人张嘴，不说话的人不出声",
+     "critical": false
+    },
+    {
+     "id": "D6",
+     "name": "听得清",
+     "question": "环境声不盖过台词；悄悄话、远处的话能听清",
+     "critical": false
+    }
+   ],
+   "ticked_by": "claude-opus-5-5/dialogue__a + gpt-6-astra/dialogue__b",
+   "ticked_by_list": [
+    "claude-opus-5-5/dialogue__a",
+    "gpt-6-astra/dialogue__b"
+   ],
+   "findings": {
+    "重出": 1,
+    "可剪": 0,
+    "记录": 1,
+    "存疑": 0
+   },
+   "rows": 2,
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/dialogue__a.md",
+     "prompt": "items/dialogue__a.md",
+     "agents": [],
+     "ticked_at": "2026-11-08T15:25:00",
+     "by": "claude-opus-5-5/dialogue__a",
+     "scores": {
+      "D1": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 说得完"
+      },
+      "D2": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 节拍对位"
+      },
+      "D3": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 外语与专名"
+      },
+      "D4": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 台词逻辑"
+      },
+      "D5": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 说话人"
+      },
+      "D6": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 听得清"
+      }
+     },
+     "findings": {
+      "重出": 1,
+      "可剪": 0,
+      "记录": 1,
+      "存疑": 0
+     },
+     "rows": 2,
+     "clean": false,
+     "finding_rows": [
+      {
+       "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+       "cells": [
+        "s1_st1",
+        "1",
+        "物理",
+        "重出",
+        "②",
+        "第3格",
+        "改（便宜）"
+       ],
+       "shot": "s1_st1",
+       "sec": "1",
+       "sub": "物理",
+       "sev": "重出",
+       "gate": "②",
+       "evidence": "第3格",
+       "fix": "改（便宜）"
+      },
+      {
+       "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+       "cells": [
+        "s2_st1",
+        "2",
+        "物理",
+        "记录",
+        "④",
+        "第4格",
+        "改"
+       ],
+       "shot": "s2_st1",
+       "sec": "2",
+       "sub": "物理",
+       "sev": "记录",
+       "gate": "④",
+       "evidence": "第4格",
+       "fix": "改"
+      }
+     ],
+     "report_sha": "e8506be20b379873f7dd3e939c68fde4bdc40676534e7d33e116e538899b9663"
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "gpt-6.1-sol",
+     "status": "done",
+     "report": "reports/dialogue__b.md",
+     "prompt": "items/dialogue__b.md",
+     "agents": [],
+     "ticked_at": "2026-11-08T15:25:00",
+     "by": "gpt-6-astra/dialogue__b",
+     "scores": {
+      "D1": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 说得完"
+      },
+      "D2": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 节拍对位"
+      },
+      "D3": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 外语与专名"
+      },
+      "D4": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 台词逻辑"
+      },
+      "D5": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 说话人"
+      },
+      "D6": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 听得清"
+      }
+     },
+     "findings": {
+      "重出": 1,
+      "可剪": 0,
+      "记录": 1,
+      "存疑": 0
+     },
+     "rows": 2,
+     "clean": false,
+     "finding_rows": [
+      {
+       "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+       "cells": [
+        "s1_st1",
+        "1",
+        "物理",
+        "重出",
+        "②",
+        "第3格",
+        "改（便宜）"
+       ],
+       "shot": "s1_st1",
+       "sec": "1",
+       "sub": "物理",
+       "sev": "重出",
+       "gate": "②",
+       "evidence": "第3格",
+       "fix": "改（便宜）"
+      },
+      {
+       "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+       "cells": [
+        "s2_st1",
+        "2",
+        "物理",
+        "记录",
+        "④",
+        "第4格",
+        "改"
+       ],
+       "shot": "s2_st1",
+       "sec": "2",
+       "sub": "物理",
+       "sev": "记录",
+       "gate": "④",
+       "evidence": "第4格",
+       "fix": "改"
+      }
+     ],
+     "report_sha": "e8506be20b379873f7dd3e939c68fde4bdc40676534e7d33e116e538899b9663"
+    }
+   },
+   "ticked_at": "2026-11-08T15:25:00",
+   "scores": {
+    "D1": {
+     "name": "说得完",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 说得完",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 说得完",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "D2": {
+     "name": "节拍对位",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 节拍对位",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 节拍对位",
+     "verdict": "抽查",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": "回到首帧第3格核过，证据成立"
+    },
+    "D3": {
+     "name": "外语与专名",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 外语与专名",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 外语与专名",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "D4": {
+     "name": "台词逻辑",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 台词逻辑",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 台词逻辑",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "D5": {
+     "name": "说话人",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 说话人",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 说话人",
+     "verdict": "抽查",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": "回到首帧第3格核过，证据成立"
+    },
+    "D6": {
+     "name": "听得清",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 听得清",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 听得清",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    }
+   },
+   "disputes": [],
+   "audits": [
+    "D2",
+    "D5"
+   ],
+   "reconciled_at": "2026-11-08T15:25:00",
+   "finding_rows": [
+    {
+     "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+     "cells": [
+      "s1_st1",
+      "1",
+      "物理",
+      "重出",
+      "②",
+      "第3格",
+      "改（便宜）"
+     ],
+     "shot": "s1_st1",
+     "sec": "1",
+     "sub": "物理",
+     "sev": "重出",
+     "gate": "②",
+     "evidence": "第3格",
+     "fix": "改（便宜）",
+     "from": [
+      "a",
+      "b"
+     ]
+    },
+    {
+     "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+     "cells": [
+      "s2_st1",
+      "2",
+      "物理",
+      "记录",
+      "④",
+      "第4格",
+      "改"
+     ],
+     "shot": "s2_st1",
+     "sec": "2",
+     "sub": "物理",
+     "sev": "记录",
+     "gate": "④",
+     "evidence": "第4格",
+     "fix": "改",
+     "from": [
+      "a",
+      "b"
+     ]
+    }
+   ],
+   "clean": false,
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "D2",
+     "D5"
+    ],
+    "prompt": "items/dialogue__judge.md",
+    "report": "reports/dialogue__judge.md",
+    "agents": [],
+    "by": "claude-opus-5-5/dialogue__judge",
+    "at": "2026-11-08T15:25:01",
+    "ruling": {
+     "D2": {
+      "score": 3,
+      "evidence": "回到首帧第3格核过，证据成立"
+     },
+     "D5": {
+      "score": 3,
+      "evidence": "回到首帧第3格核过，证据成立"
+     }
+    },
+    "report_sha": "8959fa7b6a07dbabb2c58b025be2883bdec4eb83d5aa4f704145089e17be9de4"
+   },
+   "final_scores": {
+    "D1": 3,
+    "D2": 3,
+    "D3": 3,
+    "D4": 3,
+    "D5": 3,
+    "D6": 3
+   },
+   "must_result": {
+    "D1": "✓",
+    "D2": "✓",
+    "D3": "✓",
+    "D4": "✓",
+    "D5": "✓",
+    "D6": "✓"
+   },
+   "done_at": "2026-11-08T15:25:01"
+  },
+  {
+   "id": "native_ear",
+   "law": "native_ear",
+   "law_name": "母语听感",
+   "color": "#0f766e",
+   "scope": [
+    "s1",
+    "s2"
+   ],
+   "checks": "以英语母语观众（美国、英国、加拿大、澳洲的年轻 vlog 观众）的耳朵逐句听 Riley 的英文台词：真人会不会这么说；有没有中文直译的句式、电报式罗列、视角或时态说不通（她是穿越者）、讲解腔、指代不清（说 this 却没东西可看）、观众不懂的词、没落地的笑点；每句给自然 / 有点怪 / 很怪的判断和更顺的改写（不更长）。",
+   "how": "只用 materials/lines.md；尽量换一个模型审（`codex exec`），和作者、和「台词」审稿人不是同一个模型；改写保持每秒 ≤2.8 词、前后呼应一致。",
+   "blind": true,
+   "blind_note": "**你是英语母语观众，盲审：只读 `materials/lines.md`（全集台词按播放顺序，附一句画面说明），不要读 spec.md、story、分镜、prompt 或别的审稿报告。**",
+   "prefer_model": "codex",
+   "must": [
+    {
+     "id": "N1",
+     "text": "自然度：逐句：母语观众听着自然 / 有点怪 / 很怪"
+    },
+    {
+     "id": "N2",
+     "text": "别扭原因：直译句式、电报式、时态或视角、讲解腔、指代不清、生僻词"
+    },
+    {
+     "id": "N3",
+     "text": "笑点与回收：笑点母语观众接得住；开场目标与结尾、dextram 回收得上"
+    },
+    {
+     "id": "N4",
+     "text": "人设口吻：像一个二十多岁、亲切的旅行博主在说话，前后口吻一致"
+    },
+    {
+     "id": "N5",
+     "text": "改写：每句「有点怪 / 很怪」都给不更长的改写"
+    },
+    {
+     "id": "N6",
+     "text": "最别扭的 5 句：列出并排序"
+    }
+   ],
+   "status": "done",
+   "report": "reconcile/native_ear.md",
+   "prompt": "items/native_ear.md",
+   "what": "用英语母语观众的耳朵逐句听 Riley 的英文：真人会不会这么说。盲审，只看台词表，尽量换另一个模型审。",
+   "problem": "台词「语法对、母语者听着怪」：中文直译句式、电报式罗列、穿越者视角说不通、讲解腔。原来的台词审稿人没抓到，用户指出后加的。",
+   "method": [
+    "只读 lines.md，按播放顺序逐句出声读",
+    "每句给结论、原因和改写",
+    "最后通读一遍看口吻与回收"
+   ],
+   "model_why": "英语语感：母语观众听着自然不自然",
+   "rubric": [
+    {
+     "id": "N1",
+     "name": "自然度",
+     "question": "逐句：母语观众听着自然 / 有点怪 / 很怪",
+     "critical": false
+    },
+    {
+     "id": "N2",
+     "name": "别扭原因",
+     "question": "直译句式、电报式、时态或视角、讲解腔、指代不清、生僻词",
+     "critical": false
+    },
+    {
+     "id": "N3",
+     "name": "笑点与回收",
+     "question": "笑点母语观众接得住；开场目标与结尾、dextram 回收得上",
+     "critical": false
+    },
+    {
+     "id": "N4",
+     "name": "人设口吻",
+     "question": "像一个二十多岁、亲切的旅行博主在说话，前后口吻一致",
+     "critical": false
+    },
+    {
+     "id": "N5",
+     "name": "改写",
+     "question": "每句「有点怪 / 很怪」都给不更长的改写",
+     "critical": false
+    },
+    {
+     "id": "N6",
+     "name": "最别扭的 5 句",
+     "question": "列出并排序",
+     "critical": false
+    }
+   ],
+   "ticked_by": "claude-opus-5-5/native_ear__a + gpt-6-astra/native_ear__b",
+   "ticked_by_list": [
+    "claude-opus-5-5/native_ear__a",
+    "gpt-6-astra/native_ear__b"
+   ],
+   "findings": {
+    "重出": 1,
+    "可剪": 0,
+    "记录": 1,
+    "存疑": 0
+   },
+   "rows": 2,
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/native_ear__a.md",
+     "prompt": "items/native_ear__a.md",
+     "agents": [],
+     "ticked_at": "2026-11-08T15:25:01",
+     "by": "claude-opus-5-5/native_ear__a",
+     "scores": {
+      "N1": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 自然度"
+      },
+      "N2": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 别扭原因"
+      },
+      "N3": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 笑点与回收"
+      },
+      "N4": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 人设口吻"
+      },
+      "N5": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 改写"
+      },
+      "N6": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 最别扭的 5 句"
+      }
+     },
+     "findings": {
+      "重出": 1,
+      "可剪": 0,
+      "记录": 1,
+      "存疑": 0
+     },
+     "rows": 2,
+     "clean": false,
+     "finding_rows": [
+      {
+       "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+       "cells": [
+        "s1_st1",
+        "1",
+        "物理",
+        "重出",
+        "②",
+        "第3格",
+        "改（便宜）"
+       ],
+       "shot": "s1_st1",
+       "sec": "1",
+       "sub": "物理",
+       "sev": "重出",
+       "gate": "②",
+       "evidence": "第3格",
+       "fix": "改（便宜）"
+      },
+      {
+       "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+       "cells": [
+        "s2_st1",
+        "2",
+        "物理",
+        "记录",
+        "④",
+        "第4格",
+        "改"
+       ],
+       "shot": "s2_st1",
+       "sec": "2",
+       "sub": "物理",
+       "sev": "记录",
+       "gate": "④",
+       "evidence": "第4格",
+       "fix": "改"
+      }
+     ],
+     "report_sha": "ecc9fdf14c3d7e76546ae1639e106e0c8521a67edcab64a29b78b43146b29bcc"
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "gpt-6-astra",
+     "status": "done",
+     "report": "reports/native_ear__b.md",
+     "prompt": "items/native_ear__b.md",
+     "agents": [],
+     "ticked_at": "2026-11-08T15:25:01",
+     "by": "gpt-6-astra/native_ear__b",
+     "scores": {
+      "N1": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 自然度"
+      },
+      "N2": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 别扭原因"
+      },
+      "N3": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 笑点与回收"
+      },
+      "N4": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 人设口吻"
+      },
+      "N5": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 改写"
+      },
+      "N6": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 最别扭的 5 句"
+      }
+     },
+     "findings": {
+      "重出": 1,
+      "可剪": 0,
+      "记录": 1,
+      "存疑": 0
+     },
+     "rows": 2,
+     "clean": false,
+     "finding_rows": [
+      {
+       "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+       "cells": [
+        "s1_st1",
+        "1",
+        "物理",
+        "重出",
+        "②",
+        "第3格",
+        "改（便宜）"
+       ],
+       "shot": "s1_st1",
+       "sec": "1",
+       "sub": "物理",
+       "sev": "重出",
+       "gate": "②",
+       "evidence": "第3格",
+       "fix": "改（便宜）"
+      },
+      {
+       "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+       "cells": [
+        "s2_st1",
+        "2",
+        "物理",
+        "记录",
+        "④",
+        "第4格",
+        "改"
+       ],
+       "shot": "s2_st1",
+       "sec": "2",
+       "sub": "物理",
+       "sev": "记录",
+       "gate": "④",
+       "evidence": "第4格",
+       "fix": "改"
+      }
+     ],
+     "report_sha": "ecc9fdf14c3d7e76546ae1639e106e0c8521a67edcab64a29b78b43146b29bcc"
+    }
+   },
+   "ticked_at": "2026-11-08T15:25:01",
+   "scores": {
+    "N1": {
+     "name": "自然度",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 自然度",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 自然度",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "N2": {
+     "name": "别扭原因",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 别扭原因",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 别扭原因",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "N3": {
+     "name": "笑点与回收",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 笑点与回收",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 笑点与回收",
+     "verdict": "抽查",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": "回到首帧第3格核过，证据成立"
+    },
+    "N4": {
+     "name": "人设口吻",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 人设口吻",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 人设口吻",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "N5": {
+     "name": "改写",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 改写",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 改写",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "N6": {
+     "name": "最别扭的 5 句",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 最别扭的 5 句",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 最别扭的 5 句",
+     "verdict": "抽查",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": "回到首帧第3格核过，证据成立"
+    }
+   },
+   "disputes": [],
+   "audits": [
+    "N3",
+    "N6"
+   ],
+   "reconciled_at": "2026-11-08T15:25:01",
+   "finding_rows": [
+    {
+     "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+     "cells": [
+      "s1_st1",
+      "1",
+      "物理",
+      "重出",
+      "②",
+      "第3格",
+      "改（便宜）"
+     ],
+     "shot": "s1_st1",
+     "sec": "1",
+     "sub": "物理",
+     "sev": "重出",
+     "gate": "②",
+     "evidence": "第3格",
+     "fix": "改（便宜）",
+     "from": [
+      "a",
+      "b"
+     ]
+    },
+    {
+     "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+     "cells": [
+      "s2_st1",
+      "2",
+      "物理",
+      "记录",
+      "④",
+      "第4格",
+      "改"
+     ],
+     "shot": "s2_st1",
+     "sec": "2",
+     "sub": "物理",
+     "sev": "记录",
+     "gate": "④",
+     "evidence": "第4格",
+     "fix": "改",
+     "from": [
+      "a",
+      "b"
+     ]
+    }
+   ],
+   "clean": false,
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "N3",
+     "N6"
+    ],
+    "prompt": "items/native_ear__judge.md",
+    "report": "reports/native_ear__judge.md",
+    "agents": [],
+    "by": "claude-opus-5-5/native_ear__judge",
+    "at": "2026-11-08T15:25:01",
+    "ruling": {
+     "N3": {
+      "score": 3,
+      "evidence": "回到首帧第3格核过，证据成立"
+     },
+     "N6": {
+      "score": 3,
+      "evidence": "回到首帧第3格核过，证据成立"
+     }
+    },
+    "report_sha": "2e89238ec5de2779fedec0826c3de051baa75f8d077dfe6c40ba4ee66ab18cc9"
+   },
+   "final_scores": {
+    "N1": 3,
+    "N2": 3,
+    "N3": 3,
+    "N4": 3,
+    "N5": 3,
+    "N6": 3
+   },
+   "must_result": {
+    "N1": "✓",
+    "N2": "✓",
+    "N3": "✓",
+    "N4": "✓",
+    "N5": "✓",
+    "N6": "✓"
+   },
+   "done_at": "2026-11-08T15:25:01"
+  },
+  {
+   "id": "era",
+   "law": "era",
+   "law_name": "时代与世界观",
+   "color": "#8a6d1f",
+   "scope": [
+    "s1",
+    "s2"
+   ],
+   "checks": "时代可信度（建筑、街道、器物、服装发型、食物；有无现代物件）；系列禁区（以 bible 为准，规则源本身有矛盾也要报）；画面不出现相机、手机、自拍杆、文字；主角服装是否始终符合设定。",
+   "how": "以 scene1.jpg 为主，疑点看 sheet1/sheet4 或自己放大；读 bible 与考据资料；同时检查分镜与 prompt 里会诱发问题的写法。",
+   "blind": false,
+   "must": [
+    {
+     "id": "E1",
+     "text": "器物：器物是公元 75 年庞贝有的（陶灯、双耳罐、铜币），没有现代或中世纪器物"
+    },
+    {
+     "id": "E2",
+     "text": "建筑与材质：抹灰、红瓦、玄武岩石板、凝灰岩；没有城垛、百叶窗、玻璃格窗、托斯卡纳农舍"
+    },
+    {
+     "id": "E3",
+     "text": "服饰与发型：当地人 tunica/palla、男人刮脸；主持人现代旅行装且无首饰"
+    },
+    {
+     "id": "E4",
+     "text": "系列禁区：画面不出现烟柱、白烟、冒白气的山；prompt 不写火山词；维苏威不提"
+    },
+    {
+     "id": "E5",
+     "text": "文字：画面里没有可读的文字、字母、数字（墙、船、招牌、钱币）"
+    },
+    {
+     "id": "E6",
+     "text": "史实一致：台词和画面里的史实与考据一致（地震年份、浴场时间、物价、尿税）"
+    },
+    {
+     "id": "E7",
+     "text": "规则源：场景卡、道具卡、考据负面词里没有和以上冲突的写法"
+    }
+   ],
+   "status": "done",
+   "report": "reconcile/era.md",
+   "prompt": "items/era.md",
+   "what": "画面和台词符合公元 75 年的庞贝：器物、建筑、服饰、发型都对；遵守系列禁区（画面不出现烟柱、维苏威不提）；不出现现代物件和文字。",
+   "problem": "穿越剧最怕出戏：中世纪小镇、百叶窗、玻璃灯罩、耳环、相机，或开场城上一缕白烟被当成火山预兆。",
+   "method": [
+    "列出首帧和场景图里看得见的所有器物、建筑构件、衣着，逐项判断年代",
+    "放大找文字和类字母的涂痕",
+    "读 prompt 和卡片找火山词、禁区词",
+    "台词里的史实对照考据 dossier"
+   ],
+   "model_why": "看图认器物建筑服饰，加史实知识",
+   "rubric": [
+    {
+     "id": "E1",
+     "name": "器物",
+     "question": "器物是公元 75 年庞贝有的（陶灯、双耳罐、铜币），没有现代或中世纪器物",
+     "critical": false
+    },
+    {
+     "id": "E2",
+     "name": "建筑与材质",
+     "question": "抹灰、红瓦、玄武岩石板、凝灰岩；没有城垛、百叶窗、玻璃格窗、托斯卡纳农舍",
+     "critical": false
+    },
+    {
+     "id": "E3",
+     "name": "服饰与发型",
+     "question": "当地人 tunica/palla、男人刮脸；主持人现代旅行装且无首饰",
+     "critical": false
+    },
+    {
+     "id": "E4",
+     "name": "系列禁区",
+     "question": "画面不出现烟柱、白烟、冒白气的山；prompt 不写火山词；维苏威不提",
+     "critical": false
+    },
+    {
+     "id": "E5",
+     "name": "文字",
+     "question": "画面里没有可读的文字、字母、数字（墙、船、招牌、钱币）",
+     "critical": false
+    },
+    {
+     "id": "E6",
+     "name": "史实一致",
+     "question": "台词和画面里的史实与考据一致（地震年份、浴场时间、物价、尿税）",
+     "critical": false
+    },
+    {
+     "id": "E7",
+     "name": "规则源",
+     "question": "场景卡、道具卡、考据负面词里没有和以上冲突的写法",
+     "critical": false
+    }
+   ],
+   "ticked_by": "claude-opus-5-5/era__a + gpt-6-astra/era__b",
+   "ticked_by_list": [
+    "claude-opus-5-5/era__a",
+    "gpt-6-astra/era__b"
+   ],
+   "findings": {
+    "重出": 1,
+    "可剪": 0,
+    "记录": 1,
+    "存疑": 0
+   },
+   "rows": 2,
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-opus-5-5",
+     "status": "done",
+     "report": "reports/era__a.md",
+     "prompt": "items/era__a.md",
+     "agents": [],
+     "ticked_at": "2026-11-08T15:25:01",
+     "by": "claude-opus-5-5/era__a",
+     "scores": {
+      "E1": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 器物"
+      },
+      "E2": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 建筑与材质"
+      },
+      "E3": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 服饰与发型"
+      },
+      "E4": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 系列禁区"
+      },
+      "E5": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 文字"
+      },
+      "E6": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 史实一致"
+      },
+      "E7": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 规则源"
+      }
+     },
+     "findings": {
+      "重出": 1,
+      "可剪": 0,
+      "记录": 1,
+      "存疑": 0
+     },
+     "rows": 2,
+     "clean": false,
+     "finding_rows": [
+      {
+       "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+       "cells": [
+        "s1_st1",
+        "1",
+        "物理",
+        "重出",
+        "②",
+        "第3格",
+        "改（便宜）"
+       ],
+       "shot": "s1_st1",
+       "sec": "1",
+       "sub": "物理",
+       "sev": "重出",
+       "gate": "②",
+       "evidence": "第3格",
+       "fix": "改（便宜）"
+      },
+      {
+       "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+       "cells": [
+        "s2_st1",
+        "2",
+        "物理",
+        "记录",
+        "④",
+        "第4格",
+        "改"
+       ],
+       "shot": "s2_st1",
+       "sec": "2",
+       "sub": "物理",
+       "sev": "记录",
+       "gate": "④",
+       "evidence": "第4格",
+       "fix": "改"
+      }
+     ],
+     "report_sha": "2b10dcb0ff7cf09abead6858013cc166fe2dde899c6f2eddaa9f85d596f54004"
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "gpt-6-astra",
+     "status": "done",
+     "report": "reports/era__b.md",
+     "prompt": "items/era__b.md",
+     "agents": [],
+     "ticked_at": "2026-11-08T15:25:01",
+     "by": "gpt-6-astra/era__b",
+     "scores": {
+      "E1": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 器物"
+      },
+      "E2": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 建筑与材质"
+      },
+      "E3": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 服饰与发型"
+      },
+      "E4": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 系列禁区"
+      },
+      "E5": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 文字"
+      },
+      "E6": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 史实一致"
+      },
+      "E7": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 规则源"
+      }
+     },
+     "findings": {
+      "重出": 1,
+      "可剪": 0,
+      "记录": 1,
+      "存疑": 0
+     },
+     "rows": 2,
+     "clean": false,
+     "finding_rows": [
+      {
+       "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+       "cells": [
+        "s1_st1",
+        "1",
+        "物理",
+        "重出",
+        "②",
+        "第3格",
+        "改（便宜）"
+       ],
+       "shot": "s1_st1",
+       "sec": "1",
+       "sub": "物理",
+       "sev": "重出",
+       "gate": "②",
+       "evidence": "第3格",
+       "fix": "改（便宜）"
+      },
+      {
+       "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+       "cells": [
+        "s2_st1",
+        "2",
+        "物理",
+        "记录",
+        "④",
+        "第4格",
+        "改"
+       ],
+       "shot": "s2_st1",
+       "sec": "2",
+       "sub": "物理",
+       "sev": "记录",
+       "gate": "④",
+       "evidence": "第4格",
+       "fix": "改"
+      }
+     ],
+     "report_sha": "2b10dcb0ff7cf09abead6858013cc166fe2dde899c6f2eddaa9f85d596f54004"
+    }
+   },
+   "ticked_at": "2026-11-08T15:25:01",
+   "scores": {
+    "E1": {
+     "name": "器物",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 器物",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 器物",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "E2": {
+     "name": "建筑与材质",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 建筑与材质",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 建筑与材质",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "E3": {
+     "name": "服饰与发型",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 服饰与发型",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 服饰与发型",
+     "verdict": "抽查",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": "回到首帧第3格核过，证据成立"
+    },
+    "E4": {
+     "name": "系列禁区",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 系列禁区",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 系列禁区",
+     "verdict": "抽查",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": "回到首帧第3格核过，证据成立"
+    },
+    "E5": {
+     "name": "文字",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 文字",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 文字",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "E6": {
+     "name": "史实一致",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 史实一致",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 史实一致",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "E7": {
+     "name": "规则源",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 规则源",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 规则源",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    }
+   },
+   "disputes": [],
+   "audits": [
+    "E3",
+    "E4"
+   ],
+   "reconciled_at": "2026-11-08T15:25:01",
+   "finding_rows": [
+    {
+     "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+     "cells": [
+      "s1_st1",
+      "1",
+      "物理",
+      "重出",
+      "②",
+      "第3格",
+      "改（便宜）"
+     ],
+     "shot": "s1_st1",
+     "sec": "1",
+     "sub": "物理",
+     "sev": "重出",
+     "gate": "②",
+     "evidence": "第3格",
+     "fix": "改（便宜）",
+     "from": [
+      "a",
+      "b"
+     ]
+    },
+    {
+     "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+     "cells": [
+      "s2_st1",
+      "2",
+      "物理",
+      "记录",
+      "④",
+      "第4格",
+      "改"
+     ],
+     "shot": "s2_st1",
+     "sec": "2",
+     "sub": "物理",
+     "sev": "记录",
+     "gate": "④",
+     "evidence": "第4格",
+     "fix": "改",
+     "from": [
+      "a",
+      "b"
+     ]
+    }
+   ],
+   "clean": false,
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "E3",
+     "E4"
+    ],
+    "prompt": "items/era__judge.md",
+    "report": "reports/era__judge.md",
+    "agents": [],
+    "by": "claude-opus-5-5/era__judge",
+    "at": "2026-11-08T15:25:01",
+    "ruling": {
+     "E3": {
+      "score": 3,
+      "evidence": "回到首帧第3格核过，证据成立"
+     },
+     "E4": {
+      "score": 3,
+      "evidence": "回到首帧第3格核过，证据成立"
+     }
+    },
+    "report_sha": "1e9e6e79ec1b695655939254a1887cf579157426955ac7a1f28c6f728364146e"
+   },
+   "final_scores": {
+    "E1": 3,
+    "E2": 3,
+    "E3": 3,
+    "E4": 3,
+    "E5": 3,
+    "E6": 3,
+    "E7": 3
+   },
+   "must_result": {
+    "E1": "✓",
+    "E2": "✓",
+    "E3": "✓",
+    "E4": "✓",
+    "E5": "✓",
+    "E6": "✓",
+    "E7": "✓"
+   },
+   "done_at": "2026-11-08T15:25:01"
+  },
+  {
+   "id": "framing",
+   "law": "framing",
+   "law_name": "镜头规格",
+   "color": "#476070",
+   "scope": [
+    "s1",
+    "s2"
+   ],
+   "checks": "节拍逐拍对时间（早了晚了多少）；景别、机位方向、运镜、自拍还是他拍、一镜到底；画内人数；镜组条里模型自己切镜的位置与设计分界；剪辑区间有没有切掉必要拍点；节拍是否过满、景别与动作是否冲突；镜组板与俯视图是否一致（模型会照板子出）。",
+   "how": "把 spec.md 的节拍换算到成片用的区间，对照 sheet4.jpg 的时间码。",
+   "blind": false,
+   "must": [
+    {
+     "id": "F1",
+     "text": "景别与人物大小：按站位图距离与焦距算出的人物画高，和首帧实测相差不超过约 25%"
+    },
+    {
+     "id": "F2",
+     "text": "机位与朝向：站位图的机位方向、首帧的视角、文字的「镜头」三者一致"
+    },
+    {
+     "id": "F3",
+     "text": "画面位置：人和关键道具在画面里的左右上下位置，三处一致"
+    },
+    {
+     "id": "F4",
+     "text": "节拍秒数：动作节拍的秒数排得下（走多远、几秒到），没有挤压"
+    },
+    {
+     "id": "F5",
+     "text": "画内人数：写了几个人就几个人（含 extras），首帧一致"
+    },
+    {
+     "id": "F6",
+     "text": "轴线：同一场前后镜头的左右关系不跳轴"
+    },
+    {
+     "id": "F7",
+     "text": "一镜到底：单镜内不需要切镜；镜头运动写清且做得到"
+    }
+   ],
+   "status": "done",
+   "report": "reconcile/framing.md",
+   "prompt": "items/framing.md",
+   "what": "镜头规格：景别、机位、取景、人在画面里多大、节拍的秒数、画内人数，都和分镜、俯视站位图、首帧三者一致。",
+   "problem": "模型会照着首帧和故事板出：首帧画错一格、站位图和首帧对不上，整条视频就跟着错，或中途重新构图。",
+   "method": [
+    "从 overhead.toml 取机位、焦距、人物坐标，算出人物应有的画高和画面位置",
+    "在首帧上实测人物画高和位置，算偏差",
+    "核对机位朝向与首帧视角",
+    "按节拍和走位速度算时间够不够"
+   ],
+   "model_why": "看图 + 几何计算：按站位图算人在画面里多大、在哪，和首帧实测比",
+   "rubric": [
+    {
+     "id": "F1",
+     "name": "景别与人物大小",
+     "question": "按站位图距离与焦距算出的人物画高，和首帧实测相差不超过约 25%",
+     "critical": false
+    },
+    {
+     "id": "F2",
+     "name": "机位与朝向",
+     "question": "站位图的机位方向、首帧的视角、文字的「镜头」三者一致",
+     "critical": false
+    },
+    {
+     "id": "F3",
+     "name": "画面位置",
+     "question": "人和关键道具在画面里的左右上下位置，三处一致",
+     "critical": false
+    },
+    {
+     "id": "F4",
+     "name": "节拍秒数",
+     "question": "动作节拍的秒数排得下（走多远、几秒到），没有挤压",
+     "critical": false
+    },
+    {
+     "id": "F5",
+     "name": "画内人数",
+     "question": "写了几个人就几个人（含 extras），首帧一致",
+     "critical": false
+    },
+    {
+     "id": "F6",
+     "name": "轴线",
+     "question": "同一场前后镜头的左右关系不跳轴",
+     "critical": false
+    },
+    {
+     "id": "F7",
+     "name": "一镜到底",
+     "question": "单镜内不需要切镜；镜头运动写清且做得到",
+     "critical": false
+    }
+   ],
+   "ticked_by": "claude-opus-5-5/framing__a + gpt-6-astra/framing__b",
+   "ticked_by_list": [
+    "claude-opus-5-5/framing__a",
+    "gpt-6-astra/framing__b"
+   ],
+   "findings": {
+    "重出": 1,
+    "可剪": 0,
+    "记录": 1,
+    "存疑": 0
+   },
+   "rows": 2,
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-opus-5-5",
+     "status": "done",
+     "report": "reports/framing__a.md",
+     "prompt": "items/framing__a.md",
+     "agents": [],
+     "ticked_at": "2026-11-08T15:25:01",
+     "by": "claude-opus-5-5/framing__a",
+     "scores": {
+      "F1": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 景别与人物大小"
+      },
+      "F2": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 机位与朝向"
+      },
+      "F3": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 画面位置"
+      },
+      "F4": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 节拍秒数"
+      },
+      "F5": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 画内人数"
+      },
+      "F6": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 轴线"
+      },
+      "F7": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 一镜到底"
+      }
+     },
+     "findings": {
+      "重出": 1,
+      "可剪": 0,
+      "记录": 1,
+      "存疑": 0
+     },
+     "rows": 2,
+     "clean": false,
+     "finding_rows": [
+      {
+       "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+       "cells": [
+        "s1_st1",
+        "1",
+        "物理",
+        "重出",
+        "②",
+        "第3格",
+        "改（便宜）"
+       ],
+       "shot": "s1_st1",
+       "sec": "1",
+       "sub": "物理",
+       "sev": "重出",
+       "gate": "②",
+       "evidence": "第3格",
+       "fix": "改（便宜）"
+      },
+      {
+       "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+       "cells": [
+        "s2_st1",
+        "2",
+        "物理",
+        "记录",
+        "④",
+        "第4格",
+        "改"
+       ],
+       "shot": "s2_st1",
+       "sec": "2",
+       "sub": "物理",
+       "sev": "记录",
+       "gate": "④",
+       "evidence": "第4格",
+       "fix": "改"
+      }
+     ],
+     "report_sha": "be0f7842b10fcf070854e9750be237b02c618b4fc6a86261be0a7aa92bdd28b2"
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "gpt-6.1-sol",
+     "status": "done",
+     "report": "reports/framing__b.md",
+     "prompt": "items/framing__b.md",
+     "agents": [],
+     "ticked_at": "2026-11-08T15:25:01",
+     "by": "gpt-6-astra/framing__b",
+     "scores": {
+      "F1": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 景别与人物大小"
+      },
+      "F2": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 机位与朝向"
+      },
+      "F3": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 画面位置"
+      },
+      "F4": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 节拍秒数"
+      },
+      "F5": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 画内人数"
+      },
+      "F6": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 轴线"
+      },
+      "F7": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 一镜到底"
+      }
+     },
+     "findings": {
+      "重出": 1,
+      "可剪": 0,
+      "记录": 1,
+      "存疑": 0
+     },
+     "rows": 2,
+     "clean": false,
+     "finding_rows": [
+      {
+       "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+       "cells": [
+        "s1_st1",
+        "1",
+        "物理",
+        "重出",
+        "②",
+        "第3格",
+        "改（便宜）"
+       ],
+       "shot": "s1_st1",
+       "sec": "1",
+       "sub": "物理",
+       "sev": "重出",
+       "gate": "②",
+       "evidence": "第3格",
+       "fix": "改（便宜）"
+      },
+      {
+       "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+       "cells": [
+        "s2_st1",
+        "2",
+        "物理",
+        "记录",
+        "④",
+        "第4格",
+        "改"
+       ],
+       "shot": "s2_st1",
+       "sec": "2",
+       "sub": "物理",
+       "sev": "记录",
+       "gate": "④",
+       "evidence": "第4格",
+       "fix": "改"
+      }
+     ],
+     "report_sha": "be0f7842b10fcf070854e9750be237b02c618b4fc6a86261be0a7aa92bdd28b2"
+    }
+   },
+   "ticked_at": "2026-11-08T15:25:01",
+   "scores": {
+    "F1": {
+     "name": "景别与人物大小",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 景别与人物大小",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 景别与人物大小",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "F2": {
+     "name": "机位与朝向",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 机位与朝向",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 机位与朝向",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "F3": {
+     "name": "画面位置",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 画面位置",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 画面位置",
+     "verdict": "抽查",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": "回到首帧第3格核过，证据成立"
+    },
+    "F4": {
+     "name": "节拍秒数",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 节拍秒数",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 节拍秒数",
+     "verdict": "抽查",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": "回到首帧第3格核过，证据成立"
+    },
+    "F5": {
+     "name": "画内人数",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 画内人数",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 画内人数",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "F6": {
+     "name": "轴线",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 轴线",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 轴线",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "F7": {
+     "name": "一镜到底",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 一镜到底",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 一镜到底",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    }
+   },
+   "disputes": [],
+   "audits": [
+    "F3",
+    "F4"
+   ],
+   "reconciled_at": "2026-11-08T15:25:01",
+   "finding_rows": [
+    {
+     "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+     "cells": [
+      "s1_st1",
+      "1",
+      "物理",
+      "重出",
+      "②",
+      "第3格",
+      "改（便宜）"
+     ],
+     "shot": "s1_st1",
+     "sec": "1",
+     "sub": "物理",
+     "sev": "重出",
+     "gate": "②",
+     "evidence": "第3格",
+     "fix": "改（便宜）",
+     "from": [
+      "a",
+      "b"
+     ]
+    },
+    {
+     "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+     "cells": [
+      "s2_st1",
+      "2",
+      "物理",
+      "记录",
+      "④",
+      "第4格",
+      "改"
+     ],
+     "shot": "s2_st1",
+     "sec": "2",
+     "sub": "物理",
+     "sev": "记录",
+     "gate": "④",
+     "evidence": "第4格",
+     "fix": "改",
+     "from": [
+      "a",
+      "b"
+     ]
+    }
+   ],
+   "clean": false,
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "F3",
+     "F4"
+    ],
+    "prompt": "items/framing__judge.md",
+    "report": "reports/framing__judge.md",
+    "agents": [],
+    "by": "claude-opus-5-5/framing__judge",
+    "at": "2026-11-08T15:25:01",
+    "ruling": {
+     "F3": {
+      "score": 3,
+      "evidence": "回到首帧第3格核过，证据成立"
+     },
+     "F4": {
+      "score": 3,
+      "evidence": "回到首帧第3格核过，证据成立"
+     }
+    },
+    "report_sha": "677cee22934f5902142264330f3223be441777cb87f3e4f57493981801206f25"
+   },
+   "final_scores": {
+    "F1": 3,
+    "F2": 3,
+    "F3": 3,
+    "F4": 3,
+    "F5": 3,
+    "F6": 3,
+    "F7": 3
+   },
+   "must_result": {
+    "F1": "✓",
+    "F2": "✓",
+    "F3": "✓",
+    "F4": "✓",
+    "F5": "✓",
+    "F6": "✓",
+    "F7": "✓"
+   },
+   "done_at": "2026-11-08T15:25:01"
+  },
+  {
+   "id": "prompt_text",
+   "law": "prompt_text",
+   "law_name": "Prompt 文本",
+   "color": "#5b6b2a",
+   "scope": [
+    "s1",
+    "s2"
+   ],
+   "checks": "送给生成模型的文字与参考：过期与图文矛盾；物理上做不到的指令（手数、道具来源）；同一 prompt 内前后矛盾或歧义；节拍过满；镜组 prompt 的镜头切换与分界；系列硬规则与负面词是否写全、有无诱发禁区的词；规则源（bible、场景卡、考据）与 prompt 是否一致。最后给「重出前必须改」清单。",
+   "how": "读 filming.json、prompts.json、各资料包 prompt.txt 与 manifest.json、镜组板与首帧 prompt、人物卡、bible；只在需要验证时看成片。",
+   "blind": false,
+   "must": [
+    {
+     "id": "T1",
+     "text": "自相矛盾：正文要的东西没有被负面词禁掉；同一 prompt 内前后一致"
+    },
+    {
+     "id": "T2",
+     "text": "否定句：正文里没有「没有 X」「看不到 X」这类会招来 X 的否定句"
+    },
+    {
+     "id": "T3",
+     "text": "过期描述：人物、场景、道具描述是现行版本（发色、造型、卡片）"
+    },
+    {
+     "id": "T4",
+     "text": "图文一致：文字和挂的首帧、站位图、场景图一致"
+    },
+    {
+     "id": "T5",
+     "text": "混入别镜：「本场」「场景」行没有把别的镜头的内容带进来"
+    },
+    {
+     "id": "T6",
+     "text": "参考清单：参考图齐全、顺序与用法说明对得上，没有多余或缺失"
+    },
+    {
+     "id": "T7",
+     "text": "长度与重点：prompt 不超长，关键动作写在前面、写得清楚"
+    }
+   ],
+   "status": "done",
+   "report": "reconcile/prompt_text.md",
+   "prompt": "items/prompt_text.md",
+   "what": "送给视频模型的 prompt 文字本身：有没有自相矛盾（正文要的东西负面词里禁了）、否定句、过期描述、图文不一致、别镜的内容混进来。",
+   "problem": "prompt 是模型唯一看到的文字：写错一个词，模型就照着错。例如负面词禁了「木桶」、正文却要拉一桶灰浆。",
+   "method": [
+    "逐个读编译后的 prompt.txt 全文",
+    "正文与负面词逐词交叉比对",
+    "对照挂的图看图文是否一致",
+    "对照卡片看描述是否过期"
+   ],
+   "model_why": "逐行读 prompt 找自相矛盾、过期描述、图文不一致",
+   "rubric": [
+    {
+     "id": "T1",
+     "name": "自相矛盾",
+     "question": "正文要的东西没有被负面词禁掉；同一 prompt 内前后一致",
+     "critical": false
+    },
+    {
+     "id": "T2",
+     "name": "否定句",
+     "question": "正文里没有「没有 X」「看不到 X」这类会招来 X 的否定句",
+     "critical": false
+    },
+    {
+     "id": "T3",
+     "name": "过期描述",
+     "question": "人物、场景、道具描述是现行版本（发色、造型、卡片）",
+     "critical": false
+    },
+    {
+     "id": "T4",
+     "name": "图文一致",
+     "question": "文字和挂的首帧、站位图、场景图一致",
+     "critical": false
+    },
+    {
+     "id": "T5",
+     "name": "混入别镜",
+     "question": "「本场」「场景」行没有把别的镜头的内容带进来",
+     "critical": false
+    },
+    {
+     "id": "T6",
+     "name": "参考清单",
+     "question": "参考图齐全、顺序与用法说明对得上，没有多余或缺失",
+     "critical": false
+    },
+    {
+     "id": "T7",
+     "name": "长度与重点",
+     "question": "prompt 不超长，关键动作写在前面、写得清楚",
+     "critical": false
+    }
+   ],
+   "ticked_by": "claude-opus-5-5/prompt_text__a + gpt-6-astra/prompt_text__b",
+   "ticked_by_list": [
+    "claude-opus-5-5/prompt_text__a",
+    "gpt-6-astra/prompt_text__b"
+   ],
+   "findings": {
+    "重出": 1,
+    "可剪": 0,
+    "记录": 1,
+    "存疑": 0
+   },
+   "rows": 2,
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/prompt_text__a.md",
+     "prompt": "items/prompt_text__a.md",
+     "agents": [],
+     "ticked_at": "2026-11-08T15:25:01",
+     "by": "claude-opus-5-5/prompt_text__a",
+     "scores": {
+      "T1": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 自相矛盾"
+      },
+      "T2": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 否定句"
+      },
+      "T3": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 过期描述"
+      },
+      "T4": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 图文一致"
+      },
+      "T5": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 混入别镜"
+      },
+      "T6": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 参考清单"
+      },
+      "T7": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 长度与重点"
+      }
+     },
+     "findings": {
+      "重出": 1,
+      "可剪": 0,
+      "记录": 1,
+      "存疑": 0
+     },
+     "rows": 2,
+     "clean": false,
+     "finding_rows": [
+      {
+       "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+       "cells": [
+        "s1_st1",
+        "1",
+        "物理",
+        "重出",
+        "②",
+        "第3格",
+        "改（便宜）"
+       ],
+       "shot": "s1_st1",
+       "sec": "1",
+       "sub": "物理",
+       "sev": "重出",
+       "gate": "②",
+       "evidence": "第3格",
+       "fix": "改（便宜）"
+      },
+      {
+       "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+       "cells": [
+        "s2_st1",
+        "2",
+        "物理",
+        "记录",
+        "④",
+        "第4格",
+        "改"
+       ],
+       "shot": "s2_st1",
+       "sec": "2",
+       "sub": "物理",
+       "sev": "记录",
+       "gate": "④",
+       "evidence": "第4格",
+       "fix": "改"
+      }
+     ],
+     "report_sha": "2d30810303cde3a80d1c2f3d3b531007c7a0c92a4bd593f7dad55247a1c2e2dd"
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "gpt-6.1-sol",
+     "status": "done",
+     "report": "reports/prompt_text__b.md",
+     "prompt": "items/prompt_text__b.md",
+     "agents": [],
+     "ticked_at": "2026-11-08T15:25:01",
+     "by": "gpt-6-astra/prompt_text__b",
+     "scores": {
+      "T1": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 自相矛盾"
+      },
+      "T2": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 否定句"
+      },
+      "T3": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 过期描述"
+      },
+      "T4": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 图文一致"
+      },
+      "T5": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 混入别镜"
+      },
+      "T6": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 参考清单"
+      },
+      "T7": {
+       "score": 3,
+       "evidence": "s1_st1 第3格逐格核过 长度与重点"
+      }
+     },
+     "findings": {
+      "重出": 1,
+      "可剪": 0,
+      "记录": 1,
+      "存疑": 0
+     },
+     "rows": 2,
+     "clean": false,
+     "finding_rows": [
+      {
+       "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+       "cells": [
+        "s1_st1",
+        "1",
+        "物理",
+        "重出",
+        "②",
+        "第3格",
+        "改（便宜）"
+       ],
+       "shot": "s1_st1",
+       "sec": "1",
+       "sub": "物理",
+       "sev": "重出",
+       "gate": "②",
+       "evidence": "第3格",
+       "fix": "改（便宜）"
+      },
+      {
+       "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+       "cells": [
+        "s2_st1",
+        "2",
+        "物理",
+        "记录",
+        "④",
+        "第4格",
+        "改"
+       ],
+       "shot": "s2_st1",
+       "sec": "2",
+       "sub": "物理",
+       "sev": "记录",
+       "gate": "④",
+       "evidence": "第4格",
+       "fix": "改"
+      }
+     ],
+     "report_sha": "2d30810303cde3a80d1c2f3d3b531007c7a0c92a4bd593f7dad55247a1c2e2dd"
+    }
+   },
+   "ticked_at": "2026-11-08T15:25:01",
+   "scores": {
+    "T1": {
+     "name": "自相矛盾",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 自相矛盾",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 自相矛盾",
+     "verdict": "抽查",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": "回到首帧第3格核过，证据成立"
+    },
+    "T2": {
+     "name": "否定句",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 否定句",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 否定句",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "T3": {
+     "name": "过期描述",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 过期描述",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 过期描述",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "T4": {
+     "name": "图文一致",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 图文一致",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 图文一致",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "T5": {
+     "name": "混入别镜",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 混入别镜",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 混入别镜",
+     "verdict": "抽查",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": "回到首帧第3格核过，证据成立"
+    },
+    "T6": {
+     "name": "参考清单",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 参考清单",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 参考清单",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    },
+    "T7": {
+     "name": "长度与重点",
+     "a": 3,
+     "a_ev": "s1_st1 第3格逐格核过 长度与重点",
+     "b": 3,
+     "b_ev": "s1_st1 第3格逐格核过 长度与重点",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3
+    }
+   },
+   "disputes": [],
+   "audits": [
+    "T1",
+    "T5"
+   ],
+   "reconciled_at": "2026-11-08T15:25:01",
+   "finding_rows": [
+    {
+     "raw": "| s1_st1 | 1 | 物理 | 重出 | ② | 第3格 | 改（便宜） |",
+     "cells": [
+      "s1_st1",
+      "1",
+      "物理",
+      "重出",
+      "②",
+      "第3格",
+      "改（便宜）"
+     ],
+     "shot": "s1_st1",
+     "sec": "1",
+     "sub": "物理",
+     "sev": "重出",
+     "gate": "②",
+     "evidence": "第3格",
+     "fix": "改（便宜）",
+     "from": [
+      "a",
+      "b"
+     ]
+    },
+    {
+     "raw": "| s2_st1 | 2 | 物理 | 记录 | ④ | 第4格 | 改 |",
+     "cells": [
+      "s2_st1",
+      "2",
+      "物理",
+      "记录",
+      "④",
+      "第4格",
+      "改"
+     ],
+     "shot": "s2_st1",
+     "sec": "2",
+     "sub": "物理",
+     "sev": "记录",
+     "gate": "④",
+     "evidence": "第4格",
+     "fix": "改",
+     "from": [
+      "a",
+      "b"
+     ]
+    }
+   ],
+   "clean": false,
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "T1",
+     "T5"
+    ],
+    "prompt": "items/prompt_text__judge.md",
+    "report": "reports/prompt_text__judge.md",
+    "agents": [],
+    "by": "claude-opus-5-5/prompt_text__judge",
+    "at": "2026-11-08T15:25:01",
+    "ruling": {
+     "T1": {
+      "score": 3,
+      "evidence": "回到首帧第3格核过，证据成立"
+     },
+     "T5": {
+      "score": 3,
+      "evidence": "回到首帧第3格核过，证据成立"
+     }
+    },
+    "report_sha": "60c02fe23c35d874d0ac3a1cb0156e9f9664cb40e909b48dc54e1deb504832dc"
+   },
+   "final_scores": {
+    "T1": 3,
+    "T2": 3,
+    "T3": 3,
+    "T4": 3,
+    "T5": 3,
+    "T6": 3,
+    "T7": 3
+   },
+   "must_result": {
+    "T1": "✓",
+    "T2": "✓",
+    "T3": "✓",
+    "T4": "✓",
+    "T5": "✓",
+    "T6": "✓",
+    "T7": "✓"
+   },
+   "done_at": "2026-11-08T15:25:01"
+  }
+ ],
+ "state": "已完成",
+ "log": [
+  {
+   "at": "2026-11-08T15:25:00",
+   "item": "physics",
+   "slot": "a",
+   "event": "tick",
+   "by": "claude-opus-5-5/physics__a"
+  },
+  {
+   "at": "2026-11-08T15:25:00",
+   "item": "physics",
+   "slot": "b",
+   "event": "tick",
+   "by": "gpt-6-astra/physics__b"
+  },
+  {
+   "at": "2026-11-08T15:25:00",
+   "item": "physics",
+   "event": "reconcile",
+   "note": "分歧 无；抽查 P3、P6 → 待裁决"
+  },
+  {
+   "at": "2026-11-08T15:25:00",
+   "item": "physics",
+   "slot": "judge",
+   "event": "adjudicate",
+   "by": "claude-opus-5-5/physics__judge",
+   "note": "P3→3；P6→3"
+  },
+  {
+   "at": "2026-11-08T15:25:00",
+   "item": "character",
+   "slot": "a",
+   "event": "tick",
+   "by": "claude-opus-5-5/character__a"
+  },
+  {
+   "at": "2026-11-08T15:25:00",
+   "item": "character",
+   "slot": "b",
+   "event": "tick",
+   "by": "gpt-6-astra/character__b"
+  },
+  {
+   "at": "2026-11-08T15:25:00",
+   "item": "character",
+   "event": "reconcile",
+   "note": "分歧 无；抽查 C5、C6 → 待裁决"
+  },
+  {
+   "at": "2026-11-08T15:25:00",
+   "item": "character",
+   "slot": "judge",
+   "event": "adjudicate",
+   "by": "claude-opus-5-5/character__judge",
+   "note": "C5→3；C6→3"
+  },
+  {
+   "at": "2026-11-08T15:25:00",
+   "item": "continuity",
+   "slot": "a",
+   "event": "tick",
+   "by": "claude-opus-5-5/continuity__a"
+  },
+  {
+   "at": "2026-11-08T15:25:00",
+   "item": "continuity",
+   "slot": "b",
+   "event": "tick",
+   "by": "gpt-6-astra/continuity__b"
+  },
+  {
+   "at": "2026-11-08T15:25:00",
+   "item": "continuity",
+   "event": "reconcile",
+   "note": "分歧 无；抽查 K6、K7 → 待裁决"
+  },
+  {
+   "at": "2026-11-08T15:25:00",
+   "item": "continuity",
+   "slot": "judge",
+   "event": "adjudicate",
+   "by": "claude-opus-5-5/continuity__judge",
+   "note": "K6→3；K7→3"
+  },
+  {
+   "at": "2026-11-08T15:25:00",
+   "item": "dialogue",
+   "slot": "a",
+   "event": "tick",
+   "by": "claude-opus-5-5/dialogue__a"
+  },
+  {
+   "at": "2026-11-08T15:25:00",
+   "item": "dialogue",
+   "slot": "b",
+   "event": "tick",
+   "by": "gpt-6-astra/dialogue__b"
+  },
+  {
+   "at": "2026-11-08T15:25:00",
+   "item": "dialogue",
+   "event": "reconcile",
+   "note": "分歧 无；抽查 D2、D5 → 待裁决"
+  },
+  {
+   "at": "2026-11-08T15:25:01",
+   "item": "dialogue",
+   "slot": "judge",
+   "event": "adjudicate",
+   "by": "claude-opus-5-5/dialogue__judge",
+   "note": "D2→3；D5→3"
+  },
+  {
+   "at": "2026-11-08T15:25:01",
+   "item": "native_ear",
+   "slot": "a",
+   "event": "tick",
+   "by": "claude-opus-5-5/native_ear__a"
+  },
+  {
+   "at": "2026-11-08T15:25:01",
+   "item": "native_ear",
+   "slot": "b",
+   "event": "tick",
+   "by": "gpt-6-astra/native_ear__b"
+  },
+  {
+   "at": "2026-11-08T15:25:01",
+   "item": "native_ear",
+   "event": "reconcile",
+   "note": "分歧 无；抽查 N3、N6 → 待裁决"
+  },
+  {
+   "at": "2026-11-08T15:25:01",
+   "item": "native_ear",
+   "slot": "judge",
+   "event": "adjudicate",
+   "by": "claude-opus-5-5/native_ear__judge",
+   "note": "N3→3；N6→3"
+  },
+  {
+   "at": "2026-11-08T15:25:01",
+   "item": "era",
+   "slot": "a",
+   "event": "tick",
+   "by": "claude-opus-5-5/era__a"
+  },
+  {
+   "at": "2026-11-08T15:25:01",
+   "item": "era",
+   "slot": "b",
+   "event": "tick",
+   "by": "gpt-6-astra/era__b"
+  },
+  {
+   "at": "2026-11-08T15:25:01",
+   "item": "era",
+   "event": "reconcile",
+   "note": "分歧 无；抽查 E3、E4 → 待裁决"
+  },
+  {
+   "at": "2026-11-08T15:25:01",
+   "item": "era",
+   "slot": "judge",
+   "event": "adjudicate",
+   "by": "claude-opus-5-5/era__judge",
+   "note": "E3→3；E4→3"
+  },
+  {
+   "at": "2026-11-08T15:25:01",
+   "item": "framing",
+   "slot": "a",
+   "event": "tick",
+   "by": "claude-opus-5-5/framing__a"
+  },
+  {
+   "at": "2026-11-08T15:25:01",
+   "item": "framing",
+   "slot": "b",
+   "event": "tick",
+   "by": "gpt-6-astra/framing__b"
+  },
+  {
+   "at": "2026-11-08T15:25:01",
+   "item": "framing",
+   "event": "reconcile",
+   "note": "分歧 无；抽查 F3、F4 → 待裁决"
+  },
+  {
+   "at": "2026-11-08T15:25:01",
+   "item": "framing",
+   "slot": "judge",
+   "event": "adjudicate",
+   "by": "claude-opus-5-5/framing__judge",
+   "note": "F3→3；F4→3"
+  },
+  {
+   "at": "2026-11-08T15:25:01",
+   "item": "prompt_text",
+   "slot": "a",
+   "event": "tick",
+   "by": "claude-opus-5-5/prompt_text__a"
+  },
+  {
+   "at": "2026-11-08T15:25:01",
+   "item": "prompt_text",
+   "slot": "b",
+   "event": "tick",
+   "by": "gpt-6-astra/prompt_text__b"
+  },
+  {
+   "at": "2026-11-08T15:25:01",
+   "item": "prompt_text",
+   "event": "reconcile",
+   "note": "分歧 无；抽查 T1、T5 → 待裁决"
+  },
+  {
+   "at": "2026-11-08T15:25:01",
+   "item": "prompt_text",
+   "slot": "judge",
+   "event": "adjudicate",
+   "by": "claude-opus-5-5/prompt_text__judge",
+   "note": "T1→3；T5→3"
+  },
+  {
+   "at": "2026-11-08T15:25:02",
+   "event": "fix",
+   "item": "physics",
+   "note": "I1 → implemented：改分镜、重画首帧"
+  },
+  {
+   "at": "2026-11-08T15:25:02",
+   "event": "fix",
+   "item": "character",
+   "note": "I2 → implemented：改分镜、重画首帧"
+  },
+  {
+   "at": "2026-11-08T15:25:02",
+   "event": "fix",
+   "item": "continuity",
+   "note": "I3 → implemented：改分镜、重画首帧"
+  },
+  {
+   "at": "2026-11-08T15:25:02",
+   "event": "fix",
+   "item": "dialogue",
+   "note": "I4 → implemented：改分镜、重画首帧"
+  },
+  {
+   "at": "2026-11-08T15:25:02",
+   "event": "fix",
+   "item": "native_ear",
+   "note": "I5 → implemented：改分镜、重画首帧"
+  },
+  {
+   "at": "2026-11-08T15:25:02",
+   "event": "fix",
+   "item": "era",
+   "note": "I6 → implemented：改分镜、重画首帧"
+  },
+  {
+   "at": "2026-11-08T15:25:02",
+   "event": "fix",
+   "item": "framing",
+   "note": "I7 → implemented：改分镜、重画首帧"
+  },
+  {
+   "at": "2026-11-08T15:25:02",
+   "event": "fix",
+   "item": "prompt_text",
+   "note": "I8 → implemented：改分镜、重画首帧"
+  },
+  {
+   "at": "2026-11-08T15:25:04",
+   "event": "corrections",
+   "note": "修复页：8 条方案、首帧换了 1 镜"
+  }
+ ],
+ "child": "ai_videos/demo/reviews/ep01_20261108-152502_pregen_r2",
+ "corrections": "corrections.json"
+}

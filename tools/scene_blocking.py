@@ -134,6 +134,8 @@ def render_scene(scene_dir: Path) -> Path | None:
         pts = [(float(p[1]), float(p[2])) for s in items for a in s["cfg"].get("actor", []) for p in a["path"]]
         pts += [tuple(o["xy"]) for s in items for o in s["cfg"].get("object", [])]
         pts += [(float(q[1]), float(q[2])) for s in items for pr in s["cfg"].get("prop", []) for q in pr["path"]]
+        # 没有人物的空镜（街景、夜景）也要有范围：算上机位（chuanyue_yiri follow-up 020，原来这里 min() 空序列报错）
+        pts += [(float(c["xy"][0]), float(c["xy"][1])) for s in items for c in s["cfg"].get("camera", [])]
         x0, x1 = min(p[0] for p in pts) - MARGIN_M, max(p[0] for p in pts) + MARGIN_M
         y0, y1 = min(p[1] for p in pts) - MARGIN_M, max(p[1] for p in pts) + MARGIN_M
         if x1 - x0 < 12:

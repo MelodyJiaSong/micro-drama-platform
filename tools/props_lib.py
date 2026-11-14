@@ -12,8 +12,13 @@
 from __future__ import annotations
 
 import re
+import sys
 import tomllib
 from pathlib import Path
+
+if str(Path(__file__).resolve().parents[1]) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from projects.ai_video_management.libs.common.asset_group import grouped_dirs, character_weapon_keys  # noqa: E402
 
 KEY = re.compile(r"^p(\d+)$")
 DIR = re.compile(r"^p(\d+)_(.+)$")
@@ -40,19 +45,47 @@ def registry(anywhere: Path | str) -> list[dict]:
     return tomllib.loads(p.read_text(encoding="utf-8")).get("prop", []) if p.is_file() else []
 
 
+def prop_dirs(root: Path) -> list[Path]:
+    """`props/` 下的物件目录：直接一层，或一层分组目录（如 `中立_neutral/`）之下（dota_yingxiong follow-up 025）。"""
+    return grouped_dirs(root, lambda name: DIR.match(name) is not None)
+
+
+def in_props(d: Path) -> bool:
+    """d 住在 props/ 下的合法位置：`props/{d}` 或 `props/{分组}/{d}`。"""
+    return d.parent.name == "props" or (d.parent.parent.name == "props" and not DIR.match(d.parent.name))
+
+
 def find(anywhere: Path | str, key: str) -> Path | None:
     """p{N} → 它的目录；没有目录返回 None。目录名 `p{N}_{名}` 是判据，同号两个目录直接报错。"""
     root = props_root(anywhere)
-    hits = [d for d in root.glob(f"{key}_*") if d.is_dir() and DIR.match(d.name) and d.name.split("_", 1)[0] == key]
+    hits = [d for d in prop_dirs(root) if DIR.match(d.name) and d.name.split("_", 1)[0] == key]
     if len(hits) > 1:
         raise SystemExit(f"{key} 在 {root} 下有 {len(hits)} 个目录：{[h.name for h in hits]}")
     return hits[0] if hits else None
 
 
+def character_prop_keys(d: Path) -> list[str]:
+    card = d / f"{d.name}.md"
+    if not card.is_file():
+        return []
+    return character_weapon_keys(card.read_text(encoding="utf-8"))
+
+
+def character_props(d: Path) -> list[Path]:
+    images = []
+    for key in character_prop_keys(d):
+        pd = find(d, key)
+        image = pd / f"{pd.name}.png" if pd else None
+        if image is None or not image.is_file():
+            raise FileNotFoundError(f"{d.name}：固定武器 {key} 缺锚点图，先生成并验收武器")
+        images.append(image)
+    return images
+
+
 def scene_objects(anywhere: Path | str) -> list[Path]:
     """有 asset.toml 的 prop 目录 ＝ 走三视图流程的物件（场景物件 + 2026-09-25 起的剧情物件 p1–p14）。"""
     root = props_root(anywhere)
-    return sorted((d for d in root.iterdir() if d.is_dir() and DIR.match(d.name) and (d / "asset.toml").is_file()),
+    return sorted((d for d in prop_dirs(root) if DIR.match(d.name) and (d / "asset.toml").is_file()),
                   key=lambda d: int(DIR.match(d.name).group(1)))
 
 

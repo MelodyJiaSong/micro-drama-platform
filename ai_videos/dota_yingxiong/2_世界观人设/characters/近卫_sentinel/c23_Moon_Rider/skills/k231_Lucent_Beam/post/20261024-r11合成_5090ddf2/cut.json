@@ -1,0 +1,57 @@
+{
+  "purpose": "k231 r11：r10c 剪法 + 光柱边缘辉光 + 光鸟改到光柱最上方、紧接光柱出现；follow-up 170（用户「光柱后紧接着鸟就出来，在光柱的最上方……光柱边缘可以有点渐进光的效果」「鸟的位置再高一点，在光柱的最上方，然后鸟停落多0.5秒」）",
+  "video": [
+    {
+      "src": "renders/20261024-145230_6ccea1ef/k231_Lucent_Beam_clip.mp4",
+      "submit_id": "6ccea1ef-ee16-4fe8-86e8-617fb9451e9f",
+      "frames": "0-43"
+    },
+    {
+      "xfade": "fade 2 帧（0.0833 s），offset 1.75 s（光柱最亮段）"
+    },
+    {
+      "src": "renders/20261024-153654_a127e130/k231_Lucent_Beam_clip.mp4",
+      "submit_id": "a127e130-e710-44cf-b78c-c2fec701a876",
+      "frames": "0-36"
+    },
+    {
+      "xfade": "fade 4 帧（0.1667 s），offset 3.0833 s；接在第三段第 2 帧（姿势仍与第二段一致，第 9 帧起才起身），独立审稿 r10 后修"
+    },
+    {
+      "src": "renders/20261024-155744_5090ddf2/k231_Lucent_Beam_clip.mp4",
+      "submit_id": "5090ddf2-f350-449a-bd27-5d8522721542",
+      "frames": "2-end",
+      "align": "按背景特征点对齐第二段：scale 1300x731 + pad 2,3 + crop 1280x720（相似变换 scale 1.015, tx 1.5, ty 3.1）",
+      "hold": "末帧定格延长 2.3 s",
+      "speed": "第三段第 2–19 帧（近乎静止的蹲伏）2 倍速，其后原速"
+    }
+  ],
+  "overlay": {
+    "src": "renders/20261024-153623_0b19d3e1/k231_bird_overlay.mp4",
+    "submit_id": "0b19d3e1-f556-4eeb-a13c-e00fd328a131",
+    "start_in_output_s": 1.85,
+    "scale": "691x389",
+    "center_xy": [
+      946,
+      95
+    ],
+    "retime": "源 0.8–1.1 2×（成形）；1.1–2.65 1.6×（悬停约 1.0 s）；2.65–3.6 2×（消散）；约 3.33 s 散尽",
+    "blend": "screen (gbrp)"
+  },
+  "audio": "三段原声 acrossfade；第三段前 0.75 s 2 倍速（atempo）；末尾补 2.3 s 静音并 0.8 s 淡出；光鸟无声；未混 Suno 音效",
+  "output": {
+    "fps": 24,
+    "codec": "libx264 crf16 + aac 192k",
+    "duration_s": 8.96,
+    "file": "k231_Lucent_Beam_clip_nocall.mp4"
+  },
+  "script": ".audit/adhoc_agents/2026-10-24/luna-k231-r3/compose_r11.py（可重跑，参数与说明以脚本为准）",
+  "glow": {
+    "range_s": [
+      1.0,
+      2.25
+    ],
+    "mask": "光柱一列 x 790–1100，y<480；亮度阈值 0.62，gblur σ24，冰蓝，×1.6，滤色"
+  },
+  "bird_call": "未混：Suno job 8f235721d1b341c9a74d8fe041143682 uncertain，待用户在 Suno 资料库确认"
+}

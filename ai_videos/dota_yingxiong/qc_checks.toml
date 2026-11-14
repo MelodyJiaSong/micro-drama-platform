@@ -1,0 +1,634 @@
+# 自检登记表 · **剧级（dota_yingxiong）** —— 只对本剧生效。与仓库级登记表
+# `.agents/references/project/qc_checks.toml` 合并使用（id 两层不许重复）。
+#
+# 本剧的参考与声音原则（follow-up 257）：原版参考图 best effort——找得到就挂，找不到写「无原图」照常往下做；
+# 错的参考比没有更糟，`ref_image.identity` 不过或拿不准的不当硬参考，单一来源只作软参考。
+# 声音：原声 → 克隆 → 使用，原声对不上原台词、克隆声纹或转写对不上都不进下一步。
+#
+# 这些检查都产生于本剧的实战反馈；某一条在另一部剧也反复出现，再提议升到仓库级（须用户同意）。
+
+# ── 剧级流程策略（2026-10-30 follow-up 295）──
+# 用户：「在自主权下，生成了一个video跑完了有问题，不能再次提交，必须等我反馈」。
+# 出片后（不论闸门过没过），该技能下一条提交前必须有用户对上一条的反馈记录（`skill_pack.py feedback`）；
+# `skill_pack.py submit` 与 `skill_run.py` 都强制。自主授权（如 follow-up 284/285）也不越过这一条。
+[policy]
+wait_user_feedback_after_render = true
+# 用户 2026-10-30：「一镜到底这个要求是对所有的英雄技能video生效的」（follow-up 295）——本剧技能视频一律按一镜到底查，
+# 不再看规格里有没有写这四个字；`qc.py gate` 对 skills/ 下的出片自动带上「一镜到底」。
+skill_video_onetake = true
+
+[[check]]
+id = "ref_image.identity"
+stage = "ref_image"
+kind = "review"
+layer = "quality"
+perspective = "fidelity"
+gate = true
+auto = false
+desc = "参考图确实是这个英雄 / 技能 / 物件，与文字考据（形状、颜色、范围）对得上"
+how = "只给审稿人参考图与考据原文，问「这是不是 X」；不是或拿不准 → 不当硬参考。错的参考比没有参考更糟"
+sources = ["dota_yingxiong#257"]
+
+[[check]]
+id = "ref_image.version"
+stage = "ref_image"
+kind = "review"
+layer = "spec"
+perspective = "fidelity"
+gate = false
+auto = false
+desc = "参考来自锚定版本（dota 为 6.83d），不是高清改模 / AI 重绘 / 同人"
+how = "看来源与画风；可信度标 ✅多源一致 / ⚠单源（只作软参考）/ ❌冲突 / 无原图（best effort 照常往下做）"
+sources = ["dota_yingxiong#257"]
+
+# 用户 2026-11-01（follow-up 316）：「我们不要dota2 的任何图标和ref……我们做的是dota1，严格按照dota1来做」。
+[[check]]
+id = "ref_image.dota1_only"
+stage = "ref_image"
+kind = "review"
+layer = "quality"
+perspective = "fidelity"
+gate = true
+auto = false
+desc = "参考与造型依据只来自 DotA 1（6.83d 地图）/ 魔兽 3 原版：不含 Dota 2 的图标、截图、视频截帧、音频、wiki 图；卡里也没有借 Dota 2 补的造型、配色、构件或特效"
+how = "看参考文件来源（URL、文件名、refs.md）与卡的「图标 / 真人化」依据：出现 Dota 2 / Steam CDN / dota2 wiki 来源，或写着「取自 / 参考 / 确认于 Dota 2」「两图一致」→ fail，删参考、改卡、重出。DotA 1 原图缺失时写「无原图 ⚠️ 创作」，不许拿 Dota 2 补"
+sources = ["dota_yingxiong#316"]
+
+[[check]]
+id = "ref_audio.line_match"
+stage = "ref_audio"
+kind = "machine"
+layer = "quality"
+gate = true
+auto = false
+desc = "原声转写与原台词表一致、说话人是这个英雄、没有混进音乐音效"
+how = "ASR 转写比对原台词（dota：0_research/parts/d09–d14）；信噪比；对不上不拿去克隆"
+sources = ["dota_yingxiong#257"]
+
+[[check]]
+id = "audio.clone_similarity"
+stage = "audio"
+kind = "machine"
+layer = "quality"
+gate = true
+auto = false
+desc = "克隆声与原声的声纹相似、克隆台词转写与剧本一致、响度不爆"
+how = "声纹嵌入余弦相似度；ASR 比对剧本；LUFS 与削波"
+sources = ["dota_yingxiong#257"]
+
+[[check]]
+id = "spec.required_fields"
+stage = "spec"
+kind = "review"
+layer = "spec"
+perspective = "director"
+gate = true
+auto = false
+desc = "技能规格必答项齐：作用中心、扩散方式与时长、镜头（是否一镜到底）、受击与死亡、消散、声音"
+how = "缺一项就补齐再出片；这些是 dota 一周里用户一轮一轮补进来的项（冰霜新星 11 轮）"
+sources = ["dota_yingxiong#084", "dota_yingxiong#089", "dota_yingxiong#090", "dota_yingxiong#131"]
+
+[[check]]
+id = "spec.duration_budget"
+stage = "spec"
+kind = "machine"
+layer = "spec"
+gate = true
+auto = true
+desc = "四条技能合计 ≥ 53 s（可计入每条首尾各 0.5 s 停顿），每条含起势与收势"
+how = "按 demo_standard.md §1 / §3 的预算表求和：原片合计 + 每条最多 1 s 停顿 ≥ 53 s"
+sources = ["dota_yingxiong#217", "dota_yingxiong#219", "dota_yingxiong#268"]
+
+[[check]]
+id = "prompt.moderation_words"
+stage = "prompt"
+kind = "machine"
+layer = "quality"
+gate = false
+auto = true
+desc = "提交前扫会触发内容审核的词（如「开锋 / 刃口」→ 改「抛光亮边」）"
+how = "词表扫描；命中就换说法再提交"
+sources = ["dota_yingxiong#050", "dota_yingxiong#061"]
+
+[[check]]
+id = "video.slowmo"
+stage = "video"
+kind = "machine"
+layer = "quality"
+gate = true
+auto = true
+desc = "动作中段没有突然变慢、定格或整段偏慢"
+how = "tools/motion_check.py --action 起势后-收势前 [--xt --scale --expect]；报出的段回看 4 fps 拼图判定"
+sources = ["dota_yingxiong#241", "dota_yingxiong#245", "dota_yingxiong#246"]
+
+[[check]]
+id = "video.timeline"
+stage = "video"
+kind = "review"
+layer = "spec"
+tolerance = "不要求精确到秒：某一拍提前或推迟不超过 2 秒（或不超过这一拍时长的一半，取较大者）算对上；缺拍、顺序颠倒、多出明显的动作，或偏差超出这个范围才判 fail"
+perspective = "director"
+gate = true
+auto = false
+desc = "时间轴每一行都发生了、先后顺序对、时刻大致对（大范围偏差才算错，不要求精确到秒）、没有多出来的明显动作"
+how = "审稿人只看 4 fps 拼图与时间轴表，逐行判「发生 / 缺 / 错 / 顺序」并给出看到的秒数；时刻按容差判（用户 2026-11-14：不需要精确到秒，但大范围时间偏差还是要报错）"
+sources = ["dota_yingxiong#141"]
+
+[[check]]
+id = "video.scale"
+stage = "video"
+kind = "review"
+layer = "spec"
+tolerance = "量的是画面里的相对高度，透视与姿态（弯腰、骑坐、四足、远近不同）会让读数偏差：同一深度、一眼看得出比例偏离卡上约三成以上（如该 4:1 实测 1.5:1）才判 fail；小偏差判 pass 并记下实测比；远近、姿态不同没法换算的记审不了·看不清"
+perspective = "director"
+gate = true
+auto = false
+desc = "体型比例符合卡（主体与小兵的相对高度）"
+how = "拼图里量各角色占画面的相对高度，对照人物卡身高（tools/scale_table.py 派生的体型对照）；四足生物按肩高比"
+sources = ["dota_yingxiong#070", "dota_yingxiong#245"]
+
+[[check]]
+id = "video.head_tail"
+stage = "video"
+kind = "review"
+layer = "spec"
+tolerance = "开头预备段里特效提前不到 1 秒、结尾余波稍长只记录；一开场就出特效、没有收势、结尾结果看不见才判 fail"
+perspective = "director"
+gate = true
+auto = false
+desc = "开头 1–2 s 只有预备动作不出特效；结尾结果可见、余波散尽、回站姿"
+how = "看拼图首尾两段"
+sources = ["dota_yingxiong#217", "dota_yingxiong#219"]
+
+[[check]]
+id = "cut.duration"
+stage = "cut"
+kind = "machine"
+layer = "spec"
+gate = true
+auto = false
+desc = "成片 ≥ 65 s，转场为不重叠的 0.4 s 渐黑渐亮，接缝无静音爆音"
+how = "ffprobe 时长；音频接缝 RMS"
+sources = ["dota_yingxiong#217"]
+
+# ── 2026-10-26 follow-up 266：多视角审查（每个角色各开一个审稿人站在自己立场审；观众；原版还原）──
+
+[[check]]
+id = "spec.scale_table"
+stage = "spec"
+kind = "machine"
+layer = "spec"
+gate = true
+auto = true
+desc = "出场角色的人物卡都写了身高——体型对照只有一个出处（人物卡），一开始就要设计好"
+how = "tools/qc_pre.py machine：从资料包认出出场角色，tools/scale_table.py 读卡里「体型 / 年龄 / 种族」的身高；缺就先补卡"
+sources = ["dota_yingxiong#266"]
+
+[[check]]
+id = "keyframe.scale"
+stage = "keyframe"
+kind = "review"
+layer = "spec"
+tolerance = "量的是画面里的相对高度，透视与姿态（弯腰、骑坐、四足、远近不同）会让读数偏差：同一深度、一眼看得出比例偏离卡上约三成以上（如该 4:1 实测 1.5:1）才判 fail；小偏差判 pass 并记下实测比；远近、姿态不同没法换算的记审不了·看不清"
+perspective = "director"
+gate = true
+auto = false
+desc = "开场图里各角色的相对大小符合人物卡身高——开场图就是视频第一帧，比例错了视频必然错；规格里的比例描述也要与卡一致"
+how = "审稿人拿到各角色身高，量开场图里每个角色占画面的相对高度；规格写的比例（如「只到马肩高」）与卡上数字冲突也判不过"
+sources = ["dota_yingxiong#266"]
+
+[[check]]
+id = "spec.agency"
+stage = "spec"
+kind = "review"
+layer = "quality"
+perspective = "character"
+gate = true
+auto = false
+desc = "站在这个角色自己的立场独立思考：每一拍看到什么、想要什么、该做什么，剧本让他做的说得通吗"
+how = "敌人冲来要从一开始就戒备、应对、反击，不能等到跟前还不出手；挨打要有反应，除非剧本写明被控制（眩晕、冻住）；小兵也有求生本能，不发呆、不排队送死"
+sources = ["dota_yingxiong#266"]
+
+# 用户 2026-11-02（follow-up 327）：「不要上来就展现神秘洞口，如果我看到洞口，就不会是这个轻松惬意的表情，因该是好奇惊讶，你的逻辑审查机制有漏洞」。
+[[check]]
+id = "spec.reaction_matches_seen"
+stage = "spec"
+kind = "review"
+layer = "quality"
+perspective = "character"
+gate = true
+auto = false
+desc = "角色每一拍的表情与情绪，要和他此刻看得见、听得见的东西一致：奇观或异常（神秘洞口、光柱、怪物、陌生人群）一旦入画或就在他身边，他不可能还是轻松闲聊的神情"
+how = "逐拍列出「画面里有什么 / 他看得见什么」→「他该是什么情绪」。想让他先轻松，就让奇观不在画内、在他背后看不见的地方；奇观出现的那一拍必须写出他发现它、表情转为好奇或惊讶。剧本里「身后就是神秘洞口还笑着闲聊」→ fail"
+sources = ["dota_yingxiong#327"]
+
+[[check]]
+id = "video.reaction_matches_seen"
+stage = "video"
+kind = "review"
+layer = "quality"
+perspective = "character"
+gate = true
+auto = false
+desc = "成片里角色的表情和他画面中看得见的东西一致：奇观入画时没有轻松惬意、视而不见的表情"
+how = "审稿人代入角色看拼图逐格判：这一格画面里有什么异常？他的表情配得上吗？模型常把奇观提前放进开场画面，即使剧本写了后揭示"
+sources = ["dota_yingxiong#327"]
+
+# 用户 2026-11-02（follow-up 334）：「感觉进程太快了，从发现亮光（应该是忽隐忽现的，太明显就要思考为什么之前没人发现），到疑惑，到好奇，
+# 上前小心翼翼的走过去上前查看，扒开冰，然后不小心掉下去，我觉的至少需要双倍的时间来刻画……为什么一开是review，review不出来呢？」
+[[check]]
+id = "spec.pacing"
+stage = "spec"
+kind = "review"
+layer = "quality"
+perspective = "viewer"
+gate = true
+auto = false
+desc = "情绪与认知的每一步都有自己的时间：察觉 → 怀疑 → 确认 → 好奇 → 试探 → 行动，每一步至少一个独立拍点和看得见的反应停顿，不把几步挤进同一个几秒的镜头"
+how = "把这一段要观众跟着经历的心理台阶逐条列出来，对照分镜拍点与秒数：一个台阶少于约 2–3 秒、或两三个台阶挤在一拍里 → fail，加镜或加时长。只核对「片子有没有照分镜拍」查不出这个问题；要站在观众的位置，按 1 倍速从头看完再判断"
+sources = ["dota_yingxiong#334"]
+
+[[check]]
+id = "spec.world_logic"
+stage = "spec"
+kind = "review"
+layer = "quality"
+perspective = "viewer"
+gate = true
+auto = false
+desc = "钩子和奇观在世界里说得通：一个显眼的异常为什么偏偏现在、偏偏被她发现（为什么之前没人发现）"
+how = "问「如果它这么明显，别人早该看见了吧？」答不上就改：让异常很微弱、时隐时现、要在特定角度或光线下才看得见，或者交代它刚刚才露出来"
+sources = ["dota_yingxiong#334"]
+
+[[check]]
+id = "video.pacing"
+stage = "video"
+kind = "review"
+layer = "quality"
+perspective = "viewer"
+gate = true
+auto = false
+desc = "按 1 倍速完整看片：情绪的每一步来得及被观众感受到，没有「一眨眼就过去」的转变"
+how = "不能只看抽帧拼图（拼图看不出节奏）：完整播放，记下每个心理台阶出现与结束的秒数，台阶之间过于仓促 → fail，记成分镜问题（加时长或拆镜），不是重出能解决的"
+sources = ["dota_yingxiong#334"]
+
+[[check]]
+id = "spec.gaze"
+stage = "spec"
+kind = "review"
+layer = "quality"
+perspective = "character"
+gate = true
+auto = false
+desc = "每一拍写明这个角色看向哪里；战斗中不能长时间不看敌人"
+how = "没写视线的拍子模型会乱选（看镜头、看天）；被控制、倒地等例外要写明"
+sources = ["dota_yingxiong#266"]
+
+[[check]]
+id = "video.agency"
+stage = "video"
+kind = "review"
+layer = "quality"
+perspective = "character"
+gate = true
+auto = false
+desc = "画面里这个角色的行为站在他自己的立场说得通：不原地空等、不在敌人到跟前才出手、挨打有反应"
+how = "审稿人代入这个角色看拼图逐格判；模型常自己加出「原地空等」，即使剧本写对了"
+sources = ["dota_yingxiong#266"]
+
+[[check]]
+id = "video.gaze"
+stage = "video"
+kind = "review"
+layer = "quality"
+perspective = "character"
+gate = true
+auto = false
+desc = "画面里这个角色的眼神与头朝向一直对着该看的对象（战斗中盯着敌人），不看镜头、不发呆"
+how = "逐格看头部朝向与视线；被控制、倒地的格子除外。眼神看不清就看头和身体朝向；连朝向也看不清的段落记审不了·看不清，不判 fail（follow-up 354）"
+sources = ["dota_yingxiong#266"]
+
+[[check]]
+id = "video.readability"
+stage = "video"
+kind = "review"
+layer = "quality"
+perspective = "audience"
+gate = true
+auto = false
+desc = "第一次看的观众能一眼看懂：谁放了什么技能、打中了谁、结果是什么"
+how = "审稿人当作没看过规格的普通观众，只看拼图说出发生了什么；说不清或说错就不过（Vision：技能更绚丽、结果可见）"
+sources = ["dota_yingxiong#266"]
+
+[[check]]
+id = "video.fidelity"
+stage = "video"
+kind = "review"
+layer = "spec"
+tolerance = "形状、颜色大类、命中方式走样（该是暗红火焰出成橙白、该是螺旋缠绕出成横圈）才判 fail；亮度、粗细、光晕大小的差异只记录；没有峰值图或原版截帧记审不了·材料缺"
+perspective = "fidelity"
+gate = true
+auto = false
+desc = "技能长相与峰值图一致（形状、颜色、命中效果）——同一个技能无论在哪段出现都是同一个样子"
+how = "审稿人对照峰值图与拼图里技能最强的那几格；形状、颜色、命中方式走样就不过"
+sources = ["dota_yingxiong#266"]
+
+# ── 2026-10-26 follow-up 269：攻击要真的打到身上（用户抓到 k632 盾里挥剑全是对空挥）──
+
+[[check]]
+id = "video.attack_contact"
+stage = "video"
+kind = "review"
+layer = "quality"
+perspective = "director"
+gate = true
+auto = false
+desc = "每一下攻击都实际打到目标身上：武器 / 特效与目标身体接触，目标同时有受击反应，不是对空挥、隔着距离比划"
+how = "逐格看攻击帧：武器刃或特效是否与目标身体重叠、命中处有木屑 / 光 / 形变、目标有踉跄后仰；距离够不着（如隔着护盾、站位太远）就判不过"
+sources = ["dota_yingxiong#269"]
+
+# ── 2026-10-26 follow-up 271：眩晕连续三版看不出（用户：「要有眩晕，为什么总是加不上去？」）──
+# 原因：规格把原版头顶眩晕标记写成「本片不画」并放进负面词，只靠肢体演「被打懵」，模型一律画成普通受击。
+
+[[check]]
+id = "spec.status_visual"
+stage = "spec"
+kind = "review"
+layer = "spec"
+perspective = "fidelity"
+gate = true
+auto = false
+desc = "规格里的控制状态（眩晕、减速、沉默等）写了看得见的标记，且与原版一致；原版标记不能出现在负面词里"
+how = "对照 0_research 的原版特效（如眩晕 ThunderclapTarget＝头顶一圈浅蓝白旋涡，follow-up 137 用户定）；只写肢体「被打懵、站不稳」不算；峰值图也要画出这个标记"
+sources = ["dota_yingxiong#137", "dota_yingxiong#271"]
+
+[[check]]
+id = "video.stun_visible"
+stage = "video"
+when = "眩晕"
+kind = "review"
+layer = "quality"
+perspective = "audience"
+gate = true
+auto = false
+desc = "被眩晕的目标一眼看得出被晕住：头顶有旋涡标记、原地不能行动约规定秒数，不是普通的挨打后仰或乱挥"
+how = "观众只看拼图，问「哪个单位被晕住了、晕了多久」；说不出或只看到受击踉跄就不过"
+sources = ["dota_yingxiong#271"]
+
+# ── 2026-10-27 follow-up 279：出手节奏、减速看得见（用户看 c63 k632 / k633 第 2 轮抓到）──
+
+[[check]]
+id = "video.attack_tempo"
+stage = "video"
+kind = "review"
+layer = "quality"
+perspective = "director"
+gate = true
+auto = false
+desc = "英雄出手干脆有力、速度像实战：起手到命中不拖，不是慢吞吞地抬手挥过去"
+how = "看拼图里每一次出手从起手到命中用了几格（4 fps）；近战一剑通常 1–2 格完成，超过 3 格且中间姿势几乎不变就判慢"
+sources = ["dota_yingxiong#279"]
+
+[[check]]
+id = "video.slow_visible"
+stage = "video"
+kind = "review"
+layer = "quality"
+perspective = "audience"
+gate = true
+auto = false
+when = "减速"
+desc = "被减速的目标一眼看得出变慢：中招前后移动 / 出手速度对比明显，同时画面仍是实时速度（其他角色照常快）"
+how = "观众只看拼图，问「哪个单位被减速了、从哪一刻开始」；对比中招前后同一单位每格的位移；说不出或整片一起变慢都不过"
+sources = ["dota_yingxiong#279"]
+
+# ── 2026-10-30 follow-up 295：一镜到底被切成两段（用户抓到 Lina k421 v1 3.50 s 剪切）──
+# 根因：峰值图与开场图取景不同（远近、人物位置），模型为同时满足两张图在特效那一刻切镜。
+# 实测边缘重合：同一镜头内两帧约 0.76，跨剪切约 0.54；当时四对开场 / 峰值图只有 0.37–0.51。
+
+[[check]]
+id = "keyframe.framing_match"
+stage = "keyframe"
+kind = "machine"
+layer = "spec"
+gate = true
+auto = true
+desc = "峰值图与开场图是同一个取景：机位、远近、人物位置与大小、背景都不变，只改动作与特效"
+how = "qc_pre.py machine 用 motion_check 的边缘重合比较开场图与峰值图，≥ 0.62 才过；不过就以开场图为底图重画峰值图"
+sources = ["dota_yingxiong#295"]
+
+[[check]]
+id = "spec.onetake"
+stage = "spec"
+kind = "machine"
+layer = "spec"
+gate = true
+auto = true
+desc = "技能视频规格写明一镜到底：一个连续固定镜头，不剪切、不转场、不跳时（本剧所有英雄技能视频都要求）"
+how = "qc_pre.py machine 查规格 text 块里有「一镜到底」或「不剪切」；没有就补进「要求」行再审"
+sources = ["dota_yingxiong#295"]
+
+# ── 2026-11-03 follow-up 342：违反物理与视线常识（用户抓到冰女 vlog s1 g1 / g2）──
+# g1：蓝光在她身后左边，她的头从没转向那里就开始「揉眼确认」；g2：冰面一碎她就像被吸进去，没有任何让她掉下去的物理原因。
+# 根因：规格只写「扭头看向左边」「她跟着往前栽进去」，没按画面左右写死东西在哪、她往哪转头，也没写掉落的受力原因。
+
+[[check]]
+id = "spec.notice_gaze"
+stage = "spec"
+kind = "review"
+layer = "quality"
+perspective = "character"
+gate = true
+auto = false
+desc = "角色「发现 / 看见」某物的那一拍，规格按画面左右写清那件东西在哪，并写出他先把头和眼睛转向它、它在他的视线上，之后才有反应"
+how = "逐拍找「看见、发现、注意到、察觉」：有没有写东西在画面哪一侧、他的头往哪转、转过去之后才惊讶 / 揉眼？只写「扭头看向左边」而不说画面哪边、或反应写在转头之前，判不过。还要写出用什么机位让人和物在同一条视线上：过肩 / 主观镜头（物在他头朝向的正前方）或反打（物在镜头方向、光照到他脸上、他看镜头旁边）；只靠「人在前景、物在背景」的单机位，模型常把物放到他身后，判不过（follow-up 343：g1 改了文字仍两次画成光在她背后）"
+sources = ["dota_yingxiong#342", "dota_yingxiong#343"]
+
+[[check]]
+id = "video.notice_gaze"
+stage = "video"
+kind = "review"
+layer = "quality"
+perspective = "character"
+gate = true
+auto = false
+desc = "成片里角色对某物有反应之前，头和眼睛确实转向了那件东西；对着别处就做出「看到了」的反应不过"
+how = "审稿人代入角色看拼图：那件东西在画面哪里？他反应的那几格，脸和视线朝向哪？不在一条线上就判不过"
+sources = ["dota_yingxiong#342"]
+
+[[check]]
+id = "spec.physical_cause"
+stage = "spec"
+kind = "review"
+layer = "quality"
+perspective = "director"
+gate = true
+auto = false
+desc = "每一次摔倒、掉落、塌陷、被推开或移动，规格都写出物理原因：重量压在哪、谁用了力、失去了什么支撑；不能是物体一碎人就凭空移动"
+how = "逐拍找「掉、摔、塌、栽、飞、滑」：上一拍有没有交代人的重量 / 受力 / 支撑？缺原因就判不过"
+sources = ["dota_yingxiong#342"]
+
+[[check]]
+id = "video.physical_cause"
+stage = "video"
+kind = "review"
+layer = "quality"
+perspective = "audience"
+gate = true
+auto = false
+desc = "成片里每次掉落、摔倒的原因看得见：人的重量压在塌掉的东西上、脚下失去支撑或被外力推动；不是像被吸进去一样凭空移动"
+how = "观众只看拼图，问「她为什么会掉下去？」答不出来、或看起来像被吸进去就不过"
+sources = ["dota_yingxiong#342"]
+
+# ── 2026-11-03 follow-up 344：镜组之间接不上（用户抓到冰女 vlog s1 g3 结尾她望向远方、g4 一开始就蹲着摸地板）──
+# 根因：g4 首镜规格虽写了「她走着」，镜头却写「近景，先拍她的手和地面」，模型直接从蹲姿开场，跳过了走过去的过程。
+
+[[check]]
+id = "spec.group_continuity"
+stage = "spec"
+kind = "review"
+layer = "quality"
+perspective = "director"
+gate = true
+auto = false
+desc = "每个镜组的第一镜接得上上一个镜组的最后一镜：人物位置、正在做的动作、视线与行进方向连续；中间省掉的过程（走过去、进门、蹲下）要在首镜里演出来，首镜的镜头也要从能看到这个过程的景别开始"
+how = "并排读上一镜组最后一镜的结尾一拍和这一镜组第一镜的开头一拍：人在哪、在做什么、朝哪走、看哪里？对不上、或首镜镜头一开始就是特写 / 结果姿态（已蹲下、已站在终点）判不过"
+sources = ["dota_yingxiong#344"]
+
+[[check]]
+id = "video.group_continuity"
+stage = "video"
+kind = "review"
+layer = "quality"
+perspective = "audience"
+gate = true
+auto = false
+desc = "成片里相邻镜组的交界处接得上：观众看得懂人物是怎么从上一个位置 / 动作到这一个的"
+how = "观众看上一镜组最后 2 秒与这一镜组前 2 秒的拼图，问「她是怎么到这里的？」答不出来就不过"
+sources = ["dota_yingxiong#344"]
+
+# ── 2026-11-03 follow-up 345：道具尺寸不对（用户抓到冰霜法典第一次出现太大，不像能拿在手里）──
+
+[[check]]
+id = "spec.prop_scale"
+stage = "spec"
+kind = "review"
+layer = "spec"
+perspective = "director"
+gate = true
+auto = false
+desc = "要被人拿、抱、夹、穿戴的道具，道具卡与分镜都写死实际尺寸（厘米）并给一个身体参照（比手掌 / 靴子 / 小臂大多少）；第一次出现时尤其要写"
+how = "找出本镜出现的每件可手持道具：卡上和分镜里有没有厘米尺寸和身体参照？只写「一本书」「一把剑」判不过"
+sources = ["dota_yingxiong#345"]
+
+[[check]]
+id = "video.prop_scale"
+stage = "video"
+kind = "review"
+layer = "quality"
+perspective = "audience"
+gate = true
+auto = false
+desc = "成片里可手持道具与人的比例合理，第一次出现时就看得出是一个人能拿起来的大小"
+how = "观众看道具第一次出现的那几格：拿身边的人或她的手、靴子比一比，像不像能拿在手里？显得像大部头或家具就不过"
+sources = ["dota_yingxiong#345"]
+
+# ── 2026-11-03 follow-up 347：切镜越轴（用户抓到冰女 vlog s1 g1 过肩切反打后蓝光跑到她脑后）──
+
+[[check]]
+id = "spec.screen_axis"
+stage = "spec"
+kind = "review"
+layer = "quality"
+perspective = "director"
+gate = true
+auto = false
+desc = "同一段戏里切镜不越轴：人物与关键物（她看着的东西、交谈对象）的屏幕方位在相邻镜头里保持一致（她在左看向右，下一镜也在左看向右）；反打时关键物在镜头身后，背景里不能再出现它"
+how = "按镜头顺序列出每镜「人物在画面哪侧、脸朝哪侧、关键物在哪侧」；有翻转、或反打镜头没写明背景里没有关键物，判不过。能用同侧的侧面双人构图就不用反打"
+sources = ["dota_yingxiong#347"]
+
+[[check]]
+id = "video.screen_axis"
+stage = "video"
+kind = "review"
+layer = "quality"
+perspective = "audience"
+gate = true
+auto = false
+desc = "成片切镜前后，关键物与人物的屏幕方位一致：不会上一镜在她前面、下一镜跑到她身后"
+how = "观众看每个切点前后各 1 秒的拼图，问「那个东西现在在她哪边？和上一镜一样吗？」不一样就不过"
+sources = ["dota_yingxiong#347"]
+
+# ── 2026-11-03 follow-up 348：微光却照亮人脸、同一场地距离忽远忽近（用户抓到冰女 vlog s1 g1）──
+
+[[check]]
+id = "spec.light_strength"
+stage = "spec"
+kind = "review"
+layer = "quality"
+perspective = "director"
+gate = true
+auto = false
+desc = "光源强弱和它的照明效果一致：写成「微弱、远处一点」的光，不能同时写它照亮人脸、映进眼睛；要照亮人，就得写成近而亮的光"
+how = "找出每个光源的描述（强 / 弱、远 / 近）和它照到什么；弱光却写了映在脸上、眼睛发光，判不过；弱光要明写『照不到她、脸上没有反光』"
+sources = ["dota_yingxiong#348"]
+
+[[check]]
+id = "spec.space_consistency"
+stage = "spec"
+kind = "review"
+layer = "quality"
+perspective = "director"
+gate = true
+auto = false
+desc = "同一场地的多个镜头，人与主要地标（墙、崖、门、建筑）的距离写成同一个数，并写出地标在画面里大概多大；不能一镜写『几米外』、下一镜写『远处』"
+how = "把同一镜组各镜里人到地标的距离描述并排列出来：有一镜没写、或写法互相矛盾（几米外 / 远处 / 正前方远处），判不过"
+sources = ["dota_yingxiong#348"]
+
+[[check]]
+id = "video.space_consistency"
+stage = "video"
+kind = "review"
+layer = "quality"
+perspective = "audience"
+gate = true
+auto = false
+desc = "成片里同一场地切镜前后，人与地标的距离和大小比例一致；微弱的光不会把人照亮"
+how = "观众看镜组拼图：冰崖 / 墙离她是不是一会儿近一会儿远？远处一点微光是不是把她的脸、眼睛照蓝了？有就不过"
+sources = ["dota_yingxiong#348"]
+
+[[check]]
+id = "spec.cut_contrast"
+stage = "spec"
+kind = "review"
+layer = "quality"
+perspective = "director"
+gate = true
+auto = false
+desc = "同一镜组里相邻两镜一定要看得出是换了机位：景别差一档以上，或机位角度差 30° 以上；同一段连续动作拆成两镜时，前一镜结尾的动作由下一镜接着做完（动作接动作），镜组里的天光亮度和色调保持一致，不靠整个画面突然变暗来交代事情"
+how = "把镜组各镜的景别、机位方向并排列出：相邻两镜景别和角度都差不多，判不过；写了『天色暗了一瞬』『云影扫过』这类整幅画面突然变亮或变暗，判不过（改成只写光源本身的明暗）"
+sources = ["dota_yingxiong#349"]
+
+[[check]]
+id = "video.jump_cut"
+stage = "video"
+kind = "review"
+layer = "quality"
+perspective = "audience"
+gate = true
+auto = false
+desc = "成片的每个剪切点看起来像换了机位，不像漏了帧：前后两帧景别、角度明显不同，亮度和色调接得上"
+how = "取每个剪切点前后各一帧并排看：人物大小、位置、角度几乎一样，或者整幅画面一下子亮度不一样，判不过"
+sources = ["dota_yingxiong#349"]
+
+[[check]]
+id = "spec.prop_whereabouts"
+stage = "spec"
+kind = "review"
+layer = "quality"
+perspective = "director"
+gate = true
+auto = false
+desc = "关键道具的去向前后一致：大到搬不动、固定在原地的东西，下一场不能出现在她手里；随身带的东西每一镜都还在身上（帽子、书）；新出现的同款道具要交代它本来就在那里"
+how = "列出每件关键道具在每一镜的位置（在哪、谁拿着、多大）：前后对不上就判不过；转场、特效段（风大、强光、传送）里帽子之类的随身衣物要明写『一直在』"
+sources = ["dota_yingxiong#349"]

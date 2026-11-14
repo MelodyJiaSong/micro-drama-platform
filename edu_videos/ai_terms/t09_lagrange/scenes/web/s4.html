@@ -1,0 +1,83 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  .open { position: absolute; left: var(--mx); top: 330px; }
+  .open .display { font-size: 200px; line-height: 1; }
+  .open .h1 { margin-top: 30px; }
+  #map, #map2 { position: absolute; left: var(--mx); top: 250px; }
+  .side { position: absolute; left: 960px; width: 860px; }
+  .rows { top: 270px; }
+  .rows .row { display: grid; grid-template-columns: 220px 1fr; align-items: baseline; padding: 22px 0; border-top: 1px solid var(--hair); }
+  .rows .row .v { font-size: var(--fs-h2); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .rows .row .k { font-size: var(--fs-caption); font-weight: 600; color: var(--sub); }
+  .gain { top: 560px; }
+  .gain .v { font-size: 92px; font-weight: 700; white-space: nowrap; }
+  .lam3 { position: relative; }
+  .lamnote { position: absolute; left: 50%; top: 96%; transform: translateX(-50%); font-size: 30px; font-weight: 600; }
+  .ttl { top: 750px; }
+  .ttl .t { position: absolute; top: 0; left: 0; white-space: nowrap; }
+  html[lang=en] .ttl .t.h1 { font-size: 56px; line-height: 1.2; }
+  html[lang=en] .ttl { top: 730px; }
+  .zero { top: 300px; }
+  .zero .display { font-size: 180px; line-height: 1; margin-top: 8px; }
+  .zero .h2 { margin-top: 24px; }
+  .sum { position: absolute; left: var(--mx); top: 300px; width: 1680px; }
+  .sum .h1 { margin-bottom: 40px; }
+  .sum .row { display: grid; grid-template-columns: 420px 90px 1fr; align-items: baseline; padding: 24px 0; border-top: 1px solid var(--hair); }
+  .sum .arrow { color: var(--faint); font-size: var(--fs-h2); }
+</style>
+
+<div class="eb eyebrow" data-zh='03 · 把 <span style="text-transform:none">λ</span> 看成价格' data-en="03 · Lambda as a price"></div>
+<div class="open" id="open"><div class="display"><span class="accent">λ</span> = 3</div>
+  <div class="h1" data-zh="这条规矩有多贵？" data-en="How costly is the rule?"></div></div>
+
+<svg id="map"></svg>
+<div class="side rows" id="rows">
+  <div class="row" id="r1" data-zh='<span class="k">围栏半径</span><span class="v">1.5 → <span class="accent">1.6</span></span>' data-en='<span class="k">Fence radius</span><span class="v">1.5 → <span class="accent">1.6</span></span>'></div>
+  <div class="row" id="r2" data-zh='<span class="k">最高点</span><span class="v">7.75 → <span class="accent">8.04</span></span>' data-en='<span class="k">Highest point</span><span class="v">7.75 → <span class="accent">8.04</span></span>'></div>
+</div>
+<div class="side gain" id="gain"><div class="v"><span class="c-good">+0.29</span> <span class="faint">≈</span> <span class="accent lam3">3<span class="lamnote">λ</span></span> × 0.1</div></div>
+<div class="side ttl">
+  <div class="h1 t" id="ta" data-zh="多爬高度 ≈ 3 × 放宽距离" data-en='Extra height ≈<br>3 × extra radius'></div>
+  <div class="display t grad" id="tb" style="font-size:110px" data-zh="影子价格" data-en="Shadow price"></div>
+</div>
+
+<svg id="map2"></svg>
+<div class="side zero" id="zero"><div class="h2" data-zh="山顶在围栏里" data-en="Summit inside the fence"></div>
+  <div class="display"><span class="accent">λ</span> = 0</div>
+  <div class="h2 ink2 nb" data-zh="规矩没挡着" data-en="No cost"></div></div>
+
+<div class="sum" id="sum"><div class="h1" data-zh='哪条规矩在卡你？' data-en='What <span class="accent">λ</span> tells you'></div>
+  <div class="row" data-zh='<span class="h2"><span class="accent">λ</span> 大</span><span class="arrow">→</span><span class="h2 c-bad">卡得狠</span>' data-en='<span class="h2">High <span class="accent">λ</span></span><span class="arrow">→</span><span class="h2 c-bad">Costly rule</span>'></div>
+  <div class="row" data-zh='<span class="h2"><span class="accent">λ</span> = 0</span><span class="arrow">→</span><span class="h2 ink2">没挡着</span>' data-en='<span class="h2"><span class="accent">λ</span> = 0</span><span class="arrow">→</span><span class="h2 ink2">No cost</span>'></div>
+</div>
+
+<script>
+const M = makeMap("#map", { scale: 110, dom: { x: [-2.0, 4.6], y: [-1.8, 3.2] } });
+const pS = D.p_star, k16 = 1.6 / 1.5, p16 = [pS[0] * k16, pS[1] * k16];
+const r16 = M.ring(1.6, "--accent", 6, "2 14");
+r16.setAttribute("stroke-linecap", "round");
+const dot = M.dot(pS);
+const M2 = makeMap("#map2", { scale: 110, dom: { x: [-2.6, 4.0], y: [-2.4, 2.6] }, peak: D.peak_in });
+const dot2 = M2.dot(D.peak_in);
+
+gsap.set([M.svg.node(), r16, dot, "#rows", "#r1", "#r2", "#gain", "#ta", "#tb", M2.svg.node(), "#zero", "#sum", "#sum .h1", "#sum .row"], { opacity: 0 });
+EDU.in(".eb", 0);
+// l24 λ = 3：这条规矩有多贵
+EDU.in("#open .display", EDU.t("l24", .05)); gsap.set("#open .h1", { opacity: 0 }); EDU.in("#open .h1", EDU.t("l24", .6));
+// l25 围栏放大：1.5 → 1.6
+EDU.out("#open", EDU.t("l25")); EDU.in(M.svg.node(), EDU.t("l25", .05), { y: 0 }); EDU.in(dot, EDU.t("l25", .05));
+EDU.in("#rows", EDU.t("l25", .1), { y: 0, d: .01 }); EDU.in("#r1", EDU.t("l25", .3)); EDU.in(r16, EDU.t("l25", .5));
+// l26 最高点 7.75 → 8.04，多 0.29 ≈ 3 × 0.1
+EDU.in("#r2", EDU.t("l26", .05)); moveDot(M, dot, p16, EDU.t("l26", .1));
+EDU.in("#gain", EDU.t("l26", .5));
+// l27 放宽一点，多得约三倍
+EDU.in("#ta", EDU.t("l27", .3));
+// l28 影子价格
+EDU.out("#ta", EDU.t("l28")); EDU.in("#tb", EDU.t("l28", .05));
+// l29 山顶在围栏里：λ = 0
+EDU.out([M.svg.node(), dot, "#rows", "#gain", "#tb"], EDU.t("l29")); EDU.in(M2.svg.node(), EDU.t("l29", .1), { y: 0 });
+EDU.in("#zero", EDU.t("l29", .45));
+// l30 看 λ，就知道哪条规矩在真正卡着你
+EDU.out([M2.svg.node(), "#zero"], EDU.t("l30")); EDU.in("#sum", EDU.t("l30", .02), { y: 0, d: .01 });
+EDU.in("#sum .h1", EDU.t("l30", .05)); EDU.in("#sum .row", EDU.t("l30", .35), { stagger: .25 });
+</script>

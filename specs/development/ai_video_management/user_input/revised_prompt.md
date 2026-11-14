@@ -12399,7 +12399,6 @@ story 组只含 1.1.1 总览、1.1.2 故事内容、1.1.3 执行与验证；分�
 
 目录 source 支持 `parent`（同组源路径）；编号为父编号加序号（如 1.1.1.1），`tools/workflow_catalog.py` 整理与检查子页连续；读取接受四级以上编号并返回 parent；导航中有子页的源显示为可展开目录，点击仍打开该源。
 
-
 ---
 
 ## 211 — 2026-10-08 19:12:52 — 故事片种分层
@@ -12424,7 +12423,6 @@ story 组只含 1.1.1 总览、1.1.2 故事内容、1.1.3 执行与验证；分�
 
 删除源页面片种切换、「片种：… 本页只写…」说明、导航片种标签与变灰及本地记忆；保留共用原则页的「片种适配」链接（列出全部片种）与目录 `formats`/`adapts` 元数据。
 
-
 ---
 
 ## 213 — 2026-10-08 20:37:26 — 影视改编镜头知识
@@ -12436,7 +12434,6 @@ story 组只含 1.1.1 总览、1.1.2 故事内容、1.1.3 执行与验证；分�
 ### 摘要
 
 影视改编新增 1.2.2 镜头设计（五个维度、选镜顺序、camera 写法、通则）与五个子页：功能镜头、景别、取景、角度与高度、焦点与景深；旧单篇 `ai_video_shot_sizes.md` 并入后删除。原知识页网址重定向到镜头设计源页面，目录不可用时的备用导航同样指向它。
-
 
 ---
 
@@ -12450,7 +12447,6 @@ story 组只含 1.1.1 总览、1.1.2 故事内容、1.1.3 执行与验证；分�
 
 `prompts.md` 改为 Prompt 编译总纲（分镜要给什么、落盘与导入、当前边界），新增子页 1.3.1.1 Prompt 结构（十行、来源字段、作用，附 EP1 冷开场真实编译示例）与 1.3.1.2 固定规则（key、声音、无对白、连续镜头、无字幕水印、版本门禁、确定性）。编译器代码不变（v3）。
 
-
 ---
 
 ## 215 — 2026-10-09 12:04:44 — 运镜：跟拍
@@ -12462,7 +12458,6 @@ story 组只含 1.1.1 总览、1.1.2 故事内容、1.1.3 执行与验证；分�
 ### 摘要
 
 镜头设计新增 1.2.2.6 运镜（目前收录跟拍）：是什么与不是什么（摇、俯仰不算；推拉跟、横移跟）；效果变量——运动质感（轨道、稳定器、升降航拍、手持）、焦距、景深、景别、角度、镜头位置、速度、多人视线引导、时长与剪辑，附片例；应该/不应该；写进分镜的方法与旧运镜提示词词库一致（只进 camera、起幅→运镜→落幅、不用「快速」）。总纲加「运镜」维度。
-
 
 ---
 
@@ -12476,7 +12471,6 @@ story 组只含 1.1.1 总览、1.1.2 故事内容、1.1.3 执行与验证；分�
 
 第二类改名「系统与代码」，分 2.1 代理与执行设置、2.2 管理应用（projects/ai_video_management 代码与默认值）、2.3 制作工具（tools 脚本与配置）；135 份源从 1.2/1.3/1.4 迁出（含 agent-team playbook 与三份通用流程规则）。1_AI Video 只留文档。影视改编分 1.2.2 镜头（shot，原镜头设计）与新增 1.2.3 场（scene：字段、用镜头覆盖一场的做法、应该/不应该）。
 
-
 ---
 
 ## 217 — 2026-10-09 12:33:15 — 术语表与关系可视化
@@ -12488,7 +12482,6 @@ story 组只含 1.1.1 总览、1.1.2 故事内容、1.1.3 执行与验证；分�
 ### 摘要
 
 结论：两棵树（叙事树、交付树）共享「场」，树间多对多，时间区间层（cue、字幕、拍点）与镜头多对多，资产被共享引用。新增 `ai_video_glossary.json`（31 术语、38 关系、3 条时间轴，定义经网络研究并附来源，未证中文译名照实标注）与 `/workflow/glossary` 页（React Flow 关系图、SVG 时间轴、术语列表、详情栏），目录新组 1.5 术语表。覆盖讲义写入 1.2.3 场「覆盖」一节。
-
 
 ---
 
@@ -12502,7 +12495,6 @@ story 组只含 1.1.1 总览、1.1.2 故事内容、1.1.3 执行与验证；分�
 
 全局目录新增 1.4 剪辑、1.5 声音与音乐、1.6 成片交付（占位指南），Prompt 组改名「Prompt 编译与出片」并加「出片」子页（现行规则与切自动的前提）；影视改编标注覆盖规划待设计；制作资源、术语表顺延 1.7、1.8。剧内导航加 5–7 占位 stage（无集文档），页面显示待设计。SKILL、AGENTS、CONVENTIONS、工作流说明、README 与术语表所属模块同步；workflow.json 标识保持 three-module-v1。
 
-
 ---
 
 ## 219 — 2026-10-09 13:51:52 — 总览：工作流全景与术语表
@@ -12514,7 +12506,6 @@ story 组只含 1.1.1 总览、1.1.2 故事内容、1.1.3 执行与验证；分�
 ### 摘要
 
 1_AI Video 顶部新增「1.0 总览」（目录组 overview，编号类别号 .0，工具与读取校验支持，模块编号不变），含工作流全景与术语表两页、共用抬头。工作流全景数据 `ai_video_workflow_map.json`（六模块、两段、关卡、产出、文件、支持层、交接/回路/供给连线）与 React Flow 页面（蛇形排布、筛选、点选详情、模块一览表）。术语表从 1.8 移入总览。
-
 
 ---
 
@@ -12528,7 +12519,6 @@ story 组只含 1.1.1 总览、1.1.2 故事内容、1.1.3 执行与验证；分�
 
 核查各工具官方条款，paid_services.md 新增「商业用途（全局必经）」表与规则，CONVENTIONS 调用前置第 1 步加入商业用途核对。明确不用：Eleven Music（自助档排除影视）、Udio、可灵、Cascadeur Free 及各家免费档；Dreamina / 即梦条款不明确，待用户决定；OpenAI 内置图像待核。
 
-
 ---
 
 ## 221 — 2026-10-09 14:23:03 — 执行商用清理
@@ -12540,7 +12530,6 @@ Dreamina / 即梦保留。按清单执行：删除 Eleven Music 入口与草稿�
 ### 摘要
 
 paid_services 标 Dreamina / 即梦为用户决定保留；删除两份 Eleven Music 脚本与两首草稿（回执与哈希入审计）、目录撤下；演员库直连可灵出图接口返回 403、UI 选项停用、手动出图提示改为 Dreamina；OpenAI 图像与 IndexTTS 结论为有条件可用并入表。
-
 
 ---
 
@@ -12554,7 +12543,6 @@ paid_services 标 Dreamina / 即梦为用户决定保留；删除两份 Eleven M
 
 影视改编按故事创作的做法分层：共用 1.2.2 镜头、1.2.3 场（含覆盖）；新增 1.2.4 片种（对比表）及 1.2.4.1 电影（视觉弧线、奇观段落、开场与结尾画面、世界的建立）、1.2.4.2 连续剧（风格由第一集定、单集结构、常驻场景与复用、跨集连续性、节奏与覆盖）。片种页登记 formats 与 adapts，共用页自动显示片种适配；filming.md 与 SKILL 读本剧片种页。内容经研究核实，出处见审计。
 
-
 ---
 
 ## 223 — 2026-10-09 14:27:46 — 好场的构成
@@ -12566,7 +12554,6 @@ paid_services 标 Dreamina / 即梦为用户决定保留；删除两份 Eleven M
 ### 摘要
 
 1.2.3 场改为总纲（定义、字段、子页、通则），新增 1.2.3.1 好场的构成（Mercurio 定义；冲突四类与赌注；人物发展；情节功能：轻推、段落高潮、幕高潮与转折点四效果；走位与调度；《沉默的羔羊》四要素合用；本剧用法），覆盖拆为 1.2.3.2；电影、连续剧的片种适配改指覆盖页；故事结构加「场」行链接；术语表同步。
-
 
 ---
 
@@ -12580,6 +12567,17 @@ paid_services 标 Dreamina / 即梦为用户决定保留；删除两份 Eleven M
 
 1.2 重排为 1.2.2 片种（幕 / 集：1.2.2.1 电影（幕）、1.2.2.2 连续剧（集））→ 1.2.3 场（1.2.3.1 好场的构成）→ 1.2.4 覆盖（由场的子页升为独立一级）→ 1.2.5 镜头（1.2.5.1–6）。页面标题、相互链接、模块指南、术语表位置、README、工作流说明与 e2e 期望同步。
 
+---
+
+## 225 — 2026-10-09 14:54:25 — 剪辑模块：AI 自动剪辑调研
+
+### 指令
+
+上网 deep research 如何通过 AI 自动做剪辑，把学到的内容以清晰、结构化的方式加到 1.4.1_剪辑模块下。
+
+### 摘要
+
+三路独立调研（工具现状、程序化流水线、剪辑工艺规则）。1.4.1 改为设计稿总纲：四步（选条、粗剪、精剪、锁片）各自定什么、机器做什么、人做什么，原则（决定即数据、封闭操作菜单、模型打分不当通过门、缺镜开单退回），边界（延长与局部重绘属收费生成、锁片须用户批准与独立审稿），现有工具与差距。新增子页 1.4.1.1 选条（标注、硬门与软分、VLM 看片能力）、1.4.1.2 粗剪（先音后画、决定文件与 OTIO 互通、代理参与方式）、1.4.1.3 精剪（Murch 取舍顺序、切点规则与检查方式、规则写成代价、竖屏节奏经验）、1.4.1.4 锁片（三档质检、冻结项、锁后变更）、1.4.1.5 AI 素材的修补与遮掩、1.4.1.6 AI 剪辑工具现状。未核实数字不写成规则，出处见审计 `.audit/adhoc_agents/2026-10-09/edit-module/`。
 
 ---
 
@@ -12604,18 +12602,6 @@ paid_services 标 Dreamina / 即梦为用户决定保留；删除两份 Eleven M
 ### 摘要
 
 编译器 v4：短标签、一字段一行（声音、时长、场景、画面、镜头、台词、要求、声音），台词每句单独一行、缩进两格；不改分镜结构、不新增字段。字幕读回同时支持 v3、v4。UI：Prompt 模块选中镜头时只显示该镜，深色代码块、字段名高亮、镜头编号行标色，带复制与上一镜／下一镜；选中场次时列出本场各镜链接与画面摘要；导航树的 Prompt 场次显示分镜地点。字段高亮正则补上画面、声音、要求、台词、情节、走位、光线、参考用法、负面词（仙剑镜头卡里原本未高亮的字段也随之高亮）。按用户追加说明，未照搬仙剑的参考图、角色、走位、光线等字段，也未扩展分镜结构。
-
----
-
-## 225 — 2026-10-09 14:54:25 — 剪辑模块：AI 自动剪辑调研
-
-### 指令
-
-上网 deep research 如何通过 AI 自动做剪辑，把学到的内容以清晰、结构化的方式加到 1.4.1_剪辑模块下。
-
-### 摘要
-
-三路独立调研（工具现状、程序化流水线、剪辑工艺规则）。1.4.1 改为设计稿总纲：四步（选条、粗剪、精剪、锁片）各自定什么、机器做什么、人做什么，原则（决定即数据、封闭操作菜单、模型打分不当通过门、缺镜开单退回），边界（延长与局部重绘属收费生成、锁片须用户批准与独立审稿），现有工具与差距。新增子页 1.4.1.1 选条（标注、硬门与软分、VLM 看片能力）、1.4.1.2 粗剪（先音后画、决定文件与 OTIO 互通、代理参与方式）、1.4.1.3 精剪（Murch 取舍顺序、切点规则与检查方式、规则写成代价、竖屏节奏经验）、1.4.1.4 锁片（三档质检、冻结项、锁后变更）、1.4.1.5 AI 素材的修补与遮掩、1.4.1.6 AI 剪辑工具现状。未核实数字不写成规则，出处见审计 `.audit/adhoc_agents/2026-10-09/edit-module/`。
 
 ---
 
@@ -12757,6 +12743,58 @@ s2 第一轮出片推车形制每镜不一（带篷货车 / 敞开木架车 / �
 ### 摘要
 
 2/8 决定做什么，不降低做到什么程度。测试体系的取舍据此：纳入范围的测试必须稳定、可重复（同样输入同样结论），不接受时好时坏的测试；每次改进用测试固定（只进不退）；非确定环节（LLM / 看图评审）要么做到结构化、金标校准、可复现，要么不进入必须通过的一层。`.agents/skills/ai-videos-pipeline/SKILL.md` 的「不追求 100%」原则行补上这一句。
+
+---
+
+## 236 — 2026-10-11 — 剪辑模块补「转场」：九种剪辑转场提炼进工作流
+
+> target_stage: 3
+> target_artifacts:
+>   - .agents/skills/ai-videos-pipeline/modules/edit-transitions.md
+> severity: low
+
+### 指令
+
+用户贴来 StudioBinder《The Shot List》第 9 集「9 种剪辑转场」课程字幕，要求提炼精华补充到工作流。
+
+### 摘要
+
+新增剪辑子页 `modules/edit-transitions.md`（目录 1.4.1.7「转场」）：切、淡入淡出（含黑场过渡、白场）、叠化（含叠印）、匹配剪辑（含匹配叠化）、光圈、划像、遮挡过渡、甩镜、硬切、J/L 剪辑的定义、功能与原课片例；「本剧用法」按 AI 出片条件分出剪辑可做的转场菜单与须在影视改编 / Prompt 编译预先设计的转场（匹配、遮挡、甩镜），并给竖屏短剧的应该 / 不应该。`edit.md`、`edit-fine.md` 加链接；`ai_video_workflow.md` 剪辑段落登记。本剧用法是取舍判断，不是原课结论，页内已注明。
+
+---
+
+## 237 — 2026-10-11 — 新增 Codex 内置出图工具（画质高于即梦 CLI）
+
+> target_stage: 3
+> target_artifacts:
+>   - tools/codex_image.py
+>   - .agents/skills/codex-imagegen/SKILL.md
+> severity: medium
+
+### 指令
+
+用户要求加入一个比即梦 CLI 画质更高的出图工具：让 Claude Code 通过 Codex CLI 调用 Codex 内置 imagegen（复用 ChatGPT 订阅，不要 API key）。
+
+### 摘要
+
+新增 `tools/codex_image.py`：先写 RequestLog（provider `codex_imagegen`），再在临时空目录、只读沙箱跑 `codex exec --json`（指令走 stdin，参考图 `--image`），从 Codex 会话记录取 `savedPath` / `revisedPrompt` / `failure`（exec JSONL 不含出图条目），回退为 `generated_images/<thread_id>/` 新文件，拷到 `--out`；不覆盖已有文件，拿不到图不自动重提。新增共用 skill `codex-imagegen`（Claude 入口 `/codex-imagegen`、`/ai_videos__codex_imagegen`），paid_services.md 增「Codex 内置出图」，assets.md 出图服务注明；工作流目录登记 1.7.6 / 2.3.41。测试 `tools/tests/test_codex_image.py`（4 条）。实测一张文字出图约 140 秒、941×1672 PNG，日志在 `ai_videos/_research/request_log.md`。未改 `image_engine.py` 的自动路由：人物、道具是否改用它由用户决定；参考图与透明背景未实测。
+
+---
+
+## 238 — 2026-10-11 — Codex 内置出图设为默认，即梦降为最低选项
+
+> target_stage: 3
+> target_artifacts:
+>   - tools/image_engine.py
+> severity: medium
+
+### 指令
+
+用户：把 Codex 出图方式作为默认，Dreamina CLI 出图作为最低选项，除非其他选项都不 work。
+
+### 摘要
+
+`tools/image_engine.py` 改为统一顺序：auto ＝ Codex → ElevenLabs → 即梦（`order()`；`CODEX` 加入 `CHOICES`）；scene/bg 为 Codex → ElevenLabs，仍禁即梦（`scene_choice()` 改返回顺序列表）；超即梦 1600 字时跳过即梦；显式 `--engine X` 只用 X。取代 follow-up 229（人物 ElevenLabs、prop 即梦）与 017 / 022 / 027 / 029（props / 装备三视图只用即梦、蓝档武器 ElevenLabs）的引擎分工；`equipment_lib.Config.engine_for` 只剩 `--only-engine` 分批与卡字数检查。五个出图器（`gen_char_images`、`gen_bg_images`、`gen_bg_assets`、`gen_outfit_views`、`gen_equipment`）接入 `codex_image.render`（画幅写进 prompt，先落临时名再改名）。明确失败才换下一家；即梦已出图扣费但下载失败（DownloadLost）不换家、不重提。文档同步：CONVENTIONS.md 出图授权、assets.md 出图服务、paid_services.md、ai_video_workflow.md、prompts-references.md、codex-imagegen skill。测试：`test_scene_image_policy.py` 改为新顺序（含 scene 先 Codex 后 ElevenLabs、不退即梦、首家成功即停）；tools/tests 全部通过。未做：出图器经 Codex 的真实批量出图、参考图出图实测。
 
 ---
 
@@ -13201,8 +13239,6 @@ shengji_zhilu ep01 按新故事重做后要先给 s2 出片：s2 的参考只差
 - 机检（blocker）：carry 的人、件、位置、时段合法；同一人同一件时段不重叠；同 key 的东西不同时在两个人身上，也不同时是地上的 `[[prop]]`；用兵器出手的 `[[hit]]`（含故意落空）那一刻出手的人手里要有这件（盾看 shield）。
 - previz：`overhead_previz.py` 把 carry 写成 `[[角色.持物]]`——在手里的握法跟着这一刻 `[[pose]]` 里的持物姿态走（双手低握、前砸、扛肩R、靠腿、单手握R……），没写取该件的默认握法；背在身后用引擎新姿态「斜背」（盾用「背盾」）。用兵器的 `[[hit]]`（不落空）抄成 `[[命中]]`，渲染时查锤头真的贴到目标。持物件的默认长度与握法表放 `tools/previz/planschema.py` 一处。
 
----
-
 
 ## 263 — 2026-10-16 09:40:00 — Codex 出图超时在 Windows 上杀不掉子进程
 
@@ -13214,6 +13250,11 @@ shengji_zhilu ep01 按新故事重做后要先给 s2 出片：s2 的参考只差
 ### 指令
 
 （shengji_zhilu follow-up 056 重出背景时发现。）`tools/codex_image.py` 的 900 秒超时在 Windows 上不生效：`subprocess.run` 超时只杀 `codex.CMD` 外壳，node / codex 子进程还握着管道，脚本一直挂到 Codex 自己放弃（实测 24–40 分钟），代理只能按 PID 手动杀。改成超时时杀整棵进程树（Windows `taskkill /T /F`，其他系统进程组），超时后照旧按「结果未知、不自动重提」处理。
+
+### 摘要
+
+- 新 `run_codex(argv, *, input, cwd, timeout)`：Popen 启动（Windows 新进程组，其他系统新会话），超时杀整棵进程树后再收尾，抛 `subprocess.TimeoutExpired`（带已收到的输出）；`generate` 改经它调用，其余行为不变。
+- 测试：原 5 条改为替换 `run_codex`；新增 1 条真进程测试——子进程再拉起一个长睡的孙进程握着管道，超时 2 秒后 30 秒内返回且孙进程已退出。
 
 ## 264 — 2026-10-16 20:27:05 — 从流程中彻底删除 R2 媒体同步
 
@@ -13235,23 +13276,113 @@ shengji_zhilu ep01 按新故事重做后要先给 s2 出片：s2 的参考只差
 
 用户：「R2 这部分已经不需要了，把这部分彻底从流程删除掉」。媒体不再同步到 Cloudflare R2：删除同步工具、索引与 git hooks 模板，规范与 skills 里不再要求「媒体走 R2、先传字节再提交索引」。媒体仍然不进 git（`.gitignore` 规则保留），只存本机。
 
+### 执行边界（代理判断）
+
+- 删除：`tools/assets_sync.py`、整个 `tools/assets/`（R2 客户端、清单、扫描、hooks 模板、测试、`.env.example`、依赖 boto3）、`ai_videos/assets.json` 索引、本机派生缓存 `.assets_cache.json`。本机没有装过这些 git hooks（`.git/hooks` 只有 sample、未设 `core.hooksPath`），不用卸载。
+- 保留：`.gitignore` 里媒体扩展名的忽略规则（媒体照样不进 git），只改注释；删掉 `.assets_cache.json` 一行。
+- 历史记录不回写：各剧 / 各项目的 changelog、follow-up、旧剧数据与 research 里提到 R2 的文字是当时的记录，不改。
+- 管理应用代码没有引用 R2，不用改代码；README 里一句「也不进 R2」改成只说不进 git。
+
+### 摘要
+
+- 删除：`tools/assets_sync.py`；`tools/assets/` 整个包（`r2.py`、`manifest.py`、`scanner.py`、`plan.py`、git hooks 模板 5 个、`.env.example`、`README.md`、`requirements.txt`、测试 2 个）；`ai_videos/assets.json`；本机 `.assets_cache.json`。根 `requirements.txt` 去掉 `-r tools/assets/requirements.txt`（boto3）。
+- 规范：`CONVENTIONS.md`「媒体走 R2 不走 git」改为「媒体不进 git，只存本机，不再同步 R2」，另两处（媒体迁移、旧流程说明）去掉 R2；`AGENTS.md` 收尾保留项去掉「媒体 R2 索引流程」；`resources/assets.md` 媒体一节、`paid_services.md` 的 R2 资产迁移一段删除。
+- 注释：`.gitignore`（媒体规则保留、删 `.assets_cache.json`）、`tools/previz/review.py`、`tools/fetch_wow_maps.py`、`tools/build_scene.py`、管理应用 README 的白模说明。
+- 工作流目录：去掉 3 个已删源（`tools/assets_sync.py`、`tools/assets/scanner.py`、`tools/assets/r2.py`），`--fix` 重排编号，现 11 组 / 141 源、编号连续；管理界面重新构建。
+
+Validation: tools 测试 106 passed；后端 344 passed / 1 skipped；`workflow_catalog --check` 通过；`sync_agent_skills --check` 通过（5 个共用 skill / 10 个 Claude 入口）。
+
 ## 265 — 2026-10-16 20:44:10 — 出片分两步：先 480p 草稿，用户审过再用它出 720p
+
+> target_artifacts:
+>   - tools/shot_take.py
+>   - tools/shot_pack.py
+>   - tools/tests/test_shot_take_stages.py
+>   - ai_videos/shengji_zhilu/workflow.json
+>   - projects/ai_video_management/libs/infrastructure/readers/shot_renders__reader.py
+>   - projects/ai_video_management/（草稿审核通过的命令、接口与界面按钮）
+>   - .agents/skills/ai-videos-pipeline/modules/prompts-generate.md
+>   - .agents/references/project/paid_services.md
+> severity: medium
 
 ### 指令
 
 用户：「帮我加一个 step，因为生成 480p 的 cost 比较低，时间比较快，所以我们可以先生成一版 480p，等我审核过之后，再用它生成 720p」。出片改成两步：第一步按资料包出 480p 草稿；用户审过草稿、标记通过后，第二步出 720p 正式条，并把通过的 480p 草稿作为参考视频一起提交（「用它生成」），让 720p 沿用草稿的镜头、走位、表演与节奏。
 
+### 执行边界（代理判断）
+
+- 「生成永远人点」不变：草稿和正式条都只在用户决定后提交。草稿「通过」由用户在管理界面点（写进该条 `review.md` 的「状态：」行），代理不替用户判通过；正式条只能从用户标了通过的草稿出。
+- 「用它生成」按参考视频实现：Seedance 没有「放大既有视频」的接口（CLI 只有 image_upscale），同一 prompt 重抽一次 720p 不能保证跟草稿一样。正式条提交时保留资料包原有的全部参考与 prompt，追加草稿视频为最后一条参考视频，并在「参考：」「参考用法：」行补一句说明：镜头、构图、走位、动作、表演与台词节奏照它，人物长相与服装仍以三视图为准。
+- 草稿视频作参考前在本机统一成 1280×720、24fps、去音轨，超过 15 秒按 `tools/previz/seedance_ref.py` 切段（参考视频要求 ≥409600 像素、2–15 秒；480p 宽 848 时像素不够）。
+- 分辨率读剧 `workflow.json`：`prompt.draft_resolution`（新增，本剧 480p）与 `prompt.resolution`（720p）。CLI 帮助没有列 480p，这一档尚未实测；第一次草稿提交即实测，被拒（提交阶段失败不扣费）就停下汇报，不自行改档。
+
+### 摘要
+
+- `tools/shot_take.py`：`submit` 加 `--stage draft|final`（默认 draft）与 `--from`；草稿按 `prompt.draft_resolution`（480p）提交资料包原样；正式条只接受用户标了「通过」的草稿条，按 `prompt.resolution`（720p）提交，草稿统一成 1280×720 / 24fps / 无声 / ≤15 s 段后追加为最后的参考视频，「参考：」「参考用法：」两行补上它；参考视频总数超过模型上限就不提交。`generation.json` 记 `stage`、实际分辨率与正式条的 `from_take`（原来分辨率固定写设置值）；pending 文件带 meta，poll 补收也记得是哪一步。新命令 `approved <集目录>` 列出草稿已通过、还没出正式条的镜头。
+- `tools/shot_pack.py cmd` 打印草稿命令（480p），并提示正式条用 `shot_take --stage final`。
+- 本剧 `workflow.json` 的 `prompt` 加 `"draft_resolution": "480p"`。
+- 管理应用：`POST /api/shot-take/verdict`（ShotTakeWriter / ShotTakeCommand / 路由 / 错误处理）；生成记录读出 `stage`、`from_take`；界面每条显示「草稿 / 正式条」，草稿有「通过，可出正式条」「不通过」按钮。界面已重新构建。
+- 规范：`modules/prompts-generate.md` 分辨率一行改写并新增「两步出片」一行，条目录说明加 `stage` / `from_take`；`paid_services.md` 记 480p 在本 CLI 入口尚未实测（本机 CLI 帮助不认 2.5 与 480p；BytePlus 文档列 2.5 输出 480p / 720p，480p 是最低一档）。
+- 测试：`tools/tests/test_shot_take_stages.py`（新，9 条，先红后绿）；`tests/test_shot_take_verdict.py`（新，9 条）；`test_api_write_origin_guard.py` 加新写路由的同源用例；`apps/ui/test/take-verdict.test.tsx`（新）。
+
+Validation: tools 115 passed；后端 355 passed / 1 skipped；UI 新测试通过（全量 vitest 只剩旧有的 workflow-map 失败）；`workflow_catalog --check`、`sync_agent_skills --check` 通过。480p 实际提交未做（生成等用户决定）。
+
 ## 266 — 2026-10-16 21:14:30 — 草稿条单独放在每镜的 drafts/ 目录
+
+> target_artifacts:
+>   - tools/shot_take.py
+>   - tools/tests/test_shot_take_stages.py
+>   - projects/ai_video_management/libs/infrastructure/readers/shot_renders__reader.py
+>   - projects/ai_video_management/libs/infrastructure/writers/shot_take__writer.py
+>   - .agents/skills/ai-videos-pipeline/modules/prompts-generate.md
+> severity: low
 
 ### 指令
 
 用户：「帮我把 ep1 scene1、scene2 的所有 shot 都生成一遍 480p 草稿，草稿应该存在他自己的一个特殊 folder 里，在每个 shot 下面的」。草稿条不再和正式条混在 `renders/` 里，改放每镜自己的 `drafts/{条}/`；正式条仍在 `renders/{条}/`。
 
+### 执行边界（代理判断）
+
+- 目录名 `drafts/`（与 `renders/`、`previz/`、`planning/` 同一层，英文目录名沿用仓库约定）。条目录格式、`generation.json`、`review.md`、`prompt.txt` 与正式条相同。
+- 等出片期间的 `.pending/` 跟着阶段放（草稿在 `drafts/.pending/`），poll 两处都找。
+- 管理界面「生成记录」与审片串联同时读 `drafts/` 和 `renders/`，按时间合在一起；草稿审核按钮照旧。网页手动下载的导入仍进 `renders/`。
+- 本次生成按用户指令执行：EP1 s1、s2 全部镜头各提交一条 480p 草稿（shengji_zhilu 侧另记）。
+
+### 摘要
+
+- 草稿条改放每镜 `drafts/{条}/`，正式条仍在 `renders/{条}/`；`.pending/` 跟着阶段放，poll 两处都找；`approved` 只看 `drafts/` 里的草稿、`renders/` 里的 `from_take`。
+- 管理应用：生成记录（含审片串联）同时读 `drafts/` 与 `renders/`，按时间合并；审核接口接受 `drafts/` 下的条。`series_shared` 与 `tools/wow_version_gate.py` 把 `drafts` 当作非场景 / 跳过目录。界面重新构建。
+- 测试：tools 115 passed（草稿落 `drafts/`、正式条落 `renders/`）；后端相关 107 passed。
+- **实测 480p 被拒**：按用户指令提交 EP1 s1 st1 的 480p 草稿，Dreamina CLI 上传完成后服务端回 `video_resolution must be one of 720p, 1080p`，没有 submit_id、不扣费（request_id 9e4433b7…）。按 265 的边界停下，没有自行改成 720p，其余 38 镜未提交，等用户决定。`paid_services.md` 已记这次实测。
+- 用户问「是不是 dreamina cli 不是最新版的原因」：是。本机 1.4.5（2026-06-04），官方最新 1.4.20（2026-10-16）帮助里 seedance2.5 收 480p / 720p / 1080p。按用户原指令（出 480p 草稿）升级 CLI：旧二进制备份为 `~/bin/dreamina_1.4.5_backup`，登录与积分不受影响；s1 st1 480p 草稿重新提交成功（84 积分），其余 38 镜分 4 路并行提交。
+
 ## 267 — 2026-10-16 21:52:03 — 场次页加「草稿」tab：全场镜头草稿缩略图，点开放大预览
+
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/components/SceneDraftsPanel.tsx（新）
+>   - projects/ai_video_management/apps/ui/src/components/EpisodeWorkflowPage.tsx
+>   - projects/ai_video_management/apps/ui/src/components/EpisodeWorkflowPage.css
+>   - projects/ai_video_management/apps/ui/test/scene-drafts.test.tsx（新）
+> severity: low
 
 ### 指令
 
 用户：「帮我加一个 feature，在每个 scene 的 page，比如 ep1_s1，给我一个草稿 tab，点击后帮我展示所有 shot 的 MP4 的缩略版，点击我可以选择性放大 preview」。
+
+### 执行边界（代理判断）
+
+- 「scene 的 page」＝ Prompt 编译模块选中某一场时的页面（`?module=prompts&scene=sN`，草稿与生成记录都挂在这一模块）。页内加「镜头 / 草稿」两个 tab，选中的 tab 写进地址（`tab=drafts`），刷新或分享链接时保持不变。
+- 草稿 tab：本场每个镜头一格，按分镜顺序；格内是该镜**最新一条草稿**（`drafts/` 里的条，follow-up 266）的静音缩略视频，配镜头 key、条数与审核状态；还没有草稿的镜头也占一格写「还没有草稿」，一眼看出缺哪镜。
+- 点缩略图弹出放大预览：大播放器（有声、可拖动）、镜头 key、状态、「通过，可出正式条 / 不通过」按钮（与生成记录同一接口），以及去镜头页的链接；Esc、点遮罩或关闭按钮退出，左右键切到上一镜 / 下一镜的草稿。
+- 只读后端已有数据（工作流接口里的 renders 已合并 drafts），不加后端接口。
+
+### 摘要
+
+- 新组件 `SceneDraftsPanel.tsx`：本场每镜一格（分镜顺序），最新一条草稿的静音缩略视频（鼠标悬停播放），配镜头 key、审核状态与草稿条数；没有草稿的镜头写「还没有草稿」；顶部「N 镜 · M 镜有草稿」。点缩略图弹出放大预览（有声播放器、通过 / 不通过、打开镜头页、上一镜 / 下一镜），Esc、点遮罩或 × 关闭，← / → 在有草稿的镜头间切换。
+- `EpisodeWorkflowPage.tsx`：Prompt 编译模块选中场次时显示「镜头 / 草稿」tab（`tab=drafts` 写进地址）；样式在 `EpisodeWorkflowPage.css`。
+- 测试：`apps/ui/test/scene-drafts.test.tsx`（新，2 条）。
+
+Validation: UI 75 passed / 1 failed（workflow-map 旧有失败，未变）；tsc 通过；界面重新构建。
 
 ---
 
@@ -13283,21 +13414,89 @@ shengji_zhilu ep01 按新故事重做后要先给 s2 出片：s2 的参考只差
 
 ## 269 — 2026-10-17 11:45:58 — 剪辑模块（5_剪辑）做成页面，草稿剪辑与正片剪辑分开
 
+> target_artifacts:
+>   - projects/ai_video_management/libs/{common/scene_cut.py, domain/errors/scene_cut__error.py, infrastructure/readers/scene_cut__reader.py, application/dtos/scene_cut__dto.py, application/queries/scene_cut__query.py}（新）
+>   - projects/ai_video_management/apps/api/routes/scene_cut__route.py（新）、apps/api/{container.py, app_factory.py, routes/__init__.py}
+>   - projects/ai_video_management/libs/infrastructure/readers/tree__reader.py
+>   - projects/ai_video_management/apps/ui/src/{lib/sceneCuts.ts, components/EditStagePanel.tsx}（新）、components/EpisodeWorkflowPage.{tsx,css}
+>   - projects/ai_video_management/tests/test_scene_cut.py、apps/ui/test/edit-stage.test.tsx（新）
+> severity: medium
+
 ### 指令
 
 用户：「cut 好的 MP4 在哪，我要在 UI 上 preview」「从 UI 上怎么 navigate 到这里？」「对，逐渐把模块 5 构建出来，但是要区分草稿的剪辑和正片的剪辑，现在这个是草稿」。
 
+### 执行边界（代理判断）
+
+- 「模块 5」＝ 导航里的「5_剪辑」（剪辑模块）。先做只读页面：看各场剪辑的成片与时间线；剪辑本身仍由 Claude Code / Codex 用 `tools/scene_cut.py` 做，页面不提供改切点或渲染按钮（以后按模块设计再加）。
+- 草稿剪辑与正片剪辑：数据分目录（`edit/draft/`、`edit/final/`），决定里 `stage` 与目录一致；草稿剪辑只用 `drafts/` 草稿条，正片剪辑只用 `renders/` 正式条（工具 check 时强制）。已有的 s3、s4 剪辑移到 `edit/draft/` 并改名（魔兽世界 follow-up 061 补充）。
+- 声音与音乐、成片交付仍是占位。
+
+### 摘要
+
+- 后端：`GET /api/scene-cuts?episode_path=`（SceneCutReader → SceneCutQuery → EpisodeCutsQdto），按分镜顺序给每场的草稿剪辑 / 正片剪辑版本、成片路径、时间线、备注与违例；坏文件、stage 与目录不一致照列并带 error；成片文件名不能带路径。导航「5_剪辑 → EP」有剪辑时展开为场次 →「草稿剪辑 · vN」「正片剪辑 · vN」。
+- 前端：`EditStagePanel` 取代剪辑的占位页：「草稿剪辑 / 正片剪辑」tab（`cut=`）、场次列表、版本切换（`v=`）、干净版 / 标注版播放器、时间线（点起点跳转；J/L 显示声音区间；缺镜占位整行标出并列出分镜与台词）、备注与有意违例。
+- 测试：后端 `tests/test_scene_cut.py`（新，6 条）；前端 `test/edit-stage.test.tsx`（新，4 条）；`episode-scenes.test.tsx` 的占位用例改测「声音与音乐」。
+
 ## 270 — 2026-10-17 13:50:00 — 图片只用 ElevenLabs 或 Codex 内置出图，即梦只用于视频
+
+> target_stage: 3
+> target_artifacts:
+>   - tools/image_engine.py
+>   - tools/service_request.py
+>   - tools/gen_equipment.py 等出图器的引擎选项与说明
+>   - CONVENTIONS.md、resources/assets.md、paid_services.md、ai_video_workflow.md、prompts-references.md
+> severity: medium
 
 ### 指令
 
 用户：「顺便帮我加入流程，出任意图片之后只有两个选择，eleven labs 或者 codex imagegen，dreamina 只用来生成视频」。
 
+### 执行边界（代理判断）
+
+- 取代 238 里「即梦作图片最低选项」：所有图片（人物、换装、道具、物件、装备、背景、plate、镜头首尾帧等）auto ＝ Codex 内置出图 → ElevenLabs，前一家明确失败才换下一家；没有第三家，两家都失败就报出来。显式 `--engine dreamina` 出图一律报错。
+- 兜底放在唯一出处：`image_engine.order()` 不再给出即梦；`RequestLog` 的即梦图片操作（CLI `text2image` / `image2image`、HTTP 图片接口）不论归属一律拒绝，任何出图器或手工命令都绕不过去。即梦的视频、查询、下载照常（已扣费任务的取回不受影响）。
+- 出图器里即梦专用的分支（即梦字数硬限、`--sheet` 三视图设定图、`--only-engine dreamina` 分批）随引擎选项一起失效，保留代码路径但不可达的部分删掉入口，不重写出图器。
+- 历史即梦图不在本条处理（物件三视图另由 shengji 062 重出）。
+
+### 摘要
+
+- **规则**：任何图片只有两个选择，Codex 内置出图 → ElevenLabs（auto 顺序；显式 `--engine` 只能点这两家）；即梦只用于视频。
+- **代码**：`tools/image_engine.py` 的 `CHOICES` / `AUTO_ORDER` 去掉即梦，`order()` 点名即梦直接报错，`scene_choice()` 与普通图片同序；新增 `reject_dreamina_image()`（旧名 `reject_dreamina_scene` 保留为别名）。`tools/service_request.py` 的两处兜底（CLI `text2image` / `image2image`、`invoke` 的即梦图片操作）改为不论归属一律拒绝，请求不落盘、不执行。出图器的 `--engine` 选项随 `CHOICES` 自动去掉 dreamina；说明文字改为新顺序（`gen_char_images`、`gen_outfit_views`、`gen_equipment`（`--sheet` 标为停用）、`gen_bg_assets`、`gen_bg_images`、`dreamina_image`）。
+- **文档**：`CONVENTIONS.md`「场景 / 背景图片的生成服务」改为「图片的生成服务」并扩到所有图片，出图授权一条改引用 270；`resources/assets.md`「出图服务」表；`paid_services.md`（服务表、图片入口、手工命令示例删去即梦出图、图片服务限制一节、Codex 默认顺序，补记 Codex 提前退出与并发 429 的实测）；`ai_video_workflow.md`、`prompts-references.md`、`codex-imagegen` skill。
+- **测试**：`test_scene_image_policy.py` 改为「即梦不出任何图（人物 / 道具 / 镜头图 / 封面都拒，且不落日志）」「即梦视频、查询、余额照常」「auto 只有 Codex → ElevenLabs」；`test_outfit_view_refs.py` 的即梦镜像背面用例改为点名即梦被拒；`test_service_request.py` 的付费示例改用视频操作。tools 测试 121 通过；`workflow_catalog --check` 11 组 / 143 源；`sync_agent_skills --check` 通过。
+- **未做**：出图器里即梦专用的分支代码（字数硬限、设定图裁切、即梦提交与找回）没有删，已不可达；历史即梦图不在本条范围（shengji 物件由其 062 重出）。
+
+---
+
 ## 271 — 2026-10-17 20:40:00 — 分镜场页面加「场的走位图」（俯视简图，人与物的位置、编号虚线轨迹）
+
+> target_stage: 6
+> target_artifacts:
+>   - tools/scene_blocking.py（新）、tools/shot_overhead.py（画完镜头 overhead 后重画所在场的走位图）
+>   - apps/ui/src/components/EpisodeWorkflowPage.tsx（filming 模块每场显示走位图）
+>   - .agents/skills/ai-videos-pipeline/modules/prompts-overhead.md
+> severity: medium
 
 ### 指令
 
 用户：在影视改编的场页面（如 `/drama?drama=ai_videos/shengji_zhilu&episode=ep01&module=filming&scene=s1`）除了文字，还要看到一张俯视图：大概背景的简笔画，用颜色和形状（红色圆形、方块、蓝色三角等）表示重要的人或物，看得出站位与相互位置；用箭头和虚线画出他们在这一场的运动轨迹，多条虚线标 1、2、3。加到所有场。
+
+### 执行边界（代理判断）
+
+- 专业叫法：场的走位图（blocking diagram / 场面调度图）。数据唯一出处是各镜的 `planning/overhead.toml`（不另存一份坐标）；一场一张，叠起本场每个镜头的走位，编号＝本场镜头的播放顺序。
+- 人＝彩色圆（颜色与 overhead、previz 人偶同一张 `figure_colors`），怪物与匪徒＝三角，物件与道具＝方块；本镜内移动＝带箭头的虚线，标镜号。不画机位（用户要看人与物的相互位置；机位仍在每镜 overhead）。
+- 同一场里不同镜用了不同场地平面图（例如河边桥头与葡萄园）时，按平面图分块画在同一张图里。
+- 还没写 overhead 的镜不画，图下注明缺哪几镜；场里一镜都没有就不出图，页面显示「尚未生成」。
+
+### 摘要
+
+- **工具**：新增 `tools/scene_blocking.py`：读本场各镜 `planning/overhead.toml`，出 `scenes/sN/planning/sN_blocking.png`——场地简笔画底图（与 Seedance 版 overhead 共用 `shot_overhead.sketch_site`，从 `render_ref` 抽出，重构前后图逐字节一致）；人＝彩色圆（`figure_colors`），群演卡（m）＝三角，物件 / 道具＝橙色方块；镜内移动＝带箭头虚线标镜号，同一站位的镜号合并成区间（「3–5·8」）；同场多张平面图分块画；右栏图例与镜头表。`shot_overhead.py` 画单镜后重画所在场，`--all` 后重画整集各场。
+- **UI**：`EpisodeWorkflowPage` 的影视改编场页面在场次说明下显示走位图（`ZoomableImage`，点击放大；加载失败显示「走位图尚未生成」）；单镜页不重复。`ZoomableImage` 加可选 `onError`。
+- **测试**：`tools/tests/test_scene_blocking.py`（4）；UI `episode-scenes.test.tsx` 加 2 条；tools 测试全过；UI 测试中 `workflow-map.test.tsx` 1 条失败与本次无关（工作流全景数据由别的未提交改动造成），其余全过；`tsc --noEmit` 通过。
+- **文档 / 目录**：`prompts-overhead.md` 加「场的走位图」一段；`workflow_catalog.json` 登记 `tools/scene_blocking.py`（2.3.41）。
+
+---
 
 ## 272 — 2026-10-17 23:40:00 — 出片工具：用户明确要求时可不经草稿直接出正式条
 
@@ -13305,11 +13504,34 @@ shengji_zhilu ep01 按新故事重做后要先给 s2 出片：s2 的参考只差
 
 用户要求 shengji_zhilu EP1 s1 直接出 720p 正式条，并在两步出片的提问里选了「直接出 720p 正式条」。
 
+### 执行边界（代理判断）
+
+- 两步出片（265）仍是默认；新增 `--stage final --no-draft <理由>` 只在用户明确要求跳过草稿时用，理由写进 `generation.json` 的 `no_draft`；不加草稿参考视频，其余（资料包、请求日志、条目录）不变。
+
+### 摘要
+
+- `tools/shot_take.py`：`submit(..., no_draft=)` 与 CLI `--no-draft`（只配 `--stage final`）；`make_take` 记 `no_draft`。测试 `test_a_final_without_a_draft_only_when_the_user_says_so`；tools 测试 129 通过。`prompts-generate.md` 提交表补一句。
+
+---
+
 ## 273 — 2026-10-17 23:55:00 — 场次页加「正片」审片标签：每镜一格，永远显示最新的正式条
 
 ### 指令
 
 用户：UI 上除了草稿 review 标签页，也要一个正片 review 页面，永远显示每个 shot 最新的 MP4，每个 shot 一格。
+
+### 执行边界（代理判断）
+
+- 复用草稿网格（follow-up 267）：同一组件按 `stage` 显示草稿（`drafts/`）或正片（`renders/` 里的正式条），每格取这一镜最新的一条；点开放大、带声音、左右切镜。
+- 正片也能点「通过 / 不通过」：通过记为「通过（用户 …，正片可用）」，供之后剪辑选条；草稿的「通过，可出正式条」不变。
+
+### 摘要
+
+- UI：`SceneDraftsPanel` 加 `stage`（draft / final）；场次页标签「镜头 / 草稿 / 正片」（`tab=finals`）。
+- 后端：`ShotTakeCommand.verdict` 接受正式条，状态文字按草稿 / 正片区分（没有 stage 的旧条按所在目录判断）。
+- 测试：`tests/test_shot_take_verdict.py`（正式条可审）10 通过；UI `scene-drafts.test.tsx` 加正片标签用例；UI 全量 82 通过，1 条 `workflow-map.test.tsx` 预先存在的失败与本次无关；`tsc --noEmit` 通过。
+
+---
 
 ## 274 — 2026-10-18 00:30:00 — 编译器 v10：同一张卡在镜内站了几个人就写几个人
 
@@ -13317,11 +13539,47 @@ shengji_zhilu ep01 按新故事重做后要先给 s2 出片：s2 的参考只差
 
 用户要求代理自查。查到 shengji EP1 s1 st1 只出了一名门卫，而分镜写两名：编译后的 prompt「人物」行只描述一个「北郡门卫」，要求行的「每个人物只出现一次、不要分身」与负面词「同一人物出现两次、多出来的人」把第二名压掉；唯一的例外句把门卫叫「动物」。
 
+### 执行边界（代理判断）
+
+- 人数是确定性数据，从各镜 overhead 的 `[[actor]]`（卡号 × `count`）数出来，不让编剧另填。
+- 例外句改为「群演与动物」，覆盖 m 卡与任何人数大于 1 的卡；编译器升 v10，已编译的 prompt 标为过期须重编译。
+
+### 摘要
+
+- `libs/infrastructure/readers/shot_materials__reader.py` 从 overhead 数人数（`CastMember.count`）；`episode_workflow__entity._prompt` 在「人物」行写「×N（同一张三视图画 N 个人，各在自己的位置）」，要求行用 `GROUP_COUNT_RULE`；`COMPILER_VERSION = 10`。
+- 测试：`test_one_card_standing_for_several_people_says_how_many`，原狼群用例改为新措辞；管理应用测试 363 通过。`prompts-rules.md`「防分身」一行同步。
+- shengji EP1 整集用 v10 重编译：s1 st1、st4「北郡门卫 ×2」，s6 st2、st3「迪菲亚匪徒 ×2」；s1 st2 画外那名门卫从 overhead 删去，人物行回到一名。资料包 32 个一致。
+
+---
+
 ## 275 — 2026-10-17 22:55:00 — 出图默认 ElevenLabs，额度不够才换 Codex
+
+> target_stage: 3
+> target_artifacts:
+>   - tools/image_engine.py
+>   - tools/gen_bg_images.py、gen_bg_assets.py、gen_char_images.py、gen_outfit_views.py、gen_equipment.py
+>   - CONVENTIONS.md、resources/assets.md、paid_services.md、ai_video_workflow.md、prompts-references.md、codex-imagegen skill
+> severity: medium
 
 ### 指令
 
 用户：「请加上默认使用eleven labs生成图片，没有quota 再用codex 生成。」（同一对话里先要求 shengji EP1 s2 背景图用 ElevenLabs 重出、高清真实。）
+
+### 执行边界（代理判断）
+
+- 取代 270 的 Codex 优先：auto ＝ ElevenLabs → Codex；即梦仍不出图（270 不变）。
+- 「没有 quota 再用 codex」按字面执行：ElevenLabs 只在额度 / 套餐不够（quota_exceeded、402、credits / insufficient）时换 Codex；别的失败（审核拦截、参数错、超时、结果未知）照实报出、不换家，免得结果未知时两家都扣费。
+- 背景出图器原来写死 ElevenLabs `quality=high`、`resolution=2K`；加 `--quality`、`--resolution` 选项（默认不变），本次 s2 背景用 `xhigh` / `4K`。
+
+### 摘要
+
+- **代码**：`tools/image_engine.py` `AUTO_ORDER = (ELEVENLABS, CODEX)`，新增 `NO_QUOTA` 与 `fallback_ok(engine, err)`；四个换家循环（`gen_bg_images.generate`、`gen_bg_assets.do_images`（装备经它）、`gen_char_images`、`gen_outfit_views`）在 ElevenLabs 非额度失败时停止换家（后两个的 for/else 改为显式 `ok` 标记）；`gen_bg_images` 加 `--quality {low…max}`、`--resolution {1K,2K,4K}`，`anchor_gen.json` 记 resolution。各出图器帮助文字改为新顺序。
+- **文档**：`CONVENTIONS.md`（图片生成服务、出图授权两处）、`resources/assets.md`「出图服务」、`paid_services.md`（图片入口、Codex 默认顺序）、`ai_video_workflow.md`、`prompts-references.md`、`codex-imagegen` SKILL.md。
+- **测试**：`test_scene_image_policy.py` 改为 auto ＝ ElevenLabs → Codex；新增「只有额度不够才换 Codex」「非额度失败不换家」「额度不够时每家只交一次」；tools 测试 131 通过。
+- **未做**：ElevenLabs 额度耗尽的真实报错文本未实测（按官方 quota_exceeded 与仓库 402 文案匹配）；零散单张的 `codex-imagegen` skill 本身照旧可直接用。
+
+
+---
 
 ## 276 — 2026-10-18 03:10:00 — 编译器 v11：同卡多人不再写「多出来的人」；镜头可带首帧图
 
@@ -13329,40 +13587,1442 @@ shengji_zhilu ep01 按新故事重做后要先给 s2 出片：s2 的参考只差
 
 用户：「怎么又变回一个守卫了？而且离墙很远，为什么之前说的问题反复出现？」随后：「没事不用担心费用，按你说的来，重新生成」（方案：改编译器去掉与人数冲突的负面词；s1 st1 先出首帧图钉住站位再出视频）。
 
-## 277 — 2026-10-18 09:00:00 — 剪辑：集级接场与转场工具箱
+### 执行边界（代理判断）
+
+- 原因：v10 已在「人物」行写「北郡门卫 ×2」，但负面词仍有「多出来的人」，要求行有「每个人物只出现一次」，两名门卫又共用一张三视图——第三轮又只剩一名。有群演或同卡多人的镜，负面词去掉「多出来的人」；例外句加「写了几个就画几个，一个都不能少」。「分身、双胞胎、同一人物出现两次」保留，具名人物仍防分身。
+- 文字和俯视图三轮钉不住人数与离墙距离，改用首帧：镜头目录有 `planning/{stN}_first_frame.png` 时，编译器把它作为第一张参考（`{key}_first_frame`，角色「首帧画面」）并写用法；没有就照旧。文件存在即生效，只放自查过站位的那张（候选图另存 `_v1` 等后缀）。
+- 编译器升 v11，已编译的 prompt 过期须整集重编译。
+
+### 摘要
+
+- `libs/common/episode_workflow.py`：`COMPILER_VERSION = 11`、`GROUP_COUNT_RULE` 新措辞、`GROUP_DROPPED_NEGATIVE`、`FIRST_FRAME_USAGE`。
+- `ShotMaterials.first_frame`；`shot_materials__reader` 读 `planning/{stN}_first_frame.png`；`episode_workflow__entity._prompt` 首帧排参考第一位、用法打头，群演镜负面词去掉「多出来的人」。
+- 测试：新增 `test_an_opening_still_goes_first_as_the_first_frame`；狼群用例断言新措辞与负面词。
+- 规范：`prompts-rules.md`（参考顺序、负面词、防分身、首帧图）、`prompts-generate.md`（同一毛病出现两次，第三轮改用首帧图）。
+- shengji EP1 整集用 v11 重编译（含另一会话的 s2），资料包 32 个一致；s1 st1 首帧 ElevenLabs 出图一次通过（shengji follow-up 079）。
+
+---
+
+## 277 — 2026-10-18 09:00:00 — 剪辑：集级接场与转场工具箱（菜单、样片、J/L、片头片尾）
 
 ### 指令
 
-用户：「你能帮我锁片，然后加入转场么，我要看看效果」；「转场应该有很多选择，帮我做好tool box，我们到时候可以选择，帮我做好s1 和s2的转场」。
+用户：「你能帮我锁片，然后加入转场么，我要看看效果」；随后：「转场应该有很多选择，帮我做好tool box，我们到时候可以选择，帮我做好s1 和s2的转场」。
 
-## 278 — 2026-10-18 10:20:00 — 剪辑页加「整集」
+### 执行边界（代理判断）
+
+- `scene_cut.py` 只管一场之内；场与场怎么接另起 `tools/episode_cut.py`，读各场 `render` 出的干净版成片（绑 sha，场重剪后要重新决定）。
+- 菜单照 `edit-transitions.md`「剪辑可做」一栏实现：切、硬切、叠化、叠印、黑场、白场、光圈开 / 合、五种划像、推出、模拟甩镜、推近转场；J / L 用条里入点之前 / 出点之后的原声（只配切类）；片头片尾可切、淡入淡出到黑或白。只能从菜单选、每条写理由。匹配剪辑、遮挡过渡、真正的甩镜仍要上游设计，不在菜单里假装能做。
+- 「到时候可以选择」做成 `gallery`：在两场交界把每种转场各出一段带名字的样片，接成一条并附时间索引；条里原声不够做 J / L 时跳过并说明。
+- 回读：时长、帧数、黑段，重跑镜头检测与应有切点（场内各刀 + 场间切）对账。本剧阴天冷灰画面切点 scdet 分数只有 10–13，阈值用 8。
+
+### 摘要
+
+- 新增 `tools/episode_cut.py`（menu / check / join / gallery）与 `tools/tests/test_episode_cut.py`（4 项）；`scene_cut.py` 文档指向它。
+- 规范：`edit.md`「试行实现」加集级与转场一行；`edit-transitions.md`「本剧用法」加工具说明。工作流目录登记新工具。
+- shengji EP1：s1 / s2 精剪 v2，集级决定 `episodes/ep01/edit/final/cut_v1.json`（s1→s2 切 + J 0.75 秒），样片 `转场样片_s1_s2.mp4`（106 秒，17 种转场 + 片头淡入 / 片尾淡出；L 因 s1 末条出点后只剩 0.07 秒原声而跳过）。见 shengji follow-up 085。
+- 独立审稿指出切到 s1 st4 亮度骤降：`scene_cut.py` 事件加可选 `grade`（ffmpeg eq 的 gamma / brightness / contrast / saturation，整段统一，须写理由），check 核对。
+
+---
+
+## 278 — 2026-10-18 10:20:00 — 剪辑页加「整集」：接起来的成片、转场、独立审稿、转场样片
 
 ### 指令
 
 用户：「请给我ui的url，我可以直接点击，我需要再ui上能browse」。
 
+### 执行边界（代理判断）
+
+- 剪辑页原来只按场列剪辑（269）；277 的集级剪辑与转场样片在界面上看不到。加「整集」一项（`scene=episode`），排在各场前面；导航树同步加「整集（场与场接起来、转场）」。
+- 只读：播放整集成片，按版本切换；表格列各场在成片里的起点（点了跳过去，场名链到那一版场剪辑）与转场（中文名、重叠时长、J/L、理由，点了从转场前 1.5 秒放）；独立审稿结论只认 sha 绑的是这版成片的，不符就写「这一版还没审」；转场样片按 `.txt` 索引点名字跳到那一段。
+- 转场菜单从 `tools/episode_cut.py` 挪到 `libs/common/scene_cut.py`（`TRANSITIONS` / `EDGES` / `GALLERY_PATTERN` / `EPISODE_CUT`），工具与界面读同一份。
+
+### 摘要
+
+- 后端：`scene_cut__reader`（`cuts(…, None)` 读集级、`galleries`）、`scene_cut__dto`（`EpisodeJoinQdto` 等）、`scene_cut__query`（`joined` / `gallery`）、`tree__reader`（整集导航）；测试 `tests/test_scene_cut.py` +3。
+- 前端：`EditStagePanel.tsx`（`EpisodeJoinView`、`GalleryView`）、`lib/sceneCuts.ts`、`EpisodeWorkflowPage.css`；测试 `test/edit-stage.test.tsx` +1。
+- 验证：后端 367 通过、1 跳过；edit-stage 5 通过；`tsc -b` 通过；本机 UI 打开 shengji EP1 整集页，v2 成片、审稿「可锁片」、时间线与转场都显示。
+
+---
+
 ## 279 — 2026-10-18 10:55:00 — 资料包检查：走位预演视频必须按当前 overhead 渲染
 
 ### 指令
 
-用户：「你可以review下scene4，没什么问题的话，你开始出scene4 的720p正片」。
+用户：「你可以review下scene4，没什么问题的话，你开始出scene4 的720p正片」（审 s4 时发现）。
+
+### 执行边界（代理判断）
+
+- shengji EP1 s4 在 083 改 overhead 后没重渲 previz，`shot_pack check` 仍报 ok，资料包会把旧走位送给 Seedance。原检查只比 overhead.toml 与 previz.json 的 sha。
+- 运动参考是 previz 视频时加两项：`previz_config.toml` 要等于 `overhead_previz.config()` 现在生成的；`{镜}_previz.stamp.json` 要等于 `render_inputs(配置)`（build_previz 写戳、这里验戳，同一函数）。不符即判资料包失效，提示重跑 `overhead_previz.py <镜头> --render`。
+- 另记：`overhead_previz.py` 同时给 `--stills --render` 只出静帧不渲染（`if stills: return`），本次分两次跑；未改。
+
+### 摘要
+
+- `tools/shot_pack.py`：`previz_problems()`，在 `shot_problems` 里对 previz 视频运动参考调用。
+- 测试 `tools/tests/test_shot_pack_previz_fresh.py`（3 项）。
+- 全集检查：改前 s4 三镜判失效，重渲后 32 个一致。
+
+---
 
 ## 280 — 2026-10-18 11:20:00 — 侧栏文件树按需加载；文件变化自动推到页面
 
 ### 指令
 
-用户：「每次你做完我都要重新刷新url才能看到新的update，但是load时间越来越长了，有没有解决方案」；「先做1，3」。
+用户：「每次你做完我都要重新刷新url才能看到新的update，但是load时间越来越长了，有没有解决方案」；看过诊断与四项建议后：「先做1，3」（1 侧栏按需加载，3 文件变化自动刷新；2 服务端缓存、4 精简侧栏暂不做）。
 
+### 执行边界（代理判断）
+
+- 诊断：页面每次打开都等 `/api/tree`——10.2 秒、8.8 MB、47,540 个节点（shengji 一部 2.7 万），每出一条片多一批资料包、上传副本、previz 帧，越用越慢；前端没有任何轮询或推送。
+- 1：`/api/tree?lazy=1` 只给导航骨架和前几层（剧根下两层、镜头文件夹下一层），更深的文件夹是 `lazy` 占位；侧栏点开、打开深处文件、角色画廊、回收站时再取 `/api/tree/subtree`。不带 `lazy` 的旧接口不变（现有测试与工具照用）。
+- 3：一个后台线程（watchfiles）看着 `ai_videos/`，`/api/events`（SSE）把变化的路径推给页面；页面只重取被改到的部分。剧页静默重取，不清空、不换媒体缓存参数，正在放的视频不中断。
+- 与另一会话协调：本条编号 280 由对方确认留给本会话；`tree__reader.py` 保留对方 278 未提交的「整集」导航改动。
+
+### 摘要
+
+- 后端：`tree__reader.py`（`build(lazy)`、`subtree()`、`_has_visible()`、`LAZY_DRAMA_DEPTH` / `LAZY_SHOT_DEPTH`）、`tree__query.py`、`routes/tree__route.py`（`/api/tree?lazy=1`、`/api/tree/subtree`、`/api/events`）、新 `libs/infrastructure/watchers/file_change__watcher.py`、`container.py`；依赖显式加 `watchfiles`（原本经 `uvicorn[standard]` 已装）。测试 `tests/test_tree_lazy.py`（5）、`tests/test_file_events.py`（5）。
+- 前端：`lib/lazyTree.ts`、`lib/fileEvents.ts`、`components/TreeLoaderContext.tsx`、`App.tsx`、`Sidebar.tsx`、`Reader.tsx`、`markdown/renderer.tsx`、`EpisodeWorkflowPage.tsx`、`CharacterGrid.tsx`、`DeletedView.tsx`、`api.ts`、`types.ts`；测试 `test/lazy-tree.test.tsx`（8）。
+- 实测（本机同一棵树）：首次加载 10.2 秒 / 8.8 MB → 服务端 0.34 秒、经开发代理 1.7 秒 / 1.0 MB；打开一个 renders 文件夹 0.04 秒；写入一个文件后约 1 秒内页面收到推送。
+- 验证：后端全量 377 通过、1 跳过；前端 92 项中 91 通过，唯一失败的 `workflow-map.test.tsx`（「锁片（用户批准）」文案）改动前就失败，与本条无关；`tsc --noEmit` 通过。
+
+
+---
 
 ## 281 — 2026-10-18 14:40:00 — 默认所有镜头都不做 previz
 
 ### 指令
 
-用户：「是不是你用了previz？ 感觉效果更差了，请拿掉previz，我们default所有镜头都不加previz了，需要加的我们单独处理。」
+用户：「是不是你用了previz？ 感觉效果更差了，请拿掉previz，我们default所有镜头都不加previz了，需要加的我们单独处理。」（看 shengji EP1 s5 st2 正片：亚伦动作像机器人一样僵硬、瞬间把伤者放倒；该镜的运动参考是 previz 视频。）
 
+### 执行边界（代理判断）
+
+- `tools/shot_overhead.py`：`previz_decision` 默认返回「免」；只有 `[meta] previz = true` 且写了 `previz_why` 才要（缺理由报错）；`previz_triggers` 保留，只把命中的判据写进理由作「复杂镜提示」。审阅图侧栏与 `overheads.md` 索引的说明同步。
+- 编译器、资料包不改：仍按 `previz.json` 挑运动参考；previz 视频的新鲜度检查（279）照旧只对要 previz 的镜生效。
+- 不主动重跑已有镜头：旧 `previz.json` 为 true 的镜（shengji s4 st1–st3、s5 st1–st2 等）下次跑 `shot_overhead.py` 时变为 false，资料包随之失效、重编译后改用 overhead 图。显式写了 `previz = true` 且有理由的镜（shengji s2 st1）保留。
+- 规范：`prompts-previz.md`（默认不要、判据只作提示、原因）、`prompts-overhead.md`、`prompts-references.md`、`prompts.md`、`SKILL.md`、`ai_video_workflow.md`、`ai_video_workflow_map.json`、`workflow_catalog.json`、shengji README。
+- 同时补出片审核清单（`prompts-generate.md`）：在场的人对突发动静的反应、伤口位置跨镜一致、动作是否僵硬（用户指出 s5 st1、st2 的审核漏了这些）。
+
+### 摘要
+
+- 新测试 `tools/tests/test_shot_overhead_previz_default.py`（3 项）；previz 相关测试 19 项通过；`workflow_catalog.py --check`、`sync_agent_skills.py --check` 通过。
+
+
+---
 
 ## 282 — 2026-10-18 15:45:00 — 镜头可单独放开剧级负面词（编译器 v12）
 
 ### 指令
 
-用户确认 shengji EP1 s5 重写方案（「好的」），其中写明：「夸张金光」只对圣光那几镜放开，「人物自发光、瞳孔发光」照旧禁止。
+用户确认 shengji EP1 s5 重写方案（「好的」），方案中写明：剧 `workflow.json` 负面词里的「夸张金光」与圣光特效冲突，到 Prompt 编译时只对圣光那几镜放开这一项，「人物自发光、瞳孔发光」照旧禁止。
+
+### 执行边界（代理判断）
+
+- 分镜镜头加可选字段 `allow_negatives`（剧负面词里的词语列表）。编译时只在这一镜的「负面词」行去掉列出的词；列了剧负面词里没有的词拒绝编译（防拼错）；空列表、重复、含逗号保存时拒绝。不写的镜头逐字不变。
+- 编译器版本 11 → 12；全仓旧编译结果标待更新，重编译后不用此字段的镜头文本不变。
+- 不改剧级负面词本身，不对整剧放开。
+
+### 摘要
+
+- `libs/domain/entities/episode_workflow__entity.py`、`libs/common/episode_workflow.py`（v12）、`tests/test_episode_workflow.py`（2 个新测试，含 4 组参数）；规范 `prompts-rules.md`、`prompts.md`、`filming.md`；`final_specs/spec.md`。
+
+---
+
+## 283 — 2026-10-18 17:00:00 — 后期试做工具：声音、双语字幕、地名字卡
+
+### 指令
+
+用户：「我们现在尝试给现在的整集（虽然还不完整）做后期声音处理，你先按你的best effort做，我看看效果，还有一部后期制作是加字幕，还有aaron每到一个大的场景，屏幕上可以出现优美的字体，介绍此地」。
+
+### 执行边界（代理判断）
+
+- 声音与音乐、成片交付模块仍是待设计；本工具只是试做，读一份后期决定（数据）在集级剪辑成片上叠后期，做法随模块设计再定。旧流程的字幕工具已随旧流程删除，不复活，从零写最小部分。
+- 台词时间来自各条 annotation（faster-whisper 逐词），字幕首尾词对齐；声音只用本地处理（ffmpeg），不调用收费服务。
+
+### 摘要
+
+- 新增 `tools/episode_post.py`：timeline（集级剪辑 → 各场与各条在成片里的位置）、subtitle_times、title_png / subtitle_png（PIL 透明图叠加）、srt、gain_expr（台词区间内原声 1、区间外按场增益、J 剪辑提前进来的部分按下一场算）、合成环境声床、两遍 loudnorm、回读写回 output。
+- 测试 `tools/tests/test_episode_post.py`（3 项）；工作流目录登记。工具测试 146 通过。
+
+---
+
+## 284 — 2026-10-18 20:10:00 — 人物与道具卡可再分一层分组目录
+
+> target_stage: 6
+> target_artifacts:
+>   - final_specs/spec.md
+> severity: medium
+
+### 指令
+
+用户（剧 dota_yingxiong follow-up 025）：DotA 有近卫、天灾两个阵营，另有公共阵营（公共商店、野怪等）；资产先按阵营分再放其他资产，结构选定为「资产类型下面分阵营」：`characters/{近卫_sentinel,天灾_scourge,中立_neutral}/<卡>/`、`background/{…}/<bg>/`、`props/中立_neutral/<道具>/`。
+
+### 执行边界（代理判断）
+
+- 卡目录可直接在 `characters/` / `props/` 下，也可在一层不带键的分组目录下；分组不是资产、不进编号，只下钻一层。不带键也不含带键子目录的旧式目录照旧当资产，其他剧的平铺结构不变。`background/` 本已任意嵌套，不变。
+- 判定只在 `libs/common/asset_group.py` 定义一次，管理应用与 `tools/*.py` 共用；前端 `lib/dramas.ts` `characterFolders`。
+
+### 摘要
+
+- 管理应用：角色画廊列表 / 一键重生、三视图提取按钮判定、Downloads 导入候选、镜头参考解析（人物卡、道具卡）、系列冲突扫描都认分组；画廊按分组分段；文件树照常显示分组层。
+- 工具：`gen_char_images`（含 `--kind props`）、`gen_turntable_videos`（账本留在 `characters/` 根）、`char_assets`、`episode_shots`、`skill_pack`、`gen_outfit_views`、`character_sheet`、`image_fetch`、`props_lib`（`prop_dirs` / `in_props`）、`gen_bg_assets`。
+
+---
+
+## 285 — 2026-10-18 23:59:00 — image-leaf-test-matches-reader
+
+### 指令
+资产树测试 `test_image_leaves_typed_as_image` 只认 `.png` / `.jpg`，但读取器本来就把 gif / webp / jpeg / bmp 当图片；dota_yingxiong 的原版模型参考动图（`.gif`）因此误报。测试改用读取器同一份扩展名表。另把新工具 `tools/skill_pack.py`、`tools/voice_design.py` 与 `libs/common/asset_group.py` 登记进工作流目录（共用文档已引用）。
+
+### 摘要
+测试与读取器图片扩展名对齐；工作流目录补登记三个被引用的源。
+
+---
+
+## 286 — 2026-10-18 21:00:00 — 人物详情页加「样片与正片」review 区
+
+> target_stage: 6
+> target_artifacts:
+>   - final_specs/spec.md
+> severity: low
+
+### 指令
+
+用户（dota_yingxiong follow-up 028）：「我需要一个总页面来 review 各个样片，还有 5 个正片，以及剪辑拼接好的片子，放到 character 的 main page 里。」
+
+### 执行边界（代理判断）
+
+- 人物主页面＝资产库里点开人物进入的人物卡正文页（`/file/…/{卡}/{卡}.md`）；review 区放在正文上方，只读，无生成按钮。
+- 只在有技能视频（`skills/k*/drafts|renders/` 里有条）的人物显示；其他人物页面不变。
+- 正片＝`{卡}_turntable.mp4`＋每个技能 `renders/` 最新一条（按技能键序）；样片＝每个技能 `drafts/` 全部条（新的在前）＋峰值图（无 `{目录}_peak.png` 时取版本号最大的 `_peak_v{N}.png`）；剪辑拼接＝`{剧}/episodes/ep*/edit/{draft,final}/cut_v{N}.json` 中任一 `events[].clip` 在人物目录下的成片，分草稿剪辑 / 正片剪辑，新版本在前。
+- 时长：generation.json / cut json 有就用，没有由播放器读视频元数据。
+
+### 摘要
+
+人物详情页顶部新增「样片与正片」三个标签（正片 / 样片 / 剪辑拼接），后端 `GET /api/character-reel` 复用镜头生成记录与剪辑决定的读取器。
+
+---
+
+## 287 — 2026-10-18 23:59:30 — character-reel-final-cuts-first
+
+### 指令
+人物详情页「样片与正片」的剪辑拼接里，正片剪辑放在前面（dota_yingxiong follow-up 031）。
+
+### 摘要
+`CharacterReelPanel` 剪辑拼接按 正片剪辑 → 草稿剪辑 排；剪辑模块页仍按草稿 → 正片。
+
+
+---
+
+## 288 — 2026-10-18 23:59:45 — character-reel-demo-folder
+
+> target_stage: 6
+> target_artifacts:
+>   - final_specs/spec.md
+> severity: low
+
+### 指令
+用户（dota_yingxiong follow-up 035）：「最终的结果还有其他 MP4 都应该在 character 下面，我们还没有开始做剧情呢，没有 episode 呢。」没有分集的剧把英雄 demo（故事稿、决策、剪辑 `edit/{draft,final}/`）放在人物目录 `demo/` 下。人物详情页「样片与正片」的剪辑拼接**也**从人物目录 `demo/edit/{draft,final}/cut_v{N}.json` 找（全算这个人物的，排在前面），`{剧}/episodes/ep*/edit/` 仍按原规则（event 指向该人物目录才算）；没有 `episodes/` 的剧各页照常显示。
+
+### 摘要
+人物 reel 的剪辑拼接先列人物目录 `demo/` 的剪辑（标「人物 demo」），再列各集里用到该人物的剪辑；dota_yingxiong 斧王 demo 已从 `episodes/ep01/` 搬到人物目录。
+
+## 289 — 2026-10-19 13:30:00 — 本地音频生成工具；后期试做支持生成的环境声与配乐
+
+> target_stage: 6
+> target_artifacts:
+>   - final_specs/spec.md
+> severity: low
+
+### 指令
+
+用户（shengji_zhilu follow-up 109）：声音模型下载完成，「请用模型改善环境音和背景音」。
+
+### 执行边界（代理判断）
+
+- 本地模型不是收费服务，不走请求日志；商用条件登记进 `paid_services.md` 商用表（Stable Audio 3：Community License，年收入 < 100 万美元可商用，须用户在 Stability 登记；ACE-Step 1.5：MIT）。
+- 推理代码检出在 `.cache/src/`，独立环境 `.cache/venvs/stable-audio`（Python 3.11、torch 2.7.1+cu128，`uv pip install -e`；不用 `uv sync`，它按上游 `.python-version` 重建成 3.10 并卸掉 torch）。权重只从 `.cache/models/` 读，`HF_HUB_OFFLINE=1`；T5Gemma 改读权重目录的子文件夹。
+- 仍是声音与音乐模块设计前的试做工具，模块页只加一段「试做工具」说明。
+
+### 摘要
+
+- 新增 `tools/local_audio.py`：读 `{集}/post/audio/gen_v{N}.json`（items: id、model medium | small-sfx、prompt、duration、seeds、可选 continue_from 用另一条的开头或结尾若干秒作上下文续写），按条按种子出 `{id}_s{seed}.wav` 与生成记录 `.json`（prompt、种子、权重、sha256、峰值与逐秒 RMS）；没变的跳过。
+- `tools/episode_post.py`：`beds` 里以 `.wav` 结尾的键是音频文件（相对后期决定，不够长就循环）；新增 `music[]`（path、scene、offset、skip、length、db、duck_db、fade_in / fade_out），台词区间内按 `duck_expr` 再压低。测试 +1（压低与恢复的数值）。
+- 工作流目录登记 `tools/local_audio.py`；`modules/sound.md` 加试做工具说明；`paid_services.md` 商用表加两行。
+
+---
+
+## 290 — 2026-10-19 20:30:00 — 剪辑页显示后期试做；后期对白增益与压缩可调
+
+> target_stage: 6
+> target_artifacts:
+>   - final_specs/spec.md
+> severity: low
+
+### 指令
+
+用户（shengji_zhilu follow-up 110）：「之前生成那一版，我要在UI上也能看到，还有效果不太好，人声太小了，背景音乐不是很好，我觉得你可以尝试只做环境声音，给我背景音乐的prompt，我自己suno生成」。
+
+### 执行边界（代理判断）
+
+- 后期试做不分草稿 / 正片，挂在剪辑页（与整集同级，列在最前），不新开模块页；声音与音乐模块仍待设计。只读。
+- 成片是否过期不算 sha（每次请求读 30 MB 文件不值），只看文件在不在。
+- `tools/episode_post.py` 新参数都带默认值，旧决定照旧复现。
+
+### 摘要
+
+- 后端：`libs/common/scene_cut.py` `POST_DIR` / `POST_FILE_PATTERN` / `POST_CUT`；`SceneCutReader.posts`；`SceneCutQuery.post` → `PostTrialQdto` / `PostLayerQdto`，`EpisodeCutsQdto.posts`；导航 `tree__reader` 加「后期试做 · vN」（`module=edit&scene=post`）。测试 +2。
+- 前端：`sceneCuts.ts` 类型；`EditStagePanel` 的 `PostTrialView`（成片、响度、声音层表、字幕与字卡、说明）与场次表入口、版本切换。测试 +1。
+- `tools/episode_post.py`：`sound.dialogue_db`（台词区间内原声再加几 dB）、`sound.dialogue_comp {threshold_db, ratio, makeup}`；`gain_expr` 加 `inside` 参数。
+- `final_specs/spec.md` 剪辑接口一段补后期试做。
+
+---
+
+## 291 — 2026-10-19 21:00:00 — 删除 Stable Audio 3；本地模型只用完全开源的
+
+> target_stage: 6
+> target_artifacts:
+>   - final_specs/spec.md
+> severity: low
+
+### 指令
+
+用户（dota_yingxiong follow-up 040）：「那就不用 stable audio 3 这个模型，把他删了吧，以后只用完全开源的模型」（起因：Stability AI Community License 有 100 万美元年收入门槛、商用须登记）。
+
+### 执行边界（代理判断）
+
+- 删本地权重 `.cache/models/stable-audio-3-{medium,small-sfx}`、环境 `.cache/venvs/stable-audio`、代码检出 `.cache/src/stable-audio-3`，以及只为它写的 `tools/local_audio.py`（289）。`tools/episode_post.py` 混音读 wav 文件，不依赖它，保留。
+- 已用它生成的 shengji_zhilu ep01 后期声音（`post/audio/` 与 post_v3 / v4 成片）：用户确认后删除（shengji_zhilu follow-up 112）。
+- 用户级 Hugging Face 缓存里的 Stable Audio Open 1.0（同一许可，2026-06 下载，18 GB）：用户确认后删除。
+
+### 摘要
+
+- `paid_services.md` 商业用途一节加规则：本地模型只用代码与权重都是 OSI 开源许可证（MIT、Apache-2.0 等）、商用无门槛无登记的；Stable Audio 3 一行改「不用」。
+- 删 `tools/local_audio.py`；工作流目录去掉该源（`workflow_catalog.py --fix / --check` 通过）；`modules/sound.md` 试做工具说明改写。
+
+---
+
+## 292 — 2026-10-20 10:00:00 — 本地音效工具 local_sfx.py（MOSS-SoundEffect-v2.0）
+
+> target_stage: 6
+> target_artifacts:
+>   - final_specs/spec.md
+> severity: low
+
+### 指令
+
+用户（dota_yingxiong follow-up 041）：本地装 MOSS-SoundEffect-v2.0；给下载清单让 downloader 下大文件；下完后建环境、试音效。
+
+### 执行边界（代理判断）
+
+- 许可按一手来源复核：模型卡 Apache-2.0，代码仓库 LICENSE Apache-2.0，文本编码器 Qwen3-1.7B Apache-2.0；符合 291 的「只用完全开源」。
+- 大文件（4 个权重 + torch 安装包）由用户的 downloader 下，清单 `.cache/models/moss_soundeffect_v2_download_list.md`；小文件与代码浅克隆由代理下；全部 sha256 核对通过。
+- 独立环境 `.cache/venvs/moss-soundeffect`（Python 3.12、torch 2.9.0+cu128，官方 pyproject 的 `torch-cu128` 档，`uv pip install -e`）。Windows 无 Triton，默认 `TORCHDYNAMO_DISABLE=1`；torchaudio 2.9 存盘依赖 FFmpeg 动态库，改用 soundfile 写 24-bit wav。
+- `vae_128d_48k.pth` 是 pickle 整模型对象（官方加载方式），只用官方地址下载且 sha256 核过的文件。
+
+### 摘要
+
+- 新增 `tools/local_sfx.py`：读产物目录里的生成清单（items: id、prompt、negative、duration ≤30、seeds、steps / cfg / shift），按条按种子出 `{id}_s{seed}.wav`（48 kHz 单声道）与记录 `.json`（prompt、种子、权重、sha256、峰值与逐秒 RMS）；没变的跳过。
+- `paid_services.md` 商用表加 MOSS-SoundEffect-v2.0（允许）；`modules/sound.md` 试做工具说明加 local_sfx；工作流目录登记（`--fix / --check` 通过，150 源）。
+
+---
+
+## 293 — 2026-10-21 22:30:00 — 资产总览：每个资产一格，点开预览
+
+> target_stage: 6
+> target_artifacts:
+>   - final_specs/spec.md
+> severity: low
+
+### 指令
+
+用户（看 dota_yingxiong 时）：资产要能 high level 总览；总览页上人物全部排在一起，一个人物一格，点击可以预览。
+
+### 执行边界（代理判断）
+
+- 新页 `/assets?drama=`，剧页加「🗂 资产总览」；原「角色画廊」（每格内嵌视频、三视图重提）是制作工具，保留不改。
+- 总览一并列背景与道具（同一页三节），用户只点名人物，其余两节按同样格式补上。
+- 每格只用目录顶层的图做封面，不读 `ref/`、`skills/`、形态子目录；人物技能在预览里复用 `GET /api/character-reel`。
+- 只读，不改资产文件。
+
+### 摘要
+
+- 后端 `GET /api/asset-overview`（reader / query / dto / route，`tests/test_asset_overview.py`）。
+- 前端 `AssetOverviewPage`（格子、过滤、按节跳转、预览弹窗：图片与视频切换、卡开头的键与状态行、人物技能、← / → / Esc、`?open=`），`apps/ui/test/asset-overview.test.tsx`。
+- `final_specs/spec.md` FR-111、项目 README。
+
+---
+
+## 294 — 2026-10-22 09:00:00 — 侧栏「1_资产库」点名字进资产总览
+
+> target_stage: 6
+> target_artifacts:
+>   - final_specs/spec.md
+> severity: low
+
+### 指令
+
+用户：左侧导航点一个东西就能进资产总览，比如「1_资产库」应该既能展开也能选择。
+
+### 摘要
+
+- 六模块剧的「1_资产库」（`2_世界观人设`）节点带 `navigation_href = /assets?drama={剧}`：点名字打开资产总览并展开（在总览页时高亮），点 ▸ / ▾ 只展开收起。`0_research` 不变。
+- `tree__reader.py`、`tests/test_tree_display_name_zh.py`；`final_specs/spec.md` FR-111。
+
+---
+
+
+## 295 — 2026-10-22 21:26:00 — 左侧导航支持仙侠系列公用资产
+
+> target_stage: 6
+> target_artifacts: final_specs/spec.md
+> severity: low
+
+### 指令
+
+用户反馈仙侠公共资产在 UI 看不到；明确放到 left nav 的一个 item，既可放剧，也可放剧的系列，例如“仙侠”。
+
+### 摘要
+
+新增 `ai_videos/xianxia/series.json`，按既有系列显示“仙侠”；点名称进入总览，展开显示“公用资产”与以后加入的具体剧目。`shared_library` 引用原库，不迁移或复制图片、规则、请求日志。沿用 `/assets?library=` 及文件/媒体接口，支持分类、状态、文字筛选、预览、规则和研究。不保留独立顶栏公共资产按钮。
+
+---
+
+---
+
+## 296 — 2026-10-22 22:57:09 — 中文分类导航与资产三视图
+
+### 指令
+
+公用资产左侧导航显示中文大类、小类、具体资产；类别与资产直接定位总览和预览，图片展示包括建筑场景正侧背三视图。
+
+### 自主执行判断
+
+资产分类唯一源放 library.json 的 navigation；保留物理目录与资产ID。建筑/场景采用并列三面板设定图，每张包含正、侧、背三面；以既有锚点锁定设计。旧失败先核本地输出，再按新版本简化描述补图，不覆盖原图。新图未经当前SHA审稿不计验收通过。
+
+
+---
+
+## 297 — 2026-10-23 22:06:39 — integrate-base-layout-view
+
+### 指令
+
+把 Dota 两个基地的建筑坐标、编号切换、泉水商店图、游戏参考与已生成建筑素材接入现有管理站点和剧内入口；复用既有文件/媒体 API 与导航，不另起 HTML 站点或扩展原始 HTML 执行。
+
+### 摘要
+
+补齐缺失建筑并纳入现有管理站点。
+
+
+---
+
+## 298 — 2026-10-24 08:06:15 — verify-base-image-links
+
+### 指令
+
+修复Dota基地页面及资产卡的失效图片链接，交付前自行在实际页面验证，覆盖目录未加载时点击、三视图、全景图、来源记录及下载，不能只用文件存在或HTTP200代替用户操作。
+
+### 摘要
+
+修复导航未加载时误判图片断链，并补实际点击回归。
+
+
+---
+
+## 299 — 2026-10-24 — hierarchical-map-regions
+
+### 指令
+
+系统划分整张 DotA 地图并标号，层级管理区域、场景、建筑实例及机位。重点制作近卫与天灾泉水、出生圈、商店区域；自动生成各区域的俯视、远景、正面、侧面图。UI 集成原管理站，交付前验证链接。
+
+### 自主执行判断
+
+保留6.83d与现有资产编号；8个大区、16个拍摄区域，每区4种机位。大区为管理分区，分界为本剧推定而非官方边界。原游戏图只供人眼定位，生成仅引用本剧自有图片。逐图落盘、记录请求与失败，不覆盖旧图，不重提结果未知请求。
+
+
+### 执行结果
+
+- 原管理站新增「地图资产」：8个大区、16个区域、64个机位；新增采用51张，复用13张远景。区域→bg主体→建筑/商人引用→机位层级保留既有编号与物理目录；新增bg40、bg41。
+- 两方泉水区各3座固定建筑（含泉水）、8商人站位、5出生点；多余商店与出生圈经定点修正。全部86处基地实例通过编号引用原版布局唯一源，不另维护坐标副本。
+- 主体/角度/数量代理初审绑定当前SHA；独立审稿未审。生成图为电影候选，分区边界、米制尺度与部分侧前机位属推定，不能当原版精确几何。
+- 浏览器实际切换并解码64张、逐张点击下载64次且SHA一致；标记地图与两方坐标图下载一致。217个资料链接HTTP/内容检查通过；新增泉水卡图片点击7次通过；移动端无横向溢出、无JS错误。
+- 前端相关9测试、导航20测试、生产构建通过。该剧无episodes，未改任何已用镜头的引用，shot_pack同步无适用目标。
+- 审计：`.audit/adhoc_agents/2026-10-24/dota-map-regions/`；请求仍在剧background/request_log.md，未绕过审计入口。
+
+
+---
+
+## 300 — 2026-10-24 — original-map-red-boundary-comparison
+
+### 指令
+
+在上面放原图做对比；第一俯视图使用完整原图地图，用红线画出几个大区范围及具体代号。
+
+### 执行判断
+
+在现有地图资产页最上方并排显示完整原图红线标注版、未标注原版，手机竖排。复用已有6.83d原始256×256纹理，完整放大，不生成替代地形；红线从已有100×100唯一归属网格导出，标8大区代号/名称与16拍摄区编号，下方图例展示层级。B1定位点移入下路边界内。红线属制作管理推定，原版建筑坐标继续保留在基地资料唯一源。
+
+### 执行结果
+
+- 两图可点击放大及下载；编号可进入区域详情，仍在原管理站。
+- 标注源保存为regions_overview_red.svg，页面使用浏览器渲染的PNG；原始地图字节保持不变。
+- 验证记录：`.audit/adhoc_agents/2026-10-24/dota-map-comparison/`。
+
+- 实际浏览器验收：两张完整地图解码成功、桌面同尺寸；16个地图编号逐一跳转成功；两张下载与本地SHA一致，两个放大弹窗通过；手机无横向溢出，无JS错误。相关前端9测试及生产构建通过。
+
+
+---
+
+## 301 — 2026-10-24 — fountain-building-paired-annotations
+
+### 指令
+
+我们先看下泉水，俯视图分一张标记建筑物，然后旁边放一张原图同样标记建筑物，我要对比。
+
+### 执行判断
+
+在现有地图资产页S1、D1详情顶部新增生成斜俯视图与原版游戏截图并排对照。每方三座固定建筑以真实资产编号对应：近卫bg15/bg22/bg23，天灾bg25/bg32/bg33。UI叠加红线指向实际可见建筑，原图字节保持不变。编号图例可打开资产卡，可放大并排及隐藏标记。
+
+### 观察与边界
+
+- 近卫当前生成图从左到右古树/密室/泉水，与原版泉水/密室/古树相反；出生圈横排与原版竖排不同。保留当前候选，清楚显示差异，未重生成。
+- 天灾采用既有6.83d录像549秒截图，右边缘裁到两家商店，bg32部分可见，标记仅指向可见部分；不补造原图。
+- 两图视角和尺度未校准；商人单位不误标为建筑。来源记录复用shop_refs各阵营refs.md。
+- 审计目录：`.audit/adhoc_agents/2026-10-24/dota-fountain-comparison/`；纯本地UI标注，不调用生成服务。
+
+### 验证结果
+
+两方共4张来源图片实际浏览器解码成功，6个建筑编号两图一致；4次下载SHA与原图一致；6个资产卡和2个来源记录实际打开成功；桌面并排、放大显隐及手机布局通过，无JS错误。相关10个前端测试和生产构建通过。原始4张图片SHA保持不变。本剧无episodes，本次未改生成俯视图文件，shot_pack无适用目标。
+
+
+---
+
+## 302 — 2026-10-24 — fountain-npcs-original-layout-alignment
+
+### 指令
+
+你看原图，上面还有7个小人，站在那里，就是npc，作用跟商店一样，我们也应该浮现出来，而且各个object位置、布局应该和原图一致，俯视图就能检查出来。
+
+### 执行判断
+
+- 原版脚本每方8个商店实体：7人形NPC＋m306小精灵光团。保留m300–m307身份与既有武器p117–p121。每方3座固定建筑、8商店实体、5出生圈，共16个有原版坐标的对象。
+- 近卫建筑自西向东泉水/密室/古树，出生圈西侧纵排；北侧六商人按m305/m306/m307/m304/m302/m303排列，m300、m301在西侧。天灾建筑自北向南泉水/恶魔遗物/崩碎之穴，东侧五圈，西侧六商人与北侧两商人。
+- 从base_layout_manifest唯一源取坐标，北朝上、显式范围换算，不能靠生成画面美术摆位。两方俯视重做；旧图保留，其他旧机位标待布局更新。
+- 原游戏截图仅供人眼研究；生成参考只用本剧自有建筑/人物/武器。完整请求经tools/codex_image.py记background/request_log.md。
+- UI标注范围扩为建筑/NPC/出生圈；右侧可切原版截图与原始坐标重绘，左侧可叠加原版目标点。截图不可见的对象不虚构画面标点，完整坐标仍可检查。
+- 审计：`.audit/adhoc_agents/2026-10-24/dota-fountain-alignment/`。
+
+
+### 本轮结果与验证
+
+- 两方各三轮，共6张新候选；选近卫v3、天灾v4接入当前俯视。逐张看图确认7人形＋1光团、3建筑、5圈。近卫建筑顺序、两方商人站位分组与出生圈纵排已改正。
+- **逐点精确布局仍未通过**：镜头仍偏斜、近卫出生圈间距偏紧/古树偏东；天灾泉水偏北/北侧两NPC偏西。没有把概念图当精确空间验收；其他6张旧机位统一标旧布局待更新。三轮后按codex-imagegen技能上限停止同图重提。
+- 32个对象分色标注，支持建筑/NPC/出生圈筛选；原版坐标图从base_layout_manifest实时引用，按当前取景范围换算，可叠加目标点核对偏移。截图被遮挡/裁出或无法辨认的点不补造；7人形NPC站位已标，小光团在低清原图中无法可靠标点，坐标模式完整显示。
+- 浏览器实际核对两方32个图上目标坐标与源数据逐点一致、所有分类数量正确；4张源图解码，4次下载SHA一致，22张资产卡和2份来源记录逐一打开，手机无横向溢出，无JS错误。相关11项前端测试、生产构建通过。
+- 独立审稿未审；本剧无episodes，未改任何镜头绑定，shot_pack无适用目标。请求日志绑定background，尺寸/费用按真实回执，未造型号。
+
+
+---
+
+## 303 — 2026-10-24 — fountain-open-exits-overhead-continuity
+
+### 指令
+
+俯视图通向外面的通道被堵死了；场景可以更壮丽，只要保证相对位置一致；俯视图与其他角度不一致，应使用俯视图参考生成其他视角。
+
+### 执行判断
+
+- 本轮按用户新标准优先保持对象相对位置与顺序，打开可连续通行的基地出口；近卫东/东北、天灾西南方向。道路细节为本剧拍摄设计，不宣称原版逐格复原。
+- 两方先修改俯视母图，逐图检查后再用新母图作为第一参考生成远景、正面、侧面；人物与武器自有资产板为辅助参考。原版游戏图仅供人眼研究。
+- 以新版本保留旧图，记录每张派生机位实际使用的母图路径和SHA；现有management站点展示参考关系，原版并排对比保留。
+- 最新指令启动新修订轮，既有精确坐标候选的三轮结果保留，不冒充已通过。
+- 审计：`.audit/adhoc_agents/2026-10-24/dota-fountain-continuity/`；请求经`tools/codex_image.py`先记background/request_log.md。
+
+### 执行结果
+
+- 共生成14张版本候选，采用8张接入原management站点：两方俯视v1、远景v1、正面v2；近卫侧面选v1侧前方（5圈正确），天灾侧面v3标布局待核准（6圈，应5）。新图不覆盖历史文件。
+- 两张俯视主代理检查：每方3建筑、7人形商人＋1光团、5圈，S1东/东北通路和D1西南大道贯通；高台/外围景观加强。所有派生视角的第一参考是各自新俯视，实际路径/SHA入清单。
+- **未完成项**：天灾侧面出生圈多1个；近卫侧前方转角较浅；天灾正面远天光略暖。三轮侧面修订后按codex-imagegen规定停止，不把候选写成通过；独立审稿未审，未声称三维投影精确一致。
+- UI保留原图并排与分类标注，32个新图标点重新定位；记录机位参考母图并显示过期提示。原版坐标图保留研究用途，当前美术图未作透视配准。
+- 验证：12项相关前端测试、生产构建通过；实际浏览器两方8张机位解码/下载SHA一致、6个参考母图下载SHA一致，32对象分类与2组原图对照解码通过；手机无横向溢出，无JS错误。构建只有既有大chunk提醒。
+- 本剧无episodes（已检查），shot_pack无适用同步目标。请求经审计入口，14个输出均在background/request_log.md中可追溯。本轮没有修改共用工作流/skill源，无目录同步目标。
+
+
+
+---
+
+## 304 — 2026-10-24 — fountain-to-ancient-global-geography
+
+### 指令
+
+往外的出口仍然不对，出口直通大本营基地，里面有巨大的生命之树或者冰风王座，应该参考全图。
+
+### 执行判断
+
+已看完整原版地图和两方全基地脚本坐标图：近卫泉水至世界之树向量(+1664,+1056)，天灾泉水至冰封王座(-1600,-1504)。泉水高地与主基地相连，不能画成独立山巅、长桥和云海。新俯视同时包含泉水角落、整个内部连接和基地古迹，再派生其他角度；原图仅供人眼，生成参考用本剧资产。沿用已授权图片修正与codex-imagegen审计入口。审计`.audit/adhoc_agents/2026-10-24/dota-fountain-base-connection/`。
+
+### 结果
+
+已按完整原版地图、全基地脚本坐标及地形高程重做：S1泉水向东北直接连接世界之树内庭，D1泉水向西南直接连接冰封王座广场。两张俯视母图同时呈现泉水角落、整段连接和古迹；六张其他机位都记录并使用相应母图作为第一参考。共生成14个版本候选，选用8张，旧山崖/长桥版本留档并标为历史。
+
+原management站增加泉水→大本营说明、可展开的全基地坐标图、S2/D2邻区导航；保留原版截图并排，重新定位32个对象标注。S2/D2早期全景未重生成，标为旧布局待更新，避免冒充本轮对齐结果。
+
+已核验：15项相关前端测试与生产构建通过；实际Chrome打开两方8张机位、逐张下载SHA一致，6个母图引用下载SHA一致；2张全基地坐标图解码及邻区导航成功；32对象筛选、原图对照、移动端无横向溢出，无JS错误。逐图主代理检查，所有选用图的出生圈为5个；天灾远景末圈间距偏宽，前/侧机位仍属斜俯，局部距离与附属装饰未达严格三维配准。独立审稿未审。
+
+14个生成输出均通过审计入口写入background/request_log.md。本剧无episodes，shot_pack无适用同步目标；未改共用工作流或skill，无目录/入口同步目标。审计：`.audit/adhoc_agents/2026-10-24/dota-fountain-base-connection/`。
+
+最终复核更正：D1俯视v2实际4圈，早先计数错误；最终采用v3补齐5圈。天灾三个派生机位实际参考仍是v2，保留真实路径/SHA；已逐图对照v3复核连接关系，复核记录同时绑定当前母图与机位SHA，任一更新即失效。近卫三个派生机位仍直接参考当前v1。出生圈标签边距及天灾北排商人标签已调整。最终截图、下载与机位复核显示均再次通过。
+
+
+---
+
+## 305 — 2026-10-24 — fountain-five-hero-capacity
+
+### 指令
+
+泉水附近空间要大，容纳5个英雄自由行走仍有富余。用户随后要求continue。
+
+### 执行判断
+
+扩大两方泉水本地前庭，建筑与商人保持相对方位和顺序；保留直接通向世界之树/冰封王座的基地连接。设计目标约30×24m前庭、18×14m连续净空、8m出口，以五个直径3m活动包络和错身余量作概念检查；尺寸是电影化设计意图，不冒充图片测绘。先重做俯视，再按新母图派生其他角度；沿用原management站。
+
+### 结果
+
+已扩大S1/D1泉水本地前庭，商人站位外移、中心留空、商店与泉水前沿留出通行空间；保持建筑/商人顺序和阵营内方位，出口仍直通世界之树/冰封王座。11张版本候选中采用8张：S1俯视/远景/侧前v1、正面v2；D1俯视v2、远景/正面v1、侧前v2。六个派生机位均以本轮最终俯视为第一参考，路径和SHA可追溯。
+
+原management页面加入“五英雄活动空间”开关，H1–H5占位与选定连续净空叠加于当前俯视，原图对照保留；标注绑定当前母图SHA，换图后旧标注隐藏。32对象重新标点。五个活动占位均在空地内，互不重叠，并留有通过余量。30×24m前庭、18×14m净空、8m出口为提示词中的设计目标，未当作实测尺寸。
+
+验收：逐图查看8张当前图，5出生圈、7人形商人＋光团和3建筑均保留；近卫正面商人误位已修正，天灾侧前图额外远城已去除。17项相关前端测试、生产构建通过；Chrome实际8张切换/解码/下载SHA核对，6母图引用、2组五英雄叠加/关闭、32对象筛选、全基地图与邻区导航、移动端无横向溢出均通过，无JS错误。构建仍有既有大chunk提醒。
+
+限制：几何为电影化概念；正面/侧面仍有明显俯角，侧前转角较浅，未做精确3D碰撞或动态行走模拟，独立审稿未审。S2/D2旧全基地机位继续标为旧布局待更新。本剧无episodes，shot_pack无适用同步目标；未改共用工作流或skill源。11个生成输出全部通过审计入口，审计`.audit/adhoc_agents/2026-10-24/dota-fountain-capacity/`。
+
+
+---
+
+## 306 — 2026-10-24 — scourge-npc-circulation-cold-review
+
+### 指令
+
+天灾泉水NPC有点不合适；生成后从不同角度作冷眼观众多次审查，逻辑有问题或不合适之处自主修正。
+
+### 执行判断
+
+将“有点耽误了”先理解为NPC影响动线，同时处理排队式僵直站姿。商人沿西/北边缘退让，保留身份和顺序；避开五英雄净空、商店前沿及西南王座通路。生成后由独立上下文审查动线、视觉/机位连续性，反馈后修正并复审；本轮仅改D1，S1保留。
+
+### 结果
+
+天灾D1四图更新为NPC动线v2：7人形商人＋1光团沿西北边缘，中央五英雄前庭和西南王座通路开放。共8张候选，选4张；三个派生角度真实引用最终俯视母图。三名独立审查者分别检查站姿、连续性与通行，发现并修复多出生圈、多光团、侧面楼梯朝向；主代理另修外围悬崖/海洋/桥。两组最终复审均无blocker，结论绑定四图SHA。保留正面第五圈间距偏大、局部箱桶差异、固定商店站姿和入口未细化等限制。
+
+原management站Chrome核验通过：两区域8张图片切换/解码/下载SHA、6个真实母图引用、32对象分类、原图并排、两组五英雄叠加、全基地图及邻区跳转；移动端无横向溢出，无JS错误。已实际查看D1对照及五英雄叠加截图。S1及其余15区manifest内容保持不变；本轮未改UI代码。8张生成均在background/request_log.md可追溯。本剧无episodes，shot_pack无适用目标；未改共用工作流/skill。
+
+
+---
+
+## 307 — 2026-10-24 — region-default-overhead-originals
+
+### 指令
+
+点击上路、中路等区域时默认显示俯视图；所有区域的tab选项都准备原图供对比。
+
+### 执行判断
+
+保留现有management站点；统一区域切换默认俯视，全部16区加原图入口和各机位并排对照。优先归档实机截图，另给6.83d原版地图本区定位；区分实机画面与低清地图纹理，不把生成图当原图。
+
+### 结果
+
+已将区域默认机位与区域切换重置为俯视；大区标题可直达首个区域。全部16区新增原图tab，远景/俯视/正面/侧面默认并排显示本区原图，支持关闭并排、单看原图、来源与下载、完整6.83d地图定位。9区用游戏截图（7张独立来源；M1/M2/R2共用中路坡道参考），7区用2009年6.60之后旧版地貌局部；旧版、非同机位、一塔全景未覆盖等限制均显式标明，不能冒充16区6.83d高清实机齐全。原版源全部本地保存，来源与SHA记在map_regions/original_references.json。
+
+
+---
+
+## 308 — 2026-10-24 — map-navigation-foundation
+
+### 指令
+
+先系统研究原版地图的可通行、高低地、不可通行、树木阻挡与不可跨越边界，再据此生成和标记场景；应用于左右对照、整图和所有区域，为后续视频人物路线提供约束。
+
+### 执行判断
+
+以6.83d地图的寻路网格、地形顶点、树木/障碍及脚本为依据，区分静态地形、动态障碍和技能例外；普通步行默认，破树/跳跃/飞行须另说明。旧图不能直接当碰撞依据；原图坐标不能生硬叠到未经配准的电影图。
+
+### 结果
+
+已完成原版静态地形研究与管理UI：提取6.83d的512×512寻路格、129×129地形顶点、5198放置对象（3676树位），核对W3B覆盖，识别193个已取消pathTex的视线阻挡对象，避免误当禁行。树木按基础对象表名义尺寸保守占地；建筑/NPC使用明确标注的制作缓冲，不冒充引擎碰撞。整图与16区均提供同坐标左右研究图、6类同步图层、离散高度层、点查和带32游戏单位余量的直线路段检查、34张带方向/图例导出、16份区域出图/视频约束。原有默认俯视和所有机位原图对比保留，各资产卡挂接本区约束。
+
+出图与未完成范围：经审计入口生成16区初稿＋S1/D1/T1/R2四张修订，共20张。独立审查全部实看并绑定SHA，全部仍需返工：斜俯视、凭空桥峡谷、泉台高差/出生圈错误、X误标主路等；通过路线母图数为0。各区只展示返工对照与原版标注，没有替换现用机位，也未从失败母图继续生成其他角度。电影几何配准、实机寻路和动态单位碰撞尚未完成，整个场景校准任务不能记为全部通过。
+
+验收：24项相关前端测试通过，生产构建通过（既有大chunk提醒）；修复切区后同级重复React key造成研究面板重复，并加回归测试。Chrome实测16区、64机位保留约束、左右图层开关、32个区域下载、两点阻挡提示、手机无横向溢出；20张生成图下载SHA与请求日志逐一核对，JS错误为0。独立数据审查完成并增量复核：修正flags解释、粗网格混合格歧义、导出图例，当前静态研究无blocker；不宣称动态/实机通过。树记录压缩至866499 bytes，站内接口200。审计目录`.audit/adhoc_agents/2026-10-24/dota-navigation-foundation/`。本剧无episodes，shot_pack无适用目标；未改共用工作流或skill源。
+
+
+---
+
+## 309 — 2026-10-25 — latest-map-layout-revision
+
+### 指令
+
+根据最新的地图继续修正场景图。
+
+### 执行判断
+
+结合前文按刚完成的6.83d地图研究/通行标注执行，保持本剧版本，未收到切换游戏版本的明确指令。用户要求根据最新地图，本轮将本剧自绘、由地图数据派生的布局研究图作为直接图片参考，纠正上一轮仅文字输入造成的地形漂移；这是本任务对assets指南“平面图不进生成参考”的具体覆盖，不修改共用规则，不上传原游戏截图。参考只约束布局，美术保持本剧电影风格；先复核关键区域，再根据结果推进其余区域。生成审计和独立冷看继续执行。
+
+### 结果
+
+按当前项目最新6.83d静态导航研究，生成16区自绘布局参考，直接输入S1/D1/T1/R2重出v3四张（审计入口留痕）。四张及其四份参考均已独立冷看并绑定SHA；累计24张导航候选审查，路线母图批准仍为0。S1宽坡道仍被桥式通道及树台挤占；D1把南端bg30埋骨地画成王座式建筑；两基地7人形NPC＋1精灵均未验明；T1/R2仅可供有限美术参考。五出生圈各可数到5个，但五英雄净空未验证。
+
+原management站已展示v3候选、原版标注对照、实际输入布局图和独立拒绝原因；新增“蓝色仅为低地，不等于水域”说明。其他12区候选、地图几何与64个正式角度没有被替换；其余12区布局图已准备，尚未直接参考重出。现有多角度图未按新布局完成空间配准。
+
+本轮实际prompt错误（低层误等同水、D1裁切外Ancient未清楚限定）已在research.md如实记录，不事后改写已提交prompt。关键四区累计三轮仍不合格，按codex-imagegen skill停止同类重抽；遵用户不提问授权，自主保留待返工状态，后续应优先统一地形、建筑和NPC的三维坐标再出机位。没有将审查失败的图晋升正式路线母图。
+
+验证：24项相关前端测试、TypeScript和生产构建通过（仅既有bundle尺寸提醒）。Chrome已验证16区默认俯视、16张当前候选图解码及HTTP/SHA、4张实际布局输入HTTP/SHA和生成审计；移动端无横向溢出，JS错误0。详情见本次audit/browser_verification.json。本剧无episodes，shot_pack无适用目标；未改共用工作流/skills，无对应目录同步。审计目录：.audit/adhoc_agents/2026-10-25/dota-latest-layout-revision/。整体状态为已复审、未全部修妥，水位/实机碰撞与镜头配准仍未完成。
+
+---
+
+## 310 — 2026-10-26 12:23:21 — process-qc-ui
+
+> target_artifacts:
+>   - apps/ui/src/components/ProcessQcPage.tsx
+>   - libs/infrastructure/readers/process_qc__reader.py
+> severity: medium
+
+### 指令
+
+在管理站 UI 上展示和管理流程与自检，仓库级与剧级分开不混（来源 dota_yingxiong follow-up 258）。
+
+### 摘要
+
+新增只读的流程与自检：仓库级页 /workflow/qc（工作流 › 1.0.4）与剧级页 /qc?drama=…（剧页按钮进入）；管理＝复制指令给代理执行。
+
+---
+
+## 311 — 2026-10-27 19:15:33 — shared-view-panel-directions
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/components/SharedAssetPreview.tsx
+> severity: low
+
+### 指令
+
+仙侠资产独立深审发现三视图实际方向与固定正侧背标签不一致；按现有views.panels元数据展示真实面板方向，作为用户已授权资产纠错的必要界面修复。
+
+### 摘要
+
+共享资产预览按实际panels显示方位，支持南北东顺序及西侧视，不改变图片。
+
+---
+
+## 312 — 2026-11-01 11:43:06 — hero-preview-page
+
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src
+> severity: medium
+
+### 指令
+
+我们应该为每一个英雄建立一个preview的页面，上面有所有视频，还有相关的图片，到时候你就只给我preview一个链接就行了
+
+### 摘要
+
+管理 UI 新增英雄预览页 /hero-preview?path=<英雄目录>：一页汇总人物立绘、亮相视频、三视图，四个技能的最新出片、峰值图、开场图与历史出片，以及 demo 成片；以后交片只给这一个链接。
+
+---
+
+## 313 — 2026-11-01 11:54:53 — hero-preview-layout
+
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/components/HeroPreviewPage.tsx
+> severity: low
+
+### 指令
+
+排版要改进，我最在意的就是demo，人物视频，还有各个技能的视频，应该要突出他们，很多图片和辅助可以是默认collapse的
+
+### 摘要
+
+英雄预览页改版：Demo、人物亮相、四技能最新视频大图在前（技能两列 16:9），立绘、三视图、声样、拼图、峰值图、开场图、历史出片全部默认收起。
+
+---
+
+## 314 — 2026-11-01 13:43:43 — hero-preview-demo-first
+
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/lib/heroPreview.ts
+
+### 指令
+
+preview里的第一个视频应该是demo
+
+### 摘要
+
+英雄预览页 Demo 节的第一个视频必须是最新成片：按 edit/final → edit/draft → 其他排序，同目录内按版本号 vN 从大到小；修掉按路径倒序时 demo/review_* 审阅包视频排在 edit/final 成片前的问题（Tiny 目录复现）。
+
+---
+
+## 315 — 2026-11-01 15:48:51 — demo-final-badge
+
+> severity: low
+
+### 指令
+
+我们看下dota这个英雄，所有demo finalized的英雄，在UI的各个地方给我打一个标记，这样我好判断，还有请确保publish文件都已经生成好了
+
+### 摘要
+
+新增 GET /api/demo-status，并在侧栏、角色画廊、资产总览、英雄预览、人物卡剪辑拼接处给 demo 已定版的英雄打「Demo 定版」标记，发布文案过期/缺失同时提示
+
+---
+
+## 319 — 2026-11-03 23:23:23 — rank-episode-preview
+
+> severity: low
+
+### 指令
+
+用户（paihangbang 排行榜 ep05_deadliest_viruses）：「最后给我一个类似于dota preview的页面link给我，我好review」。管理 UI 新增排行榜单集预览页 /rank-preview?path=<集目录>：标题/kicker/口径、topic/sources/qc/publish 链接、主片（多版本新的在前，其余折叠）与封面、qc.md 摘要、按倒数顺序的名次卡片网格（图、数值、国家/说明行、徽章、图源）并在 after_rank 处插洞察卡、assets/music 音频、折叠 render/preview 截图；在剧导航的排行榜集目录处给入口。
+
+### 摘要
+
+管理 UI 新增排行榜单集预览页 /rank-preview，供 review 一条链接看完整集
+
+---
+
+## 318 — 2026-11-03 23:23:07 — rank-preview-page
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/components/RankPreviewPage.tsx
+> severity: low
+
+### 指令
+
+用户「最后给我一个类似于dota preview的页面link给我，我好review」——针对排行榜系列（ai_videos/paihangbang）ep03。新增「排行榜单期预览页」/rank-preview?path=<集目录>：只读展示 data.json（标题区、洞察、条目卡片含主图/替代图/logo/创始人头像/风险标记/署名/来源）、render/ 下全部成片与封面、topic/sources/qc/publish 文档链接、ep03 的 assets/ref 候选图；路径限定在 ai_videos/paihangbang/episodes/ 之下。样式与用法参照英雄预览页。
+
+### 摘要
+
+新增排行榜单期预览页 /rank-preview（API + UI + 测试 + README）
+
+---
+
+## 320 — 2026-11-03 23:32:22 — rank-preview-series-api
+
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/components/RankPreviewPage.tsx
+>   - projects/ai_video_management/apps/api/routes/rank_preview__route.py
+> severity: medium
+
+### 指令
+
+用户原话：「做完之后请仔细review和审查你的工作产出，然后用suno 配上音乐，最后给我一个类似于dota preview的页面link给我，我好review」。
+本条（主代理委派）在 follow-up 317 已有的单期 /rank-preview 前端之上增量补齐，不覆盖 317/318 的改动：
+- 只读 API GET /api/rank-preview?path=：path 限定 ai_videos/paihangbang（系列）或其 episodes/<期目录>（单期），复用 SafeResolver，防目录穿越。
+- 系列总览（path=ai_videos/paihangbang）：每期一张卡（期号、英文标题、N、冠军、时长、render/thumbnail.png、审片结论、是否有配乐、图片统计），按期号排序全列，ep11–ep20 重点展示，点进单期。
+- 单期页：render/ 下全部 mp4 一个 tab，标「推荐审看」（有配乐风险版 > 有配乐默认版 > 无配乐风险版 > 默认版；配乐按 manifest inputs.music / ffmpeg 音频输入或文件名识别）；概况行（标题、N、时长、主题、period_label、source_line、scope_note）；qc.md 最新结论段摘录（可展开全文）；卡片明细表（名次、名称、国家+国旗 _assets/flags/<iso2>.png、value_display、badge、image / image_alt 缩略图、assets.json licence/author/source、image_risk 标红、AI-generated 标黄）；洞察、publish.md、_build/handoff.md 醒目展示。
+- 只读，无修改/生成按钮；文件缺失显示「尚未生成」。加后端测试与前端测试；项目 README 与 ai_videos/paihangbang/README.md 末尾「审片链接」各加一处入口。
+
+### 摘要
+
+排行榜预览页补系列总览与只读 API /api/rank-preview（推荐审看 tab、审片结论、卡片明细表、洞察/发布稿/交接）
+
+---
+
+## 321 — 2026-11-04 00:49:31 — rank-preview-list-mode
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/ai_video_management/apps/api/routes/rank_preview__route.py
+>   - projects/ai_video_management/apps/ui/src/components/RankReviewSections.tsx
+> severity: low
+
+### 指令
+
+用户要「类似于 dota preview 的页面 link」审 ep03（ai_videos/paihangbang/episodes/ep03_ai_companies）；本条为 ep03 列表期补齐：排行榜预览页支持 data.json mode=list（不把 rank 1 当冠军、名次列改「序」），卡片明细表按字段补 corner、logo 缩略图（logo_bg 底色）、创始人头像与姓名身份（person.image_risk 标红）、主图 image_risk 原文（news-agency 红）、image_alt_credit（AI-generated 标黄）、secondary_display、notes 可展开；图片走已有媒体接口。不改 317 未收尾的 RankPreviewPage.tsx / rankPreview.ts。
+
+### 摘要
+
+排行榜预览页补列表期模式与 ep03 明细字段（logo / 创始人 / 图片风险 / 备注）
+
+---
+
+## 317 — 2026-11-03 23:22:49 — rank-preview-page
+
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/components/RankPreviewPage.tsx
+>   - projects/ai_video_management/apps/ui/src/lib/rankPreview.ts
+> severity: medium
+
+### 指令
+
+用户（paihangbang 两期换图配乐进行中）：「做完之后请仔细review和审查你的工作产出，然后用suno 配上音乐，最后给我一个类似于dota preview的页面link给我，我好review」。
+执行边界（代理判断）：
+- 仿英雄预览页（follow-up 312）新增 `/rank-preview?path=<排行榜集目录>`，纯前端：经 /api/file 读 data.json、assets.json、render/*.manifest.json，经 /api/media 播成片与配乐、显示卡片主图。
+- 一页内容：成片（完整版含待签字图 / 默认版并列，时长与配乐入出点）、配乐试听、统计（卡数、许可分级、风险图、AI 出图数）、按名次排列的卡片网格（主图、名次、名称、数值、署名、许可颜色、风险说明、主体核对）、审片记录与发布稿链接。
+- 交片时只给这一个链接；加单测覆盖数据组装。
+
+### 摘要
+
+管理应用新增排行榜预览页 /rank-preview：一页看成片、配乐、每张卡的主图与许可、审片记录
+
+---
+
+## 322 — 2026-11-05 22:50:32 — remove-shikong-lvxing
+
+> severity: medium
+
+### 指令
+
+帮我把时空旅行这个系列的所有东西都删除干净，一点不留，我想重新开始；记住是把生成的所有文件也删除干净，我不想有旧的文件
+
+### 摘要
+
+删除《时空旅行》系列 shikong_lvxing（sk1–sk3）全部文件与生成物、_deleted 备份、specs/ai_video/{shikong_lvxing,sk1,sk2,sk3}、.audit 下的子代理记录；shengji_zhilu 对 sk2 的路径引用标为已删除，并删除 sk2_reuse.md；工具示例与测试夹具去掉该系列路径，image_fetch --drama 改为必填
+
+---
+
+## 323 — 2026-11-06 21:00:34 — youtube-channel-skill
+
+> severity: medium
+
+### 指令
+
+新增仓库级共用 skill：YouTube 频道（上传 + 自有频道增长分析 + 同类频道对比）。上传沿用 tools/youtube_upload.py（一律私享、公开人点）；分析用 YouTube Analytics API（yt-analytics.readonly，只读）拉自有频道按天播放、观看时长、订阅增减、流量来源、地区设备、单视频留存，报告落文件；同类频道公开数据沿用 tools/yt_research.py。用户 2026-11-06 明确同意升为仓库级。
+
+### 摘要
+
+新增 youtube-channel skill 与 tools/youtube_analytics.py，授权加 Analytics 只读权限
+
+---
+
+## 324 — 2026-11-06 23:20:55 — seedance-camera-first-and-camera-relative-direction
+
+> severity: medium
+
+### 指令
+
+调研并验证两个 Seedance 出片假设，作用于所有剧：①先写镜头再写动作，动作被镜头包住、不割裂；②方向以镜头为参照（朝镜头走、背对镜头离开），不用前后左右/东南西北。有价值就加入总流程。
+
+### 摘要
+
+官方 2.5 指南示例一律镜头起句、方向全用画面/镜头参照；Seedance 1.0 报告给出机理（decoder-only 编码器、caption 从观众视角写）；扫描 102 镜走位约 10 镜只有东南西北、1 镜与俯视图矛盾。方向规则进分镜规范，镜头在前写入 Seedance 写法页；编译器改序待 A/B。
+
+---
+
+## 325 — 2026-11-07 00:03:51 — seedance-order-direction-ab-test
+
+> severity: medium
+
+### 指令
+
+用户：实测一下（镜头在前、方向以镜头为参照），找一个好的案例，做好了给我看结果。
+
+### 摘要
+
+chuanyue_yiri EP1 s1 st3 跟拍做 2×2×2 共 8 条 480p 草稿（768 积分），盲审＋作者核对：镜头在前无增益、编译器不改；方向以镜头为参照弱支持（左侧放对 4/4 对 2/4），分镜规则保留。
+
+---
+
+## 326 — 2026-11-07 09:02:08 — episode-preview-page
+
+> severity: medium
+
+### 指令
+
+用户（chuanyue_yiri EP01 出片后）：预览页应该在 ai_video_management 里给链接，不要另外发布的 Artifact 页。新增三模块剧通用的单集预览页 /episode-preview?path=ai_videos/<剧>/episodes/epNN：整集成片（集级正片剪辑最新版）、各场剪辑成片、逐镜正式条（台词、拉丁语等外语台词的中文意思、审片结论与备注）、人物定妆；数据只读，来自 filming.json、各镜 renders/ 的最新条与 review.md、/api/scene-cuts，以及可选的 {集}/preview.json（场次标题与一句话、外语台词释义、人物表、逐镜结论）。
+
+### 摘要
+
+新增只读单集预览页 /episode-preview，剧页可直达
+
+---
+
+## 327 — 2026-11-07 11:36:30 — group-takes-in-cuts-boards-preview
+
+> severity: medium
+
+### 指令
+
+chuanyue_yiri EP01 v2 改用镜组与故事板后暴露的工具缺口（用户 2026-11-07 授权代理自主推进）：场剪辑 scene_cut.py 不支持镜组的条（dota 只能原样拼接）；场故事板里单镜只有占位格；空镜（无人物）让 scene_blocking 走位图崩溃；单集预览页找不到镜组的条；剪辑缺少场尾停留检查。
+
+### 摘要
+
+scene_cut 支持镜组事件与场尾停留提示；场故事板单镜用首帧图；scene_blocking 空镜不崩；单集预览页按镜组条与偏移播放
+
+---
+
+## 328 — 2026-11-07 20:37:59 — episode-preview-film-mode
+
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/components/EpisodePreviewPage.tsx
+> severity: medium
+
+### 指令
+
+用户（zhenshi_chidu 真实尺度 ep01 成片交审后）：给我做一个类似 /episode-preview?path=ai_videos/chuanyue_yiri/episodes/ep01 的审片 url。真实尺度这类非短剧系列没有 filming.json、集目录名带后缀（ep01_largest_land_animals），现有单集预览页打不开。扩展单集预览页：集目录名允许 epNN_后缀；没有 filming.json 但 preview.json 带 video（成片路径）时进入成片模式：播放成片、按章节 / 条目时间线跳转、条目卡片（缩略图、标题、副标题、备注、提示标记）、封面候选图、文档链接、待拍板事项与说明。数据只读，preview.json 由剧自己的脚本生成。
+
+### 摘要
+
+单集预览页增加成片模式（无 filming.json、preview.json 给成片与章节），支持 epNN_后缀目录
+
+---
+
+## 329 — 2026-11-07 20:44:13 — character-review-page
+
+### 指令
+
+我需要一个人物的review page，到时候我可以告诉你是那个表情需要修复
+
+### 摘要
+
+新增 /character-review?path=<人物目录>：读人物目录 review.json，分区展示建立视频、三视图、表情等，每项带编号，便于用户按编号指认修复
+
+---
+
+## 330 — 2026-11-07 21:39:51 — review-strategy-page
+
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/components/ReviewStrategyPage.tsx
+> severity: medium
+
+### 指令
+
+你的这个页面应该做进我的网站里，而且尽量用 diagram，标记出 dependency、流程、关键节点等等
+
+### 摘要
+
+管理站新增「1.0.4.1 审查机制（草案）」/workflow/qc/strategy：主流程、依赖、审稿人泳道、判定树、漏网案例五张交互 SVG 图，顶部实时显示试点剧闸门状态
+
+---
+
+## 331 — 2026-11-07 22:50:29 — review-run-page
+
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/components/ReviewRunPage.tsx
+> severity: medium
+
+### 指令
+
+每次都生成一个审查的 check list，像是在一个审查页面下面……每一个独立 agent 审查完成要 tick 一个 box，只有所有 box 都 tick 完，审查才算结束
+
+### 摘要
+
+管理站新增 /review-run 审查单页（集下列表＋单张清单，进度、逐人勾、严重度、报告与任务书链接），单集工作流页头、单集预览、审查机制页加入口；导航 1.0.5 审查机制与审查单
+
+---
+
+## 332 — 2026-11-07 23:17:32 — review-run-rounds
+
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/components/ReviewRunPage.tsx
+> severity: medium
+
+### 指令
+
+checklist 都应该被保存在剧下面的某一个 folder，我要能 easy navigate 到；最后把结果给我看，让我来 confirm 是否出视频
+
+### 摘要
+
+审查单页支持剧级列表（按集→循环链分组）、第几轮与上下轮链接、改了什么、必查项 ✓/✗、待用户确认 / 已确认出片状态与结果链接；剧页加「☑ 审查单」按钮
+
+---
+
+## 333 — 2026-11-08 09:20:53 — review-run-nav-two-levels
+
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/components/ReviewRunPage.tsx
+> severity: medium
+
+### 指令
+
+用户 2026-11-08：审查单在left nav上应该是有清晰记录的，是left nav里的一个类，然后下面应该有一堆审查单item，我们可以考虑每集一个审查单组，或者每个剧一个审查单组，审查单本身的目的是告诉我审查的大类有哪些，是否有审查，high level有多少个问题，哪些独立agent参与了审查，但是审查单页面应该不用告诉我细节，我需要审查单保持简单高效，整洁，然后我可以click或者继续deep dive到下一层，另一个page去看细节，每一个具体agent怎么审查的，审查的流程是什么，结果细节是什么
+
+### 摘要
+
+左侧导航加「审查单」一类（剧 → 集分组，列每轮审查单）；审查单页只留每个大类的一行摘要（审了没、问题数、哪些审稿人）；点进去是审稿人详情页（怎么审、流程、必查项、报告全文）
+
+---
+
+## 334 — 2026-11-08 09:32:04 — review-strategy-native-ear
+
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/lib/reviewStrategy.ts
+> severity: medium
+
+### 指令
+
+用户 2026-11-08：台词每个大类都应该有一个或多个审查机制；结尾女主的话不通顺，native speaker 观众看起来会很怪
+
+### 摘要
+
+审查机制页法则表加「母语听感」（英语母语盲审、换模型），台词改名「台词（时长与逻辑）」；与名册 review_roster v3 一致
+
+---
+
+## 335 — 2026-11-08 10:32:18 — compiler-extras-field
+
+> target_artifacts:
+>   - projects/ai_video_management/libs/domain/entities/episode_workflow__entity.py
+> severity: medium
+
+### 指令
+
+（chuanyue_yiri 出片前审查 s1 第 1 轮 prompt_text 审稿人报出：有路人但没有三视图的镜头负面词仍写「多出来的人」，违反 prompts-rules 的群演规则）
+
+### 摘要
+
+编译器加可选镜头字段 extras（路人数）：去掉「多出来的人」并写明路人数；不写时输出不变，不升编译器版本
+
+---
+
+## 336 — 2026-11-08 12:05:46 — episode-storyboard-review-layout
+
+### 指令
+
+我进入ep的page 里面，看到故事板里还是旧的照片，你应该把除了出video之外的工作都做完，并且确保在ep的page里有一个很好的layout，让我看到update之后的最新的故事版图片，我好做最后一轮人工review
+
+### 摘要
+
+剧页故事板改为按场、按镜直接读每镜现行首帧图（planning/<st>_first_frame.png，按修改时间破缓存），缺图显示「首帧待出」，每场附出片前审查单状态；去掉剧页上读旧场故事板（镜组板切图）的入口
+
+---
+
+## 337 — 2026-11-08 12:36:11 — review-run-agent-details
+
+### 指令
+
+你在审查表还应该告诉我每一步是谁负责审查的，哪个独立的agent，我点击去应该能开到agent更详细的内容，比如他用的什么指令，什么skill 等等
+
+### 摘要
+
+审查单页每位审稿人标签显示是哪个独立 agent（执行方式 · 模型，重派标第几次）；审稿人详情页顶部新增「审稿 agent」：每次派单的执行方式、模型、上下文、派单与打勾时间、用了哪些规则 / skill（可点）、发给它的完整指令原文与回复
+
+---
+
+## 338 — 2026-11-08 13:29:02 — review-law-page
+
+### 指令
+
+我们现在在审查页面里有几大类，当我点击到下一次，我希望一开始你要素我，这一大类是什么？他想解决什么问题，他又细分成几个小类？分别是什么，他检查的流程是什么，用的什么skill，然后再告诉我检查的结果
+
+### 摘要
+
+审查单页点大类名进新的审查大类页：先讲这一类是什么、想解决什么问题（含真实例子）、几个小类（本轮各审稿人 ✓/✗ 矩阵）、检查流程、用了哪些 skill / 规则与实际跑的 agent，最后给本类结果与合并问题表
+
+---
+
+## 339 — 2026-11-08 13:37:31 — edu-videos-preview
+
+### 指令
+
+教学视频（edu_videos/）也要能在管理应用的预览页审片：开放 edu_videos/ 为只读可访问根目录（文件、媒体），单集预览页成片模式支持 edu_videos/<系列>/<知识点> 路径；preview.json 由工具从时间轴与讲稿生成。
+
+### 摘要
+
+单集预览页支持 edu_videos 知识点
+
+---
+
+## 340 — 2026-11-08 13:50:44 — images-codex-only
+
+> target_artifacts:
+>   - tools/image_engine.py
+> severity: high
+
+### 指令
+
+用户 2026-11-08：以后出图片没我允许不用elevenlabs，全部用codex
+
+### 摘要
+
+出图默认引擎改为只用 Codex：image_engine.AUTO_ORDER=(codex,)，ElevenLabs 只在用户允许、显式 --engine elevenlabs 时用、不再作自动回退；CONVENTIONS、codex-imagegen、paid_services、assets.md 同步；引擎策略测试按新规则改写
+
+---
+
+## 341 — 2026-11-08 13:51:15 — images-codex-only
+
+### 指令
+
+以后出图片没有用户允许不用 ElevenLabs，全部用 Codex 内置出图，省下的 ElevenLabs credit 留给配音；写入流程（共用约定、skills、refs、出图器）。
+
+### 摘要
+
+出图一律 Codex，ElevenLabs 出图须用户允许
+
+---
+
+## 342 — 2026-11-08 13:54:13 — cast-voice-optional
+
+> target_artifacts:
+>   - projects/ai_video_management/libs/infrastructure/readers/shot_materials__reader.py
+> severity: medium
+
+### 指令
+
+（chuanyue_yiri 出片前审查：喷泉接水女人、浴场妇女按 bible §2.1 不做声样，但编译器要求画面里每个人都有声样）
+
+### 摘要
+
+编译器解析人物时声样改为可选：有就挂，没有不报错（不开口或只说一句的当地人不做声样）；已有声样的人物编译结果不变，不升版本；同时人物行补上「另有 N 个没有三视图的当地人」
+
+---
+
+## 343 — 2026-11-08 14:07:21 — review-v5-ui
+
+### 指令
+
+有了多重review，我们应该看到based on rubric，两个得分结果，根据结果，在derive出问题，哪些是critical的，然后应该怎么解决，然后implement solution，然后继续loop回一开始继续检查；每一大类，应该有自己的rubric…rubric要有很多维度
+
+### 摘要
+
+管理站审查单页接 review_run.py v5：大类页「细分成几个小类」改成 rubric 评分表（每项 Claude a 分 / Codex b 分 / 最终，0–3 着色，悬停与展开看证据，标分歧、抽查与裁决），检查流程加 method、skill 节加 model_why 与两位审稿人和裁决人；审查单页每项显示两位审稿人的模型与打勾状态（含待裁决、代登记），有 issues.json 时顶部加问题清单摘要卡；新增问题清单页 /review-run/issues（级别 / 状态 / 类别 / 场筛选，严重在前，证据展开、方案、历史，循环位置「本轮 → 问题 → 方案 → 实施 → 下一轮复核」与挡着下一轮的严重 / 主要数）；审稿项详情页 v5 两位并排与对比 / 裁决节。v2 单照旧。
+
+---
+
+## 345 — 2026-11-08 14:57:34 — shared-assets-inline-detail
+
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/components/SharedAssetPreview.tsx
+> severity: low
+
+### 指令
+
+公用资产页：点击左侧导航或资产卡片时不要弹窗，右侧主页面直接切换为该资产详情（带返回列表）。
+
+### 摘要
+
+SharedAssetPreview 由 dialog 改为主区域 article；打开时隐藏列表，面包屑带资产名；详情加显仙侠参照、details、采用层级与被引用。
+
+---
+
+## 346 — 2026-11-08 15:31:10 — review-corrections-page
+
+> target_artifacts:
+>   - tools/review_run.py
+>   - projects/ai_video_management/apps/ui/src/components/ReviewCorrectionsPage.tsx
+
+### 指令
+
+每一次审查结果不需要我的human gate，所以不应该有状态是等我review，还有每一次审计的结果应该link 到另一个page，另一个page是correction，基于review，我们修复了那些，这个我也想看，所以你要给我另一组 page的link，两边是关联的
+
+### 摘要
+
+审查单每轮收轮改为「已收轮」并记结论（可出片 / 不可出片＋理由），旧「待用户确认」migrate；用户确认只留在出片时（confirm / can-submit 查最新一张已收轮单）。新增 review_run.py corrections 与管理站修复页 /review-run/corrections：每个有方案的问题、首帧前后、分镜 diff、下一轮复核结果，与审查单、问题清单、左侧导航双向链接；new 存 materials/snapshot，fix 加 --file / --before --after / --by。
+
+---
+
+## 344 — 2026-11-08 14:14:44 — review-page-edu
+
+### 指令
+
+审阅页（/character-review）也接受 edu_videos/ 下带 review.json 的目录，用于教学视频的配音选型等试听审阅。
+
+### 摘要
+
+审阅页支持 edu_videos 目录
+
+---
+
+## 347 — 2026-11-08 16:48:54 — overhead-facing-and-size-check
+
+> target_artifacts:
+>   - tools/shot_overhead.py
+> severity: medium
+
+### 指令
+
+（出片前审查裁决发现）俯视图同一位置多次朝向只画最后一个；景别档缺失时距离机检从不运行
+
+### 摘要
+
+tools/shot_overhead.py：原地（≤0.2 m）的路点合成一个点，先后每个朝向（差 ≥25°）各画一个尖角并标秒数（审阅图与 _ref 图都改，_ref 图秒数贴着各自尖角摆、路过点缩小）；[[camera]] 新增 shot_size（景别）键，逐路点核机位距离，表外词 blocker，有人却一个都没写＝warning「距离机检跳过」；补测试与 prompts-overhead / prompts-structure 文档
+
+---
+
+## 348 — 2026-11-08 16:59:46 — review-run-latest-badge
+
+### 指令
+
+你的审查单我看不出来哪个是最新的，你报要不要加上时间在名字上，或者某种版本号
+
+### 摘要
+
+审查单按「集 → 范围（集+阶段+场）」分组、新的在前，每个范围最新一张标「最新」、旧的变灰并写明被哪张取代；导航每张以开单时间开头；审查单页非最新时顶部横幅链到最新；新增 /api/review-runs/checklist 读超过 1 MiB 的 checklist.json（场二到场八第 2 轮原先打不开）
+
+---
+
+## 349 — 2026-11-08 17:19:37 — film-preview-language-switch
+
+> severity: low
+
+### 指令
+
+教学视频要中英两版同时出，预览页要能切换语言（edu_videos follow-up 006）。
+
+### 摘要
+
+单集预览成片模式支持 preview.<lang>.json 与语言切换
+
+---
+
+## 350 — 2026-11-08 17:42:59 — compiler-v13-voice-scene-line
+
+> severity: medium
+
+### 指令
+
+「你可以加版本号，但是没必要说一定升级，保持上一个版本会怎么样呢？」→「那还是还是按原来的吧，你不用保留两种写法，那样更乱」
+
+### 摘要
+
+编译器 v12→v13，单一写法不加剧级开关：无台词的镜/镜组不挂任何声样、不写声音参考用法，有台词的镜只挂本镜说话的人的声样（按 speaks 认人）；删掉「本场：」整场目的一行（场景行保留地点·时间），避免别的镜头情节串进单镜 prompt。所有剧旧 prompts.json（v12）都标待更新、资料包失效，需各自重新编译（本次不重编）。
+
+---
+
+## 351 — 2026-11-08 19:58:15 — capcut-mcp-research
+
+### 指令
+
+调研 CapCut 是否推出 MCP；评估对本仓库剪辑模块是否有增益，有则接入；必须确保可商用。
+
+### 摘要
+
+CapCut 官方远程 MCP 存在（Codex/ChatGPT 桌面插件 v0.2.7），但不适合本流程且商用条款不满足，登记为不用。
+
+---
+
+## 352 — 2026-11-08 20:07:50 — capcut-own-content-only
+
+### 指令
+
+用户有 Codex，可用 CapCut 插件；关心能否剪出更好的成片且必须可商用；CapCut 不许商用的内容由我们自己准备，CapCut 只负责剪。
+
+### 摘要
+
+复核：只用自备素材时条款不禁止商用，但 CapCut 剩下的只是执行剪辑决定、没有自动导出，AI 粗剪是黑盒，不比现有流程好；登记细化，不接入。
+
+---
+
+## 353 — 2026-11-08 20:11:43 — dev-preview-page
+
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/components/DevPreviewPage.tsx
+> severity: low
+
+### 指令
+
+为西幻新剧开发框架做管理 UI 的 preview + review 页：系列节点下挂「新剧开发框架」，框架页看说明、模板、试套评估；每个开发稿（试套与各剧 0_开发）看主题摘要与逐页预览，评审页看形式检查、评估与使用反馈。
+
+### 摘要
+
+新增 /dev-preview 路由与系列树「新剧开发框架」节点。
+
+---
+
+## 354 — 2026-11-08 20:12:54 — mcp-request-log-and-blind-ab
+
+### 指令
+
+为 CapCut 剪辑盲测提供 MCP 调用的请求日志入口与盲测工具。
+
+### 摘要
+
+新增 tools/mcp_request_log.py（MCP 宿主调用的两段式请求日志）与 tools/edit_blind_test.py（素材池、合规机检、盲化、揭盲）。
+
+---
+
+## 355 — 2026-11-08 23:07:05 — edu-line-review-runs
+
+> target_artifacts:
+>   - libs/infrastructure/readers/review_run__reader.py
+> severity: medium
+
+### 指令
+
+用户 2026-11-08：注意你的审查结果应该记录在审查单下面（教学视频台词审）。
+
+### 摘要
+
+审查单读取器加 edu_videos/<系列>/<知识点>/reviews/*/checklist.json；edu_review.py 每一步写 v5 同形 checklist.json 与 issues.json（编号、级别、处理状态、方案），站上 /review-run 与问题清单页直接显示教学视频台词审；加测试。
+
+---
+
+## 356 — 2026-11-09 20:05:33 — episode-preview-inline-play
+
+> target_artifacts:
+>   - projects/ai_video_management/apps/ui/src/components/EpisodePreviewPage.tsx
+> severity: medium
+
+### 指令
+
+这个页面又bug，我点下面播放，自动跳到上面去播放了：/episode-preview?path=ai_videos/chuanyue_yiri/episodes/ep01
+
+### 摘要
+
+单集预览分场里点镜头缩略图改为就地播放该镜片段（到镜尾自动暂停），不再跳到顶部播放器；同时只保留一个就地播放，顶部播放器开始播放时收起就地播放
+
+---
+
+## 357 — 2026-11-09 20:12:29 — sidebar_edu_videos
+
+> target_artifacts:
+>   - projects/ai_video_management/libs/infrastructure/readers/tree__reader.py
+
+### 指令
+
+单独做一期，然后把完整的6季写入md文件我要在UI上能看到。left nav 能navigate
+
+### 摘要
+
+左侧导航加「教学视频」一节：系列 → 课程表.md 的季 → 期，已有目录的期点开单集预览
+
+---
+
+## 358 — 2026-11-10 20:07:58 — shot-point-field
+
+> target_artifacts:
+>   - projects/ai_video_management/libs/domain/entities/episode_workflow__entity.py
+> severity: medium
+
+### 指令
+
+s2 st1 有问题…我不清楚你想表达的point是什么（流程改进：分镜加看点字段）
+
+### 摘要
+
+分镜每镜可选字段 point：校验为非空字符串，只给审查用，不编译进 prompt（chuanyue_yiri follow-up 058）
+
+## 316 — 2026-11-01 20:31:06 — shop-items-view
+
+> target_artifacts:
+>   - projects/ai_video_management
+> severity: low
+
+### 指令
+
+按你的想法，把没做的都做了（含：管理应用里加商店货单视图，显示每个商店 / NPC 卖什么道具）
+
+### 摘要
+
+新增 /shop-items 商店货单页（出售方列表、物品格、物品反查出售方）与 GET /api/shop-items 端点，资产总览与地图资产页加入口
+
+## 359 — 2026-11-14 20:35:10 — audio-preview-player
+
+> severity: medium
+
+### 指令
+
+管理 UI 新增整集音频预览：只放音频（本地 TTS 模拟人物声音的对白），播放器下方显示 scene / shot 进度条（与视频预览一致），点进度条跳到对应镜头并显示该镜头的故事板图与台词；探索系列的故事板页样式照短剧拍摄模块页。
+
+### 摘要
+
+音频预览播放器（scene/shot 进度条）＋ edu 故事板页沿用拍摄模块样式
+
+## 360 — 2026-11-14 20:47:16 — audio-preview-gate-free-video
+
+> severity: high
+
+### 指令
+
+音频预览写入总流程（仓库级，用户明确要求）：出视频前先做整集音频预览（本地 TTS 按人物声音模拟对白，按镜头时长排好时间轴，播放器下方显示 scene / shot 进度条），用户审过音频才出视频；音频时间轴尽量与成片一致，代理也用它自检。授权边界：只有扣积分的生成（Seedance 等收费视频）需要用户审阅并人点；不扣积分的视频（本地渲染等）代理可以直接出。
+
+### 摘要
+
+总流程加「出视频前审音频预览」闸门；只有扣积分的视频生成要人点，免费本地视频代理直接出

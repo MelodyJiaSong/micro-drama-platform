@@ -138,8 +138,12 @@ def find_assets(paths: list[str]) -> list[Asset]:
     out: dict[Path, Asset] = {}
     for p in paths:
         root = Path(p).resolve()
-        if root.name == "props" or props_lib.DIR.match(root.name) and root.parent.name == "props":
-            dirs = props_lib.scene_objects(root) if root.name == "props" else [root] if (root / "asset.toml").is_file() else []
+        if root.name == "props":
+            dirs = props_lib.scene_objects(root)
+        elif root.parent.name == "props" and not props_lib.DIR.match(root.name):       # 分组目录 props/{分组}/
+            dirs = [d for d in props_lib.scene_objects(root) if d.parent == root]
+        elif props_lib.DIR.match(root.name) and props_lib.in_props(root):
+            dirs = [root] if (root / "asset.toml").is_file() else []
         else:
             dirs = [d for d in (props_lib.find(root, k) for k in sorted(used_keys(root))) if d and (d / "asset.toml").is_file()]
         out.update({d: Asset(d) for d in dirs})
@@ -163,7 +167,7 @@ def check(a: Asset) -> list[str]:
         return errs + [f"{VIEWS_KEY} = {vs!r}：取 {list(VIEW_NAMES)} 里不重复的几面，且必须含{VIEW_NAMES[0]}（侧 / 背挂正面图作参考）"]
     if not a.dir.name.startswith(a.key + "_"):
         errs.append(f"目录名 {a.dir.name} 不以键 {a.key}_ 开头")
-    if not props_lib.KEY.match(a.key) or a.dir.parent.name != "props":
+    if not props_lib.KEY.match(a.key) or not props_lib.in_props(a.dir):
         errs.append(f"键 {a.key} 不是 p{{N}}，或目录不在 props/ 下——物件只住 props，编号从 props_lib.allocate() 领")
     if MULTI.search(a.spec.get("name_zh", "")) and not a.spec.get("single"):
         # 一个 GLB 只装一个物体（2026-09-25 用户定调）：名字里并列了几样东西，就拆成几件资产，
@@ -408,7 +412,7 @@ def do_images(a: Asset, engine: str, force: bool) -> None:
         t0 = time.time()
         full, _ = request(a, i, ie.ELEVENLABS)
         ok, errs = False, []
-        for eng in ie.order(engine, target=out, prompt=full):   # auto ＝ ElevenLabs → Codex（follow-up 275，额度不够才换；图片不用即梦）
+        for eng in ie.order(engine, target=out, prompt=full):   # auto ＝ 只用 Codex（follow-up 341；图片不用即梦）
             prompt, refs = request(a, i, eng)
             try:
                 ok = _dreamina_retrying(a, i, prompt, refs) if eng == ie.DREAMINA else                     (_codex if eng == ie.CODEX else _elevenlabs)(a, i, prompt, refs)
@@ -466,7 +470,7 @@ def main() -> int:
     ap.add_argument("step", choices=("check", "plan", "refs", "images", "mesh", "all"))
     ap.add_argument("paths", nargs="+")
     ap.add_argument("--engine", default=ie.AUTO, choices=ie.CHOICES,
-                    help="auto ＝ ElevenLabs → Codex（额度不够才换，follow-up 275；图片不用即梦）；显式指定 ＝ 只用那一家")
+                    help="auto ＝ 只用 Codex（follow-up 341；ElevenLabs 须用户允许；图片不用即梦）；显式指定 ＝ 只用那一家")
     ap.add_argument("--tier", default="Sketch", choices=("Sketch", "Regular"))
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--shard", default="0/1", help="k/n：只做第 k 份（共 n 份），多进程并发时各拿不相交的一份")

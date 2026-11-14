@@ -1,0 +1,135 @@
+<style>
+  .open { position: absolute; left: 0; right: 0; top: 440px; text-align: center; }
+  .ev { position: absolute; left: var(--mx); right: var(--mx); top: 210px; display: flex; gap: 40px; align-items: flex-end; }
+  .ev .card { flex: 1; padding: 36px 40px; display: flex; flex-direction: column; justify-content: flex-end; }
+  .ev .slot { margin-bottom: 22px; }
+  .ev .eyebrow { white-space: nowrap; }
+  .ev .h2 { margin-top: 10px; }
+  .ev .body { margin-top: 8px; color: var(--ink2); }
+  .gt { position: absolute; left: var(--mx); top: 170px; }
+  #chg { position: absolute; left: var(--mx); top: 290px; }
+  .gc { position: absolute; left: var(--mx); top: 790px; display: flex; align-items: center; gap: 22px; }
+  .lesson { position: absolute; left: 0; right: 0; top: 440px; text-align: center; }
+  .rows { position: absolute; left: var(--mx); top: 270px; width: 760px; }
+  html[lang=en] .rows, html[lang=en] .paper { width: 820px; }
+  html[lang=en] #fx4 { left: 980px; width: 820px; height: 461px; }
+  .rows .r { display: flex; align-items: baseline; gap: 20px; padding: 22px 0; border-top: 1px solid var(--hair); }
+  .rows .r:first-child { border-top: 0; }
+  .rows .mk { font-size: var(--fs-h2); font-weight: 700; width: 48px; }
+  .paper { position: absolute; left: var(--mx); top: 640px; width: 760px; }
+  #fx4 { left: 920px; top: 270px; width: 880px; height: 495px; }
+  .why { position: absolute; left: 0; right: 0; top: 420px; text-align: center; }
+  .why .body { margin-top: 18px; }
+</style>
+
+<div class="eb eyebrow" data-zh="04 · 不全怪「动它」" data-en="04 · Outages without upgrades"></div>
+
+<div class="open" id="open"><div class="h1" data-zh="三个反例" data-en="Three exceptions"></div>
+  <div class="h2 sub" style="margin-top:18px" data-zh="达拉斯 · 费城 · 洛杉矶" data-en="Dallas · Philadelphia · Los Angeles"></div></div>
+
+<!-- 三次事件 -->
+<div class="ev" id="ev">
+  <div class="card" id="e1">
+    <figure class="slot cx" data-src="img/dallas.jpg" style="--h:220px"></figure>
+    <div class="eyebrow" data-zh="2025 年 9 月 · 达拉斯" data-en="Sept 2025 · Dallas"></div>
+    <div class="h2 cx" data-zh="光纤被切断" data-en="Fiber cuts"></div>
+    <div class="body cx" data-zh="备份没顶上" data-en="Backup failed"></div>
+  </div>
+  <div class="card" id="e2">
+    <figure class="slot cx" data-src="img/philly.jpg" style="--h:220px"></figure>
+    <div class="eyebrow" data-zh="2026 年 9 月 · 费城" data-en="Sept 2026 · Philadelphia"></div>
+    <div class="h2 cx" data-zh="主线坏了" data-en="Main line failed"></div>
+    <div class="body cx" data-zh="备份早被挖断" data-en="Backup line cut"></div>
+  </div>
+  <div class="card" id="e3">
+    <figure class="slot" data-src="img/source/commons/Los_Angeles_ARTCC.jpg" style="--h:220px">
+      <figcaption data-zh="洛杉矶航路管制中心 · 图：FAA" data-en="Los Angeles Center · Photo: FAA"></figcaption></figure>
+    <div class="eyebrow" data-zh="2004 年 · 洛杉矶中心" data-en="2004 · Los Angeles Center"></div>
+    <div class="h2" data-zh="没按规定重启" data-en="Restart skipped"></div>
+    <div class="body" id="e3b" data-zh="备份：1 分钟内也崩" data-en="Backup down within a minute"></div>
+  </div>
+</div>
+
+<!-- 每月 150–200 条新线路 -->
+<div class="gt h2" id="gt" data-zh="每月 150–200 条新线路" data-en="150–200 new connections a month"></div>
+<svg id="chg"></svg>
+<div class="gc" id="gc1"><span class="h2 c-good" data-zh="绝大多数没出事" data-en="Mostly routine"></span><span id="illTag"></span></div>
+<div class="gc" id="gc2"><span class="h2" data-zh="共同点：只限最严重的几次" data-en="Focus: the worst outages"></span></div>
+
+<!-- 第二个教训 -->
+<div class="lesson h1" id="lesson" data-zh="备份为什么没顶上" data-en="Why the backups failed"></div>
+<div class="rows" id="rows">
+  <div class="r" id="r1"><span class="mk c-good">✓</span><span class="h2" data-zh="防得了「各自坏」" data-en="Separate failures: covered"></span></div>
+  <div class="r" id="r2"><span class="mk c-bad">✕</span><span class="h2" data-zh="防不了「一起坏」" data-en="Joint failures: not covered"></span></div>
+</div>
+<div class="paper h2" id="paper" data-zh='备份：只在<span class="accent">纸面上</span>' data-en='Backup: <span class="accent">on paper</span> only'></div>
+<!-- sd4 模拟画面：挖斗落下，沟里并排的两根管道一起被扯断（片中 5–6 秒处断开；从 l63 中段起放，断开落在 l64 讲「同一条沟」时） -->
+<div class="footage" id="fx4"><video id="v4" src="img/footage/sd4_trench_cut.mp4" data-start="{{t:l63:0.45}}" data-duration="{{d:l63:0.45>l65:0.3|6}}"
+  data-media-start="0" data-track-index="1" muted playsinline></video></div>
+
+<div class="why" id="why">
+  <div class="h2" data-zh="怎么就波及全国？" data-en="Why nationwide?"></div>
+  <div class="body sub" data-zh="原因：待调查" data-en="Cause: under investigation"></div>
+</div>
+
+<script>
+const T = EDU.tl, C = css;
+document.getElementById("illTag").innerHTML = pill("ill", "示意，不是真实比例", "Illustration, not to scale");
+// 绿格 = 一次次成功的改动；红点 = 出大事的几次（示意）
+const G = D.changes, cs = 48, gp = 10, svg = document.getElementById("chg");
+svg.setAttribute("width", G.cols * (cs + gp)); svg.setAttribute("height", G.rows * (cs + gp));
+const cells = d3.range(G.cols * G.rows).map(i => svgEl(svg, "rect", { x: (i % G.cols) * (cs + gp), y: Math.floor(i / G.cols) * (cs + gp),
+  width: cs, height: cs, rx: 8, fill: C("--d-good"), "fill-opacity": .78 }));
+const reds = G.red.map(i => svgEl(svg, "circle", { cx: (i % G.cols) * (cs + gp) + cs / 2, cy: Math.floor(i / G.cols) * (cs + gp) + cs / 2,
+  r: 17, fill: C("--d-bad"), stroke: C("--surface"), "stroke-width": 4 }));
+
+gsap.set(["#open", "#e1", "#e2", "#e3", "#e3b", "#gt", "#gc1", "#gc2", "#lesson", "#r1", "#r2", "#paper", "#why"], { opacity: 0 });
+gsap.set([...cells, ...reds], { opacity: 0 });
+EDU.in(".eb", 0);
+
+// l55 公平地说，不全是「动它」惹的祸
+EDU.in("#open", EDU.t("l55", .05));
+// l56 达拉斯：两条光纤被切断，备份没起作用
+EDU.out("#open", EDU.t("l56", 0));
+EDU.in("#e1", EDU.t("l56", .05));
+srcNote("FAA（经 CBS Texas，2025-09）", "FAA (via CBS Texas, Sept 2025)", EDU.t("l56", .2), EDU.end("l56") + .1);
+// l57 费城：主线坏，备份早被挖断
+const fold = (id, at) => { EDU.out(`${id} .cx`, at, { y: 0 }); EDU.tl.set(`${id} .cx`, { display: "none" }, at + .45); EDU.dim(`${id} .eyebrow`, at, .6); EDU.tl.to(id, { flexGrow: .001, duration: .6, ease: "power3.inOut" }, at + .2); };   // 收成和眉标一样宽的小条
+fold("#e1", EDU.t("l57", 0));
+EDU.in("#e2", EDU.t("l57", .05));
+srcNote("Airways（综合 FAA、NBC）", "Airways (FAA, NBC)", EDU.t("l57", .2), EDU.end("l57") + .1);
+// l58 2004 洛杉矶：规程要求的定期重启没做（FAA 说法）
+fold("#e2", EDU.t("l58", 0));
+EDU.in("#e3", EDU.t("l58", .05));
+srcNote("FAA 说法（经 IEEE Spectrum，2004-11）", "FAA, via IEEE Spectrum (Nov 2004)", EDU.t("l58", .2), EDU.end("l59") + .1);
+// l59 备份开机一分钟内也崩了
+EDU.in("#e3b", EDU.t("l59", .1));
+
+// l60 每月 150–200 条新线路，绝大多数没出事
+EDU.out("#ev", EDU.t("l60", 0));
+EDU.in("#gt", EDU.t("l60", .05));
+EDU.in(cells, EDU.t("l60", .1), { stagger: .006, d: .3 });
+EDU.in(reds, EDU.t("l60", .55), { stagger: .1 });
+EDU.in("#gc1", EDU.t("l60", .6));
+srcNote("L3Harris 新闻稿（2026-05）", "L3Harris press release (May 2026)", EDU.t("l60", .2), EDU.end("l61") + .1);
+// l61 只说最严重的那几次
+EDU.dim(cells, EDU.t("l61", 0), .25);
+EDU.out("#gc1", EDU.t("l61", 0), { y: 0 });
+EDU.in("#gc2", EDU.t("l61", .1));
+
+// l62 第二个教训
+EDU.out(["#gt", "#chg", "#gc2"], EDU.t("l62", 0));
+EDU.in("#lesson", EDU.t("l62", .1));
+// l63 防得了各自坏，防不了一起坏
+EDU.out("#lesson", EDU.t("l63", 0));
+EDU.in("#r1", EDU.t("l63", .05));
+EDU.in("#r2", EDU.t("l63", .5));
+// l64 同一条沟、同一张网、同一家承包商 → 备份只在纸面上（模拟画面：一铲子两根一起断）
+EDU.in("#paper", EDU.t("l64", .7));
+
+// l65 这次为什么打到全国，还得等调查
+EDU.out(["#rows", "#paper"], Math.max(EDU.t("l65", 0), footEnd("v4") - .45));
+EDU.in("#why", Math.max(EDU.t("l65", .05), footEnd("v4")));
+ourTake(["l61", "l62", "l63", "l64"]);
+EDU.out("#why", EDU.S.duration - .5);
+</script>

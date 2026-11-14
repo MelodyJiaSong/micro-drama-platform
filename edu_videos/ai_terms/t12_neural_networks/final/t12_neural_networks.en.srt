@@ -1,0 +1,567 @@
+1
+00:00:00,600 --> 00:00:03,126
+Remember our two-knob taxi-fare machine?
+
+2
+00:00:03,126 --> 00:00:04,831
+It learned how fares change
+
+3
+00:00:04,831 --> 00:00:06,347
+with distance just fine.
+
+4
+00:00:06,697 --> 00:00:09,281
+But fares also depend on the time of day:
+
+5
+00:00:09,281 --> 00:00:10,542
+rush hour costs more
+
+6
+00:00:10,542 --> 00:00:12,622
+and late night a little more too.
+
+7
+00:00:12,972 --> 00:00:14,198
+It can't learn that
+
+8
+00:00:14,198 --> 00:00:15,682
+because all it can draw
+
+9
+00:00:15,682 --> 00:00:16,908
+is a straight line.
+
+10
+00:00:17,258 --> 00:00:18,460
+So how does a machine
+
+11
+00:00:18,460 --> 00:00:20,006
+learn a pattern that bends?
+
+12
+00:00:20,006 --> 00:00:21,266
+With a neural network.
+
+13
+00:00:26,967 --> 00:00:28,974
+Last time, turning the knobs was like
+
+14
+00:00:28,974 --> 00:00:30,494
+walking downhill blindfolded
+
+15
+00:00:30,494 --> 00:00:31,633
+always stepping where
+
+16
+00:00:31,633 --> 00:00:32,935
+the score drops fastest.
+
+17
+00:00:33,285 --> 00:00:34,884
+Today we'll build a tiny
+
+18
+00:00:34,884 --> 00:00:36,750
+network that learns the bend
+
+19
+00:00:36,750 --> 00:00:38,349
+see why more layers help
+
+20
+00:00:38,349 --> 00:00:39,482
+and meet AlexNet.
+
+21
+00:00:43,600 --> 00:00:45,464
+Here's some made-up data:
+
+22
+00:00:45,464 --> 00:00:48,073
+the same 5-kilometer ride, 48 times
+
+23
+00:00:48,073 --> 00:00:50,309
+at different hours of the day.
+
+24
+00:00:50,659 --> 00:00:52,594
+Daytime rides cost about $23
+
+25
+00:00:52,594 --> 00:00:55,288
+just what our two-knob machine charges.
+
+26
+00:00:55,638 --> 00:00:56,593
+Around 8 a.m.
+
+27
+00:00:56,593 --> 00:00:58,062
+and 6 p.m. it spikes
+
+28
+00:00:58,062 --> 00:01:00,779
+and late at night it's a bit pricier.
+
+29
+00:01:01,129 --> 00:01:02,102
+Same two knobs
+
+30
+00:01:02,102 --> 00:01:04,326
+one for height and one for slope
+
+31
+00:01:04,326 --> 00:01:06,202
+but now we feed it the time
+
+32
+00:01:06,202 --> 00:01:07,384
+not the distance.
+
+33
+00:01:07,734 --> 00:01:08,909
+However you turn them
+
+34
+00:01:08,909 --> 00:01:10,475
+the best you get is a nearly
+
+35
+00:01:10,475 --> 00:01:12,097
+flat line through the middle.
+
+36
+00:01:12,447 --> 00:01:14,270
+It undercharges at rush
+
+37
+00:01:14,270 --> 00:01:16,490
+hour and overcharges by day.
+
+38
+00:01:16,490 --> 00:01:19,582
+Its loss, the score for how wrong it is
+
+39
+00:01:19,582 --> 00:01:21,247
+can't get below 11.5.
+
+40
+00:01:21,597 --> 00:01:23,665
+The knobs aren't the problem:
+
+41
+00:01:23,665 --> 00:01:26,376
+this machine only draws straight lines
+
+42
+00:01:26,376 --> 00:01:27,945
+and the pattern bends.
+
+43
+00:01:32,067 --> 00:01:33,930
+The fix isn't one big machine.
+
+44
+00:01:33,930 --> 00:01:35,917
+It's lots of simple little ones.
+
+45
+00:01:36,267 --> 00:01:37,802
+Each unit still has two
+
+46
+00:01:37,802 --> 00:01:39,271
+knobs and draws a line
+
+47
+00:01:39,271 --> 00:01:40,205
+plus one rule:
+
+48
+00:01:40,205 --> 00:01:42,408
+anything below zero becomes zero.
+
+49
+00:01:42,758 --> 00:01:45,461
+Its line stays flat, then bends upward.
+
+50
+00:01:45,811 --> 00:01:47,252
+The two knobs set where
+
+51
+00:01:47,252 --> 00:01:49,195
+it bends and how steep it gets.
+
+52
+00:01:49,545 --> 00:01:50,899
+One bend isn't enough
+
+53
+00:01:50,899 --> 00:01:52,639
+so add more units that bend
+
+54
+00:01:52,639 --> 00:01:53,864
+in different spots.
+
+55
+00:01:54,214 --> 00:01:56,780
+Add them up, and you can build bumps
+
+56
+00:01:56,780 --> 00:01:58,490
+steps, almost any curve.
+
+57
+00:01:58,840 --> 00:02:00,849
+Our network has 12 units side
+
+58
+00:02:00,849 --> 00:02:02,650
+by side in the first layer
+
+59
+00:02:02,650 --> 00:02:04,521
+and one unit in the second.
+
+60
+00:02:04,871 --> 00:02:06,322
+That unit scales each
+
+61
+00:02:06,322 --> 00:02:07,773
+bent line with a knob
+
+62
+00:02:07,773 --> 00:02:08,602
+adds them up
+
+63
+00:02:08,602 --> 00:02:11,089
+then one last knob shifts the total.
+
+64
+00:02:11,089 --> 00:02:12,194
+That's the fare.
+
+65
+00:02:12,544 --> 00:02:14,293
+Thirty-seven knobs in all.
+
+66
+00:02:14,643 --> 00:02:16,240
+Layers of little units like
+
+67
+00:02:16,240 --> 00:02:18,548
+this are what we call a neural network.
+
+68
+00:02:18,898 --> 00:02:21,267
+The name comes from neurons in the brain
+
+69
+00:02:21,267 --> 00:02:23,281
+but don't take that too seriously.
+
+70
+00:02:24,800 --> 00:02:26,419
+To turn all thirty-seven
+
+71
+00:02:26,419 --> 00:02:28,241
+we use last episode's trick
+
+72
+00:02:28,241 --> 00:02:30,130
+nudging every knob whichever
+
+73
+00:02:30,130 --> 00:02:31,951
+way drops the loss fastest.
+
+74
+00:02:32,301 --> 00:02:34,829
+Our curve starts as a random squiggle
+
+75
+00:02:34,829 --> 00:02:36,537
+and step by step it bends
+
+76
+00:02:36,537 --> 00:02:37,699
+toward the peaks.
+
+77
+00:02:38,049 --> 00:02:39,685
+After 10,000 steps
+
+78
+00:02:39,685 --> 00:02:41,958
+the loss is down to 0.26.
+
+79
+00:02:41,958 --> 00:02:43,958
+The best straight line
+
+80
+00:02:43,958 --> 00:02:45,867
+never got below 11.5.
+
+81
+00:02:46,217 --> 00:02:47,946
+Rush hours and late nights
+
+82
+00:02:47,946 --> 00:02:49,276
+it catches them all.
+
+83
+00:02:49,626 --> 00:02:51,401
+And every corner on this curve
+
+84
+00:02:51,401 --> 00:02:53,472
+is one little unit making its bend.
+
+85
+00:02:53,822 --> 00:02:54,369
+By the way
+
+86
+00:02:54,369 --> 00:02:56,504
+there's a much faster trick for finding
+
+87
+00:02:56,504 --> 00:02:58,037
+which way to turn each knob.
+
+88
+00:02:58,037 --> 00:02:59,296
+More on that next time.
+
+89
+00:03:03,400 --> 00:03:06,101
+So far, we've put units side by side
+
+90
+00:03:06,101 --> 00:03:07,677
+each adding one bend.
+
+91
+00:03:08,027 --> 00:03:08,917
+Now stack them
+
+92
+00:03:08,917 --> 00:03:10,697
+so each layer folds the line
+
+93
+00:03:10,697 --> 00:03:12,540
+it gets from the layer before
+
+94
+00:03:12,540 --> 00:03:13,748
+like folding paper.
+
+95
+00:03:14,098 --> 00:03:16,781
+For example, two units per layer can fold
+
+96
+00:03:16,781 --> 00:03:18,809
+a slanted line exactly in half.
+
+97
+00:03:19,159 --> 00:03:21,222
+One layer makes two straight pieces
+
+98
+00:03:21,222 --> 00:03:22,400
+two layers make four
+
+99
+00:03:22,400 --> 00:03:23,815
+and in this example each
+
+100
+00:03:23,815 --> 00:03:25,170
+new layer doubles that.
+
+101
+00:03:25,520 --> 00:03:27,968
+So ten units side by side
+
+102
+00:03:27,968 --> 00:03:30,221
+give at most 11 pieces.
+
+103
+00:03:30,221 --> 00:03:33,746
+Stacked five deep, they can give 32.
+
+104
+00:03:34,096 --> 00:03:35,573
+Later layers reuse what
+
+105
+00:03:35,573 --> 00:03:37,372
+earlier ones already folded.
+
+106
+00:03:37,722 --> 00:03:38,902
+The deeper the stack
+
+107
+00:03:38,902 --> 00:03:40,494
+the more complex the shapes
+
+108
+00:03:40,494 --> 00:03:41,969
+the same units can build.
+
+109
+00:03:42,319 --> 00:03:44,120
+That's the "deep" in deep learning.
+
+110
+00:03:48,233 --> 00:03:51,089
+In 2012, three researchers at the University
+
+111
+00:03:51,089 --> 00:03:54,074
+of Toronto trained a very deep neural network.
+
+112
+00:03:54,424 --> 00:03:57,081
+Their network became known as AlexNet.
+
+113
+00:03:57,431 --> 00:04:00,117
+It had 8 layers and 60 million knobs.
+
+114
+00:04:00,117 --> 00:04:02,078
+It learned 1,000 categories
+
+115
+00:04:02,078 --> 00:04:03,820
+from 1.2 million photos.
+
+116
+00:04:04,170 --> 00:04:06,107
+At that year's ImageNet contest
+
+117
+00:04:06,107 --> 00:04:08,045
+it got five guesses per picture
+
+118
+00:04:08,045 --> 00:04:10,482
+and only missed if all five were wrong.
+
+119
+00:04:10,832 --> 00:04:14,348
+The version they entered got 15.3% wrong.
+
+120
+00:04:14,348 --> 00:04:16,406
+The runner-up got 26.2%.
+
+121
+00:04:16,756 --> 00:04:18,476
+Nobody told it what to look for
+
+122
+00:04:18,476 --> 00:04:19,974
+yet its first layer learned
+
+123
+00:04:19,974 --> 00:04:21,639
+to spot stripes at every angle
+
+124
+00:04:21,639 --> 00:04:22,804
+and patches of color.
+
+125
+00:04:23,154 --> 00:04:24,888
+Later layers combined those into
+
+126
+00:04:24,888 --> 00:04:26,567
+more and more complex patterns.
+
+127
+00:04:26,917 --> 00:04:28,779
+Removing any middle layer made
+
+128
+00:04:28,779 --> 00:04:30,579
+its first-guess accuracy drop
+
+129
+00:04:30,579 --> 00:04:32,193
+about 2 percentage points.
+
+130
+00:04:32,543 --> 00:04:33,707
+As the paper put it
+
+131
+00:04:33,707 --> 00:04:35,668
+"the depth really is important."
+
+132
+00:04:37,200 --> 00:04:38,944
+So a neural network is just
+
+133
+00:04:38,944 --> 00:04:40,882
+simple little units with knobs
+
+134
+00:04:40,882 --> 00:04:42,368
+stacked layer on layer.
+
+135
+00:04:42,718 --> 00:04:43,963
+Stack them deep enough
+
+136
+00:04:43,963 --> 00:04:45,208
+and they can recognize
+
+137
+00:04:45,208 --> 00:04:46,679
+really complicated things.
+
+138
+00:04:47,029 --> 00:04:49,905
+Thirty-seven knobs, we can test one by one.
+
+139
+00:04:49,905 --> 00:04:51,108
+But sixty million?
+
+140
+00:04:51,108 --> 00:04:52,780
+How do you find which way
+
+141
+00:04:52,780 --> 00:04:53,917
+to turn them all?
+
+142
+00:04:54,267 --> 00:04:56,765
+That's backpropagation, coming up next time.

@@ -1,0 +1,142 @@
+{
+  "asset_id": "bg21",
+  "followups": [
+    287,
+    288,
+    289
+  ],
+  "status": "failed",
+  "started_at": 1793187863.5074496,
+  "engine": "local ComfyUI TRELLIS.2",
+  "hyper3d": false,
+  "paid_requests": 0,
+  "references": {
+    "anchor": {
+      "path": "2_世界观人设/background/近卫_sentinel/bg21_猎手大厅/bg21_猎手大厅.png",
+      "sha256": "512e873b2e51b3d226f39616def4650e6aed7c922b4865db800b94995ed8d05d"
+    },
+    "views": {
+      "front": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg21_猎手大厅/views/bg21_猎手大厅_front.png",
+        "sha256": "bb815ea840096a566526f1f4f336e204bda42a6294194be83b20a89b072f0453"
+      },
+      "side": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg21_猎手大厅/views/bg21_猎手大厅_side.png",
+        "sha256": "e274e417dfd3669146821fc759ed175af6c019758566dfde2b46b6638791c2e6"
+      },
+      "back": {
+        "path": "2_世界观人设/background/近卫_sentinel/bg21_猎手大厅/views/bg21_猎手大厅_back.png",
+        "sha256": "1199eaaa74f0d6c20854ba437303e31d1681195afda58b6285f2f1d51b6a8581"
+      }
+    }
+  },
+  "resolution": "1024_cascade",
+  "multiview": false,
+  "sampling_profile": "official",
+  "pipeline_config_sha256": "222c359ab1ed9bc6735a640a34f95d47f8681b9bc4aaa101bfb80274676253c6",
+  "runtime_patch_sha256": "0d5e1285cf5f42089ee256969a8bf32888497a1c8898a38a82448e9d79b706dd",
+  "runtime_patch_version": "latent-grid-16x-and-multiview-texture-v2",
+  "workflow_sha256": "260db42ce12310f9419d5fbecf14f45aed4281c8ba2be0738f5aef1b9a7c1e94",
+  "license_route": "DINOv3 本次用户授权；BiRefNet 公共模型；CuMesh + DRTK，不使用 nvdiffrast/nvdiffrec",
+  "review": "not_reviewed",
+  "receipt": {
+    "prompt_id": "ca3c3f01-9213-412f-9a9e-d7f14c67cb8d",
+    "number": 15,
+    "node_errors": {}
+  },
+  "prompt_id": "ca3c3f01-9213-412f-9a9e-d7f14c67cb8d",
+  "history_status": {
+    "status_str": "error",
+    "completed": false,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "ca3c3f01-9213-412f-9a9e-d7f14c67cb8d",
+          "timestamp": 1793187863522
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [
+            "1"
+          ],
+          "prompt_id": "ca3c3f01-9213-412f-9a9e-d7f14c67cb8d",
+          "timestamp": 1793187863559
+        }
+      ],
+      [
+        "execution_error",
+        {
+          "prompt_id": "ca3c3f01-9213-412f-9a9e-d7f14c67cb8d",
+          "node_id": "21",
+          "node_type": "Trellis2ImageToShape",
+          "executed": [
+            "10",
+            "11",
+            "20"
+          ],
+          "exception_message": "ComfyUI-TRELLIS2: call_id=155 timed out after 600.0s\n",
+          "exception_type": "TimeoutError",
+          "traceback": [
+            "  File \"C:\\workspace/ComfyUI\\execution.py\", line 548, in execute\n    output_data, output_ui, has_subgraph, has_pending_tasks = await get_output_data(prompt_id, unique_id, obj, input_data_all, execution_block_cb=execution_block_cb, pre_execute_cb=pre_execute_cb, v3_data=v3_data)\n                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
+            "  File \"C:\\workspace/ComfyUI\\execution.py\", line 353, in get_output_data\n    return_values = await _async_map_node_over_list(prompt_id, unique_id, obj, input_data_all, obj.FUNCTION, allow_interrupt=True, execution_block_cb=execution_block_cb, pre_execute_cb=pre_execute_cb, v3_data=v3_data)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
+            "  File \"C:\\workspace/ComfyUI\\execution.py\", line 327, in _async_map_node_over_list\n    await process_inputs(input_dict, i)\n",
+            "  File \"C:\\workspace/ComfyUI\\execution.py\", line 315, in process_inputs\n    result = f(**inputs)\n             ^^^^^^^^^^^\n",
+            "  File \"C:\\workspace\\ComfyUI\\.venv\\Lib\\site-packages\\comfy_env\\isolation\\metadata.py\", line 556, in proxy\n    result = worker.call_method(\n             ^^^^^^^^^^^^^^^^^^^\n",
+            "  File \"C:\\workspace\\ComfyUI\\.venv\\Lib\\site-packages\\comfy_env\\isolation\\workers\\subprocess.py\", line 669, in call_method\n    response = self._send_request(request, timeout)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
+            "  File \"C:\\workspace\\ComfyUI\\.venv\\Lib\\site-packages\\comfy_env\\isolation\\workers\\subprocess.py\", line 600, in _send_request\n    raise TimeoutError(f\"{self.name}: call_id={call_id} timed out after {timeout}s\")\n"
+          ],
+          "current_inputs": {
+            "model_config": [
+              "{'model_name': 'microsoft/TRELLIS.2-4B', 'resolution': '1024_cascade', 'precision': 'bf16', 'dtype': 'bf16', 'attn_backend': 'sdpa'}"
+            ],
+            "seed": [
+              28723
+            ],
+            "ss_sampling_steps": [
+              12
+            ],
+            "shape_sampling_steps": [
+              12
+            ],
+            "max_tokens": [
+              32768
+            ],
+            "ss_guidance_strength": [
+              7.5
+            ],
+            "ss_guidance_rescale": [
+              0.7
+            ],
+            "shape_guidance_strength": [
+              7.5
+            ],
+            "shape_guidance_rescale": [
+              0.5
+            ],
+            "conditioning": [
+              "{'cond_512': tensor([[[-1.1279e-01, -1.1562e+00, -3.0469e+00,  ...,  3.1055e-01,\n          -4.4922e-01, -1.0938e+00],\n         [-4.6250e+00,  5.1953e-01, -8.3125e+00,  ...,  8.9844e-01,\n          -1.4922e+00,  2.9492e-01],\n         [ 2.7734e-01, -2.7618e-03, -9.1309e-02,  ...,  3.1494e-02,\n           1.8677e-02,  3.3691e-02],\n         ...,\n         [-5.5859e-01, -9.2969e-01, -5.1250e+00,  ..., -6.4941e-02,\n          -7.8516e-01,  4.9805e-02],\n         [-5.7812e-01, -9.1016e-01, -5.4375e+00,  ..., -1.2061e-01,\n          -7.0312e-01,  9.2773e-02],\n         [-3.5742e-01, -1.2656e+00, -5.5938e+00,  ..., -2.6855e-02,\n          -4.4336e-01,  1.1279e-01]]], dtype=torch.bfloat16), 'neg_cond': tensor([[[0., 0., 0.,  ..., 0., 0., 0.],\n         [0., 0., 0.,  ..., 0., 0., 0.],\n         [0., 0., 0.,  ..., 0., 0., 0.],\n         ...,\n         [0., 0., 0.,  ..., 0., 0., 0.],\n         [0., 0., 0.,  ..., 0., 0., 0.],\n         [0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.bfloat16), 'cond_1024': tensor([[[-2.1289e-01, -1.0312e+00, -3.2812e+00,  ...,  2.8125e-01,\n          -7.9688e-01, -1.0938e+00],\n         [-4.3438e+00,  6.3672e-01, -8.2500e+00,  ...,  9.2578e-01,\n          -1.5156e+00,  4.2773e-01],\n         [ 2.7734e-01, -6.2256e-03, -1.0205e-01,  ...,  3.3447e-02,\n           1.7334e-02,  3.5645e-02],\n         ...,\n         [-5.2344e-01, -8.1250e-01, -5.4688e+00,  ..., -7.5195e-02,\n          -5.7031e-01,  1.3184e-01],\n         [-5.1172e-01, -8.5938e-01, -5.5938e+00,  ..., -9.2773e-02,\n          -5.4688e-01,  1.2793e-01],\n         [-2.8711e-01, -1.3359e+00, -5.5312e+00,  ...,  1.0791e-01,\n          -2.9102e-01,  1.3281e-01]]], dtype=torch.bfloat16)}"
+            ]
+          },
+          "current_outputs": [
+            "26",
+            "21",
+            "24",
+            "11",
+            "22",
+            "1",
+            "10",
+            "27",
+            "20",
+            "25",
+            "23"
+          ],
+          "timestamp": 1793188936219
+        }
+      ]
+    ]
+  },
+  "outputs": []
+}

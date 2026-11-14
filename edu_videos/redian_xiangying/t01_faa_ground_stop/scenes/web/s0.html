@@ -1,0 +1,152 @@
+<style>
+  /* 屏 A：时刻 + 停飞公告「电报卡」 */
+  #fx1 { left: 240px; top: 100px; width: 1440px; height: 810px; }
+  #fx1::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,.6) 100%); }
+  .when { position: absolute; left: 300px; top: 640px; color: #fff; }
+  .when .eyebrow { color: rgba(255,255,255,.85); }
+  .when .display { margin-top: 6px; }
+  .adv { position: absolute; left: var(--mx); right: var(--mx); top: 300px; padding: 40px 56px 34px; }
+  .adv .hd { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--hair); }
+  .adv .hd .mono { font-size: var(--fs-micro); color: var(--sub); letter-spacing: .04em; }
+  .adv .hd b { font-size: var(--fs-micro); font-weight: 700; letter-spacing: .12em; color: var(--ink); }
+  /* 公告正文压成纹理（只作证据，字色压到约 25%），只有念到的那句读得清 */
+  .adv .txt { margin-top: 18px; font-size: var(--fs-caption); line-height: 1.6; white-space: pre;
+              color: transparent; text-shadow: 0 0 20px rgba(29,29,31,.55); }
+  .adv .txt .hl.on { color: var(--ink); text-shadow: none; }
+  .adv .txt .hl { background-image: linear-gradient(var(--accent-soft), var(--accent-soft)); background-repeat: no-repeat; background-size: 0% 100%; }
+  .adv .stamp { margin-top: 16px; font-size: var(--fs-micro); color: var(--sub); }
+  .gloss { position: absolute; left: var(--mx); top: 170px; white-space: nowrap; }
+
+  /* 屏 B：大数字卡，一句一张，后一张替换前一张 */
+  .nc { position: absolute; left: 460px; top: 250px; width: 1000px; padding: 48px 60px; }
+  .nc .slot { margin-bottom: 26px; }
+  .nc .display, .nc .h1 { margin-top: 12px; white-space: nowrap; }
+  .nc .body { margin-top: 10px; }
+  .nc .pair { display: grid; grid-template-columns: auto 1fr; column-gap: 30px; align-items: baseline; margin-top: 6px; }
+  .nc .pair .body { margin: 0; color: var(--sub); }
+  .nc .eyebrow.keep { text-transform: none; }
+  .nc .tagrow { margin-top: 18px; }
+
+  /* 屏 C：两种说法 → 合成一张 */
+  .why { position: absolute; left: 0; right: 0; top: 190px; text-align: center; }
+  .two .card { position: absolute; top: 380px; width: 600px; padding: 44px 52px; }
+  #ca { left: 320px; } #cb { left: 1000px; }
+  .two .h1 { margin-top: 14px; }
+  .two .tagrow { margin-top: 16px; }
+  #cm { position: absolute; left: 560px; top: 380px; width: 800px; padding: 44px 52px; text-align: center; }
+  #cm .h1 { font-size: 96px; }
+</style>
+
+<!-- 屏 A：停飞令下达那一刻（sd1 模拟画面：停机坪上一动不动的客机），接公告原文 -->
+<div class="footage" id="fx1"><video id="v1" src="img/footage/sd1_tarmac.mp4" data-start="{{t:l01:0}}" data-duration="{{d:l01:0>l02:0.3|6}}"
+  data-media-start="0" data-track-index="1" muted playsinline></video></div>
+<div class="when" id="when">
+  <div class="eyebrow" data-zh="2026 年 11 月 13 日 · 周五 · 美东时间" data-en="Friday · Nov 13, 2026"></div>
+  <div class="display" data-zh="15:54" data-en="3:54 p.m. ET"></div>
+</div>
+<div class="gloss h1 accent" id="g1" data-zh="全部机场停飞" data-en=""></div>
+<div class="gloss h1 accent" id="g2" data-zh="特殊情况，出于安全考虑" data-en=""></div>
+<div class="adv card" id="adv">
+  <div class="hd"><span class="mono" id="advHead"></span><b>NATIONAL GROUND STOP</b></div>
+  <div class="txt mono" id="advTxt"></div>
+  <div class="stamp mono" id="advStamp"></div>
+</div>
+
+<!-- 屏 B：一句一张卡 -->
+<div class="nc card" id="n1">
+  <div class="eyebrow" data-zh="停飞时长" data-en="Ground stop lasted"></div>
+  <div class="display" data-zh="4 小时 21 分" data-en="4 hr 21 min"></div>
+  <div class="body sub" data-zh="美东 15:54 → 20:15" data-en="3:54 → 8:15 p.m. ET"></div>
+</div>
+<div class="nc card" id="n2">
+  <figure class="slot" data-src="img/fr24_airborne.jpg" style="--h:260px"></figure>
+  <div class="eyebrow" data-zh="停飞时在空" data-en="Planes in the air"></div>
+  <div class="display" data-zh="3,500+ 架" data-en="3,500+"></div>
+  <div class="body c-good" data-zh="全部安全落地" data-en="All landed safely"></div>
+</div>
+<div class="nc card" id="n3">
+  <figure class="slot" data-src="img/departures_board.jpg" style="--h:260px"></figure>
+  <div class="eyebrow keep" data-zh="FlightAware · 当晚" data-en="FlightAware · that night"></div>
+  <div class="pair"><span class="body" data-zh="取消" data-en="Canceled"></span><span class="display"><span id="vC">—</span><span class="unit h2" data-zh=" 班" data-en=""></span></span></div>
+  <div class="pair"><span class="body" data-zh="延误" data-en="Delayed"></span><span class="display"><span id="vD">—</span><span class="unit h2" data-zh=" 班" data-en=""></span></span></div>
+</div>
+<div class="nc card" id="n4">
+  <div class="eyebrow" data-zh="全美停飞令" data-en="Nationwide ground stops"></div>
+  <div class="h1" data-zh="9·11 以来第 2 回" data-en="2nd since 9/11"></div>
+  <div class="tagrow" id="firstTag"></div>
+</div>
+
+<!-- 屏 C -->
+<div class="why h1" id="why" data-zh="为什么停？" data-en="So why?"></div>
+<div class="two">
+  <div class="card" id="ca"><div class="eyebrow" data-zh="交通部长 达菲" data-en="Secretary Duffy"></div>
+    <div class="h1" data-zh="太老了" data-en="Too old"></div></div>
+  <div class="card" id="cb"><div class="eyebrow" data-zh="CBS · 匿名信源" data-en="CBS · unnamed sources"></div>
+    <div class="h1" data-zh="更新后崩了" data-en="An update broke it"></div><div class="tagrow" id="cbTag"></div></div>
+</div>
+<div class="card" id="cm">
+  <div class="h1 grad" data-zh="同一个坑" data-en="The same trap"></div></div>
+
+<script>
+// 公告原文：照存档逐行排；正文压暗成纹理（证据），只有念到的两处短语读得清（台词审 r1 I7/I65–I67）
+const A = D.advisory;
+const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+document.getElementById("advHead").textContent = A.head[0];
+document.getElementById("advStamp").textContent = A.stamp;
+const HL = { "DUE TO EXTRAORDINARY CIRCUMSTANCES AND FOR REASONS OF SAFETY.": "h2", "ALL AIRPORTS ARE GROUND STOPPED": "h1" };
+document.getElementById("advTxt").innerHTML = A.lines.join("\n").split(/(DUE TO EXTRAORDINARY CIRCUMSTANCES AND FOR REASONS OF SAFETY\.|ALL AIRPORTS ARE GROUND STOPPED)/)
+  .map(part => HL[part] ? `<span class="hl" id="${HL[part]}">${esc(part)}</span>` : esc(part)).join("");
+document.getElementById("firstTag").innerHTML = pill("dispute", "计数有分歧", "Counts differ");
+document.getElementById("cbTag").innerHTML = pill("unver", "未证实", "Unconfirmed");
+
+gsap.set(["#when", "#adv", "#g1", "#g2", "#n1", "#n2", "#n3", "#n4", "#why", "#ca", "#cb", "#cm"], { opacity: 0 });
+
+const T = EDU.tl;
+// l01 时刻（叠在停机坪画面上）；画面放完接公告卡
+const cardAt = footEnd("v1") - .35;
+EDU.in("#when", EDU.t("l01", .1));
+EDU.out("#when", cardAt - .2, { y: 0 });
+// l02 公告：全部机场停飞
+EDU.in("#adv", cardAt, { d: .9 });
+T.set("#h1", { attr: { class: "hl on" } }, cardAt + .5); T.fromTo("#h1", { opacity: .3 }, { opacity: 1, backgroundSize: "100% 100%", duration: .9, ease: "power3.inOut", immediateRender: false }, cardAt + .5);
+EDU.in("#g1", cardAt + .6);
+srcNote("FAA 空管指挥中心公告原文（存档）", "FAA Command Center advisory, archived original", cardAt + .2, EDU.end("l03") + .2);
+// l03 理由：特殊情况，出于安全考虑（高亮换到这一行）
+T.to("#h1", { backgroundSize: "0% 100%", duration: .45, ease: "power2.in" }, EDU.t("l03", 0)); T.set("#h1", { attr: { class: "hl" } }, EDU.t("l03", .1));
+EDU.out("#g1", EDU.t("l03", 0), { y: 0 });
+T.set("#h2", { attr: { class: "hl on" } }, EDU.t("l03", .05)); T.fromTo("#h2", { opacity: .3 }, { opacity: 1, backgroundSize: "100% 100%", duration: .9, ease: "power3.inOut", immediateRender: false }, EDU.t("l03", .05));
+EDU.in("#g2", EDU.t("l03", .15));
+
+// l04 停了 4 小时 21 分（一句一张卡，后一张替换前一张：I11）
+EDU.out(["#adv", "#g2"], EDU.t("l04", 0));
+EDU.in("#n1", EDU.t("l04", .1));
+srcNote("解除时刻：据达菲", "Reopening time per Duffy", EDU.t("l04", .3), EDU.end("l04") + .1);
+// l05 3,500 多架全部安全落地
+EDU.out("#n1", EDU.t("l05", 0));
+EDU.in("#n2", EDU.t("l05", .05));
+srcNote("达菲（经 NBC、Scripps）", "Duffy, via NBC and Scripps", EDU.t("l05", .3), EDU.end("l05") + .1);
+// l06 取消、延误（FlightAware，当晚）
+EDU.out("#n2", EDU.t("l06", 0));
+EDU.in("#n3", EDU.t("l06", .02));
+countUp("#vC", EDU.t("l06", .15), N.cancel, 1.2);
+countUp("#vD", EDU.t("l06", .4), N.delay, 1.2);
+srcNote("经 Fox News", "Via Fox News", EDU.t("l06", .3), EDU.end("l06") + .1);
+// l07 9·11 以来第二回（有争议）
+EDU.out("#n3", EDU.t("l07", 0));
+EDU.in("#n4", EDU.t("l07", .05));
+srcNote("ABC、Scripps 计为第 2 回；算上 9·11 当天则是第 3 回", "ABC, Scripps: 2nd; counting 9/11 itself makes it 3rd", EDU.t("l07", .3), EDU.end("l07") + .1);
+
+// l08 为什么停？
+EDU.out("#n4", EDU.t("l08", 0));
+EDU.in("#why", EDU.t("l08", .1));
+// l09 太老了 / 更新弄崩（CBS 未证实）：这是两方的说法，不挂「我们的判断」（裁决补充）
+EDU.in("#ca", EDU.t("l09", .05));
+EDU.in("#cb", EDU.t("l09", .5));
+srcNote("达菲白宫记者会 · CBS 引匿名信源", "Duffy at the White House · CBS, unnamed sources", EDU.t("l09", .2), EDU.end("l09") + .2);
+// l10 合成一张：同一个坑（从这里起才是我们的判断）
+T.to("#ca", { x: 340, opacity: 0, duration: .8, ease: "power3.inOut" }, EDU.t("l10", 0));
+T.to("#cb", { x: -340, opacity: 0, duration: .8, ease: "power3.inOut" }, EDU.t("l10", 0));
+EDU.in("#cm", EDU.t("l10", .3), { y: 0 });
+ourTake(["l10"]);
+EDU.out(["#why", "#cm"], EDU.S.duration - .5);
+</script>

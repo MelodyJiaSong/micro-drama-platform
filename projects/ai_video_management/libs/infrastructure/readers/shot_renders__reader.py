@@ -34,9 +34,13 @@ class ShotRendersReader:
                 key = first_shot_key(shot["id"])
                 if key is not None:
                     folder = key.folder(episode)
-                    takes = self._takes(folder / DRAFTS) + self._takes(folder / RENDERS)
-                    out[shot["id"]] = [t for _, t in sorted(takes, key=lambda t: (t[0], t[1]["id"]), reverse=True)]
+                    out[shot["id"]] = self.takes(folder / DRAFTS, folder / RENDERS)
         return out
+
+    def takes(self, *folders: Path) -> list[dict[str, Any]]:
+        """这些 drafts/ 或 renders/ 目录里的全部生成，新的在前（人物技能卡同样用，follow-up 286）。"""
+        found = [take for folder in folders for take in self._takes(folder)]
+        return [t for _, t in sorted(found, key=lambda t: (t[0], t[1]["id"]), reverse=True)]
 
     def _rel(self, path: Path) -> str:
         return path.relative_to(self.root).as_posix()

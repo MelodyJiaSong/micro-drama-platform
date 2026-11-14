@@ -1,0 +1,345 @@
+# 原始需求 · rank_scroll 渲染器
+
+> 采集时间：2026-11-03 ｜ task_type: development ｜ task_name: rank_scroll ｜ 来源：ai_videos/paihangbang 系列（specs/ai_video/paihangbang follow-up 001）
+
+用户（2026-11-02）：做一个类似 https://www.youtube.com/watch?v=YzRCcFx3XME 的系列视频——找 topic、前 X 名排名、下载图片、配最新 stats、配国家、整点小 icon、从左到右滚动、配上音乐。
+用户（2026-11-03）：渲染器「可以」按 Python + skia + ffmpeg 自建；滚动方向「对的」（卡片向左平移、读序从左到右、冠军最后）；英文画面；Suno 音乐；先不加旁白。
+用户（2026-11-03 睡前）：尽可能多地完成后续步骤，不要问问题，不确定就自己做 best-effort 决定。
+
+---
+
+## 001 — 2026-11-03 15:25:35 — accept-pexels-unsplash-pixabay
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/rank_scroll/rank_scroll/contract.py
+>   - ai_videos/paihangbang/data_contract.md
+> severity: low
+
+### 指令
+
+源自 paihangbang follow-up 006/007：图片改为多来源择优后，Codex 找到的候选大量是 Pexels / Unsplash 许可（可商用、免署名），现有校验只认 Public domain / CC0 / CC BY / CC BY-SA，会拒收。把 Pexels License、Unsplash License、Pixabay Content License 加入可接受许可；NC / ND / GFDL / 来源不明仍拒绝；补测试。
+
+### 摘要
+
+rank_scroll 许可白名单加入 Pexels / Unsplash / Pixabay，补测试
+
+---
+
+## 002 — 2026-11-03 15:30:24 — waving-flag-animation
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/rank_scroll/rank_scroll/draw.py
+>   - projects/rank_scroll/rank_scroll/cards.py
+>   - projects/rank_scroll/rank_scroll/render.py
+> severity: low
+
+### 指令
+
+源自 paihangbang follow-up 008：卡片国旗持续飘动。draw.py 新增 flag_layer（带框国旗按尺寸缓存成小图）与 flag_waving（每帧竖条正弦错位＋明暗）；cards.card_image 增加 flag_out 参数，给了就不把国旗画进缓存卡片而是交出位置；render._draw_band 贴卡后按 f/FPS 每帧画旗，相位按元素序号错开。
+
+### 摘要
+
+rank_scroll 卡片国旗每帧绘制、正弦飘动
+
+---
+
+## 003 — 2026-11-03 19:16:50 — risk-signoff-skips-licence-check
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/rank_scroll/rank_scroll/contract.py
+> severity: low
+
+### 指令
+
+源自 paihangbang follow-up 009：许可未知的图并入 image_risk 机制。contract.load_episode：标了 image_risk 的图在 allow_risk_images（人已签字）时不再卡许可白名单；默认仍扣下用占位卡；未标风险的图许可不合格照旧报错。补测试。
+
+### 摘要
+
+rank_scroll：签字放行的风险图不卡许可
+
+---
+
+## 007 — 2026-11-03 21:49:20 — flagless-mode-virus-theme
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/rank_scroll/rank_scroll
+>   - ai_videos/paihangbang/data_contract.md
+> severity: medium
+
+### 指令
+
+来自 paihangbang follow-up 013 / 016（ep05 历史上致死人数最多的 30 种病毒）：病毒没有国籍，卡上不挂国旗；每张卡都要有高质量图。
+执行边界（代理判断）：
+- 契约加可选 layout.flags（默认 true）；false 时 country_iso2 可为空、不查国旗文件，卡片左上、无图占位、封面都不画国旗，片尾与描述框的署名行去掉 flagcdn。country_name 仍作卡上强调色小字行（ep05 用来写统计窗口）。
+- 新主题 virus（近黑底、生物危害绿强调色），无图占位图标按主题取 virus。
+- 图标集加 Tabler 3.24.0（MIT）的 virus、vaccine、skull、droplet、bug、wind、biohazard。
+- 默认（flags=true）输出不变；加测试覆盖 flags=false。与同时进行的 005（image_alt）、006（音乐床）只做精确局部修改，不动它们的段落。
+
+### 摘要
+
+rank_scroll 无国旗模式（layout.flags=false）、virus 主题与 7 个新图标
+
+---
+
+## 004 — 2026-11-03 20:58:49 — list-mode-company-card
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/rank_scroll
+>   - ai_videos/paihangbang/data_contract.md
+> severity: medium
+
+### 指令
+
+排行榜 ep03（paihangbang follow-up 010）：用户要 30 家 AI 公司「这次不用排名，只是一个一个 list」，按成立年份从老到新，卡上要 logo、公司照片和创始人头像，主数字放最新估值与成立年。
+执行边界（代理判断）：
+- data.json 加 mode=list：按文件顺序从左到右出场，不显示名次、不放大前 10 名，结尾不做冠军光晕与 No. 1 面板，改为最后一张停留；计分板仍可按国家累计并在结尾揭晓。
+- 每项可选 corner（右上角短标签，如 EST. 2015）、logo（白底圆角牌，进图片账本）、person（创始人圆形头像加姓名与身份，头像进账本，可单独标 image_risk）。
+- 排名模式（ep01 / ep02）输出不变；契约升 v1.3，测试补列表模式。
+
+### 摘要
+
+rank_scroll 列表模式（不排名）与公司卡（logo 牌、创始人圆形头像、右上角标签）
+
+---
+
+## 009 — 2026-11-04 00:44:21 — tally-icons-synthetic-disclosure
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/rank_scroll/rank_scroll
+> severity: medium
+
+### 指令
+
+来自 paihangbang ep05 第 2 轮独立审片（qc.md N1、N2、D11）：描述框超 5,000 字符、合成内容声明检测失效（按署名文字找 Illustration，账本条目里没有）、来源卡仍写 Photo credits、计分板 6 行同一个地球图标。
+执行边界（代理判断，用户夜间授权自主决策 paihangbang follow-up 038）：
+- publish：按账本 licence 以 AI-generated 开头或 synthetic=true 判定合成图，据此写描述框注释与上传清单（选 Yes）；无国旗的分组计分期不在署名行重复 country_name；合成图没有外部来源时不写内部路径。
+- 来源卡改为 Image credits。
+- 契约加可选 tally.icons（分组名 → 图标），计分板与揭晓页按它画图标，缺省仍是 globe；ICONS 加 paw / glass-full / hand-stop。
+- 默认输出不变；补测试。
+
+### 摘要
+
+rank_scroll：合成图按账本判定并披露、来源卡 Image credits、计分板分组图标 tally.icons
+
+---
+
+## 008 — 2026-11-03 23:58:21 — intro-hold-and-chapter-labels
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/rank_scroll/rank_scroll/timeline.py
+>   - projects/rank_scroll/rank_scroll/contract.py
+>   - projects/rank_scroll/rank_scroll/publish.py
+>   - ai_videos/paihangbang/data_contract.md
+> severity: medium
+
+### 指令
+
+来源：paihangbang ep06 独立审片（_build/qc_round1_independent.md #7、#21），用户睡前授权自主决策（2026-11-03）。
+- 第一张卡（倒数最后一名）在片头滑入后立刻开始左移，约 1 秒就被左边缘切掉，低于 bible §7-5 的 3 秒可读；各期通病。新增可选 data.json layout.intro_hold（秒，0–6，默认 0 = 行为不变）：滑入结束后整排静止 intro_hold 秒再滚动；滚动段长度相应加长，publish 章节时间同步。
+- publish 章节标签按组下限写（#30–#21），并列名次时下限可能不存在；改为写该组实际最小名次（#30–#23）。
+- 加单测 test_intro_hold_keeps_band_still_then_scrolls；全套 30 项通过。
+
+### 摘要
+
+rank_scroll：新增 layout.intro_hold 让第一张卡可读；章节标签按实际名次
+
+---
+
+## 012 — 2026-11-04 02:23:15 — thumb-logo-title-wrap
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/rank_scroll/rank_scroll/render.py
+> severity: low
+
+### 指令
+
+paihangbang ep03 作者自查（follow-up 037 夜间自主）：封面草图标题「30 AI COMPANIES SHAPING THE FU…」被截断，三张公司图没有 logo / 名称，观众认不出是哪家。
+执行边界（代理判断）：标题放不下时改为两行换行而不是省略号；公司卡（有 logo）在数值药丸上方加 logo 白底牌。排名期封面在标题放得下时输出不变。
+
+### 摘要
+
+rank_scroll 封面：标题过长时两行换行；公司卡加 logo 牌
+
+---
+
+## 005 — 2026-11-03 21:26:21 — image-alt-ai-generated
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/rank_scroll/rank_scroll/contract.py
+>   - projects/rank_scroll/rank_scroll/publish.py
+>   - ai_videos/paihangbang/data_contract.md
+> severity: medium
+
+### 指令
+
+来自 paihangbang follow-up 020（用户：每张卡都必须有高质量图，找不到就让 Codex 生成）。
+执行边界（代理判断）：
+- 契约 v1.4：新增可选字段 image_alt / image_alt_credit——标了 image_risk 的图在默认母版扣下时，用 image_alt（须在 assets.json 且许可可接受）顶上，不再出占位卡；--allow-risk-images 版仍用原图。
+- 许可白名单加 AI-generated（Codex image_gen 生成图，最后手段；上传时勾选合成内容声明）。
+- publish 署名按实际上屏的那张图（image 或 image_alt）取账本条目。
+- 加测试 test_image_alt_replaces_withheld_risk_photo；渲染、时间线不变。
+
+### 摘要
+
+rank_scroll 契约 v1.4：image_alt 顶替被扣下的风险图，许可白名单收 AI 生成图
+
+---
+
+## 010 — 2026-11-04 01:57:55 — ai-image-chip
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/rank_scroll/rank_scroll/cards.py
+>   - projects/rank_scroll/rank_scroll/contract.py
+> severity: medium
+
+### 指令
+
+来自 paihangbang ep14 独立审片（用户整夜授权主代理自主决定）：AI 生成图的标注只在卡底最小一行，手机上看不出，观众会以为是实拍。
+执行边界（代理判断）：账本 licence 以 AI-generated 开头的图，卡片左上（国旗与徽章下方）自动加黄色「AI IMAGE」标记，底部署名改为「AI-generated image, not a photo」；风险版换成实拍时不显示。全系列各期自动生效，不改数据契约。加测试。
+
+### 摘要
+
+rank_scroll：AI 生成图卡片自动加 AI IMAGE 标记与「not a photo」署名
+
+---
+
+## 011 — 2026-11-04 02:05:36 — chapters-first-group
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/rank_scroll/rank_scroll/publish.py
+> severity: low
+
+### 指令
+
+来自 paihangbang ep15 制作代理报告（N=36 时 publish 章节漏了 #36–#31 段，需手改）。执行边界：章节按十名一组，第一组从 N 开始（N<50 时不再丢段），其余逻辑不变；用 ep15/ep19/ep02 实测，测试全过。
+
+### 摘要
+
+rank_scroll：publish 章节在 N<50 时不再漏掉第一组
+
+---
+
+## 013 — 2026-11-04 02:25:37 — publish-list-mode-portrait-credits
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/rank_scroll/rank_scroll/publish.py
+> severity: medium
+
+### 指令
+
+paihangbang ep03 作者自查（follow-up 037 夜间自主）：publish.md 对列表期仍用排名口径（ranked by…、章节 #21–#30 / No. 1、标题重复 kicker），且漏了创始人头像（person.image）的署名——CC BY / CC BY-SA 头像必须署名。
+执行边界（代理判断）：列表期首句改为 listed by founding / in order, not ranked；章节按出场公司每约 6 家一段，标「A → B」，加计分板与来源；标签不用 #Ranking；序号不带 #。所有期：进片的头像与主图一样列入署名（简版与完整版），数据里 youtube_title 优先。排名期其余输出不变。
+
+### 摘要
+
+rank_scroll publish：列表期文案与章节，头像署名
+
+---
+
+## 006 — 2026-11-03 21:31:35 — music-bed-in-out-fit-linear-loudnorm
+
+> target_artifacts:
+>   - projects/rank_scroll/rank_scroll/render.py
+>   - projects/rank_scroll/rank_scroll/__main__.py
+> severity: medium
+
+### 指令
+
+来源：paihangbang follow-up 011 的独立音频审片（ep01 配乐版）——两首首尾相接时「第一首结尾 + 第二首前奏」形成约 35 s 低能量段（交叉淡入处 momentary -26.8 LUFS），第二首被片尾硬切在中段，单遍 loudnorm 让片头增益漂移 +11 dB、压平原曲渐强。用户要求「请帮我的视频加上音乐」，质量须过审片。
+执行边界（代理判断）：
+- `--music` 每项可写 `song.mp3@IN:OUT`（秒）截取；同一首可重复出现（做结尾再现）。
+- 新增 `--music-fit end`：音乐比片子长时，从最后一首的开头跳过多出的部分，让它自己的结尾正好落在片尾。
+- 音乐先单独做成 WAV「音乐床」：裁切 → 4 s 交叉淡入 → 不足时循环 → 1 s 淡入 / 3 s 淡出 → loudnorm 两遍（第二遍 linear=true，目标 I=-16 TP=-1.5 LRA=11），再与画面合流；manifest 记录每首入出点、fit 与第一遍测量值。
+- 不带新参数时行为与旧版一致（除 loudnorm 改两遍线性）；加测试覆盖解析与 fit 计算。
+
+### 摘要
+
+配乐改为先做音乐床：每首可设入点出点、末首对齐片尾自然结束、loudnorm 两遍线性
+
+---
+
+## 014 — 2026-11-04 04:47:06 — equal-power-music-crossfade
+
+> target_artifacts:
+>   - projects/rank_scroll/rank_scroll/render.py
+> severity: low
+
+### 指令
+
+用户要求「做完之后请仔细review和审查你的工作产出，然后用suno 配上音乐」。paihangbang ep01 第 5 轮独立审片测到接缝 176–180 s 瞬时响度下陷约 7.6 LU（acrossfade c1=tri 线性），代理判断改为等功率 qsin 曲线；只改曲线，不改淡化时长与 loudnorm。
+
+### 摘要
+
+配乐拼接改为等功率交叉淡化（qsin），消除接缝处约 2 秒的音量下陷
+
+---
+
+## 016 — 2026-11-07 00:00:20 — image-fit-contain
+
+> severity: medium
+
+### 指令
+
+排行榜 paihangbang follow-up（卡片配图完整放入）：渲染器卡片主图支持按卡开启的 contain 模式——整图等比缩放完整放入卡片图区，空余部分用同一张图 cover 放大后高斯模糊（略压暗）填充，不加边框线。数据合同新增卡级可选字段（默认不开启，行为与现在完全一致）；配图闸门的裁后分辨率口径对 contain 卡改为按完整放入后的实际显示尺寸判。
+
+### 摘要
+
+卡片主图新增 image_fit=contain（同图虚化填充）
+
+---
+
+## 017 — 2026-11-07 00:06:42 — cjk-wrap
+
+> target_artifacts:
+>   - projects/rank_scroll/rank_scroll/draw.py
+
+### 指令
+
+（paihangbang ep21 第 2 轮独立复核 R2-B1）中文版洞察卡整句被截：wrap() 只按空格断行
+
+### 摘要
+
+draw.wrap() 支持中日韩文字逐字断行（英文单词仍按词，不在行首放中文标点），修中文版洞察卡等多行文字溢出。
+
+---
+
+## 018 — 2026-11-07 10:34:32 — speed-3px
+
+> severity: medium
+
+### 指令
+
+paihangbang 用户要求滚动快 1.5 倍：SPEED 2→3 px/帧（1080p60 匀速段，仍整数）。原实现要求匀速段距离能被 SPEED 整除（槽宽取 4 的倍数保证偶数），3 不再保证整除；改为把余数并入末段缓动距离（ease_dist = EASE_DIST + 余数，缓动帧数 2·ease_dist/SPEED 保持速度衔接），时间轴其余段不变。
+
+### 摘要
+
+SPEED 3 px/帧；匀速段余数并入缓动段
+
+---
+
+## 015 — 2026-11-04 16:49:18 — zh-locale
+
+> target_stage: 6
+> target_artifacts:
+>   - projects/rank_scroll/rank_scroll/
+> severity: medium
+
+### 指令
+
+源自 paihangbang follow-up（中文版）：渲染器加 --lang zh：读 data.zh.json、界面文字走中英对照表、字体整套切 Noto Sans SC（按字重设 wght 轴）、计分板国家名用固定 ISO→中文表（不取条目上的 country_name，防止「中国台湾」被当成「中国」的标签）、输出文件名带 _zh。英文版行为不变，补测试。
+
+### 摘要
+
+rank_scroll 中文版本地化（--lang zh）

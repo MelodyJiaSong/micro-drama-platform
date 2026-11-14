@@ -10,13 +10,14 @@ from typing import Any
 from libs.common import asset_link, drama_ref, equipment_key, prop_key, scene_key
 from libs.common.drama_layout import EQUIPMENT_DIR_NAME, is_equipment_tool_dir
 from libs.common.episode_workflow import MODULE_NAV_LABELS, MODULES, PLACEHOLDER_STAGES, WORLD_FACTS_FILE, WORKFLOW_ID, WORKFLOW_MARKER
-from libs.common.production_key import BACKGROUND_DIR_NAME, SCENES_DIR_NAME, first_shot_key, shot_key
-from libs.common.scene_cut import CUT_FILE_PATTERN, CUT_STAGES, EDIT_DIR, EPISODE_CUT
-from urllib.parse import urlencode
+from libs.common.production_key import BACKGROUND_DIR_NAME, GROUP_ID_RE, GROUPS_DIR_NAME, SCENES_DIR_NAME, first_shot_key, group_key, shot_key
+from libs.common.scene_cut import CUT_FILE_PATTERN, CUT_STAGES, EDIT_DIR, EPISODE_CUT, POST_CUT, POST_DIR, POST_FILE_PATTERN
+from urllib.parse import quote, urlencode
 from libs.common.exposed_tree import ExposedTree, TREE_VISIBLE_EXTENSIONS
 from libs.domain.errors.file__error import FileNotInSandboxError
 from libs.domain.errors.media__error import NotUnderAiVideosError
 from libs.infrastructure.readers.scene_registry__reader import SceneRegistryReader
+from libs.infrastructure.readers.shared_library_tree__reader import SharedLibraryTreeReader
 
 _IMAGE_EXTENSIONS: frozenset[str] = frozenset({".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"})
 _VIDEO_EXTENSIONS: frozenset[str] = frozenset({".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v"})
@@ -28,6 +29,10 @@ _PDF_EXTENSIONS: frozenset[str] = frozenset({".pdf"})
 _MODEL_EXTENSIONS: frozenset[str] = frozenset({".glb", ".gltf"})
 _CJK_RE = re.compile("[\u4e00-\u9fff]")
 _DIGITS_RE = re.compile(r"(\d+)")
+# Series-level new-drama development framework (xihuan follow-up 001); the UI route lives in lib/devPreview.ts.
+DEV_FRAMEWORK_DIR = "framework"
+DEV_DOCS_DIR = "0_开发"
+DEV_PREVIEW_ROUTE = "/dev-preview"
 
 
 def _natural(name: str) -> list[str | int]:
@@ -74,6 +79,16 @@ _HIDDEN_DIR_NAMES: frozenset[str] = frozenset({"_plan"})
 LAZY_DRAMA_DEPTH: int = 2
 LAZY_SHOT_DEPTH: int = 1
 
+# 教学视频一节（follow-up 357）：系列 → 课程表的季 → 期。课程表格式见 edu_videos/ai_terms/课程表.md。
+EDU_VIDEOS_DIR = "edu_videos"
+EDU_SECTION_NAME = "教学视频"
+EDU_SYLLABUS_FILE = "课程表.md"
+EDU_SYLLABUS_NODE = "syllabus"   # 季与期是虚拟节点，路径挂在系列下这个名字里，不对应真实目录
+EDU_TOPIC_DIR_RE = re.compile(r"(t\d+)_.+")
+EDU_SEASON_RE = re.compile(r"^###\s*第\s*(\d+)\s*季\s*(.*)$")
+EDU_ROW_RE = re.compile(r"^\|\s*(\d+-\d+)\s*\|\s*(t\d+)\s*(✅)?\s*\|\s*([^|]+?)\s*\|")
+EDU_TOPIC_FILE_EXTENSIONS: frozenset[str] = frozenset({".md", ".json"})
+
 
 def _obsolete_note(children: list[dict[str, Any]]) -> str | None:
     """Path of the folder's own `OBSOLETE.md` among its walked children, else None."""
@@ -108,7 +123,7 @@ class TreeReader:
             "type": "section",
             "name": "root",
             "path": "",
-            "children": [self._ai_videos_section(lazy)],
+            "children": [self._ai_videos_section(lazy), *self._edu_videos_section()],
         }
 
     def subtree(self, rel_path: str, depth: int | None = 1) -> dict[str, Any]:
@@ -166,6 +181,92 @@ class TreeReader:
             "children": children,
         }
 
+    def _edu_videos_section(self) -> list[dict[str, Any]]:
+        """教学视频（follow-up 357）：`edu_videos/` 每个系列一个节点。
+
+        系列有 `课程表.md` 时按它列「第 N 季 → 季-集 词」：有知识点目录的期点开单集预览、
+        展开看讲稿等文件；还没目录的期只显示「规划」。没有课程表的系列直接列知识点目录。
+        只读、不懒加载（每个系列只有几十个节点）。没有 `edu_videos/` 时不出这一节。
+        """
+        edu_root = self._root / EDU_VIDEOS_DIR
+        if not edu_root.is_dir() or edu_root.is_symlink():
+            return []
+        series_nodes = []
+        for series_dir in sorted(p for p in edu_root.iterdir() if p.is_dir() and not p.is_symlink()):
+            if series_dir.name.startswith(("_", ".")) or series_dir.name in self._exposed.excluded_dirs():
+                continue
+            series_nodes.append(self._edu_series(series_dir))
+        return [{"type": "section", "name": EDU_SECTION_NAME, "path": EDU_VIDEOS_DIR, "children": series_nodes}]
+
+    def _edu_series(self, series_dir: Path) -> dict[str, Any]:
+        rel = self._rel(series_dir)
+        topics = {m.group(1): d for d in series_dir.iterdir()
+                  if d.is_dir() and not d.is_symlink() and (m := EDU_TOPIC_DIR_RE.fullmatch(d.name))}
+        readme, syllabus = series_dir / "README.md", series_dir / EDU_SYLLABUS_FILE
+        title = self._edu_title(readme) or series_dir.name
+        children: list[dict[str, Any]] = []
+        node: dict[str, Any] = {"type": "directory", "name": series_dir.name, "display_name": title,
+                                "path": rel, "children": children}
+        if syllabus.is_file() and not syllabus.is_symlink():
+            node["navigation_href"] = "/file/" + quote(self._rel(syllabus), safe="")
+            children.append({"type": "file", "name": syllabus.name, "display_name": "课程表", "path": self._rel(syllabus)})
+        if readme.is_file() and not readme.is_symlink():
+            children.append({"type": "file", "name": readme.name, "display_name": "系列说明", "path": self._rel(readme)})
+        seasons = self._edu_seasons(syllabus) if syllabus.is_file() and not syllabus.is_symlink() else []
+        listed: set[str] = set()
+        for number, season_title, rows in seasons:
+            episodes = []
+            for code, topic_id, word in rows:
+                listed.add(topic_id)
+                episodes.append(self._edu_episode(f"{rel}/{EDU_SYLLABUS_NODE}/{code}", f"{code} {word}", topics.get(topic_id),
+                                                   syllabus_href=node["navigation_href"] + "?" + urlencode({"ep": code})))
+            children.append({"type": "directory", "name": f"s{number}", "display_name": season_title,
+                             "path": f"{rel}/{EDU_SYLLABUS_NODE}/s{number}", "children": episodes})
+        rest = sorted((t for t in topics if t not in listed), key=_natural)
+        if rest and seasons:
+            children.append({"type": "directory", "name": "_unlisted", "display_name": "未排进课程表",
+                             "path": f"{rel}/{EDU_SYLLABUS_NODE}/_unlisted",
+                             "children": [self._edu_episode(self._rel(topics[t]), topics[t].name, topics[t]) for t in rest]})
+        elif rest:
+            children.extend(self._edu_episode(self._rel(topics[t]), topics[t].name, topics[t]) for t in rest)
+        return node
+
+    @staticmethod
+    def _edu_title(readme: Path) -> str | None:
+        if not readme.is_file() or readme.is_symlink():
+            return None
+        for line in readme.read_text(encoding="utf-8").splitlines():
+            if line.startswith("# "):
+                return re.sub(r"[（(][^）)]*[）)]\s*$", "", line[2:]).strip() or None
+        return None
+
+    @staticmethod
+    def _edu_seasons(syllabus: Path) -> list[tuple[str, str, list[tuple[str, str, str]]]]:
+        """`### 第 N 季 · 名（M 期）` 起一季，其下 `| 季-集 | tNN ✅ | 词 | …` 每行一期。"""
+        seasons: list[tuple[str, str, list[tuple[str, str, str]]]] = []
+        for line in syllabus.read_text(encoding="utf-8").splitlines():
+            if (m := EDU_SEASON_RE.match(line)):
+                seasons.append((m.group(1), f"第 {m.group(1)} 季 {m.group(2).strip()}".strip(), []))
+            elif seasons and (m := EDU_ROW_RE.match(line)):
+                seasons[-1][2].append((m.group(1), m.group(2), m.group(4).strip()))
+        return seasons
+
+    def _edu_episode(self, path: str, label: str, topic: Path | None, syllabus_href: str | None = None) -> dict[str, Any]:
+        if topic is None:   # 还没目录：点开课程表（带 ?ep= 只为高亮这一行，阅读页不看它）
+            node = {"type": "directory", "name": label, "display_name": f"{label} · 规划", "path": path, "children": []}
+            if syllabus_href:
+                node["navigation_href"] = syllabus_href
+            return node
+        files = [self._leaf_for(f) for f in sorted(topic.iterdir(), key=lambda f: _natural(f.name))
+                 if f.is_file() and not f.is_symlink() and f.suffix.lower() in EDU_TOPIC_FILE_EXTENSIONS]
+        done = any((topic / "final").glob("*.mp4")) if (topic / "final").is_dir() else False
+        node: dict[str, Any] = {"type": "directory", "name": topic.name,
+                                "display_name": label + (" ✅" if done else " · 制作中"),
+                                "path": path, "children": files}
+        if (topic / "preview.json").is_file():
+            node["navigation_href"] = "/episode-preview?" + urlencode({"path": self._rel(topic)})
+        return node
+
     def _walk_project(self, project_dir: Path, series_note: str | None = None, lazy: bool = False) -> dict[str, Any] | None:
         sub = self._walk_filtered(project_dir, self._is_allowed_leaf, depth=LAZY_DRAMA_DEPTH if lazy else None)
         node: dict[str, Any] = {
@@ -192,6 +293,8 @@ class TreeReader:
                     child["lifetime"] = "persistent"
                     if child["name"] == "2_世界观人设":
                         self._label_world_assets(child.get("children", []))
+                        # 点名字开资产总览，点箭头照常展开（follow-up 294）
+                        child["navigation_href"] = "/assets?" + urlencode({"drama": node["path"]})
                 episodes_root = project_dir / "episodes"
                 episodes = sorted((p for p in episodes_root.iterdir() if p.is_dir() and not p.is_symlink()
                                    and re.fullmatch(r"ep\d+", p.name)), key=lambda p: _natural(p.name)) if episodes_root.is_dir() else []
@@ -240,6 +343,17 @@ class TreeReader:
                         "path": f"{node['path']}/stages/{stage}",
                         "children": stage_outputs,
                     })
+            for key, title, route in [("base_layout", "基地布局", "/base-layout"), ("map_regions", "地图资产", "/map-regions")]:
+                layout = config.get(key)
+                if isinstance(layout, str) and layout.endswith(".json") and "\\" not in layout and ":" not in layout:
+                    parts = layout.split("/")
+                    if all(part not in {"", ".", ".."} for part in parts):
+                        target = project_dir.joinpath(*parts)
+                        if target.is_file() and not any(p.is_symlink() for p in [target, *target.parents]):
+                            node["children"].insert(2, {
+                                "type": "file", "name": key, "display_name": title,
+                                "path": f"{node['path']}/stages/{key}", "navigation_href": route + "?" + urlencode({"path": self._rel(target)}),
+                            })
         zh_title = _SYSTEM_FOLDER_LABELS_ZH.get(project_dir.name) or self._project_zh_title(project_dir)
         if zh_title:
             node["display_name"] = zh_title
@@ -282,6 +396,12 @@ class TreeReader:
             nodes.append({"type": "directory", "name": EPISODE_CUT, "display_name": "整集（场与场接起来、转场）",
                           "path": f"{drama}/episodes/{episode.name}/edit/episode",
                           "navigation_href": self._workflow_url(drama, episode.name, "edit", EPISODE_CUT), "children": whole})
+        post = episode / POST_DIR   # 后期试做（follow-up 290）：排在整集后面
+        posts = [int(m.group(1)) for f in post.iterdir() if (m := re.fullmatch(POST_FILE_PATTERN, f.name)) and f.is_file()]             if post.is_dir() and not post.is_symlink() else []
+        if posts:
+            nodes.append({"type": "directory", "name": POST_CUT, "display_name": f"后期试做（声音、字幕、字卡） · v{max(posts)}",
+                          "path": f"{drama}/episodes/{episode.name}/edit/post",
+                          "navigation_href": self._workflow_url(drama, episode.name, "edit", POST_CUT), "children": []})
         for sid in sorted(found, key=lambda s: (order.index(s) if s in order else len(order), _natural(s))):
             stages = []
             for stage in CUT_STAGES:
@@ -310,19 +430,68 @@ class TreeReader:
                 locations = {item["id"]: item.get("location", "") for item in json.loads(filming.read_text(encoding="utf-8"))["content"]["scenes"]}
             except (ValueError, KeyError, TypeError):
                 locations = {}
+        filming_durations: dict[str, dict[str, int]] = {}
+        if module == "prompts" and filming.is_file() and not filming.is_symlink():
+            try:
+                filming_durations = {item["id"]: {s["id"]: s["duration"] for s in item["shots"] if isinstance(s.get("duration"), int)}
+                                     for item in json.loads(filming.read_text(encoding="utf-8"))["content"]["scenes"]}
+            except (ValueError, KeyError, TypeError):
+                filming_durations = {}
         for scene in scenes:
             path = f"{base}/{module}.json/scenes/{scene['id']}"
-            children = []
+            shot_nodes: dict[str, dict] = {}
+            durations: dict[str, int] = {}
             for shot in scene["shots"]:
                 key = shot_key(episode, scene["id"], shot["id"]) if module == "filming" else first_shot_key(shot["id"])
                 if key is None:
                     continue
                 folder = key.folder(self._root / base)
-                children.append({"type": "directory", "name": f"st{key.shot}", "display_name": key.value,
-                                 "path": f"{path}/shots/st{key.shot}",
-                                 "navigation_href": self._workflow_url(drama, episode, module, scene["id"], key.value),
-                                 "children": self._walk_filtered(folder, self._is_allowed_leaf, depth=LAZY_SHOT_DEPTH if lazy else None)
-                                 if folder.is_dir() and not folder.is_symlink() else []})
+                durations[f"st{key.shot}"] = shot.get("duration") if isinstance(shot.get("duration"), int) else 0
+                shot_nodes[f"st{key.shot}"] = {"type": "directory", "name": f"st{key.shot}", "display_name": key.value,
+                                               "path": f"{path}/shots/st{key.shot}",
+                                               "navigation_href": self._workflow_url(drama, episode, module, scene["id"], key.value),
+                                               "children": self._walk_filtered(folder, self._is_allowed_leaf, depth=LAZY_SHOT_DEPTH if lazy else None)
+                                               if folder.is_dir() and not folder.is_symlink() else []}
+            if module == "prompts":     # compiled shots carry no duration; take it from filming
+                durations.update(filming_durations.get(scene["id"], {}))
+            # 场 → 镜组 → 镜头 (follow-up 331): every shot sits under a group; a shot not listed in `groups` is a one-shot
+            # group of its own. A written group opens its preview page; its board, pack and takes live there, not in the nav.
+            grouped: dict[str, tuple[str, list[str]]] = {}
+            for group in scene.get("groups", []):
+                gid = group["id"].rsplit("_", 1)[-1]
+                members = [m.rsplit("_", 1)[-1] for m in group.get("shots", [])]
+                if GROUP_ID_RE.fullmatch(gid) and members:
+                    for member in members:
+                        grouped[member] = (gid, members)
+            children = []
+            done: set[str] = set()
+            for sid, shot_node in shot_nodes.items():
+                if sid in done:
+                    continue
+                if sid not in grouped:
+                    done.add(sid)
+                    children.append({"type": "directory", "name": sid,
+                                     "display_name": f"单镜 {sid}" + (f" · {durations[sid]} 秒" if durations.get(sid) else ""),
+                                     "path": f"{path}/groups/{sid}", "navigation_href": shot_node["navigation_href"],
+                                     "children": [shot_node]})
+                    continue
+                gid, members = grouped[sid]
+                done.update(members)
+                folder = self._root / base / SCENES_DIR_NAME / scene["id"] / GROUPS_DIR_NAME / gid
+                total = sum(durations.get(m, 0) for m in members)
+                children.append({"type": "directory", "name": gid,
+                                 "display_name": f"镜组 {group_key(episode, scene['id'], gid)} · {members[0]}–{members[-1]}"
+                                 + (f" · {total} 秒" if total else ""),
+                                 "path": f"{path}/groups/{gid}",
+                                 "navigation_href": "/group-preview?" + urlencode({"path": self._rel(folder)}),
+                                 "children": [shot_nodes[m] for m in members if m in shot_nodes]})
+            # 场故事板 (follow-up 336): the scene's panels left to right, for review; first under the scene.
+            board = self._root / base / SCENES_DIR_NAME / scene["id"] / "board" / "scene_board.json"
+            if board.is_file() and not board.is_symlink():
+                children.insert(0, {"type": "directory", "name": "board", "display_name": "场故事板",
+                                    "path": f"{path}/board",
+                                    "navigation_href": "/scene-preview?" + urlencode({"path": self._rel(board.parent.parent)}),
+                                    "children": []})
             # Scene-level decision record (follow-up 225): purpose, coverage, why each shot, cited guidelines.
             decision = self._root / base / "scenes" / scene["id"] / "decisions.md"
             if module == "filming" and decision.is_file() and not decision.is_symlink():
@@ -343,6 +512,9 @@ class TreeReader:
         for entry in sorted(p for p in series_dir.iterdir() if p.is_dir()):
             if entry.name in self._exposed.excluded_dirs():
                 continue
+            if entry.name == DEV_FRAMEWORK_DIR and (entry / "README.md").is_file() and (entry / "templates").is_dir():
+                shared.append(self._dev_framework_node(entry))
+                continue
             node = self._walk_project(entry, series_note=note, lazy=lazy)
             if node is None:
                 continue
@@ -360,8 +532,41 @@ class TreeReader:
             "path": self._rel(series_dir),
             "children": shared + members + loose,
         }
+        library = self._series_library(series_dir, lazy)
+        if library is not None:
+            series["navigation_href"] = library["navigation_href"]
+            series["children"].insert(0, library)
         _mark_obsolete(series, note)
         return series
+
+    def _dev_framework_node(self, framework: Path) -> dict[str, Any]:
+        """Series-level new-drama development framework (xihuan follow-up 001): the framework page
+        plus one entry per dev-doc folder (worked examples, and each member drama's `0_开发`)."""
+        folders = sorted(p for p in (framework / "examples").glob("*") if (p / "01_主题.md").is_file())
+        folders += sorted(p / DEV_DOCS_DIR for p in framework.parent.iterdir()
+                          if p.is_dir() and (p / DEV_DOCS_DIR / "01_主题.md").is_file())
+        children = [{"type": "directory", "name": f.name if f.name != DEV_DOCS_DIR else f.parent.name,
+                     "display_name": (f"试套 · {self._h1_zh(f / '01_主题.md') or f.name}" if f.parent.name == "examples"
+                                      else f"开发稿 · {self._project_zh_title(f.parent) or f.parent.name}"),
+                     "path": self._rel(f), "navigation_href": DEV_PREVIEW_ROUTE + "?" + urlencode({"path": self._rel(f)}),
+                     "children": []} for f in folders]
+        return {"type": "directory", "name": framework.name, "display_name": "新剧开发框架", "path": self._rel(framework),
+                "navigation_href": DEV_PREVIEW_ROUTE + "?" + urlencode({"path": self._rel(framework)}), "children": children}
+
+    def _series_library(self, series_dir: Path, lazy: bool) -> dict[str, Any] | None:
+        try:
+            config = json.loads((series_dir / drama_ref.SERIES_MARKER_NAME).read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            return None
+        rel = config.get("shared_library")
+        if not isinstance(rel, str) or not self._exposed.is_inside(rel):
+            return None
+        library = self._root / rel
+        if library.is_symlink() or not (library / "library.json").is_file():
+            return None
+        return {"type": "directory", "name": "shared_library", "display_name": "公用资产",
+                "path": self._rel(library), "navigation_href": "/assets?" + urlencode({"library": self._rel(library)}),
+                "children": SharedLibraryTreeReader().read(library, self._rel(library))}
 
     def _series_zh_title(self, series_dir: Path) -> str:
         try:

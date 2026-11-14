@@ -8,9 +8,12 @@ import { mediaUrl } from "../api";
 import { useFileChanges } from "../lib/fileEvents";
 import type { ShotPack, ShotTake } from "../lib/episodeWorkflow";
 import { Renderer } from "../markdown/renderer";
+import { episodePreviewHref } from "../lib/episodePreview";
+import { reviewRunHref } from "../lib/reviewRun";
 import { EditStagePanel } from "./EditStagePanel";
 import { ReviewReelPanel } from "./ReviewReelPanel";
 import { SceneDraftsPanel } from "./SceneDraftsPanel";
+import { EpisodeStoryboard } from "./EpisodeStoryboard";
 import { ZoomableImage } from "./ZoomableImage";
 import "./EpisodeWorkflowPage.css";
 
@@ -79,9 +82,16 @@ function BlockingDiagram({ src, sceneId }: { src: string; sceneId: string }): JS
   useEffect(() => setMissing(false), [src]);
   if (missing) return <p className="workflow-note">走位图尚未生成：先画本场各镜的 overhead（tools/shot_overhead.py）。</p>;
   return <figure className="workflow-blocking">
-    <ZoomableImage src={src} alt={`${sceneId} 走位图`} onError={() => setMissing(true)} />
+    <ZoomableImage src={src} alt={`${sceneId} 走位图`} loading="lazy" onError={() => setMissing(true)} />
     <figcaption>走位图（俯视）：圆＝主要人物，三角＝卫兵、匪徒等群演，方块＝物件；虚线箭头＝这一镜里的移动，数字＝本场第几镜。点击放大。</figcaption>
   </figure>;
+}
+
+/** 选中镜头时，分镜全文上方的现行首帧（按修改时间换 URL；没出就写「首帧待出」）。 */
+function FirstFrame({ frame, label }: { frame?: { path: string; mtime: number }; label: string }): JSX.Element {
+  if (!frame?.path) return <p className="workflow-note">首帧待出</p>;
+  return <figure className="workflow-blocking"><ZoomableImage src={mediaUrl(frame.path, frame.mtime)} alt={`${label} 首帧`} />
+    <figcaption>本镜首帧（现行）。点击放大。</figcaption></figure>;
 }
 
 export function EpisodeWorkflowPage({ dramaPath, title }: { dramaPath: string; title: string }): JSX.Element {
@@ -164,9 +174,20 @@ export function EpisodeWorkflowPage({ dramaPath, title }: { dramaPath: string; t
   const copy = (text: string): void => {
     void navigator.clipboard.writeText(text).then(() => setMessage("已复制")).catch(() => setError("复制失败，请手动选择文本"));
   };
-  return <div className="episode-workflow">
+  // 故事板审阅（follow-up 336）：影视改编不选镜头时按场铺开每镜首帧，页面放宽
+  const storyboardOpen = !reelOpen && requested === "filming" && !selectedShot;
+  const storyboardHref = (): string => {
+    const next = new URLSearchParams(params);
+    for (const key of ["scene", "shot", "view", "tab", "cut"]) next.delete(key);
+    next.set("module", "filming");
+    return `?${next.toString()}`;
+  };
+  return <div className={`episode-workflow${storyboardOpen ? " storyboard-wide" : ""}`}>
     <header><div><p className="workflow-eyebrow">创作工作台 · EP{Number(episode.slice(2))}</p><h1>{title}</h1></div>
       <div className="workflow-header-actions">
+        <Link className="workflow-header-link" to={episodePreviewHref(path)}>单集预览</Link>
+        <Link className="workflow-header-link" to={storyboardHref()} aria-current={storyboardOpen && !selectedScene ? "page" : undefined}>故事板</Link>
+        <Link className="workflow-header-link" to={reviewRunHref(path)}>审查单</Link>
         <Link className="workflow-header-link" to={reelHref(!reelOpen)} aria-pressed={reelOpen}>{reelOpen ? "返回模块" : "审片串联"}</Link>
         <button type="button" onClick={() => setRefresh(value => value + 1)}>刷新</button></div></header>
     <p className="workflow-note">只读展示。通过 Claude Code / Codex 修改文件后刷新。</p>
@@ -196,11 +217,16 @@ export function EpisodeWorkflowPage({ dramaPath, title }: { dramaPath: string; t
         {module.content.text && <button type="button" onClick={() => copy(module.content.text!)}>复制正文</button>}
       </div>}
       {active === "filming" && <div className="workflow-prompts">
-        {filmingScenes.filter(scene => !selectedScene || scene.id === selectedScene).map(scene => <section key={scene.id} aria-label={`场次 ${scene.id}`}>
+        {/* 不选镜头：故事板审阅，每场一节、每镜一张首帧卡（follow-up 336，取代读旧场故事板 board/ 切图的条带）；选中镜头：本镜分镜全文 */}
+        {!selectedShot && current && <EpisodeStoryboard workflow={current} dramaPath={dramaPath} episode={episode} scene={selectedScene} refresh={refresh}
+          shotHref={(scene, key) => shotHref({ scene, shot: key })}
+          sceneExtra={id => <details className="storyboard-blocking"><summary>走位图（俯视）</summary>
+            <BlockingDiagram sceneId={id} src={mediaUrl(`${path}/scenes/${id}/planning/${id}_blocking.png`, refresh)} /></details>} />}
+        {selectedShot && filmingScenes.filter(scene => !selectedScene || scene.id === selectedScene).map(scene => <section key={scene.id} aria-label={`场次 ${scene.id}`}>
           <h3>{scene.id} · {scene.location} · {scene.time}</h3><p>环境资产：{scene.background || "未绑定"}</p><p>本场目标与变化：{scene.purpose}</p>
-          {!selectedShot && <BlockingDiagram sceneId={scene.id} src={mediaUrl(`${path}/scenes/${scene.id}/planning/${scene.id}_blocking.png`, refresh)} />}
-          {scene.shots.filter(shot => !selectedShot || current?.shot_keys[scene.id]?.[shot.id] === selectedShot).map(shot => <article key={shot.id}>
+          {scene.shots.filter(shot => current?.shot_keys[scene.id]?.[shot.id] === selectedShot).map(shot => <article key={shot.id}>
             <h4>{current?.shot_keys[scene.id]?.[shot.id]} · {shot.duration}秒</h4>
+            <FirstFrame frame={current?.first_frames?.[selectedShot]} label={selectedShot} />
             <dl><dt>出场人物</dt><dd>{shot.cast?.length ? shot.cast.join("、") : "无"}</dd>{shot.props?.length ? <><dt>道具</dt><dd>{shot.props.join("、")}</dd></> : null}{shot.background ? <><dt>本镜场景</dt><dd>{shot.background}</dd></> : null}<dt>行动</dt><dd>{shot.action}</dd>
               <dt>走位</dt><dd>{shot.blocking || "—"}</dd><dt>动作分拍</dt><dd>{shot.beats || "—"}</dd><dt>拍摄</dt><dd>{shot.camera}</dd>
               <dt>光线</dt><dd>{shot.lighting || "—"}</dd><dt>对白</dt><dd>{shot.dialogue || "无对白"}</dd></dl></article>)}

@@ -63,7 +63,7 @@ def test_get_tree_returns_expected_sections() -> None:
     payload = r.json()
     assert payload["type"] == "section"
     sections = payload["children"]
-    assert [s["name"] for s in sections] == ["AI Videos"], sections
+    assert [s["name"] for s in sections] == ["AI Videos", "教学视频"], sections
 
 
 def test_stages_endpoint_dropped() -> None:

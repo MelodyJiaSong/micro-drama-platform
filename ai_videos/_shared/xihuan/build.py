@@ -23,7 +23,7 @@ DATA = ROOT / "data"
 ENTRIES = ROOT / "entries"
 CODEX = ROOT / "codex"
 REVIEWS = ROOT / "qc" / "reviews.json"
-VERSION = "1.1.0"
+VERSION = "1.2.0"
 
 STYLE_FILE = ROOT / "prompt_styles.json"
 FAMILIARITY = {"高", "中", "低"}
@@ -34,7 +34,7 @@ BASIS = {"tradition": "欧洲传统", "genre": "现代类型（无传统原型�
 FRANCHISE = re.compile(r"D&D|SRD|Pathfinder|魔兽|Warcraft|Dota|暗黑|英雄联盟|上古卷轴|猎魔人|龙腾|托尔金|指环王|冰与火|权力的游戏|时光之轮|战锤|魂系|艾尔登|万智牌|哈利|RPG|游戏|网文|网漫|短剧|现代奇幻|现代吸血鬼|现代女性向|IP 注意|日系|韩系|西幻通用|机制参考")
 ADOPTION = {"locked": "锁定：跨剧一致，不改", "default": "默认：采用剧可改名改数值", "optional": "可选模块：采用剧可整块关闭"}
 KIND = {"PL": "位面", "PS": "力量源", "SC": "魔法", "EL": "魔法", "HL": "魔法", "DK": "魔法", "PR": "魔法", "AU": "魔法",
-        "TR": "位阶", "PH": "位阶", "EV": "事件", "FL": "事件", "TL": "头衔", "CL": "职业", "RC": "种族", "RS": "种族",
+        "EV": "事件", "FL": "事件", "TL": "头衔", "CL": "职业", "RC": "种族", "RS": "种族",
         "GF": "天赋", "GR": "成长", "IR": "道具", "CF": "工艺", "IT": "道具", "MT": "材料", "OR": "组织", "BS": "生物", "GD": "神祇"}
 
 
@@ -303,7 +303,7 @@ def main() -> int:
         write_text(ENTRIES / e["id"].lower() / "card.md", card(e, a, names), changed, args.check)
     lib = {
         "schema_version": 1, "version": VERSION, "title": "西幻公共资料库", "generated_by": "build.py（源为 data/*.json，勿手改）",
-        "scope": "欧美奇幻世界的力量源、魔法学派、位阶、职业、种族、成长、道具、组织、位面与生物；每条附仙侠对应。不含剧情与具体人物。",
+        "scope": "欧美奇幻世界的力量源、魔法学派、头衔与威胁度、职业、种族、成长、道具、组织、位面与生物；每条附仙侠对应。不含剧情与具体人物。",
         "navigation": [{"id": g.gid, "name": g.name, "children": [{"id": s["id"], "name": s["name"], "asset_ids": [e["id"] for e in s["entries"]]} for s in g.subgroups]} for g in groups],
         "assets": assets,
     }

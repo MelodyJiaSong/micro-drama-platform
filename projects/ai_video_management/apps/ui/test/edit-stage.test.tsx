@@ -4,7 +4,7 @@ import { afterEach, expect, it, vi } from "vitest";
 import { EditStagePanel } from "../src/components/EditStagePanel";
 import { EpisodeWorkflowPage } from "../src/components/EpisodeWorkflowPage";
 import { loadWorkflow } from "../src/lib/episodeWorkflow";
-import { loadSceneCuts, type CutVersion, type EpisodeCuts, type EpisodeJoin } from "../src/lib/sceneCuts";
+import { loadSceneCuts, type CutVersion, type EpisodeCuts, type EpisodeJoin, type PostTrial } from "../src/lib/sceneCuts";
 
 vi.mock("../src/lib/sceneCuts", async importOriginal => ({ ...await importOriginal<typeof import("../src/lib/sceneCuts")>(), loadSceneCuts: vi.fn() }));
 vi.mock("../src/lib/episodeWorkflow", async importOriginal => ({ ...await importOriginal<typeof import("../src/lib/episodeWorkflow")>(), loadWorkflow: vi.fn() }));
@@ -115,4 +115,32 @@ it("shows the whole episode with its transitions, review and the transition gall
   expect(gallery.currentTime).toBeCloseTo(16.51);
   fireEvent.click(screen.getByRole("link", { name: "v1" }));
   expect(await screen.findByText("审稿结论审的是另一版成片，这一版还没审。")).toBeInTheDocument();
+});
+
+const PDIR = `${EP}/post/trial`;
+function postTrial(n: number, extra: Partial<PostTrial> = {}): PostTrial {
+  return {
+    version: n, status: "试做 · 英文版", path: `${PDIR}/post_v${n}.json`, source_cut: "edit/final/cut_v9.json", video: `${PDIR}/ep01_post_v${n}.mp4`,
+    srt: `${PDIR}/ep01_post_v${n}.srt`, duration: 87.25, rendered_at: "2026-10-19T13:15:00", loudness_lufs: -16, true_peak_db: -1.3,
+    subtitle_lang: "en", subtitles: 21, titles: ["ELWYNN FOREST", "NORTHSHIRE ABBEY"], notes: ["本地生成"], error: "",
+    layers: [{ kind: "环境声", scene: "s1", source: "amb_s1_s12.wav", db: -2 }, { kind: "配乐", scene: "s1", source: "mus_s1_s101.wav", db: -15 },
+      { kind: "环境声", scene: "s2", source: "amb_s2_s21.wav", db: 4 }],
+    ...extra,
+  };
+}
+
+it("lists post trials and plays the chosen version with its sound layers", async () => {
+  vi.mocked(loadSceneCuts).mockResolvedValue({ ...CUTS, posts: [postTrial(4), postTrial(3, { video: "" })] });
+  panel("?module=edit");
+  const item = within(await screen.findByRole("list", { name: "场次" })).getAllByRole("listitem")[0];
+  expect(item).toHaveTextContent("后期试做 · 声音、字幕、地名字卡 v4 · 87.3 秒");
+  fireEvent.click(within(item).getByRole("link"));
+  const video = await screen.findByLabelText("后期成片");
+  expect(video.getAttribute("src")).toContain(encodeURIComponent(`${PDIR}/ep01_post_v4.mp4`));
+  const rows = within(screen.getByRole("table", { name: "声音层" })).getAllByRole("row");
+  expect(rows[1]).toHaveTextContent("s1amb_s1_s12.wav（-2 dB）mus_s1_s101.wav（-15 dB）");
+  expect(rows[2]).toHaveTextContent("s2amb_s2_s21.wav（+4 dB）—");
+  expect(screen.getByText(/字幕 21 条（只出英文）/)).toHaveTextContent("ELWYNN FOREST、NORTHSHIRE ABBEY");
+  fireEvent.click(screen.getByRole("link", { name: "v3" }));
+  expect(await screen.findByText(/还没渲染：运行/)).toHaveTextContent("tools/episode_post.py");
 });

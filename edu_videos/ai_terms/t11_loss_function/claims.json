@@ -1,0 +1,226 @@
+{
+ "note": "事实台账：讲稿与画面上每个事实、数字、专业概念一条，写明出处与原文原话。实验算出的写 source: \"experiment\"，并指到 scenes/data.py 里的断言；比方里的虚构情节写 source: \"analogy\"。核对记录见 research.md。",
+ "claims": [
+  {
+   "id": "C01",
+   "lines": [
+    "l03",
+    "l04",
+    "l05",
+    "l06",
+    "l07",
+    "l10"
+   ],
+   "claim": "损失是描述模型预测错得多少的一个数，越低越好；训练的目标是把损失降到尽量低",
+   "screen": [
+    "误差",
+    "损失",
+    "分越低越好"
+   ],
+   "source": "Google Machine Learning Crash Course · Linear regression: Loss (developers.google.com/machine-learning/crash-course/linear-regression/loss)",
+   "quote": "Loss is a numerical metric that describes how wrong a model's predictions are. ... The goal of training a model is to minimize the loss, reducing it to its lowest possible value."
+  },
+  {
+   "id": "C02",
+   "lines": [
+    "l11",
+    "l12",
+    "l13",
+    "l14",
+    "l15",
+    "l16"
+   ],
+   "claim": "十二趟打车（示意数据，_shared/s1_data.py）；第一组拧法 起步价 5、每公里 2：5 公里那趟实际 23、猜 15、差 8、平方 64；十二趟误差平方的平均 77.96 ≈ 78",
+   "screen": [
+    "示意数据",
+    "5",
+    "2",
+    "23",
+    "15",
+    "−8",
+    "8² = 64",
+    "78"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：i5 与 sets.A 的断言"
+  },
+  {
+   "id": "C03",
+   "lines": [
+    "l17",
+    "l18",
+    "l19",
+    "l20",
+    "l21",
+    "l22"
+   ],
+   "claim": "第二组 起步价 4、每公里 3.5：短途猜少、长途猜多；直接平均误差 −0.33；平方再平均 13.39 ≈ 13.4；差 2 罚 4、差 8 罚 64",
+   "screen": [
+    "4",
+    "3.5",
+    "≈ −0.3",
+    "13.4",
+    "2² = 4",
+    "8² = 64"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：sets.B 的断言"
+  },
+  {
+   "id": "C04",
+   "lines": [
+    "l20",
+    "l21",
+    "l23"
+   ],
+   "claim": "均方误差：误差平方再平均（L2 损失的平均），是最常见的损失函数之一；平方去掉正负号，差得越多罚得越重",
+   "screen": [
+    "均方误差",
+    "Mean squared error"
+   ],
+   "source": "Google Machine Learning Crash Course · Linear regression: Loss",
+   "quote": "Mean squared error (MSE): The average of L2 losses across a set of N examples. ... Loss focuses on the distance between the values, not the direction. ... When the difference between the prediction and label is large, squaring makes the loss even larger."
+  },
+  {
+   "id": "C05",
+   "lines": [
+    "l24",
+    "l25"
+   ],
+   "claim": "第三组 起步价 10、每公里 2.5：得分 2.19，三组里最低",
+   "screen": [
+    "10",
+    "2.5",
+    "2.19",
+    "78",
+    "13.4"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：sets.C 的断言"
+  },
+  {
+   "id": "C06",
+   "lines": [
+    "l26",
+    "l27",
+    "l28",
+    "l29",
+    "l30"
+   ],
+   "claim": "两个旋钮的全部拧法（起步价 0–20、每公里 1–4，161×121 格）算出分数地形图；最低点 起步价 10.2、每公里 2.54、分数 1.97，与最小二乘解（s1_data best）一致",
+   "screen": [
+    "10.2",
+    "2.54",
+    "1.97",
+    "最低点"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：land 与 best 的断言"
+  },
+  {
+   "id": "C07",
+   "lines": [
+    "l31",
+    "l32",
+    "l33"
+   ],
+   "claim": "最低点分数 1.97 不是零：示意数据里加了随机波动（s1_data.py 正态噪声 σ=1.6），直线无法每趟都猜中",
+   "screen": [
+    "1.97 ≠ 0"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：best_loss > 1.5"
+  },
+  {
+   "id": "C08",
+   "lines": [
+    "l35",
+    "l36"
+   ],
+   "claim": "平方后大错更吃亏：同样一共差 8 元，四趟各差 2 → 罚 16，一趟差 8 → 罚 64",
+   "screen": [
+    "16",
+    "64"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：spread / lump 的断言"
+  },
+  {
+   "id": "C09",
+   "lines": [
+    "l38",
+    "l39",
+    "l40",
+    "l42"
+   ],
+   "claim": "大语言模型预训练的损失是给「猜下一个词」打分：自回归对数似然，即交叉熵损失",
+   "screen": [
+    "交叉熵",
+    "Cross-entropy"
+   ],
+   "source": "Kaplan et al., Scaling Laws for Neural Language Models, arXiv:2001.08361 (OpenAI, 2020) §2",
+   "quote": "We optimize the autoregressive log-likelihood (i.e. cross-entropy loss) averaged over a 1024-token context, which is also our principal performance metric."
+  },
+  {
+   "id": "C10",
+   "lines": [
+    "l41"
+   ],
+   "claim": "交叉熵对一个词的罚分是 −ln(给正确词的把握)：90% → 0.11，10% → 2.30",
+   "screen": [
+    "90%",
+    "10%",
+    "0.11",
+    "2.30"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：ce 的断言"
+  },
+  {
+   "id": "C11",
+   "lines": [
+    "l43",
+    "l44",
+    "l45"
+   ],
+   "claim": "Meta 2023 年发布 Llama 2；论文图 5 画出各尺寸模型的训练损失，预训练读完 2 万亿词元后仍未饱和（画面曲线是示意形状，不是论文数据）",
+   "screen": [
+    "Llama 2",
+    "2 万亿词元",
+    "示意",
+    "Touvron 等 2023 · 图 5"
+   ],
+   "source": "Touvron et al., Llama 2: Open Foundation and Fine-Tuned Chat Models, arXiv:2307.09288 (Meta, 2023), Figure 5 与 §2.1",
+   "quote": "Figure 5: Training Loss for Llama 2 models. We compare the training loss of the Llama 2 family of models. We observe that after pretraining on 2T Tokens, the models still did not show any sign of saturation."
+  },
+  {
+   "id": "C12",
+   "lines": [
+    "l46"
+   ],
+   "claim": "Llama 2 最大的模型 700 亿参数（7B、13B、70B），即「几百亿个旋钮」",
+   "screen": [
+    "几百亿个旋钮"
+   ],
+   "source": "Touvron et al. 2023, Llama 2, §1",
+   "quote": "We are releasing variants of Llama 2 with 7B, 13B, and 70B parameters."
+  },
+  {
+   "id": "C13",
+   "lines": [
+    "l08"
+   ],
+   "claim": "高尔夫杆数越少越好（比方）",
+   "source": "analogy"
+  },
+  {
+   "id": "C14",
+   "lines": [
+    "l02",
+    "l37"
+   ],
+   "claim": "英文 l02 的 \"right\"、l37 的 \"good\"（中文「对」「好」）加引号是指这个词本身，不是引用出处",
+   "source": "analogy"
+  }
+ ]
+}

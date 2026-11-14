@@ -1,0 +1,1016 @@
+{
+ "version": 5,
+ "kind": "edu_lines",
+ "scoring": {
+  "scale": {
+   "0": "没查或查不了（写 `原因：`）",
+   "1": "有问题（问题表里必须有对应条目）",
+   "2": "基本没问题，有小瑕疵（写证据）",
+   "3": "没问题（写证据）"
+  },
+  "evidence_rule": "证据要指到句号 lNN / 屏号、原文或数字，至少 8 个字；没证据的高分按 0 处理。",
+  "disagreement": "分歧：两位同一维度差 ≥2，或一人 ≤1、另一人 ≥2，交裁决人；两人都 ≥2 的维度，裁决人每项抽 2 维复核（专抓两个模型共同的盲点）。"
+ },
+ "adjudicator": {
+  "runner": "claude",
+  "model": "claude-opus-5-5"
+ },
+ "id": "lines_r1",
+ "chain": "t04_gradient_descent/lines",
+ "loop": 1,
+ "max_loops": 3,
+ "parent": "",
+ "title": "t04_gradient_descent · 台词审（口播＋屏幕文字）第 1 轮",
+ "target": "edu_videos/ai_terms/t04_gradient_descent",
+ "episode": "t04_gradient_descent",
+ "stage": "lines",
+ "stage_name": "台词审（口播＋屏幕文字 × 中英）",
+ "scenes": [],
+ "created_at": "2026-11-09T20:46:23",
+ "author": "Claude Code",
+ "known": "",
+ "changes": "",
+ "items": [
+  {
+   "id": "voice_zh",
+   "law": "lines",
+   "law_name": "中文口播（母语听感，盲审）",
+   "color": "#c0502e",
+   "scope": [],
+   "checks": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_zh.md",
+   "prompt": "items/voice_zh__a.md",
+   "what": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "problem": "上一版「本期内容」念成「这一期，讲四件事：它是个什么问题；为什么只背练习册不行……」，像在念目录，正常人不会这么说话（用户 2026-11-08 指出）；原先的审稿没抓到。",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "像真人在讲",
+     "question": "逐句：自然 / 有点怪 / 很怪。书面腔、讲解腔、翻译腔、念稿感、报菜名式罗列都算怪"
+    },
+    {
+     "id": "V2",
+     "name": "衔接与过渡",
+     "question": "开场、本期内容、章节转换、举例前后：像一个人顺着思路往下讲，而不是「下面讲第一点」式的模板或目录朗读；上下句接得上"
+    },
+    {
+     "id": "V3",
+     "name": "一遍听懂",
+     "question": "只靠耳朵：一句只带一个新意思；指代清楚（说「这个」时观众知道指什么）；术语先解释再用；数字、同音字不会听错"
+    },
+    {
+     "id": "V4",
+     "name": "精炼",
+     "question": "没有废话、重复、正确的空话；删掉不影响理解的句子要指出来"
+    },
+    {
+     "id": "V5",
+     "name": "口吻与节奏",
+     "question": "从头到尾是同一个亲切、清楚、不端着的讲解者；长短句交替，每句适合一口气念完"
+    },
+    {
+     "id": "V6",
+     "name": "改写",
+     "question": "每句「有点怪 / 很怪」都给出可以直接替换、不更长的中文改写；列出最别扭的 5 句并排序"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_zh__a.md",
+     "prompt": "items/voice_zh__a.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "多数句子口语自然，如 l08「想象你蒙着眼站在山坡上，要走到谷底」、l26「坡越缓，每一步挪得越短」；但 l13、l32、l34、l45、l49、l50 句式偏书面或指代不清，其中片尾 l49、l50 按从严必改。"
+      },
+      "V2": {
+       "score": 2,
+       "evidence": "开场 l01→l07「上一期…那它是怎么走到最低点的？答案叫梯度下降，今天就聊它」顺着思路走，没有目录朗读；片尾 l50「可只有两个旋钮的一条直线，能学会的东西很有限」突然冒出「一条直线」，和 l51 的衔接也生硬。"
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "术语先比喻再命名（l09→l13「梯度」），数字多数好懂；扣分在 l13「这个方向」指代、l32/l34「太小的/太大的」要回头想是什么、l50「一条直线」听众没听过、l45 一句塞了年份+Adam+单独定步子三个新信息。"
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "整体紧凑；l03「旋钮只有两个，每种拧法都能算一遍，画出整张图」与 l02 意思重叠，l38「所以学习率常常是训练时最要紧的一个设定」和 l39 部分重复，可并句。"
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "全程亲切的同一个讲解者，长短句交替（l36「五步就跳出了地图」、l37「合适的那条，稳稳走到了谷底」）；l13（7.6s）、l45（8.3s）一口气念不完，到 l45 突然变得像讲稿。"
+      },
+      "V6": {
+       "score": 2,
+       "evidence": "下面问题表对每个「有点怪/很怪」句都给出不更长的改写；最别扭 5 句排序见整体观察。"
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/voice_zh__b.md",
+     "prompt": "items/voice_zh__b.md",
+     "scores": {
+      "V1": {
+       "score": 1,
+       "evidence": "l02「两个旋钮所有拧法的分数」、l13「合起来这个方向就叫梯度」都需要听完再重新拼意思；l22「主要拧每公里」把省略用得过头了。"
+      },
+      "V2": {
+       "score": 1,
+       "evidence": "l40「只是做了两处改进」接 l41「第一处」，再到 l45「第二处，步子更聪明」，仍是目录式串场；l50「只有两个旋钮的一条直线」突然带入此前没交代的对象。"
+      },
+      "V3": {
+       "score": 1,
+       "evidence": "l15「是训练前人定好的」容易瞬间听成“前人”；l32「零点零零零五，小十倍」与 l34「零点零二一，大约四倍」连续要求听众记小数、数零、比较倍数。"
+      },
+      "V4": {
+       "score": 1,
+       "evidence": "l35「九十六、一百一十八、一百四十五」报完三个数，并没有比“分数越跳越高”多说明什么；l45 的年份、l46「Meta 的 Llama 用它的改版」也可以删。"
+      },
+      "V5": {
+       "score": 1,
+       "evidence": "l09「地面往哪边斜、斜得多厉害」亲切清楚；到了 l45「二零一四年提出的 Adam，会根据每个旋钮之前的坡」，突然变成介绍资料的口吻，8.3 秒内还塞进了年份、名称、依据和做法。"
+      },
+      "V6": {
+       "score": 1,
+       "evidence": "l13「每个旋钮往哪边拧、分数降得最快」、l50「可只有两个旋钮的一条直线」需要重组句子。所有判怪句均在问题表给出不更长的替换；最别扭五句另见整体观察。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "像真人在讲",
+     "a": 2,
+     "a_ev": "多数句子口语自然，如 l08「想象你蒙着眼站在山坡上，要走到谷底」、l26「坡越缓，每一步挪得越短」；但 l13、l32、l34、l45、l49、l50 句式偏书面或指代不清，其中片尾 l49、l50 按从严必改。",
+     "b": 1,
+     "b_ev": "l02「两个旋钮所有拧法的分数」、l13「合起来这个方向就叫梯度」都需要听完再重新拼意思；l22「主要拧每公里」把省略用得过头了。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "l13「每个旋钮往哪边拧、分数降得最快，合起来这个方向就叫梯度」、l45「第二处，步子更聪明：二零一四年提出的 Adam……」、片尾 l50「只有两个旋钮的一条直线」三句两人都判必改，属于「有问题」而不是小瑕疵；a 的必改条目与 2 分自相矛盾，取 b。但 a 判 l49 必改不成立（见驳回）。"
+    },
+    "V2": {
+     "name": "衔接与过渡",
+     "a": 2,
+     "a_ev": "开场 l01→l07「上一期…那它是怎么走到最低点的？答案叫梯度下降，今天就聊它」顺着思路走，没有目录朗读；片尾 l50「可只有两个旋钮的一条直线，能学会的东西很有限」突然冒出「一条直线」，和 l51 的衔接也生硬。",
+     "b": 1,
+     "b_ev": "l40「只是做了两处改进」接 l41「第一处」，再到 l45「第二处，步子更聪明」，仍是目录式串场；l50「只有两个旋钮的一条直线」突然带入此前没交代的对象。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "片尾 l50 突然带入此前口播从没提过的「一条直线」，再接 l51 预告，属于片尾串场「有点怪」，按从严条目必改；l45「第二处，步子更聪明：」是冒号小标题式串场。b 说 l40「两处改进」→ l41「第一处」是目录朗读，这一点不成立（见驳回），但单凭 l50、l45 就够 1 分。"
+    },
+    "V3": {
+     "name": "一遍听懂",
+     "a": 2,
+     "a_ev": "术语先比喻再命名（l09→l13「梯度」），数字多数好懂；扣分在 l13「这个方向」指代、l32/l34「太小的/太大的」要回头想是什么、l50「一条直线」听众没听过、l45 一句塞了年份+Adam+单独定步子三个新信息。",
+     "b": 1,
+     "b_ev": "l15「是训练前人定好的」容易瞬间听成“前人”；l32「零点零零零五，小十倍」与 l34「零点零二一，大约四倍」连续要求听众记小数、数零、比较倍数。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "l13「这个方向」指代要回头补；l15「是训练前人定好的」只听容易切成「训练／前人」（b 抓到、a 漏了）；l32「零点零零零五，小十倍」、l34「零点零二一，大约四倍」连续要数零、换算倍数；l50「一条直线」此前没交代。多处一遍听不懂，取 b。"
+    },
+    "V4": {
+     "name": "精炼",
+     "a": 2,
+     "a_ev": "整体紧凑；l03「旋钮只有两个，每种拧法都能算一遍，画出整张图」与 l02 意思重叠，l38「所以学习率常常是训练时最要紧的一个设定」和 l39 部分重复，可并句。",
+     "b": 1,
+     "b_ev": "l35「九十六、一百一十八、一百四十五」报完三个数，并没有比“分数越跳越高”多说明什么；l45 的年份、l46「Meta 的 Llama 用它的改版」也可以删。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "只有 l02/l03 部分重叠、l38/l39 可以并句这类小冗余，没有空话。b 要删的 l35「九十六、一百一十八、一百四十五」和 l46「Meta 的 Llama 用它的改版」，屏上都有对应文字（s4「再跳回来更高：96、118、145」、s5「用 Adam，Llama 用改版」），而且给了具体感，不算废话，取 a。"
+    },
+    "V5": {
+     "name": "口吻与节奏",
+     "a": 2,
+     "a_ev": "全程亲切的同一个讲解者，长短句交替（l36「五步就跳出了地图」、l37「合适的那条，稳稳走到了谷底」）；l13（7.6s）、l45（8.3s）一口气念不完，到 l45 突然变得像讲稿。",
+     "b": 1,
+     "b_ev": "l09「地面往哪边斜、斜得多厉害」亲切清楚；到了 l45「二零一四年提出的 Adam，会根据每个旋钮之前的坡」，突然变成介绍资料的口吻，8.3 秒内还塞进了年份、名称、依据和做法。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "整体是同一个亲切的讲解者（l26、l36、l37 短句收束都好），但 l45 有 8.3 秒，塞进年份、名字、依据、做法，突然变成念资料；l43「省下大量计算」、l17「打车数据是示意的」也带图注腔，口吻断了不止一处。a 自己把 l45 的 V5 判为必改，打 2 分不一致，取 b。"
+    },
+    "V6": {
+     "name": "改写",
+     "a": 2,
+     "a_ev": "下面问题表对每个「有点怪/很怪」句都给出不更长的改写；最别扭 5 句排序见整体观察。",
+     "b": 1,
+     "b_ev": "l13「每个旋钮往哪边拧、分数降得最快」、l50「可只有两个旋钮的一条直线」需要重组句子。所有判怪句均在问题表给出不更长的替换；最别扭五句另见整体观察。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "两人对判怪的句子都给了不更长的改写。a 的 l50、l32、l34、l13 改写基本能直接替换；b 的 l13、l12、l16、l51 改写反而更差（见驳回），l45 两人的改写都不理想（a「叫 Adam，二零一四年提出的」缺主语，b「看之前的变化」丢了「坡」），下面补了一版。整体能用，有瑕疵，取 a。"
+    }
+   },
+   "disputes": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6"
+   ],
+   "audits": [],
+   "final_scores": {
+    "V1": 1,
+    "V2": 1,
+    "V3": 1,
+    "V4": 2,
+    "V5": 1,
+    "V6": 2
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "V1",
+     "V2",
+     "V3",
+     "V4",
+     "V5",
+     "V6"
+    ],
+    "prompt": "items/voice_zh__judge.md",
+    "report": "reports/voice_zh__judge.md",
+    "ruling": {
+     "V1": {
+      "score": 1,
+      "evidence": "l13「每个旋钮往哪边拧、分数降得最快，合起来这个方向就叫梯度」、l45「第二处，步子更聪明：二零一四年提出的 Adam……」、片尾 l50「只有两个旋钮的一条直线」三句两人都判必改，属于「有问题」而不是小瑕疵；a 的必改条目与 2 分自相矛盾，取 b。但 a 判 l49 必改不成立（见驳回）。"
+     },
+     "V2": {
+      "score": 1,
+      "evidence": "片尾 l50 突然带入此前口播从没提过的「一条直线」，再接 l51 预告，属于片尾串场「有点怪」，按从严条目必改；l45「第二处，步子更聪明：」是冒号小标题式串场。b 说 l40「两处改进」→ l41「第一处」是目录朗读，这一点不成立（见驳回），但单凭 l50、l45 就够 1 分。"
+     },
+     "V3": {
+      "score": 1,
+      "evidence": "l13「这个方向」指代要回头补；l15「是训练前人定好的」只听容易切成「训练／前人」（b 抓到、a 漏了）；l32「零点零零零五，小十倍」、l34「零点零二一，大约四倍」连续要数零、换算倍数；l50「一条直线」此前没交代。多处一遍听不懂，取 b。"
+     },
+     "V4": {
+      "score": 2,
+      "evidence": "只有 l02/l03 部分重叠、l38/l39 可以并句这类小冗余，没有空话。b 要删的 l35「九十六、一百一十八、一百四十五」和 l46「Meta 的 Llama 用它的改版」，屏上都有对应文字（s4「再跳回来更高：96、118、145」、s5「用 Adam，Llama 用改版」），而且给了具体感，不算废话，取 a。"
+     },
+     "V5": {
+      "score": 1,
+      "evidence": "整体是同一个亲切的讲解者（l26、l36、l37 短句收束都好），但 l45 有 8.3 秒，塞进年份、名字、依据、做法，突然变成念资料；l43「省下大量计算」、l17「打车数据是示意的」也带图注腔，口吻断了不止一处。a 自己把 l45 的 V5 判为必改，打 2 分不一致，取 b。"
+     },
+     "V6": {
+      "score": 2,
+      "evidence": "两人对判怪的句子都给了不更长的改写。a 的 l50、l32、l34、l13 改写基本能直接替换；b 的 l13、l12、l16、l51 改写反而更差（见驳回），l45 两人的改写都不理想（a「叫 Adam，二零一四年提出的」缺主语，b「看之前的变化」丢了「坡」），下面补了一版。整体能用，有瑕疵，取 a。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 45,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_zh__a",
+    "codex/voice_zh__b"
+   ]
+  },
+  {
+   "id": "voice_en",
+   "law": "lines",
+   "law_name": "English narration (native ear, blind)",
+   "color": "#2e6fc0",
+   "scope": [],
+   "checks": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_en.md",
+   "prompt": "items/voice_en__a.md",
+   "what": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "problem": "The previous agenda read 'In this episode: What the problem is. Why memorizing answers fails. A different way to think about learning…' — a table of contents read aloud. No one talks like that (caught by the user, 2026-11-08); earlier reviews missed it.",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "Sounds like a person talking",
+     "question": "Each line: natural / a bit off / clearly off. Written-style, lecture tone, translated-from-Chinese phrasing, telegraphic lists all count as off"
+    },
+    {
+     "id": "V2",
+     "name": "Flow and transitions",
+     "question": "Cold open, the 'what's coming' part, chapter changes, before/after examples: does it sound like one person following a thought, not 'Point one…' templates or a TOC read aloud? Do adjacent lines connect?"
+    },
+    {
+     "id": "V3",
+     "name": "Clear on one hearing",
+     "question": "Ear only: one new idea per line; clear reference ('this' points to something); terms explained before used; numbers and words not misheard"
+    },
+    {
+     "id": "V4",
+     "name": "Tight",
+     "question": "No filler, repetition, or empty truisms; point out lines that could go without losing anything"
+    },
+    {
+     "id": "V5",
+     "name": "Voice and rhythm",
+     "question": "One warm, clear, unpretentious narrator throughout; varied sentence length; each line sayable in one breath"
+    },
+    {
+     "id": "V6",
+     "name": "Rewrites",
+     "question": "For every 'a bit off' / 'clearly off' line, a drop-in rewrite no longer than the original; rank the 5 most awkward lines"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_en__a.md",
+     "prompt": "items/voice_en__a.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "Most of the video sounds spoken (\"Feel again, step again, and you get there\", l11; \"It never saw the whole map. It only felt the ground underfoot\", l29). Written-style lines: l13 \"Which way each knob should turn to drop the score fastest, all together, is the gradient\"; l17 \"the taxi data is illustrative\"; l51 \"lots of little knob-filled units in layers\"."
+      },
+      "V2": {
+       "score": 2,
+       "evidence": "The cold open (l01-l07) and the chapter flow are one person following a thought, with no TOC read aloud. Breaks: l17 \"the taxi data\" appears with no setup; l50 \"a straight line with two knobs\" comes from nowhere; l37 \"The one in between\" does not say which rate; l03 repeats l02."
+      },
+      "V3": {
+       "score": 1,
+       "evidence": "l20-l21 \"The base fare drops the score one point seven ... Both should go up\" is hard to parse on one hearing (what drops? what goes up?); l50 \"a straight line\" is never introduced; l17 \"taxi data\" is never introduced; l35 lists three numbers (ninety-six, a hundred eighteen, a hundred forty-five) in 2.7s; l12/l13 stack abstractions (slope = score change per nudge, gradient = direction for all knobs)."
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "l03 \"With two knobs, you can work out every setting and draw that whole map\" repeats l02. l39 \"Too big... Too small...\" re-says l32-l36 (acceptable as the takeaway). l47 \"one small step at a time\" echoes l10/l14/l48."
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "One warm, plain narrator, with short punchy lines (\"How does it find the bottom?\", l06; \"Five steps in, it's off the map\", l36). Weak spots: l12 and l45 run long, so a breath is needed mid-line. l18 and l34 are dense with numbers."
+      },
+      "V6": {
+       "score": 2,
+       "evidence": "Rewrites are given for every flagged line in the issue table. Top 5 most awkward: l50, l21/l20, l17, l13, l51."
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/voice_en__b.md",
+     "prompt": "items/voice_en__b.md",
+     "scores": {
+      "V1": {
+       "score": 1,
+       "evidence": "l13 “Which way each knob should turn … is the gradient” makes the listener hold a long clause before learning what it means. l20–21 use “per kilometer” as though it names a knob."
+      },
+      "V2": {
+       "score": 1,
+       "evidence": "l07 “and that's today's topic” stalls the opening; l45 “Second, smarter steps: Adam, from twenty fourteen” sounds like presentation notes read aloud. The supplied chapter titles themselves sound natural."
+      },
+      "V3": {
+       "score": 1,
+       "evidence": "l20 makes the base fare itself the thing that drops the score; l35 packs three substantial numbers into 2.7 seconds; l50 introduces “a straight line” without explaining that phrase in this narration."
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "Most lines move the explanation forward, especially l26 and l29. However, l32/l34 repeat exact decimal settings after giving understandable comparisons, and l48 repeats “step” three times."
+      },
+      "V5": {
+       "score": 1,
+       "evidence": "l08–11 have a warm, easy rhythm. That rhythm breaks at l35’s rapid number sequence and l45’s stacked label, name, date, and explanation."
+      },
+      "V6": {
+       "score": 1,
+       "evidence": "l13, l20, and l45 need sentence-level rewrites. Every flagged line has a replacement below, no longer than its original by word count. The five most awkward lines are ranked in the overall observations."
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "Sounds like a person talking",
+     "a": 2,
+     "a_ev": "Most of the video sounds spoken (\"Feel again, step again, and you get there\", l11; \"It never saw the whole map. It only felt the ground underfoot\", l29). Written-style lines: l13 \"Which way each knob should turn to drop the score fastest, all together, is the gradient\"; l17 \"the taxi data is illustrative\"; l51 \"lots of little knob-filled units in layers\".",
+     "b": 1,
+     "b_ev": "l13 “Which way each knob should turn … is the gradient” makes the listener hold a long clause before learning what it means. l20–21 use “per kilometer” as though it names a knob.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b holds up. a's own retell marks l13, l17, l21 and l50 \"clearly off\" and puts six 必改 rows under V1/V3, which does not fit a score of 2. l13 (the core definition, with the subject held to the end and \"all together\" left dangling), l20 (the \"raise\" action is missing, and \"per kilometer\" is used as a knob name) and the outro teaser l51 \"little knob-filled units in layers\" are all real written-style or compressed-label lines."
+    },
+    "V2": {
+     "name": "Flow and transitions",
+     "a": 2,
+     "a_ev": "The cold open (l01-l07) and the chapter flow are one person following a thought, with no TOC read aloud. Breaks: l17 \"the taxi data\" appears with no setup; l50 \"a straight line with two knobs\" comes from nowhere; l37 \"The one in between\" does not say which rate; l03 repeats l02.",
+     "b": 1,
+     "b_ev": "l07 “and that's today's topic” stalls the opening; l45 “Second, smarter steps: Adam, from twenty fourteen” sounds like presentation notes read aloud. The supplied chapter titles themselves sound natural.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b holds up, and the strict items make it a 1. The cold open l07 \"and that's today's topic\" turns into an episode announcement. The linking line l45 \"Second, smarter steps:\" reads a heading aloud (a also flagged it, only as 建议; it has to be 必改). The outro link l50 \"a straight line with two knobs\" comes out of nowhere. The chapter card \"How big models train\" right after \"How big a step?\" is a garden path (a is right here; b's claim that every title sounds natural does not hold). The chapter 3 opener l30 has a broken \"so\" link (see 补充)."
+    },
+    "V3": {
+     "name": "Clear on one hearing",
+     "a": 1,
+     "a_ev": "l20-l21 \"The base fare drops the score one point seven ... Both should go up\" is hard to parse on one hearing (what drops? what goes up?); l50 \"a straight line\" is never introduced; l17 \"taxi data\" is never introduced; l35 lists three numbers (ninety-six, a hundred eighteen, a hundred forty-five) in 2.7s; l12/l13 stack abstractions (slope = score change per nudge, gradient = direction for all knobs).",
+     "b": 1,
+     "b_ev": "l20 makes the base fare itself the thing that drops the score; l35 packs three substantial numbers into 2.7 seconds; l50 introduces “a straight line” without explaining that phrase in this narration.",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "V4": {
+     "name": "Tight",
+     "a": 2,
+     "a_ev": "l03 \"With two knobs, you can work out every setting and draw that whole map\" repeats l02. l39 \"Too big... Too small...\" re-says l32-l36 (acceptable as the takeaway). l47 \"one small step at a time\" echoes l10/l14/l48.",
+     "b": 2,
+     "b_ev": "Most lines move the explanation forward, especially l26 and l29. However, l32/l34 repeat exact decimal settings after giving understandable comparisons, and l48 repeats “step” three times.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "I agree with both reviewers that most lines move the explanation forward (l26 and l29 especially). Both missed two problems. In the cold open, l03 and l04 say \"draw that whole map\" and \"no drawing the whole map\" in consecutive lines, and l02 already said it, so the opening states the same point three times. l08 re-pictures the l05 blindfold image right after the title card. Both are 补充 below, and under the strict rule the l03–l04 one counts as 必改."
+    },
+    "V5": {
+     "name": "Voice and rhythm",
+     "a": 2,
+     "a_ev": "One warm, plain narrator, with short punchy lines (\"How does it find the bottom?\", l06; \"Five steps in, it's off the map\", l36). Weak spots: l12 and l45 run long, so a breath is needed mid-line. l18 and l34 are dense with numbers.",
+     "b": 1,
+     "b_ev": "l08–11 have a warm, easy rhythm. That rhythm breaks at l35’s rapid number sequence and l45’s stacked label, name, date, and explanation.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "a holds up. One warm narrator throughout, and sentence length varies well: l06 2.3s, l11 3.1s, l24 2.7s and l36 2.7s against l18 7.7s and l34 7.7s. The long lines all have comma breaks where a breath fits. b's evidence (l35 runs three numbers in 2.7s, l45 stacks label, name and year) is real, but it is a local problem already scored under V1/V2/V3. It does not break the voice, so it does not drop this dimension to 1."
+    },
+    "V6": {
+     "name": "Rewrites",
+     "a": 2,
+     "a_ev": "Rewrites are given for every flagged line in the issue table. Top 5 most awkward: l50, l21/l20, l17, l13, l51.",
+     "b": 1,
+     "b_ev": "l13, l20, and l45 need sentence-level rewrites. Every flagged line has a replacement below, no longer than its original by word count. The five most awkward lines are ranked in the overall observations.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "Several lines need sentence-level rewrites (l13, l20, l45, l50, l51), and the rewrites the two reviewers offer are not all drop-in. a's l17 (13 words against 11) and l37 are longer than the originals. a's l45 keeps the \"Second, smarter steps:\" heading it flagged. b's l02, l07, l13 and l45 rewrites are worse (see 驳回). The rewrites cannot go in without another pass."
+    }
+   },
+   "disputes": [
+    "V1",
+    "V2",
+    "V5",
+    "V6"
+   ],
+   "audits": [
+    "V4"
+   ],
+   "final_scores": {
+    "V1": 1,
+    "V2": 1,
+    "V3": 1,
+    "V4": 2,
+    "V5": 2,
+    "V6": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "V1",
+     "V2",
+     "V5",
+     "V6",
+     "V4"
+    ],
+    "prompt": "items/voice_en__judge.md",
+    "report": "reports/voice_en__judge.md",
+    "ruling": {
+     "V1": {
+      "score": 1,
+      "evidence": "b holds up. a's own retell marks l13, l17, l21 and l50 \"clearly off\" and puts six 必改 rows under V1/V3, which does not fit a score of 2. l13 (the core definition, with the subject held to the end and \"all together\" left dangling), l20 (the \"raise\" action is missing, and \"per kilometer\" is used as a knob name) and the outro teaser l51 \"little knob-filled units in layers\" are all real written-style or compressed-label lines."
+     },
+     "V2": {
+      "score": 1,
+      "evidence": "b holds up, and the strict items make it a 1. The cold open l07 \"and that's today's topic\" turns into an episode announcement. The linking line l45 \"Second, smarter steps:\" reads a heading aloud (a also flagged it, only as 建议; it has to be 必改). The outro link l50 \"a straight line with two knobs\" comes out of nowhere. The chapter card \"How big models train\" right after \"How big a step?\" is a garden path (a is right here; b's claim that every title sounds natural does not hold). The chapter 3 opener l30 has a broken \"so\" link (see 补充)."
+     },
+     "V5": {
+      "score": 2,
+      "evidence": "a holds up. One warm narrator throughout, and sentence length varies well: l06 2.3s, l11 3.1s, l24 2.7s and l36 2.7s against l18 7.7s and l34 7.7s. The long lines all have comma breaks where a breath fits. b's evidence (l35 runs three numbers in 2.7s, l45 stacks label, name and year) is real, but it is a local problem already scored under V1/V2/V3. It does not break the voice, so it does not drop this dimension to 1."
+     },
+     "V6": {
+      "score": 1,
+      "evidence": "Several lines need sentence-level rewrites (l13, l20, l45, l50, l51), and the rewrites the two reviewers offer are not all drop-in. a's l17 (13 words against 11) and l37 are longer than the originals. a's l45 keeps the \"Second, smarter steps:\" heading it flagged. b's l02, l07, l13 and l45 rewrites are worse (see 驳回). The rewrites cannot go in without another pass."
+     },
+     "V4": {
+      "score": 2,
+      "evidence": "I agree with both reviewers that most lines move the explanation forward (l26 and l29 especially). Both missed two problems. In the cold open, l03 and l04 say \"draw that whole map\" and \"no drawing the whole map\" in consecutive lines, and l02 already said it, so the opening states the same point three times. l08 re-pictures the l05 blindfold image right after the title card. Both are 补充 below, and under the strict rule the l03–l04 one counts as 必改."
+     }
+    }
+   },
+   "findings": {},
+   "rows": 40,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_en__a",
+    "codex/voice_en__b"
+   ]
+  },
+  {
+   "id": "screen_zh",
+   "law": "lines",
+   "law_name": "中文屏幕文字（PPT 式画面）",
+   "color": "#b8860b",
+   "scope": [],
+   "checks": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "how": "硬上限（超了必须报）：标题 ≤12 字；其余每块 ≤16 字；同屏文字块 ≤4 块（不含页眉小标签、出处与图表刻度）；一屏总字数 ≤36 字。屏幕下方还有口播字幕，观众要同时看。计数口径（第 2 轮裁决定，2026-11-09）：页眉小标签、案例页签、出处、片尾署名不计；同构的列表 / 表格 / 卡片行（每项 ≤8 字、最多 6 项、样子一样）合算 1 块，编号不计字；图里的文字（区域名、曲线名、轴标题、柱条标签、图上注释）要计字数，整张图合算 1 块，只有坐标刻度数字豁免；表格的列头算在表里。",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_zh.md",
+   "prompt": "items/screen_zh__a.md",
+   "what": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "problem": "上一版屏幕文字很多是整句（如「另训一个模型，在两家医院的片子上认医院的准确率——胸片里藏着医院的“指纹”」），等于把口播又印了一遍；用户要求画面只列纲要、相对简练（2026-11-08）。",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "只列纲要",
+     "question": "每屏只放关键词、短语、关键数字、标签；不是口播整句的复述。按硬上限逐屏数字数，超了就报"
+    },
+    {
+     "id": "P2",
+     "name": "与口播分工",
+     "question": "屏幕给结构、数字、对比，口播负责解释；不和口播逐字重复，也不出现口播没说过的新说法；术语、叫法与口播一致"
+    },
+    {
+     "id": "P3",
+     "name": "层级与体例",
+     "question": "一眼先看到什么、第二眼看什么；标题—要点—注释不超过三级；编号、标签、章节名、目录项前后一致（例：目录写的和章节卡写的是不是同一个说法）"
+    },
+    {
+     "id": "P4",
+     "name": "中文措辞与排版",
+     "question": "短语化、不带句末句号；标点、引号、空格规范；不半中半英；**标题、章名读出来要顺**：名词堆砌、生造的名词短语（如「现实里的祸」）算必改"
+    },
+    {
+     "id": "P5",
+     "name": "看得完",
+     "question": "按截图和停留时间：文字量在停留时间内读得完（约 6 字/秒，还要分神看字幕和图）"
+    },
+    {
+     "id": "P6",
+     "name": "改写",
+     "question": "每处超限或不顺的屏幕文字，都给出更短、可直接替换的写法"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_zh__a.md",
+     "prompt": "items/screen_zh__a.md",
+     "scores": {
+      "P1": {
+       "score": 2,
+       "evidence": "多数屏只有关键词，如 l41「每步只看一小批」、l47「1750 亿个旋钮」；但 l20 加上图内文字约 39 字（材料 27 + 轴标题 8 + 分数/步数 4），超 36；l38 材料计 37 字，超 36。"
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "分工大体对，如 l12「拧一点 → 分变多少」只给结构；但 l24「谷底：又长又缓的沟」、l26「坡越缓，步子越短」、l29「只看脚下，没看全图」与口播近乎逐字重复；l42「每步随机抽 3 趟」的「3 趟」口播没说过；l14 口播已是「梯度下降」，屏幕仍写「梯度 gradient」。"
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "章节名「蒙着眼下山 / 做个小实验 / 步子迈多大 / 大模型怎么训练」与页眉「01–04」前后一致；但 l13「梯度 gradient」只在 22px 小标签里，大字是「分降得最快的方向」，刚定义的新术语不是第一眼；l10「往最陡的下坡」与片尾「往最陡处下山」说法不一。"
+      },
+      "P4": {
+       "score": 1,
+       "evidence": "l04「几千亿个：画不出」缺量词对象，读着断；「最低点 = 最好」把等号放进标题；l44「≈ 十万分之一」+「的训练数据」一句话拆成两级，第二行以「的」开头，读着别扭。开场属从严条目，必改。"
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "l18–l29 每屏 20 多个字加图，停留 2–6 秒，l20（5.4s）要同时看 2 个旋钮、分数、两行增减值、地形图，读不完；l38（4.1s）约 37 字加三格图，偏紧。其余屏文字少，读得完。"
+      },
+      "P6": {
+       "score": 2,
+       "evidence": "下面问题表对每处超限和不顺的地方都给了替换文字；l36 圆圈编号 1–5 在屏上无解释，只能靠口播，改写栏给不出，所以记为存疑，不给满分。"
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/screen_zh__b.md",
+     "prompt": "items/screen_zh__b.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "逐屏核算后，l20、l21 各至少39字；l38、l39 各37字；l42、l43 的图表文字合计19字，超过单块16字。不能沿用材料中排除图表的合计。"
+      },
+      "P2": {
+       "score": 1,
+       "evidence": "l43 口播说“谷底附近”，屏幕却写“也到谷底”，删掉了关键限定；l42 的“3趟”也没有对应口播交代。"
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "四章名称与页眉一致，“太小／合适／太大”三栏对比清楚；但 l15 讲学习率时仍保留“拧一小步／再看坡／再拧”，旧说明继续争抢注意力。"
+      },
+      "P4": {
+       "score": 1,
+       "evidence": "l38 的收束标题“学习率：常常最要紧”像压缩残句；l10“往最陡的下坡”介词悬着，独立读不顺。四个章节卡标题本身自然。"
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "l11“再探，再迈”4字、3.3秒，l26 新增结论7字、2.2秒，均可读完；但包装卡没有截图和逐项显隐时间，不能确认片尾17字如何分块、何时让位给下一期预告。"
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "下表对 l20、l38、l42 的超限、l43 的限定丢失及片尾长块均给出可直接替换的短写法，并说明需要撤下的旧文字。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "只列纲要",
+     "a": 2,
+     "a_ev": "多数屏只有关键词，如 l41「每步只看一小批」、l47「1750 亿个旋钮」；但 l20 加上图内文字约 39 字（材料 27 + 轴标题 8 + 分数/步数 4），超 36；l38 材料计 37 字，超 36。",
+     "b": 1,
+     "b_ev": "逐屏核算后，l20、l21 各至少39字；l38、l39 各37字；l42、l43 的图表文字合计19字，超过单块16字。不能沿用材料中排除图表的合计。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "l20 截图里能看到两轴标题「每公里（元）」「起步价（元）」共 8 字，以及「分数」「步数」4 字，加上材料计的 27 字，一共 39 字，超过 36 字（l21 同屏）；l38 材料计 37 字，也超 36（l39 同屏）。两处都超硬上限，a 自己的问题表也标了必改，给 2 分前后矛盾，采 b。b 说 l42/l43 图表文字 19 字，按「曲线名计入图表、整图合算 1 块」的口径算是成立的（轴标题 8 字 + 图例「一小批算坡」「全部数据算坡」11 字 > 16 字）。"
+    },
+    "P2": {
+     "name": "与口播分工",
+     "a": 2,
+     "a_ev": "分工大体对，如 l12「拧一点 → 分变多少」只给结构；但 l24「谷底：又长又缓的沟」、l26「坡越缓，步子越短」、l29「只看脚下，没看全图」与口播近乎逐字重复；l42「每步随机抽 3 趟」的「3 趟」口播没说过；l14 口播已是「梯度下降」，屏幕仍写「梯度 gradient」。",
+     "b": 1,
+     "b_ev": "l43 口播说“谷底附近”，屏幕却写“也到谷底”，删掉了关键限定；l42 的“3趟”也没有对应口播交代。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "l43 屏幕写「歪歪扭扭，也到谷底」，口播 l43 说的是「最后也到了谷底附近」。s5.html 第 74 行的源注释本来也写着「也到谷底附近」。截图里紫点停在绿色最低点旁边，没有重合，所以屏幕把「接近」说成了「到达」，和口播矛盾，算必改。l42 大字「每步随机抽 3 趟」，口播没说过「3 趟」，同屏图例又叫「一小批」，一个东西两种叫法。采 b。a 举的 l24/l26/l29 是口播压缩后的短语，不是逐字重复，只够建议。"
+    },
+    "P3": {
+     "name": "层级与体例",
+     "a": 2,
+     "a_ev": "章节名「蒙着眼下山 / 做个小实验 / 步子迈多大 / 大模型怎么训练」与页眉「01–04」前后一致；但 l13「梯度 gradient」只在 22px 小标签里，大字是「分降得最快的方向」，刚定义的新术语不是第一眼；l10「往最陡的下坡」与片尾「往最陡处下山」说法不一。",
+     "b": 2,
+     "b_ev": "四章名称与页眉一致，“太小／合适／太大”三栏对比清楚；但 l15 讲学习率时仍保留“拧一小步／再看坡／再拧”，旧说明继续争抢注意力。",
+     "verdict": "抽查",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": "两人都只看到局部。第一，术语屏的层级是成批倒置的：l13「梯度」、l15「学习率」、l42「随机梯度下降」都是口播里正式立名的术语，屏幕上却都放在 22px 眉标里，大字是解释。a 只抓了 l13，b 一处没抓。第二，l40 给的「改进 ①」「改进 ②」编号，到 l42 和 l45 就断了（l45 截图眉标是「KINGMA 和 BA · 2014」），口播 l45 说「第二处，步子更聪明」，屏幕上既没有 ② 也没有「步子更聪明」。第三，片尾「往最陡处下山」和 l10「往最陡的下坡」说法不一。片尾属于从严条目，a 只记了建议，应升为必改。"
+    },
+    "P4": {
+     "name": "中文措辞与排版",
+     "a": 1,
+     "a_ev": "l04「几千亿个：画不出」缺量词对象，读着断；「最低点 = 最好」把等号放进标题；l44「≈ 十万分之一」+「的训练数据」一句话拆成两级，第二行以「的」开头，读着别扭。开场属从严条目，必改。",
+     "b": 1,
+     "b_ev": "l38 的收束标题“学习率：常常最要紧”像压缩残句；l10“往最陡的下坡”介词悬着，独立读不顺。四个章节卡标题本身自然。",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "P5": {
+     "name": "看得完",
+     "a": 2,
+     "a_ev": "l18–l29 每屏 20 多个字加图，停留 2–6 秒，l20（5.4s）要同时看 2 个旋钮、分数、两行增减值、地形图，读不完；l38（4.1s）约 37 字加三格图，偏紧。其余屏文字少，读得完。",
+     "b": 2,
+     "b_ev": "l11“再探，再迈”4字、3.3秒，l26 新增结论7字、2.2秒，均可读完；但包装卡没有截图和逐项显隐时间，不能确认片尾17字如何分块、何时让位给下一期预告。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "维持 2 分，但 a 的论据说重了。l20 的文字从 l18 起逐步加上，到 l20 才新出现的只有两行增减值，共 10 字，并且要一直留到 l21，合计 9.1 秒。l38 新出现的只有标题 8 字，三栏是 l31–l37 逐格加上的，留到 l39，合计 6.9 秒。两处都读得完。最紧的是 l36（1.7 秒）：「飞出地图」4 字加 224，再加 ②–⑤ 圆圈，勉强能看完。片尾 22 秒、两行字，按时长读得完，但没有截图，分块没法核实，这一点同意 b。"
+    },
+    "P6": {
+     "name": "改写",
+     "a": 2,
+     "a_ev": "下面问题表对每处超限和不顺的地方都给了替换文字；l36 圆圈编号 1–5 在屏上无解释，只能靠口播，改写栏给不出，所以记为存疑，不给满分。",
+     "b": 3,
+     "b_ev": "下表对 l20、l38、l42 的超限、l43 的限定丢失及片尾长块均给出可直接替换的短写法，并说明需要撤下的旧文字。",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    }
+   },
+   "disputes": [
+    "P1",
+    "P2"
+   ],
+   "audits": [
+    "P5",
+    "P3"
+   ],
+   "final_scores": {
+    "P1": 1,
+    "P2": 1,
+    "P3": 1,
+    "P4": 1,
+    "P5": 2,
+    "P6": 2
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "P1",
+     "P2",
+     "P5",
+     "P3"
+    ],
+    "prompt": "items/screen_zh__judge.md",
+    "report": "reports/screen_zh__judge.md",
+    "ruling": {
+     "P1": {
+      "score": 1,
+      "evidence": "l20 截图里能看到两轴标题「每公里（元）」「起步价（元）」共 8 字，以及「分数」「步数」4 字，加上材料计的 27 字，一共 39 字，超过 36 字（l21 同屏）；l38 材料计 37 字，也超 36（l39 同屏）。两处都超硬上限，a 自己的问题表也标了必改，给 2 分前后矛盾，采 b。b 说 l42/l43 图表文字 19 字，按「曲线名计入图表、整图合算 1 块」的口径算是成立的（轴标题 8 字 + 图例「一小批算坡」「全部数据算坡」11 字 > 16 字）。"
+     },
+     "P2": {
+      "score": 1,
+      "evidence": "l43 屏幕写「歪歪扭扭，也到谷底」，口播 l43 说的是「最后也到了谷底附近」。s5.html 第 74 行的源注释本来也写着「也到谷底附近」。截图里紫点停在绿色最低点旁边，没有重合，所以屏幕把「接近」说成了「到达」，和口播矛盾，算必改。l42 大字「每步随机抽 3 趟」，口播没说过「3 趟」，同屏图例又叫「一小批」，一个东西两种叫法。采 b。a 举的 l24/l26/l29 是口播压缩后的短语，不是逐字重复，只够建议。"
+     },
+     "P5": {
+      "score": 2,
+      "evidence": "维持 2 分，但 a 的论据说重了。l20 的文字从 l18 起逐步加上，到 l20 才新出现的只有两行增减值，共 10 字，并且要一直留到 l21，合计 9.1 秒。l38 新出现的只有标题 8 字，三栏是 l31–l37 逐格加上的，留到 l39，合计 6.9 秒。两处都读得完。最紧的是 l36（1.7 秒）：「飞出地图」4 字加 224，再加 ②–⑤ 圆圈，勉强能看完。片尾 22 秒、两行字，按时长读得完，但没有截图，分块没法核实，这一点同意 b。"
+     },
+     "P3": {
+      "score": 1,
+      "evidence": "两人都只看到局部。第一，术语屏的层级是成批倒置的：l13「梯度」、l15「学习率」、l42「随机梯度下降」都是口播里正式立名的术语，屏幕上却都放在 22px 眉标里，大字是解释。a 只抓了 l13，b 一处没抓。第二，l40 给的「改进 ①」「改进 ②」编号，到 l42 和 l45 就断了（l45 截图眉标是「KINGMA 和 BA · 2014」），口播 l45 说「第二处，步子更聪明」，屏幕上既没有 ② 也没有「步子更聪明」。第三，片尾「往最陡处下山」和 l10「往最陡的下坡」说法不一。片尾属于从严条目，a 只记了建议，应升为必改。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 35,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_zh__a",
+    "codex/screen_zh__b"
+   ]
+  },
+  {
+   "id": "screen_en",
+   "law": "lines",
+   "law_name": "English on-screen text (slides)",
+   "color": "#6b4fc0",
+   "scope": [],
+   "checks": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "how": "Hard limits (report every breach): title ≤6 words; any other block ≤9 words; ≤4 text blocks per screen (not counting the small eyebrow label, source line or chart ticks); ≤22 words per screen. Narration subtitles also sit at the bottom of the frame. Counting rules (round-2 ruling, 2026-11-09): eyebrow labels, case tabs, source lines and end-card credits are exempt; a list, table or card row of look-alike items (each ≤6 words, at most 6 items) counts as one block, and numbering doesn't count as words; in-chart text (zone names, curve names, axis titles, bar labels, callouts) counts toward words and the whole chart counts as one block — only axis tick numbers are exempt; a table's column headers count with the table.",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_en.md",
+   "prompt": "items/screen_en__a.md",
+   "what": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "problem": "The previous version put full sentences on screen (e.g. 'A separate model identified the hospital for scans from two hospitals — a hospital fingerprint'), repeating the narration. The user wants outline-only, concise slides (2026-11-08).",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "Outline, not prose",
+     "question": "Only keywords, short phrases, key numbers, labels; no full narration sentences. Count words per screen against the hard limits"
+    },
+    {
+     "id": "P2",
+     "name": "Divided from narration",
+     "question": "Screen carries structure, numbers, contrasts; narration explains. No verbatim repetition, no new claims the narration doesn't make; terms match the narration"
+    },
+    {
+     "id": "P3",
+     "name": "Hierarchy and consistency",
+     "question": "What reads first, second; ≤3 levels (title, point, note); numbering, labels, chapter names and agenda items consistent with each other"
+    },
+    {
+     "id": "P4",
+     "name": "Native phrasing and style",
+     "question": "Sentence case headline style; no Chinglish; consistent punctuation (no trailing periods on fragments), en dashes, quotes; parallel grammar in lists; **chapter titles and headings must read naturally aloud** — awkward noun stacks are must-fix"
+    },
+    {
+     "id": "P5",
+     "name": "Readable in time",
+     "question": "From the screenshot and how long it stays: readable in time (~3 words/s while also reading subtitles and the chart)"
+    },
+    {
+     "id": "P6",
+     "name": "Rewrites",
+     "question": "For every breach or awkward phrase, a shorter drop-in rewrite"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_en__a.md",
+     "prompt": "items/screen_en__a.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "Hard limits broken on two screens. l20 (6.2s) carries about 23 counted words (chart 7 + knobs 6 + 78/0 + the two delta rows \"Base fare +$0.10 −1.7\" / \"Per km +$0.10 −11.2\" = 8). l38 carries 26 words (title 4 + three panel heads 9 + three result lines 13, including \"Score\" x3). Otherwise titles are all ≤6 words and blocks ≤9 words; most screens are real outlines (l11 \"Feel, step, repeat\", l46 table). Outro card is sentence-like."
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "Division of labour is mostly good (numbers, contrasts, labels on screen). Near-verbatim echoes: l24 \"The floor: a long, gentle trench\" vs narration \"The floor is a long, gentle trench\"; l47 \"Turned one small step at a time\" vs \"one small step at a time\"; l45 \"Each knob gets its own step size\" vs \"gives each knob its own step size\"; outro \"Feel for the steepest way down\" is l48 word for word. l04 \"Billions: no map\" understates \"hundreds of billions of knobs\"."
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "Chapter numbering 01–04 and eyebrows are consistent, and ≤3 levels hold. But the defined terms \"The gradient\" (l13) and \"The learning rate\" (l15) appear only as a 22px eyebrow while a paraphrase is the h1 (\"Fastest way down\", \"How big each step\"), so the term being taught reads last. l40 \"Upgrade ①/②\" circled numerals clash with \"01–04\" chapter numbering. \"Score\" caption is repeated three times in l34–l38."
+      },
+      "P4": {
+       "score": 1,
+       "evidence": "Strict items. Chapter title \"How big models train\" garden-paths (reads as \"how big models...\"). Chapter card \"Downhill, blindfolded\" is a fragment, not a natural spoken title. Cold open l04 \"Billions: no map\" lacks its noun and l01 \"Lower is better\" vs l02 \"Lowest = best\" mixes \"is\" and \"=\". Outro lines are not parallel (\"Feel for the steepest way down\" is an imperative; \"Step size is the learning rate\" is a sentence). l23 \"Into the valley in 3\" is clipped (\"3\" what?). l30 \"What if it's wrong?\" has no antecedent on screen. l40 \"A small batch per step\" / \"Smarter steps\" not parallel."
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "Screens in s2 and s0 are light and readable (l09–l11 at 6 words in 3 to 6s). Overloaded: l20 (23 words in 6.2s plus chart), l38 (26 words in 5.4s; most of it persists from l36/l37, so only the title is new). Subtitles sit at the bottom, and l37/l38 panels end at about y=880 of 1080, which is tight. Chapter-card and outro screenshots are not provided, so their timing is unchecked."
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "Every row in the issue table has a drop-in rewrite, checked against the word limits (for example l38 rewrite totals 22 words; l20 rewrite totals 19)."
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/screen_en__b.md",
+     "prompt": "items/screen_en__b.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "l20–l21 contain 23 counted words after restoring chart text; l38–l39 contain 26 even excluding step numbering. l45 retains a complete explanatory sentence."
+      },
+      "P2": {
+       "score": 1,
+       "evidence": "l33–l39 add “Still halfway,” whereas narration says “still far from the bottom.” l45 and the outro repeat explanations already delivered aloud."
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "The four supplied chapter titles match their scene labels, and l40 clearly separates two upgrades. At l38, retained outcome captions compete with the new headline."
+      },
+      "P4": {
+       "score": 1,
+       "evidence": "l15 “How big each step” sounds unfinished; cold-open l06 “How to find the bottom?” is an awkward question-heading construction."
+      },
+      "P5": {
+       "score": 1,
+       "evidence": "In s0_l04–s0_l07, “Per km ($)” becomes almost invisible against the faded map. Package-card layout and final subtitle interaction cannot be verified from the supplied images."
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "Every issue below includes replacement wording, including “Step size,” “Valley in 3 steps,” and a shorter, structured outro."
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "Outline, not prose",
+     "a": 1,
+     "a_ev": "Hard limits broken on two screens. l20 (6.2s) carries about 23 counted words (chart 7 + knobs 6 + 78/0 + the two delta rows \"Base fare +$0.10 −1.7\" / \"Per km +$0.10 −11.2\" = 8). l38 carries 26 words (title 4 + three panel heads 9 + three result lines 13, including \"Score\" x3). Otherwise titles are all ≤6 words and blocks ≤9 words; most screens are real outlines (l11 \"Feel, step, repeat\", l46 table). Outro card is sentence-like.",
+     "b": 1,
+     "b_ev": "l20–l21 contain 23 counted words after restoring chart text; l38–l39 contain 26 even excluding step numbering. l45 retains a complete explanatory sentence.",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "P2": {
+     "name": "Divided from narration",
+     "a": 2,
+     "a_ev": "Division of labour is mostly good (numbers, contrasts, labels on screen). Near-verbatim echoes: l24 \"The floor: a long, gentle trench\" vs narration \"The floor is a long, gentle trench\"; l47 \"Turned one small step at a time\" vs \"one small step at a time\"; l45 \"Each knob gets its own step size\" vs \"gives each knob its own step size\"; outro \"Feel for the steepest way down\" is l48 word for word. l04 \"Billions: no map\" understates \"hundreds of billions of knobs\".",
+     "b": 1,
+     "b_ev": "l33–l39 add “Still halfway,” whereas narration says “still far from the bottom.” l45 and the outro repeat explanations already delivered aloud.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 站得住。严格项里有贴着口播的问题，按规则都算必改：outro 的 \"Feel for the steepest way down\" 与 l48 逐字相同（a 自己在证据里也写了），冷开场 l04 的 \"Billions: no map\" 和口播 \"hundreds of billions of knobs\" 对不上（zh 版写的是\"几千亿个\"）。另外 l33–l39 的 \"Still halfway\" 是口播没说过的量化判断（口播只说 \"still far from the bottom\"）；从 s4_l38 看路径终点只在几何上大约走了一半，按分数是从 78 降到 5.5，基本到了底，所以这个词会误导。l24、l45、l47 近乎逐字重复口播，两位都列了。a 列出了必改证据却给 2 分，前后矛盾。"
+    },
+    "P3": {
+     "name": "Hierarchy and consistency",
+     "a": 2,
+     "a_ev": "Chapter numbering 01–04 and eyebrows are consistent, and ≤3 levels hold. But the defined terms \"The gradient\" (l13) and \"The learning rate\" (l15) appear only as a 22px eyebrow while a paraphrase is the h1 (\"Fastest way down\", \"How big each step\"), so the term being taught reads last. l40 \"Upgrade ①/②\" circled numerals clash with \"01–04\" chapter numbering. \"Score\" caption is repeated three times in l34–l38.",
+     "b": 2,
+     "b_ev": "The four supplied chapter titles match their scene labels, and l40 clearly separates two upgrades. At l38, retained outcome captions compete with the new headline.",
+     "verdict": "抽查",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": "两人都漏了章节标题的一致性。第 03 章 \"How big a step?\" 和第 04 章 \"How big models train\" 是相邻章，都以 \"How big\" 开头，意思却不同（前者问步子大小，后者的 big 修饰 models），l15 的 h1 \"How big each step\" 又是一个 \"How big\"。连着看，04 很容易被读成第三个\"多大\"的问题。这是严格项（章节标题），必改。a 指出了 l13/l15 术语只出现在小号 eyebrow、Upgrade ①② 与 01–04 编号体系冲突，这两条成立。"
+    },
+    "P4": {
+     "name": "Native phrasing and style",
+     "a": 1,
+     "a_ev": "Strict items. Chapter title \"How big models train\" garden-paths (reads as \"how big models...\"). Chapter card \"Downhill, blindfolded\" is a fragment, not a natural spoken title. Cold open l04 \"Billions: no map\" lacks its noun and l01 \"Lower is better\" vs l02 \"Lowest = best\" mixes \"is\" and \"=\". Outro lines are not parallel (\"Feel for the steepest way down\" is an imperative; \"Step size is the learning rate\" is a sentence). l23 \"Into the valley in 3\" is clipped (\"3\" what?). l30 \"What if it's wrong?\" has no antecedent on screen. l40 \"A small batch per step\" / \"Smarter steps\" not parallel.",
+     "b": 1,
+     "b_ev": "l15 “How big each step” sounds unfinished; cold-open l06 “How to find the bottom?” is an awkward question-heading construction.",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "P5": {
+     "name": "Readable in time",
+     "a": 2,
+     "a_ev": "Screens in s2 and s0 are light and readable (l09–l11 at 6 words in 3 to 6s). Overloaded: l20 (23 words in 6.2s plus chart), l38 (26 words in 5.4s; most of it persists from l36/l37, so only the title is new). Subtitles sit at the bottom, and l37/l38 panels end at about y=880 of 1080, which is tight. Chapter-card and outro screenshots are not provided, so their timing is unchecked.",
+     "b": 1,
+     "b_ev": "In s0_l04–s0_l07, “Per km ($)” becomes almost invisible against the faded map. Package-card layout and final subtitle interaction cannot be verified from the supplied images.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 站得住。s0_l04、s0_l06 截图里，纵轴标题 \"Per km ($)\" 被雾层盖成几乎看不见的残影（s0.html 里 fog 盖住了整个 svg，轴标题在图内），刻度 1–4 和 \"Base fare ($)\" 却照常显示。冷开场是严格项，这一条算必改。a 的 l38 \"26 words in 5.4s\" 不能作为超时证据：三栏是 l31 起逐屏累积的，l38 只新加了 4 词标题，而且 l39 不换屏再停 5.0s。l20 也一样，新增的只有两行增量（8 词，停 6.2+3.8s）。a 担心底栏字幕可能撞到 y≈880 的分数行，这一点作为存疑保留。另有 s5_l40 卡片标题折行，\"step\" 单独落在第二行（见补充）。"
+    },
+    "P6": {
+     "name": "Rewrites",
+     "a": 3,
+     "a_ev": "Every row in the issue table has a drop-in rewrite, checked against the word limits (for example l38 rewrite totals 22 words; l20 rewrite totals 19).",
+     "b": 3,
+     "b_ev": "Every issue below includes replacement wording, including “Step size,” “Valley in 3 steps,” and a shorter, structured outro.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "每条问题都附了改写，但有几条改写比原文差或引入新术语：b 的 l38 \"Diverging\"/\"Near minimum\"、l45 \"Step sizes by knob\"、l22 \"Larger turn: per km\"、l09 \"Slope underfoot\"、l43 \"Wobbly but effective\"，a 的 l23 \"In the valley in 3 steps\"（in…in 重复），详见「驳回」。不能给满分。"
+    }
+   },
+   "disputes": [
+    "P2",
+    "P5"
+   ],
+   "audits": [
+    "P3",
+    "P6"
+   ],
+   "final_scores": {
+    "P1": 1,
+    "P2": 1,
+    "P3": 1,
+    "P4": 1,
+    "P5": 1,
+    "P6": 2
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "P2",
+     "P5",
+     "P3",
+     "P6"
+    ],
+    "prompt": "items/screen_en__judge.md",
+    "report": "reports/screen_en__judge.md",
+    "ruling": {
+     "P2": {
+      "score": 1,
+      "evidence": "b 站得住。严格项里有贴着口播的问题，按规则都算必改：outro 的 \"Feel for the steepest way down\" 与 l48 逐字相同（a 自己在证据里也写了），冷开场 l04 的 \"Billions: no map\" 和口播 \"hundreds of billions of knobs\" 对不上（zh 版写的是\"几千亿个\"）。另外 l33–l39 的 \"Still halfway\" 是口播没说过的量化判断（口播只说 \"still far from the bottom\"）；从 s4_l38 看路径终点只在几何上大约走了一半，按分数是从 78 降到 5.5，基本到了底，所以这个词会误导。l24、l45、l47 近乎逐字重复口播，两位都列了。a 列出了必改证据却给 2 分，前后矛盾。"
+     },
+     "P5": {
+      "score": 1,
+      "evidence": "b 站得住。s0_l04、s0_l06 截图里，纵轴标题 \"Per km ($)\" 被雾层盖成几乎看不见的残影（s0.html 里 fog 盖住了整个 svg，轴标题在图内），刻度 1–4 和 \"Base fare ($)\" 却照常显示。冷开场是严格项，这一条算必改。a 的 l38 \"26 words in 5.4s\" 不能作为超时证据：三栏是 l31 起逐屏累积的，l38 只新加了 4 词标题，而且 l39 不换屏再停 5.0s。l20 也一样，新增的只有两行增量（8 词，停 6.2+3.8s）。a 担心底栏字幕可能撞到 y≈880 的分数行，这一点作为存疑保留。另有 s5_l40 卡片标题折行，\"step\" 单独落在第二行（见补充）。"
+     },
+     "P3": {
+      "score": 1,
+      "evidence": "两人都漏了章节标题的一致性。第 03 章 \"How big a step?\" 和第 04 章 \"How big models train\" 是相邻章，都以 \"How big\" 开头，意思却不同（前者问步子大小，后者的 big 修饰 models），l15 的 h1 \"How big each step\" 又是一个 \"How big\"。连着看，04 很容易被读成第三个\"多大\"的问题。这是严格项（章节标题），必改。a 指出了 l13/l15 术语只出现在小号 eyebrow、Upgrade ①② 与 01–04 编号体系冲突，这两条成立。"
+     },
+     "P6": {
+      "score": 2,
+      "evidence": "每条问题都附了改写，但有几条改写比原文差或引入新术语：b 的 l38 \"Diverging\"/\"Near minimum\"、l45 \"Step sizes by knob\"、l22 \"Larger turn: per km\"、l09 \"Slope underfoot\"、l43 \"Wobbly but effective\"，a 的 l23 \"In the valley in 3 steps\"（in…in 重复），详见「驳回」。不能给满分。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 38,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_en__a",
+    "codex/screen_en__b"
+   ]
+  }
+ ],
+ "state": "已收轮",
+ "concluded_at": "2026-11-09T21:18:50",
+ "result": "结果.md",
+ "verdict": {
+  "result": "不通过",
+  "text": "不通过：4 项未过；已按问题清单修改，开下一轮复核"
+ },
+ "log": []
+}

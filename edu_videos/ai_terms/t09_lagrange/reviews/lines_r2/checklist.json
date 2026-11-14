@@ -1,0 +1,1141 @@
+{
+ "version": 5,
+ "kind": "edu_lines",
+ "scoring": {
+  "scale": {
+   "0": "没查或查不了（写 `原因：`）",
+   "1": "有问题（问题表里必须有对应条目）",
+   "2": "基本没问题，有小瑕疵（写证据）",
+   "3": "没问题（写证据）"
+  },
+  "evidence_rule": "证据要指到句号 lNN / 屏号、原文或数字，至少 8 个字；没证据的高分按 0 处理。",
+  "disagreement": "分歧：两位同一维度差 ≥2，或一人 ≤1、另一人 ≥2，交裁决人；两人都 ≥2 的维度，裁决人每项抽 2 维复核（专抓两个模型共同的盲点）。"
+ },
+ "adjudicator": {
+  "runner": "claude",
+  "model": "claude-opus-5-5"
+ },
+ "id": "lines_r2",
+ "chain": "t09_lagrange/lines",
+ "loop": 2,
+ "max_loops": 3,
+ "parent": "edu_videos/ai_terms/t09_lagrange/reviews/lines_r1",
+ "title": "t09_lagrange · 台词审（口播＋屏幕文字）第 2 轮",
+ "target": "edu_videos/ai_terms/t09_lagrange",
+ "episode": "t09_lagrange",
+ "stage": "lines",
+ "stage_name": "台词审（口播＋屏幕文字 × 中英）",
+ "scenes": [],
+ "created_at": "2026-11-09T13:03:58",
+ "author": "Claude Code",
+ "known": "",
+ "changes": "# 台词审汇总：lines_r1\n\n处理状态：待处理 0 · 已改 123 · 不改 25 · 驳回 0（`python tools/edu_review.py fix` 登记；下一轮审稿人按「处理」列逐条复核）\n\n## 各项结论（最终分：裁决过的维度用裁决分，其余取两人较低分）\n\n| 项 | 最终分 | 未处理的必改 | 结论 |\n|---|---|---|---|\n| voice_zh | V1=1 V2=1 V3=1 V4=2 V5=1 V6=2 | 0 | 不通过 |\n| voice_en | V1=1 V2=1 V3=1 V4=2 V5=2 V6=1 | 0 | 不通过 |\n| screen_zh | P1=1 P2=1 P3=1 P4=1 P5=2 P6=2 | 0 | 不通过 |\n| screen_en | P1=1 P2=1 P3=1 P4=1 P5=1 P6=2 | 0 | 不通过 |\n\n## 问题（来源 a = Claude、b = Codex、judge = 裁决补充）\n\n| 编号 | 项 | 位置 | 维度 | 级别 | 来源 | 原文 | 问题 | 建议改写 | 裁决人意见 | 处理 |\n|---|---|---|---|---|---|---|---|---|---|---|\n| I1 | screen_en | card c_problem (strict, chapter title) | P4 | 必改 | a | \"What a Lagrange multiplier is\" | The embedded clause ends on a bare \"is\", which sounds stilted read aloud. It is also the only non-noun chapter title and repeats the l03 title card. | \"What is a Lagrange multiplier?\" |  | 已改：章节卡改 What is a Lagrange multiplier? |\n| I2 | screen_en | intro (`card_intro`) | P3, P5 | 必改 | b | Lagrange multiplier | The title exceeds the frame width: the opening “L” and the right end are clipped. The episode’s identifying term must be fully readable. This screenshot supplies no evidence of a later readable hold. | **Lagrange multiplier** — retain the term, reduce its size, and fit the complete title within the frame |  | 已改：包装模板：片头片名过宽时按比例缩字号（template.html），英文片名不再被裁 |\n| I3 | screen_en | card s6 (outro, strict) | P4 | 建议 | a | \"a price on a constraint, / set just right\" | \"set just right\" is a dangling participle and the comma splits it from the lead-in. It is passable but not clean. | \"a price on a constraint — set just right\" |  | 已改：片尾卡改 Price the rule / just right（≤6 词，不再照搬口播） |\n| I4 | screen_en | l01–l03 | P2, P4 | 必改 | b | Be helpful / Harm ≤ the line; Do your best / Never cross | The cold open mixes an instruction with a mathematical comparison to a metaphorical “line.” l02 adds wording already spoken verbatim rather than clarifying the goal/constraint structure. These are strict cold-open items. | Main pair: **Helpfulness ↑** / **Harm ≤ limit**<br>Side labels at l02: **Goal** / **Constraint** | b · l01–l03（cold open 改成 “Helpfulness ↑ / Harm ≤ limit”，侧标改 “Goal / Constraint”）：改了更差。冷开场的钩子就是 “Do your best” 和 “never cross” 这两句口语要求形成的反差。改成 Goal/Constraint，会在 l04 讲到之前就先用上术语，还和 l04 的两张卡片重复。冷开场真正要改的是 a 指出的 “Do your / best” 换行，以及给两句加引号。 | 不改（理由：裁决人驳回：改成 Goal / Constraint 会在 l04 之前抢用术语；只采纳加引号与不折行（见 I5）） |\n| I5 | screen_en | l02 (cold open, strict) | P4 | 必改 | a | \"Do your / best\" (wrapped) and \"Never cross\" | The left label wraps to two lines (screenshot). \"Never cross\" has no object, and the narration quotes both phrases but the screen has no quote marks. | Widen the label column. \"“Do your best”\" / \"“Never cross it”\" |  | 已改：冷开场标签加引号并加宽不折行：“Do your best” / “Never cross it” |\n| I6 | screen_en | l03 (cold open, strict) | P2 | 必改 | a | eyebrow \"1788 · Lagrange\" | The narration says \"over two hundred years ago\", not 1788, so the date is a claim the narration does not make. It is mild and accurate, but the strict rule says anything off is must-fix. | Either have the narration say \"In 1788\" or change to \"Lagrange\" |  | 已改：眉题改 A 200-year-old idea（与口播「两百多年前」一致，不再出现 1788） |\n| I7 | screen_en | l04 | P4 | 建议 | a | \"Make it the best\" | Vague \"it\", slightly off idiom. | \"As good as possible\" |  | 不改（理由：l04 两张卡是「目标 / 约束」的对照，Don’t cross the line 与口播 without crossing a line 一致） |\n| I8 | screen_en | l04 | P5 | 建议 | judge | Don’t cross the / line | CONSTRAINT 卡片里 “line” 单独掉到第二行，和左边一行就放下的 GOAL 卡片不对称。 | Don’t cross the line（缩字号或加宽卡片，保持一行），或 Stay under the line |  | 已改：英文卡片加宽到 680px，Don’t cross the line 一行放下 |\n| I9 | screen_en | l06 | P3 | 建议 | a | \"A little over, a little lost\" + \"The price λ: the Lagrange multiplier\" | The big λ appears twice (tag and left), the body line is tautological, and \"lost\" has no object. | \"Over a bit, lose a bit\" + \"λ = the Lagrange multiplier\" |  | 不改（理由：价签图里的 λ 是图标，左侧大 λ 是术语出场，两者一图一字，分工不同） |\n| I10 | screen_en | l06 | P2, P4 | 建议 | b | A little over, a little lost / Th",
+ "items": [
+  {
+   "id": "voice_zh",
+   "law": "lines",
+   "law_name": "中文口播（母语听感，盲审）",
+   "color": "#c0502e",
+   "scope": [],
+   "checks": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_zh.md",
+   "prompt": "items/voice_zh__a.md",
+   "what": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "problem": "上一版「本期内容」念成「这一期，讲四件事：它是个什么问题；为什么只背练习册不行……」，像在念目录，正常人不会这么说话（用户 2026-11-08 指出）；原先的审稿没抓到。",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "像真人在讲",
+     "question": "逐句：自然 / 有点怪 / 很怪。书面腔、讲解腔、翻译腔、念稿感、报菜名式罗列都算怪"
+    },
+    {
+     "id": "V2",
+     "name": "衔接与过渡",
+     "question": "开场、本期内容、章节转换、举例前后：像一个人顺着思路往下讲，而不是「下面讲第一点」式的模板或目录朗读；上下句接得上"
+    },
+    {
+     "id": "V3",
+     "name": "一遍听懂",
+     "question": "只靠耳朵：一句只带一个新意思；指代清楚（说「这个」时观众知道指什么）；术语先解释再用；数字、同音字不会听错"
+    },
+    {
+     "id": "V4",
+     "name": "精炼",
+     "question": "没有废话、重复、正确的空话；删掉不影响理解的句子要指出来"
+    },
+    {
+     "id": "V5",
+     "name": "口吻与节奏",
+     "question": "从头到尾是同一个亲切、清楚、不端着的讲解者；长短句交替，每句适合一口气念完"
+    },
+    {
+     "id": "V6",
+     "name": "改写",
+     "question": "每句「有点怪 / 很怪」都给出可以直接替换、不更长的中文改写；列出最别扭的 5 句并排序"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_zh__a.md",
+     "prompt": "items/voice_zh__a.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "43 句里只有 l37「其实像这样给规矩标价的做法，AI 里到处都有」是名词化长修饰，判有点怪；l38「扣多重」、l39「也是这样一个价」、l26「差不多是三乘零点一」、l15「这个点就落在哪」略带书面或算式腔。其余像人在讲，如 l02「两头都顾上」、l09「定高了，他干脆就不玩了」。"
+      },
+      "V2": {
+       "score": 2,
+       "evidence": "开场 l01→l02→l03 顺着问题往下讲，没有目录腔；l24「你可能觉得拉姆达只是个拿来调的旋钮。其实……」、l31「回到开头那个要求」两处章节过渡都是人话。扣分点：l37 从 Safe RLHF 转到「到处都有」时，用「做法」这个名词句硬转；l08「那就换个说法」其实是换办法，指向不准。"
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "l17、l18 用「它」指点，前面 l15 已交代「这个点」，指代清楚；l25「稍微放大些」避开了「一点点」撞数字。小瑕疵：l13「营地这圈围栏」的「营地」事先没交代；l26 一句连报七点七五、八点零四、零点二九、零点一四个数；l25「半径一点五」与 l18「价一点五」数字撞车。"
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "l33「目标是：有害程度不能越过底线……」是回扣 l01，有用，不算重复；l30「所以看拉姆达，就知道哪条规矩在真正卡着你」收章，不算废话。没有该整句删掉的句子，l27 的「放宽距离」略啰嗦。"
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "全片统一是「咱们」式的亲切讲解者（l11「咱们来做个小实验」、l12、l25）；长短句交替好，如 l09 四秒短句接 l10。扣分：l37—l39 连续三句抽象，l39 单句 7.8 秒，一口气偏长。"
+      },
+      "V6": {
+       "score": 2,
+       "evidence": "每句判「有点怪」的都在问题表里给了不更长的改写（l37、l38、l39、l26、l15、l08）；最别扭 5 句排序见整体观察。"
+      },
+      "R": {
+       "score": 2,
+       "evidence": "上一轮本项必改均已落实：l01「越过」改「越过一条底线」顺了，l02「两头都顾上」、l12「咱们要找的，是最高的地方」、l23、l31、l41、l42 均已是人话；I137（l34 念公式）、I143（l40 主旨句）、I140（l37—l39 不删）三条「不采纳」，理由成立（屏上有公式，l40 与 l05 首尾呼应，画面 ①②③ 专为这三句做）。改出的新毛病：l15 改后「这个点就落在哪」仍有点绕；l38 改后「扣多重」仍别扭；l37 虽改过，「做法」名词化仍在。"
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/voice_zh__b.md",
+     "prompt": "items/voice_zh__b.md",
+     "scores": {
+      "V1": {
+       "score": 1,
+       "evidence": "l15「哪里剩得最多，这个点就落在哪」还在依赖画面里的点；l39「差远了扣多少，也是这样一个价」省掉了“由这个价决定”，听起来没有说完整。"
+      },
+      "V2": {
+       "score": 1,
+       "evidence": "l24「这条规矩有多贵」没有直接接上“放宽围栏能多爬多少”；l31 转回开场时，接连介绍年份、单位、办法名称，仍有读资料的感觉。"
+      },
+      "V3": {
+       "score": 1,
+       "evidence": "l26 在 6.5 秒里连续念「七点七五」「八点零四」「零点二九」「三乘零点一」，听众要边记数字边算关系；l15 没有交代“这个点”是用来标位置的。"
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "主体内容有推进，例如 l25 放宽围栏、l26 比较收益、l27 解释三倍，各有作用。小瑕疵是 l05「思路很妙」可删，l31「二零二三年」删掉也不影响理解。"
+      },
+      "V5": {
+       "score": 1,
+       "evidence": "l26 的数字集中、l31 的出处信息集中，明显比周围句子费耳朵；l41「谁都会自己停在线上」又突然从具体实验变成泛指所有人的口号。"
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "问题表已给全部 12 句“有点怪／很怪”提供不更长的替换稿，另给 l05 删赘语稿。最别扭五句依次是：① l15「这个点就落在哪」；② l41「谁都会自己停在线上」；③ l26 连续数字；④ l24「这条规矩有多贵」；⑤ l42「这条规矩到底值多少」。"
+      },
+      "R": {
+       "score": 1,
+       "evidence": "逐条复核如下。I106：不改理由成立，「把 λ 看成价格」作为章节标题自然，不必强改成完整口语句。I107：未解决，「超过」换成「越过」只修了搭配的一部分，「有害的内容」究竟怎样越线仍不清楚；旧改写拗口的批评成立，但不能据此判原问题消失。I108：已解决，「一边要尽量做好，一边又不许越线」顺口。I109：主要问题已解决，「这条线当成一堵墙」补上了墙的来由；「思路很妙」仍可删。I110：已解决，「越往里越高，正中间是山顶」不再重复“中间”。I111、I112：已解决，「咱们要找的，是最高的地方」不像念任务卡。I113：已解决，「每离营地中心远一步」语序顺了。I114、I115、I116：未解决，算式拆开了，但「这个点」仍未先交代；保留“点”这个锚点的要求成立，当前写法还没有建立锚点。I117：已解决，「跑出了围栏」替换“出圈”有效。I118：部分未解决，“涨什么”已明确，但“点”的身份仍受 l15 拖累。I119：已解决，「越远……越多」不再暗示距离数值直接等于涨价数值。I120：本项无法独立核实听画是否错位；未读画面文件，不把作者说明当作已核验，也不据句末快照重报错位。I121：已解决，「价涨到一点五，它往回退」避免了“一点五，点”的黏连。I122：改出新问题，缩短后「它那圈等高线」省掉了“经过它”，只听时关系更含糊。I123、I124：已解决，「想再往高处走，就得直直穿过围栏」成为能听懂的动作。I125：部分未解决，“拿来调的旋钮”修好了，“规矩有多贵”的含义仍要猜。I126：已解决，「稍微放大些」不再与小数混听。I127、I128：未解决，删掉“正好”修了重复，数字密度没有实质下降。I129、I130：已解决，“三倍”明确比较新增高度与放宽距离；本轮另记「围栏放宽距离」的书面感。I131：已解决，「这个价」明确了指代。I132、I133、I134：部分未解决，书面词减少了，但年份、机构、新名称仍挤在同一次过渡里；保留办法名称可以，不能由此推出年份也必须保留。I135：已解决，「两个模型来打分，一个看……」自然。I136：部分未解决，“有害程度”补齐了，但「有害程度不能越过底线」仍不如“不能超标”清楚。I137：不改理由成立，已知有用分、有害分和单价后，「拿……减去……乘以……」可以听懂；该判断不依赖屏幕公式。I138：已解决，「没超标」「多帮些忙」都顺了。I139：已解决，「给规矩标价的做法」比“系数”容易接上。I140：不整段删除的理由成立，这两例确实补充了其他用途，并非重复或空话；本次不以画面是否悬空作判断。I141：已解决，「扣多重，就看这个价定多少」说完整了。I142：未完全解决，l39 仍较长，且「也是这样一个价」仍缺少决定扣分多少的关系。I143：不改可以成立，「给约束标个价」作为方法的口语概括能听懂；“它是主旨句”本身不能代替听感判断。I144、I145、I146：改出新问题，重复和用词统一修好了，但「谁都会」又换成了泛指人的主语；上轮反对随意改成人的理由，同样适用于这一版。I147：已解决，“不妨问问自己”的劝导腔去掉了。I148：未解决，「规矩到底值多少」仍可能被听成规矩值不值得遵守；批评旧改写丢失钩子有道理，但保留钩子也可以说清“放宽后多得到多少”。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "像真人在讲",
+     "a": 2,
+     "a_ev": "43 句里只有 l37「其实像这样给规矩标价的做法，AI 里到处都有」是名词化长修饰，判有点怪；l38「扣多重」、l39「也是这样一个价」、l26「差不多是三乘零点一」、l15「这个点就落在哪」略带书面或算式腔。其余像人在讲，如 l02「两头都顾上」、l09「定高了，他干脆就不玩了」。",
+     "b": 1,
+     "b_ev": "l15「哪里剩得最多，这个点就落在哪」还在依赖画面里的点；l39「差远了扣多少，也是这样一个价」省掉了“由这个价决定”，听起来没有说完整。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "采纳 b 的分数，但理由不全按 b。l15「哪里剩得最多，这个点就落在哪」用「这个点」指一个从没交代过的东西，后面 l16—l22 都在说它跑、退、停，属于必改；l41「谁都会自己停在线上」把主语换成泛指的人，片尾从严，必改。a 自己也说 l15 绕、l41 带概括腔，只是没算进分数，所以 2 分偏高。必改定稿：l15「然后看高度减掉扣分，哪儿剩得最多，就在哪儿标个点。」；l41「价调合适了，不用立墙，自己就会停在线上。」（和讲稿一句话主旨「也会刚好停在线上」对得上，也接得回 l10 孩子、l19 点、l35 模型这三个「自己停」）。l39「也是这样一个价」话没说完，定为建议（改法见下文）。"
+    },
+    "V2": {
+     "name": "衔接与过渡",
+     "a": 2,
+     "a_ev": "开场 l01→l02→l03 顺着问题往下讲，没有目录腔；l24「你可能觉得拉姆达只是个拿来调的旋钮。其实……」、l31「回到开头那个要求」两处章节过渡都是人话。扣分点：l37 从 Safe RLHF 转到「到处都有」时，用「做法」这个名词句硬转；l08「那就换个说法」其实是换办法，指向不准。",
+     "b": 1,
+     "b_ev": "l24「这条规矩有多贵」没有直接接上“放宽围栏能多爬多少”；l31 转回开场时，接连介绍年份、单位、办法名称，仍有读资料的感觉。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "采纳 a。开场 l01→l03 顺着往下讲；l24 和 s4 屏上标题「这条规矩有多贵？」一致，是有意留的钩子，l25—l27 马上就兑现，不算接不上；l31「回到开头那个要求」后面先介绍出处，是为 l34「他们用的办法，就是拉格朗日乘子」留揭晓，b 的改写把揭晓提前了，所以 b 的两条证据都不成立。还剩的小毛病：l37「其实」前面没有可以转折的内容，l08「换个说法」其实换的是办法，都是建议级。"
+    },
+    "V3": {
+     "name": "一遍听懂",
+     "a": 2,
+     "a_ev": "l17、l18 用「它」指点，前面 l15 已交代「这个点」，指代清楚；l25「稍微放大些」避开了「一点点」撞数字。小瑕疵：l13「营地这圈围栏」的「营地」事先没交代；l26 一句连报七点七五、八点零四、零点二九、零点一四个数；l25「半径一点五」与 l18「价一点五」数字撞车。",
+     "b": 1,
+     "b_ev": "l26 在 6.5 秒里连续念「七点七五」「八点零四」「零点二九」「三乘零点一」，听众要边记数字边算关系；l15 没有交代“这个点”是用来标位置的。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "采纳 b 的分数。l15「这个点」没有交代，只听的话后面整段实验都没有落点（s3 里这个点要到 l15 念到 70% 处才出现在画面上，盲听更找不到），必改，定稿同 V1。另外 l26 从头到尾没说出「零点一」是放宽的量，只念了「一点五变成一点六」，听众得自己算 1.6−1.5，属于建议级；l35「是自己调的」可能被听成「人手动调」，见补充问题。a 的证据「l15 已交代『这个点』」不成立：l15 本身就是第一次出现这个点。"
+    },
+    "V4": {
+     "name": "精炼",
+     "a": 2,
+     "a_ev": "l33「目标是：有害程度不能越过底线……」是回扣 l01，有用，不算重复；l30「所以看拉姆达，就知道哪条规矩在真正卡着你」收章，不算废话。没有该整句删掉的句子，l27 的「放宽距离」略啰嗦。",
+     "b": 2,
+     "b_ev": "主体内容有推进，例如 l25 放宽围栏、l26 比较收益、l27 解释三倍，各有作用。小瑕疵是 l05「思路很妙」可删，l31「二零二三年」删掉也不影响理解。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "抽查维持 2 分。l33 回扣 l01、l40 呼应 l05 都是有意为之，没有该整句删掉的；两人都没发现的共同盲点是 l26「差不多是三乘零点一」和 l27「大约是……三倍」把同一个关系连说两遍，按下面的 l26 改法删掉前一处就行。l05「思路很妙」算正常的讲解口吻，可以留。"
+    },
+    "V5": {
+     "name": "口吻与节奏",
+     "a": 2,
+     "a_ev": "全片统一是「咱们」式的亲切讲解者（l11「咱们来做个小实验」、l12、l25）；长短句交替好，如 l09 四秒短句接 l10。扣分：l37—l39 连续三句抽象，l39 单句 7.8 秒，一口气偏长。",
+     "b": 1,
+     "b_ev": "l26 的数字集中、l31 的出处信息集中，明显比周围句子费耳朵；l41「谁都会自己停在线上」又突然从具体实验变成泛指所有人的口号。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "采纳 a。全片都是「咱们」式的同一个讲解者，l09 的短句接 l10 的长句，节奏交替得好。b 列的 l26、l31 是信息密度问题，已分别归到 V3 和 V2 处理；l41 的问题主要在用词，已按 V1 必改处理，改完后语气跟前面一致。l39 有 7.8 秒，但中间有逗号可以换气，按建议处理。"
+    },
+    "V6": {
+     "name": "改写",
+     "a": 2,
+     "a_ev": "每句判「有点怪」的都在问题表里给了不更长的改写（l37、l38、l39、l26、l15、l08）；最别扭 5 句排序见整体观察。",
+     "b": 3,
+     "b_ev": "问题表已给全部 12 句“有点怪／很怪”提供不更长的替换稿，另给 l05 删赘语稿。最别扭五句依次是：① l15「这个点就落在哪」；② l41「谁都会自己停在线上」；③ l26 连续数字；④ l24「这条规矩有多贵」；⑤ l42「这条规矩到底值多少」。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "抽查后把 b 的 3 分降到 2。b 给的替换稿里有好几条比原句差：l24、l41、l42、l01、l31 丢了「价」的说法或提前揭了底，l27「围栏往外挪的距离的三倍」连着两个「的」，l05 改写和 l06 重复。a 的 l26 改写「大概是零点一的三倍」紧接 l27「大约是……三倍」，「三倍」连说两遍，两个人都没发现。"
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "上一轮本项必改均已落实：l01「越过」改「越过一条底线」顺了，l02「两头都顾上」、l12「咱们要找的，是最高的地方」、l23、l31、l41、l42 均已是人话；I137（l34 念公式）、I143（l40 主旨句）、I140（l37—l39 不删）三条「不采纳」，理由成立（屏上有公式，l40 与 l05 首尾呼应，画面 ①②③ 专为这三句做）。改出的新毛病：l15 改后「这个点就落在哪」仍有点绕；l38 改后「扣多重」仍别扭；l37 虽改过，「做法」名词化仍在。",
+     "b": 1,
+     "b_ev": "逐条复核如下。I106：不改理由成立，「把 λ 看成价格」作为章节标题自然，不必强改成完整口语句。I107：未解决，「超过」换成「越过」只修了搭配的一部分，「有害的内容」究竟怎样越线仍不清楚；旧改写拗口的批评成立，但不能据此判原问题消失。I108：已解决，「一边要尽量做好，一边又不许越线」顺口。I109：主要问题已解决，「这条线当成一堵墙」补上了墙的来由；「思路很妙」仍可删。I110：已解决，「越往里越高，正中间是山顶」不再重复“中间”。I111、I112：已解决，「咱们要找的，是最高的地方」不像念任务卡。I113：已解决，「每离营地中心远一步」语序顺了。I114、I115、I116：未解决，算式拆开了，但「这个点」仍未先交代；保留“点”这个锚点的要求成立，当前写法还没有建立锚点。I117：已解决，「跑出了围栏」替换“出圈”有效。I118：部分未解决，“涨什么”已明确，但“点”的身份仍受 l15 拖累。I119：已解决，「越远……越多」不再暗示距离数值直接等于涨价数值。I120：本项无法独立核实听画是否错位；未读画面文件，不把作者说明当作已核验，也不据句末快照重报错位。I121：已解决，「价涨到一点五，它往回退」避免了“一点五，点”的黏连。I122：改出新问题，缩短后「它那圈等高线」省掉了“经过它”，只听时关系更含糊。I123、I124：已解决，「想再往高处走，就得直直穿过围栏」成为能听懂的动作。I125：部分未解决，“拿来调的旋钮”修好了，“规矩有多贵”的含义仍要猜。I126：已解决，「稍微放大些」不再与小数混听。I127、I128：未解决，删掉“正好”修了重复，数字密度没有实质下降。I129、I130：已解决，“三倍”明确比较新增高度与放宽距离；本轮另记「围栏放宽距离」的书面感。I131：已解决，「这个价」明确了指代。I132、I133、I134：部分未解决，书面词减少了，但年份、机构、新名称仍挤在同一次过渡里；保留办法名称可以，不能由此推出年份也必须保留。I135：已解决，「两个模型来打分，一个看……」自然。I136：部分未解决，“有害程度”补齐了，但「有害程度不能越过底线」仍不如“不能超标”清楚。I137：不改理由成立，已知有用分、有害分和单价后，「拿……减去……乘以……」可以听懂；该判断不依赖屏幕公式。I138：已解决，「没超标」「多帮些忙」都顺了。I139：已解决，「给规矩标价的做法」比“系数”容易接上。I140：不整段删除的理由成立，这两例确实补充了其他用途，并非重复或空话；本次不以画面是否悬空作判断。I141：已解决，「扣多重，就看这个价定多少」说完整了。I142：未完全解决，l39 仍较长，且「也是这样一个价」仍缺少决定扣分多少的关系。I143：不改可以成立，「给约束标个价」作为方法的口语概括能听懂；“它是主旨句”本身不能代替听感判断。I144、I145、I146：改出新问题，重复和用词统一修好了，但「谁都会」又换成了泛指人的主语；上轮反对随意改成人的理由，同样适用于这一版。I147：已解决，“不妨问问自己”的劝导腔去掉了。I148：未解决，「规矩到底值多少」仍可能被听成规矩值不值得遵守；批评旧改写丢失钩子有道理，但保留钩子也可以说清“放宽后多得到多少”。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "采纳 b 的分数。上一轮 l15 锚点问题（b 引的 I114—I116，a 也记了「l15 改后仍有点绕」）这轮还没解决；l41 这轮改成「谁都会」，改出了新毛病。两条都还在，R 不能给 2。b 判 l01（I107）、l24（I125）、l42（I148）未解决，这三条不成立（理由见驳回）。"
+    }
+   },
+   "disputes": [
+    "V1",
+    "V2",
+    "V3",
+    "V5",
+    "R"
+   ],
+   "audits": [
+    "V6",
+    "V4"
+   ],
+   "final_scores": {
+    "V1": 1,
+    "V2": 2,
+    "V3": 1,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "V1",
+     "V2",
+     "V3",
+     "V5",
+     "R",
+     "V6",
+     "V4"
+    ],
+    "prompt": "items/voice_zh__judge.md",
+    "report": "reports/voice_zh__judge.md",
+    "ruling": {
+     "V1": {
+      "score": 1,
+      "evidence": "采纳 b 的分数，但理由不全按 b。l15「哪里剩得最多，这个点就落在哪」用「这个点」指一个从没交代过的东西，后面 l16—l22 都在说它跑、退、停，属于必改；l41「谁都会自己停在线上」把主语换成泛指的人，片尾从严，必改。a 自己也说 l15 绕、l41 带概括腔，只是没算进分数，所以 2 分偏高。必改定稿：l15「然后看高度减掉扣分，哪儿剩得最多，就在哪儿标个点。」；l41「价调合适了，不用立墙，自己就会停在线上。」（和讲稿一句话主旨「也会刚好停在线上」对得上，也接得回 l10 孩子、l19 点、l35 模型这三个「自己停」）。l39「也是这样一个价」话没说完，定为建议（改法见下文）。"
+     },
+     "V2": {
+      "score": 2,
+      "evidence": "采纳 a。开场 l01→l03 顺着往下讲；l24 和 s4 屏上标题「这条规矩有多贵？」一致，是有意留的钩子，l25—l27 马上就兑现，不算接不上；l31「回到开头那个要求」后面先介绍出处，是为 l34「他们用的办法，就是拉格朗日乘子」留揭晓，b 的改写把揭晓提前了，所以 b 的两条证据都不成立。还剩的小毛病：l37「其实」前面没有可以转折的内容，l08「换个说法」其实换的是办法，都是建议级。"
+     },
+     "V3": {
+      "score": 1,
+      "evidence": "采纳 b 的分数。l15「这个点」没有交代，只听的话后面整段实验都没有落点（s3 里这个点要到 l15 念到 70% 处才出现在画面上，盲听更找不到），必改，定稿同 V1。另外 l26 从头到尾没说出「零点一」是放宽的量，只念了「一点五变成一点六」，听众得自己算 1.6−1.5，属于建议级；l35「是自己调的」可能被听成「人手动调」，见补充问题。a 的证据「l15 已交代『这个点』」不成立：l15 本身就是第一次出现这个点。"
+     },
+     "V5": {
+      "score": 2,
+      "evidence": "采纳 a。全片都是「咱们」式的同一个讲解者，l09 的短句接 l10 的长句，节奏交替得好。b 列的 l26、l31 是信息密度问题，已分别归到 V3 和 V2 处理；l41 的问题主要在用词，已按 V1 必改处理，改完后语气跟前面一致。l39 有 7.8 秒，但中间有逗号可以换气，按建议处理。"
+     },
+     "R": {
+      "score": 1,
+      "evidence": "采纳 b 的分数。上一轮 l15 锚点问题（b 引的 I114—I116，a 也记了「l15 改后仍有点绕」）这轮还没解决；l41 这轮改成「谁都会」，改出了新毛病。两条都还在，R 不能给 2。b 判 l01（I107）、l24（I125）、l42（I148）未解决，这三条不成立（理由见驳回）。"
+     },
+     "V6": {
+      "score": 2,
+      "evidence": "抽查后把 b 的 3 分降到 2。b 给的替换稿里有好几条比原句差：l24、l41、l42、l01、l31 丢了「价」的说法或提前揭了底，l27「围栏往外挪的距离的三倍」连着两个「的」，l05 改写和 l06 重复。a 的 l26 改写「大概是零点一的三倍」紧接 l27「大约是……三倍」，「三倍」连说两遍，两个人都没发现。"
+     },
+     "V4": {
+      "score": 2,
+      "evidence": "抽查维持 2 分。l33 回扣 l01、l40 呼应 l05 都是有意为之，没有该整句删掉的；两人都没发现的共同盲点是 l26「差不多是三乘零点一」和 l27「大约是……三倍」把同一个关系连说两遍，按下面的 l26 改法删掉前一处就行。l05「思路很妙」算正常的讲解口吻，可以留。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 27,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_zh__a",
+    "codex/voice_zh__b"
+   ]
+  },
+  {
+   "id": "voice_en",
+   "law": "lines",
+   "law_name": "English narration (native ear, blind)",
+   "color": "#2e6fc0",
+   "scope": [],
+   "checks": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_en.md",
+   "prompt": "items/voice_en__a.md",
+   "what": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "problem": "The previous agenda read 'In this episode: What the problem is. Why memorizing answers fails. A different way to think about learning…' — a table of contents read aloud. No one talks like that (caught by the user, 2026-11-08); earlier reviews missed it.",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "Sounds like a person talking",
+     "question": "Each line: natural / a bit off / clearly off. Written-style, lecture tone, translated-from-Chinese phrasing, telegraphic lists all count as off"
+    },
+    {
+     "id": "V2",
+     "name": "Flow and transitions",
+     "question": "Cold open, the 'what's coming' part, chapter changes, before/after examples: does it sound like one person following a thought, not 'Point one…' templates or a TOC read aloud? Do adjacent lines connect?"
+    },
+    {
+     "id": "V3",
+     "name": "Clear on one hearing",
+     "question": "Ear only: one new idea per line; clear reference ('this' points to something); terms explained before used; numbers and words not misheard"
+    },
+    {
+     "id": "V4",
+     "name": "Tight",
+     "question": "No filler, repetition, or empty truisms; point out lines that could go without losing anything"
+    },
+    {
+     "id": "V5",
+     "name": "Voice and rhythm",
+     "question": "One warm, clear, unpretentious narrator throughout; varied sentence length; each line sayable in one breath"
+    },
+    {
+     "id": "V6",
+     "name": "Rewrites",
+     "question": "For every 'a bit off' / 'clearly off' line, a drop-in rewrite no longer than the original; rank the 5 most awkward lines"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_en__a.md",
+     "prompt": "items/voice_en__a.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "Most lines pass the friend test, e.g. l07 \"Say a parent allows one hour of video games a day, and the kid keeps sneaking in more.\" and l35 \"When harm goes over the line, lambda goes up, and safety counts for more.\" Small dents: l04 \"is called constrained optimization\" (textbook definition), l34 \"take the helpfulness score, and subtract lambda times the harm score\" (formula read aloud), l38/l39 \"sets how many / how much\"."
+      },
+      "V2": {
+       "score": 3,
+       "evidence": "The thread holds from the cold open (l01 \"don't let harm cross a line\", l02 \"never cross this line\") through l31 \"Back to where we started\", l36 \"Just like the dot on our mountain\", l37 \"Prices on rules show up all over AI\" and the outro l41 \"you don't need a wall\". There is no table-of-contents line anywhere, and no \"Point one\" templates."
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "Mostly clear. Weak spots: l15 \"That's this dot\" (the dot was never introduced to an ear-only listener), l31 \"a way to train language models called Safe RLHF\" (the acronym is never unpacked), l22 \"walking along the fence only takes you downhill\" (two geometry ideas in 9.6s), and l25 \"one point five\" reuses the number from l18's price."
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "Tight overall. l30 \"So lambda tells you which rules are really pinning you down.\" mostly restates l24-l29 and could go. l38 and l39 end the same way (\"a price like this sets how many / how much\"), which is mild repetition."
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "One warm, plain narrator with varied length (l12 3.1s, l19 3.5s against l22 9.6s). Slightly heavy: l22 and l38 (9.6s each, with a clause stack). The \"Noun phrase: sentence\" opener appears at l05, l40 and in the l04-l06 run, but it is kept to a few spots."
+      },
+      "V6": {
+       "score": 2,
+       "evidence": "Rewrites are in the issue table. Top 5 most awkward: l26, l22, l15, l38/l39, l31. No clearly-off line was found."
+      },
+      "R": {
+       "score": 2,
+       "evidence": "I71 l01 resolved (keeps \"line\"). I74 l06 resolved (\"a few points\"). I75/I76 l08 resolved (\"every minute under earns one\"). I80/I81 l16/l21 resolved (no \"circle\"). I83 l18 resolved (\"At a price of one point five\"), though the number collides with l25's radius, so only partly. I85 l22 resolved. I86/I87 l23 resolved. I88/I89 l26 changed to digits and is still four numbers in 9.6s, so it is not fully solved. I92/I93 l33 resolved. I94/I95 l34 resolved but still formula-like. I97/I98 l37 resolved. I99-I102 l38/l39 resolved, but \"model they started as\" is slightly off (new minor issue). I104/I105 l43 resolved (\"Up next: gradient descent.\"). Author \"不采纳\" on l04 (I72), l17 (I82), l20 (I84), l30 (I91): all four reasons hold. l04 is the only definition line, l17 is plain narration, l20 states a conclusion, and l30 closes the chapter. I keep l04 and l30 only as 记录."
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/voice_en__b.md",
+     "prompt": "items/voice_en__b.md",
+     "scores": {
+      "V1": {
+       "score": 1,
+       "evidence": "l15 “find where height, minus that charge, comes out highest” still sounds like written arithmetic. l33 “as much help as we can get within it” compresses the relationship into an awkward reference."
+      },
+      "V2": {
+       "score": 1,
+       "evidence": "The opening question in l02 and return in l31 connect well. However, the chapter entrance at l11 needs a clearer explanation of the rings, and the strict outro at l42 changes “what the rule costs” into “what the rule is worth.”"
+      },
+      "V3": {
+       "score": 1,
+       "evidence": "l26 asks listeners to retain 7.75, 8.04, 0.29, three, and 0.1 within 9.6 seconds. l15 introduces “this dot” without first identifying it as the selected location."
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "Most lines advance the explanation. The concluding function of l20 and l30 justifies keeping them. l10 unnecessarily repeats “just right” as “That just-right price.”"
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "l08–l10 and l16–l19 have a consistent, approachable voice and useful sentence-length variation. l26 interrupts that rhythm with successive decimal readouts; l38–l39 end with compressed “how many” / “how much” constructions."
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "Every line marked off below has a complete replacement no longer than its original. The five most awkward lines, ranked: **l26, l42, l15, l11, l01**."
+      },
+      "R": {
+       "score": 1,
+       "evidence": "**I69–I71, l01: unresolved in part**—“anything harmful” has gone, but “don't let harm cross a line” remains a strained opening collocation. Keeping a connection to l02 does not require that wording. **I72, l04: resolved on recheck**—retaining a short definition is justified. **I73: resolved for the repeated-template concern**—l12 and l34 now have spoken verbs; l33 has a separate remaining wording problem. **I74, l06: resolved**—“lose a few points” is clear. **I75–I76, l08: resolved**—“under” refers naturally to the hour. **I77, l10: unresolved in part**—the roundabout ending is fixed, but “just right” still repeats. **I78, l11: unresolved**—“rising toward the summit” locates the rings without plainly explaining their relationship to height; assuming viewers already know contour maps does not satisfy an ear-only test. Preserving “experiment” is reasonable and possible in the rewrite. **I79, l15: unresolved**—the arithmetic wording and unexplained dot remain. **I80–I81, l16/l21: resolved**—“fence” now supplies a consistent reference. **I82, l17: resolved on recheck**—the original is understandable; rejecting the less natural proposed replacement was justified. **I83, l18: resolved**—“At a price of” identifies 1.5. **I84, l20: resolved on recheck**—the author's reason for keeping the conclusion is sound. **I85, l22: resolved**—“walking” and “downhill” make the consequence easier to imagine. **I86–I87, l23: resolved**—“the steepest way uphill goes” removes the “uphill points” misparse. **I88–I89, l26: unresolved**—adding “we added” helps the reference but leaves the numerical burden. **I90, l27: unresolved in part**—“a lambda of three” fixes the equation grammar; “loosen the fence” remains awkward. **I91, l30: resolved on recheck**—keeping a short chapter conclusion is justified. **I92–I93, l33: unresolved**—“within it” preserves the compressed spatial wording. **I94–I95, l34: resolved**—the imperative explanation works; preserving the named tool was justified. **I96, l36: resolved on recheck**—“help more” follows the scoring explanation, and naming the dot improves the callback; retaining the callback was reasonable. **I97–I98, l37: resolved**—the unexplained “coefficients” is gone. The chosen replacement works, although “adjustable” does not itself mean “automatically adjusted.” **I99–I100, l38: unresolved in part**—the passive construction is fixed, but the new term, unexplained memorizing, and compressed ending still stack up. **I101–I102, l39: previous grammar problem resolved; a residual wording problem remains**—the coefficient identity error is gone, but “a price … sets how much” is still imprecise. **I103, l42: unresolved for “worth”; repetition resolved**—the author's shadow-price rationale does not remove the ordinary-English distinction between a rule's benefit and its cost. **I104–I105, l43: resolved**—“Up next” removes the repeated “Next time.”"
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "Sounds like a person talking",
+     "a": 2,
+     "a_ev": "Most lines pass the friend test, e.g. l07 \"Say a parent allows one hour of video games a day, and the kid keeps sneaking in more.\" and l35 \"When harm goes over the line, lambda goes up, and safety counts for more.\" Small dents: l04 \"is called constrained optimization\" (textbook definition), l34 \"take the helpfulness score, and subtract lambda times the harm score\" (formula read aloud), l38/l39 \"sets how many / how much\".",
+     "b": 1,
+     "b_ev": "l15 “find where height, minus that charge, comes out highest” still sounds like written arithmetic. l33 “as much help as we can get within it” compresses the relationship into an awkward reference.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 成立。l01「don't let harm cross a line」是生硬搭配（harm 是数量，应当说低于某条线，片中 l33/l35 自己也说 harm under / over the line），而且出现在冷开场，属于严格项。l15「height, minus that charge, comes out highest」是把算式照念出来。l40「in one line」与全片的核心比喻「line」撞词（l41 紧接着就是「stop right at the line」），属于严格项。a 把这三处判 natural 或漏判，2 分站不住。"
+    },
+    "V2": {
+     "name": "Flow and transitions",
+     "a": 3,
+     "a_ev": "The thread holds from the cold open (l01 \"don't let harm cross a line\", l02 \"never cross this line\") through l31 \"Back to where we started\", l36 \"Just like the dot on our mountain\", l37 \"Prices on rules show up all over AI\" and the outro l41 \"you don't need a wall\". There is no table-of-contents line anywhere, and no \"Point one\" templates.",
+     "b": 1,
+     "b_ev": "The opening question in l02 and return in l31 connect well. However, the chapter entrance at l11 needs a clearer explanation of the rings, and the strict outro at l42 changes “what the rule costs” into “what the rule is worth.”",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 成立，a 给 3 分理由不足。严格项里有三处 a bit off。l11 是章节入口，没交代 contour line 是「同一高度的线」，l22 的「so walking along the fence only takes you downhill」就推不出来。l31 也是章节入口，「language models called Safe RLHF」有歧义，听起来像模型叫 Safe RLHF。l42 是结尾，「worth」把全片讲的「规则的代价」（l24「how expensive the rule is」）听成了「规则的价值」，同时「this rule」也没接上同句里的「a line」。"
+    },
+    "V3": {
+     "name": "Clear on one hearing",
+     "a": 2,
+     "a_ev": "Mostly clear. Weak spots: l15 \"That's this dot\" (the dot was never introduced to an ear-only listener), l31 \"a way to train language models called Safe RLHF\" (the acronym is never unpacked), l22 \"walking along the fence only takes you downhill\" (two geometry ideas in 9.6s), and l25 \"one point five\" reuses the number from l18's price.",
+     "b": 1,
+     "b_ev": "l26 asks listeners to retain 7.75, 8.04, 0.29, three, and 0.1 within 9.6 seconds. l15 introduces “this dot” without first identifying it as the selected location.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 成立。l15「That's this dot」：纯听时 dot 没有先被说出来，后面 l16–l22 的指代却都靠它。l26 在 9.6s 里塞了 7.75、8.04、0.29、three、0.1 五个数，而且同一句里的「point」同时是地点（highest point）和小数点（point two nine / point one）。另外 l11 缺了等高线的定义，l22–l23 的推理听不懂。a 只给建议级，偏松。"
+    },
+    "V4": {
+     "name": "Tight",
+     "a": 2,
+     "a_ev": "Tight overall. l30 \"So lambda tells you which rules are really pinning you down.\" mostly restates l24-l29 and could go. l38 and l39 end the same way (\"a price like this sets how many / how much\"), which is mild repetition.",
+     "b": 2,
+     "b_ev": "Most lines advance the explanation. The concluding function of l20 and l30 justifies keeping them. l10 unnecessarily repeats “just right” as “That just-right price.”",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "抽查确认 2 分。l30 收束章节、l20 给出结论，都应保留。l38/l39 结尾都是「a price like this sets how many / how much」，属于轻度重复，两人都已记录。我没有找到两人共同漏掉的冗句。b 提的 l10「just-right」重复我驳回（见下），它是 l22「just-right point」的伏笔。"
+    },
+    "V5": {
+     "name": "Voice and rhythm",
+     "a": 2,
+     "a_ev": "One warm, plain narrator with varied length (l12 3.1s, l19 3.5s against l22 9.6s). Slightly heavy: l22 and l38 (9.6s each, with a clause stack). The \"Noun phrase: sentence\" opener appears at l05, l40 and in the l04-l06 run, but it is kept to a few spots.",
+     "b": 2,
+     "b_ev": "l08–l10 and l16–l19 have a consistent, approachable voice and useful sentence-length variation. l26 interrupts that rhythm with successive decimal readouts; l38–l39 end with compressed “how many” / “how much” constructions.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "抽查确认 2 分，但两人共同漏了一处节奏单调：「X: Y」冒号铺垫句式全片约 14 处，在 s3–s4 尤其密集（l13、l14 相邻，加上 l20、l23、l25、l27、l29，13 句里占 7 句）。a 只数到 l05/l40 两处。这处不到必改，改写建议列在补充问题。"
+    },
+    "V6": {
+     "name": "Rewrites",
+     "a": 2,
+     "a_ev": "Rewrites are in the issue table. Top 5 most awkward: l26, l22, l15, l38/l39, l31. No clearly-off line was found.",
+     "b": 3,
+     "b_ev": "Every line marked off below has a complete replacement no longer than its original. The five most awkward lines, ranked: **l26, l42, l15, l11, l01**.",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "I71 l01 resolved (keeps \"line\"). I74 l06 resolved (\"a few points\"). I75/I76 l08 resolved (\"every minute under earns one\"). I80/I81 l16/l21 resolved (no \"circle\"). I83 l18 resolved (\"At a price of one point five\"), though the number collides with l25's radius, so only partly. I85 l22 resolved. I86/I87 l23 resolved. I88/I89 l26 changed to digits and is still four numbers in 9.6s, so it is not fully solved. I92/I93 l33 resolved. I94/I95 l34 resolved but still formula-like. I97/I98 l37 resolved. I99-I102 l38/l39 resolved, but \"model they started as\" is slightly off (new minor issue). I104/I105 l43 resolved (\"Up next: gradient descent.\"). Author \"不采纳\" on l04 (I72), l17 (I82), l20 (I84), l30 (I91): all four reasons hold. l04 is the only definition line, l17 is plain narration, l20 states a conclusion, and l30 closes the chapter. I keep l04 and l30 only as 记录.",
+     "b": 1,
+     "b_ev": "**I69–I71, l01: unresolved in part**—“anything harmful” has gone, but “don't let harm cross a line” remains a strained opening collocation. Keeping a connection to l02 does not require that wording. **I72, l04: resolved on recheck**—retaining a short definition is justified. **I73: resolved for the repeated-template concern**—l12 and l34 now have spoken verbs; l33 has a separate remaining wording problem. **I74, l06: resolved**—“lose a few points” is clear. **I75–I76, l08: resolved**—“under” refers naturally to the hour. **I77, l10: unresolved in part**—the roundabout ending is fixed, but “just right” still repeats. **I78, l11: unresolved**—“rising toward the summit” locates the rings without plainly explaining their relationship to height; assuming viewers already know contour maps does not satisfy an ear-only test. Preserving “experiment” is reasonable and possible in the rewrite. **I79, l15: unresolved**—the arithmetic wording and unexplained dot remain. **I80–I81, l16/l21: resolved**—“fence” now supplies a consistent reference. **I82, l17: resolved on recheck**—the original is understandable; rejecting the less natural proposed replacement was justified. **I83, l18: resolved**—“At a price of” identifies 1.5. **I84, l20: resolved on recheck**—the author's reason for keeping the conclusion is sound. **I85, l22: resolved**—“walking” and “downhill” make the consequence easier to imagine. **I86–I87, l23: resolved**—“the steepest way uphill goes” removes the “uphill points” misparse. **I88–I89, l26: unresolved**—adding “we added” helps the reference but leaves the numerical burden. **I90, l27: unresolved in part**—“a lambda of three” fixes the equation grammar; “loosen the fence” remains awkward. **I91, l30: resolved on recheck**—keeping a short chapter conclusion is justified. **I92–I93, l33: unresolved**—“within it” preserves the compressed spatial wording. **I94–I95, l34: resolved**—the imperative explanation works; preserving the named tool was justified. **I96, l36: resolved on recheck**—“help more” follows the scoring explanation, and naming the dot improves the callback; retaining the callback was reasonable. **I97–I98, l37: resolved**—the unexplained “coefficients” is gone. The chosen replacement works, although “adjustable” does not itself mean “automatically adjusted.” **I99–I100, l38: unresolved in part**—the passive construction is fixed, but the new term, unexplained memorizing, and compressed ending still stack up. **I101–I102, l39: previous grammar problem resolved; a residual wording problem remains**—the coefficient identity error is gone, but “a price … sets how much” is still imprecise. **I103, l42: unresolved for “worth”; repetition resolved**—the author's shadow-price rationale does not remove the ordinary-English distinction between a rule's benefit and its cost. **I104–I105, l43: resolved**—“Up next” removes the repeated “Next time.”",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 的逐条复核站得住。I69–I71（l01）、I78（l11）、I79（l15）、I88–I89（l26）、I103（l42）实际都未解决，前四条和 l42 均有严格项或必改问题。a 把 I71 判「resolved (keeps \"line\")」不成立：保留 line 是对的，但「let harm cross」的搭配问题还在。b 判 I72、I82、I84、I91 复核后成立，我同意。"
+    }
+   },
+   "disputes": [
+    "V1",
+    "V2",
+    "V3",
+    "R"
+   ],
+   "audits": [
+    "V4",
+    "V5"
+   ],
+   "final_scores": {
+    "V1": 1,
+    "V2": 1,
+    "V3": 1,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "V1",
+     "V2",
+     "V3",
+     "R",
+     "V4",
+     "V5"
+    ],
+    "prompt": "items/voice_en__judge.md",
+    "report": "reports/voice_en__judge.md",
+    "ruling": {
+     "V1": {
+      "score": 1,
+      "evidence": "b 成立。l01「don't let harm cross a line」是生硬搭配（harm 是数量，应当说低于某条线，片中 l33/l35 自己也说 harm under / over the line），而且出现在冷开场，属于严格项。l15「height, minus that charge, comes out highest」是把算式照念出来。l40「in one line」与全片的核心比喻「line」撞词（l41 紧接着就是「stop right at the line」），属于严格项。a 把这三处判 natural 或漏判，2 分站不住。"
+     },
+     "V2": {
+      "score": 1,
+      "evidence": "b 成立，a 给 3 分理由不足。严格项里有三处 a bit off。l11 是章节入口，没交代 contour line 是「同一高度的线」，l22 的「so walking along the fence only takes you downhill」就推不出来。l31 也是章节入口，「language models called Safe RLHF」有歧义，听起来像模型叫 Safe RLHF。l42 是结尾，「worth」把全片讲的「规则的代价」（l24「how expensive the rule is」）听成了「规则的价值」，同时「this rule」也没接上同句里的「a line」。"
+     },
+     "V3": {
+      "score": 1,
+      "evidence": "b 成立。l15「That's this dot」：纯听时 dot 没有先被说出来，后面 l16–l22 的指代却都靠它。l26 在 9.6s 里塞了 7.75、8.04、0.29、three、0.1 五个数，而且同一句里的「point」同时是地点（highest point）和小数点（point two nine / point one）。另外 l11 缺了等高线的定义，l22–l23 的推理听不懂。a 只给建议级，偏松。"
+     },
+     "R": {
+      "score": 1,
+      "evidence": "b 的逐条复核站得住。I69–I71（l01）、I78（l11）、I79（l15）、I88–I89（l26）、I103（l42）实际都未解决，前四条和 l42 均有严格项或必改问题。a 把 I71 判「resolved (keeps \"line\")」不成立：保留 line 是对的，但「let harm cross」的搭配问题还在。b 判 I72、I82、I84、I91 复核后成立，我同意。"
+     },
+     "V4": {
+      "score": 2,
+      "evidence": "抽查确认 2 分。l30 收束章节、l20 给出结论，都应保留。l38/l39 结尾都是「a price like this sets how many / how much」，属于轻度重复，两人都已记录。我没有找到两人共同漏掉的冗句。b 提的 l10「just-right」重复我驳回（见下），它是 l22「just-right point」的伏笔。"
+     },
+     "V5": {
+      "score": 2,
+      "evidence": "抽查确认 2 分，但两人共同漏了一处节奏单调：「X: Y」冒号铺垫句式全片约 14 处，在 s3–s4 尤其密集（l13、l14 相邻，加上 l20、l23、l25、l27、l29，13 句里占 7 句）。a 只数到 l05/l40 两处。这处不到必改，改写建议列在补充问题。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 31,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_en__a",
+    "codex/voice_en__b"
+   ]
+  },
+  {
+   "id": "screen_zh",
+   "law": "lines",
+   "law_name": "中文屏幕文字（PPT 式画面）",
+   "color": "#b8860b",
+   "scope": [],
+   "checks": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "how": "硬上限（超了必须报）：标题 ≤12 字；其余每块 ≤16 字；同屏文字块 ≤4 块（不含页眉小标签、出处与图表刻度）；一屏总字数 ≤36 字。屏幕下方还有口播字幕，观众要同时看。计数口径（第 2 轮裁决定，2026-11-09）：页眉小标签、案例页签、出处、片尾署名不计；同构的列表 / 表格 / 卡片行（每项 ≤8 字、最多 6 项、样子一样）合算 1 块，编号不计字；图里的文字（区域名、曲线名、轴标题、柱条标签、图上注释）要计字数，整张图合算 1 块，只有坐标刻度数字豁免；表格的列头算在表里。",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_zh.md",
+   "prompt": "items/screen_zh__a.md",
+   "what": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "problem": "上一版屏幕文字很多是整句（如「另训一个模型，在两家医院的片子上认医院的准确率——胸片里藏着医院的“指纹”」），等于把口播又印了一遍；用户要求画面只列纲要、相对简练（2026-11-08）。",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "只列纲要",
+     "question": "每屏只放关键词、短语、关键数字、标签；不是口播整句的复述。按硬上限逐屏数字数，超了就报"
+    },
+    {
+     "id": "P2",
+     "name": "与口播分工",
+     "question": "屏幕给结构、数字、对比，口播负责解释；不和口播逐字重复，也不出现口播没说过的新说法；术语、叫法与口播一致"
+    },
+    {
+     "id": "P3",
+     "name": "层级与体例",
+     "question": "一眼先看到什么、第二眼看什么；标题—要点—注释不超过三级；编号、标签、章节名、目录项前后一致（例：目录写的和章节卡写的是不是同一个说法）"
+    },
+    {
+     "id": "P4",
+     "name": "中文措辞与排版",
+     "question": "短语化、不带句末句号；标点、引号、空格规范；不半中半英；**标题、章名读出来要顺**：名词堆砌、生造的名词短语（如「现实里的祸」）算必改"
+    },
+    {
+     "id": "P5",
+     "name": "看得完",
+     "question": "按截图和停留时间：文字量在停留时间内读得完（约 6 字/秒，还要分神看字幕和图）"
+    },
+    {
+     "id": "P6",
+     "name": "改写",
+     "question": "每处超限或不顺的屏幕文字，都给出更短、可直接替换的写法"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_zh__a.md",
+     "prompt": "items/screen_zh__a.md",
+     "scores": {
+      "P1": {
+       "score": 2,
+       "evidence": "按第 2 轮口径逐屏数过，标题 ≤12 字（最长 l31「安全的人类反馈强化学习」11 字）、每块 ≤16 字、同屏 ≤4 块（l15 图+3 段=4，l17 图+h1+价格+状态=4，l21 图+价格+高度+状态=4）、全屏最多 l15 约 24 字，均未超硬上限；扣分只在 l30 h1「看 λ，找真正卡你的规矩」仍近整句、l17 图内注释「跑得越远，涨得越多」是口播「点跑出去越远，价就涨得越多」的缩写。"
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "l17「跑得越远，涨得越多」与口播近逐字；l30 h1 与口播 l30「就知道哪条规矩在真正卡着你」同义复述；l31 眉题「训练大语言模型」与口播「训练大模型」叫法略不同；l35 出处「ICLR 2024」与口播「2023年」（出处豁免，记录）。其余如 l04「做到最好/不许越线」、l26 数字对比、片尾「给约束标价」与口播 l40 一致、分工好。"
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "l06 口播要点是「拉格朗日乘子」，屏上最小的 38px 才写「单价 λ：拉格朗日乘子」，大字是「越线 → 扣分」；l23 新概念「拉格朗日条件」只是 22px 眼眉，h1 仍是上一句的「等高线贴着围栏」。其余页眉「01–04 · 章名」与章节卡一致，λ 大写问题已修（l28、l30 截图页眉为小写 λ），三级以内。"
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "章节标题「拉格朗日乘子是什么」「做个小实验」「把 λ 看成价格」「AI 里怎么用」读着顺，无生造名词短语；片尾「给约束标价 / 价对了，停在线上」无句号；扣分在 l27「多放 0.1，多爬约 3 倍」中「多放」单说读不出放什么（口播是「放宽」），l39 右列「λ 自己调」与「复杂扣分」「偏离扣分」体例不一。"
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "l17 口播 3.5s，屏上约 23 字（图注 8 字+h1 5+状态 5+标签与 λ），约 6.6 字/秒，略超 6 字/秒且红字注释压在图右缘；l12（2.4s，11 字）、l19（3.3s，15 字）、l28（2.6s，新字仅「影子价格」）均在可读范围；l39 7.8s、三行 12 字很宽松。"
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "问题表每条都给出可直接替换的写法，如 l27「放宽 0.1，多爬约 3 倍」、l39「λ 自己调」→「λ 随训练调」，l23 把「拉格朗日条件」提到 h2。"
+      },
+      "R": {
+       "score": 2,
+       "evidence": "上一轮屏幕中文条目逐条复核：I44–I46 片尾已改成「给约束标价 / 价对了，停在线上」（已解决）；I47 眉题「两百多年前的办法」不再出现 1788（已解决）；I48–I51 l06「越线 → 扣分」、l15「高度 − 扣分，取最大」（已解决，l06 仍有层级问题见 L06）；I53–I54 l20/l21 现 3–4 块（已解决）；I55 l23 改一行「往高处 → 直直穿过围栏」（已解决）；I56/I61 页眉 λ 已小写（已解决）；I59–I60 l27 改「多放 0.1，多爬约 3 倍」（已解决，但改出新瑕疵「多放」）；I62 l29 前提升 h2（已解决）；I65 章名改「AI 里怎么用」（已解决）；I66–I68 l39 三行改「安全底线 | λ 自己调 / 正则化 | 复杂扣分 / 贴近原模型 | 偏离扣分」（已解决，「别离」歧义消失）。「不改」的理由 I52（图注已加白底）、I63（口播只念英文，中文释义是唯一解释）、I64、I57、I58（公式未被裁）成立。"
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/screen_zh__b.md",
+     "prompt": "items/screen_zh__b.md",
+     "scores": {
+      "P1": {
+       "score": 2,
+       "evidence": "逐屏核对后未发现硬上限超限。片尾两行主标题共12字；l39「给规矩标价」加三行分别为5、7、7、9字，共28字、4块。第三行超过8字，不能把列表合算1块，但分行计仍合规。l30标题仍偏口播整句，见问题表。"
+      },
+      "P2": {
+       "score": 1,
+       "evidence": "l08用「多玩1分钟／−1块」呈现对应关系，分工清楚；但l27「多放0.1，多爬约3倍」仍未明确倍数的比较对象，不能准确承接口播的两个变化量。"
+      },
+      "P3": {
+       "score": 3,
+       "evidence": "四张章节卡与正文页眉叫法一致；l20撤掉旧标题与状态后，图、价格、高度分成3块；l21加状态共4块。l29「山顶在围栏里」已提升为醒目的前提。"
+      },
+      "P4": {
+       "score": 1,
+       "evidence": "章节名「做个小实验」「把λ看成价格」「AI里怎么用」读来顺畅；但l27「多爬约3倍」仍有比较对象缺失的问题，见问题表。"
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "l12共11字、2.4秒，图中5字已在前屏出现，新增标题可读完；l17新增8字注释有3.5秒，并已加白底。l35／l36的24—28px图中文字仍偏小，见问题表。"
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "问题表为l27提供「放宽0.1，多爬0.29」，沿用屏上已有数字；为l30提供「规矩的价格」，均可直接替换，且比原文短。"
+      },
+      "R": {
+       "score": 1,
+       "evidence": "I44已解决：片尾主标题压到12字；I45已解决：「就是」残句及行末逗号撤除；I46已解决：片尾明显压短；I47已解决：改为「两百多年前的办法」；I48已解决：改为「越线→扣分」；I49已解决：l15改为「高度−扣分，取最大」，驳回半角冒号判断的理由成立；I50已解决：旧说明淡化，新概念成为视觉重点；I51已解决：「取最大」消除了原来的断句歧义；I52不改理由成立：白底提高辨识度，新增8字在3.5秒内可读；I53已解决：l20为3块、l21为4块；I54已解决：同屏旧标题已撤；I55已解决：箭头式关系替代原来两行复述；I56已解决：页眉显示小写λ；I57不改在限字和自然度上成立，但l30仍建议纲要化；I58不改理由成立：三张截图公式均完整，0.1右侧有留白；I59未解决：改后仍未明确“三倍”的比较对象；I60未解决：采用裁决写法不等于消除了歧义；I61已解决：页眉与章节卡λ一致；I62已解决：前提升至h2；I63不改理由成立：中文释义帮助解释英文名称，没有另起概念；I64不改理由部分成立：页内未见文字碰撞，但字号偏小仍在，且无字幕截图不能验证成片字幕关系；I65已解决：第四章改为「AI里怎么用」；I66已解决：「贴近原模型／偏离扣分」无原有歧义，第三行9字须独立计块；I67已解决：三行体例统一；I68已解决：「复杂扣分」「偏离扣分」已压成短语。未见因此改出的新必改问题。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "只列纲要",
+     "a": 2,
+     "a_ev": "按第 2 轮口径逐屏数过，标题 ≤12 字（最长 l31「安全的人类反馈强化学习」11 字）、每块 ≤16 字、同屏 ≤4 块（l15 图+3 段=4，l17 图+h1+价格+状态=4，l21 图+价格+高度+状态=4）、全屏最多 l15 约 24 字，均未超硬上限；扣分只在 l30 h1「看 λ，找真正卡你的规矩」仍近整句、l17 图内注释「跑得越远，涨得越多」是口播「点跑出去越远，价就涨得越多」的缩写。",
+     "b": 2,
+     "b_ev": "逐屏核对后未发现硬上限超限。片尾两行主标题共12字；l39「给规矩标价」加三行分别为5、7、7、9字，共28字、4块。第三行超过8字，不能把列表合算1块，但分行计仍合规。l30标题仍偏口播整句，见问题表。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "抽查维持 2 分。按第 2 轮口径逐屏复数：l17 图（山顶、营地、图注共 12 字）+ h1 + 价格 λ 0 + 状态 = 4 块；l26–l28 同构两行表 + 公式 + h1 = 4 块；l39 第三行「贴近原模型 偏离扣分」9 字，不能合并成列表，分开算 h1 + 3 行 = 4 块、28 字；l03 淡出的两行 + 眉题 + h1 共 30 字。都没超硬上限。两人共同漏掉的只有 l27 h1 是公式的文字复述（P2 已处理），没有新的超限。"
+    },
+    "P2": {
+     "name": "与口播分工",
+     "a": 2,
+     "a_ev": "l17「跑得越远，涨得越多」与口播近逐字；l30 h1 与口播 l30「就知道哪条规矩在真正卡着你」同义复述；l31 眉题「训练大语言模型」与口播「训练大模型」叫法略不同；l35 出处「ICLR 2024」与口播「2023年」（出处豁免，记录）。其余如 l04「做到最好/不许越线」、l26 数字对比、片尾「给约束标价」与口播 l40 一致、分工好。",
+     "b": 1,
+     "b_ev": "l08用「多玩1分钟／−1块」呈现对应关系，分工清楚；但l27「多放0.1，多爬约3倍」仍未明确倍数的比较对象，不能准确承接口播的两个变化量。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "采纳 b。l27 h1「多放 0.1，多爬约 3 倍」中的「多爬约 3 倍」在中文里默认读成「高度涨到原来的约 3 倍」，可实际是 7.75→8.04；口播 l27 说的是「多爬的高度，大约是围栏放宽距离的三倍」，屏幕丢了比较对象，等于和口播意思不一致，按「与口播矛盾」算**必改**。a 把同一处只记为「多放」的措辞瑕疵（建议），低估了。另外 l17 图注「跑得越远，涨得越多」、l30 h1「看 λ，找真正卡你的规矩」仍是口播缩写（建议）；l31「训练大语言模型」/口播「大模型」、l35 出处 ICLR 2024/口播 2023 记录即可。**l27 定稿：`多爬的高度 ≈ 放宽的 3 倍`**（约 10 字，宽度与现 h1 相当，不会挤出右栏；与英文版「Extra height ≈ 3 × extra radius」同义）。"
+    },
+    "P3": {
+     "name": "层级与体例",
+     "a": 2,
+     "a_ev": "l06 口播要点是「拉格朗日乘子」，屏上最小的 38px 才写「单价 λ：拉格朗日乘子」，大字是「越线 → 扣分」；l23 新概念「拉格朗日条件」只是 22px 眼眉，h1 仍是上一句的「等高线贴着围栏」。其余页眉「01–04 · 章名」与章节卡一致，λ 大写问题已修（l28、l30 截图页眉为小写 λ），三级以内。",
+     "b": 3,
+     "b_ev": "四张章节卡与正文页眉叫法一致；l20撤掉旧标题与状态后，图、价格、高度分成3块；l21加状态共4块。l29「山顶在围栏里」已提升为醒目的前提。",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P4": {
+     "name": "中文措辞与排版",
+     "a": 2,
+     "a_ev": "章节标题「拉格朗日乘子是什么」「做个小实验」「把 λ 看成价格」「AI 里怎么用」读着顺，无生造名词短语；片尾「给约束标价 / 价对了，停在线上」无句号；扣分在 l27「多放 0.1，多爬约 3 倍」中「多放」单说读不出放什么（口播是「放宽」），l39 右列「λ 自己调」与「复杂扣分」「偏离扣分」体例不一。",
+     "b": 1,
+     "b_ev": "章节名「做个小实验」「把λ看成价格」「AI里怎么用」读来顺畅；但l27「多爬约3倍」仍有比较对象缺失的问题，见问题表。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "l27 同一句有两处措辞问题：「多放」读不出放了什么（a 指出，口播说的是「放宽」）；「多爬约 3 倍」缺比较对象（b 指出）。两人各说对一半，合起来是必改，不是 a 判的「建议」小瑕疵，所以取 1。从严条目逐一核过，都通过：章节卡「拉格朗日乘子是什么」「做个小实验」「把 λ 看成价格」「AI 里怎么用」、l03 眉题「两百多年前的办法」、片尾「给约束标价 / 价对了，停在线上」读着都顺，没有生造名词短语，也没有句末句号。l39 右列「λ 自己调」与「复杂扣分」「偏离扣分」体例不一，记建议。定稿同 P2：`多爬的高度 ≈ 放宽的 3 倍`。"
+    },
+    "P5": {
+     "name": "看得完",
+     "a": 2,
+     "a_ev": "l17 口播 3.5s，屏上约 23 字（图注 8 字+h1 5+状态 5+标签与 λ），约 6.6 字/秒，略超 6 字/秒且红字注释压在图右缘；l12（2.4s，11 字）、l19（3.3s，15 字）、l28（2.6s，新字仅「影子价格」）均在可读范围；l39 7.8s、三行 12 字很宽松。",
+     "b": 2,
+     "b_ev": "l12共11字、2.4秒，图中5字已在前屏出现，新增标题可读完；l17新增8字注释有3.5秒，并已加白底。l35／l36的24—28px图中文字仍偏小，见问题表。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "抽查维持 2 分。按「新增字数 / 停留时长」复算：l12 新增 6 字/2.4s、l17 新增 8 字/3.5s、l19 新增 6 字/3.3s、l28 新增 4 字/2.6s、l30 17 字/4.1s，都不超过约 6 字/秒（a 按全屏 23 字算出的 6.6 字/秒偏严，因为其中 15 字上一屏已经出现）。l35/l36 图中 24–28px 标签偏小（b 提），记录。两人没有共同漏掉可读性问题。"
+    },
+    "P6": {
+     "name": "改写",
+     "a": 3,
+     "a_ev": "问题表每条都给出可直接替换的写法，如 l27「放宽 0.1，多爬约 3 倍」、l39「λ 自己调」→「λ 随训练调」，l23 把「拉格朗日条件」提到 h2。",
+     "b": 3,
+     "b_ev": "问题表为l27提供「放宽0.1，多爬0.29」，沿用屏上已有数字；为l30提供「规矩的价格」，均可直接替换，且比原文短。",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": ""
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "上一轮屏幕中文条目逐条复核：I44–I46 片尾已改成「给约束标价 / 价对了，停在线上」（已解决）；I47 眉题「两百多年前的办法」不再出现 1788（已解决）；I48–I51 l06「越线 → 扣分」、l15「高度 − 扣分，取最大」（已解决，l06 仍有层级问题见 L06）；I53–I54 l20/l21 现 3–4 块（已解决）；I55 l23 改一行「往高处 → 直直穿过围栏」（已解决）；I56/I61 页眉 λ 已小写（已解决）；I59–I60 l27 改「多放 0.1，多爬约 3 倍」（已解决，但改出新瑕疵「多放」）；I62 l29 前提升 h2（已解决）；I65 章名改「AI 里怎么用」（已解决）；I66–I68 l39 三行改「安全底线 | λ 自己调 / 正则化 | 复杂扣分 / 贴近原模型 | 偏离扣分」（已解决，「别离」歧义消失）。「不改」的理由 I52（图注已加白底）、I63（口播只念英文，中文释义是唯一解释）、I64、I57、I58（公式未被裁）成立。",
+     "b": 1,
+     "b_ev": "I44已解决：片尾主标题压到12字；I45已解决：「就是」残句及行末逗号撤除；I46已解决：片尾明显压短；I47已解决：改为「两百多年前的办法」；I48已解决：改为「越线→扣分」；I49已解决：l15改为「高度−扣分，取最大」，驳回半角冒号判断的理由成立；I50已解决：旧说明淡化，新概念成为视觉重点；I51已解决：「取最大」消除了原来的断句歧义；I52不改理由成立：白底提高辨识度，新增8字在3.5秒内可读；I53已解决：l20为3块、l21为4块；I54已解决：同屏旧标题已撤；I55已解决：箭头式关系替代原来两行复述；I56已解决：页眉显示小写λ；I57不改在限字和自然度上成立，但l30仍建议纲要化；I58不改理由成立：三张截图公式均完整，0.1右侧有留白；I59未解决：改后仍未明确“三倍”的比较对象；I60未解决：采用裁决写法不等于消除了歧义；I61已解决：页眉与章节卡λ一致；I62已解决：前提升至h2；I63不改理由成立：中文释义帮助解释英文名称，没有另起概念；I64不改理由部分成立：页内未见文字碰撞，但字号偏小仍在，且无字幕截图不能验证成片字幕关系；I65已解决：第四章改为「AI里怎么用」；I66已解决：「贴近原模型／偏离扣分」无原有歧义，第三行9字须独立计块；I67已解决：三行体例统一；I68已解决：「复杂扣分」「偏离扣分」已压成短语。未见因此改出的新必改问题。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "上一轮 I59/I60（l27「三倍」跟谁比）没有真正解决：现稿「多放 0.1，多爬约 3 倍」照样有比较对象歧义，还多出「多放」这个新毛病。a 自己也写了「改出新瑕疵」，却给了 2 分，自相矛盾，所以采纳 b 的「未解决」。其余条目两人结论一致，截图核对后成立：I44–I46 片尾 12 字、I47 无 1788、I48/I49 l06「越线 → 扣分」与 l15「高度 − 扣分，取最大」、I53/I54 l20–l21 撤旧标题、I56/I61 页眉小写 λ、I62 l29 前提、I65 第四章名、I66–I68 l39 三行。"
+    }
+   },
+   "disputes": [
+    "P2",
+    "P4",
+    "R"
+   ],
+   "audits": [
+    "P1",
+    "P5"
+   ],
+   "final_scores": {
+    "P1": 2,
+    "P2": 1,
+    "P3": 2,
+    "P4": 1,
+    "P5": 2,
+    "P6": 3,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "P2",
+     "P4",
+     "R",
+     "P1",
+     "P5"
+    ],
+    "prompt": "items/screen_zh__judge.md",
+    "report": "reports/screen_zh__judge.md",
+    "ruling": {
+     "P2": {
+      "score": 1,
+      "evidence": "采纳 b。l27 h1「多放 0.1，多爬约 3 倍」中的「多爬约 3 倍」在中文里默认读成「高度涨到原来的约 3 倍」，可实际是 7.75→8.04；口播 l27 说的是「多爬的高度，大约是围栏放宽距离的三倍」，屏幕丢了比较对象，等于和口播意思不一致，按「与口播矛盾」算**必改**。a 把同一处只记为「多放」的措辞瑕疵（建议），低估了。另外 l17 图注「跑得越远，涨得越多」、l30 h1「看 λ，找真正卡你的规矩」仍是口播缩写（建议）；l31「训练大语言模型」/口播「大模型」、l35 出处 ICLR 2024/口播 2023 记录即可。**l27 定稿：`多爬的高度 ≈ 放宽的 3 倍`**（约 10 字，宽度与现 h1 相当，不会挤出右栏；与英文版「Extra height ≈ 3 × extra radius」同义）。"
+     },
+     "P4": {
+      "score": 1,
+      "evidence": "l27 同一句有两处措辞问题：「多放」读不出放了什么（a 指出，口播说的是「放宽」）；「多爬约 3 倍」缺比较对象（b 指出）。两人各说对一半，合起来是必改，不是 a 判的「建议」小瑕疵，所以取 1。从严条目逐一核过，都通过：章节卡「拉格朗日乘子是什么」「做个小实验」「把 λ 看成价格」「AI 里怎么用」、l03 眉题「两百多年前的办法」、片尾「给约束标价 / 价对了，停在线上」读着都顺，没有生造名词短语，也没有句末句号。l39 右列「λ 自己调」与「复杂扣分」「偏离扣分」体例不一，记建议。定稿同 P2：`多爬的高度 ≈ 放宽的 3 倍`。"
+     },
+     "R": {
+      "score": 1,
+      "evidence": "上一轮 I59/I60（l27「三倍」跟谁比）没有真正解决：现稿「多放 0.1，多爬约 3 倍」照样有比较对象歧义，还多出「多放」这个新毛病。a 自己也写了「改出新瑕疵」，却给了 2 分，自相矛盾，所以采纳 b 的「未解决」。其余条目两人结论一致，截图核对后成立：I44–I46 片尾 12 字、I47 无 1788、I48/I49 l06「越线 → 扣分」与 l15「高度 − 扣分，取最大」、I53/I54 l20–l21 撤旧标题、I56/I61 页眉小写 λ、I62 l29 前提、I65 第四章名、I66–I68 l39 三行。"
+     },
+     "P1": {
+      "score": 2,
+      "evidence": "抽查维持 2 分。按第 2 轮口径逐屏复数：l17 图（山顶、营地、图注共 12 字）+ h1 + 价格 λ 0 + 状态 = 4 块；l26–l28 同构两行表 + 公式 + h1 = 4 块；l39 第三行「贴近原模型 偏离扣分」9 字，不能合并成列表，分开算 h1 + 3 行 = 4 块、28 字；l03 淡出的两行 + 眉题 + h1 共 30 字。都没超硬上限。两人共同漏掉的只有 l27 h1 是公式的文字复述（P2 已处理），没有新的超限。"
+     },
+     "P5": {
+      "score": 2,
+      "evidence": "抽查维持 2 分。按「新增字数 / 停留时长」复算：l12 新增 6 字/2.4s、l17 新增 8 字/3.5s、l19 新增 6 字/3.3s、l28 新增 4 字/2.6s、l30 17 字/4.1s，都不超过约 6 字/秒（a 按全屏 23 字算出的 6.6 字/秒偏严，因为其中 15 字上一屏已经出现）。l35/l36 图中 24–28px 标签偏小（b 提），记录。两人没有共同漏掉可读性问题。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 14,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_zh__a",
+    "codex/screen_zh__b"
+   ]
+  },
+  {
+   "id": "screen_en",
+   "law": "lines",
+   "law_name": "English on-screen text (slides)",
+   "color": "#6b4fc0",
+   "scope": [],
+   "checks": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "how": "Hard limits (report every breach): title ≤6 words; any other block ≤9 words; ≤4 text blocks per screen (not counting the small eyebrow label, source line or chart ticks); ≤22 words per screen. Narration subtitles also sit at the bottom of the frame. Counting rules (round-2 ruling, 2026-11-09): eyebrow labels, case tabs, source lines and end-card credits are exempt; a list, table or card row of look-alike items (each ≤6 words, at most 6 items) counts as one block, and numbering doesn't count as words; in-chart text (zone names, curve names, axis titles, bar labels, callouts) counts toward words and the whole chart counts as one block — only axis tick numbers are exempt; a table's column headers count with the table.",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_en.md",
+   "prompt": "items/screen_en__a.md",
+   "what": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "problem": "The previous version put full sentences on screen (e.g. 'A separate model identified the hospital for scans from two hospitals — a hospital fingerprint'), repeating the narration. The user wants outline-only, concise slides (2026-11-08).",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "Outline, not prose",
+     "question": "Only keywords, short phrases, key numbers, labels; no full narration sentences. Count words per screen against the hard limits"
+    },
+    {
+     "id": "P2",
+     "name": "Divided from narration",
+     "question": "Screen carries structure, numbers, contrasts; narration explains. No verbatim repetition, no new claims the narration doesn't make; terms match the narration"
+    },
+    {
+     "id": "P3",
+     "name": "Hierarchy and consistency",
+     "question": "What reads first, second; ≤3 levels (title, point, note); numbering, labels, chapter names and agenda items consistent with each other"
+    },
+    {
+     "id": "P4",
+     "name": "Native phrasing and style",
+     "question": "Sentence case headline style; no Chinglish; consistent punctuation (no trailing periods on fragments), en dashes, quotes; parallel grammar in lists; **chapter titles and headings must read naturally aloud** — awkward noun stacks are must-fix"
+    },
+    {
+     "id": "P5",
+     "name": "Readable in time",
+     "question": "From the screenshot and how long it stays: readable in time (~3 words/s while also reading subtitles and the chart)"
+    },
+    {
+     "id": "P6",
+     "name": "Rewrites",
+     "question": "For every breach or awkward phrase, a shorter drop-in rewrite"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_en__a.md",
+     "prompt": "items/screen_en__a.md",
+     "scores": {
+      "P1": {
+       "score": 2,
+       "evidence": "Round-1 fixes hold. l39 list is 3 look-alike rows (Safety line / Original model etc., each ≤6 words) = 1 block, 6 words of text + title 3 = ~9 words; l20 now 3 blocks (chart, λ 3, Height 7.75). Remaining small breach: l06 shows 5 text-bearing elements at once (No wall, A price instead, Cross it → lose points, The price λ: the Lagrange multiplier, plus the λ icon) against the 4-block cap; the first two are dimmed to ~30% but still on screen. l27 prints the same relation twice (+0.29 ≈ 3 × 0.1 and Extra height ≈ 3 × extra radius)."
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "Terms match the narration throughout (l10 \"just-right price\", l23 \"straight through fence\", l37 \"Prices on rules\"). Small issues: l17 keeps the stale \"Out past the fence\" from l16 while the narration is about raising the price; l06 body \"The price λ: the Lagrange multiplier\" is close to a verbatim echo of \"That price is the Lagrange multiplier, usually written λ\"; card_intro title is plural \"Lagrange multipliers\" while narration and every other screen say singular \"multiplier\"."
+      },
+      "P3": {
+       "score": 1,
+       "evidence": "Running header on l04–l10 still reads \"01 · What a Lagrange multiplier is\" (s2_l04 screenshot, 7 screens), but the chapter card c_problem now reads \"What is a Lagrange multiplier?\". Chapters 02, 03, 04 match card and header exactly; chapter 01 does not. This is a strict chapter-title item."
+      },
+      "P4": {
+       "score": 1,
+       "evidence": "Same header: \"What a Lagrange multiplier is\" ends on a bare \"is\", stilted when read aloud; this was the round-1 I1 finding and was only fixed on the card, not on the header that is on screen far longer (strict item, so 必改). Otherwise phrasing is good: \"No fence, just a charge\", \"Rule: stay in the fence\", \"Contour touches fence\", \"Prices on rules\" are natural; sentence case and no trailing periods throughout; a few fragments mix capitalisation styles (\"Over → λ up\" vs \"Cross it → lose points\") but consistently."
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "Most screens are ≤14 words and stay ≥5 s. l30 (4.2 s, 9 words incl. title) and l28 (2.3 s, \"Shadow price\" + 2 table rows + formula, 13 words but all carried over from l27 so only 2 new words) are fine. l17 (6.5 s) has the red callout \"Farther out, higher price\" spilling past the right edge of the map panel (ends x≈1000, panel ends x≈965) and overlapping the contour area; l33 headline \"Harm ≤ the line · Most helpful\" starts at y≈570, touching the bottom of the two cards (y≈562)."
+      },
+      "P6": {
+       "score": 2,
+       "evidence": "Every issue below has a drop-in rewrite; the must-fix header has a one-word-class fix (\"What is a Lagrange multiplier?\" to match the card). The rewrites for l06/l27/l17 are short and use only words the narration already says."
+      },
+      "R": {
+       "score": 2,
+       "evidence": "I1 (c_problem card): card resolved, but the same phrase persists in the running header on l04–l10, so 改出新问题/部分未解决 (see issue 1). I2 (intro clipping): resolved, card_intro title now spans x≈130–1800 inside the frame. I3/I43 (outro): resolved, \"Price the rule / just right\" + \"Next · Gradient descent\" fits ≤6 words. I4 not adopted: reason holds (Goal/Constraint would pre-empt l04). I5: resolved, \"“Do your best”\" and \"“Never cross it”\" on one line each. I6: resolved, eyebrow \"A 200-year-old idea\". I8: resolved, \"Don’t cross the line\" on one line. I9 not adopted: reason mostly holds, the tag λ is an icon and the big λ is the term reveal; only the body line is slightly tautological (建议 below). I12 not adopted: reason holds, the 240px λ is the focus. I19: only partly resolved, the callout now has a white backing but still overruns the panel edge (issue 5). I20 not adopted: reason holds. I21/I22/I23: resolved (l20 = 3 blocks). I35: wording fixed, but the spacing under the cards is still tight (issue 6). I37 not adopted: reason holds (\"λ tunes itself\" is a 3-word headline phrase and the narration says \"adjusts itself\"). I38: resolved, \"Over → λ up\" is complete and clear of the frame top. I39–I42: resolved, \"Complexity costs\", \"Original model / Drifting costs\" are parallel nouns. I26/I27: resolved, \"Uphill → straight through fence\". I29–I32: resolved."
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/screen_en__b.md",
+     "prompt": "items/screen_en__b.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "l35–l39 retain “λ tunes itself,” an explanatory clause repeating the narration. No numerical hard-limit breach found under the revised grouping rule: l27 has 16 words; l39 has 14 words, with its three qualifying rows grouped as one block."
+      },
+      "P2": {
+       "score": 1,
+       "evidence": "l02 prints “Do your best” and “Never cross it” alongside their paraphrases while the narration speaks the same requests. l35’s “λ tunes itself” similarly restates “λ adjusts itself.”"
+      },
+      "P3": {
+       "score": 1,
+       "evidence": "c_problem says “What is a Lagrange multiplier?” but l04–l10 retain the previous chapter label, “What a Lagrange multiplier is.” Conversely, l20 and l21 now comply at three and four blocks respectively."
+      },
+      "P4": {
+       "score": 1,
+       "evidence": "l13’s “Rule: stay in the fence” is unnatural spatial English; someone stays **inside** a fence. l04’s “Make it the best” also retains an unnecessary, undefined “it.”"
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "l30’s nine words fit its 4.2-second line; l28 introduces only “Shadow price” over previously established material. Minor layout problems remain: “most” is stranded in l07, “fence” in l23, and l33’s headline sits immediately beneath the cards. Exact entrance times and subtitle clearance cannot be verified from these stills."
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "Every issue below has a shorter replacement, including “Rule: inside the fence,” “Tuning λ,” and “Daily limit: 1 hour.” The replacements preserve the spoken concepts without adding technical terminology."
+      },
+      "R": {
+       "score": 1,
+       "evidence": "**I1 — Unresolved in propagation:** c_problem is fixed, but l04–l10 retain the old chapter wording. **I2 — Resolved:** card_intro displays the complete title within the frame. **I3 — Resolved:** “Price the rule / just right” removes the dangling construction. **I4 — Unresolved:** avoiding premature terminology is a reasonable objection to “Goal / Constraint,” but it does not address the duplicated spoken requests or the nonparallel main pair; plain alternatives are available. **I5 — Resolved:** both quotations fit and “Never cross it” has an object. **I6 — Resolved:** “A 200-year-old idea” removes the unsupported exact date. **I7 — Unresolved:** the rejection discusses the opposite card, not the vague “it.” **I8 — Resolved:** “Don’t cross the line” fits on one line. **I9 — Partly resolved:** retaining an icon λ beside the defining λ is defensible; the unnecessarily long definition remains. **I10 — Partly resolved:** “Cross it → lose points” fixes the ambiguous “lost,” but the definition remains verbose. **I11 — New problem:** the revised phrase strands “most” on its own line. **I12 — Accepted unchanged:** the large λ is a legitimate focal point; the explanatory eyebrow remains legible. **I13 — New problem:** “stay in the fence” introduces an unnatural preposition. **I14 — Resolved:** fragment periods removed. **I15 — Resolved:** same punctuation fix. **I16 — Resolved:** “Maximize height − charge” states the operation directly. **I17 — Resolved:** production-note wording removed. **I18 — Resolved:** the formula instruction fits on one line. **I19 — Resolved for readability:** the white backing separates the callout from the orange contour fill. **I20 — Unverified:** the explanation that 1.5 appears before further increases is plausible; the supplied end-frame showing 2.63 cannot verify that hold. **I21 — Resolved:** l20 has three blocks. **I22 — Resolved:** l20–l21 no longer exceed four blocks. **I23 — Resolved:** l21 has four blocks; an additional numerical readout is a valid screen/narration division. **I24 — Accepted unchanged:** retaining the previous best point supports the comparison; no English-text defect established. **I25 — Resolved:** “touches” matches the intended relationship. **I26 — Resolved in structure, with a new layout blemish:** the sentence is compressed, but the claimed one-line replacement actually strands “fence.” Avoiding unfamiliar terminology is reasonable. **I27 — Resolved:** the two explanatory blocks become one compact directional label. **I28 — Accepted unchanged:** “costly” and “expensive” express the same concept naturally. **I29 — Resolved:** the extra-height/extra-radius relationship is explicit. **I30 — Resolved:** the replacement stays within the text area. **I31 — Resolved:** “No cost” replaces the explanatory sentence. **I32 — Resolved:** the headline is shortened and the repeated wording removed. **I33 — Resolved:** nine words in 4.2 seconds, with parallel result labels. **I34 — Not reopened:** a conference year in a citation need not equal the proposal year; counting exemption alone would not excuse an actual contradiction. **I35 — Partly resolved:** “Most helpful” fixes “max help,” but the headline remains crowded against the card bottoms. **I36 — Resolved:** the formula now subtracts named scores. **I37 — Unresolved:** three tokens do not make a subject–verb clause an outline; “Tuning λ,” already used earlier, avoids both repetition and new terminology. **I38 — Resolved:** the chart callout’s letterforms are complete. **I39 — Resolved:** “Too complex costs” is removed. **I40 — Resolved:** the replacement is idiomatic. **I41 — Resolved:** “Original model” restores parallel noun labels. **I42 — Resolved under the revised rule:** the three short rows qualify for grouping; applying a nine-word aggregate cap would be incorrect. **I43 — Resolved:** the outro’s five-word headline removes the earlier eight-word title and reconstructed narration sentence."
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "Outline, not prose",
+     "a": 2,
+     "a_ev": "Round-1 fixes hold. l39 list is 3 look-alike rows (Safety line / Original model etc., each ≤6 words) = 1 block, 6 words of text + title 3 = ~9 words; l20 now 3 blocks (chart, λ 3, Height 7.75). Remaining small breach: l06 shows 5 text-bearing elements at once (No wall, A price instead, Cross it → lose points, The price λ: the Lagrange multiplier, plus the λ icon) against the 4-block cap; the first two are dimmed to ~30% but still on screen. l27 prints the same relation twice (+0.29 ≈ 3 × 0.1 and Extra height ≈ 3 × extra radius).",
+     "b": 1,
+     "b_ev": "l35–l39 retain “λ tunes itself,” an explanatory clause repeating the narration. No numerical hard-limit breach found under the revised grouping rule: l27 has 16 words; l39 has 14 words, with its three qualifying rows grouped as one block.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "a 站得住。按第 2 轮分组规则逐屏核过，没有硬上限超标：l27 是表格两行（1 块）+ 公式 + 说明行，共 3 块 16 词；l39 是标题 + 三行列表（1 块），14 词；l06 中淡出的「No wall / A price instead」是一行同类项，算 1 块，加上「Cross it → lose points」和正文，共 3 块 14 词。b 认为「λ tunes itself」是“解释性从句”，但它只有 3 个记号，是标题，不是口播句（口播是 “And λ adjusts itself during training…”），所以 1 分不成立。剩下的小瑕疵是 l27 把同一关系印了两遍（+0.29 ≈ 3 × 0.1 和 Extra height ≈ 3 × extra radius）。"
+    },
+    "P2": {
+     "name": "Divided from narration",
+     "a": 2,
+     "a_ev": "Terms match the narration throughout (l10 \"just-right price\", l23 \"straight through fence\", l37 \"Prices on rules\"). Small issues: l17 keeps the stale \"Out past the fence\" from l16 while the narration is about raising the price; l06 body \"The price λ: the Lagrange multiplier\" is close to a verbatim echo of \"That price is the Lagrange multiplier, usually written λ\"; card_intro title is plural \"Lagrange multipliers\" while narration and every other screen say singular \"multiplier\".",
+     "b": 1,
+     "b_ev": "l02 prints “Do your best” and “Never cross it” alongside their paraphrases while the narration speaks the same requests. l35’s “λ tunes itself” similarly restates “λ adjusts itself.”",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "判 1 分，但理由不是 b 给的那条。l02 的引语「“Do your best” → Be helpful」是“口语要求 → 正式目标”的对应结构，不算重复，b 的这条证据驳回。真正与口播对不上的有两处，都在严格项：①冷开场 l01–l02 的「Be helpful」丢了口播 “as helpful as you can” / “Do your best” 的“尽量”含义，同一概念到 l33 又写成「Most helpful」（中文源两处都是“尽量有用”）；②片尾 card_s6 的眉标「IN ONE SENTENCE」，而口播 l40 说的是 “in one line”，眉标下面的「Price the rule just right」也不是一个句子。见补充问题。"
+    },
+    "P3": {
+     "name": "Hierarchy and consistency",
+     "a": 1,
+     "a_ev": "Running header on l04–l10 still reads \"01 · What a Lagrange multiplier is\" (s2_l04 screenshot, 7 screens), but the chapter card c_problem now reads \"What is a Lagrange multiplier?\". Chapters 02, 03, 04 match card and header exactly; chapter 01 does not. This is a strict chapter-title item.",
+     "b": 1,
+     "b_ev": "c_problem says “What is a Lagrange multiplier?” but l04–l10 retain the previous chapter label, “What a Lagrange multiplier is.” Conversely, l20 and l21 now comply at three and four blocks respectively.",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "P4": {
+     "name": "Native phrasing and style",
+     "a": 1,
+     "a_ev": "Same header: \"What a Lagrange multiplier is\" ends on a bare \"is\", stilted when read aloud; this was the round-1 I1 finding and was only fixed on the card, not on the header that is on screen far longer (strict item, so 必改). Otherwise phrasing is good: \"No fence, just a charge\", \"Rule: stay in the fence\", \"Contour touches fence\", \"Prices on rules\" are natural; sentence case and no trailing periods throughout; a few fragments mix capitalisation styles (\"Over → λ up\" vs \"Cross it → lose points\") but consistently.",
+     "b": 1,
+     "b_ev": "l13’s “Rule: stay in the fence” is unnatural spatial English; someone stays **inside** a fence. l04’s “Make it the best” also retains an unnecessary, undefined “it.”",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "P5": {
+     "name": "Readable in time",
+     "a": 2,
+     "a_ev": "Most screens are ≤14 words and stay ≥5 s. l30 (4.2 s, 9 words incl. title) and l28 (2.3 s, \"Shadow price\" + 2 table rows + formula, 13 words but all carried over from l27 so only 2 new words) are fine. l17 (6.5 s) has the red callout \"Farther out, higher price\" spilling past the right edge of the map panel (ends x≈1000, panel ends x≈965) and overlapping the contour area; l33 headline \"Harm ≤ the line · Most helpful\" starts at y≈570, touching the bottom of the two cards (y≈562).",
+     "b": 2,
+     "b_ev": "l30’s nine words fit its 4.2-second line; l28 introduces only “Shadow price” over previously established material. Minor layout problems remain: “most” is stranded in l07, “fence” in l23, and l33’s headline sits immediately beneath the cards. Exact entrance times and subtitle clearance cannot be verified from these stills.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "抽查后维持 2 分。两人各漏一半，合起来证据完整：l07「1 hour a day at / most」把 at most 拆到两行（b 抓到）；l23「straight through / fence」孤字成行（b 抓到）；l17 标注「Farther out, higher price」右端约 x≈1000，超出地图面板边缘 x≈965（a 抓到，b 误判已解决）；l33 标题贴着卡片底边（两人都抓到）。l28（2.3 s）只新增 2 个词，l30（4.2 s）9 词，都读得完。没有发现两人共同漏掉的时长问题。"
+    },
+    "P6": {
+     "name": "Rewrites",
+     "a": 2,
+     "a_ev": "Every issue below has a drop-in rewrite; the must-fix header has a one-word-class fix (\"What is a Lagrange multiplier?\" to match the card). The rewrites for l06/l27/l17 are short and use only words the narration already says.",
+     "b": 3,
+     "b_ev": "Every issue below has a shorter replacement, including “Rule: inside the fence,” “Tuning λ,” and “Daily limit: 1 hour.” The replacements preserve the spoken concepts without adding technical terminology.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "b 给 3 分偏高，有几条改写比原文差。「Harm ≤ limit」（l01、l33）把口播和全片统一用的术语 line 换成了 limit，l35 图中也标着 “The line”；把 l35 改成「Tuning λ」会和 s3 手动调价的标题撞名，抹掉“λ 自己调”这个要点；a 给 l04 的「Do it as well as possible」比原文还长，“it” 仍然没有指代。其余改写可用（如「Rule: inside the fence」「Uphill → straight out」「λ = Lagrange multiplier」）。"
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "I1 (c_problem card): card resolved, but the same phrase persists in the running header on l04–l10, so 改出新问题/部分未解决 (see issue 1). I2 (intro clipping): resolved, card_intro title now spans x≈130–1800 inside the frame. I3/I43 (outro): resolved, \"Price the rule / just right\" + \"Next · Gradient descent\" fits ≤6 words. I4 not adopted: reason holds (Goal/Constraint would pre-empt l04). I5: resolved, \"“Do your best”\" and \"“Never cross it”\" on one line each. I6: resolved, eyebrow \"A 200-year-old idea\". I8: resolved, \"Don’t cross the line\" on one line. I9 not adopted: reason mostly holds, the tag λ is an icon and the big λ is the term reveal; only the body line is slightly tautological (建议 below). I12 not adopted: reason holds, the 240px λ is the focus. I19: only partly resolved, the callout now has a white backing but still overruns the panel edge (issue 5). I20 not adopted: reason holds. I21/I22/I23: resolved (l20 = 3 blocks). I35: wording fixed, but the spacing under the cards is still tight (issue 6). I37 not adopted: reason holds (\"λ tunes itself\" is a 3-word headline phrase and the narration says \"adjusts itself\"). I38: resolved, \"Over → λ up\" is complete and clear of the frame top. I39–I42: resolved, \"Complexity costs\", \"Original model / Drifting costs\" are parallel nouns. I26/I27: resolved, \"Uphill → straight through fence\". I29–I32: resolved.",
+     "b": 1,
+     "b_ev": "**I1 — Unresolved in propagation:** c_problem is fixed, but l04–l10 retain the old chapter wording. **I2 — Resolved:** card_intro displays the complete title within the frame. **I3 — Resolved:** “Price the rule / just right” removes the dangling construction. **I4 — Unresolved:** avoiding premature terminology is a reasonable objection to “Goal / Constraint,” but it does not address the duplicated spoken requests or the nonparallel main pair; plain alternatives are available. **I5 — Resolved:** both quotations fit and “Never cross it” has an object. **I6 — Resolved:** “A 200-year-old idea” removes the unsupported exact date. **I7 — Unresolved:** the rejection discusses the opposite card, not the vague “it.” **I8 — Resolved:** “Don’t cross the line” fits on one line. **I9 — Partly resolved:** retaining an icon λ beside the defining λ is defensible; the unnecessarily long definition remains. **I10 — Partly resolved:** “Cross it → lose points” fixes the ambiguous “lost,” but the definition remains verbose. **I11 — New problem:** the revised phrase strands “most” on its own line. **I12 — Accepted unchanged:** the large λ is a legitimate focal point; the explanatory eyebrow remains legible. **I13 — New problem:** “stay in the fence” introduces an unnatural preposition. **I14 — Resolved:** fragment periods removed. **I15 — Resolved:** same punctuation fix. **I16 — Resolved:** “Maximize height − charge” states the operation directly. **I17 — Resolved:** production-note wording removed. **I18 — Resolved:** the formula instruction fits on one line. **I19 — Resolved for readability:** the white backing separates the callout from the orange contour fill. **I20 — Unverified:** the explanation that 1.5 appears before further increases is plausible; the supplied end-frame showing 2.63 cannot verify that hold. **I21 — Resolved:** l20 has three blocks. **I22 — Resolved:** l20–l21 no longer exceed four blocks. **I23 — Resolved:** l21 has four blocks; an additional numerical readout is a valid screen/narration division. **I24 — Accepted unchanged:** retaining the previous best point supports the comparison; no English-text defect established. **I25 — Resolved:** “touches” matches the intended relationship. **I26 — Resolved in structure, with a new layout blemish:** the sentence is compressed, but the claimed one-line replacement actually strands “fence.” Avoiding unfamiliar terminology is reasonable. **I27 — Resolved:** the two explanatory blocks become one compact directional label. **I28 — Accepted unchanged:** “costly” and “expensive” express the same concept naturally. **I29 — Resolved:** the extra-height/extra-radius relationship is explicit. **I30 — Resolved:** the replacement stays within the text area. **I31 — Resolved:** “No cost” replaces the explanatory sentence. **I32 — Resolved:** the headline is shortened and the repeated wording removed. **I33 — Resolved:** nine words in 4.2 seconds, with parallel result labels. **I34 — Not reopened:** a conference year in a citation need not equal the proposal year; counting exemption alone would not excuse an actual contradiction. **I35 — Partly resolved:** “Most helpful” fixes “max help,” but the headline remains crowded against the card bottoms. **I36 — Resolved:** the formula now subtracts named scores. **I37 — Unresolved:** three tokens do not make a subject–verb clause an outline; “Tuning λ,” already used earlier, avoids both repetition and new terminology. **I38 — Resolved:** the chart callout’s letterforms are complete. **I39 — Resolved:** “Too complex costs” is removed. **I40 — Resolved:** the replacement is idiomatic. **I41 — Resolved:** “Original model” restores parallel noun labels. **I42 — Resolved under the revised rule:** the three short rows qualify for grouping; applying a nine-word aggregate cap would be incorrect. **I43 — Resolved:** the outro’s five-word headline removes the earlier eight-word title and reconstructed narration sentence.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "上一轮的 I1 是严格章节标题项，在本轮被审渲染里只改了一半：c_problem 卡已改成 “What is a Lagrange multiplier?”，但 l04–l10 共 7 屏的眉标仍是「01 · What a Lagrange multiplier is」，与卡片不一致。a 自己把它列为必改却给了 R 2 分，前后矛盾。另外，I11 的改法造成 l07「most」孤行，I26 的改法造成 l23「fence」孤行，都是改出的新问题。已核对场景源文件：`scenes/web/s2.html:25` 现已写成 `01 · What is a Lagrange multiplier?`，但修改时间（13:09）晚于截图（13:03），必须重新渲染、确认截图后才能销项。**定稿：l04–l10 眉标 = `01 · What is a Lagrange multiplier?`**（与 c_problem 卡逐字一致）。"
+    }
+   },
+   "disputes": [
+    "P1",
+    "P2",
+    "R"
+   ],
+   "audits": [
+    "P5",
+    "P6"
+   ],
+   "final_scores": {
+    "P1": 2,
+    "P2": 1,
+    "P3": 1,
+    "P4": 1,
+    "P5": 2,
+    "P6": 2,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "P1",
+     "P2",
+     "R",
+     "P5",
+     "P6"
+    ],
+    "prompt": "items/screen_en__judge.md",
+    "report": "reports/screen_en__judge.md",
+    "ruling": {
+     "P1": {
+      "score": 2,
+      "evidence": "a 站得住。按第 2 轮分组规则逐屏核过，没有硬上限超标：l27 是表格两行（1 块）+ 公式 + 说明行，共 3 块 16 词；l39 是标题 + 三行列表（1 块），14 词；l06 中淡出的「No wall / A price instead」是一行同类项，算 1 块，加上「Cross it → lose points」和正文，共 3 块 14 词。b 认为「λ tunes itself」是“解释性从句”，但它只有 3 个记号，是标题，不是口播句（口播是 “And λ adjusts itself during training…”），所以 1 分不成立。剩下的小瑕疵是 l27 把同一关系印了两遍（+0.29 ≈ 3 × 0.1 和 Extra height ≈ 3 × extra radius）。"
+     },
+     "P2": {
+      "score": 1,
+      "evidence": "判 1 分，但理由不是 b 给的那条。l02 的引语「“Do your best” → Be helpful」是“口语要求 → 正式目标”的对应结构，不算重复，b 的这条证据驳回。真正与口播对不上的有两处，都在严格项：①冷开场 l01–l02 的「Be helpful」丢了口播 “as helpful as you can” / “Do your best” 的“尽量”含义，同一概念到 l33 又写成「Most helpful」（中文源两处都是“尽量有用”）；②片尾 card_s6 的眉标「IN ONE SENTENCE」，而口播 l40 说的是 “in one line”，眉标下面的「Price the rule just right」也不是一个句子。见补充问题。"
+     },
+     "P5": {
+      "score": 2,
+      "evidence": "抽查后维持 2 分。两人各漏一半，合起来证据完整：l07「1 hour a day at / most」把 at most 拆到两行（b 抓到）；l23「straight through / fence」孤字成行（b 抓到）；l17 标注「Farther out, higher price」右端约 x≈1000，超出地图面板边缘 x≈965（a 抓到，b 误判已解决）；l33 标题贴着卡片底边（两人都抓到）。l28（2.3 s）只新增 2 个词，l30（4.2 s）9 词，都读得完。没有发现两人共同漏掉的时长问题。"
+     },
+     "P6": {
+      "score": 2,
+      "evidence": "b 给 3 分偏高，有几条改写比原文差。「Harm ≤ limit」（l01、l33）把口播和全片统一用的术语 line 换成了 limit，l35 图中也标着 “The line”；把 l35 改成「Tuning λ」会和 s3 手动调价的标题撞名，抹掉“λ 自己调”这个要点；a 给 l04 的「Do it as well as possible」比原文还长，“it” 仍然没有指代。其余改写可用（如「Rule: inside the fence」「Uphill → straight out」「λ = Lagrange multiplier」）。"
+     },
+     "R": {
+      "score": 1,
+      "evidence": "上一轮的 I1 是严格章节标题项，在本轮被审渲染里只改了一半：c_problem 卡已改成 “What is a Lagrange multiplier?”，但 l04–l10 共 7 屏的眉标仍是「01 · What a Lagrange multiplier is」，与卡片不一致。a 自己把它列为必改却给了 R 2 分，前后矛盾。另外，I11 的改法造成 l07「most」孤行，I26 的改法造成 l23「fence」孤行，都是改出的新问题。已核对场景源文件：`scenes/web/s2.html:25` 现已写成 `01 · What is a Lagrange multiplier?`，但修改时间（13:09）晚于截图（13:03），必须重新渲染、确认截图后才能销项。**定稿：l04–l10 眉标 = `01 · What is a Lagrange multiplier?`**（与 c_problem 卡逐字一致）。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 22,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_en__a",
+    "codex/screen_en__b"
+   ]
+  }
+ ],
+ "state": "已收轮",
+ "concluded_at": "2026-11-09T13:15:45",
+ "result": "结果.md",
+ "verdict": {
+  "result": "不通过",
+  "text": "不通过：4 项未过；已按问题清单修改，开下一轮复核"
+ },
+ "log": []
+}

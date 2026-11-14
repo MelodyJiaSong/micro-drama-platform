@@ -16,20 +16,22 @@ import {
   listCharacterVideos,
   mediaUrl,
 } from "../api";
-import { extractDramas, findAssetDir, type DramaChoice } from "../lib/dramas";
-import { CHARACTER_DIR_RE } from "../lib/characterDir";
+import { characterFolders, characterGroups, extractDramas, findAssetDir, type DramaChoice } from "../lib/dramas";
 import { announceToast } from "../lib/announce";
 import { ApiError, type TreeNode } from "../types";
 import { useTreeLoader } from "./TreeLoaderContext";
+import { DemoFinalBadge } from "./DemoFinalBadge";
+import { useDemoStatus } from "../lib/demoStatus";
+import { heroPreviewHref } from "../lib/heroPreview";
 
 const IMAGE_EXTS = [".png", ".jpg", ".jpeg", ".webp"];
-const CHAR_DIR_RE = CHARACTER_DIR_RE;
 
 interface CharacterTile {
   folder: string; // e.g. "c1_裴知秋"
   mdPath: string; // the character bible md
   dirPath: string; // the character folder
   thumbPath: string | null; // portrait image (fallback when no video)
+  group: string | null; // group folder under characters/ (e.g. "近卫_sentinel"), null when flat
 }
 
 function extOf(p: string): string {
@@ -59,8 +61,7 @@ function tilesForDrama(tree: TreeNode | null, drama: DramaChoice | null): Charac
   const charsDir = findAssetDir(dramaNode, "characters");
   if (!charsDir) return [];
   const tiles: CharacterTile[] = [];
-  for (const folder of charsDir.children ?? []) {
-    if (folder.type !== "directory" || !CHAR_DIR_RE.test(folder.name)) continue;
+  for (const { node: folder, group } of characterFolders(charsDir)) {
     const files = (folder.children ?? []).filter(isLeafFile);
     const images = files.filter((f) => IMAGE_EXTS.includes(extOf(f.path)));
     // Prefer the portrait named after the folder (cN_xxx.png); else first image.
@@ -71,9 +72,17 @@ function tilesForDrama(tree: TreeNode | null, drama: DramaChoice | null): Charac
       mdPath: `${folder.path}/${folder.name}.md`,
       dirPath: folder.path,
       thumbPath: portrait ? portrait.path : null,
+      group,
     });
   }
   return tiles;
+}
+
+/** Tiles split by group folder, in first-seen order (one null group when flat). */
+function tileGroups(tiles: CharacterTile[]): [string | null, CharacterTile[]][] {
+  const groups = new Map<string | null, CharacterTile[]>();
+  for (const t of tiles) groups.set(t.group, [...(groups.get(t.group) ?? []), t]);
+  return [...groups.entries()];
 }
 
 export interface CharacterGridProps {
@@ -91,6 +100,7 @@ export function CharacterGrid({ tree, onChange }: CharacterGridProps): JSX.Eleme
   // for the whole map = not loaded yet (degrade to portrait-only).
   const [videos, setVideos] = useState<Record<string, string | null>>({});
   const [regenFolder, setRegenFolder] = useState<string | null>(null);
+  const demoStatus = useDemoStatus();
 
   // Initial drama comes from the `?drama=` query (set by the drama page's 角色画廊
   // button) when the user hasn't picked one from the dropdown yet.
@@ -111,12 +121,15 @@ export function CharacterGrid({ tree, onChange }: CharacterGridProps): JSX.Eleme
   const tiles = useMemo<CharacterTile[]>(() => tilesForDrama(tree, drama), [tree, drama]);
 
   // Lazy tree (follow-up 280): each character folder arrives as a stub; load
-  // them so the tiles can find their portraits.
+  // them so the tiles can find their portraits. Group folders (follow-up 284)
+  // arrive as stubs too: once loaded, their card stubs are loaded the same way.
   const { ensureChildrenLoaded } = useTreeLoader();
   useEffect(() => {
     if (!tree || !drama) return;
     const dramaNode = findNodeByPath(tree, drama.path);
-    ensureChildrenLoaded(dramaNode ? findAssetDir(dramaNode, "characters") : null);
+    const charsDir = dramaNode ? findAssetDir(dramaNode, "characters") : null;
+    ensureChildrenLoaded(charsDir);
+    for (const group of charsDir ? characterGroups(charsDir) : []) ensureChildrenLoaded(group);
   }, [tree, drama, ensureChildrenLoaded]);
 
   // Fetch each character's newest turntable mp4 (the tree has no mtime, so the
@@ -195,6 +208,7 @@ export function CharacterGrid({ tree, onChange }: CharacterGridProps): JSX.Eleme
   }
 
   const withVideo = tiles.filter((t) => videos[t.folder]).length;
+  const withFinal = tiles.filter((t) => demoStatus.has(t.dirPath)).length;
 
   return (
     <div className="actor-grid-page">
@@ -214,7 +228,7 @@ export function CharacterGrid({ tree, onChange }: CharacterGridProps): JSX.Eleme
           </select>
         )}
         <span className="actor-grid-count">
-          {tiles.length} 个角色 · {withVideo} 个已有建立视频
+          {tiles.length} 个角色 · {withVideo} 个已有建立视频{withFinal > 0 ? ` · ${withFinal} 个 demo 已定版` : ""}
         </span>
         <button
           type="button"
@@ -228,55 +242,66 @@ export function CharacterGrid({ tree, onChange }: CharacterGridProps): JSX.Eleme
       {tiles.length === 0 ? (
         <div className="actor-grid-empty">本剧 characters/ 下没有角色文件夹。</div>
       ) : (
-        <div className="actor-grid">
-          {tiles.map((t) => {
-            const latestVideo = videos[t.folder] ?? null;
-            const regenning = regenFolder === t.folder;
-            return (
-              <div key={t.folder} className="character-tile">
-                <div className="character-tile-media">
-                  {latestVideo ? (
-                    <video
-                      src={mediaUrl(latestVideo)}
-                      controls
-                      preload="metadata"
-                      playsInline
-                    />
-                  ) : t.thumbPath ? (
-                    <img src={mediaUrl(t.thumbPath)} alt={t.folder} loading="lazy" />
-                  ) : (
-                    <div className="actor-tile-noimg">无立绘</div>
-                  )}
-                </div>
-                <div className="actor-tile-label">
-                  {t.folder}
-                  {!latestVideo && <span className="character-tile-novideo"> · 无视频</span>}
-                </div>
-                <div className="character-tile-actions">
-                  <button
-                    type="button"
-                    onClick={() => navigate(`/file/${encodeURIComponent(t.mdPath)}`)}
-                    title={`打开 ${t.folder} 人物卡`}
-                  >
-                    📄 详情页
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => onRegenOne(t.folder, latestVideo)}
-                    disabled={!latestVideo || regenFolder !== null}
-                    title={
-                      latestVideo
-                        ? "用该角色最新 turntable 视频重生 三视图+音频+前2s 到 views/"
-                        : "该角色还没有 turntable 视频"
-                    }
-                  >
-                    {regenning ? "⏳…" : "🖼 重生三视图+前2s"}
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        tileGroups(tiles).map(([group, groupTiles]) => (
+          <section key={group ?? ""} className="actor-grid-group">
+            {group !== null && <h2 className="actor-grid-group-title">{group}</h2>}
+            <div className="actor-grid">
+              {groupTiles.map((t) => {
+                const latestVideo = videos[t.folder] ?? null;
+                const regenning = regenFolder === t.folder;
+                return (
+                  <div key={t.folder} className={demoStatus.has(t.dirPath) ? "character-tile demo-final" : "character-tile"}>
+                    <div className="character-tile-media">
+                      {latestVideo ? (
+                        <video
+                          src={mediaUrl(latestVideo)}
+                          controls
+                          preload="metadata"
+                          playsInline
+                        />
+                      ) : t.thumbPath ? (
+                        <img src={mediaUrl(t.thumbPath)} alt={t.folder} loading="lazy" />
+                      ) : (
+                        <div className="actor-tile-noimg">无立绘</div>
+                      )}
+                    </div>
+                    <div className="actor-tile-label">
+                      {t.folder}
+                      {!latestVideo && <span className="character-tile-novideo"> · 无视频</span>}
+                      <DemoFinalBadge status={demoStatus.get(t.dirPath)} />
+                    </div>
+                    <div className="character-tile-actions">
+                      <button
+                        type="button"
+                        onClick={() => navigate(`/file/${encodeURIComponent(t.mdPath)}`)}
+                        title={`打开 ${t.folder} 人物卡`}
+                      >
+                        📄 详情页
+                      </button>
+                      {demoStatus.has(t.dirPath) ? (
+                        <button type="button" onClick={() => navigate(heroPreviewHref(t.dirPath))} title={`打开 ${t.folder} 英雄预览页（含定版 demo）`}>
+                          🎬 英雄预览
+                        </button>
+                      ) : null}
+                      <button
+                        type="button"
+                        onClick={() => onRegenOne(t.folder, latestVideo)}
+                        disabled={!latestVideo || regenFolder !== null}
+                        title={
+                          latestVideo
+                            ? "用该角色最新 turntable 视频重生 三视图+音频+前2s 到 views/"
+                            : "该角色还没有 turntable 视频"
+                        }
+                      >
+                        {regenning ? "⏳…" : "🖼 重生三视图+前2s"}
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        ))
       )}
     </div>
   );

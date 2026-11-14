@@ -1,0 +1,24 @@
+<style>
+  .hook { position: absolute; left: var(--mx); top: 290px; }
+  .hook .line { display: flex; align-items: baseline; gap: 40px; }
+  .hook .line + .line { margin-top: 30px; }
+  .hook .k { font-size: var(--fs-h2); font-weight: 500; color: var(--sub); width: 380px; }
+  .hook .v { font-size: 110px; font-weight: 700; letter-spacing: -.01em; }
+  .name { position: absolute; left: var(--mx); top: 720px; }
+  .name .h1 { margin-top: 10px; }
+</style>
+
+<div class="hook">
+  <div class="line" id="a"><div class="k" data-zh="手里的数据" data-en="On your data"></div><div class="v c-good" data-zh="几乎满分" data-en="Nearly perfect"></div></div>
+  <div class="line" id="b"><div class="k" data-zh="换到新数据" data-en="On new data"></div><div class="v c-bad" data-zh="一塌糊涂" data-en="Falls apart"></div></div>
+</div>
+<div class="name" id="n"><div class="eyebrow" data-zh="这种毛病叫" data-en="The problem is called"></div>
+  <div class="h1 grad" data-zh="过拟合" data-en="Overfitting"></div></div>
+
+<script>
+gsap.set(["#a", "#b", "#n"], { opacity: 0 });
+EDU.in("#a", EDU.t("l01"));
+EDU.in("#b", EDU.t("l01", .5));
+EDU.in("#n", EDU.t("l02", .62));
+EDU.out(["#a", "#b", "#n"], EDU.S.duration - .5);
+</script>

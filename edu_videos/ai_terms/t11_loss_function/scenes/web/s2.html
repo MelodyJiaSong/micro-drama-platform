@@ -1,0 +1,92 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  #pair { position: absolute; left: 160px; top: 270px; }
+  #pile { position: absolute; left: 120px; top: 330px; }
+  .scorebox { position: absolute; left: 690px; top: 420px; width: 300px; padding: 34px 0 30px; text-align: center; }
+  .scorebox .num { font-size: 120px; font-weight: 700; line-height: 1; margin-top: 10px; font-variant-numeric: tabular-nums; }
+  #kn { position: absolute; left: 230px; top: 360px; }
+  .side { position: absolute; left: 1080px; width: 740px; }
+  .ttl { top: 300px; }
+  .ttl .t { position: absolute; top: 0; left: 0; white-space: nowrap; }
+  html[lang=en] .ttl .t { font-size: 60px; }
+  .low { top: 450px; }
+  .low .h2 + .h2 { margin-top: 18px; }
+  .golf { top: 650px; padding: 30px 40px; width: 680px; }
+  html[lang=en] .golf { width: 780px; }
+  html[lang=en] .golf .h2 { white-space: nowrap; }
+  .golf .h2 { margin-top: 10px; }
+  .mark { top: 460px; }
+  .mark .s { position: absolute; top: 0; left: 0; white-space: nowrap; }
+</style>
+
+<div class="eb eyebrow" data-zh="01 · 损失函数是什么" data-en="01 · What is a loss function?"></div>
+<svg id="pair"></svg>
+<svg id="pile"></svg>
+<div class="scorebox card" id="sb"><div class="eyebrow" data-zh="损失" data-en="Loss"></div><div class="num" id="sv">—</div></div>
+<div id="kn"></div>
+
+<div class="side ttl">
+  <div class="h1 t" id="ta" data-zh='差多少 = <span class="c-bad">误差</span>' data-en='How far off = <span class="c-bad">error</span>'></div>
+  <div class="h1 t" id="tb" data-zh="一堆误差 → 一个分" data-en="Errors → one score"></div>
+  <div class="h1 t" id="tc" data-zh="拧一下，看分数" data-en="Turn, then check"></div>
+  <div class="h1 t" id="td" data-zh='训练 = 把分<span class="accent">压下去</span>' data-en='Training: push loss <span class="accent">down</span>'></div>
+</div>
+<div class="side low" id="low">
+  <div class="h2" data-zh='分越<span class="c-good">低</span>越好' data-en='<span class="c-good">Lower</span> loss = better'></div>
+  <div class="h2 ink2" data-zh="0 = 一点不差" data-en="0 = no error"></div>
+</div>
+<div class="side golf soft" id="golf"><div class="eyebrow" data-zh="就像" data-en="Like"></div>
+  <div class="h2" data-zh="高尔夫：杆数越少越好" data-en="Golf: fewest strokes wins"></div></div>
+<div class="side mark">
+  <div class="h2 s c-good" id="ok" data-zh="✓ 分低了：拧对了" data-en="✓ Lower: keep it"></div>
+  <div class="h2 s c-bad" id="bad" data-zh="✗ 分高了：拧回来" data-en="✗ Higher: turn back"></div>
+</div>
+
+<script>
+const T = EDU.tl;
+// l05 一次猜测：实际 vs 猜的，中间的红线 = 误差
+const P = d3.select("#pair").attr("width", 760).attr("height", 560);
+const ax = P.append("line").attr("class", "axis-base").attr("x1", 40).attr("x2", 720).attr("y1", 500).attr("y2", 500).node();
+const seg = P.append("line").attr("x1", 380).attr("x2", 380).attr("y1", 150).attr("y2", 380).attr("stroke", css("--d-bad")).attr("stroke-width", 8).attr("stroke-linecap", "round").node();
+const real = P.append("circle").attr("cx", 380).attr("cy", 150).attr("r", 22).attr("fill", css("--ink")).node();
+const guess = P.append("circle").attr("cx", 380).attr("cy", 380).attr("r", 22).attr("fill", css("--surface")).attr("stroke", css("--accent")).attr("stroke-width", 8).node();
+const lab = (t, x, y, col, anchor = "end") => P.append("text").attr("x", x).attr("y", y).attr("font-size", 34).attr("font-weight", 600).attr("text-anchor", anchor).attr("fill", css(col)).text(t).node();
+const lReal = lab(EDU.tr("实际", "Actual"), 340, 162, "--ink"), lGuess = lab(EDU.tr("猜的", "Guess"), 340, 392, "--accent-text");
+const lErr = lab(EDU.tr("误差", "Error"), 420, 278, "--d-bad", "start");
+// l06 一堆误差 → 一个分
+const errs = [3.1, -1.4, 2.2, -2.8, 0.9, 3.6, -1.9, 1.3];
+const Q = d3.select("#pile").attr("width", 560).attr("height", 520);
+Q.append("line").attr("class", "axis-base").attr("x1", 20).attr("x2", 440).attr("y1", 260).attr("y2", 260);
+const bars = errs.map((e, i) => Q.append("line").attr("x1", 44 + i * 52).attr("x2", 44 + i * 52).attr("y1", 260).attr("y2", 260 - e * 52)
+  .attr("stroke", css("--d-bad")).attr("stroke-width", 12).attr("stroke-linecap", "round").node());
+const arr = Q.append("text").attr("x", 470).attr("y", 286).attr("font-size", 76).attr("fill", css("--faint")).attr("font-weight", 600).text("→").node();
+// l09 一个旋钮 + 分数
+const K = knob("#kn", { label: EDU.tr("旋钮", "Knob"), min: 1.5, max: 3.5, value: D.demo[0].m, fmt: v => v.toFixed(1), size: 230 });
+const SV = document.getElementById("sv"), dm = D.demo;
+
+gsap.set(["#pair", real, guess, seg, lReal, lGuess, lErr, "#pile", ...bars, arr, "#sb", "#kn", "#ta", "#tb", "#tc", "#td", "#low", "#low .h2", "#golf", "#ok", "#bad"], { opacity: 0 });
+EDU.in(".eb", 0);
+// l05
+EDU.in("#pair", EDU.t("l05"), { y: 0, d: .01 }); EDU.in([real, lReal], EDU.t("l05", .1)); EDU.in([guess, lGuess], EDU.t("l05", .3));
+EDU.in(seg, EDU.t("l05", .55)); EDU.draw(seg, EDU.t("l05", .55), .6); EDU.in(lErr, EDU.t("l05", .65)); EDU.in("#ta", EDU.t("l05", .65));
+// l06 一堆误差 → 一个分（损失）
+EDU.out(["#pair", "#ta"], EDU.t("l06")); EDU.in("#pile", EDU.t("l06"), { y: 0, d: .01 });
+EDU.in(bars, EDU.t("l06", .05), { stagger: .08 }); EDU.in("#tb", EDU.t("l06", .05));
+EDU.in(arr, EDU.t("l06", .55)); EDU.in("#sb", EDU.t("l06", .6));
+countTo(SV, EDU.t("l06", .65), 0, dm[0].mse, .8, v => v.toFixed(1));
+// l07 分越低越好，0 = 一点不差
+EDU.out("#tb", EDU.t("l07")); EDU.in("#low", EDU.t("l07"), { y: 0, d: .01 });
+EDU.in("#low .h2:first-child", EDU.t("l07", .15)); EDU.in("#low .h2:last-child", EDU.t("l07", .5));
+// l08 像高尔夫
+EDU.in("#golf", EDU.t("l08", .1));
+// l09 拧一下：分低了 ✓；拧过头：分高了 ✗，拧回来
+EDU.out(["#pile", "#low", "#golf"], EDU.t("l09")); EDU.in("#kn", EDU.t("l09", .05)); EDU.in("#tc", EDU.t("l09", .05));
+K.path(dm[0].m, [[dm[1].m, EDU.t("l09", .25), .6], [dm[2].m, EDU.t("l09", .62), .6], [dm[3].m, EDU.t("l09", .86), .5]]);
+countTo(SV, EDU.t("l09", .25), dm[0].mse, dm[1].mse, .6, v => v.toFixed(1)); EDU.in("#ok", EDU.t("l09", .32));
+EDU.out("#ok", EDU.t("l09", .6)); countTo(SV, EDU.t("l09", .62), dm[1].mse, dm[2].mse, .6, v => v.toFixed(1)); EDU.in("#bad", EDU.t("l09", .68));
+countTo(SV, EDU.t("l09", .86), dm[2].mse, dm[3].mse, .5, v => v.toFixed(1));
+// l10 一遍遍拧，分一路往下
+EDU.out(["#bad", "#tc"], EDU.t("l10")); EDU.in("#td", EDU.t("l10", .03));
+K.path(dm[3].m, [[dm[4].m, EDU.t("l10", .2), .5], [dm[5].m, EDU.t("l10", .45), .5], [dm[6].m, EDU.t("l10", .7), .5]]);
+for (let k = 4; k <= 6; k++) countTo(SV, EDU.t("l10", .2 + (k - 4) * .25), dm[k - 1].mse, dm[k].mse, .5, v => v.toFixed(1));
+</script>

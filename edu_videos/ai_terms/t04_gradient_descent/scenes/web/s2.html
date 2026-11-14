@@ -1,0 +1,79 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  .ill { position: absolute; object-fit: contain;
+         -webkit-mask-image: radial-gradient(ellipse 74% 72% at 50% 52%, #000 62%, transparent 100%);
+                 mask-image: radial-gradient(ellipse 74% 72% at 50% 52%, #000 62%, transparent 100%); }
+  .big-ill { left: 10px; top: 170px; width: 1080px; height: 608px; }
+  .right { position: absolute; left: 1140px; width: 700px; }
+  .right .t { position: absolute; top: 0; left: 0; width: 700px; }
+  .right .h1 + .h2, .right .eyebrow + .h1, .right .h2 + .h2 { margin-top: 14px; }
+  html[lang=en] .right .h1 { font-size: 64px; }
+  .r1 { top: 300px; }
+  #knobs { position: absolute; left: 150px; top: 250px; width: 800px; height: 420px; }
+  .ar { position: absolute; font-size: 90px; font-weight: 700; color: var(--accent-text); line-height: 1; }
+  .loop { position: absolute; left: var(--mx); top: 770px; display: flex; align-items: center; gap: 28px; }
+  .loop .chip { padding: 16px 30px; border-radius: 999px; background: var(--surface); box-shadow: var(--shadow); font-size: var(--fs-body); font-weight: 600; white-space: nowrap; }
+  .loop .arr { font-size: var(--fs-body); color: var(--faint); font-weight: 600; }
+</style>
+
+<div class="eb eyebrow" data-zh="01 · 蒙着眼下山" data-en="01 · Downhill, blindfolded"></div>
+<img class="ill big-ill" id="ill" src="img/clay_hiker.png">
+
+<div class="right r1">
+  <div class="t" id="ta"><div class="eyebrow" data-zh="目标" data-en="Goal"></div><div class="h1" data-zh="走到谷底" data-en="Reach the valley"></div></div>
+  <div class="t" id="tb"><div class="h1" data-zh='<span class="sub">看不见路</span>' data-en='<span class="sub">Can’t see</span>'></div>
+    <div class="h2" data-zh="脚能感觉到坡" data-en="Feet feel the slope"></div></div>
+  <div class="t" id="tc"><div class="h1" data-zh='<span class="accent">哪边最陡</span>往哪迈' data-en='<span class="accent">Steepest</span> way down'></div>
+    <div class="h2" data-zh="只迈一小步" data-en="One small step"></div></div>
+  <div class="t" id="td"><div class="h1" data-zh="再探，再迈" data-en="Feel, step, repeat"></div></div>
+  <div class="t" id="te"><div class="eyebrow" data-zh="脚下的坡" data-en="The slope underfoot"></div>
+    <div class="h2" data-zh='拧一点 → <span class="accent">分变多少</span>' data-en='Nudge → <span class="accent">score change</span>'></div></div>
+  <div class="t" id="tf"><div class="eyebrow" data-zh="gradient" data-en=""></div>
+    <div class="h1 grad" data-zh="梯度" data-en="The gradient"></div>
+    <div class="h2" data-zh="分降得最快的方向" data-en="Fastest way down"></div></div>
+  <div class="t" id="tg"><div class="eyebrow" data-zh="learning rate" data-en=""></div>
+    <div class="h1 accent" data-zh="学习率" data-en="Learning rate"></div>
+    <div class="h2" data-zh="每一步拧多大" data-en="Step size"></div>
+    <div class="h2 sub" data-zh="训练前定好" data-en="Set before training"></div></div>
+</div>
+
+<div id="knobs"></div>
+<div class="ar" id="a1">↻</div><div class="ar" id="a2">↻</div>
+<div class="loop" id="loop">
+  <div class="chip" id="l1" data-zh="拧一小步" data-en="Turn a little"></div><div class="arr">→</div>
+  <div class="chip" id="l2" data-zh="再看坡" data-en="Check the slope"></div><div class="arr">→</div>
+  <div class="chip" id="l3" data-zh="再拧" data-en="Turn again"></div><div class="arr">↺</div>
+</div>
+
+<script>
+const K1 = knob("#knobs", { size: 260, min: 0, max: 20, value: D.start[0], left: 20, top: 40, label: EDU.tr("起步价", "Base fare"), unit: EDU.tr("元", ""), fmt: money });
+const K2 = knob("#knobs", { size: 260, min: 0, max: 5, value: D.start[1], left: 420, top: 40, label: EDU.tr("每公里", "Per km"), unit: EDU.tr("元", ""), fmt: money2 });
+const place = (id, k) => { const r = k.el.getBoundingClientRect(), s = document.getElementById("stage").getBoundingClientRect(), e = document.getElementById(id);
+  e.style.left = (r.right - s.left - 10) + "px"; e.style.top = (r.top - s.top + 30) + "px"; };
+place("a1", K1); place("a2", K2);
+const T = EDU.tl;
+gsap.set(["#ill", "#ta", "#tb", "#tc", "#td", "#te", "#tf", "#tg", "#knobs", "#a1", "#a2", "#loop", "#l1", "#l2", "#l3", "#loop .arr"], { opacity: 0 });
+EDU.in(".eb", 0);
+// l08 蒙着眼站在山坡上，要走到谷底
+EDU.in("#ill", EDU.t("l08", .03), { y: 12, d: .9 }); EDU.in("#ta", EDU.t("l08", .5));
+// l09 看不见路，脚能感觉坡
+EDU.out("#ta", EDU.t("l09")); EDU.in("#tb", EDU.t("l09", .05));
+// l10 往最陡的下坡，迈一小步
+EDU.out("#tb", EDU.t("l10")); EDU.in("#tc", EDU.t("l10", .3));
+// l11 再探，再迈
+EDU.out("#tc", EDU.t("l11")); EDU.in("#td", EDU.t("l11", .05));
+// l12 换回模型：脚下的坡 = 拧一点，分变多少
+EDU.out(["#ill", "#td"], EDU.t("l12")); EDU.in("#knobs", EDU.t("l12", .1)); EDU.in("#te", EDU.t("l12", .4));
+K1.turn(EDU.t("l12", .55), D.start[0], D.start[0] + 1, .4); K1.turn(EDU.t("l12", .55) + .5, D.start[0] + 1, D.start[0], .4);
+K2.turn(EDU.t("l12", .75), D.start[1], D.start[1] + .25, .4); K2.turn(EDU.t("l12", .75) + .5, D.start[1] + .25, D.start[1], .4);
+// l13 梯度：每个旋钮往哪拧、分降得最快
+EDU.out("#te", EDU.t("l13")); EDU.in(["#a1", "#a2"], EDU.t("l13", .2)); EDU.in("#tf", EDU.t("l13", .55));
+// l14 一起拧一小步 → 再看坡 → 再拧
+EDU.in("#loop", EDU.t("l14"), { y: 0, d: .01 });
+EDU.in("#l1", EDU.t("l14", .1)); EDU.in("#loop .arr", EDU.t("l14", .5), { stagger: .25 });
+EDU.in("#l2", EDU.t("l14", .55)); EDU.in("#l3", EDU.t("l14", .8));
+K1.turn(EDU.t("l14", .1), D.start[0], D.start[0] + .4, .6); K2.turn(EDU.t("l14", .1), D.start[1], D.start[1] + .6, .6);
+// l15 学习率：每一步拧多大
+EDU.out(["#tf", "#a1", "#a2"], EDU.t("l15")); EDU.in("#tg", EDU.t("l15", .05));
+EDU.out("#knobs", EDU.t("l15")); EDU.dim(["#l2", "#l3", "#loop .arr"], EDU.t("l15", .3), .3); EDU.focus("#l1", EDU.t("l15", .3));   // 学习率管的就是「拧一小步」这一格
+</script>

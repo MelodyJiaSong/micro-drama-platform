@@ -1,0 +1,32 @@
+# #7 One World Trade Center
+
+- Card shows: One World Trade Center — New York City, United States; 541 m
+- Wikipedia: https://en.wikipedia.org/wiki/One_World_Trade_Center (Skyscraper in Manhattan, New York)
+- Coordinates: [40.71305556, -74.01333333]
+- Identity reference photo (do not publish): ref.jpg
+
+## Article text (excerpt)
+
+One World Trade Center, also known as One WTC and the Freedom Tower, is the main building of the rebuilt World Trade Center complex in Lower Manhattan, New York City.  Designed by David Childs of Skidmore, Owings & Merrill, One World Trade Center is the tallest building in the United States, the tallest building in the Western Hemisphere, and the seventh-tallest in the world. The supertall structure has the same name as the North Tower of the original World Trade Center, which was destroyed in the terrorist attacks of September 11, 2001. The skyscraper stands on the northwest corner of the 16-acre (6.5 ha) World Trade Center site, on the site of the original 6 World Trade Center. It is bounded by West Street to the west, Vesey Street to the north, Fulton Street to the south, and Washington Street to the east.
+The construction of below-ground utility relocations, footings, and foundations for the new building began on April 27, 2006. One World Trade Center became the tallest structure in New York City on April 30, 2012, when it surpassed the height of the Empire State Building. The tower's steel structure was topped out on August 30, 2012. On May 10, 2013, after the final component of the skyscraper's spire was installed, it reached a height of 1,776 feet (541 m). Its height in feet references the signing of the United States Declaration of Independence in 1776. The building opened on November 3, 2014; the One World Observatory opened on May 29, 2015.
+On March 26, 2009, the Port Authority of New York and New Jersey (PANYNJ) confirmed that the building would be officially known by its legal name of One World Trade Center, rather than its colloquial name of Freedom Tower. The building has 94 stories, with the top floor numbered 104.
+The construction of the new World Trade Center complex has been part of an effort to memorialize and rebuild following the destruction of the original World Trade Center complex. Along with One World Trade Center, the new complex also includes three completed high-rise office buildings along Greenwich Street (3 WTC, 4 WTC, and 7 WTC), the National September 11 Memorial & Museum (located just south of One World Trade Center where the original Twin Towers stood), and the World Trade Center Transportation Hub to its east. An additional high-rise office building, 2 World Trade Center, is under construction along Greenwich Street, while a high-rise mixed-use tower, 5 World Trade Center, remains in the planning stages for Liberty Street.
+
+
+History
+
+
+Original building (1971–2001)
+
+The construction of the original World Trade Center was conceived as an urban renewal project and spearheaded by David Rockefeller. The project was intended to help revitalize Lower Manhattan. The project was planned by the Port Authority of New York and New Jersey (PANYNJ), which hired architect Minoru Yamasaki. The twin towers at 1 and 2 World Trade Center were designed as framed tube structures, giving tenants open floor plans, unobstructed by columns or walls. One World Trade Center was the North Tower, and Two World Trade Center was the South Tower. Each tower was over 1,350 feet (410 m) high, and occupied about 1 acre (0.40 ha) of the total 16 acres (6.5 ha) of the site's land. Of the 110 stories in each tower, 8 were set aside as mechanical floors. All the remaining floors were open for tenants. Each floor of the tower had 40,000 square feet (3,700 m2) of available space. The North and South towers had 3,800,000 square feet (350,000 m2) of total office space.
+Construction of the North Tower began in August 1966; extensive use of prefabricated components sped up the construction process. The first tenants moved into the North Tower in October 1971. At the time, the original One World Trade Center became the tallest building in the world, at 1,368 feet (417 m) tall. After a 360-foot (110 m)-tall antenna was installed in 1978, the highest point of the North Tower reached 1,728 ft (527 m).  In the 1970s, four other low-level buildings were built as part of the World Trade Center complex. A seventh building was built in the mid-1980s. The entire complex of seven buildings had a combined total of 13,400,000 square feet (1,240,000 m2) of office space.
+At 8:46 a.m. (EDT) on September 11, 2001, five hijackers affiliated with al-Qaeda crashed American Airlines Flight 11 into the northern facade of the North Tower. After burning for 102 minutes, the North Tower collapsed due to structural failure at 10:28 a.m. (EDT). When the North Tower collapsed, debris fell on the nearby 7 World Trade Center, which caught fire and collapsed at 5:21 p.m. (EDT). Together with a simultaneous attack on the Pentagon in Arlington, Virginia, and a passenger revolt that resulted in a plane crash in Shanksville, Pennsylvania, the attacks resulted in the deaths of 2,996 people (2,507 civilians, 343 firefighters, 72 law enforcement officers, 55 military personnel, and the 19 hijackers).
+
+
+Planning
+
+
+World Trade Center master plan
+
+Following the destruction of the original World Trade Center, there was debate regarding the future of the World Trade Center site. There were proposals for its reconstruction almost immediately, and by 2002, the Lower Manhattan Development Corporation had organized a competition to determine how to use the site. The proposals were part of a larger plan to memorialize the September 11 attacks and rebuild the complex. Already the site was becoming a tourist attraction; in the year following the attacks the Ground Zero site became the most visited place in the United States. On September 10, 2002, the Viewing Wall, a temporary display containing information about the attacks and listing the names of the dead, opened to the public. The same year, then–New York Governor George Pataki faced accusations of cronyism for supposedly using his influence to get the winning architect's design picked as a personal favor for his friend and campaign contributor, Ronald Lauder.
+When the public rejected the fir

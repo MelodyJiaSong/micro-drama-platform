@@ -1,0 +1,23 @@
+"""Persist reviewed images, the commit-memory diagnosis, and pending quality work."""
+from pathlib import Path
+import json,hashlib,datetime
+ROOT=Path(__file__).resolve().parents[3];WORLD=next(ROOT.glob('2_*'));OUT=WORLD/'background/map_3d';AUDIT=ROOT.parents[1]/'.audit/adhoc_agents/2026-10-27/dota-local-3d-287';now=datetime.datetime.now().astimezone().isoformat()
+def evidence(path):return {'path':str(path.relative_to(ROOT)),'sha256':hashlib.sha256(path.read_bytes()).hexdigest()}
+checks={}
+for pattern,names,notes in [
+ ('characters/*/m309_*/model_3d/r05',['back_detail.png'],['黑洞和 UV 拼缝消失，但头皮像边缘明显的圆贴片，不能接受。']),
+ ('characters/*/m309_*/model_3d/r06',['back_detail.png','back_side.png','author_preview.png'],['后脑没有原来的大洞，但补面上缘仍碎裂/露缝，头发像整齐的灰色帘子，前脸与皮肤仍偏蜡和浅绿。','不作为精细通过版本，也未改地图中的 r01 商人。']),
+ ('background/*/bg23_*/model_3d/r42',['root_detail.png','hook_side_detail.png','perspective_preview.png'],['直接扫描树皮颜色恢复棕色，连续土层和加大蕨类改善墙脚。','弯臂向后移 0.22 父空间米；球面最小间隙 0.08977 父空间米，新增带四铆钉的连接块。','石带颗粒与不饱和色改善；檐口程序化苔藓像小刺，不接受其细节。']),
+ ('background/*/bg23_*/model_3d/r43',['root_detail.png','perspective_preview.png'],['低矮苔藓仍像绿色小石块，晶洞面替代葡萄串但过蓝且像多边形装饰片。']),
+ ('background/*/bg23_*/model_3d/r44',['root_detail.png'],['晶洞改为真实折射/体吸收，无发光；透光反射比 r43 改善。','扫描苔藓原来是单株 0.9–3 cm 小枝，误按整簇归一到 11 cm 造成巨大植株，拒绝这个尺度。']),
+ ('background/*/bg23_*/model_3d/r45',['root_detail.png'],['按真实单株尺度恢复，每个 11 cm 苔藓簇含 80 株、5 个共享簇、308 个实例。檐口已恢复低矮绒状观感。','全景和独立检查仍待确认。'])]:
+ folder=next(WORLD.glob(pattern));row={'at':now,'review_type':'author_visual_check_not_independent_QC','status':'author_trial_not_accepted','notes':notes,'images':[evidence(folder/name) for name in names]};(folder/'author_visual_check.json').write_text(json.dumps(row,ensure_ascii=False,indent=2),encoding='utf-8');checks[str(folder.relative_to(ROOT))]=row
+for revision,names,notes in [
+ ('v039',['River_Eye_Level','Rock_River_Close'],['岩石色调与局部碎石摆放改善，但导航诊断在 18 块岩层上发现 715 个受保护区域的露出样本，不能合入。']),
+ ('v040',['River_Eye_Level','Rock_River_Close'],['保守裁掉投影包围盒碰到保护区的 525797 三角面，保留 1307295 面，剩余面投影包围盒全部避开保护区。','近景出现明显竖直锯齿帘状切口，视觉拒绝。']),
+ ('v041',['Rock_River_Close'],['切边向内 1.2 m 平滑贴回地面，竖直帘状边消除，XY 和拓扑未改变保护区排除。','岩层仍有拉伸/弯曲和泥土穿露，不能作为全图岩壁完成；后续应测试更少形变的扫描岩层适配。'])]:
+ checks['environment:'+revision]={'status':'local_trial_not_accepted','notes':notes,'images':[evidence(OUT/f'environment_{revision}_{name}.png') for name in names]}
+review=next(WORLD.glob('background/*/bg23_*/model_3d/r41/inspection/independent_review.json'));r=json.loads(review.read_text(encoding='utf-8'))
+memory={'at_diagnosis':'2026-10-29T10:46:00+08:00','physical_available_gib':85.55,'system_commit_gib':287.03,'system_commit_limit_gib':338.46,'other_process':{'name':'openweb','pid':13652,'private_commit_gib':258.66,'working_set_gib':19.31,'owned_by_this_task':False,'action':'No termination. User confirmation pending via async question.'},'failure':'v022 Map_Overview Cycles allocation failed with about 38GB allocated; original failed render log preserved.','guard_fix':'map_render_slot now requires both physical and available commit headroom; current commit ~50 GiB correctly holds 84 GiB render.','official_source':'https://learn.microsoft.com/windows/win32/api/sysinfoapi/ns-sysinfoapi-memorystatusex'}
+report={'at':now,'checks':checks,'bg23_r41_independent':{'verdict':r['verdict'],'blockers':len(r['blockers']),'evidence':evidence(review)},'map_memory':memory,'accepted_families':1,'total_families':59,'running_at_record':{'map_v022_resume_waiting_pid':34440,'m26_r12_UV_transfer_pid':12572,'bg23_r45_author_pid':35456},'m26_note':'Original r07 source has 4K albedo/roughness; r09 reconstructed mesh has 8,765,718 faces. r12 UV transfer is CPU-active but has not produced a saved candidate yet. Preserve high mesh and consider a separate map working mesh.','moss_source':evidence(OUT/'environment_sources/moss_01/provenance.json')}
+(AUDIT/'manual_work_r21.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8');path=OUT/'authoring_checkpoint.json';p=json.loads(path.read_text(encoding='utf-8'));p['at']=now;p['map']='v022 总装已保存，使用 v036 环境和当前候选；首张全景因系统提交额度不足失败。恢复进程等待物理/提交各 84 GiB，原失败日志保留。v039–v041 岩层仍为局部试验，不合入总装。';p['assets']['bg23'].update(authoring='r42 根系树皮、墙脚植被、弯臂间隙/铆接块改善；r43/r44 苔藓尺度试验拒绝；r45 真实尺度扫描苔藓局部已看。',candidate='r41 独立 fail 6；r42–r45 尚未完整独立检查。');p['assets']['m309'].update(authoring='r05/r06 补后脑大洞但接缝和头发帘状仍不自然，作者未接受。',candidate='地图仍使用 r01；后续没有新独立通过。');p['assets'].setdefault('m26',{}).update(authoring=report['m26_note']);p['runtime']['latest_author_evidence']=str((AUDIT/'manual_work_r21.json').relative_to(ROOT.parents[1]));p['runtime']['pending_trials']=report['running_at_record'];p['runtime']['map_memory']=memory;path.write_text(json.dumps(p,ensure_ascii=False,indent=2),encoding='utf-8');print('R21_PROGRESS_RECORDED')

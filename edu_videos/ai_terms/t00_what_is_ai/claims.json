@@ -1,0 +1,283 @@
+{
+ "note": "事实台账（讲稿 v2.1 句号）：讲稿与画面上每个事实、数字、专业概念一条，写明出处与原文原话。实验算出的写 source: \"experiment\"，并指到 scenes/data.py 里的断言。核对记录见 research.md。 v3（2026-11-09）：讲稿缩短后重排句号；删去 AlphaFold、诺奖、ChatGPT 三条（C08–C10、C16），旧台账存为 claims_v2.json。",
+ "claims": [
+  {
+   "id": "C01",
+   "lines": [
+    "l17",
+    "l18",
+    "l24"
+   ],
+   "claim": "数据集共 1797 张 8×8 手写数字；种子 0 分出 300 张考试题，其余 1497 张当练习例子",
+   "screen": [
+    "1797 张",
+    "8 × 8",
+    "考试题 300",
+    "练习用的例子 1497"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：assert n_total == 1797 and n_test == 300 and n_pool == 1497"
+  },
+  {
+   "id": "C02",
+   "lines": [
+    "l21",
+    "l22",
+    "l23",
+    "l24"
+   ],
+   "claim": "看 10 / 100 / 1497 个例子，考试准确率 37% / 88% / 97%（10–1000 张各 20 种抽法取中位数，1497 即全部只跑一次）；瞎猜 10%；随机抽 10 张覆盖五到九种数字，口播「多抽几回，一般只有 37% 左右」指中位数",
+   "screen": [
+    "37%",
+    "88%",
+    "97%",
+    "瞎猜 10%",
+    "每个点：随机抽 20 次取中位数（最后一点用全部例子）"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：assert 准确率四舍五入为 37/88/97，抽 10 张覆盖的数字种类在 5–9"
+  },
+  {
+   "id": "C03",
+   "lines": [
+    "l26"
+   ],
+   "claim": "用全部 1497 张训练后，300 道考题错 10 道；其中一张 2 被认作 1",
+   "screen": [
+    "300 题，错了 10 道"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：assert full_wrong == 10"
+  },
+  {
+   "id": "C04",
+   "lines": [
+    "l28"
+   ],
+   "claim": "本期数字模型（逻辑回归）对考试题里第一张 3 输出 96% 的预测概率；这是这个模型的输出，不代表所有 AI 都报把握，也不自动等于正确率",
+   "screen": [
+    "96% 是 3"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：assert round(probe_conf*100) == 96"
+  },
+  {
+   "id": "C05",
+   "lines": [
+    "l44",
+    "l45",
+    "l46"
+   ],
+   "claim": "人画的 8×8 字母 A 被模型认作 4，把握 92%；模型只能在 0–9 中选（逻辑回归 softmax 输出 10 类概率，和为 1），所以把握只是十个数字间的相对比较",
+   "screen": [
+    "“92% 是 4”"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：assert ood_A == (4, 92)"
+  },
+  {
+   "id": "C06",
+   "lines": [
+    "l26",
+    "l47"
+   ],
+   "claim": "一张考试题里的 2 被认作 1，把握 81%",
+   "screen": [
+    "“81% 是 1”"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：assert wrong_2 == (1, 81)"
+  },
+  {
+   "id": "C07",
+   "lines": [
+    "l17"
+   ],
+   "claim": "数据集是公开的（UCI Optical Recognition of Handwritten Digits，Alpaydin & Kaynak 1998，CC BY 4.0；scikit-learn load_digits 是其测试集）",
+   "screen": [
+    "数据：UCI 手写数字（Alpaydin & Kaynak，1998），CC BY 4.0 · 经 scikit-learn 加载，已改画"
+   ],
+   "source": "UCI Machine Learning Repository, Optical Recognition of Handwritten Digits, https://doi.org/10.24432/C50P49 ；scikit-learn toy datasets 文档",
+   "quote": "UCI: This dataset is licensed under a Creative Commons Attribution 4.0 International (CC BY 4.0) license. … scikit-learn（指 load_digits 的数据集说明）: This is a copy of the test set of the UCI ML hand-written digits datasets",
+   "verified": "2026-11-08 UCI 页面与 scikit-learn 文档；本机逐值核对 digits.csv.gz 与 optdigits.tes 相同"
+  },
+  {
+   "id": "C11",
+   "lines": [
+    "l38",
+    "l39",
+    "l40",
+    "l41",
+    "l42"
+   ],
+   "claim": "据路透社，亚马逊的简历筛选 AI 用十年间收到的简历训练，大多来自男性；它等于自己学会了男性候选人更好；给含 women's 的简历扣分（如 women's chess club captain，译「女子国际象棋社社长」）；工具后来被放弃",
+   "screen": [
+    "学的是 10 年的简历，大多来自男性",
+    "“women's”（女子的）→ 扣分",
+    "工具后来被放弃",
+    "路透社 2018"
+   ],
+   "source": "Jeffrey Dastin, \"Amazon scraps secret AI recruiting tool that showed bias against women\", Reuters, 2018-10-10",
+   "quote": "trained to vet applicants by observing patterns in resumes submitted to the company over a 10-year period. Most came from men … In effect, Amazon's system taught itself that male candidates were preferable. It penalized resumes that included the word \"women's,\" as in \"women's chess club captain.\"",
+   "verified": "2026-11-08 Internet Archive 快照原文核对（research.md §3）；Amazon 称该工具从未被招聘人员用于评估候选人，讲稿只说「曾想用」「后来被放弃」"
+  },
+  {
+   "id": "C12",
+   "lines": [
+    "l33",
+    "l34",
+    "l35",
+    "l36",
+    "l37"
+   ],
+   "claim": "概念层级：AI ⊃ 机器学习 ⊃ 深度学习（多层神经网络）⊃ 大语言模型；基于规则的系统（如下棋程序）属于 AI，普通的计算程序（如算工资）不算",
+   "screen": [
+    "AI",
+    "机器学习",
+    "深度学习",
+    "大语言模型（LLM）",
+    "人写规则（传统办法）"
+   ],
+   "source": "Russell S, Norvig P. Artificial Intelligence: A Modern Approach, 4th ed., 2020（ch.1 将基于知识与规则的系统列为 AI；ch.19、21 机器学习与深度学习）；Goodfellow I, Bengio Y, Courville A. Deep Learning, MIT Press, 2016, Fig. 1.4（AI ⊃ ML ⊃ representation learning ⊃ deep learning 的维恩图）",
+   "quote": "Deep Learning (Goodfellow et al. 2016) Figure 1.4: A Venn diagram showing how deep learning is a kind of representation learning, which is in turn a kind of machine learning, which is used for many but not all approaches to AI.",
+   "verified": "2026-11-08 事实核查（Codex）打开《Deep Learning》第 1 章图 1.4、1.5 核对层级与规则系统分支；「本期的 AI 指机器学习这一圈」是本片范围声明，不是用词统计"
+  },
+  {
+   "id": "C13",
+   "lines": [
+    "l01",
+    "l02",
+    "l08",
+    "l09",
+    "l10",
+    "l12",
+    "l25"
+   ],
+   "claim": "今天的 AI（相册认猫这类识别器）（机器学习，这里是监督学习）不靠人手写识别规则，而是从带答案的例子（标注数据）中学出规律；人提供的是答案（标签），不是规则",
+   "screen": [
+    "规则·人写的",
+    "规律·学出来的"
+   ],
+   "source": "Goodfellow I, Bengio Y, Courville A. Deep Learning, MIT Press, 2016, ch.1 与 §5.1（监督学习：从带标签的样本中学习）；Mitchell T. Machine Learning, McGraw-Hill, 1997, ch.1",
+   "quote": "Deep Learning §5.1.3（原文）: Supervised learning involves observing several examples of a random vector x and an associated value or vector y, then learning to predict y from x",
+   "verified": "2026-11-08 事实核查第 2 轮对照原书改回 then learning；l01、l32 已区分「不写规则」与「不给标签」"
+  },
+  {
+   "id": "C14",
+   "lines": [
+    "l05",
+    "l06",
+    "l07"
+   ],
+   "claim": "手写数字识别难以用手写规则写全（反例：两个弯 8 也有，下半开口朝左 5 也有），这类规则容易漏判与误判",
+   "screen": [
+    "规则 1：上下两个弯？ 8 也是",
+    "规则 2：下半开口朝左？ 5 也是"
+   ],
+   "source": "Goodfellow et al., Deep Learning, 2016, ch.1 引言（难以形式化描述的直觉型任务，如识别图像中的人脸、口语中的词）",
+   "quote": "The true challenge to artificial intelligence proved to be solving the tasks that are easy for people to perform but hard for people to describe formally—problems that we solve intuitively … like recognizing spoken words or faces in images.",
+   "verified": "原话凭记忆摘录、未逐字对照原书，交事实核查第 2 轮核对；图中 8、5 反例取自本期数据集真实样本（scenes/data.json samples）；措辞按事实核查收紧为「很难写全」「很容易漏掉」"
+  },
+  {
+   "id": "C15",
+   "lines": [
+    "l27",
+    "l28",
+    "l30",
+    "l31",
+    "l32"
+   ],
+   "claim": "大语言模型逐个预测下一段文字生成回答；它也能从数据中学到知识，但生成流畅不保证事实正确",
+   "screen": [
+    "今天的 AI ≈ 一台预测机器",
+    "严格说是词元 token"
+   ],
+   "source": "Brown T et al. Language Models are Few-Shot Learners (GPT-3), NeurIPS 2020, https://arxiv.org/abs/2005.14165 ；scikit-learn 文档 Probability calibration（置信度不等于正确率）",
+   "quote": "GPT-3 §1（原文）: … simply by predicting what comes next ……（「逐个预测下一个词元」为本片概括，非原文）",
+   "verified": "2026-11-08 事实核查第 2 轮：原 §2 引文在原文中找不到，已改摘 §1 原话并把词元机制标为概括"
+  },
+  {
+   "id": "C17",
+   "lines": [
+    "l11"
+   ],
+   "claim": "模型：学习得到的、把输入映射到答案的函数（本片说成「学出来的那套认法」）",
+   "screen": [
+    "模型 model：学出来的那套认法"
+   ],
+   "source": "Goodfellow et al., Deep Learning, 2016, §5.1",
+   "quote": "（概括，非原文）机器学习算法从数据中学到一个从输入到输出的映射，即模型",
+   "verified": "教材通行定义，概括"
+  },
+  {
+   "id": "C18",
+   "lines": [
+    "l20",
+    "l25"
+   ],
+   "claim": "泛化：在没见过的新数据上表现好；要用训练时没见过的测试数据检验；本期实验里例子越多成绩越高（不单独主张「越全」）",
+   "screen": [
+    "考试题 300 · 训练时不许看",
+    "只有考它没见过的题，才知道它是真会认了"
+   ],
+   "source": "Goodfellow et al., Deep Learning, 2016, §5.2",
+   "quote": "The central challenge in machine learning is that our algorithm must perform well on new, previously unseen inputs—not just those on which our model was trained. The ability to perform well on previously unobserved inputs is called generalization.",
+   "verified": "原话凭记忆摘录，交事实核查第 3 轮对照原文"
+  },
+  {
+   "id": "C19",
+   "lines": [
+    "l23",
+    "l24",
+    "l25"
+   ],
+   "claim": "本期模型要靠大量例子（10 个约 37%，100 个约 88%，约 1500 个 97%）",
+   "screen": [
+    "例子越多，考得越好（本次实验）"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：准确率断言（C02）"
+  },
+  {
+   "id": "C20",
+   "lines": [
+    "l44",
+    "l45",
+    "l46"
+   ],
+   "claim": "本期数字模型是封闭的十分类：面对范围外的输入（字母 A）也必须在 0–9 中给出一个答案；把握只是十类之间的相对比较（概率和为 1）",
+   "screen": [
+    "只在 0–9 里比谁更像"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：ood A 的 proba 和为 1、argmax = 4、max = 0.92"
+  },
+  {
+   "id": "C21",
+   "lines": [
+    "l48"
+   ],
+   "claim": "模型的本事与毛病既来自训练数据，也受模型设计与训练方法影响（不排主次）",
+   "screen": [
+    "本事和毛病来自数据",
+    "也和设计、训练有关"
+   ],
+   "source": "Goodfellow et al., Deep Learning, 2016, ch.5（数据、模型容量与优化共同决定泛化）",
+   "quote": "（概括，非原文）",
+   "verified": "按事实核查第 1 轮建议收紧为「主要来自数据，也和设计、训练有关」"
+  },
+  {
+   "id": "C22",
+   "lines": [
+    "l52"
+   ],
+   "claim": "过拟合：训练表现好、在新数据上表现差（下期预告）",
+   "screen": [
+    "下一期：过拟合"
+   ],
+   "source": "Goodfellow et al., Deep Learning, 2016, §5.2",
+   "quote": "Overfitting occurs when the gap between the training error and test error is too large.",
+   "verified": "原话凭记忆摘录，交事实核查第 3 轮对照原文"
+  }
+ ]
+}

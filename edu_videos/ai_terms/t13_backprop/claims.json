@@ -1,0 +1,210 @@
+{
+ "note": "事实台账：讲稿与画面上每个事实、数字、专业概念一条，写明出处与原文原话。实验算出的写 source: \"experiment\"，并指到 scenes/data.py 里的断言；比方写 source: \"analogy\"。核对记录见 research.md。",
+ "claims": [
+  {
+   "id": "C01",
+   "lines": [
+    "l01",
+    "l02"
+   ],
+   "claim": "大模型有几十亿到上千亿个参数（旋钮），训练每一步都要算每个参数的梯度",
+   "screen": [
+    "几十亿个旋钮"
+   ],
+   "source": "Brown et al. 2020（GPT-3，1750 亿参数，第一季 t10 已核）；PyTorch 教程：每个参数的梯度存进 .grad",
+   "quote": "Autograd then calculates and stores the gradients for each model parameter in the parameter's .grad attribute."
+  },
+  {
+   "id": "C02",
+   "lines": [
+    "l10",
+    "l11",
+    "l29"
+   ],
+   "claim": "挨个旋钮试拧（有限差分）每个旋钮要多算一遍：N 个旋钮共 N+1 遍正着算",
+   "screen": [
+    "8 遍",
+    "1154 遍"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：passes_fd == 8；中号网络 calls == n_mid + 1"
+  },
+  {
+   "id": "C03",
+   "lines": [
+    "l13",
+    "l14",
+    "l15",
+    "l16"
+   ],
+   "claim": "齿轮比方：×2、×3 一路乘起来 6；倒着算每步多乘一次（链式法则的直觉）",
+   "screen": [
+    "×2",
+    "×3",
+    "2 × 3 = 6"
+   ],
+   "source": "analogy",
+   "check": "scenes/data.py：gears 断言；Rumelhart 1986 原文 'We can then apply the chain rule'"
+  },
+  {
+   "id": "C04",
+   "lines": [
+    "l18",
+    "l19",
+    "l20",
+    "l21"
+   ],
+   "claim": "两层小网络七个旋钮；5 公里那趟实付 23 元（示意数据）；A=6、B=4、猜 29、多猜 6",
+   "screen": [
+    "5 公里",
+    "6",
+    "4",
+    "29",
+    "23",
+    "+6"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：forward 断言；_shared/s1_data.py"
+  },
+  {
+   "id": "C05",
+   "lines": [
+    "l22",
+    "l23",
+    "l24",
+    "l25",
+    "l26",
+    "l27"
+   ],
+   "claim": "倒着走一趟：第二层 36、24、6；传回 A 12、B 6；第一层 60、12、30、6；都为正、都往小拧",
+   "screen": [
+    "36",
+    "24",
+    "6",
+    "12",
+    "60",
+    "30"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：grad、toA、toB 断言"
+  },
+  {
+   "id": "C06",
+   "lines": [
+    "l28"
+   ],
+   "claim": "按七个数各拧一小步（步子 0.005），猜 29 → 23.88",
+   "screen": [
+    "29 → 23.88"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：pred_new 断言"
+  },
+  {
+   "id": "C07",
+   "lines": [
+    "l29",
+    "l30"
+   ],
+   "claim": "挨个试拧算出的七个坡度与反向传播一致；反向传播只要正着一遍、倒着一趟",
+   "screen": [
+    "一模一样",
+    "1 遍 + 1 趟"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：np.allclose(fd, grad)、passes_bp"
+  },
+  {
+   "id": "C08",
+   "lines": [
+    "l31",
+    "l32",
+    "l34"
+   ],
+   "claim": "十亿个旋钮挨个试要 1,000,000,001 遍；假设一遍一秒约 31.7 年；所以靠挨个试，几十亿个旋钮的大模型实际训练不动（反向传播约 3 遍工夫，见 C09）",
+   "screen": [
+    "1,000,000,001",
+    "31.7 年"
+   ],
+   "source": "experiment",
+   "check": "scenes/data.py：years 断言（假设一遍一秒）"
+  },
+  {
+   "id": "C09",
+   "lines": [
+    "l33"
+   ],
+   "claim": "倒着一趟约是正着一遍的两倍工夫，合计约三遍",
+   "screen": [
+    "≈ 3 遍"
+   ],
+   "source": "scenes/data.py 乘法计数（2.89）；Kaplan et al. 2020, Scaling Laws for Neural Language Models §2.1（arXiv:2001.08361，ar5iv 全文核对）",
+   "quote": "Accounting for the backwards pass (approximately twice the compute as the forwards pass), we then define the estimated non-embedding compute as C ≈ 6N floating point operators per training token.",
+   "check": "scenes/data.py：2.8 < ratio ≤ 3.0"
+  },
+  {
+   "id": "C10",
+   "lines": [
+    "l35"
+   ],
+   "claim": "1986 年 Rumelhart、Hinton、Williams 在《自然》发表反向传播论文",
+   "screen": [
+    "《自然》· 1986",
+    "Rumelhart · Hinton · Williams"
+   ],
+   "source": "Rumelhart, Hinton & Williams, Nature 323, 533–536 (1986)",
+   "quote": "We describe a new learning procedure, back-propagation, for networks of neurone-like units."
+  },
+  {
+   "id": "C11",
+   "lines": [
+    "l36"
+   ],
+   "claim": "论文里每个权重的偏导分两趟算：正着一趟，再从最上一层倒着传回",
+   "screen": [
+    "正着一趟",
+    "倒着一趟"
+   ],
+   "source": "Rumelhart, Hinton & Williams 1986",
+   "quote": "For a given case, the partial derivatives of the error with respect to each weight are computed in two passes. … The backward pass which propagates derivatives from the top layer back to the bottom one"
+  },
+  {
+   "id": "C12",
+   "lines": [
+    "l37"
+   ],
+   "claim": "这样训练，隐藏单元会表示任务里的重要特征",
+   "screen": [
+    "自己学出有用的特征"
+   ],
+   "source": "Rumelhart, Hinton & Williams 1986",
+   "quote": "internal 'hidden' units which are not part of the input or output come to represent important features of the task domain"
+  },
+  {
+   "id": "C13",
+   "lines": [
+    "l38"
+   ],
+   "claim": "类似算法在 1986 年之前已有人提出：Linnainmaa 1970 发表反向模式自动微分，Werbos 1982 把它用于多层网络；不说 1986 论文发明或最早提出",
+   "screen": [
+    "类似的算法，更早已有人提出"
+   ],
+   "source": "Wikipedia: Backpropagation — History · Modern backpropagation（2026-11-09 取原始 wikitext 核对）",
+   "quote": "Modern backpropagation was first published by Seppo Linnainmaa as \"reverse mode of automatic differentiation\" (1970) … In 1982, Paul Werbos applied backpropagation to MLPs in the way that has become standard."
+  },
+  {
+   "id": "C14",
+   "lines": [
+    "l39",
+    "l40"
+   ],
+   "claim": "PyTorch 里调用 .backward()，自动求导从输出倒着走，算出每个参数的梯度",
+   "screen": [
+    "loss.backward()",
+    "自动求导"
+   ],
+   "source": "PyTorch 教程 A Gentle Introduction to torch.autograd",
+   "quote": "It does this by traversing backwards from the output, collecting the derivatives of the error with respect to the parameters of the functions (gradients)"
+  }
+ ]
+}

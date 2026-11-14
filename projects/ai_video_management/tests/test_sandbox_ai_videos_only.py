@@ -1,4 +1,4 @@
-"""The sandbox exposes `ai_videos/` only (follow-up 233).
+"""The sandbox exposes `ai_videos/` and `edu_videos/` (follow-ups 233 / 339).
 
 `downloaded_novels/` and `my_novel/` were admitted by follow-ups 096 / 113 for
 the novel browsing, which went with the old pipeline; their data stays on disk
@@ -45,3 +45,16 @@ def test_api_serves_ai_videos_and_404s_the_novel_roots(tmp_path: Path) -> None:
             assert client.get("/api/file", params={"path": rel}).status_code == 404, rel
         sections = client.get("/api/tree").json()["children"]
     assert [s["name"] for s in sections] == ["AI Videos"]
+
+
+def test_edu_videos_is_readable_for_the_preview_page(tmp_path: Path) -> None:
+    """follow-up 339：教学视频 `edu_videos/` 可读（单集预览页成片模式），仓库其他目录照旧不开放。"""
+    root = _repo(tmp_path)
+    (root / "edu_videos/ai_terms/t01_x").mkdir(parents=True)
+    (root / "edu_videos/ai_terms/t01_x/preview.json").write_text('{"video": "x.mp4"}', encoding="utf-8")
+    (root / "specs").mkdir()
+    (root / "specs/secret.md").write_text("# no\n", encoding="utf-8")
+    app = make_app(RepoRoot(path=root), BoundOrigin(host="127.0.0.1", port=8766), serve_static=False)
+    with TestClient(app) as client:
+        assert client.get("/api/file", params={"path": "edu_videos/ai_terms/t01_x/preview.json"}).status_code == 200
+        assert client.get("/api/file", params={"path": "specs/secret.md"}).status_code == 404

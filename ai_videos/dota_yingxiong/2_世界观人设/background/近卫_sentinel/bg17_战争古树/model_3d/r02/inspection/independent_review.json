@@ -1,0 +1,75 @@
+{
+  "verdict": "fail",
+  "suitable_use": {
+    "usable_now": "Usable as a far-distance map asset (the building takes up about 1/8 of the frame or less, or sits behind atmospheric haze or depth-of-field blur). At that distance the low wide stance, the two upright shoulder boards, the grey-white stone beast face and the two bone-white tusks are all readable and fully consistent with the reference.",
+    "conditionally_usable": "Usable for mid-shots (about 15–40 m) only if the lower base slab is sunk into or covered by the terrain, the camera stays off the shoulder-board stone panels and the moss/fern areas, and the image is softened by grading. Even then, the chalky, washed-out colour of the textures will stand out next to live-action-grade surroundings.",
+    "not_usable": "Not usable for mid-close, close-up or feature shots (closer than about 15 m, or the building filling more than about 1/3 of the frame), for close views of the face or shoulder boards, or for low-angle shots that skim the ground edge. The moss, ferns and stone-panel carvings fall apart at these distances, and the base reads like a miniature diorama.",
+    "rework_required": true
+  },
+  "blockers": [
+    "The base is one continuous flat slab with a raised, hard-edged rim (visible all around in south, east, north, west and perspective). The roots are fused into this plinth instead of a root net spreading over grass and gripping the soil. It reads strongly as a tabletop miniature or diorama, which the asset card explicitly forbids. The reference has no such slab, so its exposed edge fails any shot that can see it.",
+    "The ferns and moss have 'melted': across the shoulders, crown, under the chin and between the armour plates, they are thick blobby clumps that drip downward like wax (clearest in the upper halves of south and north, at the top of east, and near the right shoulder board in perspective). There are no separate fern fronds or leaflets and no thin moss layer. The reference shows clearly defined fern fronds and moss tufts. This breaks the photoreal look at mid range and closer.",
+    "The carvings on the stone panels are wrong. The front reference has a clear concave spiral, and the back reference has a geometric rosette. In the model, the front panels in south and the back panels in north both look like vertically stacked tiki/totem faces with eyes and a mouth. Only the east and west side panels approach a spiral. This adds a set of 'faces' that compete with the central stone beast face, contradicts the asset card's 'spiral geometric pattern / a stone is a stone, no cartoon expressions', and from behind it reads like two extra faces.",
+    "The material colour and texture are off as a whole. The reference wood is grey-brown old wood with a warm-brown base and a grey-white crust. The model's wood is mostly chalky white-grey to pale pink-grey with low contrast, and has nearly the same value as the stone face and the tusks. As a result the wood/stone/bone material separation is lost (most obvious in the perspective and north views). The texture is soft and smeared, so the reference's cracks, wormholes and bark layers do not hold up at mid-close range.",
+    "The beast face is soft and lumpy. In south and perspective the face has an even, blobby, popcorn-like bump texture. It lacks the reference's carved deep eye sockets, clear brow bones and nose bridge, and its edges are soft. Up close it reads more like a cast foam piece than weathered stone. The top of the head continues back into a large blob of the same texture (the upper centre of south and perspective), and its boundary with the wood is unclear."
+  ],
+  "refinements": [
+    "Above the left shoulder board, top centre of south (near the top-left edge of the face), a few small leaf fragments look detached from the body or only weakly attached. Check whether they float and whether they are connected (not verified).",
+    "The undersides of the armour plates and the gaps between the roots are dark holes that read as one mass. Some through-gaps are visible in east and west. Check whether these are real cavities or projection/occlusion holes. Backface and internal faces are not verified.",
+    "The tusks are good overall, but they are glossy and smooth at the root and lack the reference's dry cracks and peeled-bark texture. Their contact with the chin is fuzzy; refine it.",
+    "The armour plates are thin and their edges very rounded; some plates (for example at the right shoulder in south and perspective) are thinner than the asset card's 'about half a metre thick'. Strengthen the rounded wear and the layered crack detail.",
+    "The asset card's faint glowing moss in the root gaps is not represented. It is optional, but if kept it should be a separate material controlled by the shader, not baked into the texture.",
+    "The textures look like they contain baked light and AO (highlights read uniformly white). Check whether the 4096 Image_0/Image_1 maps are albedo or have lighting baked in, and ask for de-lit albedo plus roughness and normal maps. The shader node graph was not provided, so this is not verified.",
+    "Bounding box is 10.84 × 9.57 × 6.0 m, matching the asset card's 6 m tall and about 11 m wide. The 'height_bound_requires_pose_review' status can be closed: the base touches the ground evenly and the pose fits a crouch. The root net at about 9–11 m in diameter is slightly smaller than the card's 14 m (a design choice; can stay as is).",
+    "Topology, UVs, manifoldness, self-intersection and internal hidden faces cannot be proven from 5 renders and are not verified. The 983,644-triangle count is consistent with a single dense image-to-3D or photogrammetry-style mesh; it needs a LOD/retopology plan before map deployment. The normal alignment data (as_exported median_dot 0.986, no negatives) is reasonable, and there is no visible shading inversion in the renders."
+  ],
+  "evidence": {
+    "1_front (reference)": "Confirmed design: low wide armoured tree; two upright square boards at the shoulders inset with grey-white spiral stone panels; a grey stone wolf/bear face at the centre; two bone-white tusks curving down; ferns under the chin; curved claw-roots on both sides; a natural root net at the base with no slab. Wood is grey-brown and full of wormholes.",
+    "2_side (reference)": "Face is on the left and juts well forward; the shoulder board panel shows a spiral; armour plates stack and spread toward the back; roots arch down to the ground; plates and fern fronds are clearly defined.",
+    "3_back (reference)": "Two shoulder boards on the back face carry rosette geometric patterns; the centre is a bundle of trunks topped by a small stone peak; no face or door is repeated on the back.",
+    "4_south (model, front)": "Silhouette, face, tusks, two shoulder boards and the claw-roots all match the front reference. The stone panel pattern became stacked tiki faces instead of the spiral. Moss and ferns are melted blobs. The base is a slab with a raised rim. The wood is pale white-grey with low contrast.",
+    "5_east (model, side)": "The face sticks out on the left, as in the side reference. The shoulder board panel is roughly spiral. The plates have real thickness and stack. The base slab is clearly visible. Moss hangs off the plate edges in wax-like drips. Gaps between the roots show some see-through holes.",
+    "6_north (model, back)": "The back has no copy of the front stone face or a door, and the central trunk bundle matches the back reference. However, the two back stone panels show tiki-like faces (the reference has rosettes), so from behind they read as two extra faces. Ferns are blobby and the base slab rim is visible.",
+    "7_west (model, other side)": "Mirrors east: the face sticks out on the right and the panel is a rough spiral. The structure is thick and reasonable, the base slab is visible, and the moss is blobby.",
+    "8_perspective (model)": "Front-left three-quarter view. Volume and identity are clear, and the face reads as a wolf/bear head. But the stone, wood and bone are all similar pale grey-white, the face has an even blobby bump texture, a few leaves above the shoulder board may be detached, and the hard edge of the base slab is obvious from this angle. It does not meet the live-action-grade realism standard at mid-close range.",
+    "machine_data": "Single mesh, 946,046 vertices and 983,644 triangles. Two 4096² maps. Calibrated to 6 m tall, about 10.84 m × 9.57 m footprint. Normals match the geometry well (fraction_dot_above_0_8 is about 0.986). Material names (Inspection_clay, Studio_floor, Dots Stroke, etc.) do not prove shader behaviour. Neither node graph nor modifier data was provided, so shader correctness, lighting response and topology are all not verified."
+  },
+  "reviewer": "claude",
+  "source_artifact_sha256": "330520f365d5c9d6f0634e943970c73a66e806a9cd4b762d81bd786ea241a8e6",
+  "blend_sha256": "e4f3c4af03c4c15fd6c40501389b115915b06296abb3810e797a8eb3c1fccf3a",
+  "evidence_files": [
+    {
+      "path": "2_世界观人设\\background\\近卫_sentinel\\bg17_战争古树\\views\\bg17_战争古树_front.png",
+      "sha256": "ba93e3aa949665e2c71a76bc7c44f2e06f6d4dabc7e6abd2b6cc23ea80dbc805"
+    },
+    {
+      "path": "2_世界观人设\\background\\近卫_sentinel\\bg17_战争古树\\views\\bg17_战争古树_side.png",
+      "sha256": "a1713ef21943a55b897de731f22905f2e7870558f737d4b5eb515b87d28210f0"
+    },
+    {
+      "path": "2_世界观人设\\background\\近卫_sentinel\\bg17_战争古树\\views\\bg17_战争古树_back.png",
+      "sha256": "06600b91d351fe3eec42591882c0826385535939d1b3064c25ff426564642da0"
+    },
+    {
+      "path": "2_世界观人设\\background\\近卫_sentinel\\bg17_战争古树\\model_3d\\r02\\inspection\\south.png",
+      "sha256": "03f2187003418947e02e5f8ddd79e84c1eda00940436e96f67bdc24f4243e7cd"
+    },
+    {
+      "path": "2_世界观人设\\background\\近卫_sentinel\\bg17_战争古树\\model_3d\\r02\\inspection\\east.png",
+      "sha256": "fc838cb8539e3da6c47b01c4ac8c0417599f93b44fbaf5f44ac1976a8530ed99"
+    },
+    {
+      "path": "2_世界观人设\\background\\近卫_sentinel\\bg17_战争古树\\model_3d\\r02\\inspection\\north.png",
+      "sha256": "cbd96c09d02bbdd21680676e164582f5756f758d5c3ac95a107d052b86f6799b"
+    },
+    {
+      "path": "2_世界观人设\\background\\近卫_sentinel\\bg17_战争古树\\model_3d\\r02\\inspection\\west.png",
+      "sha256": "d74848c5e29348991775620465f4dc7f176ab8552104da7ce15fe2f88d74b8aa"
+    },
+    {
+      "path": "2_世界观人设\\background\\近卫_sentinel\\bg17_战争古树\\model_3d\\r02\\inspection\\perspective.png",
+      "sha256": "d7fc7724bc9aa73ae6e15a8d7e48e85387acddcec584ae44f382ab873aff0757"
+    }
+  ],
+  "prior_errors": []
+}

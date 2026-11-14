@@ -17,7 +17,8 @@ Seedance 版 overhead（`{shot}_overhead_ref.png`）就是运动与几何参考�
                 walkable = ["b08"]（本镜机位允许站进的地块 id，只给类型泛用的地块用）·
                 previz = true（可选，单独要 previz 时写）· previz_why（写 previz = true 时必填）
     [[camera]]  t · xy · h（离地米）· look（瞄准点）· lens（mm）· tag（机位标签，可选）·
-                subject（这一刻景别量谁，人物卡键；缺省＝第一个 actor）· cut（true＝硬切到这里，不是运镜走过来）· note
+                subject（这一刻景别量谁，人物卡键；缺省＝第一个 actor）· shot_size（这一刻的景别：远景 / 全景 / 中全景 /
+                中景 / 中近景 / 近景 / 特写 / 大特写，写了才核机位距离）· cut（true＝硬切到这里，不是运镜走过来）· note
     [[actor]]   key（人物卡目录名）· label · count（群体数，默认 1）· path = [[t, x, y], …]
                 （路点可写 [t, x, y, fx, fy]：fx/fy ＝ 此刻面朝的点）· note
     [[object]]  label · xy · size · rot · key（物件卡目录名，可选）· note —— 场地图里没有、本镜才出现的东西
@@ -32,7 +33,8 @@ Seedance 版 overhead（`{shot}_overhead_ref.png`）就是运动与几何参考�
 
 构建闸门（blocker 不写图）：键名白名单 · 场景能解析 · 时刻落在镜长内且不倒退 ·
 **入画人物与 shot md 的 `角色:` 行双向一致**（prompt 说谁在画面里，这张图就得给谁站位）。
-提示（warning，印在图上）：机位落在有高度的体块里 · 起幅 / 落幅的机位距离与 `景别档` 按焦距反算的距离差太多。
+提示（warning，印在图上）：机位落在有高度的体块里 · 机位距离与 `[[camera]] shot_size`（旧剧：shot md 的 `景别档`）按焦距反算的距离差太多 ·
+一个景别都没写＝ 距离机检跳过（也是 warning，不静默）。
 
 用法：
     python tools/shot_overhead.py <shot 目录>
@@ -66,7 +68,9 @@ from tools.previz.planstyle import (  # noqa: E402
 KEYS = {
     "meta": {"scene", "view", "note", "walkable", "previz", "previz_why", "hostile", "calm", "proxy", "skip"},   # proxy：本镜人偶改色（szzl 057 E3）；skip：与上一镜之间跳过了时间（写理由，8f 站位 4）
     # aim_h：瞄点离地高（m），近景插入瞄手（≈1.0）/ 脚下（≈0.15）时写；缺省按 previz 的统一瞄高（follow-up 043）
-    "camera": {"t", "xy", "h", "look", "lens", "tag", "subject", "cut", "note", "aim_h", "axis_ok", "jump_ok"},   # axis_ok / jump_ok：有意跨轴 / 同景别同角度的镜内切（写理由）
+    "camera": {"t", "xy", "h", "look", "lens", "tag", "subject", "cut", "note", "aim_h", "axis_ok", "jump_ok", "shot_size"},   # axis_ok / jump_ok：有意跨轴 / 同景别同角度的镜内切（写理由）
+    # shot_size：这一路点的景别（SHOT_SIZE_H 的键：远景 / 全景 / 中全景 / 中景 / 中近景 / 近景 / 特写 / 大特写），量 subject；
+    # 写了才核机位距离与景别对不对得上，一个都没写＝ warning「距离机检跳过」
     # shield：这一镜手上持盾（"左" / "右"），shield_t = [t0, t1] 只在这段时间持盾（缺省整镜）——follow-up 046
     # enter / gone：这一刻才出场 / 这一刻起不在场（从鼠洞里钻出来、钻回去）——场外不参与任何距离机检，previz 里藏起来（049）
     # idle：打斗里真要等的时段 [[t0, t1, "理由"]]，理由要在 `动作:` 里逐字看得见（051 G11）
@@ -127,8 +131,13 @@ GRASS_REF, ROCK_REF, WATER_REF, ROAD_REF = (236, 238, 228), (204, 200, 190), (17
 WALKABLE = {"hall_shell", "chamber", "tunnel", "vineyard", "graveyard", "arch_bridge", "mine_portal",
             "plaza", "yard", "lawn", "tables"}
 SENSOR_W = 36.0          # 全画幅；16:9 横向视角由它与焦距算
-FRAC = {"远景": 0.12, "全景": 0.3, "中景": 0.6, "近景": 0.9, "特写": 1.3}
+# [[camera]] shot_size（景别）→ 主体所在距离上画面竖向拍得到多高（m）；与 prompts-overhead.md「景别与距离」表同一把尺。
+# 距离 ≈ 画面高 × 焦距 ÷ 20.25（全画幅 16:9）。写了 shot_size 的机位路点才核「图上距离 vs 景别反算距离」。
+SHOT_SIZE_H = {"远景": 7.0, "全景": 2.4, "中全景": 1.7, "中景": 1.2, "中近景": 0.95, "近景": 0.7, "特写": 0.35, "大特写": 0.18}
+SIZE_RATIO_OK = (0.4, 2.5)   # 图上距离 ÷ 景别反算距离 落在这个范围外＝ warning
 SUBJ_H = 1.72
+STAY_M = 0.2             # 相邻路点离得这么近（m）＝ 原地（换重心、挪半步）：图上合成一个点，各次朝向分开画
+FACE_SPLIT_DEG = 25.0    # 原地的几次面朝相差超过这个角度＝ 分开画尖角，各标秒数（chuanyue_yiri 出片前审查 T4）
 MAP_MAX = (1500, 1250)
 # ── previz 要不要：四条判据，任一条成立就要（名字只在这里定义，引擎与索引都从这里读）──
 PREVIZ_CAM_TRAVEL_M = 12.0   # 机位连续水平移动：穿行 / 长跟拍——俯视图给得出路线，给不出沿途遮挡与纵深
@@ -299,25 +308,63 @@ def gate(cfg: dict, site: dict, secs: float, chars: set[str], jb: str) -> tuple[
             if h > float(c.get("h", 1.6)) and b.get("kind") not in WALKABLE \
                     and b.get("id") not in open_ids and _inside(b, x, y):
                 warn.append("机位 t=%gs 在「%s」(h%g m) 里面" % (c["t"], b["name"], h))
-    # 起幅 / 落幅：按景别档的人占画高与焦距反算机位距离，与图上距离比一下
-    m = re.findall(r"(远景|全景|中景|近景|特写)([0-9.]+)", jb)
     acts = {a["key"]: a for a in cfg.get("actor", [])}
-    first = next(iter(acts), None)
     for c in cams:
         if c.get("subject") and c["subject"] not in acts:
             bad.append("机位 t=%gs 的 subject %s 不是本镜的 actor" % (c["t"], c["subject"]))
+    size_bad, size_warn = size_errors(cfg, jb)
+    bad.extend(size_bad)
+    warn.extend(size_warn)
+    return bad, warn
+
+
+def _size_check(c: dict, subj: dict, name: str, frame_h: float) -> str | None:
+    """机位 c 按景别 name（主体处画面高 frame_h m）与焦距反算该离主体多远，与图上距离比；差太多返回提示。"""
+    lens = float(c.get("lens", 35))
+    want = frame_h * lens / (SENSOR_W * 9 / 16)
+    got = math.dist(c["xy"], _pos_at(subj["path"], float(c["t"])))
+    if got and not SIZE_RATIO_OK[0] <= got / want <= SIZE_RATIO_OK[1]:
+        return "t=%gs %s：按 %gmm 该离%s约 %.1fm，图上是 %.1fm" % (
+            float(c["t"]), name, lens, subj.get("label", subj["key"]), want, got)
+    return None
+
+
+def size_errors(cfg: dict, jb: str = "") -> tuple[list[str], list[str]]:
+    """景别 vs 机位距离。`[[camera]] shot_size` 逐个路点核；旧剧另读 shot md 的 `景别档`（起幅 / 落幅）。
+    有人物却一个景别都没写＝ warning：这一镜的人物画高从没机检过（chuanyue_yiri ep01 63 镜都缺，检查一次也没跑）。"""
+    bad: list[str] = []
+    warn: list[str] = []
+    cams = cfg.get("camera", [])
+    acts = {a["key"]: a for a in cfg.get("actor", [])}
+    first = next(iter(acts), None)
+    checked = 0
+    for c in cams:
+        name = c.get("shot_size")
+        if name is None:
+            continue
+        if name not in SHOT_SIZE_H:
+            bad.append("机位 t=%gs 的 shot_size「%s」不认识（只能写 %s）" % (float(c["t"]), name, " / ".join(SHOT_SIZE_H)))
+            continue
+        subj = acts.get(c.get("subject", first)) if first else None
+        if subj is None:
+            continue
+        checked += 1
+        msg = _size_check(c, subj, name, SHOT_SIZE_H[name])
+        if msg:
+            warn.append(msg)
+    m = re.findall(r"(远景|全景|中景|近景|特写)([0-9.]+)", jb or "")
     if m and first and cams:
         for (name, v), c in ((m[0], cams[0]), (m[-1], cams[-1])):
-            subj = acts.get(c.get("subject", first), acts[first])
-            frac = float(v)
-            lens = float(c.get("lens", 35))
-            vfov = 2 * math.atan((SENSOR_W * 9 / 16) / (2 * lens))
-            want = SUBJ_H / frac / (2 * math.tan(vfov / 2))
-            p = _pos_at(subj["path"], float(c["t"]))
-            got = math.dist(c["xy"], p)
-            if got and not 0.4 <= got / want <= 2.5:
-                warn.append("t=%gs %s%s：按 %gmm 该离主体约 %.1fm，图上是 %.1fm" % (
-                    c["t"], name, v, lens, want, got))
+            if float(v) <= 0:
+                continue
+            checked += 1
+            msg = _size_check(c, acts.get(c.get("subject", first), acts[first]), name + v, SUBJ_H / float(v))
+            if msg:
+                warn.append(msg)
+    if acts and cams and not checked:
+        hint = sorted({n for c in cams for n in SHOT_SIZE_H if n in str(c.get("tag", ""))}, key=len, reverse=True)
+        warn.append("没有一个 [[camera]] 写 shot_size（景别），人物画高与机位距离的机检跳过了%s" % (
+            "（tag 里写着「%s」，挪进 shot_size 才会核）" % hint[0] if hint else ""))
     return bad, warn
 
 
@@ -614,6 +661,54 @@ def face_vec(path: list, t: float) -> tuple[float, float] | None:
         elif nxt is not None and math.dist((float(p[1]), float(p[2])), (float(nxt[1]), float(nxt[2]))) > 0.05:
             u = (float(nxt[1]) - float(p[1]), float(nxt[2]) - float(p[2]))
     return u if u and math.hypot(*u) > 1e-6 else None
+
+
+def stay_groups(path: list, tol: float = STAY_M) -> list[list[int]]:
+    """连续停在同一处（离这一组第一个路点 ≤ tol m，缺省 STAY_M）的路点下标合成一组：俯视图上一组只画一个人。"""
+    groups: list[list[int]] = []
+    for j, q in enumerate(path):
+        if groups and math.dist((float(path[groups[-1][0]][1]), float(path[groups[-1][0]][2])),
+                                (float(q[1]), float(q[2]))) <= tol:
+            groups[-1].append(j)
+        else:
+            groups.append([j])
+    return groups
+
+
+def stay_facings(path: list, idx: list[int]) -> list[tuple[float, list[tuple[float, float]]]]:
+    """一组原地路点里先后的每个面朝（与 face_vec 同一口径）：[(角度 rad, [(t0, t1), …]), …]，按第一次出现排序。
+    相差不到 FACE_SPLIT_DEG 的算同一个朝向；连续几个路点同一朝向并成一段 t0–t1，离开又回来另记一段。
+    以前一组只画最后一个朝向——「先对镜说话、再转身看城门」的前一个朝向在图上就没了（chuanyue_yiri 出片前审查 T4）。"""
+    out: list[list] = []
+    last = None
+    for j in idx:
+        t = float(path[j][0])
+        u = face_vec(path, t)
+        if u is None:
+            last = None
+            continue
+        ang = math.atan2(u[1], u[0])
+        k = next((i for i, (a0, _s) in enumerate(out)
+                  if _ang_diff(ang, a0) <= FACE_SPLIT_DEG), None)
+        if k is None:
+            out.append([ang, []])
+            k = len(out) - 1
+        if k == last:
+            out[k][1][-1] = (out[k][1][-1][0], t)
+        else:
+            out[k][1].append((t, t))
+        last = k
+    return [(a0, spans) for a0, spans in out]
+
+
+def _ang_diff(a: float, b: float) -> float:
+    """两个方向（弧度）相差多少度，0–180。"""
+    return abs((math.degrees(a - b) + 180) % 360 - 180)
+
+
+def span_text(spans: list[tuple[float, float]]) -> str:
+    """[(0, 11), (17.5, 18)] → 「0–11s、17.5–18s」。"""
+    return "、".join(("%gs" % a) if a == b else ("%g–%gs" % (a, b)) for a, b in spans)
 
 
 def screen_view(cfg: dict, t: float) -> dict[str, dict]:
@@ -1498,32 +1593,49 @@ def render(shot_dir: Path) -> tuple[Path | None, list[str], list[str]]:
     colors = actor_colors(cfg, shot_dir)
     for i, a in enumerate(cfg.get("actor", [])):
         col = colors[a["key"]]
-        pts = [P(float(p[1]), float(p[2])) for p in a["path"]]
+        raw = a["path"]
+        pts = [P(float(p[1]), float(p[2])) for p in raw]
         n = int(a.get("count", 1))
-        if len(pts) > 1:
-            for j in range(len(pts) - 1):
-                if pts[j] == pts[j + 1]:
-                    continue
-                # 切点瞬间换位置（Δt ≤ 0.2s）是镜内硬切的时间压缩，不是真的走过去——画虚线
-                if float(a["path"][j + 1][0]) - float(a["path"][j][0]) <= 0.2:
-                    _dashed(d, pts[j], pts[j + 1], col + (120,))
-                else:
-                    _arrow(d, pts[j], pts[j + 1], col + (220,), 4, 14)
-        for j, (p, raw) in enumerate(zip(pts, a["path"])):
-            r = 9 if j == 0 else 6
+        groups = stay_groups(raw, max(STAY_M, 4 / PX))   # 图上不到 4 px 的挪动也画不出来
+        gid = {j: k for k, g in enumerate(groups) for j in g}
+        for j in range(len(pts) - 1):
+            if gid[j] == gid[j + 1] or pts[j] == pts[j + 1]:
+                continue
+            # 切点瞬间换位置（Δt ≤ 0.2s）是镜内硬切的时间压缩，不是真的走过去——画虚线
+            if float(raw[j + 1][0]) - float(raw[j][0]) <= 0.2:
+                _dashed(d, pts[j], pts[j + 1], col + (120,))
+            else:
+                _arrow(d, pts[j], pts[j + 1], col + (220,), 4, 14)
+        # 原地的几个路点只画一个点；先后每个朝向一条短线，线头标那段秒数（以前秒数叠在一起、朝向看不出先后，T4）
+        for k, g in enumerate(groups):
+            p = pts[g[0]]
+            r = 9 if k == 0 else 6
             d.ellipse([p[0] - r, p[1] - r, p[0] + r, p[1] + r], fill=col, outline=(255, 255, 255))
-            if n > 1 and j == 0:
-                for k in range(1, min(n, 6)):
-                    ang = k * 2 * math.pi / min(n, 6)
+            if n > 1 and k == 0:
+                for m_ in range(1, min(n, 6)):
+                    ang = m_ * 2 * math.pi / min(n, 6)
                     q = (p[0] + 18 * math.cos(ang), p[1] + 18 * math.sin(ang))
                     d.ellipse([q[0] - 6, q[1] - 6, q[0] + 6, q[1] + 6], fill=col + (170,))
-            if len(raw) == 5:
-                fx, fy = P(float(raw[3]), float(raw[4]))
-                ang = math.atan2(fy - p[1], fx - p[0])
-                d.line([p, (p[0] + 26 * math.cos(ang), p[1] + 26 * math.sin(ang))], fill=col, width=3)
-            halo(d, (p[0] + 14, p[1] + 14), "%gs" % float(raw[0]), f_s, col, anchor="lm")
+            # 与旧图同口径：只画写了面朝点的路点；路过的单个路点不画短线（行进方向看箭头）
+            faces = stay_facings(raw, g) if any(len(raw[j]) == 5 for j in g) else []
+            L = 26 if len(faces) <= 1 else 34
+            for fa, spans in faces:
+                tip = (p[0] + L * math.cos(fa), p[1] + L * math.sin(fa))
+                d.line([p, tip], fill=col, width=3)
+                if len(faces) > 1:
+                    txt = span_text(spans)
+                    off = 12 + abs(math.cos(fa)) * d.textlength(txt, font=f_s) / 2
+                    halo(d, (tip[0] + off * math.cos(fa), tip[1] + 18 * math.sin(fa)), txt, f_s, col)
+            if len(faces) <= 1:
+                t0, t1 = float(raw[g[0]][0]), float(raw[g[-1]][0])
+                halo(d, (p[0] + 14, p[1] + 14), ("%gs" % t0) if t0 == t1 else ("%g–%gs" % (t0, t1)), f_s, col, anchor="lm")
         name = a.get("label", a["key"]) + (" ×%d" % n if n > 1 else "")
-        halo(d, (pts[0][0], pts[0][1] - 22), name, f_m, col)
+        # 名字写在起点离各朝向短线最远的一侧（上 / 下 / 左 / 右），别和朝向秒数叠在一起
+        fa0 = [fa for fa, _sp in stay_facings(raw, groups[0])] if any(len(raw[j]) == 5 for j in groups[0]) else []
+        side = max((-math.pi / 2, math.pi / 2, math.pi, 0.0),
+                   key=lambda s_: min((abs((s_ - fa + math.pi) % (2 * math.pi) - math.pi) for fa in fa0), default=9))
+        nw = d.textlength(name, font=f_m)
+        halo(d, (pts[0][0] + math.cos(side) * (22 + nw / 2), pts[0][1] + math.sin(side) * 22), name, f_m, col)
     # 机位
     cams = cfg["camera"]
     cp = [P(*c["xy"]) for c in cams]
@@ -1632,7 +1744,7 @@ def render(shot_dir: Path) -> tuple[Path | None, list[str], list[str]]:
                 "%gs ｜ %s（%s）｜ 景别档 %s" % (secs, site["meta"].get("name_zh", bg), bg, jb or "—"),
                 cfg["meta"].get("note", ""))
     halo(d, (pad, H - 72), "红＝机位（实线箭头＝运镜、虚线「切」＝硬切；圆牌号＝路点顺序、旁边是秒数，扇形＝朝向与视角）"
-         "　彩色＝人物走位（点旁数字＝秒，短线＝面朝）　橙＝本镜物件", f_s, MUTED, anchor="lm")
+         "　彩色＝人物走位（点旁数字＝秒，短线＝面朝；原地几条短线＝先后几次朝向，线头标秒数）　橙＝本镜物件", f_s, MUTED, anchor="lm")
     footer(d, pad, H - 40, "由 tools/shot_overhead.py 从 planning/overhead.toml 生成 · 位置的唯一出处，shot blend 从同一份读"
            " · 底图＝%s 场地平面图 blocks.toml@%s" % (bg, planschema.sha(owner)))
     out = shot_dir / "planning" / ("%s_overhead.png" % shot_dir.name)
@@ -1679,7 +1791,7 @@ def _ref_view(cfg: dict) -> tuple[float, float, float, float]:
 
 def render_ref(shot_dir: Path, cfg: dict, site: dict, secs: float) -> Path:
     """Seedance 版 overhead：视频模型读的是「图形」，所以只留图形——
-    地块（灰，深浅＝高低）、人（彩色圆 + 朝向尖角 + 路线箭头 + 到达秒数）、机位（红色机身 + 视野扇形 + 段号与秒数）。
+    地块（灰，深浅＝高低）、人（彩色圆 + 朝向尖角 + 路线箭头 + 到达秒数；原地转身＝同一点几个尖角、各标秒数）、机位（红色机身 + 视野扇形 + 段号与秒数）。
     无标题 / 侧栏 / 坐标 / 图例：图例在 prompt 的 `参考用法:` 里用文字交代，不画在图上。
     标签先收齐再统一避让摆放——字压字的图，模型与人都读不出谁是谁。"""
     W, H = REF_SIZE
@@ -1688,7 +1800,8 @@ def render_ref(shot_dir: Path, cfg: dict, site: dict, secs: float) -> Path:
     img = Image.new("RGB", (W, H), GRASS_REF)
     d = ImageDraw.Draw(img, "RGBA")
     taken: list[tuple[float, float, float, float]] = []      # 已被图形 / 标签占住的矩形
-    labels: list[tuple[tuple[float, float], str, object, tuple, float]] = []   # (锚点, 文字, 字体, 颜色, 最小离开距离)
+    labels: list[tuple] = []   # (锚点, 文字, 字体, 颜色, 最小离开距离[, 优先方向 rad])
+    face_labels: list[tuple] = []   # 原地几次朝向的秒数：最先摆，紧贴各自的尖角
 
     def P(x: float, y: float) -> tuple[float, float]:
         return (x - vx0) * PX, (y - vy0) * PX
@@ -1748,25 +1861,20 @@ def render_ref(shot_dir: Path, cfg: dict, site: dict, secs: float) -> Path:
         col = colors[a["key"]]
         raw = a["path"]
         pts = [P(float(q[1]), float(q[2])) for q in raw]
+        # 同一位置连续的路点合成一个「a–bs」；原地先后几次朝向各画一个尖角、各标秒数
+        groups = stay_groups(raw, max(STAY_M, 4 / PX))   # 图上不到 4 px 的挪动也画不出来
+        gid = {j: k for k, g in enumerate(groups) for j in g}
         for j in range(len(pts) - 1):
-            if math.dist(pts[j], pts[j + 1]) > 4:
+            if gid[j] != gid[j + 1] and math.dist(pts[j], pts[j + 1]) > 4:
                 if float(raw[j + 1][0]) - float(raw[j][0]) <= 0.2:
                     _dashed(d, pts[j], pts[j + 1], col + (160,), 4)
                 else:
                     _arrow(d, pts[j], pts[j + 1], col + (235,), 6, 20)
-        # 同一位置连续的路点合成一个「a–bs」
-        groups: list[list[int]] = []
-        for j, p in enumerate(pts):
-            if groups and math.dist(pts[groups[-1][-1]], p) <= 4:
-                groups[-1].append(j)
-            else:
-                groups.append([j])
-        for g in groups:
+        # 原地转了几次身的组最后画，免得几个尖角被旁边路过的点盖住
+        for g, faces in sorted(((g, stay_facings(raw, g)) for g in groups), key=lambda gf: len(gf[1]) > 1):
             p = pts[g[0]]
-            face = next((raw[j] for j in reversed(g) if len(raw[j]) == 5), None)
-            if face is not None:
-                fx, fy = P(float(face[3]), float(face[4]))
-                ang = math.atan2(fy - p[1], fx - p[0])
+            if faces:
+                ang = [f_[0] for f_ in faces]
             elif g[-1] + 1 < len(pts):
                 q = pts[g[-1] + 1]
                 ang = math.atan2(q[1] - p[1], q[0] - p[0])
@@ -1775,16 +1883,31 @@ def render_ref(shot_dir: Path, cfg: dict, site: dict, secs: float) -> Path:
                 ang = math.atan2(p[1] - q[1], p[0] - q[0])
             else:
                 ang = None
-            _person_glyph(d, p, ang, col, big=(g is groups[0] or g is groups[-1]))
+            ends = g is groups[0] or g is groups[-1]
+            if len(g) == 1 and not ends and (len(faces) != 1 or _ang_diff(faces[0][0], math.atan2(
+                    pts[g[0] + 1][1] - p[1], pts[g[0] + 1][0] - p[0])) <= FACE_SPLIT_DEG):
+                # 路过的点（没停、面朝就是走的方向）：小圆点＋秒数就够，方向看箭头——省下地方给原地转身的尖角
+                d.ellipse([p[0] - 8, p[1] - 8, p[0] + 8, p[1] + 8], fill=col, outline=(255, 255, 255), width=2)
+                occupy(p, 14)
+                labels.append((p, "%gs" % float(raw[g[0]][0]), font(24), col, 18))
+                continue
+            tips = _person_glyph(d, p, ang, col, big=ends)
             occupy(p, 30)
+            for tip in tips:            # 尖角本身也占位，别的字不许压上去
+                occupy(((p[0] + tip[0]) / 2, (p[1] + tip[1]) / 2), 12)
             t0, t1 = float(raw[g[0]][0]), float(raw[g[-1]][0])
-            labels.append((p, ("%gs" % t0) if t0 == t1 else ("%g–%gs" % (t0, t1)), font(24), col, 30))
+            if len(faces) > 1:          # 几次朝向：秒数贴着各自的尖角写（合起来就是这一组停留的时段），先于其他字摆
+                for (fa, spans), tip in zip(faces, tips):
+                    face_labels.append(((tip[0] + 12 * math.cos(fa), tip[1] + 12 * math.sin(fa)), span_text(spans),
+                                        font(22), col, 2, fa))
+            else:
+                labels.append((p, ("%gs" % t0) if t0 == t1 else ("%g–%gs" % (t0, t1)), font(24), col, 30))
         n = int(a.get("count", 1))
         labels.insert(0, (pts[0], _short(a.get("label", a["key"])) + (" ×%d" % n if n > 1 else ""),
                           font(30, bold=True), col, 34))
 
-    for anchor, txt, f, col, gap in labels:
-        _place(d, taken, anchor, txt, f, col, gap, W, H)
+    for anchor, txt, f, col, gap, *pref in face_labels + labels:
+        _place(d, taken, anchor, txt, f, col, gap, W, H, prefer=pref[0] if pref else None)
     north_arrow(d, W - 70, 40, 60)
     scale_bar(d, 40, H - 60, PX, meters=_nice(vx1 - vx0))
     out = ref_path(shot_dir)
@@ -1825,12 +1948,17 @@ def sketch_site(d: ImageDraw.ImageDraw, site: dict, P, PX: float, box: tuple[flo
     return labels
 
 
-def _place(d: ImageDraw.ImageDraw, taken: list, anchor, txt: str, f, col, gap: float, W: int, H: int) -> None:
-    """在锚点周围 8 个方位里挑第一个不压别人的位置写字；都压就放离得最少的那个。"""
+def _place(d: ImageDraw.ImageDraw, taken: list, anchor, txt: str, f, col, gap: float, W: int, H: int,
+           prefer: float | None = None) -> None:
+    """在锚点周围 8 个方位里挑第一个不压别人的位置写字；都压就放离得最少的那个。
+    prefer（弧度）：先试最接近这个方向的方位（朝向尖角的秒数贴着自己那个尖角写）。"""
     w, h = d.textlength(txt, font=f), f.size * 1.25
     best, best_hit = None, None
+    order = (6, 2, 0, 4, 7, 5, 1, 3)                 # 上、下、右、左，再四个斜角
+    if prefer is not None:
+        order = tuple(sorted(range(8), key=lambda k: abs((k * math.pi / 4 - prefer + math.pi) % (2 * math.pi) - math.pi)))
     for rad in (gap, gap + 30, gap + 70):
-        for k in (6, 2, 0, 4, 7, 5, 1, 3):          # 上、下、右、左，再四个斜角
+        for k in order:
             ang = k * math.pi / 4
             cx = anchor[0] + math.cos(ang) * (rad + (w / 2 if k in (0, 4, 1, 3, 5, 7) else 0))
             cy = anchor[1] + math.sin(ang) * (rad + h / 2)
@@ -1859,16 +1987,22 @@ def _camera_glyph(d: ImageDraw.ImageDraw, p, ang: float) -> None:
     d.polygon([R(8, -8), R(26, -15), R(26, 15), R(8, 8)], fill=ACCENT, outline=(255, 255, 255), width=3)
 
 
-def _person_glyph(d: ImageDraw.ImageDraw, p, ang: float | None, col, big: bool) -> None:
-    """人：实心圆 + 朝面向伸出的尖角（没有朝向信息就只画圆）。"""
+def _person_glyph(d: ImageDraw.ImageDraw, p, ang, col, big: bool) -> list[tuple[float, float]]:
+    """人：实心圆 + 朝面向伸出的尖角（没有朝向信息就只画圆）。ang 可以是几个角度（原地先后几次朝向）：
+    每个朝向一个窄一点、长一点的尖角，免得相邻两个糊成一片。返回各尖角的尖端（给秒数标签当锚点）。"""
     r = 20 if big else 13
-    if ang is not None:
-        ca, sa = math.cos(ang), math.sin(ang)
-        tip = (p[0] + (r + 20) * ca, p[1] + (r + 20) * sa)
-        l = (p[0] + r * 0.9 * math.cos(ang + 0.75), p[1] + r * 0.9 * math.sin(ang + 0.75))
-        rr = (p[0] + r * 0.9 * math.cos(ang - 0.75), p[1] + r * 0.9 * math.sin(ang - 0.75))
-        d.polygon([l, tip, rr], fill=col, outline=(255, 255, 255))
+    angs = [] if ang is None else (list(ang) if isinstance(ang, (list, tuple)) else [ang])
+    spread, reach = (0.75, 20) if len(angs) <= 1 else (0.42, 30)
+    tips = []
+    for a in angs:
+        ca, sa = math.cos(a), math.sin(a)
+        tip = (p[0] + (r + reach) * ca, p[1] + (r + reach) * sa)
+        l = (p[0] + r * 0.9 * math.cos(a + spread), p[1] + r * 0.9 * math.sin(a + spread))
+        rr = (p[0] + r * 0.9 * math.cos(a - spread), p[1] + r * 0.9 * math.sin(a - spread))
+        d.polygon([l, tip, rr], fill=col, outline=(255, 255, 255), width=1 if len(angs) <= 1 else 2)
+        tips.append(tip)
     d.ellipse([p[0] - r, p[1] - r, p[0] + r, p[1] + r], fill=col, outline=(255, 255, 255), width=3)
+    return tips
 
 
 def _xy(p) -> str:

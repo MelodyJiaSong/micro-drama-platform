@@ -1,0 +1,208 @@
+{
+  "prompt": [
+    23,
+    "d6dbc683-f93c-44aa-8323-b3dd6cad3faf",
+    {
+      "1": {
+        "class_type": "LoadTrellis2Models",
+        "inputs": {
+          "resolution": "1024_cascade",
+          "precision": "bf16",
+          "attn_backend": "sdpa"
+        }
+      },
+      "10": {
+        "class_type": "LoadImage",
+        "inputs": {
+          "image": "dota287_m13_front_dad0f6f57a.png"
+        }
+      },
+      "11": {
+        "class_type": "Trellis2RemoveBackground",
+        "inputs": {
+          "image": [
+            "10",
+            0
+          ],
+          "low_vram": true
+        }
+      },
+      "20": {
+        "class_type": "Trellis2GetConditioning",
+        "inputs": {
+          "model_config": [
+            "1",
+            0
+          ],
+          "image": [
+            "11",
+            0
+          ],
+          "mask": [
+            "11",
+            1
+          ],
+          "background_color": "black"
+        }
+      },
+      "21": {
+        "class_type": "Trellis2ImageToShape",
+        "inputs": {
+          "model_config": [
+            "1",
+            0
+          ],
+          "seed": 28723,
+          "ss_sampling_steps": 12,
+          "shape_sampling_steps": 12,
+          "max_tokens": 32768,
+          "ss_guidance_strength": 7.5,
+          "ss_guidance_rescale": 0.7,
+          "shape_guidance_strength": 7.5,
+          "shape_guidance_rescale": 0.5,
+          "conditioning": [
+            "20",
+            0
+          ]
+        }
+      },
+      "22": {
+        "class_type": "Trellis2ExportTrimesh",
+        "inputs": {
+          "trimesh": [
+            "21",
+            0
+          ],
+          "filename_prefix": "dota287/m13_r01_raw",
+          "file_format": "glb"
+        }
+      },
+      "23": {
+        "class_type": "Trellis2ShapeToTexturedMesh",
+        "inputs": {
+          "model_config": [
+            "1",
+            0
+          ],
+          "conditioning": [
+            "20",
+            0
+          ],
+          "shape_slat": [
+            "21",
+            1
+          ],
+          "subs": [
+            "21",
+            2
+          ],
+          "seed": 28723,
+          "tex_sampling_steps": 12,
+          "tex_guidance_strength": 1.0,
+          "tex_guidance_rescale": 0.0
+        }
+      },
+      "24": {
+        "class_type": "Trellis2ProcessMesh",
+        "inputs": {
+          "trimesh": [
+            "21",
+            0
+          ],
+          "remesh": "on",
+          "target_face_count": 1000000,
+          "remesh.remesh_band": 1.0,
+          "remesh.remove_inner_faces": false,
+          "floater_threshold": 0.0,
+          "weld_vertices": true,
+          "weld_digits": 5,
+          "chart_cone_angle": 90.0,
+          "chart_refine_iterations": 0,
+          "chart_global_iterations": 1,
+          "chart_smooth_strength": 1
+        }
+      },
+      "25": {
+        "class_type": "Trellis2RasterizePBR",
+        "inputs": {
+          "trimesh": [
+            "24",
+            0
+          ],
+          "voxelgrid": [
+            "23",
+            0
+          ],
+          "texture_size": 4096,
+          "original_mesh": [
+            "21",
+            0
+          ]
+        }
+      },
+      "26": {
+        "class_type": "Trellis2ExportTrimesh",
+        "inputs": {
+          "trimesh": [
+            "25",
+            0
+          ],
+          "filename_prefix": "dota287/m13_r01_pbr",
+          "file_format": "glb"
+        }
+      },
+      "27": {
+        "class_type": "Trellis2ExportTrimesh",
+        "inputs": {
+          "trimesh": [
+            "24",
+            0
+          ],
+          "filename_prefix": "dota287/m13_r01_processed",
+          "file_format": "glb"
+        }
+      }
+    },
+    {
+      "client_id": "dota287_m13_r01",
+      "create_time": 1793203336958
+    },
+    [
+      "22",
+      "27",
+      "26"
+    ]
+  ],
+  "outputs": {},
+  "status": {
+    "status_str": "success",
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "d6dbc683-f93c-44aa-8323-b3dd6cad3faf",
+          "timestamp": 1793203336960
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [
+            "1"
+          ],
+          "prompt_id": "d6dbc683-f93c-44aa-8323-b3dd6cad3faf",
+          "timestamp": 1793203337000
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "d6dbc683-f93c-44aa-8323-b3dd6cad3faf",
+          "timestamp": 1793203607757
+        }
+      ]
+    ]
+  },
+  "meta": {}
+}

@@ -1,0 +1,179 @@
+<style>
+  /* 屏 A：左「已证实」三件，右「报道称 · 匿名信源」两件 */
+  .col { position: absolute; top: 190px; }
+  #ca { left: var(--mx); width: 780px; }
+  #cb { left: 1000px; width: 800px; }
+  .colh { display: flex; align-items: center; gap: 18px; padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  #cb .colh { border-bottom-style: dashed; border-bottom-color: var(--d-bad); }
+  .colh .h2 { white-space: nowrap; }
+  .it { display: grid; grid-template-columns: 64px 1fr; column-gap: 18px; padding: 22px 0 18px; border-bottom: 1px solid var(--hair); }
+  .it .no { font-size: var(--fs-h2); font-weight: 700; color: var(--faint); line-height: 1.25; }
+  .it .h2 { white-space: nowrap; }
+  .it .det { grid-column: 2; }
+  .it .det .caption, .it .det .body { margin-top: 6px; }
+  .it .det .slot { margin-top: 14px; width: 560px; }
+  .it .tagrow { grid-column: 2; margin-top: 10px; }
+  .q-en { color: var(--ink); font-weight: 600; }
+
+  /* 屏 B：另一边的说法 */
+  .ot { position: absolute; left: var(--mx); top: 170px; }
+  .rsp { position: absolute; left: var(--mx); right: var(--mx); top: 280px; display: flex; gap: 40px; align-items: stretch; }
+  .rsp .card { flex: 1.2 1 0; min-width: 0; padding: 36px 40px; }
+  .rsp #r3 { flex: .75 1 0; }
+  .rsp .h2 { margin-top: 16px; }
+  .rsp .body { margin-top: 18px; color: var(--ink2); }
+  .rsp .caption { margin-top: 6px; }
+  .rsp .slot { margin-top: 16px; }
+  .rsp .ico { display: none; }
+  html[lang=en] #r3 .h1 { white-space: normal; }
+  .rsp .slot figcaption { margin-top: 4px; }
+  #r3 { display: flex; flex-direction: column; justify-content: center; }
+  #r3 .h1 { margin-top: 12px; white-space: nowrap; }
+
+  /* 屏 C：信 ？ 报道 —— 不连线 */
+  .qm { position: absolute; left: var(--mx); right: var(--mx); top: 250px; display: grid; grid-template-columns: 1fr 240px 1fr; align-items: center; }
+  .qm .card { padding: 44px 48px; text-align: center; }
+  .qm .h2 { margin-top: 14px; }
+  .qm .caption { margin-top: 8px; }
+  .qm .mark { text-align: center; font-size: 200px; font-weight: 700; color: var(--accent); line-height: 1; }
+  .qmf { position: absolute; left: 0; right: 0; top: 660px; text-align: center; }
+</style>
+
+<div class="eb eyebrow" data-zh="01 · 哪些是真的" data-en="01 · What's confirmed"></div>
+
+<!-- 屏 A -->
+<div class="col" id="ca">
+  <div class="colh" id="cah"><figure class="slot av" data-nocap data-src="img/source/commons/Jensen_Huang_Stanford_2026-04-30_010_(cropped).jpg" style="--s:72px; --pos:50% 25%"></figure><span class="h2" data-zh="已证实" data-en="Confirmed"></span></div>
+  <div class="it" id="a1"><span class="no">1</span><span class="h2" data-zh="写信认了不忠" data-en="Admitted infidelity"></span></div>
+  <div class="it" id="a2"><span class="no">2</span><span class="h2" data-zh="董事会启动调查" data-en="Board investigation"></span>
+    <div class="det" id="a2d">
+      <div class="body" id="a2a" data-zh="起因：报道称他是<br>「外国情报活动」目标" data-en='Over reports he was the <span class="q-en">“target of a foreign intelligence effort”</span>'></div>
+      <div class="caption" id="a2b" data-zh="国家安全、公司机密：暂无理由认为受损" data-en="No reason to believe security or secrets were compromised"></div>
+    </div></div>
+  <div class="it" id="a3"><span class="no">3</span><span class="h2" data-zh="辞职，原因未写" data-en="Resigned, no reason given"></span></div>
+</div>
+<div class="col" id="cb">
+  <div class="colh" id="cbh"><span id="cbTag"></span></div>
+  <div class="it" id="b1"><span class="no">1</span><span class="h2" data-zh="一名女商人" data-en="A businesswoman"></span>
+    <div class="det" id="b1d">
+      <div class="body" id="b1a" data-zh="美国情报界怀疑：替中国情报机构做事" data-en="Suspected by US intelligence of working for China"></div>
+      <div class="body" id="b1b" data-zh="新加坡公司前高管 · 英伟达客户" data-en="Ex-executive, Singapore firm · Nvidia customer"></div>
+      <figure class="slot" id="sg" data-src="img/source/commons/Singapore_Marina_Bay_Dusk_2018-02-27.jpg" style="--h:150px"></figure>
+    </div>
+    <div class="tagrow" id="b1t"></div></div>
+  <div class="it" id="b2"><span class="no">2</span><span class="h2" data-zh="另一段关系" data-en="Another relationship"></span>
+    <div class="det" id="b2d">
+      <div class="body" data-zh="对象：一名向他汇报的高管" data-en="With an executive who reported to him"></div>
+      <div class="body" id="b2b" data-zh="英伟达：拒绝置评" data-en="Nvidia: declined to comment"></div>
+    </div>
+    <div class="tagrow" id="b2t"></div></div>
+</div>
+
+<!-- 屏 B -->
+<div class="ot h2" id="ot" data-zh="另一边的说法" data-en="The other side"></div>
+<div class="rsp" id="rsp">
+  <div class="card" id="r1"><span data-icon="podium" data-size="56"></span>
+    <div class="eyebrow" data-zh="中国外交部 · 11 月 9 日" data-en="China's Foreign Ministry · Nov 9"></div>
+    <div class="h2" data-zh="「纯属捕风捉影，<br>污蔑抹黑」" data-en="Groundless smears"></div>
+    <div class="caption" data-zh="" data-en="Translated from Chinese"></div></div>
+  <div class="card" id="r2"><span data-icon="bill" data-size="56"></span>
+    <div class="eyebrow" data-zh="新加坡内政部 · 11 月 12 日" data-en="Singapore Home Affairs · Nov 12"></div>
+    <div class="h2" data-zh="未以间谍事由调查她" data-en="“Not investigated for espionage”"></div>
+    <figure class="slot" id="crt" data-src="img/source/ai/ai_crates.png" style="--h:130px"></figure>
+    <div class="body" id="r2b" data-zh="警方曾查：买服务器申报不实" data-en="Police probe: false declarations on servers"></div>
+    <div class="caption" id="r2c" data-zh="结论：证据不足" data-en="Result: insufficient evidence"></div></div>
+  <div class="card" id="r3"><div class="eyebrow" data-zh="截至 11 月 14 日" data-en="As of Nov 14"></div>
+    <div class="h1 accent" data-zh="起诉：无" data-en="Charges: none"></div></div>
+</div>
+
+<!-- 屏 C -->
+<div class="qm" id="qm">
+  <div class="card" id="qa"><span data-icon="letter" data-size="64"></span>
+    <div class="h2" data-zh="他信里认的那段" data-en="The affair in his letter"></div>
+    <div class="caption" data-zh="对象：未写" data-en="With whom: not said"></div></div>
+  <div class="mark" id="qmk">?</div>
+  <div class="card" id="qb"><span data-icon="person" data-size="64"></span>
+    <div class="h2" data-zh="报道里的女商人" data-en="The reported businesswoman"></div>
+    <div class="caption" data-zh="报道称 · 匿名信源" data-en="Reported · unnamed sources"></div></div>
+</div>
+<div class="qmf body sub" id="qmf" data-zh="他没说 · 我们也不知道" data-en="He didn't say · we don't know"></div>
+
+<script>
+const T = EDU.tl;
+document.getElementById("cbTag").innerHTML = pill("reported");
+document.getElementById("b1t").innerHTML = pill("unver");
+document.getElementById("b2t").innerHTML = pill("unver");
+document.querySelector("#cbTag .pill").style.cssText = "font-size: var(--fs-caption); padding: 6px 22px;";
+
+gsap.set(["#ca", "#cah", "#a1", "#a2", "#a2a", "#a2b", "#a3", "#cb", "#b1", "#b1a", "#b1b", "#sg", "#b1t", "#b2", "#b2t",
+          "#ot", "#rsp", "#r1", "#r2", "#r2b", "#r2c", "#crt", "#r3", "#qm", "#qa", "#qb", "#qmk", "#qmf"], { opacity: 0 });
+EDU.in(".eb", 0);
+
+// l10 板上钉钉的有三件
+EDU.in("#ca", EDU.t("l10", 0), { y: 0, d: .01 });
+EDU.in("#cah", EDU.t("l10", .05));
+// l11 写信认了不忠
+EDU.in("#a1", EDU.t("l11", .05));
+const HU = "img/source/commons/Jensen_Huang_Stanford_2026-04-30_010_(cropped).jpg";
+srcNote(cred(HU), cred(HU), EDU.t("l10", .1), EDU.t("l11", 0));
+srcNote(withCred("英伟达致员工信 · 2026-11-08", HU), withCred("Nvidia, letter to employees · Nov 8, 2026", HU), EDU.t("l11", .2), EDU.end("l11") + .1);
+// l12 董事会因「外国情报活动」报道启动调查
+EDU.dim("#a1", EDU.t("l12", 0), .45);
+EDU.in("#a2", EDU.t("l12", .05));
+EDU.in("#a2a", EDU.t("l12", .35));
+srcNote("英伟达董事会声明 · 2026-11-08", "Nvidia board statement · Nov 8, 2026", EDU.t("l12", .2), EDU.end("l13") + .1);
+// l13 但暂无理由认为国家安全、机密受损
+EDU.in("#a2b", EDU.t("l13", .1));
+// l14 他辞职了，没说原因（细节收起）
+EDU.out("#a2d", EDU.t("l14", 0), { y: 0 }); T.set("#a2d", { display: "none" }, EDU.t("l14", 0) + .46);
+EDU.dim("#a2", EDU.t("l14", 0), .45);
+EDU.in("#a3", EDU.t("l14", .1));
+srcNote("SEC 8-K · 2026-11-12", "SEC 8-K · Nov 12, 2026", EDU.t("l14", .2), EDU.end("l14") + .1);
+
+// l15 只是报道、没证实的有两件（左栏退后）
+EDU.dim("#ca", EDU.t("l15", 0), .25);
+EDU.in("#cb", EDU.t("l15", 0), { y: 0, d: .01 });
+EDU.in("#cbh", EDU.t("l15", .05));
+// l16 NYT：情报界怀疑一名女商人（匿名信源 · 未证实）
+EDU.in("#b1", EDU.t("l16", .03));
+EDU.in("#b1a", EDU.t("l16", .3));
+EDU.in("#b1t", EDU.t("l16", .55), { y: 0 });
+srcNote("《纽约时报》2026-10-29（匿名信源，经 CNBC）", "The New York Times, Oct 29, 2026 (unnamed sources, via CNBC)", EDU.t("l16", .2), EDU.t("l17", .25));
+// l17 新加坡公司前高管，那家公司是英伟达的客户
+EDU.in("#b1b", EDU.t("l17", .05));
+EDU.in("#sg", EDU.t("l17", .3));
+// l18 另一段关系：一名向他汇报的高管；英伟达拒绝置评
+EDU.out(["#b1d"], EDU.t("l18", 0), { y: 0 }); T.set("#b1d", { display: "none" }, EDU.t("l18", 0) + .46);
+EDU.dim(["#b1"], EDU.t("l18", 0), .45);
+EDU.in("#b2", EDU.t("l18", .05));
+EDU.in("#b2t", EDU.t("l18", .4), { y: 0 });
+srcNote("《纽约时报》2026-11-11（匿名信源）", "The New York Times, Nov 11, 2026 (unnamed sources)", EDU.t("l18", .2), EDU.end("l18") + .1);
+
+// l19 另一边：中国外交部
+EDU.out(["#ca", "#cb"], EDU.t("l19", 0));
+EDU.in("#ot", EDU.t("l19", .02));
+EDU.in("#rsp", EDU.t("l19", 0), { y: 0, d: .01 });
+EDU.in("#r1", EDU.t("l19", .1));
+srcNote("中国外交部例行记者会 · 2026-11-09", "China MFA press briefing · Nov 9, 2026", EDU.t("l19", .2), EDU.end("l19") + .1);
+// l20 新加坡内政部：没有以间谍事由调查她
+EDU.dim("#r1", EDU.t("l20", 0), .5);
+EDU.in("#r2", EDU.t("l20", .05));
+srcNote("新加坡内政部 · 2026-11-12", "Singapore Ministry of Home Affairs · Nov 12, 2026", EDU.t("l20", .2), EDU.end("l21") + .1);
+// l21 警方查过：申报不实，证据不足
+EDU.in("#crt", EDU.t("l21", 0));
+EDU.in("#r2b", EDU.t("l21", .05));
+EDU.in("#r2c", EDU.t("l21", .55));
+// l22 没有人被起诉
+EDU.dim("#r2", EDU.t("l22", 0), .5);
+EDU.in("#r3", EDU.t("l22", .05));
+srcNote("检索至 2026-11-14 未见任何起诉记录", "No charges found as of Nov 14, 2026", EDU.t("l22", .2), EDU.end("l22") + .2);
+
+// l23 信里那段关系是不是她：他没说，我们不知道（问号，不连线）
+EDU.out(["#ot", "#rsp"], EDU.t("l23", 0));
+EDU.in("#qm", EDU.t("l23", 0), { y: 0, d: .01 });
+EDU.in("#qa", EDU.t("l23", .08));
+EDU.in("#qb", EDU.t("l23", .18));
+EDU.in("#qmk", EDU.t("l23", .3), { y: 0 });
+EDU.in("#qmf", EDU.t("l23", .55));
+EDU.out(["#qm", "#qmf"], EDU.S.duration - .5);
+</script>

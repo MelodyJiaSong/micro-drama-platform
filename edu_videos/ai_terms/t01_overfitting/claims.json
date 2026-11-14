@@ -1,0 +1,220 @@
+{
+ "note": "事实台账：讲稿与画面上每个事实、数字、专业概念一条（v3.1 句号），写明出处与原文原话。实验算出的写 source: \"experiment\"，并指到 scenes/t01.py 里的断言。程序检验（tools/edu_review.py validate）核对：带数字、百分比、引号的句子都要在这里登记。核对记录见 research.md。 v5 句号已重挂（2026-11-09）。",
+ "claims": [
+  {
+   "id": "C01",
+   "lines": [
+    "l15",
+    "l20"
+   ],
+   "claim": "③ 弯曲线（9 次多项式）训练误差为零；测试误差是 ② 的二十多倍（实际 25 倍）",
+   "screen": [
+    "训练误差 0.00",
+    "测试误差 1.80",
+    "是 ② 的 25 倍 / 25× model ②"
+   ],
+   "source": "experiment",
+   "check": "scenes/t01.py：assert MSE[9][0] < 1e-6 and 20 <= RATIO < 30"
+  },
+  {
+   "id": "C02",
+   "lines": [],
+   "claim": "重复实验 300 次，取中位数；训练误差单调下降，测试误差先降后升",
+   "screen": [
+    "300 次实验的中位数"
+   ],
+   "source": "experiment",
+   "check": "scenes/t01.py：error_curves(runs=300)",
+   "note": "v5（2026-11-09 缩短）片中已删去，台账保留备查"
+  },
+  {
+   "id": "C03",
+   "lines": [
+    "l08",
+    "l25",
+    "l26",
+    "l27"
+   ],
+   "claim": "10 个点；三次多项式 4 个系数；九次多项式 10 个系数，正好穿过 10 个点",
+   "screen": [
+    "10 个数字",
+    "4 个数字",
+    "10 → 10"
+   ],
+   "source": "experiment",
+   "check": "scenes/t01.py：assert len(FITS[3]) == 4 and len(FITS[9]) == len(XTR) == 10"
+  },
+  {
+   "id": "C04",
+   "lines": [
+    "l30",
+    "l31",
+    "l32",
+    "l33"
+   ],
+   "claim": "GFT（估算流感样病例的就诊比例）最初版本从 5000 万个搜索词里挑最贴合 1152 个数据点的；研究者称之为过拟合；part flu detector, part winter detector",
+   "screen": [
+    "“一部分在测流感，一部分在测冬天”",
+    "最初版本 · 5000 万个搜索词 · 1152 个数据点"
+   ],
+   "source": "Lazer D, Kennedy R, King G, Vespignani A. The Parable of Google Flu: Traps in Big Data Analysis. Science 343(6176):1203–1205, 2014. https://doi.org/10.1126/science.1248506",
+   "quote": "the methodology was to find the best matches among 50 million search terms to fit 1152 data points … the big data were overfitting the small number of cases … part flu detector, part winter detector",
+   "verified": "2026-11-08 原文 PDF 逐字核对"
+  },
+  {
+   "id": "C05",
+   "lines": [
+    "l34"
+   ],
+   "claim": "2011-08-21 到 2013-09-01，GFT 在 108 周中有 100 周报得过高（后来的版本）",
+   "screen": [
+    "100 / 108 周",
+    "流感估高（2011–2013）"
+   ],
+   "source": "Lazer 等 2014，同上",
+   "quote": "From 21 August 2011 to 1 September 2013, GFT reported overly high flu prevalence 100 out of 108 weeks.",
+   "verified": "2026-11-08 原文 PDF 逐字核对；讲稿只说「后来的版本也没好多少」，不把 100/108 全归因于过拟合"
+  },
+  {
+   "id": "C06",
+   "lines": [],
+   "claim": "肺炎模型换到新医院成绩下降（AUC 0.931 → 0.815）；另训的一个 CNN 能以 99.95%（NIH）/ 99.98%（Mount Sinai）认出胸片来自哪个医院系统——讲稿说「其中两家医院」「超过 99.9%」；各医院数据集中标为肺炎的比例差别很大（MSH 34.2%，NIH 1.2%，IU 1.0%），医院可成为混杂线索",
+   "screen": [
+    "99.9%+",
+    "另训一个模型，认出其中两家医院的片子",
+    "肺炎模型换到新医院 → 成绩下降"
+   ],
+   "source": "Zech JR 等. Variable generalization performance of a deep learning model to detect pneumonia in chest radiographs. PLOS Medicine 15(11): e1002683, 2018. https://doi.org/10.1371/journal.pmed.1002683",
+   "quote": "We trained a CNN to predict hospital systems from radiographs … A CNN trained to identify hospital systems accurately identified 22,050/22,062 (99.95%) NIH … 8,386/8,388 (99.98%) MSH … lower external performance at IU (AUC 0.815) … Positive cases of pneumonia were remarkably more prevalent in MSH data (34.2%) … relative to NIH and IU (1.2% and 1.0%) … CNNs robustly identified hospital system and department within a hospital, which can have large differences in disease burden and may confound predictions",
+   "verified": "2026-11-08 原文核对；初稿把 99.9% 说成肺炎模型自己认医院，独立审稿抓到后更正；「好成绩很可能有一部分靠认医院」按论文的混杂结论措辞",
+   "note": "v5（2026-11-09 缩短）片中已删去，台账保留备查"
+  },
+  {
+   "id": "C07",
+   "lines": [],
+   "claim": "研究中，画了手术标记的良性痣，CNN 特异度从 84.1% 降到 45.8%，即一半多被判成癌（16% → 54%）；可疑的痣在临床上常被画标记，作者推测训练数据中标记分布不均使 CNN 把标记与黑色素瘤联系起来（讲稿用「很可能」）",
+   "screen": [
+    "16% → 54%",
+    "良性痣被误判为癌（皮肤上有标记笔迹时）"
+   ],
+   "source": "Winkler JK 等. Association Between Surgical Skin Markings in Dermoscopic Images and Diagnostic Performance of a Deep Learning CNN for Melanoma Recognition. JAMA Dermatology 155(10):1135–1141, 2019",
+   "quote": "In unmarked lesions … a specificity of 84.1% … In marked lesions … a significantly reduced specificity of 45.8% … suspicious lesions are frequently marked before being excised or photographed … may induce a CNN to associate skin markings with the diagnosis of melanoma",
+   "verified": "2026-11-08 原文摘要核对；1 − 特异度换算",
+   "note": "v5（2026-11-09 缩短）片中已删去，台账保留备查"
+  },
+  {
+   "id": "C08",
+   "lines": [],
+   "claim": "后两个例子属于捷径学习（shortcut learning），与过拟合相近而不相同",
+   "source": "Geirhos R 等. Shortcut learning in deep neural networks. Nature Machine Intelligence 2, 665–673 (2020). https://doi.org/10.1038/s42256-020-00257-z",
+   "quote": "shortcuts are decision rules that perform well on standard benchmarks but fail to transfer to more challenging testing conditions",
+   "verified": "2026-11-08 按摘要措辞；待事实核查审稿人复核原文",
+   "note": "v5（2026-11-09 缩短）片中已删去，台账保留备查"
+  },
+  {
+   "id": "C09",
+   "lines": [
+    "l03",
+    "l13",
+    "l21",
+    "l22",
+    "l23",
+    "l41"
+   ],
+   "claim": "欠拟合：训练误差都降不下来；过拟合：训练误差与测试误差差距过大（练习好、新数据差）",
+   "source": "Goodfellow I, Bengio Y, Courville A. Deep Learning. MIT Press, 2016. https://www.deeplearningbook.org/contents/ml.html §5.2",
+   "quote": "Underfitting occurs when the model is not able to obtain a sufficiently low error value on the training set. Overfitting occurs when the gap between the training error and test error is too large.",
+   "verified": "2026-11-08 引文凭记忆录入，待事实核查对原文逐字复核"
+  },
+  {
+   "id": "C10",
+   "lines": [
+    "l36",
+    "l37"
+   ],
+   "claim": "验证集：从训练数据里另分出一份，用来估计泛化误差、挑选超参数 / 模型；测试集留到最后",
+   "source": "Goodfellow I, Bengio Y, Courville A. Deep Learning. MIT Press, 2016. https://www.deeplearningbook.org/contents/ml.html §5.3.1",
+   "quote": "we split the training data into two disjoint subsets. One of these subsets is used to learn the parameters. The other subset is our validation set, used to estimate the generalization error during or after training, allowing for the hyperparameters to be updated accordingly.",
+   "verified": "2026-11-08 引文凭记忆录入，待事实核查对原文逐字复核"
+  },
+  {
+   "id": "C11",
+   "lines": [
+    "l40"
+   ],
+   "claim": "正则化：为降低泛化误差而对学习算法做的修改，例如对复杂度加惩罚（权重衰减）",
+   "source": "Goodfellow I, Bengio Y, Courville A. Deep Learning. MIT Press, 2016. https://www.deeplearningbook.org/contents/ml.html §5.2.2",
+   "quote": "Regularization is any modification we make to a learning algorithm that is intended to reduce its generalization error but not its training error.",
+   "verified": "2026-11-08 引文凭记忆录入，待事实核查对原文逐字复核"
+  },
+  {
+   "id": "C12",
+   "lines": [
+    "l39"
+   ],
+   "claim": "更多、更多样的训练数据通常能减轻过拟合（降低方差）",
+   "source": "Goodfellow I, Bengio Y, Courville A. Deep Learning. MIT Press, 2016. https://www.deeplearningbook.org/contents/ml.html §5.2 / §7.4（dataset augmentation）",
+   "quote": "The best way to make a machine learning model generalize better is to train it on more data.",
+   "verified": "2026-11-08 引文凭记忆录入，待事实核查对原文逐字复核"
+  },
+  {
+   "id": "C13",
+   "lines": [
+    "l24",
+    "l25",
+    "l26",
+    "l27",
+    "l28",
+    "l29"
+   ],
+   "claim": "「学习可以看成压缩」是一种解释视角（最小描述长度原则），讲稿以「可以看成」表述，不作为定理；「十个数字存十个点，等于没有压缩」是直观说法（参数数 ≠ 编码长度），作为视角表述保留",
+   "source": "Grünwald PD. The Minimum Description Length Principle. MIT Press, 2007",
+   "quote": "learning as data compression: the more we are able to compress the data, the more we have learned about it",
+   "verified": "2026-11-08 引文凭记忆录入，待事实核查对原文逐字复核；属解释视角"
+  },
+  {
+   "id": "C14",
+   "lines": [
+    "l12",
+    "l14",
+    "l15",
+    "l17",
+    "l18",
+    "l23"
+   ],
+   "claim": "本实验：误差为均方误差（每点与曲线纵向差的平方平均）；测试点 6 个；② 的测试误差在三者中最低；③ 练习误差为零",
+   "source": "experiment",
+   "check": "scenes/data.py：mse、make_data 的 6 个测试点；断言 MSE[9][0] < 1e-6"
+  },
+  {
+   "id": "C15",
+   "lines": [
+    "l08",
+    "l09",
+    "l17"
+   ],
+   "claim": "训练数据用于拟合模型；测试数据是训练时没见过、用来评估的数据；噪声是数据里的随机偏差",
+   "source": "Goodfellow I, Bengio Y, Courville A. Deep Learning. MIT Press, 2016, §5.2",
+   "quote": "we typically estimate the generalization error of a machine learning model by measuring its performance on a test set of examples that were collected separately from the training set",
+   "verified": "2026-11-08 引文凭记忆录入，待事实核查对原文逐字复核"
+  },
+  {
+   "id": "C16",
+   "lines": [
+    "l38"
+   ],
+   "claim": "本片演示中按测试（考试）误差挑出了「刚刚好」的模型——讲稿 l53 主动说明这是演示做法，实际应用验证集",
+   "source": "experiment",
+   "check": "scenes/web/s4.html 用测试误差标「刚刚好」"
+  },
+  {
+   "id": "C17",
+   "lines": [
+    "l04"
+   ],
+   "claim": "比方里的虚构情节：学生练习册回回满分（100 分），不是事实陈述",
+   "source": "analogy",
+   "check": "讲稿 l04–l05 是「打个比方」，无需出处"
+  }
+ ]
+}

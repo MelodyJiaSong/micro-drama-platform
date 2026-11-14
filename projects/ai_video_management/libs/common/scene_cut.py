@@ -34,3 +34,8 @@ TRANSITIONS: dict[str, tuple[str, str | None, float, float, str]] = {
 }
 EDGES = {"cut": ("切", None), "fade_black": ("淡入 / 淡出（黑）", "black"), "fade_white": ("淡入 / 淡出（白）", "white")}
 GALLERY_PATTERN = r"转场样片_(s\d+)_(s\d+)\.mp4"     # 两场交界的转场样片；同名 .txt 是时间索引（「  0.0s  切 cut」一行一条）
+
+# 后期试做（follow-up 290，tools/episode_post.py）：`{集}/post/trial/post_v{N}.json`，成片与 .srt 同目录，文件名记在决定的 output 段。
+POST_DIR = "post/trial"
+POST_CUT = "post"   # 剪辑页 `scene=post` ＝ 后期试做
+POST_FILE_PATTERN = r"post_v(\d+)\.json"

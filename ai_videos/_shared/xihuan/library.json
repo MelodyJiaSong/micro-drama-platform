@@ -1,9 +1,9 @@
 {
  "schema_version": 1,
- "version": "1.1.0",
+ "version": "1.2.0",
  "title": "西幻公共资料库",
  "generated_by": "build.py（源为 data/*.json，勿手改）",
- "scope": "欧美奇幻世界的力量源、魔法学派、位阶、职业、种族、成长、道具、组织、位面与生物；每条附仙侠对应。不含剧情与具体人物。",
+ "scope": "欧美奇幻世界的力量源、魔法学派、头衔与威胁度、职业、种族、成长、道具、组织、位面与生物；每条附仙侠对应。不含剧情与具体人物。",
  "navigation": [
   {
    "id": "cosmos",
@@ -148,34 +148,27 @@
    ]
   },
   {
-   "id": "tiers",
-   "name": "位阶：灵魂的大功业",
+   "id": "ranks",
+   "name": "头衔、关口与失败",
    "children": [
     {
-     "id": "metals",
-     "name": "七金属位阶与神话阶",
+     "id": "titles",
+     "name": "路线头衔",
      "asset_ids": [
-      "TR00",
-      "TR01",
-      "TR02",
-      "TR03",
-      "TR04",
-      "TR05",
-      "TR06",
-      "TR07",
-      "TR08",
-      "TR09"
+      "TL01",
+      "TL02",
+      "TL03",
+      "TL04",
+      "TL05"
      ]
     },
     {
-     "id": "phases",
-     "name": "四相与突破",
+     "id": "rites",
+     "name": "关口事件",
      "asset_ids": [
-      "PH01",
       "EV01",
-      "EV02",
-      "EV03",
       "EV05",
+      "EV03",
       "EV04"
      ]
     },
@@ -187,17 +180,6 @@
       "FL02",
       "FL03",
       "FL04"
-     ]
-    },
-    {
-     "id": "titles",
-     "name": "路线头衔",
-     "asset_ids": [
-      "TL01",
-      "TL02",
-      "TL03",
-      "TL04",
-      "TL05"
      ]
     }
    ]
@@ -437,7 +419,6 @@
       "IT19",
       "IT20",
       "IT21",
-      "IT22",
       "IT23",
       "IT24",
       "IT25",
@@ -520,8 +501,8 @@
    "name": "生物",
    "children": [
     {
-     "id": "grade",
-     "name": "讨伐等级",
+     "id": "threat",
+     "name": "威胁度",
      "asset_ids": [
       "BS00"
      ]
@@ -567,7 +548,7 @@
  "assets": [
   {
    "id": "PL00",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "存在之链",
    "name_en": "The Great Chain of Being",
    "aliases": [
@@ -642,7 +623,7 @@
   },
   {
    "id": "PL01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "凡世",
    "name_en": "The Mortal Realm",
    "aliases": [
@@ -716,7 +697,7 @@
   },
   {
    "id": "PL02",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "天界",
    "name_en": "The Celestial Heavens",
    "aliases": [
@@ -791,7 +772,7 @@
   },
   {
    "id": "PL03",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "地狱",
    "name_en": "The Infernal Pit",
    "aliases": [
@@ -866,7 +847,7 @@
   },
   {
    "id": "PL04",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "冥界",
    "name_en": "The Underworld",
    "aliases": [
@@ -958,7 +939,7 @@
   },
   {
    "id": "PL05",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "妖精国度",
    "name_en": "The Otherworld (Faerie)",
    "aliases": [
@@ -1051,7 +1032,7 @@
   },
   {
    "id": "PL06",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "元素界",
    "name_en": "The Elemental Realms",
    "aliases": [
@@ -1135,7 +1116,7 @@
   },
   {
    "id": "PL07",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "以太之海",
    "name_en": "The Aether Sea",
    "aliases": [
@@ -1157,16 +1138,16 @@
    "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
    "relations": [
     {
-     "target": "TR09",
-     "kind": "位阶",
-     "role": "神阶居所",
+     "target": "GD01",
+     "kind": "神祇",
+     "role": "神与传说者的灵魂所在",
      "required": false,
      "note": ""
     },
     {
-     "target": "TR05",
-     "kind": "位阶",
-     "role": "灵魂可达",
+     "target": "DK04",
+     "kind": "魔法",
+     "role": "灵魂出窍可达",
      "required": false,
      "note": ""
     }
@@ -1209,7 +1190,7 @@
   },
   {
    "id": "PL08",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "外域虚空",
    "name_en": "The Outer Void",
    "aliases": [
@@ -1275,7 +1256,7 @@
   },
   {
    "id": "PL09",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "梦境",
    "name_en": "The Dreamlands",
    "aliases": [
@@ -1285,7 +1266,7 @@
    ],
    "category": "宇宙与位面·诸界",
    "grade": null,
-   "function": "所有凡人梦境相连的地方：先知与汞阶以上者可以有意识地进入，进入他人的梦、在梦中会面或施加噩梦。",
+   "function": "所有凡人梦境相连的地方：先知、灵魂术士与高阶法师可以有意识地进入，进入他人的梦、在梦中会面或施加噩梦。",
    "cost_limit": "见卡片",
    "counter_failure": "见卡片",
    "visual_signature": "不合逻辑地拼接的场景、颠倒的楼梯、柔和失焦的光。",
@@ -1296,9 +1277,9 @@
    "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
    "relations": [
     {
-     "target": "TR05",
-     "kind": "位阶",
-     "role": "进入位阶",
+     "target": "DK04",
+     "kind": "魔法",
+     "role": "入梦之术",
      "required": false,
      "note": ""
     },
@@ -1356,7 +1337,7 @@
   },
   {
    "id": "PL10",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "地脉与圣地",
    "name_en": "Ley Lines & Holy Places",
    "aliases": [
@@ -1457,7 +1438,7 @@
   },
   {
    "id": "PS01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "奥术",
    "name_en": "Arcane",
    "aliases": [
@@ -1515,7 +1496,7 @@
    "basis": "tradition",
    "xianxia": {
     "concept": "灵气 / 法修",
-    "note": "都是「天地间有游离能量，凭方法引导」。差异：奥术是学术——靠公式、语言与知识积累，不讲心性与炼化入体；能承载多少魔力取决于灵魂的金属位阶（见位阶）。"
+    "note": "都是「天地间有游离能量，凭方法引导」。差异：奥术是学术——靠公式、语言与知识积累，不讲心性与炼化入体；能承载多少魔力取决于天赋之火与学识（见 GF01、TL01）。"
    },
    "familiarity": "高",
    "ip": "generic",
@@ -1550,7 +1531,7 @@
   },
   {
    "id": "SC01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "防护系",
    "name_en": "Abjuration",
    "aliases": [
@@ -1634,7 +1615,7 @@
   },
   {
    "id": "SC02",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "咒法系",
    "name_en": "Conjuration",
    "aliases": [
@@ -1715,7 +1696,7 @@
   },
   {
    "id": "SC03",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "预言系",
    "name_en": "Divination",
    "aliases": [
@@ -1811,7 +1792,7 @@
   },
   {
    "id": "SC04",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "惑控系",
    "name_en": "Enchantment",
    "aliases": [
@@ -1897,7 +1878,7 @@
   },
   {
    "id": "SC05",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "塑能系",
    "name_en": "Evocation",
    "aliases": [
@@ -1982,7 +1963,7 @@
   },
   {
    "id": "SC06",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "幻术系",
    "name_en": "Illusion",
    "aliases": [
@@ -2048,7 +2029,7 @@
   },
   {
    "id": "SC07",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "死灵系",
    "name_en": "Necromancy",
    "aliases": [
@@ -2136,7 +2117,7 @@
   },
   {
    "id": "SC08",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "变化系",
    "name_en": "Transmutation",
    "aliases": [
@@ -2206,7 +2187,7 @@
   },
   {
    "id": "EL07",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "光与星辰",
    "name_en": "Astromancy (Light & Stars)",
    "aliases": [
@@ -2287,7 +2268,7 @@
   },
   {
    "id": "EL08",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "时间与空间",
    "name_en": "Chronomancy",
    "aliases": [
@@ -2345,7 +2326,7 @@
   },
   {
    "id": "PS02",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "神圣 / 圣光",
    "name_en": "Holy Light (Divine)",
    "aliases": [
@@ -2431,11 +2412,6 @@
      "role": "力量源"
     },
     {
-     "source": "TR09",
-     "kind": "位阶",
-     "role": "可成为的力量源"
-    },
-    {
      "source": "CL07",
      "kind": "职业",
      "role": "力量源"
@@ -2476,7 +2452,7 @@
    "basis": "tradition",
    "xianxia": {
     "concept": "功德金光 / 愿力 / 浩然正气 / 佛光（参照）",
-    "note": "本库默认形而上学：圣光由信念点燃；众多信者的信念汇聚成神（以太阶），神再回应信者。采用剧可改为「神赐予」或「无神，纯信念」（见神与信仰 GD）。誓言破了力量就熄灭。"
+    "note": "本库默认形而上学：圣光由信念点燃；众多信者的信念汇聚成神，神再回应信者。采用剧可改为「神赐予」或「无神，纯信念」（见神与信仰 GD）。誓言破了力量就熄灭。"
    },
    "familiarity": "高",
    "ip": "inspired",
@@ -2517,7 +2493,7 @@
   },
   {
    "id": "HL01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "圣愈",
    "name_en": "Restoration (Healing Light)",
    "aliases": [
@@ -2611,7 +2587,7 @@
   },
   {
    "id": "HL02",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "圣裁",
    "name_en": "Smite (Judgment)",
    "aliases": [
@@ -2704,7 +2680,7 @@
   },
   {
    "id": "HL03",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "圣域",
    "name_en": "Consecration (Sanctuary)",
    "aliases": [
@@ -2781,7 +2757,7 @@
   },
   {
    "id": "HL04",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "驱魔",
    "name_en": "Exorcism",
    "aliases": [
@@ -2867,7 +2843,7 @@
   },
   {
    "id": "PS03",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "自然 / 原初",
    "name_en": "Primal (Nature)",
    "aliases": [
@@ -2955,7 +2931,7 @@
   },
   {
    "id": "PR01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "变形术",
    "name_en": "Shapeshifting",
    "aliases": [
@@ -3053,7 +3029,7 @@
   },
   {
    "id": "PR02",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "赛兹与先灵",
    "name_en": "Seiðr (Spirit-calling)",
    "aliases": [
@@ -3144,7 +3120,7 @@
   },
   {
    "id": "PS04",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "元素",
    "name_en": "Elemental",
    "aliases": [
@@ -3301,7 +3277,7 @@
   },
   {
    "id": "EL01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "火系",
    "name_en": "Pyromancy",
    "aliases": [
@@ -3377,7 +3353,7 @@
   },
   {
    "id": "EL02",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "水系",
    "name_en": "Hydromancy",
    "aliases": [
@@ -3453,7 +3429,7 @@
   },
   {
    "id": "EL03",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "土系",
    "name_en": "Geomancy",
    "aliases": [
@@ -3532,7 +3508,7 @@
   },
   {
    "id": "EL04",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "风系",
    "name_en": "Aeromancy",
    "aliases": [
@@ -3607,7 +3583,7 @@
   },
   {
    "id": "EL05",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "冰系",
    "name_en": "Cryomancy",
    "aliases": [
@@ -3676,7 +3652,7 @@
   },
   {
    "id": "EL06",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "雷系",
    "name_en": "Storm (Electromancy)",
    "aliases": [
@@ -3748,7 +3724,7 @@
   },
   {
    "id": "PS05",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "暗影与死亡",
    "name_en": "Shadow & Death",
    "aliases": [
@@ -3863,7 +3839,7 @@
   },
   {
    "id": "DK04",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "灵魂术",
    "name_en": "Soul Magic",
    "aliases": [
@@ -3901,9 +3877,14 @@
    ],
    "backlinks": [
     {
-     "source": "TR05",
-     "kind": "位阶",
-     "role": "相关魔法"
+     "source": "PL07",
+     "kind": "位面",
+     "role": "灵魂出窍可达"
+    },
+    {
+     "source": "PL09",
+     "kind": "位面",
+     "role": "入梦之术"
     },
     {
      "source": "IT20",
@@ -3952,7 +3933,7 @@
   },
   {
    "id": "DK03",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "巫术与诅咒",
    "name_en": "Hexcraft (Witchcraft & Curses)",
    "aliases": [
@@ -4042,7 +4023,7 @@
   },
   {
    "id": "PS06",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "深渊 / 地狱之力",
    "name_en": "Infernal (Abyssal)",
    "aliases": [
@@ -4147,7 +4128,7 @@
   },
   {
    "id": "DK01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "契约魔法",
    "name_en": "Pact Magic",
    "aliases": [
@@ -4200,11 +4181,6 @@
      "source": "GD04",
      "kind": "神祇",
      "role": "契约方"
-    },
-    {
-     "source": "TR09",
-     "kind": "位阶",
-     "role": "可成为的契约方"
     },
     {
      "source": "CL16",
@@ -4272,7 +4248,7 @@
   },
   {
    "id": "PS07",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "血脉",
    "name_en": "Bloodline",
    "aliases": [
@@ -4373,7 +4349,7 @@
   },
   {
    "id": "DK02",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "血魔法",
    "name_en": "Blood Magic (Hemomancy)",
    "aliases": [
@@ -4447,7 +4423,7 @@
   },
   {
    "id": "PS08",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "符文与工艺",
    "name_en": "Runecraft",
    "aliases": [
@@ -4557,7 +4533,7 @@
   },
   {
    "id": "PS09",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "勇武 / 英雄之光",
    "name_en": "Valor (Hero's Light)",
    "aliases": [
@@ -4607,6 +4583,11 @@
      "source": "AU01",
      "kind": "魔法",
      "role": "力量源"
+    },
+    {
+     "source": "EV01",
+     "kind": "事件",
+     "role": "觉醒后才有英雄之光"
     },
     {
      "source": "CL01",
@@ -4673,7 +4654,7 @@
   },
   {
    "id": "AU01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "燃剑",
    "name_en": "Kindled Blade",
    "aliases": [
@@ -4756,7 +4737,7 @@
   },
   {
    "id": "GD01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "光",
    "name_en": "The Light (One Faith)",
    "aliases": [
@@ -4799,6 +4780,11 @@
     }
    ],
    "backlinks": [
+    {
+     "source": "PL07",
+     "kind": "位面",
+     "role": "神与传说者的灵魂所在"
+    },
     {
      "source": "PS02",
      "kind": "力量源",
@@ -4845,7 +4831,7 @@
   },
   {
    "id": "GD02",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "众神殿",
    "name_en": "Pantheon",
    "aliases": [
@@ -4869,13 +4855,6 @@
      "target": "PS02",
      "kind": "力量源",
      "role": "力量源",
-     "required": false,
-     "note": ""
-    },
-    {
-     "target": "TR09",
-     "kind": "位阶",
-     "role": "位阶",
      "required": false,
      "note": ""
     }
@@ -4918,7 +4897,7 @@
   },
   {
    "id": "GD03",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "古神与土地之灵",
    "name_en": "Old Gods & Land-spirits",
    "aliases": [
@@ -5002,7 +4981,7 @@
   },
   {
    "id": "GD04",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "被遗忘的神",
    "name_en": "Forgotten Gods",
    "aliases": [
@@ -5022,13 +5001,6 @@
    },
    "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
    "relations": [
-    {
-     "target": "TR09",
-     "kind": "位阶",
-     "role": "位阶",
-     "required": false,
-     "note": ""
-    },
     {
      "target": "DK01",
      "kind": "魔法",
@@ -5078,7 +5050,7 @@
   },
   {
    "id": "GD05",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "赞助者",
    "name_en": "Patrons",
    "aliases": [
@@ -5168,1736 +5140,8 @@
    }
   },
   {
-   "id": "TR00",
-   "version": "1.1.0",
-   "name": "原质",
-   "name_en": "Unwrought (Prima Materia)",
-   "aliases": [
-    "Unwrought (Prima Materia)",
-    "凡人",
-    "mundane",
-    "未炼者"
-   ],
-   "category": "位阶：灵魂的大功业·七金属位阶与神话阶",
-   "grade": "0",
-   "function": "未觉醒的普通人。灵魂是混沌的原料，炼金术称为「原质」——人人都是，人人都有可能被炼成。",
-   "cost_limit": "见卡片",
-   "counter_failure": "见卡片",
-   "visual_signature": "无灵魂光泽。",
-   "activation": {
-    "trigger": "—",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "EV01",
-     "kind": "事件",
-     "role": "下一步事件",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [],
-   "adoption": "default",
-   "module": null,
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "凡人",
-    "note": "差异：炼金观念里凡人不是「没有资格」，而是「尚未被炼」，强调潜能而非门槛。"
-   },
-   "familiarity": "高",
-   "ip": "public_domain",
-   "references": [
-    {
-     "work": "炼金术",
-     "note": "prima materia 原质"
-    }
-   ],
-   "hooks": [],
-   "details": {
-    "人口比例": "约九成人终生停留于此；武艺与手艺另计熟练度，不需要觉醒",
-    "能做什么": "使用不需要灵魂驱动的魔法物品（药剂、一次性卷轴、护身符）"
-   },
-   "image": {
-    "anchor": "entries/tr00/anchor_v1.png",
-    "prompt": "entries/tr00/prompt_v1.txt",
-    "purpose": "magic",
-    "sha256": "95a39bf678dcfb34113c6f3f4585cf497c073592c4e0e8a25eb41001bcdeaed6",
-    "status": "reviewed_with_notes",
-    "actual_dimensions": [
-     1672,
-     941
-    ],
-    "review_notes": [
-     "兜帽人物在灰暗空间静立，无任何光效，脚边一团未成形的深色陶土，符合「无灵魂光泽」",
-     "人物为侧后方约四分之三背影，未露脸，基本满足背对镜头要求",
-     "斗篷做成毛边破布感，比 brief 的旧羊毛斗篷更褴褛，不影响使用"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave4/verdicts_01.json"
-   }
-  },
-  {
-   "id": "TR01",
-   "version": "1.1.0",
-   "name": "铅阶",
-   "name_en": "Lead",
-   "aliases": [
-    "Lead",
-    "觉醒者",
-    "the Awakened",
-    "Saturn-souled"
-   ],
-   "category": "位阶：灵魂的大功业·七金属位阶与神话阶",
-   "grade": "1",
-   "function": "灵魂苏醒：第一次感到力量的存在，能点燃微光、感应魔法与灵体，但储量极小，用一次就累。",
-   "cost_limit": "力量不稳定，情绪剧烈时会失控外泄。",
-   "counter_failure": "见卡片",
-   "visual_signature": "暗沉的铅灰微光，像蒙尘的金属。",
-   "activation": {
-    "trigger": "—",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "TR02",
-     "kind": "位阶",
-     "role": "下一阶",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [
-    {
-     "source": "EV01",
-     "kind": "事件",
-     "role": "通往"
-    },
-    {
-     "source": "IR01",
-     "kind": "道具",
-     "role": "驱动位阶参照"
-    }
-   ],
-   "adoption": "default",
-   "module": null,
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "炼气（参照）",
-    "note": "同为入门。差异：铅对应土星与忧郁，觉醒常伴随沉重与痛苦（大病、丧亲、濒死），而非打坐感气。"
-   },
-   "familiarity": "高",
-   "ip": "public_domain",
-   "references": [
-    {
-     "work": "炼金术七金属",
-     "note": "铅—土星，最贱的金属"
-    },
-    {
-     "work": "《赫尔墨斯文集·Poimandres》§25–26",
-     "note": "灵魂上升穿越七重天，每层交还一种恶习（本库按行星对应到金属）"
-    }
-   ],
-   "hooks": [],
-   "details": {
-    "能做什么": "小戏法、感知魔法、短暂的英雄之光、基础祈祷",
-    "炼金/行星": "铅 · 土星",
-    "默认弧线·本阶之恶（可选模块）": "虚妄 Falsehood——离开铅阶要停止自欺：承认自己真正想要什么、害怕什么。",
-    "人口（每百万人，默认）": "约 6 万"
-   },
-   "image": {
-    "anchor": "entries/tr01/anchor_v2.png",
-    "prompt": "entries/tr01/prompt_v2.txt",
-    "purpose": "magic",
-    "sha256": "b3f1b0a7775ac7748ec614c2515abf7b03139c614263cc0387f1d7962ce1a682",
-    "status": "reviewed",
-    "actual_dimensions": [
-     1672,
-     941
-    ],
-    "review_notes": [
-     "兜帽人握拳垂立于暗处，身侧只有零碎、贴身、低亮度的铅灰微光，灰色颗粒缓慢下沉",
-     "无金色、无亮色、无光带漩涡，压抑沉重的初醒感到位",
-     "无文字，解剖正常"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave3a/verdicts_01.json"
-   }
-  },
-  {
-   "id": "TR02",
-   "version": "1.1.0",
-   "name": "锡阶",
-   "name_en": "Tin",
-   "aliases": [
-    "Tin",
-    "Jupiter-souled",
-    "立基者"
-   ],
-   "category": "位阶：灵魂的大功业·七金属位阶与神话阶",
-   "grade": "2",
-   "function": "力量第一次「立住」：能稳定地储存和引导，能与一件施法器或一个誓言建立联系。大多数正式学徒、新骑士停在这里。",
-   "cost_limit": "缔结的对象一旦损毁，力量随之跌落。",
-   "counter_failure": "见卡片",
-   "visual_signature": "苍白的锡银光，比铅亮，但仍偏冷偏灰。",
-   "activation": {
-    "trigger": "—",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "TR03",
-     "kind": "位阶",
-     "role": "下一阶",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [
-    {
-     "source": "TR01",
-     "kind": "位阶",
-     "role": "下一阶"
-    }
-   ],
-   "adoption": "default",
-   "module": null,
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "筑基（参照）",
-    "note": "同为打基础。差异：西方的「基础」不在丹田，而在第一次缔结——绑定施法器、立誓、与使魔或土地建立联系。"
-   },
-   "familiarity": "中",
-   "ip": "public_domain",
-   "references": [
-    {
-     "work": "炼金术七金属",
-     "note": "锡—木星"
-    },
-    {
-     "work": "《赫尔墨斯文集·Poimandres》§25–26",
-     "note": "灵魂上升穿越七重天，每层交还一种恶习（本库按行星对应到金属）"
-    }
-   ],
-   "hooks": [],
-   "details": {
-    "能做什么": "完整的基础法术、圣光小治疗、持续一场战斗的勇武",
-    "炼金/行星": "锡 · 木星",
-    "默认弧线·本阶之恶（可选模块）": "贪婪 Avarice——离开锡阶要放下对财富与占有的执念。",
-    "人口（每百万人，默认）": "约 2.5 万"
-   },
-   "image": {
-    "anchor": "entries/tr02/anchor_v3.png",
-    "prompt": "entries/tr02/prompt_v3.txt",
-    "purpose": "aura",
-    "sha256": "93a71766bbfa75cde4ebbb9431733fbcfffb4ac63027bb09c8654c50aac98f24",
-    "status": "reviewed",
-    "actual_dimensions": [
-     1536,
-     1024
-    ],
-    "review_notes": [
-     "静立兜帽人物持朴素木杖，冷灰银色细光边贴合轮廓，宽度不超过一指",
-     "手到杖身有一道同色细光线，没有向外放出效果",
-     "手部结构正常，画面克制稳定"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave7/verdicts_01.json"
-   }
-  },
-  {
-   "id": "TR03",
-   "version": "1.1.0",
-   "name": "铜阶",
-   "name_en": "Copper",
-   "aliases": [
-    "Copper",
-    "Venus-souled",
-    "导魂者"
-   ],
-   "category": "位阶：灵魂的大功业·七金属位阶与神话阶",
-   "grade": "3",
-   "function": "灵魂变得「导电」：能把力量传给他人与物品——缔结使魔、把灵魂的一部分注入武器（让它认主）、以魅力和声音影响人心。",
-   "cost_limit": "连结是双向的：认主的武器被毁、使魔死去，主人同受重伤。",
-   "counter_failure": "见卡片",
-   "visual_signature": "温暖的玫瑰铜光，带铜绿色的边缘流光，光会沿接触物传导。",
-   "activation": {
-    "trigger": "—",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "TR04",
-     "kind": "位阶",
-     "role": "下一阶",
-     "required": false,
-     "note": ""
-    },
-    {
-     "target": "GR06",
-     "kind": "成长",
-     "role": "本阶解锁",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [
-    {
-     "source": "TR02",
-     "kind": "位阶",
-     "role": "下一阶"
-    },
-    {
-     "source": "GR06",
-     "kind": "成长",
-     "role": "解锁位阶"
-    }
-   ],
-   "adoption": "default",
-   "module": null,
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "筑基后期至结丹前（参照）",
-    "note": "差异：铜对应金星与爱，这一阶的核心是「连结」——第一次把灵魂与器物、动物或他人联系起来（使魔、认主武器），而非凝结内核。"
-   },
-   "familiarity": "中",
-   "ip": "public_domain",
-   "references": [
-    {
-     "work": "炼金术七金属",
-     "note": "铜—金星"
-    },
-    {
-     "work": "《赫尔墨斯文集·Poimandres》§25–26",
-     "note": "灵魂上升穿越七重天，每层交还一种恶习（本库按行星对应到金属）"
-    }
-   ],
-   "hooks": [],
-   "details": {
-    "能做什么": "灵魂绑定器物与使魔、治疗重伤、鼓舞一队士兵",
-    "炼金/行星": "铜 · 金星",
-    "默认弧线·本阶之恶（可选模块）": "欲念 Lust——离开铜阶要让连结不再是占有：放手所爱。",
-    "人口（每百万人，默认）": "约 6000"
-   },
-   "image": {
-    "anchor": "entries/tr03/anchor_v1.png",
-    "prompt": "entries/tr03/prompt_v1.txt",
-    "purpose": "magic",
-    "sha256": "9d8b3e2b883d7f8e139c8d9b5d5f5d468ca3cef4d2234322e50ee4429fbc00d1",
-    "status": "reviewed",
-    "actual_dimensions": [
-     1672,
-     941
-    ],
-    "review_notes": [
-     "玫瑰铜光、铜绿边缘流光、光沿手臂传入插地之剑、剑身纹饰点亮均到位"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave1/verdicts_02.json"
-   }
-  },
-  {
-   "id": "TR04",
-   "version": "1.1.0",
-   "name": "铁阶",
-   "name_en": "Iron",
-   "aliases": [
-    "Iron",
-    "Mars-souled",
-    "铁魂"
-   ],
-   "category": "位阶：灵魂的大功业·七金属位阶与神话阶",
-   "grade": "4",
-   "function": "灵魂淬火变硬：力量全面强化肉体与意志，能承受真正的战争与连续施法。王国的元帅、骑士团长、学院讲席大师多在这一阶。",
-   "cost_limit": "铁会生锈：长期不战、不修，位阶光泽会暗淡（实力缓慢流失）。",
-   "counter_failure": "见卡片",
-   "visual_signature": "暗铁灰带火星红的光，像刚出炉的铁。",
-   "activation": {
-    "trigger": "—",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "TR05",
-     "kind": "位阶",
-     "role": "下一阶",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [
-    {
-     "source": "TR03",
-     "kind": "位阶",
-     "role": "下一阶"
-    }
-   ],
-   "adoption": "default",
-   "module": null,
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "结丹（参照）",
-    "note": "差异：铁对应火星与战争，标志是「淬火」——在一场真正的血战中把灵魂锻硬，西方叙事里这是职业强者的门槛。"
-   },
-   "familiarity": "高",
-   "ip": "public_domain",
-   "references": [
-    {
-     "work": "炼金术七金属",
-     "note": "铁—火星"
-    },
-    {
-     "work": "《赫尔墨斯文集·Poimandres》§25–26",
-     "note": "灵魂上升穿越七重天，每层交还一种恶习（本库按行星对应到金属）"
-    }
-   ],
-   "hooks": [],
-   "details": {
-    "能做什么": "一人敌一队骑兵；高阶法术；圣光可驱散成群亡灵",
-    "炼金/行星": "铁 · 火星",
-    "默认弧线·本阶之恶（可选模块）": "鲁莽 Wrath & Rashness——离开铁阶要驯服愤怒与不顾后果的勇猛。",
-    "人口（每百万人，默认）": "约 1000"
-   },
-   "image": {
-    "anchor": "entries/tr04/anchor_v3.png",
-    "prompt": "entries/tr04/prompt_v3.txt",
-    "purpose": "aura",
-    "sha256": "e46b1ce03ad57d10f5e0d7179b1a20f0b50b98ba34b986207ce85530bf26cca3",
-    "status": "reviewed",
-    "actual_dimensions": [
-     1199,
-     1312
-    ],
-    "review_notes": [
-     "弓步架势稳，全身暗铁灰金属质感，肩臂轮廓有橙红热边",
-     "少量火星落地，像锻炉余火，没有外放旋涡或光束",
-     "双拳和腿脚结构正常"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave7/verdicts_01.json"
-   }
-  },
-  {
-   "id": "TR05",
-   "version": "1.1.0",
-   "name": "汞阶",
-   "name_en": "Quicksilver",
-   "aliases": [
-    "Quicksilver",
-    "Mercury-souled",
-    "水银",
-    "灵行者"
-   ],
-   "category": "位阶：灵魂的大功业·七金属位阶与神话阶",
-   "grade": "5",
-   "function": "灵魂变成流动的水银：能短暂离开身体（灵魂出窍）、穿行梦境、看见并对话灵体、在形体间变化。王国的大法师、传奇骑士在这一阶。",
-   "cost_limit": "离体太久肉身会被占据；流动的灵魂难以「定形」，性格变得多变难测。",
-   "counter_failure": "见卡片",
-   "visual_signature": "液态镜面般的光，像水银在皮肤表面流动，反射周围。",
-   "activation": {
-    "trigger": "—",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "TR06",
-     "kind": "位阶",
-     "role": "下一阶",
-     "required": false,
-     "note": ""
-    },
-    {
-     "target": "DK04",
-     "kind": "魔法",
-     "role": "相关魔法",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [
-    {
-     "source": "PL07",
-     "kind": "位面",
-     "role": "灵魂可达"
-    },
-    {
-     "source": "PL09",
-     "kind": "位面",
-     "role": "进入位阶"
-    },
-    {
-     "source": "TR04",
-     "kind": "位阶",
-     "role": "下一阶"
-    }
-   ],
-   "adoption": "default",
-   "module": null,
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "元婴（参照）",
-    "note": "同为「灵魂可离体」的分水岭。差异：西方原型是赫尔墨斯（墨丘利）——往返于生死与诸界的信使，强调穿行与沟通，而非孕育第二个自我。"
-   },
-   "familiarity": "中",
-   "ip": "public_domain",
-   "references": [
-    {
-     "work": "炼金术七金属",
-     "note": "汞—水星（Mercury / Hermes）"
-    },
-    {
-     "work": "赫尔墨斯传统",
-     "note": "穿行诸界的信使"
-    },
-    {
-     "work": "《赫尔墨斯文集·Poimandres》§25–26",
-     "note": "灵魂上升穿越七重天，每层交还一种恶习（本库按行星对应到金属）"
-    }
-   ],
-   "hooks": [],
-   "details": {
-    "能做什么": "灵魂出窍侦察、进入他人梦境、审问亡魂、主持大型仪式",
-    "炼金/行星": "汞 · 水星",
-    "默认弧线·本阶之恶（可选模块）": "诡诈 Guile——离开汞阶要放弃算计与操纵，说出真话。",
-    "人口（每百万人，默认）": "约 150"
-   },
-   "image": {
-    "anchor": "entries/tr05/anchor_v1.png",
-    "prompt": "entries/tr05/prompt_v1.txt",
-    "purpose": "magic",
-    "sha256": "d0af41b2657b2ba1b19352fbc0c8898aa9f7ce0740ed6dbe2f6f4e5cb9c88fc0",
-    "status": "reviewed",
-    "actual_dimensions": [
-     1672,
-     941
-    ],
-    "review_notes": [
-     "跪地本体、液态镜面水银分身起身离开、胸口银线相连均到位"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave1/verdicts_02.json"
-   }
-  },
-  {
-   "id": "TR06",
-   "version": "1.1.0",
-   "name": "银阶",
-   "name_en": "Silver",
-   "aliases": [
-    "Silver",
-    "Moon-souled",
-    "月魂"
-   ],
-   "category": "位阶：灵魂的大功业·七金属位阶与神话阶",
-   "grade": "6",
-   "function": "灵魂如月，能映照他人：活着的传奇。力量可覆盖一座城或一片战场；死后灵魂可在世间停留，以亡魂或预言者身份回来。",
-   "cost_limit": "力量随月相起落；被大众的信仰与恐惧所塑造（名声会改变他）。",
-   "counter_failure": "见卡片",
-   "visual_signature": "冷白月光般的银辉，柔和但覆盖范围极大，周围像有潮汐起伏。",
-   "activation": {
-    "trigger": "—",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "TR07",
-     "kind": "位阶",
-     "role": "下一阶",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [
-    {
-     "source": "TR05",
-     "kind": "位阶",
-     "role": "下一阶"
-    }
-   ],
-   "adoption": "default",
-   "module": null,
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "化神（参照）",
-    "note": "同为能影响一方天地。差异：月亮主梦、潮汐与反射——银阶的影响以「潮汐」形式出现（周期起落），并能以梦和预兆影响大众。"
-   },
-   "familiarity": "高",
-   "ip": "public_domain",
-   "references": [
-    {
-     "work": "炼金术七金属",
-     "note": "银—月亮"
-    },
-    {
-     "work": "《赫尔墨斯文集·Poimandres》§25–26",
-     "note": "灵魂上升穿越七重天，每层交还一种恶习（本库按行星对应到金属）"
-    }
-   ],
-   "hooks": [],
-   "details": {
-    "能做什么": "城市级结界、左右一场战役、在众人梦中显现；死后灵魂可在世间滞留",
-    "炼金/行星": "银 · 月亮",
-    "默认弧线·本阶之恶（可选模块）": "执着 Attachment——离开银阶要接受盛衰与死亡，不再抓住肉身与旧日。",
-    "人口（每百万人，默认）": "约 15"
-   },
-   "image": {
-    "anchor": "entries/tr06/anchor_v1.png",
-    "prompt": "entries/tr06/prompt_v1.txt",
-    "purpose": "magic",
-    "sha256": "64d8987029f53376a158169e92791fd32bc719021bc200ecc358466f8631ee0d",
-    "status": "reviewed",
-    "actual_dimensions": [
-     1672,
-     941
-    ],
-    "review_notes": [
-     "张臂、月白银辉潮汐环、身后巨大满月、整体冷银色均到位"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave1/verdicts_02.json"
-   }
-  },
-  {
-   "id": "TR07",
-   "version": "1.1.0",
-   "name": "金阶",
-   "name_en": "Gold",
-   "aliases": [
-    "Gold",
-    "Sun-souled",
-    "日魂",
-    "完成者"
-   ],
-   "category": "位阶：灵魂的大功业·七金属位阶与神话阶",
-   "grade": "7",
-   "function": "凡人所能达到的完美：炼金术的终点。衰老几乎停止，灵魂发出太阳般的光，所在之处自成法则。百年未必出一位。",
-   "cost_limit": "太阳会灼伤靠近的人：金阶者难以与凡人相处，光芒招来所有神话存在的注意。",
-   "counter_failure": "见卡片",
-   "visual_signature": "太阳般的纯金光，不刺眼却无法直视，周围的物体投下金色长影。",
-   "activation": {
-    "trigger": "—",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "TR08",
-     "kind": "位阶",
-     "role": "下一阶",
-     "required": false,
-     "note": ""
-    },
-    {
-     "target": "EV04",
-     "kind": "事件",
-     "role": "通往神话阶",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [
-    {
-     "source": "TR06",
-     "kind": "位阶",
-     "role": "下一阶"
-    }
-   ],
-   "adoption": "default",
-   "module": null,
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "炼虚至大乘（参照）",
-    "note": "同为凡间巅峰。差异：金阶是「完成」而非「积累」——炼金术里金不会再锈蚀，所以金阶的标志是不朽的稳定，而非更大的破坏力。"
-   },
-   "familiarity": "高",
-   "ip": "public_domain",
-   "references": [
-    {
-     "work": "炼金术",
-     "note": "金—太阳，不朽的完美金属，大功业的目标"
-    },
-    {
-     "work": "《赫尔墨斯文集·Poimandres》§25–26",
-     "note": "灵魂上升穿越七重天，每层交还一种恶习（本库按行星对应到金属）"
-    }
-   ],
-   "hooks": [],
-   "details": {
-    "能做什么": "在自身周围建立「领域」（法则暂改）、一人定国运",
-    "寿命": "金不锈：不再衰老（唯一随位阶而来的长生）",
-    "炼金/行星": "金 · 太阳",
-    "默认弧线·本阶之恶（可选模块）": "傲慢 Pride——离开金阶要放下支配一切的傲慢——金阶者最后的敌人是自己的光。",
-    "人口（每百万人，默认）": "整片大陆同时 0–2 人"
-   },
-   "image": {
-    "anchor": "entries/tr07/anchor_v1.png",
-    "prompt": "entries/tr07/prompt_v1.txt",
-    "purpose": "magic",
-    "sha256": "d07a619f3757a5cd51fedd73a22c1867c4a0f690a6eeaf68952a4174e00ad8c2",
-    "status": "reviewed",
-    "actual_dimensions": [
-     1672,
-     941
-    ],
-    "review_notes": [
-     "近白核心的纯金光、小石投金色长影、黄金黎明氛围均到位",
-     "光源更像身后日轮而非周身发光，属细节差异"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave1/verdicts_02.json"
-   }
-  },
-  {
-   "id": "TR08",
-   "version": "1.1.0",
-   "name": "贤者之石",
-   "name_en": "The Red Stone (Rubedo)",
-   "aliases": [
-    "The Red Stone (Rubedo)",
-    "半神",
-    "demigod",
-    "the Stone",
-    "Philosopher's Stone",
-    "红化者"
-   ],
-   "category": "位阶：灵魂的大功业·七金属位阶与神话阶",
-   "grade": "M1",
-   "function": "神话阶：灵魂本身变成「贤者之石」——能把别人点化。可以赐予追随者力量、复活新死者、点石成金。只有通过「封神之试」的人能到达。",
-   "cost_limit": "石可碎：心核被击碎即死；追随者的信仰与背叛直接影响其力量。",
-   "counter_failure": "见卡片",
-   "visual_signature": "胸口一颗发光的深红宝石般的核心，全身光芒带红宝石色。",
-   "activation": {
-    "trigger": "—",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "TR09",
-     "kind": "位阶",
-     "role": "下一阶",
-     "required": false,
-     "note": ""
-    },
-    {
-     "target": "IT21",
-     "kind": "道具",
-     "role": "同源物品",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [
-    {
-     "source": "TR07",
-     "kind": "位阶",
-     "role": "下一阶"
-    },
-    {
-     "source": "EV04",
-     "kind": "事件",
-     "role": "通往"
-    },
-    {
-     "source": "IT21",
-     "kind": "道具",
-     "role": "同源位阶"
-    }
-   ],
-   "adoption": "optional",
-   "module": "神话阶",
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "渡劫飞升 / 真仙（参照）",
-    "note": "差异：贤者之石的本质是「能转化他人」，所以半神必然拥有追随者或子民；神话阶的人不离开凡间，而是成为凡间的一部分（圣地、信仰、王朝的源头）。"
-   },
-   "familiarity": "高",
-   "ip": "public_domain",
-   "references": [
-    {
-     "work": "炼金术",
-     "note": "rubedo 红化与贤者之石"
-    },
-    {
-     "work": "希腊神话",
-     "note": "赫拉克勒斯封神——英雄成为半神"
-    }
-   ],
-   "hooks": [],
-   "details": {
-    "人口比例": "神话传说中的人物",
-    "能做什么": "点化他人、复活、建立圣地",
-    "寿命": "不朽（可被杀）"
-   },
-   "image": {
-    "anchor": "entries/tr08/anchor_v1.png",
-    "prompt": "entries/tr08/prompt_v1.txt",
-    "purpose": "magic",
-    "sha256": "28576d291b44b6dc4c4b602bd9ef07cb7d62762fbe57787e75565f813caf44b3",
-    "status": "reviewed_with_notes",
-    "actual_dimensions": [
-     1672,
-     941
-    ],
-    "review_notes": [
-     "离地悬浮、红宝石晶核、红金光流、脚下石地金化扩散均到位",
-     "背对视角下晶核显示在后背而非胸口透出，参考时注意"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave1/verdicts_02.json"
-   }
-  },
-  {
-   "id": "TR09",
-   "version": "1.1.0",
-   "name": "以太",
-   "name_en": "Aether (Quintessence)",
-   "aliases": [
-    "Aether (Quintessence)",
-    "神",
-    "god",
-    "第五元素",
-    "quintessence"
-   ],
-   "category": "位阶：灵魂的大功业·七金属位阶与神话阶",
-   "grade": "M2",
-   "function": "灵魂溶入第五元素：不再需要身体，成为神或类神存在，被信仰、可以成为别人的力量源（圣光之源、契约的赞助者）。",
-   "cost_limit": "被遗忘即衰亡；无法直接干涉凡间，只能通过选民与契约行事。",
-   "counter_failure": "见卡片",
-   "visual_signature": "无实体的星光与彩虹色以太，形象随观看者而变。",
-   "activation": {
-    "trigger": "—",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "PS02",
-     "kind": "力量源",
-     "role": "可成为的力量源",
-     "required": false,
-     "note": ""
-    },
-    {
-     "target": "DK01",
-     "kind": "魔法",
-     "role": "可成为的契约方",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [
-    {
-     "source": "PL07",
-     "kind": "位面",
-     "role": "神阶居所"
-    },
-    {
-     "source": "GD02",
-     "kind": "神祇",
-     "role": "位阶"
-    },
-    {
-     "source": "GD04",
-     "kind": "神祇",
-     "role": "位阶"
-    },
-    {
-     "source": "TR08",
-     "kind": "位阶",
-     "role": "下一阶"
-    }
-   ],
-   "adoption": "optional",
-   "module": "神话阶",
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "金仙及以上 / 神（参照）",
-    "note": "差异：以太存在依赖与凡间的关系（信仰、契约），被遗忘会衰弱——西方神话中失去信徒的神会消亡。"
-   },
-   "familiarity": "中",
-   "ip": "public_domain",
-   "references": [
-    {
-     "work": "古典哲学",
-     "note": "aether / quintessence 第五元素"
-    }
-   ],
-   "hooks": [],
-   "details": {
-    "能做什么": "成为力量源、回应祈祷、签订契约",
-    "寿命": "取决于被记住"
-   },
-   "image": {
-    "anchor": "entries/tr09/anchor_v1.png",
-    "prompt": "entries/tr09/prompt_v1.txt",
-    "purpose": "magic",
-    "sha256": "ebc9f1f997650d59dc0fe5e4ef6db3e774155b396540c70fef7b67921cc18374",
-    "status": "reviewed",
-    "actual_dimensions": [
-     1672,
-     941
-    ],
-    "review_notes": [
-     "星光与彩虹以太构成的巨大人形、内部星点、前景跪地凡人仰望均到位"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave1/verdicts_02.json"
-   }
-  },
-  {
-   "id": "PH01",
-   "version": "1.1.0",
-   "name": "四相",
-   "name_en": "The Four Phases (Nigredo · Albedo · Citrinitas · Rubedo)",
-   "aliases": [
-    "The Four Phases (Nigredo · Albedo · Citrinitas · Rubedo)",
-    "黑化",
-    "白化",
-    "黄化",
-    "红化",
-    "blackening",
-    "whitening",
-    "yellowing",
-    "reddening"
-   ],
-   "category": "位阶：灵魂的大功业·四相与突破",
-   "grade": null,
-   "function": "每一金属阶内的四个阶段：黑化（崩解，力量混乱）→ 白化（净化，掌控）→ 黄化（觉醒，新能力浮现）→ 红化（定形，可以冲击下一阶）。",
-   "cost_limit": "见卡片",
-   "counter_failure": "见卡片",
-   "visual_signature": "灵魂光泽内依次呈现黑、白、黄、红的色调层。",
-   "activation": {
-    "trigger": "—",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "EV02",
-     "kind": "事件",
-     "role": "突破事件",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [
-    {
-     "source": "EV02",
-     "kind": "事件",
-     "role": "结构"
-    }
-   ],
-   "adoption": "optional",
-   "module": "四相",
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "初期 / 中期 / 后期 / 圆满（参照）",
-    "note": "差异：第一相是「崩解」而不是「刚入门」——刚升阶的人反而最不稳定。本模块可关闭。"
-   },
-   "familiarity": "低",
-   "ip": "public_domain",
-   "references": [
-    {
-     "work": "炼金术",
-     "note": "nigredo / albedo / citrinitas / rubedo"
-    },
-    {
-     "work": "荣格心理学",
-     "note": "把四色阶段解读为人格转化"
-    }
-   ],
-   "hooks": [],
-   "details": {
-    "黑化 Nigredo": "旧我死去，力量混乱、易失控，情绪低落",
-    "白化 Albedo": "净化与掌控，力量稳定",
-    "黄化 Citrinitas": "曙光，本阶的新能力出现",
-    "红化 Rubedo": "圆满定形，可以尝试突破"
-   },
-   "image": {
-    "anchor": "entries/ph01/anchor_v1.png",
-    "prompt": "entries/ph01/prompt_v1.txt",
-    "purpose": "item_set",
-    "sha256": "cd2d2a8ebddefbb18f5a84d58b9df4171c6aa1967d882b6e7dd68f7c263c1259",
-    "status": "reviewed",
-    "actual_dimensions": [
-     1752,
-     897
-    ],
-    "review_notes": [
-     "四只相同的圆底蜡封玻璃瓶一字排开，自左至右为翻涌黑色焦油、白色光质、金黄光质、深红晶体，顺序正确",
-     "后方黄铜炼金炉炉口发光，工作台深色",
-     "无文字与标志"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave4/verdicts_01.json"
-   }
-  },
-  {
-   "id": "EV01",
-   "version": "1.1.0",
-   "name": "觉醒",
-   "name_en": "Awakening (the Kindling)",
-   "aliases": [
-    "Awakening (the Kindling)",
-    "点燃",
-    "first spark"
-   ],
-   "category": "位阶：灵魂的大功业·四相与突破",
-   "grade": null,
-   "function": "从原质到铅阶：灵魂第一次被点燃。通常由极端经历触发——大病、濒死、丧亲、初次杀戮、第一次真心的祈祷。",
-   "cost_limit": "见卡片",
-   "counter_failure": "见卡片",
-   "visual_signature": "胸口一闪，眼中第一次出现微光。",
-   "activation": {
-    "trigger": "生死、哀恸、强烈的信念或愤怒。",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "TR01",
-     "kind": "位阶",
-     "role": "通往",
-     "required": false,
-     "note": ""
-    },
-    {
-     "target": "IT22",
-     "kind": "道具",
-     "role": "检测工具",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [
-    {
-     "source": "TR00",
-     "kind": "位阶",
-     "role": "下一步事件"
-    },
-    {
-     "source": "IT22",
-     "kind": "道具",
-     "role": "相关事件"
-    }
-   ],
-   "adoption": "default",
-   "module": null,
-   "basis": "genre",
-   "xianxia": {
-    "concept": "感气入门 / 灵根检测（参照）",
-    "note": "差异：不是测出来的，而是「被生活点燃」的；常在剧情最低谷发生。"
-   },
-   "familiarity": "高",
-   "ip": "generic",
-   "references": [
-    {
-     "work": "欧美短剧与成长流",
-     "note": "awakening 是最受欢迎的转折点"
-    }
-   ],
-   "hooks": [],
-   "details": {},
-   "image": {
-    "anchor": "entries/ev01/anchor_v1.png",
-    "prompt": "entries/ev01/prompt_v1.txt",
-    "purpose": "magic",
-    "sha256": "b5b50779c261309a5734ad03412f9407cc366c6c504a6c5c28e5c4c56da1c9d1",
-    "status": "reviewed",
-    "actual_dimensions": [
-     1672,
-     941
-    ],
-    "review_notes": [
-     "湿石跪地低头、胸口火花、积水上扩散光环、雨滴被照亮均到位"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave1/verdicts_02.json"
-   }
-  },
-  {
-   "id": "EV02",
-   "version": "1.1.0",
-   "name": "灵魂的黑夜",
-   "name_en": "The Dark Night (Transmutation)",
-   "aliases": [
-    "The Dark Night (Transmutation)",
-    "转化",
-    "突破",
-    "breakthrough",
-    "dark night of the soul"
-   ],
-   "category": "位阶：灵魂的大功业·四相与突破",
-   "grade": null,
-   "function": "每一次升阶的必经危机：旧的自我必须死去。默认弧线是战胜本阶对应的一种恶（可选模块）；不用该模块时，黑夜的内容由采用剧决定。通过则金属转化，失败则灵魂留下「炉渣」。",
-   "cost_limit": "失败见「炉渣」；成功也会失去某样东西（一段执念、一种恐惧，有时是一段感情）。",
-   "counter_failure": "见卡片",
-   "visual_signature": "角色被黑暗包裹，光泽熄灭，随后从内部燃起新金属的光。",
-   "activation": {
-    "trigger": "到达红化相后，主动进入或被危机推入。",
-    "requirement": "导师或圣所的庇护能提高成功率。"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "PH01",
-     "kind": "位阶",
-     "role": "结构",
-     "required": false,
-     "note": ""
-    },
-    {
-     "target": "FL01",
-     "kind": "事件",
-     "role": "失败结果",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [
-    {
-     "source": "PH01",
-     "kind": "位阶",
-     "role": "突破事件"
-    }
-   ],
-   "adoption": "default",
-   "module": null,
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "突破瓶颈 / 心魔劫（参照）",
-    "note": "差异：不是外来的天雷，而是内在的「死亡与重生」，源自基督教神秘主义的「灵魂的黑夜」与炼金术的黑化。外部可表现为高烧昏迷、幻象、几天几夜的独处。"
-   },
-   "familiarity": "中",
-   "ip": "public_domain",
-   "references": [
-    {
-     "work": "圣十字若望",
-     "note": "Dark Night of the Soul"
-    },
-    {
-     "work": "炼金术",
-     "note": "nigredo：腐化即重生的前提"
-    }
-   ],
-   "hooks": [],
-   "details": {},
-   "image": {
-    "anchor": "entries/ev02/anchor_v2.png",
-    "prompt": "entries/ev02/prompt_v2.txt",
-    "purpose": "scene",
-    "sha256": "18624eef37bf50d874674f617802abdbc8c2635ad8e4334560fc75482c358bd6",
-    "status": "reviewed",
-    "actual_dimensions": [
-     1672,
-     941
-    ],
-    "review_notes": [
-     "画面只有一人，身处吞没光线的黑色旋涡球内，胸口中心迸出明亮金属光，光纹像蛋壳般把黑球裂开",
-     "姿态为坐地仰头而非蜷缩，属可接受差异",
-     "无其他人物、无文字"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave6/verdicts_01.json"
-   }
-  },
-  {
-   "id": "EV03",
-   "version": "1.1.0",
-   "name": "神判",
-   "name_en": "The Ordeal",
-   "aliases": [
-    "The Ordeal",
-    "试炼",
-    "trial by ordeal",
-    "考核"
-   ],
-   "category": "位阶：灵魂的大功业·四相与突破",
-   "grade": null,
-   "function": "中世纪用来判定有罪无罪的神判：烧红的铁、沸水、冷水、决斗。被告的伤口三日后验，愈合即无罪。本库用于审判（猎巫、异端、悬案），不用于晋升。",
-   "cost_limit": "被告受伤乃至死亡；结果可被主审者操纵。",
-   "counter_failure": "见卡片",
-   "visual_signature": "公众围观的仪式场：火盆、深水池、决斗场。",
-   "activation": {
-    "trigger": "审判官或领主下令。",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "OR04",
-     "kind": "组织",
-     "role": "主持者",
-     "required": false,
-     "note": ""
-    },
-    {
-     "target": "CL09",
-     "kind": "职业",
-     "role": "主持者",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [],
-   "adoption": "default",
-   "module": null,
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "无直接对应",
-    "note": "仙侠的「宗门大比」对应的是晋升仪式 EV05；神判是司法程序。"
-   },
-   "familiarity": "中",
-   "ip": "public_domain",
-   "references": [
-    {
-     "work": "中世纪法律",
-     "note": "trial by ordeal、trial by combat；伤口三日后验"
-    }
-   ],
-   "hooks": [],
-   "details": {},
-   "image": {
-    "anchor": "entries/ev03/anchor_v1.png",
-    "prompt": "entries/ev03/prompt_v1.txt",
-    "purpose": "environment",
-    "sha256": "0bd46e0936301a4cb59a283779ee0e966762b64d4ff5f4dc73dd8bd16e714227",
-    "status": "reviewed",
-    "actual_dimensions": [
-     1774,
-     887
-    ],
-    "review_notes": [
-     "黄昏石院、木看台观众、炭火长沟、两端铁火盆、无纹章旗幡、琥珀天空均到位",
-     "无文字；画幅约 2:1"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave1/verdicts_02.json"
-   }
-  },
-  {
-   "id": "EV05",
-   "version": "1.1.0",
-   "name": "晋升仪式",
-   "name_en": "Rites of Investiture",
-   "aliases": [
-    "Rites of Investiture",
-    "dubbing",
-    "vigil of arms",
-    "disputation",
-    "ordination",
-    "授衔"
-   ],
-   "category": "位阶：灵魂的大功业·四相与突破",
-   "grade": null,
-   "function": "组织授予头衔的仪式，按路线不同：骑士守夜受封（vigil of arms + 授剑礼）、比武大会；行会提交杰作；大学公开答辩（disputatio）；教会按手授职；女巫会入会礼。证明的不是灵魂成色，而是技艺、品格与誓言。",
-   "cost_limit": "失败者失去资格与名誉；仪式中的誓言终身有效。",
-   "counter_failure": "见卡片",
-   "visual_signature": "教堂守夜的烛光、授剑礼的肩头轻触、答辩厅的长桌、比武场。",
-   "activation": {
-    "trigger": "申请头衔时，或领主、院长、主教召集。",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "TL01",
-     "kind": "头衔",
-     "role": "授衔",
-     "required": false,
-     "note": ""
-    },
-    {
-     "target": "TL02",
-     "kind": "头衔",
-     "role": "授衔",
-     "required": false,
-     "note": ""
-    },
-    {
-     "target": "TL03",
-     "kind": "头衔",
-     "role": "授衔",
-     "required": false,
-     "note": ""
-    },
-    {
-     "target": "TL05",
-     "kind": "头衔",
-     "role": "授衔",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [],
-   "adoption": "default",
-   "module": null,
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "宗门大比 / 入门考核（参照）"
-   },
-   "familiarity": "高",
-   "ip": "public_domain",
-   "references": [
-    {
-     "work": "中世纪骑士、行会、大学与教会制度",
-     "note": "dubbing、masterpiece、disputatio、ordination"
-    }
-   ],
-   "hooks": [],
-   "details": {},
-   "image": {
-    "anchor": "entries/ev05/anchor_v2.png",
-    "prompt": "entries/ev05/prompt_v2.txt",
-    "purpose": "environment",
-    "sha256": "e8f5da2467d6a881b93dc72610aef6471446c5d1c6b6019fe13704e45bed7f10",
-    "status": "reviewed_with_notes",
-    "actual_dimensions": [
-     1672,
-     940
-    ],
-    "review_notes": [
-     "放大核对祭坛上方浮雕：实心圆盘加恰好七道直边短三角芒，非八芒",
-     "胸甲、直立头盔、护手、护胫分件摆放，带鞘长剑横置，烛列、窄窗冷月光、白衣跪者背影均符合",
-     "跪者在画面中偏中等大小，不算很小；甲件是并排摆放而非叠放",
-     "左侧拱洞直通室外原野并有花藤垂入，与「小石礼拜堂」的封闭感略不一致，可接受"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave5/verdicts_01.json"
-   }
-  },
-  {
-   "id": "EV04",
-   "version": "1.1.0",
-   "name": "封神之试",
-   "name_en": "Apotheosis",
-   "aliases": [
-    "Apotheosis",
-    "神化",
-    "飞升",
-    "ascension"
-   ],
-   "category": "位阶：灵魂的大功业·四相与突破",
-   "grade": null,
-   "function": "从金阶到贤者之石：凡人成为半神的终极试炼。通常是一桩传说级的功业（屠灭灾厄、拯救一国）加上灵魂的最后一次黑夜。",
-   "cost_limit": "失败即死，且常被历史抹去；成功后不再属于凡人社会。",
-   "counter_failure": "见卡片",
-   "visual_signature": "火焰中升起的身影，或被光柱接引。",
-   "activation": {
-    "trigger": "—",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "TR08",
-     "kind": "位阶",
-     "role": "通往",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [
-    {
-     "source": "TR07",
-     "kind": "位阶",
-     "role": "通往神话阶"
-    },
-    {
-     "source": "GR07",
-     "kind": "成长",
-     "role": "终点"
-    },
-    {
-     "source": "BS08",
-     "kind": "生物",
-     "role": "功业原型"
-    }
-   ],
-   "adoption": "optional",
-   "module": "神话阶",
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "渡劫飞升（参照）",
-    "note": "差异：西方的封神来自功业（赫拉克勒斯的十二功业）与众人的传颂，不是天劫；半神仍留在世间，作为圣地或王朝之源。"
-   },
-   "familiarity": "中",
-   "ip": "public_domain",
-   "references": [
-    {
-     "work": "希腊神话",
-     "note": "赫拉克勒斯在火葬堆上封神"
-    }
-   ],
-   "hooks": [],
-   "details": {},
-   "image": {
-    "anchor": "entries/ev04/anchor_v2.png",
-    "prompt": "entries/ev04/prompt_v2.txt",
-    "purpose": "environment",
-    "sha256": "fb085e299126e7f3e601f9ba432efb061eabc14b8d36715ebd1a8bdf18bc01b3",
-    "status": "reviewed_with_notes",
-    "actual_dimensions": [
-     1774,
-     887
-    ],
-    "review_notes": [
-     "夜空星辰下山顶火葬柴堆、火焰中升起的红宝石与金色发光人形、云层打开的光柱均到位，柴堆旁无人",
-     "柴堆偏矮平，不是「高耸的柴堆」；人形在火柱上方而非被高焰包住",
-     "山脚远处跪拜者为一片锥形兜帽小形体，放大后可读为跪者，但也易被看成草垛",
-     "发光人形为裸体女性轮廓（无细节），可接受；无文字"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave6/verdicts_01.json"
-   }
-  },
-  {
-   "id": "FL01",
-   "version": "1.1.0",
-   "name": "炉渣",
-   "name_en": "Slag (Cracked Soul)",
-   "aliases": [
-    "Slag (Cracked Soul)",
-    "裂魂",
-    "根基受损",
-    "burnout"
-   ],
-   "category": "位阶：灵魂的大功业·失败与堕落",
-   "grade": null,
-   "function": "突破失败或透支后，灵魂留下杂质与裂痕：位阶跌落或永久卡住，施法时伴随剧痛。",
-   "cost_limit": "可修复但极难：需要传说级的药剂或圣物，或再经历一次黑夜。",
-   "counter_failure": "生命之酒、圣物、导师以自身灵魂渡化。",
-   "visual_signature": "灵魂光泽里有黑色裂纹与灰斑，光断断续续。",
-   "activation": {
-    "trigger": "—",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "IT04",
-     "kind": "道具",
-     "role": "修复物",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [
-    {
-     "source": "EV02",
-     "kind": "事件",
-     "role": "失败结果"
-    },
-    {
-     "source": "IT04",
-     "kind": "道具",
-     "role": "可修复"
-    }
-   ],
-   "adoption": "default",
-   "module": null,
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "根基受损 / 修为跌落（参照）"
-   },
-   "familiarity": "低",
-   "ip": "public_domain",
-   "references": [
-    {
-     "work": "冶金/炼金",
-     "note": "slag 熔渣——炼金失败的残余"
-    }
-   ],
-   "hooks": [],
-   "details": {},
-   "image": {
-    "anchor": "entries/fl01/anchor_v1.png",
-    "prompt": "entries/fl01/prompt_v1.txt",
-    "purpose": "magic",
-    "sha256": "74e9991906a5b4a9cc540c8cab3e093e7385a339101a4f9b05eb36e3ed52ec37",
-    "status": "reviewed",
-    "actual_dimensions": [
-     1672,
-     941
-    ],
-    "review_notes": [
-     "捂胸痛苦、光泽中黑色裂纹与灰斑、渣屑如余烬掉落均到位"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave1/verdicts_02.json"
-   }
-  },
-  {
-   "id": "FL02",
-   "version": "1.1.0",
-   "name": "腐化",
-   "name_en": "Corruption",
-   "aliases": [
-    "Corruption",
-    "堕落",
-    "黑化",
-    "tainted"
-   ],
-   "category": "位阶：灵魂的大功业·失败与堕落",
-   "grade": null,
-   "function": "力量来源本身带毒：深渊之力、死亡之力或贪婪的魔法物品逐渐改变使用者的身体和人格，直至变成怪物。",
-   "cost_limit": "每使用一次都更深一步；达到临界即永久转化（恶魔、亡灵、怪物）。",
-   "counter_failure": "圣光净化、舍弃力量来源、他人的牺牲。",
-   "visual_signature": "黑色脉络从手部向上蔓延，瞳孔颜色改变。",
-   "activation": {
-    "trigger": "—",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "PS06",
-     "kind": "力量源",
-     "role": "常见来源",
-     "required": false,
-     "note": ""
-    },
-    {
-     "target": "PS05",
-     "kind": "力量源",
-     "role": "常见来源",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [
-    {
-     "source": "GR10",
-     "kind": "成长",
-     "role": "风险"
-    },
-    {
-     "source": "IT26",
-     "kind": "道具",
-     "role": "风险"
-    }
-   ],
-   "adoption": "default",
-   "module": null,
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "入魔（参照）",
-    "note": "差异：西方的腐化是「可见的、渐进的、身体性的」——长角、皮肤发灰、影子变形，观众可以逐集看到。"
-   },
-   "familiarity": "高",
-   "ip": "generic",
-   "references": [
-    {
-     "work": "托尔金",
-     "note": "戒指腐蚀持有者"
-    },
-    {
-     "work": "战锤奇幻",
-     "note": "混沌变异"
-    },
-    {
-     "work": "欧洲民间与猎巫记录",
-     "note": "与魔鬼交易者身上出现魔鬼印记"
-    }
-   ],
-   "hooks": [],
-   "details": {},
-   "image": {
-    "anchor": "entries/fl02/anchor_v2.png",
-    "prompt": "entries/fl02/prompt_v2.txt",
-    "purpose": "magic",
-    "sha256": "381c260ff8dceca9273fad7102dc21e635bf22738d0625bc33c18be7ec106646",
-    "status": "reviewed_with_notes",
-    "actual_dimensions": [
-     1672,
-     941
-    ],
-    "review_notes": [
-     "掌心朝向观众的举起手为拇指加四指共五指，另一只手握住手腕，黑色树枝状脉络从指尖沿前臂蔓延，指甲发黑，红烟渗出，到位",
-     "举起手的小指外展过低过长，形似第二根拇指，乍看有点怪，但手指数量正确",
-     "皮肤偏粉红灰，「灰烬色」不够明显",
-     "可用作腐化视觉参考"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave3a/verdicts_01.json"
-   }
-  },
-  {
-   "id": "FL03",
-   "version": "1.1.0",
-   "name": "附身",
-   "name_en": "Possession",
-   "aliases": [
-    "Possession",
-    "夺舍",
-    "被附身",
-    "abomination"
-   ],
-   "category": "位阶：灵魂的大功业·失败与堕落",
-   "grade": null,
-   "function": "另一个存在（恶魔、亡魂、妖精）占据了身体。弱者全面失控，强者与之争夺主导权，形成双重人格。",
-   "cost_limit": "被附身期间的行为由宿主背负；长期附身会让两个灵魂融合。",
-   "counter_failure": "驱魔、说出附身者真名、宿主的意志觉醒。",
-   "visual_signature": "眼睛变色（全黑或发光），声音出现第二重音轨，动作不自然。",
-   "activation": {
-    "trigger": "—",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "HL04",
-     "kind": "魔法",
-     "role": "解法",
-     "required": false,
-     "note": ""
-    },
-    {
-     "target": "RC16",
-     "kind": "种族",
-     "role": "常见附身者",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [
-    {
-     "source": "GR09",
-     "kind": "成长",
-     "role": "相关失败"
-    }
-   ],
-   "adoption": "default",
-   "module": null,
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "夺舍 / 心魔附体（参照）",
-    "note": "差异：西方附身者是「另一个有名字的存在」，可以被谈判、被骗、被驱逐，戏剧冲突更具体。"
-   },
-   "familiarity": "高",
-   "ip": "public_domain",
-   "references": [
-    {
-     "work": "欧洲民间与教会传统",
-     "note": "恶魔附身与驱魔"
-    },
-    {
-     "work": "龙腾世纪",
-     "note": "被附身的法师（机制参考）"
-    }
-   ],
-   "hooks": [],
-   "details": {},
-   "image": {
-    "anchor": "entries/fl03/anchor_v3.png",
-    "prompt": "entries/fl03/prompt_v3.txt",
-    "purpose": "scene",
-    "sha256": "4baac513abc9abc1351f1f5cf9130705759fe1cbb01bd90325fff1a8528b89e4",
-    "status": "reviewed_with_notes",
-    "actual_dimensions": [
-     1536,
-     1024
-    ],
-    "review_notes": [
-     "只有一名被附身者，头部后仰并歪向一侧，脸部清晰可见。",
-     "双眼全黑，各有一个红点，符合要求。",
-     "半透明的有角暗影与身体重叠，像双重曝光：暗影的头在她头部右上方略微错开，两条暗影手臂贴着她的手臂并带爪，能看出动作不同步。",
-     "肩部有黑色细烟，没有旋涡或其他多余特效。",
-     "brief 要求兜帽推到脑后，图里没有兜帽，属于小偏差，不影响识别。",
-     "她的姿态更像抽搐时张开双臂，不算僵直站立，可以接受。",
-     "两只真手的手指数量正常，没有可读文字或水印，也没有真实宗教符号。"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave8/verdicts_01.json"
-   }
-  },
-  {
-   "id": "FL04",
-   "version": "1.1.0",
-   "name": "失恩",
-   "name_en": "Fall from Grace",
-   "aliases": [
-    "Fall from Grace",
-    "背誓",
-    "oathbreaker",
-    "破誓"
-   ],
-   "category": "位阶：灵魂的大功业·失败与堕落",
-   "grade": null,
-   "function": "违背誓言或信仰的人失去圣光或勇武：光会突然熄灭，有时反过来灼伤自己。背誓骑士在西方叙事里是固定的悲剧形象。",
-   "cost_limit": "力量熄灭；被组织除名；有时转向黑暗（成为死亡骑士、背誓者）。",
-   "counter_failure": "赎罪之旅、重新立誓、被更高者宽恕。",
-   "visual_signature": "圣光像熄灭的蜡烛冒出一缕黑烟，盔甲上的圣徽变黑。",
-   "activation": {
-    "trigger": "—",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "CL08",
-     "kind": "职业",
-     "role": "常见对象",
-     "required": false,
-     "note": ""
-    },
-    {
-     "target": "GR03",
-     "kind": "成长",
-     "role": "相关成长",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [
-    {
-     "source": "CL08",
-     "kind": "职业",
-     "role": "风险"
-    },
-    {
-     "source": "CL24",
-     "kind": "职业",
-     "role": "常见来源"
-    },
-    {
-     "source": "GR03",
-     "kind": "成长",
-     "role": "失败"
-    }
-   ],
-   "adoption": "default",
-   "module": null,
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "道心破碎（参照）",
-    "note": "差异：西方的失恩是道德与契约性的——违背的是一句具体的誓言，因此可以通过赎罪任务（quest）重新获得。"
-   },
-   "familiarity": "高",
-   "ip": "generic",
-   "references": [
-    {
-     "work": "D&D",
-     "note": "Oathbreaker 誓约破除者"
-    },
-    {
-     "work": "骑士文学",
-     "note": "背誓与赎罪"
-    }
-   ],
-   "hooks": [],
-   "details": {},
-   "image": {
-    "anchor": "entries/fl04/anchor_v3.png",
-    "prompt": "entries/fl04/prompt_v3.txt",
-    "purpose": "scene",
-    "sha256": "50e2fd6a0907e02d2a57b4d0c56dad3ef43dfe9c85230115be02b4f204ea1c07",
-    "status": "reviewed_with_notes",
-    "actual_dimensions": [
-     1536,
-     1024
-    ],
-    "review_notes": [
-     "画面只有一名骑士，跪地低头，剑在身旁地上，无旗帜、无太阳、无其他人物",
-     "胸甲素面圆形凸饰已发黑锈蚀，周身只剩微弱金色光尘，符合圣光将熄",
-     "缺点：那缕烟从领口和肩后升起，并非从凸饰冒出，颜色偏灰白而不是黑色；若重出，可让黑烟直接从凸饰中心升起",
-     "背景哥特窗的格栅是普通窗棂，虚化处理，不构成十字标志"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave7/verdicts_01.json"
-   }
-  },
-  {
    "id": "TL01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "奥术头衔",
    "name_en": "Arcane Ranks",
    "aliases": [
@@ -6906,7 +5150,7 @@
     "apprentice",
     "archmage"
    ],
-   "category": "位阶：灵魂的大功业·路线头衔",
+   "category": "头衔、关口与失败·路线头衔",
    "grade": null,
    "function": "学徒 Apprentice → 熟手 Journeyman → 法师 Magus → 大师 Master → 大法师 Archmage。沿用中世纪行会的「学徒—熟手—大师」制度，出师要提交一件「杰作」（masterwork spell），升大师要公开答辩。",
    "cost_limit": "见卡片",
@@ -6980,12 +5224,12 @@
    ],
    "hooks": [],
    "details": {
-    "Apprentice": "随师学习，不得独立施法谋生；典型铅—锡",
-    "Journeyman": "可游历接委托，默认需在多处学院求学；典型锡—铜",
-    "Magus": "提交杰作出师，可开业、收学徒；典型铜—铁",
-    "Master": "答辩通过，可主持讲席；典型铁",
-    "Archmage": "由议会推选，一国个位数；典型汞以上",
-    "说明": "成色是典型值不是门槛：学院政治里有铜阶大师，也有拒绝头衔的汞阶隐士"
+    "Apprentice": "随师学习，不得独立施法谋生；典型威胁度：野兽",
+    "Journeyman": "可游历接委托，默认需在多处学院求学；典型威胁度：野兽—怪物",
+    "Magus": "提交杰作出师，可开业、收学徒；典型威胁度：怪物",
+    "Master": "答辩通过，可主持讲席；典型威胁度：怪物",
+    "Archmage": "由议会推选，一国个位数；典型威胁度：恐怖以上",
+    "说明": "头衔对应的强弱是典型值不是门槛：学院政治里有徒有其名的大师，也有拒绝头衔、强到恐怖级的隐士"
    },
    "image": {
     "anchor": "entries/tl01/anchor_v1.png",
@@ -7007,7 +5251,7 @@
   },
   {
    "id": "TL02",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "骑士头衔",
    "name_en": "Chivalric Ranks",
    "aliases": [
@@ -7016,7 +5260,7 @@
     "squire",
     "peer of the realm"
    ],
-   "category": "位阶：灵魂的大功业·路线头衔",
+   "category": "头衔、关口与失败·路线头衔",
    "grade": null,
    "function": "侍童 Page → 侍从 Squire → 骑士 Knight → 旗骑士 Knight-Banneret → 王国重臣 Peer → 王之斗士 Champion。受封骑士需「授剑礼」（dubbing）；重臣是王国最高的十二骑士席位。",
    "cost_limit": "见卡片",
@@ -7094,10 +5338,10 @@
     "Page": "七岁起入城堡服侍",
     "Squire": "十四岁起为骑士持械",
     "Knight": "守夜受封与授剑礼；武艺熟练度为主，可未觉醒",
-    "Knight-Banneret": "可率领自己的旗帜与部众；典型铜—铁",
-    "Peer": "王国最高的十二骑士席位，由王授予；典型铁—汞",
-    "Champion": "代国王出战的决斗代表；典型汞以上",
-    "说明": "骑士身份靠武艺、誓言与受封，不要求觉醒；成色只是强者的典型分布"
+    "Knight-Banneret": "可率领自己的旗帜与部众；典型威胁度：怪物",
+    "Peer": "王国最高的十二骑士席位，由王授予；典型威胁度：怪物—恐怖",
+    "Champion": "代国王出战的决斗代表；典型威胁度：恐怖以上",
+    "说明": "骑士身份靠武艺、誓言与受封，不要求觉醒；威胁度只是强者的典型分布"
    },
    "image": {
     "anchor": "entries/tl02/anchor_v2.png",
@@ -7120,7 +5364,7 @@
   },
   {
    "id": "TL03",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "教会圣职",
    "name_en": "Holy Orders",
    "aliases": [
@@ -7129,7 +5373,7 @@
     "bishop",
     "saint"
    ],
-   "category": "位阶：灵魂的大功业·路线头衔",
+   "category": "头衔、关口与失败·路线头衔",
    "grade": null,
    "function": "侍祭 Acolyte → 执事 Deacon → 神父/女祭司 Priest → 主教 Bishop → 大主教 Archbishop；「圣徒 Saint」不是职位，是死后或生前因神迹被追认。",
    "cost_limit": "见卡片",
@@ -7183,7 +5427,7 @@
    "basis": "tradition",
    "xianxia": {
     "concept": "道观 / 佛门的僧阶（参照）",
-    "note": "差异：圣职与位阶脱钩——主教可能只有锡阶（政治任命），乡村神父却可能是银阶。这个错位是天然的剧情矛盾。"
+    "note": "差异：圣职与神恩强弱脱钩——主教可能连圣愈都施不出（政治任命），乡村神父却可能驱逐过灾厄级的恶魔。这个错位是天然的剧情矛盾。"
    },
    "familiarity": "高",
    "ip": "public_domain",
@@ -7201,7 +5445,7 @@
     "Bishop": "管辖一个教区",
     "Archbishop": "管辖一国教会",
     "Saint": "神迹得到认定后由教会追认（默认需两件以上）",
-    "说明": "圣职与成色脱钩：主教可能只有锡阶（政治任命），乡村神父可能是银阶"
+    "说明": "圣职与神恩强弱脱钩：主教可能连圣愈都施不出（政治任命），乡村神父却可能驱逐过灾厄级的恶魔"
    },
    "image": {
     "anchor": "entries/tl03/anchor_v3.png",
@@ -7224,7 +5468,7 @@
   },
   {
    "id": "TL04",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "德鲁伊阶层",
    "name_en": "Druidic Grades",
    "aliases": [
@@ -7233,7 +5477,7 @@
     "ovate",
     "archdruid"
    ],
-   "category": "位阶：灵魂的大功业·路线头衔",
+   "category": "头衔、关口与失败·路线头衔",
    "grade": null,
    "function": "吟游者 Bard → 卜者 Ovate → 德鲁伊 Druid → 大德鲁伊 Archdruid。源自古代凯尔特的三级学者阶层：诗与记忆、占卜与医药、仪式与裁决。",
    "cost_limit": "见卡片",
@@ -7322,7 +5566,7 @@
   },
   {
    "id": "TL05",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "女巫阶层",
    "name_en": "Coven Degrees",
    "aliases": [
@@ -7331,7 +5575,7 @@
     "high witch",
     "crone"
    ],
-   "category": "位阶：灵魂的大功业·路线头衔",
+   "category": "头衔、关口与失败·路线头衔",
    "grade": null,
    "function": "学徒 Novice → 女巫 Witch → 高阶女巫 High Witch（主持一个女巫会）→ 长老 Crone/Elder。以师承和女巫会（coven）为单位，不受教会与学院承认。",
    "cost_limit": "见卡片",
@@ -7416,8 +5660,705 @@
    }
   },
   {
+   "id": "EV01",
+   "version": "1.2.0",
+   "name": "觉醒",
+   "name_en": "Awakening (the Kindling)",
+   "aliases": [
+    "Awakening (the Kindling)",
+    "点燃",
+    "first spark"
+   ],
+   "category": "头衔、关口与失败·关口事件",
+   "grade": null,
+   "function": "凡人第一次燃起超凡之力：灵魂被点燃。通常由极端经历触发——大病、濒死、丧亲、初次杀戮、第一次真心的祈祷。约一成人类一生中会觉醒；不觉醒也能凭武艺与手艺成名。",
+   "cost_limit": "见卡片",
+   "counter_failure": "见卡片",
+   "visual_signature": "胸口一闪，眼中第一次出现微光。",
+   "activation": {
+    "trigger": "生死、哀恸、强烈的信念或愤怒。",
+    "requirement": "—"
+   },
+   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
+   "relations": [
+    {
+     "target": "GF01",
+     "kind": "天赋",
+     "role": "天赋决定难易",
+     "required": false,
+     "note": ""
+    },
+    {
+     "target": "GR04",
+     "kind": "成长",
+     "role": "血脉者的觉醒",
+     "required": false,
+     "note": ""
+    },
+    {
+     "target": "PS09",
+     "kind": "力量源",
+     "role": "觉醒后才有英雄之光",
+     "required": false,
+     "note": ""
+    }
+   ],
+   "backlinks": [
+    {
+     "source": "GF01",
+     "kind": "天赋",
+     "role": "决定觉醒难易"
+    },
+    {
+     "source": "GR06",
+     "kind": "成长",
+     "role": "前提"
+    }
+   ],
+   "adoption": "default",
+   "module": null,
+   "basis": "genre",
+   "xianxia": {
+    "concept": "感气入门 / 灵根检测（参照）",
+    "note": "差异：不是测出来的，而是「被生活点燃」的；常在剧情最低谷发生。觉醒只是开始，之后怎么变强看职业与成长途径，没有一条统一的境界线。"
+   },
+   "familiarity": "高",
+   "ip": "generic",
+   "references": [
+    {
+     "work": "欧美短剧与成长流",
+     "note": "awakening 是最受欢迎的转折点"
+    }
+   ],
+   "hooks": [],
+   "details": {},
+   "image": {
+    "anchor": "entries/ev01/anchor_v1.png",
+    "prompt": "entries/ev01/prompt_v1.txt",
+    "purpose": "magic",
+    "sha256": "b5b50779c261309a5734ad03412f9407cc366c6c504a6c5c28e5c4c56da1c9d1",
+    "status": "reviewed",
+    "actual_dimensions": [
+     1672,
+     941
+    ],
+    "review_notes": [
+     "湿石跪地低头、胸口火花、积水上扩散光环、雨滴被照亮均到位"
+    ],
+    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave1/verdicts_02.json"
+   }
+  },
+  {
+   "id": "EV05",
+   "version": "1.2.0",
+   "name": "晋升仪式",
+   "name_en": "Rites of Investiture",
+   "aliases": [
+    "Rites of Investiture",
+    "dubbing",
+    "vigil of arms",
+    "disputation",
+    "ordination",
+    "授衔"
+   ],
+   "category": "头衔、关口与失败·关口事件",
+   "grade": null,
+   "function": "组织授予头衔的仪式，按路线不同：骑士守夜受封（vigil of arms + 授剑礼）、比武大会；行会提交杰作；大学公开答辩（disputatio）；教会按手授职；女巫会入会礼。证明的是技艺、品格与誓言，不是天赋。",
+   "cost_limit": "失败者失去资格与名誉；仪式中的誓言终身有效。",
+   "counter_failure": "见卡片",
+   "visual_signature": "教堂守夜的烛光、授剑礼的肩头轻触、答辩厅的长桌、比武场。",
+   "activation": {
+    "trigger": "申请头衔时，或领主、院长、主教召集。",
+    "requirement": "—"
+   },
+   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
+   "relations": [
+    {
+     "target": "TL01",
+     "kind": "头衔",
+     "role": "授衔",
+     "required": false,
+     "note": ""
+    },
+    {
+     "target": "TL02",
+     "kind": "头衔",
+     "role": "授衔",
+     "required": false,
+     "note": ""
+    },
+    {
+     "target": "TL03",
+     "kind": "头衔",
+     "role": "授衔",
+     "required": false,
+     "note": ""
+    },
+    {
+     "target": "TL05",
+     "kind": "头衔",
+     "role": "授衔",
+     "required": false,
+     "note": ""
+    }
+   ],
+   "backlinks": [],
+   "adoption": "default",
+   "module": null,
+   "basis": "tradition",
+   "xianxia": {
+    "concept": "宗门大比 / 入门考核（参照）"
+   },
+   "familiarity": "高",
+   "ip": "public_domain",
+   "references": [
+    {
+     "work": "中世纪骑士、行会、大学与教会制度",
+     "note": "dubbing、masterpiece、disputatio、ordination"
+    }
+   ],
+   "hooks": [],
+   "details": {},
+   "image": {
+    "anchor": "entries/ev05/anchor_v2.png",
+    "prompt": "entries/ev05/prompt_v2.txt",
+    "purpose": "environment",
+    "sha256": "e8f5da2467d6a881b93dc72610aef6471446c5d1c6b6019fe13704e45bed7f10",
+    "status": "reviewed_with_notes",
+    "actual_dimensions": [
+     1672,
+     940
+    ],
+    "review_notes": [
+     "放大核对祭坛上方浮雕：实心圆盘加恰好七道直边短三角芒，非八芒",
+     "胸甲、直立头盔、护手、护胫分件摆放，带鞘长剑横置，烛列、窄窗冷月光、白衣跪者背影均符合",
+     "跪者在画面中偏中等大小，不算很小；甲件是并排摆放而非叠放",
+     "左侧拱洞直通室外原野并有花藤垂入，与「小石礼拜堂」的封闭感略不一致，可接受"
+    ],
+    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave5/verdicts_01.json"
+   }
+  },
+  {
+   "id": "EV03",
+   "version": "1.2.0",
+   "name": "神判",
+   "name_en": "The Ordeal",
+   "aliases": [
+    "The Ordeal",
+    "试炼",
+    "trial by ordeal",
+    "考核"
+   ],
+   "category": "头衔、关口与失败·关口事件",
+   "grade": null,
+   "function": "中世纪用来判定有罪无罪的神判：烧红的铁、沸水、冷水、决斗。被告的伤口三日后验，愈合即无罪。本库用于审判（猎巫、异端、悬案），不用于晋升。",
+   "cost_limit": "被告受伤乃至死亡；结果可被主审者操纵。",
+   "counter_failure": "见卡片",
+   "visual_signature": "公众围观的仪式场：火盆、深水池、决斗场。",
+   "activation": {
+    "trigger": "审判官或领主下令。",
+    "requirement": "—"
+   },
+   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
+   "relations": [
+    {
+     "target": "OR04",
+     "kind": "组织",
+     "role": "主持者",
+     "required": false,
+     "note": ""
+    },
+    {
+     "target": "CL09",
+     "kind": "职业",
+     "role": "主持者",
+     "required": false,
+     "note": ""
+    }
+   ],
+   "backlinks": [],
+   "adoption": "default",
+   "module": null,
+   "basis": "tradition",
+   "xianxia": {
+    "concept": "无直接对应",
+    "note": "仙侠的「宗门大比」对应的是晋升仪式 EV05；神判是司法程序。"
+   },
+   "familiarity": "中",
+   "ip": "public_domain",
+   "references": [
+    {
+     "work": "中世纪法律",
+     "note": "trial by ordeal、trial by combat；伤口三日后验"
+    }
+   ],
+   "hooks": [],
+   "details": {},
+   "image": {
+    "anchor": "entries/ev03/anchor_v1.png",
+    "prompt": "entries/ev03/prompt_v1.txt",
+    "purpose": "environment",
+    "sha256": "0bd46e0936301a4cb59a283779ee0e966762b64d4ff5f4dc73dd8bd16e714227",
+    "status": "reviewed",
+    "actual_dimensions": [
+     1774,
+     887
+    ],
+    "review_notes": [
+     "黄昏石院、木看台观众、炭火长沟、两端铁火盆、无纹章旗幡、琥珀天空均到位",
+     "无文字；画幅约 2:1"
+    ],
+    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave1/verdicts_02.json"
+   }
+  },
+  {
+   "id": "EV04",
+   "version": "1.2.0",
+   "name": "封神之试",
+   "name_en": "Apotheosis",
+   "aliases": [
+    "Apotheosis",
+    "神化",
+    "飞升",
+    "ascension"
+   ],
+   "category": "头衔、关口与失败·关口事件",
+   "grade": null,
+   "function": "凡人成为半神的终极试炼：一桩传说级的功业（屠灭灾厄级的怪物、拯救一国）加上一次死亡与重生（火葬堆、冥界归来）。通过者的威胁度进入神话级。",
+   "cost_limit": "失败即死，且常被历史抹去；成功后不再属于凡人社会。",
+   "counter_failure": "见卡片",
+   "visual_signature": "火焰中升起的身影，或被光柱接引。",
+   "activation": {
+    "trigger": "—",
+    "requirement": "—"
+   },
+   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
+   "relations": [
+    {
+     "target": "GR07",
+     "kind": "成长",
+     "role": "前提",
+     "required": false,
+     "note": ""
+    },
+    {
+     "target": "BS00",
+     "kind": "生物",
+     "role": "通过后：神话级",
+     "required": false,
+     "note": ""
+    },
+    {
+     "target": "IT21",
+     "kind": "道具",
+     "role": "传说中的遗留",
+     "required": false,
+     "note": ""
+    }
+   ],
+   "backlinks": [
+    {
+     "source": "GR07",
+     "kind": "成长",
+     "role": "终点"
+    },
+    {
+     "source": "IT21",
+     "kind": "道具",
+     "role": "传说来源"
+    },
+    {
+     "source": "BS08",
+     "kind": "生物",
+     "role": "功业原型"
+    }
+   ],
+   "adoption": "optional",
+   "module": "封神",
+   "basis": "tradition",
+   "xianxia": {
+    "concept": "渡劫飞升（参照）",
+    "note": "差异：西方的封神来自功业（赫拉克勒斯的十二功业）与众人的传颂，不是天劫，也不是一条境界线的终点；半神仍留在世间，作为圣地或王朝之源。"
+   },
+   "familiarity": "中",
+   "ip": "public_domain",
+   "references": [
+    {
+     "work": "希腊神话",
+     "note": "赫拉克勒斯在火葬堆上封神"
+    }
+   ],
+   "hooks": [],
+   "details": {},
+   "image": {
+    "anchor": "entries/ev04/anchor_v2.png",
+    "prompt": "entries/ev04/prompt_v2.txt",
+    "purpose": "environment",
+    "sha256": "fb085e299126e7f3e601f9ba432efb061eabc14b8d36715ebd1a8bdf18bc01b3",
+    "status": "reviewed_with_notes",
+    "actual_dimensions": [
+     1774,
+     887
+    ],
+    "review_notes": [
+     "夜空星辰下山顶火葬柴堆、火焰中升起的红宝石与金色发光人形、云层打开的光柱均到位，柴堆旁无人",
+     "柴堆偏矮平，不是「高耸的柴堆」；人形在火柱上方而非被高焰包住",
+     "山脚远处跪拜者为一片锥形兜帽小形体，放大后可读为跪者，但也易被看成草垛",
+     "发光人形为裸体女性轮廓（无细节），可接受；无文字"
+    ],
+    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave6/verdicts_01.json"
+   }
+  },
+  {
+   "id": "FL01",
+   "version": "1.2.0",
+   "name": "炉渣",
+   "name_en": "Slag (Cracked Soul)",
+   "aliases": [
+    "Slag (Cracked Soul)",
+    "裂魂",
+    "根基受损",
+    "burnout"
+   ],
+   "category": "头衔、关口与失败·失败与堕落",
+   "grade": null,
+   "function": "透支力量或强行越过自身极限（施放超出能力的法术、仪式或契约失败、承受不住的血脉觉醒）后，灵魂留下杂质与裂痕：力量减弱或永久卡住，施法时伴随剧痛。",
+   "cost_limit": "可修复但极难：需要传说级的药剂或圣物，或一次濒死的重生。",
+   "counter_failure": "生命之酒、圣物、导师以自身灵魂渡化。",
+   "visual_signature": "身周的力量光里有黑色裂纹与灰斑，光断断续续。",
+   "activation": {
+    "trigger": "—",
+    "requirement": "—"
+   },
+   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
+   "relations": [
+    {
+     "target": "IT04",
+     "kind": "道具",
+     "role": "修复物",
+     "required": false,
+     "note": ""
+    }
+   ],
+   "backlinks": [
+    {
+     "source": "IT04",
+     "kind": "道具",
+     "role": "可修复"
+    }
+   ],
+   "adoption": "default",
+   "module": null,
+   "basis": "tradition",
+   "xianxia": {
+    "concept": "根基受损（参照）"
+   },
+   "familiarity": "低",
+   "ip": "public_domain",
+   "references": [
+    {
+     "work": "冶金/炼金",
+     "note": "slag 熔渣——炼金失败的残余"
+    }
+   ],
+   "hooks": [],
+   "details": {},
+   "image": {
+    "anchor": "entries/fl01/anchor_v1.png",
+    "prompt": "entries/fl01/prompt_v1.txt",
+    "purpose": "magic",
+    "sha256": "74e9991906a5b4a9cc540c8cab3e093e7385a339101a4f9b05eb36e3ed52ec37",
+    "status": "reviewed",
+    "actual_dimensions": [
+     1672,
+     941
+    ],
+    "review_notes": [
+     "捂胸痛苦、光泽中黑色裂纹与灰斑、渣屑如余烬掉落均到位"
+    ],
+    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave1/verdicts_02.json"
+   }
+  },
+  {
+   "id": "FL02",
+   "version": "1.2.0",
+   "name": "腐化",
+   "name_en": "Corruption",
+   "aliases": [
+    "Corruption",
+    "堕落",
+    "黑化",
+    "tainted"
+   ],
+   "category": "头衔、关口与失败·失败与堕落",
+   "grade": null,
+   "function": "力量来源本身带毒：深渊之力、死亡之力或贪婪的魔法物品逐渐改变使用者的身体和人格，直至变成怪物。",
+   "cost_limit": "每使用一次都更深一步；达到临界即永久转化（恶魔、亡灵、怪物）。",
+   "counter_failure": "圣光净化、舍弃力量来源、他人的牺牲。",
+   "visual_signature": "黑色脉络从手部向上蔓延，瞳孔颜色改变。",
+   "activation": {
+    "trigger": "—",
+    "requirement": "—"
+   },
+   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
+   "relations": [
+    {
+     "target": "PS06",
+     "kind": "力量源",
+     "role": "常见来源",
+     "required": false,
+     "note": ""
+    },
+    {
+     "target": "PS05",
+     "kind": "力量源",
+     "role": "常见来源",
+     "required": false,
+     "note": ""
+    }
+   ],
+   "backlinks": [
+    {
+     "source": "GR10",
+     "kind": "成长",
+     "role": "风险"
+    },
+    {
+     "source": "IT26",
+     "kind": "道具",
+     "role": "风险"
+    }
+   ],
+   "adoption": "default",
+   "module": null,
+   "basis": "tradition",
+   "xianxia": {
+    "concept": "入魔（参照）",
+    "note": "差异：西方的腐化是「可见的、渐进的、身体性的」——长角、皮肤发灰、影子变形，观众可以逐集看到。"
+   },
+   "familiarity": "高",
+   "ip": "generic",
+   "references": [
+    {
+     "work": "托尔金",
+     "note": "戒指腐蚀持有者"
+    },
+    {
+     "work": "战锤奇幻",
+     "note": "混沌变异"
+    },
+    {
+     "work": "欧洲民间与猎巫记录",
+     "note": "与魔鬼交易者身上出现魔鬼印记"
+    }
+   ],
+   "hooks": [],
+   "details": {},
+   "image": {
+    "anchor": "entries/fl02/anchor_v2.png",
+    "prompt": "entries/fl02/prompt_v2.txt",
+    "purpose": "magic",
+    "sha256": "381c260ff8dceca9273fad7102dc21e635bf22738d0625bc33c18be7ec106646",
+    "status": "reviewed_with_notes",
+    "actual_dimensions": [
+     1672,
+     941
+    ],
+    "review_notes": [
+     "掌心朝向观众的举起手为拇指加四指共五指，另一只手握住手腕，黑色树枝状脉络从指尖沿前臂蔓延，指甲发黑，红烟渗出，到位",
+     "举起手的小指外展过低过长，形似第二根拇指，乍看有点怪，但手指数量正确",
+     "皮肤偏粉红灰，「灰烬色」不够明显",
+     "可用作腐化视觉参考"
+    ],
+    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave3a/verdicts_01.json"
+   }
+  },
+  {
+   "id": "FL03",
+   "version": "1.2.0",
+   "name": "附身",
+   "name_en": "Possession",
+   "aliases": [
+    "Possession",
+    "夺舍",
+    "被附身",
+    "abomination"
+   ],
+   "category": "头衔、关口与失败·失败与堕落",
+   "grade": null,
+   "function": "另一个存在（恶魔、亡魂、妖精）占据了身体。弱者全面失控，强者与之争夺主导权，形成双重人格。",
+   "cost_limit": "被附身期间的行为由宿主背负；长期附身会让两个灵魂融合。",
+   "counter_failure": "驱魔、说出附身者真名、宿主的意志觉醒。",
+   "visual_signature": "眼睛变色（全黑或发光），声音出现第二重音轨，动作不自然。",
+   "activation": {
+    "trigger": "—",
+    "requirement": "—"
+   },
+   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
+   "relations": [
+    {
+     "target": "HL04",
+     "kind": "魔法",
+     "role": "解法",
+     "required": false,
+     "note": ""
+    },
+    {
+     "target": "RC16",
+     "kind": "种族",
+     "role": "常见附身者",
+     "required": false,
+     "note": ""
+    }
+   ],
+   "backlinks": [
+    {
+     "source": "GR09",
+     "kind": "成长",
+     "role": "相关失败"
+    }
+   ],
+   "adoption": "default",
+   "module": null,
+   "basis": "tradition",
+   "xianxia": {
+    "concept": "夺舍 / 心魔附体（参照）",
+    "note": "差异：西方附身者是「另一个有名字的存在」，可以被谈判、被骗、被驱逐，戏剧冲突更具体。"
+   },
+   "familiarity": "高",
+   "ip": "public_domain",
+   "references": [
+    {
+     "work": "欧洲民间与教会传统",
+     "note": "恶魔附身与驱魔"
+    },
+    {
+     "work": "龙腾世纪",
+     "note": "被附身的法师（机制参考）"
+    }
+   ],
+   "hooks": [],
+   "details": {},
+   "image": {
+    "anchor": "entries/fl03/anchor_v3.png",
+    "prompt": "entries/fl03/prompt_v3.txt",
+    "purpose": "scene",
+    "sha256": "4baac513abc9abc1351f1f5cf9130705759fe1cbb01bd90325fff1a8528b89e4",
+    "status": "reviewed_with_notes",
+    "actual_dimensions": [
+     1536,
+     1024
+    ],
+    "review_notes": [
+     "只有一名被附身者，头部后仰并歪向一侧，脸部清晰可见。",
+     "双眼全黑，各有一个红点，符合要求。",
+     "半透明的有角暗影与身体重叠，像双重曝光：暗影的头在她头部右上方略微错开，两条暗影手臂贴着她的手臂并带爪，能看出动作不同步。",
+     "肩部有黑色细烟，没有旋涡或其他多余特效。",
+     "brief 要求兜帽推到脑后，图里没有兜帽，属于小偏差，不影响识别。",
+     "她的姿态更像抽搐时张开双臂，不算僵直站立，可以接受。",
+     "两只真手的手指数量正常，没有可读文字或水印，也没有真实宗教符号。"
+    ],
+    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave8/verdicts_01.json"
+   }
+  },
+  {
+   "id": "FL04",
+   "version": "1.2.0",
+   "name": "失恩",
+   "name_en": "Fall from Grace",
+   "aliases": [
+    "Fall from Grace",
+    "背誓",
+    "oathbreaker",
+    "破誓"
+   ],
+   "category": "头衔、关口与失败·失败与堕落",
+   "grade": null,
+   "function": "违背誓言或信仰的人失去圣光或勇武：光会突然熄灭，有时反过来灼伤自己。背誓骑士在西方叙事里是固定的悲剧形象。",
+   "cost_limit": "力量熄灭；被组织除名；有时转向黑暗（成为死亡骑士、背誓者）。",
+   "counter_failure": "赎罪之旅、重新立誓、被更高者宽恕。",
+   "visual_signature": "圣光像熄灭的蜡烛冒出一缕黑烟，盔甲上的圣徽变黑。",
+   "activation": {
+    "trigger": "—",
+    "requirement": "—"
+   },
+   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
+   "relations": [
+    {
+     "target": "CL08",
+     "kind": "职业",
+     "role": "常见对象",
+     "required": false,
+     "note": ""
+    },
+    {
+     "target": "GR03",
+     "kind": "成长",
+     "role": "相关成长",
+     "required": false,
+     "note": ""
+    }
+   ],
+   "backlinks": [
+    {
+     "source": "CL08",
+     "kind": "职业",
+     "role": "风险"
+    },
+    {
+     "source": "CL24",
+     "kind": "职业",
+     "role": "常见来源"
+    },
+    {
+     "source": "GR03",
+     "kind": "成长",
+     "role": "失败"
+    }
+   ],
+   "adoption": "default",
+   "module": null,
+   "basis": "tradition",
+   "xianxia": {
+    "concept": "道心破碎（参照）",
+    "note": "差异：西方的失恩是道德与契约性的——违背的是一句具体的誓言，因此可以通过赎罪任务（quest）重新获得。"
+   },
+   "familiarity": "高",
+   "ip": "generic",
+   "references": [
+    {
+     "work": "D&D",
+     "note": "Oathbreaker 誓约破除者"
+    },
+    {
+     "work": "骑士文学",
+     "note": "背誓与赎罪"
+    }
+   ],
+   "hooks": [],
+   "details": {},
+   "image": {
+    "anchor": "entries/fl04/anchor_v3.png",
+    "prompt": "entries/fl04/prompt_v3.txt",
+    "purpose": "scene",
+    "sha256": "50e2fd6a0907e02d2a57b4d0c56dad3ef43dfe9c85230115be02b4f204ea1c07",
+    "status": "reviewed_with_notes",
+    "actual_dimensions": [
+     1536,
+     1024
+    ],
+    "review_notes": [
+     "画面只有一名骑士，跪地低头，剑在身旁地上，无旗帜、无太阳、无其他人物",
+     "胸甲素面圆形凸饰已发黑锈蚀，周身只剩微弱金色光尘，符合圣光将熄",
+     "缺点：那缕烟从领口和肩后升起，并非从凸饰冒出，颜色偏灰白而不是黑色；若重出，可让黑烟直接从凸饰中心升起",
+     "背景哥特窗的格栅是普通窗棂，虚化处理，不构成十字标志"
+    ],
+    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave7/verdicts_01.json"
+   }
+  },
+  {
    "id": "CL01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "战士",
    "name_en": "Warrior (Man-at-Arms)",
    "aliases": [
@@ -7497,7 +6438,7 @@
   },
   {
    "id": "CL02",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "骑士",
    "name_en": "Knight",
    "aliases": [
@@ -7596,7 +6537,7 @@
   },
   {
    "id": "CL03",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "狂战士",
    "name_en": "Berserker",
    "aliases": [
@@ -7682,7 +6623,7 @@
   },
   {
    "id": "CL04",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "游侠",
    "name_en": "Ranger",
    "aliases": [
@@ -7772,7 +6713,7 @@
   },
   {
    "id": "CL05",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "盗贼",
    "name_en": "Rogue (Thief)",
    "aliases": [
@@ -7851,7 +6792,7 @@
   },
   {
    "id": "CL06",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "刺客",
    "name_en": "Assassin",
    "aliases": [
@@ -7936,7 +6877,7 @@
   },
   {
    "id": "CL07",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "牧师",
    "name_en": "Priest (Cleric)",
    "aliases": [
@@ -8052,7 +6993,7 @@
   },
   {
    "id": "CL08",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "圣武士",
    "name_en": "Paladin",
    "aliases": [
@@ -8160,7 +7101,7 @@
   },
   {
    "id": "CL09",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "审判官",
    "name_en": "Inquisitor (Witch Hunter)",
    "aliases": [
@@ -8275,7 +7216,7 @@
   },
   {
    "id": "CL10",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "法师",
    "name_en": "Wizard (Mage)",
    "aliases": [
@@ -8391,7 +7332,7 @@
   },
   {
    "id": "CL11",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "战斗法师",
    "name_en": "Battlemage (Spellsword)",
    "aliases": [
@@ -8457,7 +7398,7 @@
   },
   {
    "id": "CL17",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "召唤师",
    "name_en": "Summoner (Conjurer)",
    "aliases": [
@@ -8543,7 +7484,7 @@
   },
   {
    "id": "CL18",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "炼金术士",
    "name_en": "Alchemist",
    "aliases": [
@@ -8638,7 +7579,7 @@
   },
   {
    "id": "CL19",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "符文匠",
    "name_en": "Runesmith",
    "aliases": [
@@ -8744,7 +7685,7 @@
   },
   {
    "id": "CL21",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "先知",
    "name_en": "Seer (Oracle)",
    "aliases": [
@@ -8833,7 +7774,7 @@
   },
   {
    "id": "CL22",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "吟游诗人",
    "name_en": "Bard",
    "aliases": [
@@ -8913,7 +7854,7 @@
   },
   {
    "id": "CL12",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "德鲁伊",
    "name_en": "Druid",
    "aliases": [
@@ -9021,7 +7962,7 @@
   },
   {
    "id": "CL13",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "元素术士",
    "name_en": "Elementalist",
    "aliases": [
@@ -9121,7 +8062,7 @@
   },
   {
    "id": "CL14",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "术士",
    "name_en": "Sorcerer",
    "aliases": [
@@ -9211,7 +8152,7 @@
   },
   {
    "id": "CL23",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "猎魔人",
    "name_en": "Monster Hunter",
    "aliases": [
@@ -9315,7 +8256,7 @@
   },
   {
    "id": "CL15",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "死灵法师",
    "name_en": "Necromancer",
    "aliases": [
@@ -9424,7 +8365,7 @@
   },
   {
    "id": "CL16",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "契约师",
    "name_en": "Warlock (Pactbound)",
    "aliases": [
@@ -9519,7 +8460,7 @@
   },
   {
    "id": "CL20",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "女巫",
    "name_en": "Witch",
    "aliases": [
@@ -9644,7 +8585,7 @@
   },
   {
    "id": "CL24",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "死亡骑士",
    "name_en": "Death Knight (Revenant Knight)",
    "aliases": [
@@ -9734,7 +8675,7 @@
   },
   {
    "id": "RC17",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "天使",
    "name_en": "Celestials (Angels)",
    "aliases": [
@@ -9821,8 +8762,7 @@
     "本族等级链": "三阶九级（取自中世纪天使学，本库只借结构）：下阶——使者 Messengers、守护者 Guardians、领域君 Principalities；中阶——权能 Powers、德能 Virtues、主宰 Dominions；上阶——座天使 Thrones、智天使 Cherubim、炽天使 Seraphim",
     "核心规则": "不能撒谎、不能违命；在凡世需借凡人之躯或付出代价；坠落即失去光",
     "弱点": "怀疑、对凡人的爱",
-    "欧美观众热度": "高：堕落天使、天使守护者之恋",
-    "金属成色": "否：被任命"
+    "欧美观众热度": "高：堕落天使、天使守护者之恋"
    },
    "image": {
     "anchor": "entries/rc17/anchor_v1.png",
@@ -9843,7 +8783,7 @@
   },
   {
    "id": "RC12",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "天恩之子",
    "name_en": "The Graced (Angel-born)",
    "aliases": [
@@ -9910,11 +8850,10 @@
    "details": {
     "寿命": "人类两三倍",
     "力量源": "血脉（天界）+ 圣光",
-    "位阶特点": "圣光天赋极高",
+    "觉醒特点": "圣光天赋极高",
     "觉醒标志": "背后浮现光翼的轮廓、瞳孔金化",
     "弱点": "被天界与深渊同时盯上",
-    "欧美观众热度": "高：天使之子与恶魔之子的禁忌之恋",
-    "金属成色": "是：觉醒早"
+    "欧美观众热度": "高：天使之子与恶魔之子的禁忌之恋"
    },
    "image": {
     "anchor": "entries/rc12/anchor_v2.png",
@@ -9936,7 +8875,7 @@
   },
   {
    "id": "RC09",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "妖精",
    "name_en": "The Fae",
    "aliases": [
@@ -10059,8 +8998,7 @@
     "核心规则": "不能说谎；必须履约；冷铁灼伤；真名约束；彼岸时间流速不同",
     "社会结构": "两大宫廷：光辉宫廷 Seelie 与幽暗宫廷 Unseelie",
     "弱点": "冷铁、盐、真名、圣钟声",
-    "欧美观众热度": "高：妖精王子、与妖精的交易、被带走的凡人",
-    "金属成色": "否：以宫廷爵位"
+    "欧美观众热度": "高：妖精王子、与妖精的交易、被带走的凡人"
    },
    "image": {
     "anchor": "entries/rc09/anchor_v1.png",
@@ -10082,7 +9020,7 @@
   },
   {
    "id": "RS04",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "光辉宫廷",
    "name_en": "Seelie Court (Summer Court)",
    "aliases": [
@@ -10142,8 +9080,7 @@
    "details": {
     "君主": "夏之女王",
     "颜色": "金、绿、花色",
-    "对凡人": "以礼相待，以恩相报，也以恩相挟",
-    "金属成色": "否"
+    "对凡人": "以礼相待，以恩相报，也以恩相挟"
    },
    "image": {
     "anchor": "entries/rs04/anchor_v1.png",
@@ -10163,7 +9100,7 @@
   },
   {
    "id": "RS05",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "幽暗宫廷",
    "name_en": "Unseelie Court (Winter Court)",
    "aliases": [
@@ -10223,8 +9160,7 @@
    "details": {
     "君主": "冬之女王",
     "颜色": "黑、霜白、深紫",
-    "对凡人": "以猎物与玩物视之；但交易仍须对等",
-    "金属成色": "否"
+    "对凡人": "以猎物与玩物视之；但交易仍须对等"
    },
    "image": {
     "anchor": "entries/rs05/anchor_v4.png",
@@ -10251,7 +9187,7 @@
   },
   {
    "id": "RC02",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "精灵",
    "name_en": "Elves",
    "aliases": [
@@ -10262,7 +9198,7 @@
    ],
    "category": "种族与各族体系·妖精与长生种",
    "grade": null,
-   "function": "长生、优雅、与星辰或森林相连的古老种族。成长以世纪计，天生亲近奥术与自然，但人口稀少、繁衍极慢，正在缓慢衰退。用金属成色衡量其施法者。",
+   "function": "长生、优雅、与星辰或森林相连的古老种族。成长以世纪计，天生亲近奥术与自然，但人口稀少、繁衍极慢，正在缓慢衰退。族内按年岁论地位，施法者另按职业头衔论强弱。",
    "cost_limit": "见卡片",
    "counter_failure": "见卡片",
    "visual_signature": "尖耳、细长骨架、无瑕的皮肤、长发，服饰为流动的织物与叶脉纹金属。",
@@ -10352,13 +9288,12 @@
     "寿命": "七百年至无尽；不老，但会「褪去」",
     "体型": "高挑纤细，尖耳",
     "力量源": "奥术、自然（按亚种）",
-    "位阶特点": "觉醒率高、升阶极慢；长者多为铁—汞，古老者偶有银",
+    "觉醒特点": "觉醒率高、成长极慢；长者多为怪物至恐怖级，古老者偶达灾厄",
     "本族等级链": "幼芽 Sapling（百岁内，被视为孩子）→ 盛年 Bloom → 长者 Elder → 古老者 Ancient → 褪去 Faded（离开凡世）",
     "社会结构": "长老议会与古老家族；血统与年岁即地位",
     "弱点": "傲慢、繁衍慢、难以适应变化",
     "与他族": "视人类为短命孩童；与矮人有旧怨",
-    "欧美观众热度": "中：精灵王子/公主恋爱",
-    "金属成色": "是：觉醒高、升阶极慢"
+    "欧美观众热度": "中：精灵王子/公主恋爱"
    },
    "image": {
     "anchor": "entries/rc02/anchor_v2.png",
@@ -10381,7 +9316,7 @@
   },
   {
    "id": "RS01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "高等精灵",
    "name_en": "High Elves",
    "aliases": [
@@ -10445,8 +9380,7 @@
     "力量源": "奥术、星辰",
     "社会": "城邦议会与古老家族",
     "典型职业": "法师、先知、吟游诗人",
-    "颜色": "白、银、深蓝",
-    "金属成色": "是"
+    "颜色": "白、银、深蓝"
    },
    "image": {
     "anchor": "entries/rs01/anchor_v2.png",
@@ -10469,7 +9403,7 @@
   },
   {
    "id": "RS02",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "林地精灵",
    "name_en": "Wood Elves",
    "aliases": [
@@ -10534,8 +9468,7 @@
     "力量源": "自然",
     "社会": "部族与林地守护者",
     "典型职业": "游侠、德鲁伊",
-    "颜色": "苔绿、树皮褐、秋叶金",
-    "金属成色": "是"
+    "颜色": "苔绿、树皮褐、秋叶金"
    },
    "image": {
     "anchor": "entries/rs02/anchor_v2.png",
@@ -10557,7 +9490,7 @@
   },
   {
    "id": "RS03",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "影精灵",
    "name_en": "Shadow Elves",
    "aliases": [
@@ -10623,8 +9556,7 @@
     "力量源": "暗影与死亡、幻术",
     "社会": "流亡家族的契约网络，重视秘密",
     "典型职业": "幻术师、先知、死灵法师",
-    "颜色": "暮灰、深紫、银",
-    "金属成色": "是"
+    "颜色": "暮灰、深紫、银"
    },
    "image": {
     "anchor": "entries/rs03/anchor_v2.png",
@@ -10647,7 +9579,7 @@
   },
   {
    "id": "RS10",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "半精灵",
    "name_en": "Half-elves",
    "aliases": [
@@ -10704,7 +9636,6 @@
    "details": {
     "寿命": "约 200 岁",
     "力量源": "奥术或自然（随精灵一方）",
-    "金属成色": "是",
     "社会": "无本族社会，常游走于两族之间"
    },
    "image": {
@@ -10727,7 +9658,7 @@
   },
   {
    "id": "RC01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "人类",
    "name_en": "Humans",
    "aliases": [
@@ -10791,16 +9722,15 @@
    ],
    "hooks": [],
    "details": {
-    "寿命": "60–80 岁（金属位阶可延长）",
+    "寿命": "60–80 岁（生命之酒、契约、神恩可延长）",
     "体型": "中等",
     "力量源": "全部九种皆可，奥术与圣光最普遍",
-    "位阶特点": "觉醒率约一成，升阶最快，上限因人而异",
+    "觉醒特点": "觉醒率约一成，成长最快，上限因人而异",
     "社会结构": "王国—贵族家族—教会—行会—平民",
     "典型职业": "全部",
     "弱点": "寿命短、内斗、易被腐化",
     "与他族": "与精灵互相轻视又依赖；与矮人贸易；与兽人世仇或同盟视剧而定",
-    "欧美观众热度": "主角默认种族；常为「被隐藏的混血」",
-    "金属成色": "是：觉醒约一成，升阶最快"
+    "欧美观众热度": "主角默认种族；常为「被隐藏的混血」"
    },
    "image": {
     "anchor": "entries/rc01/anchor_v2.png",
@@ -10822,7 +9752,7 @@
   },
   {
    "id": "RC19",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "半身人",
    "name_en": "Halflings",
    "aliases": [
@@ -10875,9 +9805,9 @@
     "寿命": "约 120 岁",
     "体型": "约 1 米",
     "力量源": "勇武（运气与韧性）、少量自然",
-    "金属成色": "是：觉醒率低",
     "本族等级链": "家族长老会；最受尊敬的是家族长母或长父",
-    "社会结构": "河谷村镇与河船家族"
+    "社会结构": "河谷村镇与河船家族",
+    "觉醒特点": "觉醒率低"
    },
    "image": {
     "anchor": "entries/rc19/anchor_v3.png",
@@ -10902,7 +9832,7 @@
   },
   {
    "id": "RC03",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "矮人",
    "name_en": "Dwarves",
    "aliases": [
@@ -10972,13 +9902,12 @@
     "寿命": "250–400 岁",
     "体型": "矮壮，约 1.3 米，骨密度极高",
     "力量源": "符文与工艺、勇武；天生抗魔",
-    "位阶特点": "极少觉醒奥术，勇武与符文成就高",
+    "觉醒特点": "极少觉醒奥术，勇武与符文成就高",
     "本族等级链": "族人 → 匠人（出师）→ 领主 Thane → 族长 Clan Lord → 山王 High King；手艺大师与族长同尊",
     "社会结构": "氏族与山城，祖先祭祀，誓言石",
     "弱点": "固执、记仇、不善水与航海",
     "与他族": "与人类贸易；与精灵旧怨；与哥布林争夺地下",
-    "欧美观众热度": "低：多为配角",
-    "金属成色": "是：极少奥术"
+    "欧美观众热度": "低：多为配角"
    },
    "image": {
     "anchor": "entries/rc03/anchor_v1.png",
@@ -10999,7 +9928,7 @@
   },
   {
    "id": "RC06",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "兽人",
    "name_en": "Orcs",
    "aliases": [
@@ -11073,8 +10002,7 @@
     "本族等级链": "幼崽 Whelp → 见血者 Blooded（首次战斗后）→ 誓士 Sworn（在誓环上立誓入战帮）→ 勇士 Champion → 战王 War-King；挑战与推举均可继位",
     "社会结构": "氏族与战帮，长屋议事，血金习惯法",
     "弱点": "部落间内斗，被他族歧视",
-    "欧美观众热度": "中：兽人酋长与人类公主的恋爱（女性向）",
-    "金属成色": "是"
+    "欧美观众热度": "中：兽人酋长与人类公主的恋爱（女性向）"
    },
    "image": {
     "anchor": "entries/rc06/anchor_v1.png",
@@ -11097,7 +10025,7 @@
   },
   {
    "id": "RC04",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "巨人",
    "name_en": "Giants",
    "aliases": [
@@ -11152,8 +10080,7 @@
     "本族等级链": "按体型与年岁：年少者 → 酋长 → 巨王；王位以力量决斗决定",
     "分支": "霜巨人（北境）、火巨人（火山）、石巨人（山脉）、风暴巨人（海崖）",
     "弱点": "迟缓、人口稀少、怕被诡计戏耍（民间故事中常被聪明的凡人骗倒）",
-    "欧美观众热度": "低",
-    "金属成色": "否：以年岁与体型"
+    "欧美观众热度": "低"
    },
    "image": {
     "anchor": "entries/rc04/anchor_v4.png",
@@ -11178,7 +10105,7 @@
   },
   {
    "id": "RC07",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "巨魔",
    "name_en": "Trolls",
    "aliases": [
@@ -11219,8 +10146,7 @@
     "力量源": "血脉（再生）",
     "本族等级链": "按年岁：年幼 → 成年 → 山王；年老的巨魔皮肤长苔藓、几乎与山石无异",
     "弱点": "阳光（石化）、火（阻止再生）",
-    "欧美观众热度": "低",
-    "金属成色": "否"
+    "欧美观众热度": "低"
    },
    "image": {
     "anchor": "entries/rc07/anchor_v3.png",
@@ -11244,7 +10170,7 @@
   },
   {
    "id": "RC05",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "哥布林",
    "name_en": "Goblins",
    "aliases": [
@@ -11306,8 +10232,7 @@
     "力量源": "幻魅与小巫术",
     "本族等级链": "无固定等级，以帮伙为单位，最狡猾者为头",
     "核心规则": "被款待则帮忙，被冒犯则捣乱；怕冷铁与教堂钟声",
-    "欧美观众热度": "低：喜剧配角",
-    "金属成色": "否"
+    "欧美观众热度": "低：喜剧配角"
    },
    "image": {
     "anchor": "entries/rc05/anchor_v1.png",
@@ -11328,7 +10253,7 @@
   },
   {
    "id": "RC08",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "人鱼",
    "name_en": "Merfolk",
    "aliases": [
@@ -11393,8 +10318,7 @@
     "本族等级链": "歌者 → 潮汐祭司 → 海王/海后；地位由歌声的力量决定",
     "社会结构": "珊瑚城邦与海底王庭",
     "弱点": "离水虚弱、怕干旱与火",
-    "欧美观众热度": "高：人鱼与人类的恋爱（上岸的代价）",
-    "金属成色": "是（施法者）"
+    "欧美观众热度": "高：人鱼与人类的恋爱（上岸的代价）"
    },
    "image": {
     "anchor": "entries/rc08/anchor_v1.png",
@@ -11414,7 +10338,7 @@
   },
   {
    "id": "RS06",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "海豹人",
    "name_en": "Selkies",
    "aliases": [
@@ -11476,8 +10400,7 @@
     "寿命": "人类数倍",
     "力量源": "血脉（变形）",
     "核心禁忌": "海豹皮被夺即被困陆地",
-    "欧美观众热度": "中：被困的妻子、找回海豹皮的那一刻",
-    "金属成色": "否"
+    "欧美观众热度": "中：被困的妻子、找回海豹皮的那一刻"
    },
    "image": {
     "anchor": "entries/rs06/anchor_v1.png",
@@ -11497,7 +10420,7 @@
   },
   {
    "id": "RC20",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "半人马",
    "name_en": "Centaurs",
    "aliases": [
@@ -11544,7 +10467,6 @@
     "寿命": "约 150 岁",
     "体型": "马身，站立时头部约 2.5 米",
     "力量源": "自然、星辰（预言）",
-    "金属成色": "是",
     "本族等级链": "群落按年岁与学识：年轻射手 → 长者 → 观星者",
     "社会结构": "游牧群落"
    },
@@ -11570,7 +10492,7 @@
   },
   {
    "id": "RC13",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "狼人",
    "name_en": "Werewolves (Lycans)",
    "aliases": [
@@ -11671,8 +10593,7 @@
     "弱点": "银、狼毒草、新月",
     "社会结构": "狼群 pack，以领地划分",
     "欧美观众热度": "极高：女性向头号题材",
-    "时代变体": "现代都市狼人题材可把服装与组织改为当代，规则不变",
-    "金属成色": "否：以狼群地位与血统"
+    "时代变体": "现代都市狼人题材可把服装与组织改为当代，规则不变"
    },
    "image": {
     "anchor": "entries/rc13/anchor_v2.png",
@@ -11695,7 +10616,7 @@
   },
   {
    "id": "RC15",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "吸血鬼",
    "name_en": "Vampires",
    "aliases": [
@@ -11806,8 +10727,7 @@
     "核心规则": "未经邀请不能进入住宅；阳光灼烧；木桩穿心与斩首可杀；圣物与银令其痛苦；转化凡人需互饮血并「死去一次」",
     "社会结构": "血统家族与血族议会，长老统治",
     "弱点": "阳光、圣物、木桩、火、流水（部分血统）",
-    "欧美观众热度": "极高：吸血鬼王与人类新娘",
-    "金属成色": "否：以血龄与血统"
+    "欧美观众热度": "极高：吸血鬼王与人类新娘"
    },
    "image": {
     "anchor": "entries/rc15/anchor_v1.png",
@@ -11828,7 +10748,7 @@
   },
   {
    "id": "RS09",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "半吸血鬼",
    "name_en": "Dhampirs",
    "aliases": [
@@ -11897,8 +10817,7 @@
     "力量源": "血脉",
     "能力": "看见隐形之物、感知吸血鬼、超常感官",
     "代价": "对血的渴望；两边都不接纳",
-    "欧美观众热度": "中",
-    "金属成色": "是"
+    "欧美观众热度": "中"
    },
    "image": {
     "anchor": "entries/rs09/anchor_v3.png",
@@ -11920,7 +10839,7 @@
   },
   {
    "id": "RC18",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "魔裔",
    "name_en": "Cambions (Half-Demons)",
    "aliases": [
@@ -11998,11 +10917,10 @@
    "details": {
     "寿命": "人类两倍",
     "力量源": "血脉（深渊）",
-    "位阶特点": "觉醒早、易腐化",
+    "觉醒特点": "觉醒早、易腐化",
     "社会": "无本族社会，散居于人类之中，常隐藏身份",
     "弱点": "圣物、恶魔真名对其同样有效",
-    "欧美观众热度": "高：隐藏的恶魔之子",
-    "金属成色": "是：觉醒早"
+    "欧美观众热度": "高：隐藏的恶魔之子"
    },
    "image": {
     "anchor": "entries/rc18/anchor_v2.png",
@@ -12024,7 +10942,7 @@
   },
   {
    "id": "RC14",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "亡灵",
    "name_en": "The Undead",
    "aliases": [
@@ -12171,7 +11089,7 @@
     "亡魂分支": "幽魂 Ghost、报丧女妖 Banshee（见生物）",
     "弱点": "圣光、圣水、盐、完成执念、毁掉护命匣",
     "欧美观众热度": "中：鬼魂恋人、复仇归来者",
-    "金属成色": "巫妖保留生前成色，其余否"
+    "巫妖": "保留生前的法术造诣，常为恐怖级以上"
    },
    "image": {
     "anchor": "entries/rc14/anchor_v2.png",
@@ -12193,7 +11111,7 @@
   },
   {
    "id": "RC16",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "恶魔",
    "name_en": "Demons (Fiends)",
    "aliases": [
@@ -12346,8 +11264,7 @@
     "成长方式": "收集灵魂与契约、吞噬同类",
     "核心规则": "真名约束；必须履行契约字面；不能主动进入无邀请的圣地；在凡世需宿主或召唤阵",
     "弱点": "圣光、圣物、真名、契约漏洞",
-    "欧美观众热度": "高：恶魔契约之恋、恶魔王子",
-    "金属成色": "否：以爵位"
+    "欧美观众热度": "高：恶魔契约之恋、恶魔王子"
    },
    "image": {
     "anchor": "entries/rc16/anchor_v1.png",
@@ -12368,7 +11285,7 @@
   },
   {
    "id": "RS07",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "堕落天使",
    "name_en": "Fallen Angels",
    "aliases": [
@@ -12424,8 +11341,7 @@
     "失去": "圣光、天界之门、部分记忆",
     "在恶魔爵位中": "多为公爵以上",
     "核心规则": "可以说谎（这是堕落的标志）；被原谅或赎罪可重返（默认极难）",
-    "欧美观众热度": "高：堕落天使之恋",
-    "金属成色": "否：保留天使位格"
+    "欧美观众热度": "高：堕落天使之恋"
    },
    "image": {
     "anchor": "entries/rs07/anchor_v1.png",
@@ -12447,7 +11363,7 @@
   },
   {
    "id": "RS08",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "梦魔",
    "name_en": "Incubi & Succubi",
    "aliases": [
@@ -12521,8 +11437,7 @@
     "进食方式": "在梦中汲取生命力与欲念，受害者日渐憔悴",
     "核心规则": "被叫出真名即受约束；无法进入有护梦符或圣物守护的卧室；真心的爱会灼伤它们（默认）",
     "在恶魔爵位中": "多为次级至高阶恶魔",
-    "欧美观众热度": "高",
-    "金属成色": "否"
+    "欧美观众热度": "高"
    },
    "image": {
     "anchor": "entries/rs08/anchor_v2.png",
@@ -12545,7 +11460,7 @@
   },
   {
    "id": "RC10",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "龙",
    "name_en": "Dragons",
    "aliases": [
@@ -12633,8 +11548,7 @@
     "分支": "按元素：火、霜、风暴、毒（沼泽）、岩",
     "核心规则": "龙语（言出即法）、宝藏执念、龙血能赋予凡人力量",
     "弱点": "腹下软鳞、贪婪、被诡计欺骗",
-    "欧美观众热度": "中：龙骑士、化人形的龙王",
-    "金属成色": "否：以年岁与宝藏"
+    "欧美观众热度": "中：龙骑士、化人形的龙王"
    },
    "image": {
     "anchor": "entries/rc10/anchor_v3.png",
@@ -12657,7 +11571,7 @@
   },
   {
    "id": "RC11",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "元素生灵",
    "name_en": "Elementals",
    "aliases": [
@@ -12729,8 +11643,7 @@
     "本族等级链": "灵火/微灵 Wisp → 元素灵 Elemental → 大元素灵 Greater Elemental → 元素领主 Elemental Lord",
     "核心规则": "需现场有对应元素；契约以「供奉」维持",
     "弱点": "相克元素",
-    "欧美观众热度": "低",
-    "金属成色": "否"
+    "欧美观众热度": "低"
    },
    "image": {
     "anchor": "entries/rc11/anchor_v1.png",
@@ -12752,7 +11665,7 @@
   },
   {
    "id": "GF01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "天赋之火",
    "name_en": "The Gift (Spark)",
    "aliases": [
@@ -12764,10 +11677,10 @@
    ],
    "category": "天赋与成长·天赋与气质",
    "grade": null,
-   "function": "先天力量的强弱：无火 Giftless（终生难以觉醒）→ 微火 Ember → 明火 Flame → 烈火 Blaze → 天火 Wildfire（百年一遇，觉醒即暴走）。决定升阶速度与上限，不决定当前位阶。",
+   "function": "先天力量的强弱：无火 Giftless（终生难以觉醒）→ 微火 Ember → 明火 Flame → 烈火 Blaze → 天火 Wildfire（百年一遇，觉醒即暴走）。决定觉醒的难易、成长速度与能走多远，不决定当前强弱。",
    "cost_limit": "见卡片",
    "counter_failure": "见卡片",
-   "visual_signature": "试金石上划出的痕迹亮度（见试金石 IT22）。",
+   "visual_signature": "像灯火的强弱：从熄灭的冷灯到烧裂灯罩的白焰。天赋多是危机中自己显露的，不靠仪器测。",
    "activation": {
     "trigger": "—",
     "requirement": "—"
@@ -12775,25 +11688,25 @@
    "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
    "relations": [
     {
-     "target": "IT22",
-     "kind": "道具",
-     "role": "检测工具",
+     "target": "GF02",
+     "kind": "天赋",
+     "role": "另一轴",
      "required": false,
      "note": ""
     },
     {
-     "target": "GF02",
-     "kind": "天赋",
-     "role": "另一轴",
+     "target": "EV01",
+     "kind": "事件",
+     "role": "决定觉醒难易",
      "required": false,
      "note": ""
     }
    ],
    "backlinks": [
     {
-     "source": "IT22",
-     "kind": "道具",
-     "role": "检测对象"
+     "source": "EV01",
+     "kind": "事件",
+     "role": "天赋决定难易"
     }
    ],
    "adoption": "default",
@@ -12818,9 +11731,9 @@
    "hooks": [],
    "details": {
     "Giftless 无火": "约九成人；勇武与工艺路线仍可走",
-    "Ember 微火": "可到锡至铜阶",
-    "Flame 明火": "可到铁至汞阶",
-    "Blaze 烈火": "可到银阶以上",
+    "Ember 微火": "能觉醒、学会小法术；多止于熟手、神父一级",
+    "Flame 明火": "可成为法师、大师、旗骑士一级的强者",
+    "Blaze 烈火": "大法师、王之斗士之才，可达恐怖级",
     "Wildfire 天火": "上限未知，失控风险极高"
    },
    "image": {
@@ -12843,7 +11756,7 @@
   },
   {
    "id": "GF02",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "四种气质",
    "name_en": "The Four Temperaments",
    "aliases": [
@@ -12923,7 +11836,7 @@
   },
   {
    "id": "GF03",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "第七子之七子",
    "name_en": "Seventh Son of a Seventh Son",
    "aliases": [
@@ -13002,7 +11915,7 @@
   },
   {
    "id": "GF04",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "胎膜之子",
    "name_en": "Caul-born",
    "aliases": [
@@ -13088,7 +12001,7 @@
   },
   {
    "id": "GF05",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "女巫印记",
    "name_en": "Witch's Mark",
    "aliases": [
@@ -13164,7 +12077,7 @@
   },
   {
    "id": "GF06",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "光痕",
    "name_en": "Lightbrand",
    "aliases": [
@@ -13239,7 +12152,7 @@
   },
   {
    "id": "GF07",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "换生儿",
    "name_en": "Changeling",
    "aliases": [
@@ -13315,7 +12228,7 @@
   },
   {
    "id": "GF08",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "冷铁之魂",
    "name_en": "Null (Ironsoul)",
    "aliases": [
@@ -13382,7 +12295,7 @@
    "details": {
     "效果": "抗魔、触碰可驱散法术与幻象",
     "代价": "无法被治疗魔法救治、无法使用魔法物品",
-    "位阶": "不在金属位阶内；以勇武路线成长"
+    "成长": "不会觉醒；只凭武艺熟练度成长"
    },
    "image": {
     "anchor": "entries/gf08/anchor_v3.png",
@@ -13404,7 +12317,7 @@
   },
   {
    "id": "GF09",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "预言之子",
    "name_en": "Prophecy-marked",
    "aliases": [
@@ -13473,7 +12386,7 @@
   },
   {
    "id": "GR01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "拜师学艺",
    "name_en": "Apprenticeship",
    "aliases": [
@@ -13547,7 +12460,7 @@
   },
   {
    "id": "GR02",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "学院与考核",
    "name_en": "Academy & Examinations",
    "aliases": [
@@ -13626,7 +12539,7 @@
   },
   {
    "id": "GR03",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "誓言",
    "name_en": "Oath & Vow",
    "aliases": [
@@ -13726,7 +12639,7 @@
   },
   {
    "id": "GR12",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "禁誓",
    "name_en": "Geas",
    "aliases": [
@@ -13799,7 +12712,7 @@
   },
   {
    "id": "GR04",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "血脉觉醒",
    "name_en": "Bloodline Awakening",
    "aliases": [
@@ -13832,6 +12745,11 @@
      "source": "PS07",
      "kind": "力量源",
      "role": "觉醒方式"
+    },
+    {
+     "source": "EV01",
+     "kind": "事件",
+     "role": "血脉者的觉醒"
     },
     {
      "source": "CL14",
@@ -13881,7 +12799,7 @@
   },
   {
    "id": "GR05",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "缔约",
    "name_en": "Pact",
    "aliases": [
@@ -13955,7 +12873,7 @@
   },
   {
    "id": "GR06",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "灵魂缔结",
    "name_en": "Soulbond",
    "aliases": [
@@ -13966,7 +12884,7 @@
    ],
    "category": "天赋与成长·成长途径",
    "grade": null,
-   "function": "铜阶起可把灵魂与他者相连：使魔、战马、龙、命定伴侣。双方共享感知与力量，一方受伤另一方同痛。",
+   "function": "觉醒者可把灵魂与他者相连：使魔、战马、龙、命定伴侣（狼人的伴侣羁绊是天生的）。双方共享感知与力量，一方受伤另一方同痛。",
    "cost_limit": "缔结对象死去会重创另一方；不能随意解除。",
    "counter_failure": "见卡片",
    "visual_signature": "两者之间一缕同色的光线；同时眨眼、同时皱眉。",
@@ -13977,30 +12895,30 @@
    "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
    "relations": [
     {
-     "target": "TR03",
-     "kind": "位阶",
-     "role": "解锁位阶",
+     "target": "BS15",
+     "kind": "生物",
+     "role": "对象",
      "required": false,
      "note": ""
     },
     {
-     "target": "BS15",
-     "kind": "生物",
-     "role": "对象",
+     "target": "EV01",
+     "kind": "事件",
+     "role": "前提",
      "required": false,
      "note": ""
     }
    ],
    "backlinks": [
     {
-     "source": "TR03",
-     "kind": "位阶",
-     "role": "本阶解锁"
-    },
-    {
      "source": "CL04",
      "kind": "职业",
      "role": "成长方式"
+    },
+    {
+     "source": "IR01",
+     "kind": "道具",
+     "role": "认主方式"
     },
     {
      "source": "BS04",
@@ -14054,7 +12972,7 @@
   },
   {
    "id": "GR07",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "功业与名声",
    "name_en": "Deeds & Renown",
    "aliases": [
@@ -14090,7 +13008,13 @@
      "note": ""
     }
    ],
-   "backlinks": [],
+   "backlinks": [
+    {
+     "source": "EV04",
+     "kind": "事件",
+     "role": "前提"
+    }
+   ],
    "adoption": "default",
    "module": null,
    "basis": "tradition",
@@ -14134,7 +13058,7 @@
   },
   {
    "id": "GR08",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "圣物传承",
    "name_en": "Relic Inheritance",
    "aliases": [
@@ -14207,7 +13131,7 @@
   },
   {
    "id": "GR09",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "炼金蜕变",
    "name_en": "Alchemical Transformation",
    "aliases": [
@@ -14293,7 +13217,7 @@
   },
   {
    "id": "GR10",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "吞噬",
    "name_en": "Devouring",
    "aliases": [
@@ -14380,7 +13304,7 @@
   },
   {
    "id": "GR11",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "神恩",
    "name_en": "Grace (Divine Favor)",
    "aliases": [
@@ -14448,7 +13372,7 @@
   },
   {
    "id": "IR01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "器物等第",
    "name_en": "Provenance Grades",
    "aliases": [
@@ -14470,9 +13394,9 @@
    "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
    "relations": [
     {
-     "target": "TR01",
-     "kind": "位阶",
-     "role": "驱动位阶参照",
+     "target": "GR06",
+     "kind": "成长",
+     "role": "认主方式",
      "required": false,
      "note": ""
     }
@@ -14501,8 +13425,8 @@
    "details": {
     "Common 凡品": "凡人可用",
     "Masterwork 名匠之作": "名匠作品，可有小附魔",
-    "Enchanted 附魔器": "需锡阶以上驱动",
-    "Named 有名之器": "有名字、有传说，需认主（铜阶起）",
+    "Enchanted 附魔器": "需觉醒者驱动",
+    "Named 有名之器": "有名字、有传说，需认主（灵魂缔结）",
     "Hallowed 圣物": "圣人或英雄遗留，有意志",
     "God-wrought 神造之器": "无法再造，会挑选主人",
     "道具组参考色": "白 / 绿 / 蓝 / 紫 / 橙 / 红金——仅供道具与特效组内部区分，不上屏、不进字幕"
@@ -14527,7 +13451,7 @@
   },
   {
    "id": "CF01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "炼金",
    "name_en": "Alchemy",
    "aliases": [
@@ -14565,6 +13489,11 @@
      "source": "IT01",
      "kind": "道具",
      "role": "制作"
+    },
+    {
+     "source": "IT21",
+     "kind": "道具",
+     "role": "炼成工艺"
     },
     {
      "source": "MT09",
@@ -14611,7 +13540,7 @@
   },
   {
    "id": "CF02",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "附魔与符文锻造",
    "name_en": "Enchanting & Runeforging",
    "aliases": [
@@ -14703,7 +13632,7 @@
   },
   {
    "id": "CF03",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "法阵与结界术",
    "name_en": "Circles & Wards",
    "aliases": [
@@ -14790,7 +13719,7 @@
   },
   {
    "id": "CF04",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "抄写术",
    "name_en": "Scribing",
    "aliases": [
@@ -14867,7 +13796,7 @@
   },
   {
    "id": "IT01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "治疗药剂",
    "name_en": "Healing Potion",
    "aliases": [
@@ -14942,7 +13871,7 @@
   },
   {
    "id": "IT02",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "魔力药剂",
    "name_en": "Mana Draught",
    "aliases": [
@@ -15013,7 +13942,7 @@
   },
   {
    "id": "IT03",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "万灵药",
    "name_en": "Panacea",
    "aliases": [
@@ -15093,7 +14022,7 @@
   },
   {
    "id": "IT04",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "生命之酒",
    "name_en": "Elixir of Life",
    "aliases": [
@@ -15176,7 +14105,7 @@
   },
   {
    "id": "IT05",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "爱情魔药",
    "name_en": "Love Philter",
    "aliases": [
@@ -15246,7 +14175,7 @@
   },
   {
    "id": "IT06",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "勇气药剂",
    "name_en": "Draught of Valor",
    "aliases": [
@@ -15317,7 +14246,7 @@
   },
   {
    "id": "IT07",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "毒药与药毒",
    "name_en": "Poisons & Potion Toxicity",
    "aliases": [
@@ -15390,7 +14319,7 @@
    ],
    "hooks": [],
    "details": {
-    "药毒上限": "凡人约两瓶；铁阶约五瓶；猎魔人经异变后更高",
+    "药毒上限": "凡人约两瓶；久经锤炼的骑士或大师级法师约五瓶；猎魔人经异变后更高",
     "假死药": "让人看似死去一到三日"
    },
    "image": {
@@ -15413,7 +14342,7 @@
   },
   {
    "id": "IT08",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "契约书",
    "name_en": "Infernal Contract",
    "aliases": [
@@ -15494,7 +14423,7 @@
   },
   {
    "id": "IT09",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "咒偶与巫瓶",
    "name_en": "Hex Doll & Witch Bottle",
    "aliases": [
@@ -15565,7 +14494,7 @@
   },
   {
    "id": "IT10",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "符文石",
    "name_en": "Runestone",
    "aliases": [
@@ -15643,7 +14572,7 @@
   },
   {
    "id": "IT11",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "法术卷轴",
    "name_en": "Spell Scroll",
    "aliases": [
@@ -15652,7 +14581,7 @@
    ],
    "category": "道具与资源·卷轴、符文与护符",
    "grade": null,
-   "function": "写着完整法术的羊皮纸卷：展开并念出即可施放一次，施放后字迹燃尽。可用于施放超出自身位阶的法术，但有失败风险。",
+   "function": "写着完整法术的羊皮纸卷：展开并念出即可施放一次，施放后字迹燃尽。可用于施放超出自身能力的法术，但有失败风险。",
    "cost_limit": "一次性；越阶使用可能失败爆炸。",
    "counter_failure": "见卡片",
    "visual_signature": "带丝带和蜡封的羊皮卷，展开时字迹发光，用后化为灰烬。",
@@ -15717,7 +14646,7 @@
   },
   {
    "id": "IT12",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "护身符",
    "name_en": "Amulet & Talisman",
    "aliases": [
@@ -15782,7 +14711,7 @@
   },
   {
    "id": "IT13",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "护界石",
    "name_en": "Ward Stone",
    "aliases": [
@@ -15860,7 +14789,7 @@
   },
   {
    "id": "IT14",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "魔杖",
    "name_en": "Wand",
    "aliases": [
@@ -15926,7 +14855,7 @@
   },
   {
    "id": "IT15",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "法杖",
    "name_en": "Staff",
    "aliases": [
@@ -16005,7 +14934,7 @@
   },
   {
    "id": "IT16",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "魔法书",
    "name_en": "Grimoire",
    "aliases": [
@@ -16084,7 +15013,7 @@
   },
   {
    "id": "IT17",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "圣徽与圣物匣",
    "name_en": "Holy Symbol & Reliquary",
    "aliases": [
@@ -16157,7 +15086,7 @@
   },
   {
    "id": "IT18",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "圣髑",
    "name_en": "Holy Relic",
    "aliases": [
@@ -16260,7 +15189,7 @@
   },
   {
    "id": "IT19",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "认主之剑",
    "name_en": "The Chosen Sword",
    "aliases": [
@@ -16331,7 +15260,7 @@
   },
   {
    "id": "IT20",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "护命匣",
    "name_en": "Phylactery (Soul Vessel)",
    "aliases": [
@@ -16423,7 +15352,7 @@
   },
   {
    "id": "IT21",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "贤者之石",
    "name_en": "Philosopher's Stone",
    "aliases": [
@@ -16433,7 +15362,7 @@
    ],
    "category": "道具与资源·圣物与神器",
    "grade": null,
-   "function": "炼金术的终极成果：能点铅成金、炼成生命之酒。在本库中，它也是灵魂炼成神话阶的物质形态——半神死后可能留下一块。",
+   "function": "炼金术的终极成果：能点铅成金、炼成生命之酒。传说半神死后可能留下一块（封神之试 EV04，可选）。",
    "cost_limit": "炼成需要传说级原料，传说常需人命。",
    "counter_failure": "见卡片",
    "visual_signature": "鸽蛋大小的深红半透明宝石，内部似有流动的光。",
@@ -16444,25 +15373,32 @@
    "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
    "relations": [
     {
-     "target": "TR08",
-     "kind": "位阶",
-     "role": "同源位阶",
+     "target": "IT04",
+     "kind": "道具",
+     "role": "用途",
      "required": false,
      "note": ""
     },
     {
-     "target": "IT04",
-     "kind": "道具",
-     "role": "用途",
+     "target": "CF01",
+     "kind": "工艺",
+     "role": "炼成工艺",
+     "required": false,
+     "note": ""
+    },
+    {
+     "target": "EV04",
+     "kind": "事件",
+     "role": "传说来源",
      "required": false,
      "note": ""
     }
    ],
    "backlinks": [
     {
-     "source": "TR08",
-     "kind": "位阶",
-     "role": "同源物品"
+     "source": "EV04",
+     "kind": "事件",
+     "role": "传说中的遗留"
     },
     {
      "source": "CL18",
@@ -16515,93 +15451,8 @@
    }
   },
   {
-   "id": "IT22",
-   "version": "1.1.0",
-   "name": "试金石",
-   "name_en": "Touchstone (Soul Assay)",
-   "aliases": [
-    "Touchstone (Soul Assay)",
-    "touchstone",
-    "assay",
-    "测灵石"
-   ],
-   "category": "道具与资源·圣物与神器",
-   "grade": null,
-   "function": "测量灵魂成色与天赋的黑色石板：滴一滴血在上面划过，痕迹的金属光泽显示成色、亮度显示天赋。源自真实的金匠验金法。多数人的天赋是自己显露的，验石只用于确认，常见于学院招生、教会封圣调查与审判。",
-   "cost_limit": "见卡片",
-   "counter_failure": "见卡片",
-   "visual_signature": "掌心大小的黑色玄武岩板，血痕划过后显出金属光泽的线条。",
-   "activation": {
-    "trigger": "—",
-    "requirement": "—"
-   },
-   "parameters": "文中出现的数值都是默认值，采用剧可在自己的采用文件里改。",
-   "relations": [
-    {
-     "target": "GF01",
-     "kind": "天赋",
-     "role": "检测对象",
-     "required": false,
-     "note": ""
-    },
-    {
-     "target": "EV01",
-     "kind": "事件",
-     "role": "相关事件",
-     "required": false,
-     "note": ""
-    }
-   ],
-   "backlinks": [
-    {
-     "source": "EV01",
-     "kind": "事件",
-     "role": "检测工具"
-    },
-    {
-     "source": "GF01",
-     "kind": "天赋",
-     "role": "检测工具"
-    }
-   ],
-   "adoption": "default",
-   "module": null,
-   "basis": "tradition",
-   "xianxia": {
-    "concept": "测灵石（参照）",
-    "note": "差异：不是入门标配；欧洲叙事里天赋多是自己显露，或被器物选中。"
-   },
-   "familiarity": "中",
-   "ip": "public_domain",
-   "references": [
-    {
-     "work": "古代至中世纪金匠",
-     "note": "touchstone 试金石验金"
-    }
-   ],
-   "hooks": [],
-   "details": {},
-   "image": {
-    "anchor": "entries/it22/anchor_v2.png",
-    "prompt": "entries/it22/prompt_v2.txt",
-    "purpose": "item",
-    "sha256": "0b55809afcd6ef7be2b209a0525f124ca51b108d365005f286b32abac042af3a",
-    "status": "reviewed_with_notes",
-    "actual_dimensions": [
-     1536,
-     1024
-    ],
-    "review_notes": [
-     "黑色玄武岩板放在木座上，七道条痕从左到右依次为铅灰、锡白、铜粉、铁暗、液态水银、亮银、金，顺序正确",
-     "最后一道旁边的血滴光滑饱满，更像红宝石，建议后续做成略扁平、湿润的血滴",
-     "水银条做成凸起的液体，与其他擦痕质感不一，可接受"
-    ],
-    "review_evidence": ".audit/adhoc_agents/2026-11-08/xihuan-research-20261108-125135/spawns/img_wave6/verdicts_02.json"
-   }
-  },
-  {
    "id": "IT23",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "无底行囊",
    "name_en": "Bottomless Bag",
    "aliases": [
@@ -16669,7 +15520,7 @@
   },
   {
    "id": "IT24",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "真视之镜",
    "name_en": "Mirror of True Sight",
    "aliases": [
@@ -16744,7 +15595,7 @@
   },
   {
    "id": "IT25",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "圣杯",
    "name_en": "The Grail",
    "aliases": [
@@ -16813,7 +15664,7 @@
   },
   {
    "id": "IT26",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "诅咒指环",
    "name_en": "The Cursed Ring",
    "aliases": [
@@ -16879,7 +15730,7 @@
   },
   {
    "id": "IT27",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "七里靴",
    "name_en": "Seven-League Boots",
    "aliases": [
@@ -16942,7 +15793,7 @@
   },
   {
    "id": "IT28",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "隐身斗篷",
    "name_en": "Cloak of Invisibility",
    "aliases": [
@@ -17007,7 +15858,7 @@
   },
   {
    "id": "IT29",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "王权器物",
    "name_en": "Regalia",
    "aliases": [
@@ -17073,7 +15924,7 @@
   },
   {
    "id": "IT30",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "女巫器具",
    "name_en": "Witch's Tools",
    "aliases": [
@@ -17138,7 +15989,7 @@
   },
   {
    "id": "MT01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "以太晶",
    "name_en": "Aether Crystal",
    "aliases": [
@@ -17216,7 +16067,7 @@
   },
   {
    "id": "MT02",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "银",
    "name_en": "Silver",
    "aliases": [
@@ -17312,7 +16163,7 @@
   },
   {
    "id": "MT03",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "冷铁",
    "name_en": "Cold Iron",
    "aliases": [
@@ -17424,7 +16275,7 @@
   },
   {
    "id": "MT04",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "山铜",
    "name_en": "Orichalcum",
    "aliases": [
@@ -17488,7 +16339,7 @@
   },
   {
    "id": "MT05",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "精金",
    "name_en": "Adamant",
    "aliases": [
@@ -17553,7 +16404,7 @@
   },
   {
    "id": "MT06",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "龙之遗材",
    "name_en": "Dragon Materials",
    "aliases": [
@@ -17640,7 +16491,7 @@
   },
   {
    "id": "MT07",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "凤凰羽",
    "name_en": "Phoenix Feather",
    "aliases": [
@@ -17710,7 +16561,7 @@
   },
   {
    "id": "MT08",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "独角兽角",
    "name_en": "Unicorn Horn (Alicorn)",
    "aliases": [
@@ -17792,7 +16643,7 @@
   },
   {
    "id": "MT09",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "曼德拉草",
    "name_en": "Mandrake",
    "aliases": [
@@ -17856,7 +16707,7 @@
   },
   {
    "id": "MT10",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "狼毒草",
    "name_en": "Wolfsbane",
    "aliases": [
@@ -17926,7 +16777,7 @@
   },
   {
    "id": "MT11",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "圣水与盐",
    "name_en": "Holy Water & Salt",
    "aliases": [
@@ -18019,7 +16870,7 @@
   },
   {
    "id": "MT12",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "兽石",
    "name_en": "Bezoar & Beast-stones",
    "aliases": [
@@ -18101,7 +16952,7 @@
   },
   {
    "id": "OR01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "法师学院",
    "name_en": "Arcane Academy",
    "aliases": [
@@ -18199,7 +17050,7 @@
   },
   {
    "id": "OR02",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "圣光教会",
    "name_en": "Church of the Light",
    "aliases": [
@@ -18304,7 +17155,7 @@
   },
   {
    "id": "OR03",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "骑士团",
    "name_en": "Knightly Order",
    "aliases": [
@@ -18397,7 +17248,7 @@
   },
   {
    "id": "OR04",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "异端裁判所",
    "name_en": "The Inquisition (Order of the Hunt)",
    "aliases": [
@@ -18502,7 +17353,7 @@
   },
   {
    "id": "OR05",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "德鲁伊环",
    "name_en": "Druid Circle",
    "aliases": [
@@ -18606,7 +17457,7 @@
   },
   {
    "id": "OR07",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "冒险者公会",
    "name_en": "Adventurers' Guild",
    "aliases": [
@@ -18630,7 +17481,7 @@
     {
      "target": "BS00",
      "kind": "生物",
-     "role": "委托对象",
+     "role": "委托难度",
      "required": false,
      "note": ""
     }
@@ -18639,15 +17490,15 @@
     {
      "source": "BS00",
      "kind": "生物",
-     "role": "发布者"
+     "role": "可选：按它定委托难度"
     }
    ],
    "adoption": "optional",
-   "module": "冒险者与讨伐等级",
+   "module": "冒险者公会",
    "basis": "genre",
    "xianxia": {
     "concept": "散修联盟 / 悬赏堂（参照）",
-    "note": "来自日系异世界与 RPG，不是欧洲原生制度；作为可选模块。为避免与灵魂成色混淆，等级用星。"
+    "note": "来自日系异世界与 RPG，不是欧洲原生制度；作为可选模块。会员等级用星，不用金属；委托难度沿用威胁度 BS00。"
    },
    "familiarity": "高",
    "ip": "generic",
@@ -18682,7 +17533,7 @@
   },
   {
    "id": "OR15",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "猎魔人行会",
    "name_en": "Monster Hunters' Lodge",
    "aliases": [
@@ -18722,6 +17573,11 @@
      "source": "CL23",
      "kind": "职业",
      "role": "所属组织"
+    },
+    {
+     "source": "BS00",
+     "kind": "生物",
+     "role": "评估者"
     }
    ],
    "adoption": "default",
@@ -18767,7 +17623,7 @@
   },
   {
    "id": "OR10",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "贵族家族",
    "name_en": "Noble House",
    "aliases": [
@@ -18844,7 +17700,7 @@
   },
   {
    "id": "OR11",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "王庭",
    "name_en": "The Crown & Court",
    "aliases": [
@@ -18934,7 +17790,7 @@
   },
   {
    "id": "OR17",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "商人与手工行会",
    "name_en": "Merchant & Craft Guilds",
    "aliases": [
@@ -19008,7 +17864,7 @@
   },
   {
    "id": "OR06",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "女巫会",
    "name_en": "Coven",
    "aliases": [
@@ -19108,7 +17964,7 @@
   },
   {
    "id": "OR08",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "盗贼行会",
    "name_en": "Thieves' Guild",
    "aliases": [
@@ -19190,7 +18046,7 @@
   },
   {
    "id": "OR09",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "静手会",
    "name_en": "The Quiet Hand",
    "aliases": [
@@ -19262,7 +18118,7 @@
   },
   {
    "id": "OR14",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "恶魔教团",
    "name_en": "Demon Cult",
    "aliases": [
@@ -19342,7 +18198,7 @@
   },
   {
    "id": "OR16",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "赫尔墨斯学会",
    "name_en": "Hermetic Society",
    "aliases": [
@@ -19352,7 +18208,7 @@
    ],
    "category": "组织与势力·隐秘组织",
    "grade": null,
-   "function": "隐秘的炼金与秘传团体：成员是学者、医生、贵族，以暗号相认，研究灵魂炼成与贤者之石。表面不存在，实际影响学院与王庭。",
+   "function": "隐秘的炼金与秘传团体：成员是学者、医生、贵族，以暗号相认，研究灵性炼金与贤者之石。表面不存在，实际影响学院与王庭。",
    "cost_limit": "见卡片",
    "counter_failure": "见卡片",
    "visual_signature": "密室、蜡封信件、玫瑰与十字以外的原创秘符。",
@@ -19394,7 +18250,7 @@
    ],
    "hooks": [],
    "details": {
-    "内部结构": "按灵魂成色与入门仪式分级，外圈不知内圈",
+    "内部结构": "按入门仪式与秘传深浅分级，外圈不知内圈",
     "资源": "秘传手稿、成员的财富与人脉"
    },
    "image": {
@@ -19417,7 +18273,7 @@
   },
   {
    "id": "OR12",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "狼群",
    "name_en": "Werewolf Pack",
    "aliases": [
@@ -19490,7 +18346,7 @@
   },
   {
    "id": "OR13",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "血族议会",
    "name_en": "Vampire Court",
    "aliases": [
@@ -19562,21 +18418,21 @@
   },
   {
    "id": "BS00",
-   "version": "1.1.0",
-   "name": "讨伐等级",
+   "version": "1.2.0",
+   "name": "威胁度",
    "name_en": "Threat Classes",
    "aliases": [
     "Threat Classes",
-    "bounty class",
+    "讨伐等级",
     "threat rating",
     "妖兽等级"
    ],
-   "category": "生物·讨伐等级",
+   "category": "生物·威胁度",
    "grade": null,
-   "function": "五级：害兽 Pest → 野兽 Beast → 怪物 Monster → 恐怖 Terror → 灾厄 Calamity。用于公会委托与王国警报，与灵魂金属位阶对照使用。",
+   "function": "跨种族、跨职业比较强弱的默认参照，四级：野兽 Beast → 怪物 Monster → 恐怖 Terror → 灾厄 Calamity，之上是神话 Mythic。王国警报、猎魔人行会与教会驱魔都按它评估「要多大代价才对付得了」；各族内部仍用本族等级链，人类用职业头衔。",
    "cost_limit": "见卡片",
    "counter_failure": "见卡片",
-   "visual_signature": "公会告示上的骷髅数量或印章颜色。",
+   "visual_signature": "王国告示与猎魔人合同上的蜡封：爪痕越多，威胁越高。",
    "activation": {
     "trigger": "—",
     "requirement": "—"
@@ -19586,7 +18442,14 @@
     {
      "target": "OR07",
      "kind": "组织",
-     "role": "发布者",
+     "role": "可选：按它定委托难度",
+     "required": false,
+     "note": ""
+    },
+    {
+     "target": "OR15",
+     "kind": "组织",
+     "role": "评估者",
      "required": false,
      "note": ""
     },
@@ -19600,16 +18463,22 @@
    ],
    "backlinks": [
     {
+     "source": "EV04",
+     "kind": "事件",
+     "role": "通过后：神话级"
+    },
+    {
      "source": "OR07",
      "kind": "组织",
-     "role": "委托对象"
+     "role": "委托难度"
     }
    ],
-   "adoption": "optional",
-   "module": "冒险者与讨伐等级",
+   "adoption": "default",
+   "module": null,
    "basis": "genre",
    "xianxia": {
-    "concept": "妖兽品阶（参照）"
+    "concept": "妖兽品阶 / 战力对照（参照）",
+    "note": "差异：只评估对付它要付出多大代价，不是一条可以修炼爬升的境界线；人不「升到」恐怖级，只是「被评为」恐怖级。"
    },
    "familiarity": "中",
    "ip": "generic",
@@ -19621,11 +18490,12 @@
    ],
    "hooks": [],
    "details": {
-    "Pest 害兽": "凡人民兵可处理（巨鼠、鬼火）",
-    "Beast 野兽": "需锡阶战士小队（巨狼、狮鹫幼崽）",
-    "Monster 怪物": "需铜至铁阶（蛇怪、蝎尾狮）",
-    "Terror 恐怖": "需汞阶以上或军队（九头蛇、成年龙）",
-    "Calamity 灾厄": "威胁王国，需银阶以上（古龙、海妖王）"
+    "Beast 野兽": "一名老练战士或几个民兵就能应付（巨狼、狮鹫幼崽）；更弱的害兽（巨鼠、鬼火）不入等级",
+    "Monster 怪物": "需要骑士、法师一级的职业者小队（蛇怪、蝎尾狮）",
+    "Terror 恐怖": "需要王国重臣、大法师一级的强者，或一支军队（九头蛇、成年龙）",
+    "Calamity 灾厄": "威胁一个王国，需要传说中的英雄或举国之力（古龙、海妖王）",
+    "Mythic 神话": "神、魔王、半神；凡人不能靠力量取胜，只能靠圣物、真名、契约漏洞或牺牲",
+    "浮动": "在本族领地、月相、黑夜、契约范围内上浮一档；离开则下浮一档"
    },
    "image": {
     "anchor": "entries/bs00/anchor_v1.png",
@@ -19646,7 +18516,7 @@
   },
   {
    "id": "BS03",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "狮鹫",
    "name_en": "Griffin",
    "aliases": [
@@ -19691,7 +18561,7 @@
    "hooks": [],
    "details": {
     "体型": "大如战马",
-    "讨伐等级": "野兽至怪物",
+    "威胁度": "野兽至怪物",
     "缔结": "需从蛋孵化或赢得其尊重"
    },
    "image": {
@@ -19714,7 +18584,7 @@
   },
   {
    "id": "BS04",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "飞马",
    "name_en": "Pegasus (Winged Horse)",
    "aliases": [
@@ -19759,7 +18629,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "野兽",
+    "威胁度": "野兽",
     "缔结": "需在其饮水时以金辔头套住（希腊传说）"
    },
    "image": {
@@ -19782,7 +18652,7 @@
   },
   {
    "id": "BS05",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "独角兽",
    "name_en": "Unicorn",
    "aliases": [
@@ -19832,7 +18702,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "禁止讨伐",
+    "威胁度": "不评级（禁止讨伐）",
     "角": "见独角兽角 MT08"
    },
    "image": {
@@ -19853,7 +18723,7 @@
   },
   {
    "id": "BS12",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "恐狼",
    "name_en": "Great Wolf",
    "aliases": [
@@ -19904,7 +18774,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "野兽",
+    "威胁度": "野兽",
     "缔结": "幼狼认主"
    },
    "image": {
@@ -19927,7 +18797,7 @@
   },
   {
    "id": "BS15",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "使魔",
    "name_en": "Familiars",
    "aliases": [
@@ -20012,7 +18882,7 @@
   },
   {
    "id": "BS11",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "魔像",
    "name_en": "Golem",
    "aliases": [
@@ -20066,7 +18936,7 @@
    "details": {
     "材质": "黏土、石、铁、青铜",
     "驱动": "刻在额上或口中的符文/真名",
-    "讨伐等级": "怪物"
+    "威胁度": "怪物"
    },
    "image": {
     "anchor": "entries/bs11/anchor_v2.png",
@@ -20088,7 +18958,7 @@
   },
   {
    "id": "BS01",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "龙",
    "name_en": "Dragon",
    "aliases": [
@@ -20098,7 +18968,7 @@
    ],
    "category": "生物·怪物",
    "grade": null,
-   "function": "见种族「龙」。作为生物形态：四足双翼、喷吐元素之息，是最高讨伐等级的存在。",
+   "function": "见种族「龙」。作为生物形态：四足双翼、喷吐元素之息，古龙与巨龙是灾厄级的存在。",
    "cost_limit": "见卡片",
    "counter_failure": "见卡片",
    "visual_signature": "四足双翼、长颈长尾、熔金竖瞳、鳞甲。",
@@ -20145,7 +19015,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "恐怖至灾厄"
+    "威胁度": "恐怖至灾厄"
    },
    "image": {
     "anchor": "entries/bs01/anchor_v1.png",
@@ -20165,7 +19035,7 @@
   },
   {
    "id": "BS02",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "双足飞龙",
    "name_en": "Wyvern",
    "aliases": [
@@ -20209,7 +19079,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "怪物"
+    "威胁度": "怪物"
    },
    "image": {
     "anchor": "entries/bs02/anchor_v1.png",
@@ -20229,7 +19099,7 @@
   },
   {
    "id": "BS06",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "凤凰",
    "name_en": "Phoenix",
    "aliases": [
@@ -20281,7 +19151,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "禁止讨伐",
+    "威胁度": "不评级（禁止讨伐）",
     "产出": "凤凰羽 MT07"
    },
    "image": {
@@ -20304,7 +19174,7 @@
   },
   {
    "id": "BS07",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "蛇怪",
    "name_en": "Basilisk",
    "aliases": [
@@ -20349,7 +19219,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "怪物至恐怖",
+    "威胁度": "怪物至恐怖",
     "克制": "镜子反射其目光、鼬鼠、公鸡啼声"
    },
    "image": {
@@ -20372,7 +19242,7 @@
   },
   {
    "id": "BS08",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "九头蛇",
    "name_en": "Hydra",
    "aliases": [
@@ -20416,7 +19286,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "恐怖",
+    "威胁度": "恐怖",
     "克制": "火灼断颈"
    },
    "image": {
@@ -20438,7 +19308,7 @@
   },
   {
    "id": "BS09",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "蝎尾狮",
    "name_en": "Manticore",
    "aliases": [
@@ -20474,7 +19344,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "怪物"
+    "威胁度": "怪物"
    },
    "image": {
     "anchor": "entries/bs09/anchor_v1.png",
@@ -20494,7 +19364,7 @@
   },
   {
    "id": "BS10",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "海妖克拉肯",
    "name_en": "Kraken",
    "aliases": [
@@ -20539,7 +19409,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "灾厄"
+    "威胁度": "灾厄"
    },
    "image": {
     "anchor": "entries/bs10/anchor_v1.png",
@@ -20559,7 +19429,7 @@
   },
   {
    "id": "BS13",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "石像鬼",
    "name_en": "Gargoyle",
    "aliases": [
@@ -20604,7 +19474,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "怪物",
+    "威胁度": "怪物",
     "弱点": "白天无法行动"
    },
    "image": {
@@ -20626,7 +19496,7 @@
   },
   {
    "id": "BS14",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "地狱犬",
    "name_en": "Hellhound",
    "aliases": [
@@ -20689,7 +19559,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "怪物",
+    "威胁度": "怪物",
     "规则": "追踪契约到期者，无法被常规手段甩掉"
    },
    "image": {
@@ -20710,7 +19580,7 @@
   },
   {
    "id": "BS16",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "报丧女妖",
    "name_en": "Banshee",
    "aliases": [
@@ -20755,7 +19625,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "怪物",
+    "威胁度": "怪物",
     "规则": "只为特定家族哭嚎"
    },
    "image": {
@@ -20777,7 +19647,7 @@
   },
   {
    "id": "BS17",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "鬼火",
    "name_en": "Will-o'-the-Wisp",
    "aliases": [
@@ -20823,7 +19693,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "害兽",
+    "威胁度": "野兽以下（害兽）",
     "规则": "跟随即迷路；有时也引向宝藏"
    },
    "image": {
@@ -20844,7 +19714,7 @@
   },
   {
    "id": "BS18",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "狂猎",
    "name_en": "The Wild Hunt",
    "aliases": [
@@ -20896,7 +19766,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "灾厄（不可讨伐，只能躲避）",
+    "威胁度": "灾厄（不可讨伐，只能躲避）",
     "规则": "冬夜与风暴中出现；闭门、伏地、不回应号角"
    },
    "image": {
@@ -20917,7 +19787,7 @@
   },
   {
    "id": "BS19",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "水马",
    "name_en": "Kelpie",
    "aliases": [
@@ -20962,7 +19832,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "怪物",
+    "威胁度": "怪物",
     "克制": "套上它的辔头即可驯服；冷铁"
    },
    "image": {
@@ -20983,7 +19853,7 @@
   },
   {
    "id": "BS20",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "无头骑士",
    "name_en": "Dullahan (Headless Horseman)",
    "aliases": [
@@ -21032,7 +19902,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "恐怖",
+    "威胁度": "恐怖",
     "克制": "黄金（民间说法）",
     "规则": "不能被锁门阻挡"
    },
@@ -21056,7 +19926,7 @@
   },
   {
    "id": "BS21",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "塞壬",
    "name_en": "Sirens",
    "aliases": [
@@ -21100,7 +19970,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "怪物",
+    "威胁度": "怪物",
     "克制": "蜡封耳、把自己绑在桅杆上"
    },
    "image": {
@@ -21125,7 +19995,7 @@
   },
   {
    "id": "BS22",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "牛头人",
    "name_en": "Minotaur",
    "aliases": [
@@ -21162,7 +20032,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "恐怖",
+    "威胁度": "恐怖",
     "规则": "通常与迷宫一起出现"
    },
    "image": {
@@ -21185,7 +20055,7 @@
   },
   {
    "id": "BS23",
-   "version": "1.1.0",
+   "version": "1.2.0",
    "name": "食人魔",
    "name_en": "Ogre",
    "aliases": [
@@ -21221,7 +20091,7 @@
    ],
    "hooks": [],
    "details": {
-    "讨伐等级": "怪物",
+    "威胁度": "怪物",
     "规则": "贪吃与贪财是它的弱点"
    },
    "image": {

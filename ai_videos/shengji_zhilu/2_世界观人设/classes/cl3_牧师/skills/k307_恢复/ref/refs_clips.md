@@ -1,0 +1,15 @@
+# k307 恢复 · 实机施法片段与截帧
+
+> 暴雪娱乐版权素材，只给人看、写 prompt 用，不上传生成服务、不进成片。片段与截帧取自 archive.org 公开的 WarcraftMovies 老录像（ffmpeg 按时间点截取）。待主代理合并进 refs.md。
+
+| 文件 | 来源 URL / 时间点 | sha256 前 12 位 | 看到了什么 |
+|---|---|---|---|
+| `clip_ia_Camio_-_Holy_Priest_PvP__87.5.mp4` | https://archive.org/details/Camio_-_Holy_Priest_PvP_2006-01-17_4.80 时间点 1:27.5–1:32.5（《Camio - Holy Priest PvP [Priest][2006-01-17][4.80]》，2006-01-17，原版时期画面；声音未逐段听辨，Fraps＋Premiere 剪辑作品，疑为配乐） | fbca082a77e4 | 阿拉希盆地。主角 Camio（EU-Blackrock 部落神圣牧师，绿色长袍、持法杖，画面小未认准种族性别）先上盾（1:28.5 浮字 Power Word: Shield，金白椭圆环），1:29.9 浮字「[Renew]」：瞬发，身体被一团暖金色光晕包住，1:30.75 同时触发饰品「[Unstable Power]」（橙金色爆光，非恢复本身），1:31.5 起胸口/全身持续发出柔和的金黄色光晕（恢复持续效果，从身上往外发散而非从天上落），持续到片段末。纯游戏画面，无变速；恢复与饰品光叠在一起，需对照浮字区分。 |
+| `snap_ia_Camio_-_Holy_Priest_PvP__90.jpg` | https://archive.org/details/Camio_-_Holy_Priest_PvP_2006-01-17_4.80 1:30.0 帧（片段 87.5 内） | 94835a6da74d | 出手：浮字「[Renew]」刚出现，牧师身上一层淡金光，旁边是击杀浮字「HK: Master Sergeant」。 |
+| `snap_ia_Camio_-_Holy_Priest_PvP__90.75.jpg` | https://archive.org/details/Camio_-_Holy_Priest_PvP_2006-01-17_4.80 1:30.8 帧（片段 87.5 内） | da57d9735fe6 | 同时触发饰品：浮字「[Renew]」「[Unstable Power]」，身上爆出一团橙金色光（饰品光，非恢复）。 |
+| `snap_ia_Camio_-_Holy_Priest_PvP__91.75.jpg` | https://archive.org/details/Camio_-_Holy_Priest_PvP_2006-01-17_4.80 1:31.8 帧（片段 87.5 内） | 8ebf7e941471 | 持续：牧师全身被一团柔和的黄白色光晕包住，光从身体向外散，地面无光圈。 |
+| `clip_ia_Camio_-_Holy_Priest_PvP__595.5.mp4` | https://archive.org/details/Camio_-_Holy_Priest_PvP_2006-01-17_4.80 时间点 9:55.5–9:59.5（《Camio - Holy Priest PvP [Priest][2006-01-17][4.80]》，2006-01-17，原版时期画面；声音未逐段听辨，Fraps＋Premiere 剪辑作品，疑为配乐） | 7473bfe25205 | 奥特兰克山谷雪地。主角快速治疗自己（9:56.25 「you +1248」）后紧接着瞬发恢复：9:56.75 浮字「[Renew]」，牧师身上亮起金黄色光，周身向上飘起细小的黄绿色光点与竖条光丝（9:57.0–9:57.5 最明显），之后带着持续的淡金光晕边跑边被追打。雪地背景对比好，人物中等大小。 |
+| `snap_ia_Camio_-_Holy_Priest_PvP__597.25.jpg` | https://archive.org/details/Camio_-_Holy_Priest_PvP_2006-01-17_4.80 9:57.2 帧（片段 595.5 内） | 85121715d987 | 持续：浮字「[Renew]」「you +1248」，牧师（持法杖）全身金黄色亮光，左侧拖着一串黄绿色光点。 |
+| `clip_ia_Xantim_-_Rank_14_Shadow__114.5.mp4` | https://archive.org/details/Xantim_-_Rank_14_Shadow_Priest_PvP_Priest_2005-10-29_3.63 1:54.5–1:59.0（《Xantim - Rank 14 Shadow Priest PvP [Priest][2005-10-29][3.63]》，2005-10-29，原版时期画面；配乐，非游戏原声） | 0c0787c2cf51 | 认法：主角头顶 SCT 在 1:55.0 跳出紫色「[Renew]」（获得恢复），之后头上陆续出现绿色治疗数字「+254」（恢复的跳数）。施法者是录像主角暗影牧师 Xantim 给自己上（此时还没开暗影形态，青绿色长袍），在东瘟疫之地的橙色落叶地上，人物在画面中部偏小。分拍：1:54.5–1:55.0 人物正常，头上「-Combat」（刚脱战）和一串紫色伤害数字「-48」（身上的持续伤害）；1:55.0–1:55.25 人物身上亮起一层金黄色的光，脚下一圈橙红色光；约 0.5 秒后淡掉，身上不留明显光效。瞬发，人物一直在走，没看到抬手。之后 1:57.5 起开始读快速治疗（施法条「Flash Heal」），片段后半段与之重叠。画面上「Low Mana!」「[Renew]」「[Ephemeral Power]」几行字正好压在人物上方，遮住不少细节；未见变速。声音：片头黑屏字幕段就有音乐，全片音轨电平持续在 -11～-15 dB，判断为整片配乐，未逐段听辨是否混有游戏原声。 |
+| `snap_ia_Xantim_-_Rank_14_Shadow__115.25.jpg` | https://archive.org/details/Xantim_-_Rank_14_Shadow_Priest_PvP_Priest_2005-10-29_3.63 1:55.25 帧（片段 114.5 内） | 29f0a86b92d0 | 刚上恢复：头上「Low Mana!」「[Renew]」，人物身上一层金黄色光，脚下橙红光。人物很小、被字压住，裁中间 320×240。 |
+| `snap_ia_Xantim_-_Rank_14_Shadow__116.jpg` | https://archive.org/details/Xantim_-_Rank_14_Shadow_Priest_PvP_Priest_2005-10-29_3.63 1:56.0 帧（片段 114.5 内） | d12290133d87 | 上恢复后：金光已淡，头上「[Renew]」「[Ephemeral Power]」两行紫字，人物脚下残留一点橙红光。裁中间 320×240。 |

@@ -1,0 +1,23 @@
+# 审稿项 physics（世界物理 · 出片前（故事＋分镜＋prompt＋首帧/故事板））
+
+范围：s1。双审：每位拿自己的任务书、全新上下文、互不看报告；两人都打勾后工具自动对比，分歧与抽查交裁决人。
+
+## a 位 · claude · claude-opus-5-5
+- 任务书：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\reviews\ep01_20261108-153208_pregen_r1\items\physics__a.md`
+- 报告：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\reviews\ep01_20261108-153208_pregen_r1\reports\physics__a.md`
+- 打勾：`python tools/review_run.py tick "C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\reviews\ep01_20261108-153208_pregen_r1" physics --slot a --report "C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\reviews\ep01_20261108-153208_pregen_r1\reports\physics__a.md" --by "claude-opus-5-5/physics__a"`
+
+## b 位 · codex · gpt-6-astra
+- 任务书：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\reviews\ep01_20261108-153208_pregen_r1\items\physics__b.md`
+- 报告：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\reviews\ep01_20261108-153208_pregen_r1\reports\physics__b.md`
+- 打勾：`python tools/review_run.py tick "C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\reviews\ep01_20261108-153208_pregen_r1" physics --slot b --report "C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\reviews\ep01_20261108-153208_pregen_r1\reports\physics__b.md" --by "gpt-6-astra/physics__b"` `--attest-log <codex exec 运行日志>`（Codex 沙箱跑不了 python，由调用方凭日志代登记）
+
+## 评分维度
+- **P1** 手数：自拍镜只剩一只手可用；每个时刻每只手在干什么、有没有多出或少掉的手
+- **P2** 道具来源与去向：每件道具进场时在哪、出场时在哪；没有凭空出现或消失
+- **P3** 交接三段：交接写清从哪拿、交到哪、对方怎么握住或收起；钱、灯、刮板都要
+- **P4** 重力与支撑：没有悬空的物体；放下的东西有支撑；液体、粉末、蒸汽方向对
+- **P5** 身体可行：转身、迈步、上台阶、坐下是真人做得到的，时长够；没有 180° 扭头、滑步
+- **P6** 穿模与距离：人、动物、道具之间的距离够，走位路线不穿墙、不撞人
+- **P7** 服装与动作相容：衣服允许这个动作（短袖不能卷袖、塞进腰里的下摆不会自己跑出来）
+- **P8** 首帧 = 第 0 秒：首帧画的正是第 0 秒的状态，和节拍第一拍接得上

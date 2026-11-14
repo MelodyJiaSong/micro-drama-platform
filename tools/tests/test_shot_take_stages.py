@@ -146,6 +146,16 @@ def test_the_take_records_its_stage_and_where_a_final_came_from(pack: Path, tmp_
     assert record["stage"] == "final" and record["resolution"] == "720p" and record["from_take"] == "20261016-100000_aaaa1111"
 
 
+def test_polling_a_job_that_was_already_collected_does_not_add_a_second_take(pack: Path, tmp_path: Path, monkeypatch,
+                                                                              capsys) -> None:
+    (pack / "renders" / "20261103-100054_abcdef12").mkdir(parents=True)   # 别的会话已收进正式条（follow-up 349）
+    monkeypatch.setattr(shot_take, "query", lambda *a: pytest.fail("不应再去查询"))
+    monkeypatch.setattr("sys.argv", ["shot_take.py", "poll", str(tmp_path), "ep1_s9_st1", "abcdef123456"])
+    assert shot_take.main() == 0
+    assert "已收过" in capsys.readouterr().out
+    assert not (pack / "drafts").exists()
+
+
 @pytest.mark.skipif(shutil.which("ffmpeg") is None or shutil.which("ffprobe") is None, reason="needs ffmpeg")
 def test_the_draft_reference_is_lifted_to_720p_without_sound_and_cut_to_15_s_parts(tmp_path: Path) -> None:
     folder = tmp_path / "renders" / "20261016-100000_aaaa1111"
@@ -160,3 +170,15 @@ def test_the_draft_reference_is_lifted_to_720p_without_sound_and_cut_to_15_s_par
                                capture_output=True, text=True).stdout
         streams = json.loads(probe)["streams"]
         assert [s["codec_type"] for s in streams] == ["video"] and (streams[0]["width"], streams[0]["height"]) == (1280, 720)
+
+
+def test_a_group_without_its_own_approved_draft_uses_its_shots_approved_drafts(tmp_path: Path) -> None:
+    """镜组正式条（follow-up 333）：镜组自己没有通过的草稿时，成员镜头都通过了就按顺序用它们；缺一个就不用。"""
+    ep = tmp_path / "ep01"
+    group = {"id": "ep1_s1_g1", "scene": "s1", "shots": ["ep1_s1_st1", "ep1_s1_st2"]}
+    a = take(ep / "scenes/s1/shots/st1/drafts", "20261102-100000_aaaa1111", "draft", "通过")
+    assert shot_take.member_drafts(ep, group, {}) is None
+    b = take(ep / "scenes/s1/shots/st2/drafts", "20261102-110000_bbbb2222", "draft", "通过")
+    assert shot_take.member_drafts(ep, group, {}) == [a, b]
+    take(ep / "scenes/s1/groups/g1/drafts", "20261102-120000_cccc3333", "draft", "通过")
+    assert shot_take.member_drafts(ep, group, {}) is None

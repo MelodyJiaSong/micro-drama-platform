@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>系列包装 · 风格样张</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap">
+<style>
+  /* 频道片头 / 转场 / 片尾样张：纯黑舞台、大字、渐变强调、留白（发布会式）。每个 .frame 是一帧 1920×1080。 */
+  :root {
+    --stage: #000;
+    --ink: #f5f5f7;
+    --sub: #86868b;
+    --hair: #2a2a2e;
+    --g1: #2dd4bf;   /* AI 系列渐变：青 → 蓝 → 紫 */
+    --g2: #60a5fa;
+    --g3: #a78bfa;
+    --latin: "Inter", "Noto Sans SC", sans-serif;
+    --han: "Noto Sans SC", "Inter", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #111; }
+  .frame {
+    width: 1920px; height: 1080px; position: relative; overflow: hidden;
+    background: var(--stage); color: var(--ink); font-family: var(--han);
+    margin-bottom: 40px;
+  }
+  .glow {
+    position: absolute; width: 1400px; height: 900px; left: 50%; top: 55%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(closest-side, rgba(96,165,250,.28), rgba(167,139,250,.12) 55%, transparent 75%);
+    filter: blur(40px);
+  }
+  .grad {
+    background: linear-gradient(100deg, var(--g1), var(--g2) 45%, var(--g3));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    padding-bottom: .12em;   /* 渐变字的下伸部（g、y）不被裁掉 */
+  }
+  .eyebrow { font-family: var(--latin); font-size: 30px; letter-spacing: .14em; color: var(--sub); font-weight: 600; }
+  .mark { position: absolute; left: 96px; bottom: 72px; font-family: var(--latin); font-size: 24px; color: var(--sub); letter-spacing: .08em; }
+  .mark b { color: var(--ink); font-weight: 600; }
+  .center { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; gap: 28px; }
+
+  /* 1 片头 */
+  .f1 h1 { font-size: 240px; font-weight: 700; line-height: 1; letter-spacing: .02em; }
+  .f1 .latin { font-family: var(--latin); font-size: 64px; font-weight: 300; color: var(--sub); letter-spacing: .01em; }
+
+  /* 2 本期内容 + 先修 */
+  .f2 { display: grid; grid-template-columns: 1.25fr 1fr; gap: 120px; padding: 150px 140px; align-items: center; }
+  .f2 h2 { font-size: 72px; font-weight: 700; margin-bottom: 56px; }
+  .agenda { display: grid; gap: 34px; }
+  .agenda div { display: grid; grid-template-columns: 220px 1fr; align-items: baseline; border-top: 1px solid var(--hair); padding-top: 26px; }
+  .agenda span { font-size: 30px; color: var(--sub); letter-spacing: .06em; }
+  .agenda p { font-size: 40px; font-weight: 500; }
+  .pre { border: 1px solid var(--hair); border-radius: 36px; padding: 56px; background: linear-gradient(160deg, #0d0d10, #08080a); }
+  .pre .eyebrow { margin-bottom: 30px; }
+  .pre ul { list-style: none; display: grid; gap: 22px; }
+  .pre li { display: flex; justify-content: space-between; align-items: baseline; font-size: 40px; font-weight: 500; }
+  .pre li em { font-style: normal; font-family: var(--latin); font-size: 26px; color: var(--sub); }
+  .pre .hint { margin-top: 34px; font-size: 26px; color: var(--sub); line-height: 1.6; }
+
+  /* 3 章节转场 */
+  .f3 .num { font-family: var(--latin); font-size: 200px; font-weight: 200; line-height: 1; }
+  .f3 h2 { font-size: 104px; font-weight: 700; }
+  .f3 .en { font-family: var(--latin); font-size: 40px; color: var(--sub); font-weight: 300; }
+  .rail { position: absolute; left: 50%; bottom: 120px; transform: translateX(-50%); display: flex; gap: 46px; font-size: 24px; color: #4a4a4f; }
+  .rail span { position: relative; padding-top: 22px; }
+  .rail span::before { content: ""; position: absolute; top: 0; left: 50%; width: 10px; height: 10px; border-radius: 50%; background: #3a3a3f; transform: translateX(-50%); }
+  .rail .on { color: var(--ink); }
+  .rail .on::before { background: var(--g2); box-shadow: 0 0 18px var(--g2); }
+  .rail .done::before { background: #6b7280; }
+
+  /* 4 片尾 */
+  .f4 .quote { font-size: 104px; font-weight: 700; line-height: 1.25; max-width: 1500px; }
+  .f4 .next { margin-top: 40px; font-size: 36px; color: var(--sub); }
+  .f4 .next b { color: var(--ink); font-weight: 600; }
+
+  /* 5 英文片头 */
+  .f5 h1 { font-family: var(--latin); font-size: 220px; font-weight: 700; letter-spacing: -.035em; line-height: 1; }
+  .f5 .latin { font-family: var(--han); font-size: 56px; font-weight: 400; color: var(--sub); }
+</style>
+</head>
+<body>
+
+<section class="frame f1" id="f1">
+  <div class="glow"></div>
+  <div class="center">
+    <div class="eyebrow">AI 高频词 · 第 01 期</div>
+    <h1 class="grad">过拟合</h1>
+    <div class="latin">Overfitting</div>
+  </div>
+  <div class="mark"><b>AI 高频词</b> &nbsp;·&nbsp; AI Glossary</div>
+</section>
+
+<section class="frame f2" id="f2">
+  <div>
+    <h2>这一期，我们会讲</h2>
+    <div class="agenda">
+      <div><span>问题</span><p>模型为什么会“背答案”，代价是什么</p></div>
+      <div><span>类比</span><p>只背练习册的学生</p></div>
+      <div><span>视角</span><p>学规律，还是记数据</p></div>
+      <div><span>现实</span><p>医疗影像、量化交易里的真实翻车</p></div>
+    </div>
+  </div>
+  <div class="pre">
+    <div class="eyebrow">建议先了解</div>
+    <ul>
+      <li>什么是“模型”<em>1 min</em></li>
+      <li>训练数据与测试数据<em>t07</em></li>
+      <li>误差是怎么算的<em>t04</em></li>
+    </ul>
+    <p class="hint">不了解也能看懂，片中会用一句话带过。</p>
+  </div>
+</section>
+
+<section class="frame f3" id="f3">
+  <div class="glow" style="opacity:.6"></div>
+  <div class="center">
+    <div class="num grad">02</div>
+    <h2>它在解决什么问题</h2>
+    <div class="en">What problem are we solving</div>
+  </div>
+  <div class="rail">
+    <span class="done">开场</span><span class="on">问题</span><span>类比</span><span>实验</span><span>视角</span><span>现实</span><span>对策</span>
+  </div>
+</section>
+
+<section class="frame f4" id="f4">
+  <div class="center">
+    <div class="eyebrow">一句话记住</div>
+    <p class="quote">过拟合，是把答案背下来了，<br><span class="grad">却没学会规律。</span></p>
+    <p class="next">下一期 &nbsp;·&nbsp; <b>强化学习</b> &nbsp;Reinforcement Learning</p>
+  </div>
+  <div class="mark"><b>AI 高频词</b> &nbsp;·&nbsp; AI Glossary</div>
+</section>
+
+<section class="frame f5" id="f5">
+  <div class="glow"></div>
+  <div class="center">
+    <div class="eyebrow">AI GLOSSARY · EPISODE 01</div>
+    <h1 class="grad">Overfitting</h1>
+    <div class="latin">过拟合</div>
+  </div>
+  <div class="mark"><b>AI Glossary</b> &nbsp;·&nbsp; AI 高频词</div>
+</section>
+
+</body>
+</html>

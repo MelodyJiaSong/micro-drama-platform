@@ -1,0 +1,72 @@
+<style>
+  /* 屏 A：一句话卡（左图右字）＋那条线是谁画的 */
+  #mg { position: absolute; left: var(--mx); top: 200px; width: 760px; }
+  .one { position: absolute; left: 960px; right: var(--mx); top: 220px; }
+  .one .h1 { margin-top: 10px; white-space: nowrap; }
+  html[lang=en] .one .h1 { white-space: normal; font-size: var(--fs-h2); line-height: 1.2; }
+  #ln { display: block; margin-top: 46px; }
+  .one .body { margin-top: 14px; color: var(--ink2); }
+
+  /* 屏 B：接下来要看（三件），右边 sd4 空听证席；视频不在时清单居中 */
+  .watch { position: absolute; left: var(--mx); width: 900px; top: 190px; }
+  html.no-v4 .watch { left: 510px; }
+  .watch .r { display: grid; grid-template-columns: 220px 1fr; align-items: baseline; padding: 26px 0; border-top: 1px solid var(--hair); }
+  html[lang=en] .watch .r { grid-template-columns: 270px 1fr; }
+  .watch .r .k { font-size: var(--fs-h2); font-weight: 700; white-space: nowrap; }
+  .watch .r .h2 { font-weight: 500; }
+  .watch .r .pill { margin-left: 14px; }
+  #fx4 { left: 1080px; top: 250px; width: 720px; height: 405px; }
+  .foot { position: absolute; left: 0; right: 0; top: 820px; text-align: center; }
+</style>
+
+<div class="eb eyebrow" data-zh="06 · 留得住的道理" data-en="06 · What sticks"></div>
+
+<!-- 屏 A -->
+<figure class="slot" id="mg" data-src="img/source/ai/ai_magnifier.png" style="--h:428px"></figure>
+<div class="one" id="one">
+  <div class="eyebrow" data-zh="热度过后" data-en="When the headlines fade"></div>
+  <div class="h1" data-zh="卖的东西越要紧" data-en="The more critical the product,"></div>
+  <div class="h1 grad" data-zh="私事越不是私事" data-en="the less private the life"></div>
+  <svg id="ln" width="760" height="20"><path id="lnp" d="M4,10 L756,10" stroke="var(--accent)" stroke-width="6" stroke-linecap="round" stroke-dasharray="2 14" fill="none"/></svg>
+  <div class="body" id="who" data-zh="这条线：是他公司卖的东西画的" data-en="Who draws the line: what his company sells"></div>
+</div>
+
+<!-- 屏 B -->
+<div class="watch" id="watch">
+  <div class="eyebrow" style="margin-bottom:14px" data-zh="接下来要看" data-en="What to watch"></div>
+  <div class="r" id="w1"><span class="k" data-zh="11-17" data-en="Nov 17"></span><span class="h2" data-zh="第一份没有黄仁勋的财报" data-en="First earnings without Huang"></span></div>
+  <div class="r" id="w2"><span class="k" data-zh="去国会" data-en="Congress"></span><span class="h2" data-zh="时间：还在谈" data-en="Date: still in talks"></span></div>
+  <div class="r" id="w3"><span class="k" data-zh="调查" data-en="Probes"></span><span class="h2" data-zh="都还没有结论" data-en="No conclusions yet"></span></div>
+</div>
+<div class="footage" id="fx4"><video id="v4" src="img/footage/sd4_hearing_room.mp4" data-start="{{t:l69:0}}" data-duration="{{d:l69:0>l70:0.6|6}}"
+  data-media-start="0" data-track-index="1" muted playsinline></video></div>
+<div class="foot caption" id="foot" data-zh="以上说法截至 2026-11-14 · 不构成投资建议" data-en="As of Nov 14, 2026 · Not investment advice"></div>
+
+<script>
+const T = EDU.tl;
+gsap.set(["#mg", "#one", "#ln", "#who", "#watch", "#w1", "#w2", "#w3", "#foot"], { opacity: 0 });
+EDU.in(".eb", 0);
+
+// l66 留下的道理：卖的东西越要紧，掌门人的私事越不是私事
+EDU.in("#mg", EDU.t("l66", 0));
+EDU.in("#one", EDU.t("l66", .1));
+// l67 那条线不是他自己画的，是他公司卖的东西画的
+EDU.in("#ln", EDU.t("l67", .02), { y: 0, d: .2 });
+EDU.draw("#lnp", EDU.t("l67", .05), 1.1);
+EDU.in("#who", EDU.t("l67", .35));
+ourTake(["l66", "l67"]);
+
+// l68 接下来：11-17 第一份没有黄仁勋的财报
+EDU.out(["#mg", "#one"], EDU.t("l68", 0));
+EDU.in("#watch", EDU.t("l68", .03), { y: 0, d: .01 });
+EDU.in("#w1", EDU.t("l68", .15));
+srcNote("英伟达新闻稿 · 2026-11-12", "Nvidia release · Nov 12, 2026", EDU.t("l68", .2), EDU.end("l68") + .1);
+// l69 去国会还在谈；几方调查都没结论（sd4 空听证席）
+EDU.dim("#w1", EDU.t("l69", 0), .45);
+EDU.in("#w2", EDU.t("l69", .05));
+EDU.in("#w3", EDU.t("l69", .5));
+srcNote("众院外委会主席（经 CNBC）· 英伟达董事会 · 新加坡内政部", "House Foreign Affairs chair (via CNBC) · Nvidia board · Singapore MHA", EDU.t("l69", .2), EDU.end("l69") + .1);
+// l70 截至 11-14，不构成投资建议
+EDU.dim("#w2", EDU.t("l70", 0), .45);
+EDU.in("#foot", EDU.t("l70", .05));
+</script>

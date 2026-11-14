@@ -1,0 +1,72 @@
+<style>
+  .head { position: absolute; left: var(--mx); top: var(--mt); }
+  .head .h1 { margin-top: 14px; }
+  .flow { position: absolute; left: var(--mx); top: 330px; display: flex; align-items: center; gap: 36px; }
+  .flow .box { font-size: var(--fs-h2); font-weight: 600; }
+  html[lang="en"] .head .h1 { font-size: 64px; }
+  html[lang="en"] .flow { gap: 24px; }
+  html[lang="en"] .flow .box, html[lang="en"] .flow .pill { font-size: 44px !important; padding: 20px 28px !important; }
+  .ok { position: absolute; left: var(--mx); top: 590px; display: flex; gap: 48px; align-items: baseline; }
+  .big3 { position: absolute; left: var(--mx); top: 280px; }
+  .q3 { position: absolute; left: 640px; top: 420px; }
+  #grid { position: absolute; left: var(--mx); top: 250px; display: grid; grid-template-columns: repeat(6, auto); gap: 18px; }
+  .rules { position: absolute; left: 1110px; top: 250px; width: 690px; }
+  .rrow { display: flex; align-items: center; gap: 24px; padding: 22px 0; border-top: 1px solid var(--hair); }
+  .rrow .q { font-size: var(--fs-body); font-weight: 600; width: 380px; }
+  .rrow .ex { display: flex; align-items: center; gap: 14px; }
+  .end { position: absolute; left: 1110px; top: 660px; width: 690px; }
+</style>
+
+<div class="head"><div class="eyebrow" data-zh="01 · 规则写不完" data-en="01 · When rules fall short"></div>
+  <div class="h1" id="h1" data-zh="传统程序：人写规则" data-en="Traditional program: hand-written rules"></div></div>
+<div class="flow" id="flow">
+  <div class="pill rulep" style="font-size:var(--fs-h2);padding:22px 36px" data-zh="规则" data-en="Rules"></div>
+  <span class="arrow">→</span><div class="box" data-zh="电脑照做" data-en="Computer"></div>
+  <span class="arrow">→</span><div class="box" data-zh="答案" data-en="Answer"></div>
+</div>
+<div class="ok h2" id="ok"><span data-zh="算工资" data-en="Payroll"></span><span data-zh="订机票" data-en="Booking flights"></span>
+  <span class="c-good" data-zh="✓ 规则说得清" data-en="✓ Clear rules"></span></div>
+
+<div class="big3" id="big3"></div>
+<div class="q3" id="q3"><div class="eyebrow" data-zh="比如" data-en="For example"></div>
+  <div class="h1" style="margin-top:12px" data-zh="认出一个<br>手写的 3" data-en="Recognize a<br>handwritten 3"></div>
+  <div class="body sub" style="margin-top:18px" data-zh="规则很难写全" data-en="Hard to capture in rules"></div></div>
+
+<div id="grid"></div>
+<div class="rules" id="rules">
+  <div class="eyebrow" style="margin-bottom:12px" data-zh="试着写成规则" data-en="Try writing rules"></div>
+  <div class="rrow" id="r1"><div class="q" data-zh="上下两个弯？" data-en="Two curves, stacked?"></div><div class="ex" id="ex1"></div></div>
+  <div class="rrow" id="r2"><div class="q" data-zh="下半截开口朝左？" data-en="Opens left at the bottom?"></div><div class="ex" id="ex2"></div></div>
+</div>
+<div class="end" id="end"><div class="h2" data-zh='会<span class="c-bad">漏判</span>，也会<span class="c-bad">认错</span>' data-en='<span class="c-bad">Misses</span> some 3s,<br><span class="c-bad">mislabels</span> others'></div></div>
+
+<script>
+const T = EDU.tl;
+document.querySelector("#big3").appendChild(digitEl(D.threes[0], 420, true));
+D.threes.forEach(img => document.querySelector("#grid").appendChild(tileEl(img, 110)));
+[["#ex1", "8", L("8 也是", "Also an 8")], ["#ex2", "5", L("5 也是", "Also a 5")]].forEach(([s, k, t]) => {
+  const ex = document.querySelector(s);
+  ex.appendChild(tileEl(D.samples[k][0], 70));
+  const lab = document.createElement("div"); lab.className = "body c-bad"; lab.style.fontWeight = 600; lab.style.whiteSpace = "nowrap"; lab.textContent = t; ex.appendChild(lab);
+});
+gsap.set(["#h1", "#flow > *", "#ok > *", "#big3", "#q3", "#grid .tile", "#rules", "#r1", "#r2", "#ex1", "#ex2", "#end"], { opacity: 0 });
+// l03 规则 → 执行 → 答案
+EDU.in("#h1", EDU.t("l03"));
+EDU.in("#flow > *", EDU.t("l03", 0.35), { stagger: 0.25 });
+// l04 规则说得清的事
+EDU.in("#ok > *", EDU.t("l04", 0.1), { stagger: 0.35 });
+// l05 手写的 3 → 人人写得不一样
+EDU.out(["#h1", "#flow", "#ok"], EDU.t("l05"));
+EDU.in("#big3", EDU.t("l05", 0.12));
+EDU.in("#q3", EDU.t("l05", 0.2));
+EDU.out(["#big3", "#q3"], EDU.t("l05", 0.65));
+EDU.in("#grid .tile", EDU.t("l05", 0.55), { stagger: 0.05 });
+// l06 两条规则，各配一个反例
+EDU.in("#rules", EDU.t("l06", 0.05), { d: 0.01 });
+EDU.in("#r1", EDU.t("l06", 0.3)); EDU.in("#ex1", EDU.t("l06", 0.5));
+EDU.in("#r2", EDU.t("l06", 0.65)); EDU.in("#ex2", EDU.t("l06", 0.88));
+// l07 漏判 + 误判
+EDU.dim(["#r1 .q", "#r2 .q"], EDU.t("l07"), 0.45);
+EDU.in("#end", EDU.t("l07", 0.1));
+EDU.out(["#grid", "#rules", "#end"], EDU.S.duration - 0.5);
+</script>

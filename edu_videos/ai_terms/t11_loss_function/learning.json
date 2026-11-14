@@ -1,0 +1,214 @@
+{
+ "note": "学习目标与理解测验（写讲稿前定，审查与测验都对照它）。题目以迁移题为主，干扰项来自真实误解；前测、看片、后测、讲回来。AI 学生只用来筛题，最终以真人盲测为准。句号按 v1.1 讲稿挂上（2026-11-09）。",
+ "objectives": [
+  {
+   "id": "O1",
+   "zh": "能用自己的话说出损失函数在做什么：把模型猜错的程度汇成一个分数，分越低越好；训练就是拧旋钮把这个分压下去",
+   "en": "Say in their own words what a loss function does: turn how wrong the model is into one score, lower is better; training turns the knobs to push that score down",
+   "lines": [
+    "l03",
+    "l04",
+    "l05",
+    "l06",
+    "l07",
+    "l09",
+    "l10",
+    "l47",
+    "l48"
+   ]
+  },
+  {
+   "id": "O2",
+   "zh": "会算最常见的一种：每个例子的误差（猜的 − 实际）→ 平方 → 平均（均方误差）",
+   "en": "Work through the most common one: each example's error (guess − actual) → square → average (mean squared error)",
+   "lines": [
+    "l14",
+    "l15",
+    "l16",
+    "l22",
+    "l23"
+   ]
+  },
+  {
+   "id": "O3",
+   "zh": "说得出为什么要平方：正负误差会互相抵消；平方后都为正，而且差得越多罚得越狠",
+   "en": "Explain why we square: positive and negative errors cancel out; squares are all positive and punish big misses much more",
+   "lines": [
+    "l18",
+    "l19",
+    "l20",
+    "l21",
+    "l35",
+    "l36"
+   ]
+  },
+  {
+   "id": "O4",
+   "zh": "看得懂损失地形图：每种拧法一个分数，最低点就是最好的拧法；最低点通常不是零",
+   "en": "Read a loss landscape: every knob setting has a score, the lowest point is the best setting, and that lowest score usually isn't zero",
+   "lines": [
+    "l26",
+    "l27",
+    "l28",
+    "l29",
+    "l30",
+    "l31",
+    "l32",
+    "l33"
+   ]
+  },
+  {
+   "id": "O5",
+   "zh": "知道选什么损失函数就是定义什么算「好」；大语言模型的损失是给「猜下一个词」打分（交叉熵），训练时这个分一路往下压",
+   "en": "Know that choosing a loss defines what 'good' means; a language model's loss scores its next-word guesses (cross-entropy), and training pushes it down",
+   "lines": [
+    "l37",
+    "l38",
+    "l39",
+    "l40",
+    "l41",
+    "l42",
+    "l43",
+    "l44",
+    "l45"
+   ]
+  }
+ ],
+ "quiz": [
+  {
+   "id": "Q1",
+   "objective": "O1",
+   "type": "迁移",
+   "zh": "一个天气模型预测明天气温。换了一组旋钮之后，它的损失从 9 降到了 4。这说明什么？",
+   "en": "A weather model predicts tomorrow's temperature. After a different knob setting, its loss drops from 9 to 4. What does that tell you?",
+   "choices": {
+    "zh": [
+     "A 新拧法猜得更不准了",
+     "B 新拧法整体猜得更准了",
+     "C 明天会降温",
+     "D 模型的旋钮变少了"
+    ],
+    "en": [
+     "A The new setting is less accurate",
+     "B The new setting is more accurate overall",
+     "C It will be colder tomorrow",
+     "D The model now has fewer knobs"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "以为分越高越好（跟考试分数混淆）",
+    "C": "把损失当成预测的内容本身"
+   }
+  },
+  {
+   "id": "Q2",
+   "objective": "O3",
+   "type": "误解探针",
+   "zh": "一个房价模型，一半房子猜高了 20 万，一半猜低了 20 万。把误差直接平均，得 0。能说明它猜得很准吗？",
+   "en": "A house-price model overshoots half the houses by $20k and undershoots the other half by $20k. The plain average error is 0. Does that mean it's accurate?",
+   "choices": {
+    "zh": [
+     "A 能，平均误差是 0 就是满分",
+     "B 不能，正负抵消了；平方再平均就看得出它每套都差 20 万",
+     "C 不能，因为房价不能平均",
+     "D 能，猜高猜低刚好扯平"
+    ],
+    "en": [
+     "A Yes, zero average error is a perfect score",
+     "B No, the pluses and minuses cancel; squaring first shows it misses every house by $20k",
+     "C No, because house prices can't be averaged",
+     "D Yes, the overs and unders even out"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "不知道正负会抵消",
+    "D": "以为猜高猜低能互相弥补"
+   }
+  },
+  {
+   "id": "Q3",
+   "objective": "O3",
+   "type": "解释为什么",
+   "zh": "用均方误差打分时，模型 A 每个例子都差 2，模型 B 九个例子全对、一个例子差 6。谁的分更低？为什么？",
+   "en": "Scored by mean squared error over ten examples: model A misses every one by 2; model B gets nine exactly right and misses one by 6. Which scores lower, and why?",
+   "answer_key": {
+    "zh": "B 略低：A 的平方平均是 4，B 是 36 ÷ 10 = 3.6。关键是会算，并说出平方让一次大错罚得很重（差 6 罚 36，是差 2 的 9 倍）",
+    "en": "B is slightly lower (A: 4, B: 36 ÷ 10 = 3.6). The key is doing the arithmetic and noting that squaring makes the one big miss cost 9× a miss of 2"
+   }
+  },
+  {
+   "id": "Q4",
+   "objective": "O4",
+   "type": "识图",
+   "zh": "在两个旋钮的损失地形图上，训练要找的是哪里？那里的分数一定是零吗？",
+   "en": "On a two-knob loss landscape, where is training trying to get to? Is the score there always zero?",
+   "choices": {
+    "zh": [
+     "A 最高点；是零",
+     "B 最低点；不一定是零，数据里有随机波动时最好的拧法也会有误差",
+     "C 地图正中间；是零",
+     "D 最低点；一定是零"
+    ],
+    "en": [
+     "A The highest point; yes",
+     "B The lowest point; not necessarily, noisy data leaves some error even at the best setting",
+     "C The middle of the map; yes",
+     "D The lowest point; always zero"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "把地形图的高处当成好",
+    "D": "以为训练的目标是零误差"
+   }
+  },
+  {
+   "id": "Q5",
+   "objective": "O5",
+   "type": "迁移",
+   "zh": "大语言模型读到「我今天喝了一杯」，下一个词实际是「咖啡」。哪种情况损失最高？",
+   "en": "A language model reads \"This morning I drank a cup of\", and the real next word is \"coffee\". When is the loss highest?",
+   "choices": {
+    "zh": [
+     "A 它给「咖啡」90% 的把握",
+     "B 它给「咖啡」50% 的把握",
+     "C 它给「咖啡」2% 的把握",
+     "D 三种一样，反正都猜到了「咖啡」"
+    ],
+    "en": [
+     "A It gives \"coffee\" 90%",
+     "B It gives \"coffee\" 50%",
+     "C It gives \"coffee\" 2%",
+     "D All the same, \"coffee\" is on the list either way"
+    ]
+   },
+   "answer": "C",
+   "misconception_choices": {
+    "D": "以为只看猜没猜中、不看把握"
+   }
+  }
+ ],
+ "pass_rule": "每个学习目标至少有一道题，真人后测正确率比前测提升、且 ≥ 2/3 的人答对；讲回来能说出「给错误打分、越低越好」「训练就是把分压下去」，不出现误解。AI 学生结果只用于改题与找讲稿漏洞，不作过关依据。",
+ "explain_back": {
+  "prompt": {
+   "zh": "请用一分钟跟朋友解释：损失函数是什么，为什么常常要把误差平方。",
+   "en": "In one minute, explain to a friend what a loss function is, and why we often square the errors."
+  },
+  "propositions": [
+   "损失函数给模型的错误打一个分，分越低越好",
+   "训练就是拧旋钮把这个分压下去",
+   "误差先平方：正负不会抵消，大错罚得更重",
+   "（加分）每种拧法一个分，画成地形图，最低点就是最好的拧法，但最低点通常不是零",
+   "（加分）大语言模型给「猜下一个词」打分，叫交叉熵"
+  ],
+  "misconceptions": [
+   "损失越高越好",
+   "训练的目标是把损失降到零",
+   "直接平均误差就够了",
+   "模型懂得任务本身，不只是在压分",
+   "损失函数只有一种"
+  ]
+ }
+}

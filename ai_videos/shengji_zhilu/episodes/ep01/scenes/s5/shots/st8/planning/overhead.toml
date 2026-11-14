@@ -1,45 +1,45 @@
-# s5 st8（14 s）中景：维里攥拳转胳膊「It doesn't hurt.」；萨缪尔腿一软跪坐回地上，交代结果。
+# s5 st8（12 s）中景：维里猛地坐起、翻身站起，攥拳抡胳膊「It doesn't hurt.」；萨缪尔放下手站稳「Good. It's healed.」（104：施光后不累）。
 # 坐标＝bg2 平面图；s5 全场共用摆位见 .audit/adhoc_agents/2026-10-18/ep01-s5-rewrite-096/s5_overheads.py 头注（follow-up 096 新建，默认不做 previz）。
 
 [meta]
 scene = "bg2-6"
 view = [14.5, 44.0, 20.5, 50.0]
-note = "机位在维里脚边往东约 2 m、离地 1.1 m、28 mm，略俯：萨缪尔在画左（6–8 s 从站着跪坐下去）、亚伦在画右站着，维里仰躺在中间、抬起的右臂在画中。"
+note = "机位在维里脚边往东约 2 m、离地 1.1 m、28 mm：维里从躺着 0–3 s 坐起站起（站在原地偏东），萨缪尔在画左一直站着，亚伦在画右站着。"
 
 [[camera]]
 t = 0
 xy = [20.0, 47.2]
-h = 1.1
+h = 1.3
 look = [16.95, 46.7]
 lens = 28
-aim_h = 0.8
+aim_h = 1.5
 subject = "c13_Deputy_Willem"
-tag = "中景·恢复与脱力·固定"
+tag = "中景·恢复·维里正脸·固定"
 
 [[camera]]
-t = 14
+t = 12
 xy = [20.0, 47.2]
-h = 1.1
+h = 1.3
 look = [16.95, 46.7]
 lens = 28
-aim_h = 0.8
+aim_h = 1.5
 subject = "c13_Deputy_Willem"
 tag = "固定"
 
 [[actor]]
 key = "c13_Deputy_Willem"
 label = "维里"
-path = [[0, 17.9, 47.0, 20.0, 47.0], [14, 17.9, 47.0, 20.0, 47.0]]
+path = [[0, 17.9, 47.0, 20.0, 47.0], [1.5, 17.2, 47.0, 20.0, 47.0], [3, 16.9, 47.0, 20.0, 46.8], [12, 16.9, 47.0, 20.0, 46.8]]
 
 [[actor]]
 key = "c14_Brother_Sammuel"
 label = "萨缪尔"
-path = [[0, 16.8, 48.05, 16.65, 47.3], [6, 16.8, 48.05, 16.65, 47.3], [8, 16.75, 47.95, 16.2, 47.0], [14, 16.75, 47.95, 16.2, 47.0]]
+path = [[0, 16.8, 48.05, 16.9, 47.0], [12, 16.8, 48.05, 16.9, 47.0]]
 
 [[actor]]
 key = "c1_Aaron"
 label = "亚伦"
-path = [[0, 17.6, 45.4, 16.65, 47.3], [14, 17.6, 45.4, 16.65, 47.3]]
+path = [[0, 17.6, 45.4, 16.9, 47.0], [12, 17.6, 45.4, 16.9, 47.0]]
 
 [[object]]
 label = "长桌"
@@ -56,27 +56,32 @@ h = 0.45
 [[pose]]
 t = 0
 who = "维里"
-pose = "躺+伸手"
+pose = "躺"
+
+[[pose]]
+t = 1.5
+who = "维里"
+pose = "坐"
+
+[[pose]]
+t = 3
+who = "维里"
+pose = "站"
+
+[[pose]]
+t = 4
+who = "维里"
+pose = "站+伸手"
 
 [[pose]]
 t = 6
 who = "维里"
-pose = "躺"
+pose = "站"
 
 [[pose]]
 t = 0
 who = "萨缪尔"
 pose = "站"
-
-[[pose]]
-t = 6.5
-who = "萨缪尔"
-pose = "单膝跪"
-
-[[pose]]
-t = 7.5
-who = "萨缪尔"
-pose = "跪"
 
 [[pose]]
 t = 0
@@ -85,26 +90,27 @@ pose = "站"
 
 [[beat]]
 t0 = 0
-t1 = 4
-text = "维里抬右臂、攥拳、转胳膊"
+t1 = 3
+text = "维里猛地坐起、翻身站起"
 
 [[beat]]
-t0 = 4
+t0 = 3
 t1 = 6
-text = "维里「It doesn't hurt. Nothing.」"
+text = "攥拳、抡胳膊「It doesn't hurt. Nothing.」"
 
 [[beat]]
 t0 = 6
-t1 = 8
-text = "萨缪尔腿一软跪坐回地上"
+t1 = 9
+text = "萨缪尔放下手站稳"
 
 [[beat]]
-t0 = 8
-t1 = 14
-text = "萨缪尔「It's healed. The blood you lost will take longer. Stay down.」"
+t0 = 9
+t1 = 12
+text = "萨缪尔「Good. It's healed.」"
 
 [[carry]]
 who = "亚伦"
 what = "锤"
 key = "p480"
-on = "背
+on = "背"
+

@@ -15,9 +15,10 @@ MODULE_NAV_LABELS = {"story": "2_故事", "filming": "3_影视改编", "prompts"
                      "edit": "5_剪辑", "sound": "6_声音与音乐", "delivery": "7_成片交付"}
 WORLD_FACTS_FILE = "world_rules.md"
 STATE_CHANGES_FILE = "state_changes.md"
-COMPILER_VERSION = 12
+COMPILER_VERSION = 14
 VIDEO_SOUND_RULE = "仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。"
 SILENT_SHOT_RULE = "本镜没有人说话。"
+DIALOGUE_PRIORITY_RULE = "对白优先：有人说话时环境声和动作声压低到对白下面，每句台词清楚可辨。"
 ONE_TAKE_RULE = "连续镜头，不要切镜。不要字幕或水印。"
 # v5 (follow-up 227): every shot carries references and says what each one is for.
 # v6 (follow-up 228): one 参考 line; every person's three-view sheet and voice sample; the background image; the card's
@@ -34,10 +35,18 @@ ONE_TAKE_RULE = "连续镜头，不要切镜。不要字幕或水印。"
 # v11 (follow-up 276): a shot with a group card no longer lists 多出来的人 among its negatives — that word, the twin rule
 # and one shared sheet together made EP1 s1 st1 drop the second guard again; the count rule now says none may be missing.
 # A shot may carry an opening still (`planning/{stN}_first_frame.png`); it goes first on the 参考 line as the first frame.
+# v12 (follow-up 282): a shot's `allow_negatives` lifts named drama negatives for that shot only.
+# v13 (follow-up 350): voices go only to people who speak in the shot (a silent shot or group carries
+# no voice reference and no 声音参考 text); the 「本场：」 line (the whole scene's purpose) is gone, so other shots' beats
+# never leak into a shot prompt — 「场景：」 still gives location · time.
+# v14 (follow-up 043, chuanyue_yiri ep01 pre-gen review r3 I20/I35, s1 r2 I8): a shot with dialogue says dialogue comes
+# first in the mix; a shot with only extras (no three-view people) still gets the natural-performance rule; the prop
+# usage no longer says "it is this one item" (a purse of nine coins is several of one kind) — the count follows 画面.
 ANTI_TWIN_RULE = "画面中每个人物只出现一次，不要分身或双胞胎。"
 GROUP_COUNT_RULE = ("群演与动物（{keys}）按「人物」「画面」写的数量出现，写了几个就画几个，一个都不能少；"
                     "同一张三视图可以是几个同类，不算分身。")
 GROUP_DROPPED_NEGATIVE = "多出来的人，"
+EXTRAS_COUNT_RULE = "画面里另有 {n} 个没有三视图的路人，按「画面」写的样子和位置出现，写了几个就画几个，不多不少。"
 FIRST_FRAME_USAGE = ("`{tag}`是本镜的第一帧画面：视频就从这张图开始，开场时的人数、每个人的站位与离墙离门的距离、大小、朝向、"
                      "手里拿的东西、机位与取景都和它一致，然后按「动作」演下去。")
 NATURAL_MOTION_RULE = "人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。"
@@ -49,12 +58,25 @@ PREVIZ_USAGE = ("`{tag}`是绿幕前纯色小人偶的走位预演：只参考�
 CAST_USAGE = ("每张人物三视图（{keys}）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，"
               "不取图里的姿势、站位和机位，三视图的浅灰背景不入画。")
 SCENE_USAGE = "场景图`{scene}`只取材质、形制、陈设与色调，空间关系以`{motion}`为准，光线与时段按「光线」一行，场景图里的光向不照搬。"
-PROP_USAGE = ("道具图（{keys}）是本镜出现的道具：只取它的形制、尺寸比例、材质与配色，画面里它就是这一件，不换成别的样式；"
+PROP_USAGE = ("道具图（{keys}）是本镜出现的道具：只取它的形制、尺寸比例、材质与配色，画面里同类道具照它的样子画、不换成别的样式，数量按「画面」写的来；"
               "不取道具图的浅灰背景、机位与摆放角度。")
 VOICE_USAGE = "声音参考（{keys}）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。"
 LIP_SYNC_RULE = "画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。"
 BASE_NEGATIVES = ("分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，"
                   "绿幕，纯色人偶，示意图的圆点、箭头、线条与文字")
+# 镜组 (follow-up 331): a scene may list `groups` — consecutive shots generated in one call. Each group compiles to one
+# extra prompt beside the shots' own (which stay unchanged, so the version stays 12): the 镜组板 first, every member
+# shot's overhead, the union of people / props / backgrounds / voices, then one section per shot in order, and a rule
+# that cuts between shots but not within one. A group needs its board `scenes/sN/groups/gN/board.png`.
+GROUP_MAX_SECONDS = 30            # Seedance 2.5 output limit (tools/previz/seedance_ref.py MODEL_LIMITS)
+GROUP_BOARD_FILE = "board.png"
+GROUP_BOARD_USAGE = ("`{tag}`是本镜组的镜组板：{n} 格从左到右、从上到下依次对应下面的镜头 1 到镜头 {n}，每格是那个镜头的代表画面；"
+                     "照它安排每个镜头的构图、景别、机位、人物朝向与表情；格子的边框、排列、格与格之间的空白和多出来的空格都不出现在画面里，空格不对应任何镜头。")
+GROUP_OVERHEAD_USAGE = ("{tags}依次是镜头 1 到镜头 {n} 的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，"
+                        "旁边数字＝该镜头内的到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排每个镜头的机位、站位、"
+                        "朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。")
+GROUP_CUT_RULE = ("共 {n} 个镜头，按「镜头 1」到「镜头 {n}」的顺序与各自时长依次切换，每个镜头内部连续、不再切；"
+                  "镜头之间人物、服装、道具、光线与场景连续一致。不要字幕或水印。")
 CAST_KEY_RE = r"[cm][1-9]\d*(?:-[1-9]\d*)?"
 PROP_KEY_RE = r"p[1-9]\d*"
 PROMPT_MAX_CHARS = 5000

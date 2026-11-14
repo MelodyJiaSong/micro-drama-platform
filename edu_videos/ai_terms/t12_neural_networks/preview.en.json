@@ -1,0 +1,540 @@
+{
+ "title": "t12 Neural networks and deep learning — narration (English)",
+ "tagline": "",
+ "lang": "en",
+ "languages": [
+  {
+   "lang": "zh",
+   "label": "中文",
+   "preview": "edu_videos/ai_terms/t12_neural_networks/preview.json"
+  },
+  {
+   "lang": "en",
+   "label": "English",
+   "preview": "edu_videos/ai_terms/t12_neural_networks/preview.en.json"
+  }
+ ],
+ "video": "edu_videos/ai_terms/t12_neural_networks/final/t12_neural_networks.en.mp4",
+ "duration": 297.67,
+ "chapters": [
+  {
+   "id": "s0",
+   "title": "Cold open",
+   "t": 0.0
+  },
+  {
+   "id": "s1",
+   "title": "In this episode",
+   "t": 26.37
+  },
+  {
+   "id": "s2",
+   "title": "Beyond straight lines",
+   "t": 40.4
+  },
+  {
+   "id": "s3",
+   "title": "Build a small network",
+   "t": 88.87
+  },
+  {
+   "id": "s4",
+   "title": "Training",
+   "t": 144.2
+  },
+  {
+   "id": "s5",
+   "title": "Why go deep?",
+   "t": 180.2
+  },
+  {
+   "id": "s6",
+   "title": "AlexNet, 2012",
+   "t": 225.03
+  },
+  {
+   "id": "s7",
+   "title": "Ending",
+   "t": 276.6
+  }
+ ],
+ "items": [
+  {
+   "t": 0.6,
+   "end": 6.35,
+   "title": "Remember our two-knob taxi-fare machine?",
+   "subtitle": "Remember our two-knob taxi-fare machine? It learned how fares change with distance just fine.",
+   "badge": "l01",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l01.jpg"
+  },
+  {
+   "t": 6.7,
+   "end": 12.62,
+   "title": "But fares also depend on the time of day:",
+   "subtitle": "But fares also depend on the time of day: rush hour costs more, and late night a little more too.",
+   "badge": "l02",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l02.jpg"
+  },
+  {
+   "t": 12.97,
+   "end": 16.91,
+   "title": "It can't learn that",
+   "subtitle": "It can't learn that, because all it can draw is a straight line.",
+   "badge": "l03",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l03.jpg"
+  },
+  {
+   "t": 17.26,
+   "end": 21.27,
+   "title": "So how does a machine",
+   "subtitle": "So how does a machine learn a pattern that bends? With a neural network.",
+   "badge": "l04",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l04.jpg"
+  },
+  {
+   "t": 26.97,
+   "end": 32.94,
+   "title": "Last time, turning the knobs was like",
+   "subtitle": "Last time, turning the knobs was like walking downhill blindfolded, always stepping where the score drops fastest.",
+   "badge": "l05",
+   "chapter": "s1",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l05.jpg"
+  },
+  {
+   "t": 33.29,
+   "end": 39.48,
+   "title": "Today we'll build a tiny",
+   "subtitle": "Today we'll build a tiny network that learns the bend, see why more layers help, and meet AlexNet.",
+   "badge": "l06",
+   "chapter": "s1",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l06.jpg"
+  },
+  {
+   "t": 43.6,
+   "end": 50.31,
+   "title": "Here's some made-up data:",
+   "subtitle": "Here's some made-up data: the same 5-kilometer ride, 48 times, at different hours of the day.",
+   "badge": "l07",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l07.jpg"
+  },
+  {
+   "t": 50.66,
+   "end": 55.29,
+   "title": "Daytime rides cost about $23",
+   "subtitle": "Daytime rides cost about $23, just what our two-knob machine charges.",
+   "badge": "l08",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l08.jpg"
+  },
+  {
+   "t": 55.64,
+   "end": 60.78,
+   "title": "Around 8 a.m.",
+   "subtitle": "Around 8 a.m. and 6 p.m. it spikes, and late at night it's a bit pricier.",
+   "badge": "l09",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l09.jpg"
+  },
+  {
+   "t": 61.13,
+   "end": 67.38,
+   "title": "Same two knobs",
+   "subtitle": "Same two knobs, one for height and one for slope, but now we feed it the time, not the distance.",
+   "badge": "l10",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l10.jpg"
+  },
+  {
+   "t": 67.73,
+   "end": 72.1,
+   "title": "However you turn them",
+   "subtitle": "However you turn them, the best you get is a nearly flat line through the middle.",
+   "badge": "l11",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l11.jpg"
+  },
+  {
+   "t": 72.45,
+   "end": 81.25,
+   "title": "It undercharges at rush",
+   "subtitle": "It undercharges at rush hour and overcharges by day. Its loss, the score for how wrong it is, can't get below 11.5.",
+   "badge": "l12",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l12.jpg"
+  },
+  {
+   "t": 81.6,
+   "end": 87.94,
+   "title": "The knobs aren't the problem:",
+   "subtitle": "The knobs aren't the problem: this machine only draws straight lines, and the pattern bends.",
+   "badge": "l13",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l13.jpg"
+  },
+  {
+   "t": 92.07,
+   "end": 95.92,
+   "title": "The fix isn't one big machine.",
+   "subtitle": "The fix isn't one big machine. It's lots of simple little ones.",
+   "badge": "l14",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l14.jpg"
+  },
+  {
+   "t": 96.27,
+   "end": 102.41,
+   "title": "Each unit still has two",
+   "subtitle": "Each unit still has two knobs and draws a line, plus one rule: anything below zero becomes zero.",
+   "badge": "l15",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l15.jpg"
+  },
+  {
+   "t": 102.76,
+   "end": 105.46,
+   "title": "Its line stays flat, then bends upward.",
+   "subtitle": "Its line stays flat, then bends upward.",
+   "badge": "l16",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l16.jpg"
+  },
+  {
+   "t": 105.81,
+   "end": 109.19,
+   "title": "The two knobs set where",
+   "subtitle": "The two knobs set where it bends and how steep it gets.",
+   "badge": "l17",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l17.jpg"
+  },
+  {
+   "t": 109.55,
+   "end": 113.86,
+   "title": "One bend isn't enough",
+   "subtitle": "One bend isn't enough, so add more units that bend in different spots.",
+   "badge": "l18",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l18.jpg"
+  },
+  {
+   "t": 114.21,
+   "end": 118.49,
+   "title": "Add them up, and you can build bumps",
+   "subtitle": "Add them up, and you can build bumps, steps, almost any curve.",
+   "badge": "l19",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l19.jpg"
+  },
+  {
+   "t": 118.84,
+   "end": 124.52,
+   "title": "Our network has 12 units side",
+   "subtitle": "Our network has 12 units side by side in the first layer, and one unit in the second.",
+   "badge": "l20",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l20.jpg"
+  },
+  {
+   "t": 124.87,
+   "end": 132.19,
+   "title": "That unit scales each",
+   "subtitle": "That unit scales each bent line with a knob, adds them up, then one last knob shifts the total. That's the fare.",
+   "badge": "l21",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l21.jpg"
+  },
+  {
+   "t": 132.54,
+   "end": 134.29,
+   "title": "Thirty-seven knobs in all.",
+   "subtitle": "Thirty-seven knobs in all.",
+   "badge": "l22",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l22.jpg"
+  },
+  {
+   "t": 134.64,
+   "end": 138.55,
+   "title": "Layers of little units like",
+   "subtitle": "Layers of little units like this are what we call a neural network.",
+   "badge": "l23",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l23.jpg"
+  },
+  {
+   "t": 138.9,
+   "end": 143.28,
+   "title": "The name comes from neurons in the brain",
+   "subtitle": "The name comes from neurons in the brain, but don't take that too seriously.",
+   "badge": "l24",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l24.jpg"
+  },
+  {
+   "t": 144.8,
+   "end": 151.95,
+   "title": "To turn all thirty-seven",
+   "subtitle": "To turn all thirty-seven, we use last episode's trick, nudging every knob whichever way drops the loss fastest.",
+   "badge": "l25",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l25.jpg"
+  },
+  {
+   "t": 152.3,
+   "end": 157.7,
+   "title": "Our curve starts as a random squiggle",
+   "subtitle": "Our curve starts as a random squiggle, and step by step it bends toward the peaks.",
+   "badge": "l26",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l26.jpg"
+  },
+  {
+   "t": 158.05,
+   "end": 165.87,
+   "title": "After 10,000 steps",
+   "subtitle": "After 10,000 steps, the loss is down to 0.26. The best straight line never got below 11.5.",
+   "badge": "l27",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l27.jpg"
+  },
+  {
+   "t": 166.22,
+   "end": 169.28,
+   "title": "Rush hours and late nights",
+   "subtitle": "Rush hours and late nights, it catches them all.",
+   "badge": "l28",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l28.jpg"
+  },
+  {
+   "t": 169.63,
+   "end": 173.47,
+   "title": "And every corner on this curve",
+   "subtitle": "And every corner on this curve is one little unit making its bend.",
+   "badge": "l29",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l29.jpg"
+  },
+  {
+   "t": 173.82,
+   "end": 179.3,
+   "title": "By the way",
+   "subtitle": "By the way, there's a much faster trick for finding which way to turn each knob. More on that next time.",
+   "badge": "l30",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l30.jpg"
+  },
+  {
+   "t": 183.4,
+   "end": 187.68,
+   "title": "So far, we've put units side by side",
+   "subtitle": "So far, we've put units side by side, each adding one bend.",
+   "badge": "l31",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l31.jpg"
+  },
+  {
+   "t": 188.03,
+   "end": 193.75,
+   "title": "Now stack them",
+   "subtitle": "Now stack them, so each layer folds the line it gets from the layer before, like folding paper.",
+   "badge": "l32",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l32.jpg"
+  },
+  {
+   "t": 194.1,
+   "end": 198.81,
+   "title": "For example, two units per layer can fold",
+   "subtitle": "For example, two units per layer can fold a slanted line exactly in half.",
+   "badge": "l33",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l33.jpg"
+  },
+  {
+   "t": 199.16,
+   "end": 205.17,
+   "title": "One layer makes two straight pieces",
+   "subtitle": "One layer makes two straight pieces, two layers make four, and in this example each new layer doubles that.",
+   "badge": "l34",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l34.jpg"
+  },
+  {
+   "t": 205.52,
+   "end": 213.75,
+   "title": "So ten units side by side",
+   "subtitle": "So ten units side by side give at most 11 pieces. Stacked five deep, they can give 32.",
+   "badge": "l35",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l35.jpg"
+  },
+  {
+   "t": 214.1,
+   "end": 217.37,
+   "title": "Later layers reuse what",
+   "subtitle": "Later layers reuse what earlier ones already folded.",
+   "badge": "l36",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l36.jpg"
+  },
+  {
+   "t": 217.72,
+   "end": 221.97,
+   "title": "The deeper the stack",
+   "subtitle": "The deeper the stack, the more complex the shapes the same units can build.",
+   "badge": "l37",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l37.jpg"
+  },
+  {
+   "t": 222.32,
+   "end": 224.12,
+   "title": "That's the \"deep\" in deep learning.",
+   "subtitle": "That's the \"deep\" in deep learning.",
+   "badge": "l38",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l38.jpg"
+  },
+  {
+   "t": 228.23,
+   "end": 234.07,
+   "title": "In 2012, three researchers at the University",
+   "subtitle": "In 2012, three researchers at the University of Toronto trained a very deep neural network.",
+   "badge": "l39",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l39.jpg"
+  },
+  {
+   "t": 234.42,
+   "end": 237.08,
+   "title": "Their network became known as AlexNet.",
+   "subtitle": "Their network became known as AlexNet.",
+   "badge": "l40",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l40.jpg"
+  },
+  {
+   "t": 237.43,
+   "end": 243.82,
+   "title": "It had 8 layers and 60 million knobs.",
+   "subtitle": "It had 8 layers and 60 million knobs. It learned 1,000 categories from 1.2 million photos.",
+   "badge": "l41",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l41.jpg"
+  },
+  {
+   "t": 244.17,
+   "end": 250.48,
+   "title": "At that year's ImageNet contest",
+   "subtitle": "At that year's ImageNet contest, it got five guesses per picture, and only missed if all five were wrong.",
+   "badge": "l42",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l42.jpg"
+  },
+  {
+   "t": 250.83,
+   "end": 256.41,
+   "title": "The version they entered got 15.3% wrong.",
+   "subtitle": "The version they entered got 15.3% wrong. The runner-up got 26.2%.",
+   "badge": "l43",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l43.jpg"
+  },
+  {
+   "t": 256.76,
+   "end": 262.8,
+   "title": "Nobody told it what to look for",
+   "subtitle": "Nobody told it what to look for, yet its first layer learned to spot stripes at every angle, and patches of color.",
+   "badge": "l44",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l44.jpg"
+  },
+  {
+   "t": 263.15,
+   "end": 266.57,
+   "title": "Later layers combined those into",
+   "subtitle": "Later layers combined those into more and more complex patterns.",
+   "badge": "l45",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l45.jpg"
+  },
+  {
+   "t": 266.92,
+   "end": 272.19,
+   "title": "Removing any middle layer made",
+   "subtitle": "Removing any middle layer made its first-guess accuracy drop about 2 percentage points.",
+   "badge": "l46",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l46.jpg"
+  },
+  {
+   "t": 272.54,
+   "end": 275.67,
+   "title": "As the paper put it",
+   "subtitle": "As the paper put it, \"the depth really is important.\"",
+   "badge": "l47",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l47.jpg"
+  },
+  {
+   "t": 277.2,
+   "end": 282.37,
+   "title": "So a neural network is just",
+   "subtitle": "So a neural network is just simple little units with knobs, stacked layer on layer.",
+   "badge": "l48",
+   "chapter": "s7",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l48.jpg"
+  },
+  {
+   "t": 282.72,
+   "end": 286.68,
+   "title": "Stack them deep enough",
+   "subtitle": "Stack them deep enough, and they can recognize really complicated things.",
+   "badge": "l49",
+   "chapter": "s7",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l49.jpg"
+  },
+  {
+   "t": 287.03,
+   "end": 293.92,
+   "title": "Thirty-seven knobs, we can test one by one.",
+   "subtitle": "Thirty-seven knobs, we can test one by one. But sixty million? How do you find which way to turn them all?",
+   "badge": "l50",
+   "chapter": "s7",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l50.jpg"
+  },
+  {
+   "t": 294.27,
+   "end": 296.77,
+   "title": "That's backpropagation, coming up next time.",
+   "subtitle": "That's backpropagation, coming up next time.",
+   "badge": "l51",
+   "chapter": "s7",
+   "image": "edu_videos/ai_terms/t12_neural_networks/renders/en/thumbs/l51.jpg"
+  }
+ ],
+ "links": [
+  {
+   "label": "讲稿",
+   "path": "edu_videos/ai_terms/t12_neural_networks/script.en.md"
+  },
+  {
+   "label": "时间轴",
+   "path": "edu_videos/ai_terms/t12_neural_networks/timeline.en.json"
+  },
+  {
+   "label": "调研",
+   "path": "edu_videos/ai_terms/t12_neural_networks/research.md"
+  },
+  {
+   "label": "字幕",
+   "path": "edu_videos/ai_terms/t12_neural_networks/final/t12_neural_networks.en.srt"
+  }
+ ]
+}

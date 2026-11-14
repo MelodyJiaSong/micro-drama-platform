@@ -1,0 +1,20 @@
+# #41 Salween（Myanmar · Asia）
+
+- 长度：2,400 km（Encyclopaedia Britannica: Salween River；https://www.britannica.com/place/Salween-River）
+- 原文：“the river flows generally south for about 1,500 miles (2,400 km)”
+- 走向：From Tibet；Into the Andaman Sea
+- 备注：Nu Jiang in China, Thanlwin in Myanmar. FLAGGED: Wikipedia list 3,060 km, Wikidata 2,815 km (diff 15–22%). Kept Britannica.
+
+## 它是什么、在哪、长什么样（Britannica 摘录，存档于 raw/brit/）
+…article. External Websites Burma Rivers Network - Salween River Ask the Chatbot a Question Also known as: Khong River, Nu Chiang, Nu Jiang, Thanlwin Ri ver (Show More) Written and fact-checked by Britannica Editors Encyclopaedia Britannica's editors oversee subject areas in which they have extensive knowledge, whether from years of experience gained by working on that content or via study for an advanced degree.... Britannica Editors History Table of Contents Table of Contents Ask the Chatbot Salween River , major stream of Southeast Asia and the longest in Myanmar (Burma). Rising in the T’ang-ku-la Mountains, a range of eastern Tibet , the river flows generally south for about 1,500 miles (2,400 km) through Yunnan province, China , and eastern Myanmar, emptying into the Gulf of Martaban of the Andaman Sea at Moulmein. In its lower course the river forms the frontier between Myanmar and Thailand for about 80 miles (130 km). Chinese: Nu Chiang, or Nu Jiang (Show more) See all related content Wild and picturesque in its upper reaches, the Salween flows through narrow, deep gorges between high hills and cuts through the Shan Plateau of Myanmar. It is crossed by the Burma Road (Huiting Bridge) and by several road ferries in the Shan region. While the river is navigable for small craft in certain sections, dangerous rapids have impeded its use as a major waterway. Its major economic use is in floating teak logs from the forests of southeastern Myanmar to the sea. Hydroelectric power has been developed on the Pilu River, a right-bank tributary (via the Pawn River), while the Salween Rapids are potentially exploitable for power and irrigation. The Salween’s lower course is navigable for less than 100 miles (160 km). At Moulmein the Salween forms a small alluvial delta with the…
+
+## Wikipedia 导语（只作文字参考；TITLE: Salween River REVID: 1383395182）
+The Salween is a Southeast Asian river, about 3,289 km (2,044 mi) long, flowing from the Tibetan Plateau south into the Andaman Sea. The Salween flows primarily within southwest China and eastern Myanmar, with a short section forming the border of Myanmar and Thailand. Throughout most of its course, it runs swiftly through rugged mountain canyons. Despite the river's great length, only the last 90 km (56 mi) are navigable, where it forms a modest estuary and delta at Mawlamyine. The river is known by various names along its course, including the Thanlwin (named after Elaeocarpus sp., an olive-like plant that grows on its banks) in Myanmar and the Nu Jiang (or Nu River, named after Nu people) in China. The commonly used spelling "Salween" is an anglicisation of the Burmese name dating from 19th-century British maps.
+Due to its great range of elevation and latitude coupled with geographic isolation, the Salween basin is considered one of the most ecologically diverse regions in the world. Along with the Lancang and Jinsha rivers, it flows through the Three Parallel Rivers World Heritage Site, which is believed to support over 25% of the world’s animal species. During its course the Salween provides water for agriculture and supports abundant fisheries, especially in the delta region. The Salween basin is home to numerous ethnic minority groups, whose ancestors largely originated in the Tibetan Plateau and northwest China. Starting about 5,000 years ago, people began migrating s
+
+
+
+## 找图要点（浓缩进 data.json image_hint）
+- 标志性视角 / 最佳拍摄点：the First Bend of the Nu River (Salween) at Bingzhongluo, Yunnan, or the Thanlwin at Hpa-an / Mawlamyine, Myanmar
+- 易混对象（排除）：not the Mekong, not the Yangtze First Bend
+- 要求：真实照片，河本身是主体，横幅风景，适合 720×800 满版卡居中裁切；不要地图、卫星假彩色、AI 图。

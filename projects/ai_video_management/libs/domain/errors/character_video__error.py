@@ -46,3 +46,7 @@ class AudioExtractFailedError(CharacterVideoDomainError):
 class InvalidCharactersDirError(CharacterVideoDomainError):
     """Path is empty, outside sandbox, or not an `ai_videos/{drama}/.../
     characters/` directory — used by the batch extract-all run."""
+
+
+class NotCharacterCardDirError(CharacterVideoDomainError):
+    """Path is not a card folder `…/characters/[{group}/]{cN|mN}_…` (follow-up 286)."""

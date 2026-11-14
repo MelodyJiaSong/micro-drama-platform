@@ -1,0 +1,87 @@
+# s3 st3（7 s）
+# 坐标＝bg43 场地平面图（米，x 向东、y 向南）；follow-up 325
+
+[meta]
+scene = "bg43"
+view = [394, 556, 408, 570]
+note = "中景双人，同 st1 机位，随两人起身轻微上升；对话中两人一直互相看着。"
+
+[[camera]]
+t = 0
+xy = [400.3, 564.8]
+h = 1.0
+look = [400.3, 561.0]
+lens = 35
+aim_h = 1.4
+subject = "c113_Traveler"
+tag = "中景·双人"
+
+[[camera]]
+t = 7
+xy = [400.3, 564.8]
+h = 1.5
+look = [400.3, 561.0]
+lens = 35
+aim_h = 1.4
+subject = "c113_Traveler"
+
+[[actor]]
+key = "c113_Traveler"
+label = "旅行者"
+note = "坐着看医者问话；4–7 s 被扶着站起"
+path = [[0, 399.5, 561.0, 401.2, 561.0], [7, 399.6, 561.2, 401.0, 561.2]]
+
+[[actor]]
+key = "m310_Druid_Healer"
+label = "德鲁伊医者"
+note = "蹲着看她，3 s 笑一下、扶住她的左臂，4–7 s 两人一起站起"
+path = [[0, 401.2, 561.0, 399.5, 561.0], [7, 400.8, 561.2, 399.6, 561.2]]
+
+[[pose]]
+t = 0
+who = "旅行者"
+pose = "坐"
+
+[[pose]]
+t = 0
+who = "德鲁伊医者"
+pose = "蹲"
+
+[[pose]]
+t = 4
+who = "旅行者"
+pose = "站"
+
+[[pose]]
+t = 4
+who = "德鲁伊医者"
+pose = "站"
+
+[[gaze]]
+who = "旅行者"
+t0 = 0
+t1 = 7
+at = "德鲁伊医者"
+label = "医者"
+
+[[gaze]]
+who = "德鲁伊医者"
+t0 = 0
+t1 = 7
+at = "旅行者"
+label = "她"
+
+[[beat]]
+t0 = 0
+t1 = 3
+text = "她看着医者问「The... what? Sorry, where am I?」"
+
+[[beat]]
+t0 = 3
+t1 = 4
+text = "医者笑一下、扶住她的胳膊"
+
+[[beat]]
+t0 = 4
+t1 = 7
+text = "医者看着她说「Come. You need rest first.」，两人一起站起。"

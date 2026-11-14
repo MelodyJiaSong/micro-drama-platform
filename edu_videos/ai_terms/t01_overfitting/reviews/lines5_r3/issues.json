@@ -1,0 +1,4145 @@
+{
+ "run": "lines5_r3",
+ "round": 3,
+ "generated_at": "2026-11-09T10:26:01",
+ "items": [
+  {
+   "item": "voice_zh",
+   "name": "中文口播（母语听感，盲审）",
+   "final": {
+    "V1": 1,
+    "V2": 1,
+    "V3": 2,
+    "V4": 2,
+    "V5": 2,
+    "V6": 1,
+    "R": 2
+   },
+   "scores": {
+    "a": {
+     "V1": 1,
+     "V2": 1,
+     "V3": 2,
+     "V4": 2,
+     "V5": 2,
+     "V6": 2,
+     "R": 2
+    },
+    "b": {
+     "V1": 1,
+     "V2": 1,
+     "V3": 2,
+     "V4": 2,
+     "V5": 2,
+     "V6": 1,
+     "R": 1
+    },
+    "judge": {
+     "V6": 1,
+     "R": 2,
+     "V4": 2,
+     "V5": 2
+    }
+   }
+  },
+  {
+   "item": "voice_en",
+   "name": "English narration (native ear, blind)",
+   "final": {
+    "V1": 2,
+    "V2": 1,
+    "V3": 2,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2,
+    "R": 1
+   },
+   "scores": {
+    "a": {
+     "V1": 2,
+     "V2": 2,
+     "V3": 2,
+     "V4": 2,
+     "V5": 2,
+     "V6": 2,
+     "R": 2
+    },
+    "b": {
+     "V1": 1,
+     "V2": 1,
+     "V3": 2,
+     "V4": 2,
+     "V5": 2,
+     "V6": 3,
+     "R": 1
+    },
+    "judge": {
+     "V1": 2,
+     "V2": 1,
+     "R": 1,
+     "V5": 2,
+     "V4": 2
+    }
+   }
+  },
+  {
+   "item": "screen_zh",
+   "name": "中文屏幕文字（PPT 式画面）",
+   "final": {
+    "P1": 1,
+    "P2": 2,
+    "P3": 2,
+    "P4": 2,
+    "P5": 2,
+    "P6": 2,
+    "R": 1
+   },
+   "scores": {
+    "a": {
+     "P1": 1,
+     "P2": 2,
+     "P3": 2,
+     "P4": 2,
+     "P5": 2,
+     "P6": 2,
+     "R": 1
+    },
+    "b": {
+     "P1": 1,
+     "P2": 1,
+     "P3": 2,
+     "P4": 1,
+     "P5": 2,
+     "P6": 3,
+     "R": 1
+    },
+    "judge": {
+     "P2": 2,
+     "P4": 2,
+     "P5": 2,
+     "P6": 2,
+     "R": 1
+    }
+   }
+  },
+  {
+   "item": "screen_en",
+   "name": "English on-screen text (slides)",
+   "final": {
+    "P1": 2,
+    "P2": 2,
+    "P3": 2,
+    "P4": 2,
+    "P5": 1,
+    "P6": 2,
+    "R": 1
+   },
+   "scores": {
+    "a": {
+     "P1": 2,
+     "P2": 2,
+     "P3": 2,
+     "P4": 2,
+     "P5": 2,
+     "P6": 2,
+     "R": 2
+    },
+    "b": {
+     "P1": 2,
+     "P2": 2,
+     "P3": 2,
+     "P4": 3,
+     "P5": 1,
+     "P6": 3,
+     "R": 1
+    },
+    "judge": {
+     "P5": 1,
+     "R": 1,
+     "P4": 2,
+     "P1": 2
+    }
+   }
+  }
+ ],
+ "issues": [
+  {
+   "id": "I1",
+   "key": "a69c6cffaac6",
+   "item": "screen_en",
+   "where": "card_s10, credit",
+   "dim": "P5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "card_s10, credit"
+   ],
+   "evidence": [
+    "AI-generated narration · Font: MiSans"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**AI narration · MiSans** — render in the darker secondary-text colour, such as `#6E6E73`",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "AI-generated narration · Font: MiSans",
+   "problem": "The small, pale credit remains difficult to read against the near-white background. Credit exemption concerns word counts; it does not resolve legibility. This is a strict outro item.",
+   "suggest": "**AI narration · MiSans** — render in the darker secondary-text colour, such as `#6E6E73`",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "片尾署名改用 --sub 深灰（裁决人定稿）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I2",
+   "key": "01fa9c76ad22",
+   "item": "screen_en",
+   "where": "card_s10 credit (outro, strict)",
+   "dim": "P5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "card_s10 credit (outro, strict)"
+   ],
+   "evidence": [
+    "`AI-generated narration · Font: MiSans` in `color: var(--faint)` (#AEAEB2, ≈2.1:1)"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "Text unchanged. In `_shared/package/template.html` line 86, change `.outro .ai { … color: var(--faint); … }` to `.outro .ai { … color: var(--sub); … }` (#6E6E73, ≈4.9:1). Keep the size at 20 px. This shared template also affects other episodes, which is intended.",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "`AI-generated narration · Font: MiSans` in `color: var(--faint)` (#AEAEB2, ≈2.1:1)",
+   "problem": "Upheld from b and the previous I5. This is a disclosure on a strict outro, and at ≈2.1:1 it nearly disappears on a phone. The author declined because enlarging it would compete with the conclusion, but the fix is colour only. Source lines on l31–l34 already use `--sub` at the same size and do not compete.",
+   "suggest": "Text unchanged. In `_shared/package/template.html` line 86, change `.outro .ai { … color: var(--faint); … }` to `.outro .ai { … color: var(--sub); … }` (#6E6E73, ≈4.9:1). Keep the size at 20 px. This shared template also affects other episodes, which is intended.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "片尾署名改用 --sub 深灰（裁决人定稿）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I3",
+   "key": "e3ad18df1dc5",
+   "item": "screen_en",
+   "where": "outro (card_s10)",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "outro (card_s10)"
+   ],
+   "evidence": [
+    "`Overfitting:` / `Misprints memorized, / mistaken for patterns`"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "`Memorizing misprints, / mistaking them for patterns` (6 words)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "`Overfitting:` / `Misprints memorized, / mistaken for patterns`",
+   "problem": "Strict item, so I checked hard. It reads as a legitimate headline with parallel participles and ties back to the narration's \"misprints\" metaphor, so I do not call it must-fix. A native would still find it slightly telegraphic after the kicker and prefer an active frame.",
+   "suggest": "`Memorizing misprints, / mistaking them for patterns` (6 words)",
+   "judge_note": "a · outro rewrite `Memorizing misprints, / mistaking them for patterns`: This nearly repeats narration l41 (\"memorizing the misprints and mistaking them for real patterns\") word for word, which breaks the P2 split between screen and narration. The current participle headline reads naturally and passes the strict check, so keep it.",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：a · outro rewrite `Memorizing misprints, / mistaking them for patterns`: This nearly repeats narration l41 (\"memorizing the misprints and mistaking them for real patterns\") word for word, which breaks",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I4",
+   "key": "78ecc33b497d",
+   "item": "screen_en",
+   "where": "card_c_problem",
+   "dim": "P4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "card_c_problem"
+   ],
+   "evidence": [
+    "`What overfitting is`"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "`What overfitting is` (keep)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "`What overfitting is`",
+   "problem": "Strict item. Round 1 and round 2 ruled it natural; I agree it reads aloud without wincing. It does not parallel the noun-phrase cards (\"A small experiment\", \"A real example\"), but it pairs with \"How to prevent overfitting\". No change needed.",
+   "suggest": "`What overfitting is` (keep)",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人第 1、2 轮都判章名 What overfitting is 自然",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I5",
+   "key": "d6fc7fcd6ae4",
+   "item": "screen_en",
+   "where": "card_s10 credit line",
+   "dim": "P5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "card_s10 credit line"
+   ],
+   "evidence": [
+    "`AI-generated narration · Font: MiSans`"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep, or darken to `#6E6E73`",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "`AI-generated narration · Font: MiSans`",
+   "problem": "Exempt from word counts. Faint grey at about 2:1 contrast; the round-2 judge's note stands. Author's licensing reason is fair.",
+   "suggest": "Keep, or darken to `#6E6E73`",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "片尾署名改用 --sub 深灰（裁决人定稿）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I6",
+   "key": "9245474cf305",
+   "item": "screen_en",
+   "where": "card_intro",
+   "dim": "P3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "card_intro"
+   ],
+   "evidence": [
+    "`AI GLOSSARY · EPISODE 01` plus bottom-left `AI Glossary`"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "`AI GLOSSARY · EPISODE 01` plus bottom-left `AI Glossary`",
+   "problem": "The series label appears twice on the same card. Exempt (eyebrow and brand mark).",
+   "suggest": "Keep",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "片头卡是系列统一版式（左上角系列名＋中间期号），t00 同样",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I7",
+   "key": "ccf49ecdd142",
+   "item": "screen_en",
+   "where": "l03",
+   "dim": "P1, P2, P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2, P3",
+   "shots": [
+    "l03"
+   ],
+   "evidence": [
+    "`Model learns flukes in practice data` / `Does worse on new data`"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "`Memorizing flukes in practice data` / `Worse on new data`",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "`Model learns flukes in practice data` / `Does worse on new data`",
+   "problem": "The two blocks are not parallel (one has a subject, one does not), and the second is the narration's own closing clause. The round-2 judge kept the first line as a headline clause; that is acceptable, but the second line still copies the narration.",
+   "suggest": "`Memorizing flukes in practice data` / `Worse on new data`",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "两块是同一定义的两半（学到什么 / 结果），不求语法平行",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I8",
+   "key": "612ca3b9948d",
+   "item": "screen_en",
+   "where": "l03",
+   "dim": "P1, P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "l03"
+   ],
+   "evidence": [
+    "Model learns flukes in practice data / Does worse on new data"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Memorizing flukes in practice data** / **Worse on new data**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Model learns flukes in practice data / Does worse on new data",
+   "problem": "This still reads as a compressed spoken definition. The second line repeats the narration directly. Both blocks fit numerically, but the screen/voice division could be cleaner.",
+   "suggest": "**Memorizing flukes in practice data** / **Worse on new data**",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "定义屏是两行要点（学到什么 / 后果），屏上的短语比口播短一半，不是逐字重复",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I9",
+   "key": "822096f467fe",
+   "item": "screen_en",
+   "where": "l05",
+   "dim": "P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l05"
+   ],
+   "evidence": [
+    "`A small change,<br>and he's lost` (straight ')"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "s2.html data-en: `A small change,<br>and he’s lost`",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "`A small change,<br>and he's lost` (straight ')",
+   "problem": "Upheld from a (previous I17 was recorded as done but was not applied here). This 76 px red display line is the most visible straight apostrophe in the video, and l20 and l21 use ’.",
+   "suggest": "s2.html data-en: `A small change,<br>and he’s lost`",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l05、l10 眉题的撇号改成弯引号 ’（s2、s3 的英文全部替换）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I10",
+   "key": "d6422e71d5c4",
+   "item": "screen_en",
+   "where": "l05",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l05"
+   ],
+   "evidence": [
+    "`A small change, / and he's lost`"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "`A small change, / and he’s lost` (or `Small change, he’s lost`)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "`A small change, / and he's lost`",
+   "problem": "Straight apostrophe, while l20 and l21 use curly ones (the round-2 fix I17 was not applied here). The line also echoes the narration, but with the illustration beside it I keep that as the judge ruled.",
+   "suggest": "`A small change, / and he’s lost` (or `Small change, he’s lost`)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l05、l10 眉题的撇号改成弯引号 ’（s2、s3 的英文全部替换）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I11",
+   "key": "959ccee15090",
+   "item": "screen_en",
+   "where": "l05",
+   "dim": "P1, P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "l05"
+   ],
+   "evidence": [
+    "A small change, and he's lost"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Small change, he's lost**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "A small change, and he's lost",
+   "problem": "Natural and readable, but still close to the spoken sentence. The conjunction adds spoken rhythm rather than visual structure.",
+   "suggest": "**Small change, he's lost**",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "比方屏只有一个短句配插图，是故事的落点，不另造标签",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I12",
+   "key": "5e436062aaf8",
+   "item": "screen_en",
+   "where": "l08 vs l25, l27",
+   "dim": "P3, P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3, P4",
+   "shots": [
+    "l08 vs l25, l27"
+   ],
+   "evidence": [
+    "`Ten points: training data` vs `How many numbers for 10 points?`"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "`10 points: training data`",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "`Ten points: training data` vs `How many numbers for 10 points?`",
+   "problem": "One video shows both \"Ten\" and \"10\" for the same ten points.",
+   "suggest": "`10 points: training data`",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "l08 是口播句的字幕式标题「Ten points」，l25/l27 是数据表里的「10 numbers」，分别按文字与数字体例",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I13",
+   "key": "73e0baf4c49e",
+   "item": "screen_en",
+   "where": "l10 eyebrow",
+   "dim": "P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l10 eyebrow"
+   ],
+   "evidence": [
+    "`The model's job` (rendered `THE MODEL'S JOB`, straight ')"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "s3.html `#task .eyebrow` data-en: `The model’s job`",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "`The model's job` (rendered `THE MODEL'S JOB`, straight ')",
+   "problem": "Both reviewers missed this, and I17 claimed every on-screen apostrophe had been converted. Uppercase tracking makes the straight tick stand out.",
+   "suggest": "s3.html `#task .eyebrow` data-en: `The model’s job`",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l05、l10 眉题的撇号改成弯引号 ’（s2、s3 的英文全部替换）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I14",
+   "key": "bdba0512bde5",
+   "item": "screen_en",
+   "where": "l17–l21",
+   "dim": "P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l17–l21"
+   ],
+   "evidence": [
+    "`0.54` (grey, row ①, EXAM column)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep the text, darken the value to `#6E6E73` or lighter-weight dark grey",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "`0.54` (grey, row ①, EXAM column)",
+   "problem": "The exam score of the underfit model, which l22 says is bad, is pale grey (about 2.4:1 on near-white) and is hard to read beside the black practice value.",
+   "suggest": "Keep the text, darken the value to `#6E6E73` or lighter-weight dark grey",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "表格只比较练习、考试误差的大小，① 的考试误差已显示（0.54），不再另标",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I15",
+   "key": "781661808f97",
+   "item": "screen_en",
+   "where": "l17–l21",
+   "dim": "P3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l17–l21"
+   ],
+   "evidence": [
+    "column header `PRACTICE / EXAM`"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "`PRACTICE ERR. / EXAM ERR.` is too tight, so keep and rely on the l20 title; or `ERROR · PRACTICE / EXAM` as one header",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "column header `PRACTICE / EXAM`",
+   "problem": "The earlier header `PRACTICE ERROR` (l13–l16) becomes `PRACTICE / EXAM` and drops \"error\"; the unit comes back only in the l20 title.",
+   "suggest": "`PRACTICE ERR. / EXAM ERR.` is too tight, so keep and rely on the l20 title; or `ERROR · PRACTICE / EXAM` as one header",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "第二章前半只有练习误差一列，到考试才加第二列，列头随之变化",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I16",
+   "key": "942189f51c83",
+   "item": "screen_en",
+   "where": "l20",
+   "dim": "P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l20"
+   ],
+   "evidence": [
+    "`Wiggly curve’s exam error: 25× higher`"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep, or `26×`",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "`Wiggly curve’s exam error: 25× higher`",
+   "problem": "1.80 / 0.07 = 25.7, so a viewer who divides gets 26. The narration says \"more than twenty times\", which is safe. The \"higher than what\" baseline is the gentle-curve row, which the round-2 judge accepted.",
+   "suggest": "Keep, or `26×`",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "倍数按未四舍五入的误差算（24.9≈25），口播说「二十多倍」，不矛盾（上一轮裁决人已核）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I17",
+   "key": "f4591ebcb5d0",
+   "item": "screen_en",
+   "where": "l21",
+   "dim": "P2, P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2, P3",
+   "shots": [
+    "l21"
+   ],
+   "evidence": [
+    "`Noise: memorized, but won't repeat`"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "`Overfit: memorized noise won't repeat` (5 words)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "`Noise: memorized, but won't repeat`",
+   "problem": "The narration lands on \"That's overfitting\", but the headline never names it; the word appears only as a 22px tag in row ③. The headline is also a fragment pair that needs the narration to decode.",
+   "suggest": "`Overfit: memorized noise won't repeat` (5 words)",
+   "judge_note": "a · l21 `Overfit: memorized noise won't repeat`: This is unnecessary. The row ③ \"overfit\" tag appears on exactly this beat (s4_l21; it is absent on s4_l17–l20), so the screen already names overfitting when the narration says \"That's overfitting\". The rewrite also reintroduces a straight apostrophe.",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：a · l21 `Overfit: memorized noise won't repeat`: This is unnecessary. The row ③ \"overfit\" tag appears on exactly this beat (s4_l21; it is absent on s4_l17–l20), so the screen already names overfitting",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I18",
+   "key": "f079b014d569",
+   "item": "screen_en",
+   "where": "l23",
+   "dim": "P4, P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4, P2",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "`Overfit: aces practice, hard to catch`"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "`Overfit: perfect practice, hard to spot`",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "`Overfit: aces practice, hard to catch`",
+   "problem": "\"Aces\" needs a test as its object (same concern as the cold-open \"aces the data\" ruled off in round 2). \"Hard to catch\" does not parallel \"easy to spot\" on the line above, and the narration says \"sneakier\", not \"catch\".",
+   "suggest": "`Overfit: perfect practice, hard to spot`",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l23 改 Overfit: perfect practice, hard to spot（不再用 aces 配非考试的宾语）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I19",
+   "key": "7754f35e3924",
+   "item": "screen_en",
+   "where": "l24",
+   "dim": "P3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l24"
+   ],
+   "evidence": [
+    "`Learning ≈ compression` right after card `Learning as compression`"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "`Learning ≈ compression` right after card `Learning as compression`",
+   "problem": "The chapter card and the first screen show the same two words back to back, and l24 has no eyebrow. It works as the reveal for the narration \"think of learning as compression\", so only a note.",
+   "suggest": "Keep",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "第三章开场屏是一个大字论断「学习 ≈ 压缩」，章节卡刚出现过章名，开场屏不再重复页眉",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I20",
+   "key": "546dfedc7a77",
+   "item": "screen_en",
+   "where": "l24, l31–l34",
+   "dim": "P3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l24, l31–l34"
+   ],
+   "evidence": [
+    "no `03 ·` / `04 ·` eyebrow"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Add `04 · A REAL EXAMPLE` eyebrow in place of the l31/l34 sub-labels, or leave as is",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "no `03 ·` / `04 ·` eyebrow",
+   "problem": "Chapters 01, 02 and 05 keep the numbered eyebrow on all screens, 03 and 04 drop it after the first screen. The viewer can still locate themselves via the card dots, so a note.",
+   "suggest": "Add `04 · A REAL EXAMPLE` eyebrow in place of the l31/l34 sub-labels, or leave as is",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同上；第四章页眉在开场屏，之后用版本小标签定位（上一轮已说明）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I21",
+   "key": "bd23f5cba745",
+   "item": "screen_en",
+   "where": "l26–l28",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l26–l28"
+   ],
+   "evidence": [
+    "`Store as is: 10 numbers` / `② 4 numbers: compressed` / `③ 10 numbers: no compression`"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "`As is: 10 numbers` / `② Gentle curve: 4 numbers, compressed` / `③ Wiggly curve: 10 numbers, no compression` (20 words, still within limits)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "`Store as is: 10 numbers` / `② 4 numbers: compressed` / `③ 10 numbers: no compression`",
+   "problem": "Row 1 has no marker and no curve name, while rows 2 and 3 point back to curves from chapter 02. The author's reason (① is already the straight line) is valid, so do not number it, but a name keeps the rows parallel.",
+   "suggest": "`As is: 10 numbers` / `② Gentle curve: 4 numbers, compressed` / `③ Wiggly curve: 10 numbers, no compression` (20 words, still within limits)",
+   "judge_note": "b · l26–l28 `Raw points: 10 / ② Gentle curve: 4 / ③ Wiggly curve: 10`: This deletes \"compressed / no compression\", the payoff the narration lands on at l26 (\"That's compression\") and l28 (\"no compression at all\").",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：b · l26–l28 `Raw points: 10 / ② Gentle curve: 4 / ③ Wiggly curve: 10`: This deletes \"compressed / no compression\", the payoff the narration lands on at l26 (\"That's compression\") and l28 (\"no compress",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I22",
+   "key": "d5f35413d7e1",
+   "item": "screen_en",
+   "where": "l26–l28",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l26–l28"
+   ],
+   "evidence": [
+    "Store as is: 10 numbers / ② 4 numbers: compressed / ③ 10 numbers: no compression"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Raw points: 10** / **② Gentle curve: 4** / **③ Wiggly curve: 10** — retain the coloured number blocks; the title already establishes the unit",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Store as is: 10 numbers / ② 4 numbers: compressed / ③ 10 numbers: no compression",
+   "problem": "The coloured curves help, but ②/③ have no local names. The objection to inventing a ① is valid; it does not prevent naming the two models.",
+   "suggest": "**Raw points: 10** / **② Gentle curve: 4** / **③ Wiggly curve: 10** — retain the coloured number blocks; the title already establishes the unit",
+   "judge_note": "b · l26–l28 `Raw points: 10 / ② Gentle curve: 4 / ③ Wiggly curve: 10`: This deletes \"compressed / no compression\", the payoff the narration lands on at l26 (\"That's compression\") and l28 (\"no compression at all\").",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：b · l26–l28 `Raw points: 10 / ② Gentle curve: 4 / ③ Wiggly curve: 10`: This deletes \"compressed / no compression\", the payoff the narration lands on at l26 (\"That's compression\") and l28 (\"no compress",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I23",
+   "key": "6e48609b106c",
+   "item": "screen_en",
+   "where": "l31–l34 source lines; card_s10 credits",
+   "dim": "P5",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l31–l34 source lines; card_s10 credits"
+   ],
+   "evidence": [
+    "Lazer et al. · Science · 2014; end-card credits"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Keep the wording; verify on a composited subtitle frame and move upward only if necessary",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Lazer et al. · Science · 2014; end-card credits",
+   "problem": "These sit near the lower frame. The screenshots omit narration subtitles, so they cannot demonstrate final clearance, especially for a two-line subtitle. No collision is established.",
+   "suggest": "Keep the wording; verify on a composited subtitle frame and move upward only if necessary",
+   "judge_note": "b · l31–l34 source lines / card_s10 credits (存疑, subtitle overlap): The author's round-2 answer still holds. Source lines sit at y≈875 in s8_l31–l34, the subtitle band is y≥930, and the layout self-check passed. b gives no new evidence.",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "出处行 y≈860–890，字幕带 y≥930，版式自检通过",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I24",
+   "key": "0803c57ec3c1",
+   "item": "screen_en",
+   "where": "l32",
+   "dim": "P1, P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "l32"
+   ],
+   "evidence": [
+    "Some terms just peak in winter"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Just winter peaks**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Some terms just peak in winter",
+   "problem": "A complete explanatory sentence remains on screen. Calling it a keynote headline does not fully address this project’s outline-only preference. The earlier rejection correctly asks to retain “just.”",
+   "suggest": "**Just winter peaks**",
+   "judge_note": "b · l32 `Just winter peaks`: This is worse. It reads as \"only the winter peaks\" and drops \"terms\", the word that links l32 to the \"search terms\" on l31. The round-2 judge already ruled the current 6-word headline legitimate, and that ruling stands.",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：b · l32 `Just winter peaks`: This is worse. It reads as \"only the winter peaks\" and drops \"terms\", the word that links l32 to the \"search terms\" on l31. The round-2 judge already ruled the current 6-w",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I25",
+   "key": "8c8887caa65b",
+   "item": "screen_en",
+   "where": "l32, l33",
+   "dim": "P1",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l32, l33"
+   ],
+   "evidence": [
+    "`Some terms just peak in winter`; `“Part flu detector, part winter detector”`"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "`Some terms just peak in winter`; `“Part flu detector, part winter detector”`",
+   "problem": "l32 is a short claim headline and l33 a sourced quote. Both are within limits and both were accepted in round 2. Neither is a new issue.",
+   "suggest": "Keep",
+   "judge_note": "b · l32 `Just winter peaks`: This is worse. It reads as \"only the winter peaks\" and drops \"terms\", the word that links l32 to the \"search terms\" on l31. The round-2 judge already ruled the current 6-word headline legitimate, and that ruling stands.",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：b · l32 `Just winter peaks`: This is worse. It reads as \"only the winter peaks\" and drops \"terms\", the word that links l32 to the \"search terms\" on l31. The round-2 judge already ruled the current 6-w",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I26",
+   "key": "f090e1ad73eb",
+   "item": "screen_en",
+   "where": "l34",
+   "dim": "P5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l34"
+   ],
+   "evidence": [
+    "`100 / 108` (the `108` in pale grey)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Darken `108` slightly",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "`100 / 108` (the `108` in pale grey)",
+   "problem": "The denominator is large type, so it stays readable, but at about 2.1:1 it is the weakest large text on the screen.",
+   "suggest": "Darken `108` slightly",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "分母字号大，可读（审稿人记录级）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I27",
+   "key": "0ba5f46337a8",
+   "item": "screen_en",
+   "where": "l38 caption",
+   "dim": "P5, P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5, P4",
+   "shots": [
+    "l38 caption"
+   ],
+   "evidence": [
+    "`Not for real projects: picking by / exam score`"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "s9.html `#confess` data-en: `Real projects:<br><span class=\"accent\">don’t pick by exam score</span>`, which shows as `Real projects:` / `don’t pick by exam score` (7 words, curly ’, with a forced break where the meaning splits)",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "`Not for real projects: picking by / exam score`",
+   "problem": "Upheld from a and b (previous I31). The rendered break splits the phrase after \"by\", so the author's reason for not adopting is false. The line also puts the predicate before the subject, so viewers read \"Not for real projects\" before they know what it refers to. Narration: \"On a real project, you shouldn't.\"",
+   "suggest": "s9.html `#confess` data-en: `Real projects:<br><span class=\"accent\">don’t pick by exam score</span>`, which shows as `Real projects:` / `don’t pick by exam score` (7 words, curly ’, with a forced break where the meaning splits)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l38 改为 Real projects: / don’t pick by exam score（裁决人定稿，折行落在冒号后）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I28",
+   "key": "bf3521077ff6",
+   "item": "screen_en",
+   "where": "l38",
+   "dim": "P5, P1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5, P1",
+   "shots": [
+    "l38"
+   ],
+   "evidence": [
+    "`Not for real projects: picking / by exam score`"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "`Real projects: don't pick by exam score` (7 words) or `Don't pick by exam score` (5)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "`Not for real projects: picking / by exam score`",
+   "problem": "Wraps after \"picking by\", so the author's claim that it breaks after the colon is wrong. It is the longest block on any screen (8 words) and a gerund fragment that does not say what to do.",
+   "suggest": "`Real projects: don't pick by exam score` (7 words) or `Don't pick by exam score` (5)",
+   "judge_note": "b · l38 `Demo only: / picking by exam score`: \"Demo only\" does not tell the viewer what to do on a real project, and it keeps the predicate-first structure. The ruling's rewrite above replaces it.",
+   "status": "implemented",
+   "solution": "l38 改为 Real projects: / don’t pick by exam score（裁决人定稿，折行落在冒号后）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I29",
+   "key": "4affc21264f6",
+   "item": "screen_en",
+   "where": "l38",
+   "dim": "P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l38"
+   ],
+   "evidence": [
+    "Not for real projects: picking by / exam score"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**Demo only:** / **picking by exam score**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Not for real projects: picking by / exam score",
+   "problem": "The supplied screenshot still splits the phrase after “by.” The author’s stated break, “Not for real projects: / picking by exam score,” is not what this capture shows.",
+   "suggest": "**Demo only:** / **picking by exam score**",
+   "judge_note": "b · l38 `Demo only: / picking by exam score`: \"Demo only\" does not tell the viewer what to do on a real project, and it keeps the predicate-first structure. The ruling's rewrite above replaces it.",
+   "status": "implemented",
+   "solution": "l38 改为 Real projects: / don’t pick by exam score（裁决人定稿，折行落在冒号后）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I30",
+   "key": "b474d012ef3c",
+   "item": "screen_en",
+   "where": "l39, l40 card ②",
+   "dim": "P5, P3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5, P3",
+   "shots": [
+    "l39, l40 card ②"
+   ],
+   "evidence": [
+    "`② More data, more / variety`"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "s9.html card ② data-en: `② More data<br><span class=\"c-good\">and more variety</span>`, which shows as `② More data` / `and more variety` (5 words; l40 total becomes 14; green matches the card's curve)",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "`② More data, more / variety`",
+   "problem": "Upheld from a (this regression came from the I32 fix). The card wraps mid-phrase and leaves \"more\" dangling, the false-start effect I32 was meant to remove. Card ① already uses a title plus a coloured second line, but card ② does not.",
+   "suggest": "s9.html card ② data-en: `② More data<br><span class=\"c-good\">and more variety</span>`, which shows as `② More data` / `and more variety` (5 words; l40 total becomes 14; green matches the card's curve)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "卡② 改为 ② More data / and more variety（裁决人定稿）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I31",
+   "key": "9175095bf362",
+   "item": "screen_en",
+   "where": "l39, l40 (card ②)",
+   "dim": "P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l39, l40 (card ②)"
+   ],
+   "evidence": [
+    "`② More data, more / variety`"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "`② More varied data` (one line, 3 words)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "`② More data, more / variety`",
+   "problem": "Introduced by the round-2 fix. The card title wraps and leaves \"variety\" alone on line 2, while ① and ③ do not wrap in the same way. The repeated \"more\" also reads as a false start.",
+   "suggest": "`② More varied data` (one line, 3 words)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "卡② 改为 ② More data / and more variety（裁决人定稿）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I32",
+   "key": "90a5f37888ce",
+   "item": "screen_en",
+   "where": "l40 (card ③)",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l40 (card ③)"
+   ],
+   "evidence": [
+    "`③ Regularization` (bare) next to `① Validation set / a mock exam`"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "`③ Regularization` with a purple second line `penalize complexity` (word total about 20, still under 22)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "`③ Regularization` (bare) next to `① Validation set / a mock exam`",
+   "problem": "① has a plain-language gloss, ③ is a jargon term with none, and the narration's whole explanation (\"overly complicated curves get penalized\") has no on-screen anchor.",
+   "suggest": "`③ Regularization` with a purple second line `penalize complexity` (word total about 20, still under 22)",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "③ 正则化是术语本身，口播当句就解释了「太复杂就扣分」",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I33",
+   "key": "2a932c2e701b",
+   "item": "screen_zh",
+   "where": "outro",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "outro"
+   ],
+   "evidence": [
+    "小字「过拟合，就是」＋大字「连印错的都背了，／还当成规律」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "去掉行末逗号，改成两行「连印错的都背了／还当成规律」；小字保留「过拟合，就是」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "小字「过拟合，就是」＋大字「连印错的都背了，／还当成规律」",
+   "problem": "大号行末带逗号，11 秒不动的画面上很显眼；全句的主语只在小灰字里，大字单独读不出是谁在背",
+   "suggest": "去掉行末逗号，改成两行「连印错的都背了／还当成规律」；小字保留「过拟合，就是」",
+   "judge_note": "b · outro（改写「死记噪声／误当规律」）：片尾是从严条目。「误当规律」没有宾语，是电报体，也丢掉了练习册「印错的」这个回扣；现文是上一轮裁定的完整句，不改。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "两行是一句话的上下半，行末逗号是中文正常停顿；主语在页眉小字「过拟合，就是」",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I34",
+   "key": "005712651455",
+   "item": "screen_zh",
+   "where": "outro",
+   "dim": "P1、P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P2",
+   "shots": [
+    "outro"
+   ],
+   "evidence": [
+    "过拟合，就是／连印错的都背了，／还当成规律"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "小字“过拟合”；主文“死记噪声／误当规律”（8字）；保留“下一期·强化学习”。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "过拟合，就是／连印错的都背了，／还当成规律",
+   "problem": "语病已解决，12字主文也合规；但与 l41 仍是同一句话的缩印，未转成纲要。",
+   "suggest": "小字“过拟合”；主文“死记噪声／误当规律”（8字）；保留“下一期·强化学习”。",
+   "judge_note": "b · outro（改写「死记噪声／误当规律」）：片尾是从严条目。「误当规律」没有宾语，是电报体，也丢掉了练习册「印错的」这个回扣；现文是上一轮裁定的完整句，不改。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：b · outro（改写「死记噪声／误当规律」）：片尾是从严条目。「误当规律」没有宾语，是电报体，也丢掉了练习册「印错的」这个回扣；现文是上一轮裁定的完整句，不改。",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I35",
+   "key": "7477f6c0b075",
+   "item": "screen_zh",
+   "where": "出处行",
+   "dim": "P4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "出处行"
+   ],
+   "evidence": [
+    "「Lazer 等 ·《Science》· 2014」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「Lazer 等 · 《Science》 · 2014」，两侧都留一个空格",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "「Lazer 等 ·《Science》· 2014」",
+   "problem": "间隔号两侧空格不对称（「等 ·《」前有空格后无，「》· 2014」前无后有）；出处行不计字数，只是体例",
+   "suggest": "「Lazer 等 · 《Science》 · 2014」，两侧都留一个空格",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "出处行用《》书名号，间隔号两侧空格是英文作者名（Lazer 等）与中文书名号相接处的排版，后续统一时一起改",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I36",
+   "key": "98ebe1346b05",
+   "item": "screen_zh",
+   "where": "l01",
+   "dim": "P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l01"
+   ],
+   "evidence": [
+    "「换到新数据」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「换成新数据」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "「换到新数据」",
+   "problem": "口播是「一换成新数据」，屏上是「换到」，用词不同",
+   "suggest": "「换成新数据」",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "屏上「换到新数据」与口播「换成新数据」同义，标签更短",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I37",
+   "key": "7ace82ec579b",
+   "item": "screen_zh",
+   "where": "l03",
+   "dim": "P2、P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2、P4",
+   "shots": [
+    "l03"
+   ],
+   "evidence": [
+    "「偶然的细节也学进去」／「新数据上反而变差」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「死记碰巧的细节」／「新数据答不准」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "「偶然的细节也学进去」／「新数据上反而变差」",
+   "problem": "口播已改成「碰巧出现的细节都记住了」「答不准」，屏上用词没跟着改；「学进去」是翻译腔（语音审稿已抓过）；「变差」不说变差什么",
+   "suggest": "「死记碰巧的细节」／「新数据答不准」",
+   "judge_note": "a · l03（改写「死记碰巧的细节」）：「碰巧的细节」是上一轮 I36 判过搭配别扭的说法，作者已经改掉了，不能改回去。如果要和新口播统一，用「碰巧出现的细节也记住」（9 字），配「新数据上反而答不准」。",
+   "status": "implemented",
+   "solution": "定义屏改「碰巧的细节都记住了 / 新数据反而答不准」，与口播 l03 用词一致",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I38",
+   "key": "7229b0bf8636",
+   "item": "screen_zh",
+   "where": "l04",
+   "dim": "P3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l04"
+   ],
+   "evidence": [
+    "学生插图"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "插图延伸到底，或四周留白后居中",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "学生插图",
+   "problem": "插图在 y≈745 处被一条直边切掉桌腿，下方整片空白，像裁错了；不是文字问题",
+   "suggest": "插图延伸到底，或四周留白后居中",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "陶土插图的下边缘是图本身的构图（桌面截断），不是文字问题，留待插图统一重出时处理",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I39",
+   "key": "d21a8c3ebb12",
+   "item": "screen_zh",
+   "where": "l13–l16",
+   "dim": "P3、P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3、P5",
+   "shots": [
+    "l13–l16"
+   ],
+   "evidence": [
+    "① 行小字「欠拟合」（22px 浅灰）"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "文字不变，字号提到 28px，颜色加深到 #6E6E73 左右，保留灰色表示「欠拟合」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "① 行小字「欠拟合」（22px 浅灰）",
+   "problem": "口播在 l13 刚给它起名「这就叫欠拟合」，它在屏上却是最弱元素，标题 76px 压着它；浅灰对比度低，边看曲线边看字幕容易漏",
+   "suggest": "文字不变，字号提到 28px，颜色加深到 #6E6E73 左右，保留灰色表示「欠拟合」",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "欠拟合标签沿用全片图例颜色（灰），字号已是最小字号以上；口播当句命名，屏幕只做标注",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I40",
+   "key": "3ef600b69b17",
+   "item": "screen_zh",
+   "where": "l13–l16",
+   "dim": "P3、P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3、P5",
+   "shots": [
+    "l13–l16"
+   ],
+   "evidence": [
+    "欠拟合"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "文字保留“欠拟合”，字号提高到28px，适当加深灰色，保持与直线的对应。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "欠拟合",
+   "problem": "标签比模型名称、误差数字都弱。灰色编码可以保留，但“符合最小字号”不足以回应兼看字幕时的辨识问题。",
+   "suggest": "文字保留“欠拟合”，字号提高到28px，适当加深灰色，保持与直线的对应。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同上",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I41",
+   "key": "f9e0d5dceb92",
+   "item": "screen_zh",
+   "where": "l17–l19",
+   "dim": "P2、P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2、P3",
+   "shots": [
+    "l17–l19"
+   ],
+   "evidence": [
+    "#h-a 标题「换成新题：考试」"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "`scenes/web/s4.html` 的 #h-a 标题，data-zh 改成「六个新点：测试数据」（8 字），和 s3.html 的「十个点：训练数据」对仗；表头「练习／考试」保留，对应口播「相当于考试」",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "#h-a 标题「换成新题：考试」",
+   "problem": "两人都漏了。口播 l17 刚说「这叫测试数据，就相当于考试」，屏上却没有「测试数据」这个术语；l08 的同位标题是「十个点：训练数据」，到这里体例断了。后面 l36–l40 的柱条写的是「测试」，在屏上找不到出处，同一张卡上「测试」柱和「考试」注释成了一样东西的两个叫法",
+   "suggest": "`scenes/web/s4.html` 的 #h-a 标题，data-zh 改成「六个新点：测试数据」（8 字），和 s3.html 的「十个点：训练数据」对仗；表头「练习／考试」保留，对应口播「相当于考试」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l17 标题改「六个新点：测试数据」，屏上有了口播刚命名的术语",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I42",
+   "key": "bd8323e26702",
+   "item": "screen_zh",
+   "where": "l17–l20",
+   "dim": "P5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l17–l20"
+   ],
+   "evidence": [
+    "材料里 ③ 行「过拟合」从 l17 起就列了"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "无需改画面；材料按每句说完前一刻重截",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "材料里 ③ 行「过拟合」从 l17 起就列了",
+   "problem": "材料与截图不一致：截图 l17、l20 的 ③ 行没有小字，l21 才出现；本报告以截图为准，材料漏拍的是句中出现的元素",
+   "suggest": "无需改画面；材料按每句说完前一刻重截",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "审查材料工具的已知限制（子元素透明时仍计字），见 I44；以截图为准",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I43",
+   "key": "c549c86cee7a",
+   "item": "screen_zh",
+   "where": "l17–l20、outro、l02（材料记录）",
+   "dim": "R",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "R",
+   "shots": [
+    "l17–l20、outro、l02（材料记录）"
+   ],
+   "evidence": [
+    "材料提前列“过拟合”；片尾漏列小字；l02 只计“过拟合”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "材料中“过拟合”诊断从 l21 起列；片尾补列“过拟合，就是”“下一期”；l02 补列仍可见的旧文字。本轮计数以截图为准。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "材料提前列“过拟合”；片尾漏列小字；l02 只计“过拟合”",
+   "problem": "文字清单与实际截图不完全一致，不能直接使用材料合计判定通过。l02 截图还保留淡出的两行旧文字。",
+   "suggest": "材料中“过拟合”诊断从 l21 起列；片尾补列“过拟合，就是”“下一期”；l02 补列仍可见的旧文字。本轮计数以截图为准。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同上",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I44",
+   "key": "f389e1f6b050",
+   "item": "screen_zh",
+   "where": "材料（l17–l20 ③ 行、各屏合计行）",
+   "dim": "R、P1",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "R、P1",
+   "shots": [
+    "材料（l17–l20 ③ 行、各屏合计行）"
+   ],
+   "evidence": [
+    "材料在 l17–l20 列出了「过拟合」（9 字）；合计行写「不含小标签、图表」"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "TEXT_JS 取字时跳过 op<0.3 的子元素；合计行只排除页眉小标签、案例页签和出处，把表头（.cols）和图内文字计进去，按口径分别标出「表」「图」各算 1 块",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "材料在 l17–l20 列出了「过拟合」（9 字）；合计行写「不含小标签、图表」",
+   "problem": "作者 I41 的不改理由「漏拍」不成立：`tools/edu_web.py` 的 TEXT_JS 把带 data-zh 的整行当一块，取的是 innerText，只看这一行本身的透明度，所以透明度为 0 的子元素 #tg3 也被计了进去。另外 `tools/edu_review.py` 的合计排除了 eyebrow 和 chart 两类，和第 2 轮定的口径冲突：列头「练习／考试」（class 是 eyebrow cols）和图内的「训练／验证／测试」都应该计。两位审稿人这两轮都只能自己重算",
+   "suggest": "TEXT_JS 取字时跳过 op<0.3 的子元素；合计行只排除页眉小标签、案例页签和出处，把表头（.cols）和图内文字计进去，按口径分别标出「表」「图」各算 1 块",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决成立：TEXT_JS 取 innerText 时，子元素透明也会算进去；已记为工具改进项（screen_dump 改为逐个可见文本节点计字）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I45",
+   "key": "02d561a4b3b7",
+   "item": "screen_zh",
+   "where": "l20",
+   "dim": "P3、P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3、P4",
+   "shots": [
+    "l20"
+   ],
+   "evidence": [
+    "「③ 的考试误差：② 的 25 倍」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「③ 考试误差：② 的 25 倍」，红色只给「25 倍」，② 保持绿色",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "「③ 的考试误差：② 的 25 倍」",
+   "problem": "标题里的「②」是红色，表格里 ② 是绿色，同一个编号两种颜色，红色其实是在强调倍数；圈号做主语，要回头对表才懂",
+   "suggest": "「③ 考试误差：② 的 25 倍」，红色只给「25 倍」，② 保持绿色",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l20 标题里的「②」不再标红，只把「25 倍」标红",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I46",
+   "key": "53ca68b85743",
+   "item": "screen_zh",
+   "where": "l21",
+   "dim": "P1、P3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P3",
+   "shots": [
+    "l21"
+   ],
+   "evidence": [
+    "表 ③ 行「③ 复杂曲线／过拟合／0.00／1.80」（9 字）；标题「噪声不会重演」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "标题「过拟合：噪声不会重演」（10 字）；③ 行删掉小字，只留「③ 复杂曲线／0.00／1.80」。整屏约 33 字，表恢复合算 1 块",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "表 ③ 行「③ 复杂曲线／过拟合／0.00／1.80」（9 字）；标题「噪声不会重演」",
+   "problem": "上一轮 I43 未解决。③ 行 9 字超每项 ≤8 字，表不再算 1 块，整屏变成 标题＋列头＋3 行＝5 块，超 4 块；口播最后一句「这就是过拟合」，屏上「过拟合」只是 22px 小字，标题反而没有它",
+   "suggest": "标题「过拟合：噪声不会重演」（10 字）；③ 行删掉小字，只留「③ 复杂曲线／0.00／1.80」。整屏约 33 字，表恢复合算 1 块",
+   "judge_note": "b · l21（标题改写「过拟合：误把噪声当规律」）：这是在重复 l07「把噪声当规律记住→过拟合」。标题在 l21 的 0.42 处淡入，那时口播正在说「噪声是随机的……不会再来一遍」，所以用补充问题里的定稿「过拟合：噪声不会重演」。",
+   "status": "implemented",
+   "solution": "l21：#h-c 标题改「过拟合：噪声不会重演」，③ 行去掉小字标签（只剩「③ 复杂曲线」），全屏 32 字、2 块（裁决人定稿）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I47",
+   "key": "bb13e0bb6c9c",
+   "item": "screen_zh",
+   "where": "l21",
+   "dim": "P1、P3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P3",
+   "shots": [
+    "l21"
+   ],
+   "evidence": [
+    "噪声不会重演；③ 复杂曲线／过拟合／0.00／1.80"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "标题改“过拟合：误把噪声当规律”（10字）；第三行只留“③ 复杂曲线／0.00／1.80”（6字），删除行内诊断。整屏33字，表格可合算1块。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "噪声不会重演；③ 复杂曲线／过拟合／0.00／1.80",
+   "problem": "第三行 4＋3＋1＋1＝9 字，不能享受每项≤8字的合并例外。标题1块＋表格列头1块＋三行3块＝5块，超过4块；“过拟合”也仍被压成小字。",
+   "suggest": "标题改“过拟合：误把噪声当规律”（10字）；第三行只留“③ 复杂曲线／0.00／1.80”（6字），删除行内诊断。整屏33字，表格可合算1块。",
+   "judge_note": "b · l21（标题改写「过拟合：误把噪声当规律」）：这是在重复 l07「把噪声当规律记住→过拟合」。标题在 l21 的 0.42 处淡入，那时口播正在说「噪声是随机的……不会再来一遍」，所以用补充问题里的定稿「过拟合：噪声不会重演」。",
+   "status": "implemented",
+   "solution": "l21：#h-c 标题改「过拟合：噪声不会重演」，③ 行去掉小字标签（只剩「③ 复杂曲线」），全屏 32 字、2 块（裁决人定稿）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I48",
+   "key": "7b0446de29b7",
+   "item": "screen_zh",
+   "where": "l21",
+   "dim": "P1、P3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P3",
+   "shots": [
+    "l21"
+   ],
+   "evidence": [
+    "标题「噪声不会重演」＋表 ③ 行「③ 复杂曲线／过拟合／0.00／1.80」（当前 s4.html 的 #h-c 和 #r3）"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "**定稿**（只改中文，data-en 不动）：① `scenes/web/s4.html` 的 #h-c 标题，data-zh 改成 `过拟合：<span class=\"c-bad\">噪声不会重演</span>`（9 字，和 l20 #h-b、l23 一样用「黑色标签＋红色要点」）。② 同一文件的 #r3 行标签，data-zh 删掉内层的 `<span class=\"tg\" id=\"tg3\">过拟合</span>`，改成 `<span class=\"name c-bad\">③ 复杂曲线</span><b id=\"p3\"></b><b id=\"e3\" class=\"c-bad\">—</b>`，这样 ③ 行是「③ 复杂曲线／0.00／1.80」（6 字）。脚本里的 `\"#tg3\"` 两处可以不动：中文页面找不到这个元素时，EDU.in 拿到的是空列表，不会报错。改完 l21 是标题 9＋列头 4＋7＋6＋6＝32 字、2 块。改完重截 s4_l21，确认 ③ 行没有残留空行，标题不折行",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "标题「噪声不会重演」＋表 ③ 行「③ 复杂曲线／过拟合／0.00／1.80」（当前 s4.html 的 #h-c 和 #r3）",
+   "problem": "维持上一轮 I43 的必改，两人都判 1 分，属实。③ 行 9 字，超过同构行每项 8 字，表格不能合成 1 块，整屏 5 块，超过 4 块。本屏的结论「过拟合」只是 22px 小字，到 l21 七成处才淡入，是全屏最弱的元素，标题里反而没有它",
+   "suggest": "**定稿**（只改中文，data-en 不动）：① `scenes/web/s4.html` 的 #h-c 标题，data-zh 改成 `过拟合：<span class=\"c-bad\">噪声不会重演</span>`（9 字，和 l20 #h-b、l23 一样用「黑色标签＋红色要点」）。② 同一文件的 #r3 行标签，data-zh 删掉内层的 `<span class=\"tg\" id=\"tg3\">过拟合</span>`，改成 `<span class=\"name c-bad\">③ 复杂曲线</span><b id=\"p3\"></b><b id=\"e3\" class=\"c-bad\">—</b>`，这样 ③ 行是「③ 复杂曲线／0.00／1.80」（6 字）。脚本里的 `\"#tg3\"` 两处可以不动：中文页面找不到这个元素时，EDU.in 拿到的是空列表，不会报错。改完 l21 是标题 9＋列头 4＋7＋6＋6＝32 字、2 块。改完重截 s4_l21，确认 ③ 行没有残留空行，标题不折行",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l21：#h-c 标题改「过拟合：噪声不会重演」，③ 行去掉小字标签（只剩「③ 复杂曲线」），全屏 32 字、2 块（裁决人定稿）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I49",
+   "key": "8bf735347726",
+   "item": "screen_zh",
+   "where": "l22、l23",
+   "dim": "P1、P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P4",
+   "shots": [
+    "l22、l23"
+   ],
+   "evidence": [
+    "欠拟合：练习考试都差，好发现；过拟合：练习成绩好，难发现"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "两行统一改为“欠拟合：练习差、考试差”“过拟合：练习好、考试差”（各9字）；发现难易交给口播。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "欠拟合：练习考试都差，好发现；过拟合：练习成绩好，难发现",
+   "problem": "标题“练习考试”连写不顺，“好发现”又单独强调，读起来像压缩口播。标题从严处理。",
+   "suggest": "两行统一改为“欠拟合：练习差、考试差”“过拟合：练习好、考试差”（各9字）；发现难易交给口播。",
+   "judge_note": "b · l22、l23（必改级别和改写）：这两屏不是从严条目（不是章名，也不是串场），没有超硬上限，「好发现／难发现」也读得懂，所以降为建议，不维持必改。b 的改写「欠拟合：练习差、考试差」「过拟合：练习好、考试差」把这两句口播的重点「好发现／难发现」删掉了，只剩上一屏表格的复述，比现文差。如果要改，只加一个顿号：「欠拟合：练习、考试都差，好发现」，字数不变。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人把 b 的必改降为建议：l22–l23 两行对仗读得通",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I50",
+   "key": "2d9ebdd0922f",
+   "item": "screen_zh",
+   "where": "l22",
+   "dim": "P1、P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P4",
+   "shots": [
+    "l22"
+   ],
+   "evidence": [
+    "「欠拟合：练习考试都差，好发现」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「欠拟合：练习考试都差」（9 字），「好发现」交给口播；若保留，与 l23 对齐写「欠拟合：练习差，好发现」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "「欠拟合：练习考试都差，好发现」",
+   "problem": "顶满标题 12 字，带逗号，读起来是缩印的整句；「好发现」口播已说；与 l23 的「练习成绩」不成对",
+   "suggest": "「欠拟合：练习考试都差」（9 字），「好发现」交给口播；若保留，与 l23 对齐写「欠拟合：练习差，好发现」",
+   "judge_note": "b · l22、l23（必改级别和改写）：这两屏不是从严条目（不是章名，也不是串场），没有超硬上限，「好发现／难发现」也读得懂，所以降为建议，不维持必改。b 的改写「欠拟合：练习差、考试差」「过拟合：练习好、考试差」把这两句口播的重点「好发现／难发现」删掉了，只剩上一屏表格的复述，比现文差。如果要改，只加一个顿号：「欠拟合：练习、考试都差，好发现」，字数不变。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同上",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I51",
+   "key": "59ff61fc2c98",
+   "item": "screen_zh",
+   "where": "l23",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "「过拟合：练习成绩好，难发现」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「过拟合：练习误差 0.00，难发现」（11 字），把口播要指的数字留在画面里",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "「过拟合：练习成绩好，难发现」",
+   "problem": "口播说「像这里练习误差是零」，这一屏没有表也没有数字，「这里」指不到东西；屏上只是口播的缩印",
+   "suggest": "「过拟合：练习误差 0.00，难发现」（11 字），把口播要指的数字留在画面里",
+   "judge_note": "b · l22、l23（必改级别和改写）：这两屏不是从严条目（不是章名，也不是串场），没有超硬上限，「好发现／难发现」也读得懂，所以降为建议，不维持必改。b 的改写「欠拟合：练习差、考试差」「过拟合：练习好、考试差」把这两句口播的重点「好发现／难发现」删掉了，只剩上一屏表格的复述，比现文差。如果要改，只加一个顿号：「欠拟合：练习、考试都差，好发现」，字数不变。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "l23 屏上只放两行结论，数字零在前一屏表格里刚出现过，口播「像这里」指的是刚才的实验",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I52",
+   "key": "51ddfd188c92",
+   "item": "screen_zh",
+   "where": "l24",
+   "dim": "P3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l24"
+   ],
+   "evidence": [
+    "章首屏「学习 ≈ 压缩」没有页眉"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "在 l24 补页眉「03 · 把学习看成压缩」（不计字数）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "章首屏「学习 ≈ 压缩」没有页眉",
+   "problem": "其余各章首屏（l03、l08、l30、l35）都有「0N · 章名」页眉，唯独第三章首屏没有，下一屏 l25 才出现",
+   "suggest": "在 l24 补页眉「03 · 把学习看成压缩」（不计字数）",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "第三章开场屏是大字论断「学习 ≈ 压缩」，章节卡刚出现，不再加页眉（同 I19）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I53",
+   "key": "4b89fce40676",
+   "item": "screen_zh",
+   "where": "l27",
+   "dim": "P1",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l27"
+   ],
+   "evidence": [
+    "标题「记住 10 个点，要几个数字？」＋三行（原样记／②／③）"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "行内去掉「个数字」：「原样记：10 个」「② 4 个：压缩了」「③ 10 个：没压缩」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "标题「记住 10 个点，要几个数字？」＋三行（原样记／②／③）",
+   "problem": "数字按每位算字，全屏约 36 字，正好在上限；行里「个数字」与标题重复",
+   "suggest": "行内去掉「个数字」：「原样记：10 个」「② 4 个：压缩了」「③ 10 个：没压缩」",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "按计数口径 36 字在上限内",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I54",
+   "key": "38a1812a65f0",
+   "item": "screen_zh",
+   "where": "l29",
+   "dim": "P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l29"
+   ],
+   "evidence": [
+    "「留住规律，少记噪声」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「留住规律，扔掉噪声」；「压过头：规律也丢了」（7 字）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "「留住规律，少记噪声」",
+   "problem": "口播说「把噪声扔掉」，屏上「少记」是新说法；「压过头：连规律也丢了」几乎是口播原句",
+   "suggest": "「留住规律，扔掉噪声」；「压过头：规律也丢了」（7 字）",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "「少记噪声」是对「把噪声扔掉」的屏上短写，意思一致",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I55",
+   "key": "f6ac065cadff",
+   "item": "screen_zh",
+   "where": "l30",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "「用搜索记录估流感」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「用搜索记录估流感比例」（10 字）；或「用搜索估流感病例」（9 字）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "「用搜索记录估流感」",
+   "problem": "口播说的是「估一估看病的人里症状像流感的占多少」，屏上「估流感」像在估流感本身，对象不对",
+   "suggest": "「用搜索记录估流感比例」（10 字）；或「用搜索估流感病例」（9 字）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l30 副标题改「用搜索估流感就诊比例」，不再像在估流感本身",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I56",
+   "key": "dbea57a999cb",
+   "item": "screen_zh",
+   "where": "l32",
+   "dim": "P1、P2、P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P2、P4",
+   "shots": [
+    "l32"
+   ],
+   "evidence": [
+    "「碰巧在冬天搜得多的词」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「碰巧挑中冬天的词」（8 字），或「挑中冬天高发的词」（9 字）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "「碰巧在冬天搜得多的词」",
+   "problem": "把口播结尾整段搬上屏；一串「的」的名词短语单看接不上，没有说它是什么问题",
+   "suggest": "「碰巧挑中冬天的词」（8 字），或「挑中冬天高发的词」（9 字）",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "l32 屏上是 10 字名词短语，接在「最初的版本 5000万 远多于 1152」之后，指被挑中的词",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I57",
+   "key": "5e33540588dc",
+   "item": "screen_zh",
+   "where": "l33",
+   "dim": "P1、P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P2",
+   "shots": [
+    "l33"
+   ],
+   "evidence": [
+    "“一部分在测流感，一部分在测冬天”；研究者：这是过拟合"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "若保留原引语，下方缩为“过拟合”，出处保留；若改成纲要，主文用“测流感，也测冬天”（8字），下方“过拟合”。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“一部分在测流感，一部分在测冬天”；研究者：这是过拟合",
+   "problem": "引语14字、说明8字，基本重印整句口播。保留引语的修辞价值，不等于必须再加一句相同判断。",
+   "suggest": "若保留原引语，下方缩为“过拟合”，出处保留；若改成纲要，主文用“测流感，也测冬天”（8字），下方“过拟合”。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "引语保留原话的修辞价值，下面「研究者：这是过拟合」标出处判断（裁决人第 1 轮已定）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I58",
+   "key": "7659fc7f320f",
+   "item": "screen_zh",
+   "where": "l33",
+   "dim": "P1、P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P2",
+   "shots": [
+    "l33"
+   ],
+   "evidence": [
+    "「研究者：这是过拟合」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "保留；要再减，把它并成引语下方的标签「研究者的结论：过拟合」，不增字数",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "「研究者：这是过拟合」",
+   "problem": "与口播「研究者说这就是过拟合」逐字重复；引语本身保留，上一轮裁决已定",
+   "suggest": "保留；要再减，把它并成引语下方的标签「研究者的结论：过拟合」，不增字数",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "引语按原话保留（裁决人第 1 轮已定）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I59",
+   "key": "02030652f8bc",
+   "item": "screen_zh",
+   "where": "l36–l40、l02–l07",
+   "dim": "P3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l36–l40、l02–l07"
+   ],
+   "evidence": [
+    "圈号 ①②③"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "不必改；若要统一，第五章改用「一、二、三」或「方法 1」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "圈号 ①②③",
+   "problem": "第二章 ①②③ 指三种模型，第五章 ①②③ 指三个办法，同一套编号在两处含义不同；相隔较远，不致误读",
+   "suggest": "不必改；若要统一，第五章改用「一、二、三」或「方法 1」",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "第二章 ①②③ 在表格里指三种模型，第五章 ①②③ 在卡片里指三个办法，两处相隔两章、各有标题，不会混",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I60",
+   "key": "ca25fbdc1eee",
+   "item": "screen_zh",
+   "where": "l36–l38",
+   "dim": "P5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l36–l38"
+   ],
+   "evidence": [
+    "卡片下半大片空白；柱条白字「验证」「测试」压在紫、橙块上"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "文字不变，柱条白字提到 24px，卡片高度随内容收短",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "卡片下半大片空白；柱条白字「验证」「测试」压在紫、橙块上",
+   "problem": "白字对紫色、橙色约 3–4:1，22px 偏淡；卡片上下留白大，右侧三分之二整屏空着",
+   "suggest": "文字不变，柱条白字提到 24px，卡片高度随内容收短",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "白字压在实色柱条上，字号 22px 为最小字号；卡片版式全片统一",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I61",
+   "key": "185df38c576a",
+   "item": "screen_zh",
+   "where": "l37",
+   "dim": "P1、P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P2",
+   "shots": [
+    "l37"
+   ],
+   "evidence": [
+    "用它挑模型，考试留到最后"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "“验证：挑模型／测试：最后考”（10字），分别靠近对应区域。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "用它挑模型，考试留到最后",
+   "problem": "指代有同卡标题承接，但仍是解释句；图中的验证、测试区域更适合承载职责标签。",
+   "suggest": "“验证：挑模型／测试：最后考”（10字），分别靠近对应区域。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "「用它挑模型，考试留到最后」写在验证集卡里，是这张卡唯一的说明；柱条上的「验证 / 测试」只是区块名",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I62",
+   "key": "5fa32c02672f",
+   "item": "screen_zh",
+   "where": "l38",
+   "dim": "P1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l38"
+   ],
+   "evidence": [
+    "「演示时按考试成绩挑，实际别这样」（14 字）"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「别按考试成绩挑模型」（9 字），保留警示，不丢「实际别这样」的意思",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "「演示时按考试成绩挑，实际别这样」（14 字）",
+   "problem": "逗号分两小句，是口播「刚才演示时……真做项目可不能这么干」的缩印；该保留的警示是做法本身",
+   "suggest": "「别按考试成绩挑模型」（9 字），保留警示，不丢「实际别这样」的意思",
+   "judge_note": "b · l38（改写「考试成绩选模型／实际项目禁用」）：「禁用」像在说禁止某个功能，语域不对。如果作者要再压，用 a 的「别按考试成绩挑模型」（9 字），警示还在。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：b · l38（改写「考试成绩选模型／实际项目禁用」）：「禁用」像在说禁止某个功能，语域不对。如果作者要再压，用 a 的「别按考试成绩挑模型」（9 字），警示还在。",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I63",
+   "key": "97073daa9e53",
+   "item": "screen_zh",
+   "where": "l38",
+   "dim": "P1、P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P2",
+   "shots": [
+    "l38"
+   ],
+   "evidence": [
+    "演示时按考试成绩挑，实际别这样"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "“考试成绩选模型／实际项目禁用”（13字）。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "演示时按考试成绩挑，实际别这样",
+   "problem": "警示必要，14字整句仍与口播高度重复；可以留下具体做法及禁用范围。",
+   "suggest": "“考试成绩选模型／实际项目禁用”（13字）。",
+   "judge_note": "b · l38（改写「考试成绩选模型／实际项目禁用」）：「禁用」像在说禁止某个功能，语域不对。如果作者要再压，用 a 的「别按考试成绩挑模型」（9 字），警示还在。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：b · l38（改写「考试成绩选模型／实际项目禁用」）：「禁用」像在说禁止某个功能，语域不对。如果作者要再压，用 a 的「别按考试成绩挑模型」（9 字），警示还在。",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I64",
+   "key": "0c02d513f5f4",
+   "item": "screen_zh",
+   "where": "l40",
+   "dim": "P5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P5",
+   "shots": [
+    "l40"
+   ],
+   "evidence": [
+    "卡 ③「正则化：复杂就扣分」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "文字不变，给卡片标题加 nowrap，或字号降到 42px",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "卡 ③「正则化：复杂就扣分」",
+   "problem": "标题右端离卡片内边只剩约 3px，字体回退或字距稍变就会再折出「分」孤字",
+   "suggest": "文字不变，给卡片标题加 nowrap，或字号降到 42px",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "右端余量小但当前字体下不折行（版式自检通过）；若后续换字体需复查",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I65",
+   "key": "38ed3f31cc17",
+   "item": "voice_en",
+   "where": "l06",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l06"
+   ],
+   "evidence": [
+    "The workbook is the model's data, and the misprints are what we call noise."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "The workbook is the data the model learns from, and the misprints are the noise.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "The workbook is the model's data, and the misprints are what we call noise.",
+   "problem": "\"the model's data\" is vague on one hearing; \"training data\" is not yet a term.",
+   "suggest": "The workbook is the data the model learns from, and the misprints are the noise.",
+   "judge_note": "l06, a's rewrite \"The workbook is the data the model learns from, and the misprints are the noise.\": it is longer than the original (16 words against 15). It also drops \"what we call\", which is where the term \"noise\" is first introduced, so the rewrite treats a new term as already known. b's retell hears the original as natural. Keep it.",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：l06, a's rewrite \"The workbook is the data the model learns from, and the misprints are the noise.\": it is longer than the original (16 words against 15). It also drops \"what we call\", which is where ",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I66",
+   "key": "e59ab4fdecb0",
+   "item": "voice_en",
+   "where": "l08",
+   "dim": "V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2",
+   "shots": [
+    "l08"
+   ],
+   "evidence": [
+    "Here are ten points we collected. This is the training data, our practice questions."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Let's test this with ten points. They're our training data, our practice questions.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Here are ten points we collected. This is the training data, our practice questions.",
+   "problem": "**A bit off as a transition.** The listener moves straight from the workbook story into plotted points without hearing that an experiment is beginning. This is a strict chapter-opening item. The original sentences themselves are natural.",
+   "suggest": "Let's test this with ten points. They're our training data, our practice questions.",
+   "judge_note": "l08, b's rewrite \"Let's test this with ten points. They're our training data, our practice questions.\": it uses \"test\" for the practice data three lines before l17 introduces \"the test data, our exam\". That blurs the train/test split, which is the whole point of the chapter. \"Test this\" also has no clear object. Use the 补充问题 rewrite.；l08, a's rewrite \"Let's try it. Here are ten points we collected.\": it is longer than the original (it adds three words without cutting anything), so it breaks the rule that a rewrite must be no longer. \"Try it\" is also vaguer than \"see it happen\" about what is coming.",
+   "status": "implemented",
+   "solution": "l08 改 Let's see it happen. These ten points are our training data, our practice questions.（裁决人定稿）；s3 里十个点改在说到 ten points 时出现",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I67",
+   "key": "87dadd4ade0d",
+   "item": "voice_en",
+   "where": "l08 (strict: chapter transition into \"A small experiment\")",
+   "dim": "V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2",
+   "shots": [
+    "l08 (strict: chapter transition into \"A small experiment\")"
+   ],
+   "evidence": [
+    "Here are ten points we collected. This is the training data, our practice questions."
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "ten}`. The l08 dot cues in `scenes/web/s3.html` start early in the line, so after re-recording run `python tools/shot_pack.py check` and confirm the ten dots land on \"ten points\", not on \"Let's see it happen\".",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "Here are ten points we collected. This is the training data, our practice questions.",
+   "problem": "Upheld from b (and a's 存疑, I65). The chapter card is silent, so by ear the story jumps from l07 \"…that's overfitting.\" straight into plotted points with no spoken cue that an experiment is starting. After l04's \"scores a hundred\", \"ten points\" can briefly be heard as score points. The rewrite's \"it\" points back to l07's \"overfitting\" and promises what the chapter shows. Its second sentence is a full clause, not the \"Ten points:\" fragment rejected in round 2. It avoids \"test\", which belongs to l17's test data. It matches the on-screen 「Ten points: training data」. Final drop-in: 14 words and 19 syllables against the original's 15 words and 20 syllables. In `script.en.md`, keep the subtitle form `{10",
+   "suggest": "ten}`. The l08 dot cues in `scenes/web/s3.html` start early in the line, so after re-recording run `python tools/shot_pack.py check` and confirm the ten dots land on \"ten points\", not on \"Let's see it happen\".",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l08 改 Let's see it happen. These ten points are our training data, our practice questions.（裁决人定稿）；s3 里十个点改在说到 ten points 时出现",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I68",
+   "key": "1d19920ba690",
+   "item": "voice_en",
+   "where": "l08",
+   "dim": "V2",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2",
+   "shots": [
+    "l08"
+   ],
+   "evidence": [
+    "Here are ten points we collected."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Let's try it. Here are ten points we collected.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Here are ten points we collected.",
+   "problem": "First line after a chapter card, nothing spoken bridges from the student story. Natural enough as it begins by showing something, so not raised to 必改.",
+   "suggest": "Let's try it. Here are ten points we collected.",
+   "judge_note": "l08, b's rewrite \"Let's test this with ten points. They're our training data, our practice questions.\": it uses \"test\" for the practice data three lines before l17 introduces \"the test data, our exam\". That blurs the train/test split, which is the whole point of the chapter. \"Test this\" also has no clear object. Use the 补充问题 rewrite.；l08, a's rewrite \"Let's try it. Here are ten points we collected.\": it is longer than the original (it adds three words without cutting anything), so it breaks the rule that a rewrite must be no longer. \"Try it\" is also vaguer than \"see it happen\" about what is coming.",
+   "status": "implemented",
+   "solution": "l08 改 Let's see it happen. These ten points are our training data, our practice questions.（裁决人定稿）；s3 里十个点改在说到 ten points 时出现",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I69",
+   "key": "f08237a0566b",
+   "item": "voice_en",
+   "where": "l12",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l12"
+   ],
+   "evidence": [
+    "The average mistake is the error."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Average those mistakes and you get the error.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "The average mistake is the error.",
+   "problem": "Abrupt definition by equation; sounds like a glossary entry.",
+   "suggest": "Average those mistakes and you get the error.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "l12 已按第 1 轮裁决改成 bigger the mistake / average mistake，审稿人记为建议级",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I70",
+   "key": "767cc9e47348",
+   "item": "voice_en",
+   "where": "l23",
+   "dim": "V3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "Overfitting is sneakier, because its practice score can look amazing. Here, its practice error was zero."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Overfitting is sneakier: the practice score can look amazing. Here, the practice error was zero.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Overfitting is sneakier, because its practice score can look amazing. Here, its practice error was zero.",
+   "problem": "“Its” loosely gives overfitting itself a score. I recover the intended model immediately, so this is a minor note, not a listening blocker.",
+   "suggest": "Overfitting is sneakier: the practice score can look amazing. Here, the practice error was zero.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "口语里 its 指刚说的过拟合模型，听感自然（第 2 轮已说明）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I71",
+   "key": "d4b2d5607ce0",
+   "item": "voice_en",
+   "where": "l25",
+   "dim": "V3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l25"
+   ],
+   "evidence": [
+    "one height per point"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "one number per point",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "one height per point",
+   "problem": "\"height\" was never set up; the ear has to guess what is being stored.",
+   "suggest": "one number per point",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "l25 后半就是「one height per point」，屏上同时出 10 个方块，height 有画面支撑",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I72",
+   "key": "d7076c2b4dae",
+   "item": "voice_en",
+   "where": "l28",
+   "dim": "V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4",
+   "shots": [
+    "l28"
+   ],
+   "evidence": [
+    "Ten numbers for ten points is no compression at all, so the noise got saved too."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "That's no compression at all, so the noise got saved too.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Ten numbers for ten points is no compression at all, so the noise got saved too.",
+   "problem": "**A bit off for tightness.** l27 has just supplied the same numbers. Keep this line’s conclusion and remove the repeated setup.",
+   "suggest": "That's no compression at all, so the noise got saved too.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "l27 讲做法，l28 下结论（没压缩、噪声也存了），屏上在 l28 才亮出结论",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I73",
+   "key": "81003c65ba0a",
+   "item": "voice_en",
+   "where": "l28",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4",
+   "shots": [
+    "l28"
+   ],
+   "evidence": [
+    "Ten numbers for ten points is no compression at all, so the noise got saved too."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "That's no compression at all, so the noise got saved too.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Ten numbers for ten points is no compression at all, so the noise got saved too.",
+   "problem": "Repeats l27's \"ten numbers ... ten points\" one line later.",
+   "suggest": "That's no compression at all, so the noise got saved too.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同上",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I74",
+   "key": "e149c5d8b7d5",
+   "item": "voice_en",
+   "where": "l30",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "Google once used people's searches to estimate what share of doctor visits involved flu-like symptoms."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Google once used searches to estimate how many doctor visits were for flu-like symptoms.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Google once used people's searches to estimate what share of doctor visits involved flu-like symptoms.",
+   "problem": "\"estimate what share of ... involved\" is report language.",
+   "suggest": "Google once used searches to estimate how many doctor visits were for flu-like symptoms.",
+   "judge_note": "l30, a's rewrite \"estimate how many doctor visits were for flu-like symptoms\": \"how many\" turns a proportion into a count. GFT estimated the share of visits for flu-like illness (claims.json), so the author's I75 reason holds against this wording.",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：l30, a's rewrite \"estimate how many doctor visits were for flu-like symptoms\": \"how many\" turns a proportion into a count. GFT estimated the share of visits for flu-like illness (claims.json), so the ",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I75",
+   "key": "c5a276e02dae",
+   "item": "voice_en",
+   "where": "l30",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "Take Google Flu Trends. Google once used people's searches to estimate what share of doctor visits involved flu-like symptoms."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Take Google Flu Trends. Google used searches to estimate what percentage of doctor visits were for flu-like symptoms.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Take Google Flu Trends. Google once used people's searches to estimate what share of doctor visits involved flu-like symptoms.",
+   "problem": "**A bit off in the explanatory sentence.** “Take Google Flu Trends” is a natural transition. The following stretch sounds more like a report than speech. Preserve the proportion being estimated and “flu-like symptoms.”",
+   "suggest": "Take Google Flu Trends. Google used searches to estimate what percentage of doctor visits were for flu-like symptoms.",
+   "judge_note": "l30, a's rewrite \"estimate how many doctor visits were for flu-like symptoms\": \"how many\" turns a proportion into a count. GFT estimated the share of visits for flu-like illness (claims.json), so the author's I75 reason holds against this wording.",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：l30, a's rewrite \"estimate how many doctor visits were for flu-like symptoms\": \"how many\" turns a proportion into a count. GFT estimated the share of visits for flu-like illness (claims.json), so the ",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I76",
+   "key": "50c500c3c641",
+   "item": "voice_en",
+   "where": "l31",
+   "dim": "V1, V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l31"
+   ],
+   "evidence": [
+    "At first, it sifted fifty million search terms to match about eleven hundred flu data points."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "At first, it checked fifty million search terms against eleven hundred flu data points.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "At first, it sifted fifty million search terms to match about eleven hundred flu data points.",
+   "problem": "\"sifted ... to match\" is a slightly odd pairing for the ear.",
+   "suggest": "At first, it checked fifty million search terms against eleven hundred flu data points.",
+   "judge_note": "l31, a's and b's rewrite \"checked fifty million search terms against … eleven hundred flu data points\": \"checked against\" means compared. It drops the idea of picking the best-fitting terms, which is what the original \"sifted … to match\" says and what the source says (\"find the best matches among 50 million search terms to fit 1152 data points\"). That selection is the mechanism behind l32 and the overfitting verdict in l33. Keep the original.",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：l31, a's and b's rewrite \"checked fifty million search terms against … eleven hundred flu data points\": \"checked against\" means compared. It drops the idea of picking the best-fitting terms, which is ",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I77",
+   "key": "6ed41bf71589",
+   "item": "voice_en",
+   "where": "l31",
+   "dim": "V1, V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l31"
+   ],
+   "evidence": [
+    "At first, it sifted fifty million search terms to match about eleven hundred flu data points."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "At first, it checked fifty million search terms against about eleven hundred flu data points.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "At first, it sifted fifty million search terms to match about eleven hundred flu data points.",
+   "problem": "**A bit off.** “Sifted … to match” makes the listener work out what was compared with what. A direct comparison verb makes the two large quantities easier to follow.",
+   "suggest": "At first, it checked fifty million search terms against about eleven hundred flu data points.",
+   "judge_note": "l31, a's and b's rewrite \"checked fifty million search terms against … eleven hundred flu data points\": \"checked against\" means compared. It drops the idea of picking the best-fitting terms, which is what the original \"sifted … to match\" says and what the source says (\"find the best matches among 50 million search terms to fit 1152 data points\"). That selection is the mechanism behind l32 and the overfitting verdict in l33. Keep the original.",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：l31, a's and b's rewrite \"checked fifty million search terms against … eleven hundred flu data points\": \"checked against\" means compared. It drops the idea of picking the best-fitting terms, which is ",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I78",
+   "key": "cad7101aa5cc",
+   "item": "voice_en",
+   "where": "l34",
+   "dim": "V3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l34"
+   ],
+   "evidence": [
+    "In a hundred out of a hundred and eight weeks"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "(No change.)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "In a hundred out of a hundred and eight weeks",
+   "problem": "Parseable, but number-heavy for a single hearing. Acceptable.",
+   "suggest": "(No change.)",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "数字已改为 a hundred out of a hundred and eight（裁决人第 2 轮写法）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I79",
+   "key": "aaa249dc7d0b",
+   "item": "voice_en",
+   "where": "l39",
+   "dim": "V1, V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V5",
+   "shots": [
+    "l39"
+   ],
+   "evidence": [
+    "Second, collect more data, and more varied data, so noise and coincidences are less likely to pass for patterns."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Second, get more varied data, so noise and coincidences are less likely to look like patterns.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Second, collect more data, and more varied data, so noise and coincidences are less likely to pass for patterns.",
+   "problem": "\"pass for patterns\" and \"coincidences\" are literary; 7.7s.",
+   "suggest": "Second, get more varied data, so noise and coincidences are less likely to look like patterns.",
+   "judge_note": "l39, a's rewrite \"Second, get more varied data, so noise and coincidences…\": it drops \"more data\", so the advice shrinks to variety alone, and the step is \"collect more data, and more varied data\". b's version keeps both and is the acceptable optional one, but the original is not must-fix.",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：l39, a's rewrite \"Second, get more varied data, so noise and coincidences…\": it drops \"more data\", so the advice shrinks to variety alone, and the step is \"collect more data, and more varied data\". b'",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I80",
+   "key": "7116944cd984",
+   "item": "voice_en",
+   "where": "l39",
+   "dim": "V1, V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V5",
+   "shots": [
+    "l39"
+   ],
+   "evidence": [
+    "Second, collect more data, and more varied data, so noise and coincidences are less likely to pass for patterns."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Second, get more data, and more varied data, so flukes are less likely to look like patterns.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Second, collect more data, and more varied data, so noise and coincidences are less likely to pass for patterns.",
+   "problem": "**A bit off.** The instruction starts naturally, but “noise and coincidences … pass for patterns” makes its ending unnecessarily heavy. This is an actual instruction, so the numbering itself is fine.",
+   "suggest": "Second, get more data, and more varied data, so flukes are less likely to look like patterns.",
+   "judge_note": "l39, a's rewrite \"Second, get more varied data, so noise and coincidences…\": it drops \"more data\", so the advice shrinks to variety alone, and the step is \"collect more data, and more varied data\". b's version keeps both and is the acceptable optional one, but the original is not must-fix.",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：l39, a's rewrite \"Second, get more varied data, so noise and coincidences…\": it drops \"more data\", so the advice shrinks to variety alone, and the step is \"collect more data, and more varied data\". b'",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I81",
+   "key": "ba0dbab22b6f",
+   "item": "voice_en",
+   "where": "l40",
+   "dim": "V1, V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V5",
+   "shots": [
+    "l40"
+   ],
+   "evidence": [
+    "Third, give the model a rule: overly complicated curves get penalized, so it won't chase the noise. That's called regularization."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Third, penalize overly complicated curves, so the model won't chase noise. That's regularization.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Third, give the model a rule: overly complicated curves get penalized, so it won't chase the noise. That's called regularization.",
+   "problem": "8.3s, the longest line; passive \"get penalized\" is written style, and the line needs two breaths.",
+   "suggest": "Third, penalize overly complicated curves, so the model won't chase noise. That's regularization.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "8.3 秒，配音一口气念完，回听通过；主动改写会丢 the model 的指代（裁决人第 1 轮）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I82",
+   "key": "e19d1fb85e3a",
+   "item": "voice_zh",
+   "where": "章节卡「把学习看成压缩」",
+   "dim": "V1",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "章节卡「把学习看成压缩」"
+   ],
+   "evidence": [
+    "把学习看成压缩"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "学习就是压缩？",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "把学习看成压缩",
+   "problem": "「把……看成……」偏书面，其他卡（「过拟合是什么」「怎么防过拟合」）都是口语；是否算有点怪由裁决人定。",
+   "suggest": "学习就是压缩？",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人判「把学习看成压缩」自然（与口播「可以看成一种压缩」一致），保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I83",
+   "key": "fe9b22d03df6",
+   "item": "voice_zh",
+   "where": "l03—l04",
+   "dim": "V5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V5",
+   "shots": [
+    "l03—l04"
+   ],
+   "evidence": [
+    "（l03 8.5s → l04 9.0s）"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "保留",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "（l03 8.5s → l04 9.0s）",
+   "problem": "第一章开头连着两个最长的句子。配音可以在 l04「连印错的那几处也照着背」后面换一口气，不必改字。",
+   "suggest": "保留",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "配音在 l04 后自然换气，回听通过",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I84",
+   "key": "15a0b04e8283",
+   "item": "voice_zh",
+   "where": "l06",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l06"
+   ],
+   "evidence": [
+    "这里的练习册，就是模型手里的数据，那几处印错的地方，就是数据里的噪声。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "这练习册，就好比模型拿来练的数据；印错的地方，就好比数据里的噪声。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "这里的练习册，就是模型手里的数据，那几处印错的地方，就是数据里的噪声。",
+   "problem": "「这里的……就是……」对照表腔；「模型手里的数据」是绕着说训练数据。保留对应关系的理由成立，但措辞可以口语些。",
+   "suggest": "这练习册，就好比模型拿来练的数据；印错的地方，就好比数据里的噪声。",
+   "judge_note": "a · l06（有点怪；R 中称不采纳理由不成立）：「这里的……就是……」是讲解员把比方对回概念时最常见的说法，「模型手里的数据」口语里也很自然，不是拐着弯说话。不采纳的理由（保住两组对应、和屏上对照表一致）成立。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：a · l06（有点怪；R 中称不采纳理由不成立）：「这里的……就是……」是讲解员把比方对回概念时最常见的说法，「模型手里的数据」口语里也很自然，不是拐着弯说话。不采纳的理由（保住两组对应、和屏上对照表一致）成立。",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I85",
+   "key": "02b1521e0c54",
+   "item": "voice_zh",
+   "where": "l07",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l07"
+   ],
+   "evidence": [
+    "模型把噪声也当成规律记住了，这就是过拟合。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "保留",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "模型把噪声也当成规律记住了，这就是过拟合。",
+   "problem": "与 l03、l21 同一结论第三遍；作为第一章收口可留。",
+   "suggest": "保留",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "第一章收口句，有意回扣（裁决人记录级）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I86",
+   "key": "c9882e85de87",
+   "item": "voice_zh",
+   "where": "l08",
+   "dim": "V2、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V2、V3",
+   "shots": [
+    "l08"
+   ],
+   "evidence": [
+    "你看，这里有十个点，是收集来的数据，叫训练数据，相当于练习题。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "做个小实验。这十个点是收集来的训练数据，就当是练习题。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "你看，这里有十个点，是收集来的数据，叫训练数据，相当于练习题。",
+   "problem": "有点怪。刚讲完背练习册，突然指向十个点；章节卡不念，声音里缺少“现在做个实验”的起手。听众要自己补上场景转换。",
+   "suggest": "做个小实验。这十个点是收集来的训练数据，就当是练习题。",
+   "judge_note": "b · l08 改写「这十个点是收集来的训练数据，就当是练习题」：问题成立，但改写去掉了「叫训练数据」这个点名，术语变成没先介绍就直接用；按补充问题里的定稿改。",
+   "status": "implemented",
+   "solution": "l08 改「做个小实验。这十个点是收集来的数据，叫训练数据，就像练习题。」（裁决人定稿）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I87",
+   "key": "df16d48a9a36",
+   "item": "voice_zh",
+   "where": "l08",
+   "dim": "V2、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V2、V3",
+   "shots": [
+    "l08"
+   ],
+   "evidence": [
+    "你看，这里有十个点，是收集来的数据，叫训练数据，相当于练习题。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "定稿：做个小实验。这十个点是收集来的数据，叫训练数据，就像练习题。（26 字，与原句同长；保留点名，「做个小实验」与卡片同字）",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "你看，这里有十个点，是收集来的数据，叫训练数据，相当于练习题。",
+   "problem": "b 成立；这是串场，从严算必改。章节卡「做个小实验」不念出来，耳朵从 l07「这就是过拟合」直接跳到「这里有十个点」。其余三次换章都有能听到的起手（l24「咱们换个角度看」、l30「说个真事儿」、l35「那过拟合怎么发现」），只有这一处没有。b 的改写去掉了「叫训练数据」这个点名，术语就变成没先介绍就直接用了。",
+   "suggest": "定稿：做个小实验。这十个点是收集来的数据，叫训练数据，就像练习题。（26 字，与原句同长；保留点名，「做个小实验」与卡片同字）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l08 改「做个小实验。这十个点是收集来的数据，叫训练数据，就像练习题。」（裁决人定稿）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I88",
+   "key": "2dc17d009b51",
+   "item": "voice_zh",
+   "where": "l12",
+   "dim": "V1、V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l12"
+   ],
+   "evidence": [
+    "点离线越远，扣分越多，平均扣多少，就是误差。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "点离线越远扣分越多，平均扣分就是误差。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "点离线越远，扣分越多，平均扣多少，就是误差。",
+   "problem": "「扣分」前面没铺垫，「平均扣多少，就是误差」念着像公式。上一轮未处理。",
+   "suggest": "点离线越远扣分越多，平均扣分就是误差。",
+   "judge_note": "a · l12（有点怪）：「平均扣多少，就是误差」是正常的口语讲解，b 在逐句复述里也判自然。上一轮 I90 和更早的 I108/I109 都已裁定用现句。a 的改写「平均扣分就是误差」更紧，反而更像公式。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：a · l12（有点怪）：「平均扣多少，就是误差」是正常的口语讲解，b 在逐句复述里也判自然。上一轮 I90 和更早的 I108/I109 都已裁定用现句。a 的改写「平均扣分就是误差」更紧，反而更像公式。",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I89",
+   "key": "70ce9a0ede7c",
+   "item": "voice_zh",
+   "where": "l28",
+   "dim": "V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l28"
+   ],
+   "evidence": [
+    "十个数字记十个点，等于根本没压缩，连噪声也一起存了下来。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "这就等于没压缩，连噪声也一起存了下来。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "十个数字记十个点，等于根本没压缩，连噪声也一起存了下来。",
+   "problem": "句式自然，但前一句刚交代十个数字和十个点。再念一次拖慢结论，删掉不影响理解。",
+   "suggest": "这就等于没压缩，连噪声也一起存了下来。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I72",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I90",
+   "key": "34630a00ee9b",
+   "item": "voice_zh",
+   "where": "l28",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l28"
+   ],
+   "evidence": [
+    "十个数字记十个点，等于根本没压缩，连噪声也一起存了下来。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "这等于根本没压缩，连噪声也一起存了下来。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "十个数字记十个点，等于根本没压缩，连噪声也一起存了下来。",
+   "problem": "前半句复述 l27，删掉也懂；但有强调作用，可留。",
+   "suggest": "这等于根本没压缩，连噪声也一起存了下来。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I72",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I91",
+   "key": "2d7b272e8a2e",
+   "item": "voice_zh",
+   "where": "l30",
+   "dim": "V2、V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V2、V5",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "说个真事儿：谷歌做过个项目，叫流感趋势，想靠搜索记录，估一估看病的人里，症状像流感的占多少。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "过拟合在现实里也出过事：谷歌有个项目叫流感趋势，想靠搜索记录，估一估看病的人里症状像流感的占多少。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "说个真事儿：谷歌做过个项目，叫流感趋势，想靠搜索记录，估一估看病的人里，症状像流感的占多少。",
+   "problem": "8.5 秒一口气，四个逗号；「说个真事儿」没告诉听众这是过拟合闯的祸，直到 l33 才点破，转场少一个钩子。",
+   "suggest": "过拟合在现实里也出过事：谷歌有个项目叫流感趋势，想靠搜索记录，估一估看病的人里症状像流感的占多少。",
+   "judge_note": "a · l30（V2、V5 建议，逐句复述判有点怪）：l30 是上一轮裁决给出的写法。只靠耳朵听，「说个真事儿」作换章起手是自然的，而且 l33 才点明「这就是过拟合」，悬念正是这样留出来的。a 的改写把结论提前说破，还长了 5 字，全片最密的这一句会更满。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：a · l30（V2、V5 建议，逐句复述判有点怪）：l30 是上一轮裁决给出的写法。只靠耳朵听，「说个真事儿」作换章起手是自然的，而且 l33 才点明「这就是过拟合」，悬念正是这样留出来的。a 的改写把结论提前说破，还长了 5 字，全片最密的这一句会更满。",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I92",
+   "key": "019ec0b05939",
+   "item": "voice_zh",
+   "where": "l31",
+   "dim": "V1、V3、V6",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3、V6",
+   "shots": [
+    "l31"
+   ],
+   "evidence": [
+    "一开始，它拿一千多个流感数据点，去五千万个搜索词里挑走势最像的。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "一开始，它拿一千多个流感数据，从五千万个搜索词里，挑搜索量起伏最像的。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "一开始，它拿一千多个流感数据点，去五千万个搜索词里挑走势最像的。",
+   "problem": "「拿……去……里挑」是书面搭配；「走势」是谁的走势，只靠耳朵听不出（该是搜索量的起伏）。上一轮未解决。",
+   "suggest": "一开始，它拿一千多个流感数据，从五千万个搜索词里，挑搜索量起伏最像的。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l31 改「一开始，它比了五千万个搜索词，看谁的搜索量跟一千多个流感数据点最像。」（说清比的是搜索量，保住「数据点」与 l32 的呼应）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I93",
+   "key": "1379e0b54fd8",
+   "item": "voice_zh",
+   "where": "l31",
+   "dim": "V1、V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l31"
+   ],
+   "evidence": [
+    "一开始，它拿一千多个流感数据点，去五千万个搜索词里挑走势最像的。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "起初，用一千多条流感记录，从五千万个词里挑搜索量变化最像的。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "一开始，它拿一千多个流感数据点，去五千万个搜索词里挑走势最像的。",
+   "problem": "有点怪。数据点和搜索词不是直接可比的东西；「走势最像」省掉了搜索量怎样变化，外行得自己补。",
+   "suggest": "起初，用一千多条流感记录，从五千万个词里挑搜索量变化最像的。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l31 改「一开始，它比了五千万个搜索词，看谁的搜索量跟一千多个流感数据点最像。」（说清比的是搜索量，保住「数据点」与 l32 的呼应）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I94",
+   "key": "1fc5caad47d7",
+   "item": "voice_zh",
+   "where": "l31",
+   "dim": "V1、V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l31"
+   ],
+   "evidence": [
+    "一开始，它拿一千多个流感数据点，去五千万个搜索词里挑走势最像的。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "可选定稿：起初，它拿一千多个流感数据点，去五千万个词里挑搜索量变化最像的。（29 字，与原句同长；「数据点」与屏幕和 l32 保持一致）",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "一开始，它拿一千多个流感数据点，去五千万个搜索词里挑走势最像的。",
+   "problem": "不在从严范围内，维持建议。两人第三轮都判有点怪：「走势」指的是谁的走势，只靠耳朵听要自己补。a、b 的改写分别是 31 字、27 字。27 字那版把「数据点」改成了「流感记录」，和屏上「1152个数据点」、l32「比数据点多」对不上。",
+   "suggest": "可选定稿：起初，它拿一千多个流感数据点，去五千万个词里挑搜索量变化最像的。（29 字，与原句同长；「数据点」与屏幕和 l32 保持一致）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l31 改「一开始，它比了五千万个搜索词，看谁的搜索量跟一千多个流感数据点最像。」（说清比的是搜索量，保住「数据点」与 l32 的呼应）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I95",
+   "key": "0e8257da1bc3",
+   "item": "voice_zh",
+   "where": "l32",
+   "dim": "V1、V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l32"
+   ],
+   "evidence": [
+    "问题是，能挑的词比数据点多太多，难免挑中只是碰巧在冬天搜得多的词。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "问题是，能挑的词比数据点多太多，总会碰上些只是冬天搜得多的词，看着就像流感。（比原句长 2 字，但补出了因果）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "问题是，能挑的词比数据点多太多，难免挑中只是碰巧在冬天搜得多的词。",
+   "problem": "「挑中只是碰巧……的词」修饰语太长；没说流感也是冬天多，听众不知道「冬天搜得多」为什么会被当成像流感。",
+   "suggest": "问题是，能挑的词比数据点多太多，总会碰上些只是冬天搜得多的词，看着就像流感。（比原句长 2 字，但补出了因果）",
+   "judge_note": "a · l32 改写「总会碰上些只是冬天搜得多的词，看着就像流感」：长 4 字（a 自己写的是 2 字）。流感冬天多是普通观众都知道的常识，而且 l33「一部分在测冬天」紧跟着就点破了，用不着在这里先补出因果。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：a · l32 改写「总会碰上些只是冬天搜得多的词，看着就像流感」：长 4 字（a 自己写的是 2 字）。流感冬天多是普通观众都知道的常识，而且 l33「一部分在测冬天」紧跟着就点破了，用不着在这里先补出因果。",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I96",
+   "key": "474631a550e2",
+   "item": "voice_zh",
+   "where": "l33",
+   "dim": "V3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l33"
+   ],
+   "evidence": [
+    "研究者说这就是过拟合，它一部分在测流感，一部分在测冬天。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "研究者说这就是过拟合：它一部分测的是流感，一部分测的是冬天。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "研究者说这就是过拟合，它一部分在测流感，一部分在测冬天。",
+   "problem": "「它」可能被听成研究者；上一轮裁决认为接原话，我同意只记录。",
+   "suggest": "研究者说这就是过拟合：它一部分测的是流感，一部分测的是冬天。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "上一轮裁决认为接原话，记录级",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I97",
+   "key": "510b646e1800",
+   "item": "voice_zh",
+   "where": "l34",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l34"
+   ],
+   "evidence": [
+    "后来的版本也不准：从二零一一年到二零一三年，一百零八周里，有一百周它都估高了。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "后来的版本也不准：二零一一到一三年这一百零八周，有一百周都估高了。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "后来的版本也不准：从二零一一年到二零一三年，一百零八周里，有一百周它都估高了。",
+   "problem": "年份加两个「一百」数字扎堆，耳朵要同时记四个数。上一轮已记录，仍是听觉负担。",
+   "suggest": "后来的版本也不准：二零一一到一三年这一百零八周，有一百周都估高了。",
+   "judge_note": "a · l34 改写「二零一一到一三年这一百零八周」：「一三年这一百零八」一口气连出好几个「一」，比原句更容易听混；删掉「从」「年」后的时间口径，也和上一轮 I103/I104 的裁决不一致。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人意见：a · l34 改写「二零一一到一三年这一百零八周」：「一三年这一百零八」一口气连出好几个「一」，比原句更容易听混；删掉「从」「年」后的时间口径，也和上一轮 I103/I104 的裁决不一致。",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I98",
+   "key": "b397a2e66ab6",
+   "item": "voice_zh",
+   "where": "l34",
+   "dim": "V3、V5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3、V5",
+   "shots": [
+    "l34"
+   ],
+   "evidence": [
+    "后来的版本也不准：从二零一一年到二零一三年，一百零八周里，有一百周它都估高了。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "后来的版本也不准。二零一一年到二零一三年，一百零八周里，有一百周都估高了。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "后来的版本也不准：从二零一一年到二零一三年，一百零八周里，有一百周它都估高了。",
+   "problem": "句式自然，但两个相近年份后紧跟两个相近周数，一遍听需要集中记数字。年份后应给明显停顿。",
+   "suggest": "后来的版本也不准。二零一一年到二零一三年，一百零八周里，有一百周都估高了。",
+   "judge_note": "a · l34 改写「二零一一到一三年这一百零八周」：「一三年这一百零八」一口气连出好几个「一」，比原句更容易听混；删掉「从」「年」后的时间口径，也和上一轮 I103/I104 的裁决不一致。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "年份后配音有停顿，回听通过（记录级）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I99",
+   "key": "7c9dfd217df9",
+   "item": "voice_zh",
+   "where": "l36",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l36"
+   ],
+   "evidence": [
+    "第一，再留出一份数据来当模拟考，这份数据叫验证集。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "第一，再留出一份数据来当模拟考，这份就叫验证集。（21 字，原 22）",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "第一，再留出一份数据来当模拟考，这份数据叫验证集。",
+   "problem": "一句里出现两次「数据」，后一个可以省掉；两人逐句复述时都自然地说成了「这份就叫验证集」，但都没有列出来。",
+   "suggest": "第一，再留出一份数据来当模拟考，这份就叫验证集。（21 字，原 22）",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "「这份数据叫验证集」的两个「数据」念起来不拗，记录级",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I100",
+   "key": "019adac30ea0",
+   "item": "voice_zh",
+   "where": "l39",
+   "dim": "V1",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l39"
+   ],
+   "evidence": [
+    "噪声和巧合就不容易被当成规律了"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "噪声和巧合就不容易被当成规律。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "噪声和巧合就不容易被当成规律了",
+   "problem": "「被当成」略书面，可接受。",
+   "suggest": "噪声和巧合就不容易被当成规律。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级，可接受",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I101",
+   "key": "753b47831259",
+   "item": "voice_zh",
+   "where": "l42",
+   "dim": "V1、V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V2",
+   "shots": [
+    "l42"
+   ],
+   "evidence": [
+    "下回你觉得自己全懂了，就找道没见过的题试试。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "以后你要是觉得自己全懂了，就找道没见过的题试试。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "下回你觉得自己全懂了，就找道没见过的题试试。",
+   "problem": "片尾从严。「下回你觉得……」缺「要是」，条件句硬接，念着像书面；而且「下回」紧接 l43「下一期」，两个「下」连着，容易被听成「下回=下一期」。",
+   "suggest": "以后你要是觉得自己全懂了，就找道没见过的题试试。",
+   "judge_note": "a · l42 改写「以后你要是觉得自己全懂了……」：比原句长 2 字，也没有注明，违反「不更长」。问题本身成立，按补充问题里同样长度的「哪天……」改。",
+   "status": "implemented",
+   "solution": "l42 改「哪天你觉得自己全懂了，就找道没见过的题试试。」（裁决人定稿，不再和「下一期」撞「下」）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I102",
+   "key": "b1130e86cb5d",
+   "item": "voice_zh",
+   "where": "l42",
+   "dim": "V1、V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V2",
+   "shots": [
+    "l42"
+   ],
+   "evidence": [
+    "下回你觉得自己全懂了，就找道没见过的题试试。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "定稿：哪天你觉得自己全懂了，就找道没见过的题试试。（20 字，与原句同长；「哪天」本身就带着假设的意思，不跟「下一期」撞字）",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "下回你觉得自己全懂了，就找道没见过的题试试。",
+   "problem": "a 判有点怪，b 判自然，裁决判有点怪；片尾从严，所以是必改。「下回」紧挨着 l43 的「下一期」，片尾这里耳朵很容易把「下回」先听成「下一期」，到后半句才发现是在说你自己。缺「要是」不是主要问题，口语里这样省略很常见。a 的改写「以后你要是……」能解决问题，但比原句长 2 字。",
+   "suggest": "定稿：哪天你觉得自己全懂了，就找道没见过的题试试。（20 字，与原句同长；「哪天」本身就带着假设的意思，不跟「下一期」撞字）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l42 改「哪天你觉得自己全懂了，就找道没见过的题试试。」（裁决人定稿，不再和「下一期」撞「下」）",
+   "reason": "",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T10:27:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,24 @@
+# #17 Madeira–Mamoré（Brazil · South America）
+
+- 长度：3,352 km（Encyclopaedia Britannica: Madeira River；https://www.britannica.com/place/Madeira-River）
+- 原文：“The Madeira is 2,082 miles (3,352 km) long from the upper reaches of the Mamoré”
+- 走向：From Bolivia；Joins the Amazon
+- 备注：Largest tributary of the Amazon by volume. Wikipedia list 3,380 km.
+
+## 它是什么、在哪、长什么样（Britannica 摘录，存档于 raw/brit/）
+…edia Britannica Article History Table of Contents Table of Contents Ask the Chatbot Madeira River (more) Madeira River , major tributary of the Amazon . It is formed by the junction of the Mamoré and Beni rivers at Villa Bella, Bolivia, and flows northward forming the border between Bolivia and Brazil for approximately 60 miles (100 km). After receiving the Abuná River , the Madeira meanders northeastward in Brazil through Rondônia and Amazonas states to its junction with the Amazon River, 90 miles (145 km) east of Manaus . A distributary of the Madeira flows into the Amazon about 100 miles (160 km) farther downstream, creating the marshy island of Tupinambarama. The Madeira is 2,082 miles (3,352 km) long from the upper reaches of the Mamoré, and its general width is about one-half mile. It is navigable by seagoing vessels most of the year from its mouth on the Amazon to the Cachoeira (falls) de Santo Antônio 807 miles (1,300 km) upstream, the first of 19 waterfalls or rapids that block further passage, near the town of Pôrto Velho , Brazil. The Madeira-Mamoré Railway , which extended for 228 miles (367 km) between Pôrto Velho and Guajará-Mirim , circumvented the falls and rapids and provided a link with the upper course of the Madeira River. Abandoned in the 1970s, much of the railway’s corridor is now served by highway. Portuguese: Rio Madeira (Show more) See all related content Although exploration of the Madeira valley began in the 16th century, parts of the region were not mapped until the late 1970s, via satellite. The tropical rainforest’s traditional inhabitants, Indians and mestizos, who lived along the riverbanks and gathered forest products such as Brazil nuts and rubber, were joined by farmers and ranchers who settled in the area during the latter half of th…
+
+## Wikipedia 导语（只作文字参考；TITLE: Madeira River REVID: 1368590037）
+The Madeira River (Portuguese: Rio Madeira [maˈdejɾɐ]) is a major waterway in South America. It is estimated to be 1,450 km (900 mi) in length, while the Madeira-Mamoré is estimated near 3,250 km (2,020 mi) or 3,380 km (2,100 mi) in length depending on the measuring party and their methods. The Madeira is the biggest tributary of the Amazon, accounting for about 15% of the water in the basin. A map from Emanuel Bowen in 1747, held by the David Rumsey Map Collection, refers to the Madeira by the pre-colonial, indigenous name Cuyari. 
+The River of Cuyari, called by the Portuguese Madeira or the Wood River, is formed by two great rivers, which join near its mouth. It was by this River, that the Nation of Topinambes passed into the River Amazon.
+
+### 河道 / 地理
+Between Guajará-Mirim and the falls of Teotônio, the Madeira receives the drainage of the north-eastern slopes of the Andes from Santa Cruz de la Sierra to Cuzco, the whole of the south-western slope of Brazilian Mato Grosso and the northern slope of the Chiquitos sierras. In total, this catchment area, which is slightly more than the combined area of all headwaters, is 850,000 km2 (330,000 sq mi), almost equal in size to France and Spain combined. The waters flow into the Madeira from many large rivers, the principal of which, (from east to west), are the Guaporé or Iténez, the Baures and Blanco, the Itonamas or San Miguel, the Mamoré, Beni, and Madre de Dios or Mayutata, all of which are reinforced by numerous secondary but powerful affluents. The climate of the upper catchment area varies from humid in the western edge with the origin of the river's main stem by volume (Río Madre de Dios, Río Beni) to semi arid in the southernmost part with the Andine headwaters of the main stem by length (Río Caine, Río Rocha, Río Grande, Mamoré).
+All of the upper branches of the river Madeira find their way to the falls across the open, almost level Mojos and Beni plains, 90,000 km2 (35,000 sq mi) of which are yearly flooded to an average depth of about one meter (3 ft) for a period of from three to four months.
+
+From its source in the confluence of Madre de Dios and Mamoré rivers and downstream to Abuna River the Madeira flows northward forming border between Bolivia and Brazil. Below
+
+## 找图要点（浓缩进 data.json image_hint）
+- 标志性视角 / 最佳拍摄点：the Madeira River near Porto Velho, Rondônia: wide brown river, sandbanks and Amazon rainforest, aerial or riverbank
+- 易混对象（排除）：not Madeira island (Portugal), not the Amazon at Manaus
+- 要求：真实照片，河本身是主体，横幅风景，适合 720×800 满版卡居中裁切；不要地图、卫星假彩色、AI 图。

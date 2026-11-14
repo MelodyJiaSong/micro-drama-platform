@@ -17,7 +17,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 
-from libs.common import asset_key, drama_layout, equipment_key
+from libs.common import asset_group, asset_key, drama_layout, equipment_key, prop_key
 from libs.common.drama_ref import AI_VIDEOS_DIR_NAME, SERIES_SHARED_DIR_NAME, is_series_dir
 
 CONFLICT_PREFIX: str = "series_key_conflict"
@@ -54,9 +54,26 @@ def child_dirs(parent: Path) -> list[Path]:
         return []
 
 
+# `characters/` and `props/` may split their folders into one level of unkeyed
+# group folders (`characters/近卫_sentinel/c65_Axe/`, follow-up 284): a group is
+# walked through, never listed as an asset itself.
+_GROUPED_LAYOUTS: dict[LayoutDir, asset_group.IsKeyed] = {
+    drama_layout.characters_dir: asset_group.is_character_name,
+    drama_layout.props_dir: prop_key.is_folder_name,
+}
+
+
+def layout_children(layout_dir: LayoutDir, root: Path) -> list[Path]:
+    """The asset folders of one layout under one asset root, group folders expanded."""
+    is_keyed = _GROUPED_LAYOUTS.get(layout_dir)
+    folder = layout_dir(root)
+    return child_dirs(folder) if is_keyed is None else asset_group.grouped_dirs(folder, is_keyed)
+
+
 def asset_dirs(drama_dir: Path, layout_dir: LayoutDir) -> list[Path]:
-    """Every `{characters|scenes|props}/*` folder across the drama's asset roots."""
-    return [child for root in asset_roots(drama_dir) for child in child_dirs(layout_dir(root))]
+    """Every `{characters|scenes|props}/*` folder across the drama's asset roots
+    (a character / prop inside a group folder counts, the group does not)."""
+    return [child for root in asset_roots(drama_dir) for child in layout_children(layout_dir, root)]
 
 
 @dataclass(frozen=True)
@@ -89,7 +106,7 @@ def _owned_folders(root: Path) -> list[Path]:
     """Asset folders plus the keyed `bg{N}_{主体}` subjects nested inside scenes
     and the `e{N}_…` equipment items — never their category / slot folders,
     which every side legitimately shares by name (`板甲/`, `主手/`)."""
-    folders = [child for layout in _ASSET_LAYOUTS for child in child_dirs(layout(root))]
+    folders = [child for layout in _ASSET_LAYOUTS for child in layout_children(layout, root)]
     subjects = [
         sub
         for scene in child_dirs(drama_layout.background_dir(root))
@@ -138,6 +155,7 @@ __all__ = [
     "child_dirs",
     "equipment_item_dirs",
     "find_conflicts",
+    "layout_children",
     "scene_subject_dirs",
     "shared_dir",
 ]

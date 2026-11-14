@@ -1,0 +1,42 @@
+{
+ "artifact": "ep1_s7_st1_d6e48fe8-f4c2-4d3b-ace4-24e9277e116c_video_1.mp4",
+ "sha256": "09ce8fe031210ba24398700346d89c9b4677c6fcc9ce0fa7493107c7483e6908",
+ "checks": {
+  "video.subject_count": {
+   "verdict": "pass",
+   "by": "review",
+   "evidence": "[director·claude] I counted every frame from 00:00:00.000 to 00:00:12.750 (52 frames). There is only Riley the whole time. No second person, double or extra figure appears. The count at the start (1) matches the end (1), as the spec's 'only she is in frame' requires.",
+   "at": "2026-11-10T21:28:07"
+  },
+  "video.no_text": {
+   "verdict": "pass",
+   "by": "review",
+   "evidence": "[director·claude·审稿兜底，待机检工具] Apart from the yellow timecode the review tool adds in each frame's top-left corner, I saw no subtitles, watermark, logo or UI in any frame (0–12.75s). The wall, door, window, stool and lamp show no readable letters. Caveat: this is a 4fps contact sheet at low resolution, so I could not run a fine-grained OCR.",
+   "at": "2026-11-10T21:28:07"
+  },
+  "video.object_continuity": {
+   "verdict": "fail",
+   "by": "review",
+   "evidence": "[director·claude] These items stay in place across all frames: the left-edge door, the stool and lit lamp at picture left, and the blue window at upper right (0–12.75s). Nothing floats, clips through anything, or appears/disappears. But I can't confirm one thing, so this fails: the spec wants the wall behind her 'covered in scratches from 0s, none added or removed', plus a small, neatly lined-up cluster of tally marks next to the lamp. In every frame the wall behind her and around the lamp looks like plain dark plaster. I can't see any scratches in the 11.25–12.75s frames, where she turns to look at the wall. So I can't verify that these marks exist or stay constant. The wall glow next to the lamp is clearly a tall bright column at 0–0.5s and is noticeably weaker after 4.5s. That brightness change also needs checking against the full-resolution footage.",
+   "at": "2026-11-10T21:28:07"
+  },
+  "video.person_still": {
+   "verdict": "pass",
+   "by": "review",
+   "evidence": "[director·claude·审稿兜底，待机检工具] At 0–1.25s she leans back and her hands move from her knees to both sides of the bed. From 1.5 to 11.0s her body holds the same pose (hands braced on the bed), but her head tilt, face angle and expression keep changing at 2.75, 4.75, 5.5, 6.75, 8.75 and 10.25s, and her mouth moves as she talks. At 11.25–12.75s she turns her head to look back. I saw no stretch over 1.5s where she is fully frozen like a prop. Caveat: I did not run tools/person_motion.py; this is judged by eye from the contact sheet only.",
+   "at": "2026-11-10T21:28:07"
+  },
+  "video.acting_natural": {
+   "verdict": "fail",
+   "by": "review",
+   "evidence": "[Riley·codex] 关掉声音，我看到的是：我坐在床边，向后撑住身体，持续微笑着对镜头聊天，最后转头看向画左身后的墙；能读出放松满足，但读不出“钱花光了，仍然觉得值”的转折。第1张第1行0–1.5秒，后仰、双手撑床的动作有自然过渡；但第4行第4–8格及第5行第1–5格（6.75–9.0秒），我的双手基本一直撑在床上，没有规格要求在“zero money”处摊开两只空手、耸肩的反应，这一关键表演节拍缺失。第5–6行9.0–11.0秒仍主要靠笑容和头部变化延续聊天，未清楚形成“Honestly?”停一拍再笑着说“Worth it.”的节奏；仅凭这些抽帧也拿不准停顿是否落实。第6行第6格（11.25秒）已经开始转头，早于规格11.6秒的收尾动作起点。整体有活人感，但关键反应不足，未完整演出看点。",
+   "at": "2026-11-10T21:28:07"
+  },
+  "video.point_landed": {
+   "verdict": "fail",
+   "by": "review",
+   "evidence": "[director·claude] What I see with the sound off: a woman in travel clothes sits on the edge of a bed in a lamp-lit night room and chats happily to camera with her hands braced on the bed the whole time, then turns her head to look at the wall behind her. I can't read 'the money is gone, but I got a bed and tasted garum, so it was worth it' from that. Against the beats: ① At 6.8–9.2s the spec wants 'spreads both empty hands and shrugs' for 'zero money'. In the 6.75–9.5s frames both hands stay flat on the bed (picture-left hand on the mattress, picture-right hand on the blanket). They never spread and her shoulders don't shrug. This 'no money' beat is completely missing. ② At 2.4–4.4s she should pat the bed on 'bed'. In the 2.5–4.5s frames her hands stay planted and I can't make out a pat. ③ At 0–1.5s the spec wants her hands braced on the mattress behind her. At 0.75–1.25s they are braced at her sides, which is a small deviation. ④ At 11.6–13s the spec wants her to look at the neat cluster of tally marks. From 11.25–12.75s she does turn her head toward her right shoulder / picture left, but I can't see tally marks anywhere on the wall, so the payoff of 'smiling at the marks' has no source. The motion speed looks natural, but the key gestures for the point (bed / empty hands) did not land.",
+   "at": "2026-11-10T21:28:07"
+  }
+ }
+}

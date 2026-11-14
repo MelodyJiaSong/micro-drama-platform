@@ -1,0 +1,90 @@
+<style>
+  .tabs { position: absolute; left: var(--mx); right: var(--mx); top: var(--mt); display: flex; gap: 56px; }
+  .tabs .tab.eyebrow { letter-spacing: .02em; text-transform: none; }
+  .tabs .chap { align-self: center; margin-right: 8px; }
+  .tab { font-size: var(--fs-caption); font-weight: 500; color: var(--faint); padding-bottom: 12px; border-bottom: 2px solid transparent; }
+  .tab.on { color: var(--ink); border-color: var(--accent); }
+  .open { position: absolute; left: var(--mx); top: 360px; }
+  .open .h1 { margin-top: 18px; }
+  .case { position: absolute; left: var(--mx); top: 250px; width: 1680px; }
+  .case .display { font-size: 160px; line-height: 1; }
+  .case .h2 { margin-top: 26px; max-width: 1500px; }
+  .case .eyebrow + .display, .case .eyebrow + .flow, .case .eyebrow + .h1 { margin-top: 22px; }
+  .case .note { margin-top: 18px; }
+  .flow { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .flow > div { white-space: nowrap; }
+  .flow .n { font-size: 120px; font-weight: 700; line-height: 1; letter-spacing: -.01em; }
+  .flow .u { font-size: var(--fs-h2); font-weight: 600; margin-left: .35em; }
+  .flow .arr { font-size: var(--fs-h2); font-weight: 600; color: var(--sub); }
+  .quote { font-size: 72px; font-weight: 700; line-height: 1.25; }
+  .src { position: absolute; left: var(--mx); top: 860px; }
+  .close { position: absolute; left: var(--mx); top: 330px; width: 1600px; }
+  .close .h2 { margin-top: 22px; }
+</style>
+
+<div class="tabs">
+  <div class="eyebrow chap" id="chap" data-zh="05 · 现实里的祸" data-en="05 · Real-world failures"></div>
+  <div class="tab eyebrow" id="tab0" data-zh="谷歌流感趋势" data-en="Google Flu Trends"></div>
+  <div class="tab eyebrow" id="tab1" data-zh="胸片肺炎模型" data-en="Pneumonia X-ray model"></div>
+  <div class="tab eyebrow" id="tab2" data-zh="皮肤癌识别" data-en="Skin-cancer detector"></div>
+</div>
+<div class="open" id="open"><div class="eyebrow" data-zh="05 · 现实里的祸" data-en="05 · Real-world failures"></div>
+  <div class="h1" data-zh='三个<span class="c-bad">真实案例</span>' data-en='Three <span class="c-bad">real cases</span>'></div></div>
+<div class="case" id="f0"><div class="h1" data-zh="用搜索记录估流感" data-en="Flu, estimated from searches"></div></div>
+
+<div class="case" id="f1"><div class="eyebrow" data-zh="最初的版本" data-en="The first version"></div>
+  <div class="flow"><div data-zh='<span class="n">5000万</span><span class="u sub">个搜索词</span>' data-en='<span class="n">50M</span> <span class="u sub">search terms</span>'></div>
+    <div class="arr" data-zh="远多于" data-en="far more than"></div><div data-zh='<span class="n accent">1152</span><span class="u sub">个数据点</span>' data-en='<span class="n accent">1,152</span> <span class="u sub">data points</span>'></div></div>
+  <div class="h2 ink2" id="f1b" data-zh="总有词，碰巧在冬天搜得多" data-en="Some just happen to peak in winter"></div></div>
+<div class="case" id="f2"><div class="quote" data-zh='“一部分在测流感，<br><span class="accent">一部分在测冬天</span>”' data-en='“Part flu detector,<br><span class="accent">part winter detector</span>”'></div>
+  <div class="body ink2 note" data-zh="研究者：这是过拟合" data-en="The researchers: overfitting"></div></div>
+<div class="case" id="f3"><div class="eyebrow" data-zh="后来的版本 · 2011–2013" data-en="Later versions · 2011–2013"></div>
+  <div class="display c-bad" data-zh='<span id="n100">100</span><span class="faint"> / 108 周</span>' data-en='<span id="n100">100</span><span class="faint"> / 108</span>'></div>
+  <div class="h2" data-zh="流感估高了" data-en="weeks overestimated"></div></div>
+<div class="src" id="s0" data-zh="Lazer 等 ·《Science》· 2014" data-en="Lazer et al. · Science · 2014"></div>
+
+<div class="case" id="x1"><div class="eyebrow" data-zh="看胸片诊断肺炎" data-en="Pneumonia from chest X-rays"></div>
+  <div class="h1" data-zh='换到新医院，<span class="c-bad">成绩下降</span>' data-en='New hospital, <span class="c-bad">worse results</span>'></div></div>
+<div class="case" id="x2"><div class="eyebrow" data-zh="另训一个模型" data-en="A separate model: which hospital?"></div>
+  <div class="display accent"><span class="faint" style="font-size:110px">&gt;</span> 99.9%</div>
+  <div class="h2" data-zh="看胸片，就认得出医院" data-en="A hospital fingerprint"></div></div>
+<div class="case" id="x3"><div class="eyebrow" data-zh="各医院标成肺炎的比例" data-en="Scans labeled pneumonia, by hospital"></div>
+  <div class="display" data-zh='<span class="accent">34%</span><span class="faint" style="font-size:96px"> 对 </span>1%' data-en='<span class="accent">34%</span><span class="faint" style="font-size:96px"> vs. </span>1%'></div>
+  <div class="h2 c-bad" data-zh="好成绩，可能有一部分靠认医院" data-en="Maybe spotting hospitals, not disease"></div></div>
+<div class="src" id="s1" data-zh="Zech 等 ·《PLOS Medicine》· 2018" data-en="Zech et al. · PLOS Medicine · 2018"></div>
+
+<div class="case" id="m1"><div class="eyebrow" data-zh="标记成了线索" data-en="The ink clue"></div>
+  <div class="display c-bad">54%</div>
+  <div class="h2" data-zh="画了标记的良性痣，被判成癌" data-en="of inked harmless moles flagged as cancer"></div></div>
+<div class="src" id="s2" data-zh="Winkler 等 ·《JAMA Dermatology》· 2019" data-en="Winkler et al. · JAMA Dermatology · 2019"></div>
+
+<div class="close" id="fin"><div class="h1 accent" data-zh="捷径学习" data-en="Shortcut learning"></div>
+  <div class="h2 ink2" data-zh="熟悉的环境里，也许考得不错" data-en="May do well in familiar settings"></div>
+  <div class="h2 c-bad" data-zh="换个环境，就可能失灵" data-en="Can fail somewhere new"></div></div>
+
+<script>
+const T = EDU.tl;
+const on = (i, at) => [0, 1, 2].forEach(k => T.set("#tab" + k, { className: "tab eyebrow" + (k === i ? " on" : "") }, at));
+gsap.set([".tab", "#chap", "#f0", "#open", "#f1", "#f1b", "#f2", "#f3", "#s0", "#x1", "#x2", "#x3", "#s1", "#m1", "#s2", "#fin"], { opacity: 0 });
+// l41 开场
+EDU.in("#open", EDU.t("l41"));
+// l42 谷歌流感趋势：页签
+EDU.out("#open", EDU.t("l42")); EDU.in(["#chap", ".tab"], EDU.t("l42"), { stagger: .1 }); on(0, EDU.t("l42", .05)); EDU.in("#f0", EDU.t("l42", .1));
+// l43 5000 万 ≫ 1152
+EDU.out("#f0", EDU.t("l43")); EDU.in(["#f1", "#s0"], EDU.t("l43", .03), { stagger: .2 });
+// l44 碰巧在冬天搜得多 → 研究者原话
+EDU.in("#f1b", EDU.t("l44")); EDU.out("#f1", EDU.t("l44", .45)); EDU.in("#f2", EDU.t("l44", .5));
+// l45 100/108
+EDU.out("#f2", EDU.t("l45")); EDU.in("#f3", EDU.t("l45", .05)); EDU.count("#n100", EDU.t("l45", .35), 100, 1.2, v => Math.round(v));
+// l46 胸片：新医院成绩下降
+EDU.out(["#f3", "#s0"], EDU.t("l46")); on(1, EDU.t("l46", .02)); EDU.in(["#x1", "#s1"], EDU.t("l46", .05), { stagger: .2 });
+// l47 另训模型认医院 99.9%
+EDU.out("#x1", EDU.t("l47")); EDU.in("#x2", EDU.t("l47", .05));
+// l48 标成肺炎的比例 34% vs 1% → 结论（上一屏收走，不叠加）
+EDU.out("#x2", EDU.t("l48")); EDU.in("#x3", EDU.t("l48", .03));
+// l49 皮肤癌
+EDU.out(["#x3", "#s1"], EDU.t("l49")); on(2, EDU.t("l49", .02)); EDU.in(["#m1", "#s2"], EDU.t("l49", .3), { stagger: .2 });
+// l50 捷径学习
+EDU.out(["#m1", "#s2"], EDU.t("l50")); T.set("#tab0", { className: "tab eyebrow" }, EDU.t("l50")); T.set(["#tab1", "#tab2"], { className: "tab eyebrow on" }, EDU.t("l50"));
+EDU.in("#fin", EDU.t("l50", .05));
+</script>

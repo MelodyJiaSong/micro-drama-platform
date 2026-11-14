@@ -1,0 +1,472 @@
+{
+ "title": "t13 反向传播 Backpropagation",
+ "tagline": "反向传播，就是把错误从输出往回传，一层层分责任；倒着走一趟，每个旋钮该往哪拧、拧多少就全算出来了。",
+ "lang": "zh",
+ "languages": [
+  {
+   "lang": "zh",
+   "label": "中文",
+   "preview": "edu_videos/ai_terms/t13_backprop/preview.json"
+  },
+  {
+   "lang": "en",
+   "label": "English",
+   "preview": "edu_videos/ai_terms/t13_backprop/preview.en.json"
+  }
+ ],
+ "video": "edu_videos/ai_terms/t13_backprop/final/t13_backprop.mp4",
+ "duration": 299.5,
+ "chapters": [
+  {
+   "id": "s0",
+   "title": "冷开场",
+   "t": 0.0
+  },
+  {
+   "id": "s1",
+   "title": "本期内容",
+   "t": 21.7
+  },
+  {
+   "id": "s2",
+   "title": "一个个试，试不过来",
+   "t": 36.8
+  },
+  {
+   "id": "s3",
+   "title": "倒着往回算",
+   "t": 75.07
+  },
+  {
+   "id": "s4",
+   "title": "做个小实验",
+   "t": 119.27
+  },
+  {
+   "id": "s5",
+   "title": "从 1986 到今天",
+   "t": 236.57
+  },
+  {
+   "id": "s6",
+   "title": "片尾",
+   "t": 277.43
+  }
+ ],
+ "items": [
+  {
+   "t": 0.6,
+   "end": 4.1,
+   "title": "现在的大模型，有几十亿、上千亿个旋钮",
+   "subtitle": "现在的大模型，有几十亿、上千亿个旋钮。",
+   "badge": "l01",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l01.jpg"
+  },
+  {
+   "t": 4.45,
+   "end": 9.5,
+   "title": "训练时每走一步",
+   "subtitle": "训练时每走一步，都得知道每个旋钮往哪拧、拧多少。",
+   "badge": "l02",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l02.jpg"
+  },
+  {
+   "t": 9.85,
+   "end": 12.1,
+   "title": "一个一个去试？",
+   "subtitle": "一个一个去试？根本试不完。",
+   "badge": "l03",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l03.jpg"
+  },
+  {
+   "t": 12.45,
+   "end": 16.59,
+   "title": "其实倒着走一趟，就全算出来了",
+   "subtitle": "其实倒着走一趟，就全算出来了，这叫反向传播。",
+   "badge": "l04",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l04.jpg"
+  },
+  {
+   "t": 22.3,
+   "end": 27.4,
+   "title": "上期说过，神经网络就是一层层小单元",
+   "subtitle": "上期说过，神经网络就是一层层小单元，每个都带着旋钮。",
+   "badge": "l05",
+   "chapter": "s1",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l05.jpg"
+  },
+  {
+   "t": 27.75,
+   "end": 35.88,
+   "title": "这期咱们先看看挨个试为什么不行",
+   "subtitle": "这期咱们先看看挨个试为什么不行，再拿个小网络，看错误怎么倒着传回去，最后说说这招哪来的。",
+   "badge": "l06",
+   "chapter": "s1",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l06.jpg"
+  },
+  {
+   "t": 40.0,
+   "end": 45.72,
+   "title": "先说训练",
+   "subtitle": "先说训练：模型猜个答案，跟正确答案一比，差多少就是错误。",
+   "badge": "l07",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l07.jpg"
+  },
+  {
+   "t": 46.07,
+   "end": 53.51,
+   "title": "给错误打个分，差得越多分越高",
+   "subtitle": "给错误打个分，差得越多分越高，这个分叫损失。训练就是拧旋钮，把损失压低。",
+   "badge": "l08",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l08.jpg"
+  },
+  {
+   "t": 53.86,
+   "end": 59.45,
+   "title": "每个旋钮拧一点，错误变多少？",
+   "subtitle": "每个旋钮拧一点，错误变多少？这叫它的坡度，合起来就是梯度。",
+   "badge": "l09",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l09.jpg"
+  },
+  {
+   "t": 59.8,
+   "end": 67.19,
+   "title": "最直接的办法是挨个试",
+   "subtitle": "最直接的办法是挨个试：把一个旋钮拧一点点，从头重算一遍，看错误变大还是变小。",
+   "badge": "l10",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l10.jpg"
+  },
+  {
+   "t": 67.54,
+   "end": 74.16,
+   "title": "有多少个旋钮，就得重算多少遍",
+   "subtitle": "有多少个旋钮，就得重算多少遍。几十亿个，就是几十亿遍，这还只是一步。",
+   "badge": "l11",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l11.jpg"
+  },
+  {
+   "t": 78.27,
+   "end": 84.76,
+   "title": "反向传播换了个思路",
+   "subtitle": "反向传播换了个思路。打个比方，有一串齿轮咬在一起，最后一个带着指针。",
+   "badge": "l12",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l12.jpg"
+  },
+  {
+   "t": 85.11,
+   "end": 91.57,
+   "title": "第一个转一格，第二个就转两格",
+   "subtitle": "第一个转一格，第二个就转两格。第二个转一格，第三个就转三格。",
+   "badge": "l13",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l13.jpg"
+  },
+  {
+   "t": 91.92,
+   "end": 98.29,
+   "title": "那第一个转一格，指针转几格？",
+   "subtitle": "那第一个转一格，指针转几格？沿路的倍数乘起来，二乘三，六格。",
+   "badge": "l14",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l14.jpg"
+  },
+  {
+   "t": 98.64,
+   "end": 106.56,
+   "title": "倒着算最省事",
+   "subtitle": "倒着算最省事：从指针开始往回走，每过一个齿轮，就在上一步的结果上再乘个倍数。",
+   "badge": "l15",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l15.jpg"
+  },
+  {
+   "t": 106.91,
+   "end": 109.56,
+   "title": "每处只乘一次，算过的接着用",
+   "subtitle": "每处只乘一次，算过的接着用。",
+   "badge": "l16",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l16.jpg"
+  },
+  {
+   "t": 109.91,
+   "end": 118.35,
+   "title": "神经网络也像一串齿轮",
+   "subtitle": "神经网络也像一串齿轮：每个旋钮隔着几层，影响最后的答案。所以错误也能一层层倒着传回去。",
+   "badge": "l17",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l17.jpg"
+  },
+  {
+   "t": 122.47,
+   "end": 129.03,
+   "title": "来看个真的小网络",
+   "subtitle": "来看个真的小网络：两层，七个旋钮。给它五公里的路程，让它猜车费。",
+   "badge": "l18",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l18.jpg"
+  },
+  {
+   "t": 129.38,
+   "end": 136.85,
+   "title": "第一层两个小单元，A 和 B",
+   "subtitle": "第一层两个小单元，A 和 B，各用两个旋钮算一下：A 得六，B 得四。",
+   "badge": "l19",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l19.jpg"
+  },
+  {
+   "t": 137.2,
+   "end": 143.75,
+   "title": "第二层把这两个数各乘一个旋钮",
+   "subtitle": "第二层把这两个数各乘一个旋钮，再直接加上第三个，猜出车费：二十九块。",
+   "badge": "l20",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l20.jpg"
+  },
+  {
+   "t": 144.1,
+   "end": 149.65,
+   "title": "可实际是二十三块，多猜了六块",
+   "subtitle": "可实际是二十三块，多猜了六块。这六块，就是要往回传的错误。",
+   "badge": "l21",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l21.jpg"
+  },
+  {
+   "t": 150.0,
+   "end": 157.88,
+   "title": "先看最后一层的三个旋钮",
+   "subtitle": "先看最后一层的三个旋钮。每个旋钮分到的责任，就是它的坡度：错误乘上送进它的数。",
+   "badge": "l22",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l22.jpg"
+  },
+  {
+   "t": 158.23,
+   "end": 168.58,
+   "title": "送进来的是六、四，直接加的那个算一",
+   "subtitle": "送进来的是六、四，直接加的那个算一，乘上错误六，分到三十六、二十四、六。送进来的越大，分到的越多。",
+   "badge": "l23",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l23.jpg"
+  },
+  {
+   "t": 168.93,
+   "end": 174.43,
+   "title": "再往前一层，错误顺着连线往回走",
+   "subtitle": "再往前一层，错误顺着连线往回走，路过哪个旋钮，就乘上哪个。",
+   "badge": "l24",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l24.jpg"
+  },
+  {
+   "t": 174.78,
+   "end": 180.13,
+   "title": "A 那边乘二，收到十二",
+   "subtitle": "A 那边乘二，收到十二。B 那边乘一，收到六。",
+   "badge": "l25",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l25.jpg"
+  },
+  {
+   "t": 180.48,
+   "end": 184.63,
+   "title": "两个小单元再用同样的办法",
+   "subtitle": "两个小单元再用同样的办法，算出自己两个旋钮的责任。",
+   "badge": "l26",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l26.jpg"
+  },
+  {
+   "t": 184.98,
+   "end": 193.14,
+   "title": "就这么倒着走一趟",
+   "subtitle": "就这么倒着走一趟，七个旋钮全有了自己的数。猜多了，所以七个都该往小拧，只是有的多、有的少。",
+   "badge": "l27",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l27.jpg"
+  },
+  {
+   "t": 193.49,
+   "end": 200.16,
+   "title": "按这七个数各拧一小步再猜",
+   "subtitle": "按这七个数各拧一小步再猜：从二十九变成差不多二十四，离二十三近多了。",
+   "badge": "l28",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l28.jpg"
+  },
+  {
+   "t": 200.51,
+   "end": 207.11,
+   "title": "再用笨办法核对",
+   "subtitle": "再用笨办法核对：先不拧，算一遍，七个旋钮轮流拧，各算一遍，一共八遍。",
+   "badge": "l29",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l29.jpg"
+  },
+  {
+   "t": 207.46,
+   "end": 214.77,
+   "title": "算出来的七个数，跟反向传播一模一样",
+   "subtitle": "算出来的七个数，跟反向传播一模一样。可反向传播只正着算了一遍，再倒着走了一趟。",
+   "badge": "l30",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l30.jpg"
+  },
+  {
+   "t": 215.12,
+   "end": 220.74,
+   "title": "旋钮一多，差距就拉开了",
+   "subtitle": "旋钮一多，差距就拉开了：十亿个旋钮，挨个试要算十亿零一遍。",
+   "badge": "l31",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l31.jpg"
+  },
+  {
+   "t": 221.09,
+   "end": 224.89,
+   "title": "哪怕一遍只要一秒，也得三十多年",
+   "subtitle": "哪怕一遍只要一秒，也得三十多年，这才走了一步。",
+   "badge": "l32",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l32.jpg"
+  },
+  {
+   "t": 225.24,
+   "end": 231.51,
+   "title": "反向传播呢，还是一来一回",
+   "subtitle": "反向传播呢，还是一来一回。倒着那趟大约顶两遍，加起来也就三遍的工夫。",
+   "badge": "l33",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l33.jpg"
+  },
+  {
+   "t": 231.86,
+   "end": 235.66,
+   "title": "没有它，几十亿个旋钮的大模型根本训练不动",
+   "subtitle": "没有它，几十亿个旋钮的大模型根本训练不动。",
+   "badge": "l34",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l34.jpg"
+  },
+  {
+   "t": 239.77,
+   "end": 248.86,
+   "title": "这办法哪来的？",
+   "subtitle": "这办法哪来的？1986年，鲁梅尔哈特、辛顿和威廉姆斯，在《自然》上发了篇论文，把它讲清楚了。",
+   "badge": "l35",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l35.jpg"
+  },
+  {
+   "t": 249.21,
+   "end": 255.65,
+   "title": "论文里说，坡度分两趟算",
+   "subtitle": "论文里说，坡度分两趟算：先正着一趟，再从输出那头倒着传回来。",
+   "badge": "l36",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l36.jpg"
+  },
+  {
+   "t": 256.0,
+   "end": 259.5,
+   "title": "他们还发现",
+   "subtitle": "他们还发现，中间那些单元会自己学会抓规律。",
+   "badge": "l37",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l37.jpg"
+  },
+  {
+   "t": 259.85,
+   "end": 265.55,
+   "title": "类似的算法更早就有人提过",
+   "subtitle": "类似的算法更早就有人提过，这篇论文演示了怎么用它训练多层网络。",
+   "badge": "l38",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l38.jpg"
+  },
+  {
+   "t": 265.9,
+   "end": 272.89,
+   "title": "现在用 PyTorch 这类框架",
+   "subtitle": "现在用 PyTorch 这类框架，写一行 loss.backward()，所有旋钮的坡度就都算好了。",
+   "badge": "l39",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l39.jpg"
+  },
+  {
+   "t": 273.24,
+   "end": 276.53,
+   "title": "这叫自动求导，底下就是反向传播",
+   "subtitle": "这叫自动求导，底下就是反向传播。",
+   "badge": "l40",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l40.jpg"
+  },
+  {
+   "t": 278.03,
+   "end": 282.98,
+   "title": "反向传播，就是把错误从输出往回传",
+   "subtitle": "反向传播，就是把错误从输出往回传，一层层分责任。",
+   "badge": "l41",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l41.jpg"
+  },
+  {
+   "t": 283.33,
+   "end": 287.92,
+   "title": "倒着走一趟，每个旋钮该往哪拧、拧多少",
+   "subtitle": "倒着走一趟，每个旋钮该往哪拧、拧多少，就全算出来了。",
+   "badge": "l42",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l42.jpg"
+  },
+  {
+   "t": 288.27,
+   "end": 294.76,
+   "title": "不过旋钮多了也有麻烦",
+   "subtitle": "不过旋钮多了也有麻烦：模型可能把练习题背下来，换道新题就不会了。",
+   "badge": "l43",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l43.jpg"
+  },
+  {
+   "t": 295.11,
+   "end": 298.57,
+   "title": "这毛病叫过拟合，下一期咱们聊聊",
+   "subtitle": "这毛病叫过拟合，下一期咱们聊聊。",
+   "badge": "l44",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/thumbs/l44.jpg"
+  }
+ ],
+ "links": [
+  {
+   "label": "讲稿",
+   "path": "edu_videos/ai_terms/t13_backprop/script.md"
+  },
+  {
+   "label": "时间轴",
+   "path": "edu_videos/ai_terms/t13_backprop/timeline.json"
+  },
+  {
+   "label": "调研",
+   "path": "edu_videos/ai_terms/t13_backprop/research.md"
+  },
+  {
+   "label": "字幕",
+   "path": "edu_videos/ai_terms/t13_backprop/final/t13_backprop.srt"
+  }
+ ]
+}

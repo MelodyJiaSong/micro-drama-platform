@@ -1,0 +1,104 @@
+{
+  "at": "2026-10-29T08:43:39.355417+08:00",
+  "status": "comparisons_complete_quality_still_fails",
+  "observations": [
+    "Current multiview sampler combines predictions by voxel position without camera pose alignment",
+    "m300:r01 was already single-view; its defects cannot be attributed to multiview alone",
+    "Original m300:r01 retains more coherent body structure than later anatomy replacements"
+  ],
+  "comparison": {
+    "asset": "bg12",
+    "multiview": "r02",
+    "single_view": "r03",
+    "shared_settings": "1024_cascade, seed 28723, 12 sampling steps, remesh 512, 1M target faces, 4096 PBR",
+    "question": "Does using only the established front view improve structural separation and material coherence?",
+    "limits": "Back and side consistency must still be checked against all established references",
+    "outcome": "bg12 r02 多视图、r03 单视图 wrapper、r04 单视图 official 均未通过；单视图保留较完整结构，但不解决草叶熔化与苍白配色。"
+  },
+  "artifacts_preserved": true,
+  "official_sampling_profile": {
+    "ss_guidance": 7.5,
+    "ss_rescale": 0.7,
+    "shape_guidance": 7.5,
+    "shape_rescale": 0.5,
+    "texture_guidance": 1,
+    "texture_rescale": 0,
+    "new_batch_only": true
+  },
+  "normal_export_defect": {
+    "cause": "导出节点改变顶点坐标后使 trimesh 法线缓存失效，又将已经重新计算的法线再旋转一次。",
+    "verified_assets": {
+      "m300_r14": {
+        "before_median_dot": 0.323,
+        "after_median_dot": 0.99681
+      },
+      "bg12_r04": {
+        "before_median_dot": 0.20791,
+        "after_median_dot": 0.99233
+      },
+      "m300_r08_authored": {
+        "before_median_dot": 0.35441,
+        "after_median_dot": 0.99158
+      }
+    },
+    "repair": "保留原件，在副本上对识别出的错误法线绕 X 轴旋转 +90°；数值验证后才保存。",
+    "scope": "修正表面明暗，不修正原有几何、闭眼、布料破洞、草叶熔化或配色。",
+    "new_inspections": "inspect_model.py 自动检测与修正导出副本；未修改共享 ComfyUI 安装。"
+  },
+  "scheduler_stopped_pid_historical": 29188,
+  "scheduler_resumed_pid": null,
+  "runtime_timeout_repair": {
+    "task_launcher_only": true,
+    "node_timeout_seconds": 3600,
+    "failed_request": "bg21:r01",
+    "retry": "bg21:r02",
+    "bg22_receipt_saved_before_restart": true
+  },
+  "mesh_preservation_trial": {
+    "asset": "m1",
+    "revision": "r08",
+    "status": "independent_review_fail_5_blockers",
+    "finding": "Installed nodes_unwrap.py ProcessMesh remesh-on hardcodes resolution=512 after 1024 generation.",
+    "trial": "Same reference, seed, 1024 cascade and official sampler; disable remesh, disable fill-holes and retain 3M faces.",
+    "raw_glb_sha256_identical_in_r01_r08": "092df0ed7aa96143faab86e8d57affcc9ba8fcd9ac0d5bd7715ecbc0d7a4d2dc",
+    "processed_faces": 2794043,
+    "conclusion": "Author verified sharper bark and lichen. Independent review still fails: foliage colour and fused shape, floating fragments, torso texture distortion and fused roots. Raw clay retains more detail but contains voxel noise and fragments. No acceptance implied.",
+    "new_batch_requests": "Scheduler resumed with preserve mesh profile; m15 existing baseline receipt retained. Prior models unchanged.",
+    "reference": "https://github.com/microsoft/TRELLIS.2/issues/92"
+  },
+  "ground_fragment_diagnosis": {
+    "verified": {
+      "m5_r03": {
+        "removed_faces": 94,
+        "corrected_height_m": 0.0542565
+      },
+      "m8_r02": {
+        "removed_faces": 288,
+        "corrected_height_m": 0.038521
+      }
+    },
+    "method": "Weld coincident UV-split vertices in analysis; remove disconnected components wholly below a principal body with >95% area and each below-body component <0.5% area. Re-ground from remaining geometry.",
+    "new_imports": "inspect_model.py applies this to NPC exports except Wisp; raw GLB retained.",
+    "rejected_trial": "m5 r02 analysed UV-split vertices as physical components; rejected and superseded by seam-aware r03."
+  },
+  "high_resolution_remesh_trial": {
+    "asset": "m1",
+    "revisions": [
+      "r11 preserve",
+      "r16 remesh1024"
+    ],
+    "raw_sha256_identical": "b751eeaf433fe818c349244430d0ec354c30fe92936de4dec9668a46a5d80dfa",
+    "worker_log_verified": "ProcessMesh Remeshing quad DC resolution=1024",
+    "result": "r16 independent visual review fail, 8 blockers",
+    "topology_report": "characters/近卫_sentinel/m1_Treant/model_3d/remesh_topology_comparison.json",
+    "boundary_edges_at_5_decimal_quantization": {
+      "r11": 1246583,
+      "r16": 0
+    },
+    "nonmanifold_edges_at_5_decimal_quantization": {
+      "r11": 1262,
+      "r16": 17430
+    },
+    "caution": "Quantized topology statistics are not manifold acceptance. Blender distance-based weld found 2751 boundary edges in r16. No final batch profile change."
+  }
+}

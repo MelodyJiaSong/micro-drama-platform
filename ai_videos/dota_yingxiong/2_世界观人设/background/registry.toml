@@ -3,122 +3,318 @@
 # 规则：
 # · `n` 分配一次、永不复用、永不改号；目录改名只改 `dir`。
 # · `node` 留空：本剧没有世界树节点表（0_research 只有 d01 地图考据）；"" ＝ 不挂节点。
-# · 目录落点：background/{continent}/{zone}/{dir}/；continent 固定 "dota_map"，zone ∈ river / sentinel / scourge。
+# · 目录落点：background/{zone}/{dir}/；zone ∈ 近卫_sentinel / 天灾_scourge / 中立_neutral（2026-10-18 follow-up 025 按阵营分组：河道、神符点、巨兽巢穴与公共商店归中立）。
 # · 新号从 `next` 起编；bg1–bg14 由 assets_index.md「背景」表 2026-10-18 首次分配。
 # · bg1 是世界锚点（零参考图自由生成），其余卡的 `参考:` 行一律点名 bg1。
 
 [meta]
 drama = "dota_yingxiong"
-next = 15
+next = 45
 
 [[bg]]
 n = 1
 node = ""
 dir = "bg1_中路河道交叉口"
-zone = "river"
-continent = "dota_map"
+zone = "中立_neutral"
 note = "世界锚点；技能主舞台（d01 §6.2）"
 
 [[bg]]
 n = 2
 node = ""
 dir = "bg2_近卫基地·世界之树"
-zone = "sentinel"
-continent = "dota_map"
+zone = "近卫_sentinel"
 note = "近卫英雄亮相（d01 §6.1）"
 
 [[bg]]
 n = 3
 node = ""
 dir = "bg3_天灾基地·冰封王座"
-zone = "scourge"
-continent = "dota_map"
+zone = "天灾_scourge"
 note = "天灾英雄亮相（d01 §6.1）"
 
 [[bg]]
 n = 4
 node = ""
 dir = "bg4_近卫中路一塔"
-zone = "sentinel"
-continent = "dota_map"
+zone = "近卫_sentinel"
 note = "兵线交战、连放技能（d01 §6.4）"
 
 [[bg]]
 n = 5
 node = ""
 dir = "bg5_天灾中路一塔"
-zone = "scourge"
-continent = "dota_map"
+zone = "天灾_scourge"
 note = "兵线交战、连放技能（d01 §6.4）"
 
 [[bg]]
 n = 6
 node = ""
 dir = "bg6_上河道神符点"
-zone = "river"
-continent = "dota_map"
+zone = "中立_neutral"
 note = "入场、水与冰系技能（d01 §6.3）"
 
 [[bg]]
 n = 7
 node = ""
 dir = "bg7_下河道神符点"
-zone = "river"
-continent = "dota_map"
+zone = "中立_neutral"
 note = "入场、水与冰系技能（d01 §6.3）"
 
 [[bg]]
 n = 8
 node = ""
 dir = "bg8_近卫野区空地"
-zone = "sentinel"
-continent = "dota_map"
+zone = "近卫_sentinel"
 note = "隐身、位移类英雄（d01 §6.5）"
 
 [[bg]]
 n = 9
 node = ""
 dir = "bg9_天灾野区空地"
-zone = "scourge"
-continent = "dota_map"
+zone = "天灾_scourge"
 note = "隐身、位移类英雄（d01 §6.5）"
 
 [[bg]]
 n = 10
 node = ""
 dir = "bg10_巨兽巢穴"
-zone = "river"
-continent = "dota_map"
+zone = "中立_neutral"
 note = "大英雄压迫镜头（d01 §6.6）；assets_index 写「Roshan 巢穴」，目录名去掉空格（参考行按空白切分）"
 
 [[bg]]
 n = 11
 node = ""
 dir = "bg11_秘密商店"
-zone = "sentinel"
-continent = "dota_map"
+zone = "中立_neutral"
 note = "买装备过场（d01 §6.7）；画近卫一侧那一处"
 
 [[bg]]
 n = 12
 node = ""
 dir = "bg12_边路地精商店"
-zone = "sentinel"
-continent = "dota_map"
+zone = "中立_neutral"
 note = "买装备过场（d01 §6.7）；画西边缘上路旁那一处"
 
 [[bg]]
 n = 13
 node = ""
 dir = "bg13_近卫泉水与商店"
-zone = "sentinel"
-continent = "dota_map"
+zone = "近卫_sentinel"
 note = "出生、亮相"
 
 [[bg]]
 n = 14
 node = ""
 dir = "bg14_天灾泉水与商店"
-zone = "scourge"
-continent = "dota_map"
+zone = "天灾_scourge"
 note = "出生、亮相"
+
+[[bg]]
+n = 15
+node = ""
+dir = "bg15_近卫泉水"
+zone = "近卫_sentinel"
+note = "单体建筑：近卫泉水 Well of Life（follow-up 053）"
+
+[[bg]]
+n = 16
+node = ""
+dir = "bg16_近卫防御塔"
+zone = "近卫_sentinel"
+note = "单体建筑：远古守护者 Ancient Protector"
+
+[[bg]]
+n = 17
+node = ""
+dir = "bg17_战争古树"
+zone = "近卫_sentinel"
+note = "单体建筑：近战兵营 Ancient of War"
+
+[[bg]]
+n = 18
+node = ""
+dir = "bg18_知识古树"
+zone = "近卫_sentinel"
+note = "单体建筑：远程兵营 Ancient of Lore"
+
+[[bg]]
+n = 19
+node = ""
+dir = "bg19_月亮井"
+zone = "近卫_sentinel"
+note = "单体建筑：月亮井 Moon Well ×11"
+
+[[bg]]
+n = 20
+node = ""
+dir = "bg20_风之古树"
+zone = "近卫_sentinel"
+note = "单体建筑：风之古树 Ancient of Wind ×2"
+
+[[bg]]
+n = 21
+node = ""
+dir = "bg21_猎手大厅"
+zone = "近卫_sentinel"
+note = "单体建筑：猎手大厅 Hunter's Hall ×2"
+
+[[bg]]
+n = 22
+node = ""
+dir = "bg22_奇迹古树"
+zone = "近卫_sentinel"
+note = "商店建筑：奇迹古树 Ancient of Wonders（消耗品）"
+
+[[bg]]
+n = 23
+node = ""
+dir = "bg23_奎尔瑟兰的密室"
+zone = "近卫_sentinel"
+note = "商店建筑：Cache of the Quel'thelan（杂货）"
+
+[[bg]]
+n = 24
+node = ""
+dir = "bg24_近卫商人营地"
+zone = "近卫_sentinel"
+note = "8 家人形商店站位的空场（商人另立人物卡）"
+
+[[bg]]
+n = 25
+node = ""
+dir = "bg25_天灾泉水"
+zone = "天灾_scourge"
+note = "单体建筑：被污染的生命之泉"
+
+[[bg]]
+n = 26
+node = ""
+dir = "bg26_天灾防御塔"
+zone = "天灾_scourge"
+note = "单体建筑：幽魂塔 Spirit Tower 1–3 级；与 bg5 锚点图形制不符，待用户定"
+
+[[bg]]
+n = 27
+node = ""
+dir = "bg27_地穴"
+zone = "天灾_scourge"
+note = "单体建筑：近战兵营 Crypt"
+
+[[bg]]
+n = 28
+node = ""
+dir = "bg28_诅咒神庙"
+zone = "天灾_scourge"
+note = "单体建筑：远程兵营 Temple of the Damned"
+
+[[bg]]
+n = 29
+node = ""
+dir = "bg29_通灵塔"
+zone = "天灾_scourge"
+note = "单体建筑：通灵塔 Ziggurat ×11（bg26 熄灭版）"
+
+[[bg]]
+n = 30
+node = ""
+dir = "bg30_埋骨地"
+zone = "天灾_scourge"
+note = "单体建筑：埋骨地 Boneyard ×2"
+
+[[bg]]
+n = 31
+node = ""
+dir = "bg31_牺牲深渊"
+zone = "天灾_scourge"
+note = "单体建筑：牺牲深渊 Sacrificial Pit ×2"
+
+[[bg]]
+n = 32
+node = ""
+dir = "bg32_崩碎之穴"
+zone = "天灾_scourge"
+note = "商店建筑：Tomb of Relics（消耗品）"
+
+[[bg]]
+n = 33
+node = ""
+dir = "bg33_恶魔遗物"
+zone = "天灾_scourge"
+note = "商店建筑：Demonic Artifacts（杂货；WC3 经典高等精灵兵营模型）"
+
+[[bg]]
+n = 34
+node = ""
+dir = "bg34_天灾商人营地"
+zone = "天灾_scourge"
+note = "8 家人形商店站位的空场（商人另立人物卡）"
+
+[[bg]]
+n = 35
+node = ""
+dir = "bg35_天灾侧秘密商店"
+zone = "中立_neutral"
+note = "秘密商店天灾一侧那处（bg11 是近卫一侧）"
+
+[[bg]]
+n = 36
+node = ""
+dir = "bg36_地精实验室"
+zone = "中立_neutral"
+note = "边路商店第二座建筑 Goblin Laboratory（bg12 是地精商人）"
+
+[[bg]]
+n = 37
+node = ""
+dir = "bg37_天灾四级蛛魔塔"
+zone = "天灾_scourge"
+note = "遗迹旁四级塔：蛛魔塔蓝色球体形态；两处实例共用"
+
+[[bg]]
+n = 38
+node = ""
+dir = "bg38_近卫基地全景"
+zone = "近卫_sentinel"
+note = "完整基地的电影搭景与构图候选；单体编号保留，follow-up 106"
+
+[[bg]]
+n = 39
+node = ""
+dir = "bg39_天灾基地全景"
+zone = "天灾_scourge"
+note = "完整基地的电影搭景与构图候选；单体编号保留，follow-up 106"
+
+[[bg]]
+n = 40
+node = ""
+dir = "bg40_上路林缘走廊"
+zone = "中立_neutral"
+note = "整图区域体系新增兵线外景，follow-up 115"
+
+[[bg]]
+n = 41
+node = ""
+dir = "bg41_下路林缘走廊"
+zone = "中立_neutral"
+note = "整图区域体系新增兵线外景，follow-up 115"
+
+[[bg]]
+n = 42
+node = ""
+dir = "bg42_北极冰洞"
+zone = "中立_neutral"
+note = "vlog 穿越段：主角原来世界的北极冰洞遗迹（法器、法阵），follow-up 325"
+
+[[bg]]
+n = 43
+node = ""
+dir = "bg43_圣泉湖广场"
+zone = "近卫_sentinel"
+note = "vlog：扩展成城的近卫泉水（圣泉湖、湖心岩峰与光柱），follow-up 325"
+
+[[bg]]
+n = 44
+node = ""
+dir = "bg44_冰女小树屋"
+zone = "近卫_sentinel"
+note = "vlog：疗伤所旁主角暂住的小树屋，follow-up 325"

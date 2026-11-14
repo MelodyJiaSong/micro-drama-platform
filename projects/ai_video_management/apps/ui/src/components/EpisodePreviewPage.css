@@ -1,0 +1,109 @@
+/* 单集预览页（follow-up 326） */
+.ep-page{max-width:1180px;margin:0 auto;padding:24px 20px 64px;color:var(--text)}
+.ep-page h2{font-size:18px;margin:36px 0 12px}
+.ep-alert{color:var(--error-text);background:var(--error-bg);border:1px solid var(--error-border);border-radius:6px;padding:8px 12px}
+.ep-mute{color:var(--text-muted);font-size:13px;margin:4px 0}
+.ep-hero h1{font-size:30px;margin:4px 0 8px;letter-spacing:-.01em}
+.ep-eyebrow{color:var(--text-muted);font-size:13px;margin:0}
+.ep-tagline{font-size:16px;line-height:1.6;max-width:760px;margin:0 0 14px}
+.ep-stats{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:0 0 10px}
+.ep-stats li{background:var(--bg-sidebar);border:1px solid var(--border);border-radius:999px;padding:4px 12px;font-size:13px;color:var(--text-muted)}
+.ep-stats li b{color:var(--text);margin-right:4px;font-size:15px}
+.ep-stats li.ep-warn{background:var(--error-bg);border-color:var(--error-border)}
+.ep-links{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;margin:0}
+
+.ep-player{margin-top:20px;background:#0c1118;border-radius:10px;padding:12px;color:#e6edf3}
+.ep-player video{display:block;width:100%;max-height:72vh;aspect-ratio:16/9;background:#000;border-radius:6px}
+.ep-modes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.ep-modes button{background:#1b2430;color:#c9d1d9;border:1px solid #2d3a4a;border-radius:6px;padding:6px 12px;font-size:13px;cursor:pointer}
+.ep-modes button[aria-selected="true"]{background:#e6edf3;color:#0c1118;border-color:#e6edf3;font-weight:600}
+.ep-langs a{background:transparent;color:#4b5563;border:1px solid #d1d5db;border-radius:6px;padding:6px 12px;font-size:13px;text-decoration:none}
+.ep-langs a[aria-current="page"]{background:#1b2430;color:#fff;border-color:#1b2430;font-weight:600}
+.ep-timeline{display:flex;gap:2px;height:14px;margin:10px 0 4px}
+.ep-seg{flex-basis:0;min-width:4px;border:0;border-radius:2px;padding:0;cursor:pointer;opacity:.55;background:var(--seg,#6e7781)}
+.ep-seg:hover{opacity:.85}
+.ep-seg.ep-on{opacity:1;outline:2px solid #fff;outline-offset:1px}
+.ep-now{padding:8px 4px 2px;min-height:56px}
+.ep-now-id{font-size:12px;color:#8b98a5;margin:0 0 4px;letter-spacing:.04em}
+.ep-player .ep-line span{color:#e6edf3}
+.ep-player .ep-line em{color:#f0c674}
+.ep-player .ep-mute{color:#8b98a5}
+.ep-empty{color:#8b98a5;padding:40px;text-align:center}
+
+.ep-line{display:grid;grid-template-columns:5.2em minmax(0,1fr);column-gap:6px;margin:3px 0;font-size:14px;line-height:1.55}
+.ep-line b{font-weight:600;overflow-wrap:anywhere}
+.ep-line em{grid-column:2;font-style:normal;color:#8a5a00;font-size:13px}
+.ep-line.ep-mute{display:block}
+.ep-line.ep-foreign span{font-style:italic}
+
+.ep-cast-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.ep-cast figure{margin:0;background:var(--bg-panel);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.ep-cast img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;background:var(--bg-sidebar)}
+.ep-cast figcaption{padding:8px 10px;display:flex;flex-direction:column;gap:2px;font-size:13px}
+.ep-cast figcaption span{color:var(--text-muted)}
+.ep-cast figcaption small{color:var(--text-muted);line-height:1.4}
+
+.ep-scene{border:1px solid var(--border);border-left:4px solid var(--seg,#6e7781);border-radius:8px;background:var(--bg-panel);padding:16px;margin:0 0 18px}
+.ep-scene>header{display:flex;gap:14px;align-items:flex-start}
+.ep-scene>header p{margin:4px 0;line-height:1.6}
+.ep-scene h3{margin:0;font-size:18px}
+.ep-scene h3 small{font-weight:400;color:var(--text-muted);font-style:italic;margin-left:8px;font-size:14px}
+.ep-scene-num{flex:none;background:var(--seg,#6e7781);color:#fff;font-weight:700;border-radius:6px;padding:4px 8px;font-size:13px}
+.ep-scene-cut{margin:12px 0 4px;max-width:720px}
+.ep-lazy{width:100%;aspect-ratio:16/9;background:#000;border-radius:6px;overflow:hidden}
+.ep-scene-cut video{display:block;width:100%;aspect-ratio:16/9;background:#000;border-radius:6px}
+.ep-shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:14px}
+.ep-shot{border:1px solid var(--border);border-radius:8px;padding:8px;background:var(--bg)}
+.ep-shot.ep-on{border-color:var(--accent);box-shadow:0 0 0 2px var(--bg-active)}
+.ep-thumb{position:relative;display:block;width:100%;padding:0;border:0;border-radius:6px;overflow:hidden;background:#000;cursor:pointer}
+.ep-thumb video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;pointer-events:none}
+.ep-thumb:disabled{cursor:default}
+.ep-inline{display:block;width:100%;aspect-ratio:16/9;background:#000;border-radius:6px}
+.ep-thumb>span:not(.ep-dur){display:block;color:#8b98a5;padding:36px 0;font-size:13px}
+.ep-thumb::after{content:"▶";position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:26px;opacity:0;background:rgba(0,0,0,.25);transition:opacity .15s}
+.ep-thumb:not(:disabled):hover::after,.ep-thumb:focus-visible::after{opacity:1}
+.ep-dur{position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.65);color:#fff;font-size:12px;border-radius:4px;padding:1px 6px}
+.ep-shot-meta{display:flex;align-items:center;gap:8px;margin:8px 0 4px;font-size:13px}
+.ep-shot-meta a{margin-left:auto}
+.ep-chip{white-space:nowrap;border-radius:999px;padding:1px 8px;font-size:12px;border:1px solid}
+.ep-chip.ep-v-ok{color:#166534;background:#dcfce7;border-color:#86efac}
+.ep-chip.ep-v-note{color:#854d0e;background:#fef9c3;border-color:#fde047}
+.ep-chip.ep-v-redo{color:var(--error-text);background:var(--error-bg);border-color:var(--error-border)}
+.ep-chip.ep-v-pending{color:var(--text-muted);background:var(--bg-sidebar);border-color:var(--border)}
+.ep-note{font-size:13px;color:var(--text-muted);border-top:1px dashed var(--border);margin:8px 0 0;padding-top:6px;line-height:1.5}
+.ep-cut{font-size:12px;color:var(--text-muted);margin-top:6px}
+.ep-cut summary{cursor:pointer}
+.ep-cut p{margin:4px 0 0;line-height:1.5}
+.ep-notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:8px 24px}
+.ep-notes ul{margin:0;padding-left:20px;line-height:1.7;font-size:14px}
+
+.ep-s1{--seg:#2f6f9f}.ep-s2{--seg:#3f8f6b}.ep-s3{--seg:#b7791f}.ep-s4{--seg:#8a5cb8}
+.ep-s5{--seg:#c2410c}.ep-s6{--seg:#9b2c5a}.ep-s7{--seg:#3b4a8c}.ep-s8{--seg:#2b7a78}.ep-s9{--seg:#6b7f2a}
+
+@media (max-width:640px){
+  .ep-page{padding:16px 16px 48px}
+  .ep-hero h1{font-size:24px}
+  .ep-shots{grid-template-columns:minmax(0,1fr)}
+}
+
+/* 成片模式（follow-up 328） */
+.ep-film-track{position:relative}
+.ep-mark{position:absolute;top:-4px;width:4px;height:22px;margin-left:-2px;padding:0;border:0;border-radius:2px;background:#f0c674;cursor:pointer}
+.ep-now-title{margin:0 0 2px;font-size:16px;display:flex;align-items:center;gap:8px}
+.ep-now-note{margin:6px 0 0;color:#f0c674;font-size:14px;line-height:1.55}
+.ep-badge{font-size:11px;font-weight:600;letter-spacing:.04em;border-radius:4px;padding:1px 6px;background:#1f2937;color:#facc15;white-space:nowrap}
+.ep-thumb img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.ep-film-images{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.ep-film-images figure{margin:0;background:var(--bg-panel);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.ep-film-images img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.ep-film-images figcaption{padding:8px 10px;font-size:13px}
+.ep-shot .ep-mute{margin:2px 0}
+
+/* 音频预览（follow-up 359）：大图是当前镜头的故事板，底部叠当前台词 */
+.ep-audio-stage{display:flex;flex-direction:column;gap:8px}
+.ep-audio-frame{position:relative;width:100%;aspect-ratio:16/9;max-height:72vh;background:#000;border-radius:6px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.ep-audio-frame img{width:100%;height:100%;object-fit:contain}
+.ep-audio-blank{color:#8b98a5;font-size:15px}
+.ep-audio-cue{position:absolute;left:50%;bottom:4%;transform:translateX(-50%);max-width:88%;margin:0;padding:6px 14px;border-radius:6px;background:rgba(0,0,0,.66);color:#fff;font-size:clamp(14px,2.1vw,22px);line-height:1.45;text-align:center}
+.ep-audio-cue b{color:#f0c674;margin-right:.5em;font-weight:600}
+.ep-audio-stage audio{width:100%}

@@ -1,0 +1,171 @@
+# 自检登记表 · **剧级（chuanyue_yiri）** —— 只对本剧生效。与仓库级登记表
+# `.agents/references/project/qc_checks.toml` 合并使用（id 两层不许重复）。
+#
+# 产生于本剧的实战反馈；某一条在另一部剧也反复出现，再提议升到仓库级（须用户同意）。
+# 用户 2026-11-10（follow-up 054）看 EP01 成片：s1→s2 接口不自然、s2 两个女人互动和裤子梗僵硬、
+# s3 面包师在 Riley 说话时「跟傻子一样僵在那里」。写作规则见 filming.md「画面里的人不定格」，
+# 出片审核见 prompts-generate.md「表演」一节，剪辑见 edit.md「场剪辑、整集审完才发给用户」。
+
+[[check]]
+id = "filming.no_freeze"
+stage = "keyframe"
+kind = "machine"
+layer = "quality"
+gate = true
+auto = false
+desc = "分镜里没有让人定格的写法（一动不动 / 愣住 / 就那样盯着看），别人说话超过 3 秒时听的人有手上的活和钉在词上的反应"
+how = "python tools/filming_lint.py <集目录> [--scene sN]；报出的镜头改分镜后再编译出片"
+basis = "共用规则：filming.md「画面里的人不定格」"
+sources = ["chuanyue_yiri#054"]
+
+[[check]]
+id = "video.person_still"
+stage = "video"
+kind = "machine"
+layer = "quality"
+gate = false
+auto = false
+desc = "出片里没有人静止超过 1.5 秒（听的人站成摆件）"
+how = "python tools/person_motion.py <视频>；报出的时段回看 sheet_4fps 拼图，是分镜写的安静一拍就放过，是摆件就判重出并补分镜"
+basis = "共用规则：prompts-generate.md 审核「表演」一节"
+sources = ["chuanyue_yiri#054"]
+
+[[check]]
+id = "video.acting_natural"
+stage = "video"
+kind = "review"
+layer = "quality"
+perspective = "character"
+gate = true
+auto = false
+desc = "关掉声音看每个人像活人：不说话时在干什么、反应及时自然（≤1.5 秒）、梗不拖成几拍、同一个梗不重复用"
+how = "每个有戏的人一位审稿人（qc_review.py，换另一个模型），逐秒看拼图回答：他此刻手上在做什么、对哪句话有反应；摆件、僵硬、梗拖沓判重出"
+basis = "共用规则：review_roster.json 人物逻辑 C8 / C9"
+sources = ["chuanyue_yiri#054"]
+
+# 用户 2026-11-10（follow-up 056）：s1 st1→st2 画面和台词都不搭（他拍全景里低声惊叹 → 自拍里欢快地重新打招呼）。
+# K5 / C7 早有「接得上」，但材料一镜一份、没人逐个接点看；补接点表、机检和逐接点审查。
+
+[[check]]
+id = "filming.shot_junctions"
+stage = "keyframe"
+kind = "machine"
+layer = "quality"
+gate = true
+auto = true
+desc = "镜间接点机检：同一个人跨镜头接着说话时不重新打招呼、不重复刚说的专名、情绪换挡有交代；视角来源切换有交代或合本剧视角约定"
+how = "python tools/shot_junctions.py <集目录> [--scene sN]；⚠ 改分镜或台词后再编译出片，确属有意的写明理由；ℹ 逐条按 bible 视角约定判"
+basis = "共用规则：filming.md「镜与镜接得上」、story-structure.md「台词跨镜头接着说」"
+sources = ["chuanyue_yiri#056"]
+
+[[check]]
+id = "review.junction_table"
+stage = "keyframe"
+kind = "review"
+layer = "quality"
+gate = true
+auto = false
+desc = "出片前审查逐个接点判（不只看机检标记的）：位置朝向、手里的东西、视角来源、情绪、台词接着说；报告附接点表"
+how = "review_run.py 出片前审查单的 materials/junctions.md；连续性 K8 / K9、人物 C7、台词 D7、母语听感 N10"
+basis = "共用规则：review_roster.json 连续性 K8 / K9、台词 D7、母语听感 N10"
+sources = ["chuanyue_yiri#056"]
+
+[[check]]
+id = "edit.shot_joins"
+stage = "edit"
+kind = "review"
+layer = "quality"
+gate = true
+auto = false
+desc = "场剪辑连着听每个镜间接点（前一镜尾 4 秒 ↔ 后一镜头 4 秒）：像不像同一台相机、同一个人在同一刻接着说"
+how = "review_run.py --stage cut 的 materials/scenes/<场>_junctions.md 与 <场>_bounds.jpg；不搭的接点改分镜重出，或剪辑加过渡镜"
+basis = "共用规则：edit.md「场剪辑、整集审完才发给用户」、review_roster.json K8 / K9 / D7"
+sources = ["chuanyue_yiri#056"]
+
+# 用户 2026-11-10（follow-up 058）：s2 st1「我不清楚你想表达的 point 是什么」——走得太慢、踩干石头溅水花、地上没有水。
+# 分镜没写看点、撑看点的水没写具体、首帧就没有水，出片审核写「Vision：给出了」放行。
+
+[[check]]
+id = "filming.point_written"
+stage = "keyframe"
+kind = "machine"
+layer = "spec"
+gate = true
+auto = true
+desc = "每镜写了 point（这一镜要观众看懂或感到什么）"
+how = "python tools/filming_lint.py <集目录>（报「没写看点」）"
+basis = "共用规则：filming.md「每镜写看点，画得出来，按真实速度演」"
+sources = ["chuanyue_yiri#058"]
+
+[[check]]
+id = "keyframe.point_visible"
+stage = "keyframe"
+kind = "review"
+layer = "spec"
+gate = true
+auto = false
+desc = "撑看点的画面元素在 prompt 里写具体、首帧里看得到"
+how = "出片前审查 framing F8：逐镜对照 point 看首帧"
+basis = "共用规则：review_roster.json 构图 F8"
+sources = ["chuanyue_yiri#058"]
+
+[[check]]
+id = "video.point_landed"
+stage = "video"
+kind = "review"
+layer = "spec"
+tolerance = "只问关掉声音能不能说出 point 的意思；分镜写的动作层次与秒数不在这一项里判（那是时间轴与表演的事）"
+gate = true
+auto = false
+desc = "出片关声音看，说得出这一镜在讲什么且和 point 一致；动作速度像真人；效果有来源"
+how = "审核 review.md「看点」一节：先写自己看到的，再对照 point；physics P9 / P10"
+basis = "共用规则：prompts-generate.md 审核「看点」一节、review_roster.json P9 / P10 / A8"
+sources = ["chuanyue_yiri#058"]
+
+[[check]]
+id = "filming.character_motive"
+stage = "keyframe"
+kind = "machine"
+layer = "quality"
+gate = true
+auto = true
+desc = "对话里不写只为情节成立的避而不看（头也不抬、眼睛只看手里、没有任何手势）"
+how = "python tools/filming_lint.py <集目录>；shot_take.py submit 提交前自动跑"
+basis = "共用规则：filming.md「动机来自人物，反应要克制，跨语言要说清」①、review_roster C10"
+sources = ["chuanyue_yiri#062"]
+
+[[check]]
+id = "filming.reaction_restraint"
+stage = "keyframe"
+kind = "machine"
+layer = "quality"
+gate = true
+auto = true
+desc = "配角的反应不写大表情（张大嘴、张嘴吸气、瞪大眼、鼓腮、笑出声）"
+how = "python tools/filming_lint.py <集目录>；shot_take.py submit 提交前自动跑"
+basis = "共用规则：filming.md 同上②、review_roster C11"
+sources = ["chuanyue_yiri#062"]
+
+[[check]]
+id = "filming.cross_language"
+stage = "keyframe"
+kind = "machine"
+layer = "quality"
+gate = true
+auto = true
+desc = "Riley 对只说拉丁语的人不只问一个词、要配手势"
+how = "python tools/filming_lint.py <集目录>；shot_take.py submit 提交前自动跑"
+basis = "共用规则：filming.md 同上③、review_roster D8"
+sources = ["chuanyue_yiri#062"]
+
+[[check]]
+id = "filming.no_cross_ref"
+stage = "keyframe"
+kind = "machine"
+layer = "spec"
+gate = true
+auto = true
+desc = "送给模型的正文只描述这一镜：不写「接上一镜」「下一镜她…」「交给 st10」"
+how = "python tools/filming_lint.py <集目录>（报 [跨镜]）；shot_take.py submit 提交前自动跑"
+basis = "共用规则：filming.md「镜与镜接得上」（接点写在首帧与接点表，不进 prompt）；review_roster prompt_text T5"
+sources = ["chuanyue_yiri#067"]

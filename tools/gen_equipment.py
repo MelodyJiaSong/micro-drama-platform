@@ -537,7 +537,7 @@ def images(paths: list[str], engine: str, force: bool, only: set[str], shard: tu
             dirp = el.find(root, r.key)
             if dirp is None or (only and r.key not in only):
                 continue
-            eng = engine or ie.AUTO   # follow-up 275：auto ＝ ElevenLabs → Codex（额度不够才换）；engine_for 只剩 --only-engine 分批用
+            eng = engine or ie.AUTO   # follow-up 341：auto ＝ 只用 Codex（ElevenLabs 须用户允许）；engine_for 只剩 --only-engine 分批用
             if only_engine and cfg.engine_for(r) != only_engine:
                 continue
             if Path(p).resolve() in (root, dirp, dirp.parent):
@@ -573,7 +573,7 @@ def main() -> int:
     ap.add_argument("step", choices=("build", "check", "images", "lint"))
     ap.add_argument("paths", nargs="+")
     ap.add_argument("--engine", default="", choices=("",) + ie.CHOICES,
-                    help="默认 auto ＝ ElevenLabs → Codex（额度不够才换，follow-up 275；图片不用即梦）；显式点名则整批只用它")
+                    help="默认 auto ＝ 只用 Codex（follow-up 341；ElevenLabs 须用户允许；图片不用即梦）；显式点名则整批只用它")
     ap.add_argument("--only-engine", default="", choices=("", ie.DREAMINA, ie.ELEVENLABS),
                     help="只出 equipment.toml [meta] 旧分组判定为这一家的条目（分批并发时用；引擎本身仍按 --engine）")
     ap.add_argument("--force", action="store_true")

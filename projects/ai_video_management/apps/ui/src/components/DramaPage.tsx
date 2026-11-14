@@ -6,6 +6,7 @@
  *  - 📥 导入: move recent Downloads into the drama — a shot render by its full
  *    `ep{N}_s{N}_st{N}` key into `renders/<条>/`, an asset view by its
  *    `bg` / `p` / `e` / `c` key — then the folder-name rename pass.
+ *  - 🗂 资产总览: every character / background / prop as one tile, click to preview (follow-up 293).
  *  - 🎭 角色画廊: every character's turntable + one-click three-view extraction.
  * A six-module drama (`workflow.json: three-module-v1`) with a module selected
  * shows its episode workflow below the actions; the actions stay reachable
@@ -20,6 +21,10 @@ import { ApiError, type TreeNode } from "../types";
 import { announceToast } from "../lib/announce";
 import { EpisodeWorkflowPage } from "./EpisodeWorkflowPage";
 import { ObsoleteBadge } from "./ObsoleteBadge";
+import { BASE_LAYOUT_ROUTE } from "../lib/baseLayout";
+import { processQcDramaUrl } from "../lib/processQc";
+import { reviewRunHref } from "../lib/reviewRun";
+import { MAP_REGIONS_ROUTE } from "../lib/mapRegions";
 
 export interface DramaPageProps {
   tree: TreeNode | null;
@@ -97,10 +102,34 @@ export function DramaPage({ tree, onChange }: DramaPageProps): JSX.Element {
       <button
         type="button"
         className="drama-page-action-btn"
+        onClick={() => navigate(`/assets?drama=${encodeURIComponent(dramaPath)}`)}
+        title="资产总览：人物、背景、道具每个一格，点开预览图片、视频与技能"
+      >
+        🗂 资产总览
+      </button>
+      <button
+        type="button"
+        className="drama-page-action-btn"
         onClick={() => navigate(`/characters?drama=${encodeURIComponent(dramaPath)}`)}
         title="角色画廊：所有角色的建立视频 + 一键重提三视图 / 音频 / 前 2 秒"
       >
         🎭 角色画廊
+      </button>
+      <button
+        type="button"
+        className="drama-page-action-btn"
+        onClick={() => navigate(processQcDramaUrl(dramaPath))}
+        title="本剧的流程与自检（剧级）：本剧检查与继承自仓库级的检查分开看，缺陷与逃逸分析、出片检查结论、日志健康"
+      >
+        🔍 流程与自检
+      </button>
+      <button
+        type="button"
+        className="drama-page-action-btn"
+        onClick={() => navigate(reviewRunHref(dramaPath))}
+        title="本剧所有审查单（reviews/）：每次出片前出审查单，独立审稿人逐个打勾，最多 3 轮，用户确认后才出片"
+      >
+        ☑ 审查单
       </button>
       {obsolete && dramaNode.obsolete_note ? (
         <button
@@ -112,6 +141,11 @@ export function DramaPage({ tree, onChange }: DramaPageProps): JSX.Element {
           📄 过时说明
         </button>
       ) : null}
+      {dramaNode.children?.filter(child => [BASE_LAYOUT_ROUTE, MAP_REGIONS_ROUTE].some(route => child.navigation_href?.startsWith(`${route}?`))).map(child => (
+        <button type="button" className="drama-page-action-btn" key={child.path} onClick={() => navigate(child.navigation_href!)}>
+          🗺 {child.display_name || child.name}
+        </button>
+      ))}
     </div>
   );
 

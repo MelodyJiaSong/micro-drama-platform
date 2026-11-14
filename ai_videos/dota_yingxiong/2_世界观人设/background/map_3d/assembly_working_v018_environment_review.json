@@ -1,0 +1,103 @@
+{
+  "verdict": "fail",
+  "suitable_use": "Internal blockout for layout and faction zoning only. You can use it to check that the main river runs diagonally from upper left to lower right, that Sentinel is bottom left and Scourge is top right, and roughly where the lanes and bases are. It is not good enough for cinematic close shots, mid shots or a beauty overview, and it can't be used to accept terrain, shorelines or materials.",
+  "blockers": [
+    "The river and cliff outlines still follow the W3E grid. In the overview the main river's two banks are clearly stair-stepped with right angles, especially at (440-530, 270-470), (530-700, 470-590) and the outlet at (700-900, 560-620). This does not look like a natural river shape.",
+    "The edges of the terrain tiers show up as thin straight lines and boxy terraces. In the overview the Scourge half has long straight vertical lines at about x≈670 (y 130-370), x≈730 (y 130-240) and x≈940 (y 90-190), and horizontal ones at about y≈410 and y≈480, plus several rectangular folds. In the Mid River view the far-bank tier ramp at (230-380, 360-400) is a straight, smooth slope, and image 6 has a long straight cliff line at (500-1200, 40-100). None of these read as real rock walls or slopes with thickness and erosion detail.",
+    "The map edge is a hard rectangle and there's no natural transition to the out-of-bounds area. The playable area in the overview is bounded by straight lines at x≈120, x≈1080, y≈60 and y≈830. Outside it is a flat surface with repeated tree scatter. The top band (y 0-60) and the right band (x 1080-1200) show texture stretched into streaks. In image 4 there's a dark strip on the horizon at (0-230, 180-195) and (1000-1200, 170-185), which suggests the edge of the terrain or the boundary plane is visible.",
+    "The ground materials aren't realistic. The Sentinel base in image 5 is a uniform green with an evenly spread pattern of dark green speckles, and the overview's green area is the same flat green. The Scourge base in image 6 is grey-brown sand with uniform ripples, which reads as desert, not blighted ground. The lane in image 3 is pale grey and nearly uniform, like concrete or tiles, with no soil, ruts, gravel or lane edges.",
+    "The banks are smooth and extruded, with no transition to the water. In image 4 the far bank (0-1200, 450-570) is a smooth earthen slope made of polyline segments, the near bank's green slope (180-520, 690-720) has a hard faceted ridge, and the water meets the bank at a clean line. There is no wet soil, sediment, water plants, shallow-water colour change or foam. Along the bank top, a row of pale rocks of similar size and shape is lined up evenly (0-400, 455-500; 740-1200, 500-560; 540-1200, 680-780). They look placed on the surface rather than embedded, and the repetition is obvious.",
+    "There is an extra rectangular water or trench body. In the overview, beside the Sentinel side at (265-360, 450-525), there is a dark rectangular ring or trench. Its position roughly matches the current_components entry grid(20-34, 51-63), a 34-vertex wet area the source doesn't have, and its outline is a regular rectangle. Nearby at (390-410, 430-485) there are more small dark straight-sided patches, which may be the extra components at grid x 36-38. Treat these as overlaps with the reported problem areas, not proof.",
+    "The edge pools are rendered as blocky shapes. On the left edge of the overview at (140-185, 565-610) there's a blue rectangular block, and at the right edge (1000-1060, 580-605) a dark square pool. The positions are close to the sampled edge pool components, but the outlines are squares and don't blend into the surrounding terrain.",
+    "There's an obvious overlap in the Sentinel base. In image 5 the World Tree's canopy and trunk (660-980, 330-640) overlap two buildings behind it at (600-700, 380-500) and (930-1000, 420-540) with no gap between them. The tree's base is a pure white flat disc (730-870, 550-630) with roots sticking straight through it. It doesn't sit on the ground and it hides the surroundings.",
+    "The Scourge base reads as a flat slab. In the overview it sits on a dark grey area with roughly rectangular edges (740-1020, 130-350). There is no terrain relief inside the base, no paths, and no blight variation. The main building cluster and the lanes don't read as connected from the ground."
+  ],
+  "refinements": [
+    "The lanes are hard to see. In the overview the Sentinel left lane (x≈220-240) and bottom lane (y≈760-780) are only pale strips with variable width, and the mid lane can barely be followed from (430, 580) towards the river. On the Scourge half, the top lane and the mid lane past the river can hardly be picked out from the ground. In image 1 all three lanes are continuous light-coloured paths.",
+    "Faction boundaries don't match the source. In the overview the area south-east of the river at the bottom right (960-1080, 600-830) is Scourge-style brown ground with dead trees. In image 1 the matching area (200-256, 190-256) is the Sentinel's dark green. Recheck where the biomes divide.",
+    "The ground in image 3 needs more surface detail. The grass tufts are dotted at even spacing over the pale ground (600-1200, 560-900) with no taller grass or soil transition. The green leaf layer on the left (0-650, 545-605) has a hard edge and looks like a flat decal. The mid-ground platform (500-690, 505-535) has a straight edge.",
+    "The forest has a single layer of vegetation. In images 3 and 5 the trees are only one canopy layer, and under them there are no shrubs, ferns, fallen leaves, rocks or moss. In the overview the out-of-bounds trees are very similar models scattered evenly, which reads as procedural repetition.",
+    "The ground has unexplained pale patches. In image 5, at (740-880, 130-210) and (40-140, 240-300), there are soft-edged grey-white blobs. There's also an unexplained dark shadow blob at the bottom (380-520, 850-900).",
+    "The Scourge base has small black dots. In image 6 small black square stones are scattered evenly across the ground, for example at (815, 428), (535, 505), (975, 775) and (325, 518). They read as noise, and at this resolution you can't tell whether they sit on the ground. There's a green-grey tier edge at the bottom right (580-1200, 730-860) with a stiff outline.",
+    "Relative scale of the structures. The Frozen Throne crystal in image 6 (600-665, 320-430) is shorter than the ziggurats around it. The World Tree in image 5 is not much bigger than the nearby buildings. This weakens the main focal point of each base, so recheck it against the separate building review.",
+    "Water rendering. The water in image 4 is an almost uniform blue-grey mirror with no depth gradient, ripples, floating debris, reflected shoreline detail or edge darkening.",
+    "Sky and atmosphere. Image 3 has a cloudless gradient sky, and the aerial haze gives little sense of depth, which limits it as a film shot. The horizon in image 4 shows a flat dark strip with a large smooth hill silhouette behind it.",
+    "The overview has a dark grey straight-edged rectangle at the top left (150-220, 95-155), and a dark notch in the tree belt at the bottom edge (430-500, 800-835). Check whether each is a water body, a hole or a material error."
+  ],
+  "unverified": [
+    "Navigation: lane connectivity, whether units can walk the ramps, and whether the river can be crossed.",
+    "Collision, and whether trees and buildings block paths as in the original game.",
+    "Mesh topology: non-manifold edges, overlapping faces, flipped normals, and density.",
+    "Whether object positions match the W3E/W3U source coordinates one-to-one.",
+    "Real-world scale in metres and lane width. The images have no scale reference.",
+    "Whether the cliff vertical scale (residual heights scaled ×20 vs. cliff tiers at 32 game units per metre) makes the tier height differences wrong. The images only show stiff terraces; the cause isn't visible.",
+    "Where the 37 missing wet vertices and the 90 extra wet vertices from the sample are, and their exact shoreline shape. Only the possible overlaps above can be seen in the images.",
+    "Water depth, the riverbed, and whether the underwater ground is modelled.",
+    "Close-up texture accuracy. Textures were capped at 2048 for these renders, so the source maps can't be judged.",
+    "Whether small stones, pebbles and grass tufts are actually embedded in the ground. At 1200×900 the shadows can't settle this.",
+    "Views not rendered: the top/bottom lane flanks, Roshan pit, side shops, secret shops, and the cliff faces of the high ground.",
+    "Night or alternative lighting, motion blur, LOD, and distant flicker."
+  ],
+  "evidence": {
+    "1_map_683d_original": "Source layout: the main river is a diagonal interior band from top-left of centre (about 40-95, 70) to the right edge (about 240, 185) and does not reach the map edges. There are separate small pools at the left edge (about 5-10, 170) and in other places. Sentinel at the bottom left is dark green, Scourge at the top right is dark grey. The three lanes are continuous pale paths: the left lane x≈25, the bottom lane y≈235, and the mid lane diagonal. The south-east of the river at the bottom right (200-256, 190-256) is green. Used only as the layout and faction reference.",
+    "2_Map_Overview": "The main river's diagonal direction and overall extent match the source, and the faction colours are clearly split. Problems: the river banks are stair-stepped at right angles; the Scourge half has long straight tier lines (x≈670/730/940) and rectangular folds; there's a rectangular dark trench at (265-360, 450-525); the edge pools are square blocks (140-185, 565-610) and (1000-1060, 580-605); the playable area is a hard rectangle; outside it the surface is flat, the trees repeat, and the top/right bands have stretched streaks; the Scourge base sits on a rectangular dark slab; the Scourge lanes can't be picked out; and the bottom-right biome doesn't match the source.",
+    "3_Sentinel_Forest_Eye": "The tree models are believable, with natural light and shadow, and the large tree on the right sits on the ground with visible roots. But the lane surface across the whole frame is a pale grey, nearly uniform, concrete-like ground with no lane edge or soil variation. The grass tufts are spread evenly like dots, the green leaf layer on the left has a hard edge, there's no undergrowth, the mid-ground platform (500-690, 505-535) has a straight edge, and the sky is a plain gradient. It doesn't meet the needs of a realistic eye-level shot.",
+    "4_Mid_River": "The water is a mirror with no shoreline transition. The far bank is a smooth extruded slope made of polyline segments, the near bank's green slope has a hard faceted ridge, and the bank tops have a row of similar pale rocks evenly lined up. The Scourge-side ground is uniform grey-beige with a straight tier ramp at (230-380, 360-400). There's a dark strip at the horizon edge. The faction identity is clear (Scourge ziggurats and dead trees vs. Sentinel green banks), but the realism of the terrain and banks fails.",
+    "5_Sentinel_Base": "The ground is a uniform green with an even speckle pattern and no paths, rocks or level changes. The World Tree overlaps two buildings behind it, and its base is a pure white flat disc. There are pale blobs and a dark shadow blob at the bottom. The buildings stand directly on flat lawn without foundations that blend into the ground. The green colour scheme and the moon wells make the faction identifiable.",
+    "6_Scourge_Base": "The ground is grey-brown sand with uniform ripples, which reads as desert rather than blighted ground. Black square pebbles are scattered evenly as dots. The Frozen Throne's crystal is shorter than the surrounding buildings. There's a long straight cliff line at the top right and a stiff tier edge at the bottom right. The buildings sit on flat ground with acceptable contact shadows, and the dead trees and bone pits make the faction identifiable."
+  },
+  "reviewer": "claude",
+  "blend_sha256": "1d786933122c2ce2b3975771253b3d08f83866d97bb13b134045b78e3211e58b",
+  "evidence_files": [
+    {
+      "path": "0_research\\base_layout_refs\\map_683d_original.png",
+      "sha256": "03da5fe9537fa59c081956cd13abf646ac1a1c93e7b43c2416650f8dd2d7cda7"
+    },
+    {
+      "path": "2_世界观人设\\background\\map_3d\\assembly_working_v018_Map_Overview.png",
+      "sha256": "36cfbd1e7dfbdc35c23c71564fa48856a8c1a507c49aaaf8583d25f3b864a018"
+    },
+    {
+      "path": "2_世界观人设\\background\\map_3d\\assembly_working_v018_Sentinel_Forest_Eye.png",
+      "sha256": "f6f5051f1b138fe79384115160690c62ae5af04bd64f3fde7f0942165449a0ff"
+    },
+    {
+      "path": "2_世界观人设\\background\\map_3d\\assembly_working_v018_Mid_River.png",
+      "sha256": "9ed87e81c2ad765834a720d255c2ab4dd449161c10e29942afedb13eaa7bd4fa"
+    },
+    {
+      "path": "2_世界观人设\\background\\map_3d\\assembly_working_v018_Sentinel_Base.png",
+      "sha256": "9691f1d5faecf30bca1cc8511467de76afa7af8a16d99383f543042002978466"
+    },
+    {
+      "path": "2_世界观人设\\background\\map_3d\\assembly_working_v018_Scourge_Base.png",
+      "sha256": "bcb81f79284e3d833a368e94a639c8a6749e77a6dd889c361b2fa684b2482489"
+    },
+    {
+      "path": "2_世界观人设\\background\\map_3d\\assembly_working_v018_Map_Overview_render_settings.json",
+      "sha256": "a4af060304e41ee89d9320ca2e966a771e4af7d9e292c1a42d6d0c9d3b856c48"
+    },
+    {
+      "path": "2_世界观人设\\background\\map_3d\\assembly_working_v018_Sentinel_Forest_Eye_render_settings.json",
+      "sha256": "a4af060304e41ee89d9320ca2e966a771e4af7d9e292c1a42d6d0c9d3b856c48"
+    },
+    {
+      "path": "2_世界观人设\\background\\map_3d\\assembly_working_v018_Mid_River_render_settings.json",
+      "sha256": "a4af060304e41ee89d9320ca2e966a771e4af7d9e292c1a42d6d0c9d3b856c48"
+    },
+    {
+      "path": "2_世界观人设\\background\\map_3d\\assembly_working_v018_Sentinel_Base_render_settings.json",
+      "sha256": "a4af060304e41ee89d9320ca2e966a771e4af7d9e292c1a42d6d0c9d3b856c48"
+    },
+    {
+      "path": "2_世界观人设\\background\\map_3d\\assembly_working_v018_Scourge_Base_render_settings.json",
+      "sha256": "a4af060304e41ee89d9320ca2e966a771e4af7d9e292c1a42d6d0c9d3b856c48"
+    },
+    {
+      "path": "2_世界观人设\\background\\map_3d\\original_water_footprint_audit.json",
+      "sha256": "95a8b1344fd4bb345b7ae98c951f100280149ae25c1da9f6794281562569eca1"
+    }
+  ],
+  "scope": "environment_visual_only_not_final_map_acceptance",
+  "prior_errors": []
+}

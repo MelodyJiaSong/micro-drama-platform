@@ -1,0 +1,106 @@
+{
+  "episode": "ep01",
+  "follow_up": 114,
+  "service": "http://127.0.0.1:8770",
+  "source_cut": "edit/final/cut_v9.json",
+  "status": "blocked_challenge",
+  "rule": "M01、M02 已各点击 Create 一次，均无已确认歌曲 URL；保持原任务与幂等键，禁止再次 Create。M02 检测到验证码，整个自动化队列持久暂停；M03–M06 未提交。人工处理并核对歌曲后，只恢复已知 URL 的下载。",
+  "jobs": [
+    {
+      "cue": "M01",
+      "name": "晨雨与山谷",
+      "idempotency_key": "shengji-ep01-score-20261022-m01-v1",
+      "job_id": "11bb141ca9164b79b88825820db8dc99",
+      "status": "uncertain",
+      "body": {
+        "prompt": "Original instrumental cinematic fantasy underscore. Rainy dawn at a stone forest gate: sparse warm harp and solo wooden flute over soft violas; gradually opens into broad lyrical strings and restrained French horns for a vast green valley reveal. Human, curious, spacious and quietly hopeful. Acoustic orchestra, 72 BPM, D major, simple recurring melody, room for dialogue, gentle natural dynamics, clean sustained transitions. No vocals, no choir, no lyrics, no electronic instruments, no trailer hits, no heavy percussion.",
+        "format": "wav",
+        "instrumental": true,
+        "target": "ai_videos/shengji_zhilu/episodes/ep01"
+      },
+      "placement": "当前 v9：0–38.6 秒。守卫对白下压低，21.5 秒抬眼开始抬起，28 秒全谷展开达到宽阔音色，37.625 秒回到大路后收薄。生成曲段需试听再剪，不能假定 Suno 按秒写曲。",
+      "error": {
+        "code": "generation_timeout",
+        "message": "尚未确认两首属于本任务的歌曲；请查 Suno 后提供歌曲地址恢复"
+      },
+      "song_urls": [],
+      "files": []
+    },
+    {
+      "cue": "M02",
+      "name": "伸手相助",
+      "idempotency_key": "shengji-ep01-score-20261022-m02-v1",
+      "job_id": "7559bb5d429a420a8c9c55480aa3384f",
+      "status": "uncertain",
+      "body": {
+        "prompt": "Original instrumental acoustic orchestral film underscore for helping a wounded stranger on a forest road. Low soft cello pulse, restrained viola tremolo, a few warm muted horn notes, an intimate humane melodic response in the lower strings. Urgent but compassionate, a person choosing to help rather than a battle. D minor moving toward a suspended D major sonority, 80 BPM, sparse and quiet with plenty of room for spoken dialogue. No vocals, no choir, no electronic drones, no horror stings, no big drums, no action trailer crescendo. End on a gentle unresolved sustain.",
+        "format": "wav",
+        "instrumental": true,
+        "target": "ai_videos/shengji_zhilu/episodes/ep01"
+      },
+      "placement": "当前 v9：呼救 43.625–47.085 秒先只留原声；约 48 秒亚伦赶去帮人后进入，64.8 秒收出。不能用惊吓重击抢 Help me。",
+      "error": {
+        "code": "challenge",
+        "message": "页面出现验证码；自动化已停止"
+      },
+      "song_urls": [],
+      "files": []
+    },
+    {
+      "cue": "M03",
+      "name": "修道院庇护",
+      "idempotency_key": "shengji-ep01-score-20261022-m03-v1",
+      "job_id": null,
+      "status": "not_submitted",
+      "body": {
+        "prompt": "Original instrumental orchestral fantasy underscore for arriving at an ancient stone abbey while helping an injured friend. Warm French horn and broad low strings briefly reveal the scale of the building, a faint soft wooden flute recalls a pastoral journey, then the texture becomes intimate and restrained under dialogue. Quiet dignity, shelter, hope with lingering urgency. D major, 72 BPM, acoustic orchestral sound, no triumphant final cadence, leave the journey open. No vocals, no choir, no bells, no drums, no electronic instruments, no trailer hits.",
+        "format": "wav",
+        "instrumental": true,
+        "target": "ai_videos/shengji_zhilu/episodes/ep01"
+      },
+      "placement": "当前 v9：65.125 秒建筑显露至 87.25 秒中庭；72.875 秒问路前压低。此处并非全剧结尾，保持未完而非胜利终止。"
+    },
+    {
+      "cue": "M04",
+      "name": "第一次圣光",
+      "idempotency_key": "shengji-ep01-score-20261022-m04-v1",
+      "job_id": null,
+      "status": "not_submitted",
+      "body": {
+        "prompt": "Original instrumental orchestral film cue for witnessing a gentle miraculous healing in a modest stone room. Begin with near-silent divided strings and sparse warm harp harmonics. Slowly open into radiant but restrained high violins, rich cellos and a warm French horn answering a simple two-note rising phrase. Wonder grounded in human kindness, light appearing to help someone else. D major with suspended harmonies, 66 BPM, natural acoustic space, a clear rise followed by a soft settling release. No singing, no choir, no voices, no organ, no bells, no thunderous percussion, no action trailer sound, no electronic effects.",
+        "format": "wav",
+        "instrumental": true,
+        "target": "ai_videos/shengji_zhilu/episodes/ep01"
+      },
+      "placement": "s5 尚无场剪：st4 祈求时接近静音；st6 光柱出现才展开，st5 反应和 st7 愈合托住，st8 维里吸气开口前退下。依正式条定同步，不按分镜秒数做终混。"
+    },
+    {
+      "cue": "M05",
+      "name": "学会求助",
+      "idempotency_key": "shengji-ep01-score-20261022-m05-v1",
+      "job_id": null,
+      "status": "not_submitted",
+      "body": {
+        "prompt": "Original instrumental intimate fantasy film underscore for an apprentice learning to ask for strength to help another person. Sparse wooden flute and warm solo cello trade a simple gentle rising phrase over occasional harp notes, soft sustained violas underneath. Sincere, humble, quietly hopeful, never heroic swagger. D major, 72 BPM, acoustic chamber orchestra, very restrained dynamics and long breathing spaces for dialogue, ending in a quiet open suspended chord that leads onward. No vocals, no choir, no drums, no electronic instruments, no soaring climax, no trailer sound.",
+        "format": "wav",
+        "instrumental": true,
+        "target": "ai_videos/shengji_zhilu/episodes/ep01"
+      },
+      "placement": "s5 待正式画面：st12 收徒可短点主题；st13–st15 密集解释尽量不铺；st16 教他开口求光后轻回主题，st17 出发接环境声。"
+    },
+    {
+      "cue": "M06",
+      "name": "葡萄园河岸",
+      "idempotency_key": "shengji-ep01-score-20261022-m06-v1",
+      "job_id": null,
+      "status": "not_submitted",
+      "body": {
+        "prompt": "Original instrumental restrained acoustic suspense underscore for a young traveller hiding beneath a riverbank near a vineyard. Very soft low viola tremolo, occasional plucked cello notes, sparse muted horn suspensions, long spaces of almost silence. Alert listening and vulnerable curiosity, no combat, no certainty of victory. D minor and open fifths, 72 BPM, chamber orchestra, subtle changing tension instead of a repetitive loud beat. End with an unresolved suspended low string chord and a quiet natural decay. No vocals, no choir, no horror stingers, no drums, no electronic drones, no trailer rises.",
+        "format": "wav",
+        "instrumental": true,
+        "target": "ai_videos/shengji_zhilu/episodes/ep01"
+      },
+      "placement": "s6 四镜无正式条：st1 看见葡萄园时稀疏进入，st2 蹚水让位水声，st3 匪徒谈话低伏，st4 听见 Hale 名字时抽掉主题，只留水声和未解和声尾音。"
+    }
+  ]
+}

@@ -20,6 +20,7 @@
 | 声音与字幕 | Resolve AI Audio Assistant、IntelliCut、Animated Subtitles；剪映 AI 字幕与卡点 | 自动混音、删静音、逐字字幕、按节拍卡点 | 属下游模块；剪映功能只见第三方教程 |
 | 锁片 / 批处理 | Resolve 21.1 Studio 内置 MCP | Claude、Codex 等用自然语言整理媒体、批量渲染、按规则删短片段 | 能否从零搭时间线报道未说清 |
 | 横转竖 | Smart Reframe、Auto Reframe | 自动跟主体改画幅 | 本剧原生 9:16，用处不大 |
+| 粗剪 / 包装 | CapCut 官方插件（远程 MCP `capcut.com/api/external_mcp`，v0.2.7，2026-10-24 发布） | AI 粗剪、自动字幕、在云端草稿上加素材、转场与特效；内含 Seedance 生成 | **不用**（2026-11-08 核查，follow-up 351、352）：在 Codex 桌面版里可以用，但 CapCut 的音乐、字体（字幕默认字体也算）、转场、滤镜、特效、模板都是「公司内容」，不能商用；全换成自备素材后，剩下的只是按毫秒执行剪辑决定、在云端存草稿、手动导出，`scene_cut.py` / `episode_cut.py` 已经能按帧确定性地做；AI 粗剪是黑盒，面向 vlog，会自选配乐，输出音轨已混合、图文已烧进画面，没有证据比按分镜与对白剪得好。商用条款见[外部服务](../../../references/project/paid_services.md)。社区的 VectCutAPI 等只写本地草稿，靠逆向格式，同样不用。证据见 `.audit/adhoc_agents/2026-11-08/capcut-mcp/` |
 
 ## 对本剧的启示
 

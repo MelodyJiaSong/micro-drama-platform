@@ -1,0 +1,63 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  .head { position: absolute; left: var(--mx); top: 200px; width: 1680px; }
+  .head .t { position: absolute; left: 0; top: 0; white-space: nowrap; }
+  #knobs { position: absolute; left: 160px; top: 330px; width: 780px; height: 480px; }
+  .note { position: absolute; left: 1120px; top: 360px; width: 560px; padding: 40px 52px; transform-origin: left top; }
+  .note .row { display: grid; grid-template-columns: 1fr auto; align-items: baseline; padding: 16px 0; border-top: 1px solid var(--hair); }
+  .note .row:first-of-type { border-top: none; }
+  .note .row .h2 { white-space: nowrap; }
+  html[lang=en] .note { width: 620px; left: 1100px; }
+  .note .row b { font-size: var(--fs-h2); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .note .eyebrow { margin-bottom: 10px; }
+  .copy { position: absolute; left: 1220px; top: 420px; }
+  .rows { position: absolute; left: 1120px; top: 380px; width: 640px; }
+  html[lang=en] .rows { left: 1060px; width: 740px; }
+  .rows .row { display: grid; grid-template-columns: 1fr auto; column-gap: 40px; align-items: baseline; padding: 22px 0; border-top: 1px solid var(--hair); font-size: var(--fs-h2); }
+  .rows .row .h2 { white-space: nowrap; }
+  .rows .row b { font-size: var(--fs-h2); font-weight: 700; white-space: nowrap; }
+  .same { position: absolute; left: 1120px; top: 760px; }
+  .big { position: absolute; left: var(--mx); top: 400px; }
+  .big .t { position: absolute; left: 0; top: 0; white-space: nowrap; }
+  html[lang=en] .big .t { font-size: 104px; }
+</style>
+
+<div class="eb eyebrow" data-zh="03 · 学到了什么" data-en="03 · What it learned"></div>
+<div class="head">
+  <div class="h1 t" id="ha" data-zh='学到的 = <span class="accent">两个读数</span>' data-en='All it learned: <span class="accent">two settings</span>'></div>
+</div>
+<div id="knobs"></div>
+
+<div class="rows" id="rows">
+  <div class="row" id="r1" data-zh='<span class="h2">机器</span><b class="c-neutral">没变</b>' data-en='<span class="h2">Machine</span><b class="c-neutral">Same</b>'></div>
+  <div class="row" id="r2" data-zh='<span class="h2">旋钮位置</span><b class="accent">变了</b>' data-en='<span class="h2">Knob settings</span><b class="accent">Changed</b>'></div>
+</div>
+<div class="card note" id="note"><div class="eyebrow" data-zh="抄给别人" data-en="For a friend"></div>
+  <div class="row"><span class="h2" data-zh="起步价" data-en="Base fare"></span><b data-zh="10.2" data-en="$10.20"></b></div>
+  <div class="row"><span class="h2" data-zh="每公里" data-en="Per km"></span><b data-zh="2.54" data-en="$2.54"></b></div></div>
+<div class="h2 same" id="same" data-zh='= <span class="c-good">一模一样的模型</span>' data-en='= <span class="c-good">the exact same model</span>'></div>
+
+<div class="big">
+  <div class="display t" id="b1" data-zh='训练 = <span class="accent">拧旋钮</span>' data-en='Training = <span class="accent">turning knobs</span>'></div>
+</div>
+
+<script>
+const T = EDU.tl, B = D.steps.best;
+const K1 = knob("#knobs", { size: 300, min: D.knobs.base.min, max: D.knobs.base.max, value: B.base, left: 0, top: 0, label: EDU.tr("起步价", "Base fare"),
+  unit: EDU.tr("元", ""), fmt: v => EDU.tr(v.toFixed(1), "$" + v.toFixed(2)), readingSize: 84 });
+const K2 = knob("#knobs", { size: 300, min: D.knobs.per_km.min, max: D.knobs.per_km.max, value: B.per_km, left: 420, top: 0, label: EDU.tr("每公里", "Per km"),
+  unit: EDU.tr("元", ""), fmt: v => EDU.tr(v.toFixed(2), "$" + v.toFixed(2)), readingSize: 84 });
+
+gsap.set(["#ha", "#knobs", "#rows", "#r1", "#r2", "#note", "#same", "#b1"], { opacity: 0 });
+EDU.in(".eb", 0);
+// l26 学会了什么？两个读数
+EDU.in("#knobs", EDU.t("l26", .05), { y: 0 }); EDU.in("#ha", EDU.t("l27", .2));
+// l27 十二趟学到的，全在这两个数里：读数放大一下
+EDU.focus([K1.reading, K2.reading], EDU.t("l27", .3)); EDU.unfocus([K1.reading, K2.reading], EDU.t("l27", .85));
+// l28 机器没变，变的只有旋钮位置
+EDU.in("#rows", EDU.t("l28"), { y: 0, d: .01 }); EDU.in("#r1", EDU.t("l28", .1)); EDU.in("#r2", EDU.t("l28", .55));
+// l29 抄给别人：一模一样的模型
+EDU.out("#rows", EDU.t("l29")); EDU.out("#knobs", EDU.t("l29", .05)); EDU.in("#note", EDU.t("l29", .1), { y: 20, d: .8 }); EDU.in("#same", EDU.t("l29", .6));
+// l30 训练 = 拧旋钮
+EDU.out(["#ha", "#knobs", "#note", "#same"], EDU.t("l30")); EDU.in("#b1", EDU.t("l30", .15));
+</script>

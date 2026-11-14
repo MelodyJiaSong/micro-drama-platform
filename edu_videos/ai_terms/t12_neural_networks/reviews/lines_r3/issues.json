@@ -1,0 +1,3404 @@
+{
+ "run": "lines_r3",
+ "round": 3,
+ "generated_at": "2026-11-09T22:08:00",
+ "items": [
+  {
+   "item": "voice_zh",
+   "name": "中文口播（母语听感，盲审）",
+   "final": {
+    "V1": 1,
+    "V2": 1,
+    "V3": 1,
+    "V4": 1,
+    "V5": 1,
+    "V6": 2,
+    "R": 1
+   },
+   "scores": {
+    "a": {
+     "V1": 1,
+     "V2": 1,
+     "V3": 2,
+     "V4": 2,
+     "V5": 2,
+     "V6": 2,
+     "R": 1
+    },
+    "b": {
+     "V1": 1,
+     "V2": 1,
+     "V3": 1,
+     "V4": 1,
+     "V5": 1,
+     "V6": 3,
+     "R": 1
+    },
+    "judge": {
+     "V3": 1,
+     "V4": 1,
+     "V5": 1,
+     "V6": 2
+    }
+   }
+  },
+  {
+   "item": "voice_en",
+   "name": "English narration (native ear, blind)",
+   "final": {
+    "V1": 1,
+    "V2": 1,
+    "V3": 2,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2,
+    "R": 1
+   },
+   "scores": {
+    "a": {
+     "V1": 2,
+     "V2": 2,
+     "V3": 2,
+     "V4": 3,
+     "V5": 3,
+     "V6": 2,
+     "R": 2
+    },
+    "b": {
+     "V1": 1,
+     "V2": 1,
+     "V3": 2,
+     "V4": 2,
+     "V5": 2,
+     "V6": 3,
+     "R": 1
+    },
+    "judge": {
+     "V1": 1,
+     "V2": 1,
+     "R": 1,
+     "V5": 2,
+     "V3": 2
+    }
+   }
+  },
+  {
+   "item": "screen_zh",
+   "name": "中文屏幕文字（PPT 式画面）",
+   "final": {
+    "P1": 1,
+    "P2": 1,
+    "P3": 2,
+    "P4": 1,
+    "P5": 2,
+    "P6": 2,
+    "R": 1
+   },
+   "scores": {
+    "a": {
+     "P1": 2,
+     "P2": 1,
+     "P3": 2,
+     "P4": 2,
+     "P5": 2,
+     "P6": 3,
+     "R": 2
+    },
+    "b": {
+     "P1": 1,
+     "P2": 1,
+     "P3": 2,
+     "P4": 1,
+     "P5": 2,
+     "P6": 3,
+     "R": 1
+    },
+    "judge": {
+     "P1": 1,
+     "P4": 1,
+     "R": 1,
+     "P6": 2,
+     "P5": 2
+    }
+   }
+  },
+  {
+   "item": "screen_en",
+   "name": "English on-screen text (slides)",
+   "final": {
+    "P1": 2,
+    "P2": 1,
+    "P3": 2,
+    "P4": 2,
+    "P5": 2,
+    "P6": 2,
+    "R": 1
+   },
+   "scores": {
+    "a": {
+     "P1": 2,
+     "P2": 2,
+     "P3": 2,
+     "P4": 2,
+     "P5": 3,
+     "P6": 2,
+     "R": 2
+    },
+    "b": {
+     "P1": 1,
+     "P2": 1,
+     "P3": 2,
+     "P4": 2,
+     "P5": 2,
+     "P6": 3,
+     "R": 1
+    },
+    "judge": {
+     "P1": 2,
+     "P2": 1,
+     "R": 1,
+     "P6": 2,
+     "P4": 2
+    }
+   }
+  }
+ ],
+ "issues": [
+  {
+   "id": "I1",
+   "key": "6fe2885765aa",
+   "item": "screen_en",
+   "where": "agenda",
+   "dim": "P3, P4",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3, P4",
+   "shots": [
+    "agenda"
+   ],
+   "evidence": [
+    "\"Prereqs: Gradient descent\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Good to know: Gradient descent\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Prereqs: Gradient descent\"",
+   "problem": "Extracted label \"Prereqs\" is course jargon and the hint text \"Not required — one-line recap\" is not in the materials; screenshot empty, so the rendered card cannot be checked. If the card really prints \"Prereqs:\", change it.",
+   "suggest": "\"Good to know: Gradient descent\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "已从 renders/package/{zh,en}/ 逐张抽末帧核对（agenda 01–04 连续、先修侧栏「建议先了解 / HELPFUL TO KNOW」与不带句号的提示、四张章节卡、片尾两行分块与下一期）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I2",
+   "key": "b2d7c511e917",
+   "item": "screen_en",
+   "where": "agenda, c_*, outro",
+   "dim": "P3, P5",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3, P5",
+   "shots": [
+    "agenda, c_*, outro"
+   ],
+   "evidence": [
+    "empty screenshot fields"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Supply card frames for the next round",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "empty screenshot fields",
+   "problem": "Strict-item cards (agenda numbering 01–04, chapter cards, outro \"Next · Backpropagation\", hold times) were not in the supplied screenshots, so I only checked extracted text, which is consistent.",
+   "suggest": "Supply card frames for the next round",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "已从 renders/package/{zh,en}/ 逐张抽末帧核对（agenda 01–04 连续、先修侧栏「建议先了解 / HELPFUL TO KNOW」与不带句号的提示、四张章节卡、片尾两行分块与下一期）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I3",
+   "key": "30fdd186f1e4",
+   "item": "screen_en",
+   "where": "agenda, c_problem, c_experiment, c_lens, c_real, outro",
+   "dim": "P3, P5",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3, P5",
+   "shots": [
+    "agenda, c_problem, c_experiment, c_lens, c_real, outro"
+   ],
+   "evidence": [
+    "Empty screenshot fields; agenda “16.9s”; outro “22.6s”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Retain the chapter titles. Keep outro blocks separate: **“Simple units, stacked in layers”** / **“Stack deep → recognize complex patterns”** / **“Next: Backpropagation”**. Verify the rendered states and holds.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Empty screenshot fields; agenda “16.9s”; outro “22.6s”",
+   "problem": "The supplied directory contains the intro card, but none of these package cards. Actual numbering, hint text, outro separation and individual holds cannot be independently verified. Author-reported rendering does not close this evidence gap.",
+   "suggest": "Retain the chapter titles. Keep outro blocks separate: **“Simple units, stacked in layers”** / **“Stack deep → recognize complex patterns”** / **“Next: Backpropagation”**. Verify the rendered states and holds.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "已从 renders/package/{zh,en}/ 逐张抽末帧核对（agenda 01–04 连续、先修侧栏「建议先了解 / HELPFUL TO KNOW」与不带句号的提示、四张章节卡、片尾两行分块与下一期）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I4",
+   "key": "b1d402888886",
+   "item": "screen_en",
+   "where": "outro",
+   "dim": "P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "outro"
+   ],
+   "evidence": [
+    "\"Simple units, stacked in layers\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep, or \"Units + knobs, stacked in layers\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Simple units, stacked in layers\"",
+   "problem": "Near-verbatim repeat of l48 \"simple little units with knobs, stacked layer on layer\". Acceptable for a one-line takeaway card; note only.",
+   "suggest": "Keep, or \"Units + knobs, stacked in layers\"",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：片尾一句话带走与口播呼应，可接受（审稿人原话）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I5",
+   "key": "695992e8dd45",
+   "item": "screen_en",
+   "where": "l20, l21, l22, l23, l24",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l20, l21, l22, l23, l24"
+   ],
+   "evidence": [
+    "“Time”; “Fare”; “Layer 1 · 12 units”; “Layer 2 · 1 unit”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "“Time”; “Fare”; **“L1: 12 units”; “L2: 1 unit”** — eight words, retaining both layer identifiers",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“Time”; “Fare”; “Layer 1 · 12 units”; “Layer 2 · 1 unit”",
+   "problem": "One diagram block contains **1 + 1 + 4 + 4 = 10 words**, exceeding nine on every listed screen. These are meaningful diagram labels, not exempt axis ticks. Staying below 22 words overall does not remove this breach.",
+   "suggest": "“Time”; “Fare”; **“L1: 12 units”; “L2: 1 unit”** — eight words, retaining both layer identifiers",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回（r1 I22、r2 I11 已裁）：图内文字只计入每屏 ≤22 词",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I6",
+   "key": "227e2eae1b50",
+   "item": "screen_en",
+   "where": "l24",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l24"
+   ],
+   "evidence": [
+    "「Named after neurons · loosely」"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "「Loosely named after neurons」",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "「Named after neurons · loosely」",
+   "problem": "用间隔点把「loosely」单独切出去，朗读像两段残句，和全片「A · B」并列用法（如「Layer 1 · 12 units」）也不一致。",
+   "suggest": "「Loosely named after neurons」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "按裁决人建议改 Loosely named after neurons",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I7",
+   "key": "9c6e28719884",
+   "item": "screen_en",
+   "where": "l29",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l29"
+   ],
+   "evidence": [
+    "“Unit bends → corner”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**“Unit → corner”**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“Unit bends → corner”",
+   "problem": "“Bends” can read as either a verb or a plural noun. The arrow joins mismatched grammatical forms, making the callout feel translated.",
+   "suggest": "**“Unit → corner”**",
+   "judge_note": "b · l29 改写「Unit → corner」：丢掉「bends」，箭头两端都是名词，意思更含糊；现状「Unit bends → corner」可保留。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回 b 的改写，现状 Unit bends → corner 保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I8",
+   "key": "398df24f5bd6",
+   "item": "screen_en",
+   "where": "l29",
+   "dim": "P4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l29"
+   ],
+   "evidence": [
+    "\"Unit bends → corner\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Optional: \"One unit = one corner\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Unit bends → corner\"",
+   "problem": "Slightly clipped, but understandable beside the curve and matches narration \"every corner ... one little unit making its bend\".",
+   "suggest": "Optional: \"One unit = one corner\"",
+   "judge_note": "b · l29 改写「Unit → corner」：丢掉「bends」，箭头两端都是名词，意思更含糊；现状「Unit bends → corner」可保留。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I7",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I9",
+   "key": "2903d33f2e4c",
+   "item": "screen_en",
+   "where": "l30",
+   "dim": "P2, P3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2, P3",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "\"Which way / to turn?\" + \"Next episode\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"A faster way\" / \"Next time\" (or \"Too many knobs?\" / \"Next time: a faster way\")",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Which way / to turn?\" + \"Next episode\"",
+   "problem": "Strict linking line. Narration now says there is \"a much faster way to find each one's direction\"; the screen still poses the which-way question that l25 had already answered (nudge each knob downhill), so screen and narration disagree and the teaser is also wrong in tone (next time is about speed, not direction). Screenshot s4_l30 confirms the old text.",
+   "suggest": "\"A faster way\" / \"Next time\" (or \"Too many knobs?\" / \"Next time: a faster way\")",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "按裁决人定稿改 h1「A much / faster way」+ h2「Next time」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I10",
+   "key": "3d02ebc47fb8",
+   "item": "screen_en",
+   "where": "l30",
+   "dim": "P2, P3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2, P3",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "h1「Which way / to turn?」+ h2「Next episode」"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "h1「A much faster way」（两行：A much / faster way）+ h2「Next time」。若 l30 口播终稿点明「millions of knobs」，可改为 h1「Millions of knobs?」+ h2「Next time: a much faster way」。两种都不说「往哪拧」是新问题，只说「更快」，不碰 l25。中文屏「旋钮的坡度怎么算？/ 下一期」请口播定稿后一并核对。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "h1「Which way / to turn?」+ h2「Next episode」",
+   "problem": "严格项（下期预告衔接句）。新口播讲的是「更快地算出每个旋钮的方向」，屏上却把「往哪拧」当成未解问题，与 l25（已用上期办法逐个往下坡拧）矛盾，也和口播「next time」用词不一。",
+   "suggest": "h1「A much faster way」（两行：A much / faster way）+ h2「Next time」。若 l30 口播终稿点明「millions of knobs」，可改为 h1「Millions of knobs?」+ h2「Next time: a much faster way」。两种都不说「往哪拧」是新问题，只说「更快」，不碰 l25。中文屏「旋钮的坡度怎么算？/ 下一期」请口播定稿后一并核对。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I9",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I11",
+   "key": "cbd2b79ac7fa",
+   "item": "screen_en",
+   "where": "l35, l36, l37",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l35, l36, l37"
+   ],
+   "evidence": [
+    "\"10 side by side: ≤ 11 pieces\" / \"10 in 5 layers: up to 32 pieces\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"10 units side by side: up to 11 pieces\" / \"10 units in 5 layers: up to 32 pieces\" (8 and 9 words, both within limit)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"10 side by side: ≤ 11 pieces\" / \"10 in 5 layers: up to 32 pieces\"",
+   "problem": "Two notations (≤ symbol vs \"up to\") for the same idea in one pair; \"10\" has no noun, so a viewer reading only the screen cannot tell what is being counted.",
+   "suggest": "\"10 units side by side: up to 11 pieces\" / \"10 units in 5 layers: up to 32 pieces\" (8 and 9 words, both within limit)",
+   "judge_note": "a · l35 改写「10 units side by side: up to 11 pieces」/「10 units in 5 layers: up to 32 pieces」：s5_l36 截图里右侧标题已占到 x≈960–1805，54px 下两处各加「units」会超出 1920 画面；「≤」与「up to」并存只到记录级，保持现状。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：各加 units 会超出画面；≤ 与 up to 并存只到记录级",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I12",
+   "key": "ac125d90b7d3",
+   "item": "screen_en",
+   "where": "l36",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l36"
+   ],
+   "evidence": [
+    "\"Earlier folds, reused\" (same 54px as the two data headings)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Make it a caption size under both charts, or \"Reuse earlier folds\" at a smaller weight",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Earlier folds, reused\" (same 54px as the two data headings)",
+   "problem": "Third heading at the same level, placed below the left chart only, so it reads as a caption for the staircase, not the takeaway for both.",
+   "suggest": "Make it a caption size under both charts, or \"Reuse earlier folds\" at a smaller weight",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "「Earlier folds, reused」降为正文字号（body），不再与两张图的标题同级",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I13",
+   "key": "c784107d946d",
+   "item": "screen_en",
+   "where": "l36",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l36"
+   ],
+   "evidence": [
+    "「Earlier folds, reused」位于左侧（并排·阶梯）图下"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "文字不变，挪到右侧（5 层·锯齿）图下，字号降到 caption 级",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "「Earlier folds, reused」位于左侧（并排·阶梯）图下",
+   "problem": "这句说的是叠层网络，却挂在并排那张图下面，容易被读成阶梯图的说明。",
+   "suggest": "文字不变，挪到右侧（5 层·锯齿）图下，字号降到 caption 级",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I12",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I14",
+   "key": "1693c9275866",
+   "item": "screen_en",
+   "where": "l44",
+   "dim": "P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l44"
+   ],
+   "evidence": [
+    "eyebrow \"Not told what to look for\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep (judge already ruled), or \"Unprompted\" is not recommended (new term)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "eyebrow \"Not told what to look for\"",
+   "problem": "Nearly the same words as narration \"Nobody told it what to look for\"; kept because it labels the surprise. Still a repeat, set in small eyebrow type.",
+   "suggest": "Keep (judge already ruled), or \"Unprompted\" is not recommended (new term)",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：裁决人上一轮已判保留",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I15",
+   "key": "fcc1e2bf3daa",
+   "item": "screen_en",
+   "where": "l46",
+   "dim": "P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l46"
+   ],
+   "evidence": [
+    "「Remove a middle layer → ~2 pts worse」"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "「Remove a middle layer → ~2 points worse」（保留下方小字「First-guess accuracy (top-1)」，宽度在画面内）",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "「Remove a middle layer → ~2 pts worse」",
+   "problem": "上一轮裁决人已定「pts → points」，作者标「已改」但屏上和源文件都没改；终轮不能再留。",
+   "suggest": "「Remove a middle layer → ~2 points worse」（保留下方小字「First-guess accuracy (top-1)」，宽度在画面内）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "按裁决人定稿改 Remove a middle layer → ~2 points worse（保留小字 First-guess accuracy (top-1)）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I16",
+   "key": "00e0febe4fc7",
+   "item": "screen_en",
+   "where": "l46",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l46"
+   ],
+   "evidence": [
+    "\"Remove a middle layer → ~2 pts worse\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Remove a middle layer → ~2 points worse\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Remove a middle layer → ~2 pts worse\"",
+   "problem": "\"pts\" is a clipped abbreviation; the previous round (I20) asked for \"points\" and the author marked it fixed, but the text still has \"pts\".",
+   "suggest": "\"Remove a middle layer → ~2 points worse\"",
+   "judge_note": "b · l46 改写「Middle layer removed → ~2-point drop」：改了口播一致的动词「Remove」，没必要；只换「points」即可（见上表）。",
+   "status": "implemented",
+   "solution": "同 I15",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I17",
+   "key": "83ce9ccc72c9",
+   "item": "screen_en",
+   "where": "l46",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l46"
+   ],
+   "evidence": [
+    "“Remove a middle layer → ~2 pts worse”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**“Middle layer removed → ~2-point drop”**",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“Remove a middle layer → ~2 pts worse”",
+   "problem": "“Pts worse” remains clipped and vague. The author’s response does not match the current screenshot. Keep the cause and the helpful first-guess caption.",
+   "suggest": "**“Middle layer removed → ~2-point drop”**",
+   "judge_note": "b · l46 改写「Middle layer removed → ~2-point drop」：改了口播一致的动词「Remove」，没必要；只换「points」即可（见上表）。",
+   "status": "implemented",
+   "solution": "同 I15",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I18",
+   "key": "14ec831e5272",
+   "item": "screen_en",
+   "where": "l47",
+   "dim": "P1, P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1, P2",
+   "shots": [
+    "l47"
+   ],
+   "evidence": [
+    "“…the depth really is important…”"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "**“The importance of depth”**; eyebrow **“Paper finding”**; retain the source and remove quotation marks",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "“…the depth really is important…”",
+   "problem": "A complete sentence duplicates the spoken quotation. Attribution and ellipses improve quotation presentation, but the screen still fails the requested outline-only format.",
+   "suggest": "**“The importance of depth”**; eyebrow **“Paper finding”**; retain the source and remove quotation marks",
+   "judge_note": "b · l47（P1/P2，必改）：前两轮（I38、I21）已裁：引语卡出示论文原话并标出处（§7）是标准做法，本轮已按 I22 加省略号。「The importance of depth」+「Paper finding」去掉了证据，不采纳。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回（I38、I21 已裁）：引语卡出示原话并标出处",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I19",
+   "key": "665c54eb6fa9",
+   "item": "screen_zh",
+   "where": "outro",
+   "dim": "P2、P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2、P4",
+   "shots": [
+    "outro"
+   ],
+   "evidence": [
+    "叠得深，复杂的也认得出"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "「叠得深 → 能认复杂图案」",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "叠得深，复杂的也认得出",
+   "problem": "「复杂的」缺少明确对象，片尾总结读来仍有省略过度之感，且基本复印口播。「上轮接受」不足以支持本轮继续保留。",
+   "suggest": "「叠得深 → 能认复杂图案」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "按裁决人定稿改「叠得深，复杂图案也认得出」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I20",
+   "key": "a465bf28bd9e",
+   "item": "screen_zh",
+   "where": "片尾 outro（quote 第 2 行）",
+   "dim": "P2、P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2、P4",
+   "shots": [
+    "片尾 outro（quote 第 2 行）"
+   ],
+   "evidence": [
+    "叠得深，复杂的也认得出"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "叠得深，复杂图案也认得出（10 字；`package.json` 的 `quote.zh[1]`）",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "叠得深，复杂的也认得出",
+   "problem": "维持必改（b 第 3 条；上一轮 I26），这是定稿。片尾从严：「复杂的」后面没有中心词，观众会愣一下「复杂的什么」。补上「图案」，和 l45「越来越复杂的图案」前后对上。",
+   "suggest": "叠得深，复杂图案也认得出（10 字；`package.json` 的 `quote.zh[1]`）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I19",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I21",
+   "key": "2123bc92ccfe",
+   "item": "screen_zh",
+   "where": "agenda",
+   "dim": "P3",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "agenda"
+   ],
+   "evidence": [
+    "先修：梯度下降（材料抽取）"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "保持现状，待有截图时核对",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "先修：梯度下降（材料抽取）",
+   "problem": "材料无截图，仅能核对抽取文字；上一轮裁决说实渲是「建议先了解」。我无法复核渲染。",
+   "suggest": "保持现状，待有截图时核对",
+   "judge_note": "a · agenda 第 3 项「目录项超出每项 ≤8 字 1 字，改『多叠几层』」：编号不计字，「为什么要多叠几层」是 8 字，不超限；而且改章名要连带改章节卡和页眉，第 3 章改名「为什么要多叠几层」是 lines_r1 裁决定的（见 package.json v1.1 的说明）。；b · agenda「侧栏至少 42 字、提示缩为『可选回看』」：上一轮已裁定侧栏是模板卡，不计入字数（I27）；「可选回看」读不通，原提示「没看过也能懂，片中一句话带过」已经不带句号，也通顺。",
+   "status": "implemented",
+   "solution": "已从 renders/package/{zh,en}/ 逐张抽末帧核对（agenda 01–04 连续、先修侧栏「建议先了解 / HELPFUL TO KNOW」与不带句号的提示、四张章节卡、片尾两行分块与下一期）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I22",
+   "key": "576c404ed196",
+   "item": "screen_zh",
+   "where": "agenda",
+   "dim": "P1、P3",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P3",
+   "shots": [
+    "agenda"
+   ],
+   "evidence": [
+    "四项目录／梯度下降／没看过也能懂，片中一句话带过"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "侧栏保留「梯度下降」，提示缩为「可选回看」；上述文字降至32字",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "四项目录／梯度下降／没看过也能懂，片中一句话带过",
+   "problem": "本轮材料未抽出上一轮已确认存在的侧栏提示。四项目录净24字，加「梯度下降」4字、修改后提示14字，若同时显示，**至少42字**，超过36字；侧栏说明不属于当然豁免项。缺当前截图，暂不判实际超限。",
+   "suggest": "侧栏保留「梯度下降」，提示缩为「可选回看」；上述文字降至32字",
+   "judge_note": "a · agenda 第 3 项「目录项超出每项 ≤8 字 1 字，改『多叠几层』」：编号不计字，「为什么要多叠几层」是 8 字，不超限；而且改章名要连带改章节卡和页眉，第 3 章改名「为什么要多叠几层」是 lines_r1 裁决定的（见 package.json v1.1 的说明）。；b · agenda「侧栏至少 42 字、提示缩为『可选回看』」：上一轮已裁定侧栏是模板卡，不计入字数（I27）；「可选回看」读不通，原提示「没看过也能懂，片中一句话带过」已经不带句号，也通顺。",
+   "status": "implemented",
+   "solution": "已从 renders/package/{zh,en}/ 逐张抽末帧核对（agenda 01–04 连续、先修侧栏「建议先了解 / HELPFUL TO KNOW」与不带句号的提示、四张章节卡、片尾两行分块与下一期）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I23",
+   "key": "cba79d239868",
+   "item": "screen_zh",
+   "where": "agenda、c_problem、c_experiment、c_lens、c_real、outro",
+   "dim": "P3、P5、R",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3、P5、R",
+   "shots": [
+    "agenda、c_problem、c_experiment、c_lens、c_real、outro"
+   ],
+   "evidence": [
+    "截图路径为空"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "无需先改文案；补齐当前包装卡截图及分段停留时间后复核",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "截图路径为空",
+   "problem": "无法独立确认包装卡的实际分块、完整文字及入场时序；尤其不能据作者说明直接关闭I23–I25。",
+   "suggest": "无需先改文案；补齐当前包装卡截图及分段停留时间后复核",
+   "judge_note": "a · agenda 第 3 项「目录项超出每项 ≤8 字 1 字，改『多叠几层』」：编号不计字，「为什么要多叠几层」是 8 字，不超限；而且改章名要连带改章节卡和页眉，第 3 章改名「为什么要多叠几层」是 lines_r1 裁决定的（见 package.json v1.1 的说明）。；b · agenda「侧栏至少 42 字、提示缩为『可选回看』」：上一轮已裁定侧栏是模板卡，不计入字数（I27）；「可选回看」读不通，原提示「没看过也能懂，片中一句话带过」已经不带句号，也通顺。",
+   "status": "implemented",
+   "solution": "已从 renders/package/{zh,en}/ 逐张抽末帧核对（agenda 01–04 连续、先修侧栏「建议先了解 / HELPFUL TO KNOW」与不带句号的提示、四张章节卡、片尾两行分块与下一期）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I24",
+   "key": "0ee700b4cb82",
+   "item": "screen_zh",
+   "where": "agenda 第 3 项",
+   "dim": "P3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "agenda 第 3 项"
+   ],
+   "evidence": [
+    "03 · 为什么要多叠几层（9 字）"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "03 · 多叠几层（与口播一致，且 ≤8 字）；需同步章节卡、页眉",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "03 · 为什么要多叠几层（9 字）",
+   "problem": "目录项超出「同构行每项 ≤8 字」口径 1 字；章名 ≤12 字未超。另外口播 l06 说的是「多叠几层能强多少」，章名是「为什么」，叫法略错开。",
+   "suggest": "03 · 多叠几层（与口播一致，且 ≤8 字）；需同步章节卡、页眉",
+   "judge_note": "a · agenda 第 3 项「目录项超出每项 ≤8 字 1 字，改『多叠几层』」：编号不计字，「为什么要多叠几层」是 8 字，不超限；而且改章名要连带改章节卡和页眉，第 3 章改名「为什么要多叠几层」是 lines_r1 裁决定的（见 package.json v1.1 的说明）。；b · agenda「侧栏至少 42 字、提示缩为『可选回看』」：上一轮已裁定侧栏是模板卡，不计入字数（I27）；「可选回看」读不通，原提示「没看过也能懂，片中一句话带过」已经不带句号，也通顺。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：编号不计字，「为什么要多叠几层」8 字不超限，章名是 lines_r1 裁决定的",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I25",
+   "key": "d056badc6fcc",
+   "item": "screen_zh",
+   "where": "片尾 outro",
+   "dim": "P2、P4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2、P4",
+   "shots": [
+    "片尾 outro"
+   ],
+   "evidence": [
+    "小单元一层层叠 叠得深，复杂的也认得出"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "叠得深 → 能认复杂的图案（若分行已核实可不动）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "小单元一层层叠 叠得深，复杂的也认得出",
+   "problem": "材料合列 17 字；作者与裁决人称已分两行各 ≤12 字。第二行「复杂的」缺中心词，与口播 l49 近乎同句。",
+   "suggest": "叠得深 → 能认复杂的图案（若分行已核实可不动）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I19",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I26",
+   "key": "51de0289a9d7",
+   "item": "screen_zh",
+   "where": "agenda 03",
+   "dim": "P1、P3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P3",
+   "shots": [
+    "agenda 03"
+   ],
+   "evidence": [
+    "03 · 为什么要多叠几层"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "不改",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "03 · 为什么要多叠几层",
+   "problem": "材料把编号也算进了字数，标成 9 字。按口径「编号不计字」，实际是 8 字，符合同构行「每项 ≤8 字」，不超限。",
+   "suggest": "不改",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：裁决人核实不超限",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I27",
+   "key": "da5f0019da28",
+   "item": "screen_zh",
+   "where": "l19",
+   "dim": "P4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l19"
+   ],
+   "evidence": [
+    "拐弯加起来 → 鼓包、台阶……"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "拐弯相加 → 鼓包、台阶",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "拐弯加起来 → 鼓包、台阶……",
+   "problem": "省略号「……」在短标题里偏口语，符号「+ + =」不计字。",
+   "suggest": "拐弯相加 → 鼓包、台阶",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "上一轮裁决人驳回英文同类改法：省略号对应口播「什么弯都能拼」",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I28",
+   "key": "9cc5c20be82a",
+   "item": "screen_zh",
+   "where": "l21",
+   "dim": "P2、P1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2、P1",
+   "shots": [
+    "l21"
+   ],
+   "evidence": [
+    "每条折线配个旋钮"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "每条折线一个旋钮 → 加起来，再调高低 → 车费（改成两行结构：「折线 × 旋钮」/「相加 + 高低 → 车费」）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "每条折线配个旋钮",
+   "problem": "口播原话的截取，当 h1 偏大，下一行才是屏幕应给的结构。",
+   "suggest": "每条折线一个旋钮 → 加起来，再调高低 → 车费（改成两行结构：「折线 × 旋钮」/「相加 + 高低 → 车费」）",
+   "judge_note": "a · l21「改成『折线 × 旋钮』/『相加 + 高低 → 车费』」：全换成符号，比现在「加起来，再调高低 → 车费」更难读，和口播的对应关系也没了。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：全换符号更难读，与口播的对应也没了",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I29",
+   "key": "e84f87df5ccb",
+   "item": "screen_zh",
+   "where": "l24",
+   "dim": "P1、P5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P5",
+   "shots": [
+    "l24"
+   ],
+   "evidence": [
+    "神经网络 ／ 一层层小单元 ／ 来自神经元 · 别当真 ／ 图"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "删 h2：神经网络 ／ 来自神经元 · 别当真（共 28 字，3 块）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "神经网络 ／ 一层层小单元 ／ 来自神经元 · 别当真 ／ 图",
+   "problem": "34 字、4 块，贴着 36 字线；5.0s 内读完要 5.7s。h1「神经网络」与 l23 完全重复，h2 又是在复述定义，真正新的只有「来自神经元 · 别当真」。",
+   "suggest": "删 h2：神经网络 ／ 来自神经元 · 别当真（共 28 字，3 块）",
+   "judge_note": "a · l24「删 h2『一层层小单元』」：34 字、4 块，没超硬上限；h2 是 l23「神经网络」之后补上的定义，上一轮也决定保留（I14 同理），删掉画面上就只剩名字没有定义了。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：34 字未超限，h2 是定义，删了只剩名字",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I30",
+   "key": "349de9e42f96",
+   "item": "screen_zh",
+   "where": "l30",
+   "dim": "P2、P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2、P4",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "旋钮的坡度 / 怎么算？（h1，截图中为半角「?」且折行）+「下一期」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "每个旋钮往哪拧？（下一期）；或两行：「该往哪拧、拧多少？」/「下一期」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "旋钮的坡度 / 怎么算？（h1，截图中为半角「?」且折行）+「下一期」",
+   "problem": "口播已改成「每个该往哪拧、拧多少，怎么才算得快」，屏幕仍是「旋钮的坡度怎么算」：叫法与口播不一致，且「坡度」正是上一轮裁决（I73）认定会与 l10/l17 的「斜度、陡」撞词的字眼。这是串场句的屏幕，从严。截图里问号是半角、硬折成两行，不整齐。",
+   "suggest": "每个旋钮往哪拧？（下一期）；或两行：「该往哪拧、拧多少？」/「下一期」",
+   "judge_note": "a · l30「截图里是半角问号」：`scenes/web/s4.html` 里写的是全角「？」，截图里的样子是 MiSans 这个字体的字形，不是半角。这条不用单独改，定稿已经要求用全角问号。；a · l30 改写「每个旋钮往哪拧？」／ b · l30 改写「每个旋钮怎么拧？」：l25 已经答过「怎么拧」（「还是上一期的老办法」），用这两个改写，串场标题就和前文冲突了，而且丢了口播「怎么算得快」这个重点。改用补充问题表的定稿。",
+   "status": "implemented",
+   "solution": "按裁决人定稿改 h1「旋钮一多 / 怎么算得快？」，h2「下一期」，不再用「坡度」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I31",
+   "key": "46ddaade066e",
+   "item": "screen_zh",
+   "where": "l30",
+   "dim": "P2、P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2、P4",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "旋钮的坡度／怎么算？"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "「每个旋钮怎么拧？」；保留「下一期」",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "旋钮的坡度／怎么算？",
+   "problem": "「坡度」直接修饰「旋钮」不自然，也未获本句口播解释。这是下一期预告，按串场从严处理。",
+   "suggest": "「每个旋钮怎么拧？」；保留「下一期」",
+   "judge_note": "a · l30「截图里是半角问号」：`scenes/web/s4.html` 里写的是全角「？」，截图里的样子是 MiSans 这个字体的字形，不是半角。这条不用单独改，定稿已经要求用全角问号。；a · l30 改写「每个旋钮往哪拧？」／ b · l30 改写「每个旋钮怎么拧？」：l25 已经答过「怎么拧」（「还是上一期的老办法」），用这两个改写，串场标题就和前文冲突了，而且丢了口播「怎么算得快」这个重点。改用补充问题表的定稿。",
+   "status": "implemented",
+   "solution": "同 I30",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I32",
+   "key": "9a16f69f36b9",
+   "item": "screen_zh",
+   "where": "l30（s4 `#q`）",
+   "dim": "P2、P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2、P4",
+   "shots": [
+    "l30（s4 `#q`）"
+   ],
+   "evidence": [
+    "h1「旋钮的坡度 / 怎么算？」＋ h2「下一期」"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "h1「旋钮一多<br>怎么算得快？」（两行，4＋5＝9 字，全角问号），h2 保留「下一期」",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "h1「旋钮的坡度 / 怎么算？」＋ h2「下一期」",
+   "problem": "维持必改（a 第 1 条、b 第 2 条），这是定稿。串场从严：一是「坡度」已经从口播里删掉（I73），而且和 l10「斜度」、l17「多陡」撞词；二是两人的改写「每个旋钮往哪拧 / 怎么拧」问的是 l25 已经回答过的问题。定稿和口播「下一期讲：旋钮多了怎么算得快」意思一致，不用「坡度」二字，也和口播裁决定稿「旋钮一多，挨个试着拧就太慢了，快办法下一期讲」接得上。",
+   "suggest": "h1「旋钮一多<br>怎么算得快？」（两行，4＋5＝9 字，全角问号），h2 保留「下一期」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I30",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I33",
+   "key": "a24ccb54b174",
+   "item": "screen_zh",
+   "where": "l40 / l47",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l40 / l47"
+   ],
+   "evidence": [
+    "Krizhevsky 等 · NIPS 2012 ／ Krizhevsky 等 2012 · 第 7 节"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "统一「Krizhevsky 等 · NIPS 2012」，l47 写「同上 · 第 7 节」，名单降为 caption",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Krizhevsky 等 · NIPS 2012 ／ Krizhevsky 等 2012 · 第 7 节",
+   "problem": "同一论文两种出处写法；l40 的三人名单仍是 38px 正文字号，视觉上还是第二重。",
+   "suggest": "统一「Krizhevsky 等 · NIPS 2012」，l47 写「同上 · 第 7 节」，名单降为 caption",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "l47 出现时底部出处已收走，同屏只有一条出处；l40 名单已降为正文小号灰字",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I34",
+   "key": "ed99b898103a",
+   "item": "screen_zh",
+   "where": "l41",
+   "dim": "P3、P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3、P4",
+   "shots": [
+    "l41"
+   ],
+   "evidence": [
+    "8层 ／ 6000 万个旋钮 ／ 120 万张照片 ／ 1000类"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "统一为「8 层」「1000 类」，或全部去掉空格",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "8层 ／ 6000 万个旋钮 ／ 120 万张照片 ／ 1000类",
+   "problem": "数字与量词有的带空格有的不带（「8层」「1000类」对「6000 万」「120 万」），同构卡片行体例不一。",
+   "suggest": "统一为「8 层」「1000 类」，或全部去掉空格",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "数字与量词用同一样式间距排开（截图一致），材料抽取时去掉了间距；不改",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I35",
+   "key": "9800c10e6e28",
+   "item": "screen_zh",
+   "where": "l42 / l43",
+   "dim": "P1、P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P2",
+   "shots": [
+    "l42 / l43"
+   ],
+   "evidence": [
+    "猜 5 个，全错才算错"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "l43 去掉这行（图注「错误率（猜 5 个）」已带规则）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "猜 5 个，全错才算错",
+   "problem": "几乎是口播整句「每张图猜五个答案，五个都不对才算错」，且 l43 又印一遍；规则可只在 l42 说明，l43 只留数字对比。",
+   "suggest": "l43 去掉这行（图注「错误率（猜 5 个）」已带规则）",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "l43 保留比赛规则一行作为柱状图的语境，停留 7 秒以上读得完",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I36",
+   "key": "6d9ad8867178",
+   "item": "screen_zh",
+   "where": "l46",
+   "dim": "P1、P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P4",
+   "shots": [
+    "l46"
+   ],
+   "evidence": [
+    "拿掉中间一层 → 成绩降约 2 个百分点"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "标题「拿掉中间一层」；下方「首个答案正确率：约降2个百分点」",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "拿掉中间一层 → 成绩降约 2 个百分点",
+   "problem": "图下主结论使用小标题体例，共15字，超过标题12字上限；「成绩」也不如「正确率」明确。",
+   "suggest": "标题「拿掉中间一层」；下方「首个答案正确率：约降2个百分点」",
+   "judge_note": "b · l46 改写「首个答案正确率：约降2个百分点」：数字前后不加空格，和全片体例不一致（全片都写「约 2 个」「6000 万」）；「首个答案正确率」偏书面。改用补充问题表的定稿。",
+   "status": "implemented",
+   "solution": "按裁决人定稿改 h2「拿掉中间层 → 约降 2 个百分点」，小字「只看第一个答案猜对的比例」",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I37",
+   "key": "02e42720c9a3",
+   "item": "screen_zh",
+   "where": "l46（s6 `#sb`、`#sb2`）",
+   "dim": "P1、P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1、P4",
+   "shots": [
+    "l46（s6 `#sb`、`#sb2`）"
+   ],
+   "evidence": [
+    "h2「拿掉中间一层 → 成绩降约 2 个百分点」＋ caption「只看第一个答案」"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "h2「拿掉中间层 → <span class=\"c-bad\">约降 2 个百分点</span>」（5＋2＋1＋4＝12 字）；caption 改「只看第一个答案猜对的比例」（12 字）。全屏 24 字",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "h2「拿掉中间一层 → 成绩降约 2 个百分点」＋ caption「只看第一个答案」",
+   "problem": "维持必改（b 第 1 条），这是定稿。标题 15 字，超过 12 字上限；「降约」语序别扭，应该说「约降」；「成绩」说不清是什么。",
+   "suggest": "h2「拿掉中间层 → <span class=\"c-bad\">约降 2 个百分点</span>」（5＋2＋1＋4＝12 字）；caption 改「只看第一个答案猜对的比例」（12 字）。全屏 24 字",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I36",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I38",
+   "key": "36ee07da9ccd",
+   "item": "screen_zh",
+   "where": "l46",
+   "dim": "P2、P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2、P3",
+   "shots": [
+    "l46"
+   ],
+   "evidence": [
+    "「成绩降约 2 个百分点」紧接 l43 的「错误率」柱状图"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "同上 l46 定稿",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "「成绩降约 2 个百分点」紧接 l43 的「错误率」柱状图",
+   "problem": "两人都漏了：l43 刚给观众看完「错误率」，数字越低越好；到 l46 指标换成了「第一个答案猜对的比例」，这个越高越好。屏上只写「成绩降」，观众很容易接着按「错误率降了」去理解，以为拿掉一层反而变好了。上面 l46 的定稿已经把指标写明（caption 写「猜对的比例」，红色标「约降」），这一条随 l46 定稿一起解决。",
+   "suggest": "同上 l46 定稿",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I36：小字写明指标是猜对的比例",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I39",
+   "key": "0c04a6f1611c",
+   "item": "voice_en",
+   "where": "l05",
+   "dim": "V1, V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V2",
+   "shots": [
+    "l05"
+   ],
+   "evidence": [
+    "Last time, we turned the knobs by walking downhill blindfolded, toward wherever the score drops fastest."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Last time, we lowered the score by turning knobs, like feeling our way downhill blindfolded.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Last time, we turned the knobs by walking downhill blindfolded, toward wherever the score drops fastest.",
+   "problem": "**A bit off; strict preview line.** “Turned the knobs by walking” tangles the physical action with its metaphor. “Toward wherever” adds another small stumble. Make the comparison explicit so the listener need not untangle it.",
+   "suggest": "Last time, we lowered the score by turning knobs, like feeling our way downhill blindfolded.",
+   "judge_note": "l05（b 改写「…we lowered the score by turning knobs, like feeling our way downhill blindfolded.」）：丢了「降得最快」这个方向，l25 的回指就落空了。按定稿改。",
+   "status": "implemented",
+   "solution": "l05 改为「Last time, turning the knobs was like walking downhill blindfolded, always stepping where the score drops fastest.」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I40",
+   "key": "b987824a109b",
+   "item": "voice_en",
+   "where": "l05",
+   "dim": "V1, V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V2",
+   "shots": [
+    "l05"
+   ],
+   "evidence": [
+    "Last time, we turned the knobs by walking downhill blindfolded, toward wherever the score drops fastest."
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "Last time, turning the knobs was like walking downhill blindfolded, always stepping where the score drops fastest.",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "Last time, we turned the knobs by walking downhill blindfolded, toward wherever the score drops fastest.",
+   "problem": "定稿（维持 b 的必改，改写另定）。承接句属于严格项。「turned the knobs by walking」把拧旋钮说成是靠走路完成的，动作和比喻搅在一起。b 的改写丢了「往降得最快的方向」，而这正是 l25「last episode's trick」和 l30「much faster trick」要回指的内容。a 的改写「turned the knobs like walking」还是同一种搅法。",
+   "suggest": "Last time, turning the knobs was like walking downhill blindfolded, always stepping where the score drops fastest.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l05 改为「Last time, turning the knobs was like walking downhill blindfolded, always stepping where the score drops fastest.」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I41",
+   "key": "65b840f29bce",
+   "item": "voice_en",
+   "where": "l05",
+   "dim": "V1",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l05"
+   ],
+   "evidence": [
+    "...we turned the knobs by walking downhill blindfolded..."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Last time, we turned the knobs like walking downhill blindfolded, toward wherever the score drops fastest.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "...we turned the knobs by walking downhill blindfolded...",
+   "problem": "Blended metaphor (turning knobs BY walking); understandable.",
+   "suggest": "Last time, we turned the knobs like walking downhill blindfolded, toward wherever the score drops fastest.",
+   "judge_note": "l05（b 改写「…we lowered the score by turning knobs, like feeling our way downhill blindfolded.」）：丢了「降得最快」这个方向，l25 的回指就落空了。按定稿改。",
+   "status": "implemented",
+   "solution": "l05 改为「Last time, turning the knobs was like walking downhill blindfolded, always stepping where the score drops fastest.」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I42",
+   "key": "83b1d7a1d927",
+   "item": "voice_en",
+   "where": "l06",
+   "dim": "V1, V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V2",
+   "shots": [
+    "l06"
+   ],
+   "evidence": [
+    "Today we'll build a tiny network that learns the bend, see why stacking more layers helps, and meet a famous one called AlexNet."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Today we'll build a tiny network that learns the bend, then stack more layers and see what happens.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Today we'll build a tiny network that learns the bend, see why stacking more layers helps, and meet a famous one called AlexNet.",
+   "problem": "Strict \"what's coming\" line. Three items in a row (build, see why, meet) still sounds like a spoken agenda, though far better than a TOC. A friend states one goal and hints at the rest.",
+   "suggest": "Today we'll build a tiny network that learns the bend, then stack more layers and see what happens.",
+   "judge_note": "l06（a，V1/V2 必改）：「Today we'll build…, see why…, and meet…」用三个动作说预告，是英语讲解视频里很常见的说法，不是把目录念出来，b 也明确判它自然。a 的改写删掉了 AlexNet，而点名 AlexNet 正是 lines_r1 裁决要求加上的，改写反而更差。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：三个动作的预告是英语讲解常见说法，AlexNet 是 r1 裁决要求点名的",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I43",
+   "key": "29d9156bbfa8",
+   "item": "voice_en",
+   "where": "l09",
+   "dim": "V1, V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l09"
+   ],
+   "evidence": [
+    "Around eight a.m. and six p.m. it spikes, and late at night it's a bit pricier."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Prices spike around eight a.m. and six p.m., and they're a bit higher late at night.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "Around eight a.m. and six p.m. it spikes, and late at night it's a bit pricier.",
+   "problem": "**A bit off.** The preceding subject is plural “Daytime rides,” so singular “it” has no clean spoken antecedent. The intended meaning is recoverable, but naming prices avoids the momentary repair.",
+   "suggest": "Prices spike around eight a.m. and six p.m., and they're a bit higher late at night.",
+   "judge_note": "l09（b，建议）：「it spikes」里的 it 指的是车费，是口语里很自然的省略，前一句刚说过价格，屏上也有曲线，听一遍不会卡。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：it 指车费，口语自然",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I44",
+   "key": "c0007ec93344",
+   "item": "voice_en",
+   "where": "l21",
+   "dim": "V1, V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3",
+   "shots": [
+    "l21"
+   ],
+   "evidence": [
+    "That unit scales each bent line with a knob, adds them up, then one last knob shifts the total. That's the fare."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Each bent line gets a knob to stretch, shrink or flip it. Add them; another knob shifts the total. That's the fare.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "That unit scales each bent line with a knob, adds them up, then one last knob shifts the total. That's the fare.",
+   "problem": "**A bit off.** The final knob now makes sense. But “scales each bent line” still assumes mathematical vocabulary the surrounding explanation carefully avoids. Name the visible change in ordinary words.",
+   "suggest": "Each bent line gets a knob to stretch, shrink or flip it. Add them; another knob shifts the total. That's the fare.",
+   "judge_note": "l21（a、b 都标了「scales」）：scale 是日常词，这一句也是上一轮才定稿的，只算建议级。两位的改写（「turns each bent line up or down」「stretch, shrink or flip」）都更长，会让 8.1s 的句子更挤，所以不强制改。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：scale 是日常词，只到建议级，改写更长",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I45",
+   "key": "c8ec090afd62",
+   "item": "voice_en",
+   "where": "l22",
+   "dim": "V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V5",
+   "shots": [
+    "l22"
+   ],
+   "evidence": [
+    "That's thirty-seven knobs in total."
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "Thirty-seven knobs in all.",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "That's thirty-seven knobs in total.",
+   "problem": "紧接着 l21 的「That's the fare.」，又一句以「That's」开头，听着像在复读前一句的收尾，节奏发顿。",
+   "suggest": "Thirty-seven knobs in all.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l22 改为「Thirty-seven knobs in all.」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I46",
+   "key": "db96948358b4",
+   "item": "voice_en",
+   "where": "l30",
+   "dim": "V2, V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2, V3",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "With this many knobs, there's a much faster way to find each one's direction. That's next time."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Nudging each knob works for 37, but not for millions. More on that next time.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "With this many knobs, there's a much faster way to find each one's direction. That's next time.",
+   "problem": "Strict linking line. l25 just said we nudge each knob toward the fastest drop, so \"a faster way to find each one's direction\" sounds slightly contradictory by ear. It also pre-teases l50-l51.",
+   "suggest": "Nudging each knob works for 37, but not for millions. More on that next time.",
+   "judge_note": "l30（a 改写「Nudging each knob works for 37, but not for millions. More on that next time.」）：提前把片尾 l50「Thirty-seven…, But sixty million?」的悬念说掉了，片尾的钩子就没劲了。不采纳，按补充问题表的定稿改。；l30（b 改写「Now, what happens if we stack these units in more layers?」）：丢了中文 l30 和屏上「Which way / to turn? · Next episode」对应的内容，句号就对不上了；而且和 l31–l32 的「stack」铺垫重复。问题成立，改写不采纳，按定稿改。",
+   "status": "implemented",
+   "solution": "l30 改为「By the way, there's a much faster trick for finding which way to turn each knob. More on that next time.」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I47",
+   "key": "06cff528e0bd",
+   "item": "voice_en",
+   "where": "l30",
+   "dim": "V2, V4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2, V4",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "With this many knobs, there's a much faster way to find each one's direction. That's next time."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "Now, what happens if we stack these units in more layers?",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "With this many knobs, there's a much faster way to find each one's direction. That's next time.",
+   "problem": "**A bit off; strict linking line.** “That's next time” signals an ending, but the narrator immediately resumes explaining layers. The stronger closing teaser already appears at l50–l51. “Much faster” repairs the earlier conceptual conflict, but the placement still interrupts the thought.",
+   "suggest": "Now, what happens if we stack these units in more layers?",
+   "judge_note": "l30（a 改写「Nudging each knob works for 37, but not for millions. More on that next time.」）：提前把片尾 l50「Thirty-seven…, But sixty million?」的悬念说掉了，片尾的钩子就没劲了。不采纳，按补充问题表的定稿改。；l30（b 改写「Now, what happens if we stack these units in more layers?」）：丢了中文 l30 和屏上「Which way / to turn? · Next episode」对应的内容，句号就对不上了；而且和 l31–l32 的「stack」铺垫重复。问题成立，改写不采纳，按定稿改。",
+   "status": "implemented",
+   "solution": "l30 改为「By the way, there's a much faster trick for finding which way to turn each knob. More on that next time.」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I48",
+   "key": "335cfda0137c",
+   "item": "voice_en",
+   "where": "l30",
+   "dim": "V2, V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2, V3",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "With this many knobs, there's a much faster way to find each one's direction. That's next time."
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "By the way, there's a much faster trick for finding which way to turn each knob. More on that next time.",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "With this many knobs, there's a much faster way to find each one's direction. That's next time.",
+   "problem": "定稿（维持 a、b 的必改，改写另定）。严格项，有三处毛病：①「With this many knobs」把 37 说成多，和 l50「Thirty-seven knobs, we can test one by one」口径相反，两人都没发现；②旋钮的「direction」不是口语说法，屏上是「Which way / to turn?」；③「That's next time」光秃秃放在章节中段，听着像全片要收尾。改写里用「By the way」标明这是顺口一提，接着讲下一章；「a much faster trick」接 l25 的「last episode's trick」，和 l50–l51 构成「先埋问题、片尾揭晓」，不再重复。句号和屏上「Which way / to turn? · Next episode」都不用变。",
+   "suggest": "By the way, there's a much faster trick for finding which way to turn each knob. More on that next time.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l30 改为「By the way, there's a much faster trick for finding which way to turn each knob. More on that next time.」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I49",
+   "key": "8ca38ca771de",
+   "item": "voice_en",
+   "where": "l33",
+   "dim": "V3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l33"
+   ],
+   "evidence": [
+    "For example, two units per layer can fold a slanted line exactly in half."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "For example, two units per layer can fold a slanted line right in half, like paper.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "For example, two units per layer can fold a slanted line exactly in half.",
+   "problem": "Hard to picture by ear; l32 paper image carries it.",
+   "suggest": "For example, two units per layer can fold a slanted line right in half, like paper.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：l32 的折纸比喻已经铺垫",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I50",
+   "key": "0b5f7f6125eb",
+   "item": "voice_en",
+   "where": "l34",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4",
+   "shots": [
+    "l34"
+   ],
+   "evidence": [
+    "...and in this example each new layer doubles that."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "...and every new layer doubles that.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "...and in this example each new layer doubles that.",
+   "problem": "\"In this example\" is padding.",
+   "suggest": "...and every new layer doubles that.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "「in this example」是必须保留的限定语（只有这个特意搭的例子才每层翻倍，见 research.md 第 2 节）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I51",
+   "key": "d144d5e778e0",
+   "item": "voice_en",
+   "where": "l35",
+   "dim": "V3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l35"
+   ],
+   "evidence": [
+    "So ten units side by side give at most eleven pieces. Stacked five deep, they can give thirty-two."
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "So take ten units. Side by side, they give at most eleven pieces. Five layers of two can give thirty-two.",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "So ten units side by side give at most eleven pieces. Stacked five deep, they can give thirty-two.",
+   "problem": "「ten units」是这一句才出现的数，「五层×每层两个」要听众自己推。屏上文字能接住，所以只记录。",
+   "suggest": "So take ten units. Side by side, they give at most eleven pieces. Five layers of two can give thirty-two.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：屏上「10 side by side / 10 in 5 layers」同时显示，能接住",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I52",
+   "key": "e4d4209b76c1",
+   "item": "voice_en",
+   "where": "l37",
+   "dim": "V1, V3, V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1, V3, V5",
+   "shots": [
+    "l37"
+   ],
+   "evidence": [
+    "The deeper the stack, the more complex the shapes the same units can build."
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "With the same units, a deeper stack can build more complex shapes.",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "The deeper the stack, the more complex the shapes the same units can build.",
+   "problem": "**A bit off.** “The more complex the shapes the same units…” stacks too many grammatical dependencies together. The important qualification—using the same units—arrives inside the comparison. Put it first.",
+   "suggest": "With the same units, a deeper stack can build more complex shapes.",
+   "judge_note": "l37（b，建议）：「The deeper the stack, the more complex the shapes…」是常见的口语比较句，第 1、2 轮裁决都已经保留，没有新理由。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回（前两轮已保留）",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I53",
+   "key": "e529febe9d06",
+   "item": "voice_en",
+   "where": "l41",
+   "dim": "V3",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l41"
+   ],
+   "evidence": [
+    "It had eight layers and sixty million knobs. It learned a thousand categories from one point two million photos."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "It had eight layers and sixty million knobs, and learned a thousand categories from over a million photos.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "It had eight layers and sixty million knobs. It learned a thousand categories from one point two million photos.",
+   "problem": "Four big numbers in 7 seconds; heavy by ear.",
+   "suggest": "It had eight layers and sixty million knobs, and learned a thousand categories from over a million photos.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人（voice_zh）同类驳回：屏上同时列出四个数，删数会让口播和屏幕对不上",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I54",
+   "key": "2ca68fdcb7e2",
+   "item": "voice_en",
+   "where": "l43",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l43"
+   ],
+   "evidence": [
+    "The version they entered got fifteen point three percent wrong, and the runner-up got twenty-six point two percent wrong."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Their entry got fifteen point three percent wrong. The runner-up got twenty-six point two.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "The version they entered got fifteen point three percent wrong, and the runner-up got twenty-six point two percent wrong.",
+   "problem": "\"The version they entered\" is stiff; \"percent wrong\" said twice.",
+   "suggest": "Their entry got fifteen point three percent wrong. The runner-up got twenty-six point two.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "「The version they entered」是限定语：15.3% 是参赛的变体（7 个网络平均），不是单个网络",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I55",
+   "key": "55ebb6662a24",
+   "item": "voice_en",
+   "where": "l46",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l46"
+   ],
+   "evidence": [
+    "Removing any middle layer made its first-guess accuracy drop about two percentage points."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Take out any middle layer, and it got about two points worse at its first guess.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Removing any middle layer made its first-guess accuracy drop about two percentage points.",
+   "problem": "\"First-guess accuracy\" is a new term right after \"five guesses\".",
+   "suggest": "Take out any middle layer, and it got about two points worse at its first guess.",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "与屏上小字 First-guess accuracy (top-1) 一致，正好说明指标换了",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I56",
+   "key": "8aa8a6dc1077",
+   "item": "voice_zh",
+   "where": "l01",
+   "dim": "V1、V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V5",
+   "shots": [
+    "l01"
+   ],
+   "evidence": [
+    "前几期那台只有两个旋钮的打车费机器，按距离算车费，算得挺准。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "前几期那台算车费的机器，只有两个旋钮，按距离算得挺准。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "前几期那台只有两个旋钮的打车费机器，按距离算车费，算得挺准。",
+   "problem": "有点怪。“打车费机器”不是自然叫法；“前几期那台只有两个旋钮的……”也让开场主语拖得偏长。开场从严。",
+   "suggest": "前几期那台算车费的机器，只有两个旋钮，按距离算得挺准。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l01 改为「前几期那台算车费的机器，只有两个旋钮，按距离算得挺准。」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I57",
+   "key": "2b2c64012e88",
+   "item": "voice_zh",
+   "where": "l01",
+   "dim": "V1 V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1 V5",
+   "shots": [
+    "l01"
+   ],
+   "evidence": [
+    "前几期那台只有两个旋钮的打车费机器，按距离算车费，算得挺准。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "前几期那台算车费的机器，只有两个旋钮，按距离算得挺准。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "前几期那台只有两个旋钮的打车费机器，按距离算车费，算得挺准。",
+   "problem": "维持必改（开场从严），这是定稿，采用 b 的写法。原句「前几期那台只有两个旋钮的打车费机器」前面堆了一长串修饰语，「打车费机器」不是系列里用过的叫法（t10 说「猜打车费」），后面又重复一遍「车费」。定稿拆成短句，l08「那台两个旋钮的机器」照样接得上，屏上「算得挺准」不受影响。",
+   "suggest": "前几期那台算车费的机器，只有两个旋钮，按距离算得挺准。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l01 改为「前几期那台算车费的机器，只有两个旋钮，按距离算得挺准。」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I58",
+   "key": "b04c4df97b15",
+   "item": "voice_zh",
+   "where": "l05",
+   "dim": "V1 V2 V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1 V2 V3",
+   "shots": [
+    "l05"
+   ],
+   "evidence": [
+    "上一期讲了怎么拧旋钮：就像蒙着眼下山，每步都往损失降得最快的方向拧一点。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "上一期讲了怎么拧旋钮：像蒙着眼下山，每步都往错得最少的方向拧一点。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "上一期讲了怎么拧旋钮：就像蒙着眼下山，每步都往损失降得最快的方向拧一点。",
+   "problem": "回顾串场从严。「损失」在这里第一次出现且没解释，l12 又把它当新词解释，次序反了；「下山」比喻里的「每步」后面接「拧」，两个动作叠在一起，要耳朵转一下。",
+   "suggest": "上一期讲了怎么拧旋钮：像蒙着眼下山，每步都往错得最少的方向拧一点。",
+   "judge_note": "l05（a 改写「每步都往错得最少的方向拧一点」）：梯度下降是往降得最快的方向走，「错得最少」意思不对。（b 改写「看错误分数往哪边降得最快」）：又多出「错误分数」第三个叫法，和 l12 的「给错误打的分」、l25 的「损失」不统一。",
+   "status": "implemented",
+   "solution": "l05 改为「上一期讲了怎么拧旋钮：就像蒙着眼下山，每步都往错误降得最快的方向拧一点。」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I59",
+   "key": "1ef89e0d77e3",
+   "item": "voice_zh",
+   "where": "l05",
+   "dim": "V2、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V2、V3",
+   "shots": [
+    "l05"
+   ],
+   "evidence": [
+    "上一期讲了怎么拧旋钮：就像蒙着眼下山，每步都往损失降得最快的方向拧一点。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "上一期说，拧旋钮就像蒙眼下山：看错误分数往哪边降得最快，就往哪边拧一点。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "上一期讲了怎么拧旋钮：就像蒙着眼下山，每步都往损失降得最快的方向拧一点。",
+   "problem": "有点怪。比喻可以听懂，但盲听的新观众还不知道“损失”是什么。“上一期讲过”不能代替本句所需的简短解释；这是回顾串场，从严。",
+   "suggest": "上一期说，拧旋钮就像蒙眼下山：看错误分数往哪边降得最快，就往哪边拧一点。",
+   "judge_note": "l05（a 改写「每步都往错得最少的方向拧一点」）：梯度下降是往降得最快的方向走，「错得最少」意思不对。（b 改写「看错误分数往哪边降得最快」）：又多出「错误分数」第三个叫法，和 l12 的「给错误打的分」、l25 的「损失」不统一。",
+   "status": "implemented",
+   "solution": "l05 改为「上一期讲了怎么拧旋钮：就像蒙着眼下山，每步都往错误降得最快的方向拧一点。」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I60",
+   "key": "5d47c8e1fb45",
+   "item": "voice_zh",
+   "where": "l05",
+   "dim": "V2 V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V2 V3",
+   "shots": [
+    "l05"
+   ],
+   "evidence": [
+    "上一期讲了怎么拧旋钮：就像蒙着眼下山，每步都往损失降得最快的方向拧一点。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "上一期讲了怎么拧旋钮：就像蒙着眼下山，每步都往错误降得最快的方向拧一点。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "上一期讲了怎么拧旋钮：就像蒙着眼下山，每步都往损失降得最快的方向拧一点。",
+   "problem": "维持必改，这是定稿。只把「损失」换成「错误」，字数不变：先用大白话说，l12「给错误打的分，也就是损失」再起名，l25 用「损失」接上。下山的比喻不动，上一轮已确认听得懂。",
+   "suggest": "上一期讲了怎么拧旋钮：就像蒙着眼下山，每步都往错误降得最快的方向拧一点。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l05 改为「上一期讲了怎么拧旋钮：就像蒙着眼下山，每步都往错误降得最快的方向拧一点。」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I61",
+   "key": "17e376d73de6",
+   "item": "voice_zh",
+   "where": "l12",
+   "dim": "V3、V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3、V5",
+   "shots": [
+    "l12"
+   ],
+   "evidence": [
+    "它在高峰报得太便宜，白天又报得太贵，给错误打的分，也就是损失，最低也有十一点五。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "它高峰报得太便宜，白天又太贵。给错误打的分叫损失，最低也有十一点五。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "它在高峰报得太便宜，白天又报得太贵，给错误打的分，也就是损失，最低也有十一点五。",
+   "problem": "有点怪。先比较两个时段，再插入术语解释，最后才报分数；一句里连续换任务。“同位语本身成立”不等于整句容易听。",
+   "suggest": "它高峰报得太便宜，白天又太贵。给错误打的分叫损失，最低也有十一点五。",
+   "judge_note": "l12（b，建议）：同上一轮，「给错误打的分，也就是损失」是自然的同位语。l05 定稿后，这一句就是本片第一次给「损失」起名，原句保留更好。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：同位语自然，且 l05 定稿后这里是本片第一次给「损失」起名",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I62",
+   "key": "bcea270642f3",
+   "item": "voice_zh",
+   "where": "l12",
+   "dim": "V5",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V5",
+   "shots": [
+    "l12"
+   ],
+   "evidence": [
+    "它在高峰报得太便宜，白天又报得太贵，给错误打的分，也就是损失，最低也有十一点五。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "它高峰报得太便宜，白天又太贵。给错误打的分叫损失，最低也有十一点五。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "它在高峰报得太便宜，白天又报得太贵，给错误打的分，也就是损失，最低也有十一点五。",
+   "problem": "7.6s，插入语较长，一口气略紧；上一轮已判自然，此处仅记。",
+   "suggest": "它高峰报得太便宜，白天又太贵。给错误打的分叫损失，最低也有十一点五。",
+   "judge_note": "l12（b，建议）：同上一轮，「给错误打的分，也就是损失」是自然的同位语。l05 定稿后，这一句就是本片第一次给「损失」起名，原句保留更好。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "同 I61",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I63",
+   "key": "67c1ef4eeba6",
+   "item": "voice_zh",
+   "where": "l21",
+   "dim": "V1、V3、V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3、V5",
+   "shots": [
+    "l21"
+   ],
+   "evidence": [
+    "第二层这个单元，给每条折线配个旋钮管分量，加起来，再加一个管高低的旋钮，就是车费。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "第二层用旋钮调每条折线的分量，把结果加起来，再用一个旋钮调高低，就算出车费。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "第二层这个单元，给每条折线配个旋钮管分量，加起来，再加一个管高低的旋钮，就是车费。",
+   "problem": "有点怪。“加起来”没有说加什么，紧接着又说“加一个旋钮”，容易听成把旋钮也加进计算结果。补上旋钮的作用，仍未修好动作关系。",
+   "suggest": "第二层用旋钮调每条折线的分量，把结果加起来，再用一个旋钮调高低，就算出车费。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l21 改为「第二层给每条折线配个旋钮调分量，把它们加起来，再用一个旋钮调高低，就是车费。」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I64",
+   "key": "95d62cf9eeda",
+   "item": "voice_zh",
+   "where": "l21",
+   "dim": "V1 V3 V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1 V3 V5",
+   "shots": [
+    "l21"
+   ],
+   "evidence": [
+    "第二层这个单元，给每条折线配个旋钮管分量，加起来，再加一个管高低的旋钮，就是车费。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "第二层给每条折线配个旋钮调分量，把它们加起来，再用一个旋钮调高低，就是车费。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "第二层这个单元，给每条折线配个旋钮管分量，加起来，再加一个管高低的旋钮，就是车费。",
+   "problem": "维持必改，这是定稿。「加起来」补出对象「它们」（就是那些折线）；「再加一个旋钮」改成「再用一个旋钮调高低」，不会听成多装一个旋钮。保留「给每条折线配个旋钮」，l22 数出 37 个才接得上，也和屏上「每条折线配个旋钮」「加起来，再调高低 → 车费」一字对齐。比原句短。",
+   "suggest": "第二层给每条折线配个旋钮调分量，把它们加起来，再用一个旋钮调高低，就是车费。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l21 改为「第二层给每条折线配个旋钮调分量，把它们加起来，再用一个旋钮调高低，就是车费。」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I65",
+   "key": "6636f2e4fd56",
+   "item": "voice_zh",
+   "where": "l24",
+   "dim": "V1、V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l24"
+   ],
+   "evidence": [
+    "名字来自神经元，但别当真，它就是一堆带旋钮的小单元。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "它借了神经元的名字，其实就是一堆带旋钮的小单元。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "名字来自神经元，但别当真，它就是一堆带旋钮的小单元。",
+   "problem": "有点怪。“别当真”究竟是否认名字来历，还是提醒别把它当成脑子，没有说清。直接说“借了名字”更省听众推断。",
+   "suggest": "它借了神经元的名字，其实就是一堆带旋钮的小单元。",
+   "judge_note": "l24（b，建议）：同上一轮，「别当真」指的就是这个名字，口语里很自然。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：「别当真」指的就是这个名字",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I66",
+   "key": "ef95dda5d798",
+   "item": "voice_zh",
+   "where": "l28",
+   "dim": "V1、V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V3",
+   "shots": [
+    "l28"
+   ],
+   "evidence": [
+    "高峰和半夜，它都抓住了。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "高峰、半夜，也都算准了。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "高峰和半夜，它都抓住了。",
+   "problem": "有点怪。字面上抓住的是时段，实际要表达的是这些时段的车费也算准了。这里值得把结果说实。",
+   "suggest": "高峰、半夜，也都算准了。",
+   "judge_note": "l28（b，建议）：「高峰和半夜，它都抓住了」就是「抓住了规律」的口语说法，很自然；b 的改写「高峰、半夜，也都算准了」没了主语，「也」字也没有前文可接。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：「抓住了」就是抓住了规律，口语自然",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I67",
+   "key": "f5ef2fe06b47",
+   "item": "voice_zh",
+   "where": "l30",
+   "dim": "V1 V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1 V2",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "旋钮一多，每个该往哪拧、拧多少，怎么才算得快，咱们下一期再讲。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "旋钮这么多，怎么快速算出每个该往哪拧，下一期再讲。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "旋钮一多，每个该往哪拧、拧多少，怎么才算得快，咱们下一期再讲。",
+   "problem": "串场从严。三项并列的压缩句，「怎么才算得快」前面没有主语，听着像报菜名；章节中段说「下一期再讲」像要收尾；l25 才说过「还是上一期的老办法，往损失降得最快的方向拧」，这里又说往哪拧下期讲，前后对不上。",
+   "suggest": "旋钮这么多，怎么快速算出每个该往哪拧，下一期再讲。",
+   "judge_note": "l30（a 改写）：「旋钮这么多，怎么快速算出每个该往哪拧，下一期再讲」还在说「往哪拧」，和 l25 冲突，也和 l50 重复，a 自己指出的问题没改掉。用上表的定稿。；l30（b 改写及删去中途预告的主张）：「那要是把这些单元叠起来，会怎样？」和 l23「把这些小单元一层层连起来」打架（网络已经是两层），又抢了 l32「换个摆法：一层叠一层」的话。这个句位和英文 l30、s4 的「下一期」屏共用，中途提一句本身没问题，措辞不重复就行，不必删。",
+   "status": "implemented",
+   "solution": "l30 改为「旋钮一多，挨个试着拧就太慢了，快办法下一期讲。」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I68",
+   "key": "aa69d1bc0d38",
+   "item": "voice_zh",
+   "where": "l30",
+   "dim": "V1、V2、V4、V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V2、V4、V5",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "旋钮一多，每个该往哪拧、拧多少，怎么才算得快，咱们下一期再讲。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "那要是把这些单元叠起来，会怎样？",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "旋钮一多，每个该往哪拧、拧多少，怎么才算得快，咱们下一期再讲。",
+   "problem": "有点怪。问项套问项，最后才落到“下期讲”；26个汉字挤在3.7秒里，很难自然停顿。中途预告又与片尾重复，建议直接换成通往下一章的过渡。",
+   "suggest": "那要是把这些单元叠起来，会怎样？",
+   "judge_note": "l30（a 改写）：「旋钮这么多，怎么快速算出每个该往哪拧，下一期再讲」还在说「往哪拧」，和 l25 冲突，也和 l50 重复，a 自己指出的问题没改掉。用上表的定稿。；l30（b 改写及删去中途预告的主张）：「那要是把这些单元叠起来，会怎样？」和 l23「把这些小单元一层层连起来」打架（网络已经是两层），又抢了 l32「换个摆法：一层叠一层」的话。这个句位和英文 l30、s4 的「下一期」屏共用，中途提一句本身没问题，措辞不重复就行，不必删。",
+   "status": "implemented",
+   "solution": "l30 改为「旋钮一多，挨个试着拧就太慢了，快办法下一期讲。」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I69",
+   "key": "98d5b64d3674",
+   "item": "voice_zh",
+   "where": "l30 屏（s4 `#q`）",
+   "dim": "V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l30 屏（s4 `#q`）"
+   ],
+   "evidence": [
+    "屏：「旋钮的坡度 / 怎么算？」「下一期」"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "屏 h1 改「挨个试<br>太慢了」，h2 保留「下一期」（与下行 l30 定稿对应；英文屏另审）",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "屏：「旋钮的坡度 / 怎么算？」「下一期」",
+   "problem": "两人都漏了：上一轮裁决（I73）因为「坡度」没解释，又和 l10「管斜度」、l17「多陡」撞词，把它从 l30、l50 口播里删了，可屏幕标题还留着「旋钮的坡度」。口播一个说法，屏幕另一个说法，属于和口播矛盾。",
+   "suggest": "屏 h1 改「挨个试<br>太慢了」，h2 保留「下一期」（与下行 l30 定稿对应；英文屏另审）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "同 I30（屏幕裁决人的定稿，与口播 l30「快办法下一期讲」一致）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/package.json",
+    "edu_videos/ai_terms/t12_neural_networks/scenes/web/"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I70",
+   "key": "e4268c239263",
+   "item": "voice_zh",
+   "where": "l30",
+   "dim": "V1 V2 V4 V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1 V2 V4 V5",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "旋钮一多，每个该往哪拧、拧多少，怎么才算得快，咱们下一期再讲。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "旋钮一多，挨个试着拧就太慢了，快办法下一期讲。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "旋钮一多，每个该往哪拧、拧多少，怎么才算得快，咱们下一期再讲。",
+   "problem": "维持必改，这是定稿。原句的问题：三个问项挤在一起；和 l25「老办法往损失降得最快的方向拧」冲突（往哪拧已经讲过）；和 l50 措辞几乎一样；26 字只有 3.7 秒。定稿只点出「挨个试太慢、有快办法」，和英文 l30、l50 的意思对上，也给 l50「三十七个还好办」埋下伏笔，不再重复它的字眼。",
+   "suggest": "旋钮一多，挨个试着拧就太慢了，快办法下一期讲。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l30 改为「旋钮一多，挨个试着拧就太慢了，快办法下一期讲。」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I71",
+   "key": "db6502273755",
+   "item": "voice_zh",
+   "where": "l32",
+   "dim": "V1、V2、V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V2、V3",
+   "shots": [
+    "l32"
+   ],
+   "evidence": [
+    "换个摆法：一层叠一层，后一层在前一层折好的线上接着折。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "换个摆法：一层叠一层，前面折好的线，后面接着折。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "换个摆法：一层叠一层，后一层在前一层折好的线上接着折。",
+   "problem": "有点怪。“后一层在前一层折好的线上”仍是一长串前后关系，听众要等到“接着折”才拼出动作。关键转换句应把先后动作直接说开。",
+   "suggest": "换个摆法：一层叠一层，前面折好的线，后面接着折。",
+   "judge_note": "l32（b，必改）：「一层叠一层，后一层在前一层折好的线上接着折」谁折、在哪折、怎么折都在一个小句里，5.0 秒，听一遍能懂；这句不属于从严条目，是章节里的正文。b 的改写去掉了「层」，「前面 / 后面」反而没了着落。不升必改，维持原句。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：非从严条目，5 秒听一遍能懂；改写反而丢了「层」",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I72",
+   "key": "093079920cbe",
+   "item": "voice_zh",
+   "where": "l36–l37",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l36–l37"
+   ],
+   "evidence": [
+    "因为后面的层……／所以同样多的单元……"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "保留。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "因为后面的层……／所以同样多的单元……",
+   "problem": "一因一果各占一拍，节奏上可保留，要精炼可合并。",
+   "suggest": "保留。",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "记录级：一因一果各占一拍",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I73",
+   "key": "748fee42c910",
+   "item": "voice_zh",
+   "where": "l39–l40",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l39–l40"
+   ],
+   "evidence": [
+    "三个人训练了一个很深的神经网络。／这个网络，后来大家叫它 AlexNet。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "二零一二年，多伦多大学三个人训出个很深的网络，后来大家叫它 AlexNet。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "三个人训练了一个很深的神经网络。／这个网络，后来大家叫它 AlexNet。",
+   "problem": "两句可并成一句，不影响理解；不并也不算怪。",
+   "suggest": "二零一二年，多伦多大学三个人训出个很深的网络，后来大家叫它 AlexNet。",
+   "judge_note": "l39–l40（a，记录·合并）：l40 单独一句，让「AlexNet」这个外文名单独落地；合并后一句太长，名字也被压在句尾。维持分开。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：l40 单独一句让 AlexNet 这个名字落地",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I74",
+   "key": "c9aedd152e56",
+   "item": "voice_zh",
+   "where": "l41",
+   "dim": "V3、V4、V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3、V4、V5",
+   "shots": [
+    "l41"
+   ],
+   "evidence": [
+    "它有八层、六千万个旋钮。练它用了一百二十万张照片，要认一千类东西。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "它有八层、六千万个旋钮，靠看照片学着认东西。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "它有八层、六千万个旋钮。练它用了一百二十万张照片，要认一千类东西。",
+   "problem": "有点怪。四组数字仍在6.1秒内连续出现，换句号没有减少记忆负担。照片数量和类别数量删去，也不妨碍这里理解“深网络靠照片学习识别”。",
+   "suggest": "它有八层、六千万个旋钮，靠看照片学着认东西。",
+   "judge_note": "l41（b，建议）：已经用句号拆开，四个数量级差得远，不会听串；屏上 s6 同时列着四个数，「一千类」也给 l42「每张图猜五个答案」做了铺垫。删掉两组数会让口播和屏幕对不上。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：已用句号拆开，屏上同时列出四个数",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I75",
+   "key": "36d524b41cd1",
+   "item": "voice_zh",
+   "where": "l42",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l42"
+   ],
+   "evidence": [
+    "那年的 ImageNet 图片识别比赛，每张图猜五个答案，五个都不对才算错。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "那年 ImageNet 有场识图比赛，每张图能猜五个答案，五个全猜错才算错。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "那年的 ImageNet 图片识别比赛，每张图猜五个答案，五个都不对才算错。",
+   "problem": "名词短语开头，没有动词，像在念说明书；朋友会说「有场比赛」。",
+   "suggest": "那年 ImageNet 有场识图比赛，每张图能猜五个答案，五个全猜错才算错。",
+   "judge_note": "l42（a，建议）：同上一轮，「话题＋说明」是常见口语句式；a 的改写「ImageNet 有场识图比赛」又把数据集说成了办比赛的。",
+   "status": "wontfix",
+   "solution": "",
+   "reason": "裁决人驳回：话题＋说明是常见口语句式",
+   "files": [],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I76",
+   "key": "a09a51223c1e",
+   "item": "voice_zh",
+   "where": "l46",
+   "dim": "V1 V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1 V3",
+   "shots": [
+    "l46"
+   ],
+   "evidence": [
+    "他们还试过，拿掉中间任何一层，第一个答案就猜对的比例，会掉两个百分点左右。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "他们还试过拿掉中间任何一层，第一个答案猜对的，少了大概两个百分点。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "他们还试过，拿掉中间任何一层，第一个答案就猜对的比例，会掉两个百分点左右。",
+   "problem": "「第一个答案就猜对的比例」是长名词短语作主语，加上前面刚讲「猜五个」，听众要自己转换成「只看第一个答案」；「就」字容易听成「马上」。",
+   "suggest": "他们还试过拿掉中间任何一层，第一个答案猜对的，少了大概两个百分点。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l46 改为「他们还试过拿掉中间任何一层，只看第一个答案，猜对的比例低了两个百分点左右。」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I77",
+   "key": "536fd361de6c",
+   "item": "voice_zh",
+   "where": "l46",
+   "dim": "V1、V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1、V5",
+   "shots": [
+    "l46"
+   ],
+   "evidence": [
+    "他们还试过，拿掉中间任何一层，第一个答案就猜对的比例，会掉两个百分点左右。"
+   ],
+   "sources": [
+    "b 位（Codex）"
+   ],
+   "fix": "他们还试过拿掉中间任何一层。只看第一个答案，答对的比例低了两个百分点左右。",
+   "cost": "便宜",
+   "src": "b",
+   "orig": "他们还试过，拿掉中间任何一层，第一个答案就猜对的比例，会掉两个百分点左右。",
+   "problem": "有点怪。现在能知道下降的是答对比例，但“第一个答案就猜对的比例”是压得很紧的长定语，聊天通常会把“看哪个答案”和“答对比例”分开说。",
+   "suggest": "他们还试过拿掉中间任何一层。只看第一个答案，答对的比例低了两个百分点左右。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l46 改为「他们还试过拿掉中间任何一层，只看第一个答案，猜对的比例低了两个百分点左右。」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I78",
+   "key": "a19d9f69154a",
+   "item": "voice_zh",
+   "where": "l46",
+   "dim": "V1 V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1 V3",
+   "shots": [
+    "l46"
+   ],
+   "evidence": [
+    "他们还试过，拿掉中间任何一层，第一个答案就猜对的比例，会掉两个百分点左右。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "他们还试过拿掉中间任何一层，只看第一个答案，猜对的比例低了两个百分点左右。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "他们还试过，拿掉中间任何一层，第一个答案就猜对的比例，会掉两个百分点左右。",
+   "problem": "两人都判有点怪，非从严句，建议改。长定语「第一个答案就猜对的比例」拆成「只看第一个答案」加「猜对的比例」，正好对上屏上的说明「只看第一个答案」，「就」字也不会听成「马上」。字数和原句一样。",
+   "suggest": "他们还试过拿掉中间任何一层，只看第一个答案，猜对的比例低了两个百分点左右。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l46 改为「他们还试过拿掉中间任何一层，只看第一个答案，猜对的比例低了两个百分点左右。」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I79",
+   "key": "c83fb82b0933",
+   "item": "voice_zh",
+   "where": "l48",
+   "dim": "V1 V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1 V2",
+   "shots": [
+    "l48"
+   ],
+   "evidence": [
+    "所以，神经网络就是把很多简单的小单元一层层叠起来，每个都带旋钮。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "所以神经网络说白了，就是一堆带旋钮的小单元，一层层叠起来。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "所以，神经网络就是把很多简单的小单元一层层叠起来，每个都带旋钮。",
+   "problem": "片尾从严。「所以……就是把……」是定义腔，「每个都带旋钮」是补在句尾的碎片，朋友不会这么收尾。",
+   "suggest": "所以神经网络说白了，就是一堆带旋钮的小单元，一层层叠起来。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l48 改为「所以神经网络说白了，就是一堆带旋钮的小单元，一层层叠起来。」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I80",
+   "key": "aecea5f45c00",
+   "item": "voice_zh",
+   "where": "l48",
+   "dim": "V1 V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1 V2",
+   "shots": [
+    "l48"
+   ],
+   "evidence": [
+    "所以，神经网络就是把很多简单的小单元一层层叠起来，每个都带旋钮。"
+   ],
+   "sources": [
+    "裁决人"
+   ],
+   "fix": "所以神经网络说白了，就是一堆带旋钮的小单元，一层层叠起来。",
+   "cost": "便宜",
+   "src": "judge",
+   "orig": "所以，神经网络就是把很多简单的小单元一层层叠起来，每个都带旋钮。",
+   "problem": "维持必改（片尾从严），这是定稿，采用 a 的写法。句尾「每个都带旋钮」像补上去的半截话；定稿呼应 l24「一堆带旋钮的小单元」，结尾落在「一层层叠起来」，正好接 l49「叠得够深」。",
+   "suggest": "所以神经网络说白了，就是一堆带旋钮的小单元，一层层叠起来。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l48 改为「所以神经网络说白了，就是一堆带旋钮的小单元，一层层叠起来。」（裁决人定稿原样改）",
+   "reason": "",
+   "files": [
+    "edu_videos/ai_terms/t12_neural_networks/script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-09T22:08:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  }
+ ]
+}

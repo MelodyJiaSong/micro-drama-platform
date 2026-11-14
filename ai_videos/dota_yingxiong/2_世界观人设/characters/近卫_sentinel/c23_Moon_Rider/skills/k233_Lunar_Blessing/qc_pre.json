@@ -1,0 +1,330 @@
+{
+ "superseded": {
+  "superseded": {
+   "superseded": {
+    "superseded": {
+     "skill": "k233_Lunar_Blessing",
+     "sha256": "1fd1170d427c53b5941f6419f0b2f5af005656f1060e7b3246fca678888ddb7f",
+     "checks": {
+      "spec.scale_table": {
+       "verdict": "pass",
+       "by": "machine",
+       "evidence": "月之骑士 2.4 m（身高）；食尸鬼 1.8 m（身高）；树人 1.9 m（身高）；猛禽德鲁伊 1.95 m（身高）",
+       "at": "2026-10-26T20:36:59"
+      },
+      "spec.duration_budget": {
+       "verdict": "pass",
+       "by": "machine",
+       "evidence": "四条原片合计 49 s，加首尾停顿 53 s（要求 ≥ 53 s）：k231 9s、k232 11s、k233 13s、k234 16s",
+       "at": "2026-10-26T20:36:59"
+      },
+      "keyframe.locked_traits": {
+       "verdict": "fail",
+       "by": "review",
+       "evidence": "[director·claude] Image 1 (opening frame) has the right cast and positions: she and the panther are on the left, the druid is centre-left, there is one treant in the middle, and there are 4 ghouls (one centre in front of the treant, one mid-ground right, one farther back on the far right, and one in the bottom-right foreground with its back to camera). Her purple skin, helmet with cheek guards, pointed ears, green hair, upturned horned pauldrons, black spotless panther, white fangs and amber eyes, and the gold-rimmed disc with three curved blades all match image 3. The druid's antlers, green beard, feather cape and staff match image 6. There are no effects in the frame. Several items fail or are uncertain: (1) Image 1's treant has a body far larger than in image 5, and its two arms end in oversized talon-like fingers, unlike the drooping arms and short wooden fingers in image 5; its glowing eyes are also faint and hard to confirm. (2) In image 1, the bottom-right ghoul's legs and feet are at the bottom edge of the frame. I can't tell if they are cut off, which would break 'all characters fully in frame'. (3) Image 2 (peak keyframe): the light under the panther is several bright, hard-edged thin rings or spirals, not the spec's 'soft ellipse that fades at the edge'. That hits the negative prompt 'white halo / hard-edged neon ring'. Some of the ring lines spread to the claws of the centre ghoul (around x≈700–850, y≈620–640), which looks like 'light under a ghoul'. No glow can be seen under the treant. (4) In image 2, the thrown moon glaive (around x≈1150–1400, y≈400–470) has a white motion trail. This breaks the spec's 'no trail'. Since the spec says the light should match `k233_peak`, the peak image itself conflicts with the locked description.",
+       "at": "2026-10-26T20:46:43"
+      },
+      "ref_image.identity": {
+       "verdict": "fail",
+       "by": "review",
+       "evidence": "[fidelity·claude] 英雄本人能认出来：第1张上两排低模、第2张五帧都是同一个模型——骑乌黑无斑豹、白獠牙、黄眼，人物有尖角大肩甲和绿发束；第3张头像和第1张左下 playdota_hero16_icon.gif、wowpedia_BTNHuntress.png 一致，都是紫皮、紫银全包盔盖住额头和两颊、尖耳从盔侧穿出，对得上 c23_Moon_Rider 的考据。拿不准的是技能和武器两处：①本片技能是 Lunar Blessing（加持后友军和黑豹脚下出白色月光光晕），可四张图里三张参考没有一格拍到这个技能在 DotA 1 里的特效，只有英雄外观。第4张峰值图里黑豹前爪下、德鲁伊脚边那几圈白色细线环，没有原版截图可以对照，没法确认就是这个技能的原版样子。②月刃形制：第1张最下排经典 BTNUpgradeMoonGlaive 是金边圆盘带弯刃，但看不清是三片还是四片；Reforged 版只露出两片。第4张峰值图右侧飞行中的月刃还带着白色拖尾，和规格写的「没有拖尾」冲突。技能参考缺失，判 fail。",
+       "at": "2026-10-26T20:46:43"
+      },
+      "ref_image.version": {
+       "verdict": "fail",
+       "by": "review",
+       "evidence": "[fidelity·claude] 第2张（playdota hero16 角色帧）、第3张（playdota hero16 头像）、第1张上两排游戏内低模截图，以及左下 playdota_hero16_icon 和 wowpedia_BTNHuntress（两张互相一致），都是经典 WC3/DotA 1 的低多边形画风，能算多源一致 ✅。但第1张被标成「DotA 1 原版参考截图」，里面却混进了高清重制图：第三行第3格 wowpedia_BTNHuntress-Reforged.png、第4格 wowpedia_Wc3r_huntress_portrait.png、最下排第2格 wowpedia_BTNUpgradeMoonGlaive-Reforged.png，都不是 6.83d。另外第1张中段右侧那幅游戏内头像（1854/2080）黄蓝底色破碎，看不清来源。月刃只有一张经典图标是原版（⚠单源）；Lunar Blessing 技能特效没有任何原版图（无原图）。参考集里混有非锚定版本，判 fail。这几张 Reforged 图应该从硬参考里剔除。",
+       "at": "2026-10-26T20:46:43"
+      },
+      "spec.required_fields": {
+       "verdict": "pass",
+       "by": "review",
+       "evidence": "[director·claude] Each required item is in the spec. Centre of effect: the white light starts under the panther's feet at 1.5–1.8 s and flows to the feet of the treant and druid. Spread and duration: it flashes along the ground in 1.5–1.8 s, three halos light up, and they last until the end of the clip. Camera: one continuous 24 mm fixed shot, no cuts, no push or pan. Hits and deaths: a fixed beat of one hit per second from 2.5 s to 9.5 s, 8 hits, two per ghoul. Each hit target stumbles back. Deaths follow `m4_Ghoul_corpse`: flat on the back within 0.3 s, never gets up, no blood. Dissipation and wind-down: the glaive flies back at 4.5/8.5 s, the bodies twitch once at 9.5–11 s and dust settles, and at 11–13 s the white light stays and the hold is clean. Sound: one line of dialogue, the skill effect sound, eight hit sounds, flight whoosh, death growls, ambient sound, and no music. Leftover problem (covered under locked_traits): the spec says the glow should match `k233_peak`, but that image doesn't match its own 'soft fading edge, no trail'.",
+       "at": "2026-10-26T20:46:43"
+      },
+      "keyframe.scale": {
+       "verdict": "fail",
+       "by": "review",
+       "evidence": "[director·claude] Measured on image 1 (opening frame, 941 px tall). The druid (1.95 m) runs from his antler tips at y≈228 to his boots at y≈650, about 420 px. The treant (card says 1.9 m, spec says 'about adult height') runs from the top of its canopy at y≈10 to its roots at y≈620, about 610 px. Its feet are higher in the frame than the druid's, so it is at the same depth or slightly farther away. Even so, it is about 1.45× the druid's height, which works out to roughly 2.8 m or more. It should be about as tall as the druid or slightly shorter, so this fails. Image 2 (peak) shows the treant even more clearly towering over the druid, the same error. Other measurements: she and the panther run from helmet top y≈175 to paws y≈770, about 595 px, 1.42× the druid. The card ratio is 2.4/1.95 ≈ 1.23. She is closer to the camera, so perspective could explain the gap, but I can't confirm that. The panther's back sits at about 0.7× the druid's height, which fits 'shoulder above an adult's waist'. The centre ghoul crouches from head y≈490 to claws y≈690, about 200 px, roughly 0.93 m, which is reasonable for a deep crouch. The spec's own size descriptions (treant about adult height, panther shoulder above waist, 2.4 m on panther's back) all agree with the cards. The failure is the opening frame's treant.",
+       "at": "2026-10-26T20:46:43"
+      },
+      "spec.agency": {
+       "verdict": "fail",
+       "by": "review",
+       "evidence": "[月之骑士·claude] 从我（月之骑士）自己的立场看，剧本说得通。第1张开场图：我骑在黑豹背上，位于画面左侧。右手把月刃横在身侧，没有举过头，也没有做出掷出的预备动作。四只食尸鬼都在右侧中景和前景，正围着德鲁伊和树人扑咬，没有一只扑到我跟前，所以0–1.5秒我戒备、不起手是合理的。按规格：1.5–1.8秒我一看清局势就加持；2.5秒立刻原地掷刃，砍中德鲁伊面前那只；3.5秒月刃自己弹到右侧中景那只；6.5秒再掷，7.5秒弹砍。我一直远程支援、不冲上去，符合我作为远程射手的身份。第2张峰值图也对得上：我仍坐在豹背上、留在原位，左手前指，月刃已经飞出、正砍中右侧中景那只食尸鬼，没有近身劈砍。唯一的小瑕疵在规格上：4.5–6.5秒月刃已经回到我手里，但我约2秒不掷。好在这段时间德鲁伊在5.5秒出手，节拍仍然是一秒一击，不算原地空等。；[食尸鬼·claude] 站在食尸鬼立场看：剧本大体说得通（4只一直主动扑咬友军；挨打会往后踉跄、缩一下再扑回去；挨两下才死，倒地后不再起来），但有两处拿不准。① 第1张开场图（第一帧，0秒）里只有德鲁伊面前那只（约x870,y560）真在扑德鲁伊。右侧中景那只（约x1430,y560）和最右边稍远那只（约x1570,y450）离树人还有两三个身位，没贴身，像是蹲在路上观望，对不上规格0–1.5秒写的“四只食尸鬼扑咬树人和德鲁伊”。② 最右边稍远那只6.5秒挨月刃时还在“画面最右边稍远”，可9.5秒却是站在原地、位于画面左中（约x700）的德鲁伊一杖把它横扫打死。规格没写这只食尸鬼在6.5–9.5秒之间要横穿画面冲到德鲁伊跟前。按我自己的意图，这3秒里我该怎么跑到他面前没交代，模型很可能让它远处原地空等，要么让德鲁伊冲上去（违反负面词“友军前冲”），要么让它瞬移。；[树人·claude] 我（树人）在图1中景居中偏右（约 x≈950–1400）。两条枝臂张开，左臂木爪抬在半空，右臂伸向右边，戒备的架势有了。但图1里没有一只食尸鬼在扑咬我：我脚前左侧（约 x≈900,y≈560）那只脸朝左，冲着德鲁伊和黑豹；右侧中景（约 x≈1450,y≈560）和最右稍远（约 x≈1570,y≈450）两只离我还有一段距离，我的木爪也没碰到它们；前景背对镜头那只（约 x≈1300,y≈780）朝右上爬，不是冲我来的。这样就对不上规格0–1.5秒『四只食尸鬼扑咬树人和德鲁伊，树人挥枝臂把它们打得一缩』，也说不清4.5秒和8.5秒我该拍、该砸的『树人脚前那只』到底是哪一只，我出手的理由不清楚。图2峰值里，我两臂朝镜头和前景方向伸着，身边同样没有扑咬我的食尸鬼，月刃从我右臂旁边飞过，我没有对着具体目标还手或者挨咬后晃一下。另外两张图里我都明显比德鲁伊（1.95 m）高出将近一倍，和人物卡1.9 m不符，近身对打的距离也因此判断不准。综上，判 fail。；[猛禽德鲁伊·claude] 我是猛禽德鲁伊，按规格应原地近身打：0–1.5秒用木杖把食尸鬼打得一缩，5.5秒一杖戳死面前那只，9.5秒一杖横扫画面最右边稍远那只。问题一：图1开场图里我的木杖斜着向上指向右上方，杖头伸到树人的躯干和枝臂那边，没有打向任何一只食尸鬼。我面前那只食尸鬼（图1中部约 x≈900、y≈560）在我右下方，杖根本没对着它，所以看不出起势里我在用木杖反击。问题二：图2峰值图里我站在黑豹身后，木杖竖着握在身侧，是空站的姿势。这时月刃正砍中右侧的食尸鬼，我面前那只就在黑豹头前，我却没有戒备，也没有出手。问题三：9.5秒要我横扫的是最右边稍远那只，它在图1右上远处（约 x≈1580、y≈460），离我好几米。规格又写了我站在原地打、负面词里有“友军前冲”，却没写这只会窜到我跟前，我站在原地够不着它，从我的立场说不通。另外 4.5秒和 8.5秒是树人出手，这两拍我挨咬后该怎么还手也没写。拿不准的地方：图1、图2都只是静帧，看不出我有没有在动。",
+       "at": "2026-10-26T20:46:43"
+      },
+      "spec.gaze": {
+       "verdict": "fail",
+       "by": "review",
+       "evidence": "[月之骑士·claude] 拿不准，所以判 fail。① 第1张开场图（0秒）：规格要求我盯着离友军最近的食尸鬼，也就是德鲁伊脚前那只，在图中约 x900、y560 处，伏在地上。但图里我的头是平着朝右转的，没有低头。视线大致是水平的，落在德鲁伊上半身、法杖或树人的高度，看不出我在往下盯那只伏地的食尸鬼。② 规格本身有两段没写我看哪里：4.5–6.5秒（月刃回到手里，到下一次掷出之前）和8.5–9.5秒（月刃回到手里，到最后一只倒下之前）。这两段没交代视线，模型可能让我随便看，比如看天或看镜头。另外，9.5–11秒写我『接住月刃』，可月刃在8.5秒已经回到手里，前后矛盾。③ 第2张峰值图里，我的头和指向都偏水平，指向德鲁伊和树人之间；被月刃砍中的那只食尸鬼在右侧更低处，约 x1380、y520。我的视线是不是在看月刃和这个目标，也拿不准。；[食尸鬼·claude] 规格文字写清了：四只食尸鬼倒下前一直盯着各自扑咬的友军，全片不看镜头；倒下以后已经死了，不需要再写视线。问题出在图上：第1张开场图里，右侧中景那只（约x1420,y540）和最右边稍远那只（约x1555,y455）的脸基本正对镜头、朝左下，而树人在它们左边，它们没在看树人。第2张峰值图里，德鲁伊身前那只（约x870,y560）张嘴正脸直视镜头，德鲁伊其实在它的左后方，它根本没看着自己扑咬的友军。参考图本身就带“看镜头”的样子，模型很可能照着画，违反“全片不看镜头”和“盯着各自扑咬的友军”。；[树人·claude] 规格要求『树人一直盯着正在扑咬自己的食尸鬼』『全片不看镜头』。图2峰值（锁定的技能长相）里，我树皮里那两点橙色发光的眼睛（约 x≈1095,y≈265）正对镜头，不在看任何一只食尸鬼，直接违反『看镜头』这条负面词。图1开场里，我的脸（约 x≈1080,y≈260）大致朝前偏左下，发光的眼不明显，看不出在盯哪只食尸鬼，也可能是在看镜头，拿不准。而且图1里本来就没有在扑咬我的食尸鬼，『盯着扑咬自己的那只』没有可以落实的目标。所以开场和峰值两拍我的视线都不达标，判 fail。；[猛禽德鲁伊·claude] 规格只给我一句“一直盯着正在扑咬自己的食尸鬼”。问题一：5.5秒我把面前那只戳死以后，规格没写接下来是哪只在扑咬我。9.5秒我要横扫的又是最右边稍远那只，我该看谁对不上。问题二：9.5–13秒四只全死了，“正在扑咬自己的食尸鬼”已经没有了，收势这几秒我的视线没写，可能会看镜头或看天。规格只写了她9.5秒后看四具尸体，没写我。问题三：图1里我的脸朝右、视线大致水平，落在树人的躯干和枝臂一带，没有明确往下看右下方我面前那只食尸鬼。图2里我也是水平朝右看，同样看不出在盯黑豹头前那只食尸鬼。拿不准我到底在看树人还是看食尸鬼，所以判 fail。",
+       "at": "2026-10-26T20:46:43"
+      },
+      "spec.status_visual": {
+       "verdict": "fail",
+       "by": "review",
+       "evidence": "[fidelity·claude] 规格里没有眩晕、减速、沉默这类控制状态：Lunar Blessing 是增益光环，月刃弹射也不带控制，这部分本身没有问题。唯一的状态标记是友军和黑豹脚下的白色月光光晕（1.5–1.8秒那一拍写的「贴地椭圆、中心乳白偏冷银蓝、边缘朦胧渐变」）。拿不准的有三处：①没有原版截图证明 DotA 1 的 Lunar Blessing 长这样，没法核对是否和原版一致。②负面词里写了「白色光环」「光圈」「硬边霓虹光圈」，正好和这个必须出现的标记冲突，生成时很可能把它压掉。③第4张峰值图画出来的是黑豹爪下、德鲁伊脚边几圈硬边的白色细线环（大约在画面左中下 x≈150–800、y≈600–720），不是边缘朦胧的乳白光晕；树人脚下（画面中央 x≈900–1000、y≈600）看不清有没有光晕，更像负面词里的「硬边霓虹光圈」。判 fail。",
+       "at": "2026-10-26T20:46:43"
+      }
+     }
+    },
+    "skill": "k233_Lunar_Blessing",
+    "sha256": "4e5175229bf2037fb7b2040c017fd5411cafe598e74eedc9ebf03294cc0a78d2",
+    "checks": {
+     "spec.scale_table": {
+      "verdict": "pass",
+      "by": "machine",
+      "evidence": "月之骑士 2.4 m（身高）；食尸鬼 1.8 m（身高）；树人 1.9 m（身高）；猛禽德鲁伊 1.95 m（身高）",
+      "at": "2026-10-26T21:37:39"
+     },
+     "spec.duration_budget": {
+      "verdict": "pass",
+      "by": "machine",
+      "evidence": "四条原片合计 49 s，加首尾停顿 53 s（要求 ≥ 53 s）：k231 9s、k232 11s、k233 13s、k234 16s",
+      "at": "2026-10-26T21:37:39"
+     },
+     "keyframe.locked_traits": {
+      "verdict": "fail",
+      "by": "review",
+      "evidence": "[director·claude] Image 1 (the opening frame) matches the following: the rider is on the left of frame on an all-black panther with amber eyes, two white fangs and dark purple tack; she has purple skin, a full helmet, green hair and upturned shoulder spikes, which matches image 3. The druid has antlers, a green beard, a feather cloak and a staff. The scene is a full moon, mud and puddles, a fire bowl in the distance, and no effects. There is one treant, one druid and four ghouls, so the head count is right.\n\nIt fails on these points. (1) Ghoul posture: the spec requires every ghoul to stay deeply hunched on all fours with its head no higher than its shoulders. In image 1, the ghoul on the treant's image-right (about x1380,y480) is half-upright on two legs, both hands gripping the treant's arm, head clearly above the shoulders. The ghoul in front of the druid (about x900,y560) is in a two-legged lunge with both hands on the druid. The one behind the druid's legs (about x640,y520) also has both hands on him. None of these three has its front limbs on the ground. This breaks the locked trait and hits the negative terms '食尸鬼直立 / 两腿站立' (ghoul upright / standing on two legs). (2) Ghoul look: the face of the ghoul on the treant's right (about x1340,y380) reads as an open-mouthed zombie, not the big jutting underbite with exposed square teeth in image 4. I can't make out three bone claws per hand. (3) Positions: the treant faces the camera, so its right side is image-left, but its 'right-side' ghoul is on image-right, which is its left. The druid faces image-right, and his 'right-side' ghoul is behind his legs toward image-left. Neither matches 'one on his right side', and I can't make the call either way. (4) Druid skin: in image 1 his face looks close to normal flesh tone, not the purple skin of image 6. (5) Moon glaive: in image 1 (about x170,y380) only two large curved blades are clearly visible. I can't confirm the 'three blades in the same direction', so this is uncertain. (6) Treant: in image 1 the trunk is X-shaped and the crown is huge and spread wide. The arms hanging past the knees and the two glowing eyes from image 5 can't be made out. Also, image 2 (the peak frame) has red blood at the hit point on the ghoul (about x1420,y520), which hits the negative terms '血 / 红色伤口' (blood / red wound). If the peak frame is followed as written, that will carry into the video.",
+      "at": "2026-10-26T21:43:08"
+     },
+     "ref_image.identity": {
+      "verdict": "fail",
+      "by": "review",
+      "evidence": "[fidelity·claude] The hero references are correct. In image 1 (playdota, 5-angle in-game model strip), every frame shows a rider on a black panther with no spots, a green-plumed helmet and a moon glaive on the back, which matches Luna (Moon Rider), who uses the Huntress-style mount. Image 2 (playdota icon) and image 3 (wowpedia BTNHuntress) are the same purple-skinned, pointy-eared, purple-silver full helmet portrait. They match the text on purple skin, long ears coming out of the helmet, the helmet covering the forehead and cheeks, dark green long hair and the black panther. The skill itself is not covered. None of images 1–3 show Lunar Blessing as it looks in DotA 1: no aura or buff effect on allies, nothing at the feet. So the white moonlight halos the spec requires under the treant, the druid and the panther at 1.5–1.8 s have no original screenshot behind them. They rest only on our peak image 4 (the white rings round the panther's paws at about x=180–680, y=640–760), and I can't confirm they are DotA 1's original look. The peak also departs from the references and the text in ways I'm unsure about. In image 4 the glaive (about x=1220–1390, y=455–535) reads as a double-sided axe-shaped crescent blade, and I can't make out the three same-direction blades plus gold disc of the p46 spec. The red blood-like mark at the impact (about x=1410–1440, y=510–540) breaks the spec's \"no blood\" rule. Her gold open-faced helmet in image 4 differs from the purple-silver full helmet in images 2 and 3. Because the skill's identity can't be checked, this item fails.",
+      "at": "2026-10-26T21:43:08"
+     },
+     "ref_image.version": {
+      "verdict": "pass",
+      "by": "review",
+      "evidence": "[fidelity·claude] Images 1 and 2 come from playdota, the official DotA 1 site of that era, and image 3 is the original Warcraft III BTNHuntress icon from wowpedia. All three are low-resolution pixel art in the original style: image 1 is a low-poly model with a team-coloured red armour plate, and images 2 and 3 are 64px-style icons, the 256px frame being a blown-up copy. None of them is a Reforged HD model, an AI repaint or fan art. ✅ The two sources (playdota and wowpedia) agree on how the hero looks. Two caveats. The images carry no 6.83d version marker; I'm judging only that this is classic WC3/DotA 1 art, not confirming the exact version. And Lunar Blessing's own effect has no original image (no-original-image, best effort), which is noted under identity.",
+      "at": "2026-10-26T21:43:08"
+     },
+     "spec.required_fields": {
+      "verdict": "pass",
+      "by": "review",
+      "evidence": "[director·claude] The spec text answers every required item. Effect center: the 1.5–1.8 s beat says the light 'flashes from under the panther's feet'. Spread and duration: it 'flows along the ground to the treant's and druid's feet' and 'stays until the end of the clip'. Ghouls get no light. Camera: the 'Camera' section says one continuous shot, no cuts, 24 mm, locked off. Hits and death: each beat from 2.5 s to 9.5 s states who is hit, the reaction (staggers back, still on all fours), the two-hit kill, and the death per m4_Ghoul_corpse (rolls onto its back within 0.3 s, never gets up, no blood). Dissipation: the glow is explicitly held to the end. From 9.5–11 s the corpses twitch and the dust settles, and from 11–13 s there is a clean ending hold. Sound: the 'Sound' section lists the line, the strike sounds, the skill shimmer, the eight evenly spaced hits, the glaive's whoosh, four death grunts and the ambience, and it explicitly bans background music.",
+      "at": "2026-10-26T21:43:08"
+     },
+     "keyframe.scale": {
+      "verdict": "fail",
+      "by": "review",
+      "evidence": "[director·claude] Character card heights: treant 1.9 m < druid 1.95 m. Measured in image 1: the treant runs from the top of its crown at about y145 to its roots at about y680, roughly 535 px. The druid runs from the antler tips at about y245 to his feet at about y720, roughly 475 px. The treant's feet sit higher in frame (about y650–680 vs the druid's y720), so it is further from the camera and should look smaller than the druid. Instead it is about 13% taller and its crown spreads much wider than the druid, which works out to at least about 2.2 m+. That contradicts the card's 'about as tall as an adult (1.9 m)'. The rider plus panther (helmet top about y175 to paw bottom about y780, roughly 605 px) is about 1.27× the druid, in line with 2.4/1.95≈1.23, so that's fine. The ghouls are hunched and look reasonable. Image 2 (peak frame) shows the same problem: treant about y60–620 ≈ 560 px vs druid about y230–650 ≈ 420 px, so the treant is even more oversized. The opening frame is the video's first frame, so this scale error will carry straight into the video.",
+      "at": "2026-10-26T21:43:08"
+     },
+     "spec.agency": {
+      "verdict": "fail",
+      "by": "review",
+      "evidence": "[月之骑士·claude] From my own point of view the script holds together. Image 1, opening frame: I sit on the panther at the far left of the frame with the moon glaive in my right hand, about two body-widths from the fight, and I don't move yet. The script's 0–1.5s opening lasts only 1.5 s. At 1.5–1.8s I raise the glaive, shout \"Watchers, strike!\" and lay the light under the panther and my allies. At 2.5s I throw for the first time. This matches the reactions section's 'she buffs as soon as she reads the fight and throws at once', and I never wait for a ghoul to reach me. The ghouls only ever bite the druid and the treant, never me, so I have no reason to charge. Staying put and throwing is right for a ranged fighter. Image 2, the peak, confirms the stance: I stay seated and point with my left arm while the glaive flies on its own to a ghoul at the right of the frame, with no charge and no melee. Each of my throws hits (2.5s, 3.5s, 6.5s, 7.5s). Between them, at 4.5–6.5s and 8.5–9.5s, the glaive is back in my hand and I hold it, but the script says I am already looking at my next target. That is a ready stance driven by the fixed beat, not standing around idle, so the logic works.；[食尸鬼·claude] 规格本身说得通：0–9.5 秒四只食尸鬼一直在扑咬，每次挨打都写了往后一踉跄、身子一缩，随即又扑上去咬，挨两下才死，倒地后不再起来，不会发呆或排队送死。第1张开场图里四只也都在打：德鲁伊正面那只抓住木杖并去咬；德鲁伊身边另一只（约 x650,y500）贴在他腿边抓着他；树人右侧那只抱住树人的枝臂咬；树人脚前那只伏地扑向树人。问题出在第2张峰值图，它是锁定的技能长相，里面的食尸鬼可能被模型照搬进视频。第一，图里有第五只食尸鬼（最右约 x1570,y520），它和树人、德鲁伊都隔着距离，只站着张嘴吼，没在扑咬任何友军，正是规格不许的发呆。第二，前景那只（约 x1100,y750）背对友军往右下方爬开，看不出在扑咬树人。第三，德鲁伊右侧那只在峰值图里根本没有。第四，被月刃砍中那只（约 x1450,y560）身上有红血，规格写的是不流血。峰值图本来只该借友军脚下光晕和掷刃样子，但这些食尸鬼的姿态会不会混进视频，我拿不准，所以判 fail。另外第1张里树人右侧那只两腿站直抱树，不是四肢着地。；[树人·claude] 从我（树人）的立场看，剧本让我做的事说得通。第1张开场图里我站在画面中右，两只食尸鬼一只在我右侧（约x1300,y380）扑咬我的枝臂，一只在我脚前偏右（约x1350,y700）四肢着地扑上来。我的右枝臂已经伸出去缠住、压住右侧那只，算从第一帧就在应对，和规格0–1.5秒『树人用枝臂把它们打得一缩』相符。第2张峰值图里，我的长臂木指正抓向右侧扑咬我的那只，仍在原地近身对抗，没有前冲，也没倒下。规格给我的节拍很清楚：0–9.5秒挨咬时一晃，随即还手；5.5秒一爪拍中右侧那只，9.5秒抡臂砸死脚前那只；只打扑咬我的两只，不越界，不发呆。注意：第2张里原本在我脚前的那只食尸鬼已经跑到前景（约x1100,y750），离我的根脚有一段距离。到9.5秒时，规格说的『站在原地够得着』在生成时可能出问题，这一点应在成片里复查。；[猛禽德鲁伊·claude] 我的规格写得通：剧本里我在0–8.5秒一直站在原地，只打扑我的两只（4.5秒一杖戳中右侧那只，8.5秒横扫正面那只把它打死），挨咬时身子一晃再还手，从不前冲、从不倒地。图1（开场图，0秒）也对：我正把木杖杵进正面那只的嘴里，另一只缠在我身侧，我从第一帧起就在还手。图2（峰值图）不对：一只食尸鬼伸爪抓我胸口，可我只把木杖竖着拿在身侧，没格挡、没招架、没还手，挨打没有任何反应。而且我身侧那只食尸鬼在图里不见了，没在扑我。这和规格里‘友军挨咬时身子一晃、随即还手’‘德鲁伊只打扑咬他的两只’对不上。图2虽然只锁光晕和她掷刃的样子，但我拿不准我这副被动的姿势会不会被带进加持之后的几拍（2.5秒起），所以判 fail。",
+      "at": "2026-10-26T21:43:08"
+     },
+     "spec.gaze": {
+      "verdict": "fail",
+      "by": "review",
+      "evidence": "[月之骑士·claude] 1) Contradiction: the gaze section has me 'glance up at the moon' at 1.5–1.8s while raising the glaive. The same paragraph ends with 'never looks at the camera or the sky for the whole film', and the negative prompt also lists 'looking at the sky'. The moon is in the sky (image 1, top center), so these two lines fight each other. The model could either skip the glance or stay looking up for too long. 2) The 8.5s beat is undefined: the rule says that when the glaive comes back I am 'already looking at the next target I will hit'. But my last throw is at 7.5s, and the ghoul still alive after 8.5s (the one at the treant's feet) is killed by the treant at 9.5s. I have no 'next target', so I can't tell what I should look at between 8.5 and 9.5s, and the model would have to pick on its own. 3) The other beats are clear: 0–1.5s I watch the ghoul in front of the druid. In image 1 my head and eyes are turned toward the ghoul at the center of the frame that is biting the druid's staff, which fits. From 2.5s I follow each throw, and 9.5–13s I look at the corpses. Because of points 1 and 2 this item fails.；[食尸鬼·claude] 规格写了食尸鬼的视线：倒下前一直盯着各自扑咬的友军，倒下后不算视线，全片不看镜头、不看天。但第1张开场图（视频第0秒）里，贴在德鲁伊腿边那只（约 x650,y500）脸朝画面左边，张着嘴对着黑豹和骑手那边，没在看它正扑咬的德鲁伊。规格要求第一帧就是这张图，这和“盯着自己扑咬的友军”直接冲突。另外三只在第1张里大体对得上：德鲁伊正面那只脸冲着德鲁伊，树人右侧那只抬头冲着树人，树人脚前那只头朝树人。第2张峰值图里，最右那只多出来的食尸鬼看向画面左边那只挨砍的同伴或镜头一侧，没看任何友军；前景爬行那只头低着、背对友军。这些视线可能被带进视频，所以判 fail。；[树人·claude] 规格要我0–9.5秒一直盯着扑咬我的那只（右侧那只或脚前那只），全片不看镜头。可两张图里，我树冠中央的木脸都是正面朝外。第1张（约x1210,y320）和第2张（约x1150,y290）里，那两点眼睛都朝向镜头或画面前方，既没转向右侧啃我枝臂的食尸鬼（第1张约x1330,y390；第2张约x1260,y380），也没低头看脚前那只。开场帧就是视频第一帧，峰值图锁定了技能长相，所以我『看镜头、不看敌人』的朝向很可能贯穿全片。这正踩中负面词『看镜头』，也违反『战斗中不能长时间不看敌人』。脸很小，眼神不能百分之百确定，但两张图都看不出我在看敌人，所以判 fail。；[猛禽德鲁伊·claude] 规格写了我每一拍看哪里：0–8.5秒盯着正在扑我的那只（谁扑上来看谁），8.5秒后低头看脚边的尸体，收势（11–13秒）看她一眼，全片不看镜头、不看天，写得够清楚。图1（0秒）对：我低头盯着被木杖杵住的正面那只。图2（峰值图）有问题：我头朝画面右边，视线好像越过抓我胸口那只的头顶，看向树人或者右边月刃砍中的地方，没落在扑我的食尸鬼身上。从图上分不清我的眼睛到底看着谁，拿不准就判 fail。",
+      "at": "2026-10-26T21:43:08"
+     },
+     "spec.status_visual": {
+      "verdict": "pass",
+      "by": "review",
+      "evidence": "[fidelity·claude] Lunar Blessing is an aura that buffs allies. Nothing in the spec applies a control state such as a stun, slow or silence. From 2.5 s to 9.5 s the eight hits only make the targets stagger back, flinch and then die, and no control state is described, so there is no status marker that needs to show. The negative-word list has no original control marker in it (only items like hard-edged neon rings, magic circles and light pillars), so nothing conflicts. The peak image (image 4) doesn't need to draw a control marker either. This item does not apply here, so it passes.",
+      "at": "2026-10-26T21:43:08"
+     }
+    }
+   },
+   "skill": "k233_Lunar_Blessing",
+   "sha256": "abd39cceb79b93b42c6be08365c202a9a3b8093121b8f73d8845e573a79b6de5",
+   "checks": {
+    "spec.scale_table": {
+     "verdict": "pass",
+     "by": "machine",
+     "evidence": "月之骑士 2.4 m（身高）；食尸鬼 1.8 m（身高）；树人 1.9 m（身高）；猛禽德鲁伊 1.95 m（身高）",
+     "at": "2026-10-26T22:49:02"
+    },
+    "spec.duration_budget": {
+     "verdict": "pass",
+     "by": "machine",
+     "evidence": "四条原片合计 49 s，加首尾停顿 53 s（要求 ≥ 53 s）：k231 9s、k232 11s、k233 13s、k234 16s",
+     "at": "2026-10-26T22:49:02"
+    },
+    "keyframe.locked_traits": {
+     "verdict": "fail",
+     "by": "review",
+     "evidence": "[director·claude] Image 1 (the opening frame) shows only three ghouls. The spec says the first frame is a fight with four ghouls, all on all fours: two on the druid (one in front of him, one beside him) and two on the treant (one at his feet, one beside him). Ghoul A is at x≈520–700, y≈590–720, between the panther and the druid. Its head faces down and to the right, toward the camera, so it is not clearly biting the druid in front of it. Ghoul B is at x≈880–1290, crouched on the druid's right with its mouth open toward him. Ghoul C is at x≈1390–1650, on the treant's right. The ghoul that should be at the treant's feet is missing: the ground in front of the treant's roots at x≈1150–1350 is empty. That breaks two locked rules: 'exactly four ghouls (living plus corpses)' and 'two ghouls lunging at the treant'. The 2.5 s, 3.5 s and 9.5 s beats all target 'the one at the treant's feet', so they would have no target. Image 2 (the peak frame) also has only three ghouls, and white light appears to spill onto the ground under the ghoul at x≈1300–1400. These traits do match: Moon Rider has purple skin, a purple-silver helmet, upturned pointed pauldrons and dark green hair; the panther is black with no spots, two white fangs and amber eyes; the moon blade is three silver crescents around a gold disc with no handle and no glow; there is one treant and one druid; she is mounted on the left side of the frame; and the opening frame has no effects.",
+     "at": "2026-10-26T22:53:30"
+    },
+    "ref_image.identity": {
+     "verdict": "pass",
+     "by": "review",
+     "evidence": "[fidelity·claude] 图1（playdota hero16 character frame）是 5 格同一模型的动画帧。5 格里都是长着绿色头发、戴紫色头盔的精灵女战士，骑在一头乌黑无斑点的黑豹上；黑豹露出白色獠牙，眼睛偏黄。红色部分是 WC3 的玩家队伍色。这是 WC3 Huntress 模型，也就是 DotA 1 的 Moon Rider (Luna)。图2（playdota 图标）和图3（wowpedia BTNHuntress 64px）是同一张头像：紫色皮肤，尖长耳从紫银色全包头盔侧面伸出，深绿长发，绿唇。这些都和规格里「紫色皮肤、尖长耳、紫银全包头盔、深绿长发、乌黑无斑点黑豹、白獠牙」对得上，所以参考图确实是这个英雄。有两点限制：(1) 三张参考图都只证明英雄长相。图1 里她身侧那片白色弯刃最多只有十几个像素，看不出是不是『三刃金边圆盘』，月刃形制得靠没附上的 p46，这几张图不能当月刃的硬参考。(2) Lunar Blessing 技能本身没有任何原版截图。规格已注明光晕「按 best effort 由本剧设计（follow-up 257）」，所以图4 峰值图里黑豹（左下）、德鲁伊（中）、树人（右）脚下的白色贴地光晕只能当本剧的设计，不能当原版还原。",
+     "at": "2026-10-26T22:53:30"
+    },
+    "ref_image.version": {
+     "verdict": "pass",
+     "by": "review",
+     "evidence": "[fidelity·claude] 来源可信度：✅多源一致（英雄外形）；技能光效为「无原图（best effort）」。图1、图2 来自 playdota（DotA 1 官方站，6.7x–6.8x 年代），图3 来自 wowpedia 的 WC3 原版图标 BTNHuntress。图2 是图3 那张 64px 原版图标放大后的样子，像素块明显，两张图完全一致。图1 是低面数的经典 WC3 模型，贴图粗糙，背景纯黑，不是 Reforged 高清模型，也不是 AI 重绘或同人画风。Huntress 模型和图标在 6.83d 和更早的版本之间没有变过，可以认定它们代表 6.83d 的原版外观。图4 是本剧真人电影质感的设计稿，按要求不算进版本判定。",
+     "at": "2026-10-26T22:53:30"
+    },
+    "spec.required_fields": {
+     "verdict": "pass",
+     "by": "review",
+     "evidence": "[director·claude] All six required items are in the spec. Centre of effect: the moonlight starts under the black panther's feet (1.5–1.8 s beat). Spread and duration: 'a layer of white moonlight flashes across the ground', 'flows to the feet of the treant and the druid', and 'stays until the end of the clip'. Camera: 'one continuous shot, no cuts, 24 mm, locked-off'. Hits and deaths: the 2.5–5.5 s beats each describe the hit-but-alive reaction (recoil, slide back 1–2 m, still on all fours), and the 6.5–9.5 s beats give the death per `m4_Ghoul_corpse` (rolls onto its back, flat within 0.3 s, never gets up). Dissipation: the 9.5–11 s beat (corpses twitch once, then still, dust settles) and the 11–13 s settle, with the white light explicitly staying to the end. Sound: one line of dialogue, one ethereal tone, eight even hit sounds, four death grunts, night wind and insects, no music.",
+     "at": "2026-10-26T22:53:30"
+    },
+    "keyframe.scale": {
+     "verdict": "pass",
+     "by": "review",
+     "evidence": "[director·claude] Measured on image 1, with the ground line at about y≈700–790. Moon Rider mounted: helmet top y≈175 to panther paws y≈790 is about 615 px for 2.4 m, which gives ≈256 px/m. Treant: crown top y≈165 to roots y≈700 is about 535 px, ≈2.09 m including the crown, close to 1.9 m once the crown is allowed for. Druid: he is leaning forward; head top y≈305 to feet y≈700 measures about 395 px, which would be ≈450–480 px standing, about 1.8–1.9 m, matching 1.95 m and roughly level with the treant. Ghoul B: crouched, body length about 410 px ≈ 1.6 m, which fits 1.8 m when stretched out. Ghoul A's skull is about the same size as Ghoul B's. Panther: shoulder height about 360 px ≈ 1.4 m, above an adult's waist. The spec's own size descriptions do not conflict with the character cards: Moon Rider about 2.4 m, treant 'about adult height, about 1.9 m', ghouls 1.8 m standing, panther shoulder above an adult's waist. The druid's lean and Ghoul A being partly hidden behind the panther make these two readings estimates, but neither is clearly out of proportion.",
+     "at": "2026-10-26T22:53:30"
+    },
+    "spec.agency": {
+     "verdict": "fail",
+     "by": "review",
+     "evidence": "[月之骑士·claude] 站在月之骑士的立场：①第1张开场图里，按规格应是“德鲁伊正面那只”的食尸鬼（约x640,y650）已经贴在我黑豹的嘴边，黑豹正对它龇牙。敌人就在坐骑面前，规格却要我到1.5秒才加持、2.5秒才出第一刃。从我的立场看，这只食尸鬼像是在咬我的豹，不是在咬德鲁伊，所以剧本“不等食尸鬼扑到自己跟前”的前提在这一帧就站不住。②第2张峰值图里，黑豹的獠牙直接咬在这只食尸鬼头上，这就是负面词里的“黑豹扑咬食尸鬼”；我这一方（人加豹）成了近身攻击者，不再只是远程掷刃。③两张图里能看清的食尸鬼都只有三只：豹嘴下、德鲁伊与树人之间、树人右侧。规格里“树人脚前那只”不在树人脚前，所以3.5秒月刃弹过去砍它这一拍，我找不到对应目标，拿不准。④第2张月刃砍中的是最右边树人右侧那只，规格的第一刃（2.5秒）应该砍德鲁伊正面那只，峰值样子和我的第一击目标对不上。⑤第1张里我右臂向后伸、举着月刃，已经是蓄势掷刃的姿势，和0–1.5秒“右手握刃、不起手”相比是否算起手，拿不准。；[食尸鬼·claude] 规格要求两只食尸鬼扑咬德鲁伊（正面一只、右侧一只），两只扑咬树人（脚前一只、右侧一只）。图1开场图里只能数出三只食尸鬼：①在德鲁伊脚下，几乎趴在黑豹獠牙下面，约(620,650)；②在德鲁伊右侧，正扑向德鲁伊，约(920–1250,580–750)；③在树人右侧，约(1500,620)。树人脚前那只不在画面里，所以树人只受一只的围攻，0–1.5秒起势、3.5秒和9.5秒这两拍里，我（树人脚前那只）根本不存在，没有可演的戏。另外，图1和图2里，德鲁伊正面那只都缩在黑豹嘴下，没有扑向德鲁伊。图2中黑豹的獠牙几乎叼住了它的后颈，约(470–560,600)，看起来像是被黑豹咬住、在豹爪下缩成一团，而不是主动扑咬自己的目标德鲁伊。这也撞上了负面词『黑豹扑咬食尸鬼』。德鲁伊右侧那只（图2咬住木杖，约(900,480)）和树人右侧那只（图2被月刃砍中、有受击反应，约(1500,600)）的主动性符合要求。不确定的地方：第二只扑咬树人的食尸鬼会不会在视频里补出来；如果不补，就会违反『食尸鬼加尸体恰好四只』，四次击杀的节拍也对不上。；[树人·claude] 站在我（树人）的立场：规格 0–1.5 秒写的是两只食尸鬼伏地扑咬我，一只在我脚前、一只在我身旁，我用枝臂把它们打得一缩。可第 1 张开场图里我站在画面右中（约 x1130–1500），两条枝臂张开往下垂，没有挥臂、拍打或格挡的动作。真正冲着我的只有右侧那一只（约 x1400–1650，脸朝左对着我）。我脚前没有一只朝我扑咬的食尸鬼：中间那只（约 x870–1290）的后半身挨着我的根脚，头和张开的嘴却朝左对着德鲁伊的木杖。所以从我的视角，开场图里看不到第二个在咬我的敌人，规格里『树人脚前那只』具体指哪只拿不准。到 3.5 秒月刃砍它、9.5 秒我抡臂把它砸死，这只目标在第一帧里对不上，我的两次出手（5.5 秒拍右侧那只、9.5 秒砸脚前那只）就缺了一个说得通的对象。第 2 张峰值图里，我的右枝臂伸向右侧那只，可月刃这时打在的正是右侧那只，不是 3.5 秒该砍的脚前那只，我该打哪只就更不清楚。另外，规格只在 5.5 秒和 9.5 秒安排了我出手；2.5–5.5 秒我被咬时只写了『身子一晃、随即还手』，这几下还手打到哪只、对方有什么受击反应都没写，有原地被动挨咬的风险。；[猛禽德鲁伊·claude] 从我（德鲁伊）的立场看，剧本里我的每一拍都说得通。图1开场：我站在画面中央，双手持木杖斜指地面，身子朝右前方压向正面那只张嘴扑来的食尸鬼（约x≈900）；另一只伏在我脚边前侧（约x≈620）。这符合规格0–1.5秒“德鲁伊用木杖把它们打得一缩”，说明我从第一帧起就在戒备、在还手，不是等敌人扑到跟前才动。图2峰值：我横握木杖格挡，正面那只咬住杖身，我站在原地，脚下有白色月光光晕（约x≈850–900、y≈680），没有前冲，也没有倒地。规格里我4.5秒一杖戳中右侧那只、8.5秒横扫正面那只致死，挨咬时“身子一晃、随即还手”，只打扑咬我的两只，站在原地够得着，始终站着不倒，挨打有反应，节奏连贯，没有发呆。小提醒（不影响判定）：图1右侧那只（x≈620）的头朝向黑豹，没有朝着我，图2里它正被黑豹咬住。这是食尸鬼和黑豹那边的问题，不算我的行为。",
+     "at": "2026-10-26T22:53:30"
+    },
+    "spec.gaze": {
+     "verdict": "fail",
+     "by": "review",
+     "evidence": "[月之骑士·claude] ①第1张（0秒）：我的头朝右平视，视线大致落在德鲁伊上半身和头部的高度（约y300–400），没有明确往下看豹嘴边那只德鲁伊正面的食尸鬼（约y650）。规格要求0–1.8秒盯着这一只，图上视线指向拿不准。②第2张（掷刃那一拍）：我双臂张开，脸朝画面右侧中部，视线大致在德鲁伊和中间那只食尸鬼一带，没有跟着已经飞到最右侧那只食尸鬼身上的月刃（约x1520,y570）。规格要求每一掷都看着要砍的那只、看着月刃砍中并弹走，这一点不成立。③规格要求8.5–9.5秒我看着“树人脚前那只”，可是开场图和峰值图里树人脚前都没有食尸鬼，这一拍的视线没有可看的目标，拿不准。；[食尸鬼·claude] 规格的视线一节写了『四只食尸鬼倒下前一直盯着各自扑咬的友军』，文字本身是清楚的。但两张图和这条要求对不上：图1中，德鲁伊正面那只的脸转向镜头左下方，约(660,650)，张着嘴朝外，没有抬头看德鲁伊；图2中，同一只的脸也朝左下、朝镜头方向，约(500,650)，眼睛看的是画外，不是德鲁伊。这违反了『全片不看镜头』和『盯着各自扑咬的友军』。图2中树人右侧那只被月刃砍中，脸朝左前方，约(1390,590)，视线大致朝向镜头和树人之间，看不准是不是在盯着树人。德鲁伊右侧那只（图1和图2都咬向德鲁伊）的视线没有问题。树人脚前那只在两张图里都缺席，没法判断它的视线。；[树人·claude] 规格对我的视线是写全了的：0–9.5 秒盯着扑咬我的那只，9.5 秒后低头看脚边的尸体，收势时看她一眼。但第 1 张开场图是锁定的第一帧，图里我的脸（约 x1245, y370）正对画面前方、微微朝下，两点眼光看向镜头一侧。我没有转头看右侧正在扑咬我的那只（约 x1420, y580），也没有看我脚边。这跟规格要求的『0 秒起盯着扑咬我的那只』和『全片不看镜头』冲突，开场就可能读成看镜头或发呆。第 2 张峰值图里我的树冠和脸处在暗部（约 x1230, y230），看不出眼睛朝向，没法确认我是不是在看右侧挨刃的那只，还是看着脚前那只（这只在图里找不到）。再加上开场图里认不出『脚前那只』在哪，9.5 秒前我『谁扑上来看谁』该看哪只就没有可靠的目标，这里拿不准，判 fail。；[猛禽德鲁伊·claude] 规格给我写的视线拍子完整：0–8.5秒盯着正在扑咬我的那一只（正面那只或右侧那只，谁扑上来看谁）；8.5秒两只都死后低头看脚边的尸体；收势11–13秒看一眼她；全片不看镜头、不看天。从2.5秒到9.5秒，没有哪一段我的视线是空着的，也没有哪一拍没交代。和图对得上：图1我的头和眼睛朝右下，盯着正面扑来的那只（x≈900），符合0–1.5秒的写法；图2我低头看着咬住木杖的那只，也是在看扑咬我的敌人。8.5–9.5秒我低头看尸体时，最后一只还在跟树人缠斗，但只有约1秒，而且那只不扑我，不算战斗中长时间不看敌人。",
+     "at": "2026-10-26T22:53:30"
+    },
+    "spec.status_visual": {
+     "verdict": "pass",
+     "by": "review",
+     "evidence": "[fidelity·claude] Lunar Blessing 在 DotA 1 里是给友军加伤害的增益，不带眩晕、减速、沉默这类控制状态。规格从 2.5 秒到 9.5 秒的每一拍里，也没给食尸鬼写任何控制状态。2.5、3.5、4.5、5.5 秒写的『往后一挫、滑退一两米、身子一缩』只是受击反应，不是控制状态，所以不需要原版的状态标记，负面词也就谈不上误伤原版标记。唯一的状态是友军增益，规格在 1.5–1.8 秒那一拍给它写了看得见的标记：『树人、德鲁伊和黑豹脚下各亮起一圈柔和的白色月光光晕……食尸鬼脚下没有光』，一直保持到片尾。图4 峰值图把这个标记画出来了：黑豹四足下（左下）、德鲁伊脚下（中）、树人根部（右）各有一圈白色贴地光晕。原版没有截图可对，按 follow-up 257 走 best effort 的设计。附带记两点（不在本项判定范围）：图4 里黑豹的嘴贴着一只食尸鬼的头，像在扑咬，这撞了负面词『黑豹扑咬食尸鬼』；那只食尸鬼也半压在黑豹的光晕上，读起来容易像『食尸鬼脚下的光』。建议其他检查项复核。",
+     "at": "2026-10-26T22:53:30"
+    }
+   }
+  },
+  "skill": "k233_Lunar_Blessing",
+  "sha256": "238a3578ca8f30d1888bb913983f198be7d1ab9fb8dbc33c17345b6f5233b8fe",
+  "checks": {
+   "spec.scale_table": {
+    "verdict": "pass",
+    "by": "machine",
+    "evidence": "月之骑士 2.4 m（身高）；食尸鬼 1.8 m（身高）；树人 1.9 m（身高）；猛禽德鲁伊 1.95 m（身高）",
+    "at": "2026-10-27T08:42:49"
+   },
+   "spec.duration_budget": {
+    "verdict": "pass",
+    "by": "machine",
+    "evidence": "四条原片合计 49 s，加首尾停顿 53 s（要求 ≥ 53 s）：k231 9s、k232 11s、k233 13s、k234 16s",
+    "at": "2026-10-27T08:42:49"
+   },
+   "keyframe.locked_traits": {
+    "verdict": "fail",
+    "by": "review",
+    "evidence": "[director·codex] 图1人数符合：一名女骑士、一头黑豹、一名德鲁伊、一只树人、三只食尸鬼。但德鲁伊与树人之间的食尸鬼前爪抬向德鲁伊，树人右侧的食尸鬼前爪伸向树干，均不符合0–1.5秒首帧要求的“三只都四肢着地”。图1黑豹尾部被左画边截断，不符合“所有角色始终完整在画内”。图1、图2树人的眼部未见可明确辨认的“两点发光的眼”，该锁定特征无法确认。图2飞行月刃盘面近乎正对镜头，无法确认符合“平着旋转”的锁定姿态。",
+    "at": "2026-10-27T08:45:31"
+   },
+   "ref_image.identity": {
+    "verdict": "pass",
+    "by": "review",
+    "evidence": "[fidelity·claude] 第1张是 playdota hero16 的角色模型 5 帧序列，每帧都是同一个形象：紫色皮肤的精灵女骑手，戴紫银头盔，绿色长发从盔后垂下，肩甲尖角向上翘，骑着一头乌黑、没有斑点的黑豹。黑豹露出白色獠牙，眼睛偏黄，背上有一把三刃月刃。月刃的红色部分是 WC3 的队伍色。这些和考据里写的骑豹女战士、黑豹、三刃飞轮外形都对得上。第2张（playdota 头像，放大到 256px）和第3张（wowpedia BTNHuntress，64px）构图一致：紫皮肤、尖长耳、紫银全包头盔盖住额头和两颊、绿唇、深绿长发，也和文字一致。三张图都是 Moon Rider/Luna 本人，可以当英雄外观的硬参考。技能 Lunar Blessing 没有原版截图，第1到第3张也都没拍到技能效果；规格已注明光晕由本剧设计（follow-up 257），按无原图 best effort 处理。这几张参考图本身没有指错对象。",
+    "at": "2026-10-27T08:45:31"
+   },
+   "ref_image.version": {
+    "verdict": "pass",
+    "by": "review",
+    "evidence": "[fidelity·claude] 第1、2张来自 playdota（DotA 1 时代的官方英雄页，hero16），第3张来自 wowpedia 的 WC3 原版 BTNHuntress 图标。第1张是 WC3 低多边形原版模型的游戏内渲染：黑底、像素颗粒明显、红色队伍色贴图，不是高清改模、AI 重绘或同人。第2张和第3张是同一张原版图标，第2张只是放大后出现了马赛克。两个来源对得上，可信度标 ✅多源一致。不过三张图都是英雄外观，从图里看不出具体版本号；Luna 的模型和图标在 6.xx 各版之间没有变过，所以视为与 6.83d 一致。技能 Lunar Blessing 本身标为「无原图」，按 best effort 继续。",
+    "at": "2026-10-27T08:45:31"
+   },
+   "spec.required_fields": {
+    "verdict": "pass",
+    "by": "review",
+    "evidence": "[director·codex] 文字必答项齐全：1.5–1.8秒明确以黑豹脚下为作用起点，白光贴地闪过并流向树人、德鲁伊，三处光晕持续至片尾；镜头明确13秒固定机位、连续一镜；2.5–10.5秒逐拍规定九次命中、非致命受击反应和各目标第三击死亡，死亡后0.3秒内仰躺；消散处理明确光晕片内持续、11秒尘土落下；声音明确一句台词、技能泛音、九次击打、飞刃声、三次死亡声及环境声。本项仅判规格字段完整，不代表已验证视频执行。",
+    "at": "2026-10-27T08:45:31"
+   },
+   "keyframe.scale": {
+    "verdict": "fail",
+    "by": "review",
+    "evidence": "[director·codex] 按图1约1672×941画面估量，树人从树冠顶至根脚约640像素，德鲁伊从枝角顶至靴底约515像素，树人约为德鲁伊的1.24倍；人物卡要求1.9/1.95≈0.97倍。两者脚部处于相近画面高度，树人明显偏大的表现缺乏足够透视依据。女骑士连坐骑从盔顶至豹足约620像素，树人仍与骑乘总高相当，而规格给出的树人高度与骑乘头顶高度之比仅1.9/2.4≈0.79。另外，人物卡将2.4米标为月之骑士“身高”，正文却定义为“骑在豹背上头顶约2.4米”，测量口径不一致。无法确认比例合卡，判fail。",
+    "at": "2026-10-27T08:45:31"
+   },
+   "spec.agency": {
+    "verdict": "fail",
+    "by": "review",
+    "evidence": "[月之骑士·codex] 规格4.5秒：月刃已回到我手里，我也已看向德鲁伊与树人之间仍在扑咬的敌人；我想立即支援，却被安排到6.5秒才再次掷刃。这两秒没有给我必要的准备动作、限制或应对，只安排友军攻击，无法说明我为何持刃等待，与“一看清局势就加持并立即远程掷刃支援”“不原地空等”冲突。；[食尸鬼·claude] 规格文字没问题：0–10.5 秒三只一直扑咬面前的友军，2.5/3.5/4.5/5.5/6.5/8.5 秒每次挨打都写了往后一挫、滑退一两米、身子一缩，随即又扑上去，不发呆、不排队送死；死法照 corpse 图。第 1 张开场图也对得上：德鲁伊脚前那只（画面中下）抓着木杖低头咬他，中间那只张嘴扑向德鲁伊，树人右侧那只（画面最右）四肢着地朝树人根部扑，三只都在进攻。毛病出在第 2 张峰值图：原来德鲁伊脚前那只挪到了黑豹嘴下（约 x480–800, y600–770），身子和脸都冲着黑豹、贴在獠牙底下，看起来像是我在扑黑豹，或者正被黑豹咬。这既违反了「只咬德鲁伊」，也踩了负面词「黑豹扑咬食尸鬼」。峰值图被锁成技能长相，我拿不准模型会不会把这个站位和扑咬对象一起照抄过来，所以判 fail。另外第 1 张中间那只是跪着、上身立起、双手举起，不算四肢着地，和「始终深度佝偻、四肢着地」有出入。；[树人·codex] 图1中我右侧已有贴身食尸鬼；规格0–1.5秒让我立即用枝臂将它打缩，符合自保动机。持续反应条款明确我挨咬时身子一晃、随即还手，始终站在原地，只打扑咬我的这一只；5.5秒明确拍中它。7.5秒它死后，我转而观察德鲁伊方向仍存活的威胁；11–13秒收手喘息、站定，符合自身威胁解除后的反应。；[猛禽德鲁伊·claude] From my own position as the Druid: in image 1 (opening frame, 0s) I'm in the centre of the shot, standing on both feet with my staff swung down at a ghoul. One ghoul is crouched on all fours at my feet. A second, between me and the Treant, is clawing and biting at me. I'm already fighting back at 0s; I don't wait for them to reach me, and I don't charge forward. That matches the opening beat, where my staff knocks them back but nobody goes down. The script gives me two hits. At 4.5s I jab the ghoul between me and the Treant. At 8.5s I sweep the ghoul at my feet. I only hit the two ghouls biting me, and I stay in place within reach. The script also says I sway when bitten and hit back, and I never fall. That makes sense for me: I have a staff and the ghouls are right next to me, so I hold my ground and fight. In image 2 (peak) I'm holding the staff crosswise while the middle ghoul bites it, so I'm fending it off, and I'm still standing on my white halo. At 11s I stop fighting and catch my breath, which also makes sense because both ghouls attacking me are dead. My actions are reasonable at every beat, I react to every bite, and nothing has me standing idle.",
+    "at": "2026-10-27T08:45:31"
+   },
+   "spec.gaze": {
+    "verdict": "fail",
+    "by": "review",
+    "evidence": "[月之骑士·codex] 规格明确了我0–1.8秒盯德鲁伊脚前那只、2.5–10.5秒追踪攻击目标及弹刃、4.5和8.5秒提前转看下一目标、11–13秒看尸体；但1.8–2.5秒加持结束至首次出手，以及10.5–11秒最后命中至回收月刃，未明确我继续看目标、追踪月刃还是转看尸体。两张附图不能补足这些时段的视线，按“每一拍写明”无法确认通过。；[食尸鬼·claude] 规格写了视线：三只倒下前一直盯着各自扑咬的友军，倒下后不算视线。第 1 张里，中间那只张嘴看着德鲁伊，最右那只朝着树人，都对。德鲁伊脚前那只低着头、脸被挡住，看不出在看哪里，拿不准。第 2 张峰值图里，黑豹嘴下那只脸朝左下、略偏镜头，看的是黑豹或镜头方向，不是德鲁伊；最右那只被月刃砍中时脸朝左前方，没对着树人，看起来像在看镜头。负面词有「看镜头」，峰值图又是锁定的技能长相，这两只的视线偏差可能会被带进视频，所以判 fail。；[树人·codex] 规格“视线”逐段覆盖我的注意目标：0–7.5秒始终盯住扑咬我的右侧食尸鬼，包含起势、受加持及5.5秒反击；7.5秒它死后转看德鲁伊那边仍活着的敌人；10.5秒后低头看尸体，收势时看一眼骑豹女战士。另有全片不看镜头、不看天的限制，没有未交代视线的时间段。；[猛禽德鲁伊·claude] The gaze section gives me a target for the whole clip. From 0 to 10.5s I watch whichever ghoul is biting me (the one at my feet or the one beside me, whichever lunges). After 10.5s, when both are dead, I look down at the corpses by my feet. During the settle (11–13s) I glance at her. That covers every beat, so the model has no gap where it would pick a target on its own. In image 1 my face is in profile, turned down and to the right, toward the middle ghoul biting me. My staff is pressed down on the ghoul at my feet, so I'm watching an enemy. In image 2 my eyes are on the middle ghoul biting my staff. In neither image do I look at the camera or the sky. The gaze spec matches the hit beats: by 4.5s I'm on the middle ghoul and by 8.5s on the one at my feet, and both fall within 'whichever lunges'. I never go long without watching an enemy during the fight.",
+    "at": "2026-10-27T08:45:31"
+   },
+   "spec.status_visual": {
+    "verdict": "pass",
+    "by": "review",
+    "evidence": "[fidelity·claude] DotA 6.83d 的 Lunar Blessing 是给友军加攻击的光环，不带任何控制状态。规格从头到尾也没写眩晕、减速、沉默之类的状态：2.5、3.5、4.5、5.5、6.5、8.5 秒这几拍写的「往后一挫、在地上滑退一两米、身子一缩」都只是普通受击反应，不是控制状态。所以这里不需要原版状态标记，负面词里也没有误禁哪个原版标记（负面词里只有「硬边霓虹光圈、魔法阵、光柱」这类，都不是原版控制标记）。第4张峰值图也确实只画了友军和黑豹脚下的白色贴地光晕，没有画任何控制标记，和规格一致。顺带提一句，不属于本项：第4张里，黑豹脚边那只食尸鬼的前爪（约 x470–560、y690–740）伸进了黑豹的光圈里，树人右侧那只的前爪也压在树人光圈边缘，和规格「食尸鬼脚下没有光」有点擦边，建议峰值图复核时再看一眼。",
+    "at": "2026-10-27T08:45:31"
+   }
+  }
+ },
+ "skill": "k233_Lunar_Blessing",
+ "sha256": "8e79342e4557932710a9a85bf2e98a21944e1adff8cca98cfdb3be767fec5ce5",
+ "checks": {
+  "spec.scale_table": {
+   "verdict": "pass",
+   "by": "machine",
+   "evidence": "月之骑士 2.4 m（身高）；食尸鬼 1.8 m（身高）；树人 1.9 m（身高）；猛禽德鲁伊 1.95 m（身高）",
+   "at": "2026-10-27T08:46:29"
+  },
+  "spec.duration_budget": {
+   "verdict": "pass",
+   "by": "machine",
+   "evidence": "四条原片合计 49 s，加首尾停顿 53 s（要求 ≥ 53 s）：k231 9s、k232 11s、k233 13s、k234 16s",
+   "at": "2026-10-27T08:46:29"
+  },
+  "keyframe.locked_traits": {
+   "verdict": "fail",
+   "by": "review",
+   "evidence": "[director·codex] 图1中德鲁伊与树人之间的食尸鬼抬起前肢抓向德鲁伊，前爪未全部着地，不符合0–1.5秒首帧明确要求的“三只都四肢着地”。图1树人的树冠主要是密集椭圆小叶，图5身份立绘则是明显分裂的掌状阔叶，锁定外形不一致。图1树人的眼部也无法确认具有规格要求的“两点发光的眼”，按拿不准即fail处理。",
+   "at": "2026-10-27T08:49:00"
+  },
+  "ref_image.identity": {
+   "verdict": "fail",
+   "by": "review",
+   "evidence": "[fidelity·claude] 英雄本身认得对：第 2 张（playdota hero16 头像）和第 3 张（BTNHuntress）是同一张头像，都是紫皮肤、尖长耳、紫银色头盔、深绿长发，和规格里写的她对得上；第 1 张的 5 帧游戏截图是骑乌黑大豹的女骑手，豹身没有斑点，也对得上。但这 3 张都只能证明英雄，没有一张画出 Lunar Blessing 技能本身；月刃在第 1 张里太小，三刃飞轮的形制核对不了。按原版，Lunar Blessing 是被动光环：一直生效，没有起手、没有喊话，也没有地面闪光。规格里 1.5–1.8 秒那一拍写的是「举刃过头、喊 Watchers, strike!、白光贴地闪过再挂上光晕」，这是主动施放的演法，和原版机制不一致。另外我记得 6.83d 的这个光环只给附近的远程单位加攻击，如果没记错，近战的树人脚下本不该有光晕；这一点我拿不准，所以写明在这里。峰值图（第 4 张）也有偏差：左侧的她是浅色皮肤，头盔和胸甲偏金铜色，和第 2、3 张的紫皮肤、紫银头盔不一致。左下黑豹脚下的光圈（约 x230–650、y690–790）罩住了前面那只食尸鬼的前爪（约 x490–570、y700–750），而且黑豹张嘴对着这只食尸鬼，撞上了负面词「食尸鬼脚下的光」和「黑豹扑咬食尸鬼」。光晕的样子没有原版截图能印证，规格自己也承认是 best effort。所以拿不准，判 fail。",
+   "at": "2026-10-27T08:49:00"
+  },
+  "ref_image.version": {
+   "verdict": "pass",
+   "by": "review",
+   "evidence": "[fidelity·claude] 第 1 张是低多边形、低分辨率的 WC3 游戏模型截图，红色是队伍色，不是高清改模，也不是 AI 重绘；第 2 张是 64px 原版图标放大后的像素块，和第 3 张 wowpedia 的 BTNHuntress 原版素材完全一致。英雄参考可以标 ✅ 两个来源一致。这套模型和图标是 WC3 原版资源，各个 DotA 版本都没改过，所以不和 6.83d 冲突。Lunar Blessing 技能本身属于「无原图」：规格写明 DotA 1 没有可用截图，峰值图光晕按 best effort 自行设计（follow-up 257），这一档按规则照常往下做，不当硬参考。",
+   "at": "2026-10-27T08:49:00"
+  },
+  "spec.required_fields": {
+   "verdict": "pass",
+   "by": "review",
+   "evidence": "[director·codex] 文字字段齐全：作用中心是黑豹脚下；1.5–1.8秒白色月光瞬间贴地扩散到树人、德鲁伊脚下，三处光晕持续至片尾；镜头明确为13秒固定机位连续一镜；2.5–9.5秒逐拍写明受击对象、退缩反应与三次受击死亡，死亡后0.3秒内仰躺；消散与残留明确为9.5–11秒尘土落下、尸体保留、光晕不在片内消失；声音明确列出台词、技能泛音、九下击打、飞刃、死亡及环境声。此项仅判字段完整，不代表动态执行已获验证。",
+   "at": "2026-10-27T08:49:00"
+  },
+  "keyframe.scale": {
+   "verdict": "fail",
+   "by": "review",
+   "evidence": "[director·codex] 图1按可见顶部至落地位置粗量：树人约从y=110至y=760，高约650像素；德鲁伊约从y=250至y=775，高约525像素。两者落地位置接近，树人画面高度却约为德鲁伊的1.24倍；人物卡要求1.9/1.95≈0.97，树人应略矮。树人的顶部还明显高于骑豹女战士头顶，与规格中树人约1.9米、骑乘头顶约2.4米的关系不符。枝冠与枝角的身高计量边界未明确，无法据此证明比例合格，按要求判fail。",
+   "at": "2026-10-27T08:49:00"
+  },
+  "spec.agency": {
+   "verdict": "fail",
+   "by": "review",
+   "evidence": "[月之骑士·codex] 图1中我骑豹居左、持刃戒备；规格0–1.5秒让我盯住德鲁伊脚前的敌人，已有明确威胁目标。1.5–1.8秒举刃加持，2.5秒原地远程支援，符合我保护友军、保持射程的意图。2.5/4.5/6.5/8.5秒连续掷刃，3.5/5.5/7.5秒由月刃自行弹射；回刃即再掷，不需要我冲近敌人或空等。9.5秒战斗结束后收刃，11–13秒观察尸体并喘息，行动动机连贯。；[食尸鬼·claude] Image 1 (opening frame, 0s) is mostly fine: the ghoul right of the treant (x≈1370–1650) is crouched low and lunging at the treant with its claws out; the ghoul between the druid and the treant (x≈850–1250) has its mouth open and claws on the druid's leg and staff; the ghoul at the druid's feet (x≈560–750) is pinned low under the staff, grabbing at it. All three are actively on the attack, not idling and not lining up to die. One problem: the between-ghoul's knees are on the ground but both hands are raised to grab the druid, so it isn't clearly on all fours. The bigger problem is image 2 (locked peak look, about 2.5s). The ghoul at the druid's feet has moved under the panther's jaw (x≈470–800). Its body faces lower left, away from the druid, toward the panther and her side. It is not attacking its assigned target, the druid. The panther is baring its fangs right over its head, which looks like the negative 'panther bites a ghoul'. Under the spec, that ghoul should only ever attack the druid, so its motivation and target don't make sense here. The right-of-treant ghoul is getting hit by the glaive (x≈1350–1650) and its body is twisting left as it screams. It shows a hit reaction but has drifted away from the treant. I'm judging this a fail because the 'ghoul at the druid's feet' in image 2 has the wrong target.；[树人·codex] 规格0–1.5秒让我用枝臂应敌，挨咬后立即反应，4.5秒拍中右侧敌人，动机合理。但6.5秒我的敌人死亡后，直到9.5秒才写我收手喘气；这三秒只交代转头观看，未写我如何保持戒备或应对剩余威胁，又限定我只打自己的那一只。无法确定我这段该做什么、是否原地空等。；[猛禽德鲁伊·claude] From my own position as the Druid: in image 1 (opening frame) I'm in the middle of the frame, under attack from two ghouls (one at my feet in the lower left, its hands gripping my staff; one between me and the Treant, its claws reaching for my staff and chest). I'm already holding the staff in both hands, pressing it down and blocking. I'm not waiting for them to get close, so I'm on guard and fighting back from the very first frame. That matches the 0–1.5 s line 'the Druid hits them with the staff and makes them flinch'. Image 2 (peak) shows me again: feet planted, staff held level and jammed into the mouth of the ghoul between me and the Treant, with a white halo glowing under my feet. That fits 'standing in place, blocking and pushing back with the wooden staff'. The script's logic holds from my side. I only fight the two that are biting me and can reach both without stepping forward. When I'm bitten I sway and hit back without going down (the 'action' section). At 9.5 s I finish the one between me and the Treant with a horizontal staff sweep. Then from 9.5–11 s I lower my hands, catch my breath and look down at the bodies, and from 11–13 s I stand still. Every beat has a reason, and I'm never idle, frozen or waiting around.",
+   "at": "2026-10-27T08:49:00"
+  },
+  "spec.gaze": {
+   "verdict": "fail",
+   "by": "review",
+   "evidence": "[月之骑士·codex] 规格“视线”覆盖我的全部时段：0–2.5秒始终看德鲁伊脚前那只，举刃时也不看天；2.5–9.5秒跟随月刃命中、弹射和回收，每次接住瞬间转看下一目标，明确覆盖4.5/6.5/8.5秒再掷的衔接；9.5–13秒看三具尸体，包含收刃和最终收势。全片另明确禁止看镜头、看天，没有未交代的视线时段。；[食尸鬼·claude] Image 1, 0s: the between-ghoul is in side profile facing left toward the druid ✓. The right-of-treant ghoul's side profile faces left toward the treant's roots ✓. The ghoul at the druid's feet has its head buried under the staff and its face can't be seen (x≈580–660), so I can't confirm it is looking at the druid. Image 2, peak: the ghoul at the druid's feet (x≈480–560, y≈610–690) is turned almost fully to camera, mouth open, eyes pointing lower left toward the camera and the panther, not at the druid. That breaks 'none of them looks at the camera full-face' and 'stays side-on to its own target'. The right-of-treant ghoul (x≈1350–1420) has its face turned left-forward toward the camera. It is no longer side-on to the treant (the treant is behind it to the upper left), so its gaze has also drifted off target. The between-ghoul (x≈900–960) is biting the druid's staff with its face toward the druid ✓. Two of the three ghouls are off target in the peak image, and one of them is close to looking at the camera, so this is a fail.；[树人·codex] 规格“视线”明确：0–6.5秒我盯着右侧扑咬我的食尸鬼；6.5秒它死后转看德鲁伊那边仍活着的敌人；9.5秒后低头看尸体；11–13秒收势时看一眼骑豹女战士。我的战斗、威胁解除和收势阶段均有视线去向。；[猛禽德鲁伊·claude] My gaze is written for the whole clip: from 0–9.5 s I watch whichever ghoul is biting me; at 9.5 s I look down at the bodies by my feet; at the close (11–13 s) I glance at her. There's no unscripted gap. In image 1 my face is in right-facing profile, eyes down and to the right on the ghoul between me and the Treant, which is pouncing at me. In image 2 my face is again in right-facing profile, eyes on that same ghoul biting my staff. Both match the 0–9.5 s rule. In neither image am I looking at the camera or the sky, and in combat I always have an enemy in view.",
+   "at": "2026-10-27T08:49:00"
+  },
+  "spec.status_visual": {
+   "verdict": "pass",
+   "by": "review",
+   "evidence": "[fidelity·claude] Lunar Blessing 是加攻击的光环，没有眩晕、减速、沉默这类控制效果。规格里也没写任何控制状态：2.5–8.5 秒每一击都只写了食尸鬼「往后一挫、滑退一两米、身子一缩」的受击反应，没有用肢体动作冒充控制状态，所以不需要原版控制标记。负面词里也没有误禁原版控制标记。规格里唯一的状态可视物是友军和黑豹脚下的白色光晕（1.5 秒起一直保持到片尾），峰值图第 4 张在黑豹、德鲁伊、树人脚下都画出了这圈光晕。",
+   "at": "2026-10-27T08:49:00"
+  }
+ }
+}

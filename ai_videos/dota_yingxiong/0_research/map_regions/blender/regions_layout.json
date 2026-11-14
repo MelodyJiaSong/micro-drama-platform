@@ -1,0 +1,33 @@
+{
+  "extends": "common.json",
+  "region": "all-regions",
+  "overhead_bounds": [
+    -8192,
+    -8192,
+    8192,
+    8192
+  ],
+  "terrain_bounds": [
+    -8192,
+    -8192,
+    8192,
+    8192
+  ],
+  "terrain_step": 32,
+  "out_dir": "../layout",
+  "blend_name": "regions_layout.blend",
+  "sources": {
+    "terrain": "../../base_layout_refs/terrain_samples.json",
+    "trees": "../navigation/tree_positions.json",
+    "units": "../../base_layout_refs/base_layout_manifest.json",
+    "doodads": "../navigation/war3map.doo",
+    "features": "../map_features.json",
+    "region_manifest": "../map_regions.json",
+    "region_cameras": "region_cameras.json"
+  },
+  "notes": [
+    "水平 20 游戏单位/米（follow-up 221 定尺度 B），建筑体块按资产卡尺寸；每个悬崖层取 4 米（原版 128 单位），为电影化压低的高差，不是游戏实测。",
+    "全图一次搭建，地形 32 游戏单位格距；每个拍摄区一台正交相机，范围取 map_regions.json 的窗口。营地画脚本清空判定区外框与刷新点，颜色按营地大小；肉山、神符、商店与基地外的塔按 map_features.json。"
+  ],
+  "cameras": []
+}

@@ -1,0 +1,32 @@
+# screen_en__a (a, claude-sonnet-5-5), round 3
+
+## 评分表
+
+- P1 3 证据：No hard-limit breach under the round-2 counting rules. Titles are all ≤6 words (c_lens "The model only sees the score" = 6; l35 "How you score shapes learning" = 5). Densest screens: l21 (two "Off by 2 → 4" / "Off by 8 → 64" rows form one look-alike list, 4 blocks, 13 words); l29/l30 chart text = Per km →, 2 · 13.4, 3 · 2.19, 1 · 78, Lowest · 1.97, Starting fare → = 9 words with numbering exempt (exactly at the limit); l25 table of Try 1/2/3 counts as one block. No prose sentences remain; the agenda-style card problem from earlier rounds is gone (outro = two label lines plus "Next · Gradient descent").
+- P2 2 证据：Mostly division of labor is good (l09 "Turn, then check", l36 "4 × 2² = 16" carry structure, narration explains). Small flaws: l35 h1 "How you score shapes learning" is nearly the narration clause "The way you score it shapes how it learns"; l10 h1 "Training: push it down" and outro "Training: push loss down" phrase the same idea two ways; outro first line says "Loss" while narration l47 recaps "a loss function".
+- P3 2 证据：Hierarchy is clear (eyebrow, one h1, h2 or number cards). Numbering "01 · / 02 · / 03 · / 04 ·" and chapter names match the cards (card_c_lens = "The model only sees the score" = eyebrow of s4). Weak spots: l29 shows "Lowest · 1.97" on the chart and "Lowest loss 1.97" in the card at once (same number twice); l04 puts the definition "The rule for scoring mistakes" in the smallest 22px eyebrow below the 132px term.
+- P4 2 证据：Sentence case, no Chinglish, consistent no trailing periods, minus signs/arrows consistent. Minor: l38 h2 "Scored too, but not on fares" is slightly clunky as a strict chapter-opener line ("too" has no on-screen antecedent); l10 "push it down" has a bare pronoun; l18 "They cancel out" (previously ruled keep) has no on-screen subject.
+- P5 3 证据：Reading load is fine at roughly 3 words/s or less. l08 (3.5 s) only adds the 4-word Golf card; l25 (5.0 s) is mostly numbers; l46 (8.1 s, 9 words). Slight visual flaw only: s5_l46 miniature knob array is cut off at its right edge (partial circles at x≈1320); l35/l36 h1 wraps to two lines but no orphan word.
+- P6 3 证据：Every flagged item below has a shorter drop-in rewrite (e.g. l10 "Training: push loss down", l35 "Scoring shapes learning").
+- R 3 证据：Round-2 items checked against the screenshots and text. I1/I2 (outro) fixed: card_s6 now reads "Loss: a score for mistakes / Training: push loss down". I3 fixed ("Model = machine + knobs"). I5 fixed ("Lower loss = better"). I6 not changed; the author's reason holds (fewest strokes wins is idiomatic). I7 fixed: s2_l08 card now has right padding (text ends x≈1820, card edge x≈1860). I8 not changed; reason holds (both branches appear in sequence). I9 fixed. I12/I13 fixed: the green ring label is now "Lowest · 1.97" placed top-right of the ring, apart from "3 · 2.19" (s3_l29). I14 fixed. I15 fixed ("Lowest loss ≠ 0"). I16/I17 fixed ("Taxi? No idea", h2 gone). I19 fixed ("Big misses cost most", one line). I21 fixed ("Loss function defines “good”"). I22 fixed. I23/I24 fixed ("Loss keeps falling"). I25 fixed: s5_l46 text no longer overlaps the knob array. I10, I11, I18, I20 not changed; reasons hold. No new problems introduced by the fixes except the small items below.
+
+## 问题表
+
+| 位置 | 维度 | 级别 | 原文 | 问题 | 改写 |
+|---|---|---|---|---|---|
+| card_s6 (outro) | P2, P3 | 建议 | "Loss: a score for mistakes" | Strict outro. Narration l47 recaps the loss function ("a loss function is how you score the model's mistakes"), but the screen's first line defines "Loss", and the video's term is "Loss function". A native viewer would accept it, but it is a term mismatch on a strict item. | "Loss function: scores mistakes" (keep line 2 "Training: push loss down") |
+| l10 | P3, P2 | 建议 | h1 "Training: push it down" | Bare "it" (the card on screen says Loss, but the headline stands alone); the outro uses "push loss down" for the same idea. Consistency. | "Training: push loss down" |
+| l35 | P2 | 建议 | h1 "How you score shapes learning" | Near-verbatim repeat of narration "The way you score it shapes how it learns"; the only screen where title and narration are the same clause. Already kept by the author (R2 I36), so treat as a note. | "Scoring shapes learning" (3 words, one line) |
+| l03 | P2 | 建议 | bare "13.4" chip, no text | Cold open (strict). The chip shows a number for 3.5 s with no label, so a viewer does not know it is the score until l04. | add the small label "Score" above or in the chip: "Score 13.4" |
+| l04 | P3 | 建议 | eyebrow "The rule for scoring mistakes" (22px) under "Loss function" (132px) | The definition is the smallest text on the cold-open payoff screen. Kept in round 2 as intended; the hierarchy works, but if one line is promoted it should be this one. | h2 "The rule for scoring mistakes" at ~40px, or keep as is |
+| l29 / l30 | P3 | 记录 | chart "Lowest · 1.97" plus card "Lowest loss 1.97" | Same number twice on one screen. Within limits (chart = 9 words). | optional: ring label "Lowest" only |
+| l38 | P4 | 记录 | h2 "Scored too, but not on fares" | Chapter-opener line is slightly clunky; matches narration's "just not for taxi fares". | "Scored too, just not on fares" |
+| s5_l46 | P5 | 记录 | knob array (right of "Tens of billions of knobs") | The right-most column of the miniature knobs is cropped by the container edge; looks like a clipping bug rather than intentional "too many to show". | extend the container by ~20px or end the grid on a full column |
+| l18–l19 | P4 | 记录 | "They cancel out" | Pronoun with no antecedent on screen (previously ruled keep). | "Errors cancel out" (same length) |
+
+## 整体观察
+
+- No hard-limit breach remains after round 2: titles ≤6 words, other blocks ≤9, ≤4 blocks, ≤22 words per screen under the counting rulings.
+- Strict items are in good shape: cold open (l01 "Model = machine + knobs", l02 "Is this turn better?", l04 "Loss function"), the four chapter cards, and the outro are all short fragments, and nothing is a narration sentence any more.
+- Remaining issues are polish-level; the only strict-item notes are the unlabeled "13.4" in l03 and the "Loss" vs "Loss function" term on the outro.
+- Keep: (1) the Try 1/2/3 labels paired with the knob values and the same numbering on the map (l25, l28); (2) "Taxi? No idea" and the single "Score ↓" pair in l34/l46, which divide the work with narration well; (3) the outro card (two parallel label lines plus "Next · Gradient descent").

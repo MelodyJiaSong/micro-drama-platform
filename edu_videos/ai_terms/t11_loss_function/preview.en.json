@@ -1,0 +1,521 @@
+{
+ "title": "t11 Loss function — narration (English)",
+ "tagline": "",
+ "lang": "en",
+ "languages": [
+  {
+   "lang": "zh",
+   "label": "中文",
+   "preview": "edu_videos/ai_terms/t11_loss_function/preview.json"
+  },
+  {
+   "lang": "en",
+   "label": "English",
+   "preview": "edu_videos/ai_terms/t11_loss_function/preview.en.json"
+  }
+ ],
+ "video": "edu_videos/ai_terms/t11_loss_function/final/t11_loss_function.en.mp4",
+ "duration": 297.77,
+ "chapters": [
+  {
+   "id": "s0",
+   "title": "Cold open",
+   "t": 0.0
+  },
+  {
+   "id": "s2",
+   "title": "What a loss function is",
+   "t": 26.13
+  },
+  {
+   "id": "s3",
+   "title": "A small experiment",
+   "t": 63.13
+  },
+  {
+   "id": "s4",
+   "title": "The model only sees the score",
+   "t": 197.27
+  },
+  {
+   "id": "s5",
+   "title": "How big models are scored",
+   "t": 222.37
+  },
+  {
+   "id": "s6",
+   "title": "Wrap-up",
+   "t": 277.3
+  }
+ ],
+ "items": [
+  {
+   "t": 0.6,
+   "end": 6.49,
+   "title": "Last time, we said a model is a machine with knobs",
+   "subtitle": "Last time, we said a model is a machine with knobs, and learning means turning those knobs to the right spot.",
+   "badge": "l01",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l01.jpg"
+  },
+  {
+   "t": 6.84,
+   "end": 12.02,
+   "title": "But what does \"right\" even mean?",
+   "subtitle": "But what does \"right\" even mean? How does the machine know this turn beat the last one?",
+   "badge": "l02",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l02.jpg"
+  },
+  {
+   "t": 12.37,
+   "end": 14.82,
+   "title": "The trick is to give its mistakes a score.",
+   "subtitle": "The trick is to give its mistakes a score.",
+   "badge": "l03",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l03.jpg"
+  },
+  {
+   "t": 15.17,
+   "end": 21.0,
+   "title": "That score is called the loss",
+   "subtitle": "That score is called the loss, and the rule for working it out is the loss function. That's today's topic.",
+   "badge": "l04",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l04.jpg"
+  },
+  {
+   "t": 29.33,
+   "end": 35.06,
+   "title": "Every time the model guesses",
+   "subtitle": "Every time the model guesses, it lands a bit too high or too low. That gap is the error.",
+   "badge": "l05",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l05.jpg"
+  },
+  {
+   "t": 35.41,
+   "end": 41.19,
+   "title": "Roll all those errors up into one number",
+   "subtitle": "Roll all those errors up into one number, and that's the loss: a score for how wrong it is.",
+   "badge": "l06",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l06.jpg"
+  },
+  {
+   "t": 41.54,
+   "end": 46.74,
+   "title": "It's the opposite of a test score:",
+   "subtitle": "It's the opposite of a test score: lower is better, and zero means not wrong at all.",
+   "badge": "l07",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l07.jpg"
+  },
+  {
+   "t": 47.09,
+   "end": 50.35,
+   "title": "Kind of like golf",
+   "subtitle": "Kind of like golf, where fewer strokes is better.",
+   "badge": "l08",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l08.jpg"
+  },
+  {
+   "t": 50.7,
+   "end": 56.93,
+   "title": "Now the machine can check itself.",
+   "subtitle": "Now the machine can check itself. If a turn lowers the score, keep it. If not, turn it back.",
+   "badge": "l09",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l09.jpg"
+  },
+  {
+   "t": 57.28,
+   "end": 62.22,
+   "title": "So training is just turning the knobs",
+   "subtitle": "So training is just turning the knobs again and again to push that score down.",
+   "badge": "l10",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l10.jpg"
+  },
+  {
+   "t": 66.33,
+   "end": 71.34,
+   "title": "Remember those twelve made-up taxi rides?",
+   "subtitle": "Remember those twelve made-up taxi rides? Distance along the bottom, fare up the side.",
+   "badge": "l11",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l11.jpg"
+  },
+  {
+   "t": 71.69,
+   "end": 76.9,
+   "title": "The model's still that straight line",
+   "subtitle": "The model's still that straight line, with two knobs: starting fare and price per kilometer.",
+   "badge": "l12",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l12.jpg"
+  },
+  {
+   "t": 77.25,
+   "end": 83.23,
+   "title": "First try: a $5 starting fare and $2 a kilometer.",
+   "subtitle": "First try: a $5 starting fare and $2 a kilometer. The whole line sits too low.",
+   "badge": "l13",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l13.jpg"
+  },
+  {
+   "t": 83.58,
+   "end": 91.78,
+   "title": "Take the 5-kilometer ride:",
+   "subtitle": "Take the 5-kilometer ride: it cost $23, the model guessed $15, so it's off by $8. That's the error.",
+   "badge": "l14",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l14.jpg"
+  },
+  {
+   "t": 92.12,
+   "end": 96.99,
+   "title": "Now square it:",
+   "subtitle": "Now square it: eight times eight is 64. That's the red square.",
+   "badge": "l15",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l15.jpg"
+  },
+  {
+   "t": 97.34,
+   "end": 102.61,
+   "title": "Do that for all twelve rides",
+   "subtitle": "Do that for all twelve rides, take the average, and this setting scores 78.",
+   "badge": "l16",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l16.jpg"
+  },
+  {
+   "t": 102.96,
+   "end": 110.34,
+   "title": "Second try: $4 to start and $3.50 a kilometer.",
+   "subtitle": "Second try: $4 to start and $3.50 a kilometer. Too steep, so short rides come out low and long ones high.",
+   "badge": "l17",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l17.jpg"
+  },
+  {
+   "t": 110.7,
+   "end": 115.56,
+   "title": "If we skip the squaring",
+   "subtitle": "If we skip the squaring and just average the errors, the lows and the highs cancel out.",
+   "badge": "l18",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l18.jpg"
+  },
+  {
+   "t": 115.91,
+   "end": 121.08,
+   "title": "The average is only −$0.33",
+   "subtitle": "The average is only −$0.33, so it looks like it's barely wrong at all.",
+   "badge": "l19",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l19.jpg"
+  },
+  {
+   "t": 121.43,
+   "end": 125.61,
+   "title": "So we square.",
+   "subtitle": "So we square. Everything turns positive, and nothing cancels.",
+   "badge": "l20",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l20.jpg"
+  },
+  {
+   "t": 125.96,
+   "end": 132.28,
+   "title": "And big misses cost way more:",
+   "subtitle": "And big misses cost way more: off by two costs four, but off by eight costs 64.",
+   "badge": "l21",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l21.jpg"
+  },
+  {
+   "t": 132.63,
+   "end": 136.32,
+   "title": "Square, then average",
+   "subtitle": "Square, then average, and this setting scores 13.4.",
+   "badge": "l22",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l22.jpg"
+  },
+  {
+   "t": 136.67,
+   "end": 141.15,
+   "title": "This is called mean squared error",
+   "subtitle": "This is called mean squared error, and it's one of the most common loss functions.",
+   "badge": "l23",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l23.jpg"
+  },
+  {
+   "t": 141.5,
+   "end": 148.39,
+   "title": "Third try: $10 to start, $2.50 a kilometer.",
+   "subtitle": "Third try: $10 to start, $2.50 a kilometer. The squares are tiny, and it scores 2.19.",
+   "badge": "l24",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l24.jpg"
+  },
+  {
+   "t": 148.74,
+   "end": 152.26,
+   "title": "The third has the lowest score",
+   "subtitle": "The third has the lowest score, so it's the best of the three.",
+   "badge": "l25",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l25.jpg"
+  },
+  {
+   "t": 152.61,
+   "end": 158.49,
+   "title": "But that's only three tries.",
+   "subtitle": "But that's only three tries. Score every setting of both knobs, and you get a landscape of scores.",
+   "badge": "l26",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l26.jpg"
+  },
+  {
+   "t": 158.84,
+   "end": 163.97,
+   "title": "Starting fare along the bottom",
+   "subtitle": "Starting fare along the bottom, price per kilometer up the side, and the darker the color, the higher the score.",
+   "badge": "l27",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l27.jpg"
+  },
+  {
+   "t": 164.32,
+   "end": 171.54,
+   "title": "Our three tries:",
+   "subtitle": "Our three tries: the first way up high, the second halfway down, the third nearly at the bottom of the valley.",
+   "badge": "l28",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l28.jpg"
+  },
+  {
+   "t": 171.89,
+   "end": 177.99,
+   "title": "The best is $10.20 to start",
+   "subtitle": "The best is $10.20 to start and $2.54 a kilometer. It scores 1.97.",
+   "badge": "l29",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l29.jpg"
+  },
+  {
+   "t": 178.34,
+   "end": 182.75,
+   "title": "It's the best setting",
+   "subtitle": "It's the best setting, and the whole job of training is finding that lowest point.",
+   "badge": "l30",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l30.jpg"
+  },
+  {
+   "t": 183.1,
+   "end": 187.0,
+   "title": "Here's something easy to miss:",
+   "subtitle": "Here's something easy to miss: even the lowest point isn't zero.",
+   "badge": "l31",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l31.jpg"
+  },
+  {
+   "t": 187.35,
+   "end": 192.16,
+   "title": "Real fares bounce around",
+   "subtitle": "Real fares bounce around with traffic and detours, so no straight line could nail every ride.",
+   "badge": "l32",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l32.jpg"
+  },
+  {
+   "t": 192.51,
+   "end": 196.37,
+   "title": "Training isn't chasing zero.",
+   "subtitle": "Training isn't chasing zero. It's getting as low as it can.",
+   "badge": "l33",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l33.jpg"
+  },
+  {
+   "t": 200.47,
+   "end": 205.62,
+   "title": "Here's the thing:",
+   "subtitle": "Here's the thing: the model has no idea what a taxi is. All it sees is the score.",
+   "badge": "l34",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l34.jpg"
+  },
+  {
+   "t": 205.97,
+   "end": 212.26,
+   "title": "The way you score it shapes how it learns.",
+   "subtitle": "The way you score it shapes how it learns. Because we squared the errors, it's terrified of big mistakes.",
+   "badge": "l35",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l35.jpg"
+  },
+  {
+   "t": 212.61,
+   "end": 216.53,
+   "title": "It would rather be a little off",
+   "subtitle": "It would rather be a little off on every ride than way off on just one.",
+   "badge": "l36",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l36.jpg"
+  },
+  {
+   "t": 216.88,
+   "end": 221.46,
+   "title": "So when you pick a loss function",
+   "subtitle": "So when you pick a loss function, you're really telling the model what \"good\" means.",
+   "badge": "l37",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l37.jpg"
+  },
+  {
+   "t": 225.57,
+   "end": 230.93,
+   "title": "Big language models like ChatGPT",
+   "subtitle": "Big language models like ChatGPT get a score in training too, just not for taxi fares.",
+   "badge": "l38",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l38.jpg"
+  },
+  {
+   "t": 231.28,
+   "end": 236.25,
+   "title": "Their job is to guess the next word",
+   "subtitle": "Their job is to guess the next word, like what comes after \"Twinkle, twinkle, little.\"",
+   "badge": "l39",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l39.jpg"
+  },
+  {
+   "t": 236.6,
+   "end": 242.14,
+   "title": "The score checks how sure the model",
+   "subtitle": "The score checks how sure the model was about the real next word. The less sure, the bigger the penalty.",
+   "badge": "l40",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l40.jpg"
+  },
+  {
+   "t": 242.49,
+   "end": 250.09,
+   "title": "If it was 90% sure of the right word",
+   "subtitle": "If it was 90% sure of the right word, the penalty's tiny. Only 10% sure, and it's way bigger.",
+   "badge": "l41",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l41.jpg"
+  },
+  {
+   "t": 250.44,
+   "end": 255.34,
+   "title": "This kind of scoring",
+   "subtitle": "This kind of scoring is called cross-entropy. The name is all you need for now.",
+   "badge": "l42",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l42.jpg"
+  },
+  {
+   "t": 255.69,
+   "end": 260.14,
+   "title": "In 2023, Meta tracked that score while",
+   "subtitle": "In 2023, Meta tracked that score while training a model called Llama 2.",
+   "badge": "l43",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l43.jpg"
+  },
+  {
+   "t": 260.49,
+   "end": 265.54,
+   "title": "It read 2 trillion tokens of text.",
+   "subtitle": "It read 2 trillion tokens of text. Tokens are roughly words or bits of words.",
+   "badge": "l44",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l44.jpg"
+  },
+  {
+   "t": 265.89,
+   "end": 269.8,
+   "title": "And even then",
+   "subtitle": "And even then, the score was still falling, nowhere near flat.",
+   "badge": "l45",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l45.jpg"
+  },
+  {
+   "t": 270.15,
+   "end": 276.4,
+   "title": "A big model has tens of billions of knobs",
+   "subtitle": "A big model has tens of billions of knobs, we have two, but the job's the same: find the lowest point.",
+   "badge": "l46",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l46.jpg"
+  },
+  {
+   "t": 277.9,
+   "end": 283.02,
+   "title": "So, a loss function is how",
+   "subtitle": "So, a loss function is how you score the model's mistakes, and lower is better.",
+   "badge": "l47",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l47.jpg"
+  },
+  {
+   "t": 283.37,
+   "end": 286.0,
+   "title": "And training is just",
+   "subtitle": "And training is just pushing that score down.",
+   "badge": "l48",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l48.jpg"
+  },
+  {
+   "t": 286.35,
+   "end": 293.24,
+   "title": "But with tons of knobs",
+   "subtitle": "But with tons of knobs, that landscape's way too big to see all at once. So which way do you turn to go downhill?",
+   "badge": "l49",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l49.jpg"
+  },
+  {
+   "t": 293.59,
+   "end": 296.85,
+   "title": "That's where gradient descent comes in.",
+   "subtitle": "That's where gradient descent comes in. It's up next time.",
+   "badge": "l50",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t11_loss_function/renders/en/thumbs/l50.jpg"
+  }
+ ],
+ "links": [
+  {
+   "label": "讲稿",
+   "path": "edu_videos/ai_terms/t11_loss_function/script.en.md"
+  },
+  {
+   "label": "时间轴",
+   "path": "edu_videos/ai_terms/t11_loss_function/timeline.en.json"
+  },
+  {
+   "label": "调研",
+   "path": "edu_videos/ai_terms/t11_loss_function/research.md"
+  },
+  {
+   "label": "字幕",
+   "path": "edu_videos/ai_terms/t11_loss_function/final/t11_loss_function.en.srt"
+  }
+ ]
+}

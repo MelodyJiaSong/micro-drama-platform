@@ -1,0 +1,67 @@
+<style>
+  .tabs { position: absolute; left: var(--mx); right: var(--mx); top: var(--mt); display: flex; gap: 56px; }
+  .tab { font-size: var(--fs-caption); font-weight: 500; color: var(--faint); padding-bottom: 12px; border-bottom: 2px solid transparent; }
+  .tab.on { color: var(--ink); border-color: var(--accent); }
+  .open { position: absolute; left: var(--mx); top: 400px; width: 1680px; }
+  .case { position: absolute; left: var(--mx); top: 300px; width: 1680px; }
+  .case .display { line-height: 1.05; }
+  .case .h2 { margin-top: 26px; max-width: 1500px; }
+  .flow { display: flex; align-items: baseline; gap: 40px; margin-top: 28px; }
+  .flow .arrow { font-size: 72px; }
+  .srcl { position: absolute; left: var(--mx); top: 860px; }
+  .close { position: absolute; left: var(--mx); top: 360px; width: 1600px; }
+</style>
+
+<div class="tabs">
+  <div class="tab" id="tab0" data-zh="AlphaFold" data-en="AlphaFold"></div>
+  <div class="tab" id="tab1" data-zh="ChatGPT" data-en="ChatGPT"></div>
+  <div class="tab" id="tab2" data-zh="亚马逊招聘 AI" data-en="Amazon hiring AI"></div>
+</div>
+<div class="open h1" id="open" data-zh='从数据里学的本事，<span class="accent">已经在改变现实</span>' data-en='Learning from data is <span class="accent">changing the world</span>'></div>
+
+<div class="case" id="a1"><div class="eyebrow" data-zh="蛋白质的形状" data-en="The shape of a protein"></div>
+  <div class="flow"><div class="h1 sub" data-zh="实验测：常要好几年" data-en="Lab work: often years"></div><div class="arrow">→</div>
+    <div class="h1" data-zh='<span class="accent">直接预测</span>' data-en='<span class="accent">predicted directly</span>'></div></div>
+  <div class="h2 ink2" data-zh="AlphaFold 从已知的结构里学会预测" data-en="AlphaFold learned from known structures"></div></div>
+<div class="case" id="a2"><div class="display grad" data-zh="2024 诺贝尔化学奖" data-en="2024 Nobel Prize in Chemistry"></div>
+  <div class="h2" data-zh="带领研发它的两个人，分享了其中的一半" data-en="Its two lead developers shared half of it"></div></div>
+<div class="srcl src" id="s0" data-zh="诺贝尔奖官网 2024 · Jumper 等《Nature》2021" data-en="NobelPrize.org 2024 · Jumper et al., Nature 2021"></div>
+
+<div class="case" id="g1"><div class="eyebrow" data-zh="上线约两个月" data-en="About two months after launch"></div>
+  <div class="display" style="margin-top:18px"><span class="faint">≈ </span><span data-zh="1 亿" data-en="100 million"></span></div>
+  <div class="h2" data-zh="月活跃用户（估计）" data-en="monthly active users (estimate)"></div></div>
+<div class="srcl src" id="s1" data-zh="路透社 2023（UBS 引 Similarweb 估计）" data-en="Reuters 2023 (UBS, citing Similarweb estimates)"></div>
+
+<div class="case" id="z1"><div class="eyebrow" data-zh="据路透社报道：筛简历的 AI" data-en="According to Reuters: a résumé-screening AI"></div>
+  <div class="h1" style="margin-top:18px" data-zh='学的是 10 年的简历，<span class="sub">大多来自男性</span>' data-en='Learned from 10 years of résumés, <span class="sub">mostly men&#39;s</span>'></div></div>
+<div class="case" id="z2"><div class="h2 ink2" data-zh="它等于自己学会了：男性候选人更好" data-en="In effect, it taught itself: male candidates are preferable"></div>
+  <div class="display c-bad" style="margin-top:22px;font-size:110px" data-zh="“women's”（女子的）<br>→ 扣分" data-en="“women's” → marked down"></div>
+  <div class="h2 sub" data-zh="例：女子国际象棋社社长 · 工具后来被放弃" data-en="e.g. “women's chess club captain” · the tool was scrapped"></div></div>
+<div class="srcl src" id="s2" data-zh="路透社 2018（亚马逊称该工具从未被用于评估候选人）" data-en="Reuters 2018 (Amazon said the tool was never used to evaluate candidates)"></div>
+
+<div class="close h1" id="fin" data-zh='数据里的偏见，<br><span class="c-bad">也可能被它一起学走</span>' data-en='Bias in the data<br><span class="c-bad">can be learned right along with it</span>'></div>
+
+<script>
+const T = EDU.tl;
+const on = (i, at) => [0, 1, 2].forEach(k => T.set("#tab" + k, { className: "tab" + (k === i ? " on" : "") }, at));
+gsap.set([".tab", "#open", "#a1", "#a2", "#s0", "#g1", "#s1", "#z1", "#z2", "#s2", "#fin"], { opacity: 0 });
+// l42 开场
+EDU.in("#open", EDU.t("l42", 0.05));
+EDU.in(".tab", EDU.t("l42", 0.5), { stagger: 0.15 });
+// l43 AlphaFold
+EDU.out("#open", EDU.t("l43")); on(0, EDU.t("l43"));
+EDU.in(["#a1", "#s0"], EDU.t("l43", 0.05));
+// l44 诺奖一半
+EDU.out("#a1", EDU.t("l44")); EDU.in("#a2", EDU.t("l44", 0.05));
+// l45 ChatGPT
+EDU.out(["#a2", "#s0"], EDU.t("l45")); on(1, EDU.t("l45"));
+EDU.in(["#g1", "#s1"], EDU.t("l45", 0.05));
+// l46 亚马逊：数据
+EDU.out(["#g1", "#s1"], EDU.t("l46")); on(2, EDU.t("l46"));
+EDU.in(["#z1", "#s2"], EDU.t("l46", 0.2));
+// l47 它学会了什么
+EDU.out("#z1", EDU.t("l47")); EDU.in("#z2", EDU.t("l47", 0.05));
+// l48 结论
+EDU.out(["#z2", "#s2", ".tabs"], EDU.t("l48")); EDU.in("#fin", EDU.t("l48", 0.1));
+EDU.out("#fin", EDU.S.duration - 0.5);
+</script>

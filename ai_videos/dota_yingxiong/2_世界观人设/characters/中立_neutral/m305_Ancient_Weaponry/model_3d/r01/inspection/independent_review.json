@@ -1,0 +1,88 @@
+{
+  "verdict": "fail",
+  "suitable_use": "需要返工。当前可在地图远景中辨认出带角、尖刺护肩和白色弯刃的女战士轮廓，但不符合本资产要求的精细写实标准；不适合直接用于场景中景或近景。远景也不建议作为最终资产使用，因为悬浮碎片和武器形制错误会影响辨识。",
+  "blockers": [
+    "武器附近有明显悬浮的浅色碎片：南视图中位于人物右侧、刃与裙甲之间，东西侧及透视图中也可见；北视图中武器旁有类似碎片。应检查并清除或正确连接这些零件。",
+    "武器形制与已确定参考及资产卡不一致：侧面和透视图中的握把明显向前伸出，主刃呈大幅外展的镰刀状；握把另一端只见小装饰状端头，未见要求的独立小弯刃。主刃和小刃均朝下的设计未得到满足。",
+    "模型盔甲整体偏黑、灰和银色，尤其背部中央鳞片和侧面裙甲有大面积浅灰银白色，与参考图紫黑、深紫甲虫壳般的整体配色及明确排除银白盔甲的要求不符。",
+    "下半脸在正面和侧面呈近乎纯白、缺少可辨的鼻口及薄唇形态，与参考图冷调淡紫灰皮肤和清晰下半脸不一致；中近景中面部真实感不足。",
+    "姿态基本直立，侧视图未呈现参考要求的明显上身微前倾和前脚掌承重感，削弱了随时扑出的识别轮廓。"
+  ],
+  "refinements": [
+    "增加头盔、胸腹鳞片与长甲裙的深紫层次，使材质更接近参考图的冷色金属油光；同时保留自然高光，避免大片均匀银灰。",
+    "细化骨白刃面的厚度、刃缘和表面纹理，以及皮革握把与手的接触关系；现有渲染尺度不足以确认握持是否存在穿插。",
+    "核对角色实际身高：机器数据的 2.2 米是包含姿态及外轮廓的高度包围盒，不能直接证明人物身高符合约 1.95 米的要求。",
+    "提供更近的面部、手部、武器连接处及足底渲染，并在 Blender 中检查实际材质节点、修改器、网格连接与法线，以完成结构和着色验证。"
+  ],
+  "evidence": [
+    {
+      "image": "1_m305_Ancient_Weaponry.png",
+      "role": "已确定设计参考",
+      "findings": "高挑精灵女战士，紫黑鳞片甲、外张尖刺护肩、双角面甲、可见淡紫灰下半脸及紫色胸甲；右手持骨白大弯刃，主刃下垂，护手附近有小弯钩。此图不作为候选模型的三维证据。"
+    },
+    {
+      "image": "2_south.png",
+      "role": "候选模型南面",
+      "findings": "头角、尖耳、护肩、长甲裙及白色弯刃保持主要识别特征；胸部仍有淡紫色。下半脸发白且细节难辨，甲色偏黑灰；武器附近可见独立浅色碎片。双脚看似接近地面，但足底接触和握把与手的连接无法从该视图确认。"
+    },
+    {
+      "image": "3_east.png",
+      "role": "候选模型东面",
+      "findings": "侧面可见头盔、护肩、躯干及裙甲的立体纵深；大弯刃向身体前方大幅伸展，握把另一端未见明确的小弯刃。裙甲前方有浅色悬浮碎片，上身整体偏直立。"
+    },
+    {
+      "image": "4_north.png",
+      "role": "候选模型北面",
+      "findings": "背面有独立的后脑、背甲和叠层裙甲，没有明显复制正面；中央背甲及裙甲大面积呈浅灰银色。武器旁可见浅色小碎片，背部部分鳞片交界较杂乱，是否存在几何断裂需近查。"
+    },
+    {
+      "image": "5_west.png",
+      "role": "候选模型西面",
+      "findings": "侧面可见实际形体纵深及向前外展的巨大弯刃；握把后端呈小装饰状，未形成清楚的第二片弯刃。武器与裙甲之间有明显悬浮浅色片；足部与地面视觉上接近，但高跟鞋底的实际接触未验证。"
+    },
+    {
+      "image": "6_perspective.png",
+      "role": "候选模型透视",
+      "findings": "整体轮廓可辨，尖角、尖耳、护肩及白色武器均可见；浅色碎片悬在武器和人物之间，面部发白且缺少清楚的下半脸细节，甲裙偏灰银。主刃的外展方向与参考中的贴身下垂轮廓差异明显。"
+    },
+    {
+      "source": "用户提供的机器数据",
+      "findings": "数据报告约 282.75 万个面、法线与几何方向高度一致，并注明未删除碎片、未执行几何焊接；这些统计不能证明可见悬浮片的连接关系、拓扑质量或材质表现。输入中没有实际材质节点及修改器配置，因此其着色行为、修改器结果、拓扑连通性和任意角度下的完整性均未验证。"
+    }
+  ],
+  "reviewer": "codex",
+  "source_artifact_sha256": "6adbcdd8843f64f9e88844b3b186cb1ff07f70a63b737cef568faca67e3f3e73",
+  "blend_sha256": "425fd5dfcbc46c556282252afc85e7c554b3bfecc907e25d154f68edd2c2dbed",
+  "evidence_files": [
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m305_Ancient_Weaponry\\m305_Ancient_Weaponry.png",
+      "sha256": "2ae9309528ec042e2e2eb962ccd669fb38386876e30b25e210e15273e6e2fc64"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m305_Ancient_Weaponry\\model_3d\\r01\\inspection\\south.png",
+      "sha256": "b49e7032879ce7030f5b3c4ad910a23fa7277fe078256d8bd6d821aab0e1552b"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m305_Ancient_Weaponry\\model_3d\\r01\\inspection\\east.png",
+      "sha256": "660babba1861d63d40f7d47037c0d899e17c3af84828779f6e158486ae1eaa3f"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m305_Ancient_Weaponry\\model_3d\\r01\\inspection\\north.png",
+      "sha256": "6154b461f58a3cd0d57ddcc55866ec2eb5ad0298a0bbd17a4a2954a80e35a7a8"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m305_Ancient_Weaponry\\model_3d\\r01\\inspection\\west.png",
+      "sha256": "65c732f31a0e0599f22c56871697ee8fd2cf6d12df88a7024e4fed35d4bd89e7"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m305_Ancient_Weaponry\\model_3d\\r01\\inspection\\perspective.png",
+      "sha256": "2514213fdd33aa44971beca5a13208d01d30538b16e1914444e53a3ae3bb84a1"
+    }
+  ],
+  "prior_errors": [
+    {
+      "reviewer": "claude",
+      "error": "Command '['claude', '-p', '--output-format', 'text', '--allowedTools', 'Read', '--add-dir', 'C:\\\\Users\\\\light\\\\AppData\\\\Local\\\\Temp\\\\dota_static_review_b947ii2w']' timed out after 600 seconds"
+    }
+  ]
+}

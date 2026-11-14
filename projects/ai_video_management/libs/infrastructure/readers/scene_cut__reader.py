@@ -6,7 +6,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from libs.common.scene_cut import CUT_FILE_PATTERN, CUT_STAGES, EDIT_DIR, GALLERY_PATTERN
+from libs.common.scene_cut import CUT_FILE_PATTERN, CUT_STAGES, EDIT_DIR, GALLERY_PATTERN, POST_DIR, POST_FILE_PATTERN
 from libs.infrastructure.readers.episode_workflow__reader import EpisodeWorkflowReader
 
 
@@ -61,4 +61,24 @@ class SceneCutReader:
             index = file.with_suffix(".txt")
             text = index.read_text(encoding="utf-8") if index.is_file() and not index.is_symlink() else ""
             out.append((file.relative_to(self.root).as_posix(), match.group(1), match.group(2), text))
+        return out
+
+    def posts(self, episode_path: str) -> list[dict[str, Any]]:
+        """后期试做决定 `{集}/post/trial/post_v{N}.json`（follow-up 290）：原样读出，附 _path / _dir / _file_version。"""
+        folder = self.root / episode_path / POST_DIR
+        if not folder.is_dir() or folder.is_symlink():
+            return []
+        out = []
+        for file in folder.iterdir():
+            match = re.fullmatch(POST_FILE_PATTERN, file.name)
+            if not match or not file.is_file() or file.is_symlink():
+                continue
+            try:
+                data = json.loads(file.read_text(encoding="utf-8"))
+                if not isinstance(data, dict):
+                    raise ValueError("不是 JSON 对象")
+            except (OSError, ValueError) as exc:
+                data = {"_error": f"读不出：{exc}"}
+            out.append({**data, "_path": file.relative_to(self.root).as_posix(),
+                        "_dir": folder.relative_to(self.root).as_posix(), "_file_version": int(match.group(1))})
         return out

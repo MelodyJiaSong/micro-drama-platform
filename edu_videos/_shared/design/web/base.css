@@ -1,0 +1,43 @@
+/* 频道网页场景的基础样式（排版、版式、卡片、图表）。颜色与字号一律用 tokens.css 的变量，不在场景里写死。
+   规范：edu_videos/_shared/design/design_system.md */
+@font-face { font-family: "MiSans"; src: url("fonts/MiSans-Regular.ttf"); font-weight: 400; }
+@font-face { font-family: "MiSans"; src: url("fonts/MiSans-Medium.ttf"); font-weight: 500; }
+@font-face { font-family: "MiSans"; src: url("fonts/MiSans-Semibold.ttf"); font-weight: 600; }
+@font-face { font-family: "MiSans"; src: url("fonts/MiSans-Bold.ttf"); font-weight: 700; }
+@font-face { font-family: "MiSans"; src: url("fonts/MiSans-Heavy.ttf"); font-weight: 900; }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); color: var(--ink);
+        font-family: "MiSans", sans-serif; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+.stage { position: absolute; inset: 0; }
+/* 安全区：左右留边、上留边、底部字幕带 */
+.safe { position: absolute; left: var(--mx); right: var(--mx); top: var(--mt); bottom: var(--band); }
+
+/* 字号阶梯：只用这六档 */
+.display { font-size: var(--fs-display); font-weight: var(--fw-display); letter-spacing: var(--tr-display); line-height: 1.02; }
+.h1 { font-size: var(--fs-h1); font-weight: var(--fw-h1); letter-spacing: var(--tr-h1); line-height: 1.18; }
+.h2 { font-size: var(--fs-h2); font-weight: var(--fw-h2); line-height: 1.25; }
+.body { font-size: var(--fs-body); font-weight: var(--fw-body); line-height: 1.5; }
+.caption { font-size: var(--fs-caption); font-weight: var(--fw-caption); line-height: 1.5; color: var(--sub); }
+.micro { font-size: var(--fs-micro); font-weight: var(--fw-micro); color: var(--sub); }
+.eyebrow { font-size: var(--fs-micro); font-weight: 600; letter-spacing: var(--tr-eyebrow); color: var(--sub); text-transform: uppercase; }
+html[lang="en"] .eyebrow { letter-spacing: .12em; }
+
+.ink2 { color: var(--ink2); } .sub { color: var(--sub); } .faint { color: var(--faint); }
+.accent { color: var(--accent-text); }
+.grad { background: linear-gradient(100deg, var(--grad-from), var(--grad-to)); -webkit-background-clip: text; background-clip: text;
+        color: transparent; padding-bottom: .08em; }
+.c-train { color: var(--d-train); } .c-test { color: var(--d-test); } .c-valid { color: var(--d-valid); }
+.c-good { color: var(--d-good); } .c-bad { color: var(--d-bad); } .c-neutral { color: var(--d-neutral); }
+
+.card { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); }
+.soft { background: var(--surface2); border-radius: var(--radius); }
+.rule { height: 1px; background: var(--hair); }
+.src { font-size: var(--fs-micro); color: var(--sub); letter-spacing: .02em; }
+.nowrap { white-space: nowrap; }
+
+/* 图表：不画框、不画网格，只留一条基线；标签直接贴在对象旁 */
+svg text { font-family: "MiSans", sans-serif; }
+.axis-base { stroke: var(--hair); stroke-width: 2; }
+.label { font-size: var(--fs-caption); font-weight: 500; }

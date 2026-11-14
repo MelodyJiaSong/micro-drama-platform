@@ -1,0 +1,755 @@
+{
+ "version": 2,
+ "id": "ep01_20261108-102006_pregen_r1",
+ "chain": "ep01_20261108-102006_pregen_r1",
+ "loop": 1,
+ "max_loops": 3,
+ "parent": "",
+ "title": "ep01 · 场一 · 出片前 第 1 轮 · 11-08 10:20",
+ "target": "ai_videos/chuanyue_yiri/episodes/ep01",
+ "episode": "ep01",
+ "stage": "pregen",
+ "stage_name": "出片前（故事＋分镜＋prompt＋首帧/故事板）",
+ "gate_stage": true,
+ "scenes": [
+  "s1"
+ ],
+ "created_at": "2026-11-08T10:20:06",
+ "author": "Claude Code (claude-opus-5-5)",
+ "known": "1) 维苏威：按用户 2026-11-06 决定「只入画、全片不提」，bg1 里远处保留一座压淡的绿山（不冒烟）；要不要完全去掉待用户定，不用再报山本身，但山若冒烟、成为主体或 prompt 写了火山词仍要报。2) 本轮之前已按 decisions/audit_v2_全量审查.md 改过故事 v2.1、台词（两位母语听感盲审定稿）、分镜、场景图与道具卡；旧的问题清单只作背景，以现在的材料为准。3) 场一之外的场还没出首帧，本单只审 s1。",
+ "changes": "",
+ "roster_sha": "faecb2ee9650ee01618e397df569cdd96a271d9e4d12e4e857af22a4869e37bf",
+ "materials": {
+  "ai_videos/chuanyue_yiri/episodes/ep01/filming.json#s1": "56164167a13e8894e807b68c43062e670ea753eead9ac90730b3cbd491b05bf8",
+  "ai_videos/chuanyue_yiri/episodes/ep01/story.json": "d76d02f07fa9dceb7185386ac9472a867effe574bd5406dc670cca35517a10c6",
+  "ai_videos/chuanyue_yiri/episodes/ep01/prompts.json#s1": "2ce0b0241e5712e928cea7adc413555a91baec1221043e7d9e00f392ab874a46",
+  "ai_videos/chuanyue_yiri/bible.md": "b9f888fa4945c2c96ad05274985b8f7c24e58711089afbc64b90eefffbe7d58b",
+  "ai_videos/chuanyue_yiri/2_世界观人设/characters/c1_Riley/c1_Riley.md": "2156df0432d2901f5e641e8857ecb02ddb900c5f9261658109a7eabad0cc01ba",
+  "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st1/资料包/prompt.txt": "41c8d5ede19cedeb5fb1474009b138508fbe4aa7879e8042c41fe8c1a348ee57",
+  "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st2/资料包/prompt.txt": "6690de1859f720f0993a804ec90314f00d37b963fa60e7504bd61a906a1ff34e",
+  "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st3/资料包/prompt.txt": "a9014b59dda5e79caebf389463a0adeea782611b5798085bc916b2989a7ecfe5",
+  "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st4/资料包/prompt.txt": "cef66bdbe32e1b4e7a7661e4e1195d85776fb308d7a6871f8e2999be60e5ea39",
+  "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/shots/st5/资料包/prompt.txt": "15240666dd8bdf09e2c5eddcec2fdb70c24163230936fdd61584fa2ff7d86fa4",
+  "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/groups/g1/资料包/prompt.txt": "02df0bc626ffc729c99bc5fd50c18875d1cd15c3bf48cf82216bb0ed30d5b839",
+  "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s1/groups/g2/资料包/prompt.txt": "2ee92ebe752a486beeb14dbece65613e99d8984706858264ee84b9367bfd8821"
+ },
+ "items": [
+  {
+   "id": "physics",
+   "law": "physics",
+   "law_name": "世界物理",
+   "color": "#c0502e",
+   "scope": [
+    "s1"
+   ],
+   "checks": "重力与支撑（东西被谁、用哪只手托着？有没有悬空、黏在手上）；手的数量（自拍占一只手，其余动作只剩一只手）；道具守恒（凭空出现、消失、变形、数量变化）；道具交接后去向；穿模；身体变形（多手指、肢体扭曲、脸或身体溶解/半透明）；运动物理（滑步、瞬移）；火、烟、水、蒸汽、光影；画面突然溶解成另一画面。",
+   "how": "逐镜看 sheet4.jpg 每一格，盯手、手里的东西、脚和地面、画面边缘进出的物体；疑点用 ffmpeg 加密抽帧或放大裁切确认。对照 spec.md，也指出分镜文字本身做不到、或没交代道具来源与去向的地方。",
+   "blind": false,
+   "must": [
+    {
+     "id": "P1",
+     "text": "手数：每个自拍镜里主角只剩一只手可用，逐镜核动作是否只用一只手"
+    },
+    {
+     "id": "P2",
+     "text": "道具来源：镜内用到的每件道具第 0 秒在哪、谁拿着（首帧里看得到）"
+    },
+    {
+     "id": "P3",
+     "text": "道具交接：从哪拿→交到哪→对方怎么握住或收起；没有被带回、悬空、黏手"
+    },
+    {
+     "id": "P4",
+     "text": "支撑：每件被拿着的东西都有可见的手或台面托着"
+    },
+    {
+     "id": "P5",
+     "text": "服装与动作一致：动作不要求服装没有的部件（如短袖卷袖子）"
+    },
+    {
+     "id": "P6",
+     "text": "身体与运动：不要求做不到的身体动作；出片里无多指、变形、溶解、瞬移、滑步"
+    }
+   ],
+   "status": "done",
+   "report": "reports/physics.md",
+   "prompt": "items/physics.md",
+   "ticked_at": "2026-11-08T10:25:47",
+   "ticked_by": "claude-opus-5-5/physics",
+   "findings": {
+    "重出": 1,
+    "可剪": 3,
+    "记录": 5,
+    "存疑": 1
+   },
+   "rows": 10,
+   "clean": false,
+   "must_result": {
+    "P1": "✓",
+    "P2": "✗",
+    "P3": "✗",
+    "P4": "✓",
+    "P5": "✗",
+    "P6": "✗"
+   },
+   "report_sha": "e36f56db7932678bc6dff498994baca7aa7b3a3ba0ba4ed3ba1ee8331b0d0225",
+   "agents": [
+    {
+     "n": 1,
+     "at": "2026-11-08T12:32:49",
+     "runner": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+     "model": "claude-opus-5-5",
+     "context": "全新上下文，看不到作者会话与别的审稿报告",
+     "prompt": "agents/physics_1.md",
+     "skills": [
+      "审稿人名册 .agents/references/project/review_roster.json · 法则 physics（世界物理）",
+      "审稿说明 BRIEF.md（材料、规则、报告格式）",
+      "任务书 items/physics.md（范围、要查什么、怎么查、必查项、打勾命令）"
+     ],
+     "note": "补登（2026-11-08）：派单时还没有 dispatch 命令；指令原文按当时实际发出的文本重建，审稿人的最终回复当时没存档，结果以 reports/ 里的报告为准"
+    }
+   ]
+  },
+  {
+   "id": "character",
+   "law": "character",
+   "law_name": "人物逻辑",
+   "color": "#7a4fb0",
+   "scope": [
+    "s1"
+   ],
+   "checks": "对每个有戏的人分别代入他自己：此刻知道什么、想要什么、该看向哪里、对别人的话或动作该有什么反应。查视线、反应缺失或不合情理、动作动机、站桩不演、当地人对奇装异服陌生人的反应是否可信、主持人对观众说话的时机。",
+   "how": "以 sheet1.jpg 为主，需要时看 sheet4；先读故事稿与人物卡的文字设定。也指出分镜里人物动机或反应写得不清、重出还会错的地方。",
+   "blind": false,
+   "must": [
+    {
+     "id": "C1",
+     "text": "每个有戏的配角此刻看向谁、在想什么（分镜写了没有，出片做到没有）"
+    },
+    {
+     "id": "C2",
+     "text": "反应拍：对突发、怪人、台词的反应单独成拍且合乎情理"
+    },
+    {
+     "id": "C3",
+     "text": "动机与方向：每个走、递、指、停都有理由；方向等逻辑前后一致"
+    },
+    {
+     "id": "C4",
+     "text": "路人对主角的反应可信（不全体无视，也不抢戏）"
+    },
+    {
+     "id": "C5",
+     "text": "主角对镜头说话的时机"
+    }
+   ],
+   "status": "done",
+   "report": "reports/character.md",
+   "prompt": "items/character.md",
+   "ticked_at": "2026-11-08T10:24:58",
+   "ticked_by": "claude-opus-5-5/character",
+   "findings": {
+    "重出": 1,
+    "可剪": 3,
+    "记录": 3,
+    "存疑": 1
+   },
+   "rows": 8,
+   "clean": false,
+   "must_result": {
+    "C1": "✗",
+    "C2": "✗",
+    "C3": "✗",
+    "C4": "✗",
+    "C5": "✗"
+   },
+   "report_sha": "c7259bf91af24b9ed63a46f2ff731efa618dd8d15ee99ef23ea56b4dbbe693f9",
+   "agents": [
+    {
+     "n": 1,
+     "at": "2026-11-08T12:32:49",
+     "runner": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+     "model": "claude-opus-5-5",
+     "context": "全新上下文，看不到作者会话与别的审稿报告",
+     "prompt": "agents/character_1.md",
+     "skills": [
+      "审稿人名册 .agents/references/project/review_roster.json · 法则 character（人物逻辑）",
+      "审稿说明 BRIEF.md（材料、规则、报告格式）",
+      "任务书 items/character.md（范围、要查什么、怎么查、必查项、打勾命令）"
+     ],
+     "note": "补登（2026-11-08）：派单时还没有 dispatch 命令；指令原文按当时实际发出的文本重建，审稿人的最终回复当时没存档，结果以 reports/ 里的报告为准"
+    }
+   ]
+  },
+  {
+   "id": "continuity",
+   "law": "continuity",
+   "law_name": "连续性",
+   "color": "#2f74b5",
+   "scope": [
+    "s1"
+   ],
+   "checks": "先建全集道具状态表（钱币逐次核账、食物、器物、灯等），找对不上的地方；服装与头发状态；同场光向与场间时段推进；跳轴与左右对调；场景布置跨镜一致。",
+   "how": "看每场 bounds.jpg（镜头接口两帧）与 scene1.jpg（整场每秒 1 帧），加每镜 spec.md；附上道具状态表。",
+   "blind": false,
+   "must": [
+    {
+     "id": "K1",
+     "text": "全集道具状态表：钱币逐次核账、食物、器物、灯等逐镜对得上"
+    },
+    {
+     "id": "K2",
+     "text": "服装、头发状态（湿干、挽披）跨镜一致"
+    },
+    {
+     "id": "K3",
+     "text": "光向与时段：同场一致、场间推进合理"
+    },
+    {
+     "id": "K4",
+     "text": "站位左右与跳轴：俯视图、故事板、出片三者一致"
+    },
+    {
+     "id": "K5",
+     "text": "场景布置与地点前后一致"
+    }
+   ],
+   "status": "done",
+   "report": "reports/continuity.md",
+   "prompt": "items/continuity.md",
+   "ticked_at": "2026-11-08T10:26:07",
+   "ticked_by": "claude-opus-5-5/continuity",
+   "findings": {
+    "重出": 2,
+    "可剪": 1,
+    "记录": 5,
+    "存疑": 1
+   },
+   "rows": 9,
+   "clean": false,
+   "must_result": {
+    "K1": "✗",
+    "K2": "✓",
+    "K3": "✗",
+    "K4": "✗",
+    "K5": "✗"
+   },
+   "report_sha": "5cc98f44dfb70169de9d1f338e641522751e02d40bfdd8304a2aa87a306e642d",
+   "agents": [
+    {
+     "n": 1,
+     "at": "2026-11-08T12:32:49",
+     "runner": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+     "model": "claude-opus-5-5",
+     "context": "全新上下文，看不到作者会话与别的审稿报告",
+     "prompt": "agents/continuity_1.md",
+     "skills": [
+      "审稿人名册 .agents/references/project/review_roster.json · 法则 continuity（连续性）",
+      "审稿说明 BRIEF.md（材料、规则、报告格式）",
+      "任务书 items/continuity.md（范围、要查什么、怎么查、必查项、打勾命令）"
+     ],
+     "note": "补登（2026-11-08）：派单时还没有 dispatch 命令；指令原文按当时实际发出的文本重建，审稿人的最终回复当时没存档，结果以 reports/ 里的报告为准"
+    }
+   ]
+  },
+  {
+   "id": "dialogue",
+   "law": "dialogue",
+   "law_name": "台词（时长与逻辑）",
+   "color": "#1f8a5b",
+   "scope": [
+    "s1"
+   ],
+   "checks": "口语自然度（给改写）；节拍时间里说得完（约 2.5–2.8 词/秒）、说完后留 ≥1.5 秒；识别结果与台词不一致处判断是读错还是识别器问题；外语（如拉丁语）语法、时代口吻、发音（另用对应语言模型转写核对）；说话人是否正确；故事稿台词前后逻辑（编号、回收）。",
+   "how": "读各镜 spec.md 的台词、节拍、语音识别与区间，加故事稿；可用本机 faster-whisper 重听片段。",
+   "blind": false,
+   "must": [
+    {
+     "id": "D1",
+     "text": "每句台词口语自然（给出改写）"
+    },
+    {
+     "id": "D2",
+     "text": "说得完：≤2.8 词/秒，开口前留 ≥1 秒，说完后留 ≥1.5 秒"
+    },
+    {
+     "id": "D3",
+     "text": "外语与专名：语法、时代口吻、注音进了 prompt；出片用对应语言模型核发音"
+    },
+    {
+     "id": "D4",
+     "text": "台词逻辑：编号、回收、前后说法一致"
+    },
+    {
+     "id": "D5",
+     "text": "说话人正确、画内该张嘴的人张嘴"
+    }
+   ],
+   "status": "done",
+   "report": "reports/dialogue.md",
+   "prompt": "items/dialogue.md",
+   "ticked_at": "2026-11-08T10:25:15",
+   "ticked_by": "claude-opus-5-5/dialogue",
+   "findings": {
+    "重出": 0,
+    "可剪": 0,
+    "记录": 4,
+    "存疑": 0
+   },
+   "rows": 4,
+   "clean": false,
+   "must_result": {
+    "D1": "✓",
+    "D2": "✗",
+    "D3": "✗",
+    "D4": "✗",
+    "D5": "✓"
+   },
+   "report_sha": "3ea570cac65d75f55acb838f9d463e5710812eec0c589bd5efa3823451386e28",
+   "agents": [
+    {
+     "n": 1,
+     "at": "2026-11-08T12:32:50",
+     "runner": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+     "model": "claude-opus-5-5",
+     "context": "全新上下文，看不到作者会话与别的审稿报告",
+     "prompt": "agents/dialogue_1.md",
+     "skills": [
+      "审稿人名册 .agents/references/project/review_roster.json · 法则 dialogue（台词（时长与逻辑））",
+      "审稿说明 BRIEF.md（材料、规则、报告格式）",
+      "任务书 items/dialogue.md（范围、要查什么、怎么查、必查项、打勾命令）"
+     ],
+     "note": "补登（2026-11-08）：派单时还没有 dispatch 命令；指令原文按当时实际发出的文本重建，审稿人的最终回复当时没存档，结果以 reports/ 里的报告为准"
+    }
+   ]
+  },
+  {
+   "id": "native_ear",
+   "law": "native_ear",
+   "law_name": "母语听感",
+   "color": "#0f766e",
+   "scope": [
+    "s1"
+   ],
+   "checks": "以英语母语观众（美国、英国、加拿大、澳洲的年轻 vlog 观众）的耳朵逐句听 Riley 的英文台词：真人会不会这么说；有没有中文直译的句式、电报式罗列、视角或时态说不通（她是穿越者）、讲解腔、指代不清（说 this 却没东西可看）、观众不懂的词、没落地的笑点；每句给自然 / 有点怪 / 很怪的判断和更顺的改写（不更长）。",
+   "how": "只用 materials/lines.md；尽量换一个模型审（`codex exec`），和作者、和「台词」审稿人不是同一个模型；改写保持每秒 ≤2.8 词、前后呼应一致。",
+   "blind": true,
+   "blind_note": "**你是英语母语观众，盲审：只读 `materials/lines.md`（全集台词按播放顺序，附一句画面说明），不要读 spec.md、story、分镜、prompt 或别的审稿报告。**",
+   "prefer_model": "codex",
+   "must": [
+    {
+     "id": "N1",
+     "text": "逐句判断母语观众听着自然不自然（自然 / 有点怪 / 很怪），每句都要有结论"
+    },
+    {
+     "id": "N2",
+     "text": "指出别扭的原因：直译句式、电报式、时态或视角、讲解腔、指代不清、生僻词"
+    },
+    {
+     "id": "N3",
+     "text": "笑点和呼应（开场目标 ↔ 结尾、dextram 回收等）母语观众接得住"
+    },
+    {
+     "id": "N4",
+     "text": "每句「有点怪 / 很怪」都给出不更长的改写"
+    },
+    {
+     "id": "N5",
+     "text": "列出全集最别扭的 5 句，特别看开场和结尾"
+    }
+   ],
+   "status": "done",
+   "report": "reports/native_ear.md",
+   "prompt": "items/native_ear.md",
+   "ticked_at": "2026-11-08T10:23:18",
+   "ticked_by": "codex/native_ear",
+   "findings": {
+    "重出": 0,
+    "可剪": 0,
+    "记录": 0,
+    "存疑": 3
+   },
+   "rows": 21,
+   "clean": false,
+   "must_result": {
+    "N1": "✓",
+    "N2": "✓",
+    "N3": "✗",
+    "N4": "✓",
+    "N5": "✗"
+   },
+   "report_sha": "e0d519e86c13e71c71500f705df4eec1f1d60383bd6db7eeab9da13f865c36bd",
+   "agents": [
+    {
+     "n": 1,
+     "at": "2026-11-08T12:32:50",
+     "runner": "Codex CLI（codex exec -s workspace-write，另起进程）",
+     "model": "gpt-6-astra（reasoning high，~/.codex/config.toml）",
+     "context": "全新的 Codex 进程，和作者（Claude）不是同一个模型；看不到作者会话与别的审稿报告",
+     "prompt": "agents/native_ear_1.md",
+     "skills": [
+      "审稿人名册 .agents/references/project/review_roster.json · 法则 native_ear（母语听感）",
+      "审稿说明 BRIEF.md（材料、规则、报告格式）",
+      "任务书 items/native_ear.md（范围、要查什么、怎么查、必查项、打勾命令）"
+     ],
+     "note": "补登（2026-11-08）：派单时还没有 dispatch 命令；指令原文按当时实际发出的文本重建，审稿人的最终回复当时没存档，结果以 reports/ 里的报告为准"
+    }
+   ]
+  },
+  {
+   "id": "era",
+   "law": "era",
+   "law_name": "时代与世界观",
+   "color": "#8a6d1f",
+   "scope": [
+    "s1"
+   ],
+   "checks": "时代可信度（建筑、街道、器物、服装发型、食物；有无现代物件）；系列禁区（以 bible 为准，规则源本身有矛盾也要报）；画面不出现相机、手机、自拍杆、文字；主角服装是否始终符合设定。",
+   "how": "以 scene1.jpg 为主，疑点看 sheet1/sheet4 或自己放大；读 bible 与考据资料；同时检查分镜与 prompt 里会诱发问题的写法。",
+   "blind": false,
+   "must": [
+    {
+     "id": "E1",
+     "text": "系列禁区：以 bible 为准，且核对场景卡、考据、参考图与 bible 是否矛盾"
+    },
+    {
+     "id": "E2",
+     "text": "时代可信：建筑、器物、灯具、窗、服装发型、首饰、食物"
+    },
+    {
+     "id": "E3",
+     "text": "画面不出现相机、手机、自拍杆、文字"
+    },
+    {
+     "id": "E4",
+     "text": "主角服装始终符合设定"
+    },
+    {
+     "id": "E5",
+     "text": "prompt、场景卡、参考图里会诱发问题的词与画面"
+    }
+   ],
+   "status": "done",
+   "report": "reports/era.md",
+   "prompt": "items/era.md",
+   "ticked_at": "2026-11-08T10:27:12",
+   "ticked_by": "claude-opus-5-5/era",
+   "findings": {
+    "重出": 1,
+    "可剪": 0,
+    "记录": 6,
+    "存疑": 2
+   },
+   "rows": 9,
+   "clean": false,
+   "must_result": {
+    "E1": "✗",
+    "E2": "✗",
+    "E3": "✓",
+    "E4": "✓",
+    "E5": "✗"
+   },
+   "report_sha": "4c21f08f5ab9b07069f7cd7aa96a7ceadbbe9d91d935523160bcaea718223b8d",
+   "agents": [
+    {
+     "n": 1,
+     "at": "2026-11-08T12:32:50",
+     "runner": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+     "model": "claude-opus-5-5",
+     "context": "全新上下文，看不到作者会话与别的审稿报告",
+     "prompt": "agents/era_1.md",
+     "skills": [
+      "审稿人名册 .agents/references/project/review_roster.json · 法则 era（时代与世界观）",
+      "审稿说明 BRIEF.md（材料、规则、报告格式）",
+      "任务书 items/era.md（范围、要查什么、怎么查、必查项、打勾命令）"
+     ],
+     "note": "补登（2026-11-08）：派单时还没有 dispatch 命令；指令原文按当时实际发出的文本重建，审稿人的最终回复当时没存档，结果以 reports/ 里的报告为准"
+    }
+   ]
+  },
+  {
+   "id": "framing",
+   "law": "framing",
+   "law_name": "镜头规格",
+   "color": "#476070",
+   "scope": [
+    "s1"
+   ],
+   "checks": "节拍逐拍对时间（早了晚了多少）；景别、机位方向、运镜、自拍还是他拍、一镜到底；画内人数；镜组条里模型自己切镜的位置与设计分界；剪辑区间有没有切掉必要拍点；节拍是否过满、景别与动作是否冲突；镜组板与俯视图是否一致（模型会照板子出）。",
+   "how": "把 spec.md 的节拍换算到成片用的区间，对照 sheet4.jpg 的时间码。",
+   "blind": false,
+   "must": [
+    {
+     "id": "F1",
+     "text": "节拍时间：分镜不过满；出片每拍早晚多少"
+    },
+    {
+     "id": "F2",
+     "text": "景别、机位、运镜、自拍或他拍与动作不冲突"
+    },
+    {
+     "id": "F3",
+     "text": "画内人数与规格一致，无分身"
+    },
+    {
+     "id": "F4",
+     "text": "镜组板与俯视图一致（模型会照板子出）"
+    },
+    {
+     "id": "F5",
+     "text": "镜组切点与剪辑区间（出片阶段）"
+    }
+   ],
+   "status": "done",
+   "report": "reports/framing.md",
+   "prompt": "items/framing.md",
+   "ticked_at": "2026-11-08T10:27:37",
+   "ticked_by": "claude-opus-5-5/framing",
+   "findings": {
+    "重出": 2,
+    "可剪": 2,
+    "记录": 5,
+    "存疑": 0
+   },
+   "rows": 9,
+   "clean": false,
+   "must_result": {
+    "F1": "✗",
+    "F2": "✗",
+    "F3": "✗",
+    "F4": "✗",
+    "F5": "✓"
+   },
+   "report_sha": "b2de6d58153ad714cff0033afd63c610ee9d91af36e7424626f231eef255c321",
+   "agents": [
+    {
+     "n": 1,
+     "at": "2026-11-08T12:32:50",
+     "runner": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+     "model": "claude-opus-5-5",
+     "context": "全新上下文，看不到作者会话与别的审稿报告",
+     "prompt": "agents/framing_1.md",
+     "skills": [
+      "审稿人名册 .agents/references/project/review_roster.json · 法则 framing（镜头规格）",
+      "审稿说明 BRIEF.md（材料、规则、报告格式）",
+      "任务书 items/framing.md（范围、要查什么、怎么查、必查项、打勾命令）"
+     ],
+     "note": "补登（2026-11-08）：派单时还没有 dispatch 命令；指令原文按当时实际发出的文本重建，审稿人的最终回复当时没存档，结果以 reports/ 里的报告为准"
+    }
+   ]
+  },
+  {
+   "id": "prompt_text",
+   "law": "prompt_text",
+   "law_name": "Prompt 文本",
+   "color": "#5b6b2a",
+   "scope": [
+    "s1"
+   ],
+   "checks": "送给生成模型的文字与参考：过期与图文矛盾；物理上做不到的指令（手数、道具来源）；同一 prompt 内前后矛盾或歧义；节拍过满；镜组 prompt 的镜头切换与分界；系列硬规则与负面词是否写全、有无诱发禁区的词；规则源（bible、场景卡、考据）与 prompt 是否一致。最后给「重出前必须改」清单。",
+   "how": "读 filming.json、prompts.json、各资料包 prompt.txt 与 manifest.json、镜组板与首帧 prompt、人物卡、bible；只在需要验证时看成片。",
+   "blind": false,
+   "must": [
+    {
+     "id": "T1",
+     "text": "图文一致：人物卡、参考图、prompt 文字、bible 互相一致，无过期描述"
+    },
+    {
+     "id": "T2",
+     "text": "物理上做不到的指令（手数、道具来源）"
+    },
+    {
+     "id": "T3",
+     "text": "同一 prompt 内的矛盾与歧义（景别、参考用法、负面词与正文）"
+    },
+    {
+     "id": "T4",
+     "text": "负面词与系列硬规则写全（时代禁用、禁区、相机手机、首饰）"
+    },
+    {
+     "id": "T5",
+     "text": "规则源（bible、场景卡、考据）与 prompt 一致"
+    },
+    {
+     "id": "T6",
+     "text": "给出「重出前必须改」清单"
+    }
+   ],
+   "status": "done",
+   "report": "reports/prompt_text.md",
+   "prompt": "items/prompt_text.md",
+   "ticked_at": "2026-11-08T10:30:12",
+   "ticked_by": "claude-opus-5-5/prompt_text",
+   "findings": {
+    "重出": 4,
+    "可剪": 3,
+    "记录": 10,
+    "存疑": 1
+   },
+   "rows": 18,
+   "clean": false,
+   "must_result": {
+    "T1": "✗",
+    "T2": "✗",
+    "T3": "✗",
+    "T4": "✗",
+    "T5": "✗",
+    "T6": "✓"
+   },
+   "report_sha": "e529670a579b224897dd5527f18f6f3b72c0a110059d296ee1e92f6420b4a626",
+   "agents": [
+    {
+     "n": 1,
+     "at": "2026-11-08T12:32:50",
+     "runner": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+     "model": "claude-opus-5-5",
+     "context": "全新上下文，看不到作者会话与别的审稿报告",
+     "prompt": "agents/prompt_text_1.md",
+     "skills": [
+      "审稿人名册 .agents/references/project/review_roster.json · 法则 prompt_text（Prompt 文本）",
+      "审稿说明 BRIEF.md（材料、规则、报告格式）",
+      "任务书 items/prompt_text.md（范围、要查什么、怎么查、必查项、打勾命令）"
+     ],
+     "note": "补登（2026-11-08）：派单时还没有 dispatch 命令；指令原文按当时实际发出的文本重建，审稿人的最终回复当时没存档，结果以 reports/ 里的报告为准"
+    }
+   ]
+  }
+ ],
+ "state": "已完成",
+ "log": [
+  {
+   "at": "2026-11-08T10:21:16",
+   "event": "指纹改为只看本单的场（follow-up 036：一场一场走循环，改别的场不再作废本单）；改之前核过材料没变",
+   "by": "Claude Code"
+  },
+  {
+   "at": "2026-11-08T10:23:18",
+   "item": "native_ear",
+   "event": "tick",
+   "by": "codex/native_ear"
+  },
+  {
+   "at": "2026-11-08T10:24:58",
+   "item": "character",
+   "event": "tick",
+   "by": "claude-opus-5-5/character"
+  },
+  {
+   "at": "2026-11-08T10:25:15",
+   "item": "dialogue",
+   "event": "tick",
+   "by": "claude-opus-5-5/dialogue"
+  },
+  {
+   "at": "2026-11-08T10:25:47",
+   "item": "physics",
+   "event": "tick",
+   "by": "claude-opus-5-5/physics"
+  },
+  {
+   "at": "2026-11-08T10:25:59",
+   "item": "continuity",
+   "event": "tick",
+   "by": "claude-opus-5-5/continuity"
+  },
+  {
+   "at": "2026-11-08T10:26:07",
+   "item": "continuity",
+   "event": "tick",
+   "by": "claude-opus-5-5/continuity"
+  },
+  {
+   "at": "2026-11-08T10:27:12",
+   "item": "era",
+   "event": "tick",
+   "by": "claude-opus-5-5/era"
+  },
+  {
+   "at": "2026-11-08T10:27:37",
+   "item": "framing",
+   "event": "tick",
+   "by": "claude-opus-5-5/framing"
+  },
+  {
+   "at": "2026-11-08T10:30:12",
+   "item": "prompt_text",
+   "event": "tick",
+   "by": "claude-opus-5-5/prompt_text"
+  },
+  {
+   "at": "2026-11-08T12:32:49",
+   "item": "physics",
+   "event": "dispatch",
+   "by": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+   "note": "claude-opus-5-5 · 第 1 次派单"
+  },
+  {
+   "at": "2026-11-08T12:32:49",
+   "item": "character",
+   "event": "dispatch",
+   "by": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+   "note": "claude-opus-5-5 · 第 1 次派单"
+  },
+  {
+   "at": "2026-11-08T12:32:49",
+   "item": "continuity",
+   "event": "dispatch",
+   "by": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+   "note": "claude-opus-5-5 · 第 1 次派单"
+  },
+  {
+   "at": "2026-11-08T12:32:50",
+   "item": "dialogue",
+   "event": "dispatch",
+   "by": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+   "note": "claude-opus-5-5 · 第 1 次派单"
+  },
+  {
+   "at": "2026-11-08T12:32:50",
+   "item": "era",
+   "event": "dispatch",
+   "by": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+   "note": "claude-opus-5-5 · 第 1 次派单"
+  },
+  {
+   "at": "2026-11-08T12:32:50",
+   "item": "framing",
+   "event": "dispatch",
+   "by": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+   "note": "claude-opus-5-5 · 第 1 次派单"
+  },
+  {
+   "at": "2026-11-08T12:32:50",
+   "item": "prompt_text",
+   "event": "dispatch",
+   "by": "Claude Code 子代理（Agent 工具 · general-purpose，后台运行）",
+   "note": "claude-opus-5-5 · 第 1 次派单"
+  },
+  {
+   "at": "2026-11-08T12:32:50",
+   "item": "native_ear",
+   "event": "dispatch",
+   "by": "Codex CLI（codex exec -s workspace-write，另起进程）",
+   "note": "gpt-6-astra（reasoning high，~/.codex/config.toml） · 第 1 次派单"
+  },
+  {
+   "at": "2026-11-08T15:09:09",
+   "event": "corrections",
+   "note": "修复页：59 条方案、首帧换了 5 镜"
+  },
+  {
+   "at": "2026-11-08T15:28:42",
+   "event": "corrections",
+   "note": "修复页：59 条方案、首帧换了 5 镜"
+  },
+  {
+   "at": "2026-11-08T16:43:31",
+   "event": "rename",
+   "by": "Claude Code",
+   "note": "改名（用户：看不出哪张最新）：ep01 · 出片前（故事＋分镜＋prompt＋首帧/故事板） · 第 1 轮 → ep01 · 场一 · 出片前 第 1 轮 · 11-08 10:20"
+  }
+ ],
+ "fp_scope": "scenes",
+ "child": "ai_videos/chuanyue_yiri/reviews/ep01_20261108-111837_pregen_r2",
+ "corrections": "corrections.json"
+}

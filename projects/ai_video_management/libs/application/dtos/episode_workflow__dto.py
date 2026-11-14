@@ -11,6 +11,7 @@ class EpisodeWorkflowQdto:
     shot_keys: dict[str, dict[str, str]]
     packs: dict[str, dict[str, Any]] = field(default_factory=dict)   # shot key -> 资料包 status and files (follow-up 229)
     renders: dict[str, list[dict[str, Any]]] = field(default_factory=dict)   # shot key -> generations, newest first (follow-up 230)
+    first_frames: dict[str, dict[str, Any]] = field(default_factory=dict)   # shot key -> 首帧图 path / mtime(ms) / prompt (follow-up 336)
 
 
 @dataclass(frozen=True)

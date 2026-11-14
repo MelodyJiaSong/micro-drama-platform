@@ -1,0 +1,11 @@
+export type Mode = 'advanced' | 'simple' | 'sounds';
+export type Reference = { asset_id?: string; url?: string };
+export type Generation = { prompt: string; mode: Mode; instrumental: boolean; format: 'mp3' | 'wav'; title?: string; target?: string; lyrics?: string; options: Record<string, string | number | boolean>; references: Reference[] };
+export type AudioFile = { name: string; bytes: number; sha256: string; song_url: string };
+export type Job = { id: string; status: string; prompt: string; format: string; created_at: string; updated_at: string; request: Partial<Generation>; applied_options: Record<string, unknown>; next_action: string; error: { code: string; message: string } | null; files: AudioFile[]; song_urls: string[] };
+export type SchemaField = { description?: string; minimum?: number; maximum?: number; maxLength?: number; type?: string; enum?: string[]; anyOf?: SchemaField[] };
+export type Capabilities = { automation_paused: boolean; options: string[]; uploads: { max_bytes: number; extensions: string[] }; request_schema: { $defs: { GenerationOptions: { properties: Record<string, SchemaField> } } }; evidence: Record<string, string> };
+export type Plan = { schema_valid: boolean; automation_paused: boolean; warnings: string[]; request: Generation };
+export type Pending = { key: string; request: Generation };
+export const newRequest = (): Generation => ({ prompt: '', mode: 'advanced', instrumental: true, format: 'mp3', options: {}, references: [] });
+export const statusNames: Record<string, string> = { queued: '排队中', preparing: '填写网页', submitting: '正在提交', waiting: '正在生成', downloading: '收取音频', completed: '已完成', needs_login: '需要登录', needs_attention: '需要处理', uncertain: '提交结果未知', failed: '失败', cancelled: '已取消' };

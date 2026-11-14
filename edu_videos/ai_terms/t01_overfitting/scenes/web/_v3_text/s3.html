@@ -1,0 +1,57 @@
+<style>
+  .head { position: absolute; left: var(--mx); top: var(--mt); }
+  .head .h1 { margin-top: 16px; white-space: nowrap; }
+  #chart { position: absolute; left: 96px; top: 250px; }
+  .side { position: absolute; left: 1250px; top: 280px; width: 550px; }
+  .row { padding: 24px 0 26px; border-top: 1px solid var(--hair); display: grid; grid-template-columns: 1fr auto; align-items: end; }
+  .row .name { font-size: var(--fs-caption); font-weight: 600; }
+  .row .tag { font-size: var(--fs-micro); font-weight: 600; letter-spacing: .08em; text-align: right; }
+  .row .num { grid-column: 1 / 3; display: flex; align-items: baseline; gap: 16px; margin-top: 8px; }
+  .row .num b { font-size: 64px; font-weight: 600; }
+  .row .num span { font-size: var(--fs-micro); color: var(--sub); }
+</style>
+
+<div class="head">
+  <div class="eyebrow" data-zh="01 · 问题" data-en="01 · The problem"></div>
+  <div class="h1" id="h-a" data-zh="同一组练习题，三种模型" data-en="One set of practice problems, three models"></div>
+  <div class="h1" id="h-b" style="position:absolute;top:0;margin-top:44px;opacity:0"
+       data-zh='先猜一下：换成新题，<span class="grad">哪一种考得最好？</span>' data-en='Quick guess: on new questions, <span class="grad">which does best?</span>'></div>
+</div>
+<svg id="chart"></svg>
+<div class="side">
+  <div class="row" id="r1"><div class="name c-neutral" data-zh="① 直线" data-en="① Straight line"></div><div class="tag c-neutral" id="t1" data-zh="欠拟合" data-en="UNDERFIT"></div>
+    <div class="num"><b id="n1">0.00</b><span data-zh="练习误差" data-en="practice error"></span></div></div>
+  <div class="row" id="r2"><div class="name c-good" data-zh="② 平缓曲线" data-en="② Gentle curve"></div><div class="tag"></div>
+    <div class="num"><b id="n2">0.00</b><span data-zh="练习误差" data-en="practice error"></span></div></div>
+  <div class="row" id="r3"><div class="name c-bad" data-zh="③ 弯曲线" data-en="③ Wiggly curve"></div><div class="tag"></div>
+    <div class="num"><b id="n3">0.00</b><span data-zh="练习误差" data-en="practice error"></span></div></div>
+</div>
+
+<script>
+const C = makeChart("#chart"), T = EDU.tl;
+const f1 = v => polyval(D.coef["1"], v);
+const gaps = C.gaps(D.train, f1, "--d-neutral");
+const c1 = C.curve(D.fits["1"], "--d-neutral", 4), c2 = C.curve(D.fits["3"], "--d-good", 6), c3 = C.curve(D.fits["9"], "--d-bad", 6);
+const dots = C.dots(D.train);
+const errLab = C.note(EDU.tr("误差", "Error"), [D.train[2][0], (D.train[2][1] + f1(D.train[2][0])) / 2], 16, -14, "caption ink2");
+
+gsap.set(["#r1", "#r2", "#r3", "#t1", c1, c2, c3, gaps, errLab], { opacity: 0 });
+EDU.in(".head .eyebrow, #h-a", 0, { stagger: .08 });
+EDU.in(dots, 0.15, { d: .5, stagger: .03 });
+// l14 直线 → 点到线的距离叫误差
+T.set(c1, { opacity: 1 }, EDU.t("l14", .05)); EDU.draw(c1, EDU.t("l14", .05), 1.0);
+EDU.in(gaps, EDU.t("l14", .55)); EDU.in(errLab, EDU.t("l14", .62));
+// l15 练习误差压不下来 → 欠拟合
+EDU.in("#r1", EDU.t("l15")); EDU.count("#n1", EDU.t("l15"), mse(1), .9);
+EDU.in("#t1", EDU.t("l15", .7));
+// l16 平缓曲线
+EDU.out([errLab], EDU.t("l16")); EDU.dim(gaps, EDU.t("l16"), 0); EDU.dim(c1, EDU.t("l16"), .25);
+T.set(c2, { opacity: 1 }, EDU.t("l16", .05)); EDU.draw(c2, EDU.t("l16", .05), 1.4);
+EDU.in("#r2", EDU.t("l16", .35)); EDU.count("#n2", EDU.t("l16", .35), mse(3), .9);
+// l17 弯曲线，练习误差 0
+EDU.dim(c2, EDU.t("l17"), .3);
+T.set(c3, { opacity: 1 }, EDU.t("l17", .08)); EDU.draw(c3, EDU.t("l17", .08), 1.8);
+EDU.in("#r3", EDU.t("l17", .5)); EDU.count("#n3", EDU.t("l17", .55), mse(9), .8);
+// l18 先猜一下
+EDU.out("#h-a", EDU.t("l18")); EDU.in("#h-b", EDU.t("l18", .05));
+</script>

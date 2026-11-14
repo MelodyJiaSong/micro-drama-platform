@@ -167,6 +167,14 @@ button:disabled { cursor: not-allowed; opacity: 0.6; }
 .tree-icon { font-size: 11px; }
 .tree-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+/* 审查单导航（follow-up 333）：导航里的一个类，剧 → 集 → 每轮审查单 */
+.review-nav { border-bottom: 1px solid var(--border, #e5e7eb); padding-bottom: 4px; margin-bottom: 4px; }
+.review-nav .rn-root .tree-label { font-weight: 600; }
+.rn-count { margin-left: auto; padding-left: 6px; color: var(--text-muted); font-size: 11px; white-space: nowrap; }
+.rn-dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: #9ca3af; }
+.rn-dot-run { background: #f59e0b; } .rn-dot-ok { background: #0e7a5f; } .rn-dot-void { background: #b91c1c; }
+.rn-dot-ask { background: #2563eb; } .rn-dot-go { background: #16a34a; box-shadow: 0 0 0 2px #bbf7d0; }
+
 /* Small inline action button on a sidebar row (🧹 永久清理 on _deleted/) */
 .drama-rename-btn {
   margin-left: 6px;
@@ -271,6 +279,16 @@ button:disabled { cursor: not-allowed; opacity: 0.6; }
   border: 1px solid var(--locked-border); border-radius: 999px;
 }
 .drama-page-header .obsolete-badge, .drama-page-toolbar .obsolete-badge { font-size: 12px; margin-left: 0; }
+/* 「Demo 定版」(DemoFinalBadge) — 英雄 demo 已定版；发布文案没对上定版成片时变警示色 (follow-up 315) */
+.demo-final-badge {
+  display: inline-block; margin-left: 6px; padding: 0 6px; vertical-align: middle;
+  font-size: 11px; line-height: 1.6; font-weight: 600; white-space: nowrap;
+  color: #1a7f37; background: var(--tint-a);
+  border: 1px solid var(--tint-a-border); border-radius: 999px;
+}
+.demo-final-badge.needs-publish { color: var(--warning-text); background: var(--warning-bg); border-color: var(--locked-border); }
+h1 .demo-final-badge, h2 .demo-final-badge { font-size: 13px; }
+.asset-tile.demo-final .asset-tile-media, .character-tile.demo-final .character-tile-media { box-shadow: inset 0 0 0 3px #1a7f37; }
 .reader-body { padding: 8px 0; }
 
 .text-view {
@@ -863,6 +881,16 @@ button:disabled { cursor: not-allowed; opacity: 0.6; }
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 12px;
+}
+/* Group folders under characters/ (follow-up 284): one titled section each */
+.actor-grid-group + .actor-grid-group {
+  margin-top: 20px;
+}
+.actor-grid-group-title {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
 }
 /* Empty-state box */
 .actor-grid-empty {
@@ -2442,3 +2470,28 @@ a.research-vx-channel:hover { color: var(--accent); }
 }
 .zoom-viewer-toolbar button:hover { background: rgba(255, 255, 255, 0.12); }
 .zoom-viewer-pct { min-width: 48px; text-align: center; font-variant-numeric: tabular-nums; }
+
+/* 人物卡「样片与正片」（follow-up 286） */
+.character-reel { margin: 0 0 20px; padding: 12px 14px; border: 1px solid #e0e5df; border-radius: 8px; background: #fbfcfb; }
+.character-reel h3 { margin: 0 0 8px; }
+.character-reel h4 { margin: 14px 0 8px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.character-reel-tabs { display: flex; gap: 4px; border-bottom: 1px solid #e0e5df; margin-bottom: 12px; }
+.character-reel-tabs button { padding: 6px 14px; border: 1px solid transparent; border-bottom: none; border-radius: 6px 6px 0 0; background: none; color: #2d4a6b; cursor: pointer; }
+.character-reel-tabs button[aria-selected="true"] { border-color: #e0e5df; background: #fff; font-weight: 600; margin-bottom: -1px; }
+.character-reel-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.character-reel-card { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.character-reel-card.wide { grid-column: span 2; }
+.character-reel-card.demo-final { padding: 6px; border: 2px solid #1a7f37; border-radius: 6px; }
+.character-reel-video { width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 4px; }
+.character-reel-peak { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 4px; }
+.character-reel-skill { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.character-reel-icon { width: 28px; height: 28px; border-radius: 4px; }
+.character-reel-icon.none { display: inline-block; background: #e0e5df; }
+.character-reel-meta { font-size: 0.85em; color: #5b665e; overflow-wrap: anywhere; }
+.character-reel-note { margin: 0; font-size: 0.9em; color: #3c4a40; }
+.character-reel-empty { margin: 0; padding: 10px; color: #7d5c26; background: #faf5e9; border-radius: 4px; }
+@media (max-width: 640px) { .character-reel-card.wide { grid-column: auto; } }
+/* 审查单导航：同一范围最新一张标「最新」，被取代的变灰（用户 2026-11-08） */
+.rn-latest { flex: none; margin-left: 6px; padding: 0 5px; border-radius: 6px; font-size: 10.5px; line-height: 1.6; font-weight: 700; background: #0e6b66; color: #fff; white-space: nowrap; }
+.review-nav .rn-old:not(.tree-active) .tree-label, .review-nav .rn-old:not(.tree-active) .rn-count { opacity: 0.55; }
+.review-nav .rn-old:not(.tree-active) .rn-dot { opacity: 0.45; }

@@ -1,0 +1,72 @@
+<style>
+  .pair { position: absolute; left: var(--mx); top: 300px; }
+  .pair .display + .display { margin-top: 18px; }
+  #wall { position: absolute; left: var(--mx); top: 200px; display: grid; grid-template-columns: repeat(10, auto); gap: 16px 18px; }
+  .flow { position: absolute; left: var(--mx); top: 560px; display: flex; align-items: center; gap: 34px; }
+  .flow .box { font-size: var(--fs-h2); font-weight: 600; }
+  html[lang="en"] .flow { gap: 24px; } html[lang="en"] .flow .box, html[lang="en"] .flow .pill { font-size: 44px !important; padding: 20px 28px !important; }
+  .name { position: absolute; left: var(--mx); top: 760px; }
+  .use { position: absolute; left: var(--mx); top: 330px; display: flex; align-items: center; gap: 40px; }
+  .use .box { font-size: var(--fs-h2); font-weight: 600; }
+  .use .ans { font-size: 180px; font-weight: 700; line-height: 1; }
+  .use .def { position: absolute; left: 0; top: 330px; width: 1600px; }
+  .myth { position: absolute; left: var(--mx); top: 250px; width: 1600px; }
+  .myth .row { display: flex; align-items: baseline; gap: 34px; padding: 30px 0; border-top: 1px solid var(--hair); }
+  .myth .k { width: 260px; font-size: var(--fs-caption); font-weight: 600; letter-spacing: .08em; }
+</style>
+
+<div style="position:absolute;left:var(--mx);top:var(--mt)"><div class="eyebrow" data-zh="01 · 规则写不完" data-en="01 · When rules fall short"></div></div>
+<div class="pair" id="pair">
+  <div class="display sub" id="pa" data-zh="写规则" data-en="Write rules"></div>
+  <div class="display grad" id="pb" data-zh="给例子" data-en="Give examples"></div>
+</div>
+<div id="wall"></div>
+<div class="flow" id="flow">
+  <div class="box" data-zh="例子 + 答案" data-en="Examples + answers"></div><span class="arrow">→</span>
+  <div class="box" data-zh="学习" data-en="Learning"></div><span class="arrow">→</span>
+  <div class="pill learn" style="font-size:var(--fs-h2);padding:22px 36px" data-zh="规律" data-en="Patterns"></div>
+</div>
+<div class="name" id="name"><div class="h1" data-zh='这叫 <span class="accent">机器学习</span>' data-en='That’s <span class="accent">machine learning</span>'></div>
+  <div class="caption" data-zh="machine learning" data-en=""></div></div>
+<div class="use" id="use">
+  <div id="newimg"></div><span class="arrow">→</span>
+  <div class="box" data-zh="模型" data-en="Model"></div><span class="arrow">→</span>
+  <div class="ans accent">3</div>
+  <div class="def body ink2" id="mdef" data-zh='模型 = 学出来的认法' data-en='Model = what it learned'></div>
+</div>
+<div class="myth" id="myth">
+  <div class="row" id="m1"><div class="k sub" data-zh="很多人以为" data-en="MANY THINK"></div>
+    <div class="h2 sub" id="m1t" data-zh="AI 的本事是人写进去的" data-en="Programmers hard-coded it all"></div></div>
+  <div class="row" id="m2"><div class="k accent" data-zh="其实" data-en="IN FACT"></div>
+    <div class="h2" data-zh='大多从例子学来<br>例子 = <span class="accent">数据</span>' data-en='Mostly from examples = <span class="accent">data</span>'></div></div>
+</div>
+
+<script>
+const T = EDU.tl;
+for (let j = 0; j < 2; j++) for (let k = 0; k < 10; k++)
+  document.querySelector("#wall").appendChild(tileEl(D.samples[String(k)][j], 92, String(k), "accent"));
+document.querySelector("#newimg").appendChild(tileEl(D.probe.img, 150, L("新图", "New image"), "sub"));
+gsap.set(["#pa", "#pb", "#wall .tile", "#flow > *", "#name", "#use", "#use > *", "#mdef", "#myth", "#m1", "#m2"], { opacity: 0 });
+// l08 写规则 → 给例子
+EDU.in("#pa", EDU.t("l08", 0.35)); EDU.dim("#pa", EDU.t("l08", 0.62), 0.3);
+EDU.in("#pb", EDU.t("l08", 0.7));
+// l09 每一张都带答案
+EDU.out("#pair", EDU.t("l09"));
+EDU.in("#wall .tile", EDU.t("l09", 0.1), { stagger: 0.05 });
+// l10 例子 + 答案 → 学习 → 规律；名字后出
+EDU.in("#flow > *", EDU.t("l10"), { stagger: 0.3 });
+EDU.in("#name", EDU.t("l10", 0.62));
+// l11 模型：新图 → 模型 → 答案
+EDU.out(["#wall", "#flow", "#name"], EDU.t("l11"));
+EDU.in("#use", EDU.t("l11", 0.05), { d: 0.01 });
+EDU.in(["#newimg", "#use .arrow:nth-of-type(1)", "#use .box"], EDU.t("l11", 0.1), { stagger: 0.25 });
+EDU.in("#mdef", EDU.t("l11", 0.3));
+EDU.in(["#use .arrow:nth-of-type(2)", "#use .ans"], EDU.t("l11", 0.65), { stagger: 0.2 });
+// l12 点名误解，再驳斥
+EDU.out("#use", EDU.t("l12"));
+EDU.in("#myth", EDU.t("l12", 0.02), { d: 0.01 });
+EDU.in("#m1", EDU.t("l12", 0.05));
+EDU.dim("#m1t", EDU.t("l12", 0.4), 0.35);
+EDU.in("#m2", EDU.t("l12", 0.42));
+EDU.out("#myth", EDU.S.duration - 0.5);
+</script>

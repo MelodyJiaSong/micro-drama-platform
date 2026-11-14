@@ -1,0 +1,37 @@
+<style>
+  #mach { position: absolute; left: 140px; top: 200px; }
+  .side { position: absolute; left: 860px; width: 940px; }
+  .s1 { top: 330px; }
+  .s1 .h1 { margin-top: 14px; }
+  .q { position: absolute; left: 720px; top: 150px; font-size: 200px; font-weight: 700; color: var(--accent-text); line-height: 1; }
+  .s2 { top: 560px; }
+  .name { top: 330px; }
+  .name .display { margin-top: 10px; }
+  .name .h2 { margin-top: 18px; }
+</style>
+
+<svg id="mach"></svg>
+<div class="q" id="q">?</div>
+<div class="side s1" id="s1"><div class="eyebrow" data-zh="上一期" data-en="Last time"></div>
+  <div class="h1" data-zh="模型 = 带旋钮的机器" data-en="Model = machine + knobs"></div></div>
+<div class="side s2 h1" id="s2" data-zh='拧得好不好<span class="accent">？</span>' data-en='Is this turn <span class="accent">better</span>?'></div>
+<div class="side name" id="name"><div class="eyebrow" data-zh="给错误打分的规则" data-en="The rule for scoring mistakes"></div>
+  <div class="display grad" data-zh="损失函数" data-en="Loss function"></div>
+  <div class="h2 sub" data-zh="Loss function" data-en=""></div></div>
+
+<script>
+const M = machine("#mach");
+gsap.set(["#mach", "#q", "#s1", "#s2", "#name", M.screen], { opacity: 0 });
+// l01 上一期：模型是一台带旋钮的机器
+EDU.in("#mach", EDU.t("l01", .05), { d: 1 }); EDU.in("#s1", EDU.t("l01", .2));
+M.turn(0, -40, 50, EDU.t("l01", .6), .9); M.turn(1, 30, -20, EDU.t("l01", .7), .9);
+// l02 什么叫对？拧得好不好
+EDU.out("#s1", EDU.t("l02")); EDU.in("#s2", EDU.t("l02", .1)); EDU.in("#q", EDU.t("l02", .3));
+M.turn(0, 50, 0, EDU.t("l02", .4), .6); M.turn(0, 0, 70, EDU.t("l02", .75), .6);
+// l03 给错误打个分：机器顶上出现分数屏
+EDU.out(["#q", "#s2"], EDU.t("l03")); EDU.in(M.screen, EDU.t("l03", .3));
+countTo(M.scoreT, EDU.t("l03", .55), 0, 13.4, .9, v => v.toFixed(1));
+// l04 损失 / 损失函数
+EDU.in("#name", EDU.t("l04", .1));
+EDU.out(["#mach", "#name", M.screen], EDU.S.duration - .5);
+</script>

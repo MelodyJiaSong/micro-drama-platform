@@ -1,0 +1,67 @@
+<style>
+  .hook { position: absolute; left: var(--mx); top: 300px; }
+  .hook .line { display: flex; align-items: baseline; gap: 36px; }
+  .hook .line + .line { margin-top: 26px; }
+  .hook .k { font-size: var(--fs-h2); font-weight: 500; color: var(--sub); width: 360px; }
+  .hook .v { font-size: 104px; font-weight: 700; letter-spacing: -.01em; }
+  .hook .q { margin-top: 56px; }
+  #chart { position: absolute; left: 96px; top: 240px; }
+  .head { position: absolute; left: var(--mx); top: var(--mt); }
+  .head .h1 { margin-top: 18px; white-space: nowrap; }
+  .cap { position: absolute; font-size: var(--fs-caption); font-weight: 500; }
+  .task { position: absolute; left: 1260px; top: 360px; width: 540px; }
+  .task .h2 { margin-top: 16px; }
+</style>
+
+<div class="hook" id="hook">
+  <div class="line" id="hk1"><div class="k" data-zh="手里的数据" data-en="On your data"></div><div class="v c-good" data-zh="几乎满分" data-en="Nearly perfect"></div></div>
+  <div class="line" id="hk2"><div class="k" data-zh="换到新数据" data-en="On new data"></div><div class="v c-bad" data-zh="一塌糊涂" data-en="Falls apart"></div></div>
+  <div class="h2 sub q" id="hk3" data-zh="为什么？" data-en="Why?"></div>
+</div>
+
+<div class="head" id="head"><div class="eyebrow" data-zh="01 · 问题" data-en="01 · The problem"></div>
+  <div class="h1" data-zh="模型在学什么" data-en="What a model learns"></div></div>
+<svg id="chart" width="1100" height="620"></svg>
+<div class="task" id="task"><div class="eyebrow" data-zh="模型的任务" data-en="The model's job"></div>
+  <div class="h2" data-zh='从这些点里找出<span class="accent">规律</span>，<br>去预测没见过的新数据' data-en='Find the <span class="accent">pattern</span> in these points,<br>to predict data it has never seen'></div></div>
+
+<script>
+const D = EDU.S.data, W = 1100, H = 620, T = EDU.tl;
+const x = d3.scaleLinear([-3, 3], [30, W - 30]), y = d3.scaleLinear([-3.2, 3.2], [H, 0]);
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const svg = d3.select("#chart");
+const base = svg.append("line").attr("class", "axis-base").attr("x1", 30).attr("x2", W - 30).attr("y1", y(0)).attr("y2", y(0)).node();
+const line = d3.line().x((d, i) => x(D.xs[i])).y(d => y(d)).curve(d3.curveCatmullRom);
+const truth = svg.append("path").attr("d", line(D.truth)).attr("fill", "none").attr("stroke", css("--ink"))
+  .attr("stroke-width", 3).attr("stroke-dasharray", "2 10").attr("stroke-linecap", "round").node();
+const noise = svg.append("g").node();
+D.train.forEach(([a, b], i) => {
+  const ty = 1.2 * Math.sin(1.3 * a) + 0.25 * a;
+  d3.select(noise).append("line").attr("x1", x(a)).attr("x2", x(a)).attr("y1", y(b)).attr("y2", y(ty))
+    .attr("stroke", css("--d-bad")).attr("stroke-width", 3);
+});
+const dots = svg.append("g").selectAll("circle").data(D.train).join("circle")
+  .attr("cx", d => x(d[0])).attr("cy", d => y(d[1])).attr("r", 10).attr("fill", css("--d-train")).nodes();
+const capT = document.createElement("div"); capT.className = "cap"; capT.innerHTML = EDU.tr("背后的规律", "The hidden pattern");
+capT.style.left = (96 + x(-1.5) - 60) + "px"; capT.style.top = (240 + y(-1.85)) + "px"; document.getElementById("stage").appendChild(capT);
+const capN = document.createElement("div"); capN.className = "cap c-bad"; capN.innerHTML = EDU.tr("噪声：随机的偏差", "Noise: random wobble");
+capN.style.left = (96 + x(1.0)) + "px"; capN.style.top = (240 + y(1.95)) + "px"; document.getElementById("stage").appendChild(capN);
+
+gsap.set(["#head", "#task", base, truth, noise, capT, capN, ...dots], { opacity: 0 });
+// l07 冷开场：一个反差
+EDU.in("#hk1", EDU.t("l07"));
+EDU.in("#hk2", EDU.t("l07", .42));
+EDU.in("#hk3", EDU.t("l07", .82));
+// l08 训练数据
+EDU.out("#hook", EDU.t("l08"));
+EDU.in("#head", EDU.t("l08", .05));
+T.to(base, { opacity: 1, duration: .5 }, EDU.t("l08", .1));
+EDU.in(dots, EDU.t("l08", .2), { stagger: .06 });
+// l09 规律 + 噪声
+T.set(truth, { opacity: .55 }, EDU.t("l09")); EDU.draw(truth, EDU.t("l09"), 1.4);
+EDU.in(capT, EDU.t("l09", .2));
+EDU.in(noise, EDU.t("l09", .58)); EDU.in(capN, EDU.t("l09", .62));
+// l10 任务
+EDU.out([capT, capN, noise], EDU.t("l10")); EDU.dim(truth, EDU.t("l10"), .18);
+EDU.in("#task", EDU.t("l10", .1));
+</script>

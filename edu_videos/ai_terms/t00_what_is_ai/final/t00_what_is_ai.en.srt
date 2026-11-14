@@ -1,0 +1,599 @@
+1
+00:00:00,600 --> 00:00:01,686
+Your phone can find
+
+2
+00:00:01,686 --> 00:00:03,000
+your cat in your photos
+
+3
+00:00:03,000 --> 00:00:04,658
+yet nobody ever gave it rules
+
+4
+00:00:04,658 --> 00:00:06,144
+for what a cat looks like.
+
+5
+00:00:06,494 --> 00:00:08,063
+So how does it do it?
+
+6
+00:00:08,063 --> 00:00:10,603
+It saw tons of examples and worked
+
+7
+00:00:10,603 --> 00:00:12,395
+out the patterns itself.
+
+8
+00:00:12,395 --> 00:00:13,740
+That's today's AI.
+
+9
+00:00:22,067 --> 00:00:24,429
+A traditional program works differently:
+
+10
+00:00:24,429 --> 00:00:26,378
+people write the rules one by one
+
+11
+00:00:26,378 --> 00:00:28,149
+and the computer follows them.
+
+12
+00:00:28,499 --> 00:00:30,465
+For payroll or booking flights
+
+13
+00:00:30,465 --> 00:00:32,955
+the rules are clear, so that's enough.
+
+14
+00:00:33,305 --> 00:00:34,995
+But some things are hard
+
+15
+00:00:34,995 --> 00:00:36,263
+to write rules for
+
+16
+00:00:36,263 --> 00:00:38,587
+like reading a handwritten three.
+
+17
+00:00:38,587 --> 00:00:39,926
+Fat, skinny, tilted
+
+18
+00:00:39,926 --> 00:00:41,475
+you know it instantly.
+
+19
+00:00:41,825 --> 00:00:43,623
+Now try writing down how.
+
+20
+00:00:43,623 --> 00:00:45,133
+"Two curves stacked"?
+
+21
+00:00:45,133 --> 00:00:46,212
+So is an eight.
+
+22
+00:00:46,212 --> 00:00:48,010
+"Bottom half opens left"?
+
+23
+00:00:48,010 --> 00:00:49,089
+So does a five.
+
+24
+00:00:49,439 --> 00:00:51,365
+Rules like that miss some threes
+
+25
+00:00:51,365 --> 00:00:53,532
+and mistake other digits for threes.
+
+26
+00:00:55,033 --> 00:00:58,035
+So most of today's AI flips it around:
+
+27
+00:00:58,035 --> 00:00:59,931
+no rules, just examples.
+
+28
+00:01:00,281 --> 00:01:01,922
+Show the computer hundreds
+
+29
+00:01:01,922 --> 00:01:04,069
+or thousands of handwritten digits
+
+30
+00:01:04,069 --> 00:01:05,395
+each with its answer:
+
+31
+00:01:05,395 --> 00:01:07,478
+this is a three, this is a seven.
+
+32
+00:01:07,828 --> 00:01:09,511
+It finds the patterns itself
+
+33
+00:01:09,511 --> 00:01:11,615
+and that's called machine learning.
+
+34
+00:01:11,965 --> 00:01:14,052
+What it learns is called a model.
+
+35
+00:01:14,052 --> 00:01:15,696
+Show the model a new image
+
+36
+00:01:15,696 --> 00:01:17,404
+and it gives you an answer.
+
+37
+00:01:17,754 --> 00:01:19,843
+A lot of people think programmers
+
+38
+00:01:19,843 --> 00:01:21,742
+coded in everything AI can do.
+
+39
+00:01:21,742 --> 00:01:23,768
+Mostly, it learned from examples
+
+40
+00:01:23,768 --> 00:01:24,971
+which we call data.
+
+41
+00:01:29,100 --> 00:01:30,830
+Let's actually try it
+
+42
+00:01:30,830 --> 00:01:33,797
+with nearly 1,800 handwritten digits
+
+43
+00:01:33,797 --> 00:01:35,527
+each a tiny 8×8 grid.
+
+44
+00:01:35,877 --> 00:01:38,307
+First we lock away 300 as the test
+
+45
+00:01:38,307 --> 00:01:41,165
+and the rest are examples to learn from.
+
+46
+00:01:41,515 --> 00:01:43,687
+Learning from them is called training
+
+47
+00:01:43,687 --> 00:01:45,331
+and during training it never
+
+48
+00:01:45,331 --> 00:01:46,564
+sees a test question.
+
+49
+00:01:46,914 --> 00:01:48,901
+Only questions it hasn't seen can
+
+50
+00:01:48,901 --> 00:01:50,646
+show whether it truly learned
+
+51
+00:01:50,646 --> 00:01:51,730
+or just memorized.
+
+52
+00:01:52,080 --> 00:01:53,226
+So, take a guess:
+
+53
+00:01:53,226 --> 00:01:54,642
+with just 10 examples
+
+54
+00:01:54,642 --> 00:01:57,271
+how much of the test does it get right?
+
+55
+00:01:59,121 --> 00:02:00,286
+Pick ten at random
+
+56
+00:02:00,286 --> 00:02:01,644
+and often some digits
+
+57
+00:02:01,644 --> 00:02:03,003
+don't show up at all.
+
+58
+00:02:03,353 --> 00:02:05,093
+We tried twenty different
+
+59
+00:02:05,093 --> 00:02:06,415
+random sets of ten.
+
+60
+00:02:06,415 --> 00:02:08,642
+The typical score was about 37%:
+
+61
+00:02:08,642 --> 00:02:11,287
+better than the 10% you'd get guessing
+
+62
+00:02:11,287 --> 00:02:12,261
+but still low.
+
+63
+00:02:12,611 --> 00:02:16,205
+With a hundred examples, it gets 88%.
+
+64
+00:02:16,205 --> 00:02:19,508
+With all 1,500 or so, it gets 97%.
+
+65
+00:02:19,858 --> 00:02:21,924
+We never gave it rules for a three
+
+66
+00:02:21,924 --> 00:02:24,113
+just told it which ones were threes.
+
+67
+00:02:24,113 --> 00:02:25,207
+In this experiment
+
+68
+00:02:25,207 --> 00:02:27,273
+more examples meant better scores.
+
+69
+00:02:27,623 --> 00:02:29,700
+Still, it missed 10 of the 300
+
+70
+00:02:29,700 --> 00:02:32,192
+like this messy two it called a one.
+
+71
+00:02:36,300 --> 00:02:38,140
+Here's another way to see it:
+
+72
+00:02:38,140 --> 00:02:40,360
+today's AI is a prediction machine.
+
+73
+00:02:40,360 --> 00:02:41,946
+Not predicting the future
+
+74
+00:02:41,946 --> 00:02:43,278
+just seeing something
+
+75
+00:02:43,278 --> 00:02:44,800
+and guessing the answer.
+
+76
+00:02:45,150 --> 00:02:48,042
+Our model also says how sure it is.
+
+77
+00:02:48,042 --> 00:02:50,768
+It's 96% sure this one's a three.
+
+78
+00:02:51,118 --> 00:02:52,832
+Other AI works the same way.
+
+79
+00:02:52,832 --> 00:02:55,098
+Give a language model half a sentence
+
+80
+00:02:55,098 --> 00:02:56,812
+and it guesses the next word
+
+81
+00:02:56,812 --> 00:02:57,608
+then the next
+
+82
+00:02:57,608 --> 00:02:59,384
+until there's a whole answer.
+
+83
+00:02:59,734 --> 00:03:01,366
+Chatbots built on large
+
+84
+00:03:01,366 --> 00:03:03,565
+language models reply this way.
+
+85
+00:03:03,915 --> 00:03:04,903
+They guess well
+
+86
+00:03:04,903 --> 00:03:06,418
+but a convincing answer
+
+87
+00:03:06,418 --> 00:03:07,670
+can still be wrong.
+
+88
+00:03:09,200 --> 00:03:11,995
+So how do all these terms fit together?
+
+89
+00:03:11,995 --> 00:03:14,504
+Picture AI, artificial intelligence
+
+90
+00:03:14,504 --> 00:03:16,081
+as the biggest circle:
+
+91
+00:03:16,081 --> 00:03:17,658
+computers doing things
+
+92
+00:03:17,658 --> 00:03:19,450
+that seem to take smarts.
+
+93
+00:03:19,800 --> 00:03:21,244
+A chess program built
+
+94
+00:03:21,244 --> 00:03:23,650
+on hand-written rules counts as AI.
+
+95
+00:03:23,650 --> 00:03:25,850
+A plain payroll program doesn't.
+
+96
+00:03:26,200 --> 00:03:28,076
+Inside AI is machine learning
+
+97
+00:03:28,076 --> 00:03:30,017
+and inside that, deep learning
+
+98
+00:03:30,017 --> 00:03:31,957
+which runs on neural networks:
+
+99
+00:03:31,957 --> 00:03:33,704
+many layers of simple math.
+
+100
+00:03:34,054 --> 00:03:35,943
+"Deep" just means many layers
+
+101
+00:03:35,943 --> 00:03:37,442
+not deep understanding.
+
+102
+00:03:37,442 --> 00:03:38,810
+Large language models
+
+103
+00:03:38,810 --> 00:03:40,699
+are built with deep learning.
+
+104
+00:03:41,049 --> 00:03:42,578
+When I say "today's AI,"
+
+105
+00:03:42,578 --> 00:03:44,107
+I mean machine learning:
+
+106
+00:03:44,107 --> 00:03:45,955
+AI that learns from examples.
+
+107
+00:03:50,067 --> 00:03:52,648
+Learning from data can go wrong, too.
+
+108
+00:03:52,648 --> 00:03:54,043
+According to Reuters
+
+109
+00:03:54,043 --> 00:03:55,647
+Amazon once tried using
+
+110
+00:03:55,647 --> 00:03:57,112
+AI to screen résumés.
+
+111
+00:03:57,462 --> 00:03:58,962
+It learned from 10 years
+
+112
+00:03:58,962 --> 00:04:00,837
+of résumés sent to the company
+
+113
+00:04:00,837 --> 00:04:01,712
+mostly by men.
+
+114
+00:04:02,062 --> 00:04:04,339
+In effect, it taught itself that male
+
+115
+00:04:04,339 --> 00:04:05,754
+candidates were better.
+
+116
+00:04:06,104 --> 00:04:08,280
+Résumés with the word "women's,"
+
+117
+00:04:08,280 --> 00:04:10,659
+as in "women's chess club captain,"
+
+118
+00:04:10,659 --> 00:04:11,747
+got marked down.
+
+119
+00:04:12,097 --> 00:04:14,016
+The tool was later scrapped.
+
+120
+00:04:14,016 --> 00:04:15,455
+If the data is biased
+
+121
+00:04:15,455 --> 00:04:17,579
+the model can pick that up too.
+
+122
+00:04:21,700 --> 00:04:24,150
+When you use AI, remember three things.
+
+123
+00:04:24,500 --> 00:04:26,220
+First, it may answer anyway
+
+124
+00:04:26,220 --> 00:04:28,386
+even about things it's never seen.
+
+125
+00:04:28,386 --> 00:04:30,488
+Show our digit model the letter A
+
+126
+00:04:30,488 --> 00:04:32,017
+and it still has to pick
+
+127
+00:04:32,017 --> 00:04:33,164
+from zero to nine.
+
+128
+00:04:33,514 --> 00:04:35,999
+It says it's 92% sure that's a four.
+
+129
+00:04:35,999 --> 00:04:38,830
+But it can only pick from the ten digits.
+
+130
+00:04:39,180 --> 00:04:40,243
+A kid would say
+
+131
+00:04:40,243 --> 00:04:43,006
+"That's not a number." The model won't.
+
+132
+00:04:43,356 --> 00:04:45,577
+Second, it gives you predictions
+
+133
+00:04:45,577 --> 00:04:46,548
+not the truth.
+
+134
+00:04:46,548 --> 00:04:48,214
+Remember that messy two?
+
+135
+00:04:48,214 --> 00:04:50,642
+The model was 81% sure it was a one
+
+136
+00:04:50,642 --> 00:04:51,822
+and it was wrong.
+
+137
+00:04:52,172 --> 00:04:54,396
+Third, what it gets right or wrong
+
+138
+00:04:54,396 --> 00:04:55,639
+depends on its data
+
+139
+00:04:55,639 --> 00:04:58,387
+and also on how it's designed and trained.
+
+140
+00:04:58,737 --> 00:05:00,875
+So to judge whether an AI is reliable
+
+141
+00:05:00,875 --> 00:05:03,245
+first find out what data it learned from.
+
+142
+00:05:03,595 --> 00:05:06,733
+Whenever an AI sounds totally sure, ask yourself:
+
+143
+00:05:06,733 --> 00:05:09,231
+has it seen questions like this before?
+
+144
+00:05:10,733 --> 00:05:12,205
+Most of today's AI isn't
+
+145
+00:05:12,205 --> 00:05:13,922
+built on rules people write.
+
+146
+00:05:13,922 --> 00:05:15,945
+It learns patterns from examples.
+
+147
+00:05:16,295 --> 00:05:18,497
+Next time, we'll look at why a model can
+
+148
+00:05:18,497 --> 00:05:19,928
+ace the practice questions
+
+149
+00:05:19,928 --> 00:05:21,579
+and still stumble on new ones.
+
+150
+00:05:21,579 --> 00:05:23,506
+That's often a sign of overfitting.

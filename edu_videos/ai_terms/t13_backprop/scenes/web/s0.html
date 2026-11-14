@@ -1,0 +1,52 @@
+<style>
+  #grid { position: absolute; left: var(--mx); top: 300px; }
+  .ttl { position: absolute; left: var(--mx); top: 150px; }
+  .ttl .t { position: absolute; left: 0; top: 0; white-space: nowrap; }
+  .name { position: absolute; left: var(--mx); top: 420px; padding: 50px 64px 44px; background: var(--bg); border-radius: var(--radius); }
+  .name .display { margin-top: 12px; }
+  .cnt { position: absolute; right: var(--mx); top: 168px; font-size: var(--fs-h2); font-weight: 700; color: var(--d-bad); font-variant-numeric: tabular-nums; }
+</style>
+
+<div class="ttl">
+  <div class="h1 t" id="ta" data-zh='几十亿个<span class="accent">旋钮</span>' data-en='Billions of <span class="accent">knobs</span>'></div>
+  <div class="h1 t" id="tb" data-zh="每一步：往哪拧、拧多少" data-en="Which way? How far?"></div>
+  <div class="h1 t" id="tc" data-zh='挨个试？<span class="c-bad">试不完</span>' data-en='One at a time? <span class="c-bad">Takes forever</span>'></div>
+</div>
+<div class="cnt" id="cnt" data-zh='试了 <span id="cv">0</span> 个' data-en='<span id="cv">0</span> tested'></div>
+<svg id="grid"></svg>
+<div class="name" id="n">
+  <div class="display grad" data-zh="反向传播" data-en="Backpropagation"></div></div>
+
+<script>
+const T = EDU.tl, COLS = 26, ROWS = 9, GAP = 64, R = 22;
+const svg = d3.select("#grid").attr("width", COLS * GAP).attr("height", ROWS * GAP);
+const rnd = d3.randomLcg(13);
+const dials = [], ptrs = [], rings = [];
+for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+  const g = svg.append("g").attr("transform", `translate(${c * GAP + GAP / 2},${r * GAP + GAP / 2})`);
+  g.append("circle").attr("r", R).attr("fill", css("--surface")).attr("stroke", css("--hair")).attr("stroke-width", 2);
+  const p = g.append("line").attr("x1", 0).attr("y1", 0).attr("x2", 0).attr("y2", -R * .72).attr("stroke", css("--ink2"))
+    .attr("stroke-width", 4).attr("stroke-linecap", "round").attr("transform", `rotate(${(rnd() - .5) * 240})`);
+  const ring = g.append("circle").attr("r", R + 5).attr("fill", "none").attr("stroke", css("--d-bad")).attr("stroke-width", 5).attr("opacity", 0);
+  dials.push(g.node()); ptrs.push(p.node()); rings.push(ring.node());
+}
+gsap.set(["#ta", "#tb", "#tc", "#cnt", "#n"], { opacity: 0 }); gsap.set(dials, { opacity: 0 });
+const CV = document.getElementById("cv");
+// l01 几十亿个旋钮：一大片转盘
+T.to(dials, { opacity: 1, duration: .5, stagger: { each: .004, from: "start" } }, EDU.t("l01", .05));
+EDU.in("#ta", EDU.t("l01", .2));
+// l02 每一步都要知道每个往哪拧、拧多少：指针一起动
+EDU.out("#ta", EDU.t("l02")); EDU.in("#tb", EDU.t("l02", .05));
+T.to(ptrs, { rotation: "+=40", svgOrigin: "0 0", duration: 1.2, ease: "power2.inOut", stagger: { each: .002, from: "random" } }, EDU.t("l02", .2));
+// l03 一个个试？试不完
+EDU.out("#tb", EDU.t("l03")); EDU.in("#tc", EDU.t("l03", .05)); EDU.in("#cnt", EDU.t("l03", .1));
+const n = 9, t0 = EDU.t("l03", .1), dt = (EDU.t("l03", 1) - t0) / n;
+for (let i = 0; i < n; i++) { T.set(rings[i], { opacity: 1 }, t0 + i * dt); if (i) T.set(rings[i - 1], { opacity: .25 }, t0 + i * dt); }
+countTo(CV, t0, 0, n, n * dt, v => Math.round(v));
+// l04 倒着走一趟：一道波从右往左扫过，全部点亮；出名字
+EDU.out(["#tc", "#cnt"], EDU.t("l04")); T.to(rings, { opacity: 0, duration: .3 }, EDU.t("l04"));
+T.to(dials.map(d => d.querySelector("circle")), { attr: { fill: css("--accent-soft"), stroke: css("--accent") }, duration: .3,
+  stagger: { each: .02, grid: [ROWS, COLS], from: "end", axis: "x" } }, EDU.t("l04", .05));
+EDU.dim(dials, EDU.t("l04", .45), .25); EDU.in("#n", EDU.t("l04", .5));
+EDU.out(["#n", ...dials], EDU.S.duration - .5);
+</script>

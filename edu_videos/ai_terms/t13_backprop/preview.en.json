@@ -1,0 +1,472 @@
+{
+ "title": "t13 Backpropagation — narration (English)",
+ "tagline": "",
+ "lang": "en",
+ "languages": [
+  {
+   "lang": "zh",
+   "label": "中文",
+   "preview": "edu_videos/ai_terms/t13_backprop/preview.json"
+  },
+  {
+   "lang": "en",
+   "label": "English",
+   "preview": "edu_videos/ai_terms/t13_backprop/preview.en.json"
+  }
+ ],
+ "video": "edu_videos/ai_terms/t13_backprop/final/t13_backprop.en.mp4",
+ "duration": 291.0,
+ "chapters": [
+  {
+   "id": "s0",
+   "title": "Cold open",
+   "t": 0.0
+  },
+  {
+   "id": "s1",
+   "title": "In this episode",
+   "t": 24.67
+  },
+  {
+   "id": "s2",
+   "title": "Too many knobs to try",
+   "t": 37.77
+  },
+  {
+   "id": "s3",
+   "title": "Working backward",
+   "t": 72.43
+  },
+  {
+   "id": "s4",
+   "title": "A small experiment",
+   "t": 115.3
+  },
+  {
+   "id": "s5",
+   "title": "From 1986 to today",
+   "t": 229.9
+  },
+  {
+   "id": "s6",
+   "title": "Ending",
+   "t": 272.03
+  }
+ ],
+ "items": [
+  {
+   "t": 0.6,
+   "end": 5.62,
+   "title": "Today's big AI models",
+   "subtitle": "Today's big AI models have billions of knobs, some hundreds of billions.",
+   "badge": "l01",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l01.jpg"
+  },
+  {
+   "t": 5.97,
+   "end": 10.48,
+   "title": "Every step of training",
+   "subtitle": "Every step of training, you need to know which way each knob should turn, and how far.",
+   "badge": "l02",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l02.jpg"
+  },
+  {
+   "t": 10.83,
+   "end": 13.43,
+   "title": "You'd never finish testing",
+   "subtitle": "You'd never finish testing them one at a time.",
+   "badge": "l03",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l03.jpg"
+  },
+  {
+   "t": 13.78,
+   "end": 19.56,
+   "title": "The real trick?",
+   "subtitle": "The real trick? One trip backward tells you how to turn every knob. It's called backpropagation.",
+   "badge": "l04",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l04.jpg"
+  },
+  {
+   "t": 25.27,
+   "end": 30.7,
+   "title": "Last time we saw that a neural",
+   "subtitle": "Last time we saw that a neural network is layers of small units, each with its own knobs.",
+   "badge": "l05",
+   "chapter": "s1",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l05.jpg"
+  },
+  {
+   "t": 31.05,
+   "end": 36.84,
+   "title": "This time, we'll build a tiny network and watch",
+   "subtitle": "This time, we'll build a tiny network and watch the error run backward through it, knob by knob.",
+   "badge": "l06",
+   "chapter": "s1",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l06.jpg"
+  },
+  {
+   "t": 40.97,
+   "end": 46.32,
+   "title": "In training, the model makes a guess",
+   "subtitle": "In training, the model makes a guess, we compare it with the right answer, and the gap is the error.",
+   "badge": "l07",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l07.jpg"
+  },
+  {
+   "t": 46.67,
+   "end": 52.14,
+   "title": "The loss is a score for how wrong it is.",
+   "subtitle": "The loss is a score for how wrong it is. Training is turning the knobs to push that score down.",
+   "badge": "l08",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l08.jpg"
+  },
+  {
+   "t": 52.49,
+   "end": 58.34,
+   "title": "Each knob's slope tells",
+   "subtitle": "Each knob's slope tells you which way to turn, and how far. All the slopes together are the gradient.",
+   "badge": "l09",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l09.jpg"
+  },
+  {
+   "t": 58.69,
+   "end": 64.83,
+   "title": "The obvious way?",
+   "subtitle": "The obvious way? Nudge one knob, rerun everything, and see if the error went up or down.",
+   "badge": "l10",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l10.jpg"
+  },
+  {
+   "t": 65.18,
+   "end": 71.5,
+   "title": "One full rerun per knob.",
+   "subtitle": "One full rerun per knob. Billions of knobs, billions of reruns. For a single step.",
+   "badge": "l11",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l11.jpg"
+  },
+  {
+   "t": 75.63,
+   "end": 82.25,
+   "title": "Backpropagation starts at the answer instead.",
+   "subtitle": "Backpropagation starts at the answer instead. Picture a chain of gears, with a pointer on the last one.",
+   "badge": "l12",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l12.jpg"
+  },
+  {
+   "t": 82.6,
+   "end": 89.17,
+   "title": "Turn the first gear one notch",
+   "subtitle": "Turn the first gear one notch, and the second turns 2. Turn the second one notch, and the third turns 3.",
+   "badge": "l13",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l13.jpg"
+  },
+  {
+   "t": 89.52,
+   "end": 95.47,
+   "title": "So how far does the pointer move?",
+   "subtitle": "So how far does the pointer move? Multiply along the way: 2 × 3. 6 notches.",
+   "badge": "l14",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l14.jpg"
+  },
+  {
+   "t": 95.82,
+   "end": 100.72,
+   "title": "So start at the pointer and work backward",
+   "subtitle": "So start at the pointer and work backward, multiplying by each gear's ratio as you go.",
+   "badge": "l15",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l15.jpg"
+  },
+  {
+   "t": 101.07,
+   "end": 106.35,
+   "title": "At each gear you multiply once",
+   "subtitle": "At each gear you multiply once and reuse what you already have. Nothing gets redone.",
+   "badge": "l16",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l16.jpg"
+  },
+  {
+   "t": 106.7,
+   "end": 114.37,
+   "title": "A neural network is a chain like this.",
+   "subtitle": "A neural network is a chain like this. Each knob affects the answer through the layers after it. So the error can flow back the same way.",
+   "badge": "l17",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l17.jpg"
+  },
+  {
+   "t": 118.5,
+   "end": 126.29,
+   "title": "Here's a real, tiny network:",
+   "subtitle": "Here's a real, tiny network: two layers, 7 knobs. It guesses taxi fares. We give it a 5-kilometer ride.",
+   "badge": "l18",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l18.jpg"
+  },
+  {
+   "t": 126.64,
+   "end": 133.61,
+   "title": "In the first layer, two units, A and B",
+   "subtitle": "In the first layer, two units, A and B, use two knobs each to turn the five into a 6 and a 4.",
+   "badge": "l19",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l19.jpg"
+  },
+  {
+   "t": 133.96,
+   "end": 140.29,
+   "title": "The second layer",
+   "subtitle": "The second layer multiplies each by a knob, adds a seventh knob, and guesses: 29 yuan.",
+   "badge": "l20",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l20.jpg"
+  },
+  {
+   "t": 140.64,
+   "end": 146.3,
+   "title": "The real fare was 23.",
+   "subtitle": "The real fare was 23. 6 too high. That six is the error we pass back.",
+   "badge": "l21",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l21.jpg"
+  },
+  {
+   "t": 146.65,
+   "end": 152.83,
+   "title": "Last layer first.",
+   "subtitle": "Last layer first. A knob's blame is the error times the number fed into it. That's its slope.",
+   "badge": "l22",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l22.jpg"
+  },
+  {
+   "t": 153.18,
+   "end": 164.72,
+   "title": "So: 6 × 6, 36.",
+   "subtitle": "So: 6 × 6, 36. 6 × 4, 24. And the seventh knob's input is 1, so 6. Bigger input, bigger blame.",
+   "badge": "l23",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l23.jpg"
+  },
+  {
+   "t": 165.06,
+   "end": 170.34,
+   "title": "One layer back",
+   "subtitle": "One layer back, the error flows along the wires and gets multiplied by each knob it passes.",
+   "badge": "l24",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l24.jpg"
+  },
+  {
+   "t": 170.69,
+   "end": 177.0,
+   "title": "For A, the error times 2: 12.",
+   "subtitle": "For A, the error times 2: 12. For B, times 1: 6.",
+   "badge": "l25",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l25.jpg"
+  },
+  {
+   "t": 177.35,
+   "end": 181.38,
+   "title": "For their own two knobs",
+   "subtitle": "For their own two knobs, it's error times input again.",
+   "badge": "l26",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l26.jpg"
+  },
+  {
+   "t": 181.73,
+   "end": 188.73,
+   "title": "One trip back",
+   "subtitle": "One trip back, and all seven knobs have a number. We guessed high, so they all turn down, some more than others.",
+   "badge": "l27",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l27.jpg"
+  },
+  {
+   "t": 189.07,
+   "end": 195.49,
+   "title": "We turn each knob down",
+   "subtitle": "We turn each knob down a little and guess again. 29 becomes about 24. Much closer.",
+   "badge": "l28",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l28.jpg"
+  },
+  {
+   "t": 195.84,
+   "end": 202.31,
+   "title": "We checked the slow way too:",
+   "subtitle": "We checked the slow way too: one run with nothing changed, then one per nudged knob. 8 runs.",
+   "badge": "l29",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l29.jpg"
+  },
+  {
+   "t": 202.66,
+   "end": 208.62,
+   "title": "Same seven numbers, exactly.",
+   "subtitle": "Same seven numbers, exactly. Backpropagation needed just one run forward and one trip back.",
+   "badge": "l30",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l30.jpg"
+  },
+  {
+   "t": 208.97,
+   "end": 214.06,
+   "title": "Scale up to a billion knobs",
+   "subtitle": "Scale up to a billion knobs, and the slow way is 1,000,000,001 runs.",
+   "badge": "l31",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l31.jpg"
+  },
+  {
+   "t": 214.41,
+   "end": 218.76,
+   "title": "Even at one second a run",
+   "subtitle": "Even at one second a run, that's over 30 years. For one step.",
+   "badge": "l32",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l32.jpg"
+  },
+  {
+   "t": 219.11,
+   "end": 226.12,
+   "title": "Backpropagation is still",
+   "subtitle": "Backpropagation is still one trip each way. The trip back costs about two runs, so roughly 3 in all.",
+   "badge": "l33",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l33.jpg"
+  },
+  {
+   "t": 226.48,
+   "end": 228.99,
+   "title": "Without it, nobody could train these models.",
+   "subtitle": "Without it, nobody could train these models.",
+   "badge": "l34",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l34.jpg"
+  },
+  {
+   "t": 233.1,
+   "end": 240.58,
+   "title": "So where does this come from?",
+   "subtitle": "So where does this come from? In 1986, Rumelhart, Hinton and Williams laid it out in the journal Nature.",
+   "badge": "l35",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l35.jpg"
+  },
+  {
+   "t": 240.93,
+   "end": 245.7,
+   "title": "They found each knob's",
+   "subtitle": "They found each knob's slope in two passes: forward, then back from the output.",
+   "badge": "l36",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l36.jpg"
+  },
+  {
+   "t": 246.05,
+   "end": 250.66,
+   "title": "They also found that the units",
+   "subtitle": "They also found that the units in the middle learn to pick up useful patterns on their own.",
+   "badge": "l37",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l37.jpg"
+  },
+  {
+   "t": 251.01,
+   "end": 256.77,
+   "title": "Others had similar ideas earlier.",
+   "subtitle": "Others had similar ideas earlier. This paper showed the method working on networks with several layers.",
+   "badge": "l38",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l38.jpg"
+  },
+  {
+   "t": 257.12,
+   "end": 266.26,
+   "title": "Today, in PyTorch",
+   "subtitle": "Today, in PyTorch, a popular tool for building models, a single line does it: loss.backward(). Every knob gets its slope.",
+   "badge": "l39",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l39.jpg"
+  },
+  {
+   "t": 266.61,
+   "end": 271.1,
+   "title": "That's automatic differentiation.",
+   "subtitle": "That's automatic differentiation. Underneath, it's backpropagation.",
+   "badge": "l40",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l40.jpg"
+  },
+  {
+   "t": 272.63,
+   "end": 277.72,
+   "title": "Backpropagation is passing",
+   "subtitle": "Backpropagation is passing the blame backward, from the output, layer by layer.",
+   "badge": "l41",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l41.jpg"
+  },
+  {
+   "t": 278.07,
+   "end": 282.19,
+   "title": "One trip back",
+   "subtitle": "One trip back, and every knob knows which way to turn, and how far.",
+   "badge": "l42",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l42.jpg"
+  },
+  {
+   "t": 282.54,
+   "end": 287.64,
+   "title": "But with so many knobs",
+   "subtitle": "But with so many knobs, a model can memorize the practice questions and get new ones wrong.",
+   "badge": "l43",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l43.jpg"
+  },
+  {
+   "t": 287.99,
+   "end": 290.08,
+   "title": "That's overfitting, and it's up next.",
+   "subtitle": "That's overfitting, and it's up next.",
+   "badge": "l44",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t13_backprop/renders/en/thumbs/l44.jpg"
+  }
+ ],
+ "links": [
+  {
+   "label": "讲稿",
+   "path": "edu_videos/ai_terms/t13_backprop/script.en.md"
+  },
+  {
+   "label": "时间轴",
+   "path": "edu_videos/ai_terms/t13_backprop/timeline.en.json"
+  },
+  {
+   "label": "调研",
+   "path": "edu_videos/ai_terms/t13_backprop/research.md"
+  },
+  {
+   "label": "字幕",
+   "path": "edu_videos/ai_terms/t13_backprop/final/t13_backprop.en.srt"
+  }
+ ]
+}

@@ -1,0 +1,1134 @@
+{
+ "version": 5,
+ "kind": "edu_lines",
+ "scoring": {
+  "scale": {
+   "0": "没查或查不了（写 `原因：`）",
+   "1": "有问题（问题表里必须有对应条目）",
+   "2": "基本没问题，有小瑕疵（写证据）",
+   "3": "没问题（写证据）"
+  },
+  "evidence_rule": "证据要指到句号 lNN / 屏号、原文或数字，至少 8 个字；没证据的高分按 0 处理。",
+  "disagreement": "分歧：两位同一维度差 ≥2，或一人 ≤1、另一人 ≥2，交裁决人；两人都 ≥2 的维度，裁决人每项抽 2 维复核（专抓两个模型共同的盲点）。"
+ },
+ "adjudicator": {
+  "runner": "claude",
+  "model": "claude-opus-5-5"
+ },
+ "id": "lines_r2",
+ "chain": "t11_loss_function/lines",
+ "loop": 2,
+ "max_loops": 3,
+ "parent": "edu_videos/ai_terms/t11_loss_function/reviews/lines_r1",
+ "title": "t11_loss_function · 台词审（口播＋屏幕文字）第 2 轮",
+ "target": "edu_videos/ai_terms/t11_loss_function",
+ "episode": "t11_loss_function",
+ "stage": "lines",
+ "stage_name": "台词审（口播＋屏幕文字 × 中英）",
+ "scenes": [],
+ "created_at": "2026-11-09T21:52:38",
+ "author": "Claude Code",
+ "known": "",
+ "changes": "# 台词审汇总：lines_r1\n\n处理状态：待处理 0 · 已改 89 · 不改 30 · 驳回 0（`python tools/edu_review.py fix` 登记；下一轮审稿人按「处理」列逐条复核）\n\n## 各项结论（最终分：裁决过的维度用裁决分，其余取两人较低分）\n\n| 项 | 最终分 | 未处理的必改 | 结论 |\n|---|---|---|---|\n| voice_zh | V1=1 V2=1 V3=1 V4=2 V5=2 V6=1 | 0 | 不通过 |\n| voice_en | V1=1 V2=1 V3=1 V4=2 V5=2 V6=2 | 0 | 不通过 |\n| screen_zh | P1=1 P2=1 P3=2 P4=1 P5=2 P6=3 | 0 | 不通过 |\n| screen_en | P1=1 P2=1 P3=2 P4=1 P5=2 P6=2 | 0 | 不通过 |\n\n## 问题（来源 a = Claude、b = Codex、judge = 裁决补充）\n\n| 编号 | 项 | 位置 | 维度 | 级别 | 来源 | 原文 | 问题 | 建议改写 | 裁决人意见 | 处理 |\n|---|---|---|---|---|---|---|---|---|---|---|\n| I1 | screen_en | outro | P4 | 必改 | a | \"Score the mistakes\" / \"Training pushes it down\" | Outro is a strict item. Lines are not parallel (imperative vs declarative); \"Score the mistakes\" reads as an instruction to the viewer and drops the key takeaway \"lower is better\" from l47. | \"Loss: a score for mistakes\" / \"Training: push it down\" |  | 已改：片尾卡改为 Loss: a score for mistakes / Training: push it down（采纳 a，两行同为「名词: 说明」体例，不再照搬口播）；页眉改 Remember |\n| I2 | screen_en | c_lens | P4 | 必改 | a | \"The score is all it sees\" | Chapter title (strict). A full sentence next to \"What is a loss function?\", \"A small experiment\", \"How big models are scored\"; also repeated as the eyebrow on 7 screens. | \"All the model sees\" (or \"What the model sees\") | c_lens（a）：改写「All the model sees」去掉了关键词「score」，章节卡上只剩「模型看到的全部」，宾语没了，比原文更费解。原题「The score is all it sees」6 词，未超限。若要改，用「It only sees the score」（5 词）。 | 已改：第 3 章章名中英都改：模型只认分数 / It only sees the score（裁决人给的写法，5 词） |\n| I3 | screen_en | outro / card_s6 | P1, P2, P4 | 必改 | b | Score the mistakes / Training pushes it down | The second line is a narration-style sentence; “it” has an imprecise on-screen antecedent. The two summary lines also use different grammatical structures. Strict outro item. | **Mistakes → score**<br>**Training → lower loss** |  | 已改：同 I1 |\n| I4 | screen_en | outro | P2 | 记录 | a | \"Next · Gradient descent\" shown for all 25.3 s | Gives away the answer before l49 poses the question \"which way do you turn?\" | Reveal \"Next · Gradient descent\" only at l50. |  | 不改（理由：片尾「下一期」由系列共用包装模板统一排版（_shared/package/template.html），本期不改共用文件；l49 是设问，名字先出现不影响悬念） |\n| I5 | screen_en | l01 | P1, P2 | 必改 | b | A model is a machine with knobs | Seven words exceed the six-word title limit. This is also a complete clause copied directly from the narration. The cold open requires correction. | **Model = machine + knobs** |  | 已改：l01 标题改 Model = a machine with knobs（6 词） |\n| I6 | screen_en | s0_l04 / l42 | P4 | 必改 | a | \"A score for mistakes\" + \"损失函数\" (l04); \"交叉熵\" (l42) | Chinese gloss in the English-track slide. If the English cut is for English viewers this is stray text; l04 is the cold open (strict). Also it is not counted in the word totals. | Drop the Chinese lines on the English version. If kept on purpose, state so and treat it as a note, not a title. |  | 已改：英文版去掉 l04、l42 屏上的中文小注 |\n| I7 | screen_en | l04 | P2 | 必改 | b | A score for mistakes / Loss function | The eyebrow reads as a definition of the term below it. Narration distinguishes the **loss**—the score—from the **loss function**—the scoring rule. This distinction should survive the cold open. | Eyebrow: **The scoring rule** |  | 已改：l04 眉标改 The rule for scoring mistakes（中文同步改「给错误打分的规则」），区分损失与损失函数 |\n| I8 | screen_en | l06–l08 | P5 | 建议 | judge | 误差柱与「LOSS 17.9」卡之间的「→」（s2.html：`text(\"→\")` x=470，SVG 宽 500，76px） | 箭头字形被 SVG 右边界裁掉，截图里只剩一段灰短横，看上去是「−」。紧挨着有正有负的误差柱，容易被读成「误差减 17.9」，抵消了 l06 h1「Errors → one score」的意思。 | 把 #pile 的宽度加到 ≥560，或者把箭头左移到 x≈440；也可以改用带箭头头部的 SVG path。 |  | 已改：#pile 画布加宽到 560px，箭头不再被裁成「−」 |\n| I9 | screen_en | l07/l08 | P2 | 建议 | a | \"0 = not wrong at all\" | Near-verbatim narration. | \"0 = no error\" (l08's 4-block stack is at the limit; this also lowers the word count from 13 to 11) |  | 已改：改 0 = no error |\n| I10 | screen_en | l07–l08 | P1, P4 | 建议 | b | 0 = not wrong at all | Understandable, but unnecessarily conversational for a mathematical label. It repeats the narration’s wording and occup",
+ "items": [
+  {
+   "id": "voice_zh",
+   "law": "lines",
+   "law_name": "中文口播（母语听感，盲审）",
+   "color": "#c0502e",
+   "scope": [],
+   "checks": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_zh.md",
+   "prompt": "items/voice_zh__a.md",
+   "what": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "problem": "上一版「本期内容」念成「这一期，讲四件事：它是个什么问题；为什么只背练习册不行……」，像在念目录，正常人不会这么说话（用户 2026-11-08 指出）；原先的审稿没抓到。",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "像真人在讲",
+     "question": "逐句：自然 / 有点怪 / 很怪。书面腔、讲解腔、翻译腔、念稿感、报菜名式罗列都算怪"
+    },
+    {
+     "id": "V2",
+     "name": "衔接与过渡",
+     "question": "开场、本期内容、章节转换、举例前后：像一个人顺着思路往下讲，而不是「下面讲第一点」式的模板或目录朗读；上下句接得上"
+    },
+    {
+     "id": "V3",
+     "name": "一遍听懂",
+     "question": "只靠耳朵：一句只带一个新意思；指代清楚（说「这个」时观众知道指什么）；术语先解释再用；数字、同音字不会听错"
+    },
+    {
+     "id": "V4",
+     "name": "精炼",
+     "question": "没有废话、重复、正确的空话；删掉不影响理解的句子要指出来"
+    },
+    {
+     "id": "V5",
+     "name": "口吻与节奏",
+     "question": "从头到尾是同一个亲切、清楚、不端着的讲解者；长短句交替，每句适合一口气念完"
+    },
+    {
+     "id": "V6",
+     "name": "改写",
+     "question": "每句「有点怪 / 很怪」都给出可以直接替换、不更长的中文改写；列出最别扭的 5 句并排序"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_zh__a.md",
+     "prompt": "items/voice_zh__a.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "l46「忙的都一样：找最低点」、l45「还没有到头的意思」、l40「答案其实是「光」，就看它有几成把握猜「光」」三处略别扭，其余 47 句像人在讲；上一轮抓到的「名词＋和＋问句」「目录朗读」一类在开场 l01–l04、l38、l49 都已不见。"
+      },
+      "V2": {
+       "score": 2,
+       "evidence": "l01「上一期说过……」→l02「可什么叫「对」？」→l03「办法很简单」→l04「今天就聊它」一路顺着问题往下，没有「下面讲第一点」；l11「还是上期那十二趟打车」、l31「不过你注意，最低点也不是零分」、l38「像 ChatGPT 这样的大语言模型，训练时也有个分，只是猜的不是车费了」接得上，小瑕疵：l38 句尾「了」、l40「其实」。"
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "l29「起步价十块二、每公里两块五毛四，只有一点九七分」一句塞三个数；l44「词元」只听可能听成「次元」，虽然紧跟解释；其余指代清楚，术语先解释再用（l04 损失/损失函数、l23 均方误差）。"
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "l45「读了这么多，分还在往下降，还没有到头的意思」与 l43「分数一直在降」重复；l33「所以训练追求的不是零分，而是尽量低」与 l30/l31 有轻微重叠，但承担了转折，可留。"
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "从头到尾是同一个亲切的讲解者（l08 高尔夫、l36「它宁可每趟都差一点，也不愿意有一趟差很多」）；瑕疵是自称「我们」（l35）、「咱们」（l46、l50）不统一，「上一期」（l01）与「上期」（l11）不统一，l49 一口气 31 字偏长。"
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "下面问题表里每条「有点怪」都给了不更长的可直接替换的改写（如 l46、l45、l40、l11、l38），并排出最别扭 5 句。"
+      },
+      "R": {
+       "score": 2,
+       "evidence": "r1 里 l11、l12、l13/l14/l17/l24（元→块）、l19、l27、l29、l32、l35、l38、l40、l41、l42、l43 的修改都已落实，没再看到同类问题，已解决；「不采纳」的 l06、l08、l15、l24、l47、l93/l96（保留编号）理由我认同；l117「词元」不改，理由（紧跟解释）成立，只留 homophone 记录；l118「还没有……的意思」我不同意裁决人「常见口语」的判断，仍觉得略翻译腔，列为建议；l40 的改写带出了新的小问题（「其实」「猜光」）。"
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/voice_zh__b.md",
+     "prompt": "items/voice_zh__b.md",
+     "scores": {
+      "V1": {
+       "score": 1,
+       "evidence": "l06「把一大堆误差汇成一个数」偏书面；l46「忙的都一样：找最低点」搭配别扭；l33「追求的不是零分，而是尽量低」前后句式没有接齐。"
+      },
+      "V2": {
+       "score": 1,
+       "evidence": "l11「横着是距离，竖着是车费」仍像直接念图注，没有先接上“拿这些车费做实验”；l47「损失函数，就是给错误打个分」在片尾省掉了开场已经讲清的“打分办法”。两处均属从严位置。"
+      },
+      "V3": {
+       "score": 1,
+       "evidence": "l15「六十四，就是图上这个红方块」没有用声音交代六十四怎样参与打分；l24「线贴着点走，方块都很小」需要听众自行翻译成“猜得准”。"
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "l14「实际二十三块，模型猜十五块，差了八块」信息紧凑；l45「还没有到头的意思」紧跟「分还在往下降」，删掉不影响本句理解。"
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "l02「可什么叫『对』？」、l35「它就特别怕犯大错」保持了亲切口吻；l29在5.4秒内连续交代「十块二」「两块五毛四」「一点九七」，听觉负担仍偏重。"
+      },
+      "V6": {
+       "score": 1,
+       "evidence": "仍有14句需要改写，均见问题表，替换文字均不长于原句。最别扭的五句依次为：①l11「横着是距离，竖着是车费」；②l47「损失函数，就是给错误打个分」；③l15「就是图上这个红方块」；④l46「忙的都一样：找最低点」；⑤l29「最低点在起步价十块二、每公里两块五毛四」。"
+      },
+      "R": {
+       "score": 1,
+       "evidence": "上一轮l12「起步价，和每公里多少钱」已经修好，l32「车费里有堵车」也已修好；但I88的图注式开场、I95的盲听缺口仍在。“保留编号”也不能解释为什么不改I93后半句。逐条复核如下。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "像真人在讲",
+     "a": 2,
+     "a_ev": "l46「忙的都一样：找最低点」、l45「还没有到头的意思」、l40「答案其实是「光」，就看它有几成把握猜「光」」三处略别扭，其余 47 句像人在讲；上一轮抓到的「名词＋和＋问句」「目录朗读」一类在开场 l01–l04、l38、l49 都已不见。",
+     "b": 1,
+     "b_ev": "l06「把一大堆误差汇成一个数」偏书面；l46「忙的都一样：找最低点」搭配别扭；l33「追求的不是零分，而是尽量低」前后句式没有接齐。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "两人都判 l46「忙的都一样：找最低点」有点怪，b 的判断站得住。l46 是大模型一章的最后一句，直接接片尾（v1.1 为「不与片尾重复」专门改过），属于从严的章节收束和过渡句，判「有点怪」就算必改。可替换为「大模型几百亿个旋钮，咱们才两个，干的事一样：找最低点。」（不比原句长）。另有建议级的 l40「答案其实是「光」…猜「光」」和 l33「追求的不是零分，而是尽量低」。b 举的 l06「汇成一个数」不成立，见驳回。"
+    },
+    "V2": {
+     "name": "衔接与过渡",
+     "a": 2,
+     "a_ev": "l01「上一期说过……」→l02「可什么叫「对」？」→l03「办法很简单」→l04「今天就聊它」一路顺着问题往下，没有「下面讲第一点」；l11「还是上期那十二趟打车」、l31「不过你注意，最低点也不是零分」、l38「像 ChatGPT 这样的大语言模型，训练时也有个分，只是猜的不是车费了」接得上，小瑕疵：l38 句尾「了」、l40「其实」。",
+     "b": 1,
+     "b_ev": "l11「横着是距离，竖着是车费」仍像直接念图注，没有先接上“拿这些车费做实验”；l47「损失函数，就是给错误打个分」在片尾省掉了开场已经讲清的“打分办法”。两处均属从严位置。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "a 的证据成立。l01→l04 顺着问题往下讲，l11「还是上期那十二趟打车」、l31「不过你注意」、l38「只是猜的不是车费了」都接得上。b 的两条从严证据我核过都不成立：l11 念「横着是距离，竖着是车费」时，横轴、纵轴标题正好依次出现（s3.html:82，l11 第 .45 和 .6 处），这是在指着图讲，不是在念目录；l47 维持 r1 的裁决。"
+    },
+    "V3": {
+     "name": "一遍听懂",
+     "a": 2,
+     "a_ev": "l29「起步价十块二、每公里两块五毛四，只有一点九七分」一句塞三个数；l44「词元」只听可能听成「次元」，虽然紧跟解释；其余指代清楚，术语先解释再用（l04 损失/损失函数、l23 均方误差）。",
+     "b": 1,
+     "b_ev": "l15「六十四，就是图上这个红方块」没有用声音交代六十四怎样参与打分；l24「线贴着点走，方块都很小」需要听众自行翻译成“猜得准”。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "a 更准。l15 念「这个红方块」时红方块正好出现（s3.html:93），l16 马上接「十二趟都这么算，再取个平均」，六十四拿来做什么已经用声音交代了。l24 前面 l15 已经讲过「方块＝误差平方」，所以「方块都很小」能听懂。剩下的是 l29 一句里三个数、l44「词元」可能听成「次元」，都是记录级。"
+    },
+    "V4": {
+     "name": "精炼",
+     "a": 2,
+     "a_ev": "l45「读了这么多，分还在往下降，还没有到头的意思」与 l43「分数一直在降」重复；l33「所以训练追求的不是零分，而是尽量低」与 l30/l31 有轻微重叠，但承担了转折，可留。",
+     "b": 2,
+     "b_ev": "l14「实际二十三块，模型猜十五块，差了八块」信息紧凑；l45「还没有到头的意思」紧跟「分还在往下降」，删掉不影响本句理解。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "抽查后同意 2 分，但两人都漏了两处重复。l19「看着好像几乎没错」叠了三层含糊词；l43「分数一直在降，画出来是一条往下走的曲线」在一句里把下降说了两遍，加上 l45「还在往下降」，下降一共说了三遍。都是建议级。"
+    },
+    "V5": {
+     "name": "口吻与节奏",
+     "a": 2,
+     "a_ev": "从头到尾是同一个亲切的讲解者（l08 高尔夫、l36「它宁可每趟都差一点，也不愿意有一趟差很多」）；瑕疵是自称「我们」（l35）、「咱们」（l46、l50）不统一，「上一期」（l01）与「上期」（l11）不统一，l49 一口气 31 字偏长。",
+     "b": 2,
+     "b_ev": "l02「可什么叫『对』？」、l35「它就特别怕犯大错」保持了亲切口吻；l29在5.4秒内连续交代「十块二」「两块五毛四」「一点九七」，听觉负担仍偏重。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "抽查后同意 2 分。口吻始终是同一个人，l36「宁可每趟都差一点」这类话很口语。两人共同漏了一点：l10、l33、l37、l47 都以「所以」开头，l37 和 l47 隔得很近，口头禅感偏重。见补充问题。"
+    },
+    "V6": {
+     "name": "改写",
+     "a": 3,
+     "a_ev": "下面问题表里每条「有点怪」都给了不更长的可直接替换的改写（如 l46、l45、l40、l11、l38），并排出最别扭 5 句。",
+     "b": 1,
+     "b_ev": "仍有14句需要改写，均见问题表，替换文字均不长于原句。最别扭的五句依次为：①l11「横着是距离，竖着是车费」；②l47「损失函数，就是给错误打个分」；③l15「就是图上这个红方块」；④l46「忙的都一样：找最低点」；⑤l29「最低点在起步价十块二、每公里两块五毛四」。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "两人都不到满分。a 给 3 分偏高：l46 的改写「干的事都一样」比原句多一个字，不符合「不更长」；最别扭五句里放了不成立的 l38 和只是记录级的 l11。b 给 1 分把被驳回的 l11、l47、l15、l27、l13 都算进 14 处待改。真正要改的只有 l46 一处必改，加上 l40、l33、l19 几处建议，都有不更长的改写。我的最别扭五句：①l46 ②l40 ③l33 ④l19 ⑤l29。"
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "r1 里 l11、l12、l13/l14/l17/l24（元→块）、l19、l27、l29、l32、l35、l38、l40、l41、l42、l43 的修改都已落实，没再看到同类问题，已解决；「不采纳」的 l06、l08、l15、l24、l47、l93/l96（保留编号）理由我认同；l117「词元」不改，理由（紧跟解释）成立，只留 homophone 记录；l118「还没有……的意思」我不同意裁决人「常见口语」的判断，仍觉得略翻译腔，列为建议；l40 的改写带出了新的小问题（「其实」「猜光」）。",
+     "b": 1,
+     "b_ev": "上一轮l12「起步价，和每公里多少钱」已经修好，l32「车费里有堵车」也已修好；但I88的图注式开场、I95的盲听缺口仍在。“保留编号”也不能解释为什么不改I93后半句。逐条复核如下。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "a 的复核站得住。r1 已改的 l12、l27、l32、l35、l41、l43 和「元→块」都已落实；l40 改出了「其实」「猜「光」」两个新的小问题，a 抓到了。b 判 I88（l11）、I95（l15）「未解决」不成立，画面时机见上。I93 的后半句「这条线整个偏低了」后面 l14 马上用「实际二十三块，模型猜十五块」量化了，是记录级，不影响 R 的结论。a 说 I118 是翻译腔，我维持 r1 的判断：「还没有……的意思」是常见口语。"
+    }
+   },
+   "disputes": [
+    "V1",
+    "V2",
+    "V3",
+    "V6",
+    "R"
+   ],
+   "audits": [
+    "V5",
+    "V4"
+   ],
+   "final_scores": {
+    "V1": 1,
+    "V2": 2,
+    "V3": 2,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2,
+    "R": 2
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "V1",
+     "V2",
+     "V3",
+     "V6",
+     "R",
+     "V5",
+     "V4"
+    ],
+    "prompt": "items/voice_zh__judge.md",
+    "report": "reports/voice_zh__judge.md",
+    "ruling": {
+     "V1": {
+      "score": 1,
+      "evidence": "两人都判 l46「忙的都一样：找最低点」有点怪，b 的判断站得住。l46 是大模型一章的最后一句，直接接片尾（v1.1 为「不与片尾重复」专门改过），属于从严的章节收束和过渡句，判「有点怪」就算必改。可替换为「大模型几百亿个旋钮，咱们才两个，干的事一样：找最低点。」（不比原句长）。另有建议级的 l40「答案其实是「光」…猜「光」」和 l33「追求的不是零分，而是尽量低」。b 举的 l06「汇成一个数」不成立，见驳回。"
+     },
+     "V2": {
+      "score": 2,
+      "evidence": "a 的证据成立。l01→l04 顺着问题往下讲，l11「还是上期那十二趟打车」、l31「不过你注意」、l38「只是猜的不是车费了」都接得上。b 的两条从严证据我核过都不成立：l11 念「横着是距离，竖着是车费」时，横轴、纵轴标题正好依次出现（s3.html:82，l11 第 .45 和 .6 处），这是在指着图讲，不是在念目录；l47 维持 r1 的裁决。"
+     },
+     "V3": {
+      "score": 2,
+      "evidence": "a 更准。l15 念「这个红方块」时红方块正好出现（s3.html:93），l16 马上接「十二趟都这么算，再取个平均」，六十四拿来做什么已经用声音交代了。l24 前面 l15 已经讲过「方块＝误差平方」，所以「方块都很小」能听懂。剩下的是 l29 一句里三个数、l44「词元」可能听成「次元」，都是记录级。"
+     },
+     "V6": {
+      "score": 2,
+      "evidence": "两人都不到满分。a 给 3 分偏高：l46 的改写「干的事都一样」比原句多一个字，不符合「不更长」；最别扭五句里放了不成立的 l38 和只是记录级的 l11。b 给 1 分把被驳回的 l11、l47、l15、l27、l13 都算进 14 处待改。真正要改的只有 l46 一处必改，加上 l40、l33、l19 几处建议，都有不更长的改写。我的最别扭五句：①l46 ②l40 ③l33 ④l19 ⑤l29。"
+     },
+     "R": {
+      "score": 2,
+      "evidence": "a 的复核站得住。r1 已改的 l12、l27、l32、l35、l41、l43 和「元→块」都已落实；l40 改出了「其实」「猜「光」」两个新的小问题，a 抓到了。b 判 I88（l11）、I95（l15）「未解决」不成立，画面时机见上。I93 的后半句「这条线整个偏低了」后面 l14 马上用「实际二十三块，模型猜十五块」量化了，是记录级，不影响 R 的结论。a 说 I118 是翻译腔，我维持 r1 的判断：「还没有……的意思」是常见口语。"
+     },
+     "V5": {
+      "score": 2,
+      "evidence": "抽查后同意 2 分。口吻始终是同一个人，l36「宁可每趟都差一点」这类话很口语。两人共同漏了一点：l10、l33、l37、l47 都以「所以」开头，l37 和 l47 隔得很近，口头禅感偏重。见补充问题。"
+     },
+     "V4": {
+      "score": 2,
+      "evidence": "抽查后同意 2 分，但两人都漏了两处重复。l19「看着好像几乎没错」叠了三层含糊词；l43「分数一直在降，画出来是一条往下走的曲线」在一句里把下降说了两遍，加上 l45「还在往下降」，下降一共说了三遍。都是建议级。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 26,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_zh__a",
+    "codex/voice_zh__b"
+   ]
+  },
+  {
+   "id": "voice_en",
+   "law": "lines",
+   "law_name": "English narration (native ear, blind)",
+   "color": "#2e6fc0",
+   "scope": [],
+   "checks": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_en.md",
+   "prompt": "items/voice_en__a.md",
+   "what": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "problem": "The previous agenda read 'In this episode: What the problem is. Why memorizing answers fails. A different way to think about learning…' — a table of contents read aloud. No one talks like that (caught by the user, 2026-11-08); earlier reviews missed it.",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "Sounds like a person talking",
+     "question": "Each line: natural / a bit off / clearly off. Written-style, lecture tone, translated-from-Chinese phrasing, telegraphic lists all count as off"
+    },
+    {
+     "id": "V2",
+     "name": "Flow and transitions",
+     "question": "Cold open, the 'what's coming' part, chapter changes, before/after examples: does it sound like one person following a thought, not 'Point one…' templates or a TOC read aloud? Do adjacent lines connect?"
+    },
+    {
+     "id": "V3",
+     "name": "Clear on one hearing",
+     "question": "Ear only: one new idea per line; clear reference ('this' points to something); terms explained before used; numbers and words not misheard"
+    },
+    {
+     "id": "V4",
+     "name": "Tight",
+     "question": "No filler, repetition, or empty truisms; point out lines that could go without losing anything"
+    },
+    {
+     "id": "V5",
+     "name": "Voice and rhythm",
+     "question": "One warm, clear, unpretentious narrator throughout; varied sentence length; each line sayable in one breath"
+    },
+    {
+     "id": "V6",
+     "name": "Rewrites",
+     "question": "For every 'a bit off' / 'clearly off' line, a drop-in rewrite no longer than the original; rank the 5 most awkward lines"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_en__a.md",
+     "prompt": "items/voice_en__a.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "Most lines pass as a person talking (l02 \"does the machine know this turn beat the last one\", l32 \"no straight line could nail every ride\", l49 \"too big to ever see whole\"). Small blemishes: l20 \"So we square: once everything's squared\" (square/squared echo), l35 \"However you score it, that's how it learns\" (vague), l42 \"The name is all you need for now\" (slightly stagey). No cold-open, linking-line or outro line is off."
+      },
+      "V2": {
+       "score": 3,
+       "evidence": "Cold open l01-l04 runs as one thought (knobs -> \"what does right mean\" -> \"give its mistakes a score\" -> \"That's today's topic\"), with no table-of-contents reading. Chapter openers l11 \"Remember those twelve made-up taxi rides?\", l31 \"Here's something easy to miss\", l38 \"just not for taxi fares\" each connect to the previous line. Outro l47 -> l48 -> l49 question -> l50 answer lands cleanly."
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "l14 stacks four numbers in one sentence (\"five-kilometer ... twenty-three ... fifteen ... eight\"). l15 \"That's this red square\" points at something an ear-only listener cannot see. l17 / l24 \"three fifty\" / \"two fifty\" could be misheard as 350 / 250 without the word \"dollars\" (only l13 and l17 say \"dollars\" up front). l22 / l24 / l29 give three close scores (13.4, 2.19, 1.97), but l25 anchors them."
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "l08 \"Kind of like golf, where fewer strokes is better\" repeats l07 \"lower is better\", but it works as a memory hook, so keep it. l20 repeats \"square/squared\". l23 \"the most common loss function\" is an unneeded superlative. l47-l48 recap is short and earns its place."
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "One warm, plain narrator throughout (l35 \"it's terrified of big mistakes\", l36 \"It would rather be a little off on every ride than way off on just one\"). Rhythm varies (l03 is 3.5s, l49 is 9.2s). \"That's ...\" still closes lines in l04, l06, l14, l15, l35 and l50 (about 7 uses), which gets a little verbal-tic. l46 (8.1s, two clauses plus the colon) is at the upper limit for one breath."
+      },
+      "V6": {
+       "score": 2,
+       "evidence": "Drop-in rewrites are given for each \"a bit off\" line below (l14, l15, l20, l23, l35, l42), all no longer than the original. Top 5 ranked in the issues table. No line is clearly off."
+      },
+      "R": {
+       "score": 2,
+       "evidence": "Most of the 'changed' items hold up: I62/l05 \"lands a bit too high or too low\" sets up the negative error and makes l18 clear; I64/l11 reads like a person; I73-74/l29 \"Ten dollars twenty to start, then two fifty-four a kilometer\" is easy to follow; I77/l38 \"just not for taxi fares\" is clear; I82/l47 matches l03-l04; I83/l49 \"too big to ever see whole\" is good; I84/l50 \"That's where gradient descent comes in, and that's next time\" sounds fine. Not unresolved but partly resolved: I61 reduced the \"That's ...\" tic yet about 7 remain. Authors' \"不改\" decisions on I59 (chapter title), I60 (l02), I71 (l27) and I72 (l28) are sound by ear: l02 and l27 are idiomatic and l28 is natural spoken ellipsis. I66 (l15 \"this red square\") is defensible with the red square on screen, but for an ear-only listener it is still a pointing word, so logged at 记录/建议 only. One new minor side effect of the I61 edit: l20 now has \"square ... squared\"."
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/voice_en__b.md",
+     "prompt": "items/voice_en__b.md",
+     "scores": {
+      "V1": {
+       "score": 1,
+       "evidence": "l11 “Distance along the bottom, fare up the side” still sounds like chart labels read aloud; l15 “That's this red square” is an awkward handoff; l50 “and that's next time” sounds clipped."
+      },
+      "V2": {
+       "score": 1,
+       "evidence": "The chapter transition at l38 now connects naturally through “just not for taxi fares.” However, strict items l02, l11, l49 and l50 still need changes. The outro’s question is useful, but its wording and landing remain awkward."
+      },
+      "V3": {
+       "score": 1,
+       "evidence": "l05 introduces high and low guesses but never explains negative errors. Consequently, l18–l19 jump from an eight-dollar gap to errors cancelling and an average of “minus thirty-three cents.”"
+      },
+      "V4": {
+       "score": 3,
+       "evidence": "l14–l16 move directly through error, squaring and averaging. l47–l48 give a short, useful recap. The golf comparison at l08 supplies an intuitive comparison rather than empty repetition."
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "l31 “Here's something easy to miss” and l36 “It would rather be a little off…” sustain a conversational voice. l28’s three-part positional list is less fluid; l29 carries several numbers but now labels the starting fare clearly."
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "Every line marked “a bit off” below has a drop-in rewrite in the issue table, no longer than its original. The five most awkward lines are ranked after that table."
+      },
+      "R": {
+       "score": 1,
+       "evidence": "**I59—resolved by justified non-adoption:** “How big models are scored” is an ordinary chapter title; passive wording alone is not a defect. **I60—unresolved:** l02 is unchanged; “beat” is conversational, but “this turn” still makes the listener reconstruct the knob adjustment. The visual justification does not settle an ear-only concern. **I61—partly resolved:** l20 and l30 vary the sentence endings successfully; l50 still has a weak double-“that's” landing. **I62—unresolved:** l05 adds high/low directions but retains “Every time” and does not establish signed errors. **I63—resolved:** “put simply” is gone from l10. **I64—unresolved:** l11’s opening question improves the entry, but the following axis-label fragments remain. Keeping axis information does not require keeping that structure. **I65—resolved:** “made-up taxi rides” removes the awkward standalone qualification. **I66—unresolved:** retaining a square reference is reasonable, but does not justify “That's this.” **I67—resolved:** l17’s “so short rides come out low…” creates a clearer causal link; the remaining conversational ellipsis is acceptable. **I68—unresolved:** l05’s high/low wording still does not explain why an error can be negative; l18 retains the improvised nouns “too-lows and too-highs.” **I69—no new fix required:** the three scores remain dense, but l25 supplies the essential comparison; screen visibility is not evidence for this blind review. **I70—resolved:** l26 now says “landscape of scores.” **I71—justified non-adoption:** the axis directions themselves are conventional spoken chart description; I would not require a rewrite of l27. **I72—partly justified non-adoption, still a small issue:** “clearly off” was too strong, but l28 remains a compressed roll call rather than flowing speech. **I73—resolved:** “ten dollars twenty” makes the amount identifiable by ear. **I74—resolved:** l29 now distinguishes the settings from the resulting score. **I75—partly resolved:** “chasing as low…” is gone, but l33’s “It's just getting as low…” still leaves the score implicit. **I76—resolved:** l38 provides its own audible bridge. **I77—resolved:** the ambiguous “It's just scoring…” has gone. **I78—resolved:** “just not for taxi fares” gives the contrast concrete meaning. **I79—resolved:** l40’s “how sure…about the real next word” is speakable and clear. **I80—resolved:** l41 now tells us what the percentages describe. **I81—resolved:** “tracked that score” works without seeing a curve. **I82—resolved:** l47 now defines the loss function as how mistakes are scored, preserving l04’s distinction. **I83—partly resolved:** “go downhill” works; “to ever see whole” introduces a clipped phrase. **I84—partly resolved:** “That's where gradient descent comes in” establishes its role, but “and that's next time” still needs a natural landing."
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "Sounds like a person talking",
+     "a": 2,
+     "a_ev": "Most lines pass as a person talking (l02 \"does the machine know this turn beat the last one\", l32 \"no straight line could nail every ride\", l49 \"too big to ever see whole\"). Small blemishes: l20 \"So we square: once everything's squared\" (square/squared echo), l35 \"However you score it, that's how it learns\" (vague), l42 \"The name is all you need for now\" (slightly stagey). No cold-open, linking-line or outro line is off.",
+     "b": 1,
+     "b_ev": "l11 “Distance along the bottom, fare up the side” still sounds like chart labels read aloud; l15 “That's this red square” is an awkward handoff; l50 “and that's next time” sounds clipped.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "取 b 的分数，但证据只部分成立。l50「That's where gradient descent comes in, and that's next time.」一句里有两个 that's，\"and that's next time\" 收得太短，像制作备注；上一轮 I84 批评的正是\"double that's weakens the landing\"，这次修改又把它带了回来。严格项片尾判 a bit off 就是必改。l49 \"way too big to ever see whole\" 前半句随口、后半句偏书面，语域混搭。b 说 l11 \"Distance along the bottom, fare up the side\" 像念坐标轴标签，这条不成立（见驳回）；l15 \"That's this red square\" 只算建议级。a 判 2，理由是严格项无一 off，与 l50 的实情不符。"
+    },
+    "V2": {
+     "name": "Flow and transitions",
+     "a": 3,
+     "a_ev": "Cold open l01-l04 runs as one thought (knobs -> \"what does right mean\" -> \"give its mistakes a score\" -> \"That's today's topic\"), with no table-of-contents reading. Chapter openers l11 \"Remember those twelve made-up taxi rides?\", l31 \"Here's something easy to miss\", l38 \"just not for taxi fares\" each connect to the previous line. Outro l47 -> l48 -> l49 question -> l50 answer lands cleanly.",
+     "b": 1,
+     "b_ev": "The chapter transition at l38 now connects naturally through “just not for taxi fares.” However, strict items l02, l11, l49 and l50 still need changes. The outro’s question is useful, but its wording and landing remain awkward.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "冷开场 l01–l04 是一条完整思路，章节开场 l11、l31、l38 也接得上，这一点 a 说得对；b 把 l02、l11 判为严格项必改，不成立。问题在片尾：l49「that map」指的地图，旁白从头到尾没说过（第 1 轮 I70 把 l26 的 \"landscape map\" 改成 \"landscape of scores\"，\"map\" 就从听觉里消失了）；l50 的落点又是双 that's。另外章节卡「It only sees the score」只有一个光秃秃的 It，上一句 l30 的主语还是 training / setting。片尾和章节标题都属严格项，所以不能给 a 的 3 分。"
+    },
+    "V3": {
+     "name": "Clear on one hearing",
+     "a": 2,
+     "a_ev": "l14 stacks four numbers in one sentence (\"five-kilometer ... twenty-three ... fifteen ... eight\"). l15 \"That's this red square\" points at something an ear-only listener cannot see. l17 / l24 \"three fifty\" / \"two fifty\" could be misheard as 350 / 250 without the word \"dollars\" (only l13 and l17 say \"dollars\" up front). l22 / l24 / l29 give three close scores (13.4, 2.19, 1.97), but l25 anchors them.",
+     "b": 1,
+     "b_ev": "l05 introduces high and low guesses but never explains negative errors. Consequently, l18–l19 jump from an eight-dollar gap to errors cancelling and an average of “minus thirty-three cents.”",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 说没有讲过负误差，所以 l18–l19 跳得太快，这条不成立：l05 已经说了 \"too high or too low\"，l17 紧接着说 \"short rides come out low and long ones high\"，到 l18 再说 too-lows 和 too-highs 抵消，听一遍就懂；\"minus thirty-three cents\" 也只要求听众知道这数接近零。a 担心 \"three fifty\" 被听成 350，也不成立，前面刚说过 \"four dollars to start\"。真正的单听理解问题在 l49：「that map」回指一个耳朵从没听过的东西，听众得自己把 l26 的 landscape、l28 的 valley 换算成 map。这句是严格项，应必改。"
+    },
+    "V4": {
+     "name": "Tight",
+     "a": 2,
+     "a_ev": "l08 \"Kind of like golf, where fewer strokes is better\" repeats l07 \"lower is better\", but it works as a memory hook, so keep it. l20 repeats \"square/squared\". l23 \"the most common loss function\" is an unneeded superlative. l47-l48 recap is short and earns its place.",
+     "b": 3,
+     "b_ev": "l14–l16 move directly through error, squaring and averaging. l47–l48 give a short, useful recap. The golf comparison at l08 supplies an intuitive comparison rather than empty repetition.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "抽查两人都漏掉的问题。l43 \"Meta trained a model … tracked that score as it trained. It kept going down.\" 一句里两次 trained，\"It kept going down\" 又和两句后 l45 \"the score was still falling\" 说的是同一件事，可以删。\"just\" 当口头填充用了 5 次：l10、l26、l33、l38、l48。l48 \"training is just pushing that score down\" 和 l10 几乎同句，但作为片尾回顾可以保留。总体紧凑，维持 2。"
+    },
+    "V5": {
+     "name": "Voice and rhythm",
+     "a": 2,
+     "a_ev": "One warm, plain narrator throughout (l35 \"it's terrified of big mistakes\", l36 \"It would rather be a little off on every ride than way off on just one\"). Rhythm varies (l03 is 3.5s, l49 is 9.2s). \"That's ...\" still closes lines in l04, l06, l14, l15, l35 and l50 (about 7 uses), which gets a little verbal-tic. l46 (8.1s, two clauses plus the colon) is at the upper limit for one breath.",
+     "b": 2,
+     "b_ev": "l31 “Here's something easy to miss” and l36 “It would rather be a little off…” sustain a conversational voice. l28’s three-part positional list is less fluid; l29 carries several numbers but now labels the starting fare clearly.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "抽查两人都漏掉的问题。以 So 开头的句子有 l10、l20、l33、l37、l47、l49，共六处，和 a 指出的 \"That's…\" 收尾叠在一起，口头禅感偏重；l28（8.1s，单句三段并列）和 l46（8.1s）在一口气的上限附近。叙述者语气始终温和统一，长短句也有变化（l03 3.5s 对 l49 9.2s），维持 2。"
+    },
+    "V6": {
+     "name": "Rewrites",
+     "a": 2,
+     "a_ev": "Drop-in rewrites are given for each \"a bit off\" line below (l14, l15, l20, l23, l35, l42), all no longer than the original. Top 5 ranked in the issues table. No line is clearly off.",
+     "b": 3,
+     "b_ev": "Every line marked “a bit off” below has a drop-in rewrite in the issue table, no longer than its original. The five most awkward lines are ranked after that table.",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "Most of the 'changed' items hold up: I62/l05 \"lands a bit too high or too low\" sets up the negative error and makes l18 clear; I64/l11 reads like a person; I73-74/l29 \"Ten dollars twenty to start, then two fifty-four a kilometer\" is easy to follow; I77/l38 \"just not for taxi fares\" is clear; I82/l47 matches l03-l04; I83/l49 \"too big to ever see whole\" is good; I84/l50 \"That's where gradient descent comes in, and that's next time\" sounds fine. Not unresolved but partly resolved: I61 reduced the \"That's ...\" tic yet about 7 remain. Authors' \"不改\" decisions on I59 (chapter title), I60 (l02), I71 (l27) and I72 (l28) are sound by ear: l02 and l27 are idiomatic and l28 is natural spoken ellipsis. I66 (l15 \"this red square\") is defensible with the red square on screen, but for an ear-only listener it is still a pointing word, so logged at 记录/建议 only. One new minor side effect of the I61 edit: l20 now has \"square ... squared\".",
+     "b": 1,
+     "b_ev": "**I59—resolved by justified non-adoption:** “How big models are scored” is an ordinary chapter title; passive wording alone is not a defect. **I60—unresolved:** l02 is unchanged; “beat” is conversational, but “this turn” still makes the listener reconstruct the knob adjustment. The visual justification does not settle an ear-only concern. **I61—partly resolved:** l20 and l30 vary the sentence endings successfully; l50 still has a weak double-“that's” landing. **I62—unresolved:** l05 adds high/low directions but retains “Every time” and does not establish signed errors. **I63—resolved:** “put simply” is gone from l10. **I64—unresolved:** l11’s opening question improves the entry, but the following axis-label fragments remain. Keeping axis information does not require keeping that structure. **I65—resolved:** “made-up taxi rides” removes the awkward standalone qualification. **I66—unresolved:** retaining a square reference is reasonable, but does not justify “That's this.” **I67—resolved:** l17’s “so short rides come out low…” creates a clearer causal link; the remaining conversational ellipsis is acceptable. **I68—unresolved:** l05’s high/low wording still does not explain why an error can be negative; l18 retains the improvised nouns “too-lows and too-highs.” **I69—no new fix required:** the three scores remain dense, but l25 supplies the essential comparison; screen visibility is not evidence for this blind review. **I70—resolved:** l26 now says “landscape of scores.” **I71—justified non-adoption:** the axis directions themselves are conventional spoken chart description; I would not require a rewrite of l27. **I72—partly justified non-adoption, still a small issue:** “clearly off” was too strong, but l28 remains a compressed roll call rather than flowing speech. **I73—resolved:** “ten dollars twenty” makes the amount identifiable by ear. **I74—resolved:** l29 now distinguishes the settings from the resulting score. **I75—partly resolved:** “chasing as low…” is gone, but l33’s “It's just getting as low…” still leaves the score implicit. **I76—resolved:** l38 provides its own audible bridge. **I77—resolved:** the ambiguous “It's just scoring…” has gone. **I78—resolved:** “just not for taxi fares” gives the contrast concrete meaning. **I79—resolved:** l40’s “how sure…about the real next word” is speakable and clear. **I80—resolved:** l41 now tells us what the percentages describe. **I81—resolved:** “tracked that score” works without seeing a curve. **I82—resolved:** l47 now defines the loss function as how mistakes are scored, preserving l04’s distinction. **I83—partly resolved:** “go downhill” works; “to ever see whole” introduces a clipped phrase. **I84—partly resolved:** “That's where gradient descent comes in” establishes its role, but “and that's next time” still needs a natural landing.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "I62、I68（l05 补了高低方向）、I73/I74（l29）、I77/I78（l38）、I82（l47）都已解决。I60（l02）和 I64（l11）不改是对的，b 判\"未解决\"不成立。但有两处修改带出了新问题：I84 修完的 l50 又出现了双 that's；I70 修完 l26 后，l49 的「that map」失去了可回指的对象。两处都在严格项片尾，所以 R 判 1；a 判 2，漏了这两点。"
+    }
+   },
+   "disputes": [
+    "V1",
+    "V2",
+    "V3",
+    "R"
+   ],
+   "audits": [
+    "V4",
+    "V5"
+   ],
+   "final_scores": {
+    "V1": 1,
+    "V2": 1,
+    "V3": 1,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "V1",
+     "V2",
+     "V3",
+     "R",
+     "V4",
+     "V5"
+    ],
+    "prompt": "items/voice_en__judge.md",
+    "report": "reports/voice_en__judge.md",
+    "ruling": {
+     "V1": {
+      "score": 1,
+      "evidence": "取 b 的分数，但证据只部分成立。l50「That's where gradient descent comes in, and that's next time.」一句里有两个 that's，\"and that's next time\" 收得太短，像制作备注；上一轮 I84 批评的正是\"double that's weakens the landing\"，这次修改又把它带了回来。严格项片尾判 a bit off 就是必改。l49 \"way too big to ever see whole\" 前半句随口、后半句偏书面，语域混搭。b 说 l11 \"Distance along the bottom, fare up the side\" 像念坐标轴标签，这条不成立（见驳回）；l15 \"That's this red square\" 只算建议级。a 判 2，理由是严格项无一 off，与 l50 的实情不符。"
+     },
+     "V2": {
+      "score": 1,
+      "evidence": "冷开场 l01–l04 是一条完整思路，章节开场 l11、l31、l38 也接得上，这一点 a 说得对；b 把 l02、l11 判为严格项必改，不成立。问题在片尾：l49「that map」指的地图，旁白从头到尾没说过（第 1 轮 I70 把 l26 的 \"landscape map\" 改成 \"landscape of scores\"，\"map\" 就从听觉里消失了）；l50 的落点又是双 that's。另外章节卡「It only sees the score」只有一个光秃秃的 It，上一句 l30 的主语还是 training / setting。片尾和章节标题都属严格项，所以不能给 a 的 3 分。"
+     },
+     "V3": {
+      "score": 1,
+      "evidence": "b 说没有讲过负误差，所以 l18–l19 跳得太快，这条不成立：l05 已经说了 \"too high or too low\"，l17 紧接着说 \"short rides come out low and long ones high\"，到 l18 再说 too-lows 和 too-highs 抵消，听一遍就懂；\"minus thirty-three cents\" 也只要求听众知道这数接近零。a 担心 \"three fifty\" 被听成 350，也不成立，前面刚说过 \"four dollars to start\"。真正的单听理解问题在 l49：「that map」回指一个耳朵从没听过的东西，听众得自己把 l26 的 landscape、l28 的 valley 换算成 map。这句是严格项，应必改。"
+     },
+     "R": {
+      "score": 1,
+      "evidence": "I62、I68（l05 补了高低方向）、I73/I74（l29）、I77/I78（l38）、I82（l47）都已解决。I60（l02）和 I64（l11）不改是对的，b 判\"未解决\"不成立。但有两处修改带出了新问题：I84 修完的 l50 又出现了双 that's；I70 修完 l26 后，l49 的「that map」失去了可回指的对象。两处都在严格项片尾，所以 R 判 1；a 判 2，漏了这两点。"
+     },
+     "V4": {
+      "score": 2,
+      "evidence": "抽查两人都漏掉的问题。l43 \"Meta trained a model … tracked that score as it trained. It kept going down.\" 一句里两次 trained，\"It kept going down\" 又和两句后 l45 \"the score was still falling\" 说的是同一件事，可以删。\"just\" 当口头填充用了 5 次：l10、l26、l33、l38、l48。l48 \"training is just pushing that score down\" 和 l10 几乎同句，但作为片尾回顾可以保留。总体紧凑，维持 2。"
+     },
+     "V5": {
+      "score": 2,
+      "evidence": "抽查两人都漏掉的问题。以 So 开头的句子有 l10、l20、l33、l37、l47、l49，共六处，和 a 指出的 \"That's…\" 收尾叠在一起，口头禅感偏重；l28（8.1s，单句三段并列）和 l46（8.1s）在一口气的上限附近。叙述者语气始终温和统一，长短句也有变化（l03 3.5s 对 l49 9.2s），维持 2。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 22,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_en__a",
+    "codex/voice_en__b"
+   ]
+  },
+  {
+   "id": "screen_zh",
+   "law": "lines",
+   "law_name": "中文屏幕文字（PPT 式画面）",
+   "color": "#b8860b",
+   "scope": [],
+   "checks": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "how": "硬上限（超了必须报）：标题 ≤12 字；其余每块 ≤16 字；同屏文字块 ≤4 块（不含页眉小标签、出处与图表刻度）；一屏总字数 ≤36 字。屏幕下方还有口播字幕，观众要同时看。计数口径（第 2 轮裁决定，2026-11-09）：页眉小标签、案例页签、出处、片尾署名不计；同构的列表 / 表格 / 卡片行（每项 ≤8 字、最多 6 项、样子一样）合算 1 块，编号不计字；图里的文字（区域名、曲线名、轴标题、柱条标签、图上注释）要计字数，整张图合算 1 块，只有坐标刻度数字豁免；表格的列头算在表里。",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_zh.md",
+   "prompt": "items/screen_zh__a.md",
+   "what": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "problem": "上一版屏幕文字很多是整句（如「另训一个模型，在两家医院的片子上认医院的准确率——胸片里藏着医院的“指纹”」），等于把口播又印了一遍；用户要求画面只列纲要、相对简练（2026-11-08）。",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "只列纲要",
+     "question": "每屏只放关键词、短语、关键数字、标签；不是口播整句的复述。按硬上限逐屏数字数，超了就报"
+    },
+    {
+     "id": "P2",
+     "name": "与口播分工",
+     "question": "屏幕给结构、数字、对比，口播负责解释；不和口播逐字重复，也不出现口播没说过的新说法；术语、叫法与口播一致"
+    },
+    {
+     "id": "P3",
+     "name": "层级与体例",
+     "question": "一眼先看到什么、第二眼看什么；标题—要点—注释不超过三级；编号、标签、章节名、目录项前后一致（例：目录写的和章节卡写的是不是同一个说法）"
+    },
+    {
+     "id": "P4",
+     "name": "中文措辞与排版",
+     "question": "短语化、不带句末句号；标点、引号、空格规范；不半中半英；**标题、章名读出来要顺**：名词堆砌、生造的名词短语（如「现实里的祸」）算必改"
+    },
+    {
+     "id": "P5",
+     "name": "看得完",
+     "question": "按截图和停留时间：文字量在停留时间内读得完（约 6 字/秒，还要分神看字幕和图）"
+    },
+    {
+     "id": "P6",
+     "name": "改写",
+     "question": "每处超限或不顺的屏幕文字，都给出更短、可直接替换的写法"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_zh__a.md",
+     "prompt": "items/screen_zh__a.md",
+     "scores": {
+      "P1": {
+       "score": 2,
+       "evidence": "全片无超限。最密的几屏：s3_l25（图内「车费（元）」「公里」5 字＋旋钮标签 6＋标题「三种拧法对比」6＋表「第一种/第二种/第三种」9＝约 26 字，4 块）；l21 约 25 字、4 块（「差 2 → 罚 4」「差 8 → 罚 64」同构合算）；l19 约 28 字、4 块；l36 图内 13 字＋h1 8＋h2 7＝28 字、3 块。小瑕疵：l36 标题「怎么打分，就怎么学」是带逗号的整句，更像口播而不是纲要（作者已有理由保留，见 R）。"
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "整体分工好，数字、对比在屏上，解释在口播。三处小瑕疵：l32 屏上「堵车、绕路：随机波动」，而口播 l32 已改成「堵车、绕路都会影响车费」，没有说「随机波动」，是口播没说过的新说法；l31–l32 同屏 h1「最低分 ≠ 0」与读数标签「最低损失 1.97」两种叫法；l39 屏上已亮出「光」，口播才刚问「后面该接什么」，答案提前一句。"
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "层级大体清楚（h1 大标题、读数卡、小标签三级以内）；eyebrow「01 · 损失函数是什么」与章节卡「损失函数是什么」一致，编号 01–04 前后连贯。瑕疵：s0_l04 的定义「给错误打分的规则」只放在 22px 小标签里（截图里比「Loss function」还弱），而它正是开场要交代的定义；四个章名体例不齐（问句／祈使／判断／问句）；「最低分」与「最低损失」并用。"
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "无句末句号，引号用「」规范；章名与标题读出来顺，没有「现实里的祸」那类名词堆砌：「训练 = 把分压下去」「不求零分，求最低」「损失函数：定义「好」」「分数地形图」都能顺口读。小瑕疵：l09「✗ 分高了：拧回来」符号混排（全片体例一致，但仍是符号）；l46「分 ↓」单字加箭头偏符号化。"
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "多数屏停留时间够。最紧的是 l25：3.0s（约 18 字额度），新出现的有标题 6 字＋表格 9 字＋三个数；l31 2.8s、l08 2.8s 也偏紧，但新增文字量分别只有 4 字、9 字，读得完。l25 里三个数 78、13.4、2.19 观众此前都见过，才勉强可读。"
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "本轮所有问题条目都给了可直接替换的写法（见下表），且改写比原文更短或不更长。"
+      },
+      "R": {
+       "score": 3,
+       "evidence": "上一轮本项条目逐条复核。已解决：I34/I35 片尾改为「损失函数：给错误打分／训练：把分压到最低」（card_s6 截图确认，两行 10 字与 9 字，对仗）；I39/I42 分数标签统一以「损失」为基；I43 三种拧法标题；I44/I45 l19 降到 4 块约 28 字；I48 l25 标题改「三种拧法对比」；I51 l34「只认分数／不懂打车」；I53/I54 l37「损失函数：定义「好」」；I55/I56 l38「也有损失」；I58 l40「把握小 → 罚得多」、l41 只剩柱与数字；I50 1.97 读数留到 l32 末尾。作者「不改」且理由成立：I40（高尔夫 9 字在上限内）、I46（与口播「平方以后全是正数」一致）、I47（截图中英分两行）、I52（保留「怎么打分，就怎么学」）、I36/I37/I38/I41/I57（均为记录级）。改出新问题：I49 把 h1 改成「最低分 ≠ 0」，但 I39 已把读数统一成「最低损失」，同屏出现两种叫法（见问题表 2）。另 l32 口播由 I103 改了之后，屏上「随机波动」没同步（问题表 1）。"
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/screen_zh__b.md",
+     "prompt": "items/screen_zh__b.md",
+     "scores": {
+      "P1": {
+       "score": 2,
+       "evidence": "逐屏重计，未发现硬上限超限；最长标题为片尾第一行，9 字。含图内文字，l19、l25、l30 均为 31 字、4 块；l36 为 28 字、3 块。l08、l35–l36 仍可减少口播式说明。"
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "l41 用“把握 90%／罚 0.11”与“把握 10%／罚 2.30”提供数字对比，分工清楚；l32 的“随机波动”未在对应口播解释，l08 仍重复“杆数越少越好”。"
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "四张章节卡均有 01–04 编号，名称与页眉一致；l25 已改“三种拧法对比”，第三行绿色突出最低值；l36 仍同时保留总论标题、副标题和左侧比较，重心可以更集中。"
+      },
+      "P4": {
+       "score": 3,
+       "evidence": "c_problem“损失函数是什么”、c_lens“模型只认分数”、c_real“大模型怎么打分”均自然；l37“损失函数：定义「好」”两行排，读得顺；l23 截图中中英文分行，没有粘连。"
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "l31 的“最低损失 1.97”延续到 l32，阅读时间已改善；l25 仅 3 秒，新标题与三行比较共 18 字，按约 6 字/秒已占满整段，兼顾字幕偏紧。"
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "问题表对 l08、l25、l32、l35–l36 均给出可直接替换的短写法，并明确需要撤掉的旧文字。"
+      },
+      "R": {
+       "score": 2,
+       "evidence": "I34 已解决，片尾加入概念标签；I35 已解决，同 I34；I36 不改理由成立，章名自然，截图实际已有编号；I37 不改理由成立，冷开场数字随后得到说明；I38 不改理由成立，图例与具体读数的表达可以不同；I39 已解决，读数统一为“损失”；I40 未解决，拒绝“杆少者胜”有理，但字数合规不能消除口播重复；I41 不改理由成立，符号用法可辨认；I42 已解决，“平均损失”替代旧括号写法；I43 已解决，三种标题统一且“贴近”自然；I44 已解决，l19 旧结论已撤，现为 4 块、31 字；I45 已解决，同 I44；I46 就本项而言不改理由成立，屏幕与口播一致，口播命题本身交对应审稿项判断；I47 不改理由成立，截图证实中英分行；I48 未解决，标题已改，但三秒比较页仍偏紧；I49 已解决，“最低分”明确比较对象；I50 已解决，读数保留到 l32；I51 已解决，“只认分数／不懂打车”简明；I52 未解决，拒绝原替换方案有理，但 l36 撤掉旧总论标题的精简意见未落实；I53 已解决，“定义「好」”顺畅；I54 已解决，同 I53；I55 已解决，“也有损失”短且有术语；I56 已解决，同 I55；I57 不改理由成立，“大模型”作为简称不造成歧义；I58 已解决，l40 改为箭头关系，l41 已撤该行。未发现上述修改另生措辞问题。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "只列纲要",
+     "a": 2,
+     "a_ev": "全片无超限。最密的几屏：s3_l25（图内「车费（元）」「公里」5 字＋旋钮标签 6＋标题「三种拧法对比」6＋表「第一种/第二种/第三种」9＝约 26 字，4 块）；l21 约 25 字、4 块（「差 2 → 罚 4」「差 8 → 罚 64」同构合算）；l19 约 28 字、4 块；l36 图内 13 字＋h1 8＋h2 7＝28 字、3 块。小瑕疵：l36 标题「怎么打分，就怎么学」是带逗号的整句，更像口播而不是纲要（作者已有理由保留，见 R）。",
+     "b": 2,
+     "b_ev": "逐屏重计，未发现硬上限超限；最长标题为片尾第一行，9 字。含图内文字，l19、l25、l30 均为 31 字、4 块；l36 为 28 字、3 块。l08、l35–l36 仍可减少口播式说明。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "维持两人的 2 分。按第 2 轮口径复数：l19、l21、l25、l29、l30 都是图 1 块＋旋钮卡 1 块＋h1＋读数或列表＝4 块，全片最多 31 字左右；l36 是图内 13 字＋h1 8 字＋h2 7 字＝28 字、3 块；l41 是 display 1 块＋同构两行 1 块；l46 两行同构算 1 块；片尾两行分别 9 字和 8 字。没有一屏超过硬上限。片头卡 card_intro、四张章节卡、片尾 card_s6 按从严条目重读，都不怪。剩下的小瑕疵是 l08「高尔夫：杆数越少越好」和 l35「怎么打分，就怎么学」与口播接近逐字，属于记录级。"
+    },
+    "P2": {
+     "name": "与口播分工",
+     "a": 2,
+     "a_ev": "整体分工好，数字、对比在屏上，解释在口播。三处小瑕疵：l32 屏上「堵车、绕路：随机波动」，而口播 l32 已改成「堵车、绕路都会影响车费」，没有说「随机波动」，是口播没说过的新说法；l31–l32 同屏 h1「最低分 ≠ 0」与读数标签「最低损失 1.97」两种叫法；l39 屏上已亮出「光」，口播才刚问「后面该接什么」，答案提前一句。",
+     "b": 2,
+     "b_ev": "l41 用“把握 90%／罚 0.11”与“把握 10%／罚 2.30”提供数字对比，分工清楚；l32 的“随机波动”未在对应口播解释，l08 仍重复“杆数越少越好”。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "维持两人的 2 分。l32 屏上「堵车、绕路：随机波动」确是口播没说过的概括（讲稿 l32 只说「堵车、绕路都会影响车费」，英文屏同位置只写「Traffic + detours」），两人都抓到，建议级成立。a 的 l39 也成立：s5.html 中 `#ans` 在 l39 的 0.8 处入场，截图 s5_l39 里「光」已亮出，口播还在问「后面该接什么」，b 漏了这一条。a 的 l31–l32「最低分 ≠ 0」与「最低损失 1.97」同屏两种叫法也成立。两人共同漏掉的是 l36（见补充问题）：屏上「4 趟各差 2／1 趟差 8」没有点出两边总共差得一样多，所以这组对比的前提看不出来。以上都是建议级，没有与口播矛盾的地方，也不涉及从严条目，不到 1 分。"
+    },
+    "P3": {
+     "name": "层级与体例",
+     "a": 2,
+     "a_ev": "层级大体清楚（h1 大标题、读数卡、小标签三级以内）；eyebrow「01 · 损失函数是什么」与章节卡「损失函数是什么」一致，编号 01–04 前后连贯。瑕疵：s0_l04 的定义「给错误打分的规则」只放在 22px 小标签里（截图里比「Loss function」还弱），而它正是开场要交代的定义；四个章名体例不齐（问句／祈使／判断／问句）；「最低分」与「最低损失」并用。",
+     "b": 2,
+     "b_ev": "四张章节卡均有 01–04 编号，名称与页眉一致；l25 已改“三种拧法对比”，第三行绿色突出最低值；l36 仍同时保留总论标题、副标题和左侧比较，重心可以更集中。",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P4": {
+     "name": "中文措辞与排版",
+     "a": 2,
+     "a_ev": "无句末句号，引号用「」规范；章名与标题读出来顺，没有「现实里的祸」那类名词堆砌：「训练 = 把分压下去」「不求零分，求最低」「损失函数：定义「好」」「分数地形图」都能顺口读。小瑕疵：l09「✗ 分高了：拧回来」符号混排（全片体例一致，但仍是符号）；l46「分 ↓」单字加箭头偏符号化。",
+     "b": 3,
+     "b_ev": "c_problem“损失函数是什么”、c_lens“模型只认分数”、c_real“大模型怎么打分”均自然；l37“损失函数：定义「好」”两行排，读得顺；l23 截图中中英文分行，没有粘连。",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P5": {
+     "name": "看得完",
+     "a": 2,
+     "a_ev": "多数屏停留时间够。最紧的是 l25：3.0s（约 18 字额度），新出现的有标题 6 字＋表格 9 字＋三个数；l31 2.8s、l08 2.8s 也偏紧，但新增文字量分别只有 4 字、9 字，读得完。l25 里三个数 78、13.4、2.19 观众此前都见过，才勉强可读。",
+     "b": 2,
+     "b_ev": "l31 的“最低损失 1.97”延续到 l32，阅读时间已改善；l25 仅 3 秒，新标题与三行比较共 18 字，按约 6 字/秒已占满整段，兼顾字幕偏紧。",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P6": {
+     "name": "改写",
+     "a": 3,
+     "a_ev": "本轮所有问题条目都给了可直接替换的写法（见下表），且改写比原文更短或不更长。",
+     "b": 3,
+     "b_ev": "问题表对 l08、l25、l32、l35–l36 均给出可直接替换的短写法，并明确需要撤掉的旧文字。",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": ""
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 3,
+     "a_ev": "上一轮本项条目逐条复核。已解决：I34/I35 片尾改为「损失函数：给错误打分／训练：把分压到最低」（card_s6 截图确认，两行 10 字与 9 字，对仗）；I39/I42 分数标签统一以「损失」为基；I43 三种拧法标题；I44/I45 l19 降到 4 块约 28 字；I48 l25 标题改「三种拧法对比」；I51 l34「只认分数／不懂打车」；I53/I54 l37「损失函数：定义「好」」；I55/I56 l38「也有损失」；I58 l40「把握小 → 罚得多」、l41 只剩柱与数字；I50 1.97 读数留到 l32 末尾。作者「不改」且理由成立：I40（高尔夫 9 字在上限内）、I46（与口播「平方以后全是正数」一致）、I47（截图中英分两行）、I52（保留「怎么打分，就怎么学」）、I36/I37/I38/I41/I57（均为记录级）。改出新问题：I49 把 h1 改成「最低分 ≠ 0」，但 I39 已把读数统一成「最低损失」，同屏出现两种叫法（见问题表 2）。另 l32 口播由 I103 改了之后，屏上「随机波动」没同步（问题表 1）。",
+     "b": 2,
+     "b_ev": "I34 已解决，片尾加入概念标签；I35 已解决，同 I34；I36 不改理由成立，章名自然，截图实际已有编号；I37 不改理由成立，冷开场数字随后得到说明；I38 不改理由成立，图例与具体读数的表达可以不同；I39 已解决，读数统一为“损失”；I40 未解决，拒绝“杆少者胜”有理，但字数合规不能消除口播重复；I41 不改理由成立，符号用法可辨认；I42 已解决，“平均损失”替代旧括号写法；I43 已解决，三种标题统一且“贴近”自然；I44 已解决，l19 旧结论已撤，现为 4 块、31 字；I45 已解决，同 I44；I46 就本项而言不改理由成立，屏幕与口播一致，口播命题本身交对应审稿项判断；I47 不改理由成立，截图证实中英分行；I48 未解决，标题已改，但三秒比较页仍偏紧；I49 已解决，“最低分”明确比较对象；I50 已解决，读数保留到 l32；I51 已解决，“只认分数／不懂打车”简明；I52 未解决，拒绝原替换方案有理，但 l36 撤掉旧总论标题的精简意见未落实；I53 已解决，“定义「好」”顺畅；I54 已解决，同 I53；I55 已解决，“也有损失”短且有术语；I56 已解决，同 I55；I57 不改理由成立，“大模型”作为简称不造成歧义；I58 已解决，l40 改为箭头关系，l41 已撤该行。未发现上述修改另生措辞问题。",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    }
+   },
+   "disputes": [],
+   "audits": [
+    "P2",
+    "P1"
+   ],
+   "final_scores": {
+    "P1": 2,
+    "P2": 2,
+    "P3": 2,
+    "P4": 2,
+    "P5": 2,
+    "P6": 3,
+    "R": 2
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "P2",
+     "P1"
+    ],
+    "prompt": "items/screen_zh__judge.md",
+    "report": "reports/screen_zh__judge.md",
+    "ruling": {
+     "P2": {
+      "score": 2,
+      "evidence": "维持两人的 2 分。l32 屏上「堵车、绕路：随机波动」确是口播没说过的概括（讲稿 l32 只说「堵车、绕路都会影响车费」，英文屏同位置只写「Traffic + detours」），两人都抓到，建议级成立。a 的 l39 也成立：s5.html 中 `#ans` 在 l39 的 0.8 处入场，截图 s5_l39 里「光」已亮出，口播还在问「后面该接什么」，b 漏了这一条。a 的 l31–l32「最低分 ≠ 0」与「最低损失 1.97」同屏两种叫法也成立。两人共同漏掉的是 l36（见补充问题）：屏上「4 趟各差 2／1 趟差 8」没有点出两边总共差得一样多，所以这组对比的前提看不出来。以上都是建议级，没有与口播矛盾的地方，也不涉及从严条目，不到 1 分。"
+     },
+     "P1": {
+      "score": 2,
+      "evidence": "维持两人的 2 分。按第 2 轮口径复数：l19、l21、l25、l29、l30 都是图 1 块＋旋钮卡 1 块＋h1＋读数或列表＝4 块，全片最多 31 字左右；l36 是图内 13 字＋h1 8 字＋h2 7 字＝28 字、3 块；l41 是 display 1 块＋同构两行 1 块；l46 两行同构算 1 块；片尾两行分别 9 字和 8 字。没有一屏超过硬上限。片头卡 card_intro、四张章节卡、片尾 card_s6 按从严条目重读，都不怪。剩下的小瑕疵是 l08「高尔夫：杆数越少越好」和 l35「怎么打分，就怎么学」与口播接近逐字，属于记录级。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 14,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_zh__a",
+    "codex/screen_zh__b"
+   ]
+  },
+  {
+   "id": "screen_en",
+   "law": "lines",
+   "law_name": "English on-screen text (slides)",
+   "color": "#6b4fc0",
+   "scope": [],
+   "checks": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "how": "Hard limits (report every breach): title ≤6 words; any other block ≤9 words; ≤4 text blocks per screen (not counting the small eyebrow label, source line or chart ticks); ≤22 words per screen. Narration subtitles also sit at the bottom of the frame. Counting rules (round-2 ruling, 2026-11-09): eyebrow labels, case tabs, source lines and end-card credits are exempt; a list, table or card row of look-alike items (each ≤6 words, at most 6 items) counts as one block, and numbering doesn't count as words; in-chart text (zone names, curve names, axis titles, bar labels, callouts) counts toward words and the whole chart counts as one block — only axis tick numbers are exempt; a table's column headers count with the table.",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_en.md",
+   "prompt": "items/screen_en__a.md",
+   "what": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "problem": "The previous version put full sentences on screen (e.g. 'A separate model identified the hospital for scans from two hospitals — a hospital fingerprint'), repeating the narration. The user wants outline-only, concise slides (2026-11-08).",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "Outline, not prose",
+     "question": "Only keywords, short phrases, key numbers, labels; no full narration sentences. Count words per screen against the hard limits"
+    },
+    {
+     "id": "P2",
+     "name": "Divided from narration",
+     "question": "Screen carries structure, numbers, contrasts; narration explains. No verbatim repetition, no new claims the narration doesn't make; terms match the narration"
+    },
+    {
+     "id": "P3",
+     "name": "Hierarchy and consistency",
+     "question": "What reads first, second; ≤3 levels (title, point, note); numbering, labels, chapter names and agenda items consistent with each other"
+    },
+    {
+     "id": "P4",
+     "name": "Native phrasing and style",
+     "question": "Sentence case headline style; no Chinglish; consistent punctuation (no trailing periods on fragments), en dashes, quotes; parallel grammar in lists; **chapter titles and headings must read naturally aloud** — awkward noun stacks are must-fix"
+    },
+    {
+     "id": "P5",
+     "name": "Readable in time",
+     "question": "From the screenshot and how long it stays: readable in time (~3 words/s while also reading subtitles and the chart)"
+    },
+    {
+     "id": "P6",
+     "name": "Rewrites",
+     "question": "For every breach or awkward phrase, a shorter drop-in rewrite"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_en__a.md",
+     "prompt": "items/screen_en__a.md",
+     "scores": {
+      "P1": {
+       "score": 2,
+       "evidence": "The round-1 sentence-on-screen problem is gone. Titles are 3-5 words (l33 \"Not zero, just the lowest\" 5; l35 \"How you score shapes learning\" 5), no block exceeds 9 words, no screen exceeds 22 words (worst: l29/l30 about 19; l43-l45 13). Open count issues: l28/l30 chart block (axis titles + \"Lowest point\" + three \"n · score\" tags) reads 10 and 12 words by the tool's count (9 or fewer only if the try numbers are ruled \"numbering\"); l21 stacks two h2 lines, which must be counted as one look-alike list or the screen has 5 blocks."
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "Narration carries the explanation and the screen carries labels and numbers almost everywhere (l41 \"90% sure / Penalty 0.11\", l36 \"4 × 2² = 16\"). Small echoes remain: l01 h1 \"Model = a machine with knobs\" is the narration clause \"a model is a machine with knobs\" word for word (strict cold open); l38 h2 \"Scored in training, too\" repeats \"get a score in training too\" and drops the \"not for taxi fares\" contrast the narration makes (strict chapter opener)."
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "Three levels are used cleanly (eyebrow / h1 / h2 / number card) and the numbering 01-04 matches the chapter cards. Terminology wobbles: l31 shows \"Lowest score ≠ 0\" above a card labelled \"Lowest loss 1.97\" on the same screen; l43-l45 use \"Training loss\" while the narration says \"score\". l07/l08 lead with an h2 and have no h1, so the lead line changes level between l06 and l07."
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "Sentence case throughout, no trailing periods on fragments, \"−\" and \"→\" used consistently, \"Loss: a score for mistakes / Training: push it down\" on the outro is parallel and natural. Chapter titles are mixed in form (\"What is a loss function?\" / \"A small experiment\" / \"It only sees the score\" / \"How big models are scored\") but each reads fine aloud. Minor: l09 \"✗ Higher: turn back\" leaves \"Higher\" without a subject."
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "At about 3 words/s all screens are readable; most short screens (l03 3.5s, l08 3.5s, l22 3.8s) introduce only 1-5 new words. l43 and l45 h2 \"Training loss keeps / falling\" wraps with the single word \"falling\" on line 2 (screenshot s5_l43). The l43-l45 source line is 22px (exempt but hard to read)."
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "Every issue in the table below has a shorter drop-in rewrite, each within the hard limits."
+      },
+      "R": {
+       "score": 2,
+       "evidence": "Round-1 screen_en items I1-I33 re-checked against the current materials. Resolved: I1/I3 outro now \"Loss: a score for mistakes / Training: push it down\" (card_s6 shows it parallel, no trailing period); I2 chapter title is \"It only sees the score\"; I5 l01 now 5 words (but see issue 2 below, still echoes narration); I6 no Chinese text; I7 l04 eyebrow \"The rule for scoring mistakes\" (screenshot confirms); I9/I10 \"0 = no error\"; I11 l08 \"Golf: fewest strokes wins\" is on one line; I12-I15 l14/l15 chart now has \"$8\" and \"8² = 64\"; I16-I19 l18 \"They cancel out\", −$0.33 on card matches narration; I20 l25 title \"Compare all three\" (screenshot s3_l25 clean, no duplicate \"Try 3\"); I21 l30 green ring plus dark Try 3 dot visible (s3_l30); I22-I29 all adopted; I33 \"Tens of billions of knobs\". Not resolved: I11's second half (l45 orphan \"falling\") was filed under I32 as 不改 and the orphan is still there at l43-l45 (new issue 6). 不改 judgments: I4 (outro \"Next · Gradient descent\" shown from the start) holds, since it is a shared template and the name alone does not spoil the l49 question; I31 holds (quote is the main subject); I32 holds on content (curve title vs end-of-curve label do different jobs) but the h2 can still be shortened (issue 6). No new problem introduced by a round-1 fix, except l09 reading as half the rule (issue 5)."
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/screen_en__b.md",
+     "prompt": "items/screen_en__b.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "Numeric limits pass under the round-2 grouping rules, but c_lens, l18–l19, l35–l37 and l43–l45 retain complete explanatory sentences. The l15 chart reaches 9 words; l29–l30 reach 9 after excluding trial numbering. Neither exceeds the limit."
+      },
+      "P2": {
+       "score": 1,
+       "evidence": "l34 repeats “no idea what a taxi is”; l43–l45 repeat the narrated downward trend. At l37, “Loss defines ‘good’” also loses the distinction between the score and the scoring rule established at l04."
+      },
+      "P3": {
+       "score": 1,
+       "evidence": "Chapter numbering 01–04 is consistent, and the comparison rows qualify for grouping. However, l29–l30 visually attach “Lowest point” to the marker already labelled “3 · 2.19”, despite displaying a different minimum, 1.97."
+      },
+      "P4": {
+       "score": 1,
+       "evidence": "Most headings use natural sentence case and omit fragment-ending periods. “Golf: fewest strokes wins” has an awkward plural-subject/singular-verb construction; the strict outro still mixes a noun phrase with an imperative."
+      },
+      "P5": {
+       "score": 1,
+       "evidence": "Reading time is generally sufficient: l08 adds four words over 3.5 seconds, and l41 presents its comparison over 8.1 seconds. However, l46’s expanded “Tens of billions of knobs” visibly overlaps the knob illustration."
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "Every issue below includes a shorter replacement or deletion instruction. Examples include “Only the score”, “Error cancellation”, “Squared penalties” and “Training loss ↓”."
+      },
+      "R": {
+       "score": 1,
+       "evidence": "I1/I3 **unresolved in part**: the outro is shorter, but “Training: push it down” retains the imperative and pronoun; noun-phrase parallelism remains unfinished. I2 **unresolved**: “It only sees the score” sounds natural, but shortening a complete explanation does not satisfy the outline-only requirement. I4 **rejection justified**: “Next · Gradient descent” is a useful topic preview; its name does not explain which direction to turn. I5 **resolved**: l01 now uses a five-word equation-style label. I6 **resolved**: the English screenshots at l04 and l42 contain no Chinese gloss. I7 **resolved**: “The rule for scoring mistakes” correctly identifies the loss function. I8 **resolved**: the arrow and score card are separated and legible. I9/I10 **resolved**: “0 = no error” is concise. I11 **new problem introduced at l08**: wrapping is improved, but “fewest strokes wins” is awkward; the l45 duplicate remains under I32. I12 **resolved**: “$8” clears the prediction line. I13/I14 **resolved**: the l15 chart now totals 9 words. I15 **resolved**: the equation is legible above the square. I16 **block-count issue resolved**, but “They cancel out” remains prose. I17 **resolved**: both tracks now specify −$0.33; the earlier rounding defence was reasonable, and current exact agreement is better. I18 **resolved**: title, paired knob values, chart and average form four blocks. I19 **resolved**: “Too low −” clears the dot. I20 **resolved**: “Compare all three” removes the duplicate heading. I21 **unresolved**: moving the wording does not distinguish the minimum from the nearly coincident trial-3 marker. I22 **resolved**: “Traffic + detours” works. I23 **resolved**: adding “the” restores natural phrasing; preserving the contrast with zero is justified. I24/I25 **unresolved**: deleting the subject has left near-verbatim narration on screen. I26 **partly resolved**: the grammar is clearer, but the replacement is still a complete explanatory sentence; the rejection does not address outline-only presentation. I27 **resolved**: the equations replace the long chart labels. I28 **new problem introduced**: clearer meaning, but “How you score shapes learning” is a complete sentence. I29 **partly resolved**: more idiomatic, but “Loss” now substitutes for the narrated “loss function”. I30 **resolved**: “sure” is consistent. I31 **rejection justified**: the lyric establishes the prediction target, while the coloured penalty values remain readable. I32 **unresolved; rejection not justified**: a readable sentence is still prose, and l45 repeats its trend inside the chart. I33 **new problem introduced**: adding “of knobs” fixes parallelism but creates visible overlap at l46."
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "Outline, not prose",
+     "a": 2,
+     "a_ev": "The round-1 sentence-on-screen problem is gone. Titles are 3-5 words (l33 \"Not zero, just the lowest\" 5; l35 \"How you score shapes learning\" 5), no block exceeds 9 words, no screen exceeds 22 words (worst: l29/l30 about 19; l43-l45 13). Open count issues: l28/l30 chart block (axis titles + \"Lowest point\" + three \"n · score\" tags) reads 10 and 12 words by the tool's count (9 or fewer only if the try numbers are ruled \"numbering\"); l21 stacks two h2 lines, which must be counted as one look-alike list or the screen has 5 blocks.",
+     "b": 1,
+     "b_ev": "Numeric limits pass under the round-2 grouping rules, but c_lens, l18–l19, l35–l37 and l43–l45 retain complete explanatory sentences. The l15 chart reaches 9 words; l29–l30 reach 9 after excluding trial numbering. Neither exceeds the limit.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "a 站得住。硬上限全部满足：标题最长 5 词（l33「Not zero, just the lowest」、l35「How you score shapes learning」），单块不超 9 词；l29/l30 图内为 Per km 2 + Starting fare 2 + 13.4/2.19/78 各 1（「2 ·」「3 ·」「1 ·」按第 2 轮规则算编号）+ Lowest point 2，共 9 词，压线不超。l21、l25、l41 按「同类行算一块」都不超过 4 块。b 判 1 的依据是「They cancel out」(l18，3 词)、「Lower is better」(l07，3 词) 这类短分句。3–5 词的标题式分句是幻灯片的正常写法，不等于第 1 轮被用户抓到的整句口播（如「A separate model identified the hospital…」），不能据此判 1。"
+    },
+    "P2": {
+     "name": "Divided from narration",
+     "a": 2,
+     "a_ev": "Narration carries the explanation and the screen carries labels and numbers almost everywhere (l41 \"90% sure / Penalty 0.11\", l36 \"4 × 2² = 16\"). Small echoes remain: l01 h1 \"Model = a machine with knobs\" is the narration clause \"a model is a machine with knobs\" word for word (strict cold open); l38 h2 \"Scored in training, too\" repeats \"get a score in training too\" and drops the \"not for taxi fares\" contrast the narration makes (strict chapter opener).",
+     "b": 1,
+     "b_ev": "l34 repeats “no idea what a taxi is”; l43–l45 repeat the narrated downward trend. At l37, “Loss defines ‘good’” also loses the distinction between the score and the scoring rule established at l04.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 站得住。原句照搬口播的屏仍有几处：l07「Lower is better」与口播「lower is better」一字不差；l34 h2「No idea what a taxi is」与口播「has no idea what a taxi is」相同；l43–l45 的 h2 与 l45 曲线标注重复说趋势。更要紧的是 l37「Loss defines “good”」，口播说的是「when you pick a loss function」，而 l04 专门区分了 loss（分数）和 loss function（规则）。这里把规则写成了分数，属于「terms match the narration」不过关。a 给 2，漏看了 l37 这一处术语偏差。"
+    },
+    "P3": {
+     "name": "Hierarchy and consistency",
+     "a": 2,
+     "a_ev": "Three levels are used cleanly (eyebrow / h1 / h2 / number card) and the numbering 01-04 matches the chapter cards. Terminology wobbles: l31 shows \"Lowest score ≠ 0\" above a card labelled \"Lowest loss 1.97\" on the same screen; l43-l45 use \"Training loss\" while the narration says \"score\". l07/l08 lead with an h2 and have no h1, so the lead line changes level between l06 and l07.",
+     "b": 1,
+     "b_ev": "Chapter numbering 01–04 is consistent, and the comparison rows qualify for grouping. However, l29–l30 visually attach “Lowest point” to the marker already labelled “3 · 2.19”, despite displaying a different minimum, 1.97.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "同屏一致性有三处真问题。① l31 h1「Lowest score ≠ 0」，下面的卡片却写「Lowest loss 1.97」，同一个量在一屏里有两个名字（a 指出）。② l29–l30 的绿色圆环套住第 3 次的灰点，「3 · 2.19」就贴在环边，旁边写「Lowest point」，右侧卡片又是 1.97，观众读到的是同一个点有两个分数（b 指出，s3_l30 截图可以确认）。③ 两人都漏了：l34 的页眉「03 · It only sees the score」与 h1「Sees only the score」在同一屏几乎同句，只是换了语序（见补充问题）。a 列出了问题却给 2，与问题的分量不符。"
+    },
+    "P4": {
+     "name": "Native phrasing and style",
+     "a": 2,
+     "a_ev": "Sentence case throughout, no trailing periods on fragments, \"−\" and \"→\" used consistently, \"Loss: a score for mistakes / Training: push it down\" on the outro is parallel and natural. Chapter titles are mixed in form (\"What is a loss function?\" / \"A small experiment\" / \"It only sees the score\" / \"How big models are scored\") but each reads fine aloud. Minor: l09 \"✗ Higher: turn back\" leaves \"Higher\" without a subject.",
+     "b": 1,
+     "b_ev": "Most headings use natural sentence case and omit fragment-ending periods. “Golf: fewest strokes wins” has an awkward plural-subject/singular-verb construction; the strict outro still mixes a noun phrase with an imperative.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "a 站得住。全片句首大写、片段不加句号、「−」「→」用法一致；片尾两行「Loss: a score for mistakes / Training: push it down」都是「名词: 说明」结构，读出来自然。b 的两条主要依据不成立：「Golf: fewest strokes wins」是英语常见的省略说法（同「most votes wins」「lowest score wins」），不是主谓不一致；「Training: push it down」是标签加祈使句的标准幻灯片写法，代词「it」紧接在上一行「Loss」之后。剩下的小瑕疵是四个章名句式不统一（问句、名词短语、句子、how 从句），每个单独读都通顺。"
+    },
+    "P5": {
+     "name": "Readable in time",
+     "a": 2,
+     "a_ev": "At about 3 words/s all screens are readable; most short screens (l03 3.5s, l08 3.5s, l22 3.8s) introduce only 1-5 new words. l43 and l45 h2 \"Training loss keeps / falling\" wraps with the single word \"falling\" on line 2 (screenshot s5_l43). The l43-l45 source line is 22px (exempt but hard to read).",
+     "b": 1,
+     "b_ev": "Reading time is generally sufficient: l08 adds four words over 3.5 seconds, and l41 presents its comparison over 8.1 seconds. However, l46’s expanded “Tens of billions of knobs” visibly overlaps the knob illustration.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 站得住，a 漏看了截图。s5_l46 里「Tens of billions of knobs」的末尾「bs」压在小旋钮阵列上，画面上能直接看到遮挡，必须改。此外还有两处孤词折行：l43–l45 的「Training loss keeps / falling」（a 指出），以及两人都漏掉的 l35–l36「Squaring punishes big / misses」。l08 高尔夫卡的文字贴到卡片右边框（见补充问题）。阅读时间本身够用：l08 新增 4 词、停 3.5s；l41 停 8.1s。"
+    },
+    "P6": {
+     "name": "Rewrites",
+     "a": 3,
+     "a_ev": "Every issue in the table below has a shorter drop-in rewrite, each within the hard limits.",
+     "b": 3,
+     "b_ev": "Every issue below includes a shorter replacement or deletion instruction. Examples include “Only the score”, “Error cancellation”, “Squared penalties” and “Training loss ↓”.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "抽查后不能给 3，两人都给 3，却有共同的盲点。a 在 l36 的可选改写「4 × off by 2 = 16 / 1 × off by 8 = 64」自己写明 10 词，超过单块 9 词的上限，和它「each within the hard limits」的说法矛盾。b 的多条改写比原文差，或已在上一轮被驳回：「Error cancellation」「Defining “good”」「Score only」「Squared penalties」；「Billions of knobs」还和口播「tens of billions」对不上。另外，两人对自己漏掉的 l34 页眉与 h1 重复、l36 孤词都没有改写。"
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "Round-1 screen_en items I1-I33 re-checked against the current materials. Resolved: I1/I3 outro now \"Loss: a score for mistakes / Training: push it down\" (card_s6 shows it parallel, no trailing period); I2 chapter title is \"It only sees the score\"; I5 l01 now 5 words (but see issue 2 below, still echoes narration); I6 no Chinese text; I7 l04 eyebrow \"The rule for scoring mistakes\" (screenshot confirms); I9/I10 \"0 = no error\"; I11 l08 \"Golf: fewest strokes wins\" is on one line; I12-I15 l14/l15 chart now has \"$8\" and \"8² = 64\"; I16-I19 l18 \"They cancel out\", −$0.33 on card matches narration; I20 l25 title \"Compare all three\" (screenshot s3_l25 clean, no duplicate \"Try 3\"); I21 l30 green ring plus dark Try 3 dot visible (s3_l30); I22-I29 all adopted; I33 \"Tens of billions of knobs\". Not resolved: I11's second half (l45 orphan \"falling\") was filed under I32 as 不改 and the orphan is still there at l43-l45 (new issue 6). 不改 judgments: I4 (outro \"Next · Gradient descent\" shown from the start) holds, since it is a shared template and the name alone does not spoil the l49 question; I31 holds (quote is the main subject); I32 holds on content (curve title vs end-of-curve label do different jobs) but the h2 can still be shortened (issue 6). No new problem introduced by a round-1 fix, except l09 reading as half the rule (issue 5).",
+     "b": 1,
+     "b_ev": "I1/I3 **unresolved in part**: the outro is shorter, but “Training: push it down” retains the imperative and pronoun; noun-phrase parallelism remains unfinished. I2 **unresolved**: “It only sees the score” sounds natural, but shortening a complete explanation does not satisfy the outline-only requirement. I4 **rejection justified**: “Next · Gradient descent” is a useful topic preview; its name does not explain which direction to turn. I5 **resolved**: l01 now uses a five-word equation-style label. I6 **resolved**: the English screenshots at l04 and l42 contain no Chinese gloss. I7 **resolved**: “The rule for scoring mistakes” correctly identifies the loss function. I8 **resolved**: the arrow and score card are separated and legible. I9/I10 **resolved**: “0 = no error” is concise. I11 **new problem introduced at l08**: wrapping is improved, but “fewest strokes wins” is awkward; the l45 duplicate remains under I32. I12 **resolved**: “$8” clears the prediction line. I13/I14 **resolved**: the l15 chart now totals 9 words. I15 **resolved**: the equation is legible above the square. I16 **block-count issue resolved**, but “They cancel out” remains prose. I17 **resolved**: both tracks now specify −$0.33; the earlier rounding defence was reasonable, and current exact agreement is better. I18 **resolved**: title, paired knob values, chart and average form four blocks. I19 **resolved**: “Too low −” clears the dot. I20 **resolved**: “Compare all three” removes the duplicate heading. I21 **unresolved**: moving the wording does not distinguish the minimum from the nearly coincident trial-3 marker. I22 **resolved**: “Traffic + detours” works. I23 **resolved**: adding “the” restores natural phrasing; preserving the contrast with zero is justified. I24/I25 **unresolved**: deleting the subject has left near-verbatim narration on screen. I26 **partly resolved**: the grammar is clearer, but the replacement is still a complete explanatory sentence; the rejection does not address outline-only presentation. I27 **resolved**: the equations replace the long chart labels. I28 **new problem introduced**: clearer meaning, but “How you score shapes learning” is a complete sentence. I29 **partly resolved**: more idiomatic, but “Loss” now substitutes for the narrated “loss function”. I30 **resolved**: “sure” is consistent. I31 **rejection justified**: the lyric establishes the prediction target, while the coloured penalty values remain readable. I32 **unresolved; rejection not justified**: a readable sentence is still prose, and l45 repeats its trend inside the chart. I33 **new problem introduced**: adding “of knobs” fixes parallelism but creates visible overlap at l46.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "b 站得住。round-1 的 I33（「Tens of billions of knobs」）改法引出了 l46 文字压图的新问题。I11 的 l45 孤词那一半被划到 I32 以「不改」处理，至今仍在（s5_l45）。其余各条按 a 和 b 的复核基本已解决。不过 b 判 I2（c_lens）「未解决」、I24/I26「不采纳理由不成立」不对：这几处的现行写法正是第 1 轮裁决人给的，b 又把当时已被驳回的「Score only」「Squared penalties」提了回来。"
+    }
+   },
+   "disputes": [
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5",
+    "R"
+   ],
+   "audits": [
+    "P6"
+   ],
+   "final_scores": {
+    "P1": 2,
+    "P2": 1,
+    "P3": 1,
+    "P4": 2,
+    "P5": 1,
+    "P6": 2,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "P1",
+     "P2",
+     "P3",
+     "P4",
+     "P5",
+     "R",
+     "P6"
+    ],
+    "prompt": "items/screen_en__judge.md",
+    "report": "reports/screen_en__judge.md",
+    "ruling": {
+     "P1": {
+      "score": 2,
+      "evidence": "a 站得住。硬上限全部满足：标题最长 5 词（l33「Not zero, just the lowest」、l35「How you score shapes learning」），单块不超 9 词；l29/l30 图内为 Per km 2 + Starting fare 2 + 13.4/2.19/78 各 1（「2 ·」「3 ·」「1 ·」按第 2 轮规则算编号）+ Lowest point 2，共 9 词，压线不超。l21、l25、l41 按「同类行算一块」都不超过 4 块。b 判 1 的依据是「They cancel out」(l18，3 词)、「Lower is better」(l07，3 词) 这类短分句。3–5 词的标题式分句是幻灯片的正常写法，不等于第 1 轮被用户抓到的整句口播（如「A separate model identified the hospital…」），不能据此判 1。"
+     },
+     "P2": {
+      "score": 1,
+      "evidence": "b 站得住。原句照搬口播的屏仍有几处：l07「Lower is better」与口播「lower is better」一字不差；l34 h2「No idea what a taxi is」与口播「has no idea what a taxi is」相同；l43–l45 的 h2 与 l45 曲线标注重复说趋势。更要紧的是 l37「Loss defines “good”」，口播说的是「when you pick a loss function」，而 l04 专门区分了 loss（分数）和 loss function（规则）。这里把规则写成了分数，属于「terms match the narration」不过关。a 给 2，漏看了 l37 这一处术语偏差。"
+     },
+     "P3": {
+      "score": 1,
+      "evidence": "同屏一致性有三处真问题。① l31 h1「Lowest score ≠ 0」，下面的卡片却写「Lowest loss 1.97」，同一个量在一屏里有两个名字（a 指出）。② l29–l30 的绿色圆环套住第 3 次的灰点，「3 · 2.19」就贴在环边，旁边写「Lowest point」，右侧卡片又是 1.97，观众读到的是同一个点有两个分数（b 指出，s3_l30 截图可以确认）。③ 两人都漏了：l34 的页眉「03 · It only sees the score」与 h1「Sees only the score」在同一屏几乎同句，只是换了语序（见补充问题）。a 列出了问题却给 2，与问题的分量不符。"
+     },
+     "P4": {
+      "score": 2,
+      "evidence": "a 站得住。全片句首大写、片段不加句号、「−」「→」用法一致；片尾两行「Loss: a score for mistakes / Training: push it down」都是「名词: 说明」结构，读出来自然。b 的两条主要依据不成立：「Golf: fewest strokes wins」是英语常见的省略说法（同「most votes wins」「lowest score wins」），不是主谓不一致；「Training: push it down」是标签加祈使句的标准幻灯片写法，代词「it」紧接在上一行「Loss」之后。剩下的小瑕疵是四个章名句式不统一（问句、名词短语、句子、how 从句），每个单独读都通顺。"
+     },
+     "P5": {
+      "score": 1,
+      "evidence": "b 站得住，a 漏看了截图。s5_l46 里「Tens of billions of knobs」的末尾「bs」压在小旋钮阵列上，画面上能直接看到遮挡，必须改。此外还有两处孤词折行：l43–l45 的「Training loss keeps / falling」（a 指出），以及两人都漏掉的 l35–l36「Squaring punishes big / misses」。l08 高尔夫卡的文字贴到卡片右边框（见补充问题）。阅读时间本身够用：l08 新增 4 词、停 3.5s；l41 停 8.1s。"
+     },
+     "R": {
+      "score": 1,
+      "evidence": "b 站得住。round-1 的 I33（「Tens of billions of knobs」）改法引出了 l46 文字压图的新问题。I11 的 l45 孤词那一半被划到 I32 以「不改」处理，至今仍在（s5_l45）。其余各条按 a 和 b 的复核基本已解决。不过 b 判 I2（c_lens）「未解决」、I24/I26「不采纳理由不成立」不对：这几处的现行写法正是第 1 轮裁决人给的，b 又把当时已被驳回的「Score only」「Squared penalties」提了回来。"
+     },
+     "P6": {
+      "score": 2,
+      "evidence": "抽查后不能给 3，两人都给 3，却有共同的盲点。a 在 l36 的可选改写「4 × off by 2 = 16 / 1 × off by 8 = 64」自己写明 10 词，超过单块 9 词的上限，和它「each within the hard limits」的说法矛盾。b 的多条改写比原文差，或已在上一轮被驳回：「Error cancellation」「Defining “good”」「Score only」「Squared penalties」；「Billions of knobs」还和口播「tens of billions」对不上。另外，两人对自己漏掉的 l34 页眉与 h1 重复、l36 孤词都没有改写。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 25,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_en__a",
+    "codex/screen_en__b"
+   ]
+  }
+ ],
+ "state": "已收轮",
+ "concluded_at": "2026-11-09T22:20:18",
+ "result": "结果.md",
+ "verdict": {
+  "result": "不通过",
+  "text": "不通过：3 项未过；已按问题清单修改，开下一轮复核"
+ },
+ "log": []
+}

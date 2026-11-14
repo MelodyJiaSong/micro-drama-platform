@@ -1,0 +1,158 @@
+{
+  "revision": "r17",
+  "status": "candidate_not_reviewed",
+  "source": "r16",
+  "changes": [
+    "Long fibres shortened to 72 percent, short fuzz extended to 135 percent",
+    "Cyan emission retained in outer filaments and dust",
+    "Less luminous continuous tail volume; optical bloom applied consistently"
+  ],
+  "main_filaments": 6,
+  "short_fuzz_filaments": 600,
+  "dust_particles": 1900,
+  "tail_length_m": 0.38,
+  "remaining": [
+    "All-view appearance and translated-instance checks pending"
+  ],
+  "asset_id": "m306",
+  "sha256": "a93d15592635fbf915a2fe89a5bad8a0153a134dc2341fa54900f8609c65a936",
+  "views": [
+    "south.png",
+    "east.png",
+    "north.png",
+    "west.png",
+    "perspective.png"
+  ],
+  "supplemental_views": [
+    "close.png",
+    "top.png",
+    "bottom.png",
+    "night_self_illumination.png",
+    "night_neutral_ground_control.png"
+  ],
+  "visible_object_count": 10,
+  "visible_mesh_faces_by_material": {
+    "Wisp_fading_volume": 512,
+    "Cyan_atmospheric_fringe": 512,
+    "Pale_cyan_fading_dust": 38000,
+    "Tapered_local_volume": 6
+  },
+  "material_shader_evidence": {
+    "Cyan_atmospheric_fringe": {
+      "shader_nodes": [
+        "PRINCIPLED_VOLUME"
+      ],
+      "principled_values": [],
+      "volume_values": [
+        {
+          "Density": 0.0,
+          "Emission Strength": "linked"
+        }
+      ]
+    },
+    "Tapered_local_volume": {
+      "shader_nodes": [
+        "PRINCIPLED_VOLUME"
+      ],
+      "principled_values": [],
+      "volume_values": [
+        {
+          "Density": 0.0,
+          "Emission Strength": "linked"
+        }
+      ]
+    },
+    "Wisp_fading_volume": {
+      "shader_nodes": [
+        "PRINCIPLED_VOLUME"
+      ],
+      "principled_values": [],
+      "volume_values": [
+        {
+          "Density": 0.0,
+          "Emission Strength": "linked"
+        }
+      ]
+    },
+    "Pale_cyan_tapering_fibres": {
+      "shader_nodes": [
+        "EMISSION"
+      ],
+      "principled_values": [],
+      "volume_values": []
+    },
+    "Fine_white_cyan_fuzz": {
+      "shader_nodes": [
+        "EMISSION"
+      ],
+      "principled_values": [],
+      "volume_values": []
+    },
+    "Pale_cyan_fading_dust": {
+      "shader_nodes": [
+        "EMISSION"
+      ],
+      "principled_values": [],
+      "volume_values": []
+    }
+  },
+  "optical_geometry": {
+    "lights": [
+      {
+        "name": "Wisp_actual_light",
+        "type": "POINT",
+        "watts": 8.0,
+        "position": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "Core_ground_emission_0",
+        "type": "SPOT",
+        "watts": 17.0,
+        "position": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "Core_ground_emission_1",
+        "type": "SPOT",
+        "watts": 8.0,
+        "position": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "Core_ground_emission_2",
+        "type": "SPOT",
+        "watts": 0.0,
+        "position": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    ],
+    "curves": [
+      {
+        "name": "Visible_organic_Fuzz",
+        "splines": 600,
+        "bevel_depth_m": 0.00011000000085914508
+      },
+      {
+        "name": "Six_curving_light_fibres",
+        "splines": 6,
+        "bevel_depth_m": 0.00018000000272877514
+      }
+    ]
+  },
+  "enabled_render_modifiers": {},
+  "metrics_note": "Base meshes only; modifiers and instances are not expanded. Low base face counts do not mean texture-only construction. Names do not specify shader behavior. No topology acceptance is implied.",
+  "source_inspection": "C:\\workspace\\micro-drama-platform\\ai_videos\\dota_yingxiong\\2_\u4e16\u754c\u89c2\u4eba\u8bbe\\characters\\\u4e2d\u7acb_neutral\\m306_Enchanted_Artifacts\\model_3d\\r16\\inspection\\inspection.json"
+}

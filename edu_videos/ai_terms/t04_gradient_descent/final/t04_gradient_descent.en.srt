@@ -1,0 +1,487 @@
+1
+00:00:00,600 --> 00:00:03,011
+Last time, we scored the model's mistakes:
+
+2
+00:00:03,011 --> 00:00:04,848
+the lower the score, the better.
+
+3
+00:00:05,198 --> 00:00:07,417
+We scored every setting of the two knobs
+
+4
+00:00:07,417 --> 00:00:09,358
+and drew the scores as a landscape.
+
+5
+00:00:09,358 --> 00:00:11,411
+The lowest point is the best setting.
+
+6
+00:00:11,761 --> 00:00:13,327
+With two knobs, that's easy.
+
+7
+00:00:13,677 --> 00:00:15,293
+But a big model can have
+
+8
+00:00:15,293 --> 00:00:17,246
+hundreds of billions of knobs
+
+9
+00:00:17,246 --> 00:00:18,593
+way too many to map.
+
+10
+00:00:18,943 --> 00:00:20,696
+So the model's like someone
+
+11
+00:00:20,696 --> 00:00:22,319
+blindfolded on a mountain
+
+12
+00:00:22,319 --> 00:00:24,462
+with no idea where the valley is.
+
+13
+00:00:24,812 --> 00:00:26,254
+How does it find the bottom?
+
+14
+00:00:26,604 --> 00:00:29,172
+It uses something called gradient descent.
+
+15
+00:00:29,172 --> 00:00:30,578
+Let's see how it works.
+
+16
+00:00:38,900 --> 00:00:40,877
+So picture yourself up there
+
+17
+00:00:40,877 --> 00:00:42,784
+trying to reach the valley.
+
+18
+00:00:43,134 --> 00:00:43,862
+You can't see
+
+19
+00:00:43,862 --> 00:00:44,869
+but your feet feel
+
+20
+00:00:44,869 --> 00:00:46,324
+which way the ground tilts
+
+21
+00:00:46,324 --> 00:00:47,220
+and how steeply.
+
+22
+00:00:47,570 --> 00:00:49,851
+So you feel for the steepest way down
+
+23
+00:00:49,851 --> 00:00:51,330
+and take one small step.
+
+24
+00:00:51,680 --> 00:00:54,691
+Feel again, step again, and you get there.
+
+25
+00:00:55,041 --> 00:00:55,809
+For the model
+
+26
+00:00:55,809 --> 00:00:58,230
+the slope underfoot is how much the score
+
+27
+00:00:58,230 --> 00:01:00,711
+changes when you nudge each knob a little.
+
+28
+00:01:01,061 --> 00:01:02,807
+Put those slopes together
+
+29
+00:01:02,807 --> 00:01:04,482
+and that's the gradient.
+
+30
+00:01:04,482 --> 00:01:07,345
+It shows every knob the fastest way down.
+
+31
+00:01:07,695 --> 00:01:09,332
+Gradient descent turns all
+
+32
+00:01:09,332 --> 00:01:11,409
+the knobs one small step that way
+
+33
+00:01:11,409 --> 00:01:13,171
+then checks the slope again.
+
+34
+00:01:13,521 --> 00:01:15,520
+The learning rate sets the step size
+
+35
+00:01:15,520 --> 00:01:17,685
+and you pick it before training starts.
+
+36
+00:01:21,800 --> 00:01:23,790
+Let's try it on the taxi map:
+
+37
+00:01:23,790 --> 00:01:26,536
+base fare across, per-kilometer rate up.
+
+38
+00:01:26,886 --> 00:01:28,770
+Darker means a higher score.
+
+39
+00:01:28,770 --> 00:01:30,251
+The fares are made up.
+
+40
+00:01:30,601 --> 00:01:32,641
+We start at a 5 dollar base
+
+41
+00:01:32,641 --> 00:01:34,982
+fare and 2 dollars a kilometer:
+
+42
+00:01:34,982 --> 00:01:37,022
+a score of 78, way up high.
+
+43
+00:01:37,372 --> 00:01:38,906
+First, feel the slope:
+
+44
+00:01:38,906 --> 00:01:40,928
+nudge each knob up ten cents.
+
+45
+00:01:41,278 --> 00:01:42,794
+Raise the base fare
+
+46
+00:01:42,794 --> 00:01:44,709
+and the score drops 1.7.
+
+47
+00:01:44,709 --> 00:01:46,943
+Raise the per-kilometer rate
+
+48
+00:01:46,943 --> 00:01:48,379
+and it drops 11.2.
+
+49
+00:01:48,729 --> 00:01:49,634
+So turn both up
+
+50
+00:01:49,634 --> 00:01:50,901
+but the per-kilometer
+
+51
+00:01:50,901 --> 00:01:52,228
+slope is much steeper.
+
+52
+00:01:52,578 --> 00:01:54,930
+Our first step turns that knob the most.
+
+53
+00:01:55,280 --> 00:01:56,403
+In three steps
+
+54
+00:01:56,403 --> 00:01:59,290
+the score falls from 78 to 25, 12, 9
+
+55
+00:01:59,290 --> 00:02:01,215
+and we're in the valley.
+
+56
+00:02:01,565 --> 00:02:03,638
+The floor is a long, gentle trench.
+
+57
+00:02:03,988 --> 00:02:05,573
+The base fare creeps up
+
+58
+00:02:05,573 --> 00:02:07,847
+the per-kilometer rate eases back
+
+59
+00:02:07,847 --> 00:02:09,088
+and we inch along.
+
+60
+00:02:09,438 --> 00:02:11,656
+Gentler slopes mean smaller steps
+
+61
+00:02:11,656 --> 00:02:12,731
+so we slow down.
+
+62
+00:02:13,081 --> 00:02:15,334
+After a thousand-odd steps
+
+63
+00:02:15,334 --> 00:02:17,067
+the score's about 2.
+
+64
+00:02:17,067 --> 00:02:19,233
+The true minimum is 1.97.
+
+65
+00:02:19,583 --> 00:02:21,844
+The knobs end up near a ten-dollar
+
+66
+00:02:21,844 --> 00:02:24,238
+base fare and two fifty a kilometer.
+
+67
+00:02:24,588 --> 00:02:26,470
+It never saw the whole map.
+
+68
+00:02:26,470 --> 00:02:28,841
+It only felt the ground underfoot.
+
+69
+00:02:32,967 --> 00:02:36,255
+That run used a learning rate of 0.005.
+
+70
+00:02:36,255 --> 00:02:38,447
+What if we'd picked wrong?
+
+71
+00:02:38,797 --> 00:02:41,383
+Here are three paths from the same start
+
+72
+00:02:41,383 --> 00:02:42,740
+same number of steps.
+
+73
+00:02:43,090 --> 00:02:44,648
+Make it ten times smaller
+
+74
+00:02:44,648 --> 00:02:47,017
+and it heads the right way but crawls.
+
+75
+00:02:47,367 --> 00:02:49,115
+It ends at a score of 5.5
+
+76
+00:02:49,115 --> 00:02:50,933
+still far from the bottom.
+
+77
+00:02:51,283 --> 00:02:53,282
+Make it about four times the original
+
+78
+00:02:53,282 --> 00:02:55,172
+and it overshoots across the valley
+
+79
+00:02:55,172 --> 00:02:57,117
+ending higher than where it started.
+
+80
+00:02:57,467 --> 00:02:59,431
+Then it climbs higher and higher
+
+81
+00:02:59,431 --> 00:03:00,351
+past a hundred.
+
+82
+00:03:00,701 --> 00:03:02,739
+Five steps in, it's off the map.
+
+83
+00:03:03,089 --> 00:03:04,720
+Our original rate walks
+
+84
+00:03:04,720 --> 00:03:06,351
+steadily to the bottom.
+
+85
+00:03:06,701 --> 00:03:08,497
+That's why the learning rate is often
+
+86
+00:03:08,497 --> 00:03:10,729
+the single most important setting in training.
+
+87
+00:03:11,079 --> 00:03:13,696
+Too big, and it bounces right off the map.
+
+88
+00:03:13,696 --> 00:03:15,565
+Too small, and you waste time.
+
+89
+00:03:19,667 --> 00:03:22,204
+Big models use gradient descent too
+
+90
+00:03:22,204 --> 00:03:23,508
+with two upgrades.
+
+91
+00:03:23,858 --> 00:03:25,800
+First, there's too much data
+
+92
+00:03:25,800 --> 00:03:27,603
+to read it all every step.
+
+93
+00:03:27,953 --> 00:03:30,306
+So each step grabs a small random batch
+
+94
+00:03:30,306 --> 00:03:32,599
+roughly estimates the slope, and goes.
+
+95
+00:03:32,599 --> 00:03:34,711
+That's stochastic gradient descent.
+
+96
+00:03:35,061 --> 00:03:35,973
+The path wobbles
+
+97
+00:03:35,973 --> 00:03:37,739
+but it saves loads of computing
+
+98
+00:03:37,739 --> 00:03:39,676
+and still ends up near the bottom.
+
+99
+00:03:40,026 --> 00:03:41,639
+GPT-3, for example
+
+100
+00:03:41,639 --> 00:03:43,790
+saw only about 1/100,000
+
+101
+00:03:43,790 --> 00:03:46,479
+of its training data per step.
+
+102
+00:03:46,829 --> 00:03:48,653
+Second, the steps get smarter.
+
+103
+00:03:48,653 --> 00:03:50,234
+A method called Adam gives
+
+104
+00:03:50,234 --> 00:03:51,875
+each knob its own step size
+
+105
+00:03:51,875 --> 00:03:53,395
+based on its past slopes.
+
+106
+00:03:53,745 --> 00:03:55,530
+GPT-3 was trained with Adam
+
+107
+00:03:55,530 --> 00:03:58,175
+and Meta's Llama uses a tweaked version.
+
+108
+00:03:58,525 --> 00:04:00,547
+That's how GPT-3's 175
+
+109
+00:04:00,547 --> 00:04:02,754
+billion knobs got turned
+
+110
+00:04:02,754 --> 00:04:05,052
+one small step at a time.
+
+111
+00:04:06,567 --> 00:04:09,692
+Gradient descent is walking downhill blindfolded:
+
+112
+00:04:09,692 --> 00:04:11,606
+feel for the steepest way down
+
+113
+00:04:11,606 --> 00:04:13,009
+and take a small step.
+
+114
+00:04:13,359 --> 00:04:14,983
+And the learning rate sets
+
+115
+00:04:14,983 --> 00:04:16,357
+the size of each step.
+
+116
+00:04:16,707 --> 00:04:18,450
+But a model with just two
+
+117
+00:04:18,450 --> 00:04:20,472
+knobs can only learn so much.
+
+118
+00:04:20,822 --> 00:04:22,351
+Next time, we'll stack lots
+
+119
+00:04:22,351 --> 00:04:23,766
+of little units in layers
+
+120
+00:04:23,766 --> 00:04:25,068
+each with its own knobs
+
+121
+00:04:25,068 --> 00:04:26,257
+and see what happens.
+
+122
+00:04:26,607 --> 00:04:28,482
+That's called a neural network.

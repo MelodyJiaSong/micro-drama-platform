@@ -1,0 +1,201 @@
+{
+ "note": "学习目标与理解测验（写讲稿前定，审查与测验都对照它）。题目以迁移题为主，干扰项来自真实误解；前测、看片、后测、讲回来。AI 学生只用来筛题，最终以真人盲测为准。句号按 v1.3 讲稿挂上（2026-11-09）。",
+ "objectives": [
+  {
+   "id": "O1",
+   "zh": "能说出为什么需要神经网络：两个旋钮的直线机器再怎么拧也只会画直线，学不会弯的规律；问题在机器本身，不在拧得好不好",
+   "en": "Explain why we need neural networks: a two-knob line machine can only draw straight lines however you turn it, so it can't learn a bent pattern; the limit is the machine, not the tuning",
+   "lines": [
+    "l02",
+    "l03",
+    "l10",
+    "l11",
+    "l12",
+    "l13"
+   ]
+  },
+  {
+   "id": "O2",
+   "zh": "能用自己的话说出一个小单元在做什么：两个旋钮算一条直线，小于零就当零，于是变成一条拐一下的折线；很多折线加起来能拼出各种弯",
+   "en": "Say in their own words what one unit does: two knobs make a line, anything below zero becomes zero, so it is a line with one bend; adding many bends builds any curve",
+   "lines": [
+    "l14",
+    "l15",
+    "l16",
+    "l17",
+    "l18",
+    "l19",
+    "l29"
+   ]
+  },
+  {
+   "id": "O3",
+   "zh": "知道神经网络就是一层层的小单元，每个都带旋钮，用同样的梯度下降去拧；名字来自神经元，但不是在模仿人脑",
+   "en": "Know a neural network is layers of small units, each with knobs, tuned by the same gradient descent; the name comes from neurons but it is not a copy of the brain",
+   "lines": [
+    "l20",
+    "l21",
+    "l22",
+    "l23",
+    "l24",
+    "l25",
+    "l26",
+    "l27"
+   ]
+  },
+  {
+   "id": "O4",
+   "zh": "能说出「深」的好处：后一层在前一层的结果上接着折，同样多的单元叠起来能拼出复杂得多的形状",
+   "en": "State why depth helps: each layer works on the previous layer's output, so the same number of units stacked can build far more complex shapes",
+   "lines": [
+    "l31",
+    "l32",
+    "l33",
+    "l34",
+    "l35",
+    "l36",
+    "l37",
+    "l38"
+   ]
+  },
+  {
+   "id": "O5",
+   "zh": "知道一个真实例子：2012 年 AlexNet，八层、六千万个旋钮，在 ImageNet 比赛上大幅领先；拿掉中间一层成绩就变差",
+   "en": "Know a real example: AlexNet (2012), eight layers and 60 million knobs, far ahead in the ImageNet contest; removing a middle layer made it worse",
+   "lines": [
+    "l39",
+    "l40",
+    "l41",
+    "l42",
+    "l43",
+    "l44",
+    "l45",
+    "l46",
+    "l47"
+   ]
+  }
+ ],
+ "quiz": [
+  {
+   "id": "Q1",
+   "objective": "O1",
+   "type": "迁移",
+   "zh": "用一台「两个旋钮的直线机器」预测一天里各个时刻的室外温度（早上凉、下午热、晚上又凉）。训练很久效果还是很差，最可能的原因是？",
+   "en": "A two-knob straight-line machine predicts outdoor temperature by time of day (cool morning, hot afternoon, cool evening). After long training it is still poor. The most likely reason?",
+   "choices": {
+    "zh": [
+     "A 训练时间还不够长",
+     "B 学习率没调好",
+     "C 温度先升后降，是弯的，一条直线怎么拧都画不出来",
+     "D 数据太多了"
+    ],
+    "en": [
+     "A It hasn't trained long enough",
+     "B The learning rate is wrong",
+     "C Temperature rises then falls, a bent pattern no straight line can draw",
+     "D There is too much data"
+    ]
+   },
+   "answer": "C",
+   "misconception_choices": {
+    "A": "以为多拧就能学会一切",
+    "B": "把机器能力的问题当成拧法的问题"
+   }
+  },
+  {
+   "id": "Q2",
+   "objective": "O2",
+   "type": "解释为什么",
+   "zh": "如果把小单元里「小于零就当零」这条规矩去掉，十二个单元的网络还能学会高峰那样的弯吗？为什么？",
+   "en": "If we removed the 'below zero becomes zero' rule from each unit, could a twelve-unit network still learn the rush-hour bumps? Why?",
+   "answer_key": {
+    "zh": "不能。每个单元就只是一条直线，直线加直线还是直线，整台网络又退回一台只会画直线的机器；正是这条规矩让每个单元拐一下",
+    "en": "No. Each unit would be just a line, and lines added together are still a line, so the whole network falls back to a line machine; that rule is what puts a bend in each unit"
+   }
+  },
+  {
+   "id": "Q3",
+   "objective": "O3",
+   "type": "误解探针",
+   "zh": "下面哪句话最准确地描述了神经网络？",
+   "en": "Which statement best describes a neural network?",
+   "choices": {
+    "zh": [
+     "A 一台照着人脑造的电脑，会像人一样思考",
+     "B 一层层带旋钮的简单小单元，旋钮靠训练拧好",
+     "C 一套由程序员写好的规则",
+     "D 一个巨大的数据库，把答案都存起来"
+    ],
+    "en": [
+     "A A computer built like a brain that thinks like a person",
+     "B Layers of simple units with knobs, tuned by training",
+     "C A set of rules written by programmers",
+     "D A huge database that stores all the answers"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "把名字当真：以为在模仿人脑",
+    "C": "以为规则是人写的",
+    "D": "以为是查表"
+   }
+  },
+  {
+   "id": "Q4",
+   "objective": "O4",
+   "type": "迁移",
+   "zh": "你手上有一百个小单元，想让网络认出很复杂的东西。把它们排成一层一百个，还是叠成十层、每层十个，通常哪种能拼出更复杂的形状？",
+   "en": "You have a hundred units and want the network to recognize something complex. One layer of a hundred, or ten layers of ten: which can usually build more complex shapes?",
+   "choices": {
+    "zh": [
+     "A 一层一百个，因为每个单元都直接看输入",
+     "B 十层十个，因为后面的层能反复用前面折好的结果",
+     "C 一样，单元总数相同能力就相同",
+     "D 都不行，单元太少"
+    ],
+    "en": [
+     "A One layer of a hundred, since every unit sees the input",
+     "B Ten layers of ten, since later layers reuse what earlier ones built",
+     "C The same, since the total number of units is equal",
+     "D Neither, too few units"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "C": "以为能力只看单元总数",
+    "A": "以为宽比深好"
+   }
+  },
+  {
+   "id": "Q5",
+   "objective": "O5",
+   "type": "回忆＋解释",
+   "zh": "AlexNet 的作者拿掉中间的一层，结果怎样？这说明了什么？",
+   "en": "What happened when the AlexNet authors removed a middle layer, and what does it show?",
+   "answer_key": {
+    "zh": "成绩变差了，大约两个百分点；说明深度对它的成绩很重要",
+    "en": "Performance dropped by about two percentage points; depth mattered for its results"
+   }
+  }
+ ],
+ "pass_rule": "每个学习目标至少有一道题，真人后测正确率比前测提升、且 ≥ 2/3 的人答对；讲回来能说出「直线学不会弯」「小单元＝两个旋钮＋小于零当零→折线」「一层层叠，叠深能拼出更复杂的」，不出现误解。AI 学生结果只用于改题与找讲稿漏洞，不作过关依据。",
+ "explain_back": {
+  "prompt": {
+   "zh": "请用一分钟跟朋友解释：神经网络是什么，为什么要叠得深。",
+   "en": "In one minute, explain to a friend what a neural network is and why it helps to make it deep."
+  },
+  "propositions": [
+   "一条直线（两个旋钮）学不会弯的规律",
+   "小单元：两个旋钮算直线，小于零当零，变成折线",
+   "很多小单元一层层叠起来，加起来能拼出各种弯；旋钮还是用梯度下降拧",
+   "（加分）叠深：后面的层接着用前面的结果，同样多的单元能拼出复杂得多的形状",
+   "（加分）AlexNet 2012：八层、六千万旋钮，拿掉一层就变差"
+  ],
+  "misconceptions": [
+   "神经网络在模仿人脑、会像人一样思考",
+   "直线学不会是因为没训练够",
+   "单元总数一样，排一层和叠多层没区别",
+   "神经网络的规则是人写进去的"
+  ]
+ }
+}

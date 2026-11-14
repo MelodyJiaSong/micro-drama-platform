@@ -1,5 +1,9 @@
 # Final spec — ai_video_management
 
+## 地图通行研究增量 · follow-up 308
+
+现有地图资产页面读取可选 navigation 清单。整图与16区使用同一原版坐标，在原图和数据地形重建图上同步开关静态禁行、树木保守占地、地形层变化、坡道候选及单位缓冲。两点直线路段检查只报告静态证据与32游戏单位方形余量，不自动寻路、不批准角色通过。所有机位保留本区约束，默认俯视与原图对照继续有效。出图审查结论绑定SHA；未通过或未配准的候选不替换现用机位，显示返工对照及来源说明。
+
 ## Follow-up 199 — 工作流覆盖与接续契约
 
 工作流目录除模块/指南外，须索引制作模板、编译实现、工具声明默认值及执行规则；历史专用来源标历史，不自动加入三模块输入。覆盖页同时显示源可读性、稳定编号、分类可达性、共用文档现存引用未登记，以及平铺/系列剧已保存 run 的全局来源。静态 Python 投影包含函数与 CLI 默认值、嵌套常量、环境名称，不执行代码或取秘密值。局部输入继续在剧导航与冻结快照；外部隐藏上下文不能声称全部覆盖。接续维护要求在 AGENTS/CONVENTIONS 与共用 ai_video_workflow.md；UI仍只读，源正文不复制到代理私有入口。
@@ -395,6 +399,9 @@ Mirror of the actor pool (FR-9f – FR-91 / FR-95) for the auditory identity leg
 - **FR-106** (drama production console) `POST /api/list-drama-episodes` — list a drama's episodes to drive the dashboard's per-episode 拼接成片 rows. Body `{path}` (same drama scope + validation as FR-105). `DramaEpisodesQuery.list` → read-only `DramaEpisodesReader` walks `episodes/ep{NN}/` and reports `{episode, episode_rel, shots, locked, has_master}` per episode — `shots` = `shot{NN}` subfolder count, `locked` = shots with a 定版 `shot{NN}.mp4`, `has_master` = stitched `ep{NN}.mp4` exists. Response: `{drama, episodes:[…]}`. Status: `200`, `400 invalid_batch_scope`, `405 method_not_allowed`. The `DramaDashboard` renders one row per episode (status + a `🎬 拼接成片` button that calls `POST /api/concat-episode` (FR-102) with that episode's `episode_rel`, defaults `lang=original, rife=false, plan=null`; disabled when `locked=0`).
 - **FR-107** (follow-up 280) Lazy tree. `GET /api/tree?lazy=1` returns the navigation skeleton plus the first real folder levels — two below a drama root, one below a shot folder; any deeper folder is a stub `{type:"directory", path, children:[], lazy:true}` (listed only when a full walk would list it; keeps its label and obsolete mark). `GET /api/tree/subtree?path=ai_videos/…&depth=N` returns that folder with `N` levels expanded (`depth=0` = everything); `400 not_in_ai_videos` outside `ai_videos/` or with `..`, `404 not_found` for a missing / excluded / symlinked folder. Without `lazy` `/api/tree` is unchanged. The SPA loads the lazy tree, fills a stub when it is opened (sidebar), on the way to an opened file (plus that file's own sub-folders for the sibling panel), for the character gallery (each character folder) and the recycle bin (`_deleted` in full); a link into a still-unloaded folder is not flagged broken.
 - **FR-108** (follow-up 280) Live changes. `GET /api/events` is a server-sent-event stream: one background watcher per process (watchfiles) on `ai_videos/`, debounced ~0.7 s, sends `event: change` with `{"paths":[repo-relative…]}` (`.git` / `__pycache__` / `node_modules` / `*.part` / `*.tmp` dropped; a subscriber that falls 64 batches behind gets `["*"]` = refresh everything), a `retry: 3000` line first and a `: ping` comment every 15 s. The SPA keeps one shared `EventSource`: the tree refetches the base when a change lands outside every lazy stub and refetches each opened folder that contains a changed path; the episode page refetches its data quietly (no blank, playing videos keep playing — the media cache-buster is not bumped on live updates); the edit panel refetches cuts; the reader reloads an open text file.
+- **FR-109** (follow-up 284) 人物与道具的一层分组目录。`characters/` 与 `props/` 下的卡目录可直接放，也可放在一层不带键的分组目录下（`characters/近卫_sentinel/c65_Axe/`、`props/中立_neutral/p1_极速神符/`）；分组本身不是资产。判定只在 `libs/common/asset_group.py`（`grouped_dirs` / `character_dirs`，生产工具 `tools/*.py` 也引用它；前端 `lib/dramas.ts` `characterFolders`）：带键子目录是资产，不带键且含带键子目录的是分组（只下钻一层），不带键也不含带键子目录的照旧当资产，平铺剧行为不变。角色画廊列表与一键重生、三视图提取按钮判定、Downloads 导入候选、镜头参考解析（人物卡、道具卡）、系列冲突扫描都按此列卡；角色画廊按分组分段显示，文件树照常显示分组层。`background/` 本已任意嵌套，不变。
+- **FR-110** (follow-up 286) 人物卡「样片与正片」。`GET /api/character-reel?path={人物目录}`（`…/characters/[{分组}/]{cN|mN}_…`，否则 `400 {kind:"not_a_character_dir"}`）返回 `{name, path, turntable, skills[], cuts:{draft[], final[]}, watch[]}`：`turntable` ＝ `{卡}_turntable.mp4`；`skills` 按 `skills/k{号}_…` 键号排，每个带技能名（`{目录}.md` 首个 `# ` 行）、图标（`icon/{键}_icon*.png`）、峰值图（`{目录}_peak.png`，否则版本号最大的 `_peak_v{N}.png`）、`drafts` 全部草稿与 `finals` 全部正式条（新的在前，读法同镜头生成记录 `ShotRendersReader`）、`final` ＝ 最新正式条；每条带 submit_id 前 8 位、积分、生成时间（`downloaded_at`，否则目录名时间戳）、时长（`duration_s`，没有为 null）。`cuts` ＝ 人物目录 `demo/edit/{draft,final}/cut_v{N}.json` 全部版本（follow-up 288：没有分集的剧把英雄 demo 放人物目录；`episode: "demo"`、`own: true`，排在前面）＋ `{剧}/episodes/ep*/edit/{draft,final}/cut_v{N}.json` 中任一 `events[].clip` 在人物目录下的版本（各组内新版本在前；剧没有 `episodes/` 照常），带 `note`、时长、成片（`output.file` 或 `output.files.clean.path`，文件不在为空）。SPA 在人物卡正文页（`{卡}/{卡}.md`）顶部显示「样片与正片」三个标签：正片 / 样片（按技能分组，含峰值图）/ 剪辑拼接（正片剪辑、草稿剪辑分开，人物目录的剪辑标「人物 demo」）；视频走 `/api/media`，时长缺省由播放器元数据补；`watch` 下的文件变化自动重取。只读；没有任何技能草稿或正式条的人物不显示。
+- **FR-111** (follow-up 293) 资产总览。`GET /api/asset-overview?drama={剧根}`（`ai_videos/{剧}` 或系列成员；否则 `400 {kind:"invalid_drama_path"}`，不存在 `404`）返回 `{drama, sections[], watch[]}`：`sections` 固定为人物 / 背景 / 道具三节，人物与道具取 `{characters|props}/[{分组}/]{键}_{名}/`（有 `{目录}.md` 或图片 / 视频才算），背景取 `background/` 下任意深度的 `bg{N}_{主体}/`，系列成员连同 `_series/` 的（分组名前缀 `_series`）。节内按分组排（分组按组内最小键：英雄 c 在 m 前，再按号），组内按键号；每格 `{key, folder, path, card, name, title, portrait, images[], videos[], meta[]}`：`title` 是卡首个 `# ` 行，`name` 取其 ` · ` 前一段（没有卡用目录名），`meta` 是标题前的 `> ` 行；图片与视频只看目录顶层，封面为 `{目录}.{ext}`，否则以目录名开头的图，否则第一张，图片封面在前其余按自然序，视频新的在前。SPA `/assets?drama=`（剧页「🗂 资产总览」；六模块剧侧栏「1_资产库」点名字也进这里并展开，点箭头只展开，follow-up 294）：每个资产一格（封面 + 键 + 名，有视频标 ▶），可按键 / 名字过滤，顶部按节跳转；点一格开预览（`?open={资产目录}` 可直接打开）：大图可放大，切换该目录全部图片与视频，显示 `meta`，人物另取 `GET /api/character-reel` 列技能（点开看最新正片，没有则峰值图），← / → 按当前过滤顺序切换、Esc 关闭，「打开卡片」进卡正文；`watch` 下的文件变化自动重取。只读；角色画廊（三视图重提）保留不变。
 
 ### 外部服务请求日志（follow-up 181）
 
@@ -531,4 +538,54 @@ Follow-up195：环境资产从场次概念中分离，魔兽世界资产目录�
 
 数据（制作工具 `tools/scene_cut.py` 写，魔兽世界 follow-up 061）：每场 `{集}/scenes/{场}/edit/{draft|final}/cut_v{N}.json`，草稿剪辑只用各镜 `drafts/` 的条、正片剪辑只用 `renders/` 的条；决定里 `stage` 须与目录一致，`phase`、`version`、`base_version`、`status`、`approved_by`、`events`（条、入出点、可选 `audio_in/audio_out`、理由、notes；`placeholder` 为缺镜占位，带 `duration` 与 `text`）、`intentional_violations`、`output.files.{clean,label}.path`（同目录文件名）。
 
-管理应用：`GET /api/scene-cuts?episode_path=` 按分镜顺序列出每场的 `draft` 与 `final` 版本（新的在前）：每版的阶段、状态、成片与标注版路径（文件不在或文件名带路径分隔符就给空）、时长、段数与缺镜占位数、时间线（每段在成片里的起点；只有声音区间与画面不同时才给 `audio_in/audio_out`）、备注与有意违例；读不出的 JSON、`stage` 与目录不一致的版本照列并带 `error`。导航「5_剪辑 → EP」在有剪辑时展开为场次，每场下面是「草稿剪辑 · vN」「正片剪辑 · vN」，链接 `module=edit&scene=&cut=draft|final`；声音与音乐、成片交付仍是占位。页面：「草稿剪辑 / 正片剪辑」两个 tab（`cut=final`，缺省草稿）；不选场次时列出全部场次与该阶段最新一版；选了场次显示版本切换（`v=`）、成片播放器（干净版 / 标注版）、时间线表（点起点跳到那一段）、备注与有意违例；正片剪辑为空时写明要等草稿「通过」、出了正式条再剪。只读。
+管理应用：`GET /api/scene-cuts?episode_path=` 按分镜顺序列出每场的 `draft` 与 `final` 版本（新的在前）：每版的阶段、状态、成片与标注版路径（文件不在或文件名带路径分隔符就给空）、时长、段数与缺镜占位数、时间线（每段在成片里的起点；只有声音区间与画面不同时才给 `audio_in/audio_out`）、备注与有意违例；读不出的 JSON、`stage` 与目录不一致的版本照列并带 `error`。导航「5_剪辑 → EP」在有剪辑时展开为场次，每场下面是「草稿剪辑 · vN」「正片剪辑 · vN」，链接 `module=edit&scene=&cut=draft|final`；声音与音乐、成片交付仍是占位。页面：「草稿剪辑 / 正片剪辑」两个 tab（`cut=final`，缺省草稿）；不选场次时列出全部场次与该阶段最新一版；选了场次显示版本切换（`v=`）、成片播放器（干净版 / 标注版）、时间线表（点起点跳到那一段）、备注与有意违例；正片剪辑为空时写明要等草稿「通过」、出了正式条再剪。只读。 后期试做（follow-up 290）：同一接口另给 `posts[]`——`{集}/post/trial/post_v{N}.json` 全部版本（新的在前），每版的状态、来源剪辑、成片与 .srt（`output.path` / `output.srt`，文件不在为空）、时长、整片响度与真峰值、字幕条数与语言、地名字卡、每场的声音层（环境声 `beds` 的文件名或合成种类、配乐 `music[]`，各带 dB）与声音说明；导航在剪辑 EP 下列「后期试做（声音、字幕、字卡） · vN」，链接 `module=edit&scene=post`；页面列在场次表最前，选中后显示版本切换、成片播放器与声音层表。只读。
+
+
+## FR-112 · 系列公用资产（follow-up 295）
+
+左侧 `series.json` 系列可选填 `shared_library`（`ai_videos/` 内含 `library.json` 的目录）。系列与“公用资产”子项链接 `/assets?library=`；普通子目录仍是具体剧。仙侠系列引用 `ai_videos/_shared/xianxia`，不复制或移动原图与审计记录。
+
+总览只读展示分类、图片、用途、验收状态；支持名称/ID/别名/能力、类别和验收状态筛选，分页与 `open=ID`。预览显示条件、代价、失效、验收备注、关联资产和原图，规则/研究交现有阅读器。数量来自主库，缺图占位，未审不计通过。复用文件、媒体和变更通知接口；路径继续受文件沙箱约束。
+
+
+### 公用资产中文分类树与三视图（follow-up296）
+
+系列公用资产按 library.json.navigation 显示中文大类、小类、具体名称；每个资产恰归一处。类别链接定位 group/sub，叶项 open 定位图片预览，直达链接自动展开祖先；后台物理目录、prompt与日志不占资产分类位置。建筑与场景预览完整正面/侧面/背面三面板设定图、独立图像状态和审图备注，支持打开原图。未审图只计有图，不计已验收。
+
+Follow-up311：三面图的左右顺序与侧视方向以 `views.panels` 为准，预览文字和图片替代文字均读实际元数据，不写死正侧背。标注修正不自动变更图像验收状态。
+
+
+## 剧内基地布局（follow-up 297，2026-10-23）
+
+现有管理站点新增 `/base-layout?path=<manifest>`。剧 `workflow.json` 可声明本剧目录内的 `base_layout` JSON 相对路径；合法且存在时，剧导航及剧首页展示「基地布局」。使用既有文件与媒体接口显示近卫/天灾坐标图（资产编号、数字编号、商店放大）、位置搜索、实例至资产卡/主图/三视图预览、游戏参考及来源。缺图状态按文件清单显示；重复建筑用实例号区分，共用真实资产编号。资料随目录文件事件与手动刷新更新。原有管理站点同源提供页面，不另起服务或嵌入独立 HTML。
+
+基地布局可选 `assembly_file`：按阵营展示整体场景卡、米制平面图、摆放表、场地TOML、Blender下载、原版地形高程调查与技术取景图；只有确有文件且通过记录的电影概念候选才显示。技术体块和最终建筑外观分开标注。
+
+
+### 文件阅读器初始链接状态（follow-up 298）
+
+导航目录尚未返回时，`ai_videos/` 内的相对链接保持可点击，由既有文件/媒体接口检查真实目标；不得因为当前目录清单为空就显示断链。目录加载后恢复对已加载范围的缺失判断，尚未加载的子目录继续按未知处理。
+
+
+### 地图区域资产管理（follow-up 299）
+
+`workflow.json.map_regions` 声明剧内 JSON 清单，导航显示「地图资产」，路由 `/map-regions?path=...&region=...`。整图可点击区域标记，页面按大区/区域分层选择，查看远景/俯视/正面/侧面、原图下载、场景卡、构成资产与原版实例坐标。搜索区域及资产编号，深链接保存区域选择。未生成或失败的机位显示状态，不产生无效图片链接；素材使用现有文件/媒体 API。分区与电影候选的推定范围须可见。
+
+泉水对照支持建筑、商店NPC、出生圈分色筛选（每方3＋8＋5）；原版截图与坐标俯视切换，目标点叠加由原版实例坐标实时计算。图片主体位置由人工观察标注；生成结果存在偏差时明确标为布局待核准，其他旧机位标为旧布局待更新。
+
+机位连续性（follow-up 303）：每张派生机位可记录实际使用的俯视母图路径与SHA256；区域机位上方提供母图入口及切换俯视按钮。母图路径或指纹与当前俯视不一致时提示需要复核。记录证明生成参考来源，画面空间一致性仍须逐图检查。
+
+
+泉水与大本营连接（follow-up 304）：区域清单可声明 `base_connection`（目标区域、古迹名称、全基地坐标图和说明）。泉水对照上方展示出口方位、可展开的完整基地坐标图及相邻大本营导航。近卫泉水向东北进入世界之树内庭，天灾泉水向西南进入冰封王座广场；俯视母图必须同时包含泉水、内部道路和古迹，其他机位记录这张母图来源。旧全基地图若未与当前连接统一，显示布局待复核。
+
+机位复核记录可绑定当前俯视和当前机位的SHA256：母图局部修订后，保留生成时的真实参考，另显示按当前俯视的复核结论；任一图指纹变化后恢复待复核提示。
+
+
+泉水五英雄空间（follow-up 305）：原图对照可勾选“五英雄活动空间”，在生成俯视上叠加净空范围及H1–H5活动占位，原版截图保持原样。标注绑定俯视SHA，换图后旧标注隐藏。占位依据画面人物尺度作概念检查，不是碰撞模拟或精确米制测绘。
+
+
+区域进入/切换（含大区入口、地图、树、URL历史）默认俯视；机位tab中加入原图，所有生成机位默认并排本区原图，可关闭。`original_reference`声明文件、类型、说明、来源与地图局部框；区分当前实机、旧版外观与低清定位，不暗示同机位/同版本。
+
+### 商店货单（follow-up 316）
+
+剧的 `2_世界观人设/props/shop_items.json` 存在时，资产总览与地图资产页抬头显示「🛒 商店货单」入口，路由 `/shop-items?drama=...&seller=...&item=...`。左栏列出售方（键、中文名、类型、位置、件数），右侧为该出售方物品格（缩略图、中英文名、价格、合成路线），点物品显示「哪些出售方卖它」并可跳转。后端 `GET /api/shop-items?drama=...` 只读该 JSON，路径限制在剧目录内；无文件返回空 `source`，坏 JSON 在 `error` 中说明。地图区域中属于出售方的资产附「🛒 货单」深链接。

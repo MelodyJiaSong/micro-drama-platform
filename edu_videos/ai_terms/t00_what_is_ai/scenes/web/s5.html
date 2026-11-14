@@ -1,0 +1,139 @@
+<style>
+  .head { position: absolute; left: var(--mx); top: var(--mt); }
+  #wall { position: absolute; left: var(--mx); top: 230px; display: grid; grid-template-columns: repeat(10, auto); gap: 14px; }
+  .count { position: absolute; left: 1390px; top: 230px; }
+  .count .display { line-height: 1; }
+  #big { position: absolute; left: 1400px; top: 420px; }
+  .count2 { position: absolute; left: 1400px; top: 720px; }
+  .credit { position: absolute; left: var(--mx); top: 860px; }
+  .split { position: absolute; left: var(--mx); top: 300px; width: 1680px; }
+  .bar { display: flex; height: 64px; border-radius: 16px; overflow: hidden; }
+  .bar .p { background: var(--ink); } .bar .e { background: transparent; border: 3px solid var(--accent); border-left: 0; border-radius: 0 16px 16px 0; }
+  .barlab { position: relative; height: 140px; margin-top: 18px; }
+  .barlab > div { position: absolute; top: 0; }
+  .barlab .lp { left: 0; } .barlab .le { right: 0; text-align: right; }
+  html[lang="en"] .barlab .h2 { font-size: 44px; }
+  .why { position: absolute; left: var(--mx); top: 600px; width: 1600px; }
+  .guess { position: absolute; left: var(--mx); top: 330px; }
+  .guess .display { margin-top: 20px; }
+  #chips { position: absolute; left: var(--mx); top: 250px; display: flex; gap: 14px; }
+  .chip { width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center;
+          font-size: 34px; font-weight: 700; background: var(--surface2); color: var(--faint); }
+  .chip.on { background: var(--ink); color: var(--bg); }
+  .chiplab { position: absolute; left: var(--mx); top: 340px; }
+  #chart { position: absolute; left: 96px; top: 400px; }
+  .method { position: absolute; left: var(--mx); top: 880px; }
+  .side { position: absolute; left: 1310px; top: 430px; width: 510px; }
+  .side .h2 + .h2 { margin-top: 18px; }
+  .side .h2 { font-size: 42px; }
+  #wrong { position: absolute; left: var(--mx); top: 300px; display: flex; gap: 40px; }
+  .wrongt { position: absolute; left: var(--mx); top: 220px; }
+  .hes { position: absolute; left: var(--mx); top: 700px; }
+</style>
+
+<div class="head"><div class="eyebrow" data-zh="02 · 做个小实验" data-en="02 · A small experiment"></div></div>
+<div id="wall"></div>
+<div class="count"><div class="display" id="n1797">0</div><div class="h2 sub" id="nlab" data-zh="张手写数字（公开数据）" data-en="handwritten digits (public data)"></div></div>
+<div id="big"></div>
+<div class="count2 caption" id="g8" data-zh="共 1797 张 · 每张 8 × 8" data-en="each 8 × 8"></div>
+
+<div class="split" id="split">
+  <div class="bar"><div class="p" id="bp" style="width:83.3%"></div><div class="e" id="be" style="width:16.7%"></div></div>
+  <div class="barlab"><div class="h2 lp" data-zh="训练例子 1497" data-en="Training examples: 1,497"></div>
+    <div class="h2 accent le" id="lock" data-zh="考试题 300<br><span class='caption'>训练时不许看</span>" data-en="Test: 300<br><span class='caption'>never seen in training</span>"></div></div>
+</div>
+<div class="why h2 ink2" id="why" data-zh='真会认了，<span class="accent">还是只是记住了？</span>' data-en='Learned, <span class="accent">or just memorized?</span>'></div>
+
+<div class="guess" id="guess"><div class="eyebrow" data-zh="先猜一下" data-en="Take a guess"></div>
+  <div class="display" data-zh='只看 <span class="accent">10</span> 个例子，<br>能答对多少？' data-en='With <span class="accent">10</span> examples,<br>how many right?'></div></div>
+
+<div id="chips"></div>
+<div class="chiplab caption" id="chiplab" data-zh="灰色：没抽到" data-en="Grey = not picked"></div>
+<svg id="chart"></svg>
+<div class="method micro" id="method" data-zh="每点：20 次取中间"
+     data-en="Median of 20 draws · log scale"></div>
+<div class="credit micro" id="credit" data-zh="数据：UCI 手写数字（Alpaydin &amp; Kaynak，1998），CC BY 4.0 · 经 scikit-learn 加载，已改画"
+     data-en="Data: Optical Recognition of Handwritten Digits, Alpaydin &amp; Kaynak (1998), UCI ML Repository, CC BY 4.0 · via scikit-learn, adapted"></div>
+<div class="side" id="side">
+  <div class="h2 sub" id="sd1" data-zh="只告诉它：哪张是 3" data-en="Labels, not rules"></div>
+  <div class="h2" id="sd2" data-zh='例子<span class="accent">越多</span>，<br>考得越好' data-en='Here: <span class="accent">more examples</span>,<br>better scores'></div>
+</div>
+
+<div class="wrongt h2" id="wrongt" data-zh='300 道考题，<span class="c-bad">错了 10 道</span>' data-en='300 test questions, <span class="c-bad">10 wrong</span>'></div>
+<div id="wrong"></div>
+<div class="hes body sub" id="hes" data-zh="有几张，人也拿不准" data-en="Some would stump people too"></div>
+
+<script>
+const T = EDU.tl;
+// 数据墙：每个数字 3 张
+for (let j = 0; j < 3; j++) for (let k = 0; k < 10; k++) document.querySelector("#wall").appendChild(tileEl(D.samples[String(k)][j], 74));
+document.querySelector("#big").appendChild(digitEl(D.threes[0], 280, true));
+// 抽 10 张的覆盖
+const seen = new Set(D.draw10);
+for (let k = 0; k < 10; k++) { const c = document.createElement("div"); c.className = "chip" + (seen.has(k) ? " on" : ""); c.textContent = k; document.querySelector("#chips").appendChild(c); }
+// 准确率曲线：横轴对数，只有一条基线
+const W = 1080, H = 340, acc = D.sizes.map((n, i) => [n, D.accuracy[i]]);
+const svg = d3.select("#chart").attr("width", W + 160).attr("height", H + 84);
+const x = d3.scaleLog([10, 1600], [40, W]), y = d3.scaleLinear([0, 1], [H, 70]);
+svg.append("line").attr("class", "axis-base").attr("x1", 40).attr("x2", W).attr("y1", H).attr("y2", H);
+[10, 100, 1000].forEach(v => svg.append("text").attr("x", x(v)).attr("y", H + 40).attr("text-anchor", "middle").attr("font-size", 26)
+  .attr("fill", css("--sub")).text(v.toLocaleString("en")));
+svg.append("text").attr("x", W).attr("y", H + 76).attr("text-anchor", "end").attr("font-size", 24).attr("fill", css("--sub"))
+  .text(L("例子", "Examples seen"));
+const guessLine = svg.append("line").attr("x1", 40).attr("x2", W).attr("y1", y(0.1)).attr("y2", y(0.1)).attr("stroke", css("--faint"))
+  .attr("stroke-width", 3).attr("stroke-dasharray", "6 10").node();
+const guessLab = svg.append("text").attr("x", W).attr("y", y(0.1) - 14).attr("text-anchor", "end").attr("font-size", 26)
+  .attr("fill", css("--sub")).text(L("瞎猜 10%", "Random guessing 10%")).node();
+const line = d3.line().x(d => x(d[0])).y(d => y(d[1]));
+const seg1 = svg.append("path").attr("d", line(acc.slice(0, 3))).attr("fill", "none").attr("stroke", css("--accent")).attr("stroke-width", 6).attr("stroke-linecap", "round").node();
+const seg2 = svg.append("path").attr("d", line(acc.slice(2))).attr("fill", "none").attr("stroke", css("--accent")).attr("stroke-width", 6).attr("stroke-linecap", "round").node();
+const dots = acc.map(d => svg.append("circle").attr("cx", x(d[0])).attr("cy", y(d[1])).attr("r", 11).attr("fill", css("--bg")).attr("stroke", css("--accent")).attr("stroke-width", 4).node());   // 考试成绩：琥珀空心（全片约定）
+const call = (i, dx, dy, anchor = "start") => svg.append("text").attr("x", x(acc[i][0]) + dx).attr("y", y(acc[i][1]) + dy).attr("text-anchor", anchor)
+  .attr("font-size", 64).attr("font-weight", 700).attr("fill", css("--accent")).text(pct(acc[i][1]) + "%").node();
+const c10 = call(0, 30, 44), c100 = call(2, -20, -26, "end"), c1497 = call(5, 0, -30, "middle");
+// 错题：4 张，标出那张潦草的 2
+D.wrong_examples.forEach(w => {
+  const t = tileEl(w.img, 190, `${w.true} → <span class="c-bad">${w.pred}</span>`);
+  if (w.true === 2) t.id = "two";
+  document.querySelector("#wrong").appendChild(t);
+});
+
+gsap.set(["#lock", "#credit", "#wall .tile", ".count", "#big", "#g8", "#split", "#lock", "#why", "#guess", "#chips", "#chiplab", "#chart", guessLine, guessLab,
+          seg1, seg2, ...dots, c10, c100, c1497, "#method", "#side", "#sd1", "#sd2", "#wrongt", "#wrong .tile", "#hes"], { opacity: 0 });
+// l17 公开数据集：1797 张、每张 8×8
+EDU.in("#wall .tile", EDU.t("l17", 0.05), { stagger: 0.03 }); EDU.in("#credit", EDU.t("l17", 0.2));
+EDU.in(".count", EDU.t("l17", 0.3)); EDU.count("#n1797", EDU.t("l17", 0.3), 1797, 1.2, v => Math.round(v).toLocaleString("en"));
+EDU.dim("#wall .tile", EDU.t("l17", 0.7), 0.35);
+EDU.out(".count", EDU.t("l17", 0.7)); EDU.in(["#big", "#g8"], EDU.t("l17", 0.72));
+// l18 分出考试题；l19 训练时不许看；l20 为什么
+EDU.out(["#wall", "#big", "#g8", "#credit"], EDU.t("l18"));
+EDU.in("#split", EDU.t("l18", 0.05));
+EDU.in("#lock", EDU.t("l18", 0.3));
+EDU.focus("#lock", EDU.t("l19", 0.55));
+EDU.in("#why", EDU.t("l20", 0.05));
+// l21 先猜一下
+EDU.out(["#split", "#why"], EDU.t("l21"));
+EDU.in("#guess", EDU.t("l21", 0.1));
+// l22 抽 10 张常缺数字；l23 → 37%
+EDU.out("#guess", EDU.t("l22"));
+EDU.in(["#chips", "#chiplab"], EDU.t("l22", 0.05));
+EDU.in(["#chart", guessLine, guessLab], EDU.t("l23", 0.05));
+EDU.in([dots[0], c10], EDU.t("l23", 0.3));
+EDU.in("#method", EDU.t("l23", 0.35));
+// l24 100 → 88%；1497 → 97%
+T.set(seg1, { opacity: 1 }, EDU.t("l24")); EDU.draw(seg1, EDU.t("l24"), 1.0);
+EDU.in([dots[1], dots[2]], EDU.t("l24", 0.08), { stagger: 0.3 }); EDU.in(c100, EDU.t("l24", 0.3));
+EDU.dim(c10, EDU.t("l24", 0.3), 0.35); EDU.out(["#chips", "#chiplab"], EDU.t("l24"));
+T.set(seg2, { opacity: 1 }, EDU.t("l24", 0.5)); EDU.draw(seg2, EDU.t("l24", 0.5), 1.2);
+EDU.in(dots.slice(3), EDU.t("l24", 0.58), { stagger: 0.25 }); EDU.in(c1497, EDU.t("l24", 0.85));
+EDU.dim(c100, EDU.t("l24", 0.85), 0.35);
+// l25 只告诉它哪张是 3；这次实验越多越好
+EDU.in("#side", EDU.t("l25", 0.02), { d: 0.01 }); EDU.in("#sd1", EDU.t("l25", 0.05)); EDU.in("#sd2", EDU.t("l25", 0.55));
+// l26 错了十道，点名那张潦草的 2
+EDU.out("#method", EDU.t("l25")); EDU.out(["#chart", "#side"], EDU.t("l26"));
+EDU.in("#wrongt", EDU.t("l26", 0.05));
+EDU.in("#wrong .tile", EDU.t("l26", 0.15), { stagger: 0.12 });
+EDU.dim("#wrong .tile:not(#two)", EDU.t("l26", 0.4), 0.35); EDU.focus("#two", EDU.t("l26", 0.4));
+// 潦草的 2 一直保持高亮，l47 要回扣它
+EDU.out(["#wrongt", "#wrong", "#hes"], EDU.S.duration - 0.5);
+</script>

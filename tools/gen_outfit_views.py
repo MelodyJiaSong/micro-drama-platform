@@ -18,7 +18,7 @@
 + `{key}_front.png`、`{key}_side.png`、`{key}_back.png` + `gen_log.json`。
 星形派生：正面挂锚点正面 + 本套最多 3 件装备 / 道具的正面图；侧 / 背只挂本套正面（穿着以它为准）+ 锚点的侧 / 背（只借身形轮廓）。
 背面只给即梦喂本套正面的左右镜像（它照搬参考图的左右）；Codex / ElevenLabs 自己会转身，喂原图。
-引擎按 `tools/image_engine.py`（follow-up 275：auto ＝ ElevenLabs → Codex（额度不够才换），图片不用即梦）；`--engine X` 显式指定时只用 X。
+引擎按 `tools/image_engine.py`（follow-up 341：auto ＝ 只用 Codex；ElevenLabs 须用户允许，图片不用即梦）；`--engine X` 显式指定时只用 X。
 手部装备（露指 / 半指手套等）换装图锁不住（即梦三次都画成全指）：只锁身上其它部分，手由出片时另挂的装备正面图锁
 （`specs/ai_video/shengji_zhilu/lessons.md` L16）。
 
@@ -52,6 +52,7 @@ from tools import codex_image as ci  # noqa: E402
 from tools import image_engine as ie  # noqa: E402
 from tools import image_fetch as el  # noqa: E402
 from tools import props_lib  # noqa: E402
+from projects.ai_video_management.libs.common.asset_group import find_character_dir  # noqa: E402
 
 VIEWS = (("1", "正面"), ("2", "侧面"), ("3", "背面"))
 ANCHOR = {"正面": "front", "侧面": "side", "背面": "back"}
@@ -83,6 +84,14 @@ class Outfit:
 
 def chars_dir(drama: str) -> Path:
     return REPO / "ai_videos" / drama / "2_世界观人设" / "characters"
+
+
+def card_dir(drama: str, char: str) -> Path:
+    """人物卡目录（`c1_Aaron`）：直接在 characters/ 下或一层分组目录下。"""
+    d = find_character_dir(chars_dir(drama), char)
+    if d is None:
+        raise SystemExit(f"characters/ 下找不到人物卡 {char}")
+    return d
 
 
 def outfits(drama: str, only: list[str]) -> list[Outfit]:
@@ -118,7 +127,7 @@ def _root(drama: str) -> Path:
 
 
 def anchor(drama: str, o: Outfit, view: str) -> Path:
-    return gci.anchor_frame(chars_dir(drama) / o.char, ANCHOR[view])
+    return gci.anchor_frame(card_dir(drama, o.char), ANCHOR[view])
 
 
 def equip_front(drama: str, k: str) -> Path:
@@ -137,11 +146,11 @@ def ref_image(drama: str, k: str) -> tuple[str, str, Path]:
 
 
 def own(drama: str, o: Outfit, n: str, view: str) -> Path:
-    return chars_dir(drama) / o.char / o.folder / f"{o.key}_{ANCHOR[view]}.png"
+    return card_dir(drama, o.char) / o.folder / f"{o.key}_{ANCHOR[view]}.png"
 
 
 def label(drama: str, o: Outfit) -> str:
-    card = (chars_dir(drama) / o.char / f"{o.char}.md").read_text(encoding="utf-8")
+    card = (card_dir(drama, o.char) / f"{o.char}.md").read_text(encoding="utf-8")
     lab = cws.lock_string(card)
     if not lab:
         raise SystemExit(f"{o.char} 卡里没有角色识别标签")
@@ -171,6 +180,8 @@ def prompts(drama: str, o: Outfit, with_worn: bool = True) -> dict[str, tuple[st
     look = ("本套状态：" + o.look + "。") if o.look else ""
     worn = (f"本套装备：{eq}。" if eq else "") + look       # 身上手上都没装备（状态变体）时不留空的「本套装备：。」
     eq_refs = [ref_image(drama, k) for k in o.refs]
+    weapons = props_lib.character_props(card_dir(drama, o.char))
+    eq_refs.extend(("固定武器", p.stem, p) for p in weapons if p not in [r[2] for r in eq_refs])
     kinds = "与".join(dict.fromkeys(kind for kind, _, _ in eq_refs)) or "装备"
     # 手里空着就不提「右手拿着的东西」：两手空空的状态变体，这半句会诱出一件手持物
     held = "（连同右手拿着的东西）" if any(equipment_lib.row(_root(drama), k).slot == "主手" for k in o.stage.wear) else ""
@@ -209,7 +220,13 @@ def prompts(drama: str, o: Outfit, with_worn: bool = True) -> dict[str, tuple[st
                               "后背的样子（泥、破口、背着的东西）以「本套状态」为准，不照正面的颜色推；", 1)
         out[view] = (txt, [f"`{own(drama, o, '1', '正面').stem}(本套正面·穿着以此为准)=>@`", f"`{anchor(drama, o, view).stem}(锚点{view}·身形轮廓)=>@`"],
                      [own(drama, o, "1", "正面"), anchor(drama, o, view)])
-    for v, (txt, _, _) in out.items():
+    for v, (txt, handles, refs) in list(out.items()):
+        extra = [p for p in weapons if p not in refs]
+        all_refs = refs + extra
+        if weapons:
+            txt += "\n固定武器：" + "、".join(f"参考图{all_refs.index(p)+1}（{p.stem}）" for p in weapons)
+            txt += "只锁兵器的形制、构件结构、材质与配色；持有数量、左右手及是否持有按本套状态和站姿，同款单件母版可按规定持有多件，不从旧人物图重画武器。"
+            out[v] = (txt, handles + [f"`{p.stem}(固定武器)=>@`" for p in extra], all_refs)
         if len(txt) > dm.PROMPT_MAX and with_worn:
             return prompts(drama, o, with_worn=False)          # 超即梦硬限：先去掉各件的 `worn` 细节
     return out
@@ -237,7 +254,7 @@ def card(drama: str, o: Outfit) -> str:
 
 def build(drama: str, os_: list[Outfit]) -> None:
     for o in os_:
-        d = chars_dir(drama) / o.char / o.folder
+        d = card_dir(drama, o.char) / o.folder
         d.mkdir(exist_ok=True)
         (d / f"{o.folder}.md").write_text(card(drama, o), encoding="utf-8")
         print(f"  ✓ {o.char}/{o.folder}/")
@@ -296,7 +313,7 @@ def _eleven(text: str, refs: list[Path], out: Path) -> str:
 def images(drama: str, os_: list[Outfit], engine: str, force: bool) -> list[str]:
     failed: list[str] = []
     for o in os_:
-        d = chars_dir(drama) / o.char / o.folder
+        d = card_dir(drama, o.char) / o.folder
         if not (d / f"{o.folder}.md").is_file():
             raise SystemExit(f"{o.folder} 还没有卡——先跑 build")
         ps = prompts(drama, o)
@@ -327,7 +344,7 @@ def images(drama: str, os_: list[Outfit], engine: str, force: bool) -> list[str]
                     print(f"  ✓ {out.name} {eng} {len(t)} 字 {time.time() - t0:.0f}s {tag}", flush=True)
                     ok = True
                     break
-                except (SystemExit, Exception) as e:  # noqa: BLE001 —— auto 时额度不够才换下一家；都失败记下、继续
+                except (SystemExit, Exception) as e:  # noqa: BLE001 —— auto 时ElevenLabs 失败就换下一家（dota 066）；都失败记下、继续
                     errs.append(f"{eng}：{str(e)[:200]}")
                     print(f"    ! {out.name} {errs[-1]}", flush=True)
                     if not ie.fallback_ok(eng, e):

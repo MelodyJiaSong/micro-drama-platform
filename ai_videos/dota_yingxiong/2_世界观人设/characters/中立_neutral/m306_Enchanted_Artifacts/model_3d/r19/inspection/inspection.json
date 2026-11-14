@@ -1,0 +1,146 @@
+{
+  "revision": "r19",
+  "status": "candidate_not_reviewed",
+  "source": "r17",
+  "changes": [
+    "Single 70 W point emitter; spot emitters disabled",
+    "Balanced Gaussian cyan emission and light scattering halo; r18 oversized halo rejected",
+    "No continuous wake volume; 700 separate dust grains resolvable at medium distance",
+    "Asymmetric six fine star filaments; 300 shorter fuzz strands"
+  ],
+  "main_filaments": 6,
+  "short_fuzz_filaments": 300,
+  "dust_particles": 700,
+  "tail_length_m": 0.38,
+  "remaining": [
+    "All-view lighting and translated-instance checks pending"
+  ],
+  "asset_id": "m306",
+  "sha256": "6a9302d9e5765343f25054179ccbf85e2e7818da45d8576b6b25adf324fd815b",
+  "views": [
+    "south.png",
+    "east.png",
+    "north.png",
+    "west.png",
+    "perspective.png"
+  ],
+  "supplemental_views": [
+    "close.png",
+    "top.png",
+    "bottom.png",
+    "night_self_illumination.png",
+    "night_neutral_ground_control.png"
+  ],
+  "visible_object_count": 9,
+  "visible_mesh_faces_by_material": {
+    "Wisp_fading_volume": 512,
+    "Cyan_atmospheric_fringe": 512,
+    "Sparse_cyan_light_dust": 14000
+  },
+  "material_shader_evidence": {
+    "Cyan_atmospheric_fringe": {
+      "shader_nodes": [
+        "PRINCIPLED_VOLUME"
+      ],
+      "principled_values": [],
+      "volume_values": [
+        {
+          "Density": "linked",
+          "Emission Strength": "linked"
+        }
+      ]
+    },
+    "Irregular_cyan_star_filaments": {
+      "shader_nodes": [
+        "EMISSION"
+      ],
+      "principled_values": [],
+      "volume_values": []
+    },
+    "Fine_white_cyan_fuzz": {
+      "shader_nodes": [
+        "EMISSION"
+      ],
+      "principled_values": [],
+      "volume_values": []
+    },
+    "Wisp_fading_volume": {
+      "shader_nodes": [
+        "PRINCIPLED_VOLUME"
+      ],
+      "principled_values": [],
+      "volume_values": [
+        {
+          "Density": 0.0,
+          "Emission Strength": "linked"
+        }
+      ]
+    },
+    "Sparse_cyan_light_dust": {
+      "shader_nodes": [
+        "EMISSION"
+      ],
+      "principled_values": [],
+      "volume_values": []
+    }
+  },
+  "optical_geometry": {
+    "lights": [
+      {
+        "name": "Wisp_actual_light",
+        "type": "POINT",
+        "watts": 70.0,
+        "position": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "Core_ground_emission_0",
+        "type": "SPOT",
+        "watts": 0.0,
+        "position": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "Core_ground_emission_1",
+        "type": "SPOT",
+        "watts": 0.0,
+        "position": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "Core_ground_emission_2",
+        "type": "SPOT",
+        "watts": 0.0,
+        "position": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    ],
+    "curves": [
+      {
+        "name": "Visible_organic_Fuzz",
+        "splines": 300,
+        "bevel_depth_m": 8.499999967170879e-05
+      },
+      {
+        "name": "Six_irregular_star_filaments",
+        "splines": 6,
+        "bevel_depth_m": 0.00011999999696854502
+      }
+    ]
+  },
+  "enabled_render_modifiers": {},
+  "metrics_note": "Base meshes only; modifiers and instances are not expanded. Low base face counts do not mean texture-only construction. Names do not specify shader behavior. No topology acceptance is implied.",
+  "source_inspection": "C:\\workspace\\micro-drama-platform\\ai_videos\\dota_yingxiong\\2_\u4e16\u754c\u89c2\u4eba\u8bbe\\characters\\\u4e2d\u7acb_neutral\\m306_Enchanted_Artifacts\\model_3d\\r17\\inspection\\inspection.json"
+}

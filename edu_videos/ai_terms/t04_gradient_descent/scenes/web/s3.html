@@ -1,0 +1,109 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  #map { position: absolute; left: 70px; top: 150px; }
+  .tag { position: absolute; left: 1010px; top: 140px; }
+  #knobs { position: absolute; left: 1220px; top: 150px; width: 600px; height: 330px; }
+  .score { position: absolute; left: 1220px; top: 540px; width: 600px; display: flex; gap: 56px; align-items: baseline; }
+  .score .num { font-size: 96px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+  .score .stp { font-size: var(--fs-h2); font-weight: 600; font-variant-numeric: tabular-nums; color: var(--ink2); }
+  .side { position: absolute; left: 1220px; width: 620px; top: 720px; }
+  .nudge { position: absolute; top: 455px; width: 200px; text-align: center; font-size: 46px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .nh { position: absolute; left: 1220px; top: 112px; }
+  .side .t { position: absolute; top: 0; left: 0; width: 620px; }
+  .side .t .h2 + .h2, .side .t .h2 + .caption { margin-top: 10px; }
+  html[lang=en] .side .t .h2 { font-size: 46px; }
+  .rows .row { display: grid; grid-template-columns: 1fr auto; align-items: baseline; padding: 8px 0; }
+  .rows .row b { font-size: var(--fs-h2); font-weight: 700; }
+</style>
+
+<div class="eb eyebrow" data-zh="02 · 做个小实验" data-en="02 · A small experiment"></div>
+<svg id="map"></svg>
+<div class="tag eyebrow" id="tag" data-zh="示意" data-en="Illustration"></div>
+<div id="knobs"></div>
+<div class="nh eyebrow" id="nh" data-zh="各拧 +0.1 → 分数" data-en="Nudge +$0.10 → score"></div>
+<div class="nudge c-good" id="n1" style="left:1240px">−1.7</div><div class="nudge c-good" id="n2" style="left:1540px">−11.2</div>
+<div class="score" id="score">
+  <div><div class="eyebrow" data-zh="分数" data-en="Score"></div><div class="num" id="sv">78</div></div>
+  <div><div class="eyebrow" data-zh="步数" data-en="Steps"></div><div class="stp" id="kv">0</div></div>
+</div>
+
+<div class="side">
+  <div class="t" id="ta"><div class="h2" data-zh='颜色越深 = <span class="accent">分越高</span>' data-en='Darker = <span class="accent">higher score</span>'></div></div>
+
+  <div class="t" id="tc"><div class="h2" data-zh='第一步：<span class="accent">主要拧每公里</span>' data-en='First step: <span class="accent">mostly per km</span>'></div></div>
+  <div class="t" id="td"><div class="h2" data-zh="三步掉进山谷" data-en="Valley in 3 steps"></div></div>
+  <div class="t" id="te"><div class="h2" data-zh="谷底：又长又缓的沟" data-en="Long, gentle trench"></div></div>
+  <div class="t" id="tf"><div class="h2" data-zh="坡越缓，步子越短" data-en="Gentler slope, shorter steps"></div></div>
+  <div class="t" id="tg"><div class="h2" data-zh='最低点 <span class="c-good">1.97</span>' data-en='Lowest: <span class="c-good">1.97</span>'></div></div>
+  <div class="t" id="th"><div class="h2" data-zh="只看脚下，没看全图" data-en="Only the ground underfoot"></div></div>
+</div>
+
+<script>
+const M = makeLand("#map", { W: 1080, H: 780 }), T = EDU.tl, G = D.good;
+const K1 = knob("#knobs", { size: 200, min: 0, max: 20, value: D.start[0], left: 20, top: 0, label: EDU.tr("起步价", "Base fare"),
+  unit: EDU.tr("元", ""), fmt: money });
+const K2 = knob("#knobs", { size: 200, min: 0, max: 5, value: D.start[1], left: 320, top: 0, label: EDU.tr("每公里", "Per km"),
+  unit: EDU.tr("元", ""), fmt: money2 });
+const SV = document.getElementById("sv"), KV = document.getElementById("kv");
+const fmtL = v => v >= 10 ? v.toFixed(0) : v.toFixed(1);
+const bestLab = M.bestLab;
+const startLab = M.note(EDU.tr("起点", "Start"), D.start, 26, 6, "caption");
+const trail = M.trail("--ink", 4);
+const marks = M.steps(G, 40, "--ink", 6);
+const dot = M.dot(D.start, "--ink", 15);
+// 试拧：下一步往哪走（屏幕上的方向取第一步的落点）
+const [x0, y0] = M.px(G.p[0]), [x1, y1] = M.px(G.p[1]);
+const dir = M.arrow(D.start, x1 - x0, y1 - y0, 130, "--ink", 7);
+const onWalk = (q, l, k) => { K1.set(q[0]); K2.set(q[1]); SV.textContent = fmtL(l); KV.textContent = k; };
+
+gsap.set([M.svg.node(), "#tag", "#knobs", "#score", bestLab, startLab, dot, dir, trail, ...marks, M.bestDot,
+          "#ta", "#nh", "#n1", "#n2", "#tc", "#td", "#te", "#tf", "#tg", "#th"], { opacity: 0 });
+EDU.in(".eb", 0);
+// l16 地形图：横起步价、竖每公里
+EDU.in(M.svg.node(), EDU.t("l16", .1), { y: 0, d: 1 }); gsap.set([M.bestDot], { opacity: 0 });
+EDU.in([M.bestDot, bestLab], EDU.t("l16", .7));
+// l17 颜色越深分越高；示意
+EDU.in("#ta", EDU.t("l17", .05)); EDU.in("#tag", EDU.t("l16", .5));
+// l18 起点 5 / 2，七十八分
+EDU.in([dot, startLab], EDU.t("l18", .15)); EDU.in("#knobs", EDU.t("l18", .3)); EDU.in("#score", EDU.t("l18", .7));
+// l19 两个旋钮各往上拧一毛试试
+EDU.out("#ta", EDU.t("l18")); EDU.out(startLab, EDU.t("l19")); EDU.in("#nh", EDU.t("l19", .4));
+K1.turn(EDU.t("l19", .45), 5, 5.1, .4); K1.turn(EDU.t("l19", .45) + .5, 5.1, 5, .4);
+K2.turn(EDU.t("l19", .7), 2, 2.1, .4); K2.turn(EDU.t("l19", .7) + .5, 2.1, 2, .4);
+// l20 各降多少
+EDU.in("#n1", EDU.t("l20", .05)); EDU.in("#n2", EDU.t("l20", .5));
+// l21 两个都往上；每公里的坡陡得多 → 箭头
+EDU.in(dir, EDU.t("l21", .3));
+// l22 第一步，主要拧每公里
+EDU.out(["#nh", "#n1", "#n2"], EDU.t("l22")); EDU.in("#tc", EDU.t("l22", .03));
+EDU.in(trail, EDU.t("l22", .3), { d: .01 }); EDU.in(marks[0], EDU.t("l22", .3), { d: .01 });
+walk(M, G, 0, 1, EDU.t("l22", .35), .7, { dot, pl: trail, on: onWalk, ease: "power2.inOut" });
+EDU.out(dir, EDU.t("l22", .4));
+// l23 头三步：78 → 25 → 12 → 9，掉进山谷
+EDU.out("#tc", EDU.t("l23")); EDU.in("#td", EDU.t("l23", .03));
+EDU.in(marks[1], EDU.t("l23", .05), { d: .2 });
+for (let i = 1; i <= 2; i++) {
+  const at = EDU.t("l23", .3 + (i - 1) * .25);
+  walk(M, G, i, i + 1, at, .5, { dot, pl: trail, on: onWalk, ease: "power2.inOut" });
+  EDU.in(marks[i + 1], at + .5, { d: .2 });
+}
+// l24 谷底：长长的、平缓的沟
+EDU.out("#td", EDU.t("l24")); EDU.in("#te", EDU.t("l24", .03));
+// l25 沿着沟底往前挪（旋钮跟着转）
+const iMid = G.k.indexOf(300), iLate = G.k.indexOf(700), iEnd = G.k.length - 1;
+for (let i = 4; i < 40; i++) EDU.in(marks[i], EDU.t("l25", .1) + (i - 4) * .06, { d: .2 });
+walk(M, G, 3, iMid, EDU.t("l25", .1), EDU.end("l25") - EDU.t("l25", .1) + .2, { dot, pl: trail, on: onWalk, ease: "power1.in" });
+// l26 坡越缓，步子越短
+EDU.out("#te", EDU.t("l26")); EDU.in("#tf", EDU.t("l26", .03));
+walk(M, G, iMid, iLate, EDU.t("l26", .05), EDU.end("l26") - EDU.t("l26", .05), { dot, pl: trail, on: onWalk });
+// l27 一千多步：分数到两分左右；最低点 1.97
+walk(M, G, iLate, iEnd, EDU.t("l27"), Math.max(1, (EDU.end("l27") - EDU.t("l27")) * .6), { dot, pl: trail, on: onWalk, ease: "power1.out" });
+EDU.out("#tf", EDU.t("l27", .5)); EDU.in("#tg", EDU.t("l27", .55));
+// l28 旋钮停在 10 左右、2.5 左右
+EDU.focus("#knobs", EDU.t("l28", .1)); EDU.unfocus("#knobs", EDU.t("l28", .8));
+// l29 只看脚下：再罩上一层，只留脚下一小块
+const F = fog(M, G.p[iEnd], 80);
+gsap.set(F.g, { opacity: 0 });
+EDU.out("#tg", EDU.t("l29")); EDU.in("#th", EDU.t("l29", .03));
+EDU.in(F.g, EDU.t("l29", .2), { d: .8 });
+</script>

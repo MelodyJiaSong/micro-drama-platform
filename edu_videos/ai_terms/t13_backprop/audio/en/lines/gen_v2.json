@@ -1,0 +1,316 @@
+{
+ "voice": {
+  "reference": "edu_videos/_shared/voice/host_m_voxcpm.wav",
+  "reference_text": "大家好，欢迎来到 AI 高频词。每一期，我们只讲清楚一个词：它解决什么问题，怎么理解它，以及它在现实里意味着什么。"
+ },
+ "items": [
+  {
+   "id": "l01",
+   "text": "Today's big AI models have billions of knobs, some hundreds of billions.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l02",
+   "text": "Every step of training, you need to know which way each knob should turn, and how far.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l03",
+   "text": "You'd never finish testing them one at a time.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l04",
+   "text": "The real trick? One trip backward tells you how to turn every knob. It's called backpropagation.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l05",
+   "text": "Last time we saw that a neural network is layers of small units, each with its own knobs.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l06",
+   "text": "This time, we'll build a tiny network and watch the error run backward through it, knob by knob.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l07",
+   "text": "In training, the model makes a guess, we compare it with the right answer, and the gap is the error.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l08",
+   "text": "The loss is a score for how wrong it is. Training is turning the knobs to push that score down.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l09",
+   "text": "Each knob's slope tells you which way to turn, and how far. All the slopes together are the gradient.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l10",
+   "text": "The obvious way? Nudge one knob, rerun everything, and see if the error went up or down.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l11",
+   "text": "One full rerun per knob. Billions of knobs, billions of reruns. For a single step.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l12",
+   "text": "Backpropagation starts at the answer instead. Picture a chain of gears, with a pointer on the last one.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l13",
+   "text": "Turn the first gear one notch, and the second turns two. Turn the second one notch, and the third turns three.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l14",
+   "text": "So how far does the pointer move? Multiply along the way: two times three. Six notches.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l15",
+   "text": "So start at the pointer and work backward, multiplying by each gear's ratio as you go.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l16",
+   "text": "At each gear you multiply once and reuse what you already have. Nothing gets redone.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l17",
+   "text": "A neural network is a chain like this. Each knob affects the answer through the layers after it. So the error can flow back the same way.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l18",
+   "text": "Here's a real, tiny network: two layers, seven knobs. It guesses taxi fares. We give it a five-kilometer ride.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l19",
+   "text": "In the first layer, two units, A and B, use two knobs each to turn the five into a six and a four.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l20",
+   "text": "The second layer multiplies each by a knob, adds a seventh knob, and guesses: twenty-nine yuan.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l21",
+   "text": "The real fare was twenty-three. Six too high. That six is the error we pass back.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l22",
+   "text": "Last layer first. A knob's blame is the error times the number fed into it. That's its slope.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l23",
+   "text": "So: six times six, thirty-six. Six times four, twenty-four. And the seventh knob's input is one, so six. Bigger input, bigger blame.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l24",
+   "text": "One layer back, the error flows along the wires and gets multiplied by each knob it passes.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l25",
+   "text": "For A, the error times two: twelve. For B, times one: six.",
+   "seeds": [
+    2
+   ]
+  },
+  {
+   "id": "l26",
+   "text": "For their own two knobs, it's error times input again.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l27",
+   "text": "One trip back, and all seven knobs have a number. We guessed high, so they all turn down, some more than others.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l28",
+   "text": "We turn each knob down a little and guess again. Twenty-nine becomes about twenty-four. Much closer.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l29",
+   "text": "We checked the slow way too: one run with nothing changed, then one per nudged knob. Eight runs.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l30",
+   "text": "Same seven numbers, exactly. Backpropagation needed just one run forward and one trip back.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l31",
+   "text": "Scale up to a billion knobs, and the slow way is a billion and one runs.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l32",
+   "text": "Even at one second a run, that's over thirty years. For one step.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l33",
+   "text": "Backpropagation is still one trip each way. The trip back costs about two runs, so roughly three in all.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l34",
+   "text": "Without it, nobody could train these models.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l35",
+   "text": "So where does this come from? In nineteen eighty-six, Rumelhart, Hinton and Williams laid it out in the journal Nature.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l36",
+   "text": "They found each knob's slope in two passes: forward, then back from the output.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l37",
+   "text": "They also found that the units in the middle learn to pick up useful patterns on their own.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l38",
+   "text": "Others had similar ideas earlier. This paper showed the method working on networks with several layers.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l39",
+   "text": "Today, in PyTorch, a popular tool for building models, a single line does it: loss dot backward. Every knob gets its slope.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l40",
+   "text": "That's automatic differentiation. Underneath, it's backpropagation.",
+   "seeds": [
+    2
+   ]
+  },
+  {
+   "id": "l41",
+   "text": "Backpropagation is passing the blame backward, from the output, layer by layer.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l42",
+   "text": "One trip back, and every knob knows which way to turn, and how far.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l43",
+   "text": "But with so many knobs, a model can memorize the practice questions and get new ones wrong.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l44",
+   "text": "That's overfitting, and it's up next.",
+   "seeds": [
+    1
+   ]
+  }
+ ]
+}

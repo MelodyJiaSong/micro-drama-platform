@@ -5,7 +5,8 @@
  * actor / voice views, frame / plate / last-frame extraction, the episode
  * takes / concat / subtitle toolbar — together with the whole-file editor,
  * which only ever served files outside `ai_videos/`). Media keep their preview,
- * archive / delete, and the 🖼 three-view extraction on character turntables. */
+ * archive / delete, and the 🖼 three-view extraction on character turntables.
+ * A character card's page opens with its 样片与正片 (follow-up 286). */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Breadcrumb } from "./Breadcrumb";
@@ -14,6 +15,8 @@ import { Renderer } from "../markdown/renderer";
 import { CodeView } from "../markdown/CodeView";
 import { JsonlView } from "../markdown/JsonlView";
 import { SiblingMedia, isCharacterVideoPath } from "./SiblingMedia";
+import { CharacterReelPanel } from "./CharacterReelPanel";
+import { characterCardDir } from "../lib/characterReel";
 import { announceToast } from "../lib/announce";
 import {
   archiveMedia,
@@ -177,6 +180,7 @@ export function Reader({ knownPaths, unloadedDirs, onSaved }: ReaderProps): JSX.
   const isMarkdown = ext === ".md";
   const isJsonl = ext === ".jsonl";
   const isCode = ext === ".json" || ext === ".yaml" || ext === ".yml" || ext === ".toml";
+  const cardDir = isMarkdown ? characterCardDir(path) : null;
 
   const filename = path.split("/").pop() ?? path;
   const pathParts = path.split("/");
@@ -280,6 +284,7 @@ export function Reader({ knownPaths, unloadedDirs, onSaved }: ReaderProps): JSX.
           </ParseFallback>
         ) : isMarkdown ? (
           <ParseFallback rawText={file.content} componentName="MarkdownView">
+            {cardDir && <CharacterReelPanel dir={cardDir} />}
             <Renderer content={file.content} currentPath={path} knownPaths={knownPaths} unloadedDirs={unloadedDirs} />
             <SiblingMedia currentPath={path} knownPaths={knownPaths} onChange={onSaved} />
           </ParseFallback>

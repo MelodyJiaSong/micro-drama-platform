@@ -1,0 +1,122 @@
+{
+ "stage": "final",
+ "phase": "粗剪",
+ "version": 1,
+ "status": "待用户看",
+ "note": "照宙斯 demo v2（c40_Lord_of_Olympus/demo/edit/final/cut_v2.json）的结构（follow-up 139）：5 段（人物视频 + 4 技能条）用 0.8 s 压暗转场接成一条；每个技能入场 0.15–1.9 s 中央出英文标题卡（DotA 1 图标金框 + 技能名 + Active / Passive / Ultimate + DotA 1 快捷键 R / E / D / G）；施法时段左上角小图标（时段按抽帧定）；片尾 1 s 淡出。k31 a364e83c（用户 2026-10-24「这条可以了」）；k32 b263709d 的去背景音版 sfx/mix_v2/k32_Repel_nobg.mp4（follow-up 139「不要背景音」）；k33 af885474（098 版）；k34 cffb04a0（follow-up 109 版重试成功：不从天降、背后符文标记）。原声直接用，不叠 Suno（follow-up 139）。",
+ "events": [
+  {
+   "role": "开场人物视频",
+   "clip": "ai_videos/dota_yingxiong/2_世界观人设/characters/近卫_sentinel/c3_Omniknight/c3_Omniknight_turntable.mp4",
+   "sha256": "ff50b8b2a3683ba68d2b4ebd75de7ed9d4a5d047571ec2e29503785e439c1b10",
+   "in": 0.0,
+   "start": 0.0,
+   "out": 10.0
+  },
+  {
+   "skill": "k31",
+   "title_card": {
+    "icon": "ai_videos/dota_yingxiong/2_世界观人设/characters/近卫_sentinel/c3_Omniknight/skills/k31_Purification/icon/k31_icon_dota1.png",
+    "zh": "Purification",
+    "en": "Active",
+    "key": "R",
+    "from": 0.15,
+    "to": 1.9
+   },
+   "corner_icon": {
+    "from": 2.4,
+    "to": 6.0,
+    "size_px": 120
+   },
+   "clip": "ai_videos/dota_yingxiong/2_世界观人设/characters/近卫_sentinel/c3_Omniknight/skills/k31_Purification/renders/20261024-124947_a364e83c/k31_Purification_clip.mp4",
+   "sha256": "a8ba1d238d43d0dc4ac58ee41d18f394771953965c4e6422686836cd5b591219",
+   "in": 0.0,
+   "transition_in": {
+    "type": "fadeblack（压暗）",
+    "duration": 0.8
+   },
+   "start": 9.2,
+   "out": 10.08
+  },
+  {
+   "skill": "k32",
+   "title_card": {
+    "icon": "ai_videos/dota_yingxiong/2_世界观人设/characters/近卫_sentinel/c3_Omniknight/skills/k32_Repel/icon/k32_icon_dota1.png",
+    "zh": "Repel",
+    "en": "Active",
+    "key": "E",
+    "from": 0.15,
+    "to": 1.9
+   },
+   "corner_icon": {
+    "from": 1.0,
+    "to": 7.0,
+    "size_px": 120
+   },
+   "clip": "ai_videos/dota_yingxiong/2_世界观人设/characters/近卫_sentinel/c3_Omniknight/skills/k32_Repel/sfx/mix_v2/k32_Repel_nobg.mp4",
+   "sha256": "416a1bd281958aa58d848d6318494910a3098c3f93df0d8e9a54f97bd3c4cf7d",
+   "in": 0.0,
+   "transition_in": {
+    "type": "fadeblack（压暗）",
+    "duration": 0.8
+   },
+   "start": 18.48,
+   "out": 8.033
+  },
+  {
+   "skill": "k33",
+   "title_card": {
+    "icon": "ai_videos/dota_yingxiong/2_世界观人设/characters/近卫_sentinel/c3_Omniknight/skills/k33_Degen_Aura/icon/k33_icon_dota1.png",
+    "zh": "Degen Aura",
+    "en": "Passive",
+    "key": "D",
+    "from": 0.15,
+    "to": 1.9
+   },
+   "corner_icon": {
+    "from": 1.5,
+    "to": 9.5,
+    "size_px": 120
+   },
+   "clip": "ai_videos/dota_yingxiong/2_世界观人设/characters/近卫_sentinel/c3_Omniknight/skills/k33_Degen_Aura/renders/20261023-221246_af885474/k33_Degen_Aura_clip.mp4",
+   "sha256": "239e4dd721f5ecfba7eeb068559d21e61249a6ccb58e6ecab1b238509fd5c77a",
+   "in": 0.0,
+   "transition_in": {
+    "type": "fadeblack（压暗）",
+    "duration": 0.8
+   },
+   "start": 25.713,
+   "out": 13.056
+  },
+  {
+   "skill": "k34",
+   "title_card": {
+    "icon": "ai_videos/dota_yingxiong/2_世界观人设/characters/近卫_sentinel/c3_Omniknight/skills/k34_Guardian_Angel/icon/k34_icon_dota1.png",
+    "zh": "Guardian Angel",
+    "en": "Ultimate",
+    "key": "G",
+    "from": 0.15,
+    "to": 1.9
+   },
+   "corner_icon": {
+    "from": 1.5,
+    "to": 7.5,
+    "size_px": 120
+   },
+   "clip": "ai_videos/dota_yingxiong/2_世界观人设/characters/近卫_sentinel/c3_Omniknight/skills/k34_Guardian_Angel/renders/20261024-131235_cffb04a0/k34_Guardian_Angel_clip.mp4",
+   "sha256": "424aab1ed5666c159aa1521fd3923ddb3442a1b61245615b9586821537fb5a51",
+   "in": 0.0,
+   "transition_in": {
+    "type": "fadeblack（压暗）",
+    "duration": 0.8
+   },
+   "start": 37.969,
+   "out": 12.067
+  }
+ ],
+ "output": {
+  "file": "ep01_final_v1.mp4",
+  "duration": 50.067,
+  "sha256": "1741fdf269596f7ad2d8f258e9a4a277348f23a5adcb39d880a10ca7d91758b8"
+ }
+}

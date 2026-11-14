@@ -12,6 +12,7 @@ metadata:
 # 人物资产一条龙（/ai_videos__char_assets）
 
 **调用前关卡**：独立补资产和旧剧续跑也遵 `CONVENTIONS.md` § 外部服务请求审计（全局必经）；先读 `.agents/references/project/paid_services.md`，由已接入的生成器先记录请求再调用服务，归属本剧/系列的 characters 日志。已有产物跳过不等于后续调用可免审计。
+新生成的声音资产默认走 [Suno 音频入口](../ai-videos-pipeline/modules/sound.md)，先查 capabilities。当前不支持精确对白/声线克隆时记为缺口，不拿唱歌替代声样，也不自动换本地语音模型；已有真实声样与视频音轨可继续复用。
 
 名字用纯 ASCII：中文名的 skill 在 `/` 补全里不出现（2026-09-30 用户实测 `/ai_videos` 补不出 `ai_videos__人物资产`）。
 
@@ -27,6 +28,8 @@ metadata:
 **三视图合图交接（2026-10-03，follow-up 102）**：所有剧、所有character今后的资产流程在三张源图齐备后，用 `python tools/character_sheet.py ai_videos/{剧}` 确定性拼接；左front、中side、右back，原像素保留，尺寸不同时等宽格内居中补边，不裁切/拉伸/重画。基础输出 `views/{角色目录名}_views.png`，换装输出 `{造型键}_views.png`；三张源图及 `_audio.mp3` 保留。合图内写源图SHA，源图改变须重建合图；每人只上传合图与声样，不同时上传三张单图；缺合图或源指纹过期即阻碍编译。合图三格代表同一角色三个角度；原图朝向质量问题仍须单独验收。
 
 ## 流程
+
+人物卡有 `武器参考: p编号` 时，先按人物卡和原版核对资料制作、看图验收武器锚点，再生成／重生人物图。之后的人物图片、建立视频及技能视频同时挂独立武器图；不能只靠旧人物图里较小的武器锁形制。绑定与工具行为见 [资产](../ai-videos-pipeline/resources/assets.md)「固定武器」。
 
 | 步 | 命令 | 做什么 |
 |---|---|---|

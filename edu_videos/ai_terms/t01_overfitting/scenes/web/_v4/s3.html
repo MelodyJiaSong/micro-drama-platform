@@ -1,0 +1,55 @@
+<style>
+  .head { position: absolute; left: var(--mx); top: var(--mt); }
+  .head .h1 { margin-top: 16px; white-space: nowrap; }
+  #chart { position: absolute; left: 96px; top: 250px; }
+  .side { position: absolute; left: 1250px; top: 290px; width: 550px; }
+  .colhead { padding-bottom: 18px; }
+  .row { padding: 22px 0 24px; border-top: 1px solid var(--hair); display: grid; grid-template-columns: 1fr auto; align-items: baseline; row-gap: 4px; }
+  .row .name { font-size: var(--fs-caption); font-weight: 600; }
+  .row b { font-size: 60px; font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+  .row .tag { grid-column: 1 / 3; font-size: var(--fs-micro); font-weight: 600; letter-spacing: .08em; }
+</style>
+
+<div class="head">
+  <div class="eyebrow" data-zh="01 · 过拟合是什么" data-en="01 · What overfitting is"></div>
+  <div class="h1" id="h-a" data-zh="同一组练习题，三种模型" data-en="Same data, three models"></div>
+  <div class="h1" id="h-b" style="position:absolute;top:0;margin-top:44px;opacity:0"
+       data-zh='换成新题，<span class="grad">谁考得最好？</span>' data-en='Which does best <span class="grad">on new data?</span>'></div>
+</div>
+<svg id="chart"></svg>
+<div class="side">
+  <div class="eyebrow colhead" id="ch" data-zh="练习误差" data-en="Practice error"></div>
+  <div class="row" id="r1" data-zh='<span class="name c-neutral">① 直线</span><b id="n1">—</b><span class="tag c-neutral" id="t1">欠拟合</span>'
+       data-en='<span class="name c-neutral">① Straight line</span><b id="n1">—</b><span class="tag c-neutral" id="t1">Underfit</span>'></div>
+  <div class="row" id="r2" data-zh='<span class="name c-good">② 平缓曲线</span><b id="n2">—</b>' data-en='<span class="name c-good">② Gentle curve</span><b id="n2">—</b>'></div>
+  <div class="row" id="r3" data-zh='<span class="name c-bad">③ 弯曲线</span><b id="n3">—</b>' data-en='<span class="name c-bad">③ Wiggly curve</span><b id="n3">—</b>'></div>
+</div>
+
+<script>
+const C = makeChart("#chart"), T = EDU.tl;
+const f1 = v => polyval(D.coef["1"], v);
+const gaps = C.gaps(D.train, f1, "--d-neutral");
+const c1 = C.curve(D.fits["1"], "--d-neutral", 4), c2 = C.curve(D.fits["3"], "--d-good", 6), c3 = C.curve(D.fits["9"], "--d-bad", 6);
+const dots = C.dots(D.train);
+const errLab = C.note(EDU.tr("误差", "Error"), [D.train[2][0], (D.train[2][1] + f1(D.train[2][0])) / 2], 16, -14, "caption ink2");
+
+gsap.set(["#ch", "#r1", "#r2", "#r3", "#t1", c1, c2, c3, gaps, errLab], { opacity: 0 });
+EDU.in(".head .eyebrow, #h-a", 0, { stagger: .08 });
+EDU.in(dots, 0.15, { d: .5, stagger: .03 });
+// l14 直线 → 点到线的距离叫误差
+T.set(c1, { opacity: 1 }, EDU.t("l14", .05)); EDU.draw(c1, EDU.t("l14", .05), 1.0);
+EDU.in(gaps, EDU.t("l14", .55)); EDU.in(errLab, EDU.t("l14", .62));
+// l15 练习误差压不下来 → 欠拟合
+EDU.in(["#ch", "#r1"], EDU.t("l15"), { stagger: .1 }); EDU.count("#n1", EDU.t("l15"), mse(1), .9);
+EDU.in("#t1", EDU.t("l15", .7));
+// l16 平缓曲线
+EDU.out([errLab], EDU.t("l16")); EDU.dim(gaps, EDU.t("l16"), 0); EDU.dim(c1, EDU.t("l16"), .25);
+T.set(c2, { opacity: 1 }, EDU.t("l16", .05)); EDU.draw(c2, EDU.t("l16", .05), 1.4);
+EDU.in("#r2", EDU.t("l16", .35)); EDU.count("#n2", EDU.t("l16", .35), mse(3), .9);
+// l17 弯曲线，练习误差 0
+EDU.dim(c2, EDU.t("l17"), .3);
+T.set(c3, { opacity: 1 }, EDU.t("l17", .08)); EDU.draw(c3, EDU.t("l17", .08), 1.8);
+EDU.in("#r3", EDU.t("l17", .5)); EDU.count("#n3", EDU.t("l17", .55), mse(9), .8);
+// l18 先猜一下
+EDU.out("#h-a", EDU.t("l18")); EDU.in("#h-b", EDU.t("l18", .05));
+</script>

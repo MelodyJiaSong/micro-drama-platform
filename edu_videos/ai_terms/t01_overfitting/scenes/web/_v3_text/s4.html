@@ -1,0 +1,66 @@
+<style>
+  .head { position: absolute; left: var(--mx); top: var(--mt); }
+  .head .h1 { margin-top: 16px; white-space: nowrap; }
+  #chart { position: absolute; left: 96px; top: 250px; }
+  .side { position: absolute; left: 1250px; top: 280px; width: 550px; }
+  .row { padding: 22px 0 24px; border-top: 1px solid var(--hair); }
+  .row .top { display: flex; justify-content: space-between; align-items: baseline; }
+  .row .name { font-size: var(--fs-caption); font-weight: 600; }
+  .row .tag { font-size: var(--fs-micro); font-weight: 600; letter-spacing: .08em; }
+  .row .nums { display: grid; grid-template-columns: 1fr 1fr; margin-top: 8px; }
+  .row .nums b { display: block; font-size: 52px; font-weight: 600; }
+  .row .nums span { font-size: var(--fs-micro); color: var(--sub); }
+  .times { margin-top: 6px; }
+  .take { position: absolute; left: var(--mx); top: 250px; width: 1060px; }
+  .take .line + .line { margin-top: 26px; }
+</style>
+
+<div class="head"><div class="eyebrow" data-zh="01 · 问题" data-en="01 · The problem"></div>
+  <div class="h1" id="h-a" data-zh="换成新题：考试" data-en="New questions: the exam"></div></div>
+<svg id="chart"></svg>
+<div class="side">
+  <div class="row" id="r1"><div class="top"><div class="name c-neutral" data-zh="① 直线" data-en="① Straight line"></div><div class="tag c-neutral" data-zh="欠拟合" data-en="UNDERFIT"></div></div>
+    <div class="nums"><div><b id="p1"></b><span data-zh="练习误差" data-en="practice"></span></div><div><b id="e1" class="c-neutral"></b><span data-zh="考试误差" data-en="exam"></span></div></div></div>
+  <div class="row" id="r2"><div class="top"><div class="name c-good" data-zh="② 平缓曲线" data-en="② Gentle curve"></div><div class="tag c-good" id="tg2" data-zh="刚刚好" data-en="JUST RIGHT"></div></div>
+    <div class="nums"><div><b id="p2"></b><span data-zh="练习误差" data-en="practice"></span></div><div><b id="e2" class="c-good">—</b><span data-zh="考试误差" data-en="exam"></span></div></div></div>
+  <div class="row" id="r3"><div class="top"><div class="name c-bad" data-zh="③ 弯曲线" data-en="③ Wiggly curve"></div><div class="tag c-bad" id="tg3" data-zh="过拟合" data-en="OVERFIT"></div></div>
+    <div class="nums"><div><b id="p3"></b><span data-zh="练习误差" data-en="practice"></span></div><div><b id="e3" class="c-bad">—</b><span data-zh="考试误差" data-en="exam"></span></div></div>
+    <div class="body c-bad times" id="x25"></div></div>
+</div>
+<div class="take" id="take">
+  <div class="line h2 ink2" data-zh='欠拟合：练习、考试都差——<span class="sub">很容易发现</span>' data-en='Underfit: bad on both — <span class="sub">easy to spot</span>'></div>
+  <div class="line h2" data-zh='过拟合：练习误差 0——<span class="c-bad">看起来好极了</span>' data-en='Overfit: zero practice error — <span class="c-bad">looks great</span>'></div>
+</div>
+
+<script>
+const C = makeChart("#chart"), T = EDU.tl;
+const c1 = C.curve(D.fits["1"], "--d-neutral", 4), c2 = C.curve(D.fits["3"], "--d-good", 6), c3 = C.curve(D.fits["9"], "--d-bad", 6);
+const truth = C.curve(D.truth, "--ink", 3, "2 10");
+const noise = C.gaps(D.train, truthAt, "--d-bad", null);
+const dots = C.dots(D.train);
+const rings = C.dots(D.test, "test");
+const g2 = C.gaps(D.test, v => polyval(D.coef["3"], v), "--d-good", null);
+const g3 = C.gaps(D.test, v => polyval(D.coef["9"], v), "--d-bad", null);
+const ringLab = C.note(EDU.tr("考题", "Exam points"), D.test[0], 22, 10, "caption accent");
+const noiseLab = C.note(EDU.tr("噪声不会在新题里重演", "Noise won't repeat on new questions"), [-0.3, 2.6], 0, -60, "caption c-bad");
+[["#p1", 1], ["#p2", 3], ["#p3", 9]].forEach(([s, d]) => document.querySelector(s).textContent = mse(d).toFixed(2));
+document.querySelector("#e1").textContent = mse(1, 1).toFixed(2);
+document.querySelector("#x25").innerHTML = EDU.tr(`是 ② 的 ${Math.round(D.ratio)} 倍`, `${Math.round(D.ratio)}× model ②`);
+gsap.set([c1, c2], { opacity: .3 });
+gsap.set([truth, noise, ...rings, g2, g3, ringLab, noiseLab, "#tg2", "#tg3", "#x25", "#take .line"], { opacity: 0 });
+// l19 考题出现
+EDU.in(rings, EDU.t("l19", .1), { stagger: .1 }); EDU.in(ringLab, EDU.t("l19", .35));
+// l20 平缓曲线：离新点都不远
+EDU.out(ringLab, EDU.t("l20")); T.to(c2, { opacity: 1, duration: .5 }, EDU.t("l20"));
+EDU.in(g2, EDU.t("l20", .2)); EDU.count("#e2", EDU.t("l20", .3), mse(3, 1), .8); EDU.in("#tg2", EDU.t("l20", .6));
+// l21 弯曲线：离有些新点很远，二十多倍
+T.to(c2, { opacity: .3, duration: .4 }, EDU.t("l21")); EDU.dim(g2, EDU.t("l21"), 0); T.to(c3, { opacity: 1, duration: .5 }, EDU.t("l21"));
+EDU.in(g3, EDU.t("l21", .25)); EDU.count("#e3", EDU.t("l21", .55), mse(9, 1), .9); EDU.in("#x25", EDU.t("l21", .8));
+// l22 背下了噪声；噪声不会重演
+EDU.dim(g3, EDU.t("l22"), 0); T.set(truth, { opacity: .5 }, EDU.t("l22")); EDU.draw(truth, EDU.t("l22"), 1.2);
+EDU.in(noise, EDU.t("l22", .25)); EDU.in(noiseLab, EDU.t("l22", .45)); EDU.in("#tg3", EDU.t("l22", .8));
+// l23 欠拟合好发现，过拟合难察觉
+EDU.out(["#chart", noiseLab, ".head .h1"], EDU.t("l23"));
+EDU.in("#take .line", EDU.t("l23", .05), { stagger: .5 });
+EDU.focus("#r3", EDU.t("l23", .6));
+</script>

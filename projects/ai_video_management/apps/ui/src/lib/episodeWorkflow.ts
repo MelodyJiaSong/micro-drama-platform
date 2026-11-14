@@ -72,6 +72,8 @@ export interface EpisodeWorkflow {
   shot_keys: Record<string, Record<string, string>>;
   packs?: Record<string, ShotPack>;
   renders?: Record<string, ShotTake[]>;
+  /** 每镜现行首帧图（故事板审阅，follow-up 336）：path 为空＝还没出；mtime（毫秒）做图片缓存版本号。 */
+  first_frames?: Record<string, { path: string; mtime: number; prompt: string }>;
 }
 /** One generation of a shot: its folder under renders/ with the video, record and review (follow-up 230). */
 export interface ShotTake {

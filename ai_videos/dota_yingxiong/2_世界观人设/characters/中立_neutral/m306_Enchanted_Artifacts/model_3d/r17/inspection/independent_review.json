@@ -1,0 +1,86 @@
+{
+  "verdict": "fail",
+  "suitable_use": "可用于地图远景：广角或俯瞰镜头里约 10 m 以外、画面高度不足约 40 px 的背景商人光点。这时白核、星芒和地面光斑都能读出，和参考图大体一致。场景中景（约 3–10 m）只能勉强用，光尾会读成一根平滑的光针或彗星束，光丝会读成对称的风车纹。近景、特写、人物身边的互动镜头和 turntable 建立镜头都不适用：绒毛像棉球或蒲公英，缺少参考图那种发光晕层；光尾的尘粒只在 close/top/bottom 这几张近距离图里看得到；地面光斑的边缘像聚光灯打出来的。",
+  "blockers": [
+    "光尾质感与参考不符（识别层③）：参考图的光尾是一股青色细尘粒流，往外逐渐散开、变淡。候选在标准机位下显示为连续、边缘平滑的一条实心光带：东视图在核心右侧 x≈520–680 是一条平滑白带，西视图在 x≈340–470 是一根针状光束。1900 颗尘粒只在 close/top/bottom 近距离图中可见，中景下读成彗星或激光束，看不出光尘消散。",
+    "北视图（光尾大致朝向镜头）：核心正下方 x≈480–500、y≈330–385 有一团向下垂的模糊白色拖影，像水滴或花茎挂在光团下面，与参考里斜向散开的尘尾不一致，背面这个角度的识别度差。",
+    "光丝排列过于规整：南视图、透视图和两张夜景图中，4 根主光丝绕核心呈近似旋转对称的风车或卍字形弯曲，粗细均匀，在 bloom 下像光滑的管状触须。参考里的 5–6 缕光丝长短不一、方向随机，细如发丝，最长的一根向右上伸得很远。目前更像图案化的符号，不像有机的星芒或绒毛。",
+    "核心缺少发光晕层：参考图的白核外有一圈明显的青白柔光，把绒毛包在里面，光团看起来有体积。候选的 Cyan_atmospheric_fringe、Wisp_fading_volume 和 Tapered_local_volume 都是 Principled Volume，Density=0，只有自发光、没有散射。实际渲染中核心外几乎没有晕圈，close、top、bottom 三张图里绒毛读成白色棉球、蒲公英种子球或鸡毛掸，近景下是一个毛球，不像一团活光。",
+    "地面光照像聚光灯：在 night_self_illumination 和 night_neutral_ground_control 中，地面是一块内部亮度近乎均匀、边界清楚的椭圆亮斑，看起来是 SPOT 锥角投出的圆盘（数据中 Core_ground_emission_0/1 是 17 W 和 8 W 的聚光灯），不是点光源按距离平方衰减的渐变。光斑边缘外的立方体朝向光团的那一面几乎全黑，只有 8 W 点光源产生的微弱投影，近处物体被照亮的方式不真实。设定卡要求柔和照亮身边的地面和近处的人，照亮近处的人这一点目前不成立。",
+    "透视图和两张夜景图中，核心下方 x≈505–515、y≈345–390 有一段光丝，它与核心之间似乎有暗缝，看起来像一段悬空的碎丝（PLAUSIBLE，需要放大或改机位确认是否真的断开）。"
+  ],
+  "refinements": [
+    "光尾：把连续光带体积的亮度再压低，或改成只在根部存在的短渐隐；让尘粒密度和亮度在中景尺度下也能读出，并沿尾向逐渐稀疏、变大、变淡，接近参考右下方的散尘。",
+    "光丝：打破旋转对称，长短拉开（1 根特长、2 根中长、2–3 根短），根部做出锥形收细，弯曲方向随机，避免风车或卍字形的读法。",
+    "核心晕层：给外圈 fringe 体积一点很低的散射密度，或者合成上可控的柔光；先在不依赖后期 bloom 的前提下做出青白过渡的光晕，让绒毛被光包住，避免近景读成毛球。",
+    "地面照明：聚光灯换成点光或面光，加大光源半径，或调宽 spot blend，去掉锥角边界；让光照随距离自然衰减，使地面光斑带有柔和渐变，近处立方体或人物朝向光团的一面能被照亮。",
+    "清理 0 W 的 Core_ground_emission_2 灯光对象。",
+    "确认 4 盏灯是否已父级绑定或放进光团集合实例（数据给出的 position 都是 [0,0,1]，没有说明是世界坐标还是局部坐标），保证平移、复制实例后灯光跟着走。机器数据也把 translated-instance 检查列为待完成。",
+    "用已知尺寸的参照物（例如 1.8 m 人体）出一张对比图，验证光团连光晕约 25 cm 宽、悬停高度约 1 m。现有立方体的尺寸没有给出，无法据此核对。",
+    "在真实地图地面材质（草地或泥土）和白天环境光下补一组渲染，确认白天光团不会显得过灰，地面光斑仍然可见但不会过亮。"
+  ],
+  "evidence": {
+    "1_m306_Enchanted_Artifacts.png（设计参考，非模型）": "浅灰棚内一团近白亮核，外面有明显的青白柔光晕和密集的放射状细芒；5–6 缕发丝般细、长短不一的光丝，其中一根最长的向右上方延伸；右下方拖出一股青色细尘粒尾，逐渐散成光点；地面上一片宽而柔、没有明确边界的冷白光斑。",
+    "2_south.png": "核心加绒毛可读，4 根主光丝绕核心呈旋转对称的风车形弯曲，粗细均匀；光尾在这个角度藏在身后，基本看不见，与 turntable 的正面要求一致。地面光斑在光团正下方，是边界清晰的椭圆。右侧立方体的投影方向与主光一致，看不出被光团照亮。核心外的光晕很弱。",
+    "3_east.png": "光尾从侧面完整横拖向右，但读成一条平滑连续的白色光带，看不到尘粒散开；光丝在这个角度只剩上下两根。立方体在光斑中间，顶面受光，接地正常。",
+    "4_north.png": "光尾接近朝向镜头，在核心正下方形成一团向下的模糊垂坠拖影，像水滴或花茎；光丝 4–5 根，分布均匀。左侧立方体在光斑外，接地正常。",
+    "5_west.png": "光尾向左上方拖出，像一根细长平滑的光针，末端只是线性变淡，没有尘粒；只有一根长光丝向上伸，绒毛团偏右。地面光斑仍在正下方。",
+    "6_perspective.png": "整体轮廓与参考的星芒加短尾大致一致；光尾短而平滑；核心下方有一段光丝，与核心之间疑似有暗缝。地面光斑是边界明确的椭圆；立方体在光斑边缘，朝向光团的面没有明显受光。",
+    "7_close.png": "近距离下光丝细而有锥度，接近参考；尘粒尾在这里清晰可见，并逐渐散开，是全组最接近参考的一张。不过绒毛是一团均匀的白色毛絮，青白过渡层很薄，读成毛绒球；核心外的柔光晕明显小于参考。",
+    "8_top.png": "俯视：尘尾向上（图中方向）延伸，颗粒可见；两根长光丝几乎贴着水平面伸出。绒毛呈白色羽毛状，外观像鸡毛掸。地面受光均匀，没有异常投影。三维厚度成立，不是单面片。",
+    "9_bottom.png": "仰视：绒毛与核心读成蒲公英种子球，尘尾向下拖出，长度合理（约 0.38 m 量级，未用比例尺核实）。背面没有复制的正面结构，各方向形态一致，但缺少参考那种发光晕层。",
+    "10_night_self_illumination.png": "夜间光团自发光可读，呈青白色、尺寸小；地面光斑偏灰绿，是均匀椭圆，边缘清楚；立方体除了顶边几乎全黑，投影向右下，说明光源方向正确，但近处物体受光过弱。光丝仍呈风车状排列。",
+    "11_night_neutral_ground_control.png": "中性地面对照：光斑更亮、偏青，同样是边界明确的聚光灯椭圆；立方体朝向光团的一面依然很暗。与 10 对比可确认地面光主要来自 SPOT 锥角，而不是点光源的自然衰减。",
+    "machine_data": "节点数据显示：光丝、绒毛和尘粒用 EMISSION 着色器（不接受外部光照，对光源来说合理）；三个体积材质为 Principled Volume，Density=0，Emission Strength 由节点连入，只发光、不散射，与渲染中缺少空气晕圈的现象一致。灯光为 1 盏 8 W POINT 加 3 盏 SPOT（17 / 8 / 0 W）。曲线为 600 根绒毛（bevel 0.11 mm）加 6 根主光丝（bevel 0.18 mm）。没有启用渲染修改器。以下内容未验证：曲线和网格拓扑质量、Tapered_local_volume 的 6 面网格包围盒是否在其他角度露出体积边界、灯光在平移实例下是否跟随、实际尺寸与悬停高度、各 Emission Strength 的具体数值。以上都不能由这组有限渲染证明。"
+  },
+  "reviewer": "claude",
+  "source_artifact_sha256": "a93d15592635fbf915a2fe89a5bad8a0153a134dc2341fa54900f8609c65a936",
+  "blend_sha256": "a93d15592635fbf915a2fe89a5bad8a0153a134dc2341fa54900f8609c65a936",
+  "evidence_files": [
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\m306_Enchanted_Artifacts.png",
+      "sha256": "53a9db2d2daaca35ebc576b986f5e7586924eb854277ad7999d8185766f03974"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r17\\inspection\\south.png",
+      "sha256": "74d0e4cfd6049d733e32433bc1bfe51300bb51e86c31db18410511efed423cdb"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r17\\inspection\\east.png",
+      "sha256": "d8f1f8c29e0ba69413b89d6730f34fa2cf2d1aa0ef877c7dde97f7a316235b82"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r17\\inspection\\north.png",
+      "sha256": "3c2ab5c968ab8138a60beb0af839a80c430e8f5df166a27cdeff9532323d2365"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r17\\inspection\\west.png",
+      "sha256": "e3e98d717bec9ae51469a3123741e8f4fa12c344a660af4c485484916c95683c"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r17\\inspection\\perspective.png",
+      "sha256": "53bf908e3a1dcc02e46ab88ce7e2777153eb4196e32bf38c12eda1567a1b512a"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r17\\inspection\\close.png",
+      "sha256": "5b009a77282fffa9651e0dd974169369499fba5b1e0ce2c88a12b29d2fb05d87"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r17\\inspection\\top.png",
+      "sha256": "dae4a29e58117bc331648a718b3fae3062ed0d5ef77b028dfa90c917d7d59343"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r17\\inspection\\bottom.png",
+      "sha256": "b16961ee6b5e90347ae67f2091ec52ef702bb8d657691a397514ce7c46f1f196"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r17\\inspection\\night_self_illumination.png",
+      "sha256": "34d2f15b53bd6c8eb9707a7901ae7cc3fa4334d186951df46640af54799786dc"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r17\\inspection\\night_neutral_ground_control.png",
+      "sha256": "aa17b51efe7d75f10b0507c0fcd7227bd8c493e0f5685df830cc90873bb39f12"
+    }
+  ],
+  "prior_errors": []
+}

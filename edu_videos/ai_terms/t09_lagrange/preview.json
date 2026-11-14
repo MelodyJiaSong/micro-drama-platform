@@ -1,0 +1,458 @@
+{
+ "title": "t09 拉格朗日乘子 Lagrange multiplier",
+ "tagline": "拉格朗日乘子，就是给约束标个价；价调到刚好，不用砌墙，也会刚好停在线上。",
+ "lang": "zh",
+ "languages": [
+  {
+   "lang": "zh",
+   "label": "中文",
+   "preview": "edu_videos/ai_terms/t09_lagrange/preview.json"
+  },
+  {
+   "lang": "en",
+   "label": "English",
+   "preview": "edu_videos/ai_terms/t09_lagrange/preview.en.json"
+  }
+ ],
+ "video": "edu_videos/ai_terms/t09_lagrange/final/t09_lagrange.mp4",
+ "duration": 265.63,
+ "chapters": [
+  {
+   "id": "s0",
+   "title": "冷开场",
+   "t": 0.0
+  },
+  {
+   "id": "s2",
+   "title": "拉格朗日乘子是什么",
+   "t": 23.97
+  },
+  {
+   "id": "s3",
+   "title": "做个小实验",
+   "t": 71.23
+  },
+  {
+   "id": "s4",
+   "title": "把 λ 看成价格",
+   "t": 147.77
+  },
+  {
+   "id": "s5",
+   "title": "AI 里的一个例子",
+   "t": 186.9
+  },
+  {
+   "id": "s6",
+   "title": "片尾",
+   "t": 247.33
+  }
+ ],
+ "items": [
+  {
+   "t": 0.6,
+   "end": 7.88,
+   "title": "训练 AI 的时候，常会提这么个要求",
+   "subtitle": "训练 AI 的时候，常会提这么个要求：回答要尽量有用，但有害的内容不能越过一条底线。",
+   "badge": "l01",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l01.jpg"
+  },
+  {
+   "t": 8.23,
+   "end": 13.41,
+   "title": "一边要尽量做好，一边又不许越线",
+   "subtitle": "一边要尽量做好，一边又不许越线，怎么让模型两头都顾上？",
+   "badge": "l02",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l02.jpg"
+  },
+  {
+   "t": 13.76,
+   "end": 18.86,
+   "title": "两百多年前",
+   "subtitle": "两百多年前，数学家拉格朗日就给过一个办法，叫拉格朗日乘子。",
+   "badge": "l03",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l03.jpg"
+  },
+  {
+   "t": 27.17,
+   "end": 32.84,
+   "title": "在不许越线的前提下，把一件事做到最好",
+   "subtitle": "在不许越线的前提下，把一件事做到最好，这叫带约束的最优化。",
+   "badge": "l04",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l04.jpg"
+  },
+  {
+   "t": 33.19,
+   "end": 39.01,
+   "title": "拉格朗日的思路很妙",
+   "subtitle": "拉格朗日的思路很妙：别把这条线当成一堵墙，改成给越线标个价。",
+   "badge": "l05",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l05.jpg"
+  },
+  {
+   "t": 39.36,
+   "end": 45.95,
+   "title": "越线一点，就扣一点分",
+   "subtitle": "越线一点，就扣一点分，扣分的单价就叫拉格朗日乘子，通常写成字母λ。",
+   "badge": "l06",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l06.jpg"
+  },
+  {
+   "t": 46.3,
+   "end": 52.44,
+   "title": "打个比方",
+   "subtitle": "打个比方，家长规定孩子每天最多玩一小时游戏，可孩子总想偷偷多玩。",
+   "badge": "l07",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l07.jpg"
+  },
+  {
+   "t": 52.79,
+   "end": 58.52,
+   "title": "那就换个办法",
+   "subtitle": "那就换个办法：多玩一分钟，扣一块零花钱，少玩一分钟，奖一块。",
+   "badge": "l08",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l08.jpg"
+  },
+  {
+   "t": 58.87,
+   "end": 63.44,
+   "title": "价定低了，孩子照样超",
+   "subtitle": "价定低了，孩子照样超。定高了，他干脆就不玩了。",
+   "badge": "l09",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l09.jpg"
+  },
+  {
+   "t": 63.79,
+   "end": 70.32,
+   "title": "价调得刚好，他自己就会停在一小时上下",
+   "subtitle": "价调得刚好，他自己就会停在一小时上下。这个刚好的价，就是λ。",
+   "badge": "l10",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l10.jpg"
+  },
+  {
+   "t": 74.43,
+   "end": 82.22,
+   "title": "咱们来做个小实验",
+   "subtitle": "咱们来做个小实验。这是一张地图，一圈圈的线是等高线，越往里越高，正中间是山顶。",
+   "badge": "l11",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l11.jpg"
+  },
+  {
+   "t": 82.57,
+   "end": 84.76,
+   "title": "咱们要找的，是最高的地方",
+   "subtitle": "咱们要找的，是最高的地方。",
+   "badge": "l12",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l12.jpg"
+  },
+  {
+   "t": 85.11,
+   "end": 90.72,
+   "title": "但有个约束",
+   "subtitle": "但有个约束：只能待在营地这圈围栏里，可山顶偏偏在围栏外面。",
+   "badge": "l13",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l13.jpg"
+  },
+  {
+   "t": 91.07,
+   "end": 97.78,
+   "title": "那就照拉格朗日的办法",
+   "subtitle": "那就照拉格朗日的办法：拆掉围栏，每离营地中心远一步，就扣λ这么多分。",
+   "badge": "l14",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l14.jpg"
+  },
+  {
+   "t": 98.13,
+   "end": 102.93,
+   "title": "然后看高度减掉扣分，哪儿剩得最多",
+   "subtitle": "然后看高度减掉扣分，哪儿剩得最多，就在哪儿标个点。",
+   "badge": "l15",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l15.jpg"
+  },
+  {
+   "t": 103.28,
+   "end": 108.77,
+   "title": "先把价定成零，不扣分，那当然直奔山顶",
+   "subtitle": "先把价定成零，不扣分，那当然直奔山顶，一下就跑出了围栏。",
+   "badge": "l16",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l16.jpg"
+  },
+  {
+   "t": 109.12,
+   "end": 112.88,
+   "title": "那就涨价，点跑出去越远，价就涨得越多",
+   "subtitle": "那就涨价，点跑出去越远，价就涨得越多。",
+   "badge": "l17",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l17.jpg"
+  },
+  {
+   "t": 113.23,
+   "end": 118.46,
+   "title": "价涨到一点五，它往回退了一些",
+   "subtitle": "价涨到一点五，它往回退了一些，还在围栏外。再涨，它再退。",
+   "badge": "l18",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l18.jpg"
+  },
+  {
+   "t": 118.81,
+   "end": 121.96,
+   "title": "涨到三的时候，点刚好停在了围栏上",
+   "subtitle": "涨到三的时候，点刚好停在了围栏上。",
+   "badge": "l19",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l19.jpg"
+  },
+  {
+   "t": 122.31,
+   "end": 126.16,
+   "title": "这正是有围栏时能到的最高点",
+   "subtitle": "这正是有围栏时能到的最高点，高度七点七五。",
+   "badge": "l20",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l20.jpg"
+  },
+  {
+   "t": 126.51,
+   "end": 131.7,
+   "title": "价要是再高，比如四，点就躲进围栏里面",
+   "subtitle": "价要是再高，比如四，点就躲进围栏里面，白白少爬了一截。",
+   "badge": "l21",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l21.jpg"
+  },
+  {
+   "t": 132.05,
+   "end": 139.83,
+   "title": "再看那个刚好的点",
+   "subtitle": "再看那个刚好的点：它那圈等高线，正好贴着围栏。顺着围栏往哪边挪，都只会更低。",
+   "badge": "l22",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l22.jpg"
+  },
+  {
+   "t": 140.18,
+   "end": 146.84,
+   "title": "这就是拉格朗日条件",
+   "subtitle": "这就是拉格朗日条件：在最好的那个点上，想再往高处走，就得直直穿过围栏。",
+   "badge": "l23",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l23.jpg"
+  },
+  {
+   "t": 150.97,
+   "end": 157.14,
+   "title": "你可能觉得λ只是个拿来调的旋钮",
+   "subtitle": "你可能觉得λ只是个拿来调的旋钮。其实它还告诉你，这条规矩有多贵。",
+   "badge": "l24",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l24.jpg"
+  },
+  {
+   "t": 157.49,
+   "end": 161.78,
+   "title": "咱们把围栏稍微放大些",
+   "subtitle": "咱们把围栏稍微放大些，半径从一点五变成一点六。",
+   "badge": "l25",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l25.jpg"
+  },
+  {
+   "t": 162.13,
+   "end": 166.0,
+   "title": "围栏放宽零点一，最高点就多爬了零点二九",
+   "subtitle": "围栏放宽零点一，最高点就多爬了零点二九。",
+   "badge": "l26",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l26.jpg"
+  },
+  {
+   "t": 166.35,
+   "end": 171.79,
+   "title": "所以λ等于三，就是说",
+   "subtitle": "所以λ等于三，就是说：围栏放宽多少，就能多爬差不多三倍。",
+   "badge": "l27",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l27.jpg"
+  },
+  {
+   "t": 172.14,
+   "end": 174.93,
+   "title": "这个价，经济学里叫影子价格",
+   "subtitle": "这个价，经济学里叫影子价格。",
+   "badge": "l28",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l28.jpg"
+  },
+  {
+   "t": 175.28,
+   "end": 181.5,
+   "title": "反过来，要是山顶本来就在围栏里面",
+   "subtitle": "反过来，要是山顶本来就在围栏里面，λ就是零，这条规矩根本没挡着你。",
+   "badge": "l29",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l29.jpg"
+  },
+  {
+   "t": 181.85,
+   "end": 185.99,
+   "title": "所以看λ，就知道哪条规矩真在卡着你",
+   "subtitle": "所以看λ，就知道哪条规矩真在卡着你。",
+   "badge": "l30",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l30.jpg"
+  },
+  {
+   "t": 190.1,
+   "end": 197.9,
+   "title": "回到开头那个要求",
+   "subtitle": "回到开头那个要求。2023年，北大一个团队想了个训练大模型的办法，叫 Safe RLHF。",
+   "badge": "l31",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l31.jpg"
+  },
+  {
+   "t": 198.25,
+   "end": 203.52,
+   "title": "它用两个模型来打分",
+   "subtitle": "它用两个模型来打分：一个看回答有多有用，一个看有多有害。",
+   "badge": "l32",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l32.jpg"
+  },
+  {
+   "t": 203.87,
+   "end": 208.85,
+   "title": "目标是：有害不能超标，在这个前提下",
+   "subtitle": "目标是：有害不能超标，在这个前提下，回答尽量有用。",
+   "badge": "l33",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l33.jpg"
+  },
+  {
+   "t": 209.2,
+   "end": 215.34,
+   "title": "他们用的办法，就是拉格朗日乘子",
+   "subtitle": "他们用的办法，就是拉格朗日乘子：拿有用分，减去λ乘以有害分。",
+   "badge": "l34",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l34.jpg"
+  },
+  {
+   "t": 215.69,
+   "end": 221.74,
+   "title": "而且λ在训练里会自己调",
+   "subtitle": "而且λ在训练里会自己调：有害超标了，它就往上涨，更看重安全。",
+   "badge": "l35",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l35.jpg"
+  },
+  {
+   "t": 222.09,
+   "end": 228.38,
+   "title": "没超标，它就往下降，让模型多帮些忙",
+   "subtitle": "没超标，它就往下降，让模型多帮些忙。跟刚才在山上调价一模一样。",
+   "badge": "l36",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l36.jpg"
+  },
+  {
+   "t": 228.72,
+   "end": 231.37,
+   "title": "其实 AI 里到处都在给规矩标价",
+   "subtitle": "其实 AI 里到处都在给规矩标价。",
+   "badge": "l37",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l37.jpg"
+  },
+  {
+   "t": 231.72,
+   "end": 238.89,
+   "title": "比如正则化，用来防止模型死记硬背",
+   "subtitle": "比如正则化，用来防止模型死记硬背：模型太复杂就扣分，扣多少，就看这个价。",
+   "badge": "l38",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l38.jpg"
+  },
+  {
+   "t": 239.24,
+   "end": 246.41,
+   "title": "还有，训练聊天模型时",
+   "subtitle": "还有，训练聊天模型时，常要它别跟原来的模型差太远，差远了扣多少，也看这个价。",
+   "badge": "l39",
+   "chapter": "s5",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l39.jpg"
+  },
+  {
+   "t": 247.93,
+   "end": 251.5,
+   "title": "所以说，拉格朗日乘子，就是给约束标个价",
+   "subtitle": "所以说，拉格朗日乘子，就是给约束标个价。",
+   "badge": "l40",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l40.jpg"
+  },
+  {
+   "t": 251.85,
+   "end": 256.23,
+   "title": "价调合适了，不用立墙",
+   "subtitle": "价调合适了，不用立墙，模型自己就会停在线上。",
+   "badge": "l41",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l41.jpg"
+  },
+  {
+   "t": 256.58,
+   "end": 262.05,
+   "title": "下次碰到「既要又要」的事，想想",
+   "subtitle": "下次碰到「既要又要」的事，想想：卡着你的那条规矩，到底有多贵？",
+   "badge": "l42",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l42.jpg"
+  },
+  {
+   "t": 262.4,
+   "end": 264.72,
+   "title": "下一期，咱们聊聊梯度下降",
+   "subtitle": "下一期，咱们聊聊梯度下降。",
+   "badge": "l43",
+   "chapter": "s6",
+   "image": "edu_videos/ai_terms/t09_lagrange/renders/thumbs/l43.jpg"
+  }
+ ],
+ "links": [
+  {
+   "label": "讲稿",
+   "path": "edu_videos/ai_terms/t09_lagrange/script.md"
+  },
+  {
+   "label": "时间轴",
+   "path": "edu_videos/ai_terms/t09_lagrange/timeline.json"
+  },
+  {
+   "label": "调研",
+   "path": "edu_videos/ai_terms/t09_lagrange/research.md"
+  },
+  {
+   "label": "字幕",
+   "path": "edu_videos/ai_terms/t09_lagrange/final/t09_lagrange.srt"
+  }
+ ]
+}

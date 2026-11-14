@@ -4,11 +4,11 @@
 卡 `characters/{dir}/{dir}.md` 里 `# Seedream 立绘 prompt`（`--kind props`：`props/{dir}/{dir}.md` 里
 `# 锚点图 prompt`，三视图卡没有这个标题、不在此列）标题之后、首行 ＝ 目录名的第一个 ```text 块 →
 `{dir}/{dir}.png`。块内没有 `负面词` 行的，接上其后 `## 负向` 节的块。首行路由键与 `参考:` / `比例:` 这类
-给人看的行不发给模型。立绘零参考图（纯文字自由生成）。
+给人看的行不发给模型。人物卡声明「武器参考: p编号」时上传武器锚点图，缺图拒绝生成。
 画幅读块里 `比例:` 行的比值（限 `gen_bg_images.RATIOS`；不带比值的「比例：真人正常比例…」是身形描述，不算），
 读不到用 KINDS 的缺省；命令行 `--aspect` 显式给了才覆盖（2026-09-30：m7 / m9 写 16:9，工具写死 9:16 出成竖幅）。
 
-引擎按 `tools/image_engine.py`（follow-up 270）：auto ＝ Codex 内置出图 → ElevenLabs，前一家明确失败才换下一家；
+引擎按 `tools/image_engine.py`：auto ＝ 只用 Codex 内置出图（follow-up 341，ElevenLabs 须用户允许）；
 图片不用即梦（即梦只用于视频）。显式 `--engine X` 只用 X。
 
 用法（仓库根目录）：
@@ -34,6 +34,8 @@ from tools import dreamina_image as dm  # noqa: E402
 from tools import codex_image as ci  # noqa: E402
 from tools import image_engine as ie  # noqa: E402
 from tools import image_fetch as el  # noqa: E402
+from tools import props_lib  # noqa: E402
+from projects.ai_video_management.libs.common.asset_group import character_dirs  # noqa: E402  卡可再分一层分组
 
 # 目录 → (标题, 卡里读不到画幅时的缺省, 是否第一张锚点的难图)
 KINDS = {"characters": (re.compile(r"^# Seedream 立绘 prompt.*$", re.M), "9:16", True),
@@ -65,6 +67,7 @@ class Job:
     def __init__(self, d: Path, head: re.Pattern, aspect: str) -> None:
         self.dir, self.name = d, d.name
         self.out = d / f"{d.name}.png"
+        self.refs = props_lib.character_props(d) if head is KINDS["characters"][0] else []
         text = (d / f"{d.name}.md").read_text(encoding="utf-8")
         h = head.search(text)
         if not h:
@@ -87,6 +90,9 @@ class Job:
             neg = n.group(1) if n else neg_section(text)
             if neg:
                 self.prompt += "\n" + gba.neg_line(neg)
+        if self.refs:
+            self.prompt += "\n固定武器参考：" + "；".join(f"第{i}张参考图是{p.stem}" for i, p in enumerate(self.refs, 1))
+            self.prompt += "。只采用这些图的武器形制、构件结构、材质与配色；持有数量、左右手和持法按人物描述，同款单件母版可按规定持有多件，禁止重新设计武器。"
 
 
 def neg_section(text: str) -> str:
@@ -108,7 +114,7 @@ def neg_section(text: str) -> str:
 def run_one(j: Job, engine: str, args: argparse.Namespace) -> str:
     part = j.out.with_name(j.out.stem + ".part.png")
     if engine == ie.CODEX:
-        return ci.render(j.prompt, [], j.out, j.aspect)
+        return ci.render(j.prompt, j.refs, j.out, j.aspect)
     if engine == ie.DREAMINA:
         # 网络超时先退避重试，别一失败就退贵的 ElevenLabs（实测 2026-09-25 即梦接口 2–5s 才回头，CLI 频繁超时）
         for attempt in range(bgi.UPLOAD_RETRIES + 1):
@@ -125,7 +131,8 @@ def run_one(j: Job, engine: str, args: argparse.Namespace) -> str:
         return f"credits={cost}"
     key = el.api_key()
     gid = el.create(key, j.prompt, model=args.model, quality=args.quality,
-                    aspect=j.aspect, resolution=args.resolution, target=j.out)
+                    aspect=j.aspect, resolution=args.resolution, target=j.out,
+                    refs=[el.inline(p) for p in j.refs] or None)
     el.wait_download(key, gid, part)
     part.replace(j.out)
     return f"gid={gid}"
@@ -143,17 +150,17 @@ def main() -> int:
     ap.add_argument("--aspect", default=None, choices=bgi.RATIOS,
                     help="显式覆盖；缺省读立绘块的「比例:」行，读不到按 --kind：人物 9:16、物件 1:1")
     ap.add_argument("--engine", default=ie.AUTO, choices=ie.CHOICES,
-                    help="auto ＝ ElevenLabs → Codex（额度不够才换，follow-up 275；图片不用即梦）；显式指定只用那一家")
+                    help="auto ＝ 只用 Codex（follow-up 341；ElevenLabs 须用户允许；图片不用即梦）；显式指定只用那一家")
     ap.add_argument("--shard", default="0/1")
     ap.add_argument("--force", action="store_true")
     args = ap.parse_args()
     head, aspect, _ = KINDS[args.kind]
     root = REPO / "ai_videos" / args.drama / "2_世界观人设" / args.kind
     only = [s for s in args.only.split(",") if s]
-    dirs = sorted(d for d in root.iterdir()
-                  if d.is_dir() and (d / f"{d.name}.md").is_file()
-                  and (not only or d.name.split("_")[0] in only)
-                  and head.search((d / f"{d.name}.md").read_text(encoding="utf-8")))
+    dirs = sorted((d for d in (character_dirs(root) if args.kind == "characters" else props_lib.prop_dirs(root))
+                   if (d / f"{d.name}.md").is_file()
+                   and (not only or d.name.split("_")[0] in only)
+                   and head.search((d / f"{d.name}.md").read_text(encoding="utf-8"))), key=lambda d: d.name)
     jobs = [Job(d, head, aspect) for d in dirs]
     if args.aspect:
         for j in jobs:
@@ -180,7 +187,7 @@ def main() -> int:
                 print(f"  ✓ {j.name} {eng} {len(j.prompt)} 字 {time.time() - t0:.0f}s {tag}", flush=True)
                 ok = True
                 break
-            except (SystemExit, Exception) as e:  # noqa: BLE001 —— 额度不够才换下一家；都失败记下、继续
+            except (SystemExit, Exception) as e:  # noqa: BLE001 —— ElevenLabs 失败就换下一家（dota 066）；都失败记下、继续
                 errs.append(f"{eng}：{str(e)[:200]}")
                 print(f"  ! {j.name} {errs[-1]}", flush=True)
                 if not ie.fallback_ok(eng, e):

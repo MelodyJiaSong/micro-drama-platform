@@ -1,0 +1,92 @@
+{
+  "asset_id": "bg23",
+  "revision": "r03",
+  "verdict": "failed",
+  "review_type": "author_visual_inspection",
+  "independent_review": "not_performed",
+  "summary": "本地建模链已跑通，但本候选不满足精细模型交付要求。",
+  "blockers": [
+    {
+      "id": "Q1",
+      "finding": "参考中的多颗金属球在正、侧、背检查图中大量缺失，只剩零散片段。",
+      "evidence": [
+        "south.png",
+        "east.png",
+        "north.png"
+      ]
+    },
+    {
+      "id": "Q2",
+      "finding": "顶部细支架、中央立柱有断裂与漂浮碎片，无法作为完整实体使用。",
+      "evidence": [
+        "south.png",
+        "east.png",
+        "north.png"
+      ]
+    },
+    {
+      "id": "Q3",
+      "finding": "屋檐、墙体装饰带与基座有碎片状几何和纹理变形，近景不合格。",
+      "evidence": [
+        "south.png",
+        "east.png",
+        "north.png"
+      ]
+    }
+  ],
+  "technical_checks": {
+    "glb_import": "passed",
+    "embedded_textures": "present",
+    "target_height_m": 5.0,
+    "vertices": 262379,
+    "triangles": 233941,
+    "gltf_alpha_mode": "OPAQUE",
+    "note": "不能把球体缺失解释为 glTF 透明模式；缺损在多个角度均可见。"
+  },
+  "next_work": [
+    "核对抠图掩膜与多视图输入的一致性",
+    "对金属球和细支架采用精确几何重建并修复主体",
+    "修复后重新渲染和独立审阅，再决定批量路线"
+  ],
+  "production_accepted": false,
+  "reviewed_artifacts": [
+    {
+      "path": "bg23_r03_pbr_20261027_215154.glb",
+      "sha256": "c57cc0fedba8bd8ea0450c0adfdc10f0dac68fc4a24eed654c51c9161178d008"
+    },
+    {
+      "path": "east.png",
+      "sha256": "a8c8ac3b263d9e9aa7f9db914381099f29bec47d1922d8cf1397f175017ab463"
+    },
+    {
+      "path": "north.png",
+      "sha256": "4f3eced8eb1cacfcbc33650d415456922fd238b56e53b3fc1b729249e41a88d0"
+    },
+    {
+      "path": "perspective.png",
+      "sha256": "aff34bd5a847de9ce27cab36d0ab763772b4ffe489a38c148baa1482d4efe1d2"
+    },
+    {
+      "path": "south.png",
+      "sha256": "d67ffaa5f117c11766c6fc727154ee839d5a9de8cda0f73a0ec1bbac6c2a73d6"
+    },
+    {
+      "path": "west.png",
+      "sha256": "e094d75cec4cf8ac4efb563bdc9a9beca081c13127602d7e6fc64c9421581055"
+    }
+  ],
+  "reference_hashes": {
+    "front": {
+      "path": "2_世界观人设/background/近卫_sentinel/bg23_奎尔瑟兰的密室/views/bg23_奎尔瑟兰的密室_front.png",
+      "sha256": "391e65e8d896b118812f75fcc325511cdec1f8ce95d211f57da1417c7f8c3f56"
+    },
+    "side": {
+      "path": "2_世界观人设/background/近卫_sentinel/bg23_奎尔瑟兰的密室/views/bg23_奎尔瑟兰的密室_side.png",
+      "sha256": "81273b01ea3bc5db341b84753d38bc6b65909daf0ee6b5b5866b7d95644eb772"
+    },
+    "back": {
+      "path": "2_世界观人设/background/近卫_sentinel/bg23_奎尔瑟兰的密室/views/bg23_奎尔瑟兰的密室_back.png",
+      "sha256": "30617255803725db9a6e0aa2aa206cadfe163b92c08df4174325778adc59313b"
+    }
+  }
+}

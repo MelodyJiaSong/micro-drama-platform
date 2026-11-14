@@ -1,0 +1,515 @@
+1
+00:00:00,600 --> 00:00:01,807
+When we train an AI
+
+2
+00:00:01,807 --> 00:00:04,157
+we often ask for something like this:
+
+3
+00:00:04,157 --> 00:00:05,681
+be as helpful as you can
+
+4
+00:00:05,681 --> 00:00:07,904
+but keep harm below a certain line.
+
+5
+00:00:08,254 --> 00:00:10,230
+"Do your best" and "never cross
+
+6
+00:00:10,230 --> 00:00:12,397
+this line" are different requests.
+
+7
+00:00:12,397 --> 00:00:14,246
+How does a model follow both?
+
+8
+00:00:14,596 --> 00:00:16,289
+Over two hundred years ago
+
+9
+00:00:16,289 --> 00:00:17,983
+the mathematician Lagrange
+
+10
+00:00:17,983 --> 00:00:19,220
+came up with a way.
+
+11
+00:00:19,220 --> 00:00:21,565
+It's called the Lagrange multiplier.
+
+12
+00:00:29,867 --> 00:00:31,824
+Making one thing as good as possible
+
+13
+00:00:31,824 --> 00:00:33,617
+without crossing a line is called
+
+14
+00:00:33,617 --> 00:00:34,976
+constrained optimization.
+
+15
+00:00:35,326 --> 00:00:37,835
+Lagrange's idea: don't build a wall.
+
+16
+00:00:37,835 --> 00:00:39,717
+Put a price on crossing it.
+
+17
+00:00:40,067 --> 00:00:41,182
+Go a little over
+
+18
+00:00:41,182 --> 00:00:42,994
+and you lose a few points.
+
+19
+00:00:42,994 --> 00:00:45,572
+That price is the Lagrange multiplier
+
+20
+00:00:45,572 --> 00:00:46,826
+usually written λ.
+
+21
+00:00:47,176 --> 00:00:48,608
+Say a parent allows one
+
+22
+00:00:48,608 --> 00:00:50,165
+hour of video games a day
+
+23
+00:00:50,165 --> 00:00:52,344
+and the kid keeps sneaking in more.
+
+24
+00:00:52,694 --> 00:00:54,880
+So the parent tries a new deal:
+
+25
+00:00:54,880 --> 00:00:56,573
+every extra minute costs
+
+26
+00:00:56,573 --> 00:00:58,054
+a dollar of allowance
+
+27
+00:00:58,054 --> 00:01:00,381
+and every minute under earns one.
+
+28
+00:01:00,731 --> 00:01:01,965
+Set the price too low
+
+29
+00:01:01,965 --> 00:01:03,668
+and the kid goes over anyway.
+
+30
+00:01:03,668 --> 00:01:06,135
+Too high, and he stops playing altogether.
+
+31
+00:01:06,485 --> 00:01:07,783
+Get it just right
+
+32
+00:01:07,783 --> 00:01:09,234
+and he stops around
+
+33
+00:01:09,234 --> 00:01:11,448
+the one-hour mark on his own.
+
+34
+00:01:11,448 --> 00:01:13,510
+That just-right price is λ.
+
+35
+00:01:17,633 --> 00:01:19,549
+Let's try a small experiment.
+
+36
+00:01:19,549 --> 00:01:21,333
+Here's a map of a mountain.
+
+37
+00:01:21,333 --> 00:01:23,117
+Each ring is a contour line
+
+38
+00:01:23,117 --> 00:01:25,364
+the same height all the way round.
+
+39
+00:01:25,714 --> 00:01:28,315
+Our job is to find the highest spot.
+
+40
+00:01:28,665 --> 00:01:29,843
+But there's a rule:
+
+41
+00:01:29,843 --> 00:01:31,952
+stay inside the fence around camp.
+
+42
+00:01:31,952 --> 00:01:33,751
+And the summit is outside it.
+
+43
+00:01:34,101 --> 00:01:35,738
+So we do it Lagrange's way:
+
+44
+00:01:35,738 --> 00:01:36,889
+take the fence down
+
+45
+00:01:36,889 --> 00:01:38,647
+and charge λ points for every
+
+46
+00:01:38,647 --> 00:01:40,708
+step away from the center of camp.
+
+47
+00:01:41,058 --> 00:01:43,422
+Then find the spot with the most height
+
+48
+00:01:43,422 --> 00:01:44,756
+left after the charge.
+
+49
+00:01:44,756 --> 00:01:45,847
+This dot marks it.
+
+50
+00:01:46,197 --> 00:01:48,446
+Start with a price of 0. No charge
+
+51
+00:01:48,446 --> 00:01:50,959
+so the dot runs straight to the summit
+
+52
+00:01:50,959 --> 00:01:52,613
+right out past the fence.
+
+53
+00:01:52,963 --> 00:01:54,432
+So we raise the price
+
+54
+00:01:54,432 --> 00:01:56,811
+and the farther outside the dot is
+
+55
+00:01:56,811 --> 00:01:58,280
+the more we raise it.
+
+56
+00:01:58,630 --> 00:02:01,812
+At a price of 1.5, the dot backs up a bit
+
+57
+00:02:01,812 --> 00:02:03,597
+but it's still outside.
+
+58
+00:02:03,597 --> 00:02:06,235
+Raise it again, it backs up again.
+
+59
+00:02:06,585 --> 00:02:09,208
+At 3, the dot stops right on the fence.
+
+60
+00:02:09,558 --> 00:02:11,274
+That's exactly the highest
+
+61
+00:02:11,274 --> 00:02:13,386
+you can reach with the fence up:
+
+62
+00:02:13,386 --> 00:02:14,508
+a height of 7.75.
+
+63
+00:02:14,858 --> 00:02:15,981
+Push the price to 4
+
+64
+00:02:15,981 --> 00:02:18,285
+and the dot pulls back inside the fence
+
+65
+00:02:18,285 --> 00:02:19,998
+giving up height for nothing.
+
+66
+00:02:20,348 --> 00:02:22,143
+Now look at that just-right point.
+
+67
+00:02:22,143 --> 00:02:23,411
+The contour line through
+
+68
+00:02:23,411 --> 00:02:24,731
+it just touches the fence
+
+69
+00:02:24,731 --> 00:02:26,104
+so walking along the fence
+
+70
+00:02:26,104 --> 00:02:27,371
+only takes you downhill.
+
+71
+00:02:27,721 --> 00:02:29,458
+That's the Lagrange condition:
+
+72
+00:02:29,458 --> 00:02:30,384
+at the best spot
+
+73
+00:02:30,384 --> 00:02:32,005
+the steepest way uphill goes
+
+74
+00:02:32,005 --> 00:02:33,800
+straight out through the fence.
+
+75
+00:02:37,933 --> 00:02:39,017
+You might think λ
+
+76
+00:02:39,017 --> 00:02:40,610
+is just a knob we turned.
+
+77
+00:02:40,610 --> 00:02:42,204
+But it also tells you how
+
+78
+00:02:42,204 --> 00:02:43,606
+expensive the rule is.
+
+79
+00:02:43,956 --> 00:02:46,452
+Make the fence a tiny bit bigger
+
+80
+00:02:46,452 --> 00:02:48,636
+from a radius of 1.5 to 1.6.
+
+81
+00:02:48,986 --> 00:02:50,926
+The highest you can reach
+
+82
+00:02:50,926 --> 00:02:52,711
+goes from 7.75 to 8.04.
+
+83
+00:02:52,711 --> 00:02:54,883
+That's a gain of about three
+
+84
+00:02:54,883 --> 00:02:56,668
+times the extra radius.
+
+85
+00:02:57,018 --> 00:02:58,498
+So a λ of three means:
+
+86
+00:02:58,498 --> 00:03:00,181
+loosen the fence a little
+
+87
+00:03:00,181 --> 00:03:03,007
+and you climb about three times that much.
+
+88
+00:03:03,357 --> 00:03:05,623
+Economists call this a shadow price.
+
+89
+00:03:05,973 --> 00:03:06,973
+And if the summit
+
+90
+00:03:06,973 --> 00:03:08,679
+were already inside the fence
+
+91
+00:03:08,679 --> 00:03:09,561
+λ would be zero
+
+92
+00:03:09,561 --> 00:03:11,032
+because the rule wouldn't
+
+93
+00:03:11,032 --> 00:03:12,208
+be holding you back.
+
+94
+00:03:12,558 --> 00:03:14,297
+So λ tells you which rules
+
+95
+00:03:14,297 --> 00:03:16,169
+are really pinning you down.
+
+96
+00:03:20,300 --> 00:03:22,868
+Back to where we started. In 2023
+
+97
+00:03:22,868 --> 00:03:25,670
+a team at Peking University proposed
+
+98
+00:03:25,670 --> 00:03:28,083
+a way to train language models.
+
+99
+00:03:28,083 --> 00:03:30,029
+They called it Safe RLHF.
+
+100
+00:03:30,379 --> 00:03:31,827
+One scoring model rates
+
+101
+00:03:31,827 --> 00:03:33,338
+how helpful an answer is
+
+102
+00:03:33,338 --> 00:03:34,597
+another how harmful.
+
+103
+00:03:34,947 --> 00:03:36,975
+We want harm to stay under the line
+
+104
+00:03:36,975 --> 00:03:38,772
+and as much help as we can get.
+
+105
+00:03:39,122 --> 00:03:41,183
+They used a Lagrange multiplier:
+
+106
+00:03:41,183 --> 00:03:42,857
+take the helpfulness score
+
+107
+00:03:42,857 --> 00:03:45,176
+and subtract λ times the harm score.
+
+108
+00:03:45,526 --> 00:03:48,011
+And λ adjusts itself during training.
+
+109
+00:03:48,011 --> 00:03:50,631
+When harm goes over the line, λ goes up
+
+110
+00:03:50,631 --> 00:03:52,445
+and safety counts for more.
+
+111
+00:03:52,795 --> 00:03:55,400
+When harm stays under, λ comes back down
+
+112
+00:03:55,400 --> 00:03:57,679
+and the model is free to help more.
+
+113
+00:03:57,679 --> 00:03:59,893
+Just like the dot on our mountain.
+
+114
+00:04:00,243 --> 00:04:02,860
+Prices on rules show up all over AI.
+
+115
+00:04:03,210 --> 00:04:06,224
+Take regularization. It puts a price on complexity
+
+116
+00:04:06,224 --> 00:04:08,273
+so the model doesn't just memorize
+
+117
+00:04:08,273 --> 00:04:10,021
+the examples it's trained on.
+
+118
+00:04:10,371 --> 00:04:12,773
+And chatbots often pay a price for drifting
+
+119
+00:04:12,773 --> 00:04:14,673
+too far from their original model.
+
+120
+00:04:16,200 --> 00:04:17,537
+So, to sum it up:
+
+121
+00:04:17,537 --> 00:04:19,189
+a Lagrange multiplier
+
+122
+00:04:19,189 --> 00:04:21,312
+is a price on a constraint.
+
+123
+00:04:21,662 --> 00:04:23,135
+Get the price just right
+
+124
+00:04:23,135 --> 00:04:24,731
+and you don't need a wall.
+
+125
+00:04:24,731 --> 00:04:26,572
+You'll stop right at the line.
+
+126
+00:04:26,922 --> 00:04:28,284
+Next time you want it all
+
+127
+00:04:28,284 --> 00:04:30,955
+but there's a line you can't cross, ask yourself:
+
+128
+00:04:30,955 --> 00:04:32,917
+what is that line really costing me?
+
+129
+00:04:33,267 --> 00:04:35,163
+Up next: gradient descent.

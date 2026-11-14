@@ -1,0 +1,154 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  #chart, #land { position: absolute; left: 80px; top: 190px; }
+  .tag { position: absolute; left: var(--mx); top: 140px; }
+  .knobs { position: absolute; left: 1150px; top: 170px; display: flex; gap: 70px; }
+  .side { position: absolute; left: 1150px; width: 700px; }
+  .ttl { top: 480px; }
+  .ttl .t { position: absolute; top: 0; left: 0; white-space: nowrap; }
+  html[lang=en] .ttl .t { font-size: 64px; }
+  html[lang=en] .ttl #tt { font-size: 58px; }
+  .ttl .t .h2 { display: block; margin-top: 4px; }
+  .sc { top: 610px; }
+  .sc .s { position: absolute; top: 0; left: 0; white-space: nowrap; }
+  .sc .num { font-size: 120px; font-weight: 700; line-height: 1; margin-top: 8px; font-variant-numeric: tabular-nums; }
+  .sc .h2 { margin-top: 14px; }
+  .rows { top: 620px; }
+  .rows .row { display: grid; grid-template-columns: 300px auto; align-items: baseline; padding: 10px 0; }
+  .rows .row b { font-size: var(--fs-h2); font-weight: 700; }
+</style>
+
+<div class="eb eyebrow" data-zh="02 · 做个小实验" data-en="02 · A small experiment"></div>
+<svg id="chart"></svg>
+<svg id="land"></svg>
+<div class="tag eyebrow" id="tag" data-zh="示意数据" data-en="Made-up data"></div>
+<div class="knobs" id="knobs"><div id="k1"></div><div id="k2"></div></div>
+
+<div class="side ttl">
+  <div class="h1 t" id="t1" data-zh='第一种：<span class="c-bad">偏低</span>' data-en='Try 1: <span class="c-bad">too low</span>'></div>
+  <div class="h1 t" id="t2" data-zh='第二种：<span class="c-bad">太陡</span>' data-en='Try 2: <span class="c-bad">too steep</span>'></div>
+  <div class="h1 t" id="tc" data-zh="不平方：正负抵消" data-en="They cancel out"></div>
+  <div class="h1 t" id="tsq" data-zh="平方：全是正数" data-en="Squared: all positive"></div>
+  <div class="h1 t" id="tmse" data-zh='均方误差<span class="h2 sub">Mean squared error</span>' data-en='Mean squared error'></div>
+  <div class="h1 t" id="t3" data-zh='第三种：<span class="c-good">贴合</span>' data-en='Try 3: <span class="c-good">close</span>'></div>
+  <div class="h1 t" id="tcmp" data-zh="三种拧法对比" data-en="Compare all three"></div>
+  <div class="h1 t" id="tl" data-zh="分数地形图" data-en="A map of scores"></div>
+  <div class="h1 t" id="t0" data-zh='最低损失 <span class="c-bad">≠ 0</span>' data-en='Lowest loss <span class="c-bad">≠ 0</span>'></div>
+  <div class="h1 t" id="tz" data-zh="不求零分，求最低" data-en="Lowest, not zero"></div>
+  <div class="h1 t" id="tt" data-zh='训练 = 找<span class="c-good">最低点</span>' data-en='Find the <span class="c-good">lowest point</span>'></div>
+</div>
+<div class="side sc">
+  <div class="s" id="sA"><div class="eyebrow" data-zh="平均损失" data-en="Average loss"></div><div class="num" id="vA">—</div></div>
+  <div class="s" id="sRaw"><div class="eyebrow" data-zh="平均误差" data-en="Average error"></div><div class="num sub" id="vRaw">—</div></div>
+  <div class="s" id="sPen"><div class="h2" data-zh='差 2 → 罚 <span class="c-bad">4</span>' data-en='Off by 2 → <span class="c-bad">4</span>'></div>
+    <div class="h2" data-zh='差 8 → 罚 <span class="c-bad">64</span>' data-en='Off by 8 → <span class="c-bad">64</span>'></div></div>
+  <div class="s" id="sLeg"><div class="h2" data-zh='颜色越深 = 分越高' data-en='Darker = higher score'></div></div>
+  <div class="s" id="sBest"><div class="eyebrow" data-zh="最低损失" data-en="Lowest loss"></div><div class="num c-good" id="vBest">—</div></div>
+</div>
+<div class="side h2 ink2" id="noise" style="top:800px" data-zh="堵车、绕路" data-en="Traffic + detours"></div>
+<div class="side rows" id="rows">
+  <div class="row" id="r1"><span class="h2" data-zh="①" data-en="Try 1"></span><b>78</b></div>
+  <div class="row" id="r2"><span class="h2" data-zh="②" data-en="Try 2"></span><b>13.4</b></div>
+  <div class="row" id="r3"><span class="h2 c-good" data-zh="③" data-en="Try 3"></span><b class="c-good">2.19</b></div>
+</div>
+
+<script>
+const T = EDU.tl, A = D.sets.A, B = D.sets.B, C = D.sets.C, BEST = D.best, i5 = D.i5, R5 = D.rides[i5];
+const CH = makeChart("#chart", { W: 1000, H: 690, yMax: 56 });
+const K1 = knob("#k1", { label: EDU.tr("起步价", "Starting fare"), min: 0, max: 20, value: 0, size: 150 });
+const K2 = knob("#k2", { label: EDU.tr("每公里", "Per km"), min: 0, max: 5, value: 0, size: 150 });
+CH.set(A.base, A.per_km);
+// 五公里那趟的标注
+const pred5 = A.base + A.per_km * R5.km;
+const nReal = CH.text(EDU.tr(`实际 ${R5.fare}`, `Actual $${R5.fare}`), [R5.km, R5.fare], 0, -48, { anchor: "middle" });
+const nGuess = CH.text(EDU.tr(`猜 ${pred5}`, `Guess $${pred5}`), [R5.km, pred5], 22, 44, { col: "--accent-text" });
+const nGap = CH.text(EDU.tr("差 8", "$8"), [R5.km, (R5.fare + pred5) / 2], 22, 10, { col: "--d-bad" });
+const nSq = CH.text("8² = 64", [R5.km, R5.fare], -4 * CH.ky - 24, -16, { col: "--d-bad", anchor: "middle", size: 34 });
+// 第二种：短途猜少、长途猜多
+const nLo = CH.text(EDU.tr("猜少了 −", "Too low −"), [D.rides[1].km, D.rides[1].fare], -30, -64, { col: "--d-bad" });
+const nHi = CH.text(EDU.tr("猜多了 +", "Too high +"), [D.rides[11].km, B.base + B.per_km * D.rides[11].km], -24, 0, { col: "--d-bad", anchor: "end" });
+// 地形图
+const LD = makeLand("#land", { W: 1000, H: 690 });
+const dA = LD.dot(A.base, A.per_km), dB = LD.dot(B.base, B.per_km), dC = LD.dot(C.base, C.per_km);
+const tA = LD.text(EDU.tr("① 78", "1 · 78"), A.base, A.per_km, 26, 10), tB = LD.text(EDU.tr("② 13.4", "2 · 13.4"), B.base, B.per_km, 26, 10);
+const tC = LD.text(EDU.tr("③ 2.19", "3 · 2.19"), C.base, C.per_km, -26, 36, { anchor: "end" });
+const dBest = LD.over.append("circle").attr("cx", LD.x(BEST.base)).attr("cy", LD.y(BEST.per_km)).attr("r", 30).attr("fill", "none").attr("stroke", css("--d-good")).attr("stroke-width", 7).node();
+LD.over.node().appendChild(dC);   // 第三种的黑点留在绿圈上层，看得见
+const tBest = LD.text(EDU.tr("最低点", "Lowest · 1.97"), BEST.base, BEST.per_km, 30, -24, { col: "--d-good", size: 34 });
+
+// l32：离最好那条线最远的三趟（随机波动最大）
+const res = D.rides.map((r, i) => ({ i, e: Math.abs(BEST.base + BEST.per_km * r.km - r.fare) })).sort((a, b) => b.e - a.e).slice(0, 3).map(o => o.i);
+const halo = res.map(i => CH.g.append("circle").attr("cx", CH.x(D.rides[i].km)).attr("cy", CH.y(D.rides[i].fare)).attr("r", 26)
+  .attr("fill", "none").attr("stroke", css("--d-bad")).attr("stroke-width", 4).node());
+const sqOthers = CH.sqs.filter((_, i) => i !== i5), errOthers = CH.errs.filter((_, i) => i !== i5), ptOthers = CH.pts.filter((_, i) => i !== i5);
+gsap.set(["#chart", CH.line, ...CH.errs, ...CH.sqs, CH.xt, CH.yt, nReal, nGuess, nGap, nSq, nLo, nHi, "#tag", "#knobs",
+          "#t1", "#t2", "#tc", "#tsq", "#tmse", "#t3", "#tcmp", "#tl", "#tt", "#t0", "#tz", "#noise", ...halo, "#sA", "#sRaw", "#sPen", "#sLeg", "#sBest", "#rows", "#rows .row",
+          "#land", LD.xt, LD.yt, dA, dB, dC, tA, tB, tC, dBest, tBest], { opacity: 0 });
+const VA = document.getElementById("vA"), VR = document.getElementById("vRaw"), VB = document.getElementById("vBest");
+EDU.in(".eb", 0);
+// l11 十二趟打车：横着距离、竖着车费，示意
+EDU.in("#chart", EDU.t("l11", .05), { y: 0, d: 1 }); EDU.in(CH.xt, EDU.t("l11", .45)); EDU.in(CH.yt, EDU.t("l11", .6)); EDU.in("#tag", EDU.t("l11", .8));
+// l12 一条直线、两个旋钮
+EDU.in("#knobs", EDU.t("l12", .3));
+// l13 第一种：起步 5、每公里 2，整条线偏低
+EDU.in("#t1", EDU.t("l13", .02));
+K1.set(A.base, EDU.t("l13", .12), .8, 0); K2.set(A.per_km, EDU.t("l13", .22), .8, 0);
+CH.turn(A.base, 0, A.base, A.per_km, EDU.t("l13", .22), .8); EDU.in(CH.line, EDU.t("l13", .15));
+// l14 五公里那趟：实际 23、猜 15、差 8
+EDU.dim(ptOthers, EDU.t("l14", .05), .25); EDU.in(nReal, EDU.t("l14", .2)); EDU.in(nGuess, EDU.t("l14", .45));
+EDU.in(CH.errs[i5], EDU.t("l14", .65)); EDU.in(nGap, EDU.t("l14", .7));
+// l15 平方：8 × 8 = 64，红方块
+EDU.in(CH.sqs[i5], EDU.t("l15", .3)); EDU.in(nSq, EDU.t("l15", .45));
+// l16 十二趟都这么算，平均 → 78
+EDU.out([nReal, nGuess, nGap, nSq], EDU.t("l16")); EDU.dim(ptOthers, EDU.t("l16"), 1);
+EDU.in(errOthers, EDU.t("l16", .1), { stagger: .04 }); EDU.in(sqOthers, EDU.t("l16", .35), { stagger: .04 });
+EDU.in("#sA", EDU.t("l16", .7)); countTo(VA, EDU.t("l16", .72), 0, A.mse, .8, v => v.toFixed(0));
+// l17 第二种：起步 4、每公里 3.5，太陡
+EDU.out(["#t1", "#sA", ...CH.sqs], EDU.t("l17")); EDU.in("#t2", EDU.t("l17", .05));
+K1.set(B.base, EDU.t("l17", .1), .8, A.base); K2.set(B.per_km, EDU.t("l17", .2), .8, A.per_km);
+CH.turn(A.base, A.per_km, B.base, B.per_km, EDU.t("l17", .15), .9);
+// l18 不平方、直接平均：一正一负抵消
+EDU.out("#t2", EDU.t("l18")); EDU.in("#tc", EDU.t("l18", .03));
+EDU.in(nLo, EDU.t("l18", .35)); EDU.in(nHi, EDU.t("l18", .55));
+// l19 直接平均 ≈ −0.3，看着几乎没错
+EDU.in("#sRaw", EDU.t("l19", .02)); countTo(VR, EDU.t("l19", .05), 0, B.mean_err, .6, v => (v < 0 ? "−" : "") + EDU.tr("", "$") + Math.abs(v).toFixed(2));
+// l20 平方：全是正数
+EDU.out(["#tc", "#sRaw", nLo, nHi], EDU.t("l20")); EDU.in("#tsq", EDU.t("l20", .03)); EDU.in(CH.sqs, EDU.t("l20", .2), { stagger: .03 });
+// l21 差 2 罚 4，差 8 罚 64
+EDU.in("#sPen", EDU.t("l21", .2));
+// l22 平方再平均 → 13.4
+EDU.out("#sPen", EDU.t("l22")); EDU.in("#sA", EDU.t("l22", .1)); countTo(VA, EDU.t("l22", .15), 0, B.mse, .8, v => v.toFixed(1));
+// l23 均方误差
+EDU.out(["#tsq", "#sA"], EDU.t("l23")); EDU.in("#tmse", EDU.t("l23", .05));
+// l24 第三种：起步 10、每公里 2.5 → 2.19
+EDU.out("#tmse", EDU.t("l24")); EDU.in("#t3", EDU.t("l24", .03));
+K1.set(C.base, EDU.t("l24", .1), .8, B.base); K2.set(C.per_km, EDU.t("l24", .2), .8, B.per_km);
+CH.turn(B.base, B.per_km, C.base, C.per_km, EDU.t("l24", .15), .9);
+EDU.in("#sA", EDU.t("l24", .7)); countTo(VA, EDU.t("l24", .72), 0, C.mse, .6, v => v.toFixed(2));
+// l25 三个分一比
+EDU.out(["#sA", "#t3"], EDU.t("l25")); EDU.in("#tcmp", EDU.t("l25", .03)); EDU.in("#rows", EDU.t("l25"), { y: 0, d: .01 }); EDU.in(["#r1", "#r2", "#r3"], EDU.t("l25", .05), { stagger: .18 }); EDU.dim("#knobs", EDU.t("l25"), .25);
+// l26 所有拧法都算一遍 → 地形图
+EDU.out(["#chart", "#tag", "#tcmp", "#rows"], EDU.t("l26", .25)); EDU.in("#tl", EDU.t("l26", .4));
+EDU.in("#land", EDU.t("l26", .45), { y: 0, d: 1.2 });
+// l27 横轴起步价、纵轴每公里，越深分越高
+EDU.in(LD.xt, EDU.t("l27", .05)); EDU.in(LD.yt, EDU.t("l27", .3)); EDU.in("#sLeg", EDU.t("l27", .6));
+// l28 三组拧法在图上
+EDU.out("#sLeg", EDU.t("l28")); EDU.dim("#knobs", EDU.t("l28"), 1); EDU.in([dA, tA], EDU.t("l28", .3)); EDU.in([dB, tB], EDU.t("l28", .5)); EDU.in([dC, tC], EDU.t("l28", .72));
+// l29 最低点：10.2、2.54、1.97
+EDU.in([dBest, tBest], EDU.t("l29", .1));
+K1.set(BEST.base, EDU.t("l29", .2), .6, C.base); K2.set(BEST.per_km, EDU.t("l29", .45), .6, C.per_km);
+EDU.in("#sBest", EDU.t("l29", .7)); countTo(VB, EDU.t("l29", .72), 0, BEST.mse, .6, v => v.toFixed(2));
+// l30 训练 = 找最低点
+EDU.out("#tl", EDU.t("l30", .35)); EDU.in("#tt", EDU.t("l30", .4));
+EDU.dim([dA, dB, dC], EDU.t("l30", .4), .3);
+T.to(dBest, { attr: { r: 26 }, duration: .4, yoyo: true, repeat: 1, ease: "power2.inOut" }, EDU.t("l30", .55));
+// l31 最低点也不是零：回到车费图，看最好的那条线（方块小但还在）
+EDU.out(["#land", "#tt", "#tag"], EDU.t("l31"));
+CH.turn(C.base, C.per_km, BEST.base, BEST.per_km, EDU.t("l31"), .01);
+EDU.in("#chart", EDU.t("l31", .1), { y: 0, d: .8 }); EDU.in("#t0", EDU.t("l31", .25));
+// l32 堵车、绕路：一条直线不可能每趟都猜中
+EDU.in(halo, EDU.t("l32", .3), { stagger: .12 }); EDU.in("#noise", EDU.t("l32", .3));
+// l33 不求零分，只求尽量低
+EDU.out(["#t0", "#noise", "#sBest"], EDU.t("l33")); EDU.in("#tz", EDU.t("l33", .05));
+EDU.out(["#chart", ...halo, "#tz", "#knobs", ".eb"], EDU.S.duration - .5);
+</script>

@@ -1,0 +1,365 @@
+{
+ "voice": {
+  "reference": "edu_videos/_shared/voice/host_m_voxcpm.wav",
+  "reference_text": "大家好，欢迎来到 AI 高频词。每一期，我们只讲清楚一个词：它解决什么问题，怎么理解它，以及它在现实里意味着什么。"
+ },
+ "items": [
+  {
+   "id": "l01",
+   "text": "Remember our two-knob taxi-fare machine? It learned how fares change with distance just fine.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l02",
+   "text": "But fares also depend on the time of day: rush hour costs more, and late night a little more too.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l03",
+   "text": "It can't learn that, because all it can draw is a straight line.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l04",
+   "text": "So how does a machine learn a pattern that bends? With a neural network.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l05",
+   "text": "Last time, turning the knobs was like walking downhill blindfolded, always stepping where the score drops fastest.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l06",
+   "text": "Today we'll build a tiny network that learns the bend, see why more layers help, and meet AlexNet.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l07",
+   "text": "Here's some made-up data: the same five-kilometer ride, forty-eight times, at different hours of the day.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l08",
+   "text": "Daytime rides cost about twenty-three dollars, just what our two-knob machine charges.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l09",
+   "text": "Around eight a.m. and six p.m. it spikes, and late at night it's a bit pricier.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l10",
+   "text": "Same two knobs, one for height and one for slope, but now we feed it the time, not the distance.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l11",
+   "text": "However you turn them, the best you get is a nearly flat line through the middle.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l12",
+   "text": "It undercharges at rush hour and overcharges by day. Its loss, the score for how wrong it is, can't get below eleven point five.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l13",
+   "text": "The knobs aren't the problem: this machine only draws straight lines, and the pattern bends.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l14",
+   "text": "The fix isn't one big machine. It's lots of simple little ones.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l15",
+   "text": "Each unit still has two knobs and draws a line, plus one rule: anything below zero becomes zero.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l16",
+   "text": "Its line stays flat, then bends upward.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l17",
+   "text": "The two knobs set where it bends and how steep it gets.",
+   "seeds": [
+    2
+   ]
+  },
+  {
+   "id": "l18",
+   "text": "One bend isn't enough, so add more units that bend in different spots.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l19",
+   "text": "Add them up, and you can build bumps, steps, almost any curve.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l20",
+   "text": "Our network has twelve units side by side in the first layer, and one unit in the second.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l21",
+   "text": "That unit scales each bent line with a knob, adds them up, then one last knob shifts the total. That's the fare.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l22",
+   "text": "Thirty-seven knobs in all.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l23",
+   "text": "Layers of little units like this are what we call a neural network.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l24",
+   "text": "The name comes from neurons in the brain, but don't take that too seriously.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l25",
+   "text": "To turn all thirty-seven, we use last episode's trick, nudging every knob whichever way drops the loss fastest.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l26",
+   "text": "Our curve starts as a random squiggle, and step by step it bends toward the peaks.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l27",
+   "text": "After ten thousand steps, the loss is down to zero point two six. The best straight line never got below eleven point five.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l28",
+   "text": "Rush hours and late nights, it catches them all.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l29",
+   "text": "And every corner on this curve is one little unit making its bend.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l30",
+   "text": "By the way, there's a much faster trick for finding which way to turn each knob. More on that next time.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l31",
+   "text": "So far, we've put units side by side, each adding one bend.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l32",
+   "text": "Now stack them, so each layer folds the line it gets from the layer before, like folding paper.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l33",
+   "text": "For example, two units per layer can fold a slanted line exactly in half.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l34",
+   "text": "One layer makes two straight pieces, two layers make four, and in this example each new layer doubles that.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l35",
+   "text": "So ten units side by side give at most eleven pieces. Stacked five deep, they can give thirty-two.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l36",
+   "text": "Later layers reuse what earlier ones already folded.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l37",
+   "text": "The deeper the stack, the more complex the shapes the same units can build.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l38",
+   "text": "That's the \"deep\" in deep learning.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l39",
+   "text": "In twenty twelve, three researchers at the University of Toronto trained a very deep neural network.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l40",
+   "text": "Their network became known as AlexNet.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l41",
+   "text": "It had eight layers and sixty million knobs. It learned a thousand categories from one point two million photos.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l42",
+   "text": "At that year's ImageNet contest, it got five guesses per picture, and only missed if all five were wrong.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l43",
+   "text": "The version they entered got fifteen point three percent wrong. The runner-up got twenty-six point two.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l44",
+   "text": "Nobody told it what to look for, yet its first layer learned to spot stripes at every angle, and patches of color.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l45",
+   "text": "Later layers combined those into more and more complex patterns.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l46",
+   "text": "Removing any middle layer made its first-guess accuracy drop about two percentage points.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l47",
+   "text": "As the paper put it, \"the depth really is important.\"",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l48",
+   "text": "So a neural network is just simple little units with knobs, stacked layer on layer.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l49",
+   "text": "Stack them deep enough, and they can recognize really complicated things.",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l50",
+   "text": "Thirty-seven knobs, we can test one by one. But sixty million? How do you find which way to turn them all?",
+   "seeds": [
+    1
+   ]
+  },
+  {
+   "id": "l51",
+   "text": "That's backpropagation, coming up next time.",
+   "seeds": [
+    1
+   ]
+  }
+ ]
+}

@@ -1,7 +1,3 @@
-# 《荒野生活》系列 · 合并后的完整意图（raw_prompt + 全部 follow-ups）
-
-> 派生文件，由 `raw_prompt.md` + `follow_ups/*.md` 按时序拼成。改动请改源文件后重生成。
-
 # 《荒野生活》系列 · 原始请求
 
 > 本系列的 spec 目录在第一次请求**之后**才建立，所以原始请求登记在
@@ -15,10 +11,11 @@
 
 单片级意图仍落各自的 `specs/ai_video/hy{N}/`；本目录只装系列级的。
 
+# 《荒野生活》系列 · 后续指令日志 · 2026-09
+
+> 本目录是**系列级**（跨片）意图的落点。单片意图仍落 `specs/ai_video/hy{N}/`。
 
 ---
-
-# 后续指令（按时序）
 
 ## 001 — 2026-09-12 — 二十部片单与元素系统
 
@@ -186,3 +183,293 @@ hy1 / hy2 进表但标「已锁定 · 不回溯」；新增讨论入口与元素
 恒定符号转移到五样（签名定帧 / 片名格式 / 无人声 / 14 镜骨架 / 火）+ 统一色域；
 长线伏笔升级为「痕迹人链」（每部的人留下的东西是另一部的人看见的痕迹）；
 连带改写 hy11 / hy16 / hy18 三部，其余十七部不受影响。
+
+---
+
+## 009 — 2026-11-08 18:21:24 — migrate-to-three-module-v1
+
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/README.md
+>   - ai_videos/huangye_shenghuo/workflow.json
+>   - ai_videos/huangye_shenghuo/bible.md
+> severity: high
+
+### 指令
+
+荒野生活这部系列剧已经过期了，用最新的标准更新一下，就用 Portal Travel（chuanyue_yiri）的标准
+
+### 摘要
+
+系列改为 three-module-v1 连续剧片种（照 Portal Travel 结构）：旧 hy1–hy4 与提案移入 _legacy/ 只作历史；新建 README（Vision 草稿待用户认可）、workflow.json（含出片前审查闸门）、bible.md 模板库 v0、topics.md、2_世界观人设/series.md
+
+---
+
+## 010 — 2026-11-08 18:36:11 — protagonist-look-candidates
+
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/2_世界观人设/characters
+> severity: medium
+
+### 指令
+
+可以（认可 Vision 草稿与第一集雨林重做的建议）；先弄个好点的主人公：中美混血的男子，要有东亚儒雅的长相
+
+### 摘要
+
+Vision 草稿与 ep01 雨林获用户认可；新建主角 c1（中美混血男子、东亚儒雅长相），Codex 出长相候选供用户选
+
+---
+
+## 012 — 2026-11-08 18:50:19 — ten-protagonist-candidates-sheets
+
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/2_世界观人设/characters/c1_主角/candidates/v2
+> severity: medium
+
+### 指令
+
+生成10个人让我选，分别是正面、侧面、背面、各种表情的照片，做好了给我 url 我打开看
+
+### 摘要
+
+主角候选扩到 10 人（A–D 沿用 + E–J 新出）：每人定妆照、正侧背三视图、4 张表情（专注 / 满足的笑 / 疲惫 / 警觉），Codex 出图，做成可打开的对比页给用户选
+
+---
+
+## 011 — 2026-11-08 18:37:29 — genre-research-flow-and-hooks
+
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/0_research/parts
+> severity: low
+
+### 指令
+
+同时 research 一下其他荒野求生的视频都是怎么个流程做的，有哪些吸引人的元素我们可以加入进来
+
+### 摘要
+
+同类荒野建造/求生视频调研（流程结构、吸引元素、观众吐槽与 AI 穿帮），写 0_research/parts/h01，结论再提给用户决定哪些进 bible
+
+---
+
+## 014 — 2026-11-08 19:38:57 — adopt-h01-recommendations
+
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/bible.md
+>   - ai_videos/huangye_shenghuo/README.md
+> severity: medium
+
+### 指令
+
+就按照你的建议来（同类视频调研 h01 的建议写进 bible：可直接加的全加；四条冲突由代理定）
+
+### 摘要
+
+h01 §5 建议落 bible/README：开场 15 秒亮钟、随身物清单、做饭小段 20–40 秒、合段 20–25% 屋内小仪式与窗光外景、秘密感、手部与内景布局审查、身体跟天气走、只取倒木落石、默认不配乐、睡前节奏；冲突四条代理定：成品一闪采用、跨日不采用（改雨中一滴不漏）、温柔挪开小动物采用、默认关闭 CC 字幕采用
+
+---
+
+## 013 — 2026-11-08 19:15:13 — protagonist-round3-from-BDI
+
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/2_世界观人设/characters/c1_主角/candidates/v3
+> severity: medium
+
+### 指令
+
+以 B、D、I 作为 baseline，再出 10 版给我看看，表情有微笑、沮丧、悲伤、愤怒、劳累、兴奋
+
+### 摘要
+
+以候选 B/D/I 为参考混出 10 个变体 K–T：每人定妆照、正侧背三视图、六种表情（微笑/沮丧/悲伤/愤怒/劳累/兴奋），做成对比页
+
+---
+
+## 015 — 2026-11-08 19:52:59 — pick-protagonist-O
+
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/2_世界观人设/characters/c1_主角
+> severity: medium
+
+### 指令
+
+我们选 O
+
+### 摘要
+
+主角定为候选 O（D+I：四十岁左右、低发髻、两鬓花白、灰黑短络腮胡）：O 定妆升为立绘，Codex 出高清正侧背三视图并合图，人物卡写外观与锁定描述符；名字与建立视频待用户定
+
+---
+
+## 016 — 2026-11-08 20:09:09 — julian-all-episodes
+
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/bible.md
+> severity: medium
+
+### 指令
+
+先全部用 Julian，需要换人我会告诉你
+
+### 摘要
+
+主角 Julian 跨集固定：每集都用 Julian，换人只在用户明确要求时；bible §2、README、series.md、人物卡同步
+
+---
+
+## 017 — 2026-11-08 20:26:12 — julian-turntable-and-ep01-story
+
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/2_世界观人设/characters/c1_Julian
+>   - ai_videos/huangye_shenghuo/episodes/ep01
+> severity: medium
+
+### 指令
+
+可以出视频。然后开始故事创作
+
+### 摘要
+
+提交 Julian 4 秒建立视频（Seedance，用户同意）；开 ep01 雨林：先按 bible §7 做考据 dossier，再走共用故事创作模块出故事稿与集级决策记录
+
+---
+
+## 018 — 2026-11-08 21:06:37 — ep01-storyboard-autonomous
+
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/episodes/ep01
+> severity: medium
+
+### 指令
+
+等你整个故事板做好了，再通知我
+
+### 摘要
+
+EP01 由代理连续推进到故事板完成再通知用户：冷读修订故事 → 影视改编（分镜、场级决策）→ 资产（背景、道具、换装）→ 每镜 overhead、镜组板与首帧图（场故事板）；不出视频
+
+---
+
+## 019 — 2026-11-08 22:37:08 — storyboard-self-review-then-url
+
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/episodes/ep01/scenes
+> severity: low
+
+### 指令
+
+你做好了并且 self review 完了给我 url，我来 review
+
+### 摘要
+
+故事板完成后先自审（代理逐张看图 + 独立审稿代理对照分镜与故事稿逐镜审），改完再给用户故事板 / 分镜 / 故事的管理站链接
+
+---
+
+## 020 — 2026-11-09 00:06:33 — autonomous-overnight
+
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/episodes/ep01
+> severity: medium
+
+### 指令
+
+我要睡觉了，尽可能多地完成之后能想到的步骤，不要问问题，不确定的自己 best effort 决定，包括删除文件这类高风险决定
+
+### 摘要
+
+AUTONOMOUS：代理连夜推进 EP01 故事板到自审完成（重出首帧、独立审稿第二轮、修复），整理链接与待用户决定事项；确定版本与出视频仍留给用户（生成永远人点）
+
+---
+
+## 021 — 2026-11-09 21:32:54 — julian-black-hair-boots
+
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/2_世界观人设/characters/c1_Julian/
+> severity: medium
+
+### 指令
+
+男主的白发太多了，去掉白发。 还有脚上，小腿不要搞白色的布料，样式不好看，颜色也不搭，重新生成
+
+### 摘要
+
+Julian 改黑发黑胡；雨林装米白防蚂蟥袜套+低帮胶鞋换黑色哑光橡胶中筒靴；重出立绘、两套三视图与 EP01 含 Julian 的首帧，文字设定同步
+
+---
+
+## 022 — 2026-11-14 11:40:22 — julian-turntable-v2
+
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/2_世界观人设/characters/c1_Julian/c1_Julian_turntable.mp4
+> severity: low
+
+### 指令
+
+重新出turntable视频
+
+### 摘要
+
+用 v2 黑发立绘重出 c1_Julian_turntable.mp4（Seedance 2.5 · 16:9 · 4 秒），旧视频存 _v1/
+
+---
+
+## 023 — 2026-11-14 11:53:52 — spatial-consistency-cooking-cozy
+
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/episodes/ep01/
+> severity: high
+
+### 指令
+
+对于这类视频，空间大小的正确性非常重要，比如外面看屋子不大，到了里面如果空间很大就显得很突兀，所以确保有组后的空间建立房子，还有空间一致性的检擦，还有就是位置和状态一致性，比如门口的小溪里房子多近？ 下雨后能变成多大？ 这些都要一致性检查，确保图片都是统一的。还有就是做饭的场景可以加一点，以及找个skill，把房子内部做的惬意一点。请重新review，然后自动更新文字和图片，只有出片前给我review，其他你都自己fix就好
+
+### 摘要
+
+Blender 白模定尺度；内外景独立空间审稿；修离群首帧；屋内参考按正确尺度重画并做惬意版；加三段做饭镜头；故事稿几何文字对齐锁定表
+
+---
+
+## 024 — 2026-11-14 14:58:35 — remove-buttress-roots
+
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/episodes/ep01/
+> severity: high
+
+### 指令
+
+薄板看起来还是一眼假，哪有树干或树根长起来个薄板的，这个要去掉
+
+### 摘要
+
+锚点树与巨树去掉板状板根，改为普通树干与粗圆表面根；屋檐改由屋角四根带杈短柱架起的檐杆支撑，两侧半米扇叶矮墙；锁定表、故事、分镜、卡片、白模与约 38 张图同步
+
+---
+
+## 025 — 2026-11-14 15:52:33 — door-view-site-map
+
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/episodes/ep01/decisions/site_map.png
+> severity: medium
+
+### 指令
+
+房子盖好后。打开门就是翻滚的褐色大水，这个位置和之前刚房子的时候consistent么？ 之前感觉小溪没有离得这么近啊，为什么打开们就看到了，这个审查有审查到么，还有是不是可以放一个俯视图，标记房子，小溪，树，就是主要object的相对位置和距离
+
+### 摘要
+
+s1 st1/s8 st5 门外洪水画成贴着门槛，与锁定（门→岩坎 6.4 米、洪水比阶地低 2 米）不符，空间审稿漏查；改图；新增场地俯视图+门口视线剖面 site_map.png
+
+## 026 — 2026-11-14 16:26:01 — ep01-final-render
+
+> target_artifacts:
+>   - ai_videos/huangye_shenghuo/episodes/ep01/
+> severity: high
+
+### 指令
+
+好的，如果审查没问题就开始出片子吧直接720p正片
+
+### 摘要
+
+确定 EP01 故事与分镜版本，Prompt 编译，跑 pregen 审查单收轮，审查无严重问题即按用户授权跳过草稿直接 720p 正片提交全集

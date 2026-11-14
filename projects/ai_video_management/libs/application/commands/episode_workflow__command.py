@@ -34,7 +34,8 @@ class EpisodeWorkflowCommand:
                 entity.approve(module)
             elif operation == "compile" and module == "prompts":
                 settings, materials = self.materials.read(episode_path, entity.documents["filming"]["content"])
-                entity.compile(materials, settings, scene)
+                boards = self.materials.boards(episode_path, entity.documents["filming"]["content"])
+                entity.compile(materials, settings, scene, boards)
             else:
                 raise EpisodeWorkflowError("无效操作")
             self.writer.write(episode_path, module, entity.documents[module])

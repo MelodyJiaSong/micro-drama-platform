@@ -1,0 +1,100 @@
+<style>
+  .q { position: absolute; left: var(--mx); top: 190px; }
+  .q .t { position: absolute; left: 0; top: 0; white-space: nowrap; }
+  #fs { position: absolute; left: var(--mx); top: 400px; }
+  #fx5 { left: var(--mx); top: 230px; width: 1040px; height: 585px; }
+  .land { position: absolute; left: 1230px; top: 360px; width: 570px; }
+  .land .body { margin-top: 10px; }
+  .vis { position: absolute; left: var(--mx); top: 320px; width: 1300px; }
+  .vis .r { display: grid; grid-template-columns: 520px 1fr; align-items: baseline; padding: 30px 0; border-top: 1px solid var(--hair); }
+  .vis .r:first-child { border-top: 0; }
+  html[lang=en] .vis .r { grid-template-columns: 620px 1fr; }
+  .vis .gone { color: var(--faint); text-decoration: underline dashed var(--faint); text-decoration-thickness: 3px; text-underline-offset: 12px; }
+  .take1 { position: absolute; left: var(--mx); right: var(--mx); top: 320px; }
+  .take1 .h2 { margin-top: 22px; color: var(--ink2); }
+  .take1 .h1 { margin-top: 14px; }
+  .take1 .body { margin-top: 44px; }
+</style>
+
+<div class="eb eyebrow" data-zh="06 · 停飞其实是刹车" data-en="06 · A ground stop is a brake"></div>
+
+<div class="q h1">
+  <div class="t" id="q1" data-zh="全国停飞 = 系统崩溃？" data-en="Ground stop = collapse?"></div>
+  <div class="t" id="q2" data-zh='其实是<span class="grad">刹车</span>' data-en='The <span class="grad">safety brake</span>'></div>
+</div>
+<svg id="fs" width="1680" height="380"></svg>
+
+<!-- sd5 模拟画面：夜间跑道，飞机一架接一架落地（按审核只用 0–4 秒） -->
+<div class="footage" id="fx5"><video id="v5" src="img/footage/sd5_landing.mp4" data-start="{{t:l79:0}}" data-duration="{{d:l79:0>l80:0.1|4}}"
+  data-media-start="0" data-track-index="1" muted playsinline></video></div>
+<div class="land" id="land">
+  <div class="eyebrow" data-zh="停飞时在空" data-en="Planes in the air"></div>
+  <div class="h1"><span id="nLand">—</span><span data-zh=" 架" data-en=""></span></div>
+  <div class="body c-good" data-zh="全部安全落地" data-en="All landed safely"></div>
+</div>
+
+<div class="vis" id="vis">
+  <div class="r" id="v1r"><span class="h2" data-zh="刹车的代价" data-en="The cost"></span><span class="h1" data-zh="看得见" data-en="Visible"></span></div>
+  <div class="r" id="v2r"><span class="h2" data-zh="挡掉的风险" data-en="The harm avoided"></span><span class="h1 gone" data-zh="看不见" data-en="Invisible"></span></div>
+</div>
+
+<div class="take1" id="tk">
+  <div class="eyebrow" data-zh="一句话总结" data-en="The takeaway"></div>
+  <div class="h2" data-zh="离不开的系统" data-en="A system you can’t live without"></div>
+  <div class="h1" data-zh='老了危险，<span class="grad">动它更危险</span>' data-en='Old is risky. <span class="grad">Change is riskier.</span>'></div>
+  <div class="body sub" id="tk2" data-zh="" data-en="Don’t freeze it — change it carefully"></div>
+</div>
+
+<script>
+const T = EDU.tl, C = css;
+const txt = (g, x, y, s, size = 30, fill = C("--ink"), anchor = "middle", w = 600) => { const e = svgEl(g, "text", { x, y, "text-anchor": anchor, "font-size": size, "font-weight": w, fill }); e.textContent = s; return e; };
+// 失效安全：正常运行 —（没把握）→ 安全状态（代价看得见）
+const fs = document.getElementById("fs");
+const bx = (x, fill, stroke) => svgEl(fs, "rect", { x, y: 90, width: 520, height: 170, rx: 28, fill, stroke, "stroke-width": 4 });
+const bA = bx(0, C("--surface"), C("--hair")), tA = txt(fs, 260, 192, L("正常运行", "Running"), 48, C("--ink"), "middle", 700);
+const bB = bx(1156, C("--accent-soft"), C("--accent")), tB = txt(fs, 1416, 192, L("先叫停", "Hold departures"), 48, C("--accent-text"), "middle", 700);
+const cB = txt(fs, 1416, 320, L("航班暂停", "Costly, but safe"), 30, C("--sub"), "middle", 500);
+const arr = svgEl(fs, "path", { d: "M540,175 L1130,175", stroke: C("--ink2"), "stroke-width": 5, fill: "none" });
+const head = svgEl(fs, "path", { d: "M1148,175 l-26,-14 l0,28 Z", fill: C("--ink2") });
+const why = txt(fs, 835, 150, L("没把握", "Can’t be sure"), 38, C("--ink2"), "middle", 600);
+
+gsap.set(["#q1", "#q2", "#land", "#nLand", "#vis", "#v1r", "#v2r", "#tk", "#tk2"], { opacity: 0 });
+gsap.set([bA, tA, bB, tB, cB, arr, head, why], { opacity: 0 });
+EDU.in(".eb", 0);
+
+// l76 全国停飞，看起来像系统崩溃
+EDU.in("#q1", EDU.t("l76", .05));
+// l77 其实是安全设计在起作用：刹车
+EDU.out("#q1", EDU.t("l77", 0));
+EDU.in("#q2", EDU.t("l77", .1));
+EDU.in([bA, tA], EDU.t("l77", .4));
+// l78 没把握 → 退到代价看得见、但安全的状态
+T.set(arr, { opacity: 1 }, EDU.t("l78", .05)); EDU.draw(arr, EDU.t("l78", .05), .9); EDU.in(head, EDU.t("l78", .05) + .8);
+EDU.in(why, EDU.t("l78", .15));
+EDU.in([bB, tB], EDU.t("l78", .35));
+EDU.in(cB, EDU.t("l78", .65));
+
+// l79 3,500 多架在空的飞机，全部安全落地（模拟画面：夜间一架架落地）
+EDU.out(["#q2", "#fs"], EDU.t("l79", 0));
+EDU.in("#land", EDU.t("l79", .1));
+EDU.in("#nLand", EDU.t("l79", .1), { y: 0 });
+EDU.count("#nLand", EDU.t("l79", .15), N.airborne, 1.4, v => fmt(v) + (v >= N.airborne - .5 ? "+" : ""));   // 滚完补「多」
+srcNote("达菲（经 NBC、Scripps）", "Duffy (via NBC, Scripps)", EDU.t("l79", .2), Math.max(footEnd("v5"), EDU.t("l80", 0)));
+if (footEnd("v5") < EDU.t("l80", 0) - .3) T.to("#land", { x: 960 - 1230 - 285, duration: .7, ease: "power3.inOut" }, footEnd("v5") - .3);
+EDU.out("#land", Math.max(footEnd("v5") - .45, EDU.t("l80", 0)));   // 数字留到这句说完（台词审 r1 I57）
+
+// l80 刹车的代价看得见
+EDU.in("#vis", Math.max(EDU.t("l80", 0), footEnd("v5") - .2), { y: 0, d: .01 });
+EDU.in("#v1r", Math.max(EDU.t("l80", .05), footEnd("v5")));
+// l81 它挡掉的风险看不见
+EDU.in("#v2r", EDU.t("l81", .05));
+EDU.dim("#v1r", EDU.t("l81", .05), .5);   // 新的半屏先被看到（lines_r2 I54）
+
+// l82 带走一句话
+EDU.out("#vis", EDU.t("l82", 0));
+EDU.in("#tk", EDU.t("l82", .05));
+// l83 要换，就把「换」当成最该小心的事
+EDU.in("#tk2", EDU.t("l83", .1));
+ourTake(["l76", "l77", "l78", "l80", "l81"]);
+EDU.out("#tk", EDU.S.duration - .5);
+</script>

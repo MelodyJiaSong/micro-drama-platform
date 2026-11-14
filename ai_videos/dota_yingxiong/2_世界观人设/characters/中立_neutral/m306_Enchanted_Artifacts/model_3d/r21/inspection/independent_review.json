@@ -1,0 +1,87 @@
+{
+  "verdict": "fail",
+  "suitable_use": "可以用在远景：地图全景、营地远景，屏幕上光团加光丝不超过约 40 px，只需认出“半空一团白光，地上有一圈光斑”。中景能凑合当背景，但不能作为画面主体。近景、特写、转台、与 m305/m307 同框的商人营地中景都不合适：光丝像发光的蛛腿或铁丝，侧面光尾像一条烟带。在“精细、越逼真越好”的标准下需要返工。",
+  "blockers": [
+    "光丝形态：北视图（4_north）和南视图（2_south）里，5–6 条光丝从光核向外拱起，再向下或向内弯回，粗细和亮度几乎一样，末端也没有变细或变淡。中距离看像一只发光蜘蛛或水母的腿，触到负向词“四肢”。参考图（1）的光丝细如发丝，越往外越细、越透明，呈星芒状向外散开。r21 说已改成“轻柔不对称 S 形”，但图上的回钩感仍然明显，北视图最严重。",
+    "光丝质感：特写（7_close）和俯视（8_top）里，光丝是等宽实心的白色细管，边缘发灰，读成线材，不像光。数据给的倒角半径约 0.085–0.09 mm，物理尺寸很细，但渲染出来的视觉宽度明显比参考粗、比参考实。数据也给不出变细或透明度衰减的证据（White_cyan_curving_fibres 只有 EMISSION + BSDF_TRANSPARENT，混合系数是否沿曲线长度变化未提供）。",
+    "侧面光尾：东视图（3_east）、西视图（5_west）、透视图（6_perspective）和两张夜景（10/11）里，光尾是一条连续、偏不透明的白色烟带，末端是一团团烟。看上去像飞机尾迹或香烟烟，不像参考图里那种由青白闪烁微粒组成、逐渐散开的光尘尾。只有特写、俯视、底视的近距离图里才看得出离散的光尘。也就是说，按设计最该看到光尾的侧面中景，光尾读错了。",
+    "光核下方的雾团：南视图和北视图里，光核下方或后方贴着一团发灰、斑驳的絮状物（应为 Wisp_fading_volume 或尘埃层叠加）。它比辉光暗，像一团脏棉絮或灰尘球，削弱了“中心近白、向外过渡到极淡青白”的干净层次。参考图里光核四周是密集的放射状细芒，没有灰色絮团。"
+  ],
+  "refinements": [
+    "颜色偏中性白：日光下几个视角几乎看不出青色，光丝和光尾都呈白灰色。资产卡要求“主近白 / 辅极淡青白”，参考里光丝和光晕外缘带明显的淡青。建议给光丝和光尘外缘加一点很淡的青色。",
+    "光核外围缺少参考里密集的放射状短细芒（星芒绒毛）。中景下光核读成一团柔和的模糊光斑。曲线 Visible_organic_Fuzz 有 300 条样条，但中距离几乎看不出来，可以加强亮度对比或加长一部分。",
+    "地面光斑偏大、偏均匀：Soft_local_ground_pool 是 32 W 聚光灯，打出一个边界整齐的椭圆光锥，直径约为参照方块宽度的 8–10 倍。资产卡要的是“一小圈淡淡的光斑”。建议缩小光斑、加快衰减，并让它和 18 W 点光源的照明更连贯，减少“顶上挂了一盏聚光灯”的感觉。",
+    "3 盏 0 W 聚光灯（Core_ground_emission_0/1/2）不起作用，建议清理，以免合进地图场景后被人误调亮度。",
+    "光核的辉光和光晕是在场景里由几何体或体积产生，还是靠合成器里的辉光（glare/bloom）后期加出来的，无法从图像判断。如果是后者，换到地图渲染管线后光核外观可能明显不同，需要在目标场景的合成设置下再验一次。",
+    "夜景对照图（10）里地面光斑偏橄榄色、偏暖，与“冷白光”不符。对照图 11 的中性地面上光斑是冷灰蓝，所以偏色应来自 10 的地面固有色，不是灯光颜色。建议放进实际营地地面材质后复核色温。"
+  ],
+  "unverified": [
+    "实际尺寸：光核约一拳宽、连光晕约 25 cm、光尾 30–40 cm、离地约 1 m。灯光坐标 z=1.0 和离地高度相符，但参照方块边长未知，图像无法验证绝对尺寸。",
+    "曲线和网格的拓扑质量、法线、修改器以后的最终面数：数据注明不展开修改器和实例，enabled_render_modifiers 为空。渲染图证明不了这些。",
+    "光丝和光尘的透明度或发射强度是否沿长度衰减：材质只列出 EMISSION/BSDF_TRANSPARENT 节点类型，没有给出 mix 因子的驱动方式。",
+    "Cyan_atmospheric_fringe 的体积密度和发射强度是连接到纹理的（linked），具体分布未提供。Wisp_fading_volume 的 Density 为 0.0，只发光不散射，所以不会产生真实的体积光束，这一点和图像中没有可见光柱的情况一致。"
+  ],
+  "evidence": {
+    "1_m306_Enchanted_Artifacts.png（设计参考，不是模型）": "浅灰摄影棚背景。近白亮核带密集的放射状细芒，5–6 条极细、越往外越淡的青白光丝向外舒展。光尾斜向右下，由青白闪烁微粒组成，尾端散开，地面有一圈柔和的光斑。",
+    "2_south.png": "光尾藏在后面，符合正面设定。光丝呈拱形和回钩，右上一条竖直上升再弯，整体像腿。光核下方有灰白絮团。地面光斑是大椭圆。色调基本是中性白。",
+    "3_east.png": "光尾向右横拖出来，但近光核一段是实心白色烟带，末端成烟团，不像光尘。光丝稀疏，可见 2–3 条弯钩。",
+    "4_north.png": "光尾朝镜头，向左下散成一些尘点。4–5 条光丝从光核向四周拱出再下弯，蜘蛛腿或水母的读感在所有视图里最强。光核下方有灰色斑驳絮团。",
+    "5_west.png": "光尾向左拖出，由细碎颗粒组成，比东视图好，但起始段仍是连续烟带。光丝 3–4 条，向上弯曲。",
+    "6_perspective.png": "光尾短，呈烟柱状，只有约一个光晕半径长，末端成团。光丝像几根弯铁丝。地面光斑边界整齐，像聚光灯打出来的。",
+    "7_close.png": "近看光核有放射状细绒，光尘尾由离散颗粒组成，这两点接近参考。但 6 条主光丝等宽、实心、边缘发灰，像线材，末端没有变细变淡，和参考的发丝状光丝差距明显。",
+    "8_top.png": "俯视光尾是一条直的光尘带，长度约为光丝半径的两倍，比例合理。光丝向四周平展，形态可以接受。没看到悬浮的离散碎件。",
+    "9_bottom.png": "仰视光尘尾向下散开，层次较好。光丝从底下看像几条弯腿围着光核，腿状读感依旧。",
+    "10_night_self_illumination.png": "夜景下光核是唯一光源，读感最好。地面光斑可见但偏橄榄暖色，方块顶面几乎没被照亮。光尾仍是一小段白色烟带。",
+    "11_night_neutral_ground_control.png": "中性地面上光斑是冷灰蓝，说明 10 的偏色来自地面。方块阴影背向光团，方向一致。光丝和光尾的问题与 10 相同。"
+  },
+  "reviewer": "claude",
+  "source_artifact_sha256": "72f10d65e4c07d02148ddd55bb32e9554d3868502c0ed6353fca6439b896db2a",
+  "blend_sha256": "72f10d65e4c07d02148ddd55bb32e9554d3868502c0ed6353fca6439b896db2a",
+  "evidence_files": [
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\m306_Enchanted_Artifacts.png",
+      "sha256": "53a9db2d2daaca35ebc576b986f5e7586924eb854277ad7999d8185766f03974"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r21\\inspection\\south.png",
+      "sha256": "7fce74044d4bf33c6eb051f1170e2242a48549b8bed2deadd48f553679e51aaa"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r21\\inspection\\east.png",
+      "sha256": "36a4d1e4f4703c7dd78b5a0a2c72b8777ad46a46f5b4a5d069838ed031fb4a29"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r21\\inspection\\north.png",
+      "sha256": "af7490a59653ce609c8513f5b5e540dcb78cefdde1a030b64b352f4c5ef0ee50"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r21\\inspection\\west.png",
+      "sha256": "803ea4878c063051917fe10c3578e84b1a19035208ee2708d56e6b98881af981"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r21\\inspection\\perspective.png",
+      "sha256": "ad0ce535866d3b4e39865407ddd2a38b60eeedde84dee056d44db4294405da10"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r21\\inspection\\close.png",
+      "sha256": "a3ceb9f0f865cdf63eba68840aebe468be402df4a83bef8fc93da13b6d4318ab"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r21\\inspection\\top.png",
+      "sha256": "ffa080db142ee4499444e37b6069c7ca16e420b63881daa2a0d65ee3a6a57ef0"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r21\\inspection\\bottom.png",
+      "sha256": "7517081ccb00daf3dac7ce7ebe31c8dcca2dc288fe8e166f7f41c35de9fd4544"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r21\\inspection\\night_self_illumination.png",
+      "sha256": "27a19e5ebd2c1afc5ee5152bee615c76cde7e1238578cc335a1818ecea63219b"
+    },
+    {
+      "path": "2_世界观人设\\characters\\中立_neutral\\m306_Enchanted_Artifacts\\model_3d\\r21\\inspection\\night_neutral_ground_control.png",
+      "sha256": "8abe33e6186d406329467bf0a85356a081d158d863cd4c6d4e9b361fe7d64d2d"
+    }
+  ],
+  "prior_errors": []
+}

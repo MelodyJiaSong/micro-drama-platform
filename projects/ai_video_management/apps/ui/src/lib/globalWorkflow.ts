@@ -52,5 +52,7 @@ export function matchesNavigation(href: string | undefined, pathname: string, se
   const params = new URLSearchParams(search);
   if (target.pathname === GLOBAL_SOURCE_PATH && params.get("section") !== target.searchParams.get("section")) return false;
   if (target.pathname === "/drama" && ["scene", "shot"].some(key => params.get(key) !== target.searchParams.get(key))) return false;
+  if (target.pathname === "/assets" && target.searchParams.has("library")
+    && ["group", "sub", "open"].some(key => params.get(key) !== target.searchParams.get(key))) return false;
   return [...target.searchParams].every(([key, value]) => params.get(key) === value);
 }

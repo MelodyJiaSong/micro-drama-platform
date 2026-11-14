@@ -1,0 +1,185 @@
+{
+ "note": "学习目标与理解测验（写讲稿前定，审查与测验都对照它）。题目以迁移题为主，干扰项来自真实误解；前测、看片、后测、讲回来。AI 学生只用来筛题，最终以真人盲测为准（edu_videos/_shared/research/explainer_benchmark.md）。 v5（2026-11-09）：Q5 由捷径学习题换成过拟合迁移题；目标句号重挂。",
+ "objectives": [
+  {
+   "id": "O1",
+   "zh": "能用自己的话说出过拟合是什么：在手里的数据上表现很好，换到新数据就不行，因为记住了噪声和巧合",
+   "en": "Explain overfitting in their own words: great on the data you have, poor on new data, because it memorized noise and coincidences",
+   "lines": [
+    "l03",
+    "l07",
+    "l21",
+    "l41"
+   ]
+  },
+  {
+   "id": "O2",
+   "zh": "会用两种误差判断：练习（训练）误差低、考试（测试）误差高就是过拟合的信号；两种都高是欠拟合",
+   "en": "Diagnose with two errors: low training error with high test error signals overfitting; both high is underfitting",
+   "lines": [
+    "l13",
+    "l15",
+    "l20",
+    "l22",
+    "l23"
+   ]
+  },
+  {
+   "id": "O3",
+   "zh": "说得出为什么太复杂的模型会过拟合：它的数字多到能把每个点原样存下，连噪声也一起记住",
+   "en": "Say why an overly complex model overfits: it has enough numbers to store every point as is, noise included",
+   "lines": [
+    "l15",
+    "l27",
+    "l28",
+    "l32"
+   ]
+  },
+  {
+   "id": "O4",
+   "zh": "知道三种对策各解决什么：验证集（及早发现、挑模型）、更多更多样的数据、限制复杂度（正则化）",
+   "en": "Know what each fix does: a validation set, more and more varied data, limiting complexity (regularization)",
+   "lines": [
+    "l36",
+    "l37",
+    "l39",
+    "l40"
+   ]
+  },
+  {
+   "id": "O5",
+   "zh": "不被教歪：不是越简单越好；训练误差为零不等于好模型",
+   "en": "Avoid the misconceptions: simpler is not always better; zero training error is not a good model",
+   "lines": [
+    "l13",
+    "l23",
+    "l29"
+   ]
+  }
+ ],
+ "quiz": [
+  {
+   "id": "Q1",
+   "objective": "O2",
+   "type": "迁移",
+   "zh": "一个识别垃圾邮件的模型，在训练用的邮件上准确率 99%，上线后对新邮件只有 70%。最可能是什么问题？",
+   "en": "A spam filter is 99% accurate on its training emails but only 70% on new emails after launch. What is the most likely problem?",
+   "choices": {
+    "zh": [
+     "A 欠拟合：模型太简单",
+     "B 过拟合：记住了训练邮件的特点，没学到通用规律",
+     "C 新邮件太少，统计不准",
+     "D 训练准确率越高越好，这不是问题"
+    ],
+    "en": [
+     "A Underfitting: the model is too simple",
+     "B Overfitting: it memorized quirks of the training emails",
+     "C Too few new emails to measure",
+     "D Higher training accuracy is always better, so no problem"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "把两种误差的组合弄反",
+    "D": "训练误差越低越好"
+   }
+  },
+  {
+   "id": "Q2",
+   "objective": "O5",
+   "type": "误解探针",
+   "zh": "为了避免过拟合，是不是应该总用最简单的模型？",
+   "en": "To avoid overfitting, should you always use the simplest possible model?",
+   "choices": {
+    "zh": [
+     "A 是，越简单越安全",
+     "B 不是，太简单会欠拟合，要找练习和考试都好的中间那一段",
+     "C 是，只要数据够多",
+     "D 不是，应该用最复杂的模型再多训练"
+    ],
+    "en": [
+     "A Yes, simpler is always safer",
+     "B No. Too simple underfits; look for the middle where both errors are low",
+     "C Yes, as long as there is enough data",
+     "D No, use the most complex model and train longer"
+    ]
+   },
+   "answer": "B",
+   "misconception_choices": {
+    "A": "越简单越好",
+    "D": "复杂就是好"
+   }
+  },
+  {
+   "id": "Q3",
+   "objective": "O3",
+   "type": "解释为什么",
+   "zh": "用十个点训练两个模型：一个有 4 个可调的数字，一个有 10 个。哪个更可能过拟合？为什么？",
+   "en": "Two models are trained on ten points: one has 4 adjustable numbers, the other has 10. Which is more likely to overfit, and why?",
+   "answer_key": {
+    "zh": "10 个数字的那个；它的数字多到能把十个点原样记下，连噪声也记住了",
+    "en": "The one with 10; it has enough numbers to store all ten points exactly, noise included"
+   }
+  },
+  {
+   "id": "Q4",
+   "objective": "O4",
+   "type": "迁移",
+   "zh": "你在调一个模型，想在不碰最终测试集的前提下尽早发现过拟合，应该怎么做？",
+   "en": "You are tuning a model and want to catch overfitting early without touching the final test set. What should you do?",
+   "choices": {
+    "zh": [
+     "A 只看训练误差",
+     "B 每次都用测试集挑模型",
+     "C 另留一份验证集来挑模型、观察误差",
+     "D 把测试集也加进训练"
+    ],
+    "en": [
+     "A Watch the training error only",
+     "B Use the test set to pick the model each time",
+     "C Hold out a validation set to choose models and watch its error",
+     "D Add the test set to the training data"
+    ]
+   },
+   "answer": "C",
+   "misconception_choices": {
+    "B": "数据泄漏",
+    "D": "数据泄漏"
+   }
+  },
+  {
+   "id": "Q5",
+   "objective": "O3",
+   "type": "迁移",
+   "zh": "有人想从过去 20 天的股价里找规律，用了一条能穿过全部 20 个点的复杂曲线，练习误差是零。你对它预测明天的股价有信心吗？为什么？",
+   "en": "Someone fits a complicated curve that passes through all 20 of the last 20 days' stock prices; its practice error is zero. How confident are you in its prediction for tomorrow, and why?",
+   "answer_key": {
+    "zh": "可能认不出来：它学的可能是「草地 = 牛」这种只在训练数据里成立的巧合（捷径学习，过拟合的近亲）",
+    "en": "It may fail to recognize it: it may have learned 'grass = cow', a coincidence that only holds in the training data (shortcut learning, a cousin of overfitting)"
+   },
+   "answer": {
+    "zh": "没信心：曲线把每天的随机涨跌（噪声）也记住了，噪声不会重演，这正是过拟合；练习误差为零不等于预测准。",
+    "en": "Not confident: the curve has memorized each day's random ups and downs (noise), which won't repeat — that's overfitting; zero practice error doesn't mean good predictions."
+   }
+  }
+ ],
+ "explain_back": {
+  "prompt": {
+   "zh": "请用两三句话，给一个没学过 AI 的朋友解释什么是过拟合。",
+   "en": "In two or three sentences, explain overfitting to a friend who has never studied AI."
+  },
+  "propositions": [
+   "在训练数据上表现好",
+   "在新数据上表现差",
+   "原因是记住了噪声 / 巧合 / 细节，而不是规律",
+   "（加分）和模型太复杂或数据太少有关",
+   "（加分）用验证集或测试数据发现"
+  ],
+  "misconceptions": [
+   "过拟合就是训练不够",
+   "模型越简单越好",
+   "训练误差越低越好"
+  ]
+ },
+ "pass_rule": "每个学习目标至少有一道题，真人后测正确率比前测提升、且 ≥ 2/3 的人答对；讲回来覆盖前三条要点、不出现误解。AI 学生结果只用于改题与找讲稿漏洞，不作过关依据。"
+}

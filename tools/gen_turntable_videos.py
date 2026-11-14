@@ -6,6 +6,7 @@ prompt 在卡里（`## turntable 说明` 的 ```text 块，首行 `{卡目录}_t
 走 `dreamina multimodal2video` 而不是 image2video：非人生物要挂**声音参考**（卡里 `## 叫声设计` + `ref/audio/*.mp3`），只有全能参考收音频。
 
 `参考:` 行按上传顺序把 `=>@` 填成 `@图片1 / @音频1…`（正本卡里仍是裸 `=>@`，只在提交时填号）。
+立绘之后可紧跟随身道具 `p{N}_…`，上传它的锚点图（`@图片2…`；dota_yingxiong follow-up 071 斧王巨斧 p30）。
 立绘缺失时依次退：views 锚点正面帧（`gen_char_images.anchor_frame`）→ 从文件夹里最新的原始建立视频 0.5 s 处截一帧。
 新片落盘后，同一文件夹里旧的原始建立视频挪进 `ai_videos/_deleted/`（与 webapp 软删同一处），webapp 始终只看到一条。
 
@@ -35,6 +36,8 @@ sys.stdout.reconfigure(encoding="utf-8")
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 from tools import gen_char_images as gci  # noqa: E402  views 锚点帧在哪
+from tools import props_lib  # noqa: E402
+from projects.ai_video_management.libs.common.asset_group import character_dirs, find_character_dir  # noqa: E402
 
 DELETED = REPO / "ai_videos" / "_deleted"
 from tools.service_request import RequestLog
@@ -49,6 +52,7 @@ POLL_MAX = 1200
 LEDGER = ".turntable_jobs.json"
 LOCK = ".char_assets.lock"            # 一部剧同时只许一个进程出人物资产（char_assets.py 整轮持有）
 REF_ITEM = re.compile(r"`([^`]+?)=>@`")
+PROP_REF = re.compile(r"(p\d+)_")
 SPEC = re.compile(r"^(?:比例|画幅)[:：].*?(\d+:\d+).*?时长[:：]?\s*(\d+)\s*(?:秒|s)", re.M)
 REEL = "video.mp4"                     # webapp 截出来的 2 s 片段，不是原始建立视频
 QUIET_DB = -50.0                       # 有 `## 叫声设计` 的卡，整条平均响度低于它＝叫声没出来（实测 m6 写「几乎听不见」出片约 −75 dB）
@@ -60,6 +64,11 @@ def chars_dir(drama: str) -> Path:
     if not d.is_dir():
         raise SystemExit(f"没有 {d.relative_to(REPO)}（--drama 相对 ai_videos/，如 shengji_zhilu、xianjian_yi/xj1）")
     return d
+
+
+def chars_root(d: Path) -> Path:
+    """卡目录所属的 characters/（卡可能在一层分组目录下）：账本与锁都在这一层。"""
+    return next(p for p in d.parents if p.name == "characters")
 
 
 def creature_sound(d: Path) -> dict | None:
@@ -116,8 +125,17 @@ def portrait(d: Path) -> Path:
     raise SystemExit(f"{d.name}：没有立绘、views 正面帧，也没有旧建立视频可截")
 
 
-def job(d: Path) -> tuple[str, Path, list[Path], str, str, int]:
-    """(落盘 stem, 立绘, 声音参考, 送审 prompt, 画幅, 时长)。"""
+def prop_image(d: Path, name: str) -> Path:
+    """参考行里的 `p{N}_…` 项 → 该道具的锚点图。"""
+    pd = props_lib.find(d, PROP_REF.match(name).group(1))
+    img = pd / f"{pd.name}.png" if pd else None
+    if img is None or not img.is_file():
+        raise SystemExit(f"{d.name}：参考行的道具 {name} 没有锚点图（props/…/{{目录名}}.png）")
+    return img
+
+
+def job(d: Path) -> tuple[str, list[Path], list[Path], str, str, int]:
+    """(落盘 stem, 立绘 + 道具锚点图, 声音参考, 送审 prompt, 画幅, 时长)。"""
     text = (d / f"{d.name}.md").read_text(encoding="utf-8")
     m = re.search(r"```text\n(%s_turntable\n.*?)```" % re.escape(d.name), text, re.S)
     if not m:
@@ -128,12 +146,29 @@ def job(d: Path) -> tuple[str, Path, list[Path], str, str, int]:
         raise SystemExit(f"{d.name}：prompt 里没有「比例：画幅 X:Y，时长 N 秒」")
     cry = creature_sound(d)
     audio = cry["refs"][:3] if cry else []
-    tags = iter(["@图片1"] + ["@音频%d" % (i + 1) for i in range(len(audio))])
     ref = next((l for l in body.split("\n") if re.match(r"参考[:：]", l)), None)
-    if ref is None or len(REF_ITEM.findall(ref)) != 1 + len(audio):
-        raise SystemExit(f"{d.name}：参考行要有 {1 + len(audio)} 项 `名字=>@`（立绘 + 叫声录音），实际 {ref!r}")
+    items = REF_ITEM.findall(ref) if ref else []
+    props = []
+    for name in items[1:]:
+        if not PROP_REF.match(name):
+            break
+        props.append(prop_image(d, name))
+    if ref is None or len(items) != 1 + len(props) + len(audio):
+        raise SystemExit(f"{d.name}：参考行要有 {1 + len(props) + len(audio)} 项 `名字=>@`"
+                         f"（立绘 + {len(props)} 件道具 + 叫声录音），实际 {ref!r}")
+    extra = [p for p in props_lib.character_props(d) if p not in props]
+    if extra:
+        image_items = items[:1 + len(props)] + [p.stem for p in extra]
+        items = image_items + items[1 + len(props):]
+        props.extend(extra)
+        updated = "参考: " + "、".join(f"`{name}=>@`" for name in items)
+        body = body.replace(ref, updated)
+        ref = updated
+    if props_lib.character_prop_keys(d):
+        body += "\n固定武器：形制、构件结构、材质、配色以随附武器图为准；持有数量按人物卡，同款单件母版可按规定持有多件。立绘只锁人物，不能覆盖独立武器图，运动中不得变形或增减。"
+    tags = iter(["@图片%d" % (i + 1) for i in range(1 + len(props))] + ["@音频%d" % (i + 1) for i in range(len(audio))])
     body = body.replace(ref, REF_ITEM.sub(lambda x: f"`{x.group(1)}=>{next(tags)}`", ref))
-    return stem, portrait(d), audio, body, spec.group(1), int(spec.group(2))
+    return stem, [portrait(d), *props], audio, body, spec.group(1), int(spec.group(2))
 
 
 def ledger(chars: Path, sid: str | None = None, key: str | None = None) -> dict[str, str]:
@@ -247,22 +282,24 @@ def pending(chars: Path, name: str) -> str | None:
     """账里这张卡还在生成的任务（别的进程提交的、或本进程超时放手的）：等它，不重提（一条 80 分）。
     已成功的不算——落盘后被删掉的旧片不该收回来；超时后成功的走 --harvest。"""
     for sid in reversed([s for s, n in ledger(chars).items() if n == name]):
-        r = cli("query_result", f"--submit_id={sid}", timeout=120) or {}
+        r = cli("query_result", f"--submit_id={sid}", timeout=120, target=chars) or {}
         if isinstance(r, dict) and r.get("gen_status") == "querying":
             return sid
     return None
 
 
 def one(d: Path, dry: bool, model: str) -> str:
-    stem, img, audio, prompt, ratio, dur = job(d)
-    head = f"{stem}.mp4 ← {img.name} + {[a.name for a in audio]} · {ratio} · {dur}s · {model} · {len(prompt)} 字"
+    stem, imgs, audio, prompt, ratio, dur = job(d)
+    head = f"{stem}.mp4 ← {[i.name for i in imgs]} + {[a.name for a in audio]} · {ratio} · {dur}s · {model} · {len(prompt)} 字"
     if dry:
         print(f"  [dry] {head}\n{prompt}\n")
         return "dry"
-    if sid := pending(d.parent, d.name):
+    if sid := pending(chars_root(d), d.name):
         print(f"  {d.name}: 账里有在途任务 {sid[:8]}，等它（不重提）", flush=True)
         return wait(sid, d, stem)
-    args = ["multimodal2video", "--image", str(img)]
+    args = ["multimodal2video"]
+    for i in imgs:
+        args += ["--image", str(i)]
     for a in audio:
         args += ["--audio", str(a)]
     args += [f"--prompt={prompt}", f"--duration={dur}", f"--ratio={ratio}", f"--video_resolution={RESOLUTION}",
@@ -271,18 +308,23 @@ def one(d: Path, dry: bool, model: str) -> str:
     sid = sub.get("submit_id") if isinstance(sub, dict) else None
     if not sid or sub.get("gen_status") == "fail":
         return f"提交失败：{str(sub)[:300]}"
-    ledger(d.parent, sid, d.name)
+    ledger(chars_root(d), sid, d.name)
     q = (cli("query_result", f"--submit_id={sid}", timeout=120, target=d) or {}).get("queue_info") or {}
     print(f"  {d.name}: 已提交 {sid[:8]}（{head}）· priority {q.get('priority')} · 排第 {q.get('queue_idx')} / {q.get('queue_length')}",
           flush=True)
     return wait(sid, d, stem)
 
 
-def harvest(chars: Path) -> None:
-    for sid, name in ledger(chars).items():
-        d = chars / name
+def harvest(chars: Path, only: list[str] | None = None, force: bool = False) -> None:
+    """收回超时 / 下载断线的任务。`--force --only` 时连已有旧片的卡也收（重出后下载断线，旧片还占着文件名；
+    dota_yingxiong follow-up 066 实测 m2），收回后旧片照常挪进 _deleted/。"""
+    latest = {name: sid for sid, name in ledger(chars).items()}   # 同卡多次提交只收最新一条
+    for name, sid in latest.items():
+        if only and name.split("_")[0] not in only:
+            continue
+        d = find_character_dir(chars, name) or chars / name
         stem = f"{name}_turntable"
-        if (d / f"{stem}.mp4").is_file():
+        if (d / f"{stem}.mp4").is_file() and not (force and only):
             continue
         r = cli("query_result", f"--submit_id={sid}", timeout=120, target=d) or {}
         if isinstance(r, dict) and r.get("gen_status") == "success" and video_url(r):
@@ -291,7 +333,7 @@ def harvest(chars: Path) -> None:
 
 def todo(chars: Path, only: list[str], cry: bool = False, force: bool = False) -> list[Path]:
     """要出片的卡：有卡、有 turntable 块、有立绘（或可退的正面帧），且还没有原始建立视频（--force 除外）。"""
-    return [d for d in sorted(chars.iterdir()) if d.is_dir() and (d / f"{d.name}.md").is_file()
+    return [d for d in sorted(character_dirs(chars), key=lambda d: d.name) if (d / f"{d.name}.md").is_file()
             and (not only or d.name.split("_")[0] in only) and (not cry or creature_sound(d))
             and has_block(d) and (force or not originals(d))]
 
@@ -311,7 +353,7 @@ def main() -> int:
     chars = chars_dir(args.drama)
     LOG_TARGET = chars
     if args.harvest:
-        harvest(chars)
+        harvest(chars, [s for s in args.only.split(",") if s], args.force)
         return 0
     only = [s for s in args.only.split(",") if s]
     if not only and not args.cry:

@@ -1,0 +1,1117 @@
+{
+ "version": 5,
+ "kind": "edu_lines",
+ "scoring": {
+  "scale": {
+   "0": "没查或查不了（写 `原因：`）",
+   "1": "有问题（问题表里必须有对应条目）",
+   "2": "基本没问题，有小瑕疵（写证据）",
+   "3": "没问题（写证据）"
+  },
+  "evidence_rule": "证据要指到句号 lNN / 屏号、原文或数字，至少 8 个字；没证据的高分按 0 处理。",
+  "disagreement": "分歧：两位同一维度差 ≥2，或一人 ≤1、另一人 ≥2，交裁决人；两人都 ≥2 的维度，裁决人每项抽 2 维复核（专抓两个模型共同的盲点）。"
+ },
+ "adjudicator": {
+  "runner": "claude",
+  "model": "claude-opus-5-5"
+ },
+ "id": "lines_r3",
+ "chain": "t10_model_params/lines",
+ "loop": 3,
+ "max_loops": 3,
+ "parent": "edu_videos/ai_terms/t10_model_params/reviews/lines_r2",
+ "title": "t10_model_params · 台词审（口播＋屏幕文字）第 3 轮",
+ "target": "edu_videos/ai_terms/t10_model_params",
+ "episode": "t10_model_params",
+ "stage": "lines",
+ "stage_name": "台词审（口播＋屏幕文字 × 中英）",
+ "scenes": [],
+ "created_at": "2026-11-09T21:14:47",
+ "author": "Claude Code",
+ "known": "",
+ "changes": "# 台词审汇总：lines_r2\n\n处理状态：待处理 0 · 已改 36 · 不改 39 · 驳回 0（`python tools/edu_review.py fix` 登记；下一轮审稿人按「处理」列逐条复核）\n\n## 各项结论（最终分：裁决过的维度用裁决分，其余取两人较低分）\n\n| 项 | 最终分 | 未处理的必改 | 结论 |\n|---|---|---|---|\n| voice_zh | V1=1 V2=1 V3=2 V4=2 V5=2 V6=2 R=1 | 0 | 不通过 |\n| voice_en | V1=2 V2=2 V3=2 V4=2 V5=2 V6=2 R=2 | 0 | 通过 |\n| screen_zh | P1=1 P2=2 P3=2 P4=3 P5=2 P6=2 R=1 | 0 | 不通过 |\n| screen_en | P1=2 P2=2 P3=2 P4=1 P5=2 P6=2 R=1 | 0 | 不通过 |\n\n## 问题（来源 a = Claude、b = Codex、judge = 裁决补充）\n\n| 编号 | 项 | 位置 | 维度 | 级别 | 来源 | 原文 | 问题 | 建议改写 | 裁决人意见 | 处理 |\n|---|---|---|---|---|---|---|---|---|---|---|\n| I1 | screen_en | c_problem, c_experiment, c_lens, c_real, outro; agenda if present | P3, P5 | 存疑 | b | No package-card screenshots supplied | Chapter wording can be assessed, but card hierarchy, outro line separation, subtitle clearance and actual display timing cannot be verified. No agenda text is included either. | No wording change required beyond the outro correction above; verify rendered package cards. |  | 不改（理由：存疑：包装卡由 edu_package 按共用模板渲，成片后在 sheet 与抽帧里核） |\n| I2 | screen_en | l10–l11 | P4 | 建议 | b | Fare = base + per km × distance | “Per km” is understandable shorthand but awkward as the name of a quantity in an equation. Preserve consistency by changing the corresponding dial label too. | Dial: **Rate**<br>Formula: **Fare = base + rate × distance** | b · l10–l11「Rate」（改写）：口播说「per-kilometer price」，「Rate」是口播没有的新术语，还要连带改所有旋钮标签，收益很小。原文「Per km」保留。 | 不改（理由：裁决人判不采纳：Rate 是口播没有的新词） |\n| I3 | screen_en | l12 | P4/P3 | 建议 | a | The math · by people / Settings · from examples | Rows are not strictly parallel: \"The math\" has an article, \"Settings\" does not; no verb or colon, so each row reads as a clipped fragment. Same pair repeats at l37, so it is consistent, but still uneven. | Math · set by people / Settings · learned from examples (same at l37) |  | 已改：l12 与 l37 统一改「Math · set by people」「Settings · learned from examples」 |\n| I4 | screen_en | outro; also l13 | P4 | 必改 | b | Learning = setting knobs right | “Setting knobs right” sounds compressed and less idiomatic than the surrounding English. The strict outro requirement applies. Use the same replacement at l13 for consistency. | **Learning = tuning** |  | 已改：片尾与 l13 统一改「Learning = getting the knobs right」（裁决人定稿） |\n| I5 | screen_en | 片尾 / l13 | P4, P2 | 必改 | judge | Learning = setting knobs right | 严格项。「setting knobs right」去掉冠词后读起来生硬。口播 l13、l41 都说「turning the knobs to the right positions」，l30 屏上是「Training = turning knobs」，片尾的「setting」跟这两处都不一致。要保留旋钮比喻，不能改成 b 的「Learning = tuning」。 | Learning = getting the knobs right（片尾与 l13 同步改） |  | 已改：同 I4 |\n| I6 | screen_en | outro / l13 | P4 | 建议 | a | Learning = setting knobs right | Strict item (outro). Understandable and consistent with l13, but \"setting knobs right\" is clipped; a native would say \"getting the knobs right\" or \"tuning the knobs\". Not a hard breach; the \"right positions\" idea is the one narration l41 actually states. | Learning = getting the knobs right (and the same at l13) |  | 已改：同 I4 |\n| I7 | screen_en | l17 | P2 | 存疑 | a | Bars = how far off | Narration says \"little vertical lines\"; the screen calls them \"bars\" while the picture shows thin lines. | Gaps = how far off |  | 不改（理由：保留「Bars」：图例式短标签，与画面竖线对应；英文屏幕字数受限） |\n| I8 | screen_en | l19 | P1 | 建议 | b | Whole line goes up | A subject–verb clause closely restates the spoken movement. A movement label gives the slide a clearer structural role. | **Upward shift** | b · l19「Upward shift」（改写）：比「Whole line goes up」更抽象，脱离画面动作，比原文差。原文保留。 | 不改（理由：裁决人判不采纳） |\n| I9 | screen_en | l22 / l25 | P2 | 记录 | a | Per km dial $2.54 and \"$30.50\" | Narration says \"about $2.50\"; the dial shows $2.54. Not wrong (\"about\"), but a viewer may notice the gap between $2.50 spoken and $2.54 shown. | Keep; optionally say \"about two fifty-four\"-style in narration or round the dial to $2.50 |  | 不改（理由：记录级：口播带 about，旋钮读数 2.54 是程序算出的真实值） |\n| I10 | screen_en | l22 | P4 | 记录 | a | Backing off a bit | Gerund fragment, unlike its siblings; read",
+ "items": [
+  {
+   "id": "voice_zh",
+   "law": "lines",
+   "law_name": "中文口播（母语听感，盲审）",
+   "color": "#c0502e",
+   "scope": [],
+   "checks": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_zh.md",
+   "prompt": "items/voice_zh__a.md",
+   "what": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "problem": "上一版「本期内容」念成「这一期，讲四件事：它是个什么问题；为什么只背练习册不行……」，像在念目录，正常人不会这么说话（用户 2026-11-08 指出）；原先的审稿没抓到。",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "像真人在讲",
+     "question": "逐句：自然 / 有点怪 / 很怪。书面腔、讲解腔、翻译腔、念稿感、报菜名式罗列都算怪"
+    },
+    {
+     "id": "V2",
+     "name": "衔接与过渡",
+     "question": "开场、本期内容、章节转换、举例前后：像一个人顺着思路往下讲，而不是「下面讲第一点」式的模板或目录朗读；上下句接得上"
+    },
+    {
+     "id": "V3",
+     "name": "一遍听懂",
+     "question": "只靠耳朵：一句只带一个新意思；指代清楚（说「这个」时观众知道指什么）；术语先解释再用；数字、同音字不会听错"
+    },
+    {
+     "id": "V4",
+     "name": "精炼",
+     "question": "没有废话、重复、正确的空话；删掉不影响理解的句子要指出来"
+    },
+    {
+     "id": "V5",
+     "name": "口吻与节奏",
+     "question": "从头到尾是同一个亲切、清楚、不端着的讲解者；长短句交替，每句适合一口气念完"
+    },
+    {
+     "id": "V6",
+     "name": "改写",
+     "question": "每句「有点怪 / 很怪」都给出可以直接替换、不更长的中文改写；列出最别扭的 5 句并排序"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_zh__a.md",
+     "prompt": "items/voice_zh__a.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "多数句子像真人说话，如 l05「你从一头喂点东西进去，它从另一头吐出答案」、l35「不吃不睡，得念五千五百多年」。小瑕疵集中在 l16「线上就对着一个车费」、l27「学到的全部东西，就在旋钮上这两个读数里」偏书面。"
+      },
+      "V2": {
+       "score": 2,
+       "evidence": "开场 l01→l04「新闻里见过→参数是啥→上一期说过→这一期把模型打开看看」顺着往下讲，不是目录。l32「两个旋钮，猜个打车费是够了。可要让模型写文章……」、片尾 l40→l44 一路追问到「损失函数」，都接得顺。小瑕疵：l03 一句塞了两层意思。从严项（开场、串场、片尾）未发现「有点怪」。"
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "l10 已改成先乘后加，l15 已改成「路越远，车费越高」，都听得懂。小瑕疵：l33「二零二零年，OpenAI 发布的 G P T 三，就有一千七百五十亿个参数」6.5 秒里装了年份、名字、大数；l27 的「读数」第一次出现时没有铺垫。"
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "基本没有废话。l22「两块五左右……十块二左右」两个「左右」略重复；l12 与 l37 都说「机器怎么算是人定的」，是有意回扣，可保留。"
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "全程是同一个「咱们」口吻的讲解者，长短句交替，l07「这些旋钮，就叫参数。」与 l06 长句对比得当。l03（7.8 秒）、l33（6.5 秒）、l16 一口气略长；l13「所谓『学』」略带讲课腔。"
+      },
+      "V6": {
+       "score": 2,
+       "evidence": "每个「有点怪」都给了不更长的改写，最别扭的 5 句见下表，按序排列。"
+      },
+      "R": {
+       "score": 2,
+       "evidence": "l08「喂进去的是公里数，吐出来的是它猜的车费」、l10「先拿每公里的钱乘公里数，再加上起步价」、l15「越往右，路越远，越往上，车费越高」、l41「学呢，就是把旋钮拧到合适的位置」、l42、l43 均已解决，没有改出新问题。未解决：l16（I64）作者「保留」的理由是「改写引入新动作」，但这是针对 b 的具体改写，原句「猜法画出来」「线上就对着一个车费」本身听感仍偏书面，我的耳朵里没有解决，见问题表。l17、l21、l27、l29、l36、l37 的「不采纳」我认可，理由成立（l27 的「读数」承接 l35、l38；l29 靠 l28 衔接）。"
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/voice_zh__b.md",
+     "prompt": "items/voice_zh__b.md",
+     "scores": {
+      "V1": {
+       "score": 1,
+       "evidence": "l16「模型的猜法画出来」、l27「学到的全部东西，就在旋钮上这两个读数里」仍需要在脑中转述；l21「再拧每公里」省略得硌耳。逐句判断见下表。"
+      },
+      "V2": {
+       "score": 1,
+       "evidence": "l14 只说「我这儿有十二趟打车的记录」，l15 突然进入「每个点就是一趟」，听觉上缺少把记录画成图的动作；l37「但道理跟打车费一模一样」承担两个例子的衔接，比较对象没有说顺，按串场从严判。"
+      },
+      "V3": {
+       "score": 1,
+       "evidence": "l15 的点和方向没有先在声音里建立；l17「那就是这一趟它猜的跟实际差了多少」没有直接说清指的是竖线长度；l29「抄给别人，他手里就有了一模一样的模型」缺少别人也有同样机器的条件。"
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "整体围绕旋钮展开，少有离题句；l14「都是为了举例编的，不是真实账单」重复交代虚构性质，后半句可以删除。"
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "l11「跑五公里，它就猜二十块」、l25「这十二趟里压根没有八公里的」亲切顺口；l27「学到的全部东西，就在……读数里」与周围口吻相比偏书面。按材料默念判断，未核验真实配音。"
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "下表逐句复述；所有判为「有点怪」的句子均在问题表提供完整替换句，改写均不长于原句。最别扭的五句排序：①l15「每个点就是一趟」；②l37「道理跟打车费一模一样」；③l16「模型的猜法画出来」；④l27「学到的全部东西……在……读数里」；⑤l17「那就是……差了多少」。"
+      },
+      "R": {
+       "score": 1,
+       "evidence": "I58 已解决，l08「喂进去的是公里数，吐出来的是它猜的车费」压短后，对照句式可以自然承担解释功能；I59 已解决，原来的套句已拆掉；I60 已解决，l10 已改为「先拿每公里的钱乘公里数，再加上起步价」；I61 已解决，同一改动让听觉运算顺序清楚；I62 未解决，「越往右，路越远」消除了走路歧义，但声音里仍没有作图动作，以屏幕已有图表为由不处理，在本项只听条件下不成立；I63 已解决，「走得越远」已改；I64 未解决，「上一轮裁决定稿」不能证明自然，「查到价钱」是否合适也不能消除原句「猜法画出来」「线上就对着」的别扭；I65 未解决，旧改写从定量变成定性的反对理由成立，但仍可保留「差多少」并补明竖线长度；I66 未解决，旧改写偏长的批评成立，但画面标签不能替声音里的名词，「每公里」仍省掉了价钱；I67 未解决，需要保留「读数」的理由成立，却不需要保留「全部东西就在……里」的句式；I68 已解决，接受保留「读数」，「旋钮上这两个读数」结合前面的数值能够理解；I69 未解决，降为建议可以接受，但l28「机器还是那台机器」只说训练前后机器没变，没有交代接收者也有机器；I70 未解决，能推知意思不等于搭配自然，原句仍把「旋钮」接成「训练出来的」；I71 未解决，l37 明确在把语言模型接回打车例子，位于章节内部不取消其过渡功能，「道理跟打车费一模一样」仍不顺；I72 已解决，l41「学呢，就是把旋钮拧到合适的位置」自然；I73 已解决，l42 已去掉绕词；I74 已解决，l43「能不能拿它们来打个分」把追问推进到了办法；I75 已解决，现在两个问题分别问标准和办法，不再原地重复。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "像真人在讲",
+     "a": 2,
+     "a_ev": "多数句子像真人说话，如 l05「你从一头喂点东西进去，它从另一头吐出答案」、l35「不吃不睡，得念五千五百多年」。小瑕疵集中在 l16「线上就对着一个车费」、l27「学到的全部东西，就在旋钮上这两个读数里」偏书面。",
+     "b": 1,
+     "b_ev": "l16「模型的猜法画出来」、l27「学到的全部东西，就在旋钮上这两个读数里」仍需要在脑中转述；l21「再拧每公里」省略得硌耳。逐句判断见下表。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "判 a 站得住。全片 43 句里只有 l16「模型的猜法画出来……线上就对着一个车费」明显有点怪，l27「学到的全部东西，就在……读数里」只是略书面，两句都在非从严位置，属于小瑕疵。b 提的 l21「再拧每公里」不成立：l09、l11 已经把「每公里」立成旋钮名，s3 画面上的旋钮标签也叫「每公里」，顺口的省略不算硌耳。l16 仍建议本轮改掉（见补充问题）。"
+    },
+    "V2": {
+     "name": "衔接与过渡",
+     "a": 2,
+     "a_ev": "开场 l01→l04「新闻里见过→参数是啥→上一期说过→这一期把模型打开看看」顺着往下讲，不是目录。l32「两个旋钮，猜个打车费是够了。可要让模型写文章……」、片尾 l40→l44 一路追问到「损失函数」，都接得顺。小瑕疵：l03 一句塞了两层意思。从严项（开场、串场、片尾）未发现「有点怪」。",
+     "b": 1,
+     "b_ev": "l14 只说「我这儿有十二趟打车的记录」，l15 突然进入「每个点就是一趟」，听觉上缺少把记录画成图的动作；l37「但道理跟打车费一模一样」承担两个例子的衔接，比较对象没有说顺，按串场从严判。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "判 a 站得住。b 说 l14 到 l15 缺少作图动作，但 s3.html 在 l14 开始时已经画出坐标图和十二个点（`EDU.in(C.dots, EDU.t(\"l14\", .2))`），材料也标了 l14〔画面：图表〕，所以 l15「每个点就是一趟」指得到。l37「道理跟打车费一模一样」是章节内部在回扣前面的例子，不是章节串场，「道理跟打车费一样」也是正常的口语省略。从严项我自己逐句听过：l01–l04、l14、l26、l32、l40–l44 以及四张章节卡，都没有「有点怪」的。"
+    },
+    "V3": {
+     "name": "一遍听懂",
+     "a": 2,
+     "a_ev": "l10 已改成先乘后加，l15 已改成「路越远，车费越高」，都听得懂。小瑕疵：l33「二零二零年，OpenAI 发布的 G P T 三，就有一千七百五十亿个参数」6.5 秒里装了年份、名字、大数；l27 的「读数」第一次出现时没有铺垫。",
+     "b": 1,
+     "b_ev": "l15 的点和方向没有先在声音里建立；l17「那就是这一趟它猜的跟实际差了多少」没有直接说清指的是竖线长度；l29「抄给别人，他手里就有了一模一样的模型」缺少别人也有同样机器的条件。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "判 a 站得住。b 的三条证据都不成立：l15 有画面支撑（同上）；l17 的「那就是……差了多少」紧跟着画面上的「竖线 = 差多少」，口语里说竖线是「差了多少」，听者自然理解成竖线的长度；l29 的上一句 l28 刚说「机器还是那台机器」，前提已经交代了。剩下的小瑕疵是 l33 信息密、l16 里「线上」可能被听成 online（补充问题）。数字我核过：10.2+2.54×8≈30.5，1750 亿秒约等于 5545 年，都对。"
+    },
+    "V4": {
+     "name": "精炼",
+     "a": 2,
+     "a_ev": "基本没有废话。l22「两块五左右……十块二左右」两个「左右」略重复；l12 与 l37 都说「机器怎么算是人定的」，是有意回扣，可保留。",
+     "b": 2,
+     "b_ev": "整体围绕旋钮展开，少有离题句；l14「都是为了举例编的，不是真实账单」重复交代虚构性质，后半句可以删除。",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V5": {
+     "name": "口吻与节奏",
+     "a": 2,
+     "a_ev": "全程是同一个「咱们」口吻的讲解者，长短句交替，l07「这些旋钮，就叫参数。」与 l06 长句对比得当。l03（7.8 秒）、l33（6.5 秒）、l16 一口气略长；l13「所谓『学』」略带讲课腔。",
+     "b": 2,
+     "b_ev": "l11「跑五公里，它就猜二十块」、l25「这十二趟里压根没有八公里的」亲切顺口；l27「学到的全部东西，就在……读数里」与周围口吻相比偏书面。按材料默念判断，未核验真实配音。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "抽查后同意两人都给的 2 分。全程是同一个「咱们」口吻，l21 的「哎，拧过头了」和 l35 的「不吃不睡」很亲切。最长的 l06（8.3s）由两个短句组成，可以一口气念完。共同漏掉的只有一处记录级的：l33、l34 连着两次念「一千七百五十亿」，第二次是有意换成「旋钮」做对照，节奏上能接受，不扣分。最长单句 l03（7.8s）a 已经指出过。"
+    },
+    "V6": {
+     "name": "改写",
+     "a": 2,
+     "a_ev": "每个「有点怪」都给了不更长的改写，最别扭的 5 句见下表，按序排列。",
+     "b": 3,
+     "b_ev": "下表逐句复述；所有判为「有点怪」的句子均在问题表提供完整替换句，改写均不长于原句。最别扭的五句排序：①l15「每个点就是一趟」；②l37「道理跟打车费一模一样」；③l16「模型的猜法画出来」；④l27「学到的全部东西……在……读数里」；⑤l17「那就是……差了多少」。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "b 给 3 分偏高。b 排的最别扭前两名 l15、l37 都不成立（见驳回），l16 的改写「就在线上找车费」会被听成「在线上（online）」；l14 的改写删掉了「不是真实账单」的虚构声明。a 的 l22 改写「……十块二，差不多就行」比原句长 1 个字，语义也变了；l16 的改写用了书面词「对应」。两人的改写都有不能直接替换的条目，所以判 2 分。"
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "l08「喂进去的是公里数，吐出来的是它猜的车费」、l10「先拿每公里的钱乘公里数，再加上起步价」、l15「越往右，路越远，越往上，车费越高」、l41「学呢，就是把旋钮拧到合适的位置」、l42、l43 均已解决，没有改出新问题。未解决：l16（I64）作者「保留」的理由是「改写引入新动作」，但这是针对 b 的具体改写，原句「猜法画出来」「线上就对着一个车费」本身听感仍偏书面，我的耳朵里没有解决，见问题表。l17、l21、l27、l29、l36、l37 的「不采纳」我认可，理由成立（l27 的「读数」承接 l35、l38；l29 靠 l28 衔接）。",
+     "b": 1,
+     "b_ev": "I58 已解决，l08「喂进去的是公里数，吐出来的是它猜的车费」压短后，对照句式可以自然承担解释功能；I59 已解决，原来的套句已拆掉；I60 已解决，l10 已改为「先拿每公里的钱乘公里数，再加上起步价」；I61 已解决，同一改动让听觉运算顺序清楚；I62 未解决，「越往右，路越远」消除了走路歧义，但声音里仍没有作图动作，以屏幕已有图表为由不处理，在本项只听条件下不成立；I63 已解决，「走得越远」已改；I64 未解决，「上一轮裁决定稿」不能证明自然，「查到价钱」是否合适也不能消除原句「猜法画出来」「线上就对着」的别扭；I65 未解决，旧改写从定量变成定性的反对理由成立，但仍可保留「差多少」并补明竖线长度；I66 未解决，旧改写偏长的批评成立，但画面标签不能替声音里的名词，「每公里」仍省掉了价钱；I67 未解决，需要保留「读数」的理由成立，却不需要保留「全部东西就在……里」的句式；I68 已解决，接受保留「读数」，「旋钮上这两个读数」结合前面的数值能够理解；I69 未解决，降为建议可以接受，但l28「机器还是那台机器」只说训练前后机器没变，没有交代接收者也有机器；I70 未解决，能推知意思不等于搭配自然，原句仍把「旋钮」接成「训练出来的」；I71 未解决，l37 明确在把语言模型接回打车例子，位于章节内部不取消其过渡功能，「道理跟打车费一模一样」仍不顺；I72 已解决，l41「学呢，就是把旋钮拧到合适的位置」自然；I73 已解决，l42 已去掉绕词；I74 已解决，l43「能不能拿它们来打个分」把追问推进到了办法；I75 已解决，现在两个问题分别问标准和办法，不再原地重复。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "判 a 站得住，但 a 认可的 I67 要打折扣。I58–I63、I72–I75 都已解决。I65、I66、I69、I70、I71 裁决人上一轮的判断我认可，b 再按未解决判 1 分不成立。真正没解决的是两条：I64（l16）作者以「上一轮定稿、改写引入新动作」为由保留，这条理由只针对 b 那句具体改写，原句的别扭仍在，两位审稿人本轮又都抓到了；I67（l27）「保留读数」的理由只说明这个词要留，没有说明为什么要留「全部东西就在……里」的句式，a 给的改写「全在旋钮上这两个读数里了」把读数留住了。这两条都是建议级，所以给 2 分。"
+    }
+   },
+   "disputes": [
+    "V1",
+    "V2",
+    "V3",
+    "R"
+   ],
+   "audits": [
+    "V6",
+    "V5"
+   ],
+   "final_scores": {
+    "V1": 2,
+    "V2": 2,
+    "V3": 2,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2,
+    "R": 2
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "V1",
+     "V2",
+     "V3",
+     "R",
+     "V6",
+     "V5"
+    ],
+    "prompt": "items/voice_zh__judge.md",
+    "report": "reports/voice_zh__judge.md",
+    "ruling": {
+     "V1": {
+      "score": 2,
+      "evidence": "判 a 站得住。全片 43 句里只有 l16「模型的猜法画出来……线上就对着一个车费」明显有点怪，l27「学到的全部东西，就在……读数里」只是略书面，两句都在非从严位置，属于小瑕疵。b 提的 l21「再拧每公里」不成立：l09、l11 已经把「每公里」立成旋钮名，s3 画面上的旋钮标签也叫「每公里」，顺口的省略不算硌耳。l16 仍建议本轮改掉（见补充问题）。"
+     },
+     "V2": {
+      "score": 2,
+      "evidence": "判 a 站得住。b 说 l14 到 l15 缺少作图动作，但 s3.html 在 l14 开始时已经画出坐标图和十二个点（`EDU.in(C.dots, EDU.t(\"l14\", .2))`），材料也标了 l14〔画面：图表〕，所以 l15「每个点就是一趟」指得到。l37「道理跟打车费一模一样」是章节内部在回扣前面的例子，不是章节串场，「道理跟打车费一样」也是正常的口语省略。从严项我自己逐句听过：l01–l04、l14、l26、l32、l40–l44 以及四张章节卡，都没有「有点怪」的。"
+     },
+     "V3": {
+      "score": 2,
+      "evidence": "判 a 站得住。b 的三条证据都不成立：l15 有画面支撑（同上）；l17 的「那就是……差了多少」紧跟着画面上的「竖线 = 差多少」，口语里说竖线是「差了多少」，听者自然理解成竖线的长度；l29 的上一句 l28 刚说「机器还是那台机器」，前提已经交代了。剩下的小瑕疵是 l33 信息密、l16 里「线上」可能被听成 online（补充问题）。数字我核过：10.2+2.54×8≈30.5，1750 亿秒约等于 5545 年，都对。"
+     },
+     "R": {
+      "score": 2,
+      "evidence": "判 a 站得住，但 a 认可的 I67 要打折扣。I58–I63、I72–I75 都已解决。I65、I66、I69、I70、I71 裁决人上一轮的判断我认可，b 再按未解决判 1 分不成立。真正没解决的是两条：I64（l16）作者以「上一轮定稿、改写引入新动作」为由保留，这条理由只针对 b 那句具体改写，原句的别扭仍在，两位审稿人本轮又都抓到了；I67（l27）「保留读数」的理由只说明这个词要留，没有说明为什么要留「全部东西就在……里」的句式，a 给的改写「全在旋钮上这两个读数里了」把读数留住了。这两条都是建议级，所以给 2 分。"
+     },
+     "V6": {
+      "score": 2,
+      "evidence": "b 给 3 分偏高。b 排的最别扭前两名 l15、l37 都不成立（见驳回），l16 的改写「就在线上找车费」会被听成「在线上（online）」；l14 的改写删掉了「不是真实账单」的虚构声明。a 的 l22 改写「……十块二，差不多就行」比原句长 1 个字，语义也变了；l16 的改写用了书面词「对应」。两人的改写都有不能直接替换的条目，所以判 2 分。"
+     },
+     "V5": {
+      "score": 2,
+      "evidence": "抽查后同意两人都给的 2 分。全程是同一个「咱们」口吻，l21 的「哎，拧过头了」和 l35 的「不吃不睡」很亲切。最长的 l06（8.3s）由两个短句组成，可以一口气念完。共同漏掉的只有一处记录级的：l33、l34 连着两次念「一千七百五十亿」，第二次是有意换成「旋钮」做对照，节奏上能接受，不扣分。最长单句 l03（7.8s）a 已经指出过。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 19,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_zh__a",
+    "codex/voice_zh__b"
+   ]
+  },
+  {
+   "id": "voice_en",
+   "law": "lines",
+   "law_name": "English narration (native ear, blind)",
+   "color": "#2e6fc0",
+   "scope": [],
+   "checks": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_en.md",
+   "prompt": "items/voice_en__a.md",
+   "what": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "problem": "The previous agenda read 'In this episode: What the problem is. Why memorizing answers fails. A different way to think about learning…' — a table of contents read aloud. No one talks like that (caught by the user, 2026-11-08); earlier reviews missed it.",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "Sounds like a person talking",
+     "question": "Each line: natural / a bit off / clearly off. Written-style, lecture tone, translated-from-Chinese phrasing, telegraphic lists all count as off"
+    },
+    {
+     "id": "V2",
+     "name": "Flow and transitions",
+     "question": "Cold open, the 'what's coming' part, chapter changes, before/after examples: does it sound like one person following a thought, not 'Point one…' templates or a TOC read aloud? Do adjacent lines connect?"
+    },
+    {
+     "id": "V3",
+     "name": "Clear on one hearing",
+     "question": "Ear only: one new idea per line; clear reference ('this' points to something); terms explained before used; numbers and words not misheard"
+    },
+    {
+     "id": "V4",
+     "name": "Tight",
+     "question": "No filler, repetition, or empty truisms; point out lines that could go without losing anything"
+    },
+    {
+     "id": "V5",
+     "name": "Voice and rhythm",
+     "question": "One warm, clear, unpretentious narrator throughout; varied sentence length; each line sayable in one breath"
+    },
+    {
+     "id": "V6",
+     "name": "Rewrites",
+     "question": "For every 'a bit off' / 'clearly off' line, a drop-in rewrite no longer than the original; rank the 5 most awkward lines"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_en__a.md",
+     "prompt": "items/voice_en__a.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "Nearly every line is spoken English (\"Nobody types that in\", \"crack a model open\", \"no eating, no sleeping\"). Small written-style leftovers: l16 \"they form a straight line, a fare for every distance\" (appositive fragment); l09 \"At its simplest, this machine needs just two knobs\"."
+      },
+      "V2": {
+       "score": 3,
+       "evidence": "Cold open l01 to l04 runs \"news -> what is it -> last time -> let's crack one open\" like one person thinking. The outro l42 \"But what does 'the right positions' actually mean?\" then l43 \"They're the clue\" then l44 \"That's next time\" chains well. No TOC-style reading anywhere."
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "Terms are explained before use (l07 \"Those knobs are the parameters\"). Weak spots: l44 \"loss functions\" is a new term with no gloss, though it is only a teaser. l33 and l34 pack a date, \"G P T three\" and 175 billion into 4.2s and 1.5s, so the number may be rushed. Listen to the actual audio."
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "l37 \"people decide how the machine does its math, and the settings are learned from examples\" repeats l12 almost word for word. l39 \"it means the machine has over a hundred billion knobs\" repeats l34 and l01. l41 repeats l13. The outro repeat is acceptable as a recap."
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "One warm, plain narrator throughout, with good length variety (\"Those knobs are the parameters.\" next to the long l18). l21 \"So turn the per-kilometer knob, and the line gets steeper. At three fifty a kilometer, we've gone too far: now the long rides are overestimated.\" is a bit long for one breath at 9.6s."
+      },
+      "V6": {
+       "score": 2,
+       "evidence": "Only a handful of lines are off. A drop-in rewrite for each is in the issues table, none longer than the original."
+      },
+      "R": {
+       "score": 3,
+       "evidence": "Previous voice_en items are resolved. l10 now reads \"multiplies the per-kilometer price by the distance, then adds the base fare\" with no ambiguity. l43 \"They're the clue\" no longer re-asks the question. l28 \"Only the knob settings have\" no longer echoes l27. l22 \"nudge the base fare up to\" fixes the direction. The \"not adopted\" calls hold: \"five and a half thousand years\" is idiomatic, and the l17 \"that line\" points back to l16."
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/voice_en__b.md",
+     "prompt": "items/voice_en__b.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "Most lines sound conversational: l02 asks two direct questions, and l19 naturally connects an action to its result. However, l16’s trailing “a fare for every distance” sounds appended rather than spoken through."
+      },
+      "V2": {
+       "score": 3,
+       "evidence": "l01–l04 move naturally from a familiar headline to a question and an invitation. l24–l26 connect testing the model to asking what it learned; l42–l44 give the outro a clear continuing thought. No spoken table of contents remains. The supplied chapter titles are idiomatic."
+      },
+      "V3": {
+       "score": 1,
+       "evidence": "l29 gives the friend two numbers without explicitly supplying the machine that uses them. Also, l33’s date, spelled-out name and large number are allotted 4.2 seconds; l34 repeats the large number in 1.5 seconds. Comfortable comprehension at those durations remains unverified."
+      },
+      "V4": {
+       "score": 3,
+       "evidence": "l14 now stops at “twelve made-up taxi rides,” removing the redundant qualifications. l27–l28 distinguish what changed from what stayed fixed. The brief l40–l41 recap serves the question in l42."
+      },
+      "V5": {
+       "score": 1,
+       "evidence": "The wording generally supports a warm, consistent voice, especially “Back … off” and “nudge … up” in l22. But the supplied 4.2 seconds for l33 and 1.5 seconds for l34 remain incompatible with a comfortable mental read of those number-heavy lines."
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "Every flagged line has a replacement below, no longer than its original. l16–l17 receive simpler spoken constructions; l29 supplies the missing premise. l33–l34 retain natural wording and require adequate delivery time. Five listening snags are ranked below."
+      },
+      "R": {
+       "score": 1,
+       "evidence": "I43 resolved: l10 now states multiplication before addition. I44 resolved: l14 loses both redundant qualifications. I45 partly resolved: l16 improves the opening but retains the appended “a fare for every distance.” I46 resolved: guesses are now explicitly put “on a graph.” I47 remains a minor snag: l17 still nests one “line” inside a reference to another; context makes it recoverable, but a shorter clarification is available. I48 resolved: l22 now says “nudge … up.” I49 resolved: l28 avoids repeating “where the knobs are set.” I50 unresolved: l29 still gives the friend numbers without the machine. I51 resolved: l30 drops the repeated “So when” opening. I52, I53, I54 and I55 remain unverified: the supplied l33–l34 durations are unchanged, and no recording demonstrates comfortable delivery. I56 needs no change: “five and a half thousand years” is ordinary native English, particularly in British usage; rejecting the claim that nobody says it is justified. I57 resolved: “They’re the clue” connects l43 to l42 without repeating its question. Some author-disposition text in the supplied previous-round file is garbled, so unreadable rejection reasons cannot be independently validated."
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "Sounds like a person talking",
+     "a": 2,
+     "a_ev": "Nearly every line is spoken English (\"Nobody types that in\", \"crack a model open\", \"no eating, no sleeping\"). Small written-style leftovers: l16 \"they form a straight line, a fare for every distance\" (appositive fragment); l09 \"At its simplest, this machine needs just two knobs\".",
+     "b": 2,
+     "b_ev": "Most lines sound conversational: l02 asks two direct questions, and l19 naturally connects an action to its result. However, l16’s trailing “a fare for every distance” sounds appended rather than spoken through.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "同意两位。除 l16 的名词短语尾巴外，大部分是口语（l12「But where each knob is set? Nobody types that in.」，l35「no eating, no sleeping」）。两人都漏的一个小点：l22「ten dollars twenty」和 l25「thirty dollars fifty」是英澳说法，美国观众更常说「ten twenty」「thirty fifty」。不影响听懂，记一笔（见补充问题），不扣分。"
+    },
+    "V2": {
+     "name": "Flow and transitions",
+     "a": 3,
+     "a_ev": "Cold open l01 to l04 runs \"news -> what is it -> last time -> let's crack one open\" like one person thinking. The outro l42 \"But what does 'the right positions' actually mean?\" then l43 \"They're the clue\" then l44 \"That's next time\" chains well. No TOC-style reading anywhere.",
+     "b": 3,
+     "b_ev": "l01–l04 move naturally from a familiar headline to a question and an invitation. l24–l26 connect testing the model to asking what it learned; l42–l44 give the outro a clear continuing thought. No spoken table of contents remains. The supplied chapter titles are idiomatic.",
+     "verdict": "抽查",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": "严格项逐条复核。冷开场 l01–l04 是「新闻 → 提问 → 上回 → 打开看看」一条思路，没有目录腔。章节卡「What a model looks like / Let's turn the knobs / What it learned / Billions of knobs」用词地道；每章开头那句 l05、l14、l26、l32 都接得上卡片。片尾 l40–l44 回顾、提问、回扣竖线、预告，衔接顺。l02 和 l04 都以「So」开头，属正常口语，严格标准下也不算 a bit off。没有共同漏掉的必改项。"
+    },
+    "V3": {
+     "name": "Clear on one hearing",
+     "a": 2,
+     "a_ev": "Terms are explained before use (l07 \"Those knobs are the parameters\"). Weak spots: l44 \"loss functions\" is a new term with no gloss, though it is only a teaser. l33 and l34 pack a date, \"G P T three\" and 175 billion into 4.2s and 1.5s, so the number may be rushed. Listen to the actual audio.",
+     "b": 1,
+     "b_ev": "l29 gives the friend two numbers without explicitly supplying the machine that uses them. Also, l33’s date, spelled-out name and large number are allotted 4.2 seconds; l34 repeats the large number in 1.5 seconds. Comfortable comprehension at those durations remains unverified.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "b 判 1 的两条依据都站不住。一是 l33 4.2s、l34 1.5s，这是估算时间轴把「a hundred and seventy-five billion」「G P T three」合并成数字记号计数造成的（timeline.en.json `estimated: true`，audio/en 为空）。上一轮 I52–I54 已裁定为工具估算问题，降为记录，配音后用 qa 实测复核；措辞本身一遍能听清，b 自己也承认措辞自然。二是 l29「hand it to a friend」，上一轮 I50 已判不采纳：l10 讲过算法，l12 说过「People decide how the machine does its math」，l28 又说「The machine itself hasn't changed」，机器是固定的，听得出来。剩下的小瑕疵是 l44「loss functions」没有解释就收尾，只是预告，扣到 2 分。"
+    },
+    "V4": {
+     "name": "Tight",
+     "a": 2,
+     "a_ev": "l37 \"people decide how the machine does its math, and the settings are learned from examples\" repeats l12 almost word for word. l39 \"it means the machine has over a hundred billion knobs\" repeats l34 and l01. l41 repeats l13. The outro repeat is acceptable as a recap.",
+     "b": 3,
+     "b_ev": "l14 now stops at “twelve made-up taxi rides,” removing the redundant qualifications. l27–l28 distinguish what changed from what stayed fixed. The brief l40–l41 recap serves the question in l42.",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V5": {
+     "name": "Voice and rhythm",
+     "a": 2,
+     "a_ev": "One warm, plain narrator throughout, with good length variety (\"Those knobs are the parameters.\" next to the long l18). l21 \"So turn the per-kilometer knob, and the line gets steeper. At three fifty a kilometer, we've gone too far: now the long rides are overestimated.\" is a bit long for one breath at 9.6s.",
+     "b": 1,
+     "b_ev": "The wording generally supports a warm, consistent voice, especially “Back … off” and “nudge … up” in l22. But the supplied 4.2 seconds for l33 and 1.5 seconds for l34 remain incompatible with a comfortable mental read of those number-heavy lines.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "b 判 1 的依据只有 l33/l34 的估算时长，同上，不算文字缺陷。全片同一个口吻，长短句交替（l07「Those knobs are the parameters.」1.9s 紧挨 l08、l09 的长句）。a 说 l21 一口气说不完不成立：l21 是两句，在「steeper.」处自然换气。保留 2 分是因为真实配音还没出来，l33/l34 的实际节奏没法确认；配音后如果语速超过约 4.5 音节/秒，要按 qa 结果重开。"
+    },
+    "V6": {
+     "name": "Rewrites",
+     "a": 2,
+     "a_ev": "Only a handful of lines are off. A drop-in rewrite for each is in the issues table, none longer than the original.",
+     "b": 3,
+     "b_ev": "Every flagged line has a replacement below, no longer than its original. l16–l17 receive simpler spoken constructions; l29 supplies the missing premise. l33–l34 retain natural wording and require adequate delivery time. Five listening snags are ranked below.",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 3,
+     "a_ev": "Previous voice_en items are resolved. l10 now reads \"multiplies the per-kilometer price by the distance, then adds the base fare\" with no ambiguity. l43 \"They're the clue\" no longer re-asks the question. l28 \"Only the knob settings have\" no longer echoes l27. l22 \"nudge the base fare up to\" fixes the direction. The \"not adopted\" calls hold: \"five and a half thousand years\" is idiomatic, and the l17 \"that line\" points back to l16.",
+     "b": 1,
+     "b_ev": "I43 resolved: l10 now states multiplication before addition. I44 resolved: l14 loses both redundant qualifications. I45 partly resolved: l16 improves the opening but retains the appended “a fare for every distance.” I46 resolved: guesses are now explicitly put “on a graph.” I47 remains a minor snag: l17 still nests one “line” inside a reference to another; context makes it recoverable, but a shorter clarification is available. I48 resolved: l22 now says “nudge … up.” I49 resolved: l28 avoids repeating “where the knobs are set.” I50 unresolved: l29 still gives the friend numbers without the machine. I51 resolved: l30 drops the repeated “So when” opening. I52, I53, I54 and I55 remain unverified: the supplied l33–l34 durations are unchanged, and no recording demonstrates comfortable delivery. I56 needs no change: “five and a half thousand years” is ordinary native English, particularly in British usage; rejecting the claim that nobody says it is justified. I57 resolved: “They’re the clue” connects l43 to l42 without repeating its question. Some author-disposition text in the supplied previous-round file is garbled, so unreadable rejection reasons cannot be independently validated.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "I43、I44、I46、I48、I49、I51、I57 都已解决（l10 先乘后加，l14 已缩短，l22「nudge … up」，l28「Only the knob settings have」，l43「They're the clue」）。I47、I50、I56 的不采纳理由成立，见上一轮裁决。I52–I55 按裁定延到配音后实测，不算未解决。a 给 3 分偏宽：I45/I46 改成了 l16「they form a straight line, a fare for every distance」，尾巴挂着一个名词短语，本轮两位都判 a bit off，属于改出的小问题，所以给 2 不给 3。b 给 1 分偏严，它算作未解决的 I50、I52–I55 都已有裁定。"
+    }
+   },
+   "disputes": [
+    "V3",
+    "V5",
+    "R"
+   ],
+   "audits": [
+    "V1",
+    "V2"
+   ],
+   "final_scores": {
+    "V1": 2,
+    "V2": 3,
+    "V3": 2,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2,
+    "R": 2
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "V3",
+     "V5",
+     "R",
+     "V1",
+     "V2"
+    ],
+    "prompt": "items/voice_en__judge.md",
+    "report": "reports/voice_en__judge.md",
+    "ruling": {
+     "V3": {
+      "score": 2,
+      "evidence": "b 判 1 的两条依据都站不住。一是 l33 4.2s、l34 1.5s，这是估算时间轴把「a hundred and seventy-five billion」「G P T three」合并成数字记号计数造成的（timeline.en.json `estimated: true`，audio/en 为空）。上一轮 I52–I54 已裁定为工具估算问题，降为记录，配音后用 qa 实测复核；措辞本身一遍能听清，b 自己也承认措辞自然。二是 l29「hand it to a friend」，上一轮 I50 已判不采纳：l10 讲过算法，l12 说过「People decide how the machine does its math」，l28 又说「The machine itself hasn't changed」，机器是固定的，听得出来。剩下的小瑕疵是 l44「loss functions」没有解释就收尾，只是预告，扣到 2 分。"
+     },
+     "V5": {
+      "score": 2,
+      "evidence": "b 判 1 的依据只有 l33/l34 的估算时长，同上，不算文字缺陷。全片同一个口吻，长短句交替（l07「Those knobs are the parameters.」1.9s 紧挨 l08、l09 的长句）。a 说 l21 一口气说不完不成立：l21 是两句，在「steeper.」处自然换气。保留 2 分是因为真实配音还没出来，l33/l34 的实际节奏没法确认；配音后如果语速超过约 4.5 音节/秒，要按 qa 结果重开。"
+     },
+     "R": {
+      "score": 2,
+      "evidence": "I43、I44、I46、I48、I49、I51、I57 都已解决（l10 先乘后加，l14 已缩短，l22「nudge … up」，l28「Only the knob settings have」，l43「They're the clue」）。I47、I50、I56 的不采纳理由成立，见上一轮裁决。I52–I55 按裁定延到配音后实测，不算未解决。a 给 3 分偏宽：I45/I46 改成了 l16「they form a straight line, a fare for every distance」，尾巴挂着一个名词短语，本轮两位都判 a bit off，属于改出的小问题，所以给 2 不给 3。b 给 1 分偏严，它算作未解决的 I50、I52–I55 都已有裁定。"
+     },
+     "V1": {
+      "score": 2,
+      "evidence": "同意两位。除 l16 的名词短语尾巴外，大部分是口语（l12「But where each knob is set? Nobody types that in.」，l35「no eating, no sleeping」）。两人都漏的一个小点：l22「ten dollars twenty」和 l25「thirty dollars fifty」是英澳说法，美国观众更常说「ten twenty」「thirty fifty」。不影响听懂，记一笔（见补充问题），不扣分。"
+     },
+     "V2": {
+      "score": 3,
+      "evidence": "严格项逐条复核。冷开场 l01–l04 是「新闻 → 提问 → 上回 → 打开看看」一条思路，没有目录腔。章节卡「What a model looks like / Let's turn the knobs / What it learned / Billions of knobs」用词地道；每章开头那句 l05、l14、l26、l32 都接得上卡片。片尾 l40–l44 回顾、提问、回扣竖线、预告，衔接顺。l02 和 l04 都以「So」开头，属正常口语，严格标准下也不算 a bit off。没有共同漏掉的必改项。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 14,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_en__a",
+    "codex/voice_en__b"
+   ]
+  },
+  {
+   "id": "screen_zh",
+   "law": "lines",
+   "law_name": "中文屏幕文字（PPT 式画面）",
+   "color": "#b8860b",
+   "scope": [],
+   "checks": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "how": "硬上限（超了必须报）：标题 ≤12 字；其余每块 ≤16 字；同屏文字块 ≤4 块（不含页眉小标签、出处与图表刻度）；一屏总字数 ≤36 字。屏幕下方还有口播字幕，观众要同时看。计数口径（第 2 轮裁决定，2026-11-09）：页眉小标签、案例页签、出处、片尾署名不计；同构的列表 / 表格 / 卡片行（每项 ≤8 字、最多 6 项、样子一样）合算 1 块，编号不计字；图里的文字（区域名、曲线名、轴标题、柱条标签、图上注释）要计字数，整张图合算 1 块，只有坐标刻度数字豁免；表格的列头算在表里。",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_zh.md",
+   "prompt": "items/screen_zh__a.md",
+   "what": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "problem": "上一版屏幕文字很多是整句（如「另训一个模型，在两家医院的片子上认医院的准确率——胸片里藏着医院的“指纹”」），等于把口播又印了一遍；用户要求画面只列纲要、相对简练（2026-11-08）。",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "只列纲要",
+     "question": "每屏只放关键词、短语、关键数字、标签；不是口播整句的复述。按硬上限逐屏数字数，超了就报"
+    },
+    {
+     "id": "P2",
+     "name": "与口播分工",
+     "question": "屏幕给结构、数字、对比，口播负责解释；不和口播逐字重复，也不出现口播没说过的新说法；术语、叫法与口播一致"
+    },
+    {
+     "id": "P3",
+     "name": "层级与体例",
+     "question": "一眼先看到什么、第二眼看什么；标题—要点—注释不超过三级；编号、标签、章节名、目录项前后一致（例：目录写的和章节卡写的是不是同一个说法）"
+    },
+    {
+     "id": "P4",
+     "name": "中文措辞与排版",
+     "question": "短语化、不带句末句号；标点、引号、空格规范；不半中半英；**标题、章名读出来要顺**：名词堆砌、生造的名词短语（如「现实里的祸」）算必改"
+    },
+    {
+     "id": "P5",
+     "name": "看得完",
+     "question": "按截图和停留时间：文字量在停留时间内读得完（约 6 字/秒，还要分神看字幕和图）"
+    },
+    {
+     "id": "P6",
+     "name": "改写",
+     "question": "每处超限或不顺的屏幕文字，都给出更短、可直接替换的写法"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_zh__a.md",
+     "prompt": "items/screen_zh__a.md",
+     "scores": {
+      "P1": {
+       "score": 2,
+       "evidence": "按口径逐屏数过，没有一屏超硬上限。l12「模型 2＋起步价 3＋每公里 3＋5 公里 3＋20 元 2＋读数 2＝15 字」图块，加「怎么算 人定」「拧到几 从例子里学」两卡，全屏约 28 字、3 块；l25 图 9＋旋钮 10＋「8 公里 → 30.5 元」5＋「记录里没有」5＝约 29 字、4 块，正好踩块数上限；l29 约 26 字、3 块。小瑕疵：l18「全都猜少了」、l21「拧过头了」、l32「写文章、聊天：旋钮多得多」仍是口播原话的压缩，不算纲要式关键词。"
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "术语与口播一致（参数＝旋钮、读数、起步价、每公里、竖线）。l28「机器没变 / 旋钮位置变了」把口播「机器还是那台机器，一点没变，变的只有旋钮的位置」压成对比，分工合适。未发现口播没说过的新说法。小瑕疵：l18、l21、l22「往回拧一点」仍与口播同词。"
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "多数屏「大标题＋图或表」两级；l29 标题「学到的 = 两个读数」＞表格＞「= 一模一样的模型」，视线顺。l12 与 l37 的「怎么算 人定 / 拧到几 从例子里学」同体例，前后一致。瑕疵：l04「模型里面」这个决定问号含义的标签只有 22px 小灰字，一眼先看到的是 260px 的「？」。四个章名体例不齐（问句 / 祈使 / 名词）。"
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "无句末句号；「5 公里」「20 元」数字与汉字间空格一致；「车费（元）」「距离（公里）」括号规范；GPT-3、OpenAI 是专名，不算半中半英。章名「模型长什么样」「学到了什么」「上千亿个旋钮」读得顺，「拧拧旋钮试试」口语但不怪，我不判必改。瑕疵：l33「175,000,000,000」是 12 位西式千分位，中文观众要数位。"
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "新增文字量都在 6 字/秒以内：l10 新增「车费 = 起步价 + 每公里 × 公里数」11 字，4.8s；l12 约 28 字但图块在 l11 已出现，新增只有两卡 13 字，7.2s；l25 新增 10 字，5.0s。l07 仅 1.7s，但「参数 = 旋钮」留到 l08 中段（上一轮 I28 已核）。扣分：c_problem、c_experiment、c_lens、c_real 与片尾卡仍没有截图，停留时间和排版无法核。"
+      },
+      "P6": {
+       "score": 2,
+       "evidence": "本轮没有超限或必改项，仅 4 条建议和 3 条记录，各给了可替换写法（见问题表）。"
+      },
+      "R": {
+       "score": 2,
+       "evidence": "I29/I30（l09–l13 图块超 16 字）：现按口径为 15 字，已解决。I31（l11 整屏超限）：l11 现只剩图块＋算式，已解决。I33、I34、I36、I37（l20、l21、l23、l25 复述口播）：已改为「远的竖线更长」「拧过头了」「竖线都很短」「记录里没有」，已解决（l21 仍与口播同词，见 I3）。I38（l29 重复旋钮）：截图确认旋钮已撤，全屏约 26 字，已解决。I24/I25（片尾和章节卡无截图）：本轮材料仍无截图，未解决但属材料缺口，维持存疑。作者不采纳的 I26（章名）、I32（l18）、I40（l32）、I42（l33）：理由成立，因为 10 字未超限，章名不算怪，l33 先大数字后换算是有意设计；未发现改出新问题。"
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/screen_zh__b.md",
+     "prompt": "items/screen_zh__b.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "l04 图内“从例子里学规律”7字＋“学出来的”4字＋“模型”2字＋“模型里面”4字，共17字，超过图块16字上限。其余已提供截图未发现硬超限；l09–l13 流程图均为15字，l11 全屏19字，l29 含卡内“抄给别人”共26字。未把自动清单中的独立文字节点直接当作块数。"
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "l17“竖线＝差多少”、l20“远的竖线更长”让文字指向图形，口播负责解释，分工明确；l25“记录里没有”仍未明确缺少的是“8公里的记录”，容易把整条“8公里→30.5元”当作指代对象。"
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "l12“怎么算／人定”与“拧到几／从例子里学”对应清楚；l29 已撤掉重复旋钮，标题、表格、结论层级明确。四个章节名与场景页眉一致，但章节卡、片尾截图仍缺，无法核实其实际层级。"
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "“模型长什么样”“拧拧旋钮试试”“学到了什么”“上千亿个旋钮”都自然顺口，无须强行统一成名词短语；l25“记录里没有”仍像省掉宾语的半句话。"
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "l35“一秒念一个读数／≈5545年”共9字、5.9秒，l39“千亿参数＝千亿旋钮”8字、6.1秒，阅读余量充足。l07 仅标1.7秒，延续至l08中段的显示时长仍只有处理说明；章节卡无时长，片尾仅给整段19秒，尚不能全面核实。"
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "问题表为l04提供删减后13字的图中文字，为l25提供“无8公里记录”，为l32提供“更多旋钮／写文章、聊天”，均可直接替换。"
+      },
+      "R": {
+       "score": 1,
+       "evidence": "I24、I25未解决：章节卡和片尾仍无截图，“共用模板渲染”不能代替视觉验证；I26不采纳理由成立：“拧拧旋钮试试”自然，与本片口吻相符；I27复核发现新问题：l04层级虽清楚，图内文字合计17字超限；I28未解决：延长停留已有处理说明，当前材料仍不能独立验证；I29、I30已解决：l09–l13图块均15字；I31已解决：l11文字公式已撤，只留数字算式；I32不采纳理由成立：“全都猜少了”只有5字，可作图示结论；I33已解决：“远的竖线更长”沿用图形叫法；I34已解决：“拧过头了”已删去后半句复述；I35维持记录：“往回”仅指每公里旋钮，但同屏读数及口播足以限定；I36已解决：“竖线都很短”对应图形；I37未解决：“十二趟里没有”改为“记录里没有”，仍未补清指代；I38已解决：重复灰旋钮已撤；I39原计数已随改版失效，当前l29含卡内标签共26字；I40未解决：“10字合限、与口播一致”未回应纲要化建议；I41维持记录：l32读得顺，不判措辞必改；I42不采纳理由成立：l33大数字、l34中文数量换算有明确递进，值得保留。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "只列纲要",
+     "a": 2,
+     "a_ev": "按口径逐屏数过，没有一屏超硬上限。l12「模型 2＋起步价 3＋每公里 3＋5 公里 3＋20 元 2＋读数 2＝15 字」图块，加「怎么算 人定」「拧到几 从例子里学」两卡，全屏约 28 字、3 块；l25 图 9＋旋钮 10＋「8 公里 → 30.5 元」5＋「记录里没有」5＝约 29 字、4 块，正好踩块数上限；l29 约 26 字、3 块。小瑕疵：l18「全都猜少了」、l21「拧过头了」、l32「写文章、聊天：旋钮多得多」仍是口播原话的压缩，不算纲要式关键词。",
+     "b": 1,
+     "b_ev": "l04 图内“从例子里学规律”7字＋“学出来的”4字＋“模型”2字＋“模型里面”4字，共17字，超过图块16字上限。其余已提供截图未发现硬超限；l09–l13 流程图均为15字，l11 全屏19字，l29 含卡内“抄给别人”共26字。未把自动清单中的独立文字节点直接当作块数。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "采 a。l04 截图和 s0.html 都显示这是三个分开的元素：#r1 卡「上一期 / 从例子里学规律」→ #r3「学出来的 / 模型」，右侧 #box「模型里面 ?」是另一张卡，没有箭头相连，不是一张图。即便把箭头两端算作一张图，也是 上一期 3＋从例子里学规律 7＋学出来的 4＋模型 2＝16 字，不超限。b 的 17 字把另一张卡里的「模型里面」并了进来，却又没计「上一期」，口径前后不一致，必改不成立。其余各屏按口径核过：l12 约 28 字 3 块，l25 约 29 字 4 块，l28 约 27 字 3 块，l29 约 26 字 3 块，都在上限内。"
+    },
+    "P2": {
+     "name": "与口播分工",
+     "a": 2,
+     "a_ev": "术语与口播一致（参数＝旋钮、读数、起步价、每公里、竖线）。l28「机器没变 / 旋钮位置变了」把口播「机器还是那台机器，一点没变，变的只有旋钮的位置」压成对比，分工合适。未发现口播没说过的新说法。小瑕疵：l18、l21、l22「往回拧一点」仍与口播同词。",
+     "b": 2,
+     "b_ev": "l17“竖线＝差多少”、l20“远的竖线更长”让文字指向图形，口播负责解释，分工明确；l25“记录里没有”仍未明确缺少的是“8公里的记录”，容易把整条“8公里→30.5元”当作指代对象。",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P3": {
+     "name": "层级与体例",
+     "a": 2,
+     "a_ev": "多数屏「大标题＋图或表」两级；l29 标题「学到的 = 两个读数」＞表格＞「= 一模一样的模型」，视线顺。l12 与 l37 的「怎么算 人定 / 拧到几 从例子里学」同体例，前后一致。瑕疵：l04「模型里面」这个决定问号含义的标签只有 22px 小灰字，一眼先看到的是 260px 的「？」。四个章名体例不齐（问句 / 祈使 / 名词）。",
+     "b": 2,
+     "b_ev": "l12“怎么算／人定”与“拧到几／从例子里学”对应清楚；l29 已撤掉重复旋钮，标题、表格、结论层级明确。四个章节名与场景页眉一致，但章节卡、片尾截图仍缺，无法核实其实际层级。",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P4": {
+     "name": "中文措辞与排版",
+     "a": 2,
+     "a_ev": "无句末句号；「5 公里」「20 元」数字与汉字间空格一致；「车费（元）」「距离（公里）」括号规范；GPT-3、OpenAI 是专名，不算半中半英。章名「模型长什么样」「学到了什么」「上千亿个旋钮」读得顺，「拧拧旋钮试试」口语但不怪，我不判必改。瑕疵：l33「175,000,000,000」是 12 位西式千分位，中文观众要数位。",
+     "b": 2,
+     "b_ev": "“模型长什么样”“拧拧旋钮试试”“学到了什么”“上千亿个旋钮”都自然顺口，无须强行统一成名词短语；l25“记录里没有”仍像省掉宾语的半句话。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "维持 2。四个章名「模型长什么样」「拧拧旋钮试试」「学到了什么」「上千亿个旋钮」按从严条目复核，读着都顺，不判必改。瑕疵有两处：l25「记录里没有」缺宾语；l25「8 公里 → 30.5 元」是近似值却没标近似，而 l35 写的是「≈ 5545 年」，口播也说「三十块五左右」，同片的近似标记前后不一。两人都漏了这一处。"
+    },
+    "P5": {
+     "name": "看得完",
+     "a": 2,
+     "a_ev": "新增文字量都在 6 字/秒以内：l10 新增「车费 = 起步价 + 每公里 × 公里数」11 字，4.8s；l12 约 28 字但图块在 l11 已出现，新增只有两卡 13 字，7.2s；l25 新增 10 字，5.0s。l07 仅 1.7s，但「参数 = 旋钮」留到 l08 中段（上一轮 I28 已核）。扣分：c_problem、c_experiment、c_lens、c_real 与片尾卡仍没有截图，停留时间和排版无法核。",
+     "b": 2,
+     "b_ev": "l35“一秒念一个读数／≈5545年”共9字、5.9秒，l39“千亿参数＝千亿旋钮”8字、6.1秒，阅读余量充足。l07 仅标1.7秒，延续至l08中段的显示时长仍只有处理说明；章节卡无时长，片尾仅给整段19秒，尚不能全面核实。",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P6": {
+     "name": "改写",
+     "a": 2,
+     "a_ev": "本轮没有超限或必改项，仅 4 条建议和 3 条记录，各给了可替换写法（见问题表）。",
+     "b": 3,
+     "b_ev": "问题表为l04提供删减后13字的图中文字，为l25提供“无8公里记录”，为l32提供“更多旋钮／写文章、聊天”，均可直接替换。",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "不采 b 的 3 分。b 给 l04 的改写「删除学出来的」是建立在错误计数上的，删掉后还会断开与口播「学出来的那套本事，就叫模型」的对应。a 给 l18/l21/l22 的「偏低 / 偏高 / 刚好」引入了口播里没有的叫法（口播说的是「猜少了 / 猜多了」），而且 l22 写「刚好」太早，l23 才是结果。两人都没给 l25「30.5 元」补近似号（见补充问题）。可以直接用的改写只有 b 给 l25 的「无 8 公里记录」，以及 b 给 l32 的「更多旋钮 / 写文章、聊天」。"
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "I29/I30（l09–l13 图块超 16 字）：现按口径为 15 字，已解决。I31（l11 整屏超限）：l11 现只剩图块＋算式，已解决。I33、I34、I36、I37（l20、l21、l23、l25 复述口播）：已改为「远的竖线更长」「拧过头了」「竖线都很短」「记录里没有」，已解决（l21 仍与口播同词，见 I3）。I38（l29 重复旋钮）：截图确认旋钮已撤，全屏约 26 字，已解决。I24/I25（片尾和章节卡无截图）：本轮材料仍无截图，未解决但属材料缺口，维持存疑。作者不采纳的 I26（章名）、I32（l18）、I40（l32）、I42（l33）：理由成立，因为 10 字未超限，章名不算怪，l33 先大数字后换算是有意设计；未发现改出新问题。",
+     "b": 1,
+     "b_ev": "I24、I25未解决：章节卡和片尾仍无截图，“共用模板渲染”不能代替视觉验证；I26不采纳理由成立：“拧拧旋钮试试”自然，与本片口吻相符；I27复核发现新问题：l04层级虽清楚，图内文字合计17字超限；I28未解决：延长停留已有处理说明，当前材料仍不能独立验证；I29、I30已解决：l09–l13图块均15字；I31已解决：l11文字公式已撤，只留数字算式；I32不采纳理由成立：“全都猜少了”只有5字，可作图示结论；I33已解决：“远的竖线更长”沿用图形叫法；I34已解决：“拧过头了”已删去后半句复述；I35维持记录：“往回”仅指每公里旋钮，但同屏读数及口播足以限定；I36已解决：“竖线都很短”对应图形；I37未解决：“十二趟里没有”改为“记录里没有”，仍未补清指代；I38已解决：重复灰旋钮已撤；I39原计数已随改版失效，当前l29含卡内标签共26字；I40未解决：“10字合限、与口播一致”未回应纲要化建议；I41维持记录：l32读得顺，不判措辞必改；I42不采纳理由成立：l33大数字、l34中文数量换算有明确递进，值得保留。",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "两人各对一半。I37 实际没解决：上一轮裁决指出「十二趟里没有」缺宾语，给的改写是「记录里没有 8 公里」，作者只换了主语、把「8 公里」删了，l25「记录里没有」还是半截话（b 对，a 判已解决是错的）。b 另外两处判断不成立：I27 所谓「l04 超 17 字」见 P1；I28 在 s2.html 第 70 行 `EDU.out(\"#l7\", EDU.t(\"l08\", .5))` 可以核到，「参数 = 旋钮」确实留到 l08 一半处，约 1.7＋3.2 秒，已解决。I24/I25 属于材料缺口（没有截图），维持存疑，不算作者未改。"
+    }
+   },
+   "disputes": [
+    "P1",
+    "R"
+   ],
+   "audits": [
+    "P6",
+    "P4"
+   ],
+   "final_scores": {
+    "P1": 2,
+    "P2": 2,
+    "P3": 2,
+    "P4": 2,
+    "P5": 2,
+    "P6": 2,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "P1",
+     "R",
+     "P6",
+     "P4"
+    ],
+    "prompt": "items/screen_zh__judge.md",
+    "report": "reports/screen_zh__judge.md",
+    "ruling": {
+     "P1": {
+      "score": 2,
+      "evidence": "采 a。l04 截图和 s0.html 都显示这是三个分开的元素：#r1 卡「上一期 / 从例子里学规律」→ #r3「学出来的 / 模型」，右侧 #box「模型里面 ?」是另一张卡，没有箭头相连，不是一张图。即便把箭头两端算作一张图，也是 上一期 3＋从例子里学规律 7＋学出来的 4＋模型 2＝16 字，不超限。b 的 17 字把另一张卡里的「模型里面」并了进来，却又没计「上一期」，口径前后不一致，必改不成立。其余各屏按口径核过：l12 约 28 字 3 块，l25 约 29 字 4 块，l28 约 27 字 3 块，l29 约 26 字 3 块，都在上限内。"
+     },
+     "R": {
+      "score": 1,
+      "evidence": "两人各对一半。I37 实际没解决：上一轮裁决指出「十二趟里没有」缺宾语，给的改写是「记录里没有 8 公里」，作者只换了主语、把「8 公里」删了，l25「记录里没有」还是半截话（b 对，a 判已解决是错的）。b 另外两处判断不成立：I27 所谓「l04 超 17 字」见 P1；I28 在 s2.html 第 70 行 `EDU.out(\"#l7\", EDU.t(\"l08\", .5))` 可以核到，「参数 = 旋钮」确实留到 l08 一半处，约 1.7＋3.2 秒，已解决。I24/I25 属于材料缺口（没有截图），维持存疑，不算作者未改。"
+     },
+     "P6": {
+      "score": 2,
+      "evidence": "不采 b 的 3 分。b 给 l04 的改写「删除学出来的」是建立在错误计数上的，删掉后还会断开与口播「学出来的那套本事，就叫模型」的对应。a 给 l18/l21/l22 的「偏低 / 偏高 / 刚好」引入了口播里没有的叫法（口播说的是「猜少了 / 猜多了」），而且 l22 写「刚好」太早，l23 才是结果。两人都没给 l25「30.5 元」补近似号（见补充问题）。可以直接用的改写只有 b 给 l25 的「无 8 公里记录」，以及 b 给 l32 的「更多旋钮 / 写文章、聊天」。"
+     },
+     "P4": {
+      "score": 2,
+      "evidence": "维持 2。四个章名「模型长什么样」「拧拧旋钮试试」「学到了什么」「上千亿个旋钮」按从严条目复核，读着都顺，不判必改。瑕疵有两处：l25「记录里没有」缺宾语；l25「8 公里 → 30.5 元」是近似值却没标近似，而 l35 写的是「≈ 5545 年」，口播也说「三十块五左右」，同片的近似标记前后不一。两人都漏了这一处。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 14,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_zh__a",
+    "codex/screen_zh__b"
+   ]
+  },
+  {
+   "id": "screen_en",
+   "law": "lines",
+   "law_name": "English on-screen text (slides)",
+   "color": "#6b4fc0",
+   "scope": [],
+   "checks": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "how": "Hard limits (report every breach): title ≤6 words; any other block ≤9 words; ≤4 text blocks per screen (not counting the small eyebrow label, source line or chart ticks); ≤22 words per screen. Narration subtitles also sit at the bottom of the frame. Counting rules (round-2 ruling, 2026-11-09): eyebrow labels, case tabs, source lines and end-card credits are exempt; a list, table or card row of look-alike items (each ≤6 words, at most 6 items) counts as one block, and numbering doesn't count as words; in-chart text (zone names, curve names, axis titles, bar labels, callouts) counts toward words and the whole chart counts as one block — only axis tick numbers are exempt; a table's column headers count with the table.",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_en.md",
+   "prompt": "items/screen_en__a.md",
+   "what": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "problem": "The previous version put full sentences on screen (e.g. 'A separate model identified the hospital for scans from two hospitals — a hospital fingerprint'), repeating the narration. The user wants outline-only, concise slides (2026-11-08).",
+   "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "Outline, not prose",
+     "question": "Only keywords, short phrases, key numbers, labels; no full narration sentences. Count words per screen against the hard limits"
+    },
+    {
+     "id": "P2",
+     "name": "Divided from narration",
+     "question": "Screen carries structure, numbers, contrasts; narration explains. No verbatim repetition, no new claims the narration doesn't make; terms match the narration"
+    },
+    {
+     "id": "P3",
+     "name": "Hierarchy and consistency",
+     "question": "What reads first, second; ≤3 levels (title, point, note); numbering, labels, chapter names and agenda items consistent with each other"
+    },
+    {
+     "id": "P4",
+     "name": "Native phrasing and style",
+     "question": "Sentence case headline style; no Chinglish; consistent punctuation (no trailing periods on fragments), en dashes, quotes; parallel grammar in lists; **chapter titles and headings must read naturally aloud** — awkward noun stacks are must-fix"
+    },
+    {
+     "id": "P5",
+     "name": "Readable in time",
+     "question": "From the screenshot and how long it stays: readable in time (~3 words/s while also reading subtitles and the chart)"
+    },
+    {
+     "id": "P6",
+     "name": "Rewrites",
+     "question": "For every breach or awkward phrase, a shorter drop-in rewrite"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_en__a.md",
+     "prompt": "items/screen_en__a.md",
+     "scores": {
+      "P1": {
+       "score": 3,
+       "evidence": "No hard-limit breach found. Heaviest screens: l12 (diagram 8 words + two cards 8 = 16, 3 blocks, \"Math / set by people\", \"Settings / learned from examples\"), l29 after the dials were removed (title 5 + table 6 + \"= the exact same model\" 4, 3 blocks), l28 (title 5 + dials 6 + table 5 = 16, 3 blocks). All titles ≤6 words (longest: l36 \"Set by training, not by hand\", 6). Chart screens l16–l25 run 12–15 words in ≤4 blocks. Only l32 \"Chatting takes far more knobs\" still reads as a clause."
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "Most screens give structure or numbers (l11 \"10 + 2 × 5 = 20\", l35 \"≈ 5,545 years\", l38 numbers list). Remaining echoes: l14 \"Twelve taxi rides\" vs \"Here are twelve made-up taxi rides\", l25 \"Not one of the twelve\", l34 \"= 175 billion knobs\", l20 \"Longer ride, bigger miss\". l17 \"Bars = how far off\" against narration \"little vertical line\" (s3_l25 shows the error lines as thin pale ticks, not bars). l04 eyebrow \"What it ends up with\" copies the l03 narration clause."
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "Three levels are kept; eyebrow numbering \"01 · What a model looks like\" matches the chapter cards (c_problem \"What a model looks like\", c_experiment \"Let's turn the knobs\", c_lens \"What it learned\", c_real \"Billions of knobs\"). Equation titles \"Parameters = knobs\" (l07), \"Learning = getting the knobs right\" (l13/outro), \"Training = turning knobs\" (l30) use three different verb forms. In s0_l04 the grey \"Last time\" card, the eyebrow \"What it ends up with\" and the \"Inside a model\" card produce a four-way hierarchy with no clear first read."
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "Sentence case, no Chinglish, no trailing periods on fragments, en-dash-free. \"Math set by people\" / \"Settings learned from examples\" are now parallel (l12, l37). Chapter titles read naturally aloud. Small blemishes: l10 formula uses \"base\" while the dial says \"Base fare\"; l32 is a full clause; l22 \"Backing off a bit\" is a gerund among imperative/noun siblings."
+      },
+      "P5": {
+       "score": 3,
+       "evidence": "s2_l12 (9.2s, 16 words) and s3_l25 (7.3s, 15 words) read comfortably; s4_l28 (4.6s) only adds a 5-word table under an already-seen title; l07 (1.9s, \"Parameters = knobs\", 2 words) and l34 (1.5s, \"= 175 billion knobs\" under a display number) are short enough. Bottom subtitle zone is clear in all supplied screenshots (lowest content at y≈870 of 1080)."
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "Every issue in the table below has a drop-in rewrite; none exceeds the original word count."
+      },
+      "R": {
+       "score": 2,
+       "evidence": "I3 (l12/l37 parallelism) resolved: s2_l12 and s5_l37 now read \"Math / set by people\", \"Settings / learned from examples\". I4–I6 (outro/l13 wording) resolved: \"Learning = getting the knobs right\" matches narration l13/l41 \"turning the knobs to the right positions\". I13/I14 (l29 clutter) resolved: s4_l29 now has title, table, conclusion only. I19–I21 (l35) resolved: \"One setting per second\". I7 (l17 \"Bars\") unresolved; the not-adopted reason (\"legend-style short label that matches the vertical lines\") is weak because the picture shows hairline ticks and the narration says \"line\" (still 建议). I15–I17 (l32) the \"not adopted\" reason (5-word chapter-opening title) holds for length but the clause form remains (still 建议). I22/I23 (l39): the screenshot shows normal spacing, reason holds; the \"+\" mismatch with the cold open \"100B+\" stays a record. I1 (package cards unverified): still no screenshots for c_problem, c_experiment, c_lens, c_real or the outro, so those stay unverified. No new problems were introduced by the round-2 edits."
+      }
+     }
+    },
+    "b": {
+     "slot": "b",
+     "runner": "codex",
+     "model": "codex",
+     "status": "done",
+     "report": "reports/screen_en__b.md",
+     "prompt": "items/screen_en__b.md",
+     "scores": {
+      "P1": {
+       "score": 1,
+       "evidence": "No numerical hard-limit breaches found after applying the row/table grouping rules and counting chart labels. The largest screens are l12 and l25 at 17 words each; l25 has four blocks. However, l32 “Chatting takes far more knobs” remains a complete explanatory sentence at a strict transition; l19 also uses sentence-form commentary."
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "l10–l11 use equations effectively, and l28 separates “Machine / Same” from “Knob settings / Changed.” However, l23 repeats “right along the dots” verbatim, l25 closely echoes the narration, and l39 drops the cold open’s “+.”"
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "The l29 screenshot confirms that the duplicate dials have disappeared, leaving title, table and conclusion. Chapter names match the numbered eyebrows. Package-card hierarchy and outro line separation remain unverified because their screenshots are absent."
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "“What a model looks like,” “Let’s turn the knobs,” “What it learned” and “Billions of knobs” all read naturally aloud. “Learning = getting the knobs right” fixes the previous awkward wording. At l39, the gap between “100B” and “parameters” remains noticeably tighter than the corresponding gap before “knobs.”"
+      },
+      "P5": {
+       "score": 2,
+       "evidence": "l35 presents six words over 10.0 seconds with a visibly subdued background. At l34, only “175 billion knobs” is newly added during the supplied 1.5 seconds; the large number carries over. Package-card timing and final subtitle clearance cannot be confirmed from these materials."
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "The issue table supplies shorter replacements for l32, l19, l23 and l25. The l39 replacement restores numerical consistency and separates the two sides clearly without adding words."
+      },
+      "R": {
+       "score": 1,
+       "evidence": "I1 unresolved: deferring package-card checks is understandable, but does not verify them. I2 unchanged, acceptable: retaining “Per km” preserves the established label; “Rate” is optional. I3 resolved: l12/l37 now use matching “Math / set by people” and “Settings / learned from examples.” I4–I6 resolved in wording: l13 and the supplied outro text use “getting the knobs right”; outro rendering remains unverified. I7 unchanged, acceptable: the red vertical marks support the ordinary label “Bars.” I8 unresolved: the objection to abstract wording is reasonable, but “Whole line ↑” avoids both abstraction and sentence-form commentary. I9 unchanged, acceptable: spoken “about $2.50” permits the displayed $2.54. I10 unchanged, acceptable: “Backing off a bit” is a natural action fragment. I11 unresolved: avoiding a new “error” term is reasonable, but “Small misses” uses the existing “bigger miss” vocabulary. I12 unresolved as a minor suggestion: avoiding “data” is reasonable; “New distance” provides a concise alternative. I13–I14 resolved: the l29 screenshot contains no duplicate dial labels or values. I15/I17 unresolved: five words and placement inside a chapter do not make “Chatting takes far more knobs” an outline fragment or remove its transitional function. I16 declined reasonably: the screen need not enumerate both essays and chat. I18 unchanged, acceptable: the short numerical equivalence carries an essential teaching step. I19–I20 resolved by “One setting per second.” I21 resolved visually: the background no longer competes materially with that label. I22 remains a spacing suggestion; the earlier must-fix classification overstated its effect on comprehension. I23 unresolved: l39 explicitly returns to news saying “over a hundred billion”; the GPT-3 context does not justify removing “+.” No new wording problems were introduced by the accepted fixes."
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "Outline, not prose",
+     "a": 3,
+     "a_ev": "No hard-limit breach found. Heaviest screens: l12 (diagram 8 words + two cards 8 = 16, 3 blocks, \"Math / set by people\", \"Settings / learned from examples\"), l29 after the dials were removed (title 5 + table 6 + \"= the exact same model\" 4, 3 blocks), l28 (title 5 + dials 6 + table 5 = 16, 3 blocks). All titles ≤6 words (longest: l36 \"Set by training, not by hand\", 6). Chart screens l16–l25 run 12–15 words in ≤4 blocks. Only l32 \"Chatting takes far more knobs\" still reads as a clause.",
+     "b": 1,
+     "b_ev": "No numerical hard-limit breaches found after applying the row/table grouping rules and counting chart labels. The largest screens are l12 and l25 at 17 words each; l25 has four blocks. However, l32 “Chatting takes far more knobs” remains a complete explanatory sentence at a strict transition; l19 also uses sentence-form commentary.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 2,
+     "judge_reason": "我按计数规则复核，没有超硬上限：l12 的示意图 + 两张卡共 16–17 词、3 块；l25 有 17 词、4 块，正好卡在上限；最长的标题是 l36「Set by training, not by hand」，6 词。a 判 3 分偏高，因为 l32「Chatting takes far more knobs」和 l19「Whole line goes up」仍是主谓句式。b 判 1 分偏重：s5_l32 截图里这句是压在旋钮阵列上方的 5 词大标题，不是照搬口播的整句；上一轮裁决人也已把它降为建议。所以判 2，有小瑕疵。"
+    },
+    "P2": {
+     "name": "Divided from narration",
+     "a": 2,
+     "a_ev": "Most screens give structure or numbers (l11 \"10 + 2 × 5 = 20\", l35 \"≈ 5,545 years\", l38 numbers list). Remaining echoes: l14 \"Twelve taxi rides\" vs \"Here are twelve made-up taxi rides\", l25 \"Not one of the twelve\", l34 \"= 175 billion knobs\", l20 \"Longer ride, bigger miss\". l17 \"Bars = how far off\" against narration \"little vertical line\" (s3_l25 shows the error lines as thin pale ticks, not bars). l04 eyebrow \"What it ends up with\" copies the l03 narration clause.",
+     "b": 2,
+     "b_ev": "l10–l11 use equations effectively, and l28 separates “Machine / Same” from “Knob settings / Changed.” However, l23 repeats “right along the dots” verbatim, l25 closely echoes the narration, and l39 drops the cold open’s “+.”",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P3": {
+     "name": "Hierarchy and consistency",
+     "a": 2,
+     "a_ev": "Three levels are kept; eyebrow numbering \"01 · What a model looks like\" matches the chapter cards (c_problem \"What a model looks like\", c_experiment \"Let's turn the knobs\", c_lens \"What it learned\", c_real \"Billions of knobs\"). Equation titles \"Parameters = knobs\" (l07), \"Learning = getting the knobs right\" (l13/outro), \"Training = turning knobs\" (l30) use three different verb forms. In s0_l04 the grey \"Last time\" card, the eyebrow \"What it ends up with\" and the \"Inside a model\" card produce a four-way hierarchy with no clear first read.",
+     "b": 2,
+     "b_ev": "The l29 screenshot confirms that the duplicate dials have disappeared, leaving title, table and conclusion. Chapter names match the numbered eyebrows. Package-card hierarchy and outro line separation remain unverified because their screenshots are absent.",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P4": {
+     "name": "Native phrasing and style",
+     "a": 2,
+     "a_ev": "Sentence case, no Chinglish, no trailing periods on fragments, en-dash-free. \"Math set by people\" / \"Settings learned from examples\" are now parallel (l12, l37). Chapter titles read naturally aloud. Small blemishes: l10 formula uses \"base\" while the dial says \"Base fare\"; l32 is a full clause; l22 \"Backing off a bit\" is a gerund among imperative/noun siblings.",
+     "b": 2,
+     "b_ev": "“What a model looks like,” “Let’s turn the knobs,” “What it learned” and “Billions of knobs” all read naturally aloud. “Learning = getting the knobs right” fixes the previous awkward wording. At l39, the gap between “100B” and “parameters” remains noticeably tighter than the corresponding gap before “knobs.”",
+     "verdict": "抽查",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": "两人都漏了冷开头这个严格项。s0_l03/l04 左卡「LAST TIME / Learns from examples」，动词前没有主语，连着读像是「Last time learns from examples」；右侧眉标「WHAT IT ENDS UP WITH」里的 it，屏上找不到它指什么。冷开头按规则「有一点不对就必改」。a 只在 P2/P3 提了眉标，P4 仍给 2 分，等于没计入；b 完全没提。b 说 l39「100B」与「parameters」间距偏紧，s5_l39 截图看间距是正常的，不成立。"
+    },
+    "P5": {
+     "name": "Readable in time",
+     "a": 3,
+     "a_ev": "s2_l12 (9.2s, 16 words) and s3_l25 (7.3s, 15 words) read comfortably; s4_l28 (4.6s) only adds a 5-word table under an already-seen title; l07 (1.9s, \"Parameters = knobs\", 2 words) and l34 (1.5s, \"= 175 billion knobs\" under a display number) are short enough. Bottom subtitle zone is clear in all supplied screenshots (lowest content at y≈870 of 1080).",
+     "b": 2,
+     "b_ev": "l35 presents six words over 10.0 seconds with a visibly subdued background. At l34, only “175 billion knobs” is newly added during the supplied 1.5 seconds; the large number carries over. Package-card timing and final subtitle clearance cannot be confirmed from these materials.",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P6": {
+     "name": "Rewrites",
+     "a": 3,
+     "a_ev": "Every issue in the table below has a drop-in rewrite; none exceeds the original word count.",
+     "b": 3,
+     "b_ev": "The issue table supplies shorter replacements for l32, l19, l23 and l25. The l39 replacement restores numerical consistency and separates the two sides clearly without adding words.",
+     "verdict": "抽查",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": "多数问题有可直接替换的改写，但 a 说「none exceeds the original word count」与事实不符：l10 的改写「Fare = base fare + per km × distance」比原文长。b 的 l25「New distance」语义含糊，不如原文。另外，下方补充问题里两人都漏掉的两处（s0_l03/l04 冷开头、l25「$30.50」）都没有改写。"
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "I3 (l12/l37 parallelism) resolved: s2_l12 and s5_l37 now read \"Math / set by people\", \"Settings / learned from examples\". I4–I6 (outro/l13 wording) resolved: \"Learning = getting the knobs right\" matches narration l13/l41 \"turning the knobs to the right positions\". I13/I14 (l29 clutter) resolved: s4_l29 now has title, table, conclusion only. I19–I21 (l35) resolved: \"One setting per second\". I7 (l17 \"Bars\") unresolved; the not-adopted reason (\"legend-style short label that matches the vertical lines\") is weak because the picture shows hairline ticks and the narration says \"line\" (still 建议). I15–I17 (l32) the \"not adopted\" reason (5-word chapter-opening title) holds for length but the clause form remains (still 建议). I22/I23 (l39): the screenshot shows normal spacing, reason holds; the \"+\" mismatch with the cold open \"100B+\" stays a record. I1 (package cards unverified): still no screenshots for c_problem, c_experiment, c_lens, c_real or the outro, so those stay unverified. No new problems were introduced by the round-2 edits.",
+     "b": 1,
+     "b_ev": "I1 unresolved: deferring package-card checks is understandable, but does not verify them. I2 unchanged, acceptable: retaining “Per km” preserves the established label; “Rate” is optional. I3 resolved: l12/l37 now use matching “Math / set by people” and “Settings / learned from examples.” I4–I6 resolved in wording: l13 and the supplied outro text use “getting the knobs right”; outro rendering remains unverified. I7 unchanged, acceptable: the red vertical marks support the ordinary label “Bars.” I8 unresolved: the objection to abstract wording is reasonable, but “Whole line ↑” avoids both abstraction and sentence-form commentary. I9 unchanged, acceptable: spoken “about $2.50” permits the displayed $2.54. I10 unchanged, acceptable: “Backing off a bit” is a natural action fragment. I11 unresolved: avoiding a new “error” term is reasonable, but “Small misses” uses the existing “bigger miss” vocabulary. I12 unresolved as a minor suggestion: avoiding “data” is reasonable; “New distance” provides a concise alternative. I13–I14 resolved: the l29 screenshot contains no duplicate dial labels or values. I15/I17 unresolved: five words and placement inside a chapter do not make “Chatting takes far more knobs” an outline fragment or remove its transitional function. I16 declined reasonably: the screen need not enumerate both essays and chat. I18 unchanged, acceptable: the short numerical equivalence carries an essential teaching step. I19–I20 resolved by “One setting per second.” I21 resolved visually: the background no longer competes materially with that label. I22 remains a spacing suggestion; the earlier must-fix classification overstated its effect on comprehension. I23 unresolved: l39 explicitly returns to news saying “over a hundred billion”; the GPT-3 context does not justify removing “+.” No new wording problems were introduced by the accepted fixes.",
+     "verdict": "分歧",
+     "agreed": null,
+     "final": 1,
+     "judge_reason": "I3、I4–I6、I13/I14、I19–I21 都已解决，截图里能看到（s2_l12、s5_l37、s4_l29、s5_l35）。有两条没解决，或作者的理由站不住。① I1：到第 3 轮仍没有片尾和章节卡的截图，片尾是严格项，不能按「成片后再核」算通过。② I23：作者「不改」的理由是「收在 GPT-3 的千亿量级」，但 GPT-3 是 175B，而且 l39 口播明说引用新闻原话「over a hundred billion」，回扣的是 l01 的「100B+」，所以理由不成立。b 把 I8、I11、I12 算作「未解决」，不算数：这三条上一轮已由裁决人判不采纳，重新提出改写不等于原问题没解决。"
+    }
+   },
+   "disputes": [
+    "P1",
+    "R"
+   ],
+   "audits": [
+    "P6",
+    "P4"
+   ],
+   "final_scores": {
+    "P1": 2,
+    "P2": 2,
+    "P3": 2,
+    "P4": 1,
+    "P5": 2,
+    "P6": 2,
+    "R": 1
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "done",
+    "dims": [
+     "P1",
+     "R",
+     "P6",
+     "P4"
+    ],
+    "prompt": "items/screen_en__judge.md",
+    "report": "reports/screen_en__judge.md",
+    "ruling": {
+     "P1": {
+      "score": 2,
+      "evidence": "我按计数规则复核，没有超硬上限：l12 的示意图 + 两张卡共 16–17 词、3 块；l25 有 17 词、4 块，正好卡在上限；最长的标题是 l36「Set by training, not by hand」，6 词。a 判 3 分偏高，因为 l32「Chatting takes far more knobs」和 l19「Whole line goes up」仍是主谓句式。b 判 1 分偏重：s5_l32 截图里这句是压在旋钮阵列上方的 5 词大标题，不是照搬口播的整句；上一轮裁决人也已把它降为建议。所以判 2，有小瑕疵。"
+     },
+     "R": {
+      "score": 1,
+      "evidence": "I3、I4–I6、I13/I14、I19–I21 都已解决，截图里能看到（s2_l12、s5_l37、s4_l29、s5_l35）。有两条没解决，或作者的理由站不住。① I1：到第 3 轮仍没有片尾和章节卡的截图，片尾是严格项，不能按「成片后再核」算通过。② I23：作者「不改」的理由是「收在 GPT-3 的千亿量级」，但 GPT-3 是 175B，而且 l39 口播明说引用新闻原话「over a hundred billion」，回扣的是 l01 的「100B+」，所以理由不成立。b 把 I8、I11、I12 算作「未解决」，不算数：这三条上一轮已由裁决人判不采纳，重新提出改写不等于原问题没解决。"
+     },
+     "P6": {
+      "score": 2,
+      "evidence": "多数问题有可直接替换的改写，但 a 说「none exceeds the original word count」与事实不符：l10 的改写「Fare = base fare + per km × distance」比原文长。b 的 l25「New distance」语义含糊，不如原文。另外，下方补充问题里两人都漏掉的两处（s0_l03/l04 冷开头、l25「$30.50」）都没有改写。"
+     },
+     "P4": {
+      "score": 1,
+      "evidence": "两人都漏了冷开头这个严格项。s0_l03/l04 左卡「LAST TIME / Learns from examples」，动词前没有主语，连着读像是「Last time learns from examples」；右侧眉标「WHAT IT ENDS UP WITH」里的 it，屏上找不到它指什么。冷开头按规则「有一点不对就必改」。a 只在 P2/P3 提了眉标，P4 仍给 2 分，等于没计入；b 完全没提。b 说 l39「100B」与「parameters」间距偏紧，s5_l39 截图看间距是正常的，不成立。"
+     }
+    }
+   },
+   "findings": {},
+   "rows": 17,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_en__a",
+    "codex/screen_en__b"
+   ]
+  }
+ ],
+ "state": "已收轮",
+ "concluded_at": "2026-11-09T21:26:40",
+ "result": "结果.md",
+ "verdict": {
+  "result": "不通过",
+  "text": "不通过：2 项未过；已到轮数上限，余下问题已按问题清单修改，由程序检验复核成片"
+ },
+ "log": []
+}

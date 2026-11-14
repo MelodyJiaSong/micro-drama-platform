@@ -1,0 +1,240 @@
+{
+  "objects": [
+    {
+      "name": "Atmosphere_volume",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        90.0
+      ],
+      "scale": [
+        1200.0,
+        1200.0,
+        220.0
+      ],
+      "dimensions": [
+        1200.0,
+        1200.0,
+        220.0
+      ],
+      "materials": [
+        "Low_density_day_haze"
+      ],
+      "hidden": false
+    },
+    {
+      "name": "Continuous_outer_land",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2019.199951171875,
+        2019.199951171875,
+        53.08030700683594
+      ],
+      "materials": [
+        "Continuous_ground"
+      ],
+      "hidden": false
+    },
+    {
+      "name": "Mid_River",
+      "type": "CAMERA",
+      "location": [
+        -70.0,
+        -110.0,
+        28.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "hidden": false
+    },
+    {
+      "name": "River_Eye_Level",
+      "type": "CAMERA",
+      "location": [
+        -31.0,
+        -56.0,
+        1.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "hidden": false
+    },
+    {
+      "name": "River_surface",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        819.2000122070312,
+        819.2000122070312,
+        0.0
+      ],
+      "materials": [
+        "River_water"
+      ],
+      "hidden": false
+    }
+  ],
+  "materials": [
+    {
+      "name": "River_water",
+      "nodes": [
+        {
+          "name": "Principled BSDF",
+          "type": "BSDF_PRINCIPLED",
+          "inputs": {
+            "Metallic": "0.0",
+            "Roughness": "0.12999999523162842",
+            "IOR": "1.3329999446868896",
+            "Alpha": "1.0",
+            "Thin Wall": "False",
+            "Weight": "0.0",
+            "Diffuse Roughness": "0.0",
+            "Subsurface Weight": "0.0",
+            "Subsurface Radius": "<bpy_float[3], NodeSocketVector.default_value>",
+            "Subsurface Scale": "0.004999999888241291",
+            "Subsurface IOR": "1.399999976158142",
+            "Subsurface Anisotropy": "0.0",
+            "Specular IOR Level": "0.5",
+            "Specular Tint": "<bpy_float[4], NodeSocketColor.default_value>",
+            "Anisotropic": "0.0",
+            "Anisotropic Rotation": "0.0",
+            "Tangent": "<bpy_float[3], NodeSocketVector.default_value>",
+            "Transmission Weight": "0.8500000238418579",
+            "Coat Weight": "0.0",
+            "Coat Roughness": "0.029999999329447746",
+            "Coat IOR": "1.5",
+            "Coat Tint": "<bpy_float[4], NodeSocketColor.default_value>",
+            "Coat Normal": "<bpy_float[3], NodeSocketVector.default_value>",
+            "Sheen Weight": "0.0",
+            "Sheen Roughness": "0.5",
+            "Sheen Tint": "<bpy_float[4], NodeSocketColor.default_value>",
+            "Emission Color": "<bpy_float[4], NodeSocketColor.default_value>",
+            "Emission Strength": "0.0",
+            "Thin Film Thickness": "0.0",
+            "Thin Film IOR": "1.3300000429153442"
+          }
+        },
+        {
+          "name": "Material Output",
+          "type": "OUTPUT_MATERIAL",
+          "inputs": {
+            "Displacement": "<bpy_float[3], NodeSocketVector.default_value>",
+            "Thickness": "0.0"
+          }
+        },
+        {
+          "name": "Texture Coordinate",
+          "type": "TEX_COORD",
+          "inputs": {}
+        },
+        {
+          "name": "Noise Texture",
+          "type": "TEX_NOISE",
+          "inputs": {
+            "W": "0.0",
+            "Scale": "0.5",
+            "Detail": "5.0",
+            "Roughness": "0.5",
+            "Lacunarity": "2.0",
+            "Offset": "0.0",
+            "Gain": "1.0",
+            "Distortion": "0.0"
+          }
+        },
+        {
+          "name": "Color Ramp",
+          "type": "VALTORGB",
+          "inputs": {}
+        },
+        {
+          "name": "Noise Texture.001",
+          "type": "TEX_NOISE",
+          "inputs": {
+            "W": "0.0",
+            "Scale": "9.0",
+            "Detail": "3.0",
+            "Roughness": "0.5",
+            "Lacunarity": "2.0",
+            "Offset": "0.0",
+            "Gain": "1.0",
+            "Distortion": "0.0"
+          }
+        },
+        {
+          "name": "Bump",
+          "type": "BUMP",
+          "inputs": {
+            "Strength": "0.6499999761581421",
+            "Distance": "0.03500000014901161",
+            "Filter Width": "0.10000000149011612",
+            "Normal": "<bpy_float[3], NodeSocketVector.default_value>"
+          }
+        }
+      ]
+    }
+  ],
+  "cameras": {
+    "Mid_River": {
+      "location": [
+        -70.0,
+        -110.0,
+        28.0
+      ],
+      "rotation": [
+        1.342026710510254,
+        9.626539565488201e-09,
+        -0.5984188318252563
+      ]
+    },
+    "River_Eye_Level": {
+      "location": [
+        -31.0,
+        -56.0,
+        1.5
+      ],
+      "rotation": [
+        1.528190016746521,
+        -2.229444717727347e-08,
+        -0.5947593450546265
+      ]
+    }
+  }
+}

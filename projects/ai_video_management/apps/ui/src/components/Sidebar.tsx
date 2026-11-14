@@ -2,10 +2,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import type { TreeNode, TreeNodeType } from "../types";
 import { ResearchNav } from "./ResearchNav";
+import { ReviewNav } from "./ReviewNav";
 import { workflowNavigation } from "../lib/workflowData";
 import { matchesNavigation } from "../lib/globalWorkflow";
 import { useGlobalWorkflow } from "./GlobalWorkflowContext";
 import { ObsoleteBadge } from "./ObsoleteBadge";
+import { DemoFinalBadge } from "./DemoFinalBadge";
+import { useDemoStatus } from "../lib/demoStatus";
 
 /** Node types that open a file in the reader when clicked. One source — adding
  * a leaf type (e.g. `model` for .glb) must not mean editing five predicates. */
@@ -36,6 +39,7 @@ interface FlatNode { node: TreeNode; depth: number; parentPath: string | null; }
 
 export function Sidebar({ tree, currentPath, onSelect, loadError, collapsed = false, onToggleCollapsed, onExpandLazy }: SidebarProps): JSX.Element {
   const navigate = useNavigate();
+  const demoStatus = useDemoStatus();
   const location = useLocation();
   const { catalog, error: globalError } = useGlobalWorkflow();
   const workflowTree = useMemo(() => workflowNavigation(catalog), [catalog]);
@@ -59,12 +63,14 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, collapsed = fa
   useEffect(() => {
     const opened: Record<string, boolean> = {};
     const walk = (node: TreeNode, ancestors: string[]): boolean => {
-      if (matchesNavigation(node.navigation_href, location.pathname, location.search)) {
+      const matches = matchesNavigation(node.navigation_href, location.pathname, location.search);
+      if (matches) {
         for (const path of ancestors) opened[path] = true;
         if (node.children?.length) opened[node.path] = true;
-        return true;
       }
-      return (node.children ?? []).some(child => walk(child, [...ancestors, node.path]));
+      let descendantMatches = false;
+      for (const child of node.children ?? []) descendantMatches = walk(child, [...ancestors, node.path]) || descendantMatches;
+      return matches || descendantMatches;
     };
     walk(workflowTree, []);
     if (tree) walk(tree, []);
@@ -239,6 +245,8 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, collapsed = fa
     <nav className="sidebar" aria-label="File tree">
       {globalNavigation}
       {globalError ? <p role="status" className="sidebar-toast sidebar-toast-err">全局目录加载失败，可在工作流页刷新。</p> : null}
+      {/* 审查单是导航里的一个类（follow-up 333）：剧 → 集 → 每轮审查单。 */}
+      <ReviewNav />
       <div ref={treeRef} role="tree" aria-label="File tree" className="tree">
         {flat.map((item) => {
           const isLeaf = isLeafType(item.node.type);
@@ -304,6 +312,7 @@ export function Sidebar({ tree, currentPath, onSelect, loadError, collapsed = fa
               <span className="tree-label">{item.node.display_name || item.node.name}</span>
               {item.node.lifetime === "persistent" && ["0_research", "1_资产库"].includes(item.node.display_name || item.node.name) ? <small className="tree-lifetime-badge">Persistent</small> : null}
               {item.node.obsolete ? <ObsoleteBadge note={item.node.obsolete_note} /> : null}
+              {item.node.type === "directory" ? <DemoFinalBadge status={demoStatus.get(item.node.path)} /> : null}
               {/* Drama-level actions (📥 导入 / 🎭 角色画廊) live on the drama main
                   page (DramaPage), opened by clicking the drama node. Keeps the
                   nav uncluttered. */}

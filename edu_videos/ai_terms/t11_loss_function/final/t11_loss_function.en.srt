@@ -1,0 +1,551 @@
+1
+00:00:00,600 --> 00:00:03,378
+Last time, we said a model is a machine with knobs
+
+2
+00:00:03,378 --> 00:00:04,823
+and learning means turning
+
+3
+00:00:04,823 --> 00:00:06,490
+those knobs to the right spot.
+
+4
+00:00:06,840 --> 00:00:08,789
+But what does "right" even mean?
+
+5
+00:00:08,789 --> 00:00:10,312
+How does the machine know
+
+6
+00:00:10,312 --> 00:00:12,017
+this turn beat the last one?
+
+7
+00:00:12,367 --> 00:00:14,818
+The trick is to give its mistakes a score.
+
+8
+00:00:15,168 --> 00:00:16,827
+That score is called the loss
+
+9
+00:00:16,827 --> 00:00:18,200
+and the rule for working
+
+10
+00:00:18,200 --> 00:00:19,802
+it out is the loss function.
+
+11
+00:00:19,802 --> 00:00:21,003
+That's today's topic.
+
+12
+00:00:29,333 --> 00:00:31,219
+Every time the model guesses
+
+13
+00:00:31,219 --> 00:00:33,576
+it lands a bit too high or too low.
+
+14
+00:00:33,576 --> 00:00:35,058
+That gap is the error.
+
+15
+00:00:35,408 --> 00:00:38,037
+Roll all those errors up into one number
+
+16
+00:00:38,037 --> 00:00:39,352
+and that's the loss:
+
+17
+00:00:39,352 --> 00:00:41,192
+a score for how wrong it is.
+
+18
+00:00:41,542 --> 00:00:43,722
+It's the opposite of a test score:
+
+19
+00:00:43,722 --> 00:00:44,684
+lower is better
+
+20
+00:00:44,684 --> 00:00:46,736
+and zero means not wrong at all.
+
+21
+00:00:47,086 --> 00:00:48,265
+Kind of like golf
+
+22
+00:00:48,265 --> 00:00:50,346
+where fewer strokes is better.
+
+23
+00:00:50,696 --> 00:00:52,981
+Now the machine can check itself.
+
+24
+00:00:52,981 --> 00:00:55,473
+If a turn lowers the score, keep it.
+
+25
+00:00:55,473 --> 00:00:56,927
+If not, turn it back.
+
+26
+00:00:57,277 --> 00:00:59,654
+So training is just turning the knobs
+
+27
+00:00:59,654 --> 00:01:02,224
+again and again to push that score down.
+
+28
+00:01:06,333 --> 00:01:08,808
+Remember those twelve made-up taxi rides?
+
+29
+00:01:08,808 --> 00:01:10,318
+Distance along the bottom
+
+30
+00:01:10,318 --> 00:01:11,344
+fare up the side.
+
+31
+00:01:11,694 --> 00:01:13,800
+The model's still that straight line
+
+32
+00:01:13,800 --> 00:01:14,678
+with two knobs:
+
+33
+00:01:14,678 --> 00:01:16,901
+starting fare and price per kilometer.
+
+34
+00:01:17,251 --> 00:01:21,058
+First try: a $5 starting fare and $2 a kilometer.
+
+35
+00:01:21,058 --> 00:01:23,233
+The whole line sits too low.
+
+36
+00:01:23,583 --> 00:01:25,825
+Take the 5-kilometer ride:
+
+37
+00:01:25,825 --> 00:01:28,757
+it cost $23, the model guessed $15
+
+38
+00:01:28,757 --> 00:01:30,309
+so it's off by $8.
+
+39
+00:01:30,309 --> 00:01:31,775
+That's the error.
+
+40
+00:01:32,125 --> 00:01:33,260
+Now square it:
+
+41
+00:01:33,260 --> 00:01:35,206
+eight times eight is 64.
+
+42
+00:01:35,206 --> 00:01:36,989
+That's the red square.
+
+43
+00:01:37,339 --> 00:01:39,418
+Do that for all twelve rides
+
+44
+00:01:39,418 --> 00:01:40,606
+take the average
+
+45
+00:01:40,606 --> 00:01:42,610
+and this setting scores 78.
+
+46
+00:01:42,960 --> 00:01:46,258
+Second try: $4 to start and $3.50 a kilometer.
+
+47
+00:01:46,258 --> 00:01:48,696
+Too steep, so short rides come out
+
+48
+00:01:48,696 --> 00:01:50,345
+low and long ones high.
+
+49
+00:01:50,695 --> 00:01:52,027
+If we skip the squaring
+
+50
+00:01:52,027 --> 00:01:53,590
+and just average the errors
+
+51
+00:01:53,590 --> 00:01:55,559
+the lows and the highs cancel out.
+
+52
+00:01:55,909 --> 00:01:57,885
+The average is only −$0.33
+
+53
+00:01:57,885 --> 00:02:01,078
+so it looks like it's barely wrong at all.
+
+54
+00:02:01,428 --> 00:02:02,365
+So we square.
+
+55
+00:02:02,365 --> 00:02:04,168
+Everything turns positive
+
+56
+00:02:04,168 --> 00:02:05,610
+and nothing cancels.
+
+57
+00:02:05,960 --> 00:02:08,372
+And big misses cost way more:
+
+58
+00:02:08,372 --> 00:02:10,118
+off by two costs four
+
+59
+00:02:10,118 --> 00:02:12,280
+but off by eight costs 64.
+
+60
+00:02:12,630 --> 00:02:14,135
+Square, then average
+
+61
+00:02:14,135 --> 00:02:16,317
+and this setting scores 13.4.
+
+62
+00:02:16,667 --> 00:02:18,516
+This is called mean squared error
+
+63
+00:02:18,516 --> 00:02:21,149
+and it's one of the most common loss functions.
+
+64
+00:02:21,499 --> 00:02:25,028
+Third try: $10 to start, $2.50 a kilometer.
+
+65
+00:02:25,028 --> 00:02:28,393
+The squares are tiny, and it scores 2.19.
+
+66
+00:02:28,743 --> 00:02:30,500
+The third has the lowest score
+
+67
+00:02:30,500 --> 00:02:32,257
+so it's the best of the three.
+
+68
+00:02:32,607 --> 00:02:34,341
+But that's only three tries.
+
+69
+00:02:34,341 --> 00:02:36,385
+Score every setting of both knobs
+
+70
+00:02:36,385 --> 00:02:38,490
+and you get a landscape of scores.
+
+71
+00:02:38,840 --> 00:02:40,292
+Starting fare along the bottom
+
+72
+00:02:40,292 --> 00:02:41,792
+price per kilometer up the side
+
+73
+00:02:41,792 --> 00:02:42,953
+and the darker the color
+
+74
+00:02:42,953 --> 00:02:43,969
+the higher the score.
+
+75
+00:02:44,319 --> 00:02:45,429
+Our three tries:
+
+76
+00:02:45,429 --> 00:02:46,887
+the first way up high
+
+77
+00:02:46,887 --> 00:02:48,483
+the second halfway down
+
+78
+00:02:48,483 --> 00:02:49,593
+the third nearly
+
+79
+00:02:49,593 --> 00:02:51,536
+at the bottom of the valley.
+
+80
+00:02:51,886 --> 00:02:54,460
+The best is $10.20 to start
+
+81
+00:02:54,460 --> 00:02:56,558
+and $2.54 a kilometer.
+
+82
+00:02:56,558 --> 00:02:57,988
+It scores 1.97.
+
+83
+00:02:58,338 --> 00:02:59,511
+It's the best setting
+
+84
+00:02:59,511 --> 00:03:01,131
+and the whole job of training
+
+85
+00:03:01,131 --> 00:03:02,751
+is finding that lowest point.
+
+86
+00:03:03,101 --> 00:03:04,956
+Here's something easy to miss:
+
+87
+00:03:04,956 --> 00:03:06,996
+even the lowest point isn't zero.
+
+88
+00:03:07,346 --> 00:03:08,631
+Real fares bounce around
+
+89
+00:03:08,631 --> 00:03:09,916
+with traffic and detours
+
+90
+00:03:09,916 --> 00:03:12,164
+so no straight line could nail every ride.
+
+91
+00:03:12,514 --> 00:03:14,374
+Training isn't chasing zero.
+
+92
+00:03:14,374 --> 00:03:16,366
+It's getting as low as it can.
+
+93
+00:03:20,467 --> 00:03:21,576
+Here's the thing:
+
+94
+00:03:21,576 --> 00:03:23,989
+the model has no idea what a taxi is.
+
+95
+00:03:23,989 --> 00:03:25,620
+All it sees is the score.
+
+96
+00:03:25,970 --> 00:03:28,561
+The way you score it shapes how it learns.
+
+97
+00:03:28,561 --> 00:03:30,350
+Because we squared the errors
+
+98
+00:03:30,350 --> 00:03:32,263
+it's terrified of big mistakes.
+
+99
+00:03:32,613 --> 00:03:34,349
+It would rather be a little off
+
+100
+00:03:34,349 --> 00:03:36,532
+on every ride than way off on just one.
+
+101
+00:03:36,882 --> 00:03:38,691
+So when you pick a loss function
+
+102
+00:03:38,691 --> 00:03:39,877
+you're really telling
+
+103
+00:03:39,877 --> 00:03:41,460
+the model what "good" means.
+
+104
+00:03:45,567 --> 00:03:47,636
+Big language models like ChatGPT
+
+105
+00:03:47,636 --> 00:03:49,382
+get a score in training too
+
+106
+00:03:49,382 --> 00:03:50,934
+just not for taxi fares.
+
+107
+00:03:51,284 --> 00:03:53,354
+Their job is to guess the next word
+
+108
+00:03:53,354 --> 00:03:56,251
+like what comes after "Twinkle, twinkle, little."
+
+109
+00:03:56,601 --> 00:03:58,500
+The score checks how sure the model
+
+110
+00:03:58,500 --> 00:04:00,073
+was about the real next word.
+
+111
+00:04:00,073 --> 00:04:02,135
+The less sure, the bigger the penalty.
+
+112
+00:04:02,485 --> 00:04:05,527
+If it was 90% sure of the right word
+
+113
+00:04:05,527 --> 00:04:07,133
+the penalty's tiny.
+
+114
+00:04:07,133 --> 00:04:10,091
+Only 10% sure, and it's way bigger.
+
+115
+00:04:10,441 --> 00:04:11,713
+This kind of scoring
+
+116
+00:04:11,713 --> 00:04:13,240
+is called cross-entropy.
+
+117
+00:04:13,240 --> 00:04:15,339
+The name is all you need for now.
+
+118
+00:04:15,689 --> 00:04:18,107
+In 2023, Meta tracked that score while
+
+119
+00:04:18,107 --> 00:04:20,144
+training a model called Llama 2.
+
+120
+00:04:20,494 --> 00:04:22,750
+It read 2 trillion tokens of text.
+
+121
+00:04:22,750 --> 00:04:25,536
+Tokens are roughly words or bits of words.
+
+122
+00:04:25,886 --> 00:04:26,764
+And even then
+
+123
+00:04:26,764 --> 00:04:28,587
+the score was still falling
+
+124
+00:04:28,587 --> 00:04:29,802
+nowhere near flat.
+
+125
+00:04:30,152 --> 00:04:32,738
+A big model has tens of billions of knobs
+
+126
+00:04:32,738 --> 00:04:35,009
+we have two, but the job's the same:
+
+127
+00:04:35,009 --> 00:04:36,397
+find the lowest point.
+
+128
+00:04:37,900 --> 00:04:39,652
+So, a loss function is how
+
+129
+00:04:39,652 --> 00:04:41,674
+you score the model's mistakes
+
+130
+00:04:41,674 --> 00:04:43,022
+and lower is better.
+
+131
+00:04:43,372 --> 00:04:44,566
+And training is just
+
+132
+00:04:44,566 --> 00:04:45,999
+pushing that score down.
+
+133
+00:04:46,349 --> 00:04:47,740
+But with tons of knobs
+
+134
+00:04:47,740 --> 00:04:49,258
+that landscape's way too
+
+135
+00:04:49,258 --> 00:04:50,712
+big to see all at once.
+
+136
+00:04:50,712 --> 00:04:53,241
+So which way do you turn to go downhill?
+
+137
+00:04:53,591 --> 00:04:55,822
+That's where gradient descent comes in.
+
+138
+00:04:55,822 --> 00:04:56,852
+It's up next time.

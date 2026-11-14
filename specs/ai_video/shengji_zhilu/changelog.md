@@ -838,3 +838,216 @@ Auto-updated:
 - episodes/ep01/filming.json（s5）、prompts.json、scenes/s5/shots/st1–st17/planning/（st18–st29 删除，未出片）、scenes/s5/decisions.md、decisions/filming.md
 
 未调用收费服务。
+
+## Follow-up 099 — 2026-10-18 16:50:00
+Source: user_input/follow_ups/202610.md - section 099
+Summary: s5 施法改为让亚伦让开 → 圣骑士施光架势、两掌间闪光 → 念「Light, give me strength.」→ 约三秒后圣光从上方落到维里身上 → 伤口合上、维里恢复；st1、st2 不滴血、伤口只在右上臂；播放顺序 st4 → st6 → st5。重出 st1、st2、st3、st4、st6（720p，1084 积分）：st1、st3、st4、st6 通过（待用户确认），st2 待定（取景像隔窗从屋外拍）。
+
+Auto-updated:
+- episodes/ep01/story.json（武器厅施法段、brief 圣光规矩）、decisions/story.md、scenes/s5/decisions.md
+- episodes/ep01/filming.json（s5 st1–st4、st6–st8 与播放顺序）、prompts.json、scenes/s5/shots/{st3,st4,st6,st7,st8}/planning/
+- episodes/ep01/scenes/s5/shots/{st1,st2,st3,st4,st6}/renders/（新条与 review.md；旧条 st1、st2 标不选，旧 st4 标作废）
+
+未调用其它收费服务。
+
+## Follow-up 101 — 2026-10-18 18:10:00
+Source: user_input/follow_ups/202610.md - section 101
+Summary: st1 伤口改回右上臂（去掉「搭肩」与「捂伤」的矛盾）；st2 亚伦手位不碰伤口、机位在屋里；施法按实机研究（w25，wow.lightvfx.002–004）改为一手头侧、一手腰边、两团暖金光光丝似连非连、念咒，再右手笔直上举、白芯金边光柱罩住维里；维里痊愈后立刻恢复力气，改派他去路上接治安官的人（用户选定），st10、st13、st14、st17 台词随改。重出 st1、st2、st4、st6、st7、st8（720p，1284 积分）：st1、st4、st6、st7、st8 通过（待用户确认）；st2 不通过——维里没被放平、半躺在亚伦怀里，接不上 st3 开头的平躺。
+
+Auto-updated:
+- episodes/ep01/story.json、decisions/story.md、state_changes.md、scenes/s5/decisions.md
+- episodes/ep01/filming.json（s5 st1、st2、st4、st6、st8、st10、st13、st14、st17）、prompts.json、对应 planning/
+- episodes/ep01/scenes/s5/shots/{st1,st2,st4,st6,st7,st8}/renders/（新条与 review.md）
+
+未调用其它收费服务。
+
+补记（101，st2 重出）：用户「只做第一个」——st2 写死放平后重出 20261018-194041_f78791bc（360 积分）：维里放平、台词对，但机位贴西墙拱窗，画面像隔窗从屋外拍，不通过。st2、st17 overhead 机位挪进厅里、镜头行写明无窗框门框，filming 重批、全集编译、shot_pack ok 32；st2 是否再出待用户点。本 follow-up 视频积分累计 1644。
+
+## Follow-up 102 — 2026-10-18 20:10:00
+Source: user_input/follow_ups/202610.md - section 102
+Summary: 按 w25 实机截帧补施法姿势（一手肩头与头侧之间、一手垂在大腿外侧，光是边缘模糊的光晕，两手间无光丝，新 fact wow.lightvfx.021）；st4 光丝改若有若无的淡金薄雾；st6 光柱与 st5 亚伦脸上的光改为由暗到亮再退去的渐变、无硬边；st5 亚伦改为站着（接 st6）。未出片。
+
+Auto-updated:
+- 0_research/parts/w25_圣光视觉.md（§4 加姿势与光晕边缘两行、事实注册表加 wow.lightvfx.021）
+- episodes/ep01/filming.json（s5 st4、st5、st6）、prompts.json、scenes/s5/shots/{st4,st5,st6}/planning/、scenes/s5/decisions.md
+
+未调用收费服务。
+
+补记（102，出片）：用户「都重新出」——st4（首次提交网络超时未交，list_task 核过无任务后补交）20261018-203459_f7f1f6a9 240 积分，通过（待用户确认）：无光丝、光晕渐变，姿势左手偏高；st5 201335_162cb867 120 积分，通过；st6 201846_bed97e94 160 积分，不通过：光柱渐变好，但萨缪尔眼睛发金光；st2 202512_e99df14f 360 积分，通过（机位在厅里、维里放平、尼尔斯出门）。st6 改为从 st4 架势接起、写明眼睛不发光，已编译、shot_pack ok 32，待用户点重出。本 follow-up 视频积分 880。
+
+## Follow-up 103 — 2026-10-18 21:00:00
+Source: user_input/follow_ups/202610.md - section 103
+Summary: 实机逐帧补「起手期间手臂轻晃、光团明暗呼吸」（wow.lightvfx.022）；st4、st6 共用站位与手势文字并加手臂轻晃，st6 开头接 st4 架势。未出片。
+
+Auto-updated:
+- 0_research/parts/w25_圣光视觉.md（wow.lightvfx.022）
+- episodes/ep01/filming.json（s5 st4、st6）、prompts.json、scenes/s5/decisions.md
+
+未调用收费服务。
+
+
+补记（103，出片）：用户「好的」——st4 20261018-214701_efb0c5b0（240 积分）通过（待用户确认）：手臂轻晃、光晕呼吸、无光丝，左手在腰前偏低；st6 215330_4158245e（144 积分）不通过：萨缪尔全程弯腰俯身、右手没举过头顶，与 st4 架势接不上。st6 补写「全程站直、开镜第一秒右手笔直举过头顶」，已编译、shot_pack ok 32，待用户点重出。本 follow-up 视频积分 384。
+
+## Follow-up 104 — 2026-10-18 22:30:00
+Source: user_input/follow_ups/202610.md - section 104
+Summary: 萨缪尔施一道圣光不累、全程站着；他与维里去桥头拦治安官的人、从河岸下面领进去，亚伦先去；st6 光对准右上臂的伤；st8–st17 改站姿与台词（st14 30 秒）。未出片。
+
+Auto-updated:
+- episodes/ep01/story.json（武器厅、brief 圣光规矩）、decisions/story.md、state_changes.md；episodes/ep02/story.json（一句与 brief 待写行，draft）
+- episodes/ep01/filming.json（s5 st6、st8–st17）、prompts.json、scenes/s5/shots/{st6,st8–st17}/planning/、scenes/s5/decisions.md
+
+未调用收费服务。
+
+
+补记（104，出片）：用户「先只出到st8」——st6 20261018-224721_71ddc989（160 积分）通过（待用户确认）：萨缪尔站直、举手、光柱渐变，金环落在右上臂伤口；st8 225443_b1d090d6（240 积分）不通过：维里站起后背对镜头、伤画在左臂、萨缪尔开头手还举着。st8 补写「站起后正脸对镜头、伤在他自己的右上臂、萨缪尔两手已垂在身侧」，机位离地 1.3 m，已编译、shot_pack ok 32，待用户点重出。本 follow-up 视频积分 400。
+
+补记（104，st8 重出）：用户「好的重出」——st8 20261018-230358_76589c1a（240 积分）通过（待用户确认）：维里跃起后正脸、伤在右上臂、萨缪尔站着；「Good. It's healed.」萨缪尔口型偏弱。本 follow-up 视频积分累计 640。
+
+## Follow-up 105 — 2026-10-19
+Source: user_input/follow_ups/202610.md - section 105
+Summary: st4、st6 施光光效改为分层（手心柔和光芯、手周暖金光雾、周身雾状游丝状似连非连的光气、外围微尘），两手不像灯泡；站位手势不变。按用户「改完重出」提交 st4、st6 正式条。
+
+Auto-updated:
+- episodes/ep01/filming.json（s5 st4、st6）、prompts.json、scenes/s5/shots/{st4,st6}/planning/、scenes/s5/decisions.md
+
+补记（105，重出）：用户「改完重出」——st4 20261019-084845_37ff9fe6（216 积分）光效达标、手势回退（双手平举身前），待用户决定；st6 20261019-085358_afa64ab3（160 积分）光柱对，开镜光气偏成条、2.3 秒多一声画外「Thank you.」，待用户决定。本 follow-up 视频积分累计 376。
+
+## Follow-up 106 — 2026-10-19 09:10:00
+Source: user_input/follow_ups/202610.md - section 106
+Summary: st4、st6 施光手势改为两手一高一低、掌心朝上，各托一圈柔和光晕，像托活物一样摇动；光气、光柱、站位、机位、台词不变。
+
+Auto-updated:
+- episodes/ep01/filming.json（s5 st4 action/blocking/beats/lighting；st6 action/beats/lighting）— 经管理应用命令层 save → approve
+- episodes/ep01/prompts.json + scenes/s5/shots/{st4,st6}/prompt.txt — 整集编译，仅这两镜变化（其余 30 镜逐字未变）
+- scenes/s5/shots/{st4,st6}/资料包/ — shot_pack sync；整集 check ok 32
+- scenes/s5/decisions.md — 修改记录（106）
+- user_input/revised_prompt.md — 追加 106
+
+No conflicts found in: story（未动）、overhead（站位不变）
+
+审计：.audit/adhoc_agents/2026-10-19/shengji_zhilu-fu106/（edit_filming.py、apply_via_command.py、改前 filming/prompts 备份）。
+未出片：等用户决定是否重出 st4、st6。
+
+补记（106，重出）：用户「重出，然后发给我」——直出 720p 正式条（--no-draft，沿用 105 先例）。st4 20261019-095529_e9d46c9d（240 积分）：两手合捧一颗光球在胸前、上手掌心朝下，手势仍不对，躯干带血，待用户决定；st6 20261019-100030_f3be0955（160 积分）：一高一低对、光圈画成套在手上的竖环、光柱对，无画外人声与多余举手，可替换 085358，待用户决定。本 follow-up 视频积分 400。
+
+## Follow-up 107 — 2026-10-19 10:20:00
+Source: user_input/follow_ups/202610.md - section 107
+Summary: st4、st6 掌上的光由光圈改为带雾渐变的光团（中心暖白→暖金雾、无边），两团分开，与周身光雾藕断丝连；st4 补躯干无血。
+
+Auto-updated:
+- episodes/ep01/filming.json（s5 st4 action/beats/lighting；st6 action/lighting）— 命令层 save → approve
+- episodes/ep01/prompts.json + scenes/s5/shots/{st4,st6}/prompt.txt — 整集编译，仅这两镜变化
+- scenes/s5/shots/{st4,st6}/资料包/ — shot_pack sync；整集 check ok 32
+- scenes/s5/decisions.md — 修改记录（107）
+- user_input/revised_prompt.md — 追加 107
+
+No conflicts found in: story、overhead
+
+审计：.audit/adhoc_agents/2026-10-19/shengji_zhilu-fu107/。未出片。
+
+## Follow-up 109 — 2026-10-19 13:30:00
+Source: user_input/follow_ups/202610.md - section 109
+Summary: 英文版后期 v3：环境声与配乐改用本地 Stable Audio 3 生成（每场环境声 + 4 段配乐，s2 接 s1 续写），替换 v2 的合成噪声。
+
+Auto-updated:
+- episodes/ep01/post/audio/gen_v1.json 与各条生成记录 .json（wav 不进 git）
+- episodes/ep01/post/trial/post_v3.json → ep01_post_v3.mp4 / .srt（mp4 不进 git）
+- user_input/revised_prompt.md — 追加 109
+
+No conflicts found in: story、filming、prompts、剪辑决定（只读集级剪辑 v9）
+
+Validation: 87.25 秒时长对；-16.0 LUFS、真峰值 -1.3 dBFS；逐秒短时响度对比 v2，对白段未被配乐盖过。音色未经人耳审听。
+
+## Follow-up 108 — 2026-10-19 12:10:00
+Source: user_input/follow_ups/202610.md - section 108
+Summary: 资产补上「职业与技能」：1.12 九职业 428 个主动技能各一张卡，先收原生资料（中英说明、图标、客户端视觉链、Wowhead 截图、动作库、实机片段），再做技能 demo；圣光术试点 demo prompt 待用户看。未调用收费服务。
+
+Auto-updated:
+- ai_videos/shengji_zhilu/2_世界观人设/classes/（新建）— README、registry.toml（键 k{职业位}{两位序号}，旧技能库 11 个键沿用）、9 张职业卡、428 张技能卡（icon/、ref/refs.md）；k201 圣光术写了本剧写法初稿、Shot prompt 技能、技能视频 prompt 与资料包
+- ai_videos/shengji_zhilu/0_research/parts/w29_九职业技能原典.md（新建）— 范围、来源、覆盖、录像核过的新事实（圣光术光柱只落在目标身上、被打断手光熄灭、读条循环幅度节奏）、待核问题
+- ai_videos/shengji_zhilu/0_research/refs/职业技能/（新建）— skills_index.json、动作库 动作/（README + 片段）；抓取缓存 .gitignore
+- .agents/skills/ai-videos-pipeline/resources/assets.md — 新增「技能」类与「## 技能」节（跨剧：先建技能资产、收原生资料，再出 demo，镜头引用）
+- tools/skill_pack.py — 也读 classes/{职业}/skills/ 下的技能卡；tools/tests/test_asset_groups.py 加一条测试（12 passed）
+- 脚本：.audit/adhoc_agents/2026-10-19/wow-class-skills/
+
+No conflicts found in: episodes/（未改）、旧技能库 2_世界观人设/skills/（只读）
+
+## Follow-up 110 — 2026-10-19 20:30:00
+Source: user_input/follow_ups/202610.md - section 110
+Summary: 英文版后期 v4 只留环境声，人声明显高于背景（-14 LUFS）；配乐改由用户用 Suno 生成，写好 prompt 与 cue 时间表。
+
+Auto-updated:
+- episodes/ep01/post/trial/post_v4.json → ep01_post_v4.mp4 / .srt（mp4 不进 git）
+- episodes/ep01/post/audio/suno_prompts.md（新）
+- user_input/revised_prompt.md — 追加 110
+
+No conflicts found in: story、filming、prompts、剪辑决定（只读集级剪辑 v9）
+
+Validation: 87.25 秒时长对；-14.5 LUFS、真峰值 -1.4 dBFS；台词段中位 -13.9、无台词段中位 -21.0。音色未经人耳审听。
+
+## Follow-up 112 — 2026-10-19 21:15:00
+Source: user_input/follow_ups/202610.md - section 112
+Summary: 删除 Stable Audio 3 生成的后期声音与用到它们的英文版后期 v3、v4；本地模型只用完全开源的。
+
+Auto-updated:
+- 删除 episodes/ep01/post/audio/{amb_*,mus_*,gen_v1.json}、episodes/ep01/post/trial/{post_v3,post_v4}.json 与对应 mp4 / srt
+- user_input/revised_prompt.md — 追加 112
+
+Validation: post/trial 只剩 v1、v2；audio/ 只剩 suno_prompts.md。
+
+## Follow-up 113 — 2026-10-19 21:40:00
+Source: user_input/follow_ups/202610.md - section 113
+Summary: 英文版后期 v5：v2 的合成环境声床 + v4 的人声设置（-14 LUFS），人声比无台词段高约 9.5 dB；不用生成模型、不放配乐。
+
+Auto-updated:
+- episodes/ep01/post/trial/post_v5.json → ep01_post_v5.mp4 / .srt（mp4 不进 git）
+- user_input/revised_prompt.md — 追加 113
+
+No conflicts found in: story、filming、prompts、剪辑决定
+
+Validation: 87.25 秒时长对；-14.3 LUFS、真峰值 -1.3 dBFS；运行中后端 `/api/scene-cuts` 列出 posts v5 / v2 / v1。
+
+
+## Follow-up 114 — 2026-10-22 19:25:53
+Source: user_input/follow_ups/202610.md - section 114
+Summary: 经本机 API 实际创建 EP1 Suno 配乐任务，停在 needs_login；完成六场本地环境声候选和前四场环境声试听版 v6，完整配乐仍未完成。
+
+Auto-updated:
+- episodes/ep01/post/audio/suno_prompts.md、suno/requests_v1.json — 六条配乐请求、当前剪辑入点与后两场镜头锚点；M01 已建任务，其余未提交。
+- episodes/ep01/post/audio/ambience_20261022/ — MOSS 生成清单、原始 WAV、处理版、指纹与 QC；v1 两条近静音排除，v2 六条全部生成。
+- episodes/ep01/post/trial/post_v6.json、ep01_post_v6.mp4 / .srt、stems_v6/、qc_v6.json — 仅环境声试听版与分轨。
+- episodes/ep01/request_log.md — 浏览器启动与导航请求先记后执行，导航遇到未登录；没有 Create 或下载。
+- README.md — 当前声音试做入口和未完成边界。
+- user_input/revised_prompt.md — 合并本条新指令与结果。
+
+No conflicts found in: story、filming、prompts、场级与集级剪辑决定；原 v5 后期决定与上游 SHA 未改。
+
+Validation: 六条新环境声共 174 秒，文件指纹与时长回读；生成器复跑六条全跳过、退出 0。首次 PowerShell 重定向把 stderr 警告报告为 NativeCommandError（退出 1），日志无 Python traceback，六条落盘后独立复查与幂等复跑确认完成。试听片完整解码，87.25 秒 / 2094 帧；−14.8 LUFS、−1.7 dBTP；21 条英文字幕、3 张字卡与 v5 相同。实际词时窗原声比新增环境声至少高 10.7 dB、中位 13.0 dB；原声含同步音，不能据此声称已听审。分轨的前两轨在总线响度处理前，试听混音 WAV 是视频 AAC 解码，不冒充无损母版。
+
+Pending: Suno 专用 profile 首次登录及真实生成下载；s5 st9–st17、s6 全场正式条与完整剪辑；音色、音画与情绪听审、锁片批准。设计围绕 Vision 的空间抵达与求助；完整体验尚不能判通过。当前交付为前四场候选，不是整集终混。
+
+Audit: .audit/adhoc_agents/2026-10-22/shengji-ep01-sound-114/
+
+
+### Follow-up 114 执行续记 — 2026-10-22 20:10
+
+Suno 人工登录已完成，Pro 套餐核对成功。M01 `11bb141ca9164b79b88825820db8dc99`、M02 `7559bb5d429a420a8c9c55480aa3384f` 已通过 API 各点击 Create 一次，均无确认歌曲或音频文件。M02 随后检测到验证码，服务持久暂停全部浏览器任务；不重复提交，不继续 M03–M06。请求清单、README、suno_prompts 已同步，原 v6 仅环境声候选及其 QC 没有改写成配乐完成。
+
+当前 blocker：Suno 人工验证与未知提交核对、官方下载 DOM 校准、完整画面、听审与锁片批准。历史 `needs_login` 已解除；验证码属于新阻塞。真实执行证据：`.audit/adhoc_agents/2026-10-22/suno-v6-live/result.json`。
+
+## Follow-up 115 — 2026-10-22 20:37
+Source: user_input/follow_ups/202610.md - section 115
+Summary: 降低当前 EP1 环境轨 8 dB，加入三段本地 ACE-Step 临时配乐，交付 v8；Suno 验证码暂停未解除。
+
+Auto-updated:
+- episodes/ep01/post/audio/acestep_20261022/ — 三条原音乐（45/22/28 秒）、生成参数、种子、运行配置、SHA256；来源为本地 ACE-Step 1.5 XL Turbo。
+- episodes/ep01/post/trial/post_v7.json / post_v8.json、对应 MP4/SRT、stems_v7/ / stems_v8/、qc_v7.json / qc_v8.json — 低环境声对照与带音乐候选；无损总混、环境与音乐分轨保留。
+- README.md、post/audio/suno_prompts.md、user_input/revised_prompt.md — 最新入口、来源、范围、留白与待审项。
+
+No conflicts found in: story、filming、prompts、源剪辑 v9、原 v6 试听片和原对白/同步声分轨；未新增 Suno Create 或下载请求。
+
+Validation: v8 完整解码、87.25 秒；视频流 SHA 与 v6 相同，21 条字幕和 3 张字卡不变；−16.0 LUFS / −1.9 dBTP。环境分轨实测相对 v6 −8.0 dB；音乐 38.6–48 秒全静音，台词时间窗原声高于音乐至少 10.5 dB、中位 16.4 dB。v7 −15.9 LUFS / −1.8 dBTP。后端 /api/scene-cuts 已列出 v8 为最新候选及 3 条配乐。
+
+Pending: 音色、旋律、空间、音画和情绪试听；Suno 人工验证和原未知提交核对、真实官方下载校准；s5 后半与 s6 画面、完整剪辑和锁片批准。当前只是前四场 87.25 秒候选，不能视为整集终混。
+
+Audit: .audit/adhoc_agents/2026-10-22/shengji-ep01-sound-115/。首次 ACE 初始化把目录名 vae 当作变体 ID，改用官方 ID official 后成功，未改权重。首轮 v7 的视频哈希校验错误读取 stderr，已修正为 stdout 真哈希；旧 −14 LUFS 目标与动态/峰值限制不合，明确改为 −16 LUFS 后重渲染并全部通过。

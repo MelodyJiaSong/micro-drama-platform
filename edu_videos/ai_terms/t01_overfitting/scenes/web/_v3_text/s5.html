@@ -1,0 +1,80 @@
+<style>
+  .ill { position: absolute; object-fit: contain;
+         -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 52%, #000 62%, transparent 100%);
+                 mask-image: radial-gradient(ellipse 72% 70% at 50% 52%, #000 62%, transparent 100%); }
+  .big-ill { left: 40px; top: 150px; width: 1060px; height: 596px; }
+  .right { position: absolute; left: 1140px; top: 300px; width: 660px; }
+  .right .display { margin-top: 10px; }
+  .eyebrow-top { position: absolute; left: var(--mx); top: var(--mt); }
+  .map { position: absolute; left: var(--mx); top: 220px; width: 1680px; }
+  .map .row { display: grid; grid-template-columns: 520px 80px 1fr; align-items: baseline; padding: 22px 0; border-top: 1px solid var(--hair); }
+  .map .arrow { color: var(--faint); font-size: var(--fs-h2); }
+  .limit { position: absolute; left: var(--mx); top: 820px; width: 1500px; }
+  .rule-line { position: absolute; left: var(--mx); top: 150px; white-space: nowrap; }
+  .tri { position: absolute; top: 330px; width: 520px; height: 292px; }
+  .tri.a { left: 100px; } .tri.b { left: 700px; } .tri.c { left: 1300px; }
+  .say { position: absolute; top: 650px; width: 520px; text-align: center; }
+  .say.a { left: 100px; } .say.b { left: 700px; } .say.c { left: 1300px; }
+  .cmp { position: absolute; left: var(--mx); right: var(--mx); top: 300px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+  .cmp .h1 { margin-top: 12px; } .cmp .caption { margin-top: 18px; }
+</style>
+
+<div class="eyebrow-top eyebrow" data-zh="02 · 类比" data-en="02 · An analogy"></div>
+
+<img class="ill big-ill" id="stu" src="img/clay_student.png">
+<img class="ill big-ill" id="exam" src="img/clay_exam.png">
+<div class="right" id="r-a"><div class="eyebrow" data-zh="练习册" data-en="The workbook"></div>
+  <div class="display c-good">100</div><div class="body ink2" data-zh="答案全背下来，连印错的也照背" data-en="Every answer memorized, typos included"></div></div>
+<div class="right" id="r-b"><div class="eyebrow" data-zh="考试" data-en="The exam"></div>
+  <div class="h1 c-bad" data-zh="题目稍微一变，<br>就不会了" data-en="Change a question slightly,<br>and he's lost"></div></div>
+
+<div class="map" id="map">
+  <div class="row"><div class="h2" data-zh="练习册" data-en="The workbook"></div><div class="arrow">→</div><div class="h2"><span class="c-train" data-zh="训练数据" data-en="Training data"></span></div></div>
+  <div class="row"><div class="h2" data-zh="印错的答案" data-en="The typos"></div><div class="arrow">→</div><div class="h2 c-bad" data-zh="噪声" data-en="Noise"></div></div>
+  <div class="row"><div class="h2" data-zh="考试" data-en="The exam"></div><div class="arrow">→</div><div class="h2 accent" data-zh="新数据" data-en="New data"></div></div>
+  <div class="row"><div class="h2" data-zh="死记硬背" data-en="Memorizing"></div><div class="arrow">→</div><div class="h2 c-bad" data-zh="硬穿过每个点的曲线" data-en="A curve forced through every point"></div></div>
+</div>
+<div class="limit caption" id="limit" data-zh="类比不像的地方：学生知道自己在背，模型不知道——它只是能力大到能记下每个点。"
+     data-en="Where the analogy breaks: the student knows he's memorizing. The model doesn't — it's simply powerful enough to remember every point."></div>
+
+<img class="ill big-ill" id="cats" src="img/clay_cats.png">
+<div class="right" id="r-c"><div class="eyebrow" data-zh="相近，但不一样的毛病" data-en="A related, but different, problem"></div>
+  <div class="h1" data-zh='照片里的猫，<span class="accent">全在沙发上</span>' data-en='Every cat in the photos is <span class="accent">on a sofa</span>'></div></div>
+<div class="rule-line h1" id="rule" data-zh='小朋友学到的规则：<span class="grad">沙发 = 猫</span>' data-en='The rule the child learns: <span class="grad">sofa = cat</span>'></div>
+<img class="ill tri a" id="t-cats" src="img/clay_cats.png">
+<img class="ill tri b" id="t-dog" src="img/clay_dog.png">
+<img class="ill tri c" id="t-grass" src="img/clay_grass.png">
+<div class="say a caption" id="s-a" data-zh="见过的：全对" data-en="Photos he has seen: all right"></div>
+<div class="say b h2 c-bad" id="s-b" data-zh="“是猫！”" data-en="“Cat!”"></div>
+<div class="say c h2 c-bad" id="s-c" data-zh="“不是猫。”" data-en="“Not a cat.”"></div>
+
+<div class="cmp" id="cmp">
+  <div id="cmp-a"><div class="eyebrow" data-zh="学生" data-en="The student"></div><div class="h1" data-zh='记得<span class="c-bad">太多</span>' data-en='Remembered <span class="c-bad">too much</span>'></div>
+    <div class="caption" data-zh="过拟合" data-en="Overfitting"></div></div>
+  <div id="cmp-b"><div class="eyebrow" data-zh="小朋友" data-en="The child"></div><div class="h1" data-zh='见得<span class="accent">太单一</span>' data-en='Saw <span class="accent">too narrow a slice</span>'></div>
+    <div class="caption" data-zh="捷径学习（后面还会碰到）" data-en="Shortcut learning (we'll meet it again)"></div></div>
+</div>
+
+<script>
+const all = ["#stu", "#exam", "#r-a", "#r-b", "#map .row", "#limit", "#cats", "#r-c", "#rule", "#t-cats", "#t-dog", "#t-grass", "#s-a", "#s-b", "#s-c", "#cmp-a", "#cmp-b"];
+gsap.set(all, { opacity: 0 });
+EDU.in(".eyebrow-top", 0);
+// l24 学生、满分
+EDU.in("#stu", EDU.t("l24"), { y: 12, d: .9 }); EDU.in("#r-a", EDU.t("l24", .55));
+// l25 考试
+EDU.out(["#stu", "#r-a"], EDU.t("l25")); EDU.in("#exam", EDU.t("l25", .02), { y: 12, d: .9 }); EDU.in("#r-b", EDU.t("l25", .3));
+// l26 显式对应
+EDU.out(["#exam", "#r-b"], EDU.t("l26")); EDU.in("#map .row", EDU.t("l26", .05), { stagger: EDU.S.cues.l26 ? (EDU.end("l26") - EDU.t("l26")) / 4.6 : .6 });
+// l27 类比不像的地方
+EDU.in("#limit", EDU.t("l27"));
+// l28 相近但不同：沙发上的猫
+EDU.out(["#map .row", "#limit"], EDU.t("l28")); EDU.in("#cats", EDU.t("l28", .1), { y: 12, d: .9 }); EDU.in("#r-c", EDU.t("l28", .45));
+// l29 规则与两个反例
+EDU.out(["#cats", "#r-c"], EDU.t("l29")); EDU.in("#rule", EDU.t("l29", .02));
+EDU.in(["#t-cats", "#s-a"], EDU.t("l29", .12), { stagger: .1 });
+EDU.in(["#t-dog", "#s-b"], EDU.t("l29", .45), { stagger: .12 });
+EDU.in(["#t-grass", "#s-c"], EDU.t("l29", .75), { stagger: .12 });
+// l30 对比：记得太多 vs 见得太少
+EDU.out(["#rule", "#t-cats", "#t-dog", "#t-grass", "#s-a", "#s-b", "#s-c"], EDU.t("l30"));
+EDU.in("#cmp-a", EDU.t("l30", .25)); EDU.in("#cmp-b", EDU.t("l30", .5));
+</script>

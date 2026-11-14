@@ -1,0 +1,468 @@
+{
+ "title": "t01 过拟合 overfitting",
+ "tagline": "过拟合，就是连印错的都背了下来，还把它们当成了规律。",
+ "lang": "zh",
+ "languages": [
+  {
+   "lang": "zh",
+   "label": "中文",
+   "preview": "edu_videos/ai_terms/t01_overfitting/preview.json"
+  },
+  {
+   "lang": "en",
+   "label": "English",
+   "preview": "edu_videos/ai_terms/t01_overfitting/preview.en.json"
+  }
+ ],
+ "video": "edu_videos/ai_terms/t01_overfitting/final/t01_overfitting.mp4",
+ "duration": 287.73,
+ "chapters": [
+  {
+   "id": "s0",
+   "title": "冷开场",
+   "t": 0.0
+  },
+  {
+   "id": "s2",
+   "title": "过拟合是什么",
+   "t": 17.5
+  },
+  {
+   "id": "s3",
+   "title": "三种学法",
+   "t": 54.67
+  },
+  {
+   "id": "s4",
+   "title": "考试",
+   "t": 110.8
+  },
+  {
+   "id": "s7",
+   "title": "学习就是压缩",
+   "t": 150.27
+  },
+  {
+   "id": "s8",
+   "title": "一个真实的例子",
+   "t": 190.57
+  },
+  {
+   "id": "s9",
+   "title": "怎么防",
+   "t": 230.27
+  },
+  {
+   "id": "s10",
+   "title": "片尾",
+   "t": 271.33
+  }
+ ],
+ "items": [
+  {
+   "t": 0.6,
+   "end": 7.34,
+   "title": "有个模型，拿它学过的数据来考，几乎满分",
+   "subtitle": "有个模型，拿它学过的数据来考，几乎满分，可一换成新数据，就错得一塌糊涂。",
+   "badge": "l01",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l01.jpg"
+  },
+  {
+   "t": 7.69,
+   "end": 12.38,
+   "title": "这多半不是程序写错了，是模型犯了个毛病",
+   "subtitle": "这多半不是程序写错了，是模型犯了个毛病，叫过拟合。",
+   "badge": "l02",
+   "chapter": "s0",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l02.jpg"
+  },
+  {
+   "t": 20.7,
+   "end": 29.2,
+   "title": "过拟合说白了，就是模型学得太死",
+   "subtitle": "过拟合说白了，就是模型学得太死，连数据里碰巧出现的细节都记住了，换成新数据反而答不准。",
+   "badge": "l03",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l03.jpg"
+  },
+  {
+   "t": 29.55,
+   "end": 38.57,
+   "title": "打个比方",
+   "subtitle": "打个比方，有个学生把练习册的答案全背了下来，连印错的那几处也照着背，所以练习册他回回满分。",
+   "badge": "l04",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l04.jpg"
+  },
+  {
+   "t": 38.92,
+   "end": 42.39,
+   "title": "可一到考试，题目稍微变一下，他就不会了",
+   "subtitle": "可一到考试，题目稍微变一下，他就不会了。",
+   "badge": "l05",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l05.jpg"
+  },
+  {
+   "t": 42.74,
+   "end": 48.94,
+   "title": "这里的练习册，就是模型手里的数据",
+   "subtitle": "这里的练习册，就是模型手里的数据，那几处印错的地方，就是数据里的噪声。",
+   "badge": "l06",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l06.jpg"
+  },
+  {
+   "t": 49.29,
+   "end": 53.76,
+   "title": "模型把噪声也当成规律记住了",
+   "subtitle": "模型把噪声也当成规律记住了，这就是过拟合。",
+   "badge": "l07",
+   "chapter": "s2",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l07.jpg"
+  },
+  {
+   "t": 57.87,
+   "end": 64.15,
+   "title": "做个小实验",
+   "subtitle": "做个小实验。这十个点是收集来的数据，叫训练数据，就像练习题。",
+   "badge": "l08",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l08.jpg"
+  },
+  {
+   "t": 64.5,
+   "end": 71.29,
+   "title": "这些点大致有规律",
+   "subtitle": "这些点大致有规律，但每个点又有点随机的偏差，这些偏差就是噪声。",
+   "badge": "l09",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l09.jpg"
+  },
+  {
+   "t": 71.64,
+   "end": 76.63,
+   "title": "模型要做的，就是从这些点里找出规律",
+   "subtitle": "模型要做的，就是从这些点里找出规律，去预测没见过的新点。",
+   "badge": "l10",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l10.jpg"
+  },
+  {
+   "t": 76.98,
+   "end": 81.12,
+   "title": "我们试三种模型",
+   "subtitle": "我们试三种模型。第一种太简单，只会画直线。",
+   "badge": "l11",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l11.jpg"
+  },
+  {
+   "t": 81.47,
+   "end": 85.68,
+   "title": "点离线越远，扣分越多，平均扣多少",
+   "subtitle": "点离线越远，扣分越多，平均扣多少，就是误差。",
+   "badge": "l12",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l12.jpg"
+  },
+  {
+   "t": 86.03,
+   "end": 90.79,
+   "title": "结果这条直线连练习题都做不好",
+   "subtitle": "结果这条直线连练习题都做不好，这就叫欠拟合。",
+   "badge": "l13",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l13.jpg"
+  },
+  {
+   "t": 91.14,
+   "end": 95.89,
+   "title": "第二种是条平缓的曲线，没穿过每个点",
+   "subtitle": "第二种是条平缓的曲线，没穿过每个点，但抓住了大走势。",
+   "badge": "l14",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l14.jpg"
+  },
+  {
+   "t": 96.24,
+   "end": 103.52,
+   "title": "第三种就复杂多了，曲线拐来拐去",
+   "subtitle": "第三种就复杂多了，曲线拐来拐去，硬是穿过了每一个点，所以它的练习误差是零。",
+   "badge": "l15",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l15.jpg"
+  },
+  {
+   "t": 103.87,
+   "end": 108.39,
+   "title": "你先猜一下，换成新题",
+   "subtitle": "你先猜一下，换成新题，这三种里哪一种考得最好？",
+   "badge": "l16",
+   "chapter": "s3",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l16.jpg"
+  },
+  {
+   "t": 111.4,
+   "end": 117.14,
+   "title": "我们再拿六个没见过的新点考考它们",
+   "subtitle": "我们再拿六个没见过的新点考考它们，这叫测试数据，就相当于考试。",
+   "badge": "l17",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l17.jpg"
+  },
+  {
+   "t": 117.5,
+   "end": 120.57,
+   "title": "第二种离这些新点都不远，考得最好",
+   "subtitle": "第二种离这些新点都不远，考得最好。",
+   "badge": "l18",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l18.jpg"
+  },
+  {
+   "t": 120.92,
+   "end": 125.31,
+   "title": "第三种在练习点之间乱拐",
+   "subtitle": "第三种在练习点之间乱拐，离有些新点特别远。",
+   "badge": "l19",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l19.jpg"
+  },
+  {
+   "t": 125.66,
+   "end": 128.67,
+   "title": "它的考试误差，是第二种的二十多倍",
+   "subtitle": "它的考试误差，是第二种的二十多倍。",
+   "badge": "l20",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l20.jpg"
+  },
+  {
+   "t": 129.02,
+   "end": 137.86,
+   "title": "为什么会这样？",
+   "subtitle": "为什么会这样？因为它把噪声也背下来了。可噪声是随机的，到了新题里不会再来一遍，这就是过拟合。",
+   "badge": "l21",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l21.jpg"
+  },
+  {
+   "t": 138.21,
+   "end": 142.35,
+   "title": "欠拟合其实挺好发现的，它练习和考试都差",
+   "subtitle": "欠拟合其实挺好发现的，它练习和考试都差。",
+   "badge": "l22",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l22.jpg"
+  },
+  {
+   "t": 142.7,
+   "end": 149.35,
+   "title": "过拟合就难发现了，练习成绩可能好得出奇",
+   "subtitle": "过拟合就难发现了，练习成绩可能好得出奇，像这里练习误差是零。",
+   "badge": "l23",
+   "chapter": "s4",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l23.jpg"
+  },
+  {
+   "t": 153.47,
+   "end": 157.21,
+   "title": "咱们换个角度看",
+   "subtitle": "咱们换个角度看，学习其实可以看成一种压缩。",
+   "badge": "l24",
+   "chapter": "s7",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l24.jpg"
+  },
+  {
+   "t": 157.56,
+   "end": 162.77,
+   "title": "想原样记住这十个点，就得存十个数字",
+   "subtitle": "想原样记住这十个点，就得存十个数字，也就是每个点的高度。",
+   "badge": "l25",
+   "chapter": "s7",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l25.jpg"
+  },
+  {
+   "t": 163.12,
+   "end": 171.03,
+   "title": "第二种曲线只用四个数字就能画出来",
+   "subtitle": "第二种曲线只用四个数字就能画出来。它大致贴着这些点，新点也估得准，这就算压缩了。",
+   "badge": "l26",
+   "chapter": "s7",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l26.jpg"
+  },
+  {
+   "t": 171.38,
+   "end": 174.88,
+   "title": "第三种得用十个数字，才能穿过这十个点",
+   "subtitle": "第三种得用十个数字，才能穿过这十个点。",
+   "badge": "l27",
+   "chapter": "s7",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l27.jpg"
+  },
+  {
+   "t": 175.23,
+   "end": 180.92,
+   "title": "十个数字记十个点，等于根本没压缩",
+   "subtitle": "十个数字记十个点，等于根本没压缩，连噪声也一起存了下来。",
+   "badge": "l28",
+   "chapter": "s7",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l28.jpg"
+  },
+  {
+   "t": 181.27,
+   "end": 189.67,
+   "title": "所以好的压缩，是把规律留下、把噪声扔掉",
+   "subtitle": "所以好的压缩，是把规律留下、把噪声扔掉。可要是压过了头，就像那条直线，连规律也给丢了。",
+   "badge": "l29",
+   "chapter": "s7",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l29.jpg"
+  },
+  {
+   "t": 193.77,
+   "end": 202.31,
+   "title": "说个真事儿",
+   "subtitle": "说个真事儿：谷歌做过个项目，叫流感趋势，想靠搜索记录，估一估看病的人里，症状像流感的占多少。",
+   "badge": "l30",
+   "chapter": "s8",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l30.jpg"
+  },
+  {
+   "t": 202.66,
+   "end": 208.76,
+   "title": "一开始，它比了五千万个搜索词",
+   "subtitle": "一开始，它比了五千万个搜索词，看谁的搜索量跟一千多个流感数据点最像。",
+   "badge": "l31",
+   "chapter": "s8",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l31.jpg"
+  },
+  {
+   "t": 209.11,
+   "end": 215.62,
+   "title": "问题是，能挑的词比数据点多太多",
+   "subtitle": "问题是，能挑的词比数据点多太多，难免挑中只是碰巧在冬天搜得多的词。",
+   "badge": "l32",
+   "chapter": "s8",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l32.jpg"
+  },
+  {
+   "t": 215.97,
+   "end": 221.37,
+   "title": "研究者说这就是过拟合，它一部分在测流感",
+   "subtitle": "研究者说这就是过拟合，它一部分在测流感，一部分在测冬天。",
+   "badge": "l33",
+   "chapter": "s8",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l33.jpg"
+  },
+  {
+   "t": 221.72,
+   "end": 229.36,
+   "title": "后来的版本也不准",
+   "subtitle": "后来的版本也不准：从2011年到2013年，108周里，有100周它都估高了。",
+   "badge": "l34",
+   "chapter": "s8",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l34.jpg"
+  },
+  {
+   "t": 233.47,
+   "end": 238.41,
+   "title": "那过拟合怎么发现，又怎么防呢？",
+   "subtitle": "那过拟合怎么发现，又怎么防呢？常用的办法有三个。",
+   "badge": "l35",
+   "chapter": "s9",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l35.jpg"
+  },
+  {
+   "t": 238.76,
+   "end": 243.95,
+   "title": "第一，再留出一份数据来当模拟考",
+   "subtitle": "第一，再留出一份数据来当模拟考，这份数据叫验证集。",
+   "badge": "l36",
+   "chapter": "s9",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l36.jpg"
+  },
+  {
+   "t": 244.3,
+   "end": 249.12,
+   "title": "拿它来挑模型、早点发现过拟合",
+   "subtitle": "拿它来挑模型、早点发现过拟合，真正的考试留到最后。",
+   "badge": "l37",
+   "chapter": "s9",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l37.jpg"
+  },
+  {
+   "t": 249.47,
+   "end": 255.79,
+   "title": "说实话，刚才演示时",
+   "subtitle": "说实话，刚才演示时，我们是直接按考试成绩挑的模型，真做项目可不能这么干。",
+   "badge": "l38",
+   "chapter": "s9",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l38.jpg"
+  },
+  {
+   "t": 256.14,
+   "end": 262.4,
+   "title": "第二，多收些数据，越多样越好",
+   "subtitle": "第二，多收些数据，越多样越好，噪声和巧合就不容易被当成规律了。",
+   "badge": "l39",
+   "chapter": "s9",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l39.jpg"
+  },
+  {
+   "t": 262.75,
+   "end": 270.43,
+   "title": "第三，给模型立点规矩，曲线太复杂就扣分",
+   "subtitle": "第三，给模型立点规矩，曲线太复杂就扣分，别让它追着噪声跑，这个办法叫正则化。",
+   "badge": "l40",
+   "chapter": "s9",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l40.jpg"
+  },
+  {
+   "t": 271.93,
+   "end": 279.4,
+   "title": "所以说，过拟合，就是模型像那个学生一样",
+   "subtitle": "所以说，过拟合，就是模型像那个学生一样，连印错的地方都背了下来，还当成了规律。",
+   "badge": "l41",
+   "chapter": "s10",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l41.jpg"
+  },
+  {
+   "t": 279.75,
+   "end": 283.59,
+   "title": "哪天你觉得自己全懂了",
+   "subtitle": "哪天你觉得自己全懂了，就找道没见过的题试试。",
+   "badge": "l42",
+   "chapter": "s10",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l42.jpg"
+  },
+  {
+   "t": 283.94,
+   "end": 286.81,
+   "title": "下一期，我们来聊聊强化学习",
+   "subtitle": "下一期，我们来聊聊强化学习。",
+   "badge": "l43",
+   "chapter": "s10",
+   "image": "edu_videos/ai_terms/t01_overfitting/renders/thumbs/l43.jpg"
+  }
+ ],
+ "links": [
+  {
+   "label": "讲稿",
+   "path": "edu_videos/ai_terms/t01_overfitting/script.md"
+  },
+  {
+   "label": "时间轴",
+   "path": "edu_videos/ai_terms/t01_overfitting/timeline.json"
+  },
+  {
+   "label": "调研",
+   "path": "edu_videos/ai_terms/t01_overfitting/research.md"
+  },
+  {
+   "label": "字幕",
+   "path": "edu_videos/ai_terms/t01_overfitting/final/t01_overfitting.srt"
+  }
+ ]
+}

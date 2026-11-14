@@ -140,7 +140,8 @@ def assemble(segs: list[dict], trans: list[dict], head: dict, tail: dict, sp: di
     ins, fc = [], []
     for k, s in enumerate(segs):
         ins += ["-ss", "%.3f" % s["start"], "-t", "%.3f" % s["dur"], "-i", str(s["video"])]
-        fc.append("[%d:v]settb=AVTB,fps=%d,format=yuv420p,setpts=PTS-STARTPTS[v%di]" % (k, fps, k))
+        # fps 之后再统一时间基：fps 会把时间基改成 1/fps，而 concat 输出是 AVTB，切与叠化混用时 xfade 要求两路一致
+        fc.append("[%d:v]fps=%d,format=yuv420p,setpts=PTS-STARTPTS,settb=AVTB[v%di]" % (k, fps, k))
     cur, acc = "[v0i]", segs[0]["dur"]
     for k in range(1, len(segs)):
         tr = trans[k - 1]; xf = MENU[tr["type"]][1]
@@ -148,7 +149,7 @@ def assemble(segs: list[dict], trans: list[dict], head: dict, tail: dict, sp: di
             fc.append("%s[v%di]xfade=transition=%s:duration=%.3f:offset=%.3f[v%d]" % (cur, k, xf, tr["duration"], acc - tr["duration"], k))
             acc += segs[k]["dur"] - tr["duration"]
         else:
-            fc.append("%s[v%di]concat=n=2:v=1:a=0[v%d]" % (cur, k, k))
+            fc.append("%s[v%di]concat=n=2:v=1:a=0,settb=AVTB[v%d]" % (cur, k, k))
             acc += segs[k]["dur"]
         cur = "[v%d]" % k
     post = []

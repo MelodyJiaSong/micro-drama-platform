@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<!-- 频道统一包装（片头 / 本期内容 / 章节转场 / 片尾）。由 tools/edu_package.py 注入 window.PKG 后用 HyperFrames 渲染；
+     样式取频道设计规范（design/tokens.css，2026-11-08 用户选定：浅色舞台、暖琥珀、MiSans）。不要在这里写死某一期的文字、颜色。 -->
+<link rel="stylesheet" href="assets/tokens.css" />
+<script src="assets/gsap.min.js"></script>
+<style>
+  @font-face { font-family: "MiSans"; src: url("assets/fonts/MiSans-Regular.ttf"); font-weight: 400; }
+  @font-face { font-family: "MiSans"; src: url("assets/fonts/MiSans-Medium.ttf"); font-weight: 500; }
+  @font-face { font-family: "MiSans"; src: url("assets/fonts/MiSans-Semibold.ttf"); font-weight: 600; }
+  @font-face { font-family: "MiSans"; src: url("assets/fonts/MiSans-Bold.ttf"); font-weight: 700; }
+  :root {
+    --stage: var(--bg); --g1: var(--grad-from); --g2: var(--grad-to); --g3: var(--grad-to);
+    --latin: "MiSans", sans-serif; --han: "MiSans", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--stage); }
+  #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--stage);
+          color: var(--ink); font-family: var(--han); }
+  .lang-en #root, .lang-en .card { font-family: var(--latin); }
+  .card { position: absolute; inset: 0; }
+  .glow { display: none; }   /* 浅色舞台不用光晕（B 站调研：黑底发光已被 AI 量产视频用滥） */
+  .grad { background-image: linear-gradient(100deg, var(--g1), var(--g2));
+          -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: .12em; }
+  .eyebrow { font-family: var(--latin); font-size: 30px; letter-spacing: .14em; color: var(--sub); font-weight: 600; }
+  .mark { position: absolute; left: 120px; bottom: 170px; font-family: var(--latin); font-size: 24px; color: var(--sub); letter-spacing: .08em; }
+  .mark b { color: var(--ink); font-weight: 600; }
+  .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; gap: 28px; }
+  .ch { display: inline-block; will-change: transform, filter, opacity; }
+
+  /* 片头 */
+  .intro h1 { font-size: 240px; font-weight: 700; line-height: 1.12; padding-bottom: .06em; letter-spacing: .02em; white-space: nowrap; }
+  .lang-en .intro h1 { font-size: 220px; letter-spacing: -.035em; font-family: var(--latin); }
+  .intro .sub { font-family: var(--latin); font-size: 64px; font-weight: 300; color: var(--sub); }
+  .lang-en .intro .sub { font-family: var(--han); font-size: 56px; font-weight: 400; }
+
+  /* 本期内容 + 先修 */
+  .agenda { display: grid; grid-template-columns: 1.5fr 1fr; gap: 100px; padding: 150px 140px; align-items: center; }
+  .agenda h2 { font-size: 72px; font-weight: 700; margin-bottom: 56px; }
+  .agenda.solo { grid-template-columns: 1fr; padding: 150px 260px; }
+  .agenda.solo .rows { gap: 26px; }
+  .agenda.solo .row { grid-template-columns: 120px 1fr; padding-top: 22px; }
+  .agenda.solo .row span { font-family: var(--latin); font-size: 34px; font-weight: 300; }
+  .agenda.solo .row p { font-size: 46px; }
+  .lang-en .agenda.solo .row p { font-size: 42px; }
+  .rows { display: grid; gap: 34px; }
+  .row { position: relative; display: grid; grid-template-columns: 170px 1fr; align-items: baseline; padding-top: 26px; }
+  .row .rule { position: absolute; left: 0; top: 0; height: 1px; width: 100%; background: var(--hair); transform-origin: 0 50%; }
+  .row span { font-size: 30px; color: var(--sub); letter-spacing: .06em; }
+  .row p { font-size: 40px; font-weight: 500; }
+  .lang-en .row p { font-size: 34px; }
+  .lang-en .row { grid-template-columns: 200px 1fr; }
+  .lang-en .row span { font-size: 26px; letter-spacing: .04em; }
+  .pre { border: 1px solid var(--hair); border-radius: 36px; padding: 56px; background: var(--surface); box-shadow: var(--shadow); }
+  .pre .eyebrow { margin-bottom: 30px; }
+  .pre ul { list-style: none; display: grid; gap: 22px; }
+  .pre li { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; font-size: 40px; font-weight: 500; }
+  .lang-en .pre li { font-size: 36px; }
+  .pre li em { font-style: normal; font-family: var(--latin); font-size: 26px; color: var(--sub); white-space: nowrap; }
+  .pre .hint { margin-top: 34px; font-size: 26px; color: var(--sub); line-height: 1.6; }
+
+  /* 章节转场 */
+  .chapter .num { font-family: var(--latin); font-size: 200px; font-weight: 200; line-height: 1; }
+  .chapter .mask { overflow: hidden; padding: 0 .1em .08em; }
+  .chapter h2 { font-size: 104px; font-weight: 700; }
+  .chapter .sub { font-family: var(--latin); font-size: 40px; color: var(--sub); font-weight: 300; }
+  .lang-en .chapter .sub { font-family: var(--han); }
+  .rail { position: absolute; left: 0; right: 0; bottom: 120px; display: flex; justify-content: center; gap: 46px; font-size: 24px; color: var(--faint); }
+  .rail span { position: relative; padding-top: 22px; }
+  .rail span i { position: absolute; top: 0; left: 50%; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: var(--hair); }
+  .rail .done i { background: var(--sub); }
+  .rail .on { color: var(--ink); }
+  .rail .dot { position: absolute; top: 0; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%;
+               background: var(--accent); }
+
+  /* 片尾 */
+  .outro .quote { font-size: 92px; font-weight: 700; line-height: 1.3; max-width: 1600px; }   /* 一行 16 个汉字放得下，不折出孤字 */
+  .lang-en .outro .quote { font-size: 74px; letter-spacing: -.02em; }
+  .outro .next { margin-top: 40px; font-size: 36px; color: var(--ink2); }
+  .outro .quote .grad { background: none; -webkit-text-fill-color: var(--accent-text); color: var(--accent-text); }   /* 浅渐变在浅底上对比不够（台词审 lines5_r1） */
+  .outro .next b { color: var(--ink); font-weight: 600; }
+  .outro .ai { position: absolute; right: 120px; bottom: 170px; font-family: var(--latin); font-size: 20px; color: var(--sub); letter-spacing: .06em; }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="4" data-width="1920" data-height="1080">
+  <div id="stage" class="clip" data-start="0" data-duration="4" data-track-index="0"></div>
+</div>
+<script>
+/*__PKG__*/
+(function () {
+  const P = window.PKG, D = P.duration, stage = document.getElementById("stage");
+  document.documentElement.classList.add("lang-" + P.lang);
+  document.getElementById("root").dataset.duration = D;
+  stage.dataset.duration = D;
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const chars = s => Array.from(s).map(c => c === " " ? " " : `<span class="ch">${esc(c)}</span>`).join("");
+  const mark = `<div class="mark"><b>${esc(P.series.main)}</b>${P.series.sub ? ` &nbsp;·&nbsp; ${esc(P.series.sub)}` : ""}</div>`;
+  const tl = gsap.timeline({ paused: true });
+  const EXPO = "expo.out";
+
+  // 渐变字逐字出场：每个字各自带一段整词宽度的渐变，变形 / 模糊时颜色仍连成一片
+  function gradChars(el) {
+    const W = el.getBoundingClientRect().width, x0 = el.getBoundingClientRect().left;
+    el.classList.remove("grad");
+    el.querySelectorAll(".ch").forEach(s => {
+      s.classList.add("grad");
+      s.style.backgroundSize = `${W}px 100%`;
+      s.style.backgroundPosition = `${x0 - s.getBoundingClientRect().left}px 0`;
+    });
+  }
+  function exitAll(at) {   // 收尾：整体轻微放大、模糊、淡出，像发布会翻页
+    tl.to(".card", { opacity: 0, scale: 1.03, filter: "blur(12px)", duration: Math.min(0.6, D - at), ease: "power2.in" }, at);
+  }
+
+  if (P.card === "intro") {
+    stage.innerHTML = `<section class="card intro"><div class="glow"></div><div class="center">
+      <div class="eyebrow">${esc(P.eyebrow)}</div><h1 class="grad">${chars(P.title.main)}</h1>
+      <div class="sub">${esc(P.title.sub)}</div></div>${mark}</section>`;
+    gradChars(document.querySelector(".intro h1"));
+    { // 片名太长（如 Lagrange multipliers）就按比例缩字号，左右各留 120px，不裁字（t09 台词审 lines_r1）
+      const h = document.querySelector(".intro h1"), d0 = h.style.display;
+      h.style.display = "inline-block"; const w = h.getBoundingClientRect().width; h.style.display = d0;
+      if (w > 1680) h.style.fontSize = (parseFloat(getComputedStyle(h).fontSize) * 1680 / w).toFixed(1) + "px";
+    }
+    tl.fromTo(".glow", { opacity: 0, scale: .7 }, { opacity: 1, scale: 1, duration: 2.4, ease: "power2.out" }, 0)
+      .to(".glow", { scale: 1.08, duration: D - 2.4, ease: "sine.inOut" }, 2.4)
+      .fromTo(".eyebrow", { opacity: 0, letterSpacing: ".42em" }, { opacity: 1, letterSpacing: ".14em", duration: 1.4, ease: EXPO }, .25)
+      .fromTo(".intro h1 .ch", { opacity: 0, y: 60, filter: "blur(24px)" },
+              { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.3, ease: EXPO, stagger: P.lang === "en" ? .045 : .11 }, .55)
+      .fromTo(".intro h1", { scale: .94 }, { scale: 1, duration: D - .6, ease: "power1.out" }, .55)
+      .fromTo(".intro .sub", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 1.0, ease: EXPO }, 1.45)
+      .fromTo(".mark", { opacity: 0 }, { opacity: 1, duration: 1.0 }, 1.8);
+    exitAll(D - .6);
+  }
+
+  if (P.card === "agenda") {
+    const rows = P.agenda.map(r => `<div class="row"><i class="rule"></i><span>${esc(r.tag)}</span><p>${esc(r.text)}</p></div>`).join("");
+    const pre = P.prereq.map(r => `<li>${esc(r.text)}<em>${esc(r.note || "")}</em></li>`).join("");
+    stage.innerHTML = `<section class="card agenda${P.prereq.length ? "" : " solo"}"><div><h2>${esc(P.agenda_title)}</h2><div class="rows">${rows}</div></div>
+      ${P.prereq.length ? `<div class="pre"><div class="eyebrow">${esc(P.prereq_title)}</div><ul>${pre}</ul><p class="hint">${esc(P.prereq_hint)}</p></div>` : ""}</section>`;
+    const c = P.cues;   // [标题, 每行…, 先修卡]，秒
+    tl.fromTo(".agenda h2", { opacity: 0, y: 30, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: .9, ease: EXPO }, c[0]);
+    document.querySelectorAll(".row").forEach((r, i) => {
+      tl.fromTo(r.querySelector(".rule"), { scaleX: 0 }, { scaleX: 1, duration: .9, ease: "power3.inOut" }, c[1 + i])
+        .fromTo(r.querySelectorAll("span, p"), { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: .8, ease: EXPO, stagger: .08 }, c[1 + i] + .2);
+    });
+    const tp = c[1 + P.agenda.length];
+    if (P.prereq.length) tl.fromTo(".pre", { opacity: 0, x: 60, filter: "blur(12px)" }, { opacity: 1, x: 0, filter: "blur(0px)", duration: 1.1, ease: EXPO }, tp)
+      .fromTo(".pre li, .pre .hint", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .7, ease: EXPO, stagger: .12 }, tp + .35);
+    exitAll(D - .6);
+  }
+
+  if (P.card === "chapter") {
+    const rail = P.rail.map((r, i) => `<span class="${i < P.active ? "done" : i === P.active ? "on" : ""}"><i></i>${esc(r)}</span>`).join("");
+    stage.innerHTML = `<section class="card chapter"><div class="glow" style="opacity:.6"></div><div class="center">
+      <div class="mask"><div class="num grad">${esc(P.num)}</div></div><h2>${chars(P.heading)}</h2>
+      <div class="sub">${esc(P.heading_sub)}</div></div><div class="rail">${rail}<b class="dot"></b></div></section>`;
+    // 光点从上一章滑到这一章
+    const spans = document.querySelectorAll(".rail span"), railBox = document.querySelector(".rail").getBoundingClientRect();
+    const xOf = i => { const b = spans[Math.max(i, 0)].getBoundingClientRect(); return b.left + b.width / 2 - railBox.left; };
+    tl.fromTo(".glow", { opacity: 0 }, { opacity: .6, duration: 1.2 }, 0)
+      .fromTo(".num", { yPercent: 105 }, { yPercent: 0, duration: 1.0, ease: EXPO }, .1)
+      .fromTo(".chapter h2 .ch", { opacity: 0, y: 30, filter: "blur(16px)" },
+              { opacity: 1, y: 0, filter: "blur(0px)", duration: .9, ease: EXPO, stagger: P.lang === "en" ? .018 : .045 }, .35)
+      .fromTo(".chapter .sub", { opacity: 0 }, { opacity: 1, duration: .8 }, .8)
+      .fromTo(".rail", { opacity: 0 }, { opacity: 1, duration: .6 }, .2)
+      .fromTo(".dot", { left: xOf(P.active - 1) }, { left: xOf(P.active), duration: .9, ease: "power3.inOut" }, .45);
+    exitAll(D - .5);
+  }
+
+  if (P.card === "outro") {
+    const q = P.quote.map((l, i) => `<span class="ql${i === P.quote.length - 1 ? " grad" : ""}" style="display:inline-block">${esc(l)}</span>`).join("<br>");
+    stage.innerHTML = `<section class="card outro"><div class="center"><div class="eyebrow">${esc(P.eyebrow)}</div>
+      <p class="quote">${q}</p><p class="next">${esc(P.next.label)} &nbsp;·&nbsp; <b>${esc(P.next.name)}</b> &nbsp;${esc(P.next.sub)}</p></div>
+      ${mark}<div class="ai">${esc(P.ai_note)}</div></section>`;
+    const c = P.cues;   // [眉题, 每行引语…, 下一期]
+    tl.fromTo(".outro .eyebrow", { opacity: 0, letterSpacing: ".4em" }, { opacity: 1, letterSpacing: ".14em", duration: 1.2, ease: EXPO }, c[0]);
+    document.querySelectorAll(".ql").forEach((l, i) =>
+      tl.fromTo(l, { opacity: 0, y: 40, filter: "blur(18px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.2, ease: EXPO }, c[1 + i]));
+    tl.fromTo(".outro .next, .mark, .ai", { opacity: 0 }, { opacity: 1, duration: 1.0 }, c[1 + P.quote.length]);
+    tl.to(".card", { opacity: 0, duration: .9, ease: "power1.in" }, D - .9);   // 片尾淡到黑
+  }
+
+  tl.set({}, {}, D);   // 时间线撑满整张卡
+  window.__timelines = window.__timelines || {};
+  window.__timelines["main"] = tl;
+  tl.seek(0);
+})();
+</script>
+</body>
+</html>

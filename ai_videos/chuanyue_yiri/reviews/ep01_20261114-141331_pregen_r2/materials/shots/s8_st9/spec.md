@@ -1,0 +1,16 @@
+# s8 st9（场内第 8 个镜头）
+
+- 设计时长：23 秒；出场：c1, c7；单拍
+- 送给模型的 prompt：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s8\shots\st9\资料包\prompt.txt`；参考清单：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s8\shots\st9\资料包\manifest.json`
+- 规划图：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s8\shots\st9\planning\st9_first_frame.png`
+- 规划图：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s8\shots\st9\planning\st9_overhead.png`
+- 规划图：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s8\shots\st9\planning\st9_overhead_ref.png`
+
+## 分镜规格
+**看点**（这一镜要观众看懂或感到什么；只给审查用，不进 prompt）：抹油再刮真能刮掉脏东西：她刮出一道干净的皮肤，惊喜又嫌弃
+**动作**：热水室西墙下的石凳上，两人并排坐着：邻座的妇女 Helvia（c7，外观照人物卡）在画右，整个上半身入画，本镜不说话、不看镜头。画面里共两个人：Riley 和画右的 Helvia。石凳上从画左到画右依次是：Riley、挨着她左胯的面包布包、小油瓶、Helvia。Riley 脸上带着汗光，头发是干的、蓬松，只有鬓角几缕被汗打湿贴在脸边，衬衫肩头微湿。第 0 秒：Riley 右手握着刚接过来的青铜刮板（p4）的木柄，勺形那头朝上，笑着低头端详它；她抹了油的左小臂油亮、蒙着一层灰，搁在左膝上；Helvia 在画右用手掌慢慢抹匀自己小臂上的油，眼睛看着自己的胳膊。Riley 抬眼转向镜头开始说话：说到 rub oil all over yourself 时把油亮的左小臂抬起来给镜头看，说到 with this thing 时右手把刮板举到脸边晃一晃；然后她低头把左小臂伸到身前，把刮板勺形的钝头搭在小臂外侧靠手的那头，顺着小臂往手肘慢慢刮了一下，钝头上堆起一小团灰色的油泥，刮过的那一道皮肤变成干净的哑光，和两边仍然油亮发灰的皮肤分得清清楚楚；Helvia 停下手看一眼这道干净的皮肤，轻轻点一下头；说到 look 时 Riley 低头看小臂上刮出的这一道干净皮肤，把小臂侧过来朝镜头，瞪大眼睛接着说完；Helvia 接着抹自己的油，用手指把鬓角汗湿的头发拢到耳后。说完 Riley 转向 Helvia，左手捏住铜勺的背面、右手松开木柄，把木柄那头朝 Helvia 递过去，Helvia 右手握住木柄接过，点一下头，放回两人之间的石凳上、小油瓶旁边；Riley 冲她笑着点一下头，搓了搓油亮的小臂；Helvia 也笑着点一下头，嘴闭着。道具：刮板进场在 Riley 右手，出场在两人之间的石凳上、小油瓶旁边；小油瓶（p5）塞着软木塞，始终立在两人之间的石凳上；面包布包（p3）：两个长布角系在 Riley 腰带左侧，布包挨着她的左胯落在石凳上，在她和小油瓶之间（画面上在她身体的右侧），全程系在腰带上、留在原处。
+**走位**：两人坐在西墙石凳上、面朝屋子中间：Riley 在画面中间偏左，Helvia 在画右、整个上半身入画；石凳上从画左到画右依次是：Riley、挨着她左胯的面包布包、小油瓶、Helvia；小油瓶在画面下部偏右；镜头更近，坐姿高度，斜对 Riley；Riley 端详刮板（0–1.2 秒）、刮小臂（10.2–12.7 秒）时低头看手，说台词时脸转向镜头，还刮板时（19.4 秒起）转向画右。配角：Helvia 手上一直有活，看见干净的那道点头认可。
+**节拍**：0–1.5秒 第 0 秒：Riley 坐在石凳上，右手握着青铜刮板的木柄，勺形那头朝上，笑着低头端详；油亮的左小臂搁在左膝上；Helvia 在画右用手掌慢慢抹匀自己小臂上的油，眼睛看着自己的胳膊；塞着塞子的小油瓶立在两人之间的石凳上，布包挨着 Riley 的左胯；1.2 秒她抬眼转向镜头；这一拍不说话；1.5–10.2秒 她对镜头说（1.6–10.0 秒；这期间 Helvia 在画右接着用手掌抹自己小臂上的油）：1.6–3.6 秒 Okay, so there's no soap.，4.0–10.0 秒 You just rub oil all over yourself and then scrape it off with this thing —（说到 rub oil all over yourself 时把油亮的左小臂抬起来给镜头看，说到 with this thing 时右手把刮板举到脸边晃一晃）；10.2–12.7秒 她低头把左小臂伸到身前，把刮板勺形的钝头搭在小臂外侧靠手的那头，顺着小臂往手肘慢慢刮一下，钝头上堆起一小团灰色的油泥，刮过的那一道皮肤变成干净的哑光，和两边油亮发灰的皮肤分得清清楚楚，这一拍不说话；Helvia 停下抹油的手，看一眼她刮出的那道干净皮肤，轻轻点一下头；12.7–15.2秒 她说 and look, it actually works!（12.8–15.0 秒）——说到 look 时低头看小臂上刮出的一道干净皮肤，把小臂侧过来朝镜头，再瞪大眼睛抬头看镜头；Helvia 接着抹自己的油；15.2–19.4秒 她对镜头说 Gross.（15.4–16.0 秒），先皱一下鼻子，停半拍，再咧嘴笑着说 Kind of love it, though.（16.4–18.9 秒）；Helvia 用手指把鬓角汗湿的头发拢到耳后；19.4–21.2秒 她转向画右的 Helvia，左手捏住铜勺的背面、右手松开木柄，把木柄那头递过去；Helvia 右手握住木柄接过，点一下头，放回两人之间的石凳上、小油瓶旁边；不说话；21.2–23秒 Riley 冲 Helvia 笑着点一下头，搓了搓油亮的小臂；Helvia 也笑着点一下头，嘴闭着；这一拍不说话
+**镜头**：他拍：固定机位旁观拍摄，坐着的人的视线高度；中近景：Riley 腰以上在画面中间偏左，握刮板的右手和油亮的左小臂在画面下部清楚可见；Helvia 在画右，整个上半身入画。
+**光线**：拱顶圆形小天窗的一束斜光是主光，在浓蒸汽里形成光柱；其余被蒸汽柔化，暖而朦胧；油亮的小臂和刮板的青铜有柔和反光。
+**台词**：Riley（惊奇，美式英语）：Okay, so there's no soap. You just rub oil all over yourself and then scrape it off with this thing — and look, it actually works! Gross. Kind of love it, though.

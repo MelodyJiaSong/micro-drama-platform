@@ -28,6 +28,7 @@ AI 素材特有的坏帧、身份漂移、跨镜色差与接缝，见 [AI 素材
 | 代理只在有限的操作菜单里决策，像素处理交给确定性工具 | 让模型自由发挥「加个转场」「补一段画面」 |
 | 机器做能量化的（时长、切点离词、色差、身份距离），人判动机、情绪、钩子 | 拿模型打分当通过门 |
 | 不够用就开单退回上游 | 在剪辑里改台词、改分镜、私下补生成 |
+| **场剪辑、整集审完才发给用户**（用户 2026-11-10，chuanyue_yiri follow-up 054）：各开一张审查单（`python tools/review_run.py new <集目录> --stage cut` / `--stage episode`），由全新上下文的观众审稿人连着看成片，专查场间接口（前一场最后 3 秒接后一场头 3 秒）、梗与节奏、人像不像摆件（audience A7、character C8 / C9）；场内每个镜间接点也连着听：前一镜最后 4 秒接后一镜最初 4 秒，看视角来源和表演接不接得上、同一个人的台词像不像接着说（continuity K8 / K9、dialogue D7，材料 `materials/scenes/<场>_junctions.md` 与 `<场>_bounds.jpg`；follow-up 056，EP1 s1 st1→st2 像换了台相机重新开场）；搁置镜或有瑕疵的条不放在场头、场尾；剧目录有 `qc_checks.toml` 时，`scene_cut.py render` 渲染正片剪辑前逐条查 `qc.py gate --stage video`，没过闸门的条拦下（用户明确要求照样剪才加 `--skip-gate "用户原话"`，follow-up 059：EP01 的条都没走闸门就进了成片） | 逐条审过就把拼好的片子发出去（EP1 v4/v5：s1→s2 接口接了一条光向反的搁置镜、s2 裤子梗僵、s3 Felix 定住，都没经连看审查就交了） |
 
 ## 边界
 
@@ -53,7 +54,7 @@ AI 素材特有的坏帧、身份漂移、跨镜色差与接缝，见 [AI 素材
 
 | 内容 | 位置 |
 |---|---|
-| 剪辑决定 | `{集}/scenes/{场}/edit/{draft\|final}/cut_v{N}.json`：stage（draft / final，须与目录一致）、phase（初接 / 粗剪 / 精剪 / 锁片）、version 与 base_version、status、events（条、sha256、入出点对齐到帧、可选声音区间做 J/L、理由、notes；缺镜占位）、有意违例、output（回读结果） |
+| 剪辑决定 | `{集}/scenes/{场}/edit/{draft\|final}/cut_v{N}.json`：stage（draft / final，须与目录一致）、phase（初接 / 粗剪 / 精剪 / 锁片）、version 与 base_version、status、events（条、sha256、入出点对齐到帧、可选声音区间做 J/L、理由、notes；缺镜占位）、有意违例、output（回读结果）；用镜组的条时事件加 `group`（条在 `groups/gN/` 下，同一条按镜组里的镜头切点拆成几个事件，各写画的是哪一镜；chuanyue_yiri follow-up 020）；组内切点不合适时回上游拆组单拍重出，不硬接（filming.md「镜组只用在连贯比剪辑选择更重要的地方」，follow-up 032） |
 | 标注 | 每条目录里的 `annotation.json`：逐词台词时间（faster-whisper，不喂剧本）、内切、冻帧、黑帧 |
 | 工具 | `tools/scene_cut.py annotate / check / render`：check 查条 sha、入出点、切点离词、相邻台词相撞、内切与镜长；render 画面与声音分开铺，出干净版与标注版，回读时长、帧数与黑段 |
 | 成片 | 同目录 `{场}_{draft\|final}_v{N}.mp4` 与 `_标注` 版（不进 git） |

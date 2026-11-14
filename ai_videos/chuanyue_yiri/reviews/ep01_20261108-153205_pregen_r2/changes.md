@@ -1,0 +1,208 @@
+# 第 1 轮之后改了什么
+
+## 按问题清单的方案（review_run.py fix 登记）
+
+- I1 [严重·implemented] 世界物理·道具守恒·数量 s3_st3：s3 石台布局全场固定：Riley 的面包在她面前，Felix 左手边（东）是小陶碗 (6.2,4.2)，再往东是那一摞面包 (6.7,4.3)；s3_st3 她往西挪半步自拍，首帧 prompt 写明「画面右下角石台上那只面包缺一瓣、缺口朝镜头，旁边是小陶碗，画右边缘露出那一摞面包」、后景画左驴拉西磨，负面词加「完整的一圈八瓣面包」；overhead 加三件物件；首帧 prompt 已重写（主会话重画首帧）。
+- I2 [严重·implemented] 世界物理·道具守恒·数量＋瞬移 s3_st8：s3_st8：托板上正好五个面包写进 action/道具与首帧 prompt（负面词加「托板上多于或少于五个面包」）；Felix 在石台里侧 (5.8,3.75)；石台上只有小陶碗和那一摞面包、没有亚麻布（prompt 注明 bg3 参考图上的布和空托板不画）；机位改到门脸东南斜对面让 Felix 不被 Riley 挡住；首帧 prompt 已重写（主会话重画首帧）。
+- I3 [严重·implemented] 世界物理·支撑·持镜手＋穿模/水 s2_st6：s2_st6 改为长焦（85mm）主观镜，Riley 不再自拍：两手空着垂在身侧、侧身朝画左（街那边）抬头看屋檐，画面里没有伸出的胳膊；镜头背对喷泉，背景只写虚化的街和画右的东侧店铺墙；overhead 改朝向；首帧 prompt 负面词加「喷泉、牛头出水口、石槽、水柱、伸出去的胳膊、手里拿东西」；首帧 prompt 已重写（主会话重画首帧）。
+- I4 [严重·implemented] 世界物理·交接·够不着 s3_st7：s3_st7 overhead：Riley 挪到 (5.8,5.15) 与 Felix (5.8,3.75) 隔着 0.8 m 石台正对面，相距 1.4 m；分镜写 7–8.5 秒两人都探身，手在石台正上方交接；st1/st4/st8 同一站位；镜头时长 12→13 s（给系布包 2.5 s）；首帧 prompt 已重写（主会话重画首帧）。
+- I5 [严重·implemented] 世界物理·运动物理·速度/滑步 s8_st1：s8_st1 起点改到离镜头约 7 米，0–4 秒走约 4.2 米（1.05 m/s），时长 14→16，台词 6.1–13.1 秒；overhead.toml 路径同步；首帧 prompt 已重写（scenes/s8/shots/st1/planning/st1_first_frame_prompt.txt），由主会话按它重画首帧
+- I6 [严重·implemented] 世界物理·水·头发干湿 s8_st4：s8_st4 action/beats 写明头发从头顶到发梢都是干的、只有鬓角几缕汗湿，衬衫只领口肩头汗印；首帧 prompt 已重写（scenes/s8/shots/st4/planning/st4_first_frame_prompt.txt），由主会话按它重画首帧。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I7 [严重·implemented] 世界物理·道具交接·动作过密 s8_st5：s8_st5 时长 9→12，滴油独占 5–8 秒（3 秒），递刮板 9.5–11 秒；油瓶固定在两人之间的石凳上（同 overhead）；首帧 prompt 已重写（scenes/s8/shots/st5/planning/st5_first_frame_prompt.txt），由主会话按它重画首帧
+- I8 [严重·implemented] 世界物理·道具守恒·多出一份 s5_st7：s5_st7 第 0 秒写明腰带上什么都不挂，布包已经摊在台面上，面包缺两瓣；首帧 prompt 已重写（scenes/s5/shots/st7/planning/st7_first_frame_prompt.txt），由主会话按它重画首帧；p3 卡已只写外观（主会话已做）。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I9 [严重·implemented] 世界物理·运动物理·方向反了 s6_st3：s6_st3：action/blocking/beats 改成货车 0 秒车尾和驴屁股朝镜头、在画右约七米处往街的深处（东）慢慢走远、整镜不调头；车夫在驴左侧背对镜头；overhead 货车 (16.5,9.2)→(25,8.9)；首帧 prompt 写明车尾朝镜头、负面词加「驴头朝镜头、车头朝镜头、车夫面朝镜头」。主会话按新首帧 prompt 重画首帧。。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I10 [严重·implemented] 世界物理·身体·伸手距离（手臂会被拉长） s5_st4：s5 全场 overhead 把 Asellina 挪到 (5.85,3.85)，紧挨 Riley (6.2,5.45) 的对面，相距约 1.65 米；st4 写明 Riley 把面包瓣伸到台面中间、Asellina 隔着柜台探身；st13 鱼露罐写明在 Asellina 右手边一拳远
+- I11 [严重·implemented] 人物逻辑·人物逻辑·动作方向 / 站位 s3_st4（连带 s3_st8）：s3_st4/st8：Riley 始终站在石台外侧的街面上，与 Felix 隔着石台正对面（(5.8,5.15)/(5.8,3.75)）；action 写「她始终站在门脸外的街上，不进店」；新台词下她不再用拇指指方向（只耸肩、歪头），Felix 头也不抬、无手势；st8 第 0 秒同一站位；两张首帧 prompt 已重写（主会话重画首帧），负面词加「Riley 站在店里、站在炉子前」。
+- I12 [严重·implemented] 人物逻辑·人物逻辑·反应拍起点 / 表情 s2_st8：s2_st8 第 0 秒写成 Vibia 直腰、两手扶槽沿上的满罐、挑眉撇嘴看 Riley 背影（看不惯不是生气），2.5–3.5 秒单独一拍扭开头抹罐身；首帧 prompt 已重写（主会话重画首帧），负面词加「Vibia 弯腰、水罐在水里」。
+- I13 [严重·implemented] 人物逻辑·人物逻辑·路人反应 / 走位冲突 s8_st1：s8_st1 action/首帧 prompt 写明画面里只有她一个人、负面词加第二个人/路人/提篮子的妇女；首帧 prompt 已重写（scenes/s8/shots/st1/planning/st1_first_frame_prompt.txt），由主会话按它重画首帧。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I14 [严重·implemented] 人物逻辑·人物逻辑·动作方向／路人反应 s6_st3：s6_st3：同 I9，货车与车夫背对镜头往深处走；车夫的「瞥裤子」改由左边人行道上插门板的铺子主人在 1.2–2.4 秒单独一拍完成（时间上和朝远处走的车夫错不了身）；extras=2。主会话按新首帧 prompt 重画首帧。。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I15 [严重·implemented] 人物逻辑·人物逻辑·视线 s7_st2：s7_st2：action/blocking/beats 写明 0–1 秒头转向画面左边、往右肩后看小凳和灯旁那面墙，不看窗洞（窗洞在画右上、她背后另一侧）；首帧 prompt 重写视线并在负面词加「仰头、看窗洞、视线朝画面右边」。主会话按新首帧 prompt 重画首帧。。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I16 [严重·implemented] 人物逻辑·人物逻辑·动机与方向（剧情关键） s5_st8：s5_st8 重摆机位 (0,7.2)，朝东偏南：画右铺面在横向约 59–67% 处断开露出横街口，店主在街口西南角那家门口（约 70%），驴车 8 秒消失在他的铺子墙角后；s5_st9 写明横街口在她右肩后方；首帧 prompt 已重写（scenes/s5/shots/st8/planning/st8_first_frame_prompt.txt），由主会话按它重画首帧；st9 同样重画。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I17 [严重·implemented] 连续性·连续性·左右/跳轴 s2_st5 / st7 / st8 → st4：s2_st5/st7/st8 以 st4 和俯视图为准统一朝南：分镜 action/blocking/camera 写明「东墙与牛头出水口、石槽在画左，街面在画右」，st8 写明石槽和出水口在 Riley 右肩后（画左）、Vibia 在她左肩后（画右）；三镜 overhead 重写（Vibia 固定 (14.3,23.75)）；三张首帧 prompt 已重写（主会话重画首帧），prompt 里写明朝向、各物件画面横向百分比，并注明 bg2 参考图是朝北拍的、左右不照抄。st5 现成首帧也可水平翻转后复核，st7/st8 必须重画。
+- I18 [严重·implemented] 连续性·连续性·道具（p3 布包） s5_st7：同 I8：s5_st7 去掉腰上的布包；首帧 prompt 已重写（scenes/s5/shots/st7/planning/st7_first_frame_prompt.txt），由主会话按它重画首帧。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I19 [严重·implemented] 连续性·连续性·头发与服装湿干 s8_st4 → s8_st5 / st9 / st6：s8_st4/st5/st9/st6 统一写「头发干蓬、鬓角汗湿、脸上汗光、衬衫肩头微湿」；首帧 prompt 已重写（scenes/s8/shots/st4/planning/st4_first_frame_prompt.txt），由主会话按它重画首帧；st5/st9/st6 首帧同样重画。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I20 [严重·implemented] 连续性·连续性·道具（水罐） s2_st7、s2_st8：s2 水罐状态统一：st5 1.5–3 秒把满罐提起搁在身前槽沿；st7 第 0 秒直腰、两手扶槽沿上的满罐；st8 第 0 秒直腰扶罐、2.5–3.5 秒只扭开头低头用手掌抹罐身（不再把罐伸回出水口）；st4 她直腰站着抹罐身。各镜 action 写「道具」进出场状态；st7/st8 首帧 prompt 已重写（主会话重画首帧），负面词加「弯腰、水罐在水里、水罐在出水口下面」。
+- I21 [严重·implemented] 连续性·连续性·走位方向／场景 s6_st3：s6_st3：城门、大车店都写在镜头身后；画面里只有朝东的街、天空只剩蓝紫，首帧负面词加城门、拱门、橙色晚霞、落日；货车车尾朝镜头往深处走。主会话按新首帧 prompt 重画首帧。。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I22 [严重·implemented] 连续性·连续性·左右（主机位） s5_st2：s5_st2 首帧 prompt 按主机位几何重写：街在画右、在 Riley 身后，Riley 站在柜台外；首帧 prompt 已重写（scenes/s5/shots/st2/planning/st2_first_frame_prompt.txt），由主会话按它重画首帧。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I23 [严重·implemented] 时代与世界观·时代·系列禁区（白烟） s4_st1（连带 s4_st2、st3、st5 的场景行）：bg4 洗衣坊场景卡删去柳条笼下冒烟与硫磺烟（Shot prompt 场景行、seed 主体与光线、主色），seed 负面词加「烟，白烟，蒸汽，冒烟的笼子」；bg4 底图按新卡重出（主会话）；s4 各镜首帧随之重画；（s4 作者补充）s4_st1 分镜 action/lighting 删去全部熏气、黄白烟，柳条笼只写「罩着白布」「白布在阳光里发亮」；s4_st1 首帧 prompt 负面词加「熏气、雾气」，不再写冒烟；story.md:75 那句由主会话改。是否给硫磺熏布开例外仍交用户定。
+- I24 [严重·implemented] 时代与世界观·时代·器物（油灯） s6_st4、s6_st1（底图 bg6）：s6 全场（st1/st2/st5/st6/st4）的 p1 描述改成「顶面是一整块封死的浅凹圆面、中间一个小注油孔……一体的陶，没有盖子、没有顶钮，不是茶壶」，删掉「有盖面」；所有首帧负面词加带盖的茶壶、阿拉丁神灯、灯上的顶钮。bg6 卡与底图（墙龛灯）、s6_st1/st4/st5 首帧由主会话重画。。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过；bg6 卡墙龛灯写法改为一体陶灯、负面词加茶壶与盖钮，底图已重出（目检：扁圆一体陶灯、环形把手）
+- I25 [严重·implemented] 镜头规格·F4 镜组板与俯视图 s2_st5、s2_st7、s2_st8：同 I17：s2_st5/st7/st8 分镜与首帧 prompt 写明「东墙与牛头喷泉在画左，街面在画右」及女人视线在镜头左边；overhead 机位朝南不变；三张首帧 prompt 已重写（主会话重画首帧）。
+- I26 [严重·implemented] 镜头规格·F4 镜组板与俯视图 s2_st6：同 I3：s2_st6 背对喷泉，画面里只有 Riley、虚化街面和画右店铺墙（垫脚石在长焦视野外，不再写），首帧 prompt 已重写（主会话重画首帧）。
+- I27 [严重·implemented] 镜头规格·F1 节拍时间 s8_st1：s8_st1 beats/overhead：0–4 秒走近、4–5.5 侧耳、6.1–13.1 台词、13.5–16 出画；时长 16，首帧距离改为约 7 米；首帧 prompt 已重写（scenes/s8/shots/st1/planning/st1_first_frame_prompt.txt），由主会话按它重画首帧
+- I28 [严重·implemented] 镜头规格·F3 画内人数 s8_st1：s8_st1 首帧 prompt 加「画面里只有她一个人」和人物在画面中的位置、大小；负面词加第二个人；首帧 prompt 已重写（scenes/s8/shots/st1/planning/st1_first_frame_prompt.txt），由主会话按它重画首帧。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I29 [严重·implemented] 镜头规格·F4 镜组板与俯视图 s4_st1：s4_st1 重做机位：镜头在门厅东南角、临街墙内 (9.6,9.3) 朝西北 (5.5,4.0)，24mm；Riley (7.6,7.2) 先侧背对镜头看院子，1.5–2.5 秒扭回头朝镜头嚷，脸可读；Tertius 在画左约 1/3，后排两个工人 (5.2/6.2,1.2) 在画中偏右远处，均在扇形内（沙盒机检通过）；后退约 0.8 m 到 9.6 秒全程在画面左半，之后从画左退出门槛；四分之三侧脸的写法改为「扭回头朝镜头」；首帧 prompt 已重写（主会话重画首帧）。
+- I30 [严重·implemented] 镜头规格·镜头规格·首帧与俯视图机位方向 s6_st3：s6_st3：camera/lighting 写明镜头朝东、城门和日落在镜头身后，画面里天空只剩蓝紫，余晖从镜头身后照到 Riley 脸上；overhead 机位 (9.3,8.3) 看 (17,6.6)。主会话按新首帧 prompt 重画首帧。。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I31 [严重·implemented] 镜头规格·镜头规格·景别与「钱币可数」冲突 s6_st3：s6_st3：机位改 40mm，Riley 3.5 秒停在离镜头约 2 m 处（overhead (11.1,7.45)），说到 This 时左手伸到镜头前、手离镜头约 1.3 m，画幅宽约 1.2 m，小钱约占画宽 2%、大币约 3%（1672 宽约 35/50 px），四枚可数；camera/beats 同步改写，首帧 0 秒仍是全景。
+- I32 [严重·implemented] 镜头规格·镜头规格·首帧与俯视图（楼梯走向） s6_st4：s6_st4：blocking/beats/camera 写明楼梯最下几级在画左偏下、斜线伸向画面中间深处，她背对镜头偏侧往画面中间深处走、不朝画左出画（overhead 核过：楼梯底 -23°、顶 +7°）；首帧 prompt 给出比例坐标，负面词加「楼梯朝画左或朝镜头升」。主会话按新首帧 prompt 重画首帧。。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I33 [严重·implemented] 镜头规格·镜头规格·节拍过满 s5_st3：s5_st3 拆成 st3（付钱，11 秒，每个动作 2 秒）和新镜 s5_st14（兑水＋台词，14 秒：舀酒 1–3、倒 3–5、点水 5–7、台词 8.1–10.9）；新建 st14 的 overhead 与首帧 prompt
+- I34 [严重·implemented] Prompt 文本·T1 首帧与文字矛盾 s2_st8：同 I12：s2_st8 首帧 prompt 第 0 秒为直腰扶罐挑眉，文字与首帧一致；主会话重画首帧。
+- I35 [严重·implemented] Prompt 文本·T1 / T2 用哪只手 s5_st3：s5_st3 文字和首帧 prompt 写明攥钱的是左手（离镜头近的那只），右手垂着；负面词加右手攥拳；首帧 prompt 已重写（scenes/s5/shots/st3/planning/st3_first_frame_prompt.txt），由主会话按它重画首帧。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I36 [严重·implemented] Prompt 文本·T1 首帧与文字矛盾 s6_st3：s6_st3：采用「重出首帧」一支：文字已写 0 秒车尾朝镜头在画右、街尽头不出现城门；首帧 prompt 与文字一致。主会话按新首帧 prompt 重画首帧。。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I37 [严重·implemented] Prompt 文本·T2 用哪只手 / 身体 s7_st3：s7_st3：把身体写死：右侧朝下（右肩、右胯贴草垫），压在下面的右臂弯着、右手枕在脸边；上面的左手从毯子里伸出来捏毯子边；吹灯用压在下面的右前臂和右肘撑起。头在画左、脸朝镜头时朝下的是右侧（审稿推成左侧是镜像了），原文「左手捏毯子、右肘撑」本来可行，这次把哪侧朝下、哪只在上写清楚，免得模型自己选。首帧 prompt 同步，负面词加「左侧朝下、仰躺、趴着」。
+- I38 [严重·implemented] Prompt 文本·T1 / T3 配角没有外观描写 s8_st8、s8_st9、s8_st6：s8_st8/st5/st9/st6 的 action 都补上妇女完整外观（米白亚麻浴袍从肩膀裹到小腿、袖子盖到手肘），st6 加声音描写；各镜设 extras；c7 卡未立，立好后由主会话加进 cast 并去掉 extras
+- I39 [严重·implemented] Prompt 文本·T5 规则源与 bible 冲突 s4_st3、st1、st2、st5：同 I23：bg4 场景卡不再写冒烟，s4 四镜的「场景」行编译后不再与负面词「白烟」矛盾；（s4 作者补充）s4_st1 的「画面」「光线」行也去掉熏气，与场景行、负面词一致；首帧 prompt 已重写。
+- I40 [严重·implemented] Prompt 文本·T3 人物行和画面矛盾（编译器） s2_st3、st5、st7；s7_st5：s7_st5 已加 extras=1，action 写明画面里只有一个端灯的路人；编译器的人物行改写由主会话做（s2 镜头由 s2 作者处理）。；（s2 作者）s2_st3 设 extras=3（赶车人、店主、一个过路人），s2_st5/st7 的接水女人改为立卡人物 cast=[c6]（Vibia），st8/st4 也加 c6，st4 设 extras=4；action 里删掉女人的外观描述，交给人物卡。编译器人物行与「自然表演」一句由主会话改；c6 三视图要等主会话出图。。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过；编译器已改：没有人物卡但有 extras 的镜头，人物行写「另有 N 个没有三视图的当地人」（ai_video_management 测试 64 passed）
+- I41 [主要·implemented] 世界物理·交接·够不着 s3_st1：s3_st1：小陶碗放在 Felix 左手边 (6.2,4.2)、离他约 0.6 m；Riley 站到 (5.8,5.15) 与他正对面，钱放在她面前石台外沿，Felix 探身把钱拨到手边拢进碗（单独一拍）；分镜不再写「石台角」。
+- I42 [主要·implemented] 世界物理·瞬移·驴 s3_st1 / s3_st3：s3 驴统一拉西边石磨：st5 第 0 秒画面只有驴和西磨（东磨在画右边缘不转）；st1 写「东边石磨不转，驴拉的那座在画左画外，只听得见磨声」（机检西磨在扇形外）；st3 首帧画左后景补上驴拉西磨（机检在画内）。st1/st3 首帧 prompt 已重写（主会话重画首帧）。
+- I43 [主要·implemented] 世界物理·道具守恒·复制 s3_st4：s3_st4/st8/st7：action 与首帧 prompt 写明石台上只有小陶碗和那一摞面包、没有亚麻布，st7 写「这是唯一的一块布」；prompt 参考图一行注明 bg3 图上的布和空托板不画，负面词加「石台上的亚麻布」。bg3 底图本身石台上搭着同款布，建议主会话出图时用局部修或换底图（见 notes）。
+- I44 [主要·implemented] 世界物理·穿模·擦碰 s2_st4：s2_st4 overhead：Riley 2.5/4.5 秒点挪到 x=13.4，从 Vibia (14.3,23.75) 与路缘之间走过，中心距约 0.9 m；Vibia 改成直腰站着抹罐身（不再弯腰把臀部伸向街），分镜写「两人隔着一臂多宽」。
+- I45 [主要·implemented] 世界物理·运动·滑步 s3_st1：s3_st1 Riley 进场改为 0 秒在 (5.5,5.95)（画右边缘，离石台一步）→ 1.5 秒 (5.8,5.15)，约 0.6 m/s；首帧写她刚从画右边缘走进来。
+- I46 [主要·implemented] 世界物理·道具守恒·位置与形状跳变 s8_st5 / st9 / st6：s8_st5/st9/st6 油瓶统一为「拳头大的圆肚红褐色陶瓶、没有把手」，固定在两人之间的石凳上（overhead 同）；首帧 prompt 已重写，由主会话重画 st5/st9/st6；建议主会话立道具卡 p5 小陶油瓶。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过；道具卡 p5 油瓶已立（Codex 出锚点图），挂进 s8_st5/st9/st6
+- I47 [主要·implemented] 世界物理·道具变形·刮板外形 s8_st5 / st9 / st6：s8_st5/st9/st6 刮板统一写成「直木柄＋钝头弯勺形青铜刮板，边缘圆钝」，首帧 prompt 负面词加汤勺、带圆环的柄；由主会话重画三张首帧，建议立道具卡 p4 青铜刮板。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过；道具卡 p4 刮板已立（钝口弯勺、木柄），挂进 s8_st5/st9/st6
+- I48 [主要·implemented] 世界物理·运动物理·速度 s4_st4：s4_st4 overhead 改用 bg13 十字路口；Riley 0 秒在北街 (10,6.4)、2.5 秒到路口中央 (10,9.6)，3.2 m/2.5 s≈1.3 m/s；2.5–4 秒停下左右看，嗅袖口顺延到 4–5.3 秒；镜头时长 14→16 s。
+- I49 [主要·implemented] 世界物理·穿模·出画路径被挡 s8_st1：s8_st1 去掉前景路人，出画路线贴画左走（overhead 13.5–16 秒）；首帧 prompt 已重写（scenes/s8/shots/st1/planning/st1_first_frame_prompt.txt），由主会话按它重画首帧。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I50 [主要·implemented] 世界物理·道具来源·左右手 + 伸手距离 s5_st3：s5_st3 改成左手攥钱，钱放在两人中间的台面上、Asellina 探身拈走（站位挪近）；首帧 prompt 已重写（scenes/s5/shots/st3/planning/st3_first_frame_prompt.txt），由主会话按它重画首帧。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I51 [主要·implemented] 世界物理·运动物理·速度（滑步、瞬移） s6_st5：s6_st5：镜长 11→12 s；Riley 8.5 秒起护火慢走，每秒不到一米，12 秒时还在车门里的院子中（overhead (6.4,7.4)→(5.8,5.0)，0.7 m/s），不再要求出画；Fortunata 目送挪到 10–12 秒。
+- I52 [主要·implemented] 世界物理·道具交接·叠放的钱自己摊开 s6_st2：s6_st2：改成右手拇指、食指、中指把 3 枚小钱错开捏成一小排（边挨着边），整排一次放进掌心，放下后错开摊着互不重叠；不叠放、不倒、没有钱在空中。action 与 beats 同步。
+- I53 [主要·implemented] 世界物理·道具来源·左右手 s5_st7：s5_st7 写明舔的是左手（离镜头近的那只），右手在陶杯旁；首帧 prompt 已重写（scenes/s5/shots/st7/planning/st7_first_frame_prompt.txt），由主会话按它重画首帧。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I54 [主要·implemented] 世界物理·道具变形·p1 油灯 s6_st1：s6_st1：p1 描述改成一体陶、顶面封死、没有盖子和顶钮；首帧 prompt 同步，负面词加带盖的茶壶、顶钮。主会话按新首帧 prompt 重画首帧。。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I55 [主要·implemented] 世界物理·道具变形·p1 + 手护火苗 s6_st4：s6_st4：p1 描述同 I24；手写成右手食指勾进环形把手、掌心托底，左手弯成半圈挡在火苗朝外一侧、离火苗一拳远、不在火苗正上方（action 与首帧 prompt）。主会话按新首帧 prompt 重画首帧。。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I56 [主要·implemented] 世界物理·道具来源·水罐没交代 s5_st3：s5 台面陈设全场固定：带把手的圆肚陶水罐和细高鱼露罐分开写，在 Asellina 右手边；st14 点水用这只水罐；首帧 prompt 已重写，由主会话重画 st3/st14。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I57 [主要·implemented] 连续性·连续性·场景布置（主观镜） s2_st6：同 I3/I26：s2_st6 首帧 prompt 只写虚化的街和画右店铺墙，负面词加喷泉、出水口、石槽、水柱；主会话重画首帧。
+- I58 [主要·implemented] 连续性·连续性·道具（托板面包数） s3_st8：同 I2：s3_st8 托板正好五个面包，首帧 prompt 写明并加负面词；主会话重画首帧。
+- I59 [主要·implemented] 母语听感·母语听感·穿越者时间视角 s7_st2：s7_st2 末句改成 "Two thousand years from now, people will still read it."（人留在古代、谈未来，用 it 不暗示就是这面墙）；镜长 15→17 s，排在 11.5–15.1 秒（10 词 3.6 s）。dialogue_final.md / story.json 需主会话同步这一句。
+- I60 [主要·implemented] 镜头规格·F1 节拍时间 / F4 s2_st1：s2_st1 overhead：机位挪近到 (11,21.6)、35mm，4.5 秒停在看 (12.6,20)；Riley 路径 4.5 秒到 (13.9,20.2)、5.5 秒到 (15,21)，第 5.5 秒已在扇形右沿外（约 +36°>27.5°），之后空景；分镜 beats 写明 4.5–5.5 秒从画右走出画面。
+- I61 [主要·implemented] 镜头规格·F1 节拍时间 s8_st8：s8_st8 时长 9→10，5–9 秒快步约 1.4 m/s，9–10 秒背影走进门洞蒸汽；overhead 同步
+- I62 [主要·implemented] 镜头规格·镜头规格·节拍过满 s5_st13：s5_st13 时长 12→14：解下布包 2.5 秒，顶上的结改成一拉就开的活结（2 秒），掰一瓣 2 秒
+- I63 [主要·implemented] 镜头规格·镜头规格·首帧视线 s7_st2：s7_st2：同 I15，0–1 秒视线朝画面左边身后灯旁的墙，首帧 prompt 重写。主会话按新首帧 prompt 重画首帧。。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I64 [主要·implemented] 镜头规格·镜头规格·首帧与节拍 s5_st2：s5_st2 第 0 秒改成 Riley 在画右边缘刚入画，0–2 秒走约 1 米站定（overhead 起点 (6.9,6.1)）；首帧 prompt 已重写（scenes/s5/shots/st2/planning/st2_first_frame_prompt.txt），由主会话按它重画首帧。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I65 [主要·implemented] 镜头规格·镜头规格·节拍与走位速度 s6_st5：s6_st5：同 I51，护火走速 ≤0.8 m/s，镜尾背影仍在车门里，不赶出画。
+- I66 [主要·implemented] Prompt 文本·T1 声音参考 s6_st3：s6_st3：画外吆喝本镜不生成人声，dialogue 只留 Riley 两句；beats 写明 11.8 秒她像听见吆喝转头，这一声剪辑时从 s6_st1 1.5–3.0 秒贴进来，两处同一条声音（Fortunata 不进 cast，避免她的三视图被画进画面）。剪辑需执行此贴音。
+- I67 [主要·implemented] Prompt 文本·T2 走位做不到 s3_st5：s3_st5 Felix 不再走向石台：从炉口抽出面包后侧身把它滑到炉口旁砖台上那排面包旁边，人一直在炉口前；overhead 去掉 6–8 秒走位，加「炉口旁砖台」。
+- I68 [主要·implemented] Prompt 文本·T2 手数 s6_st5：s6_st5：交灯改成 Fortunata 左手先放下、只用右手食指勾着把手递过来，Riley 双手并拢从下面捧住灯底，捧稳后 Fortunata 抽出食指；4.5–6 秒 Riley 再换成右手勾环托底、左手护火。同一时刻灯上最多三只手，两人的手指不同时在环里。overhead 与首帧 prompt 同步。
+- I69 [主要·implemented] Prompt 文本·T3 / T2 同一 prompt 自相矛盾 s6_st2：s6_st2：同 I52，删掉「叠在一起捏起来」，改成错开成一排一次放下，与「平摊看得清 3 枚」一致。
+- I70 [主要·implemented] Prompt 文本·T2 道具逻辑 s2_st8：s2_st8 去掉「把满罐伸回出水口接水」，改为 Vibia 扭开头、低头用手掌抹罐身，罐子不离开槽沿；st4 她继续抹罐身。
+- I71 [主要·implemented] Prompt 文本·T1 / T3 首帧多人、光线反了 s8_st1：s8_st1 光线写成白墙朝街一面整面在阴影里、墙脚一窄条街面在阴影里；无路人；首帧 prompt 已重写（scenes/s8/shots/st1/planning/st1_first_frame_prompt.txt），由主会话按它重画首帧。【2026-11-08 主会话完成】首帧已按新 prompt 用 Codex 重画（旧图存各镜 planning/_r1b_old/），主会话逐张目检通过
+- I72 [待核实·implemented] 世界物理·道具·提前出现＋系法 s3_st7：s3_st7 action 写明开场她腰上还没有布包、第 8.5 秒起才系上、全镜只有一个；系法统一为两个长布角绕过腰带左侧打结，给 2.5 秒（8.5–11）；首帧负面词加「腰上挂着布包」。出片后再看 0–7 秒左胯。
+- I73 [待核实·implemented] 世界物理·道具交接·够不着 s8_st2：s8_st2 0–1.5 秒写明走两步停在门房面前不到一米、伸手够得着；overhead 同步
+- I74 [待核实·planned] 世界物理·运动物理·路人速度 s8_st7：s8_st7 女孩第 0 秒在画左边缘约 6 米外，约 0.9 m/s，3–5 秒穿过（overhead 用 bg12 重画）；首帧 prompt 已重写（scenes/s8/shots/st7/planning/st7_first_frame_prompt.txt），由主会话按它重画首帧
+- I75 [待核实·implemented] 世界物理·道具去向·单手开钱袋 s6_st2：s6_st2：10–11.5 秒改成左手撑开腰间系绳松着的小皮钱袋口、右拳伸到袋口把钱放进去；首帧 prompt 写明钱袋系绳松着。
+- I76 [待核实·planned] 世界物理·身体·多出来的前臂 s5_st4：s5_st4 写明右手垂在身侧、在台面以下，画面里只有一只伸进来的手；负面词加多出来的前臂；首帧 prompt 已重写（scenes/s5/shots/st4/planning/st4_first_frame_prompt.txt），由主会话按它重画首帧
+- I77 [待核实·implemented] 世界物理·道具数量·面包缺几瓣 s5_st4：s5_st13 出场、st4、st7 都写明面包缺两瓣；首帧 prompt 同步（st4/st7 由主会话重画）
+- I78 [待核实·implemented] 世界物理·运动物理·指向和拐弯点 s5_st8：s5_st8 店主「整条右臂朝画面深处偏右、他铺子墙角另一边的横街口一指」，驴车在街口拐、消失在墙角后面（overhead 同步）
+- I79 [待核实·implemented] 世界物理·道具交接·四只手抢一只小灯 s6_st5：s6_st5：同 I68。
+- I80 [待核实·planned] 世界物理·道具数量·参考图里多一种钱 s5_st3 / s6_st1 / s6_st2 / s6_st3：s6_st3/st2 首帧 prompt 的 p2 参考行写明「参考图里那枚更小的浅色钱本帧没有」，负面词加更小的浅色铜币；正文只写 3 枚小钱＋1 枚大币。编译器按镜头过滤钱币种类、换参考图由主会话处理。
+- I81 [待核实·implemented] 世界物理·身体与运动·路线被遮挡 s7_st5：s7_st5：路人开场就在画面右边那段街的远端，一直沿看得见的街走向画左、不被屋顶挡住；overhead 路径 (24,26)→(30,32)，首帧 prompt 给出位置。
+- I82 [待核实·implemented] 世界物理·穿模·门板扫到小凳 s7_st4：s7_st4：0 秒门已开到底，门轴在北边，门板贴门轴那边、碰不到小凳；她低头跨进门槛、左手扶门框，不再推门（beats、首帧 prompt 同步）。
+- I83 [待核实·implemented] 世界物理·身体与运动·吹灯距离 s7_st3：s7_st3：blocking 写明小凳和灯在床头正西、紧挨床头，和她的头离镜头差不多远；首帧 prompt 给出灯和头的画面位置，负面词加「灯在镜头前景、灯比脸大」。
+- I84 [待核实·planned] 世界物理·火、烟·灯冒白烟 s7_st3（及 st1–st4 全部点灯段）：s7 各镜正文不写烟；出片后机检看灯嘴上方有没有烟柱，明显就重抽（主会话出片后核）。
+- I85 [待核实·implemented] 人物逻辑·人物逻辑·视线 s2_st7：核实：s2_st7 首帧低头过度、罐在槽里。已重写为直腰、头微低、视线落在镜头左边偏低处，罐在槽沿；主会话重画。
+- I86 [待核实·implemented] 人物逻辑·人物逻辑·主观视角的位置 s2_st6：核实：s2_st6 首帧画右确有出水口，与主观位置矛盾。已按 I3/I26 重写分镜和首帧 prompt，主会话重画。
+- I87 [待核实·planned] 人物逻辑·人物逻辑·视线与手势 s6_st1：s6_st1：招呼手势写成右手抬到肩边、手心朝自己、手指往回弯招两下，注明不是伸手要钱；首帧 prompt 同步，负面词加「伸手要钱的手势、掌心朝上的手」。主会话按新首帧 prompt 重画首帧。
+- I88 [待核实·implemented] 人物逻辑·人物逻辑·此刻知道什么 s6_st3→s6_st1：采用 (b)：s6_st3 写明女店主此刻才从车门里出来（画外），Riley 说话时门口没人；s6_st1 写 Fortunata 刚从车门里出来站到车门左边。
+- I89 [待核实·implemented] 连续性·连续性·场景布置（俯视图底图） s4_st4：s4_st4 overhead 改用 bg13 十字路口平面图重画（机位在南街东人行道朝北偏西，猫在东北角台阶），沙盒机检无告警。
+- I90 [待核实·planned] 连续性·连续性·左右 s5_st9：s5_st9 写明画右远处是店主那家（挂大蒜、放筐，不挂火腿），火腿只在画左熟食铺；首帧 prompt 已重写（scenes/s5/shots/st9/planning/st9_first_frame_prompt.txt），由主会话按它重画首帧
+- I91 [待核实·planned] 连续性·连续性·手别 s5_st3：同 I35；首帧 prompt 已重写（scenes/s5/shots/st3/planning/st3_first_frame_prompt.txt），由主会话按它重画首帧
+- I92 [待核实·planned] 连续性·连续性·道具冲突 s4_st2、st5，s8_st2、st8，s5_st3（布包和裤兜）：（s4 作者）s4_st2/st5 写明「布包挂在腰带左前侧，大口袋在它后下方，左手从布包后面伸进口袋」。s5_st3、s8_st2/st8 由各自作者处理。
+- I93 [待核实·implemented] 台词（时长与逻辑）·说话人·画外声 s6_st3：同 I66：本镜不生成画外吆喝，剪辑把 s6_st1 那句贴进来；画内只有 Riley 自己的两句。
+- I94 [待核实·implemented] 台词（时长与逻辑）·说话人·声音／外语 s8_st6：s8_st6 action 与 dialogue 加妇女声音（中年女声、略低、带笑、语速从容），blocking 写明拉丁语只有画右的妇女张嘴；外貌写进 st5/st9/st6
+- I95 [待核实·implemented] 台词（时长与逻辑）·说话人·声音 s5_st8：s5_st8 店主外观加声音描写：中年男声，粗嗓，隔着街大喊（action 与 dialogue）
+- I96 [待核实·planned] 台词（时长与逻辑）·外语·发音对比 s3_st1：文字不改；出片后按核实办法分别转写两段 Salve 并人耳确认（主会话出片后做）。
+- I97 [待核实·wontfix] 母语听感·母语听感·目标呼应 s5_st7：不改（理由：s1_st2 定稿台词已经列出 Mission one 和 Mission two，s5_st7 的回收成立）
+- I98 [待核实·implemented] 时代与世界观·时代·系列禁区（蒸汽） s5_st6、s5_st8（首帧里 st2、st3、st5、st7、st10、st12、st13 也有热气）：s5 各镜的热气统一改成「一两只敞着的陶罐口上贴着一点淡淡的热气，不往上飘」；st8 去掉「冒热气的柜台」
+- I99 [待核实·implemented] 时代与世界观·时代·食物 s4_st3：核实：s4_st3 原 prompt 没写摊位内容。已改为铺子门口一筐洋葱、一筐蚕豆，负面词加红色圆果子、石榴、苹果、集市。
+- I100 [待核实·implemented] 镜头规格·F4 镜组板与俯视图 s4_st4：同 I89：s4_st4 overhead 底图为 bg13，没有喷泉和直街；首帧 prompt 负面词加喷泉、石槽、垫脚石。
+- I101 [待核实·implemented] 镜头规格·F3 画内人数 s4_st3、s4_st2、s4_st5：作者确认上午窄街不是集市：s4_st3 只有一个扛柴路人（extras=1，并给他瞥裤子的单独一拍），s4_st2/st5 写「街上只有她一个人」，首帧 prompt 同步（st2/st5 可选重画）。
+- I102 [待核实·implemented] 镜头规格·镜头规格·景别与「数得清」冲突 s5_st3：s5_st3 camera 写明只要求看得出挑两枚放到台上、Asellina 收走，手心钱数不要求数清（p2 账本照记）；不加插入镜
+- I103 [待核实·implemented] 镜头规格·镜头规格·首帧与俯视图（柜台几何） s5_st2 / st12 / st3 / st13 / st7：从主机位斜着看，整条柜台都在 Riley 左手边、往画面深处伸，这是正常透视（geo 推算：Riley 79%，柜台东头 7–14°）；首帧 prompt 已写明这个几何，砖灶位置也已固定
+- I104 [待核实·implemented] 镜头规格·镜头规格·俯视图站位间距 s5_st3 / st4 / st13：同 I10：s5 st2/st10/st11/st12/st3/st14/st13/st6/st4/st7 的 overhead 全部用 Asellina (5.85,3.85)，文字写明各自伸手够得到台面中间
+- I105 [待核实·implemented] 镜头规格·镜头规格·景别与「可数」 s6_st2：s6_st2：机位推到 (6.7,8.7)、40mm、离两人的手约 1.6 m，Fortunata 掌心正对镜头在画面中间偏下；首帧 prompt 给出手和钱的画面位置。
+- I106 [待核实·implemented] Prompt 文本·T5 考据方位 s8_st1：s8_st1 去掉「朝南」，改成「沿着白墙继续往前走（去浴场的方向）」；平面坐标不变，画面不交代方位
+- I107 [待核实·implemented] Prompt 文本·T3 声音歧义 s8_st1：s8_st1 action 写明叉铃和合唱是墙后的画外实声（同期声），不是配乐
+- I108 [记录·implemented] 世界物理·支撑·罐的位置＋动作目的 s2_st5 / s2_st7 / s2_st8：同 I20/I70：s2 水罐 st5 起一直搁在槽沿上，st8 不再接水而是抹罐身。
+- I110 [记录·implemented] 世界物理·运动·速度 s2_st3：s2_st3 overhead 驴车改匀速：(0,10.4,17.2)→(3,10.4,14.8)→(6,10.4,12.4)，分镜写「车速均匀」。
+- I111 [记录·planned] 世界物理·道具变形·布包尺寸 s3_st7 → s3_st4 / s3_st8：s3 各镜面包改写为直径约二十厘米，布包写「扁圆，和一个面包差不多大」（st7 action、st4/st8 首帧 prompt）。p3 道具卡外观仍写「比两个拳头大一点」，请主会话把卡改成「扁圆、约一个面包大」以免冲突。
+- I112 [记录·implemented] 世界物理·道具守恒·消失 s3_st1 → st7/st4/st8：小陶碗位置全场固定在 Felix 左手边 (6.2,4.2)，st1/st3/st7/st4/st8/st6 的 action、overhead object 和首帧 prompt 都写进碗。
+- I113 [记录·implemented] 世界物理·道具去向·钱袋口 s8_st2：s8_st2 改成门房左手拉开钱袋口、右手丢币（8–10 秒）
+- I114 [记录·implemented] 世界物理·穿模·手与布包 s8_st8：s8_st8 改成「左手垂回身侧、拇指勾住腰带」
+- I115 [记录·implemented] 世界物理·运动物理·速度 s8_st8：s8_st8 overhead 5–10 秒走约 7 米（1.4 m/s），时长 10
+- I116 [记录·implemented] 世界物理·烟·熏气形态 s4_st1：同 I23：s4_st1 只写罩白布的柳条笼，不写熏气，首帧 prompt 负面词加熏气、雾气；首帧 prompt 已重写（主会话重画首帧）。
+- I117 [记录·planned] 世界物理·光影·受光面相反 s8_st1：s8_st1 光线：白墙朝街一面整面阴影、只有墙头一线亮，街面其余部分和民居墙在阳光里；首帧 prompt 已重写（scenes/s8/shots/st1/planning/st1_first_frame_prompt.txt），由主会话按它重画首帧
+- I118 [记录·planned] 世界物理·水·头发干湿 s8_st6：s8_st6 头发统一干蓬、鬓角汗湿；首帧 prompt 已重写（scenes/s8/shots/st6/planning/st6_first_frame_prompt.txt），由主会话按它重画首帧
+- I119 [记录·implemented] 世界物理·道具变形·鱼露罐大小 s5_st4：鱼露罐全场统一成 bg5 卡里的细高小陶罐（约三十厘米，细颈，没有把手，口上塞布），st2/st13/st6/st4 和首帧 prompt 一致
+- I120 [记录·planned] 世界物理·道具守恒·陈设换边 s5_st12：砖灶统一在柜台里的拐角、画面中间偏右的后面（overhead 加 object）；首帧 prompt 已重写（scenes/s5/shots/st12/planning/st12_first_frame_prompt.txt），由主会话按它重画首帧
+- I121 [记录·planned] 世界物理·道具变形·面包瓣形状 s5_st5：s5_st5 面包瓣写成带硬皮的三角楔形、尖上咬掉一口；首帧 prompt 已重写（scenes/s5/shots/st5/planning/st5_first_frame_prompt.txt），由主会话按它重画首帧
+- I122 [记录·planned] 世界物理·光影·晚霞方向 s6_st3：s6_st3：lighting 写明镜头朝东、太阳在镜头身后，画面里的天空只剩蓝紫、没有橙色晚霞，余晖从镜头身后照来；首帧负面词加橙色晚霞、画面里的太阳。主会话按新首帧 prompt 重画首帧。
+- I123 [记录·implemented] 世界物理·火·点灯没有火源 s6_st3：s6_st3：删掉店主点灯这一动作和街边墙龛灯，只留街远处一家铺子门里一点暖光。
+- I124 [记录·implemented] 世界物理·道具守恒·门的状态与门轴 s7_st4→s7_st1：s7_st4 1.5–3 秒加「转身用左手把门推上，不插闩」；st6、st7、st1 都写门关着、木闩没有插，门轴在北边；st1 首帧 prompt 写明门关着不闩，负面词加开着的门、插上的门闩。
+- I125 [记录·implemented] 世界物理·身体与运动·够不着、瞬移坐下 s7_st4：放灯挪到新镜 s7_st7：8 秒先走一小步到凳边 (0.62,1.35)，伸手约 0.5 m 放灯，10–12 秒转身坐到床南沿 (1.1,1.4)，坐下有 2 秒；st4 不再放灯。
+- I126 [记录·implemented] 世界物理·身体与运动·转身过快 s7_st4：s7_st4：改成「把灯举到肩高，从西墙慢慢照到北墙（只转小半圈）」，不再写转一圈。
+- I127 [记录·planned] 世界物理·道具守恒·尺寸 s7_st1、st2、st3：s7_st1/st2/st3/st7 写明灯身只有手掌大、长约十二厘米、只占凳面三分之一，首帧 prompt 同步、负面词加「大灯、灯比脸大」。主会话按新首帧 prompt 重画首帧（st1–st3）。
+- I128 [记录·planned] 世界物理·光影·唯一光源 s7_st4：s7_st4：lighting 改成床、北墙和墙角在灯照到之前只剩很暗的剪影，窗洞周围只有一小片冷蓝；首帧 prompt 同步。主会话按新首帧 prompt 重画首帧。
+- I129 [记录·planned] 世界物理·光影·月光与星空 s7_st5：s7_st5：二选一取「去掉月光」：lighting 写天上没有月亮、只有星光，海面只是一条暗线、没有倒影；首帧负面词加月亮、月光倒影、海上的亮带。主会话按新首帧 prompt 重画首帧。
+- I130 [记录·planned] 世界物理·道具·路人持灯姿势 s7_st5：s7_st5：路人把小陶灯端在胸前、光点比人头低；首帧负面词加举过头顶的灯、火把。主会话按新首帧 prompt 重画首帧。
+- I131 [记录·implemented] 人物逻辑·人物逻辑·动机 / 方向逻辑 s3_st4 → s3_st8 → s5 回收：同 I155：采用方案 A 的加强版——Felix 头也不抬、没有任何手势或朝向，方向信息只剩 dextram；删掉「顺着下巴看街 1 秒」。
+- I132 [记录·planned] 人物逻辑·人物逻辑·视线 / 发现拍 s8_st2：s8_st2 第 0 秒门房低头拨弄钱袋抽绳、没看来人，1.5 秒才抬头；首帧 prompt 已重写（scenes/s8/shots/st2/planning/st2_first_frame_prompt.txt），由主会话按它重画首帧
+- I133 [记录·implemented] 人物逻辑·人物逻辑·配角反应缺失 s3_st4：s3_st4 13–14.5 秒单独一拍：Felix 抬眼看她对着空气说话，微微歪头、挑眉，随即咧嘴一笑，又低头看面包。
+- I134 [记录·implemented] 人物逻辑·人物逻辑·反应时机 s4_st1：s4_st1 反应提前并各占一拍：嚷完 4.4–5.2 秒 Tertius 扭头皱眉，6–6.8 秒挥手喊 Apage，6.8–7.6 秒后排两工人停脚瞥裤子；她 7.6–9.6 秒举手后退说话。
+- I135 [记录·implemented] 人物逻辑·人物逻辑·配角念头 / 听不懂的台词 s8_st6：s8_st6 妇女念头改成「一天一转眼就过去，别光泡着」，写明她是看 Riley 往后一靠、闭眼长叹的姿态才明白（听不懂英语）
+- I136 [记录·planned] 人物逻辑·人物逻辑·路人反应雷同 s2_st4、s3_st8、s8_st7：（s2/s3 作者）s3_st8 顶篮子的女人换成一对母子：小男孩拽母亲袖子指她的裤子，母亲瞥一眼拉走（extras=2，overhead 补母子路径）；s2_st4 保留顶篮子的女孩。s8_st7 由 s8 作者处理。
+- I137 [记录·implemented] 人物逻辑·人物逻辑·动作描述 s3_st8：s3_st8 改成「侧背对镜头、面朝石台里的 Felix 挥一下右手」，不再写回头。
+- I138 [记录·implemented] 人物逻辑·人物逻辑·配角反应缺失 s5_st12 / s5_st7：s5_st12/st7/st14 配角行补：Riley 对镜头说话时，Asellina 歪头好奇看她、摇头笑笑，不看镜头
+- I139 [记录·implemented] 人物逻辑·人物逻辑·动机 s5_st6：s5_st6 Asellina 留在原位 (5.85,3.85)，在画面左边缘远处拔鱼露罐塞子、脸朝画左外
+- I140 [记录·implemented] 人物逻辑·人物逻辑·动机（守约） s5_st3：新镜 s5_st14 写明掀开盖圆木盖的好酒罐、从里面舀酒；st3 结尾 Asellina 按住酒罐的木盖
+- I141 [记录·planned] 人物逻辑·人物逻辑·前后状态 s5_st9：s5_st9 写明店主已经回到铺子里，门里是暗的、门口没有人；首帧 prompt 已重写（scenes/s5/shots/st9/planning/st9_first_frame_prompt.txt），由主会话按它重画首帧
+- I142 [记录·planned] 人物逻辑·人物逻辑·走位动机 s5_st2：同 I64：s5_st2 Riley 从街上走到柜台中段外侧，背后是街；首帧 prompt 已重写（scenes/s5/shots/st2/planning/st2_first_frame_prompt.txt），由主会话按它重画首帧
+- I143 [记录·implemented] 连续性·连续性·场景布置 s3_st1 / st2（对照 st5）：s3_st1 首帧 prompt 按新机位写（东磨不转、驴在画外，详见 I42）；s3_st2 首帧 prompt 写「对面一排素面抹灰的铺面墙」，负面词加神龛、壁画；首帧 prompt 已重写（主会话重画首帧）。
+- I144 [记录·planned] 连续性·连续性·光向 s8_st1：同 I117：s8_st1 光向在文字和首帧 prompt 里写清；首帧 prompt 已重写（scenes/s8/shots/st1/planning/st1_first_frame_prompt.txt），由主会话按它重画首帧
+- I146 [记录·planned] 连续性·连续性·光向 s5_st1：s5_st1 光线写明画左（街南侧）的房子和半边街面在阴影里；首帧 prompt 已重写（scenes/s5/shots/st1/planning/st1_first_frame_prompt.txt），由主会话按它重画首帧
+- I147 [记录·planned] 连续性·连续性·视线方向 s7_st1 → st2：同 I15：s7_st2 首帧视线改朝画左身后的墙。主会话按新首帧 prompt 重画首帧。
+- I148 [记录·planned] 连续性·连续性·道具（p1 油灯形制） s6_st2（对照 st1、st5、s7）：s6_st2 的 p1 描述改成一体陶、顶面封死的单嘴灯，首帧 prompt 同步。主会话按新首帧 prompt 重画首帧。
+- I149 [记录·planned] 连续性·连续性·道具（油瓶） s8_st9（对照 st5、st6）：s8_st9 油瓶统一为无把手圆肚小陶瓶，在两人之间；首帧 prompt 已重写（scenes/s8/shots/st9/planning/st9_first_frame_prompt.txt），由主会话按它重画首帧
+- I150 [记录·implemented] 连续性·连续性·道具规则 s6_st1、st5，s7 全场（规则源）：s6、s7 的「全集唯一」改成「她手里唯一的那盏」「待会儿交到 Riley 手里的那一盏」；s6_st3 删掉街边墙龛灯；新镜 s6_st6 大堂里的两盏写成双嘴青铜灯、双嘴灰陶灯，和 p1（赭红单嘴环把）区分。p1 卡「全集只有这一盏」措辞由主会话改。
+- I151 [记录·implemented] 连续性·连续性·道具逻辑 s2_st8：同 I70：s2_st8 抹罐身、st4 直腰抹罐身，不再满罐再接。
+- I152 [记录·implemented] 连续性·连续性·场景布置 s2_st4：s2_st4 机位改到 (13.5,17.0)、28mm，最近一块垫脚石在画面右下前景（机检约 +22°），首帧 prompt 写明位置；首帧 prompt 已重写（主会话重画首帧）。
+- I153 [记录·implemented] 连续性·连续性·场景布置（俯视图底图） s8_st7：s8_st7 overhead.toml 改用 bg12_浴场门外平面（门面朝西、柱廊 x10–12.5、门洞 y≈12），沙盒出图无 blocker
+- I154 [记录·implemented] 连续性·连续性·措辞歧义 s5_st5：s5_st5 改成「柜台在画左后方，街在画右后方」
+- I155 [记录·implemented] 台词（时长与逻辑）·台词逻辑·前后说法 s3_st4 → s3_st8：s3_st4 按新故事稿：Felix 无手势无朝向，Riley 随口猜「Sounds like left?」，st8 她朝自己的左边（东，画右）走，前后说法一致，错只在 dextram 一个词。
+- I156 [记录·implemented] 台词（时长与逻辑）·说得完·语速 s6_st3：s6_st3：排成 5.3–6.5 秒 Sun's going down.（3 词）、6.9–10.6 秒 This is what's left of the budget… and still no bed.（10 词 3.7 s，2.7 词/秒），摊手和说话同拍，台词不改。
+- I157 [记录·planned] 台词（时长与逻辑）·专名·注音 s3_st4、s5_st13：（s3 作者）s3_st4 台词行已补「Garum（GAH-rum，重音在前，问句上扬）」；s5_st13 由 s5 作者处理。
+- I159 [记录·implemented] 台词（时长与逻辑）·说得完·语气 s8_st6：s8_st6 Riley 第一句 1.6–4.3 秒（懒洋洋），妇女耸肩 4.4–5.1 秒，拉丁语还是 5.1 秒开始
+- I160 [记录·implemented] 台词（时长与逻辑）·说得完·语气 s4_st4：s4_st4 不改字，窗口放宽到 7.1–12.9 秒（13 词/5.8 秒≈2.2 词/秒），镜头 14→16 s，耸肩挪到 13–16 秒。
+- I161 [记录·implemented] 台词（时长与逻辑）·说得完·停顿 s7_st1：s7_st1：改成 Okay. 1.5–2.0、Bed? Found. 2.3–3.6、Garum? Tasted. 4.0–5.3、Budget? …Gone. 5.7–7.2，转头挪到 7.2–9 秒；overhead 同步。
+- I162 [记录·implemented] 台词（时长与逻辑）·说得完·贴上限；口语·指代 s4_st2：s4_st2 第一段窗口放宽到 1.3–5.6 秒（11 词/4.3 秒≈2.6 词/秒），掏钱改到 5.6–7 秒。第二段台词按定稿 dialogue_final 不改字（his 的指代交用户定稿时再看）。
+- I163 [记录·planned] 台词（时长与逻辑）·外语·注音细节 s3_st4、s8_st6：（s3 作者）s3_st4 Felix 注音已改为 EE-toh ahd DEK-strahm；s8_st6 的 dum 注音由 s8 作者处理。
+- I164 [记录·wontfix] 母语听感·母语听感·指代 s8_st2：不改（理由：s8_st2 台词按 dialogue_final v2.1 逐字照抄（作者规则），这是 minor 听感问题，由定稿台词负责人决定改不改；台词现在挪到 s8_st10）
+- I165 [记录·implemented] 母语听感·母语听感·笑点动机 s3_st4：台词已按故事稿改为随口一猜：「Okay. Straight… then 'dextram.' No clue. Sounds like left?」（不再说 That sounds like left / I'm going left），s3_st4 dialogue 与 beats 已换。
+- I166 [记录·wontfix] 母语听感·母语听感·讲解腔 s8_st1：不改（理由：s8_st1 台词按 dialogue_final v2.1 逐字照抄，这是 minor 听感问题，由定稿台词负责人决定改不改）
+- I167 [记录·planned] 时代与世界观·时代·系列禁区（火山词） s2_st1–st8、s6_st1–st5、s7_st5 的首帧出图 prompt；bg2–bg13 卡的负面词：s6、s7 全部 13 张首帧 prompt 的负面词去掉火山词，改成远山、丘陵、山峰轮廓、烟柱；s6/s7 正文也无火山词。其他场与 bg 卡的负面词由各自作者/主会话处理。；（s2/s3/s4 作者）s2–s4 本次重写的 20 张首帧 prompt 负面词改用「远处的山、山峰轮廓、烟柱、烟囱」，不再出现火山词；s2_st2（未重写）的负面词也已替换。bg 卡负面词仍由主会话处理。
+- I168 [记录·planned] 时代与世界观·时代·建筑（烟囱） s4_st1、s4_st5（底图 bg4）：s4_st1 首帧 prompt 负面词已含「烟囱」；bg4 底图重出时加负面词由主会话做。
+- I169 [记录·planned] 时代与世界观·时代·建筑（钟楼） s5_st4：s5 全部首帧 prompt 负面词加钟楼、塔楼尖顶；首帧 prompt 已重写（scenes/s5/shots/st4/planning/st4_first_frame_prompt.txt），由主会话按它重画首帧
+- I170 [记录·planned] 时代与世界观·时代·建筑（裸砖像废墟） s8_st7：s8_st7 写成柱身抹白灰、下段刷庞贝红，首帧负面词加露出红砖的柱子、废墟；首帧 prompt 已重写（scenes/s8/shots/st7/planning/st7_first_frame_prompt.txt），由主会话按它重画首帧
+- I171 [记录·implemented] 时代与世界观·时代·食物 s3_st6（也可能有 s3_st4）：s3 各镜面包写「直径约二十厘米、八道放射形刀口（八瓣）」，st4/st6/st8 首帧 prompt 负面词加「六瓣面包」（st6）；主会话重画 st4/st6/st8 首帧。
+- I173 [记录·implemented] 镜头规格·F1 节拍时间 s4_st4：同 I48：s4_st4 起点离路口中央 3.2 m，0–2.5 秒走到、2.5–4 秒张望。
+- I174 [记录·implemented] 镜头规格·F2 景别与运镜 s4_st4：s4_st4 overhead 推镜终点 12 秒到 (10.83,11.42)，离她约 2 m，35mm 约腰以上；分镜 camera 写明终点距离与景别。
+- I175 [记录·implemented] 镜头规格·F1 过满 / F2 景别与动作冲突 s8_st2：s8_st2 拆成 st2（付钱，15 秒，掏钱/捏币/收钱各 2 秒）和新镜 s8_st10（小声台词＋门房指路＋出画，8 秒）；写明钱数不要求数清；st10 新建 overhead 与首帧 prompt
+- I176 [记录·implemented] 镜头规格·F4 镜组板与俯视图 s3_st4：s3_st4 Felix 不再扬下巴，overhead 朝向一直对着手里的托板（13.4–14.3 秒抬眼看她一下）；Riley 不再有「顺着下巴看街 1 秒」那一拍，改为 5.5–7 秒皱眉想。
+- I177 [记录·implemented] 镜头规格·F2 运镜 / F1 s3_st5：s3_st5 overhead 补 0/3/6/8 秒四个机位关键点（0–3 停在西磨、3–6 摇到炉口、6–8 停），首帧 prompt 收紧到只有驴与两座石磨（炉口在画右外）；首帧 prompt 已重写（主会话重画首帧）。
+- I178 [记录·implemented] 镜头规格·F3 画内人数 / F4 s3_st8：s3_st8 overhead 补母子路人路径 (0,12.1,6.5)→(5.25,5.8,6.5)→(9,1.3,6.5)，4.5–6 秒从 Riley 身后经过；分镜设 extras=2。
+- I179 [记录·implemented] 镜头规格·F4 镜组板与俯视图 s2_st3、s2_st2：s2_st3 分镜与首帧 prompt 写明镜头正对东边、街左右横贯（画左北、画右南），收尾是对面铺面正对镜头；首帧 prompt 已重写（主会话重画首帧）。s2_st2 不改，出片后复核。
+- I180 [记录·implemented] 镜头规格·F4 / F2 s2_st1：s2_st1 机位挪近到垫脚石南边约 1.6 m (11,21.6)、35mm，首帧 prompt 写「画面上缘切在腰带，只拍腿和靴子」「背对喷泉（喷泉在镜头身后）」，负面词加喷泉；首帧 prompt 已重写（主会话重画首帧）。
+- I181 [记录·planned] 镜头规格·F4 镜组板与俯视图 s8_st5、s8_st6：以 overhead 为准：油瓶在两人之间 (0.4,5.45)，st5/st9/st6 文字同步；首帧 prompt 已重写，由主会话重画三张首帧
+- I182 [记录·implemented] 镜头规格·F4 镜组板与俯视图 s8_st3：s8_st3 overhead 把挽头发的年轻妇女挪到 (5.3,8.8)（画右靠前、离镜头约 5 米，和首帧对上），文字同步；另外建议重画 st3（现有首帧画右几位妇女是单肩浴袍）
+- I183 [记录·implemented] 镜头规格·F4 镜组板与俯视图 s8_st7：s8_st7 门洞统一为画面中间略偏右；女孩起点挪到 (8.2,11.2)，第 0 秒在画左边缘入画；时长 10
+- I184 [记录·implemented] 镜头规格·F1 节拍时间 s2_st4：s2_st4 overhead 女孩改走同一侧人行道，起点 (14.0,31.9)，4.5 秒与 Riley 在 y≈26.4 擦肩，回头一眼落在 4.5–5.5 秒。
+- I185 [记录·implemented] 镜头规格·F1 节拍时间 s3_st1：同 I45：s3_st1 进场 0.85 m 用 1.5 秒，Salve 在她站定后。
+- I186 [记录·implemented] 镜头规格·镜头规格·俯视图到达秒数 s6_st1：s6_st1 overhead：Riley 0 秒在 (10.2,7.4) 画外，3.5 秒到 (7.3,7.4) 刚好从画右入画，5 秒停在 (6.4,7.4)；和 1.5–3.0 秒的吆喝不重叠。
+- I187 [记录·implemented] 镜头规格·镜头规格·视线写法 s5_st12：s5_st12 改成「转脸直视镜头」
+- I188 [记录·implemented] 镜头规格·镜头规格·机位描述与俯视图 s5_st8：s5_st8 blocking 改成「镜头在 Riley 右后方」
+- I189 [记录·implemented] 镜头规格·镜头规格·景别与微表演 s5_st8：s5_st8 删掉瞥裤子、嘴微张，camera 写明店主只看得清大动作
+- I190 [记录·implemented] 镜头规格·镜头规格·景别与俯视图 s5_st10 / st11：s5_st10/st11 camera 改成「中近景，单人，腰以上」；机位跟着 Asellina 新位置微调，首帧不用重画
+- I191 [记录·implemented] 镜头规格·镜头规格·左右写法 s5_st5：同 I154
+- I192 [记录·implemented] 镜头规格·镜头规格·构图自相矛盾 s7_st5：s7_st5：开场改成地平线在画面上三分之一的俯瞰、屋顶和窄街占下面三分之二，6 秒起上摇，9 秒星空占满画面；blocking/camera/首帧 prompt 同步。首帧需按新构图重画（主会话）。
+- I193 [记录·implemented] 镜头规格·镜头规格·台词时长 s7_st2：s7_st2：镜长 15→17 s，Vibius 句放宽到 5.2–11.0 秒（5.8 s），末句 11.5–15.1，结尾留 1.9 s。
+- I194 [记录·implemented] 镜头规格·镜头规格·节拍与动作 s7_st4：同 I126：s7_st4 举灯只照小半圈。
+- I195 [记录·planned] 镜头规格·镜头规格·俯视图尺度 s5_st8 / st9 / st1：bg5 场地平面图街宽 9 米、首帧约 6 米；属于场景卡，由主会话决定是否收窄 blocks.toml；本场分镜不依赖精确街宽
+- I197 [记录·implemented] Prompt 文本·T5 规则自相矛盾 s6（本场行）、s6_st1：同 I150：s6 本场行和 st1 改成「她手里唯一的那盏」「待会儿交到 Riley 手里的那一盏」，s6_st3 不再有街边墙龛灯。
+- I198 [记录·implemented] Prompt 文本·T3 场景卡挂错 s8_st2：s8_st2/st10 action 写明是外门门厅（赭黄墙、深红墙裙、石子地，没有石凳壁龛），场景图只取材质；编译后的「场景」行仍是 bg8 文字，要更干净需主会话加门厅场景文字覆盖
+- I199 [记录·implemented] Prompt 文本·T3 同一 prompt 自相矛盾 s3_st7：s3_st7 统一为：第 0 秒 Felix 双手拿着叠好的亚麻布，石台上没有布（「这是唯一的一块布」）。
+- I200 [记录·implemented] Prompt 文本·T3 同一 prompt 自相矛盾 s5_st6：s5_st6 人数写成五个人（加上拉孩子的妇女），extras: 4
+- I201 [记录·implemented] Prompt 文本·T3 方位歧义 s5_st5：同 I154
+- I202 [记录·implemented] Prompt 文本·T3 歧义 s3_st8：同 I137：删掉「回头」。
+- I203 [记录·implemented] Prompt 文本·T1 数量不一致 s3_st4：s3_st4/st8/st6 托板上正好五个面包（下三上二、八道刀口），action 与首帧 prompt 一致，负面词加「托板上多于或少于五个面包」。
+- I204 [记录·implemented] Prompt 文本·T5 / T1 场景卡与 prompt 不一致 s4_st1：s4_st1 统一：Tertius 在院子靠门这头一个齐膝高、只容一人的石砌踩洗小槽里（平面图 (5,6.2)），后部另有一排同样的石槽；首帧 prompt 负面词加「大水池」。
+- I205 [记录·planned] Prompt 文本·T1 人物卡自相矛盾 s4_st1（c3_Tertius 卡）：首帧 prompt 里 Tertius 写成「下巴上一层短胡茬」；c3_Tertius 卡「脸刮得干净但有一层胡茬」二选一由主会话改卡。
+- I207 [记录·implemented] Prompt 文本·T3 歧义 s2_st6：同 I3：s2_st6 Riley 不再持镜，两手空着垂在身侧。
+
+## 补充说明
+主会话补充：全集首帧按新 prompt 用 Codex 重画；道具卡 p1–p5、人物卡 c6/c7；编译器人物行与声样规则；客栈大堂与客房参观三个新镜（用户要求）。

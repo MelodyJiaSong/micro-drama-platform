@@ -5589,3 +5589,1755 @@
   }
 }
 ```
+
+## 2026-10-26T14:23:21.489+00:00 — codex_imagegen / image_gen — request
+
+```json
+{
+  "request_id": "eee32db6d6154ecf8cbc37d0fb1c515b",
+  "provider": "codex_imagegen",
+  "operation": "image_gen",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\imagegen_pro_test_20261026_cat.png",
+  "pid": 35264,
+  "request_fingerprint": "a24e9900fcd6301bd18cc9558a60ba73d560e92ce5e0fd2bd360d63f6f1c15b3",
+  "time": "2026-10-26T14:23:21.489+00:00",
+  "event": "request",
+  "request": {
+    "service": "Codex CLI 内置 image_gen（ChatGPT 订阅额度）",
+    "prompt": "Create one square illustration of a fluffy orange kitten sitting on a sunny windowsill beside a small green plant, warm golden morning light, soft painterly textures, cozy and cheerful, clean composition, no text. Aspect ratio 1:1.",
+    "instruction": "你是出图执行器。只做一件事：调用一次内置 image_gen 工具生成一张图片。\n\n- 图片描述原样使用下方 <prompt> 里的全文，不增删、不改写、不翻译。\n- 不运行任何 shell 命令，不读写文件，不调用其他工具，不搜索网络，不提问。\n- 生成后只回复 DONE；工具失败或被拒时只回复 FAILED: 加原因。\n\n<prompt>\nCreate one square illustration of a fluffy orange kitten sitting on a sunny windowsill beside a small green plant, warm golden morning light, soft painterly textures, cozy and cheerful, clean composition, no text. Aspect ratio 1:1.\n</prompt>\n",
+    "argv": [
+      "C:\\Users\\light\\AppData\\Roaming\\npm\\codex.CMD",
+      "exec",
+      "--json",
+      "--skip-git-repo-check",
+      "--sandbox",
+      "read-only"
+    ],
+    "files": [],
+    "output": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\imagegen_pro_test_20261026_cat.png",
+    "transparent_background": false,
+    "codex_model": "用户 config 默认",
+    "image_model": "未知（内置工具不暴露）",
+    "quality": "未知",
+    "size": "未知",
+    "cost": "未知",
+    "sandbox": "read-only",
+    "timeout_s": 900,
+    "generated_root": "C:\\Users\\light\\.codex\\generated_images"
+  }
+}
+```
+
+## 2026-10-26T14:24:14.521+00:00 — codex_imagegen / image_gen — result
+
+```json
+{
+  "request_id": "eee32db6d6154ecf8cbc37d0fb1c515b",
+  "provider": "codex_imagegen",
+  "operation": "image_gen",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\imagegen_pro_test_20261026_cat.png",
+  "pid": 35264,
+  "request_fingerprint": "a24e9900fcd6301bd18cc9558a60ba73d560e92ce5e0fd2bd360d63f6f1c15b3",
+  "time": "2026-10-26T14:24:14.521+00:00",
+  "event": "result",
+  "elapsed_s": 53.016,
+  "response": {
+    "returncode": 0,
+    "timed_out": false,
+    "early_exit": false,
+    "stderr_tail": "Reading prompt from stdin...\n",
+    "thread_id": "01a17898-3175-7ce3-82b7-1db64629aadc",
+    "images": [
+      {
+        "id": "exec-966e5300-5a38-4fc1-b3fe-555c4d8f067e",
+        "status": "completed",
+        "revisedPrompt": "Create one square illustration of a fluffy orange kitten sitting on a sunny windowsill beside a small green plant, warm golden morning light, soft painterly textures, cozy and cheerful, clean composition, no text. Aspect ratio 1:1.",
+        "transparentBackground": false,
+        "failure": null,
+        "savedPath": "C:\\Users\\light\\.codex\\generated_images\\01a17898-3175-7ce3-82b7-1db64629aadc\\exec-966e5300-5a38-4fc1-b3fe-555c4d8f067e.png"
+      }
+    ],
+    "usage": {
+      "input_tokens": 34674,
+      "cached_input_tokens": 31488,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 123,
+      "reasoning_output_tokens": 0
+    },
+    "last_message": "DONE",
+    "event_types": {
+      "thread.started": 1,
+      "turn.started": 1,
+      "item.completed": 2,
+      "turn.completed": 1
+    },
+    "errors": [],
+    "generated": [
+      {
+        "path": "C:\\Users\\light\\.codex\\generated_images\\01a17898-3175-7ce3-82b7-1db64629aadc\\exec-966e5300-5a38-4fc1-b3fe-555c4d8f067e.png",
+        "exists": true,
+        "bytes": 2232456,
+        "sha256": "73f37184f2371c696741604499c678a2ffbc73ff8b6a8067cda87d8c23bc4cf2"
+      }
+    ],
+    "saved": [
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\imagegen_pro_test_20261026_cat.png",
+        "exists": true,
+        "bytes": 2232456,
+        "sha256": "73f37184f2371c696741604499c678a2ffbc73ff8b6a8067cda87d8c23bc4cf2"
+      }
+    ]
+  }
+}
+```
+
+## 2026-11-06T15:38:16.546+00:00 — dreamina / user_credit — request
+
+```json
+{
+  "request_id": "01e287e77b894b3ea543d58d30db167e",
+  "provider": "dreamina",
+  "operation": "user_credit",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 37096,
+  "request_fingerprint": "bd7b3f99465a69f987e7ad1cd756e7061dd2b84a49286562b9e0733ed60e98c9",
+  "time": "2026-11-06T15:38:16.546+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "user_credit"
+    ],
+    "files": [],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:38:28.990+00:00 — dreamina / user_credit — result
+
+```json
+{
+  "request_id": "01e287e77b894b3ea543d58d30db167e",
+  "provider": "dreamina",
+  "operation": "user_credit",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 37096,
+  "request_fingerprint": "bd7b3f99465a69f987e7ad1cd756e7061dd2b84a49286562b9e0733ed60e98c9",
+  "time": "2026-11-06T15:38:28.990+00:00",
+  "event": "result",
+  "elapsed_s": 12.438,
+  "response": {
+    "returncode": 0,
+    "stdout": "{\n  \"total_credit\": 30020,\n  \"user_id\": 3054920168911786,\n  \"user_name\": \"\",\n  \"vip_level\": \"ultra\"\n}\n",
+    "stderr": ""
+  }
+}
+```
+
+## 2026-11-06T15:39:07.231+00:00 — dreamina / multimodal2video — request
+
+```json
+{
+  "request_id": "633b4177ca70414d938dc4e3fad57edf",
+  "provider": "dreamina",
+  "operation": "multimodal2video",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 76672,
+  "request_fingerprint": "d046b9f1ef3d9160c4d7f9c77333059c4b006f6505965f63f7301d7f3e6c082e",
+  "time": "2026-11-06T15:39:07.231+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "multimodal2video",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\01_image1.jpg",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\02_image2.jpg",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\03_image3.jpg",
+      "--audio",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\04_audio1.mp3",
+      "--prompt=ep1_s1_st3\r\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\r\n时长：8秒\r\n比例：16:9\r\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\r\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\r\n人物：\r\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\r\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\r\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\r\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\r\n走位：Riley 由南向北走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步继续往北走出画面。工人在门洞西墙边的脚手架上。\r\n动作：0–3秒 Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\r\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\r\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（北）是被晨光照亮的街，形成明亮的出口；自然光。\r\n台词：\r\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\r\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\r\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\r\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\r\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\r\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。",
+      "--duration=8",
+      "--ratio=16:9",
+      "--video_resolution=480p",
+      "--model_version=seedance2.5",
+      "--poll=0"
+    ],
+    "files": [
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\01_image1.jpg",
+        "exists": true,
+        "bytes": 56562,
+        "sha256": "ffd320b5c45a370b7a0b1320fe35c81f11d998b46d8efc9e1835442b84533a86"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\02_image2.jpg",
+        "exists": true,
+        "bytes": 43143,
+        "sha256": "55357956d88ce9957de4db9ab99ed947c5b60b6ec892526fab7b7572d07f01d4"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\03_image3.jpg",
+        "exists": true,
+        "bytes": 378490,
+        "sha256": "a262ee7151cd03079a1ff2f0076e708eaf04844207ac0b9afb258dcda9a1bc40"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\04_audio1.mp3",
+        "exists": true,
+        "bytes": 78510,
+        "sha256": "917c85230bcc7c49b6de69c55e66c8e34019cd33ee7124b792dcf7e425dea3b6"
+      }
+    ],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:39:36.271+00:00 — dreamina / multimodal2video — result
+
+```json
+{
+  "request_id": "633b4177ca70414d938dc4e3fad57edf",
+  "provider": "dreamina",
+  "operation": "multimodal2video",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 76672,
+  "request_fingerprint": "d046b9f1ef3d9160c4d7f9c77333059c4b006f6505965f63f7301d7f3e6c082e",
+  "time": "2026-11-06T15:39:36.271+00:00",
+  "event": "result",
+  "elapsed_s": 29.031,
+  "response": {
+    "returncode": 0,
+    "stdout": "{\n  \"submit_id\": \"f2129ef1-4dc0-4b85-b07e-a28d714f5d35\",\n  \"prompt\": \"ep1_s1_st3\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\\r\\n时长：8秒\\r\\n比例：16:9\\r\\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\\r\\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\\r\\n人物：\\r\\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\\r\\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\\r\\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\\r\\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\\r\\n走位：Riley 由南向北走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步继续往北走出画面。工人在门洞西墙边的脚手架上。\\r\\n动作：0–3秒 Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\\r\\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\\r\\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（北）是被晨光照亮的街，形成明亮的出口；自然光。\\r\\n台词：\\r\\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\\r\\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\\r\\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\\r\\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\\r\\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\",\n  \"logid\": \"20261106233907198019255253525A84D\",\n  \"gen_status\": \"querying\",\n  \"credit_count\": 96,\n  \"estimated_remaining_seconds\": 423\n}\n",
+    "stderr": ""
+  }
+}
+```
+
+## 2026-11-06T15:39:36.712+00:00 — dreamina / multimodal2video — request
+
+```json
+{
+  "request_id": "aa12a9d6a0784f1dadb2414ad77f74cf",
+  "provider": "dreamina",
+  "operation": "multimodal2video",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 53876,
+  "request_fingerprint": "3e57ac134a7bf2c7dfa1ee8453b069fcbcbe236ee9babc2b5646c86f6e2f5783",
+  "time": "2026-11-06T15:39:36.712+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "multimodal2video",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\01_image1.jpg",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\02_image2.jpg",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\03_image3.jpg",
+      "--audio",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\04_audio1.mp3",
+      "--prompt=ep1_s1_st3\r\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\r\n时长：8秒\r\n比例：16:9\r\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\r\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\r\n人物：\r\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\r\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\r\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\r\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\r\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\r\n走位：Riley 由南向北走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步继续往北走出画面。工人在门洞西墙边的脚手架上。\r\n动作：0–3秒 镜头在她身后约两米平稳向前跟：Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 镜头继续跟：她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 镜头停住，她成腰以上中景：她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\r\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（北）是被晨光照亮的街，形成明亮的出口；自然光。\r\n台词：\r\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\r\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\r\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\r\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\r\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\r\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。",
+      "--duration=8",
+      "--ratio=16:9",
+      "--video_resolution=480p",
+      "--model_version=seedance2.5",
+      "--poll=0"
+    ],
+    "files": [
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\01_image1.jpg",
+        "exists": true,
+        "bytes": 56562,
+        "sha256": "ffd320b5c45a370b7a0b1320fe35c81f11d998b46d8efc9e1835442b84533a86"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\02_image2.jpg",
+        "exists": true,
+        "bytes": 43143,
+        "sha256": "55357956d88ce9957de4db9ab99ed947c5b60b6ec892526fab7b7572d07f01d4"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\03_image3.jpg",
+        "exists": true,
+        "bytes": 378490,
+        "sha256": "a262ee7151cd03079a1ff2f0076e708eaf04844207ac0b9afb258dcda9a1bc40"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\04_audio1.mp3",
+        "exists": true,
+        "bytes": 78510,
+        "sha256": "917c85230bcc7c49b6de69c55e66c8e34019cd33ee7124b792dcf7e425dea3b6"
+      }
+    ],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:40:09.961+00:00 — dreamina / multimodal2video — result
+
+```json
+{
+  "request_id": "aa12a9d6a0784f1dadb2414ad77f74cf",
+  "provider": "dreamina",
+  "operation": "multimodal2video",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 53876,
+  "request_fingerprint": "3e57ac134a7bf2c7dfa1ee8453b069fcbcbe236ee9babc2b5646c86f6e2f5783",
+  "time": "2026-11-06T15:40:09.961+00:00",
+  "event": "result",
+  "elapsed_s": 33.203,
+  "response": {
+    "returncode": 0,
+    "stdout": "{\n  \"submit_id\": \"303a634b-e307-4c14-8dac-37c42079cfb4\",\n  \"prompt\": \"ep1_s1_st3\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\\r\\n时长：8秒\\r\\n比例：16:9\\r\\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\\r\\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\\r\\n人物：\\r\\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\\r\\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\\r\\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\\r\\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\\r\\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\\r\\n走位：Riley 由南向北走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步继续往北走出画面。工人在门洞西墙边的脚手架上。\\r\\n动作：0–3秒 镜头在她身后约两米平稳向前跟：Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 镜头继续跟：她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 镜头停住，她成腰以上中景：她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\\r\\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（北）是被晨光照亮的街，形成明亮的出口；自然光。\\r\\n台词：\\r\\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\\r\\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\\r\\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\\r\\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\\r\\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\",\n  \"logid\": \"202611062339371980192552530437802\",\n  \"gen_status\": \"querying\",\n  \"credit_count\": 96,\n  \"estimated_remaining_seconds\": 389\n}\n",
+    "stderr": ""
+  }
+}
+```
+
+## 2026-11-06T15:40:10.522+00:00 — dreamina / multimodal2video — request
+
+```json
+{
+  "request_id": "8d2aa9ef8fe14603a17f2a19c6b2a264",
+  "provider": "dreamina",
+  "operation": "multimodal2video",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 68500,
+  "request_fingerprint": "8b35d93587850ac1460477db0967f2bb0c147da69572aba337a8bc0fc4cfcbdf",
+  "time": "2026-11-06T15:40:10.522+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "multimodal2video",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\01_image1.jpg",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\02_image2.jpg",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\03_image3.jpg",
+      "--audio",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\04_audio1.mp3",
+      "--prompt=ep1_s1_st3\r\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\r\n时长：8秒\r\n比例：16:9\r\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\r\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\r\n人物：\r\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\r\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\r\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\r\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\r\n走位：Riley 背对镜头、朝画面深处走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步，继续朝画面深处走，从门洞远端的亮口走出画面。工人在门洞里画面左侧墙边的脚手架上。\r\n动作：0–3秒 Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\r\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\r\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（画面深处）是被晨光照亮的街，形成明亮的出口；自然光。\r\n台词：\r\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\r\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\r\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\r\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\r\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\r\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。",
+      "--duration=8",
+      "--ratio=16:9",
+      "--video_resolution=480p",
+      "--model_version=seedance2.5",
+      "--poll=0"
+    ],
+    "files": [
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\01_image1.jpg",
+        "exists": true,
+        "bytes": 56562,
+        "sha256": "ffd320b5c45a370b7a0b1320fe35c81f11d998b46d8efc9e1835442b84533a86"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\02_image2.jpg",
+        "exists": true,
+        "bytes": 43143,
+        "sha256": "55357956d88ce9957de4db9ab99ed947c5b60b6ec892526fab7b7572d07f01d4"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\03_image3.jpg",
+        "exists": true,
+        "bytes": 378490,
+        "sha256": "a262ee7151cd03079a1ff2f0076e708eaf04844207ac0b9afb258dcda9a1bc40"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\04_audio1.mp3",
+        "exists": true,
+        "bytes": 78510,
+        "sha256": "917c85230bcc7c49b6de69c55e66c8e34019cd33ee7124b792dcf7e425dea3b6"
+      }
+    ],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:40:46.083+00:00 — dreamina / multimodal2video — result
+
+```json
+{
+  "request_id": "8d2aa9ef8fe14603a17f2a19c6b2a264",
+  "provider": "dreamina",
+  "operation": "multimodal2video",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 68500,
+  "request_fingerprint": "8b35d93587850ac1460477db0967f2bb0c147da69572aba337a8bc0fc4cfcbdf",
+  "time": "2026-11-06T15:40:46.083+00:00",
+  "event": "result",
+  "elapsed_s": 35.515,
+  "response": {
+    "returncode": 0,
+    "stdout": "{\n  \"submit_id\": \"0875dd75-9c0b-41e3-921d-4518c4db5a93\",\n  \"prompt\": \"ep1_s1_st3\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\\r\\n时长：8秒\\r\\n比例：16:9\\r\\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\\r\\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\\r\\n人物：\\r\\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\\r\\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\\r\\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\\r\\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\\r\\n走位：Riley 背对镜头、朝画面深处走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步，继续朝画面深处走，从门洞远端的亮口走出画面。工人在门洞里画面左侧墙边的脚手架上。\\r\\n动作：0–3秒 Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\\r\\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\\r\\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（画面深处）是被晨光照亮的街，形成明亮的出口；自然光。\\r\\n台词：\\r\\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\\r\\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\\r\\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\\r\\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\\r\\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\",\n  \"logid\": \"20261106234010198019255253848A10E\",\n  \"gen_status\": \"querying\",\n  \"credit_count\": 96,\n  \"estimated_remaining_seconds\": 434\n}\n",
+    "stderr": ""
+  }
+}
+```
+
+## 2026-11-06T15:40:46.510+00:00 — dreamina / multimodal2video — request
+
+```json
+{
+  "request_id": "2c5f7a1f7467497da4e7b10a74b6d788",
+  "provider": "dreamina",
+  "operation": "multimodal2video",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 88692,
+  "request_fingerprint": "e526d66eb78f80ba48c7188916f5ad9045a428922e3acc8bc12cf49a2aa33a8d",
+  "time": "2026-11-06T15:40:46.510+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "multimodal2video",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\01_image1.jpg",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\02_image2.jpg",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\03_image3.jpg",
+      "--audio",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\04_audio1.mp3",
+      "--prompt=ep1_s1_st3\r\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\r\n时长：8秒\r\n比例：16:9\r\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\r\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\r\n人物：\r\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\r\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\r\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\r\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\r\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\r\n走位：Riley 背对镜头、朝画面深处走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步，继续朝画面深处走，从门洞远端的亮口走出画面。工人在门洞里画面左侧墙边的脚手架上。\r\n动作：0–3秒 镜头在她身后约两米平稳向前跟：Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 镜头继续跟：她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 镜头停住，她成腰以上中景：她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\r\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（画面深处）是被晨光照亮的街，形成明亮的出口；自然光。\r\n台词：\r\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\r\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\r\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\r\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\r\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\r\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。",
+      "--duration=8",
+      "--ratio=16:9",
+      "--video_resolution=480p",
+      "--model_version=seedance2.5",
+      "--poll=0"
+    ],
+    "files": [
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\01_image1.jpg",
+        "exists": true,
+        "bytes": 56562,
+        "sha256": "ffd320b5c45a370b7a0b1320fe35c81f11d998b46d8efc9e1835442b84533a86"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\02_image2.jpg",
+        "exists": true,
+        "bytes": 43143,
+        "sha256": "55357956d88ce9957de4db9ab99ed947c5b60b6ec892526fab7b7572d07f01d4"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\03_image3.jpg",
+        "exists": true,
+        "bytes": 378490,
+        "sha256": "a262ee7151cd03079a1ff2f0076e708eaf04844207ac0b9afb258dcda9a1bc40"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\04_audio1.mp3",
+        "exists": true,
+        "bytes": 78510,
+        "sha256": "917c85230bcc7c49b6de69c55e66c8e34019cd33ee7124b792dcf7e425dea3b6"
+      }
+    ],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:41:19.693+00:00 — dreamina / multimodal2video — result
+
+```json
+{
+  "request_id": "2c5f7a1f7467497da4e7b10a74b6d788",
+  "provider": "dreamina",
+  "operation": "multimodal2video",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 88692,
+  "request_fingerprint": "e526d66eb78f80ba48c7188916f5ad9045a428922e3acc8bc12cf49a2aa33a8d",
+  "time": "2026-11-06T15:41:19.693+00:00",
+  "event": "result",
+  "elapsed_s": 33.141,
+  "response": {
+    "returncode": 0,
+    "stdout": "{\n  \"submit_id\": \"6b9d04e1-6214-414b-a3e7-44f1a4984eab\",\n  \"prompt\": \"ep1_s1_st3\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\\r\\n时长：8秒\\r\\n比例：16:9\\r\\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\\r\\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\\r\\n人物：\\r\\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\\r\\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\\r\\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\\r\\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\\r\\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\\r\\n走位：Riley 背对镜头、朝画面深处走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步，继续朝画面深处走，从门洞远端的亮口走出画面。工人在门洞里画面左侧墙边的脚手架上。\\r\\n动作：0–3秒 镜头在她身后约两米平稳向前跟：Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 镜头继续跟：她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 镜头停住，她成腰以上中景：她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\\r\\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（画面深处）是被晨光照亮的街，形成明亮的出口；自然光。\\r\\n台词：\\r\\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\\r\\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\\r\\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\\r\\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\\r\\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\",\n  \"logid\": \"202611062340461980192552538358A24\",\n  \"gen_status\": \"querying\",\n  \"credit_count\": 96,\n  \"estimated_remaining_seconds\": 398\n}\n",
+    "stderr": ""
+  }
+}
+```
+
+## 2026-11-06T15:41:20.129+00:00 — dreamina / multimodal2video — request
+
+```json
+{
+  "request_id": "cfb6aee277fc4b0fa0519e4faa8f7073",
+  "provider": "dreamina",
+  "operation": "multimodal2video",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 56156,
+  "request_fingerprint": "d046b9f1ef3d9160c4d7f9c77333059c4b006f6505965f63f7301d7f3e6c082e",
+  "time": "2026-11-06T15:41:20.129+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "multimodal2video",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\01_image1.jpg",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\02_image2.jpg",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\03_image3.jpg",
+      "--audio",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\04_audio1.mp3",
+      "--prompt=ep1_s1_st3\r\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\r\n时长：8秒\r\n比例：16:9\r\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\r\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\r\n人物：\r\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\r\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\r\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\r\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\r\n走位：Riley 由南向北走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步继续往北走出画面。工人在门洞西墙边的脚手架上。\r\n动作：0–3秒 Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\r\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\r\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（北）是被晨光照亮的街，形成明亮的出口；自然光。\r\n台词：\r\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\r\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\r\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\r\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\r\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\r\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。",
+      "--duration=8",
+      "--ratio=16:9",
+      "--video_resolution=480p",
+      "--model_version=seedance2.5",
+      "--poll=0"
+    ],
+    "files": [
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\01_image1.jpg",
+        "exists": true,
+        "bytes": 56562,
+        "sha256": "ffd320b5c45a370b7a0b1320fe35c81f11d998b46d8efc9e1835442b84533a86"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\02_image2.jpg",
+        "exists": true,
+        "bytes": 43143,
+        "sha256": "55357956d88ce9957de4db9ab99ed947c5b60b6ec892526fab7b7572d07f01d4"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\03_image3.jpg",
+        "exists": true,
+        "bytes": 378490,
+        "sha256": "a262ee7151cd03079a1ff2f0076e708eaf04844207ac0b9afb258dcda9a1bc40"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\04_audio1.mp3",
+        "exists": true,
+        "bytes": 78510,
+        "sha256": "917c85230bcc7c49b6de69c55e66c8e34019cd33ee7124b792dcf7e425dea3b6"
+      }
+    ],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:42:33.714+00:00 — dreamina / multimodal2video — result
+
+```json
+{
+  "request_id": "cfb6aee277fc4b0fa0519e4faa8f7073",
+  "provider": "dreamina",
+  "operation": "multimodal2video",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 56156,
+  "request_fingerprint": "d046b9f1ef3d9160c4d7f9c77333059c4b006f6505965f63f7301d7f3e6c082e",
+  "time": "2026-11-06T15:42:33.714+00:00",
+  "event": "result",
+  "elapsed_s": 73.531,
+  "response": {
+    "returncode": 0,
+    "stdout": "{\n  \"submit_id\": \"0d23fdde-a0c7-45c2-858b-4c93dbd7b38a\",\n  \"prompt\": \"ep1_s1_st3\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\\r\\n时长：8秒\\r\\n比例：16:9\\r\\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\\r\\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\\r\\n人物：\\r\\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\\r\\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\\r\\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\\r\\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\\r\\n走位：Riley 由南向北走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步继续往北走出画面。工人在门洞西墙边的脚手架上。\\r\\n动作：0–3秒 Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\\r\\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\\r\\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（北）是被晨光照亮的街，形成明亮的出口；自然光。\\r\\n台词：\\r\\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\\r\\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\\r\\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\\r\\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\\r\\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\",\n  \"logid\": \"202611062341201980192552534540323\",\n  \"gen_status\": \"querying\",\n  \"credit_count\": 96,\n  \"estimated_remaining_seconds\": 505\n}\n",
+    "stderr": ""
+  }
+}
+```
+
+## 2026-11-06T15:42:34.218+00:00 — dreamina / multimodal2video — request
+
+```json
+{
+  "request_id": "ad8c0430ae1a49de87c4a2b7ab5e89b9",
+  "provider": "dreamina",
+  "operation": "multimodal2video",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 7016,
+  "request_fingerprint": "3e57ac134a7bf2c7dfa1ee8453b069fcbcbe236ee9babc2b5646c86f6e2f5783",
+  "time": "2026-11-06T15:42:34.218+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "multimodal2video",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\01_image1.jpg",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\02_image2.jpg",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\03_image3.jpg",
+      "--audio",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\04_audio1.mp3",
+      "--prompt=ep1_s1_st3\r\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\r\n时长：8秒\r\n比例：16:9\r\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\r\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\r\n人物：\r\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\r\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\r\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\r\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\r\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\r\n走位：Riley 由南向北走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步继续往北走出画面。工人在门洞西墙边的脚手架上。\r\n动作：0–3秒 镜头在她身后约两米平稳向前跟：Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 镜头继续跟：她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 镜头停住，她成腰以上中景：她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\r\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（北）是被晨光照亮的街，形成明亮的出口；自然光。\r\n台词：\r\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\r\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\r\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\r\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\r\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\r\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。",
+      "--duration=8",
+      "--ratio=16:9",
+      "--video_resolution=480p",
+      "--model_version=seedance2.5",
+      "--poll=0"
+    ],
+    "files": [
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\01_image1.jpg",
+        "exists": true,
+        "bytes": 56562,
+        "sha256": "ffd320b5c45a370b7a0b1320fe35c81f11d998b46d8efc9e1835442b84533a86"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\02_image2.jpg",
+        "exists": true,
+        "bytes": 43143,
+        "sha256": "55357956d88ce9957de4db9ab99ed947c5b60b6ec892526fab7b7572d07f01d4"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\03_image3.jpg",
+        "exists": true,
+        "bytes": 378490,
+        "sha256": "a262ee7151cd03079a1ff2f0076e708eaf04844207ac0b9afb258dcda9a1bc40"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\04_audio1.mp3",
+        "exists": true,
+        "bytes": 78510,
+        "sha256": "917c85230bcc7c49b6de69c55e66c8e34019cd33ee7124b792dcf7e425dea3b6"
+      }
+    ],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:42:59.863+00:00 — dreamina / multimodal2video — result
+
+```json
+{
+  "request_id": "ad8c0430ae1a49de87c4a2b7ab5e89b9",
+  "provider": "dreamina",
+  "operation": "multimodal2video",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 7016,
+  "request_fingerprint": "3e57ac134a7bf2c7dfa1ee8453b069fcbcbe236ee9babc2b5646c86f6e2f5783",
+  "time": "2026-11-06T15:42:59.863+00:00",
+  "event": "result",
+  "elapsed_s": 25.61,
+  "response": {
+    "returncode": 0,
+    "stdout": "{\n  \"submit_id\": \"b82cca56-20bc-4d27-bc09-123dd54fcb6c\",\n  \"prompt\": \"ep1_s1_st3\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\\r\\n时长：8秒\\r\\n比例：16:9\\r\\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\\r\\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\\r\\n人物：\\r\\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\\r\\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\\r\\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\\r\\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\\r\\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\\r\\n走位：Riley 由南向北走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步继续往北走出画面。工人在门洞西墙边的脚手架上。\\r\\n动作：0–3秒 镜头在她身后约两米平稳向前跟：Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 镜头继续跟：她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 镜头停住，她成腰以上中景：她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\\r\\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（北）是被晨光照亮的街，形成明亮的出口；自然光。\\r\\n台词：\\r\\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\\r\\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\\r\\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\\r\\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\\r\\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\",\n  \"logid\": \"20261106234234198019255253532D165\",\n  \"gen_status\": \"querying\",\n  \"credit_count\": 96,\n  \"estimated_remaining_seconds\": 491\n}\n",
+    "stderr": ""
+  }
+}
+```
+
+## 2026-11-06T15:43:00.281+00:00 — dreamina / multimodal2video — request
+
+```json
+{
+  "request_id": "533cc6bda9b74415b011157f66e2a276",
+  "provider": "dreamina",
+  "operation": "multimodal2video",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 11192,
+  "request_fingerprint": "8b35d93587850ac1460477db0967f2bb0c147da69572aba337a8bc0fc4cfcbdf",
+  "time": "2026-11-06T15:43:00.281+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "multimodal2video",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\01_image1.jpg",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\02_image2.jpg",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\03_image3.jpg",
+      "--audio",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\04_audio1.mp3",
+      "--prompt=ep1_s1_st3\r\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\r\n时长：8秒\r\n比例：16:9\r\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\r\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\r\n人物：\r\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\r\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\r\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\r\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\r\n走位：Riley 背对镜头、朝画面深处走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步，继续朝画面深处走，从门洞远端的亮口走出画面。工人在门洞里画面左侧墙边的脚手架上。\r\n动作：0–3秒 Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\r\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\r\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（画面深处）是被晨光照亮的街，形成明亮的出口；自然光。\r\n台词：\r\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\r\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\r\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\r\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\r\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\r\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。",
+      "--duration=8",
+      "--ratio=16:9",
+      "--video_resolution=480p",
+      "--model_version=seedance2.5",
+      "--poll=0"
+    ],
+    "files": [
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\01_image1.jpg",
+        "exists": true,
+        "bytes": 56562,
+        "sha256": "ffd320b5c45a370b7a0b1320fe35c81f11d998b46d8efc9e1835442b84533a86"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\02_image2.jpg",
+        "exists": true,
+        "bytes": 43143,
+        "sha256": "55357956d88ce9957de4db9ab99ed947c5b60b6ec892526fab7b7572d07f01d4"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\03_image3.jpg",
+        "exists": true,
+        "bytes": 378490,
+        "sha256": "a262ee7151cd03079a1ff2f0076e708eaf04844207ac0b9afb258dcda9a1bc40"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\04_audio1.mp3",
+        "exists": true,
+        "bytes": 78510,
+        "sha256": "917c85230bcc7c49b6de69c55e66c8e34019cd33ee7124b792dcf7e425dea3b6"
+      }
+    ],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:43:30.216+00:00 — dreamina / multimodal2video — result
+
+```json
+{
+  "request_id": "533cc6bda9b74415b011157f66e2a276",
+  "provider": "dreamina",
+  "operation": "multimodal2video",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 11192,
+  "request_fingerprint": "8b35d93587850ac1460477db0967f2bb0c147da69572aba337a8bc0fc4cfcbdf",
+  "time": "2026-11-06T15:43:30.216+00:00",
+  "event": "result",
+  "elapsed_s": 29.906,
+  "response": {
+    "returncode": 0,
+    "stdout": "{\n  \"submit_id\": \"bd8596de-d5b8-4b09-878a-7b32e31c4f04\",\n  \"prompt\": \"ep1_s1_st3\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\\r\\n时长：8秒\\r\\n比例：16:9\\r\\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\\r\\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\\r\\n人物：\\r\\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\\r\\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\\r\\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\\r\\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\\r\\n走位：Riley 背对镜头、朝画面深处走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步，继续朝画面深处走，从门洞远端的亮口走出画面。工人在门洞里画面左侧墙边的脚手架上。\\r\\n动作：0–3秒 Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\\r\\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\\r\\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（画面深处）是被晨光照亮的街，形成明亮的出口；自然光。\\r\\n台词：\\r\\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\\r\\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\\r\\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\\r\\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\\r\\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\",\n  \"logid\": \"20261106234300198019255253592758C\",\n  \"gen_status\": \"querying\",\n  \"credit_count\": 96,\n  \"estimated_remaining_seconds\": 462\n}\n",
+    "stderr": ""
+  }
+}
+```
+
+## 2026-11-06T15:43:30.702+00:00 — dreamina / multimodal2video — request
+
+```json
+{
+  "request_id": "9ea4974dc02347ccbf07631da89d55cf",
+  "provider": "dreamina",
+  "operation": "multimodal2video",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 23592,
+  "request_fingerprint": "e526d66eb78f80ba48c7188916f5ad9045a428922e3acc8bc12cf49a2aa33a8d",
+  "time": "2026-11-06T15:43:30.702+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "multimodal2video",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\01_image1.jpg",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\02_image2.jpg",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\03_image3.jpg",
+      "--audio",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\04_audio1.mp3",
+      "--prompt=ep1_s1_st3\r\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\r\n时长：8秒\r\n比例：16:9\r\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\r\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\r\n人物：\r\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\r\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\r\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\r\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\r\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\r\n走位：Riley 背对镜头、朝画面深处走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步，继续朝画面深处走，从门洞远端的亮口走出画面。工人在门洞里画面左侧墙边的脚手架上。\r\n动作：0–3秒 镜头在她身后约两米平稳向前跟：Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 镜头继续跟：她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 镜头停住，她成腰以上中景：她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\r\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（画面深处）是被晨光照亮的街，形成明亮的出口；自然光。\r\n台词：\r\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\r\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\r\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\r\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\r\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\r\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。",
+      "--duration=8",
+      "--ratio=16:9",
+      "--video_resolution=480p",
+      "--model_version=seedance2.5",
+      "--poll=0"
+    ],
+    "files": [
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\01_image1.jpg",
+        "exists": true,
+        "bytes": 56562,
+        "sha256": "ffd320b5c45a370b7a0b1320fe35c81f11d998b46d8efc9e1835442b84533a86"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\02_image2.jpg",
+        "exists": true,
+        "bytes": 43143,
+        "sha256": "55357956d88ce9957de4db9ab99ed947c5b60b6ec892526fab7b7572d07f01d4"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\03_image3.jpg",
+        "exists": true,
+        "bytes": 378490,
+        "sha256": "a262ee7151cd03079a1ff2f0076e708eaf04844207ac0b9afb258dcda9a1bc40"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\04_audio1.mp3",
+        "exists": true,
+        "bytes": 78510,
+        "sha256": "917c85230bcc7c49b6de69c55e66c8e34019cd33ee7124b792dcf7e425dea3b6"
+      }
+    ],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:44:00.262+00:00 — dreamina / multimodal2video — result
+
+```json
+{
+  "request_id": "9ea4974dc02347ccbf07631da89d55cf",
+  "provider": "dreamina",
+  "operation": "multimodal2video",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 23592,
+  "request_fingerprint": "e526d66eb78f80ba48c7188916f5ad9045a428922e3acc8bc12cf49a2aa33a8d",
+  "time": "2026-11-06T15:44:00.262+00:00",
+  "event": "result",
+  "elapsed_s": 29.531,
+  "response": {
+    "returncode": 0,
+    "stdout": "{\n  \"submit_id\": \"8af07242-3a0e-4389-9797-d06091167511\",\n  \"prompt\": \"ep1_s1_st3\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\\r\\n时长：8秒\\r\\n比例：16:9\\r\\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\\r\\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\\r\\n人物：\\r\\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\\r\\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\\r\\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\\r\\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\\r\\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\\r\\n走位：Riley 背对镜头、朝画面深处走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步，继续朝画面深处走，从门洞远端的亮口走出画面。工人在门洞里画面左侧墙边的脚手架上。\\r\\n动作：0–3秒 镜头在她身后约两米平稳向前跟：Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 镜头继续跟：她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 镜头停住，她成腰以上中景：她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\\r\\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（画面深处）是被晨光照亮的街，形成明亮的出口；自然光。\\r\\n台词：\\r\\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\\r\\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\\r\\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\\r\\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\\r\\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\",\n  \"gen_status\": \"fail\",\n  \"fail_reason\": \"upload resource \\\"C:\\\\\\\\workspace\\\\\\\\micro-drama-platform\\\\\\\\ai_videos\\\\\\\\_research\\\\\\\\service_tests\\\\\\\\seedance_order_ab_20261106\\\\\\\\refs\\\\\\\\03_image3.jpg\\\": upload image: commit phase, commit byte, CommitImageUpload: do request, context deadline exceeded\"\n}\n",
+    "stderr": ""
+  }
+}
+```
+
+## 2026-11-06T15:44:12.726+00:00 — dreamina / multimodal2video — request
+
+```json
+{
+  "request_id": "6f8505ab2e984812927a6ba810101c52",
+  "provider": "dreamina",
+  "operation": "multimodal2video",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 83416,
+  "request_fingerprint": "e526d66eb78f80ba48c7188916f5ad9045a428922e3acc8bc12cf49a2aa33a8d",
+  "time": "2026-11-06T15:44:12.726+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "multimodal2video",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\01_image1.jpg",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\02_image2.jpg",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\03_image3.jpg",
+      "--audio",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\04_audio1.mp3",
+      "--prompt=ep1_s1_st3\r\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\r\n时长：8秒\r\n比例：16:9\r\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\r\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\r\n人物：\r\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\r\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\r\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\r\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\r\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\r\n走位：Riley 背对镜头、朝画面深处走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步，继续朝画面深处走，从门洞远端的亮口走出画面。工人在门洞里画面左侧墙边的脚手架上。\r\n动作：0–3秒 镜头在她身后约两米平稳向前跟：Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 镜头继续跟：她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 镜头停住，她成腰以上中景：她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\r\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（画面深处）是被晨光照亮的街，形成明亮的出口；自然光。\r\n台词：\r\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\r\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\r\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\r\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\r\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\r\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。",
+      "--duration=8",
+      "--ratio=16:9",
+      "--video_resolution=480p",
+      "--model_version=seedance2.5",
+      "--poll=0"
+    ],
+    "files": [
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\01_image1.jpg",
+        "exists": true,
+        "bytes": 56562,
+        "sha256": "ffd320b5c45a370b7a0b1320fe35c81f11d998b46d8efc9e1835442b84533a86"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\02_image2.jpg",
+        "exists": true,
+        "bytes": 43143,
+        "sha256": "55357956d88ce9957de4db9ab99ed947c5b60b6ec892526fab7b7572d07f01d4"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\03_image3.jpg",
+        "exists": true,
+        "bytes": 378490,
+        "sha256": "a262ee7151cd03079a1ff2f0076e708eaf04844207ac0b9afb258dcda9a1bc40"
+      },
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\refs\\04_audio1.mp3",
+        "exists": true,
+        "bytes": 78510,
+        "sha256": "917c85230bcc7c49b6de69c55e66c8e34019cd33ee7124b792dcf7e425dea3b6"
+      }
+    ],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:44:44.914+00:00 — dreamina / multimodal2video — result
+
+```json
+{
+  "request_id": "6f8505ab2e984812927a6ba810101c52",
+  "provider": "dreamina",
+  "operation": "multimodal2video",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 83416,
+  "request_fingerprint": "e526d66eb78f80ba48c7188916f5ad9045a428922e3acc8bc12cf49a2aa33a8d",
+  "time": "2026-11-06T15:44:44.914+00:00",
+  "event": "result",
+  "elapsed_s": 32.156,
+  "response": {
+    "returncode": 0,
+    "stdout": "{\n  \"submit_id\": \"cc5c038e-e3ce-4b63-aba0-9b3696b2ed67\",\n  \"prompt\": \"ep1_s1_st3\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\\r\\n时长：8秒\\r\\n比例：16:9\\r\\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\\r\\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\\r\\n人物：\\r\\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\\r\\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\\r\\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\\r\\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\\r\\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\\r\\n走位：Riley 背对镜头、朝画面深处走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步，继续朝画面深处走，从门洞远端的亮口走出画面。工人在门洞里画面左侧墙边的脚手架上。\\r\\n动作：0–3秒 镜头在她身后约两米平稳向前跟：Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 镜头继续跟：她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 镜头停住，她成腰以上中景：她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\\r\\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（画面深处）是被晨光照亮的街，形成明亮的出口；自然光。\\r\\n台词：\\r\\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\\r\\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\\r\\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\\r\\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\\r\\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\",\n  \"logid\": \"20261106234413198019255253055BA7C\",\n  \"gen_status\": \"querying\",\n  \"credit_count\": 96,\n  \"estimated_remaining_seconds\": 550\n}\n",
+    "stderr": ""
+  }
+}
+```
+
+## 2026-11-06T15:45:10.769+00:00 — dreamina / query_result — request
+
+```json
+{
+  "request_id": "7355391211ba46218726c3d151339646",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 29464,
+  "request_fingerprint": "e826aa527023a6f8574c05d7a600dc0f0e05e6128049d37f321c1970ad7a86ea",
+  "time": "2026-11-06T15:45:10.769+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "query_result",
+      "--submit_id=f2129ef1-4dc0-4b85-b07e-a28d714f5d35",
+      "--download_dir=C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\A_v12\\t1"
+    ],
+    "files": [],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:45:34.900+00:00 — dreamina / query_result — result
+
+```json
+{
+  "request_id": "7355391211ba46218726c3d151339646",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 29464,
+  "request_fingerprint": "e826aa527023a6f8574c05d7a600dc0f0e05e6128049d37f321c1970ad7a86ea",
+  "time": "2026-11-06T15:45:34.900+00:00",
+  "event": "result",
+  "elapsed_s": 24.094,
+  "response": {
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "download video 1 URL: https://v26-artist.vlabvod.com/dcf6a8ddb1067b83c1d9f15007ff1c6a/6aee042d/video/tos/cn/tos-cn-v-148450/o8UtDVID23b2O9P3BkEGffVRHK7AHaI1QvECMf/?a=4066&ch=0&cr=0&dr=0&er=0&cd=0%7C0%7C0%7C0&br=8234&bt=8234&cs=0&ds=12&ft=5QYTUxhhe6BMyqIPBieJD12Nzj&mime_type=video_mp4&qs=0&rc=aDpkPDU1M2Q0Omk3ZDg5NUBpM3lvdWlvOmt5ZTczNDM7M0A0XjA1MTNfNi0xYF4zNGA0YSMzY2BkYWFuXmphLS1kNC9zcw%3D%3D&btag=80000e00008000&dy_q=1793979925&feature_id=04b16e464b574158bb99cac30ccb1f5e&l=202611062345111980192552530889CEE\ndownload video 1: do request: Get \"https://v26-artist.vlabvod.com/dcf6a8ddb1067b83c1d9f15007ff1c6a/6aee042d/video/tos/cn/tos-cn-v-148450/o8UtDVID23b2O9P3BkEGffVRHK7AHaI1QvECMf/?a=4066&ch=0&cr=0&dr=0&er=0&cd=0%7C0%7C0%7C0&br=8234&bt=8234&cs=0&ds=12&ft=5QYTUxhhe6BMyqIPBieJD12Nzj&mime_type=video_mp4&qs=0&rc=aDpkPDU1M2Q0Omk3ZDg5NUBpM3lvdWlvOmt5ZTczNDM7M0A0XjA1MTNfNi0xYF4zNGA0YSMzY2BkYWFuXmphLS1kNC9zcw%3D%3D&btag=80000e00008000&dy_q=1793979925&feature_id=04b16e464b574158bb99cac30ccb1f5e&l=202611062345111980192552530889CEE\": net/http: TLS handshake timeout\n"
+  }
+}
+```
+
+## 2026-11-06T15:45:35.196+00:00 — dreamina / query_result — request
+
+```json
+{
+  "request_id": "908cfcc2b7d841729a9a028c75b26555",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 46512,
+  "request_fingerprint": "9408028e6cb957d20f5c99cb25a74489a0ea57853c88384671d8c15c05b136de",
+  "time": "2026-11-06T15:45:35.196+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "query_result",
+      "--submit_id=0d23fdde-a0c7-45c2-858b-4c93dbd7b38a",
+      "--download_dir=C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\A_v12\\t2"
+    ],
+    "files": [],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:46:04.745+00:00 — dreamina / query_result — result
+
+```json
+{
+  "request_id": "908cfcc2b7d841729a9a028c75b26555",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 46512,
+  "request_fingerprint": "9408028e6cb957d20f5c99cb25a74489a0ea57853c88384671d8c15c05b136de",
+  "time": "2026-11-06T15:46:04.745+00:00",
+  "event": "result",
+  "elapsed_s": 29.5,
+  "response": {
+    "returncode": 0,
+    "stdout": "{\n  \"submit_id\": \"0d23fdde-a0c7-45c2-858b-4c93dbd7b38a\",\n  \"prompt\": \"ep1_s1_st3\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\\r\\n时长：8秒\\r\\n比例：16:9\\r\\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\\r\\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\\r\\n人物：\\r\\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\\r\\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\\r\\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\\r\\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\\r\\n走位：Riley 由南向北走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步继续往北走出画面。工人在门洞西墙边的脚手架上。\\r\\n动作：0–3秒 Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\\r\\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\\r\\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（北）是被晨光照亮的街，形成明亮的出口；自然光。\\r\\n台词：\\r\\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\\r\\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\\r\\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\\r\\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\\r\\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\",\n  \"gen_status\": \"success\",\n  \"result_json\": {\n    \"images\": [],\n    \"videos\": [\n      {\n        \"path\": \"C:\\\\workspace\\\\micro-drama-platform\\\\ai_videos\\\\_research\\\\service_tests\\\\seedance_order_ab_20261106\\\\A_v12\\\\t2\\\\0d23fdde-a0c7-45c2-858b-4c93dbd7b38a_video_1.mp4\",\n        \"fps\": 24,\n        \"width\": 854,\n        \"height\": 480,\n        \"format\": \"mp4\",\n        \"duration\": 8.042\n      }\n    ]\n  },\n  \"credit_count\": 96,\n  \"queue_info\": {\n    \"queue_idx\": 0,\n    \"priority\": 7,\n    \"queue_status\": \"Finish\",\n    \"queue_length\": 0,\n    \"debug_info\": \"{\\\"have_no_dreamina_queue_name\\\":false,\\\"dreamina_matrix_queue_name\\\":\\\"dreamina_fusion_video45_pro\\\",\\\"dreamina_matrix_req_key\\\":\\\"DreaminaFusion:Video45_unified_edit\\\",\\\"dreamina_matrix_second_req_key\\\":\\\"\\\",\\\"have_no_queue_name\\\":true,\\\"queue_name\\\":\\\"\\\",\\\"matrix_req_key\\\":\\\"\\\",\\\"matrix_second_req_key\\\":\\\"\\\"}\"\n  }\n}\n",
+    "stderr": "download video 1 URL: https://v6-artist.vlabvod.com/45d1acd1dc05646c06b8aae243eaed82/6aee0446/video/tos/cn/tos-cn-v-148450/oYnuhTEWFIOQahk7hqQy3WXFIgSxtEw2EtEd9/?a=4066&ch=0&cr=0&dr=0&er=0&cd=0%7C0%7C0%7C0&br=6019&bt=6019&cs=0&ds=12&ft=5QYTUxhhe6BMyq6PBieJD12Nzj&mime_type=video_mp4&qs=0&rc=ZjM3NWhoPGk2aTdkaGlpZ0BpM3BqdDRvOjd5ZTczNDM7M0AzLi5gXzVgXzAxXl9iYTAyYSNtXmhsYWEvYGphLS1kNC9zcw%3D%3D&btag=80000e00008000&dy_q=1793979950&feature_id=04b16e464b574158bb99cac30ccb1f5e&l=20261106234536198019255253272B8EC\n"
+  }
+}
+```
+
+## 2026-11-06T15:46:04.977+00:00 — dreamina / query_result — request
+
+```json
+{
+  "request_id": "4e5e4421d359407581239aa2175927ce",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 97852,
+  "request_fingerprint": "77db6899c61ebfbf834571b8a93bdc2077bc21a8a861d109cfdb9c108b59594d",
+  "time": "2026-11-06T15:46:04.977+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "query_result",
+      "--submit_id=0875dd75-9c0b-41e3-921d-4518c4db5a93",
+      "--download_dir=C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\D_camdir\\t1"
+    ],
+    "files": [],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:46:18.493+00:00 — dreamina / query_result — result
+
+```json
+{
+  "request_id": "4e5e4421d359407581239aa2175927ce",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 97852,
+  "request_fingerprint": "77db6899c61ebfbf834571b8a93bdc2077bc21a8a861d109cfdb9c108b59594d",
+  "time": "2026-11-06T15:46:18.493+00:00",
+  "event": "result",
+  "elapsed_s": 13.485,
+  "response": {
+    "returncode": 0,
+    "stdout": "{\n  \"submit_id\": \"0875dd75-9c0b-41e3-921d-4518c4db5a93\",\n  \"prompt\": \"ep1_s1_st3\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\\r\\n时长：8秒\\r\\n比例：16:9\\r\\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\\r\\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\\r\\n人物：\\r\\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\\r\\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\\r\\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\\r\\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\\r\\n走位：Riley 背对镜头、朝画面深处走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步，继续朝画面深处走，从门洞远端的亮口走出画面。工人在门洞里画面左侧墙边的脚手架上。\\r\\n动作：0–3秒 Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\\r\\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\\r\\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（画面深处）是被晨光照亮的街，形成明亮的出口；自然光。\\r\\n台词：\\r\\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\\r\\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\\r\\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\\r\\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\\r\\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\",\n  \"logid\": \"20261106234010198019255253848A10E\",\n  \"gen_status\": \"querying\",\n  \"credit_count\": 96,\n  \"queue_info\": {\n    \"queue_idx\": 0,\n    \"priority\": 7,\n    \"queue_status\": \"Generating\",\n    \"queue_length\": 0,\n    \"debug_info\": \"{\\\"have_no_dreamina_queue_name\\\":false,\\\"dreamina_matrix_queue_name\\\":\\\"dreamina_fusion_video45_pro\\\",\\\"dreamina_matrix_req_key\\\":\\\"DreaminaFusion:Video45_unified_edit\\\",\\\"dreamina_matrix_second_req_key\\\":\\\"\\\",\\\"have_no_queue_name\\\":true,\\\"queue_name\\\":\\\"\\\",\\\"matrix_req_key\\\":\\\"\\\",\\\"matrix_second_req_key\\\":\\\"\\\"}\"\n  },\n  \"estimated_remaining_seconds\": 0\n}\n",
+    "stderr": ""
+  }
+}
+```
+
+## 2026-11-06T15:46:18.726+00:00 — dreamina / query_result — request
+
+```json
+{
+  "request_id": "4c23ab6064b54947a4b534baafcd809d",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 93596,
+  "request_fingerprint": "ea6eb530f2974a377fb5cd04d2d7a224e8753f69af692e68b5fab7484a1ee872",
+  "time": "2026-11-06T15:46:18.726+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "query_result",
+      "--submit_id=bd8596de-d5b8-4b09-878a-7b32e31c4f04",
+      "--download_dir=C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\D_camdir\\t2"
+    ],
+    "files": [],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:46:47.173+00:00 — dreamina / query_result — result
+
+```json
+{
+  "request_id": "4c23ab6064b54947a4b534baafcd809d",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 93596,
+  "request_fingerprint": "ea6eb530f2974a377fb5cd04d2d7a224e8753f69af692e68b5fab7484a1ee872",
+  "time": "2026-11-06T15:46:47.173+00:00",
+  "event": "result",
+  "elapsed_s": 28.437,
+  "response": {
+    "returncode": 0,
+    "stdout": "{\n  \"submit_id\": \"bd8596de-d5b8-4b09-878a-7b32e31c4f04\",\n  \"prompt\": \"ep1_s1_st3\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\\r\\n时长：8秒\\r\\n比例：16:9\\r\\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\\r\\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\\r\\n人物：\\r\\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\\r\\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\\r\\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\\r\\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\\r\\n走位：Riley 背对镜头、朝画面深处走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步，继续朝画面深处走，从门洞远端的亮口走出画面。工人在门洞里画面左侧墙边的脚手架上。\\r\\n动作：0–3秒 Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\\r\\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\\r\\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（画面深处）是被晨光照亮的街，形成明亮的出口；自然光。\\r\\n台词：\\r\\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\\r\\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\\r\\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\\r\\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\\r\\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\",\n  \"gen_status\": \"success\",\n  \"result_json\": {\n    \"images\": [],\n    \"videos\": [\n      {\n        \"path\": \"C:\\\\workspace\\\\micro-drama-platform\\\\ai_videos\\\\_research\\\\service_tests\\\\seedance_order_ab_20261106\\\\D_camdir\\\\t2\\\\bd8596de-d5b8-4b09-878a-7b32e31c4f04_video_1.mp4\",\n        \"fps\": 24,\n        \"width\": 854,\n        \"height\": 480,\n        \"format\": \"mp4\",\n        \"duration\": 8.042\n      }\n    ]\n  },\n  \"credit_count\": 96,\n  \"queue_info\": {\n    \"queue_idx\": 0,\n    \"priority\": 7,\n    \"queue_status\": \"Finish\",\n    \"queue_length\": 0,\n    \"debug_info\": \"{\\\"have_no_dreamina_queue_name\\\":false,\\\"dreamina_matrix_queue_name\\\":\\\"dreamina_fusion_video45_pro\\\",\\\"dreamina_matrix_req_key\\\":\\\"DreaminaFusion:Video45_unified_edit\\\",\\\"dreamina_matrix_second_req_key\\\":\\\"\\\",\\\"have_no_queue_name\\\":true,\\\"queue_name\\\":\\\"\\\",\\\"matrix_req_key\\\":\\\"\\\",\\\"matrix_second_req_key\\\":\\\"\\\"}\"\n  }\n}\n",
+    "stderr": "download video 1 URL: https://v3-artist.vlabvod.com/098fa1f5a1f568f1fed18dd32844dfba/6aee0470/video/tos/cn/tos-cn-v-148450/oE9tOjs7cVgIQEIIYAt1J9naQehWIAJiIvdDKD/?a=4066&ch=0&cr=0&dr=0&er=0&cd=0%7C0%7C0%7C0&br=8580&bt=8580&cs=0&ds=12&ft=5QYTUxhhe6BMyq0EBieJD12Nzj&mime_type=video_mp4&qs=0&rc=ODNoZTRoaTlmaGlnaDg2NkBpM3hqdDRvOjp5ZTczNDM7M0BhYjUtYDExXjMxY2BgYS0zYSNzXmhsYWEvYGphLS1kNC9zcw%3D%3D&btag=80000e00008000&dy_q=1793979992&feature_id=04b16e464b574158bb99cac30ccb1f5e&l=202611062346181980192552539663884\n"
+  }
+}
+```
+
+## 2026-11-06T15:46:47.381+00:00 — dreamina / query_result — request
+
+```json
+{
+  "request_id": "c4299ffbf10b40a8850a59d6b05aae19",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 69360,
+  "request_fingerprint": "8b2e10c5a2a6a4d4725092e4a05f88b7aab959b790d2baa3619d577d66f1ad7f",
+  "time": "2026-11-06T15:46:47.381+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "query_result",
+      "--submit_id=303a634b-e307-4c14-8dac-37c42079cfb4",
+      "--download_dir=C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\O_camfirst\\t1"
+    ],
+    "files": [],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:47:12.748+00:00 — dreamina / query_result — result
+
+```json
+{
+  "request_id": "c4299ffbf10b40a8850a59d6b05aae19",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 69360,
+  "request_fingerprint": "8b2e10c5a2a6a4d4725092e4a05f88b7aab959b790d2baa3619d577d66f1ad7f",
+  "time": "2026-11-06T15:47:12.748+00:00",
+  "event": "result",
+  "elapsed_s": 25.344,
+  "response": {
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "download video 1 URL: https://v26-artist.vlabvod.com/722193747dab2817117928e02ab7b216/6aee048f/video/tos/cn/tos-cn-v-148450/ocE19pgnDxtdXtQd19WqeIoXAIGtEQAgvnQh4J/?a=4066&ch=0&cr=0&dr=0&er=0&cd=0%7C0%7C0%7C0&br=6738&bt=6738&cs=0&ds=12&ft=5QYTUxhhe6BMyqOEBieJD12Nzj&mime_type=video_mp4&qs=0&rc=aWg7aTQ8NDw6ODplOTw3NEBpMzp4ZTNvOnh5ZTczNDM7M0AwXzFgLi1fNTMxLzUyYS8xYSMxZ15wYWEvXmphLS1kNC9zcw%3D%3D&btag=80000e00008000&dy_q=1793980023&feature_id=04b16e464b574158bb99cac30ccb1f5e&l=202611062346471980192552536895A40\ndownload video 1: do request: Get \"https://v26-artist.vlabvod.com/722193747dab2817117928e02ab7b216/6aee048f/video/tos/cn/tos-cn-v-148450/ocE19pgnDxtdXtQd19WqeIoXAIGtEQAgvnQh4J/?a=4066&ch=0&cr=0&dr=0&er=0&cd=0%7C0%7C0%7C0&br=6738&bt=6738&cs=0&ds=12&ft=5QYTUxhhe6BMyqOEBieJD12Nzj&mime_type=video_mp4&qs=0&rc=aWg7aTQ8NDw6ODplOTw3NEBpMzp4ZTNvOnh5ZTczNDM7M0AwXzFgLi1fNTMxLzUyYS8xYSMxZ15wYWEvXmphLS1kNC9zcw%3D%3D&btag=80000e00008000&dy_q=1793980023&feature_id=04b16e464b574158bb99cac30ccb1f5e&l=202611062346471980192552536895A40\": net/http: TLS handshake timeout\n"
+  }
+}
+```
+
+## 2026-11-06T15:47:13.018+00:00 — dreamina / query_result — request
+
+```json
+{
+  "request_id": "df77e425f17d45c389436edd31ef0e6b",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 31344,
+  "request_fingerprint": "574fe684cb7ca5ca0481e5796d673fd30578e381c4af03ad616bfb0db15d6f43",
+  "time": "2026-11-06T15:47:13.018+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "query_result",
+      "--submit_id=b82cca56-20bc-4d27-bc09-123dd54fcb6c",
+      "--download_dir=C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\O_camfirst\\t2"
+    ],
+    "files": [],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:47:41.672+00:00 — dreamina / query_result — result
+
+```json
+{
+  "request_id": "df77e425f17d45c389436edd31ef0e6b",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 31344,
+  "request_fingerprint": "574fe684cb7ca5ca0481e5796d673fd30578e381c4af03ad616bfb0db15d6f43",
+  "time": "2026-11-06T15:47:41.672+00:00",
+  "event": "result",
+  "elapsed_s": 28.625,
+  "response": {
+    "returncode": 0,
+    "stdout": "{\n  \"submit_id\": \"b82cca56-20bc-4d27-bc09-123dd54fcb6c\",\n  \"prompt\": \"ep1_s1_st3\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\\r\\n时长：8秒\\r\\n比例：16:9\\r\\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\\r\\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\\r\\n人物：\\r\\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\\r\\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\\r\\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\\r\\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\\r\\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\\r\\n走位：Riley 由南向北走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步继续往北走出画面。工人在门洞西墙边的脚手架上。\\r\\n动作：0–3秒 镜头在她身后约两米平稳向前跟：Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 镜头继续跟：她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 镜头停住，她成腰以上中景：她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\\r\\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（北）是被晨光照亮的街，形成明亮的出口；自然光。\\r\\n台词：\\r\\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\\r\\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\\r\\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\\r\\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\\r\\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\",\n  \"gen_status\": \"success\",\n  \"result_json\": {\n    \"images\": [],\n    \"videos\": [\n      {\n        \"path\": \"C:\\\\workspace\\\\micro-drama-platform\\\\ai_videos\\\\_research\\\\service_tests\\\\seedance_order_ab_20261106\\\\O_camfirst\\\\t2\\\\b82cca56-20bc-4d27-bc09-123dd54fcb6c_video_1.mp4\",\n        \"fps\": 24,\n        \"width\": 854,\n        \"height\": 480,\n        \"format\": \"mp4\",\n        \"duration\": 8.042\n      }\n    ]\n  },\n  \"credit_count\": 96,\n  \"queue_info\": {\n    \"queue_idx\": 0,\n    \"priority\": 7,\n    \"queue_status\": \"Finish\",\n    \"queue_length\": 0,\n    \"debug_info\": \"{\\\"have_no_dreamina_queue_name\\\":false,\\\"dreamina_matrix_queue_name\\\":\\\"dreamina_fusion_video45_pro\\\",\\\"dreamina_matrix_req_key\\\":\\\"DreaminaFusion:Video45_unified_edit\\\",\\\"dreamina_matrix_second_req_key\\\":\\\"\\\",\\\"have_no_queue_name\\\":true,\\\"queue_name\\\":\\\"\\\",\\\"matrix_req_key\\\":\\\"\\\",\\\"matrix_second_req_key\\\":\\\"\\\"}\"\n  }\n}\n",
+    "stderr": "download video 1 URL: https://v9-artist.vlabvod.com/a577313355b2812d8498a64efa4cf0e1/6aee04a8/video/tos/cn/tos-cn-v-148450/oUWiCsHVIAJfGfrcy2fpetl93EJIQbiqoA3FiB/?a=4066&ch=0&cr=0&dr=0&er=0&cd=0%7C0%7C0%7C0&br=7068&bt=7068&cs=0&ds=12&ft=5QYTUxhhe6BMyqn~BieJD12Nzj&mime_type=video_mp4&qs=0&rc=PDVpZDdpPGY8ZGQ1Nzg4NEBpanZlbDNvOjt5ZTczNDM7M0BeXi9hXmI1XzAxMS5jNmEtYSNqNGVnYWFeYGphLS1kNC9zcw%3D%3D&btag=80000e00008000&dy_q=1793980048&feature_id=04b16e464b574158bb99cac30ccb1f5e&l=202611062347131980192552532785A6F\n"
+  }
+}
+```
+
+## 2026-11-06T15:47:41.914+00:00 — dreamina / query_result — request
+
+```json
+{
+  "request_id": "59a85f7b2a60469994696381bfa1dc04",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 4476,
+  "request_fingerprint": "8bf6f2dfa891dbafb71af658f0d7dc1f08f2f4f9e0fcd1563659beb105323847",
+  "time": "2026-11-06T15:47:41.914+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "query_result",
+      "--submit_id=6b9d04e1-6214-414b-a3e7-44f1a4984eab",
+      "--download_dir=C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\OD_both\\t1"
+    ],
+    "files": [],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:48:11.712+00:00 — dreamina / query_result — result
+
+```json
+{
+  "request_id": "59a85f7b2a60469994696381bfa1dc04",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 4476,
+  "request_fingerprint": "8bf6f2dfa891dbafb71af658f0d7dc1f08f2f4f9e0fcd1563659beb105323847",
+  "time": "2026-11-06T15:48:11.712+00:00",
+  "event": "result",
+  "elapsed_s": 29.765,
+  "response": {
+    "returncode": 0,
+    "stdout": "{\n  \"submit_id\": \"6b9d04e1-6214-414b-a3e7-44f1a4984eab\",\n  \"prompt\": \"ep1_s1_st3\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\\r\\n时长：8秒\\r\\n比例：16:9\\r\\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\\r\\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\\r\\n人物：\\r\\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\\r\\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\\r\\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\\r\\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\\r\\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\\r\\n走位：Riley 背对镜头、朝画面深处走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步，继续朝画面深处走，从门洞远端的亮口走出画面。工人在门洞里画面左侧墙边的脚手架上。\\r\\n动作：0–3秒 镜头在她身后约两米平稳向前跟：Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 镜头继续跟：她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 镜头停住，她成腰以上中景：她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\\r\\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（画面深处）是被晨光照亮的街，形成明亮的出口；自然光。\\r\\n台词：\\r\\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\\r\\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\\r\\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\\r\\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\\r\\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\",\n  \"gen_status\": \"success\",\n  \"result_json\": {\n    \"images\": [],\n    \"videos\": [\n      {\n        \"path\": \"C:\\\\workspace\\\\micro-drama-platform\\\\ai_videos\\\\_research\\\\service_tests\\\\seedance_order_ab_20261106\\\\OD_both\\\\t1\\\\6b9d04e1-6214-414b-a3e7-44f1a4984eab_video_1.mp4\",\n        \"fps\": 24,\n        \"width\": 854,\n        \"height\": 480,\n        \"format\": \"mp4\",\n        \"duration\": 8.042\n      }\n    ]\n  },\n  \"credit_count\": 96,\n  \"queue_info\": {\n    \"queue_idx\": 0,\n    \"priority\": 7,\n    \"queue_status\": \"Finish\",\n    \"queue_length\": 0,\n    \"debug_info\": \"{\\\"have_no_dreamina_queue_name\\\":false,\\\"dreamina_matrix_queue_name\\\":\\\"dreamina_fusion_video45_pro\\\",\\\"dreamina_matrix_req_key\\\":\\\"DreaminaFusion:Video45_unified_edit\\\",\\\"dreamina_matrix_second_req_key\\\":\\\"\\\",\\\"have_no_queue_name\\\":true,\\\"queue_name\\\":\\\"\\\",\\\"matrix_req_key\\\":\\\"\\\",\\\"matrix_second_req_key\\\":\\\"\\\"}\"\n  }\n}\n",
+    "stderr": "download video 1 URL: https://v9-artist.vlabvod.com/bf90bd41bfb59d0c4ba3285b61c37c82/6aee04c4/video/tos/cn/tos-cn-v-148450/oQchrPQeI7Iuc8HAv91DtacAdEuHh8UIQJSt3g/?a=4066&ch=0&cr=0&dr=0&er=0&cd=0%7C0%7C0%7C0&br=7441&bt=7441&cs=0&ds=12&ft=5QYTUxhhe6BMyqB~BieJD12Nzj&mime_type=video_mp4&qs=0&rc=ZDgzNDdoOGdnNmc0MzczPEBpMzd3ajpvOmp5ZTczNDM7M0A0LjBhMmNgXjIxYTBjL2MxYSNjcHJoYWFmX2phLS1kNC9zcw%3D%3D&btag=80000e00008000&dy_q=1793980076&feature_id=04b16e464b574158bb99cac30ccb1f5e&l=202611062347421980192552531493345\n"
+  }
+}
+```
+
+## 2026-11-06T15:48:11.963+00:00 — dreamina / query_result — request
+
+```json
+{
+  "request_id": "d754b7856e2d4ee0be6deb0df1d5f7ff",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 87044,
+  "request_fingerprint": "b656511279a0f44911efa50f78d32675f0399554ac9237bdd0986dcf085a0a5c",
+  "time": "2026-11-06T15:48:11.963+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "query_result",
+      "--submit_id=cc5c038e-e3ce-4b63-aba0-9b3696b2ed67",
+      "--download_dir=C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\OD_both\\t2"
+    ],
+    "files": [],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:48:45.971+00:00 — dreamina / query_result — result
+
+```json
+{
+  "request_id": "d754b7856e2d4ee0be6deb0df1d5f7ff",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 87044,
+  "request_fingerprint": "b656511279a0f44911efa50f78d32675f0399554ac9237bdd0986dcf085a0a5c",
+  "time": "2026-11-06T15:48:45.971+00:00",
+  "event": "result",
+  "elapsed_s": 33.969,
+  "response": {
+    "returncode": 0,
+    "stdout": "{\n  \"submit_id\": \"cc5c038e-e3ce-4b63-aba0-9b3696b2ed67\",\n  \"prompt\": \"ep1_s1_st3\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\\r\\n时长：8秒\\r\\n比例：16:9\\r\\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\\r\\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\\r\\n人物：\\r\\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\\r\\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\\r\\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\\r\\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\\r\\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\\r\\n走位：Riley 背对镜头、朝画面深处走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步，继续朝画面深处走，从门洞远端的亮口走出画面。工人在门洞里画面左侧墙边的脚手架上。\\r\\n动作：0–3秒 镜头在她身后约两米平稳向前跟：Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 镜头继续跟：她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 镜头停住，她成腰以上中景：她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\\r\\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（画面深处）是被晨光照亮的街，形成明亮的出口；自然光。\\r\\n台词：\\r\\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\\r\\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\\r\\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\\r\\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\\r\\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\",\n  \"gen_status\": \"success\",\n  \"result_json\": {\n    \"images\": [],\n    \"videos\": [\n      {\n        \"path\": \"C:\\\\workspace\\\\micro-drama-platform\\\\ai_videos\\\\_research\\\\service_tests\\\\seedance_order_ab_20261106\\\\OD_both\\\\t2\\\\cc5c038e-e3ce-4b63-aba0-9b3696b2ed67_video_1.mp4\",\n        \"fps\": 24,\n        \"width\": 854,\n        \"height\": 480,\n        \"format\": \"mp4\",\n        \"duration\": 8.042\n      }\n    ]\n  },\n  \"credit_count\": 96,\n  \"queue_info\": {\n    \"queue_idx\": 0,\n    \"priority\": 7,\n    \"queue_status\": \"Finish\",\n    \"queue_length\": 0,\n    \"debug_info\": \"{\\\"have_no_dreamina_queue_name\\\":false,\\\"dreamina_matrix_queue_name\\\":\\\"dreamina_fusion_video45_pro\\\",\\\"dreamina_matrix_req_key\\\":\\\"DreaminaFusion:Video45_unified_edit\\\",\\\"dreamina_matrix_second_req_key\\\":\\\"\\\",\\\"have_no_queue_name\\\":true,\\\"queue_name\\\":\\\"\\\",\\\"matrix_req_key\\\":\\\"\\\",\\\"matrix_second_req_key\\\":\\\"\\\"}\"\n  }\n}\n",
+    "stderr": "download video 1 URL: https://v6-artist.vlabvod.com/c557826a0a25c65cf58345dc77321130/6aee04e2/video/tos/cn/tos-cn-v-148450/ogjAsnaHtHE2d9tIMgRwJAgDncfIEhQIQ1vcJ7/?a=4066&ch=0&cr=0&dr=0&er=0&cd=0%7C0%7C0%7C0&br=7309&bt=7309&cs=0&ds=12&ft=5QYTUxhhe6BMyqU9BieJD12Nzj&mime_type=video_mp4&qs=0&rc=aWU5NTs1Nzs7aDhmOmYzO0BpMzd4dWhvOnV5ZTczNDM7M0AxLjVeMmItXi0xNTZiMV5hYSNsLWc2YWEvYGphLS1kNC9zcw%3D%3D&btag=80000e00008000&dy_q=1793980106&feature_id=04b16e464b574158bb99cac30ccb1f5e&l=20261106234812198019255253232B303\n"
+  }
+}
+```
+
+## 2026-11-06T15:48:49.280+00:00 — dreamina / query_result — request
+
+```json
+{
+  "request_id": "db17981911194252a377d4bd1b23636f",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 91804,
+  "request_fingerprint": "e826aa527023a6f8574c05d7a600dc0f0e05e6128049d37f321c1970ad7a86ea",
+  "time": "2026-11-06T15:48:49.280+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "query_result",
+      "--submit_id=f2129ef1-4dc0-4b85-b07e-a28d714f5d35",
+      "--download_dir=C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\A_v12\\t1"
+    ],
+    "files": [],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:49:30.656+00:00 — dreamina / query_result — result
+
+```json
+{
+  "request_id": "db17981911194252a377d4bd1b23636f",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 91804,
+  "request_fingerprint": "e826aa527023a6f8574c05d7a600dc0f0e05e6128049d37f321c1970ad7a86ea",
+  "time": "2026-11-06T15:49:30.656+00:00",
+  "event": "result",
+  "elapsed_s": 41.359,
+  "response": {
+    "returncode": 0,
+    "stdout": "{\n  \"submit_id\": \"f2129ef1-4dc0-4b85-b07e-a28d714f5d35\",\n  \"prompt\": \"ep1_s1_st3\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\\r\\n时长：8秒\\r\\n比例：16:9\\r\\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\\r\\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\\r\\n人物：\\r\\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\\r\\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\\r\\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\\r\\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\\r\\n走位：Riley 由南向北走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步继续往北走出画面。工人在门洞西墙边的脚手架上。\\r\\n动作：0–3秒 Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\\r\\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\\r\\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（北）是被晨光照亮的街，形成明亮的出口；自然光。\\r\\n台词：\\r\\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\\r\\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\\r\\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\\r\\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\\r\\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\",\n  \"gen_status\": \"success\",\n  \"result_json\": {\n    \"images\": [],\n    \"videos\": [\n      {\n        \"path\": \"C:\\\\workspace\\\\micro-drama-platform\\\\ai_videos\\\\_research\\\\service_tests\\\\seedance_order_ab_20261106\\\\A_v12\\\\t1\\\\f2129ef1-4dc0-4b85-b07e-a28d714f5d35_video_1.mp4\",\n        \"fps\": 24,\n        \"width\": 854,\n        \"height\": 480,\n        \"format\": \"mp4\",\n        \"duration\": 8.042\n      }\n    ]\n  },\n  \"credit_count\": 96,\n  \"queue_info\": {\n    \"queue_idx\": 0,\n    \"priority\": 7,\n    \"queue_status\": \"Finish\",\n    \"queue_length\": 0,\n    \"debug_info\": \"{\\\"have_no_dreamina_queue_name\\\":false,\\\"dreamina_matrix_queue_name\\\":\\\"dreamina_fusion_video45_pro\\\",\\\"dreamina_matrix_req_key\\\":\\\"DreaminaFusion:Video45_unified_edit\\\",\\\"dreamina_matrix_second_req_key\\\":\\\"\\\",\\\"have_no_queue_name\\\":true,\\\"queue_name\\\":\\\"\\\",\\\"matrix_req_key\\\":\\\"\\\",\\\"matrix_second_req_key\\\":\\\"\\\"}\"\n  }\n}\n",
+    "stderr": "download video 1 URL: https://v3-artist.vlabvod.com/a0a517463ff3575b322a97619a8e9341/6aee0509/video/tos/cn/tos-cn-v-148450/o8UtDVID23b2O9P3BkEGffVRHK7AHaI1QvECMf/?a=4066&ch=0&cr=0&dr=0&er=0&cd=0%7C0%7C0%7C0&br=8234&bt=8234&cs=0&ds=12&ft=5QYTUxhhe6BMyqh9BieJD12Nzj&mime_type=video_mp4&qs=0&rc=aDpkPDU1M2Q0Omk3ZDg5NUBpM3lvdWlvOmt5ZTczNDM7M0A0XjA1MTNfNi0xYF4zNGA0YSMzY2BkYWFuXmphLS1kNC9zcw%3D%3D&btag=80000e00008000&dy_q=1793980145&feature_id=04b16e464b574158bb99cac30ccb1f5e&l=20261106234849198019255253509CAF0\n"
+  }
+}
+```
+
+## 2026-11-06T15:49:30.884+00:00 — dreamina / query_result — request
+
+```json
+{
+  "request_id": "b4bc9f43208444489acea4ea6c71e7e7",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 69584,
+  "request_fingerprint": "77db6899c61ebfbf834571b8a93bdc2077bc21a8a861d109cfdb9c108b59594d",
+  "time": "2026-11-06T15:49:30.884+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "query_result",
+      "--submit_id=0875dd75-9c0b-41e3-921d-4518c4db5a93",
+      "--download_dir=C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\D_camdir\\t1"
+    ],
+    "files": [],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:49:59.221+00:00 — dreamina / query_result — result
+
+```json
+{
+  "request_id": "b4bc9f43208444489acea4ea6c71e7e7",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 69584,
+  "request_fingerprint": "77db6899c61ebfbf834571b8a93bdc2077bc21a8a861d109cfdb9c108b59594d",
+  "time": "2026-11-06T15:49:59.221+00:00",
+  "event": "result",
+  "elapsed_s": 28.313,
+  "response": {
+    "returncode": 0,
+    "stdout": "{\n  \"submit_id\": \"0875dd75-9c0b-41e3-921d-4518c4db5a93\",\n  \"prompt\": \"ep1_s1_st3\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\\r\\n时长：8秒\\r\\n比例：16:9\\r\\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\\r\\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\\r\\n人物：\\r\\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\\r\\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\\r\\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\\r\\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\\r\\n走位：Riley 背对镜头、朝画面深处走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步，继续朝画面深处走，从门洞远端的亮口走出画面。工人在门洞里画面左侧墙边的脚手架上。\\r\\n动作：0–3秒 Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\\r\\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\\r\\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（画面深处）是被晨光照亮的街，形成明亮的出口；自然光。\\r\\n台词：\\r\\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\\r\\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\\r\\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\\r\\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\\r\\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\",\n  \"gen_status\": \"success\",\n  \"result_json\": {\n    \"images\": [],\n    \"videos\": [\n      {\n        \"path\": \"C:\\\\workspace\\\\micro-drama-platform\\\\ai_videos\\\\_research\\\\service_tests\\\\seedance_order_ab_20261106\\\\D_camdir\\\\t1\\\\0875dd75-9c0b-41e3-921d-4518c4db5a93_video_1.mp4\",\n        \"fps\": 24,\n        \"width\": 854,\n        \"height\": 480,\n        \"format\": \"mp4\",\n        \"duration\": 8.042\n      }\n    ]\n  },\n  \"credit_count\": 96,\n  \"queue_info\": {\n    \"queue_idx\": 0,\n    \"priority\": 7,\n    \"queue_status\": \"Finish\",\n    \"queue_length\": 0,\n    \"debug_info\": \"{\\\"have_no_dreamina_queue_name\\\":false,\\\"dreamina_matrix_queue_name\\\":\\\"dreamina_fusion_video45_pro\\\",\\\"dreamina_matrix_req_key\\\":\\\"DreaminaFusion:Video45_unified_edit\\\",\\\"dreamina_matrix_second_req_key\\\":\\\"\\\",\\\"have_no_queue_name\\\":true,\\\"queue_name\\\":\\\"\\\",\\\"matrix_req_key\\\":\\\"\\\",\\\"matrix_second_req_key\\\":\\\"\\\"}\"\n  }\n}\n",
+    "stderr": "download video 1 URL: https://v9-artist.vlabvod.com/e8b2b148293f71e47a9c78c6ed40fe4f/6aee0531/video/tos/cn/tos-cn-v-148450/oUfOF2gf8tbckCEIKVPfDkAPV7QFoBhaIt9YT2/?a=4066&ch=0&cr=0&dr=0&er=0&cd=0%7C0%7C0%7C0&br=7688&bt=7688&cs=0&ds=12&ft=5QYTUxhhe6BMyqJ1BieJD12Nzj&mime_type=video_mp4&qs=0&rc=aDtpNzxpZTozZGU0OWlpOkBpM2puMzpvOnl5ZTczNDM7M0BhX2EyMy8wNWExYmMuLTQ0YSNrb2hzYWFuXmphLS1kNC9zcw%3D%3D&btag=80000e00008000&dy_q=1793980185&feature_id=04b16e464b574158bb99cac30ccb1f5e&l=20261106234931198019255253121AABA\n"
+  }
+}
+```
+
+## 2026-11-06T15:49:59.454+00:00 — dreamina / query_result — request
+
+```json
+{
+  "request_id": "6d55cb56f1ef46dbafa0c33fa6ee6650",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 58380,
+  "request_fingerprint": "8b2e10c5a2a6a4d4725092e4a05f88b7aab959b790d2baa3619d577d66f1ad7f",
+  "time": "2026-11-06T15:49:59.454+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "query_result",
+      "--submit_id=303a634b-e307-4c14-8dac-37c42079cfb4",
+      "--download_dir=C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\O_camfirst\\t1"
+    ],
+    "files": [],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:50:23.535+00:00 — dreamina / query_result — result
+
+```json
+{
+  "request_id": "6d55cb56f1ef46dbafa0c33fa6ee6650",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 58380,
+  "request_fingerprint": "8b2e10c5a2a6a4d4725092e4a05f88b7aab959b790d2baa3619d577d66f1ad7f",
+  "time": "2026-11-06T15:50:23.535+00:00",
+  "event": "result",
+  "elapsed_s": 24.031,
+  "response": {
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "download video 1 URL: https://v26-artist.vlabvod.com/e8931bbb2ec29aa73f81226a09818f6a/6aee054e/video/tos/cn/tos-cn-v-148450/ocE19pgnDxtdXtQd19WqeIoXAIGtEQAgvnQh4J/?a=4066&ch=0&cr=0&dr=0&er=0&cd=0%7C0%7C0%7C0&br=6738&bt=6738&cs=0&ds=12&ft=5QYTUxhhe6BMyqa1BieJD12Nzj&mime_type=video_mp4&qs=0&rc=aWg7aTQ8NDw6ODplOTw3NEBpMzp4ZTNvOnh5ZTczNDM7M0AwXzFgLi1fNTMxLzUyYS8xYSMxZ15wYWEvXmphLS1kNC9zcw%3D%3D&btag=80000e00008000&dy_q=1793980214&feature_id=04b16e464b574158bb99cac30ccb1f5e&l=20261106234959198019255253714AADD\ndownload video 1: do request: Get \"https://v26-artist.vlabvod.com/e8931bbb2ec29aa73f81226a09818f6a/6aee054e/video/tos/cn/tos-cn-v-148450/ocE19pgnDxtdXtQd19WqeIoXAIGtEQAgvnQh4J/?a=4066&ch=0&cr=0&dr=0&er=0&cd=0%7C0%7C0%7C0&br=6738&bt=6738&cs=0&ds=12&ft=5QYTUxhhe6BMyqa1BieJD12Nzj&mime_type=video_mp4&qs=0&rc=aWg7aTQ8NDw6ODplOTw3NEBpMzp4ZTNvOnh5ZTczNDM7M0AwXzFgLi1fNTMxLzUyYS8xYSMxZ15wYWEvXmphLS1kNC9zcw%3D%3D&btag=80000e00008000&dy_q=1793980214&feature_id=04b16e464b574158bb99cac30ccb1f5e&l=20261106234959198019255253714AADD\": net/http: TLS handshake timeout\n"
+  }
+}
+```
+
+## 2026-11-06T15:51:08.774+00:00 — dreamina / query_result — request
+
+```json
+{
+  "request_id": "62392167124946b08dbe9498a69e7801",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 91368,
+  "request_fingerprint": "8b2e10c5a2a6a4d4725092e4a05f88b7aab959b790d2baa3619d577d66f1ad7f",
+  "time": "2026-11-06T15:51:08.774+00:00",
+  "event": "request",
+  "request": {
+    "argv": [
+      "dreamina",
+      "query_result",
+      "--submit_id=303a634b-e307-4c14-8dac-37c42079cfb4",
+      "--download_dir=C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106\\O_camfirst\\t1"
+    ],
+    "files": [],
+    "timeout_s": null,
+    "attempt": 1,
+    "internal_polling": "CLI --poll 参数控制；内部HTTP不可逐条观测"
+  }
+}
+```
+
+## 2026-11-06T15:51:37.566+00:00 — dreamina / query_result — result
+
+```json
+{
+  "request_id": "62392167124946b08dbe9498a69e7801",
+  "provider": "dreamina",
+  "operation": "query_result",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\seedance_order_ab_20261106",
+  "pid": 91368,
+  "request_fingerprint": "8b2e10c5a2a6a4d4725092e4a05f88b7aab959b790d2baa3619d577d66f1ad7f",
+  "time": "2026-11-06T15:51:37.566+00:00",
+  "event": "result",
+  "elapsed_s": 28.75,
+  "response": {
+    "returncode": 0,
+    "stdout": "{\n  \"submit_id\": \"303a634b-e307-4c14-8dac-37c42079cfb4\",\n  \"prompt\": \"ep1_s1_st3\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\\r\\n时长：8秒\\r\\n比例：16:9\\r\\n参考：`ep1_s1_st3_overhead=>@图片1`、`c1_Riley=>@图片2`、`bg1_海门外陡坡=>@图片3`、`c1_Riley_audio=>@音频1`\\r\\n参考用法：`ep1_s1_st3_overhead`是本镜的俯视站位示意图，不是画面：上方为北，彩色圆点是人物（尖角＝面朝，箭头＝走位路线，旁边数字＝到达秒数），红色机身与扇形是机位与视野，灰色方块是建筑与陈设。只按它安排机位、站位、朝向与走位先后；图里的颜色、线条、箭头和文字都不出现在画面中，人物颜色也不是服装颜色。每张人物三视图（`c1_Riley`）是同一个人的正面、侧面、背面，不是三个人；只取这个人的长相、发型、体型与服装，不取图里的姿势、站位和机位，三视图的浅灰背景不入画。场景图`bg1_海门外陡坡`只取材质、形制、陈设与色调，空间关系以`ep1_s1_st3_overhead`为准，光线与时段按「光线」一行，场景图里的光向不照搬。声音参考（`c1_Riley_audio`）只取该人物的音色、音高与说话质感，不取内容；本镜不说话的人物不出声。\\r\\n人物：\\r\\n  主持人（三视图`c1_Riley`；声音`c1_Riley_audio`；`ep1_s1_st3_overhead`里的蓝色圆点）：二十多岁的美国西海岸年轻女性，身体健硕，肩背和手臂结实有力、体态挺拔，像常年户外徒步冲浪的人；晒成古铜色的皮肤；被阳光漂浅的脏金色波浪长发，长过肩膀，随意披散或松松拢起；笑起来眼角有笑纹，神情明亮、热情、亲切，像观众身边的好朋友。穿她自己的现代旅行装：素色米白亚麻短袖衬衫，袖口挽起，下摆塞进腰里；卡其色工装长裤，侧面有大口袋；深棕色系带短靴；身上没有手表和首饰；画面里看不到任何相机、手机或自拍杆。\\r\\n本场：开场三件套：最惊人的一眼（建在海边悬崖台地上、满是脚手架的城与绿色单峰山）＋ Riley 说出城和年份 ＋ 当天两个小目标与一把铜钱；进城时点出这座城还在修十二年前的地震。结束时的变化：她进城了，观众知道她今天要干什么。\\r\\n场景：庞贝海门外的海边沙滩与陡坡，进城门洞 · 公元 75 年 5 月 20 日清晨，晴（`bg1_海门外陡坡`）：清晨，海边沙滩往上看：一道陡坡通向熔岩台地，台地上是灰黄色的城墙和城门，墙后挤满红瓦屋顶；城墙里一座神庙的平台上搭着木杆麻绳脚手架、堆着白色大理石块；远处一座宽大的绿色单峰山，满坡一行行葡萄藤，山顶平缓发灰，不冒烟。\\r\\n镜头：中景，单人为主：跟拍，镜头在她身后约两米平稳向前跟，第 4 秒她转身时镜头停住，她成腰以上中景；眼平；一种运镜（跟拍后停住）。\\r\\n画面：Riley 跟在一个牵着驮筐骡子的挑夫后面（挑夫是普通路人，背对镜头、不说话、不看她），走进城门洞。门洞里阴凉，墙边搭着木杆麻绳脚手架，一个工人（普通路人，不说话）在架子上往上递一桶灰浆。Riley 抬头看了看脚手架，回头对镜头说话。\\r\\n走位：Riley 由南向北走进门洞，镜头在她身后约两米跟着走；第 4 秒她停步、转身面向镜头。挑夫与骡子在她前方几步继续往北走出画面。工人在门洞西墙边的脚手架上。\\r\\n动作：0–3秒 镜头在她身后约两米平稳向前跟：Riley 背对镜头跟着挑夫和骡子走进门洞，骡蹄声在门洞里回响；3–4秒 镜头继续跟：她抬头看墙边脚手架上递灰浆桶的工人；4–8秒 镜头停住，她成腰以上中景：她停步转身，面对镜头压低声音说那句话，笑着眨眨眼\\r\\n光线：清晨，门洞里是阴凉的阴影，门洞另一头（北）是被晨光照亮的街，形成明亮的出口；自然光。\\r\\n台词：\\r\\n  Riley（压低声音、像说悄悄话，美式英语）：Fun fact: they had a huge earthquake twelve years ago. They're still fixing it.\\r\\n口型：画内说话的人嘴型与台词同步，正常语速与口型；每句只由标明的人说，其他人不开口。\\r\\n风格：真实旅行 vlog 实拍质感：手持自拍与跟拍，自然光，真实皮肤纹理与布料纤维，物理正确的材质与光影；像一位旅行博主真的带着相机去了那个年代，不是电影布景、不是游戏画面、不是三维动画\\r\\n负面词：分身，双胞胎，同一人物出现两次，多出来的人，画面文字，字幕，水印，logo，背景音乐，绿幕，纯色人偶，示意图的圆点、箭头、线条与文字，人脸变形，五官漂移，畸形肢体，多余手指，画面文字，字幕，水印，logo，路人穿现代服饰，现代建筑，现代器物，塑料感材质，影棚布景感，游戏引擎渲染感，三维动画感，卡通渲染，背景音乐，配乐\\r\\n要求：连续镜头，不要切镜。不要字幕或水印。画面中每个人物只出现一次，不要分身或双胞胎。人物按真人自然表演：走路有重心起伏和摆臂，发力有预备和惯性，不照搬参考里人偶的僵硬姿势。\\r\\n声音：仅保留本镜指定对白、自然环境声和动作声；不要背景音乐或配乐。\",\n  \"gen_status\": \"success\",\n  \"result_json\": {\n    \"images\": [],\n    \"videos\": [\n      {\n        \"path\": \"C:\\\\workspace\\\\micro-drama-platform\\\\ai_videos\\\\_research\\\\service_tests\\\\seedance_order_ab_20261106\\\\O_camfirst\\\\t1\\\\303a634b-e307-4c14-8dac-37c42079cfb4_video_1.mp4\",\n        \"fps\": 24,\n        \"width\": 854,\n        \"height\": 480,\n        \"format\": \"mp4\",\n        \"duration\": 8.042\n      }\n    ]\n  },\n  \"credit_count\": 96,\n  \"queue_info\": {\n    \"queue_idx\": 0,\n    \"priority\": 7,\n    \"queue_status\": \"Finish\",\n    \"queue_length\": 0,\n    \"debug_info\": \"{\\\"have_no_dreamina_queue_name\\\":false,\\\"dreamina_matrix_queue_name\\\":\\\"dreamina_fusion_video45_pro\\\",\\\"dreamina_matrix_req_key\\\":\\\"DreaminaFusion:Video45_unified_edit\\\",\\\"dreamina_matrix_second_req_key\\\":\\\"\\\",\\\"have_no_queue_name\\\":true,\\\"queue_name\\\":\\\"\\\",\\\"matrix_req_key\\\":\\\"\\\",\\\"matrix_second_req_key\\\":\\\"\\\"}\"\n  }\n}\n",
+    "stderr": "download video 1 URL: https://v9-artist.vlabvod.com/19fc7f792f34da1e55f3691e956bcaa6/6aee0595/video/tos/cn/tos-cn-v-148450/ocE19pgnDxtdXtQd19WqeIoXAIGtEQAgvnQh4J/?a=4066&ch=0&cr=0&dr=0&er=0&cd=0%7C0%7C0%7C0&br=6738&bt=6738&cs=0&ds=12&ft=5QYTUxhhe6BMyqzyBieJD12Nzj&mime_type=video_mp4&qs=0&rc=aWg7aTQ8NDw6ODplOTw3NEBpMzp4ZTNvOnh5ZTczNDM7M0AwXzFgLi1fNTMxLzUyYS8xYSMxZ15wYWEvXmphLS1kNC9zcw%3D%3D&btag=80000e00008000&dy_q=1793980285&feature_id=04b16e464b574158bb99cac30ccb1f5e&l=2026110623510919801925525301796EC\n"
+  }
+}
+```
+
+## 2026-11-07T14:23:03.718+00:00 — codex_imagegen / image_gen — request
+
+```json
+{
+  "request_id": "44361acf1c4c4137a25fccf2baa5504c",
+  "provider": "codex_imagegen",
+  "operation": "image_gen",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\code_video_parallax_20261107\\plate_v1.png",
+  "pid": 40776,
+  "request_fingerprint": "a1348086a11ccf78c3c4e49a8759ce34a73bd0ff1a8e958d7fb433715e748458",
+  "time": "2026-11-07T14:23:03.718+00:00",
+  "event": "request",
+  "request": {
+    "service": "Codex CLI 内置 image_gen（ChatGPT 订阅额度）",
+    "prompt": "横幅 16:9 电影级写实远景空镜，古代江南水乡小镇的清晨，中国仙侠电影质感，35mm 电影摄影，自然光。\n\n画面需要非常清晰的前中后景层次（这张图要做 2.5D 视差推镜）：\n- 前景（画面左下与右侧边缘，离镜头很近）：一截粗糙的老石栏杆和一株垂柳的枝条，柳叶清晰锐利，略带晨露。\n- 中景：一座青石拱桥横跨平静的河面，河两岸是白墙黑瓦的木结构民居，屋檐层层叠叠，几盏未熄的红灯笼挂在檐下，河面上停着一条乌篷小船，水面有柔和倒影。\n- 远景：镇子后方连绵的青色山峦，山腰缠着薄薄的晨雾，最远处山峰淡入雾中。\n- 天空：清晨的淡金色与青灰色，太阳在画面右上方山后刚升起，有柔和的体积光穿过薄雾。\n\n画面中不要有任何人物，不要有文字、水印、边框。色调清雅，青灰、墨黑、暖金点缀。景深自然，主体中景清晰。\n",
+    "instruction": "你是出图执行器。只做一件事：调用一次内置 image_gen 工具生成一张图片。\n\n- 图片描述原样使用下方 <prompt> 里的全文，不增删、不改写、不翻译。\n- 不运行任何 shell 命令，不读写文件，不调用其他工具，不搜索网络，不提问。\n- 生成后只回复 DONE；工具失败或被拒时只回复 FAILED: 加原因。\n\n<prompt>\n横幅 16:9 电影级写实远景空镜，古代江南水乡小镇的清晨，中国仙侠电影质感，35mm 电影摄影，自然光。\n\n画面需要非常清晰的前中后景层次（这张图要做 2.5D 视差推镜）：\n- 前景（画面左下与右侧边缘，离镜头很近）：一截粗糙的老石栏杆和一株垂柳的枝条，柳叶清晰锐利，略带晨露。\n- 中景：一座青石拱桥横跨平静的河面，河两岸是白墙黑瓦的木结构民居，屋檐层层叠叠，几盏未熄的红灯笼挂在檐下，河面上停着一条乌篷小船，水面有柔和倒影。\n- 远景：镇子后方连绵的青色山峦，山腰缠着薄薄的晨雾，最远处山峰淡入雾中。\n- 天空：清晨的淡金色与青灰色，太阳在画面右上方山后刚升起，有柔和的体积光穿过薄雾。\n\n画面中不要有任何人物，不要有文字、水印、边框。色调清雅，青灰、墨黑、暖金点缀。景深自然，主体中景清晰。\n</prompt>\n",
+    "argv": [
+      "C:\\Users\\light\\AppData\\Roaming\\npm\\codex.CMD",
+      "exec",
+      "--json",
+      "--skip-git-repo-check",
+      "--sandbox",
+      "read-only"
+    ],
+    "files": [],
+    "output": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\code_video_parallax_20261107\\plate_v1.png",
+    "transparent_background": false,
+    "codex_model": "用户 config 默认",
+    "image_model": "未知（内置工具不暴露）",
+    "quality": "未知",
+    "size": "未知",
+    "cost": "未知",
+    "sandbox": "read-only",
+    "timeout_s": 900,
+    "generated_root": "C:\\Users\\light\\.codex\\generated_images"
+  }
+}
+```
+
+## 2026-11-07T14:24:42.075+00:00 — codex_imagegen / image_gen — result
+
+```json
+{
+  "request_id": "44361acf1c4c4137a25fccf2baa5504c",
+  "provider": "codex_imagegen",
+  "operation": "image_gen",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\code_video_parallax_20261107\\plate_v1.png",
+  "pid": 40776,
+  "request_fingerprint": "a1348086a11ccf78c3c4e49a8759ce34a73bd0ff1a8e958d7fb433715e748458",
+  "time": "2026-11-07T14:24:42.075+00:00",
+  "event": "result",
+  "elapsed_s": 98.359,
+  "response": {
+    "returncode": 1,
+    "timed_out": false,
+    "early_exit": true,
+    "stderr_tail": "Reading prompt from stdin...\n2026-11-07T14:23:10.636268Z ERROR codex_models_manager::manager: failed to refresh available models: request timed out\n2026-11-07T14:23:10.651893Z ERROR codex_models_manager::manager: failed to refresh available models: request timed out\n2026-11-07T14:23:27.683282Z ERROR codex_models_manager::manager: failed to refresh available models: request timed out\n",
+    "thread_id": "01a1b664-3fa6-7b00-b735-f2af574626e9",
+    "images": [
+      {
+        "id": "exec-f8ef45b6-a38f-49dd-99f3-502d8183cc88",
+        "status": "completed",
+        "revisedPrompt": "横幅 16:9 电影级写实远景空镜，古代江南水乡小镇的清晨，中国仙侠电影质感，35mm 电影摄影，自然光。\n\n画面需要非常清晰的前中后景层次（这张图要做 2.5D 视差推镜）：\n- 前景（画面左下与右侧边缘，离镜头很近）：一截粗糙的老石栏杆和一株垂柳的枝条，柳叶清晰锐利，略带晨露。\n- 中景：一座青石拱桥横跨平静的河面，河两岸是白墙黑瓦的木结构民居，屋檐层层叠叠，几盏未熄的红灯笼挂在檐下，河面上停着一条乌篷小船，水面有柔和倒影。\n- 远景：镇子后方连绵的青色山峦，山腰缠着薄薄的晨雾，最远处山峰淡入雾中。\n- 天空：清晨的淡金色与青灰色，太阳在画面右上方山后刚升起，有柔和的体积光穿过薄雾。\n\n画面中不要有任何人物，不要有文字、水印、边框。色调清雅，青灰、墨黑、暖金点缀。景深自然，主体中景清晰。",
+        "transparentBackground": false,
+        "failure": null,
+        "savedPath": "C:\\Users\\light\\.codex\\generated_images\\01a1b664-3fa6-7b00-b735-f2af574626e9\\exec-f8ef45b6-a38f-49dd-99f3-502d8183cc88.png"
+      }
+    ],
+    "usage": null,
+    "last_message": "我会按原文调用一次内置 image_gen 工具生成图片。\n",
+    "event_types": {
+      "thread.started": 1,
+      "turn.started": 1,
+      "item.completed": 1
+    },
+    "errors": [],
+    "generated": [
+      {
+        "path": "C:\\Users\\light\\.codex\\generated_images\\01a1b664-3fa6-7b00-b735-f2af574626e9\\exec-f8ef45b6-a38f-49dd-99f3-502d8183cc88.png",
+        "exists": true,
+        "bytes": 2915513,
+        "sha256": "af43f20000fe4d850c559d387fd0b57ec2a9624f25d4be277e01587c730f795f"
+      }
+    ],
+    "saved": [
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\code_video_parallax_20261107\\plate_v1.png",
+        "exists": true,
+        "bytes": 2915513,
+        "sha256": "af43f20000fe4d850c559d387fd0b57ec2a9624f25d4be277e01587c730f795f"
+      }
+    ]
+  }
+}
+```
+
+## 2026-11-08T14:59:09.431+00:00 — codex_imagegen / image_gen — request
+
+```json
+{
+  "request_id": "0c81bf6238854f06a88657f9e796c229",
+  "provider": "codex_imagegen",
+  "operation": "image_gen",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\codex_ping\\ping_20261108.png",
+  "pid": 16908,
+  "request_fingerprint": "f6b61a698cb99ef5579166d1c4c15a0a4803be05f36fa48beae4976a32161321",
+  "time": "2026-11-08T14:59:09.431+00:00",
+  "event": "request",
+  "request": {
+    "service": "Codex CLI 内置 image_gen（ChatGPT 订阅额度）",
+    "prompt": "一个浅灰背景上的红色小苹果，写实照片，画幅 1:1",
+    "instruction": "你是出图执行器。只做一件事：调用一次内置 image_gen 工具生成一张图片。\n\n- 图片描述原样使用下方 <prompt> 里的全文，不增删、不改写、不翻译。\n- 不运行任何 shell 命令，不读写文件，不调用其他工具，不搜索网络，不提问。\n- 生成后只回复 DONE；工具失败或被拒时只回复 FAILED: 加原因。\n\n<prompt>\n一个浅灰背景上的红色小苹果，写实照片，画幅 1:1\n</prompt>\n",
+    "argv": [
+      "C:\\Users\\light\\AppData\\Roaming\\npm\\codex.CMD",
+      "exec",
+      "--json",
+      "--skip-git-repo-check",
+      "--sandbox",
+      "read-only",
+      "--model",
+      "gpt-6.1-sol"
+    ],
+    "files": [],
+    "output": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\codex_ping\\ping_20261108.png",
+    "transparent_background": false,
+    "codex_model": "gpt-6.1-sol",
+    "image_model": "未知（内置工具不暴露）",
+    "quality": "未知",
+    "size": "未知",
+    "cost": "未知",
+    "sandbox": "read-only",
+    "timeout_s": 900,
+    "generated_root": "C:\\Users\\light\\.codex\\generated_images"
+  }
+}
+```
+
+## 2026-11-08T15:00:15.219+00:00 — codex_imagegen / image_gen — result
+
+```json
+{
+  "request_id": "0c81bf6238854f06a88657f9e796c229",
+  "provider": "codex_imagegen",
+  "operation": "image_gen",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\codex_ping\\ping_20261108.png",
+  "pid": 16908,
+  "request_fingerprint": "f6b61a698cb99ef5579166d1c4c15a0a4803be05f36fa48beae4976a32161321",
+  "time": "2026-11-08T15:00:15.219+00:00",
+  "event": "result",
+  "elapsed_s": 65.781,
+  "response": {
+    "returncode": 1,
+    "timed_out": false,
+    "early_exit": true,
+    "stderr_tail": "Reading prompt from stdin...\n",
+    "thread_id": "01a1bbab-b060-7c01-aee9-4740c40afcc1",
+    "images": [
+      {
+        "id": "exec-78881fcd-4347-487f-8cd1-2257630d908c",
+        "status": "completed",
+        "revisedPrompt": "一个浅灰背景上的红色小苹果，写实照片，画幅 1:1",
+        "transparentBackground": false,
+        "failure": null,
+        "savedPath": "C:\\Users\\light\\.codex\\generated_images\\01a1bbab-b060-7c01-aee9-4740c40afcc1\\exec-78881fcd-4347-487f-8cd1-2257630d908c.png"
+      }
+    ],
+    "usage": null,
+    "last_message": "正在生成图片。\n",
+    "event_types": {
+      "thread.started": 1,
+      "turn.started": 1,
+      "item.completed": 1
+    },
+    "errors": [],
+    "generated": [
+      {
+        "path": "C:\\Users\\light\\.codex\\generated_images\\01a1bbab-b060-7c01-aee9-4740c40afcc1\\exec-78881fcd-4347-487f-8cd1-2257630d908c.png",
+        "exists": true,
+        "bytes": 1994252,
+        "sha256": "e9614d8c821d83ad4eb9458a7231f4e363992f40c8b518b2ae053547f0b7439d"
+      }
+    ],
+    "saved": [
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\codex_ping\\ping_20261108.png",
+        "exists": true,
+        "bytes": 1994252,
+        "sha256": "e9614d8c821d83ad4eb9458a7231f4e363992f40c8b518b2ae053547f0b7439d"
+      }
+    ]
+  }
+}
+```
+
+## 2026-11-08T15:07:42.010+00:00 — codex_imagegen / image_gen — request
+
+```json
+{
+  "request_id": "07969c5abca34eb3ade3a55049679588",
+  "provider": "codex_imagegen",
+  "operation": "image_gen",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\codex_ping\\ping_ref_20261108.png",
+  "pid": 45392,
+  "request_fingerprint": "fac561f6ff945023401fe39e24b6f5d65d225adc2fe7ca981e7d9a8cc01d9e44",
+  "time": "2026-11-08T15:07:42.010+00:00",
+  "event": "request",
+  "request": {
+    "service": "Codex CLI 内置 image_gen（ChatGPT 订阅额度）",
+    "prompt": "照参考图里这个人画一张浅灰背景的半身照，画幅 1:1",
+    "instruction": "你是出图执行器。只做一件事：调用一次内置 image_gen 工具生成一张图片。\n\n- 图片描述原样使用下方 <prompt> 里的全文，不增删、不改写、不翻译。\n- 附带的 1 张图是参考图，按附带顺序：第 1 张 c1_Julian.png。prompt 里按这个顺序指认它们。\n- 不运行任何 shell 命令，不读写文件，不调用其他工具，不搜索网络，不提问。\n- 生成后只回复 DONE；工具失败或被拒时只回复 FAILED: 加原因。\n\n<prompt>\n照参考图里这个人画一张浅灰背景的半身照，画幅 1:1\n</prompt>\n",
+    "argv": [
+      "C:\\Users\\light\\AppData\\Roaming\\npm\\codex.CMD",
+      "exec",
+      "--json",
+      "--skip-git-repo-check",
+      "--sandbox",
+      "read-only",
+      "--model",
+      "gpt-6.1-sol",
+      "--image",
+      "C:\\workspace\\micro-drama-platform\\ai_videos\\huangye_shenghuo\\2_世界观人设\\characters\\c1_Julian\\c1_Julian.png"
+    ],
+    "files": [
+      {
+        "path": "C:\\workspace\\micro-drama-platform\\ai_videos\\huangye_shenghuo\\2_世界观人设\\characters\\c1_Julian\\c1_Julian.png",
+        "exists": true,
+        "bytes": 2203803,
+        "sha256": "ae07c3920c9349d3599d00f73a03dd9122cc758e3a9104227b22a45a181bb29c"
+      }
+    ],
+    "output": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\codex_ping\\ping_ref_20261108.png",
+    "transparent_background": false,
+    "codex_model": "gpt-6.1-sol",
+    "image_model": "未知（内置工具不暴露）",
+    "quality": "未知",
+    "size": "未知",
+    "cost": "未知",
+    "sandbox": "read-only",
+    "timeout_s": 900,
+    "generated_root": "C:\\Users\\light\\.codex\\generated_images"
+  }
+}
+```
+
+## 2026-11-08T15:11:37.062+00:00 — codex_imagegen / image_gen — error
+
+```json
+{
+  "request_id": "07969c5abca34eb3ade3a55049679588",
+  "provider": "codex_imagegen",
+  "operation": "image_gen",
+  "target": "C:\\workspace\\micro-drama-platform\\ai_videos\\_research\\service_tests\\codex_ping\\ping_ref_20261108.png",
+  "pid": 45392,
+  "request_fingerprint": "fac561f6ff945023401fe39e24b6f5d65d225adc2fe7ca981e7d9a8cc01d9e44",
+  "time": "2026-11-08T15:11:37.062+00:00",
+  "event": "error",
+  "elapsed_s": 235.016,
+  "error_type": "RuntimeError",
+  "error": "没有拿到新图（结果未知，不自动重提；先查 generated_images 与 Codex 会话）：{\"thread_id\": \"01a1bbb3-892f-72d3-8e5b-8fd59fb1b088\", \"returncode\": 0, \"timed_out\": false, \"last_message\": \"FAILED: 图片生成失败，网络错误：请求发送失败。\", \"errors\": [], \"images\": [{\"id\": \"exec-2cca1568-4f3d-4484-84e7-25ed79d91335\", \"status\": \"failed\", \"revisedPrompt\": \"照参考图里这个人画一张浅灰背景的半身照，画幅 1:1\", \"transparentBackground\": null, \"failure\": null, \"savedPath\": null}]} Reading prompt from stdin...\n2026-11-08T15:07:52.869347Z ERROR codex_models_manager::manager: failed to refresh available models: request timed out\n2026-11-08T15:07:52.900423Z ERROR codex_models_manager::manager: failed to refresh available models: request timed out\n2026-11-08T15:11:07.188945Z ERROR codex_core::tools::router: error=image generation failed: network error: error sending request\n"
+}
+```

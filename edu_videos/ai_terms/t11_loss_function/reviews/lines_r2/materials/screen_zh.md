@@ -1,0 +1,717 @@
+# 屏幕文字（逐屏）
+
+每句口播说完前一刻，屏幕上看得见的文字块：`[层级 字号px]` 文字（字数）。层级：eyebrow 小标签、display 大数字、h1 标题、h2 小标题、body 正文、caption 注释、chart 图表文字。截图是 1920×1080 的那一刻（字幕在成片里另外压在底部，截图里没有）。
+
+## s0 开场（片头之前）
+### l01（6.5s）
+- 口播：上一期说过，模型就是一台带旋钮的机器，学习就是把旋钮拧到对的位置。
+- [eyebrow 22px] 上一期（3 字）
+- [h1 76px] 模型 = 带旋钮的机器（8 字）
+- 合计（不含小标签、图表）：1 块，8 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s0_l01.png`
+### l02（5.0s）
+- 口播：可什么叫「对」？机器自己怎么知道，这次比上次拧得好？
+- [div 200px] ?（0 字）
+- [h1 76px] 拧得好不好？（5 字）
+- 合计（不含小标签、图表）：2 块，5 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s0_l02.png`
+### l03（2.8s）
+- 口播：办法很简单：给它的错误打个分。
+- [chart 54px] 13.4（1 字）
+- 合计（不含小标签、图表）：0 块，0 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s0_l03.png`
+### l04（5.2s）
+- 口播：这个分就叫损失，算这个分的规则，叫损失函数，今天就聊它。
+- [chart 54px] 13.4（1 字）
+- [eyebrow 22px] 给错误打分的规则（8 字）
+- [display 132px] 损失函数（4 字）
+- [h2 54px] Loss function（2 字）
+- 合计（不含小标签、图表）：2 块，6 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s0_l04.png`
+
+## c_problem（章节卡）
+- 损失函数是什么
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/card_c_problem.png`
+
+## s2 损失函数是什么
+### l05（5.2s）
+- 口播：模型每猜一次，跟真实答案总会差一点，差了多少，就叫误差。
+- [eyebrow 22px] 01 · 损失函数是什么（8 字）
+- [h1 76px] 差多少 = 误差（5 字）
+- [chart 34px] 实际（2 字）
+- [chart 34px] 误差（2 字）
+- [chart 34px] 猜的（2 字）
+- 合计（不含小标签、图表）：1 块，5 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s2_l05.png`
+### l06（6.1s）
+- 口播：把一大堆误差汇成一个数，就是损失，也就是给模型这次表现打的分。
+- [eyebrow 22px] 01 · 损失函数是什么（8 字）
+- [h1 76px] 一堆误差 → 一个分（7 字）
+- [eyebrow 22px] 损失（2 字）
+- [div 120px] 17.9（1 字）
+- [chart 76px] →（0 字）
+- 合计（不含小标签、图表）：2 块，8 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s2_l06.png`
+### l07（5.7s）
+- 口播：不过它跟考试分数反着来：分越低越好，零分最好，就是一点不差。
+- [eyebrow 22px] 01 · 损失函数是什么（8 字）
+- [h2 54px] 分越低越好（5 字）
+- [eyebrow 22px] 损失（2 字）
+- [div 120px] 17.9（1 字）
+- [h2 54px] 0 = 一点不差（5 字）
+- [chart 76px] →（0 字）
+- 合计（不含小标签、图表）：3 块，11 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s2_l07.png`
+### l08（2.8s）
+- 口播：有点像打高尔夫，杆数越少越好。
+- [eyebrow 22px] 01 · 损失函数是什么（8 字）
+- [h2 54px] 分越低越好（5 字）
+- [eyebrow 22px] 损失（2 字）
+- [div 120px] 17.9（1 字）
+- [h2 54px] 0 = 一点不差（5 字）
+- [chart 76px] →（0 字）
+- [eyebrow 22px] 就像（2 字）
+- [h2 54px] 高尔夫：杆数越少越好（9 字）
+- 合计（不含小标签、图表）：4 块，20 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s2_l08.png`
+### l09（7.2s）
+- 口播：有了这个分，机器就能自己比较：拧一下旋钮，分低了就是拧对了，分高了就拧回来。
+- [eyebrow 22px] 01 · 损失函数是什么（8 字）
+- [h1 76px] 拧一下，看分数（6 字）
+- [eyebrow 22px] 旋钮（2 字）
+- [eyebrow 22px] 损失（2 字）
+- [h2 54px] ✗ 分高了：拧回来（6 字）
+- [div 120px] 8.6（1 字）
+- [div 54px] 2.2（1 字）
+- 合计（不含小标签、图表）：4 块，14 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s2_l09.png`
+### l10（4.8s）
+- 口播：所以训练说白了，就是一遍遍拧旋钮，把这个分压下去。
+- [eyebrow 22px] 01 · 损失函数是什么（8 字）
+- [h1 76px] 训练 = 把分压下去（7 字）
+- [eyebrow 22px] 旋钮（2 字）
+- [eyebrow 22px] 损失（2 字）
+- [div 120px] 2.2（1 字）
+- [div 54px] 2.5（1 字）
+- 合计（不含小标签、图表）：3 块，9 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s2_l10.png`
+
+## c_experiment（章节卡）
+- 做个小实验
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/card_c_experiment.png`
+
+## s3 做个小实验
+### l11（5.2s）
+- 口播：还是上期那十二趟打车，横着是距离，竖着是车费，数是编的。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意数据（4 字）
+- [chart 28px] 车费（元）（3 字）
+- [chart 26px] 40（1 字）
+- [chart 26px] 20（1 字）
+- [chart 26px] 0（1 字）
+- [chart 28px] 公里（2 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- 合计（不含小标签、图表）：0 块，0 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l11.png`
+### l12（4.8s）
+- 口播：模型还是那条直线，两个旋钮：起步价和每公里的价钱。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意数据（4 字）
+- [eyebrow 22px] 起步价（3 字）
+- [eyebrow 22px] 每公里（3 字）
+- [chart 28px] 车费（元）（3 字）
+- [chart 26px] 40（1 字）
+- [div 54px] 0（1 字）
+- [div 54px] 0（1 字）
+- [chart 26px] 20（1 字）
+- [chart 26px] 0（1 字）
+- [chart 28px] 公里（2 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- 合计（不含小标签、图表）：2 块，2 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l12.png`
+### l13（5.4s）
+- 口播：先试第一种拧法：起步价五块，每公里两块。这条线整个偏低了。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意数据（4 字）
+- [eyebrow 22px] 起步价（3 字）
+- [eyebrow 22px] 每公里（3 字）
+- [chart 28px] 车费（元）（3 字）
+- [chart 26px] 40（1 字）
+- [div 54px] 5（1 字）
+- [div 54px] 2（1 字）
+- [h1 76px] 第一种：偏低（5 字）
+- [chart 26px] 20（1 字）
+- [chart 26px] 0（1 字）
+- [chart 28px] 公里（2 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- 合计（不含小标签、图表）：3 块，7 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l13.png`
+### l14（6.3s）
+- 口播：拿五公里那趟来看：实际二十三块，模型猜十五块，差了八块，这就是误差。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意数据（4 字）
+- [eyebrow 22px] 起步价（3 字）
+- [eyebrow 22px] 每公里（3 字）
+- [chart 28px] 车费（元）（3 字）
+- [chart 26px] 40（1 字）
+- [div 54px] 5（1 字）
+- [div 54px] 2（1 字）
+- [h1 76px] 第一种：偏低（5 字）
+- [chart 30px] 实际 23（3 字）
+- [chart 26px] 20（1 字）
+- [chart 30px] 差 8（2 字）
+- [chart 30px] 猜 15（2 字）
+- [chart 26px] 0（1 字）
+- [chart 28px] 公里（2 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- 合计（不含小标签、图表）：3 块，7 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l14.png`
+### l15（4.8s）
+- 口播：把误差平方一下，八乘八，六十四，就是图上这个红方块。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意数据（4 字）
+- [eyebrow 22px] 起步价（3 字）
+- [eyebrow 22px] 每公里（3 字）
+- [chart 28px] 车费（元）（3 字）
+- [chart 26px] 40（1 字）
+- [div 54px] 5（1 字）
+- [div 54px] 2（1 字）
+- [h1 76px] 第一种：偏低（5 字）
+- [chart 34px] 8² = 64（2 字）
+- [chart 30px] 实际 23（3 字）
+- [chart 26px] 20（1 字）
+- [chart 30px] 差 8（2 字）
+- [chart 30px] 猜 15（2 字）
+- [chart 26px] 0（1 字）
+- [chart 28px] 公里（2 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- 合计（不含小标签、图表）：3 块，7 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l15.png`
+### l16（5.0s）
+- 口播：十二趟都这么算，再取个平均，第一种拧法得了七十八分。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意数据（4 字）
+- [eyebrow 22px] 起步价（3 字）
+- [eyebrow 22px] 每公里（3 字）
+- [chart 28px] 车费（元）（3 字）
+- [chart 26px] 40（1 字）
+- [div 54px] 5（1 字）
+- [div 54px] 2（1 字）
+- [h1 76px] 第一种：偏低（5 字）
+- [chart 26px] 20（1 字）
+- [eyebrow 22px] 平均损失（4 字）
+- [div 120px] 78（1 字）
+- [chart 26px] 0（1 字）
+- [chart 28px] 公里（2 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- 合计（不含小标签、图表）：4 块，8 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l16.png`
+### l17（6.1s）
+- 口播：第二种：起步价四块，每公里三块五。这回线太陡了，短途猜少，长途猜多。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意数据（4 字）
+- [eyebrow 22px] 起步价（3 字）
+- [eyebrow 22px] 每公里（3 字）
+- [chart 28px] 车费（元）（3 字）
+- [chart 26px] 40（1 字）
+- [div 54px] 4（1 字）
+- [div 54px] 3.5（1 字）
+- [h1 76px] 第二种：太陡（5 字）
+- [chart 26px] 20（1 字）
+- [chart 26px] 0（1 字）
+- [chart 28px] 公里（2 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- 合计（不含小标签、图表）：3 块，7 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l17.png`
+### l18（6.5s）
+- 口播：要是不平方，直接平均误差呢？猜少是负的，猜多是正的，一正一负就抵消了。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意数据（4 字）
+- [eyebrow 22px] 起步价（3 字）
+- [eyebrow 22px] 每公里（3 字）
+- [chart 28px] 车费（元）（3 字）
+- [chart 30px] 猜多了 +（3 字）
+- [chart 26px] 40（1 字）
+- [div 54px] 4（1 字）
+- [div 54px] 3.5（1 字）
+- [h1 76px] 不平方：正负抵消（7 字）
+- [chart 30px] 猜少了 −（3 字）
+- [chart 26px] 20（1 字）
+- [chart 26px] 0（1 字）
+- [chart 28px] 公里（2 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- 合计（不含小标签、图表）：3 块，9 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l18.png`
+### l19（3.9s）
+- 口播：平均下来，才差零点三块，看着好像几乎没错。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意数据（4 字）
+- [eyebrow 22px] 起步价（3 字）
+- [eyebrow 22px] 每公里（3 字）
+- [chart 28px] 车费（元）（3 字）
+- [chart 30px] 猜多了 +（3 字）
+- [chart 26px] 40（1 字）
+- [div 54px] 4（1 字）
+- [div 54px] 3.5（1 字）
+- [h1 76px] 不平方：正负抵消（7 字）
+- [chart 30px] 猜少了 −（3 字）
+- [chart 26px] 20（1 字）
+- [eyebrow 22px] 平均误差（4 字）
+- [div 120px] −0.33（1 字）
+- [chart 26px] 0（1 字）
+- [chart 28px] 公里（2 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- 合计（不含小标签、图表）：4 块，10 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l19.png`
+### l20（5.2s）
+- 口播：这就是为什么要平方：平方以后全是正数，谁也抵消不了谁。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意数据（4 字）
+- [eyebrow 22px] 起步价（3 字）
+- [eyebrow 22px] 每公里（3 字）
+- [chart 28px] 车费（元）（3 字）
+- [chart 26px] 40（1 字）
+- [div 54px] 4（1 字）
+- [div 54px] 3.5（1 字）
+- [h1 76px] 平方：全是正数（6 字）
+- [chart 26px] 20（1 字）
+- [chart 26px] 0（1 字）
+- [chart 28px] 公里（2 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- 合计（不含小标签、图表）：3 块，8 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l20.png`
+### l21（5.4s）
+- 口播：而且差得越多，罚得越狠：差两块只罚四，差八块就要罚六十四。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意数据（4 字）
+- [eyebrow 22px] 起步价（3 字）
+- [eyebrow 22px] 每公里（3 字）
+- [chart 28px] 车费（元）（3 字）
+- [chart 26px] 40（1 字）
+- [div 54px] 4（1 字）
+- [div 54px] 3.5（1 字）
+- [h1 76px] 平方：全是正数（6 字）
+- [chart 26px] 20（1 字）
+- [h2 54px] 差 2 → 罚 4（4 字）
+- [h2 54px] 差 8 → 罚 64（4 字）
+- [chart 26px] 0（1 字）
+- [chart 28px] 公里（2 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- 合计（不含小标签、图表）：5 块，16 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l21.png`
+### l22（3.5s）
+- 口播：先平方再平均，第二种得了十三点四分。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意数据（4 字）
+- [eyebrow 22px] 起步价（3 字）
+- [eyebrow 22px] 每公里（3 字）
+- [chart 28px] 车费（元）（3 字）
+- [chart 26px] 40（1 字）
+- [div 54px] 4（1 字）
+- [div 54px] 3.5（1 字）
+- [h1 76px] 平方：全是正数（6 字）
+- [chart 26px] 20（1 字）
+- [eyebrow 22px] 平均损失（4 字）
+- [div 120px] 13.4（1 字）
+- [chart 26px] 0（1 字）
+- [chart 28px] 公里（2 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- 合计（不含小标签、图表）：4 块，9 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l22.png`
+### l23（4.6s）
+- 口播：这种打分法叫均方误差，是最常见的一种损失函数。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意数据（4 字）
+- [eyebrow 22px] 起步价（3 字）
+- [eyebrow 22px] 每公里（3 字）
+- [chart 28px] 车费（元）（3 字）
+- [chart 26px] 40（1 字）
+- [div 54px] 4（1 字）
+- [div 54px] 3.5（1 字）
+- [h1 76px] 均方误差Mean squared error（7 字）
+- [chart 26px] 20（1 字）
+- [chart 26px] 0（1 字）
+- [chart 28px] 公里（2 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- 合计（不含小标签、图表）：3 块，9 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l23.png`
+### l24（6.7s）
+- 口播：第三种：起步价十块，每公里两块五。线贴着点走，方块都很小，只得二点一九分。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意数据（4 字）
+- [eyebrow 22px] 起步价（3 字）
+- [eyebrow 22px] 每公里（3 字）
+- [chart 28px] 车费（元）（3 字）
+- [chart 26px] 40（1 字）
+- [div 54px] 10（1 字）
+- [div 54px] 2.5（1 字）
+- [h1 76px] 第三种：贴近（5 字）
+- [chart 26px] 20（1 字）
+- [eyebrow 22px] 平均损失（4 字）
+- [div 120px] 2.19（1 字）
+- [chart 26px] 0（1 字）
+- [chart 28px] 公里（2 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- 合计（不含小标签、图表）：4 块，8 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l24.png`
+### l25（3.0s）
+- 口播：三个分一比，第三种最低，拧得最好。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意数据（4 字）
+- [eyebrow 22px] 起步价（3 字）
+- [eyebrow 22px] 每公里（3 字）
+- [chart 28px] 车费（元）（3 字）
+- [chart 26px] 40（1 字）
+- [div 54px] 10（1 字）
+- [div 54px] 2.5（1 字）
+- [h1 76px] 三种拧法对比（6 字）
+- [chart 26px] 20（1 字）
+- [b 54px] 78（1 字）
+- [h2 54px] 第一种（3 字）
+- [b 54px] 13.4（1 字）
+- [h2 54px] 第二种（3 字）
+- [chart 26px] 0（1 字）
+- [b 54px] 2.19（1 字）
+- [h2 54px] 第三种（3 字）
+- [chart 28px] 公里（2 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- 合计（不含小标签、图表）：9 块，20 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l25.png`
+### l26（7.2s）
+- 口播：可这才试了三种。把两个旋钮的所有拧法都算一遍，就能画出一张分数的地形图。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 起步价（3 字）
+- [eyebrow 22px] 每公里（3 字）
+- [chart 26px] 4（1 字）
+- [div 54px] 10（1 字）
+- [div 54px] 2.5（1 字）
+- [chart 26px] 3（1 字）
+- [h1 76px] 分数地形图（5 字）
+- [chart 26px] 2（1 字）
+- [chart 26px] 1（1 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- [chart 26px] 15（1 字）
+- [chart 26px] 20（1 字）
+- 合计（不含小标签、图表）：3 块，7 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l26.png`
+### l27（4.6s）
+- 口播：横着是起步价，竖着是每公里价钱，颜色越深分越高。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 起步价（3 字）
+- [eyebrow 22px] 每公里（3 字）
+- [chart 26px] 4（1 字）
+- [chart 28px] 每公里 →（3 字）
+- [div 54px] 10（1 字）
+- [div 54px] 2.5（1 字）
+- [chart 26px] 3（1 字）
+- [h1 76px] 分数地形图（5 字）
+- [chart 26px] 2（1 字）
+- [h2 54px] 颜色越深 = 分越高（7 字）
+- [chart 26px] 1（1 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- [chart 26px] 15（1 字）
+- [chart 26px] 20（1 字）
+- [chart 28px] 起步价 →（3 字）
+- 合计（不含小标签、图表）：4 块，14 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l27.png`
+### l28（6.1s）
+- 口播：刚才那三种拧法，第一种在高处，第二种在半山腰，第三种快到谷底了。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 起步价（3 字）
+- [eyebrow 22px] 每公里（3 字）
+- [chart 26px] 4（1 字）
+- [chart 28px] 每公里 →（3 字）
+- [chart 30px] ② 13.4（1 字）
+- [div 54px] 10（1 字）
+- [div 54px] 2.5（1 字）
+- [chart 26px] 3（1 字）
+- [h1 76px] 分数地形图（5 字）
+- [chart 30px] ③ 2.19（1 字）
+- [chart 30px] ① 78（1 字）
+- [chart 26px] 2（1 字）
+- [chart 26px] 1（1 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- [chart 26px] 15（1 字）
+- [chart 26px] 20（1 字）
+- [chart 28px] 起步价 →（3 字）
+- 合计（不含小标签、图表）：3 块，7 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l28.png`
+### l29（5.4s）
+- 口播：最低点在起步价十块二、每公里两块五毛四，只有一点九七分。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 起步价（3 字）
+- [eyebrow 22px] 每公里（3 字）
+- [chart 26px] 4（1 字）
+- [chart 28px] 每公里 →（3 字）
+- [chart 30px] ② 13.4（1 字）
+- [div 54px] 10.2（1 字）
+- [div 54px] 2.54（1 字）
+- [chart 26px] 3（1 字）
+- [chart 34px] 最低点（3 字）
+- [h1 76px] 分数地形图（5 字）
+- [chart 30px] ③ 2.19（1 字）
+- [chart 30px] ① 78（1 字）
+- [chart 26px] 2（1 字）
+- [eyebrow 22px] 最低损失（4 字）
+- [div 120px] 1.97（1 字）
+- [chart 26px] 1（1 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- [chart 26px] 15（1 字）
+- [chart 26px] 20（1 字）
+- [chart 28px] 起步价 →（3 字）
+- 合计（不含小标签、图表）：4 块，8 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l29.png`
+### l30（4.8s）
+- 口播：这就是最好的拧法。训练要做的，就是找到这个最低点。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 起步价（3 字）
+- [eyebrow 22px] 每公里（3 字）
+- [chart 26px] 4（1 字）
+- [chart 28px] 每公里 →（3 字）
+- [chart 30px] ② 13.4（1 字）
+- [div 54px] 10.2（1 字）
+- [div 54px] 2.54（1 字）
+- [chart 26px] 3（1 字）
+- [chart 34px] 最低点（3 字）
+- [h1 76px] 训练 = 找最低点（6 字）
+- [chart 30px] ③ 2.19（1 字）
+- [chart 30px] ① 78（1 字）
+- [chart 26px] 2（1 字）
+- [eyebrow 22px] 最低损失（4 字）
+- [div 120px] 1.97（1 字）
+- [chart 26px] 1（1 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- [chart 26px] 15（1 字）
+- [chart 26px] 20（1 字）
+- [chart 28px] 起步价 →（3 字）
+- 合计（不含小标签、图表）：4 块，9 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s3_l30.png`
+
+## c_lens（章节卡）
+- 模型只认分数
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/card_c_lens.png`
+
+## s4 模型只认这个分
+### l31（2.8s）
+- 口播：不过你注意，最低点也不是零分。
+- [eyebrow 22px] 03 · 模型只认分数（7 字）
+- [chart 28px] 车费（元）（3 字）
+- [h1 76px] 最低分 ≠ 0（4 字）
+- [chart 26px] 40（1 字）
+- [eyebrow 22px] 最低损失（4 字）
+- [div 120px] 1.97（1 字）
+- [chart 26px] 20（1 字）
+- [chart 26px] 0（1 字）
+- [chart 28px] 公里（2 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- 合计（不含小标签、图表）：2 块，5 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s4_l31.png`
+### l32（4.8s）
+- 口播：堵车、绕路都会影响车费，一条直线不可能每趟都猜中。
+- [eyebrow 22px] 03 · 模型只认分数（7 字）
+- [chart 28px] 车费（元）（3 字）
+- [h1 76px] 最低分 ≠ 0（4 字）
+- [chart 26px] 40（1 字）
+- [eyebrow 22px] 最低损失（4 字）
+- [div 120px] 1.97（1 字）
+- [chart 26px] 20（1 字）
+- [h2 54px] 堵车、绕路：随机波动（8 字）
+- [chart 26px] 0（1 字）
+- [chart 28px] 公里（2 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- 合计（不含小标签、图表）：3 块，13 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s4_l32.png`
+### l33（3.5s）
+- 口播：所以训练追求的不是零分，而是尽量低。
+- [eyebrow 22px] 03 · 模型只认分数（7 字）
+- [chart 28px] 车费（元）（3 字）
+- [h1 76px] 不求零分，求最低（7 字）
+- [chart 26px] 40（1 字）
+- [chart 26px] 20（1 字）
+- [chart 26px] 0（1 字）
+- [chart 28px] 公里（2 字）
+- [chart 26px] 0（1 字）
+- [chart 26px] 5（1 字）
+- [chart 26px] 10（1 字）
+- 合计（不含小标签、图表）：1 块，7 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s4_l33.png`
+### l34（5.4s）
+- 口播：还有更有意思的：模型根本不知道什么是打车，它只认这个分。
+- [eyebrow 22px] 03 · 模型只认分数（7 字）
+- [chart 54px] 1.97（1 字）
+- [h1 76px] 只认分数（4 字）
+- [h2 54px] 不懂打车（4 字）
+- 合计（不含小标签、图表）：2 块，8 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s4_l34.png`
+### l35（5.4s）
+- 口播：怎么打分，它就怎么学。比如我们用了平方，它就特别怕犯大错。
+- [eyebrow 22px] 03 · 模型只认分数（7 字）
+- [chart 54px] 1.97（1 字）
+- [h1 76px] 怎么打分，就怎么学（8 字）
+- [h2 54px] 平方：特别怕大错（7 字）
+- 合计（不含小标签、图表）：2 块，15 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s4_l35.png`
+### l36（4.1s）
+- 口播：它宁可每趟都差一点，也不愿意有一趟差很多。
+- [eyebrow 22px] 03 · 模型只认分数（7 字）
+- [chart 48px] 4 趟各差 2（5 字）
+- [h1 76px] 怎么打分，就怎么学（8 字）
+- [chart 48px] 罚 16（2 字）
+- [h2 54px] 平方：特别怕大错（7 字）
+- [chart 48px] 1 趟差 8（4 字）
+- [chart 48px] 罚 64（2 字）
+- 合计（不含小标签、图表）：2 块，15 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s4_l36.png`
+### l37（5.9s）
+- 口播：所以选什么样的损失函数，其实就是在告诉模型，什么才算「好」。
+- [eyebrow 22px] 03 · 模型只认分数（7 字）
+- [chart 48px] 4 趟各差 2（5 字）
+- [h1 76px] 损失函数： / 定义「好」（7 字）
+- [chart 48px] 罚 16（2 字）
+- [chart 48px] 1 趟差 8（4 字）
+- [chart 48px] 罚 64（2 字）
+- 合计（不含小标签、图表）：1 块，7 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s4_l37.png`
+
+## c_real（章节卡）
+- 大模型怎么打分
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/card_c_real.png`
+
+## s5 大模型怎么打分
+### l38（7.0s）
+- 口播：像 ChatGPT 这样的大语言模型，训练时也有个分，只是猜的不是车费了。
+- [eyebrow 22px] 04 · 大模型怎么打分（8 字）
+- [h1 76px] 大语言模型（5 字）
+- [h2 54px] 也有损失（4 字）
+- 合计（不含小标签、图表）：2 块，9 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s5_l38.png`
+### l39（5.2s）
+- 口播：它的任务是猜下一个词，比如「床前明月」后面该接什么。
+- [eyebrow 22px] 04 · 大模型怎么打分（8 字）
+- [display 132px] 床前明月光（5 字）
+- 合计（不含小标签、图表）：1 块，5 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s5_l39.png`
+### l40（6.1s）
+- 口播：答案其实是「光」，就看它有几成把握猜「光」：把握越小，罚得越多。
+- [eyebrow 22px] 04 · 大模型怎么打分（8 字）
+- [display 132px] 床前明月光（5 字）
+- [h1 76px] 把握小 → 罚得多（6 字）
+- 合计（不含小标签、图表）：2 块，11 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s5_l40.png`
+### l41（5.0s）
+- 口播：有九成把握猜对，几乎不罚，只有一成把握，就罚得多得多。
+- [eyebrow 22px] 04 · 大模型怎么打分（8 字）
+- [display 132px] 床前明月光（5 字）
+- [h2 54px] 把握 90%（3 字）
+- [h2 54px] 罚 0.11（2 字）
+- [h2 54px] 把握 10%（3 字）
+- [h2 54px] 罚 2.30（2 字）
+- 合计（不含小标签、图表）：5 块，15 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s5_l41.png`
+### l42（6.5s）
+- 口播：这种打分叫交叉熵，英文是 cross-entropy，名字听过就行。
+- [eyebrow 22px] 04 · 大模型怎么打分（8 字）
+- [display 132px] 交叉熵（3 字）
+- [h2 54px] Cross-entropy（2 字）
+- 合计（不含小标签、图表）：2 块，5 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s5_l42.png`
+### l43（8.5s）
+- 口播：2023年，Meta 训练大模型 Llama 2 时，分数一直在降，画出来是一条往下走的曲线。
+- [eyebrow 22px] 04 · 大模型怎么打分（8 字）
+- [eyebrow 22px] 示意（2 字）
+- [chart 28px] 损失 →（2 字）
+- [h1 76px] Llama 2（2 字）
+- [h2 54px] 训练损失一路往下（8 字）
+- [chart 28px] 读过的词元 →（5 字）
+- [div 22px] Touvron 等 · Meta · 2023 · 图 5（6 字）
+- 合计（不含小标签、图表）：3 块，16 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s5_l43.png`
+### l44（5.0s）
+- 口播：模型读完了两万亿个词元，词元大致就是字或词的碎片。
+- [eyebrow 22px] 04 · 大模型怎么打分（8 字）
+- [eyebrow 22px] 示意（2 字）
+- [chart 28px] 损失 →（2 字）
+- [h1 76px] Llama 2（2 字）
+- [h2 54px] 训练损失一路往下（8 字）
+- [chart 32px] 2 万亿（3 字）
+- [chart 28px] 读过的词元 →（5 字）
+- [div 22px] Touvron 等 · Meta · 2023 · 图 5（6 字）
+- 合计（不含小标签、图表）：3 块，16 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s5_l44.png`
+### l45（4.1s）
+- 口播：读了这么多，分还在往下降，还没有到头的意思。
+- [eyebrow 22px] 04 · 大模型怎么打分（8 字）
+- [eyebrow 22px] 示意（2 字）
+- [chart 28px] 损失 →（2 字）
+- [h1 76px] Llama 2（2 字）
+- [h2 54px] 训练损失一路往下（8 字）
+- [chart 34px] 还在降 ↓（3 字）
+- [chart 32px] 2 万亿（3 字）
+- [chart 28px] 读过的词元 →（5 字）
+- [div 22px] Touvron 等 · Meta · 2023 · 图 5（6 字）
+- 合计（不含小标签、图表）：3 块，16 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s5_l45.png`
+### l46（5.0s）
+- 口播：大模型几百亿个旋钮，咱们就两个，忙的都一样：找最低点。
+- [eyebrow 22px] 04 · 大模型怎么打分（8 字）
+- [h1 76px] 分 ↓（1 字）
+- [h2 54px] 2 个旋钮（4 字）
+- [h1 76px] 分 ↓（1 字）
+- [h2 54px] 几百亿个旋钮（6 字）
+- 合计（不含小标签、图表）：4 块，12 字
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/s5_l46.png`
+
+## s6 片尾（画面：片尾卡）
+### outro（包装卡，整段 18.7s）
+- 口播 l47：所以一句话：损失函数，就是给错误打个分，分越低越好。
+- 口播 l48：训练，就是把这个分压下去。
+- 口播 l49：可旋钮一多，地形图大得看不到边，该往哪边拧，才能一步步走到最低点呢？
+- 口播 l50：下一期，咱们聊聊梯度下降。
+- 屏幕：损失函数：给错误打分 训练：把分压到最低（17 字）
+- 屏幕：梯度下降（4 字）
+- 截图：`edu_videos/ai_terms/t11_loss_function/reviews/lines_r2/materials/screen/zh/card_s6.png`
+

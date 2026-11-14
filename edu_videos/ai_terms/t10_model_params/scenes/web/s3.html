@@ -1,0 +1,81 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  #chart { position: absolute; left: 90px; top: 170px; }
+  .tag { position: absolute; left: 400px; top: 166px; }
+  html[lang=en] .tag { left: 330px; }
+  #knobs { position: absolute; left: 1230px; top: 200px; width: 600px; height: 380px; }
+  .side { position: absolute; left: 1230px; width: 600px; top: 640px; }
+  .side .t { position: absolute; top: 0; left: 0; width: 600px; }
+  .side .t .h2 + .caption { margin-top: 8px; }
+  html[lang=en] .side .t .h2 { font-size: 46px; }
+</style>
+
+<div class="eb eyebrow" data-zh="02 · 拧拧旋钮试试" data-en="02 · Let's turn the knobs"></div>
+<svg id="chart"></svg>
+<div class="tag eyebrow" id="tag" data-zh="示意" data-en="Illustration"></div>
+<div id="knobs"></div>
+
+<div class="side">
+  <div class="t" id="ta"><div class="h2" data-zh="十二趟打车" data-en="Twelve taxi rides"></div></div>
+  <div class="t" id="tb"><div class="h2" data-zh='猜法 = <span class="accent">一条直线</span>' data-en='Guesses = <span class="accent">a line</span>'></div></div>
+  <div class="t" id="tc"><div class="h2" data-zh='竖线 = <span class="c-bad">差多少</span>' data-en='Gaps = <span class="c-bad">how far off</span>'></div></div>
+  <div class="t" id="td"><div class="h2 c-bad" data-zh="全都猜少了" data-en="All too low"></div></div>
+  <div class="t" id="te"><div class="h2" data-zh="直线整体抬高" data-en="Whole line goes up"></div></div>
+  <div class="t" id="tf"><div class="h2 c-bad" data-zh="远的竖线更长" data-en="Longer ride, bigger miss"></div></div>
+  <div class="t" id="tg"><div class="h2 c-valid" data-zh="拧过头了" data-en="Overshot"></div></div>
+  <div class="t" id="tj"><div class="h2" data-zh="往回拧一点" data-en="Backing off a bit"></div></div>
+  <div class="t" id="th"><div class="h2 c-good" data-zh="竖线都很短" data-en="Small misses"></div></div>
+  <div class="t" id="ti"><div class="h2" data-zh='8 公里 → <span id="ans" class="sub">？</span>' data-en='8 km → <span id="ans" class="sub">?</span>'></div>
+    <div class="caption" data-zh="记录里没有 8 公里" data-en="Not one of the twelve"></div></div>
+</div>
+
+<script>
+const C = fareChart("#chart", { W: 1040, H: 720 }), T = EDU.tl, ST = D.steps;
+const money = v => EDU.tr(v.toFixed(1), "$" + v.toFixed(2));
+const K1 = knob("#knobs", { size: 240, min: D.knobs.base.min, max: D.knobs.base.max, value: 0, left: 0, top: 0,
+  label: EDU.tr("起步价", "Base fare"), unit: EDU.tr("元", ""), fmt: v => EDU.tr(v.toFixed(1), "$" + v.toFixed(2)) });
+const K2 = knob("#knobs", { size: 240, min: D.knobs.per_km.min, max: D.knobs.per_km.max, value: 1, left: 330, top: 0,
+  label: EDU.tr("每公里", "Per km"), unit: EDU.tr("元", ""), fmt: v => EDU.tr(v.toFixed(2), "$" + v.toFixed(2)) });
+const s = { base: 0, per_km: 1 };
+C.draw(s.base, s.per_km);
+// 八公里的提问：虚线竖线、线上的点、读数
+const ax = C.x(D.ask.km), ay = C.y(D.ask.fare);
+const askV = C.over.append("line").attr("x1", ax).attr("x2", ax).attr("y1", C.y(0)).attr("y2", ay).attr("stroke", css("--accent"))
+  .attr("stroke-width", 4).attr("stroke-dasharray", "4 10").attr("stroke-linecap", "round").node();
+const askH = C.over.append("line").attr("x1", C.m.l).attr("x2", ax).attr("y1", ay).attr("y2", ay).attr("stroke", css("--accent"))
+  .attr("stroke-width", 4).attr("stroke-dasharray", "4 10").attr("stroke-linecap", "round").node();
+const askP = C.over.append("circle").attr("cx", ax).attr("cy", ay).attr("r", 16).attr("fill", css("--accent"))
+  .attr("stroke", css("--surface")).attr("stroke-width", 5).node();
+const askL = C.over.append("text").attr("x", ax - 24).attr("y", ay - 30).attr("text-anchor", "end").attr("font-size", 40).attr("font-weight", 700)
+  .attr("fill", css("--accent-text")).text(money(D.ask.fare)).node();
+
+const T_ALL = ["#ta", "#tb", "#tc", "#td", "#te", "#tf", "#tg", "#tj", "#th", "#ti"];
+gsap.set([C.svg.node(), "#tag", "#knobs", C.line, C.dots, C.gaps, askV, askH, askP, askL, ...T_ALL], { opacity: 0 });
+const say = (id, at) => { T.to(T_ALL.filter(x => x !== id), { opacity: 0, duration: .3 }, at); EDU.in(id, at + .05); };
+EDU.in(".eb", 0);
+// l14 十二趟（示意）
+EDU.in(C.svg.node(), EDU.t("l14", .05), { y: 0, d: .6 }); gsap.set([C.line, C.gaps], { opacity: 0 });
+EDU.in(C.dots, EDU.t("l14", .2), { stagger: .06 }); EDU.in("#tag", EDU.t("l14", .55)); say("#ta", EDU.t("l14", .1));
+// l15 每个点一趟：右远、上贵（轴标题强调）
+// l16 模型的猜法 = 一条直线；旋钮出场
+say("#tb", EDU.t("l16")); EDU.in(C.line, EDU.t("l16", .2)); EDU.in("#knobs", EDU.t("l16", .45));
+// l17 竖线 = 差多少
+say("#tc", EDU.t("l17")); EDU.in(C.gaps, EDU.t("l17", .25), { stagger: .04 });
+// l18 随便拧：0、1，全猜少
+say("#td", EDU.t("l18", .55));
+// l19 起步价拧到 10：直线整体往上
+turnBoth(K1, K2, C, s, EDU.t("l19", .25), ST.start, ST.up, 1.6); say("#te", EDU.t("l19", .3));
+// l20 近的差得少、远的差得多
+say("#tf", EDU.t("l20", .1));
+// l21 每公里拧到 3.5：拧过头
+turnBoth(K1, K2, C, s, EDU.t("l21", .05), ST.up, ST.steep, 1.8); say("#tg", EDU.t("l21", .5));
+// l22 往回拧一点：10.2、2.54
+say("#tj", EDU.t("l22", .02)); turnBoth(K1, K2, C, s, EDU.t("l22", .1), ST.steep, ST.best, 1.8);
+// l23 贴着点走，竖线都很短
+say("#th", EDU.t("l23", .05));
+// l24 问八公里
+EDU.dim(C.gaps, EDU.t("l24", .1), .25); say("#ti", EDU.t("l24", .3)); gsap.set("#ti .caption", { opacity: 0 });
+EDU.in(askV, EDU.t("l24", .35));
+// l25 十二趟里没有八公里，也能猜：30.5
+EDU.in("#ti .caption", EDU.t("l25", .1)); setText("#ans", EDU.t("l25", .75), EDU.tr("≈ 30.5 元", "≈ $30.50")); T.set("#ans", { color: css("--accent-text") }, EDU.t("l25", .75)); EDU.in([askH, askP], EDU.t("l25", .6));
+</script>

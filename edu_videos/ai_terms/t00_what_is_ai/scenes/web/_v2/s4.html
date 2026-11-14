@@ -1,0 +1,82 @@
+<style>
+  .head { position: absolute; left: var(--mx); top: var(--mt); }
+  #kid { left: 40px; top: 150px; width: 1060px; }
+  .manual { position: absolute; left: 1120px; top: 300px; width: 680px; }
+  .manual .box { padding: 34px 40px; }
+  .manual .h2 { margin-top: 12px; }
+  #mtext { font-size: 42px; white-space: nowrap; }
+  html[lang="en"] #mtext { white-space: normal; }
+  #l2c { display: block; margin-top: 8px; }
+  .manual .no { margin-top: 22px; }
+  .map { position: absolute; left: 1120px; top: 250px; width: 680px; }
+  .map .row { padding: 26px 0; border-top: 1px solid var(--hair); }
+  .map .row .caption { margin-bottom: 6px; }
+  .nolike { position: absolute; left: 1120px; top: 250px; width: 680px; }
+  .nolike .row { padding: 24px 0; border-top: 1px solid var(--hair); }
+  #c1 { left: 20px; top: 150px; width: 900px; } #c2 { left: 960px; top: 150px; width: 900px; }
+  #c2 { -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 55%, transparent 100%); mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 55%, transparent 100%); }
+  .clab { position: absolute; top: 680px; width: 800px; }
+  #l1 { left: var(--mx); } #l2 { left: 1010px; }
+  .clab .h2 { margin-top: 8px; }
+  .mapc { position: absolute; left: 1010px; top: 230px; width: 800px; }
+  .mapc .mr { display: flex; align-items: baseline; gap: 24px; padding: 20px 0; border-top: 1px solid var(--hair); }
+  .mapc .mr .caption { width: 220px; }
+</style>
+
+<div class="head"><div class="eyebrow" data-zh="02 · 打个比方" data-en="02 · An analogy"></div></div>
+<img class="ill" id="kid" src="img/clay_child_v1_cut.png">
+<div class="manual" id="manual"><div class="box">
+  <div class="caption" data-zh="你不会给他一本说明书：" data-en="You don't hand them a manual:"></div>
+  <div class="h2" id="mtext" data-zh="「3，是两个半圆叠在一起」" data-en="“A 3 is two half circles, stacked”"></div></div>
+  <div class="h2 accent no" id="point" data-zh="只是指着说：这是三。" data-en="You just point: “This is a three.”"></div>
+  <div class="body ink2" id="gen" data-zh="看多了，没见过的写法也认得出" data-en="Eventually, even new handwriting"></div></div>
+<div class="map" id="map">
+  <div class="row" id="mp1"><div class="caption" data-zh="小孩学会的那套认法" data-en="What the child picks up"></div>
+    <div class="h2" data-zh='= <span class="accent">模型</span>' data-en='= <span class="accent">the model</span>'></div></div>
+  <div class="row" id="mp2"><div class="caption" data-zh="指着的数字 +「这是三」" data-en="The digit + “this is a three”"></div>
+    <div class="h2" data-zh='= <span class="accent">带答案的例子</span>' data-en='= <span class="accent">an example with its answer</span>'></div></div>
+</div>
+<div class="nolike" id="nolike"><div class="eyebrow" data-zh="两点不像" data-en="Two things don't match"></div>
+  <div class="row" id="n1"><div class="h2" data-zh="模型要靠大量例子：100 个比 10 个准得多" data-en="A model leans on lots of examples: 100 beats 10 by far"></div></div>
+  <div class="row" id="n2"><div class="h2" data-zh="小孩会知道「三」代表三个东西；模型只是看图挑答案" data-en="A child learns three means three things; the model just picks an answer"></div></div></div>
+
+<img class="ill" id="c1" src="img/clay_cook_recipe_v1_cut.png">
+<img class="ill" id="c2" src="img/clay_cook_taste_v1_cut.png">
+<div class="clab" id="l1"><div class="caption" data-zh="有的菜：照菜谱一步一步做就行" data-en="Some dishes: just follow the recipe"></div>
+  <div class="h2" id="l1b"><span class="pill rulep" style="font-size:var(--fs-h2)" data-zh="传统程序" data-en="Traditional program"></span></div></div>
+<div class="clab" id="l2"><div class="caption" data-zh="有的菜：靠手感，尝一口、听评价、差了就调" data-en="Others take a feel: taste, listen, adjust"></div>
+  <div class="h2" id="l2b"><span class="pill learn" style="font-size:var(--fs-h2)" data-zh="机器学习" data-en="Machine learning"></span>
+    <span class="body sub" id="l2c" data-zh="　手感写不成菜谱" data-en="  the feel can't be written down"></span></div></div>
+<div class="mapc" id="mapc">
+  <div class="mr" id="q1"><span class="caption" data-zh="做一道菜" data-en="Each dish"></span><span class="h2" data-zh="= 模型猜一个答案" data-en="= the model guesses"></span></div>
+  <div class="mr" id="q2"><span class="caption" data-zh="尝一口、听评价" data-en="Taste, hear feedback"></span><span class="h2" data-zh="= 对照正确答案" data-en="= check against the answer"></span></div>
+  <div class="mr" id="q3"><span class="caption" data-zh="差了就调" data-en="Adjust when it&#39;s off"></span><span class="h2 accent" data-zh="= 学习" data-en="= learning"></span></div>
+  <div class="body sub" id="q4" style="margin-top:18px" data-zh="练出来的手感，老师傅自己也写不全成菜谱" data-en="The feel they end up with can&#39;t be fully written down"></div></div>
+
+<script>
+const T = EDU.tl;
+gsap.set(["#kid", "#manual", "#point", "#gen", "#map", "#mp1", "#mp2", "#nolike", "#n1", "#n2", "#c1", "#c2", "#l1", "#l2", "#l2c", "#mapc", "#q1", "#q2", "#q3", "#q4"], { opacity: 0 });
+// l20 小孩 + 不给说明书
+EDU.in("#kid", EDU.t("l20", 0.02), { d: 0.9 });
+EDU.in("#manual", EDU.t("l20", 0.4));
+EDU.dim("#mtext", EDU.t("l20", 0.95), 0.3);
+// l21 指着说；看多了会认
+EDU.in("#point", EDU.t("l21", 0.1));
+EDU.in("#gen", EDU.t("l21", 0.6));
+// l22 逐点对应
+EDU.out("#manual", EDU.t("l22"));
+EDU.in("#map", EDU.t("l22", 0.02), { d: 0.01 });
+EDU.in("#mp1", EDU.t("l22", 0.05)); EDU.in("#mp2", EDU.t("l22", 0.5));
+// l23 两点不像
+EDU.out("#map", EDU.t("l23"));
+EDU.in("#nolike", EDU.t("l23", 0.05)); EDU.in("#n1", EDU.t("l23", 0.2)); EDU.in("#n2", EDU.t("l23", 0.55));
+// l24 做菜：新手 vs 老师傅
+EDU.out(["#kid", "#nolike"], EDU.t("l24"));
+EDU.in(["#c1", "#l1"], EDU.t("l24", 0.15)); EDU.in(["#c2", "#l2"], EDU.t("l24", 0.5));
+EDU.in("#l2c", EDU.t("l24", 0.85));
+// l25 对应回概念：尝 = 猜，听评价 = 对照答案，调 = 学习
+EDU.out(["#c1", "#l1", "#l2c"], EDU.t("l25")); T.to(["#c2", "#l2"], { x: -900, duration: 0.8, ease: "power3.inOut" }, EDU.t("l25"));
+EDU.in("#mapc", EDU.t("l25", 0.02), { d: 0.01 });
+EDU.in("#q1", EDU.t("l25", 0.05)); EDU.in("#q2", EDU.t("l25", 0.25)); EDU.in("#q3", EDU.t("l25", 0.45)); EDU.in("#q4", EDU.t("l25", 0.7));
+EDU.out(["#c2", "#l2", "#mapc"], EDU.S.duration - 0.5);
+</script>

@@ -1,0 +1,859 @@
+# 屏幕文字（逐屏）
+
+每句口播说完前一刻，屏幕上看得见的文字块：`[层级 字号px]` 文字（字数）。层级：eyebrow 小标签、display 大数字、h1 标题、h2 小标题、body 正文、caption 注释、chart 图表文字。截图是 1920×1080 的那一刻（字幕在成片里另外压在底部，截图里没有）。
+
+## s0 开场（片头之前）
+### l01（3.5s）
+- 口播：上一期，我们给错误打了分，分越低越好。
+- [eyebrow 22px] 示意（2 字）
+- [chart 28px] 每公里（元）（4 字）
+- [eyebrow 22px] 上一期（3 字）
+- [h1 76px] 分越低越好（5 字）
+- [chart 24px] 4（1 字）
+- [chart 24px] 3（1 字）
+- [chart 24px] 2（1 字）
+- [chart 24px] 1（1 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：1 块，5 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s0_l01.png`
+### l02（6.5s）
+- 口播：把两个旋钮所有拧法的分数画出来，是张地形图，最低点就是最好的拧法。
+- [eyebrow 22px] 示意（2 字）
+- [chart 28px] 每公里（元）（4 字）
+- [eyebrow 22px] 地形图（3 字）
+- [h1 76px] 最低点 = 最好（5 字）
+- [chart 24px] 4（1 字）
+- [chart 24px] 3（1 字）
+- [caption 28px] 最低点（3 字）
+- [chart 24px] 2（1 字）
+- [chart 24px] 1（1 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：2 块，8 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s0_l02.png`
+### l03（4.3s）
+- 口播：旋钮只有两个，每种拧法都能算一遍，画出整张图。
+- [eyebrow 22px] 示意（2 字）
+- [chart 28px] 每公里（元）（4 字）
+- [eyebrow 22px] 地形图（3 字）
+- [h1 76px] 最低点 = 最好（5 字）
+- [chart 24px] 4（1 字）
+- [chart 24px] 3（1 字）
+- [caption 28px] 最低点（3 字）
+- [h2 54px] 2 个旋钮：画得出（7 字）
+- [chart 24px] 2（1 字）
+- [chart 24px] 1（1 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：3 块，15 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s0_l03.png`
+### l04（4.8s）
+- 口播：可真正的模型有几千亿个旋钮，整张图根本画不出来。
+- [eyebrow 22px] 示意（2 字）
+- [chart 28px] 每公里（元）（4 字）
+- [eyebrow 22px] 地形图（3 字）
+- [h1 76px] 最低点 = 最好（5 字）
+- [chart 24px] 4（1 字）
+- [chart 24px] 3（1 字）
+- [h2 54px] 2 个旋钮：画得出（7 字）
+- [chart 24px] 2（1 字）
+- [h2 54px] 几千亿个：画不出（7 字）
+- [chart 24px] 1（1 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：3 块，19 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s0_l04.png`
+### l05（3.9s）
+- 口播：模型就像蒙着眼站在山上，看不见谷底在哪。
+- 屏幕同上一句
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s0_l05.png`
+### l06（2.4s）
+- 口播：那它是怎么走到最低点的？
+- [eyebrow 22px] 示意（2 字）
+- [chart 28px] 每公里（元）（4 字）
+- [chart 24px] 4（1 字）
+- [chart 24px] 3（1 字）
+- [h1 76px] 怎么走到最低点？（7 字）
+- [chart 24px] 2（1 字）
+- [chart 24px] 1（1 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：1 块，7 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s0_l06.png`
+### l07（2.6s）
+- 口播：答案叫梯度下降，今天就聊它。
+- [eyebrow 22px] 示意（2 字）
+- [chart 28px] 每公里（元）（4 字）
+- [chart 24px] 4（1 字）
+- [chart 24px] 3（1 字）
+- [chart 24px] 2（1 字）
+- [eyebrow 22px] 答案（2 字）
+- [h1 76px] 梯度下降（4 字）
+- [chart 24px] 1（1 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：1 块，4 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s0_l07.png`
+
+## c_analogy（章节卡）
+- 蒙着眼下山
+- 截图：``
+
+## s2 蒙着眼下山
+### l08（3.5s）
+- 口播：想象你蒙着眼站在山坡上，要走到谷底。
+- [eyebrow 22px] 01 · 蒙着眼下山（6 字）
+- [eyebrow 22px] 目标（2 字）
+- [h1 76px] 走到谷底（4 字）
+- 合计（不含小标签、图表）：1 块，4 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s2_l08.png`
+### l09（4.8s）
+- 口播：看不见路，可脚底能感觉到地面往哪边斜、斜得多厉害。
+- [eyebrow 22px] 01 · 蒙着眼下山（6 字）
+- [h1 76px] 看不见路（4 字）
+- [h2 54px] 脚能感觉到坡（6 字）
+- 合计（不含小标签、图表）：2 块，10 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s2_l09.png`
+### l10（4.8s）
+- 口播：办法笨但管用：探探哪边往下最陡，就往那边迈一小步。
+- [eyebrow 22px] 01 · 蒙着眼下山（6 字）
+- [h1 76px] 往最陡的下坡（6 字）
+- [h2 54px] 迈一小步（4 字）
+- 合计（不含小标签、图表）：2 块，10 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s2_l10.png`
+### l11（3.3s）
+- 口播：站稳了再探，再迈，一步步就到了谷底。
+- [eyebrow 22px] 01 · 蒙着眼下山（6 字）
+- [h1 76px] 再探，再迈（4 字）
+- 合计（不含小标签、图表）：1 块，4 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s2_l11.png`
+### l12（5.0s）
+- 口播：换回模型，脚下的坡就是：每个旋钮稍拧一点，分数变多少。
+- [eyebrow 22px] 01 · 蒙着眼下山（6 字）
+- [div 34px] 起步价（3 字）
+- [div 34px] 每公里（3 字）
+- [eyebrow 22px] 脚下的坡（4 字）
+- [h2 54px] 拧一点 → 分变多少（7 字）
+- [span 57px] 5.0（1 字）
+- [span 57px] 2.00（1 字）
+- [u 29px] 元（1 字）
+- [u 29px] 元（1 字）
+- 合计（不含小标签、图表）：7 块，17 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s2_l12.png`
+### l13（7.6s）
+- 口播：每个旋钮往哪边拧、分数降得最快，合起来这个方向就叫梯度，英文 gradient。
+- [eyebrow 22px] 01 · 蒙着眼下山（6 字）
+- [div 34px] 起步价（3 字）
+- [div 34px] 每公里（3 字）
+- [eyebrow 22px] 梯度 gradient（3 字）
+- [div 90px] ↻（0 字）
+- [div 90px] ↻（0 字）
+- [h1 76px] 分降得最快的方向（8 字）
+- [span 57px] 5.0（1 字）
+- [span 57px] 2.00（1 字）
+- [u 29px] 元（1 字）
+- [u 29px] 元（1 字）
+- 合计（不含小标签、图表）：9 块，18 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s2_l13.png`
+### l14（6.1s）
+- 口播：梯度下降，就是所有旋钮一起往这个方向拧一小步，拧完再看坡，再拧。
+- [eyebrow 22px] 01 · 蒙着眼下山（6 字）
+- [div 34px] 起步价（3 字）
+- [div 34px] 每公里（3 字）
+- [eyebrow 22px] 梯度 gradient（3 字）
+- [div 90px] ↻（0 字）
+- [div 90px] ↻（0 字）
+- [h1 76px] 分降得最快的方向（8 字）
+- [span 57px] 5.4（1 字）
+- [span 57px] 2.60（1 字）
+- [u 29px] 元（1 字）
+- [u 29px] 元（1 字）
+- [div 38px] 拧一小步（4 字）
+- [div 38px] 再看坡（3 字）
+- [div 38px] 再拧（2 字）
+- [div 38px] →（0 字）
+- [div 38px] →（0 字）
+- [div 38px] ↺（0 字）
+- 合计（不含小标签、图表）：15 块，27 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s2_l14.png`
+### l15（7.0s）
+- 口播：每一步拧多大，叫学习率，英文 learning rate，是训练前人定好的。
+- [eyebrow 22px] 01 · 蒙着眼下山（6 字）
+- [div 34px] 起步价（3 字）
+- [div 34px] 每公里（3 字）
+- [eyebrow 22px] 学习率 learning rate（5 字）
+- [h1 76px] 每一步拧多大（6 字）
+- [h2 54px] 训练前定好（5 字）
+- [span 57px] 5.4（1 字）
+- [span 57px] 2.60（1 字）
+- [u 29px] 元（1 字）
+- [u 29px] 元（1 字）
+- [div 38px] 拧一小步（4 字）
+- [div 38px] 再看坡（3 字）
+- [div 38px] 再拧（2 字）
+- [div 38px] →（0 字）
+- [div 38px] →（0 字）
+- [div 38px] ↺（0 字）
+- 合计（不含小标签、图表）：14 块，30 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s2_l15.png`
+
+## c_experiment（章节卡）
+- 做个小实验
+- 截图：``
+
+## s3 做个小实验
+### l16（5.4s）
+- 口播：还是上一期那张地形图，横着是起步价，竖着是每公里多少钱。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [chart 28px] 每公里（元）（4 字）
+- [chart 24px] 4（1 字）
+- [chart 24px] 3（1 字）
+- [caption 28px] 最低点（3 字）
+- [chart 24px] 2（1 字）
+- [chart 24px] 1（1 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：1 块，3 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s3_l16.png`
+### l17（3.3s）
+- 口播：颜色越深分越高，打车数据是示意的。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意（2 字）
+- [chart 28px] 每公里（元）（4 字）
+- [chart 24px] 4（1 字）
+- [chart 24px] 3（1 字）
+- [caption 28px] 最低点（3 字）
+- [chart 24px] 2（1 字）
+- [h2 54px] 颜色越深 = 分越高（7 字）
+- [chart 24px] 1（1 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：2 块，10 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s3_l17.png`
+### l18（6.1s）
+- 口播：从上一期第一组拧法出发：起步价五元、每公里两元，七十八分，在高处。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意（2 字）
+- [div 26px] 起步价（3 字）
+- [div 26px] 每公里（3 字）
+- [chart 28px] 每公里（元）（4 字）
+- [chart 24px] 4（1 字）
+- [span 44px] 5.0（1 字）
+- [span 44px] 2.00（1 字）
+- [u 22px] 元（1 字）
+- [u 22px] 元（1 字）
+- [chart 24px] 3（1 字）
+- [caption 28px] 最低点（3 字）
+- [eyebrow 22px] 分数（2 字）
+- [eyebrow 22px] 步数（2 字）
+- [div 96px] 78（1 字）
+- [div 54px] 0（1 字）
+- [chart 24px] 2（1 字）
+- [caption 28px] 起点（2 字）
+- [h2 54px] 颜色越深 = 分越高（7 字）
+- [chart 24px] 1（1 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：11 块，24 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s3_l18.png`
+### l19（3.7s）
+- 口播：先探探坡，两个旋钮各往上拧一毛钱试试。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意（2 字）
+- [div 26px] 起步价（3 字）
+- [div 26px] 每公里（3 字）
+- [chart 28px] 每公里（元）（4 字）
+- [chart 24px] 4（1 字）
+- [span 44px] 5.0（1 字）
+- [span 44px] 2.00（1 字）
+- [u 22px] 元（1 字）
+- [u 22px] 元（1 字）
+- [chart 24px] 3（1 字）
+- [caption 28px] 最低点（3 字）
+- [eyebrow 22px] 分数（2 字）
+- [eyebrow 22px] 步数（2 字）
+- [div 96px] 78（1 字）
+- [div 54px] 0（1 字）
+- [chart 24px] 2（1 字）
+- [caption 28px] 起点（2 字）
+- [chart 24px] 1（1 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：10 块，17 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s3_l19.png`
+### l20（5.4s）
+- 口播：起步价加一毛，分数降一点七。每公里加一毛，分数降十一点二。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意（2 字）
+- [div 26px] 起步价（3 字）
+- [div 26px] 每公里（3 字）
+- [chart 28px] 每公里（元）（4 字）
+- [chart 24px] 4（1 字）
+- [span 44px] 5.0（1 字）
+- [span 44px] 2.00（1 字）
+- [u 22px] 元（1 字）
+- [u 22px] 元（1 字）
+- [chart 24px] 3（1 字）
+- [caption 28px] 最低点（3 字）
+- [eyebrow 22px] 分数（2 字）
+- [eyebrow 22px] 步数（2 字）
+- [div 96px] 78（1 字）
+- [div 54px] 0（1 字）
+- [chart 24px] 2（1 字）
+- [caption 28px] 起点（2 字）
+- [div 16px] 起步价 +0.1−1.7（5 字）
+- [chart 24px] 1（1 字）
+- [div 16px] 每公里 +0.1−11.2（5 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：12 块，27 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s3_l20.png`
+### l21（3.7s）
+- 口播：两个都该往上拧，而每公里这个坡陡得多。
+- 屏幕同上一句
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s3_l21.png`
+### l22（4.1s）
+- 口播：所以第一步主要拧每公里，起步价只动一点点。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意（2 字）
+- [div 26px] 起步价（3 字）
+- [div 26px] 每公里（3 字）
+- [chart 28px] 每公里（元）（4 字）
+- [chart 24px] 4（1 字）
+- [span 44px] 5.1（1 字）
+- [span 44px] 2.59（1 字）
+- [u 22px] 元（1 字）
+- [u 22px] 元（1 字）
+- [chart 24px] 3（1 字）
+- [caption 28px] 最低点（3 字）
+- [eyebrow 22px] 分数（2 字）
+- [eyebrow 22px] 步数（2 字）
+- [div 96px] 25（1 字）
+- [div 54px] 1（1 字）
+- [chart 24px] 2（1 字）
+- [h2 54px] 第一步：主要拧每公里（9 字）
+- [chart 24px] 1（1 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：10 块，24 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s3_l22.png`
+### l23（5.4s）
+- 口播：头三步，分数从七十八掉到二十五、十二、九，一下就掉进了山谷。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意（2 字）
+- [div 26px] 起步价（3 字）
+- [div 26px] 每公里（3 字）
+- [chart 28px] 每公里（元）（4 字）
+- [chart 24px] 4（1 字）
+- [span 44px] 5.2（1 字）
+- [span 44px] 3.02（1 字）
+- [u 22px] 元（1 字）
+- [u 22px] 元（1 字）
+- [chart 24px] 3（1 字）
+- [caption 28px] 最低点（3 字）
+- [eyebrow 22px] 分数（2 字）
+- [eyebrow 22px] 步数（2 字）
+- [div 96px] 9.2（1 字）
+- [div 54px] 3（1 字）
+- [chart 24px] 2（1 字）
+- [h2 54px] 三步掉进山谷（6 字）
+- [chart 24px] 1（1 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：10 块，21 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s3_l23.png`
+### l24（2.8s）
+- 口播：谷底是一条长长的、很平缓的沟。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意（2 字）
+- [div 26px] 起步价（3 字）
+- [div 26px] 每公里（3 字）
+- [chart 28px] 每公里（元）（4 字）
+- [chart 24px] 4（1 字）
+- [span 44px] 5.2（1 字）
+- [span 44px] 3.02（1 字）
+- [u 22px] 元（1 字）
+- [u 22px] 元（1 字）
+- [chart 24px] 3（1 字）
+- [caption 28px] 最低点（3 字）
+- [eyebrow 22px] 分数（2 字）
+- [eyebrow 22px] 步数（2 字）
+- [div 96px] 9.2（1 字）
+- [div 54px] 3（1 字）
+- [chart 24px] 2（1 字）
+- [h2 54px] 谷底：又长又缓的沟（8 字）
+- [chart 24px] 1（1 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：10 块，23 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s3_l24.png`
+### l25（5.2s）
+- 口播：接着起步价慢慢往上拧，每公里往回一点，沿着沟底往前挪。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意（2 字）
+- [div 26px] 起步价（3 字）
+- [div 26px] 每公里（3 字）
+- [chart 28px] 每公里（元）（4 字）
+- [chart 24px] 4（1 字）
+- [span 44px] 7.2（1 字）
+- [span 44px] 2.91（1 字）
+- [u 22px] 元（1 字）
+- [u 22px] 元（1 字）
+- [chart 24px] 3（1 字）
+- [caption 28px] 最低点（3 字）
+- [eyebrow 22px] 分数（2 字）
+- [eyebrow 22px] 步数（2 字）
+- [div 96px] 4.2（1 字）
+- [div 54px] 213（1 字）
+- [chart 24px] 2（1 字）
+- [h2 54px] 谷底：又长又缓的沟（8 字）
+- [chart 24px] 1（1 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：10 块，23 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s3_l25.png`
+### l26（2.2s）
+- 口播：坡越缓，每一步挪得越短。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意（2 字）
+- [div 26px] 起步价（3 字）
+- [div 26px] 每公里（3 字）
+- [chart 28px] 每公里（元）（4 字）
+- [chart 24px] 4（1 字）
+- [span 44px] 9.2（1 字）
+- [span 44px] 2.66（1 字）
+- [u 22px] 元（1 字）
+- [u 22px] 元（1 字）
+- [chart 24px] 3（1 字）
+- [caption 28px] 最低点（3 字）
+- [eyebrow 22px] 分数（2 字）
+- [eyebrow 22px] 步数（2 字）
+- [div 96px] 2.2（1 字）
+- [div 54px] 671（1 字）
+- [chart 24px] 2（1 字）
+- [h2 54px] 坡越缓，步子越短（7 字）
+- [chart 24px] 1（1 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：10 块，22 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s3_l26.png`
+### l27（5.7s）
+- 口播：走了一千多步，分数降到两分左右，最低点是一点九七，几乎到了。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意（2 字）
+- [div 26px] 起步价（3 字）
+- [div 26px] 每公里（3 字）
+- [chart 28px] 每公里（元）（4 字）
+- [chart 24px] 4（1 字）
+- [span 44px] 9.9（1 字）
+- [span 44px] 2.57（1 字）
+- [u 22px] 元（1 字）
+- [u 22px] 元（1 字）
+- [chart 24px] 3（1 字）
+- [caption 28px] 最低点（3 字）
+- [eyebrow 22px] 分数（2 字）
+- [eyebrow 22px] 步数（2 字）
+- [div 96px] 2.0（1 字）
+- [div 54px] 1200（1 字）
+- [chart 24px] 2（1 字）
+- [h2 54px] 最低点 1.97（4 字）
+- [chart 24px] 1（1 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：10 块，19 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s3_l27.png`
+### l28（4.1s）
+- 口播：旋钮停在起步价十元左右、每公里两块五左右。
+- 屏幕同上一句
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s3_l28.png`
+### l29（3.9s）
+- 口播：从头到尾，它没看过整张图，每一步只看脚下。
+- [eyebrow 22px] 02 · 做个小实验（6 字）
+- [eyebrow 22px] 示意（2 字）
+- [div 26px] 起步价（3 字）
+- [div 26px] 每公里（3 字）
+- [chart 28px] 每公里（元）（4 字）
+- [chart 24px] 4（1 字）
+- [span 44px] 9.9（1 字）
+- [span 44px] 2.57（1 字）
+- [u 22px] 元（1 字）
+- [u 22px] 元（1 字）
+- [chart 24px] 3（1 字）
+- [caption 28px] 最低点（3 字）
+- [eyebrow 22px] 分数（2 字）
+- [eyebrow 22px] 步数（2 字）
+- [div 96px] 2.0（1 字）
+- [div 54px] 1200（1 字）
+- [chart 24px] 2（1 字）
+- [h2 54px] 只看脚下，没看全图（8 字）
+- [chart 24px] 1（1 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：10 块，23 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s3_l29.png`
+
+## c_lens（章节卡）
+- 步子迈多大
+- 截图：``
+
+## s4 步子迈多大
+### l30（4.3s）
+- 口播：刚才的学习率是零点零零五，要是选错了会怎样？
+- [eyebrow 22px] 03 · 步子迈多大（6 字）
+- [h1 76px] 学习率选错了会怎样？（9 字）
+- [h2 46px] 合适（2 字）
+- [span 38px] 0.005（1 字）
+- [n 64px] 2.0（1 字）
+- [caption 28px] 分数（2 字）
+- 合计（不含小标签、图表）：5 块，15 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s4_l30.png`
+### l31（3.7s）
+- 口播：三条路放一起比，同一个起点，走同样多步。
+- [eyebrow 22px] 03 · 步子迈多大（6 字）
+- [h1 76px] 同一起点，同样多步（8 字）
+- [h2 46px] 太小（2 字）
+- [h2 46px] 合适（2 字）
+- [h2 46px] 太大（2 字）
+- [span 38px] 0.0005（1 字）
+- [span 38px] 0.005（1 字）
+- [span 38px] 0.021（1 字）
+- [n 64px] 2.0（1 字）
+- [caption 28px] 分数（2 字）
+- 合计（不含小标签、图表）：9 块，20 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s4_l31.png`
+### l32（4.8s）
+- 口播：太小的，零点零零零五，小十倍：方向都对，就是挪得太慢。
+- [eyebrow 22px] 03 · 步子迈多大（6 字）
+- [h1 76px] 同一起点，同样多步（8 字）
+- [h2 46px] 太小（2 字）
+- [h2 46px] 合适（2 字）
+- [h2 46px] 太大（2 字）
+- [span 38px] 0.0005（1 字）
+- [span 38px] 0.005（1 字）
+- [span 38px] 0.021（1 字）
+- [n 64px] 5.6（1 字）
+- [n 64px] 2.0（1 字）
+- [caption 28px] 分数（2 字）
+- [caption 28px] 分数（2 字）
+- 合计（不含小标签、图表）：11 块，23 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s4_l32.png`
+### l33（2.6s）
+- 口播：分数还剩五点五，离谷底还远。
+- [eyebrow 22px] 03 · 步子迈多大（6 字）
+- [h1 76px] 同一起点，同样多步（8 字）
+- [h2 46px] 太小（2 字）
+- [h2 46px] 合适（2 字）
+- [h2 46px] 太大（2 字）
+- [span 38px] 0.0005（1 字）
+- [span 38px] 0.005（1 字）
+- [span 38px] 0.021（1 字）
+- [n 64px] 5.5（1 字）
+- [n 64px] 2.0（1 字）
+- [h2 54px] 还在半路（4 字）
+- [caption 28px] 分数（2 字）
+- [caption 28px] 分数（2 字）
+- 合计（不含小标签、图表）：12 块，27 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s4_l33.png`
+### l34（6.3s）
+- 口播：太大的，零点零二一，大约四倍：一步迈过了头，跳到山谷对面，比原来还高。
+- [eyebrow 22px] 03 · 步子迈多大（6 字）
+- [h2 46px] 太小（2 字）
+- [h2 46px] 合适（2 字）
+- [h2 46px] 太大（2 字）
+- [span 38px] 0.0005（1 字）
+- [span 38px] 0.005（1 字）
+- [span 38px] 0.021（1 字）
+- [chart 22px] 1（1 字）
+- [n 64px] 5.5（1 字）
+- [n 64px] 2.0（1 字）
+- [n 64px] 96（1 字）
+- [h2 54px] 还在半路（4 字）
+- [caption 28px] 分数（2 字）
+- [caption 28px] 分数（2 字）
+- [caption 28px] 分数（2 字）
+- 合计（不含小标签、图表）：13 块，22 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s4_l34.png`
+### l35（5.0s）
+- 口播：再跳回来更高，九十六、一百一十八、一百四十五，越跳越高。
+- [eyebrow 22px] 03 · 步子迈多大（6 字）
+- [h2 46px] 太小（2 字）
+- [h2 46px] 合适（2 字）
+- [h2 46px] 太大（2 字）
+- [span 38px] 0.0005（1 字）
+- [span 38px] 0.005（1 字）
+- [span 38px] 0.021（1 字）
+- [chart 22px] 3（1 字）
+- [chart 22px] 1（1 字）
+- [chart 22px] 2（1 字）
+- [n 64px] 5.5（1 字）
+- [n 64px] 2.0（1 字）
+- [n 64px] 145（1 字）
+- [h2 54px] 还在半路（4 字）
+- [caption 28px] 分数（2 字）
+- [caption 28px] 分数（2 字）
+- [caption 28px] 分数（2 字）
+- 合计（不含小标签、图表）：13 块，22 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s4_l35.png`
+### l36（1.7s）
+- 口播：五步就跳出了地图。
+- [eyebrow 22px] 03 · 步子迈多大（6 字）
+- [h2 46px] 太小（2 字）
+- [h2 46px] 合适（2 字）
+- [h2 46px] 太大（2 字）
+- [span 38px] 0.0005（1 字）
+- [span 38px] 0.005（1 字）
+- [span 38px] 0.021（1 字）
+- [chart 22px] 3（1 字）
+- [chart 22px] 5（1 字）
+- [chart 22px] 1（1 字）
+- [chart 22px] 2（1 字）
+- [chart 22px] 4（1 字）
+- [n 64px] 5.5（1 字）
+- [n 64px] 2.0（1 字）
+- [n 64px] 224（1 字）
+- [h2 54px] 还在半路（4 字）
+- [h2 54px] 飞出地图（4 字）
+- [caption 28px] 分数（2 字）
+- [caption 28px] 分数（2 字）
+- [caption 28px] 分数（2 字）
+- 合计（不含小标签、图表）：14 块，26 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s4_l36.png`
+### l37（2.6s）
+- 口播：合适的那条，稳稳走到了谷底。
+- [eyebrow 22px] 03 · 步子迈多大（6 字）
+- [h2 46px] 太小（2 字）
+- [h2 46px] 合适（2 字）
+- [h2 46px] 太大（2 字）
+- [span 38px] 0.0005（1 字）
+- [span 38px] 0.005（1 字）
+- [span 38px] 0.021（1 字）
+- [chart 22px] 3（1 字）
+- [chart 22px] 5（1 字）
+- [chart 22px] 1（1 字）
+- [chart 22px] 2（1 字）
+- [chart 22px] 4（1 字）
+- [n 64px] 5.5（1 字）
+- [n 64px] 2.0（1 字）
+- [n 64px] 224（1 字）
+- [h2 54px] 还在半路（4 字）
+- [h2 54px] 到谷底（3 字）
+- [h2 54px] 飞出地图（4 字）
+- [caption 28px] 分数（2 字）
+- [caption 28px] 分数（2 字）
+- [caption 28px] 分数（2 字）
+- 合计（不含小标签、图表）：15 块，29 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s4_l37.png`
+### l38（4.1s）
+- 口播：所以学习率常常是训练时最要紧的一个设定。
+- [eyebrow 22px] 03 · 步子迈多大（6 字）
+- [h1 76px] 学习率：常常最要紧（8 字）
+- [h2 46px] 太小（2 字）
+- [h2 46px] 合适（2 字）
+- [h2 46px] 太大（2 字）
+- [span 38px] 0.0005（1 字）
+- [span 38px] 0.005（1 字）
+- [span 38px] 0.021（1 字）
+- [chart 22px] 3（1 字）
+- [chart 22px] 5（1 字）
+- [chart 22px] 1（1 字）
+- [chart 22px] 2（1 字）
+- [chart 22px] 4（1 字）
+- [n 64px] 5.5（1 字）
+- [n 64px] 2.0（1 字）
+- [n 64px] 224（1 字）
+- [h2 54px] 还在半路（4 字）
+- [h2 54px] 到谷底（3 字）
+- [h2 54px] 飞出地图（4 字）
+- [caption 28px] 分数（2 字）
+- [caption 28px] 分数（2 字）
+- [caption 28px] 分数（2 字）
+- 合计（不含小标签、图表）：16 块，37 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s4_l38.png`
+### l39（2.8s）
+- 口播：太大会越跳越高，太小又白白耗时间。
+- 屏幕同上一句
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s4_l39.png`
+
+## c_real（章节卡）
+- 大模型怎么训练
+- 截图：``
+
+## s5 大模型怎么训练
+### l40（5.0s）
+- 口播：真正的大模型也是用梯度下降训练，只是做了两处改进。
+- [eyebrow 22px] 04 · 大模型怎么训练（8 字）
+- [eyebrow 22px] 改进 ①（2 字）
+- [eyebrow 22px] 改进 ②（2 字）
+- [h1 76px] 每步只看一小批（7 字）
+- [h1 76px] 步子更聪明（5 字）
+- 合计（不含小标签、图表）：2 块，12 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s5_l40.png`
+### l41（4.3s）
+- 口播：第一处，数据太多，每一步不可能全看一遍再算坡。
+- [eyebrow 22px] 04 · 大模型怎么训练（8 字）
+- [eyebrow 22px] 改进 ①（2 字）
+- [h1 76px] 每步只看一小批（7 字）
+- 合计（不含小标签、图表）：1 块，7 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s5_l41.png`
+### l42（6.3s）
+- 口播：所以每步只随机抽一小批数据，估个大概的坡就走，这叫随机梯度下降。
+- [eyebrow 22px] 04 · 大模型怎么训练（8 字）
+- [eyebrow 22px] 示意（2 字）
+- [chart 28px] 每公里（元）（4 字）
+- [eyebrow 22px] 随机梯度下降（6 字）
+- [chart 24px] 4（1 字）
+- [h1 76px] 每步随机抽 3 趟（7 字）
+- [caption 28px] 一小批算坡（5 字）
+- [chart 24px] 3（1 字）
+- [caption 28px] 全部数据算坡（6 字）
+- [chart 24px] 2（1 字）
+- [chart 24px] 1（1 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：3 块，18 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s5_l42.png`
+### l43（5.7s）
+- 口播：坡估得粗，路就歪歪扭扭，可省下大量计算，最后也到了谷底附近。
+- [eyebrow 22px] 04 · 大模型怎么训练（8 字）
+- [eyebrow 22px] 示意（2 字）
+- [chart 28px] 每公里（元）（4 字）
+- [eyebrow 22px] 随机梯度下降（6 字）
+- [chart 24px] 4（1 字）
+- [h1 76px] 每步随机抽 3 趟（7 字）
+- [caption 28px] 一小批算坡（5 字）
+- [chart 24px] 3（1 字）
+- [caption 28px] 全部数据算坡（6 字）
+- [chart 24px] 2（1 字）
+- [h2 54px] 歪歪扭扭，也到谷底（8 字）
+- [chart 24px] 1（1 字）
+- [chart 24px] 0（1 字）
+- [chart 24px] 5（1 字）
+- [chart 24px] 10（1 字）
+- [chart 24px] 15（1 字）
+- [chart 24px] 20（1 字）
+- [chart 28px] 起步价（元）（4 字）
+- 合计（不含小标签、图表）：4 块，26 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s5_l43.png`
+### l44（5.0s）
+- 口播：比如 GPT-3，每步只看大约十万分之一的训练数据。
+- [eyebrow 22px] 04 · 大模型怎么训练（8 字）
+- [eyebrow 22px] GPT-3 · 每一步（5 字）
+- [display 132px] ≈ 十万分之一（5 字）
+- [h2 54px] 的训练数据（5 字）
+- [div 22px] Brown 等 2020 · GPT-3 论文表 2.1：每批 320 万词元，共 3000 亿词元（20 字）
+- 合计（不含小标签、图表）：3 块，30 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s5_l44.png`
+### l45（8.3s）
+- 口播：第二处，步子更聪明：2014年提出的 Adam，会根据每个旋钮之前的坡，单独定步子大小。
+- [eyebrow 22px] 04 · 大模型怎么训练（8 字）
+- [eyebrow 22px] Kingma 和 Ba · 2014（4 字）
+- [display 132px] Adam（1 字）
+- [h2 54px] 每个旋钮单独定步子（9 字）
+- [div 22px] Kingma & Ba, Adam: A Method for Stochastic Optimization（arXiv 2014 · ICLR 2015）（12 字）
+- 合计（不含小标签、图表）：3 块，22 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s5_l45.png`
+### l46（6.5s）
+- 口播：GPT-3 训练用的就是 Adam，Meta 的 Llama 用它的改版。
+- [eyebrow 22px] 04 · 大模型怎么训练（8 字）
+- [div 16px] GPT-3Adam（3 字）
+- [div 16px] LlamaAdam 改版（3 字）
+- [div 22px] Brown 等 2020 附录 B；Touvron 等 2023（AdamW）（10 字）
+- 合计（不含小标签、图表）：3 块，16 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s5_l46.png`
+### l47（6.5s）
+- 口播：GPT-3 那一千七百五十亿个旋钮，就是这样一小步一小步拧出来的。
+- [eyebrow 22px] 04 · 大模型怎么训练（8 字）
+- [eyebrow 22px] GPT-3（2 字）
+- [display 132px] 1750 亿个旋钮（5 字）
+- [h2 54px] 一小步一小步拧出来（9 字）
+- 合计（不含小标签、图表）：2 块，14 字
+- 截图：`edu_videos/ai_terms/t04_gradient_descent/reviews/lines_r1/materials/screen/zh/s5_l47.png`
+
+## s6 片尾（画面：片尾卡）
+### outro（包装卡，整段 22.0s）
+- 口播 l48：梯度下降，就是蒙着眼下山，每一步看脚下哪边最陡，往下迈一小步。
+- 口播 l49：步子迈多大，叫学习率。
+- 口播 l50：可只有两个旋钮的一条直线，能学会的东西很有限。
+- 口播 l51：下一期看看，把很多带旋钮的小单元一层层叠起来，会怎样。
+- 口播 l52：这就是神经网络。
+- 屏幕：蒙着眼，往最陡处下山 步子大小叫学习率（17 字）
+- 屏幕：神经网络（4 字）
+- 截图：``
+

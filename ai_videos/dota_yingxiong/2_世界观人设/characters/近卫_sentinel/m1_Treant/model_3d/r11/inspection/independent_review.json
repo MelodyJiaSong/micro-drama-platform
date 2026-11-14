@@ -1,0 +1,67 @@
+{
+  "asset_id": "m1",
+  "revision": "r11",
+  "verdict": "fail",
+  "suitable_use": "Not ready for final use at any distance. It can serve only as an internal layout or blocking stand-in for distant creep-wave groups (about 25–30 m or more, where the figure is under ~10% of frame height). There it gives the scale and the front silhouette: a walking tree with a crown, long arms and root feet. It fails at mid-distance (full body at 30–60% of frame) and close range (half body or face close-ups). The bark and crown colours are wrong and the crown reads as a lump. Even at a distance the pale colour reads as a bleached dead tree, which clashes with the death-state wood this unit is meant to become. Needs rework.",
+  "blockers": [
+    "The bark is the wrong colour. All views show a pale grey-beige, driftwood-like bleached wood. The reference and lock descriptor #7 require deep dark-brown rough bark with deep furrows. The current colour is very close to the card's post-death state ('dried into a silver-grey dead log'), so the living creep and its corpse can't be told apart, and it leans toward the negative prompt term 'dead bare tree'.",
+    "The crown is the wrong colour and has no material detail. The reference has a dense crown of dark green, purple-tinged, glossy maple-like broadleaves. The model's crown is olive grey dotted with many white or pale-blue patches that read as frost or snow. There is no purple tone at all. The perspective close-up shows the leaves as crumpled, melted clumps with no recognisable leaf outlines or veins, typical of single-image reconstruction. The crown is also a flatter, mushroom-cap shape than the reference's taller canopy reaching to both sides.",
+    "The face has an extra central hole. The south close-up shows a round dark hole between and slightly below the two eye sockets, so the face reads as a skull with eyes and nose. The reference and lock descriptor #2 call for only two deep-set eye sockets and no mouth, with 'human face, mouth' in the negative prompt.",
+    "There is a dark debris clump on the ground. A small dark, broken clump of geometry sits between the two root feet and touches the floor. It is visible in south, east, west and perspective, and in the south close-up it has its own dark shadow. The machine data marks the below-body fragments as removed: false. Whether this clump is one of the five components listed there is unverified, but the visible defect must be cleared.",
+    "There are untextured stems in the crown. Several straight, thin, smooth bluish-grey rods stick out of the crown: one sticking out on the upper left in perspective, plus the extended branches on the right and in the south view. They have no bark texture and are a different colour from the trunk. This looks like a texture-projection miss or stretched UVs, and it is obvious at mid-distance or closer."
+  ],
+  "refinements": [
+    "From the side (east and west) the arms and claws sit almost exactly in the torso's plane and hide behind the trunk. The profile reads as an ordinary twisted tree trunk with a crown, and the 'walking tree creature' look depends on the front and back views. Bring the arms slightly forward of the body, add separation between them, and make the slight forward lean of the head and crown clearer. That would make the model readable from any angle.",
+    "The claws are short and the finger joints are partly fused. The reference has 3 long, separated, sharp wooden claws reaching past the knees. The model's hands end at or just below knee height, so the claws should be longer, separated and sharpened.",
+    "Moss and lichen are present but come out as light grey-green speckles with low contrast against the pale bark. Once the bark is darkened, the wet moss and grey-white lichen layers should be restored. The ivy-like greenery spreading over the shoulders and chest in the reference is also thin.",
+    "There is a loop-shaped root or branch curl near the outer side of the leg in the east and west views. It is attached at both ends, so it isn't a broken piece, but the shape is odd. Decide whether to keep it as a root detail or straighten it.",
+    "The back (north) has curved shapes on the shoulders and back that resemble human muscles or a chest. Make them read more like bark and wood to avoid a 'person in a bark suit' impression.",
+    "The material node graph, texture assignments and any modifiers or instances were not supplied. From the names alone (Material/Material_0, two 4096² maps) it can't be determined whether the pale colour is the base-colour map itself or comes from colour-space, roughness or lighting settings. Check the albedo map's colour space and the actual Principled BSDF connections.",
+    "Topology and normals are unverified. The data says 2.78M triangles and 3.4M vertices on a single mesh. Normal alignment median_dot is 0.986 and the fraction below zero is about 6.8e-6, so the normals look consistent overall. But the analysis found 1,392,855 coincident vertices and no geometry weld was applied, and the mesh has 48,224 connected components. Open seams, overlapping faces, interior hidden faces and non-manifold edges can't be confirmed or ruled out from these renders. For in-map use, a decimated/LOD version is also needed.",
+    "The calibrated height of 1.9 m is the total height including the crown. The calibration status is 'height_bound_requires_pose_review', so whether body height is ~1.9 m as the card intends is unverified. If the crown is counted, the trunk body comes out shorter than an adult. Confirm the definition and calibrate again."
+  ],
+  "evidence": {
+    "1_m1_Treant.png (design reference, not a model)": "Walking-tree creature: dark brown deep-furrowed bark with lots of wet moss and grey-white lichen. A dense crown of dark green, purple-tinged, glossy maple-like leaves on top. Two deep-set dark eye sockets in the bark and no mouth. Two long branch arms past the knees, each ending in 3 long, sharp wooden claws. Two thick root legs whose spread root feet grip the ground. Frontal, symmetrical, upright pose.",
+    "2_south.png (front)": "Silhouette broadly matches the reference: crown, trunk-like torso, two long arms, two root legs, spread root feet. The two eye sockets are in the right place, but the close-up shows an extra round central hole (nose/mouth effect). Bark is overall pale grey-beige, clearly off from the reference's dark brown. Crown is olive grey with white patches and no purple-green; it is smaller and flatter than the reference. Hands end at or slightly below knee height with 3 fairly short claws. The root feet touch the floor and the contact shadow is believable, but a dark debris clump with its own shadow sits on the floor between the feet. Thin bluish-grey untextured stems are visible at the crown edge.",
+    "3_east.png (east side)": "Real thickness is present: chest/trunk depth is roughly the same as the front width, so it isn't a flat cutout. But the arms hide in the torso's plane and the profile reads as an S-twisted tree trunk with a crown, losing the creature identity. The loop-shaped root curl near the outer side of the leg is attached at both ends. No visible breaks or floating parts apart from the dark specks at the feet. Crown and bark are the same pale grey colour as in the south view, with white patches on the leaves.",
+    "4_north.png (back)": "The back is believable: no duplicated face or eye sockets, and the back of the crown is continuous. The two legs and two arms show clearly from behind and the bark texture has a back-specific layout, not a copy of the front. The muscle-like curves on the shoulders and back look a bit like a human body. Pale colour and white-patched crown as in the other views. Root feet are grounded, with a small dark shadow spot in the middle.",
+    "5_west.png (west side)": "Profile and problems match the east view: a twisted trunk column with arms and claws hard to read separately; a root curl in the lower part; dark debris specks at the bottom of the root feet. Thickness is continuous with no visible melting or breaks. The crown reads as clumpy blobs with no leaf outlines.",
+    "6_perspective.png (three-quarter)": "The 3D read is fine: arms, legs, root feet and crown are clearly layered, and one side of the eye sockets is visible. The crown close-up confirms the leaves are melted, crumpled clumps with heavy white highlight patches and no leaf outlines or veins. Several straight, smooth bluish-grey thin rods stick out of the crown without bark texture. Root feet touch the floor; a few dark specks are still visible at the bottom. Overall the colour reads as a bleached dead tree, not a living dark-brown tree with a dark green-purple crown."
+  },
+  "unverified": [
+    "Mesh topology quality, non-manifold edges, interior hidden faces, and the effect of the coincident vertices left unwelded",
+    "Actual shader node connections, texture colour space, and whether the pale colour comes from the albedo or from render settings",
+    "Whether any modifiers or instances exist (only the base mesh counts were supplied)",
+    "Whether the visible dark debris clump is the same thing as the five below_body_fragments listed in the machine data"
+  ],
+  "reviewer": "claude",
+  "source_artifact_sha256": "22a021d949d41968680309a33d808526ed62ae402983c9ee744f8e01296c75da",
+  "blend_sha256": "2a312fdf8defe395860cdfc27739f935adc70556d41f30c5d735618dee2fd1ab",
+  "evidence_files": [
+    {
+      "path": "2_世界观人设\\characters\\近卫_sentinel\\m1_Treant\\m1_Treant.png",
+      "sha256": "fdc658c99a60b813dc2a2c604f1ac59d3625c77e27e0b8d0ec4b77f9dabdbbad"
+    },
+    {
+      "path": "2_世界观人设\\characters\\近卫_sentinel\\m1_Treant\\model_3d\\r11\\inspection\\south.png",
+      "sha256": "556e8700ef241dc5bbc17880d42519d91ef666d1649f1fc062ead0ef357c99b7"
+    },
+    {
+      "path": "2_世界观人设\\characters\\近卫_sentinel\\m1_Treant\\model_3d\\r11\\inspection\\east.png",
+      "sha256": "f2a8c65b4b04c8cbd18b28df867525182a2f8a812876e6cdc67deaac6883eab8"
+    },
+    {
+      "path": "2_世界观人设\\characters\\近卫_sentinel\\m1_Treant\\model_3d\\r11\\inspection\\north.png",
+      "sha256": "4e2b7795d708dd4b7be72f8fa44d7e27b02fbd4c6b2400f4dcabdc9a587dfe68"
+    },
+    {
+      "path": "2_世界观人设\\characters\\近卫_sentinel\\m1_Treant\\model_3d\\r11\\inspection\\west.png",
+      "sha256": "93e6589f3c05128dd4c0cf1c7922ea7a8a12946c1330d92280acd0b34d893a52"
+    },
+    {
+      "path": "2_世界观人设\\characters\\近卫_sentinel\\m1_Treant\\model_3d\\r11\\inspection\\perspective.png",
+      "sha256": "f4a4a0d245295481d62f5057e8980b637dd277a6a4d203c4169d2ba8c3540ef5"
+    }
+  ],
+  "prior_errors": []
+}

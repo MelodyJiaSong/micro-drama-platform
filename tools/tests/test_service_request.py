@@ -32,6 +32,22 @@ def test_scope_shares_by_episode_or_asset_group(tmp_path, tail, expected):
     assert RequestLog(root / tail).path == root / expected
 
 
+@pytest.mark.parametrize("tail, expected", [
+    ("linear_algebra/t03_matrix_as_transform/assets/a.png", "linear_algebra/t03_matrix_as_transform/request_log.md"),
+    ("linear_algebra/t03_matrix_as_transform/music", "linear_algebra/t03_matrix_as_transform/request_log.md"),
+    ("linear_algebra/_shared/cover.png", "linear_algebra/_shared/request_log.md"),
+    ("linear_algebra/cover.png", "linear_algebra/request_log.md"),
+])
+def test_edu_scope_is_series_topic(tmp_path, tail, expected):
+    root = tmp_path / "edu_videos"
+    assert RequestLog(root / tail).path == root / expected
+
+
+def test_edu_root_has_no_owner(tmp_path):
+    with pytest.raises(ValueError):
+        RequestLog(tmp_path / "edu_videos" / "a.png")
+
+
 def test_complete_request_precedes_call_and_secrets_are_redacted(tmp_path, monkeypatch):
     log = RequestLog(tmp_path / "ai_videos/demo/characters/c1/a.png")
     secret = "secret_test_value_123"

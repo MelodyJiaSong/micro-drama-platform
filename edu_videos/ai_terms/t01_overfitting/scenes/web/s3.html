@@ -1,0 +1,75 @@
+<style>
+  .head { position: absolute; left: var(--mx); top: var(--mt); }
+  .head .h1 { margin-top: 16px; white-space: nowrap; }
+  #chart { position: absolute; left: 96px; top: 250px; }
+  .side { position: absolute; left: 1250px; top: 290px; width: 550px; }
+  .colhead { padding-bottom: 18px; }
+  .row { padding: 22px 0 24px; border-top: 1px solid var(--hair); display: grid; grid-template-columns: 1fr auto; align-items: baseline; row-gap: 4px; }
+  .row .name { font-size: var(--fs-caption); font-weight: 600; }
+  .row b { font-size: 60px; font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+  .row .tag { grid-column: 1 / 3; font-size: var(--fs-micro); font-weight: 600; letter-spacing: .08em; }
+  .task { position: absolute; left: 1260px; top: 380px; width: 540px; }
+  .task .h2 { margin-top: 16px; }
+  .head .t + .t { position: absolute; top: 0; margin-top: 44px; }
+</style>
+
+<div class="head">
+  <div class="eyebrow" data-zh="02 · 做个小实验" data-en="02 · A small experiment"></div>
+  <div class="h1 t" id="h-a" data-zh="十个点：训练数据" data-en="Ten points: training data"></div>
+  <div class="h1 t" id="h-b" data-zh="同一组练习题，三种模型" data-en="Same data, three models"></div>
+  <div class="h1 t" id="h-c" data-zh='换成新题，<span class="grad">谁考得最好？</span>' data-en='Which does best <span class="grad">on new data?</span>'></div>
+</div>
+<svg id="chart"></svg>
+<div class="task" id="task"><div class="eyebrow" data-zh="模型的任务" data-en="The model’s job"></div>
+  <div class="h2" data-zh='找出<span class="accent">规律</span><br>→ 预测新点' data-en='Find the <span class="accent">pattern</span><br>Predict new points'></div></div>
+<div class="side">
+  <div class="eyebrow colhead" id="ch" data-zh="练习误差" data-en="Practice error"></div>
+  <div class="row" id="r1" data-zh='<span class="name c-neutral">① 直线</span><b id="n1">—</b><span class="tag c-neutral" id="t1">欠拟合</span>'
+       data-en='<span class="name c-neutral">① Straight line</span><b id="n1">—</b><span class="tag c-neutral" id="t1">Underfit</span>'></div>
+  <div class="row" id="r2" data-zh='<span class="name c-good">② 平缓曲线</span><b id="n2">—</b>' data-en='<span class="name c-good">② Gentle curve</span><b id="n2">—</b>'></div>
+  <div class="row" id="r3" data-zh='<span class="name c-bad">③ 复杂曲线</span><b id="n3">—</b>' data-en='<span class="name c-bad">③ Wiggly curve</span><b id="n3">—</b>'></div>
+</div>
+
+<script>
+const C = makeChart("#chart"), T = EDU.tl;
+const truth = C.curve(D.truth, "--ink", 3, "2 10");
+const noise = C.gaps(D.train, truthAt, "--d-bad", null);
+const f1 = v => polyval(D.coef["1"], v);
+const gaps = C.gaps(D.train, f1, "--d-neutral");
+const c1 = C.curve(D.fits["1"], "--d-neutral", 4), c2 = C.curve(D.fits["3"], "--d-good", 6), c3 = C.curve(D.fits["9"], "--d-bad", 6);
+const dots = C.dots(D.train);
+const capT = C.note(EDU.tr("背后的规律", "The hidden pattern"), [-1.55, -1.75], -70, 0, "caption ink2");
+const capN = C.note(EDU.tr("噪声：随机的偏差", "Noise: random wobble"), [1.05, 2.05], 0, -40, "caption c-bad");
+const errLab = C.note(EDU.tr("误差", "Error"), [D.train[2][0], (D.train[2][1] + f1(D.train[2][0])) / 2], 16, -14, "caption ink2");
+
+gsap.set(["#h-b", "#h-c", "#task", "#ch", "#r1", "#r2", "#r3", "#t1", C.base, truth, noise, capT, capN, c1, c2, c3, gaps, errLab, ...dots], { opacity: 0 });
+// l08 十个点＝训练数据
+EDU.in([".head .eyebrow", "#h-a"], EDU.t("l08"), { stagger: .08 });
+T.to(C.base, { opacity: 1, duration: .5 }, EDU.t("l08", .2));
+EDU.in(dots, EDU.t("l08", .3), { stagger: .06 });   // l08 先有一句引子（做个小实验 / Let's see it happen），点在说到「十个点」时出现
+// l09 背后的规律＋噪声
+T.set(truth, { opacity: .5 }, EDU.t("l09")); EDU.draw(truth, EDU.t("l09"), 1.4);
+EDU.in(capT, EDU.t("l09", .2));
+EDU.in(noise, EDU.t("l09", .6)); EDU.in(capN, EDU.t("l09", .64));
+// l10 模型的任务
+EDU.out([capT, capN], EDU.t("l10")); EDU.dim(noise, EDU.t("l10"), 0); EDU.dim(truth, EDU.t("l10"), .15);
+EDU.in("#task", EDU.t("l10", .1));
+// l11 第一种：直线
+EDU.out(["#task", "#h-a"], EDU.t("l11")); EDU.in("#h-b", EDU.t("l11", .03)); EDU.dim(truth, EDU.t("l11"), 0);
+T.set(c1, { opacity: 1 }, EDU.t("l11", .1)); EDU.draw(c1, EDU.t("l11", .1), 1.0);
+// l12 误差
+EDU.in(gaps, EDU.t("l12", .1)); EDU.in(errLab, EDU.t("l12", .2));
+// l13 练习都做不好 → 欠拟合
+EDU.in(["#ch", "#r1"], EDU.t("l13"), { stagger: .1 }); EDU.count("#n1", EDU.t("l13"), mse(1), .9);
+EDU.in("#t1", EDU.t("l13", .7));
+// l14 平缓曲线
+EDU.out([errLab], EDU.t("l14")); EDU.dim(gaps, EDU.t("l14"), 0); EDU.dim(c1, EDU.t("l14"), .25);
+T.set(c2, { opacity: 1 }, EDU.t("l14", .05)); EDU.draw(c2, EDU.t("l14", .05), 1.4);
+EDU.in("#r2", EDU.t("l14", .35)); EDU.count("#n2", EDU.t("l14", .35), mse(3), .9);
+// l15 弯曲线，练习误差 0
+EDU.dim(c2, EDU.t("l15"), .3);
+T.set(c3, { opacity: 1 }, EDU.t("l15", .05)); EDU.draw(c3, EDU.t("l15", .05), 1.8);
+EDU.in("#r3", EDU.t("l15", .5)); EDU.count("#n3", EDU.t("l15", .6), mse(9), .8);
+// l16 先猜一下
+EDU.out("#h-b", EDU.t("l16")); EDU.in("#h-c", EDU.t("l16", .05));
+</script>

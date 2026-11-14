@@ -1,0 +1,87 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  .pair { position: absolute; left: var(--mx); top: 260px; display: flex; gap: 40px; }
+  .pair .card { width: 820px; padding: 40px 48px; }
+  .pair .h1 { margin-top: 14px; }
+  html[lang=en] .pair .h1 { font-size: 64px; }
+  .pair .h2 { margin-top: 14px; }
+  #map { position: absolute; left: 70px; top: 150px; }
+  .tag { position: absolute; left: 1010px; top: 140px; }
+  .side { position: absolute; left: 1220px; width: 620px; top: 260px; }
+  .side .t { position: absolute; top: 0; left: 0; width: 620px; }
+  .side .h1 + .h2, .side .eyebrow + .h1, .side .h2 + .h2 { margin-top: 14px; }
+  html[lang=en] .side .h1 { font-size: 64px; }
+  .key { display: flex; align-items: center; gap: 16px; margin-top: 30px; }
+  .key i { display: inline-block; width: 56px; height: 0; border-top: 6px solid; border-radius: 3px; }
+  .big { position: absolute; left: var(--mx); top: 250px; }
+  .big .display { margin-top: 10px; line-height: 1; }
+  .big .h2 { margin-top: 24px; }
+  .src2 { position: absolute; left: var(--mx); top: 880px; }
+  .rows { position: absolute; left: var(--mx); top: 300px; width: 1300px; }
+  .rows .row { display: grid; grid-template-columns: 520px 1fr; align-items: baseline; padding: 26px 0; border-top: 1px solid var(--hair); }
+  .rows .row .h1 { white-space: nowrap; }
+</style>
+
+<div class="eb eyebrow" data-zh="04 · 大模型怎么训练" data-en="04 · Training giant models"></div>
+
+<div class="pair" id="pair">
+  <div class="card" id="c1"><div class="eyebrow" data-zh="改进 ①" data-en="Upgrade ①"></div><div class="h1" data-zh="每步只看一小批" data-en="Small batches"></div></div>
+  <div class="card" id="c2"><div class="eyebrow" data-zh="改进 ②" data-en="Upgrade ②"></div><div class="h1" data-zh="步子更聪明" data-en="Smarter steps"></div></div>
+</div>
+
+<svg id="map"></svg>
+<div class="tag eyebrow" id="tag" data-zh="示意" data-en="Illustration"></div>
+<div class="side">
+  <div class="t" id="ta"><div class="eyebrow" data-zh="改进 ①" data-en="Upgrade ①"></div>
+    <div class="h1 accent" data-zh="随机梯度下降" data-en="Stochastic gradient descent"></div>
+    <div class="key"><i style="border-color:var(--d-valid)"></i><span class="caption" data-zh="一小批" data-en="Small batch"></span></div>
+    <div class="key" style="margin-top:12px"><i style="border-color:var(--ink);border-top-style:dashed"></i><span class="caption" data-zh="全部数据" data-en="All data"></span></div></div>
+  <div class="t" id="tb" style="top:420px"><div class="h2" data-zh='歪歪扭扭，<span class="c-good">也到谷底附近</span>' data-en='Wobbly, <span class="c-good">but close</span>'></div></div>
+</div>
+
+<div class="big" id="gpt"><div class="eyebrow" data-zh="GPT-3 · 每一步" data-en="GPT-3 · each step"></div>
+  <div class="display accent" data-zh="≈ 十万分之一" data-en="≈ 1/100,000"></div>
+  <div class="h2 ink2" data-zh="训练数据" data-en="of the training data"></div></div>
+<div class="src2 src" id="s1" data-zh="Brown 等 2020 · GPT-3 论文表 2.1：每批 320 万词元，共 3000 亿词元" data-en="Brown et al. 2020 · GPT-3 paper, Table 2.1: 3.2M-token batches, 300B tokens"></div>
+
+<div class="big" id="adam"><div class="eyebrow" data-zh="改进 ② · 步子更聪明" data-en="Upgrade ② · Smarter steps"></div>
+  <div class="display">Adam</div>
+  <div class="h2 ink2" data-zh="每个旋钮单独定步子" data-en="A step size per knob"></div></div>
+<div class="src2 src" id="s2" data-zh="Kingma &amp; Ba, Adam: A Method for Stochastic Optimization（arXiv 2014 · ICLR 2015）" data-en="Kingma &amp; Ba, Adam: A Method for Stochastic Optimization (arXiv 2014 · ICLR 2015)"></div>
+
+<div class="rows" id="rows">
+  <div class="row" id="r1" data-zh='<span class="h1">GPT-3</span><span class="h1 accent">Adam</span>' data-en='<span class="h1">GPT-3</span><span class="h1 accent">Adam</span>'></div>
+  <div class="row" id="r2" data-zh='<span class="h1">Llama</span><span class="h1 ink2">Adam 改版</span>' data-en='<span class="h1">Llama</span><span class="h1 ink2">Adam, tweaked</span>'></div>
+</div>
+<div class="src2 src" id="s3" data-zh="Brown 等 2020 附录 B；Touvron 等 2023（AdamW）" data-en="Brown et al. 2020, Appendix B; Touvron et al. 2023 (AdamW)"></div>
+<div class="big" id="last"><div class="eyebrow" data-zh="GPT-3" data-en="GPT-3"></div>
+  <div class="display grad" data-zh="1750 亿个旋钮" data-en="175 billion knobs"></div>
+  <div class="h2 ink2" data-zh="一小步一小步拧出来" data-en="One small step at a time"></div></div>
+
+<script>
+const M = makeLand("#map", { W: 1080, H: 780 }), T = EDU.tl;
+const sg = M.trail("--d-valid", 4), full = M.trail("--ink", 3, "2 9"), dot = M.dot(D.start, "--d-valid", 14);
+full.setAttribute("points", D.good.p.map(q => `${M.x(q[0]).toFixed(1)},${M.y(q[1]).toFixed(1)}`).join(" "));
+gsap.set(["#pair", "#c1", "#c2", M.svg.node(), "#tag", "#ta", "#tb", "#gpt", "#s1", "#adam", "#s2", "#rows", "#r1", "#r2", "#s3", "#last"], { opacity: 0 });
+EDU.in(".eb", 0);
+// l40 两处改进
+EDU.in("#pair", EDU.t("l40"), { y: 0, d: .01 }); EDU.in("#c1", EDU.t("l40", .5)); EDU.in("#c2", EDU.t("l40", .75));
+// l41 第一处：数据太多
+EDU.dim("#c2", EDU.t("l41", .05), .25); EDU.focus("#c1", EDU.t("l41", .05));
+// l42 每步随机抽一小批 → 随机梯度下降（同一张地形图）
+EDU.out("#pair", EDU.t("l42")); EDU.in(M.svg.node(), EDU.t("l42", .05), { y: 0, d: .8 }); EDU.in("#ta", EDU.t("l42", .3)); EDU.in("#tag", EDU.t("l42", .4));
+walk(M, D.sgd, 0, 40, EDU.t("l42", .45), EDU.end("l42") - EDU.t("l42", .45) + .3, { dot, pl: sg });
+// l43 歪歪扭扭，也到谷底附近
+walk(M, D.sgd, 40, D.sgd.k.length - 1, EDU.t("l43", .05), Math.max(1.5, (EDU.end("l43") - EDU.t("l43")) * .8), { dot, pl: sg, ease: "power1.out" });
+EDU.in("#tb", EDU.t("l43", .5));
+// l44 GPT-3：每步约十万分之一的数据
+EDU.out([M.svg.node(), "#tag", "#ta", "#tb"], EDU.t("l44")); EDU.in("#gpt", EDU.t("l44", .2)); EDU.in("#s1", EDU.t("l44", .4));
+// l45 第二处：Adam，每个旋钮单独定步子
+EDU.out(["#gpt", "#s1"], EDU.t("l45")); EDU.in("#adam", EDU.t("l45", .3)); EDU.in("#s2", EDU.t("l45", .4));
+// l46 GPT-3 用 Adam，Llama 用改版
+EDU.out(["#adam", "#s2"], EDU.t("l46")); EDU.in("#rows", EDU.t("l46"), { y: 0, d: .01 });
+EDU.in("#r1", EDU.t("l46", .05)); EDU.in("#r2", EDU.t("l46", .55)); EDU.in("#s3", EDU.t("l46", .3));
+// l47 1750 亿个旋钮，一小步一小步拧出来
+EDU.out(["#rows", "#s3"], EDU.t("l47")); EDU.in("#last", EDU.t("l47", .15));
+EDU.out("#last", EDU.S.duration - .5);
+</script>

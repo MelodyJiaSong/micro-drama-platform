@@ -1,0 +1,58 @@
+<style>
+  .eb { position: absolute; left: var(--mx); top: var(--mt); }
+  #mach { position: absolute; left: 180px; top: 200px; }
+  #cmp { position: absolute; left: 120px; top: 230px; }
+  .side { position: absolute; left: 1150px; width: 700px; }
+  .ttl { top: 300px; }
+  .ttl .t { position: absolute; top: 0; left: 0; white-space: nowrap; }
+  html[lang=en] .ttl .t { font-size: 60px; white-space: normal; width: 680px; }
+  html[lang=en] .sub2 { top: 470px; }
+  html[lang=en] .sub2 .s { white-space: normal; width: 680px; font-size: 46px; }
+  .sub2 { top: 430px; }
+  .sub2 .s { position: absolute; top: 0; left: 0; white-space: nowrap; }
+  .sub2 .num { font-size: 120px; font-weight: 700; line-height: 1; margin-top: 8px; }
+</style>
+
+<div class="eb eyebrow" data-zh="03 · 模型只认分数" data-en="03 · The model only sees the score"></div>
+<svg id="mach"></svg>
+<svg id="cmp"></svg>
+
+<div class="side ttl">
+  <div class="h1 t" id="tc" data-zh='打车？<span class="c-bad">不认识</span>' data-en='Taxi? <span class="c-bad">No idea</span>'></div>
+  <div class="h1 t" id="td" data-zh="怎么打分，就怎么学" data-en="Scoring shapes learning"></div>
+  <div class="h1 t" id="te" data-zh='损失函数：<br>定义<span class="accent">「好」</span>' data-en='Loss function<br>defines <span class="accent">“good”</span>'></div>
+</div>
+<div class="side sub2">
+  <div class="s h2 ink2" id="taxi" data-zh='不懂<span class="c-bad">打车</span>' data-en="No idea what a taxi is"></div>
+  <div class="s h2 c-bad" id="fear" data-zh="平方：特别怕大错" data-en="Big misses cost most"></div>
+</div>
+
+<script>
+const T = EDU.tl, BEST = D.best;
+// 机器
+const M = machine("#mach");
+// 同样一共差 8：四趟各差 2 vs 一趟差 8（方块边长按误差画，u 像素 / 元）
+const S = d3.select("#cmp").attr("width", 940).attr("height", 600), u = 34;
+const rowA = S.append("g"), rowB = S.append("g");
+const sq = (g, x, side, base) => g.append("rect").attr("x", x).attr("y", base - side * u).attr("width", side * u).attr("height", side * u)
+  .attr("fill", css("--d-bad")).attr("fill-opacity", .16).attr("stroke", css("--d-bad")).attr("stroke-opacity", .6).attr("stroke-width", 3);
+[0, 1, 2, 3].forEach(k => sq(rowA, k * 96, 2, 120));
+sq(rowB, 0, 8, 470);
+const cap = (g, x, y, t1, t2) => { g.append("text").attr("x", x).attr("y", y).attr("font-size", 48).attr("font-weight", 600).attr("fill", css("--ink")).text(t1);
+  g.append("text").attr("x", x).attr("y", y + 62).attr("font-size", 48).attr("font-weight", 700).attr("fill", css("--d-bad")).text(t2); };
+cap(rowA, 440, 70, EDU.tr("4 趟各差 2（共 8）", "4 × 2²"), EDU.tr("罚 16", "= 16"));
+cap(rowB, 440, 380, EDU.tr("1 趟差 8", "1 × 8²"), EDU.tr("罚 64", "= 64"));
+
+gsap.set(["#mach", M.screen, "#cmp", rowA.node(), rowB.node(), "#tc", "#td", "#te", "#taxi", "#fear"], { opacity: 0 });
+EDU.in(".eb", 0);
+// l34（本章开场）模型不知道什么是打车，只认这个分
+EDU.in("#mach", EDU.t("l34"), { d: .9 }); EDU.in("#tc", EDU.t("l34", .1));
+EDU.in(M.screen, EDU.t("l34", .6)); countTo(M.scoreT, EDU.t("l34", .62), 0, BEST.mse, .6, v => v.toFixed(2));
+// l35 怎么打分，就怎么学；平方 → 特别怕大错
+EDU.out("#tc", EDU.t("l35")); EDU.in("#td", EDU.t("l35", .03)); EDU.in("#fear", EDU.t("l35", .5));
+// l36 宁可每趟都差一点，也不愿一趟差很多
+EDU.out(["#mach", M.screen, "#fear"], EDU.t("l36")); EDU.in("#cmp", EDU.t("l36"), { y: 0, d: .01 });
+EDU.in(rowA.node(), EDU.t("l36", .1)); EDU.in(rowB.node(), EDU.t("l36", .45));
+// l37 选损失函数 = 定义什么算好
+EDU.out(["#td", "#fear"], EDU.t("l37")); EDU.in("#te", EDU.t("l37", .05));
+</script>

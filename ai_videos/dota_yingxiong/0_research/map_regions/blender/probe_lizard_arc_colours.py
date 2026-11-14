@@ -1,0 +1,9 @@
+"""Inspect blue source texels on the upper back before isolating reconstructed sparks."""
+from pathlib import Path
+import bpy,numpy as np,json
+ROOT=Path(__file__).resolve().parents[3];folder=next(next(ROOT.glob('2_*')).glob('characters/*/m26_Thunder_Lizard/model_3d'));bpy.ops.wm.open_mainfile(filepath=str(folder/'r02/authoring.blend'));ob=next(o for o in bpy.data.collections['ASSET_m26'].objects if o.type=='MESH');me=ob.data
+co=np.empty(len(me.vertices)*3,np.float32);me.vertices.foreach_get('co',co);co=co.reshape(-1,3);m=np.array(ob.matrix_world);co=co@m[:3,:3].T+m[:3,3];indices=np.empty(len(me.loops),np.int32);me.loops.foreach_get('vertex_index',indices);starts=np.empty(len(me.polygons),np.int32);counts=np.empty(len(me.polygons),np.int32);me.polygons.foreach_get('loop_start',starts);me.polygons.foreach_get('loop_total',counts);pos=np.add.reduceat(co[indices],starts)/counts[:,None]
+uv=np.empty(len(me.loops)*2,np.float32);me.uv_layers.active.data.foreach_get('uv',uv);uv=np.add.reduceat(uv.reshape(-1,2),starts)/counts[:,None];image=bpy.data.images['Image_0'];pix=np.empty(len(image.pixels),np.float32);image.pixels.foreach_get(pix);pix=pix.reshape(image.size[1],image.size[0],4);ij=np.mod(np.floor(uv*np.array(image.size)).astype(int),np.array(image.size));rgb=pix[ij[:,1],ij[:,0],:3]
+region=(pos[:,0]<1.3)&(pos[:,0]>-1.8)&(np.abs(pos[:,1])<.55)&(pos[:,2]>1.0);blue=(rgb[:,2]>rgb[:,0]*1.08)&(rgb[:,2]>rgb[:,1]*1.025)&(rgb[:,2]>.08)&region
+rows=[{'faces':int(blue.sum()),'bounds':np.array([pos[blue].min(axis=0),pos[blue].max(axis=0)]).tolist() if blue.any() else None,'rgb_median':np.median(rgb[blue],axis=0).tolist() if blue.any() else None,'sample':[{'xyz':pos[i].tolist(),'rgb':rgb[i].tolist()} for i in np.flatnonzero(blue)[::max(1,int(blue.sum())//15)][:15]]}]
+(folder/'arc_colour_probe.json').write_text(json.dumps(rows,indent=2),encoding='utf-8');np.save(folder/'arc_face_mask_r02.npy',blue);print(json.dumps(rows),flush=True)

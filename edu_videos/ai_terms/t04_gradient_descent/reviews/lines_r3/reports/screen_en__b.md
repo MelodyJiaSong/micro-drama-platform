@@ -1,0 +1,27 @@
+## 评分表
+
+- P1 1 证据：l20–l21 contain an **11-word results block**, including its header, exceeding the 9-word limit. The whole screen is within 22 words. Elsewhere, l15 now has 4 blocks/15 words; l38–l39 have 22 words, including chart labels, rates, scores and outcomes.
+- P2 2 证据：l20’s numerical contrasts and l40’s “Small batches / Smarter steps” divide the work effectively between screen and narration. l47 still repeats “One small step at a time” verbatim; this is a minor, previously accepted exception.
+- P3 3 证据：Chapter cards 01–04 match the scene eyebrows. l30 now labels “2.0” with “Score” immediately. The outro visibly separates two parallel recap definitions from “Next · Neural networks.”
+- P4 3 证据：“Downhill, blindfolded,” “A small experiment,” “How big a step?” and “Training giant models” read naturally aloud. l19’s arrow repairs the dangling header; l43’s “Wobbly, but gets close” repairs the unfinished expression.
+- P5 2 证据：l03 adds five words over 1.9s, but retains them through l04–l05; the outro gives 11 content words 27.1s. Reading load is generally manageable. Individual chapter-card durations and subtitle clearance remain unverified in the supplied materials.
+- P6 3 证据：The l20–l21 replacement below reduces the complete results block from 11 to 8 words while preserving both comparisons. The optional l47 replacement reduces six words to two without adding a claim.
+- R 1 证据：I1—resolved: both recap terms now appear in parallel definitions. I2—resolved: the screenshot confirms the separate “Next” label. I3—partly resolved: package screenshots now exist, but chapter durations remain absent; retaining the wording is justified, treating the evidence gap as closed is not. I4—unresolved: the stated automated check and future cut review do not demonstrate subtitle clearance in these subtitle-free screenshots. I5—no-change rationale holds: the five-word contrast persists beyond l03. I6—accept the adjudicated rejection; do not reopen “Feet feel the slope.” I7—no-change rationale holds: l12’s eyebrow supplies context while the larger phrase gives its meaning. I8—no-change rationale holds: l14’s added process row supplies the action. I9—resolved: knobs disappear at l15. I10—resolved by the same change. I11—resolved: arrow replaces comma. I12—resolved by the same change. I13—screen-total breach resolved, but the consolidated results block has an additional 11-word block-limit problem. I14—resolved: “Score” appears at l30. I15—resolved: “Key setting” and “Far off” bring the screen to 22 words. I16—resolved by the same changes. I17—resolved: only “Illustration” remains. I18—resolved: the dark dashed comparison path is identifiable. I19—resolved through the adjudicated alternative; rejecting “Wobbly path” reasonably preserves the destination contrast. I20—resolved by the path treatment. I21—resolved: “gets close” is idiomatic. I22—retention is justified as an accepted closing echo, recorded below rather than escalated.
+
+## 问题表
+
+| 位置 | 维度 | 级别 | 原文 | 问题 | 改写 |
+|---|---|---|---|---|---|
+| l20–l21 | P1 | 必改 | “Nudge +$0.10 → score”; “Base fare / $5.00 / −1.7”; “Per km / $2.00 / −11.2” | The consolidated results block contains **3 + 4 + 4 = 11 words**. Its header counts with the table even though styled as an eyebrow. Grouping the matching items reduces block count, but does not remove the separate 9-word block limit. | Header: **“Score change”**. Items: **“Base fare −1.7” / “Per km −11.2”**. Hide the two dollar readouts during these results. **8 words total**; l19 already establishes the ten-cent nudge. |
+| l01–l29, l38–l39, l42–l46 | P5 | 存疑 | Bottom axis title “Base fare ($)”; outcome row; source lines | These elements occupy approximately y=850–925. The screenshots explicitly omit narration subtitles, so they cannot establish final clearance. This remains an evidence gap, not a confirmed collision. | Retain the wording pending subtitle-inclusive frames. If overlap appears, raise the affected text or relocate the source line; shortening the English alone would not establish clearance. |
+| c_analogy, c_experiment, c_lens, c_real | P5 | 存疑 | “Downhill, blindfolded”; “A small experiment”; “How big a step?”; “Training giant models” | Screenshots establish readable layouts and natural titles, but individual hold durations are still missing. Chapter-card timing cannot be certified from stills. | Keep the titles unchanged. Supply individual durations; allow roughly **0.7 / 1.0 / 1.3 / 1.0 seconds** of stable reading time respectively, plus any transition time. |
+| l47 | P2 | 记录 | “One small step at a time” | Six words repeat the narration exactly. This remains an acceptable closing echo under the previous ruling, rather than a new must-fix. | Optional: **“Small steps”** |
+
+## 整体观察
+
+One hard-limit correction remains: the l20–l21 results block, rather than its screen total.  
+Keep the short, natural chapter titles and their consistent numbering.  
+Keep the repaired outro’s parallel definitions and clearly separated next-episode label.  
+Keep the numerical comparisons and distinguishable dashed path; they let the visuals carry evidence while narration explains.  
+No additional wording fault was found in the cold open, chapter transitions or outro.  
+Final subtitle clearance and chapter-card timing remain unverified.

@@ -24,4 +24,10 @@ parse_name = _GRAMMAR.parse_name
 first_key = _GRAMMAR.first_key
 
 
-__all__ = ["VIEW_NAMES", "PropKey", "first_key", "label", "parse_name", "split_name"]
+def is_folder_name(name: str) -> bool:
+    """`p15_两层石木旅店` is a prop folder; a view `p15-1_正面` or a group `中立_neutral` is not."""
+    key = parse_name(name)
+    return key is not None and key.view is None
+
+
+__all__ = ["VIEW_NAMES", "PropKey", "first_key", "is_folder_name", "label", "parse_name", "split_name"]

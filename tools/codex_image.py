@@ -250,7 +250,7 @@ def generate(out: Path, prompt: str, refs: list[Path], *, transparent: bool = Fa
                    "generated": [RequestLog.file(p) for p in found]}
         if not found:
             raise RuntimeError("没有拿到新图（结果未知，不自动重提；先查 generated_images 与 Codex 会话）："
-                               + json.dumps({k: summary[k] for k in ("returncode", "timed_out", "last_message", "errors", "images")},
+                               + json.dumps({k: summary[k] for k in ("thread_id", "returncode", "timed_out", "last_message", "errors", "images")},
                                             ensure_ascii=False) + " " + stderr[-500:])
         out.parent.mkdir(parents=True, exist_ok=True)
         saved = []
@@ -282,13 +282,15 @@ def main() -> int:
         except (AttributeError, ValueError):
             pass
     ap = argparse.ArgumentParser(description="经 Codex CLI 内置 image_gen 出图，先记请求日志")
-    ap.add_argument("--out", required=True, type=Path, help="ai_videos 下的目标 .png（决定日志归属）")
+    ap.add_argument("--out", required=True, type=Path, help="ai_videos 或 edu_videos 下的目标 .png（决定日志归属）")
     group = ap.add_mutually_exclusive_group(required=True)
     group.add_argument("--prompt")
     group.add_argument("--prompt-file", type=Path)
     ap.add_argument("--ref", action="append", default=[], type=Path, help="参考图，可重复，按顺序附带")
     ap.add_argument("--transparent", action="store_true")
-    ap.add_argument("--model", help="Codex 代理模型（不是图像模型）；缺省用 ~/.codex/config.toml")
+    ap.add_argument("--model", default=__import__("os").environ.get("CODEX_IMAGE_AGENT_MODEL", "gpt-6.1-sol"),
+                    help="Codex 代理模型（不是图像模型，只负责原样转交 prompt 给 image_gen）；缺省 gpt-6.1-sol"
+                         "（2026-11-08 用户：astra 太贵、抢出图额度），可用环境变量 CODEX_IMAGE_AGENT_MODEL 改")
     ap.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT)
     ap.add_argument("--overwrite", action="store_true")
     args = ap.parse_args()
