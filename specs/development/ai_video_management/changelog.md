@@ -7361,3 +7361,17 @@ Auto-updated:
 
 No conflicts found in: 既有制作资产、历史请求与审稿来源、其他会话的待补日志；独立审稿仍为 Kimi 单审。
 
+
+## Follow-up 367 — 2026-11-15 18:18:48
+Source: user_input/follow_ups/202611.md - section 367
+Summary: 忽略本地压缩包与 NumPy 数组，清理未推送历史并同步其余改动
+
+Auto-updated:
+- .gitignore — 全仓忽略 *.zip 与 *.npy；87 个原受跟踪文件停止跟踪且保留本地字节
+- 本地未推送提交 — 通过独立临时 index 移除全部 zip/npy，保留提交作者、时间、说明与其他内容；原历史保存在本地 backup/local-before-ignore-20261115-5b82ab618，不推送备份分支
+- .audit/ignore-artifacts-20261115/ — 本地文件大小/mtime 清单及提交映射；其余并发制作改动随本次同步提交
+
+验证: 87 个本地文件的大小与修改时间均未变；6 个待推送提交均无 zip/npy，待上传对象均不超过 100 MiB；.gitignore 根目录及嵌套路径匹配通过；远程原分支仍为新历史祖先，无须 force push。
+
+No conflicts found in: 现有本地媒体副本、远程已发布历史及其他源文件。
+
