@@ -1,0 +1,122 @@
+{
+  "worker_id": "text_review",
+  "stage": 4,
+  "role": "validator",
+  "status": "complete",
+  "reviewer": "Codex independent agent /root/chip_independent_review",
+  "date": "2026-11-15",
+  "scope": "第一批7张当前PNG候选首帧，全部实际逐张看图；人物参考实际看图；科学图同时读scientific_frames.py。不含弃用的atom_count_r1.png，不含音频、动画或成片。",
+  "summary": {
+    "pass": 7,
+    "fail": 0,
+    "看不清": 0
+  },
+  "blockers": [],
+  "interpretation": "pass仅表示作为故事板候选首帧没有发现需重出的可见错误；不等于真实器件尺寸、实拍证据、动画时序或成片验收。后期常驻示意角标与比例尺仍按原制作规则完成，不以未包含后期包装判底图失败。",
+  "results": [
+    {
+      "file": "storyboard/frames/city_reveal_r1.png",
+      "sha256": "9ccbb9987de933a6f110c7a0bc1a89a5cad00aa298b6913dae85385caa83f66f",
+      "verdict": "pass",
+      "evidence": [
+        "整幅为密集矩形分区和互连路径，铜色与蓝白信号形成俯瞰城市错觉；无真实城市建筑、品牌或伪造数字。",
+        "适配开场结构示意的作用；未从这张图推断实际die版图或栅极尺寸。"
+      ],
+      "necessary_fix": [],
+      "production_note": "发光仅为叙事/信号示意，后期须保留既定真实性标注；不要把此图用于宣称某型号芯片的真实布局。"
+    },
+    {
+      "file": "storyboard/frames/transistor_answer_r1.png",
+      "sha256": "c61c98673421567dfab1984f5f9b7816d4679cfbb85a2f8cfe01e70acecd1dd8",
+      "verdict": "pass",
+      "evidence": [
+        "林低发髻、灰外套与琥珀袖条匹配参考；圆探索表位于本人左腕（画面右侧抬手），右腕没有第二块表。",
+        "凯卷发、海军蓝帽衫、米色斜挎带与参考一致；表情皱眉可解释为半信半疑，没有明显换人。",
+        "双人对话和独立镊子样品可读，桌上完整手机与样品分开，未出现拆散手机还能点击的必然矛盾。"
+      ],
+      "necessary_fix": [],
+      "production_note": "样品外有透明展示膜/夹持外观，微小芯片本体不够大以作结构证据；本镜用于人物反应即可。光源有日光与暖台灯，属于可接受构图，不据此判角色或科学错误。"
+    },
+    {
+      "file": "storyboard/frames/vias_close_r1.png",
+      "sha256": "9e43addcd383f30425f9cc823d89498f6742e6eb77bde894bd9d279996c8c281",
+      "verdict": "pass",
+      "evidence": [
+        "前景铜短柱在选定位置连接上层铜线和下层铜线，接触两端清楚。",
+        "其他层间有透明介质隔离，上下交叉不全部连接；材质区分支持绝缘防短路的台词。",
+        "没有人物、标签乱码或把通孔画成贯穿全部金属层的巨大柱子。"
+      ],
+      "necessary_fix": [],
+      "production_note": "透明介质为观察内部的剖切/透视示意，不代表真实芯片内部是开放空间；正式动画保持介质存在并按台词顺序突出它。"
+    },
+    {
+      "file": "storyboard/frames/inverter_math_r1.png",
+      "sha256": "73b6ea45d3fbf3fa929a71b7bf3ed7300bef9274aab04e8d59348765a405047c",
+      "verdict": "pass",
+      "evidence": [
+        "同一输入连接P/N两栅；P位于VDD与输出之间、N位于输出与0V之间。",
+        "输入1时P通道断开、N通道连续，输出节点由N连到0V，显示1→0符合反相逻辑；没有VDD到地的完整短路通路。",
+        "中英文标题、输入输出与0/1清楚，无溢出。"
+      ],
+      "necessary_fix": [],
+      "production_note": "这是通断简图，不是完整器件符号或真实导线几何；动画若演示输入0，应同时切P通/N断和输出1。VDD可在首次出现时口播/短标注解释为电源，不必为当前候选重出。"
+    },
+    {
+      "file": "storyboard/frames/voltage_01_math_r1.png",
+      "sha256": "6ff9ef90699d5bf7fcfc98d519bbe3931eb180ec0c975b11f66db0639a2c3ca1",
+      "verdict": "pass",
+      "evidence": [
+        "纵轴V、横轴t，高电平标1、低电平标0，位置对应正确。",
+        "仅示意逻辑高低，没有把1写成固定1伏，也没有假造纳秒等未验证时间单位。",
+        "曲线、数字及双语示意标题清楚，足够用于本镜核心含义。"
+      ],
+      "necessary_fix": [],
+      "production_note": "直立跳变是理想化波形；现有示意标注足够，不以未画有限上升时间判错。"
+    },
+    {
+      "file": "storyboard/frames/atom_count_math_r1.png",
+      "sha256": "4966e13689ee01b2aef47d06b2aa6804e7727cd0028f41ed971a60b704f4e5ea",
+      "verdict": "pass",
+      "evidence": [
+        "当前图显示局部放大/Magnified inset和6 nm，未显示44层结论，只有首层橙色及计数1，符合先数再揭晓。",
+        "无人手或人物出现在晶格内，没有100nm人物直接碰触原子的尺度冲突。",
+        "几何源码用硅金刚石结构的四组[001]平面偏移、a/4层间距和a√3/4最近邻键长建点连线；不是随意方格点阵。"
+      ],
+      "necessary_fix": [],
+      "production_note": "当前斜投影中每一原子层含多个点且跨深度倾斜，不应按屏幕上横排点数误数层；后续l76逐层高亮需沿模型k值而非屏幕y坐标。"
+    },
+    {
+      "file": "storyboard/frames/atom_thickness_math_r1.png",
+      "sha256": "43902c8ad5a8473414206d6a9337ea63d5e7da34b2e6b80603b54386c66938e6",
+      "verdict": "pass",
+      "evidence": [
+        "44层/44 layers的揭晓在厚度图，和数原子首图分离；6 nm与a/4≈0.136 nm的数值互相合理。",
+        "模型共44个占据原子平面，约6nm厚度为边界取法/舍入的示意；不是把44个原子直径相乘。",
+        "源码晶格方向明确为[001]，图未冒充显微照片；中英文可读，底部公式不被裁切。"
+      ],
+      "necessary_fix": [],
+      "production_note": "四十几层是近似。44平面包含43个中心间距，表面边界与原子中心并不相同；当前6nm名义厚度可接受，不以这种边界约定差异判错。最终观众包装可补持续的示意角标，或沿用上一镜局部放大标识。"
+    }
+  ],
+  "not_tested": [
+    "动画动作顺序",
+    "配音同步",
+    "两语言完整字幕版",
+    "最终画面比例尺校准",
+    "真人理解测验"
+  ],
+  "supporting_inputs": [
+    {
+      "path": "edu_videos/tansuo/_shared/cast/lin/turnaround.png",
+      "sha256": "fb53350c565845d80e62df1a517540142b1006c809a63525b95f0194bd460f6b"
+    },
+    {
+      "path": "edu_videos/tansuo/_shared/cast/kai/turnaround.png",
+      "sha256": "132cfbb4f976a20b038e1614a18b963e2bb3ab6cdc1aff4e83f1373e75b0c6c1"
+    },
+    {
+      "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/scientific_frames.py",
+      "sha256": "21ac89c2a32d38d2021f9996675cd4c54b4630ccc569f11c1cb92016c3de9bb6"
+    }
+  ]
+}

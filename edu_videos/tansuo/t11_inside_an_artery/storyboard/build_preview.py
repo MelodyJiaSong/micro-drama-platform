@@ -26,10 +26,13 @@ def build():
             assert shot['cues'][0]['start'] == 0 and shot['cues'][-1]['end'] == shot['duration_estimate']
             assert all(a['end'] == b['start'] for a,b in zip(shot['cues'],shot['cues'][1:]))
             panel = panels[shot['panel']]
+            visual_panel = panels[shot.get('reference_panel',shot['panel'])]
             diagram = SB / 'diagrams' / f"{shot['id']}.png"
-            image = diagram if diagram.exists() else SB / panel.get('image', f"{panel['id']}.png")
+            image = SB / shot['preview_image'] if shot.get('preview_image') else diagram if diagram.exists() else SB / visual_panel.get('image', f"{visual_panel['id']}.png")
             assert image.is_file(), f'缺参考图：{image}'
-            kind = '本镜功能示意图' if diagram.exists() else f"{panel['id']}场景概念参考；非本镜已生成首帧"
+            kind = shot.get('visual_medium') or ('本镜功能示意图' if diagram.exists() else f"{visual_panel['id']}场景概念参考；非本镜已生成首帧")
+            visual_source = shot.get('visual_source', panel['source'])
+            if shot.get('reference_note'): kind += '；'+shot['reference_note']
             prompt = SB / 'shots' / f"{shot['id']}.txt"
             prompt.parent.mkdir(exist_ok=True)
             cues = '；'.join(f"{c['start']:g}–{c['end']:g}秒：{c['action']}" for c in shot['cues'])
@@ -39,7 +42,8 @@ def build():
                 '摄影：'+shot['camera'],'调度：'+shot['blocking'],'分拍：'+cues,
                 '转场：'+shot['transition'],'图形：'+shot['graphic'],
                 '台词：'+' / '.join(f"{d['speaker']}：{d['text']}" for d in shot['dialogue']),
-                '画面来源：'+panel['source'],'事实台账：'+', '.join(shot['claims']),
+                '画面来源：'+visual_source,'事实台账：'+', '.join(shot['claims']),
+                '动态预演：'+shot.get('preview_video','无；当前为静态设计参考'),
                 '结构以研究模型重建；此为分镜设计，不是收费视频提交包。'
             ]),encoding='utf-8')
             result['shots'].append({
@@ -48,7 +52,8 @@ def build():
                 'cast':shot['cast'],'dialogue':shot['dialogue'],
                 'action':f"【{kind}】{shot['title']}：{shot['action']}",
                 'blocking':shot['blocking'],'beats':'估算分拍：'+cues,
-                'camera':shot['camera']+' 转场：'+shot['transition']+' 图形：'+shot['graphic']+' 画面来源：'+panel['source'],
+                'camera':shot['camera']+' 转场：'+shot['transition']+' 图形：'+shot['graphic']+' 画面来源：'+visual_source,
+                'previewVideo':rel(SB/shot['preview_video']) if shot.get('preview_video') else '',
                 'image':{'path':rel(image),'mtime':image.stat().st_mtime_ns//1_000_000_000},
                 'framePrompt':rel(prompt),'packPrompt':'','shotDir':rel(SB/'shots'),
                 'note':'估算时长；'+kind,'sourcePanel':panel['id'],'claims':shot['claims']})
@@ -61,10 +66,13 @@ def build():
         'notes':[f"{plan['version']}：{len(scenes)}场、{len(ids)}镜，估算 {total//60}分{total%60:02d}秒。每张卡的秒数均为设计估算，尚未由配音实测。",
                  plan['image_policy'],'台词为分镜草稿。正式讲稿、双语台词审及整集音频听审后校准时长，再进入视频生成。',
                  '全片只有林和凯，父亲仅通过台词与单据出现。不作个人用药推荐。',
-                 '比较图为假设算例：每组100人、同一5年、同一事件定义、相对风险减少20%；不是临床试验数据或个人预测。'],
+                 '比较图为假设算例：每组100人、同一5年、同一事件定义、相对风险减少20%；不是临床试验数据或个人预测。',
+                 '本轮按用户授权由Codex直接复审；审稿者身份、范围、指纹与结论见复审报告。界面“图已出”仅统计参考图存在，不代表正式首帧已完成。'],
         'links':[{'label':label,'path':rel(path)} for label,path in [
             ('镜头设计源',plan_path),('节拍',TOPIC/'beats.md'),('事实台账',TOPIC/'claims.json'),
-            ('修订说明与复审',SB/'reviews/v3_resolution.json'),('片尾第二屏',SB/'diagrams/V38b.png'),('v2审查',SB/'reviews/structure_r1.json')]],
+            ('肝脏段40秒动态样片（无声）',SB/'liver_motion/liver_motion_v4.mp4'),
+            ('v4动态与美术复核',SB/'reviews/v4_motion_style_review.json'),
+            ('v3.1复审（历史）',SB/'reviews/v3_1_codex_review.json'),('修订说明',SB/'reviews/v3_resolution.json'),('片尾第二屏',SB/'diagrams/V38b.png'),('v2审查',SB/'reviews/structure_r1.json')]],
         'scenes':scenes}
     (SB/'storyboard.json').write_text(json.dumps(board,ensure_ascii=False,indent=2),encoding='utf-8')
     voices={}

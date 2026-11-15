@@ -1,0 +1,88 @@
+{
+  "worker_id": "text_review",
+  "stage": 4,
+  "role": "validator",
+  "status": "complete",
+  "reviewer": "Codex independent agent /root/chip_independent_review",
+  "date": "2026-11-15",
+  "scope": "第二批4张当前PNG首帧，全部实际逐张看图；同时读取build_preview.py中本轮动作定义。不含动画、声音或成片。",
+  "summary": {
+    "pass": 2,
+    "fail": 1,
+    "看不清": 1
+  },
+  "blockers": [
+    "B2-01"
+  ],
+  "interpretation": "只对候选首帧的可见内容下结论；未以没有动画或未加后期包装判底图失败。看不清单列为材料语义无法核实，不伪装成确定科学错误。",
+  "results": [
+    {
+      "file": "storyboard/frames/channel_cycle_r1.png",
+      "sha256": "34db45cc28b6ab5286fad5b3aa4425823180eac0a2d55a2579902a5c92ded9a9",
+      "verdict": "看不清",
+      "reason": "材料身份和下方包围关系不清，而非分辨率不足。",
+      "evidence": [
+        "中心左右贯通的暗色带含密集琥珀点，能表达形成通道；没有可见的电子穿栅绝缘层路径。",
+        "上方金色块下有一块较厚的浅灰弯曲层，下方是大面积深灰；图中没有标注能确定深灰底部是同一栅金属还是硅基底。",
+        "与channel_material的浅色薄绝缘层、灰色固体硅、深色外栅的图像编码不一致，不能只凭相似轮廓认证同一纳米片器件的开态。"
+      ],
+      "necessary_fix": [
+        "先补材料标注/结构依据以消除歧义，或沿用channel_material同一剖面几何与材质，仅增加硅内载流子密度；不要通过替换整块材料表达导通。"
+      ],
+      "production_note": "动作计划的开态到关态顺序正确；本判断不涉及l61/l62实测同步，也不要求首帧同时画出开与关。"
+    },
+    {
+      "id": "B2-01",
+      "file": "storyboard/frames/channel_not_road_r1.png",
+      "sha256": "efdf5c9e10632160df1706776b39e03c583a268151cff275dc8935cacb244c68",
+      "verdict": "fail",
+      "evidence": [
+        "栅金属与浅色绝缘层组成架空拱顶，拱顶内可见明显黑色透视空腔及其地板；两列虚线沿空腔内地板向纵深延伸。",
+        "这不是简单剖去前半材料以露出贴合界面：浅色绝缘层底面和下方硅表面之间有可读的隧道高度。",
+        "本镜专门解释硅材料始终存在、没有实体道路；当前图反而让观众看到栅下空洞/隧道，与该核心解释冲突。"
+      ],
+      "necessary_fix": [
+        "撤下此候选。改成硅实体、贴合其表面的极薄绝缘层、外侧栅金属连续相接的剖面，不留可穿行的架空空腔。",
+        "如保留道路比喻，用不改变器件几何的叠加虚线淡出；电子保持稀疏关态，真正聚集留至l60–l61。"
+      ],
+      "production_note": "不要求本镜独自显示整个晶体管或四面包围的全部空间面；失败依据是已画出的空隙会误导，而不是缺少镜外结构。"
+    },
+    {
+      "file": "storyboard/frames/channel_material_r1.png",
+      "sha256": "c890ef95e9e1262afc663f5baee387204cf7f447e7e2ad7d5432bca698e6b88e",
+      "verdict": "pass",
+      "evidence": [
+        "中央连续灰色实体从左端跨到右端，没有物理断口；几粒琥珀点稀疏分布，未画成已导通的亮带。",
+        "硅的上下表面各有独立浅色薄层，薄层之外为深色金属块，符合剖面要展示的硅/绝缘层/栅层次。",
+        "本镜没有人物、乱码、材料随电子消失等可见错误。"
+      ],
+      "necessary_fix": [],
+      "production_note": "粗糙晶体纹理只是材质示意，不应解说成硅沟道由碎石/多个晶粒拼成；若继续细化，可降低大块晶粒外观。作为材料持续存在的候选首帧不因此重出。"
+    },
+    {
+      "file": "storyboard/frames/die_bottom_r1.png",
+      "sha256": "9fce882a38fb18ae1d3627e3ac614a69f75e4e80b6666f0a4171201a20dc1da8",
+      "verdict": "pass",
+      "evidence": [
+        "上部铜色互连分层、上粗下细，短柱连接局部层间；最下方存在灰色器件层和连续硅基底。",
+        "核心空间关系是导线在上、器件在下；未出现把铜线本身叫作晶体管的可见标注。",
+        "全图没有人物尺度冲突或错误计数文字；可作为层次构图示意。"
+      ],
+      "necessary_fix": [],
+      "production_note": "层间黑色空隙应在正式讲解中标明介质隐藏/剖切透明显示，而不能说真实内部全是空气。此图不作精确层数、单个晶体管类型或尺寸的证据，完整模型仍需核验。"
+    }
+  ],
+  "not_tested": [
+    "动画时序与结构保持",
+    "配音同步",
+    "精确尺度",
+    "完整电路连接",
+    "真人理解测验"
+  ],
+  "supporting_inputs": [
+    {
+      "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/build_preview.py",
+      "sha256": "ece8ac3a619af422c742d71ad491c6446a8eef0fa78f59c54b572db71d73bbf9"
+    }
+  ]
+}

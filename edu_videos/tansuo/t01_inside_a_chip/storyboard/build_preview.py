@@ -8,6 +8,7 @@
 讲稿段落只表示教学节拍，不表示影视场景。SCENE_PLAN 按地点组织，每个视觉镜头独立登记机位、动作和首帧。
 """
 import json
+import hashlib
 import re
 import sys
 from pathlib import Path
@@ -52,7 +53,7 @@ VISUALS = {
     "subway_analogy": V("挤地铁类比", "人物只用小幅挪动解释个体与整体响应", "双人反应＋网页短类比", "Seedance + 网页示意"),
     "phone_blur": V("拍糊了", "凯拿手机拍导线，画面无法合焦", "过肩拍手机→屏幕糊图", "Seedance + 网页叠加", "P08"),
     "wavelength": V("光的波长太粗", "彩虹光波与纳米结构同尺度比较", "光波扫过结构的比例演示", "Blender + 网页比例尺"),
-    "microscope_gray": V("电子显微镜灰图示意", "同一结构模型从灰度切为伪彩；标明这是电镜成像示意，不能冒充真实显微照片", "灰度→伪彩切换", "Blender + 网页叠加"),
+    "microscope_gray": V("电子显微镜灰图示意", "同一结构模型由伪彩退为灰度，末尾保持灰度衔接凯的反应；人物服装保色。标明电镜成像示意，不能冒充真实显微照片", "伪彩→灰度切换", "Blender + 网页叠加"),
     "gray_reaction": V("全灰了", "画面褪灰，凯理解照片与实物颜色的区别", "凯反应近景", "Seedance"),
     "gate_array": V("抵达栅极阵列", "一排排栅极横跨硅条，凯寻找三纳米", "阵列大全景", "Blender（3D 示意）", "P09"),
     "gate_pitch": V("栅极中心间距", "标记相邻栅极中心，和头发宽度对照", "测量特写", "Blender + 网页尺寸叠加"),
@@ -73,8 +74,8 @@ VISUALS = {
     "tap_arrival": V("点击到了", "凯看到代表自己点击的信号抵达", "信号跟拍→凯反应", "Seedance + 网页信号光迹"),
     "voltage_01": V("高低电压与零一", "高低电压和 1/0 对应，开关产生并传递信号", "网页信息图＋晶体管背景", "网页 0/1 示意"),
     "inverter": V("反相器", "两个不同类型开关组成反相器，输入输出反转", "电路连接动画", "网页反相器示意"),
-    "array_signal": V("信号传向下一开关", "通道导通，相邻晶体管依次传递信号", "阵列拉远", "Blender + 网页电路叠加", "V18C"),
-    "atom_count": V("数原子", "镜头推入纳米片的局部放大窗；凯在窗外点数放大的原子层，人物不再次缩小、不接触真实原子", "人物过肩→晶格局部放大窗", "Blender 晶格 + Seedance 人物", note="旧 P11 右腕表错误且原子层数不足，已退出当前首帧；原图保留供审计。新图须左腕表、硅金刚石结构，不用旧图作视频首帧。"),
+    "array_signal": V("信号传向下一开关", "本级N管导通、P管关断，输出电压降低；变化沿输出导线到下一级栅极，不让全部晶体管同向依次导通，不画载流子穿越栅绝缘层", "沿输出导线跟拍→阵列拉远", "Blender + 网页电路叠加", "V18C"),
+    "atom_count": V("数原子", "切入明确的晶格局部放大窗，凯画外点数；从第一层逐步高亮到第五层，不提前揭晓总数。人物不再次缩小、不接触真实原子", "晶格局部放大窗，画外台词", "代码计算硅金刚石晶格", note="P11错误旧图永久留档；本镜改为无人物的准确晶格示意，从构图上消除错腕和人体尺度冲突。"),
     "atom_thickness": V("四十几层与并行制造", "厚度比例拉开，再切整片硅上器件一起制造", "切面→整片硅拉远", "Blender + 网页尺度叠加"),
     "scale_guess": V("猜缩小倍数", "两人坐在晶体管顶，凯先猜一万倍", "双人中景", "Seedance + 网页数字", "P12"),
     "scale_answer": V("一千七百万倍", "探索表七格多与 100 纳米人体同时呈现", "表盘特写→人体比例", "Seedance + 网页数字揭晓"),
@@ -86,7 +87,7 @@ VISUALS = {
     "solder_power": V("供电接地与数据", "不同焊球分别承担供电、接地和数据连接", "焊球阵列俯视→接触点分组特写", "Blender + 网页连接叠加"),
     "region_switch_question": V("开关在哪个区", "凯追问开关位置，林说明各区都靠晶体管工作", "人物近景→功能分区俯视", "Seedance + Blender 色块"),
     "static_transistor_reaction": V("没有机械零件", "静止纳米片与凯的疑惑交替，确认没有会动的把手", "静止结构特写→凯反应", "Blender + Seedance 人物"),
-    "channel_not_road": V("不是铺实体路", "虚拟道路示意散去，电子聚成真实导电通道", "概念道路淡出→电子通道微距", "Blender + 网页示意"),
+    "channel_not_road": V("不是铺实体路", "虚拟道路示意散去，完整硅片保持关态；不提前聚成通道，真正的聚集和导通留到l60–l61加栅压之后", "概念道路淡出→完整硅片微距", "Blender + 网页示意"),
     "magnet_analogy": V("磁铁隔空类比", "磁铁隔桌移动铁屑，随即切回绝缘层两侧的电场", "桌面类比→绝缘层微距", "网页类比 + Blender 剖面"),
     "pocket_beijing": V("两个北京揣兜里", "凯看着手机，想象两个北京的面积藏在日常设备里", "凯反应近景→手机与面积图同框", "Seedance + 网页面积图"),
 }
@@ -156,24 +157,49 @@ OVERLAYS = {
     "gate_pitch": "标尺：栅极中心距约 50 nm，仅为一种工艺示例；线宽、缝宽不能代替中心距。",
     "process_name": "短字卡：工艺代号 ≠ 单一尺寸 / Process name ≠ one dimension。",
     "nanosheet": "模型切换卡：纳米片晶体管示意 / Nanosheet transistor example；不宣称开场 A17 Pro 使用环绕栅。",
-    "off_state": "角标：增强型 N 沟道示例 / Enhancement-mode nMOS；这里的栅压均相对源极。源漏已有电势差，栅压控制通道；电子来自源漏载流子库，不画成绝缘层漏进来的电子。",
+    "off_state": "屏幕仅显示短角标：增强型 N 沟道示例 / Enhancement-mode nMOS。制作要求（不上屏）：这里的栅压均相对源极；源漏已有电势差，栅压控制通道；电子来自源漏载流子库，不画成绝缘层漏进来的电子。",
     "insulator": "用不同材质明确区分灰色硅、薄绝缘层、栅金属；切面描白边，不画成栅极开窗。",
     "inverter": "画出电源、地、互补 P/N 两管、共用输入与输出；高输入时 N 通 P 断、输出低，低输入相反。",
-    "atom_count": "常驻：局部放大示意 / Magnified inset；沿 [001] 约 44 原子层、厚约 6 nm，以晶格计算渲染，不拿 AI 点阵计数。",
+    "atom_count": "常驻：局部放大示意 / Magnified inset；此镜只标第一层至第五层，不提前揭晓总数。制作依据（不上屏）：[001] 厚约 6 nm，以晶格计算渲染，不拿 AI 点阵计数。",
     "atom_thickness": "原子层统计沿 [001]，间距约 0.136 nm；不是原子直径。拉远回器件时关闭局部放大窗。",
-    "scale_guess": "人物仍约 100 nm 高；叠层高度须由模型决定，不再要求叠层与人同高。P12 片间空槽只是旧构图，正式模型须显示栅金属包围每片硅及片下方；不能沿用空槽冒充环绕栅。",
+    "scale_guess": "人物仍约 100 nm 高；叠层高度须由模型决定。旧P12片间空槽已撤下；当前必须显示栅金属包围每片硅及片下方。",
     "scale_answer": "后期：1.7 m ÷ 100 nm ≈ 1700 万；7.23 格（每格十倍）。镜头放大不改变人物尺寸。",
     "beijing_area": "后期：比较的是面积；约 3.0–3.3 万 km² ≈ 1.8–2.0 个北京市行政区。平均地盘包含布线等面积，不是晶体管实体面积。",
     "next_episode": "片尾补 AI 生成画面／AI 配音标注及来源卡；下一期：开关怎么组成加法。",
 }
+OVERLAYS['die_bottom'] = '短角标：层间介质隐藏显示 / Dielectric hidden；层间黑色并非真实空气大厅。'
+OVERLAYS['field_question'] = '转入局部界面剖面模型 / Local interface cutaway；不作为整个环绕栅结构的全貌。'
+OVERLAYS['tap_arrival'] = '模型切换卡：平面器件局部示意 / Planar-device cutaway。蓝白仅为场/信号可视化，硅中蓝色底纹不作电子；若叠加电子，统一用琥珀色并保持在硅内。'
+OVERLAYS['field_force'] = '蓝箭头明确表示电场方向，不是电子运动方向；电子带负电，其响应与电场方向相反。'
+VISUALS['array_signal']['source'] = '网页两级反相器电路示意'
+VISUALS['array_signal']['camera'] = '沿输出导线平移到下一级输入'
+VISUALS['relay_compare']['source'] = '代码继电器原理图 + 静止晶体管对照'
+for _key in ('channel_not_road', 'channel_cycle', 'electrons_disperse', 'field_force', 'leakage'):
+    VISUALS[_key]['source'] = '代码精确结构示意 + 后续Blender镜头'
+    VISUALS[_key]['note'] += '本轮首帧采用统一纵向与横向结构示意；硅连续、绝缘层贴合、栅四面包围，载流子只在硅内；非实测尺寸。'
+# Independent current review invalidated these historical composition candidates.
+for _key in ('scale_guess', 'array_signal'):
+    VISUALS[_key]['image'] = None
 COMMON_VISUAL_RULES = "真人写实；林 G9 低发髻、左腕唯一探索表，凯 K1 卷发与固定服装。结构按模型，硅为灰色、铜导线为铜色、绝缘层独立可辨；结构剖切面描白边。蓝白只表示信号、电场变化，琥珀点表示电子；它们不是实际发光。比例尺由后期按模型与机位计算，非人物身高。进入芯片常驻‘结构／颜色／信号示意’，不要等到拍糊才揭示。进入晶体管后人物约 100 nm 高，原子层仅用局部放大窗。所有中文、英文文字和读数后期叠加，AI 图不画字。"
+
+approval_path = SB / 'frame_approvals.json'
+FRAME_APPROVALS = json.loads(approval_path.read_text(encoding='utf-8')) if approval_path.exists() else {}
+for key, entry in FRAME_APPROVALS.items():
+    path = ROOT / entry['path']
+    if key not in VISUALS or entry['status'] != 'pass':
+        raise ValueError(f'未知或未通过的首帧登记：{key}')
+    if hashlib.sha256(path.read_bytes()).hexdigest() != entry['sha256']:
+        raise ValueError(f'首帧与独立审图指纹不符：{key}')
+    VISUALS[key]['image'] = path.relative_to(SB).with_suffix('').as_posix()
+    VISUALS[key]['frame_review'] = entry['review']
+    VISUALS[key]['frame_kind'] = entry.get('kind', 'concept-keyframe')
 
 
 def frame_prompt(key):
     visual = VISUALS[key]
     path = SB / "prompts" / "current" / f"{key}.txt"
     path.parent.mkdir(exist_ok=True)
-    text = f"当前分镜首帧制作说明（follow-up 056，待独立复审）\n{COMMON_VISUAL_RULES}\n镜头：{visual['title']}\n镜头内动作：{visual['action']}\n机位：{visual['camera']}\n画面来源：{visual['source']}\n只画动作开始前的一个瞬间，不把整段动作拼成多格图。人物参考：_shared/cast/lin/turnaround.png 与 _shared/cast/kai/turnaround.png。\n{OVERLAYS.get(key, '')}\n{visual['note']}\n旧图片仅作构图参考；本说明不是旧图的历史生成请求。未生成、未独立审图不得记已完成。\n"
+    text = f"当前分镜首帧制作说明（follow-up 057；结论以独立审查与PNG指纹为准）\n{COMMON_VISUAL_RULES}\n镜头：{visual['title']}\n镜头内动作：{visual['action']}\n机位：{visual['camera']}\n画面来源：{visual['source']}\nAI图只画动作开始前的一个瞬间，不把整段动作拼成多格图；代码绘制的晶格和电路示意以 scientific_frames.py 为几何源。人物参考：_shared/cast/lin/turnaround.png 与 _shared/cast/kai/turnaround.png。\n{OVERLAYS.get(key, '')}\n{visual['note']}\n本说明不是旧图的历史生成请求；完整请求保留在 request_log.md。\n"
     path.write_text(text, encoding="utf-8")
     return rel(path)
 
@@ -226,7 +252,9 @@ def image_info(visual):
     path = SB / f"{image_id}.png"
     if not path.exists():
         return None, f"首帧待出：登记的 {image_id} 文件不存在"
-    if image_id == "V18C":
+    if visual.get('frame_review'):
+        note = f"首帧构图独立审查通过，绑定当前PNG；证据：{visual['frame_review']}。这不是动态成片或精确三维模型验收。"
+    elif image_id == "V18C":
         note = "V18C 历史构图通过独立审图；本轮制作说明仍待复审，不等于结构模型或成片验收"
     else:
         note = f"临时沿用 {image_id} 作构图参考，不代表本镜已审通过"
@@ -281,13 +309,15 @@ def build(lang):
 
 validate_plan()
 zh_scenes, zh_manifest = build("zh")
+zh_shot_count = sum(len(scene['shots']) for scene in zh_scenes)
+zh_frame_count = sum(bool(shot['image']) for scene in zh_scenes for shot in scene['shots'])
 board = {
-    "title": "探索 · 芯片 t01：跟着一下点击，找到那个开关", "eyebrow": "教学视频 · 探索 · t01 故事板 V5.1 修补版",
-    "lang": "zh", "version": "v5.1-review-repair", "updated": "2026-11-15",
+    "title": "探索 · 芯片 t01：跟着一下点击，找到那个开关", "eyebrow": "教学视频 · 探索 · t01 故事板 V5.2 Codex接续",
+    "lang": "zh", "version": "v5.2-codex-takeover", "updated": "2026-11-15",
     "notes": [
         COMMON_VISUAL_RULES,
-        "本轮已修文字、动作时序与制作说明；Kimi 额度限制，本轮独立复审未完成。当前仍是制作中的故事板，不是可直接出片的完成版。",
-        "P11 错腕表原图已退出当前首帧；38 个原缺图镜头加该镜，共 39 个中文镜头待首帧。现有 14 图仅作构图参考。",
+        "本次按用户指示由独立Codex接替Kimi审稿；具体文本、图像及未结项见本轮审查记录，不沿用旧版结论。故事板首帧验收不等于动态视频、音画同步或成片验收。",
+        f"中文 {zh_shot_count} 镜，已有首帧 {zh_frame_count} 镜，待补 {zh_shot_count-zh_frame_count} 镜；P11错腕表旧图已留档，原子段改为代码计算的晶格放大示意。",
         "首帧提示统一来自当前分镜；旧 P/V 提示和旧审稿保留为历史，不再用于直接生成。每镜补有真实性、尺度和电路机制制作约束。",
         "已按实际地点重组为 9 个场景、53 个中文视觉镜头；不再把 23 个讲稿段落各自当成单镜场景。",
         "每镜都有独立机位和动作；没有对应首帧就明确显示“首帧待出”，不再用同一张旧图冒充不同镜头。",
@@ -296,7 +326,8 @@ board = {
     "links": [{"label": "音频预览", "href": f"/episode-preview?path={rel(TOPIC)}&audio=1"},
               {"label": "中文讲稿", "path": rel(TOPIC / "script.md")}, {"label": "节拍", "path": rel(TOPIC / "beats.md")},
               {"label": "事实台账", "path": rel(TOPIC / "claims.json")},
-              {"label": "本轮 review 与未结项", "path": rel(TOPIC / "reviews/storyboard_v51_review.json")},
+              {"label": "上轮 review 与遗留项", "path": rel(TOPIC / "reviews/storyboard_v51_review.json")},
+              {"label": "Codex独立文本审查", "path": rel(TOPIC / "reviews/codex_takeover_r1/text_review.md")},
               {"label": "旧故事板数据（历史）", "path": rel(SB / "panels.json")}],
     "scenes": zh_scenes,
 }

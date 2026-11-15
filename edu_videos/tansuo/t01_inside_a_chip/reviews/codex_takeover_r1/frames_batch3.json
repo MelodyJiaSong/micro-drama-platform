@@ -1,0 +1,135 @@
+{
+  "worker_id": "text_review",
+  "stage": 4,
+  "role": "validator",
+  "status": "complete",
+  "reviewer": "/root/chip_independent_review",
+  "date": "2026-11-15",
+  "scope": "独立逐张看图；当前故事板候选首帧；未审成片、未做真人理解测验。",
+  "interpretation": "pass 仅放行所述候选构图，允许后期文字和后续动作，不证明动画时序与整片完成。未读取作者审稿或旧放行结论；P11不在审查范围。未修改源图或生产文件。",
+  "summary": {
+    "pass": 6,
+    "fail": 3,
+    "看不清": 0
+  },
+  "supporting_inputs": [
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/build_preview.py",
+      "sha256": "ece8ac3a619af422c742d71ad491c6446a8eef0fa78f59c54b572db71d73bbf9"
+    },
+    {
+      "file": "edu_videos/tansuo/_shared/cast/lin/turnaround.png",
+      "sha256": "fb53350c565845d80e62df1a517540142b1006c809a63525b95f0194bd460f6b"
+    },
+    {
+      "file": "edu_videos/tansuo/_shared/cast/kai/turnaround.png",
+      "sha256": "132cfbb4f976a20b038e1614a18b963e2bb3ab6cdc1aff4e83f1373e75b0c6c1"
+    }
+  ],
+  "results": [
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/black_package_r1.png",
+      "sha256": "74d58071d2a72713087930be620094c54c3fd89e9a4c9b4699f41acdc24f2c97",
+      "verdict": "fail",
+      "evidence": [
+        "林面向画面右侧，抬起解剖左臂；清楚的黑色圆表却戴在垂下的解剖右腕，违反唯一左腕探索表身份。",
+        "焊球整体悬于主板上方，球底与板面有明显空隙；本镜为已安装封装外观，并非爆炸图。"
+      ],
+      "necessary_fix": [
+        "B3-01：改成左腕唯一探索表。B3-02：让焊球接触主板焊盘，消除悬空断接。"
+      ],
+      "production_note": ""
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/electron_drift_r1.png",
+      "sha256": "e596daf87af417e384370d14c0f9264e26de1aab89a657be2e9212863c5f6cff",
+      "verdict": "pass",
+      "evidence": [
+        "铜导线切面内分散琥珀点只有局部短轨迹；蓝白变化前沿与粒子形态分开。",
+        "未见电子出现在导线外空气中。"
+      ],
+      "necessary_fix": [],
+      "production_note": "传播和漂移的速度差仍须实际动画实现。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/electrons_gather_r1.png",
+      "sha256": "673e1f3427ddfd3a5dbae92a22bbaf3b29bca397e9c4a7fdf106580320d2a9d5",
+      "verdict": "pass",
+      "evidence": [
+        "中央灰硅连续，上下为独立可辨的薄浅色介质，外侧暗色栅。",
+        "琥珀点在硅内靠近界面，未穿过介质。"
+      ],
+      "necessary_fix": [],
+      "production_note": "聚集过程与台词时序须动画复核。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/evolution_r1.png",
+      "sha256": "d447b709a6393e3711d35d67acfdd292761ce8cab7d046cbdf70ebff77e964f1",
+      "verdict": "pass",
+      "evidence": [
+        "依次可辨顶部栅的平面结构、三面控制的鳍、每片单独包覆介质且栅进入片间及底部的三片结构。"
+      ],
+      "necessary_fix": [],
+      "production_note": "架构比较截面省略源漏可接受，不是商业器件实测。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/die_flip_r1.png",
+      "sha256": "80a35febb4d7cd00f10cb9acdf1e14b2f07d6e392edde36e5163322eff4e93cd",
+      "verdict": "pass",
+      "evidence": [
+        "薄硅片倾斜悬于重布线平面与焊球之上，是明确分解与翻转构图。",
+        "表面分区颜色可读，未冒充具体品牌版图。"
+      ],
+      "necessary_fix": [],
+      "production_note": "首帧无需完成翻转，实际方向与前后连续性留给动画。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/field_force_r1.png",
+      "sha256": "4dbad7519dca900537b2c3e14db70d7eccf3d30de559107c00a11b5bb8574f09",
+      "verdict": "fail",
+      "evidence": [
+        "模型中央灰硅两侧之间存在明显深空槽，金色栅与浅色层桥跨其上。",
+        "空槽位于通道处，容易让观众以为中间原本缺少硅材料。"
+      ],
+      "necessary_fix": [
+        "B3-03：替换成连续硅体，介质紧贴硅、栅贴合介质，电子只在硅内。"
+      ],
+      "production_note": "人物和林左腕表未见明确问题；阻断来自核心结构。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/field_question_r1.png",
+      "sha256": "bda8cc1b1f0186c69a45b145155121995a88584e633b5498d7f4dec643df981d",
+      "verdict": "pass",
+      "evidence": [
+        "林低发髻、灰衣及左腕表，凯卷发、深色上衣与斜挎包保持一致。",
+        "桌面局部模型是连续灰硅、浅色界面层与暗色上栅，无物理断口。"
+      ],
+      "necessary_fix": [],
+      "production_note": "仅按局部栅—介质—硅界面模型放行；剪辑须明确局部模型切换，不能说本图已完整展示整个环绕栅。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/insulator_r1.png",
+      "sha256": "f67dd02191a5a62928ecb1ed7be4dc78391949686a2998f63a36dc5fe5ceb4a0",
+      "verdict": "pass",
+      "evidence": [
+        "灰色硅芯外围连续浅色介质可辨，外侧暗色栅。",
+        "无开窗、空气间隙或电子穿层证据。"
+      ],
+      "necessary_fix": [],
+      "production_note": "薄层厚度为可读性示意，不据此量实际厚度。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/leakage_r1.png",
+      "sha256": "11e32878fcbff97e922270168657730f3a35bbf1b842e8b27d992599a6220d3f",
+      "verdict": "fail",
+      "evidence": [
+        "暗栅只沿叠层外侧形成外框，片间是大空槽。",
+        "琥珀点沿空槽出现，会被读作电子在空气中通过。"
+      ],
+      "necessary_fix": [
+        "B3-04：介质与栅分别包围每片硅，片间和底部有栅；漏电轨迹限于硅内部。"
+      ],
+      "production_note": ""
+    }
+  ]
+}

@@ -104,4 +104,4 @@
 | 期 | 目录 | 状态 |
 |---|---|---|
 | t01 | `t01_inside_a_chip/` | 当前讲稿 v2.5、故事板 V5.1（follow-up 056）：修正层间绝缘与换向因果、英文通断画面时序、人物与镜头尺度，补齐当前逐镜制作说明。9 场，中文 53 镜／英文 58 镜；中英各 87 句。音频预览中文 **9:52**、英文 **10:29**，待用户听审；沿用 14 张构图参考，中文 39／英文 44 镜首帧待制作（含已撤下的错腕表 P11，原图保留，旧轮两次重出机会已用完）。**本轮独立复审未完成：Kimi 5 小时额度耗尽；v2.4 的通过不覆盖本轮改句与制作说明。** 当前入口 `/storyboard-preview?path=edu_videos/tansuo/t01_inside_a_chip`；问题、处理和机检证据见 `t01_inside_a_chip/reviews/storyboard_v51_review.json`。 |
-| t11 | `t11_inside_an_artery/` | 第二季试点：v2审查问题已按follow-up 055修为**故事板v3：9场38镜，估算5:01**；逐镜摄影、调度与分拍齐备，机制拆镜、证据措辞、四组假设比较及开场模型已修。节拍v1.3与claims台账、音频草稿清单同步。旧图明确为概念参考，P06/P12A等旧分子图退出当前预览。独立Kimi复审遇5小时用量限制，**未审，不能宣称过审**。原入口 `/storyboard-preview?path=edu_videos/tansuo/t11_inside_an_artery`；修订说明 `storyboard/reviews/v3_resolution.json`。正式讲稿、音频听审和最终制作另按阶段执行 |
+| t11 | `t11_inside_an_artery/` | **故事板v4：9场38镜，估算5:23**。肝脏V23–V27改为5镜40秒本地3D动态预演，原入口顶部可播放无声样片；17张现用说明/片尾图统一深色暖金青色风格（follow-up059/060）。台词文字与科学口径沿用v3.1，节拍v1.5和音频草稿清单同步。Codex按用户授权直接复核本轮改版，非独立Kimi盲审；报告 `storyboard/reviews/v4_motion_style_review.json`。原入口 `/storyboard-preview?path=edu_videos/tansuo/t11_inside_an_artery`。动态为功能预演，旧人物图为概念参考；正式讲稿、音频听审与最终制作仍按阶段执行 |

@@ -1,7 +1,8 @@
-# t01 Script (English v2.5, 2026-11-15)
+# t01 Script (English v2.6, 2026-11-15)
 
 > Spoken English rewrite with the same scenes and line IDs as script.md. This is the targeted-confirmation version after three review rounds. Duration follows the user's quality-first decision.
 > v2.5 corrects l34: insulation prevents shorts; alternating routing directions serves layout. The new line awaits independent review; Kimi was quota-blocked.
+> v2.6 follows independent Codex review under follow-up 057: gate control voltage, the output signal path, and the magnified atomic view are clarified. See reviews/codex_takeover_r1/ for re-review.
 
 ## s1 Where Are We?
 - l01: [Kai] ...A city? Like looking down from a plane at night? [pause 1]
@@ -15,7 +16,7 @@
 ## s3 Who Does the Work When I Tap?
 - l06: [Kai] See? One tap, and it lights up. But what's actually happening in there when I tap?
 - l07: [Lin] Let's follow that tap inside and find one of the switches it flips.
-- l08: [Lin] Here's the rule. Every click of this dial makes us ten times smaller. We'll keep going until we can count individual atoms.
+- l08: [Lin] Each click makes us ten times smaller. We'll shrink to see the switches, then magnify the view to see atoms.
 - l09: [Kai] Hang on. How small are we talking? I'm not ready for this—
 
 ## s4 Shrinking Down
@@ -82,10 +83,10 @@
 
 ## s15 First, Why Is It Off?
 - l54: [Lin] This N-type transistor is normally off. Why?
-- l55: [Kai] Right, there's no voltage on it, so why is it off? Doesn't silicon have electrons too?
+- l55: [Kai] But with no gate voltage, doesn't silicon still have electrons?
 - l56: [Lin] It does, but they haven't formed a channel connecting the two ends. So right now, it's off.
 - l57: [Kai] So the silicon stays. It's the path that's missing, not the material?
-- l58: [Lin] Right. There's no built-in road. Electrons gather to make a path. Watch the gate do it.
+- l58: [Lin] Right. We're not building a physical road. The silicon stays in place. More electrons make it conductive. Watch the gate do it.
 
 ## s16 Voltage On, Current Flows. Voltage Off, It Stops.
 - l59: [Lin] A very thin insulator separates the gate from the silicon. The field acts through it, but any gate leakage into the silicon is normally tiny.
@@ -107,7 +108,7 @@
 - l71: [Kai] Here it comes, that's my tap! ...But what does one switch turning on and off have to do with the photos and messages on my phone?
 - l72: [Lin] In a chip, high and low voltages often represent ones and zeros. Switches turn on and off to create and pass along these signals.
 - l73: [Lin] Two different types of switches can work together as an inverter. A one becomes a zero, and a zero becomes a one. An inverter can't store photos by itself. Different circuits work together to make decisions, store photos, and play videos.
-- l74: [Lin] Look, here's your tap. Voltage reaches the gate, the channel becomes conductive, and the signal passes to the next switch.
+- l74: [Lin] Your tap reaches the gate: the channel conducts, changing the output voltage. A wire carries that change to the next stage.
 - l75: [Kai] So my tap really did make it all the way here... Found you.
 
 ## s19 Counting Atoms
@@ -131,7 +132,7 @@
 - l87: [Kai] Woohoo, homeward bound!
 
 ## s23 One Last Thought and What's Next
-- l88: [Kai] {Let me check. |}Below, ten or twenty billion switches with no moving parts turn on with an electric field and off without it. Above, over a dozen wiring layers connect them like a city. It's all face-down inside that black package. Right?
+- l88: [Kai] {Let me check. |}Below, ten or twenty billion switches have no moving parts. Electric fields control whether they conduct. Above, over a dozen wiring layers connect them like a city. It's all face-down inside that black package. Right?
 - l89: [Lin] Exactly. You've got it.
 - l90: [Kai] ...But wait. If all they can do is turn on and off, how do they figure out that one plus one is two?
 - l91: [Lin] Ah, that's for next time. We'll head back in and find out.

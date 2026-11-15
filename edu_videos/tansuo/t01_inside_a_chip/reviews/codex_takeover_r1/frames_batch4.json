@@ -1,0 +1,165 @@
+{
+  "worker_id": "text_review",
+  "stage": 4,
+  "role": "validator",
+  "status": "complete",
+  "reviewer": "/root/chip_independent_review",
+  "date": "2026-11-15",
+  "scope": "第四批十二张候选首帧逐张实际看图，结合当前动作；未审成片，未做真人理解测试。",
+  "summary": {
+    "pass": 9,
+    "fail": 3,
+    "看不清": 0
+  },
+  "interpretation": "允许示意构图与后期文字，不以未有动画判失败。未修改生产源图或文件，未采用作者旧审稿结论。无比例标尺的环境图不臆造精确尺寸验证。",
+  "supporting_inputs": [
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/build_preview.py",
+      "sha256": "dec7acd56f9ee4d38ed6e5a7fa98caab8e01018885cfe940ed82efe453bc8b55"
+    },
+    {
+      "file": "edu_videos/tansuo/_shared/cast/lin/turnaround.png",
+      "sha256": "fb53350c565845d80e62df1a517540142b1006c809a63525b95f0194bd460f6b"
+    },
+    {
+      "file": "edu_videos/tansuo/_shared/cast/kai/turnaround.png",
+      "sha256": "132cfbb4f976a20b038e1614a18b963e2bb3ab6cdc1aff4e83f1373e75b0c6c1"
+    }
+  ],
+  "results": [
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/magnet_analogy_r1.png",
+      "sha256": "c9af473cdbd3a4587130f3fc125ee3441e89bf75c8651560fdf874db6a2ee468",
+      "verdict": "pass",
+      "evidence": [
+        "木板上铁屑与木板下手持条形磁铁分隔可辨，符合隔层施力类比。"
+      ],
+      "necessary_fix": [],
+      "production_note": "仅是磁力类比，不能说晶体管靠磁铁；实际移动与切回电场由动画完成。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/microscope_gray_r1.png",
+      "sha256": "b8b75e6bfdf3ef5a288a7bb7deff4d9bf72a96bd4e5df5b618ccb2dee38a68bb",
+      "verdict": "pass",
+      "evidence": [
+        "无彩色结构以灰度微距表现，具有灰图成像示意的视觉辨识。"
+      ],
+      "necessary_fix": [],
+      "production_note": "须后期标明成像示意，不能当真实电镜照片。当前为灰度候选，伪彩到灰度应基于同一模型完成，不能仅拿不同构型硬切冒充褪色。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/nanosheet_r1.png",
+      "sha256": "51a22d69f8b5c054053d6c960916d53aaf2c3dd6a2b14e12a58a91e9a4d8173a",
+      "verdict": "pass",
+      "evidence": [
+        "三片灰硅连接两端；中央栅区切开处每片周边有浅色介质，片间及底部有暗栅。",
+        "栅区外的片间空间与栅区内材料有区别，不是只在叠层外罩空壳。"
+      ],
+      "necessary_fix": [],
+      "production_note": "可用为结构剖切构图；所有层厚与宽度仅示意。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/next_episode_r1.png",
+      "sha256": "1fd3daf5936cf0285bfa70ab0f8267c54e0c9bfe946e5763f47c4f7d1e1d571f",
+      "verdict": "pass",
+      "evidence": [
+        "凯卷发、深蓝卫衣和斜挎包一致，拿完整手机准备点击。",
+        "林低发髻、灰衣，托腮的解剖左腕有唯一圆表，另一腕未见表。"
+      ],
+      "necessary_fix": [],
+      "production_note": "手机屏幕及片尾文字可后期叠加，首帧无文字不失败。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/off_state_r1.png",
+      "sha256": "25f026838a3d11222f0f304165f47069cac9724f66dd561b3e9537a51a7e08b7",
+      "verdict": "pass",
+      "evidence": [
+        "灰硅片始终连续连接左右端部；少量琥珀点在硅内，不是悬空电子道路。",
+        "各硅片中央有独立浅色介质边界，介质外暗栅包围；切开处可辨材料。"
+      ],
+      "necessary_fix": [],
+      "production_note": "关态电子少是定性密度示意，不是绝对无载流子；后续不得使硅片发生机械开合。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/reverse_zoom_r1.png",
+      "sha256": "d095848b2c43f733f3a04c25be6da5b8416f2a86b940e8fa8e79e0f6d8d9a461",
+      "verdict": "fail",
+      "evidence": [
+        "林看向画面右侧，戴表的是画面左侧垂下的解剖右臂；解剖左臂在凯身旁，腕部无表。",
+        "人物与阵列环境本身可读，未见必须另判的明确尺度数值冲突。"
+      ],
+      "necessary_fix": [
+        "B4-01：移到解剖左腕，并只保留一只探索表。"
+      ],
+      "production_note": "无需镜像整个画面；改腕表保持其余人物身份。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/scale_answer_r1.png",
+      "sha256": "1eea3cdb4477b691f2190d7eec26977f6cd89b384caf3e3af6d985b2195c114f",
+      "verdict": "fail",
+      "evidence": [
+        "林近侧抬起的是解剖右臂，右腕戴圆表，另一手放在桌面。",
+        "人物面前为支柱托住的蜂窝六角单层网模型，场景成为桌面模型观察；不符合本段晶体管阵列内的 100 nm 人物尺度揭晓，也不能充当硅金刚石结构。"
+      ],
+      "necessary_fix": [
+        "B4-02：改为唯一左腕表。B4-03：去掉蜂窝原子网桌面模型，回到晶体管阵列及固定人物尺度；数字读数后期补。"
+      ],
+      "production_note": "表盘暂未画出数值不构成失败；错误是可见身份与结构/场景。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/solder_detail_r1.png",
+      "sha256": "24691fe832aa88e9d13a1e123550377eb0417c11528f4024232b21385802d45d",
+      "verdict": "pass",
+      "evidence": [
+        "中心焊球上下与铜色焊盘相接，基板内走线与接点可辨；不存在悬空球底。"
+      ],
+      "necessary_fix": [],
+      "production_note": "不同球的供电、地和数据功能须后期分配，不从相同焊球外形猜功能。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/solder_power_r1.png",
+      "sha256": "badee13172154ea8759da9c71b0307e5fad71bfe12447a6b6b6aa38f7e915365",
+      "verdict": "pass",
+      "evidence": [
+        "倾斜展示封装底面的焊球阵列，用三组色块区分不同连接群，球未相互接触短接。"
+      ],
+      "necessary_fix": [],
+      "production_note": "色块是功能说明的示意分组，不是实际特定芯片球位图；后期加供电/地/数据标注。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/static_transistor_reaction_r1.png",
+      "sha256": "c7b830bdbe20102adf3c8eac46ce1174336e5e05cb26bb8dd77c37f9ad38ac87",
+      "verdict": "fail",
+      "evidence": [
+        "三块横片像层板架在大门框中，片间大空槽仅外围有白边框。",
+        "未见每片外的独立介质与片间栅填充，会再次把环绕栅理解成整个叠层的外笼。"
+      ],
+      "necessary_fix": [
+        "B4-04：保持人物反应构图也必须换成每片介质与栅完整、片间及底部有栅的器件。"
+      ],
+      "production_note": "林本图左腕表正确，人物反应本身可用。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/subway_analogy_r1.png",
+      "sha256": "16691853ec0875d3d941cff5217ea2aceee0147995a442fe6922b68ce1fdc8b5",
+      "verdict": "pass",
+      "evidence": [
+        "双人在铜色互连环境中对视，凯小幅倾身可承接挤地铁类比。",
+        "林唯一表在解剖左腕，双方固定服装、发型保持一致。"
+      ],
+      "necessary_fix": [],
+      "production_note": "人物小幅挪动与整体响应需后续实现；不要求首帧已经出现整段地铁动画。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/black_package_r2.png",
+      "sha256": "9c40fd90fbf3a8eda22515bf617f4e29d0c8a9fe7a688584e617584802120005",
+      "verdict": "pass",
+      "evidence": [
+        "林抬起解剖左臂，左腕唯一圆表，垂下右腕无表。",
+        "黑封装下焊球底部已与板面焊盘接触，未见原先悬空间隙。"
+      ],
+      "necessary_fix": [],
+      "production_note": "B3-01、B3-02 在这张新 SHA 上消除；旧 r1 的 fail 保留历史。"
+    }
+  ]
+}

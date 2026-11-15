@@ -1,0 +1,216 @@
+{
+  "worker_id": "text_review",
+  "stage": 4,
+  "role": "validator",
+  "status": "complete",
+  "reviewer": "/root/chip_independent_review",
+  "date": "2026-11-15",
+  "scope": "第五批十六张候选首帧均逐张实际看图；gray_reaction_r2 在本轮稍后到位，已补看；两级电路另核对源代码。",
+  "summary": {
+    "pass": 13,
+    "fail": 3,
+    "看不清": 0
+  },
+  "not_reviewed": [],
+  "interpretation": "pass 仅放行限定候选构图，允许后期文字及动作，不证明成片或真人一遍理解。未修改生产文件，未读取作者旧审稿结论。缺失图不虚填 SHA。",
+  "supporting_inputs": [
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/build_preview.py",
+      "sha256": "dec7acd56f9ee4d38ed6e5a7fa98caab8e01018885cfe940ed82efe453bc8b55"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/array_frame.py",
+      "sha256": "c21368134629231196086eaa4c9c32f5bf2e89fe9ea8344f03c73f90f55a9809"
+    },
+    {
+      "file": "edu_videos/tansuo/_shared/cast/lin/turnaround.png",
+      "sha256": "fb53350c565845d80e62df1a517540142b1006c809a63525b95f0194bd460f6b"
+    },
+    {
+      "file": "edu_videos/tansuo/_shared/cast/kai/turnaround.png",
+      "sha256": "132cfbb4f976a20b038e1614a18b963e2bb3ab6cdc1aff4e83f1373e75b0c6c1"
+    }
+  ],
+  "results": [
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/pocket_beijing_r1.png",
+      "sha256": "8d6a039a4049de9cb26618f58d478115ee5c15d62ee63f768e3e531896502663",
+      "verdict": "fail",
+      "evidence": [
+        "林画面左侧插兜手臂为解剖右臂，圆表戴在该右腕。",
+        "凯看手机的反应及服装可用，未把手机和真实北京市硬拼成实物。"
+      ],
+      "necessary_fix": [
+        "B5-01：探索表移至解剖左腕，右腕不留表。"
+      ],
+      "production_note": "城市面积可后期叠加，不要求底图已经显示文字。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/process_name_r1.png",
+      "sha256": "afb5b95a68407258b83c5344997a3fbad2571b0cbab2c0944c5faad1ec383d86",
+      "verdict": "pass",
+      "evidence": [
+        "凯拿刻度尺观察模型，林解释，固定人物外观及林左腕表正确。",
+        "背景图仅画尺度与结构，没有将某条尺寸硬标为三纳米。"
+      ],
+      "necessary_fix": [],
+      "production_note": "作为模型/类比构图放行，剪辑须交代模型切换；后期补工艺代号不等于单一尺寸，不能把背景跨多根条的箭头误标为单个栅距。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/region_switch_question_r1.png",
+      "sha256": "d229bd41c400c039274cc90b48f6daf06a2f0aaa7bc3b77106eed71db6a22288",
+      "verdict": "pass",
+      "evidence": [
+        "两人对话、林向表面分区示意，左腕表正确。",
+        "大片表面色区可支持功能区域说明，没有只在某一区放唯一开关的可见误导。"
+      ],
+      "necessary_fix": [],
+      "production_note": "细部开关尚未显示是此镜提问起点，后续由向下剖视解释。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/relay_compare_r1.png",
+      "sha256": "75ee2e608a5b8b16acbb61530923b47e70a18a6c2b6235193d54201ef086bf33",
+      "verdict": "fail",
+      "evidence": [
+        "右侧两个银色触点都装在同一个明显连通的金色 U 形支架上。",
+        "活动衔铁末端没有与独立动触点构成清楚的接触对，当前可见结构无法说明靠触点吸合接通两条独立电路端。"
+      ],
+      "necessary_fix": [
+        "B5-02：重画独立的动、静触点与电极；衔铁带动其中一个触点，合拢后才连接两端，分开后断开。"
+      ],
+      "production_note": "这是关键结构已错误，非因静帧无运动而失败；线圈其他隐藏端子无需首帧全部展示。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/switch_realization_r1.png",
+      "sha256": "a35d5fe3b9423f9222e3e21ba8bb3b042a882ec1ee548cdd18a50ee40724462a",
+      "verdict": "fail",
+      "evidence": [
+        "林左腕表、双方人物身份与反应成立。",
+        "背景三张珠状单层点阵悬在展示台上，没有源漏、介质、栅；不能承接刚解释完的纳米片开关或表示其完整工作结构。"
+      ],
+      "necessary_fix": [
+        "B5-03：保留双人反应，去掉或裁掉珠状点阵模型，换成已核实的连续硅—介质—栅背景；通断演示用该正确模型。"
+      ],
+      "production_note": "不要求反应镜展示全部结构，但不能把此可辨点阵模型当作同一个已讲解器件。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/tap_arrival_r1.png",
+      "sha256": "8d89d96686dd8675098b2c39b1bc10fdd3b9cb99cb38471a6ce70a8ea29d56ff",
+      "verdict": "pass",
+      "evidence": [
+        "蓝白信号沿可追踪金属线接到顶部栅，栅与硅之间有独立介质；没有把信号线直接穿进硅通道。",
+        "源漏位于连续硅体两端；人物及林左腕表一致。"
+      ],
+      "necessary_fix": [],
+      "production_note": "仅按平面器件局部剖面示意放行，须交代模型切换，不能称为前一 GAA 原样。蓝色散点不能再定义为电子；若要表达载流子应统一琥珀编码。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/tap_close_r1.png",
+      "sha256": "2f2b88a7e9c990621ccbcaf7f1121bc3799d84d9711a3263c9a9b564345579a6",
+      "verdict": "pass",
+      "evidence": [
+        "凯深色袖口与斜挎带可辨，指尖触完整手机屏幕，蓝白点击光点明确。"
+      ],
+      "necessary_fix": [],
+      "production_note": "发光为叙事信号示意；背景镊子小物不得作为真实芯片材质或工作的证据。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/watch_rule_r1.png",
+      "sha256": "85974da002454a242e143504ce8775604b5fd59a49fe4977c1f77793bc71b579",
+      "verdict": "pass",
+      "evidence": [
+        "林抬解剖左臂，唯一探索表在左腕，表盘与向外涟漪可读。",
+        "凯反应、双方服装及暖光桌面场景一致。"
+      ],
+      "necessary_fix": [],
+      "production_note": "刻度对应倍率由后期和实际动作实现，不从未标号表盘臆断精确读数。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/wavelength_r1.png",
+      "sha256": "b64ce5b3c4fb8beb3468eaaa9c1197909b2c982283909ddb827d67e96a596388",
+      "verdict": "pass",
+      "evidence": [
+        "彩色正弦波跨越多根细条，波峰间距明显大于单根结构宽度，比较构图清楚。"
+      ],
+      "necessary_fix": [],
+      "production_note": "仅是波形图示，彩虹不代表单个波在传播中改变颜色；后期必须以相邻波峰间距标波长，不能标振幅或彩带厚度。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/array_signal_math_r1.png",
+      "sha256": "380b71901e90040fea8d91346b20a1a6d897caa40b88c7486cafbab6179e59b2",
+      "verdict": "pass",
+      "evidence": [
+        "实际看图与 array_frame.py 对照：本级 IN=1，N通P断，输出接地为0；次级输入0，P通N断，输出接电源为1。",
+        "本级公共漏极输出通过明确导线连到次级两个栅，栅与沟道分开，未将载流子穿层作为信号传递。",
+        "图上明确稳态 1→0→1，双语标签可读。"
+      ],
+      "necessary_fix": [],
+      "production_note": "此为开关等效图而非精确 MOS 标准符号；颜色用来区分线/电极与通路，不宜当高低电平唯一编码。动态延迟仍待动画。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/wiring_layers_r1.png",
+      "sha256": "4423dc67542a7e7bee658a0dcc8c8814db8cca59ad0788a4a439534c87b2f17e",
+      "verdict": "pass",
+      "evidence": [
+        "铜色互连从上到下变细，透明绝缘材料将各层隔开。",
+        "仅选定位置铜柱连接上下层，底部器件层与上部布线分离。"
+      ],
+      "necessary_fix": [],
+      "production_note": "这是代表性的布线层次示意，不代表每个商业工艺都严格逐层变细。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/wrap_question_r1.png",
+      "sha256": "fc67a3561e778ed3521d13202442de94c3729d18c6a703da232300dce3a3c918",
+      "verdict": "pass",
+      "evidence": [
+        "每个灰硅截面外有连续浅色介质，外部金属进入片间及底部；没有只圈住叠层外缘。",
+        "林指示介质/栅界面，左腕表正确，凯观察姿态成立。"
+      ],
+      "necessary_fix": [],
+      "production_note": "金属暖色属于示意材质，宜与后续材料图例统一；此截面角度无法证明精确层厚，不能据人物像素测量。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/beijing_area_r1.png",
+      "sha256": "471fc0ce1c5cb06eb2758f276d770749ae058c0e7de774983ef1113f03e92333",
+      "verdict": "pass",
+      "evidence": [
+        "器件与互连阵列铺向地平线，构图有充足空域用于面积说明。",
+        "未在底图以错误城市地图或实体尺寸给出错误面积结论。"
+      ],
+      "necessary_fix": [],
+      "production_note": "面积运算与行政区域口径须后期保留；仅画面不能核实两个北京的数值。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/die_colors_r2.png",
+      "sha256": "5dd67e7b87418bcce25df2f14e146781733f1550990f8d2e2a03c1b230e39715",
+      "verdict": "pass",
+      "evidence": [
+        "同一硅片版图从部分伪彩区域渐变到灰色区，几何纹理保持连续。"
+      ],
+      "necessary_fix": [],
+      "production_note": "符合颜色是后加的对照构图；实际亮起与褪去尚待动画，不能当真实不同材料颜色的实测。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/gate_pitch_r2.png",
+      "sha256": "85b00905c51d22e5844bae009edc07637f7d808281bafea1b2b71bfa177c0f60",
+      "verdict": "pass",
+      "evidence": [
+        "俯视重复金属条，各条有中线，两条强调的亮线位于条带中心附近。",
+        "没有把边缘或间隙画成中心标记。"
+      ],
+      "necessary_fix": [],
+      "production_note": "AI 条间距并非完全一致；后期只按选定两条实际中线标一组中心距，不能从图推断全阵列精确恒定 50 nm。"
+    },
+    {
+      "file": "edu_videos/tansuo/t01_inside_a_chip/storyboard/frames/gray_reaction_r2.png",
+      "sha256": "37256f0fed40f7262a2fcb94b4ce27b985ea1795c8399486c58de95778b7c64b",
+      "verdict": "pass",
+      "evidence": [
+        "灰色结构占据背景，凯的肤色、卷发、深蓝卫衣和斜挎带仍保持颜色，反应近景可读。",
+        "林仅局部背影入镜，腕部未出镜，不臆断腕表侧别。"
+      ],
+      "necessary_fix": [],
+      "production_note": "作为灰度成像后的反应镜放行；实际模型与上一镜的连续性须剪辑复核，不把背景图称为真实电镜照片。"
+    }
+  ]
+}

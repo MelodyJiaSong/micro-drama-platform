@@ -786,3 +786,42 @@ Auto-updated:
 
 No conflicts found in: 仅t11与系列README的t11状态行；保留t01及其他会话改动。
 
+
+## Follow-up 058 — 2026-11-15 18:19:42
+Source: user_input/follow_ups/202611.md - section 058
+Summary: t11由Codex接手复审及问题闭环
+
+Auto-updated:
+- 按用户本轮授权由Codex直接接手复审，明确parent-direct非独立盲审；全38镜文字、32张现用参考与片尾图、C00–C10口径已检查。补修7类问题，升级v3.1，9场38镜估算323秒。报告storyboard/reviews/v3_1_codex_review.json，当前分镜设计范围通过、未解决必改0项；保留Kimi历史用量失败记录，更新目录状态。
+
+验证: 逐镜cue连续、时长及转场、事实关联、台词/音频清单同步、重复构建一致、当前审查指纹一致；本机预览API v3.1、32图HTTP200。shot_pack sync已执行但本阶段无prompts.json而失败，未放行视频制作包；正式中英讲稿与音频/成片属于后续阶段。
+费用: 无收费生成、无Kimi调用；网页证据复核与本地示意图重绘。
+
+No conflicts found in: 保留其他会话的暂存删除、gitignore、t01改动；目录仅更新t11状态。
+
+
+## Follow-up 059 — 2026-11-15 18:36:24
+Source: user_input/follow_ups/202611.md - section 059
+Summary: t11肝脏段改为连续动态演示分镜
+
+Auto-updated:
+- t11分镜v4：V23–V27替换为5镜40秒本地Blender动态预演，原入口添加播放链接并使用视频实际帧；同步shot_plan、38份镜头说明、review、音频清单、节拍及索引。
+
+验证: 五镜视频7/7/9/7/10秒、合片40秒，FFprobe与帧差校验通过；9场38镜323秒及台词不变；预览API和视频HTTP通过。逐镜首中末抽帧复核，修正V24末尾产物流与V26取景。shot_pack sync因无prompts.json未通过，正式资料包未对齐。详见v4_motion_style_review.json及.audit/adhoc_agents/2026-11-15/t11-motion-style/verification.json。
+费用: 本轮仅本地Blender与FFmpeg，未调用收费生成服务。
+
+No conflicts found in: 仅修改t11产物及共享索引中t11条目；保留t01和其他会话改动。
+
+
+## Follow-up 060 — 2026-11-15 18:37:56
+Source: user_input/follow_ups/202611.md - section 060
+Summary: t11图表视觉升级，与肝脏动态分镜统一
+
+Auto-updated:
+- t11现用17张说明/片尾图改为深色渐变、暖金青色、球体明暗、大字短标签和留白；遗传、试验证据、血脂种类、风险比较及片尾统一视觉。仅剧级风格，不修改全局规范。
+
+验证: 现用图表各版型已目检，无截字压叠；100人分母、5年、10→8与20→16假设算例保持；claims、镜头草稿台词及来源口径未变，v4同步校验通过。
+费用: 本地图形绘制，无外部收费调用。
+
+No conflicts found in: 保留其他会话内容；旧v3.1审查作为历史保留，新报告绑定v4产物。
+

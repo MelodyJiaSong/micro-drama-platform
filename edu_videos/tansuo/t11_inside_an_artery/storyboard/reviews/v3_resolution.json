@@ -1,8 +1,11 @@
 {
-  "version": "v3",
+  "version": "v4",
   "date": "2026-11-15",
-  "followup": 55,
-  "status": "已完成已知问题的分镜修订；独立复审未完成，不能宣称过审",
+  "followup": [
+    59,
+    60
+  ],
+  "status": "本轮动态预演与美术修订复核完成；同步验证通过；非最终成片放行",
   "scope": "分镜设计与草稿台词；不是正式讲稿、最终视频或平台发布审核",
   "changes": [
     {
@@ -11,7 +14,7 @@
     },
     {
       "issue": "时长为0、机制同屏堆叠",
-      "resolution": "逐镜6至12秒设计估算，共301秒；内皮、斑块、肝脏机制和比较图按步骤拆镜，正式音频后校准。"
+      "resolution": "v3原301秒；v3.1按口播与片尾阅读补足为323秒（5:23），均为估算；正式音频后校准。"
     },
     {
       "issue": "先回医院再继续讲课",
@@ -44,6 +47,14 @@
     {
       "issue": "多份台词和图源过时",
       "resolution": "shot_plan为现行台词与镜头源；panels只保留概念图档案；storyboard、review、38份镜头说明和音频清单同步派生。旧审查原样保留。"
+    },
+    {
+      "issue": "肝脏段PPT过多、video太少",
+      "resolution": "5镜40秒本地3D动态预演替换5张流程图；同一入口播放并显示真实视频帧。"
+    },
+    {
+      "issue": "PPT美术不够精致",
+      "resolution": "17张现用说明/片尾图统一深色暖金青色视觉，增加层次、大数字、短标签与留白，保留风险算例口径。"
     }
   ],
   "independent_review": {
@@ -52,14 +63,23 @@
     "attempt": ".audit/adhoc_agents/2026-11-15/t11-v3-fix/r1_prompt.md",
     "error": "kimi 2.5.3 exit 1: provider.api_error: You've reached your 5-hour usage limit.",
     "retry": "python .audit/adhoc_agents/2026-11-15/t11-v3-fix/run_review.py r2",
-    "note": "额度恢复后须对当前文件重取指纹复审；不能沿用v2审查或用作者自检代替。"
+    "note": "保留此前Kimi用量失败的真实记录；当前复审由用户在follow-up058授权Codex直接接手，结论见current_review，不冒充Kimi通过。",
+    "historical_record": true
   },
   "remaining_gates": [
-    "当前v3独立内容与视觉复审，Kimi额度恢复后执行",
     "正式讲稿与双语台词审；实测整集音频并由用户听审",
     "按镜制作正式科学模型/首帧与视频；旧图只作概念参考",
     "成片QC、人工剪辑及发布前适用审核"
   ],
   "shot_pack": "已运行sync，因教学视频本阶段无prompts.json而失败；未宣称已对齐制作资料包。38份分镜设计文本已单独检查。",
-  "verification": ".audit/adhoc_agents/2026-11-15/t11-v3-fix/verification.json"
+  "verification": ".audit/adhoc_agents/2026-11-15/t11-motion-style/verification.json",
+  "current_review": {
+    "report": "edu_videos/tansuo/t11_inside_an_artery/storyboard/reviews/v4_motion_style_review.json",
+    "followup": [
+      59,
+      60
+    ],
+    "reviewer": "Codex，parent-direct；非独立盲审",
+    "authorization": "用户2026-11-15要求接手Kimi未完成的审查，本轮不再等待Kimi重审。"
+  }
 }
