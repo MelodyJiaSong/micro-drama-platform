@@ -757,3 +757,19 @@ Auto-updated:
 
 No conflicts found in: （未单独核查）
 
+
+## Follow-up 056 — 2026-11-15 18:01:32
+Source: user_input/follow_ups/202611.md - section 056
+Summary: 复查并修补芯片 t01 故事板
+
+Auto-updated:
+- edu_videos/tansuo/t01_inside_a_chip/script.md、script.en.md、beats.md、claims.json — 修正l34绝缘与换向因果，中英v2.5，记录当前版未独立复审；Intel官方PDF核对
+- edu_videos/tansuo/t01_inside_a_chip/storyboard/build_preview.py、storyboard.json、storyboard/prompts/current/ — V5.1修补英文通断时序、局部放大与人体尺度、工艺拼用和电路约束；当前逐镜提示替代旧提示入口；错腕P11退出当前首帧
+- edu_videos/tansuo/t01_inside_a_chip/audio/preview_manifest*.json、audio/preview/、audio_preview*.json — 本地重出中英l34并重建预览，中文592秒53镜／英文629秒58镜
+- edu_videos/tansuo/t01_inside_a_chip/reviews/storyboard_v51_review.json、edu_videos/tansuo/README.md、edu_videos/README.md — 10项发现、修补与未结项及当前状态
+- .audit/adhoc_agents/2026-11-15/chip-review-056/ — 原始审查输入指纹、15图联系表、Kimi额度拒绝记录、官方PDF、机检与当前产物SHA
+
+验证: 本地作者核对15张图；分镜与预览句序、每语87句、53/58镜、无超15秒、无超标回听、14张参考图路径唯一、首帧提示存在、HTTP文件API内容一致；lint与git diff --check通过。sync_agent_config/check_agent_skills/workflow_catalog通过。shot_pack sync失败：教学目录无短剧prompts.json，不适用，替以本期检查。Kimi独立审稿因5小时额度耗尽未审；本轮UI截图未验。中文39／英文44首帧仍待制作；P11历史两次重出已用完，撤图不是已修图。
+
+No conflicts found in: （未单独核查）
+

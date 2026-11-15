@@ -22,7 +22,9 @@ TAIL = "No text, no letters, no numbers, no labels, no logos, no UI, no watermar
 
 
 def job(p):
-    out = SB / f"{p['id']}.png"
+    if p.get('legacy_image'):
+        return p['id'], '已改为功能分镜；用 render_diagrams.py 构建，旧图不再生成'
+    out = SB / p.get('image', f"{p['id']}.png")
     if out.exists():
         return p["id"], "exists"
     (SB / "prompts").mkdir(exist_ok=True)

@@ -30,7 +30,7 @@ def V(title, action, camera, source, image=None, note=""):
 
 
 VISUALS = {
-    "city_reveal": V("城市错觉拉远", "发光街区拉远成台灯下的芯片", "俯瞰大全景→桌面全景", "Blender 城市错觉 + Seedance 拉远"),
+    "city_reveal": V("城市错觉拉远", "夜景城市般的结构示意拉远，转场到暖光书桌上的芯片样品；不是实际发光的芯片", "俯瞰大全景→桌面全景", "Blender 城市错觉 + Seedance 拉远"),
     "chip_close": V("芯片特写", "凯用镊子夹着独立展示样品贴近观察；旁边完整手机用于后续点击", "芯片特写→凯反应", "Seedance", "P01"),
     "transistor_answer": V("晶体管定义", "林接过话，凯半信半疑", "双人中近景", "Seedance"),
     "tap_close": V("点击手机", "凯点屏，蓝白信号钻入手机", "指尖与屏幕特写", "Seedance + 网页信号光迹"),
@@ -156,12 +156,12 @@ OVERLAYS = {
     "gate_pitch": "标尺：栅极中心距约 50 nm，仅为一种工艺示例；线宽、缝宽不能代替中心距。",
     "process_name": "短字卡：工艺代号 ≠ 单一尺寸 / Process name ≠ one dimension。",
     "nanosheet": "模型切换卡：纳米片晶体管示意 / Nanosheet transistor example；不宣称开场 A17 Pro 使用环绕栅。",
-    "off_state": "角标：增强型 N 沟道示例 / Enhancement-mode nMOS；这里的栅压均相对源极。",
+    "off_state": "角标：增强型 N 沟道示例 / Enhancement-mode nMOS；这里的栅压均相对源极。源漏已有电势差，栅压控制通道；电子来自源漏载流子库，不画成绝缘层漏进来的电子。",
     "insulator": "用不同材质明确区分灰色硅、薄绝缘层、栅金属；切面描白边，不画成栅极开窗。",
     "inverter": "画出电源、地、互补 P/N 两管、共用输入与输出；高输入时 N 通 P 断、输出低，低输入相反。",
     "atom_count": "常驻：局部放大示意 / Magnified inset；沿 [001] 约 44 原子层、厚约 6 nm，以晶格计算渲染，不拿 AI 点阵计数。",
     "atom_thickness": "原子层统计沿 [001]，间距约 0.136 nm；不是原子直径。拉远回器件时关闭局部放大窗。",
-    "scale_guess": "人物仍约 100 nm 高；叠层高度须由模型决定，不再要求叠层与人同高。",
+    "scale_guess": "人物仍约 100 nm 高；叠层高度须由模型决定，不再要求叠层与人同高。P12 片间空槽只是旧构图，正式模型须显示栅金属包围每片硅及片下方；不能沿用空槽冒充环绕栅。",
     "scale_answer": "后期：1.7 m ÷ 100 nm ≈ 1700 万；7.23 格（每格十倍）。镜头放大不改变人物尺寸。",
     "beijing_area": "后期：比较的是面积；约 3.0–3.3 万 km² ≈ 1.8–2.0 个北京市行政区。平均地盘包含布线等面积，不是晶体管实体面积。",
     "next_episode": "片尾补 AI 生成画面／AI 配音标注及来源卡；下一期：开关怎么组成加法。",
@@ -227,9 +227,7 @@ def image_info(visual):
     if not path.exists():
         return None, f"首帧待出：登记的 {image_id} 文件不存在"
     if image_id == "V18C":
-        note = "V18C 已通过独立故事板审查"
-    elif image_id == "P11":
-        note = "旧 P11 仅临时参考；右腕表未过审，正式首帧必须修正"
+        note = "V18C 历史构图通过独立审图；本轮制作说明仍待复审，不等于结构模型或成片验收"
     else:
         note = f"临时沿用 {image_id} 作构图参考，不代表本镜已审通过"
     return {"path": rel(path), "mtime": int(path.stat().st_mtime)}, note
@@ -297,7 +295,9 @@ board = {
     ],
     "links": [{"label": "音频预览", "href": f"/episode-preview?path={rel(TOPIC)}&audio=1"},
               {"label": "中文讲稿", "path": rel(TOPIC / "script.md")}, {"label": "节拍", "path": rel(TOPIC / "beats.md")},
-              {"label": "事实台账", "path": rel(TOPIC / "claims.json")}, {"label": "旧故事板数据", "path": rel(SB / "panels.json")}],
+              {"label": "事实台账", "path": rel(TOPIC / "claims.json")},
+              {"label": "本轮 review 与未结项", "path": rel(TOPIC / "reviews/storyboard_v51_review.json")},
+              {"label": "旧故事板数据（历史）", "path": rel(SB / "panels.json")}],
     "scenes": zh_scenes,
 }
 (SB / "storyboard.json").write_text(json.dumps(board, ensure_ascii=False, indent=1), encoding="utf-8")

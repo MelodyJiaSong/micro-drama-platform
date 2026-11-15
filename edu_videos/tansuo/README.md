@@ -103,5 +103,5 @@
 
 | 期 | 目录 | 状态 |
 |---|---|---|
-| t01 | `t01_inside_a_chip/` | 讲稿 v2.4（中英各 23 个教学段、87 句）经三轮审查与六类定点终审，未解决必改为 0；故事板 V5 视觉分镜按 **9 个实际场景**拆成中文 53 镜、英文 58 镜，独立结构复审 0 必改（follow-up 054）；每镜有独立动作与机位，15 镜保留匹配的临时首帧，其余明确标「首帧待出」，不再复用旧图冒充。整集音频预览待用户听审：中文 **9:54、53 镜** `/episode-preview?path=edu_videos/tansuo/t01_inside_a_chip&audio=1`，英文 **10:27、58 镜** `/episode-preview?path=edu_videos/tansuo/t01_inside_a_chip&audio=1&lang=en`；均无超 15 秒镜头、无回听超标，浏览器已实际播放验证。故事板 `/storyboard-preview?path=edu_videos/tansuo/t01_inside_a_chip`。未结：旧 P11 林的表在右腕，仍待用户决定；P12 已按人物约 100 纳米、缩小 1700 万倍的新讲稿口径解决 |
+| t01 | `t01_inside_a_chip/` | 当前讲稿 v2.5、故事板 V5.1（follow-up 056）：修正层间绝缘与换向因果、英文通断画面时序、人物与镜头尺度，补齐当前逐镜制作说明。9 场，中文 53 镜／英文 58 镜；中英各 87 句。音频预览中文 **9:52**、英文 **10:29**，待用户听审；沿用 14 张构图参考，中文 39／英文 44 镜首帧待制作（含已撤下的错腕表 P11，原图保留，旧轮两次重出机会已用完）。**本轮独立复审未完成：Kimi 5 小时额度耗尽；v2.4 的通过不覆盖本轮改句与制作说明。** 当前入口 `/storyboard-preview?path=edu_videos/tansuo/t01_inside_a_chip`；问题、处理和机检证据见 `t01_inside_a_chip/reviews/storyboard_v51_review.json`。 |
 | t11 | `t11_inside_an_artery/` | 第二季试点：季研究档案 7 角度＋独立事实核查 r1；医疗边界与家人不露面已定；节拍 v1.2、故事板 v2（15 格，含他汀机制、血脂关系与降 LDL 结局证据，follow-up 050 / 051）经作者自检 r1–r2，待用户预览：`/storyboard-preview?path=edu_videos/tansuo/t11_inside_an_artery`；左导航「教学视频 → 探索 → t11 → 故事板」（ai_video_management follow-up 364）；P06 / P12A 的分子外形出片前必须用正式结构模型替换；未做独立故事板审稿（2026-11-15） |

@@ -1,746 +1,1420 @@
 {
- "title": "探索 · 血脂 t11：血管里的小船",
- "eyebrow": "教学视频 · 探索 · t11 故事板",
- "lang": "zh",
- "version": "v2",
- "updated": "2026-11-15",
- "notes": [
-  "故事板 v2：15 拍各一格，只定构图、走位、情绪和特效方向；台词是草稿，讲稿阶段按「先说后写」重说。",
-  "全片只有林和凯；父亲不露面，只通过台词和出院单道具出现。",
-  "全季不做任何药物推荐；本期加入他汀机制、血脂关系、降 LDL 结局证据与「治本 / 治标」解释，但不给剂量、停药方案或数字目标值（follow-up 050 / 051）。",
-  "分子颜色均为编码色，比例尺、医学名词、数字与真实性角标后期叠加；结构镜头最终以 Blender 按研究档案建模。"
- ],
- "links": [
-  {
-   "label": "节拍",
-   "path": "edu_videos/tansuo/t11_inside_an_artery/beats.md"
-  },
-  {
-   "label": "研究档案",
-   "path": "edu_videos/tansuo/t11_inside_an_artery/research/dossier.md"
-  },
-  {
-   "label": "事实核查 r1",
-   "path": "edu_videos/tansuo/t11_inside_an_artery/research/factcheck_r1.md"
-  },
-  {
-   "label": "作者自检 r1",
-   "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/reviews/self_r1.md"
-  },
-  {
-   "label": "作者自检 r2",
-   "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/reviews/self_r2.md"
-  },
-  {
-   "label": "panels.json",
-   "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/panels.json"
-  }
- ],
- "scenes": [
-  {
-   "id": "b1",
-   "location": "冷开场：走廊",
-   "time": "比例尺 1 m",
-   "purpose": "建立处境与悬念：一个 52 岁、一个 28 岁，同一个词「坏胆固醇」",
-   "question": "（先不问，先看）父亲出院单上的「支架」；自己体检单上 LDL 旁的箭头",
-   "shots": [
+  "title": "探索 · 血脂 t11：血管里的小船",
+  "eyebrow": "教学视频 · 探索 · t11 分镜修订",
+  "lang": "zh",
+  "version": "v3",
+  "updated": "2026-11-15",
+  "source_sha256": "57daf82015d9cabc7cb60e4838b22319663456bb6303910be28e71a7493f60e0",
+  "notes": [
+    "v3：9场、38镜，估算 5分01秒。每张卡的秒数均为设计估算，尚未由配音实测。",
+    "沿用的v2图片仅作场景和美术参考，不冒充新增镜头的首帧；当前镜头起止构图以camera和cues为准。机制及比较图为代码绘制的功能示意。",
+    "台词为分镜草稿。正式讲稿、双语台词审及整集音频听审后校准时长，再进入视频生成。",
+    "全片只有林和凯，父亲仅通过台词与单据出现。不作个人用药推荐。",
+    "比较图为假设算例：每组100人、同一5年、同一事件定义、相对风险减少20%；不是临床试验数据或个人预测。"
+  ],
+  "links": [
     {
-     "id": "P01",
-     "key": "P01",
-     "title": "冷开场：两张纸，同一个词",
-     "duration": 0,
-     "cast": [
-      "林",
-      "凯"
-     ],
-     "dialogue": [
-      {
-       "speaker": "阿凯",
-       "direction": "",
-       "text": "我爸五十二岁，刚放了支架。我的体检单上，也有一个箭头。"
-      },
-      {
-       "speaker": "阿凯",
-       "direction": "",
-       "text": "我才二十八，又瘦，这个『坏胆固醇』偏高，要紧吗？"
-      }
-     ],
-     "action": "冷开场：两张纸，同一个词。特效：化验单与出院单的文字、数值和「示意」角标全部后期叠加",
-     "blocking": "—",
-     "beats": "比例尺 1 m",
-     "camera": "画面来源：Seedance（AI 画面 · 非结构）",
-     "image": {
-      "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P01.png",
-      "mtime": 1794713852
-     },
-     "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/prompts/P01.txt",
-     "packPrompt": "",
-     "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard",
-     "note": ""
-    }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b2",
-   "location": "第一个问题",
-   "time": "比例尺 1 m",
-   "purpose": "林不直接答：先去看看这个数字到底数的是什么",
-   "question": "「我才 28，又瘦，这个『坏胆固醇』偏高要紧吗？」（观众问题 ⑤⑦）",
-   "shots": [
+      "label": "镜头设计源",
+      "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shot_plan.json"
+    },
     {
-     "id": "P02",
-     "key": "P02",
-     "title": "先去看看，这个数数的是什么",
-     "duration": 0,
-     "cast": [
-      "林",
-      "凯"
-     ],
-     "dialogue": [
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "先别急着给胆固醇判刑。我们去看看，这个数到底数的是什么。"
-      }
-     ],
-     "action": "先去看看，这个数数的是什么。特效：探索表启动：琥珀色刻度涟漪，无数字",
-     "blocking": "—",
-     "beats": "比例尺 1 m → 1 cm",
-     "camera": "画面来源：Seedance（AI 画面 · 非结构）",
-     "image": {
-      "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P02.png",
-      "mtime": 1794729716
-     },
-     "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/prompts/P02.txt",
-     "packPrompt": "",
-     "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard",
-     "note": ""
-    }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b3",
-   "location": "缩小进血流",
-   "time": "比例尺 1 cm → 10 µm",
-   "purpose": "血流里最多的是红细胞，软软的圆盘；比例尺上红细胞像一辆小车",
-   "question": "「这么挤？」",
-   "shots": [
+      "label": "节拍",
+      "path": "edu_videos/tansuo/t11_inside_an_artery/beats.md"
+    },
     {
-     "id": "P03",
-     "key": "P03",
-     "title": "进入血流：先认识红细胞",
-     "duration": 0,
-     "cast": [
-      "林",
-      "凯"
-     ],
-     "dialogue": [
-      {
-       "speaker": "阿凯",
-       "direction": "",
-       "text": "这么挤？"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "这些软软的圆盘是红细胞。一颗 LDL，比它们小几百倍。"
-      }
-     ],
-     "action": "进入血流：先认识红细胞。特效：红细胞慢动作流过；「慢动作示意」与比例尺后期叠加",
-     "blocking": "—",
-     "beats": "比例尺 1 cm → 10 µm",
-     "camera": "画面来源：Blender 结构 + Seedance 人物",
-     "image": {
-      "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P03.png",
-      "mtime": 1794714914
-     },
-     "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/prompts/P03.txt",
-     "packPrompt": "",
-     "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard",
-     "note": ""
-    }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b4",
-   "location": "血里漂着的「油」",
-   "time": "比例尺 10 µm → 100 nm",
-   "purpose": "油不溶于水，所以身体把油装进「船」里运：外面一层亲水壳，里面是油核。船有一整个家族：最大的乳糜微粒、VLDL、LDL、最小的 HDL",
-   "question": "「血脂就是血里漂着油吧？」（常见误解）",
-   "shots": [
+      "label": "事实台账",
+      "path": "edu_videos/tansuo/t11_inside_an_artery/claims.json"
+    },
     {
-     "id": "P04",
-     "key": "P04",
-     "title": "油不溶于水，所以要有船",
-     "duration": 0,
-     "cast": [
-      "林",
-      "凯"
-     ],
-     "dialogue": [
-      {
-       "speaker": "阿凯",
-       "direction": "",
-       "text": "血脂，就是血里漂着油吧？"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "油不溶于水，身体把油装进一艘艘船里运。最大的乳糜微粒、VLDL、LDL，还有更小的 HDL。"
-      }
-     ],
-     "action": "油不溶于水，所以要有船。特效：四类颗粒的名称和尺寸范围后期叠加；琥珀与冷青只是编码色",
-     "blocking": "—",
-     "beats": "比例尺 10 µm → 100 nm",
-     "camera": "画面来源：Blender（3D 示意 · 尺寸按研究档案）+ 网页标注",
-     "image": {
-      "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P04.png",
-      "mtime": 1794715072
-     },
-     "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/prompts/P04.txt",
-     "packPrompt": "",
-     "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard",
-     "note": ""
-    }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b5",
-   "location": "近看一艘 LDL",
-   "time": "比例尺 100 nm → 10 nm",
-   "purpose": "LDL 不是胆固醇，是运胆固醇的船：略扁的圆盘，一条约 60 纳米长的蛋白「腰带」（ApoB）绕一圈，每艘船只有一条；船里装两千多个胆固醇分子。化验单上的 LDL-C，是所有船上货物的总量",
-   "question": "「哪个是坏胆固醇？」",
-   "shots": [
+      "label": "修订说明与复审",
+      "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/reviews/v3_resolution.json"
+    },
     {
-     "id": "P05",
-     "key": "P05",
-     "title": "近看 LDL：船、腰带和货物",
-     "duration": 0,
-     "cast": [
-      "林",
-      "凯"
-     ],
-     "dialogue": [
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "LDL 不是胆固醇，是运胆固醇的船。"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "这一条蛋白腰带叫 ApoB，每艘船只有一条；船里装着两千多个胆固醇分子。化验单上的 LDL-C，数的是所有船上的货。"
-      }
-     ],
-     "action": "近看 LDL：船、腰带和货物。特效：ApoB 腰带亮起浅白边；结构、货物与 LDL-C 含义后期标注",
-     "blocking": "—",
-     "beats": "比例尺 100 nm → 10 nm",
-     "camera": "画面来源：Blender（3D 示意 · 结构依据 Nature 2025）+ 网页标注",
-     "image": {
-      "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P05.png",
-      "mtime": 1794715244
-     },
-     "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/prompts/P05.txt",
-     "packPrompt": "",
-     "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard",
-     "note": ""
+      "label": "v2审查",
+      "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/reviews/structure_r1.json"
     }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b6",
-   "location": "那它坏吗",
-   "time": "比例尺 10 nm",
-   "purpose": "胆固醇是身体必需的（细胞膜、激素），LDL 是把它送到全身的运输车；但船太多、开得太久就会伤血管——**这两句同一个镜头里说完**，不让「LDL 不坏」单独成句（核查 r1：怀疑派视频用的就是这半句）",
-   "question": "「那它到底是好是坏？」",
-   "shots": [
+  ],
+  "scenes": [
     {
-     "id": "P06",
-     "key": "P06",
-     "title": "不是坏东西，但船太多会伤血管",
-     "duration": 0,
-     "cast": [
-      "林",
-      "凯"
-     ],
-     "dialogue": [
-      {
-       "speaker": "阿凯",
-       "direction": "",
-       "text": "那它到底是好是坏？"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "胆固醇本来有用，LDL 负责运输；但船太多、开得太久，就会伤血管。"
-      }
-     ],
-     "action": "不是坏东西，但船太多会伤血管。特效：正常摄取与颗粒过量同框；「必需」和「过量」后期短标注",
-     "blocking": "—",
-     "beats": "比例尺 10 nm",
-     "camera": "画面来源：Blender（3D 示意）",
-     "image": {
-      "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P06.png",
-      "mtime": 1794715426
-     },
-     "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/prompts/P06.txt",
-     "packPrompt": "",
-     "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard",
-     "note": ""
-    }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b7",
-   "location": "来到血管壁",
-   "time": "比例尺 100 µm → 1 µm",
-   "purpose": "冠状动脉内壁像铺好的地砖；船不需要血管先破就能进去——直径小于约 70 纳米的船会被内皮细胞「打包」运过地砖，大多数会再出来",
-   "question": "「我爸的血管就是这里出的事？」",
-   "shots": [
+      "id": "s1",
+      "location": "医院走廊 · 长椅与模型桌",
+      "time": "日内；正常尺度",
+      "purpose": "从父亲的出院单和凯的体检单建立同一个疑问，再启动探索。",
+      "shots": [
+        {
+          "id": "V01",
+          "key": "V01",
+          "title": "两张纸",
+          "duration": 7,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "阿凯",
+              "text": "我爸五十二岁，刚放了支架。我的体检单上，也有个箭头。",
+              "direction": ""
+            }
+          ],
+          "action": "【P01场景概念参考；非本镜已生成首帧】两张纸：凯把体检单放到出院单旁，箭头进入焦点。",
+          "blocking": "凯坐左、林坐右；凯两手各持一张单据，林看单据再看凯。",
+          "beats": "估算分拍：0–1.4秒：先见出院单的支架关键词。；1.4–5.6秒：凯把体检单放到出院单旁，箭头进入焦点。；5.6–7秒：视线从箭头抬到凯；切反应中景。",
+          "camera": "纸张近景，凯肩后平视；从出院单轻移到体检单，结尾抬至凯眼睛。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：后期：支架、LDL-C↑、虚构示意；不写待核的3.6。 画面来源：Seedance（AI 画面 · 非结构）",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P01.png",
+            "mtime": 1794713852
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V01.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；P01场景概念参考；非本镜已生成首帧",
+          "sourcePanel": "P01",
+          "claims": [
+            "C00"
+          ]
+        },
+        {
+          "id": "V02",
+          "key": "V02",
+          "title": "凯的问题",
+          "duration": 8,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "阿凯",
+              "text": "我才二十八，又瘦。这个“坏胆固醇”偏高，要紧吗？",
+              "direction": ""
+            }
+          ],
+          "action": "【P01场景概念参考；非本镜已生成首帧】凯的问题：凯问完，把两张单据叠好；林回应他的目光。",
+          "blocking": "凯看林；林听完才转向模型桌，表情平静。",
+          "beats": "估算分拍：0–1.6秒：承接凯抬头。；1.6–6.4秒：凯问完，把两张单据叠好；林回应他的目光。；6.4–8秒：林起身，凯跟随；以动作接下一镜。",
+          "camera": "双人中近景，沿长椅轴线同侧；镜头轻推凯，林留在右侧。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形： 画面来源：Seedance（AI 画面 · 非结构）",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P01.png",
+            "mtime": 1794713852
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V02.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；P01场景概念参考；非本镜已生成首帧",
+          "sourcePanel": "P01",
+          "claims": [
+            "C00"
+          ]
+        },
+        {
+          "id": "V03",
+          "key": "V03",
+          "title": "探索表启动",
+          "duration": 8,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "先去看看。化验单上的这个数，量的到底是什么。",
+              "direction": ""
+            }
+          ],
+          "action": "【P02场景概念参考；非本镜已生成首帧】探索表启动：琥珀涟漪从左腕扩展，包住两人和模型入口。",
+          "blocking": "林站右侧抬左腕；凯在左侧收好单据，看探索表。",
+          "beats": "估算分拍：0–1.6秒：模型保持健康中性外形，不出现斑块或彩色颗粒。；1.6–6.4秒：琥珀涟漪从左腕扩展，包住两人和模型入口。；6.4–8秒：涟漪充满画面，匹配下一场血管弧线。",
+          "camera": "双人中景转左腕特写；从表盘拉回两人和模型桌的全景。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：AI画面·非结构；不提前揭示病变。 画面来源：Seedance（AI 画面 · 非结构）",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P02_v3.png",
+            "mtime": 1794737067
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V03.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；P02场景概念参考；非本镜已生成首帧",
+          "sourcePanel": "P02",
+          "claims": [
+            "C00"
+          ]
+        }
+      ],
+      "total": 23
+    },
     {
-     "id": "P07",
-     "key": "P07",
-     "title": "血管壁：不需要先破，船也能进去",
-     "duration": 0,
-     "cast": [
-      "林",
-      "凯"
-     ],
-     "dialogue": [
-      {
-       "speaker": "阿凯",
-       "direction": "",
-       "text": "我爸的血管，就是这里出的事？"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "血管内壁不需要先破。小船能被内皮细胞运过去，大多数还会再出来。"
-      }
-     ],
-     "action": "血管壁：不需要先破，船也能进去。特效：进入与返回两条路径用细光迹强调；不是血管破裂",
-     "blocking": "—",
-     "beats": "比例尺 100 µm → 1 µm",
-     "camera": "画面来源：Blender（3D 示意 · 转胞吞机制）",
-     "image": {
-      "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P07.png",
-      "mtime": 1794715593
-     },
-     "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/prompts/P07.txt",
-     "packPrompt": "",
-     "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard",
-     "note": ""
-    }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b8",
-   "location": "被粘住",
-   "time": "比例尺 1 µm → 100 nm",
-   "purpose": "有的船被墙里的「胶」（蛋白聚糖）粘住，卡在里面；船越多，被粘住的越多",
-   "question": "「那为什么有的没出来？」",
-   "shots": [
+      "id": "s2",
+      "location": "冠状动脉腔内 · 从细胞尺度进入纳米尺度",
+      "time": "连续；微米→纳米，缩放明确显示",
+      "purpose": "先建立血流方向，再将注意力从红细胞引向脂蛋白。",
+      "shots": [
+        {
+          "id": "V04",
+          "key": "V04",
+          "title": "红细胞擦过",
+          "duration": 7,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "阿凯",
+              "text": "这么挤？",
+              "direction": ""
+            },
+            {
+              "speaker": "林",
+              "text": "这些软软的圆盘，是红细胞。",
+              "direction": ""
+            }
+          ],
+          "action": "【P03场景概念参考；非本镜已生成首帧】红细胞擦过：双凹红细胞从近景越过，露出远处成群红细胞。",
+          "blocking": "两人站观察台左下；凯后退半步，林看向来流，人物不触碰血细胞。",
+          "beats": "估算分拍：0–1.4秒：涟漪散去，建立观察台和血流方向。；1.4–5.6秒：双凹红细胞从近景越过，露出远处成群红细胞。；5.6–7秒：林指向红细胞之间，镜头沿手势推进。",
+          "camera": "血流全景，人物背后三分之四视角；一颗红细胞从左前景缓慢掠过。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：3D示意·慢动作；只显示与本镜对应的微米尺度。 画面来源：Blender 结构 + Seedance 人物",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P03.png",
+            "mtime": 1794714914
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V04.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；P03场景概念参考；非本镜已生成首帧",
+          "sourcePanel": "P03",
+          "claims": [
+            "C02"
+          ]
+        },
+        {
+          "id": "V05",
+          "key": "V05",
+          "title": "再缩小一级",
+          "duration": 7,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "LDL 还要小几百倍。得再缩小，才能看清。",
+              "direction": ""
+            }
+          ],
+          "action": "【P03场景概念参考；非本镜已生成首帧】再缩小一级：探索表涟漪扫过，尺度条连续变化；LDL开始可分辨。",
+          "blocking": "人物随涟漪缩小，仅在左下保留剪影，红细胞退为远处色块。",
+          "beats": "估算分拍：0–1.4秒：红细胞作为旧尺度参照停留。；1.4–5.6秒：探索表涟漪扫过，尺度条连续变化；LDL开始可分辨。；5.6–7秒：纳米视野稳定后再进入下一句。",
+          "camera": "从红细胞近景连续推进至纳米视野；不把红细胞缩小成和LDL同大。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：尺度切换；未核模型前只标“尺度示意”，不宣称比例准确。 画面来源：Blender 结构 + Seedance 人物",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P03.png",
+            "mtime": 1794714914
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V05.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；P03场景概念参考；非本镜已生成首帧",
+          "sourcePanel": "P03",
+          "claims": [
+            "C02"
+          ]
+        },
+        {
+          "id": "V06",
+          "key": "V06",
+          "title": "油怎样在血里运",
+          "duration": 8,
+          "durationBasis": "estimate",
+          "cast": [],
+          "dialogue": [
+            {
+              "speaker": "阿凯",
+              "text": "血脂，就是血里漂着油？",
+              "direction": "画外音"
+            },
+            {
+              "speaker": "林",
+              "text": "油不好溶在水里，得装进脂蛋白这些“小船”里运。",
+              "direction": "画外音"
+            }
+          ],
+          "action": "【P04场景概念参考；非本镜已生成首帧】油怎样在血里运：剖开一小块表面，显露内部脂质，避免一团自由油滴漂浮。",
+          "blocking": "人物不入画，问答作画外音；只高亮当前讲的外壳和脂质。",
+          "beats": "估算分拍：0–1.6秒：先只见完整颗粒。；1.6–6.4秒：剖开一小块表面，显露内部脂质，避免一团自由油滴漂浮。；6.4–8秒：剖面合拢，切同尺度颗粒家族。",
+          "camera": "颗粒剖面近景，绕表面转约20度后停止；外壳与内部脂质分层显露。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：脂蛋白；小船是比喻；纳米结构及颜色为示意。 画面来源：Blender（3D 示意 · 尺寸按研究档案）+ 网页标注",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P04.png",
+            "mtime": 1794715072
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V06.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；P04场景概念参考；非本镜已生成首帧",
+          "sourcePanel": "P04",
+          "claims": [
+            "C01"
+          ]
+        },
+        {
+          "id": "V07",
+          "key": "V07",
+          "title": "颗粒家族",
+          "duration": 8,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "有乳糜微粒、VLDL、LDL，还有 HDL。这一回，我们跟着 LDL。",
+              "direction": ""
+            }
+          ],
+          "action": "【P04场景概念参考；非本镜已生成首帧】颗粒家族：VLDL、LDL、HDL依次亮起；最后仅保留LDL高亮。",
+          "blocking": "林与凯在画面下边缘；视线依次跟随高亮；景深不改变比较尺度。",
+          "beats": "估算分拍：0–1.6秒：只点亮乳糜微粒与名称。；1.6–6.4秒：VLDL、LDL、HDL依次亮起；最后仅保留LDL高亮。；6.4–8秒：沿LDL推进，其他类别淡出。",
+          "camera": "同一平面尺寸对比全景，固定正视；先后点亮四类，再推向LDL。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：依次显示名称；尺寸范围有重叠，不做全类别绝对大小定律。 画面来源：Blender（3D 示意 · 尺寸按研究档案）+ 网页标注",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P04.png",
+            "mtime": 1794715072
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V07.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；P04场景概念参考；非本镜已生成首帧",
+          "sourcePanel": "P04",
+          "claims": [
+            "C01"
+          ]
+        }
+      ],
+      "total": 30
+    },
     {
-     "id": "P08",
-     "key": "P08",
-     "title": "关键一步：被墙里的胶粘住",
-     "duration": 0,
-     "cast": [
-      "林",
-      "凯"
-     ],
-     "dialogue": [
-      {
-       "speaker": "阿凯",
-       "direction": "",
-       "text": "那为什么有的没出来？"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "有的被血管壁里的蛋白聚糖粘住了。船越多，被留下的也越多。"
-      }
-     ],
-     "action": "关键一步：被墙里的胶粘住。特效：粘住的一颗停住，周围微光只标接触点；滞留计数后期叠加",
-     "blocking": "—",
-     "beats": "比例尺 1 µm → 100 nm",
-     "camera": "画面来源：Blender（3D 示意 · 滞留反应）",
-     "image": {
-      "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P08.png",
-      "mtime": 1794715815
-     },
-     "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/prompts/P08.txt",
-     "packPrompt": "",
-     "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard",
-     "note": ""
-    }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b9",
-   "location": "几十年：斑块长成",
-   "time": "比例尺 1 µm → 100 µm",
-   "purpose": "卡住的船变质，免疫细胞来吞，吞撑了变成泡沫细胞，越积越多，长出黄色的油核，外面盖一层纤维帽；斑块长在血管**壁里**，向内鼓起。这从很小就开始了：美国一项小镇尸检研究（204 位年轻人，多数死于意外）里，2–15 岁的孩子约一半冠脉已有脂纹，20 多到 30 多岁约八成五——脂纹还不是会堵的斑块，但账已经开始记了",
-   "question": "「然后呢？」",
-   "shots": [
+      "id": "s3",
+      "location": "单颗 LDL 观察区",
+      "time": "连续；纳米尺度",
+      "purpose": "区分颗粒、胆固醇和LDL-C，连着说清生理作用与过量暴露风险。",
+      "shots": [
+        {
+          "id": "V08",
+          "key": "V08",
+          "title": "船和货物",
+          "duration": 7,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "LDL 是颗粒，胆固醇是它运的货。它们不是同一个东西。",
+              "direction": ""
+            }
+          ],
+          "action": "【P05场景概念参考；非本镜已生成首帧】船和货物：表面剖开，胆固醇相关脂质亮起，名称改为“胆固醇”。",
+          "blocking": "两人在左下角，凯微俯身看剖面；林手指内部，不遮挡。",
+          "beats": "估算分拍：0–1.4秒：完整颗粒旁出现“LDL颗粒”。；1.4–5.6秒：表面剖开，胆固醇相关脂质亮起，名称改为“胆固醇”。；5.6–7秒：两层标签保留，其他装饰收走。",
+          "camera": "LDL外形近景缓慢绕行15度，剖面由上方打开；中心不跳位。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：以小尺寸LDL研究模型为例；外形非所有LDL统一模板。 画面来源：Blender：以小尺寸LDL样本模型为例，Berndsen & Cassidy, Nature 638, 836–843 (2025), doi:10.1038/s41586-024-08467-w",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P05.png",
+            "mtime": 1794715244
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V08.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；P05场景概念参考；非本镜已生成首帧",
+          "sourcePanel": "P05",
+          "claims": [
+            "C03"
+          ]
+        },
+        {
+          "id": "V09",
+          "key": "V09",
+          "title": "一条蛋白",
+          "duration": 6,
+          "durationBasis": "estimate",
+          "cast": [],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "外面这条蛋白叫 ApoB。每颗 LDL 上有一条。",
+              "direction": "画外音"
+            }
+          ],
+          "action": "【P05场景概念参考；非本镜已生成首帧】一条蛋白：沿同一ApoB轮廓亮起浅白边，不显示另一条腰带。",
+          "blocking": "无人入画；只有一条连续蛋白被强调，避免多重装饰环。",
+          "beats": "估算分拍：0–1.2秒：内部脂质变暗，注意力回表面。；1.2–4.8秒：沿同一ApoB轮廓亮起浅白边，不显示另一条腰带。；4.8–6秒：返回全颗粒，方便接货物含量解释。",
+          "camera": "颗粒表面特写，镜头沿单条ApoB轮廓平移，再退到完整一圈。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：ApoB；结构示意，正式依据Berndsen & Cassidy 2025。 画面来源：Blender：以小尺寸LDL样本模型为例，Berndsen & Cassidy, Nature 638, 836–843 (2025), doi:10.1038/s41586-024-08467-w",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P05.png",
+            "mtime": 1794715244
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V09.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；P05场景概念参考；非本镜已生成首帧",
+          "sourcePanel": "P05",
+          "claims": [
+            "C03"
+          ]
+        },
+        {
+          "id": "V10",
+          "key": "V10",
+          "title": "化验单量的是货物",
+          "duration": 8,
+          "durationBasis": "estimate",
+          "cast": [],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "LDL-C 测的是血里 LDL 携带的胆固醇有多少，不是直接数有几颗 LDL。",
+              "direction": "画外音"
+            }
+          ],
+          "action": "【本镜功能示意图】化验单量的是货物：同色货物依次点亮，汇入“LDL-C：胆固醇含量”标识。",
+          "blocking": "林退出主体；凯画外音聆听，人物不入画。",
+          "beats": "估算分拍：0–1.6秒：仅保留LDL颗粒及内部货物。；1.6–6.4秒：同色货物依次点亮，汇入“LDL-C：胆固醇含量”标识。；6.4–8秒：颗粒外形与货物分别停留，切摄取机制。",
+          "camera": "固定正视示意图：左侧少量颗粒、右侧胆固醇含量读数区域；不设虚构医学阈值。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：LDL-C：胆固醇含量；避免“所有船”指向所有脂蛋白。 画面来源：Blender：以小尺寸LDL样本模型为例，Berndsen & Cassidy, Nature 638, 836–843 (2025), doi:10.1038/s41586-024-08467-w",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/diagrams/V10.png",
+            "mtime": 1794737542
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V10.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；本镜功能示意图",
+          "sourcePanel": "P05",
+          "claims": [
+            "C03"
+          ]
+        },
+        {
+          "id": "V11",
+          "key": "V11",
+          "title": "有用，也有风险",
+          "duration": 12,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "阿凯",
+              "text": "那它到底是好是坏？",
+              "direction": ""
+            },
+            {
+              "speaker": "林",
+              "text": "胆固醇有用。但 LDL 过多、暴露太久，动脉粥样硬化的风险会升高。",
+              "direction": ""
+            }
+          ],
+          "action": "【本镜功能示意图】有用，也有风险：囊泡内吞；随后周围循环LDL增多，只表达数量而不演成立即损伤。",
+          "blocking": "两人在侧边看受体结合；下半句说完前不切走，不把“有用”独立成宣传片段。",
+          "beats": "估算分拍：0–2.4秒：一颗LDL与膜上受体结合。；2.4–9.6秒：囊泡内吞；随后周围循环LDL增多，只表达数量而不演成立即损伤。；9.6–12秒：风险关键词在后半句出现，转到动脉内皮。",
+          "camera": "细胞膜功能示意中景，固定机位；同一镜内从正常摄取过渡到循环颗粒增多。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：受体与内吞为功能示意，受体不用Y形抗体外观；“风险升高”而非必然发病。 画面来源：Blender（3D 示意）",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/diagrams/V11.png",
+            "mtime": 1794737542
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V11.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；本镜功能示意图",
+          "sourcePanel": "P06",
+          "claims": [
+            "C04",
+            "C05"
+          ]
+        }
+      ],
+      "total": 33
+    },
     {
-     "id": "P09",
-     "key": "P09",
-     "title": "几十年：从滞留到斑块",
-     "duration": 0,
-     "cast": [
-      "林",
-      "凯"
-     ],
-     "dialogue": [
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "留下的颗粒会变质，免疫细胞来吞，吞撑了变成泡沫细胞。"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "年复一年，黄色油核越积越大，外面盖着一层纤维帽。斑块长在血管壁里，不是粘在血里的污垢。"
-      }
-     ],
-     "action": "几十年：从滞留到斑块。特效：时间涟漪代表年岁；15 → 30 → 50 岁与「脂纹≠堵塞斑块」后期叠加",
-     "blocking": "—",
-     "beats": "比例尺 1 µm → 100 µm",
-     "camera": "画面来源：Blender（3D 示意 · 时间快进）",
-     "image": {
-      "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P09.png",
-      "mtime": 1794715996
-     },
-     "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/prompts/P09.txt",
-     "packPrompt": "",
-     "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard",
-     "note": ""
-    }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b10",
-   "location": "破裂",
-   "time": "比例尺 100 µm",
-   "purpose": "破裂斑块的尸检研究里，95% 的纤维帽薄于 65 微米（不到 9 个红细胞并排那么宽）；帽子裂开时，血液可在裂口凝成血栓、堵住血管，这是心梗的一种机制，不反推父亲一定是这一种；**马上接：这是能提前管的事**",
-   "question": "「我爸那次……是这样？」",
-   "shots": [
+      "id": "s4",
+      "location": "动脉内皮及内皮下空间",
+      "time": "连续；细胞尺度定位→纳米特写",
+      "purpose": "看清完整内皮、跨越与滞留；进入不等于必然留下。",
+      "shots": [
+        {
+          "id": "V12",
+          "key": "V12",
+          "title": "墙没有先破",
+          "duration": 7,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "阿凯",
+              "text": "我爸的血管，是这里出了问题？",
+              "direction": ""
+            },
+            {
+              "speaker": "林",
+              "text": "先看这层内皮。它不需要先破。",
+              "direction": ""
+            }
+          ],
+          "action": "【本镜功能示意图】墙没有先破：整层内皮连续，无裂缝；镜头锁住待转运颗粒。",
+          "blocking": "两人站左侧观察台；凯看墙面，林顺着完整边缘指示。",
+          "beats": "估算分拍：0–1.4秒：建立上方血流、下方壁内的关系。；1.4–5.6秒：整层内皮连续，无裂缝；镜头锁住待转运颗粒。；5.6–7秒：颗粒停到细胞表面，切近景。",
+          "camera": "内皮剖面全景，先显示血流侧和壁内侧；缓慢移到一枚完整内皮细胞。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：血流侧／血管壁内；无患病父亲真实影像。 画面来源：Blender（3D 示意 · 转胞吞机制）",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/diagrams/V12.png",
+            "mtime": 1794737542
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V12.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；本镜功能示意图",
+          "sourcePanel": "P07",
+          "claims": [
+            "C06"
+          ]
+        },
+        {
+          "id": "V13",
+          "key": "V13",
+          "title": "一颗穿过内皮",
+          "duration": 8,
+          "durationBasis": "estimate",
+          "cast": [],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "LDL 可以被内皮细胞运过去。这是一种进入血管壁的途径。",
+              "direction": "画外音"
+            }
+          ],
+          "action": "【本镜功能示意图】一颗穿过内皮：同一颗粒随囊泡移动穿过细胞，在壁内侧释放。",
+          "blocking": "人物不入画；相机不穿膜，不把多个位置画成同时存在的五颗。",
+          "beats": "估算分拍：0–1.6秒：唯一高亮颗粒被囊泡包住。；1.6–6.4秒：同一颗粒随囊泡移动穿过细胞，在壁内侧释放。；6.4–8秒：出口停留一拍，箭头收起。",
+          "camera": "剖面特写固定；只跟一颗实心高亮LDL，从上到下，囊泡随行。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：转胞吞·路径示意；如画轨迹只用线，不复制颗粒残影。 画面来源：Blender（3D 示意 · 转胞吞机制）",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/diagrams/V13.png",
+            "mtime": 1794737543
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V13.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；本镜功能示意图",
+          "sourcePanel": "P07",
+          "claims": [
+            "C06"
+          ]
+        },
+        {
+          "id": "V14",
+          "key": "V14",
+          "title": "进入不等于留下",
+          "duration": 6,
+          "durationBasis": "estimate",
+          "cast": [],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "进入以后，有的能离开，有的会留下。",
+              "direction": "画外音"
+            }
+          ],
+          "action": "【本镜功能示意图】进入不等于留下：用两个分支标“离开”和“滞留”，各一颗代表粒子；不作数量统计。",
+          "blocking": "人物不入画；不指定未经本次核实的原路反向囊泡机制，不标返回比例。",
+          "beats": "估算分拍：0–1.2秒：上镜释放颗粒成为比较起点。；1.2–4.8秒：用两个分支标“离开”和“滞留”，各一颗代表粒子；不作数量统计。；4.8–6秒：镜头跟随滞留分支进入下一镜。",
+          "camera": "回内皮剖面中景；一颗未滞留粒子沿“离开”路径淡出，另一颗向基质移动。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：分支为命运示意，不代表概率或离开的唯一通路。 画面来源：Blender（3D 示意 · 转胞吞机制）",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/diagrams/V14.png",
+            "mtime": 1794737543
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V14.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；本镜功能示意图",
+          "sourcePanel": "P07",
+          "claims": [
+            "C06"
+          ]
+        },
+        {
+          "id": "V15",
+          "key": "V15",
+          "title": "被粘住",
+          "duration": 8,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "阿凯",
+              "text": "留下的，是卡在哪儿了？",
+              "direction": ""
+            },
+            {
+              "speaker": "林",
+              "text": "血管壁里的蛋白聚糖，能把一些颗粒粘住。",
+              "direction": ""
+            }
+          ],
+          "action": "【P08场景概念参考；非本镜已生成首帧】被粘住：一颗LDL接触基质后停止；局部浅白光标出接触，不画磁力吸走全部粒子。",
+          "blocking": "两人只占左下小范围；凯指接触点，林等动作发生再解释。",
+          "beats": "估算分拍：0–1.6秒：粒子经过纤维网络，背景粒子仍移动。；1.6–6.4秒：一颗LDL接触基质后停止；局部浅白光标出接触，不画磁力吸走全部粒子。；6.4–8秒：停住颗粒独占焦点，转下一场时间演变。",
+          "camera": "基质纳米特写，从活动粒子跟拍到接触点停止；焦点落在ApoB与基质接触处。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：蛋白聚糖／滞留；不是血腔内漂浮污垢。 画面来源：Blender（3D 示意 · 滞留反应）",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P08.png",
+            "mtime": 1794715815
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V15.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；P08场景概念参考；非本镜已生成首帧",
+          "sourcePanel": "P08",
+          "claims": [
+            "C06"
+          ]
+        }
+      ],
+      "total": 29
+    },
     {
-     "id": "P10",
-     "key": "P10",
-     "title": "斑块破裂：血栓堵住血管",
-     "duration": 0,
-     "cast": [
-      "林",
-      "凯"
-     ],
-     "dialogue": [
-      {
-       "speaker": "阿凯",
-       "direction": "",
-       "text": "我爸那次……是这样？"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "一种可能是，薄薄的纤维帽裂开，血液在裂口凝成血栓，堵住血管。"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "但这不是只能等它发生，前面很多年都可以提前管。"
-      }
-     ],
-     "action": "斑块破裂：血栓堵住血管。特效：裂口与血栓克制呈现；紧接冷静全景和「能提前管」",
-     "blocking": "—",
-     "beats": "比例尺 100 µm",
-     "camera": "画面来源：Blender（3D 示意）",
-     "image": {
-      "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P10.png",
-      "mtime": 1794716165
-     },
-     "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/prompts/P10.txt",
-     "packPrompt": "",
-     "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard",
-     "note": ""
-    }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b11",
-   "location": "量 × 时间",
-   "time": "比例尺 10 nm（回到颗粒）",
-   "purpose": "天生的实验：有人因为一个基因变异，生来 LDL 就低一些，一辈子的冠心病风险低了一半以上（Cohen 2006，两个人群两种变异，不合成一个区间）；家族性高胆固醇血症的人（约每 250–300 人 1 个）生来就高，很早出事。「量 × 时间」是比喻，不是公式。所以看的是「船的数量 × 开的年数」——年轻正是这笔账开始记的时候",
-   "question": "「那我才 28，还早吧？」",
-   "shots": [
+      "id": "s5",
+      "location": "同一段动脉壁 · 时间推移",
+      "time": "时间压缩示意；不同人的进展并不相同",
+      "purpose": "按顺序看到泡沫细胞、壁内斑块和破裂血栓，及时回到可干预的因果链。",
+      "shots": [
+        {
+          "id": "V16",
+          "key": "V16",
+          "title": "免疫细胞来吞",
+          "duration": 7,
+          "durationBasis": "estimate",
+          "cast": [],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "留下的颗粒可能发生变化。免疫细胞来吞，脂质也会在细胞里越积越多。",
+              "direction": "画外音"
+            }
+          ],
+          "action": "【P09场景概念参考；非本镜已生成首帧】免疫细胞来吞：巨噬细胞包住颗粒；内部脂滴逐渐出现。",
+          "blocking": "无人入画；镜头追踪吞入过程，囊泡和细胞边界始终可分。",
+          "beats": "估算分拍：0–1.4秒：承接同一滞留点。；1.4–5.6秒：巨噬细胞包住颗粒；内部脂滴逐渐出现。；5.6–7秒：停在含脂滴细胞，匹配下一镜。",
+          "camera": "内皮下微距跟拍，一颗巨噬细胞进入画面；不同时呈现成熟斑块。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：免疫细胞／脂质积累；只表示一条简化机制。 画面来源：Blender（3D 示意 · 时间快进）",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P09.png",
+            "mtime": 1794715996
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V16.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；P09场景概念参考；非本镜已生成首帧",
+          "sourcePanel": "P09",
+          "claims": [
+            "C06"
+          ]
+        },
+        {
+          "id": "V17",
+          "key": "V17",
+          "title": "泡沫细胞",
+          "duration": 7,
+          "durationBasis": "estimate",
+          "cast": [],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "这叫泡沫细胞。长期的炎症和细胞变化，会参与斑块形成。",
+              "direction": "画外音"
+            }
+          ],
+          "action": "【P09场景概念参考；非本镜已生成首帧】泡沫细胞：拉远出现更多壁内变化；探索表时间涟漪启动。",
+          "blocking": "人物画外音；不让泡沫细胞瞬间变为大斑块。",
+          "beats": "估算分拍：0–1.4秒：脂滴充盈的细胞停留。；1.4–5.6秒：拉远出现更多壁内变化；探索表时间涟漪启动。；5.6–7秒：涟漪作为跨年转场，不标统一发病年龄。",
+          "camera": "细胞近景慢慢拉远；脂滴与细胞膜先清楚，再显露多个细胞。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：泡沫细胞；多年演变示意。 画面来源：Blender（3D 示意 · 时间快进）",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P09.png",
+            "mtime": 1794715996
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V17.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；P09场景概念参考；非本镜已生成首帧",
+          "sourcePanel": "P09",
+          "claims": [
+            "C06"
+          ]
+        },
+        {
+          "id": "V18",
+          "key": "V18",
+          "title": "斑块在壁里",
+          "duration": 8,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "时间久了，壁里可能形成脂质核心，表面盖着纤维帽。斑块长在血管壁里。",
+              "direction": ""
+            }
+          ],
+          "action": "【P09场景概念参考；非本镜已生成首帧】斑块在壁里：脂质核心逐渐增大，纤维帽覆盖其血流侧；不演成每个人必然同样进展。",
+          "blocking": "两人重新在左下出现，只看剖面；黄核不漂到血流中。",
+          "beats": "估算分拍：0–1.6秒：先恢复血腔与壁的位置。；1.6–6.4秒：脂质核心逐渐增大，纤维帽覆盖其血流侧；不演成每个人必然同样进展。；6.4–8秒：剖面停住，帽与血腔之间边界清楚。",
+          "camera": "血管剖面中景，固定同一方向；由完整内皮定位到壁内脂质核心。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：脂质核心／纤维帽；结构与颜色示意。 画面来源：Blender（3D 示意 · 时间快进）",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P09.png",
+            "mtime": 1794715996
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V18.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；P09场景概念参考；非本镜已生成首帧",
+          "sourcePanel": "P09",
+          "claims": [
+            "C06"
+          ]
+        },
+        {
+          "id": "V19",
+          "key": "V19",
+          "title": "破裂与血栓",
+          "duration": 9,
+          "durationBasis": "estimate",
+          "cast": [],
+          "dialogue": [
+            {
+              "speaker": "阿凯",
+              "text": "我爸那次，是这样？",
+              "direction": "画外音"
+            },
+            {
+              "speaker": "林",
+              "text": "这是其中一种机制：帽子裂开，血栓可能在这里形成，堵住血管。",
+              "direction": "画外音"
+            }
+          ],
+          "action": "【P10场景概念参考；非本镜已生成首帧】破裂与血栓：一处裂开后血小板与纤维蛋白聚集；血栓从裂口向腔内生长。",
+          "blocking": "人物不入画，以凯画外音提问；只展示局部，不血腥。",
+          "beats": "估算分拍：0–1.8秒：完整帽保持半拍，接前镜空间。；1.8–7.2秒：一处裂开后血小板与纤维蛋白聚集；血栓从裂口向腔内生长。；7.2–9秒：拉远显示流道变窄；立刻切人物缓和。",
+          "camera": "帽与血腔接触面特写，先完整后小裂口；沿血栓生长方向轻拉远。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：一种机制；不是对父亲病因的诊断。 画面来源：Blender（3D 示意）",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P10.png",
+            "mtime": 1794716165
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V19.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；P10场景概念参考；非本镜已生成首帧",
+          "sourcePanel": "P10",
+          "claims": [
+            "C06"
+          ]
+        },
+        {
+          "id": "V20",
+          "key": "V20",
+          "title": "从惊讶回到问题",
+          "duration": 6,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "但不是只能等它发生。前面这条过程，有机会提前干预。",
+              "direction": ""
+            }
+          ],
+          "action": "【P10场景概念参考；非本镜已生成首帧】从惊讶回到问题：林回应，早期滞留过程在背景恢复为关注点。",
+          "blocking": "凯从裂口转头看林；林用低幅度手势指回上游，语气平稳。",
+          "beats": "估算分拍：0–1.2秒：凯紧张但无夸张惊恐。；1.2–4.8秒：林回应，早期滞留过程在背景恢复为关注点。；4.8–6秒：两人目光转向稀疏、密集两条颗粒流。",
+          "camera": "凯反应中近景转双人中景；背景病变降暗，重新点亮早期滞留点。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形： 画面来源：Blender（3D 示意）",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P10.png",
+            "mtime": 1794716165
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V20.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；P10场景概念参考；非本镜已生成首帧",
+          "sourcePanel": "P10",
+          "claims": [
+            "C04"
+          ]
+        }
+      ],
+      "total": 37
+    },
     {
-     "id": "P11",
-     "key": "P11",
-     "title": "真正要看的：量 × 时间",
-     "duration": 0,
-     "cast": [
-      "林",
-      "凯"
-     ],
-     "dialogue": [
-      {
-       "speaker": "阿凯",
-       "direction": "",
-       "text": "那我才二十八，还早吧？"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "有人天生 LDL 低一些，一辈子的冠心病风险低一半以上；也有人生来很高，很早就出事。"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "看的是船的数量和开过的年数。年轻，正是这笔账开始记的时候。"
-      }
-     ],
-     "action": "真正要看的：量 × 时间。特效：两条同年限、不同颗粒流量的对照；数字与「比喻，不是公式」后期叠加",
-     "blocking": "—",
-     "beats": "比例尺 10 nm（概念图）",
-     "camera": "画面来源：网页场景（纯示意 · 量 × 时间）",
-     "image": {
-      "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P11.png",
-      "mtime": 1794716365
-     },
-     "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/prompts/P11.txt",
-     "packPrompt": "",
-     "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard",
-     "note": ""
-    }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b12",
-   "location": "回到走廊",
-   "time": "比例尺 1 m",
-   "purpose": "化验单上的「正常范围」只写给低风险的人；同一个数字放在凯和父亲身上，意义完全不同——这期先不下结论，回去和医生一起看自己的整体风险",
-   "question": "「所以我这个箭头……」",
-   "shots": [
+      "id": "s6",
+      "location": "累积暴露比较区 · 概念空间",
+      "time": "概念图，无物理比例尺",
+      "purpose": "解释长期暴露，把基因研究的结论限定在真实研究范围内。",
+      "shots": [
+        {
+          "id": "V21",
+          "key": "V21",
+          "title": "量和时间",
+          "duration": 8,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "阿凯",
+              "text": "那我才二十八，还早吧？",
+              "direction": ""
+            },
+            {
+              "speaker": "林",
+              "text": "不只看现在的数，也要看这样的水平持续了多久。",
+              "direction": ""
+            }
+          ],
+          "action": "【P11场景概念参考；非本镜已生成首帧】量和时间：稀疏与密集流量依次呈现，积累差异渐显。",
+          "blocking": "两人在下边缘，凯看时间轴；林指时间与颗粒两项而不指数字乘法结果。",
+          "beats": "估算分拍：0–1.6秒：两栏同一时间范围先出现。；1.6–6.4秒：稀疏与密集流量依次呈现，积累差异渐显。；6.4–8秒：停留比较，不把动画当个人发病预测。",
+          "camera": "对称双栏全景固定，先相同时间轴，再显示不同颗粒浓度。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：量与时间：累积暴露的比喻，非风险公式。 画面来源：网页场景（纯示意 · 量 × 时间）",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P11.png",
+            "mtime": 1794716365
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V21.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；P11场景概念参考；非本镜已生成首帧",
+          "sourcePanel": "P11",
+          "claims": [
+            "C04"
+          ]
+        },
+        {
+          "id": "V22",
+          "key": "V22",
+          "title": "遗传研究说明什么",
+          "duration": 10,
+          "durationBasis": "estimate",
+          "cast": [],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "一项研究跟踪了十五年。某些基因变异让人从小 LDL 就低一些，这些人的冠心病风险也明显较低。",
+              "direction": "画外音"
+            }
+          ],
+          "action": "【本镜功能示意图】遗传研究说明什么：按口播顺序揭示对象与15年，最后显示冠心病风险较低。",
+          "blocking": "人物退场画外音；只有这项研究的对象、随访、方向三个要素。",
+          "beats": "估算分拍：0–2秒：抽象颗粒图淡出，证据卡进入。；2–8秒：按口播顺序揭示对象与15年，最后显示冠心病风险较低。；8–10秒：保留出处3秒，转回凯对父亲用药的疑问。",
+          "camera": "证据卡中景固定，先“特定基因变异人群”，再“15年随访”；不展示终生风险百分比。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：Cohen等，NEJM 2006，PMID16554528；不外推所有人终生减半。 画面来源：网页场景（纯示意 · 量 × 时间）",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/diagrams/V22.png",
+            "mtime": 1794737543
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V22.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；本镜功能示意图",
+          "sourcePanel": "P11",
+          "claims": [
+            "C07"
+          ]
+        }
+      ],
+      "total": 18
+    },
     {
-     "id": "P12",
-     "key": "P12",
-     "title": "回到走廊：同一个数，不同的人",
-     "duration": 0,
-     "cast": [
-      "林",
-      "凯"
-     ],
-     "dialogue": [
-      {
-       "speaker": "阿凯",
-       "direction": "",
-       "text": "所以，我这个箭头……"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "化验单的正常范围，不等于你的目标。同一个数字，放在你和你父亲身上，意义不一样。"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "这期不替你下结论，回去和医生一起看整体风险。"
-      }
-     ],
-     "action": "回到走廊：同一个数，不同的人。特效：涟漪收拢；化验单数值、风险维度和合规提示后期叠加",
-     "blocking": "—",
-     "beats": "比例尺 1 m",
-     "camera": "画面来源：Seedance（AI 画面 · 非结构）+ 网页标注",
-     "image": {
-      "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P12.png",
-      "mtime": 1794716599
-     },
-     "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/prompts/P12.txt",
-     "packPrompt": "",
-     "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard",
-     "note": ""
-    }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b13",
-   "location": "他汀：只是压数字吗",
-   "time": "比例尺 1 m → 1 µm",
-   "purpose": "他汀抑制 HMG-CoA 还原酶 → 肝细胞内胆固醇下降 → 表面 LDL 受体增多 → 从血中清除更多 LDL。对血管病变而言，它减少的是会卡进壁里的致病原料，不只是让数字好看；对 LDL 为什么偏高而言，它不改变遗传、年龄等原因，停药后 LDL 基本回到原来的水平。两层都说，不作用药推荐",
-   "question": "「他汀是治本还是治标？」（用户原话，观众问题 ⑩）",
-   "shots": [
+      "id": "s7",
+      "location": "肝脏及肝细胞观察区",
+      "time": "从动脉示意转肝脏定位；细胞尺度",
+      "purpose": "由降低上游颗粒引入他汀，把机制分步展示，再解释治标治本的边界。",
+      "shots": [
+        {
+          "id": "V23",
+          "key": "V23",
+          "title": "父亲的他汀",
+          "duration": 7,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "阿凯",
+              "text": "那我爸用的他汀，只是把化验单上的数字压低吗？",
+              "direction": ""
+            }
+          ],
+          "action": "【本镜功能示意图】父亲的他汀：凯发问，肝脏位置出现，探索表连接肝细胞剖面。",
+          "blocking": "林在凯右侧，先听问题再引导视线；两人随尺度涟漪进入肝细胞观察台。",
+          "beats": "估算分拍：0–1.4秒：前场证据卡退出。；1.4–5.6秒：凯发问，肝脏位置出现，探索表连接肝细胞剖面。；5.6–7秒：停在细胞内合成步骤，开始回答。",
+          "camera": "凯中景；沿他视线拉到肝脏定位图，再向单个肝细胞推进。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：肝脏→肝细胞；功能示意。 画面来源：Blender（3D 示意 · 他汀机制）+ 网页标注",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/diagrams/V23.png",
+            "mtime": 1794737543
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V23.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；本镜功能示意图",
+          "sourcePanel": "P12A",
+          "claims": [
+            "C00"
+          ]
+        },
+        {
+          "id": "V24",
+          "key": "V24",
+          "title": "合成减少",
+          "duration": 7,
+          "durationBasis": "estimate",
+          "cast": [],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "它会抑制胆固醇合成中的一个酶，让肝细胞少造胆固醇。",
+              "direction": "画外音"
+            }
+          ],
+          "action": "【本镜功能示意图】合成减少：他汀作用位置亮起，产物流量减少；细胞内胆固醇示意量随之降低。",
+          "blocking": "人物不入画；路径未受影响前先展示短暂正常流量。",
+          "beats": "估算分拍：0–1.4秒：先呈现合成路径与酶节点。；1.4–5.6秒：他汀作用位置亮起，产物流量减少；细胞内胆固醇示意量随之降低。；5.6–7秒：产物下降停留，切到细胞表面。",
+          "camera": "细胞内合成路径特写固定；酶作用位置为清楚标名的功能节点，不编造药物分子结构。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：HMG-CoA还原酶；功能示意，非分子结构图。 画面来源：Blender（3D 示意 · 他汀机制）+ 网页标注",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/diagrams/V24.png",
+            "mtime": 1794737543
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V24.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；本镜功能示意图",
+          "sourcePanel": "P12A",
+          "claims": [
+            "C05"
+          ]
+        },
+        {
+          "id": "V25",
+          "key": "V25",
+          "title": "受体增多",
+          "duration": 7,
+          "durationBasis": "estimate",
+          "cast": [],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "随后，细胞表面的 LDL 受体增多，就能收回更多 LDL。",
+              "direction": "画外音"
+            }
+          ],
+          "action": "【本镜功能示意图】受体增多：胆固醇下降提示淡出，膜上受体功能位点逐个增加。",
+          "blocking": "无人入画；受体用功能位点表示，不用Y形抗体外观。",
+          "beats": "估算分拍：0–1.4秒：与上镜相同细胞边界建立。；1.4–5.6秒：胆固醇下降提示淡出，膜上受体功能位点逐个增加。；5.6–7秒：一颗LDL接近新位点，匹配下一镜。",
+          "camera": "同一细胞膜中景，由内向外缓慢平移；稀疏受体变密，细胞不变形。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：受体增多；过程有时间间隔，不暗示服药瞬间完成。 画面来源：Blender（3D 示意 · 他汀机制）+ 网页标注",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/diagrams/V25.png",
+            "mtime": 1794737543
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V25.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；本镜功能示意图",
+          "sourcePanel": "P12A",
+          "claims": [
+            "C05"
+          ]
+        },
+        {
+          "id": "V26",
+          "key": "V26",
+          "title": "颗粒被收回",
+          "duration": 7,
+          "durationBasis": "estimate",
+          "cast": [],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "LDL 被结合、吞进细胞，血里循环的颗粒就少了。",
+              "direction": "画外音"
+            }
+          ],
+          "action": "【本镜功能示意图】颗粒被收回：结合后膜内陷形成囊泡，连同受体一起内吞。",
+          "blocking": "无人物；颗粒不穿透实心膜，不把货直接倒到细胞膜上。",
+          "beats": "估算分拍：0–1.4秒：承接上一镜接近的颗粒。；1.4–5.6秒：结合后膜内陷形成囊泡，连同受体一起内吞。；5.6–7秒：拉远至更稀疏的血中颗粒，切回动脉滞留点。",
+          "camera": "受体结合特写到血流中景；同一颗粒完成结合、凹陷、囊泡分离后再拉远。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：结合→内吞→清除；功能关系示意。 画面来源：Blender（3D 示意 · 他汀机制）+ 网页标注",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/diagrams/V26.png",
+            "mtime": 1794737543
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V26.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；本镜功能示意图",
+          "sourcePanel": "P12A",
+          "claims": [
+            "C05"
+          ]
+        },
+        {
+          "id": "V27",
+          "key": "V27",
+          "title": "治标还是治本",
+          "duration": 10,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "阿凯",
+              "text": "所以，不只是数字好看？",
+              "direction": ""
+            },
+            {
+              "speaker": "林",
+              "text": "对，它减少了能进入血管壁的颗粒。但不会把遗传等升高原因都消除。",
+              "direction": ""
+            }
+          ],
+          "action": "【本镜功能示意图】治标还是治本：减少颗粒的因果链依次出现；最后遗传因素留在画面边缘。",
+          "blocking": "林面对凯解释；凯先看因果图再看林，不继续盯着酶。",
+          "beats": "估算分拍：0–2秒：肝细胞画面退出。；2–8秒：减少颗粒的因果链依次出现；最后遗传因素留在画面边缘。；8–10秒：凯停顿后提出是否真能少发病，进入证据场。",
+          "camera": "双人中景，右侧简明因果图“循环颗粒↓→壁内滞留机会↓”；不并列全部分子图。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：减少致病负担，不等于消除全部原因；年龄留给整体风险。 画面来源：Blender（3D 示意 · 他汀机制）+ 网页标注",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/diagrams/V27.png",
+            "mtime": 1794737543
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V27.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；本镜功能示意图",
+          "sourcePanel": "P12A",
+          "claims": [
+            "C04",
+            "C05"
+          ]
+        }
+      ],
+      "total": 38
+    },
     {
-     "id": "P12A",
-     "key": "P12A",
-     "title": "他汀：让肝脏收回更多 LDL",
-     "duration": 0,
-     "cast": [
-      "林",
-      "凯"
-     ],
-     "dialogue": [
-      {
-       "speaker": "阿凯",
-       "direction": "",
-       "text": "那我爸用的他汀，只是把化验单上的数字压低吗？"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "它让肝细胞少造胆固醇，细胞表面的 LDL 受体就会增多，把更多 LDL 从血里抓回去。"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "所以它减少的是能卡进血管壁的原料，不只是让数字好看；但它不改变遗传、年龄这些让 LDL 容易偏高的原因。"
-      },
-      {
-       "speaker": "阿凯",
-       "direction": "",
-       "text": "所以既不只是治标，也不是把原因彻底改掉？"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "对。要不要用、用多久，得和医生按整体风险决定。"
-      }
-     ],
-     "action": "他汀：让肝脏收回更多 LDL。特效：合成减少 → 受体增多 → LDL 内吞三段联动；「减少致病原料 ≠ 消除升高原因」后期标注",
-     "blocking": "—",
-     "beats": "比例尺 1 m → 1 µm（肝细胞机制示意）",
-     "camera": "画面来源：Blender（3D 示意 · 他汀机制）+ 网页标注",
-     "image": {
-      "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P12A.png",
-      "mtime": 1794731885
-     },
-     "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/prompts/P12A.txt",
-     "packPrompt": "",
-     "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard",
-     "note": ""
-    }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b14",
-   "location": "降低 LDL 是否解决问题",
-   "time": "比例尺 1 m（证据概念图）",
-   "purpose": "血脂是总称，包括胆固醇、甘油三酯等；他汀主要减少 LDL 这类含 ApoB 的颗粒，不是清除所有血脂。遗传证据与不同降 LDL 药物的结局试验一致：降低 LDL 能减少心梗和卒中，是解决这条病因链的有效方法。但不等于血管恢复原样，也不能消除炎症、Lp(a)、血压、吸烟、糖尿病等残余风险；绝对获益取决于原本风险、降幅和持续时间，不替个人决定是否用药",
-   "question": "「他汀和血脂是什么关系？降低血脂是不是好的解决方法？」（用户 2026-11-15）",
-   "shots": [
+      "id": "s8",
+      "location": "结局证据与风险比较区 · 概念空间",
+      "time": "概念图，无物理比例尺",
+      "purpose": "区分降LDL与清空血脂，以明确的对照逻辑解释获益与残余风险。",
+      "shots": [
+        {
+          "id": "V28",
+          "key": "V28",
+          "title": "血脂不只有LDL",
+          "duration": 8,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "阿凯",
+              "text": "是把所有血脂都清掉吗？",
+              "direction": ""
+            },
+            {
+              "speaker": "林",
+              "text": "不是。血脂包括胆固醇、甘油三酯。他汀主要降低 LDL 胆固醇。",
+              "direction": ""
+            }
+          ],
+          "action": "【本镜功能示意图】血脂不只有LDL：高亮LDL指标下降，其他脂质不归零；收起所有精细分子装饰。",
+          "blocking": "人物退到左下边缘；林指LDL一列，凯看其他仍存在的类别。",
+          "beats": "估算分拍：0–1.6秒：恢复脂蛋白家族的简图。；1.6–6.4秒：高亮LDL指标下降，其他脂质不归零；收起所有精细分子装饰。；6.4–8秒：转到临床结局问题。",
+          "camera": "颗粒类别图固定正视；LDL一列减少，其他类别仍保留，不画全部清空。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：主要降低LDL-C；不暗示完全不影响甘油三酯或其他指标。 画面来源：网页场景（证据示意）+ Blender 血管",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/diagrams/V28.png",
+            "mtime": 1794737543
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V28.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；本镜功能示意图",
+          "sourcePanel": "P12B",
+          "claims": [
+            "C01",
+            "C05"
+          ]
+        },
+        {
+          "id": "V29",
+          "key": "V29",
+          "title": "试验看的是事件",
+          "duration": 10,
+          "durationBasis": "estimate",
+          "cast": [],
+          "dialogue": [
+            {
+              "speaker": "阿凯",
+              "text": "那心梗也会少吗？",
+              "direction": "画外音"
+            },
+            {
+              "speaker": "林",
+              "text": "他汀试验，以及一些其他降 LDL 治疗的试验，确实观察到心血管事件减少。",
+              "direction": "画外音"
+            }
+          ],
+          "action": "【本镜功能示意图】试验看的是事件：他汀证据出现，再补充另一类降LDL治疗证据；终点标签保留。",
+          "blocking": "人物不入画；不混合不同研究的具体风险数字。",
+          "beats": "估算分拍：0–2秒：凯问题以画外音引入。；2–8秒：他汀证据出现，再补充另一类降LDL治疗证据；终点标签保留。；8–10秒：出处停留，再转入假设算例。",
+          "camera": "固定证据卡，依次出现“随机试验→心血管事件”；药物不作商品或剂量展示。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：CTT 2010；IMPROVE-IT 2015。不同治疗、人群、终点和获益各有范围。 画面来源：网页场景（证据示意）+ Blender 血管",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/diagrams/V29.png",
+            "mtime": 1794737544
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V29.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；本镜功能示意图",
+          "sourcePanel": "P12B",
+          "claims": [
+            "C08"
+          ]
+        },
+        {
+          "id": "V30",
+          "key": "V30",
+          "title": "先说明是假设",
+          "duration": 8,
+          "durationBasis": "estimate",
+          "cast": [],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "看一个假设例子，只用来算清楚获益，不是预测你会怎样。",
+              "direction": "画外音"
+            }
+          ],
+          "action": "【本镜功能示意图】先说明是假设：说明同一5年、每组100人、同一心血管事件定义；假设相对减少20%。",
+          "blocking": "无人物，图表成为唯一主体；“假设算例”全程常驻。",
+          "beats": "估算分拍：0–1.6秒：临床研究卡退出，出现不同底色的假设算例。；1.6–6.4秒：说明同一5年、每组100人、同一心血管事件定义；假设相对减少20%。；6.4–8秒：仅揭示低基线风险一行，下一镜开始比较。",
+          "camera": "全屏图表，固定正视；只显示两行人群、对照和干预列标题，数据暂不揭示。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：假设算例·非试验数据；5年、每组100人；假设相对风险减少20%。 画面来源：网页场景（证据示意）+ Blender 血管",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/diagrams/V30.png",
+            "mtime": 1794737544
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V30.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；本镜功能示意图",
+          "sourcePanel": "P12B",
+          "claims": [
+            "C09"
+          ]
+        },
+        {
+          "id": "V31",
+          "key": "V31",
+          "title": "同一人群内比较",
+          "duration": 9,
+          "durationBasis": "estimate",
+          "cast": [],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "原来一百人里有十人发生事件，减少两成，就变成八人，少两人。",
+              "direction": "画外音"
+            }
+          ],
+          "action": "【本镜功能示意图】同一人群内比较：右侧干预100点、8事件点出现，差额单独标2人。",
+          "blocking": "无人物；高风险一行隐藏，不用两个不同人群互相作对照。",
+          "beats": "估算分拍：0–1.8秒：左侧对照100点、10事件点。；1.8–7.2秒：右侧干预100点、8事件点出现，差额单独标2人。；7.2–9秒：保留两组，镜头拉远准备下行。",
+          "camera": "低基线风险行近景；左100点与右100点同步出现，10红点与8红点清楚可数。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：每组100人；10→8，绝对减少2个百分点；假设、5年、同一事件定义常驻。 画面来源：网页场景（证据示意）+ Blender 血管",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/diagrams/V31.png",
+            "mtime": 1794737544
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V31.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；本镜功能示意图",
+          "sourcePanel": "P12B",
+          "claims": [
+            "C09"
+          ]
+        },
+        {
+          "id": "V32",
+          "key": "V32",
+          "title": "基线风险改变获益",
+          "duration": 9,
+          "durationBasis": "estimate",
+          "cast": [],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "如果原来是二十人，同样减少两成，就变成十六人，少四人。",
+              "direction": "画外音"
+            }
+          ],
+          "action": "【本镜功能示意图】基线风险改变获益：再展示干预组与4人差额；与上行2人对比。",
+          "blocking": "无人物；比较的是每行的组内差，再比较2人与4人的绝对差。",
+          "beats": "估算分拍：0–1.8秒：先展示高基线风险的对照组。；1.8–7.2秒：再展示干预组与4人差额；与上行2人对比。；7.2–9秒：两行比较逻辑停留，收起算例进入实际决策边界。",
+          "camera": "图表全景固定；下行同分母20红点→16红点亮起，上行变暗但可见。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：假设、同样相对减少20%；实际获益还取决于降幅、时间与个人情况。 画面来源：网页场景（证据示意）+ Blender 血管",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/diagrams/V32.png",
+            "mtime": 1794737544
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V32.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；本镜功能示意图",
+          "sourcePanel": "P12B",
+          "claims": [
+            "C09"
+          ]
+        },
+        {
+          "id": "V33",
+          "key": "V33",
+          "title": "还有其他风险",
+          "duration": 9,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "真实获益要看具体情况。降 LDL 也不等于血管恢复全新，血压、吸烟、糖尿病等风险还要另看。",
+              "direction": ""
+            }
+          ],
+          "action": "【本镜功能示意图】还有其他风险：残余斑块保持，不画完全洗净；其他风险项逐个出现。",
+          "blocking": "林与凯回到图侧，林逐项指示，凯看图后收回目光。",
+          "beats": "估算分拍：0–1.8秒：明确退出假设算例。；1.8–7.2秒：残余斑块保持，不画完全洗净；其他风险项逐个出现。；7.2–9秒：琥珀涟漪收拢，回到医院走廊作唯一收束。",
+          "camera": "简洁血管剖面中景，斑块保持残余；再依次出现血压、吸烟、糖尿病图标。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：LDL风险下降≠全部风险消失；不宣称每个人斑块都缩小。 画面来源：网页场景（证据示意）+ Blender 血管",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/diagrams/V33.png",
+            "mtime": 1794737544
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V33.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；本镜功能示意图",
+          "sourcePanel": "P12B",
+          "claims": [
+            "C04",
+            "C08"
+          ]
+        }
+      ],
+      "total": 53
+    },
     {
-     "id": "P12B",
-     "key": "P12B",
-     "title": "降低 LDL：有效，但不是解决全部风险",
-     "duration": 0,
-     "cast": [
-      "林",
-      "凯"
-     ],
-     "dialogue": [
-      {
-       "speaker": "阿凯",
-       "direction": "",
-       "text": "他汀和血脂到底是什么关系？是把所有血脂都降下去吗？"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "不是。血脂包括胆固醇、甘油三酯等；他汀主要减少 LDL 这类含 ApoB、能进入血管壁的颗粒。"
-      },
-      {
-       "speaker": "阿凯",
-       "direction": "",
-       "text": "那降低 LDL，真的能减少心梗，而不只是让化验单好看？"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "是。天生 LDL 较低的人、以及用不同药物降低 LDL 的试验，都指向同一个结论：心梗和卒中会减少。"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "所以它是解决这条病因链的有效方法，但不是把血管变回全新，也管不了吸烟、血压、糖尿病等其他风险。对谁获益多大，要看原本风险、降幅和持续时间。"
-      }
-     ],
-     "action": "降低 LDL：有效，但不是解决全部风险。特效：选择性减少 LDL → 壁内滞留减少 → 事件下降；两个人群方阵展示绝对获益取决于基线风险",
-     "blocking": "—",
-     "beats": "比例尺 1 m（证据与风险概念图）",
-     "camera": "画面来源：网页场景（证据示意）+ Blender 血管",
-     "image": {
-      "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P12B.png",
-      "mtime": 1794732066
-     },
-     "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/prompts/P12B.txt",
-     "packPrompt": "",
-     "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard",
-     "note": ""
+      "id": "s9",
+      "location": "医院走廊 · 回到两张单据",
+      "time": "日内；恢复正常尺度",
+      "purpose": "将理解落回个人风险评估，一次收束；不作个人用药决定。",
+      "shots": [
+        {
+          "id": "V34",
+          "key": "V34",
+          "title": "回到那个箭头",
+          "duration": 8,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "阿凯",
+              "text": "所以，这个箭头不能单独说明我该怎么办？",
+              "direction": ""
+            },
+            {
+              "speaker": "林",
+              "text": "对。化验单的参考范围，不等于每个人的治疗目标。",
+              "direction": ""
+            }
+          ],
+          "action": "【P12场景概念参考；非本镜已生成首帧】回到那个箭头：凯重新看箭头，再抬头问；林回应。",
+          "blocking": "凯取出收好的两张纸；林看单据而不指某个剂量或目标值。",
+          "beats": "估算分拍：0–1.6秒：同一长椅与模型桌建立正常尺度。；1.6–6.4秒：凯重新看箭头，再抬头问；林回应。；6.4–8秒：两张纸并排，切到人物关系中景。",
+          "camera": "匹配s1同轴双人中景，涟漪缩回林左腕；镜头下移到凯手中的单据。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：道具为虚构示意；不显示待核具体化验值。 画面来源：Seedance（AI 画面 · 非结构）+ 网页标注",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P12.png",
+            "mtime": 1794716599
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V34.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；P12场景概念参考；非本镜已生成首帧",
+          "sourcePanel": "P12",
+          "claims": [
+            "C10"
+          ]
+        },
+        {
+          "id": "V35",
+          "key": "V35",
+          "title": "整体风险",
+          "duration": 9,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "林",
+              "text": "你和父亲的情况不同。年龄、家族史、有没有心血管病，都要一起看；用药还要权衡获益和风险。",
+              "direction": ""
+            }
+          ],
+          "action": "【P12场景概念参考；非本镜已生成首帧】整体风险：年龄、家族史、既往病史按口播出现，不排出治疗结论。",
+          "blocking": "凯看林认真听；林不用夸张安慰笑容，语气平稳。",
+          "beats": "估算分拍：0–1.8秒：两张纸分别对应凯和父亲。；1.8–7.2秒：年龄、家族史、既往病史按口播出现，不排出治疗结论。；7.2–9秒：提示收走，交给凯复述。",
+          "camera": "双人侧面中景，固定机位；人物与简短风险提示保持同一阅读层级。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：由医生结合整体情况决定；不提供用药、停药或剂量方案。 画面来源：Seedance（AI 画面 · 非结构）+ 网页标注",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P12.png",
+            "mtime": 1794716599
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V35.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；P12场景概念参考；非本镜已生成首帧",
+          "sourcePanel": "P12",
+          "claims": [
+            "C10"
+          ]
+        },
+        {
+          "id": "V36",
+          "key": "V36",
+          "title": "凯带走的理解",
+          "duration": 8,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "阿凯",
+              "text": "LDL 是运货的颗粒。太多、太久，风险会升高。我得带着这两张单子，再问清楚。",
+              "direction": ""
+            }
+          ],
+          "action": "【P13场景概念参考；非本镜已生成首帧】凯带走的理解：凯用自己的处境复述，取消“只有多和久才会滞留”的阈值暗示。",
+          "blocking": "凯把两张纸叠好；林点头回应，视线保持交流。",
+          "beats": "估算分拍：0–1.6秒：凯看单据再抬头。；1.6–6.4秒：凯用自己的处境复述，取消“只有多和久才会滞留”的阈值暗示。；6.4–8秒：凯看向林，留下下期疑问。",
+          "camera": "凯中近景缓慢拉到双人；探索表关闭，背景不再出现复杂结构。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形： 画面来源：Seedance（AI 画面 · 非结构）+ 片尾网页卡",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P13.png",
+            "mtime": 1794712900
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V36.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；P13场景概念参考；非本镜已生成首帧",
+          "sourcePanel": "P13",
+          "claims": [
+            "C04",
+            "C10"
+          ]
+        },
+        {
+          "id": "V37",
+          "key": "V37",
+          "title": "下期问题",
+          "duration": 7,
+          "durationBasis": "estimate",
+          "cast": [
+            "林",
+            "阿凯"
+          ],
+          "dialogue": [
+            {
+              "speaker": "阿凯",
+              "text": "可我不胖，为什么也会高？",
+              "direction": ""
+            },
+            {
+              "speaker": "林",
+              "text": "下一期，我们接着看身体怎么调节它。",
+              "direction": ""
+            }
+          ],
+          "action": "【本镜功能示意图】下期问题：肝脏定位图出现，作为下一期主题提示。",
+          "blocking": "凯与林向走廊出口走两步，停止；不引入任何家人或其他人。",
+          "beats": "估算分拍：0–1.4秒：凯发问，林转身回应。；1.4–5.6秒：肝脏定位图出现，作为下一期主题提示。；5.6–7秒：画面淡出至片尾卡。",
+          "camera": "双人全景固定；仅一个小肝脏定位图渐现，不画Y形阀门。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：下期：为什么不胖也会高；按主题预告，不误写为既定t12编号。 画面来源：Seedance（AI 画面 · 非结构）+ 片尾网页卡",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/diagrams/V37.png",
+            "mtime": 1794737544
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V37.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；本镜功能示意图",
+          "sourcePanel": "P13",
+          "claims": [
+            "C00"
+          ]
+        },
+        {
+          "id": "V38",
+          "key": "V38",
+          "title": "片尾说明与出处",
+          "duration": 8,
+          "durationBasis": "estimate",
+          "cast": [],
+          "dialogue": [],
+          "action": "【本镜功能示意图】片尾说明与出处：第一屏保持至4秒；随后淡换第二屏AI说明与精简出处。",
+          "blocking": "无人入画；无对白，音乐缓收。",
+          "beats": "估算分拍：0–1.6秒：第一屏科普与用药边界。；1.6–6.4秒：第一屏保持至4秒；随后淡换第二屏AI说明与精简出处。；6.4–8秒：第二屏保持到8秒，淡黑结束。",
+          "camera": "固定全屏网页卡；两屏各4秒，字号按1080p至少32px。 转场：直切至下一镜；保持血流从左向右，跨尺度另用探索表涟漪。 图形：0–4秒：本片为科普，不能替代医生诊疗；用药、停药请遵医嘱。4–8秒：画面含AI生成合成内容，结构为示意；Nature 2025／Cohen 2006／CTT 2010／IMPROVE-IT 2015；完整出处随片附。 画面来源：Seedance（AI 画面 · 非结构）+ 片尾网页卡",
+          "image": {
+            "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/diagrams/V38.png",
+            "mtime": 1794737544
+          },
+          "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots/V38.txt",
+          "packPrompt": "",
+          "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard/shots",
+          "note": "估算时长；本镜功能示意图",
+          "sourcePanel": "P13",
+          "claims": [
+            "C00"
+          ]
+        }
+      ],
+      "total": 40
     }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b15",
-   "location": "一句话＋下一期",
-   "time": "比例尺 1 m",
-   "purpose": "一句话：LDL 是船，不是坏东西；船多、时间长，才卡进墙里。下一期：为什么瘦人也会高（肝脏的「阀门」）",
-   "question": "凯：「可我不胖也不吃肥肉，它为什么会高？」",
-   "shots": [
-    {
-     "id": "P13",
-     "key": "P13",
-     "title": "一句话带走，下一期的问题",
-     "duration": 0,
-     "cast": [
-      "林",
-      "凯"
-     ],
-     "dialogue": [
-      {
-       "speaker": "阿凯",
-       "direction": "",
-       "text": "所以 LDL 是船，不是坏东西；船太多、时间太长，才会卡进血管壁。"
-      },
-      {
-       "speaker": "阿凯",
-       "direction": "",
-       "text": "可我不胖，也不吃肥肉，它为什么会高？"
-      },
-      {
-       "speaker": "林",
-       "direction": "",
-       "text": "下一期，我们去看肝脏上的阀门。"
-      }
-     ],
-     "action": "一句话带走，下一期的问题。特效：LDL 余影过渡到肝脏阀门；片尾科普、AI 生成与出处卡后期叠加",
-     "blocking": "—",
-     "beats": "比例尺 1 m",
-     "camera": "画面来源：Seedance（AI 画面 · 非结构）+ 片尾网页卡",
-     "image": {
-      "path": "edu_videos/tansuo/t11_inside_an_artery/storyboard/P13.png",
-      "mtime": 1794712900
-     },
-     "framePrompt": "edu_videos/tansuo/t11_inside_an_artery/storyboard/prompts/P13.txt",
-     "packPrompt": "",
-     "shotDir": "edu_videos/tansuo/t11_inside_an_artery/storyboard",
-     "note": ""
-    }
-   ],
-   "total": 0
-  }
- ]
+  ]
 }

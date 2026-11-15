@@ -1,0 +1,125 @@
+{
+  "version": "v5.1",
+  "date": "2026-11-15",
+  "followup": "056",
+  "execution_mode": "parent-direct",
+  "reviewer_attempt": "tools/qc_review.py:run_reviewer(kimi)",
+  "independent_status": "未审：Kimi 5小时额度耗尽",
+  "conclusion": "可确认文字、时序和生成说明已修；缺首帧与独立复审尚未完成，不能作为出片放行。",
+  "scope": "中文53镜、英文58镜与15张原参考图；只检查故事板及预览数据，未完成真人听审、成片审查。",
+  "issues": [
+    {
+      "id": "I1",
+      "where": "中英 l34 / s10-3",
+      "status": "已修补，待独立复审",
+      "finding": "把交叉不短路归因于换向",
+      "fix": "改为层间绝缘防短路、换向方便布线；更新两语讲稿、C06、节拍、动作及本地预览。"
+    },
+    {
+      "id": "I2",
+      "where": "英文 s16-3 / s16-4",
+      "status": "已修补，待独立复审",
+      "finding": "l61 成通道时已在演撤电，l63/64 配了提前出现的磁铁类比",
+      "fix": "s16-3 先成通道再随 l62 撤电；s16-4 静止结构与隔层追问；磁铁仍仅在 l65。"
+    },
+    {
+      "id": "I3",
+      "where": "全部当前首帧入口",
+      "status": "已修补",
+      "finding": "有图镜头链接旧 P/V 提示，无图镜头没有可执行当前说明；P12 旧提示仍要求人和叠层同高",
+      "fix": "生成当前逐镜首帧说明，所有当前卡片都链接 prompts/current/；保留历史生成请求。"
+    },
+    {
+      "id": "I4",
+      "where": "c05/c06",
+      "status": "制作约束已补，待画面实现",
+      "finding": "不同工艺的互连、GAA 尺寸与开场手机芯片容易混为同一颗真实芯片",
+      "fix": "进互连层补不同工艺示例卡，纳米片段补模型切换卡，工艺名与尺寸分开。"
+    },
+    {
+      "id": "I5",
+      "where": "c07/c08/c09",
+      "status": "已修补，待画面实现",
+      "finding": "数原子后恢复100nm人物没有交代，回程却又写1nm起步",
+      "fix": "原子用局部放大窗，人保持100nm；区分标尺与人物尺寸；回程改从100nm开始。"
+    },
+    {
+      "id": "I6",
+      "where": "microscope_gray / s12-3",
+      "status": "已修补",
+      "finding": "Blender 灰度渲染被叫真实灰度图",
+      "fix": "改为电镜成像示意，禁止把渲染冒充显微照片。"
+    },
+    {
+      "id": "I7",
+      "where": "c01/c09",
+      "status": "已修补",
+      "finding": "夜晚书桌与现有日光构图不一致，样品和可操作手机角色不清",
+      "fix": "统一暖光书桌，城市夜景仅为错觉；镊子夹独立样品，完整手机用于点击。"
+    },
+    {
+      "id": "I8",
+      "where": "s19-1 / P11",
+      "status": "未完成：已撤下错误首帧",
+      "finding": "右腕表与固定左腕身份冲突；旧图晶格不可用于44层计数",
+      "fix": "从当前中英清单撤下，保留历史图；新制作说明要求左腕表及按模型计算晶格。旧图已用完两次重出，本次没有越限再生成。"
+    },
+    {
+      "id": "I9",
+      "where": "off_state / inverter / scale_guess / beijing_area",
+      "status": "制作约束已补，待画面实现",
+      "finding": "源栅电势、反相器完整连接、环绕栅片间金属及平均面积边界缺少具体指示",
+      "fix": "逐镜补源漏电势、栅压相对源极、互补两管真值、栅金属填充与平均面积包含布线。"
+    },
+    {
+      "id": "I10",
+      "where": "当前版整体",
+      "status": "未审",
+      "finding": "Kimi 独立审稿失败",
+      "fix": "qc_review.run_reviewer 原入口启动，被5小时用量上限拒绝；未改用作者自审冒充独立通过。"
+    }
+  ],
+  "audit": ".audit/adhoc_agents/2026-11-15/chip-review-056/",
+  "limitations": [
+    "39个中文首帧、44个英文首帧仍待制作（包括撤下的P11）",
+    "Kimi独立审稿额度限制；当前版不可沿用v2.4审稿结果",
+    "shot_pack sync 不适用于此教学目录：缺短剧 prompts.json；本次用分镜生成器与预览一致性检查",
+    "浏览器窗口最小化，未完成本轮UI截图验收；检查HTTP与实际文件API，不冒称浏览器通过"
+  ],
+  "validation": {
+    "zh": {
+      "shots": 53,
+      "lines": 87,
+      "duration": 592.0,
+      "images": 14,
+      "missing_frames": 39,
+      "max_seconds": 15,
+      "max_cer": 0.143
+    },
+    "en": {
+      "shots": 58,
+      "lines": 87,
+      "duration": 629.0,
+      "images": 14,
+      "missing_frames": 44,
+      "max_seconds": 15,
+      "max_cer": 0.083
+    },
+    "http_api": "200, served storyboard equals current file",
+    "independent_review": "未审：Kimi quota limit",
+    "sha256": {
+      "script.md": "b99cbb43a02546939c491506ec661c11504b4d16c5a1ede4077c95adc7a7a874",
+      "script.en.md": "1d3cdce72f4bd432090ad64277b3ca4ab14ec3536cf2ebf70d4b632cfb56d264",
+      "claims.json": "b53a7f75b0ec9f836038ea70d4f19f6a9d959c8045134667052107c81453f468",
+      "beats.md": "548db46d622ec7dd7965e5ee8bfad5e2b09d71e79283dd70bfd7fa8e51ccf9ea",
+      "storyboard/storyboard.json": "0bf55ce70914d5466f71fcf4b4011dbbd18efa292f7a1cf6367c8edc50c20dea",
+      "storyboard/build_preview.py": "09267a44051d752f0492b4f468ee1a10fcca380a10364a33e327816e8c25b537",
+      "audio/preview_manifest.json": "b6e71c5d63fd603a1b33955fe107ae3e2bb45689f5955f19de5b6a29705c5eeb",
+      "audio/preview_manifest.en.json": "ccb31e4ce56d7b9c56c474245567de1f229b4b499afa67aa12aeaa0e6e3d0761",
+      "audio/preview/timeline.json": "1814a6335bcc2eeb9ccc54d0961d94ed90a633d6f4115f37b38a609384c18423",
+      "audio/preview/en/timeline.json": "91ea0b151a7eba8da8928fef9c3526fc97575a980eff6001c24de9ab1b7e8902",
+      "audio_preview.json": "75f41125c8cf4f89ecf52f92b6e82a0785afbf7a43a5781f3511774d8e392d62",
+      "audio_preview.en.json": "f3d59391b3711d678ad04c3ed97164e730bf4915324622647bb22336a63c7030"
+    }
+  }
+}
