@@ -1,0 +1,65 @@
+{
+  "version": "v3",
+  "date": "2026-11-15",
+  "followup": 55,
+  "status": "已完成已知问题的分镜修订；独立复审未完成，不能宣称过审",
+  "scope": "分镜设计与草稿台词；不是正式讲稿、最终视频或平台发布审核",
+  "changes": [
+    {
+      "issue": "场镜与知识节拍混用",
+      "resolution": "保留15个知识节拍供追溯；重组9场38镜，每场2至6镜，逐镜摄影、视线、动作、分拍与转场。"
+    },
+    {
+      "issue": "时长为0、机制同屏堆叠",
+      "resolution": "逐镜6至12秒设计估算，共301秒；内皮、斑块、肝脏机制和比较图按步骤拆镜，正式音频后校准。"
+    },
+    {
+      "issue": "先回医院再继续讲课",
+      "resolution": "他汀与证据提前，医院只在最后一场返回。"
+    },
+    {
+      "issue": "终生风险减半、必然致病、大多数出来",
+      "resolution": "限定特定基因变异人群15年证据；改风险和可能性措辞；不声明未经支持的多数或唯一离开路线。"
+    },
+    {
+      "issue": "LDL-C和颗粒计数混淆",
+      "resolution": "先分开颗粒与货物，再说明LDL-C量的是LDL携带的胆固醇而非直接数颗粒。"
+    },
+    {
+      "issue": "两组比较不能说明干预获益",
+      "resolution": "改四组假设算例：同为5年100人、20%相对减少；10→8和20→16，显示2/4人绝对差；不是临床数据。"
+    },
+    {
+      "issue": "转胞吞轨迹与伪真实分子误导",
+      "resolution": "一颗实心LDL、单向运动箭头；旧P06/P07/P12A/P12B图退出当前预览，改用明确标注的功能分镜。"
+    },
+    {
+      "issue": "开场模型提前露出斑块",
+      "resolution": "已新生成P02_v3健康空腔模型，保留人物与左腕探索表。"
+    },
+    {
+      "issue": "论文和试验适用范围不清",
+      "resolution": "新增逐镜claims台账、准确Nature论文及结构亚群限制、遗传/他汀/依折麦布试验范围；独立标明来源实际阅读范围。"
+    },
+    {
+      "issue": "多份台词和图源过时",
+      "resolution": "shot_plan为现行台词与镜头源；panels只保留概念图档案；storyboard、review、38份镜头说明和音频清单同步派生。旧审查原样保留。"
+    }
+  ],
+  "independent_review": {
+    "status": "未审",
+    "runtime": "tools/qc_review.py run_reviewer → 独立Kimi临时目录",
+    "attempt": ".audit/adhoc_agents/2026-11-15/t11-v3-fix/r1_prompt.md",
+    "error": "kimi 2.5.3 exit 1: provider.api_error: You've reached your 5-hour usage limit.",
+    "retry": "python .audit/adhoc_agents/2026-11-15/t11-v3-fix/run_review.py r2",
+    "note": "额度恢复后须对当前文件重取指纹复审；不能沿用v2审查或用作者自检代替。"
+  },
+  "remaining_gates": [
+    "当前v3独立内容与视觉复审，Kimi额度恢复后执行",
+    "正式讲稿与双语台词审；实测整集音频并由用户听审",
+    "按镜制作正式科学模型/首帧与视频；旧图只作概念参考",
+    "成片QC、人工剪辑及发布前适用审核"
+  ],
+  "shot_pack": "已运行sync，因教学视频本阶段无prompts.json而失败；未宣称已对齐制作资料包。38份分镜设计文本已单独检查。",
+  "verification": ".audit/adhoc_agents/2026-11-15/t11-v3-fix/verification.json"
+}

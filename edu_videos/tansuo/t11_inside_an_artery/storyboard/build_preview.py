@@ -64,7 +64,7 @@ def build():
                  '比较图为假设算例：每组100人、同一5年、同一事件定义、相对风险减少20%；不是临床试验数据或个人预测。'],
         'links':[{'label':label,'path':rel(path)} for label,path in [
             ('镜头设计源',plan_path),('节拍',TOPIC/'beats.md'),('事实台账',TOPIC/'claims.json'),
-            ('修订说明与复审',SB/'reviews/v3_resolution.json'),('v2审查',SB/'reviews/structure_r1.json')]],
+            ('修订说明与复审',SB/'reviews/v3_resolution.json'),('片尾第二屏',SB/'diagrams/V38b.png'),('v2审查',SB/'reviews/structure_r1.json')]],
         'scenes':scenes}
     (SB/'storyboard.json').write_text(json.dumps(board,ensure_ascii=False,indent=2),encoding='utf-8')
     voices={}

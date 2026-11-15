@@ -773,3 +773,16 @@ Auto-updated:
 
 No conflicts found in: （未单独核查）
 
+
+## Follow-up 055 — 2026-11-15 18:00:37
+Source: user_input/follow_ups/202611.md - section 055
+Summary: t11 v3分镜修订及复审
+
+Auto-updated:
+- t11已知审查项修为v3，9场38镜估算301秒；逐镜摄影调度分拍、P02健康模型、机制图、四组假设比较、限定证据与claims、节拍和预览清单同步。
+
+验证: 结构及链路检查通过；本机API返回v3且源hash一致，新图HTTP200。独立Kimi调用因5小时用量上限失败，未审，审稿仍未闭环；shot_pack sync因教学视频暂无prompts.json失败，未生成制作包，38份分镜说明单独验证。详见storyboard/reviews/v3_resolution.json及.audit/adhoc_agents/2026-11-15/t11-v3-fix/verification.json。
+费用: Codex图像1次，费用未知；request_log已记。独立Kimi因配额未运行成功。
+
+No conflicts found in: 仅t11与系列README的t11状态行；保留t01及其他会话改动。
+
