@@ -1,0 +1,1781 @@
+{
+ "run": "ep01_20261115-105419_take_r1",
+ "generated_at": "2026-11-15T17:51:27",
+ "issues": [
+  {
+   "key": "dim:physics_B:P5",
+   "level": "critical",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics_B",
+   "dimension": "P5 身体可行",
+   "shots": [
+    "s4_st8"
+   ],
+   "problem": "P5 身体可行 最终 1 分：转身、迈步、上台阶、坐下是真人做得到的，时长够；没有 180° 扭头、滑步；sheet4 第 2 行第 5–6 格：2.50 秒人物持刀近景，2.75 秒突变为另一机位空镜；20fps 加密图 `work/physics_B__a/s4_st8_cut_20fps.jpg` 同样突变，ffmpeg `select=gt(scene,0.08)` 在 2.75 秒检出 I 帧。",
+   "evidence": [
+    "a（1 分）：s4_st8 2.50 秒仍为蹲姿割叶近景，2.75 秒硬切成另一机位空镜，人物与动作瞬移消失；ffmpeg 场景检测在 2.75 秒命中 I 帧（见问题表）。",
+    "sheet4 第 2 行第 5–6 格：2.50 秒人物持刀近景，2.75 秒突变为另一机位空镜；20fps 加密图 `work/physics_B__a/s4_st8_cut_20fps.jpg` 同样突变，ffmpeg `select=gt(scene,0.08)` 在 2.75 秒检出 I 帧。"
+   ],
+   "sources": [
+    "kimi/physics_B__a"
+   ],
+   "fix": "**要积分**：重出 0–4.04 秒，保持同一近景一镜到底，完成割叶、放到脚边叶堆、留下嫩叶与竹节虫。**便宜但不完整**：只可剪至 2.50 秒去掉硬切，会丢失结尾信息，不能替代完整重出。",
+   "cost": "要积分",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s4_st8 | 2.50–4.04（2.75 切点） | P5·瞬移 / 镜内硬切 | 重出 | ④ 模型随机 | sheet4 第 2 行第 5–6 格：2.50 秒人物持刀近景，2.75 秒突变为另一机位空镜；20fps 加密图 `work/physics_B__a/s4_st8_cut_20fps.jpg` 同样突变，ffmpeg `select=gt(scene,0.08)` 在 2.75 秒检出 I 帧。 | **要积分**：重出 0–4.04 秒，保持同一近景一镜到底，完成割叶、放到脚边叶堆、留下嫩叶与竹节虫。**便宜但不完整**：只可剪至 2.50 秒去掉硬切，会丢失结尾信息，不能替代完整重出。 |"
+   ],
+   "id": "I1",
+   "status": "implemented",
+   "solution": "s4_st8 新 720p 条已出并接入 s4 cut_v2；submit 395b39ba，80 积分。scene_cut check 无问题，渲染回读 1400 帧、1280×720、24fps；独立复核待 r2。",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-15T16:17:21",
+     "status": "planned",
+     "solution": "待用户批准积分：重出 s4_st8 4 秒，固定中近景完成割叶、放叶并保留嫩叶与竹节虫尾拍；不自动提交。",
+     "by": "Kimi Code"
+    },
+    {
+     "at": "2026-11-15T17:33:33",
+     "status": "planned",
+     "solution": "用户已批准：s4_st8 4 秒 720p 重出已提交，固定中近景完成割叶、放叶并保留嫩叶与竹节虫尾拍；等待新条验收。",
+     "by": "用户授权 / Kimi Code 执行"
+    },
+    {
+     "at": "2026-11-15T17:51:25",
+     "status": "implemented",
+     "solution": "s4_st8 新 720p 条已出并接入 s4 cut_v2；submit 395b39ba，80 积分。scene_cut check 无问题，渲染回读 1400 帧、1280×720、24fps；独立复核待 r2。",
+     "by": "Kimi Code",
+     "files": [
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s4/shots/st8/renders/20261115-173837_395b39ba",
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s4/edit/final/cut_v2.json"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s4/shots/st8/renders/20261115-173837_395b39ba",
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s4/edit/final/cut_v2.json"
+   ]
+  },
+  {
+   "key": "dim:physics_D:P8",
+   "level": "critical",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics_D",
+   "dimension": "P8 首帧 = 第 0 秒",
+   "shots": [
+    "s8_st5"
+   ],
+   "problem": "P8 首帧 = 第 0 秒 最终 1 分：首帧画的正是第 0 秒的状态，和节拍第一拍接得上；`spec.md:12-14` 明确锅在灶东半扁石、锅钩空；sheet4 第1/12/24格均为挂锅在火正上方，0秒即错且没有挂锅动作",
+   "evidence": [
+    "a（1 分）：s8_st5 `spec.md:12-14` 要求第0秒锅在灶东半扁石上、锅钩空，sheet4 第1/12/24格却均为锅挂在火正上方，且全镜没有挂锅动作（见问题表）。",
+    "`spec.md:12-14` 明确锅在灶东半扁石、锅钩空；sheet4 第1/12/24格均为挂锅在火正上方，0秒即错且没有挂锅动作"
+   ],
+   "sources": [
+    "kimi/physics_D__a"
+   ],
+   "fix": "**要积分**：按同一门口机位重出，起始及全镜保持锅落扁石、锅钩空，再拍跪看洪水、抹雨和扶框",
+   "cost": "要积分",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s8_st5 | 0.00–6.04（全镜） | P8 | 重出 | ③ prompt 或首帧 | `spec.md:12-14` 明确锅在灶东半扁石、锅钩空；sheet4 第1/12/24格均为挂锅在火正上方，0秒即错且没有挂锅动作 | **要积分**：按同一门口机位重出，起始及全镜保持锅落扁石、锅钩空，再拍跪看洪水、抹雨和扶框 |"
+   ],
+   "id": "I2",
+   "status": "implemented",
+   "solution": "s8_st5 新 720p 条已出并接入 s8 cut_v3；submit 39192fad，120 积分。首帧与视频 SHA 对齐；前 4 秒已本地复用到 s1 cut_v2，未另收费。独立复核待 r2。",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-15T16:17:22",
+     "status": "planned",
+     "solution": "待用户批准积分：重出 s8_st5 6 秒，锅全程落扁石、锅钩空；新条前 4 秒同时供 s1_st1 开场复用，避免重复重出。",
+     "by": "Kimi Code"
+    },
+    {
+     "at": "2026-11-15T17:33:34",
+     "status": "planned",
+     "solution": "用户已批准：s8_st5 6 秒 720p 重出已提交，首帧已改为锅落扁石、锅钩空；新条前 4 秒供 s1_st1 复用，等待新条验收。",
+     "by": "用户授权 / Kimi Code 执行"
+    },
+    {
+     "at": "2026-11-15T17:51:25",
+     "status": "implemented",
+     "solution": "s8_st5 新 720p 条已出并接入 s8 cut_v3；submit 39192fad，120 积分。首帧与视频 SHA 对齐；前 4 秒已本地复用到 s1 cut_v2，未另收费。独立复核待 r2。",
+     "by": "Kimi Code",
+     "files": [
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s8/shots/st5/renders/20261115-173341_39192fad",
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s8/edit/final/cut_v3.json",
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s1/edit/final/cut_v2.json"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s8/shots/st5/renders/20261115-173341_39192fad",
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s8/edit/final/cut_v3.json",
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s1/edit/final/cut_v2.json"
+   ]
+  },
+  {
+   "key": "dim:character_A:C2",
+   "level": "critical",
+   "law": "character",
+   "category": "人物逻辑",
+   "item": "character_A",
+   "dimension": "C2 想要什么",
+   "shots": [
+    "s4_st5→s4_st8"
+   ],
+   "problem": "C2 想要什么 最终 1 分：每个人此刻的目的清楚，动作服务于目的；s4_st5 sheet4 及原条 4.5、7、9.5 秒全尺寸帧：手指始终在原叶上指引，虫没有爬上手指，也没有手指移到旁叶；9.5 秒虫仍在原叶上部。s4_st8 3.5 秒虫却已出现在留株嫩叶上。关键善意动作被跳切代替，前镜还留下约六秒重复指叶等待。",
+   "evidence": [
+    "a（1 分）：s4_st5 3.5–9.75 秒手指始终指向原叶，未演出让虫爬上手指再移到嫩叶；s4_st8 3.5 秒虫已在留株叶上，核心动作目的没有完成（见问题表）。",
+    "s4_st5 sheet4 及原条 4.5、7、9.5 秒全尺寸帧：手指始终在原叶上指引，虫没有爬上手指，也没有手指移到旁叶；9.5 秒虫仍在原叶上部。s4_st8 3.5 秒虫却已出现在留株嫩叶上。关键善意动作被跳切代替，前镜还留下约六秒重复指叶等待。"
+   ],
+   "sources": [
+    "kimi/character_A__a"
+   ],
+   "fix": "**要积分**：按现有清楚分镜重出 s4_st5，让虫、食指、目标嫩叶同框，演完“虫上指→指移到旁叶→虫上叶”两次接触；不要用文字补心理。仅剪短 4.5–9.5 秒可减少拖沓，但补不回转移因果。",
+   "cost": "要积分",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s4_st5→s4_st8 | s4_st5 3.50–10.04；s4_st8 0–4.04 | C2 动作目的（兼 C7/C8/C9/C10） | 重出 | ④ 模型随机 | s4_st5 sheet4 及原条 4.5、7、9.5 秒全尺寸帧：手指始终在原叶上指引，虫没有爬上手指，也没有手指移到旁叶；9.5 秒虫仍在原叶上部。s4_st8 3.5 秒虫却已出现在留株嫩叶上。关键善意动作被跳切代替，前镜还留下约六秒重复指叶等待。 | **要积分**：按现有清楚分镜重出 s4_st5，让虫、食指、目标嫩叶同框，演完“虫上指→指移到旁叶→虫上叶”两次接触；不要用文字补心理。仅剪短 4.5–9.5 秒可减少拖沓，但补不回转移因果。 |"
+   ],
+   "id": "I3",
+   "status": "implemented",
+   "solution": "s4_st5 新 720p 条已出并接入 s4 cut_v2；submit 39c27c66，200 积分。首帧竹节虫与目标嫩叶同框，视频 SHA 对齐；独立复核待 r2。",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-15T16:17:22",
+     "status": "planned",
+     "solution": "待用户批准积分：重出 s4_st5 10 秒，演完竹节虫爬上手指、移到嫩叶两次接触。",
+     "by": "Kimi Code"
+    },
+    {
+     "at": "2026-11-15T17:33:34",
+     "status": "planned",
+     "solution": "用户已批准：s4_st5 10 秒 720p 重出已提交，首帧竹节虫与目标嫩叶清楚同框，等待新条验收。",
+     "by": "用户授权 / Kimi Code 执行"
+    },
+    {
+     "at": "2026-11-15T17:51:25",
+     "status": "implemented",
+     "solution": "s4_st5 新 720p 条已出并接入 s4 cut_v2；submit 39c27c66，200 积分。首帧竹节虫与目标嫩叶同框，视频 SHA 对齐；独立复核待 r2。",
+     "by": "Kimi Code",
+     "files": [
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s4/shots/st5/renders/20261115-173405_39c27c66",
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s4/edit/final/cut_v2.json"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s4/shots/st5/renders/20261115-173405_39c27c66",
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s4/edit/final/cut_v2.json"
+   ]
+  },
+  {
+   "key": "dim:character_B:C5",
+   "level": "critical",
+   "law": "character",
+   "category": "人物逻辑",
+   "item": "character_B",
+   "dimension": "C5 主持人性格",
+   "shots": [],
+   "problem": "C5 主持人性格 最终 0 分：Riley 的反应符合人设（好奇、敢试、自嘲），对当地人有回应",
+   "evidence": [
+    "a（0 分）：本集没有主持人 Riley，只有独居建造的 Julian，主持人性格与对观众说话时机不适用；Julian 的人设反应已在 C7、C9、C11 评价。"
+   ],
+   "sources": [
+    "kimi/character_B__a"
+   ],
+   "fix": "",
+   "cost": "",
+   "scores": {
+    "a": 0,
+    "b": null,
+    "final": 0
+   },
+   "rows": [],
+   "id": "I4",
+   "status": "wontfix",
+   "solution": "本集只有 Julian，没有主持人 Riley；C5=0 是不适用，不是成片缺陷。",
+   "reason": "不适用：本集无 Riley",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:02",
+     "status": "wontfix",
+     "solution": "本集只有 Julian，没有主持人 Riley；C5=0 是不适用，不是成片缺陷。",
+     "reason": "不适用：本集无 Riley",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "dim:dialogue:D5",
+   "level": "critical",
+   "law": "dialogue",
+   "category": "台词（时长与逻辑）",
+   "item": "dialogue",
+   "dimension": "D5 说话人",
+   "shots": [
+    "s1_st1、s5_st1、s5_st11、s5_st4、s7_st2"
+   ],
+   "problem": "D5 说话人 最终 0 分：每句的说话人对，画内该张嘴的人张嘴，不说话的人不出声；small.en+VAD 仍出词，但 no_speech_prob 分别 0.633、0.525、0.786、0.797、0.696，avg_logprob 均低；medium.en 文本又变成 Thank you / Thank you very much / All right 等且不一致，不能据此认定真人说话，也不能在无听音能力时保证全是幻听",
+   "evidence": [
+    "a（0 分）：当前工具只能看画面、不能实际听音，无法最终确认音轨是否完全无人说话。已核 24 镜 ASR 候选：small.en 加 VAD 后 19 镜为空，余 5 镜仍有高 no_speech_prob 幻听特征；残留时段列入存疑，须人工听原条。",
+    "small.en+VAD 仍出词，但 no_speech_prob 分别 0.633、0.525、0.786、0.797、0.696，avg_logprob 均低；medium.en 文本又变成 Thank you / Thank you very much / All right 等且不一致，不能据此认定真人说话，也不能在无听音能力时保证全是幻听"
+   ],
+   "sources": [
+    "kimi/dialogue__a"
+   ],
+   "fix": "便宜：人工戴耳机听这 5 段及 s4_st3 0.00–1.98；确认只是雨、动作、发力声则无需改片，确认有可辨词语再替换对应音轨",
+   "cost": "便宜",
+   "scores": {
+    "a": 0,
+    "b": null,
+    "final": 0
+   },
+   "rows": [
+    "| s1_st1、s5_st1、s5_st11、s5_st4、s7_st2 | 依次 0.00–0.06、2.16–2.62、0.00–0.12、0.00–0.04、1.36–1.58 | D5 | 存疑 | ④ 模型随机 | small.en+VAD 仍出词，但 no_speech_prob 分别 0.633、0.525、0.786、0.797、0.696，avg_logprob 均低；medium.en 文本又变成 Thank you / Thank you very much / All right 等且不一致，不能据此认定真人说话，也不能在无听音能力时保证全是幻听 | 便宜：人工戴耳机听这 5 段及 s4_st3 0.00–1.98；确认只是雨、动作、发力声则无需改片，确认有可辨词语再替换对应音轨 |"
+   ],
+   "id": "I5",
+   "status": "wontfix",
+   "solution": "不把高 no_speech_prob、跨模型不一致的 ASR 文本当作真人说话证据，不据此改音轨。5 个超短候选及 s4_st3 发力段列为交付前人工听辨待办；这不是听感通过。",
+   "reason": "没有可确认人声缺陷；人工听辨单列待办，不阻塞画面修复 r2",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:02",
+     "status": "planned",
+     "solution": "保留人工听辨：s1_st1、s5_st1、s5_st11、s5_st4、s7_st2 的超短候选及 s4_st3 0–1.98 秒；ASR 高 no_speech_prob 文本不作为人声证据，未听清前不判缺陷。",
+     "by": "Kimi Code"
+    },
+    {
+     "at": "2026-11-15T17:51:27",
+     "status": "wontfix",
+     "solution": "不把高 no_speech_prob、跨模型不一致的 ASR 文本当作真人说话证据，不据此改音轨。5 个超短候选及 s4_st3 发力段列为交付前人工听辨待办；这不是听感通过。",
+     "reason": "没有可确认人声缺陷；人工听辨单列待办，不阻塞画面修复 r2",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "dim:native_ear:N1",
+   "level": "critical",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "N1 自然度",
+   "shots": [],
+   "problem": "N1 自然度 最终 0 分：逐句：母语观众听着自然 / 有点怪 / 很怪",
+   "evidence": [
+    "a（0 分）：`materials/lines.md:5–19` 仅有 s1–s8 的场景标题与画面说明，台词为 0 句，无法逐句判定自然度。"
+   ],
+   "sources": [
+    "kimi/native_ear__a"
+   ],
+   "fix": "",
+   "cost": "",
+   "scores": {
+    "a": 0,
+    "b": null,
+    "final": 0
+   },
+   "rows": [],
+   "id": "I6",
+   "status": "wontfix",
+   "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+   "reason": "不适用：全集无台词",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:03",
+     "status": "wontfix",
+     "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+     "reason": "不适用：全集无台词",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "dim:native_ear:N2",
+   "level": "critical",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "N2 别扭原因",
+   "shots": [],
+   "problem": "N2 别扭原因 最终 0 分：直译句式、电报式、时态或视角、讲解腔、指代不清、生僻词",
+   "evidence": [
+    "a（0 分）：全集没有英文台词，无法检查直译、电报式表达、时态视角、讲解腔、指代或生僻词。"
+   ],
+   "sources": [
+    "kimi/native_ear__a"
+   ],
+   "fix": "",
+   "cost": "",
+   "scores": {
+    "a": 0,
+    "b": null,
+    "final": 0
+   },
+   "rows": [],
+   "id": "I7",
+   "status": "wontfix",
+   "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+   "reason": "不适用：全集无台词",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:03",
+     "status": "wontfix",
+     "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+     "reason": "不适用：全集无台词",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "dim:native_ear:N3",
+   "level": "critical",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "N3 笑点与回收",
+   "shots": [],
+   "problem": "N3 笑点与回收 最终 0 分：笑点母语观众接得住；开场目标与结尾、dextram 回收得上",
+   "evidence": [
+    "a（0 分）：全集没有台词，无法检查笑点、开场目标与结尾或 dextram 的语言回收。"
+   ],
+   "sources": [
+    "kimi/native_ear__a"
+   ],
+   "fix": "",
+   "cost": "",
+   "scores": {
+    "a": 0,
+    "b": null,
+    "final": 0
+   },
+   "rows": [],
+   "id": "I8",
+   "status": "wontfix",
+   "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+   "reason": "不适用：全集无台词",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:04",
+     "status": "wontfix",
+     "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+     "reason": "不适用：全集无台词",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "dim:native_ear:N4",
+   "level": "critical",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "N4 人设口吻",
+   "shots": [],
+   "problem": "N4 人设口吻 最终 0 分：像一个二十多岁、亲切的旅行博主在说话，前后口吻一致",
+   "evidence": [
+    "a（0 分）：没有 Riley 的实际话语，无法判断二十多岁旅行博主的口吻及前后一致性。"
+   ],
+   "sources": [
+    "kimi/native_ear__a"
+   ],
+   "fix": "",
+   "cost": "",
+   "scores": {
+    "a": 0,
+    "b": null,
+    "final": 0
+   },
+   "rows": [],
+   "id": "I9",
+   "status": "wontfix",
+   "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+   "reason": "不适用：全集无台词",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:04",
+     "status": "wontfix",
+     "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+     "reason": "不适用：全集无台词",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "dim:native_ear:N5",
+   "level": "critical",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "N5 改写",
+   "shots": [],
+   "problem": "N5 改写 最终 0 分：每句「有点怪 / 很怪」都给最自然的改写（长度不限）",
+   "evidence": [
+    "a（0 分）：没有可判为「有点怪 / 很怪」的原句，因而没有可据以改写的台词；不虚构原句或改写。"
+   ],
+   "sources": [
+    "kimi/native_ear__a"
+   ],
+   "fix": "",
+   "cost": "",
+   "scores": {
+    "a": 0,
+    "b": null,
+    "final": 0
+   },
+   "rows": [],
+   "id": "I10",
+   "status": "wontfix",
+   "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+   "reason": "不适用：全集无台词",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:05",
+     "status": "wontfix",
+     "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+     "reason": "不适用：全集无台词",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "dim:native_ear:N6",
+   "level": "critical",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "N6 最不像真人说话的 5 句",
+   "shots": [],
+   "problem": "N6 最不像真人说话的 5 句 最终 0 分：必须列满至少 5 句并排序、各给改写；不允许「全部自然、无可列」",
+   "evidence": [
+    "a（0 分）：台词总数为 0，无法列满至少 5 句最不像真人说话的原句；该强制要求与无台词材料不相容。"
+   ],
+   "sources": [
+    "kimi/native_ear__a"
+   ],
+   "fix": "",
+   "cost": "",
+   "scores": {
+    "a": 0,
+    "b": null,
+    "final": 0
+   },
+   "rows": [],
+   "id": "I11",
+   "status": "wontfix",
+   "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+   "reason": "不适用：全集无台词",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:05",
+     "status": "wontfix",
+     "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+     "reason": "不适用：全集无台词",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "dim:native_ear:N7",
+   "level": "critical",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "N7 说出口测试",
+   "shots": [],
+   "problem": "N7 说出口测试 最终 0 分：逐句先遮住原句、按画面说明写自己的说法，再对比原句；原句离真人随口说法越远分越低（写出差距最大的几句的两种说法）",
+   "evidence": [
+    "a（0 分）：画面说明虽存在，但没有任何原句可供遮住、对比和出声朗读，无法执行说出口测试。"
+   ],
+   "sources": [
+    "kimi/native_ear__a"
+   ],
+   "fix": "",
+   "cost": "",
+   "scores": {
+    "a": 0,
+    "b": null,
+    "final": 0
+   },
+   "rows": [],
+   "id": "I12",
+   "status": "wontfix",
+   "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+   "reason": "不适用：全集无台词",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:05",
+     "status": "wontfix",
+     "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+     "reason": "不适用：全集无台词",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "dim:native_ear:N8",
+   "level": "critical",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "N8 修辞痕迹",
+   "shots": [],
+   "problem": "N8 修辞痕迹 最终 0 分：自问自答、三连排比、停顿抖包袱、工整对仗、字幕 / 广告文案腔的句子数；每处都列出，像「写出来的台词」就扣分",
+   "evidence": [
+    "a（0 分）：没有台词，无法逐句识别自问自答、排比、停顿抖包袱、对仗或文案腔；不把「0 句台词」当作修辞检查通过。"
+   ],
+   "sources": [
+    "kimi/native_ear__a"
+   ],
+   "fix": "",
+   "cost": "",
+   "scores": {
+    "a": 0,
+    "b": null,
+    "final": 0
+   },
+   "rows": [],
+   "id": "I13",
+   "status": "wontfix",
+   "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+   "reason": "不适用：全集无台词",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:06",
+     "status": "wontfix",
+     "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+     "reason": "不适用：全集无台词",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "dim:native_ear:N9",
+   "level": "critical",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "N9 处境匹配",
+   "shots": [],
+   "problem": "N9 处境匹配 最终 0 分：语气、音量、精力和当时处境对得上（深夜独处、刚被赶、边嚼边说、累了一天），不像主持人对镜头念稿",
+   "evidence": [
+    "a（0 分）：没有实际话语，无法核对语气、音量、精力与深夜独处、疲惫或进食等处境是否匹配。"
+   ],
+   "sources": [
+    "kimi/native_ear__a"
+   ],
+   "fix": "",
+   "cost": "",
+   "scores": {
+    "a": 0,
+    "b": null,
+    "final": 0
+   },
+   "rows": [],
+   "id": "I14",
+   "status": "wontfix",
+   "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+   "reason": "不适用：全集无台词",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:06",
+     "status": "wontfix",
+     "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+     "reason": "不适用：全集无台词",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "dim:native_ear:N10",
+   "level": "critical",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "N10 连着读",
+   "shots": [],
+   "problem": "N10 连着读 最终 0 分：lines.md 里同一个人相邻两镜的台词连起来读：中间被切开的地方，听着像不像同一个人在同一刻接着说话；像重新开场、重新打招呼、情绪突然换挡的，列出来并给改写（可以加一句过渡，长度不限）",
+   "evidence": [
+    "a（0 分）：`materials/lines.md:5–19` 各场均无台词，不存在同一个人跨镜的前后话语，无法做接点连读。"
+   ],
+   "sources": [
+    "kimi/native_ear__a"
+   ],
+   "fix": "",
+   "cost": "",
+   "scores": {
+    "a": 0,
+    "b": null,
+    "final": 0
+   },
+   "rows": [],
+   "id": "I15",
+   "status": "wontfix",
+   "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+   "reason": "不适用：全集无台词",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:07",
+     "status": "wontfix",
+     "solution": "全集 0 句台词、无英文台词，母语听感该维度没有审查对象；0 分表示不适用，不表示通过或缺陷。",
+     "reason": "不适用：全集无台词",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "dim:framing_A:F7",
+   "level": "critical",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing_A",
+   "dimension": "F7 一镜到底",
+   "shots": [
+    "s4_st8"
+   ],
+   "problem": "F7 一镜到底 最终 1 分：单镜内不需要切镜；镜头运动写清且做得到；sheet4 的 2.50 秒仍是人左株右中近景，2.75 秒变无人远景；原视频 2.667 秒未切，ffmpeg 在 2.75 秒检出场景突变/I 帧。spec 明确固定机位、单镜条。",
+   "evidence": [
+    "a（1 分）：其余 21 镜 sheet4 构图连续；s4_st8 在 2.667 秒仍是固定 50mm 中近景，2.75 秒突然切为无人林隙远景。ffmpeg 场景检测在 2.75 秒检出突变且为 I 帧，确认设计外内切（见问题表）。",
+    "sheet4 的 2.50 秒仍是人左株右中近景，2.75 秒变无人远景；原视频 2.667 秒未切，ffmpeg 在 2.75 秒检出场景突变/I 帧。spec 明确固定机位、单镜条。"
+   ],
+   "sources": [
+    "kimi/framing_A__a"
+   ],
+   "fix": "**要积分**：按固定 50mm 中近景重出完整 4 秒，人物、株基、两片割叶、嫩叶和竹节虫保持同框；只剪去尾段会丢掉 3–4 秒设计拍点，不能替代完整修复。",
+   "cost": "要积分",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s4_st8 | 0–4.04 | F7 一镜到底 | 重出 | ④ 模型随机 | sheet4 的 2.50 秒仍是人左株右中近景，2.75 秒变无人远景；原视频 2.667 秒未切，ffmpeg 在 2.75 秒检出场景突变/I 帧。spec 明确固定机位、单镜条。 | **要积分**：按固定 50mm 中近景重出完整 4 秒，人物、株基、两片割叶、嫩叶和竹节虫保持同框；只剪去尾段会丢掉 3–4 秒设计拍点，不能替代完整修复。 |"
+   ],
+   "id": "I16",
+   "status": "implemented",
+   "solution": "与 I1 同一新条和 cut_v2 已落地，不重复扣费；独立复核待 r2。",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:07",
+     "status": "planned",
+     "solution": "与 I1 同一缺陷、同一修复：待批准后重出 s4_st8，不重复扣费。",
+     "by": "Kimi Code"
+    },
+    {
+     "at": "2026-11-15T17:33:34",
+     "status": "planned",
+     "solution": "与 I1 同一已批准重出任务，不重复扣费；等待新条验收。",
+     "by": "用户授权 / Kimi Code 执行"
+    },
+    {
+     "at": "2026-11-15T17:51:26",
+     "status": "implemented",
+     "solution": "与 I1 同一新条和 cut_v2 已落地，不重复扣费；独立复核待 r2。",
+     "by": "Kimi Code",
+     "files": [
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s4/edit/final/cut_v2.json"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s4/edit/final/cut_v2.json"
+   ]
+  },
+  {
+   "key": "dim:framing_A:F8",
+   "level": "critical",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing_A",
+   "dimension": "F8 看点画得出来",
+   "shots": [
+    "s4_st5"
+   ],
+   "problem": "F8 看点画得出来 最终 1 分：每镜的 point（这一镜要观众看懂什么）靠哪些画面元素传达；这些元素在 prompt 里写成看得见的具体样子、首帧里就看得到（例：满街流动的水、只有石头顶面是干的）；没写 point 的镜头判 ✗；原分辨率 0 秒帧叶背没有可辨竹节虫；4.00、6.75 秒手指只指向老叶；9.00 秒竹节虫出现在同一老叶上，未爬上手指，也未被送到旁边嫩叶，核心看点不成立。",
+   "evidence": [
+    "a（1 分）：s2_st1 积云在 0–4.75 秒长高，s2_st4 首帧多树同高枯枝与泥痕可见，s3_st1 原帧对岸枯枝和泥带可辨，s4_st7 各材料堆清楚；但 s4_st5 首帧叶背无可辨竹节虫，9 秒虫虽出现仍在原老叶，未演出爬指并转送旁边嫩叶（见问题表）。",
+    "原分辨率 0 秒帧叶背没有可辨竹节虫；4.00、6.75 秒手指只指向老叶；9.00 秒竹节虫出现在同一老叶上，未爬上手指，也未被送到旁边嫩叶，核心看点不成立。"
+   ],
+   "sources": [
+    "kimi/framing_A__a"
+   ],
+   "fix": "**要积分**：首帧让竹节虫及腿形清晰可辨，固定中近景完整演出 3.5–6.5 秒爬上手指、6.5–9 秒转移到旁边嫩叶。",
+   "cost": "要积分",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s4_st5 | 0–10.04 | F8 看点画得出来 | 重出 | ③ prompt 或首帧 | 原分辨率 0 秒帧叶背没有可辨竹节虫；4.00、6.75 秒手指只指向老叶；9.00 秒竹节虫出现在同一老叶上，未爬上手指，也未被送到旁边嫩叶，核心看点不成立。 | **要积分**：首帧让竹节虫及腿形清晰可辨，固定中近景完整演出 3.5–6.5 秒爬上手指、6.5–9 秒转移到旁边嫩叶。 |"
+   ],
+   "id": "I17",
+   "status": "implemented",
+   "solution": "与 I3 同一新条和 cut_v2 已落地，不重复扣费；独立复核待 r2。",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:07",
+     "status": "planned",
+     "solution": "与 I3 同一缺陷、同一修复：待批准后重出 s4_st5，不重复扣费。",
+     "by": "Kimi Code"
+    },
+    {
+     "at": "2026-11-15T17:33:34",
+     "status": "planned",
+     "solution": "与 I3 同一已批准重出任务，不重复扣费；等待新条验收。",
+     "by": "用户授权 / Kimi Code 执行"
+    },
+    {
+     "at": "2026-11-15T17:51:26",
+     "status": "implemented",
+     "solution": "与 I3 同一新条和 cut_v2 已落地，不重复扣费；独立复核待 r2。",
+     "by": "Kimi Code",
+     "files": [
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s4/edit/final/cut_v2.json"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s4/edit/final/cut_v2.json"
+   ]
+  },
+  {
+   "key": "dim:framing_B:F3",
+   "level": "critical",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing_B",
+   "dimension": "F3 画面位置",
+   "shots": [
+    "s8_st5",
+    "s8_st10"
+   ],
+   "problem": "F3 画面位置 最终 1 分：人和关键道具在画面里的左右上下位置，三处一致；spec.md 第 12–15 行要求锅在扁石上、锅钩空；首帧与 sheet4 全镜却是锅挂在钩上、火在锅下",
+   "evidence": [
+    "a（1 分）：s8_st5 spec.md 第 12–15 行要求小锅放在扁石上、锅钩空着，但首帧及 sheet4 的 0–5.75 秒小锅始终挂在锅钩上、位于火正上方，关键道具位置不一致（见问题表）。",
+    "spec.md 第 12–15 行要求锅在扁石上、锅钩空；首帧与 sheet4 全镜却是锅挂在钩上、火在锅下",
+    "运镜有推近和左摇，但末帧脸仍在画面约 x=0.30，不是 spec 第 14–15 行要求的中央；对照图 `work/framing_B__a/s8_st10_compare.jpg`"
+   ],
+   "sources": [
+    "kimi/framing_B__a"
+   ],
+   "fix": "要积分：先改首帧为锅落扁石、空锅钩，再重出本镜；便宜：末段可轻微裁切调整落幅；若保留当前构图，记录为小幅落幅偏差",
+   "cost": "要积分",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s8_st5 | 0–6.04 | F3 关键道具位置 | 重出 | ③ prompt 或首帧 | spec.md 第 12–15 行要求锅在扁石上、锅钩空；首帧与 sheet4 全镜却是锅挂在钩上、火在锅下 | 要积分：先改首帧为锅落扁石、空锅钩，再重出本镜 |",
+    "| s8_st10 | 2–6 | F3 落幅位置 | 记录 | ④ 模型随机 | 运镜有推近和左摇，但末帧脸仍在画面约 x=0.30，不是 spec 第 14–15 行要求的中央；对照图 `work/framing_B__a/s8_st10_compare.jpg` | 便宜：末段可轻微裁切调整落幅；若保留当前构图，记录为小幅落幅偏差 |"
+   ],
+   "id": "I18",
+   "status": "implemented",
+   "solution": "s8_st5 新条与 s8 cut_v3 已落地；s8_st10 小落幅偏差按原决定保留；独立复核待 r2。",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:08",
+     "status": "planned",
+     "solution": "s8_st5 随 I2 重出；s8_st10 末帧落幅仅记录，暂不重出，可在精剪中轻微裁切。",
+     "by": "Kimi Code"
+    },
+    {
+     "at": "2026-11-15T17:33:35",
+     "status": "planned",
+     "solution": "s8_st5 随 I2 已提交重出；s8_st10 末帧落幅小偏差保留，不另重出。",
+     "by": "用户授权 / Kimi Code 执行"
+    },
+    {
+     "at": "2026-11-15T17:51:26",
+     "status": "implemented",
+     "solution": "s8_st5 新条与 s8 cut_v3 已落地；s8_st10 小落幅偏差按原决定保留；独立复核待 r2。",
+     "by": "Kimi Code",
+     "files": [
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s8/edit/final/cut_v3.json"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s8/edit/final/cut_v3.json"
+   ]
+  },
+  {
+   "key": "dim:audience:A8",
+   "level": "critical",
+   "law": "audience",
+   "category": "观众",
+   "item": "audience",
+   "dimension": "A8 看点落地",
+   "shots": [],
+   "problem": "A8 看点落地 最终 0 分：关掉声音看每一镜，先写一句「这镜在讲什么」，审查结束后再对照分镜 point：哪几镜对不上",
+   "evidence": [
+    "a（0 分）：已对全部 67 镜逐镜写下“这镜在讲什么”（见下文），但审稿单第 3 行明确禁止读分镜规格，无法合法取得并对照各镜 `point`；未越界补读，也不猜对镜结果。"
+   ],
+   "sources": [
+    "kimi/audience__a"
+   ],
+   "fix": "",
+   "cost": "",
+   "scores": {
+    "a": 0,
+    "b": null,
+    "final": 0
+   },
+   "rows": [],
+   "id": "I19",
+   "status": "wontfix",
+   "solution": "观众盲审任务禁止读取 point，A8=0 是材料权限限制；审稿人已逐镜写下画面理解，镜头规格审查另核对了看点，不把它算作成片缺陷。",
+   "reason": "盲审材料权限限制，非成片缺陷",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:08",
+     "status": "wontfix",
+     "solution": "观众盲审任务禁止读取 point，A8=0 是材料权限限制；审稿人已逐镜写下画面理解，镜头规格审查另核对了看点，不把它算作成片缺陷。",
+     "reason": "盲审材料权限限制，非成片缺陷",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "dim:audience:A9",
+   "level": "critical",
+   "law": "audience",
+   "category": "观众",
+   "item": "audience",
+   "dimension": "A9 故事点抓人",
+   "shots": [],
+   "problem": "A9 故事点抓人 最终 0 分：逐个故事点（集目录 story_beats.md，每点一行、按时间顺序）判抓不抓人：强 / 中 / 弱和一句理由；连续两个以上弱点的段落、整集漏掉的情绪钩子（观众比人物知道得多的事）单独列出，并给备选",
+   "evidence": [
+    "a（0 分）：审稿单明确禁止读 story、index 和分镜规格，`story_beats.md` 不在允许材料内，故不能逐行核对正式故事点；下文只列观众从画面自行感知的段落强弱，不冒充 A9 对照结论。"
+   ],
+   "sources": [
+    "kimi/audience__a"
+   ],
+   "fix": "",
+   "cost": "",
+   "scores": {
+    "a": 0,
+    "b": null,
+    "final": 0
+   },
+   "rows": [],
+   "id": "I20",
+   "status": "wontfix",
+   "solution": "观众盲审任务禁止读取 story_beats.md，A9=0 是材料权限限制；审稿人已按画面列出段落强弱，不冒充正式故事点对照。",
+   "reason": "盲审材料权限限制，非成片缺陷",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:09",
+     "status": "wontfix",
+     "solution": "观众盲审任务禁止读取 story_beats.md，A9=0 是材料权限限制；审稿人已按画面列出段落强弱，不冒充正式故事点对照。",
+     "reason": "盲审材料权限限制，非成片缺陷",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "dim:physics_C:P5",
+   "level": "major",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics_C",
+   "dimension": "P5 身体可行",
+   "shots": [
+    "s6_st2"
+   ],
+   "problem": "P5 身体可行 最终 1 分：转身、迈步、上台阶、坐下是真人做得到的，时长够；没有 180° 扭头、滑步；`sheet4.jpg` 6.50 秒格仍是溪边近景，6.75 秒格已换为另一远景；加密帧显示 6.65 秒近景人物占画面大半，6.70 秒人物已在远处右岸，固定机位下没有可行走的距离与时间。",
+   "evidence": [
+    "a（1 分）：s6_st2 6.65 秒仍为近景背影，6.70 秒突然变成另一远景机位，人物由近处中央跳到远处溪岸，单条内无连续走位过程（见问题表及 `work/physics_C__a/s6_st2_transition.jpg` 第 8–9 格）。其余镜头蹲起、抬柱、攀脚蹬杆和退步动作本身均可行。",
+    "`sheet4.jpg` 6.50 秒格仍是溪边近景，6.75 秒格已换为另一远景；加密帧显示 6.65 秒近景人物占画面大半，6.70 秒人物已在远处右岸，固定机位下没有可行走的距离与时间。"
+   ],
+   "sources": [
+    "kimi/physics_C__a"
+   ],
+   "fix": "便宜：在 6.65 秒前裁掉后段，或把 6.70 秒起的远景明确单立为下一镜；不要作为同一固定机位连续动作播放。",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s6_st2 | 6.65–6.70 | P5·镜内跳切/人物位置突变 | 可剪 | ④ 模型随机 | `sheet4.jpg` 6.50 秒格仍是溪边近景，6.75 秒格已换为另一远景；加密帧显示 6.65 秒近景人物占画面大半，6.70 秒人物已在远处右岸，固定机位下没有可行走的距离与时间。 | 便宜：在 6.65 秒前裁掉后段，或把 6.70 秒起的远景明确单立为下一镜；不要作为同一固定机位连续动作播放。 |"
+   ],
+   "id": "I21",
+   "status": "implemented",
+   "solution": "已在 s6 cut_v2 将 st2 收在 6.50 秒，跳过 6.65–6.75 秒镜内跳构；scene_cut check 无问题，已渲染回读 34.667 秒、832 帧、1280×720、24fps。",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:09",
+     "status": "planned",
+     "solution": "本地精剪：s6_st2 在 6.50 秒跳构前收镜，保留拎兜起身走向竹丛，不重出。",
+     "by": "Kimi Code"
+    },
+    {
+     "at": "2026-11-15T16:37:13",
+     "status": "implemented",
+     "solution": "已在 s6 cut_v2 将 st2 收在 6.50 秒，跳过 6.65–6.75 秒镜内跳构；scene_cut check 无问题，已渲染回读 34.667 秒、832 帧、1280×720、24fps。",
+     "by": "Kimi Code",
+     "files": [
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s6/edit/final/cut_v2.json",
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s6/edit/final/s6_final_v2.mp4"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s6/edit/final/cut_v2.json",
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s6/edit/final/s6_final_v2.mp4"
+   ]
+  },
+  {
+   "key": "dim:continuity:K1",
+   "level": "major",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "K1 道具状态表",
+   "shots": [
+    "s8_st1→s8_st2"
+   ],
+   "problem": "K1 道具状态表 最终 1 分：逐镜列出每件道具进、出场状态，前后接得上；st1 sheet4 末行第3–4格灯未燃；st2 sheet4 首行第1–2格灯焰已亮，st2 1–2.5秒又用燃枝“点灯”，同一动作前后状态冲突",
+   "evidence": [
+    "a（1 分）：s8_st1 6.50–6.75 秒 sheet4 末行第3–4格树脂灯只有绿色叶卷、无火焰；s8_st2 0.00–0.25 秒首行第1–2格已燃黄色灯焰，随后仍表演点灯，道具状态倒流（见问题表）。",
+    "st1 sheet4 末行第3–4格灯未燃；st2 sheet4 首行第1–2格灯焰已亮，st2 1–2.5秒又用燃枝“点灯”，同一动作前后状态冲突"
+   ],
+   "sources": [
+    "kimi/continuity__a"
+   ],
+   "fix": "便宜：剪掉 st2 0–2.50 秒的点灯段，从丢回细枝、添柴/压床叶接入，使点灯发生在画外跳时中；若必须保留正面点灯动作，则要积分重出且第0秒灯必须未燃",
+   "cost": "要积分",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s8_st1→s8_st2 | st1 6.50–6.75；st2 0.00–2.50 | K1、K8 | 可剪 | ④ 模型随机 | st1 sheet4 末行第3–4格灯未燃；st2 sheet4 首行第1–2格灯焰已亮，st2 1–2.5秒又用燃枝“点灯”，同一动作前后状态冲突 | 便宜：剪掉 st2 0–2.50 秒的点灯段，从丢回细枝、添柴/压床叶接入，使点灯发生在画外跳时中；若必须保留正面点灯动作，则要积分重出且第0秒灯必须未燃 |"
+   ],
+   "id": "I22",
+   "status": "wontfix",
+   "solution": "误报：physics_D 用原条全分辨率帧确认 s8_st2 第 0 秒灯未亮，约 1.5 秒燃枝接触后才亮；保留点灯段，不剪、不重出。",
+   "reason": "原片全分辨率反证，属误报",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:09",
+     "status": "wontfix",
+     "solution": "误报：physics_D 用原条全分辨率帧确认 s8_st2 第 0 秒灯未亮，约 1.5 秒燃枝接触后才亮；保留点灯段，不剪、不重出。",
+     "reason": "原片全分辨率反证，属误报",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "dim:continuity:K8",
+   "level": "major",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "K8 镜间接点",
+   "shots": [
+    "s8_st1→s8_st2"
+   ],
+   "problem": "K8 镜间接点 最终 1 分：逐个接点（materials/junctions.md 每一条，含没有机检标记的）判：上一镜最后一拍的位置、朝向、视线、手里的东西、情绪和音量，和下一镜第 0 秒接得上；接不上时要有切的理由（跳过时间、换地点、反应插入、主观镜头）写在下一镜开头。报告里列接点表：每个接点一行，✓ 或 ✗ 加一句理由；st1 sheet4 末行第3–4格灯未燃；st2 sheet4 首行第1–2格灯焰已亮，st2 1–2.5秒又用燃枝“点灯”，同一动作前后状态冲突",
+   "evidence": [
+    "a（1 分）：66 个接点逐一核对，65 个位置、持物、情绪及动作可按连续动作或明确跳时/换地点接上；s8_st1→s8_st2 灯未灭到已亮却重复点灯，判 ✗（见接点表及问题表）。",
+    "st1 sheet4 末行第3–4格灯未燃；st2 sheet4 首行第1–2格灯焰已亮，st2 1–2.5秒又用燃枝“点灯”，同一动作前后状态冲突"
+   ],
+   "sources": [
+    "kimi/continuity__a"
+   ],
+   "fix": "便宜：剪掉 st2 0–2.50 秒的点灯段，从丢回细枝、添柴/压床叶接入，使点灯发生在画外跳时中；若必须保留正面点灯动作，则要积分重出且第0秒灯必须未燃",
+   "cost": "要积分",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s8_st1→s8_st2 | st1 6.50–6.75；st2 0.00–2.50 | K1、K8 | 可剪 | ④ 模型随机 | st1 sheet4 末行第3–4格灯未燃；st2 sheet4 首行第1–2格灯焰已亮，st2 1–2.5秒又用燃枝“点灯”，同一动作前后状态冲突 | 便宜：剪掉 st2 0–2.50 秒的点灯段，从丢回细枝、添柴/压床叶接入，使点灯发生在画外跳时中；若必须保留正面点灯动作，则要积分重出且第0秒灯必须未燃 |"
+   ],
+   "id": "I23",
+   "status": "wontfix",
+   "solution": "与 I22 同一误报；原片点灯因果成立，接点保留。",
+   "reason": "原片全分辨率反证，属误报",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:10",
+     "status": "wontfix",
+     "solution": "与 I22 同一误报；原片点灯因果成立，接点保留。",
+     "reason": "原片全分辨率反证，属误报",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "dim:era:E4",
+   "level": "major",
+   "law": "era",
+   "category": "时代与世界观",
+   "item": "era",
+   "dimension": "E4 系列禁区",
+   "shots": [
+    "s7_st9、s8_st8 / 规则源"
+   ],
+   "problem": "E4 系列禁区 最终 1 分：画面不出现烟柱、白烟、冒白气的山；prompt 不写火山词；维苏威不提；s7_st9 spec 12、14 行和现行 prompt 直接写白烟；s8_st8 sheet4 各帧屋顶都有淡烟。任务书 E4 禁一切白烟，story.md 145 行却要求三角口排烟。",
+   "evidence": [
+    "a（1 分）：67 镜 spec/prompt 未检出火山、维苏威或庞贝词，但 s7_st9 spec 12、14 行明确写“冒出一缕白烟”，s8_st8 sheet4 的 0–5.75 秒屋顶持续可见淡白烟柱，违反任务书 E4 字面禁区；实际故事稿 145 行又要求排烟，见问题表。",
+    "s7_st9 spec 12、14 行和现行 prompt 直接写白烟；s8_st8 sheet4 各帧屋顶都有淡烟。任务书 E4 禁一切白烟，story.md 145 行却要求三角口排烟。"
+   ],
+   "sources": [
+    "kimi/era__a"
+   ],
+   "fix": "便宜：明确禁区只针对火山/山体烟柱，还是连灶烟也禁；若维持本片 bible，应修正任务书而非剪片。",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s7_st9、s8_st8 / 规则源 | s7_st9 0–3；s8_st8 0–6 | E4 | 记录 | 规则源 | s7_st9 spec 12、14 行和现行 prompt 直接写白烟；s8_st8 sheet4 各帧屋顶都有淡烟。任务书 E4 禁一切白烟，story.md 145 行却要求三角口排烟。 | 便宜：明确禁区只针对火山/山体烟柱，还是连灶烟也禁；若维持本片 bible，应修正任务书而非剪片。 |"
+   ],
+   "id": "I24",
+   "status": "wontfix",
+   "solution": "era 任务书误用庞贝白烟禁区；本片现行 bible 要求灶烟从三角口排出，s7_st9、s8_st8 是设定内灶烟，不剪片。仓库级模板取舍另报用户。",
+   "reason": "审查规则错配；灶烟为现行设定",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:10",
+     "status": "wontfix",
+     "solution": "era 任务书误用庞贝白烟禁区；本片现行 bible 要求灶烟从三角口排出，s7_st9、s8_st8 是设定内灶烟，不剪片。仓库级模板取舍另报用户。",
+     "reason": "审查规则错配；灶烟为现行设定",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "dim:era:E7",
+   "level": "major",
+   "law": "era",
+   "category": "时代与世界观",
+   "item": "era",
+   "dimension": "E7 规则源",
+   "shots": [
+    "全集 / 规则源",
+    "bg3、bg6 / 规则源"
+   ],
+   "problem": "E7 规则源 最终 1 分：场景卡、道具卡、考据负面词里没有和以上冲突的写法；`items/era__a.md` 5–10、32–37 行要求公元 75 年庞贝、陶灯、tunica/palla；本集 bible.md 11–19 行和 story.md 7–12 行明确是现代婆罗洲雨林生存，审查维度与被审片种错配。",
+   "evidence": [
+    "a（1 分）：era 任务书 5–10 行写庞贝，bible.md 11–19 行与 story.md 7–12 行却是现代婆罗洲雨林；bg3_板根角落.md 24 行仍诱导“两道薄板根”而 44 行已否决，bg6_小屋内部.md 24、44 行也残留板根条，规则源自相矛盾。",
+    "`items/era__a.md` 5–10、32–37 行要求公元 75 年庞贝、陶灯、tunica/palla；本集 bible.md 11–19 行和 story.md 7–12 行明确是现代婆罗洲雨林生存，审查维度与被审片种错配。",
+    "bg3_板根角落.md 24–29 行仍是两道薄板根，44 行已改为粗圆表面根；bg6_小屋内部.md 24、28–29、44 行仍写屋内板根条，与现行无板根设定冲突。"
+   ],
+   "sources": [
+    "kimi/era__a"
+   ],
+   "fix": "便宜：把 era 任务书改为本集 bible/dossier 口径，保留现代物件、文字、生态与建造黑名单，不重出视频。；便宜：清理种子 prompt 和说明中的作废板根描述，保留唯一现行写法，避免后续编译回流。",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| 全集 / 规则源 | 全集 | E7 | 记录 | 规则源 | `items/era__a.md` 5–10、32–37 行要求公元 75 年庞贝、陶灯、tunica/palla；本集 bible.md 11–19 行和 story.md 7–12 行明确是现代婆罗洲雨林生存，审查维度与被审片种错配。 | 便宜：把 era 任务书改为本集 bible/dossier 口径，保留现代物件、文字、生态与建造黑名单，不重出视频。 |",
+    "| bg3、bg6 / 规则源 | 不适用 | E7 | 记录 | 规则源 | bg3_板根角落.md 24–29 行仍是两道薄板根，44 行已改为粗圆表面根；bg6_小屋内部.md 24、28–29、44 行仍写屋内板根条，与现行无板根设定冲突。 | 便宜：清理种子 prompt 和说明中的作废板根描述，保留唯一现行写法，避免后续编译回流。 |"
+   ],
+   "id": "I25",
+   "status": "implemented",
+   "solution": "已清理 bg3/bg6 seed prompt 中作废的板根、旧灶框和旧构图描述，与现行无板根、扇叶矮墙、0.6 米灶框设定一致；era 仓库级庞贝模板仍留用户决定，未改视频。",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:10",
+     "status": "planned",
+     "solution": "剧级清理 bg3/bg6 已否决的板根残留文字；era 任务书庞贝模板属仓库级，保留给用户决定，不改视频。",
+     "by": "Kimi Code"
+    },
+    {
+     "at": "2026-11-15T16:37:14",
+     "status": "implemented",
+     "solution": "已清理 bg3/bg6 seed prompt 中作废的板根、旧灶框和旧构图描述，与现行无板根、扇叶矮墙、0.6 米灶框设定一致；era 仓库级庞贝模板仍留用户决定，未改视频。",
+     "by": "Kimi Code",
+     "files": [
+      "ai_videos/huangye_shenghuo/2_世界观人设/background/borneo_ep01/bg3_板根角落/bg3_板根角落.md",
+      "ai_videos/huangye_shenghuo/2_世界观人设/background/borneo_ep01/bg6_小屋内部/bg6_小屋内部.md"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/huangye_shenghuo/2_世界观人设/background/borneo_ep01/bg3_板根角落/bg3_板根角落.md",
+    "ai_videos/huangye_shenghuo/2_世界观人设/background/borneo_ep01/bg6_小屋内部/bg6_小屋内部.md"
+   ]
+  },
+  {
+   "key": "row:framing:s2st4:f1景别与人物大小",
+   "level": "major",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing_A",
+   "dimension": "F1 景别与人物大小",
+   "shots": [
+    "s2_st4"
+   ],
+   "problem": "F1 景别与人物大小：sheet4 的 6.00–7.75 秒人物头顶到靴底始终完整入画；spec 与 overhead 要求最后两秒推至约 2.8m、大腿以上中全景。",
+   "evidence": [
+    "sheet4 的 6.00–7.75 秒人物头顶到靴底始终完整入画；spec 与 overhead 要求最后两秒推至约 2.8m、大腿以上中全景。"
+   ],
+   "sources": [
+    "kimi/framing_A__a"
+   ],
+   "fix": "**便宜**：末段适度裁成大腿以上，保留伸直右手、泥痕与枯枝同框；若裁剪后看点或清晰度不足则需重出。",
+   "cost": "便宜",
+   "severity": "可剪",
+   "rows": [
+    "| s2_st4 | 6–8 | F1 景别与人物大小 | 可剪 | ④ 模型随机 | sheet4 的 6.00–7.75 秒人物头顶到靴底始终完整入画；spec 与 overhead 要求最后两秒推至约 2.8m、大腿以上中全景。 | **便宜**：末段适度裁成大腿以上，保留伸直右手、泥痕与枯枝同框；若裁剪后看点或清晰度不足则需重出。 |"
+   ],
+   "id": "I26",
+   "status": "wontfix",
+   "solution": "用户 2026-11-15 选择接受 s2_st4 末两秒现构图；动作、泥痕与枯枝仍可读，不增加积分，不假装已完成空间裁剪。",
+   "reason": "用户明确接受现构图，记小偏差",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:11",
+     "status": "planned",
+     "solution": "本地精剪试验：s2_st4 末两秒裁成大腿以上中全景，保留右手、泥痕与枯枝；先验清晰度和构图，不重出。",
+     "by": "Kimi Code"
+    },
+    {
+     "at": "2026-11-15T17:23:39",
+     "status": "wontfix",
+     "solution": "用户 2026-11-15 选择接受 s2_st4 末两秒现构图；动作、泥痕与枯枝仍可读，不增加积分，不假装已完成空间裁剪。",
+     "reason": "用户明确接受现构图，记小偏差",
+     "by": "用户 / Kimi Code 登记"
+    }
+   ]
+  },
+  {
+   "key": "dim:framing_B:F7",
+   "level": "major",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing_B",
+   "dimension": "F7 一镜到底",
+   "shots": [
+    "s6_st2"
+   ],
+   "problem": "F7 一镜到底 最终 1 分：单镜内不需要切镜；镜头运动写清且做得到；sheet4：6.50 秒人物在近处竹林溪岸，6.75 秒突然变成开阔溪谷远景；工作对照图 `work/framing_B__a/s6_st2_compare.jpg` 同样显示硬跳",
+   "evidence": [
+    "a（1 分）：s6_st2 在 6.50 秒仍为人物近处背影，6.75 秒突然换成另一段溪谷的大远景构图，违反固定机位一镜到底（见问题表）。s5_st6 的升高、s8_st9 的后拉及 s8_st10 的推近均连续，未见其他镜内切镜。",
+    "sheet4：6.50 秒人物在近处竹林溪岸，6.75 秒突然变成开阔溪谷远景；工作对照图 `work/framing_B__a/s6_st2_compare.jpg` 同样显示硬跳"
+   ],
+   "sources": [
+    "kimi/framing_B__a"
+   ],
+   "fix": "便宜：在 6.50–6.75 秒跳构前收镜，保留已完成的起身拎兜走向竹丛",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s6_st2 | 6.50–8.04 | F7 一镜到底／镜内跳构 | 可剪 | ④ 模型随机 | sheet4：6.50 秒人物在近处竹林溪岸，6.75 秒突然变成开阔溪谷远景；工作对照图 `work/framing_B__a/s6_st2_compare.jpg` 同样显示硬跳 | 便宜：在 6.50–6.75 秒跳构前收镜，保留已完成的起身拎兜走向竹丛 |"
+   ],
+   "id": "I27",
+   "status": "implemented",
+   "solution": "与 I21 同一修复已落地，不重复处理。",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:11",
+     "status": "planned",
+     "solution": "与 I21 同一修复：s6_st2 在 6.50 秒跳构前收镜，不重复处理。",
+     "by": "Kimi Code"
+    },
+    {
+     "at": "2026-11-15T16:37:14",
+     "status": "implemented",
+     "solution": "与 I21 同一修复已落地，不重复处理。",
+     "by": "Kimi Code",
+     "files": [
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s6/edit/final/cut_v2.json"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s6/edit/final/cut_v2.json"
+   ]
+  },
+  {
+   "key": "dim:audience:A3",
+   "level": "major",
+   "law": "audience",
+   "category": "观众",
+   "item": "audience",
+   "dimension": "A3 节奏",
+   "shots": [
+    "s2_st2、s3_st3、s3_st6",
+    "s4_st5",
+    "s8_st3、s8_st11"
+   ],
+   "problem": "A3 节奏 最终 1 分：哪里拖、哪里急；s2_st2 后 4 秒一直仰拍树冠；s3_st3 9 秒主要绕同一棵树；随后 s3_st6 又留 4 秒空林地，选址段连续重复“看树”。",
+   "evidence": [
+    "a（1 分）：s2_st2 4–7 秒连续仰树、s3_st3 0–8 秒绕树、s4_st5 2–9 秒反复指同一片叶、s8_st3 与 s8_st11 连续共约 13 秒捧杯，信息增量偏低（见问题表）。",
+    "s2_st2 后 4 秒一直仰拍树冠；s3_st3 9 秒主要绕同一棵树；随后 s3_st6 又留 4 秒空林地，选址段连续重复“看树”。",
+    "同一近景里人物反复触摸、指向扇形叶，约 8 秒没有新动作；下一镜才真正割叶。",
+    "接口图确认两镜直接相连：前一镜捧杯抬头，后一镜仍是正面捧杯饮茶，共约 13 秒，景别虽变但信息重复。"
+   ],
+   "sources": [
+    "kimi/audience__a"
+   ],
+   "fix": "便宜：仰树压至 3–4 秒、绕树压至 4–5 秒，空林地删去或只留约 1 秒，把省下的时间留给后续建造回报。；便宜：保留拿起检查和一次按压/弯折即可，压至约 4 秒。；便宜：合并为“捧杯听风雨—喝一口”一个动作段，保留约 6–8 秒。",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s2_st2、s3_st3、s3_st6 | s2_st2 0–7；s3_st3 0–8；s3_st6 0–3 | A3·节奏 | 可剪 | ② 分镜文字 | s2_st2 后 4 秒一直仰拍树冠；s3_st3 9 秒主要绕同一棵树；随后 s3_st6 又留 4 秒空林地，选址段连续重复“看树”。 | 便宜：仰树压至 3–4 秒、绕树压至 4–5 秒，空林地删去或只留约 1 秒，把省下的时间留给后续建造回报。 |",
+    "| s4_st5 | 2–9 | A3·节奏 | 可剪 | ② 分镜文字 | 同一近景里人物反复触摸、指向扇形叶，约 8 秒没有新动作；下一镜才真正割叶。 | 便宜：保留拿起检查和一次按压/弯折即可，压至约 4 秒。 |",
+    "| s8_st3、s8_st11 | s8_st3 0–5；s8_st11 0–6 | A3·节奏、A7·连看 | 可剪 | ② 分镜文字 | 接口图确认两镜直接相连：前一镜捧杯抬头，后一镜仍是正面捧杯饮茶，共约 13 秒，景别虽变但信息重复。 | 便宜：合并为“捧杯听风雨—喝一口”一个动作段，保留约 6–8 秒。 |"
+   ],
+   "id": "I28",
+   "status": "implemented",
+   "solution": "已制作 s2/s3/s6/s8 cut_v2 精剪草稿：s2_st2=4 秒、s3_st3=5 秒、s3_st6=1 秒、s6_st2=6.5 秒；s8_st3 留 0–4.5 秒、s8_st11 取 2–5 秒。四场均 check 无问题并渲染回读通过；仍为草稿，未锁片。s4_st5 核心动作缺失留待 I3 重出。",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:11",
+     "status": "planned",
+     "solution": "本地精剪草稿：s2_st2 压至约 4 秒、s3_st3 压至约 5 秒、s3_st6 留约 1 秒；s8_st3 留 0–4.5 秒，s8_st11 取 2–5 秒；s4_st5 的竹节虫核心动作缺失由 I3 重出解决，不靠剪短冒充修复。",
+     "by": "Kimi Code"
+    },
+    {
+     "at": "2026-11-15T16:37:14",
+     "status": "implemented",
+     "solution": "已制作 s2/s3/s6/s8 cut_v2 精剪草稿：s2_st2=4 秒、s3_st3=5 秒、s3_st6=1 秒、s6_st2=6.5 秒；s8_st3 留 0–4.5 秒、s8_st11 取 2–5 秒。四场均 check 无问题并渲染回读通过；仍为草稿，未锁片。s4_st5 核心动作缺失留待 I3 重出。",
+     "by": "Kimi Code",
+     "files": [
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s2/edit/final/cut_v2.json",
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s3/edit/final/cut_v2.json",
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s6/edit/final/cut_v2.json",
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s8/edit/final/cut_v2.json"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s2/edit/final/cut_v2.json",
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s3/edit/final/cut_v2.json",
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s6/edit/final/cut_v2.json",
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s8/edit/final/cut_v2.json"
+   ]
+  },
+  {
+   "key": "dim:role_c1:V2",
+   "level": "major",
+   "law": "role",
+   "category": "角色立场·Julian",
+   "item": "role_c1",
+   "dimension": "V2 肢体",
+   "shots": [
+    "s4_st8"
+   ],
+   "problem": "V2 肢体 最终 1 分：我的手势、姿态、和对方的距离，合不合我的身份、对方的身份和这个场合；sheet4 的 2.50 秒仍是蹲姿持刀收叶，2.75 秒突然变成无人物的另一处远景；原视频亦在约 2.5 秒跳变。此刻的我不会凭空消失，我会把割下的叶子托稳、放到脚边叶堆，再让视线留在留下的嫩叶上。",
+   "evidence": [
+    "a（1 分）：s4_st8 约 2.50–2.75 秒，我收叶放叶的动作尚未收束，人物和近景突然被另一处空景替换，动作链断裂（见问题表）。",
+    "sheet4 的 2.50 秒仍是蹲姿持刀收叶，2.75 秒突然变成无人物的另一处远景；原视频亦在约 2.5 秒跳变。此刻的我不会凭空消失，我会把割下的叶子托稳、放到脚边叶堆，再让视线留在留下的嫩叶上。"
+   ],
+   "sources": [
+    "kimi/role_c1__a"
+   ],
+   "fix": "**便宜**：剪在约 2.25–2.50 秒跳变前，保留割叶、放叶已经完成的前段；若必须保留 3–4 秒嫩叶与昆虫尾拍，则**要积分**重出该镜。",
+   "cost": "要积分",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s4_st8 | 约 2.50–4.04 | V2 肢体／动作连续性 | 可剪 | ④ 模型随机 | sheet4 的 2.50 秒仍是蹲姿持刀收叶，2.75 秒突然变成无人物的另一处远景；原视频亦在约 2.5 秒跳变。此刻的我不会凭空消失，我会把割下的叶子托稳、放到脚边叶堆，再让视线留在留下的嫩叶上。 | **便宜**：剪在约 2.25–2.50 秒跳变前，保留割叶、放叶已经完成的前段；若必须保留 3–4 秒嫩叶与昆虫尾拍，则**要积分**重出该镜。 |"
+   ],
+   "id": "I29",
+   "status": "implemented",
+   "solution": "与 I1 同一新条已落地，保留完整 4 秒尾拍，未采用降级裁短；独立复核待 r2。",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:12",
+     "status": "planned",
+     "solution": "与 I1 同一缺陷；为保留嫩叶与竹节虫尾拍采用重出方案，裁至 2.5 秒仅作未获积分批准时的降级备选。",
+     "by": "Kimi Code"
+    },
+    {
+     "at": "2026-11-15T17:33:35",
+     "status": "planned",
+     "solution": "与 I1 同一已批准重出任务；为保留嫩叶与竹节虫尾拍，不采用仅剪至 2.5 秒的降级方案。",
+     "by": "用户授权 / Kimi Code 执行"
+    },
+    {
+     "at": "2026-11-15T17:51:27",
+     "status": "implemented",
+     "solution": "与 I1 同一新条已落地，保留完整 4 秒尾拍，未采用降级裁短；独立复核待 r2。",
+     "by": "Kimi Code",
+     "files": [
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s4/edit/final/cut_v2.json"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s4/edit/final/cut_v2.json"
+   ]
+  },
+  {
+   "key": "row:audience:s6st4:a4·出戏",
+   "level": "verify",
+   "law": "audience",
+   "category": "观众",
+   "item": "audience",
+   "dimension": "A4·出戏",
+   "shots": [
+    "s6_st4"
+   ],
+   "problem": "A4·出戏：sheet1 的 2 秒格两只黄黑大鸟突然占满天空，3 秒格已消失，单帧看略显贴入；每秒图不足以判断真实飞行是否自然。",
+   "evidence": [
+    "sheet1 的 2 秒格两只黄黑大鸟突然占满天空，3 秒格已消失，单帧看略显贴入；每秒图不足以判断真实飞行是否自然。"
+   ],
+   "sources": [
+    "kimi/audience__a"
+   ],
+   "fix": "便宜：回看该镜原视频 1–4 秒飞行轨迹和边缘；若确有跳现/跳没再剪短，不凭单帧重出。",
+   "cost": "便宜",
+   "severity": "存疑",
+   "rows": [
+    "| s6_st4 | 2 | A4·出戏 | 存疑 | ④ 模型随机 | sheet1 的 2 秒格两只黄黑大鸟突然占满天空，3 秒格已消失，单帧看略显贴入；每秒图不足以判断真实飞行是否自然。 | 便宜：回看该镜原视频 1–4 秒飞行轨迹和边缘；若确有跳现/跳没再剪短，不凭单帧重出。 |"
+   ],
+   "id": "I30",
+   "status": "wontfix",
+   "solution": "framing_B 回看 sheet4 与原片后确认鸟约 1.5 秒入画、3 秒出画，未见跳现/跳没；role_c1 也确认视线与飞行动作连续。",
+   "reason": "两项独立复核排除跳现",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:12",
+     "status": "wontfix",
+     "solution": "framing_B 回看 sheet4 与原片后确认鸟约 1.5 秒入画、3 秒出画，未见跳现/跳没；role_c1 也确认视线与飞行动作连续。",
+     "reason": "两项独立复核排除跳现",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "row:physics:s2st6:p8",
+   "level": "minor",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics_A",
+   "dimension": "P8",
+   "shots": [
+    "s2_st6"
+   ],
+   "problem": "P8：放大帧 `work/physics_A__a/s2_st6_000.jpg`：右手垂在身侧；`spec.md` 第 12 行及 `overhead.toml` 第 4 行写右手正伸向树根。首拍 0–1 秒随后能接上伸手，故仅小偏差。",
+   "evidence": [
+    "放大帧 `work/physics_A__a/s2_st6_000.jpg`：右手垂在身侧；`spec.md` 第 12 行及 `overhead.toml` 第 4 行写右手正伸向树根。首拍 0–1 秒随后能接上伸手，故仅小偏差。"
+   ],
+   "sources": [
+    "kimi/physics_A__a"
+   ],
+   "fix": "便宜：把第 0 秒描述改成“右手从身侧抬向树根”，与现片一致；无需重出。",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s2_st6 | 0.00 | P8 | 记录 | ③ prompt 或首帧 | 放大帧 `work/physics_A__a/s2_st6_000.jpg`：右手垂在身侧；`spec.md` 第 12 行及 `overhead.toml` 第 4 行写右手正伸向树根。首拍 0–1 秒随后能接上伸手，故仅小偏差。 | 便宜：把第 0 秒描述改成“右手从身侧抬向树根”，与现片一致；无需重出。 |"
+   ],
+   "id": "I31",
+   "status": "wontfix",
+   "solution": "接受现片：右手从身侧抬向树根，后续攀爬成立；仅为首拍文字小偏差，不重出。",
+   "reason": "小偏差，保留现片收益更大",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:12",
+     "status": "wontfix",
+     "solution": "接受现片：右手从身侧抬向树根，后续攀爬成立；仅为首拍文字小偏差，不重出。",
+     "reason": "小偏差，保留现片收益更大",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "row:physics:s2st5:p4",
+   "level": "minor",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics_A",
+   "dimension": "P4",
+   "shots": [
+    "s2_st5"
+   ],
+   "problem": "P4：放大帧 `s2_st5_425.jpg`、`s2_st5_550.jpg` 及 sheet4 第 4–5 行：水花有入水来源，但水线仅在靴筒/小腿；`spec.md` 第 12、14 行要求涨到膝盖。",
+   "evidence": [
+    "放大帧 `s2_st5_425.jpg`、`s2_st5_550.jpg` 及 sheet4 第 4–5 行：水花有入水来源，但水线仅在靴筒/小腿；`spec.md` 第 12、14 行要求涨到膝盖。"
+   ],
+   "sources": [
+    "kimi/physics_A__a"
+   ],
+   "fix": "便宜：若保留此条，把水深文字改为“靴筒/小腿”；若膝盖水深是剧情必需才需另议，不为本物理项单独重出。",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s2_st5 | 4.25–6.75 | P4 | 记录 | ④ 模型随机 | 放大帧 `s2_st5_425.jpg`、`s2_st5_550.jpg` 及 sheet4 第 4–5 行：水花有入水来源，但水线仅在靴筒/小腿；`spec.md` 第 12、14 行要求涨到膝盖。 | 便宜：若保留此条，把水深文字改为“靴筒/小腿”；若膝盖水深是剧情必需才需另议，不为本物理项单独重出。 |"
+   ],
+   "id": "I32",
+   "status": "wontfix",
+   "solution": "接受现片水深到靴筒/小腿；膝盖水深不是剧情必需，不为文字偏差重出。",
+   "reason": "非剧情必需且重出要积分",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:13",
+     "status": "wontfix",
+     "solution": "接受现片水深到靴筒/小腿；膝盖水深不是剧情必需，不为文字偏差重出。",
+     "reason": "非剧情必需且重出要积分",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "row:continuity:materials/junctions.md的s8st5→s8st6:k9",
+   "level": "minor",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "K9",
+   "shots": [
+    "materials/junctions.md 的 s8_st5→s8_st6"
+   ],
+   "problem": "K9：总表两侧均写“他拍”，但 spec 明写“他的主观视角”“镜头在门口、跪姿眼高”，sheet4 也确为无人门外主观画面",
+   "evidence": [
+    "总表两侧均写“他拍”，但 spec 明写“他的主观视角”“镜头在门口、跪姿眼高”，sheet4 也确为无人门外主观画面"
+   ],
+   "sources": [
+    "kimi/continuity__a"
+   ],
+   "fix": "便宜：修接点生成规则/材料，将 s8_st6 标为主观；成片本身不用改",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| materials/junctions.md 的 s8_st5→s8_st6 | 接点表第498–500行；s8_st6 spec 第12–15行 | K9 | 记录 | 规则源 | 总表两侧均写“他拍”，但 spec 明写“他的主观视角”“镜头在门口、跪姿眼高”，sheet4 也确为无人门外主观画面 | 便宜：修接点生成规则/材料，将 s8_st6 标为主观；成片本身不用改 |"
+   ],
+   "id": "I33",
+   "status": "wontfix",
+   "solution": "仅审查材料把 s8_st6 主观镜误写为他拍；成片视角正确，无需改片，记录审查包生成问题。",
+   "reason": "仅审查材料标注问题，成片正确",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:13",
+     "status": "wontfix",
+     "solution": "仅审查材料把 s8_st6 主观镜误写为他拍；成片视角正确，无需改片，记录审查包生成问题。",
+     "reason": "仅审查材料标注问题，成片正确",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "row:era:s6st4:e6",
+   "level": "minor",
+   "law": "era",
+   "category": "时代与世界观",
+   "item": "era",
+   "dimension": "E6",
+   "shots": [
+    "s6_st4"
+   ],
+   "problem": "E6：原条 2.50 秒天空中两只鸟有长喙与红橙盔突，可认作犀鸟；但翼下鲜黄色块与 dossier.md 247 行的黑白羽色记述不完全一致，飞翼/尾形较图案化。",
+   "evidence": [
+    "原条 2.50 秒天空中两只鸟有长喙与红橙盔突，可认作犀鸟；但翼下鲜黄色块与 dossier.md 247 行的黑白羽色记述不完全一致，飞翼/尾形较图案化。"
+   ],
+   "sources": [
+    "kimi/era__a"
+   ],
+   "fix": "便宜：本轮仅登记，不剪；若交付要求严格物种羽色，再单独批准重出（要积分）。",
+   "cost": "要积分",
+   "severity": "记录",
+   "rows": [
+    "| s6_st4 | 1.50–4.50（放大 2.50） | E6 | 记录 | ④ 模型随机 | 原条 2.50 秒天空中两只鸟有长喙与红橙盔突，可认作犀鸟；但翼下鲜黄色块与 dossier.md 247 行的黑白羽色记述不完全一致，飞翼/尾形较图案化。 | 便宜：本轮仅登记，不剪；若交付要求严格物种羽色，再单独批准重出（要积分）。 |"
+   ],
+   "id": "I34",
+   "status": "wontfix",
+   "solution": "犀鸟翼下黄色块为轻微物种羽色偏差，不影响识别或故事；本轮不为此扣积分重出。",
+   "reason": "轻微瑕疵，重出要积分且收益小",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:14",
+     "status": "wontfix",
+     "solution": "犀鸟翼下黄色块为轻微物种羽色偏差，不影响识别或故事；本轮不为此扣积分重出。",
+     "reason": "轻微瑕疵，重出要积分且收益小",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "row:framing:s4st1/s4st3/s4st4:f4节拍秒数",
+   "level": "minor",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing_A",
+   "dimension": "F4 节拍秒数",
+   "shots": [
+    "s4_st1 / s4_st3 / s4_st4"
+   ],
+   "problem": "F4 节拍秒数：st1 开砍约 4.50 秒，较设计晚约 1 秒；st3 约 0.75 秒已上肩、约 1 秒起走，较设计早约 1 秒；st4 约 4.50 秒已露藤芯，较设计早约 1 秒。动作均完成，未挤压。",
+   "evidence": [
+    "st1 开砍约 4.50 秒，较设计晚约 1 秒；st3 约 0.75 秒已上肩、约 1 秒起走，较设计早约 1 秒；st4 约 4.50 秒已露藤芯，较设计早约 1 秒。动作均完成，未挤压。"
+   ],
+   "sources": [
+    "kimi/framing_A__a"
+   ],
+   "fix": "**便宜**：若保留当前表演，按实际时间回写节拍；后续生成约束关键拍点起始时间。",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s4_st1 / s4_st3 / s4_st4 | 各 0–7.04 | F4 节拍秒数 | 记录 | ④ 模型随机 | st1 开砍约 4.50 秒，较设计晚约 1 秒；st3 约 0.75 秒已上肩、约 1 秒起走，较设计早约 1 秒；st4 约 4.50 秒已露藤芯，较设计早约 1 秒。动作均完成，未挤压。 | **便宜**：若保留当前表演，按实际时间回写节拍；后续生成约束关键拍点起始时间。 |"
+   ],
+   "id": "I35",
+   "status": "wontfix",
+   "solution": "三镜动作均完成且未挤压，接受实际节拍与设计约 1 秒偏差，不改视频。",
+   "reason": "动作完整，仅记录小偏差",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:14",
+     "status": "wontfix",
+     "solution": "三镜动作均完成且未挤压，接受实际节拍与设计约 1 秒偏差，不改视频。",
+     "reason": "动作完整，仅记录小偏差",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "row:framing:s6st4:f4节拍秒数",
+   "level": "minor",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing_B",
+   "dimension": "F4 节拍秒数",
+   "shots": [
+    "s6_st4"
+   ],
+   "problem": "F4 节拍秒数：sheet4：1.5 秒两鸟入画，约 3.0 秒已出画，较设计 4.5 秒早约 1.5 秒；灰天停顿和 6 秒后转身仍保留",
+   "evidence": [
+    "sheet4：1.5 秒两鸟入画，约 3.0 秒已出画，较设计 4.5 秒早约 1.5 秒；灰天停顿和 6 秒后转身仍保留"
+   ],
+   "sources": [
+    "kimi/framing_B__a"
+   ],
+   "fix": "便宜：按实际鸟过镜时间修订节拍记录，无需仅为这项重出",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st4 | 1.5–4.5 | F4 节拍秒数 | 记录 | ④ 模型随机 | sheet4：1.5 秒两鸟入画，约 3.0 秒已出画，较设计 4.5 秒早约 1.5 秒；灰天停顿和 6 秒后转身仍保留 | 便宜：按实际鸟过镜时间修订节拍记录，无需仅为这项重出 |"
+   ],
+   "id": "I36",
+   "status": "wontfix",
+   "solution": "接受犀鸟实际过镜约 1.5–3 秒，后续看灰天与转身完整，不重出。",
+   "reason": "动作完整，仅记录小偏差",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:15",
+     "status": "wontfix",
+     "solution": "接受犀鸟实际过镜约 1.5–3 秒，后续看灰天与转身完整，不重出。",
+     "reason": "动作完整，仅记录小偏差",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "row:framing:s6st4:f1人物画高",
+   "level": "minor",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing_B",
+   "dimension": "F1 人物画高",
+   "shots": [
+    "s6_st4"
+   ],
+   "problem": "F1 人物画高：overhead 距离约 2.47m、24mm，站高估算画高 0.84；首帧头顶至靴底约 0.61，偏小约 27%，略超容差",
+   "evidence": [
+    "overhead 距离约 2.47m、24mm，站高估算画高 0.84；首帧头顶至靴底约 0.61，偏小约 27%，略超容差"
+   ],
+   "sources": [
+    "kimi/framing_B__a"
+   ],
+   "fix": "便宜：若需严格贴几何，首帧阶段略缩短机距或提高焦距感；当前仅记录",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st4 | 0 | F1 人物画高 | 记录 | ③ prompt 或首帧 | overhead 距离约 2.47m、24mm，站高估算画高 0.84；首帧头顶至靴底约 0.61，偏小约 27%，略超容差 | 便宜：若需严格贴几何，首帧阶段略缩短机距或提高焦距感；当前仅记录 |"
+   ],
+   "id": "I37",
+   "status": "wontfix",
+   "solution": "人物画高偏小约 27%，仅略超几何容差且不妨碍看点，保留现片。",
+   "reason": "略超容差，保留现片收益更大",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:15",
+     "status": "wontfix",
+     "solution": "人物画高偏小约 27%，仅略超几何容差且不妨碍看点，保留现片。",
+     "reason": "略超容差，保留现片收益更大",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "row:framing:s8st9:f2机位配置一致性",
+   "level": "minor",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing_B",
+   "dimension": "F2 机位配置一致性",
+   "shots": [
+    "s8_st9"
+   ],
+   "problem": "F2 机位配置一致性：`overhead.toml` meta 第 4 行写“锁定 x≤−36”，camera 第 8、14 行却为 x=9→0；首帧本身仍是西岸隔溪朝东，未据此判片错",
+   "evidence": [
+    "`overhead.toml` meta 第 4 行写“锁定 x≤−36”，camera 第 8、14 行却为 x=9→0；首帧本身仍是西岸隔溪朝东，未据此判片错"
+   ],
+   "sources": [
+    "kimi/framing_B__a"
+   ],
+   "fix": "便宜：核对是否残留旧坐标注释，统一锁定坐标与 camera 路径",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s8_st9 | 0–10 | F2 机位配置一致性 | 记录 | 规则源 | `overhead.toml` meta 第 4 行写“锁定 x≤−36”，camera 第 8、14 行却为 x=9→0；首帧本身仍是西岸隔溪朝东，未据此判片错 | 便宜：核对是否残留旧坐标注释，统一锁定坐标与 camera 路径 |"
+   ],
+   "id": "I38",
+   "status": "implemented",
+   "solution": "已在 overhead 注明：全局位置遵守锁定表 x≤−36；camera x=9→0 是镜内局部后退轨迹，不与全局坐标直接比较。已重渲 st9 overhead、参考图和 s8 blocking，并 shot_pack sync；67 镜资料包恢复一致。",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:15",
+     "status": "planned",
+     "solution": "核对并清理 s8_st9 overhead 中旧坐标注释与 camera 路径的矛盾；仅修配置记录，不改视频。",
+     "by": "Kimi Code"
+    },
+    {
+     "at": "2026-11-15T16:37:15",
+     "status": "implemented",
+     "solution": "已在 overhead 注明：全局位置遵守锁定表 x≤−36；camera x=9→0 是镜内局部后退轨迹，不与全局坐标直接比较。已重渲 st9 overhead、参考图和 s8 blocking，并 shot_pack sync；67 镜资料包恢复一致。",
+     "by": "Kimi Code",
+     "files": [
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s8/shots/st9/planning/overhead.toml",
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s8/shots/st9/planning/st9_overhead.png",
+      "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s8/shots/st9/资料包/prompt.txt"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s8/shots/st9/planning/overhead.toml",
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s8/shots/st9/planning/st9_overhead.png",
+    "ai_videos/huangye_shenghuo/episodes/ep01/scenes/s8/shots/st9/资料包/prompt.txt"
+   ]
+  },
+  {
+   "key": "row:audience:s4st6、s7st4:a1·看懂",
+   "level": "minor",
+   "law": "audience",
+   "category": "观众",
+   "item": "audience",
+   "dimension": "A1·看懂",
+   "shots": [
+    "s4_st6、s7_st4"
+   ],
+   "problem": "A1·看懂：前者从树干刮下橙色碎块，后者把橙色物卷入叶片；首次看不知用途，直到 s7_st9 生火才可回推，因果间隔较长。",
+   "evidence": [
+    "前者从树干刮下橙色碎块，后者把橙色物卷入叶片；首次看不知用途，直到 s7_st9 生火才可回推，因果间隔较长。"
+   ],
+   "sources": [
+    "kimi/audience__a"
+   ],
+   "fix": "便宜：在 s7_st4 开头保留半秒橙色碎块特写，再接其落入火绒，无需加台词。",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s4_st6、s7_st4 | s4_st6 0–3；s7_st4 0–7 | A1·看懂 | 记录 | ② 分镜文字 | 前者从树干刮下橙色碎块，后者把橙色物卷入叶片；首次看不知用途，直到 s7_st9 生火才可回推，因果间隔较长。 | 便宜：在 s7_st4 开头保留半秒橙色碎块特写，再接其落入火绒，无需加台词。 |"
+   ],
+   "id": "I39",
+   "status": "wontfix",
+   "solution": "保留树脂用途先生火、后回推的纪录式发现顺序；不加台词，本轮无可用新增特写素材。",
+   "reason": "保留既定叙事顺序",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:16",
+     "status": "wontfix",
+     "solution": "保留树脂用途先生火、后回推的纪录式发现顺序；不加台词，本轮无可用新增特写素材。",
+     "reason": "保留既定叙事顺序",
+     "by": "Kimi Code"
+    }
+   ]
+  },
+  {
+   "key": "row:audience:s1st1→s2st1:a7·场间接口",
+   "level": "minor",
+   "law": "audience",
+   "category": "观众",
+   "item": "audience",
+   "dimension": "A7·场间接口",
+   "shots": [
+    "s1_st1→s2_st1"
+   ],
+   "problem": "A7·场间接口：雨夜已建好屋内突然切晴天原始溪流，首看不知时间关系；到 s8_st5 重复开窗动作后才认出是前置预告。",
+   "evidence": [
+    "雨夜已建好屋内突然切晴天原始溪流，首看不知时间关系；到 s8_st5 重复开窗动作后才认出是前置预告。"
+   ],
+   "sources": [
+    "kimi/audience__a"
+   ],
+   "fix": "便宜：无需改内容；若要更早降低困惑，可在首镜末尾多留一个与结尾一致的窗外浑水特征。",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s1_st1→s2_st1 | s1_st1 2–3；s2_st1 0–1 | A7·场间接口 | 记录 | ② 分镜文字 | 雨夜已建好屋内突然切晴天原始溪流，首看不知时间关系；到 s8_st5 重复开窗动作后才认出是前置预告。 | 便宜：无需改内容；若要更早降低困惑，可在首镜末尾多留一个与结尾一致的窗外浑水特征。 |"
+   ],
+   "id": "I40",
+   "status": "wontfix",
+   "solution": "保留 bible 规定的成品一闪；s1 与 s8_st5 的重复开窗动作已在后文回收，不改成片结构。",
+   "reason": "符合 bible 既定结构",
+   "history": [
+    {
+     "at": "2026-11-15T16:18:16",
+     "status": "wontfix",
+     "solution": "保留 bible 规定的成品一闪；s1 与 s8_st5 的重复开窗动作已在后文回收，不改成片结构。",
+     "reason": "符合 bible 既定结构",
+     "by": "Kimi Code"
+    }
+   ]
+  }
+ ]
+}

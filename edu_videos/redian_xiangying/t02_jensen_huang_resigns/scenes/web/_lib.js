@@ -72,6 +72,15 @@ document.querySelectorAll(".slot[data-src]").forEach(fig => {
   img.src = fig.dataset.src;
 });
 
+/* 页眉章节名：<div class="eb eyebrow" data-ch="c3"></div> → 「03 · 章名」。章名取 package.json（data.py 汇进 data.json），
+   与目录、章节卡同一个叫法；讲稿作者改了章名，重跑 data.py 即可（台词审 lines_r1 I1、I21、I22）。
+   data-sub 给小节标签时显示「01 · 小节」（s1 按内容换眉标：已证实 / 只是报道 / 各方回应，I6） */
+function chLabel(cid) { const c = (D.chapters || {})[cid]; return c ? `${c.no} · ${L(c.zh, c.en)}` : ""; }
+document.querySelectorAll(".eb[data-ch]").forEach(e => {
+  const c = (D.chapters || {})[e.dataset.ch];
+  e.textContent = e.dataset.subZh ? `${c ? c.no : ""} · ${L(e.dataset.subZh, e.dataset.subEn)}` : chLabel(e.dataset.ch);
+});
+
 /* 几张图的署名拼成一行（只取台账里有的，供 srcNote 用；头像等小图用 data-nocap） */
 function cred(...srcs) {
   return [...new Set(srcs.map(x => (D.credits || {})[x]).filter(Boolean).map(c => L(c.zh, c.en)))].join(" · ");

@@ -1,0 +1,113 @@
+# voice_en__a report (round 3, final; single reviewer, claude-sonnet-5-5; blind read of voice_en.md only)
+
+## 评分表
+- V1 2 证据：Most lines are conversational ("So we checked." l53, "Trump went the other way." l43, "Any CEO could be gone over that." l61). A few written-style spots: l30 "here's the chain: the most critical chips, a customer suspected of rerouting them, and someone close to the CEO" (noun-phrase list), l59 "The strongest case against us says…", l60 "a relationship with a subordinate was reported" (passive).
+- V2 2 证据：Cold open flows well (l07 "And yet within days…" into l08 "So here's our take"). The outro is clean (l66 to l70). Weak joins: l52 "In other words, at first he blamed the Democrats" after l51 "he changed his tune" (it restates l50, not l51); l59 opens a chapter with no spoken bridge after l58; l10 "Before we go on, let's separate…" is a bit teacherly.
+- V3 2 证据：Antecedents are mostly fixed (l36 "that chairman", l45 "Trump's ties"). Remaining ear problems: l28 "The evidence against her" (her = the businesswoman, many lines back), l32 "They all pointed to the same thing" (unnamed until l33), l50 has six names/ideas in 9.6 s ("HK01", "Hu Xijin", "the establishment"), l60 "that very day" (which day?).
+- V4 2 证据：l33 "The board cited reports that foreign intelligence had targeted him" repeats l12 almost word for word; l52 repeats l50; l65 repeats l08/l31/l38. The thesis said four times (l08, l31, l38, l65) is deliberate but heavy. Nothing needs cutting outright.
+- V5 2 证据：Warm, consistent narrator ("here's our take", "So we checked", "We'd say…"). Rhythm varies well (l14 3.1 s vs l43 9.6 s). "Now," opens l15, l19, l32 and l39 and "So" opens many lines, a tic. l37 and l50 are long for one breath.
+- V6 3 证据：Every flagged line below has a drop-in rewrite no longer than the original (l59, l52, l30, l50, l28, l10, l60, l32, l49); the five most awkward are ranked in 整体观察 and tagged R1 to R5 in the issues table.
+- R 2 证据：I29 (l09 "not the same as saying"), I30 (l15), I31 (l21), I32 (l22), I34 (l36 "that chairman"), I35 (l45), I37 (l51), I39 (l58), I40 (l62), I41 (l66), I42 (l67), I43 (l68) are all 已解决 and read naturally now. I36 (l50): partly resolved, "Global Times" is gone but "the establishment" remains unexplained by ear (see issues). I28 (l02 kept): author's reason holds, wire phrasing in a news cold open is acceptable. I33 (l31 kept "magnifying glass"): reason holds, matches the visual. I38 (l52 kept): 改出新问题 — after the I37 fix, "In other words" now points at l51 and misleads (see issues).
+
+## 问题表
+
+| 位置 | 维度 | 级别 | 原文 | 问题 | 改写 |
+|---|---|---|---|---|---|
+| l59 (chapter opener, strict) R1 | V2/V1 | 必改 | The strongest case against us says national security is just noise, and he left over ordinary corporate governance. | The chapter card is silent, so by ear this drops straight in after l58 with no bridge. "The strongest case against us" is debate-club written style; "ordinary corporate governance" is formal. | Not everyone buys this. The strongest pushback says national security is just noise, and he left over plain corporate governance. |
+| l52 R2 | V2/V3 | 建议 | In other words, at first he blamed the Democrats. | After l51 ("changed his tune: casualty of vicious two-party fighting") "In other words" suggests it restates l51; it actually restates l50 and sets up the contrast. | So first he blamed the Democrats, then both parties. |
+| l30 R3 | V1 | 建议 | So here's the chain: the most critical chips, a customer suspected of rerouting them, and someone close to the CEO. | Noun-phrase list read aloud; "here's the chain" is slide-speak; three heavy noun phrases in one breath. | So you've got the top chips, a customer suspected of rerouting them, and someone close to the CEO. |
+| l50 R4 | V3/V5 | 建议 | Hong Kong outlet HK01 says Hu Xijin, a well-known Chinese commentator, first claimed Democrats and the establishment were targeting Huang to get at Trump. | 9.6 s, two unfamiliar names plus "the establishment" (means little to this viewer) and a double hop (outlet says X claimed). | Hong Kong outlet HK01 says Hu Xijin, a well-known Chinese commentator, first claimed Democrats were going after Huang to get at Trump. |
+| l28 R5 | V3 | 建议 | The evidence against her fell short, but police are still investigating the company itself. | "her" is the businesswoman last named at l23, with the chips and Southeast Asia chain in between. | The evidence against the businesswoman fell short, but police are still investigating her company. |
+| l10 (linking, strict) | V1/V2 | 建议 | Before we go on, let's separate what's confirmed from what's only been reported. | "let's separate X from Y" is lecture tone; "Before we go on" has nothing to go on from right after a title card. Close to acceptable. | First, what's actually confirmed, and what's only been reported. |
+| l60 | V1/V3 | 建议 | He admitted infidelity, then a relationship with a subordinate was reported, and the board accepted his resignation that very day. | Passive "was reported"; "that very day" has no clear anchor. | He admitted cheating, then came a report about a subordinate, and the board accepted his resignation the same day. |
+| l32 (linking) | V3 | 建议 | Now look at how everyone responded. They all pointed to the same thing. | "same thing" is a teaser the next line answers; "look at" with audio only; "everyone" is vague. | Now notice how everyone responded. They all reached for national security. |
+| l49 | V1 | 建议 | there's a popular take in Chinese commentary: that Huang was a casualty of America's partisan fight. | "a take: that…" is a written construction. | Speaking of the two parties, a popular take in Chinese commentary is that Huang was a casualty of America's partisan fight. |
+| l18 / l57 | V3 | 记录 | with an executive who reported to him / the report of another relationship | "executive" was also the businesswoman at l17, so a listener may think it is the same person; "another relationship" is vague. | with someone who reported to him |
+| l33 | V4 | 记录 | The board cited reports that foreign intelligence had targeted him. | Near-verbatim repeat of l12; fine as one item in the "everyone pointed to security" list but could be shorter. | The board cited those foreign intelligence reports. |
+| l02 | V1 | 记录 | was out as CEO and as a director, effective immediately | Wire-news phrasing, acceptable in a news cold open (I28 kept, reason holds). | Jensen Huang, the co-founder, was out as CEO and off the board, effective immediately. |
+| l23 | V1 | 记录 | So was the affair in his letter with the businesswoman? | "the affair in his letter" is a little clunky. | So was the affair he admitted to with the businesswoman? |
+| l15/l19/l32/l39 | V5 | 记录 | "Now," ... | Same opener four times, with "So" opening many more. | Vary one or two ("Next," "On the other side,"). |
+
+## 逐句复述
+
+| 句号 | 原句 | 跟朋友会怎么说 | 判 |
+|---|---|---|---|
+| l01 | On November 12th, twenty twenty-six, Nvidia filed a surprise notice with regulators. | On November 12th, Nvidia suddenly filed a notice with regulators. | natural |
+| l02 | Jensen Huang… was out as CEO and as a director, effective immediately. | Jensen Huang, who co-founded it, was out as CEO and off the board, right away. | a bit off (wire style, accepted) |
+| l03 | He'd run Nvidia for thirty-three years, and the filing didn't say why he was leaving. | He'd run it for 33 years and the filing didn't say why he was going. | natural |
+| l04 | The stock opened down more than ten percent, and still closed down more than four. | Stock opened down over ten percent and still ended down over four. | natural |
+| l05 | Four days before the filing, he'd written to all his staff. One line read: "I was unfaithful to my wife." | Four days earlier he'd emailed all his staff, and one line said he'd been unfaithful to his wife. | natural |
+| l06 | He didn't say with whom. It looked like a private matter. | He didn't say who with. Seemed like a private thing. | natural |
+| l07 | And yet within days, Nvidia's board, the US Congress, and China's Foreign Ministry were all weighing in. | Yet within days the board, Congress and China's Foreign Ministry were all weighing in. | natural |
+| l08 | So here's our take: the US-China tech war turned one CEO's private life into a national security issue. | Our take is the US-China tech war turned one CEO's private life into a security issue. | natural |
+| l09 | That's not the same as saying he quit over national security. The company still hasn't said why he left. | That doesn't mean he quit over it. The company still hasn't said why. | natural |
+| l10 | Before we go on, let's separate what's confirmed from what's only been reported. | First, what do we actually know, and what's just been reported? | a bit off |
+| l11 | Here's what's on the record. Huang admitted, in writing, that he was unfaithful. | Here's what's on the record: he admitted in writing that he cheated. | natural |
+| l12 | Nvidia's board opened an investigation, citing reports that foreign intelligence had targeted him. | The board opened an investigation after reports that foreign intelligence had targeted him. | natural |
+| l13 | But the board also said it had no reason to believe national security or company secrets had been compromised. | But the board said it had no reason to think security or company secrets were compromised. | natural |
+| l14 | And then he resigned, with no reason given. | Then he resigned and gave no reason. | natural |
+| l15 | Now, two more claims. Both are New York Times reports citing anonymous sources, and neither is confirmed. | Two more claims, both from New York Times reports with anonymous sources, neither confirmed. | natural |
+| l16 | One says US intelligence suspected a businesswoman close to him of spying for China. | One says US intelligence suspected a woman close to him of spying for China. | natural |
+| l17 | She's a former executive at a Singapore company, and that company is an Nvidia customer. | She used to be an executive at a Singapore company that buys from Nvidia. | natural |
+| l18 | The other says he'd had another relationship, with an executive who reported to him. Nvidia declined to comment. | The other says he'd had another affair, with someone who reported to him. Nvidia wouldn't comment. | a bit off ("executive" clash) |
+| l19 | Now, the other side. China's Foreign Ministry calls the "Chinese spy" claims groundless smears. | Now the other side: China's Foreign Ministry says the spy claims are groundless smears. | natural |
+| l20 | Singapore's Ministry of Home Affairs says it never investigated the businesswoman for espionage. | Singapore's Home Affairs ministry says it never investigated her for spying. | natural |
+| l21 | Singapore police did look into her personally, though, over suspected false declarations when the company bought servers. | Singapore police did look into her, though, over suspected false declarations when the company bought servers. | natural |
+| l22 | This February, they said there wasn't enough evidence against her. And no one has been charged. | In February they said there wasn't enough evidence, and nobody's been charged. | natural |
+| l23 | So was the affair in his letter with the businesswoman? He didn't say, and we don't know. | So was the affair he admitted to with her? He didn't say and we don't know. | a bit off |
+| l24 | Either way, here's the real puzzle: why would someone close to a CEO set off this many alarms? | Either way, why would someone close to a CEO set off this many alarms? | natural |
+| l25 | Because Nvidia sells AI chips, and whether the best ones can go to China is the front line of the tech war. | Because Nvidia sells AI chips, and whether the best ones go to China is the front line of the tech war. | natural |
+| l26 | Nvidia's own annual report admits it's basically shut out of China's data center market. | Nvidia's own annual report admits it's basically shut out of China's data centers. | natural |
+| l27 | And what Washington fears most is chips slipping into China through Southeast Asia. | And Washington's biggest fear is chips sneaking into China through Southeast Asia. | natural |
+| l28 | That's where the Singapore company comes in. The evidence against her fell short, but police are still investigating the company itself. | That's where the Singapore company comes in. The case against her fell short but police are still looking at the company. | a bit off ("her") |
+| l29 | US export control officials have inspected it too. The company denies any wrongdoing, and there's no conclusion yet. | US export officials have inspected it too. It denies doing anything wrong and nothing's concluded. | natural |
+| l30 | So here's the chain: the most critical chips, a customer suspected of rerouting them, and someone close to the CEO. | So you've got the top chips, a customer suspected of rerouting them, and someone close to the CEO. | a bit off (list) |
+| l31 | Put those three together, and a private matter ends up under a national security magnifying glass. | Put those together and a private matter ends up under a national security magnifying glass. | natural |
+| l32 | Now look at how everyone responded. They all pointed to the same thing. | Notice how everyone responded: they all said national security. | a bit off |
+| l33 | The board cited reports that foreign intelligence had targeted him. | The board pointed to those foreign intelligence reports. | natural |
+| l34 | Three Republican committee chairmen asked him for a closed-door briefing, on national security grounds. | Three Republican chairmen asked him for a closed-door briefing, citing national security. | natural |
+| l35 | On the day he resigned, the head of the House China committee said Nvidia needs leaders who put national security first. | The day he resigned, the House China committee head said Nvidia needs leaders who put national security first. | natural |
+| l36 | And that chairman urged Congress to move fast on export control laws. | And that chairman wants Congress to move fast on export controls. | natural |
+| l37 | Even China's Foreign Ministry made it about tech, telling the US to stop fabricating a "spy narrative" to justify a tech blockade. | Even China's Foreign Ministry made it about tech: stop making up a spy story to justify a blockade. | natural |
+| l38 | So for all the shouting, both sides agree on one thing: this is about chips. | So for all the shouting, both sides agree it's about chips. | natural |
+| l39 | Now, inside Washington. On chip sales to China, lawmakers in both parties want to tighten, while the White House keeps loosening. | Inside Washington, both parties in Congress want tighter chip sales to China, but the White House keeps loosening. | natural |
+| l40 | And Huang was on the White House's side, so when the scandal hit, both parties used it to demand answers. | Huang was on the White House's side, so when the scandal hit, both parties used it to demand answers. | natural |
+| l41 | Take the tightening side first. In October twenty twenty-five, the Senate voted seventy-seven to twenty for a provision limiting chip sales to China. | Start with the tightening side: in October 2025 the Senate voted 77 to 20 to limit chip sales to China. | natural |
+| l42 | Then in March twenty twenty-six, one senator from each party jointly asked the Commerce Department to review Nvidia's export licenses. | Then in March a senator from each party asked Commerce to review Nvidia's export licenses. | natural |
+| l43 | Trump went the other way. In August twenty twenty-five, he said he'd clear a chip for China if Nvidia would "pay us as a country something." | Trump went the other way. In August he said he'd clear a chip for China if Nvidia would "pay us as a country something." | natural |
+| l44 | And after the scandal broke, he called Huang "a very honorable man." | And after the scandal broke he called Huang "a very honorable man." | natural |
+| l45 | Democrats went after Trump, asking whether officials were told not to investigate because of Trump's ties to Huang. | Democrats went after Trump, asking if officials were told not to investigate because of his ties to Huang. | natural |
+| l46 | Republicans went after the Commerce Department and pushed export control bills. | Republicans went after Commerce and pushed export bills. | natural |
+| l47 | But don't draw that line too neatly. Senator Warren, a Democrat, is also backing a Republican's bill to tighten exports. | But it's not that neat: Senator Warren, a Democrat, backs a Republican's bill to tighten exports. | natural |
+| l48 | The one clean difference is this: Democrats name Trump. Republicans don't. | The one clean difference: Democrats name Trump, Republicans don't. | natural |
+| l49 | Speaking of the two parties, there's a popular take in Chinese commentary: that Huang was a casualty of America's partisan fight. | Speaking of parties, a popular take in Chinese commentary is that Huang was a casualty of America's partisan fight. | a bit off |
+| l50 | Hong Kong outlet HK01 says Hu Xijin, a well-known Chinese commentator, first claimed Democrats and the establishment were targeting Huang to get at Trump. | HK01 says Hu Xijin, a big Chinese commentator, first claimed Democrats were going after Huang to get at Trump. | a bit off (overloaded) |
+| l51 | A day later, he changed his tune: Huang was a political casualty of vicious two-party fighting. | A day later he changed his tune: Huang was a casualty of vicious two-party fighting. | natural |
+| l52 | In other words, at first he blamed the Democrats. | So first it was the Democrats' fault, then both parties'. | a bit off (mislinked) |
+| l53 | So we checked. Before he resigned, the only lawmaker we found publicly calling for him to go was Republican Senator Kevin Cramer. | So we checked. Before he resigned, the only lawmaker we found publicly saying he should go was Republican Senator Kevin Cramer. | natural |
+| l54 | And Trump, a Republican president, backed him the whole way. | And Trump, a Republican, backed him all the way. | natural |
+| l55 | The top House Democrat did say resigning "was the right thing to do," but only after he'd already resigned. | The top House Democrat said resigning "was the right thing to do," but only after he'd resigned. | natural |
+| l56 | There's no record of either party pushing him out. | No record of either party pushing him out. | natural |
+| l57 | Besides, the board had plenty of reasons of its own: his admission, the report of another relationship, and a shareholder lawsuit. | Besides, the board had its own reasons: his admission, the other affair report, and a shareholder lawsuit. | natural |
+| l58 | We'd say no one sacrificed him on purpose. He did get caught in other people's fight, but nothing shows that's why he left. | I'd say nobody sacrificed him on purpose. He got caught in other people's fight, but nothing shows that's why he left. | natural |
+| l59 | The strongest case against us says national security is just noise, and he left over ordinary corporate governance. | Not everyone buys this. The best pushback is that security's just noise and he left over plain governance. | a bit off (strict) |
+| l60 | He admitted infidelity, then a relationship with a subordinate was reported, and the board accepted his resignation that very day. | He admitted cheating, then came a report about a subordinate, and the board took his resignation the same day. | a bit off |
+| l61 | Any CEO could be gone over that. In twenty eighteen, Intel's CEO resigned over a relationship with an employee that broke company policy. | Any CEO could go over that. Intel's CEO resigned in 2018 over a relationship with an employee that broke policy. | natural |
+| l62 | We agree with all of that, and we never said he left over national security. The direct cause may well be governance. | We agree with all that, and we never said he left over national security. Governance may well be the direct cause. | natural |
+| l63 | But we're asking a different question: how does one CEO's affair end up in front of Congress and China's Foreign Ministry? | But we're asking something else: how does one CEO's affair end up in front of Congress and China's Foreign Ministry? | natural |
+| l64 | Intel's case never did. And we think the difference isn't what he did. It's what his company sells. | Intel's never did, and the difference isn't what he did, it's what his company sells. | natural |
+| l65 | Even if the spy reports turn out to be false, everyone's already treating this as a national security issue. | Even if the spy reports are false, everyone's already treating it as a national security issue. | natural |
+| l66 | When the headlines fade, remember this: the more critical a company's product, the less private its leader's life gets. | When the headlines fade, remember: the more critical a company's product, the less private its leader's life. | natural |
+| l67 | Where his private life ends isn't up to him. What his company sells decides it. | Where his private life ends isn't up to him. What his company sells decides that. | natural |
+| l68 | Coming up on November 17th, Nvidia reports its first earnings without Jensen Huang. | On November 17th Nvidia reports its first earnings without Jensen Huang. | natural |
+| l69 | There's no date yet for him to go before Congress, and none of the investigations has wrapped up. | No date yet for him to go before Congress, and no investigation has wrapped up. | natural |
+| l70 | That's where things stand as of November 14th. None of this is investment advice, and we'll keep following the story. | That's where things stand as of November 14th. This isn't investment advice, and we'll keep following it. | natural |
+
+## 整体观察
+- Strict items: the cold open (l01-l09) and the outro (l66-l70) are in good shape, no must-fix there. The only strict must-fix is the chapter opener l59; l10 is a suggestion.
+- Previous-round fixes landed well; none introduced a new problem except the l51/l52 link.
+- Top 5 most awkward lines (rewrites in the table): 1 l59, 2 l52, 3 l30, 4 l50, 5 l28.
+- Keep: the cold-open payoff "So here's our take… That's not the same as saying he quit over national security" (l08-l09) is honest and sounds like a person.
+- Keep: "So we checked." (l53) and "We agree with all of that, and we never said…" (l62) give the narrator a credible voice.
+- Keep: the outro pair l66-l67 ("Where his private life ends isn't up to him. What his company sells decides it.") lands cleanly by ear.
+- Tics to watch: "Now," opens l15, l19, l32, l39; the thesis is repeated at l08, l31, l38, l65.

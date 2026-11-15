@@ -1,4 +1,4 @@
-"""多视角独立审稿（Claude / Codex 通用，dota_yingxiong follow-up 263 / 266）。"""
+"""多视角 Kimi 独立审稿。"""
 import json
 from pathlib import Path
 
@@ -103,11 +103,9 @@ def verdicts(path: Path) -> dict[str, str]:
     return {k: v["verdict"] for k, v in json.loads(path.read_text(encoding="utf-8"))["checks"].items()}
 
 
-def test_reviewer_is_the_other_model_by_default(monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.setenv("CLAUDECODE", "1")
-    assert qc_review.pick("auto") == ["codex", "claude"]
-    monkeypatch.delenv("CLAUDECODE")
-    assert qc_review.pick("auto") == ["claude", "codex"]
+def test_single_kimi_reviewer_by_default():
+    assert qc_review.pick("auto") == ["kimi"]
+    assert qc_review.pick("kimi") == ["kimi"]
 
 
 def test_parse_tolerates_prose_and_drops_unknown_or_bad_rows():
@@ -137,14 +135,14 @@ def test_one_reviewer_per_character_and_any_fail_fails(env: Path, monkeypatch: p
         return '[{"id":"video.timeline","verdict":"pass","evidence":"第 3 格"},{"id":"video.no_text","verdict":"pass","evidence":"无字"}]'
     monkeypatch.setattr(qc_review, "run_reviewer", fake)
     rd = sd_of(env) / "renders" / "20261026-130000_ab"
-    qc_review.main([str(rd), "--reviewer", "codex"])
+    qc_review.main([str(rd), "--reviewer", "kimi"])
     v = verdicts(rd / "qc.json")
     assert v == {"video.agency": "fail", "video.timeline": "pass", "video.readability": "pass", "video.no_text": "pass"}
     ev = json.loads((rd / "qc.json").read_text(encoding="utf-8"))["checks"]["video.agency"]["evidence"]
-    assert "[Treant·" in ev and "[Hero·" in ev                                         # 证据写明是哪个角色说的
-    assert "起势" not in prompts["audience"] and "身高" not in prompts["audience"]       # 观众不看规格
-    assert "Hero 1.8 m" in prompts["treant"] and "起势" in prompts["treant"]             # 角色知道彼此身高与规格
-    assert set(models) == {"codex", "claude"}                                           # 视角轮流分给两个模型
+    assert "[Treant·" in ev and "[Hero·" in ev
+    assert "起势" not in prompts["audience"] and "身高" not in prompts["audience"]
+    assert "Hero 1.8 m" in prompts["treant"] and "起势" in prompts["treant"]
+    assert set(models) == {"kimi"}
     assert "video.slowmo" not in prompts["director"]                                    # 有工具的机检项不交审稿
 
 
@@ -222,3 +220,25 @@ def test_prompt_has_three_verdicts_layers_and_no_fail_when_unsure(env: Path, mon
     assert "提交时的旧规格" in director and "起势，不出特效" not in director          # 对照的是这一条提交时的 prompt，不是卡上现在的
     row = json.loads((rd / "qc.json").read_text(encoding="utf-8"))["checks"]["video.agency"]
     assert row["verdict"] == "审不了" and row["reason"] == "看不清" and row["rule"] == qc.REVIEW_RULE
+
+
+def test_kimi_reviewer_command_uses_prompt_file_and_readonly_agent(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    from types import SimpleNamespace
+
+    image = tmp_path / "sheet.jpg"
+    image.write_bytes(b"jpg")
+    captured = {}
+
+    def fake_run(cmd, **kwargs):
+        captured["cmd"] = cmd
+        captured["kwargs"] = kwargs
+        return SimpleNamespace(returncode=0, stdout="[]", stderr="")
+
+    monkeypatch.setattr(qc_review.subprocess, "run", fake_run)
+    assert qc_review.run_reviewer("kimi", "只输出 []", [image], tmp_path, 30) == "[]"
+    cmd = captured["cmd"]
+    assert Path(cmd[cmd.index("--agent-file") + 1]).as_posix().endswith(".agents/agents/qc-reviewer.md")
+    assert cmd[cmd.index("-p") + 1].startswith("先用 Read")
+    assert cmd[cmd.index("--output-format") + 1] == "text"
+    assert (tmp_path / "prompt.md").read_text(encoding="utf-8") == "只输出 []"
+    assert captured["kwargs"]["stdin"] is qc_review.subprocess.DEVNULL

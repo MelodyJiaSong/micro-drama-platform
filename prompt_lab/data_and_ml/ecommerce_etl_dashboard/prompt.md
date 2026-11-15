@@ -10,7 +10,7 @@ One `make run` spins up a complete data-engineering loop end to end: 50k realist
 **Use cases:** A ready-made BI dashboard prototype to demo a stakeholder before any real warehouse exists; a portfolio or interview piece that proves you can wire generate → transform → load → visualize; a sandbox with safe synthetic data for learning cohort-retention math and pandas ETL patterns; and a reusable scaffold you re-point at real order data by swapping out `generate.py`.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away: drop the prompt below into Claude Code in an empty folder, answer 2 short setup questions, then it builds, runs the pipeline, self-reviews, and opens the dashboard autonomously.
+Copy-paste-and-walk-away: drop the prompt below into Kimi / Codex in an empty folder, answer 2 short setup questions, then it builds, runs the pipeline, self-reviews, and opens the dashboard autonomously.
 Prerequisites: `pip install pandas plotly numpy` (the prompt runs this). No external data — it's synthesized.
 
 ## 🔗 3. Reference & prior art

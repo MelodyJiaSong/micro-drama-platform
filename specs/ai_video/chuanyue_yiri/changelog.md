@@ -904,3 +904,41 @@ Auto-updated:
 
 No conflicts found in: 只改本剧 ep01 与 review_run conclude 新开关，不动其他剧
 
+
+## Follow-up 070 — 2026-11-14 20:34:46
+Source: user_input/follow_ups/202611.md - section 070
+Summary: 接续 11-14 分诊重出的 21 镜：逐条作者审核与闸门补记、选条、s3–s8 新场剪辑（s3 v8 s4 v8 s5 v7 s6 v6 s7 v6 s8 v5）、整集 v9；s1/s2 旧条按现行规则独立重审；开出片后（s3–s8）与整集审查单派独立审稿；重出与搁置清单交用户定
+
+Auto-updated:
+- 21 条 review.md / qc.json / annotation.json；s1/s2 六条旧条 qc 重审；s3 cut_v8、s4 cut_v8、s5 cut_v7、s6 cut_v6、s7 cut_v6、s8 cut_v5 及成片；整集 edit/final/cut_v9.json、ep01_final_v9.mp4；审查单 reviews/ep01_20261114-202704_take_r1、ep01_20261114-202947_episode_r1（已收轮）
+
+验证: scene_cut check/render 六场时长对、无黑段、未用 --skip-gate；episode_cut check 无问题、join 768.9s（s5 段内检出切点比预期早约 4 帧）；两张审查单 gate 通过并收轮：出片 严重32/主要27、整集 严重23/主要13，均不可交付
+
+No conflicts found in: 只改本剧 ep01 剪辑与审查产物，未改分镜、prompt、规则源，未提交生成
+
+
+## Follow-up 071 — 2026-11-14 22:03:32
+Source: user_input/follow_ups/202611.md - section 071
+Summary: 重出 v9 缺的 4 镜（s3 st8、s4 st4、s6 st1、s7 st2，共 1440 积分）：s3 st8、s4 st4 保留并补进 s3 v9、s4 v9 与整集 v10；s6 st1 一镜内场景硬切、s7 st2 人脸仍不是 Riley，判重出，建议先改上游再过出片前审查
+
+Auto-updated:
+- 4 条新条 review.md / qc.json（qc_review 独立审）；s3 cut_v9、s4 cut_v9 及成片；edit/final/cut_v10.json、ep01_final_v10.mp4
+
+验证: shot_take submit 4 条 success；qc_review：s3 st8、s4 st4、s7 st2 闸门过，s6 st1 不过；s7 st2 人脸与立绘、s7 st1 并排比对不上；scene_cut check/render 无问题、时长对、无黑段、未跳闸门；episode_cut check 无问题、join 800.2s
+费用: Seedance 1440 积分
+
+No conflicts found in: 只改本剧 ep01 出片与剪辑产物
+
+
+## Follow-up 072 — 2026-11-14 23:56:51
+Source: user_input/follow_ups/202611.md - section 072
+Summary: s6 st1 改中景双人一个景别到底、四指与 st2 统一且手心朝镜头、打量挪到走近时、行人换样子错开 Riley；s7 st2 首帧改正脸（侧脸首帧是人脸跑偏主因）、衬衫素色、划痕变浅、窗洞去蓝光、台词节拍重排；c5 人物卡外观句、bible §9 旧山句作废；出片前审查 s6/s7 三轮（r1 严重7主要9、r2 严重5主要13、r3 严重3主要8，均已处理），r3 --accept-fixes 收轮可出片，待用户确认
+
+Auto-updated:
+- filming.json（s6 st1、s7 st2）、prompts.json、两镜 overhead 与首帧（_r11–_r14 存档）、c5_Fortunata.md、bible.md §9、s6/s7 资料包与场故事板；reviews/ep01_20261114-230732_pregen_r1、232708_pregen_r2、234201_pregen_r3
+
+验证: 编译通过（s6 st1 压到 5000 字内）；shot_pack sync 13 镜更新；filming_lint 通过；shot_junctions 60 接点 0 ⚠；shot_overhead --all blocker 0；首帧每版看图验收；s6/s7 其余已出片镜中 s6 st2 因人物卡句子改动 prompt 变了（保留原条不重出）
+费用: Codex 出图 6 张（订阅额度）；未调 Seedance
+
+No conflicts found in: 只改本剧 ep01 两镜及其人物卡、bible 一句
+

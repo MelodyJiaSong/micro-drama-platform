@@ -13,18 +13,18 @@ from pathlib import Path
 import pytest
 
 
-def test_get_claude_md_happy_path(client):
-    r = client.get("/api/file?path=CLAUDE.md")
+def test_get_kimi_md_happy_path(client):
+    r = client.get("/api/file?path=AGENTS.md")
     assert r.status_code == 200
     body = r.json()
-    assert body["path"] == "CLAUDE.md"
-    assert "# CLAUDE.md" in body["content"]
+    assert body["path"] == "AGENTS.md"
+    assert "# Kimi Code 工作入口" in body["content"]
     assert body["bytes"] > 0
     assert "mtime" in body
 
 
 @pytest.mark.parametrize("rel", [
-    "AGENTS.md", "CONVENTIONS.md", ".agents/skill-aliases.json",
+    "AGENTS.md", "CONVENTIONS.md", ".agents/agents/qc-reviewer.md",
     ".agents/skills/ai-videos-pipeline/SKILL.md",
 ])
 def test_reads_shared_agent_context_over_http(client, rel):
@@ -35,13 +35,13 @@ def test_reads_shared_agent_context_over_http(client, rel):
 
 
 def test_get_includes_nosniff_header(client):
-    r = client.get("/api/file?path=CLAUDE.md")
+    r = client.get("/api/file?path=AGENTS.md")
     assert r.status_code == 200
     assert r.headers.get("x-content-type-options") == "nosniff"
 
 
 def test_get_includes_content_disposition_attachment(client):
-    r = client.get("/api/file?path=CLAUDE.md")
+    r = client.get("/api/file?path=AGENTS.md")
     assert r.status_code == 200
     cd = r.headers.get("content-disposition", "")
     assert "attachment" in cd.lower()
@@ -165,9 +165,9 @@ def test_404_does_not_leak_realpath(client):
     ".agents/skills/agent-team/SKILL.md",
     ".agents/references/project/ai_video_workflow.md",
     ".agents/skills/ai-videos-pipeline/modules/filming.md",
-    ".claude/skills/ai_videos__全流程编排/SKILL.md",
+    ".agents/agents/qc-reviewer.md",
 ])
-def test_reads_shared_sources_and_claude_adapters(client, rel):
+def test_reads_shared_sources_and_kimi_adapters(client, rel):
     r = client.get(f"/api/file?path={rel}")
     assert r.status_code == 200
 

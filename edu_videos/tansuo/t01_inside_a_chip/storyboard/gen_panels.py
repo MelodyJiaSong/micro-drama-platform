@@ -1,11 +1,11 @@
-"""Build storyboard prompt files from panels.json and generate via tools/codex_image.py (6 in parallel)."""
-import json, subprocess, sys
+"""Build storyboard prompts and generate via codex_image.py. Set PANEL_SPEC for additions."""
+import json, os, subprocess, sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 ROOT = Path(r"C:\workspace\micro-drama-platform")
 SB = ROOT / "edu_videos/tansuo/t01_inside_a_chip/storyboard"
-spec = json.loads((SB / "panels.json").read_text(encoding="utf-8"))
+spec = json.loads((SB / os.environ.get("PANEL_SPEC", "panels.json")).read_text(encoding="utf-8"))
 only = set(sys.argv[1:])
 
 HEAD = ("Cinematic film still, storyboard keyframe for a live-action-style educational short about microchips (match the style reference image). "
@@ -29,7 +29,7 @@ def job(p):
     refs = [ROOT / r for r in spec["char_refs"]]
     if p.get("style_ref"):
         refs.append(ROOT / spec["style_ref"])
-    if p["id"] not in ("P01", "P02", "P11", "P12", "P14"):  # P11/P12 原子与单管尺度：视野里没有铜线（审稿 r2）
+    if p.get("materials", p["id"] not in ("P01", "P02", "P11", "P12", "P14")):
         parts.append(MAT)
     parts.append(TAIL)
     pf = SB / "prompts" / f"{p['id']}.txt"

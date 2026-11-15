@@ -8,6 +8,7 @@
 清单（输入，代理或适配脚本写）：
     title, path（预览页的路径：知识点目录或集目录）, lang（缺省 zh）
     voices   {说话人: {reference（相对仓库根的 wav）, reference_text}}；没有声样的说话人用 voices["*"]（旁白 / 频道音色）
+    say      {写法: 念法}：只在送去配音与回听时替换（多音字「栅极」→「珊极」），页面上的台词不变
     defaults {lead 0.6, gap 0.35, tail 0.8, min 4, max 15}（秒；每镜可覆盖 lead / tail / min）
     scenes[] {id, title, subtitle?, shots[] {id, title, image?, note?, lead?, tail?, min?, lines[] {speaker, text}}}
     links[]  {label, path}；notes[] {title, items[]}
@@ -41,6 +42,7 @@ DEFAULTS = {"lead": 0.6, "gap": 0.35, "tail": 0.8, "min": 4, "max": 15}
 SEEDS = [1, 2, 3]
 LIMIT = {"zh": 0.15, "en": 0.20}      # 回听错率超过就换种子
 NOTE_RE = re.compile(r"[（(][^）)]*[）)]")
+SAY_RE = re.compile(r"\{([^|{}]*)\|([^{}]*)\}")      # 讲稿的 `{显示|念法}`（与 edu_video.py 同）
 
 
 def rel(p: Path) -> str:
@@ -50,6 +52,25 @@ def rel(p: Path) -> str:
 def clean(text: str) -> str:
     """去掉台词里写给作者的括号备注（「（倒扣朝向待核）」），只留要念的字。"""
     return re.sub(r"\s+", " ", NOTE_RE.sub("", text)).strip()
+
+
+def display(text: str) -> str:
+    """页面与字幕上的写法：`{显示|念法}` 取显示。"""
+    return SAY_RE.sub(r"\1", clean(text))
+
+
+def spoken(spec: dict, text: str) -> str:
+    """送去配音的写法：`{显示|念法}` 取念法，再按清单 say 把多音字换成同音字（模型把「栅极」念成 zhà jí）。"""
+    text = SAY_RE.sub(r"\2", clean(text))
+    for a, b in spec.get("say", {}).items():
+        text = text.replace(a, b)
+    return text
+
+
+def whisper_model():
+    from faster_whisper import WhisperModel
+    # 只用 CPU：本机 faster-whisper 的 CUDA 缺 cublas64_12.dll（2026-11-14 试过，转写时才报错），与 edu_video.py 一致
+    return WhisperModel(WHISPER, device="cpu", compute_type="int8")
 
 
 def slug(speaker: str) -> str:
@@ -75,10 +96,11 @@ def synthesize(spec: dict, out: Path, lang: str, force_qa: bool) -> dict[str, di
     for sc in spec["scenes"]:
         for sh in sc["shots"]:
             for ln in sh.get("lines", []):
-                text = clean(ln["text"])
+                text = spoken(spec, ln["text"])
                 if text:
                     wanted.setdefault(ln["speaker"], {})[line_id(ln["speaker"], text)] = text
     takes_path = out / "lines" / "takes.json"
+    takes_path.parent.mkdir(parents=True, exist_ok=True)      # 全程无台词的集也要能出静音时间轴（follow-up 363）
     takes = json.loads(takes_path.read_text(encoding="utf-8")) if takes_path.exists() else {}
     model = None
     for speaker, items in wanted.items():
@@ -101,8 +123,7 @@ def synthesize(spec: dict, out: Path, lang: str, force_qa: bool) -> dict[str, di
             print(f"配音 {speaker}：{len(todo)} 句 × 种子 {seeds}", flush=True)
             subprocess.run([str(VOXCPM_PY), str(REPO / "tools/edu_voxcpm.py"), str(gpath), *todo], cwd=REPO, check=True)
             if model is None:
-                from faster_whisper import WhisperModel
-                model = WhisperModel(WHISPER, device="cpu", compute_type="int8")
+                model = whisper_model()
             for i, text in todo.items():
                 best = None
                 for seed in seeds:
@@ -127,25 +148,44 @@ def synthesize(spec: dict, out: Path, lang: str, force_qa: bool) -> dict[str, di
 
 
 def layout(spec: dict, takes: dict[str, dict]) -> tuple[list[dict], float]:
+    """排时间轴。每镜：起势 + 各句（句后 gap，另加该句 pause）+ 收尾，向上取整秒、不少于 min。
+    defaults.split = true 时（没有定好镜头的系列，如教学视频按讲稿段落排），一段超过 max 就按句拆成几镜（`<镜>-1`、`-2`…，
+    每镜不超过 max，句子不拆开）；不开时只标 over_max，由人决定拆镜（短剧的镜头是分镜定的）。"""
     d = DEFAULTS | spec.get("defaults", {})
     shots, t0 = [], 0.0
+
+    def emit(sc: dict, sh: dict, sid: str, items: list[tuple[dict, dict]], lead: float, tail: float) -> None:
+        nonlocal t0
+        t, lines = lead, []
+        for ln, tk in items:
+            text = display(ln["text"])
+            lines.append({"speaker": ln["speaker"], "text": text, "start": round(t, 2), "end": round(t + tk["seconds"], 2),
+                          "wav": tk["wav"], "cer": tk["cer"]})
+            t += tk["seconds"] + d["gap"] + float(ln.get("pause", 0))
+        need = (t - d["gap"] if lines else t) + tail
+        dur = max(sh.get("min", d["min"]), math.ceil(need - 1e-6))
+        shots.append({"scene": sc["id"], "id": sid, "src": sh["id"], "title": sh.get("title", sh["id"]), "start": round(t0, 2),
+                      "duration": dur, "speech_need": round(need, 2), "over_max": dur > d["max"], "lines": lines})
+        t0 += dur
+
     for sc in spec["scenes"]:
         for sh in sc["shots"]:
             lead, tail = sh.get("lead", d["lead"]), sh.get("tail", d["tail"])
-            t, lines = lead, []
-            for ln in sh.get("lines", []):
-                text = clean(ln["text"])
-                if not text:
-                    continue
-                tk = takes[line_id(ln["speaker"], text)]
-                lines.append({"speaker": ln["speaker"], "text": text, "start": round(t, 2), "end": round(t + tk["seconds"], 2),
-                              "wav": tk["wav"], "cer": tk["cer"]})
-                t += tk["seconds"] + d["gap"]
-            need = (t - d["gap"] if lines else t) + tail
-            dur = max(sh.get("min", d["min"]), math.ceil(need - 1e-6))
-            shots.append({"scene": sc["id"], "id": sh["id"], "title": sh.get("title", sh["id"]), "start": round(t0, 2),
-                          "duration": dur, "speech_need": round(need, 2), "over_max": dur > d["max"], "lines": lines})
-            t0 += dur
+            items = [(ln, takes[line_id(ln["speaker"], spoken(spec, ln["text"]))]) for ln in sh.get("lines", []) if clean(ln["text"])]
+            cost = [tk["seconds"] + d["gap"] + float(ln.get("pause", 0)) for ln, tk in items]
+            if not d.get("split") or lead + sum(cost) - d["gap"] + tail <= d["max"]:
+                emit(sc, sh, sh["id"], items, lead, tail)
+                continue
+            chunks, cur, acc = [], [], 0.0
+            for it, c in zip(items, cost):
+                first = not chunks and not cur
+                budget = d["max"] - (lead if first else d["lead"]) - d["tail"]
+                if cur and acc + c - d["gap"] > budget:
+                    chunks.append(cur); cur, acc = [], 0.0
+                cur.append(it); acc += c
+            chunks.append(cur)
+            for k, ch in enumerate(chunks, 1):
+                emit(sc, sh, f"{sh['id']}-{k}", ch, lead if k == 1 else d["lead"], tail if k == len(chunks) else d["tail"])
     return shots, t0
 
 
@@ -190,7 +230,7 @@ def build(manifest: Path, lang: str | None, force_qa: bool) -> None:
             seen.add(s["scene"])
             sc = scenes[s["scene"]]
             chapters.append({"id": s["scene"], "title": sc.get("title", s["scene"]), "t": s["start"]})
-        src = shot_src[(s["scene"], s["id"])]
+        src = shot_src[(s["scene"], s["src"])]
         said = " / ".join(f"{ln['speaker']}：{ln['text']}" for ln in s["lines"]) or "无对白"
         detail = f"本镜 {s['duration']} 秒（口播加起收需要 {s['speech_need']:.1f} 秒）"
         if s["lines"]:
@@ -256,16 +296,26 @@ def from_filming(episode: Path, lang: str) -> Path:
                 shot["image"] = rel(frame)
             shots.append(shot)
         scenes.append({"id": sc["id"], "title": f"{sc['id']} · {sc.get('location', '')}", "subtitle": sc.get("time", ""), "shots": shots})
-    for name in sorted({ln["speaker"] for sc in scenes for sh in sc["shots"] for ln in sh["lines"]}):
-        hits = [p for p in drama.rglob("voice*.json") if name.lower() in p.as_posix().lower()]
-        if hits:
-            v = json.loads(hits[0].read_text(encoding="utf-8"))
-            v = v.get("voices", {}).get(lang, v)
-            if "reference" in v:
-                voices[name] = {"reference": v["reference"], "reference_text": v["reference_text"]}
     manifest = episode / "audio" / "preview_manifest.json"
     manifest.parent.mkdir(parents=True, exist_ok=True)
     old = json.loads(manifest.read_text(encoding="utf-8")) if manifest.exists() else {}
+    model = None
+    for name in sorted({ln["speaker"] for sc in scenes for sh in sc["shots"] for ln in sh["lines"]}):
+        if name in old.get("voices", {}):
+            continue
+        # 人物资产的声样：characters/<cN_名字>/views/<cN_名字>_audio.mp3（char-assets 命名规则）
+        hits = sorted(p for p in drama.glob("2_*/characters/*/views/*_audio.mp3")
+                      if re.fullmatch(rf"c\d+_{re.escape(name)}", p.parents[1].name, re.I))
+        if not hits:
+            continue
+        wav = episode / "audio" / "preview" / "voices" / f"{slug(name)}.wav"
+        wav.parent.mkdir(parents=True, exist_ok=True)
+        subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(hits[0]), "-ac", "1", "-ar", str(SR), str(wav)], check=True)
+        if model is None:
+            model = whisper_model()
+        segs, _ = model.transcribe(str(wav), language=lang, beam_size=5)   # 声样原文：转写一次，存进清单，可手改
+        voices[name] = {"reference": rel(wav), "reference_text": "".join(x.text for x in segs).strip(), "source": rel(hits[0])}
+        print(f"声样 {name}：{rel(hits[0])} → {voices[name]['reference_text'][:40]}", flush=True)
     spec = {"title": f"{drama.name} {episode.name}", "path": rel(episode), "lang": lang,
             "voices": old.get("voices", {}) | voices, "scenes": scenes}
     manifest.write_text(json.dumps(spec, ensure_ascii=False, indent=1), encoding="utf-8")

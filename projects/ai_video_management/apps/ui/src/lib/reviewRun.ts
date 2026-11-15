@@ -18,7 +18,7 @@ export interface AgentDispatch {
 }
 /** v5 一维评分：0–3 分＋证据（审稿人报告「## 评分表」，tools/review_run.py validate_scores）。 */
 export interface DimScore { score: number; evidence: string }
-/** v5 一位审稿人（a＝Claude、b＝Codex）：各自任务书、报告、派单记录与打的分。 */
+/** v5 Kimi 单审的任务书、报告、派单记录与评分；旧双审记录也可读。 */
 export interface ReviewSlot {
   slot: string; runner: string; model: string; status: "pending" | "done" | "failed"; report: string; prompt: string; agents?: AgentDispatch[];
   by?: string; ticked_at?: string; scores?: Record<string, DimScore>; findings?: Record<string, number>; rows?: number; clean?: boolean;
@@ -223,8 +223,9 @@ export const LOOP_STEPS = [
 
 // —— 审稿 agent（follow-up 337）：每一步是哪个独立 agent 审的、用的什么指令和规则 ——
 
-/** 执行方式的简称：「Claude 子代理」「Codex」；认不出的取全角括号前的部分。 */
+/** 执行方式的简称；旧 Claude / Codex 记录仍可显示。 */
 export function agentKind(runner: string): string {
+  if (/kimi/i.test(runner)) return /子代理|agent/i.test(runner) ? "Kimi 子代理" : "Kimi";
   if (/codex/i.test(runner)) return "Codex";
   if (/claude/i.test(runner)) return /子代理|agent/i.test(runner) ? "Claude 子代理" : "Claude";
   return runner.split(/[（(]/)[0].trim() || runner;
@@ -236,7 +237,7 @@ export const agentShort = (a: AgentDispatch): string => `${agentKind(a.runner)} 
 /** 派单记录，最新的在前。 */
 export const attemptsNewestFirst = (item: ReviewItem): AgentDispatch[] => [...(item.agents ?? [])].sort((a, b) => b.n - a.n);
 
-/** 打勾的是哪一次派单：按 ticked_by 的前缀（claude-opus-5-5/…、codex/…）对上模型或执行方式，从新到旧找；对不上取最新一次。 */
+/** 打勾的是哪一次派单：按 ticked_by 的前缀（kimi/…；旧记录可能是 claude-…、codex-…）对上模型或执行方式，从新到旧找；对不上取最新一次。 */
 export function tickedAttempt(item: ReviewItem): AgentDispatch | undefined {
   const list = attemptsNewestFirst(item);
   if (item.status !== "done" || !list.length) return undefined;

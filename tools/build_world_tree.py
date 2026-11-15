@@ -32,7 +32,7 @@ import yaml
 REPO = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 # 地理片区 YAML 的真实位置。**曾经写成 `ai_videos/_research/wow/map`，那个目录从来没存在过**——
 # 不带 `--src` 跑就直接 FileNotFoundError，而报错里只有路径、没有「你大概是想跑哪个剧」。
-# 这是「手写死的路径片段漂了不会报错、只会在别处炸」的同一类问题（CLAUDE.md § 一个名字只有一处定义）。
+# 这是「手写死的路径片段漂了不会报错、只会在别处炸」的同一类问题（CONVENTIONS.md § 一个名字只有一处定义）。
 DEFAULT_SRC = os.path.join(REPO, "ai_videos", "shengji_zhilu", "0_research", "map")
 
 TYPES: tuple[str, ...] = (

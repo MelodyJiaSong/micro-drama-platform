@@ -7254,3 +7254,110 @@ Auto-updated:
 
 No conflicts found in: （未单独核查）
 
+
+## Follow-up 361 — 2026-11-14 21:20:47
+Source: user_input/follow_ups/202611.md - section 361
+Summary: 所有审稿统一 Claude 单审：qc_review.py 默认只起 claude -p（不再与 Codex 轮换、不以 Codex 兜底，显式 --reviewer codex 仍可用）；同步 CONVENTIONS、ai-videos-self-check skill 与审查名册里「换模型（codex）」的旧说法
+
+Auto-updated:
+- tools/qc_review.py：pick() 默认只用 Claude，去掉 Claude/Codex 轮换与互为兜底（--reviewer codex 仍可显式单用）
+- tools/tests/test_qc_review.py：两条测试改为单审断言
+- AGENTS.md、CONVENTIONS.md 工具映射表、.agents/skills/ai-videos-self-check/SKILL.md（含 description，已 sync）、review_roster.json 母语听感说明、tools/skill_pack.py 提示：去掉「换另一个模型 / 轮换模型 / codex」旧说法
+
+验证: pytest tools/tests/test_qc_review.py 17 passed；sync_agent_skills.py --check 8/16 一致；py_compile 通过；review_roster.json 可解析；出片前审查 review_run 早已是 v6 Claude 单审（chuanyue_yiri follow-up 065），本次未改
+
+No conflicts found in: review_run.py 与名册 v6 单审规则一致
+
+
+## Follow-up 359 — 2026-11-14 20:35:10
+Source: user_input/follow_ups/202611.md - section 359
+Summary: 音频预览播放器（scene/shot 进度条）＋ edu 故事板页沿用拍摄模块样式
+
+Auto-updated:
+- apps/ui：lib/episodePreview.ts（PreviewNotes.audio/cues、previewFile(audio)、audioPreviewHref）；EpisodePreviewPage.tsx（&audio=1 读 audio_preview.json）；EpisodeFilmPreview.tsx（音频模式：当前镜故事板大图＋叠台词＋audio，场/镜进度条复用，隐藏未审统计）；EpisodePreviewPage.css；EpisodeStoryboard.tsx（导出 ShotCard，lang/label/plainLinks）；新 StoryboardPreviewPage.tsx 与路由 /storyboard-preview；test/audio-storyboard-preview.test.tsx（4 例）
+
+验证: tsc --noEmit 通过；vitest audio-storyboard-preview / episode-preview / episode-storyboard 3 文件 17 例通过；Chrome 实测两页渲染与播放。未跑全量 vitest 与 e2e。
+
+No conflicts found in: 单集预览三模块剧模式、成片模式（preview.json）不变；故事板 follow-up 336 的首帧规则不变
+
+
+## Follow-up 360 — 2026-11-14 20:47:16
+Source: user_input/follow_ups/202611.md - section 360
+Summary: 总流程加「出视频前审音频预览」闸门；只有扣积分的视频生成要人点，免费本地视频代理直接出
+
+Auto-updated:
+- 新 tools/audio_preview.py（build / from-filming：VoxCPM2 逐句克隆、whisper 回听换种子、起势+台词+停顿+收尾取整秒、≥4s、>15s 报拆镜、混音 loudnorm、timeline.json、audio_preview.json；say 读音替换；短剧按 characters/cN_名字/views/*_audio.mp3 找声样并转写原文）；workflow_catalog.json 登记 2.3.128；CONVENTIONS.md 出图与出片的授权（扣积分的视频才人点、免费本地视频代理直接出、出视频前审音频预览）及高风险操作节措辞；AGENTS.md 收尾节；ai-videos-pipeline SKILL.md 与 modules/prompts-generate.md（新增「先审音频预览」行）；paid_services.md、ai_video_workflow.md 措辞
+
+验证: 探索 t01 实跑通过（见 edu_videos 040）；from-filming 用 chuanyue_yiri ep01 只验清单：61 镜 75 句，5 人自动找到声样，Helvia/店主/画外女声 无人物资产按设计报缺，测试文件已删除；拉丁语声样原文按英语转写不准，需手改。workflow_catalog --check、sync_agent_skills --check 通过。faster-whisper CUDA 缺 cublas64_12.dll，回听固定 CPU。
+
+No conflicts found in: 外部服务请求审计；图片授权（follow-up 229/341）；出片前审查循环；两步出片
+
+
+## Follow-up 362 — 2026-11-14 21:31:41
+Source: user_input/follow_ups/202611.md - section 362
+Summary: 全部审查改为 Claude 单审：去掉 Codex b 位、对比与裁决（文档＋工具）
+
+Auto-updated:
+- tools/review_run.py（说明、发给审稿人的总说明改为 Claude 单审，去掉 Codex 代登记说明；双审分支只为读续旧单）；tools/tests/test_review_run.py（新增 test_real_roster_is_claude_single_review_everywhere 锁定名册每类一位 Claude；总说明断言改为单审）；.agents/references/project/review_roster.json（codex_model_note 标停用）；.agents/skills/ai-videos-pipeline/SKILL.md 审查循环①②③⑤改写为单审；AGENTS.md 审查一句扩到全部审查
+
+验证: pytest tools/tests/test_review_run.py 34 passed、test_qc_review.py 通过；改前基线 33 passed；py_compile 通过；sync_agent_skills --check、workflow_catalog --check 通过；全仓 grep 审稿相关 Codex 只剩旧双审单兼容说明与 Codex 出图条目。
+
+No conflicts found in: qc_review.py 与 ai-videos-self-check 已是 Claude 单审（follow-up 065）；出片前审查循环轮数与收轮规则不变
+
+
+## Follow-up 363 — 2026-11-14 23:10:08
+Source: user_input/follow_ups/202611.md - section 363
+Summary: audio_preview.py：没有任何台词时 lines/ 目录不会被创建，写 takes.json 失败；写之前先建目录，让无人声的集也能生成静音时间轴预览（首帧按镜头时长排）
+
+Auto-updated:
+- tools/audio_preview.py：build 写 takes.json 前先建 lines/ 目录
+
+验证: huangye_shenghuo ep01（67 镜全无台词）from-filming 成功：7:16、67 镜，timeline.json 每镜时长等于分镜时长；py_compile 通过；tools/tests 下没有 audio_preview 的测试
+
+No conflicts found in: 有台词的集行为不变（目录原本由各说话人子目录顺带建出）
+
+
+## Follow-up 364 — 2026-11-15 16:37:37
+Source: user_input/follow_ups/202611.md - section 364
+Summary: 统一按集故事板样式并加入左侧导航
+
+Auto-updated:
+- libs/infrastructure/readers/tree__reader.py — 短剧增加按集故事板导航；edu 期增加已有故事板入口
+- tests/test_tree_display_name_zh.py、tests/test_tree_edu_videos.py — 两类入口与无空入口回归测试
+- projects/ai_video_management/README.md、specs/development/ai_video_management/final_specs/spec.md、validation/acceptance_criteria.md — 统一入口契约
+- .audit/adhoc_agents/2026-11-15/storyboard-nav/{t11,chuanyue}.png — 实机导航与卡片证据
+
+验证: Chrome/Playwright 实开：t11 左导航选中且 15 卡；穿越一日 故事板（按集）→EP1 选中且 61 卡；截图已看图
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 365 — 2026-11-15 17:03:12
+Source: user_input/follow_ups/202611.md - section 365
+Summary: 故事板统一入口写入管理工作流目录
+
+Auto-updated:
+- .agents/references/project/ai_video_workflow.md — 全局覆盖表加入按集/期故事板入口与只读边界
+- .agents/references/project/workflow_catalog.json — 登记管理 README、tree__reader 与三个既有引用工具；探索系列源改为可读标题
+
+验证: 实开 /workflow/source?source_id=repo:edu_videos/tansuo/README.md，页面读取到每期 storyboard.json 与 ShotCard 流程；截图 workflow-tansuo.png 已看图
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 366 — 2026-11-15 17:30:49
+Source: user_input/follow_ups/202611.md - section 366
+Summary: 恢复 Codex 为共用工作流主代理，统一配置与管理入口
+
+Auto-updated:
+- AGENTS.md、CONVENTIONS.md、README.md、.agents/skills/*/SKILL.md、.agents/references/project/{ai_video_workflow,paid_services}.md — Kimi/Codex 共用规范与调用说明，保留 Kimi 独立审稿，停用 Claude 新入口
+- .agents/mcp.json、.codex/config.toml、tools/sync_agent_config.py、projects/suno_browser_service/{install-agents.ps1,README.md,apps/cli/main.py} — 一份 MCP 定义生成两端配置，Suno 安装入口共用且不改用户配置
+- .agents/references/project/workflow_catalog.json、projects/ai_video_management/{README.md,apps/ui/src/components/{EditStagePanel,EpisodeWorkflowPage}.tsx,apps/ui/src/lib/processQc.ts,apps/ui/e2e/global_workflow.spec.ts,tests/test_global_workflow.py} — 管理目录登记两端配置并验证脱敏与覆盖，统一界面提示
+- tools/followup.py、tools/check_agent_skills.py、tools/tests/{test_agent_compat,test_followup}.py、tools/review_run.py、.gitignore — Codex 会话归属、共用技能和配置检查，Claude 旧记录保留原始来源
+- projects/spec_driven/{README.md,libs/infrastructure/prompt_lab__executor.py,tests/unit/test_prompt_lab.py,apps/ui/src/components/PromptLabPage.tsx,apps/ui/src/types.ts,apps/ui/package.json,apps/ui/test/qaParser.test.ts}、prompt_lab/**/*.md — Prompt Lab 支持 PROMPT_LAB_RUNTIME=kimi|codex 并记录实际执行器，清理 Claude 使用说明；补 Node 类型及修正测试规格路径
+- specs/development/ai_video_management/final_specs/spec.md — 持久化共用流程与管理契约；.audit/kimi-codex-shared-20261115/ — 修改前快照及测试日志
+
+验证: 121 项通过：工具 26、管理后端 13、Prompt Lab 后端 15、管理前端 9、软件前端 56、Edge 浏览器端到端 2；1 项 Windows 符号链接测试因权限跳过。两套前端构建成功；8 个 skill 元数据通过，282 个工作流源编号连续，引用覆盖通过；两端 MCP 生成结果一致，Suno 安装脚本验证通过。未启动收费生成或真实 Prompt Lab 模型任务。
+
+No conflicts found in: 既有制作资产、历史请求与审稿来源、其他会话的待补日志；独立审稿仍为 Kimi 单审。
+

@@ -3,7 +3,7 @@ name: agent-team
 description: Spec-driven 软件新项目或完整阶段重跑：需求整理、访谈、研究、规格、验证、执行；持久化产物并支持续跑。短剧走 ai_videos__全流程编排；已有项目局部修复按共用 follow-up 流程。
 ---
 
-> Claude / Codex 共用正文。执行前按根目录 `AGENTS.md` 路由，工具、提问、委派、参数与收尾遵 `CONVENTIONS.md` § Tool scoping and team coordination。路径相对仓库根；同目录资源相对本源文件。
+> Kimi / Codex 共用执行正文。执行前按根目录 `AGENTS.md` 路由，工具、提问、委派、参数与收尾遵 `CONVENTIONS.md` § Tool scoping and team coordination。路径相对仓库根；同目录资源相对本源文件。
 
 
 # agent_team — spec-driven workflow

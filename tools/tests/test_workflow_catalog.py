@@ -12,7 +12,7 @@ def catalog() -> dict:
         "sources": [{"path": "a.md", "group": "story"}, {"path": "moved.md", "group": "prod"}],
         "discover": [{"glob": "refs/*.md", "group": "prod"}],
         "source_numbers": {"repo:a.md": "1.1.2", "repo:moved.md": "1.1.4", "repo:refs/old.md": "1.3.7",
-                           "repo:gone.md": "1.3.1", "user:.codex/other-machine.toml": "1.3.9"},
+                           "repo:gone.md": "1.3.1", "user:.kimi-code/other-machine.toml": "1.3.9"},
     }
 
 
@@ -24,7 +24,7 @@ def test_fix_compacts_groups_and_sources_and_appends_new(tmp_path: Path) -> None
     assert [group["number"] for group in result.groups] == ["1.1", "1.2"]
     assert result.numbers == {
         "repo:a.md": "1.1.1",
-        "repo:refs/old.md": "1.2.1", "user:.codex/other-machine.toml": "1.2.2", "repo:moved.md": "1.2.3", "repo:refs/new.md": "1.2.4",
+        "repo:refs/old.md": "1.2.1", "user:.kimi-code/other-machine.toml": "1.2.2", "repo:moved.md": "1.2.3", "repo:refs/new.md": "1.2.4",
     }
     assert "失效编号 1.3.1 repo:gone.md" in result.problems and "待编号 repo:refs/new.md" in result.problems
 

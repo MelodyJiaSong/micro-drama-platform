@@ -1,25 +1,22 @@
 ---
 name: ai-videos-self-check
-description: 技能出片前后的自检与自我进化（Claude / Codex 通用）：出片前先过闸门（规格、参考、体型、每个角色的立场与视线），出片后机检＋多视角独立审稿（每个角色各一个审稿人、导演、观众、原版还原，轮换模型）再过闸门；用户抓到问题记缺陷、放行记误报，让检查越用越准。仓库级与剧级分开。
-metadata:
-  claude:
-    argument-hint: '<出片目录> [--when 一镜到底]'
+description: 技能出片前后的自检与自我进化：出片前先过闸门（规格、参考、体型、每个角色的立场与视线），出片后机检＋多视角 Kimi 独立审稿（每个角色各一个审稿人、导演、观众、原版还原）再过闸门；用户抓到问题记缺陷、放行记误报。仓库级与剧级分开。
 ---
 
-> Claude / Codex 共用正文。执行前按根目录 `AGENTS.md` 路由，工具、提问、委派、参数与收尾遵 `CONVENTIONS.md` § Tool scoping and team coordination 与「用户报问题」节的「仓库级与剧级」「自检与自我进化」。路径相对仓库根。
+> Kimi / Codex 共用执行正文。执行前按根目录 `AGENTS.md` 路由，工具、提问、委派、参数与收尾遵 `CONVENTIONS.md` § Tool scoping and team coordination 与「用户报问题」节的「仓库级与剧级」「自检与自我进化」。路径相对仓库根。
 
 # 出片自检与自我进化
 
 **只对剧目录里有 `qc_checks.toml`（剧级登记表）的剧生效**；没有的剧照原流程。查什么＝仓库级 `.agents/references/project/qc_checks.toml` ＋ 剧级 `ai_videos/{剧}/qc_checks.toml`，`tools/qc.py` 自动合并。
 
-## 两个代理一样做
+## 执行方式
 
-| 能力 | 做法（Claude 与 Codex 相同） |
+| 能力 | 做法 |
 |---|---|
 | 机检 | 跑 `tools/motion_check.py` 等工具，结论用 `qc.py record --by machine` 记 |
-| 独立审稿 | `python tools/qc_review.py <出片目录>`：另起 `codex exec` / `claude -p` 进程，在临时空目录、只读下只看拼图与规格；默认交给**另一个**模型（Claude 调用 → Codex 审，反之亦然），失败自动换另一个，都失败记「未审」。不用代理自带的子代理，也不由作者自判 |
-| 日志 | 只用 `tools/followup.py new / done`：各会话先记在自己的 `_inbox` 条目，`merge` 周期性汇聚（Stop 钩子每次先跑）；`skill_pack.py submit` 提交前只查**本会话**的条目（撞号、格式、待补超时），别的会话的只提示、不拦 |
-| 收尾 | Claude 由 Stop hook 拦；Codex 没有 hook，收尾显式跑 `python tools/followup.py check --all` |
+| 独立审稿 | `python tools/qc_review.py <出片目录>`：另起 `kimi -p` 进程，在临时空目录用只读 QC agent，只看拼图与规格；失败记「未审」，不用作者自判 |
+| 日志 | 只用 `tools/followup.py new / done`：各会话先记在自己的 `_inbox` 条目，`merge` 周期性汇聚；`skill_pack.py submit` 提交前只查**本会话**的条目 |
+| 收尾 | 安装仓库 Kimi 插件后由 Stop hook 拦截；每回合仍显式运行 `python tools/followup.py check --all` |
 
 ## 两层、三种结论（2026-11-14，用户定，dota_yingxiong follow-up 354）
 

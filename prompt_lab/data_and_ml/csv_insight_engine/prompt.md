@@ -10,7 +10,7 @@ Point this at any CSV and a single `python insight.py <path.csv>` builds a polis
 **Use cases:** Fast first-pass EDA on a messy CSV that just landed in your inbox before you commit to deeper analysis; a one-click profiling report to hand a stakeholder who won't open a notebook; a reusable triage template you keep in your toolkit and re-point at every new dataset; and learning auto-EDA mechanics (type inference, IQR/z-score outliers, correlation surfacing) by reading clean, framework-free pandas code.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away: drop the prompt below into Claude Code in an empty folder, answer 2 short setup questions, then it builds, runs on a CSV, self-reviews, and opens the report autonomously.
+Copy-paste-and-walk-away: drop the prompt below into Kimi / Codex in an empty folder, answer 2 short setup questions, then it builds, runs on a CSV, self-reviews, and opens the report autonomously.
 Prerequisites: `pip install pandas plotly` (the prompt runs this). Bring any CSV — or let it generate a demo one.
 
 ## 🔗 3. Reference & prior art

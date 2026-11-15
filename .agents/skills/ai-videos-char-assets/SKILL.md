@@ -1,20 +1,16 @@
 ---
 name: ai-videos-char-assets
 description: 短剧人物资产补齐：立绘、4 秒建立视频、三视图与声样；给剧目录名，跳过已有资产，每步看图验收。
-metadata:
-  claude:
-    argument-hint: '<剧目录名> 例: shengji_zhilu'
 ---
 
-> Claude / Codex 共用正文。执行前按根目录 `AGENTS.md` 路由，工具、提问、委派、参数与收尾遵 `CONVENTIONS.md` § Tool scoping and team coordination。路径相对仓库根；同目录资源相对本源文件。
+> Kimi / Codex 共用执行正文。执行前按根目录 `AGENTS.md` 路由，工具、提问、委派、参数与收尾遵 `CONVENTIONS.md` § Tool scoping and team coordination。路径相对仓库根；同目录资源相对本源文件。
 
-
-# 人物资产一条龙（/ai_videos__char_assets）
+# 人物资产一条龙
 
 **调用前关卡**：独立补资产和旧剧续跑也遵 `CONVENTIONS.md` § 外部服务请求审计（全局必经）；先读 `.agents/references/project/paid_services.md`，由已接入的生成器先记录请求再调用服务，归属本剧/系列的 characters 日志。已有产物跳过不等于后续调用可免审计。
 新生成的声音资产默认走 [Suno 音频入口](../ai-videos-pipeline/modules/sound.md)，先查 capabilities。当前不支持精确对白/声线克隆时记为缺口，不拿唱歌替代声样，也不自动换本地语音模型；已有真实声样与视频音轨可继续复用。
 
-名字用纯 ASCII：中文名的 skill 在 `/` 补全里不出现（2026-09-30 用户实测 `/ai_videos` 补不出 `ai_videos__人物资产`）。
+Kimi 中用 `/skill:ai-videos-char-assets <剧目录名>`，Codex 中用 `$ai-videos-char-assets <剧目录名>`；也可自然语言指定本 skill。
 
 参数 ＝ 剧（`实际用户消息中的参数`）：`ai_videos/` 下的目录名，或带季的相对路径。
 底层是 `tools/char_assets.py`（status / run / sheet），它调 `gen_char_images.py`（立绘）、`gen_turntable_videos.py`（建立视频）、网页端 `apps.cli.extract_views`（三视图）。**已有的一律跳过**，中断后重跑同一条命令即续。

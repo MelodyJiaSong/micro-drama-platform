@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """经 Codex CLI 调内置 image_gen 出图（复用本机 ChatGPT 订阅登录，不要 OPENAI_API_KEY）。
 
-Claude 或任何代理都走这里，不直接跑 `codex exec`：先写 request_log 再调用；Codex 在空目录、只读沙箱里
+Kimi 或其他代理都走这里，不直接跑 `codex exec`：先写 request_log 再调用；Codex 在空目录、只读沙箱里
 只做一次 image_gen，图片由本脚本从 `$CODEX_HOME/generated_images/<thread_id>/` 拷到目标路径。
 内置工具不暴露型号、quality、尺寸与费用：日志记为未知；结果不明不自动重提。规则见 paid_services.md「Codex 内置出图」。
 

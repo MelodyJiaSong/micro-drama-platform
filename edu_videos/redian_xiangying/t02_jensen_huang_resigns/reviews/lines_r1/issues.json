@@ -1,0 +1,4628 @@
+{
+ "run": "lines_r1",
+ "round": 1,
+ "generated_at": "2026-11-14T22:06:24",
+ "items": [
+  {
+   "item": "voice_zh",
+   "name": "中文口播（母语听感，盲审）",
+   "final": {
+    "V1": 2,
+    "V2": 1,
+    "V3": 1,
+    "V4": 2,
+    "V5": 2,
+    "V6": 2
+   },
+   "scores": {
+    "a": {
+     "V1": 2,
+     "V2": 1,
+     "V3": 1,
+     "V4": 2,
+     "V5": 2,
+     "V6": 2
+    },
+    "judge": {}
+   }
+  },
+  {
+   "item": "voice_en",
+   "name": "English narration (native ear, blind)",
+   "final": {
+    "V1": 2,
+    "V2": 2,
+    "V3": 2,
+    "V4": 2,
+    "V5": 1,
+    "V6": 2
+   },
+   "scores": {
+    "a": {
+     "V1": 2,
+     "V2": 2,
+     "V3": 2,
+     "V4": 2,
+     "V5": 1,
+     "V6": 2
+    },
+    "judge": {}
+   }
+  },
+  {
+   "item": "screen_zh",
+   "name": "中文屏幕文字（PPT 式画面）",
+   "final": {
+    "P1": 1,
+    "P2": 2,
+    "P3": 2,
+    "P4": 1,
+    "P5": 2,
+    "P6": 2
+   },
+   "scores": {
+    "a": {
+     "P1": 1,
+     "P2": 2,
+     "P3": 2,
+     "P4": 1,
+     "P5": 2,
+     "P6": 2
+    },
+    "judge": {}
+   }
+  },
+  {
+   "item": "screen_en",
+   "name": "English on-screen text (slides)",
+   "final": {
+    "P1": 1,
+    "P2": 2,
+    "P3": 1,
+    "P4": 2,
+    "P5": 1,
+    "P6": 3
+   },
+   "scores": {
+    "a": {
+     "P1": 1,
+     "P2": 2,
+     "P3": 1,
+     "P4": 2,
+     "P5": 1,
+     "P6": 3
+    },
+    "judge": {}
+   }
+  }
+ ],
+ "issues": [
+  {
+   "id": "I1",
+   "key": "0d8d1c0a971c",
+   "item": "screen_en",
+   "where": "c_c3 chapter title",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "c_c3 chapter title"
+   ],
+   "evidence": [
+    "\"Both parties press\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Pressure from both parties\" (4 words)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Both parties press\"",
+   "problem": "Verb with no object; chapter titles must read naturally aloud",
+   "suggest": "\"Pressure from both parties\" (4 words)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "章名由讲稿作者在 package.json 改为「Both parties want answers」；s3 页眉改为从 package.json 读（data.py → data.json → _lib.js chLabel），不再写死",
+   "reason": "",
+   "files": [
+    "scenes/data.py",
+    "scenes/web/_lib.js",
+    "scenes/web/s3.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I2",
+   "key": "b898a602d6fb",
+   "item": "screen_en",
+   "where": "l02 / l03 (cold open, strict)",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l02 / l03 (cold open, strict)"
+   ],
+   "evidence": [
+    "8-K paragraph (33 words, blurred) + \"FORM 8-K · ITEM 5.02\" + \"NVIDIA CORPORATION\" + 3 row labels + h2 rows; l03 totals 12 blocks / 67 words"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep one blurred document image as a prop (not counted as text blocks only if illegible) and show only: \"CEO · director: out\" / \"33 years\" / \"Reason: not given\" (3 blocks, ≤9 words)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "8-K paragraph (33 words, blurred) + \"FORM 8-K · ITEM 5.02\" + \"NVIDIA CORPORATION\" + 3 row labels + h2 rows; l03 totals 12 blocks / 67 words",
+   "problem": "Cold open is the most strict screen; far above the 22-word / 4-block limit even if the paragraph is blurred; the viewer sees a wall of text",
+   "suggest": "Keep one blurred document image as a prop (not counted as text blocks only if illegible) and show only: \"CEO · director: out\" / \"33 years\" / \"Reason: not given\" (3 blocks, ≤9 words)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "8-K 正文改成灰条道具（读不出字），表头只留「FORM 8-K」小标签，去掉 NVIDIA CORPORATION 与可读高亮；只剩一张三行同构表：Out as CEO · director / Ran it for 33 years / Reason not given",
+   "reason": "",
+   "files": [
+    "scenes/web/s0.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:14",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I3",
+   "key": "d465d65aecea",
+   "item": "screen_en",
+   "where": "l04",
+   "dim": "P2",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l04"
+   ],
+   "evidence": [
+    "\"−13%\" next to the narration \"more than ten percent\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep; or change to \"−13% open\" only if narration adds the figure",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"−13%\" next to the narration \"more than ten percent\"",
+   "problem": "Number not stated in narration; defensible since it is computed from the shown prices",
+   "suggest": "Keep; or change to \"−13% open\" only if narration adds the figure",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "保留 −13%",
+   "reason": "审稿人也建议保留：−13% 由屏上同时给出的开盘价与前收盘价算出（151.01 / 173.73，data.py 断言 round = −13 且在 −10～−20 之间），出处行列了三个价格；口播「十几个点」与之不矛盾",
+   "files": [
+    "scenes/web/s0.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:14",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I4",
+   "key": "55e585ddc2ac",
+   "item": "screen_en",
+   "where": "l07 (cold open, strict)",
+   "dim": "P1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l07 (cold open, strict)"
+   ],
+   "evidence": [
+    "h1 \"A private matter\" + 3 h2 + 12-word source line"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Drop the \"Private\" span on l06",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "h1 \"A private matter\" + 3 h2 + 12-word source line",
+   "problem": "4 blocks, 10 words, OK; source line fine. No change except l06 \"Private\" tag duplicates h1",
+   "suggest": "Drop the \"Private\" span on l06",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "删掉 l06 的「私事 / Private」标签（中英同改）",
+   "reason": "",
+   "files": [
+    "scenes/web/s0.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:14",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I5",
+   "key": "813f966af968",
+   "item": "screen_en",
+   "where": "l09 (cold open, strict)",
+   "dim": "P1/P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1/P4",
+   "shots": [
+    "l09 (cold open, strict)"
+   ],
+   "evidence": [
+    "\"Not saying: he quit over national security\" + \"Reason for leaving: not disclosed\" + 3 repeated blocks from l08 (5 blocks, 22 words)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Replace both with \"Not claimed: he quit over it\" (one block); keep h2 + h1 from l08",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Not saying: he quit over national security\" + \"Reason for leaving: not disclosed\" + 3 repeated blocks from l08 (5 blocks, 22 words)",
+   "problem": "Sits on the limit; the two bottom lines say the same thing; \"Not saying:\" is awkward",
+   "suggest": "Replace both with \"Not claimed: he quit over it\" (one block); keep h2 + h1 from l08",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "英文 l09 两行合成一块「Not our claim: he quit over it」，删去「Reason for leaving」行；h2 与 h1 保留",
+   "reason": "",
+   "files": [
+    "scenes/web/s0.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:15",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I6",
+   "key": "cc98a7153ef5",
+   "item": "screen_en",
+   "where": "l15-l22 eyebrow",
+   "dim": "P3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "l15-l22 eyebrow"
+   ],
+   "evidence": [
+    "\"01 · What's confirmed\" over \"Reported · unnamed sources\" and \"The other side\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Change the eyebrow per section: \"01 · Confirmed\" on l11-l14, \"01 · Reported\" on l15-l18, \"01 · Disputed\" on l19-l22; or drop the eyebrow text after l14",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"01 · What's confirmed\" over \"Reported · unnamed sources\" and \"The other side\"",
+   "problem": "The chapter label says confirmed while the screen shows unconfirmed claims and rebuttals; a viewer reads the label as covering them",
+   "suggest": "Change the eyebrow per section: \"01 · Confirmed\" on l11-l14, \"01 · Reported\" on l15-l18, \"01 · Disputed\" on l19-l22; or drop the eyebrow text after l14",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "s1 页眉随内容换：l10–l14 用章名（从 package.json 读），l15 起「01 · Reported, not confirmed」，l19 起「01 · The responses」，l23「01 · What we don’t know」（中文同步：只是报道 · 未证实 / 各方回应 / 我们不知道的）",
+   "reason": "",
+   "files": [
+    "scenes/web/_lib.js",
+    "scenes/web/s1.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:15",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I7",
+   "key": "4f73c74ac442",
+   "item": "screen_en",
+   "where": "l22",
+   "dim": "P1/P4/P5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1/P4/P5",
+   "shots": [
+    "l22"
+   ],
+   "evidence": [
+    "\"Charges: none\" (overflows card) + eyebrow \"As of Nov 14\" + source \"No charges found as of Nov 14, 2026\" + 3 old cards (9 blocks, 32 words)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Clear the other two cards' small text; show \"Charges: none\" (fit to card) with eyebrow \"As of Nov 14\"; drop the long source line",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Charges: none\" (overflows card) + eyebrow \"As of Nov 14\" + source \"No charges found as of Nov 14, 2026\" + 3 old cards (9 blocks, 32 words)",
+   "problem": "Three statements of the same fact; text exceeds its card; 2.3 s",
+   "suggest": "Clear the other two cards' small text; show \"Charges: none\" (fit to card) with eyebrow \"As of Nov 14\"; drop the long source line",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l22 改成单独一屏：前两张回应卡收走，只剩「Singapore police · Feb 2026 / Against her: insufficient evidence」与「As of Nov 14 / Charges: none」（display 字号、居中不出框）；删掉长出处行",
+   "reason": "",
+   "files": [
+    "scenes/web/s1.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:16",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I8",
+   "key": "cba3b351c056",
+   "item": "screen_en",
+   "where": "l23",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "\"He didn't say · we don't know\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Delete the body line; keep \"?\" and the two captions",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"He didn't say · we don't know\"",
+   "problem": "A prose sentence; the screen's caption \"With whom: not said\" already carries it",
+   "suggest": "Delete the body line; keep \"?\" and the two captions",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "删掉底行「He didn't say · we don't know」，只留问号与两张卡；右卡的「Reported · unnamed sources」改成标签",
+   "reason": "",
+   "files": [
+    "scenes/web/s1.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:16",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I9",
+   "key": "f9145fb7ce18",
+   "item": "screen_en",
+   "where": "l29 / l28",
+   "dim": "P1/P5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1/P5",
+   "shots": [
+    "l29 / l28"
+   ],
+   "evidence": [
+    "l29: 10 blocks, 36 words, 3.8 s"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Three rows only: \"Singapore police: investigating\" / \"US export control: inspected\" / \"Company: denies wrongdoing\"; drop the footer span",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "l29: 10 blocks, 36 words, 3.8 s",
+   "problem": "Three paired label/status rows plus a footer span \"Under investigation · no conclusion\" repeating them",
+   "suggest": "Three rows only: \"Singapore police: investigating\" / \"US export control: inspected\" / \"Company: denies wrongdoing\"; drop the footer span",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "去掉底部「Under investigation · no conclusion」标签；按讲稿 v1.2 改成同构四行：Her · insufficient evidence / The company · still under investigation（l28）→ US export control · inspected / Its response · denies wrongdoing（l29，Her 行退后），左侧闸门图在 l28 退后",
+   "reason": "",
+   "files": [
+    "scenes/web/s2.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I10",
+   "key": "a2b0b0d05f03",
+   "item": "screen_en",
+   "where": "l37",
+   "dim": "P1/P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1/P2",
+   "shots": [
+    "l37"
+   ],
+   "evidence": [
+    "\"Stop fabricating a \"spy narrative\" / as a pretext for a tech blockade\" (12 words)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"No \"spy narrative\" as a pretext\" (6 words), keep \"Translated from Chinese\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Stop fabricating a \"spy narrative\" / as a pretext for a tech blockade\" (12 words)",
+   "problem": "Block over 9 words; copies the narration",
+   "suggest": "\"No \"spy narrative\" as a pretext\" (6 words), keep \"Translated from Chinese\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "外交部卡改关键词：h2「Stop the “spy narrative”」+ 正文「Pretext for a tech blockade」+「Translated from Chinese」",
+   "reason": "",
+   "files": [
+    "scenes/web/s2.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I11",
+   "key": "a1468a9d4c70",
+   "item": "screen_en",
+   "where": "l41",
+   "dim": "P1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l41"
+   ],
+   "evidence": [
+    "\"Huang: on this side\" + \"77\", \"20\", \"77 : 20\" shown together"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Show only \"77 : 20\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Huang: on this side\" + \"77\", \"20\", \"77 : 20\" shown together",
+   "problem": "Duplicate figures (spans 77, 20 plus h1 \"77 : 20\")",
+   "suggest": "Show only \"77 : 20\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "77 : 20 做成一个文字块（不再拆成 77、20 两个独立数字）；「Huang: on this side」改「Huang: with the White House」，只在 l40 出现、l41 收走",
+   "reason": "",
+   "files": [
+    "scenes/web/s3.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:18",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I12",
+   "key": "b9574e16ff8e",
+   "item": "screen_en",
+   "where": "l47 / l46 / l42",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l47 / l46 / l42"
+   ],
+   "evidence": [
+    "l47: 7 blocks, 41 words; l42: 9 blocks, 40 words"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "l42: keep one card per beat (\"Mar 2026 · one senator per party → Review export licenses\"); l47: \"Warren (D) backs GOP bill\" (5 words) as the only new block",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "l47: 7 blocks, 41 words; l42: 9 blocks, 40 words",
+   "problem": "Over limits; earlier blocks are not cleared (Oct 2025 77:20 stays while Mar 2026 arrives)",
+   "suggest": "l42: keep one card per beat (\"Mar 2026 · one senator per party → Review export licenses\"); l47: \"Warren (D) backs GOP bill\" (5 words) as the only new block",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "每拍只留当拍的卡：l41 白宫栏退后、黄仁勋行收走；l42 77:20 退后，只留「Mar 2026 · one senator per party / Review Nvidia’s export licenses」；l47 民主党卡退后，新块只有「Democrat Warren backs one too」（不用 D / GOP 缩写）",
+   "reason": "",
+   "files": [
+    "scenes/web/s3.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:18",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I13",
+   "key": "bbf470e458a7",
+   "item": "screen_en",
+   "where": "l55 / l56",
+   "dim": "P1/P3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1/P3",
+   "shots": [
+    "l55 / l56"
+   ],
+   "evidence": [
+    "l55: 6 blocks, 41 words (chart + 3 callouts + Trump line); l56 adds a 7-word h2"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Chart ticks exempt; label points only: \"Cramer (R): go\" / \"Trump (R): backed him\" / \"Jeffries (D): after he quit\"; l56 \"No party pushed him out\" (5 words)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "l55: 6 blocks, 41 words (chart + 3 callouts + Trump line); l56 adds a 7-word h2",
+   "problem": "Over limits; timeline carries three people's statements",
+   "suggest": "Chart ticks exempt; label points only: \"Cramer (R): go\" / \"Trump (R): backed him\" / \"Jeffries (D): after he quit\"; l56 \"No party pushed him out\" (5 words)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "时间轴每人只在当拍带一句说明：Cramer / Republican Senator（同一块）+ l53「Said he should go」；l54 只加「Trump, a Republican: backed him」；l55 Trump 条退后，只加 Top House Democrat +「After he quit: “the right thing to do”」；l56 收走说明，只加「Party pushing him out: no record」",
+   "reason": "",
+   "files": [
+    "scenes/web/s4.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:19",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I14",
+   "key": "acd8cc7e7177",
+   "item": "screen_en",
+   "where": "l60 / l62",
+   "dim": "P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l60 / l62"
+   ],
+   "evidence": [
+    "\"Resignation accepted Nov 11, day of report two\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"Resigned Nov 11, same day\" (5 words)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"Resignation accepted Nov 11, day of report two\"",
+   "problem": "\"report two\" is internal jargon; clipped",
+   "suggest": "\"Resigned Nov 11, same day\" (5 words)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "「report two」改「Resigned the day it was reported」（与讲稿 v1.2 l60「accepted his resignation that very day」一致）",
+   "reason": "",
+   "files": [
+    "scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:19",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I15",
+   "key": "e4ba13a874c9",
+   "item": "screen_en",
+   "where": "l61",
+   "dim": "P1/P5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1/P5",
+   "shots": [
+    "l61"
+   ],
+   "evidence": [
+    "11 blocks, 49 words incl. old Nvidia list repeated beside the Intel card"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Clear the Nvidia list; show only \"Intel · June 2018 / CEO resigns / Broke policy: relationship with employee\" (3 blocks, ~12 words)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "11 blocks, 49 words incl. old Nvidia list repeated beside the Intel card",
+   "problem": "Hard limits broken ~2x; old left-hand list should clear when the Intel card arrives",
+   "suggest": "Clear the Nvidia list; show only \"Intel · June 2018 / CEO resigns / Broke policy: relationship with employee\" (3 blocks, ~12 words)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l61 英伟达清单整体收走、反方卡退后到 0.22，只看英特尔卡（Intel · June 2018 / CEO resigns / Relationship with an employee broke policy）",
+   "reason": "",
+   "files": [
+    "scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:20",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I16",
+   "key": "240e77dd7c9f",
+   "item": "screen_en",
+   "where": "l62",
+   "dim": "P1/P5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1/P5",
+   "shots": [
+    "l62"
+   ],
+   "evidence": [
+    "8 blocks, ~42 words; \"Resignation accepted Nov 11, day of report two\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Left card: \"National security is noise\" only (grey). Right card: \"We agree\" / \"Never claimed: security\" / \"Likely cause: governance\". List items to \"Resigned Nov 11, same day as report\" if kept",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "8 blocks, ~42 words; \"Resignation accepted Nov 11, day of report two\"",
+   "problem": "Over limits; \"report two\" unreadable aloud; card repeats the l60 list",
+   "suggest": "Left card: \"National security is noise\" only (grey). Right card: \"We agree\" / \"Never claimed: security\" / \"Likely cause: governance\". List items to \"Resigned Nov 11, same day as report\" if kept",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l62 左卡只剩灰的「National security is noise」；右卡三行：We agree / Never claimed: he left over security / Direct cause: likely governance；清单不再重复",
+   "reason": "",
+   "files": [
+    "scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:20",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I17",
+   "key": "212128c8f3f0",
+   "item": "screen_en",
+   "where": "l63",
+   "dim": "P4/P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P4/P2",
+   "shots": [
+    "l63"
+   ],
+   "evidence": [
+    "\"China's MFA\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "\"China's Foreign Ministry\" or \"Beijing\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"China's MFA\"",
+   "problem": "Abbreviation not used in the narration (narration says \"China's Foreign Ministry\")",
+   "suggest": "\"China's Foreign Ministry\" or \"Beijing\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "「China’s MFA」改「China’s Foreign Ministry」；全片出处行的 MFA、NYT、MHA、N.D. Cal.、GOP、SE Asia 一并改全称",
+   "reason": "",
+   "files": [
+    "scenes/web/s1.html",
+    "scenes/web/s2.html",
+    "scenes/web/s3.html",
+    "scenes/web/s4.html",
+    "scenes/web/s5.html",
+    "scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:21",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I18",
+   "key": "b06ba31ff1ea",
+   "item": "screen_en",
+   "where": "l64 / l65",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l64 / l65"
+   ],
+   "evidence": [
+    "l64: 12 blocks, ~42 words; l65: 12 blocks, ~43 words, \"Even if the reports are false: already national security\" (9 words)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Keep Nvidia/Intel two columns with only \"Nvidia · 2026\" and \"Intel · 2018\", chips \"Congress · Export bills · China\" and \"None of it\"; headline l64 \"It's what the company sells\" (5 words); l65 \"False or not: already national security\" (6 words)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "l64: 12 blocks, ~42 words; l65: 12 blocks, ~43 words, \"Even if the reports are false: already national security\" (9 words)",
+   "problem": "Over limits; two photos with captions, tags, a three-chip row, a dashed \"None of it\" box and a headline all at once",
+   "suggest": "Keep Nvidia/Intel two columns with only \"Nvidia · 2026\" and \"Intel · 2018\", chips \"Congress · Export bills · China\" and \"None of it\"; headline l64 \"It's what the company sells\" (5 words); l65 \"False or not: already national security\" (6 words)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "两列只留「Nvidia · 2026」「Intel · 2018」+ 图标「Congress」「China’s Foreign Ministry」+「None of it」，删两张卡的说明行；l64「The difference: what the company sells」，l65「True or false: already treated as national security」（按讲稿 v1.2 l65）",
+   "reason": "",
+   "files": [
+    "scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:21",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I19",
+   "key": "88a4d0404389",
+   "item": "screen_en",
+   "where": "l66 / l67 (outro, strict)",
+   "dim": "P1/P2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1/P2",
+   "shots": [
+    "l66 / l67 (outro, strict)"
+   ],
+   "evidence": [
+    "\"The more critical the product, / the less private the life\" (10 words); l67 adds \"Who draws the line: what his company sells\" (8 words)"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "l66: \"Critical product, less privacy\" (4 words). l67: delete the extra body line, or \"The product draws it\" (4 words)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "\"The more critical the product, / the less private the life\" (10 words); l67 adds \"Who draws the line: what his company sells\" (8 words)",
+   "problem": "Title over 6 words; l67 repeats the narration sentence",
+   "suggest": "l66: \"Critical product, less privacy\" (4 words). l67: delete the extra body line, or \"The product draws it\" (4 words)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l66 标题改「Critical product, / less privacy」（4 词）；l67 正文改「The line: drawn by the product」，不抄口播",
+   "reason": "",
+   "files": [
+    "scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:21",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I20",
+   "key": "ea2d6e6962be",
+   "item": "screen_en",
+   "where": "l69 / l70 (outro, strict)",
+   "dim": "P1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l69 / l70 (outro, strict)"
+   ],
+   "evidence": [
+    "7 blocks, 25 / 23 words; \"Date: still in talks\""
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Merge into three rows: \"Nov 17 · earnings\" / \"Congress · date TBD\" / \"Probes · no conclusions\"; keep l70 caption \"As of Nov 14 · Not investment advice\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "7 blocks, 25 / 23 words; \"Date: still in talks\"",
+   "problem": "Over 4 blocks and 22 words; block count is the issue, not the wording",
+   "suggest": "Merge into three rows: \"Nov 17 · earnings\" / \"Congress · date TBD\" / \"Probes · no conclusions\"; keep l70 caption \"As of Nov 14 · Not investment advice\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "清单三行：Nov 17 · First earnings without Huang / Congress · Date not set / Probes · No conclusions yet；l70 清单收起，只留「As of Nov 14 · Not investment advice」一行",
+   "reason": "",
+   "files": [
+    "scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:22",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I21",
+   "key": "54457d9e2ec1",
+   "item": "screen_zh",
+   "where": "c_c3 / s3 页眉",
+   "dim": "P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "c_c3 / s3 页眉"
+   ],
+   "evidence": [
+    "两党都借它追问"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "两党都在追问",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "两党都借它追问",
+   "problem": "章名中「它」无指代，章节卡单独出现读不懂（从严条目）",
+   "suggest": "两党都在追问",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "章名由讲稿作者在 package.json 改为「两党都在追问」；s3 页眉从 package.json 读",
+   "reason": "",
+   "files": [
+    "scenes/data.py",
+    "scenes/web/_lib.js",
+    "scenes/web/s3.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:22",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I22",
+   "key": "4492fa8208ca",
+   "item": "screen_zh",
+   "where": "c_c6 / s6 页眉",
+   "dim": "P4",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "c_c6 / s6 页眉"
+   ],
+   "evidence": [
+    "留得住的道理"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "这件事留下什么",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "留得住的道理",
+   "problem": "生造短语，「留得住」不是人话（从严条目）",
+   "suggest": "这件事留下什么",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "章名由讲稿作者在 package.json 改为「这件事留下什么」；s6 页眉从 package.json 读",
+   "reason": "",
+   "files": [
+    "scenes/data.py",
+    "scenes/web/_lib.js",
+    "scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:23",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I23",
+   "key": "3feea62f16ee",
+   "item": "screen_zh",
+   "where": "全片",
+   "dim": "P3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P3",
+   "shots": [
+    "全片"
+   ],
+   "evidence": [
+    "11 月 9 日 / 11-08 / 2026-11-08 / 11-09 立案 / 11-17"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "屏上正文统一「11 月 9 日」，出处行用 ISO",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "11 月 9 日 / 11-08 / 2026-11-08 / 11-09 立案 / 11-17",
+   "problem": "日期四种写法",
+   "suggest": "屏上正文统一「11 月 9 日」，出处行用 ISO",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "屏上正文与眉标统一「11 月 9 日」体例（董事会 / 外交部 / 委员会眉标、时间轴刻度、立案标签、片尾清单与免责）；出处行统一 ISO「2026-11-08」",
+   "reason": "",
+   "files": [
+    "scenes/web/s0.html",
+    "scenes/web/s2.html",
+    "scenes/web/s4.html",
+    "scenes/web/s5.html",
+    "scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:23",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I24",
+   "key": "f5f448ef0d14",
+   "item": "screen_zh",
+   "where": "l02 / l03",
+   "dim": "P4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l02 / l03"
+   ],
+   "evidence": [
+    "accepted the resignation / effective immediately"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "保留；若要严格，高亮词旁加中文已有「辞去」「立即生效」即可",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "accepted the resignation / effective immediately",
+   "problem": "公告原文高亮，属证据画面，英文夹排但有中文 h2 对照，可保留；材料把 35 字英文也计入总字数，口径存疑",
+   "suggest": "保留；若要严格，高亮词旁加中文已有「辞去」「立即生效」即可",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "公告正文改成读不出字的灰条道具，不再有英文高亮；中文行里已有「辞去 · CEO · 董事 · 立即生效」",
+   "reason": "",
+   "files": [
+    "scenes/web/s0.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:24",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I25",
+   "key": "d8f8f58ba2e6",
+   "item": "screen_zh",
+   "where": "l05",
+   "dim": "P2/P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2/P4",
+   "shots": [
+    "l05"
+   ],
+   "evidence": [
+    "“I was unfaithful to my wife.” 与 「我对妻子不忠。」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "英文作小字出处，大字只留「我对妻子不忠」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "“I was unfaithful to my wife.” 与 「我对妻子不忠。」",
+   "problem": "同一句中英各印一遍，占屏；中文带句号",
+   "suggest": "英文作小字出处，大字只留「我对妻子不忠」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "中文版大字只留「我对妻子不忠」（无句号，刷底色），英文原句移进出处小字「原文 “I was unfaithful to my wife.”」",
+   "reason": "",
+   "files": [
+    "scenes/web/s0.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:24",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I26",
+   "key": "9e51ba4f63df",
+   "item": "screen_zh",
+   "where": "l13",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l13"
+   ],
+   "evidence": [
+    "国家安全、公司机密：暂无理由认为受损 + 前面累积"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「暂无证据：国家安全受损」（11 字）；把前面「起因：…」行去掉",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "国家安全、公司机密：暂无理由认为受损 + 前面累积",
+   "problem": "共 47 字",
+   "suggest": "「暂无证据：国家安全受损」（11 字）；把前面「起因：…」行去掉",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l12 起因行改「起因：「外国情报活动」报道」；l13 起因行收走，换成「安全、机密受损：暂无理由认为」；l13 合计约 30 字、3 块（列表合 1 块）",
+   "reason": "",
+   "files": [
+    "scenes/web/s1.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:25",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I27",
+   "key": "a8a9990c6e47",
+   "item": "screen_zh",
+   "where": "l17",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l17"
+   ],
+   "evidence": [
+    "7 块 44 字"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「新加坡公司前高管 · 英伟达客户」后，上方行收为「疑为中方做事」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "7 块 44 字",
+   "problem": "超限；「美国情报界怀疑：替中国情报机构做事」16 字且重复 l16",
+   "suggest": "「新加坡公司前高管 · 英伟达客户」后，上方行收为「疑为中方做事」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l17 「美国情报界怀疑」行收走，只换上「新加坡公司前高管 · 英伟达客户」",
+   "reason": "",
+   "files": [
+    "scenes/web/s1.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:25",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I28",
+   "key": "7b26667ba6f8",
+   "item": "screen_zh",
+   "where": "l18",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l18"
+   ],
+   "evidence": [
+    "10 块 41 字（含两个「未证实」）"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "去「报道称 · 匿名信源」重复条；两条各 ≤8 字，「未证实」只贴一次",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "10 块 41 字（含两个「未证实」）",
+   "problem": "超限；重复贴「未证实」",
+   "suggest": "去「报道称 · 匿名信源」重复条；两条各 ≤8 字，「未证实」只贴一次",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "「匿名信源 · 未证实」只在栏头贴一次（栏头标签合并为「匿名信源报道 · 未证实」），去掉两条下的「未证实」；对象行收为「对象：向他汇报的高管」",
+   "reason": "",
+   "files": [
+    "scenes/web/s1.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:26",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I29",
+   "key": "418279e3f845",
+   "item": "screen_zh",
+   "where": "l21",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l21"
+   ],
+   "evidence": [
+    "5 块 43 字"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "去掉中国外交部引语（l19 已讲），留「新加坡警方曾查：申报不实 / 结论：证据不足」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "5 块 43 字",
+   "problem": "超 4 块、36 字",
+   "suggest": "去掉中国外交部引语（l19 已讲），留「新加坡警方曾查：申报不实 / 结论：证据不足」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l21 外交部卡退到 0.2（不再算一块）；按讲稿 v1.2 只留「未以间谍事由调查她 / 警方查过她：涉嫌申报不实」",
+   "reason": "",
+   "files": [
+    "scenes/web/s1.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:26",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I30",
+   "key": "dc500c811131",
+   "item": "screen_zh",
+   "where": "l22",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l22"
+   ],
+   "evidence": [
+    "8 块 46 字"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "切到单独屏：「截至 11 月 14 日 / 起诉：无」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "8 块 46 字",
+   "problem": "把 l19–l21 内容全留在屏上，仅新增「起诉：无」",
+   "suggest": "切到单独屏：「截至 11 月 14 日 / 起诉：无」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l22 切单独一屏：「新加坡警方 · 2026 年 2 月 / 对她本人：证据不足」+「截至 11 月 14 日 / 起诉：无」（讲稿 v1.2 把证据不足挪到 l22）",
+   "reason": "",
+   "files": [
+    "scenes/web/s1.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:27",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I31",
+   "key": "7949c88acbfe",
+   "item": "screen_zh",
+   "where": "l23",
+   "dim": "P1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "5 块（两个 h2、两个 caption、一个 body）34 字"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "把「他信里认的那段 / 报道里的女商人」两列合为 1 块",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "5 块（两个 h2、两个 caption、一个 body）34 字",
+   "problem": "字数不超，但块数 5",
+   "suggest": "把「他信里认的那段 / 报道里的女商人」两列合为 1 块",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "删掉底行「他没说 · 我们也不知道」，「报道称 · 匿名信源」改成标签；l23 剩 3 块 18 字",
+   "reason": "",
+   "files": [
+    "scenes/web/s1.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:27",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I32",
+   "key": "00ba5bad23fc",
+   "item": "screen_zh",
+   "where": "l25",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l25"
+   ],
+   "evidence": [
+    "最先进的能否卖给中国 / = 中美科技战主战场"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "先进芯片卖中国 = 主战场 → 「先进芯片能否卖中国」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "最先进的能否卖给中国 / = 中美科技战主战场",
+   "problem": "单块 18 字",
+   "suggest": "先进芯片卖中国 = 主战场 → 「先进芯片能否卖中国」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改「先进芯片能否卖中国 / = 科技战主战场」（15 字）",
+   "reason": "",
+   "files": [
+    "scenes/web/s2.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:28",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I33",
+   "key": "3d100bd46c09",
+   "item": "screen_zh",
+   "where": "l28",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l28"
+   ],
+   "evidence": [
+    "7 + 5+3+8+5 + 图内「美国 中国 东南亚 示意」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "删「示意」或把「美国出口管制部门」改「美国商务部门」不妥；建议改「美方核查过」（5 字）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "7 + 5+3+8+5 + 图内「美国 中国 东南亚 示意」",
+   "problem": "含图内文字 37 字，超 1 字",
+   "suggest": "删「示意」或把「美国出口管制部门」改「美国商务部门」不妥；建议改「美方核查过」（5 字）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "图内「示意」改成标签；l28 左侧闸门图退后；右卡行收短（按讲稿 v1.2：她本人 · 证据不足 / 公司 · 仍在调查）",
+   "reason": "",
+   "files": [
+    "scenes/web/s2.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:28",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I34",
+   "key": "57b91ec581c4",
+   "item": "screen_zh",
+   "where": "l29",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l29"
+   ],
+   "evidence": [
+    "新加坡公司、警方、出口管制部门、公司否认、调查中 · 无结论 共 49 字"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "去掉「调查中 · 无结论」；警方 / 美国部门 / 公司三行各留 ≤8 字",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "新加坡公司、警方、出口管制部门、公司否认、调查中 · 无结论 共 49 字",
+   "problem": "超限；「调查中 · 无结论」与前三行重复",
+   "suggest": "去掉「调查中 · 无结论」；警方 / 美国部门 / 公司三行各留 ≤8 字",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "去掉「调查中 · 无结论」；l29 她本人行退后，剩标题＋三行（公司 · 仍在调查 / 美国出口管制 · 核查过 / 公司回应 · 否认违规），30 字",
+   "reason": "",
+   "files": [
+    "scenes/web/s2.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:29",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I35",
+   "key": "e1c095583810",
+   "item": "screen_zh",
+   "where": "l31",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l31"
+   ],
+   "evidence": [
+    "一件私事 → 国家安全的放大镜下"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "私事 → 国家安全放大镜下",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "一件私事 → 国家安全的放大镜下",
+   "problem": "13 字且「放大镜下」生硬",
+   "suggest": "私事 → 国家安全放大镜下",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改「一件私事 → 国家安全问题」，放大镜意象交给配图",
+   "reason": "",
+   "files": [
+    "scenes/web/s2.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:29",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I36",
+   "key": "4d609e4345cf",
+   "item": "screen_zh",
+   "where": "l35",
+   "dim": "P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l35"
+   ],
+   "evidence": [
+    "国家安全放第一"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「国家安全第一」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "国家安全放第一",
+   "problem": "口播引语是「国家安全第一」",
+   "suggest": "「国家安全第一」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改「「国家安全第一」」，与口播引语一致",
+   "reason": "",
+   "files": [
+    "scenes/web/s2.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:30",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I37",
+   "key": "562623f64edd",
+   "item": "screen_zh",
+   "where": "l37",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l37"
+   ],
+   "evidence": [
+    "「美方应当停止编造所谓的“间谍叙事”，为实施科技封锁寻找借口。」"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「间谍叙事」「科技封锁借口」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "「美方应当停止编造所谓的“间谍叙事”，为实施科技封锁寻找借口。」",
+   "problem": "单块 26 字（上限 16），整句抄口播；引号嵌套",
+   "suggest": "「间谍叙事」「科技封锁借口」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "外交部卡改关键词：「停止编造「间谍叙事」」+「为科技封锁找借口」（关键词在 data.py 对 C26 原话断言），不再印整句",
+   "reason": "",
+   "files": [
+    "scenes/data.py",
+    "scenes/web/s2.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:30",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I38",
+   "key": "08a4e352be4c",
+   "item": "screen_zh",
+   "where": "l40",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l40"
+   ],
+   "evidence": [
+    "→ 于是两党都借这件事追问"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「→ 两党借机追问」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "→ 于是两党都借这件事追问",
+   "problem": "与口播逐字重复",
+   "suggest": "「→ 两党借机追问」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改「→ 两党都借此追问」；没用「借机」，保留事实核查定的描述行为措辞（dossier §8.2）",
+   "reason": "",
+   "files": [
+    "scenes/web/s3.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:31",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I39",
+   "key": "51ca95144240",
+   "item": "screen_zh",
+   "where": "l41 / l40",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l41 / l40"
+   ],
+   "evidence": [
+    "黄仁勋：丑闻来时在这边"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「黄仁勋：站白宫一边」，只在 l40 保留",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "黄仁勋：丑闻来时在这边",
+   "problem": "「在这边」指代不清；l41 与口播主题（收紧）无关",
+   "suggest": "「黄仁勋：站白宫一边」，只在 l40 保留",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改「黄仁勋：站在白宫一边」，只在 l40 出现，l41 收走",
+   "reason": "",
+   "files": [
+    "scenes/web/s3.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:31",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I40",
+   "key": "1e82fcede501",
+   "item": "screen_zh",
+   "where": "l42",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l42"
+   ],
+   "evidence": [
+    "9 块 52 字（77:20 + 两个新条款 + 白宫栏）"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "删黄仁勋行与白宫栏；留「2026.3 两党各一位参议员 / 要商务部复审英伟达许可」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "9 块 52 字（77:20 + 两个新条款 + 白宫栏）",
+   "problem": "超限；残留「黄仁勋：丑闻来时在这边」无关",
+   "suggest": "删黄仁勋行与白宫栏；留「2026.3 两党各一位参议员 / 要商务部复审英伟达许可」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l42 去掉黄仁勋行、白宫栏退到 0.22、77:20 退后；只留「2026 年 3 月 · 两党各一位参议员 / 要商务部复审英伟达出口许可」",
+   "reason": "",
+   "files": [
+    "scenes/web/s3.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:32",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I41",
+   "key": "d09a4ba97583",
+   "item": "screen_zh",
+   "where": "l47",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l47"
+   ],
+   "evidence": [
+    "民主党沃伦：也挺共和党人的法案 + 4 条 = 44 字"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "沃伦：同挺该法案；撤去「冲着特朗普」旧条（l45 已讲）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "民主党沃伦：也挺共和党人的法案 + 4 条 = 44 字",
+   "problem": "超限；「挺……法案」口语",
+   "suggest": "沃伦：同挺该法案；撤去「冲着特朗普」旧条（l45 已讲）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改「民主党沃伦：也支持这类法案」；l46 起民主党卡说明收走、l47 整卡退后，l47 共 4 块 27 字",
+   "reason": "",
+   "files": [
+    "scenes/web/s3.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:32",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I42",
+   "key": "2d8458927b80",
+   "item": "screen_zh",
+   "where": "l55",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l55"
+   ],
+   "evidence": [
+    "6 块 38 字"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "民主党众院领袖说明改「辞职后：是对的」，特朗普条收为「特朗普（共和党）：力挺」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "6 块 38 字",
+   "problem": "超 4 块、36 字",
+   "suggest": "民主党众院领袖说明改「辞职后：是对的」，特朗普条收为「特朗普（共和党）：力挺」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l55 特朗普条退后到 0.2；民主党众院领袖说明改「辞职后：说「是对的」」；特朗普条改「特朗普（共和党）：一直力挺」",
+   "reason": "",
+   "files": [
+    "scenes/web/s4.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:32",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I43",
+   "key": "49c17679f2f5",
+   "item": "screen_zh",
+   "where": "l56",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l56"
+   ],
+   "evidence": [
+    "克雷默 / 民主党众院领袖 / 特朗普 + 底行共 49 字"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "保留时间轴，两人头像下只留党派；特朗普条改「特朗普：力挺」；底行「推他下台：无记录」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "克雷默 / 民主党众院领袖 / 特朗普 + 底行共 49 字",
+   "problem": "超限，时间轴 + 3 人 + 结论四层",
+   "suggest": "保留时间轴，两人头像下只留党派；特朗普条改「特朗普：力挺」；底行「推他下台：无记录」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "保留时间轴；克雷默只留名字＋「共和党参议员」（讲稿 v1.2 不再念参议员），说明 l54 收走；民主党领袖说明 l56 收走；底行「哪一党推他下台：无记录」",
+   "reason": "",
+   "files": [
+    "scenes/web/s4.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:33",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I44",
+   "key": "c7dc18db81d7",
+   "item": "screen_zh",
+   "where": "l57",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l57"
+   ],
+   "evidence": [
+    "4 块 37 字"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「董事会自己的理由」改「董事会的理由」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "4 块 37 字",
+   "problem": "超 1 字",
+   "suggest": "「董事会自己的理由」改「董事会的理由」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "「董事会自己的理由」改「董事会的理由」；立案标签改「11 月 9 日立案」",
+   "reason": "",
+   "files": [
+    "scenes/web/s4.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:33",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I45",
+   "key": "340d56c17148",
+   "item": "screen_zh",
+   "where": "l60",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l60"
+   ],
+   "evidence": [
+    "接受辞职：11-11，第二篇报道当天 等 4 行共 52 字"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "认了不忠 / 报道称有下属关系 / 被股东起诉 / 11-11 接受辞职；去掉「反方观点」块和 h2 重复",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "接受辞职：11-11，第二篇报道当天 等 4 行共 52 字",
+   "problem": "超限；句中带逗号",
+   "suggest": "认了不忠 / 报道称有下属关系 / 被股东起诉 / 11-11 接受辞职；去掉「反方观点」块和 h2 重复",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "按讲稿 v1.2：清单三项「认了不忠 / 报道称有下属关系 / 见报当天接受辞职」（各 ≤8 字、无逗号，股东诉讼口播已删同步删）；l60「→ 公司内部的事」收走；「反方观点」作标签保留（系列要求明显的反方标识）",
+   "reason": "",
+   "files": [
+    "scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:34",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I46",
+   "key": "8991eeab72c9",
+   "item": "screen_zh",
+   "where": "l61",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l61"
+   ],
+   "evidence": [
+    "左卡 5 条 + 英特尔卡，合计约 66 字"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "撤掉左卡，只留「英特尔 · 2018 / CEO 辞职 / 与员工关系违规」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "左卡 5 条 + 英特尔卡，合计约 66 字",
+   "problem": "超限；与 l60 左卡重复占屏",
+   "suggest": "撤掉左卡，只留「英特尔 · 2018 / CEO 辞职 / 与员工关系违规」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l61 左卡清单收走、整卡退后，只留英特尔卡「英特尔 · 2018 年 6 月 / CEO 辞职 / 与员工关系违反公司规定」",
+   "reason": "",
+   "files": [
+    "scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:34",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I47",
+   "key": "a7f3c6a77107",
+   "item": "screen_zh",
+   "where": "l61",
+   "dim": "P2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l61"
+   ],
+   "evidence": [
+    "与员工关系违反公司政策"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "与员工关系违反公司规定",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "与员工关系违反公司政策",
+   "problem": "口播说「公司规定」，叫法不一致",
+   "suggest": "与员工关系违反公司规定",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "改「与员工关系违反公司规定」",
+   "reason": "",
+   "files": [
+    "scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:35",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I48",
+   "key": "8f61ddeffaa2",
+   "item": "screen_zh",
+   "where": "l62",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l62"
+   ],
+   "evidence": [
+    "反方观点卡 + 回应卡共 12 块 84 字"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "左卡灰掉只留「国家安全只是噪音 → 治理问题」；右卡改「同意：不是因国家安全 / 直接原因：公司治理」（两行），去掉左卡三条",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "反方观点卡 + 回应卡共 12 块 84 字",
+   "problem": "超一屏 36 字、4 块",
+   "suggest": "左卡灰掉只留「国家安全只是噪音 → 治理问题」；右卡改「同意：不是因国家安全 / 直接原因：公司治理」（两行），去掉左卡三条",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l62 左卡只剩灰的「国家安全只是噪音」；右卡「✓ 我们同意 / 从没说：因国家安全下台 / 直接原因：很可能在公司内部」（口播 v1.2 用「公司内部的事」）",
+   "reason": "",
+   "files": [
+    "scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:35",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I49",
+   "key": "e7dcd79042d8",
+   "item": "screen_zh",
+   "where": "l63",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l63"
+   ],
+   "evidence": [
+    "出口管制立法"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "删，或口播补一句",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "出口管制立法",
+   "problem": "口播只说国会、中国外交部，屏幕多出一项",
+   "suggest": "删，或口播补一句",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "删「出口管制立法」图标，只留国会、中国外交部",
+   "reason": "",
+   "files": [
+    "scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:36",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I50",
+   "key": "6a75ade0b16e",
+   "item": "screen_zh",
+   "where": "l64",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l64"
+   ],
+   "evidence": [
+    "差别不在做了什么，在公司卖什么 + 双卡共 50 字"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "「差别：公司卖什么」，其余同 l65",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "差别不在做了什么，在公司卖什么 + 双卡共 50 字",
+   "problem": "超限；整句",
+   "suggest": "「差别：公司卖什么」，其余同 l65",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l64 底行改「差别：公司卖什么」，删两张卡的说明行",
+   "reason": "",
+   "files": [
+    "scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:36",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I51",
+   "key": "d79d1cf1fd02",
+   "item": "screen_zh",
+   "where": "l65",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l65"
+   ],
+   "evidence": [
+    "双卡 + 3 枚图标 + 底部结论共 51 字"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "底行改「报道真假，已是国家安全问题」（14 字）；英特尔卡以下减到只留「都没有」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "双卡 + 3 枚图标 + 底部结论共 51 字",
+   "problem": "超限；底行 15 字与口播整句重复",
+   "suggest": "底行改「报道真假，已是国家安全问题」（14 字）；英特尔卡以下减到只留「都没有」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l65 底行改「「间谍」说法真假 → 已按国家安全处理」（14 字），英特尔卡下只留「都没有」",
+   "reason": "",
+   "files": [
+    "scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:36",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I52",
+   "key": "88cdf83b4078",
+   "item": "screen_zh",
+   "where": "l65",
+   "dim": "P2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P2",
+   "shots": [
+    "l65"
+   ],
+   "evidence": [
+    "就算报道不实，也已是国家安全问题"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "就算「间谍」说法不实，也已是国家安全问题",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "就算报道不实，也已是国家安全问题",
+   "problem": "口播是「间谍的说法最后是假的」，「报道不实」范围更宽",
+   "suggest": "就算「间谍」说法不实，也已是国家安全问题",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "底行按口播限定为「「间谍」说法」，不再说「报道不实」",
+   "reason": "",
+   "files": [
+    "scenes/web/s5.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:37",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I53",
+   "key": "55d64e0e3d6d",
+   "item": "screen_zh",
+   "where": "l66",
+   "dim": "P4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P4",
+   "shots": [
+    "l66"
+   ],
+   "evidence": [
+    "私事越不是私事"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "私事不再是私事",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "私事越不是私事",
+   "problem": "读着绕",
+   "suggest": "私事不再是私事",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l66 第二行改「私事越不算私事」，与讲稿 v1.2 l66 同一说法；package.json 片尾 quote 仍是「私事越不是私事」，归讲稿作者对齐",
+   "reason": "",
+   "files": [
+    "scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:37",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I54",
+   "key": "70d4132e2f37",
+   "item": "screen_zh",
+   "where": "l70",
+   "dim": "P1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文屏幕文字",
+   "dimension": "P1",
+   "shots": [
+    "l70"
+   ],
+   "evidence": [
+    "以上说法截至 2026-11-14 · 不构成投资建议 + 前面 6 行共 45 字"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "清单收起后单行显示免责「截至 11 月 14 日 · 不构成投资建议」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "以上说法截至 2026-11-14 · 不构成投资建议 + 前面 6 行共 45 字",
+   "problem": "超限；免责声明叠在累积清单上",
+   "suggest": "清单收起后单行显示免责「截至 11 月 14 日 · 不构成投资建议」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l70 清单先收起，免责声明单独一行居中「截至 11 月 14 日 · 不构成投资建议」",
+   "reason": "",
+   "files": [
+    "scenes/web/s6.html"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:44:38",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I55",
+   "key": "4ea811daef7d",
+   "item": "voice_en",
+   "where": "l04",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l04"
+   ],
+   "evidence": [
+    "The stock opened down more than ten percent, and it closed down four point three four percent."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "The stock opened down over ten percent and closed down about four percent.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "The stock opened down more than ten percent, and it closed down four point three four percent.",
+   "problem": "Over-precise decimal is hard to catch by ear; screen shows -13%.",
+   "suggest": "The stock opened down over ten percent and closed down about four percent.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l04 改为 \"The stock opened down more than ten percent, and still closed down more than four.\"，去掉四点三四的小数",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:32:45",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I56",
+   "key": "da58ba6a2861",
+   "item": "voice_en",
+   "where": "l05",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l05"
+   ],
+   "evidence": [
+    "Four days earlier, he'd written a letter..."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Four days before that, he'd written to all his staff: \"I was unfaithful to my wife.\"",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Four days earlier, he'd written a letter...",
+   "problem": "\"Earlier\" than what? After l04 the anchor is unclear.",
+   "suggest": "Four days before that, he'd written to all his staff: \"I was unfaithful to my wife.\"",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l05 改为 \"Four days before the filing, he'd written to all his staff. One line read: ...\"，锚点改为公告",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:32:47",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I57",
+   "key": "fcdbf3ab8f09",
+   "item": "voice_en",
+   "where": "l06",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l06"
+   ],
+   "evidence": [
+    "On its face, it was a private matter."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "It looked like a private matter.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "On its face, it was a private matter.",
+   "problem": "Written idiom.",
+   "suggest": "It looked like a private matter.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l06 改为 \"It looked like a private matter.\"",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:32:49",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I58",
+   "key": "8889e233b012",
+   "item": "voice_en",
+   "where": "l07",
+   "dim": "V1/V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1/V2",
+   "shots": [
+    "l07"
+   ],
+   "evidence": [
+    "And yet the ones who took it up were Nvidia's board, the US Congress, and China's Foreign Ministry."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "And yet Nvidia's board, Congress, and China's Foreign Ministry all jumped on it.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "And yet the ones who took it up were Nvidia's board, the US Congress, and China's Foreign Ministry.",
+   "problem": "Cold open, the pivot of the hook. Cleft sentence with a list; nobody says \"the ones who took it up were\".",
+   "suggest": "And yet Nvidia's board, Congress, and China's Foreign Ministry all jumped on it.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l07 改为 \"And yet within days, Nvidia's board, the US Congress, and China's Foreign Ministry were all weighing in.\"（不用 jumped on，外交部只是表态）",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:32:50",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I59",
+   "key": "e8a44837f93e",
+   "item": "voice_en",
+   "where": "l09",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4",
+   "shots": [
+    "l09"
+   ],
+   "evidence": [
+    "The company hasn't said why he left, and nobody knows."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "That's not saying he quit over national security. The company hasn't said why.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "The company hasn't said why he left, and nobody knows.",
+   "problem": "Repeats l03/l14; \"nobody knows\" is stronger than \"not said\".",
+   "suggest": "That's not saying he quit over national security. The company hasn't said why.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l09 去掉 \"and nobody knows\"，改为 \"The company still hasn't said why he left.\"，与中文 l09 一致",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:32:51",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I60",
+   "key": "1d3dc64bb36e",
+   "item": "voice_en",
+   "where": "l10",
+   "dim": "V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V5",
+   "shots": [
+    "l10"
+   ],
+   "evidence": [
+    "So before we go any further, let's sort what's confirmed from what's only been reported."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "(text OK) Retime, or shorten: Before we go on, let's separate what's confirmed from what's only reported.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "So before we go any further, let's sort what's confirmed from what's only been reported.",
+   "problem": "Chapter intro. Text is fine, but the listed duration (1.5s for 17 words) is impossible; clip may be rushed or truncated. Check audio.",
+   "suggest": "(text OK) Retime, or shorten: Before we go on, let's separate what's confirmed from what's only reported.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l10 缩为 13 词 \"Before we go on, let's separate what's confirmed from what's only been reported.\"；重出配音时核对时长",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:32:52",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I61",
+   "key": "5b5e60d66cab",
+   "item": "voice_en",
+   "where": "l12",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l12"
+   ],
+   "evidence": [
+    "...he'd been the target of a foreign intelligence effort."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "...citing reports that foreign intelligence had targeted him.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "...he'd been the target of a foreign intelligence effort.",
+   "problem": "Ambiguous: foreign intelligence targeting him, or him targeting?",
+   "suggest": "...citing reports that foreign intelligence had targeted him.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l12 改为 \"citing reports that foreign intelligence had targeted him\"",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:32:54",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I62",
+   "key": "f92685e0d4fd",
+   "item": "voice_en",
+   "where": "l15",
+   "dim": "V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2",
+   "shots": [
+    "l15"
+   ],
+   "evidence": [
+    "Then there are two claims that have been reported, but not confirmed."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Now, two claims that are reported but not confirmed.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Then there are two claims that have been reported, but not confirmed.",
+   "problem": "Linking line. \"Then\" after \"he resigned\" sounds like the next event in time, not a new category.",
+   "suggest": "Now, two claims that are reported but not confirmed.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l15 改为 \"Now, two more claims. Both come from anonymous sources in The New York Times, and neither is confirmed.\"；l16/l18 用 One says / The other says 接",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:32:54",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I63",
+   "key": "faccfd36b498",
+   "item": "voice_en",
+   "where": "l16",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l16"
+   ],
+   "evidence": [
+    "The New York Times, citing unnamed sources, said US intelligence suspected a businesswoman close to him of working for Chinese intelligence."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "The Times, citing unnamed sources, said US intelligence suspected a businesswoman close to him of working for China.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "The New York Times, citing unnamed sources, said US intelligence suspected a businesswoman close to him of working for Chinese intelligence.",
+   "problem": "Dense; \"intelligence\" twice.",
+   "suggest": "The Times, citing unnamed sources, said US intelligence suspected a businesswoman close to him of working for China.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l16 改为 \"One says US intelligence suspected a businesswoman close to him of spying for China.\"（出处已移到 l15，intelligence 只出现一次）",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:32:55",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I64",
+   "key": "3ecd11a41cf5",
+   "item": "voice_en",
+   "where": "l21",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l21"
+   ],
+   "evidence": [
+    "Singapore police did investigate her, though, over false declarations when the company bought servers, and they found insufficient evidence."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Singapore police did look into her over false declarations in a server purchase, and found insufficient evidence. (and at l28: Police there are still looking at the company itself.)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Singapore police did investigate her, though, over false declarations when the company bought servers, and they found insufficient evidence.",
+   "problem": "l28 then says police are \"still investigating it\" (the company); the listener may hear a contradiction.",
+   "suggest": "Singapore police did look into her over false declarations in a server purchase, and found insufficient evidence. (and at l28: Police there are still looking at the company itself.)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l21 \"did look into her personally ... over suspected false declarations\"；l22 \"This February, they found insufficient evidence against her\"；l28 \"The evidence against her fell short, but police are still investigating the company itself.\"——她本人与公司本身分开说",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:32:57",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I65",
+   "key": "f9e9a66baeab",
+   "item": "voice_en",
+   "where": "l26",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3",
+   "shots": [
+    "l26"
+   ],
+   "evidence": [
+    "In fact, Nvidia's own annual report says it's been \"effectively foreclosed\" from China's data center market."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Nvidia's own annual report says it's basically shut out of China's data center market.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "In fact, Nvidia's own annual report says it's been \"effectively foreclosed\" from China's data center market.",
+   "problem": "Quoted jargon; \"In fact\" adds nothing.",
+   "suggest": "Nvidia's own annual report says it's basically shut out of China's data center market.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l26 改为 \"Nvidia's own annual report admits it's basically shut out of China's data center market.\"",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:32:57",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I66",
+   "key": "5c539c5284b8",
+   "item": "voice_en",
+   "where": "l30",
+   "dim": "V1/V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1/V5",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "The way we see it, that's the chain: the most critical chips, a customer suspected of rerouting them, and someone close to the CEO."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "So here's the chain: critical chips, a customer suspected of rerouting them, and someone close to the CEO.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "The way we see it, that's the chain: the most critical chips, a customer suspected of rerouting them, and someone close to the CEO.",
+   "problem": "List-reading, 9.6s.",
+   "suggest": "So here's the chain: critical chips, a customer suspected of rerouting them, and someone close to the CEO.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l30 改为 \"So here's the chain: the most critical chips, a customer suspected of rerouting them, and someone close to the CEO.\"",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:32:58",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I67",
+   "key": "05ef34443894",
+   "item": "voice_en",
+   "where": "l31",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4",
+   "shots": [
+    "l31"
+   ],
+   "evidence": [
+    "Put those three together, and a private matter ends up under a national security magnifying glass."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "(keep, or cut)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Put those three together, and a private matter ends up under a national security magnifying glass.",
+   "problem": "Restates l08; acceptable as the chapter payoff.",
+   "suggest": "(keep, or cut)",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "保留 l31",
+   "reason": "记录级；l31 是 s2 的收束句，画面在此罩上放大镜，句号不能删",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:32:59",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I68",
+   "key": "8e6f1e29a541",
+   "item": "voice_en",
+   "where": "l32",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l32"
+   ],
+   "evidence": [
+    "They all reached for the same hook."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "They all grabbed the same angle.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "They all reached for the same hook.",
+   "problem": "\"Hook\" is an odd metaphor.",
+   "suggest": "They all grabbed the same angle.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l32 改为 \"They all pointed to the same thing.\"；l33 相应改 \"The board cited reports...\" 避免重复 pointed",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:00",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I69",
+   "key": "e130fb8db09a",
+   "item": "voice_en",
+   "where": "l36/l38",
+   "dim": "V4",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V4",
+   "shots": [
+    "l36/l38"
+   ],
+   "evidence": [
+    "And he urged Congress to move fast... / So for all the shouting..."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "(optional trims)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "And he urged Congress to move fast... / So for all the shouting...",
+   "problem": "l36 could merge into l35; l38 overlaps l32.",
+   "suggest": "(optional trims)",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "保留 l36、l38",
+   "reason": "记录级；句号固定不能并句，l36 触发出口管制立法画面，l38 是 s2 的结论句",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:01",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I70",
+   "key": "ff36bd533f64",
+   "item": "voice_en",
+   "where": "l39",
+   "dim": "V5/V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V5/V3",
+   "shots": [
+    "l39"
+   ],
+   "evidence": [
+    "Now one layer deeper, inside Washington. Our read: on chip sales to China, both parties in Congress have people pushing to tighten, while the White House has been loosening."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Now, inside Washington. On chip sales to China, both parties in Congress want to tighten, while the White House has been loosening.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Now one layer deeper, inside Washington. Our read: on chip sales to China, both parties in Congress have people pushing to tighten, while the White House has been loosening.",
+   "problem": "Chapter opener. 10.4s, two sentences; \"Our read:\" is a label, \"one layer deeper\" is script talk.",
+   "suggest": "Now, inside Washington. On chip sales to China, both parties in Congress want to tighten, while the White House has been loosening.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l39 改为 \"Now, inside Washington. On chip sales to China, lawmakers in both parties want to tighten, while the White House keeps loosening.\"（去掉 Our read 与 one layer deeper，21 词）",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:02",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I71",
+   "key": "10aa2c77b94b",
+   "item": "voice_en",
+   "where": "l40",
+   "dim": "V2",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2",
+   "shots": [
+    "l40"
+   ],
+   "evidence": [
+    "...Huang was standing on the White House's side, so both parties used it to press."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "And Huang was on the White House's side, so when the scandal hit, both parties used it to press.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "...Huang was standing on the White House's side, so both parties used it to press.",
+   "problem": "Cause-effect is implied, not said.",
+   "suggest": "And Huang was on the White House's side, so when the scandal hit, both parties used it to press.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l40 改为 \"And Huang was on the White House's side, so when the scandal hit, both parties used it to demand answers.\"",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:02",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I72",
+   "key": "3cb09250c0b9",
+   "item": "voice_en",
+   "where": "l49",
+   "dim": "V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2",
+   "shots": [
+    "l49"
+   ],
+   "evidence": [
+    "Which is why one popular take in Chinese commentary deserves a closer look: that Huang was a casualty of America's partisan war."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "One popular take in Chinese commentary is worth checking: that Huang was a casualty of America's partisan fight.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Which is why one popular take in Chinese commentary deserves a closer look: that Huang was a casualty of America's partisan war.",
+   "problem": "Chapter opener; \"Which is why\" points to l48 but the reason is not there. Written (\"deserves a closer look\").",
+   "suggest": "One popular take in Chinese commentary is worth checking: that Huang was a casualty of America's partisan fight.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l49 改为 \"Speaking of the two parties, there's a popular take in Chinese commentary: that Huang was a casualty of America's partisan fight.\"",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:03",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I73",
+   "key": "7ce7ab476ff1",
+   "item": "voice_en",
+   "where": "l50",
+   "dim": "V3/V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3/V5",
+   "shots": [
+    "l50"
+   ],
+   "evidence": [
+    "According to the Hong Kong outlet HK01, the former Global Times editor Hu Xijin first said Democrats and the establishment were going after Huang, and through him, Trump."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "HK01 reports that Hu Xijin, a former Global Times editor, first said Democrats were going after Huang to get at Trump.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "According to the Hong Kong outlet HK01, the former Global Times editor Hu Xijin first said Democrats and the establishment were going after Huang, and through him, Trump.",
+   "problem": "Two unfamiliar names plus a chain of who-targets-whom in one breath.",
+   "suggest": "HK01 reports that Hu Xijin, a former Global Times editor, first said Democrats were going after Huang to get at Trump.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l50 改为 \"Hong Kong outlet HK01 reports that ex-Global Times editor Hu Xijin first said Democrats and the establishment were targeting Huang to get at Trump.\"（保留 establishment 以忠于 C113 转述）",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:04",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I74",
+   "key": "702026c7e76f",
+   "item": "voice_en",
+   "where": "l52",
+   "dim": "V1/V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1/V3",
+   "shots": [
+    "l52"
+   ],
+   "evidence": [
+    "In other words, his first framing was aimed at the Democrats."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "So at first, he blamed the Democrats.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "In other words, his first framing was aimed at the Democrats.",
+   "problem": "\"framing was aimed at\" is unclear by ear (who is the target, the blamed party or the audience?).",
+   "suggest": "So at first, he blamed the Democrats.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l52 改为 \"In other words, at first he blamed the Democrats.\"",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:04",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I75",
+   "key": "e758d4df3a62",
+   "item": "voice_en",
+   "where": "l60",
+   "dim": "V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V5",
+   "shots": [
+    "l60"
+   ],
+   "evidence": [
+    "He admitted infidelity, a relationship with a subordinate was reported, and shareholders sued. The board accepted..."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "He admitted infidelity, a second relationship was reported, and shareholders sued. The board accepted his resignation that same day.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "He admitted infidelity, a relationship with a subordinate was reported, and shareholders sued. The board accepted...",
+   "problem": "Passive list, 10s.",
+   "suggest": "He admitted infidelity, a second relationship was reported, and shareholders sued. The board accepted his resignation that same day.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l60 改为 \"He admitted infidelity, then a relationship with a subordinate was reported, and the board accepted his resignation that very day.\"（诉讼已在 l57，不重复）",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:05",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I76",
+   "key": "34a132f984d5",
+   "item": "voice_en",
+   "where": "l65",
+   "dim": "V3/V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V3/V4",
+   "shots": [
+    "l65"
+   ],
+   "evidence": [
+    "Even if the foreign intelligence reports turn out to be false, this is already a national security issue, because every side is treating it as one."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "Even if the spy reports are false, it's already a national security issue, because everyone's treating it like one.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Even if the foreign intelligence reports turn out to be false, this is already a national security issue, because every side is treating it as one.",
+   "problem": "Circular, and a bit at odds with the careful l09 \"not the same as saying he quit over national security\".",
+   "suggest": "Even if the spy reports are false, it's already a national security issue, because everyone's treating it like one.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l65 改为 \"Even if the spy reports turn out to be false, everyone's already treating this as a national security issue.\"",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:06",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I77",
+   "key": "630befbc5509",
+   "item": "voice_en",
+   "where": "l69",
+   "dim": "V1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V1",
+   "shots": [
+    "l69"
+   ],
+   "evidence": [
+    "When he'll go before Congress is still being worked out, and none of the investigations has reached a conclusion yet."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "No date's set for him to go before Congress, and none of the investigations has concluded.",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "When he'll go before Congress is still being worked out, and none of the investigations has reached a conclusion yet.",
+   "problem": "Outro. Nominal \"When he'll go... is still being worked out\" is written style.",
+   "suggest": "No date's set for him to go before Congress, and none of the investigations has concluded.",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l69 改为 \"There's no date yet for him to go before Congress, and none of the investigations has wrapped up.\"",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:07",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I78",
+   "key": "6c88d6964272",
+   "item": "voice_en",
+   "where": "l70",
+   "dim": "V2/V5",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "英文口播",
+   "dimension": "V2/V5",
+   "shots": [
+    "l70"
+   ],
+   "evidence": [
+    "Everything here is as of November 14th, twenty twenty-six, and none of it is investment advice."
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "That's everything as of November 14th, and none of it is investment advice. (Optionally end on l67 and put the disclaimer before l68.)",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "Everything here is as of November 14th, twenty twenty-six, and none of it is investment advice.",
+   "problem": "Outro is only a written-style disclaimer; the video ends on it with no landing. Full date repeated from l01.",
+   "suggest": "That's everything as of November 14th, and none of it is investment advice. (Optionally end on l67 and put the disclaimer before l68.)",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l70 改为 \"That's where things stand as of November 14th. None of this is investment advice, and we'll keep following the story.\"（免责声明放进收尾句，不再光秃秃收尾）",
+   "reason": "",
+   "files": [
+    "script.en.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:07",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I79",
+   "key": "b78c2b945f0e",
+   "item": "voice_zh",
+   "where": "章节标题「留得住的道理」",
+   "dim": "V1/V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1/V2",
+   "shots": [
+    "章节标题「留得住的道理」"
+   ],
+   "evidence": [
+    "留得住的道理"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "最后留下什么",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "留得住的道理",
+   "problem": "书面、鸡汤腔，口头没人这么说",
+   "suggest": "最后留下什么",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "c6 章节标题改「这件事留下什么」（同步 package.json c6.zh 与 script.md 段标题；与 screen_zh I22 建议一致）",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:08",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I80",
+   "key": "0db4f6cb054a",
+   "item": "voice_zh",
+   "where": "章节标题「反方怎么说」",
+   "dim": "V1/V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1/V2",
+   "shots": [
+    "章节标题「反方怎么说」"
+   ],
+   "evidence": [
+    "反方怎么说"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "也有人不同意",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "反方怎么说",
+   "problem": "前面没有「正方」，辩论腔",
+   "suggest": "也有人不同意",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "c5 章节标题改「也有人不同意」，l59 开头接「不同意的人里，最有力的说法是…」；package.json c5 中英同步（en 改 \"Not everyone agrees\"，script.en.md 段标题同步）",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:09",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I81",
+   "key": "2701b0bf01ef",
+   "item": "voice_zh",
+   "where": "章节标题「两党都借它追问」",
+   "dim": "V1/V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1/V2",
+   "shots": [
+    "章节标题「两党都借它追问」"
+   ],
+   "evidence": [
+    "两党都借它追问"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "两党都拿它做文章",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "两党都借它追问",
+   "problem": "「借它追问」不是口语搭配，看着像标语",
+   "suggest": "两党都拿它做文章",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "c3 章节标题改「两党都在追问」，l40 改「所以两党都抓着这事追问」；未用「拿它做文章」：「做文章」暗含动机，违反讲稿边界「不猜动机」与事实核查 r1 定下的「描述行为」措辞；与 screen_zh I21 建议一致；package.json c3 中英同步（en 改 \"Both parties want answers\"）",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:09",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I82",
+   "key": "772f2b432b31",
+   "item": "voice_zh",
+   "where": "全篇",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "全篇"
+   ],
+   "evidence": [
+    "我们（l08/l09/l23/l30/l38/l39/l53/l58/l62/l63/l64）"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "l39 删「我们的判断是」；l58 改「所以结论是」；l64 改「我觉得」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "我们（l08/l09/l23/l30/l38/l39/l53/l58/l62/l63/l64）",
+   "problem": "「我们认为/我们的判断/要我们说/我们的结论」过密，像报告署名；l39、l58 可直接去掉",
+   "suggest": "l39 删「我们的判断是」；l58 改「所以结论是」；l64 改「我觉得」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "减少「我们」署名腔：l08「在我们看来」→「我们觉得」；l30 去「我们把这几点连起来看」；l38 去「要我们说」；l39 去「我们的判断是」；l58 去「我们的结论是」；l64「我们认为」→「我们觉得」。保留 l09/l23/l53/l62/l63 的「我们」（立场或查证需要听得出是我们）；不改成「我」，全片统一用「我们」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:10",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I83",
+   "key": "a0030a57f761",
+   "item": "voice_zh",
+   "where": "l01",
+   "dim": "V3",
+   "level_zh": "存疑",
+   "level": "verify",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l01"
+   ],
+   "evidence": [
+    "十一月十二日"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "请核对公告日期，必要时改「前天」类说法或统一",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "十一月十二日",
+   "problem": "画面引文是 November 11；口播十二日，若公告日期与引文不一致，容易被抓",
+   "suggest": "请核对公告日期，必要时改「前天」类说法或统一",
+   "judge_note": "",
+   "status": "wontfix",
+   "solution": "不改 l01",
+   "reason": "已核：8-K 于 2026-11-12 提交（C01），董事会 11-11 接受辞职；l01 说的是发公告的日子，正确。画面上的 November 11 是接受辞职日，属屏幕项，由 screen 处理",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:10",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I84",
+   "key": "3be6ee323074",
+   "item": "voice_zh",
+   "where": "l02",
+   "dim": "V1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l02"
+   ],
+   "evidence": [
+    "联合创始人黄仁勋，辞去 CEO 和董事职务，立即生效。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "联合创始人黄仁勋，CEO 和董事都不干了，马上生效。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "联合创始人黄仁勋，辞去 CEO 和董事职务，立即生效。",
+   "problem": "开场，新闻稿腔，「辞去…职务」",
+   "suggest": "联合创始人黄仁勋，CEO 和董事都不干了，马上生效。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l02 改为「说联合创始人黄仁勋辞职了，CEO 和董事都不当了，马上生效。」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:10",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I85",
+   "key": "5038fe7ba449",
+   "item": "voice_zh",
+   "where": "l04",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l04"
+   ],
+   "evidence": [
+    "开盘就跌了十几个点，到收盘，还是跌了百分之四点三四"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "开盘就跌了十几个点，收盘还跌了四个多点。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "开盘就跌了十几个点，到收盘，还是跌了百分之四点三四",
+   "problem": "「点」与「百分之」混用，小数位太细，听不进去",
+   "suggest": "开盘就跌了十几个点，收盘还跌了四个多点。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l04 改为「消息一出，股价开盘就跌了十几个点，收盘还跌了四个多点。」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:11",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I86",
+   "key": "646c1f4243ea",
+   "item": "voice_zh",
+   "where": "l07",
+   "dim": "V1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l07"
+   ],
+   "evidence": [
+    "可接手这件私事的，偏偏是董事会、美国国会，还有中国外交部。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "可最后出来管的，偏偏是董事会、美国国会，还有中国外交部。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "可接手这件私事的，偏偏是董事会、美国国会，还有中国外交部。",
+   "problem": "开场，「接手」用词不对",
+   "suggest": "可最后出来管的，偏偏是董事会、美国国会，还有中国外交部。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l07 改为「可就这几天，董事会、美国国会，连中国外交部都出面了。」（未用「出来管」：外交部只是表态，不是管）",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:11",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I87",
+   "key": "de4312dfc787",
+   "item": "voice_zh",
+   "where": "l08",
+   "dim": "V1",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l08"
+   ],
+   "evidence": [
+    "在我们看来，是中美科技战，把一个 CEO 的私事，变成了国家安全问题。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "我们觉得，是中美科技战，让一个 CEO 的私事成了国家安全问题。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "在我们看来，是中美科技战，把一个 CEO 的私事，变成了国家安全问题。",
+   "problem": "开场，「是…把…变成了」句式绕",
+   "suggest": "我们觉得，是中美科技战，让一个 CEO 的私事成了国家安全问题。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l08 改为「我们觉得，是中美科技战，让一个 CEO 的私事变成了国家安全问题。」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:12",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I88",
+   "key": "1818fca08a37",
+   "item": "voice_zh",
+   "where": "l12/l13",
+   "dim": "V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V5",
+   "shots": [
+    "l12/l13"
+   ],
+   "evidence": [
+    "启动了调查，／但董事会同时也说，暂时没有理由认为，…"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "第二件，有报道说他成了「外国情报活动」的目标，董事会因此开始调查。／但董事会也说，目前没理由认为国家安全或公司机密受了损害。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "启动了调查，／但董事会同时也说，暂时没有理由认为，…",
+   "problem": "句子靠逗号跨句，因果倒装，逗号太碎",
+   "suggest": "第二件，有报道说他成了「外国情报活动」的目标，董事会因此开始调查。／但董事会也说，目前没理由认为国家安全或公司机密受了损害。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l12 改为「第二件，有报道说他被「外国情报活动」盯上了，董事会为此开始调查。」；l13 改为「但董事会也说，目前没理由认为国家安全或者公司机密受了损害。」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I89",
+   "key": "40b13b9db543",
+   "item": "voice_zh",
+   "where": "l15",
+   "dim": "V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l15"
+   ],
+   "evidence": [
+    "剩下还有两件，就只是报道了"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "另外还有两件，只是报道，到现在没证实。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "剩下还有两件，就只是报道了",
+   "problem": "「剩下还有」重复",
+   "suggest": "另外还有两件，只是报道，到现在没证实。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l15 改为「还有两条，只是《纽约时报》的匿名消息，到现在都没证实。」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:13",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I90",
+   "key": "7457e694ef6e",
+   "item": "voice_zh",
+   "where": "l16",
+   "dim": "V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V5",
+   "shots": [
+    "l16"
+   ],
+   "evidence": [
+    "《纽约时报》援引匿名人士说，美国情报界怀疑，一位跟他走得很近的女商人在替中国情报机构做事。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "《纽约时报》援引匿名人士说，美国情报部门怀疑，他身边一位女商人在替中国做事。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "《纽约时报》援引匿名人士说，美国情报界怀疑，一位跟他走得很近的女商人在替中国情报机构做事。",
+   "problem": "9.8s，三层转述，一口气念不完",
+   "suggest": "《纽约时报》援引匿名人士说，美国情报部门怀疑，他身边一位女商人在替中国做事。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "出处并入 l15，l16 改为「一条说，美国情报部门怀疑，他身边一位女商人在替中国情报机构做事。」（保留「情报机构」以忠于 C20，不写成「替中国做事」）",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:15",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I91",
+   "key": "da8b35518f9c",
+   "item": "voice_zh",
+   "where": "l18",
+   "dim": "V3/V5",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3/V5",
+   "shots": [
+    "l18"
+   ],
+   "evidence": [
+    "另一件也是《纽约时报》的匿名消息，说他和一名向他汇报的高管另有一段关系，英伟达拒绝置评。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "另一件，也是《纽约时报》的匿名消息：他和一位向他汇报的高管，还有一段关系。英伟达没有置评。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "另一件也是《纽约时报》的匿名消息，说他和一名向他汇报的高管另有一段关系，英伟达拒绝置评。",
+   "problem": "太长，「另有一段关系」含糊",
+   "suggest": "另一件，也是《纽约时报》的匿名消息：他和一位向他汇报的高管，还有一段关系。英伟达没有置评。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l18 改为「另一条说，他和一位向他汇报的高管，还有过一段关系。英伟达没有置评。」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:15",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I92",
+   "key": "a364df6479f6",
+   "item": "voice_zh",
+   "where": "l20/l21",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l20/l21"
+   ],
+   "evidence": [
+    "新加坡内政部…没有以间谍事由调查过她；新加坡警方确实查过她，查的是那家公司"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "新加坡内政部说，没因为间谍嫌疑查过她。不过新加坡警方查过那家公司买服务器时有没有报假，后来说证据不够。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "新加坡内政部…没有以间谍事由调查过她；新加坡警方确实查过她，查的是那家公司",
+   "problem": "内政部与警方并列容易混，「她」「公司」切换",
+   "suggest": "新加坡内政部说，没因为间谍嫌疑查过她。不过新加坡警方查过那家公司买服务器时有没有报假，后来说证据不够。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l20 改为「新加坡内政部说，从没因为间谍嫌疑查过这位女商人。」；l21「不过，新加坡警方查过她另一件事：那家公司买服务器时，涉嫌申报不实。」；l22「今年二月，警方认定对她证据不足。到今天，也没有任何人被起诉。」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:17",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I93",
+   "key": "30ee5b94ff27",
+   "item": "voice_zh",
+   "where": "l23",
+   "dim": "V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l23"
+   ],
+   "evidence": [
+    "他信里认的那段关系是不是跟她，他没说"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "他信里认的那段关系，是不是跟这位女商人，他没说，我们也不知道。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "他信里认的那段关系是不是跟她，他没说",
+   "problem": "「她」前面还隔着 l22，且 l18 还有另一位「高管」，指代不清",
+   "suggest": "他信里认的那段关系，是不是跟这位女商人，他没说，我们也不知道。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l23 改为「还有一点，他信里认的那段关系，是不是跟这位女商人，他没说，我们也不知道。」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:18",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I94",
+   "key": "d8f9647dfdd1",
+   "item": "voice_zh",
+   "where": "l28 vs l21",
+   "dim": "V2/V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V2/V3",
+   "shots": [
+    "l28 vs l21"
+   ],
+   "evidence": [
+    "而那家新加坡公司，新加坡警方还在查"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "而那家新加坡公司，美国管出口的部门上门核查过，新加坡那边也有调查，到现在没有结论。（若是两件不同的事，l21 要说清「那次已经结案」）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "而那家新加坡公司，新加坡警方还在查",
+   "problem": "前面 l21 说警方「最后认定证据不足」，这里又说「还在查」，听众以为前后矛盾",
+   "suggest": "而那家新加坡公司，美国管出口的部门上门核查过，新加坡那边也有调查，到现在没有结论。（若是两件不同的事，l21 要说清「那次已经结案」）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l28 改为「说回那家新加坡公司。女商人本人是证据不足，可公司本身，新加坡警方还在查。」（本人 / 本身对举，接 l22 的「对她证据不足」）；BIS 上门核查挪到 l29；claims.json 同步 C23/C131 加 l28、C132 加 l29",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:18",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I95",
+   "key": "77efc4c335d4",
+   "item": "voice_zh",
+   "where": "l30",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l30"
+   ],
+   "evidence": [
+    "最要紧的芯片，被怀疑转运的客户，跟 CEO 走得近的人。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "最要紧的芯片，可能被转手的客户，再加上跟 CEO 走得近的人。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "最要紧的芯片，被怀疑转运的客户，跟 CEO 走得近的人。",
+   "problem": "三个名词并列像报菜名；「转运」不是口语",
+   "suggest": "最要紧的芯片，可能被转手的客户，再加上跟 CEO 走得近的人。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l30 改为「这么一连，线就通了：最要紧的芯片，被怀疑往中国转芯片的客户，还有 CEO 身边的人。」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:19",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I96",
+   "key": "45231d43b076",
+   "item": "voice_zh",
+   "where": "l32",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l32"
+   ],
+   "evidence": [
+    "大家挂的都是同一个钩子。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "大家用的是同一个理由。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "大家挂的都是同一个钩子。",
+   "problem": "「挂钩子」比喻突兀",
+   "suggest": "大家用的是同一个理由。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l32 改为「大家抓的都是同一个点。」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:20",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I97",
+   "key": "f76cd88e2372",
+   "item": "voice_zh",
+   "where": "l34/l35",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l34/l35"
+   ],
+   "evidence": [
+    "三位共和党主席／众院对华委员会主席"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "三位共和党的委员会主席，以国家安全为由，请他去开闭门说明会。／…又站出来，要英伟达换上「国家安全第一」的领导层。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "三位共和党主席／众院对华委员会主席",
+   "problem": "不说是哪个机构的主席，听着像党主席；l35 逗号收尾",
+   "suggest": "三位共和党的委员会主席，以国家安全为由，请他去开闭门说明会。／…又站出来，要英伟达换上「国家安全第一」的领导层。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l34 改为「三位共和党的委员会主席说事关国家安全，请他去做闭门简报」；l35 句号收尾「…英伟达得换上把国家安全放第一的领导。」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:20",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I98",
+   "key": "085d7f93a12a",
+   "item": "voice_zh",
+   "where": "l37/l38",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l37/l38"
+   ],
+   "evidence": [
+    "寻找借口；要我们说…这事关芯片"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "给科技封锁找借口；我觉得…这事跟芯片有关。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "寻找借口；要我们说…这事关芯片",
+   "problem": "书面词",
+   "suggest": "给科技封锁找借口；我觉得…这事跟芯片有关。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l37 改「给科技封锁找借口了」；l38 去「要我们说」，结尾改「其实都认一点：这是芯片的事。」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:21",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I99",
+   "key": "263261bf5fb3",
+   "item": "voice_zh",
+   "where": "l39",
+   "dim": "V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l39"
+   ],
+   "evidence": [
+    "国会两党都有人要收紧，白宫却在放。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "再往下挖一层。对华卖芯片，国会两党都有人想收紧，白宫却在放松。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "国会两党都有人要收紧，白宫却在放。",
+   "problem": "章节首句，「在放」听不出是放松、放行，且一句三个意思",
+   "suggest": "再往下挖一层。对华卖芯片，国会两党都有人想收紧，白宫却在放松。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l39 改为「再往下挖一层。对华卖芯片这件事，国会两党都有人想收紧，白宫却在放行。」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:21",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I100",
+   "key": "b99407c50ee9",
+   "item": "voice_zh",
+   "where": "l45",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l45"
+   ],
+   "evidence": [
+    "因为他和黄仁勋的关系，被告知别查"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "问是不是有官员因为特朗普和黄仁勋的关系，被叫停了调查。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "因为他和黄仁勋的关系，被告知别查",
+   "problem": "「他」可指两人，「别查」查什么不清",
+   "suggest": "问是不是有官员因为特朗普和黄仁勋的关系，被叫停了调查。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l45 改为「民主党冲着特朗普去，追问有没有官员因为特朗普跟黄仁勋的关系，被叫停了调查。」；l46 改「共和党呢，盯着商务部…」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:22",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I101",
+   "key": "944e644d31b5",
+   "item": "voice_zh",
+   "where": "l47",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l47"
+   ],
+   "evidence": [
+    "民主党的沃伦"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "民主党参议员沃伦",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "民主党的沃伦",
+   "problem": "没有头衔，听不出是谁",
+   "suggest": "民主党参议员沃伦",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l47 改「民主党参议员沃伦」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:23",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I102",
+   "key": "def6ce95be21",
+   "item": "voice_zh",
+   "where": "l49",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l49"
+   ],
+   "evidence": [
+    "中文舆论里正好有个流行的说法，说黄仁勋…"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "说到两党，中文网上正好有个说法：黄仁勋是美国两党斗争的牺牲品。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "中文舆论里正好有个流行的说法，说黄仁勋…",
+   "problem": "「中文舆论」书面，「说法，说」重复",
+   "suggest": "说到两党，中文网上正好有个说法：黄仁勋是美国两党斗争的牺牲品。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l49 改为「说到两党，中文网上正好有个流行的说法：黄仁勋是美国两党斗争的牺牲品。」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:23",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I103",
+   "key": "6bc2f4051044",
+   "item": "voice_zh",
+   "where": "l50",
+   "dim": "V3",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l50"
+   ],
+   "evidence": [
+    "据香港〇一转述"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "香港 01 这家媒体转述，他最早说的是，民主党和建制派在整黄仁勋，接着整特朗普。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "据香港〇一转述",
+   "problem": "「〇一」听不出是媒体，「进而」书面",
+   "suggest": "香港 01 这家媒体转述，他最早说的是，民主党和建制派在整黄仁勋，接着整特朗普。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l50 改为「据香港媒体〇一转述，胡锡进头一天说，是民主党和建制派在搞黄仁勋，再借他搞特朗普。」（点明是媒体；「进而」改「再借他」；保留转述原词「搞」，不改「整」）",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:24",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I104",
+   "key": "2a603745d2b0",
+   "item": "voice_zh",
+   "where": "l52",
+   "dim": "V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l52"
+   ],
+   "evidence": [
+    "所以头一天，他的矛头其实是指向民主党的。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "也就是说，头一天他是冲着民主党去的。（或并入 l51）",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "所以头一天，他的矛头其实是指向民主党的。",
+   "problem": "「所以」不成立，重复 l50",
+   "suggest": "也就是说，头一天他是冲着民主党去的。（或并入 l51）",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l52 改为「也就是说，头一天他是冲着民主党去的。」（短过渡，句号不能删）",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:24",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I105",
+   "key": "40f225323e81",
+   "item": "voice_zh",
+   "where": "l59",
+   "dim": "V1",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1",
+   "shots": [
+    "l59"
+   ],
+   "evidence": [
+    "反方最有力的说法是…公司治理问题"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "最有力的说法是：国家安全只是噪音，他走就是普通的公司问题。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "反方最有力的说法是…公司治理问题",
+   "problem": "「反方」「公司治理」书面",
+   "suggest": "最有力的说法是：国家安全只是噪音，他走就是普通的公司问题。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l59 改为「不同意的人里，最有力的说法是：国家安全只是噪音，他走就是公司内部的事。」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:25",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I106",
+   "key": "07c516e9236b",
+   "item": "voice_zh",
+   "where": "l60",
+   "dim": "V3",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V3",
+   "shots": [
+    "l60"
+   ],
+   "evidence": [
+    "正好是第二段关系见报那天"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "正好是第二条报道出来那天。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "正好是第二段关系见报那天",
+   "problem": "「第二段关系见报」要想一下才懂",
+   "suggest": "正好是第二条报道出来那天。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l60 改为「他认了不忠，又被报道跟下属有关系。董事会接受辞职，就在这条报道出来当天。」（诉讼已在 l57，不重复；claims.json C10 去掉 l60）",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:25",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I107",
+   "key": "23accb98bd9b",
+   "item": "voice_zh",
+   "where": "l62",
+   "dim": "V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V2",
+   "shots": [
+    "l62"
+   ],
+   "evidence": [
+    "这些我们都同意，所以我们从没说过他因为国家安全下台，直接原因很可能就是公司治理"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "这些我们都认。我们也从没说他是因为国家安全下台，直接原因很可能就是公司自己的事。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "这些我们都同意，所以我们从没说过他因为国家安全下台，直接原因很可能就是公司治理",
+   "problem": "「所以」不成立；「直接原因很可能就是公司治理」与 l09「到现在也没人知道」口径不一",
+   "suggest": "这些我们都认。我们也从没说他是因为国家安全下台，直接原因很可能就是公司自己的事。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l62 改为「这些我们都同意，也从没说他因为国家安全下台。直接原因，很可能就是公司内部的事。」（去掉不成立的「所以」；l09 改为「公司一直没说」，与「很可能」口径一致）",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:26",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I108",
+   "key": "a3c262a1af4b",
+   "item": "voice_zh",
+   "where": "l65",
+   "dim": "V4",
+   "level_zh": "建议",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V4",
+   "shots": [
+    "l65"
+   ],
+   "evidence": [
+    "这件事也已经成了国家安全问题，因为每一方都把它当成国家安全问题在处理"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "就算「间谍」的说法最后是假的，各方也已经把它当国家安全问题在处理了。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "这件事也已经成了国家安全问题，因为每一方都把它当成国家安全问题在处理",
+   "problem": "「X 因为大家当 X」同词绕圈，9.1s 偏长",
+   "suggest": "就算「间谍」的说法最后是假的，各方也已经把它当国家安全问题在处理了。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l65 改为「就算「间谍」的说法最后是假的，各方也已经把它当国家安全问题在处理了。」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:27",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I109",
+   "key": "8b9f9c6867a2",
+   "item": "voice_zh",
+   "where": "l66",
+   "dim": "V1/V2",
+   "level_zh": "必改",
+   "level": "critical",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V1/V2",
+   "shots": [
+    "l66"
+   ],
+   "evidence": [
+    "所以等热度过去，这件事留下的道理是：…越不是私事"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "所以等热度过去，你只要记住一句：公司卖的东西越要紧，掌门人的私事就越不算私事。",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "所以等热度过去，这件事留下的道理是：…越不是私事",
+   "problem": "结尾点题句用「留下的道理是」模板腔，「越不是私事」绕口",
+   "suggest": "所以等热度过去，你只要记住一句：公司卖的东西越要紧，掌门人的私事就越不算私事。",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "l66 改为「热度过去以后，记住一句就行：公司卖的东西越要紧，掌门人的私事就越不算私事。」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:27",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  },
+  {
+   "id": "I110",
+   "key": "e6756b61abac",
+   "item": "voice_zh",
+   "where": "l70",
+   "dim": "V2",
+   "level_zh": "记录",
+   "level": "minor",
+   "law": "lines",
+   "category": "中文口播",
+   "dimension": "V2",
+   "shots": [
+    "l70"
+   ],
+   "evidence": [
+    "以上说法截至十一月十四日，不构成投资建议。"
+   ],
+   "sources": [
+    "a 位（Claude）"
+   ],
+   "fix": "可在 l69 与 l70 之间加一句收尾，如「后面有新进展，我们再跟。」",
+   "cost": "便宜",
+   "src": "a",
+   "orig": "以上说法截至十一月十四日，不构成投资建议。",
+   "problem": "片尾只有免责声明，没有收束或下一步，听着是突然断掉；免责声明本身是惯例",
+   "suggest": "可在 l69 与 l70 之间加一句收尾，如「后面有新进展，我们再跟。」",
+   "judge_note": "",
+   "status": "implemented",
+   "solution": "不能加句号，收尾并入 l70：「今天说的，都是截至十一月十四日的情况，不构成投资建议。后面怎么走，我们接着看。」；l69 改「至于他哪天去国会，还在谈。几方的调查，也都还没有结论。」",
+   "reason": "",
+   "files": [
+    "script.md"
+   ],
+   "history": [
+    {
+     "at": "2026-11-14T21:33:28",
+     "status": "open",
+     "solution": ""
+    }
+   ]
+  }
+ ]
+}

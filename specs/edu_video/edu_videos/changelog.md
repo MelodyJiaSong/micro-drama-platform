@@ -539,3 +539,221 @@ Auto-updated:
 
 No conflicts found in: edu_videos/README.md 大系列约定、tansuo/README.md 画风与特效节、人物参考 _shared/cast/
 
+
+## Follow-up 040 — 2026-11-14 20:35:09
+Source: user_input/follow_ups/202611.md - section 040
+Summary: t01 故事板预览改为短剧拍摄页样式；新增整集音频预览（本地 TTS、scene/shot 进度条、时间对齐成片），今后出视频前必给
+
+Auto-updated:
+- edu_videos/tansuo/t01_inside_a_chip/storyboard/build_preview.py（新：panels.json＋beats.md → storyboard/storyboard.json 与 audio/preview_manifest.json；转场镜头起收时长；say 读音替换 栅极→珊极）；storyboard.json；audio/preview_manifest.json；audio/preview/（逐句配音、takes.json、timeline.json、preview.m4a，媒体不进 git）；audio_preview.json；_shared/cast/lin|kai/voice_zh.wav、voice_en.wav、voice.json（从建立视频按 whisper 逐字时间切出的声样）；tansuo/README.md、edu_videos/README.md 流程与状态
+
+验证: 音频预览 1:56、14 镜、23 句，回听全部错率 ≤15%（栅极误读 zhà 由 say 修正，P13 欢呼改「哇哦」后通过）；每镜 5–13 秒，无超 15 秒；浏览器实测 /episode-preview?…&audio=1 大图随镜切换、叠台词、场/镜进度条，/storyboard-preview 与拍摄页同样式；首次整集约 16 分钟，增量改两句 99 秒。英文版未做。
+
+No conflicts found in: tansuo README 画风/特效/诚实标注节；edu 大系列三层审查
+
+
+## Follow-up 043 — 2026-11-14 21:31:41
+Source: user_input/follow_ups/202611.md - section 043
+Summary: edu 审查改为 Claude 单审
+
+Auto-updated:
+- edu_videos/_shared/review/roles.json（事实核查、中英母语听感 runner codex→claude，note 记录）；tools/edu_review.py 说明改为单审；edu_videos/README.md 专家审稿一段
+
+验证: roles.json 解析通过，8 个角色 runner 全为 claude；line_review.json 已是单审（models 只有 a）；edu_review.py py_compile 与 --help 正常；edu_review 无自动测试，未实跑 brief。
+
+No conflicts found in: 台词审 v2/v3 维度与硬上限不变
+
+
+## Follow-up 045 — 2026-11-14 22:24:38
+Source: user_input/follow_ups/202611.md - section 045
+Summary: 探索第二季「血脂」：医学研究档案 → 季地图 → 试点期故事
+
+Auto-updated:
+- edu_videos/tansuo/t11_inside_an_artery/research/angles/*.md — 7 个研究角度（生物学与尺度、因果与好坏、他汀与其他药、生活方式、指南与情景、对标与谣言、根因）
+- edu_videos/tansuo/t11_inside_an_artery/research/dossier.md — 季研究档案 F01–F58，按核查 r1 修订（§8）
+- edu_videos/tansuo/t11_inside_an_artery/research/factcheck_r1.md — 独立事实核查 r1
+- edu_videos/tansuo/t11_inside_an_artery/beats.md — 试点期 13 拍节拍 v1.1（凯与父亲的处境线）
+- edu_videos/tansuo/README.md — 第二季血脂 Vision、凯的一家主线、合规、编码色、t11–t20 知识点地图、期目录
+- edu_videos/README.md — 系列表探索行加第二季
+- .audit/adhoc_agents/2026-11-14/tansuo-s2-lipids-research/ — 子代理任务说明、产物要点与 403 中断记录
+
+验证: 独立上下文事实核查 r1（35 属实 / 10 需改 / 0 不实 / 13 未能核），需改项已落实；节拍未经观众或台词审（尚未进讲稿）；workflow_catalog.py --check 通过
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 046 — 2026-11-14 23:00:48
+Source: user_input/follow_ups/202611.md - section 046
+Summary: 血脂季研究加角度：LDL 升高的根因、他汀治本还是治标
+
+Auto-updated:
+- edu_videos/tansuo/t11_inside_an_artery/research/angles/root_cause.md — LDL 升高根因与他汀治本还是治标
+- edu_videos/tansuo/t11_inside_an_artery/research/angles/statins_drugs.md — §8 他汀治本还是治标
+- edu_videos/tansuo/t11_inside_an_artery/research/dossier.md — F19–F24、F33、F36–F38；§4 问题 ⑩
+- edu_videos/tansuo/README.md — 季地图 t15 以此为核心问题
+
+验证: 事实核查 r1 覆盖相关条目；核查意见：基因编辑也只作用于降 LDL 一环，不能称治本，已写入档案
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 039 — 2026-11-14 20:31:55
+Source: user_input/follow_ups/202611.md - section 039
+Summary: t01 已成片待审；t02 从讲稿做到成片：讲稿要点→中英讲解员口述→台词审→配音→网页场景＋Seedance 4 镜（用户已同意，约 480 积分）＋公开图片→Suno 配乐→合成→/episode-preview 链接
+
+Auto-updated:
+- edu_videos/redian_xiangying/t02_jensen_huang_resigns/（script.md/script.en.md v1.4、claims.json C127–C134、scenes/web s0–s6、seedance 4 镜、media_ledger、final/、preview*.json）；redian_xiangying/README.md 期目录
+
+验证: 台词审 lines_r1–r3（Claude 单审）；edu_web check 中英无问题；配音 qa 全部通过；edu_review validate 必改 0；预览页 HTTP 200
+费用: Seedance 480 积分（4×120）；Codex 出图 5 张（订阅额度）
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 041 — 2026-11-14 20:47:54
+Source: user_input/follow_ups/202611.md - section 041
+Summary: t02：补公开图片（国会议员官方照、总部、港口等）＋Codex 生成示意图（不出真人、标 AI 生成）；讲稿中英按通顺流畅重写一轮再进台词审；ElevenLabs 中文母语音色 5 句样音给用户盲听，定了再决定 t01/t02 是否换配音引擎
+
+Auto-updated:
+- media_ledger.json M08–M22（Commons 10 张、Codex 5 张）；script.md/script.en.md 通顺重写 v1.1–v1.4；_shared/voice_lab_eleven/（ElevenLabs 查询记录）
+
+验证: Codex 图逐张看过；ElevenLabs 样音未出：账户额度 600,358 已用尽，2026-11-17 15:01 重置（请求均已记日志，被拒不扣费）；用户选先用本地配音出 preview
+费用: ElevenLabs 0（被拒）
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 042 — 2026-11-14 21:21:17
+Source: user_input/follow_ups/202611.md - section 042
+Summary: 教学视频台词审（tools/edu_review.py）改 Claude 单审：line_review.json models 去掉 b 位，slots_of() 按 models 定审稿位，单审时 a 位评分即最终分、不对比不裁决；checklist/issues 兼容单审；edu README 同步；t02 lines_r1 进行中的审查单转单审（停掉 4 个 Codex 位）。上次（chuanyue_yiri 065）只改了短剧 review_run.py，没覆盖 edu_review.py
+
+Auto-updated:
+- tools/edu_review.py（slots_of 单审、TABLE_ROW 级别列允许注释）；edu_videos/_shared/review/line_review.json（models 去 b）；edu_videos/README.md 台词审说明
+
+验证: t02 lines_r1 就地转单审后 check/issues 通过；lines_r2、r3 用 new 开单审审查单（只生成 a 位）跑通 check/issues/fix/conclude；lines_r1 重跑 issues 条数不变（110）
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 047 — 2026-11-15 00:26:55
+Source: user_input/follow_ups/202611.md - section 047
+Summary: t01 不限时长、质量优先；开关原理本期讲透（t02 选题顺延）
+
+Auto-updated:
+- t01 按质量优先不限时长，开关原理并入本期；t02 改为开关怎么学会算数，中英 23 场 87 句及系列 README 已同步。
+
+验证: 三轮讲稿审查与六类定点终审均 0 必改；edu_review lint 中英通过；36 个相关测试通过。
+
+No conflicts found in: （未单独核查）
+
+## Follow-up 048 — 2026-11-15 00:31:57
+Source: user_input/follow_ups/202611.md - section 048
+Summary: 血脂季家人不露面，纯两人讲解
+
+Auto-updated:
+- edu_videos/tansuo/README.md — 第二季主线：家人不露面、不新增选角
+- edu_videos/tansuo/t11_inside_an_artery/beats.md — 父亲只以台词与出院单道具出现；同处把 047 写成了 048
+
+验证: 文本改动，两处替换已核对；无媒体产物受影响。注：本会话误对另一会话的 047 执行了 done，已把 047 的 changelog 恢复为待补骨架
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 049 — 2026-11-15 10:38:14
+Source: user_input/follow_ups/202611.md - section 049
+Summary: 血脂季不请医生署名，不做药物推荐
+
+Auto-updated:
+- edu_videos/tansuo/README.md — 不安排医生审稿署名、不做药物推荐；同步季地图与 t11 故事板状态
+- edu_videos/README.md — 更新探索系列 t11 状态
+- edu_videos/tansuo/t11_inside_an_artery/beats.md — 医疗边界、LDL 受体内吞与斑块破裂限定
+- edu_videos/tansuo/t11_inside_an_artery/research/dossier.md — 记录用户对核查员资质建议的决定与全季推荐边界
+- edu_videos/tansuo/t11_inside_an_artery/storyboard/ — v1 共 13 张 1672×941 PNG、panels/storyboard/review JSON、生成与预览脚本；图片 SHA256 与 thread_id 见 request_log.md
+- edu_videos/tansuo/t11_inside_an_artery/storyboard/reviews/self_r1.md — 13 格逐图自检；P06 出片前必改
+- edu_videos/tansuo/t11_inside_an_artery/audio/preview_manifest.json — 仅生成后续音频预览清单，未生成音频
+
+验证: 未做独立故事板审稿，待用户预览；未生成收费视频
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 050 — 2026-11-15 16:23:23
+Source: user_input/follow_ups/202611.md - section 050
+Summary: t11 增加他汀机制与治本治标解释
+
+Auto-updated:
+- edu_videos/tansuo/t11_inside_an_artery/beats.md — v1.2 新增他汀机制与治本/治标
+- edu_videos/tansuo/t11_inside_an_artery/storyboard/panels.json — v2 新增 P12A
+- edu_videos/tansuo/t11_inside_an_artery/storyboard/P12A.png — 1672×941；SHA 与生成记录见 request_log.md
+- edu_videos/tansuo/t11_inside_an_artery/storyboard/reviews/self_r2.md — 新增格自检与正式模型修正边界
+
+验证: P12A 首次网络失败无图，第二次成功并逐图验收；不作药物推荐；未生成音频或视频
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 051 — 2026-11-15 16:28:31
+Source: user_input/follow_ups/202611.md - section 051
+Summary: t11 补充他汀与血脂关系及降 LDL 是否解决问题
+
+Auto-updated:
+- edu_videos/tansuo/t11_inside_an_artery/beats.md — 新增他汀与血脂关系、降 LDL 结局证据、绝对获益和残余风险
+- edu_videos/tansuo/t11_inside_an_artery/storyboard/panels.json — 新增 P12B，共 15 格
+- edu_videos/tansuo/t11_inside_an_artery/storyboard/P12B.png — 1672×941；SHA 与生成记录见 request_log.md
+- edu_videos/tansuo/README.md 与 edu_videos/README.md — 同步 t11 v2 状态
+
+验证: P12B 首次成功并逐图验收；15 panels/scenes/review items、全部图片与链接校验通过；未生成音频或视频
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 052 — 2026-11-15 17:03:12
+Source: user_input/follow_ups/202611.md - section 052
+Summary: 芯片与血脂故事板统一入口并写入系列流程
+
+Auto-updated:
+- edu_videos/tansuo/README.md — 一期流程的故事板步骤明确每期 storyboard.json、统一 ShotCard、左导航入口与用户审顺序，适用于芯片和血脂
+
+验证: Chrome/Playwright 实开 t01 v5-script 23 镜与 t11 v2 15 镜，左导航故事板均展开并高亮；截图 .audit/adhoc_agents/2026-11-15/storyboard-nav/t01.png 已看图
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 044 — 2026-11-14 22:20:09
+Source: user_input/follow_ups/202611.md - section 044
+Summary: t01 重写：调研同类讲解 → 有铺垫的故事、观众关心的问题、详细解释、情景与特效
+
+Auto-updated:
+- t01 完成中英文叙事调研、23 场 87 句讲稿与三轮审查；V5 故事板工作稿使用已过审 V18C，其余保留临时图说明；中文音频 9:54/53 镜、英文 10:27/58 镜已生成。
+
+验证: 六类定点终审均 0 必改；中英时间轴无超 15 秒镜头、无回听超标且句数齐全；Chrome 实际打开故事板并播放两版音频通过；36 个相关测试、lint、py_compile、workflow_catalog 与 skills 检查通过。
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 053 — 2026-11-15 17:29:56
+Source: user_input/follow_ups/202611.md - section 053
+Summary: 核查 t11 v2 概念板、场镜映射与独立审稿状态
+
+Auto-updated:
+- edu_videos/tansuo/t11_inside_an_artery/storyboard/reviews/structure_r1.json — 记录场镜映射原因、独立Kimi图审、六项意见及分阶段结论
+- .audit/adhoc_agents/2026-11-15/t11-v2-review/ — 输入指纹、15格拼图、真实审稿任务与原始输出、定向原文核查
+- .audit/adhoc_agents/2026-11-15/t11-v2-review/corrected/ — 编码修复后的有效独立Kimi复审；首轮保留并明确作废
+- edu_videos/tansuo/t11_inside_an_artery/storyboard/reviews/structure_r1.json — 补入有效独立审稿完整意见，并读回校验中文
+
+验证: 有效Kimi独立复审结论：concept=pass、production=fail。全部15格图片已看；15场15镜映射、15镜0时长与占位字段已核，输入SHA256未变。P11定向核对原论文摘要。首次任务说明编码损坏，首轮结论作废，已改用英文完整说明重跑；中文报告读回正确。缺讲稿、claims与音频轴，成片和全量医学未审；未改创作内容或生成媒体。
+
+No conflicts found in: （未单独核查）
+
+
+## Follow-up 054 — 2026-11-15 17:34:23
+Source: user_input/follow_ups/202611.md - section 054
+Summary: t01 按实际场景重组并拆分视觉镜头
+
+Auto-updated:
+- storyboard/build_preview.py — 按9个实际场景登记中文53镜、英文58镜及独立视觉键；storyboard.json、audio/preview_manifest*.json、audio/preview*/timeline.json、audio_preview*.json — 同步多镜结构且保持87句与594/627秒；storyboard/reviews/v5_visual_structure*.md — 首轮6项必改与R2清零；edu_videos/README.md、tansuo/README.md — 更新期状态。
+
+验证: 独立R2复审0必改；同语言视觉键与图片路径均不重复；两版无超15秒镜头、无回听超标；Chrome展开全部9场并加载V18C、播放双语音频通过；36个测试、py_compile、sync_agent_config、skills、workflow检查通过。shot_pack check因edu目录无prompts.json而不适用，未生成或核验短剧资料包。
+
+No conflicts found in: （未单独核查）
+

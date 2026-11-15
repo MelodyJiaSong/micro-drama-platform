@@ -2,7 +2,7 @@
 """航线 / 关键帧曲线数学 —— 现由 `tools/previz/build_previz.py` 使用（单调插值）。
 原先另有两个航线工具共用它，两者已随旧流程删除。
 
-为什么单独成模块：与 `city_layout.py` 同一个理由（CLAUDE.md §General coding rules
+为什么单独成模块：与 `city_layout.py` 同一个理由（CONVENTIONS.md §General coding rules
 「一个名字只有一处定义」）。单调插值与侧向加速度这两件事，**航线生成端**要用它判断
 「这条航线转得过来吗」、**previz 求解端**要用它判断「这条航线转不过来就 raise」。
 两处各写一份的后果不是报错，是两端的判据悄悄分岔——生成时算合格、渲染时被拦下，

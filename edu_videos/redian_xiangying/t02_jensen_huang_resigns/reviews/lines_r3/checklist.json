@@ -1,0 +1,831 @@
+{
+ "version": 5,
+ "kind": "edu_lines",
+ "scoring": {
+  "scale": {
+   "0": "没查或查不了（写 `原因：`）",
+   "1": "有问题（问题表里必须有对应条目）",
+   "2": "基本没问题，有小瑕疵（写证据）",
+   "3": "没问题（写证据）"
+  },
+  "evidence_rule": "证据要指到句号 lNN / 屏号、原文或数字，至少 8 个字；没证据的高分按 0 处理。",
+  "disagreement": "单审：a 位评分即最终分。（双审时：两位同一维度差 ≥2，或一人 ≤1、另一人 ≥2，交裁决人；两人都 ≥2 的维度，裁决人每项抽 2 维复核。）"
+ },
+ "adjudicator": {
+  "runner": "claude",
+  "model": "claude-opus-5-5"
+ },
+ "id": "lines_r3",
+ "chain": "t02_jensen_huang_resigns/lines",
+ "loop": 3,
+ "max_loops": 3,
+ "parent": "edu_videos/redian_xiangying/t02_jensen_huang_resigns/reviews/lines_r2",
+ "title": "t02_jensen_huang_resigns · 台词审（口播＋屏幕文字）第 3 轮",
+ "target": "edu_videos/redian_xiangying/t02_jensen_huang_resigns",
+ "episode": "t02_jensen_huang_resigns",
+ "stage": "lines",
+ "stage_name": "台词审（口播＋屏幕文字 × 中英）",
+ "scenes": [],
+ "created_at": "2026-11-14T22:07:26",
+ "author": "Claude Code",
+ "known": "",
+ "changes": "# 台词审汇总：lines_r2\n\n处理状态：待处理 0 · 已改 59 · 不改 6 · 驳回 0（`python tools/edu_review.py fix` 登记；下一轮审稿人按「处理」列逐条复核）\n\n## 各项结论（最终分：双审时裁决过的维度用裁决分，其余取两人较低分；单审即 a 位评分）\n\n| 项 | 最终分 | 未处理的必改 | 结论 |\n|---|---|---|---|\n| voice_zh | V1=2 V2=2 V3=1 V4=2 V5=2 V6=2 R=2 | 0 | 不通过 |\n| voice_en | V1=2 V2=2 V3=2 V4=2 V5=2 V6=3 R=2 | 0 | 通过 |\n| screen_zh | P1=1 P2=2 P3=2 P4=1 P5=2 P6=3 R=2 | 0 | 不通过 |\n| screen_en | P1=2 P2=2 P3=2 P4=2 P5=2 P6=3 R=2 | 0 | 通过 |\n\n## 问题（来源 a = Claude；双审时 b = Codex、judge = 裁决补充）\n\n| 编号 | 项 | 位置 | 维度 | 级别 | 来源 | 原文 | 问题 | 建议改写 | 裁决人意见 | 处理 |\n|---|---|---|---|---|---|---|---|---|---|---|\n| I1 | screen_en | c_c4 (chapter card, strict) | P4 | 必改 | a | \"A casualty?\" | Chapter title is a bare noun fragment with no subject; read aloud it asks \"a casualty of what?\". Strict item. l49's h1 already carries the full question. | \"Was he a casualty?\" |  | 已改：package.json chapters.c4.en 与 script.en.md s4 段标题改为「Was he a casualty?」；s4 页眉从 package.json 读，已同步 |\n| I2 | screen_en | c_c1 / s1 | P3 | 记录 | a | Chapter \"What's confirmed\" covers l15-l23 (reported, rebuttals, unknowns) | Chapter name is narrower than its content; eyebrows already change per section. | \"Confirmed, reported, unknown\" if the chapter card can be renamed; otherwise keep |  | 不改：保留章名「What's confirmed」（理由：章名归讲稿作者，本轮未改；l15 起页眉已按内容换成 Reported, not confirmed / The responses / What we don’t know，内容范围已标清） |\n| I3 | screen_en | l03 | P5 | 记录 | a | \"Out as CEO - director\" and \"not given\" in light grey | Low contrast on the strict cold-open screen; the black \"33 years\" reads first, which is intended, but the other two are hard to read. | Raise the grey one step darker |  | 已改：l03 灰字加深一级：Out as 行退后透明度 0.45→0.62，「not given / 未写」改用 --sub 色（原 --faint） |\n| I4 | screen_en | l08 / l31 | P3 | 建议 | a | \"Private life -> national security\" / \"Private matter -> national security lens\" | Same idea phrased three ways across screens. | Use \"Private matter -> national security\" on both |  | 已改：l08、l31 统一为「Private matter → national security」 |\n| I5 | screen_en | l09 | P2 | 建议 | a | \"Not our claim: he quit over it\" | Restates the narration sentence; \"it\" depends on the h1 above. | \"No claim he quit over it\" (or drop the line; the narration says it) |  | 已改：l09 改「No claim he quit over it」；中文同步改「我们没说：他因国家安全下台」并删去与口播重叠的「辞职原因：未公布」 |\n| I6 | screen_en | l10 | P3 | 记录 | a | eyebrow \"01 - What's confirmed\" + h2 \"Confirmed\" | h2 repeats the eyebrow. | Delete the h2 until the first row arrives, or use h2 \"Three confirmed facts\" |  | 已改：l10 英文 h2 改「Three confirmed facts」，不再重复页眉 |\n| I7 | screen_en | l25 | P2/P4 | 记录 | a | \"Top chips to China? / = the tech war's front line\" | Equation fragment mirroring the narration; readable but wordy for 8.5 s. | \"Top chips for China = tech-war front line\" |  | 已改：l25 改「Top chips for China / = tech-war front line」 |\n| I8 | screen_en | l29 | P1/P3 | 建议 | a | Heading + 4 rows + faded chart (US / China / Southeast Asia) = 23 words; source line touches the card bottom | One word over the 22 limit when the faded chart is counted; \"Her\" row is greyed but still on screen; row labels non-parallel (Her / The company / Its response); source line collides with the card (s2_l29). | Remove the chart text and the \"Her\" row at l29; keep 3 rows: \"Company: still under investigation\" / \"US export control: inspected\" / \"Company: denies wrongdoing\" and move the source line 24 px lower |  | 已改：l29 起「Her」行收走、闸门图（含 US / China / Southeast Asia 图内字）整体收走；三行标签平行：Company · still under investigation / US export control · inspected / Company · denies wrongdoing；出处行与卡片不再相碰（截图核过） |\n| I9 | screen_en | l39 | P4 | 建议 | a | \"Congress, both parties: tighten\" / \"White House: loosening\" | Non-parallel verb forms (tighten / loosening). Repeated in the h2 on l40-l42. | \"Congress, both parties: tightening\" / \"White House: loosening\" |  | 已改：改「Congress, both parties: tightening」与「White House: loosening」平行 |\n| I10 | screen_en | l48 | P4/P2 | 建议 | a | \"Name Trump\" / \"Don't\" | The party cards behind are ghosted to near-invisibl",
+ "items": [
+  {
+   "id": "voice_zh",
+   "law": "lines",
+   "law_name": "中文口播（母语听感，盲审）",
+   "color": "#c0502e",
+   "scope": [],
+   "checks": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_zh.md",
+   "prompt": "items/voice_zh__a.md",
+   "what": "逐句听讲解员的中文：真人讲解会不会这么说、听一遍能不能懂。",
+   "problem": "上一版「本期内容」念成「这一期，讲四件事：它是个什么问题；为什么只背练习册不行……」，像在念目录，正常人不会这么说话（用户 2026-11-08 指出）；原先的审稿没抓到。",
+   "model_why": "Claude 单审：a 位评分即最终分，不对比、不裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "像真人在讲",
+     "question": "逐句：自然 / 有点怪 / 很怪。书面腔、讲解腔、翻译腔、念稿感、报菜名式罗列都算怪"
+    },
+    {
+     "id": "V2",
+     "name": "衔接与过渡",
+     "question": "开场、本期内容、章节转换、举例前后：像一个人顺着思路往下讲，而不是「下面讲第一点」式的模板或目录朗读；上下句接得上"
+    },
+    {
+     "id": "V3",
+     "name": "一遍听懂",
+     "question": "只靠耳朵：一句只带一个新意思；指代清楚（说「这个」时观众知道指什么）；术语先解释再用；数字、同音字不会听错"
+    },
+    {
+     "id": "V4",
+     "name": "精炼",
+     "question": "没有废话、重复、正确的空话；删掉不影响理解的句子要指出来"
+    },
+    {
+     "id": "V5",
+     "name": "口吻与节奏",
+     "question": "从头到尾是同一个亲切、清楚、不端着的讲解者；长短句交替，每句适合一口气念完"
+    },
+    {
+     "id": "V6",
+     "name": "改写",
+     "question": "每句「有点怪 / 很怪」都给出可以直接替换、不更长的中文改写；列出最别扭的 5 句并排序"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_zh__a.md",
+     "prompt": "items/voice_zh__a.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "70 句里约 58 句我会这么跟朋友说，如 l03「这家公司他带了三十三年，可公告里，一个字都没提为什么」、l24「凭什么能惊动这么多机构」；仍偏书面的有 l13「没理由认为……受了损害」、l22「认定对她证据不足」、l30 三项并列、l57「董事会自己的理由也够了」。"
+      },
+      "V2": {
+       "score": 2,
+       "evidence": "开场 l01–l09 一路顺着讲，l24「说到这儿，问题就来了」、l39「再往下挖一层」、l49「说到两党，中文网上正好有个流行的说法」都像一个人在接话；扣分在 l40「所以两党都抓着这事追问」因果接不上、l38 由「同一个点」（国家安全）落到「是芯片的事」、l60 原样重说 l57。"
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "术语基本先解释；仍有 l40「这事」指什么不清、l45「被要求别查」没说查什么、l21「涉嫌虚报」没说虚报什么、l50「建制派」未解释、l15「还有两条」没交代是什么的两条。较上轮好转，没有听不懂的整段。"
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "l60「他认了不忠，又被报道跟下属有过感情」与 l57 几乎逐字重复；l33 重说 l12「外国情报活动那条报道」；l52 重述 l50；l67 与 l66 同义。删掉 l60 前半句不影响理解。"
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "全程是同一个「我们」口吻，亲切不端着；长短句交替好（l11 2.8s、l36 3.3s 与 l41 8.0s 交错）。l50、l43 各 8.0s，一口气偏长；l66「掌门人」与全片的「CEO」叫法不统一。"
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "下面每个「有点怪」都给了不更长的直接替换；最别扭的 5 句已在整体观察排序。"
+      },
+      "R": {
+       "score": 2,
+       "evidence": "I45 l12、I46 l18、I49 l24、I50 l29、I52 l33、I60 l55、I62 l58、I63 l59、I64 l61 已解决；I53「间谍叙事」不改，理由成立（外交部原话）；I59 保留 l52，理由成立；I47 l21「虚报」仍没说清虚报什么，半解决；I51 l30 仍是并列清单，未解决；I54 l45 改成「被要求别查」又出新问题（查什么）；I57 记录写「建制派」已改「老牌政客」，但本轮材料 l50 仍是「建制派」，未落地。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "像真人在讲",
+     "a": 2,
+     "a_ev": "70 句里约 58 句我会这么跟朋友说，如 l03「这家公司他带了三十三年，可公告里，一个字都没提为什么」、l24「凭什么能惊动这么多机构」；仍偏书面的有 l13「没理由认为……受了损害」、l22「认定对她证据不足」、l30 三项并列、l57「董事会自己的理由也够了」。",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V2": {
+     "name": "衔接与过渡",
+     "a": 2,
+     "a_ev": "开场 l01–l09 一路顺着讲，l24「说到这儿，问题就来了」、l39「再往下挖一层」、l49「说到两党，中文网上正好有个流行的说法」都像一个人在接话；扣分在 l40「所以两党都抓着这事追问」因果接不上、l38 由「同一个点」（国家安全）落到「是芯片的事」、l60 原样重说 l57。",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V3": {
+     "name": "一遍听懂",
+     "a": 2,
+     "a_ev": "术语基本先解释；仍有 l40「这事」指什么不清、l45「被要求别查」没说查什么、l21「涉嫌虚报」没说虚报什么、l50「建制派」未解释、l15「还有两条」没交代是什么的两条。较上轮好转，没有听不懂的整段。",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V4": {
+     "name": "精炼",
+     "a": 2,
+     "a_ev": "l60「他认了不忠，又被报道跟下属有过感情」与 l57 几乎逐字重复；l33 重说 l12「外国情报活动那条报道」；l52 重述 l50；l67 与 l66 同义。删掉 l60 前半句不影响理解。",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V5": {
+     "name": "口吻与节奏",
+     "a": 2,
+     "a_ev": "全程是同一个「我们」口吻，亲切不端着；长短句交替好（l11 2.8s、l36 3.3s 与 l41 8.0s 交错）。l50、l43 各 8.0s，一口气偏长；l66「掌门人」与全片的「CEO」叫法不统一。",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V6": {
+     "name": "改写",
+     "a": 3,
+     "a_ev": "下面每个「有点怪」都给了不更长的直接替换；最别扭的 5 句已在整体观察排序。",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": ""
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "I45 l12、I46 l18、I49 l24、I50 l29、I52 l33、I60 l55、I62 l58、I63 l59、I64 l61 已解决；I53「间谍叙事」不改，理由成立（外交部原话）；I59 保留 l52，理由成立；I47 l21「虚报」仍没说清虚报什么，半解决；I51 l30 仍是并列清单，未解决；I54 l45 改成「被要求别查」又出新问题（查什么）；I57 记录写「建制派」已改「老牌政客」，但本轮材料 l50 仍是「建制派」，未落地。",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    }
+   },
+   "disputes": [],
+   "audits": [],
+   "final_scores": {
+    "V1": 2,
+    "V2": 2,
+    "V3": 2,
+    "V4": 2,
+    "V5": 2,
+    "V6": 3,
+    "R": 2
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "skipped",
+    "dims": [],
+    "prompt": "items/voice_zh__judge.md",
+    "report": "reports/voice_zh__judge.md",
+    "ruling": {}
+   },
+   "findings": {},
+   "rows": 19,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_zh__a"
+   ]
+  },
+  {
+   "id": "voice_en",
+   "law": "lines",
+   "law_name": "English narration (native ear, blind)",
+   "color": "#2e6fc0",
+   "scope": [],
+   "checks": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "how": "盲审：只听口播（按播放顺序）",
+   "blind": true,
+   "status": "done",
+   "report": "reconcile/voice_en.md",
+   "prompt": "items/voice_en__a.md",
+   "what": "Listen line by line: would a real explainer say this, and can you follow it on one hearing?",
+   "problem": "The previous agenda read 'In this episode: What the problem is. Why memorizing answers fails. A different way to think about learning…' — a table of contents read aloud. No one talks like that (caught by the user, 2026-11-08); earlier reviews missed it.",
+   "model_why": "Claude 单审：a 位评分即最终分，不对比、不裁决",
+   "rubric": [
+    {
+     "id": "V1",
+     "name": "Sounds like a person talking",
+     "question": "Each line: natural / a bit off / clearly off. Written-style, lecture tone, translated-from-Chinese phrasing, telegraphic lists all count as off"
+    },
+    {
+     "id": "V2",
+     "name": "Flow and transitions",
+     "question": "Cold open, the 'what's coming' part, chapter changes, before/after examples: does it sound like one person following a thought, not 'Point one…' templates or a TOC read aloud? Do adjacent lines connect?"
+    },
+    {
+     "id": "V3",
+     "name": "Clear on one hearing",
+     "question": "Ear only: one new idea per line; clear reference ('this' points to something); terms explained before used; numbers and words not misheard"
+    },
+    {
+     "id": "V4",
+     "name": "Tight",
+     "question": "No filler, repetition, or empty truisms; point out lines that could go without losing anything"
+    },
+    {
+     "id": "V5",
+     "name": "Voice and rhythm",
+     "question": "One warm, clear, unpretentious narrator throughout; varied sentence length; each line sayable in one breath"
+    },
+    {
+     "id": "V6",
+     "name": "Rewrites",
+     "question": "For every 'a bit off' / 'clearly off' line, a drop-in rewrite no longer than the original; rank the 5 most awkward lines"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/voice_en__a.md",
+     "prompt": "items/voice_en__a.md",
+     "scores": {
+      "V1": {
+       "score": 2,
+       "evidence": "Most lines are conversational (\"So we checked.\" l53, \"Trump went the other way.\" l43, \"Any CEO could be gone over that.\" l61). A few written-style spots: l30 \"here's the chain: the most critical chips, a customer suspected of rerouting them, and someone close to the CEO\" (noun-phrase list), l59 \"The strongest case against us says…\", l60 \"a relationship with a subordinate was reported\" (passive)."
+      },
+      "V2": {
+       "score": 2,
+       "evidence": "Cold open flows well (l07 \"And yet within days…\" into l08 \"So here's our take\"). The outro is clean (l66 to l70). Weak joins: l52 \"In other words, at first he blamed the Democrats\" after l51 \"he changed his tune\" (it restates l50, not l51); l59 opens a chapter with no spoken bridge after l58; l10 \"Before we go on, let's separate…\" is a bit teacherly."
+      },
+      "V3": {
+       "score": 2,
+       "evidence": "Antecedents are mostly fixed (l36 \"that chairman\", l45 \"Trump's ties\"). Remaining ear problems: l28 \"The evidence against her\" (her = the businesswoman, many lines back), l32 \"They all pointed to the same thing\" (unnamed until l33), l50 has six names/ideas in 9.6 s (\"HK01\", \"Hu Xijin\", \"the establishment\"), l60 \"that very day\" (which day?)."
+      },
+      "V4": {
+       "score": 2,
+       "evidence": "l33 \"The board cited reports that foreign intelligence had targeted him\" repeats l12 almost word for word; l52 repeats l50; l65 repeats l08/l31/l38. The thesis said four times (l08, l31, l38, l65) is deliberate but heavy. Nothing needs cutting outright."
+      },
+      "V5": {
+       "score": 2,
+       "evidence": "Warm, consistent narrator (\"here's our take\", \"So we checked\", \"We'd say…\"). Rhythm varies well (l14 3.1 s vs l43 9.6 s). \"Now,\" opens l15, l19, l32 and l39 and \"So\" opens many lines, a tic. l37 and l50 are long for one breath."
+      },
+      "V6": {
+       "score": 3,
+       "evidence": "Every flagged line below has a drop-in rewrite no longer than the original (l59, l52, l30, l50, l28, l10, l60, l32, l49); the five most awkward are ranked in 整体观察 and tagged R1 to R5 in the issues table."
+      },
+      "R": {
+       "score": 2,
+       "evidence": "I29 (l09 \"not the same as saying\"), I30 (l15), I31 (l21), I32 (l22), I34 (l36 \"that chairman\"), I35 (l45), I37 (l51), I39 (l58), I40 (l62), I41 (l66), I42 (l67), I43 (l68) are all 已解决 and read naturally now. I36 (l50): partly resolved, \"Global Times\" is gone but \"the establishment\" remains unexplained by ear (see issues). I28 (l02 kept): author's reason holds, wire phrasing in a news cold open is acceptable. I33 (l31 kept \"magnifying glass\"): reason holds, matches the visual. I38 (l52 kept): 改出新问题 — after the I37 fix, \"In other words\" now points at l51 and misleads (see issues)."
+      }
+     }
+    }
+   },
+   "scores": {
+    "V1": {
+     "name": "Sounds like a person talking",
+     "a": 2,
+     "a_ev": "Most lines are conversational (\"So we checked.\" l53, \"Trump went the other way.\" l43, \"Any CEO could be gone over that.\" l61). A few written-style spots: l30 \"here's the chain: the most critical chips, a customer suspected of rerouting them, and someone close to the CEO\" (noun-phrase list), l59 \"The strongest case against us says…\", l60 \"a relationship with a subordinate was reported\" (passive).",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V2": {
+     "name": "Flow and transitions",
+     "a": 2,
+     "a_ev": "Cold open flows well (l07 \"And yet within days…\" into l08 \"So here's our take\"). The outro is clean (l66 to l70). Weak joins: l52 \"In other words, at first he blamed the Democrats\" after l51 \"he changed his tune\" (it restates l50, not l51); l59 opens a chapter with no spoken bridge after l58; l10 \"Before we go on, let's separate…\" is a bit teacherly.",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V3": {
+     "name": "Clear on one hearing",
+     "a": 2,
+     "a_ev": "Antecedents are mostly fixed (l36 \"that chairman\", l45 \"Trump's ties\"). Remaining ear problems: l28 \"The evidence against her\" (her = the businesswoman, many lines back), l32 \"They all pointed to the same thing\" (unnamed until l33), l50 has six names/ideas in 9.6 s (\"HK01\", \"Hu Xijin\", \"the establishment\"), l60 \"that very day\" (which day?).",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V4": {
+     "name": "Tight",
+     "a": 2,
+     "a_ev": "l33 \"The board cited reports that foreign intelligence had targeted him\" repeats l12 almost word for word; l52 repeats l50; l65 repeats l08/l31/l38. The thesis said four times (l08, l31, l38, l65) is deliberate but heavy. Nothing needs cutting outright.",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V5": {
+     "name": "Voice and rhythm",
+     "a": 2,
+     "a_ev": "Warm, consistent narrator (\"here's our take\", \"So we checked\", \"We'd say…\"). Rhythm varies well (l14 3.1 s vs l43 9.6 s). \"Now,\" opens l15, l19, l32 and l39 and \"So\" opens many lines, a tic. l37 and l50 are long for one breath.",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "V6": {
+     "name": "Rewrites",
+     "a": 3,
+     "a_ev": "Every flagged line below has a drop-in rewrite no longer than the original (l59, l52, l30, l50, l28, l10, l60, l32, l49); the five most awkward are ranked in 整体观察 and tagged R1 to R5 in the issues table.",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": ""
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "I29 (l09 \"not the same as saying\"), I30 (l15), I31 (l21), I32 (l22), I34 (l36 \"that chairman\"), I35 (l45), I37 (l51), I39 (l58), I40 (l62), I41 (l66), I42 (l67), I43 (l68) are all 已解决 and read naturally now. I36 (l50): partly resolved, \"Global Times\" is gone but \"the establishment\" remains unexplained by ear (see issues). I28 (l02 kept): author's reason holds, wire phrasing in a news cold open is acceptable. I33 (l31 kept \"magnifying glass\"): reason holds, matches the visual. I38 (l52 kept): 改出新问题 — after the I37 fix, \"In other words\" now points at l51 and misleads (see issues).",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    }
+   },
+   "disputes": [],
+   "audits": [],
+   "final_scores": {
+    "V1": 2,
+    "V2": 2,
+    "V3": 2,
+    "V4": 2,
+    "V5": 2,
+    "V6": 3,
+    "R": 2
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "skipped",
+    "dims": [],
+    "prompt": "items/voice_en__judge.md",
+    "report": "reports/voice_en__judge.md",
+    "ruling": {}
+   },
+   "findings": {},
+   "rows": 14,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/voice_en__a"
+   ]
+  },
+  {
+   "id": "screen_zh",
+   "law": "lines",
+   "law_name": "中文屏幕文字（PPT 式画面）",
+   "color": "#b8860b",
+   "scope": [],
+   "checks": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "how": "硬上限（超了必须报）：标题 ≤12 字；其余每块 ≤16 字；同屏文字块 ≤4 块（不含页眉小标签、出处与图表刻度）；一屏总字数 ≤36 字。屏幕下方还有口播字幕，观众要同时看。计数口径（第 2 轮裁决定，2026-11-09）：页眉小标签、案例页签、出处、片尾署名不计；同构的列表 / 表格 / 卡片行（每项 ≤8 字、最多 6 项、样子一样）合算 1 块，编号不计字；图里的文字（区域名、曲线名、轴标题、柱条标签、图上注释）要计字数，整张图合算 1 块，只有坐标刻度数字豁免；表格的列头算在表里。",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_zh.md",
+   "prompt": "items/screen_zh__a.md",
+   "what": "逐屏看画面上的中文字：是不是只列纲要、够不够简练、和口播有没有分工、看不看得完。",
+   "problem": "上一版屏幕文字很多是整句（如「另训一个模型，在两家医院的片子上认医院的准确率——胸片里藏着医院的“指纹”」），等于把口播又印了一遍；用户要求画面只列纲要、相对简练（2026-11-08）。",
+   "model_why": "Claude 单审：a 位评分即最终分，不对比、不裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "只列纲要",
+     "question": "每屏只放关键词、短语、关键数字、标签；不是口播整句的复述。按硬上限逐屏数字数，超了就报"
+    },
+    {
+     "id": "P2",
+     "name": "与口播分工",
+     "question": "屏幕给结构、数字、对比，口播负责解释；不和口播逐字重复，也不出现口播没说过的新说法；术语、叫法与口播一致"
+    },
+    {
+     "id": "P3",
+     "name": "层级与体例",
+     "question": "一眼先看到什么、第二眼看什么；标题—要点—注释不超过三级；编号、标签、章节名、目录项前后一致（例：目录写的和章节卡写的是不是同一个说法）"
+    },
+    {
+     "id": "P4",
+     "name": "中文措辞与排版",
+     "question": "短语化、不带句末句号；标点、引号、空格规范；不半中半英；**标题、章名读出来要顺**：名词堆砌、生造的名词短语（如「现实里的祸」）算必改"
+    },
+    {
+     "id": "P5",
+     "name": "看得完",
+     "question": "按截图和停留时间：文字量在停留时间内读得完（约 6 字/秒，还要分神看字幕和图）"
+    },
+    {
+     "id": "P6",
+     "name": "改写",
+     "question": "每处超限或不顺的屏幕文字，都给出更短、可直接替换的写法"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_zh__a.md",
+     "prompt": "items/screen_zh__a.md",
+     "scores": {
+      "P1": {
+       "score": 2,
+       "evidence": "逐屏数下来没有超硬上限。最满的是 l18（页签 + 两行 + 两条 body，共 4 块 35 字：「一名女商人」「另一段关系」「对象：向他汇报的下属」「英伟达：拒绝置评」）和 l62（4 块 34 字），都压在 36 字线内；l57「董事会的理由」+ 三行共 31 字、l29 共 30 字、l12 / l13 共 26 / 28 字，均达标。扣 1 分：l57 的「另一段关系 + 匿名报道」、l29 的「美国出口管制 + 核查过」每行 9 字，略超「每项 ≤8 字」的合算口径，l16「美国情报界怀疑：替中国情报机构做事」正好 16 字顶格。"
+      },
+      "P2": {
+       "score": 1,
+       "evidence": "口播在上一轮改过之后，l58「卷进别人的争斗、付了代价」+「只对了一部分」，与 l58 口播「他确实被卷进了别人的争斗，但没有记录说他因此下台」对不上（口播已无「只对了一部分」，「付了代价」是口播没说的新说法，还暗示他下台是代价）；l67「画线的：公司卖的东西」，口播「什么算私事、什么算公事，不是他自己说了算」里没有「画线」，是第 2 轮英文版已为同一原因拿掉的比喻，中文屏幕漏改；此外 l30「跟 CEO 走得近的人」与口播「CEO 身边的人」、「转运」与口播「转手」叫法不同。"
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "页眉「01 · 哪些是真的 / 02 · 私事怎么变成国家安全 …… 06 · 这件事留下什么」与六张章节卡写法一致；「我们的判断」胶囊只出现在判断屏，层级清楚（l08 / l25 / l66）。小瑕疵：「01」章内 l15–l23 实际讲的是未证实、各方回应、不知道的事，页眉虽按内容换了（「01 · 只是报道 · 未证实」「01 · 各方回应」），章名「哪些是真的」仍窄于内容；l15 页眉「只是报道 · 未证实」与屏中唯一文字块「匿名信源报道 · 未证实」同义重复；l57 / l60 的「另一段关系」「报道称有下属关系」与口播「感情」叫法不一。"
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "章节名「哪些是真的」「私事怎么变成国家安全」「两党都在追问」「他是牺牲品吗」「也有人不同意」「这件事留下什么」读出来都顺，没有「现实里的祸」那类生造名词（从严项通过）；无句末句号，引号规范。小瑕疵：l13「安全、机密受损：暂无理由认为」语序别扭；l20「未以间谍事由调查她」书面腔（口播「从没因为间谍嫌疑查过」）；l68 / l69「首份无黄仁勋财报」是名词堆砌的标题体；l02「辞去 CEO · 董事 · 立即生效」里「立即生效」不是「辞去」的宾语。"
+      },
+      "P5": {
+       "score": 3,
+       "evidence": "按 6 字/秒核对逐拍新增内容均读得完：l14（2.8 s）新增只有「辞职 · 原因未写」6 字，l11（2.8 s）10 字，l36（3.3 s）新增「催国会立法管出口」8 字，l52（3.3 s）新增「矛头：民主党」5 字；最长的 l18 / l62 新增分别约 21 / 22 字，各有 6.7 / 7.6 s。l53–l56 时间线日期刻度 4×4 字属图表刻度，截图（s4_l55）里字号与层级清楚。"
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "下方问题表每条超限或不顺的文字都给了可直接替换的短写法（l58、l67、l30、l13、l20、l21、l02、l68 等），且改后字数均在限内。"
+      },
+      "R": {
+       "score": 2,
+       "evidence": "上一轮本项 14 条（I14–I27）逐条核：I14 l09 已是「我们没说：他因国家安全下台」，已解决；I15 l26 / l43 / l44 大字只留中文、英文进出处，已解决；I16 l36 现 3 块 18 字，已解决；I17 l38「双方都认：是芯片的事」、I18 l43「条件：「给国家付钱」」、I19 l45「追问：有官员被叫停调查？」、I20 l49「中文网上的流行说法」，已解决；I21 l51 左卡退为背景，现 3 块 13 字，已解决；I22 l57 现 31 字，已解决；I23 l58「只对了一部分」当时与口播一致，但随后 l58 口播重写，该屏字没跟上，见下表 l58，改出新问题；I24 l62 左卡标签收走，34 字，已解决；I25 l66 屏幕与口播「卖的东西越要紧 / 私事越容易变成公事」一致，已解决，但同批口播改动让 l67「画线的」成了孤词，改出新问题；I26 l66 眉标已删，已解决；I27 l69 第一行改「11 月 17 日 · 首份无黄仁勋财报」，值 8 字，已解决。作者「不采纳」的 6 条里本项无条目，无需复核理由。"
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "只列纲要",
+     "a": 2,
+     "a_ev": "逐屏数下来没有超硬上限。最满的是 l18（页签 + 两行 + 两条 body，共 4 块 35 字：「一名女商人」「另一段关系」「对象：向他汇报的下属」「英伟达：拒绝置评」）和 l62（4 块 34 字），都压在 36 字线内；l57「董事会的理由」+ 三行共 31 字、l29 共 30 字、l12 / l13 共 26 / 28 字，均达标。扣 1 分：l57 的「另一段关系 + 匿名报道」、l29 的「美国出口管制 + 核查过」每行 9 字，略超「每项 ≤8 字」的合算口径，l16「美国情报界怀疑：替中国情报机构做事」正好 16 字顶格。",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P2": {
+     "name": "与口播分工",
+     "a": 1,
+     "a_ev": "口播在上一轮改过之后，l58「卷进别人的争斗、付了代价」+「只对了一部分」，与 l58 口播「他确实被卷进了别人的争斗，但没有记录说他因此下台」对不上（口播已无「只对了一部分」，「付了代价」是口播没说的新说法，还暗示他下台是代价）；l67「画线的：公司卖的东西」，口播「什么算私事、什么算公事，不是他自己说了算」里没有「画线」，是第 2 轮英文版已为同一原因拿掉的比喻，中文屏幕漏改；此外 l30「跟 CEO 走得近的人」与口播「CEO 身边的人」、「转运」与口播「转手」叫法不同。",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 1,
+     "final": 1,
+     "judge_reason": ""
+    },
+    "P3": {
+     "name": "层级与体例",
+     "a": 2,
+     "a_ev": "页眉「01 · 哪些是真的 / 02 · 私事怎么变成国家安全 …… 06 · 这件事留下什么」与六张章节卡写法一致；「我们的判断」胶囊只出现在判断屏，层级清楚（l08 / l25 / l66）。小瑕疵：「01」章内 l15–l23 实际讲的是未证实、各方回应、不知道的事，页眉虽按内容换了（「01 · 只是报道 · 未证实」「01 · 各方回应」），章名「哪些是真的」仍窄于内容；l15 页眉「只是报道 · 未证实」与屏中唯一文字块「匿名信源报道 · 未证实」同义重复；l57 / l60 的「另一段关系」「报道称有下属关系」与口播「感情」叫法不一。",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P4": {
+     "name": "中文措辞与排版",
+     "a": 2,
+     "a_ev": "章节名「哪些是真的」「私事怎么变成国家安全」「两党都在追问」「他是牺牲品吗」「也有人不同意」「这件事留下什么」读出来都顺，没有「现实里的祸」那类生造名词（从严项通过）；无句末句号，引号规范。小瑕疵：l13「安全、机密受损：暂无理由认为」语序别扭；l20「未以间谍事由调查她」书面腔（口播「从没因为间谍嫌疑查过」）；l68 / l69「首份无黄仁勋财报」是名词堆砌的标题体；l02「辞去 CEO · 董事 · 立即生效」里「立即生效」不是「辞去」的宾语。",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P5": {
+     "name": "看得完",
+     "a": 3,
+     "a_ev": "按 6 字/秒核对逐拍新增内容均读得完：l14（2.8 s）新增只有「辞职 · 原因未写」6 字，l11（2.8 s）10 字，l36（3.3 s）新增「催国会立法管出口」8 字，l52（3.3 s）新增「矛头：民主党」5 字；最长的 l18 / l62 新增分别约 21 / 22 字，各有 6.7 / 7.6 s。l53–l56 时间线日期刻度 4×4 字属图表刻度，截图（s4_l55）里字号与层级清楚。",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": ""
+    },
+    "P6": {
+     "name": "改写",
+     "a": 3,
+     "a_ev": "下方问题表每条超限或不顺的文字都给了可直接替换的短写法（l58、l67、l30、l13、l20、l21、l02、l68 等），且改后字数均在限内。",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": ""
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 2,
+     "a_ev": "上一轮本项 14 条（I14–I27）逐条核：I14 l09 已是「我们没说：他因国家安全下台」，已解决；I15 l26 / l43 / l44 大字只留中文、英文进出处，已解决；I16 l36 现 3 块 18 字，已解决；I17 l38「双方都认：是芯片的事」、I18 l43「条件：「给国家付钱」」、I19 l45「追问：有官员被叫停调查？」、I20 l49「中文网上的流行说法」，已解决；I21 l51 左卡退为背景，现 3 块 13 字，已解决；I22 l57 现 31 字，已解决；I23 l58「只对了一部分」当时与口播一致，但随后 l58 口播重写，该屏字没跟上，见下表 l58，改出新问题；I24 l62 左卡标签收走，34 字，已解决；I25 l66 屏幕与口播「卖的东西越要紧 / 私事越容易变成公事」一致，已解决，但同批口播改动让 l67「画线的」成了孤词，改出新问题；I26 l66 眉标已删，已解决；I27 l69 第一行改「11 月 17 日 · 首份无黄仁勋财报」，值 8 字，已解决。作者「不采纳」的 6 条里本项无条目，无需复核理由。",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    }
+   },
+   "disputes": [],
+   "audits": [],
+   "final_scores": {
+    "P1": 2,
+    "P2": 1,
+    "P3": 2,
+    "P4": 2,
+    "P5": 3,
+    "P6": 3,
+    "R": 2
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "skipped",
+    "dims": [],
+    "prompt": "items/screen_zh__judge.md",
+    "report": "reports/screen_zh__judge.md",
+    "ruling": {}
+   },
+   "findings": {},
+   "rows": 13,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_zh__a"
+   ]
+  },
+  {
+   "id": "screen_en",
+   "law": "lines",
+   "law_name": "English on-screen text (slides)",
+   "color": "#6b4fc0",
+   "scope": [],
+   "checks": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "how": "Hard limits (report every breach): title ≤6 words; any other block ≤9 words; ≤4 text blocks per screen (not counting the small eyebrow label, source line or chart ticks); ≤22 words per screen. Narration subtitles also sit at the bottom of the frame. Counting rules (round-2 ruling, 2026-11-09): eyebrow labels, case tabs, source lines and end-card credits are exempt; a list, table or card row of look-alike items (each ≤6 words, at most 6 items) counts as one block, and numbering doesn't count as words; in-chart text (zone names, curve names, axis titles, bar labels, callouts) counts toward words and the whole chart counts as one block — only axis tick numbers are exempt; a table's column headers count with the table.",
+   "blind": false,
+   "status": "done",
+   "report": "reconcile/screen_en.md",
+   "prompt": "items/screen_en__a.md",
+   "what": "Screen by screen: is the on-screen English an outline (not prose), tight, divided from the narration, and readable in time?",
+   "problem": "The previous version put full sentences on screen (e.g. 'A separate model identified the hospital for scans from two hospitals — a hospital fingerprint'), repeating the narration. The user wants outline-only, concise slides (2026-11-08).",
+   "model_why": "Claude 单审：a 位评分即最终分，不对比、不裁决",
+   "rubric": [
+    {
+     "id": "P1",
+     "name": "Outline, not prose",
+     "question": "Only keywords, short phrases, key numbers, labels; no full narration sentences. Count words per screen against the hard limits"
+    },
+    {
+     "id": "P2",
+     "name": "Divided from narration",
+     "question": "Screen carries structure, numbers, contrasts; narration explains. No verbatim repetition, no new claims the narration doesn't make; terms match the narration"
+    },
+    {
+     "id": "P3",
+     "name": "Hierarchy and consistency",
+     "question": "What reads first, second; ≤3 levels (title, point, note); numbering, labels, chapter names and agenda items consistent with each other"
+    },
+    {
+     "id": "P4",
+     "name": "Native phrasing and style",
+     "question": "Sentence case headline style; no Chinglish; consistent punctuation (no trailing periods on fragments), en dashes, quotes; parallel grammar in lists; **chapter titles and headings must read naturally aloud** — awkward noun stacks are must-fix"
+    },
+    {
+     "id": "P5",
+     "name": "Readable in time",
+     "question": "From the screenshot and how long it stays: readable in time (~3 words/s while also reading subtitles and the chart)"
+    },
+    {
+     "id": "P6",
+     "name": "Rewrites",
+     "question": "For every breach or awkward phrase, a shorter drop-in rewrite"
+    },
+    {
+     "id": "R",
+     "name": "复核上一轮",
+     "question": "上一轮本项的问题逐条复核"
+    }
+   ],
+   "slots": {
+    "a": {
+     "slot": "a",
+     "runner": "claude",
+     "model": "claude-sonnet-5-5",
+     "status": "done",
+     "report": "reports/screen_en__a.md",
+     "prompt": "items/screen_en__a.md",
+     "scores": {
+      "P1": {
+       "score": 3,
+       "evidence": "No hard-limit breach under the round-2 counting rules. Busiest screens: l18 (tag + 2-row list + 2 notes, 17 words), l60 (title + 3 rows ≤6 words each, 17 words), l65 (19 words), l57 (title 4 + 3-row list, 17 words); every title ≤6 words (\"Both sides agree: it’s about chips\" = 6), every other block ≤9 (l55 caption 8, l65 line 8). No full narration sentences anywhere."
+      },
+      "P2": {
+       "score": 2,
+       "evidence": "Mostly structure/numbers (l04 \"Open −13% / Close −4.34%\", l41 \"77 : 20\", l22 \"Charges: none\"). Blemishes: l67 \"The line: drawn by the product\" introduces \"line\", which the narration never says; l65 \"True or false: already treated as national security\" is a close paraphrase of the narration; l09 \"No claim he quit over it\" leans on \"it\" from the h1 above."
+      },
+      "P3": {
+       "score": 2,
+       "evidence": "Chapter eyebrows \"01 …06\" consistent with c_c1–c_c6 titles; the in-chapter eyebrow changes (Reported, not confirmed / The responses / What we don’t know) are clear. Small flaws: c_c1 \"What's confirmed\" under-describes l15–l23; l46 \"Go after Commerce\" vs \"Aim at Trump\" use different verbs; l57 \"Filed Nov 9\" tag sits flush on the card's right edge (s4_l57 screenshot)."
+      },
+      "P4": {
+       "score": 2,
+       "evidence": "Sentence case, en dash in \"US–China\", curly quotes, no trailing periods on fragments. Remaining: l41 \"77 : 20\" (colon reads as a ratio; vote tallies take an en dash); l22 \"Against her: insufficient evidence\" is clipped; l67 \"The line: drawn by the product\" is a label-colon passive fragment; l42 eyebrow \"Mar 2026 · one senator per party\" mixes case. Chapter titles read naturally aloud (\"Was he a casualty?\", \"Both parties want answers\", \"Not everyone agrees\", \"What sticks\")."
+      },
+      "P5": {
+       "score": 3,
+       "evidence": "Heaviest new-text loads still fit ~3 words/s: l56 (3.5 s, 6 new words, 1.7 w/s), l46 (4.2 s, ~8 new, 1.9 w/s), l52 (3.5 s, 3 new), l14 (3.1 s, 4 new). Screenshots (s0_l03, s1_l18, s4_l55, s5_l65) show clear first/second reads, faded prior content, and l03 grey rows now legible."
+      },
+      "P6": {
+       "score": 3,
+       "evidence": "Every issue below has a drop-in rewrite of equal or shorter length."
+      },
+      "R": {
+       "score": 3,
+       "evidence": "R2 items all checked. I1 (c_c4 \"A casualty?\" → \"Was he a casualty?\") resolved: chapter card and eyebrow on s4_l55 read \"Was he a casualty?\". I3 (l03 contrast) resolved: s0_l03 grey rows readable. I4 (one phrasing \"Private matter → national security\") resolved: l08 and l31 match. I5 resolved (\"No claim he quit over it\"). I6 resolved (\"Three confirmed facts\"). I7 resolved. I8 resolved: l29 now 3 rows, no chart text, 14 words. I9 resolved: \"tightening / loosening\" parallel. I10 resolved: \"Democrats name Trump / Republicans don’t\". I11, I12 resolved. I13 mostly resolved: tag \"Unnamed sources\" is inside the card, but \"Filed Nov 9\" on the row below touches the edge (new minor, 记录). I2 not adopted (\"What's confirmed\" kept): the author's reason (eyebrows re-label the content) is mostly valid; carried below as 建议 only because chapter titles are a strict item. No new issue introduced by the fixes."
+      }
+     }
+    }
+   },
+   "scores": {
+    "P1": {
+     "name": "Outline, not prose",
+     "a": 3,
+     "a_ev": "No hard-limit breach under the round-2 counting rules. Busiest screens: l18 (tag + 2-row list + 2 notes, 17 words), l60 (title + 3 rows ≤6 words each, 17 words), l65 (19 words), l57 (title 4 + 3-row list, 17 words); every title ≤6 words (\"Both sides agree: it’s about chips\" = 6), every other block ≤9 (l55 caption 8, l65 line 8). No full narration sentences anywhere.",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": ""
+    },
+    "P2": {
+     "name": "Divided from narration",
+     "a": 2,
+     "a_ev": "Mostly structure/numbers (l04 \"Open −13% / Close −4.34%\", l41 \"77 : 20\", l22 \"Charges: none\"). Blemishes: l67 \"The line: drawn by the product\" introduces \"line\", which the narration never says; l65 \"True or false: already treated as national security\" is a close paraphrase of the narration; l09 \"No claim he quit over it\" leans on \"it\" from the h1 above.",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P3": {
+     "name": "Hierarchy and consistency",
+     "a": 2,
+     "a_ev": "Chapter eyebrows \"01 …06\" consistent with c_c1–c_c6 titles; the in-chapter eyebrow changes (Reported, not confirmed / The responses / What we don’t know) are clear. Small flaws: c_c1 \"What's confirmed\" under-describes l15–l23; l46 \"Go after Commerce\" vs \"Aim at Trump\" use different verbs; l57 \"Filed Nov 9\" tag sits flush on the card's right edge (s4_l57 screenshot).",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P4": {
+     "name": "Native phrasing and style",
+     "a": 2,
+     "a_ev": "Sentence case, en dash in \"US–China\", curly quotes, no trailing periods on fragments. Remaining: l41 \"77 : 20\" (colon reads as a ratio; vote tallies take an en dash); l22 \"Against her: insufficient evidence\" is clipped; l67 \"The line: drawn by the product\" is a label-colon passive fragment; l42 eyebrow \"Mar 2026 · one senator per party\" mixes case. Chapter titles read naturally aloud (\"Was he a casualty?\", \"Both parties want answers\", \"Not everyone agrees\", \"What sticks\").",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 2,
+     "final": 2,
+     "judge_reason": ""
+    },
+    "P5": {
+     "name": "Readable in time",
+     "a": 3,
+     "a_ev": "Heaviest new-text loads still fit ~3 words/s: l56 (3.5 s, 6 new words, 1.7 w/s), l46 (4.2 s, ~8 new, 1.9 w/s), l52 (3.5 s, 3 new), l14 (3.1 s, 4 new). Screenshots (s0_l03, s1_l18, s4_l55, s5_l65) show clear first/second reads, faded prior content, and l03 grey rows now legible.",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": ""
+    },
+    "P6": {
+     "name": "Rewrites",
+     "a": 3,
+     "a_ev": "Every issue below has a drop-in rewrite of equal or shorter length.",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": ""
+    },
+    "R": {
+     "name": "复核上一轮",
+     "a": 3,
+     "a_ev": "R2 items all checked. I1 (c_c4 \"A casualty?\" → \"Was he a casualty?\") resolved: chapter card and eyebrow on s4_l55 read \"Was he a casualty?\". I3 (l03 contrast) resolved: s0_l03 grey rows readable. I4 (one phrasing \"Private matter → national security\") resolved: l08 and l31 match. I5 resolved (\"No claim he quit over it\"). I6 resolved (\"Three confirmed facts\"). I7 resolved. I8 resolved: l29 now 3 rows, no chart text, 14 words. I9 resolved: \"tightening / loosening\" parallel. I10 resolved: \"Democrats name Trump / Republicans don’t\". I11, I12 resolved. I13 mostly resolved: tag \"Unnamed sources\" is inside the card, but \"Filed Nov 9\" on the row below touches the edge (new minor, 记录). I2 not adopted (\"What's confirmed\" kept): the author's reason (eyebrows re-label the content) is mostly valid; carried below as 建议 only because chapter titles are a strict item. No new issue introduced by the fixes.",
+     "b": -1,
+     "b_ev": "",
+     "verdict": "一致",
+     "agreed": 3,
+     "final": 3,
+     "judge_reason": ""
+    }
+   },
+   "disputes": [],
+   "audits": [],
+   "final_scores": {
+    "P1": 3,
+    "P2": 2,
+    "P3": 2,
+    "P4": 2,
+    "P5": 3,
+    "P6": 3,
+    "R": 3
+   },
+   "judge": {
+    "runner": "claude",
+    "model": "claude-opus-5-5",
+    "status": "skipped",
+    "dims": [],
+    "prompt": "items/screen_en__judge.md",
+    "report": "reports/screen_en__judge.md",
+    "ruling": {}
+   },
+   "findings": {},
+   "rows": 11,
+   "ticked_by_list": [
+    "claude-sonnet-5-5/screen_en__a"
+   ]
+  }
+ ],
+ "state": "已收轮",
+ "concluded_at": "2026-11-14T22:18:38",
+ "result": "结果.md",
+ "verdict": {
+  "result": "不通过",
+  "text": "不通过：1 项未过；已到轮数上限，余下问题已按问题清单修改，由程序检验复核成片"
+ },
+ "log": []
+}

@@ -45,15 +45,15 @@ const verdictBadge = (c: DimCell): JSX.Element | null =>
   c.verdict === "分歧" ? <em className="rv-verdict rv-verdict-dispute" title="两位分数差 ≥2，或一人 ≤1 一人 ≥2：交裁决人">分歧</em>
     : c.verdict === "抽查" ? <em className="rv-verdict rv-verdict-audit" title="两人都 ≥2：裁决人随机抽查证据">抽查</em> : null;
 
-/** 大类页「细分成几个小类」的 v5 版：一维一行，每个审稿项三列 Claude a 分 / Codex b 分 / 最终；点「证据」展开两位的证据与裁决。 */
+/** 大类页「细分成几个小类」的 v5 版：一维一行，默认显示 Kimi a 分 / 最终；旧双审记录显示 a / b / 最终；点「证据」展开两位的证据与裁决。 */
 export function RubricTable({ dir, run, items, roster }: { dir: string; run: ReviewRun; items: ReviewItem[]; roster?: RubricDim[] }): JSX.Element {
   const rows = rubricRows(items, roster);
   const [open, setOpen] = useState<Record<string, boolean>>({});
   const scale = run.scoring?.scale ?? SCORE_TEXT;
   const multi = items.length > 1;
-  const slotHead = (i: ReviewItem, k: "a" | "b"): string => { const s = i.slots?.[k]; return s ? `${s.runner === "codex" ? "Codex" : s.runner === "claude" ? "Claude" : s.runner} ${k} 分` : `${k} 分`; };
+  const slotHead = (i: ReviewItem, k: "a" | "b"): string => { const s = i.slots?.[k]; return s ? `${s.runner === "kimi" ? "Kimi" : s.runner === "codex" ? "Codex" : s.runner === "claude" ? "Claude" : s.runner} ${k} 分` : `${k} 分`; };
   const anyR = items.some(i => slotsOf(i).some(s => s.r_check));
-  const hasB = items.some(i => Boolean(i.slots?.b));   // Claude 单审（follow-up 065）没有 b 位：不画空列
+  const hasB = items.some(i => Boolean(i.slots?.b));   // Kimi 单审没有 b 位：不画空列
   const per = hasB ? 3 : 2;
   return <>
     <p className="rv-legend">评分 0–3：{[0, 1, 2, 3].map(n => <span key={n}><span className={`rv-score ${scoreClass(n)}`}>{n}</span> {scale[String(n)] ?? SCORE_TEXT[n]} </span>)}

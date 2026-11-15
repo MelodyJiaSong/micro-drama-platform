@@ -36,8 +36,8 @@ const tree: TreeNode = {
       children: [
         {
           type: "file",
-          name: "CLAUDE.md",
-          path: "CLAUDE.md",
+          name: "AGENTS.md",
+          path: "AGENTS.md",
         },
         {
           type: "directory",
@@ -148,7 +148,7 @@ describe("Sidebar — recursive walk via uniform `children` (move 2, AC-26)", ()
     const expected = countLeavesViaChildren(tree);
     expect(expected).toBeGreaterThanOrEqual(6);
     // Each leaf name appears at least once.
-    expect(screen.getAllByText("CLAUDE.md").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("AGENTS.md").length).toBeGreaterThan(0);
     expect(screen.getAllByText("general.md").length).toBeGreaterThan(0);
     expect(
       screen.getAllByText("development.md").length,

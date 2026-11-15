@@ -10,7 +10,7 @@ Run the prompt, pick a theme, and a single `index.html` opens as a working Trell
 **Use cases:** Keep a private personal task board that never phones home and works on a plane; track a small project or sprint without paying for or signing into a SaaS tool; hand a client a self-contained, brandable board demo they can open by double-clicking; or study the vanilla-JS drag-and-drop and `localStorage` serialization code to learn how state-persisting frontends work under the hood.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away. Drop the prompt below into Claude Code in an empty folder, answer the 2 short setup questions (theme, and seed-with-example-data or start-empty), and it builds autonomously, self-reviewing against a checklist until the app is done, then opens it. Prerequisites: none — it opens directly in a modern browser.
+Copy-paste-and-walk-away. Drop the prompt below into Kimi / Codex in an empty folder, answer the 2 short setup questions (theme, and seed-with-example-data or start-empty), and it builds autonomously, self-reviewing against a checklist until the app is done, then opens it. Prerequisites: none — it opens directly in a modern browser.
 
 ## 🔗 3. Reference & prior art
 

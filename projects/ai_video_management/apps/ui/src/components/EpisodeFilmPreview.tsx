@@ -51,7 +51,7 @@ export function EpisodeFilmPreview({ path, lang, audio = false, dramaPath, episo
         {count("ok") > 0 && <li><b>{count("ok")}</b>{FLAG_LABEL.ok}</li>}
         {count("note") > 0 && <li><b>{count("note")}</b>{FLAG_LABEL.note}</li>}
         {count("redo") > 0 && <li className="ep-warn"><b>{count("redo")}</b>{FLAG_LABEL.redo}</li>}
-        {count("pending") > 0 && <li><b>{count("pending")}</b>{FLAG_LABEL.pending}</li>}
+        {!audio && count("pending") > 0 && <li><b>{count("pending")}</b>{FLAG_LABEL.pending}</li>}
       </ul>
       <p className="ep-links">
         {(notes.links ?? []).map(l => <Link key={l.path} to={fileHref(l.path)}>{l.label}</Link>)}
@@ -108,7 +108,7 @@ export function EpisodeFilmPreview({ path, lang, audio = false, dramaPath, episo
         return <article key={c.id} className={`ep-scene ${chapterClass(c.id)}`} id={c.id || undefined}>
           <header>
             <span className="ep-scene-num">{clock(c.t)}</span>
-            <div><h3>{c.title}</h3><p className="ep-mute">{own.length} 段</p></div>
+            <div><h3>{c.title}</h3><p className="ep-mute">{own.length} {audio ? "镜" : "段"}</p></div>
           </header>
           <div className="ep-shots">{own.map(([x, i]) => <div key={i} className={`ep-shot${i === current ? " ep-on" : ""}`}>
             <button type="button" className="ep-thumb" onClick={() => seek(x.t)} aria-label={`播放 ${x.title}`}>

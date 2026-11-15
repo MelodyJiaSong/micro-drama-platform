@@ -26,7 +26,7 @@ import pytest
 
 
 def test_resolves_known_good_relative_path(resolver, repo_root):
-    p = resolver.resolve("CLAUDE.md")
+    p = resolver.resolve("AGENTS.md")
     assert p is not None
     assert p.is_file()
     assert p.parent == repo_root.path or repo_root.path in p.parents or p.parent.resolve() == repo_root.path
@@ -40,7 +40,7 @@ def test_resolves_nested_spec_path(resolver, repo_root):
     assert repo_root.path in p.parents
 
 
-def test_resolves_dotclaude_skill(resolver):
+def test_resolves_dotkimi_skill(resolver):
     p = resolver.resolve(".agents/skills/agent-team/SKILL.md")
     # Skill file may or may not exist depending on harness state, but it MUST
     # not be rejected pre-FS — i.e., it should resolve to an absolute path
@@ -50,11 +50,11 @@ def test_resolves_dotclaude_skill(resolver):
 
 
 @pytest.mark.parametrize("rel", [
-    "AGENTS.md", "CONVENTIONS.md", ".agents/skill-aliases.json",
+    "AGENTS.md", "CONVENTIONS.md", ".agents/agents/qc-reviewer.md",
     ".agents/skills/ai-videos-pipeline/SKILL.md",
     ".agents/references/project/ai_video_workflow.md",
     ".agents/skills/ai-videos-pipeline/modules/filming.md",
-    ".claude/skills/ai_videos__全流程编排/SKILL.md",
+    ".agents/agents/qc-reviewer.md",
 ])
 def test_resolves_shared_agent_context(resolver, rel):
     path = resolver.resolve(rel)
@@ -63,14 +63,14 @@ def test_resolves_shared_agent_context(resolver, rel):
 
 @pytest.mark.parametrize("rel", [
     ".agents/settings.json", ".agents/private/SKILL.md", ".agents/../.env",
-    ".claude/settings.json", ".mcp.json",
-    ".claude/agent_refs/project/ai_video.md",
+    ".kimi-code/local.toml", ".kimi-code/mcp.json",
+    ".kimi-code/plugin/kimi.plugin.json",
 ])
 def test_shared_agent_context_does_not_expose_runtime_config(resolver, rel):
     assert resolver.resolve(rel) is None
 
 
-def test_repository_root_found_without_claude(tmp_path):
+def test_repository_root_found_without_kimi(tmp_path):
     from libs.common.repo_root import RepoRoot
 
     (tmp_path / "AGENTS.md").write_text("Shared entry", encoding="utf-8")
@@ -129,12 +129,12 @@ def test_rejects_percent_encoded_traversal(resolver, probe):
 @pytest.mark.parametrize(
     "probe",
     [
-        "CLAUDE.md:hidden",
-        "CLAUDE.md::$DATA",
+        "AGENTS.md:hidden",
+        "AGENTS.md::$DATA",
         "specs/foo.md:Zone.Identifier",
         "specs/foo:hidden:bar",
         "foo.md:stream:$DATA",
-        "CLAUDE.md::$INDEX_ALLOCATION",
+        "AGENTS.md::$INDEX_ALLOCATION",
     ],
 )
 def test_rejects_alternate_data_streams(resolver, probe):
@@ -198,12 +198,12 @@ def test_rejects_windows_8_3_short_names(resolver, probe):
 @pytest.mark.parametrize(
     "probe",
     [
-        "CLAUDE.md\\",
+        "AGENTS.md\\",
         "specs\\..\\..",
         "foo\\bar.md",
-        "\x00CLAUDE.md",
+        "\x00AGENTS.md",
         "foo:bar.md",
-        "CLAUDE.md\x00",
+        "AGENTS.md\x00",
         "specs/foo\x00.md",
         "C:\\Windows\\system.ini",
         "\\\\?\\C:\\Windows\\system.ini",
@@ -334,7 +334,7 @@ def test_rejects_empty_and_control_input(resolver, probe):
 @pytest.mark.parametrize(
     "probe",
     [
-        "/CLAUDE.md",
+        "/AGENTS.md",
         "//etc",
         "\\\\server\\share",
         "C:/Windows",

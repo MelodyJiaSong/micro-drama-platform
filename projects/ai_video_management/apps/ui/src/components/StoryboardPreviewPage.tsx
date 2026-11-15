@@ -67,7 +67,7 @@ export function StoryboardPreviewPage(): JSX.Element {
           {s.question && <p className="storyboard-purpose" title={s.question}>问：{s.question}</p>}
           <p className="storyboard-purpose" title={s.purpose}>{s.purpose}</p>
         </div>
-        <ol className="storyboard-grid">{s.shots.map(shot => <ShotCard key={shot.id} shot={shot} scene={s.id} label={shot.id} lang={board.lang ?? "zh"} />)}</ol>
+        <ol className="storyboard-grid">{s.shots.map(shot => <ShotCard key={shot.id} shot={shot} scene={s.id} label={shot.id} lang={board.lang ?? "zh"} plainLinks />)}</ol>
       </section>)}
     </section>
   </div>;

@@ -1,13 +1,17 @@
 {
- "title": "探索 · 芯片 t01：芯片里面到底有什么",
- "eyebrow": "教学视频 · 探索 · t01 故事板",
+ "title": "探索 · 芯片 t01：跟着一下点击，找到那个开关",
+ "eyebrow": "教学视频 · 探索 · t01 故事板 V5.1 修补版",
  "lang": "zh",
- "version": "v4",
- "updated": "2026-11-14",
+ "version": "v5.1-review-repair",
+ "updated": "2026-11-15",
  "notes": [
-  "故事板 v4：定稿主角林 G9、凯 K1；每格经作者自检＋独立审稿 r1–r3（storyboard/reviews/）。台词是草稿，讲稿阶段按「先说后写」重说。",
-  "每镜时长取自整集音频预览（本地配音按人物声样排出的时间轴），之后出视频照这个时长。",
-  "待你定：P11 林的探索表画在右腕（两次重出机会已用完）；P12 叠层约为人高六成，台词倍数讲稿时按画面重算或重出。"
+  "真人写实；林 G9 低发髻、左腕唯一探索表，凯 K1 卷发与固定服装。结构按模型，硅为灰色、铜导线为铜色、绝缘层独立可辨；结构剖切面描白边。蓝白只表示信号、电场变化，琥珀点表示电子；它们不是实际发光。比例尺由后期按模型与机位计算，非人物身高。进入芯片常驻‘结构／颜色／信号示意’，不要等到拍糊才揭示。进入晶体管后人物约 100 nm 高，原子层仅用局部放大窗。所有中文、英文文字和读数后期叠加，AI 图不画字。",
+  "本轮已修文字、动作时序与制作说明；Kimi 额度限制，本轮独立复审未完成。当前仍是制作中的故事板，不是可直接出片的完成版。",
+  "P11 错腕表原图已退出当前首帧；38 个原缺图镜头加该镜，共 39 个中文镜头待首帧。现有 14 图仅作构图参考。",
+  "首帧提示统一来自当前分镜；旧 P/V 提示和旧审稿保留为历史，不再用于直接生成。每镜补有真实性、尺度和电路机制制作约束。",
+  "已按实际地点重组为 9 个场景、53 个中文视觉镜头；不再把 23 个讲稿段落各自当成单镜场景。",
+  "每镜都有独立机位和动作；没有对应首帧就明确显示“首帧待出”，不再用同一张旧图冒充不同镜头。",
+  "英文为 58 镜，因语速不同而对少数镜头作语言版拆分；时长与台词起点以对应语言 timeline.json 为准。"
  ],
  "links": [
   {
@@ -15,39 +19,35 @@
    "href": "/episode-preview?path=edu_videos/tansuo/t01_inside_a_chip&audio=1"
   },
   {
-   "label": "审稿 r1",
-   "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/reviews/r1.md"
-  },
-  {
-   "label": "审稿 r2",
-   "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/reviews/r2.md"
-  },
-  {
-   "label": "审稿 r3",
-   "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/reviews/r3.md"
+   "label": "中文讲稿",
+   "path": "edu_videos/tansuo/t01_inside_a_chip/script.md"
   },
   {
    "label": "节拍",
    "path": "edu_videos/tansuo/t01_inside_a_chip/beats.md"
   },
   {
-   "label": "panels.json",
+   "label": "事实台账",
+   "path": "edu_videos/tansuo/t01_inside_a_chip/claims.json"
+  },
+  {
+   "label": "旧故事板数据",
    "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/panels.json"
   }
  ],
  "scenes": [
   {
-   "id": "b1",
-   "location": "冷开场",
-   "time": "比例尺 1 cm",
-   "purpose": "抛出问题；林工：那就进去看",
-   "question": "指甲盖大小，怎么放得下上百亿个东西？（真问题 ①；手机芯片两百亿量级，「几百亿」只说电脑 / AI 芯片）",
+   "id": "c01",
+   "location": "暖光书桌",
+   "time": "比例尺 俯拍 → 1 cm",
+   "purpose": "用城市错觉和一下点击提出寻找开关的任务",
+   "question": "「城市？」发现是芯片后愣住；「能装一百九十亿个开关？每人两个多，怎么一个也看不见？」；「这一下里面发生了什么？」",
    "shots": [
     {
-     "id": "P01",
-     "key": "P01",
-     "title": "冷开场：桌面上的一颗芯片",
-     "duration": 0,
+     "id": "s1",
+     "key": "s1",
+     "title": "城市错觉拉远",
+     "duration": 9,
      "cast": [
       "林",
       "凯"
@@ -56,32 +56,89 @@
       {
        "speaker": "阿凯",
        "direction": "",
-       "text": "就这么指甲盖大一片，里面真有上百亿个开关？"
+       "text": "……城市？夜里坐飞机往下看那种？"
       },
       {
-       "speaker": "林工",
+       "speaker": "阿凯",
        "direction": "",
-       "text": "说不清的话，进去看看。"
+       "text": "……不是吧。这是芯片？"
       }
      ],
-     "action": "冷开场：桌面上的一颗芯片",
-     "beats": "比例尺 1 cm",
-     "camera": "画面来源：Seedance（AI 画面 · 非结构）",
-     "blocking": "特效：探索表启动：第一道琥珀色刻度涟漪",
+     "action": "发光街区拉远成台灯下的芯片",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "用城市错觉和一下点击提出寻找开关的任务；发光街区拉远成台灯下的芯片",
+     "camera": "俯瞰大全景→桌面全景；画面来源：Blender 城市错觉 + Seedance 拉远",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/city_reveal.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s2-1",
+     "key": "s2-1",
+     "title": "芯片特写",
+     "duration": 10,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "就这么一小片，能装一百九十亿个开关？摊给地球上每个人，都有两个多。可我眼睛都快贴上去了，一个也没看见啊。"
+      }
+     ],
+     "action": "凯用镊子夹着独立展示样品贴近观察；旁边完整手机用于后续点击",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "用城市错觉和一下点击提出寻找开关的任务；凯用镊子夹着独立展示样品贴近观察；旁边完整手机用于后续点击",
+     "camera": "芯片特写→凯反应；画面来源：Seedance",
      "image": {
       "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/P01.png",
       "mtime": 1794649208
      },
-     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/P01.txt",
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/chip_close.txt",
      "packPrompt": "",
      "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
-     "note": ""
+     "note": "临时沿用 P01 作构图参考，不代表本镜已审通过；后期小字：数量举例：2023 年 A17 Pro，190 亿晶体管；不是画中无品牌样品的实测。"
     },
     {
-     "id": "P02",
-     "key": "P02",
-     "title": "转场：缩小",
-     "duration": 0,
+     "id": "s2-2",
+     "key": "s2-2",
+     "title": "晶体管定义",
+     "duration": 10,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "是真的。这种小开关叫晶体管。芯片就是用许许多多这种开关干活的薄片。"
+      },
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "行……我先信一半。"
+      }
+     ],
+     "action": "林接过话，凯半信半疑",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "用城市错觉和一下点击提出寻找开关的任务；林接过话，凯半信半疑",
+     "camera": "双人中近景；画面来源：Seedance",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/transistor_answer.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s3-1",
+     "key": "s3-1",
+     "title": "点击手机",
+     "duration": 11,
      "cast": [
       "林",
       "凯"
@@ -90,37 +147,114 @@
       {
        "speaker": "阿凯",
        "direction": "",
-       "text": "等一下，我还没准备——"
+       "text": "你看，我点一下，它就亮。就这么一下——里面到底是谁在干活？"
+      },
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "那咱们就跟着这一下进去，看看它拨动了哪个开关。"
       }
      ],
-     "action": "转场：缩小",
-     "beats": "比例尺 1 cm → 1 mm",
-     "camera": "画面来源：Seedance（AI 画面 · 非结构）",
-     "blocking": "特效：标志特效：琥珀刻度涟漪＋缩小光迹",
+     "action": "凯点屏，蓝白信号钻入手机",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "用城市错觉和一下点击提出寻找开关的任务；凯点屏，蓝白信号钻入手机",
+     "camera": "指尖与屏幕特写；画面来源：Seedance + 网页信号光迹",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/tap_close.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s3-2",
+     "key": "s3-2",
+     "title": "缩小规则",
+     "duration": 13,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "规矩是这样：这块表每转一格，我们就缩小十倍。一直缩，缩到能数清原子为止。"
+      },
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "等等——缩到多小？我还没准备好——"
+      }
+     ],
+     "action": "林抬左腕，探索表刻度涟漪启动",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "用城市错觉和一下点击提出寻找开关的任务；林抬左腕，探索表刻度涟漪启动",
+     "camera": "表的特写→双人；画面来源：Seedance + 网页比例尺",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/watch_rule.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图；后期标注：缩小旅行／信号放慢为叙事示意；一次点击涉及许多器件，并非只拨动一个开关。"
+    }
+   ],
+   "total": 53
+  },
+  {
+   "id": "c02",
+   "location": "缩小途中",
+   "time": "比例尺 1 cm → 100 µm",
+   "purpose": "用米粒和头发建立第一层尺度",
+   "question": "转场惊叫",
+   "shots": [
+    {
+     "id": "s4",
+     "key": "s4",
+     "title": "米粒与头发",
+     "duration": 15,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "我去，一粒米跟座山似的——旁边这堵悬崖，不会是根头发吧？"
+      },
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "是头发，八十到一百微米粗。跟紧那道蓝白光，它就是你刚才点的那一下。"
+      }
+     ],
+     "action": "米粒成山、头发成崖，两人跟信号下降",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "用米粒和头发建立第一层尺度；米粒成山、头发成崖，两人跟信号下降",
+     "camera": "连续下降旅行镜头；画面来源：Seedance + 网页比例尺",
      "image": {
       "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/P02.png",
       "mtime": 1794649211
      },
-     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/P02.txt",
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/shrink_travel.txt",
      "packPrompt": "",
      "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
-     "note": "（转场笑点）阿凯：等一下，我还没准备——"
+     "note": "临时沿用 P02 作构图参考，不代表本镜已审通过"
     }
    ],
-   "total": 0
+   "total": 15
   },
   {
-   "id": "b2",
-   "location": "黑壳不是芯片",
+   "id": "c03",
+   "location": "封装与焊球",
    "time": "比例尺 1 mm → 100 µm",
-   "purpose": "黑色的是封装外壳，真正的芯片是里面那片薄薄的硅，倒扣在一排小凸点上（朝向待核），外壳底下才是一排焊球",
-   "question": "黑色那块就是芯片吗？（常见误解）",
+   "purpose": "分清封装、焊球和真正干活的薄硅片",
+   "question": "「黑块就是芯片吧？」；「这些球干嘛的？为什么这么多？」；「为什么趴着？」",
    "shots": [
     {
-     "id": "P03",
-     "key": "P03",
-     "title": "黑壳不是芯片",
-     "duration": 0,
+     "id": "s5",
+     "key": "s5",
+     "title": "黑色封装",
+     "duration": 14,
      "cast": [
       "林",
       "凯"
@@ -129,32 +263,63 @@
       {
        "speaker": "阿凯",
        "direction": "",
-       "text": "这块黑的就是芯片吧？"
+       "text": "这块黑的就是芯片吧？整块板子上就它看着最像。"
       },
       {
        "speaker": "林工",
        "direction": "",
-       "text": "这只是外壳。真正的芯片藏在里面，是一片很薄的硅。"
+       "text": "差一点。这是它的外壳，叫封装，护着里面的东西。真正的芯片，是里面那片薄薄的硅。"
       }
      ],
-     "action": "黑壳不是芯片",
-     "beats": "比例尺 1 mm",
-     "camera": "画面来源：Blender 结构 + Seedance 人物",
-     "blocking": "特效：镜面焊球＋光束里的浮尘",
+     "action": "凯把黑壳当成芯片，林纠正",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "分清封装、焊球和真正干活的薄硅片；凯把黑壳当成芯片，林纠正",
+     "camera": "主板低机位全景→黑壳特写；画面来源：Blender 结构 + Seedance 人物",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/black_package.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s6-1",
+     "key": "s6-1",
+     "title": "焊球大厅",
+     "duration": 13,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "哇，跟地下停车场似的……这些亮晶晶的球是干嘛的？怎么这么多？"
+      },
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "这些是焊球，是芯片和主板之间的门。电从这儿进来，信号从这儿进进出出。"
+      }
+     ],
+     "action": "两人钻到封装下，焊球像柱厅",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "分清封装、焊球和真正干活的薄硅片；两人钻到封装下，焊球像柱厅",
+     "camera": "低机位广角；画面来源：Blender 结构 + Seedance 人物",
      "image": {
       "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/P03.png",
       "mtime": 1794652019
      },
-     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/P03.txt",
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/solder_hall.txt",
      "packPrompt": "",
      "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
-     "note": ""
+     "note": "临时沿用 P03 作构图参考，不代表本镜已审通过"
     },
     {
-     "id": "P04",
-     "key": "P04",
-     "title": "剖开外壳：里面那片硅",
-     "duration": 0,
+     "id": "s6-2",
+     "key": "s6-2",
+     "title": "供电接地与数据",
+     "duration": 9,
      "cast": [
       "林",
       "凯"
@@ -163,37 +328,58 @@
       {
        "speaker": "林工",
        "direction": "",
-       "text": "它是倒扣着的，正面朝下，靠底下这一排小凸点和外面连起来。"
+       "text": "门这么多，是因为送电、接地、传数据都得有门，不是只为同时跟几个部件传话。"
       }
      ],
-     "action": "剖开外壳：里面那片硅",
-     "beats": "比例尺 100 µm",
-     "camera": "画面来源：Blender（3D 示意）",
-     "blocking": "特效：爆炸分解：封装按真实层次分开，切面白边",
+     "action": "不同焊球分别承担供电、接地和数据连接",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "分清封装、焊球和真正干活的薄硅片；不同焊球分别承担供电、接地和数据连接",
+     "camera": "焊球阵列俯视→接触点分组特写；画面来源：Blender + 网页连接叠加",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/solder_power.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s7-1",
+     "key": "s7-1",
+     "title": "封装爆炸分解",
+     "duration": 15,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "哎，散开了……这片灰灰的、薄薄的，才是芯片？那它怎么是趴着的？"
+      },
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "它是倒扣着装的：有开关和导线的那一面朝下，对着主板，电和信号就从这一面进出。"
+      }
+     ],
+     "action": "塑封、重布线层和薄硅片分层展开",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "分清封装、焊球和真正干活的薄硅片；塑封、重布线层和薄硅片分层展开",
+     "camera": "侧向爆炸图；画面来源：Blender（3D 示意）",
      "image": {
       "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/P04.png",
       "mtime": 1794650504
      },
-     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/P04.txt",
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/package_exploded.txt",
      "packPrompt": "",
      "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
-     "note": ""
-    }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b3",
-   "location": "硅片表面",
-   "time": "比例尺 1 mm",
-   "purpose": "一颗芯片分成几个区（CPU、GPU、缓存……）；从上面看不见分区，彩色地图是示意",
-   "question": "哪块是 CPU？",
-   "shots": [
+     "note": "临时沿用 P04 作构图参考，不代表本镜已审通过"
+    },
     {
-     "id": "P05",
-     "key": "P05",
-     "title": "硅片表面：哪块是 CPU？",
-     "duration": 0,
+     "id": "s7-2",
+     "key": "s7-2",
+     "title": "硅片翻转",
+     "duration": 8,
      "cast": [
       "林",
       "凯"
@@ -202,42 +388,73 @@
       {
        "speaker": "阿凯",
        "direction": "",
-       "text": "哪块是 CPU？"
+       "text": "那得翻过来看啊。"
       },
       {
        "speaker": "林工",
        "direction": "",
-       "text": "从上面其实看不出来。给它涂个色，你就明白了。"
+       "text": "行，为了看清楚，我们把它翻过来。先说好，真的芯片可不会翻。"
       }
      ],
-     "action": "硅片表面：哪块是 CPU？",
-     "beats": "比例尺 1 mm",
-     "camera": "画面来源：Blender + 网页叠加示意色块",
-     "blocking": "特效：示意色块像光一样铺满地面",
+     "action": "硅片从倒扣转为正面朝上",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "分清封装、焊球和真正干活的薄硅片；硅片从倒扣转为正面朝上",
+     "camera": "环绕翻转镜头；画面来源：Blender（3D 示意）",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/die_flip.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    }
+   ],
+   "total": 59
+  },
+  {
+   "id": "c04",
+   "location": "硅片正面",
+   "time": "比例尺 1 mm",
+   "purpose": "看清功能分区只是俯视示意，开关还在最底下",
+   "question": "「哪块是 CPU？」；「开关在哪？怎么一个也没看见？」",
+   "shots": [
+    {
+     "id": "s8-1",
+     "key": "s8-1",
+     "title": "硅片城市",
+     "duration": 10,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "真像在飞机上看一座城……哪块是 CPU？"
+      },
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "这块是 CPU。别的区先不记名字，后面就看它们的共同点：最底下的开关。"
+      }
+     ],
+     "action": "正面分区像夜景城市，凯寻找 CPU",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "看清功能分区只是俯视示意，开关还在最底下；正面分区像夜景城市，凯寻找 CPU",
+     "camera": "高空俯瞰→分区推进；画面来源：Blender + 网页色块",
      "image": {
       "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/P05.png",
       "mtime": 1794650454
      },
-     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/P05.txt",
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/die_city.txt",
      "packPrompt": "",
      "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
-     "note": ""
-    }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b4",
-   "location": "导线城市",
-   "time": "比例尺 10 µm → 100 nm",
-   "purpose": "不是，是十几层导线（大多是铜，最底几层可能是钴、钨等）；越往下越细越密，每层走向和上一层垂直",
-   "question": "这些像立交桥的就是晶体管吗？（常见误解）",
-   "shots": [
+     "note": "临时沿用 P05 作构图参考，不代表本镜已审通过"
+    },
     {
-     "id": "P06",
-     "key": "P06",
-     "title": "坐电梯往下：越往下越细",
-     "duration": 0,
+     "id": "s8-2",
+     "key": "s8-2",
+     "title": "颜色是后加的",
+     "duration": 10,
      "cast": [
       "林",
       "凯"
@@ -246,27 +463,166 @@
       {
        "speaker": "林工",
        "direction": "",
-       "text": "往下走。越往下，线越细、越密。"
+       "text": "不过说实话，从上面看，其实分不清这些区。这些颜色，是我们涂上去的。"
+      },
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "啊？涂的啊。"
       }
      ],
-     "action": "坐电梯往下：越往下越细",
-     "beats": "比例尺 10 µm",
-     "camera": "画面来源：Blender（3D 示意 · 比例准确）",
-     "blocking": "特效：下降电梯：体积光从上方倾泻",
+     "action": "分区色光亮起又褪去，说明这是示意",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "看清功能分区只是俯视示意，开关还在最底下；分区色光亮起又褪去，说明这是示意",
+     "camera": "同一机位的对照演示；画面来源：Blender + 网页色块",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/die_colors.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s9",
+     "key": "s9",
+     "title": "开关在最底下",
+     "duration": 15,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "那开关在哪个区？"
+      },
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "这些区都靠晶体管工作。器件和接法不同，功能也不同。"
+      },
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "那我站这儿半天，怎么一个都没看见？"
+      },
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "因为它们在最底下，上面还压着十几层导线。往下走。"
+      }
+     ],
+     "action": "视线穿过表面，底层开关被导线遮住",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "看清功能分区只是俯视示意，开关还在最底下；视线穿过表面，底层开关被导线遮住",
+     "camera": "表面推近→向下转场；画面来源：Blender（3D 示意）",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/die_bottom.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    }
+   ],
+   "total": 35
+  },
+  {
+   "id": "c05",
+   "location": "金属互连层",
+   "time": "比例尺 10 µm → 100 nm",
+   "purpose": "穿过导线城市，分清电子、信号与光学成像限制",
+   "question": "「立交桥就是开关吧？」；「电子也跑得飞快吧？」；「怎么是糊的？」",
+   "shots": [
+    {
+     "id": "s10-1",
+     "key": "s10-1",
+     "title": "导线城市",
+     "duration": 11,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "这一层一层的，跟立交桥似的……这些就是开关吧？"
+      },
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "不是，这些是导线，大多是铜的，一共十几层。"
+      }
+     ],
+     "action": "凯误把层叠导线当开关",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "穿过导线城市，分清电子、信号与光学成像限制；凯误把层叠导线当开关",
+     "camera": "广角看十几层互连；画面来源：Blender（3D 示意）",
      "image": {
       "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/P06.png",
       "mtime": 1794650410
      },
-     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/P06.txt",
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/wiring_city.txt",
      "packPrompt": "",
      "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
-     "note": ""
+     "note": "临时沿用 P06 作构图参考，不代表本镜已审通过；首次进结构层上屏：多种先进工艺的结构示例，非同一型号复刻 / Examples from different processes; not one chip teardown。"
     },
     {
-     "id": "P07",
-     "key": "P07",
-     "title": "导线城市：这些不是晶体管",
-     "duration": 0,
+     "id": "s10-2",
+     "key": "s10-2",
+     "title": "上粗下细",
+     "duration": 11,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "上层要送电、跑远路，像高速公路，又粗又宽。靠近开关的线路又短又多，下层就像小巷，又细又密。"
+      }
+     ],
+     "action": "上层远路与底层近连接做上下对照",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "穿过导线城市，分清电子、信号与光学成像限制；上层远路与底层近连接做上下对照",
+     "camera": "垂直剖面升降；画面来源：Blender（3D 示意）",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/wiring_layers.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s10-3",
+     "key": "s10-3",
+     "title": "层间绝缘与通孔",
+     "duration": 12,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "上下层之间有绝缘材料，交叉的线路才不会短路。相邻层常常换个方向，方便布线。要上下接通，就走这些短柱。"
+      }
+     ],
+     "action": "先显出层间绝缘材料，交叉线路互不接触；再示相邻层换向便于布线，通孔只在选定位置连接上下层",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "穿过导线城市，分清电子、信号与光学成像限制；先显出层间绝缘材料，交叉线路互不接触；再示相邻层换向便于布线，通孔只在选定位置连接上下层",
+     "camera": "绝缘剖面→通孔微距；画面来源：Blender + 网页标注",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/vias_close.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s11-1",
+     "key": "s11-1",
+     "title": "信号与电子",
+     "duration": 13,
      "cast": [
       "林",
       "凯"
@@ -275,42 +631,58 @@
       {
        "speaker": "阿凯",
        "direction": "",
-       "text": "这些就是晶体管？"
+       "text": "你看那道光，嗖一下又拐下去了——电子在里面跑得飞快吧？"
       },
       {
        "speaker": "林工",
        "direction": "",
-       "text": "不是，这些是导线，大多是铜，十几层，把底下的开关连起来。"
+       "text": "你看导线里这些橙黄色的小点，它们才是电子。它们可没跟着那道光一路跑过去。"
       }
      ],
-     "action": "导线城市：这些不是晶体管",
-     "beats": "比例尺 1 µm",
-     "camera": "画面来源：Blender（3D 示意 · 比例准确）",
-     "blocking": "特效：信号＝蓝白光迹飞驰；电子＝琥珀光点慢漂",
+     "action": "蓝白信号飞驰，琥珀电子只在局部移动",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "穿过导线城市，分清电子、信号与光学成像限制；蓝白信号飞驰，琥珀电子只在局部移动",
+     "camera": "两种运动同框；画面来源：Blender（3D 示意）",
      "image": {
       "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/P07.png",
       "mtime": 1794650479
      },
-     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/P07.txt",
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/signal_electrons.txt",
      "packPrompt": "",
      "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
-     "note": ""
-    }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b5",
-   "location": "为什么拍不到",
-   "time": "比例尺 1 µm",
-   "purpose": "可见光的波长比这里的导线还宽，这里本来就「看」不见；工程师用电子显微镜，原图是灰的；我们看到的颜色是为了分清材料",
-   "question": "我能拍下来吗？——拍不到",
-   "shots": [
+     "note": "临时沿用 P07 作构图参考，不代表本镜已审通过"
+    },
     {
-     "id": "P08",
-     "key": "P08",
-     "title": "为什么拍不到",
-     "duration": 0,
+     "id": "s11-2",
+     "key": "s11-2",
+     "title": "电子只挪一点",
+     "duration": 8,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "电子只是在原地挤一挤、挪一小步。传得快的是电场，它把那一下推了过去。"
+      }
+     ],
+     "action": "电子在导线内缓慢漂移，电场变化向前传",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "穿过导线城市，分清电子、信号与光学成像限制；电子在导线内缓慢漂移，电场变化向前传",
+     "camera": "电子微距→信号接续；画面来源：Blender（3D 示意）",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/electron_drift.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s11-3",
+     "key": "s11-3",
+     "title": "挤地铁类比",
+     "duration": 9,
      "cast": [
       "林",
       "凯"
@@ -319,42 +691,58 @@
       {
        "speaker": "阿凯",
        "direction": "",
-       "text": "我拍一张——咦，怎么是糊的？"
+       "text": "哦——挤地铁也一样，每人只挪一点。但变化靠电场传，不靠碰撞，也需要时间。"
+      }
+     ],
+     "action": "人物只用小幅挪动解释个体与整体响应",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "穿过导线城市，分清电子、信号与光学成像限制；人物只用小幅挪动解释个体与整体响应",
+     "camera": "双人反应＋网页短类比；画面来源：Seedance + 网页示意",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/subway_analogy.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s12-1",
+     "key": "s12-1",
+     "title": "拍糊了",
+     "duration": 9,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "这个我得拍下来……嗯？怎么是糊的？对焦啊你！"
       },
       {
        "speaker": "林工",
        "direction": "",
-       "text": "光的波长比这些导线还宽，这里本来就「看」不见。你看到的颜色，是我们为了分清材料涂上的。"
+       "text": "不怪你的手机，是光本身太粗了。"
       }
      ],
-     "action": "为什么拍不到",
-     "beats": "比例尺 1 µm",
-     "camera": "画面来源：Blender + 网页叠加；另插真实 TEM 灰度图（待授权）",
-     "blocking": "特效：光波像极光缎带，宽过好几根导线",
+     "action": "凯拿手机拍导线，画面无法合焦",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "穿过导线城市，分清电子、信号与光学成像限制；凯拿手机拍导线，画面无法合焦",
+     "camera": "过肩拍手机→屏幕糊图；画面来源：Seedance + 网页叠加",
      "image": {
       "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/P08.png",
       "mtime": 1794657122
      },
-     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/P08.txt",
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/phone_blur.txt",
      "packPrompt": "",
      "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
-     "note": ""
-    }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b6",
-   "location": "到底了：开关",
-   "time": "比例尺 100 nm → 10 nm",
-   "purpose": "最底层一排排等高的单元，竖着的是栅极，间距约 50 nm；单个晶体管是几片叠起来的硅薄片，被栅极整个包住；怎么开关留到下一期",
-   "question": "开关在哪？怎么一个会动的零件都没有？（真问题 ④）",
-   "shots": [
+     "note": "临时沿用 P08 作构图参考，不代表本镜已审通过"
+    },
     {
-     "id": "P09",
-     "key": "P09",
-     "title": "到底了：一排排栅极",
-     "duration": 0,
+     "id": "s12-2",
+     "key": "s12-2",
+     "title": "光的波长太粗",
+     "duration": 13,
      "cast": [
       "林",
       "凯"
@@ -363,27 +751,167 @@
       {
        "speaker": "林工",
        "direction": "",
-       "text": "到底了。这一根根竖着的叫栅极，间距大约 50 纳米。"
+       "text": "可见光的波长是四百到七百纳米。这里的导线和晶体管，相邻结构的中心间距只有几十纳米，普通光学显微镜很难分清。不是继续放大就能解决。"
       }
      ],
-     "action": "到底了：一排排栅极",
-     "beats": "比例尺 100 nm",
-     "camera": "画面来源：Blender（3D 示意 · 比例准确）",
-     "blocking": "特效：栅极依次亮起的开关涟漪（示意）",
+     "action": "彩虹光波与纳米结构同尺度比较",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "穿过导线城市，分清电子、信号与光学成像限制；彩虹光波与纳米结构同尺度比较",
+     "camera": "光波扫过结构的比例演示；画面来源：Blender + 网页比例尺",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/wavelength.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s12-3",
+     "key": "s12-3",
+     "title": "电子显微镜灰图示意",
+     "duration": 11,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "工程师拍这儿，用的是电子显微镜，原图是灰的。所以进芯片以后，这些材料的颜色都是我们后加的，方便区分。"
+      }
+     ],
+     "action": "同一结构模型从灰度切为伪彩；标明这是电镜成像示意，不能冒充真实显微照片",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "穿过导线城市，分清电子、信号与光学成像限制；同一结构模型从灰度切为伪彩；标明这是电镜成像示意，不能冒充真实显微照片",
+     "camera": "灰度→伪彩切换；画面来源：Blender + 网页叠加",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/microscope_gray.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s12-4",
+     "key": "s12-4",
+     "title": "全灰了",
+     "duration": 8,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "……哇，全灰了。原来电子显微镜拍出来是这样，跟老照片似的。"
+      }
+     ],
+     "action": "画面褪灰，凯理解照片与实物颜色的区别",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "穿过导线城市，分清电子、信号与光学成像限制；画面褪灰，凯理解照片与实物颜色的区别",
+     "camera": "凯反应近景；画面来源：Seedance",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/gray_reaction.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    }
+   ],
+   "total": 105
+  },
+  {
+   "id": "c06",
+   "location": "晶体管与栅极",
+   "time": "比例尺 100 nm → 10 nm",
+   "purpose": "找到开关并讲透电场如何让它通断",
+   "question": "「3 纳米在哪？」；「没有把手，怎么开关？」；「硅里有电子，为什么还断？」；「隔着绝缘层怎么拉电子？」；「包一面不够吗？」；「这跟照片、消息什么关系？」",
+   "shots": [
+    {
+     "id": "s13-1",
+     "key": "s13-1",
+     "title": "抵达栅极阵列",
+     "duration": 9,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "总算到底了。哎，不是老说三纳米吗？哪个是三纳米？这一堵堵墙，还是墙中间的缝？"
+      }
+     ],
+     "action": "一排排栅极横跨硅条，凯寻找三纳米",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；一排排栅极横跨硅条，凯寻找三纳米",
+     "camera": "阵列大全景；画面来源：Blender（3D 示意）",
      "image": {
       "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/P09.png",
       "mtime": 1794652050
      },
-     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/P09.txt",
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/gate_array.txt",
      "packPrompt": "",
      "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
-     "note": ""
+     "note": "临时沿用 P09 作构图参考，不代表本镜已审通过"
     },
     {
-     "id": "P10",
-     "key": "P10",
-     "title": "一个晶体管：没有会动的零件",
-     "duration": 0,
+     "id": "s13-2",
+     "key": "s13-2",
+     "title": "栅极中心间距",
+     "duration": 13,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "拿一种先进工艺举例：这些竖墙叫栅极，相邻栅极的中心间距约五十纳米。按这个间距，一根头发那么宽，能排一千六到两千道。"
+      }
+     ],
+     "action": "标记相邻栅极中心，和头发宽度对照",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；标记相邻栅极中心，和头发宽度对照",
+     "camera": "测量特写；画面来源：Blender + 网页尺寸叠加",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/gate_pitch.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图；标尺：栅极中心距约 50 nm，仅为一种工艺示例；线宽、缝宽不能代替中心距。"
+    },
+    {
+     "id": "s13-3",
+     "key": "s13-3",
+     "title": "工艺代号",
+     "duration": 10,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "至于三纳米，你可别指望拿尺子在这里量出来。它是工艺代号，就像车的型号，不直接对应哪一条边。"
+      }
+     ],
+     "action": "在实物上找不到三纳米，转车型号类比",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；在实物上找不到三纳米，转车型号类比",
+     "camera": "实物量尺→车型短类比；画面来源：Blender + 网页示意",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/process_name.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图；短字卡：工艺代号 ≠ 单一尺寸 / Process name ≠ one dimension。"
+    },
+    {
+     "id": "s14-1",
+     "key": "s14-1",
+     "title": "发现一个开关",
+     "duration": 8,
      "cast": [
       "林",
       "凯"
@@ -392,42 +920,27 @@
       {
        "speaker": "阿凯",
        "direction": "",
-       "text": "开关在哪？一个会动的零件都没有啊。"
-      },
-      {
-       "speaker": "林工",
-       "direction": "",
-       "text": "就是它。它不靠动来开关——怎么做到的，下一期讲。"
+       "text": "这就是一个开关？开关总得有个把手吧？可它一动不动的——怎么开？怎么关？"
       }
      ],
-     "action": "一个晶体管：没有会动的零件",
-     "beats": "比例尺 10 nm",
-     "camera": "画面来源：Blender（3D 示意）",
-     "blocking": "特效：导电通道刚刚形成：琥珀光点开始流动（下一期伏笔）",
+     "action": "凯围着静止晶体管寻找把手",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；凯围着静止晶体管寻找把手",
+     "camera": "晶体管全景→凯反应；画面来源：Blender + Seedance 人物",
      "image": {
       "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/P10.png",
       "mtime": 1794658130
      },
-     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/P10.txt",
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/transistor_wide.txt",
      "packPrompt": "",
      "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
-     "note": ""
-    }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b7",
-   "location": "原子",
-   "time": "比例尺 1 nm",
-   "purpose": "一片硅薄片只有四十几层原子厚",
-   "question": "这片有多薄？",
-   "shots": [
+     "note": "临时沿用 P10 作构图参考，不代表本镜已审通过"
+    },
     {
-     "id": "P11",
-     "key": "P11",
-     "title": "原子：四十几层厚",
-     "duration": 0,
+     "id": "s14-2",
+     "key": "s14-2",
+     "title": "纳米片结构",
+     "duration": 12,
      "cast": [
       "林",
       "凯"
@@ -436,37 +949,24 @@
       {
        "speaker": "林工",
        "direction": "",
-       "text": "这一片硅，只有四十几层原子厚。"
+       "text": "我们拿一种先进的纳米片开关来示意：三四片薄硅片像桥一样连着两头，每片大约六纳米厚。栅极从四面包住每一片。"
       }
      ],
-     "action": "原子：四十几层厚",
-     "beats": "比例尺 1 nm",
-     "camera": "画面来源：Blender（晶格真实 · 原子小球示意）",
-     "blocking": "特效：原子带电子云微光，晶格像水晶大教堂",
-     "image": {
-      "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/P11.png",
-      "mtime": 1794658139
-     },
-     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/P11.txt",
+     "action": "三四片硅片连接两头，栅极四面包围",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；三四片硅片连接两头，栅极四面包围",
+     "camera": "剖视推近纳米片；画面来源：Blender（3D 示意）",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/nanosheet.txt",
      "packPrompt": "",
      "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
-     "note": ""
-    }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b8",
-   "location": "猜一猜＋回程",
-   "time": "比例尺 1 nm → 1 cm",
-   "purpose": "阿凯先猜，林工揭晓：人从 1.7 m 缩到和纳米片堆同高（约 50 nm），约三千多万倍（自算，讲稿时复核）；一路倒放回桌面",
-   "question": "我们缩小了多少倍？",
-   "shots": [
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图；模型切换卡：纳米片晶体管示意 / Nanosheet transistor example；不宣称开场 A17 Pro 使用环绕栅。"
+    },
     {
-     "id": "P12",
-     "key": "P12",
-     "title": "猜一猜缩小了多少倍",
-     "duration": 0,
+     "id": "s14-3",
+     "key": "s14-3",
+     "title": "继电器对比",
+     "duration": 15,
      "cast": [
       "林",
       "凯"
@@ -475,37 +975,583 @@
       {
        "speaker": "林工",
        "direction": "",
-       "text": "猜猜，我们缩小了多少倍？"
+       "text": "你说的把手，早年有些计算机还真有。它们用继电器，一通电，铁片就被吸过去，咔哒一声，接通。"
+      },
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "可这里，没有任何零件会动。"
       },
       {
        "speaker": "阿凯",
        "direction": "",
-       "text": "一千倍？"
+       "text": "一个零件都不动……那它还算开关吗？"
+      }
+     ],
+     "action": "继电器铁片咔哒吸合，再切回静止晶体管",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；继电器铁片咔哒吸合，再切回静止晶体管",
+     "camera": "机械特写↔纳米片静止；画面来源：Blender + 继电器网页示意",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/relay_compare.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s15-1",
+     "key": "s15-1",
+     "title": "关态",
+     "duration": 15,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "这种 N 型晶体管，平时是断的。先看看为什么。"
+      },
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "对，它没加电，为什么就断着？硅里头不也有电子吗？"
       },
       {
        "speaker": "林工",
        "direction": "",
-       "text": "三千多万倍——一米七的人，缩到五十纳米高。"
+       "text": "有电子，可它们还没连成通道，把两头接通。所以现在是断的。"
       }
      ],
-     "action": "猜一猜缩小了多少倍",
-     "beats": "比例尺 50 nm",
-     "camera": "画面来源：Seedance（AI 画面 · 非结构）+ 网页数字揭晓",
-     "blocking": "特效：坐在纳米片边缘，下方萤火般的光点",
+     "action": "硅材料仍在，但电子没有连成通道",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；硅材料仍在，但电子没有连成通道",
+     "camera": "关态剖视全景；画面来源：Blender（3D 示意）",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/off_state.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图；角标：增强型 N 沟道示例 / Enhancement-mode nMOS；这里的栅压均相对源极。"
+    },
+    {
+     "id": "s15-2",
+     "key": "s15-2",
+     "title": "断的是通道不是材料",
+     "duration": 13,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "所以硅片一直都在。断的是里面的电子通道，不是中间少了材料？"
+      },
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "对。不是铺出一条实体路，而是电子聚成通道。看栅极怎么做。"
+      }
+     ],
+     "action": "硅片保持完整，断续电子路径被强调",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；硅片保持完整，断续电子路径被强调",
+     "camera": "材料与电子通道分层特写；画面来源：Blender（3D 示意）",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/channel_material.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s16-1",
+     "key": "s16-1",
+     "title": "极薄绝缘层",
+     "duration": 10,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "栅极和硅片间，隔着一层极薄的绝缘层。电场能透过去。栅极漏进硅的电流，正常工作时也极小。"
+      }
+     ],
+     "action": "栅极与硅片之间显示绝缘层，说明漏电并非绝对零",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；栅极与硅片之间显示绝缘层，说明漏电并非绝对零",
+     "camera": "绝缘层微距剖面；画面来源：Blender（3D 示意）",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/insulator.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图；用不同材质明确区分灰色硅、薄绝缘层、栅金属；切面描白边，不画成栅极开窗。"
+    },
+    {
+     "id": "s16-2",
+     "key": "s16-2",
+     "title": "加电形成通道",
+     "duration": 13,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "现在，给栅极加上电压。看，电场穿过绝缘层，把硅里的电子吸到绝缘层附近。"
+      },
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "电子越聚越多，连成一条通道。两头，通了。"
+      }
+     ],
+     "action": "电场把电子聚到绝缘层附近并连成通道",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；电场把电子聚到绝缘层附近并连成通道",
+     "camera": "电子聚集延时；画面来源：Blender（3D 示意）",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/electrons_gather.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s16-3",
+     "key": "s16-3",
+     "title": "撤电通道消失",
+     "duration": 13,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "再把电压撤掉：电子散开，通道没了，又断了。"
+      },
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "从头到尾，没有一个机械零件在动。变化的，是电场和电子的分布。"
+      }
+     ],
+     "action": "电子散开，通道断开，机械结构始终不动",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；电子散开，通道断开，机械结构始终不动",
+     "camera": "开→关循环对照；画面来源：Blender（3D 示意）",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/electrons_disperse.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s16-4",
+     "key": "s16-4",
+     "title": "隔空施力",
+     "duration": 15,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "等一下，中间隔着绝缘层，栅极碰都碰不着那些电子，凭什么能把它们拉过来？"
+      },
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "你玩过磁铁吧？隔着桌子，铁屑也会跟着磁铁走。是电场隔着绝缘层拉电子，不是磁场。"
+      }
+     ],
+     "action": "绝缘层不阻挡电场作用，磁铁只作隔空类比",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；绝缘层不阻挡电场作用，磁铁只作隔空类比",
+     "camera": "绝缘层微距＋磁铁短类比；画面来源：Blender + 网页示意",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/field_force.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s16-5",
+     "key": "s16-5",
+     "title": "看懂了",
+     "duration": 11,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "……就这样？我还以为里头藏着什么小机关呢。"
+      },
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "就这样。栅极正电压够高，通。撤掉，断。"
+      }
+     ],
+     "action": "凯发现没有小机关，林用通断短句收束",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；凯发现没有小机关，林用通断短句收束",
+     "camera": "双人近景→通道轻演示；画面来源：Seedance + Blender 背景",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/switch_realization.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s17-1",
+     "key": "s17-1",
+     "title": "为什么四面包住",
+     "duration": 7,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "四面都裹得严严实实的。为什么要裹这么严？包一面不够吗？"
+      }
+     ],
+     "action": "凯绕晶体管观察栅极包围",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；凯绕晶体管观察栅极包围",
+     "camera": "环绕机位；画面来源：Blender + Seedance 人物",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/wrap_question.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s17-2",
+     "key": "s17-2",
+     "title": "包围与漏电",
+     "duration": 10,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "栅极包得越完整，通常越管得住通道，断开时漏电也越少。但不是绝对不漏，还可能有少量电流漏过去。"
+      }
+     ],
+     "action": "包围程度与关态漏电做定性对照",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；包围程度与关态漏电做定性对照",
+     "camera": "控制通道特写；画面来源：Blender + 网页曲线",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/leakage.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s17-3",
+     "key": "s17-3",
+     "title": "平面到全包",
+     "duration": 8,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "所以器件从平面结构，变成竖起的鳍式沟道，再变成栅极四面全包。"
+      }
+     ],
+     "action": "平面器件、鳍式沟道、环绕栅依次变形",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；平面器件、鳍式沟道、环绕栅依次变形",
+     "camera": "三结构并列演变；画面来源：Blender（3D 示意）",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/evolution.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s18-1",
+     "key": "s18-1",
+     "title": "点击到了",
+     "duration": 10,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "来了来了，是我那一下！……可是一个开关通一下、断一下，跟我手机里的照片、消息有什么关系？"
+      }
+     ],
+     "action": "凯看到代表自己点击的信号抵达",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；凯看到代表自己点击的信号抵达",
+     "camera": "信号跟拍→凯反应；画面来源：Seedance + 网页信号光迹",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/tap_arrival.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s18-2",
+     "key": "s18-2",
+     "title": "高低电压与零一",
+     "duration": 10,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "芯片里，常用高、低两种电压表示一和零。开关的通断，用来产生和传递这些信号。"
+      }
+     ],
+     "action": "高低电压和 1/0 对应，开关产生并传递信号",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；高低电压和 1/0 对应，开关产生并传递信号",
+     "camera": "网页信息图＋晶体管背景；画面来源：网页 0/1 示意",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/voltage_01.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s18-3",
+     "key": "s18-3",
+     "title": "反相器",
+     "duration": 14,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "把两个不同类型的开关配合起来，能做成反相器：输入一，输出零。输入零，输出一。它自己不能存照片，要和其他电路组合，才能做判断、存照片、放视频。"
+      }
+     ],
+     "action": "两个不同类型开关组成反相器，输入输出反转",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；两个不同类型开关组成反相器，输入输出反转",
+     "camera": "电路连接动画；画面来源：网页反相器示意",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/inverter.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图；画出电源、地、互补 P/N 两管、共用输入与输出；高输入时 N 通 P 断、输出低，低输入相反。"
+    },
+    {
+     "id": "s18-4",
+     "key": "s18-4",
+     "title": "信号传向下一开关",
+     "duration": 12,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "你看，你那一下到了：栅极加电，通道通了，信号接着传给下一个开关。"
+      },
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "所以我刚才点那一下，真的传到了这儿。……找到你了。"
+      }
+     ],
+     "action": "通道导通，相邻晶体管依次传递信号",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "找到开关并讲透电场如何让它通断；通道导通，相邻晶体管依次传递信号",
+     "camera": "阵列拉远；画面来源：Blender + 网页电路叠加",
+     "image": {
+      "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/V18C.png",
+      "mtime": 1794730039
+     },
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/array_signal.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "V18C 已通过独立故事板审查"
+    }
+   ],
+   "total": 228
+  },
+  {
+   "id": "c07",
+   "location": "纳米片原子切面",
+   "time": "比例尺 1 nm",
+   "purpose": "用四十几层原子落到制造精度与并行制造",
+   "question": "凯数层",
+   "shots": [
+    {
+     "id": "s19-1",
+     "key": "s19-1",
+     "title": "数原子",
+     "duration": 8,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "一、二、三、四……五……"
+      }
+     ],
+     "action": "镜头推入纳米片的局部放大窗；凯在窗外点数放大的原子层，人物不再次缩小、不接触真实原子",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "用四十几层原子落到制造精度与并行制造；镜头推入纳米片的局部放大窗；凯在窗外点数放大的原子层，人物不再次缩小、不接触真实原子",
+     "camera": "人物过肩→晶格局部放大窗；画面来源：Blender 晶格 + Seedance 人物",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/atom_count.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图；旧 P11 右腕表错误且原子层数不足，已退出当前首帧；原图保留供审计。新图须左腕表、硅金刚石结构，不用旧图作视频首帧。；常驻：局部放大示意 / Magnified inset；沿 [001] 约 44 原子层、厚约 6 nm，以晶格计算渲染，不拿 AI 点阵计数。"
+    },
+    {
+     "id": "s19-2",
+     "key": "s19-2",
+     "title": "四十几层与并行制造",
+     "duration": 14,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "按这个六纳米的示意模型算，一片只有四十几层原子那么厚。这么薄的硅片，工程师真的能造出来。"
+      },
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "……一两百亿个开关，都在整片硅上一起造出来、连起来。"
+      }
+     ],
+     "action": "厚度比例拉开，再切整片硅上器件一起制造",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "用四十几层原子落到制造精度与并行制造；厚度比例拉开，再切整片硅上器件一起制造",
+     "camera": "切面→整片硅拉远；画面来源：Blender + 网页尺度叠加",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/atom_thickness.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图；原子层统计沿 [001]，间距约 0.136 nm；不是原子直径。拉远回器件时关闭局部放大窗。"
+    }
+   ],
+   "total": 22
+  },
+  {
+   "id": "c08",
+   "location": "晶体管阵列顶部",
+   "time": "比例尺 100 nm",
+   "purpose": "用反向放大回答指甲盖如何放下一两百亿个开关",
+   "question": "「缩小多少倍？」；「芯片也放大一千七百万倍呢？」",
+   "shots": [
+    {
+     "id": "s20-1",
+     "key": "s20-1",
+     "title": "猜缩小倍数",
+     "duration": 9,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "猜猜，我们现在缩小了多少倍？"
+      },
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "嗯……一万倍？表也就转了那么几格。"
+      }
+     ],
+     "action": "两人坐在晶体管顶，凯先猜一万倍",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "用反向放大回答指甲盖如何放下一两百亿个开关；两人坐在晶体管顶，凯先猜一万倍",
+     "camera": "双人中景；画面来源：Seedance + 网页数字",
      "image": {
       "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/P12.png",
       "mtime": 1794658140
      },
-     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/P12.txt",
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/scale_guess.txt",
      "packPrompt": "",
      "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
-     "note": ""
+     "note": "临时沿用 P12 作构图参考，不代表本镜已审通过；人物仍约 100 nm 高；叠层高度须由模型决定，不再要求叠层与人同高。"
     },
     {
-     "id": "P13",
-     "key": "P13",
-     "title": "回程：一路倒放",
-     "duration": 0,
+     "id": "s20-2",
+     "key": "s20-2",
+     "title": "一千七百万倍",
+     "duration": 10,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "转了七格多，每格十倍。我们现在大概一百纳米高，比原来缩小了一千七百万倍。"
+      },
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "一千七百万？……"
+      }
+     ],
+     "action": "探索表七格多与 100 纳米人体同时呈现",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "用反向放大回答指甲盖如何放下一两百亿个开关；探索表七格多与 100 纳米人体同时呈现",
+     "camera": "表盘特写→人体比例；画面来源：Seedance + 网页数字揭晓",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/scale_answer.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图；后期：1.7 m ÷ 100 nm ≈ 1700 万；7.23 格（每格十倍）。镜头放大不改变人物尺寸。"
+    },
+    {
+     "id": "s21-1",
+     "key": "s21-1",
+     "title": "反向放大提问",
+     "duration": 9,
      "cast": [
       "林",
       "凯"
@@ -514,37 +1560,99 @@
       {
        "speaker": "阿凯",
        "direction": "",
-       "text": "呜呼——！"
+       "text": "那要是把这颗芯片也放大一千七百万倍，每个开关的地盘，是不是就跟我们差不多大了？"
       }
      ],
-     "action": "回程：一路倒放",
-     "beats": "比例尺 1 nm → 1 cm",
-     "camera": "画面来源：Seedance + Blender 倒放",
-     "blocking": "特效：回程隧道：各层尺度闪过＋刻度涟漪收拢",
+     "action": "凯提出把芯片也放大同一倍数",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "用反向放大回答指甲盖如何放下一两百亿个开关；凯提出把芯片也放大同一倍数",
+     "camera": "人物近景→阵列待拉远；画面来源：Seedance + Blender 背景",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/reverse_zoom.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图"
+    },
+    {
+     "id": "s21-2",
+     "key": "s21-2",
+     "title": "两个北京的面积",
+     "duration": 15,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "对，平均每个开关能分到一平方米多。整颗芯片摊开，面积差不多两个北京。答案就是：指甲盖那么一小片，能放下一两百亿个开关。"
+      },
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "两个北京……我天天揣兜里？"
+      }
+     ],
+     "action": "阵列铺向地平线，面积换算覆盖视野",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "用反向放大回答指甲盖如何放下一两百亿个开关；阵列铺向地平线，面积换算覆盖视野",
+     "camera": "超大拉远＋面积信息图；画面来源：Blender 拉远 + 网页面积换算",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/beijing_area.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图；后期：比较的是面积；约 3.0–3.3 万 km² ≈ 1.8–2.0 个北京市行政区。平均地盘包含布线等面积，不是晶体管实体面积。"
+    }
+   ],
+   "total": 43
+  },
+  {
+   "id": "c09",
+   "location": "回程与暖光书桌",
+   "time": "比例尺 100 nm → 1 cm",
+   "purpose": "回到桌面，让凯讲回来并引出下一期",
+   "question": "欢呼；「只会通断，怎么算一加一？」",
+   "shots": [
+    {
+     "id": "s22",
+     "key": "s22",
+     "title": "回程",
+     "duration": 7,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "抓稳，回家了。"
+      },
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "呜呼，回家咯！"
+      }
+     ],
+     "action": "刻度涟漪倒放，两人一路返回桌面",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "回到桌面，让凯讲回来并引出下一期；刻度涟漪倒放，两人一路返回桌面",
+     "camera": "快速回程隧道；画面来源：Seedance + Blender 倒放",
      "image": {
       "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/P13.png",
       "mtime": 1794649583
      },
-     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/P13.txt",
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/return.txt",
      "packPrompt": "",
      "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
-     "note": "（转场笑点，无对白或阿凯一声欢呼）"
-    }
-   ],
-   "total": 0
-  },
-  {
-   "id": "b9",
-   "location": "一句话＋下一期",
-   "time": "比例尺 1 cm",
-   "purpose": "芯片 = 最底层上百亿个开关＋上面十几层导线；下一期：没有零件会动的开关，凭什么能开能关？",
-   "question": "—",
-   "shots": [
+     "note": "临时沿用 P13 作构图参考，不代表本镜已审通过"
+    },
     {
-     "id": "P14",
-     "key": "P14",
-     "title": "回到桌面：一句话记住",
-     "duration": 0,
+     "id": "s23-1",
+     "key": "s23-1",
+     "title": "凯讲回来",
+     "duration": 14,
      "cast": [
       "林",
       "凯"
@@ -553,29 +1661,60 @@
       {
        "speaker": "阿凯",
        "direction": "",
-       "text": "所以芯片就是——最底下上百亿个开关，上面十几层导线。"
-      },
-      {
-       "speaker": "林工",
-       "direction": "",
-       "text": "对。可它们一个零件都不会动，凭什么能开能关？下期见。"
+       "text": "我捋一下啊。最底下，一两百亿个开关，零件不动。电场一拉就通，一撤就断。上面压着十几层导线，把它们连成一座城。整个儿倒扣着，封在那个黑壳里。对吧？"
       }
      ],
-     "action": "回到桌面：一句话记住",
-     "beats": "比例尺 1 cm",
-     "camera": "画面来源：Seedance（AI 画面 · 非结构）+ 片尾卡",
-     "blocking": "特效：手机背后一闪琥珀余光，表盘最后一圈涟漪消散",
+     "action": "凯按开关、导线、倒扣封装自己总结",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "回到桌面，让凯讲回来并引出下一期；凯按开关、导线、倒扣封装自己总结",
+     "camera": "台灯下双人中景；画面来源：Seedance",
      "image": {
       "path": "edu_videos/tansuo/t01_inside_a_chip/storyboard/P14.png",
       "mtime": 1794649594
      },
-     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/P14.txt",
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/desk_recap.txt",
      "packPrompt": "",
      "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
-     "note": ""
+     "note": "临时沿用 P14 作构图参考，不代表本镜已审通过"
+    },
+    {
+     "id": "s23-2",
+     "key": "s23-2",
+     "title": "下一期问题",
+     "duration": 11,
+     "cast": [
+      "林",
+      "凯"
+     ],
+     "dialogue": [
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "对，就是这样。"
+      },
+      {
+       "speaker": "阿凯",
+       "direction": "",
+       "text": "……可是等等。它们就只会通和断，那怎么就会算一加一了？"
+      },
+      {
+       "speaker": "林工",
+       "direction": "",
+       "text": "这个呀，下一期，咱们接着进去看。"
+      }
+     ],
+     "action": "凯再点屏幕，追问开关怎么学会加法",
+     "blocking": "讲机制时人物退到画面边上，让结构与特效讲。",
+     "beats": "回到桌面，让凯讲回来并引出下一期；凯再点屏幕，追问开关怎么学会加法",
+     "camera": "屏幕特写→凯好奇表情；画面来源：Seedance + 片尾卡",
+     "image": null,
+     "framePrompt": "edu_videos/tansuo/t01_inside_a_chip/storyboard/prompts/current/next_episode.txt",
+     "packPrompt": "",
+     "shotDir": "edu_videos/tansuo/t01_inside_a_chip/storyboard",
+     "note": "首帧待出：本镜有独立机位，不再套用无关旧图；片尾补 AI 生成画面／AI 配音标注及来源卡；下一期：开关怎么组成加法。"
     }
    ],
-   "total": 0
+   "total": 32
   }
  ]
 }

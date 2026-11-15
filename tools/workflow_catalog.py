@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """工作流目录编号整理：组号在类别内连续，源号在组内从 1 连续，子页（`parent`）在父页编号下从 1 连续，界面按编号排序。
 
-    python tools/workflow_catalog.py --check [--quiet]   # 有缺号、乱号、待编号或失效编号时退出码 1（Claude Stop hook 用）
+    python tools/workflow_catalog.py --check [--quiet]   # 有缺号、乱号、待编号或失效编号时退出码 1（Kimi Stop hook 用）
     python tools/workflow_catalog.py --fix               # 按现有相对顺序重排；新发现的源追加到所在组末尾
 
 总览组（follow-up 219）：组上写 `"overview": true`，编号为「类别号.0」，排在模块之前，不占模块编号。

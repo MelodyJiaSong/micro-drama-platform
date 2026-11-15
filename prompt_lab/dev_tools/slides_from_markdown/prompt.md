@@ -10,7 +10,7 @@ You type markdown in the left pane and a polished slide deck builds itself live 
 **Use cases:** A real presentation tool for a talk or standup · Lightning-fast lecture/teaching slides from notes · A code-walkthrough deck that lives next to the repo · Quick client demos you can email as a single file.
 
 ## ▶️ 2. How to run
-Open Claude Code in an empty folder, paste the prompt below, answer the 2–3 setup questions, then walk away while it builds and self-checks. The only prerequisite is a modern browser — the deliverable is one `index.html` you double-click, no install and no server. Syntax highlighting and markdown parsing are hand-rolled or inlined so it works fully offline.
+Open Kimi / Codex in an empty folder, paste the prompt below, answer the 2–3 setup questions, then walk away while it builds and self-checks. The only prerequisite is a modern browser — the deliverable is one `index.html` you double-click, no install and no server. Syntax highlighting and markdown parsing are hand-rolled or inlined so it works fully offline.
 
 ## 🔗 3. Reference & prior art
 

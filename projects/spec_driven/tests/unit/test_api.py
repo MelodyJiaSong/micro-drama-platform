@@ -39,12 +39,12 @@ def test_get_tree_returns_recursive_shape(client):
 
 
 def test_get_file_happy_path_includes_security_headers(client):
-    r = client.get("/api/file?path=CLAUDE.md")
+    r = client.get("/api/file?path=AGENTS.md")
     assert r.status_code == 200
     assert r.headers.get("x-content-type-options") == "nosniff"
     assert "attachment" in r.headers.get("content-disposition", "").lower()
     body = r.json()
-    assert "# CLAUDE.md" in body["content"]
+    assert "# Kimi Code 工作入口" in body["content"]
     assert body["bytes"] > 0
 
 
@@ -87,7 +87,7 @@ def test_size_cap_returns_413(client, scratch_dir: Path):
 
 
 def test_patch_on_file_returns_405(client):
-    r = client.request("PATCH", "/api/file?path=CLAUDE.md")
+    r = client.request("PATCH", "/api/file?path=AGENTS.md")
     assert r.status_code == 405
     allow = r.headers.get("allow", "")
     if allow:
@@ -96,12 +96,12 @@ def test_patch_on_file_returns_405(client):
 
 
 def test_delete_on_file_returns_405(client):
-    r = client.request("DELETE", "/api/file?path=CLAUDE.md")
+    r = client.request("DELETE", "/api/file?path=AGENTS.md")
     assert r.status_code == 405
 
 
 def test_post_on_file_returns_405(client):
-    r = client.post("/api/file", json={"path": "CLAUDE.md", "content": "x"})
+    r = client.post("/api/file", json={"path": "AGENTS.md", "content": "x"})
     assert r.status_code == 405
 
 
@@ -235,7 +235,7 @@ def test_put_with_dev_server_host_returns_403(client, scratch_dir: Path):
 
 def test_get_file_foreign_origin_still_succeeds(client):
     """GET endpoints are NOT origin-validated (FR-9 lists state-changing routes only)."""
-    r = client.get("/api/file?path=CLAUDE.md", headers={"Origin": "http://evil.example.com"})
+    r = client.get("/api/file?path=AGENTS.md", headers={"Origin": "http://evil.example.com"})
     assert r.status_code == 200
 
 

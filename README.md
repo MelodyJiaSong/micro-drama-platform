@@ -1,6 +1,6 @@
 # AI 短剧制作平台
 
-个人 AI 短剧制作仓库：多部短剧、共用资产库、制作 skills，以及 FastAPI + React 管理应用。Claude 与 Codex 共用规范和流程正文。
+个人 AI 短剧制作仓库：多部短剧、共用资产库、制作 skills，以及 FastAPI + React 管理应用。Kimi 与 Codex 共用规范、制作流程、管理界面和审计；Claude 已停用，历史记录保留。
 
 短剧创作走六个模块：故事创作 → 影视改编 → Prompt 编译与出片 → 剪辑 → 声音与音乐 → 成片交付（后三个待设计）。Research 与人物、场景等资产独立支持；先在魔兽世界 EP1 开始小型 POC。旧流程已于 2026-10-11 删除，旧剧目录只作数据保留（根目录有 `OBSOLETE.md`）。下面的软件六阶段流程仅用于 spec-driven 开发任务。
 
@@ -20,10 +20,10 @@
 
 | Path                                       | What lives there |
 |--------------------------------------------|------------------|
-| `AGENTS.md` / `CONVENTIONS.md`              | Claude / Codex 共用入口与详细约定。 |
-| `CLAUDE.md`                                | Claude 入口，导入 `AGENTS.md`。 |
-| `.agents/skills/` / `.agents/references/` | 两端共用的唯一 skill 正文、playbooks 与参考规则；Codex 直接读取。 |
-| `.agents/skill-aliases.json` / `.claude/skills/` | 共用名称到旧 Claude 名称的映射，以及自动生成的 Claude 引用入口。 |
+| `AGENTS.md` / `CONVENTIONS.md` | Kimi / Codex 共用入口与详细约定。 |
+| `.agents/mcp.json` | 项目 MCP 唯一源；生成 `.kimi-code/mcp.json` 与 `.codex/config.toml`。 |
+| `.agents/skills/` / `.agents/references/` | 唯一 skill 正文、playbooks 与参考规则，Kimi / Codex 直接读取。 |
+| `.agents/agents/` / `.kimi-code/plugin/` | 自定义 Kimi agents 与可安装的 hooks 插件。 |
 | `pyproject.toml`                           | Canonical Python deps. `uv sync` reads this. |
 | `requirements.txt`                         | Mirror of the above, kept for the pip fallback path. |
 | `.agents/skills/agent-team/SKILL.md`       | The pipeline-orchestrator skill. |
@@ -38,20 +38,20 @@
 
 ## Two ways to drive the pipeline
 
-1. **From Claude Code or Codex** — 软件任务使用 Claude `/agent-team` 或 Codex `$agent-team`；短剧使用 Claude `/ai-videos-pipeline` 或 Codex `$ai-videos-pipeline`。自然语言指定流程也可以。主代理读相同 playbooks / refs，按当前环境的能力协调工作。
+1. **From Kimi Code / Codex** — Kimi 软件任务使用 `/skill:agent-team`，短剧使用 `/skill:ai-videos-pipeline`；Codex 对应 `$agent-team` 与 `$ai-videos-pipeline`。自然语言指定流程也可以。主代理读相同 playbooks / refs，按当前环境的能力协调工作。
 2. **From the browser** — run `spec_driven` (FastAPI backend + React frontend) and drive the same phases through a UI with a live event log. Same playbooks, same artifacts, same `specs/` persistence — different surface.
 
 ## 共用 skill 命令
 
-4 个 skills 共用同一组名称，调用符号按客户端使用 `/` 或 `$`。例如把下表命令后接 `shengji_zhilu` 和本次任务要求：
+在 Kimi 中把下列命令后接剧名和本次任务要求；未被系统命令占用时也可省略 `skill:` 前缀。
 
-| 功能 | Claude Code | Codex |
+| 功能 | Kimi Code | Codex |
 |---|---|---|
-| 新建 / 继续短剧 | `/ai-videos-pipeline` | `$ai-videos-pipeline` |
-| 补人物资产 | `/ai-videos-char-assets` | `$ai-videos-char-assets` |
-| ChatGPT 订阅出图，无需 API key | `/codex-imagegen` | `$codex-imagegen` |
+| 新建 / 继续短剧 | `/skill:ai-videos-pipeline` | `$ai-videos-pipeline` |
+| 补人物资产 | `/skill:ai-videos-char-assets` | `$ai-videos-char-assets` |
+| ChatGPT 订阅出图，无需 API key | `/skill:codex-imagegen` | `$codex-imagegen` |
 
-另一个是软件流程的 `agent-team`（见上节）。也可以两端都写「用 ai-videos-pipeline 继续 shengji_zhilu 第 1 集的影视改编」。原 Claude `/ai_videos__…` 命令保留。完整名称见 [.agents/skill-aliases.json](.agents/skill-aliases.json)。Claude 的 [skills 文档](https://code.claude.com/docs/en/skills) 与 Codex 的 [本地 skills 文档](https://learn.chatgpt.com/docs/build-skills) 分别说明调用方式。
+软件流程使用 `/skill:agent-team`。也可以直接写「用 ai-videos-pipeline 继续 shengji_zhilu 第 1 集的影视改编」。源文件都在 `.agents/skills/`，无需生成入口或别名映射。调用格式见 [Kimi Agent Skills 文档](https://www.kimi.com/code/docs/en/kimi-code-cli/customization/skills.html)。Codex 同样可执行完整流程；图片生成仍由 `tools/codex_image.py` 记录请求后调用。独立审稿保持现有 Kimi 单审规则。
 
 ## Quick start
 
@@ -146,15 +146,17 @@ Worker subagents are traced to `.audit/adhoc_agents/{date}/{task_id}/spawns/{wor
 
 ## Conventions
 
-从 [AGENTS.md](AGENTS.md) 开始，按任务读取 [CONVENTIONS.md](CONVENTIONS.md) 和对应 refs / skills。`.agents/skills/` 与 `.agents/references/` 是共用正文的唯一维护位置；`.claude/skills/` 只有指向它们的生成入口，settings / hooks / MCP 声明属于运行时适配。
+从 [AGENTS.md](AGENTS.md) 开始，按任务读取 [CONVENTIONS.md](CONVENTIONS.md) 和对应 refs / skills。`.agents/skills/`、`.agents/agents/` 与 `.agents/references/` 是唯一维护位置；MCP 唯一源在 `.agents/mcp.json`，两端配置由 `python tools/sync_agent_config.py --fix` 生成，hooks 插件源在 `.kimi-code/plugin/`。
 
 维护源 skill 的 name / description 后运行：
 
 ```powershell
-python tools/sync_agent_skills.py
-python tools/sync_agent_skills.py --check
+python tools/check_agent_skills.py
+python tools/check_agent_skills.py
 ```
 
-两端 ASCII 名称查 `.agents/skill-aliases.json`；3 份正文直接维护在 `.agents/skills/`。同步脚本只生成 Claude 的同名及旧名入口，均引用同一源文件，从不复制正文或回写源文件。修改流程正文即时共享；改名称、描述、`metadata.claude.argument-hint` 或新增 skill 后同步入口。Claude 入口传递 `$ARGUMENTS`，共用正文从实际消息读取参数。改分镜、overhead 或参考资产后，显式运行 `python tools/shot_pack.py sync <集目录>`（只报告用 `check`）；工作流目录或共用源增删迁移后运行 `python tools/workflow_catalog.py --fix` 再 `--check`；不能依赖 Claude Stop hook 在 Codex 中自动运行。新入口未被当前会话发现时可直接按路径读源 skill，或重新开启会话。
+正文直接维护在 `.agents/skills/`，Kimi / Codex 自动发现；自定义 agent 放在 `.agents/agents/`。修改 name、description、type 或新增 skill 后运行 `python tools/check_agent_skills.py`。改分镜、overhead 或参考资产后，显式运行 `python tools/shot_pack.py sync <集目录>`（只报告用 `check`）；工作流目录或共用源增删迁移后运行 `python tools/workflow_catalog.py --fix` 再 `--check`。两边都运行 `python tools/sync_agent_config.py --check` 核对配置。Kimi hooks 插件首次使用执行 `/plugins install .kimi-code/plugin` 并 `/reload`；未安装时也必须显式完成上述检查。
 
-发现约定依据：[OpenAI AGENTS.md 文档](https://learn.chatgpt.com/docs/agent-configuration/agents-md)、[本地 skills 文档](https://learn.chatgpt.com/docs/build-skills)。本次共用适配保留现有应用运行后端；Prompt Lab 的自动执行器仍使用其配置的 Claude CLI。
+配置依据：[Kimi Agent Skills](https://www.kimi.com/code/docs/en/kimi-code-cli/customization/skills.html)、[Agents](https://www.kimi.com/code/docs/en/kimi-code-cli/customization/agents.html)、[MCP](https://www.kimi.com/code/docs/en/kimi-code-cli/customization/mcp.html) 与 [Hooks](https://www.kimi.com/code/docs/en/kimi-code-cli/customization/hooks.html) 官方文档。Prompt Lab 通过服务端环境变量 `PROMPT_LAB_RUNTIME=kimi|codex` 选择执行器，默认 Kimi；运行记录保存实际执行器，Codex 使用 `workspace-write`。
+
+Codex 配置依据：[项目配置](https://learn.chatgpt.com/docs/config-file/config-basic)、[MCP](https://learn.chatgpt.com/docs/extend/mcp?surface=cli)、[共用 skills 发现](https://learn.chatgpt.com/docs/build-skills)。项目配置仅在受信任的项目中加载；重启会话后核对实际工具。仓库不改写用户级权限、凭据或信任设置。

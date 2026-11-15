@@ -1,6 +1,6 @@
 """Character read-side: list each character folder's newest turntable mp4.
 
-Read-side (per CLAUDE.md queries may skip the domain layer): walks
+Read-side (per CONVENTIONS.md queries may skip the domain layer): walks
 `ai_videos/{drama}/.../characters/[{group}/]cN_*` and reports the newest original
 turntable mp4 in each — mtime-max, excluding the truncated `video.mp4` reel
 and the `views/` outputs, the same rule `CharacterViewExtractor` uses to pick

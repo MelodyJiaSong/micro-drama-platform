@@ -10,7 +10,7 @@ Run the prompt and a petri-dish world fills with plants, herbivores, and predato
 **Use cases:** A standout teaching tool for ecology, evolution, and population dynamics — let students tune mutation rate or plant growth and predict the crash. A research / intuition-building sandbox for exploring how trait distributions drift under selection pressure. A data-visualization showpiece pairing an agent world with live charts. A worked example for learning agent-based simulation, energy bookkeeping, and real-time charting by reading the code.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away. Paste the prompt below into Claude Code in an empty folder, answer the 2 short setup questions, and it builds the whole thing autonomously, then opens the sim with its live charts. Prerequisites: none — opens in any modern browser.
+Copy-paste-and-walk-away. Paste the prompt below into Kimi / Codex in an empty folder, answer the 2 short setup questions, and it builds the whole thing autonomously, then opens the sim with its live charts. Prerequisites: none — opens in any modern browser.
 
 ## 🔗 3. Reference & prior art
 

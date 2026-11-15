@@ -10,7 +10,7 @@ Open one file in your browser and you're sliding numbered tiles across a 4×4 gr
 **Use cases:** A portfolio piece that proves you can ship game logic + animation in vanilla JS · a readable codebase for learning merge algorithms and `requestAnimationFrame` · something genuinely fun to share with friends · a teaching example for grid state and keyboard/touch input.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away: paste the prompt below into Claude Code in an empty folder, answer the short setup questions, then it runs autonomously to completion and opens the result. Prerequisites: none — opens in any modern browser.
+Copy-paste-and-walk-away: paste the prompt below into Kimi / Codex in an empty folder, answer the short setup questions, then it runs autonomously to completion and opens the result. Prerequisites: none — opens in any modern browser.
 
 ## 🔗 3. Reference & prior art
 

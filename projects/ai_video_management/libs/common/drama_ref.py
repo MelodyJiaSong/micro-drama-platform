@@ -9,7 +9,7 @@ which one it is looking at.
 A directory directly under `ai_videos/` is a **series** iff it contains
 `series.json`. That marker is the single, explicit rule — no name conventions, no
 manifest of episodes (episode membership stays derived from the filesystem per
-CLAUDE.md § State surfaces). Everything else directly under `ai_videos/` is either
+CONVENTIONS.md § State surfaces). Everything else directly under `ai_videos/` is either
 a flat drama or an `_`-prefixed system library (`_actors`, `_deleted`, …).
 
 Depth is therefore:
@@ -95,7 +95,7 @@ def asset_root_depth(root: Path, parts: Sequence[str]) -> int | None:
     A drama root owns its own `characters/` / `scenes/` / `props/` — but so does
     a series' shared `ai_videos/{series}/_series/` dir, which is where a
     character reused by several episodes lives and where its only copy is
-    allowed to live (CLAUDE.md § AI video rules, 2026-09-15).
+    allowed to live (CONVENTIONS.md § AI video rules, 2026-09-15).
 
     `drama_depth` cannot answer this: it returns None for `_series` precisely
     because `_series` is not a drama, and that is correct for everything keyed

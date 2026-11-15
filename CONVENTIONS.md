@@ -1,31 +1,31 @@
-# CONVENTIONS.md — Claude / Codex 共用约定
+# CONVENTIONS.md — Kimi / Codex 共用工作约定
 
-Hosts a **spec-driven workflow** and the platform that drives it. New spec-driven development projects use six stages; AI dramas use their dedicated pipeline. Existing-project fixes and convention maintenance stay scoped to the requested change. Artifacts are plain files so either agent can inspect and resume them.
+Hosts a **spec-driven workflow** and the platform that drives it. New spec-driven development projects use six stages; AI dramas use their dedicated pipeline. Existing-project fixes and convention maintenance stay scoped to the requested change. Artifacts are plain files so Kimi can inspect and resume them.
 
 ## State surfaces (explicit determinism)
 
 All workflow / `agent_team` state lives in one of these surfaces. No hidden caches, no other locations:
 
-1. **`AGENTS.md` + `CONVENTIONS.md`** — shared entry and rules. `CLAUDE.md` imports the entry; it does not own separate business rules.
-2. **Runtime adapters** — `.claude/settings*.json`, `.claude/hooks/`, `.mcp.json` for Claude. `.agents/skills/<name>/` owns each shared skill's body; `.agents/skill-aliases.json` maps its name to the legacy Claude command. `tools/sync_agent_skills.py` generates only `.claude/skills/` adapters for both command names, pointing to the canonical `.agents/` source. Runtime permissions and connected tools come from the active environment, not from another agent's config.
+1. **`AGENTS.md` + `CONVENTIONS.md`** — shared entry and rules, loaded directly by Kimi and Codex.
+2. **Runtime configuration** — `.agents/mcp.json` owns project MCP definitions; `tools/sync_agent_config.py --fix` generates `.kimi-code/mcp.json` and `.codex/config.toml`. Keep these generated files limited to MCP; personal model, permission and authentication settings stay in user configuration. `.kimi-code/plugin/` owns the installable Kimi hooks plugin. `.agents/skills/<name>/` owns each skill body and `.agents/agents/` owns custom agents; Both runtimes discover the shared skills directly; `.agents/agents/` contains Kimi-specific agents used by the independent review tools. `tools/check_agent_skills.py` validates skill metadata without generating adapters. Runtime permissions and connected tools come from the active Kimi or Codex session.
 3. **`specs/{task_type}/{task_name}/`** — per-task pipeline artifacts.
 4. **`.audit/adhoc_agents/{YYYY-MM-DD}/{task_id}/`** — runtime spawn logs (`spawns/{worker_id}/{prompt.md, output.md}`), `events.jsonl`, per-round answer JSONs.
-5. **Shared skills + playbooks + refs** under `.agents/skills/` and `.agents/references/` — the only maintained workflow sources for both agents; see § Stage playbooks and reference docs. `.claude/` must not contain independent business instructions or reference copies.
+5. **Shared skills + playbooks + refs** under `.agents/skills/` and `.agents/references/` — the only maintained workflow sources; see § Stage playbooks and reference docs.
 
-**全局制作入口（follow-up194/198）**：管理 UI 的工作流统一导航跨剧创作规则、代理配置声明、服务默认值与制作参考，目录源为 `.agents/references/project/workflow_catalog.json`，登记路径、分类、连续引用编号及自动发现范围，正文仍在上述唯一维护位置。分为 `1_AI Video`（创作知识与制作规范；最上面 `1.0_总览` 为工作流全景与术语表）与 `2_系统与代码`（代码、工具脚本、软件运行与代理设置，follow-up 216）；AI Video 下六个模块依次是 `1.1_故事创作`、`1.2_影视改编`、`1.3_Prompt编译与出片`、`1.4_剪辑`、`1.5_声音与音乐`、`1.6_成片交付`（follow-up 218）。具体源用三级编号：组号在类别内连续，源号在组内从 1 连续，界面按编号排序；源身份是 `scope:path`，改标题不改号；增删或迁移源后运行 `python tools/workflow_catalog.py --fix`，`--check`（Claude Stop hook）与 `test_global_workflow.py` 拦截缺号、乱序和待编号（follow-up 203）。新增跨剧源须进入目录或已登记发现范围，不补造历史编号或代理设置；用户配置只读脱敏，不读取 memory、凭据文件或执行配置代码。集中展示不改变模块适用范围、授权及收费请求审计。
+**全局制作入口（follow-up194/198）**：管理 UI 的工作流统一导航跨剧创作规则、代理配置声明、服务默认值与制作参考，目录源为 `.agents/references/project/workflow_catalog.json`，登记路径、分类、连续引用编号及自动发现范围，正文仍在上述唯一维护位置。分为 `1_AI Video`（创作知识与制作规范；最上面 `1.0_总览` 为工作流全景与术语表）与 `2_系统与代码`（代码、工具脚本、软件运行与代理设置，follow-up 216）；AI Video 下六个模块依次是 `1.1_故事创作`、`1.2_影视改编`、`1.3_Prompt编译与出片`、`1.4_剪辑`、`1.5_声音与音乐`、`1.6_成片交付`（follow-up 218）。具体源用三级编号：组号在类别内连续，源号在组内从 1 连续，界面按编号排序；源身份是 `scope:path`，改标题不改号；增删或迁移源后运行 `python tools/workflow_catalog.py --fix`，`--check`（Kimi Stop hook）与 `test_global_workflow.py` 拦截缺号、乱序和待编号（follow-up 203）。新增跨剧源须进入目录或已登记发现范围，不补造历史编号或代理设置；用户配置只读脱敏，不读取 memory、凭据文件或执行配置代码。集中展示不改变模块适用范围、授权及收费请求审计。
 
 Rules:
 
-- **工作流覆盖与跨会话维护（follow-up199）**：Claude Code / Codex 按 [.agents/references/project/ai_video_workflow.md](.agents/references/project/ai_video_workflow.md) 维护同一目录与源。新增影响制作的共用指南、模板、静态默认值、环境覆盖入口或编译实现时登记稳定编号并检查「工作流覆盖核对」；此页核对可读取源、编号与文档引用，不证明所有源实际加载。局部剧/季/集输入继续在剧导航中；隐藏系统上下文、外部插件内部状态及秘密环境值不宣称穷举覆盖。已结束会话的变更从共用文件、项目规格与审计接续，不写私有 memory。
+- **工作流覆盖与跨会话维护（follow-up199）**：Kimi / Codex 按 [.agents/references/project/ai_video_workflow.md](.agents/references/project/ai_video_workflow.md) 维护同一目录与源。新增影响制作的共用指南、模板、静态默认值、环境覆盖入口或编译实现时登记稳定编号并检查「工作流覆盖核对」；此页核对可读取源、编号与文档引用，不证明所有源实际加载。局部剧/季/集输入继续在剧导航中；隐藏系统上下文、外部插件内部状态及秘密环境值不宣称穷举覆盖。已结束会话的变更从共用文件、项目规格与审计接续，不写私有 memory。
 
 - **Pipeline status is derived from persisted artifacts and checks, not from memory.** Existing expected files are candidates for completion: read them, verify required sections and QC, and ensure review fingerprints match current inputs. Missing, stale, partial or blocked artifacts mean the stage is not done. Resume logic reads the tree and applicable checks.
 - **New mechanisms must land in one of the surfaces above.** No sidecars, session-scoped stores, or side-channel caches.
 - **Round-trip artifacts** between parent ↔ workers / user (e.g., `round1_answers.json`, aggregated worker outputs) live under `.audit/`, NOT in `specs/` (which is reserved for canonical user-facing output).
-- **Code-navigation indexes are derived caches, not state surfaces.** The optional CodeGraph index at `projects/{name}/.codegraph/` (a symbol/call graph over that project's code, exposed to agents via the `codegraph` MCP server in `.mcp.json`, scoped to `projects/ai_video_management` for the current trial) is a **per-machine, gitignored, rebuildable cache** — a faster substitute for grep/glob fan-out, nothing more. It MUST NOT be treated as authoritative: pipeline status is still re-derived from the filesystem (rule 1 above), and it never indexes the markdown surfaces (`specs/`, `ai_videos/`, `.claude/`). Delete `.codegraph/` and re-run `codegraph index <project>` anytime; never read stale graph data as ground truth.
+- **Code-navigation indexes are derived caches, not state surfaces.** The optional CodeGraph index at `projects/{name}/.codegraph/` (a symbol/call graph over that project's code, exposed to agents via the `codegraph` MCP server declared in `.agents/mcp.json`, scoped to `projects/ai_video_management` for the current trial) is a **per-machine, gitignored, rebuildable cache** — a faster substitute for grep/glob fan-out, nothing more. It MUST NOT be treated as authoritative: pipeline status is still re-derived from the filesystem (rule 1 above), and it never indexes the markdown surfaces (`specs/`, `ai_videos/`). Delete `.codegraph/` and re-run `codegraph index <project>` anytime; never read stale graph data as ground truth.
 
 ## 外部服务请求审计（全局必经）
 
-适用于本仓库全部剧/季/集、系列与公共资产、软件任务及独立调用；Claude、Codex、主代理与子任务使用同一契约。全流程、阶段续跑、补资产、局部修复、独立 skill 或手工命令均不能跳过。本条生效后的每次调用都执行，不补造历史日志。
+适用于本仓库全部剧/季/集、系列与公共资产、软件任务及独立调用；Kimi / Codex 主代理与子任务使用同一契约。全流程、阶段续跑、补资产、局部修复、独立 skill 或手工命令均不能跳过。本条生效后的每次调用都执行，不补造历史日志。
 
 每次调用 Dreamina CLI、ElevenLabs、Hyper3D，以及后续接入的收费服务前：
 
@@ -41,19 +41,19 @@ Rules:
 
 **2026-11-08 用户定：以后出图全部用 Codex（`tools/codex_image.py` / 各出图器 `--engine auto` 现在只用 Codex）；没有用户明确允许不用 ElevenLabs，ElevenLabs 失败也不再是自动回退的一环。** 下面关于 ElevenLabs 的说明只在用户允许时适用。
 
-Claude、Codex 与子任务为所有剧生成或重生成**任何图片**（人物与换装、怪物、道具与物件、装备、scene/bg 的世界锚点、场景锚点、各方向 plate、时间/天气变体、shot 专用背景与镜头图）时，**一律用 Codex 内置出图（`tools/codex_image.py`；出图器 `--engine auto` 即只用 Codex）**。**ElevenLabs 出图须用户明确允许**，允许后才可点名 `--engine elevenlabs`，ElevenLabs 的 credit 留给配音（2026-11-08 用户定，ai_video_management follow-up 341；取代 follow-up 275 的 ElevenLabs 优先与 dota_yingxiong follow-up 066 的失败换家）；**禁止 Dreamina/Seedream 出图，包括 auto 模式失败后的回退**。**Dreamina 只用于视频（Seedance）**。2026-10-17 用户定（ai_video_management follow-up 270，取代 238 的「即梦作图片最低选项」；scene/bg 自 2026-10-03 起已如此）。新剧全程执行，旧剧今后的调用同样执行；旧即梦图是否重出逐剧决定。
+Kimi / Codex 主代理与子任务为所有剧生成或重生成**任何图片**（人物与换装、怪物、道具与物件、装备、scene/bg 的世界锚点、场景锚点、各方向 plate、时间/天气变体、shot 专用背景与镜头图）时，**一律用 Codex 内置出图（`tools/codex_image.py`；出图器 `--engine auto` 即只用 Codex）**。**ElevenLabs 出图须用户明确允许**，允许后才可点名 `--engine elevenlabs`，ElevenLabs 的 credit 留给配音（2026-11-08 用户定，ai_video_management follow-up 341；取代 follow-up 275 的 ElevenLabs 优先与 dota_yingxiong follow-up 066 的失败换家）；**禁止 Dreamina/Seedream 出图，包括 auto 模式失败后的回退**。**Dreamina 只用于视频（Seedance）**。2026-10-17 用户定（ai_video_management follow-up 270，取代 238 的「即梦作图片最低选项」；scene/bg 自 2026-10-03 起已如此）。新剧全程执行，旧剧今后的调用同样执行；旧即梦图是否重出逐剧决定。
 
 指定“GPT 最新模型”时，调用前核对官方文档及实际入口支持的型号，记录实际 model_id；型号不公开的内置工具不能声称已验证最新具体型号。模型不可用时报告，不能静默降级或改用 Dreamina。服务与型号、完整 prompt、参考文件哈希、生成 ID、费用/未知费用继续按上节先记请求；出图后逐张看图并绑定新 SHA 审图，替换资产后同步、检查受影响资料包。执行入口：`tools/gen_bg_images.py` / `tools/image_engine.py`；详见 `.agents/references/project/paid_services.md`。
 
 ## Auto-memory is disabled
 
-Do not use agent-private auto-memory for this repository. Do not read or write `.claude/memory/` or `~/.claude/projects/<slug>/memory/`, and do not create a parallel Codex memory copy. Repository facts and lessons belong to the shared state surfaces. Higher-priority runtime instructions still apply.
+Do not use agent-private auto-memory for this repository. Repository facts and lessons belong to the shared state surfaces. Higher-priority runtime instructions still apply.
 
 If you'd save a memory entry, persist to a state surface instead:
 - Cross-conversation rules → `CONVENTIONS.md`.
 - Per-project intent → `specs/{type}/{name}/`.
 - Per-run audit → `.audit/adhoc_agents/{date}/{task_id}/`.
-- Harness config → the active runtime adapter (see § Tool scoping and team coordination).
+- Harness config → the active Kimi / Codex configuration (see § Tool scoping and team coordination).
 
 The urge to save memory is a signal that one of the surfaces is missing the information. Put it there instead.
 
@@ -61,21 +61,19 @@ The urge to save memory is a signal that one of the surfaces is missing the info
 
 ```
 micro-drama-platform/
-├── AGENTS.md                             # shared entry; both agents read it
+├── AGENTS.md                             # Kimi entry
 ├── CONVENTIONS.md                        # this detailed contract
-├── CLAUDE.md                             # imports AGENTS.md
 ├── .agents/                              # shared source of truth
-│   ├── skill-aliases.json                # shared names → legacy Claude commands
-│   ├── skills/<name>/SKILL.md            # canonical bodies; Codex reads directly
+│   ├── agents/<name>.md                  # custom Kimi agents
+│   ├── skills/<name>/SKILL.md            # canonical skills; Kimi reads directly
 │   │   └── playbooks/                    # supporting runbooks, where needed
 │   └── references/{interview,research,validation,project}/
-├── pyproject.toml                         # canonical Python deps; `uv sync` reads this
-├── requirements.txt                       # mirror for pip fallback
+├── .kimi-code/
+│   ├── mcp.json                          # project MCP configuration
+│   └── plugin/                           # installable Kimi hooks plugin
+├── pyproject.toml                        # canonical Python deps; `uv sync` reads this
+├── requirements.txt                      # mirror for pip fallback
 ├── README.md
-├── .claude/
-│   ├── skills/<shared-or-legacy-name>/SKILL.md  # generated references to .agents
-│   ├── hooks/                            # Claude lifecycle adapters
-│   └── settings*.json                    # Claude runtime configuration
 ├── specs/
 │   └── {task_type}/{task_name}/
 │       ├── user_input/{raw_prompt.md, revised_prompt.md, follow_ups/{YYYYMM}.md}
@@ -101,7 +99,7 @@ Required when starting a production / development pipeline. Choose from the know
 
 ## The six-stage workflow (task_type=development)
 
-The skill `agent_team` is the single entry point for **`development`** tasks and walks all six stages. Users invoke it as Claude `/agent-team`, Codex `$agent-team`, or by asking for a spec-driven software task; legacy Claude `/agent_team` remains available. **For `task_type=ai_video`, use `ai-videos-pipeline` (source `ai_videos__全流程编排`) instead (§ AI 短剧创作).**
+The skill `agent-team` is the single entry point for **`development`** tasks and walks all six stages. Users invoke it as `/skill:agent-team`, `/agent-team`, or by asking for a spec-driven software task. **For `task_type=ai_video`, use `ai-videos-pipeline` instead (§ AI 短剧创作).**
 
 | # | Stage | Output | Coordination |
 |---|---|---|---|
@@ -125,13 +123,11 @@ three-module-v1的影视改编按episode→scene→shot组织。scene表示剧�
 
 ## Skill + playbook naming
 
-- Canonical skills live in `.agents/skills/<name>/SKILL.md`, with matching lowercase ASCII hyphenated names (`agent-team`, `ai-videos-*`). `.agents/references/` holds shared references. `.claude/skills/` contains generated adapters only, never another copy of the workflow.
-- 原 `agent_team` / `ai_videos__{中文名}` 是兼容名称，映射在 `.agents/skill-aliases.json`；旧中文称呼可继续出现在正文引用里，不代表另一份源文件。
-  - Claude 用 `/name`，Codex 用 `$name` 或自然语言；原 Claude 命令保留并指向同一 `.agents/` 源正文，相对路径以源目录为准。源正文从实际消息读取参数；Claude 参数提示保存在源 frontmatter 的 `metadata.claude.argument-hint`，同步脚本将其转换为 Claude 入口的 `argument-hint`，并在该入口展开 `$ARGUMENTS`。不把未展开占位符放进共用工作流。
+- Canonical skills live in `.agents/skills/<name>/SKILL.md`, with matching lowercase ASCII hyphenated names (`agent-team`, `ai-videos-*`). `.agents/references/` holds shared references and `.agents/agents/` holds custom Kimi agents. Kimi discovers all three directly; no generated adapters or alias map.
+- Kimi 用 `/skill:<name>` 或未冲突的 `/<name>`，也可用自然语言。参数放在命令后；未写占位符时 Kimi 自动附加原始参数。源文件内的相对路径以源目录为准。
 - Stage playbooks live under `.agents/skills/agent-team/playbooks/`. They are NOT subagent definitions — they are runbooks the parent reads inline.
-- `.claude/agents/` is reserved for future permanent subagents (currently empty; every spec-driven stage is parent-direct).
-- Workers, when available and permitted, are general-purpose subagents driven by playbook prompts, captured under `.audit/adhoc_agents/{date}/{task_id}/spawns/`.
-- YAML frontmatter `description` field has a hard ceiling of **500 characters**.
+- Workers, when available and permitted, are general-purpose Kimi subagents driven by playbook prompts, captured under `.audit/adhoc_agents/{date}/{task_id}/spawns/`.
+- YAML frontmatter `description` field has a hard ceiling of **500 characters**; `tools/check_agent_skills.py` validates it.
 
 ## Stage playbooks and reference docs
 
@@ -176,7 +172,8 @@ The spec_driven webapp's `EXPOSED_TREE` recursive globs (`.agents/skills/agent-t
 ## AI video rules (under `ai_videos/`)
 
 - **外部服务调用必留痕**：遵本文件 § 外部服务请求审计（全局必经）及 `.agents/references/project/paid_services.md`；所有剧与独立调用均适用。
-- **出图与出片的授权（2026-10-10 用户定，follow-up 229）**：**图片**（场景 / 背景变体、人物、物件）成本低，代理在修一致性问题时（例如背景图的时辰、光线与场次不符）可以直接重出或新出，不用先问；照常先写请求日志，引擎按 `tools/image_engine.py`（2026-11-08 起只用 Codex 内置出图，ElevenLabs 出图须用户允许，follow-up 341；图片不用即梦，即梦只用于视频，follow-up 270）。**视频**生成仍要用户决定，「生成」永远人点。
+- **出图与出片的授权（2026-10-10 用户定，follow-up 229）**：**图片**（场景 / 背景变体、人物、物件）成本低，代理在修一致性问题时（例如背景图的时辰、光线与场次不符）可以直接重出或新出，不用先问；照常先写请求日志，引擎按 `tools/image_engine.py`（2026-11-08 起只用 Codex 内置出图，ElevenLabs 出图须用户允许，follow-up 341；图片不用即梦，即梦只用于视频，follow-up 270）。**扣积分的视频**（Seedance / 即梦等收费生成）仍要用户决定，「生成」永远人点；**不扣积分的视频**（本地 Blender、网页场景、Manim 等渲染，不花钱）代理可以直接出（2026-11-14 用户定，ai_video_management follow-up 360）。
+- **出视频前先审整集音频预览（2026-11-14 用户定，ai_video_management follow-up 360）**：每集（教学视频每个知识点）在提交扣积分的视频之前，先用 `python tools/audio_preview.py build <清单>`（短剧 `from-filming <集目录>`）把整集对白按人物声样用本地 VoxCPM2 合成、按镜头排成一条音轨，交用户在 `/episode-preview?path=<集或知识点>&audio=1` 听：播放器上方是当前镜头的故事板或首帧、叠当前台词，下方是场 / 镜进度条。每镜时长 = 起势 + 台词 + 句间停顿 + 收尾（取整秒，不少于 4 秒；超过 15 秒要拆镜），写在 `audio/preview/timeline.json`，就是之后出视频的目标时长与台词起点；代理出片前也用它自检时长与节奏。改台词、分镜或时长后重跑。用户听过、同意之后才提交扣积分的视频；不扣积分的本地视频不用等。音频只是听感预览，不进成片。
 - **镜头时长（2026-10-10 用户定，follow-up 229）**：overhead、静帧或子代理发现镜头时长不够（走不完、景别到不了、动作塞不下），代理直接改分镜时长并同步分拍、overhead，写进场级决策记录；不用先问。
 - **声音**：Seedance prompt明确保留本镜指定对白、自然环境声和动作声，禁止背景音乐/配乐，无对白镜明确没有人说话，出片后试听核对；由Prompt编译固定写入（见 `.agents/skills/ai-videos-pipeline/modules/prompts-rules.md`），配乐在后期独立设计。
 - **媒体不进 git**：`ai_videos/` 下的图片、视频、音频由 `.gitignore` 排除，只存本机；不再同步到 R2（2026-10-16 起，ai_video_management follow-up 264）。
@@ -220,7 +217,7 @@ Before doing any work, triage how the current prompt relates to the spec-driven 
    - Stage-procedure changes → `.agents/skills/agent-team/SKILL.md` or `.agents/skills/agent-team/playbooks/{interview,research,validation}.md`.
    - Accumulated institutional memory (stage-scoped or output-scoped) → `.agents/references/{interview,research,validation,project}/{general.md,<task_type>.md}` per § Stage playbooks and reference docs.
    - AI 短剧跨剧流程规则 → `.agents/skills/ai-videos-pipeline/`（`SKILL.md`、`modules/`、`resources/`），并登记 `workflow_catalog.json`；不再写 `.agents/references/project/ai_video.md` 或 stage refs 下的 `ai_video.md`。
-   - Harness config (hooks, permissions, env) → `.claude/settings.json` / `settings.local.json`.
+   - Harness config → `.agents/mcp.json`（生成两端 MCP 配置）、`.kimi-code/plugin/`；用户级权限与模型设置留在当前电脑的 Kimi / Codex 配置，不写入仓库。Claude 不再作为活跃运行时；历史审计与产物不改写来源。
 2. **Project-scoped instruction** — the prompt adds intent to one existing spec-driven project. Run § Follow-up prompt handling below.
 3. **Neither** — casual chat, general question, or task with no spec-driven impact (e.g., "hello", a one-off shell question). No persistence. Answer normally.
 
@@ -238,7 +235,7 @@ The triage is itself a state-surface discipline: every rule the user gives must 
 Once a spec-driven project exists, follow-up chat may contain additional intent for it. Triage every new prompt before doing anything else.
 
 1. **Triage.** Casual chat / general question with no spec-driven impact → answer normally, no persistence. Real instruction → classify which project. **If ambiguous (project X, Y, or none), ASK the user** — do not silently pick.
-2. **Persist with `python tools/followup.py new <项目> --slug … --instruction … --summary …`** — never hand-append (2026-10-26, dota_yingxiong 7-day review: hand-appending by concurrent sessions lost 25 changelog entries on the two busiest days, collided 7 numbers, and wrote execution results into other entries). The tool locks only to allocate the next number, writes the follow-up section AND the changelog skeleton in one step into the calling session's own entry file `user_input/follow_ups/_inbox/NNN-slug.md` (owner = `--owner`, else `FOLLOWUP_OWNER` / `CLAUDE_CODE_SESSION_ID` / `CODEX_SESSION_ID` / `CODEX_THREAD_ID`), and regenerates `revised_prompt.md` including inbox entries (step 3). **No single point of blocking (2026-10-27, dota_yingxiong follow-up 280)**: sessions record separately and `python tools/followup.py merge` periodically aggregates finished entries, in number order, into the month file and `changelog.md` (`done` merges its own entry right away; the Stop hook merges on every stop). Never hand-edit `_inbox` files. **Allocate first, cite second**: run `new` before writing the number into any artifact, code comment or registry `sources` — concurrent sessions take numbers in between (2026-10-26: a pre-written 256 landed as 257, a pre-written 259 as 263). It produces the format below — the description stays as the contract the tool implements. The aggregated log is the month file at `specs/{type}/{name}/user_input/follow_ups/{YYYYMM}.md` (e.g. `202608.md`), which only `merge` appends to; per-follow-up files exist only transiently under `_inbox/` until merged, and a new month file is started ONLY when the month rolls over. Append a section headed `## NNN — {YYYY-MM-DD HH:mm:ss} — {slug}` (NNN zero-padded, sequential per project, continuing across months), preceded by a `---` rule. Contents: abstracted instruction (drop chitchat) + a one-line summary. Body headings start at `###` so they nest under the section. An OPTIONAL routing-hint block may follow the header as a blockquote — YAML frontmatter cannot repeat inside a combined file (all fields optional):
+2. **Persist with `python tools/followup.py new <项目> --slug … --instruction … --summary …`** — never hand-append (2026-10-26, dota_yingxiong 7-day review: hand-appending by concurrent sessions lost 25 changelog entries on the two busiest days, collided 7 numbers, and wrote execution results into other entries). The tool locks only to allocate the next number, writes the follow-up section AND the changelog skeleton in one step into the calling session's own entry file `user_input/follow_ups/_inbox/NNN-slug.md` (owner = `--owner`, else `FOLLOWUP_OWNER` / `KIMI_CODE_SESSION_ID` / `CODEX_THREAD_ID`), and regenerates `revised_prompt.md` including inbox entries (step 3). **No single point of blocking (2026-10-27, dota_yingxiong follow-up 280)**: sessions record separately and `python tools/followup.py merge` periodically aggregates finished entries, in number order, into the month file and `changelog.md` (`done` merges its own entry right away; the Stop hook merges on every stop). Never hand-edit `_inbox` files. **Allocate first, cite second**: run `new` before writing the number into any artifact, code comment or registry `sources` — concurrent sessions take numbers in between (2026-10-26: a pre-written 256 landed as 257, a pre-written 259 as 263). It produces the format below — the description stays as the contract the tool implements. The aggregated log is the month file at `specs/{type}/{name}/user_input/follow_ups/{YYYYMM}.md` (e.g. `202608.md`), which only `merge` appends to; per-follow-up files exist only transiently under `_inbox/` until merged, and a new month file is started ONLY when the month rolls over. Append a section headed `## NNN — {YYYY-MM-DD HH:mm:ss} — {slug}` (NNN zero-padded, sequential per project, continuing across months), preceded by a `---` rule. Contents: abstracted instruction (drop chitchat) + a one-line summary. Body headings start at `###` so they nest under the section. An OPTIONAL routing-hint block may follow the header as a blockquote — YAML frontmatter cannot repeat inside a combined file (all fields optional):
    ```
    > target_stage: 1 | 2 | 3 | 4 | 5 | 6        # which stage this instruction primarily affects
    > target_artifacts:                            # specific files the walk should examine first
@@ -250,7 +247,7 @@ Once a spec-driven project exists, follow-up chat may contain additional intent 
 3. **Regenerate `revised_prompt.md`** = `raw_prompt.md` + every `follow_ups/*.md` in filename (chronological) order, and within each monthly log every `## NNN` section in order. No confirmation needed.
 4. **Walk downstream artifacts** in order: `interview/qa.md` → `findings/dossier.md` + per-angle → `final_specs/spec.md` → `validation/strategy.md` + per-level → generated outputs under `projects/` or `ai_videos/`.
 5. **Auto-update affected sections in place.** Smallest change that resolves the conflict / fills the gap. Surgical only; no whole-file regen. Inline markers (`<!-- auto-updated by follow-up NNN -->`) are NOT added by default — ask the user if a particular update is invasive enough to warrant one.
-6. **Finish the changelog entry with `python tools/followup.py done <项目> <NNN> --updated "<路径> — <改了什么>" … --verified "<怎么验的；未审写原因>" [--cost "<任务号 · 积分>"]`** — it writes into that number's own entry, not the file tail. Log enough to reconstruct the change without the chat: every touched path, version/sha of new media, render task id + cost, and the verification actually done (self-check / independent review / 未审 and why). An entry may carry `待补` while work is in progress; the Claude Stop hook (`followup.py check --all --hook`) first merges finished entries, then blocks **only on the current session's own** entries — duplicate numbers, non-canonical headings, and `待补` older than 6 hours. Other sessions' entries, pre-2026-10-27 central entries and hand-edited central logs are reported as `·` warnings and never block anyone (follow-up 280: another session's stale 267 / 269 had blocked every session's Stop hook and `skill_pack submit`). Codex has no hooks — run `python tools/followup.py check --all --owner <会话>` before finishing. Entry shape at `specs/{type}/{name}/changelog.md`:
+6. **Finish the changelog entry with `python tools/followup.py done <项目> <NNN> --updated "<路径> — <改了什么>" … --verified "<怎么验的；未审写原因>" [--cost "<任务号 · 积分>"]`** — it writes into that number's own entry, not the file tail. Log enough to reconstruct the change without the chat: every touched path, version/sha of new media, render task id + cost, and the verification actually done (self-check / independent review / 未审 and why). An entry may carry `待补` while work is in progress; the Kimi Stop hook (`followup.py check --all --hook`) first merges finished entries, then blocks **only on the current session's own** entries — duplicate numbers, non-canonical headings, and `待补` older than 6 hours. Other sessions' entries, pre-2026-10-27 central entries and hand-edited central logs are reported as `·` warnings and never block anyone (follow-up 280: another session's stale 267 / 269 had blocked every session's Stop hook and `skill_pack submit`). 未安装仓库插件时也必须显式运行 `python tools/followup.py check --all --owner <会话>`。 Entry shape at `specs/{type}/{name}/changelog.md`:
    ```markdown
    ## Follow-up NNN — {YYYY-MM-DD HH:mm:ss}
    Source: user_input/follow_ups/{YYYYMM}.md - section NNN
@@ -265,7 +262,7 @@ Once a spec-driven project exists, follow-up chat may contain additional intent 
 
 ## Regeneration prompts & autonomous mode
 
-The `spec_driven` webapp emits **copy-paste regeneration prompts** the user pastes into Claude Code or Codex to re-run one or more stages. Every such prompt opens with one of two execution-mode headers — The active agent MUST honor them at the top of a turn's input.
+The `spec_driven` webapp emits **copy-paste regeneration prompts** the user pastes into Kimi or Codex to re-run one or more stages. Every such prompt opens with one of two execution-mode headers — The active agent MUST honor them at the top of a turn's input.
 
 **Header contract:**
 
@@ -277,7 +274,7 @@ The `spec_driven` webapp emits **copy-paste regeneration prompts** the user past
 - **`# EXECUTION MODE: INTERACTIVE`** — default. Use the active runtime's user-input capability when intent is genuinely ambiguous and not inferable from existing artifacts (see § Tool scoping and team coordination).
 - **No header** = INTERACTIVE.
 
-**高风险本地操作不用先问（2026-10-11 用户定）。** 删除文件或目录、清理旧产物与旧环境、覆盖或改名等高风险本地操作，代理按最佳判断直接做，不用先问；Claude、Codex 与子任务、INTERACTIVE 与 AUTONOMOUS 都适用。做之前照常核对目标（绝对路径、范围、没有链接指到范围外），不可再生的内容先备份到 `.audit/`，事后在报告里列出删了什么、备份在哪。这条授权不包括：别人（用户或其他会话）未提交的改动——仍按「保留用户和其他会话的改动」，不用会清掉它们的 git 命令（clean / stash / checkout / reset）；对外发布、发送消息、改账号与权限；收费调用的审计（照常先写请求日志）与「生成视频永远人点」（除非用户另有授权，如 shengji_zhilu follow-up 031）。
+**高风险本地操作不用先问（2026-10-11 用户定）。** 删除文件或目录、清理旧产物与旧环境、覆盖或改名等高风险本地操作，代理按最佳判断直接做，不用先问；Kimi / Codex 主代理与子任务、INTERACTIVE 与 AUTONOMOUS 都适用。做之前照常核对目标（绝对路径、范围、没有链接指到范围外），不可再生的内容先备份到 `.audit/`，事后在报告里列出删了什么、备份在哪。这条授权不包括：别人（用户或其他会话）未提交的改动——仍按「保留用户和其他会话的改动」，不用会清掉它们的 git 命令（clean / stash / checkout / reset）；对外发布、发送消息、改账号与权限；收费调用的审计（照常先写请求日志）与「扣积分的视频生成永远人点」（除非用户另有授权，如 shengji_zhilu follow-up 031）。
 
 **What the webapp generates.** `POST /api/regen-prompt` (FR-14c) inlines the project's current `revised_prompt.md` (or `raw_prompt.md` if no revised yet) plus every `user_input/follow_ups/*.md`. A pasted regen prompt is therefore self-contained.
 
@@ -330,24 +327,24 @@ Each spec-pipeline stage (interview, findings, final_specs, validation) supports
 
 ## 人物参考资产（三视图与声样）
 
-**人物资产文件名（2026-10-03，全剧通用）**：所有剧、季、集及系列共享资产的所有 character（主配角、NPC、龙套、怪物）今后新建、补齐、重生成、抽帧或导入三视图/声样，统一 `characters/{角色}/views/{角色}_front.png`、`{角色}_side.png`、`{角色}_back.png`、`{角色}_audio.mp3`；`{角色}`＝角色目录名。换装图保留各造型子目录，用 `{造型键}_front/side/back.png`，声音复用角色自己的 `_audio.mp3`。front/side/back 分别是正/侧/背，生成与导入不得再写 views1/2/3、views.mp3 或中文方向后缀；不按旧数字顺序猜方向。迁移先看图、保留字节与哈希、更新真实路径及按镜资料包，不能靠改名宣布原图质量过审。Claude/Codex执行同一规则；其他旧剧已有文件兼容读取，不批量改名，这不豁免其今后的新产物。
+**人物资产文件名（2026-10-03，全剧通用）**：所有剧、季、集及系列共享资产的所有 character（主配角、NPC、龙套、怪物）今后新建、补齐、重生成、抽帧或导入三视图/声样，统一 `characters/{角色}/views/{角色}_front.png`、`{角色}_side.png`、`{角色}_back.png`、`{角色}_audio.mp3`；`{角色}`＝角色目录名。换装图保留各造型子目录，用 `{造型键}_front/side/back.png`，声音复用角色自己的 `_audio.mp3`。front/side/back 分别是正/侧/背，生成与导入不得再写 views1/2/3、views.mp3 或中文方向后缀；不按旧数字顺序猜方向。迁移先看图、保留字节与哈希、更新真实路径及按镜资料包，不能靠改名宣布原图质量过审。Kimi / Codex 执行同一规则；其他旧剧已有文件兼容读取，不批量改名，这不豁免其今后的新产物。
 
 **三视图合图交接（2026-10-03，follow-up 102）**：所有剧、所有character今后的资产流程在三张源图齐备后，用 `python tools/character_sheet.py ai_videos/{剧}` 确定性拼接；左front、中side、右back，原像素保留，尺寸不同时等宽格内居中补边，不裁切/拉伸/重画。基础输出 `views/{角色目录名}_views.png`，换装输出 `{造型键}_views.png`；三张源图及 `_audio.mp3` 保留。合图内写源图SHA，源图改变须重建合图；每个出场人物上传合图与声样，不同时上传三张单图；缺合图/源指纹过期即阻碍。此规则适用于今后的所有剧和角色。合图三格代表同一角色三个角度；原图朝向质量问题仍须单独验收。
 
 ## Tool scoping and team coordination
 
-工具按能力选择；下面的名字是示例，以会话实际暴露的工具及 schema 为准。只对延迟工具做发现，不向 Codex 调用 Claude 的 ToolSearch。不把某次 Claude 会话的父子权限限制当跨运行时事实。
+工具按能力选择；下面的名字以当前 Kimi / Codex 会话实际暴露的工具及 schema 为准，不把写在配置里的 MCP 当成已连接。
 
-| 能力 | Claude Code 示例 | Codex 示例 / 缺失时 |
+| 能力 | Kimi Code | Codex |
 |---|---|---|
-| 读写文件、执行脚本 | Read / Write / Edit / Bash | 文件、补丁、shell 工具；Windows 按实际 PowerShell 语法执行 |
-| 提问 / 收集答案 | AskUserQuestion；延迟时 ToolSearch | 可用的 request_user_input 或 request_user_input_async；遵守模式 / 参数限制；都不可用时在对话提问 |
-| 检索与读原文 | WebSearch / WebFetch | 可用的 web search / open / fetch；有已加载工具时直接用 |
-| 委派与等待 | Agent | 可用的 spawn_agent / send_message / wait_agent；限额不足分批，普通工作可主代理直做 |
-| 看本地图片 / 浏览器 | Read、已连接的浏览器 MCP | 本地图片查看工具、已连接的浏览器 / computer-use；不把写在配置里的 MCP 当成已连接 |
-| 技能参数 / 后台任务 | $ARGUMENTS / run_in_background | 从用户消息解析参数；用实际 shell 会话 / 后台任务机制，记录自己启动的 PID |
-| 出片独立审稿（fresh context） | `python tools/qc_review.py <出片目录>`：自动另起 `codex exec` 审（换模型） | 同一脚本：自动另起 `claude -p` 审。脚本在临时空目录、只读下运行，只给拼图与规格；失败换另一个，都失败记未审（skill `ai-videos-self-check`，dota_yingxiong follow-up 263） |
-| 收尾与出片前拦截 | Stop hook（`followup.py check --all --hook`） | 没有 hook：收尾显式跑 `python tools/followup.py check --all`。必须对等的拦截写进两边都调用的工具：`skill_pack.py submit` 提交前自查**本会话**的日志（别的会话的条目只提示，follow-up 280），`qc.py gate` 管交付 |
+| 读写文件、执行脚本 | Read / Write / Edit / Bash；以实际 shell 为准 | exec_command / apply_patch；以当前 shell 为准，PowerShell 不套 Bash 语法 |
+| 提问 / 收集答案 | AskUserQuestion；不可用时在对话提问 | request_user_input_async 或当前模式可用的提问工具；缺失时用对话 |
+| 检索与读原文 | WebSearch / FetchURL | web / 已连接的检索工具 |
+| 委派与等待 | Agent / AgentSwarm / TaskOutput / WaitFor | collaboration 工具；只有当前指令允许委派时使用，限额不足分批 |
+| 看本地图片 / 浏览器 | ReadMediaFile、已连接的浏览器 MCP / 插件 | view_image、已连接的浏览器工具 / 插件 |
+| 技能参数 / 后台任务 | $ARGUMENTS / run_in_background / 后台 task id | 读取用户实参；exec / write_stdin 或 wait 按返回的会话 ID 续跑 |
+| 出片独立审稿（fresh context） | `python tools/qc_review.py <出片目录>`：另起 `kimi -p`，在临时空目录使用只读 QC agent，只给拼图与规格；失败记未审 | 同一 `qc_review.py`，继续调用 Kimi 独立审稿，不由 Codex 作者自审替代 |
+| 收尾与出片前拦截 | 安装插件后的 Stop hook（`followup.py check --all --hook`）；每回合显式跑 `python tools/followup.py check --all`。`skill_pack.py submit` 提交前自查**本会话**日志，`qc.py gate` 管交付 | 显式执行相同检查，不假定 Kimi hooks 在 Codex 中生效 |
 
 **提问契约**：由主代理向用户提问，优先支持选项的工具。按本环境的题数、选项数、异步和模式限制分批。异步调用返回不代表已回答；答案到达前可做独立工作，依赖答案的步骤等待。已有答案和授权继续有效。默认选项、超时、自主模式都不等于人工审批；必须的剪辑审批或人点生成仍保留。没有提问工具时用对话问，不能伪造用户选择。AUTONOMOUS 不提问，记录判断依据；无法满足人工审批的环节保持待人工。
 
@@ -377,7 +374,9 @@ Both the canonical artifact and the audit `output.md` MUST begin with a YAML fro
 
 **能力缺失**：明确记录缺少什么、受影响范围及可继续部分。研究工具缺失不凭训练记忆冒充已查证，不编引用；必要 QC / 独立审稿缺失标 blocker / 未审，不能宣称通过。工具调用名不同不是能力缺失。
 
-**hooks 与收尾**：`.claude/settings.json` 的 UserPromptSubmit / Stop 只约束 Claude 自动执行，不假定其他运行时自动加载该配置；`.mcp.json` 也不是 Codex 工具已连接的证明。两端都遵守 prompt triage。改分镜、overhead 或参考资产后，对本次范围显式运行 `python tools/shot_pack.py sync <集目录> [镜头key]`（只报告用 `check`），核对输出：`sync` 把需要重编译的资料包置为失效后仍返回 0，`check` 有缺包、不一致或失效时返回 1。工作流目录或共用源增删迁移后运行 `python tools/workflow_catalog.py --fix` 再 `--check`；改 skill 名称或描述后运行 `python tools/sync_agent_skills.py` 再 `--check`。Codex 显式执行；Claude Stop hook 每回合跑 `shot_pack.py sync --all --quiet` 与 `workflow_catalog.py --check --quiet` 兜底。
+**共用配置同步**：修改 `.agents/mcp.json` 后运行 `python tools/sync_agent_config.py --fix`，收尾运行 `--check`；生成文件不手改，未知服务字段必须先补适配与验证。配置声明不证明 MCP 已连接。
+
+**hooks 与收尾**：Kimi 没有项目级 hooks 文件；`.kimi-code/plugin/` 是可安装插件源，安装并 `/reload` 后才自动执行 UserPromptSubmit / Stop。`.kimi-code/mcp.json` 只声明连接，不证明当前会话已加载。改分镜、overhead 或参考资产后，对本次范围显式运行 `python tools/shot_pack.py sync <集目录> [镜头key]`（只报告用 `check`），核对输出：`sync` 把需要重编译的资料包置为失效后仍返回 0，`check` 有缺包、不一致或失效时返回 1。工作流目录或共用源增删迁移后运行 `python tools/workflow_catalog.py --fix` 再 `--check`；改 skill 名称或描述后运行 `python tools/check_agent_skills.py`。每回合都显式执行这些检查；插件 Stop hook 每回合跑 `shot_pack.py sync --all --quiet` 与 `workflow_catalog.py --check --quiet` 兜底。
 
 **优先级**：本节解释现有 skill 的工具术语；现行规范优先于历史记录，不从 git 历史或旧审计恢复已删除的流程与工具。
 

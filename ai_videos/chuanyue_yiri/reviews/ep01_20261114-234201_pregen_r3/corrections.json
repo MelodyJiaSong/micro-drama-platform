@@ -1,0 +1,1153 @@
+{
+ "generated_at": "2026-11-14T23:56:39",
+ "run": "ep01_20261114-234201_pregen_r3",
+ "dir": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3",
+ "title": "ep01 · 场六、场七 · 出片前 第 3 轮 · 11-14 23:42",
+ "loop": 3,
+ "parent": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-232708_pregen_r2",
+ "child": "",
+ "child_state": "",
+ "issues_source": "issues.json",
+ "changes_md": "",
+ "has_snapshot": true,
+ "summary": {
+  "issues": 59,
+  "corrections": 11,
+  "by_level": {
+   "critical": 3,
+   "major": 8,
+   "verify": 0,
+   "minor": 0
+  },
+  "by_status": {
+   "open": 0,
+   "planned": 0,
+   "implemented": 9,
+   "wontfix": 2
+  },
+  "by_verification": {
+   "已复核通过": 0,
+   "复核仍有问题": 0,
+   "待复核": 11
+  },
+  "shots": 13,
+  "frames_changed": 1,
+  "specs_changed": 2,
+  "shots_touched": 5
+ },
+ "corrections": [
+  {
+   "id": "I1",
+   "level": "critical",
+   "law": "era",
+   "category": "时代与世界观",
+   "item": "era",
+   "dimension": "E5 文字",
+   "shots": [
+    "s7_st2"
+   ],
+   "keys": [
+    "s7_st2"
+   ],
+   "scenes": [
+    "s7"
+   ],
+   "problem": "E5 文字 最终 1 分：画面里没有可读的文字、字母、数字（墙、船、招牌、钱币）；1. 送模 prompt.txt 第 12 行「画面」前半写「一小片刻得较深的乱划痕」，同一句又写「颜色只比墙面略深」，自相矛盾；后面还写「再讲一句很有名的涂鸦」。2. 首帧划痕片（x90–330、y400–640）仍是带阴影的深刻沟，竖",
+   "fix": "便宜：① prompt 第 12 行把「涂鸦」改成「住客留在别处墙上的一句话」，把「刻得较深的」改成「颜色略深的」（filming.json s7_st2 action 同步，重新编译）。② 首帧：s7_st1 已出片，划痕片要和它接得上，所以首帧可以不动，只改文字；如果要淡化，用「暗部比 ≥0.6」这类可量的标准验收后再用。③ 出片后抽 14–22 秒帧，放大左上墙面复查",
+   "solution": "首帧第四版：深刻划痕抹掉，墙上只留满墙很细很淡的交叉划痕，放大看不出字形；文字改「一小片浅浅的乱划痕」",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "fix",
+   "history": [
+    {
+     "at": "2026-11-14T23:56:36",
+     "status": "implemented",
+     "by": "",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/st2_first_frame.png"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/st2_first_frame.png"
+   ],
+   "frames": [
+    {
+     "before": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/_r14_before/st2_first_frame.png",
+     "after": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/st2_first_frame.png"
+    }
+   ],
+   "verification": {
+    "status": "待复核",
+    "how": [
+     "还没开下一轮"
+    ]
+   }
+  },
+  {
+   "id": "I2",
+   "level": "critical",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "T3 过期描述",
+   "shots": [
+    "s7_st2",
+    "s6_st1"
+   ],
+   "keys": [
+    "s7_st2",
+    "s6_st1"
+   ],
+   "scenes": [
+    "s7",
+    "s6"
+   ],
+   "problem": "T3 过期描述 最终 1 分：人物、场景、道具描述是现行版本（发色、造型、卡片）；prompt.txt 第 12 行「再讲一句很有名的涂鸦」，changes.md 写 I14 已改；与负面词「像字母的刻痕，成行的伪文字」冲突，且「涂鸦」两字会提示模型把划痕刻成字",
+   "fix": "便宜：改成「再讲一句住客留在别处墙上的一句话」；重编译 prompt；便宜：「画面」「动作」行统一成「腰间皮绳」；负面词补「皮带扣，金属带扣」；便宜：删「长约十二厘米」",
+   "solution": "动作行「再讲一句很有名的涂鸦」改为「再讲一句课本上很有名的留言」",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "fix",
+   "history": [
+    {
+     "at": "2026-11-14T23:56:36",
+     "status": "implemented",
+     "by": "",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/filming.json"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/filming.json"
+   ],
+   "frames": [],
+   "verification": {
+    "status": "待复核",
+    "how": [
+     "还没开下一轮"
+    ]
+   }
+  },
+  {
+   "id": "I3",
+   "level": "critical",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "T4 图文一致",
+   "shots": [
+    "s7_st2",
+    "s6_st1"
+   ],
+   "keys": [
+    "s7_st2",
+    "s6_st1"
+   ],
+   "scenes": [
+    "s7",
+    "s6"
+   ],
+   "problem": "T4 图文一致 最终 1 分：文字和挂的首帧、站位图、场景图一致；首帧衬衫细方格（x650–1100,y380–700）与「素色米白亚麻」不符；s7_st1 保留条是素色；窗洞旁多一块棕色木板（x1480–1620,y20–230）文字没写；左墙划痕比文字描述更密更亮",
+   "fix": "便宜：首帧局部重画衬衫成素色、去掉窗边木板、划痕调淡到只比墙面略深；或把文字改成与图一致；便宜：保持与 st2 一致，出片后抽 0/6/13 秒核灯形；用户决定是否接受；便宜：负面词补一句；鬓角灰白可在首帧局部加一点或接受；便宜：删 overhead.toml 10.0s、10.3s 路点，`shot_pack.py sync` 重生成",
+   "solution": "首帧第四版衬衫改纯素色亚麻、无方格无暗花；窗洞旁木挡板写进动作行；划痕同 I1",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "fix",
+   "history": [
+    {
+     "at": "2026-11-14T23:56:37",
+     "status": "implemented",
+     "by": "",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/st2_first_frame.png"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/st2_first_frame.png"
+   ],
+   "frames": [],
+   "frame_pending": [
+    "s6_st1"
+   ],
+   "verification": {
+    "status": "待复核",
+    "how": [
+     "还没开下一轮"
+    ]
+   }
+  },
+  {
+   "id": "I4",
+   "level": "major",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "P1 手数",
+   "shots": [
+    "s6_st1"
+   ],
+   "keys": [
+    "s6_st1"
+   ],
+   "scenes": [
+    "s6"
+   ],
+   "problem": "P1 手数 最终 1 分：自拍镜只剩一只手可用；每个时刻每只手在干什么、有没有多出或少掉的手；首帧年轻行人头高 160 px vs Fortunata 134 px → 只在她前约 0.5 m、身体间隙约 0.2 m；她右手抬在肩前招手，1.5 秒后右手状态没写，年轻人还要「抬手往外一摆」，两只手在 1.5–2 秒相距",
+   "fix": "便宜：节拍 1.5 秒处加「Fortunata 招完手，右手放下垂在身侧」；年轻人改「靠镜头那只手往外一摆」；俯视图行人线改到 y≈7.6–7.9 并把「街面上」改成「在人行道上从她面前半步外走过」，与首帧一致后 shot_pack sync；便宜：删「看不见」，改成「拇指弯进掌心、压在无名指根上」，与 st2 同一说法",
+   "solution": "行人路线改到她面前半步多（俯视 y 7.7），文字同步；她喊完右手放下垂在身侧，和行人摆手不再挤在一起",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "fix",
+   "history": [
+    {
+     "at": "2026-11-14T23:56:37",
+     "status": "implemented",
+     "by": "",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/overhead.toml"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/overhead.toml"
+   ],
+   "frames": [],
+   "verification": {
+    "status": "待复核",
+    "how": [
+     "还没开下一轮"
+    ]
+   }
+  },
+  {
+   "id": "I5",
+   "level": "major",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "P5 身体可行",
+   "shots": [
+    "s7_st2"
+   ],
+   "keys": [
+    "s7_st2"
+   ],
+   "scenes": [
+    "s7"
+   ],
+   "problem": "P5 身体可行 最终 1 分：转身、迈步、上台阶、坐下是真人做得到的，时长够；没有 180° 扭头、滑步；「垂眼看一眼床头的灯苗」：灯 (0.45,0.8) 在她 (1.1,1.4) 右后方，与面朝夹角 121°（俯视图）/ 85–90°（首帧）；只垂眼看不到，要转头 60° 以上再低头，规格没写，模型易画成看空处或脖",
+   "fix": "便宜：改成「头往右转、低头看一眼身旁凳上的灯苗，再转回来」；或改成「垂眼看一下膝上的手」，不涉及灯",
+   "solution": "「垂眼看灯苗」改成「侧过头、低头看一眼身边小凳上的灯苗」",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "fix",
+   "history": [
+    {
+     "at": "2026-11-14T23:56:37",
+     "status": "implemented",
+     "by": "",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/overhead.toml"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/overhead.toml"
+   ],
+   "frames": [],
+   "verification": {
+    "status": "待复核",
+    "how": [
+     "还没开下一轮"
+    ]
+   }
+  },
+  {
+   "id": "I6",
+   "level": "major",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "P6 穿模与距离",
+   "shots": [
+    "s6_st1"
+   ],
+   "keys": [
+    "s6_st1"
+   ],
+   "scenes": [
+    "s6"
+   ],
+   "problem": "P6 穿模与距离 最终 1 分：人、动物、道具之间的距离够，走位路线不穿墙、不撞人；首帧年轻行人头高 160 px vs Fortunata 134 px → 只在她前约 0.5 m、身体间隙约 0.2 m；她右手抬在肩前招手，1.5 秒后右手状态没写，年轻人还要「抬手往外一摆」，两只手在 1.5–2 秒相距不到一拳；",
+   "fix": "便宜：节拍 1.5 秒处加「Fortunata 招完手，右手放下垂在身侧」；年轻人改「靠镜头那只手往外一摆」；俯视图行人线改到 y≈7.6–7.9 并把「街面上」改成「在人行道上从她面前半步外走过」，与首帧一致后 shot_pack sync；便宜：Riley 改「把右拳伸到 Fortunata 手的上方偏她那边摊开」，与 st2 第一拍「偏她那边」一致",
+   "solution": "同 I4",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "fix",
+   "history": [
+    {
+     "at": "2026-11-14T23:56:37",
+     "status": "implemented",
+     "by": "",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/overhead.toml"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/overhead.toml"
+   ],
+   "frames": [],
+   "verification": {
+    "status": "待复核",
+    "how": [
+     "还没开下一轮"
+    ]
+   }
+  },
+  {
+   "id": "I7",
+   "level": "major",
+   "law": "character",
+   "category": "人物逻辑",
+   "item": "character",
+   "dimension": "C8 听者在干什么",
+   "shots": [
+    "s7_st2"
+   ],
+   "keys": [
+    "s7_st2"
+   ],
+   "scenes": [
+    "s7"
+   ],
+   "problem": "C8 听者在干什么 最终 1 分：别人说话或画面焦点在别人身上时，其余每个人逐秒在做什么：有手上的活、反应钉在台词的具体词上；没有站成摆件的空白段（分镜里没写动作、出片里静止超过 1.5 秒都扣分）；动作行 14–21.5 秒只写 It says 和停半拍；引文 6 秒眼睛一直看镜头；23.9–26 秒只有「垂眼看灯苗",
+   "fix": "便宜：It says 后眼睛往上飘一下像在回忆，念到 Vibius Restitutus 时看回镜头；alone 后垂眼半拍；23.9–25 秒加一次呼吸或手指动一下；首帧手臂可局部重画为两手松搭膝头",
+   "solution": "念引文时左手手指在膝上轻轻点着；结尾看灯时手指捻一下衬衫下摆",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "fix",
+   "history": [
+    {
+     "at": "2026-11-14T23:56:38",
+     "status": "implemented",
+     "by": "",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/filming.json"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/filming.json"
+   ],
+   "frames": [],
+   "verification": {
+    "status": "待复核",
+    "how": [
+     "还没开下一轮"
+    ]
+   }
+  },
+  {
+   "id": "I8",
+   "level": "major",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "K3 服装与发型",
+   "shots": [
+    "s7_st2",
+    "s6_st1"
+   ],
+   "keys": [
+    "s7_st2",
+    "s6_st1"
+   ],
+   "scenes": [
+    "s7",
+    "s6"
+   ],
+   "problem": "K3 服装与发型 最终 1 分：衣服、腰带、布包、头发干湿与发型，镜与镜一致；衬衫胸前与袖口有一格格方格纹＋暗花（`work/continuity__a/s7st2ff_shirt.png`）；s7_st1 16.7 秒、s7_st3 都是素色亚麻；人物行写「素色米白亚麻」",
+   "fix": "便宜：首帧局部重画衬衫质地，只留亚麻粗纹，可和划痕一起一次改；便宜：可接受；要改就局部重画布料成素面、鬓角加灰白，不必为此推迟出片",
+   "solution": "同 I3：首帧衬衫改素色，和 s7 st1、st3 一致",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "fix",
+   "history": [
+    {
+     "at": "2026-11-14T23:56:38",
+     "status": "implemented",
+     "by": "",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/st2_first_frame.png"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/st2_first_frame.png"
+   ],
+   "frames": [],
+   "frame_pending": [
+    "s6_st1"
+   ],
+   "verification": {
+    "status": "待复核",
+    "how": [
+     "还没开下一轮"
+    ]
+   }
+  },
+  {
+   "id": "I9",
+   "level": "major",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "K6 环境接续",
+   "shots": [
+    "s7_st2",
+    "s7_st7 → s7_st1"
+   ],
+   "keys": [
+    "s7_st2",
+    "s7_st7",
+    "s7_st1"
+   ],
+   "scenes": [
+    "s7"
+   ],
+   "problem": "K6 环境接续 最终 1 分：同一地点的建筑、陈设、路人、动物在各镜一致，没有凭空出现；首帧灯上方划痕片 x90–330,y380–650 是深色带阴影的长刺状线，r13 局部重画前后几乎一样（`work/continuity__a/s7st2_wall_before_after.png`）；s7_st1 16.7 秒",
+   "fix": "便宜：出片前再局部重画这一片，压到只比墙面略深、无浮雕阴影，形状照 s7_st1 那一片的大小和虚实；重画后放大核对再出片；已出片，不在本轮范围；只记录，交剪辑决定",
+   "solution": "同 I1：灯上方那片划痕变浅，和 s7 st1 里同一面墙一致",
+   "status": "implemented",
+   "reason": "",
+   "cost": "便宜",
+   "solution_source": "fix",
+   "history": [
+    {
+     "at": "2026-11-14T23:56:38",
+     "status": "implemented",
+     "by": "",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/st2_first_frame.png"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/st2_first_frame.png"
+   ],
+   "frames": [],
+   "verification": {
+    "status": "待复核",
+    "how": [
+     "还没开下一轮"
+    ]
+   }
+  },
+  {
+   "id": "I10",
+   "level": "major",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "K8 镜间接点",
+   "shots": [
+    "s6_st3 → s6_st1"
+   ],
+   "keys": [
+    "s6_st3",
+    "s6_st1"
+   ],
+   "scenes": [
+    "s6"
+   ],
+   "problem": "K8 镜间接点 最终 1 分：逐个接点（materials/junctions.md 每一条，含没有机检标记的）判：上一镜最后一拍的位置、朝向、视线、手里的东西、情绪和音量，和下一镜第 0 秒接得上；接不上时要有切的理由（跳过时间、换地点、反应插入、主观镜头）写在下一镜开头。报告里列接点表：每个接点一行，✓ 或 ✗ 加",
+   "fix": "便宜：出片后对比两声音色，不一致就在剪辑里用 st1 那一声替换 st3 的画外声（同 I11 方案第 2 条）",
+   "solution": "不改",
+   "status": "wontfix",
+   "reason": "st3 画外那声和 st1 画内这声都由 Fortunata 声样生成，同一个人；st1 里她对新的行人再喊一次，招客反复吆喝是常态",
+   "cost": "便宜",
+   "solution_source": "fix",
+   "history": [
+    {
+     "at": "2026-11-14T23:56:38",
+     "status": "wontfix",
+     "by": ""
+    }
+   ],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "待复核",
+    "how": [
+     "还没开下一轮"
+    ]
+   }
+  },
+  {
+   "id": "I11",
+   "level": "major",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "N1 / N7 / N8 / N9（R：I37）",
+   "shots": [
+    "s7_st2"
+   ],
+   "keys": [
+    "s7_st2"
+   ],
+   "scenes": [
+    "s7"
+   ],
+   "problem": "N1 / N7 / N8 / N9（R：I37）：引文一字不差、「It says,」像念展板、四步结构（开场、定位、引文、收口）；人物回忆课本时不会这么齐整",
+   "fix": "用逐句表改写（拆碎、加 Apparently / some guy / Aw）；视频未出，便宜。台词用户 r3 定稿，若坚持原文，只记录",
+   "solution": "不改",
+   "status": "wontfix",
+   "reason": "台词由用户在 11-14 第 3 轮出片前审查确认时定稿，这次只为两镜画面重出，不改台词；口语化问题留给下一次台词修订交用户定",
+   "cost": "便宜",
+   "solution_source": "fix",
+   "history": [
+    {
+     "at": "2026-11-14T23:56:39",
+     "status": "wontfix",
+     "by": ""
+    }
+   ],
+   "files": [],
+   "frames": [],
+   "verification": {
+    "status": "待复核",
+    "how": [
+     "还没开下一轮"
+    ]
+   }
+  }
+ ],
+ "shots": [
+  {
+   "key": "s6_st3",
+   "scene": "s6",
+   "shot": "st3",
+   "frame": {
+    "before": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st3/planning/st3_first_frame.png",
+     "label": "现行",
+     "sha256": "9be5084d6c0f340ff8e506f37282cc48fa24b4baf488eb57826bcc58e27043ff",
+     "mtime": "2026-11-14T15:02:11",
+     "mtime_ms": 1794639731095,
+     "how": "审查时的快照（sha 对上）"
+    },
+    "after": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st3/planning/st3_first_frame.png",
+     "label": "现行",
+     "sha256": "9be5084d6c0f340ff8e506f37282cc48fa24b4baf488eb57826bcc58e27043ff",
+     "mtime": "2026-11-14T15:02:11",
+     "mtime_ms": 1794639731095,
+     "how": "现行首帧"
+    },
+    "changed": false
+   },
+   "spec": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/filming_s6.json",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/filming.json#s6",
+    "changed": false,
+    "fields": []
+   },
+   "prompt": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/prompts/s6_st3.txt",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st3/资料包/prompt.txt",
+    "changed": false,
+    "diff": []
+   },
+   "issues": [
+    "I10"
+   ]
+  },
+  {
+   "key": "s6_st1",
+   "scene": "s6",
+   "shot": "st1",
+   "frame": {
+    "before": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/st1_first_frame.png",
+     "label": "现行",
+     "sha256": "f29a8e78c65f3bccb0730faac50490261d8a248a74e058b66ff7585a30518903",
+     "mtime": "2026-11-14T23:40:44",
+     "mtime_ms": 1794670844276,
+     "how": "审查时的快照（sha 对上）"
+    },
+    "after": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/st1_first_frame.png",
+     "label": "现行",
+     "sha256": "f29a8e78c65f3bccb0730faac50490261d8a248a74e058b66ff7585a30518903",
+     "mtime": "2026-11-14T23:40:44",
+     "mtime_ms": 1794670844276,
+     "how": "现行首帧"
+    },
+    "changed": false
+   },
+   "spec": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/filming_s6.json",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/filming.json#s6",
+    "changed": true,
+    "fields": [
+     {
+      "field": "action",
+      "name": "动作",
+      "before": "大车店门口：临街一道宽大的车门，门里是铺石板的院子，停着一辆木轮货车，院子右侧马厩里的骡子在嚼草。车门左边门垛西侧的灰泥墙上有一个小拱形墙龛，龛底平放着一盏点着的小陶油灯（p1）。女店主 Fortunata（腰带上只挂一个拳头大的小皮钱袋）站在车门左边门垛前的人行道上；她招客时脸是松的，眉头舒展、嘴角平，带着做生意的精神头。两个过路的行人（当地男人，脸刮得干净：一个年长、白短发，穿褪色蓝灰短 tunica；一个年轻、直发，穿本色亚麻短 tunica）一前一后赶路、不说话，从她面前由画左往画右走。Riley 从画右走来，两人互道 Salve；Riley 用左手比划想一个人住一晚，Fortunata 只看手势，看懂后打量她，左手竖四根手指报价，再伸手要钱。道具：油灯（p1）进场、出场都在墙龛里点着、不动；钱（p2）进场攥在 Riley 右拳里（看不见），12.2 秒起她右手在两人中间摊开，掌心里 3 枚红铜小钱和 1 枚明显大一圈的金黄大黄铜币。画面里共 4 个人：Fortunata、Riley（约 4 秒入画）和两个过路的行人（约 2.5 秒出画）。",
+      "after": "大车店门口：临街一道宽大的车门，门里是铺石板的院子，停着一辆木轮货车，院子右侧马厩里的骡子在嚼草。车门左边门垛西侧的灰泥墙上有一个小拱形墙龛，龛底平放着一盏点着的小陶油灯（p1）。女店主 Fortunata（腰带上只挂一个拳头大的小皮钱袋）站在车门左边门垛前的人行道上；两个过路的行人（当地男人，脸刮得干净：一个年长、白短发，穿褪色蓝灰短 tunica；一个年轻、直发，穿本色亚麻短 tunica）一前一后赶路、不说话，从她面前由画左往画右走。Riley 从画右走来，两人互道 Salve；Riley 用左手比划想一个人住一晚，Fortunata 只看手势，看懂后打量她，左手竖四根手指报价，再伸手要钱。道具：油灯（p1）进场、出场都在墙龛里点着、不动；钱（p2）进场攥在 Riley 右拳里（看不见），12.2 秒起她右手在两人中间摊开，掌心里 3 枚红铜小钱和 1 枚明显大一圈的金黄大黄铜币。画面里共 4 个人：Fortunata、Riley（约 4 秒入画）和两个过路的行人（约 2.5 秒出画）。",
+      "diff": [
+       "@@ -3,3 +3,2 @@",
+       " 女店主 Fortunata（腰带上只挂一个拳头大的小皮钱袋）站在车门左边门垛前的人行道上；",
+       "-她招客时脸是松的，眉头舒展、嘴角平，带着做生意的精神头。",
+       " 两个过路的行人（当地男人，脸刮得干净：一个年长、白短发，穿褪色蓝灰短 tunica；"
+      ]
+     },
+     {
+      "field": "blocking",
+      "name": "走位",
+      "before": "Fortunata 站在车门左边门垛前的人行道上，墙龛在她右后方（画面上在她左边）、伸手够得着；0–3 秒她脸朝画左前方、目光跟着两个行人往画右移，3.5 秒起转向画面右边的 Riley。两个行人在人行道外沿的街面上、从 Fortunata 面前由画左走到画右（每秒一米左右），约 2.5 秒走出画右。Riley 0 秒在画面右边画外，约 4 秒从画面右边沿人行道快步走进来，5 秒停在 Fortunata 右边约一米，两人面对面：Fortunata 在画左、Riley 在画右。镜头在街上，几乎正对临街墙、略朝西。配角：Fortunata 先招呼过路的人，Riley 走来后一直看着她：只看手势，在想「一个外地女人，一个人，付得起吗」。两个行人只顾赶路。",
+      "after": "Fortunata 站在车门左边门垛前的人行道上，墙龛在她右后方（画面上在她左边）、伸手够得着；0–3 秒她脸朝画左前方、目光跟着两个行人往画右移，3.5 秒起转向画面右边的 Riley。两个行人在人行道上、从 Fortunata 面前半步多处由画左走到画右（每秒一米左右），约 2.5 秒走出画右。Riley 0 秒在画面右边画外，约 4 秒从画面右边沿人行道快步走进来，5 秒停在 Fortunata 右边约一米，两人面对面：Fortunata 在画左、Riley 在画右。镜头在街上，几乎正对临街墙、略朝西。配角：Fortunata 先招呼过路的人，Riley 走来后一直看着她：只看手势，在想「一个外地女人，一个人，付得起吗」。两个行人只顾赶路。",
+      "diff": [
+       "@@ -2,3 +2,3 @@",
+       " 0–3 秒她脸朝画左前方、目光跟着两个行人往画右移，3.5 秒起转向画面右边的 Riley。",
+       "-两个行人在人行道外沿的街面上、从 Fortunata 面前由画左走到画右（每秒一米左右），约 2.5 秒走出画右。",
+       "+两个行人在人行道上、从 Fortunata 面前半步多处由画左走到画右（每秒一米左右），约 2.5 秒走出画右。",
+       " Riley 0 秒在画面右边画外，约 4 秒从画面右边沿人行道快步走进来，5 秒停在 Fortunata 右边约一米，两人面对面：Fortunata 在画左、Riley 在画右。"
+      ]
+     },
+     {
+      "field": "beats",
+      "name": "节拍",
+      "before": "0–1.5秒 Fortunata 脸是松的、眉头舒展，嘴闭着，看着从画面左边走来的两个行人，右手抬到肩边、手心朝着自己往回招两下；两个行人一前一后赶路、不说话，从画面左边往右走；Riley 还没入画；1.5–3.5秒 Fortunata 朝两个行人吆喝 Hospitium hic locatur!（1.5–3.0秒），目光跟着他们往画右移；她一开口，前面那个头也不回地抬手往外一摆，两人脚不停，约 2.5 秒走出画右；3.5–5秒 约 4 秒 Riley 从画面右边沿人行道快步走进画面，右手攥着钱垂在腰前，5 秒停在 Fortunata 面前、面朝她；Fortunata 转过脸看着她走近，目光从她的脸往下扫到长裤，再回到脸，没人说话；5–6秒 Riley 笑着说 Salve!（5.1–5.6秒）；Fortunata 看着她，轻轻点一下头，低声回 Salve.（5.6–6.0秒）；6–9秒 Riley 只用左手比划，嘴里小声跟着说：6–6.6秒 指指自己；6.6–7.8秒 左手掌心贴在侧脸、歪头闭一下眼，说 Um — sleep?（6.7–7.6秒），Fortunata 看着她的手，眉毛一抬；7.8–9秒 Riley 竖起一根手指，说 One night?（7.9–8.6秒），Fortunata 也竖起右手一根手指，轻轻点一下头，9 秒右手放下垂在身侧；9–10.5秒 Riley 放下左手，有点期待地等着；Fortunata 不说话，左手拇指拨一下挂在左胯的小皮钱袋，目光落在 Riley 攥着钱的右拳上；10.5–11.6秒 Fortunata 抬起左手到胸前、手心朝镜头，四根手指张开朝上、拇指折进掌心看不见；看着 Riley 的脸平平地说 Quattuor.（10.7–11.4秒）；Riley 看着那四根手指，抿一下嘴，有点没把握；11.6–13秒 Fortunata 朝 Riley 伸出右手，掌心朝上停在两人中间，左手四指还竖着；Riley 看看四根手指，再低头看自己的右拳，约 12.2 秒把右拳伸到两人中间、摊开掌心，不说话",
+      "after": "0–1.5秒 Fortunata 脸是松的、眉头舒展，嘴闭着，看着从画面左边走来的两个行人，右手抬到肩边、手心朝着自己往回招两下；两个行人一前一后赶路、不说话，从画面左边往右走；Riley 还没入画；1.5–3.5秒 Fortunata 朝两个行人吆喝 Hospitium hic locatur!（1.5–3.0秒），目光跟着他们往画右移，喊完右手放下垂在身侧；她一开口，前面那个头也不回地抬手往外一摆，两人脚不停，约 2.5 秒走出画右；3.5–5秒 约 4 秒 Riley 从画面右边沿人行道快步走进画面，右手攥着钱，5 秒停在 Fortunata 面前、面朝她；Fortunata 转过脸看着她走近，目光从她的脸扫到长裤再回到脸，没人说话；5–6秒 Riley 笑着说 Salve!（5.1–5.6秒）；Fortunata 看着她，轻轻点一下头，低声回 Salve.（5.6–6.0秒）；6–9秒 Riley 只用左手比划，嘴里小声跟着说：6–6.6秒 指指自己；6.6–7.8秒 左手掌心贴在侧脸、歪头闭一下眼，说 Um — sleep?（6.7–7.6秒），Fortunata 看着她的手，眉毛一抬；7.8–9秒 Riley 竖起一根手指，说 One night?（7.9–8.6秒），Fortunata 也竖起右手一根手指，轻轻点一下头，9 秒右手放下垂在身侧；9–10.5秒 Riley 放下左手，有点期待地等着；Fortunata 不说话，左手拇指拨一下挂在左胯的小皮钱袋，目光落在 Riley 攥着钱的右拳上；10.5–11.6秒 Fortunata 抬起左手到胸前、手心朝镜头，四根手指张开朝上、拇指折进掌心看不见；看着 Riley 的脸平平地说 Quattuor.（10.7–11.4秒）；Riley 看着那四根手指，抿一下嘴，有点没把握；11.6–13秒 Fortunata 朝 Riley 伸出右手，掌心朝上停在两人中间，左手四指还竖着；Riley 看看四根手指，再低头看自己的右拳，约 12.2 秒把右拳伸到两人中间、摊开掌心，不说话",
+      "diff": [
+       "@@ -4,6 +4,6 @@",
+       " 1.5–3.5秒 Fortunata 朝两个行人吆喝 Hospitium hic locatur!",
+       "-（1.5–3.0秒），目光跟着他们往画右移；",
+       "+（1.5–3.0秒），目光跟着他们往画右移，喊完右手放下垂在身侧；",
+       " 她一开口，前面那个头也不回地抬手往外一摆，两人脚不停，约 2.5 秒走出画右；",
+       "-3.5–5秒 约 4 秒 Riley 从画面右边沿人行道快步走进画面，右手攥着钱垂在腰前，5 秒停在 Fortunata 面前、面朝她；",
+       "-Fortunata 转过脸看着她走近，目光从她的脸往下扫到长裤，再回到脸，没人说话；",
+       "+3.5–5秒 约 4 秒 Riley 从画面右边沿人行道快步走进画面，右手攥着钱，5 秒停在 Fortunata 面前、面朝她；",
+       "+Fortunata 转过脸看着她走近，目光从她的脸扫到长裤再回到脸，没人说话；",
+       " 5–6秒 Riley 笑着说 Salve!"
+      ]
+     }
+    ]
+   },
+   "prompt": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/prompts/s6_st1.txt",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/资料包/prompt.txt",
+    "changed": true,
+    "diff": [
+     "@@ -14,5 +14,5 @@",
+     " 场景：城南斯塔比亚门边的大车店门口、院子与楼下大堂 · 傍晚（`bg6_大车店门口`）：傍晚，城门边的一家大车店：街面是深灰色多边形玄武岩大石板，两边是高出路面的人行道；临街一道宽大的车门，门口的人行道被一段斜坡石板打断，方便车进出；门边墙上一个小壁龛里放着一盏陶油灯；门里是石板铺地的院子，停着一辆木轮车，一侧是窄长的马厩和砖砌饮水槽，另一侧有一道石砌楼梯贴墙通往二楼；院子深处大堂的门里透出一点暗暗的暖光；远处能看见城门的拱洞。",
+     "-画面：大车店门口：临街一道宽大的车门，门里是铺石板的院子，停着一辆木轮货车，院子右侧马厩里的骡子在嚼草。车门左边门垛西侧的灰泥墙上有一个小拱形墙龛，龛底平放着一盏点着的小陶油灯（p1）。女店主 Fortunata（腰带上只挂一个拳头大的小皮钱袋）站在车门左边门垛前的人行道上；她招客时脸是松的，眉头舒展、嘴角平，带着做生意的精神头。两个过路的行人（当地男人，脸刮得干净：一个年长、白短发，穿褪色蓝灰短 tunica；一个年轻、直发，穿本色亚麻短 tunica）一前一后赶路、不说话，从她面前由画左往画右走。Riley 从画右走来，两人互道 Salve；Riley 用左手比划想一个人住一晚，Fortunata 只看手势，看懂后打量她，左手竖四根手指报价，再伸手要钱。道具：油灯（p1）进场、出场都在墙龛里点着、不动；钱（p2）进场攥在 Riley 右拳里（看不见），12.2 秒起她右手在两人中间摊开，掌心里 3 枚红铜小钱和 1 枚明显大一圈的金黄大黄铜币。画面里共 4 个人：Fortunata、Riley（约 4 秒入画）和两个过路的行人（约 2.5 秒出画）。",
+     "-走位：Fortunata 站在车门左边门垛前的人行道上，墙龛在她右后方（画面上在她左边）、伸手够得着；0–3 秒她脸朝画左前方、目光跟着两个行人往画右移，3.5 秒起转向画面右边的 Riley。两个行人在人行道外沿的街面上、从 Fortunata 面前由画左走到画右（每秒一米左右），约 2.5 秒走出画右。Riley 0 秒在画面右边画外，约 4 秒从画面右边沿人行道快步走进来，5 秒停在 Fortunata 右边约一米，两人面对面：Fortunata 在画左、Riley 在画右。镜头在街上，几乎正对临街墙、略朝西。配角：Fortunata 先招呼过路的人，Riley 走来后一直看着她：只看手势，在想「一个外地女人，一个人，付得起吗」。两个行人只顾赶路。",
+     "-动作：0–1.5秒 Fortunata 脸是松的、眉头舒展，嘴闭着，看着从画面左边走来的两个行人，右手抬到肩边、手心朝着自己往回招两下；两个行人一前一后赶路、不说话，从画面左边往右走；Riley 还没入画；1.5–3.5秒 Fortunata 朝两个行人吆喝 Hospitium hic locatur!（1.5–3.0秒），目光跟着他们往画右移；她一开口，前面那个头也不回地抬手往外一摆，两人脚不停，约 2.5 秒走出画右；3.5–5秒 约 4 秒 Riley 从画面右边沿人行道快步走进画面，右手攥着钱垂在腰前，5 秒停在 Fortunata 面前、面朝她；Fortunata 转过脸看着她走近，目光从她的脸往下扫到长裤，再回到脸，没人说话；5–6秒 Riley 笑着说 Salve!（5.1–5.6秒）；Fortunata 看着她，轻轻点一下头，低声回 Salve.（5.6–6.0秒）；6–9秒 Riley 只用左手比划，嘴里小声跟着说：6–6.6秒 指指自己；6.6–7.8秒 左手掌心贴在侧脸、歪头闭一下眼，说 Um — sleep?（6.7–7.6秒），Fortunata 看着她的手，眉毛一抬；7.8–9秒 Riley 竖起一根手指，说 One night?（7.9–8.6秒），Fortunata 也竖起右手一根手指，轻轻点一下头，9 秒右手放下垂在身侧；9–10.5秒 Riley 放下左手，有点期待地等着；Fortunata 不说话，左手拇指拨一下挂在左胯的小皮钱袋，目光落在 Riley 攥着钱的右拳上；10.5–11.6秒 Fortunata 抬起左手到胸前、手心朝镜头，四根手指张开朝上、拇指折进掌心看不见；看着 Riley 的脸平平地说 Quattuor.（10.7–11.4秒）；Riley 看着那四根手指，抿一下嘴，有点没把握；11.6–13秒 Fortunata 朝 Riley 伸出右手，掌心朝上停在两人中间，左手四指还竖着；Riley 看看四根手指，再低头看自己的右拳，约 12.2 秒把右拳伸到两人中间、摊开掌心，不说话",
+     "+画面：大车店门口：临街一道宽大的车门，门里是铺石板的院子，停着一辆木轮货车，院子右侧马厩里的骡子在嚼草。车门左边门垛西侧的灰泥墙上有一个小拱形墙龛，龛底平放着一盏点着的小陶油灯（p1）。女店主 Fortunata（腰带上只挂一个拳头大的小皮钱袋）站在车门左边门垛前的人行道上；两个过路的行人（当地男人，脸刮得干净：一个年长、白短发，穿褪色蓝灰短 tunica；一个年轻、直发，穿本色亚麻短 tunica）一前一后赶路、不说话，从她面前由画左往画右走。Riley 从画右走来，两人互道 Salve；Riley 用左手比划想一个人住一晚，Fortunata 只看手势，看懂后打量她，左手竖四根手指报价，再伸手要钱。道具：油灯（p1）进场、出场都在墙龛里点着、不动；钱（p2）进场攥在 Riley 右拳里（看不见），12.2 秒起她右手在两人中间摊开，掌心里 3 枚红铜小钱和 1 枚明显大一圈的金黄大黄铜币。画面里共 4 个人：Fortunata、Riley（约 4 秒入画）和两个过路的行人（约 2.5 秒出画）。",
+     "+走位：Fortunata 站在车门左边门垛前的人行道上，墙龛在她右后方（画面上在她左边）、伸手够得着；0–3 秒她脸朝画左前方、目光跟着两个行人往画右移，3.5 秒起转向画面右边的 Riley。两个行人在人行道上、从 Fortunata 面前半步多处由画左走到画右（每秒一米左右），约 2.5 秒走出画右。Riley 0 秒在画面右边画外，约 4 秒从画面右边沿人行道快步走进来，5 秒停在 Fortunata 右边约一米，两人面对面：Fortunata 在画左、Riley 在画右。镜头在街上，几乎正对临街墙、略朝西。配角：Fortunata 先招呼过路的人，Riley 走来后一直看着她：只看手势，在想「一个外地女人，一个人，付得起吗」。两个行人只顾赶路。",
+     "+动作：0–1.5秒 Fortunata 脸是松的、眉头舒展，嘴闭着，看着从画面左边走来的两个行人，右手抬到肩边、手心朝着自己往回招两下；两个行人一前一后赶路、不说话，从画面左边往右走；Riley 还没入画；1.5–3.5秒 Fortunata 朝两个行人吆喝 Hospitium hic locatur!（1.5–3.0秒），目光跟着他们往画右移，喊完右手放下垂在身侧；她一开口，前面那个头也不回地抬手往外一摆，两人脚不停，约 2.5 秒走出画右；3.5–5秒 约 4 秒 Riley 从画面右边沿人行道快步走进画面，右手攥着钱，5 秒停在 Fortunata 面前、面朝她；Fortunata 转过脸看着她走近，目光从她的脸扫到长裤再回到脸，没人说话；5–6秒 Riley 笑着说 Salve!（5.1–5.6秒）；Fortunata 看着她，轻轻点一下头，低声回 Salve.（5.6–6.0秒）；6–9秒 Riley 只用左手比划，嘴里小声跟着说：6–6.6秒 指指自己；6.6–7.8秒 左手掌心贴在侧脸、歪头闭一下眼，说 Um — sleep?（6.7–7.6秒），Fortunata 看着她的手，眉毛一抬；7.8–9秒 Riley 竖起一根手指，说 One night?（7.9–8.6秒），Fortunata 也竖起右手一根手指，轻轻点一下头，9 秒右手放下垂在身侧；9–10.5秒 Riley 放下左手，有点期待地等着；Fortunata 不说话，左手拇指拨一下挂在左胯的小皮钱袋，目光落在 Riley 攥着钱的右拳上；10.5–11.6秒 Fortunata 抬起左手到胸前、手心朝镜头，四根手指张开朝上、拇指折进掌心看不见；看着 Riley 的脸平平地说 Quattuor.（10.7–11.4秒）；Riley 看着那四根手指，抿一下嘴，有点没把握；11.6–13秒 Fortunata 朝 Riley 伸出右手，掌心朝上停在两人中间，左手四指还竖着；Riley 看看四根手指，再低头看自己的右拳，约 12.2 秒把右拳伸到两人中间、摊开掌心，不说话",
+     " 镜头：他拍：中景双人，膝盖以上，眼平，40mm，固定机位，一个景别到底，不推不切；墙龛和灯在 Fortunata 画左，她身后画右是车门口；行人从镜头和她之间走过，身子被画框切掉一部分；Riley 入画后站画右；两人的手都在画内。"
+    ]
+   },
+   "issues": [
+    "I2",
+    "I3",
+    "I4",
+    "I6",
+    "I8",
+    "I10"
+   ]
+  },
+  {
+   "key": "s6_st2",
+   "scene": "s6",
+   "shot": "st2",
+   "frame": {
+    "before": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st2/planning/st2_first_frame.png",
+     "label": "现行",
+     "sha256": "3f177f3f241339b668266d5bdfa15d97c28524e2d13616d6dcb2cbafa481b1e1",
+     "mtime": "2026-11-14T15:49:35",
+     "mtime_ms": 1794642575906,
+     "how": "审查时的快照（sha 对上）"
+    },
+    "after": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st2/planning/st2_first_frame.png",
+     "label": "现行",
+     "sha256": "3f177f3f241339b668266d5bdfa15d97c28524e2d13616d6dcb2cbafa481b1e1",
+     "mtime": "2026-11-14T15:49:35",
+     "mtime_ms": 1794642575906,
+     "how": "现行首帧"
+    },
+    "changed": false
+   },
+   "spec": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/filming_s6.json",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/filming.json#s6",
+    "changed": false,
+    "fields": []
+   },
+   "prompt": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/prompts/s6_st2.txt",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st2/资料包/prompt.txt",
+    "changed": false,
+    "diff": []
+   },
+   "issues": []
+  },
+  {
+   "key": "s6_st5",
+   "scene": "s6",
+   "shot": "st5",
+   "frame": {
+    "before": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st5/planning/st5_first_frame.png",
+     "label": "现行",
+     "sha256": "1bc0604722c40abfe8fa6a538b25485d28c2c87dc273115737c57b799a3c22a0",
+     "mtime": "2026-11-09T09:02:33",
+     "mtime_ms": 1794186153782,
+     "how": "审查时的快照（sha 对上）"
+    },
+    "after": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st5/planning/st5_first_frame.png",
+     "label": "现行",
+     "sha256": "1bc0604722c40abfe8fa6a538b25485d28c2c87dc273115737c57b799a3c22a0",
+     "mtime": "2026-11-09T09:02:33",
+     "mtime_ms": 1794186153782,
+     "how": "现行首帧"
+    },
+    "changed": false
+   },
+   "spec": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/filming_s6.json",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/filming.json#s6",
+    "changed": false,
+    "fields": []
+   },
+   "prompt": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/prompts/s6_st5.txt",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st5/资料包/prompt.txt",
+    "changed": false,
+    "diff": []
+   },
+   "issues": []
+  },
+  {
+   "key": "s6_st6",
+   "scene": "s6",
+   "shot": "st6",
+   "frame": {
+    "before": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st6/planning/st6_first_frame.png",
+     "label": "现行",
+     "sha256": "6033f0da492a14ee079509c59bfb80880ea8e21ed798a70f4fcd5e8c56c0bfc2",
+     "mtime": "2026-11-14T15:51:07",
+     "mtime_ms": 1794642667445,
+     "how": "审查时的快照（sha 对上）"
+    },
+    "after": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st6/planning/st6_first_frame.png",
+     "label": "现行",
+     "sha256": "6033f0da492a14ee079509c59bfb80880ea8e21ed798a70f4fcd5e8c56c0bfc2",
+     "mtime": "2026-11-14T15:51:07",
+     "mtime_ms": 1794642667445,
+     "how": "现行首帧"
+    },
+    "changed": false
+   },
+   "spec": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/filming_s6.json",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/filming.json#s6",
+    "changed": false,
+    "fields": []
+   },
+   "prompt": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/prompts/s6_st6.txt",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st6/资料包/prompt.txt",
+    "changed": false,
+    "diff": []
+   },
+   "issues": []
+  },
+  {
+   "key": "s6_st4",
+   "scene": "s6",
+   "shot": "st4",
+   "frame": {
+    "before": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st4/planning/st4_first_frame.png",
+     "label": "现行",
+     "sha256": "e489991b864f5d33dba2b23814f44de33081084006508178952153ca5e2c255e",
+     "mtime": "2026-11-14T15:03:07",
+     "mtime_ms": 1794639787410,
+     "how": "审查时的快照（sha 对上）"
+    },
+    "after": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st4/planning/st4_first_frame.png",
+     "label": "现行",
+     "sha256": "e489991b864f5d33dba2b23814f44de33081084006508178952153ca5e2c255e",
+     "mtime": "2026-11-14T15:03:07",
+     "mtime_ms": 1794639787410,
+     "how": "现行首帧"
+    },
+    "changed": false
+   },
+   "spec": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/filming_s6.json",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/filming.json#s6",
+    "changed": false,
+    "fields": []
+   },
+   "prompt": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/prompts/s6_st4.txt",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st4/资料包/prompt.txt",
+    "changed": false,
+    "diff": []
+   },
+   "issues": []
+  },
+  {
+   "key": "s7_st4",
+   "scene": "s7",
+   "shot": "st4",
+   "frame": {
+    "before": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st4/planning/st4_first_frame.png",
+     "label": "现行",
+     "sha256": "95b72471905475b4c60767e51477d55b6a736466e2774ae162992170f75d233b",
+     "mtime": "2026-11-09T08:13:53",
+     "mtime_ms": 1794183233128,
+     "how": "审查时的快照（sha 对上）"
+    },
+    "after": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st4/planning/st4_first_frame.png",
+     "label": "现行",
+     "sha256": "95b72471905475b4c60767e51477d55b6a736466e2774ae162992170f75d233b",
+     "mtime": "2026-11-09T08:13:53",
+     "mtime_ms": 1794183233128,
+     "how": "现行首帧"
+    },
+    "changed": false
+   },
+   "spec": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/filming_s7.json",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/filming.json#s7",
+    "changed": false,
+    "fields": []
+   },
+   "prompt": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/prompts/s7_st4.txt",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st4/资料包/prompt.txt",
+    "changed": false,
+    "diff": []
+   },
+   "issues": []
+  },
+  {
+   "key": "s7_st6",
+   "scene": "s7",
+   "shot": "st6",
+   "frame": {
+    "before": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st6/planning/st6_first_frame.png",
+     "label": "现行",
+     "sha256": "81518ba75fa1b37a73ae9c7f766d2ab2ba49e6da6545ffff39057cb51299d4c3",
+     "mtime": "2026-11-14T15:50:22",
+     "mtime_ms": 1794642622074,
+     "how": "审查时的快照（sha 对上）"
+    },
+    "after": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st6/planning/st6_first_frame.png",
+     "label": "现行",
+     "sha256": "81518ba75fa1b37a73ae9c7f766d2ab2ba49e6da6545ffff39057cb51299d4c3",
+     "mtime": "2026-11-14T15:50:22",
+     "mtime_ms": 1794642622074,
+     "how": "现行首帧"
+    },
+    "changed": false
+   },
+   "spec": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/filming_s7.json",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/filming.json#s7",
+    "changed": false,
+    "fields": []
+   },
+   "prompt": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/prompts/s7_st6.txt",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st6/资料包/prompt.txt",
+    "changed": false,
+    "diff": []
+   },
+   "issues": []
+  },
+  {
+   "key": "s7_st7",
+   "scene": "s7",
+   "shot": "st7",
+   "frame": {
+    "before": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st7/planning/st7_first_frame.png",
+     "label": "现行",
+     "sha256": "8b405aa22a025e8cd0de52fdb239aeeb5e65f1e819247caaf9581528669bf5c1",
+     "mtime": "2026-11-14T15:51:19",
+     "mtime_ms": 1794642679012,
+     "how": "审查时的快照（sha 对上）"
+    },
+    "after": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st7/planning/st7_first_frame.png",
+     "label": "现行",
+     "sha256": "8b405aa22a025e8cd0de52fdb239aeeb5e65f1e819247caaf9581528669bf5c1",
+     "mtime": "2026-11-14T15:51:19",
+     "mtime_ms": 1794642679012,
+     "how": "现行首帧"
+    },
+    "changed": false
+   },
+   "spec": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/filming_s7.json",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/filming.json#s7",
+    "changed": false,
+    "fields": []
+   },
+   "prompt": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/prompts/s7_st7.txt",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st7/资料包/prompt.txt",
+    "changed": false,
+    "diff": []
+   },
+   "issues": [
+    "I9"
+   ]
+  },
+  {
+   "key": "s7_st1",
+   "scene": "s7",
+   "shot": "st1",
+   "frame": {
+    "before": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st1/planning/st1_first_frame.png",
+     "label": "现行",
+     "sha256": "301f2b4efabeb8afb12ffc2c22173f6bf60e1f22ece88ec7a0fea50a1a95518d",
+     "mtime": "2026-11-14T13:37:38",
+     "mtime_ms": 1794634658221,
+     "how": "审查时的快照（sha 对上）"
+    },
+    "after": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st1/planning/st1_first_frame.png",
+     "label": "现行",
+     "sha256": "301f2b4efabeb8afb12ffc2c22173f6bf60e1f22ece88ec7a0fea50a1a95518d",
+     "mtime": "2026-11-14T13:37:38",
+     "mtime_ms": 1794634658221,
+     "how": "现行首帧"
+    },
+    "changed": false
+   },
+   "spec": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/filming_s7.json",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/filming.json#s7",
+    "changed": false,
+    "fields": []
+   },
+   "prompt": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/prompts/s7_st1.txt",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st1/资料包/prompt.txt",
+    "changed": false,
+    "diff": []
+   },
+   "issues": [
+    "I9"
+   ]
+  },
+  {
+   "key": "s7_st2",
+   "scene": "s7",
+   "shot": "st2",
+   "frame": {
+    "before": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/_r13_candidate/st2_first_frame.png",
+     "label": "_r13_candidate",
+     "sha256": "25934284e7b6545eedcfcfa9c841e30dcd9cae8e04d87ed5af65c4e96481ccfd",
+     "mtime": "2026-11-14T23:39:34",
+     "mtime_ms": 1794670774119,
+     "how": "审查时的快照（sha 对上）"
+    },
+    "after": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/st2_first_frame.png",
+     "label": "现行",
+     "sha256": "b6e0a175f39118bc23a783314d227cdf90e880da2f7a69f0e23daebab3ba7738",
+     "mtime": "2026-11-14T23:54:37",
+     "mtime_ms": 1794671677697,
+     "how": "现行首帧"
+    },
+    "changed": true
+   },
+   "spec": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/filming_s7.json",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/filming.json#s7",
+    "changed": true,
+    "fields": [
+     {
+      "field": "action",
+      "name": "动作",
+      "before": "Riley 坐在床边；灯正上方、她右肩后的墙上有一小片刻得较深的乱划痕，方向各异的斜线交叉在一起，像随手乱抓的痕迹，颜色只比墙面略深，和满墙的细划痕连成一片；她一开始就正对镜头坐着，脸朝镜头、嘴角带笑，停一下才开口，轻声讲这里的住客什么墙上都写，再讲一句很有名的涂鸦：她发誓在历史课本上读过，说到 history textbook 时眉毛一扬，它出自一家和这里差不多的客栈；两个人名放慢，念完说一句「挺甜的」，安静地笑着，垂眼看一眼灯苗。她的两手放在膝上，说到 every wall 时侧过脸、眼睛往右后方满是划痕的墙上瞟一眼、右手拇指轻轻一指，马上转回来看镜头，语气一直轻、嘴型不张大，说到 just like this 时左手掌心朝上朝屋里轻轻一摊，每次做完都放回膝上。西墙南段那扇厚木板门关着，在画面外。床头小凳上那盏小陶油灯（p1：赭红素陶，圆形扁灯身，长约十二厘米，顶面是一整块封死的浅凹圆面、中间一个小注油孔，前端一个短单嘴，尾部一个环形把手；整盏是一体的陶）（灯身只有手掌大，平放在凳面上，占凳面直径的四成左右）在画面左下角点着。道具：油灯（p1）进场、出场都在床头小凳上点着、不动。画面里只有她一个人。",
+      "after": "Riley 坐在床边；灯正上方、她右肩后的墙上有一小片浅浅的乱划痕，方向各异的斜线交叉在一起，像随手乱抓的痕迹，颜色只比墙面略深，和满墙的细划痕连成一片；她一开始就正对镜头坐着，脸朝镜头、嘴角带笑，停一下才开口，轻声讲这里的住客什么墙上都写，再讲一句课本上很有名的留言：她发誓在历史课本上读过，说到 history textbook 时眉毛一扬，它出自一家和这里差不多的客栈；两个人名放慢，念完说一句「挺甜的」，安静地笑着，垂眼看一眼灯苗。她的两手放在膝上，说到 every wall 时侧过脸、眼睛往右后方满是划痕的墙上瞟一眼、右手拇指轻轻一指，马上转回来看镜头，语气一直轻、嘴型不张大，说到 just like this 时左手掌心朝上朝屋里轻轻一摊，每次做完都放回膝上。西墙南段那扇厚木板门关着，在画面外。床头小凳上那盏小陶油灯（p1：赭红素陶，圆形扁灯身，长约十二厘米，顶面是一整块封死的浅凹圆面、中间一个小注油孔，前端一个短单嘴，尾部一个环形把手；整盏是一体的陶）（灯身只有手掌大，平放在凳面上，占凳面直径的四成左右）在画面左下角点着。道具：油灯（p1）进场、出场都在床头小凳上点着、不动。画面里只有她一个人。",
+      "diff": [
+       "@@ -1,4 +1,4 @@",
+       " Riley 坐在床边；",
+       "-灯正上方、她右肩后的墙上有一小片刻得较深的乱划痕，方向各异的斜线交叉在一起，像随手乱抓的痕迹，颜色只比墙面略深，和满墙的细划痕连成一片；",
+       "-她一开始就正对镜头坐着，脸朝镜头、嘴角带笑，停一下才开口，轻声讲这里的住客什么墙上都写，再讲一句很有名的涂鸦：她发誓在历史课本上读过，说到 history textbook 时眉毛一扬，它出自一家和这里差不多的客栈；",
+       "+灯正上方、她右肩后的墙上有一小片浅浅的乱划痕，方向各异的斜线交叉在一起，像随手乱抓的痕迹，颜色只比墙面略深，和满墙的细划痕连成一片；",
+       "+她一开始就正对镜头坐着，脸朝镜头、嘴角带笑，停一下才开口，轻声讲这里的住客什么墙上都写，再讲一句课本上很有名的留言：她发誓在历史课本上读过，说到 history textbook 时眉毛一扬，它出自一家和这里差不多的客栈；",
+       " 两个人名放慢，念完说一句「挺甜的」，安静地笑着，垂眼看一眼灯苗。"
+      ]
+     },
+     {
+      "field": "beats",
+      "name": "节拍",
+      "before": "0–2.2秒 她坐在床边，脸正对镜头，灯光从画左低低地照亮她半边脸，嘴角带笑，嘴闭着，轻轻吸一口气，不说话；2.2–5.5秒 她轻声说 People write on, like, every wall here.（2.3–5.3 秒），说到 every wall 时侧过脸、眼睛往右后方满是划痕的墙上瞟一眼、右手拇指轻轻一指，马上转回来看镜头，手放回膝上；整句语气轻、平，嘴型不张大，不惊呼；5.5–8秒 And there's this famous one —（5.7–7.6 秒）；8–11.5秒 I swear it was in my history textbook —（8.1–11.3 秒，说到 history textbook 时眉毛一扬）；11.5–14秒 from an inn just like this.（11.6–13.8 秒，说到 just like this 时左手掌心朝上朝屋里轻轻一摊、目光跟着朝屋里一扫，马上看回镜头，手放回膝上）；14–21.5秒 It says,（14.1–14.6 秒），停半拍，\"Vibius Restitutus slept here alone, and missed his Urbana.\"（15.0–21.0 秒，两个人名放慢，alone 后停半拍）；21.5–23.9秒 That's kind of sweet.（21.7–23.4 秒），说完嘴角一扬；23.9–26秒 她安静地笑着，垂眼看一眼床头的灯苗，不说话",
+      "after": "0–2.2秒 她坐在床边，脸正对镜头，灯光从画左低低地照亮她半边脸，嘴角带笑，嘴闭着，轻轻吸一口气，不说话；2.2–5.5秒 她轻声说 People write on, like, every wall here.（2.3–5.3 秒），说到 every wall 时侧过脸、眼睛往右后方满是划痕的墙上瞟一眼、右手拇指轻轻一指，马上转回来看镜头，手放回膝上；整句语气轻、平，嘴型不张大，不惊呼；5.5–8秒 And there's this famous one —（5.7–7.6 秒）；8–11.5秒 I swear it was in my history textbook —（8.1–11.3 秒，说到 history textbook 时眉毛一扬）；11.5–14秒 from an inn just like this.（11.6–13.8 秒，说到 just like this 时左手掌心朝上朝屋里轻轻一摊、目光跟着朝屋里一扫，马上看回镜头，手放回膝上）；14–21.5秒 It says,（14.1–14.6 秒），停半拍，\"Vibius Restitutus slept here alone, and missed his Urbana.\"（15.0–21.0 秒，念的时候左手手指在膝上轻轻点着，两个人名放慢，alone 后停半拍）；21.5–23.9秒 That's kind of sweet.（21.7–23.4 秒），说完嘴角一扬；23.9–26秒 她安静地笑着，侧过头、低头看一眼身边小凳上的灯苗，手指轻轻捻一下衬衫下摆，不说话",
+      "diff": [
+       "@@ -6,4 +6,4 @@",
+       " 11.5–14秒 from an inn just like this.（11.6–13.8 秒，说到 just like this 时左手掌心朝上朝屋里轻轻一摊、目光跟着朝屋里一扫，马上看回镜头，手放回膝上）；",
+       "-14–21.5秒 It says,（14.1–14.6 秒），停半拍，\"Vibius Restitutus slept here alone, and missed his Urbana.\"（15.0–21.0 秒，两个人名放慢，alone 后停半拍）；",
+       "+14–21.5秒 It says,（14.1–14.6 秒），停半拍，\"Vibius Restitutus slept here alone, and missed his Urbana.\"（15.0–21.0 秒，念的时候左手手指在膝上轻轻点着，两个人名放慢，alone 后停半拍）；",
+       " 21.5–23.9秒 That's kind of sweet.（21.7–23.4 秒），说完嘴角一扬；",
+       "-23.9–26秒 她安静地笑着，垂眼看一眼床头的灯苗，不说话",
+       "+23.9–26秒 她安静地笑着，侧过头、低头看一眼身边小凳上的灯苗，手指轻轻捻一下衬衫下摆，不说话"
+      ]
+     }
+    ]
+   },
+   "prompt": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/prompts/s7_st2.txt",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/资料包/prompt.txt",
+    "changed": true,
+    "diff": [
+     "@@ -11,5 +11,5 @@",
+     " 场景：大车店二楼的小客房；夜里的庞贝屋顶 · 夜（`bg7_大车店客房`）：夜里的一间小客房：粗灰泥墙不刷色，墙上划满一道道模糊的刻痕，只是深浅不一的纹理；一张木架床，底是绷紧的绳网，上面铺着草垫和一条深褐色粗毛毯；床头边一张三条腿小木凳；西墙一扇厚木板门，门板内侧钉着两个木闩座；北墙很高的地方开着一个敞口的小方窗洞，窗洞外是夜空。",
+     "-画面：Riley 坐在床边；灯正上方、她右肩后的墙上有一小片刻得较深的乱划痕，方向各异的斜线交叉在一起，像随手乱抓的痕迹，颜色只比墙面略深，和满墙的细划痕连成一片；她一开始就正对镜头坐着，脸朝镜头、嘴角带笑，停一下才开口，轻声讲这里的住客什么墙上都写，再讲一句很有名的涂鸦：她发誓在历史课本上读过，说到 history textbook 时眉毛一扬，它出自一家和这里差不多的客栈；两个人名放慢，念完说一句「挺甜的」，安静地笑着，垂眼看一眼灯苗。她的两手放在膝上，说到 every wall 时侧过脸、眼睛往右后方满是划痕的墙上瞟一眼、右手拇指轻轻一指，马上转回来看镜头，语气一直轻、嘴型不张大，说到 just like this 时左手掌心朝上朝屋里轻轻一摊，每次做完都放回膝上。西墙南段那扇厚木板门关着，在画面外。床头小凳上那盏小陶油灯（p1：赭红素陶，圆形扁灯身，长约十二厘米，顶面是一整块封死的浅凹圆面、中间一个小注油孔，前端一个短单嘴，尾部一个环形把手；整盏是一体的陶）（灯身只有手掌大，平放在凳面上，占凳面直径的四成左右）在画面左下角点着。道具：油灯（p1）进场、出场都在床头小凳上点着、不动。画面里只有她一个人。",
+     "+画面：Riley 坐在床边；灯正上方、她右肩后的墙上有一小片浅浅的乱划痕，方向各异的斜线交叉在一起，像随手乱抓的痕迹，颜色只比墙面略深，和满墙的细划痕连成一片；她一开始就正对镜头坐着，脸朝镜头、嘴角带笑，停一下才开口，轻声讲这里的住客什么墙上都写，再讲一句课本上很有名的留言：她发誓在历史课本上读过，说到 history textbook 时眉毛一扬，它出自一家和这里差不多的客栈；两个人名放慢，念完说一句「挺甜的」，安静地笑着，垂眼看一眼灯苗。她的两手放在膝上，说到 every wall 时侧过脸、眼睛往右后方满是划痕的墙上瞟一眼、右手拇指轻轻一指，马上转回来看镜头，语气一直轻、嘴型不张大，说到 just like this 时左手掌心朝上朝屋里轻轻一摊，每次做完都放回膝上。西墙南段那扇厚木板门关着，在画面外。床头小凳上那盏小陶油灯（p1：赭红素陶，圆形扁灯身，长约十二厘米，顶面是一整块封死的浅凹圆面、中间一个小注油孔，前端一个短单嘴，尾部一个环形把手；整盏是一体的陶）（灯身只有手掌大，平放在凳面上，占凳面直径的四成左右）在画面左下角点着。道具：油灯（p1）进场、出场都在床头小凳上点着、不动。画面里只有她一个人。",
+     " 走位：Riley 坐在床的南沿、靠床头那一段；0 秒起脸就正对镜头，窗洞在画面右上方、她身后另一侧；一直看着镜头说话，只在说到 every wall 时侧过脸、眼睛往右后方的墙上瞟一眼、说到 just like this 时目光跟着手势朝屋里一扫，每次都马上看回镜头。镜头在她正前方略偏西南，离她一米多。",
+     "-动作：0–2.2秒 她坐在床边，脸正对镜头，灯光从画左低低地照亮她半边脸，嘴角带笑，嘴闭着，轻轻吸一口气，不说话；2.2–5.5秒 她轻声说 People write on, like, every wall here.（2.3–5.3 秒），说到 every wall 时侧过脸、眼睛往右后方满是划痕的墙上瞟一眼、右手拇指轻轻一指，马上转回来看镜头，手放回膝上；整句语气轻、平，嘴型不张大，不惊呼；5.5–8秒 And there's this famous one —（5.7–7.6 秒）；8–11.5秒 I swear it was in my history textbook —（8.1–11.3 秒，说到 history textbook 时眉毛一扬）；11.5–14秒 from an inn just like this.（11.6–13.8 秒，说到 just like this 时左手掌心朝上朝屋里轻轻一摊、目光跟着朝屋里一扫，马上看回镜头，手放回膝上）；14–21.5秒 It says,（14.1–14.6 秒），停半拍，\"Vibius Restitutus slept here alone, and missed his Urbana.\"（15.0–21.0 秒，两个人名放慢，alone 后停半拍）；21.5–23.9秒 That's kind of sweet.（21.7–23.4 秒），说完嘴角一扬；23.9–26秒 她安静地笑着，垂眼看一眼床头的灯苗，不说话",
+     "+动作：0–2.2秒 她坐在床边，脸正对镜头，灯光从画左低低地照亮她半边脸，嘴角带笑，嘴闭着，轻轻吸一口气，不说话；2.2–5.5秒 她轻声说 People write on, like, every wall here.（2.3–5.3 秒），说到 every wall 时侧过脸、眼睛往右后方满是划痕的墙上瞟一眼、右手拇指轻轻一指，马上转回来看镜头，手放回膝上；整句语气轻、平，嘴型不张大，不惊呼；5.5–8秒 And there's this famous one —（5.7–7.6 秒）；8–11.5秒 I swear it was in my history textbook —（8.1–11.3 秒，说到 history textbook 时眉毛一扬）；11.5–14秒 from an inn just like this.（11.6–13.8 秒，说到 just like this 时左手掌心朝上朝屋里轻轻一摊、目光跟着朝屋里一扫，马上看回镜头，手放回膝上）；14–21.5秒 It says,（14.1–14.6 秒），停半拍，\"Vibius Restitutus slept here alone, and missed his Urbana.\"（15.0–21.0 秒，念的时候左手手指在膝上轻轻点着，两个人名放慢，alone 后停半拍）；21.5–23.9秒 That's kind of sweet.（21.7–23.4 秒），说完嘴角一扬；23.9–26秒 她安静地笑着，侧过头、低头看一眼身边小凳上的灯苗，手指轻轻捻一下衬衫下摆，不说话",
+     " 镜头：他拍：中近景，她坐着、腰以上到膝上，35mm，正对她略偏西南，眼平略低，固定机位；床头小凳上的灯在画面左下角，灯上方墙上那一小片较深的乱划痕在画面左上，窗洞在右上；Riley 两只手都在画面里，放在膝上。"
+    ]
+   },
+   "issues": [
+    "I1",
+    "I2",
+    "I3",
+    "I5",
+    "I7",
+    "I8",
+    "I9",
+    "I11"
+   ],
+   "manual_frames": [
+    {
+     "before": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/_r14_before/st2_first_frame.png",
+     "after": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/st2_first_frame.png"
+    }
+   ]
+  },
+  {
+   "key": "s7_st3",
+   "scene": "s7",
+   "shot": "st3",
+   "frame": {
+    "before": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st3/planning/st3_first_frame.png",
+     "label": "现行",
+     "sha256": "7e4e6b3c87b4a0653cf59504dc3ccd1c1f2339bbc57d8aeb4c5ebcc15813cd6b",
+     "mtime": "2026-11-09T09:03:33",
+     "mtime_ms": 1794186213137,
+     "how": "审查时的快照（sha 对上）"
+    },
+    "after": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st3/planning/st3_first_frame.png",
+     "label": "现行",
+     "sha256": "7e4e6b3c87b4a0653cf59504dc3ccd1c1f2339bbc57d8aeb4c5ebcc15813cd6b",
+     "mtime": "2026-11-09T09:03:33",
+     "mtime_ms": 1794186213137,
+     "how": "现行首帧"
+    },
+    "changed": false
+   },
+   "spec": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/filming_s7.json",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/filming.json#s7",
+    "changed": false,
+    "fields": []
+   },
+   "prompt": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/prompts/s7_st3.txt",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st3/资料包/prompt.txt",
+    "changed": false,
+    "diff": []
+   },
+   "issues": []
+  },
+  {
+   "key": "s7_st5",
+   "scene": "s7",
+   "shot": "st5",
+   "frame": {
+    "before": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st5/planning/st5_first_frame.png",
+     "label": "现行",
+     "sha256": "483ad7af4606a5fed8d2e34a0ad0ecc46c8b194806b8c826f28eb984733d9b39",
+     "mtime": "2026-11-14T15:50:01",
+     "mtime_ms": 1794642601340,
+     "how": "审查时的快照（sha 对上）"
+    },
+    "after": {
+     "path": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st5/planning/st5_first_frame.png",
+     "label": "现行",
+     "sha256": "483ad7af4606a5fed8d2e34a0ad0ecc46c8b194806b8c826f28eb984733d9b39",
+     "mtime": "2026-11-14T15:50:01",
+     "mtime_ms": 1794642601340,
+     "how": "现行首帧"
+    },
+    "changed": false
+   },
+   "spec": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/filming_s7.json",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/filming.json#s7",
+    "changed": false,
+    "fields": []
+   },
+   "prompt": {
+    "before_source": "ai_videos/chuanyue_yiri/reviews/ep01_20261114-234201_pregen_r3/materials/snapshot/prompts/s7_st5.txt",
+    "after_source": "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st5/资料包/prompt.txt",
+    "changed": false,
+    "diff": []
+   },
+   "issues": []
+  }
+ ]
+}

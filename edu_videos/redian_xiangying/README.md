@@ -77,6 +77,6 @@ edu_videos/redian_xiangying/
 | 期 | 热点词 | 检索日期 | 状态 |
 |---|---|---|---|
 | t01_faa_ground_stop | 美国航班全国性地面停飞（FAA，2026-11-13） | 2026-11-14 | 成片 v1（中 415 秒 / 英 427 秒）待用户审片：台词审 3 轮（上限）、Seedance 5 镜、Suno 配乐；预览 /episode-preview?path=edu_videos/redian_xiangying/t01_faa_ground_stop |
-| t02_jensen_huang_resigns | 黄仁勋辞任英伟达 CEO（2026-11-12） | 2026-11-14 | 论点定为「中美科技战让一个 CEO 的私事变成国家安全问题」＋第二层「两党都拿他打自己的仗」（我们的判断），「牺牲品」作中文舆论说法引用并检验（用户 2026-11-14，follow-up 023）；事实核查 r1 已落实（第二层改为描述行为的措辞「两党都借这件事追问」，不再说「只有白宫在放」，见 dossier §8.2；新加坡内政部原文已取得；仍未能核的条目与进讲稿前补核清单见 dossier §7） |
+| t02_jensen_huang_resigns | 黄仁勋辞任英伟达 CEO（2026-11-12） | 2026-11-14 | 成片 v1（中 472 秒 / 英 475 秒）待用户审片：讲稿按「通顺流畅」重写后过台词审 3 轮（Claude 单审，上限；中文屏幕文字 P2 末轮修改未经复审）、Seedance 4 镜、公开图片 15 张＋Codex 示意图 5 张、配乐沿用 t01 Suno 铺底、本地配音（ElevenLabs 额度 11-17 重置后再做中文样音对比）；程序检验通过；预览 /episode-preview?path=edu_videos/redian_xiangying/t02_jensen_huang_resigns |
 
 选题依据（2026-11-14 检索，follow-up 021）：抖音热榜第 1（1174 万）、微博第 2、B 站第 2、知乎第 3 都是 FAA 停飞；黄仁勋辞职同时上 TikTok 全球增长标签前 10（#jensenhuang）、微博、知乎与 IT 之家多条。YouTube 全球趋势以音乐、游戏为主（GTA VI 11-19 发售），没有新闻类入榜。

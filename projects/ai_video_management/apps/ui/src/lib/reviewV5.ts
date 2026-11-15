@@ -1,5 +1,5 @@
-// 审查单 v5（tools/review_run.py，用户 2026-11-08）：每个审稿项两位审稿人（a＝Claude、b＝Codex）按该类 rubric 每维 0–3 打分，
-// 两位都勾后自动对比（reconcile/<代号>.md），分歧与抽查交裁决人；全部完成后推出分级问题清单（issues.json），逐条记方案、实施，
+// 审查单 v5（tools/review_run.py，用户 2026-11-08）：每个审稿项默认一位 Kimi 按该类 rubric 每维 0–3 打分；旧双审记录仍可显示，
+// 旧双审两位都勾后自动对比（reconcile/<代号>.md），分歧与抽查交裁决人；全部完成后推出分级问题清单（issues.json），逐条记方案、实施，
 // 严重与主要都处理完才开下一轮复核。本站只读：打勾、裁决、fix 都由 review_run.py 写。没有 slots 的 v2 单不走这里。
 import {
   agentKind, modelShort, type AgentDispatch, type ReviewItem, type ReviewRun, type ReviewSlot, type RubricDim,
@@ -19,7 +19,7 @@ export const reviewIssuesHref = (dir: string, filter: IssueFilter = {}): string 
 export const isV5Item = (item: ReviewItem): boolean => Boolean(item.slots && Object.keys(item.slots).length);
 export const isV5Run = (run: ReviewRun): boolean => run.items.some(isV5Item);
 
-/** 一位审稿人的简称：「Claude · claude-opus-5-5」「Codex · gpt-6-astra」。 */
+/** 一位审稿人的简称：「Kimi · kimi」。 */
 export const slotWho = (s: { runner: string; model: string }): string => `${agentKind(s.runner)} · ${modelShort(s.model)}`;
 export const slotMark = (s: { status: string }): string => s.status === "done" ? "✓" : s.status === "failed" ? "!" : "○";
 export const slotStatusText = (s: ReviewSlot): string =>

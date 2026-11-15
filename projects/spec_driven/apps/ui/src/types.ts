@@ -163,6 +163,7 @@ export interface PromptLabRunFile {
 
 export interface PromptLabRun {
   state: PromptLabRunState;
+  runtime?: "kimi" | "codex" | null;
   run_id: string | null;
   started_at: string | null;
   ended_at: string | null;
@@ -174,6 +175,7 @@ export interface PromptLabRun {
 
 export interface PromptLabExecuteResult {
   state: string;
+  runtime?: "kimi" | "codex";
   run_id: string;
   path: string;
 }

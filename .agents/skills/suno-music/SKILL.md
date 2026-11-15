@@ -1,9 +1,6 @@
 ---
 name: suno-music
-description: 所有新音频生成的默认入口：通过本机 Suno API/MCP 制作环境音、音效、背景音乐、主题曲和歌曲，上传参考、预检、查询与下载。Claude Code/Codex 共用；不支持的配音或克隆需求明确报能力缺口，不自动换引擎。
-metadata:
-  claude:
-    argument-hint: "音乐需求或 Suno job ID"
+description: 所有新音频生成的默认入口：通过本机 Suno API/MCP 制作环境音、音效、背景音乐、主题曲和歌曲，上传参考、预检、查询与下载；不支持的配音或克隆需求明确报能力缺口，不自动换引擎。
 ---
 
 # Suno 音乐与声音

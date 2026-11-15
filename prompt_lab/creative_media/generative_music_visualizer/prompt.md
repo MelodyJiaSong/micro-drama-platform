@@ -10,7 +10,7 @@ Run the prompt and a single `index.html` opens to a "Start" overlay; one click a
 **Use cases:** A living wallpaper or stream-overlay background for a Twitch/YouTube livestream; an infinite focus/sleep ambient generator that never loops; a kinetic visual installation for a screen at an event or gallery; or a hands-on way to learn the Web Audio API (oscillators, envelopes, convolver reverb, FFT analysis) by reading one coherent file.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away. Paste the prompt below into Claude Code in an empty folder, answer 2 short setup questions (mood + visualizer style), then it builds autonomously and opens the page. Prerequisites: none — just a modern browser; click once to start audio (browser autoplay rule).
+Copy-paste-and-walk-away. Paste the prompt below into Kimi / Codex in an empty folder, answer 2 short setup questions (mood + visualizer style), then it builds autonomously and opens the page. Prerequisites: none — just a modern browser; click once to start audio (browser autoplay rule).
 
 ## 🔗 3. Reference & prior art
 

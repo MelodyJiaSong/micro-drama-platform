@@ -348,3 +348,18 @@ Auto-updated:
 
 No conflicts found in: （未单独核查）
 
+
+## Follow-up 026 — 2026-11-14 16:26:01
+Source: user_input/follow_ups/202611.md - section 026
+Summary: 确定 EP01 故事与分镜版本，Prompt 编译，跑 pregen 审查单收轮，审查无严重问题即按用户授权跳过草稿直接 720p 正片提交全集
+
+Auto-updated:
+- EP01 故事与分镜确定（故事 v3.1 修订；分镜 58→67 镜、366→436 秒，每镜补看点）；出片前审查 r1/r2/r3（每轮 14 位 Claude 单审）逐轮修复，r3 conclude --accept-fixes 结论「可出片」
+- 锁定表 r2/r3 修订（锅钩、门几何与开关门跪位、灶框 0.6 米、横木与靴刀小刀摆放）；场景卡 bg1/bg2/bg3 系列/bg5/bg6 系列/bg7 系列改写，新建 bg6-4 施工中；道具卡只写外观，p3/p6/p7 锚点图重画；全剧负面词补充
+- 首帧 r11/r12/r13 三轮重出与局部改（旧图在各镜 planning/_r11~_r13b/）；Prompt 编译、资料包 67 镜一致；整集预览已生成（audio/preview/en，7:16）
+- 未做：720p 正片提交——审查有修复未经独立复审 + 新规则要求用户先看整集预览，等用户在对话里确认后再提交（另记 follow-up）
+
+验证: review_run status/conclude：r3 已收轮，结论可出片；shot_pack check 67 ok；shot_overhead --all 67 镜 blocker 0；episode-workflow API：story/filming approved、prompts 已编译；ep01 request_log 无 Dreamina 请求（未花积分）
+
+No conflicts found in: 未改其他剧；仓库级改动另记 ai_video_management 361、363
+

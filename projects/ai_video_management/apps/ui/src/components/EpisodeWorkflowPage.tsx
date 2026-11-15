@@ -32,7 +32,7 @@ function PackPanel({ pack }: { pack?: ShotPack }): JSX.Element {
     <h4>资料包 <span className={`workflow-pack-status ${pack.status}`}>{PACK_STATUS[pack.status]}</span></h4>
     <p className="workflow-pack-path"><code>{pack.path}</code>{pack.prompt && <> · <Link to={`/file/${encodeURIComponent(pack.prompt)}`}>prompt.txt（已填上传编号）</Link></>}</p>
     {pack.status === "invalid" && <pre className="workflow-note">{pack.reason}</pre>}
-    {pack.status === "missing" && <p className="workflow-note">编译后运行 <code>python tools/shot_pack.py sync</code>（Claude 每回合自动运行）。</p>}
+    {pack.status === "missing" && <p className="workflow-note">编译后运行 <code>python tools/shot_pack.py sync</code>（Kimi 插件每回合自动运行（未安装插件时手动运行））。</p>}
     {pack.files.length > 0 && <ol className="workflow-pack-files">{pack.files.map(file => <li key={file.path}>
       <div className="workflow-pack-media">{file.kind === "image" ? <img src={mediaUrl(file.path)} alt={file.role} loading="lazy" />
         : file.kind === "video" ? <video src={mediaUrl(file.path)} controls preload="none" />
@@ -190,7 +190,7 @@ export function EpisodeWorkflowPage({ dramaPath, title }: { dramaPath: string; t
         <Link className="workflow-header-link" to={reviewRunHref(path)}>审查单</Link>
         <Link className="workflow-header-link" to={reelHref(!reelOpen)} aria-pressed={reelOpen}>{reelOpen ? "返回模块" : "审片串联"}</Link>
         <button type="button" onClick={() => setRefresh(value => value + 1)}>刷新</button></div></header>
-    <p className="workflow-note">只读展示。通过 Claude Code / Codex 修改文件后刷新。</p>
+    <p className="workflow-note">只读展示。通过 Kimi / Codex 修改文件后刷新。</p>
     {error && <p role="alert" className="workflow-error">{error}</p>}
     {message && <p role="status" className="workflow-message">{message}</p>}
     {reelOpen ? <ReviewReelPanel key={path} episodePath={path} initialScene={selectedScene} shotHref={reelShotHref} />
@@ -208,7 +208,7 @@ export function EpisodeWorkflowPage({ dramaPath, title }: { dramaPath: string; t
           : <div>{(current?.modules[1].content.scenes as FilmingScene[] || []).map(scene => <section key={scene.id}><h3>{scene.id} · {scene.location} · {scene.time}</h3>
             <p>{scene.purpose}</p>{scene.shots.map(shot => <p key={shot.id}>{current?.shot_keys[scene.id]?.[shot.id]} · {shot.duration}秒<br />{shot.action}<br />{shot.camera}<br />{shot.dialogue || "无对白"}</p>)}</section>)}</div>}
       </details>}
-      {module.status === "stale" && <p className="workflow-note">上游版本已改变，请通过 Claude Code / Codex 核对并更新。</p>}
+      {module.status === "stale" && <p className="workflow-note">上游版本已改变，请通过 Kimi / Codex 核对并更新。</p>}
       {module.status === "blocked" && <p className="workflow-note">等待上游版本确定。</p>}
       {missingSelection && <p role="alert">找不到指定场次或镜头，请从导航重新选择。</p>}
       {active === "story" && <div className="workflow-story">

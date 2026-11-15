@@ -10,7 +10,7 @@ You run `python monitor.py` and a polished full-screen dashboard takes over your
 **Use cases:** Keep it as your everyday glanceable monitor for spotting a runaway process or a memory leak during a long build or training run. Read its source to learn Textual's app lifecycle — timer/worker-driven live updates, reactive widgets, sparkline rendering, and CSS-style theming. Show it off as a "terminals can be beautiful" demo in a talk or screen recording. Drop it onto a spare monitor or a server SSH session as a permanent, dependency-light ops dashboard.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away: drop the prompt below into Claude Code in an empty folder, answer 2 short setup questions, then it builds and launches the dashboard autonomously. Prerequisite: `pip install textual psutil` (the prompt runs this). Press `q` to quit once it's running.
+Copy-paste-and-walk-away: drop the prompt below into Kimi / Codex in an empty folder, answer 2 short setup questions, then it builds and launches the dashboard autonomously. Prerequisite: `pip install textual psutil` (the prompt runs this). Press `q` to quit once it's running.
 
 ## 🔗 3. Reference & prior art
 

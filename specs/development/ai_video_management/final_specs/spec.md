@@ -4,6 +4,10 @@
 
 现有地图资产页面读取可选 navigation 清单。整图与16区使用同一原版坐标，在原图和数据地形重建图上同步开关静态禁行、树木保守占地、地形层变化、坡道候选及单位缓冲。两点直线路段检查只报告静态证据与32游戏单位方形余量，不自动寻路、不批准角色通过。所有机位保留本区约束，默认俯视与原图对照继续有效。出图审查结论绑定SHA；未通过或未配准的候选不替换现用机位，显示返工对照及来源说明。
 
+## Follow-up 366 — Kimi / Codex 共用流程与管理
+
+Kimi 与 Codex 共用 AGENTS/CONVENTIONS、skills、specs 和审计，均可作为主代理。MCP 由 `.agents/mcp.json` 唯一定义并生成两端项目配置；工作流目录收录两端配置及用户设置（只读脱敏）。管理页提示两者都可修改共用源。Claude 不再作为活跃入口或新任务执行器；历史来源保持不变。独立审稿继续使用 Kimi 单审。
+
 ## Follow-up 199 — 工作流覆盖与接续契约
 
 工作流目录除模块/指南外，须索引制作模板、编译实现、工具声明默认值及执行规则；历史专用来源标历史，不自动加入三模块输入。覆盖页同时显示源可读性、稳定编号、分类可达性、共用文档现存引用未登记，以及平铺/系列剧已保存 run 的全局来源。静态 Python 投影包含函数与 CLI 默认值、嵌套常量、环境名称，不执行代码或取秘密值。局部输入继续在剧导航与冻结快照；外部隐藏上下文不能声称全部覆盖。接续维护要求在 AGENTS/CONVENTIONS 与共用 ai_video_workflow.md；UI仍只读，源正文不复制到代理私有入口。
@@ -16,7 +20,7 @@ Run: ai_video_management-20260505-002710
 Stage: 4 (spec compilation)
 Inputs consumed: `revised_prompt.md`, `interview/qa.md`, `findings/dossier.md`, `findings/angle-{spec-driven-parallel-audit, ai-video-render-mode-design, regen-prompt-ai-video-semantics, ai-video-tree-and-detection}.md`
 
-> **Follow-up 039 amendment (2026-05-13):** wherever this spec says `backend/`, read `apps/api/`. Wherever it says `frontend/`, read `apps/ui/`. Wherever it says `backend/libs/`, read `libs/{infrastructure,domain,application,common}/` per the DDD+CQRS layering in `.claude/agent_refs/project/development.md` §1–6. Wherever it says `backend/static/`, read `apps/api/static/`. HTTP routes, JSON request/response shapes, and externally observable behavior are unchanged. New blocker added at stage 5: cross-layer imports violating the dependency arrows defined in `development.md` §1.
+> **Follow-up 039 amendment (2026-05-13):** wherever this spec says `backend/`, read `apps/api/`. Wherever it says `frontend/`, read `apps/ui/`. Wherever it says `backend/libs/`, read `libs/{infrastructure,domain,application,common}/` per the DDD+CQRS layering in `.agents/references/project/development.md` §1–6. Wherever it says `backend/static/`, read `apps/api/static/`. HTTP routes, JSON request/response shapes, and externally observable behavior are unchanged. New blocker added at stage 5: cross-layer imports violating the dependency arrows defined in `development.md` §1.
 
 ## Goal
 
@@ -483,7 +487,8 @@ Deferred to potential v2 follow-up:
 故事 run 机制（共享 profile、run 索引与选用记录、run 页面与 API、`tools/story_run.py`）已于 follow-up 206 整体移除；故事模块从零重写，EP 导航中故事与其他两个模块同样每集直达 story.json。已确定状态仍可记在 EP/state_changes.md。
 
 标识three-module-v1的剧以故事创作、影视改编、Prompt编译替换旧阶段。Research与资产独立；其他剧不批量迁移。
-魔兽世界左侧固定0_research、1_资产库、2_故事、3_影视改编、4_prompt编译，无“EP1 创作”独立入口。2/3/4均为可展开stage目录，点击只展开/收起；当前各含EP1子项，选择子项后主工作区只读展示该集对应产物。集来自实际episodes目录，module/episode参数绑定所选内容；右侧不重复展示模块切换卡片。
+魔兽世界左侧保留0_research、1_资产库、2_故事、3_影视改编、4_prompt编译，并按 follow-up 364 增加「故事板（按集）」，无“EP1 创作”独立入口。2/3/4均为可展开stage目录，点击只展开/收起；当前各含EP1子项，选择子项后主工作区只读展示该集对应产物。集来自实际episodes目录，module/episode参数绑定所选内容；右侧不重复展示模块切换卡片。
+统一故事板入口（follow-up 364）：所有三模块剧在剧名下另列「故事板（按集）」→ EP，链接到该集 filming 整集故事板；教学视频在实际存在 `storyboard/storyboard.json` 的期下显示「故事板」，链接到 `/storyboard-preview?path=<知识点>`。两种页面复用同一镜头卡组件，按场铺卡；规划期不显示不存在的教学故事板。
 每模块独立JSON；保存/确定仅写当前模块，输入绑定已确定上游版本，冲突返回409。上游变化保留下游内容并显示待更新/等待上游。
 故事仅方向及正文。分镜 content.scenes 按场组织，每场为 id（sN）、background（bgN 或空）、location、time、purpose、shots；镜头为 id（stN）、duration、cast（出场人物资产键）、action、blocking、beats、camera、lighting、dialogue，可选 props（道具资产键）与 background（本镜的环境视角，bg 编号；不写沿用场的 background，follow-up 261）。编译固定模板，相同输入、相同参考文件及编译器版本产生相同字节，不调用模型；v5 起每镜编译前读取参考，按上传顺序写在 prompt 最前并存入 prompts.json 的 refs，参考缺失拒绝编译（follow-up 227）；v6 起「参考：」一行，含运动参考（overhead 图；单独要 previz 的镜为 previz 视频，follow-up 281 起默认所有镜头都不做 previz）、每个出场人物的三视图与声样、背景图，人物外观与场景描写取自资产卡的 Shot prompt 段，上限 5000 字（follow-up 228）。v7 起「参考：」行写成 `key_id=>@` 占位，正文按 key_id 指认参考；每镜资料包复制全部参考并填上传编号，管理 UI 每镜显示资料包状态与文件（follow-up 229）。v8 起镜头可带可选 props（道具资产键，如 p475）：每件道具的锚点图排在人物三视图之后进参考行，另起「道具：」行写道具卡的 Shot prompt 外观段，道具卡或锚点图缺失拒绝编译（follow-up 231）。v9 起「要求」行的防分身只约束人物，镜内有动物（m 键）时另写「按「画面」写的数量出现」，负面词写「同一人物出现两次」，同一张卡的几只动物不被压成一只（follow-up 245）。编译可只编一场：只查、只替换这一场，其它场保留；每个编译场记 source（这一场分镜与所依据故事版本的指纹），资料包按场判过期，整集 Prompt 状态在全部场跟上前仍为过期（follow-up 259）。镜头写了 background 时，这一镜的场景图与「场景」段描写取它，缺卡、缺图、缺段拒绝编译；不写的镜不变（follow-up 261）。v12 起镜头可带可选 allow_negatives（剧负面词里的词语列表）：只在这一镜的「负面词」行去掉列出的剧级负面词，列了剧负面词里没有的词拒绝编译，空列表、重复、含逗号的写法保存时拒绝；不写的镜逐字不变（follow-up 282）。
 

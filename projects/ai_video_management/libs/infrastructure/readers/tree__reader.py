@@ -259,6 +259,11 @@ class TreeReader:
             return node
         files = [self._leaf_for(f) for f in sorted(topic.iterdir(), key=lambda f: _natural(f.name))
                  if f.is_file() and not f.is_symlink() and f.suffix.lower() in EDU_TOPIC_FILE_EXTENSIONS]
+        storyboard = topic / "storyboard" / "storyboard.json"
+        if storyboard.is_file() and not storyboard.is_symlink():
+            files.insert(0, {"type": "file", "name": "storyboard", "display_name": "故事板",
+                             "path": f"{path}/storyboard",
+                             "navigation_href": "/storyboard-preview?" + urlencode({"path": self._rel(topic)})})
         done = any((topic / "final").glob("*.mp4")) if (topic / "final").is_dir() else False
         node: dict[str, Any] = {"type": "directory", "name": topic.name,
                                 "display_name": label + (" ✅" if done else " · 制作中"),
@@ -298,6 +303,14 @@ class TreeReader:
                 episodes_root = project_dir / "episodes"
                 episodes = sorted((p for p in episodes_root.iterdir() if p.is_dir() and not p.is_symlink()
                                    and re.fullmatch(r"ep\d+", p.name)), key=lambda p: _natural(p.name)) if episodes_root.is_dir() else []
+                node["children"].append({
+                    "type": "directory", "name": "storyboards", "display_name": "故事板（按集）",
+                    "path": f"{node['path']}/stages/storyboards",
+                    "children": [{"type": "file", "name": episode.name, "display_name": f"EP{int(episode.name[2:])}",
+                                  "path": f"{node['path']}/episodes/{episode.name}/storyboard",
+                                  "navigation_href": self._workflow_url(node["path"], episode.name, "filming")}
+                                 for episode in episodes],
+                })
                 for module in MODULES:
                     outputs = []
                     for episode in episodes:

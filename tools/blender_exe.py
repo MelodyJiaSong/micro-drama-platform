@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Blender 可执行文件的唯一出处。环境变量 BLENDER（`.claude/settings.local.json` 的 env，本机路径）优先，
+"""Blender 可执行文件的唯一出处。环境变量 BLENDER（本机路径）优先，
 旧名 BLENDER_BIN 兼容，都没有就用本仓库约定的安装位置。"""
 from __future__ import annotations
 

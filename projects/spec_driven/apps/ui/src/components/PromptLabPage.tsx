@@ -35,7 +35,7 @@ _After you run the prompt, what concretely happens and the impressive result you
 
 ## ▶️ 2. How to run
 
-_Copy-paste-and-walk-away: paste the prompt below into Claude Code in an empty folder, answer the short setup questions, then it runs autonomously. Prerequisites: none / \`pip install ...\` / a tiny server._
+_Copy-paste-and-walk-away: paste the prompt below into Kimi / Codex in an empty folder, answer the short setup questions, then it runs autonomously. Prerequisites: none / \`pip install ...\` / a tiny server._
 
 ## 🔗 3. Reference & prior art
 
@@ -199,7 +199,7 @@ export function PromptLabPage(): JSX.Element {
       await refreshRun();
     } catch (err) {
       if (err instanceof ApiError && err.status === 503) {
-        setError("The `claude` CLI isn't available to the server, so autonomous execution can't start.");
+        setError("The configured Kimi / Codex CLI is unavailable. Check PROMPT_LAB_RUNTIME and the server's PATH.");
       } else if (err instanceof ApiError && err.status === 409) {
         setError("A run is already in progress for this item.");
       } else {
@@ -397,7 +397,7 @@ export function PromptLabPage(): JSX.Element {
                     className="promptlab-execute"
                     onClick={() => void onExecute()}
                     disabled={runBusy}
-                    title="Spawn an autonomous Claude session in this item's workspace"
+                    title="Run the configured Kimi / Codex CLI in this item's workspace"
                   >
                     ▶ Execute
                   </button>
@@ -467,6 +467,7 @@ function RunPanel({ run }: { run: PromptLabRun }): JSX.Element {
         <span className={`promptlab-run-badge promptlab-run-badge-${run.state}`}>
           {badge[run.state] ?? run.state}
         </span>
+        {run.runtime ? <span className="muted">{run.runtime === "codex" ? "Codex" : "Kimi"}</span> : null}
         {run.run_id ? <span className="muted">run {run.run_id}</span> : null}
         {run.exit_code !== null && run.exit_code !== undefined ? (
           <span className="muted">exit {run.exit_code}</span>

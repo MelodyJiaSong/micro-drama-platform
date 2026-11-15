@@ -78,7 +78,7 @@ def test_tree_consumer_walk(tree):
 def test_consumer_walk_finds_known_files(tree):
     leaves = [n for n in _walk(tree) if n.get("type") == "file"]
     paths = [n["path"] for n in leaves]
-    assert {"AGENTS.md", "CONVENTIONS.md", "CLAUDE.md"} <= set(paths)
+    assert {"AGENTS.md", "CONVENTIONS.md", "AGENTS.md"} <= set(paths)
     assert ".agents/skills/ai-videos-pipeline/SKILL.md" in paths
     assert any(
         "specs/development/spec_driven/final_specs/spec.md".replace("/", p[0]) in p
@@ -124,6 +124,6 @@ def test_shared_context_includes_references_and_playbooks(tree):
     assert ".agents/references/project/ai_video_workflow.md" in leaves
     assert ".agents/skills/agent-team/playbooks/interview.md" in leaves
     assert ".agents/skills/ai-videos-pipeline/modules/filming.md" in leaves
-    assert ".claude/skills/ai_videos__全流程编排/SKILL.md" in leaves
-    assert not any(p.startswith(".claude/agent_refs/") for p in leaves)
-    assert not any(p.startswith((".agents/private/", ".claude/hooks/")) for p in leaves)
+    assert ".agents/agents/qc-reviewer.md" in leaves
+    assert not any(p.startswith(".kimi-code/plugin/") for p in leaves)
+    assert not any(p.startswith((".agents/private/", ".kimi-code/plugin/hooks/")) for p in leaves)

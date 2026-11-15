@@ -133,3 +133,59 @@ def test_execute_not_found(client, good_headers):
         headers=good_headers,
     )
     assert r.status_code == 404
+
+
+@pytest.mark.parametrize("runtime", ["kimi", "codex"])
+def test_executor_builds_runtime_prompt_command(tmp_path, monkeypatch, runtime):
+    from libs.common.exposed_tree import ExposedTree
+    from libs.common.safe_resolve import SafeResolver
+    from libs.infrastructure import prompt_lab__executor as executor_module
+
+    item = tmp_path / "prompt_lab" / "generative_art" / "demo"
+    item.mkdir(parents=True)
+    (item / "prompt.md").write_text("```text\nBuild a tiny page.\n```\n", encoding="utf-8")
+    monkeypatch.setenv("PROMPT_LAB_RUNTIME", runtime)
+    monkeypatch.setattr(executor_module, "_which_runtime", lambda name: name)
+    monkeypatch.setattr(executor_module.threading, "Thread", lambda *args, **kwargs: type("NoThread", (), {"start": lambda self: None})())
+    captured = {}
+
+    class FakeProcess:
+        pid = 123
+
+        def __init__(self, cmd, **kwargs):
+            captured["cmd"] = cmd
+            captured["kwargs"] = kwargs
+
+    monkeypatch.setattr(executor_module.subprocess, "Popen", FakeProcess)
+    executor = executor_module.PromptLabExecutor(ExposedTree(tmp_path), SafeResolver(tmp_path))
+    result = executor.execute("prompt_lab/generative_art/demo/prompt.md")
+    assert result["state"] == "running"
+    assert result["runtime"] == runtime
+    assert executor.status("prompt_lab/generative_art/demo/prompt.md")["runtime"] == runtime
+    cmd = captured["cmd"]
+    if runtime == "kimi":
+        assert cmd[cmd.index("--prompt") + 1].startswith("Read ")
+        assert cmd[cmd.index("--output-format") + 1] == "text"
+    else:
+        assert "exec" in cmd and cmd[-1].startswith("Read ")
+        assert cmd[cmd.index("--sandbox") + 1] == "workspace-write"
+        assert "--dangerously-bypass-approvals-and-sandbox" not in cmd
+    assert "bypassPermissions" not in cmd
+    assert captured["kwargs"]["stdin"] is executor_module.subprocess.DEVNULL
+    captured["kwargs"]["stdout"].close()
+
+
+@pytest.mark.parametrize("runtime", ["claude", "unknown"])
+def test_executor_rejects_unsupported_runtime_before_spawning(tmp_path, monkeypatch, runtime):
+    from libs.common.exposed_tree import ExposedTree
+    from libs.common.safe_resolve import SafeResolver
+    from libs.domain.prompt_lab__error import PromptLabExecUnavailable
+    from libs.infrastructure.prompt_lab__executor import PromptLabExecutor
+
+    item = tmp_path / "prompt_lab/generative_art/demo"
+    item.mkdir(parents=True)
+    (item / "prompt.md").write_text("```text\nBuild a page.\n```", encoding="utf-8")
+    monkeypatch.setenv("PROMPT_LAB_RUNTIME", runtime)
+    with pytest.raises(PromptLabExecUnavailable):
+        PromptLabExecutor(ExposedTree(tmp_path), SafeResolver(tmp_path)).execute("prompt_lab/generative_art/demo/prompt.md")
+    assert not (item / "workspace").exists()

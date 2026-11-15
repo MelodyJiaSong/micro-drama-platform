@@ -10,7 +10,7 @@ Run the prompt and a single hand-written `index.html` opens in your browser and 
 **Use cases:** Crank out daily "did you know" explainer Shorts/Reels/TikToks on autopilot; produce branded title cards and animated intros for a YouTube channel; build quick educational micro-lessons (one concept per scene) for a course or social feed; or learn canvas/CSS animation timing and easing by reading a self-contained sequencer you can tweak live.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away. Paste the prompt below into Claude Code in an empty folder, answer 2 short setup questions (topic + mood), then it builds autonomously and auto-plays the video. Prerequisites: none — just a modern browser. To export a real .mp4, screen-record the tab (the prompt explains how).
+Copy-paste-and-walk-away. Paste the prompt below into Kimi / Codex in an empty folder, answer 2 short setup questions (topic + mood), then it builds autonomously and auto-plays the video. Prerequisites: none — just a modern browser. To export a real .mp4, screen-record the tab (the prompt explains how).
 
 ## 🔗 3. Reference & prior art
 

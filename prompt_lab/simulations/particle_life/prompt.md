@@ -10,7 +10,7 @@ Run the prompt and thousands of glowing colored dots swarm a black canvas, attra
 **Use cases:** A vivid hook for teaching emergence, self-organization, and artificial-life concepts without any equations on the board. A generative-art engine for endless one-of-a-kind glow visuals or installation loops. A mesmerizing ambient background / screensaver you can leave running. A compact study piece for learning spatial-grid partitioning and N-body force integration by reading the code, since the whole sim hinges on making thousands of short-range interactions cheap.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away. Paste the prompt below into Claude Code in an empty folder, answer the 2 short setup questions, and it builds the whole thing autonomously, then opens the sim. Prerequisites: none — opens in any modern browser.
+Copy-paste-and-walk-away. Paste the prompt below into Kimi / Codex in an empty folder, answer the 2 short setup questions, and it builds the whole thing autonomously, then opens the sim. Prerequisites: none — opens in any modern browser.
 
 ## 🔗 3. Reference & prior art
 

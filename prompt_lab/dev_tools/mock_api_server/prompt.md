@@ -10,7 +10,7 @@ You write a plain `db.json` with a few top-level keys — `users`, `posts`, `com
 **Use cases:** Prototyping a frontend before the real backend exists · Stable fixtures for integration tests · Teaching REST semantics (status codes, verbs, query params) without infrastructure · A quick local stub when an upstream service is down.
 
 ## ▶️ 2. How to run
-Open Claude Code in an empty folder, paste the prompt below, answer the 2–3 setup questions, then walk away while it builds and tests itself. The only prerequisite is Python 3 — no pip install, no virtualenv, nothing from PyPI. When it's done you run `python server.py db.json` and `curl` (or your browser) against `http://localhost:8000`.
+Open Kimi / Codex in an empty folder, paste the prompt below, answer the 2–3 setup questions, then walk away while it builds and tests itself. The only prerequisite is Python 3 — no pip install, no virtualenv, nothing from PyPI. When it's done you run `python server.py db.json` and `curl` (or your browser) against `http://localhost:8000`.
 
 ## 🔗 3. Reference & prior art
 

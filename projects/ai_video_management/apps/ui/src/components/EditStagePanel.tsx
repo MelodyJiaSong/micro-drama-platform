@@ -117,7 +117,7 @@ function GalleryView({ gallery }: { gallery: Gallery }): JSX.Element {
   const [player, seek] = useSeek();
   return <article className="edit-cut" aria-label={`转场样片 ${gallery.from_scene}→${gallery.to_scene}`}>
     <h4>转场样片：{gallery.from_scene} → {gallery.to_scene}</h4>
-    <p className="workflow-note">同一个交界用每种转场各出一段（画面下方写着名字），挑中了告诉 Claude Code / Codex 写进集级剪辑决定。</p>
+    <p className="workflow-note">同一个交界用每种转场各出一段（画面下方写着名字），挑中了告诉 Kimi / Codex 写进集级剪辑决定。</p>
     <video ref={player} key={gallery.video} src={mediaUrl(gallery.video)} controls preload="metadata" className="workflow-take-video" aria-label="转场样片" />
     <ol className="edit-gallery-index">{gallery.entries.map(entry => <li key={entry.start}>
       <button type="button" onClick={() => seek(entry.start)}>{cutClock(entry.start)}</button> {entry.label}</li>)}</ol>

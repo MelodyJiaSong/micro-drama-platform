@@ -3,14 +3,14 @@
 **Stack:** single `index.html` (inline CSS + JS, no deps) · **Est:** 10–20 min · **Output:** a browser game you can share as one file
 
 ## ✨ 1. Expectation — what you'll get
-Answer three quick setup questions and Claude builds, level by level, a genuinely playable "gravity golf" game that opens in your browser as one shareable HTML file: drag back from the ball to aim and set power, watch a live trajectory arc bend as you adjust, then release to slingshot it through orbits around multiple planets and sink it in the glowing goal in as few strokes as you can. It arrives fully juiced — neon palette, comet-tail particle trail, screen-shake on impact, Web Audio blips on launch and sink, and a handful of hand-authored levels with a real win screen. The end result is a small indie-feeling game in a single file you can double-click to play or email to someone.
+Answer three quick setup questions and the agent builds, level by level, a genuinely playable "gravity golf" game that opens in your browser as one shareable HTML file: drag back from the ball to aim and set power, watch a live trajectory arc bend as you adjust, then release to slingshot it through orbits around multiple planets and sink it in the glowing goal in as few strokes as you can. It arrives fully juiced — neon palette, comet-tail particle trail, screen-shake on impact, Web Audio blips on launch and sink, and a handful of hand-authored levels with a real win screen. The end result is a small indie-feeling game in a single file you can double-click to play or email to someone.
 
 **Why it's cool:** The planets pull the ball with real summed inverse-square gravity, so the orbital slingshots and gravity-assist curves actually emerge from physics rather than scripted paths — a tiny no-dependency file that behaves like an orbital mechanics sandbox.
 
 **Use cases:** Drop it in a portfolio as a self-contained "I shipped a physics game" showcase piece; fork it as a game-jam starter and bolt on black holes, wind, or a level editor; read the single file to learn canvas rendering, the game loop, and how N-body gravity integration works in practice; or text the one HTML file to friends as a quick par-chasing challenge.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away: paste the prompt below into Claude Code in an empty folder, answer the 3 short setup questions (theme, difficulty, level count), then it builds autonomously to completion and opens the game in your browser. Prerequisites: none — opens in any modern browser.
+Copy-paste-and-walk-away: paste the prompt below into Kimi / Codex in an empty folder, answer the 3 short setup questions (theme, difficulty, level count), then it builds autonomously to completion and opens the game in your browser. Prerequisites: none — opens in any modern browser.
 
 ## 🔗 3. Reference & prior art
 

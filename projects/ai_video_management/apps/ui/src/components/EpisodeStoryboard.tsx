@@ -13,7 +13,11 @@ import "./EpisodeStoryboard.css";
 const fileHref = (path: string): string => `/file/${encodeURIComponent(path)}`;
 
 /** 一镜一张卡：首帧图（16:9，点开看大图）、镜头、时长、人物、整句台词、行动摘要，「展开」看全文。 */
-export function ShotCard({ shot, scene, shotHref, lang = "en", label: given }: { shot: StoryboardShot; scene: string; shotHref?: (scene: string, key: string) => string; lang?: string; label?: string }): JSX.Element {
+export function ShotCard({ shot, scene, shotHref, lang = "en", label: given, plainLinks = false }: {
+  shot: StoryboardShot; scene: string; shotHref?: (scene: string, key: string) => string; lang?: string; label?: string;
+  /** 非短剧（没有资料包与 planning 目录，follow-up 359）：只给原图与出图 prompt */
+  plainLinks?: boolean;
+}): JSX.Element {
   const [broken, setBroken] = useState(false);
   const [open, setOpen] = useState(false);
   useEffect(() => setBroken(false), [shot.image?.path, shot.image?.mtime]);
@@ -44,11 +48,14 @@ export function ShotCard({ shot, scene, shotHref, lang = "en", label: given }: {
         <dt>拍摄</dt><dd>{shot.camera || "—"}</dd>
       </dl> : <p className="storyboard-action">{shot.action}</p>}
       <button type="button" className="storyboard-toggle" aria-expanded={open} onClick={() => setOpen(v => !v)}>{open ? "收起" : "展开"}</button>
-      <p className="storyboard-links">
+      {plainLinks ? <p className="storyboard-links">
+        {shot.image ? <Link to={fileHref(shot.image.path)}>原图</Link> : null}
+        {shot.framePrompt ? <Link to={fileHref(shot.framePrompt)}>出图 prompt</Link> : null}
+      </p> : <p className="storyboard-links">
         {shot.packPrompt ? <Link to={fileHref(shot.packPrompt)}>资料包/prompt.txt</Link> : <span className="storyboard-muted">资料包未建</span>}
         {shot.image ? <Link to={fileHref(shot.image.path)} title="planning 目录：首帧图与同目录文件">planning/</Link> : null}
         {shot.framePrompt ? <Link to={fileHref(shot.framePrompt)}>首帧 prompt</Link> : null}
-      </p>
+      </p>}
     </div>
   </li>;
 }

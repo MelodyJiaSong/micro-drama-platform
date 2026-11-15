@@ -10,7 +10,7 @@ Open one file and you've got the full Wordle loop: six tries to guess a five-let
 **Use cases:** A portfolio piece showing tricky game-state logic done right · a clean reference for learning seeded randomness and duplicate-letter handling · a fun daily game to share with a group · a teaching example for keyboard input, CSS animation, and localStorage stats.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away: paste the prompt below into Claude Code in an empty folder, answer the short setup questions, then it runs autonomously to completion and opens the result. Prerequisites: none — opens in any modern browser.
+Copy-paste-and-walk-away: paste the prompt below into Kimi / Codex in an empty folder, answer the short setup questions, then it runs autonomously to completion and opens the result. Prerequisites: none — opens in any modern browser.
 
 ## 🔗 3. Reference & prior art
 

@@ -10,7 +10,7 @@ You open one web page, grant camera access, and your own video feed appears with
 **Use cases:** A showstopper demo of real-time on-device computer vision · privacy-preserving motion tracking where camera frames must never leave the device · a learning reference for `tfjs-models` pose-detection and canvas overlays · a starting point for fitness/rep-counting, gesture, or interactive-art prototypes.
 
 ## ▶️ 2. How to run
-Copy the prompt below into Claude Code inside an empty folder and walk away. Claude asks 2–3 setup questions, then builds autonomously — implementing, self-reviewing against an acceptance checklist, and fixing itself until it passes. On first run the MoveNet model (a few MB) downloads from a CDN with a visible loading state, then runs entirely locally. The webcam (`getUserMedia`) requires a real HTTP origin, not `file://`, so serve it with a tiny static server: `python -m http.server 8080`, then open `http://localhost:8080` and allow the camera.
+Copy the prompt below into Kimi / Codex inside an empty folder and walk away. The agent asks 2–3 setup questions, then builds autonomously — implementing, self-reviewing against an acceptance checklist, and fixing itself until it passes. On first run the MoveNet model (a few MB) downloads from a CDN with a visible loading state, then runs entirely locally. The webcam (`getUserMedia`) requires a real HTTP origin, not `file://`, so serve it with a tiny static server: `python -m http.server 8080`, then open `http://localhost:8080` and allow the camera.
 
 ## 🔗 3. Reference & prior art
 

@@ -188,7 +188,7 @@ Concrete `spec_driven` example: `<pre>` blocks inside `.regen-prompt-block`, `.m
 
 **v1 out of scope:** user-toggleable theme picker. If a future follow-up adds one, this rule will be revised here, not bypassed.
 
-*(Originated from follow-up 004 of run `spec_driven`; relocated from original `CLAUDE.md` (now `CONVENTIONS.md`) to this file by follow-up 005.)*
+*(Originated from follow-up 004 of run `spec_driven`; relocated to this file by follow-up 005.)*
 
 ## Update protocol
 

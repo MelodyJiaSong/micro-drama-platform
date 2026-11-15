@@ -70,7 +70,7 @@ def resolve(bg_dir: str) -> tuple[str, dict]:
 
     **解析不到就抛**——这是「每个 bg 必备」真正咬人的地方：
     下游（`build_scene` / previz / shot_plan）跑不起来，而不是靠一次全仓盘点去点名。
-    这样**新活被挡住、没动过的旧剧一个都不扫**（CLAUDE.md 2026-09-06）。
+    这样**新活被挡住、没动过的旧剧一个都不扫**（CONVENTIONS.md 2026-09-06）。
     """
     bg_dir = os.path.abspath(bg_dir)
     if owns_plan(bg_dir):

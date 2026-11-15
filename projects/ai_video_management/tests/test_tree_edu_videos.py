@@ -42,6 +42,7 @@ def test_series_lists_seasons_and_episodes_from_the_syllabus(tmp_path: Path) -> 
     _write(series / "课程表.md", SYLLABUS)
     _write(series / "t00_what_is_ai/script.md")
     _write(series / "t00_what_is_ai/preview.json", "{}")
+    _write(series / "t00_what_is_ai/storyboard/storyboard.json", "{}")
     _write(series / "t00_what_is_ai/final/t00.mp4", "")
     _write(series / "t10_model_params/script.md")
     _write(series / "t99_extra/script.md")
@@ -56,9 +57,14 @@ def test_series_lists_seasons_and_episodes_from_the_syllabus(tmp_path: Path) -> 
     s1 = node["children"][2]["children"]
     assert [e["display_name"] for e in s1] == ["1-1 什么是 AI ✅", "1-2 模型与参数 · 制作中"]
     assert s1[0]["navigation_href"] == "/episode-preview?path=edu_videos%2Fai_terms%2Ft00_what_is_ai"
-    assert [f["path"] for f in s1[0]["children"]] == ["edu_videos/ai_terms/t00_what_is_ai/preview.json",
+    storyboard = s1[0]["children"][0]
+    assert storyboard["display_name"] == "故事板"
+    assert storyboard["navigation_href"] == "/storyboard-preview?path=edu_videos%2Fai_terms%2Ft00_what_is_ai"
+    assert [f["path"] for f in s1[0]["children"]] == ["edu_videos/ai_terms/syllabus/1-1/storyboard",
+                                                      "edu_videos/ai_terms/t00_what_is_ai/preview.json",
                                                       "edu_videos/ai_terms/t00_what_is_ai/script.md"]
     assert "navigation_href" not in s1[1]
+    assert all(child["name"] != "storyboard" for child in s1[1]["children"])
     planned = node["children"][3]["children"][0]
     assert planned["display_name"] == "2-1 大语言模型 · 规划" and planned["children"] == []
     assert planned["navigation_href"] == node["navigation_href"] + "?ep=2-1"

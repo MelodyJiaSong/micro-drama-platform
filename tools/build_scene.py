@@ -23,7 +23,7 @@
 · **几何唯一出处 ＝ `<scene>/planning/blocks.toml`**（rule 4i ①）。
   本引擎一个坐标字面量都不写；改布局 ＝ 改 toml 重跑。
 · **`kind` 未登记直接 raise**，**布局违规直接 raise**——左移进生成器，
-  不留给出片前的 reviewer（CLAUDE.md「能量化的反馈必须落成可机检闸门」）。
+  不留给出片前的 reviewer（CONVENTIONS.md「能量化的反馈必须落成可机检闸门」）。
 · **A/B 档一律走本引擎，禁止拷进 scene 目录改**（rule 4h ③）。
   某个 hero 场景真需要独有构件时，加一个 `kind` 到本文件，而不是复制一份脚本。
 · **环境永不用 image-to-3D**（rule 4g §B）：墙 / 屋顶 / 街面 / 桥拱一律脚本建。

@@ -110,7 +110,7 @@ function MustSection({ run, items, r }: { run: ReviewRun; items: ReviewItem[]; r
   </section>;
 }
 
-/** v5：小类＝rubric 维度，一维一行，每个审稿项三列（Claude a 分 / Codex b 分 / 最终），悬停或展开看证据，标分歧与抽查。 */
+/** v5：小类＝rubric 维度，一维一行，默认显示 Kimi a 分 / 最终；旧双审记录显示 a / b / 最终，悬停或展开看证据，标分歧与抽查。 */
 function RubricSection({ dir, run, items, r }: { dir: string; run: ReviewRun; items: ReviewItem[]; r?: RosterLaw }): JSX.Element {
   const dims = items.find(i => i.rubric?.length)?.rubric ?? r?.rubric ?? [];
   const disputes = items.reduce((n, i) => n + (i.disputes?.length ?? 0), 0);

@@ -10,7 +10,7 @@ You open one web page with a big text box. As you type, a positive/negative mete
 **Use cases:** A privacy-preserving sentiment widget for sensitive text (support tickets, journals, HR notes) · a live demo of on-device NLP for a talk or class · a hackable reference for learning `transformers.js` text pipelines and zero-shot classification · a prototyping sandbox for routing/triage logic before you commit to a backend.
 
 ## ▶️ 2. How to run
-Copy the prompt below into Claude Code inside an empty folder and walk away. Claude asks 2–3 setup questions, then builds autonomously — implementing, self-reviewing against an acceptance checklist, and fixing itself until everything passes. The first run streams a small model (a few MB–tens of MB) from a CDN with a visible loading state; after that it's cached and every classification is fully local. Because the page fetches the model over HTTP, serve it with a tiny static server rather than opening the file directly: `python -m http.server 8080`, then open `http://localhost:8080`.
+Copy the prompt below into Kimi / Codex inside an empty folder and walk away. The agent asks 2–3 setup questions, then builds autonomously — implementing, self-reviewing against an acceptance checklist, and fixing itself until everything passes. The first run streams a small model (a few MB–tens of MB) from a CDN with a visible loading state; after that it's cached and every classification is fully local. Because the page fetches the model over HTTP, serve it with a tiny static server rather than opening the file directly: `python -m http.server 8080`, then open `http://localhost:8080`.
 
 ## 🔗 3. Reference & prior art
 

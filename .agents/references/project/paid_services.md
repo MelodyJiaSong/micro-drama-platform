@@ -4,14 +4,14 @@
 
 ## 必须执行的调用契约
 
-全局适用范围由根目录 `AGENTS.md` / `CONVENTIONS.md` § 外部服务请求审计（全局必经）规定：Claude、Codex 与其子任务共用；所有新旧剧、季、集、共享资产、续跑、局部修复、独立 skill 和手工调用均适用；后续接入收费服务也先接同一记录入口。本文只维护服务细节、日志字段与分组。
+全局适用范围由根目录 `AGENTS.md` / `CONVENTIONS.md` § 外部服务请求审计（全局必经）规定：Kimi / Codex 主代理与子任务共用；所有新旧剧、季、集、共享资产、续跑、局部修复、独立 skill 和手工调用均适用；后续接入收费服务也先接同一记录入口。本文只维护服务细节、日志字段与分组。
 
 1. 每次调用前读本页，确定服务、操作、剧/集/资产归属、完整请求、参考文件及输出位置。
 2. 所有仓库调用经 `tools/service_request.py` 的 `RequestLog`：先追加 request 事件并落盘，再调用服务；日志不能写就停止。结果或异常另追加同 request_id 的事件，不覆盖历史。
 3. 正文保留完整 prompt / 台词 / 脚本 / JSON 参数、CLI argv、模型、比例、分辨率、时长、参考顺序、时间、目标路径、PID、超时及请求指纹。文件记录路径、大小、SHA256；base64 记录解码后的大小和 SHA256，不复制媒体本体。
 4. API key、Bearer、cookie、secret、签名 URL 的鉴权参数脱敏。不要把凭据写进 prompt / 脚本 / CLI 参数。结果保留服务任务 ID、状态及原样返回的费用字段；没有费用字段即未知，不能把估算当实扣。
 5. 提交超时不代表没提交，不自动重复收费请求；先用任务 ID 查询/补收。仅明确上传失败且尚未提交时允许自动重试；结果未知时停止重提。每次由仓库发起的查询、下载和重试也留痕。Dreamina CLI 的内部上传/轮询不可观测，只能记录该次 CLI 调用与参数，不能冒充逐 HTTP 请求日志。
-6. UI 左侧「请求日志」按归属选文件、分页查看完整事件；原始 request_log.md 可在目录树查看。UI 提供查看/审查，不额外引入审批流程；既有「生成视频永远人点」及剪辑批准规则继续有效；图片在修一致性问题时代理可直接生成（follow-up 229，见 CONVENTIONS.md），仍先写请求日志。
+6. UI 左侧「请求日志」按归属选文件、分页查看完整事件；原始 request_log.md 可在目录树查看。UI 提供查看/审查，不额外引入审批流程；既有「扣积分的视频生成永远人点」（不扣积分的本地视频代理可直接出、出视频前先审音频预览，follow-up 360）及剪辑批准规则继续有效；图片在修一致性问题时代理可直接生成（follow-up 229，见 CONVENTIONS.md），仍先写请求日志。
 7. 外部 MCP/另一份安装插件/用户直接终端命令不能被本仓库自动拦截。代理必须走下面的记录入口；未接入的第三方入口需先接入，不能直接调用后声称已记录。历史请求不补造。
 
 ## 商业用途（全局必经）
@@ -147,10 +147,10 @@ python tools/service_call.py --target ai_videos/shengji_zhilu/episodes/ep01 -- d
 
 来源：[OpenAI 图像生成指南](https://developers.openai.com/api/docs/guides/image-generation)、[chatgpt-image-latest 状态](https://developers.openai.com/api/docs/models/chatgpt-image-latest)；当前工具 schema。
 
-## Codex 内置出图（Claude 等代理经 Codex CLI 调用）
+## Codex 内置出图（Kimi / Codex 共用脚本入口）
 
 - 入口 `tools/codex_image.py`（skill `codex-imagegen`）：先写 `RequestLog`（provider `codex_imagegen`），再在临时空目录、`--sandbox read-only` 下跑 `codex exec --json`，指令经 stdin 传入，要求 Codex 原样用 prompt 只调一次内置 `image_gen`、不跑命令不写文件；参考图用 `--image` 按顺序附带。图片由脚本从 `$CODEX_HOME/generated_images/<thread_id>/` 拷到 `--out`（目标须在 `ai_videos/` 或 `edu_videos/<系列>/<知识点>/` 下，决定日志归属；已存在不覆盖，除非 `--overwrite`）。
-- 用本机 `codex login` 的 ChatGPT 订阅额度，不要 `OPENAI_API_KEY`；不能只把 Codex 的 imagegen SKILL.md 复制给 Claude，那不带出图工具本身。
+- 用本机 `codex login` 的 ChatGPT 订阅额度，不要 `OPENAI_API_KEY`。Codex CLI 在这里只是出图后端，不是仓库代理运行时。
 - 内置工具不暴露图像型号、quality、尺寸与费用：日志记「未知」；结果记 thread_id、Codex 用量（tokens）、会话记录里的 `revisedPrompt`、`failure`、`savedPath` 与图片 SHA256。`revisedPrompt` 与原 prompt 不同时脚本提示。
 - 没拿到图就报错并留痕，**不自动重提**；先查 `generated_images/<thread_id>/` 与 `~/.codex/sessions/**/rollout-*-<thread_id>.jsonl`，可能已生成（超时也会扫一次）。
 - `--model` 只换 Codex 代理模型，不是图像模型。比例写在 prompt 里，不能保证精确像素。

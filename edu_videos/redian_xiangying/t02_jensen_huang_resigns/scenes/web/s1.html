@@ -17,18 +17,17 @@
 
   /* 屏 B：另一边的说法 */
   .ot { position: absolute; left: var(--mx); top: 170px; }
-  .rsp { position: absolute; left: var(--mx); right: var(--mx); top: 280px; display: flex; gap: 40px; align-items: stretch; }
+  .rsp { position: absolute; left: var(--mx); right: var(--mx); top: 220px; display: flex; gap: 40px; align-items: stretch; }
   .rsp .card { flex: 1.2 1 0; min-width: 0; padding: 36px 40px; }
-  .rsp #r3 { flex: .75 1 0; }
   .rsp .h2 { margin-top: 16px; }
   .rsp .body { margin-top: 18px; color: var(--ink2); }
   .rsp .caption { margin-top: 6px; }
   .rsp .slot { margin-top: 16px; }
   .rsp .ico { display: none; }
-  html[lang=en] #r3 .h1 { white-space: normal; }
   .rsp .slot figcaption { margin-top: 4px; }
-  #r3 { display: flex; flex-direction: column; justify-content: center; }
-  #r3 .h1 { margin-top: 12px; white-space: nowrap; }
+  .nochg { position: absolute; left: 0; right: 0; top: 330px; text-align: center; }
+  .nochg .h1 { margin-top: 12px; }
+  .nochg .display { margin-top: 12px; white-space: nowrap; }
 
   /* 屏 C：信 ？ 报道 —— 不连线 */
   .qm { position: absolute; left: var(--mx); right: var(--mx); top: 250px; display: grid; grid-template-columns: 1fr 240px 1fr; align-items: center; }
@@ -36,41 +35,42 @@
   .qm .h2 { margin-top: 14px; }
   .qm .caption { margin-top: 8px; }
   .qm .mark { text-align: center; font-size: 200px; font-weight: 700; color: var(--accent); line-height: 1; }
-  .qmf { position: absolute; left: 0; right: 0; top: 660px; text-align: center; }
+  .qm .tagrow { margin-top: 14px; }
 </style>
 
-<div class="eb eyebrow" data-zh="01 · 哪些是真的" data-en="01 · What's confirmed"></div>
+<!-- 页眉：l10–l14 用章名；l15 起换成小节标签（只是报道 / 各方回应 / 我们不知道的），不让「已证实」类章名盖住未证实的内容（台词审 lines_r1 I6） -->
+<div class="eb eyebrow" id="eb1" data-ch="c1"></div>
+<div class="eb eyebrow" id="eb2" data-ch="c1" data-sub-zh="只是报道 · 未证实" data-sub-en="Reported, not confirmed"></div>
+<div class="eb eyebrow" id="eb3" data-ch="c1" data-sub-zh="各方回应" data-sub-en="The responses"></div>
+<div class="eb eyebrow" id="eb4" data-ch="c1" data-sub-zh="我们不知道的" data-sub-en="What we don’t know"></div>
 
 <!-- 屏 A -->
 <div class="col" id="ca">
-  <div class="colh" id="cah"><figure class="slot av" data-nocap data-src="img/source/commons/Jensen_Huang_Stanford_2026-04-30_010_(cropped).jpg" style="--s:72px; --pos:50% 25%"></figure><span class="h2" data-zh="已证实" data-en="Confirmed"></span></div>
+  <div class="colh" id="cah"><figure class="slot av" data-nocap data-src="img/source/commons/Jensen_Huang_Stanford_2026-04-30_010_(cropped).jpg" style="--s:72px; --pos:50% 25%"></figure><span class="h2" data-zh="已证实" data-en="Three confirmed facts"></span></div>
   <div class="it" id="a1"><span class="no">1</span><span class="h2" data-zh="写信认了不忠" data-en="Admitted infidelity"></span></div>
   <div class="it" id="a2"><span class="no">2</span><span class="h2" data-zh="董事会启动调查" data-en="Board investigation"></span>
     <div class="det" id="a2d">
-      <div class="body" id="a2a" data-zh="起因：报道称他是<br>「外国情报活动」目标" data-en='Over reports he was the <span class="q-en">“target of a foreign intelligence effort”</span>'></div>
-      <div class="caption" id="a2b" data-zh="国家安全、公司机密：暂无理由认为受损" data-en="No reason to believe security or secrets were compromised"></div>
+      <div class="body" id="a2a" data-zh="起因：「外国情报活动」报道" data-en='Trigger: <span class="q-en">“foreign intelligence effort”</span> reports'></div>
+      <div class="body" id="a2b" data-zh="暂无理由认为安全、机密受损" data-en='Security harmed? <span class="q-en">“No reason to believe”</span>'></div>
     </div></div>
-  <div class="it" id="a3"><span class="no">3</span><span class="h2" data-zh="辞职，原因未写" data-en="Resigned, no reason given"></span></div>
+  <div class="it" id="a3"><span class="no">3</span><span class="h2" data-zh="辞职 · 原因未写" data-en="Resigned · no reason given"></span></div>
 </div>
 <div class="col" id="cb">
   <div class="colh" id="cbh"><span id="cbTag"></span></div>
   <div class="it" id="b1"><span class="no">1</span><span class="h2" data-zh="一名女商人" data-en="A businesswoman"></span>
     <div class="det" id="b1d">
-      <div class="body" id="b1a" data-zh="美国情报界怀疑：替中国情报机构做事" data-en="Suspected by US intelligence of working for China"></div>
-      <div class="body" id="b1b" data-zh="新加坡公司前高管 · 英伟达客户" data-en="Ex-executive, Singapore firm · Nvidia customer"></div>
+      <div class="body" id="b1a" data-zh="美国情报界怀疑：替中国情报机构做事" data-en="Suspected of working for Chinese intelligence"></div>
+      <div class="body" id="b1b" data-zh="新加坡公司前高管 · 英伟达客户" data-en="Former executive, Singapore firm · Nvidia customer"></div>
       <figure class="slot" id="sg" data-src="img/source/commons/Singapore_Marina_Bay_Dusk_2018-02-27.jpg" style="--h:150px"></figure>
-    </div>
-    <div class="tagrow" id="b1t"></div></div>
-  <div class="it" id="b2"><span class="no">2</span><span class="h2" data-zh="另一段关系" data-en="Another relationship"></span>
+    </div></div>
+  <div class="it" id="b2"><span class="no">2</span><span class="h2" data-zh="另一段感情" data-en="Another relationship"></span>
     <div class="det" id="b2d">
-      <div class="body" data-zh="对象：一名向他汇报的高管" data-en="With an executive who reported to him"></div>
+      <div class="body" data-zh="对象：向他汇报的下属" data-en="With someone who reported to him"></div>
       <div class="body" id="b2b" data-zh="英伟达：拒绝置评" data-en="Nvidia: declined to comment"></div>
-    </div>
-    <div class="tagrow" id="b2t"></div></div>
+    </div></div>
 </div>
 
 <!-- 屏 B -->
-<div class="ot h2" id="ot" data-zh="另一边的说法" data-en="The other side"></div>
 <div class="rsp" id="rsp">
   <div class="card" id="r1"><span data-icon="podium" data-size="56"></span>
     <div class="eyebrow" data-zh="中国外交部 · 11 月 9 日" data-en="China's Foreign Ministry · Nov 9"></div>
@@ -78,13 +78,15 @@
     <div class="caption" data-zh="" data-en="Translated from Chinese"></div></div>
   <div class="card" id="r2"><span data-icon="bill" data-size="56"></span>
     <div class="eyebrow" data-zh="新加坡内政部 · 11 月 12 日" data-en="Singapore Home Affairs · Nov 12"></div>
-    <div class="h2" data-zh="未以间谍事由调查她" data-en="“Not investigated for espionage”"></div>
+    <div class="h2" data-zh="没因间谍嫌疑查过她" data-en="“Not investigated for espionage”"></div>
     <figure class="slot" id="crt" data-src="img/source/ai/ai_crates.png" style="--h:130px"></figure>
-    <div class="body" id="r2b" data-zh="警方曾查：买服务器申报不实" data-en="Police probe: false declarations on servers"></div>
-    <div class="caption" id="r2c" data-zh="结论：证据不足" data-en="Result: insufficient evidence"></div></div>
-  <div class="card" id="r3"><div class="eyebrow" data-zh="截至 11 月 14 日" data-en="As of Nov 14"></div>
-    <div class="h1 accent" data-zh="起诉：无" data-en="Charges: none"></div></div>
+    <div class="body" id="r2b" data-zh="另查：公司买服务器涉嫌虚报" data-en="Police looked into her: server declarations"></div></div>
 </div>
+<div class="nochg" id="r3">
+  <div class="eyebrow" data-zh="新加坡警方 · 2026 年 2 月" data-en="Singapore police · Feb 2026"></div>
+  <div class="h1" id="r3a" data-zh="对她本人：证据不足" data-en="Insufficient evidence against her"></div>
+  <div class="eyebrow" id="r3e" style="margin-top:64px" data-zh="截至 11 月 14 日" data-en="As of Nov 14"></div>
+  <div class="display accent" id="r3b" data-zh="起诉：无" data-en="Charges: none"></div></div>
 
 <!-- 屏 C -->
 <div class="qm" id="qm">
@@ -94,20 +96,23 @@
   <div class="mark" id="qmk">?</div>
   <div class="card" id="qb"><span data-icon="person" data-size="64"></span>
     <div class="h2" data-zh="报道里的女商人" data-en="The reported businesswoman"></div>
-    <div class="caption" data-zh="报道称 · 匿名信源" data-en="Reported · unnamed sources"></div></div>
+    <div class="tagrow" id="qbt"></div></div>
 </div>
-<div class="qmf body sub" id="qmf" data-zh="他没说 · 我们也不知道" data-en="He didn't say · we don't know"></div>
 
 <script>
 const T = EDU.tl;
-document.getElementById("cbTag").innerHTML = pill("reported");
-document.getElementById("b1t").innerHTML = pill("unver");
-document.getElementById("b2t").innerHTML = pill("unver");
+// 「匿名信源 · 未证实」只在栏头贴一次（台词审 lines_r1 I28）
+document.getElementById("cbTag").innerHTML = pill("reported", "《纽约时报》匿名消息", "Unnamed sources · unconfirmed");
+document.getElementById("qbt").innerHTML = pill("reported");
 document.querySelector("#cbTag .pill").style.cssText = "font-size: var(--fs-caption); padding: 6px 22px;";
 
-gsap.set(["#ca", "#cah", "#a1", "#a2", "#a2a", "#a2b", "#a3", "#cb", "#b1", "#b1a", "#b1b", "#sg", "#b1t", "#b2", "#b2t",
-          "#ot", "#rsp", "#r1", "#r2", "#r2b", "#r2c", "#crt", "#r3", "#qm", "#qa", "#qb", "#qmk", "#qmf"], { opacity: 0 });
-EDU.in(".eb", 0);
+gsap.set(["#eb2", "#eb3", "#eb4", "#ca", "#cah", "#a1", "#a2", "#a2a", "#a2b", "#a3", "#cb", "#b1", "#b1a", "#b1b", "#sg", "#b2",
+          "#rsp", "#r1", "#r2", "#r2b", "#crt", "#r3", "#r3a", "#r3e", "#r3b", "#qm", "#qa", "#qb", "#qmk"], { opacity: 0 });
+gsap.set("#a2b", { display: "none" });
+EDU.in("#eb1", 0);
+// 页眉随内容换
+const ebSwap = (from, to, cue) => { EDU.out(from, EDU.t(cue, 0), { y: 0 }); EDU.in(to, EDU.t(cue, 0) + .3, { y: 0, d: .5 }); };
+ebSwap("#eb1", "#eb2", "l15"); ebSwap("#eb2", "#eb3", "l19"); ebSwap("#eb3", "#eb4", "l23");
 
 // l10 板上钉钉的有三件
 EDU.in("#ca", EDU.t("l10", 0), { y: 0, d: .01 });
@@ -122,8 +127,10 @@ EDU.dim("#a1", EDU.t("l12", 0), .45);
 EDU.in("#a2", EDU.t("l12", .05));
 EDU.in("#a2a", EDU.t("l12", .35));
 srcNote("英伟达董事会声明 · 2026-11-08", "Nvidia board statement · Nov 8, 2026", EDU.t("l12", .2), EDU.end("l13") + .1);
-// l13 但暂无理由认为国家安全、机密受损
-EDU.in("#a2b", EDU.t("l13", .1));
+// l13 但暂无理由认为国家安全、机密受损（起因那行收走，换成这一行：I26）
+EDU.out("#a2a", EDU.t("l13", 0), { y: 0 }); T.set("#a2a", { display: "none" }, EDU.t("l13", 0) + .46);
+T.set("#a2b", { display: "block" }, EDU.t("l13", 0) + .46);
+EDU.in("#a2b", EDU.t("l13", 0) + .5);
 // l14 他辞职了，没说原因（细节收起）
 EDU.out("#a2d", EDU.t("l14", 0), { y: 0 }); T.set("#a2d", { display: "none" }, EDU.t("l14", 0) + .46);
 EDU.dim("#a2", EDU.t("l14", 0), .45);
@@ -131,49 +138,47 @@ EDU.in("#a3", EDU.t("l14", .1));
 srcNote("SEC 8-K · 2026-11-12", "SEC 8-K · Nov 12, 2026", EDU.t("l14", .2), EDU.end("l14") + .1);
 
 // l15 只是报道、没证实的有两件（左栏退后）
-EDU.dim("#ca", EDU.t("l15", 0), .25);
+EDU.dim("#ca", EDU.t("l15", 0), .22);
 EDU.in("#cb", EDU.t("l15", 0), { y: 0, d: .01 });
 EDU.in("#cbh", EDU.t("l15", .05));
-// l16 NYT：情报界怀疑一名女商人（匿名信源 · 未证实）
+// l16 NYT：情报界怀疑一名女商人（栏头已标匿名信源 · 未证实）
 EDU.in("#b1", EDU.t("l16", .03));
 EDU.in("#b1a", EDU.t("l16", .3));
-EDU.in("#b1t", EDU.t("l16", .55), { y: 0 });
 srcNote("《纽约时报》2026-10-29（匿名信源，经 CNBC）", "The New York Times, Oct 29, 2026 (unnamed sources, via CNBC)", EDU.t("l16", .2), EDU.t("l17", .25));
-// l17 新加坡公司前高管，那家公司是英伟达的客户
-EDU.in("#b1b", EDU.t("l17", .05));
-EDU.in("#sg", EDU.t("l17", .3));
+// l17 新加坡公司前高管，那家公司是英伟达的客户（上一行收走：I27）
+EDU.out("#b1a", EDU.t("l17", 0), { y: 0 }); T.set("#b1a", { display: "none" }, EDU.t("l17", 0) + .46);
+EDU.in("#b1b", EDU.t("l17", 0) + .5);
+EDU.in("#sg", EDU.t("l17", 0) + .7);
 // l18 另一段关系：一名向他汇报的高管；英伟达拒绝置评
 EDU.out(["#b1d"], EDU.t("l18", 0), { y: 0 }); T.set("#b1d", { display: "none" }, EDU.t("l18", 0) + .46);
 EDU.dim(["#b1"], EDU.t("l18", 0), .45);
 EDU.in("#b2", EDU.t("l18", .05));
-EDU.in("#b2t", EDU.t("l18", .4), { y: 0 });
 srcNote("《纽约时报》2026-11-11（匿名信源）", "The New York Times, Nov 11, 2026 (unnamed sources)", EDU.t("l18", .2), EDU.end("l18") + .1);
 
-// l19 另一边：中国外交部
+// l19 各方回应：中国外交部
 EDU.out(["#ca", "#cb"], EDU.t("l19", 0));
-EDU.in("#ot", EDU.t("l19", .02));
 EDU.in("#rsp", EDU.t("l19", 0), { y: 0, d: .01 });
 EDU.in("#r1", EDU.t("l19", .1));
-srcNote("中国外交部例行记者会 · 2026-11-09", "China MFA press briefing · Nov 9, 2026", EDU.t("l19", .2), EDU.end("l19") + .1);
+srcNote("中国外交部例行记者会 · 2026-11-09", "China’s Foreign Ministry briefing · Nov 9, 2026", EDU.t("l19", .2), EDU.end("l19") + .1);
 // l20 新加坡内政部：没有以间谍事由调查她
 EDU.dim("#r1", EDU.t("l20", 0), .5);
 EDU.in("#r2", EDU.t("l20", .05));
 srcNote("新加坡内政部 · 2026-11-12", "Singapore Ministry of Home Affairs · Nov 12, 2026", EDU.t("l20", .2), EDU.end("l21") + .1);
-// l21 警方查过：申报不实，证据不足
+// l21 警方查过她另一件事：公司买服务器涉嫌申报不实（外交部那张退到底：I29）
+EDU.dim("#r1", EDU.t("l21", 0), .2);
 EDU.in("#crt", EDU.t("l21", 0));
-EDU.in("#r2b", EDU.t("l21", .05));
-EDU.in("#r2c", EDU.t("l21", .55));
-// l22 没有人被起诉
-EDU.dim("#r2", EDU.t("l22", 0), .5);
-EDU.in("#r3", EDU.t("l22", .05));
-srcNote("检索至 2026-11-14 未见任何起诉记录", "No charges found as of Nov 14, 2026", EDU.t("l22", .2), EDU.end("l22") + .2);
+EDU.in("#r2b", EDU.t("l21", .1));
+// l22 今年 2 月对她证据不足；到今天无人被起诉：单独一屏（I30、I7）
+EDU.out("#rsp", EDU.t("l22", 0));
+EDU.in("#r3", EDU.t("l22", 0), { y: 0, d: .01 });
+EDU.in("#r3a", EDU.t("l22", 0) + .3);
+EDU.in(["#r3e", "#r3b"], EDU.t("l22", .5));
 
-// l23 信里那段关系是不是她：他没说，我们不知道（问号，不连线）
-EDU.out(["#ot", "#rsp"], EDU.t("l23", 0));
+// l23 信里那段关系是不是她：他没说，我们不知道（问号，不连线；底行整句删掉：I8、I31）
+EDU.out("#r3", EDU.t("l23", 0));
 EDU.in("#qm", EDU.t("l23", 0), { y: 0, d: .01 });
 EDU.in("#qa", EDU.t("l23", .08));
 EDU.in("#qb", EDU.t("l23", .18));
 EDU.in("#qmk", EDU.t("l23", .3), { y: 0 });
-EDU.in("#qmf", EDU.t("l23", .55));
-EDU.out(["#qm", "#qmf"], EDU.S.duration - .5);
+EDU.out(["#qm", "#eb4"], EDU.S.duration - .5);
 </script>

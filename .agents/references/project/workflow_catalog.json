@@ -61,7 +61,7 @@
     {
       "id": "agents",
       "title": "代理与执行设置",
-      "description": "Claude 与 Codex 的共用入口、AI Video 编排入口与工作流目录、配置声明和执行约定。运行环境可覆盖这些声明，不能据此认定某次 run 的有效权限或模型。",
+      "description": "Kimi / Codex 入口、AI Video 编排、配置声明和执行约定；实际权限与模型以当前会话为准。",
       "number": "2.1",
       "category": "agents"
     },
@@ -83,7 +83,7 @@
   "sources": [
     {
       "path": "AGENTS.md",
-      "title": "Claude / Codex 共用入口",
+      "title": "Kimi / Codex 共用工作入口",
       "group": "agents"
     },
     {
@@ -92,9 +92,49 @@
       "group": "agents"
     },
     {
-      "path": "CLAUDE.md",
-      "title": "Claude 入口",
+      "path": ".agents/agents/qc-reviewer.md",
+      "title": "Kimi 只读视觉审稿 agent",
       "group": "agents"
+    },
+    {
+      "path": ".kimi-code/mcp.json",
+      "title": "Kimi 项目 MCP 配置",
+      "group": "agents"
+    },
+    {
+      "path": ".kimi-code/plugin/kimi.plugin.json",
+      "title": "Kimi hooks 插件",
+      "group": "agents"
+    },
+    {
+      "path": ".kimi-code/plugin/hooks/repo_hook.py",
+      "title": "Kimi 仓库 hooks",
+      "group": "agents",
+      "view": "code"
+    },
+    {
+      "path": ".kimi-code/config.toml",
+      "title": "Kimi 用户配置",
+      "group": "agents",
+      "scope": "user"
+    },
+    {
+      "path": ".kimi-code/AGENTS.md",
+      "title": "Kimi 用户指令",
+      "group": "agents",
+      "scope": "user"
+    },
+    {
+      "path": ".kimi-code/mcp.json",
+      "title": "Kimi 用户 MCP 配置",
+      "group": "agents",
+      "scope": "user"
+    },
+    {
+      "path": "tools/check_agent_skills.py",
+      "title": "Kimi / Codex 共用 skills 元数据检查",
+      "group": "agents",
+      "view": "code"
     },
     {
       "path": ".agents/references/project/general.md",
@@ -110,61 +150,6 @@
       "path": ".agents/references/validation/development.md",
       "title": "管理应用验证规则",
       "group": "agents"
-    },
-    {
-      "path": ".agents/skill-aliases.json",
-      "title": "共用技能与 Claude 入口映射",
-      "group": "agents"
-    },
-    {
-      "path": ".claude/settings.json",
-      "title": "Claude 项目配置",
-      "group": "agents"
-    },
-    {
-      "path": ".claude/settings.local.json",
-      "title": "Claude 项目本地配置",
-      "group": "agents"
-    },
-    {
-      "path": ".codex/config.toml",
-      "title": "Codex 项目配置",
-      "group": "agents"
-    },
-    {
-      "path": ".mcp.json",
-      "title": "项目 MCP 声明",
-      "group": "agents"
-    },
-    {
-      "path": ".claude/settings.json",
-      "title": "Claude 用户配置",
-      "group": "agents",
-      "scope": "user"
-    },
-    {
-      "path": ".claude/CLAUDE.md",
-      "title": "Claude 用户指令",
-      "group": "agents",
-      "scope": "user"
-    },
-    {
-      "path": ".codex/config.toml",
-      "title": "Codex 用户配置",
-      "group": "agents",
-      "scope": "user"
-    },
-    {
-      "path": ".codex/AGENTS.md",
-      "title": "Codex 用户指令",
-      "group": "agents",
-      "scope": "user"
-    },
-    {
-      "path": ".codex/AGENTS.override.md",
-      "title": "Codex 用户覆盖指令",
-      "group": "agents",
-      "scope": "user"
     },
     {
       "path": ".agents/skills/ai-videos-pipeline/modules/story-structure.md",
@@ -453,6 +438,32 @@
       "view": "code"
     },
     {
+      "path": "projects/ai_video_management/README.md",
+      "title": "管理应用：运行、导航与按集 / 期预览",
+      "group": "app"
+    },
+    {
+      "path": "projects/ai_video_management/libs/infrastructure/readers/tree__reader.py",
+      "title": "导航树与按集 / 期故事板入口",
+      "group": "app",
+      "view": "code"
+    },
+    {
+      "path": "tools/character_review.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/tests/test_asset_groups.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/tests/test_review_run.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
       "path": "projects/ai_video_management/libs/common/production_key.py",
       "group": "app",
       "view": "code"
@@ -465,11 +476,6 @@
     {
       "path": "tools/previz/review.py",
       "group": "tools",
-      "view": "code"
-    },
-    {
-      "path": "tools/sync_agent_skills.py",
-      "group": "agents",
       "view": "code"
     },
     {
@@ -868,6 +874,11 @@
       "view": "code"
     },
     {
+      "path": "tools/audio_preview.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
       "path": "tools/scene_cut.py",
       "group": "tools",
       "view": "code"
@@ -1122,7 +1133,7 @@
     },
     {
       "path": ".agents/skills/suno-music/SKILL.md",
-      "title": "Suno 音乐：Claude 与 Codex 共用调用",
+      "title": "Suno 音乐：Kimi 调用",
       "group": "production"
     },
     {
@@ -1265,6 +1276,146 @@
       "path": "edu_videos/quant_mft/README.md",
       "title": "教学视频 · 系统化中频交易系列",
       "group": "production"
+    },
+    {
+      "path": "tools/filming_lint.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/shot_junctions.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/person_motion.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/scene_board.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/review_run.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/edit_blind_test.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/local_3d.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "tools/mcp_request_log.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "ai_videos/_shared/xianxia/qc/deep_review.md",
+      "group": "production"
+    },
+    {
+      "path": "tools/motion_check.py",
+      "group": "tools",
+      "view": "code"
+    },
+    {
+      "path": "edu_videos/tansuo/README.md",
+      "title": "探索系列：角色、画风与按期故事板流程",
+      "group": "production"
+    },
+    {
+      "path": "edu_videos/ai_terms/课程表.md",
+      "group": "production"
+    },
+    {
+      "path": "ai_videos/_shared/xihuan/adoption_template.json",
+      "group": "production"
+    },
+    {
+      "path": "ai_videos/_shared/xihuan/research/works/w01_dnd_pathfinder.md",
+      "group": "production"
+    },
+    {
+      "path": "ai_videos/_shared/xihuan/research/works/w02_warcraft.md",
+      "group": "production"
+    },
+    {
+      "path": "ai_videos/_shared/xihuan/research/works/w03_dota_diablo_lol.md",
+      "group": "production"
+    },
+    {
+      "path": "ai_videos/_shared/xihuan/research/works/w04_tes_witcher_dragonage.md",
+      "group": "production"
+    },
+    {
+      "path": "ai_videos/_shared/xihuan/research/works/w05_tolkien_asoiaf_wot.md",
+      "group": "production"
+    },
+    {
+      "path": "ai_videos/_shared/xihuan/research/works/w06_warhammer_souls_mtg.md",
+      "group": "production"
+    },
+    {
+      "path": "ai_videos/_shared/xihuan/research/works/w07_european_traditions.md",
+      "group": "production"
+    },
+    {
+      "path": "ai_videos/_shared/xihuan/research/works/w08_progression_fantasy.md",
+      "group": "production"
+    },
+    {
+      "path": "ai_videos/_shared/xihuan/research/works/w09_asian_west_fantasy.md",
+      "group": "production"
+    },
+    {
+      "path": "ai_videos/_shared/xihuan/research/works/w10_verification.md",
+      "group": "production"
+    },
+    {
+      "path": "ai_videos/_shared/xianxia/qc/deep_review.json",
+      "group": "production"
+    },
+    {
+      "path": "ai_videos/_shared/xianxia/qc/repair_queue.md",
+      "group": "production"
+    },
+    {
+      "path": ".agents/mcp.json",
+      "title": "共用 MCP 定义",
+      "scope": "repo",
+      "group": "agents"
+    },
+    {
+      "path": ".codex/config.toml",
+      "title": "Codex 项目 MCP 配置（生成）",
+      "scope": "repo",
+      "group": "agents"
+    },
+    {
+      "path": "tools/sync_agent_config.py",
+      "title": "Kimi / Codex MCP 配置同步与检查",
+      "scope": "repo",
+      "group": "agents"
+    },
+    {
+      "path": ".codex/config.toml",
+      "title": "Codex 用户配置",
+      "scope": "user",
+      "group": "agents"
+    },
+    {
+      "path": ".codex/AGENTS.md",
+      "title": "Codex 用户指令",
+      "scope": "user",
+      "group": "agents"
     }
   ],
   "discover": [
@@ -1289,63 +1440,8 @@
       "group": "agents"
     },
     {
-      "glob": ".claude/hooks/*.py",
-      "group": "agents",
-      "view": "code"
-    },
-    {
-      "glob": ".claude/settings*.json",
-      "group": "agents"
-    },
-    {
-      "glob": ".claude/agents/*.md",
-      "group": "agents"
-    },
-    {
-      "glob": ".codex/*.toml",
-      "group": "agents"
-    },
-    {
-      "glob": ".codex/agents/*.toml",
-      "group": "agents"
-    },
-    {
-      "glob": ".codex/agents/*.toml",
-      "group": "agents",
-      "scope": "user"
-    },
-    {
-      "glob": ".claude/agents/*.md",
-      "group": "agents",
-      "scope": "user"
-    },
-    {
-      "glob": ".codex/skills/*/SKILL.md",
-      "group": "agents",
-      "scope": "user"
-    },
-    {
-      "glob": ".codex/skills/.system/*/SKILL.md",
-      "group": "agents",
-      "scope": "user"
-    },
-    {
-      "glob": ".claude/skills/*/SKILL.md",
-      "group": "agents",
-      "scope": "user"
-    },
-    {
       "glob": ".agents/skills/agent-team/**/*.md",
       "group": "agents"
-    },
-    {
-      "glob": ".codex/rules/*.rules",
-      "group": "agents"
-    },
-    {
-      "glob": ".codex/rules/*.rules",
-      "group": "agents",
-      "scope": "user"
     },
     {
       "glob": "projects/suno_browser_service/libs/**/*.py",
@@ -1366,6 +1462,38 @@
       "glob": "projects/suno_browser_service/apps/ui/src/*.css",
       "group": "tools",
       "view": "code"
+    },
+    {
+      "glob": ".agents/agents/*.md",
+      "group": "agents"
+    },
+    {
+      "glob": ".kimi-code/*.json",
+      "group": "agents"
+    },
+    {
+      "glob": ".kimi-code/plugin/**/*.json",
+      "group": "agents"
+    },
+    {
+      "glob": ".kimi-code/plugin/**/*.py",
+      "group": "agents",
+      "view": "code"
+    },
+    {
+      "glob": ".kimi-code/*.toml",
+      "group": "agents",
+      "scope": "user"
+    },
+    {
+      "glob": ".kimi-code/*.md",
+      "group": "agents",
+      "scope": "user"
+    },
+    {
+      "glob": ".kimi-code/mcp.json",
+      "group": "agents",
+      "scope": "user"
     }
   ],
   "categories": [
@@ -1379,7 +1507,7 @@
       "id": "agents",
       "number": "2",
       "title": "系统与代码",
-      "description": "代码、工具脚本、软件运行与 Claude / Codex 代理设置；创作知识不在这里。"
+      "description": "代码、工具脚本、软件运行与 Kimi / Codex 代理设置；创作知识不在这里。"
     }
   ],
   "formats": [
@@ -1477,43 +1605,52 @@
     "repo:ai_videos/xihuan/framework/README.md": "1.7.17",
     "repo:edu_videos/_shared/design/design_system.md": "1.7.18",
     "repo:edu_videos/_shared/review/line_review.json": "1.7.19",
+    "repo:ai_videos/_shared/xianxia/qc/deep_review.md": "1.7.20",
+    "repo:ai_videos/_shared/xihuan/adoption_template.json": "1.7.21",
+    "repo:ai_videos/_shared/xihuan/research/works/w01_dnd_pathfinder.md": "1.7.22",
+    "repo:ai_videos/_shared/xihuan/research/works/w02_warcraft.md": "1.7.23",
+    "repo:ai_videos/_shared/xihuan/research/works/w03_dota_diablo_lol.md": "1.7.24",
+    "repo:ai_videos/_shared/xihuan/research/works/w04_tes_witcher_dragonage.md": "1.7.25",
+    "repo:ai_videos/_shared/xihuan/research/works/w05_tolkien_asoiaf_wot.md": "1.7.26",
+    "repo:ai_videos/_shared/xihuan/research/works/w06_warhammer_souls_mtg.md": "1.7.27",
+    "repo:ai_videos/_shared/xihuan/research/works/w07_european_traditions.md": "1.7.28",
+    "repo:ai_videos/_shared/xihuan/research/works/w08_progression_fantasy.md": "1.7.29",
+    "repo:ai_videos/_shared/xihuan/research/works/w09_asian_west_fantasy.md": "1.7.30",
+    "repo:ai_videos/_shared/xihuan/research/works/w10_verification.md": "1.7.31",
+    "repo:edu_videos/ai_terms/课程表.md": "1.7.32",
+    "repo:edu_videos/tansuo/README.md": "1.7.33",
+    "repo:ai_videos/_shared/xianxia/qc/deep_review.json": "1.7.34",
+    "repo:ai_videos/_shared/xianxia/qc/repair_queue.md": "1.7.35",
     "repo:AGENTS.md": "2.1.1",
     "repo:CONVENTIONS.md": "2.1.2",
-    "repo:CLAUDE.md": "2.1.3",
-    "repo:.agents/references/project/general.md": "2.1.4",
-    "repo:.agents/references/project/development.md": "2.1.5",
-    "repo:.agents/references/validation/development.md": "2.1.6",
-    "repo:.agents/skill-aliases.json": "2.1.7",
-    "repo:.claude/settings.json": "2.1.8",
-    "repo:.claude/settings.local.json": "2.1.9",
-    "repo:.codex/config.toml": "2.1.10",
-    "repo:.mcp.json": "2.1.11",
-    "user:.claude/settings.json": "2.1.12",
-    "user:.claude/CLAUDE.md": "2.1.13",
-    "user:.codex/config.toml": "2.1.14",
-    "user:.codex/AGENTS.md": "2.1.15",
-    "user:.codex/AGENTS.override.md": "2.1.16",
-    "repo:.agents/references/project/workflow_catalog.json": "2.1.17",
-    "repo:.claude/hooks/spec_driven_triage.py": "2.1.18",
-    "user:.codex/skills/.system/imagegen/SKILL.md": "2.1.19",
-    "user:.codex/skills/.system/openai-docs/SKILL.md": "2.1.20",
-    "user:.codex/skills/.system/review-agent/SKILL.md": "2.1.21",
-    "user:.codex/skills/.system/skill-creator/SKILL.md": "2.1.22",
-    "user:.codex/skills/.system/skill-installer/SKILL.md": "2.1.23",
-    "user:.claude/skills/skill-creator/SKILL.md": "2.1.24",
-    "repo:tools/sync_agent_skills.py": "2.1.25",
-    "repo:.agents/skills/agent-team/SKILL.md": "2.1.26",
-    "user:.codex/rules/default.rules": "2.1.27",
-    "repo:.agents/skills/ai-videos-pipeline/SKILL.md": "2.1.28",
-    "repo:.agents/references/project/ai_video_workflow.md": "2.1.29",
-    "repo:tools/workflow_catalog.py": "2.1.30",
-    "repo:.agents/references/validation/general.md": "2.1.31",
-    "repo:.agents/skills/agent-team/playbooks/interview.md": "2.1.32",
-    "repo:.agents/skills/agent-team/playbooks/research.md": "2.1.33",
-    "repo:.agents/skills/agent-team/playbooks/validation.md": "2.1.34",
-    "repo:.agents/references/interview/general.md": "2.1.35",
-    "repo:.agents/references/research/general.md": "2.1.36",
-    "user:.codex/skills/kids-coloring-art/SKILL.md": "2.1.37",
+    "repo:.agents/references/project/general.md": "2.1.3",
+    "repo:.agents/references/project/development.md": "2.1.4",
+    "repo:.agents/references/validation/development.md": "2.1.5",
+    "repo:.agents/references/project/workflow_catalog.json": "2.1.6",
+    "repo:.agents/skills/agent-team/SKILL.md": "2.1.7",
+    "repo:.agents/skills/ai-videos-pipeline/SKILL.md": "2.1.8",
+    "repo:.agents/references/project/ai_video_workflow.md": "2.1.9",
+    "repo:tools/workflow_catalog.py": "2.1.10",
+    "repo:.agents/references/validation/general.md": "2.1.11",
+    "repo:.agents/skills/agent-team/playbooks/interview.md": "2.1.12",
+    "repo:.agents/skills/agent-team/playbooks/research.md": "2.1.13",
+    "repo:.agents/skills/agent-team/playbooks/validation.md": "2.1.14",
+    "repo:.agents/references/interview/general.md": "2.1.15",
+    "repo:.agents/references/research/general.md": "2.1.16",
+    "repo:.agents/agents/qc-reviewer.md": "2.1.17",
+    "repo:.kimi-code/mcp.json": "2.1.18",
+    "repo:.kimi-code/plugin/hooks/repo_hook.py": "2.1.19",
+    "repo:.kimi-code/plugin/kimi.plugin.json": "2.1.20",
+    "user:.kimi-code/AGENTS.md": "2.1.21",
+    "user:.kimi-code/config.toml": "2.1.22",
+    "user:.kimi-code/mcp.json": "2.1.23",
+    "user:.kimi-code/tui.toml": "2.1.24",
+    "repo:tools/check_agent_skills.py": "2.1.25",
+    "repo:.agents/mcp.json": "2.1.26",
+    "repo:.codex/config.toml": "2.1.27",
+    "repo:tools/sync_agent_config.py": "2.1.28",
+    "user:.codex/AGENTS.md": "2.1.29",
+    "user:.codex/config.toml": "2.1.30",
     "repo:projects/ai_video_management/libs/common/production_key.py": "2.2.1",
     "repo:projects/ai_video_management/libs/domain/entities/episode_workflow__entity.py": "2.2.2",
     "repo:projects/ai_video_management/libs/common/episode_workflow.py": "2.2.3",
@@ -1526,6 +1663,8 @@
     "repo:projects/ai_video_management/libs/infrastructure/readers/shot_materials__reader.py": "2.2.10",
     "repo:projects/ai_video_management/libs/infrastructure/readers/shot_pack__reader.py": "2.2.11",
     "repo:projects/ai_video_management/libs/infrastructure/readers/shot_renders__reader.py": "2.2.12",
+    "repo:projects/ai_video_management/README.md": "2.2.13",
+    "repo:projects/ai_video_management/libs/infrastructure/readers/tree__reader.py": "2.2.14",
     "repo:tools/previz/review.py": "2.3.1",
     "repo:tools/shot_overhead.py": "2.3.2",
     "repo:tools/gen_turntable_videos.py": "2.3.3",
@@ -1652,6 +1791,19 @@
     "repo:tools/edu_package.py": "2.3.124",
     "repo:tools/edu_review.py": "2.3.125",
     "repo:ai_videos/xihuan/framework/check.py": "2.3.126",
-    "repo:tools/edu_web.py": "2.3.127"
+    "repo:tools/edu_web.py": "2.3.127",
+    "repo:tools/audio_preview.py": "2.3.128",
+    "repo:tools/edit_blind_test.py": "2.3.129",
+    "repo:tools/filming_lint.py": "2.3.130",
+    "repo:tools/local_3d.py": "2.3.131",
+    "repo:tools/mcp_request_log.py": "2.3.132",
+    "repo:tools/motion_check.py": "2.3.133",
+    "repo:tools/person_motion.py": "2.3.134",
+    "repo:tools/review_run.py": "2.3.135",
+    "repo:tools/scene_board.py": "2.3.136",
+    "repo:tools/shot_junctions.py": "2.3.137",
+    "repo:tools/character_review.py": "2.3.138",
+    "repo:tools/tests/test_asset_groups.py": "2.3.139",
+    "repo:tools/tests/test_review_run.py": "2.3.140"
   }
 }

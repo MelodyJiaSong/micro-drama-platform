@@ -10,7 +10,7 @@ test("global sources use nested navigation and precise source selection", async 
   page.on("pageerror", error => errors.push(error.message));
   page.on("request", request => { if (!["GET", "HEAD"].includes(request.method())) writes.push(request.url()); });
   await page.goto(globalSourceUrl("repo:AGENTS.md"));
-  await expect(page.getByRole("heading", { name: /Claude \/ Codex 共用入口/, level: 1 })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Kimi \/ Codex 共用工作入口/, level: 1 })).toBeVisible();
   const item = page.locator(`[data-path="/workflow/source/${encodeURIComponent("repo:AGENTS.md")}"]`);
   await expect(item).toHaveAttribute("aria-level", "4");
   await expect(item).toHaveAttribute("aria-selected", "true");

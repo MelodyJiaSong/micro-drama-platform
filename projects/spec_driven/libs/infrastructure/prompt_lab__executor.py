@@ -44,7 +44,7 @@ def _now() -> str:
 
 
 class PromptLabExecutor:
-    """Spawns a headless, fully-autonomous `claude` session in an item's workspace (FR-44)."""
+    """Runs the configured Kimi or Codex CLI in an item's workspace (FR-44)."""
 
     def __init__(self, exposed: ExposedTree, resolver: SafeResolver) -> None:
         self._exposed = exposed
@@ -63,7 +63,10 @@ class PromptLabExecutor:
         if not prompt:
             raise PromptLabPathRejected()
 
-        exe = _which_claude()
+        runtime = os.environ.get("PROMPT_LAB_RUNTIME", "kimi")
+        if runtime not in {"kimi", "codex"}:
+            raise PromptLabExecUnavailable()
+        exe = _which_runtime(runtime)
         if not exe:
             raise PromptLabExecUnavailable()
 
@@ -75,8 +78,12 @@ class PromptLabExecutor:
         output_path = item_dir / "output.txt"
 
         log_fh = open(output_path, "w", encoding="utf-8", errors="replace")
-        in_fh = open(run_prompt_path, "r", encoding="utf-8")
-        args = ["--print", "--permission-mode", "bypassPermissions"]
+        instruction = f"Read {run_prompt_path} and execute its complete task. Do not ask questions."
+        args = (
+            ["--prompt", instruction, "--output-format", "text", "--add-dir", str(item_dir)]
+            if runtime == "kimi"
+            else ["exec", "--sandbox", "workspace-write", "--add-dir", str(item_dir), instruction]
+        )
         cmd = (
             [os.environ.get("COMSPEC", "cmd.exe"), "/c", exe, *args]
             if os.name == "nt"
@@ -84,26 +91,25 @@ class PromptLabExecutor:
         )
         try:
             proc = subprocess.Popen(
-                cmd, stdin=in_fh, stdout=log_fh, stderr=subprocess.STDOUT, cwd=str(workspace)
+                cmd, stdin=subprocess.DEVNULL, stdout=log_fh, stderr=subprocess.STDOUT, cwd=str(workspace)
             )
         except OSError:
             log_fh.close()
-            in_fh.close()
             raise PromptLabExecUnavailable()
 
         run_id = str(int(time.time()))
         started = _now()
         self._write_status(
             item_dir,
-            {"state": "running", "pid": proc.pid, "run_id": run_id,
+            {"state": "running", "pid": proc.pid, "run_id": run_id, "runtime": runtime,
              "started_at": started, "ended_at": None, "exit_code": None},
         )
         threading.Thread(
             target=self._finalize,
-            args=(proc, item_dir, log_fh, in_fh, run_id, started),
+            args=(proc, item_dir, log_fh, run_id, started, runtime),
             daemon=True,
         ).start()
-        return {"state": "running", "run_id": run_id, "path": prompt_rel}
+        return {"state": "running", "run_id": run_id, "path": prompt_rel, "runtime": runtime}
 
     def status(self, prompt_rel: str) -> dict[str, Any]:
         item_dir, _ = self._item(prompt_rel)
@@ -112,6 +118,7 @@ class PromptLabExecutor:
             st["state"] = "stopped"
         return {
             "state": st.get("state", "idle"),
+            "runtime": st.get("runtime"),
             "run_id": st.get("run_id"),
             "started_at": st.get("started_at"),
             "ended_at": st.get("ended_at"),
@@ -141,16 +148,15 @@ class PromptLabExecutor:
             raise PromptLabFileNotFound()
         return resolved.parent, resolved
 
-    def _finalize(self, proc, item_dir, log_fh, in_fh, run_id, started) -> None:
+    def _finalize(self, proc, item_dir, log_fh, run_id, started, runtime) -> None:
         code = proc.wait()
-        for fh in (log_fh, in_fh):
-            try:
-                fh.close()
-            except OSError:
-                pass
+        try:
+            log_fh.close()
+        except OSError:
+            pass
         self._write_status(
             item_dir,
-            {"state": "succeeded" if code == 0 else "failed", "pid": proc.pid,
+            {"state": "succeeded" if code == 0 else "failed", "pid": proc.pid, "runtime": runtime,
              "run_id": run_id, "started_at": started, "ended_at": _now(), "exit_code": code},
         )
 
@@ -169,10 +175,10 @@ class PromptLabExecutor:
         (item_dir / "status.json").write_text(json.dumps(status), encoding="utf-8")
 
 
-def _which_claude() -> str | None:
+def _which_runtime(runtime: str) -> str | None:
     import shutil
 
-    return shutil.which("claude")
+    return shutil.which(runtime)
 
 
 def _alive(pid: Any) -> bool:

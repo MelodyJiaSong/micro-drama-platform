@@ -3,14 +3,14 @@
 **Stack:** single `index.html` + Three.js via CDN · **Est:** 15–30 min · **Output:** a 3D world you fly through in-browser
 
 ## ✨ 1. Expectation — what you'll get
-Pick a time-of-day vibe and a movement style, and Claude builds a low-poly floating island suspended over a void that you actually pilot in real time: click to capture the mouse, fly with WASD, and roam past animated water lapping the island's edge, trees swaying in the breeze, clouds drifting overhead, soft dynamic shadows, fireflies that wink on as dusk falls, and a slow day/night cycle that recolors the whole sky — all wrapped in a warm bloom glow. It runs from a single HTML file in one browser tab (Three.js streams from a CDN, no install) and holds a smooth ~60fps on a laptop. The result is a living, atmospheric 3D world you can explore and screenshot the moment it opens.
+Pick a time-of-day vibe and a movement style, and the agent builds a low-poly floating island suspended over a void that you actually pilot in real time: click to capture the mouse, fly with WASD, and roam past animated water lapping the island's edge, trees swaying in the breeze, clouds drifting overhead, soft dynamic shadows, fireflies that wink on as dusk falls, and a slow day/night cycle that recolors the whole sky — all wrapped in a warm bloom glow. It runs from a single HTML file in one browser tab (Three.js streams from a CDN, no install) and holds a smooth ~60fps on a laptop. The result is a living, atmospheric 3D world you can explore and screenshot the moment it opens.
 
 **Why it's cool:** It's the most jaw-dropping "show this to anyone" demo in the library — a self-contained file with no build step that produces a breathing, cinematic 3D environment, complete with post-processing bloom and a moving sun, that you'd swear came out of a game engine.
 
 **Use cases:** Use it as the centerpiece "wow" exhibit in a creative-coding portfolio or demo reel; spin it up as a Three.js project starter and grow it into a walking sim, level, or product showcase; study the one file to learn scene graphs, PointerLock/Orbit camera controls, shader-ish water, and post-processing passes; or run it live as a teaching demo for how real-time 3D lighting and day/night cycles work in the browser.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away: paste the prompt below into Claude Code in an empty folder, answer the 2 short setup questions (time of day, movement style), then it builds autonomously to completion and opens the scene. Click to capture the mouse, WASD to fly. Prerequisites: none — opens in any modern browser (Three.js loads from a CDN).
+Copy-paste-and-walk-away: paste the prompt below into Kimi / Codex in an empty folder, answer the 2 short setup questions (time of day, movement style), then it builds autonomously to completion and opens the scene. Click to capture the mouse, WASD to fly. Prerequisites: none — opens in any modern browser (Three.js loads from a CDN).
 
 ## 🔗 3. Reference & prior art
 

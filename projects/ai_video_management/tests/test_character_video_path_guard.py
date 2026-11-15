@@ -10,13 +10,13 @@ refactor: the predicate was a `@staticmethod` whose body reached for
 The predicate needs the repo root because the owning folder is **two or three**
 segments (`ai_videos/{drama}` vs `ai_videos/{series}/{drama}`) and only the
 filesystem knows which — `libs.common.drama_ref` is the single place allowed
-to answer that (CLAUDE.md forbids re-deriving it from path depth).
+to answer that (CONVENTIONS.md forbids re-deriving it from path depth).
 
 Second regression, found 2026-09-20 extracting 艾拉's views: the predicate asked
 `drama_ref.drama_depth`, which answers None for `ai_videos/{series}/_series/`
 because `_series` is not a drama. That is right for anything keyed to an episode
 and wrong here — a character several episodes share has its ONLY home under
-`_series/characters/` (CLAUDE.md § AI video rules, 2026-09-15), so every button
+`_series/characters/` (CONVENTIONS.md § AI video rules, 2026-09-15), so every button
 on a shared character's turntable video returned `not_a_character_video`. It now
 asks `drama_ref.asset_root_depth`, which accepts both owners.
 

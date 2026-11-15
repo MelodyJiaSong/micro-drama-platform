@@ -353,8 +353,7 @@ def feedback(sd: Path, text: str) -> Path:
 def log_gate(drama: str) -> bool:
     """提交前查本剧 follow-up 日志：**本会话自己**的条目撞号 / 格式不对 / 待补超时就不提交。
 
-    Codex 没有 Stop 钩子，Claude 的钩子拦不到 Codex——拦截写进两边都调用的出片工具，才对等
-    （dota_yingxiong follow-up 263）。项目不在 specs 日志体系里的不拦。
+    拦截同时放在出片工具里，不只依赖 Kimi Stop hook。项目不在 specs 日志体系里的不拦。
     只拦自己、不拦别的会话丢下的条目，没有单点拦截（follow-up 280）。
     """
     import followup
@@ -365,7 +364,7 @@ def log_gate(drama: str) -> bool:
     for pr in probs:
         print("  ✗ 日志：%s %s" % (pr.kind, pr.detail))
     if probs:
-        print("  ✗ 先用 python tools/followup.py done 收尾本会话的条目再提交（Claude / Codex 同一道关）")
+        print("  ✗ 先用 python tools/followup.py done 收尾本会话的条目再提交")
     return not probs
 
 
@@ -396,10 +395,10 @@ def next_steps(folder: Path) -> None:
     if not drama or not (drama / qc.DRAMA_REG).exists():
         return
     rel = folder.relative_to(REPO).as_posix()
-    print("  → 自检（Claude / Codex 通用）：")
+    print("  → 自检（Kimi）：")
     print("     python tools/motion_check.py %s/*_clip.mp4 --action <起势结束>-<收势开始> --sheet %s/sheet_4fps.jpg" % (rel, rel))
     print("     python tools/qc.py record %s --check video.slowmo=pass|fail --by machine --evidence \"…\"" % rel)
-    print("     python tools/qc_review.py %s        # 另起进程独立审稿，默认换另一个模型" % rel)
+    print("     python tools/qc_review.py %s        # 另起 Kimi 进程独立审稿" % rel)
     print("     python tools/qc.py gate %s          # 不过不交、不进成片" % rel)
 
 

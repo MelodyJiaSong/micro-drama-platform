@@ -1,0 +1,16 @@
+# s6 st2（场内第 3 个镜头）
+
+- 设计时长：15 秒；出场：c1, c5；单拍
+- 送给模型的 prompt：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s6\shots\st2\资料包\prompt.txt`；参考清单：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s6\shots\st2\资料包\manifest.json`
+- 规划图：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s6\shots\st2\planning\st2_first_frame.png`
+- 规划图：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s6\shots\st2\planning\st2_overhead.png`
+- 规划图：`C:\workspace\micro-drama-platform\ai_videos\chuanyue_yiri\episodes\ep01\scenes\s6\shots\st2\planning\st2_overhead_ref.png`
+
+## 分镜规格
+**看点**（这一镜要观众看懂或感到什么；只给审查用，不进 prompt）：女店主竖着四指要价，三枚小钱不够，Riley 只好交出最后那枚大黄铜币，她全收下不找零：Riley 身上一文不剩
+**动作**：车门口：Fortunata 的右手伸在两人中间、掌心朝上，左手在胸前竖着四根手指（四指张开朝上、拇指弯进掌心、手背朝她自己，一眼数得出是四）。Riley 把攥着钱的右手伸过去摊开，掌心朝上：手心里正好 3 枚红铜小钱和 1 枚明显大一圈的金黄大黄铜币。她用左手拇指和食指、中指把 3 枚小钱错开捏成一小排（三枚边挨着边，像一把小扇子），整排一次放进 Fortunata 摊开的手心，手指碰到她的手掌再松开；放下后 3 枚小钱在她掌心里错开摊着、互不重叠，看得清是 3 枚（钱一直在手指里或掌心上）。Fortunata 低头看看手心的 3 枚，目光往 Riley 右手心那枚大币上一落，再抬眼看 Riley：右手不收回，左手四指还竖着、轻轻晃一下。Riley 叹口气，用左手把右手心里那枚大黄铜币捏起来，放在那 3 枚小钱旁边，松手。Fortunata 低头瞄一眼那枚大币，用拇指拨一下看看成色，放下左手，右手合上攥成拳，4 枚全收下、不找零；点头说 Convenit；左手拉开腰间小皮钱袋袋颈上的绳结、用手指把袋口撑开，右手的拳头伸到袋口，把钱放进去，抽出空手，再用左手把绳子一拉、扎紧袋口。Riley 摊开两只空手看看，冲她苦笑；Fortunata 瞥一眼她的空手，嘴角微微动一下、肩膀轻轻一耸，侧过头看向身边墙龛里的灯。Fortunata 腰带上只挂一个拳头大的小皮钱袋。道具：钱（p2）付前 Riley 右手心正好 3 枚红铜小钱＋1 枚大黄铜币 → 付出 1.5–3.5 秒 3 枚小钱、6–7.5 秒大黄铜币 → 付后 Riley 手里 0 枚；Fortunata 手心里先是正好 3 枚，再是正好 3 枚加 1 枚大币，8.5 秒攥在她右拳里，10–13 秒收进她腰间的小皮钱袋（袋颈本来用绳子扎着，她先拉开，放完再扎紧）。油灯（p1）进场、出场都在墙龛里点着。画面里只有 Fortunata 和 Riley 两个人。
+**走位**：两人在车门口面对面，相距约一米：Fortunata 在画左、Riley 在画右；两人伸出的手在画面中间。墙龛和那盏灯在 Fortunata 身后左上方。镜头在两人侧面、略偏 Riley 一侧，离 Riley 一米三、离 Fortunata 一米九左右，眼平。配角：Fortunata 一直看着 Riley 的手和脸：3.5–5 秒在想「三枚？我说的是四」，瞥见她手里还有一枚大币；收到大币先看一眼成色，想「这还差不多」，全收下，9 秒点头成交；收好钱后看到 Riley 的空手，知道她身上没钱了，嘴角动一下，转头去拿灯。Riley 10–13 秒看着钱进了钱袋，慢慢放下右手。
+**节拍**：0–1.5秒 Fortunata 右手掌心朝上伸在两人中间，左手在胸前竖着四根张开的手指、拇指弯进掌心，看着 Riley 的手；Riley 的右手摊开伸在两人中间偏她那边，掌心朝上：正好 3 枚红铜小钱和 1 枚大黄铜币，她低头看着，左手垂在身侧，没人说话；1.5–3.5秒 Riley 用左手拇指和食指、中指把 3 枚小钱错开捏成一小排，整排放进 Fortunata 的手心，手指碰到她的手掌再松开；3 枚小钱在她掌心里错开摊着、互不重叠，看得清是 3 枚，没人说话；3.5–5秒 Fortunata 低头看手心里的 3 枚钱，目光往 Riley 右手心那枚大币上一落，再抬眼看 Riley；右手停着不收回，左手四指还竖着、轻轻晃一下，不说话；5–6秒 Riley 叹一口气，肩膀一沉，低头看右手心里剩下的那枚大黄铜币，不说话；6–7.5秒 Riley 用左手把那枚大黄铜币捏起来，放在 Fortunata 手心里那 3 枚小钱旁边，松手；Fortunata 手心里正好 3 枚小钱加 1 枚大币，不说话；7.5–8.5秒 Fortunata 低头瞄一眼那枚大币，拇指拨一下，放下左手，右手合上攥成拳，不说话；8.5–10秒 Fortunata 点一下头，干脆地说 Convenit.（8.8–9.6秒）；10–13秒 Fortunata 左手拉开腰间小皮钱袋袋颈上的绳结，用左手手指把袋口撑开，右手的拳头伸到袋口松开，钱落进袋里，抽出空手，左手把绳子一拉、扎紧袋口；Riley 看着钱进了钱袋，慢慢放下右手，不说话；13–15秒 Riley 摊开两只空手看了看，冲 Fortunata 苦笑一下；Fortunata 瞥一眼她的空手，嘴角微微动一下、肩膀轻轻一耸，侧过头看向身边墙龛里的灯，不说话
+**镜头**：他拍：中景双人，两人腰以上，35mm 镜头感，从两人侧面、略偏 Riley 一侧拍，眼平，离两人的手一米六左右，固定机位；两人伸出的手在画面中间，Fortunata 摊开的手掌朝上，手心里的钱清楚可数；墙龛和灯在画面左上；Riley 两只手都在画面里：右手托着钱，左手捏钱、放钱；Fortunata 竖四指的左手也在画面里。
+**光线**：日落后的傍晚：太阳已落到城西边，西边天空余下一点橙色、头顶蓝紫，天空干净；街面发暗，两人身上是柔和的余晖天光；墙龛里那盏小陶油灯的火苗是近处唯一的暖光，给两人的手和脸添一点暖色。
+**台词**：Fortunata（拉丁语，古典发音 KON-weh-nit；干脆，点一下头）：Convenit.

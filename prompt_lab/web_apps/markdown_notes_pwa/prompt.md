@@ -10,7 +10,7 @@ Run the prompt, pick a theme and layout, and it builds a real Progressive Web Ap
 **Use cases:** Carry a fast, private, offline-first notes app that lives only on your device with no cloud account; keep a portfolio piece that proves you can ship installable, offline-capable web apps; draft markdown for docs, journaling, or code snippets on flaky or no connectivity; or read the generated service-worker precache, IndexedDB autosave, and `beforeinstallprompt` code to learn exactly how PWAs are built.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away. Drop the prompt below into Claude Code in an empty folder, answer the 2 short setup questions (theme default, editor layout), and it builds autonomously, self-reviewing against a checklist until done. Prerequisites: a PWA must be served over http (not file://), so it needs a tiny static server — the prompt sets one up with `python -m http.server 8080`, starts it, and opens the app at the end.
+Copy-paste-and-walk-away. Drop the prompt below into Kimi / Codex in an empty folder, answer the 2 short setup questions (theme default, editor layout), and it builds autonomously, self-reviewing against a checklist until done. Prerequisites: a PWA must be served over http (not file://), so it needs a tiny static server — the prompt sets one up with `python -m http.server 8080`, starts it, and opens the app at the end.
 
 ## 🔗 3. Reference & prior art
 

@@ -14,11 +14,11 @@
 
 首次部署先运行 `setup.ps1`（Python + Node.js/npm）；前端源码在 `apps/ui/`，`npm ci` 后 `npm run build` 输出到 `apps/api/static/`。源码与锁文件保留，构建产物和 node_modules 不进 Git。API 挂载 `/ui/`，不会覆盖 `/v1` 或 `/docs`；本机 token 认证继续适用。前端修改后重新构建，API 首次挂载静态目录需重启服务。
 
-**v0.2 代理入口：**同一请求 schema 同时用于 HTTP、JSON CLI 和 10 个 stdio MCP 工具；共用 skill 为 `$suno-music`（Codex）/ `/suno-music`（Claude Code）。Advanced 人声须写歌词；Simple 可让 Suno 根据 prompt 写词。新增模式与更多控件通过离线 Chrome 测试，真实账号仍受下述验证码阻塞，不能将“接口已实现”理解为“所有 Suno 页面已实测”。
+**v0.2 代理入口：**同一请求 schema 同时用于 HTTP、JSON CLI 和 10 个 stdio MCP 工具；Kimi 共用 skill 为 `/skill:suno-music`。Advanced 人声须写歌词；Simple 可让 Suno 根据 prompt 写词。新增模式与更多控件通过离线 Chrome 测试，真实账号仍受下述验证码阻塞，不能将“接口已实现”理解为“所有 Suno 页面已实测”。
 
-## Claude Code / Codex 快速接入
+## Kimi / Codex 快速接入
 
-仓库根执行 `./projects/suno_browser_service/install-agents.ps1`，会保留其他 MCP 配置，添加 `suno-browser`：Claude 使用本仓库 `.mcp.json`，Codex 使用其 MCP 注册命令。也可传 `-Client Claude` 或 `-Client Codex`。重启 agent 会话后发现工具；当前会话的工具列表不自动热加载。
+仓库根执行 `./projects/suno_browser_service/install-agents.ps1`，校验 `.agents/mcp.json` 的 Suno 路径后生成 `.kimi-code/mcp.json` 和 `.codex/config.toml`。其他服务保留在共用定义中；不修改用户配置或凭据。重启 Kimi / Codex 后查看实际 MCP 连接状态；Codex 项目配置需要项目已受信任。两端分别使用 `/skill:suno-music` / `$suno-music`，或自然语言指定同一 skill。
 
 MCP 工具：`suno_capabilities`、`suno_plan`、`suno_upload_reference`、`suno_create`、`suno_get_job`、`suno_list_jobs`、`suno_wait_job`、`suno_resume_job`、`suno_cancel_job`、`suno_download`。工具有类型化参数、结构化结果和读写提示。capabilities 暴露机器可读 JSON schema、实现/实测边界和队列暂停状态；plan 只做本机检查，不建任务、不收费。
 

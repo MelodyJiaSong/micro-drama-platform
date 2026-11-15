@@ -41,13 +41,13 @@ Julian，一个四十岁左右、儒雅沉稳的中美混血男子，走进一�
 | 调研建议 | 同类视频调研 h01 的建议已写进 `bible.md`（开场成品一闪与 15 秒亮钟、随身物清单、做饭小段、合段屋内小仪式、秘密感、手与内景审查等）；不跨日，天气考试改成雨中一滴不漏 | 用户 2026-11-08「就按照你的建议来」 |
 | 待议 | 每 3–5 集剪一个 15–25 分钟合集（h01 #20：破千万的真人样本都在 10 分钟以上），成片交付模块再定 | 代理提议 |
 | 流程 | 照 Portal Travel：六模块、每集考据、出片前审查闸门（`review_gate: required`），出片由用户确认 | 用户 2026-11-08 |
+| 蚂蟥特写 | s6 st3 的 4 秒蚂蟥特写按「环境细节」保留，不占 bible §3 的每集一次访客名额 | 用户 2026-11-15 |
 
 ## 待用户定
 
-1. **确定 EP01 版本**：故事 v3.1 与分镜（8 场 58 镜 366 秒）都还没确定（`approved_revision` 为空）；确定分镜后才能 Prompt 编译、开出片前审查单。在管理站故事页、分镜页点「确定」。
-2. **两处考据取舍**（代理暂定，见 `episodes/ep01/0_research/dossier.md` 顶部「故事采用与偏离」）：竹筒作容器、本南人拍水引鱼的钓法。不认可就改故事 s6。
+1. **EP01 出片后审查与剪辑**：14 项独立出片审查已完成，40 条问题已登记；用户已批准 s4 st5、s4 st8、s8 st5 三镜质量重出（约 400 积分），s2 st4 接受现构图。s2/s3/s6/s8 的 `cut_v2.json` 是审查后的精剪草稿，未锁片；锁片仍需用户批准。
+2. **两处考据取舍**（代理暂定，见 `episodes/ep01/0_research/dossier.md` 顶部「故事采用与偏离」）：竹筒作容器、本南人拍水引鱼的钓法。
 3. **时长范围**：不设（用户 2026-11-14：「不需要时间限制」）。
-4. **已知残留**（代理判断可以先审再说，详见 `episodes/ep01/decisions/filming.md`「故事板审稿 r2 处理」）：开场 s1（= s8 st5）门画得比锁定的 0.7×1.2 米大；s8 st6 岩坎看着偏低；几镜砍刀挂在右胯；s5 st7 删了「堵透光的缝」这一拍；s8 闪电的科学依据未找到出处；一天的时间表偏紧。
 
 ## 文件
 
@@ -58,18 +58,20 @@ Julian，一个四十岁左右、儒雅沉稳的中美混血男子，走进一�
 | [workflow.json](workflow.json) | 新流程声明：片种、时长范围、Seedance 风格与负面词、出片前审查闸门 |
 | `0_research/` | 系列级参考：[h01 同类视频怎么拍](0_research/parts/h01_同类视频怎么拍.md)（YouTube 35 条 + B 站 10 条）；每集考据在该集目录 |
 | `2_世界观人设/` | [series.md](2_世界观人设/series.md)（全剧方向与伏笔账本）；`characters/c1_Julian`（含雨林装 c1-1）、`background/borneo_ep01`（bg1–bg8 与状态图）、`props`（p1–p8） |
-| `episodes/epNN/` | 每集产物：ep01 雨林（考据、故事 v3.1、分镜 58 镜、故事板） |
+| `episodes/epNN/` | 每集产物：ep01 雨林（考据、故事 v3.1、分镜 67 镜、故事板、720p 正式条与初接时间线） |
 | `_legacy/` | 旧流程产物：hy1 雨林、hy2 红杉、hy3 草崖、hy4 深雪、二十部提案 `proposal.md`、旧圣经 `_series/series_bible.md`；只读，见 `_legacy/OBSOLETE.md` |
 
 需求记录：`specs/ai_video/huangye_shenghuo/user_input/`。收费服务的请求日志写在归属目录的 `request_log.md`，经 `tools/service_request.py` / `tools/service_call.py` 写入。
 
-## 状态（2026-11-14）
+## 状态（2026-11-15）
 
 - 系列骨架已按新标准建好；Vision 与第一集（雨林）用户已认可。
 - 主角 Julian 已定：立绘、三视图、4 秒建立视频、雨林装 c1-1 都已做好；人物审阅页 `/character-review?path=ai_videos/huangye_shenghuo/2_世界观人设/characters/c1_Julian`。
 - EP01 场地俯视图与门口视线剖面：`episodes/ep01/decisions/site_map.png`（房子、溪、洪水范围、砾石滩、两棵树的相对位置与距离）。
 - EP01 雨林：2026-11-14 空间一致性一轮（follow-up 023）：Blender 白模定尺度（`2_世界观人设/background/borneo_ep01/_blockout/`）、内外景独立审稿 `episodes/ep01/decisions/spatial_review_r1_*.md` 与复核 `spatial_review_r2.md`；锁定表补正；屋内参考 bg6/bg6-1 重画并新增雨夜惬意版 bg6-2/bg6-3；加三段做饭；处理记录在 `decisions/filming.md` 末尾。
-- EP01 雨林：考据完成；故事 v3.1（冷读三轮）；分镜 8 场 58 镜 366 秒；背景 bg1–bg8 与小屋状态图、道具 p1–p8 已建；每镜 overhead、首帧图与场故事板齐，经代理逐张看图和独立审稿两轮修订（`episodes/ep01/decisions/storyboard_review_r1.md`、`_r2.md`，处理记录在 `decisions/filming.md`）。
+- EP01 雨林：考据完成；故事 v3.1（冷读三轮）；分镜 8 场 67 镜 436 秒；背景 bg1–bg8 与小屋状态图、道具 p1–p8 已建；每镜 overhead、首帧图与场故事板齐，经多轮独立审稿修订，处理记录在 `decisions/filming.md`。
   - 故事板：`/scene-preview?path=ai_videos/huangye_shenghuo/episodes/ep01/scenes/s1`（s1–s8 换末尾）
   - 分镜：`/drama?drama=ai_videos%2Fhuangye_shenghuo&episode=ep01&module=filming`；故事：`…&module=story`
-- 下一步：用户审故事板并确定故事、分镜版本 → Prompt 编译 → 出片前审查 → 用户点出片。
+- EP01 出片前审查（follow-up 026）：3 轮 Claude 单审，问题由约 47 → 26 → 17 条严重逐轮修；故事、分镜已确定，Prompt 已编译、资料包 67 镜一致；r3 收轮结论「可出片」。修复记录在 `episodes/ep01/decisions/filming.md` 末尾。
+- EP01 正式条（follow-up 028）：67/67 镜 720p 已下载并完整解码，67 份标注有效且与视频 SHA 对齐；首轮成功条回执合计 8,580 积分。账户余额本批前后为 90,142 → 81,472（差 8,670，与回执合计差 90，未归因到单镜）。出片审查 r1 的 14 项已全部完成并逐条登记；用户随后批准三镜质量重出，s4_st5、s4_st8、s8_st5 已成功出片，回执合计 400 积分。s8_st5 前 4 秒已本地复用到 s1，未另收费。
+- 下一步：定向复核 `reviews/ep01_20261115-175127_take_r2`（s1/s4/s8，10 项 Kimi 单审）→ 整集剪辑与场级审查 → 用户批准锁片。s2/s3/s6/s8 已有精剪草稿，s1/s4/s8 已接入新条；全部仍未锁片。

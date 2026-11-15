@@ -1,5 +1,5 @@
 /** 流程与自检：仓库级（对所有剧生效）与剧级（只对一部剧生效）分开展示、不混。
- * 页面只读；「管理」＝ 复制一段写好的指令给 Claude Code / Codex 执行，规则文件只由代理改（日志与锁不被绕过）。 */
+ * 页面只读；「管理」＝ 复制一段写好的指令给 Kimi / Codex 执行，规则文件只由代理改（日志与锁不被绕过）。 */
 
 export const PROCESS_QC_REPO_PATH = "/workflow/qc";
 export const PROCESS_QC_DRAMA_ROUTE = "/qc";

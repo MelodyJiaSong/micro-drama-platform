@@ -1,6 +1,6 @@
 # prompt_lab — autonomous AI build prompts for Opus 4.8
 
-A personal library of **copy-paste prompts** that turn Claude Code (Opus 4.8) into a one-shot builder.
+A personal library of **copy-paste prompts** that turn Kimi / Codex into a one-shot builder.
 Every task is designed to:
 
 - **Run locally with near-zero setup** — single HTML files that open in a browser, or Python/Node
@@ -8,12 +8,12 @@ Every task is designed to:
 - **Run as a "Ralph loop"** — after a tiny setup Q&A, the agent works *autonomously*: it builds,
   self-reviews against an explicit acceptance checklist, fixes what fails, and repeats until the
   checklist passes or a round cap is hit. **No babysitting after you answer the first questions.**
-- **Impress** — each one is chosen to show off something Claude does shockingly well.
+- **Impress** — each one is chosen to show off something the agent does shockingly well.
 
 ## How to use a task
 
 1. Make an **empty folder** somewhere outside this repo, e.g. `mkdir ~/lab/gravity-golf && cd ~/lab/gravity-golf`.
-2. Open Claude Code in that folder.
+2. Open Kimi / Codex in that folder.
 3. Open the task `.md`, copy the block under **📋 COPY-PASTE PROMPT**, paste it as your first message.
 4. Answer the 2–4 setup questions. Then walk away — it loops to completion and opens/runs the result.
 
@@ -24,7 +24,7 @@ Every task is designed to:
 
 Each task is its own folder — `prompt_lab/{category}/{task}/` with `prompt.md` (the instruction) and a
 `workspace/` where a run builds. In the **spec_driven webapp's Prompt Lab section** you can hit **▶ Execute**
-on any task: it spawns a headless, fully-autonomous `claude` session in that task's `workspace/`, answers
+on any task: it spawns a headless, fully-autonomous Kimi / Codex session (selected by `PROMPT_LAB_RUNTIME`, default `kimi`) in that task's `workspace/`, answers
 every setup question itself with sensible defaults, and **logs each decision** (`decisions.jsonl`). The run's
 status, the decisions it made, live output, and generated files all show up in the UI; ⏹ Stop cancels it.
 

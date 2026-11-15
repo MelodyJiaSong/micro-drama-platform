@@ -91,7 +91,7 @@ def check(cfg: dict, scene: str) -> list[str]:
     """schema 判据住在 `tools/previz/planschema.py`（bpy-free，与场景引擎共用同一份）。
 
     本函数只是薄壳：**判据不许在这里再写一遍**，否则平面图与 `.blend` 会对同一份 toml
-    给出两套「合格」的定义，而两边都不会报错（CLAUDE.md § 一个名字只有一处定义）。
+    给出两套「合格」的定义，而两边都不会报错（CONVENTIONS.md § 一个名字只有一处定义）。
     """
     return planschema.check(cfg, scene, known_bg=bg_dirs(scene))
 
@@ -360,7 +360,7 @@ def write_table(cfg: dict, scene: str) -> str:
 
 def audit(root: str, strict: bool) -> int:
     """全仓覆盖率。**默认只报告、退出 0**——「必备」是靠下游消费者跑不起来来咬人的，
-    不是靠一次全仓盘点去点名旧剧（CLAUDE.md 2026-09-06 不回溯）。`--strict` 才判错。"""
+    不是靠一次全仓盘点去点名旧剧（CONVENTIONS.md 2026-09-06 不回溯）。`--strict` 才判错。"""
     rows = planschema.audit(root)
     owns = [r for r in rows if r[1] == "owns"]
     pts = [r for r in rows if r[1] == "points"]

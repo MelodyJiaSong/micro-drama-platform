@@ -10,7 +10,7 @@ You type one command like `python agent.py "what are the biggest files here and 
 **Use cases:** Keep it as a quick "what's eating my disk / what changed recently" CLI you actually run on cluttered project folders. Read its source to learn the plan→act→observe→synthesize agentic-loop pattern and how to drive a `rich` `Live` task tree with spinners and per-step state. Use it as a crisp, no-keys demo of "agentic AI" reasoning for a talk or workshop. Fork the tool registry to answer questions about a specific repo or download dump without ever sending data off your machine.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away: drop the prompt below into Claude Code in an empty folder, answer 2 short setup questions, then it builds and demos itself autonomously on a sample question. Prerequisite: `pip install rich` (the prompt runs this). No network, no API keys.
+Copy-paste-and-walk-away: drop the prompt below into Kimi / Codex in an empty folder, answer 2 short setup questions, then it builds and demos itself autonomously on a sample question. Prerequisite: `pip install rich` (the prompt runs this). No network, no API keys.
 
 ## 🔗 3. Reference & prior art
 

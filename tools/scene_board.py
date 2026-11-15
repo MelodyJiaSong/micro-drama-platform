@@ -9,7 +9,7 @@
     `scene_board.json`       每格的镜头、镜组、图、文字、起止秒，以及来源指纹（镜组板 sha256 + 本场分镜）
     `scene_board.png`        整场一张图：每格图片在上、文字在下、底部标「0–8 秒」，从左到右、每行 4 格往下排
 镜组板是 N 格网格：N ≤ 4 按 2×2，更多按 3 列；格间留白在切图时去掉一圈。没写镜组的单镜用它的首帧图 `shots/stN/planning/stN_first_frame.png` 当一格（chuanyue_yiri follow-up 020）；两样都没有的画一张「还没有故事板」的占位格。
-`tools/shot_pack.py sync` 每次同步资料包后顺带更新（Claude Stop hook 每回合跑），所以改了镜组板，场故事板一定跟着更新。
+`tools/shot_pack.py sync` 每次同步资料包后顺带更新（Kimi Stop hook 每回合跑），所以改了镜组板，场故事板一定跟着更新。
 """
 from __future__ import annotations
 

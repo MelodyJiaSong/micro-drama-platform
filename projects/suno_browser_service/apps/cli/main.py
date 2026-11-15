@@ -14,7 +14,7 @@ from pydantic import ValidationError
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Suno JSON CLI for Claude Code, Codex and shell programs. Token stays in local storage.")
+    parser = argparse.ArgumentParser(description="Suno JSON CLI for Kimi Code, Codex and shell programs. Token stays in local storage.")
     subs = parser.add_subparsers(dest="action", required=True)
     for action in ("capabilities", "schema", "list"):
         subs.add_parser(action)

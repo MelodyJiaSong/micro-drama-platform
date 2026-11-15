@@ -14,7 +14,7 @@ _EXCLUDED_TOP_LEVEL: frozenset[str] = frozenset(
     {"node_modules", ".git", ".audit", "__pycache__", ".pytest_cache", "dist", "build", ".vite"}
 )
 _ALLOWED_TOP_LEVEL: frozenset[str] = frozenset(
-    {*CONTEXT_ROOT_FILES, ".agents", ".claude", "specs", "projects", "prompt_lab"}
+    {*CONTEXT_ROOT_FILES, ".agents", "specs", "projects", "prompt_lab"}
 )
 
 

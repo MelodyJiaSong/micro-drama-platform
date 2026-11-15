@@ -1,7 +1,7 @@
 """Per-shot 资料包 status for the UI (follow-up 229).
 
 The pack itself is built by `tools/shot_pack.py` (copies every referenced file, writes manifest.json with source sha256,
-fills the 参考 line's `key=>@` placeholders with upload numbers; the Claude Stop hook syncs it every turn). This reader
+fills the 参考 line's `key=>@` placeholders with upload numbers; the Kimi Stop hook syncs it every turn). This reader
 only reports what is on disk: `ok`, `stale` (a source file changed size or time since the copy, or the prompt changed),
 `invalid` (the tool emptied it and left `_失效.md` with the reason), or `missing`.
 """

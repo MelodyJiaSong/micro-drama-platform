@@ -10,7 +10,7 @@ Run the prompt and a few hundred arrow-shaped agents scatter across the canvas, 
 **Use cases:** A classroom demo for teaching emergence and complex adaptive systems — toggle one rule off and watch coherence collapse. A live generative-art or projection-installation visual that never loops or repeats. A calm ambient screensaver / second-monitor backdrop. A readable reference for learning spatial-hashing / neighbor-query optimization, since the code must keep thousands of pairwise checks at 60fps.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away. Paste the prompt below into Claude Code in an empty folder, answer the 2 short setup questions, and it builds the whole thing autonomously, then opens the sim. Prerequisites: none — opens in any modern browser.
+Copy-paste-and-walk-away. Paste the prompt below into Kimi / Codex in an empty folder, answer the 2 short setup questions, and it builds the whole thing autonomously, then opens the sim. Prerequisites: none — opens in any modern browser.
 
 ## 🔗 3. Reference & prior art
 

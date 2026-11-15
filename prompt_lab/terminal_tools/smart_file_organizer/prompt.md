@@ -10,7 +10,7 @@ You point the tool at a messy folder and `python organize.py <folder>` inspects 
 **Use cases:** Run it for real on a chaotic Downloads or Desktop folder, eyeball the dry-run, then `--apply` and keep the `undo.py` as your safety net. Read its source to learn safe-automation patterns: dry-run/apply separation, hash-based dedup, collision handling, and generating a reversible undo script. Use it as a teaching example of building tools users can trust around destructive operations. Adapt the scheme rules to auto-file screenshots, invoices, or media exports as a recurring tidy-up chore.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away: drop the prompt below into Claude Code in an empty folder, answer 2 short setup questions, then it builds and demos autonomously on a generated messy sandbox folder (so nothing real is touched). Prerequisite: `pip install rich` (the prompt runs this); the stdlib does the rest.
+Copy-paste-and-walk-away: drop the prompt below into Kimi / Codex in an empty folder, answer 2 short setup questions, then it builds and demos autonomously on a generated messy sandbox folder (so nothing real is touched). Prerequisite: `pip install rich` (the prompt runs this); the stdlib does the rest.
 
 ## 🔗 3. Reference & prior art
 

@@ -33,11 +33,11 @@
    分镜文字逐字段 diff、下一轮审稿人的复核结果；`new` 会把被审的分镜、prompt 与首帧哈希存进 `materials/snapshot/` 作为「修复前」。
 所有审查单存在 `ai_videos/<剧>/reviews/<集>_<时间>_<阶段>_r<轮>/`，管理站 /review-run 显示。
 
-v5 双审（用户 2026-11-08，chuanyue_yiri follow-up）
------------------------------------------------
-每个审稿项（法则 × 范围）由名册 `reviewers` 排两位：a＝合适的 Claude 模型、b＝合适的 Codex 模型，各自拿 `items/<代号>__<a|b>.md`
-独立审，按该类 rubric 每维 0–3 打分（≥2 要证据、1 要有问题行、0 要原因）。两位都勾后自动对比（`reconcile/<代号>.md`）：分歧
-（差 ≥2，或一人 ≤1 一人 ≥2）与抽查（两人都 ≥2 的维度按 hash 抽 2 维）交裁决人（`items/<代号>__judge.md` → `adjudicate`）。
+v5 评分审查；Kimi 单审
+----------------------
+每个审稿项（法则 × 范围）只派一位 Kimi 审稿人（名册 `reviewers` 的 a 位），拿 `items/<代号>__a.md`
+独立审，按该类 rubric 每维 0–3 打分（≥2 要证据、1 要有问题行、0 要原因）；打勾即按它定分，不对比、不裁决。
+名册每类只排一位 Kimi（测试锁定，不许排第二位）。旧的双审单保留读取与历史审计；继续制作时新开 Kimi 单审，不再调用 Claude。
 全部完成后 `issues` 推出分级问题（critical / major / verify / minor），`fix` 记方案与实施状态；严重与主要都 implemented 或
 wontfix（写理由）后才能 `new --after` 开下一轮，changes.md 与 previous.md 由问题清单生成，下一轮审稿人用 R 逐条复核。
 没有 slots 的 v2 单照旧（每项一位、必查项 ✓/✗）。
@@ -80,7 +80,7 @@ DEFAULT_SCORING = {
     "evidence_rule": "打 2 或 3 分必须写证据：指到镜头、秒数、图上位置、文件行或计算数字；没有证据的高分按「没查」处理，打不了勾。",
     "disagreement": "两位审稿人同一维度分数相差 ≥2，或一人 ≤1、另一人 ≥2，就是分歧，交裁决人。",
     "audit": "两人都打 ≥2 的维度，裁决人每个审稿项随机抽 2 维复核证据，专抓两个模型共同的盲点。"}
-DEFAULT_REVIEWERS = [{"slot": "a", "runner": "claude", "model": "claude-opus-5-5"}]   # Claude 单审（用户 2026-11-14，follow-up 065）
+DEFAULT_REVIEWERS = [{"slot": "a", "runner": "kimi", "model": "kimi"}]
 
 
 def now() -> str:
@@ -471,6 +471,8 @@ def build_items(stage: str, scenes: list[str], ros: dict, loop: int, version: in
                 it["checks"] = f"你就是{me}。{ROLE_QUESTIONS} 材料：`materials/roles/{key}.md`（你出现的每一镜）。 " + it["checks"]
                 it["law_name"] = f"{spec['name']}·{name}"
             if version >= 5:
+                # 全部审查 Kimi 单审（follow-up 065 / 362）：名册每类只排一位 Kimi，由 tests/test_review_run.py 锁定；
+                # 双审分支只为读、续旧审查单保留
                 reviewers = spec.get("reviewers") or DEFAULT_REVIEWERS
                 it.update(what=(it["checks"] if roles else spec.get("what", "")), problem=spec.get("problem", ""), method=list(spec.get("method", [])),
                           model_why=spec.get("model_why", ""), rubric=rubric_of(spec), report=f"reconcile/{iid}.md",
@@ -497,9 +499,9 @@ def brief_text(ep: Path, stage_name: str, run: Path, media: bool, known: str, lo
         return text
     head, _, _ = text.partition("## 报告格式（缺一不能打勾）")
     return head + "\n".join([
-        "## 双审与评分（v5）",
-        "- 每个审稿项由两位审稿人**各自独立**审：a 位是 Claude 模型、b 位是 Codex 模型（名册 `reviewers`，按这一类最合适的模型选）。"
-        "不要读另一位的报告；两人都说没问题不等于没问题——工具会对比两份评分，分歧和抽查交裁决人。", *scoring_lines(scoring or {}), "",
+        "## 审稿与评分（v5 · Kimi 单审）",
+        "- 每个审稿项只有一位 Kimi 审稿人（名册 `reviewers` 的 a 位），没有第二位、也没有裁决人复核；"
+        "拿不准的写「存疑」并说明怎么核实，不要因为没人复核就放宽。", *scoring_lines(scoring or {}), "",
         "## 报告格式（缺一不能打勾）",
         "1. `## 评分表`：任务书里每个评分维度一行：`- <维度编号> <0–3> 证据：<镜头·秒数·图上位置·文件行·计算数字>`，"
         "例如 `- P1 1 证据：s3_st2 自拍却双手掰面包（见问题表）`、`- P4 3 证据：s1_st1–st5 首帧放大，手里都有支撑`。"
@@ -510,8 +512,7 @@ def brief_text(ep: Path, stage_name: str, run: Path, media: bool, known: str, lo
         "   建议改动要标「便宜」（改文字、出图、改工具即可）或「要积分」（必须重出视频）。",
         "   全部没问题时不写空表，写一行「结论：无问题」。",
         "3. 「整体观察」（≤10 行）。",
-        "4. **最后一步打勾**：Claude 审稿位自己运行任务书里的 `tick` 命令（带 `--slot`），看到「已打勾」才算完成；被拒就按提示改报告再打。"
-        "Codex 审稿位（沙箱里没有 python）不运行 tick，最后打印一行 `REPORT WRITTEN: <报告路径>`，由调用方凭 codex exec 运行日志 `tick … --attest-log <日志>` 代为登记。",
+        "4. **最后一步打勾**：自己运行任务书里的 `tick` 命令，看到「已打勾」才算完成；被拒就按提示改报告再打。",
         "5. 给调用你的人回 300 字以内摘要：最低分的维度、最严重的 5 条、报告路径、打勾结果。"])
 
 
@@ -581,7 +582,7 @@ def tick_cmd(run: Path, it: dict, slot: str) -> str:
 
 
 def slot_prompt(it: dict, slot: str, run: Path, stage_name: str, scoring: dict, loop: int) -> str:
-    """v5 一位审稿人（a=Claude / b=Codex）的任务书：是什么、rubric＋评分规则、审法、范围、材料、本位的打勾命令。"""
+    """v5 一位审稿人（a=Kimi；旧双审 b=Codex）的任务书：是什么、rubric＋评分规则、审法、范围、材料、本位的打勾命令。"""
     s = it["slots"][slot]
     scope = "、".join(it["scope"]) if it["scope"] else "全部"
     other = next((x for x in SLOTS if x != slot), "")
@@ -610,7 +611,7 @@ def slot_prompt(it: dict, slot: str, run: Path, stage_name: str, scoring: dict, 
         f"你是独立审稿人 **{it['id']}__{slot}**（{slot} 位 · {s['runner']} · {s['model']}），只管「{it['law_name']}」这一类。阶段：{stage_name}。",
         f"先完整读审稿说明：`{run / 'BRIEF.md'}`，严格按它的规则和报告格式做。{blind}",
         *([f"同一项还有另一位审稿人（{other} 位，另一个模型）独立审；**不要读它的报告**，也不要读 reconcile/ 下的文件。", ""]
-          if len(it["slots"]) > 1 else ["这一项只有你一位审稿人（Claude 单审），没有第二位、也没有裁决人复核：拿不准的写「存疑」并说明怎么核实。", ""]),
+          if len(it["slots"]) > 1 else ["这一项只有你一位审稿人（Kimi 单审），没有第二位、也没有裁决人复核：拿不准的写「存疑」并说明怎么核实。", ""]),
         "## 这一类是什么", it.get("what") or it["checks"], *([f"\n想解决的问题：{it['problem']}"] if it.get("problem") else []),
         *([f"\n为什么由这类模型审：{it['model_why']}"] if it.get("model_why") else []), "",
         f"## 范围\n{scope}", "", "## 材料", *mats, "", *prefer,
@@ -771,7 +772,7 @@ def cmd_new(a: argparse.Namespace) -> int:
                 (run / it["slots"][slot]["prompt"]).write_text(slot_prompt(it, slot, run, stage_name, scoring, loop), encoding="utf-8")
         else:
             (run / it["prompt"]).write_text(item_prompt(it, run, stage_name), encoding="utf-8")
-    data = {"version": VERSION, "scoring": scoring, "adjudicator": ros.get("adjudicator") or {"runner": "claude", "model": "claude-opus-5-5"},
+    data = {"version": VERSION, "scoring": scoring, "adjudicator": ros.get("adjudicator") or {"runner": "kimi", "model": "kimi"},
             "id": rid, "chain": chain or rid, "loop": loop, "max_loops": max_loops, "parent": rel(prev_run) if prev_run else "",
             "title": a.title or run_title(ep.name, scenes, lay["order"], stage_name, loop, ts,
                                            chain_attempt(reviews_dir(ep), ep.name, a.stage, scenes, chain or rid)), "target": rel(ep), "episode": ep.name,
@@ -1048,7 +1049,7 @@ def tick_slot(a: argparse.Namespace, run: Path, data: dict, it: dict) -> int:
     """v5：一位审稿人（a / b 位）打勾。两位都勾了就自动对比（reconcile）。"""
     slot = (a.slot or "").strip() or (next(iter(it["slots"])) if len(it["slots"]) == 1 else "")   # 单审不用写 --slot
     if slot not in it["slots"]:
-        raise SystemExit(f"打勾被拒：v5 审查单每项有两位审稿人，要用 --slot {'|'.join(it['slots'])} 指明是哪一位。")
+        raise SystemExit(f"打勾被拒：这张旧审查单每项有两位审稿人，要用 --slot {'|'.join(it['slots'])} 指明是哪一位。")
     s = it["slots"][slot]
     by = a.by.strip()
     check_identity(by, data, f"{it['id']}__{slot}")      # 结尾 __a / __b 不同，两位天然是不同身份
@@ -1058,7 +1059,7 @@ def tick_slot(a: argparse.Namespace, run: Path, data: dict, it: dict) -> int:
     attested = None
     if a.attest_log:
         if s["runner"] != "codex":
-            raise SystemExit("代为登记被拒：--attest-log 只用于 Codex 审稿位（沙箱跑不了 python 时），Claude 审稿人自己打勾。")
+            raise SystemExit("代为登记被拒：--attest-log 只用于 Codex 审稿位（沙箱跑不了 python 时），Kimi 审稿人自己打勾。")
         attested = check_attest(a.attest_log, run, rp, s["report"], s.get("agents"), f"{it['id']}__{slot}")
     text = rp.read_text(encoding="utf-8")
     counts, rows, clean = parse_report(text)
@@ -1136,7 +1137,7 @@ def union_rows(groups: list[tuple[str, list[dict]]]) -> list[dict]:
 
 
 def reconcile(run: Path, data: dict, it: dict) -> None:
-    if "b" not in it["slots"]:                  # Claude 单审（用户 2026-11-14，chuanyue_yiri follow-up 065）：无对比、无裁决，按 a 位定分
+    if "b" not in it["slots"]:                  # Kimi 单审（用户 2026-11-14，chuanyue_yiri follow-up 065）：无对比、无裁决，按 a 位定分
         a = it["slots"]["a"]
         it["scores"] = {r["id"]: {"name": r["name"], "a": a["scores"][r["id"]]["score"], "a_ev": a["scores"][r["id"]]["evidence"],
                                   "b": None, "b_ev": "", "verdict": "单审", "agreed": a["scores"][r["id"]]["score"], "final": None}
@@ -1168,7 +1169,7 @@ def reconcile(run: Path, data: dict, it: dict) -> None:
     recount(it)
     dims = it["disputes"] + it["audits"]
     if dims:
-        adj = data.get("adjudicator") or {"runner": "claude", "model": "claude-opus-5-5"}
+        adj = data.get("adjudicator") or {"runner": "kimi", "model": "kimi"}
         it["judge"] = {"runner": adj["runner"], "model": adj["model"], "status": "pending", "dims": dims,
                        "prompt": f"items/{it['id']}__judge.md", "report": f"reports/{it['id']}__judge.md", "agents": []}
         it["status"] = "adjudicating"
@@ -1311,7 +1312,7 @@ def cmd_fail(a: argparse.Namespace) -> int:
 
 
 def cmd_drop_slot(a: argparse.Namespace) -> int:
-    """把一张进行中的审查单改成单审（用户 2026-11-14，chuanyue_yiri follow-up 065：Codex 太慢，改为 Claude 单审）：
+    """把一张进行中的审查单改成单审（用户 2026-11-14，chuanyue_yiri follow-up 065：Codex 太慢，改为 Kimi 单审）：
     去掉每项还没打勾的那一位（默认 b 位），记日志；剩下的位都已打勾的项马上按单审收尾。"""
     run = resolve(a.run); data = load(run)
     n = 0
@@ -1333,7 +1334,7 @@ def cmd_drop_slot(a: argparse.Namespace) -> int:
 
 def cmd_dispatch(a: argparse.Namespace) -> int:
     """登记派单（follow-up 036，用户 2026-11-08：审查单要能看到每一步由哪个独立 agent 审、用的什么指令、什么 skill）。
-    每派一次记一条：执行方式（Claude 子代理 / codex exec …）、模型、完整指令原文（另存 agents/<代号>_<n>.md）、依据的规则与技能、
+    每派一次记一条：执行方式（Kimi 子代理 / kimi -p …）、模型、完整指令原文（另存 agents/<代号>_<n>.md）、依据的规则与技能、
     之后用 --reply-file 补登它最后的回复。只是元数据，不改被审材料，收轮后也能补登。"""
     run = resolve(a.run); data = load(run)
     it = next((x for x in data["items"] if x["id"] == a.item), None)
@@ -1633,7 +1634,7 @@ def score_summary(data: dict) -> list[str]:
     for it in data["items"]:
         if "slots" in it:
             laws.setdefault(it["law"], []).append(it)
-    out = ["## 各类评分（0–3；a＝Claude、b＝Codex；多段范围取最低）", ""]
+    out = ["## 各类评分（0–3；a＝Kimi；旧双审 b＝Codex；多段范围取最低）", ""]
     for its in laws.values():
         first = its[0]
         out += [f"### {first['law_name']}（{'、'.join(x['id'] for x in its)}）", "",
@@ -2361,12 +2362,12 @@ def main(argv: list[str] | None = None) -> int:
     sub = ap.add_subparsers(dest="cmd", required=True)
     n = sub.add_parser("new"); n.add_argument("target"); n.add_argument("--stage", default="")
     n.add_argument("--scenes", default=""); n.add_argument("--title", default=""); n.add_argument("--known", default="")
-    n.add_argument("--author", default="Claude Code"); n.add_argument("--no-materials", action="store_true")
+    n.add_argument("--author", default="Kimi Code"); n.add_argument("--no-materials", action="store_true")
     n.add_argument("--after", default="", help="上一轮审查单目录：开下一轮（最多 roster.max_loops 轮）")
     n.add_argument("--changes", default="", help="--after 时必填：这轮之后改了什么（文件路径或文字）")
     t = sub.add_parser("tick"); t.add_argument("run"); t.add_argument("item"); t.add_argument("--report", required=True)
     t.add_argument("--by", required=True); t.add_argument("--note", default="", help="可选备注（如补登说明），写进清单并在管理站显示")
-    t.add_argument("--slot", default="", help="v5：a（Claude）| b（Codex）")
+    t.add_argument("--slot", default="", help="v5：a（Kimi）| b（旧双审 Codex）")
     t.add_argument("--attest-log", default="", help="Codex 审稿人跑不了 python 时，凭它的 codex exec 运行日志代为登记")
     f = sub.add_parser("fail"); f.add_argument("run"); f.add_argument("item"); f.add_argument("--note", required=True)
     f.add_argument("--slot", default="", help="v5：a | b | judge")

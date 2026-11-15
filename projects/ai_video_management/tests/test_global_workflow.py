@@ -34,27 +34,29 @@ def test_credentials_are_hidden_in_nested_configs_and_urls() -> None:
 
 
 def test_private_files_are_never_registered(tmp_path: Path) -> None:
-    setup_catalog(tmp_path, [{"path": path, "group": "agents"} for path in [".codex/auth.json", ".claude/.credentials.json", ".claude/memory/private.md", ".env"]])
+    setup_catalog(tmp_path, [{"path": path, "group": "agents"} for path in [".kimi-code/auth.json", ".kimi-code/.credentials.json", ".kimi-code/memory/private.md", ".env"]])
     reader = GlobalWorkflowReader(tmp_path)
     assert all(entry.status == "unavailable" for entry in reader.catalog()[1])
 
 
-def test_registered_configs_only_and_fail_closed_for_malformed_or_oversized_files(tmp_path: Path) -> None:
+@pytest.mark.parametrize("runtime_dir", [".kimi-code", ".codex"])
+def test_registered_configs_only_and_fail_closed_for_malformed_or_oversized_files(tmp_path: Path, runtime_dir: str) -> None:
     user = tmp_path / "user"
-    (user / ".codex").mkdir(parents=True)
-    (user / ".codex/config.toml").write_text('model="model-a"\napi_key="NEVER_SEND"', encoding="utf-8")
-    setup_catalog(tmp_path, [{"path": ".codex/config.toml", "group": "agents", "scope": "user"}])
+    config = f"{runtime_dir}/config.toml"
+    (user / runtime_dir).mkdir(parents=True)
+    (user / config).write_text('model="model-a"\napi_key="NEVER_SEND"', encoding="utf-8")
+    setup_catalog(tmp_path, [{"path": config, "group": "agents", "scope": "user"}])
     reader = GlobalWorkflowReader(tmp_path, user)
     query = GlobalWorkflowQuery(reader)
-    source = query.source("user:.codex/config.toml")
+    source = query.source(f"user:{config}")
     assert source["redacted"] and "NEVER_SEND" not in source["content"] and "model-a" in source["content"]
-    for identity in ["user:.codex/auth.json", "repo:../AGENTS.md", "repo:C:/auth.json", "user:.claude/memory/private.md"]:
+    for identity in [f"user:{runtime_dir}/auth.json", "repo:../AGENTS.md", "repo:C:/auth.json", f"user:{runtime_dir}/memory/private.md"]:
         with pytest.raises(GlobalWorkflowError):
             query.source(identity)
-    (user / ".codex/config.toml").write_text('api_key="bad', encoding="utf-8")
-    assert query.source("user:.codex/config.toml")["status"] == "unavailable"
-    (user / ".codex/config.toml").write_bytes(b"x" * (GLOBAL_MAX_BYTES + 1))
-    assert query.source("user:.codex/config.toml")["status"] == "unavailable"
+    (user / config).write_text('api_key="bad', encoding="utf-8")
+    assert query.source(f"user:{config}")["status"] == "unavailable"
+    (user / config).write_bytes(b"x" * (GLOBAL_MAX_BYTES + 1))
+    assert query.source(f"user:{config}")["status"] == "unavailable"
 
 
 def test_missing_config_and_dynamic_discovery_and_symlink_refusal(tmp_path: Path) -> None:
@@ -89,14 +91,14 @@ def test_windows_junctions_are_refused_without_symlink_privilege(tmp_path: Path)
     target = tmp_path / "inside"
     target.mkdir()
     (target / "settings.json").write_text('{"model":"should-not-read"}', encoding="utf-8")
-    link = tmp_path / ".codex"
+    link = tmp_path / ".kimi-code"
     result = subprocess.run(["powershell", "-NoProfile", "-Command", "New-Item", "-ItemType", "Junction", "-Path", str(link), "-Target", str(target)], capture_output=True)
     if result.returncode:
         pytest.skip("junction creation unavailable")
-    setup_catalog(tmp_path, [{"path": ".codex/settings.json", "group": "agents"}])
+    setup_catalog(tmp_path, [{"path": ".kimi-code/settings.json", "group": "agents"}])
     try:
         reader = GlobalWorkflowReader(tmp_path)
-        assert reader.source("repo:.codex/settings.json")["status"] == "unavailable"
+        assert reader.source("repo:.kimi-code/settings.json")["status"] == "unavailable"
     finally:
         os.rmdir(link)  # Remove only this test's junction, never its target tree.
 
@@ -111,7 +113,7 @@ def test_routes_registered_and_unknown_sources_are_404(tmp_path: Path) -> None:
         assert client.get("/api/global-workflow/coverage").status_code == 200
         response = client.get("/api/global-workflow/source", params={"source_id": "repo:AGENTS.md"})
         assert response.status_code == 200 and response.json()["content"] == "shared instructions"
-        assert client.get("/api/global-workflow/source", params={"source_id": "user:.codex/auth.json"}).status_code == 404
+        assert client.get("/api/global-workflow/source", params={"source_id": "user:.kimi-code/auth.json"}).status_code == 404
 
 
 def test_reference_numbers_survive_discovery_insertions_and_title_changes(tmp_path: Path) -> None:
@@ -156,7 +158,7 @@ parser.add_argument("--api-key", default="DO_NOT_EXPOSE")
 
 
 def test_inventory_reports_unreadable_unnumbered_and_unregistered_references(tmp_path: Path) -> None:
-    setup_catalog(tmp_path, [{"path": "AGENTS.md", "group": "agents"}, {"path": ".codex/config.toml", "group": "agents"}])
+    setup_catalog(tmp_path, [{"path": "AGENTS.md", "group": "agents"}, {"path": ".kimi-code/config.toml", "group": "agents"}])
     (tmp_path / "AGENTS.md").write_text("Use `tools/new.py`. [local](specs/ai_video/demo/rules.md)", encoding="utf-8")
     (tmp_path / "tools").mkdir()
     (tmp_path / "tools/new.py").write_text("MODEL = 'new'", encoding="utf-8")
@@ -167,14 +169,17 @@ def test_inventory_reports_unreadable_unnumbered_and_unregistered_references(tmp
     assert data["total"] == 2 and data["available"] == 1 and data["numbered"] == 0
     assert {issue["kind"] for issue in data["issues"]} == {"missing", "unnumbered"}
     assert [reference["path"] for reference in data["references"]] == ["tools/new.py"]
-    (tmp_path / ".codex").mkdir()
-    (tmp_path / ".codex/config.toml").write_text('model="broken', encoding="utf-8")
+    (tmp_path / ".kimi-code").mkdir()
+    (tmp_path / ".kimi-code/config.toml").write_text('model="broken', encoding="utf-8")
     assert "unavailable" in {issue["kind"] for issue in GlobalWorkflowReader(tmp_path).inventory()["issues"]}
 
 
 def test_repository_workflow_sources_are_numbered_and_reference_closure_is_registered(tmp_path: Path) -> None:
     reader = GlobalWorkflowReader(repo_root(), tmp_path / "no-user-config")
     groups, sources = reader.catalog()
+    identities = {source.id for source in sources}
+    assert {"repo:.agents/mcp.json", "repo:.codex/config.toml", "repo:.kimi-code/mcp.json", "user:.codex/config.toml"} <= identities
+    assert all(".claude/" not in source.path and source.path != "CLAUDE.md" for source in sources)
     group_numbers = {group["id"]: group["number"] for group in groups}
     assert all(source.number.startswith(group_numbers[source.group] + ".") for source in sources)
     for category in {group["category"] for group in groups}:

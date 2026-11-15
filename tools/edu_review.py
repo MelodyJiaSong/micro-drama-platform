@@ -4,8 +4,8 @@
     python tools/edu_review.py validate <知识点目录> [--lang zh|en|all]   程序检验 → reviews/validate.md（全绿才往下审）
     python tools/edu_review.py brief <知识点目录> --stage script|cut      开一轮审稿：材料 + 每个角色的任务书 → reviews/<阶段>_rN/
     python tools/edu_review.py merge <审稿目录>                          汇总各角色报告 → issues.md（按句号排，标出多人同指的问题）
-    python tools/edu_review.py new <知识点目录> [--after <上一轮>]       台词审 v2：口播＋屏幕文字 × 中英，各两位独立审（Claude＋Codex）→ reviews/lines_rN/
-    python tools/edu_review.py check <lines_rN>                          校验报告格式与证据、对比两位评分、出裁决任务书
+    python tools/edu_review.py new <知识点目录> [--after <上一轮>]       台词审 v2：口播＋屏幕文字 × 中英，每项一位 Kimi 单审（follow-up 043）→ reviews/lines_rN/
+    python tools/edu_review.py check <lines_rN>                          校验报告格式与证据、定分（旧的双审轮次才对比、出裁决任务书）
     python tools/edu_review.py issues <lines_rN>                         汇总 → issues.json / issues.md（编号 I1…、各项最终分、通过与否）
     python tools/edu_review.py fix <lines_rN> (--ids I3,I7 | --item screen_zh --where l47,agenda) --status implemented|wontfix --solution "…" [--reason …] [--file …]
     python tools/edu_review.py conclude <lines_rN> [--note …]          收轮 → 结果.md、状态「已收轮」；下一轮 new 自动带上一轮的处理复核
@@ -239,13 +239,16 @@ def cmd_brief(topic_dir: Path, stage: str, after: Path | None = None) -> Path:
             quiz.append(f"- {c_zh} / {c_en}")
         quiz.append("")
     if learn.get("explain_back"):
-        quiz.append(f"**讲回来**：{learn['explain_back']['prompt']['zh']} / {learn['explain_back']['prompt']['en']}")
+        back = learn["explain_back"]
+        back = back.get("prompt", back)
+        quiz.append(f"**讲回来**：{back['zh']} / {back['en']}")
     (mat / "quiz.md").write_text("\n".join(quiz) + "\n", encoding="utf-8")
     rel = lambda q: q.relative_to(REPO).as_posix()
+    research = next((q for q in (topic_dir / "research.md", topic_dir / "research" / "dossier.md") if q.exists()), topic_dir / "research.md")
     paths = {
         "lines_bilingual": [mat / "lines.md"], "lines_zh": [mat / "lines_zh.md"], "lines_en": [mat / "lines_en.md"],
         "learning": [topic_dir / "learning.json"], "research_summary": [BENCH],
-        "claims": [topic_dir / "claims.json"], "research": [topic_dir / "research.md"],
+        "claims": [topic_dir / "claims.json"], "research": [research],
         "quiz_only": [mat / "quiz.md"], "design_system": DESIGN_DOCS,
         "frames_and_subs": [topic_dir / "renders" / "sheets", topic_dir / "renders" / "en" / "sheets",
                             topic_dir / "final" / f"{topic_dir.name}.srt", topic_dir / "final" / f"{topic_dir.name}.en.srt"],
@@ -254,7 +257,7 @@ def cmd_brief(topic_dir: Path, stage: str, after: Path | None = None) -> Path:
     for r in roles:
         mats = [q for k in r["materials"] for q in paths.get(k, [])]
         lines = [f"# 审稿任务：{r['name']}（{topic_dir.parent.name} / {topic_dir.name} · {stage} 第 {n} 轮）", "",
-                 "你是一位独立审稿人，用全新的视角审这一期中英双语科普短视频（AI 高频词系列，面向没有机器学习背景的普通观众）。",
+                 "你是一位独立审稿人，用全新的视角审这一期中英双语科普视频（面向没有专业背景的普通观众）。",
                  "", "## 规则",
                  "- **只读**：不要修改仓库里的任何文件；只读下面列出的材料" + ("（盲审：不要读讲稿以外的任何文件，包括另一种语言的版本与别的审稿报告）" if r.get("blind") else "，不要读别的审稿报告") + "。",
                  "- 只管你这一角色的必查项；顺手看到的其他问题放在最后「其他」，一句话。",
@@ -311,11 +314,11 @@ def cmd_merge(run: Path) -> Path:
     return p
 
 
-# ───────────────────────── 台词审 v2（口播＋屏幕文字；双审＋裁决） ─────────────────────────
+# ───────────────────────── 台词审 v2（口播＋屏幕文字；Kimi 单审，旧双审轮次仍可读） ─────────────────────────
 LINE_REVIEW = REPO / "edu_videos" / "_shared" / "review" / "line_review.json"
 LEVELS = ("必改", "存疑", "建议", "记录")
 SCORE_RE = re.compile(r"^\s*-\s*\**\s*(V\d|P\d|R)\s*\**\s*[:：]?\s*([0-3])\s*分?\s*(证据|原因|理由)\s*[:：]\s*(.+?)\s*$", re.M)
-TABLE_ROW = re.compile(r"^\|\s*([^|]+?)\s*\|\s*([^|]*?)\s*\|\s*(必改|存疑|建议|记录)\s*\|\s*([^|]*?)\s*\|\s*([^|]*?)\s*\|\s*([^|]*?)\s*\|", re.M)
+TABLE_ROW = re.compile(r"^\|\s*([^|]+?)\s*\|\s*([^|]*?)\s*\|\s*\**(必改|存疑|建议|记录)[^|]*?\|\s*([^|]*?)\s*\|\s*([^|]*?)\s*\|\s*([^|]*?)\s*\|", re.M)   # 级别列允许带注释（「必改（片尾从严）」），只取开头的级别词
 WORD_RE = re.compile(r"[A-Za-zÀ-ÖØ-öø-ÿ0-9][A-Za-zÀ-ÖØ-öø-ÿ0-9'’.%,\-–]*")   # 带重音的拉丁字母（résumé）算同一个词
 
 
@@ -510,6 +513,11 @@ def screen_md(topic_dir: Path, lang: str, mat: Path, shots: dict | None = None) 
     return "\n".join(out) + "\n"
 
 
+def slots_of(models: dict) -> list[str]:
+    """审稿位：新配置只有 a 位 Kimi；models 里有 b 则按旧双审格式处理。"""
+    return [s for s in ("a", "b") if s in models]
+
+
 def slot_prompt(it: dict, slot: str, run: Path, cfg: dict, loop: int, topic_dir: Path) -> str:
     zh = it["lang"] == "zh"
     model = cfg["models"][slot]
@@ -519,7 +527,8 @@ def slot_prompt(it: dict, slot: str, run: Path, cfg: dict, loop: int, topic_dir:
          it["who"], "", f"## 这一项查什么\n{it['what']}", "", f"为什么要查：{it['why']}", "",
          "## 规则",
          "- **只读**：不要修改仓库里的任何文件（你自己的报告除外）；不调用任何收费服务。",
-         "- 同一项还有另一位审稿人（另一个模型）独立审；**不要读它的报告**，也不要读 `reconcile/` 与 `reports/` 下别人的文件。"]
+         ("- 同一项还有另一位审稿人（另一个模型）独立审；**不要读它的报告**，也不要读 `reconcile/` 与 `reports/` 下别人的文件。"
+          if len(slots_of(cfg["models"])) > 1 else "- 你是这一项唯一的审稿人，你的评分就是最终分；不要读 `reports/` 下别的文件。")]
     if it["material"] == "voice":
         L += [f"- **盲审：只读 `{rel(mat / ('voice_' + it['lang'] + '.md'))}`**。不要读讲稿、画面、另一种语言的版本或任何别的文件——观众只能听。",
               "- 每句都出声在心里念一遍，用耳朵判断。"]
@@ -577,8 +586,9 @@ def cmd_new(topic_dir: Path, after: Path | None, chain: str = "lines") -> Path:
     if after:
         (run / "previous.md").write_text((after / "issues.md").read_text(encoding="utf-8"), encoding="utf-8")
     items = []
+    slots = slots_of(cfg["models"])
     for it in cfg["items"]:
-        for slot in ("a", "b"):
+        for slot in slots:
             (run / "items" / f"{it['id']}__{slot}.md").write_text(slot_prompt(it, slot, run, cfg, n, topic_dir), encoding="utf-8")
         n_lines = sum(len(s.lines) for s in ev.Topic(topic_dir, it["lang"]).segments())
         items.append({"id": it["id"], "name": it["name"], "dims": [d[0] for d in it["dims"]] + (["R"] if n > 1 else []),
@@ -586,7 +596,10 @@ def cmd_new(topic_dir: Path, after: Path | None, chain: str = "lines") -> Path:
     (run / "roster.json").write_text(json.dumps({"kind": "lines", "round": n, "after": rel(after) if after else None, "created_at": now_iso(), "state": "进行中",
                                                 "models": cfg["models"], "items": items}, ensure_ascii=False, indent=1), encoding="utf-8")
     write_checklist(run)
-    print(f"{rel(run)}：{len(items)} 项 × 2 位审稿 → items/<项>__a.md（Claude，自己写报告）/ __b.md（Codex，codex exec -o reports/<项>__b.md）")
+    if len(slots) > 1:
+        print(f"{rel(run)}：{len(items)} 项 × 2 位审稿 → items/<项>__a.md（Claude，自己写报告）/ __b.md（Codex，codex exec -o reports/<项>__b.md）")
+    else:
+        print(f"{rel(run)}：{len(items)} 项 × Kimi 单审 → items/<项>__a.md（自己写报告到 reports/<项>__a.md；单审不对比、不裁决）")
     return run
 
 
@@ -629,7 +642,7 @@ def judge_prompt(run: Path, it: dict, cfg_it: dict, a_rep: Path, b_rep: Path, di
                  sa: dict, sb: dict, topic_dir: Path) -> str:
     mat = run / "materials"
     fmt = lambda s, d: f"{s[d][0]} 分（{s[d][1][:300]}）" if d in s else "缺"
-    L = [f"你是裁决人 **{it['id']}__judge**（claude-opus-5-5），裁「{it['name']}」这一项两位审稿人的分歧，并抽查两人都判通过的维度。", "",
+    L = [f"你是裁决人 **{it['id']}__judge**（kimi），裁「{it['name']}」这一项两位审稿人的分歧，并抽查两人都判通过的维度。", "",
          "## 材料",
          f"- a 位报告：`{rel(a_rep)}`；b 位报告：`{rel(b_rep)}`",
          f"- 被审材料：`{rel(mat / ('voice_' + cfg_it['lang'] + '.md' if cfg_it['material'] == 'voice' else 'screen_' + cfg_it['lang'] + '.md'))}`"
@@ -661,8 +674,9 @@ def cmd_check(run: Path) -> int:
     ros = json.loads((run / "roster.json").read_text(encoding="utf-8"))
     topic_dir = run.parent.parent
     todo = 0
+    slots = slots_of(ros.get("models", cfg["models"]))
     for it in ros["items"]:
-        reps = {s: run / "reports" / f"{it['id']}__{s}.md" for s in ("a", "b")}
+        reps = {s: run / "reports" / f"{it['id']}__{s}.md" for s in slots}
         parsed = {}
         for s, p in reps.items():
             if not p.exists():
@@ -671,7 +685,11 @@ def cmd_check(run: Path) -> int:
             if errs:
                 print(f"[格式不合格] {it['id']}__{s}：" + "；".join(errs)); todo += 1; continue
             parsed[s] = sc
-        if len(parsed) < 2:
+        if len(parsed) < len(slots):
+            continue
+        if len(slots) == 1:   # 单审：按 a 位定分，无对比、无裁决
+            it["disagree"], it["audit"] = [], []
+            print(f"[完成] {it['id']}（单审）")
             continue
         sa, sb = parsed["a"], parsed["b"]
         dis = [d for d in it["dims"] if abs(sa[d][0] - sb[d][0]) >= 2 or (min(sa[d][0], sb[d][0]) <= 1 < max(sa[d][0], sb[d][0]))]
@@ -713,14 +731,16 @@ def write_checklist(run: Path) -> None:
     topic_dir = run.parent.parent
     issues = json.loads((run / "issues.json").read_text(encoding="utf-8")) if (run / "issues.json").exists() else None
     items = []
+    models = ros.get("models", cfg["models"])
+    slot_ids = slots_of(models)
     for it in ros["items"]:
         c = by_id[it["id"]]
         slots, parsed = {}, {}
-        for sl in ("a", "b"):
+        for sl in slot_ids:
             rp = run / "reports" / f"{it['id']}__{sl}.md"
             sc = parse_report(rp.read_text(encoding="utf-8"), it["dims"])[0] if rp.exists() else {}
             parsed[sl] = sc
-            slots[sl] = {"slot": sl, "runner": "claude" if sl == "a" else "codex", "model": cfg["models"][sl],
+            slots[sl] = {"slot": sl, "runner": "kimi" if models[sl] == "kimi" else "claude" if sl == "a" else "codex", "model": models[sl],
                          "status": "done" if rp.exists() else "pending", "report": f"reports/{it['id']}__{sl}.md",
                          "prompt": f"items/{it['id']}__{sl}.md",
                          "scores": {d: {"score": v[0], "evidence": v[1]} for d, v in sc.items()}}
@@ -730,9 +750,9 @@ def write_checklist(run: Path) -> None:
         dis, aud = it.get("disagree", []), it.get("audit", [])
         scores, final = {}, {}
         for d in dims:
-            a, b = parsed["a"].get(d), parsed["b"].get(d)
+            a, b = parsed["a"].get(d), parsed.get("b", {}).get(d)
             name = next((x[1] for x in c["dims"] if x[0] == d), "复核上一轮" if d == "R" else d)
-            fin = js[d][0] if d in js else (min(a[0], b[0]) if a and b else None)
+            fin = js[d][0] if d in js else (min(a[0], b[0]) if a and b else (a[0] if a and len(slot_ids) == 1 else None))
             final[d] = fin
             scores[d] = {"name": name, "a": a[0] if a else -1, "a_ev": a[1] if a else "", "b": b[0] if b else -1, "b_ev": b[1] if b else "",
                          "verdict": "分歧" if d in dis else ("抽查" if d in aud else "一致"), "agreed": None if d in dis else fin,
@@ -748,24 +768,24 @@ def write_checklist(run: Path) -> None:
             "scope": [], "checks": c["what"], "how": c.get("limits", "") or ("盲审：只听口播（按播放顺序）" if c.get("blind") else ""),
             "blind": bool(c.get("blind")), "status": "done" if done else ("adjudicating" if all(sv["status"] == "done" for sv in slots.values()) else "pending"),
             "report": f"reconcile/{it['id']}.md", "prompt": f"items/{it['id']}__a.md",
-            "what": c["what"], "problem": c["why"], "model_why": "a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决",
+            "what": c["what"], "problem": c["why"], "model_why": ("a 位 Claude、b 位 Codex 各自独立审；分歧与抽查交 Claude Opus 裁决" if len(slot_ids) > 1 else "Kimi 单审：a 位评分即最终分，不对比、不裁决"),
             "rubric": [{"id": x[0], "name": x[1], "question": x[2]} for x in c["dims"]] + ([{"id": "R", "name": "复核上一轮", "question": "上一轮本项的问题逐条复核"}] if "R" in dims else []),
             "slots": slots, "scores": scores, "disputes": dis, "audits": aud, "final_scores": final,
-            "judge": {"runner": "claude", "model": cfg["models"]["judge"], "status": "done" if jr.exists() else "pending",
+            "judge": {"runner": "kimi" if models.get("judge") == "kimi" else "claude", "model": models.get("judge", ""), "status": "done" if jr.exists() else ("pending" if len(slot_ids) > 1 else "skipped"),
                       "dims": dis + aud, "prompt": f"items/{it['id']}__judge.md", "report": f"reports/{it['id']}__judge.md",
                       "ruling": {d: {"score": v[0], "evidence": v[1]} for d, v in js.items()}},
-            "findings": {}, "rows": sum(cnt.values()), "ticked_by_list": [f"{cfg['models']['a']}/{it['id']}__a", f"{cfg['models']['b']}/{it['id']}__b"],
+            "findings": {}, "rows": sum(cnt.values()), "ticked_by_list": [f"{models[sl]}/{it['id']}__{sl}" for sl in slot_ids],
         })
     verdict = ros.get("verdict", "")
     data = {
         "version": 5, "kind": "edu_lines",
         "scoring": {"scale": {str(k): v.split("：", 1)[1] for k, v in enumerate(cfg["scoring"][:4])},
                     "evidence_rule": cfg["scoring"][4], "disagreement": cfg["scoring"][5]},
-        "adjudicator": {"runner": "claude", "model": cfg["models"]["judge"]},
+        "adjudicator": {"runner": "kimi" if models.get("judge", cfg["models"].get("judge")) == "kimi" else "claude", "model": models.get("judge", cfg["models"].get("judge", ""))},
         "id": run.name, "chain": f"{topic_dir.name}/lines", "loop": ros["round"], "max_loops": cfg["max_rounds"],
         "parent": ros.get("after") or "", "title": f"{topic_dir.name} · 台词审（口播＋屏幕文字）第 {ros['round']} 轮",
         "target": rel(topic_dir), "episode": topic_dir.name, "stage": "lines", "stage_name": "台词审（口播＋屏幕文字 × 中英）",
-        "scenes": [], "created_at": ros.get("created_at", ""), "author": "Claude Code", "known": "",
+        "scenes": [], "created_at": ros.get("created_at", ""), "author": "Kimi Code", "known": "",
         "changes": (run / "previous.md").read_text(encoding="utf-8")[:4000] if (run / "previous.md").exists() else "",
         "items": items, "state": ros.get("state", "进行中"), "concluded_at": ros.get("concluded_at", ""),
         "result": "结果.md" if (run / "结果.md").exists() else "",
@@ -793,9 +813,11 @@ def cmd_issues(run: Path) -> Path:
     ros = json.loads((run / "roster.json").read_text(encoding="utf-8"))
     rows, summary = [], []
     lvl = {k: i for i, k in enumerate(LEVELS)}
+    cfg = json.loads(LINE_REVIEW.read_text(encoding="utf-8"))
+    slot_ids = slots_of(ros.get("models", cfg["models"]))
     for it in ros["items"]:
         sc = {}
-        for s in ("a", "b"):
+        for s in slot_ids:
             t = (run / "reports" / f"{it['id']}__{s}.md").read_text(encoding="utf-8")
             sc[s], rr, _ = parse_report(t, it["dims"])
             rows += [dict(r, item=it["id"], src=s) for r in rr]
@@ -813,7 +835,7 @@ def cmd_issues(run: Path) -> Path:
             for m in re.finditer(r"^-\s*(?:\*\*)?\s*(?:([ab])\s*[·:]?\s*)?([^：:（(「]+)(.*)$", rej, re.M):
                 for tok in re.findall(r"l\d+(?:\s*[-–～~]\s*l?\d+)?|agenda|outro|c_\w+|s\d+", m.group(2)):
                     rejected.append((m.group(1), tok.replace(" ", ""), (m.group(2) + m.group(3)).strip()))
-        final = {d: (js[d][0] if d in js else min(sc["a"][d][0], sc["b"][d][0])) for d in it["dims"]}
+        final = {d: (js[d][0] if d in js else min(sc[s][d][0] for s in slot_ids)) for d in it["dims"]}
         for r in rows:
             if r["item"] == it["id"] and r["src"] != "judge":
                 notes = [txt for slot, tok, txt in rejected
@@ -821,7 +843,7 @@ def cmd_issues(run: Path) -> Path:
                 if notes:
                     r["judge_note"] = "；".join(dict.fromkeys(notes))
         summary.append({"item": it["id"], "name": it["name"], "final": final,
-                        "scores": {"a": {d: sc["a"][d][0] for d in it["dims"]}, "b": {d: sc["b"][d][0] for d in it["dims"]},
+                        "scores": {**{s: {d: sc[s][d][0] for d in it["dims"]} for s in slot_ids},
                                    "judge": {d: v[0] for d, v in js.items()}}})
     num = lambda w: int(m.group(1)) if (m := re.search(r"l(\d+)", w)) else -1
     rows.sort(key=lambda r: (r["item"], num(r["where"]), lvl[r["level"]]))
@@ -834,7 +856,7 @@ def cmd_issues(run: Path) -> Path:
         issues.append({"id": f"I{i}", "key": k, "item": r["item"], "where": r["where"], "dim": r["dim"], "level_zh": r["level"],
                        "level": UI_LEVEL[r["level"]], "law": "lines", "category": ITEM_NAME.get(r["item"], r["item"]),
                        "dimension": r["dim"], "shots": [r["where"]], "evidence": [r["orig"]] if r["orig"] else [],
-                       "sources": [{"a": "a 位（Claude）", "b": "b 位（Codex）", "judge": "裁决人"}[r["src"]]],
+                       "sources": [{"a": "a 位", "b": "b 位", "judge": "裁决人"}[r["src"]]],
                        "fix": r["fix"], "cost": "便宜",
                        "src": r["src"], "orig": r["orig"], "problem": r["issue"], "suggest": r["fix"],
                        "judge_note": r.get("judge_note", ""),
@@ -862,13 +884,13 @@ def write_issues_md(run: Path, data: dict) -> Path:
     out = [f"# 台词审汇总：{run.name}", "",
            "处理状态：" + " · ".join(f"{STATUS[k]} {v}" for k, v in cnt.items())
            + "（`python tools/edu_review.py fix` 登记；下一轮审稿人按「处理」列逐条复核）", "",
-           "## 各项结论（最终分：裁决过的维度用裁决分，其余取两人较低分）", "",
+           "## 各项结论（最终分：双审时裁决过的维度用裁决分，其余取两人较低分；单审即 a 位评分）", "",
            "| 项 | 最终分 | 未处理的必改 | 结论 |", "|---|---|---|---|"]
     for x in data["items"]:
         must = sum(1 for i in issues if i["item"] == x["item"] and i["level_zh"] == "必改" and i["status"] == "open")
         out.append(f"| {x['item']} | " + " ".join(f"{d}={v}" for d, v in x["final"].items())
                    + f" | {must} | {'通过' if item_ok(x, issues) else '不通过'} |")
-    out += ["", "## 问题（来源 a = Claude、b = Codex、judge = 裁决补充）", "",
+    out += ["", "## 问题（来源 a；旧双审时 b、judge = 裁决补充）", "",
             "| 编号 | 项 | 位置 | 维度 | 级别 | 来源 | 原文 | 问题 | 建议改写 | 裁决人意见 | 处理 |", "|---|---|---|---|---|---|---|---|---|---|---|"]
     for i in issues:
         h = STATUS[i["status"]] + (f"：{i['solution']}" if i["solution"] else "") + (f"（理由：{i['reason']}）" if i["reason"] else "")

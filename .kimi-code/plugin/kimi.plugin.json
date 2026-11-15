@@ -1,0 +1,31 @@
+{
+  "name": "micro-drama-platform",
+  "version": "1.0.0",
+  "description": "Repository triage and completion checks for Kimi Code",
+  "interface": {
+    "displayName": "Micro Drama Platform",
+    "shortDescription": "Spec-driven triage and repository completion checks"
+  },
+  "hooks": [
+    {
+      "event": "UserPromptSubmit",
+      "command": "python ./hooks/repo_hook.py triage",
+      "timeout": 5
+    },
+    {
+      "event": "Stop",
+      "command": "python ./hooks/repo_hook.py shot-pack",
+      "timeout": 120
+    },
+    {
+      "event": "Stop",
+      "command": "python ./hooks/repo_hook.py workflow-catalog",
+      "timeout": 10
+    },
+    {
+      "event": "Stop",
+      "command": "python ./hooks/repo_hook.py followup",
+      "timeout": 20
+    }
+  ]
+}

@@ -5,12 +5,12 @@
 ## ✨ 1. Expectation — what you'll get
 Run the prompt and a Python script writes `pitch.pptx` to your folder — a genuine PowerPoint file, not a web mock — a 12-slide investor deck (Title → Problem → Solution → Market → Traction → Competition → The Ask) with a consistent brand palette, shape-drawn icons, embedded native charts, and real narrative copy specific to your startup. Open it straight in PowerPoint or Keynote and every shape, chart, and text box is fully editable.
 
-**Why it's cool:** Claude produces an actual, hand-off-ready deliverable end-to-end from one prompt — the charts are real native PowerPoint objects (not flattened images) and the copy is written for your specific company, so you get an editable deck a designer could refine, not a screenshot.
+**Why it's cool:** the agent produces an actual, hand-off-ready deliverable end-to-end from one prompt — the charts are real native PowerPoint objects (not flattened images) and the copy is written for your specific company, so you get an editable deck a designer could refine, not a screenshot.
 
 **Use cases:** A first-draft fundraising deck for a real startup you can then edit and pitch; a demo-day or sales template you re-skin per audience; a fast way to mock up board or marketing one-pagers in your brand colors; or a worked example for learning python-pptx (layouts, native charts, shape drawing) by reading and re-running the generator.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away. Paste the prompt below into Claude Code in an empty folder, answer 2 short setup questions (the startup + brand vibe), then it builds autonomously, generates `pitch.pptx`, and tells you where it is. Prerequisites: `pip install python-pptx` — the prompt runs this for you.
+Copy-paste-and-walk-away. Paste the prompt below into Kimi / Codex in an empty folder, answer 2 short setup questions (the startup + brand vibe), then it builds autonomously, generates `pitch.pptx`, and tells you where it is. Prerequisites: `pip install python-pptx` — the prompt runs this for you.
 
 ## 🔗 3. Reference & prior art
 

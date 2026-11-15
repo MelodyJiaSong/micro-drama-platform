@@ -222,12 +222,12 @@ node_modules/
 projects/spec_driven/frontend/dist/
 projects/spec_driven/backend/static/
 
-# Claude — track .claude/ and its content (agents, skills, memory) by default,
-# but exclude per-session ephemeral state and per-machine permission allowlists.
-!.claude/
-!.claude/**
-.claude/scheduled_tasks.lock
-.claude/settings.local.json
+# Kimi / Codex — track shared MCP adapters; keep machine-local state out.
+.codex/*
+!.codex/config.toml
+.claude/
+CLAUDE.md
+.kimi-code/local.toml
 
 # Agent team audit trail (local runtime artifacts — interview, research,
 # validation, findings, self-evolution logs). Not committed.

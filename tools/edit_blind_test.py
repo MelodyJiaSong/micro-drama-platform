@@ -8,7 +8,7 @@
     python tools/edit_blind_test.py set-vid <测试目录> clip_01 <VID>             # 记上传后的 VID
     python tools/edit_blind_test.py check   <测试目录> <成片.mp4> [--draft <stdraft.json>] [--name capcut]
     python tools/edit_blind_test.py blind   <测试目录>                             # 两方都合规后盲化
-    python tools/edit_blind_test.py review  <测试目录> [--reviewer claude codex]  # 独立模型盲审（A/B 正反各一次）
+    python tools/edit_blind_test.py review  <测试目录> [--reviewer kimi]  # 独立模型盲审（A/B 正反各一次）
     python tools/edit_blind_test.py reveal  <测试目录>                             # 人审表填完后揭盲
 
 画面检查：成片每秒 4 帧，与素材池每一帧比（128×72 灰度），整体差与 16×12 分块的最大块差都要小；
@@ -501,20 +501,15 @@ def cmd_review(a: argparse.Namespace) -> None:
                 (test / "review" / f"prompt_{who}{'_swap' if swap else ''}.md").write_text(prompt, encoding="utf-8")
                 shutil.rmtree(work, ignore_errors=True)
                 continue
-            if who == "codex":
-                last = work / "_last.txt"
-                cmd = ["codex", "exec", "--skip-git-repo-check", "-s", "read-only", "-o", str(last)]
-                for n in images:
-                    cmd += ["-i", n]
-                subprocess.run(cmd, input=prompt, cwd=work, capture_output=True, text=True, encoding="utf-8",
-                               errors="replace", timeout=a.timeout, shell=os.name == "nt")
-                raw = last.read_text(encoding="utf-8") if last.exists() else ""
-            else:
-                reads = "、".join(str(work / n) for n in images)
-                r = subprocess.run(["claude", "-p", "--output-format", "text", "--allowedTools", "Read", "--add-dir", str(work)],
-                                   input=f"先用 Read 工具逐张读取图片：{reads}。\n{prompt}", cwd=work, capture_output=True,
-                                   text=True, encoding="utf-8", errors="replace", timeout=a.timeout, shell=os.name == "nt")
-                raw = r.stdout
+            task_file = work / "prompt.md"
+            task_file.write_text(prompt, encoding="utf-8")
+            reads = "、".join(str(work / n) for n in images)
+            instruction = f"先用 Read 读取 {task_file}，再用 ReadMediaFile 逐张读取图片：{reads}。严格按任务输出。"
+            cmd = ["kimi", "--agent-file", str(REPO / ".agents" / "agents" / "qc-reviewer.md"),
+                   "-p", instruction, "--output-format", "text"]
+            result = subprocess.run(cmd, cwd=work, stdin=subprocess.DEVNULL, capture_output=True,
+                                    text=True, encoding="utf-8", errors="replace", timeout=a.timeout, shell=os.name == "nt")
+            raw = result.stdout
             parsed = None
             try:
                 parsed = json.loads(raw[raw.index("{"): raw.rindex("}") + 1])
@@ -566,7 +561,7 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--draft", type=Path); s.add_argument("--name")
     s = sub.add_parser("blind"); s.add_argument("test", type=Path)
     s = sub.add_parser("review"); s.add_argument("test", type=Path)
-    s.add_argument("--reviewer", nargs="+", default=["claude", "codex"], choices=["claude", "codex"])
+    s.add_argument("--reviewer", nargs="+", default=["kimi"], choices=["kimi"])
     s.add_argument("--timeout", type=int, default=900)
     s.add_argument("--dry-run", action="store_true", help="只生成材料与提示词，不调审稿人")
     s = sub.add_parser("reveal"); s.add_argument("test", type=Path); s.add_argument("--force", action="store_true")

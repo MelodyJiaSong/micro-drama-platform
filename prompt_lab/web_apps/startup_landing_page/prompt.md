@@ -10,7 +10,7 @@ Run the prompt, answer two quick questions, and minutes later a single `index.ht
 **Use cases:** Spin up a convincing pitch mockup for a client or investor deck in the time it takes to grab coffee; add a striking, original landing page to your portfolio without licensing a template; prototype your own startup's hero-and-pricing story before committing to a real codebase; or read the generated Tailwind, IntersectionObserver, and vanilla-JS toggle code to learn how modern marketing pages are actually wired together.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away. Drop the prompt below into Claude Code in an empty folder, answer the 2 short setup questions (which product, which aesthetic), and it runs autonomously, self-reviewing against a checklist until the page is done, then opens it. Prerequisites: none — Tailwind loads from CDN and the page opens directly in a modern browser.
+Copy-paste-and-walk-away. Drop the prompt below into Kimi / Codex in an empty folder, answer the 2 short setup questions (which product, which aesthetic), and it runs autonomously, self-reviewing against a checklist until the page is done, then opens it. Prerequisites: none — Tailwind loads from CDN and the page opens directly in a modern browser.
 
 ## 🔗 3. Reference & prior art
 

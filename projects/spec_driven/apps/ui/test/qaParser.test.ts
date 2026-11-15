@@ -16,6 +16,7 @@ const realQaPath = resolve(
   "..",
   "..",
   "..",
+  "..",
   "specs",
   "development",
   "spec_driven",

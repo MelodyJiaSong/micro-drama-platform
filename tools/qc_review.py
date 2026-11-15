@@ -1,23 +1,20 @@
 # -*- coding: utf-8 -*-
-"""多视角独立审稿：另起全新的 CLI 进程（`codex exec` / `claude -p`）判审稿类检查——Claude 与 Codex 通用。
+"""多视角独立审稿：另起全新的 Kimi CLI 进程判审稿类检查。
 
 用法（仓库根目录）：
     python tools/qc_review.py <出片目录> [--when 一镜到底]      # 出片后：看拼图（+ 峰值图）
     python tools/qc_review.py <技能目录> --pre                  # 出片前：看规格 + 开场图 + 峰值图
-    通用参数：[--reviewer auto|codex|claude] [--sheet 拼图] [--timeout 300] [--dry-run]
+    通用参数：[--reviewer auto|kimi] [--sheet 拼图] [--timeout 300] [--dry-run]
 
 设计（dota_yingxiong follow-up 263 / 266）
 ------------------------------------------
-· **另起进程**而不是用代理自带的子代理：Claude 有子代理、Codex 没有，改成脚本后两边能力对等。
-  进程跑在临时空目录、只读，只拿到图与规格副本，读不到作者写的 `review.md`。
+· **另起进程**：进程跑在临时空目录，使用只读 QC agent，只拿到图与规格副本，读不到作者写的 `review.md`。
 · **多视角，每个视角一个独立进程**（登记表里每条检查的 `perspective`）：
-    character —— 出场几个角色就开几个审稿人，每个代入一个角色、只判与自己有关的立场与视线
-                （用户：「每个人物都应该站在自己的立场上独立思考」）；任一角色判不过即不过；
+    character —— 出场几个角色就开几个审稿人，每个代入一个角色、只判与自己有关的立场与视线；
     director  —— 规格、结构、比例、起势收势；
     audience  —— 第一次看的观众，**不给规格**，只看画面说出发生了什么；
     fidelity  —— 原版还原，额外附峰值图对照。
-· **轮换模型**：各视角轮流分给 Claude 与 Codex（默认先给「另一个」模型），并行跑；某个失败自动换另一个；
-  都失败记「未审」写原因——绝不由作者代判。
+· **Kimi 单审**：默认每个视角只起一个 `kimi -p` 进程，并行跑；失败记「未审」写原因，绝不由作者代判。
 · 还没有机检工具的机检项（auto = false）先由导演视角兜底，证据标「审稿兜底，待机检工具」。
 · **三种结论、两层**（follow-up 354）：pass / fail / 审不了（材料缺 / 看不清），取消「拿不准就判 fail」；
   每项标【通用】（只看画面本身，不拿规格数字当判据）或【对照规格】（只有大偏差 fail，容差见 qc.SPEC_TOLERANCE）。
@@ -74,10 +71,7 @@ class Task:
 
 
 def pick(order: str) -> list[str]:
-    """auto：调用方是 Claude（有 CLAUDECODE）就先让 Codex 审，否则先让 Claude 审；另一个作后备。"""
-    if order in ("codex", "claude"):
-        return [order, "claude" if order == "codex" else "codex"]
-    return ["codex", "claude"] if os.environ.get("CLAUDECODE") else ["claude", "codex"]
+    return ["kimi"]
 
 
 def find_sheet(rd: Path, art: Path, explicit: str, make: bool = True) -> Path:
@@ -201,24 +195,24 @@ def prompt_for(task: Task, t: Target) -> str:
 
 
 def run_reviewer(who: str, prompt: str, images: list[Path], work: Path, timeout: int) -> str:
+    if who != "kimi":
+        raise ValueError(f"未知审稿运行时：{who}")
     local = []
     for i, img in enumerate(images):
         dst = work / f"{i + 1}_{img.name}"
-        shutil.copy(img, dst)                                 # 只把图的副本放进空目录
-        local.append(dst.name)
-    if who == "codex":
-        last = work / "_last.txt"
-        cmd = ["codex", "exec", "--skip-git-repo-check", "-s", "read-only", "-o", str(last)]
-        for name in local:
-            cmd += ["-i", name]
-        subprocess.run(cmd, input=prompt, cwd=work, capture_output=True, text=True, encoding="utf-8",
-                       errors="replace", timeout=timeout, shell=os.name == "nt")
-        return last.read_text(encoding="utf-8") if last.exists() else ""
-    reads = "、".join(str(work / n) for n in local)
-    cmd = ["claude", "-p", "--output-format", "text", "--allowedTools", "Read", "--add-dir", str(work)]
-    r = subprocess.run(cmd, input=f"先用 Read 工具逐张读取图片：{reads}。\n{prompt}", cwd=work, capture_output=True,
-                       text=True, encoding="utf-8", errors="replace", timeout=timeout, shell=os.name == "nt")
-    return r.stdout
+        shutil.copy(img, dst)
+        local.append(dst)
+    task_file = work / "prompt.md"
+    task_file.write_text(prompt, encoding="utf-8")
+    reads = "、".join(str(path) for path in local)
+    instruction = f"先用 Read 读取 {task_file}，再用 ReadMediaFile 逐张读取图片：{reads}。严格按任务输出。"
+    cmd = ["kimi", "--agent-file", str(REPO / ".agents" / "agents" / "qc-reviewer.md"),
+           "-p", instruction, "--output-format", "text"]
+    result = subprocess.run(cmd, cwd=work, stdin=subprocess.DEVNULL, capture_output=True,
+                            text=True, encoding="utf-8", errors="replace", timeout=timeout, shell=os.name == "nt")
+    if result.returncode:
+        raise RuntimeError(f"kimi 退出码 {result.returncode}：{result.stderr[-1000:]}")
+    return result.stdout
 
 
 UNKNOWN = {"审不了", "unknown", "cannot_judge", "无法判定"}
@@ -263,7 +257,7 @@ def run_task(task: Task, t: Target, order: list[str], timeout: int, audit: Path)
         with tempfile.TemporaryDirectory(prefix="qc_review_") as tmp:
             try:
                 raw = run_reviewer(who, prompt, [img for img, _ in t.images.get(task.perspective, [])], Path(tmp), timeout)
-            except (OSError, subprocess.TimeoutExpired) as exc:
+            except (OSError, RuntimeError, subprocess.TimeoutExpired) as exc:
                 raw, notes = "", notes + [f"{who} 调用失败：{exc}"]
         d = audit / f"{t.path.name}_{task.perspective}_{task.who or task.name}_{who}"
         d.mkdir(parents=True, exist_ok=True)
@@ -305,7 +299,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--pre", action="store_true", help="出片前：审技能目录的规格、开场图与峰值图")
     ap.add_argument("--stage", default="video")
     ap.add_argument("--when", action="append", default=[])
-    ap.add_argument("--reviewer", default="auto", choices=("auto", "codex", "claude"))
+    ap.add_argument("--reviewer", default="auto", choices=("auto", "kimi"))
     ap.add_argument("--sheet", default="")
     ap.add_argument("--timeout", type=int, default=300)
     ap.add_argument("--dry-run", action="store_true", help="只打印各视角的提示词，不调审稿人、不写任何文件")
@@ -324,7 +318,7 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     order = pick(a.reviewer)
     audit = REPO / ".audit" / "adhoc_agents" / dt.date.today().isoformat() / "qc_review"
-    jobs = [(task, order[i % 2:] + order[:i % 2]) for i, task in enumerate(tasks)]       # 视角轮流先给两个模型
+    jobs = [(task, order) for task in tasks]                    # 单审：每个视角一个审稿进程
     with ThreadPoolExecutor(max_workers=4) as pool:
         results = list(pool.map(lambda j: run_task(j[0], t, j[1], a.timeout, audit), jobs))
     items = aggregate(results, checks)

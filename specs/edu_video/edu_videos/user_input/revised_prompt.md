@@ -570,19 +570,7 @@ t01 做到成片再给 /episode-preview 链接：网页场景、下载 Commons �
 
 t01 故事板 v4（G9）整集重出＋自检迭代，出片前用户预览
 
-## 039 — 2026-11-14 20:31:55 — redian_t02_full_production
-
-> target_artifacts:
->   - edu_videos/redian_xiangying/t02_jensen_huang_resigns/
-> severity: medium
-
-### 指令
-
-（电脑重启后接续）不是荒野生活，是热点相迎的两个 topic：黄仁勋、美国飞机事件；没做完的继续；做好了之后给我 preview url；t02 Seedance 4 条同意都提交
-
-### 摘要
-
-t01 已成片待审；t02 从讲稿做到成片：讲稿要点→中英讲解员口述→台词审→配音→网页场景＋Seedance 4 镜（用户已同意，约 480 积分）＋公开图片→Suno 配乐→合成→/episode-preview 链接
+---
 
 ## 040 — 2026-11-14 20:35:09 — tansuo-preview-drama-style-audio
 
@@ -598,6 +586,71 @@ t01 已成片待审；t02 从讲稿做到成片：讲稿要点→中英讲解员
 
 t01 故事板预览改为短剧拍摄页样式；新增整集音频预览（本地 TTS、scene/shot 进度条、时间对齐成片），今后出视频前必给
 
+---
+
+## 043 — 2026-11-14 21:31:41 — review-claude-single-only
+
+> severity: high
+
+### 指令
+
+教学视频的台词审、专家审、母语听感审一律只用一位 Claude 审稿人，不用 Codex，不做双审对比裁决。
+
+### 摘要
+
+edu 审查改为 Claude 单审
+
+---
+
+## 045 — 2026-11-14 22:24:38 — tansuo-s2-lipids
+
+> target_artifacts:
+>   - edu_videos/tansuo/README.md
+>   - edu_videos/tansuo/t11_what_is_ldl/
+> severity: high
+
+### 指令
+
+探索系列开新一季：血脂。讲血脂的原理、低密度脂蛋白（LDL）是什么、好与坏，他汀药是否应该服用，正确的健康方法，以及针对不同情景（人群、化验结果）的处理。先做详尽的医学研究与分析、找足够多的资料，再用视频特效与丰富的剧情展现给观众。
+
+### 摘要
+
+探索第二季「血脂」：医学研究档案 → 季地图 → 试点期故事
+
+---
+
+## 046 — 2026-11-14 23:00:48 — tansuo-s2-ldl-root-cause
+
+> target_artifacts:
+>   - edu_videos/tansuo/t11_inside_an_artery/research/
+> severity: medium
+
+### 指令
+
+血脂季研究补一个角度：低密度脂蛋白升高的根本原因是什么；他汀是在解决根本问题，还是只解决表象。
+
+### 摘要
+
+血脂季研究加角度：LDL 升高的根因、他汀治本还是治标
+
+---
+
+## 039 — 2026-11-14 20:31:55 — redian_t02_full_production
+
+> target_artifacts:
+>   - edu_videos/redian_xiangying/t02_jensen_huang_resigns/
+> severity: medium
+
+### 指令
+
+（电脑重启后接续）不是荒野生活，是热点相迎的两个 topic：黄仁勋、美国飞机事件；没做完的继续；做好了之后给我 preview url；t02 Seedance 4 条同意都提交
+
+### 摘要
+
+t01 已成片待审；t02 从讲稿做到成片：讲稿要点→中英讲解员口述→台词审→配音→网页场景＋Seedance 4 镜（用户已同意，约 480 积分）＋公开图片→Suno 配乐→合成→/episode-preview 链接
+
+---
+
 ## 041 — 2026-11-14 20:47:54 — redian_t02_images_voice_fluency
 
 > target_artifacts:
@@ -611,3 +664,162 @@ t01 故事板预览改为短剧拍摄页样式；新增整集音频预览（本�
 ### 摘要
 
 t02：补公开图片（国会议员官方照、总部、港口等）＋Codex 生成示意图（不出真人、标 AI 生成）；讲稿中英按通顺流畅重写一轮再进台词审；ElevenLabs 中文母语音色 5 句样音给用户盲听，定了再决定 t01/t02 是否换配音引擎
+
+---
+
+## 042 — 2026-11-14 21:21:17 — edu-line-review-claude-single
+
+> target_artifacts:
+>   - tools/edu_review.py
+> severity: medium
+
+### 指令
+
+我上次已经说了，审稿之后只用claude，不用codex，不然太慢了，全部改成单一审稿
+
+### 摘要
+
+教学视频台词审（tools/edu_review.py）改 Claude 单审：line_review.json models 去掉 b 位，slots_of() 按 models 定审稿位，单审时 a 位评分即最终分、不对比不裁决；checklist/issues 兼容单审；edu README 同步；t02 lines_r1 进行中的审查单转单审（停掉 4 个 Codex 位）。上次（chuanyue_yiri 065）只改了短剧 review_run.py，没覆盖 edu_review.py
+
+---
+
+## 047 — 2026-11-15 00:26:55 — tansuo-t01-length-principle
+
+> target_artifacts:
+>   - edu_videos/tansuo/t01_inside_a_chip/
+> severity: medium
+
+### 指令
+
+探索 t01 不用在意 3–5 分钟的时长约定，质量优先；第 8 场晶体管开关原理在本期讲透（为什么不加电不通、加电为什么通），不留给下一期。
+
+### 摘要
+
+t01 不限时长、质量优先；开关原理本期讲透（t02 选题顺延）
+
+---
+
+## 048 — 2026-11-15 00:31:57 — tansuo-s2-family-offscreen
+
+> target_artifacts:
+>   - edu_videos/tansuo/README.md
+>   - edu_videos/tansuo/t11_inside_an_artery/beats.md
+> severity: low
+
+### 指令
+
+血脂季：凯的家人不露面，片中只有林和凯两人讲解；家人只通过凯的台词和道具（化验单、出院单）出现，不新增选角与人物资产。
+
+### 摘要
+
+血脂季家人不露面，纯两人讲解
+
+---
+
+## 049 — 2026-11-15 10:38:14 — tansuo-s2-no-doctor-endorsement
+
+### 指令
+
+探索第二季血脂不安排持证医生审稿署名；全季不做任何药物推荐。保留科普边界：只解释机制与证据，不给用药、停药或剂量建议，提醒观众与医生讨论个人风险。
+
+### 摘要
+
+血脂季不请医生署名，不做药物推荐
+
+---
+
+## 050 — 2026-11-15 16:23:23 — tansuo-t11-add-statin-mechanism
+
+### 指令
+
+在探索第二季试点 t11 故事板中加入他汀类药物解释：说明肝细胞胆固醇合成、LDL 受体增加与血中 LDL 清除，以及它对血管壁致病原料和 LDL 升高原因的不同作用。遵守 follow-up 049：不做药物推荐，不给剂量或停药方案。
+
+### 摘要
+
+t11 增加他汀机制与治本治标解释
+
+---
+
+## 051 — 2026-11-15 16:28:31 — tansuo-t11-statin-lipid-outcome
+
+### 指令
+
+t11 他汀段还需解释他汀与血脂的关系：血脂是总称，他汀主要降低 LDL 等致动脉粥样硬化颗粒，而非清除所有血脂；说明降低 LDL 有遗传学与临床结局证据，能减少心梗和卒中，不只是改善化验数字，同时解释绝对获益取决于基线风险、降幅和持续时间，且不能消除全部风险。不作药物推荐。
+
+### 摘要
+
+t11 补充他汀与血脂关系及降 LDL 是否解决问题
+
+---
+
+## 052 — 2026-11-15 17:03:12 — tansuo-storyboard-nav-workflow
+
+### 指令
+
+芯片 t01 与血脂 t11 的故事板都统一为按一期组织、短剧 filming 样式的按场/镜卡片，并能从左侧导航进入；把这一故事板入口与人工审查顺序写进探索系列流程。
+
+### 摘要
+
+芯片与血脂故事板统一入口并写入系列流程
+
+---
+
+## 044 — 2026-11-14 22:20:09 — tansuo-t01-story-rewrite
+
+> target_artifacts:
+>   - edu_videos/tansuo/t01_inside_a_chip/
+> severity: high
+
+### 指令
+
+探索 t01 台词与故事重做：现在的台词太单薄，没有铺垫；要有情节、慢慢引入，提出观众真正感兴趣的问题，解释要详细。先调研别的文章和视频怎么讲「芯片里面有什么」，浓缩精华，再丰富成一个生动的故事，配上情景和特效展示给观众。
+
+### 摘要
+
+t01 重写：调研同类讲解 → 有铺垫的故事、观众关心的问题、详细解释、情景与特效
+
+---
+
+## 053 — 2026-11-15 17:29:56 — t11-v2-review
+
+### 指令
+
+审查探索血脂 t11 故事板 v2（15 格），给出通过与否；解释每个 scene 只有一个 shot 的原因，并核对是否已形成实际分镜。
+
+### 摘要
+
+核查 t11 v2 概念板、场镜映射与独立审稿状态
+
+---
+
+## 054 — 2026-11-15 17:34:23 — t01-visual-shot-decomposition
+
+> severity: high
+
+### 指令
+
+用户指出故事板每个 scene 只有一个 shot，且同地点被拆成多个 scene；要求修正后提供整集 preview。按实际地点重组场景，按画面动作拆多镜，同步故事板与中英文音频预览，保留台词与时间轴。
+
+### 摘要
+
+t01 按实际场景重组并拆分视觉镜头
+
+## 055 — 2026-11-15 18:00:37 — t11-v3-fix-review
+
+### 指令
+
+修复t11血脂v2审查中该修的全部问题，含真实场镜组织、复杂机制展示顺序、证据措辞与比较图、摄影调度及预览；修后独立复审。
+
+### 摘要
+
+t11 v3分镜修订及复审
+
+## 056 — 2026-11-15 18:01:32 — chip-storyboard-review-repair
+
+### 指令
+
+Review 探索 t01_inside_a_chip 当前故事板与关联讲稿、事实和资产，把能确认的问题全部修补并独立复审。
+
+### 摘要
+
+复查并修补芯片 t01 故事板

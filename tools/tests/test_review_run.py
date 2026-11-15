@@ -15,13 +15,13 @@ REAL_ROSTER = rr.ROSTER
 
 @pytest.fixture(autouse=True)
 def dual_roster(request, tmp_path_factory, monkeypatch):
-    """双审机制（对比、裁决、Codex 代登记）仍保留在工具里：这些用例用一份「每类 Claude＋Codex 两位」的名册副本跑。
-    正式名册 2026-11-14 起改为 Claude 单审（follow-up 065），单审用例标 @pytest.mark.single_review 用真名册。"""
+    """双审机制（对比、裁决、Codex 代登记）仍保留在工具里：这些用例用一份「每类 Kimi＋Codex 两位」的名册副本跑。
+    正式名册 2026-11-14 起改为 Kimi 单审（follow-up 065），单审用例标 @pytest.mark.single_review 用真名册。"""
     if request.node.get_closest_marker("single_review"):
         return
     r = json.loads(REAL_ROSTER.read_text(encoding="utf-8"))
     for law in r["laws"].values():
-        law["reviewers"] = [{"slot": "a", "runner": "claude", "model": "claude-opus-5-5"}, {"slot": "b", "runner": "codex", "model": "gpt-6.1-sol"}]
+        law["reviewers"] = [{"slot": "a", "runner": "kimi", "model": "kimi"}, {"slot": "b", "runner": "codex", "model": "gpt-6.1-sol"}]
     r["laws"]["native_ear"]["prefer_model"] = "codex"
     f = tmp_path_factory.mktemp("roster") / "review_roster.json"
     f.write_text(json.dumps(r, ensure_ascii=False), encoding="utf-8")
@@ -127,28 +127,28 @@ def test_new_saves_under_the_drama_with_must_checks(tmp_path):
     task = (run / "items/physics_A.md").read_text(encoding="utf-8")
     assert "**P1**" in task and "tick" in task
     assert (run / "materials/shots/s1_st1/spec.md").is_file()
-    assert data["version"] == 5 and data["adjudicator"]["model"] == "claude-opus-5-5"
+    assert data["version"] == 5 and data["adjudicator"]["model"] == "kimi"
 
 
-def test_new_v5_gives_each_item_a_claude_and_a_codex_slot_with_their_own_task_file(tmp_path):
-    """v5（用户 2026-11-08）：每项一位合适的 Claude 模型＋一位合适的 Codex 模型双审，各有任务书（是什么、rubric、评分规则、审法、范围、打勾命令）。"""
+def test_new_v5_gives_each_item_a_kimi_and_a_codex_slot_with_their_own_task_file(tmp_path):
+    """v5（用户 2026-11-08）：每项一位合适的 Kimi 模型＋一位合适的 Codex 模型双审，各有任务书（是什么、rubric、评分规则、审法、范围、打勾命令）。"""
     ep = make_episode(tmp_path)
     assert rr.main(["new", str(ep), "--stage", "filming"]) == 0
     run, = runs(ep)
     it = item_of(run, "physics_A")
     a, b = it["slots"]["a"], it["slots"]["b"]
-    assert (a["runner"], a["model"], b["runner"], b["model"]) == ("claude", "claude-opus-5-5", "codex", "gpt-6.1-sol")
+    assert (a["runner"], a["model"], b["runner"], b["model"]) == ("kimi", "kimi", "codex", "gpt-6.1-sol")
     assert a["report"] == "reports/physics_A__a.md" and b["prompt"] == "items/physics_A__b.md" and it["report"] == "reconcile/physics_A.md"
     assert it["status"] == "pending" and it["findings"]["重出"] == 0 and [r["id"] for r in it["rubric"]][:2] == ["P1", "P2"]
     ta = (run / a["prompt"]).read_text(encoding="utf-8"); tb = (run / b["prompt"]).read_text(encoding="utf-8")
     for task in (ta, tb):
         assert "这一类是什么" in task and "生成模型最常犯" in task and "**P8** 首帧 = 第 0 秒" in task
         assert "0–3" in task and "证据规则" in task and "画一张「手与道具」表" in task and "s1、s2" in task and "materials/index.md" in task
-    assert "--slot a" in ta and '--by "claude-opus-5-5/physics_A__a"' in ta and "REPORT WRITTEN" not in ta
+    assert "--slot a" in ta and '--by "kimi/physics_A__a"' in ta and "REPORT WRITTEN" not in ta
     assert "--slot b" in tb and '--by "gpt-6.1-sol/physics_A__b"' in tb and rr.PY_FALLBACK in tb
     assert "REPORT WRITTEN:" in tb and "不要运行 tick" in tb
     brief = (run / "BRIEF.md").read_text(encoding="utf-8")
-    assert "## 评分表" in brief and "--attest-log" in brief
+    assert "## 评分表" in brief and "Kimi 单审" in brief and "--attest-log" not in brief   # 总说明只讲单审（follow-up 362）；旧双审单的 Codex 任务书仍带代登记说明
 
 
 def test_tick_requires_reviewer_table_and_every_must(tmp_path):
@@ -168,7 +168,7 @@ def test_tick_requires_reviewer_table_and_every_must(tmp_path):
     with pytest.raises(SystemExit, match="E3"):
         t()
     rep.write_text(report5(it, {"E2": 1}), encoding="utf-8")
-    for who in ("Claude Code", "作者", "m/physics_A__a", "m/era", "m/era__b"):
+    for who in ("Kimi Code", "作者", "m/physics_A__a", "m/era", "m/era__b"):
         with pytest.raises(SystemExit, match="作者"):
             t(who)
     with pytest.raises(SystemExit, match="--slot"):
@@ -233,7 +233,7 @@ def test_conclude_confirm_and_submit_gate(tmp_path):
     assert d["state"] == "已收轮" and (run / "结果.md").is_file()          # 每轮收轮不等用户 review（用户 2026-11-08）
     assert d["verdict"]["result"] == "不可出片" and d["verdict"]["reasons"]   # 默认 ROWS 有重出 → 严重问题未处理
     res = (run / "结果.md").read_text(encoding="utf-8")
-    assert "各类评分" in res and "| P1 手数 | 3 | 3 | 3 |" in res and "claude-opus-5-5" in res and "gpt-6.1-sol" in res and "抽查" in res
+    assert "各类评分" in res and "| P1 手数 | 3 | 3 | 3 |" in res and "kimi" in res and "gpt-6.1-sol" in res and "抽查" in res
     assert "问题清单" in res and (run / "issues.json").is_file()
     assert not rr.can_submit(ep, ["ep1_s1_st1"])[0]          # concluded but not yet confirmed by the user
     assert rr.main(["confirm", str(run), "--quote", "好的，出第一场"]) == 0
@@ -265,7 +265,7 @@ def test_dialogue_has_a_blind_native_ear_reviewer_on_another_model(tmp_path):
     items = {x["id"]: x for x in load(run)["items"]}
     ear = items["native_ear"]
     assert ear["blind"] and ear["prefer_model"] == "codex" and [m["id"] for m in ear["must"]][0] == "N1"
-    assert ear["slots"]["b"]["runner"] == "codex" and ear["slots"]["a"]["runner"] == "claude"
+    assert ear["slots"]["b"]["runner"] == "codex" and ear["slots"]["a"]["runner"] == "kimi"
     task = (run / "items/native_ear__b.md").read_text(encoding="utf-8")
     assert "lines.md" in task and "codex exec" in task and "英语母语观众，盲审" in task and "你就是这一位" in task
     assert "英语母语观众，盲审" in (run / "items/native_ear__a.md").read_text(encoding="utf-8")
@@ -313,12 +313,12 @@ def test_dispatch_records_which_agent_reviewed_with_what_instructions(tmp_path):
         rr.main(["dispatch", str(run), "era", "--runner", "x", "--model", "y", "--prompt-file", str(prompt)])
     with pytest.raises(SystemExit, match="裁决"):
         rr.main(["dispatch", str(run), "era", "--slot", "judge", "--runner", "x", "--model", "y", "--prompt-file", str(prompt)])
-    assert rr.main(["dispatch", str(run), "era", "--slot", "a", "--runner", "Claude Code 子代理（general-purpose）", "--model", "claude-opus-5-5",
+    assert rr.main(["dispatch", str(run), "era", "--slot", "a", "--runner", "Kimi Code 子代理（general-purpose）", "--model", "kimi",
                     "--prompt-file", str(prompt)]) == 0
     assert rr.main(["dispatch", str(run), "era", "--slot", "a", "--reply-file", str(reply)]) == 0
     era = item_of(run, "era")
     rec, = era["slots"]["a"]["agents"]
-    assert rec["model"] == "claude-opus-5-5" and rec["reply"] == "审完，已打勾。" and any("review_roster" in s for s in rec["skills"])
+    assert rec["model"] == "kimi" and rec["reply"] == "审完，已打勾。" and any("review_roster" in s for s in rec["skills"])
     assert any("items/era__a.md" in s for s in rec["skills"]) and rec["prompt"] == "agents/era__a_1.md"
     assert (run / rec["prompt"]).read_text(encoding="utf-8").startswith("Read the task file")
     mirror, = era["agents"]
@@ -397,7 +397,7 @@ def test_attested_tick_on_a_v2_item_needs_a_codex_dispatch(tmp_path):
     log = tmp_path / "codex.log"; log.write_text(f"REPORT WRITTEN: {rep}\n", encoding="utf-8")
     prompt = tmp_path / "p.md"; prompt.write_text("run", encoding="utf-8")
     cmd = ["tick", str(run), "era", "--report", str(rep), "--by", "codex/era", "--attest-log", str(log)]
-    rr.main(["dispatch", str(run), "era", "--runner", "Claude Code 子代理", "--model", "claude-opus-5-5", "--prompt-file", str(prompt),
+    rr.main(["dispatch", str(run), "era", "--runner", "Kimi Code 子代理", "--model", "kimi", "--prompt-file", str(prompt),
              "--at", "2020-01-01T00:00:00"])
     with pytest.raises(SystemExit, match="Codex"):
         rr.main(cmd)
@@ -440,7 +440,7 @@ def test_reconcile_disagreement_goes_to_adjudication(tmp_path, capsys):
     assert x["status"] == "adjudicating" and x["disputes"] == ["E1"] and x["scores"]["E1"]["verdict"] == "分歧"
     assert x["scores"]["E2"]["agreed"] == 2                     # 差 1 且都 ≥2：不算分歧，取低分
     assert len(x["audits"]) == 2 and set(x["audits"]) <= {"E2", "E3", "E4", "E5", "E6", "E7"}
-    assert x["judge"]["model"] == "claude-opus-5-5" and x["judge"]["dims"] == ["E1", *x["audits"]]
+    assert x["judge"]["model"] == "kimi" and x["judge"]["dims"] == ["E1", *x["audits"]]
     rec = (run / "reconcile/era.md").read_text(encoding="utf-8")
     assert "| E1 器物 | 1 |" in rec and "分歧" in rec and "抽查" in rec and "待裁决" in rec
     jt = (run / "items/era__judge.md").read_text(encoding="utf-8")
@@ -630,13 +630,13 @@ def test_fix_records_files_and_before_after_pairs(tmp_path):
         rr.main(["fix", str(run), "I1", "--solution", "x", "--before", str(old)])
     with pytest.raises(SystemExit, match="图不存在"):
         rr.main(["fix", str(run), "I1", "--solution", "x", "--before", str(old), "--after", str(tmp_path / "nope.png")])
-    assert rr.main(["fix", str(run), "I1", "--solution", "重画首帧", "--status", "implemented", "--by", "Claude Code",
+    assert rr.main(["fix", str(run), "I1", "--solution", "重画首帧", "--status", "implemented", "--by", "Kimi Code",
                     "--file", str(ep / "filming.json"), "--file", str(new), "--before", str(old), "--after", str(new)]) == 0
     i = json.loads((run / "issues.json").read_text(encoding="utf-8"))["issues"][0]
     assert [Path(f).name for f in i["files"]] == ["filming.json", "st1_first_frame.png"]
     assert i["frames"] == [{"before": rr.rel(old), "after": rr.rel(new)}]
     h = i["history"][-1]
-    assert h["by"] == "Claude Code" and len(h["files"]) == 2 and h["frames"] == i["frames"]
+    assert h["by"] == "Kimi Code" and len(h["files"]) == 2 and h["frames"] == i["frames"]
     rr.main(["fix", str(run), "I1", "--solution", "重画首帧（再改）", "--status", "implemented", "--file", str(ep / "filming.json")])
     assert len(json.loads((run / "issues.json").read_text(encoding="utf-8"))["issues"][0]["files"]) == 2    # 去重
 
@@ -804,16 +804,16 @@ def test_can_submit_needs_user_confirmation_on_the_latest_concluded_run(tmp_path
 
 
 @pytest.mark.single_review
-def test_single_claude_review_finishes_without_reconcile_or_judge(tmp_path):
-    """正式名册：每项只有 Claude 一位（follow-up 065）；打勾不写 --slot 也行，勾完直接完成、没有裁决。"""
+def test_single_kimi_review_finishes_without_reconcile_or_judge(tmp_path):
+    """正式名册：每项只有 Kimi 一位（follow-up 065）；打勾不写 --slot 也行，勾完直接完成、没有裁决。"""
     ep = make_episode(tmp_path)
     assert rr.main(["new", str(ep), "--stage", "filming"]) == 0
     run = runs(ep)[-1]
     it = load(run)["items"][0]
-    assert list(it["slots"]) == ["a"] and it["slots"]["a"]["runner"] == "claude"
+    assert list(it["slots"]) == ["a"] and it["slots"]["a"]["runner"] == "kimi"
     rep = run / it["slots"]["a"]["report"]; rep.parent.mkdir(exist_ok=True)
     rep.write_text(report5(it, scores={it["rubric"][0]["id"]: 1}), encoding="utf-8")
-    assert rr.main(["tick", str(run), it["id"], "--report", str(rep), "--by", f"claude-opus-5-5/{it['id']}__a"]) == 0
+    assert rr.main(["tick", str(run), it["id"], "--report", str(rep), "--by", f"kimi/{it['id']}__a"]) == 0
     got = item_of(run, it["id"])
     assert got["status"] == "done" and "judge" not in got and got["final_scores"][it["rubric"][0]["id"]] == 1
     assert (run / got["report"]).read_text(encoding="utf-8").startswith(f"# {it['id']}") and "单审" in (run / got["report"]).read_text(encoding="utf-8")
@@ -823,7 +823,7 @@ def test_single_claude_review_finishes_without_reconcile_or_judge(tmp_path):
 def test_drop_slot_turns_a_running_dual_review_into_single(tmp_path, monkeypatch):
     r = json.loads(REAL_ROSTER.read_text(encoding="utf-8"))
     for law in r["laws"].values():
-        law["reviewers"] = [{"slot": "a", "runner": "claude", "model": "claude-opus-5-5"}, {"slot": "b", "runner": "codex", "model": "gpt-6.1-sol"}]
+        law["reviewers"] = [{"slot": "a", "runner": "kimi", "model": "kimi"}, {"slot": "b", "runner": "codex", "model": "gpt-6.1-sol"}]
     f = tmp_path / "roster.json"; f.write_text(json.dumps(r, ensure_ascii=False), encoding="utf-8")
     monkeypatch.setattr(rr, "ROSTER", f)
     ep = make_episode(tmp_path)
@@ -832,9 +832,9 @@ def test_drop_slot_turns_a_running_dual_review_into_single(tmp_path, monkeypatch
     it = load(run)["items"][0]
     rep = run / it["slots"]["a"]["report"]; rep.parent.mkdir(exist_ok=True)
     rep.write_text(report5(it), encoding="utf-8")
-    assert rr.main(["tick", str(run), it["id"], "--slot", "a", "--report", str(rep), "--by", f"claude-opus-5-5/{it['id']}__a"]) == 0
+    assert rr.main(["tick", str(run), it["id"], "--slot", "a", "--report", str(rep), "--by", f"kimi/{it['id']}__a"]) == 0
     assert item_of(run, it["id"])["status"] == "pending"
-    assert rr.main(["drop-slot", str(run), "--note", "用户：改成 Claude 单审"]) == 0
+    assert rr.main(["drop-slot", str(run), "--note", "用户：改成 Kimi 单审"]) == 0
     got = item_of(run, it["id"])
     assert got["status"] == "done" and list(got["slots"]) == ["a"] and got["dropped_slots"][0]["slot"] == "b"
 
@@ -875,3 +875,15 @@ def test_final_round_concludes_on_fixed_materials_with_accept_fixes(tmp_path):
         rr.main(["conclude", str(r3), "--accept-fixes"])
     (ep.parent.parent / "bible.md").write_text("# bible v4", encoding="utf-8")
     assert not rr.can_submit(ep, ["ep1_s1_st1"])[0]
+
+
+def test_real_roster_is_kimi_single_review_everywhere():
+    """全部审查 Kimi 单审（用户 2026-11-14，chuanyue_yiri follow-up 065、ai_video_management follow-up 362）：
+    真实名册每类只排一位审稿人，必须是 Kimi，不许出现 Codex；裁决人（只给旧双审单用）也是 Kimi。"""
+    import json
+    roster = json.loads((Path(__file__).resolve().parents[2] / ".agents/references/project/review_roster.json").read_text(encoding="utf-8"))
+    for key, law in roster["laws"].items():
+        revs = law.get("reviewers") or []
+        assert len(revs) == 1, f"{key} 排了 {len(revs)} 位审稿人"
+        assert revs[0]["runner"] == "kimi" and "codex" not in json.dumps(revs).lower(), key
+    assert roster["adjudicator"]["runner"] == "kimi"

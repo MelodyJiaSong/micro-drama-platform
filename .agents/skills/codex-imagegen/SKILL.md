@@ -1,12 +1,9 @@
 ---
 name: codex-imagegen
 description: 经 Codex CLI 调内置 image_gen 出高质量图片（ChatGPT 订阅额度，无需 API key）；先记请求日志，图片存到 ai_videos 下指定路径，再看图验收。
-metadata:
-  claude:
-    argument-hint: '<目标 .png 路径> <画面描述或 prompt 文件> [参考图…]'
 ---
 
-> Claude / Codex 共用正文。执行前按根目录 `AGENTS.md` 路由，工具、提问、委派、参数与收尾遵 `CONVENTIONS.md` § Tool scoping and team coordination。路径相对仓库根。
+> Kimi / Codex 共用本 skill，通过统一脚本调用 Codex 出图后端。执行前按根目录 `AGENTS.md` 路由，工具、提问、委派、参数与收尾遵 `CONVENTIONS.md` § Tool scoping and team coordination。路径相对仓库根。
 
 # Codex 内置出图
 

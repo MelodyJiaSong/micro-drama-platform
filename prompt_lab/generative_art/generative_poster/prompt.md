@@ -5,12 +5,12 @@
 ## ✨ 1. Expectation — what you'll get
 Run the prompt and you get a generative graphic-design system in a single `index.html`: each seed composes a complete, balanced poster — a layout grid, a harmonious limited palette, a real type hierarchy, and generative shapes that compose *with* the type rather than fight it — all in a coherent design language you chose. Tap spacebar to reroll into endless fresh-but-tasteful variations, type a seed to reproduce any poster exactly, lock the keepers, then export crisp vector SVG plus a 300-DPI print-grade PNG. The result looks intentionally art-directed, not like random clutter.
 
-**Why it's cool:** A seeded PRNG drives every single choice, so design becomes *deterministic* — the same seed yields the identical poster forever, yet the space of seeds is effectively infinite. It's Claude doing real graphic design with taste and constraints, turning a number into a finished, print-ready composition.
+**Why it's cool:** A seeded PRNG drives every single choice, so design becomes *deterministic* — the same seed yields the identical poster forever, yet the space of seeds is effectively infinite. It's the agent doing real graphic design with taste and constraints, turning a number into a finished, print-ready composition.
 
 **Use cases:** Reroll until you find a poster, album cover, or event flyer worth printing and framing; generate an on-brand series of social graphics that share a grid and palette but never repeat; produce a unique, reproducible print as a personalized gift (gift the seed with it); or read the code to learn seeded PRNGs, grid systems, type-scale hierarchy, color-theory palettes, and SVG/PNG export — a working lesson in design systems.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away: paste the prompt below into Claude Code in an empty folder, answer 2 short setup questions (design language + theme/words), then it builds and opens autonomously. Spacebar to reroll, E to export. Prerequisites: none — opens in any modern browser.
+Copy-paste-and-walk-away: paste the prompt below into Kimi / Codex in an empty folder, answer 2 short setup questions (design language + theme/words), then it builds and opens autonomously. Spacebar to reroll, E to export. Prerequisites: none — opens in any modern browser.
 
 ## 🔗 3. Reference & prior art
 

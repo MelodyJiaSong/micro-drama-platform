@@ -1,6 +1,6 @@
 """MCP 宿主代为调用的外部服务：两段式请求日志（ai_video_management follow-up 354）。
 
-外部 MCP（例如 Codex 桌面版里的 CapCut 插件）由宿主直接发请求，本仓库拦不到。
+外部 MCP（例如 Kimi 里的 CapCut 插件）由宿主直接发请求，本仓库拦不到。
 代理必须在每次调用前先跑 `request` 落盘、拿到 request_id，调用后再用同一个 id 跑
 `result` 或 `error`。日志写不进就不调用。与 `RequestLog.invoke` 同一格式、同一归属规则。
 

@@ -2,12 +2,14 @@
   /* 屏 A：反方卡（明显的「反方」标识）＋英特尔 2018 → 我们的回应 */
   .con { position: absolute; left: var(--mx); width: 860px; top: 180px; padding: 40px 48px; }
   .tag { display: inline-flex; align-items: center; gap: 12px; padding: 8px 24px; border-radius: 999px; font-size: var(--fs-caption); font-weight: 700; letter-spacing: .04em; }
-  .tag.con { background: var(--ink); color: #fff; }
-  .tag.pro { background: var(--accent-soft); color: var(--accent-text); }
+  .tag.tg-con { background: var(--ink); color: #fff; }
+  .tag.tg-pro { background: var(--accent-soft); color: var(--accent-text); }
   .con .h2 { margin-top: 22px; }
   .con .body.sub2 { margin-top: 6px; color: var(--ink2); }
   .con .li { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--hair); font-size: var(--fs-body); font-weight: 500; }
   .con .li:first-of-type { margin-top: 24px; }
+  html[lang=zh] #c1 { display: none; }
+  html[lang=zh] #c2 { margin-top: 24px; }
   .side { position: absolute; left: 1040px; right: var(--mx); top: 180px; padding: 36px 44px; }
   .side .slot { margin-bottom: 18px; }
   .side .h2 { margin-top: 8px; }
@@ -22,7 +24,7 @@
   .vs .h2 { margin-top: 10px; white-space: nowrap; }
   .vs .caption.k { margin-top: 2px; color: var(--ink2); }
   .ics { display: flex; gap: 28px; margin-top: 22px; }
-  .ics .ic { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 200px; padding: 18px 0 14px; border-radius: 22px; background: var(--accent-soft); }
+  .ics .ic { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 200px; padding: 18px 28px 14px; border-radius: 22px; background: var(--accent-soft); }
   .ics .ic .ico { color: var(--accent-text); }
   .ics .ic span.t { font-size: var(--fs-caption); font-weight: 600; color: var(--accent-text); white-space: nowrap; }
   .nil { margin-top: 22px; height: 132px; border-radius: 22px; border: 3px dashed var(--hair); display: grid; place-items: center; }
@@ -30,72 +32,71 @@
   .bl { position: absolute; left: 0; right: 0; top: 790px; text-align: center; }
 </style>
 
-<div class="eb eyebrow" data-zh="05 · 反方怎么说" data-en="05 · The strongest pushback"></div>
+<div class="eb eyebrow" data-ch="c5"></div>
 
 <!-- 屏 A -->
 <div class="con card" id="con">
-  <span class="tag con" data-zh="反方观点" data-en="The other side"></span>
+  <span class="tag tg-con" data-zh="反方观点" data-en="The other side"></span>
   <div class="h2" data-zh="国家安全只是噪音" data-en="National security is noise"></div>
-  <div class="body sub2" data-zh="→ 普通的公司治理问题" data-en="→ Ordinary corporate governance"></div>
+  <div class="body sub2" id="conb" data-zh="→ 公司内部的事" data-en="→ Ordinary corporate governance"></div>
   <div class="li" id="c1" data-zh="认了不忠" data-en="Admitted infidelity"></div>
-  <div class="li" id="c2" data-zh="被报道与下属有关系" data-en="Reported relationship with a subordinate"></div>
-  <div class="li" id="c3" data-zh="被股东起诉" data-en="Sued by shareholders"></div>
-  <div class="li" id="c4" data-zh='接受辞职：<span class="accent">11-11</span>，第二篇报道当天' data-en='Resignation accepted <span class="accent">Nov 11</span>, day of report two'></div>
+  <div class="li" id="c2" data-zh="与下属的感情见报" data-en="Reported relationship with a subordinate"></div>
+  <div class="li" id="c4" data-zh='<span class="accent">当天</span>接受辞职' data-en='Resigned <span class="accent">the day it was reported</span>'></div>
 </div>
 <div class="side card" id="intel">
   <figure class="slot" data-src="img/source/commons/Intel_Headquarters_in_2023.jpg" style="--h:260px"></figure>
   <div class="eyebrow" data-zh="英特尔 · 2018 年 6 月" data-en="Intel · June 2018"></div>
   <div class="h2" data-zh="CEO 辞职" data-en="CEO resigns"></div>
-  <div class="caption" data-zh="与员工关系违反公司政策" data-en="Relationship with an employee broke policy"></div>
+  <div class="caption" data-zh="与员工关系违反公司规定" data-en="Relationship with an employee broke policy"></div>
 </div>
 <div class="side card" id="pro">
-  <span class="tag pro" data-zh="我们的回应" data-en="Our response"></span>
-  <div class="li h2" id="p1" style="margin-top:22px" data-zh='<span class="c-good">✓</span> 这些都同意' data-en='<span class="c-good">✓</span> We agree'></div>
-  <div class="li body" id="p2" data-zh="从没说：因国家安全下台" data-en="Never said: he quit over security"></div>
-  <div class="li body" id="p3" data-zh="直接原因：很可能是公司治理" data-en="Direct cause: likely governance"></div>
+  <span class="tag tg-pro" data-zh="我们的回应" data-en="Our response"></span>
+  <div class="li h2" id="p1" style="margin-top:22px" data-zh='<span class="c-good">✓</span> 我们同意' data-en='<span class="c-good">✓</span> We agree'></div>
+  <div class="li body" id="p2" data-zh="从没说：因国家安全下台" data-en="Never claimed: he left over security"></div>
+  <div class="li body" id="p3" data-zh="直接原因：很可能在公司内部" data-en="Direct cause: may well be governance"></div>
 </div>
 
 <!-- 屏 B -->
 <div class="vs" id="vn">
   <figure class="slot" data-src="img/source/commons/NVIDIA_Headquarters.jpg" style="--h:250px"></figure>
   <div class="h2" data-zh="英伟达 · 2026" data-en="Nvidia · 2026"></div>
-  <div class="caption k" data-zh="CEO 的婚外情" data-en="A CEO’s affair"></div>
   <div class="ics" id="ics">
     <div class="ic" id="i1"><span data-icon="capitol" data-size="56"></span><span class="t" data-zh="国会" data-en="Congress"></span></div>
-    <div class="ic" id="i2"><span data-icon="bill" data-size="56"></span><span class="t" data-zh="出口管制立法" data-en="Export bills"></span></div>
-    <div class="ic" id="i3"><span data-icon="podium" data-size="56"></span><span class="t" data-zh="中国外交部" data-en="China’s MFA"></span></div>
+    <div class="ic" id="i3"><span data-icon="podium" data-size="56"></span><span class="t" data-zh="中国外交部" data-en="China’s Foreign Ministry"></span></div>
   </div>
 </div>
 <div class="vs" id="vi">
   <figure class="slot" data-src="img/source/commons/Intel_Headquarters_in_2023.jpg" style="--h:250px"></figure>
   <div class="h2" data-zh="英特尔 · 2018" data-en="Intel · 2018"></div>
-  <div class="caption k" data-zh="CEO 与员工的关系" data-en="A CEO’s relationship"></div>
   <div class="nil" id="nil"><span class="h2 faint" data-zh="都没有" data-en="None of it"></span></div>
 </div>
 <span id="lensI" data-icon="lens" data-size="120" data-sw="5"></span>
-<div class="bl h2" id="b1" data-zh='差别不在做了什么，<span class="accent">在公司卖什么</span>' data-en='Not what he did — <span class="accent">what his company sells</span>'></div>
-<div class="bl h2" id="b2" data-zh='就算报道不实，<span class="accent">也已是国家安全问题</span>' data-en='Even if the reports are false: <span class="accent">already national security</span>'></div>
+<div class="bl h2" id="b1" data-zh='差别：<span class="accent">公司卖什么</span>' data-en='The difference: <span class="accent">what the company sells</span>'></div>
+<div class="bl h2" id="b2" data-zh='「间谍」说法真假 → <span class="accent">已按国家安全处理</span>' data-en='Either way: <span class="accent">treated as national security</span>'></div>
 
 <script>
 const T = EDU.tl;
-gsap.set(["#con", "#c1", "#c2", "#c3", "#c4", "#intel", "#pro", "#p1", "#p2", "#p3", "#vn", "#vi", "#i1", "#i2", "#i3", "#nil", "#lensI", "#b1", "#b2"], { opacity: 0 });
+gsap.set(["#con", "#c1", "#c2", "#c4", "#intel", "#pro", "#p1", "#p2", "#p3", "#vn", "#vi", "#i1", "#i3", "#nil", "#lensI", "#b1", "#b2"], { opacity: 0 });
 EDU.in(".eb", 0);
 
 // l59 反方：国家安全只是噪音，就是普通的公司治理问题
 EDU.in("#con", EDU.t("l59", .05));
-// l60 认了不忠、下属关系的报道、股东起诉；11-11 接受辞职，正是第二篇报道见报那天
-EDU.in("#c1", EDU.t("l60", .02));
-EDU.in("#c2", EDU.t("l60", .18));
-EDU.in("#c3", EDU.t("l60", .34));
-EDU.in("#c4", EDU.t("l60", .55));
-srcNote("SEC 8-K ·《纽约时报》11-11（匿名信源）· 股东诉讼 11-09", "SEC 8-K · NYT, Nov 11 (unnamed sources) · Suit filed Nov 9", EDU.t("l60", .2), EDU.end("l60") + .1);
-// l61 换了谁都可能得走：2018 年英特尔 CEO
+// l60 认了不忠、下属关系的报道；接受辞职就在报道见报当天（「→ 公司内部的事」收走，列表接上：I45、I14）
+EDU.out("#conb", EDU.t("l60", 0), { y: 0 }); T.set("#conb", { display: "none" }, EDU.t("l60", 0) + .46);
+EDU.in("#c1", EDU.t("l60", .05));
+EDU.in("#c2", EDU.t("l60", .25));
+EDU.in("#c4", EDU.t("l60", .6));
+srcNote("SEC 8-K ·《纽约时报》2026-11-11（匿名信源）", "SEC 8-K · The New York Times, Nov 11 (unnamed sources)", EDU.t("l60", .2), EDU.end("l60") + .1);
+// l61 换了谁都可能得走：2018 年英特尔 CEO（英伟达那张清单收走，只留标题退后：I15、I46）
+EDU.out(["#c1", "#c2", "#c4"], EDU.t("l61", 0), { y: 0 }); T.set(["#c1", "#c2", "#c4"], { display: "none" }, EDU.t("l61", 0) + .46);
+EDU.dim("#con", EDU.t("l61", 0), .22);
 EDU.in("#intel", EDU.t("l61", .1));
 srcNote("美联社（经 CBS）· 2018-06-21", "AP (via CBS) · June 21, 2018", EDU.t("l61", .25), EDU.end("l61") + .1);
 
 // l62 这些我们同意：从没说因国家安全下台；直接原因很可能就是公司治理
 EDU.out("#intel", EDU.t("l62", 0));
-EDU.dim("#con", EDU.t("l62", 0), .35);
+T.to("#con", { opacity: .4, duration: .5, ease: "expo.out" }, EDU.t("l62", 0));
+EDU.out("#con .tag", EDU.t("l62", 0), { y: 0 });     // 反方只留一句、灰着（I16、I48）
 EDU.in("#pro", EDU.t("l62", .05));
 EDU.in("#p1", EDU.t("l62", .15));
 EDU.in("#p2", EDU.t("l62", .4));
@@ -106,7 +107,7 @@ EDU.out(["#con", "#pro"], EDU.t("l63", 0));
 EDU.in("#vn", EDU.t("l63", .05));
 EDU.in("#vi", EDU.t("l63", .15));
 EDU.in("#lensI", EDU.t("l63", .3));
-EDU.in("#i1", EDU.t("l63", .45)); EDU.in("#i2", EDU.t("l63", .6)); EDU.in("#i3", EDU.t("l63", .75));
+EDU.in("#i1", EDU.t("l63", .5)); EDU.in("#i3", EDU.t("l63", .75));
 // 两张总部照片的署名在各自图下
 // l64 英特尔那次没有；差别在公司卖什么
 EDU.in("#nil", EDU.t("l64", .05));

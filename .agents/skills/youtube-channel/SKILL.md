@@ -1,9 +1,6 @@
 ---
 name: youtube-channel
-description: YouTube 频道：经官方 API 把成片传成私享（公开人点）、发评论；拉自有频道增长报告（播放、观看时长、订阅、流量来源、留存、YPP 进度）并给出改进建议；用 yt-dlp 对比同类频道公开数据。Claude Code/Codex 共用。
-metadata:
-  claude:
-    argument-hint: "upload <剧> <期> | report [天数] | retention <video_id> | compare <频道>"
+description: YouTube 频道：经官方 API 把成片传成私享（公开人点）、发评论；拉自有频道增长报告（播放、观看时长、订阅、流量来源、留存、YPP 进度）并给出改进建议；用 yt-dlp 对比同类频道公开数据。
 ---
 
 # YouTube 频道：上传与增长分析

@@ -1,0 +1,2220 @@
+{
+ "run": "ep01_20261114-232708_pregen_r2",
+ "generated_at": "2026-11-14T23:42:01",
+ "issues": [
+  {
+   "key": "row:character:s6st1:c4/c2",
+   "level": "critical",
+   "law": "character",
+   "category": "人物逻辑",
+   "item": "character",
+   "dimension": "C4 / C2",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "C4 / C2：视频 prompt 的「人物」段仍写 Fortunata「眼神审视、不苟言笑，但不凶」，而「画面」「动作」写「脸是松的、眉头舒展、带着做生意的精神头」；r1 的 I2 方案只改了首帧 prompt，没改视频 prompt；首帧里她眉心略紧、嘴平，看起来冷、没有精神头。出片时模型多半取「审视」，0–3.5s 招客的劲头出不来",
+   "evidence": [
+    "视频 prompt 的「人物」段仍写 Fortunata「眼神审视、不苟言笑，但不凶」，而「画面」「动作」写「脸是松的、眉头舒展、带着做生意的精神头」；r1 的 I2 方案只改了首帧 prompt，没改视频 prompt；首帧里她眉心略紧、嘴平，看起来冷、没有精神头。出片时模型多半取「审视」，0–3.5s 招客的劲头出不来"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/character__a"
+   ],
+   "fix": "便宜：视频 prompt 人物段改成「招客时松、眉头舒展，打量时才审视」；首帧如要更松可重画一次",
+   "cost": "便宜",
+   "severity": "重出",
+   "rows": [
+    "| s6_st1 | 0–13s（人物段） | C4 / C2 | 重出 | ② 分镜文字 / ③ prompt | 视频 prompt 的「人物」段仍写 Fortunata「眼神审视、不苟言笑，但不凶」，而「画面」「动作」写「脸是松的、眉头舒展、带着做生意的精神头」；r1 的 I2 方案只改了首帧 prompt，没改视频 prompt；首帧里她眉心略紧、嘴平，看起来冷、没有精神头。出片时模型多半取「审视」，0–3.5s 招客的劲头出不来 | 便宜：视频 prompt 人物段改成「招客时松、眉头舒展，打量时才审视」；首帧如要更松可重画一次 |"
+   ],
+   "id": "I1",
+   "status": "implemented",
+   "solution": "人物卡 c5 外观句改成「平时眼神审视、不苟言笑，但不凶；招客、做生意时脸是松的，带着精神头」，送模人物行与动作行不再打架；首帧第三版表情松",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-14T23:41:46",
+     "status": "implemented",
+     "solution": "人物卡 c5 外观句改成「平时眼神审视、不苟言笑，但不凶；招客、做生意时脸是松的，带着精神头」，送模人物行与动作行不再打架；首帧第三版表情松",
+     "files": [
+      "ai_videos/chuanyue_yiri/2_世界观人设/characters/c5_Fortunata/c5_Fortunata.md",
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/st1_first_frame.png"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/2_世界观人设/characters/c5_Fortunata/c5_Fortunata.md",
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/st1_first_frame.png"
+   ]
+  },
+  {
+   "key": "dim:era:E3",
+   "level": "critical",
+   "law": "era",
+   "category": "时代与世界观",
+   "item": "era",
+   "dimension": "E3 服饰与发型",
+   "shots": [
+    "s6_st1",
+    "s7_st2"
+   ],
+   "problem": "E3 服饰与发型 最终 1 分：当地人 tunica/palla、男人刮脸；主持人现代旅行装且无首饰；首帧 Fortunata 腰间是打孔皮带＋金属方框带扣（约 x700–780, y570–590，`work/era__a/s6_belt.png`），像现代皮带；人物卡 c5:12 与视频 prompt 第 9 行写「皮绳」，下一镜已出片 s6_st2 是细绳。首帧定开场样子，13 秒中景一直看得见，接 st2 会突然换腰带",
+   "evidence": [
+    "a（1 分）：s6_st1 首帧 Fortunata 腰间是打孔皮带＋金属方框带扣（约 x700–780, y570–590），人物卡第 12 行和视频 prompt 第 9 行都写「皮绳」，已出片 s6_st2 是细绳；s7_st2 衬衫仍有淡格纹（见问题表）",
+    "首帧 Fortunata 腰间是打孔皮带＋金属方框带扣（约 x700–780, y570–590，`work/era__a/s6_belt.png`），像现代皮带；人物卡 c5:12 与视频 prompt 第 9 行写「皮绳」，下一镜已出片 s6_st2 是细绳。首帧定开场样子，13 秒中景一直看得见，接 st2 会突然换腰带",
+    "衬衫已改米白、腰带已改橄榄帆布，但布面仍有一层淡方格线（`work/era__a/s7_shirt.png`）；s7_st1 是素面，s7_st3 也有淡格纹，算可接受",
+    "老行人下巴和上唇有一层灰白胡茬（`work/era__a/s6_men.png`），prompt 写「脸刮得干净」；约 3 秒出画、身子被画框切掉，影响很小"
+   ],
+   "sources": [
+    "claude-opus-5-5/era__a"
+   ],
+   "fix": "便宜：首帧局部重画腰间，改成打结的细皮绳/布带（无扣、无孔），钱袋挂法不变；首帧 prompt「不要」加「带扣、皮带扣、打孔皮带」；便宜：可接受；要彻底就局部重画衬衫成素面亚麻（首帧 prompt 写「没有任何格线」）；便宜：不改；视频 prompt 已写刮净",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s6_st1 | 0–13s 全镜 | E3 服饰（新） | 重出 | ③ 首帧 | 首帧 Fortunata 腰间是打孔皮带＋金属方框带扣（约 x700–780, y570–590，`work/era__a/s6_belt.png`），像现代皮带；人物卡 c5:12 与视频 prompt 第 9 行写「皮绳」，下一镜已出片 s6_st2 是细绳。首帧定开场样子，13 秒中景一直看得见，接 st2 会突然换腰带 | 便宜：首帧局部重画腰间，改成打结的细皮绳/布带（无扣、无孔），钱袋挂法不变；首帧 prompt「不要」加「带扣、皮带扣、打孔皮带」 |",
+    "| s7_st2 | 0–26s | E3 服饰（I11 部分改好） | 记录 | ③ 首帧 | 衬衫已改米白、腰带已改橄榄帆布，但布面仍有一层淡方格线（`work/era__a/s7_shirt.png`）；s7_st1 是素面，s7_st3 也有淡格纹，算可接受 | 便宜：可接受；要彻底就局部重画衬衫成素面亚麻（首帧 prompt 写「没有任何格线」） |",
+    "| s6_st1 | 0–3s | E3 服饰 | 记录 | ④ 模型随机 | 老行人下巴和上唇有一层灰白胡茬（`work/era__a/s6_men.png`），prompt 写「脸刮得干净」；约 3 秒出画、身子被画框切掉，影响很小 | 便宜：不改；视频 prompt 已写刮净 |"
+   ],
+   "id": "I2",
+   "status": "implemented",
+   "solution": "s6 st1 首帧第三版：腰间改细皮绳挂钱袋，无皮带无金属扣，和 st2 一致",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-14T23:41:46",
+     "status": "implemented",
+     "solution": "s6 st1 首帧第三版：腰间改细皮绳挂钱袋，无皮带无金属扣，和 st2 一致",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/st1_first_frame.png"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/st1_first_frame.png"
+   ]
+  },
+  {
+   "key": "dim:framing:F1",
+   "level": "critical",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing",
+   "dimension": "F1 景别与人物大小",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "F1 景别与人物大小 最终 1 分：按站位图距离与焦距算出的人物画高，和首帧实测相差不超过约 25%；1. 本轮首帧 Fortunata 脸 x≈690、身体 x490–940，站位图预测 x532；油灯 x≈500，预测 266。<br>2. 头高 185px、头顶到腰带 468px，是预测（128／363px）的 1.45／1.29 倍；上一轮是 200／480px，几乎没缩。<br>3. 首帧 prompt 自己要求「横向 26%–40%、头顶在约 18%」，实际约 29%–56%、头顶 12%，验图时没卡住。<br>4. 院子消失点 x≈1160–1250，实际机位偏西约 10–13°，站位图只写 2.7°。<br>5. 按首帧反推（脚本：偏西 10–12.6°，F 落在 x700、720px/m），Riley 停位中心 x≈1596–1609，身体约 1395–1805，被画框右边切掉约三成。<br>6. 模型只能横摇、拉远或把 Riley 挤近，正是 fix071 要避免的「一镜内重新构图」。changes.md 写的「缩到大腿以上」在图上看不出来。",
+   "evidence": [
+    "a（1 分）：s6_st1 首帧 Fortunata 头顶到腰带约 468px，按站位图应为 363px，是 1.29 倍；头高约 185px，按站位图应为 128px，是 1.45 倍，都超过 25%。和上一轮（480px／200px）比几乎没缩：首帧 prompt 要求「头顶在约 18%」，实际在 12%（y≈110）。s7_st2 首帧头高约 235px，预测 273px，比值 0.86，合格（见问题 1）。",
+    "1. 本轮首帧 Fortunata 脸 x≈690、身体 x490–940，站位图预测 x532；油灯 x≈500，预测 266。<br>2. 头高 185px、头顶到腰带 468px，是预测（128／363px）的 1.45／1.29 倍；上一轮是 200／480px，几乎没缩。<br>3. 首帧 prompt 自己要求「横向 26%–40%、头顶在约 18%」，实际约 29%–56%、头顶 12%，验图时没卡住。<br>4. 院子消失点 x≈1160–1250，实际机位偏西约 10–13°，站位图只写 2.7°。<br>5. 按首帧反推（脚本：偏西 10–12.6°，F 落在 x700、720px/m），Riley 停位中心 x≈1596–1609，身体约 1395–1805，被画框右边切掉约三成。<br>6. 模型只能横摇、拉远或把 Riley 挤近，正是 fix071 要避免的「一镜内重新构图」。changes.md 写的「缩到大腿以上」在图上看不出来。"
+   ],
+   "sources": [
+    "claude-opus-5-5/framing__a"
+   ],
+   "fix": "便宜：再重画首帧，必须按实测验收后再用。<br>1. Fortunata 脸中心放到 x≈500–560，头高约 130–150px（头顶 y≈170–200），头顶到腰带约 360–380px。<br>2. 油灯放到 x≈260–320。<br>3. 画右 x≈1000–1400 留出 Riley 的停位。<br>如果更想保留现在这张大构图，就反过来改站位图：机位前移约 0.75m、偏西约 10°。但这样 Riley 必须停在离 Fortunata 约 0.6m 的地方（x≈1350 以内），文字「右边约一米」也要跟着改。两边必须一致。",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s6_st1 | 0–13s（重点 3.5–13s） | F1·F3·F7（R：I3/I4/I5 没改好） | 重出 | ③ 首帧 | 1. 本轮首帧 Fortunata 脸 x≈690、身体 x490–940，站位图预测 x532；油灯 x≈500，预测 266。<br>2. 头高 185px、头顶到腰带 468px，是预测（128／363px）的 1.45／1.29 倍；上一轮是 200／480px，几乎没缩。<br>3. 首帧 prompt 自己要求「横向 26%–40%、头顶在约 18%」，实际约 29%–56%、头顶 12%，验图时没卡住。<br>4. 院子消失点 x≈1160–1250，实际机位偏西约 10–13°，站位图只写 2.7°。<br>5. 按首帧反推（脚本：偏西 10–12.6°，F 落在 x700、720px/m），Riley 停位中心 x≈1596–1609，身体约 1395–1805，被画框右边切掉约三成。<br>6. 模型只能横摇、拉远或把 Riley 挤近，正是 fix071 要避免的「一镜内重新构图」。changes.md 写的「缩到大腿以上」在图上看不出来。 | 便宜：再重画首帧，必须按实测验收后再用。<br>1. Fortunata 脸中心放到 x≈500–560，头高约 130–150px（头顶 y≈170–200），头顶到腰带约 360–380px。<br>2. 油灯放到 x≈260–320。<br>3. 画右 x≈1000–1400 留出 Riley 的停位。<br>如果更想保留现在这张大构图，就反过来改站位图：机位前移约 0.75m、偏西约 10°。但这样 Riley 必须停在离 Fortunata 约 0.6m 的地方（x≈1350 以内），文字「右边约一米」也要跟着改。两边必须一致。 |"
+   ],
+   "id": "I3",
+   "status": "implemented",
+   "solution": "首帧第三版拉远：Fortunata 缩到画面横向约 24–42%、头顶约 26%，画右 43–100% 是门口与人行道留给 Riley",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-14T23:41:47",
+     "status": "implemented",
+     "solution": "首帧第三版拉远：Fortunata 缩到画面横向约 24–42%、头顶约 26%，画右 43–100% 是门口与人行道留给 Riley",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/st1_first_frame.png"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/st1_first_frame.png"
+   ]
+  },
+  {
+   "key": "dim:framing:F3",
+   "level": "critical",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing",
+   "dimension": "F3 画面位置",
+   "shots": [
+    "s6_st1",
+    "s7_st2"
+   ],
+   "problem": "F3 画面位置 最终 1 分：人和关键道具在画面里的左右上下位置，三处一致；1. 本轮首帧 Fortunata 脸 x≈690、身体 x490–940，站位图预测 x532；油灯 x≈500，预测 266。<br>2. 头高 185px、头顶到腰带 468px，是预测（128／363px）的 1.45／1.29 倍；上一轮是 200／480px，几乎没缩。<br>3. 首帧 prompt 自己要求「横向 26%–40%、头顶在约 18%」，实际约 29%–56%、头顶 12%，验图时没卡住。<br>4. 院子消失点 x≈1160–1250，实际机位偏西约 10–13°，站位图只写 2.7°。<br>5. 按首帧反推（脚本：偏西 10–12.6°，F 落在 x700、720px/m），Riley 停位中心 x≈1596–1609，身体约 1395–1805，被画框右边切掉约三成。<br>6. 模型只能横摇、拉远或把 Riley 挤近，正是 fix071 要避免的「一镜内重新构图」。changes.md 写的「缩到大腿以上」在图上看不出来。",
+   "evidence": [
+    "a（1 分）：s6_st1 首帧 Fortunata 在 x≈690–725，预测 532，偏 +170px；油灯在 x≈500，预测 266，偏 +234px。首帧 prompt 自己写的「Fortunata 在横向 26%–40%（435–669）」也没做到，实际身体在 490–940。按首帧反推机位，Riley 停位在 x≈1600，身体约 1395–1805，画框外约 130px，约占身体三成（问题 1）。s7_st2 三处偏差都不超过 40px：灯约 285 对 264，Riley 脸 x≈855、身体中心约 880 对 911，窗 1420 对 1400，床头 430–490 对 461。",
+    "1. 本轮首帧 Fortunata 脸 x≈690、身体 x490–940，站位图预测 x532；油灯 x≈500，预测 266。<br>2. 头高 185px、头顶到腰带 468px，是预测（128／363px）的 1.45／1.29 倍；上一轮是 200／480px，几乎没缩。<br>3. 首帧 prompt 自己要求「横向 26%–40%、头顶在约 18%」，实际约 29%–56%、头顶 12%，验图时没卡住。<br>4. 院子消失点 x≈1160–1250，实际机位偏西约 10–13°，站位图只写 2.7°。<br>5. 按首帧反推（脚本：偏西 10–12.6°，F 落在 x700、720px/m），Riley 停位中心 x≈1596–1609，身体约 1395–1805，被画框右边切掉约三成。<br>6. 模型只能横摇、拉远或把 Riley 挤近，正是 fix071 要避免的「一镜内重新构图」。changes.md 写的「缩到大腿以上」在图上看不出来。",
+    "1. toml 里行人 0s 在 (4.6,8.6)，预测 x≈−553，约 0.5s 才入画；首帧里他们 0s 已在 x0–520，头和 Fortunata 一样高（y55–315 对 110–295）。<br>2. 按 1m/s 走，约 0.3–1.3s 依次挡住她的脸和招手，约 1.6–1.9s 全部出画右；文字写「约 3 秒走出画右」，1.5–3.0s 吆喝时她的目光要「跟着他们往画右移」，后一半是空画面。<br>3. toml 里 Riley 从 x11.0 到 6.4 用 5s，即 0.92m/s；文字写 1.2m/s、3.5s 入画。按站位图几何，0.92m/s 约 3.9s 入画，1.2m/s 约 4.2s 入画；要 3.5s 入画、5s 停，实际速度约 0.8m/s。",
+    "「镜头」行写乱划痕「在画面左上」，首帧实际在画左中部（y380–640，竖向中心约 54%），r1 已记，没改。模型会照首帧出，风险低。"
+   ],
+   "sources": [
+    "claude-opus-5-5/framing__a"
+   ],
+   "fix": "便宜：再重画首帧，必须按实测验收后再用。<br>1. Fortunata 脸中心放到 x≈500–560，头高约 130–150px（头顶 y≈170–200），头顶到腰带约 360–380px。<br>2. 油灯放到 x≈260–320。<br>3. 画右 x≈1000–1400 留出 Riley 的停位。<br>如果更想保留现在这张大构图，就反过来改站位图：机位前移约 0.75m、偏西约 10°。但这样 Riley 必须停在离 Fortunata 约 0.6m 的地方（x≈1350 以内），文字「右边约一米」也要跟着改。两边必须一致。；便宜：二选一。一是文字改「行人约 2 秒走出画右，她对着背影吆喝」，Riley 改「步子放慢走进来」；二是首帧重画时把行人往画左外推，让他们 0.5s 后才从画左入画。toml 里 Riley 加一个路点（如 2.0s 在 x9.0），让速度和文字对上。；便宜：「左上」改成「画左、灯的上方」。",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s6_st1 | 0–13s（重点 3.5–13s） | F1·F3·F7（R：I3/I4/I5 没改好） | 重出 | ③ 首帧 | 1. 本轮首帧 Fortunata 脸 x≈690、身体 x490–940，站位图预测 x532；油灯 x≈500，预测 266。<br>2. 头高 185px、头顶到腰带 468px，是预测（128／363px）的 1.45／1.29 倍；上一轮是 200／480px，几乎没缩。<br>3. 首帧 prompt 自己要求「横向 26%–40%、头顶在约 18%」，实际约 29%–56%、头顶 12%，验图时没卡住。<br>4. 院子消失点 x≈1160–1250，实际机位偏西约 10–13°，站位图只写 2.7°。<br>5. 按首帧反推（脚本：偏西 10–12.6°，F 落在 x700、720px/m），Riley 停位中心 x≈1596–1609，身体约 1395–1805，被画框右边切掉约三成。<br>6. 模型只能横摇、拉远或把 Riley 挤近，正是 fix071 要避免的「一镜内重新构图」。changes.md 写的「缩到大腿以上」在图上看不出来。 | 便宜：再重画首帧，必须按实测验收后再用。<br>1. Fortunata 脸中心放到 x≈500–560，头高约 130–150px（头顶 y≈170–200），头顶到腰带约 360–380px。<br>2. 油灯放到 x≈260–320。<br>3. 画右 x≈1000–1400 留出 Riley 的停位。<br>如果更想保留现在这张大构图，就反过来改站位图：机位前移约 0.75m、偏西约 10°。但这样 Riley 必须停在离 Fortunata 约 0.6m 的地方（x≈1350 以内），文字「右边约一米」也要跟着改。两边必须一致。 |",
+    "| s6_st1 | 0–5s | F4·F3 | 记录 | ③ 首帧 / ② 文字 | 1. toml 里行人 0s 在 (4.6,8.6)，预测 x≈−553，约 0.5s 才入画；首帧里他们 0s 已在 x0–520，头和 Fortunata 一样高（y55–315 对 110–295）。<br>2. 按 1m/s 走，约 0.3–1.3s 依次挡住她的脸和招手，约 1.6–1.9s 全部出画右；文字写「约 3 秒走出画右」，1.5–3.0s 吆喝时她的目光要「跟着他们往画右移」，后一半是空画面。<br>3. toml 里 Riley 从 x11.0 到 6.4 用 5s，即 0.92m/s；文字写 1.2m/s、3.5s 入画。按站位图几何，0.92m/s 约 3.9s 入画，1.2m/s 约 4.2s 入画；要 3.5s 入画、5s 停，实际速度约 0.8m/s。 | 便宜：二选一。一是文字改「行人约 2 秒走出画右，她对着背影吆喝」，Riley 改「步子放慢走进来」；二是首帧重画时把行人往画左外推，让他们 0.5s 后才从画左入画。toml 里 Riley 加一个路点（如 2.0s 在 x9.0），让速度和文字对上。 |",
+    "| s7_st2 | 全镜 | F3 | 记录 | ② 分镜文字 | 「镜头」行写乱划痕「在画面左上」，首帧实际在画左中部（y380–640，竖向中心约 54%），r1 已记，没改。模型会照首帧出，风险低。 | 便宜：「左上」改成「画左、灯的上方」。 |"
+   ],
+   "id": "I4",
+   "status": "implemented",
+   "solution": "同 I3；s7 st2 位置未变（上轮只改衣服），与站位一致",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-14T23:41:47",
+     "status": "implemented",
+     "solution": "同 I3；s7 st2 位置未变（上轮只改衣服），与站位一致",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/st1_first_frame.png"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/st1_first_frame.png"
+   ]
+  },
+  {
+   "key": "dim:framing:F7",
+   "level": "critical",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing",
+   "dimension": "F7 一镜到底",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "F7 一镜到底 最终 1 分：单镜内不需要切镜；镜头运动写清且做得到；1. 本轮首帧 Fortunata 脸 x≈690、身体 x490–940，站位图预测 x532；油灯 x≈500，预测 266。<br>2. 头高 185px、头顶到腰带 468px，是预测（128／363px）的 1.45／1.29 倍；上一轮是 200／480px，几乎没缩。<br>3. 首帧 prompt 自己要求「横向 26%–40%、头顶在约 18%」，实际约 29%–56%、头顶 12%，验图时没卡住。<br>4. 院子消失点 x≈1160–1250，实际机位偏西约 10–13°，站位图只写 2.7°。<br>5. 按首帧反推（脚本：偏西 10–12.6°，F 落在 x700、720px/m），Riley 停位中心 x≈1596–1609，身体约 1395–1805，被画框右边切掉约三成。<br>6. 模型只能横摇、拉远或把 Riley 挤近，正是 fix071 要避免的「一镜内重新构图」。changes.md 写的「缩到大腿以上」在图上看不出来。",
+   "evidence": [
+    "a（1 分）：s6_st1 要求「固定机位、一个景别到底、Riley 入画后站画右、两人的手都在画内」。按首帧构图，Riley 停位约 1395–1805，被画框右边切掉约三成，模型只能横摇、拉远或把她挤近，就是上一轮 I5 的同一个风险（问题 1）。s7_st2 固定机位、单人坐姿全程，做得到。",
+    "1. 本轮首帧 Fortunata 脸 x≈690、身体 x490–940，站位图预测 x532；油灯 x≈500，预测 266。<br>2. 头高 185px、头顶到腰带 468px，是预测（128／363px）的 1.45／1.29 倍；上一轮是 200／480px，几乎没缩。<br>3. 首帧 prompt 自己要求「横向 26%–40%、头顶在约 18%」，实际约 29%–56%、头顶 12%，验图时没卡住。<br>4. 院子消失点 x≈1160–1250，实际机位偏西约 10–13°，站位图只写 2.7°。<br>5. 按首帧反推（脚本：偏西 10–12.6°，F 落在 x700、720px/m），Riley 停位中心 x≈1596–1609，身体约 1395–1805，被画框右边切掉约三成。<br>6. 模型只能横摇、拉远或把 Riley 挤近，正是 fix071 要避免的「一镜内重新构图」。changes.md 写的「缩到大腿以上」在图上看不出来。"
+   ],
+   "sources": [
+    "claude-opus-5-5/framing__a"
+   ],
+   "fix": "便宜：再重画首帧，必须按实测验收后再用。<br>1. Fortunata 脸中心放到 x≈500–560，头高约 130–150px（头顶 y≈170–200），头顶到腰带约 360–380px。<br>2. 油灯放到 x≈260–320。<br>3. 画右 x≈1000–1400 留出 Riley 的停位。<br>如果更想保留现在这张大构图，就反过来改站位图：机位前移约 0.75m、偏西约 10°。但这样 Riley 必须停在离 Fortunata 约 0.6m 的地方（x≈1350 以内），文字「右边约一米」也要跟着改。两边必须一致。",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s6_st1 | 0–13s（重点 3.5–13s） | F1·F3·F7（R：I3/I4/I5 没改好） | 重出 | ③ 首帧 | 1. 本轮首帧 Fortunata 脸 x≈690、身体 x490–940，站位图预测 x532；油灯 x≈500，预测 266。<br>2. 头高 185px、头顶到腰带 468px，是预测（128／363px）的 1.45／1.29 倍；上一轮是 200／480px，几乎没缩。<br>3. 首帧 prompt 自己要求「横向 26%–40%、头顶在约 18%」，实际约 29%–56%、头顶 12%，验图时没卡住。<br>4. 院子消失点 x≈1160–1250，实际机位偏西约 10–13°，站位图只写 2.7°。<br>5. 按首帧反推（脚本：偏西 10–12.6°，F 落在 x700、720px/m），Riley 停位中心 x≈1596–1609，身体约 1395–1805，被画框右边切掉约三成。<br>6. 模型只能横摇、拉远或把 Riley 挤近，正是 fix071 要避免的「一镜内重新构图」。changes.md 写的「缩到大腿以上」在图上看不出来。 | 便宜：再重画首帧，必须按实测验收后再用。<br>1. Fortunata 脸中心放到 x≈500–560，头高约 130–150px（头顶 y≈170–200），头顶到腰带约 360–380px。<br>2. 油灯放到 x≈260–320。<br>3. 画右 x≈1000–1400 留出 Riley 的停位。<br>如果更想保留现在这张大构图，就反过来改站位图：机位前移约 0.75m、偏西约 10°。但这样 Riley 必须停在离 Fortunata 约 0.6m 的地方（x≈1350 以内），文字「右边约一米」也要跟着改。两边必须一致。 |"
+   ],
+   "id": "I5",
+   "status": "implemented",
+   "solution": "同 I3：两人都能在中景里，一个景别到底",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-14T23:41:47",
+     "status": "implemented",
+     "solution": "同 I3：两人都能在中景里，一个景别到底",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/st1_first_frame.png"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/st1_first_frame.png"
+   ]
+  },
+  {
+   "key": "dim:physics:P1",
+   "level": "major",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "P1 手数",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "P1 手数 最终 1 分：自拍镜只剩一只手可用；每个时刻每只手在干什么、有没有多出或少掉的手；7.8–9 秒右手竖一根手指，之后到 11.6 秒伸右手之前右手状态没写；10.5 秒左手竖四指时右手食指可能仍竖着，画面 1＋4＝5 根手指，报价「四」读错",
+   "evidence": [
+    "a（1 分）：s6_st1 7.8–9 秒 Fortunata「竖起右手一根手指」后，9–11.6 秒没写放下右手；10.5–11.6 秒左手胸前竖四指，模型若保留右手食指，报价画面上同时出现 1＋4 根手指，观众可能读成「五」（见问题表 1）。其余各拍手都有着落：Riley 右手全程攥钱、比划全用左手；s7_st2 两手在膝、两次手势后都回膝。",
+    "7.8–9 秒右手竖一根手指，之后到 11.6 秒伸右手之前右手状态没写；10.5 秒左手竖四指时右手食指可能仍竖着，画面 1＋4＝5 根手指，报价「四」读错"
+   ],
+   "sources": [
+    "claude-opus-5-5/physics__a"
+   ],
+   "fix": "便宜：9–10.5 秒加「右手放下垂在身侧」，10.5–11.6 秒写「右手垂着」",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s6_st1 | 7.8–11.6 | P1 手数 | 记录 | ② 分镜文字 | 7.8–9 秒右手竖一根手指，之后到 11.6 秒伸右手之前右手状态没写；10.5 秒左手竖四指时右手食指可能仍竖着，画面 1＋4＝5 根手指，报价「四」读错 | 便宜：9–10.5 秒加「右手放下垂在身侧」，10.5–11.6 秒写「右手垂着」 |"
+   ],
+   "id": "I6",
+   "status": "implemented",
+   "solution": "9 秒右手放下垂在身侧，报价时只有左手四指",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-14T23:41:47",
+     "status": "implemented",
+     "solution": "9 秒右手放下垂在身侧，报价时只有左手四指",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/filming.json"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/filming.json"
+   ]
+  },
+  {
+   "key": "dim:physics:P5",
+   "level": "major",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "P5 身体可行",
+   "shots": [
+    "s7_st2"
+   ],
+   "problem": "P5 身体可行 最终 1 分：转身、迈步、上台阶、坐下是真人做得到的，时长够；没有 180° 扭头、滑步；俯视图视线点 (0.4,0.4) 与面朝夹角 133°，只写「头越过右肩」，单靠脖子做不到，模型易画成头部超转（I30 未改）",
+   "evidence": [
+    "a（1 分）：s7_st2 every wall（俯视图 3.6–3.9–4.3 s）视线点 (0.4,0.4) 与面朝方向夹角 133°（见计算依据），规格只写「头越过右肩」，单靠脖子＋眼睛约 110° 到顶，需带肩/上身扭 25°以上，否则会出现超转（I30 未改，见问题表 3）。s6_st1 Fortunata 视线从 t=0 朝 (4.6,8.6) 到 4 s 朝 Riley (6.4,7.4) 共约 94°，用 1.5 秒以上完成，可行。",
+    "俯视图视线点 (0.4,0.4) 与面朝夹角 133°，只写「头越过右肩」，单靠脖子做不到，模型易画成头部超转（I30 未改）"
+   ],
+   "sources": [
+    "claude-opus-5-5/physics__a"
+   ],
+   "fix": "便宜：规格加「肩膀和上身跟着往右后转一点」，或把 3.9 s 视线点改到西墙 (0,1.0)（约 95°）",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s7_st2 | ≈3.6–4.3 | P5 身体可行 | 记录 | ② 分镜文字 | 俯视图视线点 (0.4,0.4) 与面朝夹角 133°，只写「头越过右肩」，单靠脖子做不到，模型易画成头部超转（I30 未改） | 便宜：规格加「肩膀和上身跟着往右后转一点」，或把 3.9 s 视线点改到西墙 (0,1.0)（约 95°） |"
+   ],
+   "id": "I7",
+   "status": "implemented",
+   "solution": "回头改成「侧过脸、眼睛往右后方的墙上瞟一眼」，站位视线点改到身侧 (0.2,1.6)",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-14T23:41:48",
+     "status": "implemented",
+     "solution": "回头改成「侧过脸、眼睛往右后方的墙上瞟一眼」，站位视线点改到身侧 (0.2,1.6)",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/overhead.toml"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/overhead.toml"
+   ]
+  },
+  {
+   "key": "dim:physics:P6",
+   "level": "major",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "P6 穿模与距离",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "P6 穿模与距离 最终 1 分：人、动物、道具之间的距离够，走位路线不穿墙、不撞人；首帧行人头高 215–220 px vs Fortunata 190 px → 行人约在她前 0.4 m、y≈7.4（俯视图写 y=8.6）；年轻行人左手与她 palla 重叠；他们约 3 秒从画右出画，Riley 3.5 秒沿同一条线从画右迎面进来，几乎相撞",
+   "evidence": [
+    "a（1 分）：s6_st1 首帧人头大小反推两个行人离镜头约 2.9 m，只在 Fortunata 前约 0.4 m，年轻行人的左手与她的 palla 下缘重叠（裁切图左下）；而且正好走在 Riley 入画的 y≈7.4 线上，约 3 秒在画右边缘出画、Riley 3.5 秒从同一边缘迎面进来，两方在画右边缘几乎撞上（俯视图写 y=8.6 间隔 1.2 m，首帧不是这样）（见问题表 2）。",
+    "首帧行人头高 215–220 px vs Fortunata 190 px → 行人约在她前 0.4 m、y≈7.4（俯视图写 y=8.6）；年轻行人左手与她 palla 重叠；他们约 3 秒从画右出画，Riley 3.5 秒沿同一条线从画右迎面进来，几乎相撞"
+   ],
+   "sources": [
+    "claude-opus-5-5/physics__a"
+   ],
+   "fix": "便宜：首帧重画时把行人放到更靠镜头的街面（人更大、只露肩以上并被下沿切），或 prompt 写「行人在街面上、离她两步远，Riley 入画前已走远」；也可把 Riley 入画推到约 4 秒",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s6_st1 | 0–3.5 | P6 距离 / P8 | 记录 | ③ 首帧 | 首帧行人头高 215–220 px vs Fortunata 190 px → 行人约在她前 0.4 m、y≈7.4（俯视图写 y=8.6）；年轻行人左手与她 palla 重叠；他们约 3 秒从画右出画，Riley 3.5 秒沿同一条线从画右迎面进来，几乎相撞 | 便宜：首帧重画时把行人放到更靠镜头的街面（人更大、只露肩以上并被下沿切），或 prompt 写「行人在街面上、离她两步远，Riley 入画前已走远」；也可把 Riley 入画推到约 4 秒 |"
+   ],
+   "id": "I8",
+   "status": "implemented",
+   "solution": "行人 2.5 秒出画右，Riley 4 秒才从画右入画，错开 1.5 秒；首帧行人和她隔一步多",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-14T23:41:48",
+     "status": "implemented",
+     "solution": "行人 2.5 秒出画右，Riley 4 秒才从画右入画，错开 1.5 秒；首帧行人和她隔一步多",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/overhead.toml",
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/st1_first_frame.png"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/overhead.toml",
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/st1_first_frame.png"
+   ]
+  },
+  {
+   "key": "dim:physics:P9",
+   "level": "major",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "P9 效果有来源",
+   "shots": [
+    "s7_st2"
+   ],
+   "problem": "P9 效果有来源 最终 1 分：水花、溅泥、扬尘、影子、反光、湿脚印只出现在有来源的地方（踩在干的石头顶面不溅水，没风不扬尘）；窗洞内侧边亮蓝光晕＋墙面蓝色光束，窗外只有星空（I31 未改），整镜 26 秒都会带着",
+   "evidence": [
+    "a（1 分）：s7_st2 首帧窗洞（x≈1350–1480,y≈100–270）内侧边一圈亮蓝光晕、下方墙面一道蓝色光束（裁切 work/physics__a/s7st2_window.png），窗外只有星点、没交代月亮，星光不足以打出光束（I31 未改）；灯在她右后方 0.6 m、比脸低约 0.6 m，首帧脸却是正前方均匀暖光（I18 未改）；墙上暖光最亮处在火苗上方约 0.4 m 的划痕区，不在火苗旁（问题表 4、5）。s6_st1 墙龛灯照亮龛内与 Fortunata 转向灯侧的脸，大堂门里一点暖光，来源都对。",
+    "窗洞内侧边亮蓝光晕＋墙面蓝色光束，窗外只有星空（I31 未改），整镜 26 秒都会带着",
+    "灯在她右后方 0.6 m、比脸低约 0.6 m，首帧脸却是正面均匀暖光；墙上最亮处在火苗上方约 0.4 m（I18 未改）"
+   ],
+   "sources": [
+    "claude-opus-5-5/physics__a"
+   ],
+   "fix": "便宜：首帧局部重画「窗洞只透进极暗的冷蓝、洞口边缘不发光、墙上没有光束」，或在规格交代月光；便宜：首帧重画「暖光从画左下方侧照她右颊和下颌，左半边脸较暗」；或俯视图把凳子挪到她右前方与首帧一致",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s7_st2 | 0–26 | P9 效果来源 | 记录 | ③ 首帧 | 窗洞内侧边亮蓝光晕＋墙面蓝色光束，窗外只有星空（I31 未改），整镜 26 秒都会带着 | 便宜：首帧局部重画「窗洞只透进极暗的冷蓝、洞口边缘不发光、墙上没有光束」，或在规格交代月光 |",
+    "| s7_st2 | 0–26 | P9 光源方向 | 记录 | ③ 首帧 / ② 分镜文字 | 灯在她右后方 0.6 m、比脸低约 0.6 m，首帧脸却是正面均匀暖光；墙上最亮处在火苗上方约 0.4 m（I18 未改） | 便宜：首帧重画「暖光从画左下方侧照她右颊和下颌，左半边脸较暗」；或俯视图把凳子挪到她右前方与首帧一致 |"
+   ],
+   "id": "I9",
+   "status": "implemented",
+   "solution": "s7 st2 首帧局部重画：窗洞只透很弱的冷色，去掉蓝色光晕与光束",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-14T23:41:48",
+     "status": "implemented",
+     "solution": "s7 st2 首帧局部重画：窗洞只透很弱的冷色，去掉蓝色光晕与光束",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/st2_first_frame.png"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/st2_first_frame.png"
+   ]
+  },
+  {
+   "key": "row:character:s6st1:c6/c1",
+   "level": "major",
+   "law": "character",
+   "category": "人物逻辑",
+   "item": "character",
+   "dimension": "C6 / C1",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "C6 / C1：I32 未改：行人 0–3.3s 向右走到 (8.8,8.6)，Riley 3.5s 在约 (8.0,7.4) 向左走进，间隔约 1.2m，两人错身；文字却写行人「约 3 秒出画右」、Riley「3.5 秒从画面右边入画」，等于在画右边缘同一处同时出和进，没人看对方，也没人对她的长裤有反应",
+   "evidence": [
+    "I32 未改：行人 0–3.3s 向右走到 (8.8,8.6)，Riley 3.5s 在约 (8.0,7.4) 向左走进，间隔约 1.2m，两人错身；文字却写行人「约 3 秒出画右」、Riley「3.5 秒从画面右边入画」，等于在画右边缘同一处同时出和进，没人看对方，也没人对她的长裤有反应"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/character__a"
+   ],
+   "fix": "便宜：让行人 2.5s 前出画，或加一拍后排年轻人侧头瞥一眼她的裤子再转回（沿用 s6_st3 铺子主人的写法）",
+   "cost": "便宜",
+   "severity": "可剪",
+   "rows": [
+    "| s6_st1 | 0–3.5s | C6 / C1 | 可剪 | ② 分镜文字 | I32 未改：行人 0–3.3s 向右走到 (8.8,8.6)，Riley 3.5s 在约 (8.0,7.4) 向左走进，间隔约 1.2m，两人错身；文字却写行人「约 3 秒出画右」、Riley「3.5 秒从画面右边入画」，等于在画右边缘同一处同时出和进，没人看对方，也没人对她的长裤有反应 | 便宜：让行人 2.5s 前出画，或加一拍后排年轻人侧头瞥一眼她的裤子再转回（沿用 s6_st3 铺子主人的写法） |"
+   ],
+   "id": "I10",
+   "status": "implemented",
+   "solution": "同 I8：出画与入画在时间上错开，不在画右同时进出",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-14T23:41:48",
+     "status": "implemented",
+     "solution": "同 I8：出画与入画在时间上错开，不在画右同时进出",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/overhead.toml"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/overhead.toml"
+   ]
+  },
+  {
+   "key": "dim:continuity:K8",
+   "level": "major",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "K8 镜间接点",
+   "shots": [
+    "s6_st3 → s6_st1",
+    "s7_st1"
+   ],
+   "problem": "K8 镜间接点 最终 1 分：逐个接点（materials/junctions.md 每一条，含没有机检标记的）判：上一镜最后一拍的位置、朝向、视线、手里的东西、情绪和音量，和下一镜第 0 秒接得上；接不上时要有切的理由（跳过时间、换地点、反应插入、主观镜头）写在下一镜开头。报告里列接点表：每个接点一行，✓ 或 ✗ 加一句理由；st3 节拍 21.8–25 秒「眉头一松、眼睛一亮…快步走」，st1 走位「有点累，每秒一米二左右」，上一轮 I9、I57 都提过，这轮没改；st1 还没出片",
+   "evidence": [
+    "a（1 分）：12 个接点里 1 个打 ✗：s6_st3 结尾她「眉头一松、眼睛一亮…快步走」，st1 走位却写她「有点累」地走进来，情绪掉档（见接点表和问题表）。另有 1 个存疑：st3 画外吆喝和 st1 第 1.5 秒同一句的声音是否一致。其余 10 个是 ✓。",
+    "st3 节拍 21.8–25 秒「眉头一松、眼睛一亮…快步走」，st1 走位「有点累，每秒一米二左右」，上一轮 I9、I57 都提过，这轮没改；st1 还没出片",
+    "同一句 Hospitium hic locatur! 隔大约 5 秒出现两次：st3 画外一次（保留条），st1 画内 Fortunata 再喊一次。两条分开生成，又没有声样参考（manifest 只有图片），两次音色和腔调可能不一样",
+    "cut_v6 st1 出点 16.75 秒，最后一帧正对镜头；可 s7_st1 spec 节拍「16.6–18秒 转头越过右肩」和 junctions.md 的「最后一拍」还写着转头，下次审稿和自动机检会照旧判出错"
+   ],
+   "sources": [
+    "claude-opus-5-5/continuity__a"
+   ],
+   "fix": "便宜：st1 走位和 prompt 改成「松了口气、带着点期待，步子还快，走近时放慢，5 秒在她面前停住」，右拳仍攥着钱，出片前改；便宜：st1 出片后，对比 st3 20.2 秒和 st1 1.5 秒的人声；对不上就在剪辑里用 st1 那一声的音频替换 st3 的画外吆喝；便宜：spec 或 junctions 注明「剪辑出点 16.75 秒，最后一拍以正对镜头为准」",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s6_st3 → s6_st1 | st3 23.3–25；st1 3.5–5 | K8 情绪 | 记录 | ② 分镜文字 | st3 节拍 21.8–25 秒「眉头一松、眼睛一亮…快步走」，st1 走位「有点累，每秒一米二左右」，上一轮 I9、I57 都提过，这轮没改；st1 还没出片 | 便宜：st1 走位和 prompt 改成「松了口气、带着点期待，步子还快，走近时放慢，5 秒在她面前停住」，右拳仍攥着钱，出片前改 |",
+    "| s6_st3 → s6_st1 | st3 20.2–21.8；st1 1.5–3.0 | K8 / K7 声音接续 | 存疑 | ④ 模型随机 | 同一句 Hospitium hic locatur! 隔大约 5 秒出现两次：st3 画外一次（保留条），st1 画内 Fortunata 再喊一次。两条分开生成，又没有声样参考（manifest 只有图片），两次音色和腔调可能不一样 | 便宜：st1 出片后，对比 st3 20.2 秒和 st1 1.5 秒的人声；对不上就在剪辑里用 st1 那一声的音频替换 st3 的画外吆喝 |",
+    "| s7_st1 | 16.75–18（剪掉的部分） | K8 资料一致 | 记录 | 规则源 | cut_v6 st1 出点 16.75 秒，最后一帧正对镜头；可 s7_st1 spec 节拍「16.6–18秒 转头越过右肩」和 junctions.md 的「最后一拍」还写着转头，下次审稿和自动机检会照旧判出错 | 便宜：spec 或 junctions 注明「剪辑出点 16.75 秒，最后一拍以正对镜头为准」 |"
+   ],
+   "id": "I11",
+   "status": "implemented",
+   "solution": "st1 里 Riley 改成快步走进（接 st3 眼睛一亮快步走），删掉「有点累」",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-14T23:41:49",
+     "status": "implemented",
+     "solution": "st1 里 Riley 改成快步走进（接 st3 眼睛一亮快步走），删掉「有点累」",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/overhead.toml"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/overhead.toml"
+   ]
+  },
+  {
+   "key": "dim:dialogue:D1",
+   "level": "major",
+   "law": "dialogue",
+   "category": "台词（时长与逻辑）",
+   "item": "dialogue",
+   "dimension": "D1 说得完",
+   "shots": [
+    "s7_st2"
+   ],
+   "problem": "D1 说得完 最终 1 分：时间够念：按正常语速（约 2.5 词/秒；语速要正常，不能靠说快塞进镜头）算出每句需要的时间与留白（开口前 ≥1 秒、说完后 ≥1.5 秒），给数字；不够时写「镜头要延长到 X 秒 / 节拍怎么重排 / 要加的镜头或场」，不建议删词或改短句子；I swear it was in my history textbook — 8 词排 2.8s（2.86 词/秒）；from an inn just like this. 6 词排 1.9s（3.16 词/秒），都高于 2.5；引文 10 词却给了 6.2s（1.6 词/秒），后面留白 2.6s 有富余。",
+   "evidence": [
+    "a（1 分）：s6_st1 全部够：Hospitium hic locatur! 3 词/1.5s（1.5–3.0，2.0 词/秒）、Um — sleep? 2 词/0.9s、One night? 2 词/0.7s、Quattuor 0.7s，开口前 1.5s、说完后 13−11.4=1.6s。但 s7_st2 仍偏快（同 r1 I38，未改）：I swear it was in my history textbook — 8 词/2.8s（8.1–10.9）=2.86 词/秒；from an inn just like this. 6 词/1.9s（11.3–13.2）=3.16 词/秒；第一句 8 词/3.0s=2.67；And there's this famous one — 5 词/1.9s=2.6；That's kind of sweet. 4 词/1.7s=2.35；引文 10 词/6.2s=1.6 慢且有停顿，整镜总共 43 词，说话区间 2.3–23.4 = 21.1s，开口前 2.3s、说完后 2.6s 够。问题只在中段节拍太挤、引文段给得太松，镜头不必加长，重排即可（见问题表）。",
+    "I swear it was in my history textbook — 8 词排 2.8s（2.86 词/秒）；from an inn just like this. 6 词排 1.9s（3.16 词/秒），都高于 2.5；引文 10 词却给了 6.2s（1.6 词/秒），后面留白 2.6s 有富余。"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/dialogue__a"
+   ],
+   "fix": "便宜（只改 prompt 节拍文字，视频未出）：词不动，重排：People write… 2.3–5.3；And there's this famous one — 5.7–7.9；I swear it was in my history textbook — 8.3–11.4（3.1s）；from an inn just like this. 11.7–14.1（2.4s，just like this 的一摊约 13.4）；It says, 14.5–15.0；引文 15.5–22.0；That's kind of sweet. 22.4–24.0；末尾留白约 2s，仍 ≥1.5s；26 秒不必加长。同步改动作段里 5.5–8 / 8–11.2 / 11.2–13.6 的分段标注。",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s7_st2 | 8.1–13.2 | D1 | 记录 | ② 分镜文字 | I swear it was in my history textbook — 8 词排 2.8s（2.86 词/秒）；from an inn just like this. 6 词排 1.9s（3.16 词/秒），都高于 2.5；引文 10 词却给了 6.2s（1.6 词/秒），后面留白 2.6s 有富余。 | 便宜（只改 prompt 节拍文字，视频未出）：词不动，重排：People write… 2.3–5.3；And there's this famous one — 5.7–7.9；I swear it was in my history textbook — 8.3–11.4（3.1s）；from an inn just like this. 11.7–14.1（2.4s，just like this 的一摊约 13.4）；It says, 14.5–15.0；引文 15.5–22.0；That's kind of sweet. 22.4–24.0；末尾留白约 2s，仍 ≥1.5s；26 秒不必加长。同步改动作段里 5.5–8 / 8–11.2 / 11.2–13.6 的分段标注。 |"
+   ],
+   "id": "I12",
+   "status": "implemented",
+   "solution": "台词节拍重排：history textbook 8.1–11.3、from an inn 11.6–13.8、It says 14.1–14.6、引文 15.0–21.0，语速都在 2.5 词/秒附近",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-14T23:41:49",
+     "status": "implemented",
+     "solution": "台词节拍重排：history textbook 8.1–11.3、from an inn 11.6–13.8、It says 14.1–14.6、引文 15.0–21.0，语速都在 2.5 词/秒附近",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/overhead.toml"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/filming.json",
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/overhead.toml"
+   ]
+  },
+  {
+   "key": "dim:era:E2",
+   "level": "major",
+   "law": "era",
+   "category": "时代与世界观",
+   "item": "era",
+   "dimension": "E2 建筑与材质",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "E2 建筑与材质 最终 1 分：抹灰、红瓦、玄武岩石板、凝灰岩；没有城垛、百叶窗、玻璃格窗、托斯卡纳农舍；院子地面成排小方块石（x940–1500, y480–941，`work/era__a/s6_pave.png`），像近代弹石路；bg6 卡「石板铺地的院子」；已出片 s6_st2 的院子是较大的长方石板，两镜还对不上",
+   "evidence": [
+    "a（1 分）：s6_st1 院子地面（x940–1500, y480–941）是成排小方块石，像近代弹石路，bg6 卡写「石板铺地的院子」，视频 prompt 第 24 行负面词仍没有「方块石路面」（I47 未改，见问题表）；其余红瓦、抹灰、庞贝红墙裙、木栏走廊、无玻璃窗洞都对",
+    "院子地面成排小方块石（x940–1500, y480–941，`work/era__a/s6_pave.png`），像近代弹石路；bg6 卡「石板铺地的院子」；已出片 s6_st2 的院子是较大的长方石板，两镜还对不上"
+   ],
+   "sources": [
+    "claude-opus-5-5/era__a"
+   ],
+   "fix": "便宜：首帧局部重画地面为大块多边形石板或夯土；视频 prompt 负面词补「鹅卵石路面，方块石路面」",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s6_st1 | 0–13s 背景 | E2 建筑（I47 未改） | 记录 | ③ 首帧 | 院子地面成排小方块石（x940–1500, y480–941，`work/era__a/s6_pave.png`），像近代弹石路；bg6 卡「石板铺地的院子」；已出片 s6_st2 的院子是较大的长方石板，两镜还对不上 | 便宜：首帧局部重画地面为大块多边形石板或夯土；视频 prompt 负面词补「鹅卵石路面，方块石路面」 |"
+   ],
+   "id": "I13",
+   "status": "implemented",
+   "solution": "首帧第三版院子铺大块长方石板，照 st2 画面",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-14T23:41:49",
+     "status": "implemented",
+     "solution": "首帧第三版院子铺大块长方石板，照 st2 画面",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/st1_first_frame.png"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s6/shots/st1/planning/st1_first_frame.png"
+   ]
+  },
+  {
+   "key": "dim:era:E5",
+   "level": "major",
+   "law": "era",
+   "category": "时代与世界观",
+   "item": "era",
+   "dimension": "E5 文字",
+   "shots": [
+    "s7_st2"
+   ],
+   "problem": "E5 文字 最终 1 分：画面里没有可读的文字、字母、数字（墙、船、招牌、钱币）；视频 prompt 第 12 行「画面」块仍写「再讲一句很有名的涂鸦」；首帧划痕片（约 x90–330, y400–640，`work/era__a/s7_scratch.png`）刻线深、带阴影，几组交叉像 H、K、A；14.8–21.0 秒同时在念涂鸦原文，模型可能刻出字母",
+   "evidence": [
+    "a（1 分）：s7_st2 视频 prompt 第 12 行「画面」块仍写「再讲一句很有名的涂鸦」，首帧左上划痕片（约 x90–330, y400–640）比 spec 深、有 H/K/A 状交叉（I22 未改，见问题表）；s6_st1 首帧放大墙面、墙裙、门扇、车篷无字母",
+    "视频 prompt 第 12 行「画面」块仍写「再讲一句很有名的涂鸦」；首帧划痕片（约 x90–330, y400–640，`work/era__a/s7_scratch.png`）刻线深、带阴影，几组交叉像 H、K、A；14.8–21.0 秒同时在念涂鸦原文，模型可能刻出字母"
+   ],
+   "sources": [
+    "claude-opus-5-5/era__a"
+   ],
+   "fix": "便宜：「画面」块把「涂鸦」改成「住客留在别处墙上的一句话」；首帧局部压淡这片划痕到「只比墙面略深」。核实：出片后逐帧放大这片墙",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s7_st2 | 0–26s | E5 文字（I22 未改） | 存疑 | ③ prompt 或首帧 | 视频 prompt 第 12 行「画面」块仍写「再讲一句很有名的涂鸦」；首帧划痕片（约 x90–330, y400–640，`work/era__a/s7_scratch.png`）刻线深、带阴影，几组交叉像 H、K、A；14.8–21.0 秒同时在念涂鸦原文，模型可能刻出字母 | 便宜：「画面」块把「涂鸦」改成「住客留在别处墙上的一句话」；首帧局部压淡这片划痕到「只比墙面略深」。核实：出片后逐帧放大这片墙 |"
+   ],
+   "id": "I14",
+   "status": "implemented",
+   "solution": "s7 st2 首帧划痕要求画浅、无阴影、看不出字形；出片后抽帧放大 14–22 秒左上墙面复查",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-14T23:41:49",
+     "status": "implemented",
+     "solution": "s7 st2 首帧划痕要求画浅、无阴影、看不出字形；出片后抽帧放大 14–22 秒左上墙面复查",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/st2_first_frame.png"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/scenes/s7/shots/st2/planning/st2_first_frame.png"
+   ]
+  },
+  {
+   "key": "dim:era:E7",
+   "level": "major",
+   "law": "era",
+   "category": "时代与世界观",
+   "item": "era",
+   "dimension": "E7 规则源",
+   "shots": [
+    "bible.md:183",
+    "p1 负面词 / s6、s7 prompt"
+   ],
+   "problem": "E7 规则源 最终 1 分：场景卡、道具卡、考据负面词里没有和以上冲突的写法；「入画时只能是远处一座长满植被的绿山，不冒烟、不当画面主体」没标废止，紧接着又写「山不入画」",
+   "evidence": [
+    "a（1 分）：bible.md:183 仍是「入画时只能是远处一座长满植被的绿山」在前、「山不入画」在后，旧句没标废止（I49 未改，见问题表）；另存疑：p1 负面词「带盖的油灯」可能把灯推向敞口碗",
+    "「入画时只能是远处一座长满植被的绿山，不冒烟、不当画面主体」没标废止，紧接着又写「山不入画」",
+    "视频 prompt 负面词「带盖的油灯」（s6 第 24 行、s7 第 21 行）本意是防茶壶盖式的灯，但罗马灯本身就是封顶的，模型可能读成「不要顶面」，画出 s6 那种敞口碗。核实：对比 s6_st2 与 s7 系列已出片灯形和各自 prompt"
+   ],
+   "sources": [
+    "claude-opus-5-5/era__a"
+   ],
+   "fix": "便宜：前半句加「（已被 2026-11-14 follow-up 068 山不入画取代）」或删掉；便宜：改成「带独立盖子和盖钮的油灯」（bg6 卡已写「盖钮」）",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| bible.md:183 | — | E7 规则源（I49 未改） | 记录 | 规则源 | 「入画时只能是远处一座长满植被的绿山，不冒烟、不当画面主体」没标废止，紧接着又写「山不入画」 | 便宜：前半句加「（已被 2026-11-14 follow-up 068 山不入画取代）」或删掉 |",
+    "| p1 负面词 / s6、s7 prompt | — | E7 规则源 | 存疑 | 规则源 | 视频 prompt 负面词「带盖的油灯」（s6 第 24 行、s7 第 21 行）本意是防茶壶盖式的灯，但罗马灯本身就是封顶的，模型可能读成「不要顶面」，画出 s6 那种敞口碗。核实：对比 s6_st2 与 s7 系列已出片灯形和各自 prompt | 便宜：改成「带独立盖子和盖钮的油灯」（bg6 卡已写「盖钮」） |"
+   ],
+   "id": "I15",
+   "status": "implemented",
+   "solution": "bible §9 删掉「入画时只能是远处绿山」的旧说法，写明已被「山不入画」取代",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-14T23:41:50",
+     "status": "implemented",
+     "solution": "bible §9 删掉「入画时只能是远处绿山」的旧说法，写明已被「山不入画」取代",
+     "files": [
+      "ai_videos/chuanyue_yiri/bible.md"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/bible.md"
+   ]
+  },
+  {
+   "key": "row:prompt_text:s6st1:t1自相矛盾",
+   "level": "major",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "T1 自相矛盾",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "T1 自相矛盾：prompt.txt 第 9 行「人物」：「眼神审视、不苟言笑」；第 15/17 行：「招客时脸是松的、眉头舒展、嘴角平」；首帧 png 里她还是嘴抿、略紧眉。第 1 轮 I2 只改了首帧 prompt，没改送模的人物行（人物卡 c5_Fortunata.md 第 12 行就是这句，编译时原样带入）",
+   "evidence": [
+    "prompt.txt 第 9 行「人物」：「眼神审视、不苟言笑」；第 15/17 行：「招客时脸是松的、眉头舒展、嘴角平」；首帧 png 里她还是嘴抿、略紧眉。第 1 轮 I2 只改了首帧 prompt，没改送模的人物行（人物卡 c5_Fortunata.md 第 12 行就是这句，编译时原样带入）"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/prompt_text__a"
+   ],
+   "fix": "便宜：在编译前给 Fortunata 加一句「招客时松，打量她时才审视」，或让人物行不写表情；建议同时把首帧的脸再放松一点",
+   "cost": "便宜",
+   "severity": "可剪",
+   "rows": [
+    "| s6_st1 | 0–5s（全镜 Fortunata 的脸） | T1 自相矛盾 | 可剪（出片前改） | ③ prompt | prompt.txt 第 9 行「人物」：「眼神审视、不苟言笑」；第 15/17 行：「招客时脸是松的、眉头舒展、嘴角平」；首帧 png 里她还是嘴抿、略紧眉。第 1 轮 I2 只改了首帧 prompt，没改送模的人物行（人物卡 c5_Fortunata.md 第 12 行就是这句，编译时原样带入） | 便宜：在编译前给 Fortunata 加一句「招客时松，打量她时才审视」，或让人物行不写表情；建议同时把首帧的脸再放松一点 |"
+   ],
+   "id": "I16",
+   "status": "implemented",
+   "solution": "同 I1：人物卡外观句不再与动作行矛盾",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-14T23:41:50",
+     "status": "implemented",
+     "solution": "同 I1：人物卡外观句不再与动作行矛盾",
+     "files": [
+      "ai_videos/chuanyue_yiri/2_世界观人设/characters/c5_Fortunata/c5_Fortunata.md"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/2_世界观人设/characters/c5_Fortunata/c5_Fortunata.md"
+   ]
+  },
+  {
+   "key": "dim:role_c1:V3",
+   "level": "major",
+   "law": "role",
+   "category": "角色立场·Riley",
+   "item": "role_c1",
+   "dimension": "V3 表情",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "V3 表情 最终 1 分：我的表情和强度合不合此刻的处境；不过演、不面无表情；spec 与 prompt 动作行：「Riley 看着那四根手指」「Riley 看看四根手指，再低头看自己的右拳」，没有表情、没有抬眼；这是我刚说完 Hope that's enough for a bed（s6_st3 16.9s）后最紧张的一刻，不写表情模型会给一张空脸",
+   "evidence": [
+    "a（1 分）：s6_st1 3.5–5s 走位仍写「有点累」，接不上 s6_st3 23.3–25s「眼睛一亮、快步走」（问题 2）；10.5–13s 我最紧张的报价时刻只写视线、没写表情（问题 1）。s7_st2 表情分寸好（首帧闭嘴浅笑，结尾安静笑着垂眼）。",
+    "spec 与 prompt 动作行：「Riley 看着那四根手指」「Riley 看看四根手指，再低头看自己的右拳」，没有表情、没有抬眼；这是我刚说完 Hope that's enough for a bed（s6_st3 16.9s）后最紧张的一刻，不写表情模型会给一张空脸",
+    "spec「走位」与 prompt「走位」仍写「有点累，每秒一米二左右」；上一镜 s6_st3 21.8–25s 是「眉头一松、眼睛一亮……快步走」出画；入画 1.5s 没写我的脸"
+   ],
+   "sources": [
+    "claude-opus-5-5/role_c1__a"
+   ],
+   "fix": "便宜（改节拍文字）。此刻的我会：盯着四根手指，嘴唇无声动一下像在数，抬眼看一下她的脸，再低头看拳头、轻轻抿一下嘴；12.2s 摊开手心时眉毛轻轻一挑、带一点没把握的笑；便宜（改走位形容词与一句节拍）。此刻的我会：松了口气、带点期待，步子还快，走近时放慢，朝她身后的车门和院子瞟一眼，再停在她面前笑",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s6_st1 | 10.5–13 | V3 / V4（R：I58） | 记录（本镜正要出片，建议出片前改） | ② 分镜文字 | spec 与 prompt 动作行：「Riley 看着那四根手指」「Riley 看看四根手指，再低头看自己的右拳」，没有表情、没有抬眼；这是我刚说完 Hope that's enough for a bed（s6_st3 16.9s）后最紧张的一刻，不写表情模型会给一张空脸 | 便宜（改节拍文字）。此刻的我会：盯着四根手指，嘴唇无声动一下像在数，抬眼看一下她的脸，再低头看拳头、轻轻抿一下嘴；12.2s 摊开手心时眉毛轻轻一挑、带一点没把握的笑 |",
+    "| s6_st1 | 3.5–5 | V3 / V7（R：I57） | 记录（本镜正要出片，建议出片前改） | ② 分镜文字 | spec「走位」与 prompt「走位」仍写「有点累，每秒一米二左右」；上一镜 s6_st3 21.8–25s 是「眉头一松、眼睛一亮……快步走」出画；入画 1.5s 没写我的脸 | 便宜（改走位形容词与一句节拍）。此刻的我会：松了口气、带点期待，步子还快，走近时放慢，朝她身后的车门和院子瞟一眼，再停在她面前笑 |"
+   ],
+   "id": "I17",
+   "status": "implemented",
+   "solution": "10.5–11.6 秒 Riley 看着四根手指，抿一下嘴、有点没把握",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-14T23:41:50",
+     "status": "implemented",
+     "solution": "10.5–11.6 秒 Riley 看着四根手指，抿一下嘴、有点没把握",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/filming.json"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/filming.json"
+   ]
+  },
+  {
+   "key": "dim:role_extras:V5",
+   "level": "major",
+   "law": "role",
+   "category": "角色立场·路人与群众",
+   "item": "role_extras",
+   "dimension": "V5 回应",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "V5 回应 最终 1 分：别人对我说话、做动作时，我会怎么回应、多快；分镜写的回应是不是此刻的我会给的；吆喝 1.5 s 才开口；首帧行人已在画面横向 0–25%（≈x 5.16–5.54），按 spec 每秒一米，约 1.6–2.3 s 就出画右。「两人摆一下手」要在听到吆喝后半秒内做完，否则只能在画外做，或者被模型拖成慢走、加速挥手。此刻的我会：她一开口我就抬手往外一摆，脚不停，头最多偏一下",
+   "evidence": [
+    "a（1 分）：s6_st1 吆喝 1.5–3.0 s，按首帧位置加 1 m/s 计算，行人约 1.6–2.3 s 出画，回应的摆手没时间做；overhead 约 3.28 s 与 Riley 在 x≈8.0 处隔 1.2 m 错身，分镜没写反应（见问题表第 1、2 条）",
+    "吆喝 1.5 s 才开口；首帧行人已在画面横向 0–25%（≈x 5.16–5.54），按 spec 每秒一米，约 1.6–2.3 s 就出画右。「两人摆一下手」要在听到吆喝后半秒内做完，否则只能在画外做，或者被模型拖成慢走、加速挥手。此刻的我会：她一开口我就抬手往外一摆，脚不停，头最多偏一下",
+    "overhead.toml 行人 3.3 s 到 (8.0, 8.6)，Riley 3.28 s 到 (≈7.96, 7.4)，两人在画右边沿外隔 1.2 m 迎面错身；上一轮废片 sheet_4fps 3.0–3.25 s 已经同框擦肩。分镜写「只顾赶路」；同集 st3 铺子主人、st6 车夫见到她都会看。此刻的我会：擦肩时扭头扫一眼她的长裤，眉头一动，回头接着走。核实：出片后看 2.5–4 s 画右边沿有没有同框"
+   ],
+   "sources": [
+    "claude-opus-5-5/role_extras__a"
+   ],
+   "fix": "便宜：把吆喝提前到 1.0–2.5 s（台词不变，只挪时间），摆手写成「1.3 s 左右」；或把行人速度写成「每秒八九十厘米」、出画改到约 3 s，两者二选一，和 overhead 一起改；便宜：二选一，(a) 行人约 2.3 s 前出画、Riley 入画推到约 3.8 s，overhead 里让两人错开不同框；(b) 写明「若在画右边沿和 Riley 擦肩，年轻那个侧头瞟一眼她的裤子，不停步」",
+   "cost": "便宜",
+   "scores": {
+    "a": 1,
+    "b": null,
+    "final": 1
+   },
+   "rows": [
+    "| s6_st1 | 1.5–3.0 | V5 回应 | 可剪 | ② 分镜文字 | 吆喝 1.5 s 才开口；首帧行人已在画面横向 0–25%（≈x 5.16–5.54），按 spec 每秒一米，约 1.6–2.3 s 就出画右。「两人摆一下手」要在听到吆喝后半秒内做完，否则只能在画外做，或者被模型拖成慢走、加速挥手。此刻的我会：她一开口我就抬手往外一摆，脚不停，头最多偏一下 | 便宜：把吆喝提前到 1.0–2.5 s（台词不变，只挪时间），摆手写成「1.3 s 左右」；或把行人速度写成「每秒八九十厘米」、出画改到约 3 s，两者二选一，和 overhead 一起改 |",
+    "| s6_st1 | ≈3.3（画外） | V5 回应 / V7（R：I26 未改） | 存疑 | ② 分镜文字 / overhead | overhead.toml 行人 3.3 s 到 (8.0, 8.6)，Riley 3.28 s 到 (≈7.96, 7.4)，两人在画右边沿外隔 1.2 m 迎面错身；上一轮废片 sheet_4fps 3.0–3.25 s 已经同框擦肩。分镜写「只顾赶路」；同集 st3 铺子主人、st6 车夫见到她都会看。此刻的我会：擦肩时扭头扫一眼她的长裤，眉头一动，回头接着走。核实：出片后看 2.5–4 s 画右边沿有没有同框 | 便宜：二选一，(a) 行人约 2.3 s 前出画、Riley 入画推到约 3.8 s，overhead 里让两人错开不同框；(b) 写明「若在画右边沿和 Riley 擦肩，年轻那个侧头瞟一眼她的裤子，不停步」 |"
+   ],
+   "id": "I18",
+   "status": "implemented",
+   "solution": "她一开口，前面那个行人头也不回地抬手往外一摆，两人脚不停",
+   "reason": "",
+   "history": [
+    {
+     "at": "2026-11-14T23:41:50",
+     "status": "implemented",
+     "solution": "她一开口，前面那个行人头也不回地抬手往外一摆，两人脚不停",
+     "files": [
+      "ai_videos/chuanyue_yiri/episodes/ep01/filming.json"
+     ]
+    }
+   ],
+   "files": [
+    "ai_videos/chuanyue_yiri/episodes/ep01/filming.json"
+   ]
+  },
+  {
+   "key": "row:physics:s6st1:p10真实速度",
+   "level": "verify",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "P10 真实速度",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "P10 真实速度：入画到停步约 1.0 m 用 1.5 秒（≈0.67 m/s），文字写 1.2 m/s、俯视图 0.92 m/s，三者对不上；可能演成慢吞吞挪进来或 3.8 秒就到她面前",
+   "evidence": [
+    "入画到停步约 1.0 m 用 1.5 秒（≈0.67 m/s），文字写 1.2 m/s、俯视图 0.92 m/s，三者对不上；可能演成慢吞吞挪进来或 3.8 秒就到她面前"
+   ],
+   "sources": [
+    "claude-opus-5-5/physics__a"
+   ],
+   "fix": "便宜：二选一写准：「约 4 秒入画、5 秒停」，或「3.5 秒入画、边走边放慢」；出片后抽 3.5–5 秒帧核",
+   "cost": "便宜",
+   "severity": "存疑",
+   "rows": [
+    "| s6_st1 | 3.5–5 | P10 真实速度 | 存疑 | ② 分镜文字 | 入画到停步约 1.0 m 用 1.5 秒（≈0.67 m/s），文字写 1.2 m/s、俯视图 0.92 m/s，三者对不上；可能演成慢吞吞挪进来或 3.8 秒就到她面前 | 便宜：二选一写准：「约 4 秒入画、5 秒停」，或「3.5 秒入画、边走边放慢」；出片后抽 3.5–5 秒帧核 |"
+   ],
+   "id": "I19",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:physics:s6st1:p8首帧",
+   "level": "verify",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "P8 首帧",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "P8 首帧：首帧招手的右手掌心看着朝外（朝画左行人），规格写「手心朝着自己往回招」；放大后难确认",
+   "evidence": [
+    "首帧招手的右手掌心看着朝外（朝画左行人），规格写「手心朝着自己往回招」；放大后难确认"
+   ],
+   "sources": [
+    "claude-opus-5-5/physics__a"
+   ],
+   "fix": "便宜：出片后看 0–1.5 秒是否自然招手；不必重画",
+   "cost": "便宜",
+   "severity": "存疑",
+   "rows": [
+    "| s6_st1 | 0 | P8 首帧 | 存疑 | ③ 首帧 | 首帧招手的右手掌心看着朝外（朝画左行人），规格写「手心朝着自己往回招」；放大后难确认 | 便宜：出片后看 0–1.5 秒是否自然招手；不必重画 |"
+   ],
+   "id": "I20",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:continuity:s6st1:k1灯形",
+   "level": "verify",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "K1 灯形",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "K1 灯形：首帧墙龛里的灯是开口碗形（`s6st1ff_lamp.png`），和 st2、st5 保留条一致；可 prompt 道具行和 p1 参考图是「顶面封死」的封顶灯，镜内可能被模型改成封顶灯，前后镜就接不上了。整集的灯本来就是 s6 开口碗形、s7 封顶单嘴（保留条已经这样）",
+   "evidence": [
+    "首帧墙龛里的灯是开口碗形（`s6st1ff_lamp.png`），和 st2、st5 保留条一致；可 prompt 道具行和 p1 参考图是「顶面封死」的封顶灯，镜内可能被模型改成封顶灯，前后镜就接不上了。整集的灯本来就是 s6 开口碗形、s7 封顶单嘴（保留条已经这样）"
+   ],
+   "sources": [
+    "claude-opus-5-5/continuity__a"
+   ],
+   "fix": "便宜：出片后抽 0、6、13 秒看墙龛里的灯形；变了就记下来，用户决定是否接受（s6 和 s7 的灯形不一致是已经出片的历史问题）",
+   "cost": "便宜",
+   "severity": "存疑",
+   "rows": [
+    "| s6_st1 | 全镜 | K1 灯形 | 存疑 | ③ prompt 或首帧 | 首帧墙龛里的灯是开口碗形（`s6st1ff_lamp.png`），和 st2、st5 保留条一致；可 prompt 道具行和 p1 参考图是「顶面封死」的封顶灯，镜内可能被模型改成封顶灯，前后镜就接不上了。整集的灯本来就是 s6 开口碗形、s7 封顶单嘴（保留条已经这样） | 便宜：出片后抽 0、6、13 秒看墙龛里的灯形；变了就记下来，用户决定是否接受（s6 和 s7 的灯形不一致是已经出片的历史问题） |"
+   ],
+   "id": "I21",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:native_ear:s7st1:n3（存疑）",
+   "level": "verify",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "N3（存疑）",
+   "shots": [
+    "s7_st1"
+   ],
+   "problem": "N3（存疑）：lines.md 里 s6、s7 全部台词都没有 garum 或 dextram，盲审无法确认观众是否见过",
+   "evidence": [
+    "lines.md 里 s6、s7 全部台词都没有 garum 或 dextram，盲审无法确认观众是否见过"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/native_ear__a"
+   ],
+   "fix": "核实 garum 在更早场次是否已有台词或画面；没有就在 st1 改成「that fish sauce thing」；dextram 回收对照故事稿核实",
+   "cost": "",
+   "severity": "存疑",
+   "rows": [
+    "| s7_st1 | 「that garum」 | N3（存疑） | 存疑 | ① 故事 | lines.md 里 s6、s7 全部台词都没有 garum 或 dextram，盲审无法确认观众是否见过 | 核实 garum 在更早场次是否已有台词或画面；没有就在 st1 改成「that fish sauce thing」；dextram 回收对照故事稿核实 |"
+   ],
+   "id": "I22",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:prompt_text:s6st1:t4/t1手势朝向存疑",
+   "level": "verify",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "T4/T1 手势朝向存疑",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "T4/T1 手势朝向存疑：站位图：Fortunata 在 5s 后朝东面向 Riley，机位在她正南；左手在她远离机位的一侧，「手心朝镜头」要求手腕向内扭到掌心朝她自己的右侧，不是自然的递示动作；右手（近机位）才是自然朝镜头的手，但接点 st2 写的是左手。核实：看出片 10.5–11.6s 四指是否数得清、手是否扭成怪姿",
+   "evidence": [
+    "站位图：Fortunata 在 5s 后朝东面向 Riley，机位在她正南；左手在她远离机位的一侧，「手心朝镜头」要求手腕向内扭到掌心朝她自己的右侧，不是自然的递示动作；右手（近机位）才是自然朝镜头的手，但接点 st2 写的是左手。核实：看出片 10.5–11.6s 四指是否数得清、手是否扭成怪姿"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/prompt_text__a"
+   ],
+   "fix": "便宜：若试片发现扭手，改成「手心朝 Riley 偏机位约 45°」，不改也可",
+   "cost": "便宜",
+   "severity": "存疑",
+   "rows": [
+    "| s6_st1 | 10.5–11.6s | T4/T1 手势朝向存疑 | 存疑 | ② 分镜文字 | 站位图：Fortunata 在 5s 后朝东面向 Riley，机位在她正南；左手在她远离机位的一侧，「手心朝镜头」要求手腕向内扭到掌心朝她自己的右侧，不是自然的递示动作；右手（近机位）才是自然朝镜头的手，但接点 st2 写的是左手。核实：看出片 10.5–11.6s 四指是否数得清、手是否扭成怪姿 | 便宜：若试片发现扭手，改成「手心朝 Riley 偏机位约 45°」，不改也可 |"
+   ],
+   "id": "I23",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:prompt_text:s6st1:t1遮挡存疑",
+   "level": "verify",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "T1 遮挡存疑",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "T1 遮挡存疑：Riley 朝西面向 Fortunata，机位在南，她的右手在远离机位一侧，右拳伸到两人中间摊开，可能被身体遮挡；规格「两人的手都在画内」。核实：出片 12–13s 抽帧看掌心是否看得见",
+   "evidence": [
+    "Riley 朝西面向 Fortunata，机位在南，她的右手在远离机位一侧，右拳伸到两人中间摊开，可能被身体遮挡；规格「两人的手都在画内」。核实：出片 12–13s 抽帧看掌心是否看得见"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/prompt_text__a"
+   ],
+   "fix": "便宜：改「摊开掌心朝上、手停在两人中间偏机位一侧」，不改也可",
+   "cost": "便宜",
+   "severity": "存疑",
+   "rows": [
+    "| s6_st1 | 12.2s | T1 遮挡存疑 | 存疑 | ② 分镜文字 | Riley 朝西面向 Fortunata，机位在南，她的右手在远离机位一侧，右拳伸到两人中间摊开，可能被身体遮挡；规格「两人的手都在画内」。核实：出片 12–13s 抽帧看掌心是否看得见 | 便宜：改「摊开掌心朝上、手停在两人中间偏机位一侧」，不改也可 |"
+   ],
+   "id": "I24",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:physics:s6st1:r·i17残留",
+   "level": "minor",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "R·I17 残留",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "R·I17 残留：overhead.toml t=10.0 视线点 (9.5,7.6) 与 meta note「9–10.5 s 打量她、朝她身后的街上瞥一眼」仍在，印在 st1_overhead.png 顶部送给模型；toml 头注释还写「9–10.5 s 打量时右手拇指拨一下钱袋」，与节拍「左手」矛盾",
+   "evidence": [
+    "overhead.toml t=10.0 视线点 (9.5,7.6) 与 meta note「9–10.5 s 打量她、朝她身后的街上瞥一眼」仍在，印在 st1_overhead.png 顶部送给模型；toml 头注释还写「9–10.5 s 打量时右手拇指拨一下钱袋」，与节拍「左手」矛盾"
+   ],
+   "sources": [
+    "claude-opus-5-5/physics__a"
+   ],
+   "fix": "便宜：删 t=10.0 视线点、改 meta note，重生成 overhead 图并 shot_pack sync",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st1 | 9–10.5 | R·I17 残留 | 记录 | ③ prompt 参考图 | overhead.toml t=10.0 视线点 (9.5,7.6) 与 meta note「9–10.5 s 打量她、朝她身后的街上瞥一眼」仍在，印在 st1_overhead.png 顶部送给模型；toml 头注释还写「9–10.5 s 打量时右手拇指拨一下钱袋」，与节拍「左手」矛盾 | 便宜：删 t=10.0 视线点、改 meta note，重生成 overhead 图并 shot_pack sync |"
+   ],
+   "id": "I25",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:physics:s6st1、s7st2:p7服装",
+   "level": "minor",
+   "law": "physics",
+   "category": "世界物理",
+   "item": "physics",
+   "dimension": "P7 服装",
+   "shots": [
+    "s6_st1、s7_st2"
+   ],
+   "problem": "P7 服装：「短袖衬衫，袖口挽起」：短袖只能是固定翻边，首帧已画成翻边，但措辞可能让模型加卷袖动作或画成长袖卷起",
+   "evidence": [
+    "「短袖衬衫，袖口挽起」：短袖只能是固定翻边，首帧已画成翻边，但措辞可能让模型加卷袖动作或画成长袖卷起"
+   ],
+   "sources": [
+    "claude-opus-5-5/physics__a"
+   ],
+   "fix": "便宜：改为「短袖，袖口有一道翻边」",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st1、s7_st2 | 全镜 | P7 服装 | 记录 | ② 人物描述 | 「短袖衬衫，袖口挽起」：短袖只能是固定翻边，首帧已画成翻边，但措辞可能让模型加卷袖动作或画成长袖卷起 | 便宜：改为「短袖，袖口有一道翻边」 |"
+   ],
+   "id": "I26",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:character:s6st3→s6st1:c7",
+   "level": "minor",
+   "law": "character",
+   "category": "人物逻辑",
+   "item": "character",
+   "dimension": "C7",
+   "shots": [
+    "s6_st3 → s6_st1"
+   ],
+   "problem": "C7：I19 未改：st3 里 Riley 听到画外吆喝后朝画左走出；st1 开头 Fortunata 还在对行人喊同一句，Riley 3.5s 才从画右走进。r1 把它列入 I9 wontfix（方向一致）；但观众看到的是同一句吆喝在 st3 她已经听到，st1 里又在对别人喊一遍，她「走过来」这段没有交代",
+   "evidence": [
+    "I19 未改：st3 里 Riley 听到画外吆喝后朝画左走出；st1 开头 Fortunata 还在对行人喊同一句，Riley 3.5s 才从画右走进。r1 把它列入 I9 wontfix（方向一致）；但观众看到的是同一句吆喝在 st3 她已经听到，st1 里又在对别人喊一遍，她「走过来」这段没有交代"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/character__a"
+   ],
+   "fix": "便宜：st1 0–3.5s 画右画外加脚步声，或 Fortunata 在 Riley 入画时朝画右再招呼一下；也可确认接受现状",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st3 → s6_st1 | 24–25s ↔ 0–3.5s | C7 | 记录 | ② 分镜文字 | I19 未改：st3 里 Riley 听到画外吆喝后朝画左走出；st1 开头 Fortunata 还在对行人喊同一句，Riley 3.5s 才从画右走进。r1 把它列入 I9 wontfix（方向一致）；但观众看到的是同一句吆喝在 st3 她已经听到，st1 里又在对别人喊一遍，她「走过来」这段没有交代 | 便宜：st1 0–3.5s 画右画外加脚步声，或 Fortunata 在 Riley 入画时朝画右再招呼一下；也可确认接受现状 |"
+   ],
+   "id": "I27",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:character:s7st2:c8/c9",
+   "level": "minor",
+   "law": "character",
+   "category": "人物逻辑",
+   "item": "character",
+   "dimension": "C8 / C9",
+   "shots": [
+    "s7_st2"
+   ],
+   "problem": "C8 / C9：I33 未改：近 8 秒只有台词，两手在膝上；23.9–26s 垂眼看灯苗，近乎静止；中近景 35mm 一米多远，关掉声音时这段会显得像摆件",
+   "evidence": [
+    "I33 未改：近 8 秒只有台词，两手在膝上；23.9–26s 垂眼看灯苗，近乎静止；中近景 35mm 一米多远，关掉声音时这段会显得像摆件"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/character__a"
+   ],
+   "fix": "便宜：在 alone 后的半拍加一次垂眼看灯苗或手指碰一下膝头，23.9–25s 加一次呼吸或视线变化；幅度要小，不要变成表演",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s7_st2 | 13.6–21.5s；23.9–26s | C8 / C9 | 记录 | ② 分镜文字 | I33 未改：近 8 秒只有台词，两手在膝上；23.9–26s 垂眼看灯苗，近乎静止；中近景 35mm 一米多远，关掉声音时这段会显得像摆件 | 便宜：在 alone 后的半拍加一次垂眼看灯苗或手指碰一下膝头，23.9–25s 加一次呼吸或视线变化；幅度要小，不要变成表演 |"
+   ],
+   "id": "I28",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:character:s6st1:c9",
+   "level": "minor",
+   "law": "character",
+   "category": "人物逻辑",
+   "item": "character",
+   "dimension": "C9",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "C9：目光从脸扫到长裤再回到脸，只写了视线、没写脸上有什么变化；Fortunata 对一个穿长裤的外国女人，这一眼若没有任何表情，出片后可能被「吞掉」",
+   "evidence": [
+    "目光从脸扫到长裤再回到脸，只写了视线、没写脸上有什么变化；Fortunata 对一个穿长裤的外国女人，这一眼若没有任何表情，出片后可能被「吞掉」"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/character__a"
+   ],
+   "fix": "便宜：加一个很小的表情，如眉心略动或嘴角微压，之后再接 5s 的点头回 Salve；不要张嘴、不要瞪眼",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st1 | 3.5–5s | C9 | 记录 | ② 分镜文字 | 目光从脸扫到长裤再回到脸，只写了视线、没写脸上有什么变化；Fortunata 对一个穿长裤的外国女人，这一眼若没有任何表情，出片后可能被「吞掉」 | 便宜：加一个很小的表情，如眉心略动或嘴角微压，之后再接 5s 的点头回 Salve；不要张嘴、不要瞪眼 |"
+   ],
+   "id": "I29",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:continuity:s7st2:k6划痕片（i37未改）",
+   "level": "minor",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "K6 划痕片（I37 未改）",
+   "shots": [
+    "s7_st2"
+   ],
+   "problem": "K6 划痕片（I37 未改）：按凳面宽度归一后，主片宽度和 st1 差不多（st1 约 0.7 凳宽，st2 约 0.65 凳宽）。但 st2 首帧在主片上方（x140–290、y100–250）和右边（x330–560、y230–420）还多出好几道长划痕，刻得深、带亮边（`s7st2ff_wall.png`）；st1 保留条那面墙只有主片一团（`s7st1_end_wall.png`）。spec 写的是「颜色只比墙面略深」",
+   "evidence": [
+    "按凳面宽度归一后，主片宽度和 st1 差不多（st1 约 0.7 凳宽，st2 约 0.65 凳宽）。但 st2 首帧在主片上方（x140–290、y100–250）和右边（x330–560、y230–420）还多出好几道长划痕，刻得深、带亮边（`s7st2ff_wall.png`）；st1 保留条那面墙只有主片一团（`s7st1_end_wall.png`）。spec 写的是「颜色只比墙面略深」"
+   ],
+   "sources": [
+    "claude-opus-5-5/continuity__a"
+   ],
+   "fix": "便宜：首帧局部重画，去掉主片外的长划痕，主片调淡一点",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s7_st2 | 首帧 | K6 划痕片（I37 未改） | 记录 | ③ 首帧 | 按凳面宽度归一后，主片宽度和 st1 差不多（st1 约 0.7 凳宽，st2 约 0.65 凳宽）。但 st2 首帧在主片上方（x140–290、y100–250）和右边（x330–560、y230–420）还多出好几道长划痕，刻得深、带亮边（`s7st2ff_wall.png`）；st1 保留条那面墙只有主片一团（`s7st1_end_wall.png`）。spec 写的是「颜色只比墙面略深」 | 便宜：首帧局部重画，去掉主片外的长划痕，主片调淡一点 |"
+   ],
+   "id": "I30",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:continuity:s7st2:k3衬衫",
+   "level": "minor",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "K3 衬衫",
+   "shots": [
+    "s7_st2"
+   ],
+   "problem": "K3 衬衫：腰带已经改成橄榄色帆布，可衬衫表面还有一层很淡的方格纹（`s7st2ff_shirt.png`，胸前和袖口都能看到）；st1 保留条是素色粗纺亚麻（`s7st1_end_shirt.png`）；人物行写的是「素色米白亚麻」",
+   "evidence": [
+    "腰带已经改成橄榄色帆布，可衬衫表面还有一层很淡的方格纹（`s7st2ff_shirt.png`，胸前和袖口都能看到）；st1 保留条是素色粗纺亚麻（`s7st1_end_shirt.png`）；人物行写的是「素色米白亚麻」"
+   ],
+   "sources": [
+    "claude-opus-5-5/continuity__a"
+   ],
+   "fix": "便宜：首帧局部重画衬衫质地，去掉格纹，只留亚麻粗纹",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s7_st2 | 首帧 | K3 衬衫 | 记录 | ③ 首帧 | 腰带已经改成橄榄色帆布，可衬衫表面还有一层很淡的方格纹（`s7st2ff_shirt.png`，胸前和袖口都能看到）；st1 保留条是素色粗纺亚麻（`s7st1_end_shirt.png`）；人物行写的是「素色米白亚麻」 | 便宜：首帧局部重画衬衫质地，去掉格纹，只留亚麻粗纹 |"
+   ],
+   "id": "I31",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:continuity:s6st1:k6院子地面",
+   "level": "minor",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "K6 院子地面",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "K6 院子地面：首帧院子是一排排小方块石（`s6st1ff_pave.png`）；紧接着的 st2、st5 保留条是大块不规则石板（`s6st2_0.jpg`、`s6st5_0.jpg`）；bg6 也写的是石板",
+   "evidence": [
+    "首帧院子是一排排小方块石（`s6st1ff_pave.png`）；紧接着的 st2、st5 保留条是大块不规则石板（`s6st2_0.jpg`、`s6st5_0.jpg`）；bg6 也写的是石板"
+   ],
+   "sources": [
+    "claude-opus-5-5/continuity__a"
+   ],
+   "fix": "便宜：首帧局部重画院子地面，换成大块多边形石板（和时代审稿人的 I47 是同一处）",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st1 | 首帧 | K6 院子地面 | 记录 | ③ 首帧 | 首帧院子是一排排小方块石（`s6st1ff_pave.png`）；紧接着的 st2、st5 保留条是大块不规则石板（`s6st2_0.jpg`、`s6st5_0.jpg`）；bg6 也写的是石板 | 便宜：首帧局部重画院子地面，换成大块多边形石板（和时代审稿人的 I47 是同一处） |"
+   ],
+   "id": "I32",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:continuity:s6st3:k2钱的样子",
+   "level": "minor",
+   "law": "continuity",
+   "category": "连续性",
+   "item": "continuity",
+   "dimension": "K2 钱的样子",
+   "shots": [
+    "s6_st3"
+   ],
+   "problem": "K2 钱的样子：保留条掌心是 4 枚一样大的钱（2 红铜、2 黄铜，`s6st3_13.5.jpg`），st1 第 12.2 秒和 st2 第 0 秒是 3 小 1 大；数目对，样子不对，cut_v6 已经记了",
+   "evidence": [
+    "保留条掌心是 4 枚一样大的钱（2 红铜、2 黄铜，`s6st3_13.5.jpg`），st1 第 12.2 秒和 st2 第 0 秒是 3 小 1 大；数目对，样子不对，cut_v6 已经记了"
+   ],
+   "sources": [
+    "claude-opus-5-5/continuity__a"
+   ],
+   "fix": "记录即可；st1 照 3 小 1 大出，不要去迁就 st3",
+   "cost": "",
+   "severity": "记录",
+   "rows": [
+    "| s6_st3 | 12.7–16.6 | K2 钱的样子 | 记录 | ④ 模型随机 | 保留条掌心是 4 枚一样大的钱（2 红铜、2 黄铜，`s6st3_13.5.jpg`），st1 第 12.2 秒和 st2 第 0 秒是 3 小 1 大；数目对，样子不对，cut_v6 已经记了 | 记录即可；st1 照 3 小 1 大出，不要去迁就 st3 |"
+   ],
+   "id": "I33",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:dialogue:s6st1:d3",
+   "level": "minor",
+   "law": "dialogue",
+   "category": "台词（时长与逻辑）",
+   "item": "dialogue",
+   "dimension": "D3",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "D3：台词块与 prompt「台词」块注音 hos-PIH-tee-oo 缺词尾 -um（古典 -oom），模型或读者可能读成 hospitio；这镜本轮重出，prompt 反正要重新生成。",
+   "evidence": [
+    "台词块与 prompt「台词」块注音 hos-PIH-tee-oo 缺词尾 -um（古典 -oom），模型或读者可能读成 hospitio；这镜本轮重出，prompt 反正要重新生成。"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/dialogue__a"
+   ],
+   "fix": "便宜：st1 注音改 hos-PIH-tee-oom heek loh-KAH-toor；s6_st3、s6_st5 已出片，只在重出时再改，不为此单独重出。",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st1 | 1.5–3.0 | D3 | 记录 | ② 分镜文字 | 台词块与 prompt「台词」块注音 hos-PIH-tee-oo 缺词尾 -um（古典 -oom），模型或读者可能读成 hospitio；这镜本轮重出，prompt 反正要重新生成。 | 便宜：st1 注音改 hos-PIH-tee-oom heek loh-KAH-toor；s6_st3、s6_st5 已出片，只在重出时再改，不为此单独重出。 |"
+   ],
+   "id": "I34",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:dialogue:s6st1:d6",
+   "level": "minor",
+   "law": "dialogue",
+   "category": "台词（时长与逻辑）",
+   "item": "dialogue",
+   "dimension": "D6",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "D6：Fortunata「低声回 Salve.」只有 0.4s，紧挨 Riley 停步的 5.0–5.6，容易被吞。",
+   "evidence": [
+    "Fortunata「低声回 Salve.」只有 0.4s，紧挨 Riley 停步的 5.0–5.6，容易被吞。"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/dialogue__a"
+   ],
+   "fix": "便宜：Salve. 区间放宽到 5.7–6.2（节拍里 5–6 秒段不变），并在台词里写「低声但咬字清楚」。",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st1 | 5.6–6.0 | D6 | 记录 | ③ prompt | Fortunata「低声回 Salve.」只有 0.4s，紧挨 Riley 停步的 5.0–5.6，容易被吞。 | 便宜：Salve. 区间放宽到 5.7–6.2（节拍里 5–6 秒段不变），并在台词里写「低声但咬字清楚」。 |"
+   ],
+   "id": "I35",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:dialogue:s7st1→st2:d7",
+   "level": "minor",
+   "law": "dialogue",
+   "category": "台词（时长与逻辑）",
+   "item": "dialogue",
+   "dimension": "D7",
+   "shots": [
+    "s7_st1→st2"
+   ],
+   "problem": "D7：末句「I'd do it again.」后直接换话题「People write on, like, every wall here.」，没有承接词；st1 末尾她转头看划痕、st2 首帧却已正对镜头（I8 已定 wontfix，出点 16.75s 在回头前）。",
+   "evidence": [
+    "末句「I'd do it again.」后直接换话题「People write on, like, every wall here.」，没有承接词；st1 末尾她转头看划痕、st2 首帧却已正对镜头（I8 已定 wontfix，出点 16.75s 在回头前）。"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/dialogue__a"
+   ],
+   "fix": "便宜：不改词（台词 r3 定稿）；在 st2 0–2.2s 的吸气前加一个小动作：嘴角一扬、目光从灯苗抬向镜头，让「安静下来，想起另一件事」看得见。",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s7_st1→st2 | 末 / 0–2.2 | D7 | 记录 | ② 分镜文字 | 末句「I'd do it again.」后直接换话题「People write on, like, every wall here.」，没有承接词；st1 末尾她转头看划痕、st2 首帧却已正对镜头（I8 已定 wontfix，出点 16.75s 在回头前）。 | 便宜：不改词（台词 r3 定稿）；在 st2 0–2.2s 的吸气前加一个小动作：嘴角一扬、目光从灯苗抬向镜头，让「安静下来，想起另一件事」看得见。 |"
+   ],
+   "id": "I36",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:native_ear:s7st2:r/n1/n7/n9",
+   "level": "minor",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "R / N1 / N7 / N9",
+   "shots": [
+    "s7_st2"
+   ],
+   "problem": "R / N1 / N7 / N9：I10（wontfix）：lines.md 里整段仍是开场、定位、一字不差引文、收口四段；上表第 1 行",
+   "evidence": [
+    "I10（wontfix）：lines.md 里整段仍是开场、定位、一字不差引文、收口四段；上表第 1 行"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/native_ear__a"
+   ],
+   "fix": "用上表改写（打碎成「Apparently… something like… Aw.」）；视频未出，便宜；若用户坚持原台词，只记录",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s7_st2 | 全镜 26 秒 | R / N1 / N7 / N9 | 记录（用户 r3 已决定不改，登记在案） | ① 故事 | I10（wontfix）：lines.md 里整段仍是开场、定位、一字不差引文、收口四段；上表第 1 行 | 用上表改写（打碎成「Apparently… something like… Aw.」）；视频未出，便宜；若用户坚持原台词，只记录 |"
+   ],
+   "id": "I37",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:native_ear:s7st1→st2、s7st2→st3:r/n10",
+   "level": "minor",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "R / N10",
+   "shots": [
+    "s7_st1→st2、s7_st2→st3"
+   ],
+   "problem": "R / N10：I45、I46 未改：上述两处接点话题或情绪直接换挡",
+   "evidence": [
+    "I45、I46 未改：上述两处接点话题或情绪直接换挡"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/native_ear__a"
+   ],
+   "fix": "见「N10 连着读：改写」，加过渡句（便宜，st2、st3 都还没出视频）",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s7_st1→st2、s7_st2→st3 | 接点 | R / N10 | 记录 | ① 故事 | I45、I46 未改：上述两处接点话题或情绪直接换挡 | 见「N10 连着读：改写」，加过渡句（便宜，st2、st3 都还没出视频） |"
+   ],
+   "id": "I38",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:native_ear:s7st1:r/n2/n8",
+   "level": "minor",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "R / N2 / N8",
+   "shots": [
+    "s7_st1"
+   ],
+   "problem": "R / N2 / N8：I42 未改：it 指代不清、重复报账；上表第 2 行",
+   "evidence": [
+    "I42 未改：it 指代不清、重复报账；上表第 2 行"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/native_ear__a"
+   ],
+   "fix": "用上表改写（便宜，若还没出片）",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s7_st1 | 末句 | R / N2 / N8 | 记录 | ① 故事 | I42 未改：it 指代不清、重复报账；上表第 2 行 | 用上表改写（便宜，若还没出片） |"
+   ],
+   "id": "I39",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:native_ear:s7st6:n8",
+   "level": "minor",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "N8",
+   "shots": [
+    "s7_st6"
+   ],
+   "problem": "N8：I41 未改：「air conditioning → bathroom」铺垫加包袱的对子；上表第 3 行",
+   "evidence": [
+    "I41 未改：「air conditioning → bathroom」铺垫加包袱的对子；上表第 3 行"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/native_ear__a"
+   ],
+   "fix": "用上表改写（该镜已出片则要积分，可只记录）",
+   "cost": "要积分",
+   "severity": "记录",
+   "rows": [
+    "| s7_st6 | 第一句 | N8 | 记录 | ① 故事 | I41 未改：「air conditioning → bathroom」铺垫加包袱的对子；上表第 3 行 | 用上表改写（该镜已出片则要积分，可只记录） |"
+   ],
+   "id": "I40",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:native_ear:s6st3:n9",
+   "level": "minor",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "N9",
+   "shots": [
+    "s6_st3"
+   ],
+   "problem": "N9：I43 未改：「the sun's going down」对镜头念画面；上表第 4 行",
+   "evidence": [
+    "I43 未改：「the sun's going down」对镜头念画面；上表第 4 行"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/native_ear__a"
+   ],
+   "fix": "用上表改写（该镜已出片则要积分，可只记录）",
+   "cost": "要积分",
+   "severity": "记录",
+   "rows": [
+    "| s6_st3 | 第一句 | N9 | 记录 | ① 故事 | I43 未改：「the sun's going down」对镜头念画面；上表第 4 行 | 用上表改写（该镜已出片则要积分，可只记录） |"
+   ],
+   "id": "I41",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:native_ear:s7st3:n4/n8",
+   "level": "minor",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "N4 / N8",
+   "shots": [
+    "s7_st3"
+   ],
+   "problem": "N4 / N8：I44 未改：honestly 与 s7_st1 重复，goodnight from Pompeii 偏品牌腔；上表第 5 行",
+   "evidence": [
+    "I44 未改：honestly 与 s7_st1 重复，goodnight from Pompeii 偏品牌腔；上表第 5 行"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/native_ear__a"
+   ],
+   "fix": "把一处 honestly 换成 seriously，或用上表改写（便宜，若还没出片）",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s7_st3 | 末句 | N4 / N8 | 记录 | ① 故事 | I44 未改：honestly 与 s7_st1 重复，goodnight from Pompeii 偏品牌腔；上表第 5 行 | 把一处 honestly 换成 seriously，或用上表改写（便宜，若还没出片） |"
+   ],
+   "id": "I42",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:native_ear:s7st4、st6、st7:n8",
+   "level": "minor",
+   "law": "native_ear",
+   "category": "母语听感",
+   "item": "native_ear",
+   "dimension": "N8",
+   "shots": [
+    "s7_st4、st6、st7"
+   ],
+   "problem": "N8：「Cozy / air conditioning / Rustic, I guess」连续三次「夸坏东西」同一格式，加 st6 的 Cool cool cool，节奏重复",
+   "evidence": [
+    "「Cozy / air conditioning / Rustic, I guess」连续三次「夸坏东西」同一格式，加 st6 的 Cool cool cool，节奏重复"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/native_ear__a"
+   ],
+   "fix": "不一定要改；若改，把 st7 的「Rustic, I guess」换成一句真实吐槽，如「Okay, this is… a lot.」",
+   "cost": "",
+   "severity": "记录",
+   "rows": [
+    "| s7_st4、st6、st7 | 连续三镜 | N8 | 记录 | ① 故事 | 「Cozy / air conditioning / Rustic, I guess」连续三次「夸坏东西」同一格式，加 st6 的 Cool cool cool，节奏重复 | 不一定要改；若改，把 st7 的「Rustic, I guess」换成一句真实吐槽，如「Okay, this is… a lot.」 |"
+   ],
+   "id": "I43",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:era:s6st1:e1器物（i48未改）",
+   "level": "minor",
+   "law": "era",
+   "category": "时代与世界观",
+   "item": "era",
+   "dimension": "E1 器物（I48 未改）",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "E1 器物（I48 未改）：墙龛灯（约 x455–555, y325–380，`work/era__a/s6_lamp.png`）是敞口浅碗＋环把，没有封顶和前伸短嘴；p1 是封顶短嘴灯；但已出片 s6_st2 也是这种碗形，st1 改了反而与 st2 不接",
+   "evidence": [
+    "墙龛灯（约 x455–555, y325–380，`work/era__a/s6_lamp.png`）是敞口浅碗＋环把，没有封顶和前伸短嘴；p1 是封顶短嘴灯；但已出片 s6_st2 也是这种碗形，st1 改了反而与 st2 不接"
+   ],
+   "sources": [
+    "claude-opus-5-5/era__a"
+   ],
+   "fix": "便宜：维持现状，和 st2 保持一致；只记录",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st1 | 0–13s | E1 器物（I48 未改） | 记录 | ③ 首帧 | 墙龛灯（约 x455–555, y325–380，`work/era__a/s6_lamp.png`）是敞口浅碗＋环把，没有封顶和前伸短嘴；p1 是封顶短嘴灯；但已出片 s6_st2 也是这种碗形，st1 改了反而与 st2 不接 | 便宜：维持现状，和 st2 保持一致；只记录 |"
+   ],
+   "id": "I44",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:era:s6st1:e6史实（i50未改）",
+   "level": "minor",
+   "law": "era",
+   "category": "时代与世界观",
+   "item": "era",
+   "dimension": "E6 史实（I50 未改）",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "E6 史实（I50 未改）：「Quattuor」住一晚 4 as：r01_城市与一天.md:213 仍标「未查」，dossier 没补剧作设定说明",
+   "evidence": [
+    "「Quattuor」住一晚 4 as：r01_城市与一天.md:213 仍标「未查」，dossier 没补剧作设定说明"
+   ],
+   "sources": [
+    "claude-opus-5-5/era__a"
+   ],
+   "fix": "便宜：dossier 补一行「剧作设定：4 as＝1 sestertius；参照 Polybius 2.15、Aesernia 铭文，均非庞贝」",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st1 | 3–5s 对白前 | E6 史实（I50 未改） | 记录 | 规则源 | 「Quattuor」住一晚 4 as：r01_城市与一天.md:213 仍标「未查」，dossier 没补剧作设定说明 | 便宜：dossier 补一行「剧作设定：4 as＝1 sestertius；参照 Polybius 2.15、Aesernia 铭文，均非庞贝」 |"
+   ],
+   "id": "I45",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:framing:s6st1:f4·f2站位图与文字不一致",
+   "level": "minor",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing",
+   "dimension": "F4·F2 站位图与文字不一致",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "F4·F2 站位图与文字不一致：1. overhead.toml 里 Fortunata 10.0s 的路点仍朝 (9.5,7.6)，就是已删掉的「朝她身后街上瞥一眼」；送模的 st1_overhead_ref.png 上画着这个「10s」朝向尖角。<br>2. [meta] note 和 st1_overhead.png 顶部说明仍写「Fortunata 9–10.5 s 打量她、朝她身后的街上瞥一眼」。<br>3. 文件头注释写「9–10.5 s 打量时右手拇指拨一下钱袋」，和节拍「左手」矛盾。<br>4. 道具标签「两个过路行人（路人，边走边聊）」和文字「不说话」矛盾。<br>5. 走位「5 秒停在 Fortunata 右边约一米」有方位歧义（r1 已记），没改。",
+   "evidence": [
+    "1. overhead.toml 里 Fortunata 10.0s 的路点仍朝 (9.5,7.6)，就是已删掉的「朝她身后街上瞥一眼」；送模的 st1_overhead_ref.png 上画着这个「10s」朝向尖角。<br>2. [meta] note 和 st1_overhead.png 顶部说明仍写「Fortunata 9–10.5 s 打量她、朝她身后的街上瞥一眼」。<br>3. 文件头注释写「9–10.5 s 打量时右手拇指拨一下钱袋」，和节拍「左手」矛盾。<br>4. 道具标签「两个过路行人（路人，边走边聊）」和文字「不说话」矛盾。<br>5. 走位「5 秒停在 Fortunata 右边约一米」有方位歧义（r1 已记），没改。"
+   ],
+   "sources": [
+    "claude-opus-5-5/framing__a"
+   ],
+   "fix": "便宜：toml 删掉 10.0s 和 10.3s 两个路点，改写 meta note、注释和行人标签（改成「不说话」），「右边约一米」改成「她画右约一米（她面前偏镜头侧）」；然后 `python tools/shot_pack.py sync` 重生成站位图。",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st1 | 9–10.5s（toml） | F4·F2 站位图与文字不一致 | 记录 | ② 分镜文字 / 站位图 | 1. overhead.toml 里 Fortunata 10.0s 的路点仍朝 (9.5,7.6)，就是已删掉的「朝她身后街上瞥一眼」；送模的 st1_overhead_ref.png 上画着这个「10s」朝向尖角。<br>2. [meta] note 和 st1_overhead.png 顶部说明仍写「Fortunata 9–10.5 s 打量她、朝她身后的街上瞥一眼」。<br>3. 文件头注释写「9–10.5 s 打量时右手拇指拨一下钱袋」，和节拍「左手」矛盾。<br>4. 道具标签「两个过路行人（路人，边走边聊）」和文字「不说话」矛盾。<br>5. 走位「5 秒停在 Fortunata 右边约一米」有方位歧义（r1 已记），没改。 | 便宜：toml 删掉 10.0s 和 10.3s 两个路点，改写 meta note、注释和行人标签（改成「不说话」），「右边约一米」改成「她画右约一米（她面前偏镜头侧）」；然后 `python tools/shot_pack.py sync` 重生成站位图。 |"
+   ],
+   "id": "I46",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:framing:s6st1→s6st2:f2（i51仍开着）",
+   "level": "minor",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing",
+   "dimension": "F2（I51 仍开着）",
+   "shots": [
+    "s6_st1→s6_st2"
+   ],
+   "problem": "F2（I51 仍开着）：1. 两镜都是「中景双人」，机位轴只差约 7°；按本轮首帧，st1 头高约 185px，st2 约 255px，比例 1.38。<br>2. Fortunata 画面位置从 x≈690 跳到 x≈500。<br>3. 同向小推近，接点又是「摊开手」同一动作，像跳切。",
+   "evidence": [
+    "1. 两镜都是「中景双人」，机位轴只差约 7°；按本轮首帧，st1 头高约 185px，st2 约 255px，比例 1.38。<br>2. Fortunata 画面位置从 x≈690 跳到 x≈500。<br>3. 同向小推近，接点又是「摊开手」同一动作，像跳切。"
+   ],
+   "sources": [
+    "claude-opus-5-5/framing__a"
+   ],
+   "fix": "便宜：剪辑在 st1 约 12.2s 右拳刚摊开时接 st2，按动作切；或者首帧按问题 1 改回站位图的松构图，拉开两镜的景别差。",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st1→s6_st2 | st1 12.2–13s ↔ st2 0s | F2（I51 仍开着） | 记录 | ② 分镜 / 剪辑 | 1. 两镜都是「中景双人」，机位轴只差约 7°；按本轮首帧，st1 头高约 185px，st2 约 255px，比例 1.38。<br>2. Fortunata 画面位置从 x≈690 跳到 x≈500。<br>3. 同向小推近，接点又是「摊开手」同一动作，像跳切。 | 便宜：剪辑在 st1 约 12.2s 右拳刚摊开时接 st2，按动作切；或者首帧按问题 1 改回站位图的松构图，拉开两镜的景别差。 |"
+   ],
+   "id": "I47",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:framing:s7st2:f8（i52仍开着）",
+   "level": "minor",
+   "law": "framing",
+   "category": "镜头规格",
+   "item": "framing",
+   "dimension": "F8（I52 仍开着）",
+   "shots": [
+    "s7_st2"
+   ],
+   "problem": "F8（I52 仍开着）：首帧左墙 x80–330、y380–640 有划痕；她身后画右的暗墙（x1050–1672）提亮 3 倍后仍是平灰泥（`work/framing__a/s7st2_rightwall_x3.png`）。说到 every wall 时，观众能看到的「满墙」只有画左一片。",
+   "evidence": [
+    "首帧左墙 x80–330、y380–640 有划痕；她身后画右的暗墙（x1050–1672）提亮 3 倍后仍是平灰泥（`work/framing__a/s7st2_rightwall_x3.png`）。说到 every wall 时，观众能看到的「满墙」只有画左一片。"
+   ],
+   "sources": [
+    "claude-opus-5-5/framing__a"
+   ],
+   "fix": "便宜：再修首帧时让右侧暗墙也透出浅细划痕（不成字形）；不改也可以出片。",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s7_st2 | 2.2–5.5s（every wall） | F8（I52 仍开着） | 记录 | ③ 首帧 | 首帧左墙 x80–330、y380–640 有划痕；她身后画右的暗墙（x1050–1672）提亮 3 倍后仍是平灰泥（`work/framing__a/s7st2_rightwall_x3.png`）。说到 every wall 时，观众能看到的「满墙」只有画左一片。 | 便宜：再修首帧时让右侧暗墙也透出浅细划痕（不成字形）；不改也可以出片。 |"
+   ],
+   "id": "I48",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:prompt_text:s7st2:t3过期描述/来源",
+   "level": "minor",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "T3 过期描述 / 来源",
+   "shots": [
+    "s7_st2"
+   ],
+   "problem": "T3 过期描述 / 来源：「长约十二厘米」只在本镜画面行出现，p1_陶油灯.md 第 15、25 行只写「手掌大小」；与「占凳面直径的四成」叠加，两个尺寸同时出现（I23 仍未改）",
+   "evidence": [
+    "「长约十二厘米」只在本镜画面行出现，p1_陶油灯.md 第 15、25 行只写「手掌大小」；与「占凳面直径的四成」叠加，两个尺寸同时出现（I23 仍未改）"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/prompt_text__a"
+   ],
+   "fix": "便宜：删「长约十二厘米」，或把数字补进 p1 卡再引用",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s7_st2 | 全镜（第 12 行画面行） | T3 过期描述 / 来源 | 记录 | ② 分镜文字 | 「长约十二厘米」只在本镜画面行出现，p1_陶油灯.md 第 15、25 行只写「手掌大小」；与「占凳面直径的四成」叠加，两个尺寸同时出现（I23 仍未改） | 便宜：删「长约十二厘米」，或把数字补进 p1 卡再引用 |"
+   ],
+   "id": "I49",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:prompt_text:s7st2:t3/t1用词",
+   "level": "minor",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "T3/T1 用词",
+   "shots": [
+    "s7_st2"
+   ],
+   "problem": "T3/T1 用词：「画面」块把台词里的名句称为「涂鸦」，而首帧画左有一大片深色划痕，负面词有「像字母的刻痕，成行的伪文字」；「涂鸦」两字会提示模型把划痕刻成字（I22 仍未改）",
+   "evidence": [
+    "「画面」块把台词里的名句称为「涂鸦」，而首帧画左有一大片深色划痕，负面词有「像字母的刻痕，成行的伪文字」；「涂鸦」两字会提示模型把划痕刻成字（I22 仍未改）"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/prompt_text__a"
+   ],
+   "fix": "便宜：把「涂鸦」改成「住客留在别处墙上的一句话」",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s7_st2 | 全镜（第 12 行「再讲一句很有名的涂鸦」） | T3/T1 用词 | 记录 | ② 分镜文字 | 「画面」块把台词里的名句称为「涂鸦」，而首帧画左有一大片深色划痕，负面词有「像字母的刻痕，成行的伪文字」；「涂鸦」两字会提示模型把划痕刻成字（I22 仍未改） | 便宜：把「涂鸦」改成「住客留在别处墙上的一句话」 |"
+   ],
+   "id": "I50",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:prompt_text:s7st2:t2否定句",
+   "level": "minor",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "T2 否定句",
+   "shots": [
+    "s7_st2"
+   ],
+   "problem": "T2 否定句：第 14 行「嘴型不张大，不惊呼」、台词行「整段都轻声，不惊呼」；「不惊呼」直接点出「惊呼」，「嘴型不张大」还与口型同步要求（第 19 行）互相拉扯（I53 仍未改）",
+   "evidence": [
+    "第 14 行「嘴型不张大，不惊呼」、台词行「整段都轻声，不惊呼」；「不惊呼」直接点出「惊呼」，「嘴型不张大」还与口型同步要求（第 19 行）互相拉扯（I53 仍未改）"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/prompt_text__a"
+   ],
+   "fix": "便宜：改「轻声、平平地、嘴型小而松」，删「不惊呼」",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s7_st2 | 2.2–5.5s、23.9s 前后 | T2 否定句 | 记录 | ③ prompt | 第 14 行「嘴型不张大，不惊呼」、台词行「整段都轻声，不惊呼」；「不惊呼」直接点出「惊呼」，「嘴型不张大」还与口型同步要求（第 19 行）互相拉扯（I53 仍未改） | 便宜：改「轻声、平平地、嘴型小而松」，删「不惊呼」 |"
+   ],
+   "id": "I51",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:prompt_text:s7st2:t5混入/t2",
+   "level": "minor",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "T5 混入 / T2",
+   "shots": [
+    "s7_st2"
+   ],
+   "problem": "T5 混入 / T2：画面行写「西墙南段那扇厚木板门关着，在画面外」，首帧里没有门；点名「门」可能让它入画（I54 仍未改）",
+   "evidence": [
+    "画面行写「西墙南段那扇厚木板门关着，在画面外」，首帧里没有门；点名「门」可能让它入画（I54 仍未改）"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/prompt_text__a"
+   ],
+   "fix": "便宜：画面行删掉这句，场景行保留",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s7_st2 | 全镜（第 12 行画面行、第 11 行场景行） | T5 混入 / T2 | 记录 | ③ prompt | 画面行写「西墙南段那扇厚木板门关着，在画面外」，首帧里没有门；点名「门」可能让它入画（I54 仍未改） | 便宜：画面行删掉这句，场景行保留 |"
+   ],
+   "id": "I52",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:prompt_text:s6st1:t5混入别的内容",
+   "level": "minor",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "T5 混入别的内容",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "T5 混入别的内容：场景行含「远处能看见城门的拱洞」「石砌楼梯贴墙通往二楼」；本镜机位朝北、正对临街墙，两样都不在取景内，场景行是 bg6 卡的通用文字",
+   "evidence": [
+    "场景行含「远处能看见城门的拱洞」「石砌楼梯贴墙通往二楼」；本镜机位朝北、正对临街墙，两样都不在取景内，场景行是 bg6 卡的通用文字"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/prompt_text__a"
+   ],
+   "fix": "便宜：st1 编译时去掉这两句，或加「本镜不入画」",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st1 | 场景行（第 14 行） | T5 混入别的内容 | 记录 | ③ prompt | 场景行含「远处能看见城门的拱洞」「石砌楼梯贴墙通往二楼」；本镜机位朝北、正对临街墙，两样都不在取景内，场景行是 bg6 卡的通用文字 | 便宜：st1 编译时去掉这两句，或加「本镜不入画」 |"
+   ],
+   "id": "I53",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:prompt_text:s6st1:t4图文一致",
+   "level": "minor",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "T4 图文一致",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "T4 图文一致：首帧 Fortunata 发色偏棕、灰发少，prompt 写「灰白相间」，接 st2/st5 已出片的灰白鬓角（I35 仍在）；首帧院子地面是小方块石，bg6 与 prompt 写的是「石板」，负面词没有「鹅卵石路面、方块石路面」（I47 仍在）",
+   "evidence": [
+    "首帧 Fortunata 发色偏棕、灰发少，prompt 写「灰白相间」，接 st2/st5 已出片的灰白鬓角（I35 仍在）；首帧院子地面是小方块石，bg6 与 prompt 写的是「石板」，负面词没有「鹅卵石路面、方块石路面」（I47 仍在）"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/prompt_text__a"
+   ],
+   "fix": "便宜：首帧局部重画鬓角灰白与院子地面；或负面词补「鹅卵石路面，方块石路面」",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st1 | 首帧 vs 人物行 | T4 图文一致 | 记录 | ③ 首帧 | 首帧 Fortunata 发色偏棕、灰发少，prompt 写「灰白相间」，接 st2/st5 已出片的灰白鬓角（I35 仍在）；首帧院子地面是小方块石，bg6 与 prompt 写的是「石板」，负面词没有「鹅卵石路面、方块石路面」（I47 仍在） | 便宜：首帧局部重画鬓角灰白与院子地面；或负面词补「鹅卵石路面，方块石路面」 |"
+   ],
+   "id": "I54",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:prompt_text:s7st2:t4图文一致",
+   "level": "minor",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "T4 图文一致",
+   "shots": [
+    "s7_st2"
+   ],
+   "problem": "T4 图文一致：首帧衬衫仍可见细格纹织纹，文字写「素色」；画左划痕是一大片深色长划痕，文字写「一小片、颜色只比墙面略深」；窗洞内侧有一圈亮蓝光晕（I37、I31 仍在）",
+   "evidence": [
+    "首帧衬衫仍可见细格纹织纹，文字写「素色」；画左划痕是一大片深色长划痕，文字写「一小片、颜色只比墙面略深」；窗洞内侧有一圈亮蓝光晕（I37、I31 仍在）"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/prompt_text__a"
+   ],
+   "fix": "便宜：首帧局部淡化划痕、去格纹；或接受以文字为准",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s7_st2 | 首帧 vs 画面行 | T4 图文一致 | 记录 | ③ 首帧 | 首帧衬衫仍可见细格纹织纹，文字写「素色」；画左划痕是一大片深色长划痕，文字写「一小片、颜色只比墙面略深」；窗洞内侧有一圈亮蓝光晕（I37、I31 仍在） | 便宜：首帧局部淡化划痕、去格纹；或接受以文字为准 |"
+   ],
+   "id": "I55",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:prompt_text:s6st1:t1歧义",
+   "level": "minor",
+   "law": "prompt_text",
+   "category": "Prompt 文本",
+   "item": "prompt_text",
+   "dimension": "T1 歧义",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "T1 歧义：动作行写 Riley「5 秒停在 Fortunata 面前、面朝她」，走位行写「停在 Fortunata 右边约一米」；「面前」会让模型走得更近，与站位图 0.8–1 米不合",
+   "evidence": [
+    "动作行写 Riley「5 秒停在 Fortunata 面前、面朝她」，走位行写「停在 Fortunata 右边约一米」；「面前」会让模型走得更近，与站位图 0.8–1 米不合"
+   ],
+   "sources": [
+    "claude-sonnet-5-5/prompt_text__a"
+   ],
+   "fix": "便宜：动作行改「5 秒在她画右约一米处停住」",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st1 | 3.5–5s | T1 歧义 | 记录 | ② 分镜文字 | 动作行写 Riley「5 秒停在 Fortunata 面前、面朝她」，走位行写「停在 Fortunata 右边约一米」；「面前」会让模型走得更近，与站位图 0.8–1 米不合 | 便宜：动作行改「5 秒在她画右约一米处停住」 |"
+   ],
+   "id": "I56",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:role:s6st1:v4/v5（r：i56剩余）",
+   "level": "minor",
+   "law": "role",
+   "category": "角色立场·Riley",
+   "item": "role_c1",
+   "dimension": "V4 / V5（R：I56 剩余）",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "V4 / V5（R：I56 剩余）：节拍只写「Riley 放下左手，有点期待地等着」；同一拍店主拨钱袋、目光落在我攥钱的右拳上，我没有视线和反应",
+   "evidence": [
+    "节拍只写「Riley 放下左手，有点期待地等着」；同一拍店主拨钱袋、目光落在我攥钱的右拳上，我没有视线和反应"
+   ],
+   "sources": [
+    "claude-opus-5-5/role_c1__a"
+   ],
+   "fix": "便宜（改节拍文字）。此刻的我会：跟着她的目光低头瞟一眼自己的拳头，手指攥紧一点，再抬眼看她，眉毛微微一挑（「多少？」）",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st1 | 9–10.5 | V4 / V5（R：I56 剩余） | 记录 | ② 分镜文字 | 节拍只写「Riley 放下左手，有点期待地等着」；同一拍店主拨钱袋、目光落在我攥钱的右拳上，我没有视线和反应 | 便宜（改节拍文字）。此刻的我会：跟着她的目光低头瞟一眼自己的拳头，手指攥紧一点，再抬眼看她，眉毛微微一挑（「多少？」） |"
+   ],
+   "id": "I57",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:role:s7st2:v6",
+   "level": "minor",
+   "law": "role",
+   "category": "角色立场·Riley",
+   "item": "role_c1",
+   "dimension": "V6",
+   "shots": [
+    "s7_st2"
+   ],
+   "problem": "V6：节拍「脸正对镜头……嘴角带笑，嘴闭着，轻轻吸一口气」；st1 出点 16.75s 已剪掉回头看墙，st2 开口讲「每面墙都写」之前没有任何由头",
+   "evidence": [
+    "节拍「脸正对镜头……嘴角带笑，嘴闭着，轻轻吸一口气」；st1 出点 16.75s 已剪掉回头看墙，st2 开口讲「每面墙都写」之前没有任何由头"
+   ],
+   "sources": [
+    "claude-opus-5-5/role_c1__a"
+   ],
+   "fix": "便宜（改节拍文字，首帧不动）。此刻的我会：0.8–1.6s 眼睛往右肩后的墙上一瞟（只动眼、不转头），嘴角起笑，再看回镜头开口；every wall 那次转头保留",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s7_st2 | 0–2.2 | V6 | 记录 | ② 分镜文字 | 节拍「脸正对镜头……嘴角带笑，嘴闭着，轻轻吸一口气」；st1 出点 16.75s 已剪掉回头看墙，st2 开口讲「每面墙都写」之前没有任何由头 | 便宜（改节拍文字，首帧不动）。此刻的我会：0.8–1.6s 眼睛往右肩后的墙上一瞟（只动眼、不转头），嘴角起笑，再看回镜头开口；every wall 那次转头保留 |"
+   ],
+   "id": "I58",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:role:s7st2:v4",
+   "level": "minor",
+   "law": "role",
+   "category": "角色立场·Riley",
+   "item": "role_c1",
+   "dimension": "V4",
+   "shots": [
+    "s7_st2"
+   ],
+   "problem": "V4：「走位」写「一直看着镜头说话」；这 8 秒我在凭记忆复述课本上的句子，眼睛一直锁镜头像在念提词（与人物逻辑 I33 同处）",
+   "evidence": [
+    "「走位」写「一直看着镜头说话」；这 8 秒我在凭记忆复述课本上的句子，眼睛一直锁镜头像在念提词（与人物逻辑 I33 同处）"
+   ],
+   "sources": [
+    "claude-opus-5-5/role_c1__a"
+   ],
+   "fix": "便宜。此刻的我会：It says, 后那半拍眼睛往上一飘、想一下，念到 Vibius Restitutus 时看回镜头、放慢；alone 后半拍垂一下眼",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s7_st2 | 13.6–21.5 | V4 | 记录 | ② 分镜文字 | 「走位」写「一直看着镜头说话」；这 8 秒我在凭记忆复述课本上的句子，眼睛一直锁镜头像在念提词（与人物逻辑 I33 同处） | 便宜。此刻的我会：It says, 后那半拍眼睛往上一飘、想一下，念到 Vibius Restitutus 时看回镜头、放慢；alone 后半拍垂一下眼 |"
+   ],
+   "id": "I59",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:role:s7st2:v2",
+   "level": "minor",
+   "law": "role",
+   "category": "角色立场·Riley",
+   "item": "role_c1",
+   "dimension": "V2",
+   "shots": [
+    "s7_st2"
+   ],
+   "problem": "V2：`s7st2_hands.png`：双臂伸直、两手并压在大腿内侧、肩往里夹，显拘谨；s7_st1 16.7s（`s7st1_16p7.png`）是两手松搭在两个膝头、肘微弯；spec 写「两手放在膝上」",
+   "evidence": [
+    "`s7st2_hands.png`：双臂伸直、两手并压在大腿内侧、肩往里夹，显拘谨；s7_st1 16.7s（`s7st1_16p7.png`）是两手松搭在两个膝头、肘微弯；spec 写「两手放在膝上」"
+   ],
+   "sources": [
+    "claude-opus-5-5/role_c1__a"
+   ],
+   "fix": "便宜（首帧局部重画手臂）。此刻的我会：两手松松搭在两个膝头，肘微弯、肩放松，和上一镜出点一样",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s7_st2 | 首帧 0 | V2 | 记录 | ③ 首帧 | `s7st2_hands.png`：双臂伸直、两手并压在大腿内侧、肩往里夹，显拘谨；s7_st1 16.7s（`s7st1_16p7.png`）是两手松搭在两个膝头、肘微弯；spec 写「两手放在膝上」 | 便宜（首帧局部重画手臂）。此刻的我会：两手松松搭在两个膝头，肘微弯、肩放松，和上一镜出点一样 |"
+   ],
+   "id": "I60",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:role:s6st1:v1/v7（r：i59）",
+   "level": "minor",
+   "law": "role",
+   "category": "角色立场·Riley",
+   "item": "role_c1",
+   "dimension": "V1 / V7（R：I59）",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "V1 / V7（R：I59）：我在 s6_st3 21.9–23.1s 刚自己念过 Hospitium，本集一贯学来的词马上用（Salve），这里只用英语 sleep",
+   "evidence": [
+    "我在 s6_st3 21.9–23.1s 刚自己念过 Hospitium，本集一贯学来的词马上用（Salve），这里只用英语 sleep"
+   ],
+   "sources": [
+    "claude-opus-5-5/role_c1__a"
+   ],
+   "fix": "可选，台词由用户 r3 定稿，交用户定。此刻的我可能会：朝车门里一指、试探地小声说 Hospitium?，再接 sleep 手势；不改也说得通（英语只是自言自语，手势已够懂）",
+   "cost": "",
+   "severity": "记录",
+   "rows": [
+    "| s6_st1 | 6–6.6 | V1 / V7（R：I59） | 记录 | ① 故事 | 我在 s6_st3 21.9–23.1s 刚自己念过 Hospitium，本集一贯学来的词马上用（Salve），这里只用英语 sleep | 可选，台词由用户 r3 定稿，交用户定。此刻的我可能会：朝车门里一指、试探地小声说 Hospitium?，再接 sleep 手势；不改也说得通（英语只是自言自语，手势已够懂） |"
+   ],
+   "id": "I61",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:role:s6st1:v2肢体/v7本集一致",
+   "level": "minor",
+   "law": "role",
+   "category": "角色立场·Fortunata",
+   "item": "role_c5",
+   "dimension": "V2 肢体 / V7 本集一致",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "V2 肢体 / V7 本集一致：我面朝东对着 Riley（st1_overhead_ref.png 黄点朝向画右），节拍却要「手心朝镜头」（朝南），等于把价钱亮给街、Riley 只看到手的侧边；又写「拇指折进掌心看不见」——手心朝外时折进掌心的拇指正好横在掌心上，看得见（st2_first_frame.png 同一手势拇指可见），模型可能为了「看不见」画出怪手或多余手指",
+   "evidence": [
+    "我面朝东对着 Riley（st1_overhead_ref.png 黄点朝向画右），节拍却要「手心朝镜头」（朝南），等于把价钱亮给街、Riley 只看到手的侧边；又写「拇指折进掌心看不见」——手心朝外时折进掌心的拇指正好横在掌心上，看得见（st2_first_frame.png 同一手势拇指可见），模型可能为了「看不见」画出怪手或多余手指"
+   ],
+   "sources": [
+    "claude-opus-5-5/role_c5__a"
+   ],
+   "fix": "此刻的我会：身子略朝街口打开，左手举到胸前、手心斜朝 Riley 和镜头之间（约 45°），四指张开朝上、拇指弯在掌心里，看着她的脸说 Quattuor。节拍改为「手心斜朝 Riley 与镜头之间，四指张开、拇指弯进掌心」，与 st2 首帧一致。便宜（改文字，首帧不用动）",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st1 | 10.5–11.6 | V2 肢体 / V7 本集一致 | 记录 | ② 分镜文字 | 我面朝东对着 Riley（st1_overhead_ref.png 黄点朝向画右），节拍却要「手心朝镜头」（朝南），等于把价钱亮给街、Riley 只看到手的侧边；又写「拇指折进掌心看不见」——手心朝外时折进掌心的拇指正好横在掌心上，看得见（st2_first_frame.png 同一手势拇指可见），模型可能为了「看不见」画出怪手或多余手指 | 此刻的我会：身子略朝街口打开，左手举到胸前、手心斜朝 Riley 和镜头之间（约 45°），四指张开朝上、拇指弯在掌心里，看着她的脸说 Quattuor。节拍改为「手心斜朝 Riley 与镜头之间，四指张开、拇指弯进掌心」，与 st2 首帧一致。便宜（改文字，首帧不用动） |"
+   ],
+   "id": "I62",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:role:s6st1:v4视线/v5回应",
+   "level": "minor",
+   "law": "role",
+   "category": "角色立场·Fortunata",
+   "item": "role_c5",
+   "dimension": "V4 视线 / V5 回应",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "V4 视线 / V5 回应：节拍 11.6–13 秒只写我伸手、四指还竖着，12.2 秒 Riley 摊开拳头后我的眼睛没写，模型多半让我继续盯她的脸；st2 第 0 秒却是我「看着 Riley 的手」（junctions.md s6_st1→s6_st2）",
+   "evidence": [
+    "节拍 11.6–13 秒只写我伸手、四指还竖着，12.2 秒 Riley 摊开拳头后我的眼睛没写，模型多半让我继续盯她的脸；st2 第 0 秒却是我「看着 Riley 的手」（junctions.md s6_st1→s6_st2）"
+   ],
+   "sources": [
+    "claude-opus-5-5/role_c5__a"
+   ],
+   "fix": "此刻的我会：她一摊开拳头，我眼睛立刻往下落到她手心，数一眼里面几枚、哪种钱，脸不动。节拍补一句「约 12.3 秒 Fortunata 的目光落到 Riley 摊开的手心上」。便宜",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st1 | 12.2–13 | V4 视线 / V5 回应 | 记录 | ② 分镜文字 | 节拍 11.6–13 秒只写我伸手、四指还竖着，12.2 秒 Riley 摊开拳头后我的眼睛没写，模型多半让我继续盯她的脸；st2 第 0 秒却是我「看着 Riley 的手」（junctions.md s6_st1→s6_st2） | 此刻的我会：她一摊开拳头，我眼睛立刻往下落到她手心，数一眼里面几枚、哪种钱，脸不动。节拍补一句「约 12.3 秒 Fortunata 的目光落到 Riley 摊开的手心上」。便宜 |"
+   ],
+   "id": "I63",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:role:s6st1:v3表情",
+   "level": "minor",
+   "law": "role",
+   "category": "角色立场·Fortunata",
+   "item": "role_c5",
+   "dimension": "V3 表情",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "V3 表情：视频 prompt「人物」段仍是人物卡原文「眼神审视、不苟言笑，但不凶」，同一 prompt「画面」写「招客时脸是松的、眉头舒展、带着做生意的精神头」；首帧已改松，但模型可能在 0–3 秒往冷脸走；另外 3.5–5 秒扫到她长裤时我的脸没写，容易面无表情或演成大惊",
+   "evidence": [
+    "视频 prompt「人物」段仍是人物卡原文「眼神审视、不苟言笑，但不凶」，同一 prompt「画面」写「招客时脸是松的、眉头舒展、带着做生意的精神头」；首帧已改松，但模型可能在 0–3 秒往冷脸走；另外 3.5–5 秒扫到她长裤时我的脸没写，容易面无表情或演成大惊"
+   ],
+   "sources": [
+    "claude-opus-5-5/role_c5__a"
+   ],
+   "fix": "此刻的我会：招客时脸松、有生意人的精神；看到长裤时眼睛在裤腿上多停半拍、眉梢极轻一动，随即回到她脸上，不动声色。建议本镜人物段改「平时眼神审视、不苟言笑，但不凶；招客时脸是松的」，并在 3.5–5 秒补「看到长裤眉梢轻轻一动，脸不变」。便宜",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st1 | 0–5 | V3 表情 | 记录 | ③ prompt | 视频 prompt「人物」段仍是人物卡原文「眼神审视、不苟言笑，但不凶」，同一 prompt「画面」写「招客时脸是松的、眉头舒展、带着做生意的精神头」；首帧已改松，但模型可能在 0–3 秒往冷脸走；另外 3.5–5 秒扫到她长裤时我的脸没写，容易面无表情或演成大惊 | 此刻的我会：招客时脸松、有生意人的精神；看到长裤时眼睛在裤腿上多停半拍、眉梢极轻一动，随即回到她脸上，不动声色。建议本镜人物段改「平时眼神审视、不苟言笑，但不凶；招客时脸是松的」，并在 3.5–5 秒补「看到长裤眉梢轻轻一动，脸不变」。便宜 |"
+   ],
+   "id": "I64",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  },
+  {
+   "key": "row:role:s6st1:v2肢体/v4视线",
+   "level": "minor",
+   "law": "role",
+   "category": "角色立场·路人与群众",
+   "item": "role_extras",
+   "dimension": "V2 肢体 / V4 视线",
+   "shots": [
+    "s6_st1"
+   ],
+   "problem": "V2 肢体 / V4 视线：「两人摆一下手」：两人同步、一模一样地摆手，像排练过；吆喝的人在约 1.6 m 外，靠她那边的人连瞟都不瞟一眼就摆手，也说不太通。此刻的我会：靠她那边（后排、靠墙）的年轻人侧头瞟她半眼，右手往外一摆；老人头不转，照走",
+   "evidence": [
+    "「两人摆一下手」：两人同步、一模一样地摆手，像排练过；吆喝的人在约 1.6 m 外，靠她那边的人连瞟都不瞟一眼就摆手，也说不太通。此刻的我会：靠她那边（后排、靠墙）的年轻人侧头瞟她半眼，右手往外一摆；老人头不转，照走"
+   ],
+   "sources": [
+    "claude-opus-5-5/role_extras__a"
+   ],
+   "fix": "便宜：节拍改成「靠她那边的年轻人侧头瞟她一眼、抬手往外一摆表示不用，老人头也不回，两人脚步不停」",
+   "cost": "便宜",
+   "severity": "记录",
+   "rows": [
+    "| s6_st1 | 1.5–3.0 | V2 肢体 / V4 视线 | 记录 | ② 分镜文字 | 「两人摆一下手」：两人同步、一模一样地摆手，像排练过；吆喝的人在约 1.6 m 外，靠她那边的人连瞟都不瞟一眼就摆手，也说不太通。此刻的我会：靠她那边（后排、靠墙）的年轻人侧头瞟她半眼，右手往外一摆；老人头不转，照走 | 便宜：节拍改成「靠她那边的年轻人侧头瞟她一眼、抬手往外一摆表示不用，老人头也不回，两人脚步不停」 |"
+   ],
+   "id": "I65",
+   "status": "open",
+   "solution": "",
+   "reason": "",
+   "history": []
+  }
+ ]
+}

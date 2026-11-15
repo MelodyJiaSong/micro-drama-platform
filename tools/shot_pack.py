@@ -2,7 +2,7 @@
 """六模块剧的出片资料包：每镜一个 `资料包/`，把 prompt 参考的全部文件复制一份进去，并与源文件保持一致。
 
     python tools/shot_pack.py sync <集目录> [镜头key]     # 建 / 更新本集（或一镜）的资料包
-    python tools/shot_pack.py sync --all [--quiet]        # 全仓六模块剧（Claude Stop hook 每回合跑）
+    python tools/shot_pack.py sync --all [--quiet]        # 全仓六模块剧（Kimi Stop hook 每回合跑）
     python tools/shot_pack.py check <集目录> | --all       # 只报告，不改
     python tools/shot_pack.py cmd <集目录> <镜头key>       # 打印这一镜的草稿提交命令（会扣积分，只在用户决定生成后执行）
 

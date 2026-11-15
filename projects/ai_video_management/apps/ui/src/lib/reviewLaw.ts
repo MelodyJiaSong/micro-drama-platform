@@ -10,7 +10,7 @@ export type Partition = "pairs" | "halves" | "whole";
 export interface RosterLaw {
   name: string; color?: string; partition?: Partition; blind?: boolean; blind_note?: string; prefer_model?: string;
   what?: string; problem?: string; examples?: string[]; must?: MustCheck[]; checks?: string; how?: string; mechanisms?: string[];
-  /** v5：这一类的评分维度（每维 0–3）、审法步骤、两位审稿人（a＝Claude、b＝Codex）与为什么用这两个模型。 */
+  /** v5：这一类的评分维度（每维 0–3）、审法步骤、Kimi 单审与模型说明；旧双审记录也可读。 */
   rubric?: RubricDim[]; method?: string[]; reviewers?: { slot: string; runner: string; model: string }[]; model_why?: string;
 }
 export interface Roster { version?: number; laws: Record<string, RosterLaw>; adjudicator?: { runner: string; model: string } }

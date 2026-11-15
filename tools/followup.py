@@ -32,8 +32,8 @@ CONVENTIONS「Follow-up prompt handling」原本只是一段文字，各会话�
     Stop 钩子每次先跑一遍（这就是「周期性汇聚」）；还在做的条目留在 _inbox，`revised_prompt` 照样带上；
   · **只拦自己**：钩子与出片前日志闸门只拦「本会话」超过 6 小时没收尾的条目；别的会话的、旧的、
     格式不对的都只提示（·），由各自的会话或汇聚处理，不再挡别人。
-会话归属：`--owner`，否则环境变量 FOLLOWUP_OWNER / CLAUDE_CODE_SESSION_ID / CODEX_SESSION_ID / CODEX_THREAD_ID，
-钩子模式还读 stdin 里的 session_id。认不出会话的条目不拦任何人（Codex 收尾显式跑 check 时可传 --owner）。
+会话归属：`--owner`，否则环境变量 FOLLOWUP_OWNER / KIMI_CODE_SESSION_ID / CODEX_THREAD_ID，
+钩子模式还读 stdin 里的 session_id。认不出会话的条目不拦任何人（显式收尾时可传 --owner）。
 
 只对 ENFORCE_FROM 之后的条目生效（仓库惯例：规则不回溯旧产物）。
 """
@@ -58,7 +58,7 @@ PENDING_MARK = f"（{PENDING}"     # 只认骨架占位符；正文里写「其�
 LOCK_NAME = ".followup.lock"
 LOCK_WAIT_S, LOCK_STALE_S = 30.0, 120.0
 INBOX = "_inbox"
-OWNER_ENV = ("FOLLOWUP_OWNER", "CLAUDE_CODE_SESSION_ID", "CODEX_SESSION_ID", "CODEX_THREAD_ID")
+OWNER_ENV = ("FOLLOWUP_OWNER", "KIMI_CODE_SESSION_ID", "CODEX_THREAD_ID")
 
 FU_HEAD = re.compile(r"^## (\d+) — (\d{4}-\d\d-\d\d)([^\n]*)$", re.M)
 FU_CANON = re.compile(r"^## \d{3,} — \d{4}-\d\d-\d\d \d\d:\d\d:\d\d — \S")
@@ -390,7 +390,7 @@ def main(argv: list[str] | None = None) -> int:
     n.add_argument("--stage", type=int)
     n.add_argument("--severity", choices=("low", "medium", "high"))
     n.add_argument("--artifact", action="append", default=[])
-    n.add_argument("--owner", help="归属会话；缺省读 FOLLOWUP_OWNER / CLAUDE_CODE_SESSION_ID / CODEX_* 环境变量")
+    n.add_argument("--owner", help="归属会话；缺省读 FOLLOWUP_OWNER / KIMI_CODE_SESSION_ID / CODEX_THREAD_ID 环境变量")
     d = sub.add_parser("done")
     d.add_argument("project")
     d.add_argument("number")

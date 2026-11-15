@@ -56,7 +56,7 @@ def is_under_character_folder(root: Path, rel: str) -> bool:
     Needs `root` because the owning folder is **two or three** segments
     depending on whether the second one is a series folder, and that question is
     only answerable against the filesystem (`libs.common.drama_ref` — the single
-    place allowed to resolve it; CLAUDE.md forbids re-deriving it from depth).
+    place allowed to resolve it; CONVENTIONS.md forbids re-deriving it from depth).
 
     `asset_root_depth`, not `drama_depth`: a character shared by several
     episodes lives in `ai_videos/{series}/_series/characters/`, which is not a

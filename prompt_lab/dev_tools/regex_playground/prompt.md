@@ -10,7 +10,7 @@ You type a pattern up top, toggle flags like `g` `i` `m` `s`, and watch every ma
 **Use cases:** Crafting and debugging a tricky regex before pasting it into code · Learning regex with immediate visual feedback · Teaching pattern syntax with live examples · A quick offline tester when you can't paste data into an online tool.
 
 ## ▶️ 2. How to run
-Open Claude Code in an empty folder, paste the prompt below, answer the 2–3 setup questions, then walk away while it builds and self-checks. The only prerequisite is a modern browser — the deliverable is one `index.html` you double-click, no install and no server. It uses the browser's native RegExp engine, so it works fully offline.
+Open Kimi / Codex in an empty folder, paste the prompt below, answer the 2–3 setup questions, then walk away while it builds and self-checks. The only prerequisite is a modern browser — the deliverable is one `index.html` you double-click, no install and no server. It uses the browser's native RegExp engine, so it works fully offline.
 
 ## 🔗 3. Reference & prior art
 

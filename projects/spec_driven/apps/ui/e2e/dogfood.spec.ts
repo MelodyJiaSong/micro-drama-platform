@@ -48,7 +48,7 @@ test.describe("SYS-1 — Boot smoke under make run-prod", () => {
     expect(Array.isArray(tree.children)).toBe(true);
     const topNames = tree.children.map((c: { name: string }) => c.name);
     expect(topNames).toEqual(
-      expect.arrayContaining(["Claude Settings & Shared Context", "Projects"]),
+      expect.arrayContaining(["Kimi Settings & Shared Context", "Projects"]),
     );
     function hasFileLeaf(node: { type: string; children?: unknown[] }): boolean {
       if (node.type === "file") return true;
@@ -548,7 +548,7 @@ test.describe("SYS-13 — QaView Error Boundary fallback", () => {
       await expect(page.locator('[data-action="edit-file"]')).toBeVisible();
     }
     // Navigate to another file: SPA still works.
-    await page.goto(`/file/${encodePathParam("CLAUDE.md")}`);
+    await page.goto(`/file/${encodePathParam("AGENTS.md")}`);
     await expect(page.locator('[data-render-mode="markdown"]')).toBeVisible();
   });
 });
@@ -557,7 +557,7 @@ test.describe("SYS-13 — QaView Error Boundary fallback", () => {
 test.describe("SYS-14 — Path traversal probes", () => {
   const probes = [
     "../../etc/passwd",
-    "..%2f..%2f.claude%2fsettings.local.json",
+    "..%2f..%2f.kimi-code%2flocal.toml",
     `${PROJECT_REL}/findings/dossier.md::$DATA`,
     `${PROJECT_REL}/findings/COM1`,
     `${PROJECT_REL}/findings/dossier.md\\foo`,
@@ -1078,8 +1078,8 @@ test.describe("SYS-25 — Initial app load < 2s on localhost", () => {
     expect(Date.now() - t0).toBeLessThan(250);
 
     const t1 = Date.now();
-    const claudeMd = await request.get(`${URL_BACKEND}/api/file?path=CLAUDE.md`);
-    expect(claudeMd.status()).toBe(200);
+    const agentsMd = await request.get(`${URL_BACKEND}/api/file?path=AGENTS.md`);
+    expect(agentsMd.status()).toBe(200);
     expect(Date.now() - t1).toBeLessThan(100);
   });
 });

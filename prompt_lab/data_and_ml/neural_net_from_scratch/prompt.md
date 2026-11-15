@@ -10,7 +10,7 @@ You end up with a real neural network trained to recognize handwritten digits �
 **Use cases:** Truly learning how neural nets work by reading forward/backward passes you can trace line by line; a standout interview or portfolio piece that demonstrates the math, not just framework fluency; a teaching aid for explaining backprop and SGD with a runnable, visual result; and a minimal from-scratch base you extend with momentum, Adam, or a conv layer once the fundamentals click.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away: drop the prompt below into Claude Code in an empty folder, answer 2 short setup questions, then it builds, trains, self-reviews, and shows results autonomously.
+Copy-paste-and-walk-away: drop the prompt below into Kimi / Codex in an empty folder, answer 2 short setup questions, then it builds, trains, self-reviews, and shows results autonomously.
 Prerequisites: `pip install numpy scikit-learn matplotlib` (the prompt runs this). Dataset loads offline via sklearn.
 
 ## 🔗 3. Reference & prior art

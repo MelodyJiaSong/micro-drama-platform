@@ -3,14 +3,14 @@
 **Stack:** single `index.html` (canvas + JS, no deps) · **Est:** 20–40 min · **Output:** a replayable roguelike with procedural levels
 
 ## ✨ 1. Expectation — what you'll get
-Choose a tileset, run length, and difficulty, and Claude builds a complete turn-based roguelike that opens in your browser as one HTML file: move with arrow keys or WASD through procedurally generated dungeons where every floor is a fresh maze of rooms and corridors, peel back the fog-of-war as your field-of-view reveals the map, bump into wandering enemies that chase and fight back, grab loot, level up HP and XP, descend the stairs floor by floor, and try to survive permadeath to the final level. Because the dungeons, loot, and encounters regenerate every run, it stays replayable instead of being a one-shot demo. The result is a real, finishable game — message log, HUD, victory and game-over screens included — in a single shareable file.
+Choose a tileset, run length, and difficulty, and the agent builds a complete turn-based roguelike that opens in your browser as one HTML file: move with arrow keys or WASD through procedurally generated dungeons where every floor is a fresh maze of rooms and corridors, peel back the fog-of-war as your field-of-view reveals the map, bump into wandering enemies that chase and fight back, grab loot, level up HP and XP, descend the stairs floor by floor, and try to survive permadeath to the final level. Because the dungeons, loot, and encounters regenerate every run, it stays replayable instead of being a one-shot demo. The result is a real, finishable game — message log, HUD, victory and game-over screens included — in a single shareable file.
 
-**Why it's cool:** It's the meatiest "Claude built a whole game" showcase in the library — procedural map generation, shadowcasting-style field-of-view, chase AI, and bump-to-attack combat all clicking together in one no-dependency file, with no two runs ever the same.
+**Why it's cool:** It's the meatiest "the agent built a whole game" showcase in the library — procedural map generation, shadowcasting-style field-of-view, chase AI, and bump-to-attack combat all clicking together in one no-dependency file, with no two runs ever the same.
 
 **Use cases:** Show it off as a substantial portfolio piece that proves you can ship a real game loop, not just a toy; use it as a game-jam starter and graft on a boss, shopkeeper, hunger, or shareable seeds; read the single file to learn the classic roguelike building blocks — BSP/random-walk dungeon gen, FOV, and turn scheduling — from working code; or run it as a teaching demo for procedural generation and grid-based AI.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away: paste the prompt below into Claude Code in an empty folder, answer the 3 short setup questions (tileset, run length, difficulty), then it builds autonomously to completion and opens the game. Arrow keys / WASD to move. Prerequisites: none — opens in any modern browser.
+Copy-paste-and-walk-away: paste the prompt below into Kimi / Codex in an empty folder, answer the 3 short setup questions (tileset, run length, difficulty), then it builds autonomously to completion and opens the game. Arrow keys / WASD to move. Prerequisites: none — opens in any modern browser.
 
 ## 🔗 3. Reference & prior art
 

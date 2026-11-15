@@ -1,12 +1,9 @@
 ---
 name: ai-videos-character-sim
 description: 让一个人物在具体处境里开口说话（角色扮演式即兴对话），用来写更长、更口语、各人有各人声音的英文台词；故事创作写对白时用，产出是原始对话，再由作者挑选剪裁。
-metadata:
-  claude:
-    argument-hint: '<人物> <此刻的处境：在哪、刚发生什么、想要什么、知道/不知道什么> [对手人物]'
 ---
 
-> Claude / Codex 共用正文。执行前按根目录 `AGENTS.md` 路由，工具、提问、委派、参数与收尾遵 `CONVENTIONS.md` § Tool scoping and team coordination。路径相对仓库根。
+> Kimi / Codex 共用执行正文。执行前按根目录 `AGENTS.md` 路由，工具、提问、委派、参数与收尾遵 `CONVENTIONS.md` § Tool scoping and team coordination。路径相对仓库根。
 
 # 人物即兴（character-sim）
 

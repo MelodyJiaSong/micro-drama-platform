@@ -14,12 +14,11 @@ ALLOWED_EXTENSIONS: frozenset[str] = frozenset(
     {".md", ".json", ".yaml", ".yml", ".jsonl", ".txt", ".png", ".jpg"}
 )
 MAX_FILE_BYTES: int = 1_048_576
-CONTEXT_ROOT_FILES: tuple[str, ...] = ("AGENTS.md", "CONVENTIONS.md", "CLAUDE.md")
+CONTEXT_ROOT_FILES: tuple[str, ...] = ("AGENTS.md", "CONVENTIONS.md")
 CONTEXT_DIRS: dict[str, frozenset[str]] = {
-    ".agents": frozenset({"skills", "references"}),
-    ".claude": frozenset({"skills"}),
+    ".agents": frozenset({"skills", "references", "agents"}),
 }
-CONTEXT_FILES: frozenset[str] = frozenset({".agents/skill-aliases.json"})
+CONTEXT_FILES: frozenset[str] = frozenset()
 
 _EXCLUDED_DIRS: frozenset[str] = frozenset(
     {"node_modules", ".git", ".audit", "__pycache__", ".pytest_cache", "dist", "build", ".vite"}

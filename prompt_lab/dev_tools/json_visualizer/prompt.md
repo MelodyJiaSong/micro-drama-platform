@@ -10,7 +10,7 @@ You drop a wall of nested JSON (or YAML) into a textarea, hit render, and it exp
 **Use cases:** Debugging a gnarly API response or Kubernetes manifest · Onboarding teammates to an unfamiliar config schema · A teaching prop for explaining tree/graph structures · A quick offline alternative to pasting sensitive payloads into a web service.
 
 ## ▶️ 2. How to run
-Open Claude Code in an empty folder, paste the prompt below, and answer the 2–3 setup questions — then walk away while it builds and self-checks. The only prerequisite is a modern browser: the deliverable is a single `index.html` you double-click to open, no install, no server, no internet. It works fully offline.
+Open Kimi / Codex in an empty folder, paste the prompt below, and answer the 2–3 setup questions — then walk away while it builds and self-checks. The only prerequisite is a modern browser: the deliverable is a single `index.html` you double-click to open, no install, no server, no internet. It works fully offline.
 
 ## 🔗 3. Reference & prior art
 

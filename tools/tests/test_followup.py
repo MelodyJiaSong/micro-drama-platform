@@ -12,6 +12,14 @@ from tools import followup
 ME, OTHER = "session-me", "session-other"
 
 
+def test_codex_session_owns_followup_without_kimi_environment(spec: Path, monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.delenv("FOLLOWUP_OWNER", raising=False)
+    monkeypatch.delenv("KIMI_CODE_SESSION_ID", raising=False)
+    monkeypatch.setenv("CODEX_THREAD_ID", "codex-thread")
+    new("codex-work")
+    assert followup.inbox_entries(spec)[0][0].owner == "codex-thread"
+
+
 @pytest.fixture
 def spec(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     monkeypatch.setattr(followup, "REPO", tmp_path)

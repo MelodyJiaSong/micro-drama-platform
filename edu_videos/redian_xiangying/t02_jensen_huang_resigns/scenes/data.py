@@ -108,7 +108,27 @@ def quotes() -> dict:
         "trump1": quote_part("C82", "pay us as a country something"),
         "trump2": quote_part("C100", "a very honorable man"),
         "jeffries": quote_part("C123", "was the right thing to do"),
+        # 屏幕只列关键词（台词审 lines_r1 I37、I10）：外交部原话里截两段
+        "mfa2_kw": quote_part("C26", "间谍叙事"),
+        "mfa2_kw2": quote_part("C26", "科技封锁"),
     }
+
+
+def chapters() -> dict:
+    """页眉的章节叫法从 package.json 取，与目录、章节卡一致（design_system 7.5；讲稿作者改章名后重跑本脚本即可）。"""
+    pk = json.loads((TOPIC / "package.json").read_text(encoding="utf-8"))
+    out = {}
+    for i, (cid, v) in enumerate(pk["chapters"].items(), 1):
+        assert v.get("zh") and v.get("en"), f"package.json 章节 {cid} 缺中英标题"
+        out[cid] = {"no": f"{i:02d}", "zh": v["zh"], "en": v["en"]}
+    return out
+
+
+def outro_quote() -> dict:
+    """片尾点题句取 package.json quote（s6 l66 中文两行与片尾卡同一句；英文屏另用 ≤6 词的短写，见 s6）。"""
+    q = json.loads((TOPIC / "package.json").read_text(encoding="utf-8"))["quote"]
+    assert len(q["zh"]) == 2 and all(len(x) <= 12 for x in q["zh"]), q["zh"]
+    return q
 
 
 # 画面署名：默认取素材台账的 credit；这几张按要求改写成更短的写法
@@ -159,6 +179,8 @@ def main() -> None:
         "n": numbers(),
         "q": quotes(),
         "credits": credits(),
+        "chapters": chapters(),
+        "quote": outro_quote(),
     }
     redline_scan(out)
     (HERE / "data.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")

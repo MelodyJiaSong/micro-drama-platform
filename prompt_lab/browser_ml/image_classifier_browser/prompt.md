@@ -10,7 +10,7 @@ You open a single web page, drag a photo onto it (or pick one, or snap one from 
 **Use cases:** A jaw-dropping demo of on-device AI for a talk or interview · privacy-preserving image tagging where photos must never hit a server · a hackable reference for learning how `transformers.js` pipelines work · a teaching aid for explaining what a CNN/ViT actually predicts.
 
 ## ▶️ 2. How to run
-Copy the prompt below, drop it into Claude Code inside an empty folder, and walk away. Claude first asks you 2–3 quick setup questions, then builds the whole thing autonomously — implementing, self-reviewing against an acceptance checklist, and fixing itself until it passes. On the very first run the model (tens of MB) streams down from a CDN with a visible progress bar; after that it's cached and every classification is fully local. Because file-picking and the webcam want a real HTTP origin (not `file://`), serve it with a tiny static server: `python -m http.server 8080`, then open `http://localhost:8080`.
+Copy the prompt below, drop it into Kimi / Codex inside an empty folder, and walk away. The agent first asks you 2–3 quick setup questions, then builds the whole thing autonomously — implementing, self-reviewing against an acceptance checklist, and fixing itself until it passes. On the very first run the model (tens of MB) streams down from a CDN with a visible progress bar; after that it's cached and every classification is fully local. Because file-picking and the webcam want a real HTTP origin (not `file://`), serve it with a tiny static server: `python -m http.server 8080`, then open `http://localhost:8080`.
 
 ## 🔗 3. Reference & prior art
 

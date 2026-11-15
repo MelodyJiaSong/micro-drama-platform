@@ -10,7 +10,7 @@ Run the prompt and a single `index.html` springs to life: thousands of particles
 **Use cases:** Generate one-of-a-kind desktop/phone wallpapers and 4K prints to frame; spin up a cohesive set of palette-matched social, album-cover, or event-poster backdrops where every post shares a signature look; run it as an ongoing generative-art series (save the seeds, mint or print the keepers); or read the source to actually learn noise fields, particle advection, and trail-accumulation rendering on canvas.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away: paste the prompt below into Claude Code in an empty folder, answer 2 short setup questions (palette + style), then it builds and opens autonomously. Press a key to reseed, S to save. Prerequisites: none — opens in any modern browser.
+Copy-paste-and-walk-away: paste the prompt below into Kimi / Codex in an empty folder, answer 2 short setup questions (palette + style), then it builds and opens autonomously. Press a key to reseed, S to save. Prerequisites: none — opens in any modern browser.
 
 ## 🔗 3. Reference & prior art
 

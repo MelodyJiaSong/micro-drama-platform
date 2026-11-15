@@ -5,12 +5,12 @@
 ## ✨ 1. Expectation — what you'll get
 Run the prompt and you get a real-time fractal explorer rendered on the GPU through a WebGL fragment shader: drag to pan, scroll to plunge deep into the Mandelbrot set, toggle to animated Julia sets that morph under your mouse, cycle colors on the fly, and screenshot any frame. Iterations auto-scale as you zoom, so filigree detail keeps unfolding sharply instead of dissolving into mush — you can fall toward infinity and the boundary stays crisp. Every view is a coordinate you can return to and export as a print-ready image.
 
-**Why it's cool:** The whole image is computed per-pixel, in parallel, by a shader Claude writes by hand — and the infinite, self-similar detail isn't drawn anywhere, it's generated on the fly from one tiny escape-time formula. Watching a hand-written shader hold razor detail while you free-fall into the set is hypnotic.
+**Why it's cool:** The whole image is computed per-pixel, in parallel, by a shader the agent writes by hand — and the infinite, self-similar detail isn't drawn anywhere, it's generated on the fly from one tiny escape-time formula. Watching a hand-written shader hold razor detail while you free-fall into the set is hypnotic.
 
 **Use cases:** Capture screenshots of striking deep-zoom coordinates as abstract wallpapers, posters, and large-format prints; record a cinematic zoom for a music-video or social loop; build a curated series of named "locations" in the set as an art project; or read the shader code to genuinely learn WebGL fragment shaders, smooth/continuous coloring, and zoom-toward-cursor math.
 
 ## ▶️ 2. How to run
-Copy-paste-and-walk-away: paste the prompt below into Claude Code in an empty folder, answer 2 short setup questions (default fractal + color scheme), then it builds and opens autonomously. Scroll to zoom, drag to pan, S to save a screenshot. Prerequisites: none — opens in any modern browser with WebGL.
+Copy-paste-and-walk-away: paste the prompt below into Kimi / Codex in an empty folder, answer 2 short setup questions (default fractal + color scheme), then it builds and opens autonomously. Scroll to zoom, drag to pan, S to save a screenshot. Prerequisites: none — opens in any modern browser with WebGL.
 
 ## 🔗 3. Reference & prior art
 

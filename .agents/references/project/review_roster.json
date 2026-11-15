@@ -1,5 +1,5 @@
 {
- "_doc": "审稿人名册：tools/review_run.py new 按这里给每次审查生成审查单（checklist.json），存到 ai_videos/<剧>/reviews/。每一行＝一位独立审稿人（一条法则 × 一段范围）；must 是该法则的必查项，审稿人报告必须在「## 必查项」里逐条写 ✓ 或 ✗，缺一条不能打勾。出片前循环：pregen 审查单 → 全部打勾 → 便宜的改动直接改（除 Seedance 积分外都算便宜）→ 开下一轮，最多 3 轮 → 交用户确认出片（chuanyue_yiri follow-up 032/034/035，用户 2026-11-07）。 v3（用户 2026-11-08：每个大类都要有一种或多种审查机制；结尾台词母语观众听着很怪）：台词拆成「台词（时长与逻辑）」和「母语听感」两位审稿人，后者盲审、尽量换模型；每条法则的 mechanisms 列出它的审查机制（chuanyue_yiri follow-up 036）。 v4（用户 2026-11-08：点进某一大类先讲它是什么、解决什么问题、分几小类、流程和 skill，再给结果）：每条法则加 what（是什么）、problem（想解决的问题）、examples（真实踩过的例子）；小类＝must，流程＝how，审查机制＝mechanisms。 v5（用户 2026-11-08：每项由一位合适的 Claude 模型和一位合适的 Codex 模型双审；每类有自己的多维 rubric 和审法；两人都说没问题不等于没问题）：laws.<law>.rubric（评分维度，0–3 分，≥2 要证据）、method（审法步骤）、reviewers（a=Claude、b=Codex 的模型）、model_why；scoring 规定分值、证据、分歧与抽查；adjudicator 裁决分歧并抽查两人都判通过的维度。 v6（用户 2026-11-14，chuanyue_yiri follow-up 065）：Codex 审稿太慢（单份 30 分钟以上、拖住整轮），改为 **Claude 单审**：每项只有 a 位，无对比、无裁决，按 a 位定分；母语听感用 Sonnet，和写台词的 Opus 拉开。",
+ "_doc": "审稿人名册：tools/review_run.py new 按这里给每次审查生成审查单（checklist.json），存到 ai_videos/<剧>/reviews/。每一行＝一位独立审稿人（一条法则 × 一段范围）；must 是该法则的必查项，审稿人报告必须在「## 必查项」里逐条写 ✓ 或 ✗，缺一条不能打勾。出片前循环：pregen 审查单 → 全部打勾 → 便宜的改动直接改（除 Seedance 积分外都算便宜）→ 开下一轮，最多 3 轮 → 交用户确认出片（chuanyue_yiri follow-up 032/034/035，用户 2026-11-07）。 v3（用户 2026-11-08：每个大类都要有一种或多种审查机制；结尾台词母语观众听着很怪）：台词拆成「台词（时长与逻辑）」和「母语听感」两位审稿人，后者盲审、尽量换模型；每条法则的 mechanisms 列出它的审查机制（chuanyue_yiri follow-up 036）。 v4（用户 2026-11-08：点进某一大类先讲它是什么、解决什么问题、分几小类、流程和 skill，再给结果）：每条法则加 what（是什么）、problem（想解决的问题）、examples（真实踩过的例子）；小类＝must，流程＝how，审查机制＝mechanisms。 v5（用户 2026-11-08：每项由一位合适的 Claude 模型和一位合适的 Codex 模型双审；每类有自己的多维 rubric 和审法；两人都说没问题不等于没问题）：laws.<law>.rubric（评分维度，0–3 分，≥2 要证据）、method（审法步骤）、reviewers（a=Claude、b=Codex 的模型）、model_why；scoring 规定分值、证据、分歧与抽查；adjudicator 裁决分歧并抽查两人都判通过的维度。 v6（用户 2026-11-14，chuanyue_yiri follow-up 065）：Codex 审稿太慢（单份 30 分钟以上、拖住整轮），改为 **Kimi 单审**：每项只有 a 位，无对比、无裁决，按 a 位定分；所有新审查使用全新的 Kimi 独立上下文。",
  "version": 5,
  "stages": {
   "pregen": {
@@ -221,8 +221,8 @@
    "reviewers": [
     {
      "slot": "a",
-     "runner": "claude",
-     "model": "claude-opus-5-5"
+     "runner": "kimi",
+     "model": "kimi"
     }
    ],
    "model_why": "看图找细节与空间推理：首帧、站位图里手、道具、支撑、运动是否做得到"
@@ -346,8 +346,8 @@
    "reviewers": [
     {
      "slot": "a",
-     "runner": "claude",
-     "model": "claude-sonnet-5-5"
+     "runner": "kimi",
+     "model": "kimi"
     }
    ],
    "model_why": "读长文本、讲人物动机与反应逻辑"
@@ -452,8 +452,8 @@
    "reviewers": [
     {
      "slot": "a",
-     "runner": "claude",
-     "model": "claude-opus-5-5"
+     "runner": "kimi",
+     "model": "kimi"
     }
    ],
    "model_why": "看图 + 几何计算：按站位图算人在画面里多大、在哪，和首帧实测比"
@@ -571,8 +571,8 @@
    "reviewers": [
     {
      "slot": "a",
-     "runner": "claude",
-     "model": "claude-opus-5-5"
+     "runner": "kimi",
+     "model": "kimi"
     }
    ],
    "model_why": "跨镜头记账（道具、钱、服装、光向、站位）+ 看图核对"
@@ -619,7 +619,7 @@
    ],
    "mechanisms": [
     "台词审稿人：时长、逻辑、外语与专名",
-    "母语听感审稿人：英语母语观众盲听，换模型（codex）",
+    "母语听感审稿人：英语母语观众盲听，Kimi 独立审稿",
     "语音识别对词（出片后，faster-whisper）"
    ],
    "what": "台词在给定时间里说得完、说完留出呼吸；拉丁语和专名读得对；台词前后逻辑（编号、回收、谁说的）一致。",
@@ -681,8 +681,8 @@
    "reviewers": [
     {
      "slot": "a",
-     "runner": "claude",
-     "model": "claude-sonnet-5-5"
+     "runner": "kimi",
+     "model": "kimi"
     }
    ],
    "model_why": "算语速与留白（脚本）、核外语与专名、台词逻辑"
@@ -778,8 +778,8 @@
    "reviewers": [
     {
      "slot": "a",
-     "runner": "claude",
-     "model": "claude-opus-5-5"
+     "runner": "kimi",
+     "model": "kimi"
     }
    ],
    "model_why": "看图认器物建筑服饰，加史实知识"
@@ -889,8 +889,8 @@
    "reviewers": [
     {
      "slot": "a",
-     "runner": "claude",
-     "model": "claude-sonnet-5-5"
+     "runner": "kimi",
+     "model": "kimi"
     }
    ],
    "model_why": "观众视角：看懂没、笑点、节奏"
@@ -987,8 +987,8 @@
    "reviewers": [
     {
      "slot": "a",
-     "runner": "claude",
-     "model": "claude-sonnet-5-5"
+     "runner": "kimi",
+     "model": "kimi"
     }
    ],
    "model_why": "逐行读 prompt 找自相矛盾、过期描述、图文不一致"
@@ -1000,7 +1000,7 @@
    "blind": true,
    "blind_note": "**你是英语母语观众，盲审：只读 `materials/lines.md`（全集台词按播放顺序，附一句画面说明），不要读 spec.md、story、分镜、prompt 或别的审稿报告。**",
    "checks": "以英语母语观众（美国、英国、加拿大、澳洲的年轻 vlog 观众）的耳朵逐句听 Riley 的英文台词，核心问题只有一个：**一个真人在这个处境下，会不会张嘴这么说**。先做「说出口测试」：每句先遮住原句，只看画面说明（谁、在哪、多累、对谁说、想表达什么），自己写一句真人会怎么说，再揭开原句对比；差得越远越怪。再数修辞痕迹：自问自答（Bed? Found.）、三连排比、停顿抖包袱（…Gone.）、过于工整的对仗、字幕 / 广告文案腔——这些是「写出来的台词」，不是「说出来的话」。再看处境匹配：音量、精力、语气和处境对得上（深夜独处小声、刚被赶出门、嘴里塞着面包）。另外照旧查：中文直译句式、电报式罗列、视角或时态说不通（她是穿越者）、讲解腔、指代不清、观众不懂的词、没落地的笑点。**结构巧妙、笑点工整、回收漂亮都不加分；只有像真人随口说出来才加分。**每句给自然 / 有点怪 / 很怪和更顺的改写：改写只求像真人说话，**长短、词数、语速都不设限**，比原句长也可以（2026-11-08 用户：台词以像真人说话为第一；不为长度或语速删改台词——说不下就延长镜头（到 30 秒上限）、加镜头、加场、重写镜头或整场、重排节拍，镜头跟着台词调）。 另外，镜头切开的地方要连着读：同一个人前一镜最后一句和下一镜第一句，像不像同一个人在同一刻接着说（N10）（用户 2026-11-10，chuanyue_yiri follow-up 056：EP1 s1 st1 他拍全景里低声惊叹「That's Pompeii up there」，下一镜 st2 直接变成自拍里欢快的「Good morning from Pompeii!」——画面和台词都不搭。K5、C7 早就有「接得上」的检查项，但材料是一镜一份，没人逐个接点看，所以漏了）。",
-   "how": "只用 materials/lines.md；用和写台词的作者不同的 Claude 型号审（默认 Sonnet，作者多为 Opus）；逐句先写自己的说法再看原句（说出口测试）；不得全部判「自然」——必须列出最不像真人说话的至少 5 句并给改写；改写只求自然、前后呼应一致，不考虑长度和语速（说不下由影视改编延长镜头（到 30 秒上限）、加镜头、加场、重写镜头或整场）。",
+   "how": "只用 materials/lines.md；用全新的 Kimi 独立上下文审；逐句先写自己的说法再看原句（说出口测试）；不得全部判「自然」——必须列出最不像真人说话的至少 5 句并给改写；改写只求自然、前后呼应一致，不考虑长度和语速（说不下由影视改编延长镜头（到 30 秒上限）、加镜头、加场、重写镜头或整场）。",
    "must": [
     {
      "id": "N1",
@@ -1044,9 +1044,9 @@
     }
    ],
    "mechanisms": [
-    "母语听感审稿人：英语母语观众盲听，换模型（codex）；先写自己的说法再对比原句（说出口测试），数修辞痕迹，强制列出最不像真人说话的至少 5 句"
+    "母语听感审稿人：英语母语观众盲听，Kimi 独立审稿；先写自己的说法再对比原句（说出口测试），数修辞痕迹，强制列出最不像真人说话的至少 5 句"
    ],
-   "what": "用英语母语观众的耳朵逐句听 Riley 的英文：真人会不会这么说。盲审，只看台词表，尽量换另一个模型审。",
+   "what": "用英语母语观众的耳朵逐句听 Riley 的英文：真人会不会这么说。盲审，只看台词表，用全新的 Kimi 独立上下文审。",
    "problem": "台词「语法对、母语者听着怪」：中文直译句式、电报式罗列、穿越者视角说不通、讲解腔。原来的台词审稿人没抓到，用户指出后加的。2026-11-08 用户又指出「Okay. Bed? Found. Garum? Tasted. Budget? …Gone」内容没错、两位审稿人都判「自然」，但真人不会这么说：旧问法只问「听不听得懂、别不别扭」，审稿模型又偏爱有设计感的句子。于是加了说出口测试、修辞痕迹计数、处境匹配和强制列句（N6–N9），并明确「结构巧妙不加分」。",
    "examples": [
     "结尾 \"We'll still be reading it two thousand years from now\" 视角说不通（用户指出）",
@@ -1115,8 +1115,8 @@
    "reviewers": [
     {
      "slot": "a",
-     "runner": "claude",
-     "model": "claude-sonnet-5-5"
+     "runner": "kimi",
+     "model": "kimi"
     }
    ],
    "model_why": "英语语感：母语观众听着自然不自然"
@@ -1142,7 +1142,7 @@
     "对照 behavior.md 与「前几集的你」，列出这一集和以前不一致的地方；报告末尾写「## 行为档案增补」"
    ],
    "mechanisms": [
-    "角色立场审稿人：每个有卡人物一位（路人合一位），Claude 单审"
+    "角色立场审稿人：每个有卡人物一位（路人合一位），Kimi 单审"
    ],
    "must": [
     {
@@ -1214,8 +1214,8 @@
    "reviewers": [
     {
      "slot": "a",
-     "runner": "claude",
-     "model": "claude-opus-5-5"
+     "runner": "kimi",
+     "model": "kimi"
     }
    ],
    "model_why": "代入人物、判人情世故与表演分寸"
@@ -1230,12 +1230,12 @@
    "3": "没问题"
   },
   "evidence_rule": "打 2 或 3 分必须写证据：指到镜头、秒数、图上位置、文件行或计算数字；没有证据的高分按「没查」处理，打不了勾。",
-  "disagreement": "两位审稿人同一维度分数相差 ≥2，或一人 ≤1、另一人 ≥2，就是分歧，交裁决人。（v6 起 Claude 单审：只有一位审稿人时没有分歧与裁决，按这一位的分定。）",
+  "disagreement": "两位审稿人同一维度分数相差 ≥2，或一人 ≤1、另一人 ≥2，就是分歧，交裁决人。（v6 起 Kimi 单审：只有一位审稿人时没有分歧与裁决，按这一位的分定。）",
   "audit": "两人都打 ≥2 的维度，裁决人每个审稿项随机抽 2 维复核证据，专抓两个模型共同的盲点。"
  },
  "adjudicator": {
-  "runner": "claude",
-  "model": "claude-opus-5-5"
+  "runner": "kimi",
+  "model": "kimi"
  },
- "codex_model_note": "2026-11-08 用户：Codex 审稿位用 sol 或 terra，不用 astra（太贵、抢出图额度）→ 统一 gpt-6.1-sol"
+ "review_runtime_note": "所有新审查使用一位 Kimi 独立审稿人；旧 Claude / Codex 双审记录只用于读取历史。"
 }

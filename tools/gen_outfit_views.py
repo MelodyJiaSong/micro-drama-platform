@@ -105,7 +105,7 @@ def outfits(drama: str, only: list[str]) -> list[Outfit]:
             if not v:
                 continue
             unknown = set(v) - {"key", "name", "refs", "look", "carry", "pose"}
-            if unknown:                       # schema 允许之外的键：报错，别让它静默失效（CLAUDE.md「一个名字只有一处定义」）
+            if unknown:                       # schema 允许之外的键：报错，别让它静默失效（CONVENTIONS.md「一个名字只有一处定义」）
                 raise SystemExit(f"{p.name} {st.id} view 里有不认识的键：{sorted(unknown)}")
             if not v["key"].startswith(lo.character.split("_")[0] + "-"):
                 raise SystemExit(f"{p.name} {st.id}：view.key {v['key']} 不以 {lo.character.split('_')[0]}- 开头")

@@ -39,18 +39,21 @@ def test_workflow_stages_expand_into_episode_outputs(tmp_path: Path) -> None:
     (project / "2_世界观人设" / WORLD_FACTS_FILE).write_text("# 世界规则", encoding="utf-8")
     (project / "episodes/ep01" / STATE_CHANGES_FILE).write_text("# EP1状态变化", encoding="utf-8")
     node = _reader(tmp_path)._walk_project(project)
-    assert [child["display_name"] for child in node["children"]] == ["0_research", "1_资产库", *MODULE_NAV_LABELS.values()]
+    assert [child["display_name"] for child in node["children"]] == ["0_research", "1_资产库", "故事板（按集）", *MODULE_NAV_LABELS.values()]
     assert node["children"][1]["navigation_href"] == "/assets?drama=ai_videos%2Fdemo"
     assert "navigation_href" not in node["children"][0]
     rules = next(child for child in node["children"][1]["children"] if child["name"] == WORLD_FACTS_FILE)
     assert rules["display_name"] == "世界规则"
-    for stage, module in zip(node["children"][2:], MODULES):
+    storyboards = node["children"][2]
+    assert [child["display_name"] for child in storyboards["children"]] == ["EP1", "EP2"]
+    assert storyboards["children"][0]["navigation_href"] == "/drama?drama=ai_videos%2Fdemo&episode=ep01&module=filming"
+    for stage, module in zip(node["children"][3:], MODULES):
         assert stage["type"] == "directory"
         assert [child["display_name"] for child in stage["children"]] == ["EP1", "EP2"]
         assert all(child["workflow_module"] == module for child in stage["children"])
         assert stage["children"][1]["path"] == f"ai_videos/demo/episodes/ep02/{module}.json"
     # Placeholder stages list every episode but point at no document yet.
-    placeholders = node["children"][2 + len(MODULES):]
+    placeholders = node["children"][3 + len(MODULES):]
     assert [stage["name"] for stage in placeholders] == ["edit", "sound", "delivery"]
     for stage in placeholders:
         assert [(child["display_name"], child["workflow_module"], child["type"]) for child in stage["children"]] == [

@@ -14,7 +14,7 @@
 
 ## 默认音频生成入口
 
-**所有新音频生成统一默认使用 Suno 浏览器服务 API**，包括环境声床、背景音、动作/生物音效、背景音乐、主题曲、片头/片尾曲及其他音频需求。Claude Code 与 Codex 都读 [suno-music](../../suno-music/SKILL.md)，优先调用其 MCP，未加载时用同服务的 CLI 或 HTTP API（本机 `http://127.0.0.1:8770`，[接口文档](http://127.0.0.1:8770/docs)，`/health` 查运行与暂停状态）；人工使用同服务的 [本机工作台](http://127.0.0.1:8770/ui/)。用户 2026-10-24 确认：以后声音默认都用这个自建 Suno API。[API、CLI 与运行说明](../../../../projects/suno_browser_service/README.md) 是接口唯一说明源。
+**所有新音频生成统一默认使用 Suno 浏览器服务 API**，包括环境声床、背景音、动作/生物音效、背景音乐、主题曲、片头/片尾曲及其他音频需求。Kimi Code 读 [suno-music](../../suno-music/SKILL.md)，优先调用其 MCP，未加载时用同服务的 CLI 或 HTTP API（本机 `http://127.0.0.1:8770`，[接口文档](http://127.0.0.1:8770/docs)，`/health` 查运行与暂停状态）；人工使用同服务的 [本机工作台](http://127.0.0.1:8770/ui/)。用户 2026-10-24 确认：以后声音默认都用这个自建 Suno API。[API、CLI 与运行说明](../../../../projects/suno_browser_service/README.md) 是接口唯一说明源。
 
 | 需求 | 默认模式与输入 |
 |---|---|
@@ -31,7 +31,7 @@ Suno 遇验证码、配额、页面变化或能力缺口，保留阻塞与原任
 ## 从创作需求到分轨
 
 1. 读剧 Vision 与已确定画面；记录每条声音的用途、起止位置、强弱与是否压低对白。预览片的声音先标试做，不能当锁片后终混。
-2. 先确认服务：有 `suno_*` MCP 工具（`.mcp.json` 里的 `suno-browser`）就用 MCP，更方便；会话没加载就用 CLI / HTTP API。`GET http://127.0.0.1:8770/health` 连不上说明服务没启动，代理**自己运行** `projects/suno_browser_service/start.ps1` 再查 health，不用问用户（用户 2026-10-24）。默认常驻窗口模式（2026-11-03）：`start.ps1` 顺带打开服务专用 Chrome 窗口，用户一直开着；需要登录或验证码时请用户直接在这个窗口处理，不用停服务（health `browser_window=closed` 时服务有排队任务会自己重开窗口，代理也可运行 `open-window.ps1`；还没提交就因窗口出错的任务服务自动重排，最多 3 次）。`automation_paused=true` 时代理不删暂停文件。然后 `suno_capabilities` → 如需参考则 `suno_upload_reference` → `suno_plan`。设置实际集/资产目录 `target`，使服务请求日志归属正确；plan 不访问 Suno。
+2. 先确认服务：有 `suno_*` MCP 工具（`.kimi-code/mcp.json` 里的 `suno-browser`）就用 MCP，更方便；会话没加载就用 CLI / HTTP API。`GET http://127.0.0.1:8770/health` 连不上说明服务没启动，代理**自己运行** `projects/suno_browser_service/start.ps1` 再查 health，不用问用户（用户 2026-10-24）。默认常驻窗口模式（2026-11-03）：`start.ps1` 顺带打开服务专用 Chrome 窗口，用户一直开着；需要登录或验证码时请用户直接在这个窗口处理，不用停服务（health `browser_window=closed` 时服务有排队任务会自己重开窗口，代理也可运行 `open-window.ps1`；还没提交就因窗口出错的任务服务自动重排，最多 3 次）。`automation_paused=true` 时代理不删暂停文件。然后 `suno_capabilities` → 如需参考则 `suno_upload_reference` → `suno_plan`。设置实际集/资产目录 `target`，使服务请求日志归属正确；plan 不访问 Suno。
 3. `suno_create` 每条声音固定一个幂等键，保存请求、job ID 和预检结果。该服务已有自动 Create/下载授权；不改变视频出片规则。
 4. `suno_get_job` / `suno_wait_job` 查询原任务。`next_action=complete_suno_verification_in_open_window` 表示 Suno 弹了验证码、服务开着可见窗口在等人：马上告诉用户去那个 Chrome 窗口完成验证，代理不碰验证码，继续查同一任务。Sounds 没有时长控件，请求不要带 `duration_seconds`，prompt 不超过 500 字符。验证码暂停或 `uncertain` 停止自动推进；确认歌曲后只恢复原任务补收，不能另建键碰运气。已提交但结果不明（uncertain / 超时 / 认错）先用 `resume` 加 `recollect: true` 到库里按标题或 prompt 重新认领，不重新生成；确认没生成才另建新键重提。
 5. `suno_download` 取回并校验音频，记录实际引擎、歌曲 URL、文件 SHA 与用途；试听确认音色、时长、循环接缝、意外人声及与 Vision 的一致性。只有文件存在并核对后才能标成品。
